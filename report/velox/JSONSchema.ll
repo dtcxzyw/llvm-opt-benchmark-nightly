@@ -201,7 +201,7 @@ bb.a:
   %6 = alloca %"class.std::vector.80", align 8    ; 5 uses
   %7 = alloca %"class.std::unique_ptr.306", align 8 ; 6 uses
   %8 = alloca %"class.std::unique_ptr.306", align 8 ; 6 uses
-  %9 = alloca %"class.boost::basic_regex", align 8 ; 9 uses
+  %9 = alloca %"class.boost::basic_regex", align 16 ; 9 uses
   %10 = alloca %"class.std::unique_ptr.306", align 8 ; 6 uses
   %11 = alloca %"class.std::unique_ptr.306", align 8 ; 5 uses
   %12 = alloca %"class.std::unique_ptr.306", align 8 ; 5 uses
@@ -604,7 +604,7 @@ _ZNK5folly7dynamic5itemsEv.exit72.i:              ; preds = %bb.hk
   %i.apw = lshr i64 %i.apr, 3
   %i.apx = and i64 %i.apw, 1
   %i.apy = or disjoint i64 %i.apv, %i.apx
-  %i.apz = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
+  %i.apz = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.aqa = getelementptr inbounds nuw i8, ptr %i.akb, i64 72 ; 4 uses
   %i.aqb = getelementptr inbounds nuw i8, ptr %i.akb, i64 80 ; 3 uses
   br label %_ZN5folly6detail14IteratorFacadeINS_7dynamic19const_item_iteratorEKSt4pairIKS2_S2_ESt20forward_iterator_tagEppEv.exit123.i
@@ -620,7 +620,7 @@ _ZN5folly6detail14IteratorFacadeINS_7dynamic19const_item_iteratorEKSt4pairIKS2_S
 _ZNKR5folly7dynamic9getStringB5cxx11Ev.exit78.i:  ; preds = %_ZN5folly6detail14IteratorFacadeINS_7dynamic19const_item_iteratorEKSt4pairIKS2_S2_ESt20forward_iterator_tagEppEv.exit123.i
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #23, !noalias !9540
   %i.aqe = getelementptr inbounds nuw i8, ptr %i.aqc, i64 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %9, i8 0, i64 16, i1 false), !noalias !9540
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %9, i8 0, i64 16, i1 false), !noalias !9540
   %i.aqf = load ptr, ptr %i.aqe, align 8, !tbaa !58, !noalias !9540 ; 2 uses
   %i.aqg = getelementptr inbounds nuw i8, ptr %i.aqc, i64 16
   %i.aqh = load i64, ptr %i.aqg, align 8, !tbaa !50, !noalias !9540
@@ -658,22 +658,20 @@ bb.hm:                                            ; preds = %.noexc82.i
   br label %.body83.i
 
 _ZN5folly10jsonschema12_GLOBAL__N_115SchemaValidator4makeERNS1_22SchemaValidatorContextERKNS_7dynamicE.exit85.i: ; preds = %.noexc82.i
-  %.val.i = load ptr, ptr %9, align 8, !noalias !9540 ; 2 uses
-  %.val58.i = load ptr, ptr %i.apz, align 8, !noalias !9540 ; 6 uses
-  %i.aqq = load ptr, ptr %i.aqa, align 8, !tbaa !9582, !noalias !9540 ; 10 uses
+  %44 = load <2 x ptr>, ptr %9, align 16, !noalias !9540 ; 3 uses
+  %45 = extractelement <2 x ptr> %44, i64 1       ; 4 uses
+  %i.aqq = load ptr, ptr %i.aqa, align 8, !tbaa !9582, !noalias !9540 ; 9 uses
   %i.aqr = load ptr, ptr %i.aqb, align 8, !tbaa !9583, !noalias !9540
   %.not.i86.i = icmp eq ptr %i.aqq, %i.aqr
   br i1 %.not.i86.i, label %bb.hr, label %bb.hn
 
 bb.hn:                                            ; preds = %_ZN5folly10jsonschema12_GLOBAL__N_115SchemaValidator4makeERNS1_22SchemaValidatorContextERKNS_7dynamicE.exit85.i
-  store ptr %.val.i, ptr %i.aqq, align 8, !tbaa !7477, !noalias !9540
-  %44 = getelementptr inbounds nuw i8, ptr %i.aqq, i64 8
-  store ptr %.val58.i, ptr %44, align 8, !tbaa !74, !noalias !9540
-  %.not.i.i.i.i.i.i.i.i722 = icmp eq ptr %.val58.i, null
+  store <2 x ptr> %44, ptr %i.aqq, align 8, !tbaa !26, !noalias !9540
+  %.not.i.i.i.i.i.i.i.i722 = icmp eq ptr %45, null
   br i1 %.not.i.i.i.i.i.i.i.i722, label %_ZSt12construct_atISt4pairIN5boost11basic_regexIcNS1_12regex_traitsIcNS1_16cpp_regex_traitsIcEEEEEESt10unique_ptrIN5folly10jsonschema12_GLOBAL__N_110IValidatorESt14default_deleteISC_EEEJS7_S8_INSB_15SchemaValidatorESD_ISH_EEEEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPSL_DpOSM_.exit.i.i, label %bb.ho
 
 bb.ho:                                            ; preds = %bb.hn
-  %i.aqs = getelementptr inbounds nuw i8, ptr %.val58.i, i64 8 ; 3 uses
+  %i.aqs = getelementptr inbounds nuw i8, ptr %45, i64 8 ; 3 uses
   %i.aqt = load i8, ptr @__libc_single_threaded, align 1, !tbaa !18, !noalias !9540
   %.not.i.i.i.i.i.i.i.i.i723 = icmp eq i8 %i.aqt, 0
   br i1 %.not.i.i.i.i.i.i.i.i.i723, label %bb.hq, label %bb.hp
@@ -727,15 +725,13 @@ _ZNKSt6vectorISt4pairIN5boost11basic_regexIcNS1_12regex_traitsIcNS1_16cpp_regex_
           to label %.noexc91.i unwind label %.loopexit1085, !noalias !9540, !inline_history !9566 ; 5 uses
 
 .noexc91.i:                                       ; preds = %_ZNKSt6vectorISt4pairIN5boost11basic_regexIcNS1_12regex_traitsIcNS1_16cpp_regex_traitsIcEEEEEESt10unique_ptrIN5folly10jsonschema12_GLOBAL__N_110IValidatorESt14default_deleteISC_EEESaISG_EE12_M_check_lenEmPKc.exit.i.i.i
-  %i.arm = getelementptr inbounds nuw i8, ptr %i.arl, i64 %i.arc ; 3 uses
-  store ptr %.val.i, ptr %i.arm, align 8, !tbaa !7477, !noalias !9540
-  %45 = getelementptr inbounds nuw i8, ptr %i.arm, i64 8
-  store ptr %.val58.i, ptr %45, align 8, !tbaa !74, !noalias !9540
-  %.not.i.i.i.i.i.i.i10.i.i = icmp eq ptr %.val58.i, null
+  %i.arm = getelementptr inbounds nuw i8, ptr %i.arl, i64 %i.arc ; 2 uses
+  store <2 x ptr> %44, ptr %i.arm, align 8, !tbaa !26, !noalias !9540
+  %.not.i.i.i.i.i.i.i10.i.i = icmp eq ptr %45, null
   br i1 %.not.i.i.i.i.i.i.i10.i.i, label %bb.hw, label %bb.ht
 
 bb.ht:                                            ; preds = %.noexc91.i
-  %i.arn = getelementptr inbounds nuw i8, ptr %.val58.i, i64 8 ; 3 uses
+  %i.arn = getelementptr inbounds nuw i8, ptr %45, i64 8 ; 3 uses
   %i.aro = load i8, ptr @__libc_single_threaded, align 1, !tbaa !18, !noalias !9540
   %.not.i.i.i.i.i.i.i.i.i88.i = icmp eq i8 %i.aro, 0
   br i1 %.not.i.i.i.i.i.i.i.i.i88.i, label %bb.hv, label %bb.hu

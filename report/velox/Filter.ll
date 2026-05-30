@@ -201,19 +201,19 @@ bb.e:                                             ; preds = %.lr.ph, %_ZNSt10uni
   %i.ac = phi ptr [ %.promoted, %.lr.ph ], [ %i.iq, %_ZNSt10unique_ptrIN8facebook5velox6common11BigintRangeESt14default_deleteIS3_EED2Ev.exit ] ; 11 uses
   %i.ad = phi ptr [ %.promoted209, %.lr.ph ], [ %i.ip, %_ZNSt10unique_ptrIN8facebook5velox6common11BigintRangeESt14default_deleteIS3_EED2Ev.exit ] ; 33 uses
   %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %indvars.iv
-  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !153 ; 2 uses
+  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !153
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 16
-  %7 = load i64, ptr %i.ag, align 8, !tbaa !133   ; 14 uses
-  %8 = icmp slt i64 %2, %7
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.af, i64 24
-  %.pre274 = load i64, ptr %.phi.trans.insert, align 8, !tbaa !136 ; 7 uses
-  %i.ah = icmp slt i64 %.pre274, %1
-  %or.cond = select i1 %8, i1 true, i1 %i.ah
+  %7 = load <2 x i64>, ptr %i.ag, align 8, !tbaa !33 ; 3 uses
+  %8 = extractelement <2 x i64> %7, i64 1         ; 6 uses
+  %9 = extractelement <2 x i64> %7, i64 0         ; 13 uses
+  %10 = icmp slt i64 %2, %9
+  %i.ah = icmp slt i64 %8, %1
+  %or.cond = select i1 %10, i1 true, i1 %i.ah
   br i1 %or.cond, label %._crit_edge273, label %bb.n
 
 ._crit_edge273:                                   ; preds = %bb.e
   %i.ai = invoke noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #48
-          to label %.noexc45 unwind label %bb.m, !inline_history !961 ; 16 uses
+          to label %.noexc45 unwind label %bb.m, !inline_history !961 ; 15 uses
 
 .noexc45:                                         ; preds = %._crit_edge273
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
@@ -224,31 +224,29 @@ bb.e:                                             ; preds = %.lr.ph, %_ZNSt10uni
   store i32 5, ptr %i.al, align 4, !tbaa !68, !noalias !1034
   store ptr getelementptr inbounds nuw inrange(-16, 232) (i8, ptr @_ZTVN8facebook5velox6common11BigintRangeE, i64 16), ptr %i.ai, align 8, !tbaa !102, !noalias !1034
   %i.am = getelementptr inbounds nuw i8, ptr %i.ai, i64 16
-  store i64 %7, ptr %i.am, align 8, !tbaa !133, !noalias !1034
-  %9 = getelementptr inbounds nuw i8, ptr %i.ai, i64 24
-  store i64 %.pre274, ptr %9, align 8, !tbaa !136, !noalias !1034
+  store <2 x i64> %7, ptr %i.am, align 8, !tbaa !33, !noalias !1034
   %i.an = getelementptr inbounds nuw i8, ptr %i.ai, i64 32
-  %.sroa.speculated15.i.i = tail call i64 @llvm.smax.i64(i64 %7, i64 -2147483648)
+  %.sroa.speculated15.i.i = tail call i64 @llvm.smax.i64(i64 %9, i64 -2147483648)
   %i.ao = trunc i64 %.sroa.speculated15.i.i to i32
   store i32 %i.ao, ptr %i.an, align 8, !tbaa !137, !noalias !1034
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ai, i64 36
-  %.sroa.speculated11.i.i = tail call i64 @llvm.smin.i64(i64 %.pre274, i64 2147483647)
+  %.sroa.speculated11.i.i = tail call i64 @llvm.smin.i64(i64 %8, i64 2147483647)
   %i.aq = trunc i64 %.sroa.speculated11.i.i to i32
   store i32 %i.aq, ptr %i.ap, align 4, !tbaa !138, !noalias !1034
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ai, i64 40
-  %.sroa.speculated7.i.i = tail call i64 @llvm.smax.i64(i64 %7, i64 -32768)
+  %.sroa.speculated7.i.i = tail call i64 @llvm.smax.i64(i64 %9, i64 -32768)
   %i.as = trunc i64 %.sroa.speculated7.i.i to i16
   store i16 %i.as, ptr %i.ar, align 8, !tbaa !139, !noalias !1034
   %i.at = getelementptr inbounds nuw i8, ptr %i.ai, i64 42
-  %.sroa.speculated.i.i = tail call i64 @llvm.smin.i64(i64 %.pre274, i64 32767)
+  %.sroa.speculated.i.i = tail call i64 @llvm.smin.i64(i64 %8, i64 32767)
   %i.au = trunc i64 %.sroa.speculated.i.i to i16
   store i16 %i.au, ptr %i.at, align 2, !tbaa !140, !noalias !1034
   %i.av = getelementptr inbounds nuw i8, ptr %i.ai, i64 44
-  %i.aw = icmp eq i64 %.pre274, %7
+  %i.aw = icmp eq i64 %8, %9
   %i.ax = zext i1 %i.aw to i8
   store i8 %i.ax, ptr %i.av, align 4, !tbaa !141, !noalias !1034
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ai, i64 45 ; 2 uses
-  %.not.i.i = icmp sgt i64 %7, 2147483647
+  %.not.i.i = icmp sgt i64 %9, 2147483647
   br i1 %.not.i.i, label %.thread.i.i, label %bb.f
 
 .thread.i.i:                                      ; preds = %.noexc45
@@ -256,14 +254,14 @@ bb.e:                                             ; preds = %.lr.ph, %_ZNSt10uni
   br label %bb.h
 
 bb.f:                                             ; preds = %.noexc45
-  %i.az = icmp sgt i64 %.pre274, -2147483649
+  %i.az = icmp sgt i64 %8, -2147483649
   %i.ba = zext i1 %i.az to i8
   store i8 %i.ba, ptr %i.ay, align 1, !tbaa !142, !noalias !1034
-  %.not1.i.i = icmp sgt i64 %7, 32767
+  %.not1.i.i = icmp sgt i64 %9, 32767
   br i1 %.not1.i.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.bb = icmp sgt i64 %.pre274, -32769
+  %i.bb = icmp sgt i64 %8, -32769
   %i.bc = zext i1 %i.bb to i8
   br label %bb.h
 
@@ -475,7 +473,7 @@ _ZNSt10unique_ptrIN8facebook5velox6common11BigintRangeESt14default_deleteIS3_EED
   br label %bb.ag
 
 bb.n:                                             ; preds = %bb.e
-  %i.da = icmp slt i64 %7, %1
+  %i.da = icmp slt i64 %9, %1
   br i1 %i.da, label %bb.o, label %_ZNSt10unique_ptrIN8facebook5velox6common11BigintRangeESt14default_deleteIS3_EED2Ev.exit66
 
 bb.o:                                             ; preds = %bb.n
@@ -491,28 +489,28 @@ bb.o:                                             ; preds = %bb.n
   store i32 5, ptr %i.de, align 4, !tbaa !68, !noalias !1050
   store ptr getelementptr inbounds nuw inrange(-16, 232) (i8, ptr @_ZTVN8facebook5velox6common11BigintRangeE, i64 16), ptr %i.db, align 8, !tbaa !102, !noalias !1050
   %i.df = getelementptr inbounds nuw i8, ptr %i.db, i64 16
-  store i64 %7, ptr %i.df, align 8, !tbaa !133, !noalias !1050
+  store i64 %9, ptr %i.df, align 8, !tbaa !133, !noalias !1050
   %i.dg = getelementptr inbounds nuw i8, ptr %i.db, i64 24
   store i64 %i.n, ptr %i.dg, align 8, !tbaa !136, !noalias !1050
   %i.dh = getelementptr inbounds nuw i8, ptr %i.db, i64 32
-  %.sroa.speculated15.i.i51 = tail call i64 @llvm.smax.i64(i64 %7, i64 -2147483648)
+  %.sroa.speculated15.i.i51 = tail call i64 @llvm.smax.i64(i64 %9, i64 -2147483648)
   %i.di = trunc i64 %.sroa.speculated15.i.i51 to i32
   store i32 %i.di, ptr %i.dh, align 8, !tbaa !137, !noalias !1050
   %i.dj = getelementptr inbounds nuw i8, ptr %i.db, i64 36
   store i32 %i.o, ptr %i.dj, align 4, !tbaa !138, !noalias !1050
   %i.dk = getelementptr inbounds nuw i8, ptr %i.db, i64 40
-  %.sroa.speculated7.i.i53 = tail call i64 @llvm.smax.i64(i64 %7, i64 -32768)
+  %.sroa.speculated7.i.i53 = tail call i64 @llvm.smax.i64(i64 %9, i64 -32768)
   %i.dl = trunc i64 %.sroa.speculated7.i.i53 to i16
   store i16 %i.dl, ptr %i.dk, align 8, !tbaa !139, !noalias !1050
   %i.dm = getelementptr inbounds nuw i8, ptr %i.db, i64 42
   store i16 %i.p, ptr %i.dm, align 2, !tbaa !140, !noalias !1050
   %i.dn = getelementptr inbounds nuw i8, ptr %i.db, i64 44
-  %i.do = icmp eq i64 %i.n, %7
+  %i.do = icmp eq i64 %i.n, %9
   %i.dp = zext i1 %i.do to i8
   store i8 %i.dp, ptr %i.dn, align 4, !tbaa !141, !noalias !1050
   %i.dq = getelementptr inbounds nuw i8, ptr %i.db, i64 45
-  %.not.i.i55 = icmp slt i64 %7, 2147483648
-  %.not1.i.i56 = icmp slt i64 %7, 32768
+  %.not.i.i55 = icmp slt i64 %9, 2147483648
+  %.not1.i.i56 = icmp slt i64 %9, 32768
   %narrow = and i1 %.not1.i.i56, %i.r
   %narrow358 = and i1 %.not.i.i55, %i.q
   %.sink = zext i1 %narrow358 to i8

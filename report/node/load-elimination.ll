@@ -201,27 +201,27 @@ bb.d:                                             ; preds = %.loopexit
 
 bb.e:                                             ; preds = %_ZN2v88internal4Zone3NewINS0_8compiler15LoadElimination16AbstractElementsEJRPS1_EEEPT_DpOT0_.exit, %.loopexit
   %.029.idx35 = phi i64 [ 0, %_ZN2v88internal4Zone3NewINS0_8compiler15LoadElimination16AbstractElementsEJRPS1_EEEPT_DpOT0_.exit ], [ %.029.add, %.loopexit ] ; 2 uses
-  %.029.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.029.idx35 ; 4 uses
-  %.sroa.06.0.copyload = load ptr, ptr %.029.ptr, align 8 ; 10 uses
-  %.sroa.69.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.029.ptr, i64 8
-  %.sroa.69.0.copyload = load ptr, ptr %.sroa.69.0..sroa_idx, align 8 ; 9 uses
+  %.029.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.029.idx35 ; 3 uses
+  %3 = load <2 x ptr>, ptr %.029.ptr, align 8     ; 3 uses
+  %4 = extractelement <2 x ptr> %3, i64 1         ; 8 uses
+  %5 = extractelement <2 x ptr> %3, i64 0         ; 9 uses
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.029.ptr, i64 16
   %.sroa.7.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx, align 8 ; 9 uses
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.029.ptr, i64 24
   %i.n = load i64, ptr %.sroa.8.0..sroa_idx, align 8
   %.sroa.8.sroa.0.0.extract.trunc = trunc i64 %i.n to i8
-  %i.o = icmp eq ptr %.sroa.06.0.copyload, null
+  %i.o = icmp eq ptr %5, null
   br i1 %i.o, label %.loopexit, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %bb.e
   %.sroa.0.0.copyload = load ptr, ptr %1, align 8
-  %i.p = icmp eq ptr %.sroa.06.0.copyload, %.sroa.0.0.copyload
+  %i.p = icmp eq ptr %5, %.sroa.0.0.copyload
   br i1 %i.p, label %bb.f, label %.preheader.1
 
 bb.f:                                             ; preds = %.preheader.preheader
   %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx, align 8
-  %i.q = icmp eq ptr %.sroa.69.0.copyload, %.sroa.4.0.copyload
+  %i.q = icmp eq ptr %4, %.sroa.4.0.copyload
   %i.r = icmp eq ptr %.sroa.7.0.copyload, %.sroa.5.0.copyload
   %or.cond = select i1 %i.q, i1 %i.r, i1 false
   br i1 %or.cond, label %.critedge, label %.preheader.1
@@ -230,10 +230,8 @@ bb.f:                                             ; preds = %.preheader.preheade
   %i.s = load i64, ptr %i.k, align 8              ; 2 uses
   %i.t = add i64 %i.s, 1
   store i64 %i.t, ptr %i.k, align 8
-  %i.u = getelementptr inbounds nuw [32 x i8], ptr %i.i, i64 %i.s ; 4 uses
-  store ptr %.sroa.06.0.copyload, ptr %i.u, align 8
-  %.sroa.69.0..sroa_idx10 = getelementptr inbounds nuw i8, ptr %i.u, i64 8
-  store ptr %.sroa.69.0.copyload, ptr %.sroa.69.0..sroa_idx10, align 8
+  %i.u = getelementptr inbounds nuw [32 x i8], ptr %i.i, i64 %i.s ; 3 uses
+  store <2 x ptr> %3, ptr %i.u, align 8
   %.sroa.7.0..sroa_idx12 = getelementptr inbounds nuw i8, ptr %i.u, i64 16
   store ptr %.sroa.7.0.copyload, ptr %.sroa.7.0..sroa_idx12, align 8
   %.sroa.8.0..sroa_idx14 = getelementptr inbounds nuw i8, ptr %i.u, i64 24
@@ -242,91 +240,91 @@ bb.f:                                             ; preds = %.preheader.preheade
 
 .preheader.1:                                     ; preds = %bb.f, %.preheader.preheader
   %.sroa.0.0.copyload.1 = load ptr, ptr %.031.ptr34.1, align 8
-  %i.v = icmp eq ptr %.sroa.06.0.copyload, %.sroa.0.0.copyload.1
+  %i.v = icmp eq ptr %5, %.sroa.0.0.copyload.1
   br i1 %i.v, label %bb.g, label %.preheader.2
 
 bb.g:                                             ; preds = %.preheader.1
   %.sroa.5.0.copyload.1 = load ptr, ptr %.sroa.5.0..sroa_idx.1, align 8
   %.sroa.4.0.copyload.1 = load ptr, ptr %.sroa.4.0..sroa_idx.1, align 8
-  %i.w = icmp eq ptr %.sroa.69.0.copyload, %.sroa.4.0.copyload.1
+  %i.w = icmp eq ptr %4, %.sroa.4.0.copyload.1
   %i.x = icmp eq ptr %.sroa.7.0.copyload, %.sroa.5.0.copyload.1
   %or.cond.1 = select i1 %i.w, i1 %i.x, i1 false
   br i1 %or.cond.1, label %.critedge, label %.preheader.2
 
 .preheader.2:                                     ; preds = %bb.g, %.preheader.1
   %.sroa.0.0.copyload.2 = load ptr, ptr %.031.ptr34.2, align 8
-  %i.y = icmp eq ptr %.sroa.06.0.copyload, %.sroa.0.0.copyload.2
+  %i.y = icmp eq ptr %5, %.sroa.0.0.copyload.2
   br i1 %i.y, label %bb.h, label %.preheader.3
 
 bb.h:                                             ; preds = %.preheader.2
   %.sroa.5.0.copyload.2 = load ptr, ptr %.sroa.5.0..sroa_idx.2, align 8
   %.sroa.4.0.copyload.2 = load ptr, ptr %.sroa.4.0..sroa_idx.2, align 8
-  %i.z = icmp eq ptr %.sroa.69.0.copyload, %.sroa.4.0.copyload.2
+  %i.z = icmp eq ptr %4, %.sroa.4.0.copyload.2
   %i.aa = icmp eq ptr %.sroa.7.0.copyload, %.sroa.5.0.copyload.2
   %or.cond.2 = select i1 %i.z, i1 %i.aa, i1 false
   br i1 %or.cond.2, label %.critedge, label %.preheader.3
 
 .preheader.3:                                     ; preds = %bb.h, %.preheader.2
   %.sroa.0.0.copyload.3 = load ptr, ptr %.031.ptr34.3, align 8
-  %i.ab = icmp eq ptr %.sroa.06.0.copyload, %.sroa.0.0.copyload.3
+  %i.ab = icmp eq ptr %5, %.sroa.0.0.copyload.3
   br i1 %i.ab, label %bb.i, label %.preheader.4
 
 bb.i:                                             ; preds = %.preheader.3
   %.sroa.5.0.copyload.3 = load ptr, ptr %.sroa.5.0..sroa_idx.3, align 8
   %.sroa.4.0.copyload.3 = load ptr, ptr %.sroa.4.0..sroa_idx.3, align 8
-  %i.ac = icmp eq ptr %.sroa.69.0.copyload, %.sroa.4.0.copyload.3
+  %i.ac = icmp eq ptr %4, %.sroa.4.0.copyload.3
   %i.ad = icmp eq ptr %.sroa.7.0.copyload, %.sroa.5.0.copyload.3
   %or.cond.3 = select i1 %i.ac, i1 %i.ad, i1 false
   br i1 %or.cond.3, label %.critedge, label %.preheader.4
 
 .preheader.4:                                     ; preds = %bb.i, %.preheader.3
   %.sroa.0.0.copyload.4 = load ptr, ptr %.031.ptr34.4, align 8
-  %i.ae = icmp eq ptr %.sroa.06.0.copyload, %.sroa.0.0.copyload.4
+  %i.ae = icmp eq ptr %5, %.sroa.0.0.copyload.4
   br i1 %i.ae, label %bb.j, label %.preheader.5
 
 bb.j:                                             ; preds = %.preheader.4
   %.sroa.5.0.copyload.4 = load ptr, ptr %.sroa.5.0..sroa_idx.4, align 8
   %.sroa.4.0.copyload.4 = load ptr, ptr %.sroa.4.0..sroa_idx.4, align 8
-  %i.af = icmp eq ptr %.sroa.69.0.copyload, %.sroa.4.0.copyload.4
+  %i.af = icmp eq ptr %4, %.sroa.4.0.copyload.4
   %i.ag = icmp eq ptr %.sroa.7.0.copyload, %.sroa.5.0.copyload.4
   %or.cond.4 = select i1 %i.af, i1 %i.ag, i1 false
   br i1 %or.cond.4, label %.critedge, label %.preheader.5
 
 .preheader.5:                                     ; preds = %bb.j, %.preheader.4
   %.sroa.0.0.copyload.5 = load ptr, ptr %.031.ptr34.5, align 8
-  %i.ah = icmp eq ptr %.sroa.06.0.copyload, %.sroa.0.0.copyload.5
+  %i.ah = icmp eq ptr %5, %.sroa.0.0.copyload.5
   br i1 %i.ah, label %bb.k, label %.preheader.6
 
 bb.k:                                             ; preds = %.preheader.5
   %.sroa.5.0.copyload.5 = load ptr, ptr %.sroa.5.0..sroa_idx.5, align 8
   %.sroa.4.0.copyload.5 = load ptr, ptr %.sroa.4.0..sroa_idx.5, align 8
-  %i.ai = icmp eq ptr %.sroa.69.0.copyload, %.sroa.4.0.copyload.5
+  %i.ai = icmp eq ptr %4, %.sroa.4.0.copyload.5
   %i.aj = icmp eq ptr %.sroa.7.0.copyload, %.sroa.5.0.copyload.5
   %or.cond.5 = select i1 %i.ai, i1 %i.aj, i1 false
   br i1 %or.cond.5, label %.critedge, label %.preheader.6
 
 .preheader.6:                                     ; preds = %bb.k, %.preheader.5
   %.sroa.0.0.copyload.6 = load ptr, ptr %.031.ptr34.6, align 8
-  %i.ak = icmp eq ptr %.sroa.06.0.copyload, %.sroa.0.0.copyload.6
+  %i.ak = icmp eq ptr %5, %.sroa.0.0.copyload.6
   br i1 %i.ak, label %bb.l, label %.preheader.7
 
 bb.l:                                             ; preds = %.preheader.6
   %.sroa.5.0.copyload.6 = load ptr, ptr %.sroa.5.0..sroa_idx.6, align 8
   %.sroa.4.0.copyload.6 = load ptr, ptr %.sroa.4.0..sroa_idx.6, align 8
-  %i.al = icmp eq ptr %.sroa.69.0.copyload, %.sroa.4.0.copyload.6
+  %i.al = icmp eq ptr %4, %.sroa.4.0.copyload.6
   %i.am = icmp eq ptr %.sroa.7.0.copyload, %.sroa.5.0.copyload.6
   %or.cond.6 = select i1 %i.al, i1 %i.am, i1 false
   br i1 %or.cond.6, label %.critedge, label %.preheader.7
 
 .preheader.7:                                     ; preds = %bb.l, %.preheader.6
   %.sroa.0.0.copyload.7 = load ptr, ptr %.031.ptr34.7, align 8
-  %i.an = icmp eq ptr %.sroa.06.0.copyload, %.sroa.0.0.copyload.7
+  %i.an = icmp eq ptr %5, %.sroa.0.0.copyload.7
   br i1 %i.an, label %bb.m, label %.loopexit
 
 bb.m:                                             ; preds = %.preheader.7
   %.sroa.5.0.copyload.7 = load ptr, ptr %.sroa.5.0..sroa_idx.7, align 8
   %.sroa.4.0.copyload.7 = load ptr, ptr %.sroa.4.0..sroa_idx.7, align 8
-  %i.ao = icmp eq ptr %.sroa.69.0.copyload, %.sroa.4.0.copyload.7
+  %i.ao = icmp eq ptr %4, %.sroa.4.0.copyload.7
   %i.ap = icmp eq ptr %.sroa.7.0.copyload, %.sroa.5.0.copyload.7
   %or.cond.7 = select i1 %i.ao, i1 %i.ap, i1 false
   br i1 %or.cond.7, label %.critedge, label %.loopexit

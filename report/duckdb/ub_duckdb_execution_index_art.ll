@@ -201,7 +201,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph199, %bb.ax
-  %i.y = phi ptr [ %i.i, %.lr.ph199 ], [ %i.ka, %bb.ax ] ; 5 uses
+  %i.y = phi ptr [ %i.i, %.lr.ph199 ], [ %i.ka, %bb.ax ] ; 4 uses
   %i.z = load ptr, ptr %i.l, align 8, !tbaa !13, !noalias !14 ; 2 uses
   %i.aa = icmp eq ptr %i.y, %i.z
   br i1 %i.aa, label %bb.d, label %bb.c
@@ -210,9 +210,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ab = getelementptr inbounds i8, ptr %i.y, i64 -32 ; 2 uses
   %.sroa.0128.0.copyload = load ptr, ptr %i.ab, align 8, !tbaa !17
   %.sroa.6.0..sroa_idx = getelementptr inbounds i8, ptr %i.y, i64 -24
-  %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !19
-  %.sroa.14.0..sroa_idx = getelementptr inbounds i8, ptr %i.y, i64 -16
-  %.sroa.14.0.copyload = load i64, ptr %.sroa.14.0..sroa_idx, align 8, !tbaa !19
+  %7 = load <2 x i64>, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !19
   %.sroa.18.0..sroa_idx = getelementptr inbounds i8, ptr %i.y, i64 -8
   %.sroa.18.0.copyload = load i64, ptr %.sroa.18.0..sroa_idx, align 8, !tbaa !19
   br label %_ZNSt5stackIN6duckdb10ARTBuilder9NodeEntryESt5dequeIS2_SaIS2_EEE3popEv.exit
@@ -220,13 +218,11 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   %i.ac = load ptr, ptr %i.m, align 8, !tbaa !21, !noalias !14
   %i.ad = getelementptr inbounds i8, ptr %i.ac, i64 -8
-  %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !22 ; 4 uses
+  %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !22 ; 3 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 480
   %.sroa.0128.0.copyload151 = load ptr, ptr %i.af, align 8, !tbaa !17
-  %.sroa.6.0..sroa_idx152 = getelementptr inbounds nuw i8, ptr %i.ae, i64 488
-  %.sroa.6.0.copyload153 = load i64, ptr %.sroa.6.0..sroa_idx152, align 8, !tbaa !19
-  %.sroa.14.0..sroa_idx154 = getelementptr inbounds nuw i8, ptr %i.ae, i64 496
-  %.sroa.14.0.copyload155 = load i64, ptr %.sroa.14.0..sroa_idx154, align 8, !tbaa !19
+  %.sroa.14.0..sroa_idx154 = getelementptr inbounds nuw i8, ptr %i.ae, i64 488
+  %8 = load <2 x i64>, ptr %.sroa.14.0..sroa_idx154, align 8, !tbaa !19
   %.sroa.18.0..sroa_idx156 = getelementptr inbounds nuw i8, ptr %i.ae, i64 504
   %.sroa.18.0.copyload157 = load i64, ptr %.sroa.18.0..sroa_idx156, align 8, !tbaa !19
   call void @_ZdlPv(ptr noundef %i.z) #29
@@ -242,20 +238,21 @@ bb.d:                                             ; preds = %bb.b
 
 _ZNSt5stackIN6duckdb10ARTBuilder9NodeEntryESt5dequeIS2_SaIS2_EEE3popEv.exit: ; preds = %bb.c, %bb.d
   %.sroa.18.0.copyload164 = phi i64 [ %.sroa.18.0.copyload, %bb.c ], [ %.sroa.18.0.copyload157, %bb.d ] ; 6 uses
-  %.sroa.14.0.copyload162 = phi i64 [ %.sroa.14.0.copyload, %bb.c ], [ %.sroa.14.0.copyload155, %bb.d ] ; 9 uses
-  %.sroa.6.0.copyload160 = phi i64 [ %.sroa.6.0.copyload, %bb.c ], [ %.sroa.6.0.copyload153, %bb.d ] ; 8 uses
   %.sroa.0128.0.copyload158 = phi ptr [ %.sroa.0128.0.copyload, %bb.c ], [ %.sroa.0128.0.copyload151, %bb.d ] ; 4 uses
   %storemerge.i.i = phi ptr [ %i.ab, %bb.c ], [ %i.ak, %bb.d ]
+  %9 = phi <2 x i64> [ %7, %bb.c ], [ %8, %bb.d ] ; 2 uses
+  %10 = extractelement <2 x i64> %9, i64 1        ; 9 uses
+  %11 = extractelement <2 x i64> %9, i64 0        ; 8 uses
   store ptr %storemerge.i.i, ptr %i.g, align 8, !tbaa !26
   %i.al = load ptr, ptr %i.o, align 8, !tbaa !27, !nonnull !36, !align !37
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !38 ; 2 uses
-  %i.an = getelementptr inbounds nuw [16 x i8], ptr %i.am, i64 %.sroa.6.0.copyload160 ; 4 uses
+  %i.an = getelementptr inbounds nuw [16 x i8], ptr %i.am, i64 %11 ; 4 uses
   %i.ao = load i64, ptr %i.an, align 8, !tbaa !41 ; 2 uses
   %.not181 = icmp eq i64 %i.ao, %.sroa.18.0.copyload164
   br i1 %.not181, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt5stackIN6duckdb10ARTBuilder9NodeEntryESt5dequeIS2_SaIS2_EEE3popEv.exit
-  %i.ap = getelementptr inbounds nuw [16 x i8], ptr %i.am, i64 %.sroa.14.0.copyload162
+  %i.ap = getelementptr inbounds nuw [16 x i8], ptr %i.am, i64 %10
   %i.aq = getelementptr inbounds nuw i8, ptr %i.an, i64 8 ; 2 uses
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !44
   %i.as = getelementptr inbounds nuw i8, ptr %i.ap, i64 8
@@ -284,7 +281,7 @@ bb.f:                                             ; preds = %bb.e
   %i.be = call noundef zeroext i8 %i.bd(ptr noundef nonnull align 8 dereferenceable(104) %i.ba), !inline_history !51
   %i.bf = add i8 %i.be, -1
   %i.bg = icmp ult i8 %i.bf, 2
-  %i.bh = icmp ne i64 %.sroa.14.0.copyload162, %.sroa.6.0.copyload160
+  %i.bh = icmp ne i64 %10, %11
   %or.cond = select i1 %i.bg, i1 %i.bh, i1 false
   br i1 %or.cond, label %.thread, label %bb.g
 
@@ -412,18 +409,18 @@ _ZN6duckdb6Prefix11NewInternalERNS_3ARTERNS_4NodeEPhhm.exit.i: ; preds = %bb.m, 
 
 _ZN6duckdb6Prefix3NewERNS_3ARTERSt17reference_wrapperINS_4NodeEERKNS_6ARTKeyEmm.exit: ; preds = %_ZN6duckdb6Prefix11NewInternalERNS_3ARTERNS_4NodeEPhhm.exit.i, %bb.g
   %.sroa.0125.0 = phi ptr [ %.sroa.0128.0.copyload158, %bb.g ], [ %i.cr, %_ZN6duckdb6Prefix11NewInternalERNS_3ARTERNS_4NodeEPhhm.exit.i ] ; 4 uses
-  %i.cu = icmp eq i64 %.sroa.14.0.copyload162, %.sroa.6.0.copyload160
+  %i.cu = icmp eq i64 %10, %11
   br i1 %i.cu, label %bb.n, label %.preheader
 
 .preheader:                                       ; preds = %_ZN6duckdb6Prefix3NewERNS_3ARTERSt17reference_wrapperINS_4NodeEERKNS_6ARTKeyEmm.exit
-  %i.cv = add i64 %.sroa.14.0.copyload162, 1
-  %i.cw = icmp ult i64 %.sroa.6.0.copyload160, %i.cv
+  %i.cv = add i64 %10, 1
+  %i.cw = icmp ult i64 %11, %i.cv
   br i1 %i.cw, label %.lr.ph196, label %._crit_edge197
 
 bb.n:                                             ; preds = %_ZN6duckdb6Prefix3NewERNS_3ARTERSt17reference_wrapperINS_4NodeEERKNS_6ARTKeyEmm.exit
   %i.cx = load ptr, ptr %i.x, align 8, !tbaa !136, !nonnull !36, !align !37
   %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !38
-  %i.cz = getelementptr inbounds nuw [16 x i8], ptr %i.cy, i64 %.sroa.14.0.copyload162
+  %i.cz = getelementptr inbounds nuw [16 x i8], ptr %i.cy, i64 %10
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 8
   %i.db = load ptr, ptr %i.da, align 8, !tbaa !44
   %.0.copyload.i.i.i.i = load i64, ptr %i.db, align 1
@@ -440,7 +437,7 @@ bb.n:                                             ; preds = %_ZN6duckdb6Prefix3N
   br label %bb.ax, !llvm.loop !137
 
 .lr.ph196:                                        ; preds = %.preheader, %.lr.ph196
-  %.044195 = phi i64 [ %i.dn, %.lr.ph196 ], [ %.sroa.6.0.copyload160, %.preheader ] ; 3 uses
+  %.044195 = phi i64 [ %i.dn, %.lr.ph196 ], [ %11, %.preheader ] ; 3 uses
   %i.dh = load ptr, ptr %0, align 8, !tbaa !138, !nonnull !36, !align !37
   %i.di = load ptr, ptr %i.p, align 8, !tbaa !48, !nonnull !36, !align !37
   %i.dj = load ptr, ptr %i.x, align 8, !tbaa !136, !nonnull !36, !align !37
@@ -448,7 +445,7 @@ bb.n:                                             ; preds = %_ZN6duckdb6Prefix3N
   %i.dl = getelementptr inbounds nuw [16 x i8], ptr %i.dk, i64 %.044195 ; 2 uses
   %i.dm = call noundef zeroext i8 @_ZN6duckdb11ARTOperator6InsertERNS_14ArenaAllocatorERNS_3ARTERNS_4NodeERKNS_6ARTKeyEmS9_NS_10GateStatusENS_15DeleteIndexInfoENS_15IndexAppendModeE(ptr noundef nonnull align 8 dereferenceable(72) %i.dh, ptr noundef nonnull align 8 dereferenceable(433) %i.di, ptr noundef nonnull align 8 dereferenceable(8) %.sroa.0125.0, ptr noundef nonnull align 8 dereferenceable(16) %i.dl, i64 noundef 0, ptr noundef nonnull align 8 dereferenceable(16) %i.dl, i8 noundef zeroext 1, i64 0, i8 noundef zeroext 0) ; 0 uses
   %i.dn = add i64 %.044195, 1
-  %exitcond.not = icmp eq i64 %.044195, %.sroa.14.0.copyload162
+  %exitcond.not = icmp eq i64 %.044195, %10
   br i1 %exitcond.not, label %._crit_edge197, label %.lr.ph196, !llvm.loop !139
 
 .critedge:                                        ; preds = %bb.e
@@ -574,13 +571,13 @@ _ZN6duckdb6Prefix3NewERNS_3ARTERSt17reference_wrapperINS_4NodeEERKNS_6ARTKeyEmm.
           to label %.noexc69 unwind label %bb.w   ; 5 uses
 
 .noexc69:                                         ; preds = %_ZN6duckdb6Prefix3NewERNS_3ARTERSt17reference_wrapperINS_4NodeEERKNS_6ARTKeyEmm.exit67
-  store i64 %.sroa.6.0.copyload160, ptr %i.ex, align 8, !tbaa !19
+  store i64 %11, ptr %i.ex, align 8, !tbaa !19
   %i.ey = getelementptr inbounds nuw i8, ptr %i.ex, i64 8 ; 5 uses
   store ptr %i.ex, ptr %6, align 8, !tbaa !143
   store ptr %i.ey, ptr %i.r, align 8, !tbaa !144
   store ptr %i.ey, ptr %i.s, align 8, !tbaa !145
-  %storemerge183 = add i64 %.sroa.6.0.copyload160, 1 ; 2 uses
-  %.not48184 = icmp ugt i64 %storemerge183, %.sroa.14.0.copyload162
+  %storemerge183 = add i64 %11, 1                 ; 2 uses
+  %.not48184 = icmp ugt i64 %storemerge183, %10
   br i1 %.not48184, label %._crit_edge188, label %.lr.ph187
 
 ._crit_edge188:                                   ; preds = %_ZNSt6vectorImSaImEE12emplace_backIJRmEEEvDpOT_.exit79, %.noexc69
@@ -618,7 +615,7 @@ bb.w:                                             ; preds = %_ZN6duckdb6Prefix3N
   %i.fl = phi ptr [ %i.gq, %_ZNSt6vectorImSaImEE12emplace_backIJRmEEEvDpOT_.exit79 ], [ %i.ey, %.noexc69 ] ; 4 uses
   %i.fm = phi ptr [ %i.gr, %_ZNSt6vectorImSaImEE12emplace_backIJRmEEEvDpOT_.exit79 ], [ %i.ey, %.noexc69 ] ; 4 uses
   %storemerge186 = phi i64 [ %storemerge, %_ZNSt6vectorImSaImEE12emplace_backIJRmEEEvDpOT_.exit79 ], [ %storemerge183, %.noexc69 ] ; 5 uses
-  %storemerge.in185 = phi i64 [ %storemerge186, %_ZNSt6vectorImSaImEE12emplace_backIJRmEEEvDpOT_.exit79 ], [ %.sroa.6.0.copyload160, %.noexc69 ]
+  %storemerge.in185 = phi i64 [ %storemerge186, %_ZNSt6vectorImSaImEE12emplace_backIJRmEEEvDpOT_.exit79 ], [ %11, %.noexc69 ]
   %i.fn = load ptr, ptr %i.o, align 8, !tbaa !27, !nonnull !36, !align !37
   %i.fo = load ptr, ptr %i.fn, align 8, !tbaa !38 ; 2 uses
   %i.fp = getelementptr inbounds nuw [16 x i8], ptr %i.fo, i64 %storemerge.in185
@@ -705,7 +702,7 @@ _ZNSt6vectorImSaImEE12emplace_backIJRmEEEvDpOT_.exit79: ; preds = %_ZNSt6vectorI
   %i.gq = phi ptr [ %i.go, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i76 ], [ %i.fl, %bb.y ], [ %i.fl, %.lr.ph187 ]
   %i.gr = phi ptr [ %i.gn, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i76 ], [ %i.fz, %bb.y ], [ %i.fm, %.lr.ph187 ] ; 2 uses
   %storemerge = add i64 %storemerge186, 1         ; 2 uses
-  %.not48 = icmp ugt i64 %storemerge, %.sroa.14.0.copyload162
+  %.not48 = icmp ugt i64 %storemerge, %10
   br i1 %.not48, label %._crit_edge188, label %.lr.ph187, !llvm.loop !146
 
 bb.ac:                                            ; preds = %_ZN6duckdb4Node11GetNodeTypeEm.exit
@@ -846,7 +843,7 @@ bb.an:                                            ; preds = %bb.ai
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an, %_ZNK6duckdb4Node15GetChildMutableERNS_3ARTEhb.exit
-  %i.ib = phi i64 [ %i.ia, %bb.an ], [ %.sroa.14.0.copyload162, %_ZNK6duckdb4Node15GetChildMutableERNS_3ARTEhb.exit ] ; 3 uses
+  %i.ib = phi i64 [ %i.ia, %bb.an ], [ %10, %_ZNK6duckdb4Node15GetChildMutableERNS_3ARTEhb.exit ] ; 3 uses
   %i.ic = load ptr, ptr %i.g, align 8, !tbaa !26  ; 7 uses
   %i.id = load ptr, ptr %i.n, align 8, !tbaa !148
   %i.ie = getelementptr inbounds i8, ptr %i.id, i64 -32

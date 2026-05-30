@@ -201,7 +201,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t
 ; Function Attrs: mustprogress uwtable
 define void @_ZN5folly21EDFThreadPoolExecutor9threadRunESt10shared_ptrINS_18ThreadPoolExecutor6ThreadEE(ptr noundef nonnull align 64 dereferenceable(572) %0, ptr noundef %1) unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.std::shared_ptr.130", align 8 ; 6 uses
+  %2 = alloca %"class.std::shared_ptr.130", align 16 ; 5 uses
   %3 = alloca %"class.std::shared_ptr.130", align 8 ; 6 uses
   %4 = alloca %"class.folly::ExecutorBlockingGuard", align 8 ; 6 uses
   %5 = alloca %"class.std::shared_ptr.130", align 16 ; 10 uses
@@ -253,7 +253,7 @@ _ZN5folly5BatonILb1ESt6atomicE4postEv.exit:       ; preds = %bb.a, %bb.b, %bb.c
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 560
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 552
   %i.x = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %i.y = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 4 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %7, i64 32 ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %7, i64 40
@@ -262,7 +262,6 @@ _ZN5folly5BatonILb1ESt6atomicE4postEv.exit:       ; preds = %bb.a, %bb.b, %bb.c
   %i.ae = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 544 ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 8
   br label %.backedge
 
@@ -514,21 +513,21 @@ bb.ad:                                            ; preds = %bb.ac
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
   call void @llvm.experimental.noalias.scope.decl(metadata !5542)
   call void @llvm.experimental.noalias.scope.decl(metadata !5545)
-  %9 = load ptr, ptr %5, align 16, !tbaa !4685, !noalias !5548 ; 2 uses
-  store ptr %9, ptr %2, align 8, !tbaa !4685, !alias.scope !5548
-  %10 = load ptr, ptr %i.y, align 8, !tbaa !52, !noalias !5548 ; 9 uses
-  store ptr %10, ptr %8, align 8, !tbaa !52, !alias.scope !5548
+  %8 = load <2 x ptr>, ptr %5, align 16, !tbaa !58, !noalias !5548 ; 3 uses
+  %9 = extractelement <2 x ptr> %8, i64 1         ; 8 uses
+  store <2 x ptr> %8, ptr %2, align 16, !tbaa !58, !alias.scope !5548
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false), !noalias !5548
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %5, i8 0, i64 16, i1 false)
-  invoke void @_ZN5folly21EDFThreadPoolExecutor4Task3runEi(ptr noundef nonnull align 16 dereferenceable(144) %9, i32 noundef %.0.i)
+  %10 = extractelement <2 x ptr> %8, i64 0
+  invoke void @_ZN5folly21EDFThreadPoolExecutor4Task3runEi(ptr noundef nonnull align 16 dereferenceable(144) %10, i32 noundef %.0.i)
           to label %bb.ae unwind label %.body
 
 bb.ae:                                            ; preds = %"_ZNK5folly18ThreadPoolExecutor19forEachTaskObserverIZNS_21EDFThreadPoolExecutor9threadRunESt10shared_ptrINS0_6ThreadEEE3$_0EEvOT_.exit"
-  %.not.i.i.i20 = icmp eq ptr %10, null
+  %.not.i.i.i20 = icmp eq ptr %9, null
   br i1 %.not.i.i.i20, label %_ZNSt12__shared_ptrIN5folly21EDFThreadPoolExecutor4TaskELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %i.do = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 4 uses
+  %i.do = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 4 uses
   %i.dp = load atomic i64, ptr %i.do acquire, align 8 ; 2 uses
   %i.dq = icmp eq i64 %i.dp, 4294967297
   %i.dr = trunc i64 %i.dp to i32                  ; 2 uses
@@ -536,16 +535,16 @@ bb.af:                                            ; preds = %bb.ae
 
 bb.ag:                                            ; preds = %bb.af
   store i32 0, ptr %i.do, align 8, !tbaa !26
-  %i.ds = getelementptr inbounds nuw i8, ptr %10, i64 12
+  %i.ds = getelementptr inbounds nuw i8, ptr %9, i64 12
   store i32 0, ptr %i.ds, align 4, !tbaa !28
-  %i.dt = load ptr, ptr %10, align 8, !tbaa !29
+  %i.dt = load ptr, ptr %9, align 8, !tbaa !29
   %i.du = getelementptr inbounds nuw i8, ptr %i.dt, i64 16
   %i.dv = load ptr, ptr %i.du, align 8
-  call void %i.dv(ptr noundef nonnull align 8 dereferenceable(16) %10) #18, !call_target !1759, !inline_history !5549
-  %i.dw = load ptr, ptr %10, align 8, !tbaa !29
+  call void %i.dv(ptr noundef nonnull align 8 dereferenceable(16) %9) #18, !call_target !1759, !inline_history !5549
+  %i.dw = load ptr, ptr %9, align 8, !tbaa !29
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dw, i64 24
   %i.dy = load ptr, ptr %i.dx, align 8
-  call void %i.dy(ptr noundef nonnull align 8 dereferenceable(16) %10) #18, !call_target !1760, !inline_history !5549
+  call void %i.dy(ptr noundef nonnull align 8 dereferenceable(16) %9) #18, !call_target !1760, !inline_history !5549
   br label %_ZNSt12__shared_ptrIN5folly21EDFThreadPoolExecutor4TaskELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i
 
 bb.ah:                                            ; preds = %bb.af
@@ -568,7 +567,7 @@ _ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i: ; preds = %bb.aj, %
   br i1 %i.ec, label %bb.ak, label %_ZNSt12__shared_ptrIN5folly21EDFThreadPoolExecutor4TaskELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i, !prof !4688
 
 bb.ak:                                            ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i
-  call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %10) #18
+  call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %9) #18
   br label %_ZNSt12__shared_ptrIN5folly21EDFThreadPoolExecutor4TaskELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i
 
 _ZNSt12__shared_ptrIN5folly21EDFThreadPoolExecutor4TaskELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i: ; preds = %bb.ak, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i, %bb.ag, %bb.ae

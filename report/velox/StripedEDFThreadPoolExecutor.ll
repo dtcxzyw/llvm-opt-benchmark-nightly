@@ -201,23 +201,23 @@ bb.a:
   br i1 %i.d, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.e, %bb.b
   %indvar = phi i64 [ %indvar.next, %bb.e ], [ 0, %bb.b ] ; 3 uses
   %.019.i.idx = phi i64 [ %.019.i.add, %bb.e ], [ 16, %bb.b ] ; 3 uses
-  %.pn18.i = phi ptr [ %.019.i.ptr, %bb.e ], [ %0, %bb.b ] ; 5 uses
+  %.pn18.i = phi ptr [ %.019.i.ptr, %bb.e ], [ %0, %bb.b ] ; 4 uses
   %.019.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.019.i.idx ; 6 uses
-  %i.f = load i64, ptr %.019.i.ptr, align 8, !tbaa !3361 ; 8 uses
-  %2 = load i64, ptr %0, align 8, !tbaa !3361     ; 2 uses
-  %3 = icmp eq i64 %i.f, %2
-  %4 = icmp sgt i64 %i.f, %2
-  %5 = getelementptr inbounds nuw i8, ptr %.pn18.i, i64 24
-  %i.g = load i64, ptr %5, align 8                ; 5 uses
-  %6 = load i64, ptr %i.e, align 8
-  %i.h = icmp ugt i64 %i.g, %6
-  %.sroa.05.0.i.i.i.i.i = select i1 %3, i1 %i.h, i1 %4
+  %i.f = load i64, ptr %0, align 8, !tbaa !3361   ; 2 uses
+  %2 = load <2 x i64>, ptr %.019.i.ptr, align 8   ; 4 uses
+  %3 = extractelement <2 x i64> %2, i64 0         ; 6 uses
+  %4 = icmp eq i64 %3, %i.f
+  %5 = icmp sgt i64 %3, %i.f
+  %i.g = load i64, ptr %i.e, align 8
+  %6 = extractelement <2 x i64> %2, i64 1         ; 3 uses
+  %i.h = icmp ugt i64 %6, %i.g
+  %.sroa.05.0.i.i.i.i.i = select i1 %4, i1 %i.h, i1 %5
   br i1 %.sroa.05.0.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.preheader.i, label %bb.d
 
 .lr.ph.i.i.i.i.i.preheader.i:                     ; preds = %bb.c
@@ -294,17 +294,16 @@ bb.c:                                             ; preds = %bb.e, %bb.b
   br i1 %i.as, label %.lr.ph.i.i.i.i.i.i, label %_ZSt13move_backwardIPSt4pairIlmES2_ET0_T_S4_S3_.exit.i, !llvm.loop !3519
 
 _ZSt13move_backwardIPSt4pairIlmES2_ET0_T_S4_S3_.exit.i: ; preds = %.lr.ph.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.prol.loopexit
-  store i64 %i.f, ptr %0, align 8, !tbaa !3498
-  store i64 %i.g, ptr %i.e, align 8, !tbaa !3500
+  store <2 x i64> %2, ptr %0, align 8, !tbaa !3361
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.at = load i64, ptr %.pn18.i, align 8, !tbaa !3361 ; 3 uses
-  %i.au = icmp eq i64 %i.f, %i.at
-  %i.av = icmp sgt i64 %i.f, %i.at
+  %i.au = icmp eq i64 %3, %i.at
+  %i.av = icmp sgt i64 %3, %i.at
   %i.aw = getelementptr inbounds nuw i8, ptr %.pn18.i, i64 8
   %i.ax = load i64, ptr %i.aw, align 8            ; 2 uses
-  %i.ay = icmp ugt i64 %i.g, %i.ax
+  %i.ay = icmp ugt i64 %6, %i.ax
   %.sroa.05.0.i.i.i.i13.i.i = select i1 %i.au, i1 %i.ay, i1 %i.av
   br i1 %.sroa.05.0.i.i.i.i13.i.i, label %.lr.ph.i.i, label %_ZSt25__unguarded_linear_insertIPSt4pairIlmEN9__gnu_cxx5__ops14_Val_comp_iterISt7greaterIvEEEEvT_T0_.exit.i
 
@@ -318,19 +317,17 @@ bb.d:                                             ; preds = %bb.c
   store i64 %i.az, ptr %i.bb, align 8, !tbaa !3500
   %.0.i.i = getelementptr inbounds i8, ptr %.015.i.i, i64 -16 ; 2 uses
   %i.bc = load i64, ptr %.0.i.i, align 8, !tbaa !3361 ; 3 uses
-  %i.bd = icmp eq i64 %i.f, %i.bc
-  %i.be = icmp sgt i64 %i.f, %i.bc
+  %i.bd = icmp eq i64 %3, %i.bc
+  %i.be = icmp sgt i64 %3, %i.bc
   %i.bf = getelementptr inbounds i8, ptr %.015.i.i, i64 -8
   %i.bg = load i64, ptr %i.bf, align 8            ; 2 uses
-  %i.bh = icmp ugt i64 %i.g, %i.bg
+  %i.bh = icmp ugt i64 %6, %i.bg
   %.sroa.05.0.i.i.i.i.i.i = select i1 %i.bd, i1 %i.bh, i1 %i.be
   br i1 %.sroa.05.0.i.i.i.i.i.i, label %.lr.ph.i.i, label %_ZSt25__unguarded_linear_insertIPSt4pairIlmEN9__gnu_cxx5__ops14_Val_comp_iterISt7greaterIvEEEEvT_T0_.exit.i, !llvm.loop !3520
 
 _ZSt25__unguarded_linear_insertIPSt4pairIlmEN9__gnu_cxx5__ops14_Val_comp_iterISt7greaterIvEEEEvT_T0_.exit.i: ; preds = %.lr.ph.i.i, %bb.d
-  %.09.lcssa.i.i = phi ptr [ %.019.i.ptr, %bb.d ], [ %.015.i.i, %.lr.ph.i.i ] ; 2 uses
-  store i64 %i.f, ptr %.09.lcssa.i.i, align 8, !tbaa !3498
-  %7 = getelementptr inbounds nuw i8, ptr %.09.lcssa.i.i, i64 8
-  store i64 %i.g, ptr %7, align 8, !tbaa !3500
+  %.09.lcssa.i.i = phi ptr [ %.019.i.ptr, %bb.d ], [ %.015.i.i, %.lr.ph.i.i ]
+  store <2 x i64> %2, ptr %.09.lcssa.i.i, align 8, !tbaa !3361
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZSt25__unguarded_linear_insertIPSt4pairIlmEN9__gnu_cxx5__ops14_Val_comp_iterISt7greaterIvEEEEvT_T0_.exit.i, %_ZSt13move_backwardIPSt4pairIlmES2_ET0_T_S4_S3_.exit.i
@@ -345,17 +342,17 @@ _ZSt16__insertion_sortIPSt4pairIlmEN9__gnu_cxx5__ops15_Iter_comp_iterISt7greater
   br i1 %.not6.i, label %_ZSt26__unguarded_insertion_sortIPSt4pairIlmEN9__gnu_cxx5__ops15_Iter_comp_iterISt7greaterIvEEEEvT_S9_T0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZSt16__insertion_sortIPSt4pairIlmEN9__gnu_cxx5__ops15_Iter_comp_iterISt7greaterIvEEEEvT_S9_T0_.exit, %_ZSt25__unguarded_linear_insertIPSt4pairIlmEN9__gnu_cxx5__ops14_Val_comp_iterISt7greaterIvEEEEvT_T0_.exit.i14
-  %.07.i = phi ptr [ %i.by, %_ZSt25__unguarded_linear_insertIPSt4pairIlmEN9__gnu_cxx5__ops14_Val_comp_iterISt7greaterIvEEEEvT_T0_.exit.i14 ], [ %i.bi, %_ZSt16__insertion_sortIPSt4pairIlmEN9__gnu_cxx5__ops15_Iter_comp_iterISt7greaterIvEEEEvT_S9_T0_.exit ] ; 7 uses
-  %.sroa.0.0.copyload.i.i = load i64, ptr %.07.i, align 8 ; 5 uses
-  %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.07.i, i64 8
-  %.sroa.5.0.copyload.i.i = load i64, ptr %.sroa.5.0..sroa_idx.i.i, align 8 ; 3 uses
+  %.07.i = phi ptr [ %i.by, %_ZSt25__unguarded_linear_insertIPSt4pairIlmEN9__gnu_cxx5__ops14_Val_comp_iterISt7greaterIvEEEEvT_T0_.exit.i14 ], [ %i.bi, %_ZSt16__insertion_sortIPSt4pairIlmEN9__gnu_cxx5__ops15_Iter_comp_iterISt7greaterIvEEEEvT_S9_T0_.exit ] ; 6 uses
+  %7 = load <2 x i64>, ptr %.07.i, align 8        ; 3 uses
+  %8 = extractelement <2 x i64> %7, i64 0         ; 4 uses
   %.012.i.i = getelementptr inbounds i8, ptr %.07.i, i64 -16 ; 2 uses
   %i.bj = load i64, ptr %.012.i.i, align 8, !tbaa !3361 ; 3 uses
-  %i.bk = icmp eq i64 %.sroa.0.0.copyload.i.i, %i.bj
-  %i.bl = icmp sgt i64 %.sroa.0.0.copyload.i.i, %i.bj
+  %i.bk = icmp eq i64 %8, %i.bj
+  %i.bl = icmp sgt i64 %8, %i.bj
   %i.bm = getelementptr inbounds i8, ptr %.07.i, i64 -8
   %i.bn = load i64, ptr %i.bm, align 8            ; 2 uses
-  %i.bo = icmp ugt i64 %.sroa.5.0.copyload.i.i, %i.bn
+  %9 = extractelement <2 x i64> %7, i64 1         ; 2 uses
+  %i.bo = icmp ugt i64 %9, %i.bn
   %.sroa.05.0.i.i.i.i13.i.i13 = select i1 %i.bk, i1 %i.bo, i1 %i.bl
   br i1 %.sroa.05.0.i.i.i.i13.i.i13, label %.lr.ph.i.i17, label %_ZSt25__unguarded_linear_insertIPSt4pairIlmEN9__gnu_cxx5__ops14_Val_comp_iterISt7greaterIvEEEEvT_T0_.exit.i14
 
@@ -369,19 +366,17 @@ _ZSt16__insertion_sortIPSt4pairIlmEN9__gnu_cxx5__ops15_Iter_comp_iterISt7greater
   store i64 %i.bp, ptr %i.br, align 8, !tbaa !3500
   %.0.i.i20 = getelementptr inbounds i8, ptr %.015.i.i18, i64 -16 ; 2 uses
   %i.bs = load i64, ptr %.0.i.i20, align 8, !tbaa !3361 ; 3 uses
-  %i.bt = icmp eq i64 %.sroa.0.0.copyload.i.i, %i.bs
-  %i.bu = icmp sgt i64 %.sroa.0.0.copyload.i.i, %i.bs
+  %i.bt = icmp eq i64 %8, %i.bs
+  %i.bu = icmp sgt i64 %8, %i.bs
   %i.bv = getelementptr inbounds i8, ptr %.015.i.i18, i64 -8
   %i.bw = load i64, ptr %i.bv, align 8            ; 2 uses
-  %i.bx = icmp ugt i64 %.sroa.5.0.copyload.i.i, %i.bw
+  %i.bx = icmp ugt i64 %9, %i.bw
   %.sroa.05.0.i.i.i.i.i.i21 = select i1 %i.bt, i1 %i.bx, i1 %i.bu
   br i1 %.sroa.05.0.i.i.i.i.i.i21, label %.lr.ph.i.i17, label %_ZSt25__unguarded_linear_insertIPSt4pairIlmEN9__gnu_cxx5__ops14_Val_comp_iterISt7greaterIvEEEEvT_T0_.exit.i14, !llvm.loop !3520
 
 _ZSt25__unguarded_linear_insertIPSt4pairIlmEN9__gnu_cxx5__ops14_Val_comp_iterISt7greaterIvEEEEvT_T0_.exit.i14: ; preds = %.lr.ph.i.i17, %.lr.ph.i
-  %.09.lcssa.i.i15 = phi ptr [ %.07.i, %.lr.ph.i ], [ %.015.i.i18, %.lr.ph.i.i17 ] ; 2 uses
-  store i64 %.sroa.0.0.copyload.i.i, ptr %.09.lcssa.i.i15, align 8, !tbaa !3498
-  %8 = getelementptr inbounds nuw i8, ptr %.09.lcssa.i.i15, i64 8
-  store i64 %.sroa.5.0.copyload.i.i, ptr %8, align 8, !tbaa !3500
+  %.09.lcssa.i.i15 = phi ptr [ %.07.i, %.lr.ph.i ], [ %.015.i.i18, %.lr.ph.i.i17 ]
+  store <2 x i64> %7, ptr %.09.lcssa.i.i15, align 8, !tbaa !3361
   %i.by = getelementptr inbounds nuw i8, ptr %.07.i, i64 16 ; 2 uses
   %.not.i16 = icmp eq ptr %i.by, %1
   br i1 %.not.i16, label %_ZSt26__unguarded_insertion_sortIPSt4pairIlmEN9__gnu_cxx5__ops15_Iter_comp_iterISt7greaterIvEEEEvT_S9_T0_.exit, label %.lr.ph.i, !llvm.loop !3522
@@ -396,21 +391,21 @@ bb.f:                                             ; preds = %bb.a
   br i1 %.not17.i, label %_ZSt26__unguarded_insertion_sortIPSt4pairIlmEN9__gnu_cxx5__ops15_Iter_comp_iterISt7greaterIvEEEEvT_S9_T0_.exit, label %.lr.ph.i23
 
 .lr.ph.i23:                                       ; preds = %.preheader.i
-  %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 8
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.j, %.lr.ph.i23
   %.019.i24 = phi ptr [ %.016.i22, %.lr.ph.i23 ], [ %.0.i30, %bb.j ] ; 9 uses
-  %.pn18.i25 = phi ptr [ %0, %.lr.ph.i23 ], [ %.019.i24, %bb.j ] ; 5 uses
-  %i.cb = load i64, ptr %.019.i24, align 8, !tbaa !3361 ; 8 uses
-  %9 = load i64, ptr %0, align 8, !tbaa !3361     ; 2 uses
-  %10 = icmp eq i64 %i.cb, %9
-  %11 = icmp sgt i64 %i.cb, %9
-  %12 = getelementptr inbounds nuw i8, ptr %.pn18.i25, i64 24
-  %i.cc = load i64, ptr %12, align 8              ; 5 uses
-  %13 = load i64, ptr %i.ca, align 8
-  %i.cd = icmp ugt i64 %i.cc, %13
-  %.sroa.05.0.i.i.i.i.i26 = select i1 %10, i1 %i.cd, i1 %11
+  %.pn18.i25 = phi ptr [ %0, %.lr.ph.i23 ], [ %.019.i24, %bb.j ] ; 4 uses
+  %i.cb = load i64, ptr %0, align 8, !tbaa !3361  ; 2 uses
+  %10 = load <2 x i64>, ptr %.019.i24, align 8    ; 4 uses
+  %11 = extractelement <2 x i64> %10, i64 0       ; 6 uses
+  %12 = icmp eq i64 %11, %i.cb
+  %13 = icmp sgt i64 %11, %i.cb
+  %i.cc = load i64, ptr %i.ca, align 8
+  %14 = extractelement <2 x i64> %10, i64 1       ; 3 uses
+  %i.cd = icmp ugt i64 %14, %i.cc
+  %.sroa.05.0.i.i.i.i.i26 = select i1 %12, i1 %i.cd, i1 %13
   br i1 %.sroa.05.0.i.i.i.i.i26, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
@@ -541,17 +536,16 @@ middle.block:                                     ; preds = %vector.body
   br label %_ZSt13move_backwardIPSt4pairIlmES2_ET0_T_S4_S3_.exit.i37
 
 _ZSt13move_backwardIPSt4pairIlmES2_ET0_T_S4_S3_.exit.i37: ; preds = %.lr.ph.i.i.i.i.i.i39, %.lr.ph.i.i.i.i.i.i39.1, %.lr.ph.i.i.i.i.i.i39.2, %.lr.ph.i.i.i.i.i.i39.3, %.lr.ph.i.i.i.i.i.i39.4, %.lr.ph.i.i.i.i.i.i39.5, %.lr.ph.i.i.i.i.i.i39.6, %middle.block, %bb.h
-  store i64 %i.cb, ptr %0, align 8, !tbaa !3498
-  store i64 %i.cc, ptr %i.ca, align 8, !tbaa !3500
+  store <2 x i64> %10, ptr %0, align 8, !tbaa !3361
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
   %i.en = load i64, ptr %.pn18.i25, align 8, !tbaa !3361 ; 3 uses
-  %i.eo = icmp eq i64 %i.cb, %i.en
-  %i.ep = icmp sgt i64 %i.cb, %i.en
+  %i.eo = icmp eq i64 %11, %i.en
+  %i.ep = icmp sgt i64 %11, %i.en
   %i.eq = getelementptr inbounds nuw i8, ptr %.pn18.i25, i64 8
   %i.er = load i64, ptr %i.eq, align 8            ; 2 uses
-  %i.es = icmp ugt i64 %i.cc, %i.er
+  %i.es = icmp ugt i64 %14, %i.er
   %.sroa.05.0.i.i.i.i13.i.i27 = select i1 %i.eo, i1 %i.es, i1 %i.ep
   br i1 %.sroa.05.0.i.i.i.i13.i.i27, label %.lr.ph.i.i32, label %_ZSt25__unguarded_linear_insertIPSt4pairIlmEN9__gnu_cxx5__ops14_Val_comp_iterISt7greaterIvEEEEvT_T0_.exit.i28
 
@@ -565,19 +559,17 @@ bb.i:                                             ; preds = %bb.g
   store i64 %i.et, ptr %i.ev, align 8, !tbaa !3500
   %.0.i.i35 = getelementptr inbounds i8, ptr %.015.i.i33, i64 -16 ; 2 uses
   %i.ew = load i64, ptr %.0.i.i35, align 8, !tbaa !3361 ; 3 uses
-  %i.ex = icmp eq i64 %i.cb, %i.ew
-  %i.ey = icmp sgt i64 %i.cb, %i.ew
+  %i.ex = icmp eq i64 %11, %i.ew
+  %i.ey = icmp sgt i64 %11, %i.ew
   %i.ez = getelementptr inbounds i8, ptr %.015.i.i33, i64 -8
   %i.fa = load i64, ptr %i.ez, align 8            ; 2 uses
-  %i.fb = icmp ugt i64 %i.cc, %i.fa
+  %i.fb = icmp ugt i64 %14, %i.fa
   %.sroa.05.0.i.i.i.i.i.i36 = select i1 %i.ex, i1 %i.fb, i1 %i.ey
   br i1 %.sroa.05.0.i.i.i.i.i.i36, label %.lr.ph.i.i32, label %_ZSt25__unguarded_linear_insertIPSt4pairIlmEN9__gnu_cxx5__ops14_Val_comp_iterISt7greaterIvEEEEvT_T0_.exit.i28, !llvm.loop !3520
 
 _ZSt25__unguarded_linear_insertIPSt4pairIlmEN9__gnu_cxx5__ops14_Val_comp_iterISt7greaterIvEEEEvT_T0_.exit.i28: ; preds = %.lr.ph.i.i32, %bb.i
-  %.09.lcssa.i.i29 = phi ptr [ %.019.i24, %bb.i ], [ %.015.i.i33, %.lr.ph.i.i32 ] ; 2 uses
-  store i64 %i.cb, ptr %.09.lcssa.i.i29, align 8, !tbaa !3498
-  %14 = getelementptr inbounds nuw i8, ptr %.09.lcssa.i.i29, i64 8
-  store i64 %i.cc, ptr %14, align 8, !tbaa !3500
+  %.09.lcssa.i.i29 = phi ptr [ %.019.i24, %bb.i ], [ %.015.i.i33, %.lr.ph.i.i32 ]
+  store <2 x i64> %10, ptr %.09.lcssa.i.i29, align 8, !tbaa !3361
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZSt25__unguarded_linear_insertIPSt4pairIlmEN9__gnu_cxx5__ops14_Val_comp_iterISt7greaterIvEEEEvT_T0_.exit.i28, %_ZSt13move_backwardIPSt4pairIlmES2_ET0_T_S4_S3_.exit.i37

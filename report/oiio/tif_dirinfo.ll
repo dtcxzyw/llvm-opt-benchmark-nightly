@@ -201,65 +201,63 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph:                                           ; preds = %.preheader, %_TIFFSetGetType.exit
   %indvars.iv = phi i64 [ %indvars.iv.next, %_TIFFSetGetType.exit ], [ 0, %.preheader ] ; 2 uses
-  %.093108 = phi ptr [ %i.bn, %_TIFFSetGetType.exit ], [ %i.q, %.preheader ] ; 12 uses
-  %i.u = getelementptr inbounds nuw [24 x i8], ptr %1, i64 %indvars.iv ; 9 uses
+  %.093108 = phi ptr [ %i.bn, %_TIFFSetGetType.exit ], [ %i.q, %.preheader ] ; 11 uses
+  %i.u = getelementptr inbounds nuw [24 x i8], ptr %1, i64 %indvars.iv ; 8 uses
   %i.v = load i32, ptr %i.u, align 8, !tbaa !51
   store i32 %i.v, ptr %.093108, align 8, !tbaa !37
   %i.w = getelementptr inbounds nuw i8, ptr %i.u, i64 4
-  %3 = load i16, ptr %i.w, align 4, !tbaa !53     ; 5 uses
-  %4 = icmp slt i16 %3, -3
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.u, i64 6
-  %.pre = load i16, ptr %.phi.trans.insert, align 2, !tbaa !54 ; 9 uses
-  %i.x = icmp slt i16 %.pre, -3
-  %or.cond156 = select i1 %4, i1 true, i1 %i.x
+  %3 = load <2 x i16>, ptr %i.w, align 4, !tbaa !53 ; 3 uses
+  %4 = extractelement <2 x i16> %3, i64 1         ; 8 uses
+  %5 = extractelement <2 x i16> %3, i64 0         ; 4 uses
+  %6 = icmp slt i16 %5, -3
+  %i.x = icmp slt i16 %4, -3
+  %or.cond156 = select i1 %6, i1 true, i1 %i.x
   br i1 %or.cond156, label %split, label %bb.h
 
 split:                                            ; preds = %.lr.ph
-  %i.y = sext i16 %3 to i32
-  %i.z = sext i16 %.pre to i32
+  %i.y = sext i16 %5 to i32
+  %i.z = sext i16 %4 to i32
   tail call void (ptr, ptr, ptr, ...) @TIFFErrorExtR(ptr noundef nonnull %0, ptr noundef nonnull @TIFFMergeFieldInfo.module, ptr noundef nonnull @.str.12, i32 noundef %i.y, i32 noundef %i.z) #11
   br label %bb.t
 
 bb.h:                                             ; preds = %.lr.ph
-  %i.aa = icmp eq i16 %3, 0
-  %i.ab = icmp eq i16 %.pre, 0
+  %i.aa = icmp eq i16 %5, 0
+  %i.ab = icmp eq i16 %4, 0
   %or.cond = or i1 %i.aa, %i.ab
   br i1 %or.cond, label %bb.i, label %bb.k
 
 bb.i:                                             ; preds = %bb.h
   %i.ac = getelementptr inbounds nuw i8, ptr %i.u, i64 12
-  %i.ad = load i16, ptr %i.ac, align 4, !tbaa !55
+  %i.ad = load i16, ptr %i.ac, align 4, !tbaa !54
   %.not103 = icmp eq i16 %i.ad, 0
   br i1 %.not103, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.ae = sext i16 %3 to i32
-  %i.af = sext i16 %.pre to i32
+  %i.ae = sext i16 %5 to i32
+  %i.af = sext i16 %4 to i32
   tail call void (ptr, ptr, ptr, ...) @TIFFErrorExtR(ptr noundef nonnull %0, ptr noundef nonnull @TIFFMergeFieldInfo.module, ptr noundef nonnull @.str.13, i32 noundef %i.ae, i32 noundef %i.af) #11
   br label %bb.t
 
 bb.k:                                             ; preds = %bb.h, %bb.i
   %i.ag = getelementptr inbounds nuw i8, ptr %.093108, i64 4
-  store i16 %3, ptr %i.ag, align 4, !tbaa !40
-  %5 = getelementptr inbounds nuw i8, ptr %.093108, i64 6
-  store i16 %.pre, ptr %5, align 2, !tbaa !41
+  store <2 x i16> %3, ptr %i.ag, align 4, !tbaa !53
   %i.ah = getelementptr inbounds nuw i8, ptr %i.u, i64 8
-  %i.ai = load i32, ptr %i.ah, align 8, !tbaa !56 ; 6 uses
+  %i.ai = load i32, ptr %i.ah, align 8, !tbaa !55 ; 6 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %.093108, i64 8
   store i32 %i.ai, ptr %i.aj, align 8, !tbaa !38
   %i.ak = getelementptr inbounds nuw i8, ptr %.093108, i64 12
   store i32 0, ptr %i.ak, align 4, !tbaa !32
   %i.al = getelementptr inbounds nuw i8, ptr %i.u, i64 15
-  %i.am = load i8, ptr %i.al, align 1, !tbaa !57  ; 3 uses
+  %i.am = load i8, ptr %i.al, align 1, !tbaa !56  ; 3 uses
   %i.an = icmp eq i32 %i.ai, 2
-  %i.ao = icmp eq i16 %.pre, -1                   ; 2 uses
+  %i.ao = icmp eq i16 %4, -1                      ; 2 uses
   %or.cond.i = and i1 %i.ao, %i.an
   %i.ap = icmp eq i8 %i.am, 0                     ; 3 uses
   %or.cond5.i = and i1 %or.cond.i, %i.ap
   br i1 %or.cond5.i, label %_TIFFSetGetType.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.aq = icmp eq i16 %.pre, 1
+  %i.aq = icmp eq i16 %4, 1
   %or.cond8.i = and i1 %i.aq, %i.ap
   br i1 %or.cond8.i, label %bb.m, label %bb.n
 
@@ -269,7 +267,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.ar, label %_TIFFSetGetType.exit.sink.split, label %_TIFFSetGetType.exit
 
 bb.n:                                             ; preds = %bb.l
-  %i.as = icmp sgt i16 %.pre, 0
+  %i.as = icmp sgt i16 %4, 0
   %or.cond11.i = and i1 %i.as, %i.ap
   br i1 %or.cond11.i, label %bb.o, label %bb.p
 
@@ -289,7 +287,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.av, label %_TIFFSetGetType.exit.sink.split, label %_TIFFSetGetType.exit
 
 bb.r:                                             ; preds = %bb.p
-  %i.aw = icmp eq i16 %.pre, -3
+  %i.aw = icmp eq i16 %4, -3
   %switch.tableidx152 = add i32 %i.ai, -1         ; 2 uses
   %i.ax = icmp ult i32 %switch.tableidx152, 18
   %i.ay = and i1 %i.aw, %i.ax
@@ -309,17 +307,17 @@ _TIFFSetGetType.exit:                             ; preds = %_TIFFSetGetType.exi
   %i.ba = getelementptr inbounds nuw i8, ptr %.093108, i64 16
   store i32 %.0.i, ptr %i.ba, align 8, !tbaa !44
   %i.bb = getelementptr inbounds nuw i8, ptr %i.u, i64 12
-  %i.bc = load i16, ptr %i.bb, align 4, !tbaa !55
+  %i.bc = load i16, ptr %i.bb, align 4, !tbaa !54
   %i.bd = getelementptr inbounds nuw i8, ptr %.093108, i64 20
   store i16 %i.bc, ptr %i.bd, align 4, !tbaa !31
   %i.be = getelementptr inbounds nuw i8, ptr %i.u, i64 14
-  %i.bf = load i8, ptr %i.be, align 2, !tbaa !58
+  %i.bf = load i8, ptr %i.be, align 2, !tbaa !57
   %i.bg = getelementptr inbounds nuw i8, ptr %.093108, i64 22
   store i8 %i.bf, ptr %i.bg, align 2, !tbaa !42
   %i.bh = getelementptr inbounds nuw i8, ptr %.093108, i64 23
   store i8 %i.am, ptr %i.bh, align 1, !tbaa !43
   %i.bi = getelementptr inbounds nuw i8, ptr %i.u, i64 16
-  %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !59 ; 2 uses
+  %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !58 ; 2 uses
   %i.bk = icmp eq ptr %i.bj, null
   %spec.select = select i1 %i.bk, ptr @.str.14, ptr %i.bj
   %i.bl = getelementptr inbounds nuw i8, ptr %.093108, i64 24
@@ -368,13 +366,13 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
-  %i.b = load i16, ptr %i.a, align 8, !tbaa !60
+  %i.b = load i16, ptr %i.a, align 8, !tbaa !59
   %i.c = tail call i32 @TIFFIsCODECConfigured(i16 noundef zeroext %i.b) #11
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.p, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = load i16, ptr %i.a, align 8, !tbaa !60   ; 3 uses
+  %i.d = load i16, ptr %i.a, align 8, !tbaa !59   ; 3 uses
   switch i16 %i.d, label %bb.o [
     i16 5, label %bb.d
     i16 -30649, label %bb.n
@@ -531,12 +529,11 @@ attributes #12 = { nounwind willreturn memory(read) }
 !50 = !{!34, !4, i64 4}
 !51 = !{!52, !4, i64 0}
 !52 = !{!"", !4, i64 0, !14, i64 4, !14, i64 6, !4, i64 8, !14, i64 12, !5, i64 14, !5, i64 15, !9, i64 16}
-!53 = !{!52, !14, i64 4}
-!54 = !{!52, !14, i64 6}
-!55 = !{!52, !14, i64 12}
-!56 = !{!52, !4, i64 8}
-!57 = !{!52, !5, i64 15}
-!58 = !{!52, !5, i64 14}
-!59 = !{!52, !9, i64 16}
-!60 = !{!8, !14, i64 120}
+!53 = !{!14, !14, i64 0}
+!54 = !{!52, !14, i64 12}
+!55 = !{!52, !4, i64 8}
+!56 = !{!52, !5, i64 15}
+!57 = !{!52, !5, i64 14}
+!58 = !{!52, !9, i64 16}
+!59 = !{!8, !14, i64 120}
 end_hunk_0

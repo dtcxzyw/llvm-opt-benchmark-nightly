@@ -201,7 +201,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit8: ; preds = %bb.c
 ; Function Attrs: mustprogress uwtable
 define hidden noundef zeroext i1 @_ZN11OpenImageIO4v3_110TIFFOutput11write_tilesEiiiiiiNS0_8TypeDescEPKvlll(ptr noundef nonnull align 8 dereferenceable(336) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %6, i64 %7, ptr noundef %8, i64 noundef %9, i64 noundef %10, i64 noundef %11) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %12 = alloca %"class.std::shared_ptr", align 8  ; 7 uses
+  %12 = alloca %"class.std::shared_ptr", align 16 ; 7 uses
   %i.a = alloca i32, align 4                      ; 4 uses
   %13 = alloca %"class.std::shared_ptr.155", align 8 ; 7 uses
   %i.b = alloca i32, align 4                      ; 4 uses
@@ -596,8 +596,8 @@ _ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit.thread: ; preds = %b
   %i.gu = getelementptr inbounds nuw i8, ptr %24, i64 144
   %i.gv = getelementptr inbounds nuw i8, ptr %24, i64 152
   %i.gw = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 2 uses
-  %i.gx = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 3 uses
-  %i.gy = getelementptr inbounds nuw i8, ptr %23, i64 8 ; 5 uses
+  %i.gx = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 2 uses
+  %i.gy = getelementptr inbounds nuw i8, ptr %23, i64 8 ; 4 uses
   %i.gz = getelementptr inbounds nuw i8, ptr %22, i64 24 ; 2 uses
   %i.ha = getelementptr inbounds nuw i8, ptr %22, i64 32
   %i.hb = load i32, ptr %i.e, align 4, !tbaa !3
@@ -825,24 +825,23 @@ bb.al:                                            ; preds = %_ZNSt10shared_ptrIS
   br label %.body131
 
 bb.am:                                            ; preds = %"_ZZN11OpenImageIO4v3_111thread_pool4pushIZNS0_10TIFFOutput11write_tilesEiiiiiiNS0_8TypeDescEPKvlllE3$_0EESt6futureIDTclfL0p_Li0EEEEOT_ENUliE_D2Ev.exit._crit_edge.i", %_ZNSt13packaged_taskIFviEEclEi.exit.i
-  %i.jf = phi ptr [ %.pre.i, %"_ZZN11OpenImageIO4v3_111thread_pool4pushIZNS0_10TIFFOutput11write_tilesEiiiiiiNS0_8TypeDescEPKvlllE3$_0EESt6futureIDTclfL0p_Li0EEEEOT_ENUliE_D2Ev.exit._crit_edge.i" ], [ %i.in, %_ZNSt13packaged_taskIFviEEclEi.exit.i ] ; 2 uses
+  %i.jf = phi ptr [ %.pre.i, %"_ZZN11OpenImageIO4v3_111thread_pool4pushIZNS0_10TIFFOutput11write_tilesEiiiiiiNS0_8TypeDescEPKvlllE3$_0EESt6futureIDTclfL0p_Li0EEEEOT_ENUliE_D2Ev.exit._crit_edge.i" ], [ %i.in, %_ZNSt13packaged_taskIFviEEclEi.exit.i ]
   call void @llvm.experimental.noalias.scope.decl(metadata !435)
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #34, !noalias !435
-  %26 = load ptr, ptr %i.jf, align 8, !tbaa !360, !noalias !435 ; 5 uses
-  store ptr %26, ptr %12, align 8, !tbaa !370, !noalias !435
-  %27 = getelementptr inbounds nuw i8, ptr %i.jf, i64 8
-  %28 = load ptr, ptr %27, align 8, !tbaa !355, !noalias !435 ; 5 uses
-  store ptr %28, ptr %i.gx, align 8, !tbaa !355, !noalias !435
-  %.not.i.i.i.i125 = icmp eq ptr %28, null
+  %26 = load <2 x ptr>, ptr %i.jf, align 8, !tbaa !366, !noalias !435 ; 5 uses
+  store <2 x ptr> %26, ptr %12, align 16, !tbaa !366, !noalias !435
+  %27 = extractelement <2 x ptr> %26, i64 1       ; 3 uses
+  %.not.i.i.i.i125 = icmp eq ptr %27, null
   br i1 %.not.i.i.i.i125, label %_ZNSt10shared_ptrINSt13__future_base13_State_baseV2EEC2INS0_16_Task_state_baseIFviEEEvEERKS_IT_E.exit.thread.i, label %bb.an
 
 _ZNSt10shared_ptrINSt13__future_base13_State_baseV2EEC2INS0_16_Task_state_baseIFviEEEvEERKS_IT_E.exit.thread.i: ; preds = %bb.am
-  store ptr %26, ptr %23, align 16, !tbaa !370, !alias.scope !435
+  %28 = extractelement <2 x ptr> %26, i64 0       ; 2 uses
+  store ptr %28, ptr %23, align 16, !tbaa !370, !alias.scope !435
   store ptr null, ptr %i.gy, align 8, !tbaa !355, !alias.scope !435
   br label %_ZNSt10shared_ptrINSt13__future_base13_State_baseV2EEC2ERKS2_.exit.i.i.i
 
 bb.an:                                            ; preds = %bb.am
-  %i.jg = getelementptr inbounds nuw i8, ptr %28, i64 8 ; 3 uses
+  %i.jg = getelementptr inbounds nuw i8, ptr %27, i64 8 ; 3 uses
   %i.jh = load i8, ptr @__libc_single_threaded, align 1, !tbaa !15, !noalias !435
   %.not.i.i.i.i.i126 = icmp eq i8 %i.jh, 0
   br i1 %.not.i.i.i.i.i126, label %_ZNSt10shared_ptrINSt13__future_base13_State_baseV2EEC2INS0_16_Task_state_baseIFviEEEvEERKS_IT_E.exit.i, label %.thread
@@ -851,15 +850,15 @@ bb.an:                                            ; preds = %bb.am
   %i.ji = load i32, ptr %i.jg, align 4, !tbaa !3, !noalias !435
   %i.jj = add nsw i32 %i.ji, 1
   store i32 %i.jj, ptr %i.jg, align 4, !tbaa !3, !noalias !435
-  store ptr %26, ptr %23, align 16, !tbaa !370, !alias.scope !435
-  store ptr %28, ptr %i.gy, align 8, !tbaa !355, !alias.scope !435
-  %29 = getelementptr inbounds nuw i8, ptr %28, i64 8
+  store <2 x ptr> %26, ptr %23, align 16, !tbaa !366, !alias.scope !435
+  %29 = getelementptr inbounds nuw i8, ptr %27, i64 8
+  %30 = extractelement <2 x ptr> %26, i64 0
   br label %bb.ap
 
 _ZNSt10shared_ptrINSt13__future_base13_State_baseV2EEC2INS0_16_Task_state_baseIFviEEEvEERKS_IT_E.exit.i: ; preds = %bb.an
   %i.jk = atomicrmw volatile add ptr %i.jg, i32 1 acq_rel, align 4, !noalias !435 ; 0 uses
   %.pr.pre.i = load ptr, ptr %i.gx, align 8, !tbaa !355, !noalias !435 ; 3 uses
-  %.pre.i130 = load ptr, ptr %12, align 8, !tbaa !370, !noalias !435 ; 3 uses
+  %.pre.i130 = load ptr, ptr %12, align 16, !tbaa !370, !noalias !435 ; 3 uses
   store ptr %.pre.i130, ptr %23, align 16, !tbaa !370, !alias.scope !435
   store ptr %.pr.pre.i, ptr %i.gy, align 8, !tbaa !355, !alias.scope !435
   %.not.i.i.i.i.i.i = icmp eq ptr %.pr.pre.i, null
@@ -873,7 +872,7 @@ bb.ao:                                            ; preds = %_ZNSt10shared_ptrIN
 
 bb.ap:                                            ; preds = %.thread, %bb.ao
   %i.jn = phi ptr [ %29, %.thread ], [ %i.jm, %bb.ao ] ; 2 uses
-  %i.jo = phi ptr [ %26, %.thread ], [ %.pre.i130, %bb.ao ]
+  %i.jo = phi ptr [ %30, %.thread ], [ %.pre.i130, %bb.ao ]
   %i.jp = load i32, ptr %i.jn, align 4, !tbaa !3, !noalias !435
   %i.jq = add nsw i32 %i.jp, 1
   store i32 %i.jq, ptr %i.jn, align 4, !tbaa !3, !noalias !435
@@ -885,7 +884,7 @@ bb.aq:                                            ; preds = %bb.ao
   br label %_ZNSt10shared_ptrINSt13__future_base13_State_baseV2EEC2ERKS2_.exit.i.i.i
 
 _ZNSt10shared_ptrINSt13__future_base13_State_baseV2EEC2ERKS2_.exit.i.i.i: ; preds = %bb.aq, %bb.ap, %_ZNSt10shared_ptrINSt13__future_base13_State_baseV2EEC2INS0_16_Task_state_baseIFviEEEvEERKS_IT_E.exit.i, %_ZNSt10shared_ptrINSt13__future_base13_State_baseV2EEC2INS0_16_Task_state_baseIFviEEEvEERKS_IT_E.exit.thread.i
-  %i.js = phi ptr [ %.pre.i130, %_ZNSt10shared_ptrINSt13__future_base13_State_baseV2EEC2INS0_16_Task_state_baseIFviEEEvEERKS_IT_E.exit.i ], [ %i.jo, %bb.ap ], [ %.pre.i.i.i, %bb.aq ], [ %26, %_ZNSt10shared_ptrINSt13__future_base13_State_baseV2EEC2INS0_16_Task_state_baseIFviEEEvEERKS_IT_E.exit.thread.i ] ; 2 uses
+  %i.js = phi ptr [ %.pre.i130, %_ZNSt10shared_ptrINSt13__future_base13_State_baseV2EEC2INS0_16_Task_state_baseIFviEEEvEERKS_IT_E.exit.i ], [ %i.jo, %bb.ap ], [ %.pre.i.i.i, %bb.aq ], [ %28, %_ZNSt10shared_ptrINSt13__future_base13_State_baseV2EEC2INS0_16_Task_state_baseIFviEEEvEERKS_IT_E.exit.thread.i ] ; 2 uses
   %.not.i.i.i2.i = icmp eq ptr %i.js, null
   br i1 %.not.i.i.i2.i, label %.invoke.i.i.i, label %_ZNSt13__future_base13_State_baseV28_S_checkIS0_EEvRKSt10shared_ptrIT_E.exit.i.i.i
 

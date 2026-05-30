@@ -201,7 +201,7 @@ bb.a:
   %i.b = alloca [8 x i8], align 8                 ; 5 uses
   %i.c = alloca [72 x i8], align 8                ; 4 uses
   %i.d = alloca [96 x i8], align 16               ; 13 uses
-  %i.e = alloca [200 x i8], align 8               ; 12 uses
+  %i.e = alloca [200 x i8], align 8               ; 11 uses
   %.sroa.8136.i.i.i.i = alloca [32 x i8], align 8 ; 7 uses
   %i.f = alloca [152 x i8], align 8               ; 8 uses
   %i.g = alloca [304 x i8], align 16              ; 11 uses
@@ -277,7 +277,7 @@ bb.c:                                             ; preds = %bb.a, %bb.d
   %i.ax = getelementptr inbounds nuw i8, ptr %i.g, i64 298
   %i.ay = getelementptr inbounds nuw i8, ptr %i.g, i64 297
   %i.az = getelementptr inbounds nuw i8, ptr %i.o, i64 104 ; 2 uses
-  %i.ba = getelementptr inbounds nuw i8, ptr %i.o, i64 112 ; 2 uses
+  %i.ba = getelementptr inbounds nuw i8, ptr %i.o, i64 112
   %i.bb = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %.sroa.10138.0..sroa_idx139.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 40
   %.sroa.0148.sroa.5.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 40
@@ -285,7 +285,6 @@ bb.c:                                             ; preds = %bb.a, %bb.d
   %.sroa.7.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 168
   %.sroa.5149.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 152
   %.sroa.8151.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 184
-  %.sroa.9.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 192
   %i.bc = getelementptr inbounds nuw i8, ptr %i.o, i64 128 ; 5 uses
   %.sroa.3.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   %.sroa.3.sroa.2.0..sroa.3.0..sroa_idx4.sroa_idx = getelementptr inbounds nuw i8, ptr %i.u, i64 96
@@ -688,8 +687,9 @@ bb.bk:                                            ; preds = %_RINvNtCsbvkFyIu7lg
   br i1 %.not.i.i.i.i, label %bb.bl, label %bb.bm
 
 bb.bl:                                            ; preds = %bb.bk
-  %3 = load ptr, ptr %i.az, align 8, !noalias !19139, !nonnull !3, !noundef !3 ; 5 uses
-  %4 = load ptr, ptr %i.ba, align 8, !noalias !19139, !nonnull !3, !align !356, !noundef !3 ; 7 uses
+  %3 = load <2 x ptr>, ptr %i.az, align 8, !noalias !19139 ; 3 uses
+  %4 = extractelement <2 x ptr> %3, i64 1         ; 6 uses
+  %5 = extractelement <2 x ptr> %3, i64 0         ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !19139
   invoke void @_RNvMNtCsdFjMDJQAyx6_10arrow_json6readerNtB2_13ReaderBuilder13build_decoder(ptr noalias noundef nonnull sret([152 x i8]) align 8 captures(none) dereferenceable(152) %i.f, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.m)
           to label %bb.ce unwind label %bb.cd, !noalias !19140
@@ -861,8 +861,7 @@ bb.cg:                                            ; preds = %bb.ce
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7.0..sroa_idx.i.i.i.i, i8 0, i64 16, i1 false), !noalias !19139
   store i64 %i.ir, ptr %i.e, align 8, !alias.scope !19191, !noalias !19139
   store <2 x ptr> <ptr @119, ptr inttoptr (i64 1 to ptr)>, ptr %.sroa.5149.0..sroa_idx.i.i.i.i, align 8, !alias.scope !19191, !noalias !19139
-  store ptr %3, ptr %.sroa.8151.0..sroa_idx.i.i.i.i, align 8, !alias.scope !19191, !noalias !19139
-  store ptr %4, ptr %.sroa.9.0..sroa_idx.i.i.i.i, align 8, !alias.scope !19191, !noalias !19139
+  store <2 x ptr> %3, ptr %.sroa.8151.0..sroa_idx.i.i.i.i, align 8, !alias.scope !19191, !noalias !19139
   %i.iu = invoke { ptr, ptr } @_RNvYINtNtNtCs8CRAYtH5WmW_12futures_util6stream7poll_fn6PollFnNCNCNvNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default4json14open_json_file0s_0ENtNtB7_6stream9StreamExt5boxedCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 8 captures(address) dereferenceable(200) %i.e)
           to label %bb.ch unwind label %.thread159.i.i.i.i, !noalias !19140 ; 2 uses
 
@@ -1030,7 +1029,7 @@ _RNvXsq_NtCsbvkFyIu7lgC_4core6resultINtB5_6ResultINtNtB7_3pin3PinINtNtCs6Po7BT7N
   br i1 %.not.i.i81.i.i.i.i, label %bb.cz, label %bb.cy
 
 bb.cy:                                            ; preds = %_RNvXsq_NtCsbvkFyIu7lgC_4core6resultINtB5_6ResultINtNtB7_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemIBy_NtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchNtNtCs8ulvy0Wg6Ot_12delta_kernel5error5ErrorENtNtB7_6marker4SendEL_EEB3q_EINtNtNtB7_3ops9try_trait12FromResidualIBy_NtNtB7_7convert10InfallibleNtNtCsfYVtenZkBsn_12arrow_schema5error10ArrowErrorEE13from_residualCs14kWLkQVSKO_14deltalake_core.exit63.i.i.i.i
-  invoke void %i.kc(ptr noundef nonnull %3)
+  invoke void %i.kc(ptr noundef nonnull %5)
           to label %bb.cz unwind label %bb.da, !noalias !19140
 
 bb.cz:                                            ; preds = %bb.cy, %_RNvXsq_NtCsbvkFyIu7lgC_4core6resultINtB5_6ResultINtNtB7_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemIBy_NtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchNtNtCs8ulvy0Wg6Ot_12delta_kernel5error5ErrorENtNtB7_6marker4SendEL_EEB3q_EINtNtNtB7_3ops9try_trait12FromResidualIBy_NtNtB7_7convert10InfallibleNtNtCsfYVtenZkBsn_12arrow_schema5error10ArrowErrorEE13from_residualCs14kWLkQVSKO_14deltalake_core.exit63.i.i.i.i
@@ -1042,7 +1041,7 @@ bb.cz:                                            ; preds = %bb.cy, %_RNvXsq_NtC
 _RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i.i.i83.i.i.i.i: ; preds = %bb.cz
   %i.kg = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.kh = load i64, ptr %i.kg, align 8, !range !645, !invariant.load !3, !noalias !19140
-  call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %3, i64 noundef %i.ke, i64 noundef range(i64 1, 536870913) %i.kh) #48, !noalias !19140
+  call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %5, i64 noundef %i.ke, i64 noundef range(i64 1, 536870913) %i.kh) #48, !noalias !19140
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemINtNtB4_6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs14kWLkQVSKO_14deltalake_core.exit.i.i.i.i
 
 bb.da:                                            ; preds = %bb.cy
@@ -1056,7 +1055,7 @@ bb.da:                                            ; preds = %bb.cy
 _RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator10deallocate.exit.i4.i.i82.i.i.i.i: ; preds = %bb.da
   %i.km = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.kn = load i64, ptr %i.km, align 8, !range !645, !invariant.load !3, !noalias !19140
-  call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %3, i64 noundef %i.kk, i64 noundef range(i64 1, 536870913) %i.kn) #48, !noalias !19140
+  call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %5, i64 noundef %i.kk, i64 noundef range(i64 1, 536870913) %i.kn) #48, !noalias !19140
   br label %.body60.i.i.i.i
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs2pqxYH9ZEk8_3std4path7PathBufECs14kWLkQVSKO_14deltalake_core.exit91.i.i.i.i: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs2pqxYH9ZEk8_3std3ffi6os_str8OsStringECs14kWLkQVSKO_14deltalake_core.exit.i87.i.i.i.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemINtNtB4_6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs14kWLkQVSKO_14deltalake_core.exit.i.i.i.i
@@ -1131,7 +1130,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6Str
 
 bb.dk:                                            ; preds = %bb.cx, %bb.cd
   %.pn23.i.i.i.i = phi { ptr, i32 } [ %i.kb, %bb.cx ], [ %i.iq, %bb.cd ]
-  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemINtNtB4_6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs14kWLkQVSKO_14deltalake_core(ptr nonnull %3, ptr nonnull %4) #54
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemINtNtB4_6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs14kWLkQVSKO_14deltalake_core(ptr nonnull %5, ptr nonnull %4) #54
           to label %.body60.i.i.i.i unwind label %bb.cc, !noalias !19140
 
 bb.dl:                                            ; preds = %.body60.i.i.i.i

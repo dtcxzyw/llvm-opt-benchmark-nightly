@@ -201,7 +201,7 @@ bb.g:                                             ; preds = %bb.a
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !67, !noalias !4228 ; 2 uses
   %.not.i.i22.i = icmp eq ptr %i.aq, null
   %i.ar = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 4 uses
-  %.sroa.2.0..sroa_idx.i.i31.i.i = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 7 uses
+  %.sroa.2.0..sroa_idx.i.i31.i.i = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 5 uses
   %i.as = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
   br label %bb.h
 
@@ -237,19 +237,18 @@ _ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.thread.i.i: ; pre
 .lr.ph59.i.i:                                     ; preds = %.preheader.i.i
   %.promoted.i.i = load i8, ptr %i.ar, align 8, !tbaa !4169, !alias.scope !4226, !noalias !4223
   %i.bb = trunc nuw i8 %.promoted.i.i to i1
-  %i.bc = getelementptr inbounds nuw [16 x i8], ptr %i.am, i64 %.sroa.4.061.i.i ; 2 uses
-  %.val29.i.peel.i = load i64, ptr %i.bc, align 8, !alias.scope !4223, !noalias !4226 ; 8 uses
-  %6 = getelementptr i8, ptr %i.bc, i64 8
-  %.val30.i.peel.i = load i64, ptr %6, align 8, !alias.scope !4223, !noalias !4226 ; 6 uses
+  %i.bc = getelementptr inbounds nuw [16 x i8], ptr %i.am, i64 %.sroa.4.061.i.i
+  %6 = load <2 x i64>, ptr %i.bc, align 8, !alias.scope !4223, !noalias !4226 ; 6 uses
+  %7 = extractelement <2 x i64> %6, i64 1         ; 4 uses
+  %8 = extractelement <2 x i64> %6, i64 0         ; 4 uses
   br i1 %i.bb, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph59.i.i
-  store i64 %.val29.i.peel.i, ptr %3, align 8, !alias.scope !4226, !noalias !4223
-  store i64 %.val30.i.peel.i, ptr %.sroa.2.0..sroa_idx.i.i31.i.i, align 8, !tbaa !51, !alias.scope !4226, !noalias !4223
+  store <2 x i64> %6, ptr %3, align 8, !alias.scope !4226, !noalias !4223
   store i8 1, ptr %i.ar, align 8, !tbaa !4169, !alias.scope !4226, !noalias !4223
-  %7 = lshr i64 %.val29.i.peel.i, 32
-  %8 = trunc nuw i64 %7 to i32
-  %i.bd = trunc i64 %.val29.i.peel.i to i32
+  %9 = bitcast <2 x i64> %6 to <4 x i32>
+  %10 = extractelement <4 x i32> %9, i64 1
+  %i.bd = trunc i64 %8 to i32
   br label %_ZN6duckdb12_GLOBAL__N_110MinMaxBase9OperationINS_10interval_tENS0_11MinMaxStateIS3_EENS0_12MinOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit.i.peel.i
 
 bb.j:                                             ; preds = %.lr.ph59.i.i
@@ -266,15 +265,15 @@ bb.j:                                             ; preds = %.lr.ph59.i.i
   %i.bm = load i32, ptr %3, align 8, !tbaa !4175, !alias.scope !4226, !noalias !4223 ; 3 uses
   %i.bn = sext i32 %i.bm to i64
   %i.bo = add nsw i64 %i.bk, %i.bn                ; 2 uses
-  %i.bp = sdiv i64 %.val30.i.peel.i, 86400000000  ; 2 uses
+  %i.bp = sdiv i64 %7, 86400000000                ; 2 uses
   %.neg.i8.i.i.i.i.i.i.i.peel.i = mul nsw i64 %i.bp, -86400000000
-  %i.bq = add i64 %.neg.i8.i.i.i.i.i.i.i.peel.i, %.val30.i.peel.i
-  %i.br = ashr i64 %.val29.i.peel.i, 32
+  %i.bq = add i64 %.neg.i8.i.i.i.i.i.i.i.peel.i, %7
+  %i.br = ashr i64 %8, 32
   %i.bs = add nsw i64 %i.bp, %i.br                ; 2 uses
   %i.bt = sdiv i64 %i.bs, 30                      ; 2 uses
   %.neg16.i9.i.i.i.i.i.i.i.peel.i = mul nsw i64 %i.bt, -30
   %i.bu = add nsw i64 %.neg16.i9.i.i.i.i.i.i.i.peel.i, %i.bs ; 2 uses
-  %sext.i.i.i.peel.i = shl i64 %.val29.i.peel.i, 32
+  %sext.i.i.i.peel.i = shl i64 %8, 32
   %i.bv = ashr exact i64 %sext.i.i.i.peel.i, 32
   %i.bw = add nsw i64 %i.bt, %i.bv                ; 2 uses
   %i.bx = icmp sgt i64 %i.bo, %i.bw
@@ -295,17 +294,16 @@ _ZN6duckdb8LessThan9OperationINS_10interval_tEEEbRKT_S5_.exit.i.i.i.peel.i: ; pr
   br i1 %spec.select.i.i.i.i.i.i.i.peel.i, label %_ZN6duckdb8LessThan9OperationINS_10interval_tEEEbRKT_S5_.exit.thread.i.i.i.peel.i, label %_ZN6duckdb12_GLOBAL__N_110MinMaxBase9OperationINS_10interval_tENS0_11MinMaxStateIS3_EENS0_12MinOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit.i.peel.i
 
 _ZN6duckdb8LessThan9OperationINS_10interval_tEEEbRKT_S5_.exit.thread.i.i.i.peel.i: ; preds = %_ZN6duckdb8LessThan9OperationINS_10interval_tEEEbRKT_S5_.exit.i.i.i.peel.i, %bb.l, %bb.j
-  store i64 %.val29.i.peel.i, ptr %3, align 8, !alias.scope !4226, !noalias !4223
-  store i64 %.val30.i.peel.i, ptr %.sroa.2.0..sroa_idx.i.i31.i.i, align 8, !tbaa !51, !alias.scope !4226, !noalias !4223
-  %9 = lshr i64 %.val29.i.peel.i, 32
-  %10 = trunc nuw i64 %9 to i32
-  %i.cc = trunc i64 %.val29.i.peel.i to i32
+  store <2 x i64> %6, ptr %3, align 8, !alias.scope !4226, !noalias !4223
+  %11 = bitcast <2 x i64> %6 to <4 x i32>
+  %12 = extractelement <4 x i32> %11, i64 1
+  %i.cc = trunc i64 %8 to i32
   br label %_ZN6duckdb12_GLOBAL__N_110MinMaxBase9OperationINS_10interval_tENS0_11MinMaxStateIS3_EENS0_12MinOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit.i.peel.i
 
 _ZN6duckdb12_GLOBAL__N_110MinMaxBase9OperationINS_10interval_tENS0_11MinMaxStateIS3_EENS0_12MinOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit.i.peel.i: ; preds = %_ZN6duckdb8LessThan9OperationINS_10interval_tEEEbRKT_S5_.exit.thread.i.i.i.peel.i, %_ZN6duckdb8LessThan9OperationINS_10interval_tEEEbRKT_S5_.exit.i.i.i.peel.i, %bb.k, %bb.i
   %i.cd = phi i32 [ %i.cc, %_ZN6duckdb8LessThan9OperationINS_10interval_tEEEbRKT_S5_.exit.thread.i.i.i.peel.i ], [ %i.bm, %_ZN6duckdb8LessThan9OperationINS_10interval_tEEEbRKT_S5_.exit.i.i.i.peel.i ], [ %i.bm, %bb.k ], [ %i.bd, %bb.i ]
-  %i.ce = phi i32 [ %10, %_ZN6duckdb8LessThan9OperationINS_10interval_tEEEbRKT_S5_.exit.thread.i.i.i.peel.i ], [ %i.bh, %_ZN6duckdb8LessThan9OperationINS_10interval_tEEEbRKT_S5_.exit.i.i.i.peel.i ], [ %i.bh, %bb.k ], [ %8, %bb.i ]
-  %i.cf = phi i64 [ %.val30.i.peel.i, %_ZN6duckdb8LessThan9OperationINS_10interval_tEEEbRKT_S5_.exit.thread.i.i.i.peel.i ], [ %i.be, %_ZN6duckdb8LessThan9OperationINS_10interval_tEEEbRKT_S5_.exit.i.i.i.peel.i ], [ %i.be, %bb.k ], [ %.val30.i.peel.i, %bb.i ]
+  %i.ce = phi i32 [ %12, %_ZN6duckdb8LessThan9OperationINS_10interval_tEEEbRKT_S5_.exit.thread.i.i.i.peel.i ], [ %i.bh, %_ZN6duckdb8LessThan9OperationINS_10interval_tEEEbRKT_S5_.exit.i.i.i.peel.i ], [ %i.bh, %bb.k ], [ %10, %bb.i ]
+  %i.cf = phi i64 [ %7, %_ZN6duckdb8LessThan9OperationINS_10interval_tEEEbRKT_S5_.exit.thread.i.i.i.peel.i ], [ %i.be, %_ZN6duckdb8LessThan9OperationINS_10interval_tEEEbRKT_S5_.exit.i.i.i.peel.i ], [ %i.be, %bb.k ], [ %7, %bb.i ]
   %i.cg = add nuw i64 %.sroa.4.061.i.i, 1         ; 2 uses
   %exitcond68.not.i.peel.i = icmp eq i64 %i.cg, %.ph.i.i
   br i1 %exitcond68.not.i.peel.i, label %.loopexit.i.i, label %.peel.next.i
@@ -708,7 +706,7 @@ bb.g:                                             ; preds = %bb.a
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !67, !noalias !5253 ; 2 uses
   %.not.i.i22.i = icmp eq ptr %i.aq, null
   %i.ar = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 4 uses
-  %.sroa.2.0..sroa_idx.i.i31.i.i = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 7 uses
+  %.sroa.2.0..sroa_idx.i.i31.i.i = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 5 uses
   %i.as = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
   br label %bb.h
 
@@ -744,31 +742,30 @@ _ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.thread.i.i: ; pre
 .lr.ph59.i.i:                                     ; preds = %.preheader.i.i
   %.promoted.i.i = load i8, ptr %i.ar, align 8, !tbaa !4169, !alias.scope !5251, !noalias !5248
   %i.bb = trunc nuw i8 %.promoted.i.i to i1
-  %i.bc = getelementptr inbounds nuw [16 x i8], ptr %i.am, i64 %.sroa.4.061.i.i ; 2 uses
-  %.val29.i.peel.i = load i64, ptr %i.bc, align 8, !alias.scope !5248, !noalias !5251 ; 8 uses
-  %6 = getelementptr i8, ptr %i.bc, i64 8
-  %.val30.i.peel.i = load i64, ptr %6, align 8, !alias.scope !5248, !noalias !5251 ; 6 uses
+  %i.bc = getelementptr inbounds nuw [16 x i8], ptr %i.am, i64 %.sroa.4.061.i.i
+  %6 = load <2 x i64>, ptr %i.bc, align 8, !alias.scope !5248, !noalias !5251 ; 6 uses
+  %7 = extractelement <2 x i64> %6, i64 1         ; 4 uses
+  %8 = extractelement <2 x i64> %6, i64 0         ; 4 uses
   br i1 %i.bb, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph59.i.i
-  store i64 %.val29.i.peel.i, ptr %3, align 8, !alias.scope !5251, !noalias !5248
-  store i64 %.val30.i.peel.i, ptr %.sroa.2.0..sroa_idx.i.i31.i.i, align 8, !tbaa !51, !alias.scope !5251, !noalias !5248
+  store <2 x i64> %6, ptr %3, align 8, !alias.scope !5251, !noalias !5248
   store i8 1, ptr %i.ar, align 8, !tbaa !4169, !alias.scope !5251, !noalias !5248
-  %7 = lshr i64 %.val29.i.peel.i, 32
-  %8 = trunc nuw i64 %7 to i32
-  %i.bd = trunc i64 %.val29.i.peel.i to i32
+  %9 = bitcast <2 x i64> %6 to <4 x i32>
+  %10 = extractelement <4 x i32> %9, i64 1
+  %i.bd = trunc i64 %8 to i32
   br label %_ZN6duckdb12_GLOBAL__N_110MinMaxBase9OperationINS_10interval_tENS0_11MinMaxStateIS3_EENS0_12MaxOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit.i.peel.i
 
 bb.j:                                             ; preds = %.lr.ph59.i.i
-  %i.be = sdiv i64 %.val30.i.peel.i, 86400000000  ; 2 uses
+  %i.be = sdiv i64 %7, 86400000000                ; 2 uses
   %.neg.i.i.i.i.i.i.i.peel.i = mul nsw i64 %i.be, -86400000000
-  %i.bf = add i64 %.neg.i.i.i.i.i.i.i.peel.i, %.val30.i.peel.i
-  %i.bg = ashr i64 %.val29.i.peel.i, 32
+  %i.bf = add i64 %.neg.i.i.i.i.i.i.i.peel.i, %7
+  %i.bg = ashr i64 %8, 32
   %i.bh = add nsw i64 %i.be, %i.bg                ; 2 uses
   %i.bi = sdiv i64 %i.bh, 30                      ; 2 uses
   %.neg16.i.i.i.i.i.i.i.peel.i = mul nsw i64 %i.bi, -30
   %i.bj = add nsw i64 %.neg16.i.i.i.i.i.i.i.peel.i, %i.bh ; 2 uses
-  %sext.i.i.i.peel.i = shl i64 %.val29.i.peel.i, 32
+  %sext.i.i.i.peel.i = shl i64 %8, 32
   %i.bk = ashr exact i64 %sext.i.i.i.peel.i, 32
   %i.bl = add nsw i64 %i.bi, %i.bk                ; 2 uses
   %i.bm = load i64, ptr %.sroa.2.0..sroa_idx.i.i31.i.i, align 8, !tbaa !4173, !alias.scope !5251, !noalias !5248 ; 4 uses
@@ -802,17 +799,16 @@ _ZN6duckdb11GreaterThan9OperationINS_10interval_tEEEbRKT_S5_.exit.i.i.i.peel.i: 
   br i1 %spec.select.i.i.i.i.i.i.peel.i, label %_ZN6duckdb11GreaterThan9OperationINS_10interval_tEEEbRKT_S5_.exit.thread.i.i.i.peel.i, label %_ZN6duckdb12_GLOBAL__N_110MinMaxBase9OperationINS_10interval_tENS0_11MinMaxStateIS3_EENS0_12MaxOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit.i.peel.i
 
 _ZN6duckdb11GreaterThan9OperationINS_10interval_tEEEbRKT_S5_.exit.thread.i.i.i.peel.i: ; preds = %_ZN6duckdb11GreaterThan9OperationINS_10interval_tEEEbRKT_S5_.exit.i.i.i.peel.i, %bb.l, %bb.j
-  store i64 %.val29.i.peel.i, ptr %3, align 8, !alias.scope !5251, !noalias !5248
-  store i64 %.val30.i.peel.i, ptr %.sroa.2.0..sroa_idx.i.i31.i.i, align 8, !tbaa !51, !alias.scope !5251, !noalias !5248
-  %9 = lshr i64 %.val29.i.peel.i, 32
-  %10 = trunc nuw i64 %9 to i32
-  %i.cc = trunc i64 %.val29.i.peel.i to i32
+  store <2 x i64> %6, ptr %3, align 8, !alias.scope !5251, !noalias !5248
+  %11 = bitcast <2 x i64> %6 to <4 x i32>
+  %12 = extractelement <4 x i32> %11, i64 1
+  %i.cc = trunc i64 %8 to i32
   br label %_ZN6duckdb12_GLOBAL__N_110MinMaxBase9OperationINS_10interval_tENS0_11MinMaxStateIS3_EENS0_12MaxOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit.i.peel.i
 
 _ZN6duckdb12_GLOBAL__N_110MinMaxBase9OperationINS_10interval_tENS0_11MinMaxStateIS3_EENS0_12MaxOperationEEEvRT0_RKT_RNS_19AggregateUnaryInputE.exit.i.peel.i: ; preds = %_ZN6duckdb11GreaterThan9OperationINS_10interval_tEEEbRKT_S5_.exit.thread.i.i.i.peel.i, %_ZN6duckdb11GreaterThan9OperationINS_10interval_tEEEbRKT_S5_.exit.i.i.i.peel.i, %bb.k, %bb.i
   %i.cd = phi i32 [ %i.cc, %_ZN6duckdb11GreaterThan9OperationINS_10interval_tEEEbRKT_S5_.exit.thread.i.i.i.peel.i ], [ %i.bu, %_ZN6duckdb11GreaterThan9OperationINS_10interval_tEEEbRKT_S5_.exit.i.i.i.peel.i ], [ %i.bu, %bb.k ], [ %i.bd, %bb.i ]
-  %i.ce = phi i32 [ %10, %_ZN6duckdb11GreaterThan9OperationINS_10interval_tEEEbRKT_S5_.exit.thread.i.i.i.peel.i ], [ %i.bp, %_ZN6duckdb11GreaterThan9OperationINS_10interval_tEEEbRKT_S5_.exit.i.i.i.peel.i ], [ %i.bp, %bb.k ], [ %8, %bb.i ]
-  %i.cf = phi i64 [ %.val30.i.peel.i, %_ZN6duckdb11GreaterThan9OperationINS_10interval_tEEEbRKT_S5_.exit.thread.i.i.i.peel.i ], [ %i.bm, %_ZN6duckdb11GreaterThan9OperationINS_10interval_tEEEbRKT_S5_.exit.i.i.i.peel.i ], [ %i.bm, %bb.k ], [ %.val30.i.peel.i, %bb.i ]
+  %i.ce = phi i32 [ %12, %_ZN6duckdb11GreaterThan9OperationINS_10interval_tEEEbRKT_S5_.exit.thread.i.i.i.peel.i ], [ %i.bp, %_ZN6duckdb11GreaterThan9OperationINS_10interval_tEEEbRKT_S5_.exit.i.i.i.peel.i ], [ %i.bp, %bb.k ], [ %10, %bb.i ]
+  %i.cf = phi i64 [ %7, %_ZN6duckdb11GreaterThan9OperationINS_10interval_tEEEbRKT_S5_.exit.thread.i.i.i.peel.i ], [ %i.bm, %_ZN6duckdb11GreaterThan9OperationINS_10interval_tEEEbRKT_S5_.exit.i.i.i.peel.i ], [ %i.bm, %bb.k ], [ %7, %bb.i ]
   %i.cg = add nuw i64 %.sroa.4.061.i.i, 1         ; 2 uses
   %exitcond68.not.i.peel.i = icmp eq i64 %i.cg, %.ph.i.i
   br i1 %exitcond68.not.i.peel.i, label %.loopexit.i.i, label %.peel.next.i

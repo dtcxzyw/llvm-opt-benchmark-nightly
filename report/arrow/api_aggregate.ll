@@ -201,7 +201,7 @@ bb.a:
   %11 = alloca %"class.arrow::Status", align 8    ; 6 uses
   %12 = alloca %"class.std::vector.27", align 16  ; 14 uses
   %13 = alloca %"class.arrow::Result.138", align 8 ; 14 uses
-  %14 = alloca %"class.std::shared_ptr", align 8  ; 6 uses
+  %14 = alloca %"class.std::shared_ptr", align 16 ; 5 uses
   %15 = alloca %"class.arrow::Result.634", align 8 ; 15 uses
   %16 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %17 = alloca %"class.arrow::Result.138", align 8 ; 14 uses
@@ -604,9 +604,8 @@ bb.aj:                                            ; preds = %bb.af
   br i1 %.not334.i, label %.lr.ph.i, label %.critedge37.i
 
 .lr.ph.i:                                         ; preds = %bb.aj
-  %26 = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 2 uses
-  %i.dn = getelementptr inbounds nuw i8, ptr %14, i64 8
-  %i.do = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 3 uses
+  %i.dn = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 2 uses
+  %i.do = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 2 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %15, i64 8 ; 5 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %15, i64 24 ; 10 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 3 uses
@@ -657,15 +656,15 @@ bb.ao:                                            ; preds = %bb.am
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #25, !noalias !1272
   call void @llvm.experimental.noalias.scope.decl(metadata !1282)
   call void @llvm.experimental.noalias.scope.decl(metadata !1285)
-  %27 = load ptr, ptr %26, align 8, !tbaa !94, !noalias !1288 ; 4 uses
-  store ptr %27, ptr %14, align 8, !tbaa !94, !alias.scope !1289, !noalias !1272
-  %28 = load ptr, ptr %i.do, align 8, !tbaa !90, !noalias !1288 ; 9 uses
+  %26 = load <2 x ptr>, ptr %i.dn, align 8, !tbaa !93, !noalias !1288 ; 3 uses
+  %27 = extractelement <2 x ptr> %26, i64 1       ; 8 uses
   store ptr null, ptr %i.do, align 8, !tbaa !90, !noalias !1288
-  store ptr %28, ptr %i.dn, align 8, !tbaa !90, !alias.scope !1289, !noalias !1272
-  store ptr null, ptr %26, align 8, !tbaa !94, !noalias !1288
+  store <2 x ptr> %26, ptr %14, align 16, !tbaa !93, !alias.scope !1289, !noalias !1272
+  store ptr null, ptr %i.dn, align 8, !tbaa !94, !noalias !1288
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #25, !noalias !1272
   call void @llvm.experimental.noalias.scope.decl(metadata !1290)
-  %i.ei = getelementptr inbounds nuw i8, ptr %27, i64 24
+  %28 = extractelement <2 x ptr> %26, i64 0       ; 3 uses
+  %i.ei = getelementptr inbounds nuw i8, ptr %28, i64 24
   %i.ej = load ptr, ptr %i.ei, align 8, !tbaa !356, !noalias !1290 ; 3 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ej, i64 40
   %i.el = load i32, ptr %i.ek, align 8, !tbaa !357, !noalias !1290
@@ -778,7 +777,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit8.i.i: ; preds = %
   br label %.body44.i
 
 bb.au:                                            ; preds = %bb.ao, %bb.ao, %bb.ao, %bb.ao
-  %i.fl = getelementptr inbounds nuw i8, ptr %27, i64 40
+  %i.fl = getelementptr inbounds nuw i8, ptr %28, i64 40
   %i.fm = load i8, ptr %i.fl, align 8, !tbaa !159, !range !113, !noalias !1290, !noundef !114
   %i.fn = trunc nuw i8 %i.fm to i1
   br i1 %i.fn, label %bb.ay, label %bb.av
@@ -810,7 +809,7 @@ _ZN5arrow6StatusD2Ev.exit10.i.i:                  ; preds = %bb.ax, %bb.aw, %.no
 
 bb.ay:                                            ; preds = %bb.au
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #25, !noalias !1293
-  %i.fs = getelementptr inbounds nuw i8, ptr %27, i64 48
+  %i.fs = getelementptr inbounds nuw i8, ptr %28, i64 48
   %i.ft = load ptr, ptr %i.fs, align 8, !tbaa !1256, !noalias !1290
   invoke void @_ZNK5arrow6Buffer8ToStringB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %7, ptr noundef nonnull align 8 dereferenceable(80) %i.ft)
           to label %.noexc47.i unwind label %bb.bb
@@ -969,11 +968,11 @@ bb.bk:                                            ; preds = %_ZN5arrow6ResultINS
 
 _ZN5arrow6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit.i: ; preds = %bb.bj, %bb.bk, %_ZN5arrow6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7DestroyEv.exit.thread.i.i, %_ZN5arrow6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7DestroyEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #25, !noalias !1272
-  %.not.i.i57.i = icmp eq ptr %28, null
+  %.not.i.i57.i = icmp eq ptr %27, null
   br i1 %.not.i.i57.i, label %_ZNSt12__shared_ptrIN5arrow6ScalarELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i, label %bb.bl
 
 bb.bl:                                            ; preds = %_ZN5arrow6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit.i
-  %i.hi = getelementptr inbounds nuw i8, ptr %28, i64 8 ; 4 uses
+  %i.hi = getelementptr inbounds nuw i8, ptr %27, i64 8 ; 4 uses
   %i.hj = load atomic i64, ptr %i.hi acquire, align 8 ; 2 uses
   %i.hk = icmp eq i64 %i.hj, 4294967297
   %i.hl = trunc i64 %i.hj to i32                  ; 2 uses
@@ -981,16 +980,16 @@ bb.bl:                                            ; preds = %_ZN5arrow6ResultINS
 
 bb.bm:                                            ; preds = %bb.bl
   store i32 0, ptr %i.hi, align 8, !tbaa !138
-  %i.hm = getelementptr inbounds nuw i8, ptr %28, i64 12
+  %i.hm = getelementptr inbounds nuw i8, ptr %27, i64 12
   store i32 0, ptr %i.hm, align 4, !tbaa !140
-  %i.hn = load ptr, ptr %28, align 8, !tbaa !38
+  %i.hn = load ptr, ptr %27, align 8, !tbaa !38
   %i.ho = getelementptr inbounds nuw i8, ptr %i.hn, i64 16
   %i.hp = load ptr, ptr %i.ho, align 8
-  call void %i.hp(ptr noundef nonnull align 8 dereferenceable(16) %28) #25, !inline_history !1308
-  %i.hq = load ptr, ptr %28, align 8, !tbaa !38
+  call void %i.hp(ptr noundef nonnull align 8 dereferenceable(16) %27) #25, !inline_history !1308
+  %i.hq = load ptr, ptr %27, align 8, !tbaa !38
   %i.hr = getelementptr inbounds nuw i8, ptr %i.hq, i64 24
   %i.hs = load ptr, ptr %i.hr, align 8
-  call void %i.hs(ptr noundef nonnull align 8 dereferenceable(16) %28) #25, !inline_history !1308
+  call void %i.hs(ptr noundef nonnull align 8 dereferenceable(16) %27) #25, !inline_history !1308
   br label %_ZNSt12__shared_ptrIN5arrow6ScalarELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i
 
 bb.bn:                                            ; preds = %bb.bl
@@ -1013,7 +1012,7 @@ _ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i: ; preds = %bb.bp, %
   br i1 %i.hw, label %bb.bq, label %_ZNSt12__shared_ptrIN5arrow6ScalarELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i, !prof !131
 
 bb.bq:                                            ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i
-  call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %28) #25
+  call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %27) #25
   br label %_ZNSt12__shared_ptrIN5arrow6ScalarELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i
 
 _ZNSt12__shared_ptrIN5arrow6ScalarELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i: ; preds = %bb.bq, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i, %bb.bm, %_ZN5arrow6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit.i
