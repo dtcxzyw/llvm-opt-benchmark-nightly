@@ -1,0 +1,426 @@
+diff --git a/llvm/lib/Transforms/Vectorize/VectorCombine.cpp b/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
+index da8a52a6b3dca..db54ac0322aae 100644
+--- a/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
++++ b/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
+@@ -131,7 +131,7 @@ class VectorCombine {
+   bool foldExtractedCmps(Instruction &I);
+   bool foldSelectsFromBitcast(Instruction &I);
+   bool foldBinopOfReductions(Instruction &I);
+-  bool foldSingleElementStore(Instruction &I);
++  bool foldInsertElementsStore(Instruction &I);
+   bool scalarizeLoad(Instruction &I);
+   bool scalarizeLoadExtract(LoadInst *LI, VectorType *VecTy, Value *Ptr);
+   bool scalarizeLoadBitcast(LoadInst *LI, VectorType *VecTy, Value *Ptr);
+@@ -1949,61 +1949,131 @@ static Align computeAlignmentAfterScalarization(Align VectorAlignment,
+ //   %0 = bitcast <4 x i32>* %a to i32*
+ //   %1 = getelementptr inbounds i32, i32* %0, i64 0, i64 1
+ //   store i32 %b, i32* %1
+-bool VectorCombine::foldSingleElementStore(Instruction &I) {
++bool VectorCombine::foldInsertElementsStore(Instruction &I) {
+   if (!TTI.allowVectorElementIndexingUsingGEP())
+     return false;
++
+   auto *SI = cast<StoreInst>(&I);
+   if (!SI->isSimple() || !isa<VectorType>(SI->getValueOperand()->getType()))
+     return false;
+ 
+-  // TODO: Combine more complicated patterns (multiple insert) by referencing
+-  // TargetTransformInfo.
+-  Instruction *Source;
+-  Value *NewElement;
+-  Value *Idx;
+-  if (!match(SI->getValueOperand(),
+-             m_InsertElt(m_Instruction(Source), m_Value(NewElement),
+-                         m_Value(Idx))))
+-    return false;
+-
+-  if (auto *Load = dyn_cast<LoadInst>(Source)) {
+-    auto VecTy = cast<VectorType>(SI->getValueOperand()->getType());
+-    Value *SrcAddr = Load->getPointerOperand()->stripPointerCasts();
+-    // Don't optimize for atomic/volatile load or store. Ensure memory is not
+-    // modified between, vector type matches store size, and index is inbounds.
+-    if (!Load->isSimple() || Load->getParent() != SI->getParent() ||
+-        !DL->typeSizeEqualsStoreSize(Load->getType()->getScalarType()) ||
+-        SrcAddr != SI->getPointerOperand()->stripPointerCasts())
+-      return false;
++  Value *Source = SI->getValueOperand();
++  // Track back multiple inserts.
++  SmallVector<std::pair<Value *, Value *>, 4> InsertElements;
++  Value *Base = Source;
++  while (auto *Insert = dyn_cast<InsertElementInst>(Base)) {
++    if (!Insert->hasOneUse())
++      break;
++    Value *InsertVal = Insert->getOperand(1);
++    Value *Idx = Insert->getOperand(2);
++    InsertElements.push_back({InsertVal, Idx});
++    Base = Insert->getOperand(0);
++  }
++
++  if (InsertElements.empty())
++    return false;
+ 
++  // The chain is collected from the final insertelement back to the base load.
++  // Emit scalar stores in original program order to preserve semantics for
++  // duplicate or dynamically equal indices.
++  std::reverse(InsertElements.begin(), InsertElements.end());
++  auto *Load = dyn_cast<LoadInst>(Base);
++  if (!Load)
++    return false;
++
++  auto VecTy = cast<VectorType>(SI->getValueOperand()->getType());
++  if (auto *FVT = dyn_cast<FixedVectorType>(VecTy)) {
++    if (InsertElements.size() == FVT->getNumElements()) {
++      Value *FirstVal = InsertElements.front().first;
++      if (all_of(InsertElements,
++                 [FirstVal](const auto &Elt) { return Elt.first == FirstVal; }))
++        return false;
++    }
++  }
++
++  Value *SrcAddr = Load->getPointerOperand()->stripPointerCasts();
++  // Don't optimize for atomic/volatile load or store. Ensure memory is not
++  // modified between, vector type matches store size, and index is inbounds.
++  if (!Load->isSimple() || Load->getParent() != SI->getParent() ||
++      !DL->typeSizeEqualsStoreSize(Load->getType()->getScalarType()) ||
++      SrcAddr != SI->getPointerOperand()->stripPointerCasts())
++    return false;
++
++  if (isMemModifiedBetween(Load->getIterator(), SI->getIterator(),
++                           MemoryLocation::get(SI), AA))
++    return false;
++
++  for (auto [InsertVal, Idx] : InsertElements) {
+     auto ScalarizableIdx =
+         canScalarizeAccess(VecTy, Idx, SQ.getWithInstruction(Load));
+-    if (ScalarizableIdx.isUnsafe() ||
+-        isMemModifiedBetween(Load->getIterator(), SI->getIterator(),
+-                             MemoryLocation::get(SI), AA))
++    if (ScalarizableIdx.isUnsafe())
+       return false;
++  }
++
++  InstructionCost OldCost = TTI.getMemoryOpCost(
++      Instruction::Store, SI->getValueOperand()->getType(), SI->getAlign(),
++      SI->getPointerAddressSpace(), CostKind);
++
++  if (Load->hasOneUse())
++    OldCost += TTI.getMemoryOpCost(Instruction::Load, Load->getType(),
++                                   Load->getAlign(),
++                                   Load->getPointerAddressSpace(), CostKind);
++
++  for (auto [InsertVal, Idx] : InsertElements) {
++    int Index = -1;
++    if (auto *CIdx = dyn_cast<ConstantInt>(Idx))
++      Index = CIdx->getZExtValue();
++
++    OldCost += TTI.getVectorInstrCost(Instruction::InsertElement, VecTy,
++                                      CostKind, Index);
++  }
++
++  InstructionCost NewCost = 0;
+ 
+-    // Ensure we add the load back to the worklist BEFORE its users so they can
+-    // erased in the correct order.
+-    Worklist.push(Load);
++  for (auto [InsertVal, Idx] : InsertElements) {
++    Align ScalarOpAlignment = computeAlignmentAfterScalarization(
++        std::max(SI->getAlign(), Load->getAlign()), InsertVal->getType(), Idx,
++        *DL);
++
++    NewCost += TTI.getMemoryOpCost(Instruction::Store, InsertVal->getType(),
++                                   ScalarOpAlignment,
++                                   SI->getPointerAddressSpace(), CostKind);
++  }
++
++  if (!OldCost.isValid() || !NewCost.isValid() || OldCost <= NewCost)
++    return false;
++
++  // Now we know the transform is profitable. It is safe to mutate IR.
++  for (auto [InsertVal, Idx] : InsertElements) {
++    auto ScalarizableIdx =
++        canScalarizeAccess(VecTy, Idx, SQ.getWithInstruction(Load));
++    assert(!ScalarizableIdx.isUnsafe() && "already checked above");
+ 
+     if (ScalarizableIdx.isSafeWithFreeze())
+       ScalarizableIdx.freeze(Builder, *cast<Instruction>(Idx));
++  }
++
++  // Ensure we add the load back to the worklist BEFORE its users so they can
++  // erased in the correct order.
++  Worklist.push(Load);
++  StoreInst *LastStore = nullptr;
++  for (auto [InsertVal, Idx] : InsertElements) {
+     Value *GEP = Builder.CreateInBoundsGEP(
+         SI->getValueOperand()->getType(), SI->getPointerOperand(),
+         {ConstantInt::get(Idx->getType(), 0), Idx});
+-    StoreInst *NSI = Builder.CreateStore(NewElement, GEP);
+-    NSI->copyMetadata(*SI);
++
++    LastStore = Builder.CreateStore(InsertVal, GEP);
++    LastStore->copyMetadata(*SI);
++
+     Align ScalarOpAlignment = computeAlignmentAfterScalarization(
+-        std::max(SI->getAlign(), Load->getAlign()), NewElement->getType(), Idx,
++        std::max(SI->getAlign(), Load->getAlign()), InsertVal->getType(), Idx,
+         *DL);
+-    NSI->setAlignment(ScalarOpAlignment);
+-    replaceValue(I, *NSI);
+-    eraseInstruction(I);
+-    return true;
++    LastStore->setAlignment(ScalarOpAlignment);
+   }
+ 
+-  return false;
++  replaceValue(I, *LastStore);
++  eraseInstruction(I);
++  return true;
+ }
+ 
+ /// Try to scalarize vector loads feeding extractelement or bitcast
+@@ -6111,7 +6181,7 @@ bool VectorCombine::run() {
+       return true;
+ 
+     if (Opcode == Instruction::Store)
+-      if (foldSingleElementStore(I))
++      if (foldInsertElementsStore(I))
+         return true;
+ 
+     // If this is an early pipeline invocation of this pass, we are done.
+diff --git a/llvm/test/Transforms/VectorCombine/load-insert-store.ll b/llvm/test/Transforms/VectorCombine/load-insert-store.ll
+index e33ebe444d763..69c55aba5dc15 100644
+--- a/llvm/test/Transforms/VectorCombine/load-insert-store.ll
++++ b/llvm/test/Transforms/VectorCombine/load-insert-store.ll
+@@ -19,10 +19,10 @@ entry:
+ define void @insert_store2(ptr %q, i16 zeroext %s) {
+ ; CHECK-LABEL: @insert_store2(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[TMP0:%.*]] = load <8 x i16>, ptr [[Q:%.*]], align 16
+-; CHECK-NEXT:    [[VEC1:%.*]] = insertelement <8 x i16> [[TMP0]], i16 [[S:%.*]], i32 6
+-; CHECK-NEXT:    [[VEC2:%.*]] = insertelement <8 x i16> [[VEC1]], i16 [[S]], i32 7
+-; CHECK-NEXT:    store <8 x i16> [[VEC2]], ptr [[Q]], align 1
++; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr inbounds <8 x i16>, ptr [[Q:%.*]], i32 0, i32 6
++; CHECK-NEXT:    store i16 [[S:%.*]], ptr [[TMP0]], align 4
++; CHECK-NEXT:    [[TMP1:%.*]] = getelementptr inbounds <8 x i16>, ptr [[Q]], i32 0, i32 7
++; CHECK-NEXT:    store i16 [[S]], ptr [[TMP1]], align 2
+ ; CHECK-NEXT:    ret void
+ ;
+ entry:
+@@ -51,11 +51,12 @@ define void @insert_store2_duplicate_different_values(ptr %p, i16 %a, i16 %b) {
+ define void @insert_store3(ptr %q, i16 zeroext %s) {
+ ; CHECK-LABEL: @insert_store3(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[TMP0:%.*]] = load <8 x i16>, ptr [[Q:%.*]], align 16
+-; CHECK-NEXT:    [[VEC1:%.*]] = insertelement <8 x i16> [[TMP0]], i16 [[S:%.*]], i32 5
+-; CHECK-NEXT:    [[VEC2:%.*]] = insertelement <8 x i16> [[VEC1]], i16 [[S]], i32 6
+-; CHECK-NEXT:    [[VEC3:%.*]] = insertelement <8 x i16> [[VEC2]], i16 [[S]], i32 7
+-; CHECK-NEXT:    store <8 x i16> [[VEC3]], ptr [[Q]], align 1
++; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr inbounds <8 x i16>, ptr [[Q:%.*]], i32 0, i32 5
++; CHECK-NEXT:    store i16 [[S:%.*]], ptr [[TMP0]], align 2
++; CHECK-NEXT:    [[TMP1:%.*]] = getelementptr inbounds <8 x i16>, ptr [[Q]], i32 0, i32 6
++; CHECK-NEXT:    store i16 [[S]], ptr [[TMP1]], align 4
++; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr inbounds <8 x i16>, ptr [[Q]], i32 0, i32 7
++; CHECK-NEXT:    store i16 [[S]], ptr [[TMP2]], align 2
+ ; CHECK-NEXT:    ret void
+ ;
+ entry:
+@@ -70,16 +71,22 @@ entry:
+ define void @insert_store8(ptr %q, i16 zeroext %s) {
+ ; CHECK-LABEL: @insert_store8(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[TMP0:%.*]] = load <8 x i16>, ptr [[Q:%.*]], align 16
+-; CHECK-NEXT:    [[VEC1:%.*]] = insertelement <8 x i16> [[TMP0]], i16 [[S:%.*]], i32 0
+-; CHECK-NEXT:    [[VEC2:%.*]] = insertelement <8 x i16> [[VEC1]], i16 [[S]], i32 1
+-; CHECK-NEXT:    [[VEC3:%.*]] = insertelement <8 x i16> [[VEC2]], i16 [[S]], i32 2
+-; CHECK-NEXT:    [[VEC4:%.*]] = insertelement <8 x i16> [[VEC3]], i16 [[S]], i32 3
+-; CHECK-NEXT:    [[VEC5:%.*]] = insertelement <8 x i16> [[VEC4]], i16 [[S]], i32 4
+-; CHECK-NEXT:    [[VEC6:%.*]] = insertelement <8 x i16> [[VEC5]], i16 [[S]], i32 5
+-; CHECK-NEXT:    [[VEC7:%.*]] = insertelement <8 x i16> [[VEC6]], i16 [[S]], i32 6
+-; CHECK-NEXT:    [[VEC8:%.*]] = insertelement <8 x i16> [[VEC7]], i16 [[S]], i32 7
+-; CHECK-NEXT:    store <8 x i16> [[VEC8]], ptr [[Q]], align 1
++; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr inbounds <8 x i16>, ptr [[Q:%.*]], i32 0, i32 0
++; CHECK-NEXT:    store i16 [[S:%.*]], ptr [[TMP0]], align 16
++; CHECK-NEXT:    [[TMP1:%.*]] = getelementptr inbounds <8 x i16>, ptr [[Q]], i32 0, i32 1
++; CHECK-NEXT:    store i16 [[S]], ptr [[TMP1]], align 2
++; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr inbounds <8 x i16>, ptr [[Q]], i32 0, i32 2
++; CHECK-NEXT:    store i16 [[S]], ptr [[TMP2]], align 4
++; CHECK-NEXT:    [[TMP3:%.*]] = getelementptr inbounds <8 x i16>, ptr [[Q]], i32 0, i32 3
++; CHECK-NEXT:    store i16 [[S]], ptr [[TMP3]], align 2
++; CHECK-NEXT:    [[TMP4:%.*]] = getelementptr inbounds <8 x i16>, ptr [[Q]], i32 0, i32 4
++; CHECK-NEXT:    store i16 [[S]], ptr [[TMP4]], align 8
++; CHECK-NEXT:    [[TMP5:%.*]] = getelementptr inbounds <8 x i16>, ptr [[Q]], i32 0, i32 5
++; CHECK-NEXT:    store i16 [[S]], ptr [[TMP5]], align 2
++; CHECK-NEXT:    [[TMP6:%.*]] = getelementptr inbounds <8 x i16>, ptr [[Q]], i32 0, i32 6
++; CHECK-NEXT:    store i16 [[S]], ptr [[TMP6]], align 4
++; CHECK-NEXT:    [[TMP7:%.*]] = getelementptr inbounds <8 x i16>, ptr [[Q]], i32 0, i32 7
++; CHECK-NEXT:    store i16 [[S]], ptr [[TMP7]], align 2
+ ; CHECK-NEXT:    ret void
+ ;
+ entry:
+@@ -911,10 +918,10 @@ declare double @llvm.log2.f64(double)
+ define void @insert_store_gap(ptr %q, i16 zeroext %s) {
+ ; CHECK-LABEL: @insert_store_gap(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[TMP0:%.*]] = load <8 x i16>, ptr [[Q:%.*]], align 16
+-; CHECK-NEXT:    [[VEC1:%.*]] = insertelement <8 x i16> [[TMP0]], i16 [[S:%.*]], i32 2
+-; CHECK-NEXT:    [[VEC2:%.*]] = insertelement <8 x i16> [[VEC1]], i16 [[S]], i32 5
+-; CHECK-NEXT:    store <8 x i16> [[VEC2]], ptr [[Q]], align 16
++; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr inbounds <8 x i16>, ptr [[Q:%.*]], i32 0, i32 2
++; CHECK-NEXT:    store i16 [[S:%.*]], ptr [[TMP0]], align 4
++; CHECK-NEXT:    [[TMP1:%.*]] = getelementptr inbounds <8 x i16>, ptr [[Q]], i32 0, i32 5
++; CHECK-NEXT:    store i16 [[S]], ptr [[TMP1]], align 2
+ ; CHECK-NEXT:    ret void
+ ;
+ entry:
+@@ -928,11 +935,12 @@ entry:
+ define void @insert_store_reverse(ptr %q, i16 zeroext %s) {
+ ; CHECK-LABEL: @insert_store_reverse(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[TMP0:%.*]] = load <8 x i16>, ptr [[Q:%.*]], align 16
+-; CHECK-NEXT:    [[VEC1:%.*]] = insertelement <8 x i16> [[TMP0]], i16 [[S:%.*]], i32 7
+-; CHECK-NEXT:    [[VEC2:%.*]] = insertelement <8 x i16> [[VEC1]], i16 [[S]], i32 6
+-; CHECK-NEXT:    [[VEC3:%.*]] = insertelement <8 x i16> [[VEC2]], i16 [[S]], i32 5
+-; CHECK-NEXT:    store <8 x i16> [[VEC3]], ptr [[Q]], align 16
++; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr inbounds <8 x i16>, ptr [[Q:%.*]], i32 0, i32 5
++; CHECK-NEXT:    store i16 [[S:%.*]], ptr [[TMP0]], align 2
++; CHECK-NEXT:    [[TMP1:%.*]] = getelementptr inbounds <8 x i16>, ptr [[Q]], i32 0, i32 6
++; CHECK-NEXT:    store i16 [[S]], ptr [[TMP1]], align 4
++; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr inbounds <8 x i16>, ptr [[Q]], i32 0, i32 7
++; CHECK-NEXT:    store i16 [[S]], ptr [[TMP2]], align 2
+ ; CHECK-NEXT:    ret void
+ ;
+ entry:
+@@ -947,10 +955,10 @@ entry:
+ define void @insert_store_duplicate(ptr %q, i16 zeroext %s) {
+ ; CHECK-LABEL: @insert_store_duplicate(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[TMP0:%.*]] = load <8 x i16>, ptr [[Q:%.*]], align 16
+-; CHECK-NEXT:    [[VEC1:%.*]] = insertelement <8 x i16> [[TMP0]], i16 [[S:%.*]], i32 3
+-; CHECK-NEXT:    [[VEC2:%.*]] = insertelement <8 x i16> [[VEC1]], i16 [[S]], i32 3
+-; CHECK-NEXT:    store <8 x i16> [[VEC2]], ptr [[Q]], align 16
++; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr inbounds <8 x i16>, ptr [[Q:%.*]], i32 0, i32 3
++; CHECK-NEXT:    store i16 [[S:%.*]], ptr [[TMP0]], align 2
++; CHECK-NEXT:    [[TMP1:%.*]] = getelementptr inbounds <8 x i16>, ptr [[Q]], i32 0, i32 3
++; CHECK-NEXT:    store i16 [[S]], ptr [[TMP1]], align 2
+ ; CHECK-NEXT:    ret void
+ ;
+ entry:
+@@ -964,10 +972,10 @@ entry:
+ define void @insert_store_i32(ptr %q, i32 zeroext %s) {
+ ; CHECK-LABEL: @insert_store_i32(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[TMP0:%.*]] = load <4 x i32>, ptr [[Q:%.*]], align 16
+-; CHECK-NEXT:    [[VEC1:%.*]] = insertelement <4 x i32> [[TMP0]], i32 [[S:%.*]], i32 2
+-; CHECK-NEXT:    [[VEC2:%.*]] = insertelement <4 x i32> [[VEC1]], i32 [[S]], i32 3
+-; CHECK-NEXT:    store <4 x i32> [[VEC2]], ptr [[Q]], align 16
++; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr inbounds <4 x i32>, ptr [[Q:%.*]], i32 0, i32 2
++; CHECK-NEXT:    store i32 [[S:%.*]], ptr [[TMP0]], align 8
++; CHECK-NEXT:    [[TMP1:%.*]] = getelementptr inbounds <4 x i32>, ptr [[Q]], i32 0, i32 3
++; CHECK-NEXT:    store i32 [[S]], ptr [[TMP1]], align 4
+ ; CHECK-NEXT:    ret void
+ ;
+ entry:
+@@ -981,10 +989,10 @@ entry:
+ define void @insert_store_i8(ptr %q, i8 zeroext %s) {
+ ; CHECK-LABEL: @insert_store_i8(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[TMP0:%.*]] = load <16 x i8>, ptr [[Q:%.*]], align 16
+-; CHECK-NEXT:    [[VEC1:%.*]] = insertelement <16 x i8> [[TMP0]], i8 [[S:%.*]], i32 8
+-; CHECK-NEXT:    [[VEC2:%.*]] = insertelement <16 x i8> [[VEC1]], i8 [[S]], i32 9
+-; CHECK-NEXT:    store <16 x i8> [[VEC2]], ptr [[Q]], align 16
++; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr inbounds <16 x i8>, ptr [[Q:%.*]], i32 0, i32 8
++; CHECK-NEXT:    store i8 [[S:%.*]], ptr [[TMP0]], align 8
++; CHECK-NEXT:    [[TMP1:%.*]] = getelementptr inbounds <16 x i8>, ptr [[Q]], i32 0, i32 9
++; CHECK-NEXT:    store i8 [[S]], ptr [[TMP1]], align 1
+ ; CHECK-NEXT:    ret void
+ ;
+ entry:
+@@ -998,10 +1006,10 @@ entry:
+ define void @insert_store_alignment(ptr %q, i16 zeroext %s) {
+ ; CHECK-LABEL: @insert_store_alignment(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[TMP0:%.*]] = load <8 x i16>, ptr [[Q:%.*]], align 16
+-; CHECK-NEXT:    [[VEC1:%.*]] = insertelement <8 x i16> [[TMP0]], i16 [[S:%.*]], i32 0
+-; CHECK-NEXT:    [[VEC2:%.*]] = insertelement <8 x i16> [[VEC1]], i16 [[S]], i32 4
+-; CHECK-NEXT:    store <8 x i16> [[VEC2]], ptr [[Q]], align 16
++; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr inbounds <8 x i16>, ptr [[Q:%.*]], i32 0, i32 0
++; CHECK-NEXT:    store i16 [[S:%.*]], ptr [[TMP0]], align 16
++; CHECK-NEXT:    [[TMP1:%.*]] = getelementptr inbounds <8 x i16>, ptr [[Q]], i32 0, i32 4
++; CHECK-NEXT:    store i16 [[S]], ptr [[TMP1]], align 8
+ ; CHECK-NEXT:    ret void
+ ;
+ entry:
+@@ -1015,10 +1023,10 @@ entry:
+ define void @insert_store_size(ptr %q, i16 zeroext %s) {
+ ; CHECK-LABEL: @insert_store_size(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[TMP0:%.*]] = load <16 x i16>, ptr [[Q:%.*]], align 32
+-; CHECK-NEXT:    [[VEC1:%.*]] = insertelement <16 x i16> [[TMP0]], i16 [[S:%.*]], i32 8
+-; CHECK-NEXT:    [[VEC2:%.*]] = insertelement <16 x i16> [[VEC1]], i16 [[S]], i32 12
+-; CHECK-NEXT:    store <16 x i16> [[VEC2]], ptr [[Q]], align 32
++; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr inbounds <16 x i16>, ptr [[Q:%.*]], i32 0, i32 8
++; CHECK-NEXT:    store i16 [[S:%.*]], ptr [[TMP0]], align 16
++; CHECK-NEXT:    [[TMP1:%.*]] = getelementptr inbounds <16 x i16>, ptr [[Q]], i32 0, i32 12
++; CHECK-NEXT:    store i16 [[S]], ptr [[TMP1]], align 8
+ ; CHECK-NEXT:    ret void
+ ;
+ entry:
+@@ -1074,10 +1082,10 @@ define void @insert_store_nonconst_large_alignment2(ptr %q, i32 zeroext %s, i32
+ ; CHECK-NEXT:    [[CMP2:%.*]] = icmp ult i32 [[IDX2:%.*]], 4
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP1]])
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP2]])
+-; CHECK-NEXT:    [[I:%.*]] = load <4 x i32>, ptr [[Q:%.*]], align 128
+-; CHECK-NEXT:    [[VECINS1:%.*]] = insertelement <4 x i32> [[I]], i32 [[S:%.*]], i32 [[IDX1]]
+-; CHECK-NEXT:    [[VECINS2:%.*]] = insertelement <4 x i32> [[VECINS1]], i32 [[S]], i32 [[IDX2]]
+-; CHECK-NEXT:    store <4 x i32> [[VECINS2]], ptr [[Q]], align 128
++; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr inbounds <4 x i32>, ptr [[Q:%.*]], i32 0, i32 [[IDX2]]
++; CHECK-NEXT:    store i32 [[S:%.*]], ptr [[TMP0]], align 4
++; CHECK-NEXT:    [[TMP1:%.*]] = getelementptr inbounds <4 x i32>, ptr [[Q]], i32 0, i32 [[IDX1]]
++; CHECK-NEXT:    store i32 [[S]], ptr [[TMP1]], align 4
+ ; CHECK-NEXT:    ret void
+ ;
+ entry:
+@@ -1098,10 +1106,10 @@ define void @insert_store_nonconst_align_maximum_8_2(ptr %q, i64 %s, i32 %idx1,
+ ; CHECK-NEXT:    [[CMP2:%.*]] = icmp ult i32 [[IDX2:%.*]], 2
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP1]])
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP2]])
+-; CHECK-NEXT:    [[I:%.*]] = load <8 x i64>, ptr [[Q:%.*]], align 8
+-; CHECK-NEXT:    [[VECINS1:%.*]] = insertelement <8 x i64> [[I]], i64 [[S:%.*]], i32 [[IDX1]]
+-; CHECK-NEXT:    [[VECINS2:%.*]] = insertelement <8 x i64> [[VECINS1]], i64 [[S]], i32 [[IDX2]]
+-; CHECK-NEXT:    store <8 x i64> [[VECINS2]], ptr [[Q]], align 8
++; CHECK-NEXT:    [[TMP1:%.*]] = getelementptr inbounds <8 x i64>, ptr [[Q:%.*]], i32 0, i32 [[IDX2]]
++; CHECK-NEXT:    store i64 [[S:%.*]], ptr [[TMP1]], align 8
++; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr inbounds <8 x i64>, ptr [[Q]], i32 0, i32 [[IDX1]]
++; CHECK-NEXT:    store i64 [[S]], ptr [[TMP2]], align 8
+ ; CHECK-NEXT:    ret void
+ ;
+   %cmp1 = icmp ult i32 %idx1, 2
+@@ -1121,10 +1129,10 @@ define void @insert_store_nonconst_align_maximum_4_2(ptr %q, i64 %s, i32 %idx1,
+ ; CHECK-NEXT:    [[CMP2:%.*]] = icmp ult i32 [[IDX2:%.*]], 2
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP1]])
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP2]])
+-; CHECK-NEXT:    [[I:%.*]] = load <8 x i64>, ptr [[Q:%.*]], align 4
+-; CHECK-NEXT:    [[VECINS1:%.*]] = insertelement <8 x i64> [[I]], i64 [[S:%.*]], i32 [[IDX1]]
+-; CHECK-NEXT:    [[VECINS2:%.*]] = insertelement <8 x i64> [[VECINS1]], i64 [[S]], i32 [[IDX2]]
+-; CHECK-NEXT:    store <8 x i64> [[VECINS2]], ptr [[Q]], align 4
++; CHECK-NEXT:    [[TMP1:%.*]] = getelementptr inbounds <8 x i64>, ptr [[Q:%.*]], i32 0, i32 [[IDX2]]
++; CHECK-NEXT:    store i64 [[S:%.*]], ptr [[TMP1]], align 4
++; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr inbounds <8 x i64>, ptr [[Q]], i32 0, i32 [[IDX1]]
++; CHECK-NEXT:    store i64 [[S]], ptr [[TMP2]], align 4
+ ; CHECK-NEXT:    ret void
+ ;
+   %cmp1 = icmp ult i32 %idx1, 2
+@@ -1144,10 +1152,10 @@ define void @insert_store_nonconst_align_larger_2(ptr %q, i64 %s, i32 %idx1, i32
+ ; CHECK-NEXT:    [[CMP2:%.*]] = icmp ult i32 [[IDX2:%.*]], 2
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP1]])
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP2]])
+-; CHECK-NEXT:    [[I:%.*]] = load <8 x i64>, ptr [[Q:%.*]], align 4
+-; CHECK-NEXT:    [[VECINS1:%.*]] = insertelement <8 x i64> [[I]], i64 [[S:%.*]], i32 [[IDX1]]
+-; CHECK-NEXT:    [[VECINS2:%.*]] = insertelement <8 x i64> [[VECINS1]], i64 [[S]], i32 [[IDX2]]
+-; CHECK-NEXT:    store <8 x i64> [[VECINS2]], ptr [[Q]], align 2
++; CHECK-NEXT:    [[TMP1:%.*]] = getelementptr inbounds <8 x i64>, ptr [[Q:%.*]], i32 0, i32 [[IDX2]]
++; CHECK-NEXT:    store i64 [[S:%.*]], ptr [[TMP1]], align 4
++; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr inbounds <8 x i64>, ptr [[Q]], i32 0, i32 [[IDX1]]
++; CHECK-NEXT:    store i64 [[S]], ptr [[TMP2]], align 4
+ ; CHECK-NEXT:    ret void
+ ;
+   %cmp1 = icmp ult i32 %idx1, 2
