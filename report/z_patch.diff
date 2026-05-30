@@ -1,0 +1,57 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+index 97e1a6555eac4..bc91a011a6a60 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+@@ -7743,6 +7743,42 @@ Instruction *InstCombinerImpl::foldICmpCommutative(CmpPredicate Pred,
+   return nullptr;
+ }
+ 
++static Instruction *foldICmpZeroOfOrAddOperand(ICmpInst &I,
++                                               IRBuilderBase &Builder) {
++  if (!I.isEquality())
++    return nullptr;
++
++  Value *V;
++  if (match(I.getOperand(1), m_ZeroInt()))
++    V = I.getOperand(0);
++  else if (match(I.getOperand(0), m_ZeroInt()))
++    V = I.getOperand(1);
++  else
++    return nullptr;
++
++  Value *A, *B;
++  if (!match(V, m_OneUse(m_c_Or(m_Value(A), m_Value(B)))))
++    return nullptr;
++
++  Value *X, *Y;
++
++  auto Build = [&](Value *X, Value *Y) -> Instruction * {
++    Value *Or = Builder.CreateOr(X, Y);
++    return new ICmpInst(I.getPredicate(), Or,
++                        Constant::getNullValue(Or->getType()));
++  };
++
++  // ((X + Y) | X) == 0  ->  (X | Y) == 0
++  // ((X + Y) | Y) == 0  ->  (X | Y) == 0
++  if (match(A, m_c_Add(m_Value(X), m_Value(Y))) && (B == X || B == Y))
++    return Build(X, Y);
++
++  if (match(B, m_c_Add(m_Value(X), m_Value(Y))) && (A == X || A == Y))
++    return Build(X, Y);
++
++  return nullptr;
++}
++
+ Instruction *InstCombinerImpl::visitICmpInst(ICmpInst &I) {
+   bool Changed = false;
+   const SimplifyQuery Q = SQ.getWithInstruction(&I);
+@@ -8136,6 +8172,9 @@ Instruction *InstCombinerImpl::visitICmpInst(ICmpInst &I) {
+     }
+   }
+ 
++  if (Instruction *Res = foldICmpZeroOfOrAddOperand(I, Builder))
++    return Res;
++
+   return Changed ? &I : nullptr;
+ }
+ 
