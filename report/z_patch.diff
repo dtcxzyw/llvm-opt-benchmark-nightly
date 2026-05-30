@@ -1,0 +1,87 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+index 97e1a6555eac4..3d29fcbe835f4 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+@@ -7743,6 +7743,72 @@ Instruction *InstCombinerImpl::foldICmpCommutative(CmpPredicate Pred,
+   return nullptr;
+ }
+ 
++static Instruction *foldICmpZeroOfUAddSat(ICmpInst &I,
++                                          IRBuilderBase &Builder) {
++  if (!I.isEquality())
++    return nullptr;
++
++  Value *V;
++  if (match(I.getOperand(1), m_ZeroInt()))
++    V = I.getOperand(0);
++  else if (match(I.getOperand(0), m_ZeroInt()))
++    V = I.getOperand(1);
++  else
++    return nullptr;
++
++  // Keep this scalar-only for now. The motivating pattern is scalar i64, and
++  // this avoids vector constant/mask complications.
++  if (!isa<IntegerType>(V->getType()))
++    return nullptr;
++
++  Value *Cond, *TrueVal, *FalseVal;
++  if (!match(V, m_OneUse(m_Select(m_Value(Cond), m_Value(TrueVal),
++                                  m_Value(FalseVal)))))
++    return nullptr;
++
++  CmpPredicate OvPred;
++  Value *Sum, *OvOp;
++  if (!match(Cond, m_ICmp(OvPred, m_Value(Sum), m_Value(OvOp))))
++    return nullptr;
++
++  Value *OverflowVal, *NonOverflowVal;
++  if (OvPred == ICmpInst::ICMP_ULT) {
++    OverflowVal = TrueVal;
++    NonOverflowVal = FalseVal;
++  } else if (OvPred == ICmpInst::ICMP_UGE) {
++    // Also handle the inverted form:
++    //   select (sum >=u y), umin(sum, C), K
++    OverflowVal = FalseVal;
++    NonOverflowVal = TrueVal;
++  } else {
++    return nullptr;
++  }
++
++  const APInt *OverflowC;
++  if (!match(OverflowVal, m_APInt(OverflowC)) || OverflowC->isZero())
++    return nullptr;
++
++  const APInt *CapC;
++  if (!match(NonOverflowVal,
++             m_c_UMin(m_Specific(Sum), m_APInt(CapC))) ||
++      CapC->isZero())
++    return nullptr;
++
++  Value *X, *Y;
++  if (!match(Sum, m_Add(m_Value(X), m_Value(Y))))
++    return nullptr;
++
++  // The overflow check must be based on the same add:
++  //   sum = x + y
++  //   ov  = sum <u x  or  sum <u y
++  if (OvOp != X && OvOp != Y)
++    return nullptr;
++
++  Value *Or = Builder.CreateOr(X, Y);
++  return new ICmpInst(I.getPredicate(), Or,
++                      Constant::getNullValue(V->getType()));
++}
++
+ Instruction *InstCombinerImpl::visitICmpInst(ICmpInst &I) {
+   bool Changed = false;
+   const SimplifyQuery Q = SQ.getWithInstruction(&I);
+@@ -8136,6 +8202,9 @@ Instruction *InstCombinerImpl::visitICmpInst(ICmpInst &I) {
+     }
+   }
+ 
++  if (Instruction *R = foldICmpZeroOfUAddSat(I, Builder))
++    return R;
++
+   return Changed ? &I : nullptr;
+ }
+ 
