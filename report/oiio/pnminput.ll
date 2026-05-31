@@ -182,6 +182,7 @@ module asm ".globl _ZSt21ios_base_library_initv"
 @.str.57 = private unnamed_addr constant [26 x i8] c"vector::_M_default_append\00", align 1
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @__cxx_global_var_init, ptr @_ZN3fmt3v1212format_facetISt6localeE2idE }]
 @llvm.used = appending global [1 x ptr] [ptr @_ZN3fmt3v1212format_facetISt6localeE2idE], section "llvm.metadata"
+@switch.table._ZN11OpenImageIO4v3_18PNMInput16read_file_headerEv = private unnamed_addr constant [54 x i32] [i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 6], align 4
 
 ; Function Attrs: mustprogress uwtable
 define noundef ptr @_ZN11OpenImageIO4v3_124pnm_input_imageio_createEv() local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
@@ -584,42 +585,22 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.l = load ptr, ptr %i.g, align 8, !tbaa !65   ; 2 uses
   %i.m = load i8, ptr %i.l, align 1, !tbaa !66
-  switch i8 %i.m, label %bb.v [
-    i8 49, label %bb.e
-    i8 50, label %11
-    i8 51, label %12
-    i8 52, label %13
-    i8 53, label %14
-    i8 54, label %15
-    i8 102, label %16
-    i8 70, label %bb.d
-  ]
-
-11:                                               ; preds = %bb.c
-  br label %bb.e
-
-12:                                               ; preds = %bb.c
-  br label %bb.e
-
-13:                                               ; preds = %bb.c
-  br label %bb.e
-
-14:                                               ; preds = %bb.c
-  br label %bb.e
-
-15:                                               ; preds = %bb.c
-  br label %bb.e
-
-16:                                               ; preds = %bb.c
-  br label %bb.e
+  %switch.tableidx = add i8 %i.m, -49             ; 3 uses
+  %11 = icmp ult i8 %switch.tableidx, 54
+  br i1 %11, label %bb.d, label %bb.v
 
 bb.d:                                             ; preds = %bb.c
-  br label %bb.e
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i64
+  %switch.shifted = lshr i64 9007199256838207, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  br i1 %switch.lobit, label %bb.e, label %bb.v
 
-bb.e:                                             ; preds = %bb.c, %bb.d, %16, %15, %14, %13, %12, %11
-  %.sink = phi i32 [ 7, %bb.d ], [ 6, %16 ], [ 5, %15 ], [ 4, %14 ], [ 3, %13 ], [ 2, %12 ], [ 1, %11 ], [ 0, %bb.c ]
+bb.e:                                             ; preds = %bb.d
+  %12 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN11OpenImageIO4v3_18PNMInput16read_file_headerEv, i64 %12
+  %switch.load = load i32, ptr %switch.gep, align 4
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 184
-  store i32 %.sink, ptr %i.n, align 8, !tbaa !57
+  store i32 %switch.load, ptr %i.n, align 8, !tbaa !57
   %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 1
   store ptr %i.o, ptr %i.g, align 8, !tbaa !65
   %i.p = add i64 %i.j, -1                         ; 2 uses
@@ -851,8 +832,8 @@ _ZN11OpenImageIO4v3_17Strutil7isspaceEc.exit:     ; preds = %bb.s, %bb.m, %bb.r,
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #28
   br label %bb.v
 
-bb.v:                                             ; preds = %bb.c, %bb.a, %bb.b, %_ZN11OpenImageIO4v3_17Strutil7isspaceEc.exit
-  %.1 = phi i1 [ %.0, %_ZN11OpenImageIO4v3_17Strutil7isspaceEc.exit ], [ false, %bb.a ], [ false, %bb.b ], [ false, %bb.c ]
+bb.v:                                             ; preds = %bb.d, %bb.c, %bb.a, %bb.b, %_ZN11OpenImageIO4v3_17Strutil7isspaceEc.exit
+  %.1 = phi i1 [ %.0, %_ZN11OpenImageIO4v3_17Strutil7isspaceEc.exit ], [ false, %bb.a ], [ false, %bb.b ], [ false, %bb.c ], [ false, %bb.d ]
   ret i1 %.1
 }
 

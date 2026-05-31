@@ -201,6 +201,7 @@ $_ZTSSt23_Sp_counted_ptr_inplaceIN6duckdb16ColumnStatisticsESaIvELN9__gnu_cxx12_
 @.str.130 = private unnamed_addr constant [10 x i8] c"types_xym\00", align 1
 @.str.131 = private unnamed_addr constant [11 x i8] c"types_xyzm\00", align 1
 @.str.132 = private unnamed_addr constant [61 x i8] c"Failed to cast expression to type - expression type mismatch\00", align 1
+@switch.table._ZN6duckdb14BaseStatistics12GetStatsTypeERKNS_11LogicalTypeE = private unnamed_addr constant [86 x i8] c"\01\04\04\00\00\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\00\00\00\00\00\00\00\00\00\04\00\00\04\04\04\04\04\04\04\04\04\04\02\03\04\04\04\04\05", align 1
 
 @_ZN6duckdb14BaseStatisticsC1Ev = unnamed_addr alias void (ptr), ptr @_ZN6duckdb14BaseStatisticsC2Ev
 @_ZN6duckdb14BaseStatisticsC1ENS_11LogicalTypeE = unnamed_addr alias void (ptr, ptr), ptr @_ZN6duckdb14BaseStatisticsC2ENS_11LogicalTypeE
@@ -484,56 +485,31 @@ bb.a:
   %i.a = load i8, ptr %0, align 8, !tbaa !30
   switch i8 %i.a, label %bb.b [
     i8 1, label %bb.d
-    i8 60, label %.fold.split
-    i8 109, label %.fold.split4
+    i8 60, label %bb.c
+    i8 109, label %.fold.split
   ]
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1
   %i.c = load i8, ptr %i.b, align 1, !tbaa !31
-  switch i8 %i.c, label %bb.c [
-    i8 1, label %bb.d
-    i8 3, label %bb.d
-    i8 5, label %bb.d
-    i8 7, label %bb.d
-    i8 9, label %bb.d
-    i8 2, label %bb.d
-    i8 4, label %bb.d
-    i8 6, label %bb.d
-    i8 8, label %bb.d
-    i8 -52, label %bb.d
-    i8 -53, label %bb.d
-    i8 11, label %bb.d
-    i8 12, label %bb.d
-    i8 -56, label %1
-    i8 24, label %2
-    i8 23, label %3
-    i8 29, label %4
-  ]
+  %switch.tableidx = add i8 %i.c, 56              ; 2 uses
+  %1 = icmp ult i8 %switch.tableidx, 86
+  br i1 %1, label %.fold.split4, label %bb.d
 
-1:                                                ; preds = %bb.b
-  br label %bb.d
-
-2:                                                ; preds = %bb.b
-  br label %bb.d
-
-3:                                                ; preds = %bb.b
-  br label %bb.d
-
-4:                                                ; preds = %bb.b
-  br label %bb.d
-
-bb.c:                                             ; preds = %bb.b
+bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 .fold.split:                                      ; preds = %bb.a
   br label %bb.d
 
-.fold.split4:                                     ; preds = %bb.a
+.fold.split4:                                     ; preds = %bb.b
+  %2 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6duckdb14BaseStatistics12GetStatsTypeERKNS_11LogicalTypeE, i64 %2
+  %switch.load = load i8, ptr %switch.gep, align 1
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.a, %.fold.split4, %.fold.split, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.c, %4, %3, %2, %1
-  %.0 = phi i8 [ 5, %4 ], [ 4, %bb.a ], [ 0, %bb.b ], [ 4, %bb.c ], [ 6, %.fold.split ], [ 1, %1 ], [ 3, %2 ], [ 2, %3 ], [ 0, %bb.b ], [ 0, %bb.b ], [ 0, %bb.b ], [ 0, %bb.b ], [ 0, %bb.b ], [ 0, %bb.b ], [ 0, %bb.b ], [ 0, %bb.b ], [ 0, %bb.b ], [ 0, %bb.b ], [ 0, %bb.b ], [ 0, %bb.b ], [ 7, %.fold.split4 ]
+bb.d:                                             ; preds = %bb.b, %.fold.split4, %bb.a, %.fold.split, %bb.c
+  %.0 = phi i8 [ 7, %.fold.split ], [ 4, %bb.a ], [ %switch.load, %.fold.split4 ], [ 6, %bb.c ], [ 4, %bb.b ]
   ret i8 %.0
 }
 

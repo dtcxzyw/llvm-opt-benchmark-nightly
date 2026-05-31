@@ -31,7 +31,7 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @free(ptr noundef nonnull %i.b) #9
+  tail call void @free(ptr noundef nonnull %i.b) #8
   store ptr null, ptr %i.a, align 8, !tbaa !8
   br label %bb.c
 
@@ -42,7 +42,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %.not3, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @free(ptr noundef nonnull %i.d) #9
+  tail call void @free(ptr noundef nonnull %i.d) #8
   store ptr null, ptr %i.c, align 8, !tbaa !15
   br label %bb.e
 
@@ -53,7 +53,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %.not4, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  tail call void @free(ptr noundef nonnull %i.f) #9
+  tail call void @free(ptr noundef nonnull %i.f) #8
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
@@ -175,19 +175,19 @@ bb.k:                                             ; preds = %.thread
 bb.l:                                             ; preds = %bb.k
   %i.ay = zext i32 %i.ad to i64
   %i.az = shl nuw nsw i64 %i.ay, 2
-  %i.ba = tail call noalias ptr @calloc(i64 noundef %i.az, i64 noundef 1) #10 ; 2 uses
+  %i.ba = tail call noalias ptr @calloc(i64 noundef %i.az, i64 noundef 1) #9 ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 32
   store ptr %i.ba, ptr %i.bb, align 8, !tbaa !8
   %i.bc = load i32, ptr %0, align 8, !tbaa !27
   %i.bd = zext i32 %i.bc to i64
   %i.be = shl nuw nsw i64 %i.bd, 2
-  %i.bf = tail call noalias ptr @calloc(i64 noundef %i.be, i64 noundef 1) #10 ; 2 uses
+  %i.bf = tail call noalias ptr @calloc(i64 noundef %i.be, i64 noundef 1) #9 ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 40
   store ptr %i.bf, ptr %i.bg, align 8, !tbaa !15
   %i.bh = load i32, ptr %0, align 8, !tbaa !27
   %i.bi = zext i32 %i.bh to i64
   %i.bj = shl nuw nsw i64 %i.bi, 2
-  %i.bk = tail call noalias ptr @calloc(i64 noundef %i.bj, i64 noundef 1) #10 ; 3 uses
+  %i.bk = tail call noalias ptr @calloc(i64 noundef %i.bj, i64 noundef 1) #9 ; 3 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 48
   store ptr %i.bk, ptr %i.bl, align 8, !tbaa !16
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 56
@@ -230,12 +230,12 @@ bb.a:
   %7 = alloca %struct.AGParamRec, align 4         ; 8 uses
   %i.c = alloca [32 x i16], align 16              ; 6 uses
   %i.d = alloca [32 x i16], align 16              ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #8
   %i.e = icmp eq ptr %1, null
   %i.f = icmp eq ptr %2, null
   %or.cond.not416 = or i1 %i.e, %i.f
@@ -475,14 +475,11 @@ bb.s:                                             ; preds = %bb.r
   %.shrunk504 = phi i8 [ 0, %.thread ], [ 0, %bb.r ], [ %i.aj, %bb.s ], [ %i.aj, %.lr.ph449 ]
   %i.cu = zext nneg i8 %.shrunk504 to i32         ; 2 uses
   %i.cv = load i8, ptr %i.k, align 1, !tbaa !35
-  %8 = zext i8 %i.cv to i32
-  %9 = add nsw i32 %8, -16                        ; 2 uses
-  %10 = call i32 @llvm.fshl.i32(i32 %9, i32 %9, i32 30)
-  switch i32 %10, label %.loopexit419 [
-    i32 0, label %bb.t
-    i32 1, label %bb.u
-    i32 2, label %bb.v
-    i32 4, label %bb.y
+  switch i8 %i.cv, label %.loopexit419 [
+    i8 16, label %bb.t
+    i8 20, label %bb.u
+    i8 24, label %bb.v
+    i8 32, label %bb.y
   ]
 
 bb.t:                                             ; preds = %.loopexit420
@@ -885,14 +882,11 @@ bb.as:                                            ; preds = %bb.ar
   %.0352405 = phi i8 [ 0, %.thread400 ], [ %i.gk, %bb.ar ], [ %i.gk, %bb.as ], [ %i.gk, %.lr.ph438 ] ; 4 uses
   %i.ka = zext nneg i8 %.shrunk to i32            ; 2 uses
   %i.kb = load i8, ptr %i.k, align 1, !tbaa !35
-  %11 = zext i8 %i.kb to i32
-  %12 = add nsw i32 %11, -16                      ; 2 uses
-  %13 = call i32 @llvm.fshl.i32(i32 %12, i32 %12, i32 30)
-  switch i32 %13, label %bb.ax [
-    i32 0, label %bb.at
-    i32 1, label %bb.au
-    i32 2, label %bb.av
-    i32 4, label %bb.aw
+  switch i8 %i.kb, label %bb.ax [
+    i8 16, label %bb.at
+    i8 20, label %bb.au
+    i8 24, label %bb.av
+    i8 32, label %bb.aw
   ]
 
 bb.at:                                            ; preds = %.loopexit423
@@ -1151,12 +1145,12 @@ _ZL6Zero16Psjj.exit:                              ; preds = %.lr.ph.i395, %bb.bg
 
 .loopexit:                                        ; preds = %bb.l, %bb.aj, %bb.am, %bb.c, %bb.e, %bb.f, %bb.ac, %bb.ad, %_ZL6Zero16Psjj.exit, %_ZL6Zero16Psjj.exit.us463, %bb.bf, %bb.be, %bb.bd, %.lr.ph455.split.us.preheader, %.lr.ph455.split.split.us.split.split, %.thread407, %bb.bb, %bb.a
   %.0 = phi i32 [ %.4339, %.thread407 ], [ -50, %bb.a ], [ 0, %bb.bb ], [ %.4339, %bb.bf ], [ %.4339, %_ZL6Zero16Psjj.exit ], [ %.4339, %.lr.ph455.split.split.us.split.split ], [ %.4339, %_ZL6Zero16Psjj.exit.us463 ], [ %.4339, %.lr.ph455.split.us.preheader ], [ %.4339, %bb.bd ], [ %.4339, %bb.be ], [ -50, %bb.ad ], [ -50, %bb.f ], [ -50, %bb.ac ], [ %i.ie, %bb.am ], [ %i.hp, %bb.aj ], [ -50, %bb.c ], [ -50, %bb.e ], [ %i.bs, %bb.l ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #8
   ret i32 %.0
 }
 
@@ -1258,9 +1252,6 @@ declare void @BitBufferByteAlign(ptr noundef, i32 noundef) local_unnamed_addr #6
 
 declare zeroext i8 @BitBufferReadOne(ptr noundef) local_unnamed_addr #6
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.fshl.i32(i32, i32, i32) #8
-
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #2 = { mustprogress nounwind willreturn memory(readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -1269,9 +1260,8 @@ attributes #4 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping
 attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #6 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { mustprogress nofree nounwind willreturn allockind("alloc,zeroed") allocsize(0,1) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #9 = { nounwind }
-attributes #10 = { nounwind allocsize(0,1) }
+attributes #8 = { nounwind }
+attributes #9 = { nounwind allocsize(0,1) }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.0 = phi i64 [ %i.e, %bb.b ], [ %0, %bb.a ]    ; 15 uses
+  %.0 = phi i64 [ %i.e, %bb.b ], [ %0, %bb.a ]    ; 14 uses
   %i.f = getelementptr i8, ptr %1, i64 44         ; 2 uses
   %i.g = load i32, ptr %i.f, align 4, !tbaa !94
   %.not24 = icmp eq i32 %i.g, 0
@@ -212,7 +212,7 @@ bb.d:                                             ; preds = %bb.c
   br label %sum_iter_fixnum.exit
 
 bb.e:                                             ; preds = %bb.c
-  %i.h = load i64, ptr %1, align 8, !tbaa !88     ; 10 uses
+  %i.h = load i64, ptr %1, align 8, !tbaa !88     ; 9 uses
   %i.i = icmp eq i64 %i.h, 0
   %i.j = and i64 %i.h, 7
   %i.k = icmp ne i64 %i.j, 0
@@ -220,12 +220,11 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.l, label %bb.f, label %rb_type.exit
 
 bb.f:                                             ; preds = %bb.e
-  %2 = tail call i64 @llvm.fshl.i64(i64 %i.h, i64 %i.h, i64 62)
-  switch i64 %2, label %bb.g [
+  switch i64 %i.h, label %bb.g [
     i64 0, label %rb_type.exit.thread
-    i64 1, label %rb_type.exit.thread
-    i64 5, label %rb_type.exit.thread
-    i64 9, label %rb_type.exit.thread
+    i64 4, label %rb_type.exit.thread
+    i64 20, label %rb_type.exit.thread
+    i64 36, label %rb_type.exit.thread
   ]
 
 bb.g:                                             ; preds = %bb.f
@@ -261,12 +260,11 @@ rb_type.exit.thread32:                            ; preds = %bb.g, %rb_type.exit
   br i1 %i.v, label %bb.h, label %rb_type.exit27
 
 bb.h:                                             ; preds = %rb_type.exit.thread32
-  %3 = tail call i64 @llvm.fshl.i64(i64 %.0, i64 %.0, i64 62)
-  switch i64 %3, label %bb.i [
+  switch i64 %.0, label %bb.i [
     i64 0, label %rb_type.exit27.thread
-    i64 1, label %rb_type.exit27.thread
-    i64 5, label %rb_type.exit27.thread
-    i64 9, label %rb_type.exit27.thread
+    i64 4, label %rb_type.exit27.thread
+    i64 20, label %rb_type.exit27.thread
+    i64 36, label %rb_type.exit27.thread
   ]
 
 bb.i:                                             ; preds = %bb.h
@@ -421,12 +419,11 @@ bb.a:
   br i1 %i.e, label %bb.b, label %rb_type.exit
 
 bb.b:                                             ; preds = %bb.a
-  %2 = tail call i64 @llvm.fshl.i64(i64 %0, i64 %0, i64 62)
-  switch i64 %2, label %bb.c [
+  switch i64 %0, label %bb.c [
     i64 0, label %rb_type.exit.thread
-    i64 1, label %rb_type.exit.thread
-    i64 5, label %rb_type.exit.thread
-    i64 9, label %rb_type.exit.thread
+    i64 4, label %rb_type.exit.thread
+    i64 20, label %rb_type.exit.thread
+    i64 36, label %rb_type.exit.thread
   ]
 
 bb.c:                                             ; preds = %bb.b

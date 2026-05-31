@@ -201,13 +201,12 @@ define internal fastcc noundef i32 @_ZL14doWriteForwardPKDsiPDsitP10UErrorCode(p
 bb.a:
   %i.a = ptrtoaddr ptr %0 to i64
   %i.b = ptrtoaddr ptr %2 to i64
-  %6 = lshr i16 %4, 1
-  %i.c = and i16 %6, 5
+  %i.c = and i16 %4, 10
   switch i16 %i.c, label %.unreachabledefault [
     i16 0, label %bb.b
-    i16 1, label %bb.d
-    i16 4, label %.preheader178
-    i16 5, label %.preheader180
+    i16 2, label %bb.d
+    i16 8, label %.preheader178
+    i16 10, label %.preheader180
   ]
 
 bb.b:                                             ; preds = %bb.a

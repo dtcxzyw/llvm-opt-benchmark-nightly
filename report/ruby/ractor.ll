@@ -201,21 +201,17 @@ rb_type.exit.i.i.i:                               ; preds = %bb.k, %bb.j
   %i.an = or i64 %i.am, 256
   store i64 %i.an, ptr %i.g, align 8, !tbaa !119
   %i.ao = trunc i64 %i.am to i32
-  %i.ap = and i32 %i.ao, 31
-  switch i32 %i.ap, label %rb_obj_gen_fields_p.exit.i.i [
-    i32 0, label %rb_obj_set_shareable.exit
-    i32 1, label %rb_obj_set_shareable.exit
-    i32 2, label %rb_obj_set_shareable.exit
-    i32 3, label %rb_obj_set_shareable.exit
-    i32 26, label %rb_obj_set_shareable.exit
-  ]
+  %i.ap = and i32 %i.ao, 31                       ; 2 uses
+  %3 = icmp samesign ult i32 %i.ap, 27
+  %switch.shifted = lshr i32 67108879, %i.ap
+  %switch.lobit = trunc i32 %switch.shifted to i1
+  %or.cond = select i1 %3, i1 %switch.lobit, i1 false
+  %4 = and i64 %i.am, 578712547822141440
+  %.not9.i.i = icmp eq i64 %4, 0
+  %or.cond58 = or i1 %or.cond, %.not9.i.i
+  br i1 %or.cond58, label %rb_obj_set_shareable.exit, label %bb.m
 
-rb_obj_gen_fields_p.exit.i.i:                     ; preds = %rb_type.exit.i.i.i
-  %3 = and i64 %i.am, 578712547822141440
-  %.not9.i.i = icmp eq i64 %3, 0
-  br i1 %.not9.i.i, label %rb_obj_set_shareable.exit, label %bb.m
-
-bb.m:                                             ; preds = %rb_obj_gen_fields_p.exit.i.i
+bb.m:                                             ; preds = %rb_type.exit.i.i.i
   %i.aq = call i64 @rb_obj_fields(i64 noundef %0, i64 noundef 0) #21 ; 3 uses
   %i.ar = icmp eq i64 %i.aq, 0
   %i.as = and i64 %i.aq, 7
@@ -338,8 +334,8 @@ bb.x:                                             ; preds = %bb.v
 bb.y:                                             ; preds = %bb.x, %bb.u
   br label %rb_obj_set_shareable.exit
 
-rb_obj_set_shareable.exit:                        ; preds = %bb.b, %bb.a, %bb.y, %bb.x, %bb.n, %imemo_type_p.exit.i.i, %bb.m, %rb_obj_gen_fields_p.exit.i.i, %rb_type.exit.i.i.i, %rb_type.exit.i.i.i, %rb_type.exit.i.i.i, %rb_type.exit.i.i.i, %rb_type.exit.i.i.i, %rb_ractor_shareable_p.exit.thread45, %rb_type.exit, %bb.q, %rb_ractor_shareable_p.exit
-  %.1 = phi i32 [ 1, %rb_ractor_shareable_p.exit ], [ 1, %bb.n ], [ 0, %bb.q ], [ 1, %rb_ractor_shareable_p.exit.thread45 ], [ 1, %rb_type.exit ], [ 1, %bb.x ], [ 1, %rb_type.exit.i.i.i ], [ 1, %rb_type.exit.i.i.i ], [ 1, %rb_type.exit.i.i.i ], [ 1, %rb_type.exit.i.i.i ], [ 1, %rb_type.exit.i.i.i ], [ 1, %rb_obj_gen_fields_p.exit.i.i ], [ 1, %bb.m ], [ 1, %imemo_type_p.exit.i.i ], [ 0, %bb.y ], [ 1, %bb.a ], [ 1, %bb.b ]
+rb_obj_set_shareable.exit:                        ; preds = %rb_type.exit.i.i.i, %bb.b, %bb.a, %bb.y, %bb.x, %bb.n, %imemo_type_p.exit.i.i, %bb.m, %rb_ractor_shareable_p.exit.thread45, %rb_type.exit, %bb.q, %rb_ractor_shareable_p.exit
+  %.1 = phi i32 [ 1, %rb_ractor_shareable_p.exit ], [ 1, %bb.n ], [ 0, %bb.q ], [ 1, %rb_ractor_shareable_p.exit.thread45 ], [ 1, %rb_type.exit ], [ 1, %bb.x ], [ 1, %bb.m ], [ 1, %bb.b ], [ 1, %bb.a ], [ 0, %bb.y ], [ 1, %imemo_type_p.exit.i.i ], [ 1, %rb_type.exit.i.i.i ]
   ret i32 %.1
 }
 
@@ -672,21 +668,17 @@ rb_type.exit.i.i.i:                               ; preds = %bb.c, %rbimpl_RB_TY
   %i.m = or i64 %i.l, 256
   store i64 %i.m, ptr %i.a, align 8, !tbaa !119
   %i.n = trunc i64 %i.l to i32
-  %i.o = and i32 %i.n, 31
-  switch i32 %i.o, label %rb_obj_gen_fields_p.exit.i.i [
-    i32 0, label %mark_shareable.exit
-    i32 1, label %mark_shareable.exit
-    i32 2, label %mark_shareable.exit
-    i32 3, label %mark_shareable.exit
-    i32 26, label %mark_shareable.exit
-  ]
+  %i.o = and i32 %i.n, 31                         ; 2 uses
+  %1 = icmp samesign ult i32 %i.o, 27
+  %switch.shifted = lshr i32 67108879, %i.o
+  %switch.lobit = trunc i32 %switch.shifted to i1
+  %or.cond32 = select i1 %1, i1 %switch.lobit, i1 false
+  %2 = and i64 %i.l, 578712547822141440
+  %.not9.i.i = icmp eq i64 %2, 0
+  %or.cond33 = or i1 %or.cond32, %.not9.i.i
+  br i1 %or.cond33, label %mark_shareable.exit, label %bb.d
 
-rb_obj_gen_fields_p.exit.i.i:                     ; preds = %rb_type.exit.i.i.i
-  %1 = and i64 %i.l, 578712547822141440
-  %.not9.i.i = icmp eq i64 %1, 0
-  br i1 %.not9.i.i, label %mark_shareable.exit, label %bb.d
-
-bb.d:                                             ; preds = %rb_obj_gen_fields_p.exit.i.i
+bb.d:                                             ; preds = %rb_type.exit.i.i.i
   %i.p = tail call i64 @rb_obj_fields(i64 noundef %0, i64 noundef 0) #21 ; 3 uses
   %i.q = icmp eq i64 %i.p, 0
   %i.r = and i64 %i.p, 7
@@ -739,8 +731,8 @@ bb.g:                                             ; preds = %bb.f
 allow_frozen_shareable_p.exit.thread:             ; preds = %bb.g, %rbimpl_RB_TYPE_P_fastpath.exit.i14, %rbimpl_RB_TYPE_P_fastpath.exit.thread
   br label %mark_shareable.exit
 
-mark_shareable.exit:                              ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.thread, %.thread19, %bb.f, %bb.g, %allow_frozen_shareable_p.exit.thread, %bb.e, %imemo_type_p.exit.i.i, %bb.d, %rb_obj_gen_fields_p.exit.i.i, %rb_type.exit.i.i.i, %rb_type.exit.i.i.i, %rb_type.exit.i.i.i, %rb_type.exit.i.i.i, %rb_type.exit.i.i.i, %bb.a
-  %.0 = phi i32 [ 1, %bb.e ], [ 0, %allow_frozen_shareable_p.exit.thread ], [ 1, %bb.a ], [ 1, %rb_type.exit.i.i.i ], [ 1, %rb_type.exit.i.i.i ], [ 1, %rb_type.exit.i.i.i ], [ 1, %rb_type.exit.i.i.i ], [ 1, %rb_type.exit.i.i.i ], [ 1, %rb_obj_gen_fields_p.exit.i.i ], [ 1, %bb.d ], [ 1, %imemo_type_p.exit.i.i ], [ 2, %bb.g ], [ 2, %bb.f ], [ 2, %.thread19 ], [ 2, %rbimpl_RB_TYPE_P_fastpath.exit.thread ]
+mark_shareable.exit:                              ; preds = %rb_type.exit.i.i.i, %rbimpl_RB_TYPE_P_fastpath.exit.thread, %.thread19, %bb.f, %bb.g, %allow_frozen_shareable_p.exit.thread, %bb.e, %imemo_type_p.exit.i.i, %bb.d, %bb.a
+  %.0 = phi i32 [ 1, %bb.e ], [ 0, %allow_frozen_shareable_p.exit.thread ], [ 1, %bb.a ], [ 1, %imemo_type_p.exit.i.i ], [ 2, %rbimpl_RB_TYPE_P_fastpath.exit.thread ], [ 2, %.thread19 ], [ 2, %bb.f ], [ 2, %bb.g ], [ 1, %rb_type.exit.i.i.i ], [ 1, %bb.d ]
   ret i32 %.0
 }
 

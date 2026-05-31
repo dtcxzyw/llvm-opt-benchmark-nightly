@@ -66,6 +66,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.34 = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
 @.str.35 = private unnamed_addr constant [9 x i8] c"+ and ??\00", align 1
 @.str.36 = private unnamed_addr constant [9 x i8] c"+? and ?\00", align 1
+@switch.table.fetch_token = private unnamed_addr constant [22 x i32] [i32 39, i32 41, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 62], align 4
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
 define dso_local void @onig_null_warn(ptr readnone captures(none) %0) #0 {
@@ -468,23 +469,18 @@ bb.fq:                                            ; preds = %bb.fp
 
 bb.fr:                                            ; preds = %bb.fp, %bb.fq
   %i.ol = phi i32 [ %i.ok, %bb.fq ], [ 0, %bb.fp ]
-  switch i32 %i.nr, label %bb.fs [
-    i32 60, label %get_name_end_code_point.exit
-    i32 39, label %4
-    i32 40, label %5
-  ]
-
-4:                                                ; preds = %bb.fr
-  br label %get_name_end_code_point.exit
-
-5:                                                ; preds = %bb.fr
-  br label %get_name_end_code_point.exit
+  %switch.tableidx = add i32 %i.nr, -39           ; 2 uses
+  %4 = icmp ult i32 %switch.tableidx, 22
+  br i1 %4, label %bb.fs, label %get_name_end_code_point.exit
 
 bb.fs:                                            ; preds = %bb.fr
+  %5 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.fetch_token, i64 %5
+  %switch.load = load i32, ptr %switch.gep, align 4
   br label %get_name_end_code_point.exit
 
-get_name_end_code_point.exit:                     ; preds = %bb.fr, %4, %5, %bb.fs
-  %.0.i = phi i32 [ 0, %bb.fs ], [ 62, %bb.fr ], [ 39, %4 ], [ 41, %5 ]
+get_name_end_code_point.exit:                     ; preds = %bb.fr, %bb.fs
+  %.0.i = phi i32 [ %switch.load, %bb.fs ], [ 0, %bb.fr ]
   %i.om = icmp eq i32 %i.ol, %.0.i
   br i1 %i.om, label %bb.ft, label %.thread988
 

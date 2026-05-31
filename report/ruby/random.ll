@@ -201,7 +201,7 @@ rb_float_new_inline.exit.thread.sink.split:       ; preds = %bb.ar, %bb.aq, %bb.
   br label %rb_float_new_inline.exit.thread
 
 rb_float_new_inline.exit.thread:                  ; preds = %rb_float_new_inline.exit.thread.sink.split, %bb.k, %.lr.ph.preheader, %bb.ar, %._crit_edge, %RB_FLOAT_TYPE_P.exit.thread
-  %i.dp = phi i64 [ 4, %RB_FLOAT_TYPE_P.exit.thread ], [ 4, %._crit_edge ], [ 4, %bb.ar ], [ 4, %bb.k ], [ 4, %.lr.ph.preheader ], [ %.sink, %rb_float_new_inline.exit.thread.sink.split ] ; 17 uses
+  %i.dp = phi i64 [ 4, %RB_FLOAT_TYPE_P.exit.thread ], [ 4, %._crit_edge ], [ 4, %bb.ar ], [ 4, %bb.k ], [ 4, %.lr.ph.preheader ], [ %.sink, %rb_float_new_inline.exit.thread.sink.split ] ; 16 uses
   %i.dq = load i64, ptr %i.c, align 8, !tbaa !35  ; 9 uses
   %i.dr = trunc i64 %i.dq to i1
   %i.ds = trunc i64 %i.dp to i1
@@ -233,12 +233,11 @@ bb.av:                                            ; preds = %rb_float_new_inline
   br i1 %i.ed, label %bb.aw, label %rb_type.exit
 
 bb.aw:                                            ; preds = %bb.av
-  %3 = call i64 @llvm.fshl.i64(i64 %i.dp, i64 %i.dp, i64 62)
-  switch i64 %3, label %bb.ax [
+  switch i64 %i.dp, label %bb.ax [
     i64 0, label %rb_float_new_inline.exit77
-    i64 1, label %rb_float_new_inline.exit
-    i64 5, label %rb_float_new_inline.exit77
-    i64 9, label %rb_float_new_inline.exit77
+    i64 4, label %rb_float_new_inline.exit
+    i64 20, label %rb_float_new_inline.exit77
+    i64 36, label %rb_float_new_inline.exit77
   ]
 
 bb.ax:                                            ; preds = %bb.aw

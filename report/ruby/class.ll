@@ -201,16 +201,15 @@ bb.a:
   br i1 %.not57, label %rb_type.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = tail call i64 @llvm.fshl.i64(i64 %0, i64 %0, i64 62)
-  switch i64 %2, label %rb_type.exit.thread [
-    i64 0, label %rb_type.exit.thread38
-    i64 1, label %rb_type.exit.thread38
-    i64 5, label %rb_type.exit.thread38
-    i64 9, label %CHILLED_STRING_MUTATED.exit.thread
+  switch i64 %0, label %rb_type.exit.thread [
+    i64 36, label %CHILLED_STRING_MUTATED.exit.thread
+    i64 4, label %special_singleton_class_of.exit
+    i64 0, label %bb.c
+    i64 20, label %bb.d
   ]
 
 rb_type.exit:                                     ; preds = %bb.a
-  %i.e = inttoptr i64 %0 to ptr                   ; 3 uses
+  %i.e = inttoptr i64 %0 to ptr                   ; 4 uses
   %i.f = load i64, ptr %i.e, align 8, !tbaa !19   ; 6 uses
   %i.g = trunc i64 %i.f to i32
   %i.h = and i32 %i.g, 31
@@ -230,28 +229,31 @@ rb_type.exit.thread:                              ; preds = %bb.b, %rb_type.exit
   tail call void (i64, ptr, ...) @rb_raise(i64 noundef %i.i, ptr noundef nonnull @.str.38) #22
   unreachable
 
-rb_type.exit.thread38:                            ; preds = %bb.b, %bb.b, %bb.b, %rb_type.exit, %rb_type.exit, %rb_type.exit
+rb_type.exit.thread38:                            ; preds = %rb_type.exit, %rb_type.exit, %rb_type.exit
   switch i64 %0, label %special_singleton_class_of.exit.thread [
     i64 4, label %special_singleton_class_of.exit
-    i64 0, label %bb.c
     i64 20, label %bb.d
   ]
 
-bb.c:                                             ; preds = %rb_type.exit.thread38
+bb.c:                                             ; preds = %bb.b
   br label %special_singleton_class_of.exit
 
-bb.d:                                             ; preds = %rb_type.exit.thread38
+bb.d:                                             ; preds = %rb_type.exit.thread38, %bb.b
   br label %special_singleton_class_of.exit
 
-special_singleton_class_of.exit:                  ; preds = %rb_type.exit.thread38, %bb.c, %bb.d
-  %.0.i30.in = phi ptr [ @rb_cTrueClass, %bb.d ], [ @rb_cFalseClass, %bb.c ], [ @rb_cNilClass, %rb_type.exit.thread38 ]
+special_singleton_class_of.exit:                  ; preds = %rb_type.exit.thread38, %bb.b, %bb.c, %bb.d
+  %.0.i30.in = phi ptr [ @rb_cTrueClass, %bb.d ], [ @rb_cFalseClass, %bb.c ], [ @rb_cNilClass, %bb.b ], [ @rb_cNilClass, %rb_type.exit.thread38 ]
   %.0.i30 = load i64, ptr %.0.i30.in, align 8, !tbaa !17 ; 2 uses
   %i.j = icmp eq i64 %.0.i30, 4
-  br i1 %i.j, label %special_singleton_class_of.exit.thread, label %bb.r
+  br i1 %i.j, label %special_singleton_class_of.exit.special_singleton_class_of.exit.thread_crit_edge, label %bb.r
 
-special_singleton_class_of.exit.thread:           ; preds = %rb_type.exit.thread38, %special_singleton_class_of.exit
-  %3 = inttoptr i64 %0 to ptr
-  tail call void (ptr, ...) @rb_bug(ptr noundef nonnull @.str.39, ptr noundef %3) #19
+special_singleton_class_of.exit.special_singleton_class_of.exit.thread_crit_edge: ; preds = %special_singleton_class_of.exit
+  %.pre60 = inttoptr i64 %0 to ptr
+  br label %special_singleton_class_of.exit.thread
+
+special_singleton_class_of.exit.thread:           ; preds = %special_singleton_class_of.exit.special_singleton_class_of.exit.thread_crit_edge, %rb_type.exit.thread38
+  %.pre-phi61 = phi ptr [ %.pre60, %special_singleton_class_of.exit.special_singleton_class_of.exit.thread_crit_edge ], [ %i.e, %rb_type.exit.thread38 ]
+  tail call void (ptr, ...) @rb_bug(ptr noundef nonnull @.str.39, ptr noundef %.pre-phi61) #19
   unreachable
 
 rbimpl_RB_TYPE_P_fastpath.exit.i:                 ; preds = %rb_type.exit
@@ -652,9 +654,6 @@ declare i32 @rb_block_given_p() local_unnamed_addr #2
 declare i64 @rb_block_proc() local_unnamed_addr #2
 
 declare i32 @rb_keyword_given_p() local_unnamed_addr #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.fshl.i64(i64, i64, i64) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.uadd.sat.i16(i16, i16) #17

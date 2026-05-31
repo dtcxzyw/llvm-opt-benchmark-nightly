@@ -42,6 +42,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.27 = private unnamed_addr constant [14 x i8] c"/proc/%d/task\00", align 1
 @PyExc_ProcessLookupError = external local_unnamed_addr global ptr, align 8
 @.str.28 = private unnamed_addr constant [26 x i8] c"Process %d has terminated\00", align 1
+@switch.table.get_thread_status = private unnamed_addr constant [23 x i32] [i32 1, i32 3, i32 3, i32 3, i32 3, i32 1, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 0, i32 1, i32 1, i32 3, i32 3, i32 3, i32 3, i32 3, i32 1], align 4
 
 ; Function Attrs: nounwind uwtable
 define hidden range(i32 -1, 1) i32 @iterate_threads(ptr noundef %0, ptr noundef readonly captures(none) %1, ptr noundef %2) local_unnamed_addr #0 {
@@ -444,23 +445,18 @@ bb.d:                                             ; preds = %bb.c
   %i.o = getelementptr i8, ptr %i.k, i64 3
   %spec.select = select i1 %i.n, ptr %i.o, ptr %i.l
   %i.p = load i8, ptr %spec.select, align 1, !tbaa !82
-  switch i8 %i.p, label %bb.e [
-    i8 82, label %bb.f
-    i8 83, label %3
-    i8 68, label %3
-    i8 84, label %3
-    i8 90, label %3
-    i8 73, label %3
-  ]
-
-3:                                                ; preds = %bb.d, %bb.d, %bb.d, %bb.d, %bb.d
-  br label %bb.f
+  %switch.tableidx = add i8 %i.p, -68             ; 2 uses
+  %3 = icmp ult i8 %switch.tableidx, 23
+  br i1 %3, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
+  %4 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.get_thread_status, i64 %4
+  %switch.load = load i32, ptr %switch.gep, align 4
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.b, %3, %bb.e, %bb.c, %bb.d, %bb.a
-  %.1 = phi i32 [ 3, %bb.a ], [ 0, %bb.d ], [ 3, %bb.e ], [ 3, %bb.c ], [ 1, %3 ], [ 3, %bb.b ]
+bb.f:                                             ; preds = %bb.d, %bb.e, %bb.b, %bb.c, %bb.a
+  %.1 = phi i32 [ 3, %bb.a ], [ %switch.load, %bb.e ], [ 3, %bb.b ], [ 3, %bb.c ], [ 3, %bb.d ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   ret i32 %.1

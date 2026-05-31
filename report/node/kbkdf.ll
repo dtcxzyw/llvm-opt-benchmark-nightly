@@ -201,12 +201,14 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.t
   %i.bc = load i32, ptr %i.a, align 4, !tbaa !5   ; 2 uses
-  %2 = add i32 %i.bc, -8                          ; 2 uses
-  %3 = call i32 @llvm.fshl.i32(i32 %2, i32 %2, i32 29)
-  %switch = icmp ult i32 %3, 4
-  br i1 %switch, label %bb.v, label %.critedge93
+  switch i32 %i.bc, label %.critedge93 [
+    i32 32, label %bb.v
+    i32 24, label %bb.v
+    i32 16, label %bb.v
+    i32 8, label %bb.v
+  ]
 
-bb.v:                                             ; preds = %bb.u
+bb.v:                                             ; preds = %bb.u, %bb.u, %bb.u, %bb.u
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i32 %i.bc, ptr %i.bd, align 8, !tbaa !15
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
@@ -554,9 +556,6 @@ declare void @OSSL_PARAM_construct_octet_string(ptr dead_on_unwind writable sret
 declare ptr @OSSL_PARAM_locate(ptr noundef, ptr noundef) local_unnamed_addr #3
 
 declare i32 @OSSL_PARAM_set_size_t(ptr noundef, i64 noundef) local_unnamed_addr #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.fshl.i32(i32, i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #5

@@ -201,6 +201,7 @@ $_ZTSN6duckdb21InvalidInputExceptionE = comdat any
 @.str.35 = private unnamed_addr constant [30 x i8] c"cannot take log gamma of zero\00", align 1
 @.str.36 = private unnamed_addr constant [19 x i8] c"Value out of range\00", align 1
 @.str.37 = private unnamed_addr constant [26 x i8] c"lcm value is out of range\00", align 1
+@switch.table._ZN6duckdb7SignFun12GetFunctionsEv = private unnamed_addr constant [40 x ptr] [ptr @_ZN6duckdb14ScalarFunction13UnaryFunctionIaaNS_12_GLOBAL__N_112SignOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE, ptr @_ZN6duckdb14ScalarFunction13UnaryFunctionIsaNS_12_GLOBAL__N_112SignOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE, ptr @_ZN6duckdb14ScalarFunction13UnaryFunctionIiaNS_12_GLOBAL__N_112SignOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE, ptr @_ZN6duckdb14ScalarFunction13UnaryFunctionIlaNS_12_GLOBAL__N_112SignOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @_ZN6duckdb14ScalarFunction13UnaryFunctionIfaNS_12_GLOBAL__N_112SignOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE, ptr @_ZN6duckdb14ScalarFunction13UnaryFunctionIdaNS_12_GLOBAL__N_112SignOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE, ptr poison, ptr poison, ptr poison, ptr poison, ptr @_ZN6duckdb14ScalarFunction13UnaryFunctionIhaNS_12_GLOBAL__N_112SignOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE, ptr @_ZN6duckdb14ScalarFunction13UnaryFunctionItaNS_12_GLOBAL__N_112SignOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE, ptr @_ZN6duckdb14ScalarFunction13UnaryFunctionIjaNS_12_GLOBAL__N_112SignOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE, ptr @_ZN6duckdb14ScalarFunction13UnaryFunctionImaNS_12_GLOBAL__N_112SignOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @_ZN6duckdb14ScalarFunction13UnaryFunctionINS_10uhugeint_tEaNS_12_GLOBAL__N_112SignOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE, ptr @_ZN6duckdb14ScalarFunction13UnaryFunctionINS_9hugeint_tEaNS_12_GLOBAL__N_112SignOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE], align 8
 
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6duckdb12NextAfterFun12GetFunctionsEv(ptr dead_on_unwind noalias nonnull writable sret(%"class.duckdb::ScalarFunctionSet") align 8 %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
@@ -603,55 +604,11 @@ bb.l:                                             ; preds = %_ZSt10_ConstructIN6
   %.val = load i8, ptr %.sroa.045.0101, align 8, !tbaa !243
   call void @llvm.experimental.noalias.scope.decl(metadata !445)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %8, i8 0, i64 32, i1 false), !alias.scope !445
-  switch i8 %.val, label %bb.m [
-    i8 11, label %_ZN6duckdb14ScalarFunction33GetScalarUnaryFunctionFixedReturnIaNS_12_GLOBAL__N_112SignOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEERKNS_11LogicalTypeE.exit
-    i8 12, label %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit11.i
-    i8 13, label %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit16.i
-    i8 14, label %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit21.i
-    i8 28, label %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit26.i
-    i8 29, label %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit31.i
-    i8 30, label %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit36.i
-    i8 31, label %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit41.i
-    i8 50, label %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit46.i
-    i8 49, label %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit51.i
-    i8 22, label %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit56.i
-    i8 23, label %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit61.i
-  ]
+  %switch.tableidx = add i8 %.val, -11            ; 3 uses
+  %10 = icmp ult i8 %switch.tableidx, 40
+  br i1 %10, label %switch.hole_check, label %bb.m
 
-_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit11.i: ; preds = %bb.l
-  br label %_ZN6duckdb14ScalarFunction33GetScalarUnaryFunctionFixedReturnIaNS_12_GLOBAL__N_112SignOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEERKNS_11LogicalTypeE.exit
-
-_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit16.i: ; preds = %bb.l
-  br label %_ZN6duckdb14ScalarFunction33GetScalarUnaryFunctionFixedReturnIaNS_12_GLOBAL__N_112SignOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEERKNS_11LogicalTypeE.exit
-
-_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit21.i: ; preds = %bb.l
-  br label %_ZN6duckdb14ScalarFunction33GetScalarUnaryFunctionFixedReturnIaNS_12_GLOBAL__N_112SignOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEERKNS_11LogicalTypeE.exit
-
-_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit26.i: ; preds = %bb.l
-  br label %_ZN6duckdb14ScalarFunction33GetScalarUnaryFunctionFixedReturnIaNS_12_GLOBAL__N_112SignOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEERKNS_11LogicalTypeE.exit
-
-_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit31.i: ; preds = %bb.l
-  br label %_ZN6duckdb14ScalarFunction33GetScalarUnaryFunctionFixedReturnIaNS_12_GLOBAL__N_112SignOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEERKNS_11LogicalTypeE.exit
-
-_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit36.i: ; preds = %bb.l
-  br label %_ZN6duckdb14ScalarFunction33GetScalarUnaryFunctionFixedReturnIaNS_12_GLOBAL__N_112SignOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEERKNS_11LogicalTypeE.exit
-
-_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit41.i: ; preds = %bb.l
-  br label %_ZN6duckdb14ScalarFunction33GetScalarUnaryFunctionFixedReturnIaNS_12_GLOBAL__N_112SignOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEERKNS_11LogicalTypeE.exit
-
-_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit46.i: ; preds = %bb.l
-  br label %_ZN6duckdb14ScalarFunction33GetScalarUnaryFunctionFixedReturnIaNS_12_GLOBAL__N_112SignOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEERKNS_11LogicalTypeE.exit
-
-_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit51.i: ; preds = %bb.l
-  br label %_ZN6duckdb14ScalarFunction33GetScalarUnaryFunctionFixedReturnIaNS_12_GLOBAL__N_112SignOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEERKNS_11LogicalTypeE.exit
-
-_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit56.i: ; preds = %bb.l
-  br label %_ZN6duckdb14ScalarFunction33GetScalarUnaryFunctionFixedReturnIaNS_12_GLOBAL__N_112SignOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEERKNS_11LogicalTypeE.exit
-
-_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit61.i: ; preds = %bb.l
-  br label %_ZN6duckdb14ScalarFunction33GetScalarUnaryFunctionFixedReturnIaNS_12_GLOBAL__N_112SignOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEERKNS_11LogicalTypeE.exit
-
-bb.m:                                             ; preds = %bb.l
+bb.m:                                             ; preds = %switch.hole_check, %bb.l
   %i.ad = call ptr @__cxa_allocate_exception(i64 16) #23, !noalias !445 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #23, !noalias !445
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #23, !noalias !445
@@ -701,9 +658,17 @@ bb.q:                                             ; preds = %_ZNSt7__cxx1112basi
 bb.r:                                             ; preds = %bb.o
   unreachable
 
-_ZN6duckdb14ScalarFunction33GetScalarUnaryFunctionFixedReturnIaNS_12_GLOBAL__N_112SignOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEERKNS_11LogicalTypeE.exit: ; preds = %bb.l, %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit61.i, %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit56.i, %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit51.i, %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit46.i, %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit41.i, %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit36.i, %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit31.i, %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit26.i, %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit21.i, %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit16.i, %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit11.i
-  %_ZN6duckdb14ScalarFunction13UnaryFunctionIdaNS_12_GLOBAL__N_112SignOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE.sink = phi ptr [ @_ZN6duckdb14ScalarFunction13UnaryFunctionIdaNS_12_GLOBAL__N_112SignOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE, %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit61.i ], [ @_ZN6duckdb14ScalarFunction13UnaryFunctionIfaNS_12_GLOBAL__N_112SignOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE, %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit56.i ], [ @_ZN6duckdb14ScalarFunction13UnaryFunctionINS_10uhugeint_tEaNS_12_GLOBAL__N_112SignOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE, %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit51.i ], [ @_ZN6duckdb14ScalarFunction13UnaryFunctionINS_9hugeint_tEaNS_12_GLOBAL__N_112SignOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE, %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit46.i ], [ @_ZN6duckdb14ScalarFunction13UnaryFunctionImaNS_12_GLOBAL__N_112SignOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE, %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit41.i ], [ @_ZN6duckdb14ScalarFunction13UnaryFunctionIjaNS_12_GLOBAL__N_112SignOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE, %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit36.i ], [ @_ZN6duckdb14ScalarFunction13UnaryFunctionItaNS_12_GLOBAL__N_112SignOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE, %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit31.i ], [ @_ZN6duckdb14ScalarFunction13UnaryFunctionIhaNS_12_GLOBAL__N_112SignOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE, %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit26.i ], [ @_ZN6duckdb14ScalarFunction13UnaryFunctionIlaNS_12_GLOBAL__N_112SignOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE, %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit21.i ], [ @_ZN6duckdb14ScalarFunction13UnaryFunctionIiaNS_12_GLOBAL__N_112SignOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE, %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit16.i ], [ @_ZN6duckdb14ScalarFunction13UnaryFunctionIsaNS_12_GLOBAL__N_112SignOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE, %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit11.i ], [ @_ZN6duckdb14ScalarFunction13UnaryFunctionIaaNS_12_GLOBAL__N_112SignOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE, %bb.l ]
-  store ptr %_ZN6duckdb14ScalarFunction13UnaryFunctionIdaNS_12_GLOBAL__N_112SignOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE.sink, ptr %8, align 8
+switch.hole_check:                                ; preds = %bb.l
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i64
+  %switch.shifted = lshr i64 824635693071, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  br i1 %switch.lobit, label %_ZN6duckdb14ScalarFunction33GetScalarUnaryFunctionFixedReturnIaNS_12_GLOBAL__N_112SignOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEERKNS_11LogicalTypeE.exit, label %bb.m
+
+_ZN6duckdb14ScalarFunction33GetScalarUnaryFunctionFixedReturnIaNS_12_GLOBAL__N_112SignOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEERKNS_11LogicalTypeE.exit: ; preds = %switch.hole_check
+  %11 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6duckdb7SignFun12GetFunctionsEv, i64 %11
+  %switch.load = load ptr, ptr %switch.gep, align 8
+  store ptr %switch.load, ptr %8, align 8
   store i64 0, ptr %.sroa.0.i.i.i57.i.sroa.4.0..sroa_idx, align 8, !tbaa !25
   store <2 x ptr> <ptr @_ZNSt17_Function_handlerIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEPS7_E10_M_managerERSt9_Any_dataRKSA_St18_Manager_operation, ptr @_ZNSt17_Function_handlerIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEPS7_E9_M_invokeERKSt9_Any_dataS2_S4_S6_>, ptr %i.f, align 8, !tbaa !13, !alias.scope !445
   invoke void @_ZN6duckdb11LogicalTypeC1ENS_13LogicalTypeIdE(ptr noundef nonnull align 8 dereferenceable(24) %9, i8 noundef zeroext 0)

@@ -201,6 +201,7 @@ begin_hunk_0
 @_ZTVSt23_Sp_counted_ptr_inplaceIN6duckdb24CachingFileSystemWrapperESaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr @_ZTISt23_Sp_counted_ptr_inplaceIN6duckdb24CachingFileSystemWrapperESaIvELN9__gnu_cxx12_Lock_policyE2EE, ptr @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EED2Ev, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN6duckdb24CachingFileSystemWrapperESaIvELN9__gnu_cxx12_Lock_policyE2EED0Ev, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN6duckdb24CachingFileSystemWrapperESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN6duckdb24CachingFileSystemWrapperESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_destroyEv, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN6duckdb24CachingFileSystemWrapperESaIvELN9__gnu_cxx12_Lock_policyE2EE14_M_get_deleterERKSt9type_info] }, comdat, align 8
 @_ZTISt23_Sp_counted_ptr_inplaceIN6duckdb24CachingFileSystemWrapperESaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSSt23_Sp_counted_ptr_inplaceIN6duckdb24CachingFileSystemWrapperESaIvELN9__gnu_cxx12_Lock_policyE2EE, ptr @_ZTISt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE }, comdat, align 8
 @_ZTSSt23_Sp_counted_ptr_inplaceIN6duckdb24CachingFileSystemWrapperESaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr constant [99 x i8] c"St23_Sp_counted_ptr_inplaceIN6duckdb24CachingFileSystemWrapperESaIvELN9__gnu_cxx12_Lock_policyE2EE\00", comdat, align 1
+@switch.table._ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE = private unnamed_addr constant [40 x i32] [i32 2, i32 2, i32 2, i32 2, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 2, i32 2, i32 2, i32 0, i32 0, i32 0, i32 0, i32 2, i32 2, i32 2, i32 2, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 2, i32 2], align 4
 @switch.table._ZN6duckdb9Exception21ExceptionTypeToStringB5cxx11ENS_13ExceptionTypeE = private unnamed_addr constant [43 x ptr] [ptr @_ZN6duckdbL13EXCEPTION_MAPE, ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 49), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 98), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 147), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 196), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 245), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 294), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 343), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 392), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 441), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 490), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 539), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 588), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 637), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 686), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 784), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 833), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 882), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 931), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 980), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1029), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1078), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1127), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1176), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 735), ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1225), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1274), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1323), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1372), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1421), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1470), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1519), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1568), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1617), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1666), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1715), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1764), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1862), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1813), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1911), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1960), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 2009)], align 8
 @switch.table._ZN6duckdbL13StatsInternalEiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE = private unnamed_addr constant [12 x i32] [i32 2, i32 6, i32 7, i32 1, i32 7, i32 5, i32 7, i32 0, i32 7, i32 4, i32 7, i32 3], align 4
 @switch.table._ZN6duckdbL19GetLogicalTypeScoreERKNS_11LogicalTypeE = private unnamed_addr constant [110 x i64] [i64 0, i64 0, i64 0, i64 0, i64 1000, i64 0, i64 1000, i64 1000, i64 1000, i64 1000, i64 10, i64 12, i64 14, i64 16, i64 18, i64 52, i64 50, i64 53, i64 54, i64 55, i64 56, i64 21, i64 22, i64 23, i64 75, i64 77, i64 101, i64 58, i64 11, i64 13, i64 15, i64 17, i64 55, i64 1000, i64 50, i64 51, i64 100, i64 0, i64 0, i64 103, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 19, i64 20, i64 1000, i64 1000, i64 1000, i64 102, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 104, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 125, i64 126, i64 127, i64 150, i64 78, i64 1000, i64 1000, i64 150, i64 126, i64 150], align 8
@@ -603,27 +604,18 @@ bb.cx:                                            ; preds = %bb.cs
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p)
   %i.ld = getelementptr inbounds nuw [24 x i8], ptr %i.ko, i64 %i.kf
   %i.le = load i8, ptr %i.ld, align 8, !tbaa !131
-  switch i8 %i.le, label %bb.cy [
-    i8 11, label %_ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE.exit
-    i8 12, label %_ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE.exit
-    i8 13, label %_ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE.exit
-    i8 14, label %_ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE.exit
-    i8 50, label %_ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE.exit
-    i8 28, label %_ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE.exit
-    i8 29, label %_ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE.exit
-    i8 30, label %_ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE.exit
-    i8 31, label %_ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE.exit
-    i8 49, label %_ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE.exit
-    i8 21, label %_ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE.exit
-    i8 22, label %_ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE.exit
-    i8 23, label %_ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE.exit
-  ]
+  %switch.tableidx = add i8 %i.le, -11            ; 2 uses
+  %28 = icmp ult i8 %switch.tableidx, 40
+  br i1 %28, label %bb.cy, label %_ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE.exit
 
 bb.cy:                                            ; preds = %bb.cx
+  %29 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE, i64 %29
+  %switch.load = load i32, ptr %switch.gep, align 4
   br label %_ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE.exit
 
-_ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE.exit: ; preds = %bb.cy, %bb.cx, %bb.cx, %bb.cx, %bb.cx, %bb.cx, %bb.cx, %bb.cx, %bb.cx, %bb.cx, %bb.cx, %bb.cx, %bb.cx, %bb.cx
-  %.0.i215 = phi i32 [ 0, %bb.cy ], [ 2, %bb.cx ], [ 2, %bb.cx ], [ 2, %bb.cx ], [ 2, %bb.cx ], [ 2, %bb.cx ], [ 2, %bb.cx ], [ 2, %bb.cx ], [ 2, %bb.cx ], [ 2, %bb.cx ], [ 2, %bb.cx ], [ 2, %bb.cx ], [ 2, %bb.cx ], [ 2, %bb.cx ]
+_ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE.exit: ; preds = %bb.cx, %bb.cy
+  %.0.i215 = phi i32 [ %switch.load, %bb.cy ], [ 0, %bb.cx ]
   store i32 %.0.i215, ptr %i.s, align 4, !tbaa !395
   br label %bb.dj
 
@@ -1026,27 +1018,18 @@ _ZN6duckdb12optional_ptrINS_13ExtraTypeInfoELb1EEptEv.exit: ; preds = %bb.a
 define noundef range(i32 0, 3) i32 @_ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE(ptr noundef nonnull readnone align 8 captures(none) dereferenceable(672) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1) local_unnamed_addr #23 align 2 {
 bb.a:
   %i.a = load i8, ptr %1, align 8, !tbaa !131
-  switch i8 %i.a, label %bb.b [
-    i8 11, label %bb.c
-    i8 12, label %bb.c
-    i8 13, label %bb.c
-    i8 14, label %bb.c
-    i8 50, label %bb.c
-    i8 28, label %bb.c
-    i8 29, label %bb.c
-    i8 30, label %bb.c
-    i8 31, label %bb.c
-    i8 49, label %bb.c
-    i8 21, label %bb.c
-    i8 22, label %bb.c
-    i8 23, label %bb.c
-  ]
+  %switch.tableidx = add i8 %i.a, -11             ; 2 uses
+  %2 = icmp ult i8 %switch.tableidx, 40
+  br i1 %2, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
+  %3 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE, i64 %3
+  %switch.load = load i32, ptr %switch.gep, align 4
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.b
-  %.0 = phi i32 [ 0, %bb.b ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ]
+bb.c:                                             ; preds = %bb.a, %bb.b
+  %.0 = phi i32 [ %switch.load, %bb.b ], [ 0, %bb.a ]
   ret i32 %.0
 }
 

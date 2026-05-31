@@ -64,9 +64,11 @@ $_ZN4llvh11ms_demangle14ArenaAllocator5allocINS0_17PrimitiveTypeNodeEJNS0_13Prim
 @.str.74 = private unnamed_addr constant [15 x i8] c"  [%d] - %.*s\0A\00", align 1
 @.str.76 = private unnamed_addr constant [24 x i8] c"%d name backreferences\0A\00", align 1
 @switch.table._Z30translateIntrinsicFunctionCodec27FunctionIdentifierCodeGroup = private unnamed_addr constant [3 x ptr] [ptr @_ZZ30translateIntrinsicFunctionCodec27FunctionIdentifierCodeGroupE5Basic, ptr @_ZZ30translateIntrinsicFunctionCodec27FunctionIdentifierCodeGroupE5Under, ptr @_ZZ30translateIntrinsicFunctionCodec27FunctionIdentifierCodeGroupE11DoubleUnder], align 8
+@switch.table._ZN12_GLOBAL__N_19Demangler5parseER10StringView = private unnamed_addr constant [16 x ptr] [ptr @.str.35, ptr @.str.36, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @.str.38, ptr @.str.37], align 8
+@switch.table._ZN12_GLOBAL__N_19Demangler5parseER10StringView.5 = private unnamed_addr constant [16 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @.str.35, i64 9), ptr getelementptr inbounds nuw (i8, ptr @.str.36, i64 9), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @.str.38, i64 30), ptr getelementptr inbounds nuw (i8, ptr @.str.37, i64 15)], align 8
 @switch.table._ZN12_GLOBAL__N_19Demangler21demangleStringLiteralER10StringView = private unnamed_addr constant [4 x i32] [i32 0, i32 1, i32 poison, i32 2], align 4
-@switch.table._ZN12_GLOBAL__N_19Demangler20demangleFunctionTypeER10StringViewb.8 = private unnamed_addr constant [17 x i8] c"\01\01\02\02\03\03\04\04\05\05\00\00\06\06\07\07\08", align 1
-@switch.table._ZN12_GLOBAL__N_19Demangler24demangleVariableEncodingER10StringViewN4llvh11ms_demangle12StorageClassE.9 = private unnamed_addr constant [20 x i8] [i8 0, i8 1, i8 2, i8 3, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 1, i8 2, i8 3], align 1
+@switch.table._ZN12_GLOBAL__N_19Demangler20demangleFunctionTypeER10StringViewb.10 = private unnamed_addr constant [17 x i8] c"\01\01\02\02\03\03\04\04\05\05\00\00\06\06\07\07\08", align 1
+@switch.table._ZN12_GLOBAL__N_19Demangler24demangleVariableEncodingER10StringViewN4llvh11ms_demangle12StorageClassE.11 = private unnamed_addr constant [20 x i8] [i8 0, i8 1, i8 2, i8 3, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 1, i8 2, i8 3], align 1
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define hidden noundef zeroext i8 @_Z30translateIntrinsicFunctionCodec27FunctionIdentifierCodeGroup(i8 noundef signext %0, i32 noundef %1) local_unnamed_addr #0 {
@@ -469,7 +471,7 @@ bb.n:                                             ; preds = %_ZNK10StringView10s
 
 _ZN10StringView12consumeFrontES_.exit.i:          ; preds = %.thread154.thread, %.thread154, %bb.j, %_ZNK10StringView10startsWithES_.exit.i17.i, %_ZNK10StringView10startsWithES_.exit.i.i
   %.sink162 = phi i64 [ 5, %bb.j ], [ 4, %_ZNK10StringView10startsWithES_.exit.i.i ], [ 4, %_ZNK10StringView10startsWithES_.exit.i17.i ], [ 4, %.thread154 ], [ 4, %.thread154.thread ]
-  %.0.i24.ph = phi i32 [ 15, %bb.j ], [ 1, %_ZNK10StringView10startsWithES_.exit.i.i ], [ 2, %_ZNK10StringView10startsWithES_.exit.i17.i ], [ 16, %.thread154 ], [ 16, %.thread154.thread ]
+  %.0.i24.ph = phi i64 [ 14, %bb.j ], [ 0, %_ZNK10StringView10startsWithES_.exit.i.i ], [ 1, %_ZNK10StringView10startsWithES_.exit.i17.i ], [ 15, %.thread154 ], [ 15, %.thread154.thread ] ; 2 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %i.c, i64 %.sink162
   store ptr %i.fn, ptr %1, align 8, !tbaa !69
   %i.fo = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
@@ -491,7 +493,7 @@ _ZN10StringView12consumeFrontES_.exit.i:          ; preds = %.thread154.thread, 
 
 bb.o:                                             ; preds = %_ZN10StringView12consumeFrontES_.exit.i
   %i.gb = inttoptr i64 %i.fw to ptr
-  br label %_ZN4llvh11ms_demangle14ArenaAllocator5allocINS0_19NamedIdentifierNodeEJEEEPT_DpOT0_.exit.i
+  br label %bb.q
 
 bb.p:                                             ; preds = %_ZN10StringView12consumeFrontES_.exit.i
   %i.gc = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #20, !inline_history !71 ; 5 uses
@@ -504,9 +506,9 @@ bb.p:                                             ; preds = %_ZN10StringView12co
   store ptr %i.gc, ptr %i.fo, align 8, !tbaa !33
   %i.gg = getelementptr inbounds nuw i8, ptr %i.gc, i64 8
   store i64 40, ptr %i.gg, align 8, !tbaa !34
-  br label %_ZN4llvh11ms_demangle14ArenaAllocator5allocINS0_19NamedIdentifierNodeEJEEEPT_DpOT0_.exit.i
+  br label %bb.q
 
-_ZN4llvh11ms_demangle14ArenaAllocator5allocINS0_19NamedIdentifierNodeEJEEEPT_DpOT0_.exit.i: ; preds = %bb.p, %bb.o
+bb.q:                                             ; preds = %bb.p, %bb.o
   %.sink13.i.i = phi ptr [ %i.gd, %bb.p ], [ %i.gb, %bb.o ] ; 6 uses
   %2 = getelementptr inbounds nuw i8, ptr %.sink13.i.i, i64 8
   store i32 5, ptr %2, align 8, !tbaa !60
@@ -516,30 +518,12 @@ _ZN4llvh11ms_demangle14ArenaAllocator5allocINS0_19NamedIdentifierNodeEJEEEPT_DpO
   %4 = getelementptr inbounds nuw i8, ptr %.sink13.i.i, i64 24 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   %.sroa.489.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sink13.i.i, i64 32
-  switch i32 %.0.i24.ph, label %8 [
-    i32 1, label %bb.q
-    i32 2, label %5
-    i32 16, label %6
-    i32 15, label %7
-  ]
-
-5:                                                ; preds = %_ZN4llvh11ms_demangle14ArenaAllocator5allocINS0_19NamedIdentifierNodeEJEEEPT_DpOT0_.exit.i
-  br label %bb.q
-
-6:                                                ; preds = %_ZN4llvh11ms_demangle14ArenaAllocator5allocINS0_19NamedIdentifierNodeEJEEEPT_DpOT0_.exit.i
-  br label %bb.q
-
-7:                                                ; preds = %_ZN4llvh11ms_demangle14ArenaAllocator5allocINS0_19NamedIdentifierNodeEJEEEPT_DpOT0_.exit.i
-  br label %bb.q
-
-8:                                                ; preds = %_ZN4llvh11ms_demangle14ArenaAllocator5allocINS0_19NamedIdentifierNodeEJEEEPT_DpOT0_.exit.i
-  unreachable
-
-bb.q:                                             ; preds = %_ZN4llvh11ms_demangle14ArenaAllocator5allocINS0_19NamedIdentifierNodeEJEEEPT_DpOT0_.exit.i, %7, %6, %5
-  %.str.38.sink = phi ptr [ @.str.38, %7 ], [ @.str.37, %6 ], [ @.str.36, %5 ], [ @.str.35, %_ZN4llvh11ms_demangle14ArenaAllocator5allocINS0_19NamedIdentifierNodeEJEEEPT_DpOT0_.exit.i ]
-  %.sink = phi ptr [ getelementptr inbounds nuw (i8, ptr @.str.38, i64 30), %7 ], [ getelementptr inbounds nuw (i8, ptr @.str.37, i64 15), %6 ], [ getelementptr inbounds nuw (i8, ptr @.str.36, i64 9), %5 ], [ getelementptr inbounds nuw (i8, ptr @.str.35, i64 9), %_ZN4llvh11ms_demangle14ArenaAllocator5allocINS0_19NamedIdentifierNodeEJEEEPT_DpOT0_.exit.i ]
-  store ptr %.str.38.sink, ptr %4, align 8, !tbaa !69
-  store ptr %.sink, ptr %.sroa.489.0..sroa_idx, align 8, !tbaa !69
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN12_GLOBAL__N_19Demangler5parseER10StringView, i64 %.0.i24.ph
+  %switch.load = load ptr, ptr %switch.gep, align 8
+  %switch.gep181 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN12_GLOBAL__N_19Demangler5parseER10StringView.5, i64 %.0.i24.ph
+  %switch.load182 = load ptr, ptr %switch.gep181, align 8
+  store ptr %switch.load, ptr %4, align 8, !tbaa !69
+  store ptr %switch.load182, ptr %.sroa.489.0..sroa_idx, align 8, !tbaa !69
   %i.gh = tail call fastcc noundef ptr @_ZN12_GLOBAL__N_19Demangler22demangleNameScopeChainER10StringViewPN4llvh11ms_demangle14IdentifierNodeE(ptr noundef nonnull align 8 dereferenceable(200) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull %.sink13.i.i), !inline_history !71
   %i.gi = load ptr, ptr %i.fo, align 8, !tbaa !33 ; 4 uses
   %i.gj = load ptr, ptr %i.gi, align 8, !tbaa !28
@@ -612,7 +596,7 @@ switch.hole_check:                                ; preds = %bb.t
 
 switch.lookup:                                    ; preds = %switch.hole_check
   %i.hl = zext nneg i8 %switch.tableidx to i64
-  %switch.gep.a = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_19Demangler24demangleVariableEncodingER10StringViewN4llvh11ms_demangle12StorageClassE.9, i64 %i.hl
+  %switch.gep.a = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_19Demangler24demangleVariableEncodingER10StringViewN4llvh11ms_demangle12StorageClassE.11, i64 %i.hl
   %switch.load.a = load i8, ptr %switch.gep.a, align 1
   br label %_ZN12_GLOBAL__N_19Demangler18demangleQualifiersER10StringView.exit.i
 
@@ -1015,7 +999,7 @@ bb.o:                                             ; preds = %_ZNK10StringView10s
 
 switch.lookup:                                    ; preds = %bb.o
   %i.dd = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_19Demangler20demangleFunctionTypeER10StringViewb.8, i64 %i.dd
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_19Demangler20demangleFunctionTypeER10StringViewb.10, i64 %i.dd
   %switch.load = load i8, ptr %switch.gep, align 1
   br label %_ZN12_GLOBAL__N_19Demangler25demangleCallingConventionER10StringView.exit
 
@@ -1306,7 +1290,7 @@ switch.hole_check:                                ; preds = %bb.b
 
 switch.lookup:                                    ; preds = %switch.hole_check
   %i.w = zext nneg i8 %switch.tableidx350 to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_19Demangler24demangleVariableEncodingER10StringViewN4llvh11ms_demangle12StorageClassE.9, i64 %i.w
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_19Demangler24demangleVariableEncodingER10StringViewN4llvh11ms_demangle12StorageClassE.11, i64 %i.w
   %switch.load = load i8, ptr %switch.gep, align 1
   br label %_ZN10StringView12consumeFrontEc.exit.thread
 
@@ -1318,7 +1302,7 @@ switch.hole_check353:                             ; preds = %bb.e
 
 switch.lookup354:                                 ; preds = %switch.hole_check353
   %i.x = zext nneg i8 %switch.tableidx351 to i64
-  %switch.gep358 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_19Demangler24demangleVariableEncodingER10StringViewN4llvh11ms_demangle12StorageClassE.9, i64 %i.x
+  %switch.gep358 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_19Demangler24demangleVariableEncodingER10StringViewN4llvh11ms_demangle12StorageClassE.11, i64 %i.x
   %switch.load359 = load i8, ptr %switch.gep358, align 1
   br label %_ZN10StringView12consumeFrontEc.exit.thread
 
@@ -1721,7 +1705,7 @@ switch.hole_check362:                             ; preds = %bb.al
 
 switch.lookup363:                                 ; preds = %switch.hole_check362
   %i.hc = zext nneg i8 %switch.tableidx360 to i64
-  %switch.gep367 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_19Demangler24demangleVariableEncodingER10StringViewN4llvh11ms_demangle12StorageClassE.9, i64 %i.hc
+  %switch.gep367 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_19Demangler24demangleVariableEncodingER10StringViewN4llvh11ms_demangle12StorageClassE.11, i64 %i.hc
   %switch.load368 = load i8, ptr %switch.gep367, align 1
   br label %_ZN12_GLOBAL__N_19Demangler18demangleQualifiersER10StringView.exit73
 
@@ -2124,7 +2108,7 @@ _ZN4llvh11ms_demangle14ArenaAllocator5allocINS0_21FunctionSignatureNodeEJEEEPT_D
 
 switch.lookup370:                                 ; preds = %_ZN4llvh11ms_demangle14ArenaAllocator5allocINS0_21FunctionSignatureNodeEJEEEPT_DpOT0_.exit
   %i.ry = zext nneg i8 %switch.tableidx369 to i64
-  %switch.gep371 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_19Demangler20demangleFunctionTypeER10StringViewb.8, i64 %i.ry
+  %switch.gep371 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_19Demangler20demangleFunctionTypeER10StringViewb.10, i64 %i.ry
   %switch.load372 = load i8, ptr %switch.gep371, align 1
   br label %_ZN12_GLOBAL__N_19Demangler25demangleCallingConventionER10StringView.exit
 
@@ -2527,7 +2511,7 @@ switch.hole_check:                                ; preds = %_ZL28demangleFuncti
 
 switch.lookup:                                    ; preds = %switch.hole_check
   %i.bg = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_19Demangler24demangleVariableEncodingER10StringViewN4llvh11ms_demangle12StorageClassE.9, i64 %i.bg
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_19Demangler24demangleVariableEncodingER10StringViewN4llvh11ms_demangle12StorageClassE.11, i64 %i.bg
   %switch.load = load i8, ptr %switch.gep, align 1
   %i.bh = or i8 %switch.load, %i.ax
   br label %_ZN12_GLOBAL__N_19Demangler18demangleQualifiersER10StringView.exit
@@ -2548,7 +2532,7 @@ bb.i:                                             ; preds = %_ZN12_GLOBAL__N_19D
 
 switch.lookup28:                                  ; preds = %bb.i
   %i.bm = zext nneg i8 %switch.tableidx27 to i64
-  %switch.gep29 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_19Demangler20demangleFunctionTypeER10StringViewb.8, i64 %i.bm
+  %switch.gep29 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_19Demangler20demangleFunctionTypeER10StringViewb.10, i64 %i.bm
   %switch.load30 = load i8, ptr %switch.gep29, align 1
   br label %_ZN12_GLOBAL__N_19Demangler25demangleCallingConventionER10StringView.exit
 
@@ -2951,7 +2935,7 @@ switch.hole_check:                                ; preds = %_ZN12_GLOBAL__N_19D
 
 switch.lookup:                                    ; preds = %switch.hole_check
   %i.be = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_19Demangler24demangleVariableEncodingER10StringViewN4llvh11ms_demangle12StorageClassE.9, i64 %i.be
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_19Demangler24demangleVariableEncodingER10StringViewN4llvh11ms_demangle12StorageClassE.11, i64 %i.be
   %switch.load = load i8, ptr %switch.gep, align 1
   br label %_ZN12_GLOBAL__N_19Demangler18demangleQualifiersER10StringView.exit
 
@@ -3058,7 +3042,7 @@ switch.hole_check33:                              ; preds = %bb.n
 
 switch.lookup34:                                  ; preds = %switch.hole_check33
   %i.cq = zext nneg i8 %switch.tableidx31 to i64
-  %switch.gep38 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_19Demangler24demangleVariableEncodingER10StringViewN4llvh11ms_demangle12StorageClassE.9, i64 %i.cq
+  %switch.gep38 = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_19Demangler24demangleVariableEncodingER10StringViewN4llvh11ms_demangle12StorageClassE.11, i64 %i.cq
   %switch.load39 = load i8, ptr %switch.gep38, align 1
   br label %_ZN12_GLOBAL__N_19Demangler18demangleQualifiersER10StringView.exit18
 

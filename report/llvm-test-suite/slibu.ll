@@ -201,6 +201,7 @@ begin_hunk_0
 @str = private unnamed_addr constant [5 x i8] c"EXIT\00", align 1
 @str.1 = private unnamed_addr constant [28 x i8] c"Content-type: text/plain\0D\0A\0D\00", align 1
 @switch.table.decode_st_moden = private unnamed_addr constant [12 x ptr] [ptr @.str.50, ptr @.str.52, ptr poison, ptr @.str.51, ptr poison, ptr @.str.53, ptr poison, ptr @.str.54, ptr poison, ptr @.str.55, ptr poison, ptr @.str.56], align 8
+@switch.table.html_encode = private unnamed_addr constant [29 x i64] [i64 6, i64 1, i64 1, i64 1, i64 5, i64 1, i64 1, i64 1, i64 1, i64 1, i64 1, i64 1, i64 1, i64 1, i64 1, i64 1, i64 1, i64 1, i64 1, i64 1, i64 1, i64 1, i64 1, i64 1, i64 1, i64 1, i64 4, i64 1, i64 4], align 8
 
 ; Function Attrs: cold noreturn nounwind uwtable
 define dso_local noalias noundef nonnull ptr @lsystem(ptr readnone captures(none) %0) #0 {
@@ -603,46 +604,34 @@ bb.c:                                             ; preds = %bb.b, %bb.b
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %bb.f ]
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 %.04148
   %i.i = load i8, ptr %i.h, align 1, !tbaa !23
-  switch i8 %i.i, label %bb.d [
-    i8 62, label %.lr.ph.1
-    i8 60, label %.lr.ph.1
-    i8 38, label %1
-    i8 34, label %2
-  ]
-
-1:                                                ; preds = %.lr.ph
-  br label %.lr.ph.1
-
-2:                                                ; preds = %.lr.ph
-  br label %.lr.ph.1
+  %switch.tableidx = add i8 %i.i, -34             ; 2 uses
+  %1 = icmp ult i8 %switch.tableidx, 29
+  br i1 %1, label %bb.d, label %.lr.ph.1
 
 bb.d:                                             ; preds = %.lr.ph
+  %2 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.html_encode, i64 %2
+  %switch.load = load i64, ptr %switch.gep, align 8
   br label %.lr.ph.1
 
-.lr.ph.1:                                         ; preds = %.lr.ph, %.lr.ph, %1, %2, %bb.d
-  %.sink = phi i64 [ 1, %bb.d ], [ 5, %1 ], [ 6, %2 ], [ 4, %.lr.ph ], [ 4, %.lr.ph ]
+.lr.ph.1:                                         ; preds = %.lr.ph, %bb.d
+  %.sink = phi i64 [ %switch.load, %bb.d ], [ 1, %.lr.ph ]
   %i.j = add nuw nsw i64 %.04347, %.sink
   %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 %.04148
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 1
   %i.m = load i8, ptr %i.l, align 1, !tbaa !23
-  switch i8 %i.m, label %bb.e [
-    i8 62, label %bb.f
-    i8 60, label %bb.f
-    i8 38, label %4
-    i8 34, label %3
-  ]
-
-3:                                                ; preds = %.lr.ph.1
-  br label %bb.f
-
-4:                                                ; preds = %.lr.ph.1
-  br label %bb.f
+  %switch.tableidx.1 = add i8 %i.m, -34           ; 2 uses
+  %3 = icmp ult i8 %switch.tableidx.1, 29
+  br i1 %3, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %.lr.ph.1
+  %4 = zext nneg i8 %switch.tableidx.1 to i64
+  %switch.gep.1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.html_encode, i64 %4
+  %switch.load.1 = load i64, ptr %switch.gep.1, align 8
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %4, %3, %.lr.ph.1, %.lr.ph.1
-  %.sink.1 = phi i64 [ 1, %bb.e ], [ 5, %4 ], [ 6, %3 ], [ 4, %.lr.ph.1 ], [ 4, %.lr.ph.1 ]
+bb.f:                                             ; preds = %bb.e, %.lr.ph.1
+  %.sink.1 = phi i64 [ %switch.load.1, %bb.e ], [ 1, %.lr.ph.1 ]
   %i.n = add nuw nsw i64 %i.j, %.sink.1           ; 3 uses
   %i.o = add nuw nsw i64 %.04148, 2               ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
@@ -660,24 +649,18 @@ bb.f:                                             ; preds = %bb.e, %4, %3, %.lr.
   tail call void @llvm.assume(i1 %lcmp.mod59)
   %i.p = getelementptr inbounds nuw i8, ptr %i.d, i64 %.04148.epil.init
   %i.q = load i8, ptr %i.p, align 1, !tbaa !23
-  switch i8 %i.q, label %bb.g [
-    i8 62, label %._crit_edge.loopexit.epilog-lcssa
-    i8 60, label %._crit_edge.loopexit.epilog-lcssa
-    i8 38, label %6
-    i8 34, label %5
-  ]
-
-5:                                                ; preds = %.lr.ph.epil.preheader
-  br label %._crit_edge.loopexit.epilog-lcssa
-
-6:                                                ; preds = %.lr.ph.epil.preheader
-  br label %._crit_edge.loopexit.epilog-lcssa
+  %switch.tableidx.epil = add i8 %i.q, -34        ; 2 uses
+  %5 = icmp ult i8 %switch.tableidx.epil, 29
+  br i1 %5, label %bb.g, label %._crit_edge.loopexit.epilog-lcssa
 
 bb.g:                                             ; preds = %.lr.ph.epil.preheader
+  %6 = zext nneg i8 %switch.tableidx.epil to i64
+  %switch.gep.epil = getelementptr inbounds nuw [8 x i8], ptr @switch.table.html_encode, i64 %6
+  %switch.load.epil = load i64, ptr %switch.gep.epil, align 8
   br label %._crit_edge.loopexit.epilog-lcssa
 
-._crit_edge.loopexit.epilog-lcssa:                ; preds = %bb.g, %6, %5, %.lr.ph.epil.preheader, %.lr.ph.epil.preheader
-  %.sink.epil = phi i64 [ 1, %bb.g ], [ 5, %6 ], [ 6, %5 ], [ 4, %.lr.ph.epil.preheader ], [ 4, %.lr.ph.epil.preheader ]
+._crit_edge.loopexit.epilog-lcssa:                ; preds = %bb.g, %.lr.ph.epil.preheader
+  %.sink.epil = phi i64 [ %switch.load.epil, %bb.g ], [ 1, %.lr.ph.epil.preheader ]
   %i.r = add nuw nsw i64 %.04347.epil.init, %.sink.epil
   br label %._crit_edge
 
@@ -1080,12 +1063,14 @@ bb.b:                                             ; preds = %bb.a, %bb.j
   %.02737 = phi i64 [ 0, %bb.a ], [ %i.n, %bb.j ] ; 2 uses
   %.02836 = phi i64 [ -1, %bb.a ], [ %.1, %bb.j ] ; 5 uses
   %.02935 = phi i32 [ 0, %bb.a ], [ %.130, %bb.j ] ; 2 uses
-  %i.a = tail call i32 @getc(ptr noundef %0)      ; 2 uses
-  switch i32 %i.a, label %bb.i [
-    i32 -1, label %.loopexit
-    i32 35, label %bb.j
-    i32 33, label %bb.c
-    i32 47, label %bb.d
+  %i.a = tail call i32 @getc(ptr noundef %0)
+  %3 = add i32 %i.a, 1                            ; 2 uses
+  %4 = tail call i32 @llvm.fshl.i32(i32 %3, i32 %3, i32 31)
+  switch i32 %4, label %bb.i [
+    i32 0, label %.loopexit
+    i32 18, label %bb.j
+    i32 17, label %bb.c
+    i32 24, label %bb.d
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -1142,7 +1127,7 @@ bb.i:                                             ; preds = %bb.b
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.d, %bb.b, %bb.c, %bb.i
-  %.130 = phi i32 [ 0, %bb.i ], [ %i.a, %bb.b ], [ %i.c, %bb.c ], [ 0, %bb.d ]
+  %.130 = phi i32 [ 0, %bb.i ], [ 35, %bb.b ], [ %i.c, %bb.c ], [ 0, %bb.d ]
   %.1 = phi i64 [ %.02836, %bb.i ], [ %.02737, %bb.b ], [ %.02836, %bb.c ], [ %.02836, %bb.d ]
   %i.n = add nuw nsw i64 %.02737, 1               ; 2 uses
   %exitcond.not = icmp eq i64 %i.n, 250000
@@ -1400,17 +1385,20 @@ declare i32 @strcmp(ptr noundef captures(none), ptr noundef captures(none)) loca
 
 declare i64 @repl_c_string(ptr noundef, i64 noundef, i64 noundef, i64 noundef) local_unnamed_addr #2
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.fshl.i32(i32, i32, i32) #23
+
 ; Function Attrs: nofree nounwind
-declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #23
+declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #24
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare ptr @memchr(ptr, i32, i64) local_unnamed_addr #24
+declare ptr @memchr(ptr, i32, i64) local_unnamed_addr #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #25
+declare i32 @llvm.smin.i32(i32, i32) #23
 
 ; Function Attrs: nofree nounwind
-declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_addr #23
+declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_addr #24
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #26
@@ -1438,9 +1426,9 @@ attributes #19 = { mustprogress nofree nounwind willreturn allockind("alloc,unin
 attributes #20 = { nofree nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #21 = { mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #22 = { mustprogress nocallback nofree nounwind willreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #23 = { nofree nounwind }
-attributes #24 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
-attributes #25 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #23 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #24 = { nofree nounwind }
+attributes #25 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
 attributes #26 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #27 = { nounwind }
 attributes #28 = { cold }

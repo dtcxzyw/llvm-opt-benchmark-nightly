@@ -201,17 +201,15 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z, %bb.y
   ret double %i.bf
 
 bb.ac:                                            ; preds = %bb.aa, %.preheader
-  %7 = add nsw i32 %.060, -4                      ; 2 uses
-  %8 = tail call i32 @llvm.fshl.i32(i32 %7, i32 %7, i32 30)
-  switch i32 %8, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit [
-    i32 8, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread106
-    i32 0, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread106
-    i32 2, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread113
-    i32 1, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread113
-    i32 5, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread
-    i32 3, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread
-    i32 11, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread98
-    i32 7, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread98
+  switch i32 %.060, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit [
+    i32 36, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread106
+    i32 4, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread106
+    i32 12, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread113
+    i32 8, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread113
+    i32 24, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread
+    i32 16, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread
+    i32 48, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread98
+    i32 32, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread98
   ]
 
 _ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit: ; preds = %bb.ac
@@ -614,17 +612,15 @@ _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu
   br label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backEOS2_.exit
 
 bb.ab:                                            ; preds = %bb.u, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backEOS2_.exit74
-  %7 = add nsw i32 %.0, -4                        ; 2 uses
-  %8 = tail call i32 @llvm.fshl.i32(i32 %7, i32 %7, i32 30)
-  switch i32 %8, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit [
-    i32 8, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread100
-    i32 0, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread100
-    i32 2, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread107
-    i32 1, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread107
-    i32 5, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread
-    i32 3, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread
-    i32 11, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread92
-    i32 7, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread92
+  switch i32 %.0, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit [
+    i32 36, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread100
+    i32 4, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread100
+    i32 12, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread107
+    i32 8, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread107
+    i32 24, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread
+    i32 16, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread
+    i32 48, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread92
+    i32 32, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread92
   ]
 
 _ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit: ; preds = %bb.ab
@@ -1026,9 +1022,6 @@ _ZNSt7__cxx1110_List_baseIPN4geos4geom10LineStringESaIS4_EED2Ev.exit: ; preds = 
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #16
   ret ptr %.sroa.06.020
 }
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.fshl.i32(i32, i32, i32) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #14

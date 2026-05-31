@@ -201,6 +201,7 @@ begin_hunk_0
 @.str.317 = private unnamed_addr constant [49 x i8] c"Aborting rdb channel sync while loading the RDB.\00", align 1
 @.str.318 = private unnamed_addr constant [55 x i8] c"After loading RDB, replica will try psync with master.\00", align 1
 @.str.319 = private unnamed_addr constant [26 x i8] c"Aborting rdb channel sync\00", align 1
+@switch.table.roleCommand = private unnamed_addr constant [14 x ptr] [ptr @.str.239, ptr @.str.240, ptr @.str.241, ptr @.str.244, ptr @.str.244, ptr @.str.244, ptr @.str.244, ptr @.str.244, ptr @.str.244, ptr @.str.244, ptr @.str.244, ptr @.str.244, ptr @.str.242, ptr @.str.243], align 8
 @switch.table.getFailoverStateString = private unnamed_addr constant [3 x ptr] [ptr @.str.265, ptr @.str.267, ptr @.str.266], align 8
 
 ; Function Attrs: nounwind uwtable
@@ -603,37 +604,23 @@ bb.i:                                             ; preds = %bb.c
   %i.af = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 7448), align 8, !tbaa !251
   %i.ag = sext i32 %i.af to i64
   tail call void @addReplyLongLong(ptr noundef %0, i64 noundef %i.ag) #19
-  %i.ah = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 7476), align 4, !tbaa !74 ; 2 uses
+  %i.ah = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 7476), align 4, !tbaa !74 ; 3 uses
   %i.ai = add i32 %i.ah, -12
   %i.aj = icmp ult i32 %i.ai, -9
-  br i1 %i.aj, label %2, label %bb.l
+  br i1 %i.aj, label %bb.j, label %bb.l
 
-2:                                                ; preds = %bb.i
-  switch i32 %i.ah, label %bb.k [
-    i32 0, label %bb.l
-    i32 1, label %3
-    i32 2, label %4
-    i32 12, label %5
-    i32 13, label %bb.j
-  ]
+bb.j:                                             ; preds = %bb.i
+  %2 = icmp ult i32 %i.ah, 14
+  br i1 %2, label %bb.k, label %bb.l
 
-3:                                                ; preds = %2
+bb.k:                                             ; preds = %bb.j
+  %3 = zext nneg i32 %i.ah to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.roleCommand, i64 %3
+  %switch.load = load ptr, ptr %switch.gep, align 8
   br label %bb.l
 
-4:                                                ; preds = %2
-  br label %bb.l
-
-5:                                                ; preds = %2
-  br label %bb.l
-
-bb.j:                                             ; preds = %2
-  br label %bb.l
-
-bb.k:                                             ; preds = %2
-  br label %bb.l
-
-bb.l:                                             ; preds = %2, %bb.i, %3, %4, %5, %bb.j, %bb.k
-  %.0 = phi ptr [ @.str.243, %bb.j ], [ @.str.244, %bb.k ], [ @.str.238, %bb.i ], [ @.str.240, %3 ], [ @.str.241, %4 ], [ @.str.242, %5 ], [ @.str.239, %2 ]
+bb.l:                                             ; preds = %bb.j, %bb.k, %bb.i
+  %.0 = phi ptr [ %switch.load, %bb.k ], [ @.str.238, %bb.i ], [ @.str.244, %bb.j ]
   tail call void @addReplyBulkCString(ptr noundef %0, ptr noundef nonnull %.0) #19
   %i.ak = load ptr, ptr getelementptr inbounds nuw (i8, ptr @server, i64 7456), align 8, !tbaa !75 ; 2 uses
   %.not33 = icmp eq ptr %i.ak, null

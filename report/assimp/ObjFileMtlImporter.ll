@@ -201,14 +201,11 @@ bb.ak:                                            ; preds = %bb.b, %bb.b
   %i.gt = getelementptr inbounds nuw i8, ptr %i.bi, i64 1 ; 2 uses
   store ptr %i.gt, ptr %i.ae, align 8
   %i.gu = load i8, ptr %i.gt, align 1
-  %12 = sext i8 %i.gu to i32
-  %13 = add nsw i32 %12, -101                     ; 2 uses
-  %14 = call i32 @llvm.fshl.i32(i32 %13, i32 %13, i32 31)
-  switch i32 %14, label %bb.ax [
-    i32 7, label %bb.al
-    i32 2, label %bb.aq
-    i32 0, label %bb.av
-    i32 5, label %bb.aw
+  switch i8 %i.gu, label %bb.ax [
+    i8 115, label %bb.al
+    i8 105, label %bb.aq
+    i8 101, label %bb.av
+    i8 111, label %bb.aw
   ]
 
 bb.al:                                            ; preds = %bb.ak
@@ -611,13 +608,13 @@ _ZN6Assimp8getFloatIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S
   store ptr %.sroa.0.0.i.i.lcssa, ptr %i.g, align 8
   store float %i.ae, ptr %1, align 4
   %i.af = load ptr, ptr %i.g, align 8             ; 5 uses
-  %i.ag = load i8, ptr %i.af, align 1
-  switch i8 %i.ag, label %_ZN6Assimp9IsLineEndIcEEbT_.exit [
-    i8 13, label %_ZN6Assimp9IsLineEndIcEEbT_.exit.thread
-    i8 10, label %_ZN6Assimp9IsLineEndIcEEbT_.exit.thread
-    i8 0, label %_ZN6Assimp9IsLineEndIcEEbT_.exit.thread
-    i8 12, label %_ZN6Assimp9IsLineEndIcEEbT_.exit.thread
-  ]
+  %i.ag = load i8, ptr %i.af, align 1             ; 2 uses
+  %2 = icmp ult i8 %i.ag, 14
+  %switch.maskindex = zext nneg i8 %i.ag to i16
+  %switch.shifted = lshr i16 13313, %switch.maskindex
+  %switch.lobit = trunc i16 %switch.shifted to i1
+  %or.cond = select i1 %2, i1 %switch.lobit, i1 false
+  br i1 %or.cond, label %_ZN6Assimp9IsLineEndIcEEbT_.exit.thread, label %_ZN6Assimp9IsLineEndIcEEbT_.exit
 
 _ZN6Assimp9IsLineEndIcEEbT_.exit:                 ; preds = %_ZN6Assimp8getFloatIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rf.exit
   %.sroa.03.0.copyload = load ptr, ptr %i.h, align 8 ; 5 uses
@@ -804,9 +801,9 @@ _ZN6Assimp8getFloatIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S
   store ptr %.sroa.0.0.i.i32.lcssa, ptr %i.g, align 8
   br label %_ZN6Assimp9IsLineEndIcEEbT_.exit.thread
 
-_ZN6Assimp9IsLineEndIcEEbT_.exit.thread:          ; preds = %_ZN6Assimp8getFloatIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rf.exit, %_ZN6Assimp8getFloatIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rf.exit, %_ZN6Assimp8getFloatIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rf.exit, %_ZN6Assimp8getFloatIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rf.exit, %_ZN6Assimp8getFloatIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rf.exit37
-  %.040 = phi float [ %i.bd, %_ZN6Assimp8getFloatIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rf.exit37 ], [ 0.000000e+00, %_ZN6Assimp8getFloatIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rf.exit ], [ 0.000000e+00, %_ZN6Assimp8getFloatIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rf.exit ], [ 0.000000e+00, %_ZN6Assimp8getFloatIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rf.exit ], [ 0.000000e+00, %_ZN6Assimp8getFloatIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rf.exit ]
-  %.0 = phi float [ %i.ca, %_ZN6Assimp8getFloatIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rf.exit37 ], [ 0.000000e+00, %_ZN6Assimp8getFloatIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rf.exit ], [ 0.000000e+00, %_ZN6Assimp8getFloatIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rf.exit ], [ 0.000000e+00, %_ZN6Assimp8getFloatIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rf.exit ], [ 0.000000e+00, %_ZN6Assimp8getFloatIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rf.exit ]
+_ZN6Assimp9IsLineEndIcEEbT_.exit.thread:          ; preds = %_ZN6Assimp8getFloatIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rf.exit, %_ZN6Assimp8getFloatIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rf.exit37
+  %.040 = phi float [ %i.bd, %_ZN6Assimp8getFloatIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rf.exit37 ], [ 0.000000e+00, %_ZN6Assimp8getFloatIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rf.exit ]
+  %.0 = phi float [ %i.ca, %_ZN6Assimp8getFloatIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rf.exit37 ], [ 0.000000e+00, %_ZN6Assimp8getFloatIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEEET_S8_S8_Rf.exit ]
   %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 4
   store float %.040, ptr %i.cb, align 4
   %i.cc = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -1209,26 +1206,23 @@ declare void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7reserveEm(pt
 
 declare noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32), ptr noundef, i64 noundef) local_unnamed_addr #5
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.fshl.i32(i32, i32, i32) #18
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #19
+declare void @llvm.assume(i1 noundef) #18
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #20
+declare void @llvm.experimental.noalias.scope.decl(metadata) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #18
+declare i64 @llvm.umax.i64(i64, i64) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #18
+declare i64 @llvm.umin.i64(i64, i64) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #18
+declare i64 @llvm.smax.i64(i64, i64) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smin.i64(i64, i64) #18
+declare i64 @llvm.smin.i64(i64, i64) #20
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #21
@@ -1251,9 +1245,9 @@ attributes #14 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-si
 attributes #15 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #16 = { cold noreturn }
 attributes #17 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #18 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #19 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #20 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #18 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #19 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #20 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #21 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
 attributes #22 = { nounwind }
 attributes #23 = { builtin allocsize(0) }

@@ -78,6 +78,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.63 = private unnamed_addr constant [36 x i8] c"cli_rmdirs: Couldn't remove %s: %s\0A\00", align 1
 @.str.64 = private unnamed_addr constant [27 x i8] c"cli_readn: read error: %s\0A\00", align 1
 @.str.65 = private unnamed_addr constant [29 x i8] c"cli_writen: write error: %s\0A\00", align 1
+@switch.table.cl_strerror = private unnamed_addr constant [129 x ptr] [ptr @.str.30, ptr @.str.29, ptr @.str.28, ptr @.str.27, ptr @.str.26, ptr @.str.24, ptr @.str.23, ptr @.str.22, ptr @.str.21, ptr @.str.15, ptr @.str.20, ptr @.str.19, ptr @.str.18, ptr @.str.17, ptr @.str.16, ptr @.str.14, ptr @.str.25, ptr @.str.31, ptr @.str.12, ptr @.str.11, ptr @.str.13, ptr @.str.31, ptr @.str.10, ptr @.str.9, ptr @.str.8, ptr @.str.7, ptr @.str.6, ptr @.str.5, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.31, ptr @.str.3, ptr @.str.4], align 8
 
 ; Function Attrs: cold nofree nounwind uwtable
 define dso_local void @cli_warnmsg(ptr noundef readonly captures(none) %0, ...) local_unnamed_addr #0 {
@@ -178,123 +179,19 @@ bb.a:
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define dso_local noundef nonnull ptr @cl_strerror(i32 noundef %0) local_unnamed_addr #6 {
-  switch i32 %0, label %bb.b [
-    i32 0, label %bb.c
-    i32 1, label %2
-    i32 -100, label %3
-    i32 -101, label %4
-    i32 -102, label %5
-    i32 -103, label %6
-    i32 -104, label %7
-    i32 -105, label %8
-    i32 -108, label %9
-    i32 -109, label %10
-    i32 -107, label %11
-    i32 -112, label %12
-    i32 -118, label %13
-    i32 -113, label %14
-    i32 -114, label %15
-    i32 -115, label %16
-    i32 -116, label %17
-    i32 -117, label %18
-    i32 -119, label %19
-    i32 -120, label %20
-    i32 -121, label %21
-    i32 -122, label %22
-    i32 -111, label %23
-    i32 -123, label %24
-    i32 -124, label %25
-    i32 -125, label %26
-    i32 -126, label %27
-    i32 -127, label %bb.a
-  ]
+bb.a:
+  %switch.tableidx = add i32 %0, 127              ; 2 uses
+  %1 = icmp ult i32 %switch.tableidx, 129
+  br i1 %1, label %bb.b, label %bb.c
 
-2:                                                ; preds = %1
+bb.b:                                             ; preds = %bb.a
+  %2 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.cl_strerror, i64 %2
+  %switch.load = load ptr, ptr %switch.gep, align 8
   br label %bb.c
 
-3:                                                ; preds = %1
-  br label %bb.c
-
-4:                                                ; preds = %1
-  br label %bb.c
-
-5:                                                ; preds = %1
-  br label %bb.c
-
-6:                                                ; preds = %1
-  br label %bb.c
-
-7:                                                ; preds = %1
-  br label %bb.c
-
-8:                                                ; preds = %1
-  br label %bb.c
-
-9:                                                ; preds = %1
-  br label %bb.c
-
-10:                                               ; preds = %1
-  br label %bb.c
-
-11:                                               ; preds = %1
-  br label %bb.c
-
-12:                                               ; preds = %1
-  br label %bb.c
-
-13:                                               ; preds = %1
-  br label %bb.c
-
-14:                                               ; preds = %1
-  br label %bb.c
-
-15:                                               ; preds = %1
-  br label %bb.c
-
-16:                                               ; preds = %1
-  br label %bb.c
-
-17:                                               ; preds = %1
-  br label %bb.c
-
-18:                                               ; preds = %1
-  br label %bb.c
-
-19:                                               ; preds = %1
-  br label %bb.c
-
-20:                                               ; preds = %1
-  br label %bb.c
-
-21:                                               ; preds = %1
-  br label %bb.c
-
-22:                                               ; preds = %1
-  br label %bb.c
-
-23:                                               ; preds = %1
-  br label %bb.c
-
-24:                                               ; preds = %1
-  br label %bb.c
-
-25:                                               ; preds = %1
-  br label %bb.c
-
-26:                                               ; preds = %1
-  br label %bb.c
-
-27:                                               ; preds = %1
-  br label %bb.c
-
-bb.a:                                             ; preds = %1
-  br label %bb.c
-
-bb.b:                                             ; preds = %1
-  br label %bb.c
-
-bb.c:                                             ; preds = %1, %bb.b, %bb.a, %27, %26, %25, %24, %23, %22, %21, %20, %19, %18, %17, %16, %15, %14, %13, %12, %11, %10, %9, %8, %7, %6, %5, %4, %3, %2
-  %.0 = phi ptr [ @.str.31, %bb.b ], [ @.str.30, %bb.a ], [ @.str.4, %2 ], [ @.str.5, %3 ], [ @.str.6, %4 ], [ @.str.7, %5 ], [ @.str.8, %6 ], [ @.str.9, %7 ], [ @.str.10, %8 ], [ @.str.11, %9 ], [ @.str.12, %10 ], [ @.str.13, %11 ], [ @.str.14, %12 ], [ @.str.15, %13 ], [ @.str.16, %14 ], [ @.str.17, %15 ], [ @.str.18, %16 ], [ @.str.19, %17 ], [ @.str.20, %18 ], [ @.str.21, %19 ], [ @.str.22, %20 ], [ @.str.23, %21 ], [ @.str.24, %22 ], [ @.str.25, %23 ], [ @.str.26, %24 ], [ @.str.27, %25 ], [ @.str.28, %26 ], [ @.str.29, %27 ], [ @.str.3, %1 ]
+bb.c:                                             ; preds = %bb.a, %bb.b
+  %.0 = phi ptr [ %switch.load, %bb.b ], [ @.str.31, %bb.a ]
   ret ptr %.0
 }
 

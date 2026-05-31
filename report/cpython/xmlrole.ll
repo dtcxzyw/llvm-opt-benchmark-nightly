@@ -71,7 +71,7 @@ bb.e:                                             ; preds = %bb.a
   %i.e = shl i32 %i.d, 1
   %i.f = sext i32 %i.e to i64
   %i.g = getelementptr i8, ptr %2, i64 %i.f
-  %i.h = tail call i32 %i.b(ptr noundef %4, ptr noundef %i.g, ptr noundef %3, ptr noundef nonnull @KW_DOCTYPE) #5
+  %i.h = tail call i32 %i.b(ptr noundef %4, ptr noundef %i.g, ptr noundef %3, ptr noundef nonnull @KW_DOCTYPE) #4
   %.not = icmp eq i32 %i.h, 0
   br i1 %.not, label %.thread, label %common.exit.sink.split
 
@@ -153,7 +153,7 @@ bb.d:                                             ; preds = %bb.a
   %i.e = shl i32 %i.d, 1
   %i.f = sext i32 %i.e to i64
   %i.g = getelementptr i8, ptr %2, i64 %i.f
-  %i.h = tail call i32 %i.b(ptr noundef %4, ptr noundef %i.g, ptr noundef %3, ptr noundef nonnull @KW_DOCTYPE) #5
+  %i.h = tail call i32 %i.b(ptr noundef %4, ptr noundef %i.g, ptr noundef %3, ptr noundef nonnull @KW_DOCTYPE) #4
   %.not = icmp eq i32 %i.h, 0
   br i1 %.not, label %.thread, label %bb.e
 
@@ -232,13 +232,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.a = getelementptr i8, ptr %4, i64 48         ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !16
-  %i.c = tail call i32 %i.b(ptr noundef %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_SYSTEM) #5
+  %i.c = tail call i32 %i.b(ptr noundef %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_SYSTEM) #4
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.d, label %common.exit.sink.split
 
 bb.d:                                             ; preds = %bb.c
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !16
-  %i.e = tail call i32 %i.d(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_PUBLIC) #5
+  %i.e = tail call i32 %i.d(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_PUBLIC) #4
   %.not15 = icmp eq i32 %i.e, 0
   br i1 %.not15, label %.thread, label %common.exit.sink.split
 
@@ -285,7 +285,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = shl i32 %i.d, 1
   %i.f = sext i32 %i.e to i64
   %i.g = getelementptr i8, ptr %2, i64 %i.f
-  %i.h = tail call i32 %i.b(ptr noundef %4, ptr noundef %i.g, ptr noundef %3, ptr noundef nonnull @KW_ENTITY) #5
+  %i.h = tail call i32 %i.b(ptr noundef %4, ptr noundef %i.g, ptr noundef %3, ptr noundef nonnull @KW_ENTITY) #4
   %.not = icmp eq i32 %i.h, 0
   br i1 %.not, label %bb.d, label %bb.c
 
@@ -299,7 +299,7 @@ bb.d:                                             ; preds = %bb.b
   %i.k = shl i32 %i.j, 1
   %i.l = sext i32 %i.k to i64
   %i.m = getelementptr i8, ptr %2, i64 %i.l
-  %i.n = tail call i32 %i.i(ptr noundef nonnull %4, ptr noundef %i.m, ptr noundef %3, ptr noundef nonnull @KW_ATTLIST) #5
+  %i.n = tail call i32 %i.i(ptr noundef nonnull %4, ptr noundef %i.m, ptr noundef %3, ptr noundef nonnull @KW_ATTLIST) #4
   %.not28 = icmp eq i32 %i.n, 0
   br i1 %.not28, label %bb.f, label %bb.e
 
@@ -313,7 +313,7 @@ bb.f:                                             ; preds = %bb.d
   %i.q = shl i32 %i.p, 1
   %i.r = sext i32 %i.q to i64
   %i.s = getelementptr i8, ptr %2, i64 %i.r
-  %i.t = tail call i32 %i.o(ptr noundef nonnull %4, ptr noundef %i.s, ptr noundef %3, ptr noundef nonnull @KW_ELEMENT) #5
+  %i.t = tail call i32 %i.o(ptr noundef nonnull %4, ptr noundef %i.s, ptr noundef %3, ptr noundef nonnull @KW_ELEMENT) #4
   %.not29 = icmp eq i32 %i.t, 0
   br i1 %.not29, label %bb.h, label %bb.g
 
@@ -327,7 +327,7 @@ bb.h:                                             ; preds = %bb.f
   %i.w = shl i32 %i.v, 1
   %i.x = sext i32 %i.w to i64
   %i.y = getelementptr i8, ptr %2, i64 %i.x
-  %i.z = tail call i32 %i.u(ptr noundef nonnull %4, ptr noundef %i.y, ptr noundef %3, ptr noundef nonnull @KW_NOTATION) #5
+  %i.z = tail call i32 %i.u(ptr noundef nonnull %4, ptr noundef %i.y, ptr noundef %3, ptr noundef nonnull @KW_NOTATION) #4
   %.not30 = icmp eq i32 %i.z, 0
   br i1 %.not30, label %.thread, label %bb.i
 
@@ -368,13 +368,11 @@ common.exit:                                      ; preds = %.thread, %bb.n, %bb
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define internal range(i32 -1, 60) i32 @prolog2(ptr noundef captures(none) %0, i32 noundef %1, ptr readnone captures(none) %2, ptr readnone captures(none) %3, ptr readnone captures(none) %4) #2 {
 bb.a:
-  %5 = add i32 %1, -11                            ; 2 uses
-  %6 = tail call i32 @llvm.fshl.i32(i32 %5, i32 %5, i32 31)
-  switch i32 %6, label %bb.e [
-    i32 2, label %common.exit
-    i32 0, label %bb.b
-    i32 1, label %bb.c
-    i32 9, label %bb.d
+  switch i32 %1, label %bb.e [
+    i32 15, label %common.exit
+    i32 11, label %bb.b
+    i32 13, label %bb.c
+    i32 29, label %bb.d
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -638,7 +636,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr i8, ptr %4, i64 48         ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !16
-  %i.c = tail call i32 %i.b(ptr noundef %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_SYSTEM) #5
+  %i.c = tail call i32 %i.b(ptr noundef %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_SYSTEM) #4
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.d, label %bb.c
 
@@ -648,7 +646,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !16
-  %i.e = tail call i32 %i.d(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_PUBLIC) #5
+  %i.e = tail call i32 %i.d(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_PUBLIC) #4
   %.not15 = icmp eq i32 %i.e, 0
   br i1 %.not15, label %.thread, label %bb.e
 
@@ -691,7 +689,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr i8, ptr %4, i64 48         ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !16
-  %i.c = tail call i32 %i.b(ptr noundef %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_SYSTEM) #5
+  %i.c = tail call i32 %i.b(ptr noundef %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_SYSTEM) #4
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.d, label %bb.c
 
@@ -701,7 +699,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !16
-  %i.e = tail call i32 %i.d(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_PUBLIC) #5
+  %i.e = tail call i32 %i.d(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_PUBLIC) #4
   %.not15 = icmp eq i32 %i.e, 0
   br i1 %.not15, label %.thread, label %bb.e
 
@@ -916,13 +914,13 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr i8, ptr %4, i64 48         ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !16
-  %i.c = tail call i32 %i.b(ptr noundef %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_INCLUDE) #5
+  %i.c = tail call i32 %i.b(ptr noundef %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_INCLUDE) #4
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.c, label %common.exit.sink.split
 
 bb.c:                                             ; preds = %bb.b
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !16
-  %i.e = tail call i32 %i.d(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_IGNORE) #5
+  %i.e = tail call i32 %i.d(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_IGNORE) #4
   %.not13 = icmp eq i32 %i.e, 0
   br i1 %.not13, label %.thread, label %common.exit.sink.split
 
@@ -1081,7 +1079,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.d = getelementptr i8, ptr %4, i64 48
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !16
-  %i.f = tail call i32 %i.e(ptr noundef %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_NDATA) #5
+  %i.f = tail call i32 %i.e(ptr noundef %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_NDATA) #4
   %.not = icmp eq i32 %i.f, 0
   br i1 %.not, label %.thread, label %common.exit.sink.split
 
@@ -1186,55 +1184,55 @@ bb.a:
 .preheader:                                       ; preds = %bb.a
   %i.a = getelementptr i8, ptr %4, i64 48         ; 9 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !16
-  %i.c = tail call i32 %i.b(ptr noundef %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_CDATA) #5
+  %i.c = tail call i32 %i.b(ptr noundef %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_CDATA) #4
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.b, label %common.exit.sink.split
 
 bb.b:                                             ; preds = %.preheader
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !16
-  %i.e = tail call i32 %i.d(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_ID) #5
+  %i.e = tail call i32 %i.d(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_ID) #4
   %.not.1 = icmp eq i32 %i.e, 0
   br i1 %.not.1, label %bb.c, label %common.exit.sink.split
 
 bb.c:                                             ; preds = %bb.b
   %i.f = load ptr, ptr %i.a, align 8, !tbaa !16
-  %i.g = tail call i32 %i.f(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_IDREF) #5
+  %i.g = tail call i32 %i.f(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_IDREF) #4
   %.not.2 = icmp eq i32 %i.g, 0
   br i1 %.not.2, label %bb.d, label %common.exit.sink.split
 
 bb.d:                                             ; preds = %bb.c
   %i.h = load ptr, ptr %i.a, align 8, !tbaa !16
-  %i.i = tail call i32 %i.h(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_IDREFS) #5
+  %i.i = tail call i32 %i.h(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_IDREFS) #4
   %.not.3 = icmp eq i32 %i.i, 0
   br i1 %.not.3, label %bb.e, label %common.exit.sink.split
 
 bb.e:                                             ; preds = %bb.d
   %i.j = load ptr, ptr %i.a, align 8, !tbaa !16
-  %i.k = tail call i32 %i.j(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_ENTITY) #5
+  %i.k = tail call i32 %i.j(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_ENTITY) #4
   %.not.4 = icmp eq i32 %i.k, 0
   br i1 %.not.4, label %bb.f, label %common.exit.sink.split
 
 bb.f:                                             ; preds = %bb.e
   %i.l = load ptr, ptr %i.a, align 8, !tbaa !16
-  %i.m = tail call i32 %i.l(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_ENTITIES) #5
+  %i.m = tail call i32 %i.l(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_ENTITIES) #4
   %.not.5 = icmp eq i32 %i.m, 0
   br i1 %.not.5, label %bb.g, label %common.exit.sink.split
 
 bb.g:                                             ; preds = %bb.f
   %i.n = load ptr, ptr %i.a, align 8, !tbaa !16
-  %i.o = tail call i32 %i.n(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_NMTOKEN) #5
+  %i.o = tail call i32 %i.n(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_NMTOKEN) #4
   %.not.6 = icmp eq i32 %i.o, 0
   br i1 %.not.6, label %bb.h, label %common.exit.sink.split
 
 bb.h:                                             ; preds = %bb.g
   %i.p = load ptr, ptr %i.a, align 8, !tbaa !16
-  %i.q = tail call i32 %i.p(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_NMTOKENS) #5
+  %i.q = tail call i32 %i.p(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_NMTOKENS) #4
   %.not.7 = icmp eq i32 %i.q, 0
   br i1 %.not.7, label %bb.i, label %common.exit.sink.split
 
 bb.i:                                             ; preds = %bb.h
   %i.r = load ptr, ptr %i.a, align 8, !tbaa !16
-  %i.s = tail call i32 %i.r(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_NOTATION) #5
+  %i.s = tail call i32 %i.r(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_NOTATION) #4
   %.not21 = icmp eq i32 %i.s, 0
   br i1 %.not21, label %.thread, label %common.exit.sink.split
 
@@ -1276,7 +1274,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = load i32, ptr %i.c, align 8, !tbaa !18
   %i.e = sext i32 %i.d to i64
   %i.f = getelementptr i8, ptr %2, i64 %i.e
-  %i.g = tail call i32 %i.b(ptr noundef %4, ptr noundef %i.f, ptr noundef %3, ptr noundef nonnull @KW_IMPLIED) #5
+  %i.g = tail call i32 %i.b(ptr noundef %4, ptr noundef %i.f, ptr noundef %3, ptr noundef nonnull @KW_IMPLIED) #4
   %.not = icmp eq i32 %i.g, 0
   br i1 %.not, label %bb.c, label %common.exit.sink.split
 
@@ -1285,7 +1283,7 @@ bb.c:                                             ; preds = %bb.b
   %i.i = load i32, ptr %i.c, align 8, !tbaa !18
   %i.j = sext i32 %i.i to i64
   %i.k = getelementptr i8, ptr %2, i64 %i.j
-  %i.l = tail call i32 %i.h(ptr noundef nonnull %4, ptr noundef %i.k, ptr noundef %3, ptr noundef nonnull @KW_REQUIRED) #5
+  %i.l = tail call i32 %i.h(ptr noundef nonnull %4, ptr noundef %i.k, ptr noundef %3, ptr noundef nonnull @KW_REQUIRED) #4
   %.not22 = icmp eq i32 %i.l, 0
   br i1 %.not22, label %bb.d, label %common.exit.sink.split
 
@@ -1294,7 +1292,7 @@ bb.d:                                             ; preds = %bb.c
   %i.n = load i32, ptr %i.c, align 8, !tbaa !18
   %i.o = sext i32 %i.n to i64
   %i.p = getelementptr i8, ptr %2, i64 %i.o
-  %i.q = tail call i32 %i.m(ptr noundef nonnull %4, ptr noundef %i.p, ptr noundef %3, ptr noundef nonnull @KW_FIXED) #5
+  %i.q = tail call i32 %i.m(ptr noundef nonnull %4, ptr noundef %i.p, ptr noundef %3, ptr noundef nonnull @KW_FIXED) #4
   %.not23 = icmp eq i32 %i.q, 0
   br i1 %.not23, label %.thread, label %common.exit.sink.split
 
@@ -1504,7 +1502,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr i8, ptr %4, i64 48         ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !16
-  %i.c = tail call i32 %i.b(ptr noundef %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_EMPTY) #5
+  %i.c = tail call i32 %i.b(ptr noundef %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_EMPTY) #4
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.d, label %bb.c
 
@@ -1516,7 +1514,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.e = load ptr, ptr %i.a, align 8, !tbaa !16
-  %i.f = tail call i32 %i.e(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_ANY) #5
+  %i.f = tail call i32 %i.e(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_ANY) #4
   %.not17 = icmp eq i32 %i.f, 0
   br i1 %.not17, label %.thread, label %bb.e
 
@@ -1570,7 +1568,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = load i32, ptr %i.c, align 8, !tbaa !18
   %i.e = sext i32 %i.d to i64
   %i.f = getelementptr i8, ptr %2, i64 %i.e
-  %i.g = tail call i32 %i.b(ptr noundef %4, ptr noundef %i.f, ptr noundef %3, ptr noundef nonnull @KW_PCDATA) #5
+  %i.g = tail call i32 %i.b(ptr noundef %4, ptr noundef %i.f, ptr noundef %3, ptr noundef nonnull @KW_PCDATA) #4
   %.not = icmp eq i32 %i.g, 0
   br i1 %.not, label %.thread, label %common.exit.sink.split
 
@@ -1875,13 +1873,13 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr i8, ptr %4, i64 48         ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !16
-  %i.c = tail call i32 %i.b(ptr noundef %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_SYSTEM) #5
+  %i.c = tail call i32 %i.b(ptr noundef %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_SYSTEM) #4
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.c, label %common.exit.sink.split
 
 bb.c:                                             ; preds = %bb.b
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !16
-  %i.e = tail call i32 %i.d(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_PUBLIC) #5
+  %i.e = tail call i32 %i.d(ptr noundef nonnull %4, ptr noundef %2, ptr noundef %3, ptr noundef nonnull @KW_PUBLIC) #4
   %.not13 = icmp eq i32 %i.e, 0
   br i1 %.not13, label %.thread, label %common.exit.sink.split
 
@@ -2036,15 +2034,11 @@ common.exit:                                      ; preds = %common.exit.sink.sp
   ret i32 %.0
 }
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.fshl.i32(i32, i32, i32) #4
-
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #5 = { nounwind }
+attributes #4 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4}
 !llvm.ident = !{!5}

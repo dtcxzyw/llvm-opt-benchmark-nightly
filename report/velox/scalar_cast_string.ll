@@ -201,8 +201,14 @@ $_ZTSFN5arrow6ResultINS_10TypeHolderEEEPNS_7compute13KernelContextERKSt6vectorIS
 @_ZTVN10__cxxabiv120__function_type_infoE = external global [0 x ptr]
 @_ZTSFN5arrow6ResultINS_10TypeHolderEEEPNS_7compute13KernelContextERKSt6vectorIS1_SaIS1_EEE = linkonce_odr constant [87 x i8] c"FN5arrow6ResultINS_10TypeHolderEEEPNS_7compute13KernelContextERKSt6vectorIS1_SaIS1_EEE\00", comdat, align 1
 @switch.table._ZN5arrow7compute8internal18GetBinaryLikeCastsEv = private unnamed_addr constant [11 x ptr] [ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_10StringTypeENS_9UInt8TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_10StringTypeENS_8Int8TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_10StringTypeENS_10UInt16TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_10StringTypeENS_9Int16TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_10StringTypeENS_10UInt32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_10StringTypeENS_9Int32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_10StringTypeENS_10UInt64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_10StringTypeENS_9Int64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal11FailFunctorIPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEEE4ExecES5_S8_SA_, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_10StringTypeENS_9FloatTypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_10StringTypeENS_10DoubleTypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE], align 8
-@switch.table._ZN5arrow7compute8internal18GetBinaryLikeCastsEv.817 = private unnamed_addr constant [11 x ptr] [ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_14StringViewTypeENS_9UInt8TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_14StringViewTypeENS_8Int8TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_14StringViewTypeENS_10UInt16TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_14StringViewTypeENS_9Int16TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_14StringViewTypeENS_10UInt32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_14StringViewTypeENS_9Int32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_14StringViewTypeENS_10UInt64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_14StringViewTypeENS_9Int64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal11FailFunctorIPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEEE4ExecES5_S8_SA_, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_14StringViewTypeENS_9FloatTypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_14StringViewTypeENS_10DoubleTypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE], align 8
-@switch.table._ZN5arrow7compute8internal18GetBinaryLikeCastsEv.818 = private unnamed_addr constant [11 x ptr] [ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_15LargeStringTypeENS_9UInt8TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_15LargeStringTypeENS_8Int8TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_15LargeStringTypeENS_10UInt16TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_15LargeStringTypeENS_9Int16TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_15LargeStringTypeENS_10UInt32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_15LargeStringTypeENS_9Int32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_15LargeStringTypeENS_10UInt64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_15LargeStringTypeENS_9Int64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal11FailFunctorIPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEEE4ExecES5_S8_SA_, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_15LargeStringTypeENS_9FloatTypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_15LargeStringTypeENS_10DoubleTypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE], align 8
+@switch.table._ZN5arrow7compute8internal18GetBinaryLikeCastsEv.817 = private unnamed_addr constant [22 x ptr] [ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126DecimalToStringCastFunctorINS_10StringTypeENS_14Decimal128TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126DecimalToStringCastFunctorINS_10StringTypeENS_14Decimal256TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126DecimalToStringCastFunctorINS_10StringTypeENS_13Decimal32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126DecimalToStringCastFunctorINS_10StringTypeENS_13Decimal64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE], align 8
+@switch.table._ZN5arrow7compute8internal18GetBinaryLikeCastsEv.818 = private unnamed_addr constant [18 x ptr] [ptr @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_10StringTypeENS_10Date32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_10StringTypeENS_10Date64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_10StringTypeENS_13TimestampTypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_10StringTypeENS_10Time32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_10StringTypeENS_10Time64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_10StringTypeENS_12DurationTypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE], align 8
+@switch.table._ZN5arrow7compute8internal18GetBinaryLikeCastsEv.819 = private unnamed_addr constant [11 x ptr] [ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_14StringViewTypeENS_9UInt8TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_14StringViewTypeENS_8Int8TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_14StringViewTypeENS_10UInt16TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_14StringViewTypeENS_9Int16TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_14StringViewTypeENS_10UInt32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_14StringViewTypeENS_9Int32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_14StringViewTypeENS_10UInt64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_14StringViewTypeENS_9Int64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal11FailFunctorIPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEEE4ExecES5_S8_SA_, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_14StringViewTypeENS_9FloatTypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_14StringViewTypeENS_10DoubleTypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE], align 8
+@switch.table._ZN5arrow7compute8internal18GetBinaryLikeCastsEv.820 = private unnamed_addr constant [22 x ptr] [ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126DecimalToStringCastFunctorINS_14StringViewTypeENS_14Decimal128TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126DecimalToStringCastFunctorINS_14StringViewTypeENS_14Decimal256TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126DecimalToStringCastFunctorINS_14StringViewTypeENS_13Decimal32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126DecimalToStringCastFunctorINS_14StringViewTypeENS_13Decimal64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE], align 8
+@switch.table._ZN5arrow7compute8internal18GetBinaryLikeCastsEv.821 = private unnamed_addr constant [18 x ptr] [ptr @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_14StringViewTypeENS_10Date32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_14StringViewTypeENS_10Date64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_14StringViewTypeENS_13TimestampTypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_14StringViewTypeENS_10Time32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_14StringViewTypeENS_10Time64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_14StringViewTypeENS_12DurationTypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE], align 8
+@switch.table._ZN5arrow7compute8internal18GetBinaryLikeCastsEv.822 = private unnamed_addr constant [11 x ptr] [ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_15LargeStringTypeENS_9UInt8TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_15LargeStringTypeENS_8Int8TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_15LargeStringTypeENS_10UInt16TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_15LargeStringTypeENS_9Int16TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_15LargeStringTypeENS_10UInt32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_15LargeStringTypeENS_9Int32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_15LargeStringTypeENS_10UInt64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_15LargeStringTypeENS_9Int64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal11FailFunctorIPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEEE4ExecES5_S8_SA_, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_15LargeStringTypeENS_9FloatTypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126NumericToStringCastFunctorINS_15LargeStringTypeENS_10DoubleTypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE], align 8
+@switch.table._ZN5arrow7compute8internal18GetBinaryLikeCastsEv.823 = private unnamed_addr constant [22 x ptr] [ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126DecimalToStringCastFunctorINS_15LargeStringTypeENS_14Decimal128TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126DecimalToStringCastFunctorINS_15LargeStringTypeENS_14Decimal256TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126DecimalToStringCastFunctorINS_15LargeStringTypeENS_13Decimal32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_126DecimalToStringCastFunctorINS_15LargeStringTypeENS_13Decimal64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE], align 8
+@switch.table._ZN5arrow7compute8internal18GetBinaryLikeCastsEv.824 = private unnamed_addr constant [18 x ptr] [ptr @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_15LargeStringTypeENS_10Date32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_15LargeStringTypeENS_10Date64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_15LargeStringTypeENS_13TimestampTypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_15LargeStringTypeENS_10Time32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_15LargeStringTypeENS_10Time64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_15LargeStringTypeENS_12DurationTypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE], align 8
 
 ; Function Attrs: mustprogress uwtable
 define void @_ZN5arrow7compute8internal18GetBinaryLikeCastsEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::vector") align 8 captures(none) %0) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
@@ -605,27 +611,18 @@ _ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i762: ; preds = %bb.atu, %bb.a
   store ptr null, ptr %262, align 8, !tbaa !23
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.edl, i8 0, i64 32, i1 false)
   %i.efs = load i32, ptr %.sroa.039.0.ptr53.i, align 4, !tbaa !7
-  switch i32 %i.efs, label %bb.atv [
-    i32 43, label %_ZN5arrow7compute8internal15GenerateDecimalITtTpTyENS1_12_GLOBAL__N_126DecimalToStringCastFunctorENS_10StringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
-    i32 44, label %450
-    i32 23, label %451
-    i32 24, label %452
-  ]
-
-450:                                              ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i762
-  br label %_ZN5arrow7compute8internal15GenerateDecimalITtTpTyENS1_12_GLOBAL__N_126DecimalToStringCastFunctorENS_10StringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
-
-451:                                              ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i762
-  br label %_ZN5arrow7compute8internal15GenerateDecimalITtTpTyENS1_12_GLOBAL__N_126DecimalToStringCastFunctorENS_10StringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
-
-452:                                              ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i762
-  br label %_ZN5arrow7compute8internal15GenerateDecimalITtTpTyENS1_12_GLOBAL__N_126DecimalToStringCastFunctorENS_10StringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
+  %switch.tableidx3680 = add i32 %i.efs, -23      ; 2 uses
+  %450 = icmp ult i32 %switch.tableidx3680, 22
+  br i1 %450, label %bb.atv, label %_ZN5arrow7compute8internal15GenerateDecimalITtTpTyENS1_12_GLOBAL__N_126DecimalToStringCastFunctorENS_10StringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
 
 bb.atv:                                           ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i762
+  %451 = zext nneg i32 %switch.tableidx3680 to i64
+  %switch.gep3682 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN5arrow7compute8internal18GetBinaryLikeCastsEv.817, i64 %451
+  %switch.load3683 = load ptr, ptr %switch.gep3682, align 8
   br label %_ZN5arrow7compute8internal15GenerateDecimalITtTpTyENS1_12_GLOBAL__N_126DecimalToStringCastFunctorENS_10StringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
 
-_ZN5arrow7compute8internal15GenerateDecimalITtTpTyENS1_12_GLOBAL__N_126DecimalToStringCastFunctorENS_10StringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i: ; preds = %bb.atv, %452, %451, %450, %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i762
-  %.0.i.i763 = phi ptr [ null, %bb.atv ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_126DecimalToStringCastFunctorINS_10StringTypeENS_14Decimal256TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %452 ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_126DecimalToStringCastFunctorINS_10StringTypeENS_13Decimal64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %450 ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_126DecimalToStringCastFunctorINS_10StringTypeENS_14Decimal128TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %451 ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_126DecimalToStringCastFunctorINS_10StringTypeENS_13Decimal32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i762 ]
+_ZN5arrow7compute8internal15GenerateDecimalITtTpTyENS1_12_GLOBAL__N_126DecimalToStringCastFunctorENS_10StringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i: ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i762, %bb.atv
+  %.0.i.i763 = phi ptr [ %switch.load3683, %bb.atv ], [ null, %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i762 ]
   invoke void @_ZN5arrow7compute8internal12CastFunction9AddKernelENS_4Type4typeESt6vectorINS0_9InputTypeESaIS6_EENS0_10OutputTypeEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS0_12NullHandling4typeENS0_13MemAllocation4typeE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %258, ptr noundef nonnull align 8 dereferenceable(252) %i.ecq, i32 noundef %i.eef, ptr noundef nonnull %259, ptr noundef nonnull %261, ptr noundef %.0.i.i763, i32 noundef 2, i32 noundef 0)
           to label %bb.atw unwind label %bb.avb
 
@@ -1028,35 +1025,18 @@ _ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i811: ; preds = %bb.awc, %bb.a
   %i.enh = load ptr, ptr %.sroa.097.0114.i, align 8, !tbaa !23
   %i.eni = getelementptr inbounds nuw i8, ptr %i.enh, i64 40
   %i.enj = load i32, ptr %i.eni, align 8, !tbaa !220
-  switch i32 %i.enj, label %bb.awd [
-    i32 16, label %_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_10StringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
-    i32 17, label %453
-    i32 33, label %454
-    i32 19, label %455
-    i32 20, label %456
-    i32 18, label %457
-  ]
-
-453:                                              ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i811
-  br label %_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_10StringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
-
-454:                                              ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i811
-  br label %_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_10StringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
-
-455:                                              ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i811
-  br label %_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_10StringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
-
-456:                                              ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i811
-  br label %_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_10StringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
-
-457:                                              ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i811
-  br label %_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_10StringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
+  %switch.tableidx3684 = add i32 %i.enj, -16      ; 2 uses
+  %452 = icmp ult i32 %switch.tableidx3684, 18
+  br i1 %452, label %bb.awd, label %_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_10StringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
 
 bb.awd:                                           ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i811
+  %453 = zext nneg i32 %switch.tableidx3684 to i64
+  %switch.gep3686 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN5arrow7compute8internal18GetBinaryLikeCastsEv.818, i64 %453
+  %switch.load3687 = load ptr, ptr %switch.gep3686, align 8
   br label %_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_10StringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
 
-_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_10StringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i: ; preds = %bb.awd, %457, %456, %455, %454, %453, %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i811
-  %.0.i.i812 = phi ptr [ null, %bb.awd ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_10StringTypeENS_13TimestampTypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %457 ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_10StringTypeENS_10Date64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %453 ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_10StringTypeENS_12DurationTypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %454 ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_10StringTypeENS_10Time32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %455 ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_10StringTypeENS_10Time64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %456 ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_10StringTypeENS_10Date32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i811 ]
+_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_10StringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i: ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i811, %bb.awd
+  %.0.i.i812 = phi ptr [ %switch.load3687, %bb.awd ], [ null, %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i811 ]
   invoke void @_ZN5arrow7compute8internal12CastFunction9AddKernelENS_4Type4typeESt6vectorINS0_9InputTypeESaIS6_EENS0_10OutputTypeEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS0_12NullHandling4typeENS0_13MemAllocation4typeE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %252, ptr noundef nonnull align 8 dereferenceable(252) %i.eiv, i32 noundef %i.elu, ptr noundef nonnull %253, ptr noundef nonnull %254, ptr noundef %.0.i.i812, i32 noundef 2, i32 noundef 0)
           to label %bb.awe unwind label %bb.axu
 
@@ -1459,7 +1439,7 @@ _ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit79.i1255: ; preds = %bb.bpe, %b
 
 switch.lookup3681:                                ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit79.i1255
   %i.grn = zext nneg i32 %switch.tableidx3680.a to i64
-  %switch.gep3682.a = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN5arrow7compute8internal18GetBinaryLikeCastsEv.817, i64 %i.grn
+  %switch.gep3682.a = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN5arrow7compute8internal18GetBinaryLikeCastsEv.819, i64 %i.grn
   %switch.load3683.a = load ptr, ptr %switch.gep3682.a, align 8
   br label %_ZN5arrow7compute8internal15GenerateNumericITtTpTyENS1_12_GLOBAL__N_126NumericToStringCastFunctorENS_14StringViewTypeEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEEJEEET1_NS1_6detail9GetTypeIdE.exit.i
 
@@ -1862,27 +1842,18 @@ _ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i1381: ; preds = %bb.bto, %bb.
   store ptr null, ptr %180, align 8, !tbaa !23
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.hbs, i8 0, i64 32, i1 false)
   %i.hdz = load i32, ptr %.sroa.039.0.ptr53.i1367, align 4, !tbaa !7
-  switch i32 %i.hdz, label %bb.btp [
-    i32 43, label %_ZN5arrow7compute8internal15GenerateDecimalITtTpTyENS1_12_GLOBAL__N_126DecimalToStringCastFunctorENS_14StringViewTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
-    i32 44, label %458
-    i32 23, label %459
-    i32 24, label %460
-  ]
-
-458:                                              ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i1381
-  br label %_ZN5arrow7compute8internal15GenerateDecimalITtTpTyENS1_12_GLOBAL__N_126DecimalToStringCastFunctorENS_14StringViewTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
-
-459:                                              ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i1381
-  br label %_ZN5arrow7compute8internal15GenerateDecimalITtTpTyENS1_12_GLOBAL__N_126DecimalToStringCastFunctorENS_14StringViewTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
-
-460:                                              ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i1381
-  br label %_ZN5arrow7compute8internal15GenerateDecimalITtTpTyENS1_12_GLOBAL__N_126DecimalToStringCastFunctorENS_14StringViewTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
+  %switch.tableidx3692 = add i32 %i.hdz, -23      ; 2 uses
+  %454 = icmp ult i32 %switch.tableidx3692, 22
+  br i1 %454, label %bb.btp, label %_ZN5arrow7compute8internal15GenerateDecimalITtTpTyENS1_12_GLOBAL__N_126DecimalToStringCastFunctorENS_14StringViewTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
 
 bb.btp:                                           ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i1381
+  %455 = zext nneg i32 %switch.tableidx3692 to i64
+  %switch.gep3694 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN5arrow7compute8internal18GetBinaryLikeCastsEv.820, i64 %455
+  %switch.load3695 = load ptr, ptr %switch.gep3694, align 8
   br label %_ZN5arrow7compute8internal15GenerateDecimalITtTpTyENS1_12_GLOBAL__N_126DecimalToStringCastFunctorENS_14StringViewTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
 
-_ZN5arrow7compute8internal15GenerateDecimalITtTpTyENS1_12_GLOBAL__N_126DecimalToStringCastFunctorENS_14StringViewTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i: ; preds = %bb.btp, %460, %459, %458, %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i1381
-  %.0.i.i1382 = phi ptr [ null, %bb.btp ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_126DecimalToStringCastFunctorINS_14StringViewTypeENS_14Decimal256TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %460 ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_126DecimalToStringCastFunctorINS_14StringViewTypeENS_13Decimal64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %458 ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_126DecimalToStringCastFunctorINS_14StringViewTypeENS_14Decimal128TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %459 ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_126DecimalToStringCastFunctorINS_14StringViewTypeENS_13Decimal32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i1381 ]
+_ZN5arrow7compute8internal15GenerateDecimalITtTpTyENS1_12_GLOBAL__N_126DecimalToStringCastFunctorENS_14StringViewTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i: ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i1381, %bb.btp
+  %.0.i.i1382 = phi ptr [ %switch.load3695, %bb.btp ], [ null, %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i1381 ]
   invoke void @_ZN5arrow7compute8internal12CastFunction9AddKernelENS_4Type4typeESt6vectorINS0_9InputTypeESaIS6_EENS0_10OutputTypeEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS0_12NullHandling4typeENS0_13MemAllocation4typeE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %176, ptr noundef nonnull align 8 dereferenceable(252) %i.hax, i32 noundef %i.hcm, ptr noundef nonnull %177, ptr noundef nonnull %179, ptr noundef %.0.i.i1382, i32 noundef 2, i32 noundef 0)
           to label %bb.btq unwind label %bb.buv
 
@@ -2285,35 +2256,18 @@ _ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i1520: ; preds = %bb.bvw, %bb.
   %i.hlo = load ptr, ptr %.sroa.097.0114.i1474, align 8, !tbaa !23
   %i.hlp = getelementptr inbounds nuw i8, ptr %i.hlo, i64 40
   %i.hlq = load i32, ptr %i.hlp, align 8, !tbaa !220
-  switch i32 %i.hlq, label %bb.bvx [
-    i32 16, label %_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_14StringViewTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
-    i32 17, label %461
-    i32 33, label %462
-    i32 19, label %463
-    i32 20, label %464
-    i32 18, label %465
-  ]
-
-461:                                              ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i1520
-  br label %_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_14StringViewTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
-
-462:                                              ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i1520
-  br label %_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_14StringViewTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
-
-463:                                              ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i1520
-  br label %_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_14StringViewTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
-
-464:                                              ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i1520
-  br label %_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_14StringViewTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
-
-465:                                              ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i1520
-  br label %_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_14StringViewTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
+  %switch.tableidx3696 = add i32 %i.hlq, -16      ; 2 uses
+  %456 = icmp ult i32 %switch.tableidx3696, 18
+  br i1 %456, label %bb.bvx, label %_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_14StringViewTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
 
 bb.bvx:                                           ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i1520
+  %457 = zext nneg i32 %switch.tableidx3696 to i64
+  %switch.gep3698 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN5arrow7compute8internal18GetBinaryLikeCastsEv.821, i64 %457
+  %switch.load3699 = load ptr, ptr %switch.gep3698, align 8
   br label %_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_14StringViewTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
 
-_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_14StringViewTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i: ; preds = %bb.bvx, %465, %464, %463, %462, %461, %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i1520
-  %.0.i.i1521 = phi ptr [ null, %bb.bvx ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_14StringViewTypeENS_13TimestampTypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %465 ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_14StringViewTypeENS_10Date64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %461 ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_14StringViewTypeENS_12DurationTypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %462 ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_14StringViewTypeENS_10Time32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %463 ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_14StringViewTypeENS_10Time64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %464 ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_14StringViewTypeENS_10Date32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i1520 ]
+_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_14StringViewTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i: ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i1520, %bb.bvx
+  %.0.i.i1521 = phi ptr [ %switch.load3699, %bb.bvx ], [ null, %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i1520 ]
   invoke void @_ZN5arrow7compute8internal12CastFunction9AddKernelENS_4Type4typeESt6vectorINS0_9InputTypeESaIS6_EENS0_10OutputTypeEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS0_12NullHandling4typeENS0_13MemAllocation4typeE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %170, ptr noundef nonnull align 8 dereferenceable(252) %i.hhc, i32 noundef %i.hkb, ptr noundef nonnull %171, ptr noundef nonnull %172, ptr noundef %.0.i.i1521, i32 noundef 2, i32 noundef 0)
           to label %bb.bvy unwind label %bb.bxo
 
@@ -2716,7 +2670,7 @@ _ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit79.i2036: ; preds = %bb.coy, %b
 
 switch.lookup3685:                                ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit79.i2036
   %i.jpu = zext nneg i32 %switch.tableidx3684.a to i64
-  %switch.gep3686.a = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN5arrow7compute8internal18GetBinaryLikeCastsEv.818, i64 %i.jpu
+  %switch.gep3686.a = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN5arrow7compute8internal18GetBinaryLikeCastsEv.822, i64 %i.jpu
   %switch.load3687.a = load ptr, ptr %switch.gep3686.a, align 8
   br label %_ZN5arrow7compute8internal15GenerateNumericITtTpTyENS1_12_GLOBAL__N_126NumericToStringCastFunctorENS_15LargeStringTypeEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEEJEEET1_NS1_6detail9GetTypeIdE.exit.i
 
@@ -3119,27 +3073,18 @@ _ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i2162: ; preds = %bb.cti, %bb.
   store ptr null, ptr %98, align 8, !tbaa !23
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.jzz, i8 0, i64 32, i1 false)
   %i.kcg = load i32, ptr %.sroa.039.0.ptr53.i2148, align 4, !tbaa !7
-  switch i32 %i.kcg, label %bb.ctj [
-    i32 43, label %_ZN5arrow7compute8internal15GenerateDecimalITtTpTyENS1_12_GLOBAL__N_126DecimalToStringCastFunctorENS_15LargeStringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
-    i32 44, label %466
-    i32 23, label %467
-    i32 24, label %468
-  ]
-
-466:                                              ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i2162
-  br label %_ZN5arrow7compute8internal15GenerateDecimalITtTpTyENS1_12_GLOBAL__N_126DecimalToStringCastFunctorENS_15LargeStringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
-
-467:                                              ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i2162
-  br label %_ZN5arrow7compute8internal15GenerateDecimalITtTpTyENS1_12_GLOBAL__N_126DecimalToStringCastFunctorENS_15LargeStringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
-
-468:                                              ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i2162
-  br label %_ZN5arrow7compute8internal15GenerateDecimalITtTpTyENS1_12_GLOBAL__N_126DecimalToStringCastFunctorENS_15LargeStringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
+  %switch.tableidx3704 = add i32 %i.kcg, -23      ; 2 uses
+  %458 = icmp ult i32 %switch.tableidx3704, 22
+  br i1 %458, label %bb.ctj, label %_ZN5arrow7compute8internal15GenerateDecimalITtTpTyENS1_12_GLOBAL__N_126DecimalToStringCastFunctorENS_15LargeStringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
 
 bb.ctj:                                           ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i2162
+  %459 = zext nneg i32 %switch.tableidx3704 to i64
+  %switch.gep3706 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN5arrow7compute8internal18GetBinaryLikeCastsEv.823, i64 %459
+  %switch.load3707 = load ptr, ptr %switch.gep3706, align 8
   br label %_ZN5arrow7compute8internal15GenerateDecimalITtTpTyENS1_12_GLOBAL__N_126DecimalToStringCastFunctorENS_15LargeStringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
 
-_ZN5arrow7compute8internal15GenerateDecimalITtTpTyENS1_12_GLOBAL__N_126DecimalToStringCastFunctorENS_15LargeStringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i: ; preds = %bb.ctj, %468, %467, %466, %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i2162
-  %.0.i.i2163 = phi ptr [ null, %bb.ctj ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_126DecimalToStringCastFunctorINS_15LargeStringTypeENS_14Decimal256TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %468 ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_126DecimalToStringCastFunctorINS_15LargeStringTypeENS_13Decimal64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %466 ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_126DecimalToStringCastFunctorINS_15LargeStringTypeENS_14Decimal128TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %467 ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_126DecimalToStringCastFunctorINS_15LargeStringTypeENS_13Decimal32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i2162 ]
+_ZN5arrow7compute8internal15GenerateDecimalITtTpTyENS1_12_GLOBAL__N_126DecimalToStringCastFunctorENS_15LargeStringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i: ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i2162, %bb.ctj
+  %.0.i.i2163 = phi ptr [ %switch.load3707, %bb.ctj ], [ null, %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i2162 ]
   invoke void @_ZN5arrow7compute8internal12CastFunction9AddKernelENS_4Type4typeESt6vectorINS0_9InputTypeESaIS6_EENS0_10OutputTypeEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS0_12NullHandling4typeENS0_13MemAllocation4typeE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %94, ptr noundef nonnull align 8 dereferenceable(252) %i.jze, i32 noundef %i.kat, ptr noundef nonnull %95, ptr noundef nonnull %97, ptr noundef %.0.i.i2163, i32 noundef 2, i32 noundef 0)
           to label %bb.ctk unwind label %bb.cup
 
@@ -3542,35 +3487,18 @@ _ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i2301: ; preds = %bb.cvq, %bb.
   %i.kjv = load ptr, ptr %.sroa.097.0114.i2255, align 8, !tbaa !23
   %i.kjw = getelementptr inbounds nuw i8, ptr %i.kjv, i64 40
   %i.kjx = load i32, ptr %i.kjw, align 8, !tbaa !220
-  switch i32 %i.kjx, label %bb.cvr [
-    i32 16, label %_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_15LargeStringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
-    i32 17, label %469
-    i32 33, label %470
-    i32 19, label %471
-    i32 20, label %472
-    i32 18, label %473
-  ]
-
-469:                                              ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i2301
-  br label %_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_15LargeStringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
-
-470:                                              ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i2301
-  br label %_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_15LargeStringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
-
-471:                                              ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i2301
-  br label %_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_15LargeStringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
-
-472:                                              ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i2301
-  br label %_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_15LargeStringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
-
-473:                                              ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i2301
-  br label %_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_15LargeStringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
+  %switch.tableidx3708 = add i32 %i.kjx, -16      ; 2 uses
+  %460 = icmp ult i32 %switch.tableidx3708, 18
+  br i1 %460, label %bb.cvr, label %_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_15LargeStringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
 
 bb.cvr:                                           ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i2301
+  %461 = zext nneg i32 %switch.tableidx3708 to i64
+  %switch.gep3710 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN5arrow7compute8internal18GetBinaryLikeCastsEv.824, i64 %461
+  %switch.load3711 = load ptr, ptr %switch.gep3710, align 8
   br label %_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_15LargeStringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i
 
-_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_15LargeStringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i: ; preds = %bb.cvr, %473, %472, %471, %470, %469, %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i2301
-  %.0.i.i2302 = phi ptr [ null, %bb.cvr ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_15LargeStringTypeENS_13TimestampTypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %473 ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_15LargeStringTypeENS_10Date64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %469 ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_15LargeStringTypeENS_12DurationTypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %470 ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_15LargeStringTypeENS_10Time32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %471 ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_15LargeStringTypeENS_10Time64TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %472 ], [ @_ZN5arrow7compute8internal12_GLOBAL__N_127TemporalToStringCastFunctorINS_15LargeStringTypeENS_10Date32TypeEE4ExecEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultE, %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i2301 ]
+_ZN5arrow7compute8internal16GenerateTemporalITtTpTyENS1_12_GLOBAL__N_127TemporalToStringCastFunctorENS_15LargeStringTypeEJEEEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS1_6detail9GetTypeIdE.exit.i: ; preds = %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i2301, %bb.cvr
+  %.0.i.i2302 = phi ptr [ %switch.load3711, %bb.cvr ], [ null, %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i2301 ]
   invoke void @_ZN5arrow7compute8internal12CastFunction9AddKernelENS_4Type4typeESt6vectorINS0_9InputTypeESaIS6_EENS0_10OutputTypeEPFNS_6StatusEPNS0_13KernelContextERKNS0_8ExecSpanEPNS0_10ExecResultEENS0_12NullHandling4typeENS0_13MemAllocation4typeE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %88, ptr noundef nonnull align 8 dereferenceable(252) %i.kfj, i32 noundef %i.kii, ptr noundef nonnull %89, ptr noundef nonnull %90, ptr noundef %.0.i.i2302, i32 noundef 2, i32 noundef 0)
           to label %bb.cvs unwind label %bb.cxi
 

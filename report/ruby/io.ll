@@ -201,12 +201,11 @@ rb_io_check_byte_readable.exit:                   ; preds = %rb_io_check_closed.
   br i1 %i.y, label %bb.f, label %rb_type.exit
 
 bb.f:                                             ; preds = %rb_io_check_byte_readable.exit
-  %2 = tail call i64 @llvm.fshl.i64(i64 %1, i64 %1, i64 62)
-  switch i64 %2, label %bb.g [
+  switch i64 %1, label %bb.g [
     i64 0, label %rb_type.exit.thread
-    i64 1, label %rb_type.exit.thread7
-    i64 5, label %rb_type.exit.thread
-    i64 9, label %rb_type.exit.thread
+    i64 4, label %rb_type.exit.thread7
+    i64 20, label %rb_type.exit.thread
+    i64 36, label %rb_type.exit.thread
   ]
 
 bb.g:                                             ; preds = %bb.f
@@ -609,9 +608,6 @@ declare void @rb_lastline_set_up(i64 noundef, i32 noundef) local_unnamed_addr #1
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.fshl.i64(i64, i64, i64) #26
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #26
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -622,6 +618,9 @@ declare i64 @llvm.umin.i64(i64, i64) #26
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #26
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.fshl.i64(i64, i64, i64) #26
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #26

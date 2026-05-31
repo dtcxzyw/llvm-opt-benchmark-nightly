@@ -34,6 +34,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.20 = private unnamed_addr constant [33 x i8] c"unable to bind socket, errno: %d\00", align 1
 @.str.21 = private unnamed_addr constant [11 x i8] c"listen: %s\00", align 1
 @.str.22 = private unnamed_addr constant [11 x i8] c"accept: %s\00", align 1
+@switch.table.anetAcceptFailureNeedsRetry = private unnamed_addr constant [50 x i32] [i32 1, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 0, i32 0, i32 1, i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 0, i32 1, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 1], align 4
 
 ; Function Attrs: nounwind uwtable
 define dso_local i32 @anetGetError(i32 noundef %0) local_unnamed_addr #0 {
@@ -436,23 +437,18 @@ declare noundef i32 @stat64(ptr noundef readonly captures(none), ptr noundef cap
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define dso_local range(i32 0, 2) i32 @anetAcceptFailureNeedsRetry(i32 noundef %0) local_unnamed_addr #9 {
 bb.a:
-  switch i32 %0, label %bb.b [
-    i32 103, label %bb.c
-    i32 113, label %bb.c
-    i32 112, label %bb.c
-    i32 101, label %bb.c
-    i32 100, label %bb.c
-    i32 95, label %bb.c
-    i32 92, label %bb.c
-    i32 71, label %bb.c
-    i32 64, label %bb.c
-  ]
+  %switch.tableidx = add i32 %0, -64              ; 2 uses
+  %1 = icmp ult i32 %switch.tableidx, 50
+  br i1 %1, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
+  %2 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.anetAcceptFailureNeedsRetry, i64 %2
+  %switch.load = load i32, ptr %switch.gep, align 4
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.b
-  %.0 = phi i32 [ 0, %bb.b ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ]
+bb.c:                                             ; preds = %bb.a, %bb.b
+  %.0 = phi i32 [ %switch.load, %bb.b ], [ 0, %bb.a ]
   ret i32 %.0
 }
 

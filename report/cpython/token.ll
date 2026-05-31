@@ -73,111 +73,24 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.68 = private unnamed_addr constant [11 x i8] c"<ENCODING>\00", align 1
 @.str.69 = private unnamed_addr constant [11 x i8] c"<N_TOKENS>\00", align 1
 @_PyParser_TokenNames = dso_local local_unnamed_addr constant [70 x ptr] [ptr @.str, ptr @.str.1, ptr @.str.2, ptr @.str.3, ptr @.str.4, ptr @.str.5, ptr @.str.6, ptr @.str.7, ptr @.str.8, ptr @.str.9, ptr @.str.10, ptr @.str.11, ptr @.str.12, ptr @.str.13, ptr @.str.14, ptr @.str.15, ptr @.str.16, ptr @.str.17, ptr @.str.18, ptr @.str.19, ptr @.str.20, ptr @.str.21, ptr @.str.22, ptr @.str.23, ptr @.str.24, ptr @.str.25, ptr @.str.26, ptr @.str.27, ptr @.str.28, ptr @.str.29, ptr @.str.30, ptr @.str.31, ptr @.str.32, ptr @.str.33, ptr @.str.34, ptr @.str.35, ptr @.str.36, ptr @.str.37, ptr @.str.38, ptr @.str.39, ptr @.str.40, ptr @.str.41, ptr @.str.42, ptr @.str.43, ptr @.str.44, ptr @.str.45, ptr @.str.46, ptr @.str.47, ptr @.str.48, ptr @.str.49, ptr @.str.50, ptr @.str.51, ptr @.str.52, ptr @.str.53, ptr @.str.54, ptr @.str.55, ptr @.str.56, ptr @.str.57, ptr @.str.58, ptr @.str.59, ptr @.str.60, ptr @.str.61, ptr @.str.62, ptr @.str.63, ptr @.str.64, ptr @.str.65, ptr @.str.66, ptr @.str.67, ptr @.str.68, ptr @.str.69], align 16
+@switch.table._PyToken_OneChar = private unnamed_addr constant [94 x i32] [i32 54, i32 55, i32 55, i32 55, i32 24, i32 19, i32 55, i32 7, i32 8, i32 16, i32 14, i32 12, i32 15, i32 23, i32 17, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 11, i32 13, i32 20, i32 22, i32 21, i32 55, i32 49, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 9, i32 55, i32 10, i32 32, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 55, i32 25, i32 18, i32 26, i32 31], align 4
 @switch.table._PyToken_TwoChars = private unnamed_addr constant [3 x i32] [i32 33, i32 29, i32 28], align 4
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define dso_local range(i32 7, 56) i32 @_PyToken_OneChar(i32 noundef %0) local_unnamed_addr #0 {
-  switch i32 %0, label %bb.b [
-    i32 33, label %bb.c
-    i32 37, label %2
-    i32 38, label %3
-    i32 40, label %4
-    i32 41, label %5
-    i32 42, label %6
-    i32 43, label %7
-    i32 44, label %8
-    i32 45, label %9
-    i32 46, label %10
-    i32 47, label %11
-    i32 58, label %12
-    i32 59, label %13
-    i32 60, label %14
-    i32 61, label %15
-    i32 62, label %16
-    i32 64, label %17
-    i32 91, label %18
-    i32 93, label %19
-    i32 94, label %20
-    i32 123, label %21
-    i32 124, label %22
-    i32 125, label %23
-    i32 126, label %bb.a
-  ]
+bb.a:
+  %switch.tableidx = add i32 %0, -33              ; 2 uses
+  %1 = icmp ult i32 %switch.tableidx, 94
+  br i1 %1, label %bb.b, label %bb.c
 
-2:                                                ; preds = %1
+bb.b:                                             ; preds = %bb.a
+  %2 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._PyToken_OneChar, i64 %2
+  %switch.load = load i32, ptr %switch.gep, align 4
   br label %bb.c
 
-3:                                                ; preds = %1
-  br label %bb.c
-
-4:                                                ; preds = %1
-  br label %bb.c
-
-5:                                                ; preds = %1
-  br label %bb.c
-
-6:                                                ; preds = %1
-  br label %bb.c
-
-7:                                                ; preds = %1
-  br label %bb.c
-
-8:                                                ; preds = %1
-  br label %bb.c
-
-9:                                                ; preds = %1
-  br label %bb.c
-
-10:                                               ; preds = %1
-  br label %bb.c
-
-11:                                               ; preds = %1
-  br label %bb.c
-
-12:                                               ; preds = %1
-  br label %bb.c
-
-13:                                               ; preds = %1
-  br label %bb.c
-
-14:                                               ; preds = %1
-  br label %bb.c
-
-15:                                               ; preds = %1
-  br label %bb.c
-
-16:                                               ; preds = %1
-  br label %bb.c
-
-17:                                               ; preds = %1
-  br label %bb.c
-
-18:                                               ; preds = %1
-  br label %bb.c
-
-19:                                               ; preds = %1
-  br label %bb.c
-
-20:                                               ; preds = %1
-  br label %bb.c
-
-21:                                               ; preds = %1
-  br label %bb.c
-
-22:                                               ; preds = %1
-  br label %bb.c
-
-23:                                               ; preds = %1
-  br label %bb.c
-
-bb.a:                                             ; preds = %1
-  br label %bb.c
-
-bb.b:                                             ; preds = %1
-  br label %bb.c
-
-bb.c:                                             ; preds = %1, %bb.b, %bb.a, %23, %22, %21, %20, %19, %18, %17, %16, %15, %14, %13, %12, %11, %10, %9, %8, %7, %6, %5, %4, %3, %2
-  %.0 = phi i32 [ 55, %bb.b ], [ 31, %bb.a ], [ 24, %2 ], [ 19, %3 ], [ 7, %4 ], [ 8, %5 ], [ 16, %6 ], [ 14, %7 ], [ 12, %8 ], [ 15, %9 ], [ 23, %10 ], [ 17, %11 ], [ 11, %12 ], [ 13, %13 ], [ 20, %14 ], [ 22, %15 ], [ 21, %16 ], [ 49, %17 ], [ 9, %18 ], [ 10, %19 ], [ 32, %20 ], [ 25, %21 ], [ 18, %22 ], [ 26, %23 ], [ 54, %1 ]
+bb.c:                                             ; preds = %bb.a, %bb.b
+  %.0 = phi i32 [ %switch.load, %bb.b ], [ 55, %bb.a ]
   ret i32 %.0
 }
 

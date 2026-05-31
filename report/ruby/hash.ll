@@ -201,12 +201,11 @@ bb.a:
   br i1 %i.d, label %bb.b, label %rb_type.exit
 
 bb.b:                                             ; preds = %bb.a
-  %2 = tail call i64 @llvm.fshl.i64(i64 %0, i64 %0, i64 62)
-  switch i64 %2, label %bb.c [
+  switch i64 %0, label %bb.c [
     i64 0, label %rb_type.exit.thread
-    i64 1, label %rb_type.exit.thread
-    i64 5, label %rb_type.exit.thread
-    i64 9, label %rb_type.exit.thread16
+    i64 4, label %rb_type.exit.thread
+    i64 20, label %rb_type.exit.thread
+    i64 36, label %rb_type.exit.thread16
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -609,17 +608,14 @@ declare i64 @rb_get_freeze_opt(i32 noundef, ptr noundef) local_unnamed_addr #1
 
 declare i32 @rb_keyword_given_p() local_unnamed_addr #1
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.fshl.i64(i64, i64, i64) #26
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #27
+declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #26
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #26
+declare i32 @llvm.umax.i32(i32, i32) #27
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #26
+declare i64 @llvm.umax.i64(i64, i64) #27
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #28
@@ -650,8 +646,8 @@ attributes #22 = { nocallback nofree nosync nounwind willreturn memory(argmem: w
 attributes #23 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(write, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #24 = { cold noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #25 = { nofree nounwind memory(read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #26 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #27 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #26 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #27 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #28 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #29 = { nounwind }
 attributes #30 = { nounwind willreturn memory(read) }

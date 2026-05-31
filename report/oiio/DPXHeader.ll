@@ -147,6 +147,8 @@ module asm ".globl _ZSt21ios_base_library_initv"
 @.str.44 = private unnamed_addr constant [32 x i8] c"\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\00\00\00\00\00\00\00\00\02\02\02\02\03\03\04\00", align 1
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @__cxx_global_var_init, ptr @_ZN3fmt3v1212format_facetISt6localeE2idE }]
 @llvm.used = appending global [1 x ptr] [ptr @_ZN3fmt3v1212format_facetISt6localeE2idE], section "llvm.metadata"
+@switch.table._ZNK3dpx13GenericHeader17ComponentDataSizeEi = private unnamed_addr constant [25 x i32] [i32 0, i32 4, i32 1, i32 4, i32 1, i32 4, i32 4, i32 4, i32 1, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 3], align 4
+@switch.table._ZNK3dpx13GenericHeader18ComponentByteCountEi = private unnamed_addr constant [25 x i32] [i32 1, i32 8, i32 2, i32 8, i32 2, i32 8, i32 8, i32 8, i32 2, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 4], align 4
 @switch.table._ZN3dpx13GenericHeader17DataSizeByteCountENS_8DataSizeE = private unnamed_addr constant [4 x i32] [i32 1, i32 2, i32 4, i32 4], align 4
 
 @_ZN3dpx6HeaderC1Ev = hidden unnamed_addr alias void (ptr), ptr @_ZN3dpx6HeaderC2Ev
@@ -549,25 +551,18 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw [72 x i8], ptr %0, i64 %i.a
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 803
   %i.d = load i8, ptr %i.c, align 1, !tbaa !46
-  switch i8 %i.d, label %bb.c [
-    i8 8, label %bb.d
-    i8 10, label %2
-    i8 12, label %2
-    i8 16, label %2
-    i8 32, label %3
-  ]
-
-2:                                                ; preds = %bb.b, %bb.b, %bb.b
-  br label %bb.d
-
-3:                                                ; preds = %bb.b
-  br label %bb.d
+  %switch.tableidx = add i8 %i.d, -8              ; 2 uses
+  %2 = icmp ult i8 %switch.tableidx, 25
+  br i1 %2, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
+  %3 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZNK3dpx13GenericHeader17ComponentDataSizeEi, i64 %3
+  %switch.load = load i32, ptr %switch.gep, align 4
   br label %bb.d
 
-bb.d:                                             ; preds = %2, %3, %bb.c, %bb.b, %bb.a
-  %.06 = phi i32 [ 0, %bb.a ], [ 4, %bb.c ], [ 0, %bb.b ], [ 1, %2 ], [ 3, %3 ]
+bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
+  %.06 = phi i32 [ 0, %bb.a ], [ %switch.load, %bb.c ], [ 4, %bb.b ]
   ret i32 %.06
 }
 
@@ -582,25 +577,18 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw [72 x i8], ptr %0, i64 %i.a
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 803
   %i.d = load i8, ptr %i.c, align 1, !tbaa !46
-  switch i8 %i.d, label %bb.c [
-    i8 8, label %bb.d
-    i8 10, label %2
-    i8 12, label %2
-    i8 16, label %2
-    i8 32, label %3
-  ]
-
-2:                                                ; preds = %bb.b, %bb.b, %bb.b
-  br label %bb.d
-
-3:                                                ; preds = %bb.b
-  br label %bb.d
+  %switch.tableidx = add i8 %i.d, -8              ; 2 uses
+  %2 = icmp ult i8 %switch.tableidx, 25
+  br i1 %2, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
+  %3 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZNK3dpx13GenericHeader18ComponentByteCountEi, i64 %3
+  %switch.load = load i32, ptr %switch.gep, align 4
   br label %bb.d
 
-bb.d:                                             ; preds = %2, %3, %bb.c, %bb.b, %bb.a
-  %.06 = phi i32 [ 0, %bb.a ], [ 8, %bb.c ], [ 1, %bb.b ], [ 2, %2 ], [ 4, %3 ]
+bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
+  %.06 = phi i32 [ 0, %bb.a ], [ %switch.load, %bb.c ], [ 8, %bb.b ]
   ret i32 %.06
 }
 

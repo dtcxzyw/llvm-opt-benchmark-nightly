@@ -201,13 +201,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit88: ; preds = %bb.
   br label %bb.as
 
 bb.ae:                                            ; preds = %bb.b
-  %17 = add i8 %i.x, -37                          ; 2 uses
-  %18 = call i8 @llvm.fshl.i8(i8 %17, i8 %17, i8 7)
-  switch i8 %18, label %bb.ah [
-    i8 5, label %bb.af
-    i8 0, label %.loopexit128
-    i8 4, label %bb.ai
-    i8 3, label %bb.ai
+  switch i8 %i.x, label %bb.ah [
+    i8 47, label %bb.af
+    i8 37, label %.loopexit128
+    i8 45, label %bb.ai
+    i8 43, label %bb.ai
   ]
 
 bb.af:                                            ; preds = %bb.ae
@@ -608,9 +606,6 @@ bb.a:
   tail call void @__cxa_throw(ptr nonnull %i.a, ptr nonnull @_ZTIN5folly17BadExpectedAccessIvEE, ptr nonnull @_ZNSt9exceptionD2Ev) #30
   unreachable
 }
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.fshl.i8(i8, i8, i8) #26
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #26

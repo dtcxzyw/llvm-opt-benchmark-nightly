@@ -201,6 +201,7 @@ begin_hunk_0
 @_ZTVSo = external unnamed_addr constant { [5 x ptr], [5 x ptr] }, align 8
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @__cxx_global_var_init, ptr @_ZN3fmt3v1212format_facetISt6localeE2idE }]
 @llvm.used = appending global [1 x ptr] [ptr @_ZN3fmt3v1212format_facetISt6localeE2idE], section "llvm.metadata"
+@switch.table._ZN11OpenImageIO4v3_110TIFFOutput4openERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_9ImageSpecENS0_11ImageOutput8OpenModeE = private unnamed_addr constant [8 x i32] [i32 1, i32 1, i32 2, i32 2, i32 2, i32 2, i32 2, i32 0], align 4
 
 @_ZN11OpenImageIO4v3_110TIFFOutputC1Ev = hidden unnamed_addr alias void (ptr), ptr @_ZN11OpenImageIO4v3_110TIFFOutputC2Ev
 @_ZN11OpenImageIO4v3_110TIFFOutputD1Ev = hidden unnamed_addr alias void (ptr), ptr @_ZN11OpenImageIO4v3_110TIFFOutputD2Ev
@@ -603,20 +604,18 @@ bb.bs:                                            ; preds = %bb.br
   store i32 %storemerge328, ptr %i.ew, align 4, !tbaa !101
   store i32 1, ptr %i.ev, align 8, !tbaa !102
   %i.ko = load i8, ptr %i.cn, align 8, !tbaa !98
-  switch i8 %i.ko, label %bb.bu [
-    i8 5, label %75
-    i8 4, label %75
-    i8 11, label %bb.bt
-  ]
-
-75:                                               ; preds = %.thread309, %.thread309
-  br label %bb.bu
+  %switch.tableidx451 = add i8 %i.ko, -4          ; 2 uses
+  %75 = icmp ult i8 %switch.tableidx451, 8
+  br i1 %75, label %bb.bt, label %bb.bu
 
 bb.bt:                                            ; preds = %.thread309
+  %76 = zext nneg i8 %switch.tableidx451 to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN11OpenImageIO4v3_110TIFFOutput4openERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_9ImageSpecENS0_11ImageOutput8OpenModeE, i64 %76
+  %switch.load = load i32, ptr %switch.gep, align 4
   br label %bb.bu
 
-bb.bu:                                            ; preds = %.thread309, %bb.bt, %75
-  %.080 = phi i32 [ 2, %.thread309 ], [ 1, %75 ], [ 0, %bb.bt ]
+bb.bu:                                            ; preds = %bb.bt, %.thread309
+  %.080 = phi i32 [ 2, %.thread309 ], [ %switch.load, %bb.bt ]
   %i.kp = load ptr, ptr %i.f, align 8, !tbaa !34
   %i.kq = call i32 (ptr, i32, ...) @TIFFSetField(ptr noundef %i.kp, i32 noundef 65560, i32 noundef %.080) ; 0 uses
   %.pre378 = load i32, ptr %i.df, align 4, !tbaa !99

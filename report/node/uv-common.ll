@@ -201,6 +201,7 @@ begin_hunk_0
 @llvm.global_dtors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @uv_library_shutdown, ptr null }]
 @switch.table.uv_handle_size = private unnamed_addr constant [16 x i64] [i64 128, i64 120, i64 136, i64 104, i64 96, i64 120, i64 264, i64 160, i64 120, i64 136, i64 248, i64 248, i64 152, i64 312, i64 216, i64 152], align 8
 @switch.table.uv_req_size = private unnamed_addr constant [10 x i64] [i64 64, i64 96, i64 192, i64 80, i64 320, i64 440, i64 128, i64 160, i64 1320, i64 144], align 8
+@switch.table.uv__udp_check_before_send = private unnamed_addr constant [10 x i32] [i32 110, i32 16, i32 -22, i32 -22, i32 -22, i32 -22, i32 -22, i32 -22, i32 -22, i32 28], align 4
 @switch.table.uv__print_handles.2 = private unnamed_addr constant [16 x ptr] [ptr @.str.174, ptr @.str.175, ptr @.str.176, ptr @.str.177, ptr @.str.178, ptr @.str.179, ptr @.str.180, ptr @.str.181, ptr @.str.182, ptr @.str.183, ptr @.str.184, ptr @.str.185, ptr @.str.186, ptr @.str.187, ptr @.str.188, ptr @.str.189], align 8
 @switch.table.uv__fs_get_dirent_type = private unnamed_addr constant [12 x i32] [i32 4, i32 6, i32 0, i32 2, i32 0, i32 7, i32 0, i32 1, i32 0, i32 3, i32 0, i32 5], align 4
 
@@ -603,23 +604,18 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.c
   %i.f = load i16, ptr %1, align 2
-  switch i16 %i.f, label %bb.g [
-    i16 2, label %bb.f
-    i16 10, label %2
-    i16 1, label %3
-  ]
-
-2:                                                ; preds = %bb.e
-  br label %bb.g
-
-3:                                                ; preds = %bb.e
-  br label %bb.g
+  %switch.tableidx = add i16 %i.f, -1             ; 2 uses
+  %2 = icmp ult i16 %switch.tableidx, 10
+  br i1 %2, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
+  %3 = zext nneg i16 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.uv__udp_check_before_send, i64 %3
+  %switch.load = load i32, ptr %switch.gep, align 4
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.d, %2, %3, %bb.e, %bb.c, %bb.a, %bb.f
-  %.010 = phi i32 [ -106, %bb.c ], [ -22, %bb.a ], [ -22, %bb.e ], [ %.mux, %bb.d ], [ 28, %2 ], [ 110, %3 ], [ 16, %bb.f ]
+bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d, %bb.c, %bb.a
+  %.010 = phi i32 [ -106, %bb.c ], [ -22, %bb.a ], [ -22, %bb.e ], [ %.mux, %bb.d ], [ %switch.load, %bb.f ]
   ret i32 %.010
 }
 

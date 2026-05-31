@@ -5,6 +5,7 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 @SharpYuvGetCPUInfo = hidden local_unnamed_addr global ptr @x86CPUInfo, align 8
+@switch.table.x86CPUInfo = private unnamed_addr constant [50 x i32] [i32 1, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 0, i32 0, i32 1], align 4
 
 ; Function Attrs: nounwind uwtable
 define internal range(i32 0, 2) i32 @x86CPUInfo(i32 noundef %0) #0 {
@@ -61,17 +62,9 @@ bb.e:                                             ; preds = %bb.b
   %i.v = and i32 %i.u, 15
   %i.w = or disjoint i32 %i.t, %i.v
   %trunc.i = trunc nuw i32 %i.w to i8
-  switch i8 %trunc.i, label %1 [
-    i8 55, label %CheckSlowModel.exit
-    i8 74, label %CheckSlowModel.exit
-    i8 77, label %CheckSlowModel.exit
-    i8 28, label %CheckSlowModel.exit
-    i8 38, label %CheckSlowModel.exit
-    i8 39, label %CheckSlowModel.exit
-  ]
-
-1:                                                ; preds = %.preheader.preheader.i
-  br label %CheckSlowModel.exit
+  %switch.tableidx = add i8 %trunc.i, -28         ; 2 uses
+  %1 = icmp ult i8 %switch.tableidx, 50
+  br i1 %1, label %switch.lookup, label %CheckSlowModel.exit
 
 bb.f:                                             ; preds = %bb.b
   %i.x = lshr i32 %i.f, 19
@@ -120,8 +113,14 @@ bb.k:                                             ; preds = %x86CPUInfo.exit
   %.lobit = and i32 %i.at, 1
   br label %CheckSlowModel.exit
 
-CheckSlowModel.exit:                              ; preds = %bb.j, %bb.i, %bb.g, %1, %.preheader.preheader.i, %.preheader.preheader.i, %.preheader.preheader.i, %.preheader.preheader.i, %.preheader.preheader.i, %.preheader.preheader.i, %x86CPUInfo.exit, %bb.b, %bb.e, %bb.a, %bb.k, %bb.h, %bb.f, %bb.d, %bb.c
-  %.0 = phi i32 [ 0, %bb.e ], [ %.lobit17, %bb.c ], [ %i.i, %bb.d ], [ 1, %.preheader.preheader.i ], [ 0, %bb.a ], [ %.lobit16, %bb.f ], [ %i.ae, %bb.h ], [ %.lobit, %bb.k ], [ 0, %bb.j ], [ 0, %bb.b ], [ 0, %x86CPUInfo.exit ], [ 0, %bb.i ], [ 1, %.preheader.preheader.i ], [ 0, %1 ], [ 1, %.preheader.preheader.i ], [ 1, %.preheader.preheader.i ], [ 1, %.preheader.preheader.i ], [ 1, %.preheader.preheader.i ], [ 0, %bb.g ]
+switch.lookup:                                    ; preds = %.preheader.preheader.i
+  %2 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.x86CPUInfo, i64 %2
+  %switch.load = load i32, ptr %switch.gep, align 4
+  br label %CheckSlowModel.exit
+
+CheckSlowModel.exit:                              ; preds = %.preheader.preheader.i, %switch.lookup, %bb.j, %bb.i, %bb.g, %x86CPUInfo.exit, %bb.b, %bb.e, %bb.a, %bb.k, %bb.h, %bb.f, %bb.d, %bb.c
+  %.0 = phi i32 [ 0, %bb.e ], [ %.lobit17, %bb.c ], [ %i.i, %bb.d ], [ %switch.load, %switch.lookup ], [ 0, %bb.a ], [ %.lobit16, %bb.f ], [ %i.ae, %bb.h ], [ %.lobit, %bb.k ], [ 0, %bb.j ], [ 0, %bb.b ], [ 0, %x86CPUInfo.exit ], [ 0, %bb.i ], [ 0, %bb.g ], [ 0, %.preheader.preheader.i ]
   ret i32 %.0
 }
 

@@ -160,6 +160,8 @@ $_ZTSN4geos4util13GEOSExceptionE = comdat any
 @.str.33 = private unnamed_addr constant [3 x i8] c"??\00", align 1
 @.str.37 = private unnamed_addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1
 @.str.38 = private unnamed_addr constant [49 x i8] c"cannot create std::vector larger than max_size()\00", align 1
+@switch.table._ZNK4geos2io9WKTReader18readMultiPointTextEPNS0_15StringTokenizerE = private unnamed_addr constant [45 x ptr] [ptr @.str.32, ptr @.str.32, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.33, ptr @.str.11, ptr @.str.13, ptr @.str.33, ptr @.str.33, ptr @.str.1], align 8
+@switch.table._ZNK4geos2io9WKTReader18readMultiPointTextEPNS0_15StringTokenizerE.1 = private unnamed_addr constant [45 x i64] [i64 10, i64 10, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 1, i64 1, i64 2, i64 2, i64 1], align 8
 
 ; Function Attrs: mustprogress uwtable
 define void @_ZNK4geos2io9WKTReader4readERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::unique_ptr") align 8 captures(none) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(32) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
@@ -562,7 +564,7 @@ bb.b:                                             ; preds = %_ZSteqIcSt11char_tr
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread94: ; preds = %bb.a, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
   %i.r = invoke noundef i32 @_ZN4geos2io15StringTokenizer13peekNextTokenEv(ptr noundef nonnull align 8 dereferenceable(56) %2)
-          to label %bb.c unwind label %bb.o       ; 2 uses
+          to label %bb.c unwind label %bb.o       ; 4 uses
 
 bb.c:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread94
   switch i32 %i.r, label %bb.an [
@@ -965,13 +967,8 @@ bb.ao:                                            ; preds = %bb.an
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit unwind label %bb.aq ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit: ; preds = %bb.ao
-  switch i32 %i.r, label %bb.ar [
-    i32 44, label %13
-    i32 41, label %12
-    i32 0, label %.invoke
-    i32 1, label %.invoke
-    i32 40, label %11
-  ]
+  %11 = icmp ult i32 %i.r, 45
+  br i1 %11, label %bb.ar, label %.invoke
 
 bb.ap:                                            ; preds = %bb.an
   %i.ew = landingpad { ptr, i32 }
@@ -983,21 +980,18 @@ bb.aq:                                            ; preds = %.invoke, %_ZStlsISt
           cleanup
   br label %bb.aw
 
-11:                                               ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
-  br label %.invoke
-
-12:                                               ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
-  br label %.invoke
-
-13:                                               ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
-  br label %.invoke
-
 bb.ar:                                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
+  %12 = zext nneg i32 %i.r to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4geos2io9WKTReader18readMultiPointTextEPNS0_15StringTokenizerE, i64 %12
+  %switch.load = load ptr, ptr %switch.gep, align 8
+  %13 = zext nneg i32 %i.r to i64
+  %switch.gep156 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4geos2io9WKTReader18readMultiPointTextEPNS0_15StringTokenizerE.1, i64 %13
+  %switch.load157 = load i64, ptr %switch.gep156, align 8
   br label %.invoke
 
-.invoke:                                          ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %11, %12, %13, %bb.ar
-  %14 = phi ptr [ @.str.33, %bb.ar ], [ @.str.1, %13 ], [ @.str.13, %12 ], [ @.str.11, %11 ], [ @.str.32, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit ], [ @.str.32, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit ]
-  %15 = phi i64 [ 2, %bb.ar ], [ 1, %13 ], [ 1, %12 ], [ 1, %11 ], [ 10, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit ], [ 10, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit ]
+.invoke:                                          ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %bb.ar
+  %14 = phi ptr [ %switch.load, %bb.ar ], [ @.str.33, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit ]
+  %15 = phi i64 [ %switch.load157, %bb.ar ], [ 2, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit ]
   %i.ey = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.eu, ptr noundef nonnull %14, i64 noundef %15)
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit72 unwind label %bb.aq ; 0 uses
 

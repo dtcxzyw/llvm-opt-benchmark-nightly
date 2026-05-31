@@ -74,8 +74,9 @@ module asm ".globl _ZSt21ios_base_library_initv"
 @imath_half_to_float_table = external local_unnamed_addr global ptr, align 8
 @.str.25 = private unnamed_addr constant [42 x i8] c"Cannot build .lut Op. Invalid cache type.\00", align 1
 @switch.table._ZNK16OpenColorIO_v2_512_GLOBAL__N_115LocalFileFormat4readERSiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_13InterpolationE = private unnamed_addr constant [4 x ptr] [ptr @.str.17, ptr @.str.21, ptr @.str.19, ptr @.str.20], align 8
+@switch.table._ZNK16OpenColorIO_v2_512_GLOBAL__N_115LocalFileFormat4readERSiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_13InterpolationE.12 = private unnamed_addr constant [49 x i32] [i32 8, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 7, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 0, i32 2, i32 0, i32 3, i32 0, i32 0, i32 0, i32 5], align 4
 @switch.table._ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils10IMLutAllocEPPNS1_11IMLutStructEii = private unnamed_addr constant [9 x i32] [i32 8, i32 0, i32 10, i32 0, i32 12, i32 0, i32 0, i32 0, i32 -16], align 4
-@switch.table._ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils10IMLutAllocEPPNS1_11IMLutStructEii.12 = private unnamed_addr constant [9 x i32] [i32 8, i32 0, i32 10, i32 0, i32 12, i32 0, i32 0, i32 0, i32 16], align 4
+@switch.table._ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils10IMLutAllocEPPNS1_11IMLutStructEii.13 = private unnamed_addr constant [9 x i32] [i32 8, i32 0, i32 10, i32 0, i32 12, i32 0, i32 0, i32 0, i32 16], align 4
 
 ; Function Attrs: mustprogress uwtable
 define hidden noalias noundef nonnull ptr @_ZN16OpenColorIO_v2_527CreateFileFormatDiscreet1DLEv() local_unnamed_addr #0 {
@@ -478,35 +479,18 @@ _ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils11GetBitDepthENS1_20IM_LutBitsPer
   %switch.select136 = zext i1 %switch.selectcmp135 to i32
   %i.pu = getelementptr inbounds nuw i8, ptr %.1, i64 12 ; 2 uses
   %i.pv = load i32, ptr %i.pu, align 4, !tbaa !84
-  switch i32 %i.pv, label %bb.di [
-    i32 -32, label %24
-    i32 8, label %_ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils11GetBitDepthENS1_20IM_LutBitsPerChannelE.exit77
-    i32 10, label %20
-    i32 12, label %21
-    i32 16, label %22
-    i32 -16, label %23
-  ]
-
-20:                                               ; preds = %_ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils11GetBitDepthENS1_20IM_LutBitsPerChannelE.exit
-  br label %_ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils11GetBitDepthENS1_20IM_LutBitsPerChannelE.exit77
-
-21:                                               ; preds = %_ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils11GetBitDepthENS1_20IM_LutBitsPerChannelE.exit
-  br label %_ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils11GetBitDepthENS1_20IM_LutBitsPerChannelE.exit77
-
-22:                                               ; preds = %_ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils11GetBitDepthENS1_20IM_LutBitsPerChannelE.exit
-  br label %_ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils11GetBitDepthENS1_20IM_LutBitsPerChannelE.exit77
-
-23:                                               ; preds = %_ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils11GetBitDepthENS1_20IM_LutBitsPerChannelE.exit
-  br label %_ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils11GetBitDepthENS1_20IM_LutBitsPerChannelE.exit77
-
-24:                                               ; preds = %_ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils11GetBitDepthENS1_20IM_LutBitsPerChannelE.exit
-  br label %_ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils11GetBitDepthENS1_20IM_LutBitsPerChannelE.exit77
+  %switch.tableidx326 = add i32 %i.pv, 32         ; 2 uses
+  %20 = icmp ult i32 %switch.tableidx326, 49
+  br i1 %20, label %bb.di, label %_ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils11GetBitDepthENS1_20IM_LutBitsPerChannelE.exit77
 
 bb.di:                                            ; preds = %_ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils11GetBitDepthENS1_20IM_LutBitsPerChannelE.exit
+  %21 = zext nneg i32 %switch.tableidx326 to i64
+  %switch.gep328 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZNK16OpenColorIO_v2_512_GLOBAL__N_115LocalFileFormat4readERSiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_13InterpolationE.12, i64 %21
+  %switch.load329 = load i32, ptr %switch.gep328, align 4
   br label %_ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils11GetBitDepthENS1_20IM_LutBitsPerChannelE.exit77
 
-_ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils11GetBitDepthENS1_20IM_LutBitsPerChannelE.exit77: ; preds = %_ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils11GetBitDepthENS1_20IM_LutBitsPerChannelE.exit, %20, %21, %22, %23, %24, %bb.di
-  %.0.i76 = phi i32 [ 0, %bb.di ], [ 8, %24 ], [ 7, %23 ], [ 2, %20 ], [ 3, %21 ], [ 5, %22 ], [ 1, %_ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils11GetBitDepthENS1_20IM_LutBitsPerChannelE.exit ] ; 2 uses
+_ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils11GetBitDepthENS1_20IM_LutBitsPerChannelE.exit77: ; preds = %_ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils11GetBitDepthENS1_20IM_LutBitsPerChannelE.exit, %bb.di
+  %.0.i76 = phi i32 [ %switch.load329, %bb.di ], [ 0, %_ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils11GetBitDepthENS1_20IM_LutBitsPerChannelE.exit ] ; 2 uses
   %i.pw = getelementptr inbounds nuw i8, ptr %.1, i64 4
   %i.px = load i32, ptr %i.pw, align 4, !tbaa !86 ; 4 uses
   %i.py = invoke noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #25
@@ -909,7 +893,7 @@ switch.lookup:                                    ; preds = %.split.i
 
 switch.lookup72:                                  ; preds = %.split.i37
   %i.m = zext nneg i32 %switch.tableidx71 to i64
-  %switch.gep73 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils10IMLutAllocEPPNS1_11IMLutStructEii.12, i64 %i.m
+  %switch.gep73 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils10IMLutAllocEPPNS1_11IMLutStructEii.13, i64 %i.m
   %switch.load74 = load i32, ptr %switch.gep73, align 4
   br label %_ZN16OpenColorIO_v2_512_GLOBAL__N_110Lut1dUtils24IMLutTableSizeToBitDepthEib.exit38
 

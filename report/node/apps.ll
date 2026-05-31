@@ -201,6 +201,7 @@ begin_hunk_0
 @.str.228 = private unnamed_addr constant [8 x i8] c"reading\00", align 1
 @.str.229 = private unnamed_addr constant [8 x i8] c"writing\00", align 1
 @.str.230 = private unnamed_addr constant [18 x i8] c"(doing something)\00", align 1
+@switch.table.bio_open_default_ = private unnamed_addr constant [23 x ptr] [ptr @.str.227, ptr @.str.230, ptr @.str.230, ptr @.str.230, ptr @.str.230, ptr @.str.230, ptr @.str.230, ptr @.str.230, ptr @.str.230, ptr @.str.230, ptr @.str.230, ptr @.str.230, ptr @.str.230, ptr @.str.230, ptr @.str.230, ptr @.str.230, ptr @.str.230, ptr @.str.228, ptr @.str.230, ptr @.str.230, ptr @.str.230, ptr @.str.230, ptr @.str.229], align 8
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define dso_local noundef i32 @app_init(i64 noundef %0) local_unnamed_addr #0 {
@@ -603,23 +604,18 @@ bb.n:                                             ; preds = %modestr.exit
 
 bb.o:                                             ; preds = %bb.n
   %i.z = load ptr, ptr @bio_err, align 8, !tbaa !11
-  switch i8 %1, label %bb.p [
-    i8 97, label %modeverb.exit
-    i8 114, label %4
-    i8 119, label %5
-  ]
-
-4:                                                ; preds = %bb.o
-  br label %modeverb.exit
-
-5:                                                ; preds = %bb.o
-  br label %modeverb.exit
+  %switch.tableidx = add i8 %1, -97               ; 2 uses
+  %4 = icmp ult i8 %switch.tableidx, 23
+  br i1 %4, label %bb.p, label %modeverb.exit
 
 bb.p:                                             ; preds = %bb.o
+  %5 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.bio_open_default_, i64 %5
+  %switch.load = load ptr, ptr %switch.gep, align 8
   br label %modeverb.exit
 
-modeverb.exit:                                    ; preds = %bb.o, %4, %5, %bb.p
-  %.0.i26 = phi ptr [ @.str.230, %bb.p ], [ @.str.229, %5 ], [ @.str.228, %4 ], [ @.str.227, %bb.o ]
+modeverb.exit:                                    ; preds = %bb.o, %bb.p
+  %.0.i26 = phi ptr [ %switch.load, %bb.p ], [ @.str.230, %bb.o ]
   %i.aa = tail call ptr @__errno_location() #27
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !5
   %i.ac = tail call ptr @strerror(i32 noundef %i.ab) #25

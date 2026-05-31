@@ -201,12 +201,11 @@ bb.a:
   br i1 %i.d, label %bb.b, label %rb_type.exit
 
 bb.b:                                             ; preds = %bb.a
-  %3 = tail call i64 @llvm.fshl.i64(i64 %0, i64 %0, i64 62)
-  switch i64 %3, label %bb.c [
+  switch i64 %0, label %bb.c [
     i64 0, label %rb_type.exit.thread
-    i64 1, label %rb_type.exit.thread
-    i64 5, label %rb_type.exit.thread
-    i64 9, label %rb_type.exit.thread
+    i64 4, label %rb_type.exit.thread
+    i64 20, label %rb_type.exit.thread
+    i64 36, label %rb_type.exit.thread
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -607,9 +606,6 @@ declare i32 @llvm.bswap.i32(i32) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.bswap.i16(i16) #15
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.fshl.i64(i64, i64, i64) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #15

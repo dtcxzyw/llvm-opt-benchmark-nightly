@@ -201,54 +201,34 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %.not36, label %bb.p, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %3 = add nsw i32 %0, -284                       ; 2 uses
-  %4 = tail call i32 @llvm.fshl.i32(i32 %3, i32 %3, i32 31)
-  switch i32 %4, label %bb.m [
-    i32 0, label %bb.h
-    i32 7, label %bb.j
-    i32 8, label %bb.k
-    i32 5, label %bb.k
+  switch i32 %0, label %bb.m [
+    i32 284, label %bb.h
+    i32 298, label %bb.j
+    i32 300, label %bb.k
+    i32 294, label %bb.k
   ]
 
 bb.h:                                             ; preds = %bb.g
   %.not.i = icmp sgt i32 %i.g, -1
-  %.pre.a = load i32, ptr @symbol_TYPEMASK, align 4 ; 6 uses
+  %.pre.a = load i32, ptr @symbol_TYPEMASK, align 4 ; 3 uses
   br i1 %.not.i, label %symbol_IsFunction.exit.thread, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.h = sub nsw i32 0, %i.g                      ; 2 uses
+  %i.h = sub nsw i32 0, %i.g
   %i.i = and i32 %.pre.a, %i.h
   %switch = icmp samesign ult i32 %i.i, 2
-  br i1 %switch, label %symbol_IsFunction.exit.thread45, label %symbol_IsFunction.exit.thread
-
-symbol_IsFunction.exit.thread45:                  ; preds = %bb.i
-  switch i32 %0, label %bb.m [
-    i32 298, label %symbol_IsPredicate.exit
-    i32 300, label %symbol_IsFunction.exit.thread
-    i32 294, label %symbol_IsFunction.exit.thread
-  ]
+  br i1 %switch, label %bb.m, label %symbol_IsFunction.exit.thread
 
 bb.j:                                             ; preds = %bb.g
   %.not.i42 = icmp sgt i32 %i.g, -1
-  %.pre57 = load i32, ptr @symbol_TYPEMASK, align 4 ; 2 uses
-  br i1 %.not.i42, label %symbol_IsFunction.exit.thread, label %.symbol_IsPredicate.exit_crit_edge
+  %.pre57 = load i32, ptr @symbol_TYPEMASK, align 4 ; 3 uses
+  br i1 %.not.i42, label %symbol_IsFunction.exit.thread, label %symbol_IsPredicate.exit
 
-.symbol_IsPredicate.exit_crit_edge:               ; preds = %bb.j
-  %.pre58 = sub nsw i32 0, %i.g
-  br label %symbol_IsPredicate.exit
-
-symbol_IsPredicate.exit:                          ; preds = %.symbol_IsPredicate.exit_crit_edge, %symbol_IsFunction.exit.thread45
-  %.pre-phi = phi i32 [ %.pre58, %.symbol_IsPredicate.exit_crit_edge ], [ %i.h, %symbol_IsFunction.exit.thread45 ]
-  %5 = phi i32 [ %.pre57, %.symbol_IsPredicate.exit_crit_edge ], [ %.pre.a, %symbol_IsFunction.exit.thread45 ] ; 4 uses
-  %i.j = and i32 %5, %.pre-phi
+symbol_IsPredicate.exit:                          ; preds = %bb.j
+  %3 = sub nsw i32 0, %i.g
+  %i.j = and i32 %.pre57, %3
   %.not53 = icmp eq i32 %i.j, 2
-  br i1 %.not53, label %6, label %symbol_IsFunction.exit.thread
-
-6:                                                ; preds = %symbol_IsPredicate.exit
-  switch i32 %0, label %bb.m [
-    i32 300, label %symbol_IsFunction.exit.thread
-    i32 294, label %symbol_IsFunction.exit.thread
-  ]
+  br i1 %.not53, label %bb.m, label %symbol_IsFunction.exit.thread
 
 bb.k:                                             ; preds = %bb.g, %bb.g
   %.not.i43 = icmp sgt i32 %i.g, -1
@@ -261,14 +241,14 @@ symbol_IsJunctor.exit:                            ; preds = %bb.k
   %i.k = icmp eq i32 %.pre61, 3
   br i1 %i.k, label %bb.m, label %symbol_IsFunction.exit.thread
 
-symbol_IsFunction.exit.thread:                    ; preds = %symbol_IsFunction.exit.thread45, %symbol_IsFunction.exit.thread45, %6, %6, %bb.i, %bb.k, %bb.j, %bb.h, %symbol_IsJunctor.exit, %symbol_IsPredicate.exit
-  %7 = phi i32 [ %.pre.a, %bb.i ], [ %.pre56, %bb.k ], [ %.pre57, %bb.j ], [ %.pre.a, %bb.h ], [ %.pre56, %symbol_IsJunctor.exit ], [ %5, %symbol_IsPredicate.exit ], [ %.pre.a, %symbol_IsFunction.exit.thread45 ], [ %.pre.a, %symbol_IsFunction.exit.thread45 ], [ %5, %6 ], [ %5, %6 ]
+symbol_IsFunction.exit.thread:                    ; preds = %bb.i, %bb.k, %bb.j, %bb.h, %symbol_IsJunctor.exit, %symbol_IsPredicate.exit
+  %4 = phi i32 [ %.pre.a, %bb.i ], [ %.pre56, %bb.k ], [ %.pre57, %bb.j ], [ %.pre.a, %bb.h ], [ %.pre56, %symbol_IsJunctor.exit ], [ %.pre57, %symbol_IsPredicate.exit ]
   %i.l = load ptr, ptr @stdout, align 8
   %i.m = tail call i32 @fflush(ptr noundef %i.l)  ; 0 uses
   %i.n = load i32, ptr @dfg_LINENUMBER, align 4
   tail call void (ptr, ...) @misc_UserErrorReport(ptr noundef nonnull @.str.217, i32 noundef %i.n, ptr noundef nonnull %1) #12
   %i.o = sub nsw i32 0, %i.g
-  %i.p = and i32 %7, %i.o                         ; 2 uses
+  %i.p = and i32 %4, %i.o                         ; 2 uses
   %i.q = icmp ult i32 %i.p, 4
   br i1 %i.q, label %switch.lookup, label %bb.l
 
@@ -284,7 +264,7 @@ bb.l:                                             ; preds = %symbol_IsFunction.e
   tail call fastcc void @misc_Error()
   unreachable
 
-bb.m:                                             ; preds = %bb.g, %symbol_IsFunction.exit.thread45, %6, %symbol_IsJunctor.exit
+bb.m:                                             ; preds = %bb.i, %symbol_IsPredicate.exit, %bb.g, %symbol_IsJunctor.exit
   %.not40 = icmp eq i32 %2, -2
   br i1 %.not40, label %bb.v, label %bb.n
 
@@ -686,9 +666,6 @@ bb.a:
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.fshl.i32(i32, i32, i32) #10
 
 ; Function Attrs: nofree nounwind
 declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #11

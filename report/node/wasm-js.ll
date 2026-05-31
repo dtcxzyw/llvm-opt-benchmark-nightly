@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %_ZN2v88internal15Is
   %i.ao = load i64, ptr %i.an, align 8
   %i.ap = lshr i64 %i.ao, 32
   %i.aq = trunc nuw i64 %i.ap to i32
-  %i.ar = ashr i32 %i.aq, 2                       ; 4 uses
+  %i.ar = ashr i32 %i.aq, 2                       ; 5 uses
   %i.as = sext i32 %i.ar to i64                   ; 7 uses
   %i.at = icmp slt i32 %i.ar, 0
   br i1 %i.at, label %bb.c, label %_ZNSt6vectorIN2v88internal4wasm9ValueTypeESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i
@@ -262,14 +262,11 @@ middle.block:                                     ; preds = %vector.body
   %i.bf = ptrtoint ptr %.lcssa to i64             ; 5 uses
   %i.bg = ptrtoint ptr %i.be to i64               ; 5 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.am, i64 16 ; 5 uses
-  %3 = shl nuw nsw i64 %i.as, 2                   ; 2 uses
-  %4 = add nsw i64 %3, -4
-  %5 = lshr exact i64 %4, 2
-  switch i64 %5, label %bb.h [
-    i64 3, label %bb.g
-    i64 1, label %bb.e
-    i64 2, label %bb.f
-    i64 0, label %bb.d
+  switch i32 %i.ar, label %bb.h [
+    i32 4, label %bb.g
+    i32 2, label %bb.e
+    i32 3, label %bb.f
+    i32 1, label %bb.d
   ]
 
 bb.d:                                             ; preds = %.loopexit
@@ -291,6 +288,7 @@ bb.g:                                             ; preds = %.loopexit
   br label %_ZN2v88internal12PodArrayBaseINS0_4wasm9ValueTypeENS0_9ByteArrayEE8copy_outEiPS3_i.exit
 
 bb.h:                                             ; preds = %.loopexit
+  %3 = shl nuw nsw i64 %i.as, 2
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.av, ptr nonnull align 4 %i.bh, i64 %3, i1 false)
   br label %_ZN2v88internal12PodArrayBaseINS0_4wasm9ValueTypeENS0_9ByteArrayEE8copy_outEiPS3_i.exit
 

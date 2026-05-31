@@ -201,11 +201,9 @@ rb_execarg_get.exit:                              ; preds = %bb.d, %RTYPEDDATA_G
   br i1 %i.ak, label %bb.e, label %rb_type.exit
 
 bb.e:                                             ; preds = %rb_execarg_get.exit
-  %3 = tail call i64 @llvm.fshl.i64(i64 %1, i64 %1, i64 62) ; 2 uses
-  %i.al = icmp ult i64 %3, 10
-  %switch.maskindex = trunc i64 %3 to i16
-  %switch.shifted = lshr i16 547, %switch.maskindex
-  %switch.lobit = trunc i16 %switch.shifted to i1
+  %i.al = icmp ult i64 %1, 37
+  %switch.shifted = lshr i64 68720525329, %1
+  %switch.lobit = trunc i64 %switch.shifted to i1
   %or.cond = select i1 %i.al, i1 %switch.lobit, i1 false
   br i1 %or.cond, label %rb_type.exit.thread, label %bb.f
 
@@ -608,8 +606,8 @@ rb_type.exit.thread74.sink.split:                 ; preds = %bb.ba, %bb.az, %bb.
   br label %rb_type.exit.thread74
 
 rb_type.exit.thread74:                            ; preds = %rb_type.exit.thread74.sink.split, %bb.f, %rb_type.exit, %rb_type.exit, %rb_type.exit
-  %i.hp = phi i64 [ %1, %bb.f ], [ %1, %rb_type.exit ], [ %1, %rb_type.exit ], [ %1, %rb_type.exit ], [ %.sink, %rb_type.exit.thread74.sink.split ] ; 12 uses
-  %i.hq = load i64, ptr %i.j, align 8, !tbaa !47  ; 16 uses
+  %i.hp = phi i64 [ %1, %bb.f ], [ %1, %rb_type.exit ], [ %1, %rb_type.exit ], [ %1, %rb_type.exit ], [ %.sink, %rb_type.exit.thread74.sink.split ] ; 13 uses
+  %i.hq = load i64, ptr %i.j, align 8, !tbaa !47  ; 15 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i64 %i.hq, ptr %i.a, align 8, !tbaa !47
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #26
@@ -621,12 +619,11 @@ rb_type.exit.thread74:                            ; preds = %rb_type.exit.thread
   br i1 %i.hu, label %bb.br, label %rb_type.exit.i
 
 bb.br:                                            ; preds = %rb_type.exit.thread74
-  %4 = call i64 @llvm.fshl.i64(i64 %i.hq, i64 %i.hq, i64 62)
-  switch i64 %4, label %bb.bs [
+  switch i64 %i.hq, label %bb.bs [
     i64 0, label %rb_type.exit.thread.i
-    i64 1, label %rb_type.exit.thread.i
-    i64 5, label %rb_type.exit.thread.i
-    i64 9, label %rb_type.exit.thread.i
+    i64 4, label %rb_type.exit.thread.i
+    i64 20, label %rb_type.exit.thread.i
+    i64 36, label %rb_type.exit.thread.i
   ]
 
 bb.bs:                                            ; preds = %bb.br
@@ -854,9 +851,11 @@ bb.co:                                            ; preds = %rb_type.exit.i
   %i.lo = load ptr, ptr %i.e, align 8, !tbaa !81
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #26
   store volatile i64 %i.ln, ptr %i.lo, align 8, !tbaa !47
+  %3 = icmp eq i64 %i.hp, 0
   %i.lp = and i64 %i.hp, 7
-  %.not108 = icmp eq i64 %i.lp, 0
-  br i1 %.not108, label %rbimpl_RB_TYPE_P_fastpath.exit65.i, label %rbimpl_RB_TYPE_P_fastpath.exit65.thread.i
+  %4 = icmp ne i64 %i.lp, 0
+  %5 = or i1 %3, %4
+  br i1 %5, label %rbimpl_RB_TYPE_P_fastpath.exit65.thread.i, label %rbimpl_RB_TYPE_P_fastpath.exit65.i
 
 rbimpl_RB_TYPE_P_fastpath.exit65.i:               ; preds = %bb.co
   %i.lq = inttoptr i64 %i.hp to ptr
@@ -870,7 +869,7 @@ bb.cp:                                            ; preds = %rbimpl_RB_TYPE_P_fa
   br label %rbimpl_RB_TYPE_P_fastpath.exit65.thread.i
 
 rbimpl_RB_TYPE_P_fastpath.exit65.thread.i:        ; preds = %bb.cp, %rbimpl_RB_TYPE_P_fastpath.exit65.i, %bb.co
-  %.059.i = phi i64 [ %i.lu, %bb.cp ], [ %i.hp, %rbimpl_RB_TYPE_P_fastpath.exit65.i ], [ %i.hp, %bb.co ] ; 6 uses
+  %.059.i = phi i64 [ %i.lu, %bb.cp ], [ %i.hp, %rbimpl_RB_TYPE_P_fastpath.exit65.i ], [ %i.hp, %bb.co ] ; 7 uses
   %i.lv = trunc i64 %.059.i to i1
   br i1 %i.lv, label %bb.cq, label %bb.cs
 
@@ -887,9 +886,11 @@ bb.cr:                                            ; preds = %bb.cq
   br i1 %i.mb, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i, label %bb.cs
 
 bb.cs:                                            ; preds = %bb.cr, %rbimpl_RB_TYPE_P_fastpath.exit65.thread.i
+  %6 = icmp eq i64 %.059.i, 0
   %i.mc = and i64 %.059.i, 7
-  %.not109 = icmp eq i64 %i.mc, 0
-  br i1 %.not109, label %rbimpl_RB_TYPE_P_fastpath.exit.i, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i
+  %7 = icmp ne i64 %i.mc, 0
+  %8 = or i1 %6, %7
+  br i1 %8, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i, label %rbimpl_RB_TYPE_P_fastpath.exit.i
 
 rbimpl_RB_TYPE_P_fastpath.exit.i:                 ; preds = %bb.cs
   %i.md = inttoptr i64 %.059.i to ptr             ; 5 uses
@@ -1292,12 +1293,11 @@ bb.a:
   br i1 %i.e, label %bb.b, label %rb_type.exit
 
 bb.b:                                             ; preds = %bb.a
-  %1 = tail call i64 @llvm.fshl.i64(i64 %0, i64 %0, i64 62)
-  switch i64 %1, label %bb.c [
+  switch i64 %0, label %bb.c [
     i64 0, label %rb_type.exit.thread
-    i64 1, label %rb_type.exit.thread
-    i64 5, label %rb_type.exit.thread
-    i64 9, label %rb_type.exit.thread
+    i64 4, label %rb_type.exit.thread
+    i64 20, label %rb_type.exit.thread
+    i64 36, label %rb_type.exit.thread
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -1398,12 +1398,11 @@ bb.a:
   br i1 %i.e, label %bb.b, label %rb_type.exit
 
 bb.b:                                             ; preds = %bb.a
-  %1 = tail call i64 @llvm.fshl.i64(i64 %0, i64 %0, i64 62)
-  switch i64 %1, label %bb.c [
+  switch i64 %0, label %bb.c [
     i64 0, label %rb_type.exit.thread
-    i64 1, label %rb_type.exit.thread
-    i64 5, label %rb_type.exit.thread
-    i64 9, label %rb_type.exit.thread
+    i64 4, label %rb_type.exit.thread
+    i64 20, label %rb_type.exit.thread
+    i64 36, label %rb_type.exit.thread
   ]
 
 bb.c:                                             ; preds = %bb.b

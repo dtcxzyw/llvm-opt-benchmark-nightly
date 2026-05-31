@@ -24,6 +24,7 @@ target triple = "x86_64-pc-linux-gnu"
 @switch.table.sdsnewplacement.3 = private unnamed_addr constant [5 x i64] [i64 1, i64 3, i64 5, i64 9, i64 17], align 8
 @switch.table.sdsResize = private unnamed_addr constant [5 x i32] [i32 1, i32 3, i32 5, i32 9, i32 17], align 4
 @switch.table.sdsResize.6 = private unnamed_addr constant [3 x i64] [i64 255, i64 65535, i64 4294967295], align 8
+@switch.table.hex_digit_to_int = private unnamed_addr constant [54 x i32] [i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15], align 4
 @switch.table.sdstemplate.9 = private unnamed_addr constant [5 x i64] [i64 -1, i64 -3, i64 -5, i64 -9, i64 -17], align 8
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
@@ -426,77 +427,19 @@ bb.a:
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define dso_local range(i32 0, 16) i32 @hex_digit_to_int(i8 noundef signext %0) local_unnamed_addr #0 {
-  switch i8 %0, label %bb.b [
-    i8 70, label %bb.a
-    i8 49, label %bb.c
-    i8 50, label %2
-    i8 51, label %3
-    i8 52, label %4
-    i8 53, label %5
-    i8 54, label %6
-    i8 55, label %7
-    i8 56, label %8
-    i8 57, label %9
-    i8 97, label %10
-    i8 65, label %10
-    i8 98, label %11
-    i8 66, label %11
-    i8 99, label %12
-    i8 67, label %12
-    i8 100, label %13
-    i8 68, label %13
-    i8 101, label %14
-    i8 69, label %14
-    i8 102, label %bb.a
-  ]
+bb.a:
+  %switch.tableidx = add i8 %0, -49               ; 2 uses
+  %1 = icmp ult i8 %switch.tableidx, 54
+  br i1 %1, label %bb.b, label %bb.c
 
-2:                                                ; preds = %1
+bb.b:                                             ; preds = %bb.a
+  %2 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.hex_digit_to_int, i64 %2
+  %switch.load = load i32, ptr %switch.gep, align 4
   br label %bb.c
 
-3:                                                ; preds = %1
-  br label %bb.c
-
-4:                                                ; preds = %1
-  br label %bb.c
-
-5:                                                ; preds = %1
-  br label %bb.c
-
-6:                                                ; preds = %1
-  br label %bb.c
-
-7:                                                ; preds = %1
-  br label %bb.c
-
-8:                                                ; preds = %1
-  br label %bb.c
-
-9:                                                ; preds = %1
-  br label %bb.c
-
-10:                                               ; preds = %1, %1
-  br label %bb.c
-
-11:                                               ; preds = %1, %1
-  br label %bb.c
-
-12:                                               ; preds = %1, %1
-  br label %bb.c
-
-13:                                               ; preds = %1, %1
-  br label %bb.c
-
-14:                                               ; preds = %1, %1
-  br label %bb.c
-
-bb.a:                                             ; preds = %1, %1
-  br label %bb.c
-
-bb.b:                                             ; preds = %1
-  br label %bb.c
-
-bb.c:                                             ; preds = %1, %bb.b, %bb.a, %14, %13, %12, %11, %10, %9, %8, %7, %6, %5, %4, %3, %2
-  %.0 = phi i32 [ 0, %bb.b ], [ 15, %bb.a ], [ 14, %14 ], [ 2, %2 ], [ 3, %3 ], [ 4, %4 ], [ 5, %5 ], [ 6, %6 ], [ 7, %7 ], [ 8, %8 ], [ 9, %9 ], [ 10, %10 ], [ 11, %11 ], [ 12, %12 ], [ 13, %13 ], [ 1, %1 ]
+bb.c:                                             ; preds = %bb.a, %bb.b
+  %.0 = phi i32 [ %switch.load, %bb.b ], [ 0, %bb.a ]
   ret i32 %.0
 }
 

@@ -37,150 +37,22 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.32 = private unnamed_addr constant [23 x i8] c"Source buffer is wrong\00", align 1
 @.str.33 = private unnamed_addr constant [62 x i8] c"Block-level external sequence producer returned an error code\00", align 1
 @.str.34 = private unnamed_addr constant [33 x i8] c"External sequences are not valid\00", align 1
+@switch.table._ZN11duckdb_zstd18ERR_getErrorStringENS_14ZSTD_ErrorCodeE = private unnamed_addr constant [108 x ptr] [ptr @.str.1, ptr @.str.2, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str.3, ptr @.str, ptr @.str.4, ptr @.str, ptr @.str.5, ptr @.str, ptr @.str.6, ptr @.str, ptr @.str, ptr @.str, ptr @.str.7, ptr @.str, ptr @.str.8, ptr @.str, ptr @.str.9, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str.21, ptr @.str, ptr @.str.22, ptr @.str, ptr @.str.23, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str.10, ptr @.str.11, ptr @.str.12, ptr @.str, ptr @.str.17, ptr @.str, ptr @.str.18, ptr @.str, ptr @.str.19, ptr @.str, ptr @.str.20, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str.16, ptr @.str, ptr @.str.13, ptr @.str, ptr @.str.14, ptr @.str, ptr @.str.15, ptr @.str, ptr @.str, ptr @.str, ptr @.str.24, ptr @.str, ptr @.str.25, ptr @.str, ptr @.str.26, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str.27, ptr @.str, ptr @.str.28, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str, ptr @.str.29, ptr @.str, ptr @.str.30, ptr @.str, ptr @.str.31, ptr @.str.32, ptr @.str.33, ptr @.str.34], align 8
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull ptr @_ZN11duckdb_zstd18ERR_getErrorStringENS_14ZSTD_ErrorCodeE(i32 noundef %0) local_unnamed_addr #0 {
-  switch i32 %0, label %bb.b [
-    i32 0, label %bb.c
-    i32 1, label %2
-    i32 10, label %3
-    i32 12, label %4
-    i32 14, label %5
-    i32 16, label %6
-    i32 20, label %7
-    i32 22, label %8
-    i32 24, label %9
-    i32 40, label %10
-    i32 41, label %11
-    i32 42, label %12
-    i32 62, label %13
-    i32 64, label %14
-    i32 66, label %15
-    i32 60, label %16
-    i32 44, label %17
-    i32 46, label %18
-    i32 48, label %19
-    i32 50, label %20
-    i32 30, label %21
-    i32 32, label %22
-    i32 34, label %23
-    i32 70, label %24
-    i32 72, label %25
-    i32 74, label %26
-    i32 80, label %27
-    i32 82, label %28
-    i32 100, label %29
-    i32 102, label %30
-    i32 104, label %31
-    i32 105, label %32
-    i32 106, label %33
-    i32 107, label %bb.a
-  ]
+bb.a:
+  %1 = icmp ult i32 %0, 108
+  br i1 %1, label %bb.b, label %bb.c
 
-2:                                                ; preds = %1
+bb.b:                                             ; preds = %bb.a
+  %2 = zext nneg i32 %0 to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN11duckdb_zstd18ERR_getErrorStringENS_14ZSTD_ErrorCodeE, i64 %2
+  %switch.load = load ptr, ptr %switch.gep, align 8
   br label %bb.c
 
-3:                                                ; preds = %1
-  br label %bb.c
-
-4:                                                ; preds = %1
-  br label %bb.c
-
-5:                                                ; preds = %1
-  br label %bb.c
-
-6:                                                ; preds = %1
-  br label %bb.c
-
-7:                                                ; preds = %1
-  br label %bb.c
-
-8:                                                ; preds = %1
-  br label %bb.c
-
-9:                                                ; preds = %1
-  br label %bb.c
-
-10:                                               ; preds = %1
-  br label %bb.c
-
-11:                                               ; preds = %1
-  br label %bb.c
-
-12:                                               ; preds = %1
-  br label %bb.c
-
-13:                                               ; preds = %1
-  br label %bb.c
-
-14:                                               ; preds = %1
-  br label %bb.c
-
-15:                                               ; preds = %1
-  br label %bb.c
-
-16:                                               ; preds = %1
-  br label %bb.c
-
-17:                                               ; preds = %1
-  br label %bb.c
-
-18:                                               ; preds = %1
-  br label %bb.c
-
-19:                                               ; preds = %1
-  br label %bb.c
-
-20:                                               ; preds = %1
-  br label %bb.c
-
-21:                                               ; preds = %1
-  br label %bb.c
-
-22:                                               ; preds = %1
-  br label %bb.c
-
-23:                                               ; preds = %1
-  br label %bb.c
-
-24:                                               ; preds = %1
-  br label %bb.c
-
-25:                                               ; preds = %1
-  br label %bb.c
-
-26:                                               ; preds = %1
-  br label %bb.c
-
-27:                                               ; preds = %1
-  br label %bb.c
-
-28:                                               ; preds = %1
-  br label %bb.c
-
-29:                                               ; preds = %1
-  br label %bb.c
-
-30:                                               ; preds = %1
-  br label %bb.c
-
-31:                                               ; preds = %1
-  br label %bb.c
-
-32:                                               ; preds = %1
-  br label %bb.c
-
-33:                                               ; preds = %1
-  br label %bb.c
-
-bb.a:                                             ; preds = %1
-  br label %bb.c
-
-bb.b:                                             ; preds = %1
-  br label %bb.c
-
-bb.c:                                             ; preds = %1, %bb.b, %bb.a, %33, %32, %31, %30, %29, %28, %27, %26, %25, %24, %23, %22, %21, %20, %19, %18, %17, %16, %15, %14, %13, %12, %11, %10, %9, %8, %7, %6, %5, %4, %3, %2
-  %.0 = phi ptr [ @.str, %bb.b ], [ @.str.34, %bb.a ], [ @.str.2, %2 ], [ @.str.3, %3 ], [ @.str.4, %4 ], [ @.str.5, %5 ], [ @.str.6, %6 ], [ @.str.7, %7 ], [ @.str.8, %8 ], [ @.str.9, %9 ], [ @.str.10, %10 ], [ @.str.11, %11 ], [ @.str.12, %12 ], [ @.str.13, %13 ], [ @.str.14, %14 ], [ @.str.15, %15 ], [ @.str.16, %16 ], [ @.str.17, %17 ], [ @.str.18, %18 ], [ @.str.19, %19 ], [ @.str.20, %20 ], [ @.str.21, %21 ], [ @.str.22, %22 ], [ @.str.23, %23 ], [ @.str.24, %24 ], [ @.str.25, %25 ], [ @.str.26, %26 ], [ @.str.27, %27 ], [ @.str.28, %28 ], [ @.str.29, %29 ], [ @.str.30, %30 ], [ @.str.31, %31 ], [ @.str.32, %32 ], [ @.str.33, %33 ], [ @.str.1, %1 ]
+bb.c:                                             ; preds = %bb.a, %bb.b
+  %.0 = phi ptr [ %switch.load, %bb.b ], [ @.str, %bb.a ]
   ret ptr %.0
 }
 

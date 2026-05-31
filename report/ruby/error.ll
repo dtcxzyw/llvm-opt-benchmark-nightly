@@ -201,7 +201,7 @@ begin_hunk_0
 @.str.320 = private unnamed_addr constant [18 x i8] c"%s:%ld: warning: \00", align 1
 @rb_warn_m.rbimpl_id.321 = internal unnamed_addr global i64 0, align 8
 @.str.322 = private unnamed_addr constant [7 x i8] c"lineno\00", align 1
-@switch.table.rb_type = private unnamed_addr constant [10 x i32] [i32 19, i32 17, i32 poison, i32 poison, i32 poison, i32 18, i32 poison, i32 poison, i32 poison, i32 22], align 4
+@switch.table.rb_type = private unnamed_addr constant [37 x i32] [i32 19, i32 poison, i32 poison, i32 poison, i32 17, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 18, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 22], align 4
 
 ; Function Attrs: nounwind sspstrong uwtable
 define hidden noundef i64 @rb_syntax_error_append(i64 noundef %0, i64 noundef %1, i32 noundef %2, i32 noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6) local_unnamed_addr #0 {
@@ -604,7 +604,7 @@ bb.c:                                             ; preds = %bb.a
   %i.c = and i64 %0, 7
   %i.d = icmp ne i64 %i.c, 0
   %i.e = or i1 %i.b, %i.d
-  br i1 %i.e, label %bb.e, label %bb.d
+  br i1 %i.e, label %2, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.f = inttoptr i64 %0 to ptr
@@ -613,16 +613,20 @@ bb.d:                                             ; preds = %bb.c
   %i.i = and i32 %i.h, 31
   br label %rb_type.exit
 
-bb.e:                                             ; preds = %bb.c
-  %2 = tail call i64 @llvm.fshl.i64(i64 %0, i64 %0, i64 62) ; 3 uses
-  %3 = icmp ult i64 %2, 10
-  %switch.maskindex = trunc i64 %2 to i16
-  %switch.shifted = lshr i16 547, %switch.maskindex
-  %switch.lobit = trunc i16 %switch.shifted to i1
-  %or.cond = select i1 %3, i1 %switch.lobit, i1 false
-  br i1 %or.cond, label %switch.lookup, label %bb.f
+2:                                                ; preds = %bb.c
+  switch i64 %0, label %bb.f [
+    i64 0, label %rb_type.exit
+    i64 4, label %3
+    i64 20, label %bb.e
+  ]
 
-bb.f:                                             ; preds = %bb.e
+3:                                                ; preds = %2
+  br label %rb_type.exit
+
+bb.e:                                             ; preds = %2
+  br label %rb_type.exit
+
+bb.f:                                             ; preds = %2
   %i.j = trunc i64 %0 to i1
   br i1 %i.j, label %rb_type.exit, label %bb.g
 
@@ -632,13 +636,8 @@ bb.g:                                             ; preds = %bb.f
   %spec.select.i = select i1 %i.l, i32 20, i32 4
   br label %rb_type.exit
 
-switch.lookup:                                    ; preds = %bb.e
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.rb_type, i64 %2
-  %switch.load = load i32, ptr %switch.gep, align 4
-  br label %rb_type.exit
-
-rb_type.exit:                                     ; preds = %switch.lookup, %bb.d, %bb.f, %bb.g
-  %.0.i = phi i32 [ %i.i, %bb.d ], [ %spec.select.i, %bb.g ], [ 21, %bb.f ], [ %switch.load, %switch.lookup ] ; 2 uses
+rb_type.exit:                                     ; preds = %bb.d, %2, %3, %bb.e, %bb.f, %bb.g
+  %.0.i = phi i32 [ %i.i, %bb.d ], [ 17, %3 ], [ 18, %bb.e ], [ %spec.select.i, %bb.g ], [ 19, %2 ], [ 21, %bb.f ] ; 2 uses
   %.not = icmp eq i32 %.0.i, %1
   br i1 %.not, label %bb.h, label %.split
 
@@ -682,11 +681,9 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  %1 = tail call i64 @llvm.fshl.i64(i64 %0, i64 %0, i64 62) ; 3 uses
-  %i.i = icmp ult i64 %1, 10
-  %switch.maskindex = trunc i64 %1 to i16
-  %switch.shifted = lshr i16 547, %switch.maskindex
-  %switch.lobit = trunc i16 %switch.shifted to i1
+  %i.i = icmp ult i64 %0, 37
+  %switch.shifted = lshr i64 68720525329, %0
+  %switch.lobit = trunc i64 %switch.shifted to i1
   %or.cond = select i1 %i.i, i1 %switch.lobit, i1 false
   br i1 %or.cond, label %switch.lookup, label %bb.d
 
@@ -701,7 +698,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 switch.lookup:                                    ; preds = %bb.c
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.rb_type, i64 %1
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.rb_type, i64 %0
   %switch.load = load i32, ptr %switch.gep, align 4
   br label %bb.f
 
@@ -1102,9 +1099,6 @@ declare i64 @rb_to_symbol_type(i64 noundef) local_unnamed_addr #2
 declare void @rb_out_of_int(i64 noundef) local_unnamed_addr #30
 
 declare i32 @rb_str_end_with_asciichar(i64 noundef, i32 noundef) local_unnamed_addr #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.fshl.i64(i64, i64, i64) #31
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #31

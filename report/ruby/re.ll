@@ -163,6 +163,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.127 = private unnamed_addr constant [3 x i8] c"%d\00", align 1
 @.str.128 = private unnamed_addr constant [4 x i8] c"nil\00", align 1
 @.str.129 = private unnamed_addr constant [2 x i8] c">\00", align 1
+@switch.table.rb_char_to_option_kcode.7 = private unnamed_addr constant [16 x i32] [i32 1, i32 0, i32 0, i32 0, i32 4, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 2], align 4
 
 ; Function Attrs: nofree norecurse nosync nounwind sspstrong memory(argmem: read) uwtable
 define dso_local range(i32 -255, 256) i32 @rb_memcicmp(ptr noundef readonly captures(none) %0, ptr noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #0 {
@@ -565,7 +566,7 @@ define dso_local range(i32 0, 33) i32 @rb_char_to_option_kcode(i32 noundef %0, p
 bb.a:
   switch i32 %0, label %bb.e [
     i32 110, label %bb.b
-    i32 101, label %bb.g
+    i32 101, label %bb.f
     i32 115, label %bb.c
     i32 117, label %bb.d
   ]
@@ -575,36 +576,34 @@ bb.b:                                             ; preds = %bb.a
   br label %char_to_option.exit
 
 bb.c:                                             ; preds = %bb.a
-  br label %bb.g
+  br label %bb.f
 
 bb.d:                                             ; preds = %bb.a
-  br label %bb.g
+  br label %bb.f
 
 bb.e:                                             ; preds = %bb.a
   store i32 -1, ptr %2, align 4, !tbaa !7
-  switch i32 %0, label %bb.f [
-    i32 105, label %char_to_option.exit
-    i32 120, label %3
-    i32 109, label %4
-  ]
+  %switch.tableidx = add i32 %0, -105             ; 3 uses
+  %3 = icmp ult i32 %switch.tableidx, 16
+  br i1 %3, label %bb.g, label %char_to_option.exit
 
-3:                                                ; preds = %bb.e
-  br label %char_to_option.exit
-
-4:                                                ; preds = %bb.e
-  br label %char_to_option.exit
-
-bb.f:                                             ; preds = %bb.e
-  br label %char_to_option.exit
-
-bb.g:                                             ; preds = %bb.a, %bb.d, %bb.c
+bb.f:                                             ; preds = %bb.a, %bb.d, %bb.c
   %.sink = phi i32 [ 1, %bb.d ], [ 11, %bb.c ], [ 10, %bb.a ]
   store i32 %.sink, ptr %2, align 4, !tbaa !7
   br label %char_to_option.exit
 
-char_to_option.exit:                              ; preds = %bb.f, %4, %3, %bb.e, %bb.g, %bb.b
-  %.sink11 = phi i32 [ 16, %bb.g ], [ 32, %bb.b ], [ 0, %bb.f ], [ 4, %4 ], [ 2, %3 ], [ 1, %bb.e ]
-  %.0 = phi i32 [ 1, %bb.g ], [ 32, %bb.b ], [ 0, %bb.f ], [ 4, %4 ], [ 2, %3 ], [ 1, %bb.e ]
+bb.g:                                             ; preds = %bb.e
+  %4 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.rb_char_to_option_kcode.7, i64 %4
+  %switch.load = load i32, ptr %switch.gep, align 4
+  %5 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep12 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.rb_char_to_option_kcode.7, i64 %5
+  %switch.load13 = load i32, ptr %switch.gep12, align 4
+  br label %char_to_option.exit
+
+char_to_option.exit:                              ; preds = %bb.e, %bb.g, %bb.f, %bb.b
+  %.sink11 = phi i32 [ 16, %bb.f ], [ 32, %bb.b ], [ %switch.load, %bb.g ], [ 0, %bb.e ]
+  %.0 = phi i32 [ 1, %bb.f ], [ 32, %bb.b ], [ %switch.load13, %bb.g ], [ 0, %bb.e ]
   store i32 %.sink11, ptr %1, align 4, !tbaa !7
   ret i32 %.0
 }

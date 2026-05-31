@@ -76,6 +76,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.59 = private unnamed_addr constant [66 x i8] c"Error in gtStripSeparate: column offset %d exceeds image width %d\00", align 1
 @.str.60 = private unnamed_addr constant [16 x i8] c"gtStripSeparate\00", align 1
 @.str.61 = private unnamed_addr constant [36 x i8] c"Integer overflow in gtStripSeparate\00", align 1
+@switch.table.TIFFRGBAImageBegin = private unnamed_addr constant [52 x ptr] [ptr @putcontig8bitYCbCr11tile, ptr @putcontig8bitYCbCr12tile, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @putcontig8bitYCbCr21tile, ptr @putcontig8bitYCbCr22tile, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @putcontig8bitYCbCr41tile, ptr @putcontig8bitYCbCr42tile, ptr poison, ptr @putcontig8bitYCbCr44tile], align 8
 
 ; Function Attrs: nounwind uwtable
 define range(i32 0, 2) i32 @TIFFRGBAImageOK(ptr noundef %0, ptr noundef writeonly captures(none) %1) local_unnamed_addr #0 {
@@ -478,40 +479,22 @@ bb.cn:                                            ; preds = %bb.cm
   %i.fu = load i16, ptr %i.f, align 2, !tbaa !31
   %i.fv = zext i16 %i.fu to i32
   %i.fw = or i32 %i.ft, %i.fv
-  switch i32 %i.fw, label %bb.co [
-    i32 68, label %.sink.split.i
-    i32 66, label %4
-    i32 65, label %5
-    i32 34, label %6
-    i32 33, label %7
-    i32 18, label %8
-    i32 17, label %9
-  ]
+  %switch.tableidx = add nsw i32 %i.fw, -17       ; 3 uses
+  %4 = icmp ult i32 %switch.tableidx, 52
+  %switch.maskindex = zext nneg i32 %switch.tableidx to i64
+  %switch.shifted = lshr i64 3096224744013827, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  %or.cond208 = select i1 %4, i1 %switch.lobit, i1 false
+  br i1 %or.cond208, label %.sink.split.i, label %bb.co
 
-4:                                                ; preds = %bb.cn
-  br label %.sink.split.i
-
-5:                                                ; preds = %bb.cn
-  br label %.sink.split.i
-
-6:                                                ; preds = %bb.cn
-  br label %.sink.split.i
-
-7:                                                ; preds = %bb.cn
-  br label %.sink.split.i
-
-8:                                                ; preds = %bb.cn
-  br label %.sink.split.i
-
-9:                                                ; preds = %bb.cn
-  br label %.sink.split.i
-
-.sink.split.i:                                    ; preds = %9, %8, %7, %6, %5, %4, %bb.cn
-  %putcontig8bitYCbCr11tile.sink.i = phi ptr [ @putcontig8bitYCbCr11tile, %9 ], [ @putcontig8bitYCbCr12tile, %8 ], [ @putcontig8bitYCbCr21tile, %7 ], [ @putcontig8bitYCbCr22tile, %6 ], [ @putcontig8bitYCbCr41tile, %5 ], [ @putcontig8bitYCbCr42tile, %4 ], [ @putcontig8bitYCbCr44tile, %bb.cn ]
-  store ptr %putcontig8bitYCbCr11tile.sink.i, ptr %i.dz, align 8, !tbaa !57
+.sink.split.i:                                    ; preds = %bb.cn
+  %5 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.TIFFRGBAImageBegin, i64 %5
+  %switch.load = load ptr, ptr %switch.gep, align 8
+  store ptr %switch.load, ptr %i.dz, align 8, !tbaa !57
   br label %bb.co
 
-bb.co:                                            ; preds = %.sink.split.i, %bb.cn
+bb.co:                                            ; preds = %bb.cn, %.sink.split.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #11
   br label %bb.da
