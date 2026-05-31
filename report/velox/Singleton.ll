@@ -201,13 +201,13 @@ tailrecurse.i:                                    ; preds = %tailrecurse.i.prehe
   %.tr3.i = phi i32 [ %i.bw, %tailrecurse.i ], [ %.tr3.i.ph, %tailrecurse.i.preheader ]
   %accumulator.tr2.i = phi i64 [ %i.bx, %tailrecurse.i ], [ %accumulator.tr2.i.ph, %tailrecurse.i.preheader ]
   %i.bw = add i32 %.tr3.i, -1                     ; 2 uses
-  %i.bx = mul nuw nsw i64 %accumulator.tr2.i, 10  ; 2 uses
+  %i.bx = mul i64 %accumulator.tr2.i, 10          ; 2 uses
   %i.by = icmp eq i32 %i.bw, 0
   br i1 %i.by, label %_ZN3fmt3v116detail5pow10Ej.exit, label %tailrecurse.i, !llvm.loop !3571
 
 _ZN3fmt3v116detail5pow10Ej.exit:                  ; preds = %tailrecurse.i, %middle.block, %vec.epilog.middle.block, %bb.k
   %accumulator.tr.lcssa.i = phi i64 [ 1, %bb.k ], [ %i.bv, %vec.epilog.middle.block ], [ %i.bq, %middle.block ], [ %i.bx, %tailrecurse.i ] ; 2 uses
-  %.not64 = icmp samesign ugt i64 %accumulator.tr.lcssa.i, %i.a
+  %.not64 = icmp ugt i64 %accumulator.tr.lcssa.i, %i.a
   br i1 %.not64, label %bb.r, label %bb.l
 
 bb.l:                                             ; preds = %_ZN3fmt3v116detail5pow10Ej.exit

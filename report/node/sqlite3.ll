@@ -201,7 +201,7 @@ bb.g:                                             ; preds = %bb.f, %dupedExprNod
   %i.v = getelementptr inbounds nuw i8, ptr %.tr, i64 24
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !1157 ; 2 uses
   %.not9 = icmp eq ptr %i.w, null
-  %i.x = add nuw nsw i32 %.0, %accumulator.tr     ; 2 uses
+  %i.x = add i32 %.0, %accumulator.tr             ; 2 uses
   br i1 %.not9, label %bb.h, label %tailrecurse
 
 bb.h:                                             ; preds = %bb.g

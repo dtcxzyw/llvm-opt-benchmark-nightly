@@ -38,7 +38,7 @@ tailrecurse:                                      ; preds = %.lr.ph, %bb.b
 }
 
 ; Function Attrs: nofree nosync nounwind memory(none) uwtable
-define dso_local range(i32 -2147483647, -2147483648) i32 @fib(i32 noundef %0) local_unnamed_addr #0 {
+define dso_local i32 @fib(i32 noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp slt i32 %0, 2
   br i1 %i.a, label %tailrecurse._crit_edge, label %tailrecurse
@@ -49,12 +49,12 @@ tailrecurse:                                      ; preds = %bb.a, %tailrecurse
   %i.b = add nsw i32 %.tr6, -2
   %i.c = tail call i32 @fib(i32 noundef %i.b)
   %i.d = add nsw i32 %.tr6, -1
-  %i.e = add nsw i32 %i.c, %accumulator.tr5       ; 2 uses
+  %i.e = add i32 %i.c, %accumulator.tr5           ; 2 uses
   %i.f = icmp samesign ult i32 %.tr6, 3
   br i1 %i.f, label %tailrecurse._crit_edge.loopexit, label %tailrecurse
 
 tailrecurse._crit_edge.loopexit:                  ; preds = %tailrecurse
-  %i.g = add nsw i32 %i.e, 1
+  %i.g = add i32 %i.e, 1
   br label %tailrecurse._crit_edge
 
 tailrecurse._crit_edge:                           ; preds = %tailrecurse._crit_edge.loopexit, %bb.a

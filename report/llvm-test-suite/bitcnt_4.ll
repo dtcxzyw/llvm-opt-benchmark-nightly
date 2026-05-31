@@ -18,7 +18,7 @@ tailrecurse:                                      ; preds = %tailrecurse, %bb.a
   %i.d = sext i8 %i.c to i32
   %i.e = ashr i64 %.tr, 4                         ; 2 uses
   %.not = icmp eq i64 %i.e, 0
-  %i.f = add nsw i32 %accumulator.tr, %i.d        ; 2 uses
+  %i.f = add i32 %accumulator.tr, %i.d            ; 2 uses
   br i1 %.not, label %bb.b, label %tailrecurse
 
 bb.b:                                             ; preds = %tailrecurse
@@ -39,7 +39,7 @@ tailrecurse:                                      ; preds = %tailrecurse, %bb.a
   %i.d = sext i8 %i.c to i32
   %i.e = ashr i64 %.tr, 8                         ; 2 uses
   %.not = icmp eq i64 %i.e, 0
-  %i.f = add nsw i32 %accumulator.tr, %i.d        ; 2 uses
+  %i.f = add i32 %accumulator.tr, %i.d            ; 2 uses
   br i1 %.not, label %bb.b, label %tailrecurse
 
 bb.b:                                             ; preds = %tailrecurse
