@@ -201,7 +201,7 @@ ReadSymbol.exit.i49:                              ; preds = %BitMask.exit.i.i.i5
   %i.tq = lshr i64 %i.tl, %i.to                   ; 3 uses
   store i64 %i.tq, ptr %i.e, align 8, !tbaa !51
   %i.tr = getelementptr inbounds nuw i8, ptr %.0.i.i27.i, i64 2
-  %i.ts = load i16, ptr %i.tr, align 2, !tbaa !68 ; 5 uses
+  %i.ts = load i16, ptr %i.tr, align 2, !tbaa !68 ; 6 uses
   %i.tt = zext i16 %i.ts to i64                   ; 2 uses
   %i.tu = load i64, ptr %i.rz, align 8, !tbaa !29
   %i.tv = add i64 %i.tu, -1
@@ -212,15 +212,16 @@ ReadSymbol.exit.i49:                              ; preds = %BitMask.exit.i.i.i5
   br i1 %i.tx, label %bb.bc, label %bb.bf
 
 bb.bc:                                            ; preds = %ReadSymbol.exit.i49
-  %i.ty = zext nneg i16 %i.ts to i32              ; 4 uses
+  %i.ty = zext nneg i16 %i.ts to i32              ; 3 uses
   store i32 %i.ty, ptr %i.rm, align 8, !tbaa !154
   %i.tz = icmp samesign ult i16 %i.ts, 4
   br i1 %i.tz, label %bb.bd, label %bb.be
 
 bb.bd:                                            ; preds = %bb.bc
   %.neg.i = xor i32 %i.ty, -1
-  %1 = lshr i32 1, %i.ty                          ; 3 uses
-  store i32 %1, ptr %i.tw, align 4, !tbaa !155
+  %1 = icmp eq i16 %i.ts, 0
+  %2 = zext i1 %1 to i32                          ; 3 uses
+  store i32 %2, ptr %i.tw, align 4, !tbaa !155
   %i.ua = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.ub = getelementptr inbounds nuw i8, ptr %0, i64 108 ; 2 uses
   %i.uc = load i32, ptr %i.ub, align 4, !tbaa !164 ; 2 uses
@@ -230,7 +231,7 @@ bb.bd:                                            ; preds = %bb.bc
   %i.ug = getelementptr inbounds nuw [4 x i8], ptr %i.ua, i64 %i.uf
   %i.uh = load i32, ptr %i.ug, align 4, !tbaa !5  ; 2 uses
   store i32 %i.uh, ptr %i.rm, align 8, !tbaa !154
-  %i.ui = sub nsw i32 %i.uc, %1
+  %i.ui = sub nsw i32 %i.uc, %2
   store i32 %i.ui, ptr %i.ub, align 4, !tbaa !164
   br label %ReadDistanceInternal.exit
 
@@ -297,7 +298,7 @@ BrotliReadBits32.exit:                            ; preds = %BrotliFillBitWindow
   br label %ReadDistanceInternal.exit
 
 ReadDistanceInternal.exit:                        ; preds = %BrotliReadBits32.exit, %bb.bd, %bb.be, %bb.ax
-  %i.vv = phi i32 [ 0, %BrotliReadBits32.exit ], [ %1, %bb.bd ], [ 0, %bb.be ], [ %i.rp, %bb.ax ]
+  %i.vv = phi i32 [ 0, %BrotliReadBits32.exit ], [ %2, %bb.bd ], [ 0, %bb.be ], [ %i.rp, %bb.ax ]
   %i.vw = phi i32 [ %i.vu, %BrotliReadBits32.exit ], [ %i.uh, %bb.bd ], [ %storemerge.i, %bb.be ], [ %i.ry, %bb.ax ] ; 6 uses
   %i.vx = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
   %i.vy = load i32, ptr %i.vx, align 8, !tbaa !115 ; 2 uses
@@ -700,8 +701,9 @@ bb.ae:                                            ; preds = %bb.ad
 
 bb.af:                                            ; preds = %bb.ae
   %.neg.i = xor i32 %i.op, -1
-  %1 = lshr i32 1, %i.op                          ; 3 uses
-  store i32 %1, ptr %i.om, align 4, !tbaa !155
+  %1 = icmp eq i32 %i.op, 0
+  %2 = zext i1 %1 to i32                          ; 3 uses
+  store i32 %2, ptr %i.om, align 4, !tbaa !155
   %i.or = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.os = getelementptr inbounds nuw i8, ptr %0, i64 108 ; 2 uses
   %i.ot = load i32, ptr %i.os, align 4, !tbaa !164 ; 2 uses
@@ -711,7 +713,7 @@ bb.af:                                            ; preds = %bb.ae
   %i.ox = getelementptr inbounds nuw [4 x i8], ptr %i.or, i64 %i.ow
   %i.oy = load i32, ptr %i.ox, align 4, !tbaa !5  ; 2 uses
   store i32 %i.oy, ptr %i.lg, align 8, !tbaa !154
-  %i.oz = sub nsw i32 %i.ot, %1
+  %i.oz = sub nsw i32 %i.ot, %2
   store i32 %i.oz, ptr %i.os, align 4, !tbaa !164
   br label %ReadDistanceInternal.exit
 
@@ -824,7 +826,7 @@ ReadDistanceInternal.exit.thread:                 ; preds = %SafeReadBits32.exit
   br label %.thread206
 
 ReadDistanceInternal.exit:                        ; preds = %bb.ag, %bb.af, %bb.aj
-  %i.qy = phi i32 [ 0, %bb.ag ], [ %1, %bb.af ], [ 0, %bb.aj ]
+  %i.qy = phi i32 [ 0, %bb.ag ], [ %2, %bb.af ], [ 0, %bb.aj ]
   %i.qz = phi i32 [ %storemerge.i, %bb.ag ], [ %i.oy, %bb.af ], [ %i.qx, %bb.aj ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   br label %bb.ak
