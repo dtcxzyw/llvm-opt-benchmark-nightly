@@ -201,21 +201,24 @@ safe_muldiv_u64.exit.thread25.i:                  ; preds = %bb.d
 safe_mul_u64.exit36.i.i:                          ; preds = %bb.d
   %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 range(i64 0, 4294967296) %i.o, i64 %i.l) ; 2 uses
   %spec.select34.i.i = tail call i64 @llvm.umax.i64(i64 range(i64 0, 4294967296) %i.o, i64 %i.l) ; 2 uses
-  %i.x = udiv i64 %spec.select34.i.i, %i.r
   %2 = urem i64 %spec.select34.i.i, %i.r
-  %i.y = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.x, i64 range(i64 0, 4294967296) %spec.select.i.i) ; 2 uses
+  %3 = mul nuw i64 %2, %spec.select.i.i
+  %i.x = udiv i64 %spec.select34.i.i, %i.r
+  %4 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.x, i64 range(i64 0, 4294967296) %spec.select.i.i) ; 2 uses
+  %5 = extractvalue { i64, i1 } %4, 0
+  %6 = udiv i64 %3, %i.r
+  %i.y = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %5, i64 %6) ; 2 uses
   %i.z = extractvalue { i64, i1 } %i.y, 1
   br i1 %i.z, label %safe_muldiv_u64.exit.thread33.i, label %safe_mul_u64.exit38.i.i
 
 safe_mul_u64.exit38.i.i:                          ; preds = %safe_mul_u64.exit36.i.i
-  %3 = mul nuw i64 %2, %spec.select.i.i
+  %7 = extractvalue { i64, i1 } %4, 1
   %i.aa = extractvalue { i64, i1 } %i.y, 0
-  %4 = udiv i64 %3, %i.r
-  %spec.select.i = tail call i64 @llvm.uadd.sat.i64(i64 %i.aa, i64 %4)
+  %spec.select33.i = select i1 %7, i64 -1, i64 %i.aa
   br label %safe_muldiv_u64.exit.thread33.i
 
 safe_muldiv_u64.exit.thread33.i:                  ; preds = %safe_mul_u64.exit38.i.i, %safe_mul_u64.exit36.i.i, %safe_muldiv_u64.exit.thread25.i, %bb.c
-  %i.ab = phi i64 [ %spec.select.i, %safe_mul_u64.exit38.i.i ], [ -1, %safe_mul_u64.exit36.i.i ], [ %i.w, %safe_muldiv_u64.exit.thread25.i ], [ -1, %bb.c ] ; 2 uses
+  %i.ab = phi i64 [ -1, %bb.c ], [ %spec.select33.i, %safe_mul_u64.exit38.i.i ], [ %i.w, %safe_muldiv_u64.exit.thread25.i ], [ -1, %safe_mul_u64.exit36.i.i ] ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 72
   store i64 %i.ab, ptr %i.ac, align 8
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -320,13 +323,13 @@ newreno_update_diag.exit:                         ; preds = %.sink.split.i, %bb.
 declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare { i64, i1 } @llvm.uadd.with.overflow.i64(i64, i64) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #6
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.uadd.sat.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #6

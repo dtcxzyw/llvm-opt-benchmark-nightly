@@ -201,56 +201,68 @@ declare noundef nonnull ptr @_Znam(i64 noundef) local_unnamed_addr #10
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6Assimp11SMDImporter22CreateOutputAnimationsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS_8IOSystemE(ptr noundef nonnull align 8 dereferenceable(226) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef %2) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.std::vector.59", align 8    ; 13 uses
+  %3 = alloca %"class.std::vector.59", align 8    ; 14 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #27
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, i8 0, i64 24, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 224
   %i.b = load i8, ptr %i.a, align 8, !range !5, !noundef !31
   %i.c = trunc nuw i8 %i.b to i1
-  br i1 %i.c, label %5, label %bb.c
+  br i1 %i.c, label %7, label %._crit_edge27
 
-5:                                                ; preds = %bb.a
-  invoke void @_ZN6Assimp11SMDImporter20GetAnimationFileListERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS_8IOSystemERSt6vectorISt5tupleIJS6_S6_EESaISD_EE(ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(24) %3)
-          to label %._crit_edge27 unwind label %bb.b
-
-._crit_edge27:                                    ; preds = %5
+._crit_edge27:                                    ; preds = %bb.a
   %.phi.trans.insert.a = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %.pre = load ptr, ptr %.phi.trans.insert.a, align 8
-  %.pre28.a = load ptr, ptr %3, align 8
-  %6 = ptrtoint ptr %.pre to i64
-  %7 = ptrtoint ptr %.pre28.a to i64
-  %8 = sub i64 %6, %7
-  %9 = shl i64 %8, 26
-  %10 = add i64 %9, 4294967296
-  br label %bb.c
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
+  %.pre28.a = load ptr, ptr %5, align 8
+  %6 = getelementptr inbounds nuw i8, ptr %.pre28.a, i64 48
+  store i32 1, ptr %6, align 8
+  br label %14
 
-bb.b:                                             ; preds = %5
+7:                                                ; preds = %bb.a
+  invoke void @_ZN6Assimp11SMDImporter20GetAnimationFileListERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS_8IOSystemERSt6vectorISt5tupleIJS6_S6_EESaISD_EE(ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(24) %3)
+          to label %bb.c unwind label %bb.b
+
+bb.b:                                             ; preds = %7
   %i.d = landingpad { ptr, i32 }
           cleanup
   br label %bb.l
 
-bb.c:                                             ; preds = %._crit_edge27, %bb.a
-  %sext = phi i64 [ %10, %._crit_edge27 ], [ 4294967296, %bb.a ] ; 2 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 4 uses
+bb.c:                                             ; preds = %7
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %.pre = load ptr, ptr %.phi.trans.insert, align 8
+  %.pre28 = load ptr, ptr %3, align 8
+  %8 = ptrtoint ptr %.pre to i64
+  %9 = ptrtoint ptr %.pre28 to i64
+  %10 = sub i64 %8, %9
+  %.fr = freeze i64 %10
+  %11 = shl i64 %.fr, 26
+  %12 = add i64 %11, 4294967296                   ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 48
   store i32 1, ptr %i.h, align 8
-  %11 = call i64 @llvm.smax.i64(i64 %sext, i64 -1)
-  %12 = ashr i64 %11, 29
-  %13 = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %12) #29
+  %13 = ashr exact i64 %12, 29                    ; 2 uses
+  %.inv = icmp sgt i64 %12, -1
+  %spec.select = select i1 %.inv, i64 %13, i64 -1
+  br label %14
+
+14:                                               ; preds = %bb.c, %._crit_edge27
+  %15 = phi i64 [ %13, %bb.c ], [ 8, %._crit_edge27 ]
+  %16 = phi ptr [ %i.f, %bb.c ], [ %5, %._crit_edge27 ] ; 3 uses
+  %17 = phi ptr [ %i.e, %bb.c ], [ %.phi.trans.insert.a, %._crit_edge27 ] ; 2 uses
+  %18 = phi i64 [ %spec.select, %bb.c ], [ 8, %._crit_edge27 ]
+  %19 = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %18) #29
           to label %._crit_edge.i.i unwind label %bb.f
 
-._crit_edge.i.i:                                  ; preds = %bb.c
-  %i.i = load ptr, ptr %i.f, align 8
+._crit_edge.i.i:                                  ; preds = %14
+  %i.i = load ptr, ptr %16, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 56
-  store ptr %13, ptr %i.j, align 8
-  %i.k = load ptr, ptr %i.f, align 8
+  store ptr %19, ptr %i.j, align 8
+  %i.k = load ptr, ptr %16, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 56
   %i.m = load ptr, ptr %i.l, align 8
-  %14 = ashr exact i64 %sext, 29
-  call void @llvm.memset.p0.i64(ptr align 8 %i.m, i8 0, i64 %14, i1 false)
+  call void @llvm.memset.p0.i64(ptr align 8 %i.m, i8 0, i64 %15, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #27
   %i.n = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 6 uses
   store ptr %i.n, ptr %4, align 8
@@ -274,7 +286,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.d, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #27
   %i.t = load ptr, ptr %3, align 8                ; 3 uses
-  %i.u = load ptr, ptr %i.e, align 8              ; 2 uses
+  %i.u = load ptr, ptr %17, align 8               ; 2 uses
   %.not25 = icmp eq ptr %i.t, %i.u
   br i1 %.not25, label %_ZSt8_DestroyIPSt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_EES7_EvT_S9_RSaIT0_E.exit.i, label %.lr.ph
 
@@ -287,7 +299,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.d,
 
 ._crit_edge:                                      ; preds = %bb.k
   %.pre29 = load ptr, ptr %3, align 8             ; 3 uses
-  %.pre30 = load ptr, ptr %i.e, align 8           ; 2 uses
+  %.pre30 = load ptr, ptr %17, align 8            ; 2 uses
   %.not4.i.i.i = icmp eq ptr %.pre29, %.pre30
   br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPSt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_EES7_EvT_S9_RSaIT0_E.exit.i, label %.lr.ph.i.i.i
 
@@ -344,7 +356,7 @@ _ZNSt6vectorISt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_EE
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #27
   ret void
 
-bb.f:                                             ; preds = %bb.c
+bb.f:                                             ; preds = %14
   %i.ar = landingpad { ptr, i32 }
           cleanup
   br label %bb.l
@@ -418,7 +430,7 @@ bb.j:                                             ; preds = %.loopexit, %bb.h
 
 .loopexit:                                        ; preds = %._crit_edge.i
   store double %.1.lcssa.i, ptr %i.y, align 8
-  %i.bn = load ptr, ptr %i.f, align 8
+  %i.bn = load ptr, ptr %16, align 8
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 48 ; 2 uses
   %i.bp = load i32, ptr %i.bo, align 8            ; 2 uses
   %i.bq = add i32 %i.bp, 1
@@ -820,9 +832,6 @@ _ZSt4fillIPSt4pairIjfES1_EvT_S3_RKT0_.exit:       ; preds = %scalar.ph159, %.lr.
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #25
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #26
