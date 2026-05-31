@@ -61,7 +61,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.46 = private unnamed_addr constant [59 x i8] c"Use the escape string syntax for backslashes, e.g., E'\\\\'.\00", align 1
 @.str.47 = private unnamed_addr constant [46 x i8] c"nonstandard use of escape in a string literal\00", align 1
 @.str.48 = private unnamed_addr constant [57 x i8] c"Use the escape string syntax for escapes, e.g., E'\\r\\n'.\00", align 1
-@switch.table._ZN17duckdb_libpgquery10core_yylexEPNS_12core_YYSTYPEEPiPv = private unnamed_addr constant [10 x i8] [i8 8, i8 poison, i8 12, i8 poison, i8 poison, i8 poison, i8 10, i8 poison, i8 13, i8 9], align 1
 
 ; Function Attrs: mustprogress uwtable
 define hidden noundef range(i32 -32768, 32768) i32 @_ZN17duckdb_libpgquery10core_yylexEPNS_12core_YYSTYPEEPiPv(ptr noundef %0, ptr noundef %1, ptr noundef initializes((152, 168)) %2) local_unnamed_addr #0 {
@@ -464,35 +463,41 @@ bb.cb:                                            ; preds = %bb.bq
 _ZN17duckdb_libpgqueryL27check_string_escape_warningEhPv.exit: ; preds = %bb.bv, %bb.ca, %bb.cb
   %i.sw = load ptr, ptr %i.aw, align 8, !tbaa !32
   %i.sx = getelementptr inbounds nuw i8, ptr %i.sw, i64 1
-  %i.sy = load i8, ptr %i.sx, align 1, !tbaa !34  ; 4 uses
-  %3 = zext i8 %i.sy to i32
-  %4 = add nsw i32 %3, -98                        ; 2 uses
-  %5 = tail call i32 @llvm.fshl.i32(i32 %4, i32 %4, i32 31) ; 3 uses
-  %6 = icmp ult i32 %5, 10
-  %switch.maskindex = trunc i32 %5 to i16
-  %switch.shifted = lshr i16 837, %switch.maskindex
-  %switch.lobit = trunc i16 %switch.shifted to i1
-  %or.cond = select i1 %6, i1 %switch.lobit, i1 false
-  br i1 %or.cond, label %switch.lookup, label %bb.cc
+  %i.sy = load i8, ptr %i.sx, align 1, !tbaa !34  ; 5 uses
+  %3 = tail call i8 @llvm.fshl.i8(i8 %i.sy, i8 %i.sy, i8 7)
+  switch i8 %3, label %bb.cc [
+    i8 49, label %_ZN17duckdb_libpgqueryL20unescape_single_charEhPv.exit
+    i8 51, label %4
+    i8 55, label %5
+    i8 57, label %6
+    i8 58, label %7
+    i8 0, label %bb.cd
+  ]
+
+4:                                                ; preds = %_ZN17duckdb_libpgqueryL27check_string_escape_warningEhPv.exit
+  br label %_ZN17duckdb_libpgqueryL20unescape_single_charEhPv.exit
+
+5:                                                ; preds = %_ZN17duckdb_libpgqueryL27check_string_escape_warningEhPv.exit
+  br label %_ZN17duckdb_libpgqueryL20unescape_single_charEhPv.exit
+
+6:                                                ; preds = %_ZN17duckdb_libpgqueryL27check_string_escape_warningEhPv.exit
+  br label %_ZN17duckdb_libpgqueryL20unescape_single_charEhPv.exit
+
+7:                                                ; preds = %_ZN17duckdb_libpgqueryL27check_string_escape_warningEhPv.exit
+  br label %_ZN17duckdb_libpgqueryL20unescape_single_charEhPv.exit
 
 bb.cc:                                            ; preds = %_ZN17duckdb_libpgqueryL27check_string_escape_warningEhPv.exit
-  %or.cond.i = icmp sgt i8 %i.sy, 0
+  %or.cond.i = icmp sgt i8 %i.sy, -1
   br i1 %or.cond.i, label %_ZN17duckdb_libpgqueryL20unescape_single_charEhPv.exit, label %bb.cd
 
-bb.cd:                                            ; preds = %bb.cc
+bb.cd:                                            ; preds = %bb.cc, %_ZN17duckdb_libpgqueryL27check_string_escape_warningEhPv.exit
   %i.sz = load ptr, ptr %2, align 8, !tbaa !45
   %i.ta = getelementptr inbounds nuw i8, ptr %i.sz, i64 77
   store i8 1, ptr %i.ta, align 1, !tbaa !61
   br label %_ZN17duckdb_libpgqueryL20unescape_single_charEhPv.exit
 
-switch.lookup:                                    ; preds = %_ZN17duckdb_libpgqueryL27check_string_escape_warningEhPv.exit
-  %7 = zext nneg i32 %5 to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN17duckdb_libpgquery10core_yylexEPNS_12core_YYSTYPEEPiPv, i64 %7
-  %switch.load = load i8, ptr %switch.gep, align 1
-  br label %_ZN17duckdb_libpgqueryL20unescape_single_charEhPv.exit
-
-_ZN17duckdb_libpgqueryL20unescape_single_charEhPv.exit: ; preds = %switch.lookup, %bb.cc, %bb.cd
-  %.0.i900 = phi i8 [ %switch.load, %switch.lookup ], [ %i.sy, %bb.cc ], [ %i.sy, %bb.cd ]
+_ZN17duckdb_libpgqueryL20unescape_single_charEhPv.exit: ; preds = %_ZN17duckdb_libpgqueryL27check_string_escape_warningEhPv.exit, %4, %5, %6, %7, %bb.cc, %bb.cd
+  %.0.i900 = phi i8 [ 8, %_ZN17duckdb_libpgqueryL27check_string_escape_warningEhPv.exit ], [ 9, %7 ], [ 12, %4 ], [ 10, %5 ], [ 13, %6 ], [ %i.sy, %bb.cd ], [ %i.sy, %bb.cc ]
   %i.tb = load ptr, ptr %2, align 8, !tbaa !45    ; 4 uses
   %i.tc = getelementptr inbounds nuw i8, ptr %i.tb, i64 48
   %i.td = load i32, ptr %i.tc, align 8, !tbaa !51 ; 2 uses
@@ -895,14 +900,14 @@ declare noundef zeroext i1 @_ZN17duckdb_libpgquery15scanner_isspaceEc(i8 noundef
 ; Function Attrs: mustprogress nofree nosync nounwind willreturn memory(none)
 declare ptr @__ctype_b_loc() local_unnamed_addr #10
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.fshl.i32(i32, i32, i32) #15
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare ptr @memchr(ptr, i32, i64) local_unnamed_addr #16
+declare ptr @memchr(ptr, i32, i64) local_unnamed_addr #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #15
+declare i8 @llvm.fshl.i8(i8, i8, i8) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umin.i64(i64, i64) #16
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #17
@@ -922,8 +927,8 @@ attributes #11 = { nocallback nofree nosync nounwind willreturn memory(argmem: w
 attributes #12 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #13 = { nofree nounwind memory(read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #14 = { cold noreturn }
-attributes #15 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #16 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #15 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #16 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #17 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #18 = { noreturn }
 attributes #19 = { nounwind willreturn memory(none) }

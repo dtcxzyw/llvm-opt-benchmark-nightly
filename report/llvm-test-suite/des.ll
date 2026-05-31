@@ -26,6 +26,8 @@ target triple = "x86_64-pc-linux-gnu"
 @str.1 = private unnamed_addr constant [12 x i8] c"decryption\0A\00", align 1
 @str.2 = private unnamed_addr constant [8 x i8] c"passed.\00", align 1
 @str.3 = private unnamed_addr constant [8 x i8] c"failed!\00", align 1
+@switch.table.des_main_ks = private unnamed_addr constant [16 x i64] [i64 1, i64 1, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 1, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 1], align 8
+@switch.table.des_main_ks.4 = private unnamed_addr constant [16 x i64] [i64 27, i64 27, i64 26, i64 26, i64 26, i64 26, i64 26, i64 26, i64 27, i64 26, i64 26, i64 26, i64 26, i64 26, i64 26, i64 27], align 8
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local noundef i32 @des_main_ks(ptr noundef writeonly captures(none) %0, ptr noundef readonly captures(none) %1) local_unnamed_addr #0 {
@@ -157,20 +159,22 @@ bb.b:                                             ; preds = %bb.a, %bb.d
   %.0106 = phi ptr [ %0, %bb.a ], [ %i.iq, %bb.d ] ; 3 uses
   %.099105 = phi i64 [ %i.dq, %bb.a ], [ %.1, %bb.d ] ; 2 uses
   %.0100104 = phi i64 [ %i.dp, %bb.a ], [ %.1101, %bb.d ] ; 2 uses
-  %.0102103 = phi i32 [ 0, %bb.a ], [ %i.ir, %bb.d ] ; 2 uses
-  switch i32 %.0102103, label %bb.c [
-    i32 15, label %bb.d
-    i32 8, label %bb.d
-    i32 1, label %bb.d
-    i32 0, label %bb.d
-  ]
+  %.0102103 = phi i32 [ 0, %bb.a ], [ %i.ir, %bb.d ] ; 4 uses
+  %2 = icmp samesign ult i32 %.0102103, 16
+  br i1 %2, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
+  %3 = zext nneg i32 %.0102103 to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.des_main_ks, i64 %3
+  %switch.load = load i64, ptr %switch.gep, align 8
+  %4 = zext nneg i32 %.0102103 to i64
+  %switch.gep114 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.des_main_ks.4, i64 %4
+  %switch.load115 = load i64, ptr %switch.gep114, align 8
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.b, %bb.b, %bb.b, %bb.b, %bb.c
-  %.sink112 = phi i64 [ 2, %bb.c ], [ 1, %bb.b ], [ 1, %bb.b ], [ 1, %bb.b ], [ 1, %bb.b ] ; 2 uses
-  %.sink111 = phi i64 [ 26, %bb.c ], [ 27, %bb.b ], [ 27, %bb.b ], [ 27, %bb.b ], [ 27, %bb.b ] ; 2 uses
+bb.d:                                             ; preds = %bb.b, %bb.c
+  %.sink112 = phi i64 [ %switch.load, %bb.c ], [ 2, %bb.b ] ; 2 uses
+  %.sink111 = phi i64 [ %switch.load115, %bb.c ], [ 26, %bb.b ] ; 2 uses
   %i.dr = shl nuw nsw i64 %.0100104, %.sink112    ; 6 uses
   %i.ds = lshr i64 %.0100104, %.sink111           ; 2 uses
   %i.dt = shl nuw nsw i64 %.099105, %.sink112     ; 15 uses

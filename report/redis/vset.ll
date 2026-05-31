@@ -201,18 +201,29 @@ bb.i:                                             ; preds = %bb.g
 .lr.ph86.i:                                       ; preds = %bb.i, %.outer.backedge.i
   %.0.ph89.i = phi ptr [ %.0.ph.be.i, %.outer.backedge.i ], [ %.ptr93.i, %bb.i ] ; 3 uses
   %.052.ph88.i = phi ptr [ %.052.ph.be.i, %.outer.backedge.i ], [ %i.af, %bb.i ] ; 3 uses
-  %scevgep.i = getelementptr i8, ptr %.0.ph89.i, i64 1 ; 6 uses
+  %scevgep.i = getelementptr i8, ptr %.0.ph89.i, i64 1 ; 8 uses
   %i.aj = load i8, ptr %.0.ph89.i, align 1, !tbaa !18 ; 2 uses
   %i.ak = icmp eq i8 %i.aj, 92
   br i1 %i.ak, label %bb.n, label %.outer.backedge.i
 
 bb.j:                                             ; preds = %bb.n
   %i.al = load i8, ptr %scevgep.i, align 1, !tbaa !18 ; 2 uses
-  switch i8 %i.al, label %bb.m [
-    i8 110, label %.outer.backedge.i
-    i8 114, label %bb.k
-    i8 116, label %bb.l
+  %2 = sext i8 %i.al to i32
+  %3 = add nsw i32 %2, -34                        ; 2 uses
+  %4 = tail call i32 @llvm.fshl.i32(i32 %3, i32 %3, i32 31)
+  switch i32 %4, label %bb.m [
+    i32 38, label %.outer.backedge.i
+    i32 40, label %5
+    i32 41, label %6
+    i32 29, label %bb.k
+    i32 0, label %bb.l
   ]
+
+5:                                                ; preds = %bb.j
+  br label %.outer.backedge.i
+
+6:                                                ; preds = %bb.j
+  br label %.outer.backedge.i
 
 bb.k:                                             ; preds = %bb.j
   br label %.outer.backedge.i
@@ -223,9 +234,9 @@ bb.l:                                             ; preds = %bb.j
 bb.m:                                             ; preds = %bb.j
   br label %.outer.backedge.i
 
-.outer.backedge.i:                                ; preds = %bb.m, %bb.l, %bb.k, %bb.j, %.lr.ph86.i
-  %.sink.i = phi i8 [ %i.aj, %.lr.ph86.i ], [ 13, %bb.k ], [ 9, %bb.l ], [ 10, %bb.j ], [ %i.al, %bb.m ]
-  %.085100.i = phi ptr [ %.0.ph89.i, %.lr.ph86.i ], [ %scevgep.i, %bb.k ], [ %scevgep.i, %bb.l ], [ %scevgep.i, %bb.j ], [ %scevgep.i, %bb.m ]
+.outer.backedge.i:                                ; preds = %bb.m, %bb.l, %bb.k, %6, %5, %bb.j, %.lr.ph86.i
+  %.sink.i = phi i8 [ %i.aj, %.lr.ph86.i ], [ 13, %5 ], [ 9, %6 ], [ 92, %bb.k ], [ 34, %bb.l ], [ %i.al, %bb.m ], [ 10, %bb.j ]
+  %.085100.i = phi ptr [ %.0.ph89.i, %.lr.ph86.i ], [ %scevgep.i, %5 ], [ %scevgep.i, %6 ], [ %scevgep.i, %bb.k ], [ %scevgep.i, %bb.l ], [ %scevgep.i, %bb.m ], [ %scevgep.i, %bb.j ]
   store i8 %.sink.i, ptr %.052.ph88.i, align 1, !tbaa !18
   %.0.ph.be.i = getelementptr inbounds nuw i8, ptr %.085100.i, i64 1 ; 2 uses
   %.052.ph.be.i = getelementptr inbounds nuw i8, ptr %.052.ph88.i, i64 1 ; 2 uses
@@ -627,6 +638,9 @@ bb.a:
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @strncmp(ptr noundef captures(none), ptr noundef captures(none), i64 noundef) local_unnamed_addr #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.fshl.i32(i32, i32, i32) #15
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare ptr @memchr(ptr, i32, i64) local_unnamed_addr #19

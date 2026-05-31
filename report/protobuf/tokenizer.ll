@@ -62,6 +62,8 @@ $_ZSt18__do_uninit_fill_nIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEm
 @.str.27 = private unnamed_addr constant [55 x i8] c"%s: __pos (which is %zu) > this->size() (which is %zu)\00", align 1
 @.str.28 = private unnamed_addr constant [21 x i8] c"basic_string::append\00", align 1
 @.str.29 = private unnamed_addr constant [50 x i8] c"basic_string: construction from null is not valid\00", align 1
+@switch.table._ZN6google8protobuf2io9Tokenizer4NextEv.7 = private unnamed_addr constant [24 x i8] [i8 9, i8 poison, i8 11, i8 12, i8 13, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 32], align 1
+@switch.table._ZN6google8protobuf2io9Tokenizer4NextEv.9 = private unnamed_addr constant [24 x i8] [i8 9, i8 10, i8 11, i8 12, i8 13, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 32], align 1
 
 @_ZN6google8protobuf2io14ErrorCollectorD1Ev = unnamed_addr alias void (ptr), ptr @_ZN6google8protobuf2io14ErrorCollectorD2Ev
 @_ZN6google8protobuf2io9TokenizerC1EPNS1_19ZeroCopyInputStreamEPNS1_14ErrorCollectorE = unnamed_addr alias void (ptr, ptr, ptr), ptr @_ZN6google8protobuf2io9TokenizerC2EPNS1_19ZeroCopyInputStreamEPNS1_14ErrorCollectorE
@@ -464,24 +466,33 @@ bb.b:                                             ; preds = %.lr.ph, %.critedge2
   store i32 %i.af, ptr %i.s, align 8, !tbaa !28
   %i.ag = load i8, ptr %i.t, align 1, !tbaa !52, !range !38, !noundef !39
   %i.ah = trunc nuw i8 %i.ag to i1
-  %i.ai = load i8, ptr %i.u, align 8, !tbaa !40   ; 5 uses
-  br i1 %i.ah, label %bb.c, label %bb.u
+  %i.ai = load i8, ptr %i.u, align 8, !tbaa !40   ; 2 uses
+  %switch.tableidx = add i8 %i.ai, -9             ; 5 uses
+  %4 = icmp ult i8 %switch.tableidx, 24           ; 2 uses
+  br i1 %i.ah, label %5, label %8
 
-bb.c:                                             ; preds = %bb.b
-  switch i8 %i.ai, label %_ZN6google8protobuf2io9Tokenizer20TryConsumeWhitespaceEv.exit.thread [
-    i8 32, label %.preheader201
-    i8 13, label %.preheader201
-    i8 11, label %.preheader201
-    i8 9, label %.preheader201
-    i8 12, label %.preheader201
-  ]
+5:                                                ; preds = %bb.b
+  br i1 %4, label %bb.c, label %_ZN6google8protobuf2io9Tokenizer20TryConsumeWhitespaceEv.exit.thread
 
-.preheader201:                                    ; preds = %bb.c, %bb.c, %bb.c, %bb.c, %bb.c
-  br label %bb.d
+bb.c:                                             ; preds = %5
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i32
+  %switch.shifted = lshr i32 8388637, %switch.maskindex
+  %switch.lobit = trunc i32 %switch.shifted to i1
+  br i1 %switch.lobit, label %bb.d, label %_ZN6google8protobuf2io9Tokenizer20TryConsumeWhitespaceEv.exit.thread
 
-bb.d:                                             ; preds = %.backedge, %.preheader201
-  %i.aj = phi i8 [ %i.ai, %.preheader201 ], [ %i.bx, %.backedge ]
-  switch i8 %i.aj, label %bb.g [
+.preheader201:                                    ; preds = %_ZN6google8protobuf2io9Tokenizer8NextCharEv.exit43
+  %switch.maskindex205 = zext nneg i8 %switch.tableidx201 to i32
+  %switch.shifted206 = lshr i32 8388637, %switch.maskindex205
+  %switch.lobit207 = trunc i32 %switch.shifted206 to i1
+  br i1 %switch.lobit207, label %bb.d, label %_ZN6google8protobuf2io9Tokenizer20TryConsumeWhitespaceEv.exit.thread47
+
+bb.d:                                             ; preds = %bb.c, %.preheader201
+  %i.aj = phi i8 [ %switch.tableidx201, %.preheader201 ], [ %switch.tableidx, %bb.c ]
+  %switch.table._ZN6google8protobuf2io9Tokenizer4NextEv.7.sink = phi ptr [ @switch.table._ZN6google8protobuf2io9Tokenizer4NextEv.7, %.preheader201 ], [ @switch.table._ZN6google8protobuf2io9Tokenizer4NextEv.7, %bb.c ]
+  %6 = zext nneg i8 %i.aj to i64
+  %switch.gep208 = getelementptr inbounds nuw i8, ptr %switch.table._ZN6google8protobuf2io9Tokenizer4NextEv.7.sink, i64 %6
+  %switch.load209 = load i8, ptr %switch.gep208, align 1
+  switch i8 %switch.load209, label %bb.g [
     i8 10, label %bb.e
     i8 9, label %bb.f
   ]
@@ -600,38 +611,37 @@ bb.t:                                             ; preds = %bb.s, %bb.q
   br label %_ZN6google8protobuf2io9Tokenizer8NextCharEv.exit43
 
 _ZN6google8protobuf2io9Tokenizer8NextCharEv.exit43: ; preds = %bb.i, %bb.t
-  %i.bx = phi i8 [ %i.ay, %bb.i ], [ %.sink.i.i41, %bb.t ] ; 2 uses
-  switch i8 %i.bx, label %_ZN6google8protobuf2io9Tokenizer20TryConsumeWhitespaceEv.exit.thread47 [
-    i8 32, label %.backedge
-    i8 13, label %.backedge
-    i8 11, label %.backedge
-    i8 9, label %.backedge
-    i8 12, label %.backedge
-  ]
+  %i.bx = phi i8 [ %i.ay, %bb.i ], [ %.sink.i.i41, %bb.t ]
+  %switch.tableidx201 = add i8 %i.bx, -9          ; 3 uses
+  %7 = icmp ult i8 %switch.tableidx201, 24
+  br i1 %7, label %.preheader201, label %_ZN6google8protobuf2io9Tokenizer20TryConsumeWhitespaceEv.exit.thread47
 
-.backedge:                                        ; preds = %_ZN6google8protobuf2io9Tokenizer8NextCharEv.exit43, %_ZN6google8protobuf2io9Tokenizer8NextCharEv.exit43, %_ZN6google8protobuf2io9Tokenizer8NextCharEv.exit43, %_ZN6google8protobuf2io9Tokenizer8NextCharEv.exit43, %_ZN6google8protobuf2io9Tokenizer8NextCharEv.exit43
-  br label %bb.d, !llvm.loop !64
-
-_ZN6google8protobuf2io9Tokenizer20TryConsumeWhitespaceEv.exit.thread47: ; preds = %_ZN6google8protobuf2io9Tokenizer8NextCharEv.exit43, %_ZN6google8protobuf2io9Tokenizer8NextCharEv.exit43.thread
+_ZN6google8protobuf2io9Tokenizer20TryConsumeWhitespaceEv.exit.thread47: ; preds = %_ZN6google8protobuf2io9Tokenizer8NextCharEv.exit43, %.preheader201, %_ZN6google8protobuf2io9Tokenizer8NextCharEv.exit43.thread
   store i32 7, ptr %0, align 8, !tbaa !35
   br label %.critedge15
 
-bb.u:                                             ; preds = %bb.b
-  switch i8 %i.ai, label %_ZN6google8protobuf2io9Tokenizer17TryConsumeNewlineEv.exit [
-    i8 32, label %.preheader203
-    i8 13, label %.preheader203
-    i8 11, label %.preheader203
-    i8 10, label %.preheader203
-    i8 9, label %.preheader203
-    i8 12, label %.preheader203
-  ]
+8:                                                ; preds = %bb.b
+  br i1 %4, label %bb.u, label %_ZN6google8protobuf2io9Tokenizer17TryConsumeNewlineEv.exit
 
-.preheader203:                                    ; preds = %bb.u, %bb.u, %bb.u, %bb.u, %bb.u, %bb.u
-  br label %bb.v
+bb.u:                                             ; preds = %8
+  %switch.maskindex214 = zext nneg i8 %switch.tableidx to i32
+  %switch.shifted215 = lshr i32 8388639, %switch.maskindex214
+  %switch.lobit216 = trunc i32 %switch.shifted215 to i1
+  br i1 %switch.lobit216, label %bb.v, label %_ZN6google8protobuf2io9Tokenizer17TryConsumeNewlineEv.exit
 
-bb.v:                                             ; preds = %.backedge204, %.preheader203
-  %i.by = phi i8 [ %i.ai, %.preheader203 ], [ %i.dm, %.backedge204 ]
-  switch i8 %i.by, label %bb.y [
+.preheader203:                                    ; preds = %_ZN6google8protobuf2io9Tokenizer8NextCharEv.exit
+  %switch.maskindex223 = zext nneg i8 %switch.tableidx219 to i32
+  %switch.shifted224 = lshr i32 8388639, %switch.maskindex223
+  %switch.lobit225 = trunc i32 %switch.shifted224 to i1
+  br i1 %switch.lobit225, label %bb.v, label %_ZN6google8protobuf2io9Tokenizer20TryConsumeWhitespaceEv.exit
+
+bb.v:                                             ; preds = %bb.u, %.preheader203
+  %i.by = phi i8 [ %switch.tableidx219, %.preheader203 ], [ %switch.tableidx, %bb.u ]
+  %switch.table._ZN6google8protobuf2io9Tokenizer4NextEv.9.sink = phi ptr [ @switch.table._ZN6google8protobuf2io9Tokenizer4NextEv.9, %.preheader203 ], [ @switch.table._ZN6google8protobuf2io9Tokenizer4NextEv.9, %bb.u ]
+  %9 = zext nneg i8 %i.by to i64
+  %switch.gep226 = getelementptr inbounds nuw i8, ptr %switch.table._ZN6google8protobuf2io9Tokenizer4NextEv.9.sink, i64 %9
+  %switch.load227 = load i8, ptr %switch.gep226, align 1
+  switch i8 %switch.load227, label %bb.y [
     i8 10, label %bb.w
     i8 9, label %bb.x
   ]
@@ -750,26 +760,18 @@ bb.al:                                            ; preds = %bb.ak, %bb.ai
   br label %_ZN6google8protobuf2io9Tokenizer8NextCharEv.exit
 
 _ZN6google8protobuf2io9Tokenizer8NextCharEv.exit: ; preds = %bb.aa, %bb.al
-  %i.dm = phi i8 [ %i.cn, %bb.aa ], [ %.sink.i.i, %bb.al ] ; 2 uses
-  switch i8 %i.dm, label %_ZN6google8protobuf2io9Tokenizer20TryConsumeWhitespaceEv.exit [
-    i8 32, label %.backedge204
-    i8 13, label %.backedge204
-    i8 11, label %.backedge204
-    i8 10, label %.backedge204
-    i8 9, label %.backedge204
-    i8 12, label %.backedge204
-  ]
+  %i.dm = phi i8 [ %i.cn, %bb.aa ], [ %.sink.i.i, %bb.al ]
+  %switch.tableidx219 = add i8 %i.dm, -9          ; 3 uses
+  %10 = icmp ult i8 %switch.tableidx219, 24
+  br i1 %10, label %.preheader203, label %_ZN6google8protobuf2io9Tokenizer20TryConsumeWhitespaceEv.exit
 
-.backedge204:                                     ; preds = %_ZN6google8protobuf2io9Tokenizer8NextCharEv.exit, %_ZN6google8protobuf2io9Tokenizer8NextCharEv.exit, %_ZN6google8protobuf2io9Tokenizer8NextCharEv.exit, %_ZN6google8protobuf2io9Tokenizer8NextCharEv.exit, %_ZN6google8protobuf2io9Tokenizer8NextCharEv.exit, %_ZN6google8protobuf2io9Tokenizer8NextCharEv.exit
-  br label %bb.v, !llvm.loop !66
-
-_ZN6google8protobuf2io9Tokenizer20TryConsumeWhitespaceEv.exit: ; preds = %_ZN6google8protobuf2io9Tokenizer8NextCharEv.exit, %_ZN6google8protobuf2io9Tokenizer8NextCharEv.exit.thread
+_ZN6google8protobuf2io9Tokenizer20TryConsumeWhitespaceEv.exit: ; preds = %_ZN6google8protobuf2io9Tokenizer8NextCharEv.exit, %.preheader203, %_ZN6google8protobuf2io9Tokenizer8NextCharEv.exit.thread
   store i32 7, ptr %0, align 8, !tbaa !35
   %i.dn = load i8, ptr %i.y, align 2, !tbaa !51, !range !38, !noundef !39
   %i.do = trunc nuw i8 %i.dn to i1
   br i1 %i.do, label %.critedge15, label %_ZN6google8protobuf2io9Tokenizer17TryConsumeNewlineEv.exit
 
-_ZN6google8protobuf2io9Tokenizer20TryConsumeWhitespaceEv.exit.thread: ; preds = %bb.c
+_ZN6google8protobuf2io9Tokenizer20TryConsumeWhitespaceEv.exit.thread: ; preds = %bb.c, %5
   %i.dp = load i8, ptr %i.y, align 2, !tbaa !51, !range !38, !noundef !39
   %i.dq = trunc nuw i8 %i.dp to i1
   %i.dr = icmp eq i8 %i.ai, 10
@@ -781,8 +783,8 @@ bb.am:                                            ; preds = %_ZN6google8protobuf
   store i32 8, ptr %0, align 8, !tbaa !35
   br label %_ZN6google8protobuf2io9Tokenizer17TryConsumeNewlineEv.exit
 
-_ZN6google8protobuf2io9Tokenizer17TryConsumeNewlineEv.exit: ; preds = %bb.u, %_ZN6google8protobuf2io9Tokenizer20TryConsumeWhitespaceEv.exit, %_ZN6google8protobuf2io9Tokenizer20TryConsumeWhitespaceEv.exit.thread, %bb.am
-  %or.cond6.i178 = phi i1 [ true, %bb.am ], [ false, %_ZN6google8protobuf2io9Tokenizer20TryConsumeWhitespaceEv.exit.thread ], [ false, %_ZN6google8protobuf2io9Tokenizer20TryConsumeWhitespaceEv.exit ], [ false, %bb.u ]
+_ZN6google8protobuf2io9Tokenizer17TryConsumeNewlineEv.exit: ; preds = %8, %bb.u, %_ZN6google8protobuf2io9Tokenizer20TryConsumeWhitespaceEv.exit, %_ZN6google8protobuf2io9Tokenizer20TryConsumeWhitespaceEv.exit.thread, %bb.am
+  %or.cond6.i178 = phi i1 [ true, %bb.am ], [ false, %_ZN6google8protobuf2io9Tokenizer20TryConsumeWhitespaceEv.exit.thread ], [ false, %_ZN6google8protobuf2io9Tokenizer20TryConsumeWhitespaceEv.exit ], [ false, %bb.u ], [ false, %8 ]
   %i.ds = load i32, ptr %i.r, align 4, !tbaa !44  ; 2 uses
   %i.dt = load i32, ptr %i.s, align 8, !tbaa !28  ; 3 uses
   %.not.i.i = icmp eq i32 %i.ds, %i.dt

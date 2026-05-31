@@ -201,12 +201,13 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.as, label %bb.e, label %_RNvXso_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_21CharPredicateSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCs2VbMhdeEr66_16delta_benchmarks.exit
 
 bb.e:                                             ; preds = %bb.d
-  %i.at = lshr i32 %.sroa.4.0.i.ph.i.i.i.i, 8
-  switch i32 %i.at, label %_RNvXso_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_21CharPredicateSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCs2VbMhdeEr66_16delta_benchmarks.exit [
+  %i.at = lshr i32 %.sroa.4.0.i.ph.i.i.i.i, 8     ; 2 uses
+  %2 = tail call i32 @llvm.fshl.i32(i32 %i.at, i32 %i.at, i32 31)
+  switch i32 %2, label %_RNvXso_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_21CharPredicateSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCs2VbMhdeEr66_16delta_benchmarks.exit [
     i32 0, label %bb.h
-    i32 22, label %bb.f
-    i32 32, label %bb.i
-    i32 48, label %bb.g
+    i32 11, label %bb.f
+    i32 16, label %bb.i
+    i32 24, label %bb.g
   ]
 
 bb.f:                                             ; preds = %bb.e
@@ -331,12 +332,13 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.cw, label %bb.o, label %bb.u
 
 bb.o:                                             ; preds = %bb.n
-  %i.cx = lshr i32 %.sroa.4.1.i.ph.i.i.i.i, 8
-  switch i32 %i.cx, label %bb.u [
+  %i.cx = lshr i32 %.sroa.4.1.i.ph.i.i.i.i, 8     ; 2 uses
+  %3 = tail call i32 @llvm.fshl.i32(i32 %i.cx, i32 %i.cx, i32 31)
+  switch i32 %3, label %bb.u [
     i32 0, label %bb.r
-    i32 22, label %bb.p
-    i32 32, label %bb.s
-    i32 48, label %bb.q
+    i32 11, label %bb.p
+    i32 16, label %bb.s
+    i32 24, label %bb.q
   ]
 
 bb.p:                                             ; preds = %bb.o
@@ -737,6 +739,9 @@ declare hidden noundef zeroext i1 @_RNvXs1g_NtCsbvkFyIu7lgC_4core3fmtRNtNtCs8ulv
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RINvXNtNtCs6Po7BT7Nknu_5alloc3vec14spec_from_elemNtNtCs8VI8w5SIoU4_15datafusion_expr12table_source27TableProviderFilterPushDownNtB3_12SpecFromElem9from_elemNtNtB7_5alloc6GlobalECs2VbMhdeEr66_16delta_benchmarks(ptr dead_on_unwind noalias noundef writable sret([24 x i8]) align 8 captures(none) dereferenceable(24), i8 noundef range(i8 0, 3), i64 noundef) unnamed_addr #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.fshl.i32(i32, i32, i32) #34
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #34

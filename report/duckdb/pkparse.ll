@@ -25,9 +25,9 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %5 = alloca %struct.mbedtls_asn1_buf, align 8   ; 6 uses
   %i.b = alloca i32, align 4                      ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #4
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #4
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #5
   store i32 0, ptr %i.b, align 4, !tbaa !7
   %i.c = call i32 @mbedtls_asn1_get_tag(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %i.a, i32 noundef 48) ; 2 uses
   %.not = icmp eq i32 %i.c, 0
@@ -41,7 +41,7 @@ bb.c:                                             ; preds = %bb.a
   %i.e = load ptr, ptr %0, align 8, !tbaa !9
   %i.f = load i64, ptr %i.a, align 8, !tbaa !12
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.f ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #4
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #5
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   %i.h = call i32 @mbedtls_asn1_get_alg(ptr noundef nonnull %0, ptr noundef %i.g, ptr noundef nonnull %4, ptr noundef nonnull %5) ; 2 uses
   %.not.i = icmp eq i32 %i.h, 0
@@ -71,17 +71,17 @@ bb.g:                                             ; preds = %bb.f, %bb.f
   br i1 %.not16.i, label %_ZL13pk_get_pk_algPPhPKhP17mbedtls_pk_type_tP16mbedtls_asn1_bufPv.exit.thread51, label %_ZL13pk_get_pk_algPPhPKhP17mbedtls_pk_type_tP16mbedtls_asn1_bufPv.exit.thread
 
 _ZL13pk_get_pk_algPPhPKhP17mbedtls_pk_type_tP16mbedtls_asn1_bufPv.exit.thread51: ; preds = %bb.e, %bb.g
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #5
   br label %bb.h
 
 _ZL13pk_get_pk_algPPhPKhP17mbedtls_pk_type_tP16mbedtls_asn1_bufPv.exit.thread: ; preds = %bb.d, %bb.f, %bb.g
   %.0.i.ph = phi i32 [ -14976, %bb.g ], [ -14976, %bb.f ], [ -15488, %bb.d ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #5
   br label %bb.q
 
 _ZL13pk_get_pk_algPPhPKhP17mbedtls_pk_type_tP16mbedtls_asn1_bufPv.exit: ; preds = %bb.c
   %i.o = add nsw i32 %i.h, -14976                 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #5
   %.not42 = icmp eq i32 %i.o, 0
   br i1 %.not42, label %bb.h, label %bb.q
 
@@ -157,9 +157,9 @@ bb.p:                                             ; preds = %bb.n
 
 bb.q:                                             ; preds = %bb.p, %bb.j, %_ZL13pk_get_pk_algPPhPKhP17mbedtls_pk_type_tP16mbedtls_asn1_bufPv.exit.thread, %.thread, %bb.l, %bb.k, %_ZL13pk_get_pk_algPPhPKhP17mbedtls_pk_type_tP16mbedtls_asn1_bufPv.exit, %bb.i, %bb.b
   %.0 = phi i32 [ %i.d, %bb.b ], [ %i.x, %bb.l ], [ %i.q, %bb.i ], [ %.0.i.ph, %_ZL13pk_get_pk_algPPhPKhP17mbedtls_pk_type_tP16mbedtls_asn1_bufPv.exit.thread ], [ %i.o, %_ZL13pk_get_pk_algPPhPKhP17mbedtls_pk_type_tP16mbedtls_asn1_bufPv.exit ], [ -15488, %bb.k ], [ %.1.ph, %.thread ], [ -15206, %bb.j ], [ 0, %bb.p ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   ret i32 %.0
 }
 
@@ -188,8 +188,8 @@ bb.a:
   %8 = alloca %struct.mbedtls_pk_context, align 16 ; 5 uses
   %i.a = alloca i64, align 8                      ; 4 uses
   %9 = alloca %struct.mbedtls_pem_context, align 8 ; 11 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
-  call void @llvm.lifetime.start.p0(ptr nonnull %9) #4
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %9) #5
   %i.b = icmp eq i64 %2, 0
   br i1 %i.b, label %bb.r, label %bb.b
 
@@ -199,18 +199,24 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr i8, ptr %i.c, i64 -1       ; 2 uses
   %i.e = load i8, ptr %i.d, align 1, !tbaa !18
   %.not = icmp eq i8 %i.e, 0
-  br i1 %.not, label %bb.c, label %.thread60
+  br i1 %.not, label %bb.c, label %10
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = call i32 @mbedtls_pem_read_buffer(ptr noundef nonnull %9, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, ptr noundef nonnull %1, ptr noundef %3, i64 noundef %4, ptr noundef nonnull %i.a) ; 2 uses
-  switch i32 %i.f, label %bb.i [
-    i32 0, label %bb.d
-    i32 -4992, label %bb.r
-    i32 -4864, label %bb.h
-    i32 -4224, label %bb.j
+  %i.f = call i32 @mbedtls_pem_read_buffer(ptr noundef nonnull %9, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, ptr noundef nonnull %1, ptr noundef %3, i64 noundef %4, ptr noundef nonnull %i.a)
+  br label %10
+
+10:                                               ; preds = %bb.b, %bb.c
+  %.044 = phi i32 [ %i.f, %bb.c ], [ -4224, %bb.b ] ; 2 uses
+  %11 = add i32 %.044, 4992                       ; 2 uses
+  %12 = call i32 @llvm.fshl.i32(i32 %11, i32 %11, i32 25)
+  switch i32 %12, label %bb.i [
+    i32 39, label %bb.d
+    i32 0, label %bb.r
+    i32 1, label %bb.h
+    i32 6, label %bb.j
   ]
 
-bb.d:                                             ; preds = %bb.c
+bb.d:                                             ; preds = %10
   %i.g = call ptr @mbedtls_pk_info_from_type(i32 noundef 1)
   %i.h = call i32 @mbedtls_pk_setup(ptr noundef %0, ptr noundef %i.g) ; 2 uses
   %.not53 = icmp eq i32 %i.h, 0
@@ -243,13 +249,13 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   call void @mbedtls_pem_free(ptr noundef nonnull %9)
   br label %bb.r
 
-bb.h:                                             ; preds = %bb.c
+bb.h:                                             ; preds = %10
   br label %bb.r
 
-bb.i:                                             ; preds = %bb.c
+bb.i:                                             ; preds = %10
   br label %bb.r
 
-bb.j:                                             ; preds = %bb.c
+bb.j:                                             ; preds = %10
   %.pr = load i8, ptr %i.d, align 1, !tbaa !18
   %.not50 = icmp eq i8 %.pr, 0
   br i1 %.not50, label %bb.k, label %.thread60
@@ -277,7 +283,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   call void @mbedtls_pem_free(ptr noundef nonnull %9)
   br label %bb.r
 
-.thread60:                                        ; preds = %bb.b, %bb.j, %bb.k
+.thread60:                                        ; preds = %bb.j, %bb.k
   %i.v = call fastcc noundef i32 @_ZL34pk_parse_key_pkcs8_unencrypted_derP18mbedtls_pk_contextPKhmPFiPvPhmES3_(ptr noundef %0, ptr noundef nonnull %1, i64 noundef %2)
   %i.w = icmp eq i32 %i.v, 0
   br i1 %i.w, label %bb.r, label %bb.o
@@ -309,10 +315,10 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   call void @mbedtls_pk_init(ptr noundef %0)
   br label %bb.r
 
-bb.r:                                             ; preds = %bb.p, %.thread60, %bb.k, %bb.c, %bb.a, %bb.q, %bb.n, %bb.i, %bb.h, %bb.g
-  %.0 = phi i32 [ -15616, %bb.q ], [ %.2, %bb.g ], [ -15616, %bb.a ], [ -15360, %bb.h ], [ %i.f, %bb.i ], [ %i.u, %bb.n ], [ -15232, %bb.c ], [ %i.q, %bb.k ], [ 0, %.thread60 ], [ 0, %bb.p ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %9) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
+bb.r:                                             ; preds = %bb.p, %.thread60, %bb.k, %10, %bb.a, %bb.q, %bb.n, %bb.i, %bb.h, %bb.g
+  %.0 = phi i32 [ -15616, %bb.q ], [ %.2, %bb.g ], [ -15616, %bb.a ], [ -15360, %bb.h ], [ %.044, %bb.i ], [ %i.u, %bb.n ], [ -15232, %10 ], [ %i.q, %bb.k ], [ 0, %.thread60 ], [ 0, %bb.p ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %9) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   ret i32 %.0
 }
 
@@ -334,13 +340,13 @@ bb.a:
   %5 = alloca %struct.mbedtls_asn1_buf, align 8   ; 6 uses
   %i.c = alloca ptr, align 8                      ; 10 uses
   %i.d = alloca i32, align 4                      ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #4
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #4
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #4
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #5
   store ptr %1, ptr %i.c, align 8, !tbaa !9
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 %2 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #4
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #5
   store i32 0, ptr %i.d, align 4, !tbaa !7
   %i.f = call i32 @mbedtls_asn1_get_tag(ptr noundef nonnull %i.c, ptr noundef %i.e, ptr noundef nonnull %i.b, i32 noundef 48) ; 2 uses
   %.not = icmp eq i32 %i.f, 0
@@ -368,7 +374,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not28, label %bb.f, label %bb.t
 
 bb.f:                                             ; preds = %bb.e
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #4
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #5
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   %i.n = call i32 @mbedtls_asn1_get_alg(ptr noundef nonnull %i.c, ptr noundef %i.j, ptr noundef nonnull %4, ptr noundef nonnull %5) ; 2 uses
   %.not.i = icmp eq i32 %i.n, 0
@@ -398,17 +404,17 @@ bb.j:                                             ; preds = %bb.i, %bb.i
   br i1 %.not16.i, label %_ZL13pk_get_pk_algPPhPKhP17mbedtls_pk_type_tP16mbedtls_asn1_bufPv.exit.thread3, label %_ZL13pk_get_pk_algPPhPKhP17mbedtls_pk_type_tP16mbedtls_asn1_bufPv.exit.thread
 
 _ZL13pk_get_pk_algPPhPKhP17mbedtls_pk_type_tP16mbedtls_asn1_bufPv.exit.thread3: ; preds = %bb.h, %bb.j
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #5
   br label %bb.k
 
 _ZL13pk_get_pk_algPPhPKhP17mbedtls_pk_type_tP16mbedtls_asn1_bufPv.exit.thread: ; preds = %bb.g, %bb.i, %bb.j
   %.0.i.ph = phi i32 [ -14976, %bb.j ], [ -14976, %bb.i ], [ -15488, %bb.g ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #5
   br label %bb.t
 
 _ZL13pk_get_pk_algPPhPKhP17mbedtls_pk_type_tP16mbedtls_asn1_bufPv.exit: ; preds = %bb.f
   %i.u = add nsw i32 %i.n, -14976                 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #5
   %.not29 = icmp eq i32 %i.u, 0
   br i1 %.not29, label %bb.k, label %bb.t
 
@@ -472,11 +478,11 @@ bb.s:                                             ; preds = %bb.q
 
 bb.t:                                             ; preds = %bb.s, %bb.m, %_ZL13pk_get_pk_algPPhPKhP17mbedtls_pk_type_tP16mbedtls_asn1_bufPv.exit.thread, %bb.e, %bb.p, %bb.o, %bb.n, %_ZL13pk_get_pk_algPPhPKhP17mbedtls_pk_type_tP16mbedtls_asn1_bufPv.exit, %bb.r, %bb.l, %bb.d, %bb.b
   %.0 = phi i32 [ %i.g, %bb.b ], [ %i.l, %bb.d ], [ %spec.select, %bb.s ], [ %i.ac, %bb.o ], [ %i.w, %bb.l ], [ %.0.i.ph, %_ZL13pk_get_pk_algPPhPKhP17mbedtls_pk_type_tP16mbedtls_asn1_bufPv.exit.thread ], [ %i.u, %_ZL13pk_get_pk_algPPhPKhP17mbedtls_pk_type_tP16mbedtls_asn1_bufPv.exit ], [ -15488, %bb.n ], [ %i.al, %bb.r ], [ -15712, %bb.m ], [ -15488, %bb.p ], [ -15744, %bb.e ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   ret i32 %.0
 }
 
@@ -490,9 +496,9 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 10 uses
   %i.b = alloca i64, align 8                      ; 4 uses
   %5 = alloca %struct.mbedtls_pem_context, align 8 ; 16 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #4
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #4
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #5
   %i.c = icmp eq i64 %2, 0
   br i1 %i.c, label %bb.t, label %bb.b
 
@@ -625,9 +631,9 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.r, %bb.q, %bb.p, %.thread58, %bb.a, %bb.s, %bb.o, %bb.n, %bb.k, %bb.j, %bb.g, %bb.e
   %.0 = phi i32 [ %i.aj, %bb.s ], [ -15488, %bb.e ], [ %i.k, %bb.g ], [ %i.s, %bb.j ], [ %i.g, %bb.k ], [ %i.y, %bb.n ], [ %i.t, %bb.o ], [ -15616, %bb.a ], [ -15488, %.thread58 ], [ %i.ab, %bb.p ], [ 0, %bb.q ], [ %i.ah, %bb.r ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   ret i32 %.0
 }
 
@@ -642,11 +648,15 @@ declare i32 @mbedtls_pk_get_type(ptr noundef) local_unnamed_addr #2
 
 declare i32 @mbedtls_asn1_get_int(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.fshl.i32(i32, i32, i32) #4
+
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #4 = { nounwind }
+attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #5 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

@@ -201,14 +201,16 @@ bb.v:                                             ; preds = %bb.u
   br i1 %i.au, label %mi_out_alignright.exit.thread360, label %bb.u, !llvm.loop !13
 
 .loopexit:                                        ; preds = %bb.u, %bb.r
-  %.5233 = phi i8 [ %.2230, %bb.r ], [ %.3231, %bb.u ] ; 3 uses
+  %.5233 = phi i8 [ %.2230, %bb.r ], [ %.3231, %bb.u ] ; 4 uses
   %.2218 = phi i64 [ 0, %bb.r ], [ %.0216, %bb.u ] ; 18 uses
   %.5 = phi ptr [ %.3, %bb.r ], [ %.4, %bb.u ]    ; 6 uses
-  switch i8 %.5233, label %bb.ac [
-    i8 122, label %bb.w
-    i8 116, label %bb.w
-    i8 76, label %bb.w
-    i8 108, label %bb.y
+  %4 = add i8 %.5233, -76                         ; 2 uses
+  %5 = tail call i8 @llvm.fshl.i8(i8 %4, i8 %4, i8 7)
+  switch i8 %5, label %bb.ac [
+    i8 23, label %bb.w
+    i8 20, label %bb.w
+    i8 0, label %bb.w
+    i8 16, label %bb.y
   ]
 
 bb.w:                                             ; preds = %.loopexit, %.loopexit, %.loopexit
@@ -241,7 +243,7 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %.loopexit, %bb.ab, %bb.z, %bb.x
   %.6234 = phi i8 [ %i.av, %bb.x ], [ %i.bc, %bb.ab ], [ %i.ay, %bb.z ], [ %.5233, %.loopexit ] ; 7 uses
-  %.0215 = phi i8 [ %.5233, %bb.x ], [ 76, %bb.ab ], [ 108, %bb.z ], [ 100, %.loopexit ] ; 2 uses
+  %.0215 = phi i8 [ %.5233, %bb.x ], [ 76, %bb.ab ], [ %.5233, %bb.z ], [ 100, %.loopexit ] ; 2 uses
   %.6 = phi ptr [ %i.ax, %bb.x ], [ %i.be, %bb.ab ], [ %i.ba, %bb.z ], [ %.5, %.loopexit ] ; 4 uses
   switch i8 %.6234, label %bb.ai [
     i8 37, label %mi_outc.exit281
@@ -308,13 +310,15 @@ bb.ai:                                            ; preds = %bb.ac
   ]
 
 bb.aj:                                            ; preds = %bb.ai, %bb.ai
+  %6 = add i8 %.0215, -76                         ; 2 uses
+  %7 = tail call i8 @llvm.fshl.i8(i8 %6, i8 %6, i8 7)
   %i.cb = load i32, ptr %3, align 8               ; 11 uses
   %i.cc = icmp ult i32 %i.cb, 41                  ; 5 uses
-  switch i8 %.0215, label %bb.ba [
-    i8 122, label %bb.ak
-    i8 116, label %bb.ao
-    i8 76, label %bb.as
-    i8 108, label %bb.aw
+  switch i8 %7, label %bb.ba [
+    i8 23, label %bb.ak
+    i8 20, label %bb.ao
+    i8 0, label %bb.as
+    i8 16, label %bb.aw
   ]
 
 bb.ak:                                            ; preds = %bb.aj
@@ -600,13 +604,15 @@ bb.br:                                            ; preds = %bb.br, %.lr.ph.i288
   br i1 %niter498.ncmp.1, label %mi_outs.exit.loopexit.unr-lcssa, label %bb.br, !llvm.loop !24
 
 bb.bs:                                            ; preds = %bb.ai, %bb.ai
+  %8 = add i8 %.0215, -76                         ; 2 uses
+  %9 = tail call i8 @llvm.fshl.i8(i8 %8, i8 %8, i8 7)
   %i.fw = load i32, ptr %3, align 8               ; 11 uses
   %i.fx = icmp ult i32 %i.fw, 41                  ; 5 uses
-  switch i8 %.0215, label %bb.cj [
-    i8 122, label %bb.bt
-    i8 116, label %bb.bx
-    i8 76, label %bb.cb
-    i8 108, label %bb.cf
+  switch i8 %9, label %bb.cj [
+    i8 23, label %bb.bt
+    i8 20, label %bb.bx
+    i8 0, label %bb.cb
+    i8 16, label %bb.cf
   ]
 
 bb.bt:                                            ; preds = %bb.bs
@@ -1008,6 +1014,9 @@ bb.a:
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.fshl.i8(i8, i8, i8) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i64 @strlen(ptr captures(none)) local_unnamed_addr #12

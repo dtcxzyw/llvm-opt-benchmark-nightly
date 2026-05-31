@@ -201,6 +201,7 @@ begin_hunk_0
 @.str.266 = private unnamed_addr constant [21 x i8] c"ctypes.memoryview_at\00", align 1
 @.str.267 = private unnamed_addr constant [4 x i8] c"nni\00", align 1
 @.str.268 = private unnamed_addr constant [53 x i8] c"memoryview_at: size is negative (or overflowed): %zd\00", align 1
+@switch.table._ctypes_alloc_format_string_for_type = private unnamed_addr constant [46 x i8] [i8 63, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 73, i8 poison, i8 poison, i8 81, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 105, i8 poison, i8 poison, i8 113], align 1
 
 ; Function Attrs: nounwind uwtable
 define hidden i32 @PyDict_SetItemProxy(ptr noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 {
@@ -603,19 +604,24 @@ declare ptr @_ctypes_get_simple_type_chars() local_unnamed_addr #2
 ; Function Attrs: nounwind uwtable
 define internal fastcc ptr @_ctypes_alloc_format_string_for_type(i8 noundef signext %0) unnamed_addr #0 {
 bb.a:
-  switch i8 %0, label %bb.d [
-    i8 108, label %bb.b
-    i8 76, label %bb.c
-  ]
+  %switch.tableidx = add i8 %0, -63               ; 3 uses
+  %1 = icmp ult i8 %switch.tableidx, 46
+  br i1 %1, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i64
+  %switch.shifted = lshr i64 39582418609153, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  br i1 %switch.lobit, label %bb.c, label %bb.d
+
+bb.c:                                             ; preds = %bb.b
+  %2 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ctypes_alloc_format_string_for_type, i64 %2
+  %switch.load = load i8, ptr %switch.gep, align 1
   br label %bb.d
 
-bb.c:                                             ; preds = %bb.a
-  br label %bb.d
-
-bb.d:                                             ; preds = %bb.a, %bb.c, %bb.b
-  %.0 = phi i8 [ 113, %bb.b ], [ 81, %bb.c ], [ %0, %bb.a ]
+bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
+  %.0 = phi i8 [ %switch.load, %bb.c ], [ %0, %bb.b ], [ %0, %bb.a ]
   %i.a = tail call ptr @PyMem_Malloc(i64 noundef 3) #17 ; 5 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.e, label %bb.f

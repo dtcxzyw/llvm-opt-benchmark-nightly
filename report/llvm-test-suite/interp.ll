@@ -22,6 +22,7 @@ target triple = "x86_64-pc-linux-gnu"
 @name_errordict = external global %struct.ref_s, align 8
 @name_ErrorNames = external global %struct.ref_s, align 8
 @error_object = dso_local local_unnamed_addr global %struct.ref_s zeroinitializer, align 8
+@switch.table.interpret = private unnamed_addr constant [23 x i32] [i32 -25, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 -16, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 -5, i32 poison, i32 -3], align 4
 
 declare i32 @zadd(ptr noundef) #0
 
@@ -170,7 +171,7 @@ bb.b:                                             ; preds = %.lr.ph.split.us
   br label %._crit_edge
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.j
-  %i.m = phi i32 [ %i.an, %bb.j ], [ %i.g, %.lr.ph ] ; 13 uses
+  %i.m = phi i32 [ %i.an, %bb.j ], [ %i.g, %.lr.ph ] ; 9 uses
   %i.n = load ptr, ptr @osp, align 8, !tbaa !8
   %i.o = load ptr, ptr @osbot, align 8, !tbaa !8
   %i.p = getelementptr inbounds i8, ptr %i.o, i64 -16 ; 2 uses
@@ -193,12 +194,12 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.v, label %._crit_edge, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  switch i32 %i.m, label %bb.g [
-    i32 -3, label %._crit_edge
-    i32 -5, label %._crit_edge
-    i32 -16, label %._crit_edge
-    i32 -25, label %._crit_edge
-  ]
+  %switch.tableidx = add i32 %i.m, 25             ; 3 uses
+  %3 = icmp ult i32 %switch.tableidx, 23
+  %switch.shifted = lshr i32 5243393, %switch.tableidx
+  %switch.lobit = trunc i32 %switch.shifted to i1
+  %or.cond = select i1 %3, i1 %switch.lobit, i1 false
+  br i1 %or.cond, label %switch.lookup, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.w = icmp sgt i32 %i.m, -2
@@ -235,8 +236,14 @@ bb.j:                                             ; preds = %bb.i
   %i.ao = icmp eq i32 %i.an, -100
   br i1 %i.ao, label %._crit_edge, label %.lr.ph.split
 
-._crit_edge:                                      ; preds = %bb.j, %bb.e, %bb.d, %bb.f, %bb.f, %bb.f, %bb.f, %bb.h, %bb.g, %bb.i, %bb.b, %.lr.ph.split.us, %bb.a
-  %.0 = phi i32 [ %i.g, %bb.b ], [ 0, %bb.a ], [ %i.g, %.lr.ph.split.us ], [ %i.m, %bb.e ], [ 0, %bb.j ], [ %i.m, %bb.h ], [ %i.m, %bb.i ], [ %i.m, %bb.f ], [ %i.m, %bb.d ], [ %i.m, %bb.f ], [ %i.m, %bb.f ], [ %i.m, %bb.f ], [ %i.m, %bb.g ]
+switch.lookup:                                    ; preds = %bb.f
+  %4 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.interpret, i64 %4
+  %switch.load = load i32, ptr %switch.gep, align 4
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %bb.j, %bb.e, %bb.d, %bb.h, %bb.g, %bb.i, %switch.lookup, %bb.b, %.lr.ph.split.us, %bb.a
+  %.0 = phi i32 [ %i.g, %bb.b ], [ 0, %bb.a ], [ %i.g, %.lr.ph.split.us ], [ %switch.load, %switch.lookup ], [ %i.m, %bb.i ], [ %i.m, %bb.h ], [ %i.m, %bb.d ], [ 0, %bb.j ], [ %i.m, %bb.e ], [ %i.m, %bb.g ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #6

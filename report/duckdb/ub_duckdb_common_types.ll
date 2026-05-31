@@ -201,11 +201,13 @@ bb.v:                                             ; preds = %bb.u
   br i1 %or.cond.i, label %bb.w, label %switch.early.test.i
 
 switch.early.test.i:                              ; preds = %.lr.ph
-  switch i8 %i.bf, label %.critedge [
-    i8 95, label %bb.w
-    i8 47, label %bb.w
-    i8 43, label %bb.w
-    i8 45, label %bb.w
+  %9 = add i8 %i.bf, -43                          ; 2 uses
+  %10 = tail call i8 @llvm.fshl.i8(i8 %9, i8 %9, i8 7)
+  switch i8 %10, label %.critedge [
+    i8 26, label %bb.w
+    i8 2, label %bb.w
+    i8 0, label %bb.w
+    i8 1, label %bb.w
   ]
 
 bb.w:                                             ; preds = %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %.lr.ph
@@ -606,6 +608,9 @@ declare i32 @llvm.smin.i32(i32, i32) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #23
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.fshl.i8(i8, i8, i8) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #23

@@ -201,11 +201,13 @@ bb.an:                                            ; preds = %bb.am
 
 bb.ao:                                            ; preds = %bb.an, %bb.am
   %i.is = load i32, ptr %i.bq, align 4, !tbaa !96
-  switch i32 %i.is, label %bb.at [
-    i32 12, label %bb.ap
-    i32 40, label %bb.aq
-    i32 108, label %bb.ar
-    i32 124, label %bb.as
+  %19 = add i32 %i.is, -12                        ; 2 uses
+  %20 = call i32 @llvm.fshl.i32(i32 %19, i32 %19, i32 30)
+  switch i32 %20, label %bb.at [
+    i32 0, label %bb.ap
+    i32 7, label %bb.aq
+    i32 24, label %bb.ar
+    i32 28, label %bb.as
   ]
 
 bb.ap:                                            ; preds = %bb.ao
@@ -608,6 +610,9 @@ bb.j:                                             ; preds = %_ZSt27__uninitializ
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.fshl.i32(i32, i32, i32) #24
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #24
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
@@ -651,9 +656,6 @@ declare i128 @llvm.abs.i128(i128, i1 immarg) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.usub.sat.i32(i32, i32) #24
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.fshl.i32(i32, i32, i32) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.fshl.i64(i64, i64, i64) #24

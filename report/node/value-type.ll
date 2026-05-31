@@ -201,12 +201,14 @@ bb.j:                                             ; preds = %bb.d
 
 bb.k:                                             ; preds = %bb.j
   %i.bv = and i32 %i.bd, 268435427
-  switch i32 %i.bv, label %bb.s [
-    i32 2049, label %bb.l
-    i32 1281, label %bb.m
-    i32 1537, label %bb.n
-    i32 1825, label %bb.o
-    i32 1153, label %bb.p
+  %5 = add nsw i32 %i.bv, -1153                   ; 2 uses
+  %6 = call i32 @llvm.fshl.i32(i32 %5, i32 %5, i32 27)
+  switch i32 %6, label %bb.s [
+    i32 28, label %bb.l
+    i32 4, label %bb.m
+    i32 12, label %bb.n
+    i32 21, label %bb.o
+    i32 0, label %bb.p
   ]
 
 bb.l:                                             ; preds = %bb.k
@@ -375,12 +377,14 @@ bb.t:                                             ; preds = %.thread65
 
 bb.u:                                             ; preds = %.critedge13
   %i.dx = and i32 %.sroa.0.0.copyload, 268435427
-  switch i32 %i.dx, label %bb.aa [
-    i32 2049, label %bb.v
-    i32 1281, label %bb.w
-    i32 1537, label %bb.x
-    i32 1825, label %bb.y
-    i32 1153, label %bb.z
+  %7 = add nsw i32 %i.dx, -1153                   ; 2 uses
+  %8 = call i32 @llvm.fshl.i32(i32 %7, i32 %7, i32 27)
+  switch i32 %8, label %bb.aa [
+    i32 28, label %bb.v
+    i32 4, label %bb.w
+    i32 12, label %bb.x
+    i32 21, label %bb.y
+    i32 0, label %bb.z
   ]
 
 bb.v:                                             ; preds = %bb.u

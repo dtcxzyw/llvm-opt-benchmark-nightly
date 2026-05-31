@@ -170,22 +170,26 @@ target triple = "x86_64-pc-linux-gnu"
 @switch.table._ZL9parseArchN4llvh9StringRefE = private unnamed_addr constant [3 x i32] [i32 1, i32 29, i32 3], align 4
 @switch.table._ZL9parseArchN4llvh9StringRefE.7 = private unnamed_addr constant [3 x i32] [i32 2, i32 30, i32 4], align 4
 @switch.table._ZL12parseSubArchN4llvh9StringRefE = private unnamed_addr constant [28 x i32] [i32 22, i32 20, i32 21, i32 21, i32 16, i32 18, i32 19, i32 18, i32 17, i32 10, i32 15, i32 10, i32 12, i32 11, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 7, i32 8, i32 9, i32 21, i32 21, i32 21, i32 13, i32 14], align 4
+@switch.table._ZL16getDefaultFormatRKN4llvh6TripleE = private unnamed_addr constant [22 x i32] [i32 3, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 1, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 3, i32 3], align 4
+@switch.table._ZL16getDefaultFormatRKN4llvh6TripleE.8 = private unnamed_addr constant [22 x i32] [i32 3, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 3, i32 3], align 4
 @switch.table._ZN4llvh6Triple9normalizeB5cxx11ENS_9StringRefE = private unnamed_addr constant [3 x i64] [i64 3, i64 5, i64 4], align 8
-@switch.table._ZN4llvh6Triple9normalizeB5cxx11ENS_9StringRefE.8 = private unnamed_addr constant [3 x ptr] [ptr @.str.187, ptr @.str.188, ptr @.str.56], align 8
+@switch.table._ZN4llvh6Triple9normalizeB5cxx11ENS_9StringRefE.9 = private unnamed_addr constant [3 x ptr] [ptr @.str.187, ptr @.str.188, ptr @.str.56], align 8
 @switch.table._ZN4llvh6Triple7setArchENS0_8ArchTypeE = private unnamed_addr constant [51 x i64] [i64 7, i64 3, i64 5, i64 7, i64 10, i64 3, i64 3, i64 5, i64 5, i64 7, i64 4, i64 6, i64 6, i64 8, i64 6, i64 5, i64 7, i64 9, i64 11, i64 4, i64 6, i64 7, i64 7, i64 5, i64 7, i64 7, i64 5, i64 3, i64 5, i64 5, i64 7, i64 4, i64 6, i64 5, i64 5, i64 7, i64 4, i64 4, i64 5, i64 7, i64 5, i64 7, i64 4, i64 6, i64 7, i64 5, i64 5, i64 6, i64 6, i64 14, i64 14], align 8
-@switch.table._ZN4llvh6Triple7setArchENS0_8ArchTypeE.11 = private unnamed_addr constant [51 x ptr] [ptr @.str, ptr @.str.3, ptr @.str.4, ptr @.str.1, ptr @.str.2, ptr @.str.5, ptr @.str.6, ptr @.str.7, ptr @.str.8, ptr @.str.9, ptr @.str.10, ptr @.str.11, ptr @.str.12, ptr @.str.13, ptr @.str.14, ptr @.str.15, ptr @.str.18, ptr @.str.16, ptr @.str.17, ptr @.str.19, ptr @.str.20, ptr @.str.21, ptr @.str.22, ptr @.str.23, ptr @.str.24, ptr @.str.25, ptr @.str.26, ptr @.str.27, ptr @.str.28, ptr @.str.29, ptr @.str.30, ptr @.str.31, ptr @.str.32, ptr @.str.33, ptr @.str.34, ptr @.str.35, ptr @.str.36, ptr @.str.37, ptr @.str.38, ptr @.str.39, ptr @.str.40, ptr @.str.41, ptr @.str.42, ptr @.str.43, ptr @.str.44, ptr @.str.46, ptr @.str.45, ptr @.str.47, ptr @.str.48, ptr @.str.49, ptr @.str.50], align 8
+@switch.table._ZN4llvh6Triple7setArchENS0_8ArchTypeE.12 = private unnamed_addr constant [51 x ptr] [ptr @.str, ptr @.str.3, ptr @.str.4, ptr @.str.1, ptr @.str.2, ptr @.str.5, ptr @.str.6, ptr @.str.7, ptr @.str.8, ptr @.str.9, ptr @.str.10, ptr @.str.11, ptr @.str.12, ptr @.str.13, ptr @.str.14, ptr @.str.15, ptr @.str.18, ptr @.str.16, ptr @.str.17, ptr @.str.19, ptr @.str.20, ptr @.str.21, ptr @.str.22, ptr @.str.23, ptr @.str.24, ptr @.str.25, ptr @.str.26, ptr @.str.27, ptr @.str.28, ptr @.str.29, ptr @.str.30, ptr @.str.31, ptr @.str.32, ptr @.str.33, ptr @.str.34, ptr @.str.35, ptr @.str.36, ptr @.str.37, ptr @.str.38, ptr @.str.39, ptr @.str.40, ptr @.str.41, ptr @.str.42, ptr @.str.43, ptr @.str.44, ptr @.str.46, ptr @.str.45, ptr @.str.47, ptr @.str.48, ptr @.str.49, ptr @.str.50], align 8
 @switch.table._ZN4llvh6Triple9setVendorENS0_10VendorTypeE = private unnamed_addr constant [17 x i64] [i64 7, i64 5, i64 2, i64 4, i64 3, i64 3, i64 3, i64 3, i64 3, i64 3, i64 6, i64 3, i64 6, i64 3, i64 4, i64 4, i64 2], align 8
-@switch.table._ZN4llvh6Triple9setVendorENS0_10VendorTypeE.12 = private unnamed_addr constant [17 x ptr] [ptr @.str, ptr @.str.58, ptr @.str.59, ptr @.str.60, ptr @.str.61, ptr @.str.62, ptr @.str.63, ptr @.str.64, ptr @.str.65, ptr @.str.66, ptr @.str.67, ptr @.str.68, ptr @.str.69, ptr @.str.70, ptr @.str.71, ptr @.str.72, ptr @.str.73], align 8
+@switch.table._ZN4llvh6Triple9setVendorENS0_10VendorTypeE.13 = private unnamed_addr constant [17 x ptr] [ptr @.str, ptr @.str.58, ptr @.str.59, ptr @.str.60, ptr @.str.61, ptr @.str.62, ptr @.str.63, ptr @.str.64, ptr @.str.65, ptr @.str.66, ptr @.str.67, ptr @.str.68, ptr @.str.69, ptr @.str.70, ptr @.str.71, ptr @.str.72, ptr @.str.73], align 8
 @switch.table._ZN4llvh6Triple5setOSENS0_6OSTypeE = private unnamed_addr constant [33 x i64] [i64 7, i64 6, i64 8, i64 6, i64 9, i64 7, i64 7, i64 3, i64 8, i64 5, i64 3, i64 6, i64 6, i64 7, i64 7, i64 7, i64 5, i64 5, i64 5, i64 4, i64 3, i64 3, i64 4, i64 4, i64 6, i64 3, i64 8, i64 4, i64 7, i64 6, i64 7, i64 6, i64 6], align 8
-@switch.table._ZN4llvh6Triple5setOSENS0_6OSTypeE.13 = private unnamed_addr constant [33 x ptr] [ptr @.str, ptr @.str.74, ptr @.str.75, ptr @.str.76, ptr @.str.77, ptr @.str.78, ptr @.str.79, ptr @.str.80, ptr @.str.81, ptr @.str.82, ptr @.str.83, ptr @.str.84, ptr @.str.85, ptr @.str.86, ptr @.str.87, ptr @.str.88, ptr @.str.89, ptr @.str.90, ptr @.str.91, ptr @.str.92, ptr @.str.93, ptr @.str.94, ptr @.str.95, ptr @.str.96, ptr @.str.97, ptr @.str.98, ptr @.str.99, ptr @.str.100, ptr @.str.101, ptr @.str.102, ptr @.str.103, ptr @.str.104, ptr @.str.105], align 8
-@switch.table._ZN4llvh6Triple14setEnvironmentENS0_15EnvironmentTypeE.15 = private unnamed_addr constant [19 x i64] [i64 7, i64 3, i64 9, i64 8, i64 7, i64 9, i64 6, i64 6, i64 4, i64 6, i64 7, i64 4, i64 8, i64 10, i64 4, i64 7, i64 6, i64 7, i64 9], align 8
-@switch.table._ZN4llvh6Triple14setEnvironmentENS0_15EnvironmentTypeE.16 = private unnamed_addr constant [19 x ptr] [ptr @.str, ptr @.str.106, ptr @.str.107, ptr @.str.108, ptr @.str.110, ptr @.str.109, ptr @.str.111, ptr @.str.112, ptr @.str.113, ptr @.str.114, ptr @.str.115, ptr @.str.116, ptr @.str.117, ptr @.str.118, ptr @.str.119, ptr @.str.120, ptr @.str.121, ptr @.str.122, ptr @.str.123], align 8
-@switch.table._ZN4llvh6Triple15setObjectFormatENS0_16ObjectFormatTypeE.20 = private unnamed_addr constant [18 x i64] [i64 3, i64 9, i64 8, i64 7, i64 9, i64 6, i64 6, i64 4, i64 6, i64 7, i64 4, i64 8, i64 10, i64 4, i64 7, i64 6, i64 7, i64 9], align 8
-@switch.table._ZN4llvh6Triple15setObjectFormatENS0_16ObjectFormatTypeE.21 = private unnamed_addr constant [18 x ptr] [ptr @.str.106, ptr @.str.107, ptr @.str.108, ptr @.str.110, ptr @.str.109, ptr @.str.111, ptr @.str.112, ptr @.str.113, ptr @.str.114, ptr @.str.115, ptr @.str.116, ptr @.str.117, ptr @.str.118, ptr @.str.119, ptr @.str.120, ptr @.str.121, ptr @.str.122, ptr @.str.123], align 8
-@switch.table._ZN4llvh6Triple15setObjectFormatENS0_16ObjectFormatTypeE.22 = private unnamed_addr constant [5 x i64] [i64 0, i64 4, i64 3, i64 5, i64 4], align 8
-@switch.table._ZN4llvh6Triple15setObjectFormatENS0_16ObjectFormatTypeE.23 = private unnamed_addr constant [5 x ptr] [ptr @.str.137, ptr @.str.186, ptr @.str.187, ptr @.str.188, ptr @.str.56], align 8
+@switch.table._ZN4llvh6Triple5setOSENS0_6OSTypeE.14 = private unnamed_addr constant [33 x ptr] [ptr @.str, ptr @.str.74, ptr @.str.75, ptr @.str.76, ptr @.str.77, ptr @.str.78, ptr @.str.79, ptr @.str.80, ptr @.str.81, ptr @.str.82, ptr @.str.83, ptr @.str.84, ptr @.str.85, ptr @.str.86, ptr @.str.87, ptr @.str.88, ptr @.str.89, ptr @.str.90, ptr @.str.91, ptr @.str.92, ptr @.str.93, ptr @.str.94, ptr @.str.95, ptr @.str.96, ptr @.str.97, ptr @.str.98, ptr @.str.99, ptr @.str.100, ptr @.str.101, ptr @.str.102, ptr @.str.103, ptr @.str.104, ptr @.str.105], align 8
+@switch.table._ZN4llvh6Triple14setEnvironmentENS0_15EnvironmentTypeE.16 = private unnamed_addr constant [19 x i64] [i64 7, i64 3, i64 9, i64 8, i64 7, i64 9, i64 6, i64 6, i64 4, i64 6, i64 7, i64 4, i64 8, i64 10, i64 4, i64 7, i64 6, i64 7, i64 9], align 8
+@switch.table._ZN4llvh6Triple14setEnvironmentENS0_15EnvironmentTypeE.17 = private unnamed_addr constant [19 x ptr] [ptr @.str, ptr @.str.106, ptr @.str.107, ptr @.str.108, ptr @.str.110, ptr @.str.109, ptr @.str.111, ptr @.str.112, ptr @.str.113, ptr @.str.114, ptr @.str.115, ptr @.str.116, ptr @.str.117, ptr @.str.118, ptr @.str.119, ptr @.str.120, ptr @.str.121, ptr @.str.122, ptr @.str.123], align 8
+@switch.table._ZN4llvh6Triple15setObjectFormatENS0_16ObjectFormatTypeE.21 = private unnamed_addr constant [18 x i64] [i64 3, i64 9, i64 8, i64 7, i64 9, i64 6, i64 6, i64 4, i64 6, i64 7, i64 4, i64 8, i64 10, i64 4, i64 7, i64 6, i64 7, i64 9], align 8
+@switch.table._ZN4llvh6Triple15setObjectFormatENS0_16ObjectFormatTypeE.22 = private unnamed_addr constant [18 x ptr] [ptr @.str.106, ptr @.str.107, ptr @.str.108, ptr @.str.110, ptr @.str.109, ptr @.str.111, ptr @.str.112, ptr @.str.113, ptr @.str.114, ptr @.str.115, ptr @.str.116, ptr @.str.117, ptr @.str.118, ptr @.str.119, ptr @.str.120, ptr @.str.121, ptr @.str.122, ptr @.str.123], align 8
+@switch.table._ZN4llvh6Triple15setObjectFormatENS0_16ObjectFormatTypeE.23 = private unnamed_addr constant [5 x i64] [i64 0, i64 4, i64 3, i64 5, i64 4], align 8
+@switch.table._ZN4llvh6Triple15setObjectFormatENS0_16ObjectFormatTypeE.24 = private unnamed_addr constant [5 x ptr] [ptr @.str.137, ptr @.str.186, ptr @.str.187, ptr @.str.188, ptr @.str.56], align 8
 @switch.table._ZNK4llvh6Triple16getARMCPUForArchENS_9StringRefE = private unnamed_addr constant [6 x i64] [i64 10, i64 10, i64 9, i64 9, i64 10, i64 10], align 8
-@switch.table._ZNK4llvh6Triple16getARMCPUForArchENS_9StringRefE.24 = private unnamed_addr constant [6 x ptr] [ptr @.str.147, ptr @.str.147, ptr @.str.148, ptr @.str.148, ptr @.str.147, ptr @.str.147], align 8
+@switch.table._ZNK4llvh6Triple16getARMCPUForArchENS_9StringRefE.25 = private unnamed_addr constant [6 x ptr] [ptr @.str.147, ptr @.str.147, ptr @.str.148, ptr @.str.148, ptr @.str.147, ptr @.str.147], align 8
+@switch.table._ZNK4llvh6Triple16getARMCPUForArchENS_9StringRefE.26 = private unnamed_addr constant [9 x i64] [i64 12, i64 8, i64 8, i64 8, i64 12, i64 8, i64 8, i64 8, i64 12], align 8
+@switch.table._ZNK4llvh6Triple16getARMCPUForArchENS_9StringRefE.27 = private unnamed_addr constant [9 x ptr] [ptr @.str.142, ptr @.str.150, ptr @.str.150, ptr @.str.150, ptr @.str.142, ptr @.str.150, ptr @.str.150, ptr @.str.150, ptr @.str.142], align 8
 
 @_ZN4llvh6TripleC1ERKNS_5TwineE = hidden unnamed_addr alias void (ptr, ptr), ptr @_ZN4llvh6TripleC2ERKNS_5TwineE
 @_ZN4llvh6TripleC1ERKNS_5TwineES3_S3_ = hidden unnamed_addr alias void (ptr, ptr, ptr, ptr), ptr @_ZN4llvh6TripleC2ERKNS_5TwineES3_S3_
@@ -198,7 +202,7 @@ switch.lookup:
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple7setArchENS0_8ArchTypeE, i64 %i.a
   %switch.load = load i64, ptr %switch.gep, align 8
   %i.b = zext nneg i32 %0 to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple7setArchENS0_8ArchTypeE.11, i64 %i.b
+  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple7setArchENS0_8ArchTypeE.12, i64 %i.b
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
   %.fca.0.insert = insertvalue { ptr, i64 } poison, ptr %switch.load2, 0
   %.fca.1.insert = insertvalue { ptr, i64 } %.fca.0.insert, i64 %switch.load, 1
@@ -239,7 +243,7 @@ switch.lookup:
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple9setVendorENS0_10VendorTypeE, i64 %i.a
   %switch.load = load i64, ptr %switch.gep, align 8
   %i.b = zext nneg i32 %0 to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple9setVendorENS0_10VendorTypeE.12, i64 %i.b
+  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple9setVendorENS0_10VendorTypeE.13, i64 %i.b
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
   %.fca.0.insert = insertvalue { ptr, i64 } poison, ptr %switch.load2, 0
   %.fca.1.insert = insertvalue { ptr, i64 } %.fca.0.insert, i64 %switch.load, 1
@@ -253,7 +257,7 @@ switch.lookup:
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple5setOSENS0_6OSTypeE, i64 %i.a
   %switch.load = load i64, ptr %switch.gep, align 8
   %i.b = zext nneg i32 %0 to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple5setOSENS0_6OSTypeE.13, i64 %i.b
+  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple5setOSENS0_6OSTypeE.14, i64 %i.b
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
   %.fca.0.insert = insertvalue { ptr, i64 } poison, ptr %switch.load2, 0
   %.fca.1.insert = insertvalue { ptr, i64 } %.fca.0.insert, i64 %switch.load, 1
@@ -264,10 +268,10 @@ switch.lookup:
 define hidden { ptr, i64 } @_ZN4llvh6Triple22getEnvironmentTypeNameENS0_15EnvironmentTypeE(i32 noundef %0) local_unnamed_addr #0 align 2 {
 switch.lookup:
   %i.a = zext nneg i32 %0 to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple14setEnvironmentENS0_15EnvironmentTypeE.15, i64 %i.a
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple14setEnvironmentENS0_15EnvironmentTypeE.16, i64 %i.a
   %switch.load = load i64, ptr %switch.gep, align 8
   %i.b = zext nneg i32 %0 to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple14setEnvironmentENS0_15EnvironmentTypeE.16, i64 %i.b
+  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple14setEnvironmentENS0_15EnvironmentTypeE.17, i64 %i.b
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
   %.fca.0.insert = insertvalue { ptr, i64 } poison, ptr %switch.load2, 0
   %.fca.1.insert = insertvalue { ptr, i64 } %.fca.0.insert, i64 %switch.load, 1
@@ -670,7 +674,7 @@ _ZN4llvh12StringSwitchINS_6Triple16ObjectFormatTypeES2_E7DefaultES2_.exit: ; pre
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define internal fastcc noundef range(i32 1, 5) i32 @_ZL16getDefaultFormatRKN4llvh6TripleE(i32 %.32.val, i32 %.44.val) unnamed_addr #0 {
 bb.a:
-  switch i32 %.32.val, label %bb.g [
+  switch i32 %.32.val, label %2 [
     i32 0, label %bb.b
     i32 3, label %bb.b
     i32 1, label %bb.b
@@ -720,52 +724,50 @@ bb.a:
     i32 33, label %_ZNK4llvh6Triple10isOSDarwinEv.exit6
     i32 16, label %bb.c
     i32 17, label %bb.c
-    i32 47, label %bb.f
-    i32 48, label %bb.f
+    i32 47, label %bb.e
+    i32 48, label %bb.e
   ]
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a
   %i.a = and i32 %.44.val, -9
   %spec.select.i.i = icmp eq i32 %i.a, 3
-  br i1 %spec.select.i.i, label %_ZNK4llvh6Triple10isOSDarwinEv.exit6, label %0
+  br i1 %spec.select.i.i, label %_ZNK4llvh6Triple10isOSDarwinEv.exit6, label %_ZNK4llvh6Triple10isOSDarwinEv.exit
 
-0:                                                ; preds = %bb.b
-  switch i32 %.44.val, label %_ZNK4llvh6Triple10isOSDarwinEv.exit [
-    i32 27, label %_ZNK4llvh6Triple10isOSDarwinEv.exit6
-    i32 7, label %_ZNK4llvh6Triple10isOSDarwinEv.exit6
-    i32 28, label %_ZNK4llvh6Triple10isOSDarwinEv.exit6
-    i32 15, label %switch.edge
-  ]
-
-switch.edge:                                      ; preds = %0
-  br label %_ZNK4llvh6Triple10isOSDarwinEv.exit6
-
-_ZNK4llvh6Triple10isOSDarwinEv.exit:              ; preds = %0
-  br label %_ZNK4llvh6Triple10isOSDarwinEv.exit6
+_ZNK4llvh6Triple10isOSDarwinEv.exit:              ; preds = %bb.b
+  %switch.tableidx = add i32 %.44.val, -7         ; 2 uses
+  %0 = icmp ult i32 %switch.tableidx, 22
+  br i1 %0, label %bb.f, label %_ZNK4llvh6Triple10isOSDarwinEv.exit6
 
 bb.c:                                             ; preds = %bb.a, %bb.a
   %i.b = and i32 %.44.val, -9
   %spec.select.i.i5 = icmp eq i32 %i.b, 3
-  br i1 %spec.select.i.i5, label %bb.e, label %bb.d
+  br i1 %spec.select.i.i5, label %_ZNK4llvh6Triple10isOSDarwinEv.exit6, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  switch i32 %.44.val, label %_ZNK4llvh6Triple10isOSDarwinEv.exit6 [
-    i32 27, label %bb.e
-    i32 7, label %bb.e
-    i32 28, label %bb.e
-  ]
+  %switch.tableidx1 = add i32 %.44.val, -7        ; 2 uses
+  %1 = icmp ult i32 %switch.tableidx1, 22
+  br i1 %1, label %bb.g, label %_ZNK4llvh6Triple10isOSDarwinEv.exit6
 
-bb.e:                                             ; preds = %bb.d, %bb.d, %bb.d, %bb.c
+bb.e:                                             ; preds = %bb.a, %bb.a
   br label %_ZNK4llvh6Triple10isOSDarwinEv.exit6
 
-bb.f:                                             ; preds = %bb.a, %bb.a
-  br label %_ZNK4llvh6Triple10isOSDarwinEv.exit6
-
-bb.g:                                             ; preds = %bb.a
+2:                                                ; preds = %bb.a
   unreachable
 
-_ZNK4llvh6Triple10isOSDarwinEv.exit6:             ; preds = %switch.edge, %0, %0, %0, %bb.b, %bb.e, %bb.d, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %_ZNK4llvh6Triple10isOSDarwinEv.exit, %bb.f
-  %.0 = phi i32 [ 4, %bb.f ], [ 2, %_ZNK4llvh6Triple10isOSDarwinEv.exit ], [ 2, %bb.d ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 3, %bb.e ], [ 3, %0 ], [ 3, %0 ], [ 3, %0 ], [ 3, %bb.b ], [ 1, %switch.edge ]
+bb.f:                                             ; preds = %_ZNK4llvh6Triple10isOSDarwinEv.exit
+  %3 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZL16getDefaultFormatRKN4llvh6TripleE, i64 %3
+  %switch.load = load i32, ptr %switch.gep, align 4
+  br label %_ZNK4llvh6Triple10isOSDarwinEv.exit6
+
+bb.g:                                             ; preds = %bb.d
+  %4 = zext nneg i32 %switch.tableidx1 to i64
+  %switch.gep3 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZL16getDefaultFormatRKN4llvh6TripleE.8, i64 %4
+  %switch.load4 = load i32, ptr %switch.gep3, align 4
+  br label %_ZNK4llvh6Triple10isOSDarwinEv.exit6
+
+_ZNK4llvh6Triple10isOSDarwinEv.exit6:             ; preds = %bb.c, %bb.g, %bb.d, %_ZNK4llvh6Triple10isOSDarwinEv.exit, %bb.f, %bb.b, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.e
+  %.0 = phi i32 [ 4, %bb.e ], [ 3, %bb.b ], [ 2, %bb.d ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ 2, %bb.a ], [ %switch.load4, %bb.g ], [ %switch.load, %bb.f ], [ 2, %_ZNK4llvh6Triple10isOSDarwinEv.exit ], [ 3, %bb.c ]
   ret i32 %.0
 }
 
@@ -1168,7 +1170,7 @@ _ZN4llvh15SmallVectorImplINS_9StringRefEE6resizeEm.exit229: ; preds = %bb.bk, %.
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple9normalizeB5cxx11ENS_9StringRefE, i64 %i.jt
   %switch.load = load i64, ptr %switch.gep, align 8
   %i.ju = zext nneg i32 %switch.tableidx to i64
-  %switch.gep602 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple9normalizeB5cxx11ENS_9StringRefE.8, i64 %i.ju
+  %switch.gep602 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple9normalizeB5cxx11ENS_9StringRefE.9, i64 %i.ju
   %switch.load603 = load ptr, ptr %switch.gep602, align 8
   %i.jv = load ptr, ptr %4, align 8, !tbaa !7     ; 2 uses
   %i.jw = getelementptr inbounds nuw i8, ptr %i.jv, i64 64
@@ -1571,14 +1573,14 @@ switch.lookup:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.e = load i32, ptr %i.d, align 8, !tbaa !34   ; 2 uses
   %i.f = zext nneg i32 %i.e to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple14setEnvironmentENS0_15EnvironmentTypeE.15, i64 %i.f
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple14setEnvironmentENS0_15EnvironmentTypeE.16, i64 %i.f
   %switch.load = load i64, ptr %switch.gep, align 8 ; 4 uses
   %.not.i = icmp ult i64 %i.c, %switch.load
   br i1 %.not.i, label %_ZNK4llvh9StringRef10startswithES0_.exit.thread, label %_ZNK4llvh9StringRef10startswithES0_.exit
 
 _ZNK4llvh9StringRef10startswithES0_.exit:         ; preds = %switch.lookup
   %i.g = zext nneg i32 %i.e to i64
-  %switch.gep36 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple14setEnvironmentENS0_15EnvironmentTypeE.16, i64 %i.g
+  %switch.gep36 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple14setEnvironmentENS0_15EnvironmentTypeE.17, i64 %i.g
   %switch.load37 = load ptr, ptr %switch.gep36, align 8
   %bcmp = tail call i32 @bcmp(ptr noundef nonnull dereferenceable(1) %i.b, ptr noundef nonnull dereferenceable(1) %switch.load37, i64 %switch.load)
   %i.h = icmp eq i32 %bcmp, 0
@@ -1736,7 +1738,7 @@ switch.lookup:
 
 _ZNK4llvh9StringRef10startswithES0_.exit:         ; preds = %switch.lookup
   %i.g = zext nneg i32 %i.e to i64
-  %switch.gep70 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple5setOSENS0_6OSTypeE.13, i64 %i.g
+  %switch.gep70 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple5setOSENS0_6OSTypeE.14, i64 %i.g
   %switch.load71 = load ptr, ptr %switch.gep70, align 8
   %bcmp = tail call i32 @bcmp(ptr noundef nonnull dereferenceable(1) %i.b, ptr noundef nonnull dereferenceable(1) %switch.load71, i64 %switch.load)
   %i.h = icmp eq i32 %bcmp, 0
@@ -1975,13 +1977,11 @@ define hidden void @_ZNK4llvh6Triple13getiOSVersionERjS1_S1_(ptr noundef nonnull
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.b = load i32, ptr %i.a, align 4, !tbaa !33
-  %4 = add i32 %i.b, -3                           ; 2 uses
-  %5 = tail call i32 @llvm.fshl.i32(i32 %4, i32 %4, i32 30)
-  switch i32 %5, label %bb.b [
-    i32 0, label %bb.c
-    i32 2, label %bb.c
-    i32 1, label %bb.d
-    i32 6, label %bb.d
+  switch i32 %i.b, label %bb.b [
+    i32 3, label %bb.c
+    i32 11, label %bb.c
+    i32 7, label %bb.d
+    i32 27, label %bb.d
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -2150,7 +2150,7 @@ switch.lookup:
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple7setArchENS0_8ArchTypeE, i64 %i.a
   %switch.load = load i64, ptr %switch.gep, align 8
   %i.b = zext nneg i32 %1 to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple7setArchENS0_8ArchTypeE.11, i64 %i.b
+  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple7setArchENS0_8ArchTypeE.12, i64 %i.b
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
   tail call void @_ZN4llvh6Triple11setArchNameENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr nonnull %switch.load2, i64 %switch.load)
   ret void
@@ -2430,7 +2430,7 @@ switch.lookup:
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple9setVendorENS0_10VendorTypeE, i64 %i.a
   %switch.load = load i64, ptr %switch.gep, align 8
   %i.b = zext nneg i32 %1 to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple9setVendorENS0_10VendorTypeE.12, i64 %i.b
+  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple9setVendorENS0_10VendorTypeE.13, i64 %i.b
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
   tail call void @_ZN4llvh6Triple13setVendorNameENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr nonnull %switch.load2, i64 %switch.load)
   ret void
@@ -2579,7 +2579,7 @@ switch.lookup:
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple5setOSENS0_6OSTypeE, i64 %i.a
   %switch.load = load i64, ptr %switch.gep, align 8
   %i.b = zext nneg i32 %1 to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple5setOSENS0_6OSTypeE.13, i64 %i.b
+  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple5setOSENS0_6OSTypeE.14, i64 %i.b
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
   tail call void @_ZN4llvh6Triple9setOSNameENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr nonnull %switch.load2, i64 %switch.load)
   ret void
@@ -2888,10 +2888,10 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.g = zext nneg i32 %1 to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple14setEnvironmentENS0_15EnvironmentTypeE.15, i64 %i.g
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple14setEnvironmentENS0_15EnvironmentTypeE.16, i64 %i.g
   %switch.load = load i64, ptr %switch.gep, align 8
   %i.h = zext nneg i32 %1 to i64
-  %switch.gep21 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple14setEnvironmentENS0_15EnvironmentTypeE.16, i64 %i.h
+  %switch.gep21 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple14setEnvironmentENS0_15EnvironmentTypeE.17, i64 %i.h
   %switch.load22 = load ptr, ptr %switch.gep21, align 8
   tail call void @_ZN4llvh6Triple18setEnvironmentNameENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr nonnull %switch.load22, i64 %switch.load)
   br label %bb.b
@@ -2902,10 +2902,10 @@ switch.lookup23:                                  ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #13
   %i.i = zext nneg i32 %1 to i64
-  %switch.gep24 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple14setEnvironmentENS0_15EnvironmentTypeE.15, i64 %i.i
+  %switch.gep24 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple14setEnvironmentENS0_15EnvironmentTypeE.16, i64 %i.i
   %switch.load25 = load i64, ptr %switch.gep24, align 8
   %i.j = zext nneg i32 %1 to i64
-  %switch.gep26 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple14setEnvironmentENS0_15EnvironmentTypeE.16, i64 %i.j
+  %switch.gep26 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple14setEnvironmentENS0_15EnvironmentTypeE.17, i64 %i.j
   %switch.load27 = load ptr, ptr %switch.gep26, align 8
   store ptr %switch.load27, ptr %5, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -2919,10 +2919,10 @@ switch.lookup23:                                  ; preds = %bb.a
   store i8 3, ptr %i.n, align 1, !tbaa !47, !alias.scope !340
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #13
   %i.o = zext nneg i32 %i.b to i64
-  %switch.gep29 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple15setObjectFormatENS0_16ObjectFormatTypeE.22, i64 %i.o
+  %switch.gep29 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple15setObjectFormatENS0_16ObjectFormatTypeE.23, i64 %i.o
   %switch.load30 = load i64, ptr %switch.gep29, align 8
   %i.p = zext nneg i32 %i.b to i64
-  %switch.gep31 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple15setObjectFormatENS0_16ObjectFormatTypeE.23, i64 %i.p
+  %switch.gep31 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple15setObjectFormatENS0_16ObjectFormatTypeE.24, i64 %i.p
   %switch.load32 = load ptr, ptr %switch.gep31, align 8
   store ptr %switch.load32, ptr %6, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %6, i64 8
@@ -3132,10 +3132,10 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.d = zext nneg i32 %1 to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple15setObjectFormatENS0_16ObjectFormatTypeE.22, i64 %i.d
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple15setObjectFormatENS0_16ObjectFormatTypeE.23, i64 %i.d
   %switch.load = load i64, ptr %switch.gep, align 8
   %i.e = zext nneg i32 %1 to i64
-  %switch.gep20 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple15setObjectFormatENS0_16ObjectFormatTypeE.23, i64 %i.e
+  %switch.gep20 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple15setObjectFormatENS0_16ObjectFormatTypeE.24, i64 %i.e
   %switch.load21 = load ptr, ptr %switch.gep20, align 8
   tail call void @_ZN4llvh6Triple18setEnvironmentNameENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr nonnull %switch.load21, i64 %switch.load)
   br label %bb.b
@@ -3147,10 +3147,10 @@ switch.lookup22:                                  ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #13
   %switch.tableidx = add nsw i32 %i.b, -1         ; 2 uses
   %i.f = zext nneg i32 %switch.tableidx to i64
-  %switch.gep23 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple15setObjectFormatENS0_16ObjectFormatTypeE.20, i64 %i.f
+  %switch.gep23 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple15setObjectFormatENS0_16ObjectFormatTypeE.21, i64 %i.f
   %switch.load24 = load i64, ptr %switch.gep23, align 8
   %i.g = zext nneg i32 %switch.tableidx to i64
-  %switch.gep25 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple15setObjectFormatENS0_16ObjectFormatTypeE.21, i64 %i.g
+  %switch.gep25 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple15setObjectFormatENS0_16ObjectFormatTypeE.22, i64 %i.g
   %switch.load26 = load ptr, ptr %switch.gep25, align 8
   store ptr %switch.load26, ptr %5, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -3164,10 +3164,10 @@ switch.lookup22:                                  ; preds = %bb.a
   store i8 3, ptr %i.k, align 1, !tbaa !47, !alias.scope !396
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #13
   %i.l = zext nneg i32 %1 to i64
-  %switch.gep28 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple15setObjectFormatENS0_16ObjectFormatTypeE.22, i64 %i.l
+  %switch.gep28 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple15setObjectFormatENS0_16ObjectFormatTypeE.23, i64 %i.l
   %switch.load29 = load i64, ptr %switch.gep28, align 8
   %i.m = zext nneg i32 %1 to i64
-  %switch.gep30 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple15setObjectFormatENS0_16ObjectFormatTypeE.23, i64 %i.m
+  %switch.gep30 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6Triple15setObjectFormatENS0_16ObjectFormatTypeE.24, i64 %i.m
   %switch.load31 = load ptr, ptr %switch.gep30, align 8
   store ptr %switch.load31, ptr %6, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %6, i64 8
@@ -3570,32 +3570,36 @@ bb.g:                                             ; preds = %bb.f
   %i.ar = load i32, ptr %i.aq, align 8, !tbaa !34
   %switch.tableidx = add i32 %i.ar, -4            ; 3 uses
   %i.as = icmp ult i32 %switch.tableidx, 6
-  br i1 %i.as, label %switch.lookup, label %.thread35
+  br i1 %i.as, label %bb.i, label %.thread35
 
 bb.h:                                             ; preds = %bb.f
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.au = load i32, ptr %i.at, align 8, !tbaa !34
-  switch i32 %i.au, label %bb.i [
-    i32 9, label %.thread35
-    i32 5, label %.thread35
-    i32 13, label %.thread35
-  ]
+  %switch.tableidx40 = add i32 %i.au, -5          ; 3 uses
+  %4 = icmp ult i32 %switch.tableidx40, 9
+  br i1 %4, label %switch.lookup, label %.thread35
 
-bb.i:                                             ; preds = %bb.h
+bb.i:                                             ; preds = %bb.g
+  %5 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvh6Triple16getARMCPUForArchENS_9StringRefE, i64 %5
+  %switch.load = load i64, ptr %switch.gep, align 8
+  %6 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep38 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvh6Triple16getARMCPUForArchENS_9StringRefE.25, i64 %6
+  %switch.load39 = load ptr, ptr %switch.gep38, align 8
   br label %.thread35
 
-switch.lookup:                                    ; preds = %bb.g
-  %i.av = zext nneg i32 %switch.tableidx to i64
-  %switch.gep.a = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvh6Triple16getARMCPUForArchENS_9StringRefE, i64 %i.av
+switch.lookup:                                    ; preds = %bb.h
+  %i.av = zext nneg i32 %switch.tableidx40 to i64
+  %switch.gep.a = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvh6Triple16getARMCPUForArchENS_9StringRefE.26, i64 %i.av
   %switch.load.a = load i64, ptr %switch.gep.a, align 8
-  %i.aw = zext nneg i32 %switch.tableidx to i64
-  %switch.gep38.a = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvh6Triple16getARMCPUForArchENS_9StringRefE.24, i64 %i.aw
+  %i.aw = zext nneg i32 %switch.tableidx40 to i64
+  %switch.gep38.a = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvh6Triple16getARMCPUForArchENS_9StringRefE.27, i64 %i.aw
   %switch.load39.a = load ptr, ptr %switch.gep38.a, align 8
   br label %.thread35
 
-.thread35:                                        ; preds = %bb.g, %switch.lookup, %bb.h, %bb.h, %bb.h, %bb.f, %bb.f, %.thread, %bb.e, %_ZNK4llvh9StringRef6equalsES0_.exit10, %bb.c, %_ZNK4llvh9StringRef6equalsES0_.exit, %bb.d, %bb.i, %_ZNK4llvh9StringRef6equalsES0_.exit11, %_ZNK4llvh9StringRef6equalsES0_.exit10.thread
-  %.sroa.12.1 = phi i64 [ 9, %bb.c ], [ 0, %_ZNK4llvh9StringRef6equalsES0_.exit10.thread ], [ %i.af, %.thread ], [ 12, %_ZNK4llvh9StringRef6equalsES0_.exit ], [ 7, %_ZNK4llvh9StringRef6equalsES0_.exit11 ], [ 8, %bb.i ], [ 9, %bb.f ], [ 9, %bb.f ], [ %i.l, %bb.e ], [ %switch.load.a, %switch.lookup ], [ %i.l, %bb.d ], [ 9, %_ZNK4llvh9StringRef6equalsES0_.exit10 ], [ 12, %bb.h ], [ 12, %bb.h ], [ 12, %bb.h ], [ 9, %bb.g ]
-  %.sroa.029.1 = phi ptr [ @.str.143, %bb.c ], [ null, %_ZNK4llvh9StringRef6equalsES0_.exit10.thread ], [ %i.ae, %.thread ], [ @.str.142, %_ZNK4llvh9StringRef6equalsES0_.exit ], [ %i.ae, %_ZNK4llvh9StringRef6equalsES0_.exit11 ], [ @.str.150, %bb.i ], [ @.str.149, %bb.f ], [ @.str.149, %bb.f ], [ null, %bb.e ], [ %switch.load39.a, %switch.lookup ], [ null, %bb.d ], [ @.str.145, %_ZNK4llvh9StringRef6equalsES0_.exit10 ], [ @.str.142, %bb.h ], [ @.str.142, %bb.h ], [ @.str.142, %bb.h ], [ @.str.148, %bb.g ]
+.thread35:                                        ; preds = %bb.h, %switch.lookup, %bb.g, %bb.i, %bb.f, %bb.f, %.thread, %bb.e, %_ZNK4llvh9StringRef6equalsES0_.exit10, %bb.c, %_ZNK4llvh9StringRef6equalsES0_.exit, %bb.d, %_ZNK4llvh9StringRef6equalsES0_.exit11, %_ZNK4llvh9StringRef6equalsES0_.exit10.thread
+  %.sroa.12.1 = phi i64 [ 9, %bb.c ], [ 0, %_ZNK4llvh9StringRef6equalsES0_.exit10.thread ], [ %i.af, %.thread ], [ 12, %_ZNK4llvh9StringRef6equalsES0_.exit ], [ 7, %_ZNK4llvh9StringRef6equalsES0_.exit11 ], [ 9, %bb.g ], [ 9, %bb.f ], [ 9, %bb.f ], [ %i.l, %bb.e ], [ %switch.load, %bb.i ], [ %i.l, %bb.d ], [ 9, %_ZNK4llvh9StringRef6equalsES0_.exit10 ], [ %switch.load.a, %switch.lookup ], [ 8, %bb.h ]
+  %.sroa.029.1 = phi ptr [ @.str.143, %bb.c ], [ null, %_ZNK4llvh9StringRef6equalsES0_.exit10.thread ], [ %i.ae, %.thread ], [ @.str.142, %_ZNK4llvh9StringRef6equalsES0_.exit ], [ %i.ae, %_ZNK4llvh9StringRef6equalsES0_.exit11 ], [ @.str.148, %bb.g ], [ @.str.149, %bb.f ], [ @.str.149, %bb.f ], [ null, %bb.e ], [ %switch.load39, %bb.i ], [ null, %bb.d ], [ @.str.145, %_ZNK4llvh9StringRef6equalsES0_.exit10 ], [ %switch.load39.a, %switch.lookup ], [ @.str.150, %bb.h ]
   %.fca.0.insert = insertvalue { ptr, i64 } poison, ptr %.sroa.029.1, 0
   %.fca.1.insert = insertvalue { ptr, i64 } %.fca.0.insert, i64 %.sroa.12.1, 1
   ret { ptr, i64 } %.fca.1.insert
@@ -3634,23 +3638,20 @@ declare void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_mutateEmm
 
 declare noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32), ptr noundef nonnull align 8 dereferenceable(8), i64 noundef) local_unnamed_addr #5
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.fshl.i32(i32, i32, i32) #9
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #10
+declare void @llvm.assume(i1 noundef) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #11
+declare void @llvm.experimental.noalias.scope.decl(metadata) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #12
+declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #9
+declare i32 @llvm.umax.i32(i32, i32) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #9
+declare i64 @llvm.umin.i64(i64, i64) #12
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
@@ -3661,10 +3662,10 @@ attributes #5 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "t
 attributes #6 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #10 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #11 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #12 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #9 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #10 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #11 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #12 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #13 = { nounwind }
 attributes #14 = { builtin nounwind }
 attributes #15 = { noreturn nounwind }

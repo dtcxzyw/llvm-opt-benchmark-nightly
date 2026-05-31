@@ -201,11 +201,14 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.r, label %bb.d, label %switch.early.test
 
 switch.early.test:                                ; preds = %bb.c
-  switch i32 %sext, label %bb.e [
-    i32 1962934272, label %bb.d
-    i32 1946157056, label %bb.d
-    i32 1845493760, label %bb.d
-    i32 1627389952, label %bb.d
+  %2 = add i32 %sext, -1627389952
+  %3 = lshr exact i32 %2, 24
+  %trunc = trunc nuw i32 %3 to i8
+  switch i8 %trunc, label %bb.e [
+    i8 20, label %bb.d
+    i8 19, label %bb.d
+    i8 13, label %bb.d
+    i8 0, label %bb.d
   ]
 
 bb.d:                                             ; preds = %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %bb.c
@@ -264,11 +267,14 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.p, label %bb.d, label %switch.early.test
 
 switch.early.test:                                ; preds = %bb.c
-  switch i32 %sext, label %bb.e [
-    i32 1962934272, label %bb.d
-    i32 1946157056, label %bb.d
-    i32 1845493760, label %bb.d
-    i32 1627389952, label %bb.d
+  %1 = add i32 %sext, -1627389952
+  %2 = lshr exact i32 %1, 24
+  %trunc = trunc nuw i32 %2 to i8
+  switch i8 %trunc, label %bb.e [
+    i8 20, label %bb.d
+    i8 19, label %bb.d
+    i8 13, label %bb.d
+    i8 0, label %bb.d
   ]
 
 bb.d:                                             ; preds = %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %bb.c
@@ -495,11 +501,14 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.az, label %bb.l, label %switch.early.test.i
 
 switch.early.test.i:                              ; preds = %bb.k
-  switch i32 %sext.i, label %bb.m [
-    i32 1962934272, label %bb.l
-    i32 1946157056, label %bb.l
-    i32 1845493760, label %bb.l
-    i32 1627389952, label %bb.l
+  %2 = add i32 %sext.i, -1627389952
+  %3 = lshr exact i32 %2, 24
+  %trunc.i = trunc nuw i32 %3 to i8
+  switch i8 %trunc.i, label %bb.m [
+    i8 20, label %bb.l
+    i8 19, label %bb.l
+    i8 13, label %bb.l
+    i8 0, label %bb.l
   ]
 
 bb.l:                                             ; preds = %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %bb.k
@@ -691,11 +700,14 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.an, label %bb.i, label %switch.early.test.i
 
 switch.early.test.i:                              ; preds = %bb.h
-  switch i32 %sext.i, label %bb.j [
-    i32 1962934272, label %bb.i
-    i32 1946157056, label %bb.i
-    i32 1845493760, label %bb.i
-    i32 1627389952, label %bb.i
+  %1 = add i32 %sext.i, -1627389952
+  %2 = lshr exact i32 %1, 24
+  %trunc.i = trunc nuw i32 %2 to i8
+  switch i8 %trunc.i, label %bb.j [
+    i8 20, label %bb.i
+    i8 19, label %bb.i
+    i8 13, label %bb.i
+    i8 0, label %bb.i
   ]
 
 bb.i:                                             ; preds = %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %bb.h

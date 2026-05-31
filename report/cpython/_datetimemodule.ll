@@ -201,13 +201,15 @@ _PyUnicode_DATA.exit25.i:                         ; preds = %bb.p, %bb.o
   br label %PyUnicode_READ_CHAR.exit
 
 PyUnicode_READ_CHAR.exit:                         ; preds = %_PyUnicode_DATA.exit.i, %_PyUnicode_DATA.exit17.i, %_PyUnicode_DATA.exit25.i
-  %.0.i = phi i32 [ %i.ab, %_PyUnicode_DATA.exit.i ], [ %i.af, %_PyUnicode_DATA.exit17.i ], [ %i.ai, %_PyUnicode_DATA.exit25.i ] ; 5 uses
+  %.0.i = phi i32 [ %i.ab, %_PyUnicode_DATA.exit.i ], [ %i.af, %_PyUnicode_DATA.exit17.i ], [ %i.ai, %_PyUnicode_DATA.exit25.i ] ; 6 uses
   %i.aj = add nuw i64 %i.q, 2                     ; 17 uses
-  switch i32 %.0.i, label %bb.bb [
-    i32 122, label %bb.q
-    i32 58, label %bb.s
-    i32 90, label %bb.af
-    i32 102, label %bb.ay
+  %5 = add i32 %.0.i, -58                         ; 2 uses
+  %6 = call i32 @llvm.fshl.i32(i32 %5, i32 %5, i32 30)
+  switch i32 %6, label %bb.bb [
+    i32 16, label %bb.q
+    i32 0, label %bb.s
+    i32 8, label %bb.af
+    i32 11, label %bb.ay
   ]
 
 bb.q:                                             ; preds = %PyUnicode_READ_CHAR.exit
@@ -221,7 +223,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %PyUnicode_READ_CHAR.exit
   %i.an = icmp slt i64 %i.aj, %.val
-  br i1 %i.an, label %bb.t, label %bb.bb
+  br i1 %i.an, label %bb.t, label %7
 
 bb.t:                                             ; preds = %bb.s
   switch i32 %i.w, label %bb.aa [
@@ -294,7 +296,7 @@ _PyUnicode_DATA.exit25.i202:                      ; preds = %bb.ac, %bb.ab
 PyUnicode_READ_CHAR.exit205:                      ; preds = %_PyUnicode_DATA.exit.i196, %_PyUnicode_DATA.exit17.i189, %_PyUnicode_DATA.exit25.i202
   %.0.i191 = phi i32 [ %i.ar, %_PyUnicode_DATA.exit.i196 ], [ %i.av, %_PyUnicode_DATA.exit17.i189 ], [ %i.ay, %_PyUnicode_DATA.exit25.i202 ]
   %i.az = icmp eq i32 %.0.i191, 122
-  br i1 %i.az, label %bb.ad, label %bb.bb
+  br i1 %i.az, label %bb.ad, label %7
 
 bb.ad:                                            ; preds = %PyUnicode_READ_CHAR.exit205
   %i.ba = add nuw i64 %i.q, 3                     ; 2 uses
@@ -306,7 +308,13 @@ bb.ae:                                            ; preds = %bb.ad
   %i.bd = icmp eq ptr %i.bc, null
   br i1 %i.bd, label %.thread240, label %make_Zreplacement.exit.thread230
 
-bb.af:                                            ; preds = %PyUnicode_READ_CHAR.exit
+7:                                                ; preds = %PyUnicode_READ_CHAR.exit205, %bb.s
+  switch i32 %.0.i, label %bb.bb [
+    i32 90, label %bb.af
+    i32 102, label %bb.ay
+  ]
+
+bb.af:                                            ; preds = %PyUnicode_READ_CHAR.exit, %7
   %i.be = icmp eq ptr %.0132.ph.ph, null
   br i1 %i.be, label %bb.ag, label %make_Zreplacement.exit.thread230
 
@@ -483,7 +491,7 @@ make_Zreplacement.exit:                           ; preds = %bb.ap
   call void @_Py_Dealloc(ptr noundef nonnull @_Py_NoneStruct) #16, !inline_history !108
   br label %make_Zreplacement.exit.thread230
 
-bb.ay:                                            ; preds = %PyUnicode_READ_CHAR.exit
+bb.ay:                                            ; preds = %PyUnicode_READ_CHAR.exit, %7
   %i.cu = icmp eq ptr %.0138.ph.ph, null
   br i1 %i.cu, label %bb.az, label %make_Zreplacement.exit.thread230
 
@@ -535,7 +543,7 @@ make_freplacement.exit:                           ; preds = %PyObject_TypeCheck.
   %i.dm = icmp eq ptr %i.dl, null
   br i1 %i.dm, label %.thread240, label %make_Zreplacement.exit.thread230
 
-bb.bb:                                            ; preds = %bb.s, %PyUnicode_READ_CHAR.exit205, %PyUnicode_READ_CHAR.exit
+bb.bb:                                            ; preds = %PyUnicode_READ_CHAR.exit, %7
   %i.dn = load i32, ptr @normalize_century.cache, align 4, !tbaa !7 ; 2 uses
   %i.do = icmp slt i32 %i.dn, 0
   br i1 %i.do, label %bb.bc, label %normalize_century.exit
@@ -936,6 +944,9 @@ declare ptr @PyErr_GetRaisedException() local_unnamed_addr #2
 declare void @PyErr_FormatUnraisable(ptr noundef, ...) local_unnamed_addr #2
 
 declare void @PyErr_SetRaisedException(ptr noundef) local_unnamed_addr #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.fshl.i32(i32, i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #7

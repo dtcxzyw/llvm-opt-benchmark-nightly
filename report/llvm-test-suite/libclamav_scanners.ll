@@ -145,6 +145,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.133 = private unnamed_addr constant [34 x i8] c"CryptFF: Scanning decrypted data\0A\00", align 1
 @.str.134 = private unnamed_addr constant [27 x i8] c"CryptFF: Infected with %s\0A\00", align 1
 @.str.135 = private unnamed_addr constant [40 x i8] c"CryptFF: Decompressed data saved in %s\0A\00", align 1
+@switch.table.cli_scanraw = private unnamed_addr constant [9 x i8] c"\01\00\01\00\00\00\00\00\01", align 1
 
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 -115, 2) i32 @cli_scandir(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 {
@@ -547,17 +548,18 @@ bb.a:
   br i1 %.not, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  switch i32 %2, label %bb.c [
-    i32 500, label %bb.d
-    i32 502, label %bb.d
-    i32 508, label %bb.d
-  ]
+  %switch.tableidx = add i32 %2, -500             ; 2 uses
+  %5 = icmp ult i32 %switch.tableidx, 9
+  br i1 %5, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
+  %6 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.cli_scanraw, i64 %6
+  %switch.load = load i8, ptr %switch.gep, align 1
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.b, %bb.b, %bb.b, %bb.c, %bb.a
-  %.0118 = phi i8 [ 0, %bb.c ], [ 0, %bb.a ], [ 1, %bb.b ], [ 1, %bb.b ], [ 1, %bb.b ]
+bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
+  %.0118 = phi i8 [ %switch.load, %bb.c ], [ 0, %bb.a ], [ 0, %bb.b ]
   %i.c = tail call i64 @lseek(i32 noundef %0, i64 noundef 0, i32 noundef 0) #9
   %i.d = icmp slt i64 %i.c, 0
   br i1 %i.d, label %bb.e, label %bb.f

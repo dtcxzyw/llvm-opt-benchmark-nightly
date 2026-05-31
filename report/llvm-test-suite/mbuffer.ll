@@ -135,6 +135,7 @@ target triple = "x86_64-pc-linux-gnu"
 @str = private unnamed_addr constant [57 x i8] c"Warning: reference field for long term marking not found\00", align 1
 @str.2 = private unnamed_addr constant [66 x i8] c"Warning: assigning long_term_frame_idx different from other field\00", align 1
 @str.3 = private unnamed_addr constant [57 x i8] c"Warning: reference frame for long term marking not found\00", align 1
+@switch.table.getDpbSize = private unnamed_addr constant [23 x i32] [i32 13369344, i32 12582912, i32 12582912, i32 12582912, i32 12582912, i32 13369344, i32 12582912, i32 12582912, i32 12582912, i32 12582912, i32 12582912, i32 13369344, i32 12582912, i32 12582912, i32 12582912, i32 12582912, i32 12582912, i32 12582912, i32 12582912, i32 12582912, i32 12582912, i32 12582912, i32 13369344], align 4
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define dso_local void @dump_dpb() local_unnamed_addr #0 {
@@ -206,14 +207,12 @@ bb.i:                                             ; preds = %bb.a
 bb.j:                                             ; preds = %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.q = load i32, ptr %i.p, align 4, !tbaa !17
-  switch i32 %i.q, label %bb.k [
-    i32 100, label %bb.o
-    i32 110, label %bb.o
-    i32 122, label %bb.o
-    i32 144, label %bb.o
-  ]
+  %0 = add i32 %i.q, -100                         ; 2 uses
+  %1 = tail call i32 @llvm.fshl.i32(i32 %0, i32 %0, i32 31) ; 2 uses
+  %2 = icmp ult i32 %1, 23
+  br i1 %2, label %switch.lookup, label %bb.k
 
-bb.k:                                             ; preds = %bb.a, %bb.a, %bb.j
+bb.k:                                             ; preds = %bb.j, %bb.a, %bb.a
   br label %bb.o
 
 bb.l:                                             ; preds = %bb.a
@@ -226,8 +225,14 @@ bb.n:                                             ; preds = %bb.a
   tail call void @error(ptr noundef nonnull @.str, i32 noundef 500) #16
   br label %bb.o
 
-bb.o:                                             ; preds = %bb.j, %bb.j, %bb.j, %bb.j, %bb.c, %bb.a, %bb.a, %bb.k, %bb.d, %bb.n, %bb.m, %bb.l, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e
-  %.0 = phi i32 [ 0, %bb.n ], [ 70778880, %bb.m ], [ 152064, %bb.a ], [ 152064, %bb.a ], [ 152064, %bb.d ], [ 912384, %bb.e ], [ 345600, %bb.c ], [ 42393600, %bb.l ], [ 1824768, %bb.f ], [ 3110400, %bb.g ], [ 12582912, %bb.k ], [ 6912000, %bb.h ], [ 7864320, %bb.i ], [ 13369344, %bb.j ], [ 13369344, %bb.j ], [ 13369344, %bb.j ], [ 13369344, %bb.j ]
+switch.lookup:                                    ; preds = %bb.j
+  %3 = zext nneg i32 %1 to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.getDpbSize, i64 %3
+  %switch.load = load i32, ptr %switch.gep, align 4
+  br label %bb.o
+
+bb.o:                                             ; preds = %switch.lookup, %bb.c, %bb.a, %bb.a, %bb.k, %bb.d, %bb.n, %bb.m, %bb.l, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e
+  %.0 = phi i32 [ 0, %bb.n ], [ 70778880, %bb.m ], [ 152064, %bb.a ], [ 152064, %bb.a ], [ 152064, %bb.d ], [ 912384, %bb.e ], [ 345600, %bb.c ], [ 42393600, %bb.l ], [ 1824768, %bb.f ], [ 3110400, %bb.g ], [ 12582912, %bb.k ], [ 6912000, %bb.h ], [ 7864320, %bb.i ], [ %switch.load, %switch.lookup ]
   %i.r = add i32 %i.c, 1
   %i.s = add i32 %i.e, 1
   %i.t = mul i32 %i.s, %i.r
@@ -628,6 +633,9 @@ middle.block:                                     ; preds = %vector.body
 }
 
 declare void @write_stored_frame(ptr noundef, i32 noundef) local_unnamed_addr #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.fshl.i32(i32, i32, i32) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #12

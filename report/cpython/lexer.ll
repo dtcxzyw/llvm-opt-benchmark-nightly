@@ -54,6 +54,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.44 = private unnamed_addr constant [86 x i8] c"%c-string: newlines are not allowed in format specifiers for single quoted %c-strings\00", align 1
 @.str.45 = private unnamed_addr constant [67 x i8] c"unterminated triple-quoted %c-string literal (detected at line %d)\00", align 1
 @.str.46 = private unnamed_addr constant [53 x i8] c"unterminated %c-string literal (detected at line %d)\00", align 1
+@switch.table.verify_end_of_number = private unnamed_addr constant [14 x i32] [i32 1, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 0, i32 0, i32 0, i32 0, i32 1], align 4
 
 ; Function Attrs: nounwind uwtable
 define hidden range(i32 0, 2) i32 @_PyLexer_update_ftstring_expr(ptr noundef captures(none) %0, i8 noundef signext %1) local_unnamed_addr #0 {
@@ -456,17 +457,18 @@ tok_nextc.exit:                                   ; preds = %bb.h
   %i.ac = getelementptr i8, ptr %i.l, i64 1
   store ptr %i.ac, ptr %i.f, align 8, !tbaa !11
   %i.ad = load i8, ptr %i.l, align 1, !tbaa !34   ; 2 uses
-  switch i8 %i.ad, label %bb.p [
-    i8 115, label %bb.o
-    i8 110, label %bb.o
-    i8 102, label %bb.o
-  ]
+  %switch.tableidx = add i8 %i.ad, -102           ; 2 uses
+  %3 = icmp ult i8 %switch.tableidx, 14
+  br i1 %3, label %bb.o, label %bb.p
 
-bb.o:                                             ; preds = %tok_nextc.exit, %tok_nextc.exit, %tok_nextc.exit
+bb.o:                                             ; preds = %tok_nextc.exit
+  %4 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.verify_end_of_number, i64 %4
+  %switch.load = load i32, ptr %switch.gep, align 4
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %tok_nextc.exit
-  %.050.ph = phi i32 [ 0, %tok_nextc.exit ], [ 1, %bb.o ]
+  %.050.ph = phi i32 [ 0, %tok_nextc.exit ], [ %switch.load, %bb.o ]
   store ptr %i.l, ptr %i.f, align 8, !tbaa !11
   %i.ae = load ptr, ptr %0, align 8, !tbaa !35
   %i.af = icmp ult ptr %i.l, %i.ae

@@ -176,13 +176,14 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.g = load i32, ptr %i.f, align 8
-  %3 = trunc i32 %i.g to i16
-  %trunc = and i16 %3, -4096
-  switch i16 %trunc, label %.thread [
-    i16 -32768, label %bb.l
-    i16 8192, label %bb.l
-    i16 4096, label %bb.e
-    i16 -16384, label %bb.f
+  %3 = and i32 %i.g, 61440
+  %4 = add nsw i32 %3, -4096
+  %5 = lshr exact i32 %4, 12
+  switch i32 %5, label %.thread [
+    i32 7, label %bb.l
+    i32 1, label %bb.l
+    i32 0, label %bb.e
+    i32 11, label %bb.f
   ]
 
 bb.e:                                             ; preds = %bb.d

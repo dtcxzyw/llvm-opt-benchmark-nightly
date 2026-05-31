@@ -201,6 +201,7 @@ begin_hunk_0
 @_ZTVN6duckdb21WindowFillGlobalStateE = linkonce_odr unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN6duckdb21WindowFillGlobalStateE, ptr @_ZN6duckdb24WindowLeadLagGlobalStateD2Ev, ptr @_ZN6duckdb21WindowFillGlobalStateD0Ev, ptr @_ZN6duckdb15GlobalSinkState10MaxThreadsEm] }, comdat, align 8
 @_ZTIN6duckdb21WindowFillGlobalStateE = linkonce_odr constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN6duckdb21WindowFillGlobalStateE, ptr @_ZTIN6duckdb24WindowLeadLagGlobalStateE }, comdat, align 8
 @_ZTSN6duckdb21WindowFillGlobalStateE = linkonce_odr constant [33 x i8] c"N6duckdb21WindowFillGlobalStateE\00", comdat, align 1
+@switch.table._ZN6duckdbL20GetFillValueFunctionERKNS_11LogicalTypeE = private unnamed_addr constant [18 x ptr] [ptr @_ZN6duckdb17FillValueFunctionINS_6date_tEEEbmRNS_12WindowCursorE, ptr poison, ptr @_ZN6duckdb17FillValueFunctionINS_11timestamp_tEEEbmRNS_12WindowCursorE, ptr @_ZN6duckdb17FillValueFunctionINS_11timestamp_tEEEbmRNS_12WindowCursorE, ptr @_ZN6duckdb17FillValueFunctionINS_11timestamp_tEEEbmRNS_12WindowCursorE, ptr @_ZN6duckdb17FillValueFunctionINS_11timestamp_tEEEbmRNS_12WindowCursorE, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @_ZN6duckdb17FillValueFunctionINS_11timestamp_tEEEbmRNS_12WindowCursorE], align 8
 @switch.table._ZN6duckdb21WindowValueLocalStateC2ERNS_16ExecutionContextERKNS_22WindowValueGlobalStateE = private unnamed_addr constant [4 x i64] [i64 1, i64 2, i64 2, i64 3], align 8
 
 @_ZN6duckdb23WindowAggregateExecutorC1ERNS_21BoundWindowExpressionERNS_13ClientContextERNS_23WindowSharedExpressionsENS_21WindowAggregationModeE = unnamed_addr alias void (ptr, ptr, ptr, ptr, i32), ptr @_ZN6duckdb23WindowAggregateExecutorC2ERNS_21BoundWindowExpressionERNS_13ClientContextERNS_23WindowSharedExpressionsENS_21WindowAggregationModeE
@@ -603,19 +604,11 @@ define internal fastcc noundef nonnull ptr @_ZN6duckdbL20GetFillValueFunctionERK
 bb.a:
   %0 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %1 = alloca %"class.std::allocator", align 1    ; 5 uses
-  switch i8 %.0.val, label %bb.b [
-    i8 15, label %bb.s
-    i8 19, label %2
-    i8 32, label %2
-    i8 17, label %2
-    i8 18, label %2
-    i8 20, label %2
-  ]
+  %switch.tableidx = add i8 %.0.val, -15          ; 3 uses
+  %2 = icmp ult i8 %switch.tableidx, 18
+  br i1 %2, label %switch.hole_check, label %bb.b
 
-2:                                                ; preds = %bb.a, %bb.a, %bb.a, %bb.a, %bb.a
-  br label %bb.s
-
-bb.b:                                             ; preds = %bb.a
+bb.b:                                             ; preds = %switch.hole_check, %bb.a
   switch i8 %.1.val, label %bb.n [
     i8 2, label %bb.s
     i8 4, label %bb.c
@@ -711,8 +704,20 @@ bb.r:                                             ; preds = %_ZNKSt7__cxx1112bas
   call void @__cxa_free_exception(ptr %i.a) #29
   br label %bb.t
 
-bb.s:                                             ; preds = %bb.b, %bb.a, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %2
-  %.07 = phi ptr [ @_ZN6duckdb17FillValueFunctionINS_6date_tEEEbmRNS_12WindowCursorE, %bb.a ], [ @_ZN6duckdb17FillValueFunctionItEEbmRNS_12WindowCursorE, %bb.c ], [ @_ZN6duckdb17FillValueFunctionIjEEbmRNS_12WindowCursorE, %bb.d ], [ @_ZN6duckdb17FillValueFunctionImEEbmRNS_12WindowCursorE, %bb.e ], [ @_ZN6duckdb17FillValueFunctionINS_10uhugeint_tEEEbmRNS_12WindowCursorE, %bb.f ], [ @_ZN6duckdb17FillValueFunctionIaEEbmRNS_12WindowCursorE, %bb.g ], [ @_ZN6duckdb17FillValueFunctionIsEEbmRNS_12WindowCursorE, %bb.h ], [ @_ZN6duckdb17FillValueFunctionIiEEbmRNS_12WindowCursorE, %bb.i ], [ @_ZN6duckdb17FillValueFunctionIlEEbmRNS_12WindowCursorE, %bb.j ], [ @_ZN6duckdb17FillValueFunctionINS_9hugeint_tEEEbmRNS_12WindowCursorE, %bb.k ], [ @_ZN6duckdb17FillValueFunctionIfEEbmRNS_12WindowCursorE, %bb.l ], [ @_ZN6duckdb17FillValueFunctionIdEEbmRNS_12WindowCursorE, %bb.m ], [ @_ZN6duckdb17FillValueFunctionINS_11timestamp_tEEEbmRNS_12WindowCursorE, %2 ], [ @_ZN6duckdb17FillValueFunctionIhEEbmRNS_12WindowCursorE, %bb.b ]
+switch.hole_check:                                ; preds = %bb.a
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i32
+  %switch.shifted = lshr i32 131133, %switch.maskindex
+  %switch.lobit = trunc i32 %switch.shifted to i1
+  br i1 %switch.lobit, label %switch.lookup, label %bb.b
+
+switch.lookup:                                    ; preds = %switch.hole_check
+  %3 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6duckdbL20GetFillValueFunctionERKNS_11LogicalTypeE, i64 %3
+  %switch.load = load ptr, ptr %switch.gep, align 8
+  br label %bb.s
+
+bb.s:                                             ; preds = %switch.lookup, %bb.b, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c
+  %.07 = phi ptr [ %switch.load, %switch.lookup ], [ @_ZN6duckdb17FillValueFunctionItEEbmRNS_12WindowCursorE, %bb.c ], [ @_ZN6duckdb17FillValueFunctionIjEEbmRNS_12WindowCursorE, %bb.d ], [ @_ZN6duckdb17FillValueFunctionImEEbmRNS_12WindowCursorE, %bb.e ], [ @_ZN6duckdb17FillValueFunctionINS_10uhugeint_tEEEbmRNS_12WindowCursorE, %bb.f ], [ @_ZN6duckdb17FillValueFunctionIaEEbmRNS_12WindowCursorE, %bb.g ], [ @_ZN6duckdb17FillValueFunctionIsEEbmRNS_12WindowCursorE, %bb.h ], [ @_ZN6duckdb17FillValueFunctionIiEEbmRNS_12WindowCursorE, %bb.i ], [ @_ZN6duckdb17FillValueFunctionIlEEbmRNS_12WindowCursorE, %bb.j ], [ @_ZN6duckdb17FillValueFunctionINS_9hugeint_tEEEbmRNS_12WindowCursorE, %bb.k ], [ @_ZN6duckdb17FillValueFunctionIfEEbmRNS_12WindowCursorE, %bb.l ], [ @_ZN6duckdb17FillValueFunctionIdEEbmRNS_12WindowCursorE, %bb.m ], [ @_ZN6duckdb17FillValueFunctionIhEEbmRNS_12WindowCursorE, %bb.b ]
   ret ptr %.07
 
 bb.t:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.r
