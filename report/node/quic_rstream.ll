@@ -201,36 +201,32 @@ bb.a:
   %i.c = getelementptr i8, ptr %3, i64 16         ; 5 uses
   %.val.i.i = load i64, ptr %i.c, align 8, !tbaa !21 ; 3 uses
   %i.d = getelementptr i8, ptr %3, i64 24
-  %.val2.i.i = load i64, ptr %i.d, align 8, !tbaa !22 ; 3 uses
+  %.val2.i.i = load i64, ptr %i.d, align 8, !tbaa !22 ; 2 uses
   %i.e = icmp ult i64 %0, %.val2.i.i
   br i1 %i.e, label %ring_buf_write_at.exit, label %safe_add_u64.exit.i
 
 safe_add_u64.exit.i:                              ; preds = %bb.a
-  %i.f = load i64, ptr %i.b, align 8, !tbaa !20   ; 4 uses
+  %i.f = load i64, ptr %i.b, align 8, !tbaa !20   ; 3 uses
   %.neg.i.i = sub i64 %.val2.i.i, %.val.i.i
   %i.g = add i64 %.neg.i.i, %i.f
-  %i.h = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %0, i64 %2)
-  %4 = extractvalue { i64, i1 } %i.h, 1
-  %5 = add i64 %2, %0
+  %i.h = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %0, i64 %2) ; 2 uses
+  %4 = extractvalue { i64, i1 } %i.h, 0
   %i.i = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %.val.i.i, i64 %i.g) ; 2 uses
-  %6 = extractvalue { i64, i1 } %i.i, 1           ; 2 uses
-  %7 = add i64 %i.f, %.val2.i.i
   %i.j = extractvalue { i64, i1 } %i.i, 0
-  %.0.i45.i = select i1 %6, i64 %7, i64 %i.j
-  %i.k = icmp ugt i64 %5, %.0.i45.i
-  br i1 %i.k, label %ring_buf_write_at.exit, label %8
+  %i.k = icmp ugt i64 %4, %i.j
+  br i1 %i.k, label %ring_buf_write_at.exit, label %safe_add_u64.exit48.i
 
-8:                                                ; preds = %safe_add_u64.exit.i
-  %9 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %.val.i.i, i64 %2) ; 2 uses
-  %10 = extractvalue { i64, i1 } %9, 1
-  br i1 %10, label %ring_buf_write_at.exit, label %safe_add_u64.exit48.i
-
-safe_add_u64.exit48.i:                            ; preds = %8
-  %i.l = extractvalue { i64, i1 } %9, 0
+safe_add_u64.exit48.i:                            ; preds = %safe_add_u64.exit.i
+  %5 = extractvalue { i64, i1 } %i.h, 1
+  %6 = extractvalue { i64, i1 } %i.i, 1
+  %narrow.i = or i1 %5, %6
+  %7 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %.val.i.i, i64 %2) ; 2 uses
+  %8 = extractvalue { i64, i1 } %7, 1
+  %i.l = extractvalue { i64, i1 } %7, 0
   %i.m = icmp ugt i64 %i.l, 4611686018427387904
-  %i.n = or i1 %4, %i.m
-  %or.cond.i = or i1 %i.n, %6
-  br i1 %or.cond.i, label %ring_buf_write_at.exit, label %.preheader.i
+  %i.n = or i1 %8, %i.m
+  %or.cond55.i = select i1 %i.n, i1 true, i1 %narrow.i
+  br i1 %or.cond55.i, label %ring_buf_write_at.exit, label %.preheader.i
 
 .preheader.i:                                     ; preds = %safe_add_u64.exit48.i
   %.not.i = icmp eq i64 %2, 0
@@ -273,8 +269,8 @@ bb.d:                                             ; preds = %.lr.ph.i
   store i64 %i.ab, ptr %i.c, align 8, !tbaa !21
   br label %ring_buf_write_at.exit
 
-ring_buf_write_at.exit:                           ; preds = %bb.c, %.lr.ph.i, %bb.d, %bb.a, %safe_add_u64.exit.i, %8, %safe_add_u64.exit48.i, %.preheader.i
-  %.037.i = phi i32 [ 0, %bb.a ], [ 0, %safe_add_u64.exit48.i ], [ 0, %safe_add_u64.exit.i ], [ 0, %8 ], [ 1, %.preheader.i ], [ 1, %bb.d ], [ 1, %.lr.ph.i ], [ 1, %bb.c ]
+ring_buf_write_at.exit:                           ; preds = %bb.c, %.lr.ph.i, %bb.d, %bb.a, %safe_add_u64.exit.i, %safe_add_u64.exit48.i, %.preheader.i
+  %.037.i = phi i32 [ 0, %bb.a ], [ 0, %safe_add_u64.exit48.i ], [ 0, %safe_add_u64.exit.i ], [ 1, %.preheader.i ], [ 1, %bb.d ], [ 1, %.lr.ph.i ], [ 1, %bb.c ]
   ret i32 %.037.i
 }
 

@@ -201,10 +201,10 @@ _ZNK6duckdb10unique_ptrINS_8RowGroupESt14default_deleteIS1_ELb1EEptEv.exit220: ;
   %i.rv = ptrtoint ptr %i.rt to i64
   %i.rw = sub i64 %i.ru, %i.rv
   %.fr14.i = freeze i64 %i.rw
-  %i.rx = ashr i64 %.fr14.i, 4                    ; 3 uses
+  %i.rx = ashr i64 %.fr14.i, 4                    ; 2 uses
   %i.ry = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.rx, i64 48) ; 2 uses
   %i.rz = extractvalue { i64, i1 } %i.ry, 1
-  %i.sa = extractvalue { i64, i1 } %i.ry, 0
+  %i.sa = extractvalue { i64, i1 } %i.ry, 0       ; 3 uses
   %i.sb = or disjoint i64 %i.sa, 8
   %i.sc = select i1 %i.rz, i64 -1, i64 %i.sb
   %i.sd = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.sc) #38
@@ -217,10 +217,9 @@ _ZNK6duckdb10unique_ptrINS_8RowGroupESt14default_deleteIS1_ELb1EEptEv.exit220: ;
   br i1 %i.sf, label %_ZN6duckdb22make_unsafe_uniq_arrayINS_17ColumnAppendStateEEENS_10unique_ptrIA_T_St14default_deleteIS4_ELb0EEEm.exit.i, label %_ZN6duckdb22make_unsafe_uniq_arrayINS_17ColumnAppendStateEEENS_10unique_ptrIA_T_St14default_deleteIS4_ELb0EEEm.exit.loopexit.i
 
 _ZN6duckdb22make_unsafe_uniq_arrayINS_17ColumnAppendStateEEENS_10unique_ptrIA_T_St14default_deleteIS4_ELb0EEEm.exit.loopexit.i: ; preds = %.noexc224
-  %37 = mul i64 %i.rx, 48                         ; 2 uses
-  %i.sg = add i64 %37, -48
+  %i.sg = add i64 %i.sa, -48
   %i.sh = urem i64 %i.sg, 48
-  %i.si = sub i64 %37, %i.sh
+  %i.si = sub i64 %i.sa, %i.sh
   call void @llvm.memset.p0.i64(ptr align 8 %i.se, i8 0, i64 %i.si, i1 false), !noalias !5357
   br label %_ZN6duckdb22make_unsafe_uniq_arrayINS_17ColumnAppendStateEEENS_10unique_ptrIA_T_St14default_deleteIS4_ELb0EEEm.exit.i
 

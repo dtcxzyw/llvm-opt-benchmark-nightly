@@ -201,43 +201,37 @@ bb.f:                                             ; preds = %bb.e
   %i.ao = load i64, ptr %i.o, align 8, !tbaa !23  ; 3 uses
   %i.ap = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %..i.i.i.i, i64 %i.ao) ; 2 uses
   %i.aq = extractvalue { i64, i1 } %i.ap, 1
-  br i1 %i.aq, label %safe_mul_time.exit33.i.i.i.i.i, label %safe_muldiv_time.exit.thread.i.i.i.i
+  br i1 %i.aq, label %safe_mul_time.exit35.i.i.i.i.i, label %safe_muldiv_time.exit.thread.i.i.i.i
 
 safe_muldiv_time.exit.thread.i.i.i.i:             ; preds = %bb.f
   %i.ar = extractvalue { i64, i1 } %i.ap, 0
   %i.as = udiv i64 %i.ar, %i.ah
   br label %rxfc_should_bump_window_size.exit.i.i
 
-safe_mul_time.exit33.i.i.i.i.i:                   ; preds = %bb.f
-  %spec.select.i.i.i.i.i = tail call i64 @llvm.umin.i64(i64 %i.ao, i64 %..i.i.i.i) ; 3 uses
+safe_mul_time.exit35.i.i.i.i.i:                   ; preds = %bb.f
+  %spec.select.i.i.i.i.i = tail call i64 @llvm.umin.i64(i64 %i.ao, i64 %..i.i.i.i) ; 2 uses
   %spec.select31.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.ao, i64 %..i.i.i.i) ; 2 uses
-  %4 = udiv i64 %spec.select31.i.i.i.i.i, %i.ah
-  %5 = urem i64 %spec.select31.i.i.i.i.i, %i.ah   ; 2 uses
-  %6 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %4, i64 %spec.select.i.i.i.i.i) ; 2 uses
-  %7 = extractvalue { i64, i1 } %6, 1
-  br i1 %7, label %safe_muldiv_time.exit.thread17.i.i.i.i, label %safe_mul_time.exit35.i.i.i.i.i
-
-safe_mul_time.exit35.i.i.i.i.i:                   ; preds = %safe_mul_time.exit33.i.i.i.i.i
-  %i.at = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %5, i64 %spec.select.i.i.i.i.i) ; 2 uses
-  %i.au = extractvalue { i64, i1 } %i.at, 1       ; 2 uses
-  %8 = mul i64 %5, %spec.select.i.i.i.i.i
-  %9 = extractvalue { i64, i1 } %i.at, 0
-  %.0.i32.i.i.i.i.i = select i1 %i.au, i64 %8, i64 %9
-  %i.av = extractvalue { i64, i1 } %6, 0
-  %i.aw = udiv i64 %.0.i32.i.i.i.i.i, %i.ah
+  %4 = urem i64 %spec.select31.i.i.i.i.i, %i.ah
+  %i.at = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %4, i64 %spec.select.i.i.i.i.i) ; 2 uses
+  %i.au = extractvalue { i64, i1 } %i.at, 1
+  %5 = extractvalue { i64, i1 } %i.at, 0
+  %6 = udiv i64 %spec.select31.i.i.i.i.i, %i.ah
+  %7 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %6, i64 %spec.select.i.i.i.i.i) ; 2 uses
+  %8 = extractvalue { i64, i1 } %7, 1
+  %i.av = extractvalue { i64, i1 } %7, 0
+  %i.aw = udiv i64 %5, %i.ah
   %i.ax = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.av, i64 %i.aw) ; 2 uses
   %i.ay = extractvalue { i64, i1 } %i.ax, 1
   %i.az = extractvalue { i64, i1 } %i.ax, 0
-  %i.ba = select i1 %i.ay, i1 true, i1 %i.au
-  br i1 %i.ba, label %safe_muldiv_time.exit.thread17.i.i.i.i, label %rxfc_should_bump_window_size.exit.i.i
-
-safe_muldiv_time.exit.thread17.i.i.i.i:           ; preds = %safe_mul_time.exit35.i.i.i.i.i, %safe_mul_time.exit33.i.i.i.i.i
+  %9 = select i1 %i.ay, i1 true, i1 %8
+  %i.ba = select i1 %9, i1 true, i1 %i.au
+  %spec.select14.i.i.i.i = select i1 %i.ba, i64 0, i64 %i.az
   br label %rxfc_should_bump_window_size.exit.i.i
 
-rxfc_should_bump_window_size.exit.i.i:            ; preds = %safe_muldiv_time.exit.thread17.i.i.i.i, %safe_mul_time.exit35.i.i.i.i.i, %safe_muldiv_time.exit.thread.i.i.i.i
-  %.sroa.03.0.i.i.i.i = phi i64 [ 0, %safe_muldiv_time.exit.thread17.i.i.i.i ], [ %i.az, %safe_mul_time.exit35.i.i.i.i.i ], [ %i.as, %safe_muldiv_time.exit.thread.i.i.i.i ]
+rxfc_should_bump_window_size.exit.i.i:            ; preds = %safe_mul_time.exit35.i.i.i.i.i, %safe_muldiv_time.exit.thread.i.i.i.i
+  %.sroa.03.0.i.i.i.i = phi i64 [ %i.as, %safe_muldiv_time.exit.thread.i.i.i.i ], [ %spec.select14.i.i.i.i, %safe_mul_time.exit35.i.i.i.i.i ]
   %i.bb = icmp ugt i64 %3, 4611686018427387903
-  %i.bc = shl nuw i64 %3, 2
+  %i.bc = shl i64 %3, 2
   %.sroa.02.0.i.i.i.i = select i1 %i.bb, i64 -1, i64 %i.bc
   %i.bd = icmp uge i64 %.sroa.03.0.i.i.i.i, %.sroa.02.0.i.i.i.i
   %i.be = shl i64 %i.p, 1
