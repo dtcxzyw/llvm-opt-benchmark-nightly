@@ -201,6 +201,7 @@ $_ZTV17DeadlyImportError = comdat any
 @.str.109 = private unnamed_addr constant [26 x i8] c"vector::_M_default_append\00", align 1
 @.str.110 = private unnamed_addr constant [23 x i8] c"vector::_M_fill_insert\00", align 1
 @.str.111 = private unnamed_addr constant [24 x i8] c"vector::_M_range_insert\00", align 1
+@switch.table._ZN6Assimp11NFFImporter14InternReadFileERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEP7aiScenePNS_8IOSystemE = private unnamed_addr constant [33 x i64] [i64 6, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 7, i64 7, i64 poison, i64 7, i64 7, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 7], align 8
 
 ; Function Attrs: mustprogress uwtable
 define hidden noundef zeroext i1 @_ZNK6Assimp11NFFImporter7CanReadERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS_8IOSystemEb(ptr nonnull readnone align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr readnone captures(none) %2, i1 zeroext %3) unnamed_addr #0 align 2 {
@@ -603,13 +604,13 @@ bb.af:                                            ; preds = %bb.ae
 .critedge.i.i859:                                 ; preds = %bb.ae, %bb.ad
   %.0.lcssa.i.i860 = phi ptr [ %.0.i.i857, %bb.ad ], [ %scevgep.i.i856, %bb.ae ] ; 3 uses
   store ptr %.0.lcssa.i.i860, ptr %i.j, align 8
-  %i.iq = load i8, ptr %.0.lcssa.i.i860, align 1
-  switch i8 %i.iq, label %_ZN6Assimp9IsLineEndIcEEbT_.exit862 [
-    i8 13, label %_ZN6Assimp9IsLineEndIcEEbT_.exit862.thread
-    i8 10, label %_ZN6Assimp9IsLineEndIcEEbT_.exit862.thread
-    i8 0, label %_ZN6Assimp9IsLineEndIcEEbT_.exit862.thread
-    i8 12, label %_ZN6Assimp9IsLineEndIcEEbT_.exit862.thread
-  ]
+  %i.iq = load i8, ptr %.0.lcssa.i.i860, align 1  ; 2 uses
+  %46 = icmp ult i8 %i.iq, 14
+  %switch.maskindex = zext nneg i8 %i.iq to i16
+  %switch.shifted = lshr i16 13313, %switch.maskindex
+  %switch.lobit = trunc i16 %switch.shifted to i1
+  %or.cond6649 = select i1 %46, i1 %switch.lobit, i1 false
+  br i1 %or.cond6649, label %_ZN6Assimp9IsLineEndIcEEbT_.exit862.thread, label %_ZN6Assimp9IsLineEndIcEEbT_.exit862
 
 _ZN6Assimp9IsLineEndIcEEbT_.exit862:              ; preds = %.critedge.i.i859
   %i.ir = invoke noundef ptr @_ZN6Assimp17fast_atoreal_moveIf17DeadlyImportErrorEEPKcS3_RT_b(ptr noundef nonnull %.0.lcssa.i.i860, ptr noundef nonnull align 4 dereferenceable(4) %i.bi, i1 noundef zeroext true)
@@ -748,13 +749,13 @@ bb.au:                                            ; preds = %bb.at
 .critedge.i.i888:                                 ; preds = %bb.at, %bb.as
   %.0.lcssa.i.i889 = phi ptr [ %.0.i.i886, %bb.as ], [ %scevgep.i.i885, %bb.at ] ; 3 uses
   store ptr %.0.lcssa.i.i889, ptr %i.j, align 8
-  %i.jo = load i8, ptr %.0.lcssa.i.i889, align 1
-  switch i8 %i.jo, label %_ZN6Assimp9IsLineEndIcEEbT_.exit891 [
-    i8 13, label %_ZN6Assimp9IsLineEndIcEEbT_.exit862.thread
-    i8 10, label %_ZN6Assimp9IsLineEndIcEEbT_.exit862.thread
-    i8 0, label %_ZN6Assimp9IsLineEndIcEEbT_.exit862.thread
-    i8 12, label %_ZN6Assimp9IsLineEndIcEEbT_.exit862.thread
-  ]
+  %i.jo = load i8, ptr %.0.lcssa.i.i889, align 1  ; 2 uses
+  %47 = icmp ult i8 %i.jo, 14
+  %switch.maskindex6644 = zext nneg i8 %i.jo to i16
+  %switch.shifted6645 = lshr i16 13313, %switch.maskindex6644
+  %switch.lobit6646 = trunc i16 %switch.shifted6645 to i1
+  %or.cond6650 = select i1 %47, i1 %switch.lobit6646, i1 false
+  br i1 %or.cond6650, label %_ZN6Assimp9IsLineEndIcEEbT_.exit862.thread, label %_ZN6Assimp9IsLineEndIcEEbT_.exit891
 
 _ZN6Assimp9IsLineEndIcEEbT_.exit891:              ; preds = %.critedge.i.i888
   %i.jp = invoke noundef ptr @_ZN6Assimp17fast_atoreal_moveIf17DeadlyImportErrorEEPKcS3_RT_b(ptr noundef nonnull %.0.lcssa.i.i889, ptr noundef nonnull align 4 dereferenceable(4) %i.bm, i1 noundef zeroext true)
@@ -1157,8 +1158,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1461: ; preds = %_
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #27
   br label %thread-pre-split
 
-_ZN6Assimp9IsLineEndIcEEbT_.exit862.thread:       ; preds = %bb.aw, %bb.aw, %bb.aw, %bb.aw, %bb.aw, %.critedge.i.i888, %.critedge.i.i888, %.critedge.i.i888, %.critedge.i.i888, %.critedge.i.i859, %.critedge.i.i859, %.critedge.i.i859, %.critedge.i.i859, %bb.av, %bb.ag, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1448, %bb.q
-  %.1608 = phi i8 [ %.06074012, %bb.q ], [ %.06074012, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1448 ], [ 1, %.critedge.i.i859 ], [ 1, %.critedge.i.i888 ], [ 1, %bb.ag ], [ 1, %bb.av ], [ 1, %.critedge.i.i859 ], [ 1, %.critedge.i.i859 ], [ 1, %.critedge.i.i859 ], [ 1, %.critedge.i.i888 ], [ 1, %.critedge.i.i888 ], [ 1, %.critedge.i.i888 ], [ %.06074012, %bb.aw ], [ %.06074012, %bb.aw ], [ %.06074012, %bb.aw ], [ %.06074012, %bb.aw ], [ %.06074012, %bb.aw ] ; 2 uses
+_ZN6Assimp9IsLineEndIcEEbT_.exit862.thread:       ; preds = %.critedge.i.i888, %.critedge.i.i859, %bb.aw, %bb.aw, %bb.aw, %bb.aw, %bb.aw, %bb.av, %bb.ag, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1448, %bb.q
+  %.1608 = phi i8 [ %.06074012, %bb.q ], [ %.06074012, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1448 ], [ %.06074012, %bb.aw ], [ 1, %.critedge.i.i859 ], [ 1, %bb.ag ], [ 1, %bb.av ], [ %.06074012, %bb.aw ], [ %.06074012, %bb.aw ], [ %.06074012, %bb.aw ], [ %.06074012, %bb.aw ], [ 1, %.critedge.i.i888 ] ; 2 uses
   %i.axq = load ptr, ptr %i.h, align 8            ; 2 uses
   %i.axr = load i8, ptr %i.axq, align 1           ; 2 uses
   %.not2863 = icmp eq i8 %i.axr, 0
@@ -1561,23 +1562,22 @@ bb.sk:                                            ; preds = %bb.qg, %bb.qh
   br i1 %.not.i1757, label %bb.sl, label %bb.tb
 
 bb.sl:                                            ; preds = %bb.sk
-  %i.bvv = load i8, ptr %i.eu, align 2            ; 2 uses
-  switch i8 %i.bvv, label %bb.tb [
-    i8 32, label %bb.sm
-    i8 9, label %bb.sm
-    i8 13, label %bb.sm
-    i8 10, label %bb.sm
-    i8 0, label %bb.sm
-    i8 12, label %bb.sm
-  ]
+  %i.bvv = load i8, ptr %i.eu, align 2            ; 3 uses
+  %48 = icmp ult i8 %i.bvv, 33
+  %switch.maskindex6651 = zext nneg i8 %i.bvv to i64
+  %switch.shifted6652 = lshr i64 4294981121, %switch.maskindex6651
+  %switch.lobit6653 = trunc i64 %switch.shifted6652 to i1
+  %or.cond6654 = select i1 %48, i1 %switch.lobit6653, i1 false
+  br i1 %or.cond6654, label %bb.sm, label %bb.tb
 
-bb.sm:                                            ; preds = %bb.sl, %bb.sl, %bb.sl, %bb.sl, %bb.sl, %bb.sl
-  %.not11.i1760 = icmp eq i8 %i.bvv, 0
-  %storemerge.i1761.v = select i1 %.not11.i1760, i64 6, i64 7
+bb.sm:                                            ; preds = %bb.sl
+  %49 = zext nneg i8 %i.bvv to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6Assimp11NFFImporter14InternReadFileERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEP7aiScenePNS_8IOSystemE, i64 %49
+  %switch.load = load i64, ptr %switch.gep, align 8
   br label %bb.sn
 
-bb.sn:                                            ; preds = %bb.sp, %bb.sm
-  %.0.i.i1764.idx = phi i64 [ %storemerge.i1761.v, %bb.sm ], [ %.0.i.i1764.add, %bb.sp ] ; 4 uses
+bb.sn:                                            ; preds = %bb.sm, %bb.sp
+  %.0.i.i1764.idx = phi i64 [ %switch.load, %bb.sm ], [ %.0.i.i1764.add, %bb.sp ] ; 4 uses
   %.0.i.i1764.ptr = getelementptr inbounds nuw i8, ptr %i.i, i64 %.0.i.i1764.idx
   %i.bvw = load i8, ptr %.0.i.i1764.ptr, align 1
   switch i8 %i.bvw, label %.critedge.i.i1766.split.loop.exit5945 [
@@ -1748,7 +1748,7 @@ bb.ta:                                            ; preds = %.noexc.i1773
   call void @llvm.lifetime.end.p0(ptr nonnull %28) #27
   br label %thread-pre-split
 
-bb.tb:                                            ; preds = %bb.sk, %bb.sl
+bb.tb:                                            ; preds = %bb.sl, %bb.sk
   switch i8 %i.aye, label %sub_02899 [
     i8 108, label %bb.tc
     i8 115, label %bb.uj
