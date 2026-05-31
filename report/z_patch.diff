@@ -1,0 +1,161 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineShifts.cpp b/llvm/lib/Transforms/InstCombine/InstCombineShifts.cpp
+index 3547a79df1355..605d80f2be7de 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineShifts.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineShifts.cpp
+@@ -1402,6 +1402,10 @@ Instruction *InstCombinerImpl::visitLShr(BinaryOperator &I) {
+   const APInt *C;
+   unsigned BitWidth = Ty->getScalarSizeInBits();
+ 
++  // lshr 1, X --> zext (X == 0)
++  if (match(Op0, m_One()))
++    return new ZExtInst(Builder.CreateIsNull(Op1), Ty);
++
+   // (iN (~X) u>> (N - 1)) --> zext (X > -1)
+   if (match(Op0, m_OneUse(m_Not(m_Value(X)))) &&
+       match(Op1, m_SpecificIntAllowPoison(BitWidth - 1)))
+diff --git a/llvm/test/Transforms/InstCombine/and2.ll b/llvm/test/Transforms/InstCombine/and2.ll
+index 7437f98441649..0bc998591f69e 100644
+--- a/llvm/test/Transforms/InstCombine/and2.ll
++++ b/llvm/test/Transforms/InstCombine/and2.ll
+@@ -183,7 +183,8 @@ define <2 x i8> @and1_shl1_is_cmp_eq_0_vec_poison(<2 x i8> %x) {
+ 
+ define i8 @and1_lshr1_is_cmp_eq_0(i8 %x) {
+ ; CHECK-LABEL: @and1_lshr1_is_cmp_eq_0(
+-; CHECK-NEXT:    [[SH:%.*]] = lshr i8 1, [[X:%.*]]
++; CHECK-NEXT:    [[TMP1:%.*]] = icmp eq i8 [[X:%.*]], 0
++; CHECK-NEXT:    [[SH:%.*]] = zext i1 [[TMP1]] to i8
+ ; CHECK-NEXT:    ret i8 [[SH]]
+ ;
+   %sh = lshr i8 1, %x
+@@ -193,8 +194,8 @@ define i8 @and1_lshr1_is_cmp_eq_0(i8 %x) {
+ 
+ define i8 @and1_lshr1_is_cmp_eq_0_multiuse(i8 %x) {
+ ; CHECK-LABEL: @and1_lshr1_is_cmp_eq_0_multiuse(
+-; CHECK-NEXT:    [[SH:%.*]] = lshr i8 1, [[X:%.*]]
+-; CHECK-NEXT:    [[ADD:%.*]] = shl nuw nsw i8 [[SH]], 1
++; CHECK-NEXT:    [[TMP1:%.*]] = icmp eq i8 [[X:%.*]], 0
++; CHECK-NEXT:    [[ADD:%.*]] = select i1 [[TMP1]], i8 2, i8 0
+ ; CHECK-NEXT:    ret i8 [[ADD]]
+ ;
+   %sh = lshr i8 1, %x
+@@ -207,7 +208,8 @@ define i8 @and1_lshr1_is_cmp_eq_0_multiuse(i8 %x) {
+ 
+ define <2 x i8> @and1_lshr1_is_cmp_eq_0_vec(<2 x i8> %x) {
+ ; CHECK-LABEL: @and1_lshr1_is_cmp_eq_0_vec(
+-; CHECK-NEXT:    [[SH:%.*]] = lshr <2 x i8> splat (i8 1), [[X:%.*]]
++; CHECK-NEXT:    [[TMP1:%.*]] = icmp eq <2 x i8> [[X:%.*]], zeroinitializer
++; CHECK-NEXT:    [[SH:%.*]] = zext <2 x i1> [[TMP1]] to <2 x i8>
+ ; CHECK-NEXT:    ret <2 x i8> [[SH]]
+ ;
+   %sh = lshr <2 x i8> <i8 1, i8 1>, %x
+@@ -217,7 +219,8 @@ define <2 x i8> @and1_lshr1_is_cmp_eq_0_vec(<2 x i8> %x) {
+ 
+ define <2 x i8> @and1_lshr1_is_cmp_eq_0_vec_poison(<2 x i8> %x) {
+ ; CHECK-LABEL: @and1_lshr1_is_cmp_eq_0_vec_poison(
+-; CHECK-NEXT:    [[AND:%.*]] = lshr <2 x i8> <i8 1, i8 poison>, [[X:%.*]]
++; CHECK-NEXT:    [[TMP1:%.*]] = icmp eq <2 x i8> [[X:%.*]], zeroinitializer
++; CHECK-NEXT:    [[AND:%.*]] = zext <2 x i1> [[TMP1]] to <2 x i8>
+ ; CHECK-NEXT:    ret <2 x i8> [[AND]]
+ ;
+   %sh = lshr <2 x i8> <i8 1, i8 poison>, %x
+diff --git a/llvm/test/Transforms/InstCombine/conditional-variable-length-signext-after-high-bit-extract.ll b/llvm/test/Transforms/InstCombine/conditional-variable-length-signext-after-high-bit-extract.ll
+index b00b3a289de47..ccccafdf5f3c7 100644
+--- a/llvm/test/Transforms/InstCombine/conditional-variable-length-signext-after-high-bit-extract.ll
++++ b/llvm/test/Transforms/InstCombine/conditional-variable-length-signext-after-high-bit-extract.ll
+@@ -1140,10 +1140,8 @@ define i32 @n290_or_with_wrong_magic(i32 %data, i32 %nbits) {
+ 
+ define i32 @bitwidth_does_not_fit(i3 %arg) {
+ ; CHECK-LABEL: @bitwidth_does_not_fit(
+-; CHECK-NEXT:    [[NEG:%.*]] = sub i3 0, [[ARG:%.*]]
+-; CHECK-NEXT:    [[NEG_EXT:%.*]] = zext i3 [[NEG]] to i32
+-; CHECK-NEXT:    [[SHR:%.*]] = lshr i32 1, [[NEG_EXT]]
+-; CHECK-NEXT:    [[INC:%.*]] = add nuw nsw i32 [[SHR]], 1
++; CHECK-NEXT:    [[TMP1:%.*]] = icmp eq i3 [[ARG:%.*]], 0
++; CHECK-NEXT:    [[INC:%.*]] = select i1 [[TMP1]], i32 2, i32 1
+ ; CHECK-NEXT:    ret i32 [[INC]]
+ ;
+   %neg = sub i3 0, %arg
+diff --git a/llvm/test/Transforms/InstCombine/lshr.ll b/llvm/test/Transforms/InstCombine/lshr.ll
+index ff358c6bc772a..be78220ee47ea 100644
+--- a/llvm/test/Transforms/InstCombine/lshr.ll
++++ b/llvm/test/Transforms/InstCombine/lshr.ll
+@@ -1585,3 +1585,45 @@ entry:
+   %conv = and i32 %shift, 32767
+   ret i32 %conv
+ }
++
++; lshr 1, X --> zext (X == 0)
++
++define i32 @lshr_one_i32(i32 %x) {
++; CHECK-LABEL: @lshr_one_i32(
++; CHECK-NEXT:    [[TMP1:%.*]] = icmp eq i32 [[X:%.*]], 0
++; CHECK-NEXT:    [[SHR:%.*]] = zext i1 [[TMP1]] to i32
++; CHECK-NEXT:    ret i32 [[SHR]]
++;
++  %shr = lshr i32 1, %x
++  ret i32 %shr
++}
++
++define i64 @lshr_one_i64(i64 %x) {
++; CHECK-LABEL: @lshr_one_i64(
++; CHECK-NEXT:    [[TMP1:%.*]] = icmp eq i64 [[X:%.*]], 0
++; CHECK-NEXT:    [[SHR:%.*]] = zext i1 [[TMP1]] to i64
++; CHECK-NEXT:    ret i64 [[SHR]]
++;
++  %shr = lshr i64 1, %x
++  ret i64 %shr
++}
++
++define <4 x i32> @lshr_one_v4i32(<4 x i32> %x) {
++; CHECK-LABEL: @lshr_one_v4i32(
++; CHECK-NEXT:    [[TMP1:%.*]] = icmp eq <4 x i32> [[X:%.*]], zeroinitializer
++; CHECK-NEXT:    [[SHR:%.*]] = zext <4 x i1> [[TMP1]] to <4 x i32>
++; CHECK-NEXT:    ret <4 x i32> [[SHR]]
++;
++  %shr = lshr <4 x i32> <i32 1, i32 1, i32 1, i32 1>, %x
++  ret <4 x i32> %shr
++}
++
++; Negative test: constant is not 1
++define i32 @lshr_two_i32(i32 %x) {
++; CHECK-LABEL: @lshr_two_i32(
++; CHECK-NEXT:    [[SHR:%.*]] = lshr i32 2, [[X:%.*]]
++; CHECK-NEXT:    ret i32 [[SHR]]
++;
++  %shr = lshr i32 2, %x
++  ret i32 %shr
++}
+diff --git a/llvm/test/Transforms/InstCombine/shift-direction-in-bit-test.ll b/llvm/test/Transforms/InstCombine/shift-direction-in-bit-test.ll
+index ebb53e36a3f21..5d63545b08e9a 100644
+--- a/llvm/test/Transforms/InstCombine/shift-direction-in-bit-test.ll
++++ b/llvm/test/Transforms/InstCombine/shift-direction-in-bit-test.ll
+@@ -225,10 +225,11 @@ define i1 @t12_shift_of_const0(i32 %x, i32 %y, i32 %z) {
+ }
+ define i1 @t13_shift_of_const1(i32 %x, i32 %y, i32 %z) {
+ ; CHECK-LABEL: @t13_shift_of_const1(
+-; CHECK-NEXT:    [[T0:%.*]] = lshr i32 1, [[Y:%.*]]
+-; CHECK-NEXT:    [[T1:%.*]] = and i32 [[T0]], [[Z:%.*]]
++; CHECK-NEXT:    [[TMP1:%.*]] = icmp ne i32 [[Y:%.*]], 0
++; CHECK-NEXT:    [[T1:%.*]] = and i32 [[Z:%.*]], 1
+ ; CHECK-NEXT:    [[T2:%.*]] = icmp eq i32 [[T1]], 0
+-; CHECK-NEXT:    ret i1 [[T2]]
++; CHECK-NEXT:    [[T3:%.*]] = select i1 [[TMP1]], i1 true, i1 [[T2]]
++; CHECK-NEXT:    ret i1 [[T3]]
+ ;
+   %t0 = lshr i32 1, %y
+   %t1 = and i32 %t0, %z
+@@ -238,10 +239,11 @@ define i1 @t13_shift_of_const1(i32 %x, i32 %y, i32 %z) {
+ 
+ define i1 @t14_and_with_const0(i32 %x, i32 %y, i32 %z) {
+ ; CHECK-LABEL: @t14_and_with_const0(
+-; CHECK-NEXT:    [[TMP1:%.*]] = lshr i32 1, [[Y:%.*]]
+-; CHECK-NEXT:    [[TMP2:%.*]] = and i32 [[X:%.*]], [[TMP1]]
++; CHECK-NEXT:    [[TMP1:%.*]] = icmp ne i32 [[Y:%.*]], 0
++; CHECK-NEXT:    [[TMP2:%.*]] = and i32 [[X:%.*]], 1
+ ; CHECK-NEXT:    [[T2:%.*]] = icmp eq i32 [[TMP2]], 0
+-; CHECK-NEXT:    ret i1 [[T2]]
++; CHECK-NEXT:    [[T3:%.*]] = select i1 [[TMP1]], i1 true, i1 [[T2]]
++; CHECK-NEXT:    ret i1 [[T3]]
+ ;
+   %t0 = shl i32 %x, %y
+   %t1 = and i32 %t0, 1
