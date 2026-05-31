@@ -201,9 +201,8 @@ bb.u:                                             ; preds = %bb.s, %bb.t
   %.pn.i227 = phi i64 [ %i.cg, %bb.t ], [ %i.cd, %bb.s ] ; 4 uses
   %i.ci = phi i32 [ %i.ch, %bb.t ], [ %i.bs, %bb.s ]
   %i.cj = getelementptr inbounds nuw i8, ptr %i.bv, i64 %.pn.i227 ; 3 uses
-  %12 = sub nsw i32 %i.br, %i.ci                  ; 3 uses
-  %i.ck = sub nsw i32 1, %12                      ; 2 uses
-  %i.cl = icmp eq i32 %12, 1
+  %i.ck = sub nsw i32 %i.br, %i.ci                ; 2 uses
+  %i.cl = icmp eq i32 %i.ck, 1
   br i1 %i.cl, label %.lr.ph86.i.preheader, label %bb.v
 
 .lr.ph86.i.preheader:                             ; preds = %bb.u
@@ -224,30 +223,18 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.w, %bb.v
   %i.cr = phi i32 [ %i.cq, %bb.w ], [ %i.br, %bb.v ]
   %i.cs = zext nneg i32 %i.cr to i64
-  %i.ct = sext i32 %i.ck to i64                   ; 2 uses
-  %13 = getelementptr inbounds [4 x i8], ptr @_ZL7multies, i64 %i.ct
-  %14 = load i32, ptr %13, align 4
-  %15 = getelementptr inbounds [4 x i8], ptr @_ZL9DECPOWERS, i64 %i.ct
-  %16 = load i32, ptr %15, align 4
-  %17 = sext i32 %12 to i64
-  %i.cu = getelementptr inbounds [4 x i8], ptr @_ZL9DECPOWERS, i64 %17
+  %i.ct = sext i32 %i.ck to i64
+  %i.cu = getelementptr inbounds [4 x i8], ptr @_ZL9DECPOWERS, i64 %i.ct
   %i.cv = load i32, ptr %i.cu, align 4
-  %18 = lshr i32 1, %i.ck
-  %19 = mul nuw nsw i32 %18, %14
-  %20 = lshr i32 %19, 17                          ; 2 uses
-  %21 = mul i32 %20, %16
-  %22 = sub i32 1, %21
   %.not72.i.not = icmp samesign ult i64 %.pn.i227, %i.cs
   br i1 %.not72.i.not, label %bb.y, label %.loopexit76.loopexit92.i
 
 bb.y:                                             ; preds = %bb.x
-  %23 = trunc i32 %20 to i8
-  store i8 %23, ptr %i.cj, align 1
+  store i8 0, ptr %i.cj, align 1
   br label %.loopexit76.loopexit92.i
 
 .loopexit76.loopexit92.i:                         ; preds = %bb.y, %bb.x
-  %24 = mul i32 %22, %i.cv
-  %i.cw = trunc i32 %24 to i8
+  %i.cw = trunc i32 %i.cv to i8
   br label %.loopexit76.i
 
 .loopexit76.i:                                    ; preds = %.lr.ph86.i.preheader, %.loopexit76.loopexit92.i
@@ -650,9 +637,8 @@ bb.q:                                             ; preds = %bb.o, %bb.p
   %.pn.i = phi i64 [ %i.av, %bb.p ], [ %i.as, %bb.o ] ; 4 uses
   %i.ax = phi i32 [ %i.aw, %bb.p ], [ %i.ak, %bb.o ]
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ad, i64 %.pn.i ; 3 uses
-  %8 = sub nsw i32 %i.aj, %i.ax                   ; 3 uses
-  %i.az = sub nsw i32 1, %8                       ; 2 uses
-  %i.ba = icmp eq i32 %8, 1
+  %i.az = sub nsw i32 %i.aj, %i.ax                ; 2 uses
+  %i.ba = icmp eq i32 %i.az, 1
   br i1 %i.ba, label %.lr.ph86.i.preheader, label %bb.r
 
 .lr.ph86.i.preheader:                             ; preds = %bb.q
@@ -673,30 +659,18 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.s, %bb.r
   %i.bg = phi i32 [ %i.bf, %bb.s ], [ %i.aj, %bb.r ]
   %i.bh = zext nneg i32 %i.bg to i64
-  %i.bi = sext i32 %i.az to i64                   ; 2 uses
-  %9 = getelementptr inbounds [4 x i8], ptr @_ZL7multies, i64 %i.bi
-  %10 = load i32, ptr %9, align 4
-  %11 = getelementptr inbounds [4 x i8], ptr @_ZL9DECPOWERS, i64 %i.bi
-  %12 = load i32, ptr %11, align 4
-  %13 = sext i32 %8 to i64
-  %i.bj = getelementptr inbounds [4 x i8], ptr @_ZL9DECPOWERS, i64 %13
+  %i.bi = sext i32 %i.az to i64
+  %i.bj = getelementptr inbounds [4 x i8], ptr @_ZL9DECPOWERS, i64 %i.bi
   %i.bk = load i32, ptr %i.bj, align 4
-  %14 = lshr i32 1, %i.az
-  %15 = mul nuw nsw i32 %14, %10
-  %16 = lshr i32 %15, 17                          ; 2 uses
-  %17 = mul i32 %16, %12
-  %18 = sub i32 1, %17
   %.not72.i.not = icmp samesign ult i64 %.pn.i, %i.bh
   br i1 %.not72.i.not, label %bb.u, label %.loopexit76.loopexit92.i
 
 bb.u:                                             ; preds = %bb.t
-  %19 = trunc i32 %16 to i8
-  store i8 %19, ptr %i.ay, align 1
+  store i8 0, ptr %i.ay, align 1
   br label %.loopexit76.loopexit92.i
 
 .loopexit76.loopexit92.i:                         ; preds = %bb.u, %bb.t
-  %20 = mul i32 %18, %i.bk
-  %i.bl = trunc i32 %20 to i8
+  %i.bl = trunc i32 %i.bk to i8
   br label %.loopexit76.i
 
 .loopexit76.i:                                    ; preds = %.lr.ph86.i.preheader, %.loopexit76.loopexit92.i

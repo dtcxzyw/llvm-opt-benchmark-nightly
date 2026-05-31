@@ -201,10 +201,8 @@ bb.mo:                                            ; preds = %_ZNKSt7__cxx1112bas
   br label %_ZNSt10unique_ptrIN6duckdb15LogicalOperatorESt14default_deleteIS1_EED2Ev.exit580
 
 switch.lookup:                                    ; preds = %bb.mh
-  %83 = shl nuw nsw i8 %i.aem, 3
-  %switch.shiftamt = zext nneg i8 %83 to i24
-  %switch.downshift = lshr i24 1, %switch.shiftamt
-  %switch.masked = trunc nuw nsw i24 %switch.downshift to i8
+  %83 = icmp eq i8 %i.aem, 0
+  %switch.masked = zext i1 %83 to i8
   %i.afa = getelementptr inbounds nuw i8, ptr %i.aej, i64 115
   store i8 %switch.masked, ptr %i.afa, align 1, !tbaa !150
   %i.afb = getelementptr inbounds nuw i8, ptr %0, i64 64

@@ -201,51 +201,41 @@ bb.bx:                                            ; preds = %._crit_edge96.i
 
 bb.by:                                            ; preds = %._crit_edge.i193
   %i.aml = load i32, ptr %i.k, align 8
-  %6 = sub nsw i32 8, %i.aml
-  %7 = zext nneg i32 %6 to i64
-  %8 = lshr i64 1, %7
-  %9 = trunc nuw nsw i64 %8 to i8
+  %6 = icmp eq i32 %i.aml, 8
+  %7 = zext i1 %6 to i8
   %i.amm = load ptr, ptr %i.g, align 8
   %i.amn = getelementptr inbounds nuw i8, ptr %i.amm, i64 1
-  store i8 %9, ptr %i.amn, align 1
+  store i8 %7, ptr %i.amn, align 1
   %i.amo = icmp samesign ugt i32 %i.amc, 14
   br i1 %i.amo, label %bb.bz, label %bb.cb
 
 bb.bz:                                            ; preds = %bb.by
   %i.amp = load i32, ptr %i.k, align 8
-  %10 = sub nsw i32 16, %i.amp
-  %11 = zext nneg i32 %10 to i64
-  %12 = lshr i64 1, %11
-  %13 = trunc nuw nsw i64 %12 to i8
+  %8 = icmp eq i32 %i.amp, 16
+  %9 = zext i1 %8 to i8
   %i.amq = load ptr, ptr %i.g, align 8
   %i.amr = getelementptr inbounds nuw i8, ptr %i.amq, i64 2
-  store i8 %13, ptr %i.amr, align 1
+  store i8 %9, ptr %i.amr, align 1
   %i.ams = icmp samesign ugt i32 %i.amc, 22
   br i1 %i.ams, label %bb.ca, label %bb.cb
 
 bb.ca:                                            ; preds = %bb.bz
   %i.amt = load i32, ptr %i.k, align 8
-  %14 = sub nsw i32 24, %i.amt
-  %15 = zext nneg i32 %14 to i64
-  %16 = lshr i64 1, %15
-  %17 = trunc nuw nsw i64 %16 to i8
+  %10 = icmp eq i32 %i.amt, 24
+  %11 = zext i1 %10 to i8
   %i.amu = load ptr, ptr %i.g, align 8
   %i.amv = getelementptr inbounds nuw i8, ptr %i.amu, i64 3
-  store i8 %17, ptr %i.amv, align 1
+  store i8 %11, ptr %i.amv, align 1
   %i.amw = icmp samesign ugt i32 %i.amc, 30
   br i1 %i.amw, label %.sink.split.i190, label %bb.cb
 
 .sink.split.i190:                                 ; preds = %bb.ca
-  %i.amx = load i32, ptr %i.k, align 8            ; 2 uses
-  %.not41.i191 = icmp eq i32 %i.amx, 0
-  %18 = sub nsw i32 32, %i.amx
-  %19 = zext nneg i32 %18 to i64
-  %20 = lshr i64 1, %19
-  %21 = trunc nuw nsw i64 %20 to i8
-  %.sink.i192 = select i1 %.not41.i191, i8 0, i8 %21
+  %i.amx = load i32, ptr %i.k, align 8
+  %.not41.i191 = icmp eq i32 %i.amx, 32
+  %12 = zext i1 %.not41.i191 to i8
   %i.amy = load ptr, ptr %i.g, align 8
   %i.amz = getelementptr inbounds nuw i8, ptr %i.amy, i64 4
-  store i8 %.sink.i192, ptr %i.amz, align 1
+  store i8 %12, ptr %i.amz, align 1
   br label %bb.cb
 
 bb.cb:                                            ; preds = %._crit_edge.i193, %bb.by, %bb.bz, %bb.ca, %.sink.split.i190
