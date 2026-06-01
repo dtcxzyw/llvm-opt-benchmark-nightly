@@ -64,6 +64,7 @@ $_ZTV17DeadlyExportError = comdat any
 @.str.11 = private unnamed_addr constant [49 x i8] c"cannot create std::vector larger than max_size()\00", align 1
 @_ZTV17DeadlyExportError = linkonce_odr unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTI17DeadlyExportError, ptr @_ZNSt13runtime_errorD2Ev, ptr @_ZN17DeadlyExportErrorD0Ev, ptr @_ZNKSt13runtime_error4whatEv] }, comdat, align 8
 @.str.12 = private unnamed_addr constant [26 x i8] c"vector::_M_default_append\00", align 1
+@switch.table._ZN6Assimp3FBX17FBXExportProperty4sizeEv = private unnamed_addr constant [39 x i64] [i64 1, i64 1, i64 poison, i64 1, i64 poison, i64 poison, i64 1, i64 poison, i64 poison, i64 1, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 5, i64 5, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 1, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 13, i64 poison, i64 poison, i64 poison, i64 poison, i64 13], align 8
 
 @_ZN6Assimp3FBX17FBXExportPropertyC1Eb = hidden unnamed_addr alias void (ptr, i1), ptr @_ZN6Assimp3FBX17FBXExportPropertyC2Eb
 @_ZN6Assimp3FBX17FBXExportPropertyC1Es = hidden unnamed_addr alias void (ptr, i16), ptr @_ZN6Assimp3FBX17FBXExportPropertyC2Es
@@ -466,26 +467,11 @@ _ZNK12aiMatrix4x4tIfEixEj.exit.3.3:
 define hidden noundef i64 @_ZN6Assimp3FBX17FBXExportProperty4sizeEv(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load i8, ptr %0, align 8
-  switch i8 %i.a, label %bb.b [
-    i8 67, label %bb.e
-    i8 89, label %bb.e
-    i8 73, label %bb.e
-    i8 70, label %bb.e
-    i8 68, label %bb.e
-    i8 76, label %bb.e
-    i8 83, label %1
-    i8 82, label %1
-    i8 105, label %2
-    i8 100, label %2
-  ]
+  %switch.tableidx = add i8 %i.a, -67             ; 3 uses
+  %1 = icmp ult i8 %switch.tableidx, 39
+  br i1 %1, label %switch.hole_check, label %bb.b
 
-1:                                                ; preds = %bb.a, %bb.a
-  br label %bb.e
-
-2:                                                ; preds = %bb.a, %bb.a
-  br label %bb.e
-
-bb.b:                                             ; preds = %bb.a
+bb.b:                                             ; preds = %switch.hole_check, %bb.a
   %i.b = tail call ptr @__cxa_allocate_exception(i64 16) #17 ; 3 uses
   invoke void @_ZN17DeadlyExportErrorC2IJRA43_KcEEEDpOT_(ptr noundef nonnull align 8 dereferenceable(16) %i.b, ptr noundef nonnull align 1 dereferenceable(43) @.str)
           to label %bb.c unwind label %bb.d
@@ -500,15 +486,23 @@ bb.d:                                             ; preds = %bb.b
   tail call void @__cxa_free_exception(ptr nonnull %i.b) #17
   resume { ptr, i32 } %i.c
 
-bb.e:                                             ; preds = %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %2, %1
-  %.sink7 = phi i64 [ 13, %2 ], [ 5, %1 ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ]
+switch.hole_check:                                ; preds = %bb.a
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i64
+  %switch.shifted = lshr i64 283472134731, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  br i1 %switch.lobit, label %bb.e, label %bb.b
+
+bb.e:                                             ; preds = %switch.hole_check
+  %2 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6Assimp3FBX17FBXExportProperty4sizeEv, i64 %2
+  %switch.load = load i64, ptr %switch.gep, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.f = load ptr, ptr %i.e, align 8
   %i.g = load ptr, ptr %i.d, align 8
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = ptrtoint ptr %i.g to i64
-  %i.j = add i64 %.sink7, %i.h
+  %i.j = add i64 %switch.load, %i.h
   %i.k = sub i64 %i.j, %i.i
   ret i64 %i.k
 }

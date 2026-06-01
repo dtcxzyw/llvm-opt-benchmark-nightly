@@ -201,13 +201,11 @@ bb.s:                                             ; preds = %bb.g
   br i1 %or.cond217, label %bb.ak, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %6 = add nsw i32 %4, -2                         ; 2 uses
-  %7 = tail call i32 @llvm.fshl.i32(i32 %6, i32 %6, i32 31)
-  switch i32 %7, label %bb.ak [
-    i32 0, label %bb.u
-    i32 3, label %bb.y
-    i32 4, label %bb.ac
-    i32 7, label %bb.ag
+  switch i32 %4, label %bb.ak [
+    i32 2, label %bb.u
+    i32 8, label %bb.y
+    i32 10, label %bb.ac
+    i32 16, label %bb.ag
   ]
 
 bb.u:                                             ; preds = %bb.t
@@ -610,9 +608,6 @@ declare i64 @llvm.umin.i64(i64, i64) #9
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.ctpop.i32(i32) #9
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.fshl.i32(i32, i32, i32) #9
-
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.cttz.i32(i32, i1 immarg) #10
 
@@ -633,6 +628,9 @@ declare i64 @llvm.abs.i64(i64, i1 immarg) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i128 @llvm.abs.i128(i128, i1 immarg) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.fshl.i32(i32, i32, i32) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #1

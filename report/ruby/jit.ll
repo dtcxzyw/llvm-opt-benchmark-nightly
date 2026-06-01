@@ -38,7 +38,7 @@ target triple = "x86_64-pc-linux-gnu"
 @rb_cFloat = external local_unnamed_addr global i64, align 8
 @ruby_single_main_ractor = external local_unnamed_addr global ptr, align 8
 @rb_shape_tree = external local_unnamed_addr global %struct.rb_shape_tree_t, align 8
-@switch.table.rb_RB_TYPE_P = private unnamed_addr constant [10 x i32] [i32 19, i32 17, i32 poison, i32 poison, i32 poison, i32 18, i32 poison, i32 poison, i32 poison, i32 22], align 4
+@switch.table.rb_RB_TYPE_P = private unnamed_addr constant [37 x i32] [i32 19, i32 poison, i32 poison, i32 poison, i32 17, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 18, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 22], align 4
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define hidden i32 @rb_iseq_encoded_size(ptr noundef readonly captures(none) %0) local_unnamed_addr #0 {
@@ -441,11 +441,9 @@ bb.b:                                             ; preds = %bb.a
   br label %rbimpl_RB_TYPE_P_fastpath.exit
 
 bb.c:                                             ; preds = %bb.a
-  %2 = tail call i64 @llvm.fshl.i64(i64 %0, i64 %0, i64 62) ; 3 uses
-  %i.i = icmp ult i64 %2, 10
-  %switch.maskindex = trunc i64 %2 to i16
-  %switch.shifted = lshr i16 547, %switch.maskindex
-  %switch.lobit = trunc i16 %switch.shifted to i1
+  %i.i = icmp ult i64 %0, 37
+  %switch.shifted = lshr i64 68720525329, %0
+  %switch.lobit = trunc i64 %switch.shifted to i1
   %or.cond = select i1 %i.i, i1 %switch.lobit, i1 false
   br i1 %or.cond, label %switch.lookup, label %bb.d
 
@@ -460,7 +458,7 @@ bb.e:                                             ; preds = %bb.d
   br label %rbimpl_RB_TYPE_P_fastpath.exit
 
 switch.lookup:                                    ; preds = %bb.c
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.rb_RB_TYPE_P, i64 %2
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.rb_RB_TYPE_P, i64 %0
   %switch.load = load i32, ptr %switch.gep, align 4
   br label %rbimpl_RB_TYPE_P_fastpath.exit
 
@@ -863,14 +861,11 @@ declare void @llvm.clear_cache.p0(ptr, ptr) #14
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #15
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.fshl.i64(i64, i64, i64) #16
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #17
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.umax.i16(i16, i16) #16
+declare i16 @llvm.umax.i16(i16, i16) #17
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -888,8 +883,8 @@ attributes #12 = { nofree noreturn nounwind "no-trapping-math"="true" "stack-pro
 attributes #13 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #14 = { nounwind }
 attributes #15 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
-attributes #16 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #17 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #16 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #17 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #18 = { cold noreturn nounwind }
 attributes #19 = { cold }
 

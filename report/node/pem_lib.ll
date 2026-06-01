@@ -53,6 +53,7 @@ target triple = "x86_64-pc-linux-gnu"
 @__func__.load_iv = private unnamed_addr constant [8 x i8] c"load_iv\00", align 1
 @__func__.get_name = private unnamed_addr constant [9 x i8] c"get_name\00", align 1
 @__func__.get_header_and_data = private unnamed_addr constant [20 x i8] c"get_header_and_data\00", align 1
+@switch.table.PEM_proc_type = private unnamed_addr constant [21 x ptr] [ptr @.str.2, ptr @.str.5, ptr @.str.5, ptr @.str.5, ptr @.str.5, ptr @.str.5, ptr @.str.5, ptr @.str.5, ptr @.str.5, ptr @.str.5, ptr @.str.4, ptr @.str.5, ptr @.str.5, ptr @.str.5, ptr @.str.5, ptr @.str.5, ptr @.str.5, ptr @.str.5, ptr @.str.5, ptr @.str.5, ptr @.str.3], align 8
 
 ; Function Attrs: nounwind uwtable
 define dso_local i32 @PEM_def_callback(ptr noundef %0, i32 noundef %1, i32 noundef %2, ptr noundef readonly captures(address_is_null) %3) local_unnamed_addr #0 {
@@ -125,23 +126,18 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 define dso_local void @PEM_proc_type(ptr noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #7 ; 2 uses
-  switch i32 %1, label %bb.b [
-    i32 10, label %bb.c
-    i32 30, label %2
-    i32 20, label %3
-  ]
-
-2:                                                ; preds = %bb.a
-  br label %bb.c
-
-3:                                                ; preds = %bb.a
-  br label %bb.c
+  %switch.tableidx = add i32 %1, -10              ; 2 uses
+  %2 = icmp ult i32 %switch.tableidx, 21
+  br i1 %2, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
+  %3 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.PEM_proc_type, i64 %3
+  %switch.load = load ptr, ptr %switch.gep, align 8
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.a, %2, %bb.b, %3
-  %.0 = phi ptr [ @.str.5, %bb.b ], [ @.str.3, %2 ], [ @.str.4, %3 ], [ @.str.2, %bb.a ]
+bb.c:                                             ; preds = %bb.a, %bb.b
+  %.0 = phi ptr [ %switch.load, %bb.b ], [ @.str.5, %bb.a ]
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %i.a
   %i.c = sub i64 1024, %i.a
   %i.d = tail call i32 (ptr, i64, ptr, ...) @BIO_snprintf(ptr noundef nonnull %i.b, i64 noundef %i.c, ptr noundef nonnull @.str.6, ptr noundef nonnull %.0) #8 ; 0 uses

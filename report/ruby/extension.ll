@@ -162,6 +162,7 @@ target triple = "x86_64-pc-linux-gnu"
 @parse_stream_eof.rbimpl_id = internal unnamed_addr global i64 0, align 8
 @.str.92 = private unnamed_addr constant [5 x i8] c"eof?\00", align 1
 @.str.93 = private unnamed_addr constant [41 x i8] c"Invalid or non ascii-compatible encoding\00", align 1
+@switch.table.build_options_i = private unnamed_addr constant [24 x i8] [i8 1, i8 poison, i8 poison, i8 poison, i8 2, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 4, i8 poison, i8 8, i8 poison, i8 16, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 32], align 1
 
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local void @Init_prism() local_unnamed_addr #0 {
@@ -564,39 +565,27 @@ bb.af:                                            ; preds = %bb.ae
   %.06771 = phi i8 [ %i.bt, %bb.ah ], [ 0, %bb.af ]
   %i.bp = getelementptr i8, ptr %i.bn, i64 %.072
   %i.bq = load i8, ptr %i.bp, align 1, !tbaa !49  ; 2 uses
-  switch i8 %i.bq, label %bb.ag [
-    i8 97, label %bb.ah
-    i8 101, label %3
-    i8 108, label %4
-    i8 110, label %5
-    i8 112, label %6
-    i8 120, label %7
-  ]
+  %switch.tableidx = add i8 %i.bq, -97            ; 3 uses
+  %3 = icmp ult i8 %switch.tableidx, 24
+  br i1 %3, label %switch.hole_check, label %bb.ag
 
-3:                                                ; preds = %.lr.ph
-  br label %bb.ah
-
-4:                                                ; preds = %.lr.ph
-  br label %bb.ah
-
-5:                                                ; preds = %.lr.ph
-  br label %bb.ah
-
-6:                                                ; preds = %.lr.ph
-  br label %bb.ah
-
-7:                                                ; preds = %.lr.ph
-  br label %bb.ah
-
-bb.ag:                                            ; preds = %.lr.ph
+bb.ag:                                            ; preds = %switch.hole_check, %.lr.ph
   %i.br = sext i8 %i.bq to i32
   %i.bs = load i64, ptr @rb_eArgError, align 8, !tbaa !11
   tail call void (i64, ptr, ...) @rb_raise(i64 noundef %i.bs, ptr noundef nonnull @.str.66, i32 noundef %i.br) #11
   unreachable
 
-bb.ah:                                            ; preds = %.lr.ph, %3, %4, %5, %6, %7
-  %.sink = phi i8 [ 32, %7 ], [ 2, %3 ], [ 4, %4 ], [ 8, %5 ], [ 16, %6 ], [ 1, %.lr.ph ]
-  %i.bt = or i8 %.06771, %.sink                   ; 2 uses
+switch.hole_check:                                ; preds = %.lr.ph
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i32
+  %switch.shifted = lshr i32 8431633, %switch.maskindex
+  %switch.lobit = trunc i32 %switch.shifted to i1
+  br i1 %switch.lobit, label %bb.ah, label %bb.ag
+
+bb.ah:                                            ; preds = %switch.hole_check
+  %4 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.build_options_i, i64 %4
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %i.bt = or i8 %.06771, %switch.load             ; 2 uses
   %i.bu = add nuw i64 %.072, 1                    ; 2 uses
   %exitcond.not = icmp eq i64 %i.bu, %i.bo
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !68

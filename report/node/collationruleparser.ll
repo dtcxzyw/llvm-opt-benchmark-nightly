@@ -201,30 +201,22 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %bb.d, label %switch.early.test
 
 switch.early.test:                                ; preds = %bb.b
-  switch i32 %0, label %bb.c [
-    i32 96, label %bb.d
-    i32 95, label %bb.d
-    i32 94, label %bb.d
-    i32 93, label %bb.d
-    i32 92, label %bb.d
-    i32 91, label %bb.d
-    i32 64, label %bb.d
-    i32 63, label %bb.d
-    i32 62, label %bb.d
-    i32 61, label %bb.d
-    i32 60, label %bb.d
-    i32 59, label %bb.d
-    i32 58, label %bb.d
-  ]
+  %switch.tableidx = add nsw i32 %0, -58          ; 2 uses
+  %1 = icmp ult i32 %switch.tableidx, 39
+  %switch.maskindex = zext nneg i32 %switch.tableidx to i64
+  %switch.shifted = lshr i64 541165879423, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  %or.cond15 = select i1 %1, i1 %switch.lobit, i1 false
+  br i1 %or.cond15, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %switch.early.test
   %i.c = icmp samesign ugt i32 %0, 122
   %i.d = zext i1 %i.c to i8
   br label %bb.d
 
-bb.d:                                             ; preds = %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %bb.b, %bb.c, %bb.a
-  %1 = phi i8 [ 0, %bb.a ], [ 1, %switch.early.test ], [ %i.d, %bb.c ], [ 1, %bb.b ], [ 1, %switch.early.test ], [ 1, %switch.early.test ], [ 1, %switch.early.test ], [ 1, %switch.early.test ], [ 1, %switch.early.test ], [ 1, %switch.early.test ], [ 1, %switch.early.test ], [ 1, %switch.early.test ], [ 1, %switch.early.test ], [ 1, %switch.early.test ], [ 1, %switch.early.test ], [ 1, %switch.early.test ]
-  ret i8 %1
+bb.d:                                             ; preds = %switch.early.test, %bb.b, %bb.c, %bb.a
+  %2 = phi i8 [ 0, %bb.a ], [ 1, %bb.b ], [ %i.d, %bb.c ], [ 1, %switch.early.test ]
+  ret i8 %2
 }
 
 declare noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString6appendEi(ptr noundef nonnull align 8 dereferenceable(64), i32 noundef) local_unnamed_addr #5

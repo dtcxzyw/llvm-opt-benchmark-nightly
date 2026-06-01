@@ -201,14 +201,12 @@ bb.u:                                             ; preds = %bb.t
 bb.v:                                             ; preds = %.thread211
   %i.bg = sub nsw i64 0, %i.be
   %i.bh = getelementptr inbounds [8 x i8], ptr %i.s, i64 %i.bg ; 12 uses
-  %3 = add nsw i32 %.0149209216, -2
-  %4 = lshr exact i32 %3, 1
-  switch i32 %4, label %.thread239 [
-    i32 0, label %bb.w
-    i32 1, label %bb.x
-    i32 9, label %bb.y
-    i32 10, label %bb.z
-    i32 11, label %bb.aj
+  switch i32 %.0149209216, label %.thread239 [
+    i32 2, label %bb.w
+    i32 4, label %bb.x
+    i32 20, label %bb.y
+    i32 22, label %bb.z
+    i32 24, label %bb.aj
   ]
 
 bb.w:                                             ; preds = %bb.v

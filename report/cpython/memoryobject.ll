@@ -201,6 +201,7 @@ begin_hunk_0
 @memoryview._kwtuple = internal global %struct.anon.918 { %struct.PyGC_Head zeroinitializer, %struct.PyVarObject { %struct._object { %union.anon { i64 1407378104778752 }, ptr @PyTuple_Type }, i64 1 }, i64 -1, [1 x ptr] [ptr getelementptr (i8, ptr @_PyRuntime, i64 93680)] }, align 8
 @memoryview._keywords = internal constant [2 x ptr] [ptr @.str.123, ptr null], align 16
 @memoryview._parser = internal global { ptr, ptr, ptr, ptr, %struct._PyOnceFlag, [3 x i8], i32, i32, i32, i32, [4 x i8], ptr, ptr } { ptr null, ptr @memoryview._keywords, ptr @.str.6, ptr null, %struct._PyOnceFlag zeroinitializer, [3 x i8] zeroinitializer, i32 0, i32 0, i32 0, i32 0, [4 x i8] zeroinitializer, ptr getelementptr (i8, ptr @memoryview._kwtuple, i64 16), ptr null }, align 8
+@switch.table.cast_to_1D = private unnamed_addr constant [51 x i64] [i64 1, i64 poison, i64 poison, i64 1, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 2, i64 4, i64 poison, i64 poison, i64 8, i64 poison, i64 8, i64 poison, i64 8, i64 8, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 1, i64 1, i64 8, i64 2, i64 4, i64 poison, i64 2, i64 4, i64 poison, i64 poison, i64 8, i64 poison, i64 8, i64 poison, i64 poison, i64 8], align 8
 
 ; Function Attrs: nounwind uwtable
 define internal void @mbuf_dealloc(ptr noundef %0) #0 {
@@ -603,44 +604,26 @@ bb.b:                                             ; preds = %bb.a
   %spec.select.idx.i = zext i1 %i.e to i64
   %spec.select.i = getelementptr i8, ptr %i.c, i64 %spec.select.idx.i ; 2 uses
   %i.f = load i8, ptr %spec.select.i, align 1, !tbaa !36 ; 5 uses
-  switch i8 %i.f, label %bb.e [
-    i8 99, label %bb.d
-    i8 98, label %bb.d
-    i8 66, label %bb.d
-    i8 104, label %2
-    i8 72, label %2
-    i8 105, label %3
-    i8 73, label %3
-    i8 108, label %bb.c
-    i8 76, label %bb.c
-    i8 113, label %bb.c
-    i8 81, label %bb.c
-    i8 110, label %bb.c
-    i8 78, label %bb.c
-    i8 102, label %3
-    i8 100, label %bb.c
-    i8 101, label %2
-    i8 63, label %bb.d
-    i8 80, label %bb.c
-  ]
+  %switch.tableidx = add i8 %i.f, -63             ; 3 uses
+  %2 = icmp ult i8 %switch.tableidx, 51
+  br i1 %2, label %bb.c, label %bb.e
 
-2:                                                ; preds = %bb.b, %bb.b, %bb.b
-  br label %bb.d
+bb.c:                                             ; preds = %bb.b
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i64
+  %switch.shifted = lshr i64 1309483989378569, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  br i1 %switch.lobit, label %bb.d, label %bb.e
 
-3:                                                ; preds = %bb.b, %bb.b, %bb.b
-  br label %bb.d
-
-bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b
-  br label %bb.d
-
-bb.d:                                             ; preds = %bb.c, %3, %2, %bb.b, %bb.b, %bb.b, %bb.b
-  %.0.ph.i = phi i64 [ 8, %bb.c ], [ 4, %3 ], [ 2, %2 ], [ 1, %bb.b ], [ 1, %bb.b ], [ 1, %bb.b ], [ 1, %bb.b ] ; 3 uses
+bb.d:                                             ; preds = %bb.c
+  %3 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.cast_to_1D, i64 %3
+  %switch.load = load i64, ptr %switch.gep, align 8 ; 3 uses
   %i.g = getelementptr i8, ptr %spec.select.i, i64 1
   %i.h = load i8, ptr %i.g, align 1, !tbaa !36
   %i.i = icmp eq i8 %i.h, 0
   br i1 %i.i, label %get_native_fmtchar.exit, label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %bb.b
+bb.e:                                             ; preds = %bb.c, %bb.b, %bb.d
   %i.j = load ptr, ptr @PyExc_ValueError, align 8, !tbaa !38
   tail call void @PyErr_SetString(ptr noundef %i.j, ptr noundef nonnull @.str.80) #15
   br label %bb.af
@@ -712,7 +695,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h
 bb.j:                                             ; preds = %bb.g, %bb.g, %bb.g, %bb.h, %bb.h, %switch.early.test, %switch.early.test, %switch.early.test, %get_native_fmtchar.exit43
   %i.u = getelementptr i8, ptr %0, i64 72
   %i.v = load i64, ptr %i.u, align 8, !tbaa !79   ; 2 uses
-  %i.w = add nsw i64 %.0.ph.i, -1
+  %i.w = add nsw i64 %switch.load, -1
   %i.x = and i64 %i.v, %i.w
   %.not = icmp eq i64 %i.x, 0
   br i1 %.not, label %bb.l, label %bb.k
@@ -826,10 +809,10 @@ init_flags.exit:                                  ; preds = %bb.ac, %bb.ab, %bb.
   %.024.i.ph = phi ptr [ %i.ap, %bb.ac ], [ %i.ao, %bb.ab ], [ %i.an, %bb.aa ], [ %i.am, %bb.z ], [ %i.al, %bb.y ], [ %i.ak, %bb.x ], [ %i.aj, %bb.w ], [ %i.ai, %bb.v ], [ %i.ah, %bb.u ], [ %i.ag, %bb.t ], [ %i.af, %bb.s ], [ %i.ae, %bb.r ], [ %i.ad, %bb.q ], [ %i.ac, %bb.p ], [ %i.ab, %bb.o ], [ %i.aa, %bb.n ], [ %i.z, %bb.m ], [ %i.aq, %bb.ad ]
   store ptr %.024.i.ph, ptr %i.k, align 8, !tbaa !54
   %i.as = getelementptr i8, ptr %0, i64 80        ; 2 uses
-  store i64 %.0.ph.i, ptr %i.as, align 8, !tbaa !66
+  store i64 %switch.load, ptr %i.as, align 8, !tbaa !66
   %i.at = getelementptr i8, ptr %0, i64 92
   store i32 1, ptr %i.at, align 4, !tbaa !37
-  %i.au = sdiv i64 %i.v, %.0.ph.i
+  %i.au = sdiv i64 %i.v, %switch.load
   %i.av = getelementptr i8, ptr %0, i64 104
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !64
   store i64 %i.au, ptr %i.aw, align 8, !tbaa !52

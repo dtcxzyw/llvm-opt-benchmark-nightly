@@ -201,6 +201,7 @@ begin_hunk_0
 @_ZZN8facebook5velox10FlatVectorINS0_10StringViewEEC1EPNS0_6memory10MemoryPoolERKSt10shared_ptrIKNS0_4TypeEEN5boost13intrusive_ptrINS0_6BufferEEEiSG_OSt6vectorISG_SaISG_EERKNS0_17SimpleVectorStatsIS2_EESt8optionalIiESQ_SP_IbESQ_SQ_E18veloxCheckFailArgs_4 = linkonce_odr constant %"struct.facebook::velox::detail::VeloxCheckFailArgs" { ptr @.str.180, i64 100, ptr @.str.181, ptr @.str.186, ptr @_ZN8facebook5velox12error_source19kErrorSourceRuntimeE, ptr @_ZN8facebook5velox10error_code13kInvalidStateE, i8 0 }, comdat, align 8
 @_ZZNK8facebook5velox12SimpleVectorINS0_10StringViewEE8toStringB5cxx11EiE18veloxCheckFailArgs = linkonce_odr constant %"struct.facebook::velox::detail::VeloxCheckFailArgs" { ptr @.str.173, i64 252, ptr @.str.225, ptr @.str.226, ptr @_ZN8facebook5velox12error_source19kErrorSourceRuntimeE, ptr @_ZN8facebook5velox10error_code13kInvalidStateE, i8 0 }, comdat, align 8
 @llvm.compiler.used = appending global [2 x ptr] [ptr @_ZN5folly15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEE25wakeRegisteredWaitersImplERjj, ptr @_ZN5folly15SharedMutexImplILb1EvSt6atomicNS_24SharedMutexPolicyDefaultEE25wakeRegisteredWaitersImplERjj], section "llvm.metadata"
+@switch.table._ZN8facebook5velox12_GLOBAL__N_121CastFromJsonTypedImplIN8simdjson8fallback8ondemand5valueEE5applyILNS0_8TypeKindE7EEENS3_10error_codeES6_RNS0_4exec13GenericWriterE = private unnamed_addr constant [90 x i32] [i32 4, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 3, i32 0, i32 0, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 5, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 6, i32 0, i32 0, i32 0, i32 0, i32 0, i32 5, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 2], align 4
 
 ; Function Attrs: mustprogress uwtable
 define noundef zeroext i1 @_ZNK8facebook5velox16JsonCastOperator19isSupportedFromTypeERKSt10shared_ptrIKNS0_4TypeEE(ptr noundef nonnull align 8 dereferenceable(312) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
@@ -603,46 +604,18 @@ _ZN8simdjson8fallback8ondemand14value_iterator12is_root_nullEb.exit.thread: ; pr
   %i.br = zext i32 %i.bq to i64                   ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %.sink, i64 %i.br ; 3 uses
   %i.bt = load i8, ptr %i.bs, align 1, !tbaa !37  ; 4 uses
-  switch i8 %i.bt, label %bb.i [
-    i8 123, label %_ZNSt12__shared_ptrIKN8facebook5velox8JsonTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i.i
-    i8 91, label %4
-    i8 34, label %5
-    i8 110, label %6
-    i8 116, label %7
-    i8 102, label %7
-    i8 45, label %8
-    i8 48, label %8
-    i8 49, label %8
-    i8 50, label %8
-    i8 51, label %8
-    i8 52, label %8
-    i8 53, label %8
-    i8 54, label %8
-    i8 55, label %8
-    i8 56, label %8
-    i8 57, label %8
-  ]
-
-4:                                                ; preds = %_ZN8simdjson8fallback8ondemand14value_iterator12is_root_nullEb.exit.thread
-  br label %_ZNSt12__shared_ptrIKN8facebook5velox8JsonTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i.i
-
-5:                                                ; preds = %_ZN8simdjson8fallback8ondemand14value_iterator12is_root_nullEb.exit.thread
-  br label %_ZNSt12__shared_ptrIKN8facebook5velox8JsonTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i.i
-
-6:                                                ; preds = %_ZN8simdjson8fallback8ondemand14value_iterator12is_root_nullEb.exit.thread
-  br label %_ZNSt12__shared_ptrIKN8facebook5velox8JsonTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i.i
-
-7:                                                ; preds = %_ZN8simdjson8fallback8ondemand14value_iterator12is_root_nullEb.exit.thread, %_ZN8simdjson8fallback8ondemand14value_iterator12is_root_nullEb.exit.thread
-  br label %_ZNSt12__shared_ptrIKN8facebook5velox8JsonTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i.i
-
-8:                                                ; preds = %_ZN8simdjson8fallback8ondemand14value_iterator12is_root_nullEb.exit.thread, %_ZN8simdjson8fallback8ondemand14value_iterator12is_root_nullEb.exit.thread, %_ZN8simdjson8fallback8ondemand14value_iterator12is_root_nullEb.exit.thread, %_ZN8simdjson8fallback8ondemand14value_iterator12is_root_nullEb.exit.thread, %_ZN8simdjson8fallback8ondemand14value_iterator12is_root_nullEb.exit.thread, %_ZN8simdjson8fallback8ondemand14value_iterator12is_root_nullEb.exit.thread, %_ZN8simdjson8fallback8ondemand14value_iterator12is_root_nullEb.exit.thread, %_ZN8simdjson8fallback8ondemand14value_iterator12is_root_nullEb.exit.thread, %_ZN8simdjson8fallback8ondemand14value_iterator12is_root_nullEb.exit.thread, %_ZN8simdjson8fallback8ondemand14value_iterator12is_root_nullEb.exit.thread, %_ZN8simdjson8fallback8ondemand14value_iterator12is_root_nullEb.exit.thread
-  br label %_ZNSt12__shared_ptrIKN8facebook5velox8JsonTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i.i
+  %switch.tableidx = add i8 %i.bt, -34            ; 2 uses
+  %4 = icmp ult i8 %switch.tableidx, 90
+  br i1 %4, label %bb.i, label %_ZNSt12__shared_ptrIKN8facebook5velox8JsonTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i.i
 
 bb.i:                                             ; preds = %_ZN8simdjson8fallback8ondemand14value_iterator12is_root_nullEb.exit.thread
+  %5 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN8facebook5velox12_GLOBAL__N_121CastFromJsonTypedImplIN8simdjson8fallback8ondemand5valueEE5applyILNS0_8TypeKindE7EEENS3_10error_codeES6_RNS0_4exec13GenericWriterE, i64 %5
+  %switch.load = load i32, ptr %switch.gep, align 4
   br label %_ZNSt12__shared_ptrIKN8facebook5velox8JsonTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i.i
 
-_ZNSt12__shared_ptrIKN8facebook5velox8JsonTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i.i: ; preds = %bb.i, %8, %7, %6, %5, %4, %_ZN8simdjson8fallback8ondemand14value_iterator12is_root_nullEb.exit.thread
-  %.sroa.0107.0.i.i = phi i32 [ 0, %bb.i ], [ 3, %8 ], [ 1, %4 ], [ 4, %5 ], [ 6, %6 ], [ 5, %7 ], [ 2, %_ZN8simdjson8fallback8ondemand14value_iterator12is_root_nullEb.exit.thread ] ; 2 uses
+_ZNSt12__shared_ptrIKN8facebook5velox8JsonTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i.i: ; preds = %_ZN8simdjson8fallback8ondemand14value_iterator12is_root_nullEb.exit.thread, %bb.i
+  %.sroa.0107.0.i.i = phi i32 [ %switch.load, %bb.i ], [ 0, %_ZN8simdjson8fallback8ondemand14value_iterator12is_root_nullEb.exit.thread ] ; 2 uses
   %i.bu = load ptr, ptr %i.bp, align 8, !tbaa !2603
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
   %i.bw = load ptr, ptr %i.bv, align 8, !tbaa !7
@@ -1045,46 +1018,18 @@ bb.a:
   %i.c = zext i32 %i.b to i64                     ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.c ; 6 uses
   %i.e = load i8, ptr %i.d, align 1, !tbaa !37    ; 4 uses
-  switch i8 %i.e, label %bb.b [
-    i8 123, label %_ZNSt12__shared_ptrIKN8facebook5velox8JsonTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i
-    i8 91, label %2
-    i8 34, label %3
-    i8 110, label %4
-    i8 116, label %5
-    i8 102, label %5
-    i8 45, label %6
-    i8 48, label %6
-    i8 49, label %6
-    i8 50, label %6
-    i8 51, label %6
-    i8 52, label %6
-    i8 53, label %6
-    i8 54, label %6
-    i8 55, label %6
-    i8 56, label %6
-    i8 57, label %6
-  ]
-
-2:                                                ; preds = %bb.a
-  br label %_ZNSt12__shared_ptrIKN8facebook5velox8JsonTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i
-
-3:                                                ; preds = %bb.a
-  br label %_ZNSt12__shared_ptrIKN8facebook5velox8JsonTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i
-
-4:                                                ; preds = %bb.a
-  br label %_ZNSt12__shared_ptrIKN8facebook5velox8JsonTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i
-
-5:                                                ; preds = %bb.a, %bb.a
-  br label %_ZNSt12__shared_ptrIKN8facebook5velox8JsonTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i
-
-6:                                                ; preds = %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a
-  br label %_ZNSt12__shared_ptrIKN8facebook5velox8JsonTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i
+  %switch.tableidx = add i8 %i.e, -34             ; 2 uses
+  %2 = icmp ult i8 %switch.tableidx, 90
+  br i1 %2, label %bb.b, label %_ZNSt12__shared_ptrIKN8facebook5velox8JsonTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i
 
 bb.b:                                             ; preds = %bb.a
+  %3 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN8facebook5velox12_GLOBAL__N_121CastFromJsonTypedImplIN8simdjson8fallback8ondemand5valueEE5applyILNS0_8TypeKindE7EEENS3_10error_codeES6_RNS0_4exec13GenericWriterE, i64 %3
+  %switch.load = load i32, ptr %switch.gep, align 4
   br label %_ZNSt12__shared_ptrIKN8facebook5velox8JsonTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i
 
-_ZNSt12__shared_ptrIKN8facebook5velox8JsonTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i: ; preds = %bb.b, %6, %5, %4, %3, %2, %bb.a
-  %.sroa.076.0.i = phi i32 [ 0, %bb.b ], [ 3, %6 ], [ 1, %2 ], [ 4, %3 ], [ 6, %4 ], [ 5, %5 ], [ 2, %bb.a ] ; 2 uses
+_ZNSt12__shared_ptrIKN8facebook5velox8JsonTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i: ; preds = %bb.a, %bb.b
+  %.sroa.076.0.i = phi i32 [ %switch.load, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.f = load ptr, ptr %1, align 8, !tbaa !2603
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !7

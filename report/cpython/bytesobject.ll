@@ -201,6 +201,7 @@ begin_hunk_0
 @striter_methods = internal global [4 x { ptr, ptr, i32, [4 x i8], ptr }] [{ ptr, ptr, i32, [4 x i8], ptr } { ptr @.str.170, ptr @striter_len, i32 4, [4 x i8] zeroinitializer, ptr @length_hint_doc }, { ptr, ptr, i32, [4 x i8], ptr } { ptr @.str.171, ptr @striter_reduce, i32 4, [4 x i8] zeroinitializer, ptr @reduce_doc }, { ptr, ptr, i32, [4 x i8], ptr } { ptr @.str.172, ptr @striter_setstate, i32 8, [4 x i8] zeroinitializer, ptr @setstate_doc }, { ptr, ptr, i32, [4 x i8], ptr } zeroinitializer], align 16
 @.str.174 = private unnamed_addr constant [6 x i8] c"N(O)n\00", align 1
 @.str.175 = private unnamed_addr constant [6 x i8] c"N(())\00", align 1
+@switch.table._PyBytes_FormatEx = private unnamed_addr constant [21 x i32] [i32 10, i32 poison, i32 poison, i32 poison, i32 poison, i32 10, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 8, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 10, i32 poison, i32 poison, i32 16], align 4
 @switch.table.bytes_richcompare = private unnamed_addr constant [6 x ptr] [ptr @_Py_FalseStruct, ptr @_Py_TrueStruct, ptr @_Py_TrueStruct, ptr @_Py_FalseStruct, ptr @_Py_FalseStruct, ptr @_Py_TrueStruct], align 8
 
 ; Function Attrs: nounwind uwtable
@@ -603,30 +604,15 @@ bb.dz:                                            ; preds = %bb.dy
   %i.lv = icmp eq i32 %i.lu, 0
   %i.lw = icmp ne i32 %.7371, 88
   %or.cond11 = select i1 %i.lv, i1 %i.lw, i1 false
-  br i1 %or.cond11, label %4, label %bb.eb
+  br i1 %or.cond11, label %bb.ea, label %bb.eb
 
-4:                                                ; preds = %bb.dz
-  %5 = and i32 %.2383691717, 8
-  switch i32 %.7371, label %6 [
-    i32 100, label %bb.ea
-    i32 105, label %bb.ea
-    i32 117, label %bb.ea
-    i32 111, label %7
-    i32 120, label %8
-  ]
-
-6:                                                ; preds = %4
-  unreachable
-
-7:                                                ; preds = %4
-  br label %bb.ea
-
-8:                                                ; preds = %4
-  br label %bb.ea
-
-bb.ea:                                            ; preds = %4, %4, %4, %8, %7
-  %.0 = phi i32 [ 16, %8 ], [ 8, %7 ], [ 10, %4 ], [ 10, %4 ], [ 10, %4 ]
-  %i.lx = tail call ptr @_PyLong_FormatBytesWriter(ptr noundef nonnull %i.d, ptr noundef %.03861256, ptr noundef nonnull %.0.i567, i32 noundef %.0, i32 noundef %5) #19 ; 2 uses
+bb.ea:                                            ; preds = %bb.dz
+  %4 = and i32 %.2383691717, 8
+  %5 = sext i32 %.7371 to i64
+  %6 = getelementptr [4 x i8], ptr @switch.table._PyBytes_FormatEx, i64 %5
+  %switch.gep = getelementptr i8, ptr %6, i64 -400
+  %switch.load = load i32, ptr %switch.gep, align 4
+  %i.lx = tail call ptr @_PyLong_FormatBytesWriter(ptr noundef nonnull %i.d, ptr noundef %.03861256, ptr noundef nonnull %.0.i567, i32 noundef %switch.load, i32 noundef %4) #19 ; 2 uses
   %i.ly = icmp eq ptr %i.lx, null
   br i1 %i.ly, label %Py_XDECREF.exit.thread, label %Py_XDECREF.exit
 

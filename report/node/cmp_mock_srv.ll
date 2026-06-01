@@ -201,7 +201,7 @@ declare i32 @OSSL_CMP_SRV_CTX_init_trans(ptr noundef, ptr noundef, ptr noundef) 
 define internal range(i32 -1, 2) i32 @delayed_delivery(ptr noundef %0, ptr noundef %1) #0 {
 bb.a:
   %i.a = tail call ptr @OSSL_CMP_SRV_CTX_get0_custom_ctx(ptr noundef %0) #4 ; 4 uses
-  %i.b = tail call i32 @OSSL_CMP_MSG_get_bodytype(ptr noundef %1) #4
+  %i.b = tail call i32 @OSSL_CMP_MSG_get_bodytype(ptr noundef %1) #4 ; 2 uses
   %i.c = icmp eq ptr %i.a, null
   %i.d = icmp eq ptr %1, null
   %or.cond = or i1 %i.d, %i.c
@@ -214,13 +214,11 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.g
 
 bb.c:                                             ; preds = %bb.a
-  switch i32 %i.b, label %bb.d [
-    i32 23, label %bb.g
-    i32 7, label %bb.g
-    i32 4, label %bb.g
-    i32 2, label %bb.g
-    i32 0, label %bb.g
-  ]
+  %2 = icmp ult i32 %i.b, 24
+  %switch.shifted = lshr i32 8388757, %i.b
+  %switch.lobit = trunc i32 %switch.shifted to i1
+  %or.cond26 = select i1 %2, i1 %switch.lobit, i1 false
+  br i1 %or.cond26, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 96
@@ -242,8 +240,8 @@ bb.f:                                             ; preds = %bb.e
   %. = select i1 %i.m, i32 -1, i32 1
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.d, %bb.e, %bb.f, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.b
-  %.0 = phi i32 [ -1, %bb.b ], [ 0, %bb.c ], [ %., %bb.f ], [ 0, %bb.c ], [ 0, %bb.c ], [ 0, %bb.c ], [ 0, %bb.c ], [ 0, %bb.e ], [ 0, %bb.d ]
+bb.g:                                             ; preds = %bb.c, %bb.d, %bb.e, %bb.f, %bb.b
+  %.0 = phi i32 [ -1, %bb.b ], [ 0, %bb.e ], [ %., %bb.f ], [ 0, %bb.d ], [ 0, %bb.c ]
   ret i32 %.0
 }
 

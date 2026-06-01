@@ -116,6 +116,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.96 = private unnamed_addr constant [52 x i8] c"Invalid type for [Strip|Tile][Offset/ByteCount] tag\00", align 1
 @.str.97 = private unnamed_addr constant [38 x i8] c"Cannot read offset/size for strile %d\00", align 1
 @.str.98 = private unnamed_addr constant [46 x i8] c"Cannot read offset/size for strile around ~%d\00", align 1
+@switch.table._TIFFGetStrileOffsetOrByteCountValue = private unnamed_addr constant [15 x i64] [i64 2, i64 4, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 8, i64 8], align 8
 
 ; Function Attrs: nounwind uwtable
 define range(i32 0, 2) i32 @TIFFReadDirectory(ptr noundef %0) local_unnamed_addr #0 {
@@ -518,18 +519,12 @@ bb.t:                                             ; preds = %bb.s
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   %i.bo = getelementptr inbounds nuw i8, ptr %2, i64 2 ; 2 uses
   %i.bp = load i16, ptr %i.bo, align 2, !tbaa !46
-  switch i16 %i.bp, label %bb.u [
-    i16 3, label %bb.v
-    i16 4, label %5
-    i16 16, label %6
-    i16 17, label %6
-  ]
-
-5:                                                ; preds = %bb.t
-  br label %bb.v
-
-6:                                                ; preds = %bb.t, %bb.t
-  br label %bb.v
+  %switch.tableidx = add i16 %i.bp, -3            ; 3 uses
+  %5 = icmp ult i16 %switch.tableidx, 15
+  %switch.shifted = lshr i16 24579, %switch.tableidx
+  %switch.lobit = trunc i16 %switch.shifted to i1
+  %or.cond52 = select i1 %5, i1 %switch.lobit, i1 false
+  br i1 %or.cond52, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   tail call void (ptr, ptr, ptr, ...) @TIFFErrorExtR(ptr noundef nonnull %0, ptr noundef nonnull @_TIFFPartialReadStripArray.module, ptr noundef nonnull @.str.96) #15
@@ -538,8 +533,10 @@ bb.u:                                             ; preds = %bb.t
   store i64 0, ptr %i.br, align 8, !tbaa !85
   br label %bb.ay
 
-bb.v:                                             ; preds = %6, %5, %bb.t
-  %.0106.i.i = phi i64 [ 2, %bb.t ], [ 4, %5 ], [ 8, %6 ] ; 6 uses
+bb.v:                                             ; preds = %bb.t
+  %6 = zext nneg i16 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._TIFFGetStrileOffsetOrByteCountValue, i64 %6
+  %switch.load = load i64, ptr %switch.gep, align 8 ; 6 uses
   %i.bs = and i32 %i.bm, 524288
   %.not116.i.i = icmp eq i32 %i.bs, 0
   %i.bt = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
@@ -589,16 +586,16 @@ bb.ab:                                            ; preds = %bb.aa
 bb.ac:                                            ; preds = %bb.aa, %.thread.i.i
   %.0107122.i.i = phi i64 [ %i.bx, %.thread.i.i ], [ %i.by, %bb.aa ] ; 2 uses
   %i.cc = sext i32 %1 to i64                      ; 3 uses
-  %i.cd = mul nsw i64 %.0106.i.i, %i.cc
+  %i.cd = mul nsw i64 %switch.load, %i.cc
   %i.ce = add i64 %.0107122.i.i, %i.cd            ; 4 uses
   %i.cf = and i64 %i.ce, -4096                    ; 5 uses
   %i.cg = add i64 %i.cf, 4096                     ; 2 uses
-  %i.ch = add i64 %i.ce, %.0106.i.i
+  %i.ch = add i64 %i.ce, %switch.load
   %i.ci = icmp ugt i64 %i.ch, %i.cg
   %i.cj = add i64 %i.cf, 8192
   %spec.select.i.i = select i1 %i.ci, i64 %i.cj, i64 %i.cg
   %i.ck = zext i32 %i.bi to i64
-  %i.cl = mul nuw nsw i64 %.0106.i.i, %i.ck
+  %i.cl = mul nuw nsw i64 %switch.load, %i.ck
   %i.cm = add nuw i64 %.0107122.i.i, %i.cl
   %.1.i.i = call i64 @llvm.umin.i64(i64 %i.cm, i64 %spec.select.i.i) ; 3 uses
   %.not117.i.i = icmp ult i64 %i.cf, %.1.i.i
@@ -636,7 +633,7 @@ bb.ah:                                            ; preds = %bb.ag
 
 bb.ai:                                            ; preds = %bb.ag
   %i.cx = and i64 %i.ce, 4095                     ; 2 uses
-  %i.cy = call range(i64 1, 65) i64 @llvm.cttz.i64(i64 %.0106.i.i, i1 true)
+  %i.cy = call range(i64 1, 65) i64 @llvm.cttz.i64(i64 %switch.load, i1 true)
   %i.cz = lshr i64 %i.cx, %i.cy
   %i.da = trunc nuw nsw i64 %i.cz to i32
   %spec.select120.i.i = call i32 @llvm.smin.i32(i32 %1, i32 %i.da) ; 2 uses
@@ -654,14 +651,14 @@ bb.aj:                                            ; preds = %bb.ax, %.lr.ph.i.i
   %indvars.iv.i.i = phi i64 [ %i.de, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.ax ] ; 2 uses
   %i.df = phi i32 [ %i.db, %.lr.ph.i.i ], [ %i.ee, %bb.ax ] ; 4 uses
   %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, 1 ; 3 uses
-  %i.dg = mul nsw i64 %indvars.iv.next.i.i, %.0106.i.i
+  %i.dg = mul nsw i64 %indvars.iv.next.i.i, %switch.load
   %i.dh = add i64 %i.dg, %i.ce
   %.not119.i.i = icmp ugt i64 %i.dh, %.1.i.i
   br i1 %.not119.i.i, label %_TIFFPartialReadStripArray.exit.i, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
   %i.di = load i16, ptr %i.bo, align 2, !tbaa !46
-  %i.dj = mul nsw i64 %indvars.iv.i.i, %.0106.i.i
+  %i.dj = mul nsw i64 %indvars.iv.i.i, %switch.load
   %i.dk = getelementptr inbounds i8, ptr %i.dd, i64 %i.dj ; 4 uses
   switch i16 %i.di, label %bb.au [
     i16 3, label %bb.al

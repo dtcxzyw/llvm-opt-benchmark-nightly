@@ -65,6 +65,7 @@ $_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_mutateEmmPKcm = comdat
 @.str.23 = private unnamed_addr constant [24 x i8] c"basic_string::_M_create\00", align 1
 @__libc_single_threaded = external local_unnamed_addr global i8, align 1
 @.str.25 = private unnamed_addr constant [21 x i8] c"basic_string::append\00", align 1
+@switch.table._ZN5arrow6Status12CodeAsStringB5cxx11ENS_10StatusCodeE = private unnamed_addr constant [43 x ptr] [ptr @.str.3, ptr @.str.4, ptr @.str.5, ptr @.str.6, ptr @.str.7, ptr @.str.9, ptr @.str.10, ptr @.str.11, ptr @.str.8, ptr @.str.12, ptr @.str.13, ptr @.str.14, ptr @.str.18, ptr @.str.18, ptr @.str.18, ptr @.str.18, ptr @.str.18, ptr @.str.18, ptr @.str.18, ptr @.str.18, ptr @.str.18, ptr @.str.18, ptr @.str.18, ptr @.str.18, ptr @.str.18, ptr @.str.18, ptr @.str.18, ptr @.str.18, ptr @.str.18, ptr @.str.18, ptr @.str.18, ptr @.str.18, ptr @.str.18, ptr @.str.18, ptr @.str.18, ptr @.str.18, ptr @.str.18, ptr @.str.18, ptr @.str.18, ptr @.str.18, ptr @.str.15, ptr @.str.16, ptr @.str.17], align 8
 
 @_ZN5arrow6StatusC1ENS_10StatusCodeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE = unnamed_addr alias void (ptr, i8, ptr), ptr @_ZN5arrow6StatusC2ENS_10StatusCodeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
 @_ZN5arrow6StatusC1ENS_10StatusCodeENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrINS_12StatusDetailEE = unnamed_addr alias void (ptr, i8, ptr, ptr), ptr @_ZN5arrow6StatusC2ENS_10StatusCodeENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrINS_12StatusDetailEE
@@ -467,71 +468,18 @@ bb.b:                                             ; preds = %_ZNK5arrow6Status4c
 
 ; Function Attrs: mustprogress uwtable
 define void @_ZN5arrow6Status12CodeAsStringB5cxx11ENS_10StatusCodeE(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, i8 noundef signext %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
-  switch i8 %1, label %bb.b [
-    i8 0, label %bb.c
-    i8 1, label %3
-    i8 2, label %4
-    i8 3, label %5
-    i8 4, label %6
-    i8 8, label %7
-    i8 5, label %8
-    i8 6, label %9
-    i8 7, label %10
-    i8 9, label %11
-    i8 10, label %12
-    i8 11, label %13
-    i8 40, label %14
-    i8 41, label %15
-    i8 42, label %bb.a
-  ]
+bb.a:
+  %2 = icmp ult i8 %1, 43
+  br i1 %2, label %bb.b, label %bb.c
 
-3:                                                ; preds = %2
+bb.b:                                             ; preds = %bb.a
+  %3 = zext nneg i8 %1 to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN5arrow6Status12CodeAsStringB5cxx11ENS_10StatusCodeE, i64 %3
+  %switch.load = load ptr, ptr %switch.gep, align 8
   br label %bb.c
 
-4:                                                ; preds = %2
-  br label %bb.c
-
-5:                                                ; preds = %2
-  br label %bb.c
-
-6:                                                ; preds = %2
-  br label %bb.c
-
-7:                                                ; preds = %2
-  br label %bb.c
-
-8:                                                ; preds = %2
-  br label %bb.c
-
-9:                                                ; preds = %2
-  br label %bb.c
-
-10:                                               ; preds = %2
-  br label %bb.c
-
-11:                                               ; preds = %2
-  br label %bb.c
-
-12:                                               ; preds = %2
-  br label %bb.c
-
-13:                                               ; preds = %2
-  br label %bb.c
-
-14:                                               ; preds = %2
-  br label %bb.c
-
-15:                                               ; preds = %2
-  br label %bb.c
-
-bb.a:                                             ; preds = %2
-  br label %bb.c
-
-bb.b:                                             ; preds = %2
-  br label %bb.c
-
-bb.c:                                             ; preds = %2, %bb.b, %bb.a, %15, %14, %13, %12, %11, %10, %9, %8, %7, %6, %5, %4, %3
-  %.0 = phi ptr [ @.str.18, %bb.b ], [ @.str.17, %bb.a ], [ @.str.4, %3 ], [ @.str.5, %4 ], [ @.str.6, %5 ], [ @.str.7, %6 ], [ @.str.8, %7 ], [ @.str.9, %8 ], [ @.str.10, %9 ], [ @.str.11, %10 ], [ @.str.12, %11 ], [ @.str.13, %12 ], [ @.str.14, %13 ], [ @.str.15, %14 ], [ @.str.16, %15 ], [ @.str.3, %2 ] ; 3 uses
+bb.c:                                             ; preds = %bb.a, %bb.b
+  %.0 = phi ptr [ %switch.load, %bb.b ], [ @.str.18, %bb.a ] ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.a, ptr %0, align 8, !tbaa !7
   %i.b = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %.0) #20 ; 8 uses

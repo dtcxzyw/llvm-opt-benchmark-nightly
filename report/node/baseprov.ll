@@ -201,6 +201,7 @@ begin_hunk_0
 @.str.95 = private unnamed_addr constant [9 x i8] c"SEED-SRC\00", align 1
 @.str.96 = private unnamed_addr constant [14 x i8] c"provider=base\00", align 1
 @ossl_seed_src_functions = external constant [0 x %struct.ossl_dispatch_st], align 8
+@switch.table.base_query = private unnamed_addr constant [18 x ptr] [ptr @base_rands, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr @base_encoder, ptr @base_decoder, ptr @base_store], align 8
 
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 0, 2) i32 @ossl_base_provider_init(ptr noundef %0, ptr noundef %1, ptr noundef writeonly captures(none) %2, ptr noundef captures(none) %3) local_unnamed_addr #0 {
@@ -368,27 +369,18 @@ bb.j:                                             ; preds = %bb.h, %bb.f, %bb.d,
 define internal noundef ptr @base_query(ptr readnone captures(none) %0, i32 noundef %1, ptr noundef writeonly captures(none) initializes((0, 4)) %2) #3 {
 bb.a:
   store i32 0, ptr %2, align 4, !tbaa !5
-  switch i32 %1, label %bb.b [
-    i32 20, label %bb.c
-    i32 21, label %3
-    i32 22, label %4
-    i32 5, label %5
-  ]
-
-3:                                                ; preds = %bb.a
-  br label %bb.c
-
-4:                                                ; preds = %bb.a
-  br label %bb.c
-
-5:                                                ; preds = %bb.a
-  br label %bb.c
+  %switch.tableidx = add i32 %1, -5               ; 2 uses
+  %3 = icmp ult i32 %switch.tableidx, 18
+  br i1 %3, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
+  %4 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.base_query, i64 %4
+  %switch.load = load ptr, ptr %switch.gep, align 8
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.a, %bb.b, %5, %4, %3
-  %.0 = phi ptr [ null, %bb.b ], [ @base_rands, %5 ], [ @base_decoder, %3 ], [ @base_store, %4 ], [ @base_encoder, %bb.a ]
+bb.c:                                             ; preds = %bb.a, %bb.b
+  %.0 = phi ptr [ %switch.load, %bb.b ], [ null, %bb.a ]
   ret ptr %.0
 }
 

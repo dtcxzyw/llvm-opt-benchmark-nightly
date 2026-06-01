@@ -201,16 +201,13 @@ bb.ca:                                            ; preds = %bb.e
   br i1 %.not33, label %bb.cq, label %bb.cb
 
 bb.cb:                                            ; preds = %bb.ca
-  %6 = sext i8 %i.ac to i32
-  %7 = add nsw i32 %6, -67                        ; 2 uses
-  %8 = tail call i32 @llvm.fshl.i32(i32 %7, i32 %7, i32 30)
-  switch i32 %8, label %bb.cq [
-    i32 13, label %.critedge
-    i32 5, label %bb.cc
-    i32 12, label %bb.cj
-    i32 4, label %bb.ck
-    i32 8, label %bb.cl
-    i32 0, label %bb.cl
+  switch i8 %i.ac, label %bb.cq [
+    i8 119, label %.critedge
+    i8 87, label %bb.cc
+    i8 115, label %bb.cj
+    i8 83, label %bb.ck
+    i8 99, label %bb.cl
+    i8 67, label %bb.cl
   ]
 
 .critedge:                                        ; preds = %bb.cb
@@ -611,9 +608,6 @@ bb.n:                                             ; preds = %bb.m
 _ZNSt6vectorIN5folly18RegexMatchCacheKeyESaIS1_EED2Ev.exit20: ; preds = %bb.m, %bb.n
   resume { ptr, i32 } %.pn.pn
 }
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.fshl.i32(i32, i32, i32) #38
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #38

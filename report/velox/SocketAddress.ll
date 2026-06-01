@@ -154,6 +154,7 @@ $_ZTVN5folly29InvalidAddressFamilyExceptionE = comdat any
 @.str.46 = private unnamed_addr constant [49 x i8] c"getnameinfo() failed in getIpString() error = {}\00", align 1
 @.str.48 = private unnamed_addr constant [88 x i8] c"SocketAddress: attempted to set a Unix socket with a length too short for a sockaddr_un\00", align 1
 @.str.49 = private unnamed_addr constant [56 x i8] c"SocketAddress: unsupported address family for comparing\00", align 1
+@switch.table._ZN5folly13SocketAddress17getFamilyNameFromEPK8sockaddrPKc = private unnamed_addr constant [11 x ptr] [ptr @.str.8, ptr @.str.7, ptr @.str.5, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @.str.6], align 8
 
 ; Function Attrs: mustprogress uwtable
 define noundef zeroext i1 @_ZNK5folly13SocketAddress16isPrivateAddressEv(ptr noundef nonnull align 8 dereferenceable(40) %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
@@ -556,28 +557,21 @@ bb.b:                                             ; preds = %.sink.split, %bb.a
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef ptr @_ZN5folly13SocketAddress17getFamilyNameFromEPK8sockaddrPKc(ptr noundef readonly captures(none) %0, ptr noundef readnone captures(ret: address, provenance) %1) local_unnamed_addr #14 align 2 {
 bb.a:
-  %i.a = load i16, ptr %0, align 2, !tbaa !54
-  switch i16 %i.a, label %bb.b [
-    i16 2, label %bb.c
-    i16 10, label %2
-    i16 1, label %3
-    i16 0, label %4
-  ]
-
-2:                                                ; preds = %bb.a
-  br label %bb.c
-
-3:                                                ; preds = %bb.a
-  br label %bb.c
-
-4:                                                ; preds = %bb.a
-  br label %bb.c
+  %i.a = load i16, ptr %0, align 2, !tbaa !54     ; 3 uses
+  %2 = icmp ult i16 %i.a, 11
+  %switch.shifted = lshr i16 1031, %i.a
+  %switch.lobit = trunc i16 %switch.shifted to i1
+  %or.cond = select i1 %2, i1 %switch.lobit, i1 false
+  br i1 %or.cond, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
+  %3 = zext nneg i16 %i.a to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN5folly13SocketAddress17getFamilyNameFromEPK8sockaddrPKc, i64 %3
+  %switch.load = load ptr, ptr %switch.gep, align 8
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.a, %bb.b, %4, %3, %2
-  %.0 = phi ptr [ %1, %bb.b ], [ @.str.8, %4 ], [ @.str.6, %2 ], [ @.str.7, %3 ], [ @.str.5, %bb.a ]
+bb.c:                                             ; preds = %bb.a, %bb.b
+  %.0 = phi ptr [ %switch.load, %bb.b ], [ %1, %bb.a ]
   ret ptr %.0
 }
 

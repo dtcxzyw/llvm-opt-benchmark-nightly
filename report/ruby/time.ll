@@ -201,12 +201,11 @@ bb.a:
   br i1 %i.d, label %bb.b, label %rb_type.exit.i
 
 bb.b:                                             ; preds = %bb.a
-  %1 = tail call i64 @llvm.fshl.i64(i64 %0, i64 %0, i64 62)
-  switch i64 %1, label %bb.c [
+  switch i64 %0, label %bb.c [
     i64 0, label %rb_type.exit.thread.i
-    i64 1, label %num_exact_check.exit
-    i64 5, label %rb_type.exit.thread.i
-    i64 9, label %rb_type.exit.thread.i
+    i64 4, label %num_exact_check.exit
+    i64 20, label %rb_type.exit.thread.i
+    i64 36, label %rb_type.exit.thread.i
   ]
 
 bb.c:                                             ; preds = %bb.b

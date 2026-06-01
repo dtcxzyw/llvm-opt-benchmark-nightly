@@ -201,13 +201,11 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %i.s = and i32 %2, 1984
-  switch i32 %i.s, label %bb.j [
-    i32 0, label %_ZN2v88internal6maglev16KnownNodeAspects10EnsureTypeEPNS0_8compiler12JSHeapBrokerEPNS1_9ValueNodeENS1_8NodeTypeEPS8_.exit
-    i32 64, label %_ZN2v88internal6maglev16KnownNodeAspects10EnsureTypeEPNS0_8compiler12JSHeapBrokerEPNS1_9ValueNodeENS1_8NodeTypeEPS8_.exit
-    i32 448, label %_ZN2v88internal6maglev16KnownNodeAspects10EnsureTypeEPNS0_8compiler12JSHeapBrokerEPNS1_9ValueNodeENS1_8NodeTypeEPS8_.exit
-    i32 1984, label %_ZN2v88internal6maglev16KnownNodeAspects10EnsureTypeEPNS0_8compiler12JSHeapBrokerEPNS1_9ValueNodeENS1_8NodeTypeEPS8_.exit
-  ]
+  %4 = lshr i32 %2, 6
+  %i.s = and i32 %4, 31
+  %switch.shifted = lshr i32 -2147483517, %i.s
+  %switch.lobit = trunc i32 %switch.shifted to i1
+  br i1 %switch.lobit, label %_ZN2v88internal6maglev16KnownNodeAspects10EnsureTypeEPNS0_8compiler12JSHeapBrokerEPNS1_9ValueNodeENS1_8NodeTypeEPS8_.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.t = getelementptr inbounds nuw i8, ptr %i.i, i64 4
@@ -216,8 +214,8 @@ bb.j:                                             ; preds = %bb.i
   store i8 1, ptr %i.u, align 8
   br label %_ZN2v88internal6maglev16KnownNodeAspects10EnsureTypeEPNS0_8compiler12JSHeapBrokerEPNS1_9ValueNodeENS1_8NodeTypeEPS8_.exit
 
-_ZN2v88internal6maglev16KnownNodeAspects10EnsureTypeEPNS0_8compiler12JSHeapBrokerEPNS1_9ValueNodeENS1_8NodeTypeEPS8_.exit: ; preds = %bb.c, %bb.f, %bb.i, %bb.i, %bb.i, %bb.i, %bb.j
-  %.1.i = phi i1 [ true, %bb.c ], [ true, %bb.f ], [ false, %bb.j ], [ false, %bb.i ], [ false, %bb.i ], [ false, %bb.i ], [ false, %bb.i ]
+_ZN2v88internal6maglev16KnownNodeAspects10EnsureTypeEPNS0_8compiler12JSHeapBrokerEPNS1_9ValueNodeENS1_8NodeTypeEPS8_.exit: ; preds = %bb.i, %bb.c, %bb.f, %bb.j
+  %.1.i = phi i1 [ true, %bb.c ], [ true, %bb.f ], [ false, %bb.j ], [ false, %bb.i ]
   ret i1 %.1.i
 }
 
@@ -620,12 +618,13 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %i.ab = and i32 %2, 1984
+  %3 = lshr i32 %2, 6
+  %i.ab = and i32 %3, 31
   switch i32 %i.ab, label %bb.f [
     i32 0, label %_ZN2v88internal6maglev13MaglevReducerINS1_20MaglevGraphOptimizerEE10EnsureTypeEPNS1_9ValueNodeENS1_8NodeTypeEPS7_.exit
-    i32 64, label %_ZN2v88internal6maglev13MaglevReducerINS1_20MaglevGraphOptimizerEE10EnsureTypeEPNS1_9ValueNodeENS1_8NodeTypeEPS7_.exit
-    i32 448, label %_ZN2v88internal6maglev13MaglevReducerINS1_20MaglevGraphOptimizerEE10EnsureTypeEPNS1_9ValueNodeENS1_8NodeTypeEPS7_.exit
-    i32 1984, label %_ZN2v88internal6maglev13MaglevReducerINS1_20MaglevGraphOptimizerEE10EnsureTypeEPNS1_9ValueNodeENS1_8NodeTypeEPS7_.exit
+    i32 1, label %_ZN2v88internal6maglev13MaglevReducerINS1_20MaglevGraphOptimizerEE10EnsureTypeEPNS1_9ValueNodeENS1_8NodeTypeEPS7_.exit
+    i32 7, label %_ZN2v88internal6maglev13MaglevReducerINS1_20MaglevGraphOptimizerEE10EnsureTypeEPNS1_9ValueNodeENS1_8NodeTypeEPS7_.exit
+    i32 31, label %_ZN2v88internal6maglev13MaglevReducerINS1_20MaglevGraphOptimizerEE10EnsureTypeEPNS1_9ValueNodeENS1_8NodeTypeEPS7_.exit
   ]
 
 bb.f:                                             ; preds = %bb.e

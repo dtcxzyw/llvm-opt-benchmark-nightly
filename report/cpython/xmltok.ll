@@ -36,6 +36,7 @@ target triple = "x86_64-pc-linux-gnu"
 @little2_encoding_ns = internal constant { { [4 x ptr], [2 x ptr], ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, i32, i8, i8, [2 x i8] }, [256 x i8], ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr } { { [4 x ptr], [2 x ptr], ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, i32, i8, i8, [2 x i8] } { [4 x ptr] [ptr @little2_prologTok, ptr @little2_contentTok, ptr @little2_cdataSectionTok, ptr @little2_ignoreSectionTok], [2 x ptr] [ptr @little2_attributeValueTok, ptr @little2_entityValueTok], ptr @little2_nameMatchesAscii, ptr @little2_nameLength, ptr @little2_skipS, ptr @little2_getAtts, ptr @little2_charRefNumber, ptr @little2_predefinedEntityName, ptr @little2_updatePosition, ptr @little2_isPublicId, ptr @little2_toUtf8, ptr @little2_toUtf16, i32 2, i8 0, i8 1, [2 x i8] zeroinitializer }, [256 x i8] c"\00\00\00\00\00\00\00\00\00\15\0A\00\00\09\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\15\10\0C\13\1C\1E\03\0D\1F !\22#\1B\1A\11\19\19\19\19\19\19\19\19\19\19\17\12\02\0E\0B\0F\1C\18\18\18\18\18\18\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\14\1C\04\1C\16\1C\18\18\18\18\18\18\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\1C$\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\16\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\16\1C\1A\1C\1C\16\1C\1C\1C\1C\1C\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\1C\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\1C\16\16\16\16\16\16\16\16", ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null }, align 8
 @switch.table.normal_nameLength = private unnamed_addr constant [25 x i64] [i64 2, i64 3, i64 4, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 1, i64 1, i64 1, i64 1, i64 1, i64 1, i64 poison, i64 1], align 8
 @switch.table.big2_nameLength = private unnamed_addr constant [25 x i64] [i64 2, i64 3, i64 4, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 2, i64 2, i64 2, i64 2, i64 2, i64 2, i64 poison, i64 2], align 8
+@switch.table.big2_scanLit = private unnamed_addr constant [22 x i32] [i32 27, i32 27, i32 27, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 27, i32 27, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 27], align 4
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define hidden void @_INTERNAL_trim_to_complete_utf8_characters(ptr noundef readnone captures(address) %0, ptr noundef captures(none) %1) local_unnamed_addr #0 {
@@ -438,17 +439,9 @@ bb.r:                                             ; preds = %bb.q
   %i.af = zext i8 %i.ae to i64
   %i.ag = getelementptr i8, ptr %i.e, i64 %i.af
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !13
-  switch i8 %i.ah, label %5 [
-    i8 21, label %.thread
-    i8 9, label %.thread
-    i8 10, label %.thread
-    i8 11, label %.thread
-    i8 30, label %.thread
-    i8 20, label %.thread
-  ]
-
-5:                                                ; preds = %bb.r
-  br label %.thread
+  %switch.tableidx = add i8 %i.ah, -9             ; 2 uses
+  %5 = icmp ult i8 %switch.tableidx, 22
+  br i1 %5, label %switch.lookup, label %.thread
 
 bb.s:                                             ; preds = %bb.b
   %i.ai = getelementptr i8, ptr %.04369, i64 1
@@ -461,8 +454,14 @@ bb.t:                                             ; preds = %bb.f, %bb.j, %bb.n,
   %i.al = icmp sgt i64 %i.ak, 0
   br i1 %i.al, label %bb.b, label %.thread
 
-.thread:                                          ; preds = %bb.t, %bb.k, %bb.c, %bb.g, %bb.a, %bb.q, %5, %bb.o, %bb.m, %bb.i, %bb.e, %bb.r, %bb.r, %bb.r, %bb.r, %bb.r, %bb.r
-  %.2 = phi i32 [ 27, %bb.r ], [ 27, %bb.r ], [ 27, %bb.r ], [ 27, %bb.r ], [ 27, %bb.r ], [ 27, %bb.r ], [ -27, %bb.q ], [ 0, %5 ], [ 0, %bb.o ], [ 0, %bb.m ], [ 0, %bb.e ], [ 0, %bb.i ], [ -1, %bb.a ], [ -1, %bb.t ], [ -2, %bb.k ], [ -2, %bb.c ], [ -2, %bb.g ]
+switch.lookup:                                    ; preds = %bb.r
+  %6 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.big2_scanLit, i64 %6
+  %switch.load = load i32, ptr %switch.gep, align 4
+  br label %.thread
+
+.thread:                                          ; preds = %bb.t, %bb.k, %bb.c, %bb.g, %bb.r, %switch.lookup, %bb.a, %bb.q, %bb.o, %bb.m, %bb.i, %bb.e
+  %.2 = phi i32 [ %switch.load, %switch.lookup ], [ 0, %bb.r ], [ -1, %bb.a ], [ 0, %bb.i ], [ 0, %bb.e ], [ 0, %bb.m ], [ -27, %bb.q ], [ 0, %bb.o ], [ -1, %bb.t ], [ -2, %bb.k ], [ -2, %bb.c ], [ -2, %bb.g ]
   ret i32 %.2
 }
 
@@ -865,24 +864,16 @@ bb.j:                                             ; preds = %bb.i
   %i.x = getelementptr i8, ptr %.03457, i64 3
   %i.y = load i8, ptr %i.x, align 1, !tbaa !13
   %cond = icmp eq i8 %i.y, 0
-  br i1 %cond, label %unicode_byte_type.exit42, label %unicode_byte_type.exit42.thread
+  br i1 %cond, label %unicode_byte_type.exit42, label %.thread
 
 unicode_byte_type.exit42:                         ; preds = %bb.j
   %i.z = load i8, ptr %i.t, align 1, !tbaa !13
   %i.aa = zext i8 %i.z to i64
   %i.ab = getelementptr i8, ptr %i.e, i64 %i.aa
   %i.ac = load i8, ptr %i.ab, align 1, !tbaa !13
-  switch i8 %i.ac, label %unicode_byte_type.exit42.thread [
-    i8 21, label %.thread
-    i8 9, label %.thread
-    i8 10, label %.thread
-    i8 11, label %.thread
-    i8 30, label %.thread
-    i8 20, label %.thread
-  ]
-
-unicode_byte_type.exit42.thread:                  ; preds = %bb.j, %unicode_byte_type.exit42
-  br label %.thread
+  %switch.tableidx = add i8 %i.ac, -9             ; 2 uses
+  %5 = icmp ult i8 %switch.tableidx, 22
+  br i1 %5, label %switch.lookup, label %.thread
 
 unicode_byte_type.exit.thread44:                  ; preds = %bb.b, %bb.c, %unicode_byte_type.exit
   %i.ad = getelementptr i8, ptr %.03457, i64 2
@@ -895,8 +886,14 @@ bb.k:                                             ; preds = %bb.d, %bb.f, %bb.g,
   %i.ag = icmp sgt i64 %i.af, 1
   br i1 %i.ag, label %bb.b, label %.thread
 
-.thread:                                          ; preds = %bb.k, %unicode_byte_type.exit.thread47, %bb.e, %bb.a, %unicode_byte_type.exit42.thread, %unicode_byte_type.exit.thread, %bb.i, %unicode_byte_type.exit42, %unicode_byte_type.exit42, %unicode_byte_type.exit42, %unicode_byte_type.exit42, %unicode_byte_type.exit42, %unicode_byte_type.exit42
-  %.2 = phi i32 [ -27, %bb.i ], [ 27, %unicode_byte_type.exit42 ], [ 27, %unicode_byte_type.exit42 ], [ 27, %unicode_byte_type.exit42 ], [ 27, %unicode_byte_type.exit42 ], [ 27, %unicode_byte_type.exit42 ], [ 0, %unicode_byte_type.exit42.thread ], [ 0, %unicode_byte_type.exit.thread ], [ 27, %unicode_byte_type.exit42 ], [ -1, %bb.a ], [ -1, %bb.k ], [ -2, %unicode_byte_type.exit.thread47 ], [ -2, %bb.e ]
+switch.lookup:                                    ; preds = %unicode_byte_type.exit42
+  %6 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.big2_scanLit, i64 %6
+  %switch.load = load i32, ptr %switch.gep, align 4
+  br label %.thread
+
+.thread:                                          ; preds = %bb.k, %unicode_byte_type.exit.thread47, %bb.e, %bb.j, %unicode_byte_type.exit42, %switch.lookup, %bb.a, %unicode_byte_type.exit.thread, %bb.i
+  %.2 = phi i32 [ -27, %bb.i ], [ %switch.load, %switch.lookup ], [ 0, %bb.j ], [ -1, %bb.a ], [ 0, %unicode_byte_type.exit.thread ], [ 0, %unicode_byte_type.exit42 ], [ -1, %bb.k ], [ -2, %unicode_byte_type.exit.thread47 ], [ -2, %bb.e ]
   ret i32 %.2
 }
 
@@ -1299,7 +1296,7 @@ bb.j:                                             ; preds = %bb.i
   store ptr %i.u, ptr %4, align 8, !tbaa !10
   %i.y = load i8, ptr %i.u, align 1, !tbaa !13
   %cond = icmp eq i8 %i.y, 0
-  br i1 %cond, label %unicode_byte_type.exit42, label %unicode_byte_type.exit42.thread
+  br i1 %cond, label %unicode_byte_type.exit42, label %.thread
 
 unicode_byte_type.exit42:                         ; preds = %bb.j
   %i.z = getelementptr i8, ptr %.03457, i64 3
@@ -1307,17 +1304,9 @@ unicode_byte_type.exit42:                         ; preds = %bb.j
   %i.ab = zext i8 %i.aa to i64
   %i.ac = getelementptr i8, ptr %i.e, i64 %i.ab
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !13
-  switch i8 %i.ad, label %unicode_byte_type.exit42.thread [
-    i8 21, label %.thread
-    i8 9, label %.thread
-    i8 10, label %.thread
-    i8 11, label %.thread
-    i8 30, label %.thread
-    i8 20, label %.thread
-  ]
-
-unicode_byte_type.exit42.thread:                  ; preds = %bb.j, %unicode_byte_type.exit42
-  br label %.thread
+  %switch.tableidx = add i8 %i.ad, -9             ; 2 uses
+  %5 = icmp ult i8 %switch.tableidx, 22
+  br i1 %5, label %switch.lookup, label %.thread
 
 unicode_byte_type.exit.thread44:                  ; preds = %bb.b, %bb.c, %unicode_byte_type.exit
   %i.ae = getelementptr i8, ptr %.03457, i64 2
@@ -1330,8 +1319,14 @@ bb.k:                                             ; preds = %bb.d, %bb.f, %bb.g,
   %i.ah = icmp sgt i64 %i.ag, 1
   br i1 %i.ah, label %bb.b, label %.thread
 
-.thread:                                          ; preds = %bb.k, %unicode_byte_type.exit.thread47, %bb.e, %bb.a, %unicode_byte_type.exit42.thread, %unicode_byte_type.exit.thread, %bb.i, %unicode_byte_type.exit42, %unicode_byte_type.exit42, %unicode_byte_type.exit42, %unicode_byte_type.exit42, %unicode_byte_type.exit42, %unicode_byte_type.exit42
-  %.2 = phi i32 [ -27, %bb.i ], [ 27, %unicode_byte_type.exit42 ], [ 27, %unicode_byte_type.exit42 ], [ 27, %unicode_byte_type.exit42 ], [ 27, %unicode_byte_type.exit42 ], [ 27, %unicode_byte_type.exit42 ], [ 0, %unicode_byte_type.exit42.thread ], [ 0, %unicode_byte_type.exit.thread ], [ 27, %unicode_byte_type.exit42 ], [ -1, %bb.a ], [ -1, %bb.k ], [ -2, %unicode_byte_type.exit.thread47 ], [ -2, %bb.e ]
+switch.lookup:                                    ; preds = %unicode_byte_type.exit42
+  %6 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.big2_scanLit, i64 %6
+  %switch.load = load i32, ptr %switch.gep, align 4
+  br label %.thread
+
+.thread:                                          ; preds = %bb.k, %unicode_byte_type.exit.thread47, %bb.e, %bb.j, %unicode_byte_type.exit42, %switch.lookup, %bb.a, %unicode_byte_type.exit.thread, %bb.i
+  %.2 = phi i32 [ -27, %bb.i ], [ %switch.load, %switch.lookup ], [ 0, %bb.j ], [ -1, %bb.a ], [ 0, %unicode_byte_type.exit.thread ], [ 0, %unicode_byte_type.exit42 ], [ -1, %bb.k ], [ -2, %unicode_byte_type.exit.thread47 ], [ -2, %bb.e ]
   ret i32 %.2
 }
 

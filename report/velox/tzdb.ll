@@ -201,6 +201,7 @@ $_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7reserveEm = comdat any
 @.str.65 = private unnamed_addr constant [21 x i8] c"/usr/share/zoneinfo/\00", align 1
 @.str.66 = private unnamed_addr constant [22 x i8] c"tzdb: the time zone '\00", align 1
 @.str.67 = private unnamed_addr constant [31 x i8] c"' is not found in the database\00", align 1
+@switch.table._ZN8facebook5velox4tzdbL14__parse_tzdataERNS1_4tzdbERSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_INS1_6__ruleESaISC_EEESaISF_EERSi.74 = private unnamed_addr constant [20 x i32] [i32 2, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 1, i32 poison, i32 2, i32 poison, i32 0, i32 poison, i32 poison, i32 2], align 4
 
 ; Function Attrs: mustprogress uwtable
 define void @_ZN8facebook5velox4tzdb23__libcpp_tzdb_directoryB5cxx11Ev(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::__cxx11::basic_string") align 8 captures(none) %0) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
@@ -603,26 +604,25 @@ _ZN8facebook5velox4tzdbL27__skip_mandatory_whitespaceERSi.exit91.i.i: ; preds = 
           to label %.noexc93.i.i unwind label %bb.bi
 
 .noexc93.i.i:                                     ; preds = %.noexc92.i.i
-  switch i32 %i.hb, label %33 [
-    i32 119, label %bb.al
-    i32 115, label %bb.aj
-    i32 117, label %bb.ak
-    i32 103, label %bb.ak
-    i32 122, label %bb.ak
-  ]
+  %switch.tableidx = add i32 %i.hb, -103          ; 3 uses
+  %33 = icmp ult i32 %switch.tableidx, 20
+  %switch.shifted = lshr i32 610305, %switch.tableidx
+  %switch.lobit = trunc i32 %switch.shifted to i1
+  %or.cond = select i1 %33, i1 %switch.lobit, i1 false
+  br i1 %or.cond, label %bb.ak, label %bb.aj
 
 bb.aj:                                            ; preds = %.noexc93.i.i
-  br label %bb.al
-
-bb.ak:                                            ; preds = %.noexc93.i.i, %.noexc93.i.i, %.noexc93.i.i
-  br label %bb.al
-
-33:                                               ; preds = %.noexc93.i.i
   %34 = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi5ungetEv(ptr noundef nonnull align 8 dereferenceable(16) %30)
           to label %bb.al unwind label %bb.bi     ; 0 uses
 
-bb.al:                                            ; preds = %33, %bb.ak, %bb.aj, %.noexc93.i.i
-  %.0.i.i.i.i = phi i32 [ 0, %.noexc93.i.i ], [ 2, %bb.ak ], [ 1, %bb.aj ], [ 0, %33 ]
+bb.ak:                                            ; preds = %.noexc93.i.i
+  %35 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN8facebook5velox4tzdbL14__parse_tzdataERNS1_4tzdbERSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_INS1_6__ruleESaISC_EEESaISF_EERSi.74, i64 %35
+  %switch.load = load i32, ptr %switch.gep, align 4
+  br label %bb.al
+
+bb.al:                                            ; preds = %bb.ak, %bb.aj
+  %.0.i.i.i.i = phi i32 [ %switch.load, %bb.ak ], [ 0, %bb.aj ]
   %i.hc = getelementptr inbounds i8, ptr %.sink.i, i64 -64
   store i64 %i.ha, ptr %i.hc, align 8, !tbaa !35
   %.sroa.57.0..sroa_idx.i.i = getelementptr inbounds i8, ptr %.sink.i, i64 -56
@@ -1025,7 +1025,7 @@ bb.bh:                                            ; preds = %_ZN8facebook5velox4
           cleanup
   br label %.loopexit.split-lp.i.i
 
-bb.bi:                                            ; preds = %33, %.noexc92.i.i, %_ZN8facebook5velox4tzdbL27__skip_mandatory_whitespaceERSi.exit91.i.i
+bb.bi:                                            ; preds = %bb.aj, %.noexc92.i.i, %_ZN8facebook5velox4tzdbL27__skip_mandatory_whitespaceERSi.exit91.i.i
   %i.jp = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp.i.i
@@ -1428,31 +1428,30 @@ bb.ff:                                            ; preds = %bb.fd
           to label %.noexc112.i.i.i unwind label %bb.fj
 
 .noexc112.i.i.i:                                  ; preds = %.noexc111.i.i.i
-  switch i32 %i.wp, label %35 [
-    i32 119, label %bb.fi
-    i32 115, label %bb.fg
-    i32 117, label %bb.fh
-    i32 103, label %bb.fh
-    i32 122, label %bb.fh
-  ]
+  %switch.tableidx573 = add i32 %i.wp, -103       ; 3 uses
+  %36 = icmp ult i32 %switch.tableidx573, 20
+  %switch.shifted576 = lshr i32 610305, %switch.tableidx573
+  %switch.lobit577 = trunc i32 %switch.shifted576 to i1
+  %or.cond580 = select i1 %36, i1 %switch.lobit577, i1 false
+  br i1 %or.cond580, label %bb.fh, label %bb.fg
 
 bb.fg:                                            ; preds = %.noexc112.i.i.i
-  br label %bb.fi
-
-bb.fh:                                            ; preds = %.noexc112.i.i.i, %.noexc112.i.i.i, %.noexc112.i.i.i
-  br label %bb.fi
-
-35:                                               ; preds = %.noexc112.i.i.i
-  %36 = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi5ungetEv(ptr noundef nonnull align 8 dereferenceable(16) %31)
+  %37 = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi5ungetEv(ptr noundef nonnull align 8 dereferenceable(16) %31)
           to label %bb.fi unwind label %bb.fj     ; 0 uses
 
-bb.fi:                                            ; preds = %35, %bb.fh, %bb.fg, %.noexc112.i.i.i
-  %.0.i.i.i.i.i = phi i32 [ 0, %.noexc112.i.i.i ], [ 2, %bb.fh ], [ 1, %bb.fg ], [ 0, %35 ]
+bb.fh:                                            ; preds = %.noexc112.i.i.i
+  %38 = zext nneg i32 %switch.tableidx573 to i64
+  %switch.gep578 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN8facebook5velox4tzdbL14__parse_tzdataERNS1_4tzdbERSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_INS1_6__ruleESaISC_EEESaISF_EERSi.74, i64 %38
+  %switch.load579 = load i32, ptr %switch.gep578, align 4
+  br label %bb.fi
+
+bb.fi:                                            ; preds = %bb.fh, %bb.fg
+  %.0.i.i.i.i.i = phi i32 [ %switch.load579, %bb.fh ], [ 0, %bb.fg ]
   store i64 %i.wo, ptr %i.lh, align 8, !tbaa !35, !alias.scope !99
   store i32 %.0.i.i.i.i.i, ptr %i.li, align 8, !tbaa !84, !alias.scope !99
   br label %_ZN8facebook5velox4tzdbL20__parse_continuationERSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES2_INS1_6__ruleESaISA_EEESaISD_EERSi.exit.i.i
 
-bb.fj:                                            ; preds = %35, %.noexc111.i.i.i, %bb.ff
+bb.fj:                                            ; preds = %bb.fg, %.noexc111.i.i.i, %bb.ff
   %i.wq = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp.i.i.i

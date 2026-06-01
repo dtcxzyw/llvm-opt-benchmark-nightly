@@ -201,6 +201,7 @@ begin_hunk_0
 @rb_f_chop.rbimpl_id = internal unnamed_addr global i64 0, align 8
 @rb_f_chomp.rbimpl_id = internal unnamed_addr global i64 0, align 8
 @ruby_current_ec = external thread_local local_unnamed_addr global ptr, align 8
+@switch.table.opt_W_getter = private unnamed_addr constant [21 x i64] [i64 3, i64 4, i64 4, i64 4, i64 1, i64 4, i64 4, i64 4, i64 4, i64 4, i64 4, i64 4, i64 4, i64 4, i64 4, i64 4, i64 4, i64 4, i64 4, i64 4, i64 5], align 8
 
 ; Function Attrs: nounwind sspstrong uwtable
 define hidden void @ruby_show_usage_line(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %6) local_unnamed_addr #0 {
@@ -603,24 +604,17 @@ bb.a:
 define internal range(i64 1, 6) i64 @opt_W_getter(i64 %0, ptr readnone captures(none) %1) #0 {
 bb.a:
   %i.a = tail call ptr @rb_ruby_verbose_ptr() #23
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !24
-  switch i64 %i.b, label %bb.b [
-    i64 4, label %bb.c
-    i64 0, label %2
-    i64 20, label %3
-  ]
-
-2:                                                ; preds = %bb.a
-  br label %bb.c
-
-3:                                                ; preds = %bb.a
-  br label %bb.c
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !24   ; 2 uses
+  %2 = icmp ult i64 %i.b, 21
+  br i1 %2, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.opt_W_getter, i64 %i.b
+  %switch.load = load i64, ptr %switch.gep, align 8
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.a, %bb.b, %3, %2
-  %.0 = phi i64 [ 4, %bb.b ], [ 5, %3 ], [ 3, %2 ], [ 1, %bb.a ]
+bb.c:                                             ; preds = %bb.a, %bb.b
+  %.0 = phi i64 [ %switch.load, %bb.b ], [ 4, %bb.a ]
   ret i64 %.0
 }
 

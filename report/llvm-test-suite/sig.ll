@@ -38,65 +38,33 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.31 = private unnamed_addr constant [3 x i8] c", \00", align 1
 @.str.33 = private unnamed_addr constant [8 x i8] c"void %s\00", align 1
 @.str.34 = private unnamed_addr constant [31 x i8] c"Error reading type signature!\0A\00", align 1
+@switch.table._Z8sig2typePc = private unnamed_addr constant [52 x i32] [i32 11, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 1, i32 2, i32 7, i32 poison, i32 6, i32 poison, i32 poison, i32 4, i32 5, i32 poison, i32 8, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 3, i32 poison, i32 poison, i32 0, i32 poison, i32 poison, i32 poison, i32 10, i32 8], align 4
 
 ; Function Attrs: mustprogress nofree nounwind uwtable
 define dso_local noundef range(i32 0, 12) i32 @_Z8sig2typePc(ptr noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = load i8, ptr %0, align 1, !tbaa !8
-  switch i8 %i.a, label %bb.b [
-    i8 66, label %bb.c
-    i8 67, label %1
-    i8 68, label %2
-    i8 70, label %3
-    i8 73, label %4
-    i8 74, label %5
-    i8 76, label %6
-    i8 83, label %7
-    i8 90, label %8
-    i8 91, label %6
-    i8 40, label %9
-    i8 86, label %10
-  ]
+  %switch.tableidx = add i8 %i.a, -40             ; 3 uses
+  %1 = icmp ult i8 %switch.tableidx, 52
+  br i1 %1, label %switch.hole_check, label %bb.b
 
-1:                                                ; preds = %bb.a
-  br label %bb.c
-
-2:                                                ; preds = %bb.a
-  br label %bb.c
-
-3:                                                ; preds = %bb.a
-  br label %bb.c
-
-4:                                                ; preds = %bb.a
-  br label %bb.c
-
-5:                                                ; preds = %bb.a
-  br label %bb.c
-
-6:                                                ; preds = %bb.a, %bb.a
-  br label %bb.c
-
-7:                                                ; preds = %bb.a
-  br label %bb.c
-
-8:                                                ; preds = %bb.a
-  br label %bb.c
-
-9:                                                ; preds = %bb.a
-  br label %bb.c
-
-10:                                               ; preds = %bb.a
-  br label %bb.c
-
-bb.b:                                             ; preds = %bb.a
+bb.b:                                             ; preds = %switch.hole_check, %bb.a
   %i.b = load ptr, ptr @stderr, align 8, !tbaa !9
   %i.c = tail call i64 @fwrite(ptr nonnull @.str.9, i64 38, i64 1, ptr %i.b) #10 ; 0 uses
   tail call void @exit(i32 noundef 1) #11
   unreachable
 
-bb.c:                                             ; preds = %bb.a, %10, %9, %8, %7, %6, %5, %4, %3, %2, %1
-  %.0 = phi i32 [ 0, %10 ], [ 2, %1 ], [ 7, %2 ], [ 6, %3 ], [ 4, %4 ], [ 5, %5 ], [ 8, %6 ], [ 3, %7 ], [ 10, %8 ], [ 1, %bb.a ], [ 11, %9 ]
-  ret i32 %.0
+switch.hole_check:                                ; preds = %bb.a
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i64
+  %switch.shifted = lshr i64 3456960590512129, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  br i1 %switch.lobit, label %bb.c, label %bb.b
+
+bb.c:                                             ; preds = %switch.hole_check
+  %2 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._Z8sig2typePc, i64 %2
+  %switch.load = load i32, ptr %switch.gep, align 4
+  ret i32 %switch.load
 }
 
 ; Function Attrs: nofree nounwind

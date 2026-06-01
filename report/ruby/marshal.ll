@@ -131,7 +131,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.86 = private unnamed_addr constant [42 x i8] c"dump format error (symlink with encoding)\00", align 1
 @.str.87 = private unnamed_addr constant [35 x i8] c"invalid byte sequence in %s: %+li\0B\00", align 1
 @.str.88 = private unnamed_addr constant [11 x i8] c"bad symbol\00", align 1
-@switch.table.rb_type = private unnamed_addr constant [10 x i32] [i32 19, i32 17, i32 poison, i32 poison, i32 poison, i32 18, i32 poison, i32 poison, i32 poison, i32 22], align 4
+@switch.table.rb_type = private unnamed_addr constant [37 x i32] [i32 19, i32 poison, i32 poison, i32 poison, i32 17, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 18, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 22], align 4
 
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local void @rb_marshal_define_compat(i64 noundef %0, i64 noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 {
@@ -534,11 +534,9 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  %1 = tail call i64 @llvm.fshl.i64(i64 %0, i64 %0, i64 62) ; 3 uses
-  %i.i = icmp ult i64 %1, 10
-  %switch.maskindex = trunc i64 %1 to i16
-  %switch.shifted = lshr i16 547, %switch.maskindex
-  %switch.lobit = trunc i16 %switch.shifted to i1
+  %i.i = icmp ult i64 %0, 37
+  %switch.shifted = lshr i64 68720525329, %0
+  %switch.lobit = trunc i64 %switch.shifted to i1
   %or.cond = select i1 %i.i, i1 %switch.lobit, i1 false
   br i1 %or.cond, label %switch.lookup, label %bb.d
 
@@ -553,7 +551,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 switch.lookup:                                    ; preds = %bb.c
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.rb_type, i64 %1
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.rb_type, i64 %0
   %switch.load = load i32, ptr %switch.gep, align 4
   br label %bb.f
 

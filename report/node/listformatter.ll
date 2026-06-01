@@ -201,13 +201,11 @@ bb.c:                                             ; preds = %_ZNK6icu_7813Unicod
 _ZNK6icu_7813UnicodeStringixEi.exit28:            ; preds = %bb.c
   %i.v = getelementptr inbounds nuw i8, ptr %i.n, i64 4
   %i.w = load i16, ptr %i.v, align 2
-  %1 = add i16 %i.w, -65                          ; 2 uses
-  %2 = tail call i16 @llvm.fshl.i16(i16 %1, i16 %1, i16 14)
-  switch i16 %2, label %_ZNK6icu_7813UnicodeStringixEi.exit37.thread [
-    i16 8, label %_ZNK6icu_7813UnicodeStringixEi.exit43
-    i16 0, label %_ZNK6icu_7813UnicodeStringixEi.exit43
-    i16 9, label %_ZNK6icu_7813UnicodeStringixEi.exit43
-    i16 1, label %_ZNK6icu_7813UnicodeStringixEi.exit43
+  switch i16 %i.w, label %_ZNK6icu_7813UnicodeStringixEi.exit37.thread [
+    i16 97, label %_ZNK6icu_7813UnicodeStringixEi.exit43
+    i16 65, label %_ZNK6icu_7813UnicodeStringixEi.exit43
+    i16 101, label %_ZNK6icu_7813UnicodeStringixEi.exit43
+    i16 69, label %_ZNK6icu_7813UnicodeStringixEi.exit43
   ]
 
 _ZNK6icu_7813UnicodeStringixEi.exit40:            ; preds = %_ZNK6icu_7813UnicodeStringixEi.exit19
@@ -609,9 +607,6 @@ declare noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeStri
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #12
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.fshl.i16(i16, i16, i16) #12
 
 attributes #0 = { nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

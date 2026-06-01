@@ -88,6 +88,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.77 = private unnamed_addr constant [43 x i8] c"Not enough memory to hold JP2 Header data\0A\00", align 1
 @.str.78 = private unnamed_addr constant [43 x i8] c"Stream error while writing JP2 Header box\0A\00", align 1
 @switch.table.opj_jp2_setup_encoder = private unnamed_addr constant [3 x i32] [i32 3, i32 1, i32 3], align 4
+@switch.table.opj_jp2_read_header = private unnamed_addr constant [13 x i32] [i32 5, i32 -1, i32 -1, i32 -1, i32 1, i32 2, i32 3, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 4], align 4
 
 ; Function Attrs: nounwind uwtable
 define range(i32 0, 2) i32 @opj_jp2_decode(ptr noundef captures(none) %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 {
@@ -490,31 +491,18 @@ bb.n:                                             ; preds = %bb.m
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 60
   %i.al = load i32, ptr %i.ak, align 4, !tbaa !101
   %i.am = getelementptr inbounds nuw i8, ptr %i.aj, i64 20
-  switch i32 %i.al, label %bb.o [
-    i32 16, label %bb.p
-    i32 17, label %4
-    i32 18, label %5
-    i32 24, label %6
-    i32 12, label %7
-  ]
-
-4:                                                ; preds = %bb.n
-  br label %bb.p
-
-5:                                                ; preds = %bb.n
-  br label %bb.p
-
-6:                                                ; preds = %bb.n
-  br label %bb.p
-
-7:                                                ; preds = %bb.n
-  br label %bb.p
+  %switch.tableidx = add i32 %i.al, -12           ; 2 uses
+  %4 = icmp ult i32 %switch.tableidx, 13
+  br i1 %4, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
+  %5 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.opj_jp2_read_header, i64 %5
+  %switch.load = load i32, ptr %switch.gep, align 4
   br label %bb.p
 
-bb.p:                                             ; preds = %bb.n, %4, %6, %bb.o, %7, %5
-  %.sink = phi i32 [ 2, %4 ], [ 4, %6 ], [ -1, %bb.o ], [ 5, %7 ], [ 3, %5 ], [ 1, %bb.n ]
+bb.p:                                             ; preds = %bb.n, %bb.o
+  %.sink = phi i32 [ %switch.load, %bb.o ], [ -1, %bb.n ]
   store i32 %.sink, ptr %i.am, align 4, !tbaa !105
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 128 ; 2 uses
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !102 ; 2 uses

@@ -201,6 +201,7 @@ begin_hunk_0
 @.str.647 = private unnamed_addr constant [5 x i8] c"%04d\00", align 1
 @.str.648 = private unnamed_addr constant [17 x i8] c"unknown encoding\00", align 1
 @.str.649 = private unnamed_addr constant [68 x i8] c"Unable to delete/modify collation sequence due to active statements\00", align 1
+@switch.table.sqlite3ErrStr = private unnamed_addr constant [102 x ptr] [ptr @.str.550, ptr @.str.551, ptr @.str.572, ptr @.str.552, ptr @.str.553, ptr @.str.554, ptr @.str.555, ptr @.str.206, ptr @.str.556, ptr @.str.557, ptr @.str.558, ptr @.str.559, ptr @.str.572, ptr @.str.560, ptr @.str.561, ptr @.str.572, ptr @.str.562, ptr @.str.199, ptr @.str.563, ptr @.str.564, ptr @.str.565, ptr @.str.566, ptr @.str.567, ptr @.str.568, ptr @.str.569, ptr @.str.570, ptr @.str.571, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.572, ptr @.str.550, ptr @.str.550], align 8
 @switch.table.sqlite3Pragma = private unnamed_addr constant [4 x ptr] [ptr @.str.485, ptr @.str.479, ptr @.str.481, ptr @.str.483], align 8
 @switch.table.multiSelect.90 = private unnamed_addr constant [3 x ptr] [ptr @.str.386, ptr @.str.388, ptr @.str.387], align 8
 @switch.table.typeofFunc = private unnamed_addr constant [5 x ptr] [ptr @.str.6, ptr @.str.5, ptr @.str.606, ptr @.str.607, ptr @.str.4], align 8
@@ -603,109 +604,18 @@ bb.a:
 define internal fastcc noundef nonnull ptr @sqlite3ErrStr(i32 noundef %0) unnamed_addr #10 {
 bb.a:
   %trunc = trunc i32 %0 to i8
-  switch i8 %trunc, label %bb.b [
-    i8 100, label %bb.c
-    i8 101, label %bb.c
-    i8 0, label %bb.c
-    i8 1, label %1
-    i8 3, label %2
-    i8 4, label %3
-    i8 5, label %4
-    i8 6, label %5
-    i8 7, label %6
-    i8 8, label %7
-    i8 9, label %8
-    i8 10, label %9
-    i8 11, label %10
-    i8 13, label %11
-    i8 14, label %12
-    i8 16, label %13
-    i8 17, label %14
-    i8 18, label %15
-    i8 19, label %16
-    i8 20, label %17
-    i8 21, label %18
-    i8 22, label %19
-    i8 23, label %20
-    i8 24, label %21
-    i8 25, label %22
-    i8 26, label %23
-  ]
-
-1:                                                ; preds = %bb.a
-  br label %bb.c
-
-2:                                                ; preds = %bb.a
-  br label %bb.c
-
-3:                                                ; preds = %bb.a
-  br label %bb.c
-
-4:                                                ; preds = %bb.a
-  br label %bb.c
-
-5:                                                ; preds = %bb.a
-  br label %bb.c
-
-6:                                                ; preds = %bb.a
-  br label %bb.c
-
-7:                                                ; preds = %bb.a
-  br label %bb.c
-
-8:                                                ; preds = %bb.a
-  br label %bb.c
-
-9:                                                ; preds = %bb.a
-  br label %bb.c
-
-10:                                               ; preds = %bb.a
-  br label %bb.c
-
-11:                                               ; preds = %bb.a
-  br label %bb.c
-
-12:                                               ; preds = %bb.a
-  br label %bb.c
-
-13:                                               ; preds = %bb.a
-  br label %bb.c
-
-14:                                               ; preds = %bb.a
-  br label %bb.c
-
-15:                                               ; preds = %bb.a
-  br label %bb.c
-
-16:                                               ; preds = %bb.a
-  br label %bb.c
-
-17:                                               ; preds = %bb.a
-  br label %bb.c
-
-18:                                               ; preds = %bb.a
-  br label %bb.c
-
-19:                                               ; preds = %bb.a
-  br label %bb.c
-
-20:                                               ; preds = %bb.a
-  br label %bb.c
-
-21:                                               ; preds = %bb.a
-  br label %bb.c
-
-22:                                               ; preds = %bb.a
-  br label %bb.c
-
-23:                                               ; preds = %bb.a
-  br label %bb.c
+  %1 = icmp ult i8 %trunc, 102
+  br i1 %1, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
+  %trunc.mask = and i32 %0, 127
+  %2 = zext nneg i32 %trunc.mask to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.sqlite3ErrStr, i64 %2
+  %switch.load = load ptr, ptr %switch.gep, align 8
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.a, %bb.a, %bb.a, %bb.b, %23, %22, %21, %20, %19, %18, %17, %16, %15, %14, %13, %12, %11, %10, %9, %8, %7, %6, %5, %4, %3, %2, %1
-  %.0 = phi ptr [ @.str.572, %bb.b ], [ @.str.571, %23 ], [ @.str.551, %1 ], [ @.str.552, %2 ], [ @.str.553, %3 ], [ @.str.554, %4 ], [ @.str.555, %5 ], [ @.str.206, %6 ], [ @.str.556, %7 ], [ @.str.557, %8 ], [ @.str.558, %9 ], [ @.str.559, %10 ], [ @.str.560, %11 ], [ @.str.561, %12 ], [ @.str.562, %13 ], [ @.str.199, %14 ], [ @.str.563, %15 ], [ @.str.564, %16 ], [ @.str.565, %17 ], [ @.str.566, %18 ], [ @.str.567, %19 ], [ @.str.568, %20 ], [ @.str.569, %21 ], [ @.str.570, %22 ], [ @.str.550, %bb.a ], [ @.str.550, %bb.a ], [ @.str.550, %bb.a ]
+bb.c:                                             ; preds = %bb.a, %bb.b
+  %.0 = phi ptr [ %switch.load, %bb.b ], [ @.str.572, %bb.a ]
   ret ptr %.0
 }
 

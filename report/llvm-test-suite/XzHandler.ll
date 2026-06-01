@@ -201,6 +201,7 @@ $_ZTS13CObjectVectorI5CPropE = comdat any
 @IID_ISetProperties = external global %struct.GUID, align 4
 @IID_IInStream = external local_unnamed_addr global %struct.GUID, align 4
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @_GLOBAL__sub_I_XzHandler.cpp, ptr null }]
+@switch.table._ZN8NArchive3NXz8CHandler7ExtractEPKjjiP23IArchiveExtractCallback = private unnamed_addr constant [18 x i32] [i32 0, i32 2, i32 poison, i32 3, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 2, i32 2], align 4
 
 @_ZN8NArchive3NXz8CHandlerC1Ev = dso_local unnamed_addr alias void (ptr), ptr @_ZN8NArchive3NXz8CHandlerC2Ev
 @_ZN8NArchive3NXz17COpenCallbackWrapC1EP20IArchiveOpenCallback = dso_local unnamed_addr alias void (ptr, ptr), ptr @_ZN8NArchive3NXz17COpenCallbackWrapC2EP20IArchiveOpenCallback
@@ -603,22 +604,13 @@ bb.bd:                                            ; preds = %bb.ar, %bb.as, %bb.
 
 .thread:                                          ; preds = %bb.x, %.thread173
   %.3117 = phi i32 [ %.2116.ph, %.thread173 ], [ %i.au, %bb.x ] ; 4 uses
-  switch i32 %.3117, label %.thread.thread [
-    i32 0, label %bb.bf
-    i32 4, label %8
-    i32 3, label %bb.bf
-    i32 1, label %9
-    i32 16, label %9
-    i32 17, label %9
-  ]
+  %8 = icmp ult i32 %.3117, 18
+  %switch.shifted = lshr i32 196635, %.3117
+  %switch.lobit = trunc i32 %switch.shifted to i1
+  %or.cond233 = select i1 %8, i1 %switch.lobit, i1 false
+  br i1 %or.cond233, label %bb.bf, label %.thread.thread
 
-8:                                                ; preds = %.thread
-  br label %bb.bf
-
-9:                                                ; preds = %.thread, %.thread, %.thread
-  br label %bb.bf
-
-.thread.thread:                                   ; preds = %bb.aa, %.thread
+.thread.thread:                                   ; preds = %.thread, %bb.aa
   %.3117189 = phi i32 [ %.3117, %.thread ], [ 2, %bb.aa ]
   %i.dq = invoke noundef i32 @_Z13SResToHRESULTi(i32 noundef %.3117189)
           to label %.loopexit unwind label %bb.be
@@ -629,8 +621,10 @@ bb.be:                                            ; preds = %bb.bg, %.thread.thr
           catch ptr null
   br label %bb.bn
 
-bb.bf:                                            ; preds = %.thread, %.thread, %9, %8
-  %.094 = phi i32 [ 2, %9 ], [ 1, %8 ], [ %.3117, %.thread ], [ %.3117, %.thread ]
+bb.bf:                                            ; preds = %.thread
+  %9 = zext nneg i32 %.3117 to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN8NArchive3NXz8CHandler7ExtractEPKjjiP23IArchiveExtractCallback, i64 %9
+  %switch.load = load i32, ptr %switch.gep, align 4
   %i.ds = load ptr, ptr %5, align 8, !tbaa !157   ; 3 uses
   %.not.i = icmp eq ptr %i.ds, null
   br i1 %.not.i, label %_ZN9CMyComPtrI20ISequentialOutStreamE7ReleaseEv.exit, label %bb.bg
@@ -650,7 +644,7 @@ _ZN9CMyComPtrI20ISequentialOutStreamE7ReleaseEv.exit: ; preds = %.noexc, %bb.bf
   %i.dx = load ptr, ptr %4, align 8, !tbaa !8
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dx, i64 72
   %i.dz = load ptr, ptr %i.dy, align 8
-  %i.ea = invoke noundef i32 %i.dz(ptr noundef nonnull align 8 dereferenceable(8) %4, i32 noundef %.094)
+  %i.ea = invoke noundef i32 %i.dz(ptr noundef nonnull align 8 dereferenceable(8) %4, i32 noundef %switch.load)
           to label %.loopexit unwind label %bb.bh
 
 bb.bh:                                            ; preds = %_ZN9CMyComPtrI20ISequentialOutStreamE7ReleaseEv.exit

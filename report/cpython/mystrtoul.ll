@@ -37,14 +37,13 @@ bb.b:                                             ; preds = %.lr.ph
   br label %.critedge
 
 .critedge:                                        ; preds = %.critedge.loopexit, %bb.a
-  %.0101.lcssa = phi ptr [ %0, %bb.a ], [ %.0101.lcssa.ph, %.critedge.loopexit ] ; 15 uses
+  %.0101.lcssa = phi ptr [ %0, %bb.a ], [ %.0101.lcssa.ph, %.critedge.loopexit ] ; 16 uses
   %.lcssa = phi i1 [ false, %bb.a ], [ %i.i, %.critedge.loopexit ] ; 4 uses
-  %3 = tail call i32 @llvm.fshl.i32(i32 %2, i32 %2, i32 31)
-  switch i32 %3, label %bb.ae [
+  switch i32 %2, label %bb.ae [
     i32 0, label %bb.c
-    i32 8, label %bb.p
-    i32 4, label %bb.u
-    i32 1, label %bb.z
+    i32 16, label %bb.p
+    i32 8, label %bb.u
+    i32 2, label %bb.z
   ]
 
 bb.c:                                             ; preds = %.critedge
@@ -145,12 +144,12 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.ar
 
 bb.p:                                             ; preds = %.critedge
-  br i1 %.lcssa, label %bb.q, label %bb.ae
+  br i1 %.lcssa, label %bb.q, label %.preheader137.preheader
 
 bb.q:                                             ; preds = %bb.p
   %i.al = getelementptr i8, ptr %.0101.lcssa, i64 1 ; 3 uses
   %i.am = load i8, ptr %i.al, align 1, !tbaa !11
-  switch i8 %i.am, label %bb.ae [
+  switch i8 %i.am, label %.preheader137.preheader [
     i8 120, label %bb.r
     i8 88, label %bb.r
   ]
@@ -162,7 +161,7 @@ bb.r:                                             ; preds = %bb.q, %bb.q
   %i.aq = getelementptr i8, ptr @_PyLong_DigitValue, i64 %i.ap
   %i.ar = load i8, ptr %i.aq, align 1, !tbaa !11
   %i.as = icmp ugt i8 %i.ar, 15
-  br i1 %i.as, label %bb.s, label %bb.ae
+  br i1 %i.as, label %bb.s, label %.preheader137.preheader
 
 bb.s:                                             ; preds = %bb.r
   %.not124 = icmp eq ptr %1, null
@@ -173,12 +172,12 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.ar
 
 bb.u:                                             ; preds = %.critedge
-  br i1 %.lcssa, label %bb.v, label %bb.ae
+  br i1 %.lcssa, label %bb.v, label %.preheader137.preheader
 
 bb.v:                                             ; preds = %bb.u
   %i.at = getelementptr i8, ptr %.0101.lcssa, i64 1 ; 3 uses
   %i.au = load i8, ptr %i.at, align 1, !tbaa !11
-  switch i8 %i.au, label %bb.ae [
+  switch i8 %i.au, label %.preheader137.preheader [
     i8 111, label %bb.w
     i8 79, label %bb.w
   ]
@@ -190,7 +189,7 @@ bb.w:                                             ; preds = %bb.v, %bb.v
   %i.ay = getelementptr i8, ptr @_PyLong_DigitValue, i64 %i.ax
   %i.az = load i8, ptr %i.ay, align 1, !tbaa !11
   %i.ba = icmp ugt i8 %i.az, 7
-  br i1 %i.ba, label %bb.x, label %bb.ae
+  br i1 %i.ba, label %bb.x, label %.preheader137.preheader
 
 bb.x:                                             ; preds = %bb.w
   %.not123 = icmp eq ptr %1, null
@@ -201,12 +200,12 @@ bb.y:                                             ; preds = %bb.x
   br label %bb.ar
 
 bb.z:                                             ; preds = %.critedge
-  br i1 %.lcssa, label %bb.aa, label %bb.ae
+  br i1 %.lcssa, label %bb.aa, label %.preheader137.preheader
 
 bb.aa:                                            ; preds = %bb.z
   %i.bb = getelementptr i8, ptr %.0101.lcssa, i64 1 ; 3 uses
   %i.bc = load i8, ptr %i.bb, align 1, !tbaa !11
-  switch i8 %i.bc, label %bb.ae [
+  switch i8 %i.bc, label %.preheader137.preheader [
     i8 98, label %bb.ab
     i8 66, label %bb.ab
   ]
@@ -218,7 +217,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.aa
   %i.bg = getelementptr i8, ptr @_PyLong_DigitValue, i64 %i.bf
   %i.bh = load i8, ptr %i.bg, align 1, !tbaa !11
   %i.bi = icmp ugt i8 %i.bh, 1
-  br i1 %i.bi, label %bb.ac, label %bb.ae
+  br i1 %i.bi, label %bb.ac, label %.preheader137.preheader
 
 bb.ac:                                            ; preds = %bb.ab
   %.not122 = icmp eq ptr %1, null
@@ -228,15 +227,14 @@ bb.ad:                                            ; preds = %bb.ac
   store ptr %i.bb, ptr %1, align 8, !tbaa !14
   br label %bb.ar
 
-bb.ae:                                            ; preds = %bb.ab, %bb.aa, %bb.w, %bb.v, %bb.r, %bb.q, %bb.z, %bb.u, %bb.p, %.critedge
-  %.3 = phi ptr [ %.0101.lcssa, %.critedge ], [ %.0101.lcssa, %bb.z ], [ %.0101.lcssa, %bb.u ], [ %i.av, %bb.w ], [ %i.bb, %bb.aa ], [ %i.bd, %bb.ab ], [ %i.al, %bb.q ], [ %.0101.lcssa, %bb.p ], [ %i.an, %bb.r ], [ %i.at, %bb.v ] ; 2 uses
+bb.ae:                                            ; preds = %.critedge
   %i.bj = add i32 %2, -37
   %or.cond = icmp ult i32 %i.bj, -35
   br i1 %or.cond, label %bb.af, label %.preheader137.preheader
 
-.preheader137.preheader:                          ; preds = %bb.c, %bb.k, %bb.h, %bb.e, %bb.ae
-  %.3173 = phi ptr [ %.3, %bb.ae ], [ %.0101.lcssa, %bb.c ], [ %i.x, %bb.k ], [ %i.r, %bb.h ], [ %i.l, %bb.e ]
-  %.0105172 = phi i32 [ %2, %bb.ae ], [ 10, %bb.c ], [ 2, %bb.k ], [ 8, %bb.h ], [ 16, %bb.e ] ; 4 uses
+.preheader137.preheader:                          ; preds = %bb.ab, %bb.aa, %bb.w, %bb.u, %bb.v, %bb.r, %bb.p, %bb.q, %bb.c, %bb.k, %bb.h, %bb.e, %bb.z, %bb.ae
+  %.3176 = phi ptr [ %.0101.lcssa, %bb.ae ], [ %i.bd, %bb.ab ], [ %i.bb, %bb.aa ], [ %i.av, %bb.w ], [ %.0101.lcssa, %bb.u ], [ %i.at, %bb.v ], [ %i.an, %bb.r ], [ %.0101.lcssa, %bb.p ], [ %i.al, %bb.q ], [ %.0101.lcssa, %bb.c ], [ %i.x, %bb.k ], [ %i.r, %bb.h ], [ %i.l, %bb.e ], [ %.0101.lcssa, %bb.z ]
+  %.0105175 = phi i32 [ %2, %bb.ae ], [ 2, %bb.ab ], [ 2, %bb.aa ], [ 8, %bb.w ], [ 8, %bb.u ], [ 8, %bb.v ], [ 16, %bb.r ], [ 16, %bb.p ], [ 16, %bb.q ], [ 10, %bb.c ], [ 2, %bb.k ], [ 8, %bb.h ], [ 16, %bb.e ], [ 2, %bb.z ] ; 4 uses
   br label %.preheader137
 
 bb.af:                                            ; preds = %bb.ae
@@ -244,23 +242,23 @@ bb.af:                                            ; preds = %bb.ae
   br i1 %.not132, label %bb.ar, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
-  store ptr %.3, ptr %1, align 8, !tbaa !14
+  store ptr %.0101.lcssa, ptr %1, align 8, !tbaa !14
   br label %bb.ar
 
 .preheader137:                                    ; preds = %.preheader137.preheader, %.preheader137
-  %.4 = phi ptr [ %i.bm, %.preheader137 ], [ %.3173, %.preheader137.preheader ] ; 4 uses
+  %.4 = phi ptr [ %i.bm, %.preheader137 ], [ %.3176, %.preheader137.preheader ] ; 4 uses
   %i.bk = load i8, ptr %.4, align 1, !tbaa !11    ; 2 uses
   %i.bl = icmp eq i8 %i.bk, 48
   %i.bm = getelementptr i8, ptr %.4, i64 1
   br i1 %i.bl, label %.preheader137, label %bb.ah, !llvm.loop !19
 
 bb.ah:                                            ; preds = %.preheader137
-  %i.bn = zext nneg i32 %.0105172 to i64          ; 4 uses
+  %i.bn = zext nneg i32 %.0105175 to i64          ; 4 uses
   %i.bo = zext i8 %i.bk to i64
   %i.bp = getelementptr i8, ptr @_PyLong_DigitValue, i64 %i.bo
   %i.bq = load i8, ptr %i.bp, align 1, !tbaa !11  ; 2 uses
   %i.br = zext i8 %i.bq to i32
-  %i.bs = icmp samesign ugt i32 %.0105172, %i.br
+  %i.bs = icmp samesign ugt i32 %.0105175, %i.br
   br i1 %i.bs, label %.lr.ph154, label %._crit_edge
 
 .lr.ph154:                                        ; preds = %bb.ah
@@ -308,7 +306,7 @@ bb.an:                                            ; preds = %bb.am, %bb.aj
   %i.cm = getelementptr i8, ptr @_PyLong_DigitValue, i64 %i.cl
   %i.cn = load i8, ptr %i.cm, align 1, !tbaa !11  ; 2 uses
   %i.co = zext i8 %i.cn to i32
-  %i.cp = icmp samesign ugt i32 %.0105172, %i.co
+  %i.cp = icmp samesign ugt i32 %.0105175, %i.co
   br i1 %i.cp, label %bb.ai, label %._crit_edge, !llvm.loop !22
 
 ._crit_edge:                                      ; preds = %bb.an, %bb.ah
@@ -332,7 +330,7 @@ select.unfold:                                    ; preds = %bb.am, %bb.al, %bb.
   %i.cs = getelementptr i8, ptr @_PyLong_DigitValue, i64 %i.cr
   %i.ct = load i8, ptr %i.cs, align 1, !tbaa !11
   %i.cu = zext i8 %i.ct to i32
-  %i.cv = icmp samesign ugt i32 %.0105172, %i.cu
+  %i.cv = icmp samesign ugt i32 %.0105175, %i.cu
   %i.cw = getelementptr i8, ptr %.6, i64 1
   br i1 %i.cv, label %.preheader, label %bb.ap, !llvm.loop !23
 
@@ -341,7 +339,7 @@ bb.ap:                                            ; preds = %.preheader
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap, %select.unfold
-  %i.cx = tail call ptr @__errno_location() #3
+  %i.cx = tail call ptr @__errno_location() #2
   store i32 34, ptr %i.cx, align 4, !tbaa !7
   br label %bb.ar
 
@@ -405,7 +403,7 @@ bb.e:                                             ; preds = %.critedge.thread
   br i1 %or.cond4, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.p = tail call ptr @__errno_location() #3
+  %i.p = tail call ptr @__errno_location() #2
   store i32 34, ptr %i.p, align 4, !tbaa !7
   br label %bb.g
 
@@ -414,13 +412,9 @@ bb.g:                                             ; preds = %bb.d, %bb.e, %bb.f
   ret i64 %.020
 }
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.fshl.i32(i32, i32, i32) #2
-
 attributes #0 = { nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree nosync nounwind willreturn memory(none) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #3 = { nounwind willreturn memory(none) }
+attributes #2 = { nounwind willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5}
 !llvm.ident = !{!6}

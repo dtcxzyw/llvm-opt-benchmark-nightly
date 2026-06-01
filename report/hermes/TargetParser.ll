@@ -201,6 +201,7 @@ begin_hunk_0
 @.str.407 = private unnamed_addr constant [6 x i8] c"turks\00", align 1
 @_ZN12_GLOBAL__N_18R600GPUsE = internal constant [26 x { { ptr, i64 }, { ptr, i64 }, i32, i32 }] [{ { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.382, i64 4 }, { ptr, i64 } { ptr @.str.382, i64 4 }, i32 1, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.383, i64 5 }, { ptr, i64 } { ptr @.str.382, i64 4 }, i32 1, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.384, i64 5 }, { ptr, i64 } { ptr @.str.382, i64 4 }, i32 1, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.385, i64 4 }, { ptr, i64 } { ptr @.str.385, i64 4 }, i32 2, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.386, i64 5 }, { ptr, i64 } { ptr @.str.387, i64 5 }, i32 3, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.387, i64 5 }, { ptr, i64 } { ptr @.str.387, i64 5 }, i32 3, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.388, i64 5 }, { ptr, i64 } { ptr @.str.387, i64 5 }, i32 3, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.389, i64 5 }, { ptr, i64 } { ptr @.str.387, i64 5 }, i32 3, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.390, i64 5 }, { ptr, i64 } { ptr @.str.390, i64 5 }, i32 4, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.391, i64 5 }, { ptr, i64 } { ptr @.str.391, i64 5 }, i32 5, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.392, i64 5 }, { ptr, i64 } { ptr @.str.392, i64 5 }, i32 6, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.393, i64 5 }, { ptr, i64 } { ptr @.str.394, i64 5 }, i32 7, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.394, i64 5 }, { ptr, i64 } { ptr @.str.394, i64 5 }, i32 7, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.395, i64 5 }, { ptr, i64 } { ptr @.str.395, i64 5 }, i32 8, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.396, i64 4 }, { ptr, i64 } { ptr @.str.395, i64 5 }, i32 8, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.397, i64 7 }, { ptr, i64 } { ptr @.str.397, i64 7 }, i32 9, i32 2 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.398, i64 7 }, { ptr, i64 } { ptr @.str.397, i64 7 }, i32 9, i32 2 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.399, i64 7 }, { ptr, i64 } { ptr @.str.399, i64 7 }, i32 10, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.400, i64 7 }, { ptr, i64 } { ptr @.str.400, i64 7 }, i32 11, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.401, i64 4 }, { ptr, i64 } { ptr @.str.401, i64 4 }, i32 12, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.402, i64 5 }, { ptr, i64 } { ptr @.str.401, i64 4 }, i32 12, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.403, i64 5 }, { ptr, i64 } { ptr @.str.403, i64 5 }, i32 13, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.404, i64 6 }, { ptr, i64 } { ptr @.str.404, i64 6 }, i32 14, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.405, i64 5 }, { ptr, i64 } { ptr @.str.406, i64 6 }, i32 15, i32 2 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.406, i64 6 }, { ptr, i64 } { ptr @.str.406, i64 6 }, i32 15, i32 2 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.407, i64 5 }, { ptr, i64 } { ptr @.str.407, i64 5 }, i32 16, i32 0 }], align 16
 @.str.409 = private unnamed_addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1
+@switch.table._ZN4llvh3ARM12getHWDivNameEj = private unnamed_addr constant [49 x ptr] [ptr @_ZN12_GLOBAL__N_110HWDivNamesE, ptr getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_110HWDivNamesE, i64 24), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_110HWDivNamesE, i64 48), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_110HWDivNamesE, i64 72), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_110HWDivNamesE, i64 96)], align 8
 @switch.table._ZN4llvh3ARM16parseArchProfileENS_9StringRefE = private unnamed_addr constant [34 x i32] [i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 3, i32 1, i32 1, i32 2, i32 3, i32 3, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 2, i32 3, i32 3, i32 0, i32 0, i32 0, i32 0, i32 1], align 4
 @switch.table._ZN4llvh3ARM16parseArchVersionENS_9StringRefE = private unnamed_addr constant [34 x i32] [i32 0, i32 2, i32 2, i32 3, i32 3, i32 4, i32 4, i32 5, i32 5, i32 5, i32 6, i32 6, i32 6, i32 6, i32 6, i32 7, i32 7, i32 7, i32 7, i32 7, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 5, i32 5, i32 5, i32 7, i32 7], align 4
 @switch.table._ZN4llvh3ARM23computeDefaultTargetABIERKNS_6TripleENS_9StringRefE = private unnamed_addr constant [10 x ptr] [ptr @.str.148, ptr @.str.148, ptr poison, ptr poison, ptr @.str.145, ptr @.str.145, ptr @.str.148, ptr poison, ptr @.str.148, ptr @.str.148], align 8
@@ -603,37 +604,26 @@ _ZNK4llvh9StringRef6equalsES0_.exit32.thread:     ; preds = %bb.d, %_ZNK4llvh9St
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define hidden { ptr, i64 } @_ZN4llvh3ARM12getHWDivNameEj(i32 noundef %0) local_unnamed_addr #0 {
-.critedge:
-  switch i32 %0, label %.loopexit [
-    i32 0, label %bb.a
-    i32 1, label %.fold.split
-    i32 16, label %.fold.split15
-    i32 32, label %.fold.split16
-    i32 48, label %.fold.split17
-  ]
+.fold.split17:
+  %1 = icmp ult i32 %0, 49
+  %switch.maskindex = zext nneg i32 %0 to i64
+  %switch.shifted = lshr i64 281479271743491, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  %or.cond = select i1 %1, i1 %switch.lobit, i1 false
+  br i1 %or.cond, label %bb.a, label %.loopexit
 
-.fold.split:                                      ; preds = %.critedge
-  br label %bb.a
-
-.fold.split15:                                    ; preds = %.critedge
-  br label %bb.a
-
-.fold.split16:                                    ; preds = %.critedge
-  br label %bb.a
-
-.fold.split17:                                    ; preds = %.critedge
-  br label %bb.a
-
-bb.a:                                             ; preds = %.critedge, %.fold.split17, %.fold.split16, %.fold.split15, %.fold.split
-  %.06.ptr.lcssa = phi ptr [ @_ZN12_GLOBAL__N_110HWDivNamesE, %.critedge ], [ getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_110HWDivNamesE, i64 72), %.fold.split16 ], [ getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_110HWDivNamesE, i64 24), %.fold.split ], [ getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_110HWDivNamesE, i64 48), %.fold.split15 ], [ getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_110HWDivNamesE, i64 96), %.fold.split17 ] ; 2 uses
-  %.sroa.5.0..06.ptr.sroa_idx = getelementptr inbounds nuw i8, ptr %.06.ptr.lcssa, i64 8
+bb.a:                                             ; preds = %.fold.split17
+  %2 = zext nneg i32 %0 to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh3ARM12getHWDivNameEj, i64 %2
+  %switch.load = load ptr, ptr %switch.gep, align 8 ; 2 uses
+  %.sroa.5.0..06.ptr.sroa_idx = getelementptr inbounds nuw i8, ptr %switch.load, i64 8
   %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..06.ptr.sroa_idx, align 8, !tbaa !30
-  %.sroa.0.0.copyload = load ptr, ptr %.06.ptr.lcssa, align 8, !tbaa !29
+  %.sroa.0.0.copyload = load ptr, ptr %switch.load, align 8, !tbaa !29
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.critedge, %bb.a
-  %.sroa.4.1 = phi i64 [ %.sroa.5.0.copyload, %bb.a ], [ 0, %.critedge ]
-  %.sroa.09.1 = phi ptr [ %.sroa.0.0.copyload, %bb.a ], [ null, %.critedge ]
+.loopexit:                                        ; preds = %.fold.split17, %bb.a
+  %.sroa.4.1 = phi i64 [ %.sroa.5.0.copyload, %bb.a ], [ 0, %.fold.split17 ]
+  %.sroa.09.1 = phi ptr [ %.sroa.0.0.copyload, %bb.a ], [ null, %.fold.split17 ]
   %.fca.0.insert = insertvalue { ptr, i64 } poison, ptr %.sroa.09.1, 0
   %.fca.1.insert = insertvalue { ptr, i64 } %.fca.0.insert, i64 %.sroa.4.1, 1
   ret { ptr, i64 } %.fca.1.insert

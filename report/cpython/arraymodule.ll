@@ -201,6 +201,8 @@ begin_hunk_0
 @.str.140 = private unnamed_addr constant [32 x i8] c"__reduce__() takes no arguments\00", align 1
 @.str.141 = private unnamed_addr constant [6 x i8] c"N(())\00", align 1
 @.str.142 = private unnamed_addr constant [6 x i8] c"N(O)n\00", align 1
+@switch.table.typecode_to_mformat_code = private unnamed_addr constant [54 x i32] [i32 0, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 2, i32 6, i32 -1, i32 -1, i32 10, i32 -1, i32 -1, i32 -1, i32 -1, i32 10, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 1, i32 -1, i32 16, i32 -1, i32 14, i32 -1, i32 4, i32 8, i32 -1, i32 -1, i32 12, i32 -1, i32 -1, i32 -1, i32 -1, i32 12, i32 -1, i32 -1, i32 -1, i32 20, i32 -1, i32 20], align 4
+@switch.table.array_new = private unnamed_addr constant [54 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @descriptors, i64 48), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @descriptors, i64 240), ptr getelementptr inbounds nuw (i8, ptr @descriptors, i64 336), ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @descriptors, i64 432), ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @descriptors, i64 528), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @descriptors, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @descriptors, i64 624), ptr poison, ptr getelementptr inbounds nuw (i8, ptr @descriptors, i64 576), ptr poison, ptr getelementptr inbounds nuw (i8, ptr @descriptors, i64 192), ptr getelementptr inbounds nuw (i8, ptr @descriptors, i64 288), ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @descriptors, i64 384), ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @descriptors, i64 480), ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @descriptors, i64 96), ptr poison, ptr getelementptr inbounds nuw (i8, ptr @descriptors, i64 144)], align 8
 
 ; Function Attrs: nounwind uwtable
 define ptr @PyInit_array() local_unnamed_addr #0 {
@@ -603,58 +605,19 @@ declare void @PyErr_SetString(ptr noundef, ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define internal fastcc range(i32 -1, 21) i32 @typecode_to_mformat_code(i8 noundef signext %0) unnamed_addr #3 {
-  switch i8 %0, label %9 [
-    i8 98, label %bb.c
-    i8 66, label %2
-    i8 117, label %3
-    i8 119, label %3
-    i8 102, label %4
-    i8 100, label %5
-    i8 104, label %10
-    i8 72, label %6
-    i8 105, label %bb.a
-    i8 73, label %7
-    i8 108, label %bb.b
-    i8 76, label %8
-    i8 113, label %bb.b
-    i8 81, label %8
-  ]
+bb.a:
+  %switch.tableidx = add i8 %0, -66               ; 2 uses
+  %1 = icmp ult i8 %switch.tableidx, 54
+  br i1 %1, label %bb.b, label %bb.c
 
-2:                                                ; preds = %1
+bb.b:                                             ; preds = %bb.a
+  %2 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.typecode_to_mformat_code, i64 %2
+  %switch.load = load i32, ptr %switch.gep, align 4
   br label %bb.c
 
-3:                                                ; preds = %1, %1
-  br label %bb.c
-
-4:                                                ; preds = %1
-  br label %bb.c
-
-5:                                                ; preds = %1
-  br label %bb.c
-
-6:                                                ; preds = %1
-  br label %bb.c
-
-7:                                                ; preds = %1
-  br label %bb.c
-
-8:                                                ; preds = %1, %1
-  br label %bb.c
-
-9:                                                ; preds = %1
-  br label %bb.c
-
-10:                                               ; preds = %1
-  br label %bb.c
-
-bb.a:                                             ; preds = %1
-  br label %bb.c
-
-bb.b:                                             ; preds = %1, %1
-  br label %bb.c
-
-bb.c:                                             ; preds = %8, %7, %6, %5, %4, %1, %bb.b, %bb.a, %10, %9, %3, %2
-  %.2 = phi i32 [ -1, %9 ], [ 8, %bb.a ], [ 0, %2 ], [ 20, %3 ], [ 1, %1 ], [ 16, %5 ], [ 4, %10 ], [ 14, %4 ], [ 2, %6 ], [ 6, %7 ], [ 10, %8 ], [ 12, %bb.b ]
+bb.c:                                             ; preds = %bb.a, %bb.b
+  %.2 = phi i32 [ %switch.load, %bb.b ], [ -1, %bb.a ]
   ret i32 %.2
 }
 
@@ -1057,64 +1020,18 @@ bb.r:                                             ; preds = %bb.q
 PyObject_TypeCheck.exit210.thread:                ; preds = %bb.o, %bb.r, %PyObject_TypeCheck.exit212.thread, %bb.n, %PyObject_TypeCheck.exit210, %.critedge.thread, %.critedge
   %.095 = phi ptr [ null, %.critedge ], [ null, %.critedge.thread ], [ null, %PyObject_TypeCheck.exit210 ], [ null, %bb.n ], [ %i.bo, %bb.r ], [ null, %bb.o ], [ null, %PyObject_TypeCheck.exit212.thread ] ; 7 uses
   %i.bq = load i32, ptr %i.a, align 4, !tbaa !6
-  switch i32 %i.bq, label %bb.bq [
-    i32 98, label %bb.s
-    i32 66, label %.fold.split
-    i32 117, label %.fold.split296
-    i32 119, label %.fold.split297
-    i32 104, label %.fold.split298
-    i32 72, label %.fold.split299
-    i32 105, label %.fold.split300
-    i32 73, label %.fold.split301
-    i32 108, label %.fold.split302
-    i32 76, label %.fold.split303
-    i32 113, label %.fold.split304
-    i32 81, label %.fold.split305
-    i32 102, label %.fold.split306
-    i32 100, label %.fold.split307
-  ]
+  %switch.tableidx = add i32 %i.bq, -66           ; 3 uses
+  %3 = icmp ult i32 %switch.tableidx, 54
+  %switch.maskindex = zext nneg i32 %switch.tableidx to i64
+  %switch.shifted = lshr i64 11405049431360705, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  %or.cond312 = select i1 %3, i1 %switch.lobit, i1 false
+  br i1 %or.cond312, label %bb.s, label %bb.bq
 
-.fold.split:                                      ; preds = %PyObject_TypeCheck.exit210.thread
-  br label %bb.s
-
-.fold.split296:                                   ; preds = %PyObject_TypeCheck.exit210.thread
-  br label %bb.s
-
-.fold.split297:                                   ; preds = %PyObject_TypeCheck.exit210.thread
-  br label %bb.s
-
-.fold.split298:                                   ; preds = %PyObject_TypeCheck.exit210.thread
-  br label %bb.s
-
-.fold.split299:                                   ; preds = %PyObject_TypeCheck.exit210.thread
-  br label %bb.s
-
-.fold.split300:                                   ; preds = %PyObject_TypeCheck.exit210.thread
-  br label %bb.s
-
-.fold.split301:                                   ; preds = %PyObject_TypeCheck.exit210.thread
-  br label %bb.s
-
-.fold.split302:                                   ; preds = %PyObject_TypeCheck.exit210.thread
-  br label %bb.s
-
-.fold.split303:                                   ; preds = %PyObject_TypeCheck.exit210.thread
-  br label %bb.s
-
-.fold.split304:                                   ; preds = %PyObject_TypeCheck.exit210.thread
-  br label %bb.s
-
-.fold.split305:                                   ; preds = %PyObject_TypeCheck.exit210.thread
-  br label %bb.s
-
-.fold.split306:                                   ; preds = %PyObject_TypeCheck.exit210.thread
-  br label %bb.s
-
-.fold.split307:                                   ; preds = %PyObject_TypeCheck.exit210.thread
-  br label %bb.s
-
-bb.s:                                             ; preds = %PyObject_TypeCheck.exit210.thread, %.fold.split307, %.fold.split306, %.fold.split305, %.fold.split304, %.fold.split303, %.fold.split302, %.fold.split301, %.fold.split300, %.fold.split299, %.fold.split298, %.fold.split297, %.fold.split296, %.fold.split
-  %.096248.lcssa = phi ptr [ @descriptors, %PyObject_TypeCheck.exit210.thread ], [ getelementptr inbounds nuw (i8, ptr @descriptors, i64 576), %.fold.split306 ], [ getelementptr inbounds nuw (i8, ptr @descriptors, i64 48), %.fold.split ], [ getelementptr inbounds nuw (i8, ptr @descriptors, i64 96), %.fold.split296 ], [ getelementptr inbounds nuw (i8, ptr @descriptors, i64 144), %.fold.split297 ], [ getelementptr inbounds nuw (i8, ptr @descriptors, i64 192), %.fold.split298 ], [ getelementptr inbounds nuw (i8, ptr @descriptors, i64 240), %.fold.split299 ], [ getelementptr inbounds nuw (i8, ptr @descriptors, i64 288), %.fold.split300 ], [ getelementptr inbounds nuw (i8, ptr @descriptors, i64 336), %.fold.split301 ], [ getelementptr inbounds nuw (i8, ptr @descriptors, i64 384), %.fold.split302 ], [ getelementptr inbounds nuw (i8, ptr @descriptors, i64 432), %.fold.split303 ], [ getelementptr inbounds nuw (i8, ptr @descriptors, i64 480), %.fold.split304 ], [ getelementptr inbounds nuw (i8, ptr @descriptors, i64 528), %.fold.split305 ], [ getelementptr inbounds nuw (i8, ptr @descriptors, i64 624), %.fold.split307 ]
+bb.s:                                             ; preds = %PyObject_TypeCheck.exit210.thread
+  %4 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.array_new, i64 %4
+  %switch.load = load ptr, ptr %switch.gep, align 8
   %i.br = load ptr, ptr %i.b, align 8, !tbaa !24  ; 4 uses
   %i.bs = icmp eq ptr %i.br, null
   br i1 %i.bs, label %bb.v, label %bb.t
@@ -1150,7 +1067,7 @@ PyObject_TypeCheck.exit214.PyObject_TypeCheck.exit214.thread_crit_edge: ; preds 
 
 bb.v:                                             ; preds = %.sink.split, %PyObject_TypeCheck.exit214, %bb.s
   %.0103 = phi i64 [ 0, %bb.s ], [ 0, %PyObject_TypeCheck.exit214 ], [ %.val207, %.sink.split ] ; 4 uses
-  %i.bz = call fastcc ptr @newarrayobject(ptr noundef %0, i64 noundef %.0103, ptr noundef nonnull %.096248.lcssa) ; 35 uses
+  %i.bz = call fastcc ptr @newarrayobject(ptr noundef %0, i64 noundef %.0103, ptr noundef nonnull %switch.load) ; 35 uses
   %i.ca = icmp eq ptr %i.bz, null
   br i1 %i.ca, label %.critedge148, label %bb.w
 

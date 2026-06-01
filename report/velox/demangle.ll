@@ -168,6 +168,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.165 = private unnamed_addr constant [7 x i8] c"sizeof\00", align 1
 @.str.166 = private unnamed_addr constant [3 x i8] c"sz\00", align 1
 @.str.169 = private unnamed_addr constant [6 x i8] c"std::\00", align 1
+@switch.table._ZN6googleL17ParseSubstitutionEPNS_5StateE = private unnamed_addr constant [20 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @_ZN6googleL17kSubstitutionListE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZN6googleL17kSubstitutionListE, i64 32), ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN6googleL17kSubstitutionListE, i64 96), ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN6googleL17kSubstitutionListE, i64 64), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN6googleL17kSubstitutionListE, i64 80), ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN6googleL17kSubstitutionListE, i64 48), ptr @_ZN6googleL17kSubstitutionListE], align 8
 
 ; Function Attrs: mustprogress nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_ZN6google8DemangleEPKcPcm(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #0 {
@@ -570,36 +571,20 @@ _ZN6googleL17ParseOneCharTokenEPNS_5StateEc.exit27.i.i.i: ; preds = %_ZN6googleL
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dh, i64 1 ; 2 uses
   store ptr %i.dk, ptr %0, align 8, !tbaa !21
   %i.dl = load i8, ptr %i.dk, align 1, !tbaa !20
-  switch i8 %i.dl, label %bb.ay [
-    i8 116, label %bb.af
-    i8 97, label %.fold.split.i.i.i
-    i8 98, label %.fold.split39.i.i.i
-    i8 115, label %.fold.split40.i.i.i
-    i8 105, label %.fold.split41.i.i.i
-    i8 111, label %.fold.split42.i.i.i
-    i8 100, label %.fold.split43.i.i.i
-  ]
-
-.fold.split.i.i.i:                                ; preds = %_ZN6googleL17ParseOneCharTokenEPNS_5StateEc.exit27.i.i.i
-  br label %bb.af
-
-.fold.split39.i.i.i:                              ; preds = %_ZN6googleL17ParseOneCharTokenEPNS_5StateEc.exit27.i.i.i
-  br label %bb.af
-
-.fold.split40.i.i.i:                              ; preds = %_ZN6googleL17ParseOneCharTokenEPNS_5StateEc.exit27.i.i.i
-  br label %bb.af
-
-.fold.split41.i.i.i:                              ; preds = %_ZN6googleL17ParseOneCharTokenEPNS_5StateEc.exit27.i.i.i
-  br label %bb.af
-
-.fold.split42.i.i.i:                              ; preds = %_ZN6googleL17ParseOneCharTokenEPNS_5StateEc.exit27.i.i.i
-  br label %bb.af
+  %switch.tableidx = add i8 %i.dl, -97            ; 3 uses
+  %15 = icmp ult i8 %switch.tableidx, 20
+  br i1 %15, label %.fold.split43.i.i.i, label %bb.ay
 
 .fold.split43.i.i.i:                              ; preds = %_ZN6googleL17ParseOneCharTokenEPNS_5StateEc.exit27.i.i.i
-  br label %bb.af
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i32
+  %switch.shifted = lshr i32 803083, %switch.maskindex
+  %switch.lobit = trunc i32 %switch.shifted to i1
+  br i1 %switch.lobit, label %bb.af, label %bb.ay
 
-bb.af:                                            ; preds = %.fold.split43.i.i.i, %.fold.split42.i.i.i, %.fold.split41.i.i.i, %.fold.split40.i.i.i, %.fold.split39.i.i.i, %.fold.split.i.i.i, %_ZN6googleL17ParseOneCharTokenEPNS_5StateEc.exit27.i.i.i
-  %.033.lcssa.i.i.i = phi ptr [ @_ZN6googleL17kSubstitutionListE, %_ZN6googleL17ParseOneCharTokenEPNS_5StateEc.exit27.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN6googleL17kSubstitutionListE, i64 80), %.fold.split42.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN6googleL17kSubstitutionListE, i64 16), %.fold.split.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN6googleL17kSubstitutionListE, i64 32), %.fold.split39.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN6googleL17kSubstitutionListE, i64 48), %.fold.split40.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN6googleL17kSubstitutionListE, i64 64), %.fold.split41.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN6googleL17kSubstitutionListE, i64 96), %.fold.split43.i.i.i ]
+bb.af:                                            ; preds = %.fold.split43.i.i.i
+  %16 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6googleL17ParseSubstitutionEPNS_5StateE, i64 %16
+  %switch.load = load ptr, ptr %switch.gep, align 8
   %i.dm = load i8, ptr %.sroa.5.0..sroa_idx.i, align 2, !tbaa !18, !range !26, !noundef !27
   %i.dn = trunc nuw i8 %i.dm to i1
   br i1 %i.dn, label %bb.ag, label %_ZN6googleL11MaybeAppendEPNS_5StateEPKc.exit85
@@ -651,7 +636,7 @@ bb.aj:                                            ; preds = %.loopexit.i22.i.i82
   br label %_ZN6googleL11MaybeAppendEPNS_5StateEPKc.exit85
 
 _ZN6googleL11MaybeAppendEPNS_5StateEPKc.exit85:   ; preds = %bb.af, %.loopexit.thread.i19.i.i79, %.loopexit.i22.i.i82, %bb.aj
-  %i.ef = getelementptr inbounds nuw i8, ptr %.033.lcssa.i.i.i, i64 8
+  %i.ef = getelementptr inbounds nuw i8, ptr %switch.load, i64 8
   %i.eg = load ptr, ptr %i.ef, align 8, !tbaa !39 ; 5 uses
   %i.eh = load i8, ptr %i.eg, align 1, !tbaa !20
   %.not24.i.i.i = icmp eq i8 %i.eh, 0
@@ -820,7 +805,7 @@ _ZN6googleL17ParseSubstitutionEPNS_5StateE.exit.i.i.thread221: ; preds = %bb.ae,
   call void @llvm.lifetime.end.p0(ptr nonnull %12)
   br label %_ZN6googleL18ParseTemplateParamEPNS_5StateE.exit.i.i.thread
 
-bb.ay:                                            ; preds = %_ZN6googleL17ParseOneCharTokenEPNS_5StateEc.exit27.i.i.i, %_ZN6googleL17ParseOneCharTokenEPNS_5StateEc.exit.i11.i.i
+bb.ay:                                            ; preds = %.fold.split43.i.i.i, %_ZN6googleL17ParseOneCharTokenEPNS_5StateEc.exit27.i.i.i, %_ZN6googleL17ParseOneCharTokenEPNS_5StateEc.exit.i11.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(48) %12, i64 48, i1 false), !tbaa.struct !29
   call void @llvm.lifetime.end.p0(ptr nonnull %12)
   %i.gf = load ptr, ptr %0, align 8, !tbaa !21    ; 3 uses
@@ -1223,38 +1208,22 @@ _ZN6googleL17ParseOneCharTokenEPNS_5StateEc.exit27: ; preds = %_ZN6googleL17Pars
   %i.t = getelementptr inbounds nuw i8, ptr %i.q, i64 1 ; 2 uses
   store ptr %i.t, ptr %0, align 8, !tbaa !21
   %i.u = load i8, ptr %i.t, align 1, !tbaa !20
-  switch i8 %i.u, label %.critedge [
-    i8 116, label %bb.h
-    i8 97, label %.fold.split
-    i8 98, label %.fold.split39
-    i8 115, label %.fold.split40
-    i8 105, label %.fold.split41
-    i8 111, label %.fold.split42
-    i8 100, label %.fold.split43
-  ]
-
-.fold.split:                                      ; preds = %_ZN6googleL17ParseOneCharTokenEPNS_5StateEc.exit27
-  br label %bb.h
-
-.fold.split39:                                    ; preds = %_ZN6googleL17ParseOneCharTokenEPNS_5StateEc.exit27
-  br label %bb.h
-
-.fold.split40:                                    ; preds = %_ZN6googleL17ParseOneCharTokenEPNS_5StateEc.exit27
-  br label %bb.h
-
-.fold.split41:                                    ; preds = %_ZN6googleL17ParseOneCharTokenEPNS_5StateEc.exit27
-  br label %bb.h
-
-.fold.split42:                                    ; preds = %_ZN6googleL17ParseOneCharTokenEPNS_5StateEc.exit27
-  br label %bb.h
+  %switch.tableidx = add i8 %i.u, -97             ; 3 uses
+  %2 = icmp ult i8 %switch.tableidx, 20
+  br i1 %2, label %.fold.split43, label %.critedge
 
 .fold.split43:                                    ; preds = %_ZN6googleL17ParseOneCharTokenEPNS_5StateEc.exit27
-  br label %bb.h
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i32
+  %switch.shifted = lshr i32 803083, %switch.maskindex
+  %switch.lobit = trunc i32 %switch.shifted to i1
+  br i1 %switch.lobit, label %bb.h, label %.critedge
 
-bb.h:                                             ; preds = %_ZN6googleL17ParseOneCharTokenEPNS_5StateEc.exit27, %.fold.split43, %.fold.split42, %.fold.split41, %.fold.split40, %.fold.split39, %.fold.split
-  %.033.lcssa = phi ptr [ @_ZN6googleL17kSubstitutionListE, %_ZN6googleL17ParseOneCharTokenEPNS_5StateEc.exit27 ], [ getelementptr inbounds nuw (i8, ptr @_ZN6googleL17kSubstitutionListE, i64 80), %.fold.split42 ], [ getelementptr inbounds nuw (i8, ptr @_ZN6googleL17kSubstitutionListE, i64 16), %.fold.split ], [ getelementptr inbounds nuw (i8, ptr @_ZN6googleL17kSubstitutionListE, i64 32), %.fold.split39 ], [ getelementptr inbounds nuw (i8, ptr @_ZN6googleL17kSubstitutionListE, i64 48), %.fold.split40 ], [ getelementptr inbounds nuw (i8, ptr @_ZN6googleL17kSubstitutionListE, i64 64), %.fold.split41 ], [ getelementptr inbounds nuw (i8, ptr @_ZN6googleL17kSubstitutionListE, i64 96), %.fold.split43 ]
+bb.h:                                             ; preds = %.fold.split43
+  %3 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6googleL17ParseSubstitutionEPNS_5StateE, i64 %3
+  %switch.load = load ptr, ptr %switch.gep, align 8
   tail call fastcc void @_ZN6googleL11MaybeAppendEPNS_5StateEPKc(ptr noundef nonnull %0, ptr noundef nonnull @.str.5)
-  %i.v = getelementptr inbounds nuw i8, ptr %.033.lcssa, i64 8
+  %i.v = getelementptr inbounds nuw i8, ptr %switch.load, i64 8
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !39   ; 2 uses
   %i.x = load i8, ptr %i.w, align 1, !tbaa !20
   %.not24 = icmp eq i8 %i.x, 0
@@ -1271,7 +1240,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   store ptr %i.z, ptr %0, align 8, !tbaa !21
   br label %bb.k
 
-.critedge:                                        ; preds = %_ZN6googleL17ParseOneCharTokenEPNS_5StateEc.exit27, %_ZN6googleL17ParseOneCharTokenEPNS_5StateEc.exit
+.critedge:                                        ; preds = %.fold.split43, %_ZN6googleL17ParseOneCharTokenEPNS_5StateEc.exit27, %_ZN6googleL17ParseOneCharTokenEPNS_5StateEc.exit
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(48) %1, i64 48, i1 false), !tbaa.struct !29
   br label %bb.k
 

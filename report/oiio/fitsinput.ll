@@ -201,6 +201,7 @@ begin_hunk_0
 @.str.83 = private unnamed_addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @__cxx_global_var_init, ptr @_ZN3fmt3v1212format_facetISt6localeE2idE }]
 @llvm.used = appending global [1 x ptr] [ptr @_ZN3fmt3v1212format_facetISt6localeE2idE], section "llvm.metadata"
+@switch.table._ZN11OpenImageIO4v3_19FitsInput13set_spec_infoEv = private unnamed_addr constant [13 x i64] [i64 268, i64 poison, i64 poison, i64 poison, i64 267, i64 poison, i64 poison, i64 poison, i64 poison, i64 258, i64 261, i64 poison, i64 263], align 8
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noalias noundef ptr @_ZN11OpenImageIO4v3_128fits_imageio_library_versionEv() local_unnamed_addr #0 {
@@ -603,32 +604,23 @@ bb.f:                                             ; preds = %_ZN11OpenImageIO4v3
   %i.ax = call i32 @fgetpos(ptr noundef %i.av, ptr noundef nonnull %i.aw) ; 0 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 228
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !100
-  switch i32 %i.az, label %bb.g [
-    i32 8, label %.sink.split
-    i32 16, label %2
-    i32 32, label %3
-    i32 -32, label %4
-    i32 -64, label %5
-  ]
+  %2 = add i32 %i.az, 64                          ; 2 uses
+  %3 = call i32 @llvm.fshl.i32(i32 %2, i32 %2, i32 29) ; 3 uses
+  %4 = icmp ult i32 %3, 13
+  %switch.maskindex = trunc i32 %3 to i16
+  %switch.shifted = lshr i16 5649, %switch.maskindex
+  %switch.lobit = trunc i16 %switch.shifted to i1
+  %or.cond = select i1 %4, i1 %switch.lobit, i1 false
+  br i1 %or.cond, label %.sink.split, label %bb.g
 
-2:                                                ; preds = %bb.f
-  br label %.sink.split
-
-3:                                                ; preds = %bb.f
-  br label %.sink.split
-
-4:                                                ; preds = %bb.f
-  br label %.sink.split
-
-5:                                                ; preds = %bb.f
-  br label %.sink.split
-
-.sink.split:                                      ; preds = %bb.f, %2, %4, %5, %3
-  %.sink = phi i64 [ 261, %2 ], [ 263, %3 ], [ 268, %5 ], [ 267, %4 ], [ 258, %bb.f ]
-  call void @_ZN11OpenImageIO4v3_19ImageSpec10set_formatENS0_8TypeDescE(ptr noundef nonnull align 8 dereferenceable(160) %i.j, i64 %.sink) #29
+.sink.split:                                      ; preds = %bb.f
+  %5 = zext nneg i32 %3 to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN11OpenImageIO4v3_19FitsInput13set_spec_infoEv, i64 %5
+  %switch.load = load i64, ptr %switch.gep, align 8
+  call void @_ZN11OpenImageIO4v3_19ImageSpec10set_formatENS0_8TypeDescE(ptr noundef nonnull align 8 dereferenceable(160) %i.j, i64 %switch.load) #29
   br label %bb.g
 
-bb.g:                                             ; preds = %.sink.split, %bb.f, %_ZN11OpenImageIO4v3_19ImageSpecD2Ev.exit
+bb.g:                                             ; preds = %bb.f, %.sink.split, %_ZN11OpenImageIO4v3_19ImageSpecD2Ev.exit
   ret i1 %i.at
 }
 
@@ -1031,6 +1023,9 @@ declare noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_st
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #27
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.fshl.i32(i32, i32, i32) #25
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -1071,9 +1066,6 @@ declare i128 @llvm.abs.i128(i128, i1 immarg) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.usub.sat.i32(i32, i32) #25
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.fshl.i32(i32, i32, i32) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.fshl.i64(i64, i64, i64) #25

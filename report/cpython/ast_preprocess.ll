@@ -201,6 +201,7 @@ begin_hunk_0
 @_PyRuntime = external global %struct.pyruntimestate, align 8
 @.str.6 = private unnamed_addr constant [3 x i8] c"%d\00", align 1
 @.str.7 = private unnamed_addr constant [4 x i8] c".%d\00", align 1
+@switch.table.optimize_format.16 = private unnamed_addr constant [17 x i32] [i32 4, i32 poison, i32 poison, i32 8, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 2, i32 poison, i32 1, i32 poison, i32 poison, i32 16], align 4
 
 ; Function Attrs: nounwind uwtable
 define hidden range(i32 -1, 2) i32 @_PyAST_Preprocess(ptr noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %6, ptr noundef %7) local_unnamed_addr #0 {
@@ -603,29 +604,21 @@ _PyUnicode_DATA.exit.i.i.us.us.i:                 ; preds = %.backedge.i.us.us.i
   %i.bv = getelementptr i8, ptr %.val4.i.i.i.us.us.i, i64 %.066158.i.us.us.i
   %i.bw = load i8, ptr %i.bv, align 1, !tbaa !24  ; 2 uses
   %i.bx = add i64 %.066158.i.us.us.i, 1           ; 3 uses
-  switch i8 %i.bw, label %.split.us.loopexit132.i [
-    i8 45, label %bb.ae
-    i8 43, label %.backedge.i.us.us.i
-    i8 32, label %6
-    i8 35, label %5
-    i8 48, label %4
-  ]
-
-4:                                                ; preds = %_PyUnicode_DATA.exit.i.i.us.us.i
-  br label %.backedge.i.us.us.i
-
-5:                                                ; preds = %_PyUnicode_DATA.exit.i.i.us.us.i
-  br label %.backedge.i.us.us.i
-
-6:                                                ; preds = %_PyUnicode_DATA.exit.i.i.us.us.i
-  br label %.backedge.i.us.us.i
+  %switch.tableidx = add i8 %i.bw, -32            ; 3 uses
+  %4 = icmp ult i8 %switch.tableidx, 17
+  br i1 %4, label %bb.ae, label %.split.us.loopexit132.i
 
 bb.ae:                                            ; preds = %_PyUnicode_DATA.exit.i.i.us.us.i
-  br label %.backedge.i.us.us.i
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i32
+  %switch.shifted = lshr i32 75785, %switch.maskindex
+  %switch.lobit = trunc i32 %switch.shifted to i1
+  br i1 %switch.lobit, label %.backedge.i.us.us.i, label %.split.us.loopexit132.i
 
-.backedge.i.us.us.i:                              ; preds = %bb.ae, %6, %5, %4, %_PyUnicode_DATA.exit.i.i.us.us.i
-  %.sink178.i.us.us.i = phi i32 [ 1, %bb.ae ], [ 16, %4 ], [ 4, %6 ], [ 8, %5 ], [ 2, %_PyUnicode_DATA.exit.i.i.us.us.i ]
-  %i.by = or i32 %.sink178.i.us.us.i, %.049.us.us.i
+.backedge.i.us.us.i:                              ; preds = %bb.ae
+  %5 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.optimize_format.16, i64 %5
+  %switch.load = load i32, ptr %switch.gep, align 4
+  %i.by = or i32 %switch.load, %.049.us.us.i
   %exitcond.not.i.us.us.i = icmp eq i64 %i.bx, %.val
   br i1 %exitcond.not.i.us.us.i, label %parse_format.exit.thread, label %_PyUnicode_DATA.exit.i.i.us.us.i
 
@@ -635,29 +628,21 @@ _PyUnicode_DATA.exit.i.i.us.i:                    ; preds = %.lr.ph.i.split.us.i
   %i.bz = getelementptr i8, ptr %.0.i.i14.i.i.i, i64 %.066158.i.us.i
   %i.ca = load i8, ptr %i.bz, align 1, !tbaa !24  ; 2 uses
   %i.cb = add i64 %.066158.i.us.i, 1              ; 3 uses
-  switch i8 %i.ca, label %.split.us.loopexit134.i [
-    i8 45, label %bb.af
-    i8 43, label %.backedge.i.us.i
-    i8 32, label %9
-    i8 35, label %8
-    i8 48, label %7
-  ]
-
-7:                                                ; preds = %_PyUnicode_DATA.exit.i.i.us.i
-  br label %.backedge.i.us.i
-
-8:                                                ; preds = %_PyUnicode_DATA.exit.i.i.us.i
-  br label %.backedge.i.us.i
-
-9:                                                ; preds = %_PyUnicode_DATA.exit.i.i.us.i
-  br label %.backedge.i.us.i
+  %switch.tableidx354 = add i8 %i.ca, -32         ; 3 uses
+  %6 = icmp ult i8 %switch.tableidx354, 17
+  br i1 %6, label %bb.af, label %.split.us.loopexit134.i
 
 bb.af:                                            ; preds = %_PyUnicode_DATA.exit.i.i.us.i
-  br label %.backedge.i.us.i
+  %switch.maskindex358 = zext nneg i8 %switch.tableidx354 to i32
+  %switch.shifted359 = lshr i32 75785, %switch.maskindex358
+  %switch.lobit360 = trunc i32 %switch.shifted359 to i1
+  br i1 %switch.lobit360, label %.backedge.i.us.i, label %.split.us.loopexit134.i
 
-.backedge.i.us.i:                                 ; preds = %bb.af, %9, %8, %7, %_PyUnicode_DATA.exit.i.i.us.i
-  %.sink178.i.us.i = phi i32 [ 1, %bb.af ], [ 16, %7 ], [ 4, %9 ], [ 8, %8 ], [ 2, %_PyUnicode_DATA.exit.i.i.us.i ]
-  %i.cc = or i32 %.sink178.i.us.i, %.049.us.i
+.backedge.i.us.i:                                 ; preds = %bb.af
+  %7 = zext nneg i8 %switch.tableidx354 to i64
+  %switch.gep361 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.optimize_format.16, i64 %7
+  %switch.load362 = load i32, ptr %switch.gep361, align 4
+  %i.cc = or i32 %switch.load362, %.049.us.i
   %exitcond.not.i.us.i = icmp eq i64 %i.cb, %.val
   br i1 %exitcond.not.i.us.i, label %parse_format.exit.thread, label %_PyUnicode_DATA.exit.i.i.us.i
 
@@ -674,29 +659,21 @@ _PyUnicode_DATA.exit17.i.i.us.us.i:               ; preds = %.backedge.i.us80.us
   %i.cd = getelementptr [2 x i8], ptr %.val4.i16.i.i.us.us.i, i64 %.066158.i.us77.us.i
   %i.ce = load i16, ptr %i.cd, align 2, !tbaa !126 ; 2 uses
   %i.cf = add i64 %.066158.i.us77.us.i, 1         ; 3 uses
-  switch i16 %i.ce, label %.split.us.loopexit136.i [
-    i16 45, label %bb.ag
-    i16 43, label %.backedge.i.us80.us.i
-    i16 32, label %12
-    i16 35, label %11
-    i16 48, label %10
-  ]
-
-10:                                               ; preds = %_PyUnicode_DATA.exit17.i.i.us.us.i
-  br label %.backedge.i.us80.us.i
-
-11:                                               ; preds = %_PyUnicode_DATA.exit17.i.i.us.us.i
-  br label %.backedge.i.us80.us.i
-
-12:                                               ; preds = %_PyUnicode_DATA.exit17.i.i.us.us.i
-  br label %.backedge.i.us80.us.i
+  %switch.tableidx363 = add i16 %i.ce, -32        ; 3 uses
+  %8 = icmp ult i16 %switch.tableidx363, 17
+  br i1 %8, label %bb.ag, label %.split.us.loopexit136.i
 
 bb.ag:                                            ; preds = %_PyUnicode_DATA.exit17.i.i.us.us.i
-  br label %.backedge.i.us80.us.i
+  %switch.maskindex367 = zext nneg i16 %switch.tableidx363 to i32
+  %switch.shifted368 = lshr i32 75785, %switch.maskindex367
+  %switch.lobit369 = trunc i32 %switch.shifted368 to i1
+  br i1 %switch.lobit369, label %.backedge.i.us80.us.i, label %.split.us.loopexit136.i
 
-.backedge.i.us80.us.i:                            ; preds = %bb.ag, %12, %11, %10, %_PyUnicode_DATA.exit17.i.i.us.us.i
-  %.sink178.i.us81.us.i = phi i32 [ 1, %bb.ag ], [ 16, %10 ], [ 4, %12 ], [ 8, %11 ], [ 2, %_PyUnicode_DATA.exit17.i.i.us.us.i ]
-  %i.cg = or i32 %.sink178.i.us81.us.i, %.049.us76.us.i
+.backedge.i.us80.us.i:                            ; preds = %bb.ag
+  %9 = zext nneg i16 %switch.tableidx363 to i64
+  %switch.gep370 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.optimize_format.16, i64 %9
+  %switch.load371 = load i32, ptr %switch.gep370, align 4
+  %i.cg = or i32 %switch.load371, %.049.us76.us.i
   %exitcond.not.i.us82.us.i = icmp eq i64 %i.cf, %.val
   br i1 %exitcond.not.i.us82.us.i, label %parse_format.exit.thread, label %_PyUnicode_DATA.exit17.i.i.us.us.i
 
@@ -706,29 +683,21 @@ _PyUnicode_DATA.exit17.i.i.us.i:                  ; preds = %.lr.ph.i.split.us75
   %i.ch = getelementptr [2 x i8], ptr %.0.i.i14.i.i.i, i64 %.066158.i.us77.i
   %i.ci = load i16, ptr %i.ch, align 2, !tbaa !126 ; 2 uses
   %i.cj = add i64 %.066158.i.us77.i, 1            ; 3 uses
-  switch i16 %i.ci, label %.split.us.loopexit138.i [
-    i16 45, label %bb.ah
-    i16 43, label %.backedge.i.us80.i
-    i16 32, label %15
-    i16 35, label %14
-    i16 48, label %13
-  ]
-
-13:                                               ; preds = %_PyUnicode_DATA.exit17.i.i.us.i
-  br label %.backedge.i.us80.i
-
-14:                                               ; preds = %_PyUnicode_DATA.exit17.i.i.us.i
-  br label %.backedge.i.us80.i
-
-15:                                               ; preds = %_PyUnicode_DATA.exit17.i.i.us.i
-  br label %.backedge.i.us80.i
+  %switch.tableidx372 = add i16 %i.ci, -32        ; 3 uses
+  %10 = icmp ult i16 %switch.tableidx372, 17
+  br i1 %10, label %bb.ah, label %.split.us.loopexit138.i
 
 bb.ah:                                            ; preds = %_PyUnicode_DATA.exit17.i.i.us.i
-  br label %.backedge.i.us80.i
+  %switch.maskindex376 = zext nneg i16 %switch.tableidx372 to i32
+  %switch.shifted377 = lshr i32 75785, %switch.maskindex376
+  %switch.lobit378 = trunc i32 %switch.shifted377 to i1
+  br i1 %switch.lobit378, label %.backedge.i.us80.i, label %.split.us.loopexit138.i
 
-.backedge.i.us80.i:                               ; preds = %bb.ah, %15, %14, %13, %_PyUnicode_DATA.exit17.i.i.us.i
-  %.sink178.i.us81.i = phi i32 [ 1, %bb.ah ], [ 16, %13 ], [ 4, %15 ], [ 8, %14 ], [ 2, %_PyUnicode_DATA.exit17.i.i.us.i ]
-  %i.ck = or i32 %.sink178.i.us81.i, %.049.us76.i
+.backedge.i.us80.i:                               ; preds = %bb.ah
+  %11 = zext nneg i16 %switch.tableidx372 to i64
+  %switch.gep379 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.optimize_format.16, i64 %11
+  %switch.load380 = load i32, ptr %switch.gep379, align 4
+  %i.ck = or i32 %switch.load380, %.049.us76.i
   %exitcond.not.i.us82.i = icmp eq i64 %i.cj, %.val
   br i1 %exitcond.not.i.us82.i, label %parse_format.exit.thread, label %_PyUnicode_DATA.exit17.i.i.us.i
 
@@ -745,29 +714,18 @@ _PyUnicode_DATA.exit25.i.i.us.i:                  ; preds = %.backedge.i.us99.i,
   %i.cl = getelementptr [4 x i8], ptr %.val4.i24.i.i.us.i, i64 %.066158.i.us98.i
   %i.cm = load i32, ptr %i.cl, align 4, !tbaa !7  ; 2 uses
   %i.cn = add i64 %.066158.i.us98.i, 1            ; 3 uses
-  switch i32 %i.cm, label %.split.us.i [
-    i32 45, label %19
-    i32 43, label %.backedge.i.us99.i
-    i32 32, label %18
-    i32 35, label %17
-    i32 48, label %16
-  ]
+  %switch.tableidx381 = add i32 %i.cm, -32        ; 3 uses
+  %12 = icmp ult i32 %switch.tableidx381, 17
+  %switch.shifted385 = lshr i32 75785, %switch.tableidx381
+  %switch.lobit386 = trunc i32 %switch.shifted385 to i1
+  %or.cond = select i1 %12, i1 %switch.lobit386, i1 false
+  br i1 %or.cond, label %.backedge.i.us99.i, label %.split.us.i
 
-16:                                               ; preds = %_PyUnicode_DATA.exit25.i.i.us.i
-  br label %.backedge.i.us99.i
-
-17:                                               ; preds = %_PyUnicode_DATA.exit25.i.i.us.i
-  br label %.backedge.i.us99.i
-
-18:                                               ; preds = %_PyUnicode_DATA.exit25.i.i.us.i
-  br label %.backedge.i.us99.i
-
-19:                                               ; preds = %_PyUnicode_DATA.exit25.i.i.us.i
-  br label %.backedge.i.us99.i
-
-.backedge.i.us99.i:                               ; preds = %19, %18, %17, %16, %_PyUnicode_DATA.exit25.i.i.us.i
-  %.sink178.i.us100.i = phi i32 [ 1, %19 ], [ 16, %16 ], [ 4, %18 ], [ 8, %17 ], [ 2, %_PyUnicode_DATA.exit25.i.i.us.i ]
-  %i.co = or i32 %.sink178.i.us100.i, %.049.us97.i
+.backedge.i.us99.i:                               ; preds = %_PyUnicode_DATA.exit25.i.i.us.i
+  %13 = zext nneg i32 %switch.tableidx381 to i64
+  %switch.gep387 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.optimize_format.16, i64 %13
+  %switch.load388 = load i32, ptr %switch.gep387, align 4
+  %i.co = or i32 %switch.load388, %.049.us97.i
   %exitcond.not.i.us101.i = icmp eq i64 %i.cn, %.val
   br i1 %exitcond.not.i.us101.i, label %parse_format.exit.thread, label %_PyUnicode_DATA.exit25.i.i.us.i
 
@@ -777,45 +735,34 @@ _PyUnicode_DATA.exit25.i.i.i:                     ; preds = %.lr.ph.i.split.i, %
   %i.cp = getelementptr [4 x i8], ptr %.0.i.i14.i.i.i, i64 %.066158.i.i
   %i.cq = load i32, ptr %i.cp, align 4, !tbaa !7  ; 2 uses
   %i.cr = add i64 %.066158.i.i, 1                 ; 3 uses
-  switch i32 %i.cq, label %.split.us.i [
-    i32 45, label %20
-    i32 43, label %.backedge.i.i
-    i32 32, label %21
-    i32 35, label %22
-    i32 48, label %23
-  ]
+  %switch.tableidx389 = add i32 %i.cq, -32        ; 3 uses
+  %14 = icmp ult i32 %switch.tableidx389, 17
+  %switch.shifted393 = lshr i32 75785, %switch.tableidx389
+  %switch.lobit394 = trunc i32 %switch.shifted393 to i1
+  %or.cond397 = select i1 %14, i1 %switch.lobit394, i1 false
+  br i1 %or.cond397, label %.backedge.i.i, label %.split.us.i
 
-20:                                               ; preds = %_PyUnicode_DATA.exit25.i.i.i
-  br label %.backedge.i.i
-
-.backedge.i.i:                                    ; preds = %23, %22, %21, %20, %_PyUnicode_DATA.exit25.i.i.i
-  %.sink178.i.i = phi i32 [ 1, %20 ], [ 16, %23 ], [ 4, %21 ], [ 8, %22 ], [ 2, %_PyUnicode_DATA.exit25.i.i.i ]
-  %i.cs = or i32 %.sink178.i.i, %.049.i
+.backedge.i.i:                                    ; preds = %_PyUnicode_DATA.exit25.i.i.i
+  %15 = zext nneg i32 %switch.tableidx389 to i64
+  %switch.gep395 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.optimize_format.16, i64 %15
+  %switch.load396 = load i32, ptr %switch.gep395, align 4
+  %i.cs = or i32 %switch.load396, %.049.i
   %exitcond.not.i.i = icmp eq i64 %i.cr, %.val
   br i1 %exitcond.not.i.i, label %parse_format.exit.thread, label %_PyUnicode_DATA.exit25.i.i.i
 
-21:                                               ; preds = %_PyUnicode_DATA.exit25.i.i.i
-  br label %.backedge.i.i
-
-22:                                               ; preds = %_PyUnicode_DATA.exit25.i.i.i
-  br label %.backedge.i.i
-
-23:                                               ; preds = %_PyUnicode_DATA.exit25.i.i.i
-  br label %.backedge.i.i
-
-.split.us.loopexit132.i:                          ; preds = %_PyUnicode_DATA.exit.i.i.us.us.i
+.split.us.loopexit132.i:                          ; preds = %bb.ae, %_PyUnicode_DATA.exit.i.i.us.us.i
   %i.ct = zext i8 %i.bw to i32
   br label %.split.us.i
 
-.split.us.loopexit134.i:                          ; preds = %_PyUnicode_DATA.exit.i.i.us.i
+.split.us.loopexit134.i:                          ; preds = %bb.af, %_PyUnicode_DATA.exit.i.i.us.i
   %i.cu = zext i8 %i.ca to i32
   br label %.split.us.i
 
-.split.us.loopexit136.i:                          ; preds = %_PyUnicode_DATA.exit17.i.i.us.us.i
+.split.us.loopexit136.i:                          ; preds = %bb.ag, %_PyUnicode_DATA.exit17.i.i.us.us.i
   %i.cv = zext i16 %i.ce to i32
   br label %.split.us.i
 
-.split.us.loopexit138.i:                          ; preds = %_PyUnicode_DATA.exit17.i.i.us.i
+.split.us.loopexit138.i:                          ; preds = %bb.ah, %_PyUnicode_DATA.exit17.i.i.us.i
   %i.cw = zext i16 %i.ci to i32
   br label %.split.us.i
 

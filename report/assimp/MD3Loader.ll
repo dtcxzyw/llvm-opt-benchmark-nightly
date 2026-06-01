@@ -201,35 +201,31 @@ bb.ab:                                            ; preds = %.loopexit
 
 _ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i: ; preds = %bb.ab
   %i.cs = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i88, i64 3
-  %i.ct = load i8, ptr %i.cs, align 1
-  switch i8 %i.ct, label %bb.ac [
-    i8 32, label %_ZN6Assimp11TokenMatchIERPKcS1_j.exit
-    i8 9, label %_ZN6Assimp11TokenMatchIERPKcS1_j.exit
-    i8 13, label %_ZN6Assimp11TokenMatchIERPKcS1_j.exit
-    i8 10, label %_ZN6Assimp11TokenMatchIERPKcS1_j.exit
-    i8 0, label %_ZN6Assimp11TokenMatchIERPKcS1_j.exit
-    i8 12, label %_ZN6Assimp11TokenMatchIERPKcS1_j.exit
-  ]
+  %i.ct = load i8, ptr %i.cs, align 1             ; 2 uses
+  %9 = icmp ult i8 %i.ct, 33
+  %switch.maskindex = zext nneg i8 %i.ct to i64
+  %switch.shifted = lshr i64 4294981121, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  %or.cond = select i1 %9, i1 %switch.lobit, i1 false
+  br i1 %or.cond, label %_ZN6Assimp11TokenMatchIERPKcS1_j.exit, label %bb.ac
 
-bb.ac:                                            ; preds = %bb.ab, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i
+bb.ac:                                            ; preds = %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i, %bb.ab
   %i.cu = call i32 @strncasecmp(ptr noundef nonnull @.str.11, ptr noundef nonnull %.0.lcssa.i.i88, i64 noundef 8) #28
   %.not.i90 = icmp eq i32 %i.cu, 0
   br i1 %.not.i90, label %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i92, label %bb.as
 
 _ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i92: ; preds = %bb.ac
   %i.cv = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i88, i64 8
-  %i.cw = load i8, ptr %i.cv, align 1
-  switch i8 %i.cw, label %bb.as [
-    i8 32, label %_ZN6Assimp11TokenMatchIERPKcS1_j.exit
-    i8 9, label %_ZN6Assimp11TokenMatchIERPKcS1_j.exit
-    i8 13, label %_ZN6Assimp11TokenMatchIERPKcS1_j.exit
-    i8 10, label %_ZN6Assimp11TokenMatchIERPKcS1_j.exit
-    i8 0, label %_ZN6Assimp11TokenMatchIERPKcS1_j.exit
-    i8 12, label %_ZN6Assimp11TokenMatchIERPKcS1_j.exit
-  ]
+  %i.cw = load i8, ptr %i.cv, align 1             ; 2 uses
+  %10 = icmp ult i8 %i.cw, 33
+  %switch.maskindex471 = zext nneg i8 %i.cw to i64
+  %switch.shifted472 = lshr i64 4294981121, %switch.maskindex471
+  %switch.lobit473 = trunc i64 %switch.shifted472 to i1
+  %or.cond474 = select i1 %10, i1 %switch.lobit473, i1 false
+  br i1 %or.cond474, label %_ZN6Assimp11TokenMatchIERPKcS1_j.exit, label %bb.as
 
-_ZN6Assimp11TokenMatchIERPKcS1_j.exit:            ; preds = %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i92, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i92, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i92, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i92, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i92, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i92, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i
-  %.sink = phi i64 [ 4, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i ], [ 4, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i ], [ 4, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i ], [ 4, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i ], [ 4, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i ], [ 4, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i ], [ 9, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i92 ], [ 9, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i92 ], [ 9, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i92 ], [ 9, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i92 ], [ 9, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i92 ], [ 9, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i92 ]
+_ZN6Assimp11TokenMatchIERPKcS1_j.exit:            ; preds = %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i92, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i
+  %.sink = phi i64 [ 4, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i ], [ 9, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i92 ]
   %i.cx = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i88, i64 %.sink ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
   call void @llvm.experimental.noalias.scope.decl(metadata !6)
@@ -408,7 +404,7 @@ bb.ar:                                            ; preds = %.noexc.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
   br label %.loopexit.split-lp
 
-bb.as:                                            ; preds = %bb.ac, %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i92
+bb.as:                                            ; preds = %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i92, %bb.ac
   %i.ei = call i32 @strncasecmp(ptr noundef nonnull @.str.12, ptr noundef nonnull %.0.lcssa.i.i88, i64 noundef 9) #28
   %.not.i99 = icmp eq i32 %i.ei, 0
   br i1 %.not.i99, label %_ZN6Assimp15ASSIMP_strincmpEPKcS1_j.exit.thread.i102, label %bb.bs

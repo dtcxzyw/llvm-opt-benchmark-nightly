@@ -14,6 +14,7 @@ target triple = "x86_64-pc-linux-gnu"
 
 @unz_copyright = local_unnamed_addr constant [81 x i8] c" unzip 1.01 Copyright 1998-2004 Gilles Vollant - http://www.winimage.com/zLibDll\00", align 16
 @.str = private unnamed_addr constant [4 x i8] c"1.3\00", align 1
+@switch.table.unzOpenCurrentFile3 = private unnamed_addr constant [13 x i32] [i32 0, i32 -103, i32 -103, i32 -103, i32 -103, i32 -103, i32 -103, i32 -103, i32 0, i32 -103, i32 -103, i32 -103, i32 0], align 4
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: read) uwtable
 define i32 @unzStringFileNameCompare(ptr noundef readonly captures(none) %0, ptr noundef readonly captures(none) %1, i32 noundef %2) local_unnamed_addr #0 {
@@ -416,7 +417,7 @@ unz64local_getShort.exit92.i:                     ; preds = %bb.k
   br i1 %.not.i89.not.i, label %bb.l, label %.thread.i
 
 bb.l:                                             ; preds = %unz64local_getShort.exit92.i, %unz64local_getShort.exit92.thread.i
-  %.0131155.i = phi i64 [ %i.by, %unz64local_getShort.exit92.thread.i ], [ 0, %unz64local_getShort.exit92.i ] ; 2 uses
+  %.0131155.i = phi i64 [ %i.by, %unz64local_getShort.exit92.thread.i ], [ 0, %unz64local_getShort.exit92.i ] ; 3 uses
   %i.cd = icmp eq i32 %i.bq, 0
   br i1 %i.cd, label %bb.m, label %.thread.i
 
@@ -424,21 +425,17 @@ bb.m:                                             ; preds = %bb.l
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 200
   %i.cf = load i64, ptr %i.ce, align 8
   %.not60.i = icmp eq i64 %.0131155.i, %i.cf
-  br i1 %.not60.i, label %bb.n, label %.thread.i
+  %5 = icmp samesign ult i64 %.0131155.i, 13
+  %or.cond111 = select i1 %.not60.i, i1 %5, i1 false
+  br i1 %or.cond111, label %bb.n, label %.thread.i
 
 bb.n:                                             ; preds = %bb.m
-  %trunc.i = trunc nuw i64 %.0131155.i to i16
-  switch i16 %trunc.i, label %5 [
-    i16 0, label %.thread.i
-    i16 12, label %.thread.i
-    i16 8, label %.thread.i
-  ]
-
-5:                                                ; preds = %bb.n
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.unzOpenCurrentFile3, i64 %.0131155.i
+  %switch.load = load i32, ptr %switch.gep, align 4
   br label %.thread.i
 
-.thread.i:                                        ; preds = %5, %bb.n, %bb.n, %bb.n, %bb.m, %bb.l, %unz64local_getShort.exit92.i
-  %.4.i = phi i32 [ -103, %5 ], [ 0, %bb.n ], [ 0, %bb.n ], [ 0, %bb.n ], [ -103, %bb.m ], [ -1, %unz64local_getShort.exit92.i ], [ %i.bq, %bb.l ]
+.thread.i:                                        ; preds = %bb.n, %bb.m, %bb.l, %unz64local_getShort.exit92.i
+  %.4.i = phi i32 [ -103, %bb.m ], [ %switch.load, %bb.n ], [ %i.bq, %bb.l ], [ -1, %unz64local_getShort.exit92.i ]
   %i.cg = load ptr, ptr %i.v, align 8             ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #14
   %i.ch = load ptr, ptr %i.ae, align 8

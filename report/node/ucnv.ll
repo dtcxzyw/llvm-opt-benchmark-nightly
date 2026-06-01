@@ -33,6 +33,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.20 = private unnamed_addr constant [19 x i8] c"ibm-1363_P110-1997\00", align 1
 @.str.21 = private unnamed_addr constant [29 x i8] c"ISO_2022,locale=ko,version=0\00", align 1
 @.str.22 = private unnamed_addr constant [19 x i8] c"ibm-1088_P100-1995\00", align 1
+@switch.table.ucnv_isFixedWidth_78 = private unnamed_addr constant [31 x i8] c"\01\01\00\00\00\00\00\01\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\01", align 1
 
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local ptr @ucnv_open_78(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 {
@@ -435,21 +436,18 @@ bb.f:                                             ; preds = %bb.d
   br label %ucnv_getType_78.exit
 
 ucnv_getType_78.exit:                             ; preds = %bb.e, %bb.f
-  %.0.i = phi i32 [ %i.k, %bb.e ], [ %i.l, %bb.f ]
-  switch i32 %.0.i, label %bb.g [
-    i32 0, label %bb.h
-    i32 1, label %bb.h
-    i32 7, label %bb.h
-    i32 8, label %bb.h
-    i32 30, label %bb.h
-    i32 26, label %bb.h
-  ]
+  %.0.i = phi i32 [ %i.k, %bb.e ], [ %i.l, %bb.f ] ; 2 uses
+  %2 = icmp ult i32 %.0.i, 31
+  br i1 %2, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %ucnv_getType_78.exit
+  %3 = zext nneg i32 %.0.i to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.ucnv_isFixedWidth_78, i64 %3
+  %switch.load = load i8, ptr %switch.gep, align 1
   br label %bb.h
 
-bb.h:                                             ; preds = %ucnv_getType_78.exit, %ucnv_getType_78.exit, %ucnv_getType_78.exit, %ucnv_getType_78.exit, %ucnv_getType_78.exit, %ucnv_getType_78.exit, %bb.a, %bb.g, %bb.c
-  %.0 = phi i8 [ 0, %bb.a ], [ 0, %bb.c ], [ 0, %bb.g ], [ 1, %ucnv_getType_78.exit ], [ 1, %ucnv_getType_78.exit ], [ 1, %ucnv_getType_78.exit ], [ 1, %ucnv_getType_78.exit ], [ 1, %ucnv_getType_78.exit ], [ 1, %ucnv_getType_78.exit ]
+bb.h:                                             ; preds = %ucnv_getType_78.exit, %bb.g, %bb.a, %bb.c
+  %.0 = phi i8 [ 0, %bb.a ], [ 0, %bb.c ], [ %switch.load, %bb.g ], [ 0, %ucnv_getType_78.exit ]
   ret i8 %.0
 }
 

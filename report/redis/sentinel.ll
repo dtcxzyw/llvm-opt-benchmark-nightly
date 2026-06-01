@@ -201,8 +201,11 @@ begin_hunk_0
 @redis_tls_ctx = external local_unnamed_addr global ptr, align 8
 @redis_tls_client_ctx = external local_unnamed_addr global ptr, align 8
 @.str.448 = private unnamed_addr constant [47 x i8] c"Failed to save config file. Check server logs.\00", align 1
+@switch.table.sentinelHandleConfiguration.2 = private unnamed_addr constant [21 x ptr] [ptr @.str.60, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.57, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.61], align 8
+@switch.table.sentinelHandleConfiguration.3 = private unnamed_addr constant [21 x ptr] [ptr @.str.60, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.58, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.61], align 8
 @switch.table.sentinelConfigGetCommand = private unnamed_addr constant [5 x ptr] [ptr @.str.207, ptr @.str.208, ptr @.str.209, ptr @.str.210, ptr @.str.211], align 8
 @switch.table.addReplySentinelRedisInstance = private unnamed_addr constant [7 x ptr] [ptr @.str.220, ptr @.str.221, ptr @.str.222, ptr @.str.223, ptr @.str.224, ptr @.str.225, ptr @.str.226], align 8
+@switch.table.sentinelCommand = private unnamed_addr constant [21 x ptr] [ptr @.str.60, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.56, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.62, ptr @.str.61], align 8
 
 ; Function Attrs: nounwind uwtable
 define dso_local void @dictInstancesValDestructor(ptr readnone captures(none) %0, ptr noundef %1) #0 {
@@ -605,19 +608,14 @@ bb.c:                                             ; preds = %bb.b
   %i.r = trunc i64 %i.q to i32
   %i.s = tail call ptr @createSentinelRedisInstance(ptr noundef %i.l, i32 noundef 1, ptr noundef %i.n, i32 noundef %i.r, i32 noundef %i.i, ptr noundef null)
   %i.t = icmp eq ptr %i.s, null
-  br i1 %i.t, label %bb.d, label %.critedge.a
+  br i1 %i.t, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %bb.c
   %i.u = tail call ptr @__errno_location() #28
   %i.v = load i32, ptr %i.u, align 4, !tbaa !9
-  switch i32 %i.v, label %7 [
-    i32 16, label %3
-    i32 2, label %sentinelCheckCreateInstanceErrors.exit.thread
-    i32 22, label %6
-  ]
-
-3:                                                ; preds = %bb.d
-  br label %sentinelCheckCreateInstanceErrors.exit.thread
+  %switch.tableidx = add i32 %i.v, -2             ; 2 uses
+  %3 = icmp ult i32 %switch.tableidx, 21
+  br i1 %3, label %switch.lookup, label %sentinelCheckCreateInstanceErrors.exit.thread
 
 bb.e:                                             ; preds = %bb.a
   %i.w = tail call i32 @strcasecmp(ptr noundef %i.b, ptr noundef nonnull @.str.70) #30
@@ -691,7 +689,7 @@ bb.h:                                             ; preds = %bb.g
 sentinelPropagateDownAfterPeriod.exit:            ; preds = %._crit_edge.i, %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #26
-  br label %.critedge.a
+  br label %.critedge
 
 bb.i:                                             ; preds = %bb.e
   %i.ba = tail call i32 @strcasecmp(ptr noundef %i.b, ptr noundef nonnull @.str.73) #30
@@ -719,7 +717,7 @@ bb.k:                                             ; preds = %bb.j
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bg, i64 296
   store i64 %i.bl, ptr %i.bm, align 8, !tbaa !175
   %i.bn = icmp slt i32 %i.bk, 1
-  br i1 %i.bn, label %sentinelCheckCreateInstanceErrors.exit.thread, label %.critedge.a
+  br i1 %i.bn, label %sentinelCheckCreateInstanceErrors.exit.thread, label %.critedge
 
 bb.l:                                             ; preds = %bb.i
   %i.bo = tail call i32 @strcasecmp(ptr noundef %i.b, ptr noundef nonnull @.str.74) #30
@@ -744,7 +742,7 @@ bb.n:                                             ; preds = %bb.m
   %i.by = trunc i64 %i.bx to i32
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bu, i64 172
   store i32 %i.by, ptr %i.bz, align 4, !tbaa !173
-  br label %.critedge.a
+  br label %.critedge
 
 bb.o:                                             ; preds = %bb.l
   %i.ca = tail call i32 @strcasecmp(ptr noundef %i.b, ptr noundef nonnull @.str.75) #30
@@ -774,7 +772,7 @@ bb.r:                                             ; preds = %bb.q
   %i.cm = tail call ptr @sdsnew(ptr noundef %i.cl) #26
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cg, i64 320
   store ptr %i.cm, ptr %i.cn, align 8, !tbaa !27
-  br label %.critedge.a
+  br label %.critedge
 
 bb.s:                                             ; preds = %bb.o
   %i.co = tail call i32 @strcasecmp(ptr noundef %i.b, ptr noundef nonnull @.str.77) #30
@@ -801,7 +799,7 @@ bb.v:                                             ; preds = %bb.u
   %i.cy = tail call ptr @sdsnew(ptr noundef %i.cx) #26
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cs, i64 328
   store ptr %i.cy, ptr %i.cz, align 8, !tbaa !28
-  br label %.critedge.a
+  br label %.critedge
 
 bb.w:                                             ; preds = %bb.s
   %i.da = tail call i32 @strcasecmp(ptr noundef %i.b, ptr noundef nonnull @.str.79) #30
@@ -822,7 +820,7 @@ bb.y:                                             ; preds = %bb.x
   %i.dh = tail call ptr @sdsnew(ptr noundef %i.dg) #26
   %i.di = getelementptr inbounds nuw i8, ptr %i.de, i64 176
   store ptr %i.dh, ptr %i.di, align 8, !tbaa !31
-  br label %.critedge.a
+  br label %.critedge
 
 bb.z:                                             ; preds = %bb.w
   %i.dj = tail call i32 @strcasecmp(ptr noundef %i.b, ptr noundef nonnull @.str.80) #30
@@ -843,7 +841,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.dq = tail call ptr @sdsnew(ptr noundef %i.dp) #26
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dn, i64 184
   store ptr %i.dq, ptr %i.dr, align 8, !tbaa !32
-  br label %.critedge.a
+  br label %.critedge
 
 bb.ac:                                            ; preds = %bb.z
   %i.ds = tail call i32 @strcasecmp(ptr noundef %i.b, ptr noundef nonnull @.str.5) #30
@@ -858,11 +856,11 @@ bb.ad:                                            ; preds = %bb.ac
   %i.dx = tail call i64 @__isoc23_strtoull(ptr noundef %i.dw, ptr noundef null, i32 noundef 10) #26 ; 2 uses
   %i.dy = load i64, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 48), align 16, !tbaa !72
   %i.dz = icmp ugt i64 %i.dx, %i.dy
-  br i1 %i.dz, label %bb.ae, label %.critedge.a
+  br i1 %i.dz, label %bb.ae, label %.critedge
 
 bb.ae:                                            ; preds = %bb.ad
   store i64 %i.dx, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 48), align 16, !tbaa !72
-  br label %.critedge.a
+  br label %.critedge
 
 bb.af:                                            ; preds = %bb.ac
   %i.ea = tail call i32 @strcasecmp(ptr noundef %i.b, ptr noundef nonnull @.str.6) #30
@@ -879,7 +877,7 @@ bb.ag:                                            ; preds = %bb.af
 
 bb.ah:                                            ; preds = %bb.ag
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 32 dereferenceable(40) @sentinel, ptr noundef nonnull align 1 dereferenceable(40) %i.ed, i64 40, i1 false)
-  br label %.critedge.a
+  br label %.critedge
 
 bb.ai:                                            ; preds = %bb.af
   %i.ef = tail call i32 @strcasecmp(ptr noundef %i.b, ptr noundef nonnull @.str.82) #30
@@ -902,11 +900,11 @@ bb.ak:                                            ; preds = %bb.aj
   store i64 %i.em, ptr %i.en, align 8, !tbaa !206
   %i.eo = load i64, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 48), align 16, !tbaa !72
   %i.ep = icmp ugt i64 %i.em, %i.eo
-  br i1 %i.ep, label %bb.al, label %.critedge.a
+  br i1 %i.ep, label %bb.al, label %.critedge
 
 bb.al:                                            ; preds = %bb.ak
   store i64 %i.em, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 48), align 16, !tbaa !72
-  br label %.critedge.a
+  br label %.critedge
 
 bb.am:                                            ; preds = %bb.ai
   %i.eq = tail call i32 @strcasecmp(ptr noundef %i.b, ptr noundef nonnull @.str.83) #30
@@ -927,7 +925,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.ex = tail call i64 @__isoc23_strtoull(ptr noundef %i.ew, ptr noundef null, i32 noundef 10) #26
   %i.ey = getelementptr inbounds nuw i8, ptr %i.eu, i64 256
   store i64 %i.ex, ptr %i.ey, align 8, !tbaa !207
-  br label %.critedge.a
+  br label %.critedge
 
 bb.ap:                                            ; preds = %bb.am
   %i.ez = tail call i32 @strcasecmp(ptr noundef %i.b, ptr noundef nonnull @.str.84) #30
@@ -963,19 +961,14 @@ bb.at:                                            ; preds = %bb.as
   %i.fn = load i32, ptr %i.fm, align 8, !tbaa !89
   %i.fo = tail call ptr @createSentinelRedisInstance(ptr noundef null, i32 noundef 2, ptr noundef %i.fh, i32 noundef %i.fl, i32 noundef %i.fn, ptr noundef nonnull %i.ff)
   %i.fp = icmp eq ptr %i.fo, null
-  br i1 %i.fp, label %bb.au, label %.critedge.a
+  br i1 %i.fp, label %bb.au, label %.critedge
 
 bb.au:                                            ; preds = %bb.at
   %i.fq = tail call ptr @__errno_location() #28
   %i.fr = load i32, ptr %i.fq, align 4, !tbaa !9
-  switch i32 %i.fr, label %7 [
-    i32 16, label %4
-    i32 2, label %sentinelCheckCreateInstanceErrors.exit.thread
-    i32 22, label %6
-  ]
-
-4:                                                ; preds = %bb.au
-  br label %sentinelCheckCreateInstanceErrors.exit.thread
+  %switch.tableidx281 = add i32 %i.fr, -2         ; 2 uses
+  %4 = icmp ult i32 %switch.tableidx281, 21
+  br i1 %4, label %switch.lookup282, label %sentinelCheckCreateInstanceErrors.exit.thread
 
 bb.av:                                            ; preds = %bb.ar, %bb.aq
   %i.fs = tail call i32 @strcasecmp(ptr noundef %i.b, ptr noundef nonnull @.str.86) #30
@@ -986,7 +979,7 @@ bb.av:                                            ; preds = %bb.ar, %bb.aq
   br i1 %or.cond248, label %bb.aw, label %bb.bb
 
 bb.aw:                                            ; preds = %bb.av
-  br i1 %i.e, label %bb.ax, label %.critedge.a
+  br i1 %i.e, label %bb.ax, label %.critedge
 
 bb.ax:                                            ; preds = %bb.aw
   %i.fu = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1013,20 +1006,9 @@ bb.ay:                                            ; preds = %bb.ax
 bb.az:                                            ; preds = %bb.ay
   %i.gj = tail call ptr @__errno_location() #28
   %i.gk = load i32, ptr %i.gj, align 4, !tbaa !9
-  switch i32 %i.gk, label %7 [
-    i32 16, label %5
-    i32 2, label %sentinelCheckCreateInstanceErrors.exit.thread
-    i32 22, label %6
-  ]
-
-5:                                                ; preds = %bb.az
-  br label %sentinelCheckCreateInstanceErrors.exit.thread
-
-6:                                                ; preds = %bb.d, %bb.au, %bb.az
-  br label %sentinelCheckCreateInstanceErrors.exit.thread
-
-7:                                                ; preds = %bb.d, %bb.au, %bb.az
-  br label %sentinelCheckCreateInstanceErrors.exit.thread
+  %switch.tableidx285 = add i32 %i.gk, -2         ; 2 uses
+  %5 = icmp ult i32 %switch.tableidx285, 21
+  br i1 %5, label %.critedge.a, label %sentinelCheckCreateInstanceErrors.exit.thread
 
 bb.ba:                                            ; preds = %bb.ay
   %i.gl = load ptr, ptr %i.fx, align 8, !tbaa !95
@@ -1034,7 +1016,7 @@ bb.ba:                                            ; preds = %bb.ay
   %i.gn = getelementptr inbounds nuw i8, ptr %i.gh, i64 16
   store ptr %i.gm, ptr %i.gn, align 8, !tbaa !26
   %i.go = tail call i32 @sentinelTryConnectionSharing(ptr noundef nonnull %i.gh) ; 0 uses
-  br label %.critedge.a
+  br label %.critedge
 
 bb.bb:                                            ; preds = %bb.av
   %i.gp = tail call i32 @strcasecmp(ptr noundef %i.b, ptr noundef nonnull @.str.87) #30
@@ -1061,7 +1043,7 @@ bb.bd:                                            ; preds = %bb.bc
   %i.hc = load ptr, ptr %i.hb, align 8, !tbaa !38
   %i.hd = tail call i32 @dictAdd(ptr noundef %i.hc, ptr noundef %i.gx, ptr noundef %i.ha) #26
   %.not236 = icmp eq i32 %i.hd, 0
-  br i1 %.not236, label %.critedge.a, label %bb.be
+  br i1 %.not236, label %.critedge, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
   tail call void @sdsfree(ptr noundef %i.gx) #26
@@ -1079,12 +1061,12 @@ bb.bg:                                            ; preds = %bb.bf
   %i.hh = load ptr, ptr %i.hg, align 8, !tbaa !95 ; 2 uses
   %char0233 = load i8, ptr %i.hh, align 1
   %.not234 = icmp eq i8 %char0233, 0
-  br i1 %.not234, label %.critedge.a, label %bb.bh
+  br i1 %.not234, label %.critedge, label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg
   %i.hi = tail call ptr @sdsnew(ptr noundef nonnull %i.hh) #26
   store ptr %i.hi, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 104), align 8, !tbaa !81
-  br label %.critedge.a
+  br label %.critedge
 
 bb.bi:                                            ; preds = %bb.bf
   %i.hj = tail call i32 @strcasecmp(ptr noundef %i.b, ptr noundef nonnull @.str.1) #30
@@ -1098,7 +1080,7 @@ bb.bj:                                            ; preds = %bb.bi
   %i.hn = tail call i64 @__isoc23_strtol(ptr noundef nonnull %i.hm, ptr noundef null, i32 noundef 10) #26, !inline_history !205
   %i.ho = trunc i64 %i.hn to i32
   store i32 %i.ho, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 112), align 16, !tbaa !82
-  br label %.critedge.a
+  br label %.critedge
 
 bb.bk:                                            ; preds = %bb.bi
   %i.hp = tail call i32 @strcasecmp(ptr noundef %i.b, ptr noundef nonnull @.str.2) #30
@@ -1112,7 +1094,7 @@ bb.bl:                                            ; preds = %bb.bk
   %i.ht = tail call i32 @yesnotoi(ptr noundef %i.hs) #26 ; 2 uses
   store i32 %i.ht, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 128), align 32, !tbaa !84
   %i.hu = icmp eq i32 %i.ht, -1
-  br i1 %i.hu, label %sentinelCheckCreateInstanceErrors.exit.thread, label %.critedge.a
+  br i1 %i.hu, label %sentinelCheckCreateInstanceErrors.exit.thread, label %.critedge
 
 bb.bm:                                            ; preds = %bb.bk
   %i.hv = tail call i32 @strcasecmp(ptr noundef %i.b, ptr noundef nonnull @.str.3) #30
@@ -1125,12 +1107,12 @@ bb.bn:                                            ; preds = %bb.bm
   %i.hy = load ptr, ptr %i.hx, align 8, !tbaa !95 ; 2 uses
   %char0231 = load i8, ptr %i.hy, align 1
   %.not232 = icmp eq i8 %char0231, 0
-  br i1 %.not232, label %.critedge.a, label %bb.bo
+  br i1 %.not232, label %.critedge, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn
   %i.hz = tail call ptr @sdsnew(ptr noundef nonnull %i.hy) #26
   store ptr %i.hz, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 144), align 16, !tbaa !208
-  br label %.critedge.a
+  br label %.critedge
 
 bb.bp:                                            ; preds = %bb.bm
   %i.ia = tail call i32 @strcasecmp(ptr noundef %i.b, ptr noundef nonnull @.str.4) #30
@@ -1143,12 +1125,12 @@ bb.bq:                                            ; preds = %bb.bp
   %i.id = load ptr, ptr %i.ic, align 8, !tbaa !95 ; 2 uses
   %char0 = load i8, ptr %i.id, align 1
   %.not230 = icmp eq i8 %char0, 0
-  br i1 %.not230, label %.critedge.a, label %bb.br
+  br i1 %.not230, label %.critedge, label %bb.br
 
 bb.br:                                            ; preds = %bb.bq
   %i.ie = tail call ptr @sdsnew(ptr noundef nonnull %i.id) #26
   store ptr %i.ie, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 136), align 8, !tbaa !209
-  br label %.critedge.a
+  br label %.critedge
 
 bb.bs:                                            ; preds = %bb.bp
   %i.if = tail call i32 @strcasecmp(ptr noundef %i.b, ptr noundef nonnull @.str.7) #30
@@ -1162,7 +1144,7 @@ bb.bt:                                            ; preds = %bb.bs
   %i.ij = tail call i32 @yesnotoi(ptr noundef %i.ii) #26 ; 2 uses
   store i32 %i.ij, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 152), align 8, !tbaa !92
   %i.ik = icmp eq i32 %i.ij, -1
-  br i1 %i.ik, label %sentinelCheckCreateInstanceErrors.exit.thread, label %.critedge.a
+  br i1 %i.ik, label %sentinelCheckCreateInstanceErrors.exit.thread, label %.critedge
 
 bb.bu:                                            ; preds = %bb.bs
   %i.il = tail call i32 @strcasecmp(ptr noundef %i.b, ptr noundef nonnull @.str.8) #30
@@ -1176,7 +1158,7 @@ bb.bv:                                            ; preds = %bb.bu
   %i.ip = tail call i32 @yesnotoi(ptr noundef %i.io) #26 ; 2 uses
   store i32 %i.ip, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 156), align 4, !tbaa !96
   %i.iq = icmp eq i32 %i.ip, -1
-  br i1 %i.iq, label %sentinelCheckCreateInstanceErrors.exit.thread, label %.critedge.a
+  br i1 %i.iq, label %sentinelCheckCreateInstanceErrors.exit.thread, label %.critedge
 
 bb.bw:                                            ; preds = %bb.bu
   %i.ir = tail call i32 @strcasecmp(ptr noundef %i.b, ptr noundef nonnull @.str.92) #30
@@ -1201,13 +1183,31 @@ bb.by:                                            ; preds = %bb.bx
   store i64 %i.iz, ptr %i.ja, align 8, !tbaa !166
   %i.jb = and i64 %i.iy, 2147483648
   %.not259 = icmp eq i64 %i.jb, 0
-  br i1 %.not259, label %.critedge.a, label %sentinelCheckCreateInstanceErrors.exit.thread
+  br i1 %.not259, label %.critedge, label %sentinelCheckCreateInstanceErrors.exit.thread
 
-.critedge.a:                                      ; preds = %bb.ba, %bb.aw, %bb.at, %bb.c, %bb.bd, %bb.ad, %bb.ae, %sentinelPropagateDownAfterPeriod.exit, %bb.n, %bb.v, %bb.ab, %bb.ah, %bb.ao, %bb.bh, %bb.bg, %bb.bl, %bb.br, %bb.bq, %bb.bv, %bb.by, %bb.bt, %bb.bn, %bb.bo, %bb.bj, %bb.ak, %bb.al, %bb.y, %bb.r, %bb.k
+.critedge:                                        ; preds = %bb.ba, %bb.aw, %bb.at, %bb.c, %bb.bd, %bb.ad, %bb.ae, %sentinelPropagateDownAfterPeriod.exit, %bb.n, %bb.v, %bb.ab, %bb.ah, %bb.ao, %bb.bh, %bb.bg, %bb.bl, %bb.br, %bb.bq, %bb.bv, %bb.by, %bb.bt, %bb.bn, %bb.bo, %bb.bj, %bb.ak, %bb.al, %bb.y, %bb.r, %bb.k
   br label %sentinelCheckCreateInstanceErrors.exit.thread
 
-sentinelCheckCreateInstanceErrors.exit.thread:    ; preds = %7, %6, %5, %bb.az, %bb.ax, %4, %bb.au, %bb.as, %3, %bb.d, %bb.b, %bb.be, %bb.bw, %bb.by, %bb.bx, %bb.bv, %bb.bt, %bb.bl, %bb.bc, %bb.an, %bb.aj, %bb.ag, %bb.aa, %bb.x, %bb.u, %bb.t, %bb.q, %bb.p, %bb.m, %bb.k, %bb.j, %bb.g, %bb.f, %.critedge.a
-  %.4 = phi ptr [ null, %.critedge.a ], [ @.str.94, %bb.bw ], [ @.str.71, %bb.f ], [ @.str.71, %bb.as ], [ @.str.71, %bb.j ], [ @.str.72, %bb.g ], [ @.str.72, %bb.k ], [ @.str.71, %bb.p ], [ @.str.71, %bb.m ], [ @.str.71, %bb.t ], [ @.str.76, %bb.q ], [ @.str.78, %bb.u ], [ @.str.71, %bb.x ], [ @.str.71, %bb.aa ], [ @.str.81, %bb.ag ], [ @.str.71, %bb.aj ], [ @.str.69, %bb.b ], [ @.str.88, %bb.be ], [ @.str.71, %bb.an ], [ @.str.71, %bb.bc ], [ @.str.89, %bb.bl ], [ @.str.90, %bb.bt ], [ @.str.71, %bb.bx ], [ @.str.91, %bb.bv ], [ @.str.93, %bb.by ], [ @.str.60, %bb.d ], [ @.str.56, %3 ], [ @.str.71, %bb.ax ], [ @.str.62, %7 ], [ @.str.60, %bb.au ], [ @.str.57, %4 ], [ @.str.61, %6 ], [ @.str.60, %bb.az ], [ @.str.58, %5 ]
+switch.lookup:                                    ; preds = %bb.d
+  %6 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.sentinelCommand, i64 %6
+  %switch.load = load ptr, ptr %switch.gep, align 8
+  br label %sentinelCheckCreateInstanceErrors.exit.thread
+
+switch.lookup282:                                 ; preds = %bb.au
+  %7 = zext nneg i32 %switch.tableidx281 to i64
+  %switch.gep283 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.sentinelHandleConfiguration.2, i64 %7
+  %switch.load284 = load ptr, ptr %switch.gep283, align 8
+  br label %sentinelCheckCreateInstanceErrors.exit.thread
+
+.critedge.a:                                      ; preds = %bb.az
+  %8 = zext nneg i32 %switch.tableidx285 to i64
+  %switch.gep287 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.sentinelHandleConfiguration.3, i64 %8
+  %switch.load288 = load ptr, ptr %switch.gep287, align 8
+  br label %sentinelCheckCreateInstanceErrors.exit.thread
+
+sentinelCheckCreateInstanceErrors.exit.thread:    ; preds = %bb.d, %bb.au, %bb.az, %.critedge.a, %switch.lookup282, %switch.lookup, %bb.ax, %bb.as, %bb.b, %bb.be, %bb.bw, %bb.by, %bb.bx, %bb.bv, %bb.bt, %bb.bl, %bb.bc, %bb.an, %bb.aj, %bb.ag, %bb.aa, %bb.x, %bb.u, %bb.t, %bb.q, %bb.p, %bb.m, %bb.k, %bb.j, %bb.g, %bb.f, %.critedge
+  %.4 = phi ptr [ null, %.critedge ], [ @.str.94, %bb.bw ], [ @.str.71, %bb.f ], [ @.str.71, %bb.as ], [ @.str.71, %bb.j ], [ @.str.72, %bb.g ], [ @.str.72, %bb.k ], [ @.str.71, %bb.p ], [ @.str.71, %bb.m ], [ @.str.71, %bb.t ], [ @.str.76, %bb.q ], [ @.str.78, %bb.u ], [ @.str.71, %bb.x ], [ @.str.71, %bb.aa ], [ @.str.81, %bb.ag ], [ @.str.71, %bb.aj ], [ @.str.69, %bb.b ], [ @.str.88, %bb.be ], [ @.str.71, %bb.an ], [ @.str.71, %bb.bc ], [ @.str.89, %bb.bl ], [ @.str.90, %bb.bt ], [ @.str.71, %bb.bx ], [ @.str.91, %bb.bv ], [ @.str.93, %bb.by ], [ %switch.load, %switch.lookup ], [ %switch.load288, %.critedge.a ], [ @.str.71, %bb.ax ], [ %switch.load284, %switch.lookup282 ], [ @.str.62, %bb.az ], [ @.str.62, %bb.au ], [ @.str.62, %bb.d ]
   ret ptr %.4
 }
 
@@ -1610,23 +1610,18 @@ bb.bk:                                            ; preds = %bb.bi
 bb.bl:                                            ; preds = %bb.bk
   %i.fb = tail call ptr @__errno_location() #28
   %i.fc = load i32, ptr %i.fb, align 4, !tbaa !9
-  switch i32 %i.fc, label %bb.bm [
-    i32 16, label %4
-    i32 2, label %sentinelCheckCreateInstanceErrors.exit
-    i32 22, label %5
-  ]
-
-4:                                                ; preds = %bb.bl
-  br label %sentinelCheckCreateInstanceErrors.exit
-
-5:                                                ; preds = %bb.bl
-  br label %sentinelCheckCreateInstanceErrors.exit
+  %switch.tableidx = add i32 %i.fc, -2            ; 2 uses
+  %4 = icmp ult i32 %switch.tableidx, 21
+  br i1 %4, label %bb.bm, label %sentinelCheckCreateInstanceErrors.exit
 
 bb.bm:                                            ; preds = %bb.bl
+  %5 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.sentinelCommand, i64 %5
+  %switch.load = load ptr, ptr %switch.gep, align 8
   br label %sentinelCheckCreateInstanceErrors.exit
 
-sentinelCheckCreateInstanceErrors.exit:           ; preds = %bb.bl, %4, %5, %bb.bm
-  %.0.i315 = phi ptr [ @.str.62, %bb.bm ], [ @.str.61, %5 ], [ @.str.56, %4 ], [ @.str.60, %bb.bl ]
+sentinelCheckCreateInstanceErrors.exit:           ; preds = %bb.bl, %bb.bm
+  %.0.i315 = phi ptr [ %switch.load, %bb.bm ], [ @.str.62, %bb.bl ]
   call void @addReplyError(ptr noundef nonnull %0, ptr noundef nonnull %.0.i315) #26
   br label %.thread338
 

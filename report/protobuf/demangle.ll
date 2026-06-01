@@ -201,6 +201,8 @@ begin_hunk_0
 @.str.291 = private unnamed_addr constant [23 x i8] c"transaction clone for \00", align 1
 @.str.294 = private unnamed_addr constant [26 x i8] c"template parameter object\00", align 1
 @.str.295 = private unnamed_addr constant [21 x i8] c"basic_string::append\00", align 1
+@switch.table._ZN4absl12lts_2025051218debugging_internalL17ParseSubstitutionEPNS1_5StateEb = private unnamed_addr constant [19 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2025051218debugging_internalL17kSubstitutionListE, i64 24), ptr getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2025051218debugging_internalL17kSubstitutionListE, i64 48), ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2025051218debugging_internalL17kSubstitutionListE, i64 144), ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2025051218debugging_internalL17kSubstitutionListE, i64 96), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2025051218debugging_internalL17kSubstitutionListE, i64 120), ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2025051218debugging_internalL17kSubstitutionListE, i64 72)], align 8
+@switch.table._ZN4absl12lts_2025051218debugging_internalL17ParseOperatorNameEPNS1_5StateEPi = private unnamed_addr constant [48 x ptr] [ptr @.str.144, ptr poison, ptr poison, ptr poison, ptr @.str.145, ptr poison, ptr poison, ptr poison, ptr @.str.148, ptr poison, ptr poison, ptr poison, ptr @.str.143, ptr @.str.141, ptr poison, ptr @.str.142, ptr poison, ptr poison, ptr poison, ptr @.str.147, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @.str.146], align 8
 
 ; Function Attrs: mustprogress uwtable
 define noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internal8DemangleEPKcPcm(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
@@ -603,23 +605,20 @@ bb.p:                                             ; preds = %bb.o
   %or.cond = and i1 %i.br, %1
   br i1 %or.cond, label %bb.q, label %bb.u
 
-.fold.split:                                      ; preds = %bb.u
-  br label %bb.q
-
-.fold.split98:                                    ; preds = %bb.u
-  br label %bb.q
-
-.fold.split99:                                    ; preds = %bb.u
-  br label %bb.q
-
 .fold.split100:                                   ; preds = %bb.u
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i32
+  %switch.shifted = lshr i32 278795, %switch.maskindex
+  %switch.lobit = trunc i32 %switch.shifted to i1
+  br i1 %switch.lobit, label %.fold.split101, label %.critedge
+
+.fold.split101:                                   ; preds = %.fold.split100
+  %3 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4absl12lts_2025051218debugging_internalL17ParseSubstitutionEPNS1_5StateEb, i64 %3
+  %switch.load = load ptr, ptr %switch.gep, align 8
   br label %bb.q
 
-.fold.split101:                                   ; preds = %bb.u
-  br label %bb.q
-
-bb.q:                                             ; preds = %bb.u, %.fold.split101, %.fold.split100, %.fold.split99, %.fold.split98, %.fold.split, %bb.p
-  %.089.lcssa = phi ptr [ @_ZN4absl12lts_2025051218debugging_internalL17kSubstitutionListE, %bb.p ], [ getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2025051218debugging_internalL17kSubstitutionListE, i64 24), %bb.u ], [ getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2025051218debugging_internalL17kSubstitutionListE, i64 120), %.fold.split100 ], [ getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2025051218debugging_internalL17kSubstitutionListE, i64 48), %.fold.split ], [ getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2025051218debugging_internalL17kSubstitutionListE, i64 72), %.fold.split98 ], [ getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2025051218debugging_internalL17kSubstitutionListE, i64 96), %.fold.split99 ], [ getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2025051218debugging_internalL17kSubstitutionListE, i64 144), %.fold.split101 ]
+bb.q:                                             ; preds = %.fold.split101, %bb.p
+  %.089.lcssa = phi ptr [ @_ZN4absl12lts_2025051218debugging_internalL17kSubstitutionListE, %bb.p ], [ %switch.load, %.fold.split101 ]
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
   %i.bt = load i32, ptr %i.bs, align 8
   %.not.i62 = icmp sgt i32 %i.bt, -1
@@ -670,16 +669,11 @@ _ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit70:
   br label %_ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit56
 
 bb.u:                                             ; preds = %bb.p
-  switch i8 %i.bq, label %.critedge [
-    i8 97, label %bb.q
-    i8 98, label %.fold.split
-    i8 115, label %.fold.split98
-    i8 105, label %.fold.split99
-    i8 111, label %.fold.split100
-    i8 100, label %.fold.split101
-  ]
+  %switch.tableidx = add i8 %i.bq, -97            ; 3 uses
+  %4 = icmp ult i8 %switch.tableidx, 19
+  br i1 %4, label %.fold.split100, label %.critedge
 
-.critedge:                                        ; preds = %bb.u, %.thread83
+.critedge:                                        ; preds = %.fold.split100, %bb.u, %.thread83
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.x, ptr noundef nonnull align 4 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !25
   br label %_ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit56
 
@@ -1082,61 +1076,41 @@ bb.h:                                             ; preds = %.loopexit112
   %.031.i = phi ptr [ %i.ax, %_ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit91 ], [ %i.aq, %.lr.ph.i74.preheader ]
   %i.ax = getelementptr inbounds i8, ptr %.031.i, i64 -1 ; 3 uses
   %i.ay = load i8, ptr %i.ax, align 1, !tbaa !7
-  switch i8 %i.ay, label %_ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit91 [
-    i8 80, label %.sink.split.i
-    i8 82, label %3
-    i8 79, label %4
-    i8 67, label %5
-    i8 71, label %6
-    i8 114, label %7
-    i8 86, label %8
-    i8 75, label %bb.i
-  ]
-
-3:                                                ; preds = %.lr.ph.i74
-  br label %.sink.split.i
-
-4:                                                ; preds = %.lr.ph.i74
-  br label %.sink.split.i
-
-5:                                                ; preds = %.lr.ph.i74
-  br label %.sink.split.i
-
-6:                                                ; preds = %.lr.ph.i74
-  br label %.sink.split.i
-
-7:                                                ; preds = %.lr.ph.i74
-  br label %.sink.split.i
-
-8:                                                ; preds = %.lr.ph.i74
-  br label %.sink.split.i
+  %switch.tableidx = add i8 %i.ay, -67            ; 3 uses
+  %3 = icmp ult i8 %switch.tableidx, 48
+  br i1 %3, label %bb.i, label %_ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit91
 
 bb.i:                                             ; preds = %.lr.ph.i74
-  br label %.sink.split.i
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i64
+  %switch.shifted = lshr i64 140737488924945, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  br i1 %switch.lobit, label %.sink.split.i, label %_ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit91
 
-.sink.split.i:                                    ; preds = %bb.i, %8, %7, %6, %5, %4, %3, %.lr.ph.i74
-  %.str.141.sink.i = phi ptr [ @.str.148, %bb.i ], [ @.str.142, %3 ], [ @.str.143, %4 ], [ @.str.144, %5 ], [ @.str.145, %6 ], [ @.str.146, %7 ], [ @.str.147, %8 ], [ @.str.141, %.lr.ph.i74 ] ; 3 uses
+.sink.split.i:                                    ; preds = %bb.i
+  %4 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4absl12lts_2025051218debugging_internalL17ParseOperatorNameEPNS1_5StateEPi, i64 %4
+  %switch.load = load ptr, ptr %switch.gep, align 8 ; 3 uses
   %i.az = load i32, ptr %.sroa.7.0..sroa_idx, align 8
   %.not.i89 = icmp sgt i32 %i.az, -1
   br i1 %.not.i89, label %_ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit91, label %bb.j
 
 bb.j:                                             ; preds = %.sink.split.i
-  %i.ba = load i8, ptr %.str.141.sink.i, align 1, !tbaa !7
+  %i.ba = load i8, ptr %switch.load, align 1, !tbaa !7
   %.not4.i.i = icmp eq i8 %i.ba, 0
   br i1 %.not4.i.i, label %_ZN4absl12lts_2025051218debugging_internalL6StrLenEPKc.exit.i, label %.lr.ph.preheader.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.j
-  %scevgep.i.i = getelementptr i8, ptr %.str.141.sink.i, i64 1
+  %scevgep.i.i = getelementptr i8, ptr %switch.load, i64 1
   %strlen.i.i90 = tail call i64 @strlen(ptr nonnull readonly dereferenceable(1) %scevgep.i.i)
   %i.bb = add i64 %strlen.i.i90, 1
   br label %_ZN4absl12lts_2025051218debugging_internalL6StrLenEPKc.exit.i
 
 _ZN4absl12lts_2025051218debugging_internalL6StrLenEPKc.exit.i: ; preds = %.lr.ph.preheader.i.i, %bb.j
   %.0.lcssa.i.i = phi i64 [ 0, %bb.j ], [ %i.bb, %.lr.ph.preheader.i.i ]
-  tail call fastcc void @_ZN4absl12lts_2025051218debugging_internalL21MaybeAppendWithLengthEPNS1_5StateEPKcm(ptr noundef nonnull %0, ptr noundef nonnull readonly %.str.141.sink.i, i64 noundef %.0.lcssa.i.i)
+  tail call fastcc void @_ZN4absl12lts_2025051218debugging_internalL21MaybeAppendWithLengthEPNS1_5StateEPKcm(ptr noundef nonnull %0, ptr noundef nonnull readonly %switch.load, i64 noundef %.0.lcssa.i.i)
   br label %_ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit91
 
-_ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit91: ; preds = %_ZN4absl12lts_2025051218debugging_internalL6StrLenEPKc.exit.i, %.sink.split.i, %.lr.ph.i74
+_ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit91: ; preds = %bb.i, %.lr.ph.i74, %_ZN4absl12lts_2025051218debugging_internalL6StrLenEPKc.exit.i, %.sink.split.i
   %.not.i75 = icmp eq ptr %i.an, %i.ax
   br i1 %.not.i75, label %.thread106, label %.lr.ph.i74, !llvm.loop !65
 

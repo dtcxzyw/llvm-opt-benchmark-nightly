@@ -201,6 +201,7 @@ begin_hunk_0
 @str.2 = private unnamed_addr constant [15 x i8] c"file is longer\00", align 1
 @str.3 = private unnamed_addr constant [13 x i8] c"identical   \00", align 1
 @str.4 = private unnamed_addr constant [49 x i8] c"\0AClose this window or press ENTER to continue...\00", align 1
+@switch.table._Z13distanceModelR5Mixer = private unnamed_addr constant [34 x ptr] [ptr @_ZZ13distanceModelR5MixerE5posnl, ptr @_ZZ13distanceModelR5MixerE5pos00, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @_ZZ13distanceModelR5MixerE5posnl, ptr poison, ptr poison, ptr @_ZZ13distanceModelR5MixerE5posnl, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @_ZZ13distanceModelR5MixerE5pos20], align 8
 
 @_ZN4IlogC1Ev = dso_local unnamed_addr alias void (ptr), ptr @_ZN4IlogC2Ev
 @_ZN7StretchC1Ev = dso_local unnamed_addr alias void (ptr), ptr @_ZN7StretchC2Ev
@@ -603,13 +604,9 @@ bb.f:                                             ; preds = %bb.e
   %i.i = load i32, ptr @c4, align 4, !tbaa !4     ; 2 uses
   %trunc = trunc i32 %i.i to i8
   %.pre = load i32, ptr @pos, align 4, !tbaa !4   ; 2 uses
-  switch i8 %trunc, label %._crit_edge [
-    i8 0, label %._crit_edge.sink.split
-    i8 32, label %1
-    i8 -1, label %bb.h
-    i8 13, label %bb.h
-    i8 10, label %bb.h
-  ]
+  %switch.tableidx = add i8 %trunc, 1             ; 3 uses
+  %1 = icmp ult i8 %switch.tableidx, 34
+  br i1 %1, label %bb.h, label %._crit_edge
 
 bb.g:                                             ; preds = %bb.c
   %i.j = landingpad { ptr, i32 }
@@ -617,18 +614,20 @@ bb.g:                                             ; preds = %bb.c
   tail call void @__cxa_guard_abort(ptr nonnull @_ZGVZ13distanceModelR5MixerE2cr) #38
   resume { ptr, i32 } %i.j
 
-1:                                                ; preds = %bb.f
-  br label %._crit_edge.sink.split
+bb.h:                                             ; preds = %bb.f
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i64
+  %switch.shifted = lshr i64 8589953027, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  br i1 %switch.lobit, label %._crit_edge.sink.split, label %._crit_edge
 
-bb.h:                                             ; preds = %bb.f, %bb.f, %bb.f
-  br label %._crit_edge.sink.split
-
-._crit_edge.sink.split:                           ; preds = %bb.f, %bb.h, %1
-  %_ZZ13distanceModelR5MixerE5pos20.sink = phi ptr [ @_ZZ13distanceModelR5MixerE5pos20, %1 ], [ @_ZZ13distanceModelR5MixerE5posnl, %bb.h ], [ @_ZZ13distanceModelR5MixerE5pos00, %bb.f ]
-  store i32 %.pre, ptr %_ZZ13distanceModelR5MixerE5pos20.sink, align 4, !tbaa !4
+._crit_edge.sink.split:                           ; preds = %bb.h
+  %2 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._Z13distanceModelR5Mixer, i64 %2
+  %switch.load = load ptr, ptr %switch.gep, align 8
+  store i32 %.pre, ptr %switch.load, align 4, !tbaa !4
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %._crit_edge.sink.split, %bb.f
+._crit_edge:                                      ; preds = %bb.h, %bb.f, %._crit_edge.sink.split
   %i.k = load i32, ptr @_ZZ13distanceModelR5MixerE5pos00, align 4, !tbaa !4
   %i.l = sub nsw i32 %.pre, %i.k
   %i.m = tail call noundef i32 @llvm.smin.i32(i32 %i.l, i32 255)

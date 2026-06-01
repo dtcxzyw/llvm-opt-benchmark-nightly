@@ -47,6 +47,7 @@ $_ZN4absl12lts_2025051219str_format_internal13ConvTagHolder5valueE = comdat any
 @.str.31 = private unnamed_addr constant [2 x i8] c"%\00", align 1
 @.str.32 = private unnamed_addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1
 @switch.table._ZNK4absl12lts_2025051219str_format_internal16ParsedFormatBase18MatchesConversionsEbSt16initializer_listINS0_23FormatConversionCharSetEE = private unnamed_addr constant [19 x i8] c"csdiouxXfFeEgGaAnpv", align 1
+@switch.table._ZN4absl12lts_2025051219str_format_internal29FormatConversionCharToConvIntEc = private unnamed_addr constant [56 x i64] [i64 65536, i64 poison, i64 poison, i64 poison, i64 4096, i64 1024, i64 16384, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 256, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 32768, i64 poison, i64 2, i64 8, i64 2048, i64 512, i64 8192, i64 poison, i64 16, i64 poison, i64 poison, i64 poison, i64 poison, i64 131072, i64 32, i64 262144, i64 poison, i64 poison, i64 4, i64 poison, i64 64, i64 524288, i64 poison, i64 128], align 8
 
 @_ZN4absl12lts_2025051219str_format_internal16ParsedFormatBaseC1ESt17basic_string_viewIcSt11char_traitsIcEEbSt16initializer_listINS0_23FormatConversionCharSetEE = unnamed_addr alias void (ptr, i64, ptr, i1, ptr, i64), ptr @_ZN4absl12lts_2025051219str_format_internal16ParsedFormatBaseC2ESt17basic_string_viewIcSt11char_traitsIcEEbSt16initializer_listINS0_23FormatConversionCharSetEE
 
@@ -449,90 +450,31 @@ bb.i:                                             ; preds = %.lr.ph.7
 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr noundef i64 @_ZN4absl12lts_2025051219str_format_internal29FormatConversionCharToConvIntEc(i8 noundef signext %0) local_unnamed_addr #3 comdat {
-  switch i8 %0, label %bb.d [
-    i8 99, label %bb.e
-    i8 115, label %2
-    i8 100, label %3
-    i8 105, label %4
-    i8 111, label %5
-    i8 117, label %6
-    i8 120, label %7
-    i8 88, label %8
-    i8 102, label %9
-    i8 70, label %10
-    i8 101, label %11
-    i8 69, label %12
-    i8 103, label %13
-    i8 71, label %14
-    i8 97, label %15
-    i8 65, label %16
-    i8 110, label %bb.a
-    i8 112, label %bb.b
-    i8 118, label %bb.c
-  ]
+bb.a:
+  %switch.tableidx = add i8 %0, -65               ; 3 uses
+  %1 = icmp ult i8 %switch.tableidx, 56
+  br i1 %1, label %bb.c, label %bb.b
 
-2:                                                ; preds = %1
+bb.b:                                             ; preds = %bb.c, %bb.a
+  %2 = icmp eq i8 %0, 42
+  %3 = zext i1 %2 to i64
   br label %bb.e
 
-3:                                                ; preds = %1
+bb.c:                                             ; preds = %bb.a
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i64
+  %switch.shifted = lshr i64 50913422803468401, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  br i1 %switch.lobit, label %bb.d, label %bb.b
+
+bb.d:                                             ; preds = %bb.c
+  %4 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4absl12lts_2025051219str_format_internal29FormatConversionCharToConvIntEc, i64 %4
+  %switch.load = load i64, ptr %switch.gep, align 8
   br label %bb.e
 
-4:                                                ; preds = %1
-  br label %bb.e
-
-5:                                                ; preds = %1
-  br label %bb.e
-
-6:                                                ; preds = %1
-  br label %bb.e
-
-7:                                                ; preds = %1
-  br label %bb.e
-
-8:                                                ; preds = %1
-  br label %bb.e
-
-9:                                                ; preds = %1
-  br label %bb.e
-
-10:                                               ; preds = %1
-  br label %bb.e
-
-11:                                               ; preds = %1
-  br label %bb.e
-
-12:                                               ; preds = %1
-  br label %bb.e
-
-13:                                               ; preds = %1
-  br label %bb.e
-
-14:                                               ; preds = %1
-  br label %bb.e
-
-15:                                               ; preds = %1
-  br label %bb.e
-
-16:                                               ; preds = %1
-  br label %bb.e
-
-bb.a:                                             ; preds = %1
-  br label %bb.e
-
-bb.b:                                             ; preds = %1
-  br label %bb.e
-
-bb.c:                                             ; preds = %1
-  br label %bb.e
-
-bb.d:                                             ; preds = %1
-  %17 = icmp eq i8 %0, 42
-  %18 = zext i1 %17 to i64
-  br label %bb.e
-
-bb.e:                                             ; preds = %1, %2, %4, %6, %8, %10, %12, %14, %16, %bb.b, %bb.d, %bb.c, %bb.a, %15, %13, %11, %9, %7, %5, %3
-  %19 = phi i64 [ %18, %bb.d ], [ 4, %2 ], [ 8, %3 ], [ 16, %4 ], [ 32, %5 ], [ 64, %6 ], [ 128, %7 ], [ 256, %8 ], [ 512, %9 ], [ 1024, %10 ], [ 2048, %11 ], [ 4096, %12 ], [ 8192, %13 ], [ 16384, %14 ], [ 32768, %15 ], [ 65536, %16 ], [ 131072, %bb.a ], [ 262144, %bb.b ], [ 524288, %bb.c ], [ 2, %1 ]
-  ret i64 %19
+bb.e:                                             ; preds = %bb.d, %bb.b
+  %5 = phi i64 [ %3, %bb.b ], [ %switch.load, %bb.d ]
+  ret i64 %5
 }
 
 ; Function Attrs: mustprogress uwtable

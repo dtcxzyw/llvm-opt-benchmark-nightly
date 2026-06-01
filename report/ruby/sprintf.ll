@@ -201,7 +201,7 @@ bb.ig:                                            ; preds = %bb.ia, %bb.ib, %bb.
   br label %.backedge
 
 .backedge:                                        ; preds = %.backedge.backedge, %bb.ig
-  %.0..0..0..0.175 = load volatile i64, ptr %i.i, align 8, !tbaa !11 ; 7 uses
+  %.0..0..0..0.175 = load volatile i64, ptr %i.i, align 8, !tbaa !11 ; 6 uses
   %i.vm = icmp eq i64 %.0..0..0..0.175, 0
   %i.vn = and i64 %.0..0..0..0.175, 7
   %i.vo = icmp ne i64 %i.vn, 0
@@ -209,12 +209,11 @@ bb.ig:                                            ; preds = %bb.ia, %bb.ib, %bb.
   br i1 %i.vp, label %bb.ih, label %rb_type.exit
 
 bb.ih:                                            ; preds = %.backedge
-  %3 = call i64 @llvm.fshl.i64(i64 %.0..0..0..0.175, i64 %.0..0..0..0.175, i64 62)
-  switch i64 %3, label %bb.ii [
+  switch i64 %.0..0..0..0.175, label %bb.ii [
     i64 0, label %rb_type.exit.thread
-    i64 1, label %rb_type.exit.thread
-    i64 5, label %rb_type.exit.thread
-    i64 9, label %rb_type.exit.thread
+    i64 4, label %rb_type.exit.thread
+    i64 20, label %rb_type.exit.thread
+    i64 36, label %rb_type.exit.thread
   ]
 
 bb.ii:                                            ; preds = %bb.ih

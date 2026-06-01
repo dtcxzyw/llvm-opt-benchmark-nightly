@@ -201,6 +201,8 @@ begin_hunk_0
 @_ZTISt23_Sp_counted_ptr_inplaceIN6duckdb20StorageLockInternalsESaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSSt23_Sp_counted_ptr_inplaceIN6duckdb20StorageLockInternalsESaIvELN9__gnu_cxx12_Lock_policyE2EE, ptr @_ZTISt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE }, comdat, align 8
 @_ZTSSt23_Sp_counted_ptr_inplaceIN6duckdb20StorageLockInternalsESaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr constant [95 x i8] c"St23_Sp_counted_ptr_inplaceIN6duckdb20StorageLockInternalsESaIvELN9__gnu_cxx12_Lock_policyE2EE\00", comdat, align 1
 @_ZN6duckdb20SequenceCatalogEntry4NameE = external constant ptr, align 8
+@switch.table._ZN6duckdb16CheckpointWriter10WriteEntryERNS_12CatalogEntryERNS_10SerializerE = private unnamed_addr constant [31 x i64] [i64 64, i64 56, i64 72, i64 104, i64 poison, i64 80, i64 poison, i64 112, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 88, i64 96], align 8
+@switch.table._ZN6duckdb16CheckpointReader9ReadEntryENS_18CatalogTransactionERNS_12DeserializerE = private unnamed_addr constant [31 x i64] [i64 40, i64 32, i64 48, i64 80, i64 poison, i64 56, i64 poison, i64 88, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 64, i64 72], align 8
 
 @_ZN6duckdb10ArenaChunkC1ERNS_9AllocatorEm = unnamed_addr alias void (ptr, ptr, i64), ptr @_ZN6duckdb10ArenaChunkC2ERNS_9AllocatorEm
 @_ZN6duckdb10ArenaChunkD1Ev = unnamed_addr alias void (ptr), ptr @_ZN6duckdb10ArenaChunkD2Ev
@@ -603,39 +605,11 @@ _ZN6duckdb10Serializer13WritePropertyINS_11CatalogTypeEEEvtPKcRKT_.exit: ; preds
   %i.r = load ptr, ptr %i.q, align 8
   tail call void %i.r(ptr noundef nonnull align 8 dereferenceable(680) %2), !inline_history !755
   %i.s = load i8, ptr %i.a, align 8, !tbaa !511
-  switch i8 %i.s, label %bb.d [
-    i8 2, label %bb.i
-    i8 8, label %5
-    i8 6, label %6
-    i8 1, label %7
-    i8 3, label %8
-    i8 30, label %9
-    i8 31, label %10
-    i8 4, label %11
-  ]
+  %switch.tableidx = add i8 %i.s, -1              ; 3 uses
+  %5 = icmp ult i8 %switch.tableidx, 31
+  br i1 %5, label %switch.hole_check, label %bb.d
 
-5:                                                ; preds = %_ZN6duckdb10Serializer13WritePropertyINS_11CatalogTypeEEEvtPKcRKT_.exit
-  br label %bb.i
-
-6:                                                ; preds = %_ZN6duckdb10Serializer13WritePropertyINS_11CatalogTypeEEEvtPKcRKT_.exit
-  br label %bb.i
-
-7:                                                ; preds = %_ZN6duckdb10Serializer13WritePropertyINS_11CatalogTypeEEEvtPKcRKT_.exit
-  br label %bb.i
-
-8:                                                ; preds = %_ZN6duckdb10Serializer13WritePropertyINS_11CatalogTypeEEEvtPKcRKT_.exit
-  br label %bb.i
-
-9:                                                ; preds = %_ZN6duckdb10Serializer13WritePropertyINS_11CatalogTypeEEEvtPKcRKT_.exit
-  br label %bb.i
-
-10:                                               ; preds = %_ZN6duckdb10Serializer13WritePropertyINS_11CatalogTypeEEEvtPKcRKT_.exit
-  br label %bb.i
-
-11:                                               ; preds = %_ZN6duckdb10Serializer13WritePropertyINS_11CatalogTypeEEEvtPKcRKT_.exit
-  br label %bb.i
-
-bb.d:                                             ; preds = %_ZN6duckdb10Serializer13WritePropertyINS_11CatalogTypeEEEvtPKcRKT_.exit
+bb.d:                                             ; preds = %switch.hole_check, %_ZN6duckdb10Serializer13WritePropertyINS_11CatalogTypeEEEvtPKcRKT_.exit
   %i.t = tail call ptr @__cxa_allocate_exception(i64 16) #23 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
@@ -682,10 +656,18 @@ bb.h:                                             ; preds = %_ZNKSt7__cxx1112bas
   call void @__cxa_free_exception(ptr %i.t) #23
   br label %bb.j
 
-bb.i:                                             ; preds = %_ZN6duckdb10Serializer13WritePropertyINS_11CatalogTypeEEEvtPKcRKT_.exit, %11, %10, %9, %8, %7, %6, %5
-  %.sink39 = phi i64 [ 104, %11 ], [ 96, %10 ], [ 88, %9 ], [ 72, %8 ], [ 64, %7 ], [ 80, %6 ], [ 112, %5 ], [ 56, %_ZN6duckdb10Serializer13WritePropertyINS_11CatalogTypeEEEvtPKcRKT_.exit ]
+switch.hole_check:                                ; preds = %_ZN6duckdb10Serializer13WritePropertyINS_11CatalogTypeEEEvtPKcRKT_.exit
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i32
+  %switch.shifted = lshr i32 1610612911, %switch.maskindex
+  %switch.lobit = trunc i32 %switch.shifted to i1
+  br i1 %switch.lobit, label %bb.i, label %bb.d
+
+bb.i:                                             ; preds = %switch.hole_check
+  %6 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6duckdb16CheckpointWriter10WriteEntryERNS_12CatalogEntryERNS_10SerializerE, i64 %6
+  %switch.load = load i64, ptr %switch.gep, align 8
   %i.z = load ptr, ptr %0, align 8, !tbaa !45
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 %.sink39
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 %switch.load
   %i.ab = load ptr, ptr %i.aa, align 8
   tail call void %i.ab(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(248) %1, ptr noundef nonnull align 8 dereferenceable(680) %2)
   ret void
@@ -801,39 +783,11 @@ _ZN6duckdb12Deserializer12ReadPropertyINS_11CatalogTypeEEET_tPKc.exit: ; preds =
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 32
   %i.y = load ptr, ptr %i.x, align 8
   call void %i.y(ptr noundef nonnull align 8 dereferenceable(632) %2), !inline_history !761
-  switch i8 %.0.i.i, label %bb.f [
-    i8 2, label %bb.k
-    i8 8, label %6
-    i8 6, label %7
-    i8 1, label %8
-    i8 3, label %9
-    i8 30, label %10
-    i8 31, label %11
-    i8 4, label %12
-  ]
+  %switch.tableidx = add i8 %.0.i.i, -1           ; 3 uses
+  %6 = icmp ult i8 %switch.tableidx, 31
+  br i1 %6, label %switch.hole_check, label %bb.f
 
-6:                                                ; preds = %_ZN6duckdb12Deserializer12ReadPropertyINS_11CatalogTypeEEET_tPKc.exit
-  br label %bb.k
-
-7:                                                ; preds = %_ZN6duckdb12Deserializer12ReadPropertyINS_11CatalogTypeEEET_tPKc.exit
-  br label %bb.k
-
-8:                                                ; preds = %_ZN6duckdb12Deserializer12ReadPropertyINS_11CatalogTypeEEET_tPKc.exit
-  br label %bb.k
-
-9:                                                ; preds = %_ZN6duckdb12Deserializer12ReadPropertyINS_11CatalogTypeEEET_tPKc.exit
-  br label %bb.k
-
-10:                                               ; preds = %_ZN6duckdb12Deserializer12ReadPropertyINS_11CatalogTypeEEET_tPKc.exit
-  br label %bb.k
-
-11:                                               ; preds = %_ZN6duckdb12Deserializer12ReadPropertyINS_11CatalogTypeEEET_tPKc.exit
-  br label %bb.k
-
-12:                                               ; preds = %_ZN6duckdb12Deserializer12ReadPropertyINS_11CatalogTypeEEET_tPKc.exit
-  br label %bb.k
-
-bb.f:                                             ; preds = %_ZN6duckdb12Deserializer12ReadPropertyINS_11CatalogTypeEEET_tPKc.exit
+bb.f:                                             ; preds = %switch.hole_check, %_ZN6duckdb12Deserializer12ReadPropertyINS_11CatalogTypeEEET_tPKc.exit
   %i.z = call ptr @__cxa_allocate_exception(i64 16) #23 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #23
@@ -880,10 +834,18 @@ bb.j:                                             ; preds = %_ZNKSt7__cxx1112bas
   call void @__cxa_free_exception(ptr %i.z) #23
   br label %common.resume
 
-bb.k:                                             ; preds = %_ZN6duckdb12Deserializer12ReadPropertyINS_11CatalogTypeEEET_tPKc.exit, %12, %11, %10, %9, %8, %7, %6
-  %.sink24 = phi i64 [ 80, %12 ], [ 72, %11 ], [ 64, %10 ], [ 48, %9 ], [ 40, %8 ], [ 56, %7 ], [ 88, %6 ], [ 32, %_ZN6duckdb12Deserializer12ReadPropertyINS_11CatalogTypeEEET_tPKc.exit ]
+switch.hole_check:                                ; preds = %_ZN6duckdb12Deserializer12ReadPropertyINS_11CatalogTypeEEET_tPKc.exit
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i32
+  %switch.shifted = lshr i32 1610612911, %switch.maskindex
+  %switch.lobit = trunc i32 %switch.shifted to i1
+  br i1 %switch.lobit, label %bb.k, label %bb.f
+
+bb.k:                                             ; preds = %switch.hole_check
+  %7 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6duckdb16CheckpointReader9ReadEntryENS_18CatalogTransactionERNS_12DeserializerE, i64 %7
+  %switch.load = load i64, ptr %switch.gep, align 8
   %i.af = load ptr, ptr %0, align 8, !tbaa !45
-  %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 %.sink24
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 %switch.load
   %i.ah = load ptr, ptr %i.ag, align 8
   call void %i.ah(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull byval(%"struct.duckdb::CatalogTransaction") align 8 %1, ptr noundef nonnull align 8 dereferenceable(632) %2)
   ret void

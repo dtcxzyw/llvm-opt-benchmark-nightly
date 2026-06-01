@@ -30,6 +30,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.10 = private unnamed_addr constant [5 x i8] c"jips\00", align 1
 @.str.11 = private unnamed_addr constant [10 x i8] c",swaplfnl\00", align 1
 @_ZL13gb18030Ranges = internal unnamed_addr constant [14 x [4 x i32]] [[4 x i32] [i32 65536, i32 1114111, i32 1876218, i32 2924793], [4 x i32] [i32 40870, i32 55295, i32 1706261, i32 1720686], [4 x i32] [i32 1106, i32 7742, i32 1688038, i32 1694674], [4 x i32] [i32 7744, i32 8207, i32 1694676, i32 1695139], [4 x i32] [i32 59493, i32 63787, i32 1720768, i32 1725062], [4 x i32] [i32 9795, i32 11904, i32 1696437, i32 1698546], [4 x i32] [i32 64042, i32 65071, i32 1725296, i32 1726325], [4 x i32] [i32 15585, i32 16469, i32 1701916, i32 1702800], [4 x i32] [i32 13851, i32 14615, i32 1700191, i32 1700955], [4 x i32] [i32 18872, i32 19574, i32 1705179, i32 1705881], [4 x i32] [i32 16736, i32 17206, i32 1703065, i32 1703535], [4 x i32] [i32 18318, i32 18758, i32 1704636, i32 1705076], [4 x i32] [i32 17623, i32 17995, i32 1703947, i32 1704319], [4 x i32] [i32 65510, i32 65535, i32 1726612, i32 1726637]], align 16
+@switch.table.ucnv_MBCSGetFilteredUnicodeSetForUnicode_78 = private unnamed_addr constant [8 x i32] [i32 3, i32 4, i32 2, i32 2, i32 2, i32 2, i32 2, i32 3], align 4
 
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @ucnv_MBCSGetFilteredUnicodeSetForUnicode_78(ptr noundef %0, ptr noundef %1, i32 noundef %2, i32 noundef %3, ptr noundef %4) local_unnamed_addr #0 {
@@ -125,20 +126,18 @@ bb.k:                                             ; preds = %bb.c
 
 bb.l:                                             ; preds = %bb.a
   %i.af = icmp eq i32 %2, 1                       ; 6 uses
-  switch i8 %i.g, label %bb.m [
-    i8 2, label %bb.n
-    i8 9, label %bb.n
-    i8 3, label %5
-  ]
-
-5:                                                ; preds = %bb.l
-  br label %bb.n
+  %switch.tableidx = add i8 %i.g, -2              ; 2 uses
+  %5 = icmp ult i8 %switch.tableidx, 8
+  br i1 %5, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
+  %6 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.ucnv_MBCSGetFilteredUnicodeSetForUnicode_78, i64 %6
+  %switch.load = load i32, ptr %switch.gep, align 4
   br label %bb.n
 
-bb.n:                                             ; preds = %bb.l, %bb.l, %bb.m, %5
-  %.0146 = phi i32 [ 2, %bb.m ], [ 4, %5 ], [ 3, %bb.l ], [ 3, %bb.l ] ; 3 uses
+bb.n:                                             ; preds = %bb.l, %bb.m
+  %.0146 = phi i32 [ %switch.load, %bb.m ], [ 2, %bb.l ] ; 3 uses
   %i.ag = lshr exact i32 %., 1
   %i.ah = shl nuw nsw i32 %.0146, 4
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 7 uses

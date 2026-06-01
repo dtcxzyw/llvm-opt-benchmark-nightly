@@ -21,6 +21,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.14 = private unnamed_addr constant [51 x i8] c"Detected false positive MD5 match. Please report.\0A\00", align 1
 @.str.15 = private unnamed_addr constant [44 x i8] c"cli_checkfp(): Can't generate MD5 checksum\0A\00", align 1
 @.str.16 = private unnamed_addr constant [46 x i8] c"Eliminated false positive match (fp sig: %s)\0A\00", align 1
+@switch.table.cli_scandesc = private unnamed_addr constant [28 x i64] [i64 1, i64 6, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 2, i64 poison, i64 poison, i64 poison, i64 poison, i64 5, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 3, i64 4], align 8
 
 ; Function Attrs: nounwind uwtable
 define dso_local i32 @cli_scanbuff(ptr noundef %0, i32 noundef %1, ptr noundef %2, ptr noundef readonly captures(address_is_null) %3, i32 noundef %4) local_unnamed_addr #0 {
@@ -38,33 +39,18 @@ bb.c:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !8    ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !13   ; 4 uses
-  switch i32 %4, label %.thread [
-    i32 503, label %.fold.split68
-    i32 502, label %bb.d
-    i32 513, label %.fold.split
-    i32 528, label %.fold.split65
-    i32 529, label %.fold.split66
-    i32 518, label %.fold.split67
-  ]
+  %switch.tableidx = add i32 %4, -502             ; 3 uses
+  %6 = icmp ult i32 %switch.tableidx, 28
+  %switch.shifted = lshr i32 201394179, %switch.tableidx
+  %switch.lobit = trunc i32 %switch.shifted to i1
+  %or.cond = select i1 %6, i1 %switch.lobit, i1 false
+  br i1 %or.cond, label %bb.d, label %.thread
 
-.fold.split:                                      ; preds = %bb.c
-  br label %bb.d
-
-.fold.split65:                                    ; preds = %bb.c
-  br label %bb.d
-
-.fold.split66:                                    ; preds = %bb.c
-  br label %bb.d
-
-.fold.split67:                                    ; preds = %bb.c
-  br label %bb.d
-
-.fold.split68:                                    ; preds = %bb.c
-  br label %bb.d
-
-bb.d:                                             ; preds = %bb.c, %.fold.split68, %.fold.split67, %.fold.split66, %.fold.split65, %.fold.split
-  %.lcssa = phi i64 [ 1, %bb.c ], [ 5, %.fold.split67 ], [ 2, %.fold.split ], [ 3, %.fold.split65 ], [ 4, %.fold.split66 ], [ 6, %.fold.split68 ]
-  %i.d = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.lcssa
+bb.d:                                             ; preds = %bb.c
+  %7 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.cli_scandesc, i64 %7
+  %switch.load = load i64, ptr %switch.gep, align 8
+  %i.d = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %switch.load
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !13   ; 5 uses
   %.not49 = icmp eq ptr %i.e, null
   br i1 %.not49, label %.thread, label %bb.e
@@ -467,35 +453,20 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %.0136 = phi ptr [ null, %bb.c ], [ %i.f, %bb.d ] ; 6 uses
-  switch i32 %3, label %.loopexit [
-    i32 503, label %.fold.split223
-    i32 502, label %bb.f
-    i32 513, label %.fold.split
-    i32 528, label %.fold.split220
-    i32 529, label %.fold.split221
-    i32 518, label %.fold.split222
-  ]
+  %switch.tableidx = add i32 %3, -502             ; 3 uses
+  %10 = icmp ult i32 %switch.tableidx, 28
+  %switch.shifted = lshr i32 201394179, %switch.tableidx
+  %switch.lobit = trunc i32 %switch.shifted to i1
+  %or.cond224 = select i1 %10, i1 %switch.lobit, i1 false
+  br i1 %or.cond224, label %bb.f, label %.loopexit
 
-.fold.split:                                      ; preds = %bb.e
-  br label %bb.f
-
-.fold.split220:                                   ; preds = %bb.e
-  br label %bb.f
-
-.fold.split221:                                   ; preds = %bb.e
-  br label %bb.f
-
-.fold.split222:                                   ; preds = %bb.e
-  br label %bb.f
-
-.fold.split223:                                   ; preds = %bb.e
-  br label %bb.f
-
-bb.f:                                             ; preds = %bb.e, %.fold.split223, %.fold.split222, %.fold.split221, %.fold.split220, %.fold.split
-  %.lcssa = phi i64 [ 1, %bb.e ], [ 5, %.fold.split222 ], [ 2, %.fold.split ], [ 3, %.fold.split220 ], [ 4, %.fold.split221 ], [ 6, %.fold.split223 ]
+bb.f:                                             ; preds = %bb.e
+  %11 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.cli_scandesc, i64 %11
+  %switch.load = load i64, ptr %switch.gep, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !8
-  %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %.lcssa
+  %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %switch.load
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !13
   br label %.loopexit
 

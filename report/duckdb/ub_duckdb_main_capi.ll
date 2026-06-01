@@ -201,6 +201,7 @@ begin_hunk_0
 @"_ZTSZ29duckdb_register_copy_functionE3$_0" = internal constant [38 x i8] c"Z29duckdb_register_copy_functionE3$_0\00", align 1
 @switch.table.duckdb_create_logical_type = private unnamed_addr constant [39 x i8] c"\0A\0B\0C\0D\0E\1C\1D\1E\1F\16\17\13\0F\10\1B2\19\1A\15\11\12\14h\00\00\006k$\22 1l\03'\01%&#", align 1
 @switch.table._ZN6duckdb18LogicalTypeIdFromCE11DUCKDB_TYPE = private unnamed_addr constant [39 x i8] c"\0A\0B\0C\0D\0E\1C\1D\1E\1F\16\17\13\0F\10\1B2\19\1A\15\11\12\14hedf6k$\22 1l\03'\01%&#", align 1
+@switch.table._ZN6duckdb16LogicalTypeIdToCENS_13LogicalTypeIdE = private unnamed_addr constant [108 x i32] [i32 36, i32 0, i32 34, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 13, i32 14, i32 20, i32 21, i32 12, i32 22, i32 19, i32 10, i32 11, i32 0, i32 17, i32 18, i32 15, i32 6, i32 7, i32 8, i32 9, i32 31, i32 0, i32 30, i32 39, i32 29, i32 37, i32 38, i32 35, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 32, i32 16, i32 0, i32 0, i32 0, i32 27, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 25, i32 24, i32 26, i32 0, i32 23, i32 0, i32 0, i32 28, i32 33], align 4
 @switch.table._ZN6duckdb12GetCTypeSizeE11DUCKDB_TYPE = private unnamed_addr constant [39 x i64] [i64 1, i64 1, i64 2, i64 4, i64 8, i64 1, i64 2, i64 4, i64 8, i64 4, i64 8, i64 8, i64 4, i64 8, i64 16, i64 16, i64 8, i64 16, i64 16, i64 8, i64 8, i64 8, i64 0, i64 0, i64 0, i64 0, i64 16, i64 0, i64 0, i64 0, i64 8, i64 16, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 8], align 8
 @switch.table.duckdb_enum_internal_type = private unnamed_addr constant [5 x i32] [i32 6, i32 0, i32 7, i32 0, i32 8], align 4
 @switch.table.duckdb_pending_execute_check_state = private unnamed_addr constant [5 x i32] [i32 0, i32 1, i32 2, i32 0, i32 3], align 4
@@ -603,167 +604,19 @@ bb.b:                                             ; preds = %bb.a, %switch.looku
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef range(i32 0, 40) i32 @_ZN6duckdb16LogicalTypeIdToCENS_13LogicalTypeIdE(i8 noundef zeroext %0) local_unnamed_addr #0 {
-  switch i8 %0, label %bb.b [
-    i8 35, label %bb.a
-    i8 38, label %38
-    i8 10, label %bb.c
-    i8 11, label %2
-    i8 12, label %3
-    i8 13, label %4
-    i8 14, label %5
-    i8 28, label %6
-    i8 29, label %7
-    i8 30, label %8
-    i8 31, label %9
-    i8 50, label %10
-    i8 49, label %11
-    i8 22, label %12
-    i8 23, label %13
-    i8 19, label %14
-    i8 32, label %15
-    i8 17, label %16
-    i8 18, label %17
-    i8 20, label %18
-    i8 15, label %19
-    i8 16, label %20
-    i8 34, label %21
-    i8 25, label %22
-    i8 26, label %23
-    i8 36, label %24
-    i8 39, label %25
-    i8 27, label %26
-    i8 21, label %27
-    i8 104, label %28
-    i8 101, label %29
-    i8 100, label %30
-    i8 102, label %31
-    i8 107, label %32
-    i8 54, label %33
-    i8 108, label %34
-    i8 3, label %35
-    i8 1, label %36
-    i8 37, label %37
-  ]
+bb.a:
+  %switch.tableidx = add i8 %0, -1                ; 2 uses
+  %1 = icmp ult i8 %switch.tableidx, 108
+  br i1 %1, label %bb.b, label %bb.c
 
-2:                                                ; preds = %1
+bb.b:                                             ; preds = %bb.a
+  %2 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6duckdb16LogicalTypeIdToCENS_13LogicalTypeIdE, i64 %2
+  %switch.load = load i32, ptr %switch.gep, align 4
   br label %bb.c
 
-3:                                                ; preds = %1
-  br label %bb.c
-
-4:                                                ; preds = %1
-  br label %bb.c
-
-5:                                                ; preds = %1
-  br label %bb.c
-
-6:                                                ; preds = %1
-  br label %bb.c
-
-7:                                                ; preds = %1
-  br label %bb.c
-
-8:                                                ; preds = %1
-  br label %bb.c
-
-9:                                                ; preds = %1
-  br label %bb.c
-
-10:                                               ; preds = %1
-  br label %bb.c
-
-11:                                               ; preds = %1
-  br label %bb.c
-
-12:                                               ; preds = %1
-  br label %bb.c
-
-13:                                               ; preds = %1
-  br label %bb.c
-
-14:                                               ; preds = %1
-  br label %bb.c
-
-15:                                               ; preds = %1
-  br label %bb.c
-
-16:                                               ; preds = %1
-  br label %bb.c
-
-17:                                               ; preds = %1
-  br label %bb.c
-
-18:                                               ; preds = %1
-  br label %bb.c
-
-19:                                               ; preds = %1
-  br label %bb.c
-
-20:                                               ; preds = %1
-  br label %bb.c
-
-21:                                               ; preds = %1
-  br label %bb.c
-
-22:                                               ; preds = %1
-  br label %bb.c
-
-23:                                               ; preds = %1
-  br label %bb.c
-
-24:                                               ; preds = %1
-  br label %bb.c
-
-25:                                               ; preds = %1
-  br label %bb.c
-
-26:                                               ; preds = %1
-  br label %bb.c
-
-27:                                               ; preds = %1
-  br label %bb.c
-
-28:                                               ; preds = %1
-  br label %bb.c
-
-29:                                               ; preds = %1
-  br label %bb.c
-
-30:                                               ; preds = %1
-  br label %bb.c
-
-31:                                               ; preds = %1
-  br label %bb.c
-
-32:                                               ; preds = %1
-  br label %bb.c
-
-33:                                               ; preds = %1
-  br label %bb.c
-
-34:                                               ; preds = %1
-  br label %bb.c
-
-35:                                               ; preds = %1
-  br label %bb.c
-
-36:                                               ; preds = %1
-  br label %bb.c
-
-37:                                               ; preds = %1
-  br label %bb.c
-
-38:                                               ; preds = %1
-  br label %bb.c
-
-bb.a:                                             ; preds = %1
-  br label %bb.c
-
-bb.b:                                             ; preds = %1
-  br label %bb.c
-
-bb.c:                                             ; preds = %1, %bb.b, %bb.a, %38, %37, %36, %35, %34, %33, %32, %31, %30, %29, %28, %27, %26, %25, %24, %23, %22, %21, %20, %19, %18, %17, %16, %15, %14, %13, %12, %11, %10, %9, %8, %7, %6, %5, %4, %3, %2
-  %.0 = phi i32 [ 0, %bb.b ], [ 39, %bb.a ], [ 38, %38 ], [ 37, %37 ], [ 2, %2 ], [ 3, %3 ], [ 4, %4 ], [ 5, %5 ], [ 6, %6 ], [ 7, %7 ], [ 8, %8 ], [ 9, %9 ], [ 16, %10 ], [ 32, %11 ], [ 10, %12 ], [ 11, %13 ], [ 12, %14 ], [ 31, %15 ], [ 20, %16 ], [ 21, %17 ], [ 22, %18 ], [ 13, %19 ], [ 14, %20 ], [ 30, %21 ], [ 17, %22 ], [ 18, %23 ], [ 29, %24 ], [ 35, %25 ], [ 15, %26 ], [ 19, %27 ], [ 23, %28 ], [ 24, %29 ], [ 25, %30 ], [ 26, %31 ], [ 28, %32 ], [ 27, %33 ], [ 33, %34 ], [ 34, %35 ], [ 36, %36 ], [ 1, %1 ]
+bb.c:                                             ; preds = %bb.a, %bb.b
+  %.0 = phi i32 [ %switch.load, %bb.b ], [ 0, %bb.a ]
   ret i32 %.0
 }
 

@@ -201,12 +201,10 @@ bb.aq:                                            ; preds = %_ZL12invertBufferPD
 _ZL12invertBufferPDsijii.exit.thread:             ; preds = %.lr.ph.i, %bb.ap, %bb.aq, %_ZL12invertBufferPDsijii.exit
   %.sroa.13.0 = phi i32 [ 1, %bb.aq ], [ 0, %_ZL12invertBufferPDsijii.exit ], [ 0, %bb.ap ], [ 0, %.lr.ph.i ] ; 4 uses
   %i.da = phi <4 x i32> [ <i32 2, i32 3, i32 393216, i32 262144>, %bb.aq ], [ <i32 3, i32 2, i32 262144, i32 393216>, %_ZL12invertBufferPDsijii.exit ], [ <i32 3, i32 2, i32 262144, i32 393216>, %bb.ap ], [ <i32 3, i32 2, i32 262144, i32 393216>, %.lr.ph.i ] ; 4 uses
-  %10 = lshr exact i32 %i.m, 3                    ; 2 uses
-  switch i32 %10, label %default.unreachable [
-    i32 1, label %bb.ar
-    i32 3, label %bb.av
-    i32 2, label %bb.aw
-    i32 0, label %bb.ax
+  switch i32 %i.m, label %default.unreachable [
+    i32 8, label %bb.ar
+    i32 24, label %bb.av
+    i32 16, label %bb.aw
   ]
 
 bb.ar:                                            ; preds = %_ZL12invertBufferPDsijii.exit.thread
@@ -267,8 +265,8 @@ bb.aw:                                            ; preds = %_ZL12invertBufferPD
 default.unreachable:                              ; preds = %_ZL12invertBufferPDsijii.exit.thread
   unreachable
 
-bb.ax:                                            ; preds = %_ZL12invertBufferPDsijii.exit.thread, %bb.as, %bb.au, %bb.at, %bb.aw, %bb.av
-  %.0301 = phi i32 [ %i.db, %bb.as ], [ %i.dc, %bb.au ], [ %i.dc, %bb.at ], [ %i.df, %bb.av ], [ %i.dg, %bb.aw ], [ %10, %_ZL12invertBufferPDsijii.exit.thread ] ; 6 uses
+bb.ax:                                            ; preds = %bb.as, %bb.au, %bb.at, %bb.aw, %bb.av
+  %.0301 = phi i32 [ %i.db, %bb.as ], [ %i.dc, %bb.au ], [ %i.dc, %bb.at ], [ %i.df, %bb.av ], [ %i.dg, %bb.aw ] ; 6 uses
   br i1 %i.cm, label %bb.ay, label %_ZL12invertBufferPDsijii.exit375
 
 bb.ay:                                            ; preds = %bb.ax

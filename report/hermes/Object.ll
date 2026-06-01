@@ -76,6 +76,7 @@ $_ZN6hermes2vm13StringBuilder14appendUTF16RefEN4llvh8ArrayRefIDsEE = comdat any
 @.str.16 = private unnamed_addr constant [33 x i8] c"Iterator value must be an object\00", align 1
 @_ZN6hermes2vm15HandleRootOwner10zeroValue_E = external global %"class.hermes::vm::PinnedHermesValue", align 8
 @_ZN6hermes2vm15HandleRootOwner9oneValue_E = external global %"class.hermes::vm::PinnedHermesValue", align 8
+@switch.table._ZN6hermes2vm29directObjectPrototypeToStringERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE = private unnamed_addr constant [34 x i32] [i32 497, i32 495, i32 495, i32 495, i32 495, i32 495, i32 495, i32 495, i32 495, i32 495, i32 495, i32 495, i32 495, i32 495, i32 495, i32 495, i32 495, i32 495, i32 495, i32 495, i32 495, i32 495, i32 495, i32 495, i32 495, i32 522, i32 495, i32 524, i32 495, i32 495, i32 495, i32 495, i32 529, i32 530], align 4
 
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden ptr @_ZN6hermes2vm23createObjectConstructorERNS0_7RuntimeE(ptr noundef nonnull align 8 dereferenceable(9816) %0) local_unnamed_addr #0 {
@@ -478,13 +479,13 @@ bb.am:                                            ; preds = %bb.al
 bb.an:                                            ; preds = %bb.am
   %.sroa.0.0.copyload.i56 = load i64, ptr %.0.i.i.i.i.i.i, align 8, !tbaa !19 ; 2 uses
   %i.db = icmp ugt i64 %.sroa.0.0.copyload.i56, -844424930131969
-  br i1 %i.db, label %_ZN6hermes2vm5vmisaINS0_8JSStringEEEbNS0_11HermesValueE.exit, label %_ZN6hermes2vm5vmisaINS0_8JSRegExpEEEbNS0_11HermesValueE.exit.thread
+  br i1 %i.db, label %_ZN6hermes2vm5vmisaINS0_8JSStringEEEbNS0_11HermesValueE.exit, label %.thread107
 
 _ZN6hermes2vm5vmisaINS0_8JSStringEEEbNS0_11HermesValueE.exit: ; preds = %bb.an
   %i.dc = and i64 %.sroa.0.0.copyload.i56, 281474976710655
   %i.dd = inttoptr i64 %i.dc to ptr
-  %i.de = load i32, ptr %i.dd, align 4            ; 2 uses
-  %.mask.i.i.i.i.i.i.i = and i32 %i.de, -16777216 ; 2 uses
+  %i.de = load i32, ptr %i.dd, align 4            ; 3 uses
+  %.mask.i.i.i.i.i.i.i = and i32 %i.de, -16777216
   switch i32 %.mask.i.i.i.i.i.i.i, label %_ZN6hermes2vm5vmisaINS0_8CallableEEEbNS0_11HermesValueE.exit [
     i32 922746880, label %.thread107
     i32 520093696, label %bb.ao
@@ -496,34 +497,22 @@ bb.ao:                                            ; preds = %_ZN6hermes2vm5vmisa
 _ZN6hermes2vm5vmisaINS0_8CallableEEEbNS0_11HermesValueE.exit: ; preds = %_ZN6hermes2vm5vmisaINS0_8JSStringEEEbNS0_11HermesValueE.exit
   %i.df = add i32 %i.de, -1140850688
   %i.dg = icmp ult i32 %i.df, 150994944
-  br i1 %i.dg, label %.thread107, label %_ZN6hermes2vm5vmisaINS0_7JSErrorEEEbNS0_11HermesValueE.exit
+  br i1 %i.dg, label %.thread107, label %bb.ap
 
-_ZN6hermes2vm5vmisaINS0_7JSErrorEEEbNS0_11HermesValueE.exit: ; preds = %_ZN6hermes2vm5vmisaINS0_8CallableEEEbNS0_11HermesValueE.exit
-  switch i32 %.mask.i.i.i.i.i.i.i, label %_ZN6hermes2vm5vmisaINS0_8JSRegExpEEEbNS0_11HermesValueE.exit.thread [
-    i32 486539264, label %.thread107
-    i32 905969664, label %3
-    i32 939524096, label %4
-    i32 1023410176, label %5
-    i32 1040187392, label %bb.ap
-  ]
+bb.ap:                                            ; preds = %_ZN6hermes2vm5vmisaINS0_8CallableEEEbNS0_11HermesValueE.exit
+  %3 = add i32 %i.de, -486539264                  ; 2 uses
+  %4 = icmp ult i32 %3, 570425344
+  br i1 %4, label %_ZN6hermes2vm5vmisaINS0_8JSRegExpEEEbNS0_11HermesValueE.exit.thread, label %.thread107
 
-3:                                                ; preds = %_ZN6hermes2vm5vmisaINS0_7JSErrorEEEbNS0_11HermesValueE.exit
+_ZN6hermes2vm5vmisaINS0_8JSRegExpEEEbNS0_11HermesValueE.exit.thread: ; preds = %bb.ap
+  %5 = lshr i32 %3, 24
+  %trunc = zext nneg i32 %5 to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6hermes2vm29directObjectPrototypeToStringERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE, i64 %trunc
+  %switch.load = load i32, ptr %switch.gep, align 4
   br label %.thread107
 
-4:                                                ; preds = %_ZN6hermes2vm5vmisaINS0_7JSErrorEEEbNS0_11HermesValueE.exit
-  br label %.thread107
-
-5:                                                ; preds = %_ZN6hermes2vm5vmisaINS0_7JSErrorEEEbNS0_11HermesValueE.exit
-  br label %.thread107
-
-bb.ap:                                            ; preds = %_ZN6hermes2vm5vmisaINS0_7JSErrorEEEbNS0_11HermesValueE.exit
-  br label %.thread107
-
-_ZN6hermes2vm5vmisaINS0_8JSRegExpEEEbNS0_11HermesValueE.exit.thread: ; preds = %_ZN6hermes2vm5vmisaINS0_7JSErrorEEEbNS0_11HermesValueE.exit, %bb.an
-  br label %.thread107
-
-.thread107:                                       ; preds = %_ZN6hermes2vm5vmisaINS0_7JSErrorEEEbNS0_11HermesValueE.exit, %_ZN6hermes2vm5vmisaINS0_8CallableEEEbNS0_11HermesValueE.exit, %_ZN6hermes2vm5vmisaINS0_8JSStringEEEbNS0_11HermesValueE.exit, %bb.am, %bb.c, %bb.a, %3, %5, %_ZN6hermes2vm5vmisaINS0_8JSRegExpEEEbNS0_11HermesValueE.exit.thread, %bb.ap, %4, %bb.ao, %bb.b
-  %.sink115 = phi i32 [ 500, %bb.am ], [ 523, %_ZN6hermes2vm5vmisaINS0_8JSStringEEEbNS0_11HermesValueE.exit ], [ 522, %3 ], [ 529, %5 ], [ 495, %_ZN6hermes2vm5vmisaINS0_8JSRegExpEEEbNS0_11HermesValueE.exit.thread ], [ 530, %bb.ap ], [ 524, %4 ], [ 537, %_ZN6hermes2vm5vmisaINS0_8CallableEEEbNS0_11HermesValueE.exit ], [ 499, %bb.ao ], [ 478, %bb.c ], [ 477, %bb.b ], [ 476, %bb.a ], [ 497, %_ZN6hermes2vm5vmisaINS0_7JSErrorEEEbNS0_11HermesValueE.exit ]
+.thread107:                                       ; preds = %bb.an, %bb.ap, %_ZN6hermes2vm5vmisaINS0_8JSRegExpEEEbNS0_11HermesValueE.exit.thread, %_ZN6hermes2vm5vmisaINS0_8CallableEEEbNS0_11HermesValueE.exit, %_ZN6hermes2vm5vmisaINS0_8JSStringEEEbNS0_11HermesValueE.exit, %bb.am, %bb.c, %bb.a, %bb.ao, %bb.b
+  %.sink115 = phi i32 [ 500, %bb.am ], [ 523, %_ZN6hermes2vm5vmisaINS0_8JSStringEEEbNS0_11HermesValueE.exit ], [ %switch.load, %_ZN6hermes2vm5vmisaINS0_8JSRegExpEEEbNS0_11HermesValueE.exit.thread ], [ 477, %bb.b ], [ 499, %bb.ao ], [ 478, %bb.c ], [ 476, %bb.a ], [ 537, %_ZN6hermes2vm5vmisaINS0_8CallableEEEbNS0_11HermesValueE.exit ], [ 495, %bb.ap ], [ 495, %bb.an ]
   %i.dh = getelementptr inbounds nuw i8, ptr %0, i64 9240
   %i.di = tail call noundef ptr @_ZN6hermes2vm15IdentifierTable13getStringPrimERNS0_7RuntimeENS0_8SymbolIDE(ptr noundef nonnull align 8 dereferenceable(84) %i.dh, ptr noundef nonnull align 8 dereferenceable(9816) %0, i32 %.sink115) #9
   %i.dj = ptrtoint ptr %i.di to i64

@@ -201,6 +201,7 @@ begin_hunk_0
 @.str.107 = private unnamed_addr constant [44 x i8] c"maximum string conversion digits limitation\00", align 1
 @.str.108 = private unnamed_addr constant [27 x i8] c"str_digits_check_threshold\00", align 1
 @.str.109 = private unnamed_addr constant [46 x i8] c"minimum positive value for int_max_str_digits\00", align 1
+@switch.table.long_format_binary = private unnamed_addr constant [15 x i32] [i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 4], align 4
 
 ; Function Attrs: nounwind uwtable
 define dso_local noundef ptr @_PyLong_New(i64 noundef %0) local_unnamed_addr #0 {
@@ -603,28 +604,15 @@ bb.d:                                             ; preds = %bb.b
   %.val = load i64, ptr %i.e, align 8, !tbaa !25  ; 3 uses
   %i.f = lshr i64 %.val, 3                        ; 10 uses
   %i.g = and i64 %.val, 3
-  %i.h = icmp eq i64 %i.g, 2                      ; 5 uses
-  switch i32 %1, label %9 [
-    i32 16, label %10
-    i32 8, label %7
-    i32 2, label %8
-  ]
+  %7 = icmp eq i64 %i.g, 2                        ; 5 uses
+  %8 = sext i32 %1 to i64
+  %9 = getelementptr [4 x i8], ptr @switch.table.long_format_binary, i64 %8
+  %switch.gep = getelementptr i8, ptr %9, i64 -8
+  %switch.load = load i32, ptr %switch.gep, align 4 ; 14 uses
+  %i.h = icmp eq i64 %i.f, 0                      ; 5 uses
+  br i1 %i.h, label %bb.g, label %bb.e
 
-7:                                                ; preds = %bb.d
-  br label %10
-
-8:                                                ; preds = %bb.d
-  br label %10
-
-9:                                                ; preds = %bb.d
-  unreachable
-
-10:                                               ; preds = %bb.d, %8, %7
-  %.0239 = phi i32 [ 1, %8 ], [ 3, %7 ], [ 4, %bb.d ] ; 14 uses
-  %11 = icmp eq i64 %i.f, 0                       ; 5 uses
-  br i1 %11, label %bb.g, label %bb.e
-
-bb.e:                                             ; preds = %10
+bb.e:                                             ; preds = %bb.d
   %i.i = icmp ult i64 %.val, 2459565876494606888
   br i1 %i.i, label %.thread, label %bb.f
 
@@ -637,12 +625,12 @@ bb.e:                                             ; preds = %10
   %i.o = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.n, i1 false)
   %i.p = sub nuw nsw i32 32, %i.o
   %i.q = zext nneg i32 %i.p to i64
-  %i.r = zext i1 %i.h to i64
-  %i.s = add nsw i32 %.0239, -1
+  %i.r = zext i1 %7 to i64
+  %i.s = add nsw i32 %switch.load, -1
   %i.t = zext nneg i32 %i.s to i64
   %i.u = add nuw nsw i64 %i.k, %i.t
   %i.v = add nuw nsw i64 %i.u, %i.q
-  %i.w = zext nneg i32 %.0239 to i64
+  %i.w = zext nneg i32 %switch.load to i64
   %i.x = udiv i64 %i.v, %i.w
   %i.y = add nuw nsw i64 %i.x, %i.r
   br label %bb.g
@@ -652,8 +640,8 @@ bb.f:                                             ; preds = %bb.e
   tail call void @PyErr_SetString(ptr noundef %i.z, ptr noundef nonnull @.str.42) #16
   br label %bb.bt
 
-bb.g:                                             ; preds = %.thread, %10
-  %.1226 = phi i64 [ %i.y, %.thread ], [ 1, %10 ] ; 2 uses
+bb.g:                                             ; preds = %.thread, %bb.d
+  %.1226 = phi i64 [ %i.y, %.thread ], [ 1, %bb.d ] ; 2 uses
   %.not267 = icmp eq i32 %2, 0                    ; 5 uses
   %i.aa = add nuw i64 %.1226, 2
   %spec.select = select i1 %.not267, i64 %.1226, i64 %i.aa ; 12 uses
@@ -713,13 +701,13 @@ bb.n:                                             ; preds = %bb.l
 .critedge.thread326:                              ; preds = %.critedge..critedge.thread326_crit_edge, %bb.m
   %i.as = phi ptr [ %.pre, %.critedge..critedge.thread326_crit_edge ], [ %i.ao, %bb.m ]
   %i.at = getelementptr i8, ptr %i.as, i64 %spec.select ; 2 uses
-  br i1 %11, label %bb.o, label %.preheader342
+  br i1 %i.h, label %bb.o, label %.preheader342
 
 .preheader342:                                    ; preds = %.critedge.thread326
   %i.au = getelementptr i8, ptr %0, i64 24
   %i.av = add nuw nsw i32 %1, 255
   %i.aw = zext nneg i32 %i.av to i64
-  %i.ax = zext nneg i32 %.0239 to i64
+  %i.ax = zext nneg i32 %switch.load to i64
   %i.ay = add nsw i64 %i.f, -1
   br label %bb.p
 
@@ -754,9 +742,9 @@ bb.q:                                             ; preds = %bb.q, %bb.p
   %i.bm = add i8 %i.bl, %i.bj
   %i.bn = getelementptr i8, ptr %.1247, i64 -1    ; 4 uses
   store i8 %i.bm, ptr %i.bn, align 1, !tbaa !24
-  %i.bo = sub i32 %.1243, %.0239                  ; 3 uses
+  %i.bo = sub i32 %.1243, %switch.load            ; 3 uses
   %i.bp = lshr i64 %.1245, %i.ax                  ; 3 uses
-  %i.bq = icmp sge i32 %i.bo, %.0239
+  %i.bq = icmp sge i32 %i.bo, %switch.load
   %i.br = icmp ne i64 %i.bp, 0
   %.in275 = select i1 %i.bh, i1 %i.bq, i1 %i.br
   br i1 %.in275, label %bb.q, label %bb.r, !llvm.loop !199
@@ -783,7 +771,7 @@ bb.s:                                             ; preds = %.loopexit343
 
 bb.t:                                             ; preds = %bb.s, %.loopexit343
   %.4250 = phi ptr [ %i.bu, %bb.s ], [ %.2248, %.loopexit343 ]
-  br i1 %i.h, label %bb.u, label %bb.bo
+  br i1 %7, label %bb.u, label %bb.bo
 
 bb.u:                                             ; preds = %bb.t
   %i.bv = getelementptr i8, ptr %.4250, i64 -1
@@ -862,13 +850,13 @@ bb.ae:                                            ; preds = %bb.ac
 _PyUnicode_DATA.exit286:                          ; preds = %bb.ae, %bb.ad, %_PyUnicode_DATA.exit
   %.pn273 = phi ptr [ %i.ck, %_PyUnicode_DATA.exit ], [ %.0.i.i283, %bb.ad ], [ %.val4.i285, %bb.ae ]
   %.0233 = getelementptr i8, ptr %.pn273, i64 %spec.select ; 2 uses
-  br i1 %11, label %bb.af, label %.preheader338
+  br i1 %i.h, label %bb.af, label %.preheader338
 
 .preheader338:                                    ; preds = %_PyUnicode_DATA.exit286
   %i.cp = getelementptr i8, ptr %0, i64 24
   %i.cq = add nuw nsw i32 %1, 255
   %i.cr = zext nneg i32 %i.cq to i64
-  %i.cs = zext nneg i32 %.0239 to i64
+  %i.cs = zext nneg i32 %switch.load to i64
   %i.ct = add nsw i64 %i.f, -1
   br label %bb.ag
 
@@ -903,9 +891,9 @@ bb.ah:                                            ; preds = %bb.ah, %bb.ag
   %i.dh = add i8 %i.dg, %i.de
   %i.di = getelementptr i8, ptr %.2235, i64 -1    ; 4 uses
   store i8 %i.dh, ptr %i.di, align 1, !tbaa !24
-  %i.dj = sub i32 %.1230, %.0239                  ; 3 uses
+  %i.dj = sub i32 %.1230, %switch.load            ; 3 uses
   %i.dk = lshr i64 %.1232, %i.cs                  ; 3 uses
-  %i.dl = icmp sge i32 %i.dj, %.0239
+  %i.dl = icmp sge i32 %i.dj, %switch.load
   %i.dm = icmp ne i64 %i.dk, 0
   %.in274 = select i1 %i.dc, i1 %i.dl, i1 %i.dm
   br i1 %.in274, label %bb.ah, label %bb.ai, !llvm.loop !201
@@ -932,7 +920,7 @@ bb.aj:                                            ; preds = %.loopexit339
 
 bb.ak:                                            ; preds = %bb.aj, %.loopexit339
   %.5238 = phi ptr [ %i.dp, %bb.aj ], [ %.3236, %.loopexit339 ]
-  br i1 %i.h, label %bb.al, label %bb.bo
+  br i1 %7, label %bb.al, label %bb.bo
 
 bb.al:                                            ; preds = %bb.ak
   %i.dq = getelementptr i8, ptr %.5238, i64 -1
@@ -991,13 +979,13 @@ bb.as:                                            ; preds = %bb.aq
 _PyUnicode_DATA.exit302:                          ; preds = %bb.as, %bb.ar, %_PyUnicode_DATA.exit294
   %.pn271 = phi ptr [ %i.dy, %_PyUnicode_DATA.exit294 ], [ %.0.i.i299, %bb.ar ], [ %.val4.i301, %bb.as ]
   %.0219 = getelementptr [2 x i8], ptr %.pn271, i64 %spec.select ; 2 uses
-  br i1 %11, label %bb.at, label %.preheader340
+  br i1 %i.h, label %bb.at, label %.preheader340
 
 .preheader340:                                    ; preds = %_PyUnicode_DATA.exit302
   %i.ed = getelementptr i8, ptr %0, i64 24
   %i.ee = add nuw nsw i32 %1, 255
   %i.ef = zext nneg i32 %i.ee to i64
-  %i.eg = zext nneg i32 %.0239 to i64
+  %i.eg = zext nneg i32 %switch.load to i64
   %i.eh = add nsw i64 %i.f, -1
   br label %bb.au
 
@@ -1033,9 +1021,9 @@ bb.av:                                            ; preds = %bb.av, %bb.au
   %i.ew = sext i8 %i.ev to i16
   %i.ex = getelementptr i8, ptr %.2221, i64 -2    ; 4 uses
   store i16 %i.ew, ptr %i.ex, align 2, !tbaa !159
-  %i.ey = sub i32 %.1216, %.0239                  ; 3 uses
+  %i.ey = sub i32 %.1216, %switch.load            ; 3 uses
   %i.ez = lshr i64 %.1218, %i.eg                  ; 3 uses
-  %i.fa = icmp sge i32 %i.ey, %.0239
+  %i.fa = icmp sge i32 %i.ey, %switch.load
   %i.fb = icmp ne i64 %i.ez, 0
   %.in272 = select i1 %i.eq, i1 %i.fa, i1 %i.fb
   br i1 %.in272, label %bb.av, label %bb.aw, !llvm.loop !203
@@ -1062,7 +1050,7 @@ bb.ax:                                            ; preds = %.loopexit341
 
 bb.ay:                                            ; preds = %bb.ax, %.loopexit341
   %.5224 = phi ptr [ %i.fe, %bb.ax ], [ %.3222, %.loopexit341 ]
-  br i1 %i.h, label %bb.az, label %bb.bo
+  br i1 %7, label %bb.az, label %bb.bo
 
 bb.az:                                            ; preds = %bb.ay
   %i.ff = getelementptr i8, ptr %.5224, i64 -2
@@ -1121,13 +1109,13 @@ bb.bg:                                            ; preds = %bb.be
 _PyUnicode_DATA.exit318:                          ; preds = %bb.bg, %bb.bf, %_PyUnicode_DATA.exit310
   %.pn = phi ptr [ %i.fn, %_PyUnicode_DATA.exit310 ], [ %.0.i.i315, %bb.bf ], [ %.val4.i317, %bb.bg ]
   %.0211 = getelementptr [4 x i8], ptr %.pn, i64 %spec.select ; 2 uses
-  br i1 %11, label %bb.bh, label %.preheader
+  br i1 %i.h, label %bb.bh, label %.preheader
 
 .preheader:                                       ; preds = %_PyUnicode_DATA.exit318
   %i.fs = getelementptr i8, ptr %0, i64 24
   %i.ft = add nuw nsw i32 %1, 255
   %i.fu = zext nneg i32 %i.ft to i64
-  %i.fv = zext nneg i32 %.0239 to i64
+  %i.fv = zext nneg i32 %switch.load to i64
   %i.fw = add nsw i64 %i.f, -1
   br label %bb.bi
 
@@ -1163,9 +1151,9 @@ bb.bj:                                            ; preds = %bb.bj, %bb.bi
   %i.gl = sext i8 %i.gk to i32
   %i.gm = getelementptr i8, ptr %.2, i64 -4       ; 4 uses
   store i32 %i.gl, ptr %i.gm, align 4, !tbaa !7
-  %i.gn = sub i32 %.1208, %.0239                  ; 3 uses
+  %i.gn = sub i32 %.1208, %switch.load            ; 3 uses
   %i.go = lshr i64 %.1210, %i.fv                  ; 3 uses
-  %i.gp = icmp sge i32 %i.gn, %.0239
+  %i.gp = icmp sge i32 %i.gn, %switch.load
   %i.gq = icmp ne i64 %i.go, 0
   %.in = select i1 %i.gf, i1 %i.gp, i1 %i.gq
   br i1 %.in, label %bb.bj, label %bb.bk, !llvm.loop !205
@@ -1192,7 +1180,7 @@ bb.bl:                                            ; preds = %.loopexit
 
 bb.bm:                                            ; preds = %bb.bl, %.loopexit
   %.5 = phi ptr [ %i.gt, %bb.bl ], [ %.3, %.loopexit ]
-  br i1 %i.h, label %bb.bn, label %bb.bo
+  br i1 %7, label %bb.bn, label %bb.bo
 
 bb.bn:                                            ; preds = %bb.bm
   %i.gu = getelementptr i8, ptr %.5, i64 -4

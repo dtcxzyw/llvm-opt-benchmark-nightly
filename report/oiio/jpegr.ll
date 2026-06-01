@@ -201,6 +201,7 @@ begin_hunk_0
 @"_ZTIZN8ultrahdr5JpegR7toneMapEP14uhdr_raw_imageS2_E3$_0" = internal constant { ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv117__class_type_infoE, i64 2), ptr @"_ZTSZN8ultrahdr5JpegR7toneMapEP14uhdr_raw_imageS2_E3$_0" }, align 8
 @"_ZTSZN8ultrahdr5JpegR7toneMapEP14uhdr_raw_imageS2_E3$_0" = internal constant [52 x i8] c"ZN8ultrahdr5JpegR7toneMapEP14uhdr_raw_imageS2_E3$_0\00", align 1
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @_GLOBAL__sub_I_jpegr.cpp, ptr null }]
+@switch.table._ZN8ultrahdr5JpegR11encodeJPEGREP14uhdr_raw_imageP21uhdr_compressed_imageiP14uhdr_mem_block = private unnamed_addr constant [13 x i32] [i32 1, i32 poison, i32 poison, i32 poison, i32 3, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 6], align 4
 @switch.table._ZN8ultrahdr5JpegR11decodeJPEGREPNS_23jpegr_compressed_structEPNS_25jpegr_uncompressed_structEfPNS_17jpegr_exif_structENS_22ultrahdr_output_formatES4_PNS_24ultrahdr_metadata_structE = private unnamed_addr constant [3 x i32] [i32 0, i32 2, i32 1], align 4
 @switch.table._ZN8ultrahdr5JpegR11decodeJPEGREPNS_23jpegr_compressed_structEPNS_25jpegr_uncompressed_structEfPNS_17jpegr_exif_structENS_22ultrahdr_output_formatES4_PNS_24ultrahdr_metadata_structE.29 = private unnamed_addr constant [3 x i32] [i32 4, i32 5, i32 5], align 4
 
@@ -496,19 +497,13 @@ bb.a:
   %14 = alloca %"class.std::unique_ptr", align 8  ; 5 uses
   %15 = alloca %"class.ultrahdr::JpegEncoderHelper", align 8 ; 11 uses
   %16 = alloca %struct.uhdr_compressed_image, align 8 ; 6 uses
-  %i.a = load i32, ptr %2, align 8, !tbaa !73     ; 2 uses
-  switch i32 %i.a, label %bb.b [
-    i32 0, label %bb.c
-    i32 12, label %17
-    i32 5, label %18
-    i32 4, label %18
-  ]
-
-17:                                               ; preds = %bb.a
-  br label %bb.c
-
-18:                                               ; preds = %bb.a, %bb.a
-  br label %bb.c
+  %i.a = load i32, ptr %2, align 8, !tbaa !73     ; 4 uses
+  %17 = icmp ult i32 %i.a, 13
+  %switch.maskindex = trunc i32 %i.a to i16
+  %switch.shifted = lshr i16 4145, %switch.maskindex
+  %switch.lobit = trunc i16 %switch.shifted to i1
+  %or.cond = select i1 %17, i1 %switch.lobit, i1 false
+  br i1 %or.cond, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   store i32 3, ptr %0, align 4, !tbaa !79
@@ -518,8 +513,10 @@ bb.b:                                             ; preds = %bb.a
   %i.d = tail call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.c, i64 noundef 256, ptr noundef nonnull @.str.3, i32 noundef %i.a) #28 ; 0 uses
   br label %bb.bc
 
-bb.c:                                             ; preds = %bb.a, %17, %18
-  %.090 = phi i32 [ 3, %18 ], [ 6, %17 ], [ 1, %bb.a ]
+bb.c:                                             ; preds = %bb.a
+  %18 = zext nneg i32 %i.a to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN8ultrahdr5JpegR11encodeJPEGREP14uhdr_raw_imageP21uhdr_compressed_imageiP14uhdr_mem_block, i64 %18
+  %switch.load = load i32, ptr %switch.gep, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #28
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 20
@@ -527,7 +524,7 @@ bb.c:                                             ; preds = %bb.a, %17, %18
   %i.g = tail call noalias noundef nonnull dereferenceable(72) ptr @_Znwm(i64 noundef 72) #31, !noalias !83 ; 10 uses
   %i.h = load i32, ptr %i.e, align 8, !tbaa !3, !noalias !83
   %i.i = load i32, ptr %i.f, align 4, !tbaa !3, !noalias !83
-  invoke void @_ZN8ultrahdr18uhdr_raw_image_extC1E12uhdr_img_fmt16uhdr_color_gamut19uhdr_color_transfer16uhdr_color_rangejjj(ptr noundef nonnull align 8 dereferenceable(72) %i.g, i32 noundef %.090, i32 noundef -1, i32 noundef -1, i32 noundef -1, i32 noundef %i.h, i32 noundef %i.i, i32 noundef 64)
+  invoke void @_ZN8ultrahdr18uhdr_raw_image_extC1E12uhdr_img_fmt16uhdr_color_gamut19uhdr_color_transfer16uhdr_color_rangejjj(ptr noundef nonnull align 8 dereferenceable(72) %i.g, i32 noundef %switch.load, i32 noundef -1, i32 noundef -1, i32 noundef -1, i32 noundef %i.h, i32 noundef %i.i, i32 noundef 64)
           to label %_ZSt11make_uniqueIN8ultrahdr18uhdr_raw_image_extEJR12uhdr_img_fmt16uhdr_color_gamut19uhdr_color_transfer16uhdr_color_rangeRjS7_iEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit unwind label %bb.d, !noalias !83
 
 common.resume:                                    ; preds = %bb.bb, %bb.d

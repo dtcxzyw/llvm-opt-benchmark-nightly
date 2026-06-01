@@ -201,6 +201,7 @@ begin_hunk_0
 @_ZGVZN5folly12_GLOBAL__N_118parsePageSizeValueENS_5RangeIPKcEEE5regex = internal global i64 0, align 8
 @.str.285 = private unnamed_addr constant [17 x i8] c"(\\d+)([kmgt])?.*\00", align 1
 @.str.286 = private unnamed_addr constant [24 x i8] c"Invalid pagesize option\00", align 1
+@"switch.table._ZZNK5folly3gen7GenImplINS_5RangeIPKcEENS0_6detail16StringResplitter9GeneratorINS6_3MapINS0_4CastIS5_EEE9GeneratorINS2_IPKhEENS6_10FileReaderEOS5_EEEEE7foreachIZNKSD_IS5_SK_SI_E7foreachIZNS_12_GLOBAL__N_117readHugePageSizesEvE3$_0EEvOT_EUlS5_E_EEvSS_ENKUlS5_E_clES5_" = private unnamed_addr constant [14 x i64] [i64 1073741824, i64 1, i64 1, i64 1, i64 1024, i64 1, i64 1048576, i64 1, i64 1, i64 1, i64 1, i64 1, i64 1, i64 1099511627776], align 8
 
 declare void @__cxa_pure_virtual() unnamed_addr
 
@@ -603,16 +604,13 @@ bb.ca:                                            ; preds = %bb.e
   br i1 %.not33, label %bb.cq, label %bb.cb
 
 bb.cb:                                            ; preds = %bb.ca
-  %6 = sext i8 %i.ac to i32
-  %7 = add nsw i32 %6, -67                        ; 2 uses
-  %8 = tail call i32 @llvm.fshl.i32(i32 %7, i32 %7, i32 30)
-  switch i32 %8, label %bb.cq [
-    i32 13, label %.critedge
-    i32 5, label %bb.cc
-    i32 12, label %bb.cj
-    i32 4, label %bb.ck
-    i32 8, label %bb.cl
-    i32 0, label %bb.cl
+  switch i8 %i.ac, label %bb.cq [
+    i8 119, label %.critedge
+    i8 87, label %bb.cc
+    i8 115, label %bb.cj
+    i8 83, label %bb.ck
+    i8 99, label %bb.cl
+    i8 67, label %bb.cl
   ]
 
 .critedge:                                        ; preds = %bb.cb
@@ -1015,6 +1013,7 @@ _ZNK5boost13match_resultsIPKcSaINS_9sub_matchIS2_EEEE8positionEm.exit.i.i.i: ; p
   %i.cn = sext i8 %i.cm to i32
   %i.co = call i32 @tolower(i32 noundef %i.cn) #40
   %i.cp = trunc i32 %i.co to i8
+  %13 = add i8 %i.cp, -103
   br label %_ZNK5boost13match_resultsIPKcSaINS_9sub_matchIS2_EEEE6lengthEi.exit.thread.i.i.i
 
 .body17.i.i.i:                                    ; preds = %bb.q
@@ -1023,7 +1022,7 @@ _ZNK5boost13match_resultsIPKcSaINS_9sub_matchIS2_EEEE8positionEm.exit.i.i.i: ; p
   br label %.body.i.i.i
 
 _ZNK5boost13match_resultsIPKcSaINS_9sub_matchIS2_EEEE6lengthEi.exit.thread.i.i.i: ; preds = %_ZNK5boost13match_resultsIPKcSaINS_9sub_matchIS2_EEEE8positionEm.exit.i.i.i, %bb.u, %bb.t
-  %.09.i.i.i = phi i8 [ %i.cp, %_ZNK5boost13match_resultsIPKcSaINS_9sub_matchIS2_EEEE8positionEm.exit.i.i.i ], [ 0, %bb.t ], [ 0, %bb.u ]
+  %.09.i.i.i = phi i8 [ %13, %_ZNK5boost13match_resultsIPKcSaINS_9sub_matchIS2_EEEE8positionEm.exit.i.i.i ], [ -103, %bb.t ], [ -103, %bb.u ] ; 2 uses
   %i.cr = icmp ugt i64 %i.bv, 3
   br i1 %i.cr, label %bb.v, label %_ZNK5boost13match_resultsIPKcSaINS_9sub_matchIS2_EEEE6lengthEi.exit28.i.i.i
 
@@ -1136,27 +1135,17 @@ _ZNR5folly8ExpectedINS_5RangeIPKcEENS_14ConversionCodeEE11thenOrThrowINS_6detail
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
-  switch i8 %.09.i.i.i, label %bb.ab [
-    i8 116, label %"_ZZN5folly12_GLOBAL__N_118parsePageSizeValueENS_5RangeIPKcEEENK3$_0clEv.exit.i.i.i"
-    i8 103, label %13
-    i8 109, label %14
-    i8 107, label %15
-  ]
-
-13:                                               ; preds = %.loopexit.i.i.i
-  br label %"_ZZN5folly12_GLOBAL__N_118parsePageSizeValueENS_5RangeIPKcEEENK3$_0clEv.exit.i.i.i"
-
-14:                                               ; preds = %.loopexit.i.i.i
-  br label %"_ZZN5folly12_GLOBAL__N_118parsePageSizeValueENS_5RangeIPKcEEENK3$_0clEv.exit.i.i.i"
-
-15:                                               ; preds = %.loopexit.i.i.i
-  br label %"_ZZN5folly12_GLOBAL__N_118parsePageSizeValueENS_5RangeIPKcEEENK3$_0clEv.exit.i.i.i"
+  %14 = icmp ult i8 %.09.i.i.i, 14
+  br i1 %14, label %bb.ab, label %"_ZZN5folly12_GLOBAL__N_118parsePageSizeValueENS_5RangeIPKcEEENK3$_0clEv.exit.i.i.i"
 
 bb.ab:                                            ; preds = %.loopexit.i.i.i
+  %15 = zext nneg i8 %.09.i.i.i to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZZNK5folly3gen7GenImplINS_5RangeIPKcEENS0_6detail16StringResplitter9GeneratorINS6_3MapINS0_4CastIS5_EEE9GeneratorINS2_IPKhEENS6_10FileReaderEOS5_EEEEE7foreachIZNKSD_IS5_SK_SI_E7foreachIZNS_12_GLOBAL__N_117readHugePageSizesEvE3$_0EEvOT_EUlS5_E_EEvSS_ENKUlS5_E_clES5_", i64 %15
+  %switch.load = load i64, ptr %switch.gep, align 8
   br label %"_ZZN5folly12_GLOBAL__N_118parsePageSizeValueENS_5RangeIPKcEEENK3$_0clEv.exit.i.i.i"
 
-"_ZZN5folly12_GLOBAL__N_118parsePageSizeValueENS_5RangeIPKcEEENK3$_0clEv.exit.i.i.i": ; preds = %bb.ab, %15, %14, %13, %.loopexit.i.i.i
-  %.0.i33.i.i.i = phi i64 [ 1, %bb.ab ], [ 1024, %15 ], [ 1073741824, %13 ], [ 1048576, %14 ], [ 1099511627776, %.loopexit.i.i.i ]
+"_ZZN5folly12_GLOBAL__N_118parsePageSizeValueENS_5RangeIPKcEEENK3$_0clEv.exit.i.i.i": ; preds = %.loopexit.i.i.i, %bb.ab
+  %.0.i33.i.i.i = phi i64 [ %switch.load, %bb.ab ], [ 1, %.loopexit.i.i.i ]
   %i.dz = getelementptr inbounds nuw i8, ptr %8, i64 64
   %i.ea = load ptr, ptr %i.dz, align 8, !tbaa !84 ; 8 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.ea, null
@@ -1557,9 +1546,6 @@ bb.f:                                             ; preds = %.lr.ph
   %i.q = phi ptr [ null, %_ZN5folly16getHugePageSizesEv.exit ], [ %.sroa.010.017, %.lr.ph ], [ null, %bb.f ]
   ret ptr %i.q
 }
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.fshl.i32(i32, i32, i32) #32
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #32

@@ -201,19 +201,11 @@ bb.v:                                             ; preds = %bb.u
   br i1 %i.bq, label %.loopexit, label %switch.early.test
 
 switch.early.test:                                ; preds = %bb.v
-  switch i16 %.fr153, label %.preheader [
-    i16 8297, label %.loopexit
-    i16 8296, label %.loopexit
-    i16 8295, label %.loopexit
-    i16 8294, label %.loopexit
-    i16 8238, label %.loopexit
-    i16 8237, label %.loopexit
-    i16 8236, label %.loopexit
-    i16 8235, label %.loopexit
-    i16 8234, label %.loopexit
-  ]
+  %switch.tableidx = add i16 %.fr153, -8234       ; 2 uses
+  %3 = icmp ult i16 %switch.tableidx, 64
+  br i1 %3, label %switch.hole_check, label %.preheader
 
-.preheader:                                       ; preds = %switch.early.test
+.preheader:                                       ; preds = %switch.hole_check, %switch.early.test
   %i.br = getelementptr inbounds nuw i8, ptr %i.bj, i64 4
   %i.bs = load i32, ptr %i.br, align 4            ; 3 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bj, i64 8
@@ -342,8 +334,14 @@ middle.block:                                     ; preds = %vector.body
   %i.dw = sub nsw i32 %.1114, %.1.lcssa
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.p, %bb.o, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %bb.v, %bb.u, %bb.w, %._crit_edge175, %bb.a, %bb.b, %._crit_edge182, %bb.n, %bb.j, %bb.g
-  %.2112 = phi i32 [ -1, %bb.g ], [ -1, %bb.j ], [ %i.at, %._crit_edge182 ], [ -1, %bb.a ], [ -1, %switch.early.test ], [ -1, %switch.early.test ], [ -1, %bb.n ], [ -1, %bb.b ], [ %i.dw, %._crit_edge175 ], [ %i.ce, %bb.w ], [ %.1114, %bb.u ], [ -1, %bb.v ], [ -1, %switch.early.test ], [ -1, %switch.early.test ], [ -1, %switch.early.test ], [ -1, %switch.early.test ], [ -1, %switch.early.test ], [ -1, %switch.early.test ], [ -1, %switch.early.test ], [ -1, %bb.o ], [ -1, %bb.p ]
+switch.hole_check:                                ; preds = %switch.early.test
+  %switch.maskindex = zext nneg i16 %switch.tableidx to i64
+  %switch.shifted = lshr i64 -1152921504606846945, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  br i1 %switch.lobit, label %.loopexit, label %.preheader
+
+.loopexit:                                        ; preds = %bb.p, %switch.hole_check, %bb.o, %bb.v, %bb.u, %bb.w, %._crit_edge175, %bb.a, %bb.b, %._crit_edge182, %bb.n, %bb.j, %bb.g
+  %.2112 = phi i32 [ -1, %bb.g ], [ -1, %bb.j ], [ %i.at, %._crit_edge182 ], [ -1, %bb.a ], [ -1, %switch.hole_check ], [ -1, %bb.o ], [ -1, %bb.n ], [ -1, %bb.b ], [ %i.dw, %._crit_edge175 ], [ %i.ce, %bb.w ], [ %.1114, %bb.u ], [ -1, %bb.v ], [ -1, %bb.p ]
   ret i32 %.2112
 }
 

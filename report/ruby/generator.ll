@@ -154,7 +154,7 @@ target triple = "x86_64-pc-linux-gnu"
 @rb_cSymbol = external local_unnamed_addr global i64, align 8
 @__cpu_model = external dso_local local_unnamed_addr global { i32, i32, i32, [1 x i32] }
 @escape_table_basic = internal unnamed_addr constant <{ [93 x i8], [163 x i8] }> <{ [93 x i8] c"\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\00\00\09\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\09", [163 x i8] zeroinitializer }>, align 16
-@switch.table.json_object_i = private unnamed_addr constant [10 x i32] [i32 19, i32 17, i32 poison, i32 poison, i32 poison, i32 18, i32 poison, i32 poison, i32 poison, i32 22], align 4
+@switch.table.json_object_i = private unnamed_addr constant [37 x i32] [i32 19, i32 poison, i32 poison, i32 poison, i32 17, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 18, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 22], align 4
 
 ; Function Attrs: nounwind uwtable
 define void @Init_generator() local_unnamed_addr #0 {
@@ -557,11 +557,9 @@ bb.b:                                             ; preds = %bb.a
   br label %rb_type.exit
 
 bb.c:                                             ; preds = %bb.a
-  %3 = tail call i64 @llvm.fshl.i64(i64 %0, i64 %0, i64 62) ; 3 uses
-  %i.r = icmp ult i64 %3, 10
-  %switch.maskindex = trunc i64 %3 to i16
-  %switch.shifted = lshr i16 547, %switch.maskindex
-  %switch.lobit = trunc i16 %switch.shifted to i1
+  %i.r = icmp ult i64 %0, 37
+  %switch.shifted = lshr i64 68720525329, %0
+  %switch.lobit = trunc i64 %switch.shifted to i1
   %or.cond102 = select i1 %i.r, i1 %switch.lobit, i1 false
   br i1 %or.cond102, label %switch.lookup, label %bb.d
 
@@ -576,7 +574,7 @@ bb.e:                                             ; preds = %bb.d
   br label %rb_type.exit
 
 switch.lookup:                                    ; preds = %bb.c
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.json_object_i, i64 %3
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.json_object_i, i64 %0
   %switch.load = load i32, ptr %switch.gep, align 4
   br label %rb_type.exit
 
@@ -665,7 +663,7 @@ bb.o:                                             ; preds = %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
   store i64 %0, ptr %i.a, align 16, !tbaa !10
   store i64 20, ptr %i.ap, align 8, !tbaa !10
-  %i.ax = call i64 @rb_proc_call_with_block(i64 noundef %i.av, i32 noundef 2, ptr noundef nonnull %i.a, i64 noundef 4) #24 ; 11 uses
+  %i.ax = call i64 @rb_proc_call_with_block(i64 noundef %i.av, i32 noundef 2, ptr noundef nonnull %i.a, i64 noundef 4) #24 ; 10 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
   %i.ay = icmp eq i64 %i.ax, 0
   %i.az = and i64 %i.ax, 7
@@ -674,12 +672,11 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.bb, label %bb.p, label %rb_type.exit69.peel
 
 bb.p:                                             ; preds = %bb.o
-  %4 = call i64 @llvm.fshl.i64(i64 %i.ax, i64 %i.ax, i64 62)
-  switch i64 %4, label %bb.q [
+  switch i64 %i.ax, label %bb.q [
     i64 0, label %rb_type.exit69.peel.thread
-    i64 1, label %rb_type.exit69.peel.thread
-    i64 5, label %rb_type.exit69.peel.thread
-    i64 9, label %rb_type.exit69.peel.thread
+    i64 4, label %rb_type.exit69.peel.thread
+    i64 20, label %rb_type.exit69.peel.thread
+    i64 36, label %rb_type.exit69.peel.thread
   ]
 
 bb.q:                                             ; preds = %bb.p
@@ -1080,9 +1077,6 @@ bb.f:                                             ; preds = %generate_json_bignu
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.cttz.i32(i32, i1 immarg) #22
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.fshl.i64(i64, i64, i64) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #17

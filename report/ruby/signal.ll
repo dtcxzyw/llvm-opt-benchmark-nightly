@@ -79,6 +79,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.46 = private unnamed_addr constant [5 x i8] c"ABRT\00", align 1
 @.str.47 = private unnamed_addr constant [14 x i8] c"Aborted at %p\00", align 1
 @switch.table.signo2signm = private unnamed_addr constant [32 x ptr] [ptr @siglist, ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 12), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 24), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 36), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 48), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 60), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 72), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 120), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 96), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 108), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 360), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 132), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 372), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 156), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 168), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 180), ptr null, ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 240), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 228), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 204), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 216), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 264), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 276), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 192), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 300), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 312), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 324), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 336), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 348), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 288), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 384), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 144)], align 8
+@switch.table.default_handler = private unnamed_addr constant [31 x ptr] [ptr @sighandler, ptr @sighandler, ptr @sighandler, ptr null, ptr null, ptr null, ptr @sigbus, ptr null, ptr null, ptr @sighandler, ptr @sigsegv, ptr @sighandler, ptr @sig_do_nothing, ptr @sighandler, ptr @sighandler, ptr null, ptr @sighandler, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr null, ptr @sig_do_nothing], align 8
 @switch.table.rb_signo2signm = private unnamed_addr constant [32 x ptr] [ptr @siglist, ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 12), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 24), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 36), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 48), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 60), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 72), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 120), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 96), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 108), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 360), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 132), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 372), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 156), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 168), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 180), ptr poison, ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 240), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 228), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 204), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 216), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 264), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 276), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 192), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 300), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 312), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 324), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 336), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 348), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 288), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 384), ptr getelementptr inbounds nuw (i8, ptr @siglist, i64 144)], align 8
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
@@ -318,25 +319,21 @@ bb.m:                                             ; preds = %rb_num2int_inline.e
 
 .lr.ph.split:                                     ; preds = %.lr.ph
   %wide.trip.count102 = zext nneg i32 %0 to i64   ; 3 uses
-  switch i32 %.039.fr, label %.lr.ph.split.split.outer [
-    i32 11, label %.lr.ph.split.split.us.preheader
-    i32 7, label %.lr.ph.split.split.us.preheader
-    i32 9, label %.lr.ph.split.split.us.preheader
-    i32 4, label %.lr.ph.split.split.us.preheader
-    i32 8, label %.lr.ph.split.split.us.preheader
-    i32 19, label %.lr.ph.split.split.us.preheader
-  ]
-
-.lr.ph.split.split.us.preheader:                  ; preds = %.lr.ph.split, %.lr.ph.split, %.lr.ph.split, %.lr.ph.split, %.lr.ph.split, %.lr.ph.split
-  br label %.lr.ph.split.split.us
+  %switch.tableidx = add nsw i32 %.039.fr, -4     ; 2 uses
+  %3 = icmp ult i32 %switch.tableidx, 16
+  %switch.maskindex = trunc i32 %switch.tableidx to i16
+  %switch.shifted = lshr i16 -32583, %switch.maskindex
+  %switch.lobit = trunc i16 %switch.shifted to i1
+  %or.cond151 = select i1 %3, i1 %switch.lobit, i1 false
+  br i1 %or.cond151, label %.lr.ph.split.split.us, label %.lr.ph.split.split.outer
 
 .lr.ph.split.split.outer:                         ; preds = %.lr.ph.split, %.thread120
   %indvars.iv98.ph = phi i64 [ %indvars.iv.next99122, %.thread120 ], [ 1, %.lr.ph.split ]
   %i.ap = phi i1 [ false, %.thread120 ], [ true, %.lr.ph.split ]
   br label %.lr.ph.split.split
 
-.lr.ph.split.split.us:                            ; preds = %.lr.ph.split.split.us.preheader, %bb.r
-  %indvars.iv92 = phi i64 [ %indvars.iv.next93, %bb.r ], [ 1, %.lr.ph.split.split.us.preheader ] ; 2 uses
+.lr.ph.split.split.us:                            ; preds = %.lr.ph.split, %bb.r
+  %indvars.iv92 = phi i64 [ %indvars.iv.next93, %bb.r ], [ 1, %.lr.ph.split ] ; 2 uses
   %i.aq = getelementptr [8 x i8], ptr %1, i64 %indvars.iv92
   %i.ar = load i64, ptr %i.aq, align 8, !tbaa !16 ; 3 uses
   %i.as = trunc i64 %i.ar to i1
@@ -431,7 +428,7 @@ bb.y:                                             ; preds = %rb_num2int_inline.e
   %i.bp = icmp slt i32 %i.bo, 0
   br i1 %i.bp, label %.split.us, label %bb.z
 
-.split.us:                                        ; preds = %rb_num2int_inline.exit52.us, %bb.p, %bb.y
+.split.us:                                        ; preds = %rb_num2int_inline.exit52.us, %bb.y, %bb.p
   %i.bq = call ptr @rb_errno_ptr() #16
   %i.br = load i32, ptr %i.bq, align 4, !tbaa !7
   call void @rb_syserr_fail(i32 noundef %i.br, ptr noundef null) #18
@@ -834,35 +831,19 @@ declare i64 @rb_string_value(ptr noundef) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
 define internal fastcc noundef ptr @default_handler(i32 noundef %0) unnamed_addr #0 {
-  switch i32 %0, label %bb.b [
-    i32 2, label %bb.c
-    i32 1, label %bb.c
-    i32 3, label %bb.c
-    i32 15, label %bb.c
-    i32 14, label %bb.c
-    i32 10, label %bb.c
-    i32 12, label %bb.c
-    i32 17, label %bb.c
-    i32 7, label %2
-    i32 11, label %3
-    i32 13, label %bb.a
-    i32 31, label %bb.a
-  ]
+bb.a:
+  %switch.tableidx = add i32 %0, -1               ; 2 uses
+  %1 = icmp ult i32 %switch.tableidx, 31
+  br i1 %1, label %bb.b, label %bb.c
 
-2:                                                ; preds = %1
+bb.b:                                             ; preds = %bb.a
+  %2 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.default_handler, i64 %2
+  %switch.load = load ptr, ptr %switch.gep, align 8
   br label %bb.c
 
-3:                                                ; preds = %1
-  br label %bb.c
-
-bb.a:                                             ; preds = %1, %1
-  br label %bb.c
-
-bb.b:                                             ; preds = %1
-  br label %bb.c
-
-bb.c:                                             ; preds = %1, %1, %1, %1, %1, %1, %1, %1, %bb.b, %bb.a, %3, %2
-  %.0 = phi ptr [ null, %bb.b ], [ @sighandler, %1 ], [ @sigbus, %2 ], [ @sigsegv, %3 ], [ @sig_do_nothing, %bb.a ], [ @sighandler, %1 ], [ @sighandler, %1 ], [ @sighandler, %1 ], [ @sighandler, %1 ], [ @sighandler, %1 ], [ @sighandler, %1 ], [ @sighandler, %1 ]
+bb.c:                                             ; preds = %bb.a, %bb.b
+  %.0 = phi ptr [ %switch.load, %bb.b ], [ null, %bb.a ]
   ret ptr %.0
 }
 

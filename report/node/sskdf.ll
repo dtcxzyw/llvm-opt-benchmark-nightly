@@ -201,14 +201,12 @@ bb.u:                                             ; preds = %bb.s
   br i1 %i.az, label %bb.v, label %switch.early.test.i.i
 
 switch.early.test.i.i:                            ; preds = %bb.u
-  %7 = add i64 %i.ak, -20                         ; 2 uses
-  %8 = call i64 @llvm.fshl.i64(i64 %7, i64 %7, i64 62)
-  switch i64 %8, label %kmac_init.exit.thread.i [
-    i64 11, label %bb.v
-    i64 7, label %bb.v
-    i64 3, label %bb.v
-    i64 2, label %bb.v
-    i64 0, label %bb.v
+  switch i64 %i.ak, label %kmac_init.exit.thread.i [
+    i64 64, label %bb.v
+    i64 48, label %bb.v
+    i64 32, label %bb.v
+    i64 28, label %bb.v
+    i64 20, label %bb.v
   ]
 
 bb.v:                                             ; preds = %switch.early.test.i.i, %switch.early.test.i.i, %switch.early.test.i.i, %switch.early.test.i.i, %switch.early.test.i.i, %bb.u, %bb.t
@@ -609,9 +607,6 @@ ossl_param_is_empty.exit.thread:                  ; preds = %bb.a, %sskdf_size.e
 declare ptr @OSSL_PARAM_locate(ptr noundef, ptr noundef) local_unnamed_addr #3
 
 declare i32 @OSSL_PARAM_set_size_t(ptr noundef, i64 noundef) local_unnamed_addr #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.fshl.i64(i64, i64, i64) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #5

@@ -201,6 +201,7 @@ $_ZTSZN6duckdb24ParsedExpressionIterator15VisitExpressionINS_19ColumnRefExpressi
 @.str.102 = private unnamed_addr constant [34 x i8] c"'back' called on an empty vector!\00", align 1
 @.str.103 = private unnamed_addr constant [59 x i8] c"Failed to cast statement to type - statement type mismatch\00", align 1
 @.str.104 = private unnamed_addr constant [18 x i8] c"unordered_map::at\00", align 1
+@switch.table._ZN6duckdb17QueryErrorContext6FormatERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_NS_12optional_idxEb.100 = private unnamed_addr constant [24 x i64] [i64 1, i64 1, i64 1, i64 1, i64 1, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 1], align 8
 
 @_ZN6duckdb16ColumnDefinitionC1ENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11LogicalTypeE = unnamed_addr alias void (ptr, ptr, ptr), ptr @_ZN6duckdb16ColumnDefinitionC2ENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11LogicalTypeE
 @_ZN6duckdb16ColumnDefinitionC1ENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11LogicalTypeENS_10unique_ptrINS_16ParsedExpressionESt14default_deleteIS9_ELb1EEENS_15TableColumnTypeE = unnamed_addr alias void (ptr, ptr, ptr, ptr, i8), ptr @_ZN6duckdb16ColumnDefinitionC2ENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11LogicalTypeENS_10unique_ptrINS_16ParsedExpressionESt14default_deleteIS9_ELb1EEENS_15TableColumnTypeE
@@ -603,59 +604,54 @@ _ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIP
 
 _ZNSt6vectorImSaImEE9push_backERKm.exit208:       ; preds = %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i205, %bb.aa
   %i.dg = getelementptr inbounds nuw i8, ptr %i.bc, i64 %.0425
-  %i.dh = load i8, ptr %i.dg, align 1, !tbaa !18  ; 5 uses
+  %i.dh = load i8, ptr %i.dg, align 1, !tbaa !18  ; 6 uses
   %i.di = icmp eq i8 %i.dh, 95
-  br i1 %i.di, label %.thread, label %bb.ae
+  br i1 %i.di, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread, label %23
 
-bb.ae:                                            ; preds = %_ZNSt6vectorImSaImEE9push_backERKm.exit208
-  %i.dj = add i8 %i.dh, -33
-  %or.cond.i.a = icmp ult i8 %i.dj, 15
-  br i1 %or.cond.i.a, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread, label %switch.early.test.i
+23:                                               ; preds = %_ZNSt6vectorImSaImEE9push_backERKm.exit208
+  %24 = add i8 %i.dh, -33
+  %or.cond.i = icmp ult i8 %24, 15
+  br i1 %or.cond.i, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread, label %bb.ae
+
+bb.ae:                                            ; preds = %23
+  %i.dj = add i8 %i.dh, -58                       ; 2 uses
+  %or.cond.i.a = icmp ult i8 %i.dj, 39
+  br i1 %or.cond.i.a, label %bb.af, label %switch.early.test.i
 
 switch.early.test.i:                              ; preds = %bb.ae
-  switch i8 %i.dh, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit [
-    i8 96, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread
-    i8 95, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread
-    i8 94, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread
-    i8 93, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread
-    i8 92, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread
-    i8 91, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread
-    i8 64, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread
-    i8 63, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread
-    i8 62, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread
-    i8 61, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread
-    i8 60, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread
-    i8 59, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread
-    i8 58, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread
-  ]
+  %.old = add i8 %i.dh, -123
+  %or.cond11.i.old = icmp ult i8 %.old, 4
+  br i1 %or.cond11.i.old, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit
 
-_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit: ; preds = %switch.early.test.i
-  %i.dk = add i8 %i.dh, -123
-  %or.cond11.i.a = icmp ult i8 %i.dk, 4
-  br i1 %or.cond11.i.a, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread, label %bb.af
+_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit: ; preds = %bb.af, %switch.early.test.i
+  %i.dk = add i8 %i.dh, -9                        ; 2 uses
+  %or.cond11.i.a = icmp ult i8 %i.dk, 24
+  br i1 %or.cond11.i.a, label %.thread, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread
 
-bb.af:                                            ; preds = %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit
-  switch i8 %i.dh, label %.thread [
-    i8 32, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread
-    i8 12, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread
-    i8 11, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread
-    i8 10, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread
-    i8 9, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread
-    i8 13, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread
-  ]
+bb.af:                                            ; preds = %bb.ae
+  %switch.maskindex = zext nneg i8 %i.dj to i64
+  %switch.shifted = lshr i64 541165879423, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  %25 = add nsw i8 %i.dh, -123
+  %or.cond11.i = icmp ult i8 %25, 4
+  %or.cond = or i1 %or.cond11.i, %switch.lobit
+  br i1 %or.cond, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit
 
-.thread:                                          ; preds = %_ZNSt6vectorImSaImEE9push_backERKm.exit208, %bb.af
+.thread:                                          ; preds = %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit
+  %26 = zext nneg i8 %i.dk to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6duckdb17QueryErrorContext6FormatERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_NS_12optional_idxEb.100, i64 %26
+  %switch.load = load i64, ptr %switch.gep, align 8
   br label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread
 
-_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread: ; preds = %.thread, %bb.af, %bb.af, %bb.af, %bb.af, %bb.af, %bb.af, %bb.ae, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit
-  %23 = phi i64 [ 1, %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit ], [ 1, %bb.ae ], [ 1, %switch.early.test.i ], [ 1, %switch.early.test.i ], [ 1, %switch.early.test.i ], [ 1, %switch.early.test.i ], [ 1, %switch.early.test.i ], [ 1, %switch.early.test.i ], [ 1, %switch.early.test.i ], [ 1, %switch.early.test.i ], [ 1, %switch.early.test.i ], [ 1, %switch.early.test.i ], [ 1, %switch.early.test.i ], [ 1, %switch.early.test.i ], [ 1, %switch.early.test.i ], [ 1, %bb.af ], [ 0, %.thread ], [ 1, %bb.af ], [ 1, %bb.af ], [ 1, %bb.af ], [ 1, %bb.af ], [ 1, %bb.af ] ; 2 uses
+_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread: ; preds = %bb.af, %_ZNSt6vectorImSaImEE9push_backERKm.exit208, %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit, %.thread, %23, %switch.early.test.i
+  %27 = phi i64 [ 1, %switch.early.test.i ], [ 1, %23 ], [ 0, %_ZNSt6vectorImSaImEE9push_backERKm.exit208 ], [ %switch.load, %.thread ], [ 0, %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit ], [ 1, %bb.af ] ; 2 uses
   %i.dl = load ptr, ptr %i.bp, align 8, !tbaa !143 ; 4 uses
   %i.dm = load ptr, ptr %i.bq, align 8, !tbaa !144
   %.not.i.i = icmp eq ptr %i.dl, %i.dm
   br i1 %.not.i.i, label %bb.ah, label %bb.ag
 
 bb.ag:                                            ; preds = %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit.thread
-  store i64 %23, ptr %i.dl, align 8, !tbaa !17
+  store i64 %27, ptr %i.dl, align 8, !tbaa !17
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dl, i64 8
   store ptr %i.dn, ptr %i.bp, align 8, !tbaa !143
   br label %_ZNSt6vectorImSaImEE9push_backEOm.exit
@@ -690,7 +686,7 @@ _ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.ah
 
 .noexc210:                                        ; preds = %_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i.i
   %i.ea = getelementptr inbounds i8, ptr %i.dz, i64 %i.dr ; 2 uses
-  store i64 %23, ptr %i.ea, align 8, !tbaa !17
+  store i64 %27, ptr %i.ea, align 8, !tbaa !17
   %i.eb = icmp sgt i64 %i.dr, 0
   br i1 %i.eb, label %bb.aj, label %_ZNSt6vectorImSaImEE11_S_relocateEPmS2_S2_RS0_.exit16.i.i.i
 
@@ -873,59 +869,54 @@ _ZNSt6vectorImSaImEE17_M_realloc_insertIJmEEEvN9__gnu_cxx17__normal_iteratorIPmS
 
 _ZNSt6vectorImSaImEE9push_backEOm.exit230:        ; preds = %_ZNSt6vectorImSaImEE17_M_realloc_insertIJmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i.i227, %bb.ar
   %i.fr = getelementptr inbounds nuw i8, ptr %i.bc, i64 %storemerge489
-  %i.fs = load i8, ptr %i.fr, align 1, !tbaa !18  ; 5 uses
+  %i.fs = load i8, ptr %i.fr, align 1, !tbaa !18  ; 6 uses
   %i.ft = icmp eq i8 %i.fs, 95
-  br i1 %i.ft, label %.thread432, label %bb.aw
+  br i1 %i.ft, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread, label %28
 
-bb.aw:                                            ; preds = %_ZNSt6vectorImSaImEE9push_backEOm.exit230
-  %i.fu = add i8 %i.fs, -33
-  %or.cond.i231.a = icmp ult i8 %i.fu, 15
-  br i1 %or.cond.i231.a, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread, label %switch.early.test.i232
+28:                                               ; preds = %_ZNSt6vectorImSaImEE9push_backEOm.exit230
+  %29 = add i8 %i.fs, -33
+  %or.cond.i231 = icmp ult i8 %29, 15
+  br i1 %or.cond.i231, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread, label %bb.aw
+
+bb.aw:                                            ; preds = %28
+  %i.fu = add i8 %i.fs, -58                       ; 2 uses
+  %or.cond.i231.a = icmp ult i8 %i.fu, 39
+  br i1 %or.cond.i231.a, label %bb.ax, label %switch.early.test.i232
 
 switch.early.test.i232:                           ; preds = %bb.aw
-  switch i8 %i.fs, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235 [
-    i8 96, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread
-    i8 95, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread
-    i8 94, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread
-    i8 93, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread
-    i8 92, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread
-    i8 91, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread
-    i8 64, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread
-    i8 63, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread
-    i8 62, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread
-    i8 61, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread
-    i8 60, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread
-    i8 59, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread
-    i8 58, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread
-  ]
+  %.old713 = add i8 %i.fs, -123
+  %or.cond11.i234.old = icmp ult i8 %.old713, 4
+  br i1 %or.cond11.i234.old, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235
 
-_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235: ; preds = %switch.early.test.i232
-  %i.fv = add i8 %i.fs, -123
-  %or.cond11.i234.a = icmp ult i8 %i.fv, 4
-  br i1 %or.cond11.i234.a, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread, label %bb.ax
+_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235: ; preds = %bb.ax, %switch.early.test.i232
+  %i.fv = add i8 %i.fs, -9                        ; 2 uses
+  %or.cond11.i234.a = icmp ult i8 %i.fv, 24
+  br i1 %or.cond11.i234.a, label %.thread432, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread
 
-bb.ax:                                            ; preds = %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235
-  switch i8 %i.fs, label %.thread432 [
-    i8 32, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread
-    i8 12, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread
-    i8 11, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread
-    i8 10, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread
-    i8 9, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread
-    i8 13, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread
-  ]
+bb.ax:                                            ; preds = %bb.aw
+  %switch.maskindex706 = zext nneg i8 %i.fu to i64
+  %switch.shifted707 = lshr i64 541165879423, %switch.maskindex706
+  %switch.lobit708 = trunc i64 %switch.shifted707 to i1
+  %30 = add nsw i8 %i.fs, -123
+  %or.cond11.i234 = icmp ult i8 %30, 4
+  %or.cond714 = or i1 %or.cond11.i234, %switch.lobit708
+  br i1 %or.cond714, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread, label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235
 
-.thread432:                                       ; preds = %_ZNSt6vectorImSaImEE9push_backEOm.exit230, %bb.ax
+.thread432:                                       ; preds = %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235
+  %31 = zext nneg i8 %i.fv to i64
+  %switch.gep711 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6duckdb17QueryErrorContext6FormatERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_NS_12optional_idxEb.100, i64 %31
+  %switch.load712 = load i64, ptr %switch.gep711, align 8
   br label %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread
 
-_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread: ; preds = %.thread432, %bb.ax, %bb.ax, %bb.ax, %bb.ax, %bb.ax, %bb.ax, %bb.aw, %switch.early.test.i232, %switch.early.test.i232, %switch.early.test.i232, %switch.early.test.i232, %switch.early.test.i232, %switch.early.test.i232, %switch.early.test.i232, %switch.early.test.i232, %switch.early.test.i232, %switch.early.test.i232, %switch.early.test.i232, %switch.early.test.i232, %switch.early.test.i232, %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235
-  %24 = phi i64 [ 1, %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235 ], [ 1, %bb.aw ], [ 1, %switch.early.test.i232 ], [ 1, %switch.early.test.i232 ], [ 1, %switch.early.test.i232 ], [ 1, %switch.early.test.i232 ], [ 1, %switch.early.test.i232 ], [ 1, %switch.early.test.i232 ], [ 1, %switch.early.test.i232 ], [ 1, %switch.early.test.i232 ], [ 1, %switch.early.test.i232 ], [ 1, %switch.early.test.i232 ], [ 1, %switch.early.test.i232 ], [ 1, %switch.early.test.i232 ], [ 1, %switch.early.test.i232 ], [ 1, %bb.ax ], [ 0, %.thread432 ], [ 1, %bb.ax ], [ 1, %bb.ax ], [ 1, %bb.ax ], [ 1, %bb.ax ], [ 1, %bb.ax ] ; 2 uses
+_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread: ; preds = %bb.ax, %_ZNSt6vectorImSaImEE9push_backEOm.exit230, %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235, %.thread432, %28, %switch.early.test.i232
+  %32 = phi i64 [ 1, %switch.early.test.i232 ], [ 1, %28 ], [ 0, %_ZNSt6vectorImSaImEE9push_backEOm.exit230 ], [ %switch.load712, %.thread432 ], [ 0, %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235 ], [ 1, %bb.ax ] ; 2 uses
   %i.fw = load ptr, ptr %i.bj, align 8, !tbaa !143 ; 4 uses
   %i.fx = load ptr, ptr %i.bk, align 8, !tbaa !144
   %.not.i.i237 = icmp eq ptr %i.fw, %i.fx
   br i1 %.not.i.i237, label %bb.az, label %bb.ay
 
 bb.ay:                                            ; preds = %_ZN6duckdb10StringUtil19CharacterIsOperatorEc.exit235.thread
-  store i64 %24, ptr %i.fw, align 8, !tbaa !17
+  store i64 %32, ptr %i.fw, align 8, !tbaa !17
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fw, i64 8
   store ptr %i.fy, ptr %i.bj, align 8, !tbaa !143
   br label %_ZNSt6vectorImSaImEE9push_backEOm.exit246
@@ -960,7 +951,7 @@ _ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i.i238: ; preds = %bb.az
 
 .noexc245:                                        ; preds = %_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i.i238
   %i.gl = getelementptr inbounds i8, ptr %i.gk, i64 %i.gc ; 2 uses
-  store i64 %24, ptr %i.gl, align 8, !tbaa !17
+  store i64 %32, ptr %i.gl, align 8, !tbaa !17
   %i.gm = icmp sgt i64 %i.gc, 0
   br i1 %i.gm, label %bb.bb, label %_ZNSt6vectorImSaImEE11_S_relocateEPmS2_S2_RS0_.exit16.i.i.i241
 

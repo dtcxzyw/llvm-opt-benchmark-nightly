@@ -201,7 +201,7 @@ begin_hunk_0
 @.str.410 = private unnamed_addr constant [34 x i8] c"super(): __class__ cell not found\00", align 1
 @.str.411 = private unnamed_addr constant [8 x i8] c"super()\00", align 1
 @.str.412 = private unnamed_addr constant [46 x i8] c"super() argument 1 must be a type, not %.200s\00", align 1
-@switch.table._PyType_GetTextSignatureFromInternalDoc = private unnamed_addr constant [10 x ptr] [ptr @.str.42, ptr @.str.45, ptr poison, ptr poison, ptr @.str.43, ptr @.str.46, ptr poison, ptr poison, ptr @.str.44, ptr @.str.47], align 8
+@switch.table._PyType_GetTextSignatureFromInternalDoc = private unnamed_addr constant [37 x ptr] [ptr @.str.42, ptr poison, ptr poison, ptr poison, ptr @.str.45, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @.str.43, ptr poison, ptr poison, ptr poison, ptr @.str.46, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @.str.44, ptr poison, ptr poison, ptr poison, ptr @.str.47], align 8
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define hidden ptr @_PyStaticType_GetState(ptr noundef readonly captures(ret: address, provenance) %0, ptr noundef readonly captures(address) %1) local_unnamed_addr #0 {
@@ -604,17 +604,16 @@ skip_signature.exit:                              ; preds = %bb.d
 
 skip_signature.exit.thread:                       ; preds = %.preheader, %bb.e, %bb.b, %bb.c, %bb.a, %skip_signature.exit
   %i.n = and i32 %2, -65
-  %i.o = add i32 %i.n, -4                         ; 2 uses
-  %3 = tail call i32 @llvm.fshl.i32(i32 %i.o, i32 %i.o, i32 30) ; 3 uses
-  %i.p = icmp ult i32 %3, 10
-  %switch.maskindex = trunc i32 %3 to i16
-  %switch.shifted = lshr i16 819, %switch.maskindex
-  %switch.lobit = trunc i16 %switch.shifted to i1
+  %i.o = add i32 %i.n, -4                         ; 3 uses
+  %i.p = icmp ult i32 %i.o, 37
+  %switch.maskindex = zext nneg i32 %i.o to i64
+  %switch.shifted = lshr i64 73015558161, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
   %or.cond = select i1 %i.p, i1 %switch.lobit, i1 false
   br i1 %or.cond, label %switch.lookup, label %signature_from_flags.exit
 
 switch.lookup:                                    ; preds = %skip_signature.exit.thread
-  %i.q = zext nneg i32 %3 to i64
+  %i.q = zext nneg i32 %i.o to i64
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._PyType_GetTextSignatureFromInternalDoc, i64 %i.q
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.r = tail call ptr @PyUnicode_FromString(ptr noundef nonnull %switch.load) #21
@@ -1015,9 +1014,6 @@ Py_DECREF.exit:                                   ; preds = %bb.ab, %Py_DECREF.e
 }
 
 declare i32 @_PyArg_CheckPositional(ptr noundef, i64 noundef, i64 noundef, i64 noundef) local_unnamed_addr #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.fshl.i32(i32, i32, i32) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #19
