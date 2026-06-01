@@ -201,7 +201,7 @@ bb.a:
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.y
   %i.b = phi ptr [ %i.cw, %bb.y ], [ %.pre, %.lr.ph.preheader ] ; 2 uses
   %.096133 = phi i64 [ %i.cx, %bb.y ], [ %3, %.lr.ph.preheader ] ; 2 uses
-  %i.c = load i8, ptr %i.b, align 1, !tbaa !38    ; 9 uses
+  %i.c = load i8, ptr %i.b, align 1, !tbaa !38    ; 10 uses
   %i.d = icmp sgt i8 %i.c, -1
   br i1 %i.d, label %bb.b, label %bb.c
 
@@ -323,17 +323,10 @@ bb.q:                                             ; preds = %bb.d
   br i1 %i.bp, label %.thread128, label %switch.early.test
 
 switch.early.test:                                ; preds = %bb.q
-  switch i8 %i.c, label %bb.r [
-    i8 -1, label %.thread128
-    i8 -2, label %.thread128
-    i8 -3, label %.thread128
-    i8 -4, label %.thread128
-    i8 -5, label %.thread128
-    i8 -6, label %.thread128
-    i8 -33, label %.thread128
-  ]
+  %5 = icmp ugt i8 %i.c, -34
+  br i1 %5, label %switch.hole_check, label %bb.r
 
-bb.r:                                             ; preds = %switch.early.test
+bb.r:                                             ; preds = %switch.hole_check, %switch.early.test
   %i.bq = icmp ult i8 %.fr, -111
   %or.cond15 = icmp slt i8 %.fr, -111
   %i.br = and i8 %.fr, 127
@@ -404,8 +397,15 @@ bb.y:                                             ; preds = %bb.x, %bb.l, %bb.i,
   %i.cy = icmp sgt i64 %i.cx, 0
   br i1 %i.cy, label %.lr.ph, label %.thread128
 
-.thread128:                                       ; preds = %bb.y, %bb.b, %bb.r, %bb.c, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %bb.q, %bb.s, %bb.n, %bb.e, %bb.i, %bb.j, %bb.l, %bb.k, %bb.o, %bb.p, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.a
-  %.5 = phi i64 [ 0, %bb.a ], [ -4, %bb.b ], [ 1, %bb.n ], [ 1, %bb.s ], [ 1, %bb.q ], [ 1, %switch.early.test ], [ 1, %switch.early.test ], [ 1, %switch.early.test ], [ 1, %switch.early.test ], [ 1, %switch.early.test ], [ 1, %switch.early.test ], [ 1, %switch.early.test ], [ 1, %bb.e ], [ -2, %bb.c ], [ 1, %bb.r ], [ -4, %bb.x ], [ -4, %bb.p ], [ -4, %bb.o ], [ 1, %bb.k ], [ -4, %bb.l ], [ -4, %bb.j ], [ -4, %bb.i ], [ 1, %bb.t ], [ 1, %bb.u ], [ 1, %bb.v ], [ 1, %bb.w ], [ 0, %bb.y ]
+switch.hole_check:                                ; preds = %switch.early.test
+  %switch.tableidx = add nsw i8 %i.c, 33
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i64
+  %switch.shifted = lshr i64 8455716865, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  br i1 %switch.lobit, label %.thread128, label %bb.r
+
+.thread128:                                       ; preds = %bb.y, %bb.b, %bb.r, %bb.c, %bb.q, %bb.s, %bb.n, %bb.e, %bb.i, %bb.j, %bb.l, %bb.k, %bb.o, %bb.p, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %switch.hole_check, %bb.a
+  %.5 = phi i64 [ 0, %bb.a ], [ 1, %switch.hole_check ], [ 1, %bb.s ], [ 1, %bb.n ], [ -4, %bb.b ], [ 1, %bb.q ], [ 1, %bb.e ], [ -2, %bb.c ], [ 1, %bb.r ], [ -4, %bb.x ], [ -4, %bb.p ], [ -4, %bb.o ], [ 1, %bb.k ], [ -4, %bb.l ], [ -4, %bb.j ], [ -4, %bb.i ], [ 1, %bb.t ], [ 1, %bb.u ], [ 1, %bb.v ], [ 1, %bb.w ], [ 0, %bb.y ]
   ret i64 %.5
 }
 
