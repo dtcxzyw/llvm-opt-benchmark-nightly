@@ -201,12 +201,16 @@ bb.l:                                             ; preds = %bb.k, %bb.k
   br i1 %.not500, label %bb.t, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  switch i8 %i.j, label %bb.q [
-    i8 97, label %bb.n
-    i8 79, label %bb.p
+  %1 = add nsw i8 %i.j, -65                       ; 2 uses
+  %2 = tail call i8 @llvm.fshl.i8(i8 %1, i8 %1, i8 7)
+  switch i8 %2, label %bb.q [
+    i8 16, label %bb.n
+    i8 0, label %bb.n
+    i8 23, label %bb.p
+    i8 7, label %bb.p
   ]
 
-bb.n:                                             ; preds = %bb.g, %bb.e, %bb.c, %bb.c, %bb.i, %bb.k, %bb.m
+bb.n:                                             ; preds = %bb.g, %bb.e, %bb.c, %bb.c, %bb.i, %bb.k, %bb.m, %bb.m
   %i.q = tail call i32 @strcasecmp(ptr noundef nonnull %i.g, ptr noundef nonnull @.str.16) #25
   %.not501 = icmp eq i32 %i.q, 0
   br i1 %.not501, label %bb.t, label %bb.o
@@ -215,7 +219,7 @@ bb.o:                                             ; preds = %bb.n
   %cond = icmp eq i8 %i.j, 79
   br i1 %cond, label %bb.p, label %bb.q
 
-bb.p:                                             ; preds = %bb.m, %bb.k, %bb.i, %bb.g, %bb.e, %bb.e, %bb.o
+bb.p:                                             ; preds = %bb.k, %bb.i, %bb.g, %bb.e, %bb.e, %bb.o, %bb.m, %bb.m
   %i.r = tail call i32 @strcasecmp(ptr noundef nonnull %i.g, ptr noundef nonnull @.str.17) #25
   %.not502 = icmp eq i32 %i.r, 0
   br i1 %.not502, label %.thread524, label %bb.q
@@ -616,6 +620,9 @@ declare <32 x i8> @llvm.x86.avx.ldu.dq.256(ptr) #20
 
 ; Function Attrs: nofree nounwind
 declare noundef i32 @putchar(i32 noundef) local_unnamed_addr #21
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.fshl.i8(i8, i8, i8) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #3

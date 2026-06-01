@@ -201,11 +201,13 @@ bb.z:                                             ; preds = %.lr.ph162
 
 bb.aa:                                            ; preds = %.lr.ph116
   %i.cx = load i8, ptr %.165115, align 1
-  switch i8 %i.cx, label %.critedge78.critedge.sink.split [
-    i8 95, label %_ZN12_GLOBAL__N_125UPRV_OK_VALUE_PUNCTUATIONEc.exit.thread
-    i8 45, label %_ZN12_GLOBAL__N_125UPRV_OK_VALUE_PUNCTUATIONEc.exit.thread
-    i8 43, label %_ZN12_GLOBAL__N_125UPRV_OK_VALUE_PUNCTUATIONEc.exit.thread
-    i8 47, label %_ZN12_GLOBAL__N_125UPRV_OK_VALUE_PUNCTUATIONEc.exit.thread
+  %9 = add i8 %i.cx, -43                          ; 2 uses
+  %10 = call i8 @llvm.fshl.i8(i8 %9, i8 %9, i8 7)
+  switch i8 %10, label %.critedge78.critedge.sink.split [
+    i8 26, label %_ZN12_GLOBAL__N_125UPRV_OK_VALUE_PUNCTUATIONEc.exit.thread
+    i8 1, label %_ZN12_GLOBAL__N_125UPRV_OK_VALUE_PUNCTUATIONEc.exit.thread
+    i8 0, label %_ZN12_GLOBAL__N_125UPRV_OK_VALUE_PUNCTUATIONEc.exit.thread
+    i8 2, label %_ZN12_GLOBAL__N_125UPRV_OK_VALUE_PUNCTUATIONEc.exit.thread
   ]
 
 _ZN12_GLOBAL__N_125UPRV_OK_VALUE_PUNCTUATIONEc.exit.thread: ; preds = %bb.aa, %bb.aa, %bb.aa, %bb.aa, %.lr.ph116
@@ -593,11 +595,13 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.w, label %.critedge210, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph
-  switch i8 %i.s, label %_ZN12_GLOBAL__N_125UPRV_OK_VALUE_PUNCTUATIONEc.exit [
-    i8 95, label %.critedge210
-    i8 45, label %.critedge210
-    i8 43, label %.critedge210
-    i8 47, label %.critedge210
+  %12 = add i8 %i.s, -43                          ; 2 uses
+  %13 = call i8 @llvm.fshl.i8(i8 %12, i8 %12, i8 7)
+  switch i8 %13, label %_ZN12_GLOBAL__N_125UPRV_OK_VALUE_PUNCTUATIONEc.exit [
+    i8 26, label %.critedge210
+    i8 1, label %.critedge210
+    i8 0, label %.critedge210
+    i8 2, label %.critedge210
   ]
 
 _ZN12_GLOBAL__N_125UPRV_OK_VALUE_PUNCTUATIONEc.exit: ; preds = %bb.g
@@ -998,6 +1002,9 @@ declare void @_ZN6icu_7811StringPieceC1EPKc(ptr noundef nonnull align 8 derefere
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.fshl.i8(i8, i8, i8) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #11

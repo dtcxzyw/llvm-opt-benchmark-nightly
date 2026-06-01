@@ -86,6 +86,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.11 = private unnamed_addr constant [17 x i8] c"CHARSET_REGISTRY\00", align 1
 @.str.12 = private unnamed_addr constant [17 x i8] c"CHARSET_ENCODING\00", align 1
 @switch.table.sfnt_load_face = private unnamed_addr constant [11 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @sfnt_find_encoding.tt_encodings, i64 36), ptr getelementptr inbounds nuw (i8, ptr @sfnt_find_encoding.tt_encodings, i64 60), ptr getelementptr inbounds nuw (i8, ptr @sfnt_find_encoding.tt_encodings, i64 72), ptr getelementptr inbounds nuw (i8, ptr @sfnt_find_encoding.tt_encodings, i64 84), ptr getelementptr inbounds nuw (i8, ptr @sfnt_find_encoding.tt_encodings, i64 96), ptr getelementptr inbounds nuw (i8, ptr @sfnt_find_encoding.tt_encodings, i64 108), ptr getelementptr inbounds nuw (i8, ptr @sfnt_find_encoding.tt_encodings, i64 120), ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @sfnt_find_encoding.tt_encodings, i64 48)], align 8
+@switch.table.tt_face_load_post = private unnamed_addr constant [33 x i32] [i32 0, i32 154, i32 154, i32 154, i32 154, i32 154, i32 154, i32 154, i32 154, i32 154, i32 154, i32 154, i32 154, i32 154, i32 154, i32 154, i32 0, i32 154, i32 154, i32 154, i32 154, i32 0, i32 154, i32 154, i32 154, i32 154, i32 154, i32 154, i32 154, i32 154, i32 154, i32 154, i32 0], align 4
 
 ; Function Attrs: nounwind uwtable
 define internal ptr @sfnt_get_interface(ptr readnone captures(none) %0, ptr noundef %1) #0 {
@@ -488,18 +489,18 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.f = load i64, ptr %i.a, align 8, !tbaa !346
-  switch i64 %i.f, label %bb.e [
-    i64 196608, label %bb.d
-    i64 151552, label %bb.d
-    i64 131072, label %bb.d
-    i64 65536, label %bb.d
-  ]
+  %2 = add i64 %i.f, -65536                       ; 2 uses
+  %3 = tail call i64 @llvm.fshl.i64(i64 %2, i64 %2, i64 52) ; 2 uses
+  %4 = icmp ult i64 %3, 33
+  br i1 %4, label %bb.d, label %bb.e
 
-bb.d:                                             ; preds = %bb.c, %bb.c, %bb.c, %bb.c
+bb.d:                                             ; preds = %bb.c
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.tt_face_load_post, i64 %3
+  %switch.load = load i32, ptr %switch.gep, align 4
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.c, %bb.b, %bb.a, %bb.d
-  %.0 = phi i32 [ 0, %bb.d ], [ %i.d, %bb.a ], [ %i.e, %bb.b ], [ 154, %bb.c ]
+bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b, %bb.a
+  %.0 = phi i32 [ %switch.load, %bb.d ], [ %i.d, %bb.a ], [ %i.e, %bb.b ], [ 154, %bb.c ]
   ret i32 %.0
 }
 
@@ -900,6 +901,9 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #23
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #24
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.fshl.i64(i64, i64, i64) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #22

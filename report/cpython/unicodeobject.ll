@@ -201,45 +201,54 @@ bb.ah:                                            ; preds = %.lr.ph491.i
   br i1 %.not395.i, label %.loopexit.i, label %.lr.ph491.i, !llvm.loop !350
 
 .loopexit.i:                                      ; preds = %bb.ah, %bb.af, %bb.ae, %bb.ad, %.loopexit477.i
-  %i.em = phi i8 [ %.pre500.i, %bb.ad ], [ %i.cu, %.loopexit477.i ], [ %i.cx, %bb.ae ], [ %i.ds, %bb.af ], [ %i.eh, %bb.ah ] ; 2 uses
-  %.1317.i = phi i64 [ %spec.store.select.i, %bb.ad ], [ -1, %.loopexit477.i ], [ -1, %bb.ae ], [ %i.dq, %bb.af ], [ %i.ef, %bb.ah ] ; 13 uses
-  %.4305.i = phi ptr [ %i.dl, %bb.ad ], [ %.2303.i, %.loopexit477.i ], [ %i.cw, %bb.ae ], [ %i.dr, %bb.af ], [ %i.eg, %bb.ah ] ; 3 uses
-  %4 = add i8 %i.em, -106                         ; 2 uses
-  %5 = call i8 @llvm.fshl.i8(i8 %4, i8 %4, i8 7)
-  switch i8 %5, label %bb.al [
-    i8 1, label %bb.ai
-    i8 8, label %thread-pre-split459.i
-    i8 5, label %bb.aj
-    i8 0, label %bb.ak
+  %i.em = phi i8 [ %i.cu, %.loopexit477.i ], [ %i.cx, %bb.ae ], [ %.pre500.i, %bb.ad ], [ %i.ds, %bb.af ], [ %i.eh, %bb.ah ]
+  %.1317.i = phi i64 [ -1, %.loopexit477.i ], [ -1, %bb.ae ], [ %spec.store.select.i, %bb.ad ], [ %i.dq, %bb.af ], [ %i.ef, %bb.ah ] ; 13 uses
+  %.4305.i = phi ptr [ %.2303.i, %.loopexit477.i ], [ %i.cw, %bb.ae ], [ %i.dl, %bb.ad ], [ %i.dr, %bb.af ], [ %i.eg, %bb.ah ] ; 6 uses
+  switch i8 %i.em, label %thread-pre-split459.i [
+    i8 108, label %bb.ai
+    i8 122, label %6
+    i8 116, label %bb.aj
+    i8 106, label %bb.ak
   ]
 
 bb.ai:                                            ; preds = %.loopexit.i
   %i.en = getelementptr i8, ptr %.4305.i, i64 1   ; 2 uses
   %i.eo = load i8, ptr %i.en, align 1, !tbaa !205 ; 2 uses
   %i.ep = icmp eq i8 %i.eo, 108
-  br i1 %i.ep, label %thread-pre-split459.i, label %bb.al
+  br i1 %i.ep, label %4, label %bb.al
+
+4:                                                ; preds = %bb.ai
+  %5 = getelementptr i8, ptr %.4305.i, i64 2
+  br label %thread-pre-split459.i
+
+6:                                                ; preds = %.loopexit.i
+  %7 = getelementptr i8, ptr %.4305.i, i64 1
+  br label %thread-pre-split459.i
 
 bb.aj:                                            ; preds = %.loopexit.i
+  %8 = getelementptr i8, ptr %.4305.i, i64 1
   br label %thread-pre-split459.i
 
 bb.ak:                                            ; preds = %.loopexit.i
+  %9 = getelementptr i8, ptr %.4305.i, i64 1
   br label %thread-pre-split459.i
 
-thread-pre-split459.i:                            ; preds = %bb.ak, %bb.aj, %bb.ai, %.loopexit.i
-  %.sink571.i = phi i64 [ 2, %bb.ai ], [ 1, %bb.aj ], [ 1, %bb.ak ], [ 1, %.loopexit.i ]
-  %.0332.ph.i = phi i32 [ 2, %bb.ai ], [ 4, %bb.aj ], [ 5, %bb.ak ], [ 3, %.loopexit.i ]
-  %6 = getelementptr i8, ptr %.4305.i, i64 %.sink571.i ; 2 uses
-  %.pr460.i = load i8, ptr %6, align 1, !tbaa !205
+thread-pre-split459.i:                            ; preds = %bb.ak, %bb.aj, %6, %4, %.loopexit.i
+  %or.cond16.ph.i = phi i1 [ true, %bb.ak ], [ true, %bb.aj ], [ true, %6 ], [ false, %.loopexit.i ], [ true, %4 ] ; 2 uses
+  %.not397.ph.i = phi i1 [ false, %bb.ak ], [ false, %bb.aj ], [ false, %6 ], [ true, %.loopexit.i ], [ false, %4 ]
+  %.0332.ph.i = phi i32 [ 5, %bb.ak ], [ 4, %bb.aj ], [ 3, %6 ], [ 0, %.loopexit.i ], [ 2, %4 ]
+  %.5306.ph.i = phi ptr [ %9, %bb.ak ], [ %8, %bb.aj ], [ %7, %6 ], [ %.4305.i, %.loopexit.i ], [ %5, %4 ] ; 2 uses
+  %.pr460.i = load i8, ptr %.5306.ph.i, align 1, !tbaa !205
   br label %bb.al
 
-bb.al:                                            ; preds = %thread-pre-split459.i, %bb.ai, %.loopexit.i
-  %7 = phi i8 [ %.pr460.i, %thread-pre-split459.i ], [ %i.em, %.loopexit.i ], [ %i.eo, %bb.ai ] ; 2 uses
-  %or.cond16.i = phi i1 [ true, %thread-pre-split459.i ], [ false, %.loopexit.i ], [ false, %bb.ai ]
-  %8 = phi i1 [ true, %thread-pre-split459.i ], [ false, %.loopexit.i ], [ true, %bb.ai ]
-  %.not397.i = phi i1 [ false, %thread-pre-split459.i ], [ true, %.loopexit.i ], [ false, %bb.ai ] ; 3 uses
-  %.0332.i = phi i32 [ %.0332.ph.i, %thread-pre-split459.i ], [ 0, %.loopexit.i ], [ 1, %bb.ai ]
-  %.5306.i = phi ptr [ %6, %thread-pre-split459.i ], [ %.4305.i, %.loopexit.i ], [ %i.en, %bb.ai ] ; 3 uses
-  %.not396.i = icmp eq i8 %7, 0
+bb.al:                                            ; preds = %thread-pre-split459.i, %bb.ai
+  %10 = phi i8 [ %.pr460.i, %thread-pre-split459.i ], [ %i.eo, %bb.ai ] ; 2 uses
+  %or.cond16.i = phi i1 [ %or.cond16.ph.i, %thread-pre-split459.i ], [ false, %bb.ai ]
+  %11 = phi i1 [ %or.cond16.ph.i, %thread-pre-split459.i ], [ true, %bb.ai ]
+  %.not397.i = phi i1 [ %.not397.ph.i, %thread-pre-split459.i ], [ false, %bb.ai ] ; 3 uses
+  %.0332.i = phi i32 [ %.0332.ph.i, %thread-pre-split459.i ], [ 1, %bb.ai ]
+  %.5306.i = phi ptr [ %.5306.ph.i, %thread-pre-split459.i ], [ %i.en, %bb.ai ] ; 3 uses
+  %.not396.i = icmp eq i8 %10, 0
   br i1 %.not396.i, label %.thread564.i, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
@@ -254,7 +263,7 @@ bb.an:                                            ; preds = %bb.am
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an, %bb.am
-  %i.et = phi i8 [ %.pre501.i, %bb.an ], [ %7, %bb.am ] ; 10 uses
+  %i.et = phi i8 [ %.pre501.i, %bb.an ], [ %10, %bb.am ] ; 10 uses
   switch i8 %i.et, label %.thread564.i [
     i8 100, label %bb.ar
     i8 105, label %bb.ar
@@ -270,7 +279,7 @@ bb.ao:                                            ; preds = %bb.an, %bb.am
 
 bb.ap:                                            ; preds = %bb.ao, %bb.ao
   %i.eu = icmp sgt i64 %.2315.i, -1
-  %or.cond.i = select i1 %8, i1 true, i1 %i.eu
+  %or.cond.i = select i1 %11, i1 true, i1 %i.eu
   %i.ev = icmp sgt i64 %.1317.i, -1
   %or.cond14.i = select i1 %or.cond.i, i1 true, i1 %i.ev
   br i1 %or.cond14.i, label %bb.jq, label %bb.ar
@@ -671,9 +680,6 @@ declare i64 @llvm.smin.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #22
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.fshl.i8(i8, i8, i8) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.sadd.sat.i64(i64, i64) #22

@@ -201,6 +201,7 @@ $_ZN2v88internal10ZoneVectorINS0_8compiler13CodeGenerator11HandlerInfoEE4GrowEm 
 @switch.table._ZN2v88internal8compiler28GetSecondMacroFusionInstKindENS1_14FlagsConditionE = private unnamed_addr constant [10 x i32] [i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 0, i32 0, i32 0, i32 0], align 4
 @switch.table._ZN2v88internal8compiler13CodeGenerator19AssembleArchBooleanEPNS1_11InstructionENS1_14FlagsConditionE = private unnamed_addr constant [26 x i32] [i32 4, i32 5, i32 12, i32 13, i32 14, i32 15, i32 2, i32 3, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 poison, i32 poison, i32 10, i32 11], align 4
 @switch.table._ZN2v88internal8compiler13CodeGenerator18AssembleArchSelectEPNS1_11InstructionENS1_14FlagsConditionE = private unnamed_addr constant [26 x i32] [i32 4, i32 5, i32 12, i32 13, i32 14, i32 15, i32 2, i32 3, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 4, i32 5, i32 0, i32 1, i32 poison, i32 poison, i32 10, i32 11], align 4
+@switch.table._ZN2v88internal8compiler13CodeGenerator12AssembleMoveEPNS1_18InstructionOperandES4_ = private unnamed_addr constant [8 x i32] [i32 4, i32 8, i32 8, i32 8, i32 8, i32 8, i32 4, i32 4], align 4
 @switch.table._ZN2v88internal8compiler13CodeGenerator3PopEPNS1_18InstructionOperandENS0_21MachineRepresentationE = private unnamed_addr constant [20 x i8] [i8 0, i8 0, i8 1, i8 2, i8 3, i8 3, i8 3, i8 3, i8 3, i8 3, i8 3, i8 3, i8 2, i8 3, i8 poison, i8 1, i8 2, i8 3, i8 4, i8 5], align 1
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
@@ -603,7 +604,7 @@ _ZN2v88internal8compiler19X64OperandConverter9ToOperandEPNS1_18InstructionOperan
   br i1 %i.io, label %bb.bg, label %bb.bj
 
 bb.bg:                                            ; preds = %_ZN2v88internal8compiler19X64OperandConverter9ToOperandEPNS1_18InstructionOperandEi.exit222
-  switch i8 %i.iq, label %bb.bi [
+  switch i8 %i.iq, label %_ZN2v88internal8compiler12_GLOBAL__N_112Use32BitMoveEPNS1_18InstructionOperandES4_.exit224 [
     i8 11, label %bb.bh
     i8 4, label %bb.bh
     i8 10, label %bb.bh
@@ -613,17 +614,18 @@ bb.bh:                                            ; preds = %bb.bg, %bb.bg, %bb.
   %.val.i223 = load i64, ptr %2, align 8
   %i.ir = lshr i64 %.val.i223, 4
   %i.is = trunc i64 %i.ir to i8
-  switch i8 %i.is, label %bb.bi [
-    i8 11, label %_ZN2v88internal8compiler12_GLOBAL__N_112Use32BitMoveEPNS1_18InstructionOperandES4_.exit224
-    i8 4, label %_ZN2v88internal8compiler12_GLOBAL__N_112Use32BitMoveEPNS1_18InstructionOperandES4_.exit224
-    i8 10, label %_ZN2v88internal8compiler12_GLOBAL__N_112Use32BitMoveEPNS1_18InstructionOperandES4_.exit224
-  ]
+  %switch.tableidx = add i8 %i.is, -4             ; 2 uses
+  %9 = icmp ult i8 %switch.tableidx, 8
+  br i1 %9, label %bb.bi, label %_ZN2v88internal8compiler12_GLOBAL__N_112Use32BitMoveEPNS1_18InstructionOperandES4_.exit224
 
-bb.bi:                                            ; preds = %bb.bh, %bb.bg
+bb.bi:                                            ; preds = %bb.bh
+  %10 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN2v88internal8compiler13CodeGenerator12AssembleMoveEPNS1_18InstructionOperandES4_, i64 %10
+  %switch.load = load i32, ptr %switch.gep, align 4
   br label %_ZN2v88internal8compiler12_GLOBAL__N_112Use32BitMoveEPNS1_18InstructionOperandES4_.exit224
 
-_ZN2v88internal8compiler12_GLOBAL__N_112Use32BitMoveEPNS1_18InstructionOperandES4_.exit224: ; preds = %bb.bh, %bb.bh, %bb.bh, %bb.bi
-  %.sink263 = phi i32 [ 8, %bb.bi ], [ 4, %bb.bh ], [ 4, %bb.bh ], [ 4, %bb.bh ]
+_ZN2v88internal8compiler12_GLOBAL__N_112Use32BitMoveEPNS1_18InstructionOperandES4_.exit224: ; preds = %bb.bg, %bb.bh, %bb.bi
+  %.sink263 = phi i32 [ %switch.load, %bb.bi ], [ 8, %bb.bh ], [ 8, %bb.bg ]
   %i.it = getelementptr inbounds nuw i8, ptr %0, i64 208
   tail call void @_ZN2v88internal9Assembler8emit_movENS0_8RegisterENS0_7OperandEi(ptr noundef nonnull align 8 dereferenceable(408) %i.it, i8 10, i64 %.fca.0.load.i.i208, ptr %.fca.1.load.i.i207, i32 noundef %.sink263) #18
   %i.iu = getelementptr inbounds nuw i8, ptr %0, i64 208

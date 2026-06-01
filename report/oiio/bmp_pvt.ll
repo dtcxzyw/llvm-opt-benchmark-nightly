@@ -166,13 +166,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.h = load i32, ptr %0, align 4, !tbaa !17
-  switch i32 %i.h, label %.thread47 [
-    i32 40, label %bb.c
-    i32 108, label %bb.c
-    i32 124, label %bb.c
-    i32 52, label %bb.c
-    i32 56, label %bb.c
-    i32 12, label %bb.am
+  %2 = add i32 %i.h, -12                          ; 2 uses
+  %3 = tail call i32 @llvm.fshl.i32(i32 %2, i32 %2, i32 30)
+  switch i32 %3, label %.thread47 [
+    i32 7, label %bb.c
+    i32 24, label %bb.c
+    i32 28, label %bb.c
+    i32 10, label %bb.c
+    i32 11, label %bb.c
+    i32 0, label %bb.am
   ]
 
 bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b, %bb.b, %bb.b
@@ -277,11 +279,13 @@ bb.m:                                             ; preds = %bb.l
   br i1 %or.cond44, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  switch i32 %i.bq, label %bb.t [
-    i32 108, label %bb.o
-    i32 124, label %bb.o
-    i32 52, label %bb.o
-    i32 56, label %bb.o
+  %4 = add i32 %i.bq, -52                         ; 2 uses
+  %5 = tail call i32 @llvm.fshl.i32(i32 %4, i32 %4, i32 30)
+  switch i32 %5, label %bb.t [
+    i32 14, label %bb.o
+    i32 18, label %bb.o
+    i32 0, label %bb.o
+    i32 1, label %bb.o
   ]
 
 bb.o:                                             ; preds = %bb.n, %bb.n, %bb.n, %bb.n, %bb.m
@@ -682,6 +686,9 @@ declare i16 @llvm.bswap.i16(i16) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.fshl.i32(i32, i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.bswap.v4i32(<4 x i32>) #5

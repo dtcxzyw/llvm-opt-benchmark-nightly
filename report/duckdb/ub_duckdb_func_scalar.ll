@@ -201,6 +201,8 @@ $_ZTSFvRN6duckdb9DataChunkERNS_15ExpressionStateERNS_6VectorEE = comdat any
 @switch.table._ZN6duckdb12_GLOBAL__N_122DecodeSortKeyRecursiveEPNS0_17DecodeSortKeyDataERNS0_23DecodeSortKeyVectorDataERNS_6VectorEmm.144 = private unnamed_addr constant [3 x float] [float +inf, float +qnan, float -inf], align 4
 @switch.table._ZN6duckdb12_GLOBAL__N_122DecodeSortKeyRecursiveEPNS0_17DecodeSortKeyDataERNS0_23DecodeSortKeyVectorDataERNS_6VectorEmm.146 = private unnamed_addr constant [3 x double] [double +inf, double +qnan, double -inf], align 8
 @switch.table._ZN6duckdb14StrfTimeFormat18AddFormatSpecifierENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_16StrTimeSpecifierE = private unnamed_addr constant [36 x i64] [i64 3, i64 poison, i64 1, i64 2, i64 poison, i64 3, i64 poison, i64 2, i64 poison, i64 2, i64 poison, i64 poison, i64 2, i64 poison, i64 2, i64 poison, i64 2, i64 2, i64 poison, i64 2, i64 poison, i64 6, i64 3, i64 poison, i64 poison, i64 3, i64 poison, i64 2, i64 2, i64 poison, i64 poison, i64 poison, i64 9, i64 4, i64 1, i64 2], align 8
+@switch.table._ZN6duckdb13StrTimeFormat20ParseFormatSpecifierERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS0_ = private unnamed_addr constant [37 x ptr] [ptr @.str.13, ptr poison, ptr poison, ptr poison, ptr @.str.13, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @.str.11, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @.str.12], align 8
+@switch.table._ZN6duckdb13StrTimeFormat20ParseFormatSpecifierERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS0_.147 = private unnamed_addr constant [37 x i64] [i64 8, i64 poison, i64 poison, i64 poison, i64 8, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 17, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 8], align 8
 @switch.table._ZN6duckdb14StrpTimeFormat21NumericSpecifierWidthENS_16StrTimeSpecifierE = private unnamed_addr constant [34 x i32] [i32 1, i32 2, i32 2, i32 -1, i32 -1, i32 2, i32 2, i32 2, i32 2, i32 4, i32 2, i32 2, i32 2, i32 2, i32 -1, i32 2, i32 2, i32 2, i32 2, i32 6, i32 3, i32 -1, i32 -1, i32 3, i32 3, i32 2, i32 2, i32 -1, i32 -1, i32 -1, i32 9, i32 4, i32 1, i32 2], align 4
 
 ; Function Attrs: mustprogress uwtable
@@ -603,31 +605,32 @@ bb.ax:                                            ; preds = %bb.l, %bb.l, %bb.l,
   store ptr %i.ak, ptr %6, align 8, !tbaa !11
   store i64 0, ptr %i.al, align 8, !tbaa !19
   store i8 0, ptr %i.ak, align 8, !tbaa !18
-  switch i8 %i.cr, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit [
-    i8 99, label %17
-    i8 120, label %.invoke
-    i8 88, label %bb.az
-    i8 84, label %bb.az
-  ]
-
-17:                                               ; preds = %bb.ax
-  br label %.invoke
+  %switch.tableidx = add i8 %i.cr, -84            ; 4 uses
+  %17 = icmp ult i8 %switch.tableidx, 37
+  br i1 %17, label %bb.az, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit
 
 bb.ay:                                            ; preds = %.invoke
   %i.de = landingpad { ptr, i32 }
           cleanup
   br label %bb.cg
 
-bb.az:                                            ; preds = %bb.ax, %bb.ax
-  br label %.invoke
+bb.az:                                            ; preds = %bb.ax
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i64
+  %switch.shifted = lshr i64 68719509521, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  br i1 %switch.lobit, label %.invoke, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit
 
-.invoke:                                          ; preds = %bb.ax, %17, %bb.az
-  %18 = phi ptr [ @.str.13, %bb.az ], [ @.str.11, %17 ], [ @.str.12, %bb.ax ]
-  %19 = phi i64 [ 8, %bb.az ], [ 17, %17 ], [ 8, %bb.ax ]
-  %i.df = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %6, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %18, i64 noundef %19)
+.invoke:                                          ; preds = %bb.az
+  %18 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6duckdb13StrTimeFormat20ParseFormatSpecifierERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS0_, i64 %18
+  %switch.load = load ptr, ptr %switch.gep, align 8
+  %19 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep478 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6duckdb13StrTimeFormat20ParseFormatSpecifierERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS0_.147, i64 %19
+  %switch.load479 = load i64, ptr %switch.gep478, align 8
+  %i.df = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %6, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %switch.load, i64 noundef %switch.load479)
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit unwind label %bb.ay ; 0 uses
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit: ; preds = %.invoke, %bb.ax
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit: ; preds = %bb.az, %bb.ax, %.invoke
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #29
   store ptr %i.an, ptr %i.am, align 8, !tbaa !11
   store i64 0, ptr %i.ao, align 8, !tbaa !19
@@ -1030,11 +1033,13 @@ bb.eu:                                            ; preds = %.lr.ph1256, %.lr.ph
   br i1 %or.cond.i, label %bb.ev, label %switch.early.test.i
 
 switch.early.test.i:                              ; preds = %.lr.ph1261
-  switch i8 %i.zg, label %.critedge33 [
-    i8 95, label %bb.ev
-    i8 47, label %bb.ev
-    i8 43, label %bb.ev
-    i8 45, label %bb.ev
+  %49 = add i8 %i.zg, -43                         ; 2 uses
+  %50 = call i8 @llvm.fshl.i8(i8 %49, i8 %49, i8 7)
+  switch i8 %50, label %.critedge33 [
+    i8 26, label %bb.ev
+    i8 2, label %bb.ev
+    i8 0, label %bb.ev
+    i8 1, label %bb.ev
   ]
 
 bb.ev:                                            ; preds = %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %.lr.ph1261
@@ -1435,6 +1440,9 @@ declare void @_ZN6duckdb15PragmaFunctions16RegisterFunctionERNS_16BuiltinFunctio
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #27
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.fshl.i8(i8, i8, i8) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #23

@@ -201,12 +201,13 @@ bb.a:
   %.sroa.0.0.copyload.i.i = load ptr, ptr %i.c, align 8, !tbaa !40
   store ptr %.sroa.0.0.copyload.i, ptr %i.c, align 8, !tbaa !40
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !26   ; 2 uses
-  switch i32 %i.e, label %.critedge38 [
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !26   ; 3 uses
+  %5 = tail call i32 @llvm.fshl.i32(i32 %i.e, i32 %i.e, i32 31)
+  switch i32 %5, label %.critedge38 [
     i32 0, label %bb.b
-    i32 58, label %bb.c
-    i32 66, label %bb.h
-    i32 72, label %bb.i
+    i32 29, label %bb.c
+    i32 33, label %bb.h
+    i32 36, label %bb.i
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -608,6 +609,9 @@ declare i64 @llvm.umax.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.fshl.i32(i32, i32, i32) #15
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

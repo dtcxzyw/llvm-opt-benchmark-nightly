@@ -80,6 +80,7 @@ target triple = "x86_64-pc-linux-gnu"
 @TIFFLinkDirectory.module = internal constant [18 x i8] c"TIFFLinkDirectory\00", align 16
 @.str.54 = private unnamed_addr constant [36 x i8] c"Error writing SubIFD directory link\00", align 1
 @.str.55 = private unnamed_addr constant [26 x i8] c"Error writing TIFF header\00", align 1
+@switch.table._TIFFRewriteField = private unnamed_addr constant [14 x i32] [i32 3, i32 4, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16, i32 16], align 4
 
 ; Function Attrs: nounwind uwtable
 define noundef range(i32 0, 2) i32 @TIFFWriteDirectory(ptr noundef %0) local_unnamed_addr #0 {
@@ -482,36 +483,36 @@ bb.aw:                                            ; preds = %bb.at
 bb.ax:                                            ; preds = %bb.as, %bb.ar
   switch i32 %2, label %bb.bc [
     i32 16, label %bb.ay
-    i32 17, label %bb.ba
-    i32 18, label %bb.bb
+    i32 17, label %bb.az
+    i32 18, label %bb.ba
   ]
 
 bb.ay:                                            ; preds = %bb.ax
-  %i.dm = load i16, ptr %i.d, align 2, !tbaa !44  ; 2 uses
-  switch i16 %i.dm, label %bb.bc [
-    i16 16, label %bb.az
-    i16 4, label %bb.az
-    i16 3, label %bb.az
-  ]
+  %i.dm = load i16, ptr %i.d, align 2, !tbaa !44
+  %switch.tableidx = add i16 %i.dm, -3            ; 2 uses
+  %5 = icmp ult i16 %switch.tableidx, 14
+  br i1 %5, label %bb.bb, label %bb.bc
 
-bb.az:                                            ; preds = %bb.ay, %bb.ay, %bb.ay
-  %5 = zext nneg i16 %i.dm to i32
+bb.az:                                            ; preds = %bb.ax
+  %6 = load i16, ptr %i.d, align 2, !tbaa !44
+  %switch.selectcmp = icmp eq i16 %6, 9
+  %switch.select = select i1 %switch.selectcmp, i32 9, i32 17
   br label %bb.bc
 
 bb.ba:                                            ; preds = %bb.ax
   %i.dn = load i16, ptr %i.d, align 2, !tbaa !44
-  %switch.selectcmp.a = icmp eq i16 %i.dn, 9
-  %switch.select.a = select i1 %switch.selectcmp.a, i32 9, i32 17
+  %switch.selectcmp.a = icmp eq i16 %i.dn, 13
+  %switch.select.a = select i1 %switch.selectcmp.a, i32 13, i32 18
   br label %bb.bc
 
-bb.bb:                                            ; preds = %bb.ax
-  %6 = load i16, ptr %i.d, align 2, !tbaa !44
-  %switch.selectcmp372 = icmp eq i16 %6, 13
-  %switch.select373 = select i1 %switch.selectcmp372, i32 13, i32 18
+bb.bb:                                            ; preds = %bb.ay
+  %7 = zext nneg i16 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._TIFFRewriteField, i64 %7
+  %switch.load = load i32, ptr %switch.gep, align 4
   br label %bb.bc
 
-bb.bc:                                            ; preds = %bb.bb, %bb.ba, %bb.ay, %bb.ax, %bb.at, %bb.az, %bb.au, %bb.av, %bb.aw
-  %.0291 = phi i32 [ %5, %bb.az ], [ %switch.select.a, %bb.ba ], [ %switch.select373, %bb.bb ], [ 9, %bb.at ], [ %i.dl, %bb.au ], [ %2, %bb.aw ], [ 13, %bb.av ], [ 16, %bb.ay ], [ %2, %bb.ax ] ; 21 uses
+bb.bc:                                            ; preds = %bb.bb, %bb.ay, %bb.ba, %bb.az, %bb.ax, %bb.at, %bb.au, %bb.av, %bb.aw
+  %.0291 = phi i32 [ %switch.load, %bb.bb ], [ %switch.select, %bb.az ], [ %switch.select.a, %bb.ba ], [ 9, %bb.at ], [ %i.dl, %bb.au ], [ %2, %bb.aw ], [ 13, %bb.av ], [ 16, %bb.ay ], [ %2, %bb.ax ] ; 21 uses
   %i.do = call i32 @TIFFDataWidth(i32 noundef %.0291) #8
   %i.dp = sext i32 %i.do to i64
   %i.dq = call ptr @_TIFFCheckMalloc(ptr noundef nonnull %0, i64 noundef %3, i64 noundef %i.dp, ptr noundef nonnull @.str.8) #8 ; 19 uses

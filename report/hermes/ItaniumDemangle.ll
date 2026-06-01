@@ -201,6 +201,8 @@ begin_hunk_0
 @.str.286 = private unnamed_addr constant [4 x i8] c"id<\00", align 1
 @_ZTVN4llvh16itanium_demangle13ReferenceTypeE = linkonce_odr hidden unnamed_addr constant { [11 x ptr] } { [11 x ptr] [ptr null, ptr null, ptr @_ZNK4llvh16itanium_demangle13ReferenceType19hasRHSComponentSlowER12OutputStream, ptr @_ZNK4llvh16itanium_demangle4Node12hasArraySlowER12OutputStream, ptr @_ZNK4llvh16itanium_demangle4Node15hasFunctionSlowER12OutputStream, ptr @_ZNK4llvh16itanium_demangle4Node13getSyntaxNodeER12OutputStream, ptr @_ZNK4llvh16itanium_demangle13ReferenceType9printLeftER12OutputStream, ptr @_ZNK4llvh16itanium_demangle13ReferenceType10printRightER12OutputStream, ptr @_ZNK4llvh16itanium_demangle4Node11getBaseNameEv, ptr @_ZN4llvh16itanium_demangle4NodeD2Ev, ptr @_ZN4llvh16itanium_demangle13ReferenceTypeD0Ev] }, comdat, align 8
 @_ZTVN4llvh16itanium_demangle20PostfixQualifiedTypeE = linkonce_odr hidden unnamed_addr constant { [11 x ptr] } { [11 x ptr] [ptr null, ptr null, ptr @_ZNK4llvh16itanium_demangle4Node19hasRHSComponentSlowER12OutputStream, ptr @_ZNK4llvh16itanium_demangle4Node12hasArraySlowER12OutputStream, ptr @_ZNK4llvh16itanium_demangle4Node15hasFunctionSlowER12OutputStream, ptr @_ZNK4llvh16itanium_demangle4Node13getSyntaxNodeER12OutputStream, ptr @_ZNK4llvh16itanium_demangle20PostfixQualifiedType9printLeftER12OutputStream, ptr @_ZNK4llvh16itanium_demangle4Node10printRightER12OutputStream, ptr @_ZNK4llvh16itanium_demangle4Node11getBaseNameEv, ptr @_ZN4llvh16itanium_demangle4NodeD2Ev, ptr @_ZN4llvh16itanium_demangle20PostfixQualifiedTypeD0Ev] }, comdat, align 8
+@switch.table._ZNK4llvh23ItaniumPartialDemangler19getFunctionBaseNameEPcPm = private unnamed_addr constant [27 x i64] [i64 16, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 24, i64 24, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 16, i64 poison, i64 16], align 8
+@switch.table._ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE13parseFoldExprEv = private unnamed_addr constant [39 x i8] [i8 1, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0], align 1
 @switch.table._ZNK4llvh16itanium_demangle27ExpandedSpecialSubstitution11getBaseNameEv = private unnamed_addr constant [6 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @.str.211, i64 9), ptr getelementptr inbounds nuw (i8, ptr @.str.212, i64 12), ptr getelementptr inbounds nuw (i8, ptr @.str.212, i64 12), ptr getelementptr inbounds nuw (i8, ptr @.str.213, i64 13), ptr getelementptr inbounds nuw (i8, ptr @.str.214, i64 13), ptr getelementptr inbounds nuw (i8, ptr @.str.215, i64 14)], align 8
 @switch.table._ZNK4llvh16itanium_demangle27ExpandedSpecialSubstitution11getBaseNameEv.190 = private unnamed_addr constant [6 x ptr] [ptr @.str.211, ptr @.str.212, ptr @.str.212, ptr @.str.213, ptr @.str.214, ptr @.str.215], align 8
 @switch.table._ZNK4llvh16itanium_demangle19SpecialSubstitution11getBaseNameEv = private unnamed_addr constant [6 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @.str.211, i64 9), ptr getelementptr inbounds nuw (i8, ptr @.str.212, i64 12), ptr getelementptr inbounds nuw (i8, ptr @.str.230, i64 6), ptr getelementptr inbounds nuw (i8, ptr @.str.231, i64 7), ptr getelementptr inbounds nuw (i8, ptr @.str.232, i64 7), ptr getelementptr inbounds nuw (i8, ptr @.str.233, i64 8)], align 8
@@ -603,28 +605,29 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   br label %bb.c
 
-bb.c:                                             ; preds = %.backedge, %bb.b
-  %.0.in = phi ptr [ %i.e, %bb.b ], [ %3, %.backedge ]
+bb.c:                                             ; preds = %bb.d, %bb.b
+  %.0.in = phi ptr [ %i.e, %bb.b ], [ %5, %bb.d ]
   %.0 = load ptr, ptr %.0.in, align 8, !tbaa !71  ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.0, i64 8
   %i.g = load i8, ptr %i.f, align 8, !tbaa !70
-  switch i8 %i.g, label %bb.e [
-    i8 8, label %.backedge
-    i8 34, label %.backedge
-    i8 23, label %bb.d
-    i8 24, label %bb.d
-    i8 32, label %.backedge
-  ]
+  %switch.tableidx = add i8 %i.g, -8              ; 3 uses
+  %3 = icmp ult i8 %switch.tableidx, 27
+  br i1 %3, label %.backedge, label %bb.e
 
-.backedge:                                        ; preds = %bb.c, %bb.c, %bb.c, %bb.d
-  %.sink = phi i64 [ 16, %bb.c ], [ 16, %bb.c ], [ 24, %bb.d ], [ 16, %bb.c ]
-  %3 = getelementptr inbounds nuw i8, ptr %.0, i64 %.sink
+.backedge:                                        ; preds = %bb.c
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i32
+  %switch.shifted = lshr i32 83984385, %switch.maskindex
+  %switch.lobit = trunc i32 %switch.shifted to i1
+  br i1 %switch.lobit, label %bb.d, label %bb.e
+
+bb.d:                                             ; preds = %.backedge
+  %4 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvh23ItaniumPartialDemangler19getFunctionBaseNameEPcPm, i64 %4
+  %switch.load = load i64, ptr %switch.gep, align 8
+  %5 = getelementptr inbounds nuw i8, ptr %.0, i64 %switch.load
   br label %bb.c, !llvm.loop !72
 
-bb.d:                                             ; preds = %bb.c, %bb.c
-  br label %.backedge
-
-bb.e:                                             ; preds = %bb.c
+bb.e:                                             ; preds = %.backedge, %bb.c
   %i.h = tail call fastcc noundef ptr @_ZL9printNodePKN4llvh16itanium_demangle4NodeEPcPm(ptr noundef nonnull %.0, ptr noundef %1, ptr noundef %2)
   br label %bb.f
 
@@ -1027,18 +1030,20 @@ bb.c:                                             ; preds = %bb.b
 
 _ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit: ; preds = %bb.c
   %i.h = load i8, ptr %i.f, align 1, !tbaa !7     ; 2 uses
-  switch i8 %i.h, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfEc.exit.thread [
-    i8 108, label %bb.d
-    i8 76, label %bb.d
-    i8 114, label %.fold.split
-    i8 82, label %.fold.split
-  ]
+  %switch.tableidx = add i8 %i.h, -76             ; 3 uses
+  %1 = icmp ult i8 %switch.tableidx, 39
+  br i1 %1, label %.fold.split, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfEc.exit.thread
 
-.fold.split:                                      ; preds = %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit, %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit
-  br label %bb.d
+.fold.split:                                      ; preds = %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i64
+  %switch.shifted = lshr i64 279172874305, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  br i1 %switch.lobit, label %bb.d, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfEc.exit.thread
 
-bb.d:                                             ; preds = %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit, %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit, %.fold.split
-  %storemerge = phi i8 [ 1, %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit ], [ 1, %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit ], [ 0, %.fold.split ] ; 2 uses
+bb.d:                                             ; preds = %.fold.split
+  %2 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE13parseFoldExprEv, i64 %2
+  %switch.load = load i8, ptr %switch.gep, align 1 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 33 uses
   store ptr %i.i, ptr %0, align 16, !tbaa !11
   %i.j = ptrtoint ptr %i.i to i64
@@ -1284,7 +1289,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ac
   br i1 %i.df, label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfEc.exit.thread, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.dg = trunc nuw i8 %storemerge to i1          ; 2 uses
+  %i.dg = trunc nuw i8 %switch.load to i1         ; 2 uses
   %spec.select = select i1 %i.dg, ptr %i.de, ptr %i.dc
   %spec.select189 = select i1 %i.dg, ptr %i.dc, ptr %i.de
   br label %.thread
@@ -1336,11 +1341,11 @@ _ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4makeINS0_8Fold
   %.sroa.2.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.dv, i64 40
   store ptr %.sroa.35.0, ptr %.sroa.2.0..sroa_idx.i.i.i, align 8, !tbaa !62
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dv, i64 48
-  store i8 %storemerge, ptr %i.ea, align 8, !tbaa !164
+  store i8 %switch.load, ptr %i.ea, align 8, !tbaa !164
   br label %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfEc.exit.thread
 
-_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfEc.exit.thread: ; preds = %bb.d, %bb.ab, %bb.c, %bb.a, %bb.b, %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit, %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4makeINS0_8FoldExprEJRbR10StringViewRPNS0_4NodeESC_EEESB_DpOT0_.exit, %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfE10StringView.exit, %bb.ad
-  %.3 = phi ptr [ null, %bb.ad ], [ null, %bb.a ], [ null, %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit ], [ null, %bb.c ], [ %i.dv, %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4makeINS0_8FoldExprEJRbR10StringViewRPNS0_4NodeESC_EEESB_DpOT0_.exit ], [ null, %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfE10StringView.exit ], [ null, %bb.b ], [ null, %bb.ab ], [ null, %bb.d ]
+_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfEc.exit.thread: ; preds = %.fold.split, %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit, %bb.d, %bb.ab, %bb.c, %bb.a, %bb.b, %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4makeINS0_8FoldExprEJRbR10StringViewRPNS0_4NodeESC_EEESB_DpOT0_.exit, %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfE10StringView.exit, %bb.ad
+  %.3 = phi ptr [ null, %bb.ad ], [ null, %bb.a ], [ null, %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4lookEj.exit ], [ null, %bb.c ], [ %i.dv, %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE4makeINS0_8FoldExprEJRbR10StringViewRPNS0_4NodeESC_EEESB_DpOT0_.exit ], [ null, %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE9consumeIfE10StringView.exit ], [ null, %bb.b ], [ null, %bb.ab ], [ null, %bb.d ], [ null, %.fold.split ]
   ret ptr %.3
 }
 

@@ -201,6 +201,7 @@ begin_hunk_0
 @_ZTSN6duckdb25ConstantExpressionMatcherE = linkonce_odr constant [37 x i8] c"N6duckdb25ConstantExpressionMatcherE\00", comdat, align 1
 @_ZTIN6duckdb17ExpressionMatcherE = external constant ptr
 @_ZTVN6duckdb23StableExpressionMatcherE = external unnamed_addr constant { [5 x ptr] }, align 8
+@switch.table._ZN6duckdb11Deliminator32RemoveInequalityJoinWithDelimGetERNS_21LogicalComparisonJoinEmRNS_10unique_ptrINS_15LogicalOperatorESt14default_deleteIS4_ELb1EEERKNS_6vectorINS_18ReplacementBindingELb1ESaISA_EEE = private unnamed_addr constant [16 x i8] [i8 40, i8 37, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 37, i8 poison, i8 poison, i8 40], align 1
 
 @_ZN6duckdb23BuildProbeSideOptimizerC1ERNS_13ClientContextERNS_15LogicalOperatorE = unnamed_addr alias void (ptr, ptr, ptr), ptr @_ZN6duckdb23BuildProbeSideOptimizerC2ERNS_13ClientContextERNS_15LogicalOperatorE
 @_ZN6duckdb18ReplacementBindingC1ENS_13ColumnBindingES1_ = unnamed_addr alias void (ptr, i64, i64, i64, i64), ptr @_ZN6duckdb18ReplacementBindingC2ENS_13ColumnBindingES1_
@@ -603,7 +604,7 @@ bb.as:                                            ; preds = %bb.ar
 .split186.us:                                     ; preds = %bb.as, %bb.an
   %.us-phi187 = phi ptr [ %.sroa.0136.0179.us, %bb.an ], [ %.sroa.0136.0179, %bb.as ]
   %i.dv = getelementptr inbounds nuw i8, ptr %.us-phi187, i64 16
-  %i.dw = load i8, ptr %i.dv, align 8, !tbaa !201 ; 4 uses
+  %i.dw = load i8, ptr %i.dv, align 8, !tbaa !201 ; 3 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %i.co, i64 16 ; 3 uses
   %i.dy = load i8, ptr %i.dx, align 8, !tbaa !201
   switch i8 %i.dy, label %bb.av [
@@ -612,12 +613,9 @@ bb.as:                                            ; preds = %bb.ar
   ]
 
 bb.at:                                            ; preds = %.split186.us, %.split186.us
-  switch i8 %i.dw, label %.thread154 [
-    i8 25, label %bb.av
-    i8 26, label %bb.au
-    i8 40, label %.fold.split
-    i8 37, label %.fold.split
-  ]
+  %switch.tableidx = add i8 %i.dw, -25            ; 3 uses
+  %7 = icmp ult i8 %switch.tableidx, 16
+  br i1 %7, label %bb.au, label %.thread154
 
 .split:                                           ; preds = %.lr.ph181.split
   %i.dz = landingpad { ptr, i32 }
@@ -630,13 +628,19 @@ bb.at:                                            ; preds = %.split186.us, %.spl
   br label %bb.bc
 
 bb.au:                                            ; preds = %bb.at
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i16
+  %switch.shifted = lshr i16 -28669, %switch.maskindex
+  %switch.lobit = trunc i16 %switch.shifted to i1
+  br i1 %switch.lobit, label %.fold.split, label %.thread154
+
+.fold.split:                                      ; preds = %bb.au
+  %8 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6duckdb11Deliminator32RemoveInequalityJoinWithDelimGetERNS_21LogicalComparisonJoinEmRNS_10unique_ptrINS_15LogicalOperatorESt14default_deleteIS4_ELb1EEERKNS_6vectorINS_18ReplacementBindingELb1ESaISA_EEE, i64 %8
+  %switch.load = load i8, ptr %switch.gep, align 1
   br label %bb.av
 
-.fold.split:                                      ; preds = %bb.at, %bb.at
-  br label %bb.av
-
-bb.av:                                            ; preds = %bb.at, %.fold.split, %.split186.us, %bb.au
-  %.075 = phi i8 [ %i.dw, %.split186.us ], [ 37, %bb.au ], [ 40, %bb.at ], [ %i.dw, %.fold.split ]
+bb.av:                                            ; preds = %.fold.split, %.split186.us
+  %.075 = phi i8 [ %i.dw, %.split186.us ], [ %switch.load, %.fold.split ]
   %i.eb = invoke noundef zeroext i8 @_ZN6duckdb24FlipComparisonExpressionENS_14ExpressionTypeE(i8 noundef zeroext %.075)
           to label %bb.aw unwind label %bb.ay     ; 2 uses
 
@@ -677,8 +681,8 @@ bb.ba:                                            ; preds = %bb.as
   store i8 %.sink, ptr %i.dx, align 8, !tbaa !201
   br label %.thread154
 
-.thread154:                                       ; preds = %bb.ba, %bb.ao, %.thread154.sink.split, %bb.ax, %bb.al, %bb.aw, %switch.early.test, %switch.early.test, %bb.at
-  %.3102 = phi i1 [ %.0103189, %.thread154.sink.split ], [ false, %bb.ao ], [ %.0103189, %bb.ax ], [ %.0103189, %bb.aw ], [ %.0103189, %switch.early.test ], [ %.0103189, %switch.early.test ], [ false, %bb.at ], [ false, %bb.al ], [ false, %bb.ba ] ; 2 uses
+.thread154:                                       ; preds = %bb.ba, %bb.ao, %bb.au, %bb.at, %.thread154.sink.split, %bb.ax, %bb.al, %bb.aw, %switch.early.test, %switch.early.test
+  %.3102 = phi i1 [ %.0103189, %.thread154.sink.split ], [ false, %bb.au ], [ %.0103189, %bb.ax ], [ %.0103189, %bb.aw ], [ %.0103189, %switch.early.test ], [ %.0103189, %switch.early.test ], [ false, %bb.at ], [ false, %bb.al ], [ false, %bb.ao ], [ false, %bb.ba ] ; 2 uses
   %i.ef = add nuw i64 %.0104188, 1                ; 2 uses
   %i.eg = load ptr, ptr %i.f, align 8, !tbaa !1343
   %i.eh = load ptr, ptr %i.b, align 8, !tbaa !1344

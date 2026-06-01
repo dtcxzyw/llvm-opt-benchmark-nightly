@@ -201,12 +201,13 @@ bb.aw:                                            ; preds = %bb.au
 
 bb.ax:                                            ; preds = %bb.bc, %.lr.ph369
   %.0241 = phi ptr [ %i.di, %.lr.ph369 ], [ %i.do, %bb.bc ] ; 3 uses
-  %i.dj = load i8, ptr %.0241, align 1, !tbaa !35
-  switch i8 %i.dj, label %bb.bb [
+  %i.dj = load i8, ptr %.0241, align 1, !tbaa !35 ; 2 uses
+  %5 = call i8 @llvm.fshl.i8(i8 %i.dj, i8 %i.dj, i8 7)
+  switch i8 %5, label %bb.bb [
     i8 0, label %bb.bd
-    i8 60, label %bb.ay
-    i8 62, label %bb.az
-    i8 38, label %bb.ba
+    i8 30, label %bb.ay
+    i8 31, label %bb.az
+    i8 19, label %bb.ba
   ]
 
 bb.ay:                                            ; preds = %bb.ax
@@ -608,6 +609,9 @@ declare i32 @llvm.smax.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.fshl.i8(i8, i8, i8) #10
 
 ; Function Attrs: nofree nounwind
 declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_addr #12

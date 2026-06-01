@@ -30,7 +30,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.8 = private unnamed_addr constant [25 x i8] c"bad instruction: inst=%c\00", align 1
 @stdin = external local_unnamed_addr global ptr, align 8
 @str = private unnamed_addr constant [24 x i8] c"Interruption completed.\00", align 1
-@switch.table.execute = private unnamed_addr constant [13 x i8] [i8 92, i8 poison, i8 poison, i8 7, i8 poison, i8 12, i8 poison, i8 poison, i8 poison, i8 10, i8 poison, i8 13, i8 9], align 1
 
 ; Function Attrs: nounwind uwtable
 define dso_local void @stop_execution(i32 %0) #0 {
@@ -433,39 +432,46 @@ bb.z:                                             ; preds = %.preheader147
   %i.gm = load ptr, ptr %i.gl, align 8, !tbaa !13
   %i.gn = sext i32 %i.gj to i64
   %i.go = getelementptr inbounds i8, ptr %i.gm, i64 %i.gn
-  %i.gp = load i8, ptr %i.go, align 1, !tbaa !15  ; 2 uses
-  %0 = icmp eq i8 %i.gp, 34
-  br i1 %0, label %bb.ac, label %bb.aa
+  %i.gp = load i8, ptr %i.go, align 1, !tbaa !15
+  %0 = add i8 %i.gp, -34                          ; 2 uses
+  %1 = call i8 @llvm.fshl.i8(i8 %0, i8 %0, i8 7)
+  switch i8 %1, label %bb.ab [
+    i8 0, label %bb.ac
+    i8 38, label %.sink.split
+    i8 41, label %2
+    i8 40, label %3
+    i8 32, label %4
+    i8 34, label %bb.aa
+    i8 29, label %switch.lookup
+  ]
 
-bb.aa:                                            ; preds = %bb.z
-  %1 = sext i8 %i.gp to i32
-  %2 = add nsw i32 %1, -92                        ; 2 uses
-  %3 = call i32 @llvm.fshl.i32(i32 %2, i32 %2, i32 31) ; 3 uses
-  %4 = icmp ult i32 %3, 13
-  %switch.maskindex = trunc i32 %3 to i16
-  %switch.shifted = lshr i16 6697, %switch.maskindex
-  %switch.lobit = trunc i16 %switch.shifted to i1
-  %or.cond198 = select i1 %4, i1 %switch.lobit, i1 false
-  br i1 %or.cond198, label %switch.lookup, label %bb.ab
-
-switch.lookup:                                    ; preds = %bb.aa
-  %5 = zext nneg i32 %3 to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.execute, i64 %5
-  %switch.load = load i8, ptr %switch.gep, align 1
+2:                                                ; preds = %bb.z
   br label %.sink.split
 
-.sink.split:                                      ; preds = %switch.lookup, %.preheader147
-  %.sink = phi i8 [ %i.gg, %.preheader147 ], [ %switch.load, %switch.lookup ]
+3:                                                ; preds = %bb.z
+  br label %.sink.split
+
+4:                                                ; preds = %bb.z
+  br label %.sink.split
+
+bb.aa:                                            ; preds = %bb.z
+  br label %.sink.split
+
+switch.lookup:                                    ; preds = %bb.z
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.z, %.preheader147, %switch.lookup, %bb.aa, %4, %3, %2
+  %.sink = phi i8 [ %i.gg, %.preheader147 ], [ 9, %2 ], [ 13, %3 ], [ 7, %4 ], [ 12, %bb.aa ], [ 92, %switch.lookup ], [ 10, %bb.z ]
   call void @out_char(i8 noundef signext %.sink) #12
   br label %bb.ab
 
-bb.ab:                                            ; preds = %bb.aa, %.sink.split
+bb.ab:                                            ; preds = %.sink.split, %bb.z
   %.pre173 = load i32, ptr getelementptr inbounds nuw (i8, ptr @pc, i64 4), align 4, !tbaa !8
   %.pre174 = load ptr, ptr @functions, align 8, !tbaa !10
   %.pre175 = load i32, ptr @pc, align 4, !tbaa !12
   br label %.preheader147, !llvm.loop !39
 
-bb.ac:                                            ; preds = %.preheader147, %bb.z
+bb.ac:                                            ; preds = %bb.z, %.preheader147
   %i.gq = load i8, ptr @interactive, align 1, !tbaa !15
   %.not110 = icmp eq i8 %i.gq, 0
   br i1 %.not110, label %bb.dj, label %bb.ad
@@ -868,17 +874,17 @@ declare ptr @new_num(i32 noundef, i32 noundef) local_unnamed_addr #1
 ; Function Attrs: nofree nounwind
 declare noundef i32 @getc(ptr noundef captures(none)) local_unnamed_addr #6
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.fshl.i32(i32, i32, i32) #10
+; Function Attrs: nofree nounwind
+declare noundef i32 @putchar(i32 noundef) local_unnamed_addr #10
 
 ; Function Attrs: nofree nounwind
-declare noundef i32 @putchar(i32 noundef) local_unnamed_addr #11
-
-; Function Attrs: nofree nounwind
-declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_addr #11
+declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_addr #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.smin.i8(i8, i8) #10
+declare i8 @llvm.fshl.i8(i8, i8, i8) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.smin.i8(i8, i8) #11
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -890,8 +896,8 @@ attributes #6 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buf
 attributes #7 = { nofree nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { nofree noreturn nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #9 = { mustprogress nofree nosync nounwind willreturn memory(none) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #11 = { nofree nounwind }
+attributes #10 = { nofree nounwind }
+attributes #11 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #12 = { nounwind }
 attributes #13 = { noreturn nounwind }
 attributes #14 = { nounwind willreturn memory(none) }

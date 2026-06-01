@@ -201,16 +201,12 @@ bb.w:                                             ; preds = %PyUnicode_READ.exit
   br i1 %.not74.us, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  switch i8 %i.au, label %bb.y [
-    i8 91, label %.critedge
-    i8 64, label %.critedge
-    i8 47, label %.critedge
-    i8 46, label %.critedge
-    i8 42, label %.critedge
-  ]
+  %switch.tableidx = add i8 %i.au, -42            ; 2 uses
+  %1 = icmp ult i8 %switch.tableidx, 50
+  br i1 %1, label %switch.hole_check, label %bb.y
 
-bb.y:                                             ; preds = %bb.x, %bb.w, %bb.v, %PyUnicode_READ.exit88.us
-  %.164.us = phi i32 [ 0, %bb.w ], [ 1, %bb.v ], [ 1, %bb.x ], [ 0, %PyUnicode_READ.exit88.us ]
+bb.y:                                             ; preds = %switch.hole_check, %bb.x, %bb.w, %bb.v, %PyUnicode_READ.exit88.us
+  %.164.us = phi i32 [ 0, %bb.w ], [ 1, %bb.v ], [ 1, %bb.x ], [ 0, %PyUnicode_READ.exit88.us ], [ 1, %switch.hole_check ]
   %i.av = add nuw nsw i64 %.06192.us, 1           ; 2 uses
   %exitcond147.not = icmp eq i64 %i.av, %.val79
   br i1 %exitcond147.not, label %.critedge, label %PyUnicode_READ.exit88.us, !llvm.loop !151
@@ -233,16 +229,12 @@ bb.aa:                                            ; preds = %PyUnicode_READ.exit
   br i1 %.not74.us113, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  switch i16 %i.ax, label %bb.ac [
-    i16 91, label %.critedge
-    i16 64, label %.critedge
-    i16 47, label %.critedge
-    i16 46, label %.critedge
-    i16 42, label %.critedge
-  ]
+  %switch.tableidx167 = add i16 %i.ax, -42        ; 2 uses
+  %2 = icmp ult i16 %switch.tableidx167, 50
+  br i1 %2, label %switch.hole_check169, label %bb.ac
 
-bb.ac:                                            ; preds = %bb.ab, %bb.aa, %bb.z, %PyUnicode_READ.exit88.us111
-  %.164.us114 = phi i32 [ 0, %bb.aa ], [ 1, %bb.z ], [ 1, %bb.ab ], [ 0, %PyUnicode_READ.exit88.us111 ]
+bb.ac:                                            ; preds = %switch.hole_check169, %bb.ab, %bb.aa, %bb.z, %PyUnicode_READ.exit88.us111
+  %.164.us114 = phi i32 [ 0, %bb.aa ], [ 1, %bb.z ], [ 1, %bb.ab ], [ 0, %PyUnicode_READ.exit88.us111 ], [ 1, %switch.hole_check169 ]
   %i.ay = add nuw nsw i64 %.06192.us109, 1        ; 2 uses
   %exitcond.not = icmp eq i64 %i.ay, %.val79
   br i1 %exitcond.not, label %.critedge, label %PyUnicode_READ.exit88.us111, !llvm.loop !151
@@ -265,13 +257,13 @@ bb.ae:                                            ; preds = %PyUnicode_READ.exit
   br i1 %.not74, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  switch i32 %i.ba, label %bb.ag [
-    i32 91, label %.critedge
-    i32 64, label %.critedge
-    i32 47, label %.critedge
-    i32 46, label %.critedge
-    i32 42, label %.critedge
-  ]
+  %switch.tableidx174 = add i32 %i.ba, -42        ; 2 uses
+  %3 = icmp ult i32 %switch.tableidx174, 50
+  %switch.maskindex178 = zext nneg i32 %switch.tableidx174 to i64
+  %switch.shifted179 = lshr i64 562949957615665, %switch.maskindex178
+  %switch.lobit180 = trunc i64 %switch.shifted179 to i1
+  %or.cond = select i1 %3, i1 %switch.lobit180, i1 false
+  br i1 %or.cond, label %.critedge, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af, %PyUnicode_READ.exit88, %bb.ad, %bb.ae
   %.164 = phi i32 [ 0, %bb.ae ], [ 1, %bb.ad ], [ 1, %bb.af ], [ 0, %PyUnicode_READ.exit88 ]
@@ -335,22 +327,36 @@ bb.ao:                                            ; preds = %.lr.ph129
   br i1 %.not73, label %bb.aq, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
-  switch i8 %i.bp, label %bb.aq [
-    i8 47, label %.critedge
-    i8 42, label %.critedge
-    i8 91, label %.critedge
-    i8 64, label %.critedge
-    i8 46, label %.critedge
-  ]
+  %switch.tableidx181 = add i8 %i.bp, -42         ; 2 uses
+  %4 = icmp ult i8 %switch.tableidx181, 50
+  br i1 %4, label %switch.hole_check183, label %bb.aq
 
-bb.aq:                                            ; preds = %bb.ap, %.lr.ph129, %bb.ao, %bb.an
-  %.467 = phi i32 [ 0, %bb.ao ], [ 1, %bb.an ], [ 1, %bb.ap ], [ 0, %.lr.ph129 ]
+bb.aq:                                            ; preds = %switch.hole_check183, %bb.ap, %.lr.ph129, %bb.ao, %bb.an
+  %.467 = phi i32 [ 0, %bb.ao ], [ 1, %bb.an ], [ 1, %bb.ap ], [ 0, %.lr.ph129 ], [ 1, %switch.hole_check183 ]
   %i.bq = add nuw nsw i64 %.162128, 1             ; 2 uses
   %exitcond149.not = icmp eq i64 %i.bq, %.val78
   br i1 %exitcond149.not, label %.critedge, label %.lr.ph129, !llvm.loop !152
 
-.critedge:                                        ; preds = %bb.ab, %bb.ab, %bb.ab, %bb.ab, %bb.ab, %bb.ac, %bb.x, %bb.x, %bb.x, %bb.x, %bb.x, %bb.y, %bb.af, %bb.af, %bb.af, %bb.af, %bb.af, %bb.ag, %bb.aq, %bb.ap, %bb.ap, %bb.ap, %bb.ap, %bb.ap, %bb.u, %bb.am, %bb.ah, %bb.ak, %bb.al, %PyUnicode_READ.exit86, %PyUnicode_READ.exit82
-  %.4 = phi i32 [ 1, %bb.ak ], [ 1, %bb.ah ], [ 1, %PyUnicode_READ.exit82 ], [ 1, %bb.al ], [ 1, %PyUnicode_READ.exit86 ], [ 1, %bb.x ], [ 0, %bb.am ], [ 0, %bb.u ], [ 1, %bb.ap ], [ 0, %bb.ag ], [ 0, %bb.aq ], [ 1, %bb.ap ], [ 1, %bb.ap ], [ 1, %bb.ap ], [ 1, %bb.ap ], [ 1, %bb.af ], [ 1, %bb.af ], [ 1, %bb.af ], [ 1, %bb.af ], [ 1, %bb.af ], [ 0, %bb.y ], [ 1, %bb.x ], [ 1, %bb.x ], [ 1, %bb.x ], [ 1, %bb.x ], [ 1, %bb.ab ], [ 1, %bb.ab ], [ 1, %bb.ab ], [ 1, %bb.ab ], [ 0, %bb.ac ], [ 1, %bb.ab ]
+switch.hole_check183:                             ; preds = %bb.ap
+  %switch.maskindex185 = zext nneg i8 %switch.tableidx181 to i64
+  %switch.shifted186 = lshr i64 562949957615665, %switch.maskindex185
+  %switch.lobit187 = trunc i64 %switch.shifted186 to i1
+  br i1 %switch.lobit187, label %.critedge, label %bb.aq
+
+switch.hole_check:                                ; preds = %bb.x
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i64
+  %switch.shifted = lshr i64 562949957615665, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  br i1 %switch.lobit, label %.critedge, label %bb.y
+
+switch.hole_check169:                             ; preds = %bb.ab
+  %switch.maskindex171 = zext nneg i16 %switch.tableidx167 to i64
+  %switch.shifted172 = lshr i64 562949957615665, %switch.maskindex171
+  %switch.lobit173 = trunc i64 %switch.shifted172 to i1
+  br i1 %switch.lobit173, label %.critedge, label %bb.ac
+
+.critedge:                                        ; preds = %bb.ac, %switch.hole_check169, %bb.y, %switch.hole_check, %bb.ag, %bb.af, %bb.aq, %switch.hole_check183, %bb.u, %bb.am, %bb.ah, %bb.ak, %bb.al, %PyUnicode_READ.exit86, %PyUnicode_READ.exit82
+  %.4 = phi i32 [ 1, %bb.ak ], [ 1, %bb.ah ], [ 1, %PyUnicode_READ.exit82 ], [ 1, %bb.al ], [ 1, %PyUnicode_READ.exit86 ], [ 1, %switch.hole_check ], [ 0, %bb.am ], [ 0, %bb.u ], [ 1, %switch.hole_check183 ], [ 1, %bb.af ], [ 0, %bb.aq ], [ 0, %bb.ag ], [ 0, %bb.y ], [ 1, %switch.hole_check169 ], [ 0, %bb.ac ]
   ret i32 %.4
 }
 

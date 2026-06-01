@@ -201,6 +201,7 @@ $_ZTSSt23_Sp_counted_ptr_inplaceIN5arrow12ChunkedArrayESaIvELN9__gnu_cxx12_Lock_
 @_ZTSN5arrow7compute6detail12_GLOBAL__N_118KernelExecutorImplINS0_21ScalarAggregateKernelEEE = internal constant [88 x i8] c"N5arrow7compute6detail12_GLOBAL__N_118KernelExecutorImplINS0_21ScalarAggregateKernelEEE\00", align 1
 @_ZTVN5arrow7compute6detail12_GLOBAL__N_118KernelExecutorImplINS0_21ScalarAggregateKernelEEE = internal unnamed_addr constant { [8 x ptr] } { [8 x ptr] [ptr null, ptr @_ZTIN5arrow7compute6detail12_GLOBAL__N_118KernelExecutorImplINS0_21ScalarAggregateKernelEEE, ptr @_ZN5arrow7compute6detail12_GLOBAL__N_118KernelExecutorImplINS0_21ScalarAggregateKernelEED2Ev, ptr @_ZN5arrow7compute6detail12_GLOBAL__N_118KernelExecutorImplINS0_21ScalarAggregateKernelEED0Ev, ptr @_ZN5arrow7compute6detail12_GLOBAL__N_118KernelExecutorImplINS0_21ScalarAggregateKernelEE4InitEPNS0_13KernelContextENS0_14KernelInitArgsE, ptr @__cxa_pure_virtual, ptr @__cxa_pure_virtual, ptr @_ZN5arrow7compute6detail12_GLOBAL__N_118KernelExecutorImplINS0_21ScalarAggregateKernelEE15CheckResultTypeERKNS_5DatumEPKc] }, align 8
 @.str.51 = private unnamed_addr constant [49 x i8] c"ScalarAggregation requires non-null kernel state\00", align 1
+@switch.table._ZN5arrow7compute6detail12_GLOBAL__N_118NullGeneralization3GetERKNS0_9ExecValueE = private unnamed_addr constant [39 x i32] [i32 2, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 1, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 1], align 4
 
 @_ZN5arrow18TypedChunkLocationIiEC1Eii = weak_odr unnamed_addr alias void (ptr, i32, i32), ptr @_ZN5arrow18TypedChunkLocationIiEC2Eii
 @_ZN5arrow18TypedChunkLocationIsEC1Ess = weak_odr unnamed_addr alias void (ptr, i16, i16), ptr @_ZN5arrow18TypedChunkLocationIsEC2Ess
@@ -603,13 +604,13 @@ bb.a:
   %.0.in.i = select i1 %i.c, ptr %0, ptr %i.d
   %.0.i = load ptr, ptr %.0.in.i, align 8, !tbaa !399
   %i.e = getelementptr inbounds nuw i8, ptr %.0.i, i64 40
-  %i.f = load i32, ptr %i.e, align 8, !tbaa !295
-  switch i32 %i.f, label %bb.b [
-    i32 0, label %_ZN5arrow8internal24may_have_validity_bitmapENS_4Type4typeE.exit
-    i32 38, label %_ZN5arrow8internal24may_have_validity_bitmapENS_4Type4typeE.exit.fold.split
-    i32 28, label %_ZN5arrow8internal24may_have_validity_bitmapENS_4Type4typeE.exit.fold.split
-    i32 27, label %_ZN5arrow8internal24may_have_validity_bitmapENS_4Type4typeE.exit.fold.split
-  ]
+  %i.f = load i32, ptr %i.e, align 8, !tbaa !295  ; 3 uses
+  %1 = icmp ult i32 %i.f, 39
+  %switch.maskindex = zext nneg i32 %i.f to i64
+  %switch.shifted = lshr i64 275280560129, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  %or.cond23 = select i1 %1, i1 %switch.lobit, i1 false
+  br i1 %or.cond23, label %_ZN5arrow8internal24may_have_validity_bitmapENS_4Type4typeE.exit.fold.split, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   br i1 %i.c, label %bb.d, label %bb.c
@@ -639,11 +640,14 @@ bb.e:                                             ; preds = %bb.d
   %spec.select = select i1 %cond.fr, i32 0, i32 2
   br label %_ZN5arrow8internal24may_have_validity_bitmapENS_4Type4typeE.exit
 
-_ZN5arrow8internal24may_have_validity_bitmapENS_4Type4typeE.exit.fold.split: ; preds = %bb.a, %bb.a, %bb.a
+_ZN5arrow8internal24may_have_validity_bitmapENS_4Type4typeE.exit.fold.split: ; preds = %bb.a
+  %2 = zext nneg i32 %i.f to i64
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5arrow7compute6detail12_GLOBAL__N_118NullGeneralization3GetERKNS0_9ExecValueE, i64 %2
+  %switch.load = load i32, ptr %switch.gep, align 4
   br label %_ZN5arrow8internal24may_have_validity_bitmapENS_4Type4typeE.exit
 
-_ZN5arrow8internal24may_have_validity_bitmapENS_4Type4typeE.exit: ; preds = %bb.e, %bb.a, %_ZN5arrow8internal24may_have_validity_bitmapENS_4Type4typeE.exit.fold.split, %bb.d, %bb.c
-  %.1 = phi i32 [ 2, %bb.a ], [ %i.j, %bb.c ], [ 1, %bb.d ], [ %spec.select, %bb.e ], [ 1, %_ZN5arrow8internal24may_have_validity_bitmapENS_4Type4typeE.exit.fold.split ]
+_ZN5arrow8internal24may_have_validity_bitmapENS_4Type4typeE.exit: ; preds = %_ZN5arrow8internal24may_have_validity_bitmapENS_4Type4typeE.exit.fold.split, %bb.e, %bb.d, %bb.c
+  %.1 = phi i32 [ %switch.load, %_ZN5arrow8internal24may_have_validity_bitmapENS_4Type4typeE.exit.fold.split ], [ %i.j, %bb.c ], [ 1, %bb.d ], [ %spec.select, %bb.e ]
   ret i32 %.1
 }
 

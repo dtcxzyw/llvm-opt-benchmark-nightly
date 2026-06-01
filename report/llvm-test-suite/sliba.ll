@@ -201,19 +201,21 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !42
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !45
-  %i.d = tail call i32 %i.a(ptr noundef %i.c) #24
-  switch i32 %i.d, label %bb.e [
-    i32 40, label %bb.b
-    i32 46, label %bb.c
-    i32 102, label %.loopexit
-    i32 116, label %bb.d
+  %i.d = tail call i32 %i.a(ptr noundef %i.c) #24 ; 2 uses
+  %1 = add i32 %i.d, -40                          ; 2 uses
+  %2 = tail call i32 @llvm.fshl.i32(i32 %1, i32 %1, i32 31)
+  switch i32 %2, label %bb.e [
+    i32 0, label %bb.b
+    i32 3, label %bb.c
+    i32 31, label %.loopexit
+    i32 38, label %bb.d
   ]
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !44
   %i.g = load ptr, ptr %i.b, align 8, !tbaa !45
-  tail call void %i.f(i32 noundef 40, ptr noundef %i.g) #24
+  tail call void %i.f(i32 noundef %i.d, ptr noundef %i.g) #24
   %i.h = tail call ptr @lreadr(ptr noundef nonnull %0) #24 ; 2 uses
   %i.i = tail call i64 @nlength(ptr noundef %i.h) ; 7 uses
   %i.j = tail call i64 @no_interrupt(i64 noundef 1) #24 ; 2 uses
@@ -615,6 +617,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 declare ptr @closure(ptr noundef, ptr noundef) local_unnamed_addr #2
 
 declare ptr @get_eof_val() local_unnamed_addr #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.fshl.i32(i32, i32, i32) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #22

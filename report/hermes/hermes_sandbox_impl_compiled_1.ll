@@ -201,7 +201,7 @@ w2c_hermes_hermes0x3A0x3ARegisterAllocator0x3A0x3AgetRegister0x28hermes0x3A0x3AV
   %.val.i1175 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.it = getelementptr inbounds nuw i8, ptr %.val.i1175, i64 %.pre-phi.i1174
   %i.iu = getelementptr inbounds nuw i8, ptr %i.it, i64 4
-  %.0.copyload.i146.i1176 = load i32, ptr %i.iu, align 1 ; 3 uses
+  %.0.copyload.i146.i1176 = load i32, ptr %i.iu, align 1 ; 4 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i146.i1176) #7, !srcloc !19
   store i32 %i.hm, ptr %i.a, align 8, !tbaa !7
   %i.iv = add nuw nsw i64 %i.hd, 8                ; 2 uses
@@ -223,20 +223,15 @@ bb.z:                                             ; preds = %w2c_hermes_hermes0x
   br i1 %.not961, label %bb.af, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  switch i8 %.0.copyload.i1181, label %bb.ab [
-    i8 22, label %bb.af
-    i8 23, label %bb.af
-    i8 60, label %bb.af
-    i8 52, label %bb.af
-    i8 33, label %bb.af
-    i8 31, label %bb.af
-  ]
+  %switch.tableidx = add i8 %.0.copyload.i1181, -22 ; 2 uses
+  %3 = icmp ult i8 %switch.tableidx, 39
+  br i1 %3, label %switch.hole_check, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
   %i.jb = icmp ult i32 %.0.copyload.i146.i1176, 256
   br i1 %i.jb, label %bb.af, label %bb.ac
 
-bb.ac:                                            ; preds = %bb.ab
+bb.ac:                                            ; preds = %switch.hole_check, %bb.ab
   %.val1039 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.jc = getelementptr inbounds nuw i8, ptr %.val1039, i64 %i.f
   %.0.copyload.i1183 = load i32, ptr %i.jc, align 1 ; 2 uses
@@ -288,8 +283,16 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   store i32 %i.jp, ptr %i.jq, align 1
   br label %bb.af
 
-bb.af:                                            ; preds = %bb.ab, %bb.aa, %bb.aa, %bb.aa, %bb.aa, %bb.aa, %bb.aa, %bb.z, %w2c_hermes_hermes0x3A0x3ARegisterAllocator0x3A0x3AgetRegister0x28hermes0x3A0x3AValue0x2A0x29.exit1180, %bb.ae
-  %.2921 = phi i32 [ 0, %w2c_hermes_hermes0x3A0x3ARegisterAllocator0x3A0x3AgetRegister0x28hermes0x3A0x3AValue0x2A0x29.exit1180 ], [ 0, %bb.z ], [ 0, %bb.ab ], [ 1, %bb.ae ], [ 0, %bb.aa ], [ 0, %bb.aa ], [ 0, %bb.aa ], [ 0, %bb.aa ], [ 0, %bb.aa ], [ 0, %bb.aa ] ; 2 uses
+switch.hole_check:                                ; preds = %bb.aa
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i64
+  %switch.shifted = lshr i64 275951651331, %switch.maskindex
+  %switch.lobit = trunc i64 %switch.shifted to i1
+  %4 = icmp ult i32 %.0.copyload.i146.i1176, 256
+  %or.cond1515 = select i1 %switch.lobit, i1 true, i1 %4
+  br i1 %or.cond1515, label %bb.af, label %bb.ac
+
+bb.af:                                            ; preds = %switch.hole_check, %bb.ab, %bb.z, %w2c_hermes_hermes0x3A0x3ARegisterAllocator0x3A0x3AgetRegister0x28hermes0x3A0x3AValue0x2A0x29.exit1180, %bb.ae
+  %.2921 = phi i32 [ 0, %w2c_hermes_hermes0x3A0x3ARegisterAllocator0x3A0x3AgetRegister0x28hermes0x3A0x3AValue0x2A0x29.exit1180 ], [ 0, %bb.z ], [ 0, %bb.ab ], [ 1, %bb.ae ], [ 0, %switch.hole_check ] ; 2 uses
   %i.jr = add nuw nsw i64 %i.hd, 44               ; 2 uses
   %.val1033 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.js = getelementptr inbounds nuw i8, ptr %.val1033, i64 %i.jr

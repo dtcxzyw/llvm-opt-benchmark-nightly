@@ -201,6 +201,7 @@ begin_hunk_0
 @str = private unnamed_addr constant [48 x i8] c"Parset.c: slice_group_map_type invalid, default\00", align 1
 @str.1 = private unnamed_addr constant [75 x i8] c"Sequence Parameter VUI not yet implemented, this should never happen, exit\00", align 1
 @str.2 = private unnamed_addr constant [57 x i8] c"VUI: writing Sequence Parameter VUI to signal RGB format\00", align 1
+@switch.table.GeneratePic_parameter_set_rbsp = private unnamed_addr constant [23 x i64] [i64 212, i64 208, i64 208, i64 208, i64 208, i64 212, i64 208, i64 208, i64 208, i64 208, i64 208, i64 212, i64 208, i64 208, i64 208, i64 208, i64 208, i64 208, i64 208, i64 208, i64 208, i64 208, i64 212], align 8
 
 ; Function Attrs: nounwind uwtable
 define dso_local void @GenerateParameterSets() local_unnamed_addr #0 {
@@ -309,10 +310,11 @@ switch.edge:
   %i.a = load ptr, ptr @input, align 8, !tbaa !8  ; 14 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !24   ; 4 uses
   %switch.tableidx = add i32 %i.b, -100           ; 2 uses
-  %i.c = icmp ult i32 %switch.tableidx, 45
-  %switch.cast = zext nneg i32 %switch.tableidx to i45
-  %switch.downshift = lshr i45 -17592181849087, %switch.cast
-  %switch.masked = trunc i45 %switch.downshift to i1
+  %2 = tail call i32 @llvm.fshl.i32(i32 %switch.tableidx, i32 %switch.tableidx, i32 31) ; 2 uses
+  %i.c = icmp ult i32 %2, 23
+  %switch.cast = trunc i32 %2 to i23
+  %switch.downshift = lshr i23 -4192223, %switch.cast
+  %switch.masked = trunc i23 %switch.downshift to i1
   %i.d = select i1 %i.c, i1 %switch.masked, i1 false
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %i.b, ptr %i.e, align 4, !tbaa !15
@@ -620,10 +622,11 @@ switch.edge:
   %i.b = load ptr, ptr @input, align 8, !tbaa !8  ; 15 uses
   %i.c = load i32, ptr %i.b, align 8, !tbaa !24
   %switch.tableidx = add i32 %i.c, -100           ; 2 uses
-  %i.d = icmp ult i32 %switch.tableidx, 45
-  %switch.cast = zext nneg i32 %switch.tableidx to i45
-  %switch.downshift = lshr i45 -17592181849087, %switch.cast
-  %switch.masked = trunc i45 %switch.downshift to i1
+  %7 = tail call i32 @llvm.fshl.i32(i32 %switch.tableidx, i32 %switch.tableidx, i32 31) ; 2 uses
+  %i.d = icmp ult i32 %7, 23
+  %switch.cast = trunc i32 %7 to i23
+  %switch.downshift = lshr i23 -4192223, %switch.cast
+  %switch.masked = trunc i23 %switch.downshift to i1
   %i.e = select i1 %i.d, i1 %switch.masked, i1 false ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 28
   %i.g = load i32, ptr %i.f, align 4, !tbaa !31
@@ -1026,11 +1029,13 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.y = load i32, ptr %i.x, align 4, !tbaa !31
   %i.z = tail call i32 @ue_v(ptr noundef nonnull @.str.13, i32 noundef %i.y, ptr noundef %i.a) #11 ; 0 uses
   %i.aa = load i32, ptr %i.e, align 4, !tbaa !15
-  switch i32 %i.aa, label %.loopexit170 [
-    i32 100, label %bb.d
-    i32 110, label %bb.d
-    i32 122, label %bb.d
-    i32 144, label %bb.d
+  %2 = add i32 %i.aa, -100                        ; 2 uses
+  %3 = tail call i32 @llvm.fshl.i32(i32 %2, i32 %2, i32 31)
+  switch i32 %3, label %.loopexit170 [
+    i32 0, label %bb.d
+    i32 5, label %bb.d
+    i32 11, label %bb.d
+    i32 22, label %bb.d
   ]
 
 bb.d:                                             ; preds = %bb.c, %bb.c, %bb.c, %bb.c
@@ -1433,19 +1438,20 @@ bb.i:                                             ; preds = %bb.h, %bb.i
   %i.ce = load i32, ptr %i.cd, align 4, !tbaa !129
   %i.cf = tail call i32 @se_v(ptr noundef nonnull @.str.61, i32 noundef %i.ce, ptr noundef nonnull %i.a) #11 ; 0 uses
   %i.cg = load ptr, ptr @input, align 8, !tbaa !8
-  %i.ch = load i32, ptr %i.cg, align 8, !tbaa !24 ; 2 uses
-  switch i32 %i.ch, label %bb.j [
-    i32 144, label %bb.k
-    i32 122, label %bb.k
-    i32 110, label %bb.k
-    i32 100, label %bb.k
-  ]
+  %i.ch = load i32, ptr %i.cg, align 8, !tbaa !24
+  %2 = add i32 %i.ch, -100                        ; 2 uses
+  %3 = tail call i32 @llvm.fshl.i32(i32 %2, i32 %2, i32 31) ; 3 uses
+  %4 = icmp ult i32 %3, 23
+  br i1 %4, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %.loopexit182
+  %5 = zext nneg i32 %3 to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.GeneratePic_parameter_set_rbsp, i64 %5
+  %switch.load = load i64, ptr %switch.gep, align 8
   br label %bb.k
 
-bb.k:                                             ; preds = %.loopexit182, %.loopexit182, %.loopexit182, %.loopexit182, %bb.j
-  %.sink211 = phi i64 [ 208, %bb.j ], [ 212, %.loopexit182 ], [ 212, %.loopexit182 ], [ 212, %.loopexit182 ], [ 212, %.loopexit182 ]
+bb.k:                                             ; preds = %.loopexit182, %bb.j
+  %.sink211 = phi i64 [ %switch.load, %bb.j ], [ 208, %.loopexit182 ]
   %i.ci = getelementptr inbounds nuw i8, ptr %0, i64 %.sink211
   %.sink = load i32, ptr %i.ci, align 4, !tbaa !4
   %i.cj = tail call i32 @se_v(ptr noundef nonnull @.str.62, i32 noundef %.sink, ptr noundef nonnull %i.a) #11 ; 0 uses
@@ -1458,11 +1464,11 @@ bb.k:                                             ; preds = %.loopexit182, %.loo
   %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 228
   %i.cr = load i32, ptr %i.cq, align 4, !tbaa !138
   %i.cs = tail call i32 @u_1(ptr noundef nonnull @.str.65, i32 noundef %i.cr, ptr noundef nonnull %i.a) #11 ; 0 uses
-  switch i32 %i.ch, label %bb.v [
-    i32 144, label %bb.l
-    i32 122, label %bb.l
-    i32 110, label %bb.l
-    i32 100, label %bb.l
+  switch i32 %3, label %bb.v [
+    i32 22, label %bb.l
+    i32 11, label %bb.l
+    i32 5, label %bb.l
+    i32 0, label %bb.l
   ]
 
 bb.l:                                             ; preds = %bb.k, %bb.k, %bb.k, %bb.k
@@ -1835,14 +1841,17 @@ declare void @exit(i32 noundef) local_unnamed_addr #7
 ; Function Attrs: nofree nounwind
 declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_addr #8
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.fshl.i32(i32, i32, i32) #9
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #9
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #10
+declare i32 @llvm.umax.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #10
+declare i32 @llvm.umin.i32(i32, i32) #9
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -1853,8 +1862,8 @@ attributes #5 = { mustprogress nocallback nofree nosync nounwind willreturn memo
 attributes #6 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { nofree noreturn nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { nofree nounwind }
-attributes #9 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #10 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #10 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #11 = { nounwind }
 attributes #12 = { nounwind allocsize(0,1) }
 attributes #13 = { cold noreturn nounwind }
