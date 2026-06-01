@@ -64,10 +64,10 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   %.32.sink278.ph = phi ptr [ %.32, %.split183 ], [ %.365, %.split96 ], [ %.466, %.split99 ], [ %.567, %.split102 ], [ %.668, %.split105 ], [ %.769, %.split108 ], [ %.870, %.split111 ], [ %.971, %.split114 ], [ %.1072, %.split117 ], [ %.1173, %.split120 ], [ %.1274, %.split123 ], [ %.1375, %.split126 ], [ %.1476, %.split129 ], [ %.1577, %.split132 ], [ %.1678, %.split135 ], [ %.1779, %.split138 ], [ %.1880, %.split141 ], [ %.1981, %.split144 ], [ %.2082, %.split147 ], [ %.2183, %.split150 ], [ %.2284, %.split153 ], [ %.2385, %.split156 ], [ %.2486, %.split159 ], [ %.2587, %.split162 ], [ %.2688, %.split165 ], [ %.2789, %.split168 ], [ %.2890, %.split171 ], [ %.2991, %.split174 ], [ %.3092, %.split177 ], [ %.31, %.split180 ], [ %i.a, %bb.b ]
   br label %.split93
 
-.loopexit:                                        ; preds = %.split93, %bb.b
+.loopexit:                                        ; preds = %bb.b, %.split93
   ret void
 
-.split93:                                         ; preds = %.split93, %.split93.preheader
+.split93:                                         ; preds = %.split93.preheader, %.split93
   %.sink308.sink = phi i32 [ 1, %.split93 ], [ %.sink308.sink.ph, %.split93.preheader ]
   %.32.sink278 = phi ptr [ %i.c, %.split93 ], [ %.32.sink278.ph, %.split93.preheader ] ; 2 uses
   tail call void @execute(i32 noundef %.sink308.sink)
@@ -78,152 +78,152 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !8
   indirectbr ptr %i.g, [label %.loopexit, label %.split93, label %.split96, label %.split99, label %.split102, label %.split105, label %.split108, label %.split111, label %.split114, label %.split117, label %.split120, label %.split123, label %.split126, label %.split129, label %.split132, label %.split135, label %.split138, label %.split141, label %.split144, label %.split147, label %.split150, label %.split153, label %.split156, label %.split159, label %.split162, label %.split165, label %.split168, label %.split171, label %.split174, label %.split177, label %.split180, label %.split183]
 
-.split96:                                         ; preds = %.split93, %bb.b
+.split96:                                         ; preds = %bb.b, %.split93
   %.sink279 = phi i32 [ 2, %.split93 ], [ 0, %bb.b ]
   %.365 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split99:                                         ; preds = %.split93, %bb.b
+.split99:                                         ; preds = %bb.b, %.split93
   %.sink280 = phi i32 [ 3, %.split93 ], [ 0, %bb.b ]
   %.466 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split102:                                        ; preds = %.split93, %bb.b
+.split102:                                        ; preds = %bb.b, %.split93
   %.sink281 = phi i32 [ 4, %.split93 ], [ 0, %bb.b ]
   %.567 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split105:                                        ; preds = %.split93, %bb.b
+.split105:                                        ; preds = %bb.b, %.split93
   %.sink282 = phi i32 [ 5, %.split93 ], [ 0, %bb.b ]
   %.668 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split108:                                        ; preds = %.split93, %bb.b
+.split108:                                        ; preds = %bb.b, %.split93
   %.sink283 = phi i32 [ 6, %.split93 ], [ 0, %bb.b ]
   %.769 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split111:                                        ; preds = %.split93, %bb.b
+.split111:                                        ; preds = %bb.b, %.split93
   %.sink284 = phi i32 [ 7, %.split93 ], [ 0, %bb.b ]
   %.870 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split114:                                        ; preds = %.split93, %bb.b
+.split114:                                        ; preds = %bb.b, %.split93
   %.sink285 = phi i32 [ 8, %.split93 ], [ 0, %bb.b ]
   %.971 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split117:                                        ; preds = %.split93, %bb.b
+.split117:                                        ; preds = %bb.b, %.split93
   %.sink286 = phi i32 [ 9, %.split93 ], [ 0, %bb.b ]
   %.1072 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split120:                                        ; preds = %.split93, %bb.b
+.split120:                                        ; preds = %bb.b, %.split93
   %.sink287 = phi i32 [ 10, %.split93 ], [ 0, %bb.b ]
   %.1173 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split123:                                        ; preds = %.split93, %bb.b
+.split123:                                        ; preds = %bb.b, %.split93
   %.sink288 = phi i32 [ 11, %.split93 ], [ 0, %bb.b ]
   %.1274 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split126:                                        ; preds = %.split93, %bb.b
+.split126:                                        ; preds = %bb.b, %.split93
   %.sink289 = phi i32 [ 12, %.split93 ], [ 0, %bb.b ]
   %.1375 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split129:                                        ; preds = %.split93, %bb.b
+.split129:                                        ; preds = %bb.b, %.split93
   %.sink290 = phi i32 [ 13, %.split93 ], [ 0, %bb.b ]
   %.1476 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split132:                                        ; preds = %.split93, %bb.b
+.split132:                                        ; preds = %bb.b, %.split93
   %.sink291 = phi i32 [ 14, %.split93 ], [ 0, %bb.b ]
   %.1577 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split135:                                        ; preds = %.split93, %bb.b
+.split135:                                        ; preds = %bb.b, %.split93
   %.sink292 = phi i32 [ 15, %.split93 ], [ 0, %bb.b ]
   %.1678 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split138:                                        ; preds = %.split93, %bb.b
+.split138:                                        ; preds = %bb.b, %.split93
   %.sink293 = phi i32 [ 16, %.split93 ], [ 0, %bb.b ]
   %.1779 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split141:                                        ; preds = %.split93, %bb.b
+.split141:                                        ; preds = %bb.b, %.split93
   %.sink294 = phi i32 [ 17, %.split93 ], [ 0, %bb.b ]
   %.1880 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split144:                                        ; preds = %.split93, %bb.b
+.split144:                                        ; preds = %bb.b, %.split93
   %.sink295 = phi i32 [ 18, %.split93 ], [ 0, %bb.b ]
   %.1981 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split147:                                        ; preds = %.split93, %bb.b
+.split147:                                        ; preds = %bb.b, %.split93
   %.sink296 = phi i32 [ 19, %.split93 ], [ 0, %bb.b ]
   %.2082 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split150:                                        ; preds = %.split93, %bb.b
+.split150:                                        ; preds = %bb.b, %.split93
   %.sink297 = phi i32 [ 20, %.split93 ], [ 0, %bb.b ]
   %.2183 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split153:                                        ; preds = %.split93, %bb.b
+.split153:                                        ; preds = %bb.b, %.split93
   %.sink298 = phi i32 [ 21, %.split93 ], [ 0, %bb.b ]
   %.2284 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split156:                                        ; preds = %.split93, %bb.b
+.split156:                                        ; preds = %bb.b, %.split93
   %.sink299 = phi i32 [ 22, %.split93 ], [ 0, %bb.b ]
   %.2385 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split159:                                        ; preds = %.split93, %bb.b
+.split159:                                        ; preds = %bb.b, %.split93
   %.sink300 = phi i32 [ 23, %.split93 ], [ 0, %bb.b ]
   %.2486 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split162:                                        ; preds = %.split93, %bb.b
+.split162:                                        ; preds = %bb.b, %.split93
   %.sink301 = phi i32 [ 24, %.split93 ], [ 0, %bb.b ]
   %.2587 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split165:                                        ; preds = %.split93, %bb.b
+.split165:                                        ; preds = %bb.b, %.split93
   %.sink302 = phi i32 [ 25, %.split93 ], [ 0, %bb.b ]
   %.2688 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split168:                                        ; preds = %.split93, %bb.b
+.split168:                                        ; preds = %bb.b, %.split93
   %.sink303 = phi i32 [ 26, %.split93 ], [ 0, %bb.b ]
   %.2789 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split171:                                        ; preds = %.split93, %bb.b
+.split171:                                        ; preds = %bb.b, %.split93
   %.sink304 = phi i32 [ 27, %.split93 ], [ 0, %bb.b ]
   %.2890 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split174:                                        ; preds = %.split93, %bb.b
+.split174:                                        ; preds = %bb.b, %.split93
   %.sink305 = phi i32 [ 28, %.split93 ], [ 0, %bb.b ]
   %.2991 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split177:                                        ; preds = %.split93, %bb.b
+.split177:                                        ; preds = %bb.b, %.split93
   %.sink306 = phi i32 [ 29, %.split93 ], [ 0, %bb.b ]
   %.3092 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split180:                                        ; preds = %.split93, %bb.b
+.split180:                                        ; preds = %bb.b, %.split93
   %.sink307 = phi i32 [ 30, %.split93 ], [ 0, %bb.b ]
   %.31 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
 
-.split183:                                        ; preds = %.split93, %bb.b
+.split183:                                        ; preds = %bb.b, %.split93
   %.sink308 = phi i32 [ 31, %.split93 ], [ 0, %bb.b ]
   %.32 = phi ptr [ %i.c, %.split93 ], [ %i.a, %bb.b ]
   br label %.split93.preheader
