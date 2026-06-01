@@ -201,7 +201,6 @@ begin_hunk_0
 %"struct.std::hash.448" = type { i8 }
 %"struct.std::equal_to.451" = type { i8 }
 %"class.std::allocator.1064" = type { i8 }
-%struct.FilterCost = type { i64, i64 }
 %"class.duckdb::vector.1097" = type { %"class.std::vector.1098" }
 %"class.std::vector.1098" = type { %"struct.std::_Vector_base.1099" }
 %"struct.std::_Vector_base.1099" = type { %"struct.std::_Vector_base<std::reference_wrapper<duckdb::Expression>, std::allocator<std::reference_wrapper<duckdb::Expression>>>::_Vector_impl" }
@@ -604,8 +603,6 @@ bb.i:                                             ; preds = %bb.d
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS_14TableFilterSetE(ptr dead_on_unwind noalias writable writeonly sret(%"class.duckdb::vector.114") align 8 captures(none) %0, ptr noundef nonnull readonly align 8 captures(address) dereferenceable(48) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %struct.FilterCost, align 8         ; 4 uses
-  %3 = alloca %struct.FilterCost, align 8         ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !1322 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -652,8 +649,7 @@ bb.c:                                             ; preds = %bb.h, %.lr.ph.i.i.i
   br i1 %i.o, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.019.i.ptr.i.i.i, i64 16, i1 false), !tbaa.struct !65
+  %.sroa.0.0.copyload = load <2 x i64>, ptr %.sroa.0.019.i.ptr.i.i.i, align 8
   %i.p = icmp samesign ugt i64 %.sroa.0.019.i.idx.i.i.i, 16
   br i1 %i.p, label %bb.e, label %bb.f, !prof !155
 
@@ -667,8 +663,7 @@ bb.f:                                             ; preds = %bb.d
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEESC_ET0_T_SE_SD_.exit.i.i.i.i
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEESC_ET0_T_SE_SD_.exit.i.i.i.i: ; preds = %bb.f, %bb.e
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.043.1, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !65
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  store <2 x i64> %.sroa.0.0.copyload, ptr %.sroa.043.1, align 8
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.c
@@ -748,8 +743,7 @@ bb.i:                                             ; preds = %bb.o, %.lr.ph.i23.i
   br i1 %i.ae, label %bb.j, label %bb.n
 
 bb.j:                                             ; preds = %bb.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.019.i24.i.i.i, i64 16, i1 false), !tbaa.struct !65
+  %.sroa.0138.0.copyload = load <2 x i64>, ptr %.sroa.0.019.i24.i.i.i, align 8
   %i.af = ptrtoint ptr %.sroa.0.019.i24.i.i.i to i64
   %i.ag = sub i64 %i.af, %i.f                     ; 3 uses
   %i.ah = ashr exact i64 %i.ag, 4                 ; 2 uses
@@ -773,8 +767,7 @@ bb.m:                                             ; preds = %bb.l
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEESC_ET0_T_SE_SD_.exit.i39.i.i.i
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEESC_ET0_T_SE_SD_.exit.i39.i.i.i: ; preds = %bb.m, %bb.l, %bb.k
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.043.1, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !65
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
+  store <2 x i64> %.sroa.0138.0.copyload, ptr %.sroa.043.1, align 8
   br label %bb.o
 
 bb.n:                                             ; preds = %bb.i
@@ -1177,7 +1170,6 @@ bb.a:
   %4 = alloca %"class.duckdb::vector.1382", align 16 ; 5 uses
   %5 = alloca %"class.duckdb::vector.1382", align 16 ; 5 uses
   %6 = alloca %"class.duckdb::vector", align 8    ; 8 uses
-  %.sroa.0177 = alloca %"struct.duckdb::ColumnBinding", align 8 ; 5 uses
   %7 = alloca %"class.duckdb::vector.1382", align 8 ; 6 uses
   %8 = alloca %"class.duckdb::vector.1382", align 16 ; 5 uses
   %9 = alloca %"class.duckdb::vector.1382", align 16 ; 5 uses
@@ -1375,11 +1367,10 @@ _ZNSt12_Vector_baseIN6duckdb24JoinFilterPushdownColumnESaIS1_EE11_M_allocateEm.e
   br label %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EED2Ev.exit148
 
 .lr.ph254:                                        ; preds = %.lr.ph254.preheader, %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE9push_backERKS1_.exit
-  %.sroa.0182.0253 = phi ptr [ %.sroa.0182.5, %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE9push_backERKS1_.exit ], [ %i.bf, %.lr.ph254.preheader ] ; 7 uses
+  %.sroa.0182.0253 = phi ptr [ %.sroa.0182.5, %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE9push_backERKS1_.exit ], [ %i.bf, %.lr.ph254.preheader ] ; 11 uses
   %.sroa.0179.0252 = phi ptr [ %i.cq, %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE9push_backERKS1_.exit ], [ %i.ba, %.lr.ph254.preheader ] ; 2 uses
   %.sroa.19.0251 = phi ptr [ %.sroa.19.2, %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE9push_backERKS1_.exit ], [ %i.bg, %.lr.ph254.preheader ] ; 5 uses
   %.sroa.12.0250 = phi ptr [ %.sroa.12.2, %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE9push_backERKS1_.exit ], [ %i.bf, %.lr.ph254.preheader ] ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0177)
   %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.0179.0252, i64 8
   %i.bj = load i64, ptr %i.bi, align 8, !tbaa !2125 ; 3 uses
   %i.bk = load ptr, ptr %i.as, align 8, !tbaa !63
@@ -1439,16 +1430,16 @@ bb.s:                                             ; preds = %bb.r, %.noexc165
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i: ; preds = %bb.s
   call void @_ZdlPv(ptr noundef %i.by) #34
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #33
-  br i1 %.0.i.i.i, label %bb.t, label %.body
+  br i1 %.0.i.i.i, label %bb.t, label %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EED2Ev.exit148
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i: ; preds = %bb.s
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #33
-  br i1 %.0.i.i.i, label %bb.t, label %.body
+  br i1 %.0.i.i.i, label %bb.t, label %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EED2Ev.exit148
 
 bb.t:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i.i.i
   %.pn8.i.i.i = phi { ptr, i32 } [ %i.bw, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i.i.i ], [ %i.bx, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i ], [ %i.bx, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i ]
   call void @__cxa_free_exception(ptr %i.bq) #33
-  br label %.body
+  br label %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EED2Ev.exit148
 
 bb.u:                                             ; preds = %bb.r
   unreachable
@@ -1457,7 +1448,7 @@ bb.v:                                             ; preds = %.lr.ph254
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   %i.ca = getelementptr inbounds nuw [16 x i8], ptr %i.bl, i64 %i.bj ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0177, ptr noundef nonnull align 8 dereferenceable(16) %i.ca, i64 16, i1 false), !tbaa.struct !65
+  %.sroa.0177.sroa.0.0.copyload = load <2 x i64>, ptr %i.ca, align 8
   %.not.i = icmp eq ptr %.sroa.12.0250, %.sroa.19.0251
   br i1 %.not.i, label %bb.x, label %bb.w
 
@@ -1494,7 +1485,7 @@ _ZNKSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE12_M_check_lenEmPKc.exi
 
 .noexc141:                                        ; preds = %_ZNKSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE12_M_check_lenEmPKc.exit.i.i
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 %i.cd
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cm, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0177, i64 16, i1 false), !tbaa.struct !65
+  store <2 x i64> %.sroa.0177.sroa.0.0.copyload, ptr %i.cm, align 8
   %.not10.i.i.i.i.i.i = icmp eq ptr %.sroa.0182.0253, %.sroa.19.0251
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i, label %.lr.ph.i.i.i.i.i.i
 
@@ -1525,7 +1516,6 @@ _ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE9push_backERKS1_.exit: ;
   %.sroa.19.2 = phi ptr [ %i.cp, %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %.sroa.19.0251, %bb.w ] ; 2 uses
   %.sroa.0182.5 = phi ptr [ %i.cl, %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %.sroa.0182.0253, %bb.w ] ; 2 uses
   %.sroa.12.2 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.i.pn, i64 16 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0177)
   %i.cq = getelementptr inbounds nuw i8, ptr %.sroa.0179.0252, i64 16 ; 2 uses
   %.not215 = icmp eq ptr %i.cq, %i.az
   br i1 %.not215, label %._crit_edge, label %.lr.ph254
@@ -1533,16 +1523,11 @@ _ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE9push_backERKS1_.exit: ;
 .loopexit:                                        ; preds = %_ZNKSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE12_M_check_lenEmPKc.exit.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
-  br label %.body
+  br label %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EED2Ev.exit148
 
 .loopexit.split-lp:                               ; preds = %bb.y
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
-  br label %.body
-
-.body:                                            ; preds = %.loopexit, %.loopexit.split-lp, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i, %bb.t
-  %eh.lpad-body = phi { ptr, i32 } [ %i.bx, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i ], [ %i.bx, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i ], [ %.pn8.i.i.i, %bb.t ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0177)
   br label %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EED2Ev.exit148
 
 bb.aa:                                            ; preds = %._crit_edge
@@ -1590,9 +1575,9 @@ bb.af:                                            ; preds = %bb.ae
   call void @_ZdlPv(ptr noundef nonnull %i.cw) #34
   br label %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EED2Ev.exit148
 
-_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EED2Ev.exit148: ; preds = %.loopexit218, %.loopexit.split-lp219, %bb.af, %bb.ae, %.body
-  %.sroa.0182.2 = phi ptr [ null, %bb.af ], [ %.sroa.0182.0253, %.body ], [ null, %bb.ae ], [ %.sroa.0182.1.ph, %.loopexit218 ], [ null, %.loopexit.split-lp219 ] ; 2 uses
-  %.pn = phi { ptr, i32 } [ %i.cv, %bb.af ], [ %eh.lpad-body, %.body ], [ %i.cv, %bb.ae ], [ %lpad.loopexit220, %.loopexit218 ], [ %lpad.loopexit.split-lp221, %.loopexit.split-lp219 ] ; 2 uses
+_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EED2Ev.exit148: ; preds = %bb.t, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i, %.loopexit.split-lp, %.loopexit, %.loopexit218, %.loopexit.split-lp219, %bb.af, %bb.ae
+  %.sroa.0182.2 = phi ptr [ null, %bb.af ], [ null, %.loopexit.split-lp219 ], [ null, %bb.ae ], [ %.sroa.0182.1.ph, %.loopexit218 ], [ %.sroa.0182.0253, %.loopexit ], [ %.sroa.0182.0253, %.loopexit.split-lp ], [ %.sroa.0182.0253, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i ], [ %.sroa.0182.0253, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i ], [ %.sroa.0182.0253, %bb.t ] ; 2 uses
+  %.pn = phi { ptr, i32 } [ %i.cv, %bb.af ], [ %lpad.loopexit.split-lp221, %.loopexit.split-lp219 ], [ %i.cv, %bb.ae ], [ %lpad.loopexit220, %.loopexit218 ], [ %i.bx, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i ], [ %i.bx, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i ], [ %.pn8.i.i.i, %bb.t ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ] ; 2 uses
   %i.cx = load ptr, ptr %6, align 8, !tbaa !12    ; 2 uses
   %.not.i.i.i149 = icmp eq ptr %i.cx, null
   br i1 %.not.i.i.i149, label %_ZNSt6vectorIN6duckdb13ColumnBindingESaIS1_EED2Ev.exit150, label %bb.ag
@@ -1995,7 +1980,6 @@ bb.c:                                             ; preds = %bb.a
 define void @_ZN6duckdb27JoinFilterPushdownOptimizer19GenerateJoinFiltersERNS_21LogicalComparisonJoinE(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(280) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"class.duckdb::unique_ptr.132", align 8 ; 17 uses
-  %.sroa.0258 = alloca %"struct.duckdb::ColumnBinding", align 8 ; 5 uses
   %3 = alloca %"class.duckdb::vector.1388", align 8 ; 10 uses
   %4 = alloca %"class.duckdb::vector.1382", align 8 ; 7 uses
   %5 = alloca %"struct.duckdb::JoinFilterPushdownFilter", align 16 ; 14 uses
@@ -2097,7 +2081,6 @@ bb.i:                                             ; preds = %_ZNK6duckdb11Logica
   br i1 %i.v, label %_ZNK6duckdb11LogicalType8IsNestedEv.exit.thread, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0258)
   %i.w = invoke noundef ptr @_ZNK6duckdb10unique_ptrINS_10ExpressionESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %i.i)
           to label %bb.k unwind label %.loopexit283
 
@@ -2107,7 +2090,7 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 88 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0258, ptr noundef nonnull align 8 dereferenceable(16) %i.y, i64 16, i1 false), !tbaa.struct !65
+  %.sroa.0258.sroa.0.0.copyload = load <2 x i64>, ptr %i.y, align 8
   %.not.i = icmp eq ptr %.sroa.11.0319, %.sroa.18.0318
   br i1 %.not.i, label %bb.n, label %bb.m
 
@@ -2144,7 +2127,7 @@ _ZNKSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE12_M_check_lenEmPKc.exi
 
 .noexc95:                                         ; preds = %_ZNKSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE12_M_check_lenEmPKc.exit.i.i
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.ab
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ak, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0258, i64 16, i1 false), !tbaa.struct !65
+  store <2 x i64> %.sroa.0258.sroa.0.0.copyload, ptr %i.ak, align 8
   %.not10.i.i.i.i.i.i = icmp eq ptr %.sroa.0262.0320, %.sroa.11.0319
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i, label %.lr.ph.i.i.i.i.i.i
 
@@ -2171,10 +2154,10 @@ _ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE17_M_realloc_insertIJRKS
   br label %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE9push_backERKS1_.exit
 
 _ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE9push_backERKS1_.exit: ; preds = %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i, %bb.m
-  %.sroa.18.2 = phi ptr [ %i.an, %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %.sroa.18.0318, %bb.m ]
+  %.sroa.18.2 = phi ptr [ %i.an, %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %.sroa.18.0318, %bb.m ] ; 2 uses
   %.0.lcssa.i.i.i.i.i.i.pn = phi ptr [ %.0.lcssa.i.i.i.i.i.i, %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %.sroa.11.0319, %bb.m ]
-  %.sroa.0262.5 = phi ptr [ %i.aj, %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %.sroa.0262.0320, %bb.m ] ; 4 uses
-  %.sroa.11.2 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.i.pn, i64 16
+  %.sroa.0262.5 = phi ptr [ %i.aj, %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %.sroa.0262.0320, %bb.m ] ; 5 uses
+  %.sroa.11.2 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.i.pn, i64 16 ; 2 uses
   %i.ao = invoke noundef ptr @_ZNK6duckdb10unique_ptrINS_22JoinFilterPushdownInfoESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %2)
           to label %bb.q unwind label %.loopexit283 ; 4 uses
 
@@ -2190,7 +2173,7 @@ bb.r:                                             ; preds = %bb.q
   store i64 %storemerge321, ptr %i.aq, align 8, !tbaa !66
   %i.at = getelementptr inbounds nuw i8, ptr %i.aq, i64 8
   store ptr %i.at, ptr %i.ap, align 8, !tbaa !227
-  br label %_ZNSt6vectorImSaImEE9push_backERKm.exit
+  br label %_ZNK6duckdb11LogicalType8IsNestedEv.exit.thread
 
 bb.s:                                             ; preds = %bb.q
   %i.au = load ptr, ptr %i.ao, align 8, !tbaa !158 ; 4 uses
@@ -2244,16 +2227,12 @@ _ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIP
   store ptr %i.bi, ptr %i.ap, align 8, !tbaa !227
   %i.bj = getelementptr inbounds nuw [8 x i8], ptr %i.bf, i64 %i.bd
   store ptr %i.bj, ptr %i.ar, align 8, !tbaa !211
-  br label %_ZNSt6vectorImSaImEE9push_backERKm.exit
-
-_ZNSt6vectorImSaImEE9push_backERKm.exit:          ; preds = %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i, %bb.r
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0258)
   br label %_ZNK6duckdb11LogicalType8IsNestedEv.exit.thread
 
-_ZNK6duckdb11LogicalType8IsNestedEv.exit.thread:  ; preds = %bb.h, %bb.h, %bb.h, %bb.i, %bb.f, %bb.c, %_ZNSt6vectorImSaImEE9push_backERKm.exit
-  %.sroa.18.1 = phi ptr [ %.sroa.18.0318, %bb.c ], [ %.sroa.18.0318, %bb.f ], [ %.sroa.18.0318, %bb.i ], [ %.sroa.18.2, %_ZNSt6vectorImSaImEE9push_backERKm.exit ], [ %.sroa.18.0318, %bb.h ], [ %.sroa.18.0318, %bb.h ], [ %.sroa.18.0318, %bb.h ]
-  %.sroa.11.1 = phi ptr [ %.sroa.11.0319, %bb.c ], [ %.sroa.11.0319, %bb.f ], [ %.sroa.11.0319, %bb.i ], [ %.sroa.11.2, %_ZNSt6vectorImSaImEE9push_backERKm.exit ], [ %.sroa.11.0319, %bb.h ], [ %.sroa.11.0319, %bb.h ], [ %.sroa.11.0319, %bb.h ] ; 4 uses
-  %.sroa.0262.1 = phi ptr [ %.sroa.0262.0320, %bb.c ], [ %.sroa.0262.0320, %bb.f ], [ %.sroa.0262.0320, %bb.i ], [ %.sroa.0262.5, %_ZNSt6vectorImSaImEE9push_backERKm.exit ], [ %.sroa.0262.0320, %bb.h ], [ %.sroa.0262.0320, %bb.h ], [ %.sroa.0262.0320, %bb.h ] ; 7 uses
+_ZNK6duckdb11LogicalType8IsNestedEv.exit.thread:  ; preds = %bb.r, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i, %bb.h, %bb.h, %bb.h, %bb.i, %bb.f, %bb.c
+  %.sroa.18.1 = phi ptr [ %.sroa.18.0318, %bb.c ], [ %.sroa.18.0318, %bb.f ], [ %.sroa.18.0318, %bb.i ], [ %.sroa.18.0318, %bb.h ], [ %.sroa.18.0318, %bb.h ], [ %.sroa.18.0318, %bb.h ], [ %.sroa.18.2, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i ], [ %.sroa.18.2, %bb.r ]
+  %.sroa.11.1 = phi ptr [ %.sroa.11.0319, %bb.c ], [ %.sroa.11.0319, %bb.f ], [ %.sroa.11.0319, %bb.i ], [ %.sroa.11.0319, %bb.h ], [ %.sroa.11.0319, %bb.h ], [ %.sroa.11.0319, %bb.h ], [ %.sroa.11.2, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i ], [ %.sroa.11.2, %bb.r ] ; 4 uses
+  %.sroa.0262.1 = phi ptr [ %.sroa.0262.0320, %bb.c ], [ %.sroa.0262.0320, %bb.f ], [ %.sroa.0262.0320, %bb.i ], [ %.sroa.0262.0320, %bb.h ], [ %.sroa.0262.0320, %bb.h ], [ %.sroa.0262.0320, %bb.h ], [ %.sroa.0262.5, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i ], [ %.sroa.0262.5, %bb.r ] ; 7 uses
   %i.bk = add nuw i64 %storemerge321, 1           ; 2 uses
   %i.bl = load ptr, ptr %i.e, align 8, !tbaa !1343
   %i.bm = load ptr, ptr %i.c, align 8, !tbaa !1344
@@ -2268,18 +2247,12 @@ _ZNK6duckdb11LogicalType8IsNestedEv.exit.thread:  ; preds = %bb.h, %bb.h, %bb.h,
   %.sroa.0262.2.ph = phi ptr [ %.sroa.0262.0320, %bb.j ], [ %.sroa.0262.0320, %bb.k ], [ %.sroa.0262.0320, %_ZNKSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE12_M_check_lenEmPKc.exit.i.i ], [ %.sroa.0262.5, %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE9push_backERKS1_.exit ], [ %.sroa.0262.5, %_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i ]
   %lpad.loopexit286 = landingpad { ptr, i32 }
           cleanup
-  br label %16
+  br label %bb.fi
 
 .loopexit.split-lp284:                            ; preds = %bb.o, %bb.t
   %.sroa.0262.2.ph285 = phi ptr [ %.sroa.0262.5, %bb.t ], [ %.sroa.0262.0320, %bb.o ]
   %lpad.loopexit.split-lp287 = landingpad { ptr, i32 }
           cleanup
-  br label %16
-
-16:                                               ; preds = %.loopexit.split-lp284, %.loopexit283
-  %.sroa.0262.2 = phi ptr [ %.sroa.0262.2.ph, %.loopexit283 ], [ %.sroa.0262.2.ph285, %.loopexit.split-lp284 ]
-  %lpad.phi288 = phi { ptr, i32 } [ %lpad.loopexit286, %.loopexit283 ], [ %lpad.loopexit.split-lp287, %.loopexit.split-lp284 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0258)
   br label %bb.fi
 
 bb.w:                                             ; preds = %._crit_edge
@@ -2682,9 +2655,9 @@ _ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EED2Ev.exit108: ; preds = 
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #33
   br label %bb.fi
 
-bb.fi:                                            ; preds = %bb.d, %16, %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EED2Ev.exit108
-  %.sroa.0262.4 = phi ptr [ %.sroa.0262.1, %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EED2Ev.exit108 ], [ %.sroa.0262.2, %16 ], [ %.sroa.0262.0320, %bb.d ] ; 2 uses
-  %.pn87.pn.pn = phi { ptr, i32 } [ %.pn82.pn.pn, %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EED2Ev.exit108 ], [ %lpad.phi288, %16 ], [ %i.l, %bb.d ]
+bb.fi:                                            ; preds = %.loopexit283, %.loopexit.split-lp284, %bb.d, %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EED2Ev.exit108
+  %.sroa.0262.4 = phi ptr [ %.sroa.0262.1, %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EED2Ev.exit108 ], [ %.sroa.0262.0320, %bb.d ], [ %.sroa.0262.2.ph, %.loopexit283 ], [ %.sroa.0262.2.ph285, %.loopexit.split-lp284 ] ; 2 uses
+  %.pn87.pn.pn = phi { ptr, i32 } [ %.pn82.pn.pn, %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EED2Ev.exit108 ], [ %i.l, %bb.d ], [ %lpad.loopexit286, %.loopexit283 ], [ %lpad.loopexit.split-lp287, %.loopexit.split-lp284 ]
   %.not.i.i.i240 = icmp eq ptr %.sroa.0262.4, null
   br i1 %.not.i.i.i240, label %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EED2Ev.exit241, label %bb.fj
 
@@ -3087,7 +3060,6 @@ define void @_ZN6duckdb4TopN22PushdownDynamicFiltersERNS_11LogicalTopNE(ptr nonn
 bb.a:
   %2 = alloca %"class.duckdb::unique_ptr.1000", align 8 ; 6 uses
   %3 = alloca %"class.duckdb::Value", align 8     ; 6 uses
-  %.sroa.0168 = alloca %"struct.duckdb::ColumnBinding", align 8 ; 6 uses
   %4 = alloca %"class.duckdb::vector.1388", align 8 ; 13 uses
   %5 = alloca %"class.duckdb::vector.1382", align 8 ; 6 uses
   %6 = alloca %"class.duckdb::Value", align 8     ; 8 uses
@@ -3134,11 +3106,10 @@ _ZNKSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE12_M_check_lenEmPKc.exi
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   %i.w = tail call noundef ptr @_ZNK6duckdb10unique_ptrINS_10ExpressionESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %i.v)
   %i.x = tail call noundef nonnull align 8 dereferenceable(112) ptr @_ZN6duckdb14BaseExpression4CastINS_24BoundColumnRefExpressionEEERT_v(ptr noundef nonnull align 8 dereferenceable(56) %i.w)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0168)
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 88
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0168, ptr noundef nonnull align 8 dereferenceable(16) %i.y, i64 16, i1 false), !tbaa.struct !65
+  %.sroa.0168.sroa.0.0.copyload = load <2 x i64>, ptr %i.y, align 8
   %i.z = tail call noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #36 ; 4 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.z, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0168, i64 16, i1 false), !tbaa.struct !65
+  store <2 x i64> %.sroa.0168.sroa.0.0.copyload, ptr %i.z, align 8
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 16 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #33
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
@@ -3541,7 +3512,6 @@ bb.bx:                                            ; preds = %_ZSt8_DestroyIPN6du
 
 _ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EED2Ev.exit140: ; preds = %bb.bx, %_ZSt8_DestroyIPN6duckdb20PushdownFilterTargetES1_EvT_S3_RSaIT0_E.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #33
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0168)
   br label %bb.by
 
 bb.by:                                            ; preds = %bb.d, %bb.c, %bb.b, %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EED2Ev.exit140
@@ -3582,7 +3552,6 @@ bb.ca:                                            ; preds = %.body, %bb.aq
   %.pn45.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.ph = phi { ptr, i32 } [ %i.bb, %bb.m ], [ %.pn45.pn.pn.pn.pn.pn.pn.pn.pn, %bb.ca ], [ %i.al, %bb.i ], [ %i.al, %bb.j ]
   call void @_ZNSt6vectorIN6duckdb20PushdownFilterTargetESaIS1_EED2Ev(ptr noundef nonnull align 8 dereferenceable(24) %4) #33
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #33
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0168)
   br label %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EED2Ev.exit145
 
 bb.cb:                                            ; preds = %bb.e, %_ZNKSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EE12_M_check_lenEmPKc.exit.i.i
@@ -3590,7 +3559,6 @@ bb.cb:                                            ; preds = %bb.e, %_ZNKSt6vecto
           cleanup
   call void @_ZNSt6vectorIN6duckdb20PushdownFilterTargetESaIS1_EED2Ev(ptr noundef nonnull align 8 dereferenceable(24) %4) #33
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #33
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0168)
   call void @_ZdlPv(ptr noundef nonnull %i.z) #34
   br label %_ZNSt6vectorIN6duckdb24JoinFilterPushdownColumnESaIS1_EED2Ev.exit145
 
@@ -3993,13 +3961,6 @@ _ZNKSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIK
 ; Function Attrs: mustprogress nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEElNS0_5__ops15_Iter_less_iterEEvT_SF_T0_T1_(ptr %0, ptr %1, i64 noundef %2) unnamed_addr #27 {
 bb.a:
-  %3 = alloca %struct.FilterCost, align 8         ; 4 uses
-  %4 = alloca %struct.FilterCost, align 8         ; 4 uses
-  %5 = alloca %struct.FilterCost, align 8         ; 4 uses
-  %6 = alloca %struct.FilterCost, align 8         ; 4 uses
-  %7 = alloca %struct.FilterCost, align 8         ; 4 uses
-  %8 = alloca %struct.FilterCost, align 8         ; 4 uses
-  %9 = alloca %struct.FilterCost, align 8         ; 4 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.b = ptrtoint ptr %1 to i64
   %i.c = sub i64 %i.b, %i.a
@@ -4211,11 +4172,9 @@ bb.j:                                             ; preds = %.lr.ph35
   br i1 %i.ci, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  call void @llvm.lifetime.start.p0(ptr nonnull %9)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %9, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !65
+  %.sroa.0.0.copyload = load <2 x i64>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %i.cd, i64 16, i1 false), !tbaa.struct !65
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cd, ptr noundef nonnull align 8 dereferenceable(16) %9, i64 16, i1 false), !tbaa.struct !65
-  call void @llvm.lifetime.end.p0(ptr nonnull %9)
+  store <2 x i64> %.sroa.0.0.copyload, ptr %i.cd, align 8
   br label %_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_SF_SF_T0_.exit.i.preheader
 
 bb.l:                                             ; preds = %bb.j
@@ -4223,19 +4182,15 @@ bb.l:                                             ; preds = %bb.j
   br i1 %i.cj, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  call void @llvm.lifetime.start.p0(ptr nonnull %8)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %8, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !65
+  %.sroa.041.0.copyload = load <2 x i64>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %i.ce, i64 16, i1 false), !tbaa.struct !65
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ce, ptr noundef nonnull align 8 dereferenceable(16) %8, i64 16, i1 false), !tbaa.struct !65
-  call void @llvm.lifetime.end.p0(ptr nonnull %8)
+  store <2 x i64> %.sroa.041.0.copyload, ptr %i.ce, align 8
   br label %_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_SF_SF_T0_.exit.i.preheader
 
 bb.n:                                             ; preds = %bb.l
-  call void @llvm.lifetime.start.p0(ptr nonnull %7)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !65
+  %.sroa.043.0.copyload = load <2 x i64>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %i.f, i64 16, i1 false), !tbaa.struct !65
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, ptr noundef nonnull align 8 dereferenceable(16) %7, i64 16, i1 false), !tbaa.struct !65
-  call void @llvm.lifetime.end.p0(ptr nonnull %7)
+  store <2 x i64> %.sroa.043.0.copyload, ptr %i.f, align 8
   br label %_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_SF_SF_T0_.exit.i.preheader
 
 bb.o:                                             ; preds = %.lr.ph35
@@ -4243,11 +4198,9 @@ bb.o:                                             ; preds = %.lr.ph35
   br i1 %i.ck, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  call void @llvm.lifetime.start.p0(ptr nonnull %6)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !65
+  %.sroa.045.0.copyload = load <2 x i64>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %i.f, i64 16, i1 false), !tbaa.struct !65
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !65
-  call void @llvm.lifetime.end.p0(ptr nonnull %6)
+  store <2 x i64> %.sroa.045.0.copyload, ptr %i.f, align 8
   br label %_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_SF_SF_T0_.exit.i.preheader
 
 bb.q:                                             ; preds = %bb.o
@@ -4255,19 +4208,15 @@ bb.q:                                             ; preds = %bb.o
   br i1 %i.cl, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !65
+  %.sroa.047.0.copyload = load <2 x i64>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %i.ce, i64 16, i1 false), !tbaa.struct !65
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ce, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !65
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
+  store <2 x i64> %.sroa.047.0.copyload, ptr %i.ce, align 8
   br label %_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_SF_SF_T0_.exit.i.preheader
 
 bb.s:                                             ; preds = %bb.q
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !65
+  %.sroa.049.0.copyload = load <2 x i64>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %i.cd, i64 16, i1 false), !tbaa.struct !65
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cd, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !65
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  store <2 x i64> %.sroa.049.0.copyload, ptr %i.cd, align 8
   br label %_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_SF_SF_T0_.exit.i.preheader
 
 _ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_SF_SF_T0_.exit.i.preheader: ; preds = %bb.s, %bb.r, %bb.p, %bb.n, %bb.m, %bb.k
@@ -4300,11 +4249,9 @@ bb.u:                                             ; preds = %.preheader.i.i
   br i1 %i.cr, label %bb.v, label %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEET_SF_SF_T0_.exit
 
 bb.v:                                             ; preds = %bb.u
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.012.1.i.i, i64 16, i1 false), !tbaa.struct !65
+  %.sroa.051.0.copyload = load <2 x i64>, ptr %.sroa.012.1.i.i, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.012.1.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.1.i.i, i64 16, i1 false), !tbaa.struct !65
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.1.i.i, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !65
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  store <2 x i64> %.sroa.051.0.copyload, ptr %.sroa.0.1.i.i, align 8
   br label %_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_SF_SF_T0_.exit.i, !llvm.loop !5253
 
 _ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEET_SF_SF_T0_.exit: ; preds = %bb.u

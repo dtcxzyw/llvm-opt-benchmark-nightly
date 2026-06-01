@@ -31,8 +31,6 @@ $_ZThn32_N2v88internal18CancelableIdleTask3RunEd = comdat any
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN2v88internal18MakeCancelableTaskEPNS0_7IsolateESt8functionIFvvEE(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::unique_ptr") align 8 captures(none) initializes((0, 8)) %0, ptr noundef %1, ptr noundef captures(none) %2) local_unnamed_addr #0 {
 bb.a:
-  %.sroa.0.i = alloca { i64, i64 }, align 8       ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
   %i.a = tail call noalias noundef nonnull dereferenceable(72) ptr @_Znwm(i64 noundef 72) #11, !noalias !5 ; 9 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !noalias !5
@@ -42,12 +40,12 @@ bb.a:
   br i1 %.not.i.i.not.i.i, label %_ZNSt10unique_ptrIN2v88internal12_GLOBAL__N_118CancelableFuncTaskESt14default_deleteIS3_EED2Ev.exit.critedge, label %_ZNSt8functionIFvvEEC2EOS1_.exit.i
 
 _ZNSt8functionIFvvEEC2EOS1_.exit.i:               ; preds = %bb.a
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 16, i1 false), !noalias !5
+  %.sroa.0.i.sroa.0.0.copyload = load <2 x i64>, ptr %2, align 8, !noalias !5
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.d, i8 0, i64 16, i1 false), !noalias !5
   tail call void @_ZN2v88internal14CancelableTaskC2EPNS0_7IsolateE(ptr noundef nonnull align 8 dereferenceable(72) %i.a, ptr noundef %1) #12, !noalias !5
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 56
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i, i64 16, i1 false), !noalias !5
+  store <2 x i64> %.sroa.0.i.sroa.0.0.copyload, ptr %i.f, align 8, !noalias !5
   store ptr %i.e, ptr %i.g, align 8, !noalias !5
   br label %_ZNSt10unique_ptrIN2v88internal12_GLOBAL__N_118CancelableFuncTaskESt14default_deleteIS3_EED2Ev.exit
 
@@ -63,7 +61,6 @@ _ZNSt10unique_ptrIN2v88internal12_GLOBAL__N_118CancelableFuncTaskESt14default_de
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN2v88internal12_GLOBAL__N_118CancelableFuncTaskE, i64 64), ptr %i.i, align 8, !noalias !5
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   store ptr %i.c, ptr %i.j, align 8, !noalias !5
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
   store ptr %i.a, ptr %0, align 8
   ret void
 }
@@ -77,8 +74,6 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN2v88internal18MakeCancelableTaskEPNS0_21CancelableTaskManagerESt8functionIFvvEE(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::unique_ptr") align 8 captures(none) initializes((0, 8)) %0, ptr noundef %1, ptr noundef captures(none) %2) local_unnamed_addr #0 {
 bb.a:
-  %.sroa.0.i = alloca { i64, i64 }, align 8       ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
   %i.a = tail call noalias noundef nonnull dereferenceable(72) ptr @_Znwm(i64 noundef 72) #11, !noalias !8 ; 9 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !noalias !8
@@ -88,12 +83,12 @@ bb.a:
   br i1 %.not.i.i.not.i.i, label %_ZNSt10unique_ptrIN2v88internal12_GLOBAL__N_118CancelableFuncTaskESt14default_deleteIS3_EED2Ev.exit.critedge, label %_ZNSt8functionIFvvEEC2EOS1_.exit.i
 
 _ZNSt8functionIFvvEEC2EOS1_.exit.i:               ; preds = %bb.a
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 16, i1 false), !noalias !8
+  %.sroa.0.i.sroa.0.0.copyload = load <2 x i64>, ptr %2, align 8, !noalias !8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.d, i8 0, i64 16, i1 false), !noalias !8
   tail call void @_ZN2v88internal14CancelableTaskC2EPNS0_21CancelableTaskManagerE(ptr noundef nonnull align 8 dereferenceable(72) %i.a, ptr noundef %1) #12, !noalias !8
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 56
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i, i64 16, i1 false), !noalias !8
+  store <2 x i64> %.sroa.0.i.sroa.0.0.copyload, ptr %i.f, align 8, !noalias !8
   store ptr %i.e, ptr %i.g, align 8, !noalias !8
   br label %_ZNSt10unique_ptrIN2v88internal12_GLOBAL__N_118CancelableFuncTaskESt14default_deleteIS3_EED2Ev.exit
 
@@ -109,7 +104,6 @@ _ZNSt10unique_ptrIN2v88internal12_GLOBAL__N_118CancelableFuncTaskESt14default_de
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN2v88internal12_GLOBAL__N_118CancelableFuncTaskE, i64 64), ptr %i.i, align 8, !noalias !8
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   store ptr %i.c, ptr %i.j, align 8, !noalias !8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
   store ptr %i.a, ptr %0, align 8
   ret void
 }
@@ -117,8 +111,6 @@ _ZNSt10unique_ptrIN2v88internal12_GLOBAL__N_118CancelableFuncTaskESt14default_de
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN2v88internal22MakeCancelableIdleTaskEPNS0_7IsolateESt8functionIFvdEE(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::unique_ptr.10") align 8 captures(none) initializes((0, 8)) %0, ptr noundef %1, ptr noundef captures(none) %2) local_unnamed_addr #0 {
 bb.a:
-  %.sroa.0.i = alloca { i64, i64 }, align 8       ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
   %i.a = tail call noalias noundef nonnull dereferenceable(72) ptr @_Znwm(i64 noundef 72) #11, !noalias !11 ; 9 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !noalias !11
@@ -128,12 +120,12 @@ bb.a:
   br i1 %.not.i.i.not.i.i, label %_ZNSt10unique_ptrIN2v88internal12_GLOBAL__N_122CancelableIdleFuncTaskESt14default_deleteIS3_EED2Ev.exit.critedge, label %_ZNSt8functionIFvdEEC2EOS1_.exit.i
 
 _ZNSt8functionIFvdEEC2EOS1_.exit.i:               ; preds = %bb.a
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 16, i1 false), !noalias !11
+  %.sroa.0.i.sroa.0.0.copyload = load <2 x i64>, ptr %2, align 8, !noalias !11
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.d, i8 0, i64 16, i1 false), !noalias !11
   tail call void @_ZN2v88internal18CancelableIdleTaskC2EPNS0_7IsolateE(ptr noundef nonnull align 8 dereferenceable(72) %i.a, ptr noundef %1) #12, !noalias !11
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 56
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i, i64 16, i1 false), !noalias !11
+  store <2 x i64> %.sroa.0.i.sroa.0.0.copyload, ptr %i.f, align 8, !noalias !11
   store ptr %i.e, ptr %i.g, align 8, !noalias !11
   br label %_ZNSt10unique_ptrIN2v88internal12_GLOBAL__N_122CancelableIdleFuncTaskESt14default_deleteIS3_EED2Ev.exit
 
@@ -149,7 +141,6 @@ _ZNSt10unique_ptrIN2v88internal12_GLOBAL__N_122CancelableIdleFuncTaskESt14defaul
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN2v88internal12_GLOBAL__N_122CancelableIdleFuncTaskE, i64 64), ptr %i.i, align 8, !noalias !11
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   store ptr %i.c, ptr %i.j, align 8, !noalias !11
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
   store ptr %i.a, ptr %0, align 8
   ret void
 }
@@ -157,8 +148,6 @@ _ZNSt10unique_ptrIN2v88internal12_GLOBAL__N_122CancelableIdleFuncTaskESt14defaul
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN2v88internal22MakeCancelableIdleTaskEPNS0_21CancelableTaskManagerESt8functionIFvdEE(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::unique_ptr.10") align 8 captures(none) initializes((0, 8)) %0, ptr noundef %1, ptr noundef captures(none) %2) local_unnamed_addr #0 {
 bb.a:
-  %.sroa.0.i = alloca { i64, i64 }, align 8       ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
   %i.a = tail call noalias noundef nonnull dereferenceable(72) ptr @_Znwm(i64 noundef 72) #11, !noalias !14 ; 9 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !noalias !14
@@ -168,12 +157,12 @@ bb.a:
   br i1 %.not.i.i.not.i.i, label %_ZNSt10unique_ptrIN2v88internal12_GLOBAL__N_122CancelableIdleFuncTaskESt14default_deleteIS3_EED2Ev.exit.critedge, label %_ZNSt8functionIFvdEEC2EOS1_.exit.i
 
 _ZNSt8functionIFvdEEC2EOS1_.exit.i:               ; preds = %bb.a
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 16, i1 false), !noalias !14
+  %.sroa.0.i.sroa.0.0.copyload = load <2 x i64>, ptr %2, align 8, !noalias !14
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.d, i8 0, i64 16, i1 false), !noalias !14
   tail call void @_ZN2v88internal18CancelableIdleTaskC2EPNS0_21CancelableTaskManagerE(ptr noundef nonnull align 8 dereferenceable(72) %i.a, ptr noundef %1) #12, !noalias !14
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 56
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i, i64 16, i1 false), !noalias !14
+  store <2 x i64> %.sroa.0.i.sroa.0.0.copyload, ptr %i.f, align 8, !noalias !14
   store ptr %i.e, ptr %i.g, align 8, !noalias !14
   br label %_ZNSt10unique_ptrIN2v88internal12_GLOBAL__N_122CancelableIdleFuncTaskESt14default_deleteIS3_EED2Ev.exit
 
@@ -189,7 +178,6 @@ _ZNSt10unique_ptrIN2v88internal12_GLOBAL__N_122CancelableIdleFuncTaskESt14defaul
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN2v88internal12_GLOBAL__N_122CancelableIdleFuncTaskE, i64 64), ptr %i.i, align 8, !noalias !14
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   store ptr %i.c, ptr %i.j, align 8, !noalias !14
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
   store ptr %i.a, ptr %0, align 8
   ret void
 }
@@ -199,9 +187,6 @@ declare noundef nonnull ptr @_Znwm(i64 noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #3
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
 declare void @_ZN2v88internal14CancelableTaskC2EPNS0_7IsolateE(ptr noundef nonnull align 8 dereferenceable(40), ptr noundef) unnamed_addr #4
 
