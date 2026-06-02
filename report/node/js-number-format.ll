@@ -201,7 +201,7 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i:   ; preds = %bb.ae, %.lr.ph.i.i.
   %.041.i.i.i = phi i64 [ %i.hs, %.lr.ph.i.i.i ], [ %i.in, %bb.ae ]
   %.02840.i.i.i = phi ptr [ %.pre.pre, %.lr.ph.i.i.i ], [ %i.il, %bb.ae ]
   %.reass.reass.i.reass.reass.i.i = add i64 %.041.i.i.i, -4
-  %i.hw = call ptr @memchr(ptr noundef %.02840.i.i.i, i32 noundef 117, i64 noundef %.reass.reass.i.reass.reass.i.i) #22, !noalias !17 ; 5 uses
+  %i.hw = call ptr @memchr(ptr noundef %.02840.i.i.i, i32 noundef 117, i64 noundef %.reass.reass.i.reass.reass.i.i) #22 ; 5 uses
   %.not34.i.i.i = icmp eq ptr %i.hw, null
   br i1 %.not34.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findERKS4_m.exit.thread.i, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i
 
@@ -244,7 +244,7 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i19.i: ; preds = %_ZNKSt7__cxx1112bas
   %.041.i.i15.i = phi i64 [ %i.je, %bb.af ], [ %i.hs, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findERKS4_m.exit.thread.i ]
   %.02840.i.i16.i = phi ptr [ %i.jc, %bb.af ], [ %.pre.pre, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findERKS4_m.exit.thread.i ]
   %.reass.reass.i.reass.reass.i18.i = add i64 %.041.i.i15.i, -6
-  %i.is = call ptr @memchr(ptr noundef %.02840.i.i16.i, i32 noundef 112, i64 noundef %.reass.reass.i.reass.reass.i18.i) #22, !noalias !17 ; 5 uses
+  %i.is = call ptr @memchr(ptr noundef %.02840.i.i16.i, i32 noundef 112, i64 noundef %.reass.reass.i.reass.reass.i18.i) #22 ; 5 uses
   %.not34.i.i20.i = icmp eq ptr %i.is, null
   br i1 %.not34.i.i20.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit.thread.i, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i21.i
 

@@ -201,7 +201,7 @@ bb.ai:                                            ; preds = %precmdline_parse_cm
 }
 
 ; Function Attrs: nofree nounwind memory(read) uwtable
-define hidden noundef ptr @_Py_get_xoption(ptr noundef readonly captures(none) %0, ptr noundef readonly %1) local_unnamed_addr #4 {
+define hidden noundef ptr @_Py_get_xoption(ptr noundef readonly captures(none) %0, ptr noundef readonly captures(address) %1) local_unnamed_addr #4 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !tbaa !32     ; 2 uses
   %i.b = icmp sgt i64 %i.a, 0
@@ -604,7 +604,7 @@ bb.v:                                             ; preds = %bb.u
   br i1 %.not6.i.i.i, label %_Py_GetEnv.exit.thread.i.i, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.by = load i8, ptr %i.bx, align 1, !tbaa !56, !noalias !70
+  %i.by = load i8, ptr %i.bx, align 1, !tbaa !56
   switch i8 %i.by, label %_Py_GetEnv.exit.tail.thread.i.i [
     i8 0, label %_Py_GetEnv.exit.thread.i.i
     i8 48, label %_Py_GetEnv.exit.tail.i.i
@@ -612,7 +612,7 @@ bb.w:                                             ; preds = %bb.v
 
 _Py_GetEnv.exit.tail.i.i:                         ; preds = %bb.w
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bx, i64 1
-  %i.ca = load i8, ptr %i.bz, align 1, !noalias !70
+  %i.ca = load i8, ptr %i.bz, align 1
   %i.cb = icmp eq i8 %i.ca, 0
   br i1 %i.cb, label %bb.x, label %_Py_GetEnv.exit.tail.thread.i.i
 
@@ -626,7 +626,7 @@ bb.y:                                             ; preds = %bb.x
   br label %_Py_GetEnv.exit.thread.i.i
 
 _Py_GetEnv.exit.tail.thread.i.i:                  ; preds = %_Py_GetEnv.exit.tail.i.i, %bb.w
-  %i.ce = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.bx, ptr noundef nonnull dereferenceable(5) @.str.21) #14, !noalias !70
+  %i.ce = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.bx, ptr noundef nonnull dereferenceable(5) @.str.21) #14
   %i.cf = icmp eq i32 %i.ce, 0
   br i1 %i.cf, label %bb.z, label %bb.ab
 
@@ -727,12 +727,12 @@ bb.ak:                                            ; preds = %_Py_get_xoption.exi
 
 bb.al:                                            ; preds = %bb.ak
   %i.di = getelementptr i8, ptr %i.cx, i64 4      ; 2 uses
-  %i.dj = call i32 @wcscmp(ptr noundef %i.di, ptr noundef nonnull @.str.23) #14, !noalias !73
+  %i.dj = call i32 @wcscmp(ptr noundef %i.di, ptr noundef nonnull @.str.23) #14
   %i.dk = icmp eq i32 %i.dj, 0
   br i1 %i.dk, label %.sink.split.i, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  %i.dl = call i32 @wcscmp(ptr noundef %i.di, ptr noundef nonnull @.str.24) #14, !noalias !73
+  %i.dl = call i32 @wcscmp(ptr noundef %i.di, ptr noundef nonnull @.str.24) #14
   %i.dm = icmp eq i32 %i.dl, 0
   br i1 %i.dm, label %.sink.split.i, label %.thread146
 
@@ -747,7 +747,7 @@ bb.an:                                            ; preds = %_Py_get_xoption.exi
   br i1 %.not6.i.i22.i, label %.sink.split.i, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
-  %i.dp = load i8, ptr %i.do, align 1, !tbaa !56, !noalias !73
+  %i.dp = load i8, ptr %i.do, align 1, !tbaa !56
   switch i8 %i.dp, label %.thread146 [
     i8 0, label %.sink.split.i
     i8 49, label %_Py_GetEnv.exit.tail.i23.i
@@ -756,13 +756,13 @@ bb.ao:                                            ; preds = %bb.an
 
 _Py_GetEnv.exit.tail.i23.i:                       ; preds = %bb.ao
   %i.dq = getelementptr inbounds nuw i8, ptr %i.do, i64 1
-  %i.dr = load i8, ptr %i.dq, align 1, !noalias !73
+  %i.dr = load i8, ptr %i.dq, align 1
   %i.ds = icmp eq i8 %i.dr, 0
   br i1 %i.ds, label %.sink.split.i, label %.thread146
 
 .tail.i.i:                                        ; preds = %bb.ao
   %i.dt = getelementptr inbounds nuw i8, ptr %i.do, i64 1
-  %i.du = load i8, ptr %i.dt, align 1, !noalias !73
+  %i.du = load i8, ptr %i.dt, align 1
   %i.dv = icmp eq i8 %i.du, 0
   br i1 %i.dv, label %.sink.split.i, label %.thread146
 
@@ -787,13 +787,13 @@ bb.ar:                                            ; preds = %bb.aq
   br i1 %.not6.i.i29.i, label %.thread13.i.i, label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
-  %i.ea = load i8, ptr %i.dz, align 1, !tbaa !56, !noalias !76
+  %i.ea = load i8, ptr %i.dz, align 1, !tbaa !56
   %.not7.i.i.i = icmp eq i8 %i.ea, 0
   br i1 %.not7.i.i.i, label %.thread13.i.i, label %_Py_GetEnv.exit.i.i
 
 _Py_GetEnv.exit.i.i:                              ; preds = %bb.as
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13, !noalias !76
-  %i.eb = call i32 @_PyMem_GetAllocatorName(ptr noundef nonnull %i.dz, ptr noundef nonnull %i.a) #13, !noalias !76
+  %i.eb = call i32 @_PyMem_GetAllocatorName(ptr noundef nonnull %i.dz, ptr noundef nonnull %i.a) #13
   %i.ec = icmp sgt i32 %i.eb, -1
   br i1 %i.ec, label %.thread.i.i, label %bb.au
 

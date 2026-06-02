@@ -201,7 +201,7 @@ declare void @_PyObject_AssertFailed(ptr noundef, ptr noundef, ptr noundef, ptr 
 declare i32 @PyDict_Contains(ptr noundef, ptr noundef) local_unnamed_addr #3
 
 ; Function Attrs: nounwind uwtable
-define hidden ptr @_PyType_GetDocFromInternalDoc(ptr noundef readonly %0, ptr noundef %1) local_unnamed_addr #1 {
+define hidden ptr @_PyType_GetDocFromInternalDoc(ptr noundef readonly captures(address) %0, ptr noundef %1) local_unnamed_addr #1 {
 bb.a:
   %.not.i.i = icmp eq ptr %1, null
   br i1 %.not.i.i, label %_PyType_DocWithoutSignature.exit.thread12, label %bb.b
@@ -271,7 +271,7 @@ _PyType_DocWithoutSignature.exit.thread12:        ; preds = %bb.a, %_PyType_DocW
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc noundef ptr @_PyType_DocWithoutSignature(ptr noundef readonly %0, ptr noundef readonly captures(address, ret: address, provenance) %1) unnamed_addr #7 {
+define internal fastcc noundef ptr @_PyType_DocWithoutSignature(ptr noundef readonly captures(address) %0, ptr noundef readonly captures(address, ret: address, provenance) %1) unnamed_addr #7 {
 bb.a:
   %.not.i = icmp eq ptr %1, null
   br i1 %.not.i, label %find_signature.exit.thread, label %bb.b
@@ -333,7 +333,7 @@ bb.f:                                             ; preds = %skip_signature.exit
 declare ptr @PyUnicode_FromString(ptr noundef) local_unnamed_addr #3
 
 ; Function Attrs: nounwind uwtable
-define hidden ptr @_PyType_GetTextSignatureFromInternalDoc(ptr noundef readonly %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #1 {
+define hidden ptr @_PyType_GetTextSignatureFromInternalDoc(ptr noundef readonly captures(address) %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #1 {
 bb.a:
   %.not.i = icmp eq ptr %1, null
   br i1 %.not.i, label %skip_signature.exit.thread, label %bb.b

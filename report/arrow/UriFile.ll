@@ -201,7 +201,7 @@ uriFilenameToUriStringW.exit:                     ; preds = %bb.a, %.split.us.i
 }
 
 ; Function Attrs: nounwind uwtable
-define range(i32 0, 3) i32 @uriUriStringToUnixFilenameW(ptr noundef readonly %0, ptr noundef %1) local_unnamed_addr #0 {
+define range(i32 0, 3) i32 @uriUriStringToUnixFilenameW(ptr noundef readonly captures(address) %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   %i.b = icmp eq ptr %1, null
@@ -240,7 +240,7 @@ uriUriStringToFilenameW.exit:                     ; preds = %bb.a, %.thread58.th
 }
 
 ; Function Attrs: nounwind uwtable
-define range(i32 0, 3) i32 @uriUriStringToWindowsFilenameW(ptr noundef readonly %0, ptr noundef %1) local_unnamed_addr #0 {
+define range(i32 0, 3) i32 @uriUriStringToWindowsFilenameW(ptr noundef readonly captures(address) %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   %i.b = icmp eq ptr %1, null

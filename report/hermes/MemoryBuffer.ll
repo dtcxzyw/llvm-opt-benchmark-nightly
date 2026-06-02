@@ -201,7 +201,7 @@ bb.p:                                             ; preds = %bb.s, %.lr.ph.i
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.r, %bb.p
-  store i32 0, ptr %i.bp, align 4, !tbaa !3, !noalias !60
+  store i32 0, ptr %i.bp, align 4, !tbaa !3
   %i.br = call noundef i64 @pread(i32 noundef %i.h, ptr noundef %.0101.i, i64 noundef %.066100.i, i64 noundef %i.bq) #21, !noalias !60, !inline_history !74 ; 3 uses
   switch i64 %i.br, label %bb.s [
     i64 -1, label %bb.r
@@ -209,7 +209,7 @@ bb.q:                                             ; preds = %bb.r, %bb.p
   ]
 
 bb.r:                                             ; preds = %bb.q
-  %i.bs = load i32, ptr %i.bp, align 4, !tbaa !3, !noalias !60 ; 2 uses
+  %i.bs = load i32, ptr %i.bp, align 4, !tbaa !3  ; 2 uses
   %i.bt = icmp eq i32 %i.bs, 4
   br i1 %i.bt, label %bb.q, label %bb.t, !llvm.loop !75
 

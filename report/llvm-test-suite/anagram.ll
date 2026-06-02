@@ -201,7 +201,6 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.c = tail call ptr @__ctype_b_loc() #20
-  %1 = load ptr, ptr %i.c, align 8, !tbaa !17
   br label %bb.b
 
 .preheader.loopexit:                              ; preds = %.backedge
@@ -294,6 +293,7 @@ bb.b:                                             ; preds = %.lr.ph, %.backedge
   %.pn = phi ptr [ %0, %.lr.ph ], [ %i.bs, %.backedge ]
   %.03238 = phi i32 [ 0, %.lr.ph ], [ %.032.be, %.backedge ] ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %.pn, i64 1 ; 2 uses
+  %1 = load ptr, ptr %i.c, align 8, !tbaa !17
   %i.bt = sext i8 %i.br to i64                    ; 2 uses
   %i.bu = getelementptr inbounds [2 x i8], ptr %1, i64 %i.bt
   %i.bv = load i16, ptr %i.bu, align 2, !tbaa !19

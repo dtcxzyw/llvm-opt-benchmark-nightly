@@ -201,7 +201,7 @@ bb.g:                                             ; preds = %tailrecurse
 }
 
 ; Function Attrs: mustprogress nofree nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define noundef zeroext i1 @_ZN7testing8internal15UnitTestOptions13MatchesFilterERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKc(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0, ptr noundef readonly %1) local_unnamed_addr #11 align 2 {
+define noundef zeroext i1 @_ZN7testing8internal15UnitTestOptions13MatchesFilterERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKc(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0, ptr noundef readonly captures(address) %1) local_unnamed_addr #11 align 2 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !7      ; 2 uses
   %i.b = tail call noundef zeroext i1 @_ZN7testing8internal15UnitTestOptions20PatternMatchesStringEPKcS3_(ptr noundef %1, ptr noundef %i.a)
@@ -604,14 +604,14 @@ bb.aa:                                            ; preds = %_ZN7testing15Assert
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN7testing11IsSubstringEPKcS1_PKwS3_(ptr dead_on_unwind noalias writable sret(%"class.testing::AssertionResult") align 8 %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) local_unnamed_addr #0 {
+define void @_ZN7testing11IsSubstringEPKcS1_PKwS3_(ptr dead_on_unwind noalias writable sret(%"class.testing::AssertionResult") align 8 %0, ptr noundef %1, ptr noundef %2, ptr noundef readonly captures(address) %3, ptr noundef readonly captures(address) %4) local_unnamed_addr #0 {
 bb.a:
   tail call fastcc void @_ZN7testing12_GLOBAL__N_115IsSubstringImplIPKwEENS_15AssertionResultEbPKcS6_RKT_S9_(ptr dead_on_unwind noalias writable align 8 %0, i1 noundef zeroext true, ptr noundef %1, ptr noundef %2, ptr %3, ptr %4)
   ret void
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal fastcc void @_ZN7testing12_GLOBAL__N_115IsSubstringImplIPKwEENS_15AssertionResultEbPKcS6_RKT_S9_(ptr dead_on_unwind noalias writable align 8 %0, i1 noundef zeroext %1, ptr noundef %2, ptr noundef %3, ptr readonly %.0.val, ptr readonly %.0.val1) unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define internal fastcc void @_ZN7testing12_GLOBAL__N_115IsSubstringImplIPKwEENS_15AssertionResultEbPKcS6_RKT_S9_(ptr dead_on_unwind noalias writable align 8 %0, i1 noundef zeroext %1, ptr noundef %2, ptr noundef %3, ptr readonly captures(address) %.0.val, ptr readonly captures(address) %.0.val1) unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %"class.testing::Message", align 8  ; 8 uses
   %5 = alloca %"class.testing::Message", align 8  ; 8 uses
@@ -869,7 +869,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN7testing14IsNotSubstringEPKcS1_PKwS3_(ptr dead_on_unwind noalias writable sret(%"class.testing::AssertionResult") align 8 %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) local_unnamed_addr #0 {
+define void @_ZN7testing14IsNotSubstringEPKcS1_PKwS3_(ptr dead_on_unwind noalias writable sret(%"class.testing::AssertionResult") align 8 %0, ptr noundef %1, ptr noundef %2, ptr noundef readonly captures(address) %3, ptr noundef readonly captures(address) %4) local_unnamed_addr #0 {
 bb.a:
   tail call fastcc void @_ZN7testing12_GLOBAL__N_115IsSubstringImplIPKwEENS_15AssertionResultEbPKcS6_RKT_S9_(ptr dead_on_unwind noalias writable align 8 %0, i1 noundef zeroext false, ptr noundef %1, ptr noundef %2, ptr %3, ptr %4)
   ret void
@@ -1272,7 +1272,7 @@ bb.k:                                             ; preds = %bb.j, %_ZNSt7__cxx1
 declare i64 @wcslen(ptr noundef captures(none)) local_unnamed_addr #8
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(read) uwtable
-define noundef zeroext i1 @_ZN7testing8internal6String17WideCStringEqualsEPKwS3_(ptr noundef readonly %0, ptr noundef readonly %1) local_unnamed_addr #24 align 2 {
+define noundef zeroext i1 @_ZN7testing8internal6String17WideCStringEqualsEPKwS3_(ptr noundef readonly captures(address) %0, ptr noundef readonly captures(address) %1) local_unnamed_addr #24 align 2 {
 bb.a:
   %i.a = icmp eq ptr %0, null                     ; 2 uses
   %i.b = icmp eq ptr %1, null                     ; 2 uses

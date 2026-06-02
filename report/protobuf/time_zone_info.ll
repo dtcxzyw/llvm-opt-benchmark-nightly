@@ -201,14 +201,14 @@ bb.c:                                             ; preds = %bb.b, %_ZNKSt7__cxx
   br i1 %.not17.i.i.i.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.t = load i8, ptr %i.s, align 1, !tbaa !33, !noalias !264
+  %i.t = load i8, ptr %i.s, align 1, !tbaa !33
   %.not18.i.i.i.i = icmp eq i8 %i.t, 0
   %spec.select.i.i.i.i = select i1 %.not18.i.i.i.i, ptr @.str.11, ptr %i.s
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %.0.i.i.i.i = phi ptr [ @.str.11, %bb.c ], [ %spec.select.i.i.i.i, %bb.d ] ; 2 uses
-  %i.u = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %.0.i.i.i.i) #24, !noalias !264 ; 2 uses
+  %i.u = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %.0.i.i.i.i) #24 ; 2 uses
   %i.v = icmp ugt i64 %i.u, 4611686018427387903
   br i1 %i.v, label %bb.f, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i.i.i.i.i
 
@@ -221,7 +221,7 @@ bb.f:                                             ; preds = %bb.e
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i.i.i.i.i: ; preds = %bb.e
   %i.w = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %10, ptr noundef nonnull %.0.i.i.i.i, i64 noundef %i.u)
-          to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit.i.i.i.i unwind label %bb.i, !noalias !264 ; 0 uses
+          to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit.i.i.i.i unwind label %bb.i ; 0 uses
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit.i.i.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i.i.i.i.i
   %i.x = load i64, ptr %i.n, align 8, !tbaa !7, !noalias !264 ; 4 uses

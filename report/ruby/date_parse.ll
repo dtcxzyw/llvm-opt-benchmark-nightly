@@ -201,17 +201,17 @@ bb.s:                                             ; preds = %bb.r
 
 .lr.ph.i205:                                      ; preds = %bb.s
   %i.ef = tail call ptr @__ctype_b_loc() #12
-  %.pre = load ptr, ptr %i.ef, align 8, !tbaa !17
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.x, %.lr.ph.i205
   %.018.i206 = phi i32 [ 0, %.lr.ph.i205 ], [ %.1.i, %bb.x ]
   %.01217.i = phi i64 [ 0, %.lr.ph.i205 ], [ %.2.i208, %bb.x ] ; 4 uses
   %.01416.i = phi i64 [ 0, %.lr.ph.i205 ], [ %i.eq, %bb.x ] ; 2 uses
+  %1 = load ptr, ptr %i.ef, align 8, !tbaa !17
   %i.eg = getelementptr inbounds nuw i8, ptr %i.p, i64 %.01416.i
   %i.eh = load i8, ptr %i.eg, align 1, !tbaa !16  ; 2 uses
   %i.ei = zext i8 %i.eh to i64
-  %i.ej = getelementptr inbounds nuw [2 x i8], ptr %.pre, i64 %i.ei
+  %i.ej = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %i.ei
   %i.ek = load i16, ptr %i.ej, align 2, !tbaa !20
   %i.el = and i16 %i.ek, 8192
   %.not.i207 = icmp eq i16 %i.el, 0

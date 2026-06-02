@@ -113,7 +113,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call ptr @__errno_location() #21
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !3, !noalias !7
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !3
   %i.e = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt3_V216generic_categoryEv() #21
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.g = load i8, ptr %i.f, align 8, !alias.scope !7
@@ -145,7 +145,7 @@ bb.a:
 
 _ZN4llvh7ErrorOrIPvEC2EOS2_.exit:                 ; preds = %bb.a
   %i.c = tail call ptr @__errno_location() #21
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !3, !noalias !14
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !3
   %i.e = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt3_V216generic_categoryEv() #21
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.g = load i8, ptr %i.f, align 8
@@ -199,7 +199,7 @@ bb.a:
 
 _ZN4llvh7ErrorOrIPvEC2EOS2_.exit:                 ; preds = %bb.a
   %i.g = tail call ptr @__errno_location() #21
-  %i.h = load i32, ptr %i.g, align 4, !tbaa !3, !noalias !17
+  %i.h = load i32, ptr %i.g, align 4, !tbaa !3
   %i.i = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt3_V216generic_categoryEv() #21
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.k = load i8, ptr %i.j, align 8
@@ -289,7 +289,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call ptr @__errno_location() #21
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !3, !noalias !20
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !3
   %i.e = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt3_V216generic_categoryEv() #21
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.g = load i8, ptr %i.f, align 8, !alias.scope !20

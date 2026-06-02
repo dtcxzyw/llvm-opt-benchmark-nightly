@@ -201,7 +201,7 @@ Py_DECREF.exit76:                                 ; preds = %bb.ao, %_PyUnicode_
 declare ptr @_PyInterpreterState_GetConfig(ptr noundef) local_unnamed_addr #3
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(read) uwtable
-define internal fastcc range(i32 1, 9) i32 @get_error_handler_wide(ptr noundef readonly %0) unnamed_addr #13 {
+define internal fastcc range(i32 1, 9) i32 @get_error_handler_wide(ptr noundef readonly captures(address) %0) unnamed_addr #13 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   br i1 %i.a, label %bb.i, label %bb.b
@@ -604,7 +604,7 @@ _PyUnicode_Equal.exit:                            ; preds = %_PyUnicode_DATA.exi
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local range(i32 -1, 2) i32 @PyUnicode_Compare(ptr noundef readonly %0, ptr noundef readonly %1) local_unnamed_addr #1 {
+define dso_local range(i32 -1, 2) i32 @PyUnicode_Compare(ptr noundef readonly captures(address) %0, ptr noundef readonly captures(address) %1) local_unnamed_addr #1 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 8
   %.val13 = load ptr, ptr %i.a, align 8, !tbaa !197 ; 2 uses
@@ -646,7 +646,7 @@ bb.e:                                             ; preds = %bb.c, %._crit_edge,
 }
 
 ; Function Attrs: nofree nounwind memory(read) uwtable
-define internal fastcc range(i32 -1, 2) i32 @unicode_compare(ptr noundef readonly %0, ptr noundef readonly %1) unnamed_addr #16 {
+define internal fastcc range(i32 -1, 2) i32 @unicode_compare(ptr noundef readonly captures(address) %0, ptr noundef readonly captures(address) %1) unnamed_addr #16 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 32
   %i.b = load i32, ptr %i.a, align 8              ; 3 uses
@@ -1049,7 +1049,7 @@ bb.n:                                             ; preds = %.critedge
 declare i32 @memcmp(ptr noundef captures(none), ptr noundef captures(none), i64 noundef) local_unnamed_addr #5
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local range(i32 0, 2) i32 @PyUnicode_EqualToUTF8(ptr noundef readonly captures(none) %0, ptr noundef readonly %1) local_unnamed_addr #9 {
+define dso_local range(i32 0, 2) i32 @PyUnicode_EqualToUTF8(ptr noundef readonly captures(none) %0, ptr noundef readonly captures(address, ret: address, provenance) %1) local_unnamed_addr #9 {
 bb.a:
   %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #34
   %i.b = tail call i32 @PyUnicode_EqualToUTF8AndSize(ptr noundef %0, ptr noundef nonnull %1, i64 noundef %i.a)
@@ -1352,7 +1352,7 @@ bb.f:                                             ; preds = %bb.b, %_PyUnicode_D
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local ptr @PyUnicode_RichCompare(ptr noundef readonly %0, ptr noundef readonly %1, i32 noundef %2) #1 {
+define dso_local ptr @PyUnicode_RichCompare(ptr noundef readonly captures(address) %0, ptr noundef readonly captures(address) %1, i32 noundef %2) #1 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 8
   %.val29 = load ptr, ptr %i.a, align 8, !tbaa !197
@@ -1755,7 +1755,7 @@ ucs1lib_rfind.exit:                               ; preds = %bb.d, %bb.h, %bb.a,
 }
 
 ; Function Attrs: inlinehint nofree norecurse nosync nounwind memory(argmem: read) uwtable
-define internal fastcc i64 @asciilib_fastsearch(ptr noundef %0, i64 noundef %1, ptr noundef readonly %2, i64 noundef range(i64 1, 0) %3, i32 noundef range(i32 1, 3) %4) unnamed_addr #23 {
+define internal fastcc i64 @asciilib_fastsearch(ptr noundef %0, i64 noundef %1, ptr noundef readonly captures(address, ret: address, provenance) %2, i64 noundef range(i64 1, 0) %3, i32 noundef range(i32 1, 3) %4) unnamed_addr #23 {
 bb.a:
   %i.a = icmp slt i64 %1, %3
   br i1 %i.a, label %asciilib_find_char.exit, label %bb.b
@@ -2158,7 +2158,7 @@ ucs1lib_find_char.exit:                           ; preds = %bb.ad, %._crit_edge
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc i64 @ucs1lib__two_way_find(ptr noundef readonly %0, i64 noundef %1, ptr noundef %2, i64 noundef range(i64 6, -9223372036854775808) %3) unnamed_addr #25 {
+define internal fastcc i64 @ucs1lib__two_way_find(ptr noundef readonly captures(address, ret: address, provenance) %0, i64 noundef %1, ptr noundef %2, i64 noundef range(i64 6, -9223372036854775808) %3) unnamed_addr #25 {
 bb.a:
   %4 = alloca %struct.ucs1lib__pre, align 8       ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #33
@@ -2561,7 +2561,7 @@ ucs2lib_rfind_char.exit:                          ; preds = %bb.aj, %._crit_edge
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc range(i64 -4611686018427387904, 4611686018427387904) i64 @ucs2lib__two_way_find(ptr noundef readonly %0, i64 noundef %1, ptr noundef %2, i64 noundef range(i64 6, -9223372036854775808) %3) unnamed_addr #25 {
+define internal fastcc range(i64 -4611686018427387904, 4611686018427387904) i64 @ucs2lib__two_way_find(ptr noundef readonly captures(address, ret: address, provenance) %0, i64 noundef %1, ptr noundef %2, i64 noundef range(i64 6, -9223372036854775808) %3) unnamed_addr #25 {
 bb.a:
   %4 = alloca %struct.ucs2lib__pre, align 8       ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #33
@@ -2964,7 +2964,7 @@ ucs4lib_find_char.exit:                           ; preds = %bb.am, %._crit_edge
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc range(i64 -2305843009213693952, 2305843009213693952) i64 @ucs4lib__two_way_find(ptr noundef readonly %0, i64 noundef %1, ptr noundef %2, i64 noundef range(i64 6, -9223372036854775808) %3) unnamed_addr #25 {
+define internal fastcc range(i64 -2305843009213693952, 2305843009213693952) i64 @ucs4lib__two_way_find(ptr noundef readonly captures(address, ret: address, provenance) %0, i64 noundef %1, ptr noundef %2, i64 noundef range(i64 6, -9223372036854775808) %3) unnamed_addr #25 {
 bb.a:
   %4 = alloca %struct.ucs4lib__pre, align 8       ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #33

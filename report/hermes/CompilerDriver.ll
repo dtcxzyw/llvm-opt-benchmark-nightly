@@ -201,7 +201,7 @@ _ZNK2cl6CLFlagcvbEv.exit.i:                       ; preds = %bb.lb, %bb.la, %bb.
   br i1 %i.bie, label %_ZN6hermes8oscompat12should_colorEi.exit.i.i, label %bb.lc
 
 bb.lc:                                            ; preds = %_ZNK2cl6CLFlagcvbEv.exit.i
-  %i.bif = call i32 @strcmp(ptr noundef nonnull dereferenceable(5) @.str.323, ptr noundef nonnull dereferenceable(1) %i.bid) #27, !noalias !387
+  %i.bif = call i32 @strcmp(ptr noundef nonnull dereferenceable(5) @.str.323, ptr noundef nonnull dereferenceable(1) %i.bid) #27
   %i.big = icmp eq i32 %i.bif, 0
   br i1 %i.big, label %_ZN6hermes8oscompat12should_colorEi.exit.i.i, label %bb.ld
 

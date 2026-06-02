@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.a, %._crit_edge
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #33
 
 ; Function Attrs: nofree nounwind uwtable
-define dso_local i32 @_getopt_internal(i32 noundef %0, ptr noundef captures(none) %1, ptr noundef readonly %2, ptr noundef readonly captures(address) %3, ptr noundef writeonly captures(address_is_null) %4, i32 noundef %5) local_unnamed_addr #13 {
+define dso_local i32 @_getopt_internal(i32 noundef %0, ptr noundef captures(none) %1, ptr noundef readonly captures(address) %2, ptr noundef readonly captures(address) %3, ptr noundef writeonly captures(address_is_null) %4, i32 noundef %5) local_unnamed_addr #13 {
 bb.a:
   store ptr null, ptr @optarg, align 8
   %i.a = load i32, ptr @optind, align 4           ; 6 uses
@@ -604,21 +604,21 @@ declare ptr @strchr(ptr noundef, i32 noundef) local_unnamed_addr #3
 declare i32 @strncmp(ptr noundef captures(none), ptr noundef captures(none), i64 noundef) local_unnamed_addr #3
 
 ; Function Attrs: nofree nounwind uwtable
-define dso_local i32 @getopt(i32 noundef %0, ptr noundef nonnull captures(none) %1, ptr noundef nonnull %2) local_unnamed_addr #13 {
+define dso_local i32 @getopt(i32 noundef %0, ptr noundef nonnull captures(none) %1, ptr noundef nonnull readonly captures(address) %2) local_unnamed_addr #13 {
 bb.a:
   %i.a = tail call i32 @_getopt_internal(i32 noundef %0, ptr noundef nonnull %1, ptr noundef nonnull %2, ptr noundef null, ptr noundef null, i32 noundef 0)
   ret i32 %i.a
 }
 
 ; Function Attrs: nofree nounwind uwtable
-define dso_local i32 @getopt_long(i32 noundef %0, ptr noundef captures(none) %1, ptr noundef %2, ptr noundef readonly captures(address) %3, ptr noundef writeonly captures(address_is_null) %4) local_unnamed_addr #13 {
+define dso_local i32 @getopt_long(i32 noundef %0, ptr noundef captures(none) %1, ptr noundef readonly captures(address) %2, ptr noundef readonly captures(address) %3, ptr noundef writeonly captures(address_is_null) %4) local_unnamed_addr #13 {
 bb.a:
   %i.a = tail call i32 @_getopt_internal(i32 noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, i32 noundef 0)
   ret i32 %i.a
 }
 
 ; Function Attrs: nofree nounwind uwtable
-define dso_local i32 @getopt_long_only(i32 noundef %0, ptr noundef captures(none) %1, ptr noundef %2, ptr noundef readonly captures(address) %3, ptr noundef writeonly captures(address_is_null) %4) local_unnamed_addr #13 {
+define dso_local i32 @getopt_long_only(i32 noundef %0, ptr noundef captures(none) %1, ptr noundef readonly captures(address) %2, ptr noundef readonly captures(address) %3, ptr noundef writeonly captures(address_is_null) %4) local_unnamed_addr #13 {
 bb.a:
   %i.a = tail call i32 @_getopt_internal(i32 noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, i32 noundef 1)
   ret i32 %i.a

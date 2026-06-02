@@ -147,11 +147,11 @@ module asm ".globl _ZSt21ios_base_library_initv"
 @_ZTSSt19_Sp_counted_deleterIPN16OpenColorIO_v2_512ConfigMergerEPFvS2_ESaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr constant [102 x i8] c"St19_Sp_counted_deleterIPN16OpenColorIO_v2_512ConfigMergerEPFvS2_ESaIvELN9__gnu_cxx12_Lock_policyE2EE\00", align 1
 @_ZTSPFvPN16OpenColorIO_v2_512ConfigMergerEE = linkonce_odr constant [40 x i8] c"PFvPN16OpenColorIO_v2_512ConfigMergerEE\00", align 1
 @switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_ = private unnamed_addr constant [5 x ptr] [ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN16OpenColorIO_v2_513GeneralMergerE, i64 16), ptr getelementptr inbounds nuw inrange(-24, 40) (i8, ptr @_ZTVN16OpenColorIO_v2_513GeneralMergerE, i64 24), ptr getelementptr inbounds nuw inrange(-32, 32) (i8, ptr @_ZTVN16OpenColorIO_v2_513GeneralMergerE, i64 32), ptr getelementptr inbounds nuw inrange(-40, 24) (i8, ptr @_ZTVN16OpenColorIO_v2_513GeneralMergerE, i64 40), ptr getelementptr inbounds nuw inrange(-48, 16) (i8, ptr @_ZTVN16OpenColorIO_v2_513GeneralMergerE, i64 48)], align 8
-@switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.9 = private unnamed_addr constant [5 x ptr] [ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN16OpenColorIO_v2_511RolesMergerE, i64 16), ptr getelementptr inbounds nuw inrange(-24, 40) (i8, ptr @_ZTVN16OpenColorIO_v2_511RolesMergerE, i64 24), ptr getelementptr inbounds nuw inrange(-32, 32) (i8, ptr @_ZTVN16OpenColorIO_v2_511RolesMergerE, i64 32), ptr getelementptr inbounds nuw inrange(-40, 24) (i8, ptr @_ZTVN16OpenColorIO_v2_511RolesMergerE, i64 40), ptr getelementptr inbounds nuw inrange(-48, 16) (i8, ptr @_ZTVN16OpenColorIO_v2_511RolesMergerE, i64 48)], align 8
-@switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.10 = private unnamed_addr constant [5 x ptr] [ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN16OpenColorIO_v2_515FileRulesMergerE, i64 16), ptr getelementptr inbounds nuw inrange(-24, 40) (i8, ptr @_ZTVN16OpenColorIO_v2_515FileRulesMergerE, i64 24), ptr getelementptr inbounds nuw inrange(-32, 32) (i8, ptr @_ZTVN16OpenColorIO_v2_515FileRulesMergerE, i64 32), ptr getelementptr inbounds nuw inrange(-40, 24) (i8, ptr @_ZTVN16OpenColorIO_v2_515FileRulesMergerE, i64 40), ptr getelementptr inbounds nuw inrange(-48, 16) (i8, ptr @_ZTVN16OpenColorIO_v2_515FileRulesMergerE, i64 48)], align 8
-@switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.11 = private unnamed_addr constant [5 x ptr] [ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN16OpenColorIO_v2_517DisplayViewMergerE, i64 16), ptr getelementptr inbounds nuw inrange(-24, 40) (i8, ptr @_ZTVN16OpenColorIO_v2_517DisplayViewMergerE, i64 24), ptr getelementptr inbounds nuw inrange(-32, 32) (i8, ptr @_ZTVN16OpenColorIO_v2_517DisplayViewMergerE, i64 32), ptr getelementptr inbounds nuw inrange(-40, 24) (i8, ptr @_ZTVN16OpenColorIO_v2_517DisplayViewMergerE, i64 40), ptr getelementptr inbounds nuw inrange(-48, 16) (i8, ptr @_ZTVN16OpenColorIO_v2_517DisplayViewMergerE, i64 48)], align 8
-@switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.12 = private unnamed_addr constant [5 x ptr] [ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN16OpenColorIO_v2_511LooksMergerE, i64 16), ptr getelementptr inbounds nuw inrange(-24, 40) (i8, ptr @_ZTVN16OpenColorIO_v2_511LooksMergerE, i64 24), ptr getelementptr inbounds nuw inrange(-32, 32) (i8, ptr @_ZTVN16OpenColorIO_v2_511LooksMergerE, i64 32), ptr getelementptr inbounds nuw inrange(-40, 24) (i8, ptr @_ZTVN16OpenColorIO_v2_511LooksMergerE, i64 40), ptr getelementptr inbounds nuw inrange(-48, 16) (i8, ptr @_ZTVN16OpenColorIO_v2_511LooksMergerE, i64 48)], align 8
-@switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.13 = private unnamed_addr constant [5 x ptr] [ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN16OpenColorIO_v2_521NamedTransformsMergerE, i64 16), ptr getelementptr inbounds nuw inrange(-24, 40) (i8, ptr @_ZTVN16OpenColorIO_v2_521NamedTransformsMergerE, i64 24), ptr getelementptr inbounds nuw inrange(-32, 32) (i8, ptr @_ZTVN16OpenColorIO_v2_521NamedTransformsMergerE, i64 32), ptr getelementptr inbounds nuw inrange(-40, 24) (i8, ptr @_ZTVN16OpenColorIO_v2_521NamedTransformsMergerE, i64 40), ptr getelementptr inbounds nuw inrange(-48, 16) (i8, ptr @_ZTVN16OpenColorIO_v2_521NamedTransformsMergerE, i64 48)], align 8
+@switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.8 = private unnamed_addr constant [5 x ptr] [ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN16OpenColorIO_v2_511RolesMergerE, i64 16), ptr getelementptr inbounds nuw inrange(-24, 40) (i8, ptr @_ZTVN16OpenColorIO_v2_511RolesMergerE, i64 24), ptr getelementptr inbounds nuw inrange(-32, 32) (i8, ptr @_ZTVN16OpenColorIO_v2_511RolesMergerE, i64 32), ptr getelementptr inbounds nuw inrange(-40, 24) (i8, ptr @_ZTVN16OpenColorIO_v2_511RolesMergerE, i64 40), ptr getelementptr inbounds nuw inrange(-48, 16) (i8, ptr @_ZTVN16OpenColorIO_v2_511RolesMergerE, i64 48)], align 8
+@switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.9 = private unnamed_addr constant [5 x ptr] [ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN16OpenColorIO_v2_515FileRulesMergerE, i64 16), ptr getelementptr inbounds nuw inrange(-24, 40) (i8, ptr @_ZTVN16OpenColorIO_v2_515FileRulesMergerE, i64 24), ptr getelementptr inbounds nuw inrange(-32, 32) (i8, ptr @_ZTVN16OpenColorIO_v2_515FileRulesMergerE, i64 32), ptr getelementptr inbounds nuw inrange(-40, 24) (i8, ptr @_ZTVN16OpenColorIO_v2_515FileRulesMergerE, i64 40), ptr getelementptr inbounds nuw inrange(-48, 16) (i8, ptr @_ZTVN16OpenColorIO_v2_515FileRulesMergerE, i64 48)], align 8
+@switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.10 = private unnamed_addr constant [5 x ptr] [ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN16OpenColorIO_v2_517DisplayViewMergerE, i64 16), ptr getelementptr inbounds nuw inrange(-24, 40) (i8, ptr @_ZTVN16OpenColorIO_v2_517DisplayViewMergerE, i64 24), ptr getelementptr inbounds nuw inrange(-32, 32) (i8, ptr @_ZTVN16OpenColorIO_v2_517DisplayViewMergerE, i64 32), ptr getelementptr inbounds nuw inrange(-40, 24) (i8, ptr @_ZTVN16OpenColorIO_v2_517DisplayViewMergerE, i64 40), ptr getelementptr inbounds nuw inrange(-48, 16) (i8, ptr @_ZTVN16OpenColorIO_v2_517DisplayViewMergerE, i64 48)], align 8
+@switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.11 = private unnamed_addr constant [5 x ptr] [ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN16OpenColorIO_v2_511LooksMergerE, i64 16), ptr getelementptr inbounds nuw inrange(-24, 40) (i8, ptr @_ZTVN16OpenColorIO_v2_511LooksMergerE, i64 24), ptr getelementptr inbounds nuw inrange(-32, 32) (i8, ptr @_ZTVN16OpenColorIO_v2_511LooksMergerE, i64 32), ptr getelementptr inbounds nuw inrange(-40, 24) (i8, ptr @_ZTVN16OpenColorIO_v2_511LooksMergerE, i64 40), ptr getelementptr inbounds nuw inrange(-48, 16) (i8, ptr @_ZTVN16OpenColorIO_v2_511LooksMergerE, i64 48)], align 8
+@switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.12 = private unnamed_addr constant [5 x ptr] [ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN16OpenColorIO_v2_521NamedTransformsMergerE, i64 16), ptr getelementptr inbounds nuw inrange(-24, 40) (i8, ptr @_ZTVN16OpenColorIO_v2_521NamedTransformsMergerE, i64 24), ptr getelementptr inbounds nuw inrange(-32, 32) (i8, ptr @_ZTVN16OpenColorIO_v2_521NamedTransformsMergerE, i64 32), ptr getelementptr inbounds nuw inrange(-40, 24) (i8, ptr @_ZTVN16OpenColorIO_v2_521NamedTransformsMergerE, i64 40), ptr getelementptr inbounds nuw inrange(-48, 16) (i8, ptr @_ZTVN16OpenColorIO_v2_521NamedTransformsMergerE, i64 48)], align 8
 
 @_ZN16OpenColorIO_v2_523ConfigMergingParametersC1Ev = unnamed_addr alias void (ptr), ptr @_ZN16OpenColorIO_v2_523ConfigMergingParametersC2Ev
 @_ZN16OpenColorIO_v2_523ConfigMergingParametersD1Ev = unnamed_addr alias void (ptr), ptr @_ZN16OpenColorIO_v2_523ConfigMergingParametersD2Ev
@@ -554,7 +554,7 @@ bb.y:                                             ; preds = %_ZNK16OpenColorIO_v
 
 switch.lookup310:                                 ; preds = %bb.y
   %i.dv = zext nneg i32 %.sink.i100 to i64
-  %switch.gep311 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.9, i64 %i.dv
+  %switch.gep311 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.8, i64 %i.dv
   %switch.load312 = load ptr, ptr %switch.gep311, align 8
   %.sink.i104 = load ptr, ptr %switch.load312, align 8
   invoke void %.sink.i104(ptr noundef nonnull align 8 dereferenceable(80) %16)
@@ -693,7 +693,7 @@ bb.al:                                            ; preds = %_ZNK16OpenColorIO_v
 
 switch.lookup313:                                 ; preds = %bb.al
   %i.fk = zext nneg i32 %.sink.i117 to i64
-  %switch.gep314 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.10, i64 %i.fk
+  %switch.gep314 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.9, i64 %i.fk
   %switch.load315 = load ptr, ptr %switch.gep314, align 8
   %.sink.i121 = load ptr, ptr %switch.load315, align 8
   invoke void %.sink.i121(ptr noundef nonnull align 8 dereferenceable(80) %17)
@@ -832,7 +832,7 @@ bb.ay:                                            ; preds = %_ZNK16OpenColorIO_v
 
 switch.lookup316:                                 ; preds = %bb.ay
   %i.gz = zext nneg i32 %.sink.i134 to i64
-  %switch.gep317 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.11, i64 %i.gz
+  %switch.gep317 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.10, i64 %i.gz
   %switch.load318 = load ptr, ptr %switch.gep317, align 8
   %.sink.i138 = load ptr, ptr %switch.load318, align 8
   invoke void %.sink.i138(ptr noundef nonnull align 8 dereferenceable(80) %18)
@@ -1161,7 +1161,7 @@ bb.cf:                                            ; preds = %_ZNK16OpenColorIO_v
 
 switch.lookup319:                                 ; preds = %bb.cf
   %i.kr = zext nneg i32 %.sink.i167 to i64
-  %switch.gep320 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.12, i64 %i.kr
+  %switch.gep320 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.11, i64 %i.kr
   %switch.load321 = load ptr, ptr %switch.gep320, align 8
   %.sink.i171 = load ptr, ptr %switch.load321, align 8
   invoke void %.sink.i171(ptr noundef nonnull align 8 dereferenceable(80) %20)
@@ -1490,7 +1490,7 @@ bb.dm:                                            ; preds = %_ZNK16OpenColorIO_v
 
 switch.lookup322:                                 ; preds = %bb.dm
   %i.oj = zext nneg i32 %.sink.i203 to i64
-  %switch.gep323 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.13, i64 %i.oj
+  %switch.gep323 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.12, i64 %i.oj
   %switch.load324 = load ptr, ptr %switch.gep323, align 8
   %.sink.i207 = load ptr, ptr %switch.load324, align 8
   invoke void %.sink.i207(ptr noundef nonnull align 8 dereferenceable(80) %22)
@@ -1893,7 +1893,7 @@ bb.s:                                             ; preds = %_ZNK16OpenColorIO_v
 
 switch.lookup265:                                 ; preds = %bb.s
   %i.be = zext nneg i32 %.sink.i91 to i64
-  %switch.gep266 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.9, i64 %i.be
+  %switch.gep266 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.8, i64 %i.be
   %switch.load267 = load ptr, ptr %switch.gep266, align 8
   %.sink.i95 = load ptr, ptr %switch.load267, align 8
   invoke void %.sink.i95(ptr noundef nonnull align 8 dereferenceable(80) %13)
@@ -2038,7 +2038,7 @@ bb.af:                                            ; preds = %_ZNK16OpenColorIO_v
 
 switch.lookup268:                                 ; preds = %bb.af
   %i.cw = zext nneg i32 %.sink.i108 to i64
-  %switch.gep269 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.10, i64 %i.cw
+  %switch.gep269 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.9, i64 %i.cw
   %switch.load270 = load ptr, ptr %switch.gep269, align 8
   %.sink.i112 = load ptr, ptr %switch.load270, align 8
   invoke void %.sink.i112(ptr noundef nonnull align 8 dereferenceable(80) %14)
@@ -2183,7 +2183,7 @@ bb.as:                                            ; preds = %_ZNK16OpenColorIO_v
 
 switch.lookup271:                                 ; preds = %bb.as
   %i.eo = zext nneg i32 %.sink.i125 to i64
-  %switch.gep272 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.11, i64 %i.eo
+  %switch.gep272 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.10, i64 %i.eo
   %switch.load273 = load ptr, ptr %switch.gep272, align 8
   %.sink.i129 = load ptr, ptr %switch.load273, align 8
   invoke void %.sink.i129(ptr noundef nonnull align 8 dereferenceable(80) %15)
@@ -2528,7 +2528,7 @@ bb.bz:                                            ; preds = %_ZNK16OpenColorIO_v
 
 switch.lookup274:                                 ; preds = %bb.bz
   %i.iq = zext nneg i32 %.sink.i158 to i64
-  %switch.gep275 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.12, i64 %i.iq
+  %switch.gep275 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.11, i64 %i.iq
   %switch.load276 = load ptr, ptr %switch.gep275, align 8
   %.sink.i162 = load ptr, ptr %switch.load276, align 8
   invoke void %.sink.i162(ptr noundef nonnull align 8 dereferenceable(80) %17)
@@ -2873,7 +2873,7 @@ bb.dg:                                            ; preds = %_ZNK16OpenColorIO_v
 
 switch.lookup277:                                 ; preds = %bb.dg
   %i.ms = zext nneg i32 %.sink.i194 to i64
-  %switch.gep278 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.13, i64 %i.ms
+  %switch.gep278 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN16OpenColorIO_v2_520ConfigMergingHelpers12MergeConfigsERKSt10shared_ptrINS_23ConfigMergingParametersEERKS1_IKNS_6ConfigEESA_.12, i64 %i.ms
   %switch.load279 = load ptr, ptr %switch.gep278, align 8
   %.sink.i198 = load ptr, ptr %switch.load279, align 8
   invoke void %.sink.i198(ptr noundef nonnull align 8 dereferenceable(80) %19)

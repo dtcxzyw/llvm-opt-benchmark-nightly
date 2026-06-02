@@ -201,7 +201,7 @@ _ZN11duckdb_zstdL22ZSTD_deriveBlockSplitsEPNS_11ZSTD_CCtx_sEPjj.exit.i.i.i: ; pr
   br i1 %i.ib, label %bb.ba, label %bb.bb
 
 bb.ba:                                            ; preds = %_ZN11duckdb_zstdL22ZSTD_deriveBlockSplitsEPNS_11ZSTD_CCtx_sEPjj.exit.i.i.i
-  %i.ic = call fastcc noundef i64 @_ZN11duckdb_zstdL33ZSTD_compressSeqStore_singleBlockEPNS_11ZSTD_CCtx_sEPKNS_10seqStore_tEPNS_10repcodes_sES6_PvmPKvmjj(ptr noundef nonnull %0, ptr noundef nonnull %i.dd, ptr noundef %8, ptr noundef %9, ptr noundef %.0132173.i, i64 noundef range(i64 6, 0) %.0113179.i, ptr noundef %.0122176.i, i64 noundef %spec.select.i, i32 noundef range(i32 0, 2) %i.dw, i32 noundef 0)
+  %i.ic = call fastcc noundef i64 @_ZN11duckdb_zstdL33ZSTD_compressSeqStore_singleBlockEPNS_11ZSTD_CCtx_sEPKNS_10seqStore_tEPNS_10repcodes_sES6_PvmPKvmjj(ptr noundef nonnull %0, ptr noundef nonnull %i.dd, ptr noundef %8, ptr noundef %9, ptr noundef %.0132173.i, i64 noundef range(i64 6, 0) %.0113179.i, ptr noundef readonly %.0122176.i, i64 noundef %spec.select.i, i32 noundef range(i32 0, 2) %i.dw, i32 noundef 0)
   br label %_ZN11duckdb_zstdL38ZSTD_compressBlock_splitBlock_internalEPNS_11ZSTD_CCtx_sEPvmPKvmjj.exit.i.i
 
 bb.bb:                                            ; preds = %_ZN11duckdb_zstdL22ZSTD_deriveBlockSplitsEPNS_11ZSTD_CCtx_sEPjj.exit.i.i.i
@@ -604,7 +604,7 @@ declare noundef i64 @_ZN11duckdb_zstd23ZSTD_compressSuperBlockEPNS_11ZSTD_CCtx_s
 declare i64 @llvm.cttz.i64(i64, i1 immarg) #19
 
 ; Function Attrs: mustprogress uwtable
-define internal fastcc noundef i64 @_ZN11duckdb_zstdL33ZSTD_compressSeqStore_singleBlockEPNS_11ZSTD_CCtx_sEPKNS_10seqStore_tEPNS_10repcodes_sES6_PvmPKvmjj(ptr noundef captures(none) %0, ptr noundef readonly captures(none) %1, ptr noundef nonnull captures(none) %2, ptr noundef nonnull captures(none) %3, ptr noundef %4, i64 noundef %5, ptr noundef readonly %6, i64 noundef %7, i32 noundef range(i32 0, 2) %8, i32 noundef range(i32 0, 2) %9) unnamed_addr #2 {
+define internal fastcc noundef i64 @_ZN11duckdb_zstdL33ZSTD_compressSeqStore_singleBlockEPNS_11ZSTD_CCtx_sEPKNS_10seqStore_tEPNS_10repcodes_sES6_PvmPKvmjj(ptr noundef captures(none) %0, ptr noundef readonly captures(none) %1, ptr noundef nonnull captures(none) %2, ptr noundef nonnull captures(none) %3, ptr noundef %4, i64 noundef %5, ptr noundef readonly captures(address) %6, i64 noundef %7, i32 noundef range(i32 0, 2) %8, i32 noundef range(i32 0, 2) %9) unnamed_addr #2 {
 bb.a:
   %10 = alloca %"struct.duckdb_zstd::repcodes_s", align 4 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #27

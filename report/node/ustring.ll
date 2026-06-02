@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local ptr @u_memchr_78(ptr noundef readonly %0, i16 noundef zeroext %1, i32 noundef %2) local_unnamed_addr #0 {
+define dso_local ptr @u_memchr_78(ptr noundef readonly captures(address, ret: address, provenance) %0, i16 noundef zeroext %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i16, align 2                      ; 2 uses
   store i16 %1, ptr %i.a, align 2
@@ -604,7 +604,7 @@ u_strchr_78.exit:                                 ; preds = %bb.h, %.lr.ph, %bb.
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local ptr @u_memchr32_78(ptr noundef readonly %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 {
+define dso_local ptr @u_memchr32_78(ptr noundef readonly captures(address, ret: address, provenance) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i16, align 2                      ; 4 uses
   %i.b = icmp ult i32 %1, 65536
@@ -981,7 +981,7 @@ u_strFindLast_78.exit:                            ; preds = %.preheader, %_ZL19i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define dso_local ptr @u_memrchr_78(ptr noundef readonly %0, i16 noundef zeroext %1, i32 noundef %2) local_unnamed_addr #2 {
+define dso_local ptr @u_memrchr_78(ptr noundef readonly captures(address, ret: address, provenance) %0, i16 noundef zeroext %1, i32 noundef %2) local_unnamed_addr #2 {
 bb.a:
   %i.a = alloca i16, align 2                      ; 2 uses
   store i16 %1, ptr %i.a, align 2
@@ -1019,7 +1019,7 @@ bb.f:                                             ; preds = %bb.e
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define dso_local ptr @u_strrstr_78(ptr noundef readonly %0, ptr noundef readonly %1) local_unnamed_addr #2 {
+define dso_local ptr @u_strrstr_78(ptr noundef readonly captures(address, ret: address, provenance) %0, ptr noundef readonly captures(address, ret: address, provenance) %1) local_unnamed_addr #2 {
 bb.a:
   %i.a = tail call ptr @u_strFindLast_78(ptr noundef %0, i32 noundef -1, ptr noundef %1, i32 noundef -1)
   ret ptr %i.a
@@ -1170,7 +1170,7 @@ u_strrchr_78.exit:                                ; preds = %.lr.ph, %.preheader
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define dso_local ptr @u_memrchr32_78(ptr noundef readonly %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #2 {
+define dso_local ptr @u_memrchr32_78(ptr noundef readonly captures(address, ret: address, provenance) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #2 {
 bb.a:
   %i.a = alloca i16, align 2                      ; 4 uses
   %i.b = icmp ult i32 %1, 65536
@@ -1573,7 +1573,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %bb.l,
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define dso_local range(i32 -65535, 65536) i32 @u_strCompare_78(ptr noundef readonly %0, i32 noundef %1, ptr noundef readonly %2, i32 noundef %3, i8 noundef signext %4) local_unnamed_addr #2 {
+define dso_local range(i32 -65535, 65536) i32 @u_strCompare_78(ptr noundef readonly captures(address, ret: address, provenance) %0, i32 noundef %1, ptr noundef readonly captures(address, ret: address, provenance) %2, i32 noundef %3, i8 noundef signext %4) local_unnamed_addr #2 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   %i.b = icmp slt i32 %1, -1
@@ -1754,7 +1754,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define dso_local range(i32 -65535, 65536) i32 @u_strncmpCodePointOrder_78(ptr noundef readonly %0, ptr noundef readonly %1, i32 noundef %2) local_unnamed_addr #2 {
+define dso_local range(i32 -65535, 65536) i32 @u_strncmpCodePointOrder_78(ptr noundef readonly captures(address, ret: address, provenance) %0, ptr noundef readonly captures(address, ret: address, provenance) %1, i32 noundef %2) local_unnamed_addr #2 {
 bb.a:
   %i.a = tail call i32 @uprv_strCompare_78(ptr noundef %0, i32 noundef %2, ptr noundef %1, i32 noundef %2, i8 noundef signext 1, i8 noundef signext 1)
   ret i32 %i.a
@@ -2157,7 +2157,7 @@ bb.b:                                             ; preds = %.lr.ph
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define dso_local range(i32 -65535, 65536) i32 @u_memcmpCodePointOrder_78(ptr noundef readonly %0, ptr noundef readonly %1, i32 noundef %2) local_unnamed_addr #2 {
+define dso_local range(i32 -65535, 65536) i32 @u_memcmpCodePointOrder_78(ptr noundef readonly captures(address, ret: address, provenance) %0, ptr noundef readonly captures(address, ret: address, provenance) %1, i32 noundef %2) local_unnamed_addr #2 {
 bb.a:
   %i.a = tail call i32 @uprv_strCompare_78(ptr noundef %0, i32 noundef %2, ptr noundef %1, i32 noundef %2, i8 noundef signext 0, i8 noundef signext 1)
   ret i32 %i.a

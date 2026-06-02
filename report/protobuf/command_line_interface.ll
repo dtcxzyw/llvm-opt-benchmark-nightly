@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %.preheader518, %bb.
 
 bb.e:                                             ; preds = %.noexc161
   %i.v = tail call ptr @__errno_location() #40
-  %i.w = load i32, ptr %i.v, align 4, !tbaa !3, !noalias !305
+  %i.w = load i32, ptr %i.v, align 4, !tbaa !3
   %i.x = icmp eq i32 %i.w, 4
   br i1 %i.x, label %bb.d, label %.critedge.i, !llvm.loop !308
 
@@ -315,7 +315,7 @@ _ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit33.i: ; preds = %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit.i
   %i.bk = tail call ptr @__errno_location() #40
-  %i.bl = load i32, ptr %i.bk, align 4, !tbaa !3, !noalias !305
+  %i.bl = load i32, ptr %i.bk, align 4, !tbaa !3
   %i.bm = call ptr @strerror(i32 noundef %i.bl) #37, !noalias !305 ; 3 uses
   %.not.i34.i = icmp eq ptr %i.bm, null
   br i1 %.not.i34.i, label %bb.n, label %bb.o

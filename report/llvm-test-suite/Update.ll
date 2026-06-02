@@ -201,8 +201,8 @@ bb.gh:                                            ; preds = %_ZN9CMyComPtrI20ISe
   br label %_ZN9CMyComPtrI9IInStreamED2Ev.exit322.thread.i.i
 
 bb.gi:                                            ; preds = %bb.ho, %_ZN11CStringBaseIwEC2Ev.exit266.i.i
-  %i.yd = phi i32 [ 4, %_ZN11CStringBaseIwEC2Ev.exit266.i.i ], [ %i.aao, %bb.ho ] ; 6 uses
-  %i.ye = phi ptr [ %i.xu, %_ZN11CStringBaseIwEC2Ev.exit266.i.i ], [ %31, %bb.ho ] ; 9 uses
+  %i.yd = phi i32 [ 4, %_ZN11CStringBaseIwEC2Ev.exit266.i.i ], [ %31, %bb.ho ] ; 6 uses
+  %i.ye = phi ptr [ %i.xu, %_ZN11CStringBaseIwEC2Ev.exit266.i.i ], [ %32, %bb.ho ] ; 9 uses
   %i.yf = phi i1 [ %i.ya, %_ZN11CStringBaseIwEC2Ev.exit266.i.i ], [ true, %bb.ho ]
   %.0178394.i.i = phi i32 [ 0, %_ZN11CStringBaseIwEC2Ev.exit266.i.i ], [ %i.abn, %bb.ho ] ; 3 uses
   br i1 %i.yf, label %bb.gj, label %bb.ha
@@ -291,7 +291,7 @@ bb.gr:                                            ; preds = %bb.gq
   br i1 %i.za, label %_ZN11CStringBaseIwE11SetCapacityEi.exit.i269.i.i, label %bb.gs
 
 bb.gs:                                            ; preds = %bb.gr
-  %i.zb = zext nneg i32 %i.yz to i64
+  %i.zb = zext i32 %i.yz to i64
   %i.zc = icmp slt i32 %i.yy, -1
   %i.zd = shl nuw nsw i64 %i.zb, 2
   %i.ze = select i1 %i.zc, i64 -1, i64 %i.zd
@@ -373,7 +373,7 @@ bb.hb:                                            ; preds = %bb.ha
   br i1 %i.zv, label %_ZN11CStringBaseIwE11SetCapacityEi.exit.i278.i.i, label %bb.hc
 
 bb.hc:                                            ; preds = %bb.hb
-  %i.zw = zext nneg i32 %i.zu to i64
+  %i.zw = zext i32 %i.zu to i64
   %i.zx = icmp slt i32 %i.zt, -1
   %i.zy = shl nuw nsw i64 %i.zw, 2
   %i.zz = select i1 %i.zx, i64 -1, i64 %i.zy
@@ -443,11 +443,11 @@ _ZN11CStringBaseIwED2Ev.exit287.i.i:              ; preds = %bb.hj, %bb.hi, %bb.
   br label %.loopexit.split-lp.i.body.i
 
 bb.hk:                                            ; preds = %_ZN11CStringBaseIwED2Ev.exit286.i.i, %_ZN11CStringBaseIwED2Ev.exit276.i.i
-  %i.aao = phi i32 [ %i.aac, %_ZN11CStringBaseIwED2Ev.exit286.i.i ], [ %i.zh, %_ZN11CStringBaseIwED2Ev.exit276.i.i ]
-  %31 = phi ptr [ %i.aad, %_ZN11CStringBaseIwED2Ev.exit286.i.i ], [ %i.zi, %_ZN11CStringBaseIwED2Ev.exit276.i.i ] ; 10 uses
-  %32 = phi i32 [ %i.aai, %_ZN11CStringBaseIwED2Ev.exit286.i.i ], [ %i.zn, %_ZN11CStringBaseIwED2Ev.exit276.i.i ] ; 6 uses
+  %i.aao = phi i32 [ %i.zn, %_ZN11CStringBaseIwED2Ev.exit276.i.i ], [ %i.aai, %_ZN11CStringBaseIwED2Ev.exit286.i.i ] ; 6 uses
+  %31 = phi i32 [ %i.zh, %_ZN11CStringBaseIwED2Ev.exit276.i.i ], [ %i.aac, %_ZN11CStringBaseIwED2Ev.exit286.i.i ]
+  %32 = phi ptr [ %i.zi, %_ZN11CStringBaseIwED2Ev.exit276.i.i ], [ %i.aad, %_ZN11CStringBaseIwED2Ev.exit286.i.i ] ; 10 uses
   store i64 0, ptr %i.xz, align 8, !tbaa !59
-  %i.aap = invoke noundef zeroext i1 @_ZN8NWindows5NFile3NIO8COutFile6CreateEPKwb(ptr noundef nonnull align 8 dereferenceable(1084) %i.xo, ptr noundef nonnull %31, i1 noundef zeroext false)
+  %i.aap = invoke noundef zeroext i1 @_ZN8NWindows5NFile3NIO8COutFile6CreateEPKwb(ptr noundef nonnull align 8 dereferenceable(1084) %i.xo, ptr noundef nonnull %32, i1 noundef zeroext false)
           to label %_ZN14COutFileStream6CreateEPKwb.exit.i.i unwind label %.loopexit.i.i
 
 _ZN14COutFileStream6CreateEPKwb.exit.i.i:         ; preds = %bb.hk
@@ -459,11 +459,11 @@ bb.hl:                                            ; preds = %_ZN14COutFileStream
 
 .noexc128.i:                                      ; preds = %bb.hl
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aaq, i8 0, i64 16, i1 false)
-  %i.aar = add nsw i32 %32, 1                     ; 3 uses
+  %i.aar = add nsw i32 %i.aao, 1                  ; 3 uses
   %i.aas = icmp ne i32 %i.aar, 0
   call void @llvm.assume(i1 %i.aas)
   %i.aat = zext nneg i32 %i.aar to i64
-  %i.aau = icmp slt i32 %32, -1
+  %i.aau = icmp slt i32 %i.aao, -1
   %i.aav = shl nuw nsw i64 %i.aat, 2
   %i.aaw = select i1 %i.aau, i64 -1, i64 %i.aav
   %i.aax = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.aaw) #20
@@ -477,7 +477,7 @@ bb.hl:                                            ; preds = %_ZN14COutFileStream
   br label %_ZN11CStringBaseIwE11SetCapacityEi.exit.i.i124.i
 
 _ZN11CStringBaseIwE11SetCapacityEi.exit.i.i124.i: ; preds = %.noexc.i.i, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i.i124.i
-  %.04.i.i.i125.i = phi ptr [ %i.aaz, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i.i124.i ], [ %31, %.noexc.i.i ] ; 2 uses
+  %.04.i.i.i125.i = phi ptr [ %i.aaz, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i.i124.i ], [ %32, %.noexc.i.i ] ; 2 uses
   %.0.i.i.i126.i = phi ptr [ %i.abb, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i.i124.i ], [ %i.aax, %.noexc.i.i ] ; 2 uses
   %i.aaz = getelementptr inbounds nuw i8, ptr %.04.i.i.i125.i, i64 4
   %i.aba = load i32, ptr %.04.i.i.i125.i, align 4, !tbaa !35 ; 2 uses
@@ -488,7 +488,7 @@ _ZN11CStringBaseIwE11SetCapacityEi.exit.i.i124.i: ; preds = %.noexc.i.i, %_ZN11C
 
 bb.hm:                                            ; preds = %_ZN11CStringBaseIwE11SetCapacityEi.exit.i.i124.i
   %i.abc = getelementptr inbounds nuw i8, ptr %i.aaq, i64 8
-  store i32 %32, ptr %i.abc, align 8, !tbaa !43
+  store i32 %i.aao, ptr %i.abc, align 8, !tbaa !43
   invoke void @_ZN17CBaseRecordVector18ReserveOnePositionEv(ptr noundef nonnull align 8 dereferenceable(32) %27)
           to label %_ZN11CStringBaseIwED2Ev.exit289.i.thread.i unwind label %.loopexit.split-lp.i.i
 
@@ -506,7 +506,7 @@ _ZN11CStringBaseIwED2Ev.exit289.i.thread.i:       ; preds = %bb.hm
   store ptr %i.aaq, ptr %i.abh, align 8, !tbaa !13
   %i.abi = add nsw i32 %i.abf, 1
   store i32 %i.abi, ptr %i.rd, align 4, !tbaa !8
-  call void @_ZdaPv(ptr noundef nonnull %31) #21
+  call void @_ZdaPv(ptr noundef nonnull %32) #21
   br label %_ZN9CMyComPtrI20ISequentialOutStreamEaSEPS0_.exit.i.i
 
 .loopexit.i.i:                                    ; preds = %bb.hk
@@ -536,14 +536,14 @@ bb.hp:                                            ; preds = %bb.ho
   store i32 0, ptr %i.qx, align 8, !tbaa !43
   %i.abo = load ptr, ptr %i.qw, align 8, !tbaa !34 ; 3 uses
   store i32 0, ptr %i.abo, align 4, !tbaa !35
-  %i.abp = add nsw i32 %32, 1                     ; 3 uses
+  %i.abp = add nsw i32 %i.aao, 1                  ; 3 uses
   %i.abq = load i32, ptr %i.qy, align 4, !tbaa !37 ; 2 uses
   %i.abr = icmp eq i32 %i.abp, %i.abq
   br i1 %i.abr, label %_ZN11CStringBaseIwE11SetCapacityEi.exit.i115.i.preheader, label %bb.hq
 
 bb.hq:                                            ; preds = %bb.hp
   %i.abs = zext nneg i32 %i.abp to i64
-  %i.abt = icmp slt i32 %32, -1
+  %i.abt = icmp slt i32 %i.aao, -1
   %i.abu = shl nuw nsw i64 %i.abs, 2
   %i.abv = select i1 %i.abt, i64 -1, i64 %i.abu
   %i.abw = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.abv) #20
@@ -572,7 +572,7 @@ _ZN11CStringBaseIwE11SetCapacityEi.exit.i115.i.preheader: ; preds = %bb.hr, %bb.
   br label %_ZN11CStringBaseIwE11SetCapacityEi.exit.i115.i
 
 _ZN11CStringBaseIwE11SetCapacityEi.exit.i115.i:   ; preds = %_ZN11CStringBaseIwE11SetCapacityEi.exit.i115.i.preheader, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i115.i
-  %.04.i.i116.i = phi ptr [ %i.acb, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i115.i ], [ %31, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i115.i.preheader ] ; 2 uses
+  %.04.i.i116.i = phi ptr [ %i.acb, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i115.i ], [ %32, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i115.i.preheader ] ; 2 uses
   %.0.i.i117.i = phi ptr [ %i.acd, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i115.i ], [ %.0.i.i117.i.ph, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i115.i.preheader ] ; 2 uses
   %i.acb = getelementptr inbounds nuw i8, ptr %.04.i.i116.i, i64 4
   %i.acc = load i32, ptr %.04.i.i116.i, align 4, !tbaa !35 ; 2 uses
@@ -582,7 +582,7 @@ _ZN11CStringBaseIwE11SetCapacityEi.exit.i115.i:   ; preds = %_ZN11CStringBaseIwE
   br i1 %.not.i.i118.i, label %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i119.i, label %_ZN11CStringBaseIwE11SetCapacityEi.exit.i115.i, !llvm.loop !38
 
 _Z12MyStringCopyIwEPT_S1_PKS0_.exit.i119.i:       ; preds = %_ZN11CStringBaseIwE11SetCapacityEi.exit.i115.i
-  store i32 %32, ptr %i.qx, align 8, !tbaa !43
+  store i32 %i.aao, ptr %i.qx, align 8, !tbaa !43
   store i32 0, ptr %i.ra, align 8, !tbaa !43
   %i.ace = load ptr, ptr %i.qz, align 8, !tbaa !34 ; 3 uses
   store i32 0, ptr %i.ace, align 4, !tbaa !35
@@ -635,11 +635,11 @@ _ZN11CStringBaseIwED2Ev.exit289.i.i:              ; preds = %bb.ht, %_Z12MyStrin
   store i32 101, ptr %i.act, align 4, !tbaa !35
   store i32 0, ptr %i.acu, align 4, !tbaa !35
   store i32 22, ptr %i.ra, align 8, !tbaa !43
-  call void @_ZdaPv(ptr noundef nonnull %31) #21
+  call void @_ZdaPv(ptr noundef nonnull %32) #21
   br label %bb.ks
 
 .loopexit.split-lp.i.body.i:                      ; preds = %bb.hu, %.loopexit.split-lp.i.i, %.loopexit.i.i, %bb.hn, %_ZN11CStringBaseIwED2Ev.exit287.i.i, %_ZN11CStringBaseIwED2Ev.exit277.i.i, %bb.gp
-  %i.acv = phi ptr [ %31, %.loopexit.i.i ], [ %31, %.loopexit.split-lp.i.i ], [ %31, %bb.hn ], [ %31, %bb.hu ], [ %i.ye, %_ZN11CStringBaseIwED2Ev.exit277.i.i ], [ %i.ye, %bb.gp ], [ %i.ye, %_ZN11CStringBaseIwED2Ev.exit287.i.i ]
+  %i.acv = phi ptr [ %32, %.loopexit.i.i ], [ %32, %.loopexit.split-lp.i.i ], [ %32, %bb.hn ], [ %32, %bb.hu ], [ %i.ye, %_ZN11CStringBaseIwED2Ev.exit277.i.i ], [ %i.ye, %bb.gp ], [ %i.ye, %_ZN11CStringBaseIwED2Ev.exit287.i.i ]
   %.pn211.i.i = phi { ptr, i32 } [ %lpad.loopexit.i.i, %.loopexit.i.i ], [ %lpad.loopexit.split-lp.i.i, %.loopexit.split-lp.i.i ], [ %i.abd, %bb.hn ], [ %i.acm, %bb.hu ], [ %.pn206.i.i, %_ZN11CStringBaseIwED2Ev.exit277.i.i ], [ %i.yx, %bb.gp ], [ %.pn203.i.i, %_ZN11CStringBaseIwED2Ev.exit287.i.i ]
   call void @_ZdaPv(ptr noundef nonnull %i.acv) #21
   br label %_ZN9CMyComPtrI9IInStreamED2Ev.exit322.thread.i.i

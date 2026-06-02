@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %bb.b
   %i.m = load i64, ptr %i.l, align 8, !tbaa !93   ; 2 uses
   %i.n = icmp sgt i64 %i.m, 0
   %i.o = icmp eq i32 %i.g, 115
-  %or.cond = and i1 %i.o, %i.n
+  %or.cond = and i1 %i.n, %i.o
   br i1 %or.cond, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e
