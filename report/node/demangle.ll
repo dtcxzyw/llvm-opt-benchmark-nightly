@@ -201,7 +201,7 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 4              ; 2 uses
   %i.c = add nsw i32 %i.b, 1
   store i32 %i.c, ptr %i.a, align 4
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 11 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 13 uses
   %i.e = load i32, ptr %i.d, align 8              ; 2 uses
   %i.f = add nsw i32 %i.e, 1
   store i32 %i.f, ptr %i.d, align 8
@@ -370,25 +370,25 @@ _ZN4absl18debugging_internalL13ParseDecltypeEPNS0_5StateE.exit.thread: ; preds =
   br i1 %i.br, label %bb.r, label %bb.k
 
 bb.k:                                             ; preds = %_ZN4absl18debugging_internalL13ParseDecltypeEPNS0_5StateE.exit.thread
-  %1 = load <2 x i32>, ptr %i.a, align 4          ; 4 uses
-  %2 = extractelement <2 x i32> %1, i64 0         ; 5 uses
-  %i.bs = add nsw i32 %2, 1
-  %3 = extractelement <2 x i32> %1, i64 1         ; 2 uses
-  %i.bt = add nsw i32 %3, 1
+  %1 = load i32, ptr %i.a, align 4                ; 7 uses
+  %i.bs = add nsw i32 %1, 1
+  %2 = load i32, ptr %i.d, align 8                ; 4 uses
+  %i.bt = add nsw i32 %2, 1
   store i32 %i.bt, ptr %i.d, align 8
-  %i.bu = icmp sgt i32 %2, 255
-  %i.bv = icmp sgt i32 %3, 131071
+  %i.bu = icmp sgt i32 %1, 255
+  %i.bv = icmp sgt i32 %2, 131071
   %or.cond62 = select i1 %i.bu, i1 true, i1 %i.bv
   br i1 %or.cond62, label %_ZN4absl18debugging_internalL23ParseVendorExtendedTypeEPNS0_5StateE.exit.thread, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %.sroa.0129.0.copyload = load <4 x i32>, ptr %i.m, align 4
-  %4 = add nsw <2 x i32> %1, splat (i32 2)
-  store <2 x i32> %4, ptr %i.a, align 4
-  %5 = icmp sgt <2 x i32> %1, <i32 254, i32 131070> ; 2 uses
-  %6 = extractelement <2 x i1> %5, i64 0
-  %7 = extractelement <2 x i1> %5, i64 1
-  %or.cond.i38 = select i1 %6, i1 true, i1 %7
+  %3 = add nsw i32 %1, 2
+  store i32 %3, ptr %i.a, align 4
+  %4 = add nsw i32 %2, 2
+  store i32 %4, ptr %i.d, align 8
+  %5 = icmp sgt i32 %1, 254
+  %6 = icmp sgt i32 %2, 131070
+  %or.cond.i38 = select i1 %5, i1 true, i1 %6
   br i1 %or.cond.i38, label %_ZN4absl18debugging_internalL23ParseVendorExtendedTypeEPNS0_5StateE.exit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
@@ -418,12 +418,12 @@ _ZN4absl18debugging_internalL23ParseVendorExtendedTypeEPNS0_5StateE.exit.thread5
   br label %.sink.split
 
 _ZN4absl18debugging_internalL23ParseVendorExtendedTypeEPNS0_5StateE.exit: ; preds = %bb.m, %bb.l, %._ZN4absl18debugging_internalL23ParseVendorExtendedTypeEPNS0_5StateE.exit_crit_edge
-  %storemerge63.in.pre = phi i32 [ %i.cc, %._ZN4absl18debugging_internalL23ParseVendorExtendedTypeEPNS0_5StateE.exit_crit_edge ], [ %2, %bb.l ], [ %2, %bb.m ]
+  %storemerge63.in.pre = phi i32 [ %i.cc, %._ZN4absl18debugging_internalL23ParseVendorExtendedTypeEPNS0_5StateE.exit_crit_edge ], [ %1, %bb.l ], [ %1, %bb.m ]
   store <4 x i32> %.sroa.0129.0.copyload, ptr %i.m, align 4
   br label %_ZN4absl18debugging_internalL23ParseVendorExtendedTypeEPNS0_5StateE.exit.thread
 
 _ZN4absl18debugging_internalL23ParseVendorExtendedTypeEPNS0_5StateE.exit.thread: ; preds = %bb.k, %_ZN4absl18debugging_internalL23ParseVendorExtendedTypeEPNS0_5StateE.exit
-  %storemerge63.in = phi i32 [ %2, %bb.k ], [ %storemerge63.in.pre, %_ZN4absl18debugging_internalL23ParseVendorExtendedTypeEPNS0_5StateE.exit ]
+  %storemerge63.in = phi i32 [ %1, %bb.k ], [ %storemerge63.in.pre, %_ZN4absl18debugging_internalL23ParseVendorExtendedTypeEPNS0_5StateE.exit ]
   store i32 %storemerge63.in, ptr %i.a, align 4
   %i.cf = tail call fastcc noundef zeroext i1 @_ZN4absl18debugging_internalL17ParseUnscopedNameEPNS0_5StateE(ptr noundef nonnull %0)
   br i1 %i.cf, label %bb.r, label %bb.o
