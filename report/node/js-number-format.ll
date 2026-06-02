@@ -201,30 +201,30 @@ _ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN2v88internal16NumberForm
   br i1 %i.ax, label %_ZNSt6vectorImSaImEE9push_backEOm.exit, label %.lr.ph.i10.i
 
 .lr.ph.i10.i:                                     ; preds = %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN2v88internal16NumberFormatSpanESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_SH_T0_.exit.i, %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN2v88internal16NumberFormatSpanESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_comp_iterIPFbRKS4_SD_EEEEvT_T0_.exit.i11.i
-  %.sroa.0.07.i.i = phi ptr [ %i.bs, %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN2v88internal16NumberFormatSpanESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_comp_iterIPFbRKS4_SD_EEEEvT_T0_.exit.i11.i ], [ %i.aw, %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN2v88internal16NumberFormatSpanESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_SH_T0_.exit.i ] ; 10 uses
+  %.sroa.0.07.i.i = phi ptr [ %i.bs, %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN2v88internal16NumberFormatSpanESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_comp_iterIPFbRKS4_SD_EEEEvT_T0_.exit.i11.i ], [ %i.aw, %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN2v88internal16NumberFormatSpanESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_SH_T0_.exit.i ] ; 11 uses
   %.sroa.0124.0.copyload = load i32, ptr %.sroa.0.07.i.i, align 4 ; 3 uses
   %.sroa.6127.0..sroa.0.07.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i, i64 4
-  %4 = load <2 x i32>, ptr %.sroa.6127.0..sroa.0.07.i.i.sroa_idx, align 4 ; 3 uses
-  %5 = extractelement <2 x i32> %4, i64 1         ; 4 uses
-  %6 = extractelement <2 x i32> %4, i64 0         ; 4 uses
+  %.sroa.6127.0.copyload = load i32, ptr %.sroa.6127.0..sroa.0.07.i.i.sroa_idx, align 4 ; 5 uses
+  %.sroa.8130.0..sroa.0.07.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i, i64 8
+  %.sroa.8130.0.copyload = load i32, ptr %.sroa.8130.0..sroa.0.07.i.i.sroa_idx, align 4 ; 5 uses
   %.sroa.0.07.i.i.i = getelementptr inbounds i8, ptr %.sroa.0.07.i.i, i64 -12 ; 2 uses
   %i.ay = getelementptr inbounds i8, ptr %.sroa.0.07.i.i, i64 -8
   %i.az = load i32, ptr %i.ay, align 4            ; 2 uses
-  %i.ba = icmp slt i32 %6, %i.az
+  %i.ba = icmp slt i32 %.sroa.6127.0.copyload, %i.az
   br i1 %i.ba, label %.lr.ph.i.i13.i.preheader, label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph.i10.i
-  %i.bb = icmp sgt i32 %6, %i.az
+  %i.bb = icmp sgt i32 %.sroa.6127.0.copyload, %i.az
   br i1 %i.bb, label %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN2v88internal16NumberFormatSpanESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_comp_iterIPFbRKS4_SD_EEEEvT_T0_.exit.i11.i, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   %i.bc = getelementptr inbounds i8, ptr %.sroa.0.07.i.i, i64 -4
   %i.bd = load i32, ptr %i.bc, align 4            ; 2 uses
-  %i.be = icmp slt i32 %5, %i.bd
+  %i.be = icmp slt i32 %.sroa.8130.0.copyload, %i.bd
   br i1 %i.be, label %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN2v88internal16NumberFormatSpanESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_comp_iterIPFbRKS4_SD_EEEEvT_T0_.exit.i11.i, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %i.bf = icmp sgt i32 %5, %i.bd
+  %i.bf = icmp sgt i32 %.sroa.8130.0.copyload, %i.bd
   br i1 %i.bf, label %.lr.ph.i.i13.i.preheader, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
@@ -242,21 +242,21 @@ bb.u:                                             ; preds = %bb.t
   %.sroa.0.0.i.i16.i = getelementptr inbounds i8, ptr %.sroa.0.09.i.i14.i, i64 -12 ; 2 uses
   %i.bi = getelementptr inbounds i8, ptr %.sroa.0.09.i.i14.i, i64 -8
   %i.bj = load i32, ptr %i.bi, align 4            ; 2 uses
-  %i.bk = icmp slt i32 %6, %i.bj
+  %i.bk = icmp slt i32 %.sroa.6127.0.copyload, %i.bj
   br i1 %i.bk, label %.lr.ph.i.i13.i.backedge, label %bb.v
 
 bb.v:                                             ; preds = %.lr.ph.i.i13.i
-  %i.bl = icmp sgt i32 %6, %i.bj
+  %i.bl = icmp sgt i32 %.sroa.6127.0.copyload, %i.bj
   br i1 %i.bl, label %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN2v88internal16NumberFormatSpanESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_comp_iterIPFbRKS4_SD_EEEEvT_T0_.exit.i11.i, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
   %i.bm = getelementptr inbounds i8, ptr %.sroa.0.09.i.i14.i, i64 -4
   %i.bn = load i32, ptr %i.bm, align 4            ; 2 uses
-  %i.bo = icmp slt i32 %5, %i.bn
+  %i.bo = icmp slt i32 %.sroa.8130.0.copyload, %i.bn
   br i1 %i.bo, label %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN2v88internal16NumberFormatSpanESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_comp_iterIPFbRKS4_SD_EEEEvT_T0_.exit.i11.i, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %i.bp = icmp sgt i32 %5, %i.bn
+  %i.bp = icmp sgt i32 %.sroa.8130.0.copyload, %i.bn
   br i1 %i.bp, label %.lr.ph.i.i13.i.backedge, label %bb.y
 
 .lr.ph.i.i13.i.backedge:                          ; preds = %bb.x, %.lr.ph.i.i13.i, %bb.y
@@ -268,10 +268,12 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.br, label %.lr.ph.i.i13.i.backedge, label %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN2v88internal16NumberFormatSpanESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_comp_iterIPFbRKS4_SD_EEEEvT_T0_.exit.i11.i
 
 _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN2v88internal16NumberFormatSpanESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_comp_iterIPFbRKS4_SD_EEEEvT_T0_.exit.i11.i: ; preds = %bb.w, %bb.v, %bb.y, %bb.s, %bb.r, %bb.u
-  %.sroa.04.0.lcssa.i.i12.i = phi ptr [ %.sroa.0.07.i.i, %bb.u ], [ %.sroa.0.07.i.i, %bb.r ], [ %.sroa.0.07.i.i, %bb.s ], [ %.sroa.0.09.i.i14.i, %bb.y ], [ %.sroa.0.09.i.i14.i, %bb.v ], [ %.sroa.0.09.i.i14.i, %bb.w ] ; 2 uses
+  %.sroa.04.0.lcssa.i.i12.i = phi ptr [ %.sroa.0.07.i.i, %bb.u ], [ %.sroa.0.07.i.i, %bb.r ], [ %.sroa.0.07.i.i, %bb.s ], [ %.sroa.0.09.i.i14.i, %bb.y ], [ %.sroa.0.09.i.i14.i, %bb.v ], [ %.sroa.0.09.i.i14.i, %bb.w ] ; 3 uses
   store i32 %.sroa.0124.0.copyload, ptr %.sroa.04.0.lcssa.i.i12.i, align 4
-  %.sroa.6127.0..sroa.04.0.lcssa.i.i12.i.sroa_idx.a = getelementptr inbounds nuw i8, ptr %.sroa.04.0.lcssa.i.i12.i, i64 4
-  store <2 x i32> %4, ptr %.sroa.6127.0..sroa.04.0.lcssa.i.i12.i.sroa_idx.a, align 4
+  %.sroa.6127.0..sroa.04.0.lcssa.i.i12.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.04.0.lcssa.i.i12.i, i64 4
+  store i32 %.sroa.6127.0.copyload, ptr %.sroa.6127.0..sroa.04.0.lcssa.i.i12.i.sroa_idx, align 4
+  %.sroa.6127.0..sroa.04.0.lcssa.i.i12.i.sroa_idx.a = getelementptr inbounds nuw i8, ptr %.sroa.04.0.lcssa.i.i12.i, i64 8
+  store i32 %.sroa.8130.0.copyload, ptr %.sroa.6127.0..sroa.04.0.lcssa.i.i12.i.sroa_idx.a, align 4
   %i.bs = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i, i64 12 ; 2 uses
   %i.bt = icmp eq ptr %i.bs, %i.c
   br i1 %i.bt, label %_ZNSt6vectorImSaImEE9push_backEOm.exit, label %.lr.ph.i10.i, !llvm.loop !231

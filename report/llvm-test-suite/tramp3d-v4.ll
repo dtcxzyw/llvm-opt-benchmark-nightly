@@ -201,7 +201,7 @@ bb.i:                                             ; preds = %_Z27centeringDomain
   %i.ft = getelementptr inbounds nuw i8, ptr %3, i64 132 ; 2 uses
   %i.fu = getelementptr inbounds nuw i8, ptr %3, i64 76 ; 2 uses
   %i.fv = getelementptr inbounds nuw i8, ptr %3, i64 148 ; 2 uses
-  %i.fw = getelementptr inbounds nuw i8, ptr %3, i64 136
+  %i.fw = getelementptr inbounds nuw i8, ptr %3, i64 136 ; 2 uses
   %i.fx = getelementptr inbounds nuw i8, ptr %3, i64 80 ; 2 uses
   %i.fy = getelementptr inbounds nuw i8, ptr %3, i64 84 ; 2 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %3, i64 152 ; 2 uses
@@ -311,73 +311,74 @@ bb.m:                                             ; preds = %.lr.ph, %_ZN19Field
   %i.ic = load ptr, ptr %i.ib, align 8, !tbaa !3822
   %i.id = load i64, ptr %i.er, align 8, !tbaa !3847
   %i.ie = getelementptr inbounds [176 x i8], ptr %i.ic, i64 %i.id
-  %i.if = getelementptr inbounds [176 x i8], ptr %i.ie, i64 %i.hz ; 11 uses
+  %i.if = getelementptr inbounds [176 x i8], ptr %i.ie, i64 %i.hz ; 12 uses
   %i.ig = getelementptr inbounds nuw i8, ptr %i.if, i64 168
   %i.ih = getelementptr inbounds nuw i8, ptr %i.if, i64 144
   %i.ii = getelementptr inbounds nuw i8, ptr %i.if, i64 132
-  %i.ij = load i32, ptr %i.ih, align 4, !tbaa !4, !noalias !4229
-  %4 = getelementptr inbounds nuw i8, ptr %i.if, i64 148
-  %5 = load i32, ptr %4, align 4, !tbaa !4, !noalias !4229
-  %i.ik = getelementptr inbounds nuw i8, ptr %i.if, i64 152
+  %4 = load i32, ptr %i.ih, align 4, !tbaa !4, !noalias !4229
+  %i.ij = load i32, ptr %i.ii, align 4, !tbaa !4, !noalias !4229 ; 5 uses
+  %5 = mul nsw i32 %i.ij, %.sink10.i
+  %6 = add nsw i32 %5, %4                         ; 2 uses
+  %7 = mul i32 %i.ij, %i.hk
+  %i.ik = getelementptr inbounds nuw i8, ptr %i.if, i64 148
   %i.il = load i32, ptr %i.ik, align 4, !tbaa !4, !noalias !4229
-  %i.im = getelementptr inbounds nuw i8, ptr %i.if, i64 140
+  %i.im = getelementptr inbounds nuw i8, ptr %i.if, i64 136
   %i.in = load i32, ptr %i.im, align 4, !tbaa !4, !noalias !4229 ; 5 uses
-  %i.io = mul nsw i32 %i.in, %.sink6.i27
+  %i.io = mul nsw i32 %i.in, %.sink8.i28
   %i.ip = add nsw i32 %i.io, %i.il                ; 2 uses
-  %i.iq = mul i32 %i.in, %i.hm
-  %i.ir = getelementptr inbounds nuw i8, ptr %i.if, i64 16
-  %6 = getelementptr inbounds nuw i8, ptr %i.if, i64 32
-  %i.is = getelementptr inbounds nuw i8, ptr %i.if, i64 48 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.if, i64 64
-  %8 = sdiv i32 %i.iq, %i.in
-  %i.it = add nsw i32 %8, 1                       ; 2 uses
-  %9 = load <2 x double>, ptr %i.if, align 8, !tbaa !247, !noalias !4229 ; 2 uses
-  %10 = load <2 x double>, ptr %i.ir, align 8, !tbaa !247, !noalias !4229
-  %11 = load <2 x double>, ptr %6, align 8, !tbaa !247, !noalias !4229
-  store <2 x double> %9, ptr %3, align 16, !tbaa !247
-  store <2 x double> %10, ptr %i.ev, align 16, !tbaa !247
-  store <2 x double> %11, ptr %i.ex, align 16, !tbaa !247
-  %12 = load <4 x i32>, ptr %i.is, align 8, !tbaa !4, !noalias !4229
-  %13 = load i32, ptr %i.is, align 8, !tbaa !4, !noalias !4229
-  %14 = load <2 x i32>, ptr %7, align 8, !tbaa !4, !noalias !4229
-  %15 = load <2 x i32>, ptr %i.ii, align 4, !tbaa !4, !noalias !4229 ; 3 uses
-  %16 = extractelement <2 x i32> %15, i64 1       ; 4 uses
-  %17 = extractelement <2 x i32> %15, i64 0       ; 4 uses
-  %18 = mul nsw i32 %17, %.sink10.i
-  %19 = add nsw i32 %18, %i.ij                    ; 2 uses
-  %20 = mul i32 %17, %i.hk
-  %21 = mul nsw i32 %16, %.sink8.i28
-  %22 = add nsw i32 %21, %5                       ; 2 uses
-  %23 = mul i32 %16, %i.hl
-  %24 = sdiv i32 %20, %17
-  %25 = add nsw i32 %24, 1                        ; 2 uses
-  %26 = sdiv i32 %23, %16
-  %27 = add nsw i32 %26, 1                        ; 2 uses
-  store <4 x i32> %12, ptr %i.ez, align 16, !tbaa !4
-  store <2 x i32> %14, ptr %i.fd, align 16, !tbaa !4
+  %i.iq = mul i32 %i.in, %i.hl
+  %i.ir = getelementptr inbounds nuw i8, ptr %i.if, i64 152
+  %8 = load i32, ptr %i.ir, align 4, !tbaa !4, !noalias !4229
+  %i.is = getelementptr inbounds nuw i8, ptr %i.if, i64 140
+  %9 = load i32, ptr %i.is, align 4, !tbaa !4, !noalias !4229 ; 5 uses
+  %10 = mul nsw i32 %9, %.sink6.i27
+  %i.it = add nsw i32 %10, %8                     ; 2 uses
+  %11 = mul i32 %9, %i.hm
+  %12 = getelementptr inbounds nuw i8, ptr %i.if, i64 16
+  %13 = getelementptr inbounds nuw i8, ptr %i.if, i64 32
+  %14 = getelementptr inbounds nuw i8, ptr %i.if, i64 48 ; 2 uses
+  %15 = getelementptr inbounds nuw i8, ptr %i.if, i64 64
+  %16 = sdiv i32 %7, %i.ij
+  %17 = add nsw i32 %16, 1                        ; 2 uses
+  %18 = sdiv i32 %i.iq, %i.in
+  %19 = add nsw i32 %18, 1                        ; 2 uses
+  %20 = sdiv i32 %11, %9
+  %21 = add nsw i32 %20, 1                        ; 2 uses
+  %22 = load <2 x double>, ptr %i.if, align 8, !tbaa !247, !noalias !4229 ; 2 uses
+  %23 = load <2 x double>, ptr %12, align 8, !tbaa !247, !noalias !4229
+  %24 = load <2 x double>, ptr %13, align 8, !tbaa !247, !noalias !4229
+  store <2 x double> %22, ptr %3, align 16, !tbaa !247
+  store <2 x double> %23, ptr %i.ev, align 16, !tbaa !247
+  store <2 x double> %24, ptr %i.ex, align 16, !tbaa !247
+  %25 = load <4 x i32>, ptr %14, align 8, !tbaa !4, !noalias !4229
+  %26 = load i32, ptr %14, align 8, !tbaa !4, !noalias !4229
+  %27 = load <2 x i32>, ptr %15, align 8, !tbaa !4, !noalias !4229
+  store <4 x i32> %25, ptr %i.ez, align 16, !tbaa !4
+  store <2 x i32> %27, ptr %i.fd, align 16, !tbaa !4
   store i32 0, ptr %i.fp, align 4, !tbaa !4
   store i32 0, ptr %i.fq, align 16, !tbaa !4
   store i32 0, ptr %i.fr, align 4, !tbaa !4
-  store i32 %19, ptr %i.fs, align 16, !tbaa !4
+  store i32 %6, ptr %i.fs, align 16, !tbaa !4
+  store i32 %i.ij, ptr %i.ft, align 4, !tbaa !4
   store i32 0, ptr %i.ff, align 8, !tbaa !4
-  store i32 %25, ptr %i.fu, align 4, !tbaa !4
-  store i32 %22, ptr %i.fv, align 4, !tbaa !4
-  store <2 x i32> %15, ptr %i.ft, align 4, !tbaa !4
+  store i32 %17, ptr %i.fu, align 4, !tbaa !4
+  store i32 %i.ip, ptr %i.fv, align 4, !tbaa !4
+  store i32 %i.in, ptr %i.fw, align 8, !tbaa !4
   store i32 0, ptr %i.fx, align 16, !tbaa !4
-  store i32 %27, ptr %i.fy, align 4, !tbaa !4
-  store i32 %i.ip, ptr %i.fz, align 8, !tbaa !4
-  store i32 %i.in, ptr %i.ga, align 4, !tbaa !4
+  store i32 %19, ptr %i.fy, align 4, !tbaa !4
+  store i32 %i.it, ptr %i.fz, align 8, !tbaa !4
+  store i32 %9, ptr %i.ga, align 4, !tbaa !4
   store i32 0, ptr %i.gb, align 8, !tbaa !4
-  store i32 %i.it, ptr %i.gc, align 4, !tbaa !4
-  store i32 %19, ptr %i.fg, align 16, !tbaa !4
-  store i32 %25, ptr %i.fh, align 4, !tbaa !4
-  store i32 %17, ptr %i.fi, align 8, !tbaa !4
-  store i32 %22, ptr %i.fj, align 4, !tbaa !4
-  store i32 %27, ptr %i.fk, align 16, !tbaa !4
-  store i32 %16, ptr %i.fl, align 4, !tbaa !4
-  store i32 %i.ip, ptr %i.fm, align 8, !tbaa !4
-  store i32 %i.it, ptr %i.fn, align 4, !tbaa !4
-  store i32 %i.in, ptr %i.fo, align 16, !tbaa !4
+  store i32 %21, ptr %i.gc, align 4, !tbaa !4
+  store i32 %6, ptr %i.fg, align 16, !tbaa !4
+  store i32 %17, ptr %i.fh, align 4, !tbaa !4
+  store i32 %i.ij, ptr %i.fi, align 8, !tbaa !4
+  store i32 %i.ip, ptr %i.fj, align 4, !tbaa !4
+  store i32 %19, ptr %i.fk, align 16, !tbaa !4
+  store i32 %i.in, ptr %i.fl, align 4, !tbaa !4
+  store i32 %i.it, ptr %i.fm, align 8, !tbaa !4
+  store i32 %21, ptr %i.fn, align 4, !tbaa !4
+  store i32 %9, ptr %i.fo, align 16, !tbaa !4
   %i.iu = load ptr, ptr %i.ig, align 8, !tbaa !1728 ; 7 uses
   store ptr %i.iu, ptr %i.gd, align 8, !tbaa !1728
   %.not.i.i.i29 = icmp eq ptr %i.iu, null
@@ -391,7 +392,7 @@ bb.n:                                             ; preds = %bb.m
   br label %_ZN19FieldEngineBaseDataILi3E6VectorILi3Ed4FullE10ViewEngineILi3E13IndexFunctionIN10GenericURMI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEE16PositionsFunctorEEEEC2I6EngineILi3ES2_SD_E5INodeILi3EEEERKT_RKT0_RK12RelationList.exit
 
 _ZN19FieldEngineBaseDataILi3E6VectorILi3Ed4FullE10ViewEngineILi3E13IndexFunctionIN10GenericURMI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEE16PositionsFunctorEEEEC2I6EngineILi3ES2_SD_E5INodeILi3EEEERKT_RKT0_RK12RelationList.exit: ; preds = %bb.m, %bb.n
-  %i.ix = phi i32 [ %13, %bb.m ], [ %.pre, %bb.n ]
+  %i.ix = phi i32 [ %26, %bb.m ], [ %.pre, %bb.n ]
   %i.iy = load i32, ptr %i.d, align 8, !tbaa !3793
   %i.iz = mul nsw i32 %i.iy, %.056
   %i.ja = add nsw i32 %i.iz, %i.hn
@@ -423,7 +424,7 @@ _ZN19FieldEngineBaseDataILi3E6VectorILi3Ed4FullE10ViewEngineILi3E13IndexFunction
   br i1 %.not.i.i.i.i32, label %_ZN6EngineILi3E6VectorILi3Ed4FullE10ViewEngineILi3E13IndexFunctionIN10GenericURMI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEE16PositionsFunctorEEEEaSERKSE_.exit, label %_ZN12VectorEngineILi3Ed4FullEaSERKS1_.exit.i4.i.i.i
 
 _ZN12VectorEngineILi3Ed4FullEaSERKS1_.exit.i4.i.i.i: ; preds = %_ZN19FieldEngineBaseDataILi3E6VectorILi3Ed4FullE10ViewEngineILi3E13IndexFunctionIN10GenericURMI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEE16PositionsFunctorEEEEC2I6EngineILi3ES2_SD_E5INodeILi3EEEERKT_RKT0_RK12RelationList.exit
-  %i.jt = extractelement <2 x double> %9, i64 0
+  %i.jt = extractelement <2 x double> %22, i64 0
   store double %i.jt, ptr %i.jh, align 8, !tbaa !247
   %i.ju = getelementptr inbounds nuw i8, ptr %i.jh, i64 8
   %i.jv = load double, ptr %i.eu, align 8, !tbaa !247

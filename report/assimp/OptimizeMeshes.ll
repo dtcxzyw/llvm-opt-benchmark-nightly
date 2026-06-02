@@ -201,10 +201,9 @@ _ZNSt6vectorIP6aiMeshSaIS1_EE6resizeEm.exit:      ; preds = %bb.d, %_ZSt8_Destro
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN6Assimp21OptimizeMeshesProcess7CanJoinEjjjj.exit.thread
   %i.av = phi i32 [ %i.ei, %_ZN6Assimp21OptimizeMeshesProcess7CanJoinEjjjj.exit.thread ], [ %i.ag, %.lr.ph.preheader ] ; 8 uses
   %.03979 = phi i32 [ %.039, %_ZN6Assimp21OptimizeMeshesProcess7CanJoinEjjjj.exit.thread ], [ %i.ak, %.lr.ph.preheader ] ; 9 uses
-  %.039.in78 = phi i32 [ %.1.a, %_ZN6Assimp21OptimizeMeshesProcess7CanJoinEjjjj.exit.thread ], [ %i.al, %.lr.ph.preheader ]
-  %2 = phi <2 x i32> [ %7, %_ZN6Assimp21OptimizeMeshesProcess7CanJoinEjjjj.exit.thread ], [ zeroinitializer, %.lr.ph.preheader ] ; 11 uses
-  %3 = extractelement <2 x i32> %2, i64 1
-  %4 = extractelement <2 x i32> %2, i64 0
+  %.039.in78 = phi i32 [ %.1, %_ZN6Assimp21OptimizeMeshesProcess7CanJoinEjjjj.exit.thread ], [ %i.al, %.lr.ph.preheader ]
+  %.04077 = phi i32 [ %.1.a, %_ZN6Assimp21OptimizeMeshesProcess7CanJoinEjjjj.exit.thread ], [ 0, %.lr.ph.preheader ] ; 10 uses
+  %.04276 = phi i32 [ %.143, %_ZN6Assimp21OptimizeMeshesProcess7CanJoinEjjjj.exit.thread ], [ 0, %.lr.ph.preheader ] ; 10 uses
   %i.aw = load ptr, ptr %i.d, align 8
   %i.ax = zext i32 %.03979 to i64                 ; 2 uses
   %i.ay = getelementptr inbounds nuw [4 x i8], ptr %i.aw, i64 %i.ax
@@ -242,7 +241,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bs, i64 4
   %i.bv = load i32, ptr %i.bu, align 4
-  %i.bw = add i32 %i.bv, %4
+  %i.bw = add i32 %i.bv, %.04276
   %i.bx = icmp ugt i32 %i.bw, %i.bt
   br i1 %i.bx, label %_ZN6Assimp21OptimizeMeshesProcess7CanJoinEjjjj.exit.thread, label %bb.h
 
@@ -254,7 +253,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 bb.i:                                             ; preds = %bb.h
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bs, i64 8
   %i.ca = load i32, ptr %i.bz, align 8
-  %i.cb = add i32 %i.ca, %3
+  %i.cb = add i32 %i.ca, %.04077
   %i.cc = icmp ugt i32 %i.cb, %i.by
   br i1 %i.cc, label %_ZN6Assimp21OptimizeMeshesProcess7CanJoinEjjjj.exit.thread, label %bb.j
 
@@ -366,10 +365,13 @@ _ZNSt6vectorIP6aiMeshSaIS1_EE9push_backERKS1_.exit: ; preds = %bb.o, %_ZNSt6vect
   %i.du = getelementptr inbounds nuw i8, ptr %i.dt, i64 24
   %i.dv = load ptr, ptr %i.du, align 8
   %i.dw = getelementptr inbounds nuw [8 x i8], ptr %i.dv, i64 %i.ba
-  %i.dx = load ptr, ptr %i.dw, align 8
-  %i.dy = getelementptr inbounds nuw i8, ptr %i.dx, i64 4
-  %5 = load <2 x i32>, ptr %i.dy, align 4
-  %6 = add <2 x i32> %5, %2
+  %i.dx = load ptr, ptr %i.dw, align 8            ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.dx, i64 4
+  %3 = load i32, ptr %2, align 4
+  %4 = add i32 %3, %.04276
+  %i.dy = getelementptr inbounds nuw i8, ptr %i.dx, i64 8
+  %5 = load i32, ptr %i.dy, align 8
+  %6 = add i32 %5, %.04077
   %i.dz = load ptr, ptr %i.d, align 8             ; 2 uses
   %i.ea = load i32, ptr %i.b, align 8
   %i.eb = add i32 %i.ea, -1
@@ -385,9 +387,10 @@ _ZNSt6vectorIP6aiMeshSaIS1_EE9push_backERKS1_.exit: ; preds = %bb.o, %_ZNSt6vect
 
 _ZN6Assimp21OptimizeMeshesProcess7CanJoinEjjjj.exit.thread: ; preds = %bb.k, %bb.i, %bb.j, %bb.g, %bb.m, %bb.e, %_ZNSt6vectorIP6aiMeshSaIS1_EE9push_backERKS1_.exit, %_ZN6Assimp21OptimizeMeshesProcess7CanJoinEjjjj.exit, %.lr.ph
   %i.ei = phi i32 [ %i.eh, %_ZNSt6vectorIP6aiMeshSaIS1_EE9push_backERKS1_.exit ], [ %i.av, %_ZN6Assimp21OptimizeMeshesProcess7CanJoinEjjjj.exit ], [ %i.av, %.lr.ph ], [ %i.av, %bb.e ], [ %i.av, %bb.m ], [ %i.av, %bb.g ], [ %i.av, %bb.j ], [ %i.av, %bb.i ], [ %i.av, %bb.k ] ; 2 uses
-  %.1.a = phi i32 [ %.039.in78, %_ZNSt6vectorIP6aiMeshSaIS1_EE9push_backERKS1_.exit ], [ %.03979, %_ZN6Assimp21OptimizeMeshesProcess7CanJoinEjjjj.exit ], [ %.03979, %.lr.ph ], [ %.03979, %bb.e ], [ %.03979, %bb.m ], [ %.03979, %bb.g ], [ %.03979, %bb.j ], [ %.03979, %bb.i ], [ %.03979, %bb.k ] ; 2 uses
-  %7 = phi <2 x i32> [ %6, %_ZNSt6vectorIP6aiMeshSaIS1_EE9push_backERKS1_.exit ], [ %2, %_ZN6Assimp21OptimizeMeshesProcess7CanJoinEjjjj.exit ], [ %2, %.lr.ph ], [ %2, %bb.e ], [ %2, %bb.m ], [ %2, %bb.g ], [ %2, %bb.j ], [ %2, %bb.i ], [ %2, %bb.k ]
-  %.039 = add i32 %.1.a, 1                        ; 2 uses
+  %.143 = phi i32 [ %4, %_ZNSt6vectorIP6aiMeshSaIS1_EE9push_backERKS1_.exit ], [ %.04276, %_ZN6Assimp21OptimizeMeshesProcess7CanJoinEjjjj.exit ], [ %.04276, %.lr.ph ], [ %.04276, %bb.e ], [ %.04276, %bb.m ], [ %.04276, %bb.g ], [ %.04276, %bb.j ], [ %.04276, %bb.i ], [ %.04276, %bb.k ]
+  %.1.a = phi i32 [ %6, %_ZNSt6vectorIP6aiMeshSaIS1_EE9push_backERKS1_.exit ], [ %.04077, %_ZN6Assimp21OptimizeMeshesProcess7CanJoinEjjjj.exit ], [ %.04077, %.lr.ph ], [ %.04077, %bb.e ], [ %.04077, %bb.m ], [ %.04077, %bb.g ], [ %.04077, %bb.j ], [ %.04077, %bb.i ], [ %.04077, %bb.k ]
+  %.1 = phi i32 [ %.039.in78, %_ZNSt6vectorIP6aiMeshSaIS1_EE9push_backERKS1_.exit ], [ %.03979, %_ZN6Assimp21OptimizeMeshesProcess7CanJoinEjjjj.exit ], [ %.03979, %.lr.ph ], [ %.03979, %bb.e ], [ %.03979, %bb.m ], [ %.03979, %bb.g ], [ %.03979, %bb.j ], [ %.03979, %bb.i ], [ %.03979, %bb.k ] ; 2 uses
+  %.039 = add i32 %.1, 1                          ; 2 uses
   %i.ej = icmp ult i32 %.039, %i.ei
   br i1 %i.ej, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !10
 

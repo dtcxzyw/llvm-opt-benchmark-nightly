@@ -201,7 +201,7 @@ define void @_ZN8facebook5velox12VectorFuzzer21fuzzRowChildrenToLazyESt10shared_
 bb.a:
   %3 = alloca %"class.std::vector.110", align 8   ; 16 uses
   %4 = alloca %"class.std::shared_ptr", align 16  ; 10 uses
-  %5 = alloca %"class.std::shared_ptr", align 16  ; 4 uses
+  %5 = alloca %"class.std::shared_ptr", align 8   ; 4 uses
   %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = alloca i32, align 4                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #34
@@ -274,8 +274,8 @@ bb.e:                                             ; preds = %bb.a
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 384
   %i.az = getelementptr inbounds nuw i8, ptr %1, i64 1344 ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %1, i64 1376 ; 2 uses
-  %i.bb = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %i.bc = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.bb = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
+  %i.bc = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %3, i64 16
   br label %bb.f
@@ -316,14 +316,15 @@ _ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN8facebook5velox9RowVector
   br label %.body
 
 bb.f:                                             ; preds = %.lr.ph, %_ZNSt12__shared_ptrIN8facebook5velox10BaseVectorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit36
-  %.sroa.064.0113 = phi ptr [ %i.i, %.lr.ph ], [ %i.kh, %_ZNSt12__shared_ptrIN8facebook5velox10BaseVectorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit36 ] ; 2 uses
-  %6 = load <2 x ptr>, ptr %.sroa.064.0113, align 8, !tbaa !60 ; 4 uses
-  %7 = extractelement <2 x ptr> %6, i64 1         ; 18 uses
-  %.not.i.i.i = icmp eq ptr %7, null              ; 5 uses
+  %.sroa.064.0113 = phi ptr [ %i.i, %.lr.ph ], [ %i.kh, %_ZNSt12__shared_ptrIN8facebook5velox10BaseVectorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit36 ] ; 3 uses
+  %6 = load ptr, ptr %.sroa.064.0113, align 8, !tbaa !76 ; 4 uses
+  %7 = getelementptr inbounds nuw i8, ptr %.sroa.064.0113, i64 8
+  %8 = load ptr, ptr %7, align 8, !tbaa !50       ; 20 uses
+  %.not.i.i.i = icmp eq ptr %8, null              ; 5 uses
   br i1 %.not.i.i.i, label %_ZNSt10shared_ptrIN8facebook5velox10BaseVectorEEC2ERKS3_.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.bp = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 3 uses
   %i.bq = load i8, ptr @__libc_single_threaded, align 1, !tbaa !51
   %.not.i.i.i.i = icmp eq i8 %i.bq, 0
   br i1 %.not.i.i.i.i, label %bb.i, label %bb.h
@@ -339,8 +340,7 @@ bb.i:                                             ; preds = %bb.g
   br label %_ZNSt10shared_ptrIN8facebook5velox10BaseVectorEEC2ERKS3_.exit
 
 _ZNSt10shared_ptrIN8facebook5velox10BaseVectorEEC2ERKS3_.exit: ; preds = %bb.f, %bb.h, %bb.i
-  %8 = extractelement <2 x ptr> %6, i64 0         ; 2 uses
-  %.not.i = icmp eq ptr %8, null
+  %.not.i = icmp eq ptr %6, null
   br i1 %.not.i, label %bb.j, label %bb.m, !prof !40
 
 bb.j:                                             ; preds = %_ZNSt10shared_ptrIN8facebook5velox10BaseVectorEEC2ERKS3_.exit
@@ -356,7 +356,7 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.ba
 
 bb.m:                                             ; preds = %_ZNSt10shared_ptrIN8facebook5velox10BaseVectorEEC2ERKS3_.exit
-  %i.bv = getelementptr inbounds nuw i8, ptr %8, i64 28
+  %i.bv = getelementptr inbounds nuw i8, ptr %6, i64 28
   %i.bw = load i32, ptr %i.bv, align 4, !tbaa !374
   %i.bx = icmp eq i32 %i.bw, 9
   br i1 %i.bx, label %bb.n, label %bb.q, !prof !40
@@ -619,11 +619,12 @@ bb.t:                                             ; preds = %_ZN5folly12xoshiro2
   br i1 %i.hw, label %bb.u, label %bb.y
 
 bb.u:                                             ; preds = %bb.t
-  store <2 x ptr> %6, ptr %5, align 16, !tbaa !60
+  store ptr %6, ptr %5, align 8, !tbaa !76
+  store ptr %8, ptr %i.bc, align 8, !tbaa !50
   br i1 %.not.i.i.i, label %_ZNSt10shared_ptrIN8facebook5velox10BaseVectorEEC2ERKS3_.exit20, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.hx = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
+  %i.hx = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 3 uses
   %i.hy = load i8, ptr @__libc_single_threaded, align 1, !tbaa !51
   %.not.i.i.i.i19 = icmp eq i8 %i.hy, 0
   br i1 %.not.i.i.i.i19, label %bb.x, label %bb.w
@@ -643,11 +644,12 @@ _ZNSt10shared_ptrIN8facebook5velox10BaseVectorEEC2ERKS3_.exit20: ; preds = %bb.u
           to label %_ZNSt10shared_ptrIN8facebook5velox10BaseVectorEEC2ERKS3_.exit23 unwind label %.thread
 
 bb.y:                                             ; preds = %bb.t
-  store <2 x ptr> %6, ptr %4, align 16, !tbaa !60
+  store ptr %6, ptr %4, align 16, !tbaa !76
+  store ptr %8, ptr %i.bb, align 8, !tbaa !50
   br i1 %.not.i.i.i, label %_ZNSt10shared_ptrIN8facebook5velox10BaseVectorEEC2ERKS3_.exit23, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %i.ic = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
+  %i.ic = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 3 uses
   %i.id = load i8, ptr @__libc_single_threaded, align 1, !tbaa !51
   %.not.i.i.i.i22 = icmp eq i8 %i.id, 0
   br i1 %.not.i.i.i.i22, label %bb.ab, label %bb.aa
@@ -789,7 +791,7 @@ _ZNSt12__shared_ptrIN8facebook5velox10BaseVectorELN9__gnu_cxx12_Lock_policyE2EED
   br i1 %.not.i.i.i, label %_ZNSt12__shared_ptrIN8facebook5velox10BaseVectorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit36, label %bb.ar
 
 bb.ar:                                            ; preds = %_ZNSt12__shared_ptrIN8facebook5velox10BaseVectorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit31
-  %i.js = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 4 uses
+  %i.js = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 4 uses
   %i.jt = load atomic i64, ptr %i.js acquire, align 8 ; 2 uses
   %i.ju = icmp eq i64 %i.jt, 4294967297
   %i.jv = trunc i64 %i.jt to i32                  ; 2 uses
@@ -797,16 +799,16 @@ bb.ar:                                            ; preds = %_ZNSt12__shared_ptr
 
 bb.as:                                            ; preds = %bb.ar
   store i32 0, ptr %i.js, align 8, !tbaa !61
-  %i.jw = getelementptr inbounds nuw i8, ptr %7, i64 12
+  %i.jw = getelementptr inbounds nuw i8, ptr %8, i64 12
   store i32 0, ptr %i.jw, align 4, !tbaa !63
-  %i.jx = load ptr, ptr %7, align 8, !tbaa !64
+  %i.jx = load ptr, ptr %8, align 8, !tbaa !64
   %i.jy = getelementptr inbounds nuw i8, ptr %i.jx, i64 16
   %i.jz = load ptr, ptr %i.jy, align 8
-  call void %i.jz(ptr noundef nonnull align 8 dereferenceable(16) %7) #34, !inline_history !67
-  %i.ka = load ptr, ptr %7, align 8, !tbaa !64
+  call void %i.jz(ptr noundef nonnull align 8 dereferenceable(16) %8) #34, !inline_history !67
+  %i.ka = load ptr, ptr %8, align 8, !tbaa !64
   %i.kb = getelementptr inbounds nuw i8, ptr %i.ka, i64 24
   %i.kc = load ptr, ptr %i.kb, align 8
-  call void %i.kc(ptr noundef nonnull align 8 dereferenceable(16) %7) #34, !inline_history !67
+  call void %i.kc(ptr noundef nonnull align 8 dereferenceable(16) %8) #34, !inline_history !67
   br label %_ZNSt12__shared_ptrIN8facebook5velox10BaseVectorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit36
 
 bb.at:                                            ; preds = %bb.ar
@@ -829,7 +831,7 @@ _ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i34: ; preds = %bb.av, %
   br i1 %i.kg, label %bb.aw, label %_ZNSt12__shared_ptrIN8facebook5velox10BaseVectorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit36, !prof !40
 
 bb.aw:                                            ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i34
-  call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %7) #34
+  call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %8) #34
   br label %_ZNSt12__shared_ptrIN8facebook5velox10BaseVectorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit36
 
 _ZNSt12__shared_ptrIN8facebook5velox10BaseVectorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit36: ; preds = %_ZNSt12__shared_ptrIN8facebook5velox10BaseVectorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit31, %bb.as, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i34, %bb.aw
@@ -863,7 +865,7 @@ bb.ba:                                            ; preds = %bb.az, %bb.p, %bb.l
   br i1 %.not.i.i.i, label %_ZNSt12__shared_ptrIN8facebook5velox10BaseVectorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit41, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
-  %i.kl = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 4 uses
+  %i.kl = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 4 uses
   %i.km = load atomic i64, ptr %i.kl acquire, align 8 ; 2 uses
   %i.kn = icmp eq i64 %i.km, 4294967297
   %i.ko = trunc i64 %i.km to i32                  ; 2 uses
@@ -871,16 +873,16 @@ bb.bb:                                            ; preds = %bb.ba
 
 bb.bc:                                            ; preds = %bb.bb
   store i32 0, ptr %i.kl, align 8, !tbaa !61
-  %i.kp = getelementptr inbounds nuw i8, ptr %7, i64 12
+  %i.kp = getelementptr inbounds nuw i8, ptr %8, i64 12
   store i32 0, ptr %i.kp, align 4, !tbaa !63
-  %i.kq = load ptr, ptr %7, align 8, !tbaa !64
+  %i.kq = load ptr, ptr %8, align 8, !tbaa !64
   %i.kr = getelementptr inbounds nuw i8, ptr %i.kq, i64 16
   %i.ks = load ptr, ptr %i.kr, align 8
-  call void %i.ks(ptr noundef nonnull align 8 dereferenceable(16) %7) #34, !inline_history !67
-  %i.kt = load ptr, ptr %7, align 8, !tbaa !64
+  call void %i.ks(ptr noundef nonnull align 8 dereferenceable(16) %8) #34, !inline_history !67
+  %i.kt = load ptr, ptr %8, align 8, !tbaa !64
   %i.ku = getelementptr inbounds nuw i8, ptr %i.kt, i64 24
   %i.kv = load ptr, ptr %i.ku, align 8
-  call void %i.kv(ptr noundef nonnull align 8 dereferenceable(16) %7) #34, !inline_history !67
+  call void %i.kv(ptr noundef nonnull align 8 dereferenceable(16) %8) #34, !inline_history !67
   br label %_ZNSt12__shared_ptrIN8facebook5velox10BaseVectorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit41
 
 bb.bd:                                            ; preds = %bb.bb
@@ -903,7 +905,7 @@ _ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i39: ; preds = %bb.bf, %
   br i1 %i.kz, label %bb.bg, label %_ZNSt12__shared_ptrIN8facebook5velox10BaseVectorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit41, !prof !40
 
 bb.bg:                                            ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i39
-  call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %7) #34
+  call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %8) #34
   br label %_ZNSt12__shared_ptrIN8facebook5velox10BaseVectorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit41
 
 bb.bh:                                            ; preds = %.noexc

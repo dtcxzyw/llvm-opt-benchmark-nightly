@@ -201,8 +201,8 @@ _ZN6duckdb23StandardWriterPageStateINS_9hugeint_tENS_21ParquetUUIDTargetTypeENS_
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN6duckdb20StandardColumnWriterINS_9hugeint_tENS_21ParquetUUIDTargetTypeENS_19ParquetUUIDOperatorEE19WriteVectorInternalILb1EEEvRNS_11WriteStreamEPNS_22ColumnWriterStatisticsEPNS_21ColumnWriterPageStateERNS_6VectorEmm(ptr noundef nonnull align 8 dereferenceable(240) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %2, ptr noundef %3, ptr noundef nonnull align 8 dereferenceable(104) %4, i64 noundef %5, i64 noundef %6) local_unnamed_addr #7 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %7 = alloca %"struct.duckdb::ParquetUUIDTargetType", align 16 ; 10 uses
-  %8 = alloca %"struct.duckdb::ParquetUUIDTargetType", align 16 ; 4 uses
+  %7 = alloca %"struct.duckdb::ParquetUUIDTargetType", align 8 ; 11 uses
+  %8 = alloca %"struct.duckdb::ParquetUUIDTargetType", align 8 ; 5 uses
   %9 = alloca %"class.duckdb::AllocatedData", align 8 ; 5 uses
   %10 = alloca %"struct.duckdb::ParquetUUIDTargetType", align 8 ; 11 uses
   %11 = alloca %"struct.duckdb::ParquetUUIDTargetType", align 8 ; 5 uses
@@ -605,6 +605,8 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
   br i1 %i.jr, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %bb.af
+  %.fca.1.gep.i158 = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %24 = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.js = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.jt = getelementptr inbounds nuw i8, ptr %2, i64 9 ; 4 uses
   %i.ju = getelementptr inbounds nuw i8, ptr %2, i64 25 ; 3 uses
@@ -621,10 +623,12 @@ bb.ag:                                            ; preds = %.lr.ph, %_ZN6duckdb
   %.sroa.23.0.copyload = load i64, ptr %.sroa.23.0..sroa_idx, align 8, !tbaa !191
   call void @llvm.lifetime.start.p0(ptr nonnull %8)
   call void @_ZN6duckdb8BaseUUID6ToBlobENS_9hugeint_tEPh(i64 %.sroa.02.0.copyload, i64 %.sroa.23.0.copyload, ptr noundef nonnull %8)
-  %24 = load <2 x i64>, ptr %8, align 16          ; 17 uses
+  %.fca.0.load.i156 = load i64, ptr %8, align 8   ; 9 uses
+  %.fca.1.load.i159 = load i64, ptr %.fca.1.gep.i158, align 8 ; 9 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %8)
   call void @llvm.lifetime.start.p0(ptr nonnull %7)
-  store <2 x i64> %24, ptr %7, align 16
+  store i64 %.fca.0.load.i156, ptr %7, align 8
+  store i64 %.fca.1.load.i159, ptr %24, align 8
   %i.jz = load i8, ptr %i.js, align 8, !tbaa !2643, !range !250, !noundef !78
   %i.ka = trunc nuw i8 %i.jz to i1
   br i1 %i.ka, label %loadbb350, label %bb.ah
@@ -637,7 +641,7 @@ res_block347:                                     ; preds = %loadbb351, %loadbb3
   br label %endblock345
 
 loadbb350:                                        ; preds = %bb.ag
-  %i.kd = load i64, ptr %7, align 16
+  %i.kd = load i64, ptr %7, align 8
   %i.ke = load i64, ptr %i.jt, align 1
   %i.kf = call i64 @llvm.bswap.i64(i64 %i.kd)     ; 2 uses
   %i.kg = call i64 @llvm.bswap.i64(i64 %i.ke)     ; 2 uses
@@ -660,11 +664,11 @@ endblock345:                                      ; preds = %res_block347, %load
   br i1 %i.kp, label %.thread8.i162, label %loadbb357
 
 .thread8.i162:                                    ; preds = %endblock345
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.jt, ptr noundef nonnull align 16 dereferenceable(16) %7, i64 16, i1 false), !tbaa.struct !2294
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.jt, ptr noundef nonnull align 8 dereferenceable(16) %7, i64 16, i1 false), !tbaa.struct !2294
   br label %loadbb357
 
 bb.ah:                                            ; preds = %bb.ag
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.jt, ptr noundef nonnull align 16 dereferenceable(16) %7, i64 16, i1 false), !tbaa.struct !2294
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.jt, ptr noundef nonnull align 8 dereferenceable(16) %7, i64 16, i1 false), !tbaa.struct !2294
   br label %bb.ai
 
 res_block354:                                     ; preds = %loadbb358, %loadbb357
@@ -675,7 +679,7 @@ res_block354:                                     ; preds = %loadbb358, %loadbb3
   br label %endblock352
 
 loadbb357:                                        ; preds = %endblock345, %.thread8.i162
-  %i.ks = load i64, ptr %7, align 16
+  %i.ks = load i64, ptr %7, align 8
   %i.kt = load i64, ptr %i.ju, align 1
   %i.ku = call i64 @llvm.bswap.i64(i64 %i.ks)     ; 2 uses
   %i.kv = call i64 @llvm.bswap.i64(i64 %i.kt)     ; 2 uses
@@ -698,28 +702,27 @@ endblock352:                                      ; preds = %res_block354, %load
   br i1 %i.le, label %bb.ai, label %_ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTargetTypeEEEvPNS_22ColumnWriterStatisticsET0_.exit163
 
 bb.ai:                                            ; preds = %endblock352, %bb.ah
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.ju, ptr noundef nonnull align 16 dereferenceable(16) %7, i64 16, i1 false), !tbaa.struct !2294
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.ju, ptr noundef nonnull align 8 dereferenceable(16) %7, i64 16, i1 false), !tbaa.struct !2294
   br label %_ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTargetTypeEEEvPNS_22ColumnWriterStatisticsET0_.exit163
 
 _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTargetTypeEEEvPNS_22ColumnWriterStatisticsET0_.exit163: ; preds = %endblock352, %bb.ai
   store i8 1, ptr %i.js, align 8, !tbaa !2643
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
-  %25 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.0.0.extract.trunc = extractelement <16 x i8> %25, i64 0
+  %.sroa.0.0.extract.trunc = trunc i64 %.fca.0.load.i156 to i8
   %i.lf = load ptr, ptr %i.jw, align 8, !tbaa !197
   %i.lg = load i64, ptr %i.jx, align 8, !tbaa !808
   %i.lh = getelementptr i8, ptr %i.lf, i64 %i.lg
   store i8 %.sroa.0.0.extract.trunc, ptr %i.lh, align 1, !tbaa !14
-  %26 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.0.1.extract.trunc = extractelement <16 x i8> %26, i64 1
+  %.sroa.0.1.extract.shift = lshr i64 %.fca.0.load.i156, 8
+  %.sroa.0.1.extract.trunc = trunc i64 %.sroa.0.1.extract.shift to i8
   %i.li = load ptr, ptr %i.jw, align 8, !tbaa !197
   %i.lj = load i64, ptr %i.jv, align 8, !tbaa !718
   %i.lk = load i64, ptr %i.jx, align 8, !tbaa !808
   %i.ll = getelementptr i8, ptr %i.li, i64 %i.lj
   %i.lm = getelementptr i8, ptr %i.ll, i64 %i.lk
   store i8 %.sroa.0.1.extract.trunc, ptr %i.lm, align 1, !tbaa !14
-  %27 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.0.2.extract.trunc = extractelement <16 x i8> %27, i64 2
+  %.sroa.0.2.extract.shift = lshr i64 %.fca.0.load.i156, 16
+  %.sroa.0.2.extract.trunc = trunc i64 %.sroa.0.2.extract.shift to i8
   %i.ln = load ptr, ptr %i.jw, align 8, !tbaa !197
   %i.lo = load i64, ptr %i.jv, align 8, !tbaa !718
   %i.lp = shl i64 %i.lo, 1
@@ -727,8 +730,8 @@ _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTarge
   %i.lr = getelementptr i8, ptr %i.ln, i64 %i.lp
   %i.ls = getelementptr i8, ptr %i.lr, i64 %i.lq
   store i8 %.sroa.0.2.extract.trunc, ptr %i.ls, align 1, !tbaa !14
-  %28 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.0.3.extract.trunc = extractelement <16 x i8> %28, i64 3
+  %.sroa.0.3.extract.shift = lshr i64 %.fca.0.load.i156, 24
+  %.sroa.0.3.extract.trunc = trunc i64 %.sroa.0.3.extract.shift to i8
   %i.lt = load ptr, ptr %i.jw, align 8, !tbaa !197
   %i.lu = load i64, ptr %i.jv, align 8, !tbaa !718
   %i.lv = mul i64 %i.lu, 3
@@ -736,8 +739,8 @@ _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTarge
   %i.lx = getelementptr i8, ptr %i.lt, i64 %i.lv
   %i.ly = getelementptr i8, ptr %i.lx, i64 %i.lw
   store i8 %.sroa.0.3.extract.trunc, ptr %i.ly, align 1, !tbaa !14
-  %29 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.0.4.extract.trunc = extractelement <16 x i8> %29, i64 4
+  %.sroa.0.4.extract.shift = lshr i64 %.fca.0.load.i156, 32
+  %.sroa.0.4.extract.trunc = trunc i64 %.sroa.0.4.extract.shift to i8
   %i.lz = load ptr, ptr %i.jw, align 8, !tbaa !197
   %i.ma = load i64, ptr %i.jv, align 8, !tbaa !718
   %i.mb = shl i64 %i.ma, 2
@@ -745,8 +748,8 @@ _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTarge
   %i.md = getelementptr i8, ptr %i.lz, i64 %i.mb
   %i.me = getelementptr i8, ptr %i.md, i64 %i.mc
   store i8 %.sroa.0.4.extract.trunc, ptr %i.me, align 1, !tbaa !14
-  %30 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.0.5.extract.trunc = extractelement <16 x i8> %30, i64 5
+  %.sroa.0.5.extract.shift = lshr i64 %.fca.0.load.i156, 40
+  %.sroa.0.5.extract.trunc = trunc i64 %.sroa.0.5.extract.shift to i8
   %i.mf = load ptr, ptr %i.jw, align 8, !tbaa !197
   %i.mg = load i64, ptr %i.jv, align 8, !tbaa !718
   %i.mh = mul i64 %i.mg, 5
@@ -754,8 +757,8 @@ _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTarge
   %i.mj = getelementptr i8, ptr %i.mf, i64 %i.mh
   %i.mk = getelementptr i8, ptr %i.mj, i64 %i.mi
   store i8 %.sroa.0.5.extract.trunc, ptr %i.mk, align 1, !tbaa !14
-  %31 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.0.6.extract.trunc = extractelement <16 x i8> %31, i64 6
+  %.sroa.0.6.extract.shift = lshr i64 %.fca.0.load.i156, 48
+  %.sroa.0.6.extract.trunc = trunc i64 %.sroa.0.6.extract.shift to i8
   %i.ml = load ptr, ptr %i.jw, align 8, !tbaa !197
   %i.mm = load i64, ptr %i.jv, align 8, !tbaa !718
   %i.mn = mul i64 %i.mm, 6
@@ -763,8 +766,8 @@ _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTarge
   %i.mp = getelementptr i8, ptr %i.ml, i64 %i.mn
   %i.mq = getelementptr i8, ptr %i.mp, i64 %i.mo
   store i8 %.sroa.0.6.extract.trunc, ptr %i.mq, align 1, !tbaa !14
-  %32 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.0.7.extract.trunc = extractelement <16 x i8> %32, i64 7
+  %.sroa.0.7.extract.shift = lshr i64 %.fca.0.load.i156, 56
+  %.sroa.0.7.extract.trunc = trunc nuw i64 %.sroa.0.7.extract.shift to i8
   %i.mr = load ptr, ptr %i.jw, align 8, !tbaa !197
   %i.ms = load i64, ptr %i.jv, align 8, !tbaa !718
   %i.mt = mul i64 %i.ms, 7
@@ -772,8 +775,7 @@ _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTarge
   %i.mv = getelementptr i8, ptr %i.mr, i64 %i.mt
   %i.mw = getelementptr i8, ptr %i.mv, i64 %i.mu
   store i8 %.sroa.0.7.extract.trunc, ptr %i.mw, align 1, !tbaa !14
-  %33 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.11.8.extract.trunc = extractelement <16 x i8> %33, i64 8
+  %.sroa.11.8.extract.trunc = trunc i64 %.fca.1.load.i159 to i8
   %i.mx = load ptr, ptr %i.jw, align 8, !tbaa !197
   %i.my = load i64, ptr %i.jv, align 8, !tbaa !718
   %i.mz = shl i64 %i.my, 3
@@ -781,8 +783,8 @@ _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTarge
   %i.nb = getelementptr i8, ptr %i.mx, i64 %i.mz
   %i.nc = getelementptr i8, ptr %i.nb, i64 %i.na
   store i8 %.sroa.11.8.extract.trunc, ptr %i.nc, align 1, !tbaa !14
-  %34 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.11.9.extract.trunc = extractelement <16 x i8> %34, i64 9
+  %.sroa.11.9.extract.shift = lshr i64 %.fca.1.load.i159, 8
+  %.sroa.11.9.extract.trunc = trunc i64 %.sroa.11.9.extract.shift to i8
   %i.nd = load ptr, ptr %i.jw, align 8, !tbaa !197
   %i.ne = load i64, ptr %i.jv, align 8, !tbaa !718
   %i.nf = mul i64 %i.ne, 9
@@ -790,8 +792,8 @@ _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTarge
   %i.nh = getelementptr i8, ptr %i.nd, i64 %i.nf
   %i.ni = getelementptr i8, ptr %i.nh, i64 %i.ng
   store i8 %.sroa.11.9.extract.trunc, ptr %i.ni, align 1, !tbaa !14
-  %35 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.11.10.extract.trunc = extractelement <16 x i8> %35, i64 10
+  %.sroa.11.10.extract.shift = lshr i64 %.fca.1.load.i159, 16
+  %.sroa.11.10.extract.trunc = trunc i64 %.sroa.11.10.extract.shift to i8
   %i.nj = load ptr, ptr %i.jw, align 8, !tbaa !197
   %i.nk = load i64, ptr %i.jv, align 8, !tbaa !718
   %i.nl = mul i64 %i.nk, 10
@@ -799,8 +801,8 @@ _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTarge
   %i.nn = getelementptr i8, ptr %i.nj, i64 %i.nl
   %i.no = getelementptr i8, ptr %i.nn, i64 %i.nm
   store i8 %.sroa.11.10.extract.trunc, ptr %i.no, align 1, !tbaa !14
-  %36 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.11.11.extract.trunc = extractelement <16 x i8> %36, i64 11
+  %.sroa.11.11.extract.shift = lshr i64 %.fca.1.load.i159, 24
+  %.sroa.11.11.extract.trunc = trunc i64 %.sroa.11.11.extract.shift to i8
   %i.np = load ptr, ptr %i.jw, align 8, !tbaa !197
   %i.nq = load i64, ptr %i.jv, align 8, !tbaa !718
   %i.nr = mul i64 %i.nq, 11
@@ -808,8 +810,8 @@ _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTarge
   %i.nt = getelementptr i8, ptr %i.np, i64 %i.nr
   %i.nu = getelementptr i8, ptr %i.nt, i64 %i.ns
   store i8 %.sroa.11.11.extract.trunc, ptr %i.nu, align 1, !tbaa !14
-  %37 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.11.12.extract.trunc = extractelement <16 x i8> %37, i64 12
+  %.sroa.11.12.extract.shift = lshr i64 %.fca.1.load.i159, 32
+  %.sroa.11.12.extract.trunc = trunc i64 %.sroa.11.12.extract.shift to i8
   %i.nv = load ptr, ptr %i.jw, align 8, !tbaa !197
   %i.nw = load i64, ptr %i.jv, align 8, !tbaa !718
   %i.nx = mul i64 %i.nw, 12
@@ -817,8 +819,8 @@ _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTarge
   %i.nz = getelementptr i8, ptr %i.nv, i64 %i.nx
   %i.oa = getelementptr i8, ptr %i.nz, i64 %i.ny
   store i8 %.sroa.11.12.extract.trunc, ptr %i.oa, align 1, !tbaa !14
-  %38 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.11.13.extract.trunc = extractelement <16 x i8> %38, i64 13
+  %.sroa.11.13.extract.shift = lshr i64 %.fca.1.load.i159, 40
+  %.sroa.11.13.extract.trunc = trunc i64 %.sroa.11.13.extract.shift to i8
   %i.ob = load ptr, ptr %i.jw, align 8, !tbaa !197
   %i.oc = load i64, ptr %i.jv, align 8, !tbaa !718
   %i.od = mul i64 %i.oc, 13
@@ -826,8 +828,8 @@ _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTarge
   %i.of = getelementptr i8, ptr %i.ob, i64 %i.od
   %i.og = getelementptr i8, ptr %i.of, i64 %i.oe
   store i8 %.sroa.11.13.extract.trunc, ptr %i.og, align 1, !tbaa !14
-  %39 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.11.14.extract.trunc = extractelement <16 x i8> %39, i64 14
+  %.sroa.11.14.extract.shift = lshr i64 %.fca.1.load.i159, 48
+  %.sroa.11.14.extract.trunc = trunc i64 %.sroa.11.14.extract.shift to i8
   %i.oh = load ptr, ptr %i.jw, align 8, !tbaa !197
   %i.oi = load i64, ptr %i.jv, align 8, !tbaa !718
   %i.oj = mul i64 %i.oi, 14
@@ -835,8 +837,8 @@ _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTarge
   %i.ol = getelementptr i8, ptr %i.oh, i64 %i.oj
   %i.om = getelementptr i8, ptr %i.ol, i64 %i.ok
   store i8 %.sroa.11.14.extract.trunc, ptr %i.om, align 1, !tbaa !14
-  %40 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.11.15.extract.trunc = extractelement <16 x i8> %40, i64 15
+  %.sroa.11.15.extract.shift = lshr i64 %.fca.1.load.i159, 56
+  %.sroa.11.15.extract.trunc = trunc nuw i64 %.sroa.11.15.extract.shift to i8
   %i.on = load ptr, ptr %i.jw, align 8, !tbaa !197
   %i.oo = load i64, ptr %i.jv, align 8, !tbaa !718
   %i.op = mul i64 %i.oo, 15
@@ -925,8 +927,8 @@ bb.as:                                            ; preds = %bb.ao
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN6duckdb20StandardColumnWriterINS_9hugeint_tENS_21ParquetUUIDTargetTypeENS_19ParquetUUIDOperatorEE19WriteVectorInternalILb0EEEvRNS_11WriteStreamEPNS_22ColumnWriterStatisticsEPNS_21ColumnWriterPageStateERNS_6VectorEmm(ptr noundef nonnull align 8 dereferenceable(240) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %2, ptr noundef %3, ptr noundef nonnull align 8 dereferenceable(104) %4, i64 noundef %5, i64 noundef %6) local_unnamed_addr #7 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %7 = alloca %"struct.duckdb::ParquetUUIDTargetType", align 16 ; 10 uses
-  %8 = alloca %"struct.duckdb::ParquetUUIDTargetType", align 16 ; 4 uses
+  %7 = alloca %"struct.duckdb::ParquetUUIDTargetType", align 8 ; 11 uses
+  %8 = alloca %"struct.duckdb::ParquetUUIDTargetType", align 8 ; 5 uses
   %9 = alloca %"class.duckdb::AllocatedData", align 8 ; 5 uses
   %10 = alloca %"struct.duckdb::ParquetUUIDTargetType", align 8 ; 11 uses
   %11 = alloca %"struct.duckdb::ParquetUUIDTargetType", align 8 ; 5 uses
@@ -1329,6 +1331,8 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
   br i1 %i.km, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %bb.ah
+  %.fca.1.gep.i178 = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %24 = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.kn = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.ko = getelementptr inbounds nuw i8, ptr %2, i64 9 ; 4 uses
   %i.kp = getelementptr inbounds nuw i8, ptr %2, i64 25 ; 3 uses
@@ -1360,10 +1364,12 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit175.thread: ; preds = %b
   %.sroa.23.0.copyload = load i64, ptr %.sroa.23.0..sroa_idx, align 8, !tbaa !191
   call void @llvm.lifetime.start.p0(ptr nonnull %8)
   call void @_ZN6duckdb8BaseUUID6ToBlobENS_9hugeint_tEPh(i64 %.sroa.02.0.copyload, i64 %.sroa.23.0.copyload, ptr noundef nonnull %8)
-  %24 = load <2 x i64>, ptr %8, align 16          ; 17 uses
+  %.fca.0.load.i176 = load i64, ptr %8, align 8   ; 9 uses
+  %.fca.1.load.i179 = load i64, ptr %.fca.1.gep.i178, align 8 ; 9 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %8)
   call void @llvm.lifetime.start.p0(ptr nonnull %7)
-  store <2 x i64> %24, ptr %7, align 16
+  store i64 %.fca.0.load.i176, ptr %7, align 8
+  store i64 %.fca.1.load.i179, ptr %24, align 8
   %i.lb = load i8, ptr %i.kn, align 8, !tbaa !2643, !range !250, !noundef !78
   %i.lc = trunc nuw i8 %i.lb to i1
   br i1 %i.lc, label %loadbb382, label %bb.aj
@@ -1376,7 +1382,7 @@ res_block379:                                     ; preds = %loadbb383, %loadbb3
   br label %endblock377
 
 loadbb382:                                        ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit175.thread
-  %i.lf = load i64, ptr %7, align 16
+  %i.lf = load i64, ptr %7, align 8
   %i.lg = load i64, ptr %i.ko, align 1
   %i.lh = call i64 @llvm.bswap.i64(i64 %i.lf)     ; 2 uses
   %i.li = call i64 @llvm.bswap.i64(i64 %i.lg)     ; 2 uses
@@ -1399,11 +1405,11 @@ endblock377:                                      ; preds = %res_block379, %load
   br i1 %i.lr, label %.thread8.i182, label %loadbb389
 
 .thread8.i182:                                    ; preds = %endblock377
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.ko, ptr noundef nonnull align 16 dereferenceable(16) %7, i64 16, i1 false), !tbaa.struct !2294
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.ko, ptr noundef nonnull align 8 dereferenceable(16) %7, i64 16, i1 false), !tbaa.struct !2294
   br label %loadbb389
 
 bb.aj:                                            ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit175.thread
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.ko, ptr noundef nonnull align 16 dereferenceable(16) %7, i64 16, i1 false), !tbaa.struct !2294
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.ko, ptr noundef nonnull align 8 dereferenceable(16) %7, i64 16, i1 false), !tbaa.struct !2294
   br label %bb.ak
 
 res_block386:                                     ; preds = %loadbb390, %loadbb389
@@ -1414,7 +1420,7 @@ res_block386:                                     ; preds = %loadbb390, %loadbb3
   br label %endblock384
 
 loadbb389:                                        ; preds = %endblock377, %.thread8.i182
-  %i.lu = load i64, ptr %7, align 16
+  %i.lu = load i64, ptr %7, align 8
   %i.lv = load i64, ptr %i.kp, align 1
   %i.lw = call i64 @llvm.bswap.i64(i64 %i.lu)     ; 2 uses
   %i.lx = call i64 @llvm.bswap.i64(i64 %i.lv)     ; 2 uses
@@ -1437,28 +1443,27 @@ endblock384:                                      ; preds = %res_block386, %load
   br i1 %i.mg, label %bb.ak, label %_ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTargetTypeEEEvPNS_22ColumnWriterStatisticsET0_.exit183
 
 bb.ak:                                            ; preds = %endblock384, %bb.aj
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.kp, ptr noundef nonnull align 16 dereferenceable(16) %7, i64 16, i1 false), !tbaa.struct !2294
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.kp, ptr noundef nonnull align 8 dereferenceable(16) %7, i64 16, i1 false), !tbaa.struct !2294
   br label %_ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTargetTypeEEEvPNS_22ColumnWriterStatisticsET0_.exit183
 
 _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTargetTypeEEEvPNS_22ColumnWriterStatisticsET0_.exit183: ; preds = %endblock384, %bb.ak
   store i8 1, ptr %i.kn, align 8, !tbaa !2643
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
-  %25 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.0.0.extract.trunc = extractelement <16 x i8> %25, i64 0
+  %.sroa.0.0.extract.trunc = trunc i64 %.fca.0.load.i176 to i8
   %i.mh = load ptr, ptr %i.kr, align 8, !tbaa !197
   %i.mi = load i64, ptr %i.ks, align 8, !tbaa !808
   %i.mj = getelementptr i8, ptr %i.mh, i64 %i.mi
   store i8 %.sroa.0.0.extract.trunc, ptr %i.mj, align 1, !tbaa !14
-  %26 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.0.1.extract.trunc = extractelement <16 x i8> %26, i64 1
+  %.sroa.0.1.extract.shift = lshr i64 %.fca.0.load.i176, 8
+  %.sroa.0.1.extract.trunc = trunc i64 %.sroa.0.1.extract.shift to i8
   %i.mk = load ptr, ptr %i.kr, align 8, !tbaa !197
   %i.ml = load i64, ptr %i.kq, align 8, !tbaa !718
   %i.mm = load i64, ptr %i.ks, align 8, !tbaa !808
   %i.mn = getelementptr i8, ptr %i.mk, i64 %i.ml
   %i.mo = getelementptr i8, ptr %i.mn, i64 %i.mm
   store i8 %.sroa.0.1.extract.trunc, ptr %i.mo, align 1, !tbaa !14
-  %27 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.0.2.extract.trunc = extractelement <16 x i8> %27, i64 2
+  %.sroa.0.2.extract.shift = lshr i64 %.fca.0.load.i176, 16
+  %.sroa.0.2.extract.trunc = trunc i64 %.sroa.0.2.extract.shift to i8
   %i.mp = load ptr, ptr %i.kr, align 8, !tbaa !197
   %i.mq = load i64, ptr %i.kq, align 8, !tbaa !718
   %i.mr = shl i64 %i.mq, 1
@@ -1466,8 +1471,8 @@ _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTarge
   %i.mt = getelementptr i8, ptr %i.mp, i64 %i.mr
   %i.mu = getelementptr i8, ptr %i.mt, i64 %i.ms
   store i8 %.sroa.0.2.extract.trunc, ptr %i.mu, align 1, !tbaa !14
-  %28 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.0.3.extract.trunc = extractelement <16 x i8> %28, i64 3
+  %.sroa.0.3.extract.shift = lshr i64 %.fca.0.load.i176, 24
+  %.sroa.0.3.extract.trunc = trunc i64 %.sroa.0.3.extract.shift to i8
   %i.mv = load ptr, ptr %i.kr, align 8, !tbaa !197
   %i.mw = load i64, ptr %i.kq, align 8, !tbaa !718
   %i.mx = mul i64 %i.mw, 3
@@ -1475,8 +1480,8 @@ _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTarge
   %i.mz = getelementptr i8, ptr %i.mv, i64 %i.mx
   %i.na = getelementptr i8, ptr %i.mz, i64 %i.my
   store i8 %.sroa.0.3.extract.trunc, ptr %i.na, align 1, !tbaa !14
-  %29 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.0.4.extract.trunc = extractelement <16 x i8> %29, i64 4
+  %.sroa.0.4.extract.shift = lshr i64 %.fca.0.load.i176, 32
+  %.sroa.0.4.extract.trunc = trunc i64 %.sroa.0.4.extract.shift to i8
   %i.nb = load ptr, ptr %i.kr, align 8, !tbaa !197
   %i.nc = load i64, ptr %i.kq, align 8, !tbaa !718
   %i.nd = shl i64 %i.nc, 2
@@ -1484,8 +1489,8 @@ _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTarge
   %i.nf = getelementptr i8, ptr %i.nb, i64 %i.nd
   %i.ng = getelementptr i8, ptr %i.nf, i64 %i.ne
   store i8 %.sroa.0.4.extract.trunc, ptr %i.ng, align 1, !tbaa !14
-  %30 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.0.5.extract.trunc = extractelement <16 x i8> %30, i64 5
+  %.sroa.0.5.extract.shift = lshr i64 %.fca.0.load.i176, 40
+  %.sroa.0.5.extract.trunc = trunc i64 %.sroa.0.5.extract.shift to i8
   %i.nh = load ptr, ptr %i.kr, align 8, !tbaa !197
   %i.ni = load i64, ptr %i.kq, align 8, !tbaa !718
   %i.nj = mul i64 %i.ni, 5
@@ -1493,8 +1498,8 @@ _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTarge
   %i.nl = getelementptr i8, ptr %i.nh, i64 %i.nj
   %i.nm = getelementptr i8, ptr %i.nl, i64 %i.nk
   store i8 %.sroa.0.5.extract.trunc, ptr %i.nm, align 1, !tbaa !14
-  %31 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.0.6.extract.trunc = extractelement <16 x i8> %31, i64 6
+  %.sroa.0.6.extract.shift = lshr i64 %.fca.0.load.i176, 48
+  %.sroa.0.6.extract.trunc = trunc i64 %.sroa.0.6.extract.shift to i8
   %i.nn = load ptr, ptr %i.kr, align 8, !tbaa !197
   %i.no = load i64, ptr %i.kq, align 8, !tbaa !718
   %i.np = mul i64 %i.no, 6
@@ -1502,8 +1507,8 @@ _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTarge
   %i.nr = getelementptr i8, ptr %i.nn, i64 %i.np
   %i.ns = getelementptr i8, ptr %i.nr, i64 %i.nq
   store i8 %.sroa.0.6.extract.trunc, ptr %i.ns, align 1, !tbaa !14
-  %32 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.0.7.extract.trunc = extractelement <16 x i8> %32, i64 7
+  %.sroa.0.7.extract.shift = lshr i64 %.fca.0.load.i176, 56
+  %.sroa.0.7.extract.trunc = trunc nuw i64 %.sroa.0.7.extract.shift to i8
   %i.nt = load ptr, ptr %i.kr, align 8, !tbaa !197
   %i.nu = load i64, ptr %i.kq, align 8, !tbaa !718
   %i.nv = mul i64 %i.nu, 7
@@ -1511,8 +1516,7 @@ _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTarge
   %i.nx = getelementptr i8, ptr %i.nt, i64 %i.nv
   %i.ny = getelementptr i8, ptr %i.nx, i64 %i.nw
   store i8 %.sroa.0.7.extract.trunc, ptr %i.ny, align 1, !tbaa !14
-  %33 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.11.8.extract.trunc = extractelement <16 x i8> %33, i64 8
+  %.sroa.11.8.extract.trunc = trunc i64 %.fca.1.load.i179 to i8
   %i.nz = load ptr, ptr %i.kr, align 8, !tbaa !197
   %i.oa = load i64, ptr %i.kq, align 8, !tbaa !718
   %i.ob = shl i64 %i.oa, 3
@@ -1520,8 +1524,8 @@ _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTarge
   %i.od = getelementptr i8, ptr %i.nz, i64 %i.ob
   %i.oe = getelementptr i8, ptr %i.od, i64 %i.oc
   store i8 %.sroa.11.8.extract.trunc, ptr %i.oe, align 1, !tbaa !14
-  %34 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.11.9.extract.trunc = extractelement <16 x i8> %34, i64 9
+  %.sroa.11.9.extract.shift = lshr i64 %.fca.1.load.i179, 8
+  %.sroa.11.9.extract.trunc = trunc i64 %.sroa.11.9.extract.shift to i8
   %i.of = load ptr, ptr %i.kr, align 8, !tbaa !197
   %i.og = load i64, ptr %i.kq, align 8, !tbaa !718
   %i.oh = mul i64 %i.og, 9
@@ -1529,8 +1533,8 @@ _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTarge
   %i.oj = getelementptr i8, ptr %i.of, i64 %i.oh
   %i.ok = getelementptr i8, ptr %i.oj, i64 %i.oi
   store i8 %.sroa.11.9.extract.trunc, ptr %i.ok, align 1, !tbaa !14
-  %35 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.11.10.extract.trunc = extractelement <16 x i8> %35, i64 10
+  %.sroa.11.10.extract.shift = lshr i64 %.fca.1.load.i179, 16
+  %.sroa.11.10.extract.trunc = trunc i64 %.sroa.11.10.extract.shift to i8
   %i.ol = load ptr, ptr %i.kr, align 8, !tbaa !197
   %i.om = load i64, ptr %i.kq, align 8, !tbaa !718
   %i.on = mul i64 %i.om, 10
@@ -1538,8 +1542,8 @@ _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTarge
   %i.op = getelementptr i8, ptr %i.ol, i64 %i.on
   %i.oq = getelementptr i8, ptr %i.op, i64 %i.oo
   store i8 %.sroa.11.10.extract.trunc, ptr %i.oq, align 1, !tbaa !14
-  %36 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.11.11.extract.trunc = extractelement <16 x i8> %36, i64 11
+  %.sroa.11.11.extract.shift = lshr i64 %.fca.1.load.i179, 24
+  %.sroa.11.11.extract.trunc = trunc i64 %.sroa.11.11.extract.shift to i8
   %i.or = load ptr, ptr %i.kr, align 8, !tbaa !197
   %i.os = load i64, ptr %i.kq, align 8, !tbaa !718
   %i.ot = mul i64 %i.os, 11
@@ -1547,8 +1551,8 @@ _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTarge
   %i.ov = getelementptr i8, ptr %i.or, i64 %i.ot
   %i.ow = getelementptr i8, ptr %i.ov, i64 %i.ou
   store i8 %.sroa.11.11.extract.trunc, ptr %i.ow, align 1, !tbaa !14
-  %37 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.11.12.extract.trunc = extractelement <16 x i8> %37, i64 12
+  %.sroa.11.12.extract.shift = lshr i64 %.fca.1.load.i179, 32
+  %.sroa.11.12.extract.trunc = trunc i64 %.sroa.11.12.extract.shift to i8
   %i.ox = load ptr, ptr %i.kr, align 8, !tbaa !197
   %i.oy = load i64, ptr %i.kq, align 8, !tbaa !718
   %i.oz = mul i64 %i.oy, 12
@@ -1556,8 +1560,8 @@ _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTarge
   %i.pb = getelementptr i8, ptr %i.ox, i64 %i.oz
   %i.pc = getelementptr i8, ptr %i.pb, i64 %i.pa
   store i8 %.sroa.11.12.extract.trunc, ptr %i.pc, align 1, !tbaa !14
-  %38 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.11.13.extract.trunc = extractelement <16 x i8> %38, i64 13
+  %.sroa.11.13.extract.shift = lshr i64 %.fca.1.load.i179, 40
+  %.sroa.11.13.extract.trunc = trunc i64 %.sroa.11.13.extract.shift to i8
   %i.pd = load ptr, ptr %i.kr, align 8, !tbaa !197
   %i.pe = load i64, ptr %i.kq, align 8, !tbaa !718
   %i.pf = mul i64 %i.pe, 13
@@ -1565,8 +1569,8 @@ _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTarge
   %i.ph = getelementptr i8, ptr %i.pd, i64 %i.pf
   %i.pi = getelementptr i8, ptr %i.ph, i64 %i.pg
   store i8 %.sroa.11.13.extract.trunc, ptr %i.pi, align 1, !tbaa !14
-  %39 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.11.14.extract.trunc = extractelement <16 x i8> %39, i64 14
+  %.sroa.11.14.extract.shift = lshr i64 %.fca.1.load.i179, 48
+  %.sroa.11.14.extract.trunc = trunc i64 %.sroa.11.14.extract.shift to i8
   %i.pj = load ptr, ptr %i.kr, align 8, !tbaa !197
   %i.pk = load i64, ptr %i.kq, align 8, !tbaa !718
   %i.pl = mul i64 %i.pk, 14
@@ -1574,8 +1578,8 @@ _ZN6duckdb19ParquetUUIDOperator11HandleStatsINS_9hugeint_tENS_21ParquetUUIDTarge
   %i.pn = getelementptr i8, ptr %i.pj, i64 %i.pl
   %i.po = getelementptr i8, ptr %i.pn, i64 %i.pm
   store i8 %.sroa.11.14.extract.trunc, ptr %i.po, align 1, !tbaa !14
-  %40 = bitcast <2 x i64> %24 to <16 x i8>
-  %.sroa.11.15.extract.trunc = extractelement <16 x i8> %40, i64 15
+  %.sroa.11.15.extract.shift = lshr i64 %.fca.1.load.i179, 56
+  %.sroa.11.15.extract.trunc = trunc nuw i64 %.sroa.11.15.extract.shift to i8
   %i.pp = load ptr, ptr %i.kr, align 8, !tbaa !197
   %i.pq = load i64, ptr %i.kq, align 8, !tbaa !718
   %i.pr = mul i64 %i.pq, 15

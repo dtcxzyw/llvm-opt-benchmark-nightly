@@ -201,8 +201,10 @@ bb.o:                                             ; preds = %bb.m
 _ZNK8facebook5velox4exec18IndexBasedIteratorINS1_7MapViewILb1ENS0_9TimestampENS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE15ElementAccessorEEdeEv.exit: ; preds = %bb.l, %bb.n, %bb.o
   %.0.i.i.i.i.i.i.i = phi i32 [ %i.bz, %bb.o ], [ %i.bu, %bb.n ], [ %i.bp, %bb.l ]
   %i.ca = sext i32 %.0.i.i.i.i.i.i.i to i64
-  %i.cb = getelementptr inbounds [16 x i8], ptr %i.bl, i64 %i.ca
-  %5 = load <2 x i64>, ptr %i.cb, align 8, !tbaa !117, !noalias !10514 ; 6 uses
+  %i.cb = getelementptr inbounds [16 x i8], ptr %i.bl, i64 %i.ca ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i = load i64, ptr %i.cb, align 8, !tbaa !117, !noalias !10514 ; 6 uses
+  %.sroa.2.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.cb, i64 8
+  %.sroa.2.0.copyload.i.i.i.i.i.i = load i64, ptr %.sroa.2.0..sroa_idx.i.i.i.i.i.i, align 8, !tbaa !117, !noalias !10514 ; 5 uses
   %i.cc = load i64, ptr %i.al, align 8, !tbaa !476 ; 2 uses
   %i.cd = lshr i64 %i.cc, 8
   switch i64 %i.cd, label %bb.q [
@@ -213,21 +215,20 @@ _ZNK8facebook5velox4exec18IndexBasedIteratorINS1_7MapViewILb1ENS0_9TimestampENS0
 bb.p:                                             ; preds = %_ZNK8facebook5velox4exec18IndexBasedIteratorINS1_7MapViewILb1ENS0_9TimestampENS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE15ElementAccessorEEdeEv.exit
   %i.ce = load i64, ptr %i.ay, align 8, !tbaa !10418
   %i.cf = and i64 %i.ce, -16
-  %i.cg = inttoptr i64 %i.cf to ptr
-  %6 = load <2 x i64>, ptr %i.cg, align 16
-  %7 = icmp eq <2 x i64> %5, %6                   ; 2 uses
-  %8 = extractelement <2 x i1> %7, i64 0
-  %9 = extractelement <2 x i1> %7, i64 1
-  %i.ch = select i1 %8, i1 %9, i1 false
+  %i.cg = inttoptr i64 %i.cf to ptr               ; 2 uses
+  %5 = load i64, ptr %i.cg, align 16, !tbaa !7646
+  %6 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i, %5
+  %7 = getelementptr inbounds nuw i8, ptr %i.cg, i64 8
+  %8 = load i64, ptr %7, align 8
+  %9 = icmp eq i64 %.sroa.2.0.copyload.i.i.i.i.i.i, %8
+  %i.ch = select i1 %6, i1 %9, i1 false
   br i1 %i.ch, label %_ZNK5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox9TimestampEvvvvEEE4findIS6_EENS1_11F14ItemIterIPNS1_8F14ChunkIS6_EEEERKT_.exit.thread77, label %_ZNK5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox9TimestampEvvvvEEE4findIS6_EENS1_11F14ItemIterIPNS1_8F14ChunkIS6_EEEERKT_.exit.thread
 
 bb.q:                                             ; preds = %_ZNK8facebook5velox4exec18IndexBasedIteratorINS1_7MapViewILb1ENS0_9TimestampENS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE15ElementAccessorEEdeEv.exit
-  %10 = extractelement <2 x i64> %5, i64 0        ; 2 uses
-  %11 = extractelement <2 x i64> %5, i64 1
-  %i.ci = xor i64 %11, %10
+  %i.ci = xor i64 %.sroa.2.0.copyload.i.i.i.i.i.i, %.sroa.0.0.copyload.i.i.i.i.i.i
   %i.cj = mul i64 %i.ci, -7070675565921424023     ; 2 uses
   %i.ck = lshr i64 %i.cj, 47
-  %i.cl = xor i64 %10, %i.ck
+  %i.cl = xor i64 %.sroa.0.0.copyload.i.i.i.i.i.i, %i.ck
   %i.cm = xor i64 %i.cl, %i.cj
   %i.cn = mul i64 %i.cm, -7070675565921424023     ; 2 uses
   %i.co = lshr i64 %i.cn, 47
@@ -275,12 +276,13 @@ bb.s:                                             ; preds = %.critedge.i.i
   %i.dq = and i32 %i.dp, %.sroa.049.0
   %i.dr = zext nneg i32 %i.do to i64
   call void @llvm.assume(i1 %i.dm)
-  %i.ds = getelementptr inbounds nuw [16 x i8], ptr %i.df, i64 %i.dr
-  %12 = load <2 x i64>, ptr %i.ds, align 8
-  %13 = icmp eq <2 x i64> %5, %12                 ; 2 uses
-  %14 = extractelement <2 x i1> %13, i64 0
-  %15 = extractelement <2 x i1> %13, i64 1
-  %i.dt = select i1 %14, i1 %15, i1 false
+  %i.ds = getelementptr inbounds nuw [16 x i8], ptr %i.df, i64 %i.dr ; 2 uses
+  %10 = load i64, ptr %i.ds, align 8, !tbaa !7646
+  %11 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i, %10
+  %12 = getelementptr inbounds nuw i8, ptr %i.ds, i64 8
+  %13 = load i64, ptr %12, align 8
+  %14 = icmp eq i64 %.sroa.2.0.copyload.i.i.i.i.i.i, %13
+  %i.dt = select i1 %11, i1 %14, i1 false
   br i1 %i.dt, label %_ZNK5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox9TimestampEvvvvEEE4findIS6_EENS1_11F14ItemIterIPNS1_8F14ChunkIS6_EEEERKT_.exit.thread77, label %.critedge.i.i, !prof !232, !llvm.loop !10411
 
 bb.t:                                             ; preds = %.critedge.i.i
@@ -352,8 +354,10 @@ _ZNK8facebook5velox4exec16OptionalAccessorINS0_7GenericINS0_12TypeVariableILm1EE
   br i1 %.0.i.i.i.not, label %bb.aa, label %_ZNK8facebook5velox4exec16OptionalAccessorINS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE9has_valueEv.exit.thread
 
 bb.aa:                                            ; preds = %_ZNK8facebook5velox4exec16OptionalAccessorINS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE9has_valueEv.exit
-  %i.fe = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN8facebook5velox4exec9MapWriterINS0_9TimestampENS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE8add_nullEv(ptr noundef nonnull align 8 dereferenceable(48) %1)
-  store <2 x i64> %5, ptr %i.fe, align 8, !tbaa !117
+  %i.fe = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN8facebook5velox4exec9MapWriterINS0_9TimestampENS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE8add_nullEv(ptr noundef nonnull align 8 dereferenceable(48) %1) ; 2 uses
+  store i64 %.sroa.0.0.copyload.i.i.i.i.i.i, ptr %i.fe, align 8, !tbaa !117
+  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fe, i64 8
+  store i64 %.sroa.2.0.copyload.i.i.i.i.i.i, ptr %.sroa.8.0..sroa_idx, align 8, !tbaa !117
   br label %bb.ad
 
 _ZNK8facebook5velox4exec16OptionalAccessorINS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE9has_valueEv.exit.thread: ; preds = %_ZNK5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox9TimestampEvvvvEEE4findIS6_EENS1_11F14ItemIterIPNS1_8F14ChunkIS6_EEEERKT_.exit.thread77, %_ZNK8facebook5velox4exec16OptionalAccessorINS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE9has_valueEv.exit
@@ -407,15 +411,17 @@ _ZN8facebook5velox4exec9MapWriterINS0_9TimestampENS0_7GenericINS0_12TypeVariable
   %i.gg = getelementptr inbounds nuw i8, ptr %i.gf, i64 24
   %i.gh = load ptr, ptr %i.gg, align 8, !tbaa !7496, !noalias !10519
   %i.gi = sext i32 %i.ge to i64
-  %i.gj = getelementptr inbounds [16 x i8], ptr %i.gh, i64 %i.gi
+  %i.gj = getelementptr inbounds [16 x i8], ptr %i.gh, i64 %i.gi ; 2 uses
   store i8 1, ptr %i.ba, align 1, !tbaa !10458, !noalias !10519
   %i.gk = load ptr, ptr %i.bb, align 8, !tbaa !10459, !noalias !10519 ; 2 uses
   %i.gl = load ptr, ptr %i.gk, align 8, !tbaa !46, !noalias !10519
   %i.gm = load ptr, ptr %i.gl, align 8, !noalias !10519
   call void %i.gm(ptr noundef nonnull align 8 dereferenceable(96) %i.gk, i32 noundef %i.ge), !noalias !10519, !inline_history !10524
   %i.gn = load ptr, ptr %i.bb, align 8, !tbaa !10459, !noalias !10519
-  %i.go = getelementptr inbounds nuw i8, ptr %i.gn, i64 24
-  store <2 x i64> %5, ptr %i.gj, align 8, !tbaa !117
+  %15 = getelementptr inbounds nuw i8, ptr %i.gn, i64 24
+  store i64 %.sroa.0.0.copyload.i.i.i.i.i.i, ptr %i.gj, align 8, !tbaa !117
+  %i.go = getelementptr inbounds nuw i8, ptr %i.gj, i64 8
+  store i64 %.sroa.2.0.copyload.i.i.i.i.i.i, ptr %i.go, align 8, !tbaa !117
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #35
   call void @llvm.experimental.noalias.scope.decl(metadata !10525)
   call void @llvm.experimental.noalias.scope.decl(metadata !10528)
@@ -423,7 +429,7 @@ _ZN8facebook5velox4exec9MapWriterINS0_9TimestampENS0_7GenericINS0_12TypeVariable
   store ptr %i.gp, ptr %4, align 8, !tbaa !509, !alias.scope !10531
   store <2 x ptr> %i.bf, ptr %i.bg, align 8, !tbaa !38, !alias.scope !10531
   store i32 %i.bp, ptr %i.bh, align 8, !tbaa !8188, !alias.scope !10531
-  call void @_ZN8facebook5velox4exec13GenericWriter9copy_fromERKNS1_11GenericViewE(ptr noundef nonnull align 8 dereferenceable(32) %i.go, ptr noundef nonnull align 8 dereferenceable(28) %4)
+  call void @_ZN8facebook5velox4exec13GenericWriter9copy_fromERKNS1_11GenericViewE(ptr noundef nonnull align 8 dereferenceable(32) %15, ptr noundef nonnull align 8 dereferenceable(28) %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #35
   br label %bb.ad
 

@@ -201,8 +201,8 @@ bb.a:
   %20 = alloca %"class.std::vector.344", align 8  ; 11 uses
   %21 = alloca %"class.arrow::Result.234", align 8 ; 12 uses
   %22 = alloca %"struct.arrow::ArraySpan", align 8 ; 12 uses
-  %23 = alloca %"class.std::shared_ptr", align 16 ; 7 uses
-  %24 = alloca %"struct.arrow::Datum", align 16   ; 8 uses
+  %23 = alloca %"class.std::shared_ptr", align 8  ; 7 uses
+  %24 = alloca %"struct.arrow::Datum", align 8    ; 9 uses
   %25 = alloca %"class.arrow::Result.208", align 8 ; 13 uses
   %26 = alloca %"struct.arrow::Datum", align 8    ; 7 uses
   %27 = alloca %"class.arrow::compute::TakeOptions", align 8 ; 5 uses
@@ -605,12 +605,13 @@ _ZNSt12_Vector_baseISt6vectorISt10shared_ptrIN5arrow5ArrayEESaIS4_EESaIS6_EEC2Em
   %i.aaf = getelementptr inbounds nuw i8, ptr %22, i64 16
   %i.aag = getelementptr inbounds nuw i8, ptr %22, i64 24
   %i.aah = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.aai = getelementptr inbounds nuw i8, ptr %22, i64 104 ; 3 uses
-  %i.aaj = getelementptr inbounds nuw i8, ptr %22, i64 112
-  %i.aak = getelementptr inbounds nuw i8, ptr %22, i64 120
-  %i.aal = getelementptr inbounds nuw i8, ptr %21, i64 8 ; 2 uses
-  %i.aam = getelementptr inbounds nuw i8, ptr %23, i64 8
-  %i.aan = getelementptr inbounds nuw i8, ptr %21, i64 16 ; 2 uses
+  %73 = getelementptr inbounds nuw i8, ptr %22, i64 104 ; 3 uses
+  %i.aai = getelementptr inbounds nuw i8, ptr %22, i64 112
+  %i.aaj = getelementptr inbounds nuw i8, ptr %22, i64 120
+  %i.aak = getelementptr inbounds nuw i8, ptr %21, i64 8 ; 2 uses
+  %i.aal = getelementptr inbounds nuw i8, ptr %23, i64 8 ; 2 uses
+  %i.aam = getelementptr inbounds nuw i8, ptr %21, i64 16 ; 3 uses
+  %i.aan = getelementptr inbounds nuw i8, ptr %24, i64 8
   %i.aao = getelementptr inbounds nuw i8, ptr %24, i64 16
   %i.aap = getelementptr inbounds nuw i8, ptr %25, i64 24
   %i.aaq = getelementptr inbounds nuw i8, ptr %25, i64 8 ; 3 uses
@@ -658,7 +659,7 @@ bb.jb:                                            ; preds = %bb.iy, %.lr.ph295.i
 bb.jc:                                            ; preds = %bb.jb
   %i.abf = landingpad { ptr, i32 }
           cleanup
-  call void @_ZNSt6vectorIN5arrow9ArraySpanESaIS1_EED2Ev(ptr noundef nonnull align 8 dereferenceable(24) %i.aai) #26
+  call void @_ZNSt6vectorIN5arrow9ArraySpanESaIS1_EED2Ev(ptr noundef nonnull align 8 dereferenceable(24) %73) #26
   br label %.body.i87
 
 _ZN5arrow9ArraySpanC2ERKNS_9ArrayDataE.exit.i88:  ; preds = %bb.jb
@@ -668,8 +669,8 @@ _ZN5arrow9ArraySpanC2ERKNS_9ArrayDataE.exit.i88:  ; preds = %bb.jb
           to label %bb.jd unwind label %bb.jg
 
 bb.jd:                                            ; preds = %_ZN5arrow9ArraySpanC2ERKNS_9ArrayDataE.exit.i88
-  %i.abi = load ptr, ptr %i.aai, align 8, !tbaa !105, !noalias !901 ; 3 uses
-  %i.abj = load ptr, ptr %i.aaj, align 8, !tbaa !698, !noalias !901 ; 2 uses
+  %i.abi = load ptr, ptr %73, align 8, !tbaa !105, !noalias !901 ; 3 uses
+  %i.abj = load ptr, ptr %i.aai, align 8, !tbaa !698, !noalias !901 ; 2 uses
   %.not.i1.i.i.i89 = icmp eq ptr %i.abi, %i.abj
   br i1 %.not.i1.i.i.i89, label %_ZSt8_DestroyIPN5arrow9ArraySpanES1_EvT_S3_RSaIT0_E.exit.i.i.i94, label %.lr.ph.i.i.i90
 
@@ -681,7 +682,7 @@ bb.jd:                                            ; preds = %_ZN5arrow9ArraySpan
   br i1 %.not.i.i.i159.i, label %_ZSt8_DestroyIPN5arrow9ArraySpanES1_EvT_S3_RSaIT0_E.exit.loopexit.i.i.i92, label %.lr.ph.i.i.i90, !llvm.loop !700
 
 _ZSt8_DestroyIPN5arrow9ArraySpanES1_EvT_S3_RSaIT0_E.exit.loopexit.i.i.i92: ; preds = %.lr.ph.i.i.i90
-  %.pre.i.i.i93 = load ptr, ptr %i.aai, align 8, !tbaa !105, !noalias !901
+  %.pre.i.i.i93 = load ptr, ptr %73, align 8, !tbaa !105, !noalias !901
   br label %_ZSt8_DestroyIPN5arrow9ArraySpanES1_EvT_S3_RSaIT0_E.exit.i.i.i94
 
 _ZSt8_DestroyIPN5arrow9ArraySpanES1_EvT_S3_RSaIT0_E.exit.i.i.i94: ; preds = %_ZSt8_DestroyIPN5arrow9ArraySpanES1_EvT_S3_RSaIT0_E.exit.loopexit.i.i.i92, %bb.jd
@@ -690,7 +691,7 @@ _ZSt8_DestroyIPN5arrow9ArraySpanES1_EvT_S3_RSaIT0_E.exit.i.i.i94: ; preds = %_ZS
   br i1 %.not.i.i.i.i160.i, label %_ZN5arrow9ArraySpanD2Ev.exit.i95, label %bb.je
 
 bb.je:                                            ; preds = %_ZSt8_DestroyIPN5arrow9ArraySpanES1_EvT_S3_RSaIT0_E.exit.i.i.i94
-  %i.abm = load ptr, ptr %i.aak, align 8, !tbaa !701, !noalias !901
+  %i.abm = load ptr, ptr %i.aaj, align 8, !tbaa !701, !noalias !901
   %i.abn = ptrtoint ptr %i.abm to i64
   %i.abo = ptrtoint ptr %i.abl to i64
   %i.abp = sub i64 %i.abn, %i.abo
@@ -722,15 +723,15 @@ bb.jh:                                            ; preds = %_ZN5arrow9ArraySpan
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #26, !noalias !901
   call void @llvm.experimental.noalias.scope.decl(metadata !927)
   call void @llvm.experimental.noalias.scope.decl(metadata !930)
-  %73 = load <2 x ptr>, ptr %i.aal, align 8, !tbaa !351, !noalias !933 ; 4 uses
-  store ptr null, ptr %i.aan, align 8, !tbaa !352, !noalias !933
-  store <2 x ptr> %73, ptr %23, align 16, !tbaa !351, !alias.scope !934, !noalias !901
-  store ptr null, ptr %i.aal, align 8, !tbaa !101, !noalias !933
-  %74 = extractelement <2 x ptr> %73, i64 0
+  %74 = load ptr, ptr %i.aak, align 8, !tbaa !101, !noalias !933 ; 3 uses
+  store ptr %74, ptr %23, align 8, !tbaa !101, !alias.scope !934, !noalias !901
+  %75 = load ptr, ptr %i.aam, align 8, !tbaa !352, !noalias !933 ; 5 uses
+  store ptr null, ptr %i.aam, align 8, !tbaa !352, !noalias !933
+  store ptr %75, ptr %i.aal, align 8, !tbaa !352, !alias.scope !934, !noalias !901
+  store ptr null, ptr %i.aak, align 8, !tbaa !101, !noalias !933
   %i.abt = getelementptr inbounds nuw i8, ptr %74, i64 16
   %i.abu = load i64, ptr %i.abt, align 8, !tbaa !134
   %i.abv = icmp sgt i64 %i.abu, 0
-  %75 = extractelement <2 x ptr> %73, i64 1       ; 3 uses
   br i1 %i.abv, label %bb.ji, label %bb.kq
 
 bb.ji:                                            ; preds = %bb.jh
@@ -755,8 +756,9 @@ bb.jl:                                            ; preds = %bb.jj
   br label %_ZNSt12__shared_ptrIN5arrow9ArrayDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i103
 
 _ZNSt12__shared_ptrIN5arrow9ArrayDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i103: ; preds = %bb.jl, %bb.jk, %bb.ji
-  store <2 x ptr> %73, ptr %24, align 16, !tbaa !351, !noalias !901
-  store i8 2, ptr %i.aao, align 16, !tbaa !508, !noalias !901
+  store ptr %74, ptr %24, align 8, !tbaa !101, !noalias !901
+  store ptr %75, ptr %i.aan, align 8, !tbaa !352, !noalias !901
+  store i8 2, ptr %i.aao, align 8, !tbaa !508, !noalias !901
   br i1 %.not.i.i.i.i150.i, label %.critedge.i108, label %.lr.ph287.i
 
 bb.jm:                                            ; preds = %_ZN5arrow6ResultINS_5DatumEED2Ev.exit.i106
@@ -1016,7 +1018,7 @@ bb.ko:                                            ; preds = %bb.kn, %bb.jv
   br label %bb.my
 
 .critedge.i108:                                   ; preds = %bb.jm, %_ZNSt12__shared_ptrIN5arrow9ArrayDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i103
-  %i.aea = load ptr, ptr %23, align 16, !tbaa !101, !noalias !901
+  %i.aea = load ptr, ptr %23, align 8, !tbaa !101, !noalias !901
   %i.aeb = getelementptr inbounds nuw i8, ptr %i.aea, i64 16
   %i.aec = load i64, ptr %i.aeb, align 8, !tbaa !134
   %i.aed = add nsw i64 %i.aec, %.088289.i
@@ -1039,7 +1041,7 @@ bb.kp:                                            ; preds = %.loopexit258.i
 _ZN5arrow5DatumD2Ev.exit179.i:                    ; preds = %.loopexit258.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #26, !noalias !901
   call void @llvm.lifetime.end.p0(ptr nonnull %24) #26, !noalias !901
-  %.pr.i107 = load ptr, ptr %i.aam, align 8, !tbaa !352, !noalias !901
+  %.pr.i107 = load ptr, ptr %i.aal, align 8, !tbaa !352, !noalias !901
   br label %bb.kq
 
 bb.kq:                                            ; preds = %_ZN5arrow5DatumD2Ev.exit179.i, %bb.jh
@@ -1105,7 +1107,7 @@ bb.kx:                                            ; preds = %_ZNSt12__shared_ptr
   br i1 %i.aex, label %bb.ky, label %_ZN5arrow6ResultISt10shared_ptrINS_9ArrayDataEEE7DestroyEv.exit.thread.i.i96, !prof !132
 
 bb.ky:                                            ; preds = %bb.kx
-  %i.aey = load ptr, ptr %i.aan, align 8, !tbaa !352, !noalias !901 ; 8 uses
+  %i.aey = load ptr, ptr %i.aam, align 8, !tbaa !352, !noalias !901 ; 8 uses
   %.not.i.i.i.i.i.i98 = icmp eq ptr %i.aey, null
   br i1 %.not.i.i.i.i.i.i98, label %_ZN5arrow6ResultISt10shared_ptrINS_9ArrayDataEEED2Ev.exit.i97, label %bb.kz
 

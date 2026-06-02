@@ -201,12 +201,12 @@ _ZN4geos5index7strtree19TemplateSTRNodePairIPKNS_9operation8distance13FacetSeque
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZN4geos5index7strtree23TemplateSTRtreeDistanceIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance8distanceEPKNS_4geom8GeometryEE13FacetDistanceE13expandToQueueERKNS1_19TemplateSTRNodePairIS7_S8_SE_EERSt14priority_queueISH_St6vectorISH_SaISH_EENSF_16PairQueueCompareEEd.exit.i.i.i.i.i, %.lr.ph.i.preheader.i.i.i.i
   %.val3129.i.i.i.i.i = phi ptr [ %.val31.i.i.i.i.i, %_ZN4geos5index7strtree23TemplateSTRtreeDistanceIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance8distanceEPKNS_4geom8GeometryEE13FacetDistanceE13expandToQueueERKNS1_19TemplateSTRNodePairIS7_S8_SE_EERSt14priority_queueISH_St6vectorISH_SaISH_EENSF_16PairQueueCompareEEd.exit.i.i.i.i.i ], [ %.val3125.i.i.i.i.i, %.lr.ph.i.preheader.i.i.i.i ] ; 4 uses
-  %.val3028.i.i.i.i.i = phi ptr [ %.val30.i.i.i.i.i, %_ZN4geos5index7strtree23TemplateSTRtreeDistanceIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance8distanceEPKNS_4geom8GeometryEE13FacetDistanceE13expandToQueueERKNS1_19TemplateSTRNodePairIS7_S8_SE_EERSt14priority_queueISH_St6vectorISH_SaISH_EENSF_16PairQueueCompareEEd.exit.i.i.i.i.i ], [ %.val3024.i.i.i.i.i, %.lr.ph.i.preheader.i.i.i.i ] ; 14 uses
+  %.val3028.i.i.i.i.i = phi ptr [ %.val30.i.i.i.i.i, %_ZN4geos5index7strtree23TemplateSTRtreeDistanceIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance8distanceEPKNS_4geom8GeometryEE13FacetDistanceE13expandToQueueERKNS1_19TemplateSTRNodePairIS7_S8_SE_EERSt14priority_queueISH_St6vectorISH_SaISH_EENSF_16PairQueueCompareEEd.exit.i.i.i.i.i ], [ %.val3024.i.i.i.i.i, %.lr.ph.i.preheader.i.i.i.i ] ; 15 uses
   %.01227.i.i.i.i.i = phi double [ %.2.i.i.i.i.i, %_ZN4geos5index7strtree23TemplateSTRtreeDistanceIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance8distanceEPKNS_4geom8GeometryEE13FacetDistanceE13expandToQueueERKNS1_19TemplateSTRNodePairIS7_S8_SE_EERSt14priority_queueISH_St6vectorISH_SaISH_EENSF_16PairQueueCompareEEd.exit.i.i.i.i.i ], [ +inf, %.lr.ph.i.preheader.i.i.i.i ] ; 7 uses
-  %.sroa.09.026.i.i.i.i.i = phi ptr [ %.sroa.09.1.i.i.i.i.i, %_ZN4geos5index7strtree23TemplateSTRtreeDistanceIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance8distanceEPKNS_4geom8GeometryEE13FacetDistanceE13expandToQueueERKNS1_19TemplateSTRNodePairIS7_S8_SE_EERSt14priority_queueISH_St6vectorISH_SaISH_EENSF_16PairQueueCompareEEd.exit.i.i.i.i.i ], [ null, %.lr.ph.i.preheader.i.i.i.i ] ; 15 uses
-  %12 = load <2 x ptr>, ptr %.val3028.i.i.i.i.i, align 8, !tbaa !36 ; 4 uses
-  %13 = extractelement <2 x ptr> %12, i64 1       ; 11 uses
-  %14 = extractelement <2 x ptr> %12, i64 0       ; 11 uses
+  %.sroa.09.026.i.i.i.i.i = phi ptr [ %.sroa.09.1.i.i.i.i.i, %_ZN4geos5index7strtree23TemplateSTRtreeDistanceIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance8distanceEPKNS_4geom8GeometryEE13FacetDistanceE13expandToQueueERKNS1_19TemplateSTRNodePairIS7_S8_SE_EERSt14priority_queueISH_St6vectorISH_SaISH_EENSF_16PairQueueCompareEEd.exit.i.i.i.i.i ], [ null, %.lr.ph.i.preheader.i.i.i.i ] ; 16 uses
+  %.sroa.02.0.copyload.i.i.i.i.i = load ptr, ptr %.val3028.i.i.i.i.i, align 8, !tbaa !36 ; 13 uses
+  %.sroa.8.0..val32.sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.val3028.i.i.i.i.i, i64 8
+  %.sroa.8.0.copyload.i.i.i.i.i = load ptr, ptr %.sroa.8.0..val32.sroa_idx.i.i.i.i.i, align 8, !tbaa !36 ; 13 uses
   %.sroa.10.0..val32.sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.val3028.i.i.i.i.i, i64 16
   %.sroa.10.0.copyload.i.i.i.i.i = load double, ptr %.sroa.10.0..val32.sroa_idx.i.i.i.i.i, align 8, !tbaa !32 ; 5 uses
   %i.bn = ptrtoint ptr %.val3129.i.i.i.i.i to i64
@@ -331,18 +331,18 @@ bb.k:                                             ; preds = %_ZN4geos5index7strt
   br label %.body.i.i.i.i.i
 
 bb.l:                                             ; preds = %bb.j
-  %i.df = getelementptr inbounds nuw i8, ptr %14, i64 40
+  %i.df = getelementptr inbounds nuw i8, ptr %.sroa.02.0.copyload.i.i.i.i.i, i64 40
   %i.dg = load ptr, ptr %i.df, align 8, !tbaa !27 ; 4 uses
   %i.dh = icmp eq ptr %i.dg, null
-  %i.di = icmp eq ptr %i.dg, %14
+  %i.di = icmp eq ptr %i.dg, %.sroa.02.0.copyload.i.i.i.i.i
   %spec.select.i.i.i.i3.i.i.i = or i1 %i.dh, %i.di
-  %i.dj = getelementptr inbounds nuw i8, ptr %13, i64 40
+  %i.dj = getelementptr inbounds nuw i8, ptr %.sroa.8.0.copyload.i.i.i.i.i, i64 40
   %i.dk = load ptr, ptr %i.dj, align 8, !tbaa !27 ; 4 uses
   br i1 %spec.select.i.i.i.i3.i.i.i, label %_ZNK4geos5index7strtree19TemplateSTRNodePairIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance8distanceEPKNS_4geom8GeometryEE13FacetDistanceE8isLeavesEv.exit.i.i6.i.i.i, label %_ZNK4geos5index7strtree19TemplateSTRNodePairIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance8distanceEPKNS_4geom8GeometryEE13FacetDistanceE8isLeavesEv.exit.thread.i.i4.i.i.i
 
 _ZNK4geos5index7strtree19TemplateSTRNodePairIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance8distanceEPKNS_4geom8GeometryEE13FacetDistanceE8isLeavesEv.exit.i.i6.i.i.i: ; preds = %bb.l
   %i.dl = icmp eq ptr %i.dk, null
-  %i.dm = icmp eq ptr %i.dk, %13
+  %i.dm = icmp eq ptr %i.dk, %.sroa.8.0.copyload.i.i.i.i.i
   %spec.select.i2.i.i.i7.i.i.i = or i1 %i.dl, %i.dm
   br i1 %spec.select.i2.i.i.i7.i.i.i, label %bb.m, label %_ZNK4geos5index7strtree19TemplateSTRNodePairIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance8distanceEPKNS_4geom8GeometryEE13FacetDistanceE8isLeavesEv.exit.thread.i.i4.i.i.i
 
@@ -350,17 +350,21 @@ bb.m:                                             ; preds = %_ZNK4geos5index7str
   br i1 %.not18.i.i.i.i.i, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  store <2 x ptr> %12, ptr %.sroa.09.026.i.i.i.i.i, align 8, !tbaa !36
+  store ptr %.sroa.02.0.copyload.i.i.i.i.i, ptr %.sroa.09.026.i.i.i.i.i, align 8, !tbaa !36
+  %.sroa.8.0..val36.sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.09.026.i.i.i.i.i, i64 8
+  store ptr %.sroa.8.0.copyload.i.i.i.i.i, ptr %.sroa.8.0..val36.sroa_idx.i.i.i.i.i, align 8, !tbaa !36
   %.sroa.10.0..val36.sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.09.026.i.i.i.i.i, i64 16
   store double %.sroa.10.0.copyload.i.i.i.i.i, ptr %.sroa.10.0..val36.sroa_idx.i.i.i.i.i, align 8, !tbaa !32
   br label %_ZN4geos5index7strtree23TemplateSTRtreeDistanceIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance8distanceEPKNS_4geom8GeometryEE13FacetDistanceE13expandToQueueERKNS1_19TemplateSTRNodePairIS7_S8_SE_EERSt14priority_queueISH_St6vectorISH_SaISH_EENSF_16PairQueueCompareEEd.exit.i.i.i.i.i
 
 bb.o:                                             ; preds = %bb.m
   %i.dn = invoke noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #16
-          to label %_ZNSt10unique_ptrIN4geos5index7strtree19TemplateSTRNodePairIPKNS0_9operation8distance13FacetSequenceENS2_14EnvelopeTraitsEZNKS5_20IndexedFacetDistance8distanceEPKNS0_4geom8GeometryEE13FacetDistanceEESt14default_deleteISG_EED2Ev.exit.i.i.i.i.i unwind label %bb.p ; 3 uses
+          to label %_ZNSt10unique_ptrIN4geos5index7strtree19TemplateSTRNodePairIPKNS0_9operation8distance13FacetSequenceENS2_14EnvelopeTraitsEZNKS5_20IndexedFacetDistance8distanceEPKNS0_4geom8GeometryEE13FacetDistanceEESt14default_deleteISG_EED2Ev.exit.i.i.i.i.i unwind label %bb.p ; 4 uses
 
 _ZNSt10unique_ptrIN4geos5index7strtree19TemplateSTRNodePairIPKNS0_9operation8distance13FacetSequenceENS2_14EnvelopeTraitsEZNKS5_20IndexedFacetDistance8distanceEPKNS0_4geom8GeometryEE13FacetDistanceEESt14default_deleteISG_EED2Ev.exit.i.i.i.i.i: ; preds = %bb.o
-  store <2 x ptr> %12, ptr %i.dn, align 16, !tbaa !36, !noalias !43
+  store ptr %.sroa.02.0.copyload.i.i.i.i.i, ptr %i.dn, align 16, !tbaa !36, !noalias !43
+  %.sroa.8.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.dn, i64 8
+  store ptr %.sroa.8.0.copyload.i.i.i.i.i, ptr %.sroa.8.0..sroa_idx.i.i.i.i.i, align 8, !tbaa !36, !noalias !43
   %.sroa.10.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.dn, i64 16
   store double %.sroa.10.0.copyload.i.i.i.i.i, ptr %.sroa.10.0..sroa_idx.i.i.i.i.i, align 16, !tbaa !32, !noalias !43
   br label %_ZN4geos5index7strtree23TemplateSTRtreeDistanceIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance8distanceEPKNS_4geom8GeometryEE13FacetDistanceE13expandToQueueERKNS1_19TemplateSTRNodePairIS7_S8_SE_EERSt14priority_queueISH_St6vectorISH_SaISH_EENSF_16PairQueueCompareEEd.exit.i.i.i.i.i
@@ -372,48 +376,48 @@ bb.p:                                             ; preds = %bb.o
 
 _ZNK4geos5index7strtree19TemplateSTRNodePairIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance8distanceEPKNS_4geom8GeometryEE13FacetDistanceE8isLeavesEv.exit.thread.i.i4.i.i.i: ; preds = %_ZNK4geos5index7strtree19TemplateSTRNodePairIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance8distanceEPKNS_4geom8GeometryEE13FacetDistanceE8isLeavesEv.exit.i.i6.i.i.i, %bb.l
   %i.dp = icmp ne ptr %i.dg, null
-  %i.dq = icmp ne ptr %i.dg, %14
+  %i.dq = icmp ne ptr %i.dg, %.sroa.02.0.copyload.i.i.i.i.i
   %spec.select.i.not.i.i.i.i.i.i.i = and i1 %i.dp, %i.dq ; 5 uses
   %i.dr = icmp ne ptr %i.dk, null
-  %i.ds = icmp ne ptr %i.dk, %13
+  %i.ds = icmp ne ptr %i.dk, %.sroa.8.0.copyload.i.i.i.i.i
   %spec.select.i.not.i34.i.i.i.i.i.i = and i1 %i.dr, %i.ds ; 2 uses
   %or.cond.i.i.i.i.i.i = and i1 %spec.select.i.not.i.i.i.i.i.i.i, %spec.select.i.not.i34.i.i.i.i.i.i
   br i1 %or.cond.i.i.i.i.i.i, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %_ZNK4geos5index7strtree19TemplateSTRNodePairIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance8distanceEPKNS_4geom8GeometryEE13FacetDistanceE8isLeavesEv.exit.thread.i.i4.i.i.i
-  %i.dt = getelementptr inbounds nuw i8, ptr %14, i64 8
+  %i.dt = getelementptr inbounds nuw i8, ptr %.sroa.02.0.copyload.i.i.i.i.i, i64 8
   %i.du = load double, ptr %i.dt, align 8, !tbaa !46 ; 2 uses
   %i.dv = fcmp uno double %i.du, 0.000000e+00
-  %i.dw = load double, ptr %14, align 8
+  %i.dw = load double, ptr %.sroa.02.0.copyload.i.i.i.i.i, align 8
   %i.dx = fsub double %i.du, %i.dw
-  %i.dy = getelementptr inbounds nuw i8, ptr %14, i64 24
+  %i.dy = getelementptr inbounds nuw i8, ptr %.sroa.02.0.copyload.i.i.i.i.i, i64 24
   %i.dz = load double, ptr %i.dy, align 8
-  %i.ea = getelementptr inbounds nuw i8, ptr %14, i64 16
+  %i.ea = getelementptr inbounds nuw i8, ptr %.sroa.02.0.copyload.i.i.i.i.i, i64 16
   %i.eb = load double, ptr %i.ea, align 8
   %i.ec = fsub double %i.dz, %i.eb
   %i.ed = fmul double %i.dx, %i.ec
   %i.ee = select i1 %i.dv, double 0.000000e+00, double %i.ed
-  %i.ef = getelementptr inbounds nuw i8, ptr %13, i64 8
+  %i.ef = getelementptr inbounds nuw i8, ptr %.sroa.8.0.copyload.i.i.i.i.i, i64 8
   %i.eg = load double, ptr %i.ef, align 8, !tbaa !46 ; 2 uses
   %i.eh = fcmp uno double %i.eg, 0.000000e+00
-  %i.ei = load double, ptr %13, align 8
+  %i.ei = load double, ptr %.sroa.8.0.copyload.i.i.i.i.i, align 8
   %i.ej = fsub double %i.eg, %i.ei
-  %i.ek = getelementptr inbounds nuw i8, ptr %13, i64 24
+  %i.ek = getelementptr inbounds nuw i8, ptr %.sroa.8.0.copyload.i.i.i.i.i, i64 24
   %i.el = load double, ptr %i.ek, align 8
-  %i.em = getelementptr inbounds nuw i8, ptr %13, i64 16
+  %i.em = getelementptr inbounds nuw i8, ptr %.sroa.8.0.copyload.i.i.i.i.i, i64 16
   %i.en = load double, ptr %i.em, align 8
   %i.eo = fsub double %i.el, %i.en
   %i.ep = fmul double %i.ej, %i.eo
   %i.eq = select i1 %i.eh, double 0.000000e+00, double %i.ep
   %i.er = fcmp ule double %i.ee, %i.eq            ; 3 uses
-  %.sroa.02.0.copyload..sroa.8.0.copyload.i.i.i.i.i = select i1 %i.er, ptr %13, ptr %14
-  %.sroa.8.0.copyload..sroa.02.0.copyload.i.i.i.i.i = select i1 %i.er, ptr %14, ptr %13
+  %.sroa.02.0.copyload..sroa.8.0.copyload.i.i.i.i.i = select i1 %i.er, ptr %.sroa.8.0.copyload.i.i.i.i.i, ptr %.sroa.02.0.copyload.i.i.i.i.i
+  %.sroa.8.0.copyload..sroa.02.0.copyload.i.i.i.i.i = select i1 %i.er, ptr %.sroa.02.0.copyload.i.i.i.i.i, ptr %.sroa.8.0.copyload.i.i.i.i.i
   br label %.invoke.i.i.i.i.i
 
 bb.r:                                             ; preds = %_ZNK4geos5index7strtree19TemplateSTRNodePairIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance8distanceEPKNS_4geom8GeometryEE13FacetDistanceE8isLeavesEv.exit.thread.i.i4.i.i.i
   %brmerge.i.i.i.i.i = or i1 %spec.select.i.not.i.i.i.i.i.i.i, %spec.select.i.not.i34.i.i.i.i.i.i
-  %.sroa.02.0.copyload.mux.i.i.i.i.i = select i1 %spec.select.i.not.i.i.i.i.i.i.i, ptr %14, ptr %13
-  %.sroa.8.0.copyload.mux.i.i.i.i.i = select i1 %spec.select.i.not.i.i.i.i.i.i.i, ptr %13, ptr %14
+  %.sroa.02.0.copyload.mux.i.i.i.i.i = select i1 %spec.select.i.not.i.i.i.i.i.i.i, ptr %.sroa.02.0.copyload.i.i.i.i.i, ptr %.sroa.8.0.copyload.i.i.i.i.i
+  %.sroa.8.0.copyload.mux.i.i.i.i.i = select i1 %spec.select.i.not.i.i.i.i.i.i.i, ptr %.sroa.8.0.copyload.i.i.i.i.i, ptr %.sroa.02.0.copyload.i.i.i.i.i
   %not.spec.select.i.not.i.i.i.i.i.i.i = xor i1 %spec.select.i.not.i.i.i.i.i.i.i, true
   br i1 %brmerge.i.i.i.i.i, label %.invoke.i.i.i.i.i, label %bb.w
 
@@ -816,12 +820,12 @@ _ZN4geos5index7strtree19TemplateSTRNodePairIPKNS_9operation8distance13FacetSeque
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZN4geos5index7strtree23TemplateSTRtreeDistanceIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance16nearestLocationsEPKNS_4geom8GeometryEE13FacetDistanceE13expandToQueueERKNS1_19TemplateSTRNodePairIS7_S8_SE_EERSt14priority_queueISH_St6vectorISH_SaISH_EENSF_16PairQueueCompareEEd.exit.i.i.i.i.i, %.lr.ph.i.preheader.i.i.i.i
   %.val3129.i.i.i.i.i = phi ptr [ %.val31.i.i.i.i.i, %_ZN4geos5index7strtree23TemplateSTRtreeDistanceIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance16nearestLocationsEPKNS_4geom8GeometryEE13FacetDistanceE13expandToQueueERKNS1_19TemplateSTRNodePairIS7_S8_SE_EERSt14priority_queueISH_St6vectorISH_SaISH_EENSF_16PairQueueCompareEEd.exit.i.i.i.i.i ], [ %.val3125.i.i.i.i.i, %.lr.ph.i.preheader.i.i.i.i ] ; 4 uses
-  %.val3028.i.i.i.i.i = phi ptr [ %.val30.i.i.i.i.i, %_ZN4geos5index7strtree23TemplateSTRtreeDistanceIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance16nearestLocationsEPKNS_4geom8GeometryEE13FacetDistanceE13expandToQueueERKNS1_19TemplateSTRNodePairIS7_S8_SE_EERSt14priority_queueISH_St6vectorISH_SaISH_EENSF_16PairQueueCompareEEd.exit.i.i.i.i.i ], [ %.val3024.i.i.i.i.i, %.lr.ph.i.preheader.i.i.i.i ] ; 14 uses
+  %.val3028.i.i.i.i.i = phi ptr [ %.val30.i.i.i.i.i, %_ZN4geos5index7strtree23TemplateSTRtreeDistanceIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance16nearestLocationsEPKNS_4geom8GeometryEE13FacetDistanceE13expandToQueueERKNS1_19TemplateSTRNodePairIS7_S8_SE_EERSt14priority_queueISH_St6vectorISH_SaISH_EENSF_16PairQueueCompareEEd.exit.i.i.i.i.i ], [ %.val3024.i.i.i.i.i, %.lr.ph.i.preheader.i.i.i.i ] ; 15 uses
   %.01227.i.i.i.i.i = phi double [ %.2.i.i.i.i.i, %_ZN4geos5index7strtree23TemplateSTRtreeDistanceIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance16nearestLocationsEPKNS_4geom8GeometryEE13FacetDistanceE13expandToQueueERKNS1_19TemplateSTRNodePairIS7_S8_SE_EERSt14priority_queueISH_St6vectorISH_SaISH_EENSF_16PairQueueCompareEEd.exit.i.i.i.i.i ], [ +inf, %.lr.ph.i.preheader.i.i.i.i ] ; 7 uses
-  %.sroa.09.026.i.i.i.i.i = phi ptr [ %.sroa.09.1.i.i.i.i.i, %_ZN4geos5index7strtree23TemplateSTRtreeDistanceIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance16nearestLocationsEPKNS_4geom8GeometryEE13FacetDistanceE13expandToQueueERKNS1_19TemplateSTRNodePairIS7_S8_SE_EERSt14priority_queueISH_St6vectorISH_SaISH_EENSF_16PairQueueCompareEEd.exit.i.i.i.i.i ], [ null, %.lr.ph.i.preheader.i.i.i.i ] ; 15 uses
-  %13 = load <2 x ptr>, ptr %.val3028.i.i.i.i.i, align 8, !tbaa !36 ; 4 uses
-  %14 = extractelement <2 x ptr> %13, i64 1       ; 11 uses
-  %15 = extractelement <2 x ptr> %13, i64 0       ; 11 uses
+  %.sroa.09.026.i.i.i.i.i = phi ptr [ %.sroa.09.1.i.i.i.i.i, %_ZN4geos5index7strtree23TemplateSTRtreeDistanceIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance16nearestLocationsEPKNS_4geom8GeometryEE13FacetDistanceE13expandToQueueERKNS1_19TemplateSTRNodePairIS7_S8_SE_EERSt14priority_queueISH_St6vectorISH_SaISH_EENSF_16PairQueueCompareEEd.exit.i.i.i.i.i ], [ null, %.lr.ph.i.preheader.i.i.i.i ] ; 16 uses
+  %.sroa.02.0.copyload.i.i.i.i.i = load ptr, ptr %.val3028.i.i.i.i.i, align 8, !tbaa !36 ; 13 uses
+  %.sroa.8.0..val32.sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.val3028.i.i.i.i.i, i64 8
+  %.sroa.8.0.copyload.i.i.i.i.i = load ptr, ptr %.sroa.8.0..val32.sroa_idx.i.i.i.i.i, align 8, !tbaa !36 ; 13 uses
   %.sroa.10.0..val32.sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.val3028.i.i.i.i.i, i64 16
   %.sroa.10.0.copyload.i.i.i.i.i = load double, ptr %.sroa.10.0..val32.sroa_idx.i.i.i.i.i, align 8, !tbaa !32 ; 5 uses
   %i.bn = ptrtoint ptr %.val3129.i.i.i.i.i to i64
@@ -946,18 +950,18 @@ bb.k:                                             ; preds = %_ZN4geos5index7strt
   br label %.body.i.i.i.i.i
 
 bb.l:                                             ; preds = %bb.j
-  %i.df = getelementptr inbounds nuw i8, ptr %15, i64 40
+  %i.df = getelementptr inbounds nuw i8, ptr %.sroa.02.0.copyload.i.i.i.i.i, i64 40
   %i.dg = load ptr, ptr %i.df, align 8, !tbaa !27 ; 4 uses
   %i.dh = icmp eq ptr %i.dg, null
-  %i.di = icmp eq ptr %i.dg, %15
+  %i.di = icmp eq ptr %i.dg, %.sroa.02.0.copyload.i.i.i.i.i
   %spec.select.i.i.i.i3.i.i.i = or i1 %i.dh, %i.di
-  %i.dj = getelementptr inbounds nuw i8, ptr %14, i64 40
+  %i.dj = getelementptr inbounds nuw i8, ptr %.sroa.8.0.copyload.i.i.i.i.i, i64 40
   %i.dk = load ptr, ptr %i.dj, align 8, !tbaa !27 ; 4 uses
   br i1 %spec.select.i.i.i.i3.i.i.i, label %_ZNK4geos5index7strtree19TemplateSTRNodePairIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance16nearestLocationsEPKNS_4geom8GeometryEE13FacetDistanceE8isLeavesEv.exit.i.i6.i.i.i, label %_ZNK4geos5index7strtree19TemplateSTRNodePairIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance16nearestLocationsEPKNS_4geom8GeometryEE13FacetDistanceE8isLeavesEv.exit.thread.i.i4.i.i.i
 
 _ZNK4geos5index7strtree19TemplateSTRNodePairIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance16nearestLocationsEPKNS_4geom8GeometryEE13FacetDistanceE8isLeavesEv.exit.i.i6.i.i.i: ; preds = %bb.l
   %i.dl = icmp eq ptr %i.dk, null
-  %i.dm = icmp eq ptr %i.dk, %14
+  %i.dm = icmp eq ptr %i.dk, %.sroa.8.0.copyload.i.i.i.i.i
   %spec.select.i2.i.i.i7.i.i.i = or i1 %i.dl, %i.dm
   br i1 %spec.select.i2.i.i.i7.i.i.i, label %bb.m, label %_ZNK4geos5index7strtree19TemplateSTRNodePairIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance16nearestLocationsEPKNS_4geom8GeometryEE13FacetDistanceE8isLeavesEv.exit.thread.i.i4.i.i.i
 
@@ -965,17 +969,21 @@ bb.m:                                             ; preds = %_ZNK4geos5index7str
   br i1 %.not18.i.i.i.i.i, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  store <2 x ptr> %13, ptr %.sroa.09.026.i.i.i.i.i, align 8, !tbaa !36
+  store ptr %.sroa.02.0.copyload.i.i.i.i.i, ptr %.sroa.09.026.i.i.i.i.i, align 8, !tbaa !36
+  %.sroa.8.0..val36.sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.09.026.i.i.i.i.i, i64 8
+  store ptr %.sroa.8.0.copyload.i.i.i.i.i, ptr %.sroa.8.0..val36.sroa_idx.i.i.i.i.i, align 8, !tbaa !36
   %.sroa.10.0..val36.sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.09.026.i.i.i.i.i, i64 16
   store double %.sroa.10.0.copyload.i.i.i.i.i, ptr %.sroa.10.0..val36.sroa_idx.i.i.i.i.i, align 8, !tbaa !32
   br label %_ZN4geos5index7strtree23TemplateSTRtreeDistanceIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance16nearestLocationsEPKNS_4geom8GeometryEE13FacetDistanceE13expandToQueueERKNS1_19TemplateSTRNodePairIS7_S8_SE_EERSt14priority_queueISH_St6vectorISH_SaISH_EENSF_16PairQueueCompareEEd.exit.i.i.i.i.i
 
 bb.o:                                             ; preds = %bb.m
   %i.dn = invoke noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #16
-          to label %_ZNSt10unique_ptrIN4geos5index7strtree19TemplateSTRNodePairIPKNS0_9operation8distance13FacetSequenceENS2_14EnvelopeTraitsEZNKS5_20IndexedFacetDistance16nearestLocationsEPKNS0_4geom8GeometryEE13FacetDistanceEESt14default_deleteISG_EED2Ev.exit.i.i.i.i.i unwind label %bb.p ; 3 uses
+          to label %_ZNSt10unique_ptrIN4geos5index7strtree19TemplateSTRNodePairIPKNS0_9operation8distance13FacetSequenceENS2_14EnvelopeTraitsEZNKS5_20IndexedFacetDistance16nearestLocationsEPKNS0_4geom8GeometryEE13FacetDistanceEESt14default_deleteISG_EED2Ev.exit.i.i.i.i.i unwind label %bb.p ; 4 uses
 
 _ZNSt10unique_ptrIN4geos5index7strtree19TemplateSTRNodePairIPKNS0_9operation8distance13FacetSequenceENS2_14EnvelopeTraitsEZNKS5_20IndexedFacetDistance16nearestLocationsEPKNS0_4geom8GeometryEE13FacetDistanceEESt14default_deleteISG_EED2Ev.exit.i.i.i.i.i: ; preds = %bb.o
-  store <2 x ptr> %13, ptr %i.dn, align 16, !tbaa !36, !noalias !77
+  store ptr %.sroa.02.0.copyload.i.i.i.i.i, ptr %i.dn, align 16, !tbaa !36, !noalias !77
+  %.sroa.8.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.dn, i64 8
+  store ptr %.sroa.8.0.copyload.i.i.i.i.i, ptr %.sroa.8.0..sroa_idx.i.i.i.i.i, align 8, !tbaa !36, !noalias !77
   %.sroa.10.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.dn, i64 16
   store double %.sroa.10.0.copyload.i.i.i.i.i, ptr %.sroa.10.0..sroa_idx.i.i.i.i.i, align 16, !tbaa !32, !noalias !77
   br label %_ZN4geos5index7strtree23TemplateSTRtreeDistanceIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance16nearestLocationsEPKNS_4geom8GeometryEE13FacetDistanceE13expandToQueueERKNS1_19TemplateSTRNodePairIS7_S8_SE_EERSt14priority_queueISH_St6vectorISH_SaISH_EENSF_16PairQueueCompareEEd.exit.i.i.i.i.i
@@ -987,48 +995,48 @@ bb.p:                                             ; preds = %bb.o
 
 _ZNK4geos5index7strtree19TemplateSTRNodePairIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance16nearestLocationsEPKNS_4geom8GeometryEE13FacetDistanceE8isLeavesEv.exit.thread.i.i4.i.i.i: ; preds = %_ZNK4geos5index7strtree19TemplateSTRNodePairIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance16nearestLocationsEPKNS_4geom8GeometryEE13FacetDistanceE8isLeavesEv.exit.i.i6.i.i.i, %bb.l
   %i.dp = icmp ne ptr %i.dg, null
-  %i.dq = icmp ne ptr %i.dg, %15
+  %i.dq = icmp ne ptr %i.dg, %.sroa.02.0.copyload.i.i.i.i.i
   %spec.select.i.not.i.i.i.i.i.i.i = and i1 %i.dp, %i.dq ; 5 uses
   %i.dr = icmp ne ptr %i.dk, null
-  %i.ds = icmp ne ptr %i.dk, %14
+  %i.ds = icmp ne ptr %i.dk, %.sroa.8.0.copyload.i.i.i.i.i
   %spec.select.i.not.i34.i.i.i.i.i.i = and i1 %i.dr, %i.ds ; 2 uses
   %or.cond.i.i.i.i.i.i = and i1 %spec.select.i.not.i.i.i.i.i.i.i, %spec.select.i.not.i34.i.i.i.i.i.i
   br i1 %or.cond.i.i.i.i.i.i, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %_ZNK4geos5index7strtree19TemplateSTRNodePairIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance16nearestLocationsEPKNS_4geom8GeometryEE13FacetDistanceE8isLeavesEv.exit.thread.i.i4.i.i.i
-  %i.dt = getelementptr inbounds nuw i8, ptr %15, i64 8
+  %i.dt = getelementptr inbounds nuw i8, ptr %.sroa.02.0.copyload.i.i.i.i.i, i64 8
   %i.du = load double, ptr %i.dt, align 8, !tbaa !46 ; 2 uses
   %i.dv = fcmp uno double %i.du, 0.000000e+00
-  %i.dw = load double, ptr %15, align 8
+  %i.dw = load double, ptr %.sroa.02.0.copyload.i.i.i.i.i, align 8
   %i.dx = fsub double %i.du, %i.dw
-  %i.dy = getelementptr inbounds nuw i8, ptr %15, i64 24
+  %i.dy = getelementptr inbounds nuw i8, ptr %.sroa.02.0.copyload.i.i.i.i.i, i64 24
   %i.dz = load double, ptr %i.dy, align 8
-  %i.ea = getelementptr inbounds nuw i8, ptr %15, i64 16
+  %i.ea = getelementptr inbounds nuw i8, ptr %.sroa.02.0.copyload.i.i.i.i.i, i64 16
   %i.eb = load double, ptr %i.ea, align 8
   %i.ec = fsub double %i.dz, %i.eb
   %i.ed = fmul double %i.dx, %i.ec
   %i.ee = select i1 %i.dv, double 0.000000e+00, double %i.ed
-  %i.ef = getelementptr inbounds nuw i8, ptr %14, i64 8
+  %i.ef = getelementptr inbounds nuw i8, ptr %.sroa.8.0.copyload.i.i.i.i.i, i64 8
   %i.eg = load double, ptr %i.ef, align 8, !tbaa !46 ; 2 uses
   %i.eh = fcmp uno double %i.eg, 0.000000e+00
-  %i.ei = load double, ptr %14, align 8
+  %i.ei = load double, ptr %.sroa.8.0.copyload.i.i.i.i.i, align 8
   %i.ej = fsub double %i.eg, %i.ei
-  %i.ek = getelementptr inbounds nuw i8, ptr %14, i64 24
+  %i.ek = getelementptr inbounds nuw i8, ptr %.sroa.8.0.copyload.i.i.i.i.i, i64 24
   %i.el = load double, ptr %i.ek, align 8
-  %i.em = getelementptr inbounds nuw i8, ptr %14, i64 16
+  %i.em = getelementptr inbounds nuw i8, ptr %.sroa.8.0.copyload.i.i.i.i.i, i64 16
   %i.en = load double, ptr %i.em, align 8
   %i.eo = fsub double %i.el, %i.en
   %i.ep = fmul double %i.ej, %i.eo
   %i.eq = select i1 %i.eh, double 0.000000e+00, double %i.ep
   %i.er = fcmp ule double %i.ee, %i.eq            ; 3 uses
-  %.sroa.02.0.copyload..sroa.8.0.copyload.i.i.i.i.i = select i1 %i.er, ptr %14, ptr %15
-  %.sroa.8.0.copyload..sroa.02.0.copyload.i.i.i.i.i = select i1 %i.er, ptr %15, ptr %14
+  %.sroa.02.0.copyload..sroa.8.0.copyload.i.i.i.i.i = select i1 %i.er, ptr %.sroa.8.0.copyload.i.i.i.i.i, ptr %.sroa.02.0.copyload.i.i.i.i.i
+  %.sroa.8.0.copyload..sroa.02.0.copyload.i.i.i.i.i = select i1 %i.er, ptr %.sroa.02.0.copyload.i.i.i.i.i, ptr %.sroa.8.0.copyload.i.i.i.i.i
   br label %.invoke.i.i.i.i.i
 
 bb.r:                                             ; preds = %_ZNK4geos5index7strtree19TemplateSTRNodePairIPKNS_9operation8distance13FacetSequenceENS1_14EnvelopeTraitsEZNKS4_20IndexedFacetDistance16nearestLocationsEPKNS_4geom8GeometryEE13FacetDistanceE8isLeavesEv.exit.thread.i.i4.i.i.i
   %brmerge.i.i.i.i.i = or i1 %spec.select.i.not.i.i.i.i.i.i.i, %spec.select.i.not.i34.i.i.i.i.i.i
-  %.sroa.02.0.copyload.mux.i.i.i.i.i = select i1 %spec.select.i.not.i.i.i.i.i.i.i, ptr %15, ptr %14
-  %.sroa.8.0.copyload.mux.i.i.i.i.i = select i1 %spec.select.i.not.i.i.i.i.i.i.i, ptr %14, ptr %15
+  %.sroa.02.0.copyload.mux.i.i.i.i.i = select i1 %spec.select.i.not.i.i.i.i.i.i.i, ptr %.sroa.02.0.copyload.i.i.i.i.i, ptr %.sroa.8.0.copyload.i.i.i.i.i
+  %.sroa.8.0.copyload.mux.i.i.i.i.i = select i1 %spec.select.i.not.i.i.i.i.i.i.i, ptr %.sroa.8.0.copyload.i.i.i.i.i, ptr %.sroa.02.0.copyload.i.i.i.i.i
   %not.spec.select.i.not.i.i.i.i.i.i.i = xor i1 %spec.select.i.not.i.i.i.i.i.i.i, true
   br i1 %brmerge.i.i.i.i.i, label %.invoke.i.i.i.i.i, label %bb.w
 

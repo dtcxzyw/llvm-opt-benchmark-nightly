@@ -201,19 +201,19 @@ bb.ae:                                            ; preds = %bb.ac
 bb.af:                                            ; preds = %bb.ae, %bb.ad, %bb.ab
   %.0.i.i.i.i.i.i.i = phi i32 [ %i.gm, %bb.ae ], [ %i.gh, %bb.ad ], [ %i.gc, %bb.ab ]
   %i.gn = sext i32 %.0.i.i.i.i.i.i.i to i64
-  %i.go = getelementptr inbounds [16 x i8], ptr %i.fy, i64 %i.gn
-  %11 = load <2 x i64>, ptr %i.go, align 8, !tbaa !612, !noalias !11002 ; 5 uses
+  %i.go = getelementptr inbounds [16 x i8], ptr %i.fy, i64 %i.gn ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i = load i64, ptr %i.go, align 8, !tbaa !612, !noalias !11002 ; 5 uses
+  %.sroa.2.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.go, i64 8
+  %.sroa.2.0.copyload.i.i.i.i.i.i = load i64, ptr %.sroa.2.0..sroa_idx.i.i.i.i.i.i, align 8, !tbaa !612, !noalias !11002 ; 4 uses
   %i.gp = load i64, ptr %i.e, align 8, !tbaa !1394 ; 2 uses
   %i.gq = icmp ult i64 %i.gp, 256
   br i1 %i.gq, label %.noexc.thread, label %.noexc54
 
 .noexc54:                                         ; preds = %bb.af
-  %12 = extractelement <2 x i64> %11, i64 0       ; 2 uses
-  %13 = extractelement <2 x i64> %11, i64 1
-  %i.gr = xor i64 %13, %12
+  %i.gr = xor i64 %.sroa.2.0.copyload.i.i.i.i.i.i, %.sroa.0.0.copyload.i.i.i.i.i.i
   %i.gs = mul i64 %i.gr, -7070675565921424023     ; 2 uses
   %i.gt = lshr i64 %i.gs, 47
-  %i.gu = xor i64 %12, %i.gt
+  %i.gu = xor i64 %.sroa.0.0.copyload.i.i.i.i.i.i, %i.gt
   %i.gv = xor i64 %i.gu, %i.gs
   %i.gw = mul i64 %i.gv, -7070675565921424023     ; 2 uses
   %i.gx = lshr i64 %i.gw, 47
@@ -263,12 +263,13 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad, %bb.
   %i.ib = getelementptr inbounds nuw [4 x i8], ptr %i.hv, i64 %i.ia
   %i.ic = load i32, ptr %i.ib, align 4, !tbaa !3
   %i.id = zext i32 %i.ic to i64
-  %i.ie = getelementptr inbounds nuw [32 x i8], ptr %i.hm, i64 %i.id ; 2 uses
-  %14 = load <2 x i64>, ptr %i.ie, align 8
-  %15 = icmp eq <2 x i64> %11, %14                ; 2 uses
-  %16 = extractelement <2 x i1> %15, i64 0
-  %17 = extractelement <2 x i1> %15, i64 1
-  %i.if = select i1 %16, i1 %17, i1 false
+  %i.ie = getelementptr inbounds nuw [32 x i8], ptr %i.hm, i64 %i.id ; 3 uses
+  %11 = load i64, ptr %i.ie, align 8, !tbaa !7893
+  %12 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i, %11
+  %13 = getelementptr inbounds nuw i8, ptr %i.ie, i64 8
+  %14 = load i64, ptr %13, align 8
+  %15 = icmp eq i64 %.sroa.2.0.copyload.i.i.i.i.i.i, %14
+  %i.if = select i1 %12, i1 %15, i1 false
   br i1 %i.if, label %.noexc.thread, label %.critedge.i.i, !prof !741, !llvm.loop !11007
 
 bb.ag:                                            ; preds = %.critedge.i.i
@@ -342,7 +343,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ak, %bb.
 
 bb.an:                                            ; preds = %bb.am
   %i.jq = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZN8facebook5velox4exec9MapWriterINS0_9TimestampENS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE8add_nullEv(ptr noundef nonnull align 8 dereferenceable(48) %1)
-          to label %bb.ao unwind label %bb.aq     ; 2 uses
+          to label %bb.ao unwind label %bb.aq     ; 3 uses
 
 bb.ao:                                            ; preds = %bb.an
   %.not193 = icmp eq ptr %.sroa.0.0.i, null
@@ -359,7 +360,9 @@ bb.aq:                                            ; preds = %bb.an
   br label %bb.bd
 
 bb.ar:                                            ; preds = %bb.ao
-  store <2 x i64> %11, ptr %i.jq, align 8, !tbaa !612
+  store i64 %.sroa.0.0.copyload.i.i.i.i.i.i, ptr %i.jq, align 8, !tbaa !612
+  %.sroa.8110.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.jq, i64 8
+  store i64 %.sroa.2.0.copyload.i.i.i.i.i.i, ptr %.sroa.8110.0..sroa_idx, align 8, !tbaa !612
   br label %bb.bb
 
 .thread191:                                       ; preds = %.noexc.thread, %bb.am
@@ -425,7 +428,7 @@ _ZN8facebook5velox4exec9MapWriterINS0_9TimestampENS0_7GenericINS0_12TypeVariable
   %i.ku = getelementptr inbounds nuw i8, ptr %i.kt, i64 24
   %i.kv = load ptr, ptr %i.ku, align 8, !tbaa !7743, !noalias !11009
   %i.kw = sext i32 %i.ks to i64
-  %i.kx = getelementptr inbounds [16 x i8], ptr %i.kv, i64 %i.kw ; 2 uses
+  %i.kx = getelementptr inbounds [16 x i8], ptr %i.kv, i64 %i.kw ; 3 uses
   store i8 1, ptr %i.ev, align 1, !tbaa !10902, !noalias !11009
   %i.ky = load ptr, ptr %i.ew, align 8, !tbaa !10903, !noalias !11009 ; 2 uses
   %i.kz = load ptr, ptr %i.ky, align 8, !tbaa !541, !noalias !11009
@@ -450,7 +453,9 @@ bb.aw:                                            ; preds = %_ZN8facebook5velox4
   br label %bb.bd
 
 bb.ax:                                            ; preds = %bb.au
-  store <2 x i64> %11, ptr %i.kx, align 8, !tbaa !612
+  store i64 %.sroa.0.0.copyload.i.i.i.i.i.i, ptr %i.kx, align 8, !tbaa !612
+  %.sroa.8110.0..sroa.5101.8..sroa_idx = getelementptr inbounds nuw i8, ptr %i.kx, i64 8
+  store i64 %.sroa.2.0.copyload.i.i.i.i.i.i, ptr %.sroa.8110.0..sroa.5101.8..sroa_idx, align 8, !tbaa !612
   br label %bb.ay
 
 bb.ay:                                            ; preds = %bb.av, %bb.ax
@@ -853,8 +858,10 @@ bb.o:                                             ; preds = %bb.m
 _ZNK8facebook5velox4exec18IndexBasedIteratorINS1_7MapViewILb1ENS0_9TimestampENS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE15ElementAccessorEEdeEv.exit: ; preds = %bb.l, %bb.n, %bb.o
   %.0.i.i.i.i.i.i.i = phi i32 [ %i.by, %bb.o ], [ %i.bt, %bb.n ], [ %i.bo, %bb.l ]
   %i.bz = sext i32 %.0.i.i.i.i.i.i.i to i64
-  %i.ca = getelementptr inbounds [16 x i8], ptr %i.bk, i64 %i.bz
-  %5 = load <2 x i64>, ptr %i.ca, align 8, !tbaa !612, !noalias !14392 ; 6 uses
+  %i.ca = getelementptr inbounds [16 x i8], ptr %i.bk, i64 %i.bz ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i = load i64, ptr %i.ca, align 8, !tbaa !612, !noalias !14392 ; 6 uses
+  %.sroa.2.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ca, i64 8
+  %.sroa.2.0.copyload.i.i.i.i.i.i = load i64, ptr %.sroa.2.0..sroa_idx.i.i.i.i.i.i, align 8, !tbaa !612, !noalias !14392 ; 5 uses
   %i.cb = load i64, ptr %i.al, align 8, !tbaa !1394 ; 2 uses
   %i.cc = lshr i64 %i.cb, 8
   switch i64 %i.cc, label %bb.q [
@@ -865,21 +872,20 @@ _ZNK8facebook5velox4exec18IndexBasedIteratorINS1_7MapViewILb1ENS0_9TimestampENS0
 bb.p:                                             ; preds = %_ZNK8facebook5velox4exec18IndexBasedIteratorINS1_7MapViewILb1ENS0_9TimestampENS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE15ElementAccessorEEdeEv.exit
   %i.cd = load i64, ptr %i.ax, align 8, !tbaa !14320
   %i.ce = and i64 %i.cd, -16
-  %i.cf = inttoptr i64 %i.ce to ptr
-  %6 = load <2 x i64>, ptr %i.cf, align 16
-  %7 = icmp eq <2 x i64> %5, %6                   ; 2 uses
-  %8 = extractelement <2 x i1> %7, i64 0
-  %9 = extractelement <2 x i1> %7, i64 1
-  %i.cg = select i1 %8, i1 %9, i1 false
+  %i.cf = inttoptr i64 %i.ce to ptr               ; 2 uses
+  %5 = load i64, ptr %i.cf, align 16, !tbaa !7893
+  %6 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i, %5
+  %7 = getelementptr inbounds nuw i8, ptr %i.cf, i64 8
+  %8 = load i64, ptr %7, align 8
+  %9 = icmp eq i64 %.sroa.2.0.copyload.i.i.i.i.i.i, %8
+  %i.cg = select i1 %6, i1 %9, i1 false
   br i1 %i.cg, label %_ZNK5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox9TimestampEvvvvEEE4findIS6_EENS1_11F14ItemIterIPNS1_8F14ChunkIS6_EEEERKT_.exit.thread71, label %_ZNK5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox9TimestampEvvvvEEE4findIS6_EENS1_11F14ItemIterIPNS1_8F14ChunkIS6_EEEERKT_.exit.thread
 
 bb.q:                                             ; preds = %_ZNK8facebook5velox4exec18IndexBasedIteratorINS1_7MapViewILb1ENS0_9TimestampENS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE15ElementAccessorEEdeEv.exit
-  %10 = extractelement <2 x i64> %5, i64 0        ; 2 uses
-  %11 = extractelement <2 x i64> %5, i64 1
-  %i.ch = xor i64 %11, %10
+  %i.ch = xor i64 %.sroa.2.0.copyload.i.i.i.i.i.i, %.sroa.0.0.copyload.i.i.i.i.i.i
   %i.ci = mul i64 %i.ch, -7070675565921424023     ; 2 uses
   %i.cj = lshr i64 %i.ci, 47
-  %i.ck = xor i64 %10, %i.cj
+  %i.ck = xor i64 %.sroa.0.0.copyload.i.i.i.i.i.i, %i.cj
   %i.cl = xor i64 %i.ck, %i.ci
   %i.cm = mul i64 %i.cl, -7070675565921424023     ; 2 uses
   %i.cn = lshr i64 %i.cm, 47
@@ -927,12 +933,13 @@ bb.s:                                             ; preds = %.critedge.i.i
   %i.dp = and i32 %i.do, %.sroa.043.0
   %i.dq = zext nneg i32 %i.dn to i64
   call void @llvm.assume(i1 %i.dl)
-  %i.dr = getelementptr inbounds nuw [16 x i8], ptr %i.de, i64 %i.dq
-  %12 = load <2 x i64>, ptr %i.dr, align 8
-  %13 = icmp eq <2 x i64> %5, %12                 ; 2 uses
-  %14 = extractelement <2 x i1> %13, i64 0
-  %15 = extractelement <2 x i1> %13, i64 1
-  %i.ds = select i1 %14, i1 %15, i1 false
+  %i.dr = getelementptr inbounds nuw [16 x i8], ptr %i.de, i64 %i.dq ; 2 uses
+  %10 = load i64, ptr %i.dr, align 8, !tbaa !7893
+  %11 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i, %10
+  %12 = getelementptr inbounds nuw i8, ptr %i.dr, i64 8
+  %13 = load i64, ptr %12, align 8
+  %14 = icmp eq i64 %.sroa.2.0.copyload.i.i.i.i.i.i, %13
+  %i.ds = select i1 %11, i1 %14, i1 false
   br i1 %i.ds, label %_ZNK5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox9TimestampEvvvvEEE4findIS6_EENS1_11F14ItemIterIPNS1_8F14ChunkIS6_EEEERKT_.exit.thread71, label %.critedge.i.i, !prof !741, !llvm.loop !14314
 
 bb.t:                                             ; preds = %.critedge.i.i
@@ -1004,8 +1011,10 @@ _ZNK8facebook5velox4exec16OptionalAccessorINS0_7GenericINS0_12TypeVariableILm1EE
   br i1 %.0.i.i.i.not, label %bb.aa, label %_ZNK8facebook5velox4exec16OptionalAccessorINS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE9has_valueEv.exit.thread
 
 bb.aa:                                            ; preds = %_ZNK8facebook5velox4exec16OptionalAccessorINS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE9has_valueEv.exit
-  %i.fd = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN8facebook5velox4exec9MapWriterINS0_9TimestampENS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE8add_nullEv(ptr noundef nonnull align 8 dereferenceable(48) %1)
-  store <2 x i64> %5, ptr %i.fd, align 8, !tbaa !612
+  %i.fd = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN8facebook5velox4exec9MapWriterINS0_9TimestampENS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE8add_nullEv(ptr noundef nonnull align 8 dereferenceable(48) %1) ; 2 uses
+  store i64 %.sroa.0.0.copyload.i.i.i.i.i.i, ptr %i.fd, align 8, !tbaa !612
+  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fd, i64 8
+  store i64 %.sroa.2.0.copyload.i.i.i.i.i.i, ptr %.sroa.8.0..sroa_idx, align 8, !tbaa !612
   br label %_ZNK5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox9TimestampEvvvvEEE4findIS6_EENS1_11F14ItemIterIPNS1_8F14ChunkIS6_EEEERKT_.exit.thread
 
 _ZNK8facebook5velox4exec16OptionalAccessorINS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE9has_valueEv.exit.thread: ; preds = %_ZNK5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox9TimestampEvvvvEEE4findIS6_EENS1_11F14ItemIterIPNS1_8F14ChunkIS6_EEEERKT_.exit.thread71, %_ZNK8facebook5velox4exec16OptionalAccessorINS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE9has_valueEv.exit
@@ -1059,15 +1068,17 @@ _ZN8facebook5velox4exec9MapWriterINS0_9TimestampENS0_7GenericINS0_12TypeVariable
   %i.gf = getelementptr inbounds nuw i8, ptr %i.ge, i64 24
   %i.gg = load ptr, ptr %i.gf, align 8, !tbaa !7743, !noalias !14397
   %i.gh = sext i32 %i.gd to i64
-  %i.gi = getelementptr inbounds [16 x i8], ptr %i.gg, i64 %i.gh
+  %i.gi = getelementptr inbounds [16 x i8], ptr %i.gg, i64 %i.gh ; 2 uses
   store i8 1, ptr %i.az, align 1, !tbaa !10902, !noalias !14397
   %i.gj = load ptr, ptr %i.ba, align 8, !tbaa !10903, !noalias !14397 ; 2 uses
   %i.gk = load ptr, ptr %i.gj, align 8, !tbaa !541, !noalias !14397
   %i.gl = load ptr, ptr %i.gk, align 8, !noalias !14397
   call void %i.gl(ptr noundef nonnull align 8 dereferenceable(96) %i.gj, i32 noundef %i.gd), !noalias !14397, !inline_history !14402
   %i.gm = load ptr, ptr %i.ba, align 8, !tbaa !10903, !noalias !14397
-  %i.gn = getelementptr inbounds nuw i8, ptr %i.gm, i64 24
-  store <2 x i64> %5, ptr %i.gi, align 8, !tbaa !612
+  %15 = getelementptr inbounds nuw i8, ptr %i.gm, i64 24
+  store i64 %.sroa.0.0.copyload.i.i.i.i.i.i, ptr %i.gi, align 8, !tbaa !612
+  %i.gn = getelementptr inbounds nuw i8, ptr %i.gi, i64 8
+  store i64 %.sroa.2.0.copyload.i.i.i.i.i.i, ptr %i.gn, align 8, !tbaa !612
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #34
   call void @llvm.experimental.noalias.scope.decl(metadata !14403)
   call void @llvm.experimental.noalias.scope.decl(metadata !14406)
@@ -1075,7 +1086,7 @@ _ZN8facebook5velox4exec9MapWriterINS0_9TimestampENS0_7GenericINS0_12TypeVariable
   store ptr %i.go, ptr %4, align 8, !tbaa !1033, !alias.scope !14409
   store <2 x ptr> %i.be, ptr %i.bf, align 8, !tbaa !533, !alias.scope !14409
   store i32 %i.bo, ptr %i.bg, align 8, !tbaa !8647, !alias.scope !14409
-  call void @_ZN8facebook5velox4exec13GenericWriter9copy_fromERKNS1_11GenericViewE(ptr noundef nonnull align 8 dereferenceable(32) %i.gn, ptr noundef nonnull align 8 dereferenceable(28) %4)
+  call void @_ZN8facebook5velox4exec13GenericWriter9copy_fromERKNS1_11GenericViewE(ptr noundef nonnull align 8 dereferenceable(32) %15, ptr noundef nonnull align 8 dereferenceable(28) %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
   br label %_ZNK5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox9TimestampEvvvvEEE4findIS6_EENS1_11F14ItemIterIPNS1_8F14ChunkIS6_EEEERKT_.exit.thread
 
@@ -1478,8 +1489,10 @@ bb.m:                                             ; preds = %bb.k
 _ZNK8facebook5velox4exec18IndexBasedIteratorINS1_7MapViewILb1ENS0_9TimestampENS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE15ElementAccessorEEdeEv.exit: ; preds = %bb.j, %bb.l, %bb.m
   %.0.i.i.i.i.i.i.i = phi i32 [ %i.bt, %bb.m ], [ %i.bo, %bb.l ], [ %i.bj, %bb.j ]
   %i.bu = sext i32 %.0.i.i.i.i.i.i.i to i64
-  %i.bv = getelementptr inbounds [16 x i8], ptr %i.bf, i64 %i.bu
-  %5 = load <2 x i64>, ptr %i.bv, align 8, !tbaa !612, !noalias !16696 ; 6 uses
+  %i.bv = getelementptr inbounds [16 x i8], ptr %i.bf, i64 %i.bu ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i = load i64, ptr %i.bv, align 8, !tbaa !612, !noalias !16696 ; 6 uses
+  %.sroa.2.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bv, i64 8
+  %.sroa.2.0.copyload.i.i.i.i.i.i = load i64, ptr %.sroa.2.0..sroa_idx.i.i.i.i.i.i, align 8, !tbaa !612, !noalias !16696 ; 5 uses
   %i.bw = load i64, ptr %i.ar, align 8, !tbaa !1394 ; 2 uses
   %i.bx = lshr i64 %i.bw, 8
   switch i64 %i.bx, label %bb.o [
@@ -1490,21 +1503,20 @@ _ZNK8facebook5velox4exec18IndexBasedIteratorINS1_7MapViewILb1ENS0_9TimestampENS0
 bb.n:                                             ; preds = %_ZNK8facebook5velox4exec18IndexBasedIteratorINS1_7MapViewILb1ENS0_9TimestampENS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE15ElementAccessorEEdeEv.exit
   %i.by = load i64, ptr %i.as, align 8, !tbaa !14320
   %i.bz = and i64 %i.by, -16
-  %i.ca = inttoptr i64 %i.bz to ptr
-  %6 = load <2 x i64>, ptr %i.ca, align 16
-  %7 = icmp eq <2 x i64> %5, %6                   ; 2 uses
-  %8 = extractelement <2 x i1> %7, i64 0
-  %9 = extractelement <2 x i1> %7, i64 1
-  %i.cb = select i1 %8, i1 %9, i1 false
+  %i.ca = inttoptr i64 %i.bz to ptr               ; 2 uses
+  %5 = load i64, ptr %i.ca, align 16, !tbaa !7893
+  %6 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i, %5
+  %7 = getelementptr inbounds nuw i8, ptr %i.ca, i64 8
+  %8 = load i64, ptr %7, align 8
+  %9 = icmp eq i64 %.sroa.2.0.copyload.i.i.i.i.i.i, %8
+  %i.cb = select i1 %6, i1 %9, i1 false
   br i1 %i.cb, label %_ZNK5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox9TimestampEvvvvEEE4findIS6_EENS1_11F14ItemIterIPNS1_8F14ChunkIS6_EEEERKT_.exit.thread72, label %_ZNK5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox9TimestampEvvvvEEE4findIS6_EENS1_11F14ItemIterIPNS1_8F14ChunkIS6_EEEERKT_.exit.thread
 
 bb.o:                                             ; preds = %_ZNK8facebook5velox4exec18IndexBasedIteratorINS1_7MapViewILb1ENS0_9TimestampENS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE15ElementAccessorEEdeEv.exit
-  %10 = extractelement <2 x i64> %5, i64 0        ; 2 uses
-  %11 = extractelement <2 x i64> %5, i64 1
-  %i.cc = xor i64 %11, %10
+  %i.cc = xor i64 %.sroa.2.0.copyload.i.i.i.i.i.i, %.sroa.0.0.copyload.i.i.i.i.i.i
   %i.cd = mul i64 %i.cc, -7070675565921424023     ; 2 uses
   %i.ce = lshr i64 %i.cd, 47
-  %i.cf = xor i64 %10, %i.ce
+  %i.cf = xor i64 %.sroa.0.0.copyload.i.i.i.i.i.i, %i.ce
   %i.cg = xor i64 %i.cf, %i.cd
   %i.ch = mul i64 %i.cg, -7070675565921424023     ; 2 uses
   %i.ci = lshr i64 %i.ch, 47
@@ -1552,12 +1564,13 @@ bb.q:                                             ; preds = %.critedge.i.i
   %i.dk = and i32 %i.dj, %.sroa.042.0
   %i.dl = zext nneg i32 %i.di to i64
   call void @llvm.assume(i1 %i.dg)
-  %i.dm = getelementptr inbounds nuw [16 x i8], ptr %i.cz, i64 %i.dl
-  %12 = load <2 x i64>, ptr %i.dm, align 8
-  %13 = icmp eq <2 x i64> %5, %12                 ; 2 uses
-  %14 = extractelement <2 x i1> %13, i64 0
-  %15 = extractelement <2 x i1> %13, i64 1
-  %i.dn = select i1 %14, i1 %15, i1 false
+  %i.dm = getelementptr inbounds nuw [16 x i8], ptr %i.cz, i64 %i.dl ; 2 uses
+  %10 = load i64, ptr %i.dm, align 8, !tbaa !7893
+  %11 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i, %10
+  %12 = getelementptr inbounds nuw i8, ptr %i.dm, i64 8
+  %13 = load i64, ptr %12, align 8
+  %14 = icmp eq i64 %.sroa.2.0.copyload.i.i.i.i.i.i, %13
+  %i.dn = select i1 %11, i1 %14, i1 false
   br i1 %i.dn, label %_ZNK5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox9TimestampEvvvvEEE4findIS6_EENS1_11F14ItemIterIPNS1_8F14ChunkIS6_EEEERKT_.exit.thread72, label %.critedge.i.i, !prof !741, !llvm.loop !14314
 
 bb.r:                                             ; preds = %.critedge.i.i
@@ -1629,8 +1642,10 @@ _ZNK8facebook5velox4exec16OptionalAccessorINS0_7GenericINS0_12TypeVariableILm1EE
   br i1 %.0.i.i.i.not, label %bb.y, label %_ZNK8facebook5velox4exec16OptionalAccessorINS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE9has_valueEv.exit.thread
 
 bb.y:                                             ; preds = %_ZNK8facebook5velox4exec16OptionalAccessorINS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE9has_valueEv.exit
-  %i.ey = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN8facebook5velox4exec9MapWriterINS0_9TimestampENS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE8add_nullEv(ptr noundef nonnull align 8 dereferenceable(48) %1)
-  store <2 x i64> %5, ptr %i.ey, align 8, !tbaa !612
+  %i.ey = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN8facebook5velox4exec9MapWriterINS0_9TimestampENS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE8add_nullEv(ptr noundef nonnull align 8 dereferenceable(48) %1) ; 2 uses
+  store i64 %.sroa.0.0.copyload.i.i.i.i.i.i, ptr %i.ey, align 8, !tbaa !612
+  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ey, i64 8
+  store i64 %.sroa.2.0.copyload.i.i.i.i.i.i, ptr %.sroa.8.0..sroa_idx, align 8, !tbaa !612
   br label %_ZNK5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox9TimestampEvvvvEEE4findIS6_EENS1_11F14ItemIterIPNS1_8F14ChunkIS6_EEEERKT_.exit.thread72
 
 _ZNK8facebook5velox4exec16OptionalAccessorINS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE9has_valueEv.exit.thread: ; preds = %_ZNK5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox9TimestampEvvvvEEE4findIS6_EENS1_11F14ItemIterIPNS1_8F14ChunkIS6_EEEERKT_.exit.thread, %_ZNK8facebook5velox4exec16OptionalAccessorINS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEE9has_valueEv.exit
@@ -1684,15 +1699,17 @@ _ZN8facebook5velox4exec9MapWriterINS0_9TimestampENS0_7GenericINS0_12TypeVariable
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fz, i64 24
   %i.gb = load ptr, ptr %i.ga, align 8, !tbaa !7743, !noalias !16701
   %i.gc = sext i32 %i.fy to i64
-  %i.gd = getelementptr inbounds [16 x i8], ptr %i.gb, i64 %i.gc
+  %i.gd = getelementptr inbounds [16 x i8], ptr %i.gb, i64 %i.gc ; 2 uses
   store i8 1, ptr %i.au, align 1, !tbaa !10902, !noalias !16701
   %i.ge = load ptr, ptr %i.av, align 8, !tbaa !10903, !noalias !16701 ; 2 uses
   %i.gf = load ptr, ptr %i.ge, align 8, !tbaa !541, !noalias !16701
   %i.gg = load ptr, ptr %i.gf, align 8, !noalias !16701
   call void %i.gg(ptr noundef nonnull align 8 dereferenceable(96) %i.ge, i32 noundef %i.fy), !noalias !16701, !inline_history !14402
   %i.gh = load ptr, ptr %i.av, align 8, !tbaa !10903, !noalias !16701
-  %i.gi = getelementptr inbounds nuw i8, ptr %i.gh, i64 24
-  store <2 x i64> %5, ptr %i.gd, align 8, !tbaa !612
+  %15 = getelementptr inbounds nuw i8, ptr %i.gh, i64 24
+  store i64 %.sroa.0.0.copyload.i.i.i.i.i.i, ptr %i.gd, align 8, !tbaa !612
+  %i.gi = getelementptr inbounds nuw i8, ptr %i.gd, i64 8
+  store i64 %.sroa.2.0.copyload.i.i.i.i.i.i, ptr %i.gi, align 8, !tbaa !612
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #34
   call void @llvm.experimental.noalias.scope.decl(metadata !16704)
   call void @llvm.experimental.noalias.scope.decl(metadata !16707)
@@ -1700,7 +1717,7 @@ _ZN8facebook5velox4exec9MapWriterINS0_9TimestampENS0_7GenericINS0_12TypeVariable
   store ptr %i.gj, ptr %4, align 8, !tbaa !1033, !alias.scope !16710
   store <2 x ptr> %i.az, ptr %i.ba, align 8, !tbaa !533, !alias.scope !16710
   store i32 %i.bj, ptr %i.bb, align 8, !tbaa !8647, !alias.scope !16710
-  call void @_ZN8facebook5velox4exec13GenericWriter9copy_fromERKNS1_11GenericViewE(ptr noundef nonnull align 8 dereferenceable(32) %i.gi, ptr noundef nonnull align 8 dereferenceable(28) %4)
+  call void @_ZN8facebook5velox4exec13GenericWriter9copy_fromERKNS1_11GenericViewE(ptr noundef nonnull align 8 dereferenceable(32) %15, ptr noundef nonnull align 8 dereferenceable(28) %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
   br label %_ZNK5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox9TimestampEvvvvEEE4findIS6_EENS1_11F14ItemIterIPNS1_8F14ChunkIS6_EEEERKT_.exit.thread72
 
@@ -2103,7 +2120,7 @@ bb.a:
   %9 = alloca %"class.facebook::velox::util::floating_point::HashSetNaNAware.4262", align 8 ; 12 uses
   %10 = alloca %"class.facebook::velox::exec::MapView<true, facebook::velox::Timestamp, facebook::velox::Generic<facebook::velox::TypeVariable<1>>>::Element", align 8 ; 9 uses
   %11 = alloca %"class.facebook::velox::util::floating_point::HashSetNaNAware.4262", align 8 ; 10 uses
-  %12 = alloca %"struct.facebook::velox::Timestamp", align 16 ; 6 uses
+  %12 = alloca %"struct.facebook::velox::Timestamp", align 8 ; 7 uses
   %13 = alloca %"class.facebook::velox::exec::GenericView", align 8 ; 7 uses
   %14 = alloca %"class.facebook::velox::exec::GenericView", align 8 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 5 uses
@@ -2261,6 +2278,7 @@ bb.l:                                             ; preds = %bb.j
 
 .lr.ph336:                                        ; preds = %._crit_edge
   %i.bo = load i32, ptr %i.bk, align 8, !tbaa !10991, !noalias !21580 ; 2 uses
+  %15 = getelementptr inbounds nuw i8, ptr %12, i64 8
   %i.bp = getelementptr inbounds nuw i8, ptr %9, i64 16
   %i.bq = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.br = sext i32 %i.bo to i64
@@ -2357,11 +2375,12 @@ bb.v:                                             ; preds = %bb.t
 bb.w:                                             ; preds = %bb.v, %bb.u, %.thread
   %.0.i.i.i.i = phi i32 [ %i.dm, %bb.v ], [ %i.dh, %bb.u ], [ %i.dc, %.thread ]
   %i.dn = sext i32 %.0.i.i.i.i to i64
-  %i.do = getelementptr inbounds [16 x i8], ptr %i.da, i64 %i.dn
-  %15 = load <2 x i64>, ptr %i.do, align 8, !tbaa !612 ; 3 uses
-  %16 = extractelement <2 x i64> %15, i64 1       ; 4 uses
-  %17 = extractelement <2 x i64> %15, i64 0       ; 6 uses
-  store <2 x i64> %15, ptr %12, align 16
+  %i.do = getelementptr inbounds [16 x i8], ptr %i.da, i64 %i.dn ; 2 uses
+  %.sroa.0.0.copyload.i.i.i = load i64, ptr %i.do, align 8, !tbaa !612 ; 7 uses
+  %.sroa.2.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.do, i64 8
+  %.sroa.2.0.copyload.i.i.i = load i64, ptr %.sroa.2.0..sroa_idx.i.i.i, align 8, !tbaa !612 ; 5 uses
+  store i64 %.sroa.0.0.copyload.i.i.i, ptr %12, align 8
+  store i64 %.sroa.2.0.copyload.i.i.i, ptr %15, align 8
   %i.dp = load i64, ptr %i.l, align 8, !tbaa !1394 ; 2 uses
   %i.dq = lshr i64 %i.dp, 8
   switch i64 %i.dq, label %.noexc78 [
@@ -2374,18 +2393,18 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %.thre
   %i.ds = and i64 %i.dr, -16
   %i.dt = inttoptr i64 %i.ds to ptr               ; 2 uses
   %i.du = load i64, ptr %i.dt, align 16, !tbaa !7893
-  %i.dv = icmp eq i64 %17, %i.du
+  %i.dv = icmp eq i64 %.sroa.0.0.copyload.i.i.i, %i.du
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dt, i64 8
   %i.dx = load i64, ptr %i.dw, align 8
-  %i.dy = icmp eq i64 %16, %i.dx
+  %i.dy = icmp eq i64 %.sroa.2.0.copyload.i.i.i, %i.dx
   %i.dz = select i1 %i.dv, i1 %i.dy, i1 false
   br i1 %i.dz, label %.thread309, label %.thread300
 
 .noexc78:                                         ; preds = %bb.w
-  %i.ea = xor i64 %16, %17
+  %i.ea = xor i64 %.sroa.2.0.copyload.i.i.i, %.sroa.0.0.copyload.i.i.i
   %i.eb = mul i64 %i.ea, -7070675565921424023     ; 2 uses
   %i.ec = lshr i64 %i.eb, 47
-  %i.ed = xor i64 %17, %i.ec
+  %i.ed = xor i64 %.sroa.0.0.copyload.i.i.i, %i.ec
   %i.ee = xor i64 %i.ed, %i.eb
   %i.ef = mul i64 %i.ee, -7070675565921424023     ; 2 uses
   %i.eg = lshr i64 %i.ef, 47
@@ -2435,10 +2454,10 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %.thre
   call void @llvm.assume(i1 %i.fe)
   %i.fk = getelementptr inbounds nuw [16 x i8], ptr %i.ex, i64 %i.fj ; 2 uses
   %i.fl = load i64, ptr %i.fk, align 8, !tbaa !7893
-  %i.fm = icmp eq i64 %17, %i.fl
+  %i.fm = icmp eq i64 %.sroa.0.0.copyload.i.i.i, %i.fl
   %i.fn = getelementptr inbounds nuw i8, ptr %i.fk, i64 8
   %i.fo = load i64, ptr %i.fn, align 8
-  %i.fp = icmp eq i64 %16, %i.fo
+  %i.fp = icmp eq i64 %.sroa.2.0.copyload.i.i.i, %i.fo
   %i.fq = select i1 %i.fm, i1 %i.fp, i1 false
   br i1 %i.fq, label %.thread309, label %.critedge.i.i, !prof !741, !llvm.loop !14314
 
@@ -2466,10 +2485,10 @@ bb.z:                                             ; preds = %.thread309
 
 .thread300:                                       ; preds = %bb.x, %.noexc83, %.noexc, %bb.w
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #34, !noalias !21583
-  %i.fv = xor i64 %16, %17
+  %i.fv = xor i64 %.sroa.2.0.copyload.i.i.i, %.sroa.0.0.copyload.i.i.i
   %i.fw = mul i64 %i.fv, -7070675565921424023     ; 2 uses
   %i.fx = lshr i64 %i.fw, 47
-  %i.fy = xor i64 %17, %i.fx
+  %i.fy = xor i64 %.sroa.0.0.copyload.i.i.i, %i.fx
   %i.fz = xor i64 %i.fy, %i.fw
   %i.ga = mul i64 %i.fz, -7070675565921424023     ; 2 uses
   %i.gb = lshr i64 %i.ga, 47
