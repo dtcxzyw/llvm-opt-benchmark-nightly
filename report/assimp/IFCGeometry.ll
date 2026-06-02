@@ -201,21 +201,22 @@ _ZN10aiVector3tIdEdVEd.exit.i:                    ; preds = %bb.ap
 _ZN10aiVector3tIdE9NormalizeEv.exit:              ; preds = %_ZN10aiVector3tIdEdVEd.exit.i, %bb.ap
   %.sroa.19.0 = phi double [ %i.kr, %bb.ap ], [ %i.lb, %_ZN10aiVector3tIdEdVEd.exit.i ]
   %i.lc = phi <2 x double> [ %i.kq, %bb.ap ], [ %i.la, %_ZN10aiVector3tIdEdVEd.exit.i ]
+  %.fr = freeze <2 x double> %i.lc                ; 2 uses
   %.sroa.19.0.fr = freeze double %.sroa.19.0      ; 11 uses
-  %6 = icmp eq i32 %.0125481, 1
-  %7 = freeze <2 x double> %i.lc                  ; 6 uses
-  %8 = extractelement <2 x double> %7, i64 1      ; 8 uses
-  %9 = call <2 x double> @llvm.fabs.v2f64(<2 x double> %7)
-  %10 = fcmp ogt <2 x double> %9, splat (double f0x3EB0C6F7A0000000) ; 3 uses
+  %6 = extractelement <2 x double> %.fr, i64 1    ; 9 uses
+  %7 = extractelement <2 x double> %.fr, i64 0    ; 7 uses
+  %8 = call double @llvm.fabs.f64(double %7)
+  %9 = fcmp ogt double %8, f0x3EB0C6F7A0000000
+  %10 = icmp eq i32 %.0125481, 1
+  %11 = call double @llvm.fabs.f64(double %6)
+  %12 = fcmp ogt double %11, f0x3EB0C6F7A0000000  ; 2 uses
   %i.ld = icmp ne i32 %.0125481, 2                ; 3 uses
   %i.le = call double @llvm.fabs.f64(double %.sroa.19.0.fr)
   %i.lf = fcmp ule double %i.le, f0x3EB0C6F7A0000000 ; 3 uses
-  %11 = extractelement <2 x i1> %10, i64 0
-  br i1 %11, label %_ZN10aiVector3tIdE9NormalizeEv.exit.split, label %_ZN10aiVector3tIdE9NormalizeEv.exit.split.us
+  br i1 %9, label %_ZN10aiVector3tIdE9NormalizeEv.exit.split, label %_ZN10aiVector3tIdE9NormalizeEv.exit.split.us
 
 _ZN10aiVector3tIdE9NormalizeEv.exit.split.us:     ; preds = %_ZN10aiVector3tIdE9NormalizeEv.exit
   %brmerge619 = or i1 %i.ld, %i.lf
-  %12 = extractelement <2 x i1> %10, i64 1
   %or.cond = and i1 %12, %brmerge619
   br i1 %or.cond, label %.split.us.split, label %.split417.us
 
@@ -224,15 +225,14 @@ _ZN10aiVector3tIdE9NormalizeEv.exit.split:        ; preds = %_ZN10aiVector3tIdE9
   br i1 %i.lg, label %.split418, label %_ZN10aiVector3tIdE9NormalizeEv.exit.split.split
 
 _ZN10aiVector3tIdE9NormalizeEv.exit.split.split:  ; preds = %_ZN10aiVector3tIdE9NormalizeEv.exit.split
-  %13 = extractelement <2 x i1> %10, i64 1
-  br i1 %13, label %_ZN10aiVector3tIdE9NormalizeEv.exit.split.split.split, label %_ZN10aiVector3tIdE9NormalizeEv.exit.split.split.split.us
+  br i1 %12, label %_ZN10aiVector3tIdE9NormalizeEv.exit.split.split.split, label %_ZN10aiVector3tIdE9NormalizeEv.exit.split.split.split.us
 
 _ZN10aiVector3tIdE9NormalizeEv.exit.split.split.split.us: ; preds = %_ZN10aiVector3tIdE9NormalizeEv.exit.split.split
   %brmerge622 = or i1 %i.ld, %i.lf
   br i1 %brmerge622, label %.split418, label %.split417.us
 
 _ZN10aiVector3tIdE9NormalizeEv.exit.split.split.split: ; preds = %_ZN10aiVector3tIdE9NormalizeEv.exit.split.split
-  br i1 %6, label %.split.us.split, label %_ZN10aiVector3tIdE9NormalizeEv.exit.split.split.split.split
+  br i1 %10, label %.split.us.split, label %_ZN10aiVector3tIdE9NormalizeEv.exit.split.split.split.split
 
 _ZN10aiVector3tIdE9NormalizeEv.exit.split.split.split.split: ; preds = %_ZN10aiVector3tIdE9NormalizeEv.exit.split.split.split
   %brmerge625 = or i1 %i.ld, %i.lf
@@ -240,24 +240,21 @@ _ZN10aiVector3tIdE9NormalizeEv.exit.split.split.split.split: ; preds = %_ZN10aiV
 
 .split418:                                        ; preds = %_ZN10aiVector3tIdE9NormalizeEv.exit.split.split.split.split, %_ZN10aiVector3tIdE9NormalizeEv.exit.split.split.split.us, %_ZN10aiVector3tIdE9NormalizeEv.exit.split
   %i.lh = fmul double %.sroa.12.0458, %.sroa.19.0.fr
-  %i.li = call double @llvm.fmuladd.f64(double %8, double %.sroa.8.0461, double %i.lh)
+  %i.li = call double @llvm.fmuladd.f64(double %6, double %.sroa.8.0461, double %i.lh)
   %i.lj = fneg double %i.li
-  %14 = extractelement <2 x double> %7, i64 0
-  %i.lk = fdiv double %i.lj, %14
+  %i.lk = fdiv double %i.lj, %7
   br label %.loopexit397
 
 .split.us.split:                                  ; preds = %_ZN10aiVector3tIdE9NormalizeEv.exit.split.us, %_ZN10aiVector3tIdE9NormalizeEv.exit.split.split.split
   %i.ll = fmul double %.sroa.12.0458, %.sroa.19.0.fr
-  %15 = extractelement <2 x double> %7, i64 0
-  %i.lm = call double @llvm.fmuladd.f64(double %15, double %.sroa.0324.0464, double %i.ll)
+  %i.lm = call double @llvm.fmuladd.f64(double %7, double %.sroa.0324.0464, double %i.ll)
   %i.ln = fneg double %i.lm
-  %i.lo = fdiv double %i.ln, %8
+  %i.lo = fdiv double %i.ln, %6
   br label %.loopexit397
 
 .split417.us:                                     ; preds = %_ZN10aiVector3tIdE9NormalizeEv.exit.split.us, %_ZN10aiVector3tIdE9NormalizeEv.exit.split.split.split.split, %_ZN10aiVector3tIdE9NormalizeEv.exit.split.split.split.us
-  %16 = extractelement <2 x double> %7, i64 0
-  %i.lp = fmul double %.sroa.0324.0464, %16
-  %i.lq = call double @llvm.fmuladd.f64(double %8, double %.sroa.8.0461, double %i.lp)
+  %i.lp = fmul double %.sroa.0324.0464, %7
+  %i.lq = call double @llvm.fmuladd.f64(double %6, double %.sroa.8.0461, double %i.lp)
   %i.lr = fneg double %i.lq
   %i.ls = fdiv double %i.lr, %.sroa.19.0.fr
   br label %.loopexit397
@@ -279,18 +276,17 @@ _ZN10aiVector3tIdE9NormalizeEv.exit.split.split.split.split: ; preds = %_ZN10aiV
   %i.mb = call double @cos(double noundef %i.o) #30 ; 4 uses
   %i.mc = call double @sin(double noundef %i.o) #30 ; 3 uses
   %i.md = fsub double 1.000000e+00, %i.mb         ; 3 uses
-  %17 = extractelement <2 x double> %7, i64 0     ; 3 uses
-  %i.me = fmul double %17, %i.md                  ; 5 uses
-  %i.mf = call double @llvm.fmuladd.f64(double %i.me, double %17, double %i.mb)
+  %i.me = fmul double %7, %i.md                   ; 5 uses
+  %i.mf = call double @llvm.fmuladd.f64(double %i.me, double %7, double %i.mb)
   %i.mg = fmul double %.sroa.19.0.fr, %i.mc       ; 2 uses
   %i.mh = fneg double %i.mg
-  %i.mi = call double @llvm.fmuladd.f64(double %i.me, double %8, double %i.mh)
-  %i.mj = fmul double %8, %i.mc                   ; 2 uses
+  %i.mi = call double @llvm.fmuladd.f64(double %i.me, double %6, double %i.mh)
+  %i.mj = fmul double %6, %i.mc                   ; 2 uses
   %i.mk = call double @llvm.fmuladd.f64(double %i.me, double %.sroa.19.0.fr, double %i.mj)
-  %i.ml = call double @llvm.fmuladd.f64(double %i.me, double %8, double %i.mg)
-  %i.mm = fmul double %8, %i.md                   ; 3 uses
-  %i.mn = call double @llvm.fmuladd.f64(double %i.mm, double %8, double %i.mb)
-  %i.mo = fmul double %17, %i.mc                  ; 2 uses
+  %i.ml = call double @llvm.fmuladd.f64(double %i.me, double %6, double %i.mg)
+  %i.mm = fmul double %6, %i.md                   ; 3 uses
+  %i.mn = call double @llvm.fmuladd.f64(double %i.mm, double %6, double %i.mb)
+  %i.mo = fmul double %7, %i.mc                   ; 2 uses
   %i.mp = fneg double %i.mo
   %i.mq = call double @llvm.fmuladd.f64(double %i.mm, double %.sroa.19.0.fr, double %i.mp)
   %i.mr = fneg double %i.mj
@@ -691,9 +687,6 @@ declare i32 @llvm.umax.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.sqrt.f64(double) #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #5
