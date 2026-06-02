@@ -201,10 +201,10 @@ bb.ae:                                            ; preds = %.lr.ph859
 
 vector.scevcheck:                                 ; preds = %.lr.ph856
   %i.ex = trunc i64 %i.er to i32
-  %i.ey = sub i32 -2, %.0326857
+  %i.ey = sub i32 -3, %.0326857
   %i.ez = icmp ult i32 %i.ey, %i.ex
   %i.fa = trunc i64 %i.er to i32
-  %i.fb = sub i32 -3, %.0326857
+  %i.fb = sub i32 -2, %.0326857
   %i.fc = icmp ult i32 %i.fb, %i.fa
   %i.fd = icmp ugt i64 %i.er, 4294967295
   %i.fe = or i1 %i.fc, %i.fd
