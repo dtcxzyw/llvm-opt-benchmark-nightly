@@ -1,0 +1,106 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineShifts.cpp b/llvm/lib/Transforms/InstCombine/InstCombineShifts.cpp
+index 3547a79df1355..67bfa8dd57ad9 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineShifts.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineShifts.cpp
+@@ -1148,6 +1148,91 @@ static bool setShiftFlags(BinaryOperator &I, const SimplifyQuery &Q) {
+   return Changed;
+ }
+ 
++static Instruction *foldLShrOfShiftedMaskAdd(BinaryOperator &I,
++                                             IRBuilderBase &Builder) {
++  if (I.getOpcode() != Instruction::LShr || !I.isExact())
++    return nullptr;
++
++  auto *Ty = dyn_cast<IntegerType>(I.getType());
++  if (!Ty)
++    return nullptr;
++
++  const APInt *LShrAmtC;
++  if (!match(I.getOperand(1), m_APInt(LShrAmtC)))
++    return nullptr;
++
++  unsigned BitWidth = Ty->getBitWidth();
++  uint64_t ShAmt64 = LShrAmtC->getLimitedValue(BitWidth);
++  if (ShAmt64 == 0 || ShAmt64 >= BitWidth)
++    return nullptr;
++
++  unsigned ShAmt = static_cast<unsigned>(ShAmt64);
++
++  auto *Add = dyn_cast<BinaryOperator>(I.getOperand(0));
++  if (!Add || Add->getOpcode() != Instruction::Add)
++    return nullptr;
++
++  // The transform relies on the shifted add not wrapping:
++  //
++  //   (((X << ShAmt) & MaskC) + AddC) >> ShAmt
++  //     -> (X & (MaskC >> ShAmt)) + (AddC >> ShAmt)
++  //
++  // Without NUW, a carry out of the shifted region would be lost by the lshr.
++  if (!Add->hasNoUnsignedWrap())
++    return nullptr;
++
++  Value *AndV;
++  const APInt *AddC;
++  if (!match(Add, m_c_Add(m_Value(AndV), m_APInt(AddC))))
++    return nullptr;
++
++  Value *ShlV;
++  const APInt *MaskC;
++  if (!match(AndV, m_c_And(m_Value(ShlV), m_APInt(MaskC))))
++    return nullptr;
++
++  auto *Shl = dyn_cast<BinaryOperator>(ShlV);
++  if (!Shl || Shl->getOpcode() != Instruction::Shl)
++    return nullptr;
++
++  const APInt *ShlAmtC;
++  if (!match(Shl->getOperand(1), m_APInt(ShlAmtC)) ||
++      *ShlAmtC != *LShrAmtC)
++    return nullptr;
++
++  // The masked value and the add constant must both be aligned to ShAmt bits,
++  // so the final lshr can be distributed over the expression.
++  if (MaskC->countTrailingZeros() < ShAmt ||
++      AddC->countTrailingZeros() < ShAmt)
++    return nullptr;
++
++  Value *X = Shl->getOperand(0);
++
++  APInt NewMaskC = MaskC->lshr(ShAmt);
++  APInt NewAddC = AddC->lshr(ShAmt);
++
++  Value *NewMask = ConstantInt::get(Ty, NewMaskC);
++  Value *NewAddConst = ConstantInt::get(Ty, NewAddC);
++
++  Value *NewAnd = Builder.CreateAnd(X, NewMask);
++
++  auto *NewAdd = BinaryOperator::CreateAdd(NewAnd, NewAddConst);
++
++  // X & NewMaskC is unsigned <= NewMaskC. If NewMaskC + NewAddC does not
++  // unsigned-wrap, the new add is NUW.
++  bool UOverflow = false;
++  APInt MaxSum = NewMaskC.uadd_ov(NewAddC, UOverflow);
++  if (!UOverflow)
++    NewAdd->setHasNoUnsignedWrap();
++
++  // If both operands and the maximum possible result are non-negative, the new
++  // add is also NSW.
++  if (!NewMaskC.isNegative() && !NewAddC.isNegative() && !MaxSum.isNegative())
++    NewAdd->setHasNoSignedWrap();
++
++  return NewAdd;
++}
++
+ Instruction *InstCombinerImpl::visitShl(BinaryOperator &I) {
+   const SimplifyQuery Q = SQ.getWithInstruction(&I);
+ 
+@@ -1390,6 +1475,9 @@ Instruction *InstCombinerImpl::visitLShr(BinaryOperator &I) {
+                                   SQ.getWithInstruction(&I)))
+     return replaceInstUsesWith(I, V);
+ 
++  if (Instruction *R = foldLShrOfShiftedMaskAdd(I, Builder))
++    return R;
++
+   if (Instruction *X = foldVectorBinop(I))
+     return X;
+ 
