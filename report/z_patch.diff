@@ -1,0 +1,40 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+index 15cb29fb6a3cf..9e334d947b4b2 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+@@ -593,12 +593,32 @@ Instruction *InstCombinerImpl::foldSelectIntoOp(SelectInst &SI, Value *TrueVal,
+     Constant *C = ConstantExpr::getBinOpIdentity(
+         TVI->getOpcode(), TVI->getType(), true, FMF.noSignedZeros());
+     Value *OOp = TVI->getOperand(2 - OpToFold);
+-    // Avoid creating select between 2 constants unless it's selecting
+-    // between 0, 1 and -1.
++
++    // Avoid creating select between 2 constants unless it is known to be
++    // useful.
++    // Historically this only allowed 0/1/-1 selects. For vector integer OR,
++    // also allow selecting between zero and an arbitrary constant mask:
++    //
++    //   select C, (X | K), X
++    //     -> X | select C, K, 0
++    //
++    // This is useful for vector conditional bit-set patterns, such as ASCII
++    // uppercase-to-lowercase:
++    //
++    //   select C, (X | 32), X
++    //     -> X | select C, 32, 0
+     const APInt *OOpC;
+     bool OOpIsAPInt = match(OOp, m_APInt(OOpC));
++
++    auto IsVectorIntegerOrWithConstantMask = [&]() {
++      return TVI->getOpcode() == Instruction::Or &&
++             SI.getType()->isVectorTy() &&
++             SI.getType()->getScalarType()->isIntegerTy() && OOpIsAPInt;
++    };
++
+     if (isa<Constant>(OOp) &&
+-        (!OOpIsAPInt || !isSelect01(C->getUniqueInteger(), *OOpC)))
++        (!OOpIsAPInt || (!isSelect01(C->getUniqueInteger(), *OOpC) &&
++                         !IsVectorIntegerOrWithConstantMask())))
+       return nullptr;
+ 
+     // If the false value is a NaN then we have that the floating point math
