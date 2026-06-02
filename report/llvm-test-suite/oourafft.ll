@@ -201,13 +201,13 @@ vector.body:                                      ; preds = %vector.memcheck, %v
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %vector.memcheck ] ; 3 uses
   %i.t = shl i64 %index, 1                        ; 2 uses
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.t ; 2 uses
-  %wide.load = load <2 x double>, ptr %i.u, align 8 ; 2 uses
+  %wide.load = load <2 x double>, ptr %i.u, align 8, !tbaa !8 ; 2 uses
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %i.t ; 2 uses
-  %wide.load158 = load <2 x double>, ptr %i.v, align 8 ; 2 uses
+  %wide.load158 = load <2 x double>, ptr %i.v, align 8, !tbaa !8 ; 2 uses
   %i.w = fsub <2 x double> %wide.load, %wide.load158
   %i.x = fadd <2 x double> %wide.load, %wide.load158
-  store <2 x double> %i.x, ptr %i.u, align 8
-  store <2 x double> %i.w, ptr %i.v, align 8
+  store <2 x double> %i.x, ptr %i.u, align 8, !tbaa !8
+  store <2 x double> %i.w, ptr %i.v, align 8, !tbaa !8
   %index.next = add nuw i64 %index, 1
   %i.y = icmp eq i64 %index, %i.l
   br i1 %i.y, label %.loopexit, label %vector.body, !llvm.loop !44

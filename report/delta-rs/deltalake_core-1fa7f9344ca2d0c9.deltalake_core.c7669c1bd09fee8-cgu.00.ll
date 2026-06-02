@@ -201,16 +201,16 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep = getelementptr i8, ptr %i.d, i64 %i.u
   %i.v = getelementptr i8, ptr %i.d, i64 %i.u
   %next.gep2 = getelementptr i8, ptr %i.v, i64 16
-  %wide.load = load <2 x i64>, ptr %next.gep, align 8
-  %wide.load3 = load <2 x i64>, ptr %next.gep2, align 8
+  %wide.load = load <2 x i64>, ptr %next.gep, align 8, !noalias !39794
+  %wide.load3 = load <2 x i64>, ptr %next.gep2, align 8, !noalias !39794
   %i.w = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %index
   %i.x = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %index
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 16
-  store <2 x i64> %wide.load, ptr %i.w, align 8
-  store <2 x i64> %wide.load3, ptr %i.y, align 8
+  store <2 x i64> %wide.load, ptr %i.w, align 8, !noalias !39792
+  store <2 x i64> %wide.load3, ptr %i.y, align 8, !noalias !39792
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.z = icmp eq i64 %index.next, %n.vec
-  br i1 %i.z, label %.lr.ph.i.preheader6, label %vector.body, !llvm.loop !39794
+  br i1 %i.z, label %.lr.ph.i.preheader6, label %vector.body, !llvm.loop !39795
 
 .lr.ph.i.preheader6:                              ; preds = %vector.body, %.lr.ph.i.preheader
   %.sroa.10.023.i.ph = phi i64 [ %i.i, %.lr.ph.i.preheader ], [ %i.r, %vector.body ]
@@ -230,7 +230,7 @@ bb.c:                                             ; preds = %.lr.ph.i
   %i.ac = add nuw nsw i64 %.sroa.7.021.i, 1
   %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.014.022.i, i64 16
   %i.ae = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %.sroa.7.021.i
-  %i.af = load <2 x i64>, ptr %.sroa.014.022.i, align 8, !alias.scope !39789, !noalias !39795
+  %i.af = load <2 x i64>, ptr %.sroa.014.022.i, align 8, !alias.scope !39789, !noalias !39794
   store <2 x i64> %i.af, ptr %i.ae, align 8, !noalias !39792
   %i.ag = icmp eq i64 %i.ab, 0
   br i1 %i.ag, label %_RINvXNvMNtCs6Po7BT7Nknu_5alloc5sliceSp9to_vec_inINtNtNtCsbvkFyIu7lgC_4core3ops5range5RangeyENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs14kWLkQVSKO_14deltalake_core.exit, label %.lr.ph.i, !llvm.loop !39796
@@ -633,8 +633,8 @@ begin_hunk_1_@llvm.umax.i64
 !39791 = distinct !{!39791, !"_RINvXNvMNtCs6Po7BT7Nknu_5alloc5sliceSp9to_vec_inINtNtNtCsbvkFyIu7lgC_4core3ops5range5RangeyENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs14kWLkQVSKO_14deltalake_core"}
 !39792 = !{!39793, !39790}
 !39793 = distinct !{!39793, !39791, !"_RINvXNvMNtCs6Po7BT7Nknu_5alloc5sliceSp9to_vec_inINtNtNtCsbvkFyIu7lgC_4core3ops5range5RangeyENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs14kWLkQVSKO_14deltalake_core: argument 0"}
-!39794 = distinct !{!39794, !15341, !15342}
-!39795 = !{!39793}
+!39794 = !{!39793}
+!39795 = distinct !{!39795, !15341, !15342}
 !39796 = distinct !{!39796, !15342, !15341}
 !39797 = !{!39798, !39800}
 !39798 = distinct !{!39798, !39799, !"_RINvXNvMNtCs6Po7BT7Nknu_5alloc5sliceSp9to_vec_inNtNtB8_6string6StringNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs14kWLkQVSKO_14deltalake_core: argument 0"}

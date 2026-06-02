@@ -201,15 +201,15 @@ vector.body127:                                   ; preds = %vector.body127, %ve
   %i.ci = or disjoint i64 %index128, 1            ; 2 uses
   %i.cj = getelementptr inbounds nuw [16 x i8], ptr %i.al, i64 %index128
   %i.ck = getelementptr inbounds nuw [16 x i8], ptr %i.al, i64 %i.ci
-  %wide.load129 = load <2 x i64>, ptr %i.cj, align 8
-  %wide.load130 = load <2 x i64>, ptr %i.ck, align 8
+  %wide.load129 = load <2 x i64>, ptr %i.cj, align 8, !tbaa !79, !alias.scope !1079, !noalias !1088
+  %wide.load130 = load <2 x i64>, ptr %i.ck, align 8, !tbaa !79, !alias.scope !1079, !noalias !1088
   %i.cl = getelementptr inbounds nuw [16 x i8], ptr %i.at, i64 %index128
   %i.cm = getelementptr inbounds nuw [16 x i8], ptr %i.at, i64 %i.ci
-  store <2 x i64> %wide.load129, ptr %i.cl, align 8
-  store <2 x i64> %wide.load130, ptr %i.cm, align 8
+  store <2 x i64> %wide.load129, ptr %i.cl, align 8, !tbaa !79, !alias.scope !1084, !noalias !1089
+  store <2 x i64> %wide.load130, ptr %i.cm, align 8, !tbaa !79, !alias.scope !1084, !noalias !1089
   %index.next131 = add nuw i64 %index128, 2       ; 2 uses
   %i.cn = icmp eq i64 %index.next131, %n.vec126
-  br i1 %i.cn, label %middle.block132, label %vector.body127, !llvm.loop !1088
+  br i1 %i.cn, label %middle.block132, label %vector.body127, !llvm.loop !1090
 
 middle.block132:                                  ; preds = %vector.body127
   %cmp.n133 = icmp eq i64 %i.d, %n.vec126
@@ -233,7 +233,7 @@ _ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncInt
   store <2 x i64> %i.cq, ptr %i.cp, align 8, !tbaa !79, !alias.scope !1084, !noalias !1089
   %i.cr = add nuw i64 %.070104.us.us.i.i.i.i, 1   ; 2 uses
   %exitcond123.not.i.i.i.i = icmp eq i64 %i.cr, %i.d
-  br i1 %exitcond123.not.i.i.i.i, label %_ZN6duckdb14BinaryExecutor15ExecuteStandardINS_9hugeint_tEiS2_NS_12_GLOBAL__N_120TruncIntegerOperatorEEEvRNS_6VectorES6_S6_m.exit, label %_ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncIntegerOperatorENS_9hugeint_tEiS4_EET3_T_T1_T2_RNS_12ValidityMaskEm.exit87.us.us.i.i.i.i, !llvm.loop !1090
+  br i1 %exitcond123.not.i.i.i.i, label %_ZN6duckdb14BinaryExecutor15ExecuteStandardINS_9hugeint_tEiS2_NS_12_GLOBAL__N_120TruncIntegerOperatorEEEvRNS_6VectorES6_S6_m.exit, label %_ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncIntegerOperatorENS_9hugeint_tEiS4_EET3_T_T1_T2_RNS_12ValidityMaskEm.exit87.us.us.i.i.i.i, !llvm.loop !1091
 
 .lr.ph105.split.us.split.i.i.i.i:                 ; preds = %.lr.ph105.split.us.i.i.i.i, %_ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncIntegerOperatorENS_9hugeint_tEiS4_EET3_T_T1_T2_RNS_12ValidityMaskEm.exit87.us.i.i.i.i
   %.070104.us.i.i.i.i = phi i64 [ %i.da, %_ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncIntegerOperatorENS_9hugeint_tEiS4_EET3_T_T1_T2_RNS_12ValidityMaskEm.exit87.us.i.i.i.i ], [ 0, %.lr.ph105.split.us.i.i.i.i ] ; 3 uses
@@ -242,7 +242,7 @@ _ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncInt
   call void @llvm.lifetime.start.p0(ptr nonnull %30) #23, !noalias !1086
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %30, ptr noundef nonnull align 16 dereferenceable(16) %i.ch, i64 16, i1 false), !tbaa.struct !1077, !noalias !1086
   call void @llvm.lifetime.start.p0(ptr nonnull %31) #23, !noalias !1086
-  %i.ct = load <2 x i64>, ptr %i.cs, align 8, !tbaa !79, !alias.scope !1079, !noalias !1091
+  %i.ct = load <2 x i64>, ptr %i.cs, align 8, !tbaa !79, !alias.scope !1079, !noalias !1088
   store <2 x i64> %i.ct, ptr %31, align 16, !tbaa !79, !noalias !1086
   %i.cu = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN6duckdb9hugeint_tdVERKS0_(ptr noundef nonnull align 8 dereferenceable(16) %31, ptr noundef nonnull align 8 dereferenceable(16) %30), !noalias !1086 ; 0 uses
   %i.cv = call noundef zeroext i1 @_ZNK6duckdb9hugeint_tcvbEv(ptr noundef nonnull align 8 dereferenceable(16) %31), !noalias !1086
@@ -272,7 +272,7 @@ _ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncInt
   store i64 %.fca.1.load.i.i84.us.i.i.i.i, ptr %.sroa.4.0..sroa_idx.us.i.i.i.i, align 8, !tbaa !79, !alias.scope !1084, !noalias !1089
   %i.da = add nuw i64 %.070104.us.i.i.i.i, 1      ; 2 uses
   %exitcond122.not.i.i.i.i = icmp eq i64 %i.da, %i.d
-  br i1 %exitcond122.not.i.i.i.i, label %_ZN6duckdb14BinaryExecutor15ExecuteStandardINS_9hugeint_tEiS2_NS_12_GLOBAL__N_120TruncIntegerOperatorEEEvRNS_6VectorES6_S6_m.exit, label %.lr.ph105.split.us.split.i.i.i.i, !llvm.loop !1090
+  br i1 %exitcond122.not.i.i.i.i, label %_ZN6duckdb14BinaryExecutor15ExecuteStandardINS_9hugeint_tEiS2_NS_12_GLOBAL__N_120TruncIntegerOperatorEEEvRNS_6VectorES6_S6_m.exit, label %.lr.ph105.split.us.split.i.i.i.i, !llvm.loop !1091
 
 bb.aa:                                            ; preds = %bb.x
   %i.db = add i64 %i.d, 63
@@ -337,12 +337,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.du = add i64 %i.dt, 1                        ; 2 uses
   %i.dv = getelementptr inbounds nuw [16 x i8], ptr %i.al, i64 %i.dt
   %i.dw = getelementptr inbounds nuw [16 x i8], ptr %i.al, i64 %i.du
-  %wide.load = load <2 x i64>, ptr %i.dv, align 8
-  %wide.load121 = load <2 x i64>, ptr %i.dw, align 8
+  %wide.load = load <2 x i64>, ptr %i.dv, align 8, !tbaa !79, !alias.scope !1079, !noalias !1088
+  %wide.load121 = load <2 x i64>, ptr %i.dw, align 8, !tbaa !79, !alias.scope !1079, !noalias !1088
   %i.dx = getelementptr inbounds nuw [16 x i8], ptr %i.at, i64 %i.dt
   %i.dy = getelementptr inbounds nuw [16 x i8], ptr %i.at, i64 %i.du
-  store <2 x i64> %wide.load, ptr %i.dx, align 8
-  store <2 x i64> %wide.load121, ptr %i.dy, align 8
+  store <2 x i64> %wide.load, ptr %i.dx, align 8, !tbaa !79, !alias.scope !1084, !noalias !1089
+  store <2 x i64> %wide.load121, ptr %i.dy, align 8, !tbaa !79, !alias.scope !1084, !noalias !1089
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.dz = icmp eq i64 %index.next, %n.vec
   br i1 %i.dz, label %middle.block, label %vector.body, !llvm.loop !1092
@@ -378,7 +378,7 @@ _ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncInt
   call void @llvm.lifetime.start.p0(ptr nonnull %36) #23, !noalias !1086
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %36, ptr noundef nonnull align 16 dereferenceable(16) %i.dq, i64 16, i1 false), !tbaa.struct !1077, !noalias !1086
   call void @llvm.lifetime.start.p0(ptr nonnull %37) #23, !noalias !1086
-  %i.ef = load <2 x i64>, ptr %i.ee, align 8, !tbaa !79, !alias.scope !1079, !noalias !1091
+  %i.ef = load <2 x i64>, ptr %i.ee, align 8, !tbaa !79, !alias.scope !1079, !noalias !1088
   store <2 x i64> %i.ef, ptr %37, align 16, !tbaa !79, !noalias !1086
   %i.eg = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN6duckdb9hugeint_tdVERKS0_(ptr noundef nonnull align 8 dereferenceable(16) %37, ptr noundef nonnull align 8 dereferenceable(16) %36), !noalias !1086 ; 0 uses
   %i.eh = call noundef zeroext i1 @_ZNK6duckdb9hugeint_tcvbEv(ptr noundef nonnull align 8 dereferenceable(16) %37), !noalias !1086
@@ -418,7 +418,7 @@ _ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncInt
   %.196.i.i.i.i = phi i64 [ %i.er, %_ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncIntegerOperatorENS_9hugeint_tEiS4_EET3_T_T1_T2_RNS_12ValidityMaskEm.exit.i.i.i.i ], [ %.196.i.i.i.i.ph, %_ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncIntegerOperatorENS_9hugeint_tEiS4_EET3_T_T1_T2_RNS_12ValidityMaskEm.exit.i.i.i.i.preheader139 ] ; 3 uses
   %i.eo = getelementptr inbounds nuw [16 x i8], ptr %i.al, i64 %.196.i.i.i.i
   %i.ep = getelementptr inbounds nuw [16 x i8], ptr %i.at, i64 %.196.i.i.i.i
-  %i.eq = load <2 x i64>, ptr %i.eo, align 8, !tbaa !79, !alias.scope !1079, !noalias !1091
+  %i.eq = load <2 x i64>, ptr %i.eo, align 8, !tbaa !79, !alias.scope !1079, !noalias !1088
   store <2 x i64> %i.eq, ptr %i.ep, align 8, !tbaa !79, !alias.scope !1084, !noalias !1089
   %i.er = add nuw i64 %.196.i.i.i.i, 1            ; 2 uses
   %exitcond.not.i.i.i.i = icmp eq i64 %i.er, %i.dk
@@ -434,9 +434,9 @@ _ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncInt
 
 bb.ae:                                            ; preds = %.lr.ph99.i.i.i.i
   %i.ev = getelementptr inbounds nuw [16 x i8], ptr %i.al, i64 %.298.i.i.i.i ; 2 uses
-  %.sroa.014.0.copyload.i.i.i.i = load i64, ptr %i.ev, align 8, !tbaa !79, !alias.scope !1079, !noalias !1091 ; 2 uses
+  %.sroa.014.0.copyload.i.i.i.i = load i64, ptr %i.ev, align 8, !tbaa !79, !alias.scope !1079, !noalias !1088 ; 2 uses
   %.sroa.415.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ev, i64 8
-  %.sroa.415.0.copyload.i.i.i.i = load i64, ptr %.sroa.415.0..sroa_idx.i.i.i.i, align 8, !tbaa !79, !alias.scope !1079, !noalias !1091 ; 2 uses
+  %.sroa.415.0.copyload.i.i.i.i = load i64, ptr %.sroa.415.0..sroa_idx.i.i.i.i, align 8, !tbaa !79, !alias.scope !1079, !noalias !1088 ; 2 uses
   %i.ew = load i32, ptr %i.an, align 4, !tbaa !3, !alias.scope !1082, !noalias !1087 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %32), !noalias !1086
   %i.ex = icmp slt i32 %i.ew, 0
@@ -507,7 +507,7 @@ _ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncInt
   %.070104.i.i.i.i = phi i64 [ %i.fo, %_ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncIntegerOperatorENS_9hugeint_tEiS4_EET3_T_T1_T2_RNS_12ValidityMaskEm.exit87.i.i.i.i ], [ %.070104.i.i.i.i.ph, %_ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncIntegerOperatorENS_9hugeint_tEiS4_EET3_T_T1_T2_RNS_12ValidityMaskEm.exit87.i.i.i.i.preheader136 ] ; 3 uses
   %i.fl = getelementptr inbounds nuw [16 x i8], ptr %i.al, i64 %.070104.i.i.i.i
   %i.fm = getelementptr inbounds nuw [16 x i8], ptr %i.at, i64 %.070104.i.i.i.i
-  %i.fn = load <2 x i64>, ptr %i.fl, align 8, !tbaa !79, !alias.scope !1079, !noalias !1091
+  %i.fn = load <2 x i64>, ptr %i.fl, align 8, !tbaa !79, !alias.scope !1079, !noalias !1088
   store <2 x i64> %i.fn, ptr %i.fm, align 8, !tbaa !79, !alias.scope !1084, !noalias !1089
   %i.fo = add nuw i64 %.070104.i.i.i.i, 1         ; 2 uses
   %exitcond121.not.i.i.i.i = icmp eq i64 %i.fo, %i.d
@@ -910,15 +910,15 @@ vector.body127:                                   ; preds = %vector.body127, %ve
   %i.ci = or disjoint i64 %index128, 1            ; 2 uses
   %i.cj = getelementptr inbounds nuw [16 x i8], ptr %i.al, i64 %index128
   %i.ck = getelementptr inbounds nuw [16 x i8], ptr %i.al, i64 %i.ci
-  %wide.load129 = load <2 x i64>, ptr %i.cj, align 8
-  %wide.load130 = load <2 x i64>, ptr %i.ck, align 8
+  %wide.load129 = load <2 x i64>, ptr %i.cj, align 8, !tbaa !79, !alias.scope !1428, !noalias !1437
+  %wide.load130 = load <2 x i64>, ptr %i.ck, align 8, !tbaa !79, !alias.scope !1428, !noalias !1437
   %i.cl = getelementptr inbounds nuw [16 x i8], ptr %i.at, i64 %index128
   %i.cm = getelementptr inbounds nuw [16 x i8], ptr %i.at, i64 %i.ci
-  store <2 x i64> %wide.load129, ptr %i.cl, align 8
-  store <2 x i64> %wide.load130, ptr %i.cm, align 8
+  store <2 x i64> %wide.load129, ptr %i.cl, align 8, !tbaa !79, !alias.scope !1433, !noalias !1438
+  store <2 x i64> %wide.load130, ptr %i.cm, align 8, !tbaa !79, !alias.scope !1433, !noalias !1438
   %index.next131 = add nuw i64 %index128, 2       ; 2 uses
   %i.cn = icmp eq i64 %index.next131, %n.vec126
-  br i1 %i.cn, label %middle.block132, label %vector.body127, !llvm.loop !1437
+  br i1 %i.cn, label %middle.block132, label %vector.body127, !llvm.loop !1439
 
 middle.block132:                                  ; preds = %vector.body127
   %cmp.n133 = icmp eq i64 %i.d, %n.vec126
@@ -942,7 +942,7 @@ _ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncInt
   store <2 x i64> %i.cq, ptr %i.cp, align 8, !tbaa !79, !alias.scope !1433, !noalias !1438
   %i.cr = add nuw i64 %.070104.us.us.i.i.i.i, 1   ; 2 uses
   %exitcond123.not.i.i.i.i = icmp eq i64 %i.cr, %i.d
-  br i1 %exitcond123.not.i.i.i.i, label %_ZN6duckdb14BinaryExecutor15ExecuteStandardINS_10uhugeint_tEiS2_NS_12_GLOBAL__N_120TruncIntegerOperatorEEEvRNS_6VectorES6_S6_m.exit, label %_ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncIntegerOperatorENS_10uhugeint_tEiS4_EET3_T_T1_T2_RNS_12ValidityMaskEm.exit87.us.us.i.i.i.i, !llvm.loop !1439
+  br i1 %exitcond123.not.i.i.i.i, label %_ZN6duckdb14BinaryExecutor15ExecuteStandardINS_10uhugeint_tEiS2_NS_12_GLOBAL__N_120TruncIntegerOperatorEEEvRNS_6VectorES6_S6_m.exit, label %_ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncIntegerOperatorENS_10uhugeint_tEiS4_EET3_T_T1_T2_RNS_12ValidityMaskEm.exit87.us.us.i.i.i.i, !llvm.loop !1440
 
 .lr.ph105.split.us.split.i.i.i.i:                 ; preds = %.lr.ph105.split.us.i.i.i.i, %_ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncIntegerOperatorENS_10uhugeint_tEiS4_EET3_T_T1_T2_RNS_12ValidityMaskEm.exit87.us.i.i.i.i
   %.070104.us.i.i.i.i = phi i64 [ %i.da, %_ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncIntegerOperatorENS_10uhugeint_tEiS4_EET3_T_T1_T2_RNS_12ValidityMaskEm.exit87.us.i.i.i.i ], [ 0, %.lr.ph105.split.us.i.i.i.i ] ; 3 uses
@@ -951,7 +951,7 @@ _ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncInt
   call void @llvm.lifetime.start.p0(ptr nonnull %30) #23, !noalias !1435
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %30, ptr noundef nonnull align 16 dereferenceable(16) %i.ch, i64 16, i1 false), !tbaa.struct !1077, !noalias !1435
   call void @llvm.lifetime.start.p0(ptr nonnull %31) #23, !noalias !1435
-  %i.ct = load <2 x i64>, ptr %i.cs, align 8, !tbaa !79, !alias.scope !1428, !noalias !1440
+  %i.ct = load <2 x i64>, ptr %i.cs, align 8, !tbaa !79, !alias.scope !1428, !noalias !1437
   store <2 x i64> %i.ct, ptr %31, align 16, !tbaa !79, !noalias !1435
   %i.cu = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN6duckdb10uhugeint_tdVERKS0_(ptr noundef nonnull align 8 dereferenceable(16) %31, ptr noundef nonnull align 8 dereferenceable(16) %30), !noalias !1435 ; 0 uses
   %i.cv = call noundef zeroext i1 @_ZNK6duckdb10uhugeint_tcvbEv(ptr noundef nonnull align 8 dereferenceable(16) %31), !noalias !1435
@@ -981,7 +981,7 @@ _ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncInt
   store i64 %.fca.1.load.i.i84.us.i.i.i.i, ptr %.sroa.4.0..sroa_idx.us.i.i.i.i, align 8, !tbaa !79, !alias.scope !1433, !noalias !1438
   %i.da = add nuw i64 %.070104.us.i.i.i.i, 1      ; 2 uses
   %exitcond122.not.i.i.i.i = icmp eq i64 %i.da, %i.d
-  br i1 %exitcond122.not.i.i.i.i, label %_ZN6duckdb14BinaryExecutor15ExecuteStandardINS_10uhugeint_tEiS2_NS_12_GLOBAL__N_120TruncIntegerOperatorEEEvRNS_6VectorES6_S6_m.exit, label %.lr.ph105.split.us.split.i.i.i.i, !llvm.loop !1439
+  br i1 %exitcond122.not.i.i.i.i, label %_ZN6duckdb14BinaryExecutor15ExecuteStandardINS_10uhugeint_tEiS2_NS_12_GLOBAL__N_120TruncIntegerOperatorEEEvRNS_6VectorES6_S6_m.exit, label %.lr.ph105.split.us.split.i.i.i.i, !llvm.loop !1440
 
 bb.aa:                                            ; preds = %bb.x
   %i.db = add i64 %i.d, 63
@@ -1046,12 +1046,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.du = add i64 %i.dt, 1                        ; 2 uses
   %i.dv = getelementptr inbounds nuw [16 x i8], ptr %i.al, i64 %i.dt
   %i.dw = getelementptr inbounds nuw [16 x i8], ptr %i.al, i64 %i.du
-  %wide.load = load <2 x i64>, ptr %i.dv, align 8
-  %wide.load121 = load <2 x i64>, ptr %i.dw, align 8
+  %wide.load = load <2 x i64>, ptr %i.dv, align 8, !tbaa !79, !alias.scope !1428, !noalias !1437
+  %wide.load121 = load <2 x i64>, ptr %i.dw, align 8, !tbaa !79, !alias.scope !1428, !noalias !1437
   %i.dx = getelementptr inbounds nuw [16 x i8], ptr %i.at, i64 %i.dt
   %i.dy = getelementptr inbounds nuw [16 x i8], ptr %i.at, i64 %i.du
-  store <2 x i64> %wide.load, ptr %i.dx, align 8
-  store <2 x i64> %wide.load121, ptr %i.dy, align 8
+  store <2 x i64> %wide.load, ptr %i.dx, align 8, !tbaa !79, !alias.scope !1433, !noalias !1438
+  store <2 x i64> %wide.load121, ptr %i.dy, align 8, !tbaa !79, !alias.scope !1433, !noalias !1438
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.dz = icmp eq i64 %index.next, %n.vec
   br i1 %i.dz, label %middle.block, label %vector.body, !llvm.loop !1441
@@ -1087,7 +1087,7 @@ _ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncInt
   call void @llvm.lifetime.start.p0(ptr nonnull %36) #23, !noalias !1435
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %36, ptr noundef nonnull align 16 dereferenceable(16) %i.dq, i64 16, i1 false), !tbaa.struct !1077, !noalias !1435
   call void @llvm.lifetime.start.p0(ptr nonnull %37) #23, !noalias !1435
-  %i.ef = load <2 x i64>, ptr %i.ee, align 8, !tbaa !79, !alias.scope !1428, !noalias !1440
+  %i.ef = load <2 x i64>, ptr %i.ee, align 8, !tbaa !79, !alias.scope !1428, !noalias !1437
   store <2 x i64> %i.ef, ptr %37, align 16, !tbaa !79, !noalias !1435
   %i.eg = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN6duckdb10uhugeint_tdVERKS0_(ptr noundef nonnull align 8 dereferenceable(16) %37, ptr noundef nonnull align 8 dereferenceable(16) %36), !noalias !1435 ; 0 uses
   %i.eh = call noundef zeroext i1 @_ZNK6duckdb10uhugeint_tcvbEv(ptr noundef nonnull align 8 dereferenceable(16) %37), !noalias !1435
@@ -1127,7 +1127,7 @@ _ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncInt
   %.196.i.i.i.i = phi i64 [ %i.er, %_ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncIntegerOperatorENS_10uhugeint_tEiS4_EET3_T_T1_T2_RNS_12ValidityMaskEm.exit.i.i.i.i ], [ %.196.i.i.i.i.ph, %_ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncIntegerOperatorENS_10uhugeint_tEiS4_EET3_T_T1_T2_RNS_12ValidityMaskEm.exit.i.i.i.i.preheader139 ] ; 3 uses
   %i.eo = getelementptr inbounds nuw [16 x i8], ptr %i.al, i64 %.196.i.i.i.i
   %i.ep = getelementptr inbounds nuw [16 x i8], ptr %i.at, i64 %.196.i.i.i.i
-  %i.eq = load <2 x i64>, ptr %i.eo, align 8, !tbaa !79, !alias.scope !1428, !noalias !1440
+  %i.eq = load <2 x i64>, ptr %i.eo, align 8, !tbaa !79, !alias.scope !1428, !noalias !1437
   store <2 x i64> %i.eq, ptr %i.ep, align 8, !tbaa !79, !alias.scope !1433, !noalias !1438
   %i.er = add nuw i64 %.196.i.i.i.i, 1            ; 2 uses
   %exitcond.not.i.i.i.i = icmp eq i64 %i.er, %i.dk
@@ -1143,9 +1143,9 @@ _ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncInt
 
 bb.ae:                                            ; preds = %.lr.ph99.i.i.i.i
   %i.ev = getelementptr inbounds nuw [16 x i8], ptr %i.al, i64 %.298.i.i.i.i ; 2 uses
-  %.sroa.014.0.copyload.i.i.i.i = load i64, ptr %i.ev, align 8, !tbaa !79, !alias.scope !1428, !noalias !1440 ; 2 uses
+  %.sroa.014.0.copyload.i.i.i.i = load i64, ptr %i.ev, align 8, !tbaa !79, !alias.scope !1428, !noalias !1437 ; 2 uses
   %.sroa.415.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ev, i64 8
-  %.sroa.415.0.copyload.i.i.i.i = load i64, ptr %.sroa.415.0..sroa_idx.i.i.i.i, align 8, !tbaa !79, !alias.scope !1428, !noalias !1440 ; 2 uses
+  %.sroa.415.0.copyload.i.i.i.i = load i64, ptr %.sroa.415.0..sroa_idx.i.i.i.i, align 8, !tbaa !79, !alias.scope !1428, !noalias !1437 ; 2 uses
   %i.ew = load i32, ptr %i.an, align 4, !tbaa !3, !alias.scope !1431, !noalias !1436 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %32), !noalias !1435
   %i.ex = icmp slt i32 %i.ew, 0
@@ -1216,7 +1216,7 @@ _ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncInt
   %.070104.i.i.i.i = phi i64 [ %i.fo, %_ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncIntegerOperatorENS_10uhugeint_tEiS4_EET3_T_T1_T2_RNS_12ValidityMaskEm.exit87.i.i.i.i ], [ %.070104.i.i.i.i.ph, %_ZN6duckdb29BinaryStandardOperatorWrapper9OperationIbNS_12_GLOBAL__N_120TruncIntegerOperatorENS_10uhugeint_tEiS4_EET3_T_T1_T2_RNS_12ValidityMaskEm.exit87.i.i.i.i.preheader136 ] ; 3 uses
   %i.fl = getelementptr inbounds nuw [16 x i8], ptr %i.al, i64 %.070104.i.i.i.i
   %i.fm = getelementptr inbounds nuw [16 x i8], ptr %i.at, i64 %.070104.i.i.i.i
-  %i.fn = load <2 x i64>, ptr %i.fl, align 8, !tbaa !79, !alias.scope !1428, !noalias !1440
+  %i.fn = load <2 x i64>, ptr %i.fl, align 8, !tbaa !79, !alias.scope !1428, !noalias !1437
   store <2 x i64> %i.fn, ptr %i.fm, align 8, !tbaa !79, !alias.scope !1433, !noalias !1438
   %i.fo = add nuw i64 %.070104.i.i.i.i, 1         ; 2 uses
   %exitcond121.not.i.i.i.i = icmp eq i64 %i.fo, %i.d
@@ -1619,10 +1619,10 @@ begin_hunk_2_@llvm.scmp.v4i8.v4i32
 !1085 = distinct !{!1085, !1081, !"_ZN6duckdb14BinaryExecutor15ExecuteFlatLoopINS_9hugeint_tEiS2_NS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_120TruncIntegerOperatorEbLb0ELb1EEEvPKT_PKT0_PT1_mRNS_12ValidityMaskET4_: argument 2"}
 !1086 = !{!1080, !1083, !1085}
 !1087 = !{!1080, !1085}
-!1088 = distinct !{!1088, !39, !455, !456}
+!1088 = !{!1083, !1085}
 !1089 = !{!1080, !1083}
-!1090 = distinct !{!1090, !39}
-!1091 = !{!1083, !1085}
+!1090 = distinct !{!1090, !39, !455, !456}
+!1091 = distinct !{!1091, !39}
 !1092 = distinct !{!1092, !39, !455, !456}
 !1093 = distinct !{!1093, !39}
 !1094 = distinct !{!1094, !39, !456, !455}
@@ -1968,10 +1968,10 @@ begin_hunk_2_@llvm.scmp.v4i8.v4i32
 !1434 = distinct !{!1434, !1430, !"_ZN6duckdb14BinaryExecutor15ExecuteFlatLoopINS_10uhugeint_tEiS2_NS_29BinaryStandardOperatorWrapperENS_12_GLOBAL__N_120TruncIntegerOperatorEbLb0ELb1EEEvPKT_PKT0_PT1_mRNS_12ValidityMaskET4_: argument 2"}
 !1435 = !{!1429, !1432, !1434}
 !1436 = !{!1429, !1434}
-!1437 = distinct !{!1437, !39, !455, !456}
+!1437 = !{!1432, !1434}
 !1438 = !{!1429, !1432}
-!1439 = distinct !{!1439, !39}
-!1440 = !{!1432, !1434}
+!1439 = distinct !{!1439, !39, !455, !456}
+!1440 = distinct !{!1440, !39}
 !1441 = distinct !{!1441, !39, !455, !456}
 !1442 = distinct !{!1442, !39}
 !1443 = distinct !{!1443, !39, !456, !455}

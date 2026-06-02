@@ -201,12 +201,12 @@ vector.body132:                                   ; preds = %vector.body132, %ve
   %i.b = or disjoint i64 %index133, 1             ; 2 uses
   %i.c = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %index133
   %i.d = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.b
-  %wide.load134 = load <2 x i64>, ptr %i.c, align 8
-  %wide.load135 = load <2 x i64>, ptr %i.d, align 8
+  %wide.load134 = load <2 x i64>, ptr %i.c, align 8, !tbaa !13
+  %wide.load135 = load <2 x i64>, ptr %i.d, align 8, !tbaa !13
   %i.e = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %index133
   %i.f = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %i.b
-  store <2 x i64> %wide.load134, ptr %i.e, align 8
-  store <2 x i64> %wide.load135, ptr %i.f, align 8
+  store <2 x i64> %wide.load134, ptr %i.e, align 8, !tbaa !13
+  store <2 x i64> %wide.load135, ptr %i.f, align 8, !tbaa !13
   %index.next136 = add nuw i64 %index133, 2       ; 2 uses
   %i.g = icmp eq i64 %index.next136, %n.vec131
   br i1 %i.g, label %middle.block137, label %vector.body132, !llvm.loop !5490
@@ -349,12 +349,12 @@ vector.body119:                                   ; preds = %vector.body119, %ve
   %i.av = add i64 %i.au, 1                        ; 2 uses
   %i.aw = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.au
   %i.ax = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.av
-  %wide.load121 = load <2 x i64>, ptr %i.aw, align 8
-  %wide.load122 = load <2 x i64>, ptr %i.ax, align 8
+  %wide.load121 = load <2 x i64>, ptr %i.aw, align 8, !tbaa !13
+  %wide.load122 = load <2 x i64>, ptr %i.ax, align 8, !tbaa !13
   %i.ay = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %i.au
   %i.az = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %i.av
-  store <2 x i64> %wide.load121, ptr %i.ay, align 8
-  store <2 x i64> %wide.load122, ptr %i.az, align 8
+  store <2 x i64> %wide.load121, ptr %i.ay, align 8, !tbaa !13
+  store <2 x i64> %wide.load122, ptr %i.az, align 8, !tbaa !13
   %index.next123 = add nuw i64 %index120, 2       ; 2 uses
   %i.ba = icmp eq i64 %index.next123, %n.vec118
   br i1 %i.ba, label %middle.block124, label %vector.body119, !llvm.loop !5491
@@ -415,12 +415,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bo = add i64 %i.bn, 1                        ; 2 uses
   %i.bp = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.bn
   %i.bq = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.bo
-  %wide.load = load <2 x i64>, ptr %i.bp, align 8
-  %wide.load113 = load <2 x i64>, ptr %i.bq, align 8
+  %wide.load = load <2 x i64>, ptr %i.bp, align 8, !tbaa !13
+  %wide.load113 = load <2 x i64>, ptr %i.bq, align 8, !tbaa !13
   %i.br = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %i.bn
   %i.bs = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %i.bo
-  store <2 x i64> %wide.load, ptr %i.br, align 8
-  store <2 x i64> %wide.load113, ptr %i.bs, align 8
+  store <2 x i64> %wide.load, ptr %i.br, align 8, !tbaa !13
+  store <2 x i64> %wide.load113, ptr %i.bs, align 8, !tbaa !13
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.bt = icmp eq i64 %index.next, %n.vec
   br i1 %i.bt, label %middle.block, label %vector.body, !llvm.loop !5494
@@ -621,12 +621,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.x = or disjoint i64 %index, 1                ; 2 uses
   %i.y = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %index
   %i.z = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.x
-  %wide.load = load <2 x i64>, ptr %i.y, align 8
-  %wide.load63 = load <2 x i64>, ptr %i.z, align 8
+  %wide.load = load <2 x i64>, ptr %i.y, align 8, !tbaa !13
+  %wide.load63 = load <2 x i64>, ptr %i.z, align 8, !tbaa !13
   %i.aa = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %index
   %i.ab = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %i.x
-  store <2 x i64> %wide.load, ptr %i.aa, align 8
-  store <2 x i64> %wide.load63, ptr %i.ab, align 8
+  store <2 x i64> %wide.load, ptr %i.aa, align 8, !tbaa !13
+  store <2 x i64> %wide.load63, ptr %i.ab, align 8, !tbaa !13
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.ac = icmp eq i64 %index.next, %n.vec
   br i1 %i.ac, label %middle.block, label %vector.body, !llvm.loop !5499
@@ -1029,12 +1029,12 @@ vector.body132:                                   ; preds = %vector.body132, %ve
   %i.b = or disjoint i64 %index133, 1             ; 2 uses
   %i.c = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %index133
   %i.d = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.b
-  %wide.load134 = load <2 x i64>, ptr %i.c, align 8
-  %wide.load135 = load <2 x i64>, ptr %i.d, align 8
+  %wide.load134 = load <2 x i64>, ptr %i.c, align 8, !tbaa !13
+  %wide.load135 = load <2 x i64>, ptr %i.d, align 8, !tbaa !13
   %i.e = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %index133
   %i.f = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %i.b
-  store <2 x i64> %wide.load134, ptr %i.e, align 8
-  store <2 x i64> %wide.load135, ptr %i.f, align 8
+  store <2 x i64> %wide.load134, ptr %i.e, align 8, !tbaa !13
+  store <2 x i64> %wide.load135, ptr %i.f, align 8, !tbaa !13
   %index.next136 = add nuw i64 %index133, 2       ; 2 uses
   %i.g = icmp eq i64 %index.next136, %n.vec131
   br i1 %i.g, label %middle.block137, label %vector.body132, !llvm.loop !5786
@@ -1177,12 +1177,12 @@ vector.body119:                                   ; preds = %vector.body119, %ve
   %i.av = add i64 %i.au, 1                        ; 2 uses
   %i.aw = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.au
   %i.ax = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.av
-  %wide.load121 = load <2 x i64>, ptr %i.aw, align 8
-  %wide.load122 = load <2 x i64>, ptr %i.ax, align 8
+  %wide.load121 = load <2 x i64>, ptr %i.aw, align 8, !tbaa !13
+  %wide.load122 = load <2 x i64>, ptr %i.ax, align 8, !tbaa !13
   %i.ay = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %i.au
   %i.az = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %i.av
-  store <2 x i64> %wide.load121, ptr %i.ay, align 8
-  store <2 x i64> %wide.load122, ptr %i.az, align 8
+  store <2 x i64> %wide.load121, ptr %i.ay, align 8, !tbaa !13
+  store <2 x i64> %wide.load122, ptr %i.az, align 8, !tbaa !13
   %index.next123 = add nuw i64 %index120, 2       ; 2 uses
   %i.ba = icmp eq i64 %index.next123, %n.vec118
   br i1 %i.ba, label %middle.block124, label %vector.body119, !llvm.loop !5787
@@ -1243,12 +1243,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bo = add i64 %i.bn, 1                        ; 2 uses
   %i.bp = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.bn
   %i.bq = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.bo
-  %wide.load = load <2 x i64>, ptr %i.bp, align 8
-  %wide.load113 = load <2 x i64>, ptr %i.bq, align 8
+  %wide.load = load <2 x i64>, ptr %i.bp, align 8, !tbaa !13
+  %wide.load113 = load <2 x i64>, ptr %i.bq, align 8, !tbaa !13
   %i.br = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %i.bn
   %i.bs = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %i.bo
-  store <2 x i64> %wide.load, ptr %i.br, align 8
-  store <2 x i64> %wide.load113, ptr %i.bs, align 8
+  store <2 x i64> %wide.load, ptr %i.br, align 8, !tbaa !13
+  store <2 x i64> %wide.load113, ptr %i.bs, align 8, !tbaa !13
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.bt = icmp eq i64 %index.next, %n.vec
   br i1 %i.bt, label %middle.block, label %vector.body, !llvm.loop !5790
@@ -1449,12 +1449,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.x = or disjoint i64 %index, 1                ; 2 uses
   %i.y = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %index
   %i.z = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.x
-  %wide.load = load <2 x i64>, ptr %i.y, align 8
-  %wide.load63 = load <2 x i64>, ptr %i.z, align 8
+  %wide.load = load <2 x i64>, ptr %i.y, align 8, !tbaa !13
+  %wide.load63 = load <2 x i64>, ptr %i.z, align 8, !tbaa !13
   %i.aa = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %index
   %i.ab = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %i.x
-  store <2 x i64> %wide.load, ptr %i.aa, align 8
-  store <2 x i64> %wide.load63, ptr %i.ab, align 8
+  store <2 x i64> %wide.load, ptr %i.aa, align 8, !tbaa !13
+  store <2 x i64> %wide.load63, ptr %i.ab, align 8, !tbaa !13
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.ac = icmp eq i64 %index.next, %n.vec
   br i1 %i.ac, label %middle.block, label %vector.body, !llvm.loop !5795
