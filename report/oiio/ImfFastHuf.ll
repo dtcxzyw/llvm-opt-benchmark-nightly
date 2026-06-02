@@ -201,11 +201,9 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_514FastHufDecoder8readBitsEiRmRiRPKc.exit132: ; p
   %i.bv = add nsw i32 %.lcssa.i128, -8            ; 2 uses
   %i.bw = zext nneg i32 %i.bv to i64
   %i.bx = lshr i64 %.3, %i.bw
-  %6 = shl i64 %i.bx, 32
-  %i.by = and i64 %6, 1095216660480               ; 2 uses
-  %sext117 = add nuw nsw i64 %i.by, 25769803776
-  %7 = lshr exact i64 %sext117, 32
-  %i.bz = add i64 %7, %.078210
+  %i.by = and i64 %i.bx, 255                      ; 2 uses
+  %sext117 = add i64 %.078210, 6
+  %i.bz = add i64 %sext117, %i.by
   %i.ca = icmp ugt i64 %i.bz, %i.n
   br i1 %i.ca, label %bb.n, label %bb.r
 
@@ -230,9 +228,8 @@ bb.q:                                             ; preds = %bb.n
   br label %bb.ba
 
 bb.r:                                             ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_514FastHufDecoder8readBitsEiRmRiRPKc.exit132
-  %sext118 = add nuw nsw i64 %i.by, 21474836480
-  %8 = lshr exact i64 %sext118, 32
-  %i.ce = add i64 %8, %.078210
+  %sext118 = add i64 %.078210, 5
+  %i.ce = add i64 %sext118, %i.by
   br label %bb.ak
 
 bb.s:                                             ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_514FastHufDecoder8readBitsEiRmRiRPKc.exit
