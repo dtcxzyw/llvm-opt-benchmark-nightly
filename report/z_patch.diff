@@ -1,0 +1,94 @@
+diff --git a/llvm/lib/Analysis/AliasAnalysis.cpp b/llvm/lib/Analysis/AliasAnalysis.cpp
+index f3aa16ff2f790..c9d6c2eba37a2 100644
+--- a/llvm/lib/Analysis/AliasAnalysis.cpp
++++ b/llvm/lib/Analysis/AliasAnalysis.cpp
+@@ -934,6 +934,9 @@ bool llvm::isBaseOfObject(const Value *V) {
+ 
+ bool llvm::isEscapeSource(const Value *V) {
+   if (auto *CB = dyn_cast<CallBase>(V)) {
++    if (CB->onlyReadsMemory())
++      return false;
++
+     if (isIntrinsicReturningPointerAliasingArgumentWithoutCapturing(
+             CB, /*MustPreserveOffset=*/true))
+       return false;
+diff --git a/llvm/lib/Analysis/CaptureTracking.cpp b/llvm/lib/Analysis/CaptureTracking.cpp
+index 2bea8e2129b4f..9537bf9115402 100644
+--- a/llvm/lib/Analysis/CaptureTracking.cpp
++++ b/llvm/lib/Analysis/CaptureTracking.cpp
+@@ -303,10 +303,10 @@ UseCaptureInfo llvm::DetermineUseCaptureKind(const Use &U, const Value *Base) {
+     assert(Call->isDataOperand(&U) && "Non-callee must be data operand");
+     CaptureInfo CI = Call->getCaptureInfo(Call->getDataOperandNo(&U));
+ 
+-    // If the call is readonly and doesn't return a value, only the address
+-    // may be captured.
++    // If the call is readonly, the call itself can only capture the address,
++    // while the return value may capture both address and provenance.
+     CaptureComponents Mask = CaptureComponents::All;
+-    if (Call->onlyReadsMemory() && Call->getType()->isVoidTy())
++    if (Call->onlyReadsMemory())
+       Mask = CaptureComponents::Address;
+ 
+     return UseCaptureInfo(CI.getOtherComponents() & Mask,
+diff --git a/llvm/test/Transforms/FunctionAttrs/nocapture.ll b/llvm/test/Transforms/FunctionAttrs/nocapture.ll
+index aab801a9a7bf7..fadb9695da687 100644
+--- a/llvm/test/Transforms/FunctionAttrs/nocapture.ll
++++ b/llvm/test/Transforms/FunctionAttrs/nocapture.ll
+@@ -224,7 +224,7 @@ define ptr @lookup_bit(ptr %q, i32 %bitno) readnone nounwind {
+ define i1 @c7(ptr %q, i32 %bitno) {
+ ; FNATTRS: Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none)
+ ; FNATTRS-LABEL: define i1 @c7
+-; FNATTRS-SAME: (ptr readonly [[Q:%.*]], i32 [[BITNO:%.*]]) #[[ATTR6:[0-9]+]] {
++; FNATTRS-SAME: (ptr readonly captures(address) [[Q:%.*]], i32 [[BITNO:%.*]]) #[[ATTR6:[0-9]+]] {
+ ; FNATTRS-NEXT:    [[PTR:%.*]] = call ptr @lookup_bit(ptr [[Q]], i32 [[BITNO]])
+ ; FNATTRS-NEXT:    [[VAL:%.*]] = load i1, ptr [[PTR]], align 1
+ ; FNATTRS-NEXT:    ret i1 [[VAL]]
+diff --git a/llvm/test/Transforms/FunctionAttrs/writeonly.ll b/llvm/test/Transforms/FunctionAttrs/writeonly.ll
+index 5342ad6f7000d..e362f44f3a10c 100644
+--- a/llvm/test/Transforms/FunctionAttrs/writeonly.ll
++++ b/llvm/test/Transforms/FunctionAttrs/writeonly.ll
+@@ -181,7 +181,7 @@ define void @test_atomicrmw(ptr %p) {
+ define void @test_ptrmask(ptr %p) {
+ ; FNATTRS: Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write)
+ ; FNATTRS-LABEL: define {{[^@]+}}@test_ptrmask
+-; FNATTRS-SAME: (ptr writeonly [[P:%.*]]) #[[ATTR3]] {
++; FNATTRS-SAME: (ptr writeonly captures(address) [[P:%.*]]) #[[ATTR3]] {
+ ; FNATTRS-NEXT:    [[MASK:%.*]] = call ptr @llvm.ptrmask.p0.i64(ptr [[P]], i64 -5)
+ ; FNATTRS-NEXT:    store i8 0, ptr [[MASK]], align 1
+ ; FNATTRS-NEXT:    ret void
+diff --git a/llvm/test/Transforms/LICM/promote-capture.ll b/llvm/test/Transforms/LICM/promote-capture.ll
+index 19c5700740e7c..f899f08ade947 100644
+--- a/llvm/test/Transforms/LICM/promote-capture.ll
++++ b/llvm/test/Transforms/LICM/promote-capture.ll
+@@ -2,7 +2,7 @@
+ ; RUN: opt -S -passes='loop-mssa(licm)' < %s | FileCheck %s
+ 
+ declare i1 @cond(i32 %v) readnone
+-declare ptr @capture(ptr %p) readnone
++declare ptr @capture(ptr %p) memory(readwrite, argmem: none)
+ 
+ define void @test_captured_after_loop(i32 %len) {
+ ; CHECK-LABEL: @test_captured_after_loop(
+@@ -61,20 +61,18 @@ define void @test_captured_in_loop(i32 %len) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[COUNT:%.*]] = alloca i32, align 4
+ ; CHECK-NEXT:    store i32 0, ptr [[COUNT]], align 4
+-; CHECK-NEXT:    [[COUNT_PROMOTED:%.*]] = load i32, ptr [[COUNT]], align 4
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+-; CHECK-NEXT:    [[C_INC2:%.*]] = phi i32 [ [[COUNT_PROMOTED]], [[ENTRY:%.*]] ], [ [[C_INC1:%.*]], [[LATCH:%.*]] ]
+-; CHECK-NEXT:    [[I:%.*]] = phi i32 [ 0, [[ENTRY]] ], [ [[I_NEXT:%.*]], [[LATCH]] ]
++; CHECK-NEXT:    [[I:%.*]] = phi i32 [ 0, [[ENTRY:%.*]] ], [ [[I_NEXT:%.*]], [[LATCH:%.*]] ]
+ ; CHECK-NEXT:    [[COND:%.*]] = call i1 @cond(i32 [[I]])
+ ; CHECK-NEXT:    br i1 [[COND]], label [[IF:%.*]], label [[LATCH]]
+ ; CHECK:       if:
++; CHECK-NEXT:    [[C_INC2:%.*]] = load i32, ptr [[COUNT]], align 4
+ ; CHECK-NEXT:    [[C_INC:%.*]] = add i32 [[C_INC2]], 1
+ ; CHECK-NEXT:    store i32 [[C_INC]], ptr [[COUNT]], align 4
+ ; CHECK-NEXT:    [[TMP0:%.*]] = call ptr @capture(ptr [[COUNT]])
+ ; CHECK-NEXT:    br label [[LATCH]]
+ ; CHECK:       latch:
+-; CHECK-NEXT:    [[C_INC1]] = phi i32 [ [[C_INC]], [[IF]] ], [ [[C_INC2]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[I_NEXT]] = add nuw i32 [[I]], 1
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i32 [[I_NEXT]], [[LEN:%.*]]
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[EXIT:%.*]], label [[LOOP]]
