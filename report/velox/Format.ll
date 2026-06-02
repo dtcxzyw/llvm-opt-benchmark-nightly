@@ -201,7 +201,7 @@ bb.a:
   %4 = alloca %class.anon.19, align 8             ; 5 uses
   %5 = alloca %class.anon.21, align 8             ; 5 uses
   %i.a = alloca ptr, align 8                      ; 5 uses
-  %i.b = alloca ptr, align 8                      ; 17 uses
+  %i.b = alloca ptr, align 8                      ; 18 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !80     ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -211,7 +211,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #30
   %i.g = ptrtoint ptr %i.c to i64
   %i.h = sub i64 %i.f, %i.g
-  %i.i = tail call noundef ptr @memchr(ptr noundef %i.c, i32 noundef 58, i64 noundef %i.h) #29 ; 6 uses
+  %i.i = tail call noundef ptr @memchr(ptr noundef %i.c, i32 noundef 58, i64 noundef %i.h) #29 ; 7 uses
+  store ptr %i.i, ptr %i.b, align 8, !tbaa !50
   %.not = icmp eq ptr %i.i, null
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 40
   store ptr %i.c, ptr %i.j, align 8, !tbaa !50

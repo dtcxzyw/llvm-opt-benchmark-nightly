@@ -201,7 +201,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ak = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 5 uses
   %i.am = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.an = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 4 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 3 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %11, i64 8
   %i.aq = getelementptr inbounds nuw i8, ptr %11, i64 16
@@ -507,7 +507,7 @@ bb.v:                                             ; preds = %.lr.ph.i
           to label %bb.af unwind label %bb.am, !noalias !660
 
 .lr.ph27.i:                                       ; preds = %._crit_edge.i, %_ZNSt6vectorIN6duckdb5ValueESaIS1_EE12emplace_backIJS1_EEEvDpOT_.exit.i
-  %.pre39.i.a = phi ptr [ %i.fd, %_ZNSt6vectorIN6duckdb5ValueESaIS1_EE12emplace_backIJS1_EEEvDpOT_.exit.i ], [ null, %._crit_edge.i ] ; 5 uses
+  %.pre39.i.a = phi ptr [ %i.fd, %_ZNSt6vectorIN6duckdb5ValueESaIS1_EE12emplace_backIJS1_EEEvDpOT_.exit.i ], [ null, %._crit_edge.i ]
   %.sroa.05.025.i = phi ptr [ %i.fe, %_ZNSt6vectorIN6duckdb5ValueESaIS1_EE12emplace_backIJS1_EEEvDpOT_.exit.i ], [ %.pre.i, %._crit_edge.i ] ; 4 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %.sroa.05.025.i, i64 32 ; 2 uses
   %i.do = load ptr, ptr %i.aj, align 8, !tbaa !651, !noalias !660 ; 3 uses
@@ -518,9 +518,9 @@ bb.v:                                             ; preds = %.lr.ph.i
 bb.w:                                             ; preds = %.lr.ph27.i
   call void @llvm.lifetime.start.p0(ptr nonnull %3), !noalias !660
   store ptr %i.al, ptr %3, align 8, !tbaa !7, !noalias !660
-  %i.dq = load ptr, ptr %i.dn, align 8, !tbaa !15, !noalias !660 ; 2 uses
+  %i.dq = load ptr, ptr %i.dn, align 8, !tbaa !15 ; 2 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %.sroa.05.025.i, i64 40
-  %i.ds = load i64, ptr %i.dr, align 8, !tbaa !11, !noalias !660 ; 4 uses
+  %i.ds = load i64, ptr %i.dr, align 8, !tbaa !11 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #30, !noalias !660
   store i64 %i.ds, ptr %i.b, align 8, !tbaa !98, !noalias !660
   %i.dt = icmp ugt i64 %i.ds, 15
@@ -591,16 +591,21 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit5.i.i: ; preds = %
 
 bb.aa:                                            ; preds = %.lr.ph27.i
   invoke void @_ZNSt6vectorIN6duckdb5ValueESaIS1_EE17_M_realloc_insertIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %6, ptr %i.do, ptr noundef nonnull align 8 dereferenceable(32) %i.dn)
-          to label %_ZNSt6vectorIN6duckdb5ValueESaIS1_EE12emplace_backIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvDpOT_.exit.i unwind label %.loopexit.i, !noalias !660
+          to label %._ZNSt6vectorIN6duckdb5ValueESaIS1_EE12emplace_backIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvDpOT_.exit_crit_edge.i unwind label %.loopexit.i
 
-_ZNSt6vectorIN6duckdb5ValueESaIS1_EE12emplace_backIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvDpOT_.exit.i: ; preds = %bb.aa, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit5.i.i
+._ZNSt6vectorIN6duckdb5ValueESaIS1_EE12emplace_backIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvDpOT_.exit_crit_edge.i: ; preds = %bb.aa
+  %.pre39.i = load ptr, ptr %i.an, align 8, !tbaa !651, !noalias !660
+  br label %_ZNSt6vectorIN6duckdb5ValueESaIS1_EE12emplace_backIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvDpOT_.exit.i
+
+_ZNSt6vectorIN6duckdb5ValueESaIS1_EE12emplace_backIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvDpOT_.exit.i: ; preds = %._ZNSt6vectorIN6duckdb5ValueESaIS1_EE12emplace_backIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvDpOT_.exit_crit_edge.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit5.i.i
+  %25 = phi ptr [ %.pre39.i, %._ZNSt6vectorIN6duckdb5ValueESaIS1_EE12emplace_backIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvDpOT_.exit_crit_edge.i ], [ %.pre39.i.a, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit5.i.i ] ; 5 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %.sroa.05.025.i, i64 64 ; 2 uses
   %i.ej = load ptr, ptr %i.ao, align 8, !tbaa !648, !noalias !660
-  %.not.i37.i = icmp eq ptr %.pre39.i.a, %i.ej
+  %.not.i37.i = icmp eq ptr %25, %i.ej
   br i1 %.not.i37.i, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %_ZNSt6vectorIN6duckdb5ValueESaIS1_EE12emplace_backIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvDpOT_.exit.i
-  call void @_ZN6duckdb5ValueC1EOS0_(ptr noundef nonnull align 8 dereferenceable(64) %.pre39.i.a, ptr noundef nonnull align 8 dereferenceable(64) %i.ei) #30, !noalias !660
+  call void @_ZN6duckdb5ValueC1EOS0_(ptr noundef nonnull align 8 dereferenceable(64) %25, ptr noundef nonnull align 8 dereferenceable(64) %i.ei) #30
   %i.ek = load ptr, ptr %i.an, align 8, !tbaa !651, !noalias !660
   %i.el = getelementptr inbounds nuw i8, ptr %i.ek, i64 64 ; 2 uses
   store ptr %i.el, ptr %i.an, align 8, !tbaa !651, !noalias !660
@@ -608,7 +613,7 @@ bb.ab:                                            ; preds = %_ZNSt6vectorIN6duck
 
 bb.ac:                                            ; preds = %_ZNSt6vectorIN6duckdb5ValueESaIS1_EE12emplace_backIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvDpOT_.exit.i
   %i.em = load ptr, ptr %7, align 8, !tbaa !650, !noalias !660 ; 5 uses
-  %i.en = ptrtoint ptr %.pre39.i.a to i64
+  %i.en = ptrtoint ptr %25 to i64
   %i.eo = ptrtoint ptr %i.em to i64
   %i.ep = sub i64 %i.en, %i.eo                    ; 3 uses
   %i.eq = icmp eq i64 %i.ep, 9223372036854775744
@@ -636,8 +641,8 @@ _ZNKSt6vectorIN6duckdb5ValueESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb
 
 .noexc78.i:                                       ; preds = %_ZNKSt6vectorIN6duckdb5ValueESaIS1_EE12_M_check_lenEmPKc.exit.i.i
   %i.ey = getelementptr inbounds nuw i8, ptr %i.ex, i64 %i.ep
-  call void @_ZN6duckdb5ValueC1EOS0_(ptr noundef nonnull align 8 dereferenceable(64) %i.ey, ptr noundef nonnull align 8 dereferenceable(64) %i.ei) #30, !noalias !660
-  %.not10.i.i.i.i.i.i = icmp eq ptr %i.em, %.pre39.i.a
+  call void @_ZN6duckdb5ValueC1EOS0_(ptr noundef nonnull align 8 dereferenceable(64) %i.ey, ptr noundef nonnull align 8 dereferenceable(64) %i.ei) #30
+  %.not10.i.i.i.i.i.i = icmp eq ptr %i.em, %25
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb5ValueESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i, label %.lr.ph.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %.noexc78.i, %.lr.ph.i.i.i.i.i.i
@@ -647,7 +652,7 @@ _ZNKSt6vectorIN6duckdb5ValueESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb
   call void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %.0911.i.i.i.i.i.i) #30, !noalias !660
   %i.ez = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i, i64 64 ; 2 uses
   %i.fa = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i, i64 64 ; 2 uses
-  %.not.i.i.i.i.i.i = icmp eq ptr %i.ez, %.pre39.i.a
+  %.not.i.i.i.i.i.i = icmp eq ptr %i.ez, %25
   br i1 %.not.i.i.i.i.i.i, label %_ZNSt6vectorIN6duckdb5ValueESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !664
 
 _ZNSt6vectorIN6duckdb5ValueESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i: ; preds = %.lr.ph.i.i.i.i.i.i, %.noexc78.i
@@ -669,7 +674,7 @@ bb.ae:                                            ; preds = %_ZNSt6vectorIN6duck
 
 _ZNSt6vectorIN6duckdb5ValueESaIS1_EE12emplace_backIJS1_EEEvDpOT_.exit.i: ; preds = %.noexc38.i, %bb.ab
   %i.fd = phi ptr [ %i.fb, %.noexc38.i ], [ %i.el, %bb.ab ] ; 2 uses
-  %i.fe = call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.05.025.i) #35, !noalias !660 ; 2 uses
+  %i.fe = call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.05.025.i) #35 ; 2 uses
   %.not18.i = icmp eq ptr %i.fe, %i.ae
   br i1 %.not18.i, label %._crit_edge28.i, label %.lr.ph27.i
 

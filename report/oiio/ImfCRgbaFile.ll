@@ -201,7 +201,7 @@ bb.a:
   %6 = alloca %"class.Imath_3_1::Box", align 4    ; 8 uses
   %7 = alloca %"class.OpenImageIO_v3_1_Imf__3_3_5::TypedAttribute.8", align 8 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #21
-  %i.a = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %i.a = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   store i32 %2, ptr %6, align 4, !tbaa !26
   %i.b = getelementptr inbounds nuw i8, ptr %6, i64 4
   store i32 %3, ptr %i.b, align 4, !tbaa !28
@@ -274,7 +274,7 @@ bb.m:                                             ; preds = %bb.c
           to label %.noexc unwind label %bb.i
 
 .noexc:                                           ; preds = %bb.m
-  %i.m = tail call ptr @__dynamic_cast(ptr nonnull %i.l, ptr nonnull @_ZTIN27OpenImageIO_v3_1_Imf__3_3_59AttributeE, ptr nonnull @_ZTIN27OpenImageIO_v3_1_Imf__3_3_514TypedAttributeIN9Imath_3_13BoxINS1_4Vec2IiEEEEEE, i64 0) #21 ; 5 uses
+  %i.m = tail call ptr @__dynamic_cast(ptr nonnull %i.l, ptr nonnull @_ZTIN27OpenImageIO_v3_1_Imf__3_3_59AttributeE, ptr nonnull @_ZTIN27OpenImageIO_v3_1_Imf__3_3_514TypedAttributeIN9Imath_3_13BoxINS1_4Vec2IiEEEEEE, i64 0) #21 ; 4 uses
   %i.n = icmp eq ptr %i.m, null
   br i1 %i.n, label %bb.n, label %_ZN27OpenImageIO_v3_1_Imf__3_3_56Header14typedAttributeINS_14TypedAttributeIN9Imath_3_13BoxINS3_4Vec2IiEEEEEEEERT_PKc.exit
 
@@ -303,9 +303,8 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_56Header14typedAttributeINS_14TypedAttributeIN9Im
   %i.r = getelementptr inbounds nuw i8, ptr %i.m, i64 12
   store i32 %3, ptr %i.r, align 4, !tbaa !28
   %i.s = getelementptr inbounds nuw i8, ptr %i.m, i64 16
-  store i32 %4, ptr %i.s, align 4, !tbaa !26
-  %8 = getelementptr inbounds nuw i8, ptr %i.m, i64 20
-  store i32 %5, ptr %8, align 4, !tbaa !28
+  %8 = load <2 x i32>, ptr %i.a, align 4, !tbaa !3
+  store <2 x i32> %8, ptr %i.s, align 4, !tbaa !3
   br label %bb.q
 
 bb.q:                                             ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_56Header14typedAttributeINS_14TypedAttributeIN9Imath_3_13BoxINS3_4Vec2IiEEEEEEEERT_PKc.exit, %bb.f
@@ -429,7 +428,7 @@ bb.a:
   %6 = alloca %"class.Imath_3_1::Box.9", align 4  ; 8 uses
   %7 = alloca %"class.OpenImageIO_v3_1_Imf__3_3_5::TypedAttribute.10", align 8 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #21
-  %i.a = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %i.a = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   store float %2, ptr %6, align 4, !tbaa !29
   %i.b = getelementptr inbounds nuw i8, ptr %6, i64 4
   store float %3, ptr %i.b, align 4, !tbaa !31
@@ -502,7 +501,7 @@ bb.m:                                             ; preds = %bb.c
           to label %.noexc unwind label %bb.i
 
 .noexc:                                           ; preds = %bb.m
-  %i.m = tail call ptr @__dynamic_cast(ptr nonnull %i.l, ptr nonnull @_ZTIN27OpenImageIO_v3_1_Imf__3_3_59AttributeE, ptr nonnull @_ZTIN27OpenImageIO_v3_1_Imf__3_3_514TypedAttributeIN9Imath_3_13BoxINS1_4Vec2IfEEEEEE, i64 0) #21 ; 5 uses
+  %i.m = tail call ptr @__dynamic_cast(ptr nonnull %i.l, ptr nonnull @_ZTIN27OpenImageIO_v3_1_Imf__3_3_59AttributeE, ptr nonnull @_ZTIN27OpenImageIO_v3_1_Imf__3_3_514TypedAttributeIN9Imath_3_13BoxINS1_4Vec2IfEEEEEE, i64 0) #21 ; 4 uses
   %i.n = icmp eq ptr %i.m, null
   br i1 %i.n, label %bb.n, label %_ZN27OpenImageIO_v3_1_Imf__3_3_56Header14typedAttributeINS_14TypedAttributeIN9Imath_3_13BoxINS3_4Vec2IfEEEEEEEERT_PKc.exit
 
@@ -531,9 +530,8 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_56Header14typedAttributeINS_14TypedAttributeIN9Im
   %i.r = getelementptr inbounds nuw i8, ptr %i.m, i64 12
   store float %3, ptr %i.r, align 4, !tbaa !31
   %i.s = getelementptr inbounds nuw i8, ptr %i.m, i64 16
-  store float %4, ptr %i.s, align 4, !tbaa !29
-  %8 = getelementptr inbounds nuw i8, ptr %i.m, i64 20
-  store float %5, ptr %8, align 4, !tbaa !31
+  %8 = load <2 x float>, ptr %i.a, align 4, !tbaa !10
+  store <2 x float> %8, ptr %i.s, align 4, !tbaa !10
   br label %bb.q
 
 bb.q:                                             ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_56Header14typedAttributeINS_14TypedAttributeIN9Imath_3_13BoxINS3_4Vec2IfEEEEEEEERT_PKc.exit, %bb.f
@@ -936,19 +934,24 @@ bb.h:                                             ; preds = %.body
 ; Function Attrs: mustprogress uwtable
 define range(i32 0, 2) i32 @ImfHeaderSetM33fAttribute(ptr noundef nonnull %0, ptr noundef %1, ptr noundef readonly captures(none) %2) local_unnamed_addr #5 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.Imath_3_1::Matrix33", align 16 ; 7 uses
+  %3 = alloca %"class.Imath_3_1::Matrix33", align 8 ; 9 uses
   %4 = alloca %"class.OpenImageIO_v3_1_Imf__3_3_5::TypedAttribute.18", align 8 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
-  %i.a = load <4 x float>, ptr %2, align 4, !tbaa !10 ; 2 uses
-  store <4 x float> %i.a, ptr %3, align 16, !tbaa !10
-  %i.b = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.c = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %5 = load <4 x float>, ptr %i.b, align 4, !tbaa !10 ; 2 uses
-  store <4 x float> %5, ptr %i.c, align 16, !tbaa !10
+  %5 = load <2 x float>, ptr %2, align 4, !tbaa !10 ; 2 uses
+  store <2 x float> %5, ptr %3, align 8, !tbaa !10
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %7 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.a = load <4 x float>, ptr %6, align 4, !tbaa !10
+  store <4 x float> %i.a, ptr %7, align 8, !tbaa !10
+  %i.b = getelementptr inbounds nuw i8, ptr %2, i64 24
+  %i.c = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
+  %9 = load <2 x float>, ptr %i.b, align 4, !tbaa !10
+  store <2 x float> %9, ptr %i.c, align 8, !tbaa !10
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %i.e = load float, ptr %i.d, align 4, !tbaa !10 ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %3, i64 32
-  store float %i.e, ptr %i.f, align 16, !tbaa !10
+  %i.e = load float, ptr %i.d, align 4, !tbaa !10
+  %i.f = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
+  store float %i.e, ptr %i.f, align 8, !tbaa !10
   %i.g = invoke ptr @_ZN27OpenImageIO_v3_1_Imf__3_3_56Header4findEPKc(ptr noundef nonnull align 8 dereferenceable(49) %0, ptr noundef %1)
           to label %bb.b unwind label %bb.g
 
@@ -1015,7 +1018,7 @@ bb.m:                                             ; preds = %bb.c
           to label %.noexc unwind label %bb.i
 
 .noexc:                                           ; preds = %bb.m
-  %i.p = tail call ptr @__dynamic_cast(ptr nonnull %i.o, ptr nonnull @_ZTIN27OpenImageIO_v3_1_Imf__3_3_59AttributeE, ptr nonnull @_ZTIN27OpenImageIO_v3_1_Imf__3_3_514TypedAttributeIN9Imath_3_18Matrix33IfEEEE, i64 0) #21 ; 4 uses
+  %i.p = tail call ptr @__dynamic_cast(ptr nonnull %i.o, ptr nonnull @_ZTIN27OpenImageIO_v3_1_Imf__3_3_59AttributeE, ptr nonnull @_ZTIN27OpenImageIO_v3_1_Imf__3_3_514TypedAttributeIN9Imath_3_18Matrix33IfEEEE, i64 0) #21 ; 6 uses
   %i.q = icmp eq ptr %i.p, null
   br i1 %i.q, label %bb.n, label %_ZN27OpenImageIO_v3_1_Imf__3_3_56Header14typedAttributeINS_14TypedAttributeIN9Imath_3_18Matrix33IfEEEEEERT_PKc.exit
 
@@ -1040,11 +1043,19 @@ bb.p:                                             ; preds = %bb.n
 
 _ZN27OpenImageIO_v3_1_Imf__3_3_56Header14typedAttributeINS_14TypedAttributeIN9Imath_3_18Matrix33IfEEEEEERT_PKc.exit: ; preds = %.noexc
   %i.t = getelementptr inbounds nuw i8, ptr %i.p, i64 8
-  store <4 x float> %i.a, ptr %i.t, align 4, !tbaa !10
+  store <2 x float> %5, ptr %i.t, align 4, !tbaa !10
+  %10 = getelementptr inbounds nuw i8, ptr %i.p, i64 16
+  %11 = load <2 x float>, ptr %7, align 8, !tbaa !10
+  store <2 x float> %11, ptr %10, align 4, !tbaa !10
   %i.u = getelementptr inbounds nuw i8, ptr %i.p, i64 24
-  store <4 x float> %5, ptr %i.u, align 4, !tbaa !10
+  %12 = load <2 x float>, ptr %8, align 8, !tbaa !10
+  store <2 x float> %12, ptr %i.u, align 4, !tbaa !10
+  %13 = getelementptr inbounds nuw i8, ptr %i.p, i64 32
+  %14 = load <2 x float>, ptr %i.c, align 8, !tbaa !10
+  store <2 x float> %14, ptr %13, align 4, !tbaa !10
+  %15 = load float, ptr %i.f, align 8, !tbaa !10
   %i.v = getelementptr inbounds nuw i8, ptr %i.p, i64 40
-  store float %i.e, ptr %i.v, align 4, !tbaa !10
+  store float %15, ptr %i.v, align 4, !tbaa !10
   br label %bb.q
 
 bb.q:                                             ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_56Header14typedAttributeINS_14TypedAttributeIN9Imath_3_18Matrix33IfEEEEEERT_PKc.exit, %bb.f
@@ -1188,23 +1199,30 @@ bb.h:                                             ; preds = %.body
 ; Function Attrs: mustprogress uwtable
 define range(i32 0, 2) i32 @ImfHeaderSetM44fAttribute(ptr noundef nonnull %0, ptr noundef %1, ptr noundef readonly captures(none) %2) local_unnamed_addr #5 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.Imath_3_1::Matrix44", align 16 ; 8 uses
+  %3 = alloca %"class.Imath_3_1::Matrix44", align 8 ; 12 uses
   %4 = alloca %"class.OpenImageIO_v3_1_Imf__3_3_5::TypedAttribute.20", align 8 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
-  %i.a = load <4 x float>, ptr %2, align 4, !tbaa !10 ; 2 uses
-  store <4 x float> %i.a, ptr %3, align 16, !tbaa !10
-  %i.b = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.c = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.d = load <4 x float>, ptr %i.b, align 4, !tbaa !10 ; 2 uses
-  store <4 x float> %i.d, ptr %i.c, align 16, !tbaa !10
-  %i.e = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %i.f = getelementptr inbounds nuw i8, ptr %3, i64 32
-  %i.g = load <4 x float>, ptr %i.e, align 4, !tbaa !10 ; 2 uses
-  store <4 x float> %i.g, ptr %i.f, align 16, !tbaa !10
-  %i.h = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %i.i = getelementptr inbounds nuw i8, ptr %3, i64 48
-  %5 = load <4 x float>, ptr %i.h, align 4, !tbaa !10 ; 2 uses
-  store <4 x float> %5, ptr %i.i, align 16, !tbaa !10
+  %5 = load <2 x float>, ptr %2, align 4, !tbaa !10 ; 2 uses
+  store <2 x float> %5, ptr %3, align 8, !tbaa !10
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %7 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.a = load <4 x float>, ptr %6, align 4, !tbaa !10
+  store <4 x float> %i.a, ptr %7, align 8, !tbaa !10
+  %9 = getelementptr inbounds nuw i8, ptr %2, i64 24
+  %i.b = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %3, i64 32
+  %i.d = load <4 x float>, ptr %9, align 4, !tbaa !10
+  store <4 x float> %i.d, ptr %i.b, align 8, !tbaa !10
+  %10 = getelementptr inbounds nuw i8, ptr %2, i64 40
+  %i.e = getelementptr inbounds nuw i8, ptr %3, i64 40 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %3, i64 48
+  %i.g = load <4 x float>, ptr %10, align 4, !tbaa !10
+  store <4 x float> %i.g, ptr %i.e, align 8, !tbaa !10
+  %i.h = getelementptr inbounds nuw i8, ptr %2, i64 56
+  %i.i = getelementptr inbounds nuw i8, ptr %3, i64 56 ; 2 uses
+  %11 = load <2 x float>, ptr %i.h, align 4, !tbaa !10
+  store <2 x float> %11, ptr %i.i, align 8, !tbaa !10
   %i.j = invoke ptr @_ZN27OpenImageIO_v3_1_Imf__3_3_56Header4findEPKc(ptr noundef nonnull align 8 dereferenceable(49) %0, ptr noundef %1)
           to label %bb.b unwind label %bb.g
 
@@ -1271,7 +1289,7 @@ bb.m:                                             ; preds = %bb.c
           to label %.noexc unwind label %bb.i
 
 .noexc:                                           ; preds = %bb.m
-  %i.s = tail call ptr @__dynamic_cast(ptr nonnull %i.r, ptr nonnull @_ZTIN27OpenImageIO_v3_1_Imf__3_3_59AttributeE, ptr nonnull @_ZTIN27OpenImageIO_v3_1_Imf__3_3_514TypedAttributeIN9Imath_3_18Matrix44IfEEEE, i64 0) #21 ; 5 uses
+  %i.s = tail call ptr @__dynamic_cast(ptr nonnull %i.r, ptr nonnull @_ZTIN27OpenImageIO_v3_1_Imf__3_3_59AttributeE, ptr nonnull @_ZTIN27OpenImageIO_v3_1_Imf__3_3_514TypedAttributeIN9Imath_3_18Matrix44IfEEEE, i64 0) #21 ; 9 uses
   %i.t = icmp eq ptr %i.s, null
   br i1 %i.t, label %bb.n, label %_ZN27OpenImageIO_v3_1_Imf__3_3_56Header14typedAttributeINS_14TypedAttributeIN9Imath_3_18Matrix44IfEEEEEERT_PKc.exit
 
@@ -1296,13 +1314,28 @@ bb.p:                                             ; preds = %bb.n
 
 _ZN27OpenImageIO_v3_1_Imf__3_3_56Header14typedAttributeINS_14TypedAttributeIN9Imath_3_18Matrix44IfEEEEEERT_PKc.exit: ; preds = %.noexc
   %i.w = getelementptr inbounds nuw i8, ptr %i.s, i64 8
-  store <4 x float> %i.a, ptr %i.w, align 4, !tbaa !10
+  store <2 x float> %5, ptr %i.w, align 4, !tbaa !10
+  %12 = getelementptr inbounds nuw i8, ptr %i.s, i64 16
+  %13 = load <2 x float>, ptr %7, align 8, !tbaa !10
+  store <2 x float> %13, ptr %12, align 4, !tbaa !10
   %i.x = getelementptr inbounds nuw i8, ptr %i.s, i64 24
-  store <4 x float> %i.d, ptr %i.x, align 4, !tbaa !10
+  %14 = load <2 x float>, ptr %8, align 8, !tbaa !10
+  store <2 x float> %14, ptr %i.x, align 4, !tbaa !10
+  %15 = getelementptr inbounds nuw i8, ptr %i.s, i64 32
+  %16 = load <2 x float>, ptr %i.b, align 8, !tbaa !10
+  store <2 x float> %16, ptr %15, align 4, !tbaa !10
   %i.y = getelementptr inbounds nuw i8, ptr %i.s, i64 40
-  store <4 x float> %i.g, ptr %i.y, align 4, !tbaa !10
+  %17 = load <2 x float>, ptr %i.c, align 8, !tbaa !10
+  store <2 x float> %17, ptr %i.y, align 4, !tbaa !10
+  %18 = getelementptr inbounds nuw i8, ptr %i.s, i64 48
+  %19 = load <2 x float>, ptr %i.e, align 8, !tbaa !10
+  store <2 x float> %19, ptr %18, align 4, !tbaa !10
   %i.z = getelementptr inbounds nuw i8, ptr %i.s, i64 56
-  store <4 x float> %5, ptr %i.z, align 4, !tbaa !10
+  %20 = load <2 x float>, ptr %i.f, align 8, !tbaa !10
+  store <2 x float> %20, ptr %i.z, align 4, !tbaa !10
+  %21 = getelementptr inbounds nuw i8, ptr %i.s, i64 64
+  %22 = load <2 x float>, ptr %i.i, align 8, !tbaa !10
+  store <2 x float> %22, ptr %21, align 4, !tbaa !10
   br label %bb.q
 
 bb.q:                                             ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_56Header14typedAttributeINS_14TypedAttributeIN9Imath_3_18Matrix44IfEEEEEERT_PKc.exit, %bb.f

@@ -201,7 +201,7 @@ bb.a:
   %13 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %14 = alloca %"class.std::allocator.19", align 1 ; 5 uses
   %15 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
-  %16 = alloca %"class.std::unique_ptr", align 8  ; 6 uses
+  %16 = alloca %"class.std::unique_ptr", align 8  ; 7 uses
   %17 = alloca %struct.aiString, align 4          ; 9 uses
   %18 = alloca %struct.aiString, align 4          ; 7 uses
   %19 = alloca %"class.std::unique_ptr", align 8  ; 6 uses
@@ -604,7 +604,7 @@ bb.ah:                                            ; preds = %.noexc92, %.noexc91
 _ZN6Assimp12LogFunctionsINS_11IFCImporterEE7LogWarnIJRA55_KcRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvDpOT_.exit: ; preds = %.noexc93, %.noexc, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #17
   %i.ep = invoke noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #20
-          to label %bb.ai unwind label %bb.ce     ; 14 uses
+          to label %bb.ai unwind label %bb.ce     ; 13 uses
 
 bb.ai:                                            ; preds = %_ZN6Assimp12LogFunctionsINS_11IFCImporterEE7LogWarnIJRA55_KcRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvDpOT_.exit
   invoke void @_ZN10aiMaterialC1Ev(ptr noundef nonnull align 8 dereferenceable(16) %i.ep)
@@ -1007,9 +1007,14 @@ bb.bt:                                            ; preds = %_ZN6Assimp12LogFunc
 _ZNK6Assimp4STEP7EXPRESS8DataType16ResolveSelectPtrINS_3IFC10Schema_2x322IfcSurfaceStyleShadingEEEPKT_RKNS0_2DBE.exit.thread.i: ; preds = %bb.bt, %_ZNK6Assimp4STEP7EXPRESS8DataType16ResolveSelectPtrINS_3IFC10Schema_2x322IfcSurfaceStyleShadingEEEPKT_RKNS0_2DBE.exit.i, %.lr.ph.i
   %i.lv = getelementptr inbounds nuw i8, ptr %.sroa.054.061.i, i64 16 ; 2 uses
   %.not59.i = icmp eq ptr %i.lv, %i.gc
-  br i1 %.not59.i, label %.loopexit279, label %.lr.ph.i
+  br i1 %.not59.i, label %.loopexit279.loopexit, label %.lr.ph.i
 
-.loopexit279:                                     ; preds = %_ZNK6Assimp4STEP7EXPRESS8DataType16ResolveSelectPtrINS_3IFC10Schema_2x322IfcSurfaceStyleShadingEEEPKT_RKNS0_2DBE.exit.thread.i, %.noexc101
+.loopexit279.loopexit:                            ; preds = %_ZNK6Assimp4STEP7EXPRESS8DataType16ResolveSelectPtrINS_3IFC10Schema_2x322IfcSurfaceStyleShadingEEEPKT_RKNS0_2DBE.exit.thread.i
+  %.pre = load ptr, ptr %16, align 8
+  br label %.loopexit279
+
+.loopexit279:                                     ; preds = %.loopexit279.loopexit, %.noexc101
+  %21 = phi ptr [ %.pre, %.loopexit279.loopexit ], [ %i.ep, %.noexc101 ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #17
   %i.lw = getelementptr inbounds nuw i8, ptr %2, i64 200 ; 3 uses
   store ptr null, ptr %16, align 8
@@ -1021,7 +1026,7 @@ _ZNK6Assimp4STEP7EXPRESS8DataType16ResolveSelectPtrINS_3IFC10Schema_2x322IfcSurf
   br i1 %.not.i.i126, label %bb.bv, label %bb.bu
 
 bb.bu:                                            ; preds = %.loopexit279
-  store ptr %i.ep, ptr %i.ly, align 8
+  store ptr %21, ptr %i.ly, align 8
   %i.mb = load ptr, ptr %i.lx, align 8
   %i.mc = getelementptr inbounds nuw i8, ptr %i.mb, i64 8 ; 2 uses
   store ptr %i.mc, ptr %i.lx, align 8
@@ -1058,7 +1063,7 @@ _ZNKSt6vectorIP10aiMaterialSaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb
 
 .noexc129:                                        ; preds = %_ZNKSt6vectorIP10aiMaterialSaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.mp = getelementptr inbounds i8, ptr %i.mo, i64 %i.mg ; 2 uses
-  store ptr %i.ep, ptr %i.mp, align 8
+  store ptr %21, ptr %i.mp, align 8
   %i.mq = icmp sgt i64 %i.mg, 0
   br i1 %i.mq, label %bb.bx, label %_ZNSt6vectorIP10aiMaterialSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i
 

@@ -112,8 +112,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.us: ; preds = %bb
   br i1 %i.s, label %bb.d, label %.split47.us
 
 bb.d:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.us
-  %i.t = tail call ptr @__errno_location() #15
-  %i.u = load i32, ptr %i.t, align 4, !tbaa !3    ; 2 uses
+  %i.t = tail call ptr @__errno_location() #15    ; 2 uses
+  %i.u = load i32, ptr %i.t, align 4, !tbaa !3
   %i.v = icmp eq i32 %i.u, 4
   br i1 %i.v, label %.noexc.i.i.i.us, label %.critedge, !llvm.loop !17
 
@@ -172,13 +172,13 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.h,
   br i1 %i.ad, label %bb.i, label %.split47.us
 
 bb.i:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %i.ae = tail call ptr @__errno_location() #15
-  %i.af = load i32, ptr %i.ae, align 4, !tbaa !3  ; 2 uses
+  %i.ae = tail call ptr @__errno_location() #15   ; 2 uses
+  %i.af = load i32, ptr %i.ae, align 4, !tbaa !3
   %i.ag = icmp eq i32 %i.af, 4
   br i1 %i.ag, label %._crit_edge.i.i.i.i, label %.critedge, !llvm.loop !17
 
 .critedge:                                        ; preds = %bb.i, %bb.d
-  %11 = phi i32 [ %i.u, %bb.d ], [ %i.af, %bb.i ]
+  %.us-phi49 = phi ptr [ %i.t, %bb.d ], [ %i.ae, %bb.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
   store i64 23, ptr %6, align 8
@@ -193,6 +193,7 @@ bb.i:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.ai = getelementptr inbounds nuw i8, ptr %8, i64 8
   store ptr @.str.1, ptr %i.ai, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #12
+  %11 = load i32, ptr %.us-phi49, align 4, !tbaa !3
   %i.aj = call ptr @strerror(i32 noundef %11) #12 ; 3 uses
   %.not.i.i = icmp eq ptr %i.aj, null
   br i1 %.not.i.i, label %_ZN4absl12lts_202505128AlphaNumC2EPKc.exit, label %bb.j

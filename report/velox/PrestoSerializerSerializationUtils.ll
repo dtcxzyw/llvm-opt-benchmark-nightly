@@ -201,7 +201,7 @@ bb.a:
   %33 = alloca %"struct.xsimd::fma3", align 1     ; 3 uses
   %34 = alloca %"class.folly::Range.10", align 8  ; 6 uses
   %35 = alloca %class.anon.1754, align 8          ; 7 uses
-  %i.i = alloca ptr, align 8                      ; 4 uses
+  %i.i = alloca ptr, align 8                      ; 6 uses
   br label %tailrecurse
 
 tailrecurse:                                      ; preds = %bb.mj, %bb.a
@@ -604,6 +604,7 @@ bb.le:                                            ; preds = %bb.lb
   br label %common.resume
 
 bb.lf:                                            ; preds = %tailrecurse
+  store ptr %2, ptr %i.i, align 8, !tbaa !52
   %i.bay = tail call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(94) %i.j, ptr nonnull @_ZTIN8facebook5velox10BaseVectorE, ptr nonnull @_ZTIN8facebook5velox11ArrayVectorE, i64 0) #36 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #36
   store ptr %3, ptr %29, align 8, !tbaa !484
@@ -716,6 +717,7 @@ _ZN8facebook5velox10ScratchPtrINS0_10IndexRangeELi0EED2Ev.exit: ; preds = %_ZN8f
   br label %"_ZZN8facebook5velox10serializer6presto6detail15serializeColumnERKSt10shared_ptrINS0_10BaseVectorEERKN5folly5RangeIPKiEEPNS3_12VectorStreamERNS0_7ScratchEENK3$_0clEv.exit"
 
 bb.lt:                                            ; preds = %tailrecurse
+  store ptr %2, ptr %i.i, align 8, !tbaa !52
   %i.bci = tail call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(94) %i.j, ptr nonnull @_ZTIN8facebook5velox10BaseVectorE, ptr nonnull @_ZTIN8facebook5velox9MapVectorE, i64 0) #36 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %26) #36
   store ptr %3, ptr %26, align 8, !tbaa !484

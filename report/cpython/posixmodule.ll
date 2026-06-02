@@ -201,7 +201,7 @@ define internal ptr @os_open(ptr readnone captures(none) %0, ptr noundef %1, i64
 bb.a:
   %i.a = alloca [4 x ptr], align 16               ; 3 uses
   %4 = alloca %struct.path_t, align 8             ; 9 uses
-  %i.b = alloca i32, align 4                      ; 5 uses
+  %i.b = alloca i32, align 4                      ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
   %.not = icmp eq ptr %3, null                    ; 2 uses
   br i1 %.not, label %bb.c, label %bb.b
@@ -278,7 +278,11 @@ bb.k:                                             ; preds = %bb.i, %bb.j
   %i.y = getelementptr i8, ptr %i.k, i64 24
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !108  ; 4 uses
   %i.aa = icmp eq ptr %i.z, @_Py_NoneStruct
-  br i1 %i.aa, label %thread-pre-split, label %bb.l
+  br i1 %i.aa, label %dir_fd_converter.exit.thread64, label %bb.l
+
+dir_fd_converter.exit.thread64:                   ; preds = %.thread58
+  store i32 -100, ptr %i.b, align 4, !tbaa !7
+  br label %thread-pre-split
 
 bb.l:                                             ; preds = %.thread58
   %i.ab = call i32 @PyIndex_Check(ptr noundef %i.z) #19
@@ -302,9 +306,9 @@ dir_fd_converter.exit.thread-pre-split_crit_edge: ; preds = %dir_fd_converter.ex
   %.pr.pre = load i32, ptr %i.b, align 4, !tbaa !7
   br label %thread-pre-split
 
-thread-pre-split:                                 ; preds = %.thread58, %bb.k, %bb.g, %dir_fd_converter.exit.thread-pre-split_crit_edge
-  %i.ah = phi i32 [ -100, %bb.g ], [ -100, %bb.k ], [ %.pr.pre, %dir_fd_converter.exit.thread-pre-split_crit_edge ], [ -100, %.thread58 ] ; 2 uses
-  %.057 = phi i32 [ 511, %bb.g ], [ %i.u, %bb.k ], [ %.061, %dir_fd_converter.exit.thread-pre-split_crit_edge ], [ %.061, %.thread58 ] ; 2 uses
+thread-pre-split:                                 ; preds = %bb.k, %bb.g, %dir_fd_converter.exit.thread-pre-split_crit_edge, %dir_fd_converter.exit.thread64
+  %i.ah = phi i32 [ -100, %dir_fd_converter.exit.thread64 ], [ -100, %bb.k ], [ %.pr.pre, %dir_fd_converter.exit.thread-pre-split_crit_edge ], [ -100, %bb.g ] ; 2 uses
+  %.057 = phi i32 [ %.061, %dir_fd_converter.exit.thread64 ], [ %i.u, %bb.k ], [ %.061, %dir_fd_converter.exit.thread-pre-split_crit_edge ], [ 511, %bb.g ] ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %4, i64 48
   %.val48 = load ptr, ptr %i.ai, align 8          ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %4, i64 80
@@ -707,7 +711,7 @@ define internal ptr @os_mkfifo(ptr readnone captures(none) %0, ptr noundef %1, i
 bb.a:
   %i.a = alloca [3 x ptr], align 16               ; 3 uses
   %4 = alloca %struct.path_t, align 8             ; 9 uses
-  %i.b = alloca i32, align 4                      ; 5 uses
+  %i.b = alloca i32, align 4                      ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
   %.not = icmp eq ptr %3, null                    ; 2 uses
   br i1 %.not, label %bb.c, label %bb.b
@@ -772,7 +776,11 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   %i.t = getelementptr i8, ptr %i.k, i64 16
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !108  ; 4 uses
   %i.v = icmp eq ptr %i.u, @_Py_NoneStruct
-  br i1 %i.v, label %thread-pre-split.thread, label %bb.j
+  br i1 %i.v, label %dir_fd_converter.exit.thread57, label %bb.j
+
+dir_fd_converter.exit.thread57:                   ; preds = %.thread51
+  store i32 -100, ptr %i.b, align 4, !tbaa !7
+  br label %thread-pre-split.thread
 
 bb.j:                                             ; preds = %.thread51
   %i.w = call i32 @PyIndex_Check(ptr noundef %i.u) #19
@@ -792,8 +800,8 @@ dir_fd_converter.exit:                            ; preds = %bb.j
   %.not40 = icmp eq i32 %i.ab, 0
   br i1 %.not40, label %os_mkfifo_impl.exit, label %thread-pre-split
 
-thread-pre-split.thread:                          ; preds = %.thread51, %bb.i, %bb.e
-  %.050.ph = phi i32 [ 438, %bb.e ], [ %i.p, %bb.i ], [ %.054, %.thread51 ]
+thread-pre-split.thread:                          ; preds = %dir_fd_converter.exit.thread57, %bb.i, %bb.e
+  %.050.ph = phi i32 [ 438, %bb.e ], [ %i.p, %bb.i ], [ %.054, %dir_fd_converter.exit.thread57 ]
   %i.ac = getelementptr inbounds nuw i8, ptr %4, i64 48
   %.val4178 = load ptr, ptr %i.ac, align 8
   br label %.split.us.i.preheader
@@ -910,7 +918,7 @@ bb.a:
   %i.a = alloca [4 x ptr], align 16               ; 3 uses
   %4 = alloca %struct.path_t, align 8             ; 9 uses
   %i.b = alloca i64, align 8                      ; 6 uses
-  %i.c = alloca i32, align 4                      ; 5 uses
+  %i.c = alloca i32, align 4                      ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
   %.not = icmp eq ptr %3, null                    ; 2 uses
   br i1 %.not, label %bb.c, label %bb.b
@@ -995,7 +1003,11 @@ bb.l:                                             ; preds = %bb.k
   %i.z = getelementptr i8, ptr %i.m, i64 24
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !108 ; 4 uses
   %i.ab = icmp eq ptr %i.aa, @_Py_NoneStruct
-  br i1 %i.ab, label %thread-pre-split.thread, label %bb.m
+  br i1 %i.ab, label %dir_fd_converter.exit.thread67, label %bb.m
+
+dir_fd_converter.exit.thread67:                   ; preds = %.thread61
+  store i32 -100, ptr %i.c, align 4, !tbaa !7
+  br label %thread-pre-split.thread
 
 bb.m:                                             ; preds = %.thread61
   %i.ac = call i32 @PyIndex_Check(ptr noundef %i.aa) #19
@@ -1015,8 +1027,8 @@ dir_fd_converter.exit:                            ; preds = %bb.m
   %.not51 = icmp eq i32 %i.ah, 0
   br i1 %.not51, label %os_mknod_impl.exit, label %thread-pre-split
 
-thread-pre-split.thread:                          ; preds = %.thread61, %bb.l, %bb.e, %bb.i
-  %.160.ph = phi i32 [ %i.r, %bb.i ], [ 384, %bb.e ], [ %.0, %bb.l ], [ %.0, %.thread61 ]
+thread-pre-split.thread:                          ; preds = %dir_fd_converter.exit.thread67, %bb.l, %bb.e, %bb.i
+  %.160.ph = phi i32 [ %i.r, %bb.i ], [ 384, %bb.e ], [ %.0, %bb.l ], [ %.0, %dir_fd_converter.exit.thread67 ]
   %i.ai = load i64, ptr %i.b, align 8, !tbaa !157
   %i.aj = getelementptr inbounds nuw i8, ptr %4, i64 48
   %.val5291 = load ptr, ptr %i.aj, align 8

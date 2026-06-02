@@ -201,7 +201,7 @@ declare ptr @pm_options_scope_local_get(ptr noundef, i64 noundef) local_unnamed_
 declare noalias noundef ptr @malloc(i64 noundef) local_unnamed_addr #7
 
 ; Function Attrs: inlinehint nounwind sspstrong uwtable
-define internal fastcc ptr @next_newline(ptr noundef readonly %0, i64 noundef %1) unnamed_addr #8 {
+define internal fastcc ptr @next_newline(ptr noundef readonly captures(address, ret: address, provenance) %0, i64 noundef %1) unnamed_addr #8 {
 bb.a:
   %i.a = icmp sgt i64 %1, -1
   br i1 %i.a, label %bb.c, label %bb.b
@@ -604,7 +604,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.d = tail call noalias dereferenceable_or_null(32) ptr @calloc(i64 noundef 1, i64 noundef 32) #30 ; 7 uses
+  %i.d = tail call noalias dereferenceable_or_null(32) ptr @calloc(i64 noundef 1, i64 noundef 32) #30 ; 8 uses
   %i.e = icmp eq ptr %i.d, null
   br i1 %i.e, label %bb.d, label %pm_node_alloc.exit
 
@@ -686,6 +686,8 @@ pm_numbered_reference_read_node_number.exit:      ; preds = %bb.i, %bb.j
   store ptr %i.m, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !14
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   store i32 %i.aj, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !7
+  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 28
+  store i32 0, ptr %.sroa.7.0..sroa_idx, align 4
   ret ptr %i.d
 }
 

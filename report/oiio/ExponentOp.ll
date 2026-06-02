@@ -201,7 +201,7 @@ declare void @__cxa_throw(ptr, ptr, ptr) local_unnamed_addr #6
 define hidden void @_ZN16OpenColorIO_v2_523CreateExponentTransformERSt10shared_ptrINS_14GroupTransformEERS0_IKNS_2OpEE(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"class.std::shared_ptr.26", align 16 ; 9 uses
-  %3 = alloca %"class.std::shared_ptr.29", align 8 ; 9 uses
+  %3 = alloca %"class.std::shared_ptr.29", align 8 ; 10 uses
   %4 = alloca %"class.std::shared_ptr.41", align 16 ; 3 uses
   %.val = load ptr, ptr %1, align 8, !tbaa !72    ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -384,18 +384,19 @@ bb.z:                                             ; preds = %bb.y
   unreachable
 
 bb.aa:                                            ; preds = %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_56OpDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
-  %i.az = load ptr, ptr %3, align 8, !tbaa !91    ; 2 uses
+  %i.az = load ptr, ptr %3, align 8, !tbaa !91
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 48
   %i.bb = invoke noundef nonnull align 8 dereferenceable(120) ptr @_ZN16OpenColorIO_v2_518FormatMetadataImplaSERKS0_(ptr noundef nonnull align 8 dereferenceable(120) %i.ax, ptr noundef nonnull align 8 dereferenceable(120) %i.ba)
           to label %bb.ab unwind label %bb.be     ; 0 uses
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.bc = load ptr, ptr %2, align 16, !tbaa !94   ; 2 uses
-  %i.bd = getelementptr inbounds nuw i8, ptr %i.az, i64 168
-  %i.be = load ptr, ptr %i.bc, align 8, !tbaa !7
+  %5 = load ptr, ptr %2, align 16, !tbaa !94      ; 2 uses
+  %i.bc = load ptr, ptr %3, align 8, !tbaa !91
+  %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 168
+  %i.be = load ptr, ptr %5, align 8, !tbaa !7
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 88
   %i.bg = load ptr, ptr %i.bf, align 8
-  call void %i.bg(ptr noundef nonnull align 8 dereferenceable(8) %i.bc, ptr noundef nonnull align 8 dereferenceable(32) %i.bd) #23
+  call void %i.bg(ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef nonnull align 8 dereferenceable(32) %i.bd) #23
   %i.bh = load ptr, ptr %0, align 8, !tbaa !97    ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.bj = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses

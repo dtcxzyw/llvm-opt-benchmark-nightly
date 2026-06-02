@@ -201,7 +201,7 @@ _ZNSt6vectorImSaImEED2Ev.exit:                    ; preds = %bb.l, %bb.m
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN4geos11triangulate7polygon17PolygonHoleJoiner21findLeftShellVerticesERKNS_4geom10CoordinateE(ptr dead_on_unwind noalias writable sret(%"class.std::vector") align 8 captures(none) initializes((0, 24)) %0, ptr noundef nonnull readonly align 8 dereferenceable(168) %1, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN4geos11triangulate7polygon17PolygonHoleJoiner21findLeftShellVerticesERKNS_4geom10CoordinateE(ptr dead_on_unwind noalias writable sret(%"class.std::vector") align 8 captures(none) initializes((0, 24)) %0, ptr noundef nonnull readonly align 8 captures(address) dereferenceable(168) %1, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 40
@@ -278,7 +278,7 @@ _ZNSt3setIN4geos4geom10CoordinateESt4lessIS2_ESaIS2_EE11upper_boundERKS2_.exit: 
 bb.f:                                             ; preds = %.preheader, %bb.g
   %.sroa.035.1 = phi ptr [ %i.v, %bb.g ], [ %.sroa.035.0.lcssa, %.preheader ]
   %i.v = tail call noundef ptr @_ZSt18_Rb_tree_decrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.035.1) #24 ; 4 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 32 ; 4 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 32 ; 5 uses
   %i.x = invoke noundef zeroext i1 @_ZNK4geos11triangulate7polygon17PolygonHoleJoiner14crossesPolygonERKNS_4geom10CoordinateES6_(ptr noundef nonnull readonly align 8 dereferenceable(168) %1, ptr noundef nonnull readonly align 8 dereferenceable(24) %2, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.w)
           to label %bb.g unwind label %.loopexit47
 
@@ -307,8 +307,9 @@ _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE12emplace_backIJRKS2_EEEvDpOT_.exit
 
 _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE5clearEv.exit: ; preds = %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE12emplace_backIJRKS2_EEEvDpOT_.exit
   store ptr %i.ac, ptr %i.aa, align 8
-  %3 = fcmp ord double %i.ae, 0.000000e+00
-  br i1 %3, label %.lr.ph61, label %.loopexit
+  %3 = load double, ptr %i.w, align 8, !tbaa !153
+  %4 = fcmp oeq double %i.ae, %3
+  br i1 %4, label %.lr.ph61, label %.loopexit
 
 .lr.ph61:                                         ; preds = %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE5clearEv.exit, %bb.k
   %i.ah = phi ptr [ %i.bi, %bb.k ], [ %i.w, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE5clearEv.exit ] ; 2 uses

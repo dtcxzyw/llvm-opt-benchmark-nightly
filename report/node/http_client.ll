@@ -201,7 +201,7 @@ define dso_local range(i32 -1, 2) i32 @OSSL_HTTP_REQ_CTX_nbio(ptr noundef %0) lo
 bb.a:
   %i.a = alloca ptr, align 8                      ; 6 uses
   %i.b = alloca ptr, align 8                      ; 13 uses
-  %i.c = alloca ptr, align 8                      ; 7 uses
+  %i.c = alloca ptr, align 8                      ; 8 uses
   %i.d = alloca i64, align 8                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #10
@@ -505,12 +505,12 @@ bb.ap:                                            ; preds = %bb.s, %bb.s, %bb.s,
 check_max_len.exit.outer.outer:                   ; preds = %bb.cs, %bb.ap
   %.1269.ph.ph = phi i32 [ %.0268, %bb.ap ], [ %.2270, %bb.cs ]
   %.1205.ph.ph = phi i64 [ %.0204, %bb.ap ], [ %.1205, %bb.cs ]
-  %.1198.ph.ph = phi i32 [ %.0197, %bb.ap ], [ %.4201, %bb.cs ] ; 7 uses
+  %.1198.ph.ph = phi i32 [ %.0197, %bb.ap ], [ %.4201, %bb.cs ] ; 8 uses
   %.1192.ph.ph = phi i64 [ %.0191, %bb.ap ], [ %i.dl, %bb.cs ]
   br label %check_max_len.exit.outer
 
 check_max_len.exit.outer:                         ; preds = %check_max_len.exit.outer.backedge, %check_max_len.exit.outer.outer
-  %.1269.ph = phi i32 [ %.1269.ph.ph, %check_max_len.exit.outer.outer ], [ %.1269.ph.be, %check_max_len.exit.outer.backedge ] ; 8 uses
+  %.1269.ph = phi i32 [ %.1269.ph.ph, %check_max_len.exit.outer.outer ], [ %.1269.ph.be, %check_max_len.exit.outer.backedge ] ; 9 uses
   %.1205.ph = phi i64 [ %.1205.ph.ph, %check_max_len.exit.outer.outer ], [ %.1205, %check_max_len.exit.outer.backedge ]
   %.1192.ph = phi i64 [ %.1192.ph.ph, %check_max_len.exit.outer.outer ], [ %i.dl, %check_max_len.exit.outer.backedge ] ; 3 uses
   br label %check_max_len.exit
@@ -847,14 +847,19 @@ bb.bz:                                            ; preds = %bb.by
   %.not236 = icmp eq ptr %i.fs, null
   br i1 %.not236, label %.thread290, label %bb.ca
 
-bb.ca:                                            ; preds = %bb.by, %bb.bz
+bb.ca:                                            ; preds = %bb.bz, %bb.by
   %i.ft = phi ptr [ %i.fs, %bb.bz ], [ %i.fq, %bb.by ]
   store i8 0, ptr %i.ft, align 1, !tbaa !30
-  %1 = load i32, ptr %0, align 8, !tbaa !9
-  %i.fu = icmp eq i32 %1, 4
-  br i1 %i.fu, label %bb.cb, label %bb.cd
+  %.pre = load ptr, ptr %i.c, align 8
+  %i.fu = icmp eq ptr %.pre, null
+  br i1 %i.fu, label %.thread290, label %1
 
-bb.cb:                                            ; preds = %bb.ca
+1:                                                ; preds = %bb.ca
+  %2 = load i32, ptr %0, align 8, !tbaa !9
+  %3 = icmp eq i32 %2, 4
+  br i1 %3, label %bb.cb, label %bb.cd
+
+bb.cb:                                            ; preds = %1
   %i.fv = call i32 @OPENSSL_strcasecmp(ptr noundef nonnull %i.ab, ptr noundef nonnull @.str.12) #10
   %i.fw = icmp eq i32 %i.fv, 0
   br i1 %i.fw, label %bb.cc, label %bb.cd
@@ -865,7 +870,7 @@ bb.cc:                                            ; preds = %bb.cb
   %i.fy = call i64 @BIO_ctrl(ptr noundef %i.fx, i32 noundef 1, i64 noundef 0, ptr noundef null) #10 ; 0 uses
   br label %.loopexit
 
-bb.cd:                                            ; preds = %bb.cb, %bb.ca
+bb.cd:                                            ; preds = %bb.cb, %1
   %i.fz = call i32 @OPENSSL_strcasecmp(ptr noundef nonnull %i.ab, ptr noundef nonnull @.str.13) #10
   %i.ga = icmp eq i32 %i.fz, 0
   br i1 %i.ga, label %bb.ce, label %.thread294
@@ -961,9 +966,9 @@ bb.cr:                                            ; preds = %bb.cq
   %.not243.not = icmp eq i32 %i.hc, 0
   br i1 %.not243.not, label %.loopexit, label %.thread290
 
-.thread290:                                       ; preds = %bb.bz, %bb.cn, %bb.bv, %bb.cm, %bb.cr, %bb.co
-  %.2270 = phi i32 [ 1, %bb.cm ], [ %.1269.ph, %bb.bv ], [ %spec.select301, %bb.cn ], [ %.1269.ph, %bb.cr ], [ %.1269.ph, %bb.co ], [ %.1269.ph, %bb.bz ] ; 3 uses
-  %.4201 = phi i32 [ %.3200, %bb.cm ], [ %.1198.ph.ph, %bb.bv ], [ %.3200, %bb.cn ], [ %.3200, %bb.cr ], [ %.3200, %bb.co ], [ %.1198.ph.ph, %bb.bz ] ; 3 uses
+.thread290:                                       ; preds = %bb.bz, %bb.cn, %bb.bv, %bb.cm, %bb.cr, %bb.co, %bb.ca
+  %.2270 = phi i32 [ 1, %bb.cm ], [ %.1269.ph, %bb.bv ], [ %spec.select301, %bb.cn ], [ %.1269.ph, %bb.cr ], [ %.1269.ph, %bb.co ], [ %.1269.ph, %bb.ca ], [ %.1269.ph, %bb.bz ] ; 3 uses
+  %.4201 = phi i32 [ %.3200, %bb.cm ], [ %.1198.ph.ph, %bb.bv ], [ %.3200, %bb.cn ], [ %.3200, %bb.cr ], [ %.3200, %bb.co ], [ %.1198.ph.ph, %bb.ca ], [ %.1198.ph.ph, %bb.bz ] ; 3 uses
   %i.hd = load ptr, ptr %i.p, align 8, !tbaa !16
   br label %bb.cs
 

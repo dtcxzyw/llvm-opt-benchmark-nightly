@@ -201,7 +201,7 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %10, i64 24
   %i.k = getelementptr inbounds nuw i8, ptr %10, i64 32
   %i.l = getelementptr inbounds nuw i8, ptr %10, i64 40
-  %i.m = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 5 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 6 uses
   %i.n = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %7, i64 24
@@ -604,7 +604,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_55ArrayIjE11resizeEraseEl.exit.i: ; preds = %bb.e
 
 .noexc132.i:                                      ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_55ArrayIjE11resizeEraseEl.exit.i
   store i64 %i.oa, ptr %i.od, align 16
-  %i.oe = getelementptr i8, ptr %i.od, i64 8      ; 5 uses
+  %i.oe = getelementptr i8, ptr %i.od, i64 8      ; 4 uses
   %i.of = icmp eq i32 %.0117.i, 0                 ; 2 uses
   br i1 %i.of, label %_ZN27OpenImageIO_v3_1_Imf__3_3_55ArrayINS0_IPvEEEC2El.exit.thread.i, label %.lr.ph.i131
 
@@ -733,7 +733,8 @@ bb.fn:                                            ; preds = %bb.fi, %.preheader1
 
 bb.fo:                                            ; preds = %bb.fj
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #25
-  %i.pc = getelementptr inbounds nuw [16 x i8], ptr %i.oe, i64 %indvars.iv291.i
+  %22 = load ptr, ptr %i.m, align 8, !tbaa !164
+  %i.pc = getelementptr inbounds nuw [16 x i8], ptr %22, i64 %indvars.iv291.i
   %i.pd = getelementptr inbounds nuw i8, ptr %i.pc, i64 8
   %i.pe = load ptr, ptr %i.pd, align 8, !tbaa !168
   %i.pf = getelementptr inbounds [8 x i8], ptr %i.pe, i64 %i.ot
@@ -1136,7 +1137,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_55ArrayIjE11resizeEraseEl.exit: ; preds = %bb.l
 
 .noexc127:                                        ; preds = %_ZN27OpenImageIO_v3_1_Imf__3_3_55ArrayIjE11resizeEraseEl.exit
   store i64 %i.aa, ptr %i.ad, align 16
-  %i.ae = getelementptr i8, ptr %i.ad, i64 8      ; 5 uses
+  %i.ae = getelementptr i8, ptr %i.ad, i64 8      ; 4 uses
   %i.af = icmp eq i32 %.0117, 0                   ; 3 uses
   br i1 %i.af, label %_ZN27OpenImageIO_v3_1_Imf__3_3_55ArrayINS0_IPvEEEC2El.exit.thread, label %.lr.ph
 
@@ -1157,7 +1158,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_55ArrayINS0_IPvEEEC2El.exit.thread: ; preds = %.n
   br label %bb.r
 
 ._crit_edge:                                      ; preds = %bb.t, %_ZN27OpenImageIO_v3_1_Imf__3_3_55ArrayINS0_IPvEEEC2El.exit.thread
-  %i.al = phi ptr [ %i.ag, %_ZN27OpenImageIO_v3_1_Imf__3_3_55ArrayINS0_IPvEEEC2El.exit.thread ], [ %i.ah, %bb.t ] ; 2 uses
+  %i.al = phi ptr [ %i.ag, %_ZN27OpenImageIO_v3_1_Imf__3_3_55ArrayINS0_IPvEEEC2El.exit.thread ], [ %i.ah, %bb.t ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
   %i.am = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   store i32 0, ptr %i.am, align 8, !tbaa !137
@@ -1274,7 +1275,8 @@ bb.ad:                                            ; preds = %bb.y, %.preheader16
 
 bb.ae:                                            ; preds = %bb.z
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
-  %i.bl = getelementptr inbounds nuw [16 x i8], ptr %i.ae, i64 %indvars.iv253
+  %6 = load ptr, ptr %i.al, align 8, !tbaa !164
+  %i.bl = getelementptr inbounds nuw [16 x i8], ptr %6, i64 %indvars.iv253
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 8
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !168
   %i.bo = getelementptr inbounds [8 x i8], ptr %i.bn, i64 %i.bc

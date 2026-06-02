@@ -201,7 +201,7 @@ bb.k:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal fastcc void @_ZN12_GLOBAL__N_111ConvertUnitERKN6Assimp4STEP7EXPRESS8DataTypeERNS0_3IFC14ConversionDataE(ptr noundef nonnull readonly align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 captures(none) dereferenceable(392) %1) unnamed_addr #1 personality ptr @__gxx_personality_v0 {
+define internal fastcc void @_ZN12_GLOBAL__N_111ConvertUnitERKN6Assimp4STEP7EXPRESS8DataTypeERNS0_3IFC14ConversionDataE(ptr noundef nonnull readonly align 8 captures(address) dereferenceable(8) %0, ptr noundef nonnull align 8 captures(none) dereferenceable(392) %1) unnamed_addr #1 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
@@ -604,7 +604,7 @@ bb.a:
   %38 = alloca %"class.std::vector.240", align 8  ; 12 uses
   %39 = alloca %class.aiMatrix4x4t.76, align 4    ; 5 uses
   %40 = alloca %class.aiMatrix4x4t, align 16      ; 12 uses
-  %41 = alloca %"class.std::unique_ptr.268", align 8 ; 7 uses
+  %41 = alloca %"class.std::unique_ptr.268", align 8 ; 10 uses
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 3 uses
   %i.i = load ptr, ptr %i.h, align 8, !nonnull !19, !align !30 ; 6 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 192 ; 2 uses
@@ -1007,7 +1007,7 @@ bb.em:                                            ; preds = %bb.ei, %bb.ek
 bb.en:                                            ; preds = %bb.el
   call void @llvm.lifetime.start.p0(ptr nonnull %41) #28
   %i.yv = invoke noalias noundef nonnull dereferenceable(1144) ptr @_Znwm(i64 noundef 1144) #29
-          to label %bb.eo unwind label %bb.ev     ; 13 uses
+          to label %bb.eo unwind label %bb.ev     ; 10 uses
 
 bb.eo:                                            ; preds = %bb.en
   invoke void @_ZN6aiNodeC1Ev(ptr noundef nonnull align 8 dereferenceable(1144) %i.yv)
@@ -1037,24 +1037,25 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit327: ; preds = %bb
 
 bb.ep:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit327
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.zi, i8 0, i64 %i.zh, i1 false)
-  %i.zj = getelementptr inbounds nuw i8, ptr %i.yv, i64 1112 ; 2 uses
+  %i.zj = getelementptr inbounds nuw i8, ptr %i.yv, i64 1112
   store ptr %i.zi, ptr %i.zj, align 8
   %i.zk = load ptr, ptr %i.za, align 8            ; 2 uses
   %i.zl = load ptr, ptr %i.zb, align 8            ; 2 uses
   %.not512987 = icmp eq ptr %i.zk, %i.zl
-  br i1 %.not512987, label %._crit_edge991, label %.lr.ph990.preheader
+  br i1 %.not512987, label %._crit_edge991, label %.lr.ph990
 
-.lr.ph990.preheader:                              ; preds = %bb.ep
-  %42 = getelementptr inbounds nuw i8, ptr %i.yv, i64 1104 ; 2 uses
-  br label %.lr.ph990
+.lr.ph990.preheader:                              ; preds = %bb.fl
+  %.pre1404 = load ptr, ptr %41, align 8
+  br label %._crit_edge991
 
-._crit_edge991:                                   ; preds = %bb.fl, %bb.ep
+._crit_edge991:                                   ; preds = %.lr.ph990.preheader, %bb.ep
+  %42 = phi ptr [ %.pre1404, %.lr.ph990.preheader ], [ %i.yv, %bb.ep ] ; 2 uses
   store ptr null, ptr %41, align 8
   %.not.i.i328 = icmp eq ptr %.sroa.18449.7995, %.sroa.38.7994
   br i1 %.not.i.i328, label %bb.er, label %bb.eq
 
 bb.eq:                                            ; preds = %._crit_edge991
-  store ptr %i.yv, ptr %.sroa.18449.7995, align 8
+  store ptr %42, ptr %.sroa.18449.7995, align 8
   br label %_ZNSt6vectorIP6aiNodeSaIS1_EE9push_backEOS1_.exit337
 
 bb.er:                                            ; preds = %._crit_edge991
@@ -1086,7 +1087,7 @@ _ZNKSt6vectorIP6aiNodeSaIS1_EE12_M_check_lenEmPKc.exit.i.i.i329: ; preds = %bb.e
 
 .noexc336:                                        ; preds = %_ZNKSt6vectorIP6aiNodeSaIS1_EE12_M_check_lenEmPKc.exit.i.i.i329
   %i.zx = getelementptr inbounds i8, ptr %i.zw, i64 %i.zo ; 2 uses
-  store ptr %i.yv, ptr %i.zx, align 8
+  store ptr %42, ptr %i.zx, align 8
   %i.zy = icmp sgt i64 %i.zo, 0
   br i1 %i.zy, label %bb.et, label %_ZNSt6vectorIP6aiNodeSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i332
 
@@ -1122,8 +1123,8 @@ bb.ex:                                            ; preds = %_ZNSt7__cxx1112basi
           catch ptr null
   br label %.body349
 
-.lr.ph990:                                        ; preds = %.lr.ph990.preheader, %bb.fl
-  %.sroa.0395.0988 = phi ptr [ %i.abe, %bb.fl ], [ %i.zk, %.lr.ph990.preheader ] ; 2 uses
+.lr.ph990:                                        ; preds = %bb.ep, %bb.fl
+  %.sroa.0395.0988 = phi ptr [ %i.abe, %bb.fl ], [ %i.zk, %bb.ep ] ; 2 uses
   %i.aad = load ptr, ptr %.sroa.0395.0988, align 8 ; 3 uses
   %i.aae = icmp eq ptr %i.aad, null
   br i1 %i.aae, label %bb.ey, label %bb.fd
@@ -1217,7 +1218,8 @@ _ZNK6Assimp4STEP4LazyINS_3IFC10Schema_2x319IfcObjectDefinitionEEcvRKS4_Ev.exit: 
   br i1 %.not161, label %bb.fl, label %bb.fh
 
 bb.fh:                                            ; preds = %_ZNK6Assimp4STEP4LazyINS_3IFC10Schema_2x319IfcObjectDefinitionEEcvRKS4_Ev.exit
-  %i.aax = invoke fastcc noundef ptr @_ZN12_GLOBAL__N_123ProcessSpatialStructureEP6aiNodeRKN6Assimp3IFC10Schema_2x310IfcProductERNS3_14ConversionDataEPSt6vectorINS3_11TempOpeningESaISB_EE(ptr noundef nonnull %i.yv, ptr noundef nonnull align 8 dereferenceable(256) %i.aaw, ptr noundef nonnull align 8 dereferenceable(392) %2, ptr noundef null)
+  %43 = load ptr, ptr %41, align 8
+  %i.aax = invoke fastcc noundef ptr @_ZN12_GLOBAL__N_123ProcessSpatialStructureEP6aiNodeRKN6Assimp3IFC10Schema_2x310IfcProductERNS3_14ConversionDataEPSt6vectorINS3_11TempOpeningESaISB_EE(ptr noundef %43, ptr noundef nonnull align 8 dereferenceable(256) %i.aaw, ptr noundef nonnull align 8 dereferenceable(392) %2, ptr noundef null)
           to label %bb.fi unwind label %bb.fk     ; 2 uses
 
 bb.fi:                                            ; preds = %bb.fh
@@ -1225,10 +1227,13 @@ bb.fi:                                            ; preds = %bb.fh
   br i1 %.not163, label %bb.fl, label %bb.fj
 
 bb.fj:                                            ; preds = %bb.fi
-  %i.aay = load ptr, ptr %i.zj, align 8
-  %i.aaz = load i32, ptr %42, align 8             ; 2 uses
+  %44 = load ptr, ptr %41, align 8                ; 2 uses
+  %45 = getelementptr inbounds nuw i8, ptr %44, i64 1112
+  %i.aay = load ptr, ptr %45, align 8
+  %46 = getelementptr inbounds nuw i8, ptr %44, i64 1104 ; 2 uses
+  %i.aaz = load i32, ptr %46, align 8             ; 2 uses
   %i.aba = add i32 %i.aaz, 1
-  store i32 %i.aba, ptr %42, align 8
+  store i32 %i.aba, ptr %46, align 8
   %i.abb = zext i32 %i.aaz to i64
   %i.abc = getelementptr inbounds nuw [8 x i8], ptr %i.aay, i64 %i.abb
   store ptr %i.aax, ptr %i.abc, align 8
@@ -1252,7 +1257,7 @@ bb.fk:                                            ; preds = %bb.fh
 bb.fl:                                            ; preds = %bb.fi, %bb.fj, %_ZNK6Assimp4STEP4LazyINS_3IFC10Schema_2x319IfcObjectDefinitionEEcvRKS4_Ev.exit
   %i.abe = getelementptr inbounds nuw i8, ptr %.sroa.0395.0988, i64 8 ; 2 uses
   %.not512 = icmp eq ptr %i.abe, %i.zl
-  br i1 %.not512, label %._crit_edge991, label %.lr.ph990
+  br i1 %.not512, label %.lr.ph990.preheader, label %.lr.ph990
 
 _ZNSt6vectorIP6aiNodeSaIS1_EE9push_backEOS1_.exit337: ; preds = %_ZNSt6vectorIP6aiNodeSaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i334, %bb.eq
   %.sroa.38.14 = phi ptr [ %i.zz, %_ZNSt6vectorIP6aiNodeSaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i334 ], [ %.sroa.38.7994, %bb.eq ]

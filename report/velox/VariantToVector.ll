@@ -201,7 +201,7 @@ bb.ax:                                            ; preds = %bb.e
   %i.fk = tail call noundef i32 %i.fj(ptr noundef nonnull align 8 dereferenceable(94) %i.fg, i32 noundef %.tr116125), !noalias !114, !inline_history !117
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #19, !noalias !114
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %15, i8 0, i64 24, i1 false), !noalias !114
-  %i.fl = getelementptr inbounds nuw i8, ptr %i.ff, i64 96 ; 2 uses
+  %i.fl = getelementptr inbounds nuw i8, ptr %i.ff, i64 96 ; 3 uses
   %i.fm = load i64, ptr %i.fl, align 8, !tbaa !118, !noalias !114 ; 4 uses
   %i.fn = icmp ugt i64 %i.fm, 576460752303423487
   br i1 %i.fn, label %bb.ay, label %bb.az
@@ -229,11 +229,16 @@ _ZNSt12_Vector_baseIN8facebook5velox7VariantESaIS2_EE11_M_allocateEm.exit.i62: ;
   store ptr %i.fq, ptr %i.fr, align 8, !tbaa !80, !noalias !114
   %i.fs = getelementptr inbounds nuw [16 x i8], ptr %i.fq, i64 %i.fm
   store ptr %i.fs, ptr %i.fo, align 8, !tbaa !81, !noalias !114
-  %23 = getelementptr inbounds nuw i8, ptr %16, i64 8 ; 2 uses
-  %24 = getelementptr inbounds nuw i8, ptr %16, i64 9 ; 2 uses
+  %.pre = load i64, ptr %i.fl, align 8, !tbaa !118, !noalias !114
+  %23 = icmp eq i64 %.pre, 0
+  br i1 %23, label %._crit_edge, label %.lr.ph127
+
+.lr.ph127:                                        ; preds = %.lr.ph127.a
+  %24 = getelementptr inbounds nuw i8, ptr %16, i64 8 ; 2 uses
+  %25 = getelementptr inbounds nuw i8, ptr %16, i64 9 ; 2 uses
   br label %bb.bc
 
-._crit_edge:                                      ; preds = %_ZN8facebook5velox7VariantD2Ev.exit55, %bb.az
+._crit_edge:                                      ; preds = %_ZN8facebook5velox7VariantD2Ev.exit55, %bb.az, %.lr.ph127.a
   call void @llvm.experimental.noalias.scope.decl(metadata !126)
   %i.ft = invoke noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #22
           to label %.noexc59 unwind label %bb.bb  ; 3 uses
@@ -253,8 +258,8 @@ bb.bb:                                            ; preds = %_ZNSt12_Vector_base
           cleanup
   br label %.body60
 
-bb.bc:                                            ; preds = %.lr.ph127.a, %_ZN8facebook5velox7VariantD2Ev.exit55
-  %indvars.iv = phi i64 [ 0, %.lr.ph127.a ], [ %indvars.iv.next, %_ZN8facebook5velox7VariantD2Ev.exit55 ] ; 2 uses
+bb.bc:                                            ; preds = %.lr.ph127, %_ZN8facebook5velox7VariantD2Ev.exit55
+  %indvars.iv = phi i64 [ 0, %.lr.ph127 ], [ %indvars.iv.next, %_ZN8facebook5velox7VariantD2Ev.exit55 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #19, !noalias !114
   %i.fw = trunc nuw nsw i64 %indvars.iv to i32
   %i.fx = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZNK8facebook5velox9RowVector7childAtEj(ptr noundef nonnull align 8 dereferenceable(152) %i.ff, i32 noundef %i.fw)
@@ -274,10 +279,10 @@ _ZNSt6vectorIN8facebook5velox7VariantESaIS2_EE9push_backEOS2_.exit58.thread: ; p
   %i.ga = load ptr, ptr %16, align 8, !tbaa !7, !noalias !114
   store ptr %i.ga, ptr %i.fy, align 8, !tbaa !7, !noalias !114
   %i.gb = getelementptr inbounds nuw i8, ptr %i.fy, i64 8
-  %i.gc = load i8, ptr %23, align 8, !tbaa !19, !noalias !114
+  %i.gc = load i8, ptr %24, align 8, !tbaa !19, !noalias !114
   store i8 %i.gc, ptr %i.gb, align 8, !tbaa !19, !noalias !114
   %i.gd = getelementptr inbounds nuw i8, ptr %i.fy, i64 9
-  %i.ge = load i8, ptr %24, align 1, !tbaa !12, !range !13, !noalias !114, !noundef !14
+  %i.ge = load i8, ptr %25, align 1, !tbaa !12, !range !13, !noalias !114, !noundef !14
   store i8 %i.ge, ptr %i.gd, align 1, !tbaa !12, !noalias !114
   %i.gf = getelementptr inbounds nuw i8, ptr %i.fy, i64 16
   store ptr %i.gf, ptr %i.fr, align 8, !tbaa !80, !noalias !114
@@ -293,7 +298,7 @@ _ZNSt6vectorIN8facebook5velox7VariantESaIS2_EE9push_backEOS2_.exit58: ; preds = 
   br i1 %.not.i51, label %_ZN8facebook5velox7VariantD2Ev.exit55, label %bb.bg
 
 bb.bg:                                            ; preds = %_ZNSt6vectorIN8facebook5velox7VariantESaIS2_EE9push_backEOS2_.exit58
-  %i.gg = load i8, ptr %24, align 1, !tbaa !12, !range !13, !noalias !114, !noundef !14
+  %i.gg = load i8, ptr %25, align 1, !tbaa !12, !range !13, !noalias !114, !noundef !14
   %i.gh = trunc nuw i8 %i.gg to i1
   br i1 %i.gh, label %bb.bh, label %bb.bi
 
@@ -308,7 +313,7 @@ bb.bh:                                            ; preds = %bb.bg
   br label %_ZN8facebook5velox7VariantD2Ev.exit55
 
 bb.bi:                                            ; preds = %bb.bg
-  %i.gi = load i8, ptr %23, align 8, !tbaa !19, !noalias !114
+  %i.gi = load i8, ptr %24, align 8, !tbaa !19, !noalias !114
   switch i8 %i.gi, label %bb.bk [
     i8 33, label %_ZN8facebook5velox7Variant12typedDestroyILb0ELNS0_8TypeKindE33EEEvv.exit.i.i52
     i8 35, label %bb.bj
@@ -579,10 +584,10 @@ bb.cl:                                            ; preds = %bb.e
 bb.cm:                                            ; preds = %bb.cl
   tail call void @llvm.experimental.noalias.scope.decl(metadata !152)
   %i.iw = tail call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(94) %i.k, ptr nonnull @_ZTIN8facebook5velox10BaseVectorE, ptr nonnull @_ZTIN8facebook5velox12SimpleVectorIbEE, i64 0) #19, !noalias !155 ; 2 uses
-  %i.ix = load ptr, ptr %i.iw, align 8, !tbaa !43, !noalias !155
+  %i.ix = load ptr, ptr %i.iw, align 8, !tbaa !43
   %i.iy = getelementptr inbounds nuw i8, ptr %i.ix, i64 384
   %i.iz = load ptr, ptr %i.iy, align 8, !noalias !155
-  %i.ja = tail call noundef zeroext i1 %i.iz(ptr noundef nonnull align 8 dereferenceable(108) %i.iw, i32 noundef %.tr116125), !noalias !155, !inline_history !156
+  %i.ja = tail call noundef zeroext i1 %i.iz(ptr noundef nonnull align 8 dereferenceable(108) %i.iw, i32 noundef %.tr116125), !inline_history !156
   %i.jb = load ptr, ptr %.tr115124, align 8, !tbaa !40, !noalias !155 ; 2 uses
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 8
   %i.jd = load ptr, ptr %i.jc, align 8, !tbaa !45, !noalias !155 ; 2 uses
@@ -648,10 +653,10 @@ _ZN8facebook5velox12_GLOBAL__N_19variantAtILNS0_8TypeKindE0EEENS0_7VariantERKSt1
 bb.ct:                                            ; preds = %bb.cl
   tail call void @llvm.experimental.noalias.scope.decl(metadata !173)
   %i.jw = tail call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(94) %i.k, ptr nonnull @_ZTIN8facebook5velox10BaseVectorE, ptr nonnull @_ZTIN8facebook5velox12SimpleVectorIiEE, i64 0) #19, !noalias !176 ; 2 uses
-  %i.jx = load ptr, ptr %i.jw, align 8, !tbaa !43, !noalias !176
+  %i.jx = load ptr, ptr %i.jw, align 8, !tbaa !43
   %i.jy = getelementptr inbounds nuw i8, ptr %i.jx, i64 384
   %i.jz = load ptr, ptr %i.jy, align 8, !noalias !176
-  %i.ka = tail call noundef i32 %i.jz(ptr noundef nonnull align 8 dereferenceable(120) %i.jw, i32 noundef %.tr116125), !noalias !176, !inline_history !177 ; 2 uses
+  %i.ka = tail call noundef i32 %i.jz(ptr noundef nonnull align 8 dereferenceable(120) %i.jw, i32 noundef %.tr116125), !inline_history !177 ; 2 uses
   %i.kb = load ptr, ptr %.tr115124, align 8, !tbaa !40, !noalias !176 ; 2 uses
   %i.kc = getelementptr inbounds nuw i8, ptr %i.kb, i64 8
   %i.kd = load ptr, ptr %i.kc, align 8, !tbaa !45, !noalias !176 ; 2 uses
@@ -716,10 +721,10 @@ _ZN8facebook5velox12_GLOBAL__N_19variantAtILNS0_8TypeKindE3EEENS0_7VariantERKSt1
 bb.da:                                            ; preds = %bb.cl
   tail call void @llvm.experimental.noalias.scope.decl(metadata !193)
   %i.kv = tail call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(94) %i.k, ptr nonnull @_ZTIN8facebook5velox10BaseVectorE, ptr nonnull @_ZTIN8facebook5velox12SimpleVectorIaEE, i64 0) #19, !noalias !196 ; 2 uses
-  %i.kw = load ptr, ptr %i.kv, align 8, !tbaa !43, !noalias !196
+  %i.kw = load ptr, ptr %i.kv, align 8, !tbaa !43
   %i.kx = getelementptr inbounds nuw i8, ptr %i.kw, i64 384
   %i.ky = load ptr, ptr %i.kx, align 8, !noalias !196
-  %i.kz = tail call noundef signext i8 %i.ky(ptr noundef nonnull align 8 dereferenceable(108) %i.kv, i32 noundef %.tr116125), !noalias !196, !inline_history !197 ; 2 uses
+  %i.kz = tail call noundef signext i8 %i.ky(ptr noundef nonnull align 8 dereferenceable(108) %i.kv, i32 noundef %.tr116125), !inline_history !197 ; 2 uses
   %i.la = load ptr, ptr %.tr115124, align 8, !tbaa !40, !noalias !196 ; 2 uses
   %i.lb = getelementptr inbounds nuw i8, ptr %i.la, i64 8
   %i.lc = load ptr, ptr %i.lb, align 8, !tbaa !45, !noalias !196 ; 2 uses
@@ -784,10 +789,10 @@ _ZN8facebook5velox12_GLOBAL__N_19variantAtILNS0_8TypeKindE1EEENS0_7VariantERKSt1
 bb.dh:                                            ; preds = %bb.cl
   tail call void @llvm.experimental.noalias.scope.decl(metadata !213)
   %i.lu = tail call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(94) %i.k, ptr nonnull @_ZTIN8facebook5velox10BaseVectorE, ptr nonnull @_ZTIN8facebook5velox12SimpleVectorIsEE, i64 0) #19, !noalias !216 ; 2 uses
-  %i.lv = load ptr, ptr %i.lu, align 8, !tbaa !43, !noalias !216
+  %i.lv = load ptr, ptr %i.lu, align 8, !tbaa !43
   %i.lw = getelementptr inbounds nuw i8, ptr %i.lv, i64 384
   %i.lx = load ptr, ptr %i.lw, align 8, !noalias !216
-  %i.ly = tail call noundef signext i16 %i.lx(ptr noundef nonnull align 8 dereferenceable(112) %i.lu, i32 noundef %.tr116125), !noalias !216, !inline_history !217 ; 2 uses
+  %i.ly = tail call noundef signext i16 %i.lx(ptr noundef nonnull align 8 dereferenceable(112) %i.lu, i32 noundef %.tr116125), !inline_history !217 ; 2 uses
   %i.lz = load ptr, ptr %.tr115124, align 8, !tbaa !40, !noalias !216 ; 2 uses
   %i.ma = getelementptr inbounds nuw i8, ptr %i.lz, i64 8
   %i.mb = load ptr, ptr %i.ma, align 8, !tbaa !45, !noalias !216 ; 2 uses
@@ -852,10 +857,10 @@ _ZN8facebook5velox12_GLOBAL__N_19variantAtILNS0_8TypeKindE2EEENS0_7VariantERKSt1
 bb.do:                                            ; preds = %bb.cl
   tail call void @llvm.experimental.noalias.scope.decl(metadata !234)
   %i.mt = tail call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(94) %i.k, ptr nonnull @_ZTIN8facebook5velox10BaseVectorE, ptr nonnull @_ZTIN8facebook5velox12SimpleVectorIlEE, i64 0) #19, !noalias !237 ; 2 uses
-  %i.mu = load ptr, ptr %i.mt, align 8, !tbaa !43, !noalias !237
+  %i.mu = load ptr, ptr %i.mt, align 8, !tbaa !43
   %i.mv = getelementptr inbounds nuw i8, ptr %i.mu, i64 384
   %i.mw = load ptr, ptr %i.mv, align 8, !noalias !237
-  %i.mx = tail call noundef i64 %i.mw(ptr noundef nonnull align 8 dereferenceable(136) %i.mt, i32 noundef %.tr116125), !noalias !237, !inline_history !238 ; 2 uses
+  %i.mx = tail call noundef i64 %i.mw(ptr noundef nonnull align 8 dereferenceable(136) %i.mt, i32 noundef %.tr116125), !inline_history !238 ; 2 uses
   %i.my = load ptr, ptr %.tr115124, align 8, !tbaa !40, !noalias !237 ; 2 uses
   %i.mz = getelementptr inbounds nuw i8, ptr %i.my, i64 8
   %i.na = load ptr, ptr %i.mz, align 8, !tbaa !45, !noalias !237 ; 2 uses
@@ -920,10 +925,10 @@ _ZN8facebook5velox12_GLOBAL__N_19variantAtILNS0_8TypeKindE4EEENS0_7VariantERKSt1
 bb.dv:                                            ; preds = %bb.cl
   tail call void @llvm.experimental.noalias.scope.decl(metadata !254)
   %i.ns = tail call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(94) %i.k, ptr nonnull @_ZTIN8facebook5velox10BaseVectorE, ptr nonnull @_ZTIN8facebook5velox12SimpleVectorInEE, i64 0) #19, !noalias !257 ; 2 uses
-  %i.nt = load ptr, ptr %i.ns, align 16, !tbaa !43, !noalias !257
+  %i.nt = load ptr, ptr %i.ns, align 16, !tbaa !43
   %i.nu = getelementptr inbounds nuw i8, ptr %i.nt, i64 384
   %i.nv = load ptr, ptr %i.nu, align 8, !noalias !257
-  %i.nw = tail call noundef nonnull align 16 dereferenceable(16) ptr %i.nv(ptr noundef nonnull align 16 dereferenceable(176) %i.ns, i32 noundef %.tr116125), !noalias !257, !inline_history !258
+  %i.nw = tail call noundef nonnull align 16 dereferenceable(16) ptr %i.nv(ptr noundef nonnull align 16 dereferenceable(176) %i.ns, i32 noundef %.tr116125), !inline_history !258
   %i.nx = load i128, ptr %i.nw, align 16, !tbaa !259, !noalias !257 ; 2 uses
   %i.ny = load ptr, ptr %.tr115124, align 8, !tbaa !40, !noalias !257 ; 2 uses
   %i.nz = getelementptr inbounds nuw i8, ptr %i.ny, i64 8
@@ -989,10 +994,10 @@ _ZN8facebook5velox12_GLOBAL__N_19variantAtILNS0_8TypeKindE10EEENS0_7VariantERKSt
 bb.ec:                                            ; preds = %bb.cl
   tail call void @llvm.experimental.noalias.scope.decl(metadata !276)
   %i.os = tail call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(94) %i.k, ptr nonnull @_ZTIN8facebook5velox10BaseVectorE, ptr nonnull @_ZTIN8facebook5velox12SimpleVectorIfEE, i64 0) #19, !noalias !279 ; 2 uses
-  %i.ot = load ptr, ptr %i.os, align 8, !tbaa !43, !noalias !279
+  %i.ot = load ptr, ptr %i.os, align 8, !tbaa !43
   %i.ou = getelementptr inbounds nuw i8, ptr %i.ot, i64 384
   %i.ov = load ptr, ptr %i.ou, align 8, !noalias !279
-  %i.ow = tail call noundef float %i.ov(ptr noundef nonnull align 8 dereferenceable(120) %i.os, i32 noundef %.tr116125), !noalias !279, !inline_history !280 ; 2 uses
+  %i.ow = tail call noundef float %i.ov(ptr noundef nonnull align 8 dereferenceable(120) %i.os, i32 noundef %.tr116125), !inline_history !280 ; 2 uses
   %i.ox = load ptr, ptr %.tr115124, align 8, !tbaa !40, !noalias !279 ; 2 uses
   %i.oy = getelementptr inbounds nuw i8, ptr %i.ox, i64 8
   %i.oz = load ptr, ptr %i.oy, align 8, !tbaa !45, !noalias !279 ; 2 uses
@@ -1057,10 +1062,10 @@ _ZN8facebook5velox12_GLOBAL__N_19variantAtILNS0_8TypeKindE5EEENS0_7VariantERKSt1
 bb.ej:                                            ; preds = %bb.cl
   tail call void @llvm.experimental.noalias.scope.decl(metadata !297)
   %i.pr = tail call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(94) %i.k, ptr nonnull @_ZTIN8facebook5velox10BaseVectorE, ptr nonnull @_ZTIN8facebook5velox12SimpleVectorIdEE, i64 0) #19, !noalias !300 ; 2 uses
-  %i.ps = load ptr, ptr %i.pr, align 8, !tbaa !43, !noalias !300
+  %i.ps = load ptr, ptr %i.pr, align 8, !tbaa !43
   %i.pt = getelementptr inbounds nuw i8, ptr %i.ps, i64 384
   %i.pu = load ptr, ptr %i.pt, align 8, !noalias !300
-  %i.pv = tail call noundef double %i.pu(ptr noundef nonnull align 8 dereferenceable(136) %i.pr, i32 noundef %.tr116125), !noalias !300, !inline_history !301 ; 2 uses
+  %i.pv = tail call noundef double %i.pu(ptr noundef nonnull align 8 dereferenceable(136) %i.pr, i32 noundef %.tr116125), !inline_history !301 ; 2 uses
   %i.pw = load ptr, ptr %.tr115124, align 8, !tbaa !40, !noalias !300 ; 2 uses
   %i.px = getelementptr inbounds nuw i8, ptr %i.pw, i64 8
   %i.py = load ptr, ptr %i.px, align 8, !tbaa !45, !noalias !300 ; 2 uses
@@ -1124,10 +1129,10 @@ _ZN8facebook5velox12_GLOBAL__N_19variantAtILNS0_8TypeKindE6EEENS0_7VariantERKSt1
 
 bb.eq:                                            ; preds = %bb.cl
   %i.qq = tail call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(94) %i.k, ptr nonnull @_ZTIN8facebook5velox10BaseVectorE, ptr nonnull @_ZTIN8facebook5velox12SimpleVectorINS0_10StringViewEEE, i64 0) #19, !noalias !318 ; 2 uses
-  %i.qr = load ptr, ptr %i.qq, align 8, !tbaa !43, !noalias !318
+  %i.qr = load ptr, ptr %i.qq, align 8, !tbaa !43
   %i.qs = getelementptr inbounds nuw i8, ptr %i.qr, i64 384
   %i.qt = load ptr, ptr %i.qs, align 8, !noalias !318
-  %i.qu = tail call noundef nonnull align 8 dereferenceable(16) ptr %i.qt(ptr noundef nonnull align 8 dereferenceable(208) %i.qq, i32 noundef %.tr116125), !noalias !318, !inline_history !321 ; 2 uses
+  %i.qu = tail call noundef nonnull align 8 dereferenceable(16) ptr %i.qt(ptr noundef nonnull align 8 dereferenceable(208) %i.qq, i32 noundef %.tr116125), !inline_history !321 ; 2 uses
   %.sroa.03.0.copyload.i.i = load i64, ptr %i.qu, align 8, !noalias !318 ; 4 uses
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.qu, i64 8
   %.sroa.5.0.copyload.i.i = load ptr, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !tbaa !35, !noalias !318 ; 3 uses
@@ -1161,10 +1166,10 @@ bb.et:                                            ; preds = %bb.cl
   tail call void @llvm.experimental.noalias.scope.decl(metadata !322)
   call void @llvm.lifetime.start.p0(ptr nonnull %12), !noalias !149
   %i.rh = tail call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(94) %i.k, ptr nonnull @_ZTIN8facebook5velox10BaseVectorE, ptr nonnull @_ZTIN8facebook5velox12SimpleVectorINS0_10StringViewEEE, i64 0) #19, !noalias !325 ; 2 uses
-  %i.ri = load ptr, ptr %i.rh, align 8, !tbaa !43, !noalias !325
+  %i.ri = load ptr, ptr %i.rh, align 8, !tbaa !43
   %i.rj = getelementptr inbounds nuw i8, ptr %i.ri, i64 384
   %i.rk = load ptr, ptr %i.rj, align 8, !noalias !325
-  %i.rl = tail call noundef nonnull align 8 dereferenceable(16) ptr %i.rk(ptr noundef nonnull align 8 dereferenceable(208) %i.rh, i32 noundef %.tr116125), !noalias !325, !inline_history !326 ; 3 uses
+  %i.rl = tail call noundef nonnull align 8 dereferenceable(16) ptr %i.rk(ptr noundef nonnull align 8 dereferenceable(208) %i.rh, i32 noundef %.tr116125), !inline_history !326 ; 3 uses
   %i.rm = load i32, ptr %i.rl, align 8, !tbaa !327, !noalias !325 ; 4 uses
   %i.rn = icmp ult i32 %i.rm, 13
   %i.ro = getelementptr inbounds nuw i8, ptr %i.rl, i64 4 ; 2 uses
@@ -1267,10 +1272,10 @@ _ZN8facebook5velox12_GLOBAL__N_19variantAtILNS0_8TypeKindE8EEENS0_7VariantERKSt1
 bb.fa:                                            ; preds = %bb.cl
   tail call void @llvm.experimental.noalias.scope.decl(metadata !339)
   %i.st = tail call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(94) %i.k, ptr nonnull @_ZTIN8facebook5velox10BaseVectorE, ptr nonnull @_ZTIN8facebook5velox12SimpleVectorINS0_9TimestampEEE, i64 0) #19, !noalias !342 ; 2 uses
-  %i.su = load ptr, ptr %i.st, align 8, !tbaa !43, !noalias !342
+  %i.su = load ptr, ptr %i.st, align 8, !tbaa !43
   %i.sv = getelementptr inbounds nuw i8, ptr %i.su, i64 384
   %i.sw = load ptr, ptr %i.sv, align 8, !noalias !342
-  %i.sx = tail call noundef nonnull align 8 dereferenceable(16) ptr %i.sw(ptr noundef nonnull align 8 dereferenceable(152) %i.st, i32 noundef %.tr116125), !noalias !342, !inline_history !343 ; 2 uses
+  %i.sx = tail call noundef nonnull align 8 dereferenceable(16) ptr %i.sw(ptr noundef nonnull align 8 dereferenceable(152) %i.st, i32 noundef %.tr116125), !inline_history !343 ; 2 uses
   %.sroa.03.0.copyload.i37.i = load i64, ptr %i.sx, align 8, !tbaa !344, !noalias !342 ; 2 uses
   %.sroa.5.0..sroa_idx.i38.i = getelementptr inbounds nuw i8, ptr %i.sx, i64 8
   %.sroa.5.0.copyload.i39.i = load i64, ptr %.sroa.5.0..sroa_idx.i38.i, align 8, !tbaa !344, !noalias !342 ; 2 uses

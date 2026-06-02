@@ -201,7 +201,7 @@ _ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEED1Ev.exit: ; preds = 
 declare i64 @wcslen(ptr noundef captures(none)) local_unnamed_addr #9
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(read) uwtable
-define dso_local noundef zeroext i1 @_ZN7testing8internal6String17WideCStringEqualsEPKwS3_(ptr noundef readonly %0, ptr noundef readonly %1) local_unnamed_addr #17 align 2 {
+define dso_local noundef zeroext i1 @_ZN7testing8internal6String17WideCStringEqualsEPKwS3_(ptr noundef readonly captures(address) %0, ptr noundef readonly captures(address) %1) local_unnamed_addr #17 align 2 {
 bb.a:
   %i.a = icmp eq ptr %0, null                     ; 2 uses
   %i.b = icmp eq ptr %1, null                     ; 2 uses
@@ -604,12 +604,12 @@ define internal fastcc void @_ZN7testingL13GetDirFromEnvB5cxx11ESt16initializer_
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.z
   %.038 = phi ptr [ %i.bf, %bb.z ], [ %1, %.lr.ph.preheader ] ; 2 uses
   %i.b = load ptr, ptr %.038, align 8
-  %i.c = tail call noundef ptr @getenv(ptr noundef %i.b) #44 ; 9 uses
+  %i.c = tail call noundef ptr @getenv(ptr noundef %i.b) #44 ; 10 uses
   %.not21 = icmp eq ptr %i.c, null
   br i1 %.not21, label %bb.z, label %bb.a
 
 bb.a:                                             ; preds = %.lr.ph
-  %i.d = load i8, ptr %i.c, align 1               ; 2 uses
+  %i.d = load i8, ptr %i.c, align 1
   %.not22 = icmp eq i8 %i.d, 0
   br i1 %.not22, label %bb.z, label %bb.b
 
@@ -660,7 +660,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i: ; 
   ]
 
 bb.h:                                             ; preds = %._crit_edge.i.i
-  store i8 %i.d, ptr %i.p, align 1
+  %5 = load i8, ptr %i.c, align 1
+  store i8 %5, ptr %i.p, align 1
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_.exit
 
 bb.i:                                             ; preds = %._crit_edge.i.i

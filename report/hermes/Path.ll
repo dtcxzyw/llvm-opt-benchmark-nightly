@@ -201,7 +201,8 @@ bb.a:
   br i1 %.not, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %i.c = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
+  store i8 1, ptr %i.c, align 8, !tbaa !40
   %i.d = getelementptr inbounds nuw i8, ptr %5, i64 17
   store i8 1, ptr %i.d, align 1, !tbaa !43
   %i.e = load i8, ptr %i.b, align 1, !tbaa !12
@@ -219,7 +220,8 @@ _ZN4llvh5TwineC2EPKc.exit:                        ; preds = %bb.b, %bb.c
   br i1 %i.f, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %_ZN4llvh5TwineC2EPKc.exit
-  %i.g = getelementptr inbounds nuw i8, ptr %6, i64 16
+  %i.g = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
+  store i8 1, ptr %i.g, align 8, !tbaa !40
   %i.h = getelementptr inbounds nuw i8, ptr %6, i64 17
   store i8 1, ptr %i.h, align 1, !tbaa !43
   %i.i = load i8, ptr %i.b, align 1, !tbaa !12

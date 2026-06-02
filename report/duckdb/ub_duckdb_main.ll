@@ -201,10 +201,10 @@ _ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_SaIS5_E
 define noundef range(i64 1, 0) i64 @_ZN6duckdb8DBConfig19GetSystemMaxThreadsERNS_10FileSystemE(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
-  %.sroa.0 = alloca %struct.anon, align 8         ; 6 uses
+  %.sroa.0 = alloca %struct.anon, align 8         ; 7 uses
   %i.b = tail call noundef i32 @_ZNSt6thread20hardware_concurrencyEv() #28
   %i.c = zext i32 %i.b to i64
-  %i.d = tail call ptr @getenv(ptr noundef nonnull @.str.405) #28 ; 5 uses
+  %i.d = tail call ptr @getenv(ptr noundef nonnull @.str.405) #28 ; 6 uses
   %.not = icmp eq ptr %i.d, null
   br i1 %.not, label %.thread, label %bb.b
 
@@ -232,8 +232,10 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.b
   %i.j = load i32, ptr %i.d, align 1
-  %.sroa.0.4..sroa_idx28.a = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
-  store i32 %i.j, ptr %.sroa.0.4..sroa_idx28.a, align 4
+  %.sroa.0.4..sroa_idx28 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
+  store i32 %i.j, ptr %.sroa.0.4..sroa_idx28, align 4
+  %.sroa.0.4..sroa_idx28.a = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 8
+  store ptr %i.d, ptr %.sroa.0.4..sroa_idx28.a, align 8, !tbaa !93
   br label %_ZN6duckdb8string_tC2EPKc.exit
 
 _ZN6duckdb8string_tC2EPKc.exit:                   ; preds = %bb.c, %bb.d, %bb.e

@@ -138,7 +138,7 @@ bb.e:                                             ; preds = %bb.a
 
 bb.f:                                             ; preds = %bb.e
   %i.l = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %i.j, i32 noundef 61) #7 ; 6 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
   store ptr %i.l, ptr %i.m, align 8, !tbaa !15
   %i.n = icmp eq ptr %i.l, null
   br i1 %i.n, label %bb.g, label %bb.h
@@ -149,7 +149,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br label %opt_provider_param.exit
 
 bb.h:                                             ; preds = %bb.f
-  %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 1 ; 3 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 1
   store ptr %i.q, ptr %i.m, align 8, !tbaa !15
   store i8 0, ptr %i.l, align 1, !tbaa !14
   %i.r = icmp ugt ptr %i.l, %i.j
@@ -175,7 +175,8 @@ bb.i:                                             ; preds = %.lr.ph.i
 
 .critedge.i:                                      ; preds = %bb.i, %.lr.ph.i, %bb.h
   %i.ab = load ptr, ptr %i.s, align 8, !tbaa !18  ; 2 uses
-  %i.ac = load i8, ptr %i.q, align 1, !tbaa !14
+  %.promoted.i = load ptr, ptr %i.m, align 8, !tbaa !15 ; 2 uses
+  %i.ac = load i8, ptr %.promoted.i, align 1, !tbaa !14
   %i.ad = zext i8 %i.ac to i64
   %i.ae = getelementptr inbounds nuw [2 x i8], ptr %i.ab, i64 %i.ad
   %i.af = load i16, ptr %i.ae, align 2, !tbaa !20
@@ -184,7 +185,7 @@ bb.i:                                             ; preds = %.lr.ph.i
   br i1 %.not1924.i, label %._crit_edge.i, label %.lr.ph25.i
 
 .lr.ph25.i:                                       ; preds = %.critedge.i, %.lr.ph25.i
-  %i.ah = phi ptr [ %i.ai, %.lr.ph25.i ], [ %i.q, %.critedge.i ]
+  %i.ah = phi ptr [ %i.ai, %.lr.ph25.i ], [ %.promoted.i, %.critedge.i ]
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 1 ; 3 uses
   store ptr %i.ai, ptr %i.m, align 8, !tbaa !15
   %i.aj = load i8, ptr %i.ai, align 1, !tbaa !14
@@ -197,17 +198,18 @@ bb.i:                                             ; preds = %.lr.ph.i
 
 ._crit_edge.i:                                    ; preds = %.lr.ph25.i, %.critedge.i
   %i.ao = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %i.j, i32 noundef 58) #7 ; 3 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %.not20.i = icmp eq ptr %i.ao, null
   br i1 %.not20.i, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %._crit_edge.i
-  %i.aq = getelementptr inbounds nuw i8, ptr %i.ao, i64 1 ; 2 uses
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.ao, i64 1
   store ptr %i.aq, ptr %i.ap, align 8, !tbaa !25
   store i8 0, ptr %i.ao, align 1, !tbaa !14
   %i.ar = load i8, ptr %i.j, align 1, !tbaa !14
   %.not21.i = icmp eq i8 %i.ar, 0
   %i.as = select i1 %.not21.i, ptr null, ptr %i.j
+  %.pre.i = load ptr, ptr %i.ap, align 8, !tbaa !25
   br label %bb.l
 
 bb.k:                                             ; preds = %._crit_edge.i
@@ -215,7 +217,7 @@ bb.k:                                             ; preds = %._crit_edge.i
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %i.at = phi ptr [ %i.j, %bb.k ], [ %i.aq, %bb.j ]
+  %i.at = phi ptr [ %i.j, %bb.k ], [ %.pre.i, %bb.j ]
   %.sink.i = phi ptr [ null, %bb.k ], [ %i.as, %bb.j ]
   store ptr %.sink.i, ptr %1, align 8, !tbaa !26
   %i.au = load i8, ptr %i.at, align 1, !tbaa !14

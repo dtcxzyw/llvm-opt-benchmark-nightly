@@ -201,7 +201,7 @@ bb.a:
   %i.b = alloca ptr, align 8                      ; 5 uses
   %i.c = alloca ptr, align 8                      ; 5 uses
   %i.d = alloca ptr, align 8                      ; 5 uses
-  %18 = alloca %"class.std::shared_ptr.41", align 8 ; 7 uses
+  %18 = alloca %"class.std::shared_ptr.41", align 8 ; 8 uses
   %19 = alloca %"class.facebook::velox::SelectivityVector", align 8 ; 9 uses
   %20 = alloca %"class.facebook::velox::exec::LocalDecodedVector", align 8 ; 9 uses
   %i.e = alloca ptr, align 8                      ; 5 uses
@@ -381,7 +381,7 @@ bb.p:                                             ; preds = %bb.n
   br label %_ZNSt10shared_ptrIN8facebook5velox10BaseVectorEEC2ERKS3_.exit
 
 _ZNSt10shared_ptrIN8facebook5velox10BaseVectorEEC2ERKS3_.exit: ; preds = %_ZNK8facebook5velox4exec11DecodedArgs2atEi.exit35, %bb.o, %bb.p
-  %i.bq = phi ptr [ %i.bh, %_ZNK8facebook5velox4exec11DecodedArgs2atEi.exit35 ], [ %i.bh, %bb.o ], [ %.pre, %bb.p ] ; 2 uses
+  %i.bq = phi ptr [ %i.bh, %_ZNK8facebook5velox4exec11DecodedArgs2atEi.exit35 ], [ %i.bh, %bb.o ], [ %.pre, %bb.p ]
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #24
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 56
   %i.bs = load i32, ptr %i.br, align 8, !tbaa !431
@@ -409,6 +409,7 @@ _ZNK8facebook5velox13DecodedVector7indicesEv.exit: ; preds = %.noexc, %bb.q
 
 bb.s:                                             ; preds = %_ZNK8facebook5velox13DecodedVector7indicesEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #24
+  %21 = load ptr, ptr %18, align 8, !tbaa !94
   %i.bx = load ptr, ptr %4, align 8, !tbaa !327
   store ptr %i.bx, ptr %20, align 8, !tbaa !461
   %i.by = getelementptr inbounds nuw i8, ptr %20, i64 8 ; 2 uses
@@ -417,7 +418,7 @@ bb.s:                                             ; preds = %_ZNK8facebook5velox
           to label %bb.t unwind label %bb.u
 
 bb.t:                                             ; preds = %bb.s
-  invoke void @_ZN8facebook5velox13DecodedVector6decodeERKNS0_10BaseVectorERKNS0_17SelectivityVectorEb(ptr noundef nonnull align 8 dereferenceable(120) %i.bz, ptr noundef nonnull align 8 dereferenceable(94) %i.bq, ptr noundef nonnull align 8 dereferenceable(38) %19, i1 noundef zeroext true)
+  invoke void @_ZN8facebook5velox13DecodedVector6decodeERKNS0_10BaseVectorERKNS0_17SelectivityVectorEb(ptr noundef nonnull align 8 dereferenceable(120) %i.bz, ptr noundef nonnull align 8 dereferenceable(94) %21, ptr noundef nonnull align 8 dereferenceable(38) %19, i1 noundef zeroext true)
           to label %_ZN8facebook5velox4exec18LocalDecodedVectorC2ERKNS1_7EvalCtxERKNS0_10BaseVectorERKNS0_17SelectivityVectorEb.exit unwind label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s
@@ -820,7 +821,7 @@ bb.a:
   %i.b = alloca ptr, align 8                      ; 5 uses
   %i.c = alloca ptr, align 8                      ; 5 uses
   %i.d = alloca ptr, align 8                      ; 5 uses
-  %18 = alloca %"class.std::shared_ptr.41", align 8 ; 7 uses
+  %18 = alloca %"class.std::shared_ptr.41", align 8 ; 8 uses
   %19 = alloca %"class.facebook::velox::SelectivityVector", align 8 ; 9 uses
   %20 = alloca %"class.facebook::velox::exec::LocalDecodedVector", align 8 ; 9 uses
   %i.e = alloca ptr, align 8                      ; 5 uses
@@ -1000,7 +1001,7 @@ bb.p:                                             ; preds = %bb.n
   br label %_ZNSt10shared_ptrIN8facebook5velox10BaseVectorEEC2ERKS3_.exit
 
 _ZNSt10shared_ptrIN8facebook5velox10BaseVectorEEC2ERKS3_.exit: ; preds = %_ZNK8facebook5velox4exec11DecodedArgs2atEi.exit35, %bb.o, %bb.p
-  %i.bq = phi ptr [ %i.bh, %_ZNK8facebook5velox4exec11DecodedArgs2atEi.exit35 ], [ %i.bh, %bb.o ], [ %.pre, %bb.p ] ; 2 uses
+  %i.bq = phi ptr [ %i.bh, %_ZNK8facebook5velox4exec11DecodedArgs2atEi.exit35 ], [ %i.bh, %bb.o ], [ %.pre, %bb.p ]
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #24
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 56
   %i.bs = load i32, ptr %i.br, align 8, !tbaa !431
@@ -1028,6 +1029,7 @@ _ZNK8facebook5velox13DecodedVector7indicesEv.exit: ; preds = %.noexc, %bb.q
 
 bb.s:                                             ; preds = %_ZNK8facebook5velox13DecodedVector7indicesEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #24
+  %21 = load ptr, ptr %18, align 8, !tbaa !94
   %i.bx = load ptr, ptr %4, align 8, !tbaa !327
   store ptr %i.bx, ptr %20, align 8, !tbaa !461
   %i.by = getelementptr inbounds nuw i8, ptr %20, i64 8 ; 2 uses
@@ -1036,7 +1038,7 @@ bb.s:                                             ; preds = %_ZNK8facebook5velox
           to label %bb.t unwind label %bb.u
 
 bb.t:                                             ; preds = %bb.s
-  invoke void @_ZN8facebook5velox13DecodedVector6decodeERKNS0_10BaseVectorERKNS0_17SelectivityVectorEb(ptr noundef nonnull align 8 dereferenceable(120) %i.bz, ptr noundef nonnull align 8 dereferenceable(94) %i.bq, ptr noundef nonnull align 8 dereferenceable(38) %19, i1 noundef zeroext true)
+  invoke void @_ZN8facebook5velox13DecodedVector6decodeERKNS0_10BaseVectorERKNS0_17SelectivityVectorEb(ptr noundef nonnull align 8 dereferenceable(120) %i.bz, ptr noundef nonnull align 8 dereferenceable(94) %21, ptr noundef nonnull align 8 dereferenceable(38) %19, i1 noundef zeroext true)
           to label %_ZN8facebook5velox4exec18LocalDecodedVectorC2ERKNS1_7EvalCtxERKNS0_10BaseVectorERKNS0_17SelectivityVectorEb.exit unwind label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s

@@ -201,10 +201,10 @@ define dso_local noundef ptr @exprParseNumber(ptr noundef captures(none) %0) loc
   store i32 1, ptr %i.f, align 4, !tbaa !15
   store i32 1, ptr %i.d, align 8, !tbaa !17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
-  %i.g = tail call ptr @__ctype_b_loc() #24
+  %i.g = tail call ptr @__ctype_b_loc() #24       ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %.promoted = load ptr, ptr %i.h, align 8, !tbaa !31 ; 2 uses
-  %i.i = load ptr, ptr %i.g, align 8, !tbaa !34   ; 3 uses
+  %i.i = load ptr, ptr %i.g, align 8, !tbaa !34
   %i.j = load i8, ptr %.promoted, align 1, !tbaa !18 ; 3 uses
   %i.k = sext i8 %i.j to i64
   %i.l = getelementptr inbounds [2 x i8], ptr %i.i, i64 %i.k
@@ -231,9 +231,10 @@ bb.a:                                             ; preds = %.critedge.thread.1,
   %.promoted.pn = phi ptr [ %.promoted, %.critedge.thread.peel ], [ %i.w, %.critedge.thread.1 ] ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.promoted.pn, i64 1 ; 2 uses
   store ptr %i.o, ptr %i.h, align 8, !tbaa !31
+  %1 = load ptr, ptr %i.g, align 8, !tbaa !34
   %i.p = load i8, ptr %i.o, align 1, !tbaa !18    ; 3 uses
   %i.q = sext i8 %i.p to i64
-  %i.r = getelementptr inbounds [2 x i8], ptr %i.i, i64 %i.q
+  %i.r = getelementptr inbounds [2 x i8], ptr %1, i64 %i.q
   %i.s = load i16, ptr %i.r, align 2, !tbaa !36
   %.fr23 = freeze i16 %i.s
   %i.t = and i16 %.fr23, 2048
@@ -261,9 +262,10 @@ switch.early.test:                                ; preds = %bb.a
   store i8 %i.p, ptr %i.v, align 1, !tbaa !18
   %i.w = getelementptr inbounds nuw i8, ptr %.promoted.pn, i64 2 ; 3 uses
   store ptr %i.w, ptr %i.h, align 8, !tbaa !31
+  %2 = load ptr, ptr %i.g, align 8, !tbaa !34
   %i.x = load i8, ptr %i.w, align 1, !tbaa !18    ; 3 uses
   %i.y = sext i8 %i.x to i64
-  %i.z = getelementptr inbounds [2 x i8], ptr %i.i, i64 %i.y
+  %i.z = getelementptr inbounds [2 x i8], ptr %2, i64 %i.y
   %i.aa = load i16, ptr %i.z, align 2, !tbaa !36
   %.fr23.1 = freeze i16 %i.aa
   %i.ab = and i16 %.fr23.1, 2048
@@ -666,8 +668,8 @@ bb.au:                                            ; preds = %switch.early.test37
   br label %jsonParseStringToken.exit
 
 bb.av:                                            ; preds = %bb.d
-  %i.ev = tail call ptr @__ctype_b_loc() #24
-  %i.ew = load ptr, ptr %i.ev, align 8, !tbaa !34 ; 2 uses
+  %i.ev = tail call ptr @__ctype_b_loc() #24      ; 2 uses
+  %i.ew = load ptr, ptr %i.ev, align 8, !tbaa !34
   %i.ex = zext i8 %i.n to i64
   %i.ey = getelementptr inbounds nuw [2 x i8], ptr %i.ew, i64 %i.ex
   %i.ez = load i16, ptr %i.ey, align 2, !tbaa !36
@@ -690,8 +692,9 @@ bb.aw:                                            ; preds = %jsonIsNumberChar.ex
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i49 ], [ %indvars.iv.next.i, %jsonIsNumberChar.exit.thread.i ] ; 4 uses
   %i.fb = phi ptr [ %i.m, %.lr.ph.i49 ], [ %i.fi, %jsonIsNumberChar.exit.thread.i ] ; 2 uses
   %i.fc = load i8, ptr %i.fb, align 1, !tbaa !18  ; 3 uses
+  %2 = load ptr, ptr %i.ev, align 8, !tbaa !34
   %i.fd = sext i8 %i.fc to i64
-  %i.fe = getelementptr inbounds [2 x i8], ptr %i.ew, i64 %i.fd
+  %i.fe = getelementptr inbounds [2 x i8], ptr %2, i64 %i.fd
   %i.ff = load i16, ptr %i.fe, align 2, !tbaa !36
   %.fr13.i.i = freeze i16 %i.ff
   %i.fg = and i16 %.fr13.i.i, 2048

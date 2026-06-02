@@ -201,13 +201,13 @@ _ZSt20dynamic_pointer_castIKN16OpenColorIO_v2_522ExposureContrastOpDataEKNS0_6Op
   %.sroa.0111.0.i.i = phi ptr [ %i.cz, %bb.v ], [ %i.cz, %bb.t ], [ %i.cz, %bb.w ], [ null, %bb.s ], [ null, %bb.r ] ; 2 uses
   %.sroa.6.0.i.i = phi ptr [ %i.db, %bb.v ], [ null, %bb.t ], [ %i.db, %bb.w ], [ null, %bb.s ], [ null, %bb.r ] ; 8 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %.sroa.0111.0.i.i, i64 232
-  %i.di = load double, ptr %i.dh, align 8, !tbaa !128, !noalias !121
+  %i.di = load double, ptr %i.dh, align 8, !tbaa !128
   %i.dj = fcmp une double %i.di, f0x3FB6872B020C49BA
   br i1 %i.dj, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %_ZSt20dynamic_pointer_castIKN16OpenColorIO_v2_522ExposureContrastOpDataEKNS0_6OpDataEESt10shared_ptrIT_ERKS5_IT0_E.exit.i.i
   %i.dk = getelementptr inbounds nuw i8, ptr %.sroa.0111.0.i.i, i64 240
-  %i.dl = load double, ptr %i.dk, align 8, !tbaa !146, !noalias !121
+  %i.dl = load double, ptr %i.dk, align 8, !tbaa !146
   %i.dm = fcmp oeq double %i.dl, 4.350000e-01
   br i1 %i.dm, label %_ZN16OpenColorIO_v2_510CTFVersionaSERKS0_.exit17.i.i, label %bb.y
 
@@ -298,7 +298,7 @@ bb.ai:                                            ; preds = %bb.ag
 
 _ZSt20dynamic_pointer_castIKN16OpenColorIO_v2_519FixedFunctionOpDataEKNS0_6OpDataEESt10shared_ptrIT_ERKS5_IT0_E.exit.i.i: ; preds = %bb.ai, %bb.ah, %bb.af
   %i.er = getelementptr inbounds nuw i8, ptr %i.ej, i64 168
-  %i.es = load i32, ptr %i.er, align 8, !tbaa !151, !noalias !121
+  %i.es = load i32, ptr %i.er, align 8, !tbaa !151
   %switch.tableidx = add i32 %i.es, -10           ; 5 uses
   %i.et = icmp ult i32 %switch.tableidx, 32
   %switch.shifted = lshr i32 -4093, %switch.tableidx
@@ -410,7 +410,7 @@ bb.au:                                            ; preds = %bb.as
 
 _ZSt20dynamic_pointer_castIKN16OpenColorIO_v2_514ExponentOpDataEKNS0_6OpDataEESt10shared_ptrIT_ERKS5_IT0_E.exit.i.i: ; preds = %bb.au, %bb.at, %bb.ar
   %i.gb = getelementptr inbounds nuw i8, ptr %i.ft, i64 192
-  %i.gc = load double, ptr %i.gb, align 8, !tbaa !163, !noalias !121
+  %i.gc = load double, ptr %i.gb, align 8, !tbaa !163
   %i.gd = fcmp oeq double %i.gc, 1.000000e+00     ; 3 uses
   %_ZN16OpenColorIO_v2_5L28CTF_PROCESS_LIST_VERSION_1_3E.val10.i = load i32, ptr @_ZN16OpenColorIO_v2_5L28CTF_PROCESS_LIST_VERSION_1_3E, align 4, !noalias !115
   %_ZN16OpenColorIO_v2_5L28CTF_PROCESS_LIST_VERSION_1_5E.val11.i.b = load i1, ptr @_ZN16OpenColorIO_v2_5L28CTF_PROCESS_LIST_VERSION_1_5E.0, align 4
@@ -501,7 +501,7 @@ bb.be:                                            ; preds = %bb.bc
 _ZSt20dynamic_pointer_castIKN16OpenColorIO_v2_511GammaOpDataEKNS0_6OpDataEESt10shared_ptrIT_ERKS5_IT0_E.exit.i.i: ; preds = %bb.be, %bb.bd, %bb.bb
   %i.hf = phi ptr [ %i.gx, %bb.bb ], [ %i.gx, %bb.bd ], [ %.pre.i.i, %bb.be ] ; 2 uses
   %i.hg = getelementptr inbounds nuw i8, ptr %i.hf, i64 168
-  %i.hh = load i32, ptr %i.hg, align 8, !tbaa !172, !noalias !121
+  %i.hh = load i32, ptr %i.hg, align 8, !tbaa !172
   switch i32 %i.hh, label %_ZN16OpenColorIO_v2_510CTFVersionaSERKS0_.exit50.i.i [
     i32 0, label %bb.bf
     i32 1, label %bb.bf
@@ -517,7 +517,7 @@ _ZSt20dynamic_pointer_castIKN16OpenColorIO_v2_511GammaOpDataEKNS0_6OpDataEESt10s
 
 bb.bf:                                            ; preds = %_ZSt20dynamic_pointer_castIKN16OpenColorIO_v2_511GammaOpDataEKNS0_6OpDataEESt10shared_ptrIT_ERKS5_IT0_E.exit.i.i, %_ZSt20dynamic_pointer_castIKN16OpenColorIO_v2_511GammaOpDataEKNS0_6OpDataEESt10shared_ptrIT_ERKS5_IT0_E.exit.i.i, %_ZSt20dynamic_pointer_castIKN16OpenColorIO_v2_511GammaOpDataEKNS0_6OpDataEESt10shared_ptrIT_ERKS5_IT0_E.exit.i.i, %_ZSt20dynamic_pointer_castIKN16OpenColorIO_v2_511GammaOpDataEKNS0_6OpDataEESt10shared_ptrIT_ERKS5_IT0_E.exit.i.i
   %i.hi = invoke noundef zeroext i1 @_ZNK16OpenColorIO_v2_511GammaOpData24isAlphaComponentIdentityEv(ptr noundef nonnull align 8 dereferenceable(272) %i.hf)
-          to label %bb.bg unwind label %bb.bh, !noalias !121 ; 3 uses
+          to label %bb.bg unwind label %bb.bh     ; 3 uses
 
 bb.bg:                                            ; preds = %bb.bf
   %_ZN16OpenColorIO_v2_5L28CTF_PROCESS_LIST_VERSION_1_3E.val9.i = load i32, ptr @_ZN16OpenColorIO_v2_5L28CTF_PROCESS_LIST_VERSION_1_3E, align 4, !noalias !115
@@ -637,7 +637,7 @@ _ZSt20dynamic_pointer_castIKN16OpenColorIO_v2_511Lut1DOpDataEKNS0_6OpDataEESt10s
   %.sroa.083.0.i.i = phi ptr [ %i.ii, %bb.bt ], [ %i.ii, %bb.br ], [ %i.ii, %bb.bu ], [ null, %bb.bq ], [ null, %bb.bp ] ; 4 uses
   %.sroa.8.0.i.i = phi ptr [ %i.ik, %bb.bt ], [ null, %bb.br ], [ %i.ik, %bb.bu ], [ null, %bb.bq ], [ null, %bb.bp ] ; 8 uses
   %i.iq = getelementptr inbounds nuw i8, ptr %.sroa.083.0.i.i, i64 232
-  %i.ir = load i32, ptr %i.iq, align 8, !tbaa !179, !noalias !121
+  %i.ir = load i32, ptr %i.iq, align 8, !tbaa !179
   switch i32 %i.ir, label %_ZN16OpenColorIO_v2_510CTFVersionaSERKS0_.exit61.i.i [
     i32 0, label %bb.bv
     i32 1, label %bb.bw
@@ -645,7 +645,7 @@ _ZSt20dynamic_pointer_castIKN16OpenColorIO_v2_511Lut1DOpDataEKNS0_6OpDataEESt10s
 
 bb.bv:                                            ; preds = %_ZSt20dynamic_pointer_castIKN16OpenColorIO_v2_511Lut1DOpDataEKNS0_6OpDataEESt10shared_ptrIT_ERKS5_IT0_E.exit.i.i
   %i.is = getelementptr inbounds nuw i8, ptr %.sroa.083.0.i.i, i64 228
-  %i.it = load i32, ptr %i.is, align 4, !tbaa !194, !noalias !121
+  %i.it = load i32, ptr %i.is, align 4, !tbaa !194
   %.not12.i.i = icmp eq i32 %i.it, 0              ; 3 uses
   %_ZN16OpenColorIO_v2_5L28CTF_PROCESS_LIST_VERSION_1_3E.val.i = load i32, ptr @_ZN16OpenColorIO_v2_5L28CTF_PROCESS_LIST_VERSION_1_3E, align 4, !noalias !115
   %_ZN16OpenColorIO_v2_5L28CTF_PROCESS_LIST_VERSION_1_4E.val.i.b = load i1, ptr @_ZN16OpenColorIO_v2_5L28CTF_PROCESS_LIST_VERSION_1_4E.0, align 4
@@ -661,13 +661,13 @@ bb.bv:                                            ; preds = %_ZSt20dynamic_point
 
 bb.bw:                                            ; preds = %_ZSt20dynamic_pointer_castIKN16OpenColorIO_v2_511Lut1DOpDataEKNS0_6OpDataEESt10shared_ptrIT_ERKS5_IT0_E.exit.i.i
   %i.ix = getelementptr inbounds nuw i8, ptr %.sroa.083.0.i.i, i64 228
-  %i.iy = load i32, ptr %i.ix, align 4, !tbaa !194, !noalias !121
+  %i.iy = load i32, ptr %i.ix, align 4, !tbaa !194
   %.not.i.i79 = icmp eq i32 %i.iy, 0
   br i1 %.not.i.i79, label %bb.bx, label %bb.by
 
 bb.bx:                                            ; preds = %bb.bw
   %i.iz = getelementptr inbounds nuw i8, ptr %.sroa.083.0.i.i, i64 224
-  %i.ja = load i32, ptr %i.iz, align 8, !tbaa !195, !noalias !121
+  %i.ja = load i32, ptr %i.iz, align 8, !tbaa !195
   %i.jb = trunc i32 %i.ja to i1
   %spec.select.i.i = select i1 %i.jb, ptr @_ZN16OpenColorIO_v2_5L28CTF_PROCESS_LIST_VERSION_1_6E, ptr @_ZN16OpenColorIO_v2_5L28CTF_PROCESS_LIST_VERSION_1_3E
   br label %bb.by
@@ -759,7 +759,7 @@ bb.ci:                                            ; preds = %bb.cg
 
 _ZSt20dynamic_pointer_castIKN16OpenColorIO_v2_511Lut3DOpDataEKNS0_6OpDataEESt10shared_ptrIT_ERKS5_IT0_E.exit.i.i: ; preds = %bb.ci, %bb.ch, %bb.cf
   %i.kg = getelementptr inbounds nuw i8, ptr %i.jy, i64 224
-  %i.kh = load i32, ptr %i.kg, align 8, !tbaa !200, !noalias !121
+  %i.kh = load i32, ptr %i.kg, align 8, !tbaa !200
   switch i32 %i.kh, label %_ZN16OpenColorIO_v2_510CTFVersionaSERKS0_.exit72.i.i [
     i32 0, label %_ZN16OpenColorIO_v2_510CTFVersionaSERKS0_.exit72.sink.split.i.i
     i32 1, label %bb.cj
@@ -1162,7 +1162,7 @@ bb.l:                                             ; preds = %_ZN9__gnu_cxx27__ex
   %i.dz = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.ea = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 3 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %11, i64 8
-  %i.ec = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 2 uses
+  %i.ec = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 3 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %15, i64 8 ; 3 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %14, i64 16 ; 2 uses
   %i.ef = getelementptr inbounds nuw i8, ptr %14, i64 20 ; 2 uses
@@ -1565,10 +1565,10 @@ bb.bo:                                            ; preds = %bb.bn
   store i32 0, ptr %i.e, align 4, !tbaa !240
   call void @llvm.experimental.noalias.scope.decl(metadata !241)
   %i.kg = invoke noalias noundef nonnull dereferenceable(288) ptr @_Znwm(i64 noundef 288) #30
-          to label %.noexc243 unwind label %bb.bx ; 8 uses
+          to label %.noexc243 unwind label %bb.bx ; 7 uses
 
 .noexc243:                                        ; preds = %bb.bo
-  %i.kh = getelementptr inbounds nuw i8, ptr %i.kg, i64 8 ; 4 uses
+  %i.kh = getelementptr inbounds nuw i8, ptr %i.kg, i64 8
   store i32 1, ptr %i.kh, align 8, !tbaa !40, !noalias !241
   %i.ki = getelementptr inbounds nuw i8, ptr %i.kg, i64 12
   store i32 1, ptr %i.ki, align 4, !tbaa !42, !noalias !241
@@ -1689,26 +1689,32 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit247: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #27
   br label %bb.dl
 
-bb.cb:                                            ; preds = %bb.bq, %bb.bs
+bb.cb:                                            ; preds = %bb.bs, %bb.bq
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #27
   %i.lj = load ptr, ptr %i.ar, align 8, !tbaa !211, !nonnull !96, !align !212
   store ptr %.pre908, ptr %15, align 16, !tbaa !169
-  store ptr %i.kg, ptr %i.ed, align 8, !tbaa !37
-  %67 = load i8, ptr @__libc_single_threaded, align 1, !tbaa !17
-  %.not.i.i.i.i249.a = icmp eq i8 %67, 0
-  br i1 %.not.i.i.i.i249.a, label %bb.cd, label %bb.cc
+  %67 = load ptr, ptr %i.ec, align 8, !tbaa !37   ; 3 uses
+  store ptr %67, ptr %i.ed, align 8, !tbaa !37
+  %.not.i.i.i.i249.a = icmp eq ptr %67, null
+  br i1 %.not.i.i.i.i249.a, label %_ZNSt10shared_ptrIKN16OpenColorIO_v2_511GammaOpDataEEC2IS1_vEERKS_IT_E.exit, label %68
 
-bb.cc:                                            ; preds = %bb.cb
-  %i.lk = load i32, ptr %i.kh, align 8, !tbaa !3
+68:                                               ; preds = %bb.cb
+  %69 = getelementptr inbounds nuw i8, ptr %67, i64 8 ; 3 uses
+  %70 = load i8, ptr @__libc_single_threaded, align 1, !tbaa !17
+  %.not.i.i.i.i249 = icmp eq i8 %70, 0
+  br i1 %.not.i.i.i.i249, label %bb.cd, label %bb.cc
+
+bb.cc:                                            ; preds = %68
+  %i.lk = load i32, ptr %69, align 4, !tbaa !3
   %i.ll = add nsw i32 %i.lk, 1
-  store i32 %i.ll, ptr %i.kh, align 8, !tbaa !3
+  store i32 %i.ll, ptr %69, align 4, !tbaa !3
   br label %_ZNSt10shared_ptrIKN16OpenColorIO_v2_511GammaOpDataEEC2IS1_vEERKS_IT_E.exit
 
-bb.cd:                                            ; preds = %bb.cb
-  %i.lm = atomicrmw volatile add ptr %i.kh, i32 1 acq_rel, align 4 ; 0 uses
+bb.cd:                                            ; preds = %68
+  %i.lm = atomicrmw volatile add ptr %69, i32 1 acq_rel, align 4 ; 0 uses
   br label %_ZNSt10shared_ptrIKN16OpenColorIO_v2_511GammaOpDataEEC2IS1_vEERKS_IT_E.exit
 
-_ZNSt10shared_ptrIKN16OpenColorIO_v2_511GammaOpDataEEC2IS1_vEERKS_IT_E.exit: ; preds = %bb.cc, %bb.cd
+_ZNSt10shared_ptrIKN16OpenColorIO_v2_511GammaOpDataEEC2IS1_vEERKS_IT_E.exit: ; preds = %bb.cb, %bb.cc, %bb.cd
   invoke void @_ZN16OpenColorIO_v2_516XmlElementWriterC2ERNS_12XmlFormatterE(ptr noundef nonnull align 8 dereferenceable(56) %14, ptr noundef nonnull align 8 dereferenceable(16) %i.lj)
           to label %.noexc252 unwind label %bb.di
 

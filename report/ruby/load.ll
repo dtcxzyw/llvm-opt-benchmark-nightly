@@ -201,7 +201,7 @@ declare i64 @rb_str_encode_ospath(i64 noundef) local_unnamed_addr #1
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc i32 @search_required(ptr noundef %0, i64 noundef %1, ptr noundef nonnull %2, ptr noundef readonly captures(none) %3) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca i64, align 8                      ; 9 uses
+  %i.a = alloca i64, align 8                      ; 13 uses
   %i.b = alloca ptr, align 8                      ; 15 uses
   %i.c = alloca i64, align 8                      ; 6 uses
   %i.d = alloca ptr, align 8                      ; 5 uses
@@ -252,6 +252,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.e
   %i.r = call i64 @rb_find_file(i64 noundef %1) #7 ; 3 uses
+  store i64 %i.r, ptr %i.a, align 8, !tbaa !20
   %.not102 = icmp eq i64 %i.r, 0
   br i1 %.not102, label %bb.ap, label %bb.i
 
@@ -278,7 +279,8 @@ RSTRING_PTR.exit113:                              ; preds = %bb.i, %bb.j
   br i1 %or.cond, label %bb.k, label %bb.ap
 
 bb.k:                                             ; preds = %RSTRING_PTR.exit113
-  store volatile i64 %i.r, ptr %2, align 8, !tbaa !20
+  %4 = load i64, ptr %i.a, align 8, !tbaa !20
+  store volatile i64 %4, ptr %2, align 8, !tbaa !20
   br label %bb.ap
 
 bb.l:                                             ; preds = %bb.d
@@ -337,6 +339,7 @@ RSTRING_PTR.exit115:                              ; preds = %bb.p, %bb.q
   %i.aw = call i64 @rb_str_cat(i64 noundef %i.av, ptr noundef nonnull @.str.5, i64 noundef 3) #7 ; 0 uses
   call void @rb_obj_freeze_inline(i64 noundef %i.av) #7
   %i.ax = call i64 @rb_find_file(i64 noundef %i.av) #7 ; 3 uses
+  store i64 %i.ax, ptr %i.a, align 8, !tbaa !20
   %.not99 = icmp eq i64 %i.ax, 0
   br i1 %.not99, label %.thread, label %bb.r
 
@@ -363,7 +366,8 @@ RSTRING_PTR.exit117:                              ; preds = %bb.r, %bb.s
   br i1 %or.cond4, label %bb.t, label %bb.ap
 
 bb.t:                                             ; preds = %RSTRING_PTR.exit117
-  store volatile i64 %i.ax, ptr %2, align 8, !tbaa !20
+  %5 = load i64, ptr %i.a, align 8, !tbaa !20
+  store volatile i64 %5, ptr %2, align 8, !tbaa !20
   br label %bb.ap
 
 bb.u:                                             ; preds = %bb.c, %RSTRING_PTR.exit
@@ -766,7 +770,7 @@ declare void @rb_warn(ptr noundef, ...) local_unnamed_addr #21
 declare i64 @rb_str_cat(i64 noundef, ptr noundef, i64 noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc i64 @loaded_feature_path(ptr noundef %0, i64 noundef %1, ptr noundef readonly %2, i64 noundef %3, i32 noundef %4, i64 noundef %5) unnamed_addr #0 {
+define internal fastcc i64 @loaded_feature_path(ptr noundef %0, i64 noundef %1, ptr noundef readonly captures(address) %2, i64 noundef %3, i32 noundef %4, i64 noundef %5) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 7 uses
   %i.b = add i64 %3, 1

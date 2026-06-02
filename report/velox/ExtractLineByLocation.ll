@@ -63,7 +63,7 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress uwtable
 define void @_ZN4geos9linearref21ExtractLineByLocation7extractERKNS0_14LinearLocationES4_(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::unique_ptr") align 8 captures(none) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %3) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = alloca %"class.std::unique_ptr", align 8   ; 5 uses
+  %4 = alloca %"class.std::unique_ptr", align 8   ; 7 uses
   %i.a = tail call noundef i32 @_ZNK4geos9linearref14LinearLocation9compareToERKS1_(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %2)
   %i.b = icmp slt i32 %i.a, 0
   br i1 %i.b, label %bb.b, label %bb.f
@@ -71,10 +71,14 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #8
   call void @_ZN4geos9linearref21ExtractLineByLocation13computeLinearERKNS0_14LinearLocationES4_(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr") align 8 %4, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %2)
-  %i.c = load ptr, ptr %4, align 8, !tbaa !7      ; 7 uses
+  %i.c = load ptr, ptr %4, align 8, !tbaa !7      ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10)
   %i.d = icmp eq ptr %i.c, null
-  br i1 %i.d, label %bb.e, label %bb.c
+  br i1 %i.d, label %.thread, label %bb.c
+
+.thread:                                          ; preds = %bb.b
+  store ptr null, ptr %0, align 8, !tbaa !13, !alias.scope !10
+  br label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit12
 
 bb.c:                                             ; preds = %bb.b
   %i.e = tail call ptr @__dynamic_cast(ptr nonnull %i.c, ptr nonnull @_ZTIN4geos4geom8GeometryE, ptr nonnull @_ZTIN4geos4geom10LineStringE, i64 0) #8, !noalias !10 ; 2 uses
@@ -84,40 +88,53 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.f = tail call ptr @__dynamic_cast(ptr nonnull %i.c, ptr nonnull @_ZTIN4geos4geom8GeometryE, ptr nonnull @_ZTIN4geos4geom15MultiLineStringE, i64 0) #8, !noalias !10 ; 2 uses
   %.not8.i = icmp eq ptr %i.f, null
-  br i1 %.not8.i, label %_ZNKSt14default_deleteIN4geos4geom8GeometryEEclEPS2_.exit.i11, label %.thread15.sink.split.i
+  br i1 %.not8.i, label %.thread19, label %.thread15.sink.split.i
+
+.thread19:                                        ; preds = %bb.d
+  store ptr null, ptr %0, align 8, !tbaa !13, !alias.scope !10
+  br label %_ZNKSt14default_deleteIN4geos4geom8GeometryEEclEPS2_.exit.i11
 
 .thread15.sink.split.i:                           ; preds = %bb.d, %bb.c
   %.sink23.i = phi ptr [ %i.e, %bb.c ], [ %i.f, %bb.d ] ; 2 uses
-  %i.g = load ptr, ptr %.sink23.i, align 8, !tbaa !13, !noalias !10
+  %i.g = load ptr, ptr %.sink23.i, align 8, !tbaa !15, !noalias !17
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 424
   %i.i = load ptr, ptr %i.h, align 8, !noalias !10
   %i.j = invoke noundef ptr %i.i(ptr noundef nonnull align 8 dereferenceable(48) %.sink23.i)
-          to label %_ZNKSt14default_deleteIN4geos4geom8GeometryEEclEPS2_.exit.i11 unwind label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit.a, !inline_history !15
+          to label %bb.e unwind label %5, !inline_history !18
 
-_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit.a: ; preds = %.thread15.sink.split.i
-  %5 = landingpad { ptr, i32 }
+5:                                                ; preds = %.thread15.sink.split.i
+  %6 = landingpad { ptr, i32 }
           cleanup
-  %i.k = load ptr, ptr %i.c, align 8, !tbaa !13
+  %7 = load ptr, ptr %4, align 8, !tbaa !7        ; 3 uses
+  %.not.i9 = icmp eq ptr %7, null
+  br i1 %.not.i9, label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit, label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit.a
+
+_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit.a: ; preds = %5
+  %i.k = load ptr, ptr %7, align 8, !tbaa !15
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.m = load ptr, ptr %i.l, align 8
-  tail call void %i.m(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %i.c) #8, !inline_history !16
+  tail call void %i.m(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %7) #8, !inline_history !19
+  br label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit
+
+_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit: ; preds = %5, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit.a
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
-  resume { ptr, i32 } %5
+  resume { ptr, i32 } %6
 
-bb.e:                                             ; preds = %bb.b
-  store ptr null, ptr %0, align 8, !tbaa !17, !alias.scope !10
-  br label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit12
+bb.e:                                             ; preds = %.thread15.sink.split.i
+  %.pr.pre = load ptr, ptr %4, align 8, !tbaa !7  ; 2 uses
+  store ptr %i.j, ptr %0, align 8, !tbaa !13, !alias.scope !10
+  %.not.i10 = icmp eq ptr %.pr.pre, null
+  br i1 %.not.i10, label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit12, label %_ZNKSt14default_deleteIN4geos4geom8GeometryEEclEPS2_.exit.i11
 
-_ZNKSt14default_deleteIN4geos4geom8GeometryEEclEPS2_.exit.i11: ; preds = %bb.d, %.thread15.sink.split.i
-  %.sink.i.ph = phi ptr [ %i.j, %.thread15.sink.split.i ], [ null, %bb.d ]
-  store ptr %.sink.i.ph, ptr %0, align 8, !tbaa !17, !alias.scope !10
-  %i.n = load ptr, ptr %i.c, align 8, !tbaa !13
+_ZNKSt14default_deleteIN4geos4geom8GeometryEEclEPS2_.exit.i11: ; preds = %.thread19, %bb.e
+  %.sink.i.ph = phi ptr [ %i.c, %.thread19 ], [ %.pr.pre, %bb.e ] ; 2 uses
+  %i.n = load ptr, ptr %.sink.i.ph, align 8, !tbaa !15
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   %i.p = load ptr, ptr %i.o, align 8
-  tail call void %i.p(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %i.c) #8, !inline_history !16
+  tail call void %i.p(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %.sink.i.ph) #8, !inline_history !19
   br label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit12
 
-_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit12: ; preds = %bb.e, %_ZNKSt14default_deleteIN4geos4geom8GeometryEEclEPS2_.exit.i11
+_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit12: ; preds = %.thread, %bb.e, %_ZNKSt14default_deleteIN4geos4geom8GeometryEEclEPS2_.exit.i11
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
   br label %bb.g
 
@@ -135,7 +152,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define void @_ZN4geos9linearref21ExtractLineByLocationC2EPKNS_4geom8GeometryE(ptr noundef nonnull writeonly align 8 captures(none) dereferenceable(8) initializes((0, 8)) %0, ptr noundef %1) unnamed_addr #2 align 2 {
 bb.a:
-  store ptr %1, ptr %0, align 8, !tbaa !19
+  store ptr %1, ptr %0, align 8, !tbaa !20
   ret void
 }
 
@@ -150,9 +167,9 @@ bb.a:
   %7 = alloca %"class.geos::geom::Coordinate", align 8 ; 5 uses
   %8 = alloca %"class.geos::geom::Coordinate", align 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #8
-  %i.a = load ptr, ptr %1, align 8, !tbaa !19
+  %i.a = load ptr, ptr %1, align 8, !tbaa !20
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !21
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !22
   call void @_ZN4geos9linearref21LinearGeometryBuilderC1EPKNS_4geom15GeometryFactoryE(ptr noundef nonnull align 8 dereferenceable(72) %4, ptr noundef %i.c)
   invoke void @_ZN4geos9linearref21LinearGeometryBuilder18setFixInvalidLinesEb(ptr noundef nonnull align 8 dereferenceable(72) %4, i1 noundef zeroext true)
           to label %bb.b unwind label %bb.g
@@ -166,7 +183,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
-  %i.e = load ptr, ptr %1, align 8, !tbaa !19
+  %i.e = load ptr, ptr %1, align 8, !tbaa !20
   invoke void @_ZNK4geos9linearref14LinearLocation13getCoordinateEPKNS_4geom8GeometryE(ptr dead_on_unwind nonnull writable sret(%"class.geos::geom::Coordinate") align 8 %5, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef %i.e)
           to label %bb.e unwind label %bb.h
 
@@ -191,7 +208,7 @@ bb.h:                                             ; preds = %bb.e, %bb.d
 
 bb.i:                                             ; preds = %bb.f, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #8
-  %i.h = load ptr, ptr %1, align 8, !tbaa !19
+  %i.h = load ptr, ptr %1, align 8, !tbaa !20
   invoke void @_ZN4geos9linearref14LinearIteratorC1EPKNS_4geom8GeometryERKNS0_14LinearLocationE(ptr noundef nonnull align 8 dereferenceable(40) %6, ptr noundef %i.h, ptr noundef nonnull align 8 dereferenceable(24) %2)
           to label %.preheader unwind label %.loopexit.split-lp
 
@@ -257,7 +274,7 @@ bb.t:                                             ; preds = %bb.s, %bb.q, %bb.p,
 bb.u:                                             ; preds = %bb.s, %bb.r
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #8
   invoke void @_ZN4geos9linearref14LinearIterator4nextEv(ptr noundef nonnull align 8 dereferenceable(40) %6)
-          to label %.preheader unwind label %.loopexit, !llvm.loop !31
+          to label %.preheader unwind label %.loopexit, !llvm.loop !32
 
 bb.v:                                             ; preds = %bb.n, %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #8
@@ -274,7 +291,7 @@ bb.x:                                             ; preds = %bb.v
 
 bb.y:                                             ; preds = %bb.x
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #8
-  %i.q = load ptr, ptr %1, align 8, !tbaa !19
+  %i.q = load ptr, ptr %1, align 8, !tbaa !20
   invoke void @_ZNK4geos9linearref14LinearLocation13getCoordinateEPKNS_4geom8GeometryE(ptr dead_on_unwind nonnull writable sret(%"class.geos::geom::Coordinate") align 8 %8, ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef %i.q)
           to label %bb.z unwind label %bb.ab
 
@@ -327,15 +344,15 @@ bb.c:                                             ; preds = %bb.b
 
 .thread15.sink.split:                             ; preds = %bb.c, %bb.b
   %.sink23 = phi ptr [ %i.b, %bb.b ], [ %i.c, %bb.c ] ; 2 uses
-  %i.d = load ptr, ptr %.sink23, align 8, !tbaa !13, !noalias !33
+  %i.d = load ptr, ptr %.sink23, align 8, !tbaa !15, !noalias !17
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 424
-  %i.f = load ptr, ptr %i.e, align 8, !noalias !33
-  %i.g = tail call noundef ptr %i.f(ptr noundef nonnull align 8 dereferenceable(48) %.sink23), !noalias !33
+  %i.f = load ptr, ptr %i.e, align 8, !noalias !17
+  %i.g = tail call noundef ptr %i.f(ptr noundef nonnull align 8 dereferenceable(48) %.sink23), !noalias !17
   br label %.thread15
 
 .thread15:                                        ; preds = %.thread15.sink.split, %bb.c, %bb.a
   %.sink = phi ptr [ null, %bb.a ], [ null, %bb.c ], [ %i.g, %.thread15.sink.split ]
-  store ptr %.sink, ptr %0, align 8, !tbaa !17
+  store ptr %.sink, ptr %0, align 8, !tbaa !13
   ret void
 }
 
@@ -353,8 +370,8 @@ bb.a:
   %7 = alloca %"class.geos::geom::Coordinate", align 8 ; 5 uses
   %8 = alloca %"class.geos::geom::Coordinate", align 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #8
-  %i.a = load ptr, ptr %1, align 8, !tbaa !19     ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !13
+  %i.a = load ptr, ptr %1, align 8, !tbaa !20     ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !15
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   %i.d = load ptr, ptr %i.c, align 8
   call void %i.d(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.18") align 8 %4, ptr noundef nonnull align 8 dereferenceable(40) %i.a)
@@ -393,7 +410,7 @@ bb.g:                                             ; preds = %bb.d
 
 bb.h:                                             ; preds = %bb.g
   %i.m = load ptr, ptr %4, align 8, !tbaa !34     ; 2 uses
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !13
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !15
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 48
   %i.p = load ptr, ptr %i.o, align 8
   %i.q = invoke noundef i64 %i.p(ptr noundef nonnull align 8 dereferenceable(8) %i.m)
@@ -413,7 +430,7 @@ _ZNK4geos4geom18CoordinateSequence4sizeEv.exit:   ; preds = %bb.h
 
 bb.j:                                             ; preds = %_ZNK4geos4geom18CoordinateSequence4sizeEv.exit
   %i.u = load ptr, ptr %4, align 8, !tbaa !34     ; 2 uses
-  %i.v = load ptr, ptr %i.u, align 8, !tbaa !13
+  %i.v = load ptr, ptr %i.u, align 8, !tbaa !15
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 48
   %i.x = load ptr, ptr %i.w, align 8
   %i.y = invoke noundef i64 %i.x(ptr noundef nonnull align 8 dereferenceable(8) %i.u)
@@ -433,7 +450,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #8
-  %i.ab = load ptr, ptr %1, align 8, !tbaa !19
+  %i.ab = load ptr, ptr %1, align 8, !tbaa !20
   invoke void @_ZNK4geos9linearref14LinearLocation13getCoordinateEPKNS_4geom8GeometryE(ptr dead_on_unwind nonnull writable sret(%"class.geos::geom::Coordinate") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef %i.ab)
           to label %bb.n unwind label %bb.p
 
@@ -462,7 +479,7 @@ bb.q:                                             ; preds = %bb.o, %bb.l
 .lr.ph:                                           ; preds = %bb.q, %bb.r
   %.039 = phi i64 [ %i.aj, %bb.r ], [ %.020, %bb.q ] ; 2 uses
   %i.ae = load ptr, ptr %4, align 8, !tbaa !34    ; 2 uses
-  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !13
+  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !15
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 24
   %i.ah = load ptr, ptr %i.ag, align 8
   %i.ai = invoke noundef nonnull align 8 dereferenceable(24) ptr %i.ah(ptr noundef nonnull align 8 dereferenceable(8) %i.ae, i64 noundef %.039)
@@ -487,7 +504,7 @@ bb.t:                                             ; preds = %._crit_edge
 
 bb.u:                                             ; preds = %bb.t
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #8
-  %i.al = load ptr, ptr %1, align 8, !tbaa !19
+  %i.al = load ptr, ptr %1, align 8, !tbaa !20
   invoke void @_ZNK4geos9linearref14LinearLocation13getCoordinateEPKNS_4geom8GeometryE(ptr dead_on_unwind nonnull writable sret(%"class.geos::geom::Coordinate") align 8 %7, ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef %i.al)
           to label %bb.v unwind label %bb.x
 
@@ -515,7 +532,7 @@ bb.y:                                             ; preds = %bb.t, %bb.w
 
 bb.z:                                             ; preds = %bb.y
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #8
-  %i.as = load ptr, ptr %1, align 8, !tbaa !19
+  %i.as = load ptr, ptr %1, align 8, !tbaa !20
   invoke void @_ZNK4geos9linearref14LinearLocation13getCoordinateEPKNS_4geom8GeometryE(ptr dead_on_unwind nonnull writable sret(%"class.geos::geom::Coordinate") align 8 %8, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef %i.as)
           to label %bb.aa unwind label %bb.ac
 
@@ -534,7 +551,7 @@ bb.ac:                                            ; preds = %bb.aa, %bb.z
   br label %bb.ai
 
 bb.ad:                                            ; preds = %bb.ab, %bb.y
-  %i.au = load ptr, ptr %5, align 8, !tbaa !13
+  %i.au = load ptr, ptr %5, align 8, !tbaa !15
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 48
   %i.aw = load ptr, ptr %i.av, align 8
   %i.ax = invoke noundef i64 %i.aw(ptr noundef nonnull align 8 dereferenceable(8) %5)
@@ -545,7 +562,7 @@ _ZNK4geos4geom18CoordinateSequence4sizeEv.exit31: ; preds = %bb.ad
   br i1 %i.ay, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %_ZNK4geos4geom18CoordinateSequence4sizeEv.exit31
-  %i.az = load ptr, ptr %5, align 8, !tbaa !13
+  %i.az = load ptr, ptr %5, align 8, !tbaa !15
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 24
   %i.bb = load ptr, ptr %i.ba, align 8
   %i.bc = invoke noundef nonnull align 8 dereferenceable(24) ptr %i.bb(ptr noundef nonnull align 8 dereferenceable(8) %5, i64 noundef 0)
@@ -556,15 +573,15 @@ _ZNK4geos4geom18CoordinateSequenceixEm.exit32:    ; preds = %bb.ae
           to label %bb.af unwind label %bb.i
 
 bb.af:                                            ; preds = %_ZNK4geos4geom18CoordinateSequenceixEm.exit32, %_ZNK4geos4geom18CoordinateSequence4sizeEv.exit31
-  %i.bd = load ptr, ptr %1, align 8, !tbaa !19
+  %i.bd = load ptr, ptr %1, align 8, !tbaa !20
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 24
-  %i.bf = load ptr, ptr %i.be, align 8, !tbaa !21
+  %i.bf = load ptr, ptr %i.be, align 8, !tbaa !22
   %i.bg = invoke noundef ptr @_ZNK4geos4geom15GeometryFactory16createLineStringERKNS0_18CoordinateSequenceE(ptr noundef nonnull align 8 dereferenceable(45) %i.bf, ptr noundef nonnull align 8 dereferenceable(8) %5)
           to label %bb.ag unwind label %bb.i
 
 bb.ag:                                            ; preds = %bb.af
   store ptr %i.bg, ptr %0, align 8, !tbaa !41
-  store ptr getelementptr inbounds nuw inrange(-16, 152) (i8, ptr @_ZTVN4geos4geom23CoordinateArraySequenceE, i64 16), ptr %5, align 8, !tbaa !13
+  store ptr getelementptr inbounds nuw inrange(-16, 152) (i8, ptr @_ZTVN4geos4geom23CoordinateArraySequenceE, i64 16), ptr %5, align 8, !tbaa !15
   %i.bh = load ptr, ptr %i.an, align 8, !tbaa !43 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.bh, null
   br i1 %.not.i.i.i.i, label %_ZN4geos4geom23CoordinateArraySequenceD2Ev.exit, label %bb.ah
@@ -580,7 +597,7 @@ _ZN4geos4geom23CoordinateArraySequenceD2Ev.exit:  ; preds = %bb.ag, %bb.ah
   br i1 %.not.i, label %_ZNSt10unique_ptrIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EED2Ev.exit, label %_ZNKSt14default_deleteIN4geos4geom18CoordinateSequenceEEclEPS2_.exit.i
 
 _ZNKSt14default_deleteIN4geos4geom18CoordinateSequenceEEclEPS2_.exit.i: ; preds = %_ZN4geos4geom23CoordinateArraySequenceD2Ev.exit
-  %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !13
+  %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !15
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 8
   %i.bl = load ptr, ptr %i.bk, align 8
   call void %i.bl(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.bi) #8, !inline_history !45
@@ -592,7 +609,7 @@ _ZNSt10unique_ptrIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EED2Ev.e
 
 bb.ai:                                            ; preds = %bb.i, %bb.p, %bb.s, %bb.x, %bb.ac, %bb.f
   %.pn.pn = phi { ptr, i32 } [ %i.k, %bb.f ], [ %i.ak, %bb.s ], [ %i.r, %bb.i ], [ %i.at, %bb.ac ], [ %i.am, %bb.x ], [ %i.ac, %bb.p ] ; 2 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 152) (i8, ptr @_ZTVN4geos4geom23CoordinateArraySequenceE, i64 16), ptr %5, align 8, !tbaa !13
+  store ptr getelementptr inbounds nuw inrange(-16, 152) (i8, ptr @_ZTVN4geos4geom23CoordinateArraySequenceE, i64 16), ptr %5, align 8, !tbaa !15
   %i.bm = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !43 ; 2 uses
   %.not.i.i.i.i33 = icmp eq ptr %i.bn, null
@@ -610,7 +627,7 @@ _ZN4geos4geom23CoordinateArraySequenceD2Ev.exit34: ; preds = %bb.aj, %bb.ai, %bb
   br i1 %.not.i35, label %_ZNSt10unique_ptrIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EED2Ev.exit37, label %_ZNKSt14default_deleteIN4geos4geom18CoordinateSequenceEEclEPS2_.exit.i36
 
 _ZNKSt14default_deleteIN4geos4geom18CoordinateSequenceEEclEPS2_.exit.i36: ; preds = %_ZN4geos4geom23CoordinateArraySequenceD2Ev.exit34
-  %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !13
+  %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !15
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
   %i.br = load ptr, ptr %i.bq, align 8
   call void %i.br(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.bo) #8, !inline_history !45
@@ -698,32 +715,32 @@ attributes #9 = { builtin nounwind }
 !10 = !{!11}
 !11 = distinct !{!11, !12, !"_ZN4geos9linearref21ExtractLineByLocation7reverseEPKNS_4geom8GeometryE: argument 0"}
 !12 = distinct !{!12, !"_ZN4geos9linearref21ExtractLineByLocation7reverseEPKNS_4geom8GeometryE"}
-!13 = !{!14, !14, i64 0}
-!14 = !{!"vtable pointer", !6, i64 0}
-!15 = !{ptr @_ZN4geos9linearref21ExtractLineByLocation7reverseEPKNS_4geom8GeometryE}
-!16 = distinct !{null, null}
-!17 = !{!18, !8, i64 0}
-!18 = !{!"_ZTSSt10_Head_baseILm0EPN4geos4geom8GeometryELb0EE", !8, i64 0}
-!19 = !{!20, !8, i64 0}
-!20 = !{!"_ZTSN4geos9linearref21ExtractLineByLocationE", !8, i64 0}
-!21 = !{!22, !30, i64 24}
-!22 = !{!"_ZTSN4geos4geom8GeometryE", !23, i64 8, !4, i64 16, !30, i64 24, !9, i64 32}
-!23 = !{!"_ZTSSt10unique_ptrIN4geos4geom8EnvelopeESt14default_deleteIS2_EE", !24, i64 0}
-!24 = !{!"_ZTSSt15__uniq_ptr_dataIN4geos4geom8EnvelopeESt14default_deleteIS2_ELb1ELb1EE", !25, i64 0}
-!25 = !{!"_ZTSSt15__uniq_ptr_implIN4geos4geom8EnvelopeESt14default_deleteIS2_EE", !26, i64 0}
-!26 = !{!"_ZTSSt5tupleIJPN4geos4geom8EnvelopeESt14default_deleteIS2_EEE", !27, i64 0}
-!27 = !{!"_ZTSSt11_Tuple_implILm0EJPN4geos4geom8EnvelopeESt14default_deleteIS2_EEE", !28, i64 0}
-!28 = !{!"_ZTSSt10_Head_baseILm0EPN4geos4geom8EnvelopeELb0EE", !29, i64 0}
-!29 = !{!"p1 _ZTSN4geos4geom8EnvelopeE", !9, i64 0}
-!30 = !{!"p1 _ZTSN4geos4geom15GeometryFactoryE", !9, i64 0}
-!31 = distinct !{!31, !32}
-!32 = !{!"llvm.loop.mustprogress"}
-!33 = !{}
+!13 = !{!14, !8, i64 0}
+!14 = !{!"_ZTSSt10_Head_baseILm0EPN4geos4geom8GeometryELb0EE", !8, i64 0}
+!15 = !{!16, !16, i64 0}
+!16 = !{!"vtable pointer", !6, i64 0}
+!17 = !{}
+!18 = !{ptr @_ZN4geos9linearref21ExtractLineByLocation7reverseEPKNS_4geom8GeometryE}
+!19 = distinct !{null, null}
+!20 = !{!21, !8, i64 0}
+!21 = !{!"_ZTSN4geos9linearref21ExtractLineByLocationE", !8, i64 0}
+!22 = !{!23, !31, i64 24}
+!23 = !{!"_ZTSN4geos4geom8GeometryE", !24, i64 8, !4, i64 16, !31, i64 24, !9, i64 32}
+!24 = !{!"_ZTSSt10unique_ptrIN4geos4geom8EnvelopeESt14default_deleteIS2_EE", !25, i64 0}
+!25 = !{!"_ZTSSt15__uniq_ptr_dataIN4geos4geom8EnvelopeESt14default_deleteIS2_ELb1ELb1EE", !26, i64 0}
+!26 = !{!"_ZTSSt15__uniq_ptr_implIN4geos4geom8EnvelopeESt14default_deleteIS2_EE", !27, i64 0}
+!27 = !{!"_ZTSSt5tupleIJPN4geos4geom8EnvelopeESt14default_deleteIS2_EEE", !28, i64 0}
+!28 = !{!"_ZTSSt11_Tuple_implILm0EJPN4geos4geom8EnvelopeESt14default_deleteIS2_EEE", !29, i64 0}
+!29 = !{!"_ZTSSt10_Head_baseILm0EPN4geos4geom8EnvelopeELb0EE", !30, i64 0}
+!30 = !{!"p1 _ZTSN4geos4geom8EnvelopeE", !9, i64 0}
+!31 = !{!"p1 _ZTSN4geos4geom15GeometryFactoryE", !9, i64 0}
+!32 = distinct !{!32, !33}
+!33 = !{!"llvm.loop.mustprogress"}
 !34 = !{!35, !35, i64 0}
 !35 = !{!"p1 _ZTSN4geos4geom18CoordinateSequenceE", !9, i64 0}
 !36 = distinct !{null}
 !37 = distinct !{null}
-!38 = distinct !{!38, !32}
+!38 = distinct !{!38, !33}
 !39 = !{!40, !40, i64 0}
 !40 = !{!"p1 _ZTSN4geos4geom10CoordinateE", !9, i64 0}
 !41 = !{!42, !42, i64 0}

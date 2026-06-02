@@ -200,8 +200,8 @@ declare ptr @tj3LoadImage16(ptr noundef, ptr noundef, ptr noundef, i32 noundef, 
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @decompTest(ptr noundef %0) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 7 uses
-  %i.b = alloca i64, align 8                      ; 5 uses
+  %i.a = alloca ptr, align 8                      ; 8 uses
+  %i.b = alloca i64, align 8                      ; 6 uses
   %i.c = alloca [80 x i8], align 16               ; 6 uses
   %i.d = alloca [80 x i8], align 16               ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
@@ -240,7 +240,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.v, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.w = tail call i64 @ftell(ptr noundef nonnull %i.o) ; 5 uses
+  %i.w = tail call i64 @ftell(ptr noundef nonnull %i.o) ; 4 uses
   store i64 %i.w, ptr %i.b, align 8, !tbaa !43
   %i.x = icmp eq i64 %i.w, -1
   br i1 %i.x, label %bb.e, label %bb.f
@@ -253,7 +253,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br label %.thread948
 
 bb.f:                                             ; preds = %bb.d
-  %i.ac = tail call noalias ptr @malloc(i64 noundef %i.w) #26 ; 4 uses
+  %i.ac = tail call noalias ptr @malloc(i64 noundef %i.w) #26 ; 3 uses
   store ptr %i.ac, ptr %i.a, align 8, !tbaa !10
   %i.ad = icmp eq ptr %i.ac, null
   br i1 %i.ad, label %bb.g, label %bb.h
@@ -656,7 +656,9 @@ bb.bn:                                            ; preds = %bb.bj
   br label %.thread965
 
 .thread888:                                       ; preds = %bb.bl, %bb.bm, %.thread884
-  %i.gu = tail call i32 @tj3DecompressHeader(ptr noundef nonnull %i.aw, ptr noundef nonnull %i.ac, i64 noundef %i.w) #22
+  %1 = load ptr, ptr %i.a, align 8, !tbaa !10
+  %2 = load i64, ptr %i.b, align 8, !tbaa !43
+  %i.gu = tail call i32 @tj3DecompressHeader(ptr noundef nonnull %i.aw, ptr noundef %1, i64 noundef %2) #22
   %i.gv = icmp eq i32 %i.gu, -1
   br i1 %i.gv, label %bb.bo, label %.thread892
 

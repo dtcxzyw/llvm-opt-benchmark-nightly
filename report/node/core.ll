@@ -201,7 +201,7 @@ bb.a:
   br i1 %.not, label %bb.b, label %uv__close.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = tail call ptr @__errno_location() #23    ; 7 uses
+  %i.d = tail call ptr @__errno_location() #23    ; 8 uses
   %i.e = load i32, ptr %i.d, align 4              ; 2 uses
   %.not22 = icmp eq i32 %i.e, 22
   br i1 %.not22, label %bb.d, label %bb.c
@@ -276,7 +276,7 @@ uv__cloexec.exit:                                 ; preds = %bb.j, %..critedge.i
   br i1 %.not23, label %uv__close.exit, label %uv__cloexec.exit.thread
 
 uv__cloexec.exit.thread:                          ; preds = %uv__nonblock_ioctl.exit, %uv__cloexec.exit
-  %i.t = phi i32 [ %i.s, %uv__cloexec.exit ], [ %i.n, %uv__nonblock_ioctl.exit ] ; 2 uses
+  %i.t = phi i32 [ %i.s, %uv__cloexec.exit ], [ %i.n, %uv__nonblock_ioctl.exit ]
   %.042 = sub nsw i32 0, %i.t                     ; 2 uses
   %i.u = icmp sgt i32 %i.g, 2
   br i1 %i.u, label %bb.l, label %bb.k
@@ -286,13 +286,14 @@ bb.k:                                             ; preds = %uv__cloexec.exit.th
   unreachable
 
 bb.l:                                             ; preds = %uv__cloexec.exit.thread
+  %3 = load i32, ptr %i.d, align 4
   %i.v = call i64 (i64, ...) @syscall(i64 noundef 3, i32 noundef %i.g) #22
   %i.w = and i64 %i.v, 4294967295
   %i.x = icmp eq i64 %i.w, 4294967295
   br i1 %i.x, label %bb.m, label %uv__close.exit
 
 bb.m:                                             ; preds = %bb.l
-  store i32 %i.t, ptr %i.d, align 4
+  store i32 %3, ptr %i.d, align 4
   br label %uv__close.exit
 
 uv__close.exit:                                   ; preds = %bb.i, %bb.m, %bb.l, %uv__cloexec.exit, %bb.a, %bb.e, %bb.c

@@ -201,7 +201,7 @@ bb.k:                                             ; preds = %bb.d, %_ZNSt7__cxx1
 ; Function Attrs: mustprogress uwtable
 define hidden noundef zeroext i1 @_ZN6Assimp3IFC20ProcessGeometricItemERKNS0_10Schema_2x321IfcRepresentationItemEjRSt3setIjSt4lessIjESaIjEERNS0_14ConversionDataE(ptr noundef nonnull align 8 dereferenceable(9) %0, i32 noundef %1, ptr noundef nonnull align 8 dereferenceable(48) %2, ptr noundef nonnull align 8 dereferenceable(392) %3) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = alloca %"class.std::shared_ptr", align 8   ; 7 uses
+  %4 = alloca %"class.std::shared_ptr", align 8   ; 9 uses
   %5 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 8 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.a = alloca ptr, align 8                      ; 5 uses
@@ -211,14 +211,14 @@ bb.a:
   %10 = alloca %"class.std::shared_ptr", align 8  ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #30
   tail call void @llvm.experimental.noalias.scope.decl(metadata !225)
-  %i.b = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
-  %i.c = tail call noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #28, !noalias !225 ; 16 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
+  %i.c = tail call noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #28, !noalias !225 ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store i32 1, ptr %i.d, align 8, !noalias !225
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 12
   store i32 1, ptr %i.e, align 4, !noalias !225
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN6Assimp3IFC8TempMeshESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.c, align 8, !noalias !225
-  %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 14 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 8 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.f, i8 0, i64 48, i1 false), !noalias !225
   store ptr %i.c, ptr %i.b, align 8, !alias.scope !225
   store ptr %i.f, ptr %4, align 8, !alias.scope !225
@@ -392,7 +392,8 @@ bb.z:                                             ; preds = %bb.y
           to label %bb.aa unwind label %bb.ab
 
 bb.aa:                                            ; preds = %bb.z
-  invoke void @_ZN6Assimp3IFC23ProcessConnectedFaceSetERKNS0_10Schema_2x319IfcConnectedFaceSetERNS0_8TempMeshERNS0_14ConversionDataE(ptr noundef nonnull align 8 dereferenceable(72) %i.as, ptr noundef nonnull align 8 dereferenceable(48) %i.f, ptr nonnull align 8 poison)
+  %11 = load ptr, ptr %4, align 8
+  invoke void @_ZN6Assimp3IFC23ProcessConnectedFaceSetERKNS0_10Schema_2x319IfcConnectedFaceSetERNS0_8TempMeshERNS0_14ConversionDataE(ptr noundef nonnull align 8 dereferenceable(72) %i.as, ptr noundef nonnull align 8 dereferenceable(48) %11, ptr nonnull align 8 poison)
           to label %.critedge157 unwind label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa, %bb.z
@@ -449,7 +450,7 @@ bb.aj:                                            ; preds = %bb.ai
 bb.ak:                                            ; preds = %bb.ah
   %i.be = tail call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(24) %i.j, ptr nonnull @_ZTIN6Assimp4STEP6ObjectE, ptr nonnull @_ZTIN6Assimp3IFC10Schema_2x314IfcBoundingBoxE, i64 -1) #30
   %.not128 = icmp eq ptr %i.be, null
-  br i1 %.not128, label %bb.al, label %.critedge161.thread
+  br i1 %.not128, label %bb.al, label %.critedge161
 
 bb.al:                                            ; preds = %bb.ak
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #30
@@ -533,7 +534,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit171: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #30
   call void @_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEED1Ev(ptr noundef nonnull align 8 dereferenceable(128) %5) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #30
-  br label %.critedge161.thread
+  br label %.critedge161
 
 bb.aq:                                            ; preds = %bb.al
   %i.ci = landingpad { ptr, i32 }
@@ -608,20 +609,21 @@ bb.ax:                                            ; preds = %bb.aw, %bb.aq
   %i.cy = getelementptr inbounds nuw i8, ptr %3, i64 336
   %i.cz = load ptr, ptr %i.cy, align 8            ; 4 uses
   %.not146 = icmp eq ptr %i.cz, null
-  %i.da = load ptr, ptr %i.f, align 8
-  %i.db = getelementptr inbounds nuw i8, ptr %i.c, i64 24
+  %12 = load ptr, ptr %4, align 8                 ; 8 uses
+  %i.da = load ptr, ptr %12, align 8
+  %i.db = getelementptr inbounds nuw i8, ptr %12, i64 8
   %i.dc = load ptr, ptr %i.db, align 8
   %i.dd = icmp eq ptr %i.da, %i.dc
-  %i.de = getelementptr inbounds nuw i8, ptr %i.c, i64 40
+  %i.de = getelementptr inbounds nuw i8, ptr %12, i64 24
   %i.df = load ptr, ptr %i.de, align 8
-  %i.dg = getelementptr inbounds nuw i8, ptr %i.c, i64 48
+  %i.dg = getelementptr inbounds nuw i8, ptr %12, i64 32
   %i.dh = load ptr, ptr %i.dg, align 8
   %i.di = icmp eq ptr %i.df, %i.dh
   %i.dj = select i1 %i.dd, i1 %i.di, i1 false     ; 2 uses
   br i1 %.not146, label %bb.cd, label %bb.ay
 
 bb.ay:                                            ; preds = %.critedge157
-  br i1 %i.dj, label %.critedge161.thread, label %bb.az
+  br i1 %i.dj, label %.critedge161, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #30
@@ -631,16 +633,17 @@ bb.az:                                            ; preds = %bb.ay
   %i.dn = getelementptr inbounds i8, ptr %0, i64 %i.dm
   %i.do = tail call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(24) %i.dn, ptr nonnull @_ZTIN6Assimp4STEP6ObjectE, ptr nonnull @_ZTIN6Assimp3IFC10Schema_2x313IfcSolidModelE, i64 -1) #30
   %i.dp = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
+  %13 = load ptr, ptr %i.b, align 8
   store ptr null, ptr %i.b, align 8
   store ptr null, ptr %4, align 8
   store ptr %i.do, ptr %8, align 8
   %i.dq = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.dr = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.dq, i8 0, i64 24, i1 false)
-  store ptr %i.f, ptr %i.dr, align 8
+  store ptr %12, ptr %i.dr, align 8
   %i.ds = getelementptr inbounds nuw i8, ptr %8, i64 40 ; 4 uses
   store ptr null, ptr %i.dp, align 8
-  store ptr %i.c, ptr %i.ds, align 8
+  store ptr %13, ptr %i.ds, align 8
   store ptr null, ptr %9, align 8
   %i.dt = getelementptr inbounds nuw i8, ptr %8, i64 48 ; 3 uses
   %i.du = getelementptr inbounds nuw i8, ptr %8, i64 56 ; 4 uses
@@ -861,7 +864,7 @@ bb.bu:                                            ; preds = %_ZN9__gnu_cxx27__ex
 _ZNSt12__shared_ptrIN6Assimp3IFC8TempMeshELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %_ZN6Assimp3IFC11TempOpeningD2Ev.exit, %bb.bq, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i, %bb.bu
   %i.gv = load ptr, ptr %i.dp, align 8            ; 8 uses
   %.not.i.i182 = icmp eq ptr %i.gv, null
-  br i1 %.not.i.i182, label %.critedge161, label %bb.bv
+  br i1 %.not.i.i182, label %bb.ca, label %bb.bv
 
 bb.bv:                                            ; preds = %_ZNSt12__shared_ptrIN6Assimp3IFC8TempMeshELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
   %i.gw = getelementptr inbounds nuw i8, ptr %i.gv, i64 8 ; 4 uses
@@ -882,7 +885,7 @@ bb.bw:                                            ; preds = %bb.bv
   %i.hf = getelementptr inbounds nuw i8, ptr %i.he, i64 24
   %i.hg = load ptr, ptr %i.hf, align 8
   call void %i.hg(ptr noundef nonnull align 8 dereferenceable(16) %i.gv) #30, !inline_history !221
-  br label %.critedge161
+  br label %bb.ca
 
 bb.bx:                                            ; preds = %bb.bv
   %i.hh = load i8, ptr @__libc_single_threaded, align 1
@@ -901,10 +904,14 @@ bb.bz:                                            ; preds = %bb.bx
 _ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i184: ; preds = %bb.bz, %bb.by
   %.0.i.i.i.i185 = phi i32 [ %i.gz, %bb.by ], [ %i.hj, %bb.bz ]
   %i.hk = icmp eq i32 %.0.i.i.i.i185, 1
-  br i1 %i.hk, label %bb.ca, label %.critedge161, !prof !14
+  br i1 %i.hk, label %14, label %bb.ca, !prof !14
 
-bb.ca:                                            ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i184
+14:                                               ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i184
   call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.gv) #30
+  br label %bb.ca
+
+bb.ca:                                            ; preds = %_ZNSt12__shared_ptrIN6Assimp3IFC8TempMeshELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %bb.bw, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i184, %14
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #30
   br label %.critedge161
 
 bb.cb:                                            ; preds = %bb.cf, %bb.ce
@@ -922,23 +929,23 @@ bb.cc:                                            ; preds = %bb.bb
   br label %.loopexit
 
 bb.cd:                                            ; preds = %.critedge157
-  br i1 %i.dj, label %.critedge161.thread, label %bb.ce
+  br i1 %i.dj, label %.critedge161, label %bb.ce
 
 bb.ce:                                            ; preds = %bb.cd
-  invoke void @_ZN6Assimp3IFC8TempMesh24RemoveAdjacentDuplicatesEv(ptr noundef nonnull align 8 dereferenceable(48) %i.f)
+  invoke void @_ZN6Assimp3IFC8TempMesh24RemoveAdjacentDuplicatesEv(ptr noundef nonnull align 8 dereferenceable(48) %12)
           to label %bb.cf unwind label %bb.cb
 
 bb.cf:                                            ; preds = %bb.ce
-  invoke void @_ZN6Assimp3IFC8TempMesh17RemoveDegeneratesEv(ptr noundef nonnull align 8 dereferenceable(48) %i.f)
+  invoke void @_ZN6Assimp3IFC8TempMesh17RemoveDegeneratesEv(ptr noundef nonnull align 8 dereferenceable(48) %12)
           to label %bb.cg unwind label %bb.cb
 
 bb.cg:                                            ; preds = %bb.cf
-  %i.hn = invoke noundef ptr @_ZN6Assimp3IFC8TempMesh6ToMeshEv(ptr noundef nonnull align 8 dereferenceable(48) %i.f)
+  %i.hn = invoke noundef ptr @_ZN6Assimp3IFC8TempMesh6ToMeshEv(ptr noundef nonnull align 8 dereferenceable(48) %12)
           to label %bb.ch unwind label %bb.cs     ; 4 uses
 
 bb.ch:                                            ; preds = %bb.cg
   %.not147.not = icmp eq ptr %i.hn, null
-  br i1 %.not147.not, label %.critedge161.thread, label %bb.ci
+  br i1 %.not147.not, label %.critedge161, label %bb.ci
 
 bb.ci:                                            ; preds = %bb.ch
   %i.ho = getelementptr inbounds nuw i8, ptr %i.hn, i64 232
@@ -1030,7 +1037,7 @@ bb.cn:                                            ; preds = %bb.cm
   %i.iw = load ptr, ptr %i.hq, align 8
   %i.ix = getelementptr inbounds nuw i8, ptr %i.iw, i64 8
   store ptr %i.ix, ptr %i.hq, align 8
-  br label %.critedge161.thread
+  br label %.critedge161
 
 bb.co:                                            ; preds = %bb.cm
   %i.iy = load ptr, ptr %i.hp, align 8            ; 4 uses
@@ -1084,7 +1091,7 @@ _ZNSt6vectorIP6aiMeshSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal
   store ptr %i.jm, ptr %i.hq, align 8
   %i.jn = getelementptr inbounds nuw [8 x i8], ptr %i.jj, i64 %i.jh
   store ptr %i.jn, ptr %i.iu, align 8
-  br label %.critedge161.thread
+  br label %.critedge161
 
 bb.cs:                                            ; preds = %_ZNKSt6vectorIP6aiMeshSaIS1_EE12_M_check_lenEmPKc.exit.i.i, %bb.cp, %bb.cg
   %i.jo = landingpad { ptr, i32 }
@@ -1096,16 +1103,14 @@ bb.ct:                                            ; preds = %_ZNSt8_Rb_treeIjjSt
           cleanup
   br label %.loopexit
 
-.critedge161:                                     ; preds = %bb.ca, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i184, %bb.bw, %_ZNSt12__shared_ptrIN6Assimp3IFC8TempMeshELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #30
-  %.pre223 = load ptr, ptr %i.b, align 8          ; 2 uses
+.critedge161:                                     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit171, %bb.ak, %bb.ch, %bb.cn, %_ZNSt6vectorIP6aiMeshSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i, %bb.cd, %bb.ay, %bb.ca
+  %.14 = phi i1 [ false, %bb.cd ], [ true, %bb.ay ], [ false, %bb.ch ], [ true, %bb.ca ], [ true, %_ZNSt6vectorIP6aiMeshSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ true, %bb.cn ], [ false, %bb.ak ], [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit171 ]
+  %.pre223 = load ptr, ptr %i.b, align 8          ; 8 uses
   %.not.i.i193 = icmp eq ptr %.pre223, null
   br i1 %.not.i.i193, label %_ZNSt12__shared_ptrIN6Assimp3IFC8TempMeshELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit197, label %.critedge161.thread
 
-.critedge161.thread:                              ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit171, %bb.ak, %bb.cn, %_ZNSt6vectorIP6aiMeshSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i, %bb.ch, %bb.ay, %bb.cd, %.critedge161
-  %.14263 = phi i1 [ true, %.critedge161 ], [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit171 ], [ false, %bb.ak ], [ true, %bb.cn ], [ true, %_ZNSt6vectorIP6aiMeshSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ false, %bb.ch ], [ true, %bb.ay ], [ false, %bb.cd ] ; 3 uses
-  %11 = phi ptr [ %.pre223, %.critedge161 ], [ %i.c, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit171 ], [ %i.c, %bb.ak ], [ %i.c, %bb.cn ], [ %i.c, %_ZNSt6vectorIP6aiMeshSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.c, %bb.ch ], [ %i.c, %bb.ay ], [ %i.c, %bb.cd ] ; 7 uses
-  %i.jq = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 4 uses
+.critedge161.thread:                              ; preds = %.critedge161
+  %i.jq = getelementptr inbounds nuw i8, ptr %.pre223, i64 8 ; 4 uses
   %i.jr = load atomic i64, ptr %i.jq acquire, align 8 ; 2 uses
   %i.js = icmp eq i64 %i.jr, 4294967297
   %i.jt = trunc i64 %i.jr to i32                  ; 2 uses
@@ -1113,16 +1118,16 @@ bb.ct:                                            ; preds = %_ZNSt8_Rb_treeIjjSt
 
 bb.cu:                                            ; preds = %.critedge161.thread
   store i32 0, ptr %i.jq, align 8
-  %i.ju = getelementptr inbounds nuw i8, ptr %11, i64 12
+  %i.ju = getelementptr inbounds nuw i8, ptr %.pre223, i64 12
   store i32 0, ptr %i.ju, align 4
-  %i.jv = load ptr, ptr %11, align 8
+  %i.jv = load ptr, ptr %.pre223, align 8
   %i.jw = getelementptr inbounds nuw i8, ptr %i.jv, i64 16
   %i.jx = load ptr, ptr %i.jw, align 8
-  call void %i.jx(ptr noundef nonnull align 8 dereferenceable(16) %11) #30, !inline_history !221
-  %i.jy = load ptr, ptr %11, align 8
+  call void %i.jx(ptr noundef nonnull align 8 dereferenceable(16) %.pre223) #30, !inline_history !221
+  %i.jy = load ptr, ptr %.pre223, align 8
   %i.jz = getelementptr inbounds nuw i8, ptr %i.jy, i64 24
   %i.ka = load ptr, ptr %i.jz, align 8
-  call void %i.ka(ptr noundef nonnull align 8 dereferenceable(16) %11) #30, !inline_history !221
+  call void %i.ka(ptr noundef nonnull align 8 dereferenceable(16) %.pre223) #30, !inline_history !221
   br label %_ZNSt12__shared_ptrIN6Assimp3IFC8TempMeshELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit197
 
 bb.cv:                                            ; preds = %.critedge161.thread
@@ -1145,13 +1150,12 @@ _ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i195: ; preds = %bb.cx, 
   br i1 %i.ke, label %bb.cy, label %_ZNSt12__shared_ptrIN6Assimp3IFC8TempMeshELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit197, !prof !14
 
 bb.cy:                                            ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i195
-  call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %11) #30
+  call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %.pre223) #30
   br label %_ZNSt12__shared_ptrIN6Assimp3IFC8TempMeshELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit197
 
 _ZNSt12__shared_ptrIN6Assimp3IFC8TempMeshELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit197: ; preds = %.critedge161, %bb.cu, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i195, %bb.cy
-  %.14264 = phi i1 [ true, %.critedge161 ], [ %.14263, %bb.cu ], [ %.14263, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i195 ], [ %.14263, %bb.cy ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #30
-  ret i1 %.14264
+  ret i1 %.14
 
 .loopexit:                                        ; preds = %bb.j, %bb.cs, %bb.ct, %bb.n, %bb.o, %bb.u, %bb.ab, %bb.aj, %bb.ax, %bb.ag, %bb.x, %bb.r, %bb.cc, %bb.cb
   %.merged = phi { ptr, i32 } [ %i.hl, %bb.cb ], [ %i.hm, %bb.cc ], [ %i.ai, %bb.n ], [ %.pn130.pn.pn, %bb.ax ], [ %i.al, %bb.r ], [ %i.an, %bb.u ], [ %i.ap, %bb.x ], [ %i.at, %bb.ab ], [ %i.bb, %bb.ag ], [ %i.bd, %bb.aj ], [ %i.jp, %bb.ct ], [ %i.aj, %bb.o ], [ %i.jo, %bb.cs ], [ %.pn150, %bb.j ]

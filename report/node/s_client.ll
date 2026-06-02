@@ -201,7 +201,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #15
   store ptr %i.g, ptr %i.d, align 8, !tbaa !14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #15
-  %i.h = tail call ptr @__errno_location() #16    ; 10 uses
+  %i.h = tail call ptr @__errno_location() #16    ; 12 uses
   %i.i = load i32, ptr %i.h, align 4, !tbaa !5
   store i32 %i.i, ptr @saved_errno, align 4, !tbaa !5
   store i32 0, ptr %i.h, align 4, !tbaa !5
@@ -264,6 +264,8 @@ bb.e:                                             ; preds = %bb.n, %checked_uint
 bb.f:                                             ; preds = %.preheader.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #15
+  %2 = load i32, ptr %i.h, align 4, !tbaa !5
+  store i32 %2, ptr @saved_errno, align 4, !tbaa !5
   store i32 0, ptr %i.h, align 4, !tbaa !5
   %i.aj = call i64 @strtol(ptr noundef nonnull %.017.i.i, ptr noundef nonnull %i.b, i32 noundef 10) #15 ; 3 uses
   %i.ak = load i32, ptr %i.h, align 4, !tbaa !5
@@ -314,6 +316,8 @@ checked_uint8.exit33.thread.i:                    ; preds = %bb.i, %bb.h, %bb.g,
 bb.j:                                             ; preds = %.preheader.i30.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
+  %3 = load i32, ptr %i.h, align 4, !tbaa !5
+  store i32 %3, ptr @saved_errno, align 4, !tbaa !5
   store i32 0, ptr %i.h, align 4, !tbaa !5
   %i.bd = call i64 @strtol(ptr noundef nonnull %.017.i31.i, ptr noundef nonnull %i.a, i32 noundef 10) #15 ; 3 uses
   %i.be = load i32, ptr %i.h, align 4, !tbaa !5

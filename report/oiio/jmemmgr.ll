@@ -13,7 +13,7 @@ target triple = "x86_64-pc-linux-gnu"
 define void @jinit_memory_mgr(ptr noundef initializes((8, 16)) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
-  %i.b = alloca [30 x i8], align 16               ; 5 uses
+  %i.b = alloca [30 x i8], align 16               ; 6 uses
   %i.c = alloca i8, align 1                       ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -68,6 +68,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   store i64 168, ptr %i.z, align 8, !tbaa !39
   store ptr %i.f, ptr %i.d, align 8, !tbaa !7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(30) %i.b, i8 0, i64 30, i1 false)
   %i.aa = tail call ptr @getenv(ptr noundef nonnull @.str) #9 ; 3 uses
   %.not.i = icmp eq ptr %i.aa, null
   br i1 %.not.i, label %GETENV_S.exit.thread49, label %bb.d

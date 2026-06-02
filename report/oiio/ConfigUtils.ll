@@ -201,7 +201,7 @@ define hidden noundef zeroext i1 @_ZN16OpenColorIO_v2_511ConfigUtils24containsBl
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca i64, align 8                      ; 6 uses
-  %1 = alloca %"class.std::shared_ptr.25", align 8 ; 9 uses
+  %1 = alloca %"class.std::shared_ptr.25", align 8 ; 10 uses
   %2 = alloca %"class.std::shared_ptr.4", align 8 ; 7 uses
   %3 = alloca %"class.std::shared_ptr.28", align 8 ; 8 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
@@ -250,7 +250,7 @@ bb.e:                                             ; preds = %bb.c
   br label %_ZN16OpenColorIO_v2_514DynamicPtrCastIKNS_14GroupTransformEKNS_9TransformEEESt10shared_ptrIT_ERKS5_IT0_E.exit
 
 _ZN16OpenColorIO_v2_514DynamicPtrCastIKNS_14GroupTransformEKNS_9TransformEEESt10shared_ptrIT_ERKS5_IT0_E.exit: ; preds = %bb.b, %bb.d, %bb.e
-  %i.s = phi ptr [ %i.j, %bb.b ], [ %i.j, %bb.d ], [ %.pre96, %bb.e ] ; 3 uses
+  %i.s = phi ptr [ %i.j, %bb.b ], [ %i.j, %bb.d ], [ %.pre96, %bb.e ] ; 2 uses
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !29
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 88
   %i.v = load ptr, ptr %i.u, align 8
@@ -260,6 +260,7 @@ _ZN16OpenColorIO_v2_514DynamicPtrCastIKNS_14GroupTransformEKNS_9TransformEEESt10
 
 .lr.ph:                                           ; preds = %_ZN16OpenColorIO_v2_514DynamicPtrCastIKNS_14GroupTransformEKNS_9TransformEEESt10shared_ptrIT_ERKS5_IT0_E.exit
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %.pre97 = load ptr, ptr %1, align 8, !tbaa !98
   br label %bb.g
 
 bb.f:                                             ; preds = %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59TransformELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
@@ -273,7 +274,7 @@ bb.f:                                             ; preds = %_ZNSt12__shared_ptr
   br i1 %.not.not, label %bb.g, label %._crit_edge, !llvm.loop !100
 
 bb.g:                                             ; preds = %.lr.ph, %bb.f
-  %i.ae = phi ptr [ %i.s, %.lr.ph ], [ %i.z, %bb.f ] ; 2 uses
+  %i.ae = phi ptr [ %.pre97, %.lr.ph ], [ %i.z, %bb.f ] ; 2 uses
   %.02692 = phi i32 [ 0, %.lr.ph ], [ %i.y, %bb.f ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !29

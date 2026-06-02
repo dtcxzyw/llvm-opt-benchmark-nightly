@@ -201,7 +201,7 @@ sqlite3ExpirePreparedStatements.exit:             ; preds = %.lr.ph.i, %bb.a
 define dso_local i32 @sqlite3_exec(ptr noundef %0, ptr noundef %1, ptr noundef readonly captures(address_is_null) %2, ptr noundef %3, ptr noundef writeonly captures(address_is_null) %4) local_unnamed_addr #5 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
-  %i.b = alloca ptr, align 8                      ; 11 uses
+  %i.b = alloca ptr, align 8                      ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #43
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #43
   store ptr null, ptr %i.b, align 8, !tbaa !209
@@ -220,6 +220,7 @@ bb.a:
   %i.h = load i8, ptr %1, align 1, !tbaa !37
   %.not.us = icmp eq i8 %i.h, 0
   %spec.select = select i1 %.not.us, i32 0, i32 21
+  store ptr null, ptr %i.b, align 8
   br label %sqlite3_errcode.exit.thread
 
 .preheader200.split:                              ; preds = %.preheader200.split.backedge, %.preheader200.split.outer
@@ -622,7 +623,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.r = getelementptr inbounds nuw i8, ptr %8, i64 16
   %i.s = getelementptr inbounds nuw i8, ptr %8, i64 24
-  %i.t = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 4 uses
   %i.u = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.v = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.w = getelementptr inbounds nuw i8, ptr %6, i64 24
@@ -1025,7 +1026,8 @@ bb.ic:                                            ; preds = %bb.ib
 bb.id:                                            ; preds = %bb.ic, %bb.ib, %bb.ib
   %i.amg = phi ptr [ %i.ama, %bb.ib ], [ %i.ama, %bb.ib ], [ %i.amf, %bb.ic ]
   %i.amh = load i32, ptr %i.t, align 8
-  %i.ami = and i32 %i.amh, 1
+  %i.ami = and i32 %i.amh, 1                      ; 2 uses
+  store i32 %i.ami, ptr %i.t, align 8
   %i.amj = load ptr, ptr %i.ajy, align 8, !tbaa !77 ; 3 uses
   %i.amk = ptrtoint ptr %i.amg to i64
   %i.aml = ptrtoint ptr %i.amj to i64
@@ -1428,15 +1430,15 @@ bb.h:                                             ; preds = %contextMalloc.exit
 
 .lr.ph:                                           ; preds = %bb.h
   %i.ah = tail call ptr @__ctype_toupper_loc() #46
-  %.pre = load ptr, ptr %i.ah, align 8, !tbaa !70
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph, %bb.i
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.i ] ; 2 uses
   %i.ai = phi i8 [ %i.ag, %.lr.ph ], [ %i.ap, %bb.i ]
   %i.aj = getelementptr inbounds nuw i8, ptr %i.t, i64 %indvars.iv
+  %3 = load ptr, ptr %i.ah, align 8, !tbaa !70
   %i.ak = sext i8 %i.ai to i64
-  %i.al = getelementptr inbounds [4 x i8], ptr %.pre, i64 %i.ak
+  %i.al = getelementptr inbounds [4 x i8], ptr %3, i64 %i.ak
   %i.am = load i32, ptr %i.al, align 4, !tbaa !4
   %i.an = trunc i32 %i.am to i8
   store i8 %i.an, ptr %i.aj, align 1, !tbaa !37
@@ -1575,15 +1577,15 @@ bb.h:                                             ; preds = %contextMalloc.exit
 
 .lr.ph:                                           ; preds = %bb.h
   %i.ah = tail call ptr @__ctype_tolower_loc() #46
-  %.pre = load ptr, ptr %i.ah, align 8, !tbaa !70
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph, %bb.i
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.i ] ; 2 uses
   %i.ai = phi i8 [ %i.ag, %.lr.ph ], [ %i.ap, %bb.i ]
   %i.aj = getelementptr inbounds nuw i8, ptr %i.t, i64 %indvars.iv
+  %3 = load ptr, ptr %i.ah, align 8, !tbaa !70
   %i.ak = sext i8 %i.ai to i64
-  %i.al = getelementptr inbounds [4 x i8], ptr %.pre, i64 %i.ak
+  %i.al = getelementptr inbounds [4 x i8], ptr %3, i64 %i.ak
   %i.am = load i32, ptr %i.al, align 4, !tbaa !4
   %i.an = trunc i32 %i.am to i8
   store i8 %i.an, ptr %i.aj, align 1, !tbaa !37

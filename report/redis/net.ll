@@ -201,7 +201,7 @@ redisNetClose.exit:                               ; preds = %bb.c, %bb.b, %bb.a
 ; Function Attrs: nounwind uwtable
 define range(i32 -1, 1) i32 @redisCheckConnectDone(ptr noundef readonly captures(none) %0, ptr noundef writeonly captures(none) %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 5 uses
+  %i.a = alloca i32, align 4                      ; 6 uses
   %i.b = alloca i32, align 4                      ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 140 ; 2 uses
   %i.d = load i32, ptr %i.c, align 4, !tbaa !10
@@ -234,7 +234,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.q, label %bb.e, label %bb.g
 
 bb.e:                                             ; preds = %bb.d
-  %i.r = load i32, ptr %i.a, align 4, !tbaa !6    ; 3 uses
+  %i.r = load i32, ptr %i.a, align 4, !tbaa !6    ; 2 uses
   %i.s = icmp eq i32 %i.r, 0
   br i1 %i.s, label %.critedge, label %bb.f
 
@@ -246,10 +246,11 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   store i32 %i.r, ptr %i.l, align 4, !tbaa !6
+  %2 = load i32, ptr %i.a, align 4, !tbaa !6
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.d, %bb.f
-  %.114 = phi i32 [ 115, %bb.d ], [ %i.r, %bb.f ]
+  %.114 = phi i32 [ 115, %bb.d ], [ %2, %bb.f ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   br label %bb.h
@@ -652,7 +653,7 @@ declare ptr @strncpy(ptr noalias noundef returned writeonly, ptr noalias noundef
 define internal fastcc range(i32 -1, 1) i32 @redisContextWaitReady(ptr noundef %0, i64 noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [128 x i8], align 16              ; 5 uses
-  %i.b = alloca i32, align 4                      ; 5 uses
+  %i.b = alloca i32, align 4                      ; 6 uses
   %i.c = alloca i32, align 4                      ; 5 uses
   %i.d = alloca [128 x i8], align 16              ; 5 uses
   %i.e = alloca [128 x i8], align 16              ; 6 uses
@@ -738,7 +739,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.ak, label %bb.j, label %bb.l
 
 bb.j:                                             ; preds = %bb.i
-  %i.al = load i32, ptr %i.b, align 4, !tbaa !6   ; 3 uses
+  %i.al = load i32, ptr %i.b, align 4, !tbaa !6   ; 2 uses
   %i.am = icmp eq i32 %i.al, 0
   br i1 %i.am, label %.critedge.i, label %bb.k
 
@@ -749,10 +750,11 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   store i32 %i.al, ptr %i.i, align 4, !tbaa !6
+  %3 = load i32, ptr %i.b, align 4, !tbaa !6
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.i
-  %.114.i = phi i32 [ 115, %bb.i ], [ %i.al, %bb.k ]
+  %.114.i = phi i32 [ 115, %bb.i ], [ %3, %bb.k ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
   br label %bb.m

@@ -201,7 +201,7 @@ _ZNSt6vectorIiSaIiEED2Ev.exit:                    ; preds = %_ZNSt6vectorImSaImE
 ; Function Attrs: mustprogress uwtable
 define internal fastcc noundef ptr @_ZN8facebook5velox9functions12_GLOBAL__N_119decodeArrayElementsERNS0_4exec18LocalDecodedVectorES5_RKNS0_17SelectivityVectorEPS6_(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(38) %2, ptr noundef nonnull %3) unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = alloca %"class.std::shared_ptr.53", align 8 ; 7 uses
+  %4 = alloca %"class.std::shared_ptr.53", align 8 ; 8 uses
   %5 = alloca %"class.facebook::velox::SelectivityVector", align 16 ; 10 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !1867 ; 3 uses
@@ -239,7 +239,7 @@ bb.d:                                             ; preds = %bb.b
 
 _ZNSt10shared_ptrIN8facebook5velox10BaseVectorEEC2ERKS3_.exit: ; preds = %bb.a, %bb.c, %bb.d
   %i.p = phi ptr [ %i.b, %bb.a ], [ %i.b, %bb.c ], [ %.pre17, %bb.d ]
-  %i.q = phi ptr [ %i.g, %bb.a ], [ %i.g, %bb.c ], [ %.pre, %bb.d ] ; 2 uses
+  %i.q = phi ptr [ %i.g, %bb.a ], [ %i.g, %bb.c ], [ %.pre, %bb.d ]
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #43
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 56
   %i.s = load i32, ptr %i.r, align 8, !tbaa !1945
@@ -311,7 +311,8 @@ _ZN8facebook5velox17SelectivityVectorD2Ev.exit:   ; preds = %_ZN8facebook5velox1
           to label %bb.i unwind label %bb.s
 
 bb.i:                                             ; preds = %_ZN8facebook5velox17SelectivityVectorD2Ev.exit
-  invoke void @_ZN8facebook5velox13DecodedVector6decodeERKNS0_10BaseVectorERKNS0_17SelectivityVectorEb(ptr noundef nonnull align 8 dereferenceable(120) %i.ap, ptr noundef nonnull align 8 dereferenceable(94) %i.q, ptr noundef nonnull align 8 dereferenceable(38) %3, i1 noundef zeroext true)
+  %6 = load ptr, ptr %4, align 8, !tbaa !87
+  invoke void @_ZN8facebook5velox13DecodedVector6decodeERKNS0_10BaseVectorERKNS0_17SelectivityVectorEb(ptr noundef nonnull align 8 dereferenceable(120) %i.ap, ptr noundef nonnull align 8 dereferenceable(94) %6, ptr noundef nonnull align 8 dereferenceable(38) %3, i1 noundef zeroext true)
           to label %bb.j unwind label %bb.s
 
 bb.j:                                             ; preds = %bb.i

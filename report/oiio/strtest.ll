@@ -16,7 +16,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 -1, 1) i32 @main(i32 noundef %0, ptr noundef readnone captures(none) %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [3 x i8], align 1                 ; 16 uses
+  %i.a = alloca [3 x i8], align 1                 ; 17 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %puts = tail call i32 @puts(ptr nonnull dereferenceable(1) @str) ; 0 uses
   %i.b = tail call ptr @__errno_location() #10    ; 6 uses
@@ -33,9 +33,12 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %puts66 = tail call i32 @puts(ptr nonnull dereferenceable(1) @str.3) ; 0 uses
   %puts67 = tail call i32 @puts(ptr nonnull dereferenceable(1) @str.2) ; 0 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 5 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 5 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 6 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 6 uses
   store i32 0, ptr %i.b, align 4, !tbaa !4
+  store i8 1, ptr %i.a, align 1, !tbaa !8
+  store i8 2, ptr %i.f, align 1, !tbaa !8
+  store i8 3, ptr %i.g, align 1, !tbaa !8
   %i.h = tail call ptr @getenv(ptr noundef nonnull @.str.10) #9 ; 3 uses
   %.not19.i110 = icmp eq ptr %i.h, null
   br i1 %.not19.i110, label %.thread140, label %bb.d

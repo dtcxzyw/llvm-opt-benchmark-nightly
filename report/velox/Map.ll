@@ -201,8 +201,8 @@ bb.a:
   %84 = alloca %"class.std::shared_ptr.95", align 16 ; 7 uses
   %85 = alloca %"class.std::shared_ptr.95", align 16 ; 7 uses
   %86 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
-  %87 = alloca %"class.std::shared_ptr.95", align 16 ; 7 uses
-  %88 = alloca %"class.std::shared_ptr.95", align 16 ; 7 uses
+  %87 = alloca %"class.std::shared_ptr.95", align 16 ; 8 uses
+  %88 = alloca %"class.std::shared_ptr.95", align 16 ; 8 uses
   %89 = alloca %"class.facebook::velox::exec::DecodedArgs", align 8 ; 11 uses
   %90 = alloca %class.anon, align 1               ; 5 uses
   %91 = alloca %"class.facebook::velox::exec::LocalSelectivityVector", align 8 ; 7 uses
@@ -605,13 +605,20 @@ bb.cb:                                            ; preds = %bb.ca, %.noexc240
   %i.jn = load i32, ptr %i.hv, align 8, !tbaa !283
   %i.jo = sext i32 %i.jn to i64
   %.not15.i = icmp slt i64 %indvars.iv.next.i, %i.jo
-  br i1 %.not15.i, label %bb.bx, label %_ZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE15canTakeFastPathEPNS0_11ArrayVectorES6_RKNS0_17SelectivityVectorE.exit, !llvm.loop !309
+  br i1 %.not15.i, label %bb.bx, label %_ZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE15canTakeFastPathEPNS0_11ArrayVectorES6_RKNS0_17SelectivityVectorE.exit.loopexit, !llvm.loop !309
 
-_ZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE15canTakeFastPathEPNS0_11ArrayVectorES6_RKNS0_17SelectivityVectorE.exit: ; preds = %bb.cb, %.preheader.i
+_ZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE15canTakeFastPathEPNS0_11ArrayVectorES6_RKNS0_17SelectivityVectorE.exit.loopexit: ; preds = %bb.cb
+  %.pre1466 = load ptr, ptr %87, align 16, !tbaa !281
+  %.pre1467 = load ptr, ptr %88, align 16, !tbaa !281
+  br label %_ZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE15canTakeFastPathEPNS0_11ArrayVectorES6_RKNS0_17SelectivityVectorE.exit
+
+_ZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE15canTakeFastPathEPNS0_11ArrayVectorES6_RKNS0_17SelectivityVectorE.exit: ; preds = %_ZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE15canTakeFastPathEPNS0_11ArrayVectorES6_RKNS0_17SelectivityVectorE.exit.loopexit, %.preheader.i
+  %127 = phi ptr [ %.pre1467, %_ZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE15canTakeFastPathEPNS0_11ArrayVectorES6_RKNS0_17SelectivityVectorE.exit.loopexit ], [ %i.hs, %.preheader.i ]
+  %128 = phi ptr [ %.pre1466, %_ZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb0EE15canTakeFastPathEPNS0_11ArrayVectorES6_RKNS0_17SelectivityVectorE.exit.loopexit ], [ %i.hq, %.preheader.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #23
-  %i.jp = call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(94) %i.hq, ptr nonnull @_ZTIN8facebook5velox10BaseVectorE, ptr nonnull @_ZTIN8facebook5velox11ArrayVectorE, i64 0) #23 ; 3 uses
+  %i.jp = call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(94) %128, ptr nonnull @_ZTIN8facebook5velox10BaseVectorE, ptr nonnull @_ZTIN8facebook5velox11ArrayVectorE, i64 0) #23 ; 3 uses
   store ptr %i.jp, ptr %i.d, align 8, !tbaa !310
-  %i.jq = call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(94) %i.hs, ptr nonnull @_ZTIN8facebook5velox10BaseVectorE, ptr nonnull @_ZTIN8facebook5velox11ArrayVectorE, i64 0) #23
+  %i.jq = call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(94) %127, ptr nonnull @_ZTIN8facebook5velox10BaseVectorE, ptr nonnull @_ZTIN8facebook5velox11ArrayVectorE, i64 0) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %92) #23
   %i.jr = getelementptr inbounds nuw i8, ptr %i.jp, i64 128
   %i.js = load ptr, ptr %i.jr, align 8, !tbaa !281 ; 3 uses
@@ -1014,8 +1021,8 @@ bb.a:
   %81 = alloca %"class.std::shared_ptr.95", align 16 ; 7 uses
   %82 = alloca %"class.std::shared_ptr.95", align 16 ; 7 uses
   %83 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
-  %84 = alloca %"class.std::shared_ptr.95", align 16 ; 7 uses
-  %85 = alloca %"class.std::shared_ptr.95", align 16 ; 7 uses
+  %84 = alloca %"class.std::shared_ptr.95", align 16 ; 8 uses
+  %85 = alloca %"class.std::shared_ptr.95", align 16 ; 8 uses
   %86 = alloca %"class.facebook::velox::exec::DecodedArgs", align 8 ; 11 uses
   %87 = alloca %class.anon.293, align 1           ; 5 uses
   %88 = alloca %"class.facebook::velox::exec::LocalSelectivityVector", align 8 ; 7 uses
@@ -1418,13 +1425,20 @@ bb.cb:                                            ; preds = %bb.ca, %.noexc234
   %i.jn = load i32, ptr %i.hv, align 8, !tbaa !283
   %i.jo = sext i32 %i.jn to i64
   %.not15.i = icmp slt i64 %indvars.iv.next.i, %i.jo
-  br i1 %.not15.i, label %bb.bx, label %_ZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE15canTakeFastPathEPNS0_11ArrayVectorES6_RKNS0_17SelectivityVectorE.exit, !llvm.loop !937
+  br i1 %.not15.i, label %bb.bx, label %_ZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE15canTakeFastPathEPNS0_11ArrayVectorES6_RKNS0_17SelectivityVectorE.exit.loopexit, !llvm.loop !937
 
-_ZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE15canTakeFastPathEPNS0_11ArrayVectorES6_RKNS0_17SelectivityVectorE.exit: ; preds = %bb.cb, %.preheader.i
+_ZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE15canTakeFastPathEPNS0_11ArrayVectorES6_RKNS0_17SelectivityVectorE.exit.loopexit: ; preds = %bb.cb
+  %.pre1438 = load ptr, ptr %84, align 16, !tbaa !281
+  %.pre1439 = load ptr, ptr %85, align 16, !tbaa !281
+  br label %_ZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE15canTakeFastPathEPNS0_11ArrayVectorES6_RKNS0_17SelectivityVectorE.exit
+
+_ZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE15canTakeFastPathEPNS0_11ArrayVectorES6_RKNS0_17SelectivityVectorE.exit: ; preds = %_ZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE15canTakeFastPathEPNS0_11ArrayVectorES6_RKNS0_17SelectivityVectorE.exit.loopexit, %.preheader.i
+  %124 = phi ptr [ %.pre1439, %_ZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE15canTakeFastPathEPNS0_11ArrayVectorES6_RKNS0_17SelectivityVectorE.exit.loopexit ], [ %i.hs, %.preheader.i ]
+  %125 = phi ptr [ %.pre1438, %_ZNK8facebook5velox9functions12_GLOBAL__N_111MapFunctionILb1EE15canTakeFastPathEPNS0_11ArrayVectorES6_RKNS0_17SelectivityVectorE.exit.loopexit ], [ %i.hq, %.preheader.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #23
-  %i.jp = call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(94) %i.hq, ptr nonnull @_ZTIN8facebook5velox10BaseVectorE, ptr nonnull @_ZTIN8facebook5velox11ArrayVectorE, i64 0) #23 ; 3 uses
+  %i.jp = call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(94) %125, ptr nonnull @_ZTIN8facebook5velox10BaseVectorE, ptr nonnull @_ZTIN8facebook5velox11ArrayVectorE, i64 0) #23 ; 3 uses
   store ptr %i.jp, ptr %i.d, align 8, !tbaa !310
-  %i.jq = call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(94) %i.hs, ptr nonnull @_ZTIN8facebook5velox10BaseVectorE, ptr nonnull @_ZTIN8facebook5velox11ArrayVectorE, i64 0) #23
+  %i.jq = call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(94) %124, ptr nonnull @_ZTIN8facebook5velox10BaseVectorE, ptr nonnull @_ZTIN8facebook5velox11ArrayVectorE, i64 0) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %89) #23
   %i.jr = getelementptr inbounds nuw i8, ptr %i.jp, i64 128
   %i.js = load ptr, ptr %i.jr, align 8, !tbaa !281 ; 3 uses

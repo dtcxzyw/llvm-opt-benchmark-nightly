@@ -201,9 +201,9 @@ bb.j:                                             ; preds = %bb.i, %.noexc193, %
 
 bb.k:                                             ; preds = %bb.i
   %i.bt = getelementptr inbounds nuw i8, ptr %i.br, i64 8
-  %.sroa.0.0.copyload31.i.i = load <2 x float>, ptr %i.bt, align 4, !noalias !212
+  %.sroa.0.0.copyload31.i.i = load <2 x float>, ptr %i.bt, align 4
   %.sroa.10.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.br, i64 16
-  %.sroa.10.0.copyload.i.i = load float, ptr %.sroa.10.0..sroa_idx.i.i, align 4, !noalias !212
+  %.sroa.10.0.copyload.i.i = load float, ptr %.sroa.10.0..sroa_idx.i.i, align 4
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
@@ -347,9 +347,9 @@ bb.v:                                             ; preds = %bb.u, %.noexc224, %
 
 bb.w:                                             ; preds = %bb.u
   %i.di = getelementptr inbounds nuw i8, ptr %i.dg, i64 8
-  %.sroa.0.0.copyload31.i.i215 = load <2 x float>, ptr %i.di, align 4, !noalias !215
+  %.sroa.0.0.copyload31.i.i215 = load <2 x float>, ptr %i.di, align 4
   %.sroa.10.0..sroa_idx.i.i216 = getelementptr inbounds nuw i8, ptr %i.dg, i64 16
-  %.sroa.10.0.copyload.i.i217 = load float, ptr %.sroa.10.0..sroa_idx.i.i216, align 4, !noalias !215
+  %.sroa.10.0.copyload.i.i217 = load float, ptr %.sroa.10.0..sroa_idx.i.i216, align 4
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.v
@@ -664,9 +664,9 @@ bb.at:                                            ; preds = %bb.as, %.noexc274, 
 
 bb.au:                                            ; preds = %bb.as
   %i.gv = getelementptr inbounds nuw i8, ptr %i.gt, i64 8
-  %.sroa.0.0.copyload31.i.i267 = load <2 x float>, ptr %i.gv, align 4, !noalias !218 ; 5 uses
+  %.sroa.0.0.copyload31.i.i267 = load <2 x float>, ptr %i.gv, align 4 ; 5 uses
   %.sroa.10.0..sroa_idx.i.i268 = getelementptr inbounds nuw i8, ptr %i.gt, i64 16
-  %.sroa.10.0.copyload.i.i269 = load float, ptr %.sroa.10.0..sroa_idx.i.i268, align 4, !noalias !218 ; 5 uses
+  %.sroa.10.0.copyload.i.i269 = load float, ptr %.sroa.10.0..sroa_idx.i.i268, align 4 ; 5 uses
   %i.gw = load i64, ptr %i.gj, align 8, !noalias !218
   %i.gx = icmp eq i64 %i.gw, 0
   br i1 %i.gx, label %_ZN6Assimp3FBX11PropertyGetIfEET_RKNS0_13PropertyTableERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERbb.exit.thread.i, label %bb.av
@@ -701,7 +701,7 @@ bb.ay:                                            ; preds = %.noexc276, %.noexc2
 
 bb.az:                                            ; preds = %bb.ay
   %i.hh = getelementptr inbounds nuw i8, ptr %i.hf, i64 8
-  %i.hi = load float, ptr %i.hh, align 4, !noalias !218 ; 2 uses
+  %i.hi = load float, ptr %i.hh, align 4          ; 2 uses
   %i.hj = insertelement <2 x float> poison, float %i.hi, i64 0
   %i.hk = shufflevector <2 x float> %i.hj, <2 x float> poison, <2 x i32> zeroinitializer
   %i.hl = fmul <2 x float> %.sroa.0.0.copyload31.i.i267, %i.hk
@@ -1014,9 +1014,9 @@ bb.bu:                                            ; preds = %bb.bt, %.noexc331, 
 
 bb.bv:                                            ; preds = %bb.bt
   %i.ky = getelementptr inbounds nuw i8, ptr %i.kw, i64 8
-  %.sroa.0.0.copyload31.i.i322 = load <2 x float>, ptr %i.ky, align 4, !noalias !221
+  %.sroa.0.0.copyload31.i.i322 = load <2 x float>, ptr %i.ky, align 4
   %.sroa.10.0..sroa_idx.i.i323 = getelementptr inbounds nuw i8, ptr %i.kw, i64 16
-  %.sroa.10.0.copyload.i.i324 = load float, ptr %.sroa.10.0..sroa_idx.i.i323, align 4, !noalias !221
+  %.sroa.10.0.copyload.i.i324 = load float, ptr %.sroa.10.0..sroa_idx.i.i323, align 4
   br label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv, %bb.bu
@@ -1383,9 +1383,9 @@ bb.cz:                                            ; preds = %bb.cy, %.noexc396, 
 
 bb.da:                                            ; preds = %bb.cy
   %i.ot = getelementptr inbounds nuw i8, ptr %i.or, i64 8
-  %.sroa.0.0.copyload31.i.i387 = load <2 x float>, ptr %i.ot, align 4, !noalias !224
+  %.sroa.0.0.copyload31.i.i387 = load <2 x float>, ptr %i.ot, align 4
   %.sroa.10.0..sroa_idx.i.i388 = getelementptr inbounds nuw i8, ptr %i.or, i64 16
-  %.sroa.10.0.copyload.i.i389 = load float, ptr %.sroa.10.0..sroa_idx.i.i388, align 4, !noalias !224
+  %.sroa.10.0.copyload.i.i389 = load float, ptr %.sroa.10.0..sroa_idx.i.i388, align 4
   br label %bb.db
 
 bb.db:                                            ; preds = %bb.da, %bb.cz
@@ -1788,7 +1788,7 @@ bb.a:
   %i.c = alloca i64, align 8                      ; 6 uses
   %6 = alloca %struct.aiString, align 4           ; 5 uses
   %7 = alloca %struct.aiUVTransform, align 16     ; 6 uses
-  %i.d = alloca i32, align 4                      ; 9 uses
+  %i.d = alloca i32, align 4                      ; 11 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 27 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
@@ -2098,7 +2098,6 @@ bb.u:                                             ; preds = %thread-pre-split.th
   br label %bb.bi
 
 bb.v:                                             ; preds = %.lr.ph, %_ZN6Assimp12LogFunctionsINS_11FBXImporterEE7LogWarnIJRA31_KcRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_EEEvDpOT_.exit
-  %12 = phi i32 [ -1, %.lr.ph ], [ %13, %_ZN6Assimp12LogFunctionsINS_11FBXImporterEE7LogWarnIJRA31_KcRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_EEEvDpOT_.exit ] ; 9 uses
   %.sroa.0161.0215 = phi ptr [ %.sroa.0161.0213, %.lr.ph ], [ %.sroa.0161.0, %_ZN6Assimp12LogFunctionsINS_11FBXImporterEE7LogWarnIJRA31_KcRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_EEEvDpOT_.exit ] ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %.sroa.0161.0215, i64 8
   %i.dg = load ptr, ptr %i.df, align 8            ; 2 uses
@@ -2301,7 +2300,7 @@ bb.an:                                            ; preds = %bb.ak
   br label %bb.bi
 
 bb.ao:                                            ; preds = %bb.ai, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit135
-  %.275 = phi i32 [ %.073211, %bb.ai ], [ %i.fi, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit135 ] ; 3 uses
+  %.275 = phi i32 [ %.073211, %bb.ai ], [ %i.fi, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit135 ] ; 2 uses
   %i.fq = icmp eq i32 %.275, -1
   br i1 %i.fq, label %bb.ap, label %bb.as
 
@@ -2336,6 +2335,7 @@ bb.ar:                                            ; preds = %.noexc142, %.noexc1
   br label %bb.bi
 
 bb.as:                                            ; preds = %bb.ao
+  %12 = load i32, ptr %i.d, align 4
   %i.fv = icmp eq i32 %12, -1
   br i1 %i.fv, label %bb.at, label %bb.au
 
@@ -2369,10 +2369,9 @@ bb.av:                                            ; preds = %.noexc140
   br label %_ZN6Assimp12LogFunctionsINS_11FBXImporterEE7LogWarnIJRA31_KcRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_EEEvDpOT_.exit
 
 _ZN6Assimp12LogFunctionsINS_11FBXImporterEE7LogWarnIJRA31_KcRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_EEEvDpOT_.exit: ; preds = %._crit_edge.i.i.i115, %bb.v, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEiET_S8_S8_RKT0_.exit, %bb.at, %.noexc136, %.noexc139, %.noexc140, %.noexc143, %bb.w
-  %13 = phi i32 [ %12, %._crit_edge.i.i.i115 ], [ %12, %bb.v ], [ %12, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEiET_S8_S8_RKT0_.exit ], [ %.275, %bb.at ], [ %12, %.noexc136 ], [ %12, %.noexc139 ], [ %12, %.noexc140 ], [ %12, %.noexc143 ], [ %12, %bb.w ] ; 2 uses
   %.sroa.0161.0 = load ptr, ptr %.sroa.0161.0215, align 8 ; 2 uses
   %.not191 = icmp eq ptr %.sroa.0161.0, null
-  br i1 %.not191, label %thread-pre-split, label %bb.v
+  br i1 %.not191, label %thread-pre-split.loopexit, label %bb.v
 
 bb.aw:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit148, %.preheader192
   %.063202 = phi i32 [ 0, %.preheader192 ], [ %i.gs, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit148 ] ; 5 uses
@@ -2468,8 +2467,12 @@ bb.bg:                                            ; preds = %bb.bd, %bb.be
   store i32 %.266, ptr %i.d, align 4
   br label %thread-pre-split
 
-thread-pre-split:                                 ; preds = %_ZN6Assimp12LogFunctionsINS_11FBXImporterEE7LogWarnIJRA31_KcRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_EEEvDpOT_.exit, %bb.bg
-  %i.gw = phi i32 [ %.266, %bb.bg ], [ %13, %_ZN6Assimp12LogFunctionsINS_11FBXImporterEE7LogWarnIJRA31_KcRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_EEEvDpOT_.exit ]
+thread-pre-split.loopexit:                        ; preds = %_ZN6Assimp12LogFunctionsINS_11FBXImporterEE7LogWarnIJRA31_KcRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_EEEvDpOT_.exit
+  %.pr.pre = load i32, ptr %i.d, align 4
+  br label %thread-pre-split
+
+thread-pre-split:                                 ; preds = %thread-pre-split.loopexit, %bb.bg
+  %i.gw = phi i32 [ %.266, %bb.bg ], [ %.pr.pre, %thread-pre-split.loopexit ]
   %i.gx = icmp eq i32 %i.gw, -1
   br i1 %i.gx, label %thread-pre-split.thread, label %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread176
 
@@ -2872,9 +2875,9 @@ bb.i:                                             ; preds = %bb.h, %.noexc17, %b
 
 bb.j:                                             ; preds = %bb.h
   %i.as = getelementptr inbounds nuw i8, ptr %i.aq, i64 8
-  %.sroa.0.0.copyload31.i.i = load <2 x float>, ptr %i.as, align 4, !noalias !289 ; 5 uses
+  %.sroa.0.0.copyload31.i.i = load <2 x float>, ptr %i.as, align 4 ; 5 uses
   %.sroa.10.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.aq, i64 16
-  %.sroa.10.0.copyload.i.i = load float, ptr %.sroa.10.0..sroa_idx.i.i, align 4, !noalias !289 ; 5 uses
+  %.sroa.10.0.copyload.i.i = load float, ptr %.sroa.10.0..sroa_idx.i.i, align 4 ; 5 uses
   %i.at = load i64, ptr %i.w, align 8, !noalias !289
   %i.au = icmp eq i64 %i.at, 0
   br i1 %i.au, label %_ZN6Assimp3FBX11PropertyGetIfEET_RKNS0_13PropertyTableERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERbb.exit.thread.i, label %bb.k
@@ -2909,7 +2912,7 @@ bb.n:                                             ; preds = %.noexc19, %.noexc18
 
 bb.o:                                             ; preds = %bb.n
   %i.be = getelementptr inbounds nuw i8, ptr %i.bc, i64 8
-  %i.bf = load float, ptr %i.be, align 4, !noalias !289 ; 2 uses
+  %i.bf = load float, ptr %i.be, align 4          ; 2 uses
   %i.bg = insertelement <2 x float> poison, float %i.bf, i64 0
   %i.bh = shufflevector <2 x float> %i.bg, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bi = fmul <2 x float> %.sroa.0.0.copyload31.i.i, %i.bh

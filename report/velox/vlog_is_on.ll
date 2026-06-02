@@ -201,7 +201,7 @@ define hidden noundef zeroext i1 @_ZN6google11InitVLOG3__EPNS_8SiteFlagEPiPKci(p
 bb.a:
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.a = alloca i32, align 4                      ; 5 uses
-  %5 = alloca %"class.glog_internal_namespace_::MutexLock", align 8 ; 5 uses
+  %5 = alloca %"class.glog_internal_namespace_::MutexLock", align 8 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
   store ptr @_ZN6googleL12vmodule_lockE, ptr %5, align 8, !tbaa !25
   %i.b = load volatile i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN6googleL12vmodule_lockE, i64 56), align 8, !tbaa !20, !range !23, !noundef !24
@@ -480,12 +480,14 @@ bb.ac:                                            ; preds = %bb.ab
 
 bb.ad:                                            ; preds = %bb.aa, %bb.ab, %bb.ac, %.loopexit
   %i.bt = load i32, ptr %.040, align 4, !tbaa !3
-  %i.bu = load volatile i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN6googleL12vmodule_lockE, i64 56), align 8, !tbaa !20, !range !23, !noundef !24
+  %6 = load ptr, ptr %5, align 8, !tbaa !25       ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 56
+  %i.bu = load volatile i8, ptr %7, align 8, !tbaa !20, !range !23, !noundef !24
   %i.bv = trunc nuw i8 %i.bu to i1
   br i1 %i.bv, label %bb.ae, label %_ZN24glog_internal_namespace_9MutexLockD2Ev.exit
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.bw = call i32 @pthread_rwlock_unlock(ptr noundef nonnull align 8 dereferenceable(57) @_ZN6googleL12vmodule_lockE) #20
+  %i.bw = call i32 @pthread_rwlock_unlock(ptr noundef nonnull align 8 dereferenceable(57) %6) #20
   %.not.i.i50 = icmp eq i32 %i.bw, 0
   br i1 %.not.i.i50, label %_ZN24glog_internal_namespace_9MutexLockD2Ev.exit, label %bb.af
 

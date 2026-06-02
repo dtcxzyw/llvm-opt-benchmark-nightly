@@ -129,7 +129,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   store ptr %i.ab, ptr @program_invocation_short_name, align 8, !tbaa !17
-  %i.ac = tail call noalias ptr @malloc(i64 noundef %.161.lcssa) #15 ; 7 uses
+  %i.ac = tail call noalias ptr @malloc(i64 noundef %.161.lcssa) #15 ; 8 uses
   %.not31.i = icmp eq ptr %i.ac, null
   br i1 %.not31.i, label %spt_copyenv.exit.thread, label %bb.i
 
@@ -150,16 +150,18 @@ bb.j:                                             ; preds = %bb.i
   br label %spt_copyenv.exit.thread
 
 .lr.ph.i:                                         ; preds = %.preheader.i, %bb.n
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.n ], [ 0, %.preheader.i ]
-  %i.af = phi ptr [ %i.am, %bb.n ], [ %i.ae, %.preheader.i ] ; 2 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.n ], [ 0, %.preheader.i ] ; 2 uses
+  %i.af = phi ptr [ %i.am, %bb.n ], [ %i.ae, %.preheader.i ]
   %i.ag = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %i.af, i32 noundef 61) #14 ; 5 uses
   %.not34.i = icmp eq ptr %i.ag, null
   br i1 %.not34.i, label %bb.n, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph.i
+  %2 = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %indvars.iv.i
   store i8 0, ptr %i.ag, align 1, !tbaa !25
+  %3 = load ptr, ptr %2, align 8, !tbaa !17
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 1
-  %i.ai = tail call i32 @setenv(ptr noundef nonnull %i.af, ptr noundef nonnull %i.ah, i32 noundef 1) #13
+  %i.ai = tail call i32 @setenv(ptr noundef %3, ptr noundef nonnull %i.ah, i32 noundef 1) #13
   %.not35.i = icmp eq i32 %i.ai, 0
   br i1 %.not35.i, label %.thread.i, label %bb.l
 

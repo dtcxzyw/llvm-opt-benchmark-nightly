@@ -201,8 +201,8 @@ bb.m:                                             ; preds = %bb.e
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6duckdb15LocalFileSystem4ReadERNS_10FileHandleEPvlm(ptr nonnull readnone align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(80) %1, ptr noundef captures(none) %2, i64 noundef %3, i64 noundef %4) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca i64, align 8                      ; 2 uses
-  %i.b = alloca i64, align 8                      ; 2 uses
+  %i.a = alloca i64, align 8                      ; 3 uses
+  %i.b = alloca i64, align 8                      ; 3 uses
   %5 = alloca %"class.std::unordered_map.484", align 8 ; 5 uses
   %6 = alloca [1 x %"struct.std::pair.1640"], align 8 ; 6 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
@@ -223,8 +223,8 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %bb.p
   %.080 = phi ptr [ %i.ah, %bb.p ], [ %2, %bb.a ] ; 2 uses
-  %i.g = phi i64 [ %i.aj, %bb.p ], [ %4, %bb.a ]  ; 3 uses
-  %i.h = phi i64 [ %i.ai, %bb.p ], [ %3, %bb.a ]  ; 3 uses
+  %i.g = phi i64 [ %i.aj, %bb.p ], [ %4, %bb.a ]  ; 4 uses
+  %i.h = phi i64 [ %i.ai, %bb.p ], [ %3, %bb.a ]  ; 4 uses
   %i.i = tail call i64 @pread(i32 noundef %i.e, ptr noundef %.080, i64 noundef %i.h, i64 noundef %i.g) ; 4 uses
   switch i64 %i.i, label %bb.p [
     i64 -1, label %bb.b
@@ -232,6 +232,8 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %.lr.ph
+  store i64 %i.g, ptr %i.b, align 8
+  store i64 %i.h, ptr %i.a, align 8
   %i.j = tail call ptr @__cxa_allocate_exception(i64 16) #58 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #58
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #58

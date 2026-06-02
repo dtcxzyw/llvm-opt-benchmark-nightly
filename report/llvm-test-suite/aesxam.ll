@@ -200,8 +200,8 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call ptr @__ctype_toupper_loc() #9  ; 2 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !17   ; 2 uses
+  %i.b = tail call ptr @__ctype_toupper_loc() #9  ; 3 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !17
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !20
   %i.f = load i8, ptr %i.e, align 1, !tbaa !10
@@ -230,9 +230,10 @@ bb.e:                                             ; preds = %bb.d, %bb.k
   br i1 %.not66, label %.critedge.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
+  %3 = load ptr, ptr %i.b, align 8, !tbaa !17
   %i.n = getelementptr inbounds nuw i8, ptr %.053104, i64 1 ; 2 uses
   %i.o = sext i8 %i.m to i64
-  %i.p = getelementptr inbounds [4 x i8], ptr %i.c, i64 %i.o
+  %i.p = getelementptr inbounds [4 x i8], ptr %3, i64 %i.o
   %i.q = load i32, ptr %i.p, align 4, !tbaa !4
   %sext = shl i32 %i.q, 24
   %i.r = ashr exact i32 %sext, 24                 ; 3 uses

@@ -76,7 +76,7 @@ declare void @exit(i32 noundef) local_unnamed_addr #2
 ; Function Attrs: mustprogress uwtable
 define dso_local noundef range(i32 0, 2) i32 @_Z12printsignameP9ClassfileP8_IO_FILERPcS3_Pv(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef %3, ptr noundef %4) local_unnamed_addr #3 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 10 uses
+  %i.a = alloca ptr, align 8                      ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   %i.b = load ptr, ptr %2, align 8, !tbaa !12     ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 1 ; 10 uses
@@ -150,6 +150,7 @@ bb.h:                                             ; preds = %.preheader194
   %i.x = getelementptr i8, ptr %i.t, i64 %i.u
   %i.y = getelementptr i8, ptr %i.x, i64 %i.q
   store i8 0, ptr %i.y, align 1, !tbaa !8
+  store ptr %i.t, ptr %i.a, align 8, !tbaa !12
   %i.z = tail call i32 @strncmp(ptr noundef nonnull dereferenceable(1) %i.t, ptr noundef nonnull dereferenceable(11) @.str.16, i64 noundef 10) #14
   %.not155 = icmp eq i32 %i.z, 0
   br i1 %.not155, label %bb.i, label %.preheader
@@ -168,10 +169,14 @@ bb.i:                                             ; preds = %bb.h
   store i8 46, ptr %i.ac, align 1, !tbaa !8
   %i.ad = tail call noundef ptr @strchr(ptr noundef nonnull dereferenceable(1) %i.ac, i32 noundef 47) #14 ; 2 uses
   %.not156 = icmp eq ptr %i.ad, null
-  br i1 %.not156, label %.loopexit, label %.lr.ph177, !llvm.loop !16
+  br i1 %.not156, label %.loopexit.loopexit, label %.lr.ph177, !llvm.loop !16
 
-.loopexit:                                        ; preds = %.lr.ph177, %.preheader, %bb.i
-  %i.ae = phi ptr [ %i.ab, %bb.i ], [ %i.t, %.preheader ], [ %i.t, %.lr.ph177 ] ; 4 uses
+.loopexit.loopexit:                               ; preds = %.lr.ph177
+  %.pre185.pre = load ptr, ptr %i.a, align 8, !tbaa !12
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.loopexit, %.preheader, %bb.i
+  %i.ae = phi ptr [ %.pre185.pre, %.loopexit.loopexit ], [ %i.t, %.preheader ], [ %i.ab, %bb.i ] ; 4 uses
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !17 ; 3 uses
   %.not157 = icmp eq ptr %i.ag, null
@@ -181,7 +186,7 @@ bb.j:                                             ; preds = %.loopexit
   %i.ah = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ag) #14
   %sext = shl i64 %i.ah, 32
   %i.ai = ashr exact i64 %sext, 32                ; 2 uses
-  %i.aj = tail call i32 @strncmp(ptr noundef nonnull %i.ae, ptr noundef nonnull %i.ag, i64 noundef %i.ai) #14
+  %i.aj = tail call i32 @strncmp(ptr noundef %i.ae, ptr noundef nonnull %i.ag, i64 noundef %i.ai) #14
   %.not159 = icmp eq i32 %i.aj, 0
   br i1 %.not159, label %bb.k, label %.thread
 

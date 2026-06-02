@@ -201,7 +201,7 @@ bb.a:
   %22 = alloca %"class.std::shared_ptr.138", align 8 ; 7 uses
   %23 = alloca %"class.std::shared_ptr.251", align 8 ; 10 uses
   %24 = alloca %"class.std::shared_ptr.251", align 8 ; 4 uses
-  %25 = alloca %"class.std::shared_ptr.254", align 8 ; 9 uses
+  %25 = alloca %"class.std::shared_ptr.254", align 8 ; 10 uses
   %26 = alloca %"class.std::shared_ptr.257", align 8 ; 10 uses
   %27 = alloca %"class.std::shared_ptr.257", align 8 ; 5 uses
   %28 = alloca %"class.std::shared_ptr.260", align 8 ; 10 uses
@@ -604,7 +604,7 @@ _ZN16OpenColorIO_v2_514DynamicPtrCastIKNS_16BuiltinTransformEKNS_9TransformEEESt
   br label %bb.be
 
 _ZN16OpenColorIO_v2_514DynamicPtrCastIKNS_16BuiltinTransformEKNS_9TransformEEESt10shared_ptrIT_ERKS5_IT0_E.exitthread-pre-split.thread: ; preds = %bb.al, %bb.an, %_ZN16OpenColorIO_v2_514DynamicPtrCastIKNS_16BuiltinTransformEKNS_9TransformEEESt10shared_ptrIT_ERKS5_IT0_E.exitthread-pre-split
-  %i.fg = phi ptr [ %.pr376.pre, %_ZN16OpenColorIO_v2_514DynamicPtrCastIKNS_16BuiltinTransformEKNS_9TransformEEESt10shared_ptrIT_ERKS5_IT0_E.exitthread-pre-split ], [ %i.ew, %bb.an ], [ %i.ew, %bb.al ] ; 5 uses
+  %i.fg = phi ptr [ %.pr376.pre, %_ZN16OpenColorIO_v2_514DynamicPtrCastIKNS_16BuiltinTransformEKNS_9TransformEEESt10shared_ptrIT_ERKS5_IT0_E.exitthread-pre-split ], [ %i.ew, %bb.an ], [ %i.ew, %bb.al ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #26
   %i.fh = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 6 uses
@@ -739,7 +739,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i122: ; preds = %
 
 .noexc142:                                        ; preds = %.noexc141
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #26
-  store ptr %i.fg, ptr %18, align 8, !tbaa !418
+  %64 = load ptr, ptr %25, align 8, !tbaa !1813   ; 3 uses
+  store ptr %64, ptr %18, align 8, !tbaa !418
   %i.gz = getelementptr inbounds nuw i8, ptr %18, i64 8 ; 2 uses
   %i.ha = load ptr, ptr %i.ex, align 8, !tbaa !7  ; 3 uses
   store ptr %i.ha, ptr %i.gz, align 8, !tbaa !7
@@ -764,7 +765,7 @@ bb.as:                                            ; preds = %bb.aq
   br label %_ZNSt10shared_ptrIKN16OpenColorIO_v2_59TransformEEC2IKNS0_16BuiltinTransformEvEERKS_IT_E.exit.i
 
 _ZNSt10shared_ptrIKN16OpenColorIO_v2_59TransformEEC2IKNS0_16BuiltinTransformEvEERKS_IT_E.exit.i: ; preds = %bb.as, %bb.ar, %.noexc142
-  %i.hg = phi ptr [ %i.fg, %.noexc142 ], [ %i.fg, %bb.ar ], [ %.pre.i132, %bb.as ] ; 4 uses
+  %i.hg = phi ptr [ %64, %.noexc142 ], [ %64, %bb.ar ], [ %.pre.i132, %bb.as ] ; 4 uses
   %i.hh = load ptr, ptr %i.hg, align 8, !tbaa !14
   %i.hi = getelementptr inbounds nuw i8, ptr %i.hh, i64 8
   %i.hj = load ptr, ptr %i.hi, align 8

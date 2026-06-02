@@ -201,7 +201,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define dso_local noundef i32 @_Z7paqmainiPPc(i32 noundef %0, ptr noundef readonly captures(none) %1) local_unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %class.String, align 8              ; 27 uses
+  %2 = alloca %class.String, align 8              ; 28 uses
   %3 = alloca %class.String, align 8              ; 17 uses
   %4 = alloca %class.String, align 8              ; 10 uses
   %5 = alloca %class.String, align 8              ; 9 uses
@@ -296,7 +296,7 @@ bb.k:                                             ; preds = %.thread
   br label %_ZN14ProgramChecker5allocEi.exit.i.i
 
 _ZN14ProgramChecker5allocEi.exit.i.i:             ; preds = %bb.k, %.thread
-  %i.z = tail call noalias dereferenceable_or_null(8) ptr @calloc(i64 noundef 8, i64 noundef 1) #40 ; 11 uses
+  %i.z = tail call noalias dereferenceable_or_null(8) ptr @calloc(i64 noundef 8, i64 noundef 1) #40 ; 12 uses
   %.not.i.i = icmp eq ptr %i.z, null
   br i1 %.not.i.i, label %bb.l, label %_ZN5ArrayIPcLi0EEC2Ei.exit
 
@@ -320,7 +320,7 @@ bb.m:                                             ; preds = %_ZN5ArrayIPcLi0EEC2
   br label %_ZN14ProgramChecker5allocEi.exit.i.i268
 
 _ZN14ProgramChecker5allocEi.exit.i.i268:          ; preds = %bb.m, %_ZN5ArrayIPcLi0EEC2Ei.exit
-  %i.ae = tail call noalias dereferenceable_or_null(8) ptr @calloc(i64 noundef 8, i64 noundef 1) #40 ; 11 uses
+  %i.ae = tail call noalias dereferenceable_or_null(8) ptr @calloc(i64 noundef 8, i64 noundef 1) #40 ; 12 uses
   %.not.i.i269 = icmp eq ptr %i.ae, null
   br i1 %.not.i.i269, label %bb.n, label %_ZN5ArrayIlLi0EEC2Ei.exit
 
@@ -583,7 +583,7 @@ _ZN5ArrayIcLi0EE8pop_backEv.exit.i277:            ; preds = %bb.ak, %bb.aj
   %i.dp = phi i8 [ %i.en, %_ZN5ArrayIcLi0EE9push_backERKc.exit.i279 ], [ %i.do, %_ZN5ArrayIcLi0EE8pop_backEv.exit.i277 ]
   %.05.i278 = phi ptr [ %i.dq, %_ZN5ArrayIcLi0EE9push_backERKc.exit.i279 ], [ %i.d, %_ZN5ArrayIcLi0EE8pop_backEv.exit.i277 ] ; 2 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %.05.i278, i64 1 ; 2 uses
-  %i.dr = load i32, ptr %2, align 8, !tbaa !272   ; 5 uses
+  %i.dr = load i32, ptr %2, align 8, !tbaa !272   ; 6 uses
   %i.ds = load i32, ptr %i.bt, align 4, !tbaa !277
   %i.dt = icmp eq i32 %i.dr, %i.ds
   %.pre662 = load ptr, ptr %i.bu, align 8, !tbaa !270 ; 3 uses
@@ -650,6 +650,7 @@ _ZN14ProgramChecker5allocEi.exit.i416:            ; preds = %bb.aq, %bb.ap, %bb.
 
 .noexc284:                                        ; preds = %_ZN14ProgramChecker5allocEi.exit.i416, %bb.an
   %.pre661 = phi ptr [ %.pre661.pre, %_ZN14ProgramChecker5allocEi.exit.i416 ], [ %i.ec, %bb.an ]
+  store i32 %i.dr, ptr %2, align 8, !tbaa !272
   %.pre.i283 = load i8, ptr %.05.i278, align 1, !tbaa !11
   br label %_ZN5ArrayIcLi0EE9push_backERKc.exit.i279
 
@@ -1052,7 +1053,8 @@ bb.bz:                                            ; preds = %_ZN14ProgramChecker
   unreachable
 
 _ZN5ArrayIPcLi0EE6createEi.exit.i:                ; preds = %_ZN14ProgramChecker5allocEi.exit.i.i290
-  store i64 0, ptr %i.ir, align 8
+  %9 = load i64, ptr %i.z, align 8
+  store i64 %9, ptr %i.ir, align 8
   %i.is = load i32, ptr @programChecker, align 8, !tbaa !15 ; 4 uses
   %i.it = sub i32 %i.is, %i.il                    ; 4 uses
   store i32 %i.it, ptr @programChecker, align 8, !tbaa !15
@@ -1088,7 +1090,8 @@ bb.cd:                                            ; preds = %_ZN14ProgramChecker
   unreachable
 
 _ZN5ArrayIlLi0EE6createEi.exit.i:                 ; preds = %_ZN14ProgramChecker5allocEi.exit.i.i294
-  store i64 0, ptr %i.iy, align 8
+  %10 = load i64, ptr %i.ae, align 8
+  store i64 %10, ptr %i.iy, align 8
   %i.iz = load i32, ptr @programChecker, align 8, !tbaa !15
   %i.ja = sub i32 %i.iz, %i.il                    ; 3 uses
   store i32 %i.ja, ptr @programChecker, align 8, !tbaa !15

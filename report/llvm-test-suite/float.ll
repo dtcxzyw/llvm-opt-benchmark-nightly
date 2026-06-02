@@ -201,8 +201,8 @@ bb.d:                                             ; preds = %.preheader152, %bb.
   br i1 %i.h, label %bb.d, label %.preheader68, !llvm.loop !21
 
 .preheader68:                                     ; preds = %bb.d
-  %i.j = tail call ptr @__ctype_b_loc() #12       ; 2 uses
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !9    ; 4 uses
+  %i.j = tail call ptr @__ctype_b_loc() #12       ; 4 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !9    ; 3 uses
   %i.l = sext i8 %i.g to i64
   %i.m = getelementptr inbounds [2 x i8], ptr %i.k, i64 %i.l
   %i.n = load i16, ptr %i.m, align 2, !tbaa !12
@@ -222,9 +222,10 @@ bb.d:                                             ; preds = %.preheader152, %bb.
   store i8 %i.p, ptr %i.s, align 1, !tbaa !8
   %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.next
   store i8 0, ptr %i.t, align 1, !tbaa !8
+  %2 = load ptr, ptr %i.j, align 8, !tbaa !9      ; 2 uses
   %i.u = load i8, ptr %i.q, align 1, !tbaa !8     ; 3 uses
   %i.v = sext i8 %i.u to i64
-  %i.w = getelementptr inbounds [2 x i8], ptr %i.k, i64 %i.v
+  %i.w = getelementptr inbounds [2 x i8], ptr %2, i64 %i.v
   %i.x = load i16, ptr %i.w, align 2, !tbaa !12
   %i.y = and i16 %i.x, 2048
   %.not = icmp eq i16 %i.y, 0
@@ -257,11 +258,12 @@ bb.d:                                             ; preds = %.preheader152, %bb.
 
 .loopexit:                                        ; preds = %.lr.ph83, %._crit_edge..loopexit_crit_edge, %.preheader
   %.054.lcssa122 = phi i32 [ %i.z, %._crit_edge..loopexit_crit_edge ], [ 0, %.preheader ], [ 0, %.lr.ph83 ] ; 2 uses
+  %3 = phi ptr [ %2, %._crit_edge..loopexit_crit_edge ], [ %i.k, %.preheader ], [ %i.k, %.lr.ph83 ]
   %i.ai = phi i8 [ %.pre, %._crit_edge..loopexit_crit_edge ], [ %i.ac, %.preheader ], [ %i.ag, %.lr.ph83 ] ; 3 uses
   %.5 = phi ptr [ %spec.select, %._crit_edge..loopexit_crit_edge ], [ %spec.select121, %.preheader ], [ %i.ae, %.lr.ph83 ] ; 2 uses
   %.2 = phi i32 [ %i.r, %._crit_edge..loopexit_crit_edge ], [ 0, %.preheader ], [ %i.af, %.lr.ph83 ] ; 2 uses
   %i.aj = sext i8 %i.ai to i64
-  %i.ak = getelementptr inbounds [2 x i8], ptr %i.k, i64 %i.aj
+  %i.ak = getelementptr inbounds [2 x i8], ptr %3, i64 %i.aj
   %i.al = load i16, ptr %i.ak, align 2, !tbaa !12
   %i.am = and i16 %i.al, 2048
   %.not6386 = icmp eq i16 %i.am, 0
@@ -281,9 +283,10 @@ bb.d:                                             ; preds = %.preheader152, %bb.
   store i8 %i.ao, ptr %i.aq, align 1, !tbaa !8
   %i.ar = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.next110
   store i8 0, ptr %i.ar, align 1, !tbaa !8
+  %4 = load ptr, ptr %i.j, align 8, !tbaa !9
   %i.as = load i8, ptr %i.ap, align 1, !tbaa !8   ; 3 uses
   %i.at = sext i8 %i.as to i64
-  %i.au = getelementptr inbounds [2 x i8], ptr %i.k, i64 %i.at
+  %i.au = getelementptr inbounds [2 x i8], ptr %4, i64 %i.at
   %i.av = load i16, ptr %i.au, align 2, !tbaa !12
   %i.aw = and i16 %i.av, 2048
   %.not63 = icmp eq i16 %i.aw, 0

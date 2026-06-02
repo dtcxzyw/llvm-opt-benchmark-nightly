@@ -201,7 +201,7 @@ declare i32 @OSSL_CMP_CTX_set1_expected_sender(ptr noundef, ptr noundef) local_u
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 2) i32 @handle_opt_geninfo(ptr noundef %0) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 5 uses
+  %i.a = alloca ptr, align 8                      ; 7 uses
   %i.b = load ptr, ptr @opt_geninfo, align 8, !tbaa !9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   %i.c = tail call ptr @__ctype_b_loc() #14
@@ -345,16 +345,16 @@ bb.y:                                             ; preds = %bb.x
 bb.z:                                             ; preds = %bb.y
   %i.bd = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ba) #12
   %i.be = getelementptr inbounds nuw i8, ptr %i.ba, i64 %i.bd
+  store ptr %i.be, ptr %i.a, align 8, !tbaa !9
   br label %bb.ab
 
 bb.aa:                                            ; preds = %bb.y
   %i.bf = getelementptr inbounds nuw i8, ptr %i.bb, i64 1
+  store ptr %i.bf, ptr %i.a, align 8, !tbaa !9
   store i8 0, ptr %i.bb, align 1, !tbaa !12
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa, %bb.z
-  %1 = phi ptr [ %i.be, %bb.z ], [ %i.bf, %bb.aa ] ; 2 uses
-  store ptr %1, ptr %i.a, align 8, !tbaa !9
   %i.bg = tail call ptr @ASN1_UTF8STRING_new() #11 ; 4 uses
   %i.bh = icmp eq ptr %i.bg, null
   br i1 %i.bh, label %bb.ao, label %bb.ac
@@ -365,6 +365,7 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %.not65, label %bb.ao, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
+  %1 = load ptr, ptr %i.a, align 8, !tbaa !9
   tail call void @ASN1_TYPE_set(ptr noundef nonnull %i.ad, i32 noundef 12, ptr noundef nonnull %i.bg) #11
   br label %bb.ag
 

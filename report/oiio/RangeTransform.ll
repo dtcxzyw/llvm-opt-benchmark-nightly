@@ -150,11 +150,11 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZNK16OpenColorIO_v2_518RangeTransformImpl18createEditableCopyEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.8") align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(248) %1) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.std::shared_ptr", align 8   ; 7 uses
+  %2 = alloca %"class.std::shared_ptr", align 8   ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
   call void @_ZN16OpenColorIO_v2_514RangeTransform6CreateEv(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr") align 8 %2)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.b = load ptr, ptr %2, align 8, !tbaa !39, !nonnull !54, !noundef !54 ; 4 uses
+  %i.b = load ptr, ptr %2, align 8, !tbaa !39, !nonnull !54, !noundef !54
   %i.c = tail call ptr @__dynamic_cast(ptr nonnull %i.b, ptr nonnull @_ZTIN16OpenColorIO_v2_514RangeTransformE, ptr nonnull @_ZTIN16OpenColorIO_v2_518RangeTransformImplE, i64 0) #20 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.e = invoke noundef nonnull align 8 dereferenceable(168) ptr @_ZN16OpenColorIO_v2_56OpDataaSERKS0_(ptr noundef nonnull align 8 dereferenceable(228) %i.d, ptr noundef nonnull align 8 dereferenceable(228) %i.a)
@@ -164,13 +164,14 @@ _ZNSt12__shared_ptrIN16OpenColorIO_v2_514RangeTransformELN9__gnu_cxx12_Lock_poli
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 184
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 184
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(60) %i.f, ptr noundef nonnull align 8 dereferenceable(60) %i.g, i64 60, i1 false)
+  %3 = load ptr, ptr %2, align 8, !tbaa !39       ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.i = load i32, ptr %i.h, align 8, !tbaa !9
-  %i.j = load ptr, ptr %i.b, align 8, !tbaa !7
+  %i.j = load ptr, ptr %3, align 8, !tbaa !7
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 64
   %i.l = load ptr, ptr %i.k, align 8
-  tail call void %i.l(ptr noundef nonnull align 8 dereferenceable(8) %i.b, i32 noundef %i.i) #20
-  store ptr %i.b, ptr %0, align 8, !tbaa !55
+  tail call void %i.l(ptr noundef nonnull align 8 dereferenceable(8) %3, i32 noundef %i.i) #20
+  store ptr %3, ptr %0, align 8, !tbaa !55
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !44

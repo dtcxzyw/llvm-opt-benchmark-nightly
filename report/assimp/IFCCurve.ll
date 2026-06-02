@@ -201,7 +201,7 @@ bb.a:
   %13 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %14 = alloca %"class.std::allocator.46", align 1 ; 5 uses
   %15 = alloca %"class.Assimp::STEP::EXPRESS::ENUMERATION", align 8 ; 12 uses
-  %16 = alloca %class.aiVector3t, align 8         ; 7 uses
+  %16 = alloca %class.aiVector3t, align 8         ; 8 uses
   %i.g = load ptr, ptr %0, align 8
   %i.h = getelementptr i8, ptr %i.g, i64 -24
   %i.i = load i64, ptr %i.h, align 8
@@ -216,7 +216,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not48.not, label %.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.m = tail call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #31 ; 9 uses
+  %i.m = tail call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #31 ; 10 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   store ptr %i.l, ptr %i.n, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 16
@@ -224,8 +224,8 @@ bb.c:                                             ; preds = %bb.b
   store ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTVN6Assimp3IFC12_GLOBAL__N_18PolyLineE, i64 16), ptr %i.m, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 24 ; 5 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.p, i8 0, i64 24, i1 false)
-  %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 80
-  %i.r = getelementptr inbounds nuw i8, ptr %i.l, i64 88
+  %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 80 ; 2 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %i.l, i64 88 ; 2 uses
   %i.s = load ptr, ptr %i.r, align 8              ; 3 uses
   %i.t = load ptr, ptr %i.q, align 8              ; 3 uses
   %i.u = ptrtoint ptr %i.s to i64
@@ -245,7 +245,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.z = getelementptr inbounds nuw i8, ptr %i.m, i64 40 ; 4 uses
   %.not28.i = icmp eq ptr %i.s, %i.t
-  br i1 %.not28.i, label %_ZN6Assimp3IFC12_GLOBAL__N_114CompositeCurveC2ERKNS0_10Schema_2x317IfcCompositeCurveERNS0_14ConversionDataE.exit, label %_ZNSt12_Vector_baseI10aiVector3tIdESaIS1_EE11_M_allocateEm.exit.i.i
+  br i1 %.not28.i, label %_ZNSt6vectorI10aiVector3tIdESaIS1_EE7reserveEm.exit.i, label %_ZNSt12_Vector_baseI10aiVector3tIdESaIS1_EE11_M_allocateEm.exit.i.i
 
 _ZNSt12_Vector_baseI10aiVector3tIdESaIS1_EE11_M_allocateEm.exit.i.i: ; preds = %bb.e
   %i.aa = mul nuw nsw i64 %i.x, 24
@@ -253,13 +253,30 @@ _ZNSt12_Vector_baseI10aiVector3tIdESaIS1_EE11_M_allocateEm.exit.i.i: ; preds = %
           to label %.lr.ph.i.a unwind label %.thread313 ; 4 uses
 
 .lr.ph.i.a:                                       ; preds = %_ZNSt12_Vector_baseI10aiVector3tIdESaIS1_EE11_M_allocateEm.exit.i.i
-  %i.ac = getelementptr inbounds nuw i8, ptr %i.m, i64 32 ; 4 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.m, i64 32
   store ptr %i.ab, ptr %i.p, align 8
   store ptr %i.ab, ptr %i.ac, align 8
   %i.ad = getelementptr inbounds nuw [24 x i8], ptr %i.ab, i64 %i.x
   store ptr %i.ad, ptr %i.z, align 8
+  %.pre.i = load ptr, ptr %i.q, align 8
+  %.pre20.i = load ptr, ptr %i.r, align 8
+  br label %_ZNSt6vectorI10aiVector3tIdESaIS1_EE7reserveEm.exit.i
+
+_ZNSt6vectorI10aiVector3tIdESaIS1_EE7reserveEm.exit.i: ; preds = %.lr.ph.i.a, %bb.e
+  %17 = phi ptr [ %i.ab, %.lr.ph.i.a ], [ null, %bb.e ]
+  %18 = phi ptr [ %.pre20.i, %.lr.ph.i.a ], [ %i.s, %bb.e ] ; 2 uses
+  %19 = phi ptr [ %.pre.i, %.lr.ph.i.a ], [ %i.t, %bb.e ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #30
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %16, i8 0, i64 24, i1 false)
+  %.not18.i = icmp eq ptr %19, %18
+  br i1 %.not18.i, label %.thread164, label %.lr.ph.i
+
+.thread164:                                       ; preds = %_ZNSt6vectorI10aiVector3tIdESaIS1_EE7reserveEm.exit.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %16) #30
+  br label %_ZN6Assimp3IFC12_GLOBAL__N_114CompositeCurveC2ERKNS0_10Schema_2x317IfcCompositeCurveERNS0_14ConversionDataE.exit
+
+.lr.ph.i:                                         ; preds = %_ZNSt6vectorI10aiVector3tIdESaIS1_EE7reserveEm.exit.i
+  %20 = getelementptr inbounds nuw i8, ptr %i.m, i64 32 ; 3 uses
   br label %bb.f
 
 .thread313:                                       ; preds = %bb.d, %_ZNSt12_Vector_baseI10aiVector3tIdESaIS1_EE11_M_allocateEm.exit.i.i
@@ -267,9 +284,9 @@ _ZNSt12_Vector_baseI10aiVector3tIdESaIS1_EE11_M_allocateEm.exit.i.i: ; preds = %
           cleanup
   br label %.body
 
-bb.f:                                             ; preds = %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backERKS1_.exit.i, %.lr.ph.i.a
-  %i.af = phi ptr [ %i.ab, %.lr.ph.i.a ], [ %i.bb, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backERKS1_.exit.i ] ; 5 uses
-  %.sroa.015.019.i = phi ptr [ %i.t, %.lr.ph.i.a ], [ %i.bc, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backERKS1_.exit.i ] ; 2 uses
+bb.f:                                             ; preds = %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backERKS1_.exit.i, %.lr.ph.i
+  %i.af = phi ptr [ %17, %.lr.ph.i ], [ %i.bb, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backERKS1_.exit.i ] ; 5 uses
+  %.sroa.015.019.i = phi ptr [ %19, %.lr.ph.i ], [ %i.bc, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backERKS1_.exit.i ] ; 2 uses
   %i.ag = invoke noundef nonnull align 8 dereferenceable(88) ptr @_ZNK6Assimp4STEP4LazyINS_3IFC10Schema_2x317IfcCartesianPointEEcvRKS4_Ev(ptr noundef nonnull align 8 dereferenceable(8) %.sroa.015.019.i)
           to label %bb.g unwind label %.loopexit.i
 
@@ -284,9 +301,9 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.af, ptr noundef nonnull align 8 dereferenceable(24) %16, i64 24, i1 false)
-  %i.ai = load ptr, ptr %i.ac, align 8
+  %i.ai = load ptr, ptr %20, align 8
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 24 ; 2 uses
-  store ptr %i.aj, ptr %i.ac, align 8
+  store ptr %i.aj, ptr %20, align 8
   br label %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backERKS1_.exit.i
 
 bb.j:                                             ; preds = %bb.h
@@ -344,7 +361,7 @@ bb.l:                                             ; preds = %_ZNSt6vectorI10aiVe
 
 _ZNSt6vectorI10aiVector3tIdESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i: ; preds = %bb.l, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i
   store ptr %i.av, ptr %i.p, align 8
-  store ptr %i.az, ptr %i.ac, align 8
+  store ptr %i.az, ptr %20, align 8
   %i.ba = getelementptr inbounds nuw [24 x i8], ptr %i.av, i64 %i.at
   store ptr %i.ba, ptr %i.z, align 8
   br label %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backERKS1_.exit.i
@@ -352,7 +369,7 @@ _ZNSt6vectorI10aiVector3tIdESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17_
 _ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backERKS1_.exit.i: ; preds = %_ZNSt6vectorI10aiVector3tIdESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i, %bb.i
   %i.bb = phi ptr [ %i.az, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ], [ %i.aj, %bb.i ]
   %i.bc = getelementptr inbounds nuw i8, ptr %.sroa.015.019.i, i64 8 ; 2 uses
-  %.not.i = icmp eq ptr %i.bc, %i.s
+  %.not.i = icmp eq ptr %i.bc, %18
   br i1 %.not.i, label %bb.o, label %bb.f
 
 .loopexit.i:                                      ; preds = %_ZNKSt6vectorI10aiVector3tIdESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i, %bb.g, %bb.f
@@ -755,8 +772,8 @@ bb.eb:                                            ; preds = %.noexc84, %.noexc83
   tail call void @_ZdlPvm(ptr noundef nonnull %i.qu, i64 noundef 72) #33
   br label %bb.ec
 
-_ZN6Assimp3IFC12_GLOBAL__N_114CompositeCurveC2ERKNS0_10Schema_2x317IfcCompositeCurveERNS0_14ConversionDataE.exit: ; preds = %bb.e, %.thread200, %.noexc84, %._crit_edge237, %bb.bk, %bb.o, %bb.dz, %bb.dv
-  %.8 = phi ptr [ %i.m, %bb.o ], [ %i.ha, %._crit_edge237 ], [ %i.pl, %bb.dz ], [ %i.oc, %bb.dv ], [ %i.qu, %.noexc84 ], [ %i.bi, %bb.bk ], [ null, %.thread200 ], [ %i.m, %bb.e ]
+_ZN6Assimp3IFC12_GLOBAL__N_114CompositeCurveC2ERKNS0_10Schema_2x317IfcCompositeCurveERNS0_14ConversionDataE.exit: ; preds = %.thread200, %.noexc84, %._crit_edge237, %bb.bk, %bb.o, %bb.dz, %bb.dv, %.thread164
+  %.8 = phi ptr [ %i.m, %bb.o ], [ %i.ha, %._crit_edge237 ], [ %i.pl, %bb.dz ], [ %i.oc, %bb.dv ], [ %i.m, %.thread164 ], [ %i.bi, %bb.bk ], [ null, %.thread200 ], [ %i.qu, %.noexc84 ]
   ret ptr %.8
 
 bb.ec:                                            ; preds = %bb.eb, %bb.dy, %bb.du, %.body69, %.body63, %.body
