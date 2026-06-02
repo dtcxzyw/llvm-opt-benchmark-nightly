@@ -201,7 +201,7 @@ _ZN6Assimp3FBX6ObjectD2Ev.exit:                   ; preds = %bb.r, %_ZNKSt7__cxx
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden void @_ZNK6Assimp3FBX14AnimationLayer5NodesEPKPKcm(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::vector.83") align 8 captures(none) initializes((0, 24)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(80) %1, ptr noundef readonly captures(address_is_null) %2, i64 noundef %3) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define hidden void @_ZNK6Assimp3FBX14AnimationLayer5NodesEPKPKcm(ptr dead_on_unwind noalias writable sret(%"class.std::vector.83") align 8 captures(none) initializes((0, 24)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(80) %1, ptr noundef readonly captures(address_is_null) %2, i64 noundef %3) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = alloca i64, align 8                      ; 5 uses
@@ -232,7 +232,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 9 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %.not149 = icmp eq ptr %i.h, %i.i
   br i1 %.not149, label %_ZNSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EE7reserveEm.exit, label %_ZNSt12_Vector_baseIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EE11_M_allocateEm.exit.i
 
@@ -249,8 +249,8 @@ _ZNSt12_Vector_baseIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EE11_M_allocateEm.e
   br label %_ZNSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EE7reserveEm.exit
 
 _ZNSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EE7reserveEm.exit: ; preds = %.noexc48, %bb.c
-  %.promoted90 = phi ptr [ %i.o, %.noexc48 ], [ null, %bb.c ] ; 3 uses
-  %.promoted = phi ptr [ %i.q, %.noexc48 ], [ null, %bb.c ] ; 2 uses
+  %.promoted90 = phi ptr [ %i.q, %.noexc48 ], [ null, %bb.c ]
+  %.promoted = phi ptr [ %i.o, %.noexc48 ], [ null, %bb.c ] ; 2 uses
   %.not7599 = icmp eq ptr %i.i, %i.h
   br i1 %.not7599, label %._crit_edge, label %.lr.ph101
 
@@ -270,21 +270,17 @@ _ZNSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EE7reserveEm.exit: ; preds
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZNSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EE7reserveEm.exit
-  %7 = phi ptr [ %i.i, %_ZNSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EE7reserveEm.exit ], [ %.pre, %._crit_edge.loopexit ] ; 3 uses
-  %.lcssa91 = phi ptr [ %.promoted90, %_ZNSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EE7reserveEm.exit ], [ %i.cl, %._crit_edge.loopexit ]
-  %.lcssa = phi ptr [ %.promoted, %_ZNSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EE7reserveEm.exit ], [ %i.cm, %._crit_edge.loopexit ]
-  store ptr %.lcssa, ptr %i.n, align 8
-  store ptr %.lcssa91, ptr %0, align 8
-  %.not.i.i.i = icmp eq ptr %7, null
+  %.lcssa = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %i.i, %_ZNSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EE7reserveEm.exit ] ; 3 uses
+  %.not.i.i.i = icmp eq ptr %.lcssa, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIPKN6Assimp3FBX10ConnectionESaIS4_EED2Ev.exit, label %bb.d
 
 bb.d:                                             ; preds = %._crit_edge
   %i.x = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.y = load ptr, ptr %i.x, align 8
   %i.z = ptrtoint ptr %i.y to i64
-  %i.aa = ptrtoint ptr %7 to i64
+  %i.aa = ptrtoint ptr %.lcssa to i64
   %i.ab = sub i64 %i.z, %i.aa
-  call void @_ZdlPvm(ptr noundef nonnull %7, i64 noundef %i.ab) #19
+  call void @_ZdlPvm(ptr noundef nonnull %.lcssa, i64 noundef %i.ab) #19
   br label %_ZNSt6vectorIPKN6Assimp3FBX10ConnectionESaIS4_EED2Ev.exit
 
 _ZNSt6vectorIPKN6Assimp3FBX10ConnectionESaIS4_EED2Ev.exit: ; preds = %._crit_edge, %bb.d
@@ -297,10 +293,10 @@ bb.e:                                             ; preds = %_ZNSt12_Vector_base
   br label %bb.y
 
 bb.f:                                             ; preds = %.lr.ph101, %.critedge
-  %i.ad = phi ptr [ %.promoted90, %.lr.ph101 ], [ %i.ck, %.critedge ] ; 11 uses
+  %i.ad = phi ptr [ %.promoted, %.lr.ph101 ], [ %i.ck, %.critedge ] ; 9 uses
   %.sroa.072.0100 = phi ptr [ %i.i, %.lr.ph101 ], [ %i.cn, %.critedge ] ; 2 uses
-  %i.ae = phi ptr [ %.promoted, %.lr.ph101 ], [ %i.cm, %.critedge ] ; 17 uses
-  %i.af = phi ptr [ %.promoted90, %.lr.ph101 ], [ %i.cl, %.critedge ] ; 22 uses
+  %i.ae = phi ptr [ %.promoted90, %.lr.ph101 ], [ %i.cm, %.critedge ] ; 7 uses
+  %i.af = phi ptr [ %.promoted, %.lr.ph101 ], [ %i.cl, %.critedge ] ; 10 uses
   %i.ag = load ptr, ptr %.sroa.072.0100, align 8  ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
   %i.ai = load i64, ptr %i.ah, align 8
@@ -354,22 +350,16 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.i,
 bb.j:                                             ; preds = %bb.g
   %i.as = landingpad { ptr, i32 }
           cleanup
-  store ptr %i.ae, ptr %i.n, align 8
-  store ptr %i.af, ptr %0, align 8
   br label %bb.y
 
 bb.k:                                             ; preds = %.noexc.i
   %i.at = landingpad { ptr, i32 }
           cleanup
-  store ptr %i.ae, ptr %i.n, align 8
-  store ptr %i.af, ptr %0, align 8
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit52
 
 bb.l:                                             ; preds = %.noexc49
   %i.au = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  store ptr %i.ae, ptr %i.n, align 8
-  store ptr %i.af, ptr %0, align 8
   %i.av = load ptr, ptr %5, align 8               ; 2 uses
   %i.aw = icmp eq ptr %i.av, %i.v
   br i1 %i.aw, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit52, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i50
@@ -429,15 +419,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit59: ; preds = %bb.
 bb.o:                                             ; preds = %.noexc.i54
   %i.bi = landingpad { ptr, i32 }
           cleanup
-  store ptr %i.ae, ptr %i.n, align 8
-  store ptr %i.af, ptr %0, align 8
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit62
 
 bb.p:                                             ; preds = %.noexc55
   %i.bj = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  store ptr %i.ae, ptr %i.n, align 8
-  store ptr %i.af, ptr %0, align 8
   %i.bk = load ptr, ptr %6, align 8               ; 2 uses
   %i.bl = icmp eq ptr %i.bk, %i.s
   br i1 %i.bl, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit62, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i60
@@ -492,8 +478,6 @@ bb.u:                                             ; preds = %.loopexit
   br i1 %i.by, label %bb.v, label %_ZNKSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EE12_M_check_lenEmPKc.exit.i.i
 
 bb.v:                                             ; preds = %bb.u
-  store ptr %i.ae, ptr %i.n, align 8
-  store ptr %i.af, ptr %0, align 8
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.26) #20
           to label %.noexc64 unwind label %.loopexit.split-lp
 
@@ -511,7 +495,7 @@ _ZNKSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EE12_M_check_lenEmPKc.exi
   call void @llvm.assume(i1 %.not.i.i.i63)
   %i.ce = shl nuw nsw i64 %i.cd, 3
   %i.cf = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ce) #23
-          to label %.noexc65 unwind label %.loopexit76 ; 4 uses
+          to label %.noexc65 unwind label %.loopexit76 ; 5 uses
 
 .noexc65:                                         ; preds = %_ZNKSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EE12_M_check_lenEmPKc.exit.i.i
   %i.cg = getelementptr inbounds i8, ptr %i.cf, i64 %i.bx ; 2 uses
@@ -533,14 +517,16 @@ bb.x:                                             ; preds = %_ZNSt6vectorIPKN6As
   br label %_ZNSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i
 
 _ZNSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i: ; preds = %bb.x, %_ZNSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i
+  store ptr %i.cf, ptr %0, align 8
   store ptr %i.ci, ptr %i.r, align 8
-  %i.cj = getelementptr inbounds nuw [8 x i8], ptr %i.cf, i64 %i.cd
+  %i.cj = getelementptr inbounds nuw [8 x i8], ptr %i.cf, i64 %i.cd ; 2 uses
+  store ptr %i.cj, ptr %i.n, align 8
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.s, %bb.r, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit59, %bb.t, %_ZNSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.f
   %i.ck = phi ptr [ %i.ad, %bb.f ], [ %i.ad, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit59 ], [ %i.bu, %bb.t ], [ %i.ci, %_ZNSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i ], [ %i.ad, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.ad, %bb.r ], [ %i.ad, %bb.s ]
-  %i.cl = phi ptr [ %i.af, %bb.f ], [ %i.af, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit59 ], [ %i.af, %bb.t ], [ %i.cf, %_ZNSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i ], [ %i.af, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.af, %bb.r ], [ %i.af, %bb.s ] ; 2 uses
-  %i.cm = phi ptr [ %i.ae, %bb.f ], [ %i.ae, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit59 ], [ %i.ae, %bb.t ], [ %i.cj, %_ZNSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i ], [ %i.ae, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.ae, %bb.r ], [ %i.ae, %bb.s ] ; 2 uses
+  %i.cl = phi ptr [ %i.af, %bb.f ], [ %i.af, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit59 ], [ %i.af, %bb.t ], [ %i.cf, %_ZNSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i ], [ %i.af, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.af, %bb.r ], [ %i.af, %bb.s ]
+  %i.cm = phi ptr [ %i.ae, %bb.f ], [ %i.ae, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit59 ], [ %i.ae, %bb.t ], [ %i.cj, %_ZNSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i ], [ %i.ae, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.ae, %bb.r ], [ %i.ae, %bb.s ]
   %i.cn = getelementptr inbounds nuw i8, ptr %.sroa.072.0100, i64 8 ; 2 uses
   %.not75 = icmp eq ptr %i.cn, %i.h
   br i1 %.not75, label %._crit_edge.loopexit, label %bb.f
@@ -548,8 +534,6 @@ _ZNSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EE17_M_realloc_insertIJRKS
 .loopexit76:                                      ; preds = %_ZNKSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EE12_M_check_lenEmPKc.exit.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
-  store ptr %i.ae, ptr %i.n, align 8
-  store ptr %i.af, ptr %0, align 8
   br label %bb.y
 
 .loopexit.split-lp:                               ; preds = %bb.v
@@ -558,8 +542,6 @@ _ZNSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EE17_M_realloc_insertIJRKS
   br label %bb.y
 
 bb.y:                                             ; preds = %.loopexit76, %.loopexit.split-lp, %bb.j, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit52, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit62, %bb.e
-  %8 = phi ptr [ null, %bb.e ], [ %i.ae, %bb.j ], [ %i.ae, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit52 ], [ %i.ae, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit62 ], [ %i.ad, %.loopexit76 ], [ %i.ad, %.loopexit.split-lp ]
-  %9 = phi ptr [ null, %bb.e ], [ %i.af, %bb.j ], [ %i.af, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit52 ], [ %i.af, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit62 ], [ %i.af, %.loopexit76 ], [ %i.af, %.loopexit.split-lp ] ; 3 uses
   %.pn43.pn.pn = phi { ptr, i32 } [ %i.ac, %bb.e ], [ %i.as, %bb.j ], [ %.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit52 ], [ %.pn39, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit62 ], [ %lpad.loopexit, %.loopexit76 ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   %i.co = load ptr, ptr %4, align 8               ; 3 uses
   %.not.i.i.i66 = icmp eq ptr %i.co, null
@@ -576,14 +558,17 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
-  %.not.i.i.i68 = icmp eq ptr %9, null
+  %.pre90 = load ptr, ptr %0, align 8             ; 3 uses
+  %.not.i.i.i68 = icmp eq ptr %.pre90, null
   br i1 %.not.i.i.i68, label %_ZNSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EED2Ev.exit, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %8 = load ptr, ptr %7, align 8
   %i.cu = ptrtoint ptr %8 to i64
-  %i.cv = ptrtoint ptr %9 to i64
+  %i.cv = ptrtoint ptr %.pre90 to i64
   %i.cw = sub i64 %i.cu, %i.cv
-  call void @_ZdlPvm(ptr noundef nonnull %9, i64 noundef %i.cw) #19
+  call void @_ZdlPvm(ptr noundef nonnull %.pre90, i64 noundef %i.cw) #19
   br label %_ZNSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EED2Ev.exit
 
 _ZNSt6vectorIPKN6Assimp3FBX18AnimationCurveNodeESaIS4_EED2Ev.exit: ; preds = %bb.aa, %bb.ab

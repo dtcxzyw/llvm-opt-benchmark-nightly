@@ -201,7 +201,7 @@ bb.a:
   %i.m = alloca i32, align 4                      ; 7 uses
   %i.n = alloca i8, align 1                       ; 7 uses
   %12 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
-  %i.o = alloca i32, align 4                      ; 11 uses
+  %i.o = alloca i32, align 4                      ; 9 uses
   %13 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %14 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %15 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -604,11 +604,9 @@ bb.ai:                                            ; preds = %_ZNSt7__cxx1112basi
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 16 ; 5 uses
   %i.ex = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 7 uses
   %i.ey = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %.promoted150 = load i32, ptr %i.o, align 4
   br label %bb.aj
 
 bb.aj:                                            ; preds = %.loopexit187.i, %.lr.ph.i
-  %.lcssa149152 = phi i32 [ %.promoted150, %.lr.ph.i ], [ %.lcssa149151, %.loopexit187.i ] ; 2 uses
   %i.ez = phi i32 [ %i.et, %.lr.ph.i ], [ %i.jy, %.loopexit187.i ]
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %.loopexit187.i ] ; 2 uses
   %i.fa = load ptr, ptr %i.ew, align 8, !tbaa !31
@@ -627,9 +625,10 @@ bb.aj:                                            ; preds = %.loopexit187.i, %.l
 
 .lr.ph.i.i:                                       ; preds = %bb.aj, %bb.bl
   %i.fl = phi i64 [ %i.je, %bb.bl ], [ %i.fg, %bb.aj ]
-  %i.fm = phi i32 [ %i.fn, %bb.bl ], [ %.lcssa149152, %bb.aj ]
-  %.01331.i.i = phi i32 [ %.1.i.i, %bb.bl ], [ %.170.i, %bb.aj ] ; 3 uses
-  %i.fn = add nsw i32 %i.fm, 1                    ; 4 uses
+  %i.fm = phi i32 [ %.1.i.i, %bb.bl ], [ %.170.i, %bb.aj ] ; 3 uses
+  %20 = load i32, ptr %i.o, align 4, !tbaa !3
+  %i.fn = add nsw i32 %20, 1
+  store i32 %i.fn, ptr %i.o, align 4, !tbaa !3
   %i.fo = getelementptr inbounds i8, ptr %2, i64 %i.fl
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fo, i64 240
   %i.fq = load ptr, ptr %i.fp, align 8, !tbaa !51 ; 6 uses
@@ -678,7 +677,7 @@ _ZNSi7getlineEPcl.exit.i.i:                       ; preds = %.noexc51, %bb.al
   %i.ge = getelementptr inbounds nuw i8, ptr %i.gd, i64 32
   %i.gf = load i32, ptr %i.ge, align 8, !tbaa !42
   %i.gg = icmp eq i32 %i.gf, 0
-  br i1 %i.gg, label %bb.an, label %.loopexit.i.loopexit
+  br i1 %i.gg, label %bb.an, label %.loopexit.i
 
 bb.an:                                            ; preds = %.noexc53
   %i.gh = load i8, ptr %i.e, align 16, !tbaa !16
@@ -898,8 +897,8 @@ bb.bh:                                            ; preds = %bb.bg
 bb.bi:                                            ; preds = %bb.bh, %bb.bg
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #26
   %i.ip = trunc i64 %i.ic to i16
-  %i.iq = add nsw i32 %.01331.i.i, 1              ; 2 uses
-  %i.ir = sext i32 %.01331.i.i to i64
+  %i.iq = add nsw i32 %i.fm, 1                    ; 2 uses
+  %i.ir = sext i32 %i.fm to i64
   %i.is = getelementptr inbounds [2 x i8], ptr %i.fc, i64 %i.ir
   store i16 %i.ip, ptr %i.is, align 2, !tbaa !37
   %i.it = load ptr, ptr %7, align 8, !tbaa !26    ; 2 uses
@@ -937,7 +936,6 @@ bb.bj:                                            ; preds = %_ZN16OpenColorIO_v2
   br i1 %.not.i.i, label %bb.bl, label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj
-  store i32 %i.fn, ptr %i.o, align 4, !tbaa !3
   %i.iz = load i64, ptr %i.q, align 8, !tbaa !13
   %i.ja = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.e) #26
   %i.jb = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %13, i64 noundef 0, i64 noundef %i.iz, ptr noundef nonnull %i.e, i64 noundef %i.ja)
@@ -945,7 +943,7 @@ bb.bk:                                            ; preds = %bb.bj
 
 bb.bl:                                            ; preds = %bb.bj, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit._crit_edge.i.i
   %i.jc = phi ptr [ %.pre.i121.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit._crit_edge.i.i ], [ %i.ga, %bb.bj ]
-  %.1.i.i = phi i32 [ %i.iq, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit._crit_edge.i.i ], [ %.01331.i.i, %bb.bj ]
+  %.1.i.i = phi i32 [ %i.iq, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit._crit_edge.i.i ], [ %i.fm, %bb.bj ]
   %i.jd = getelementptr i8, ptr %i.jc, i64 -24
   %i.je = load i64, ptr %i.jd, align 8            ; 2 uses
   %i.jf = getelementptr inbounds i8, ptr %2, i64 %i.je
@@ -954,12 +952,8 @@ bb.bl:                                            ; preds = %bb.bj, %_ZNSt7__cxx
   %i.ji = icmp eq i32 %i.jh, 0
   br i1 %i.ji, label %.lr.ph.i.i, label %.loopexit187.loopexit.i, !llvm.loop !70
 
-.loopexit.i.loopexit:                             ; preds = %.noexc53
-  store i32 %i.fn, ptr %i.o, align 4, !tbaa !3
-  br label %.loopexit.i
-
-.loopexit.i:                                      ; preds = %.loopexit.i.loopexit, %bb.bk
-  %.014.i.i = phi i32 [ 4, %bb.bk ], [ 1, %.loopexit.i.loopexit ] ; 4 uses
+.loopexit.i:                                      ; preds = %.noexc53, %bb.bk
+  %.014.i.i = phi i32 [ 4, %bb.bk ], [ 1, %.noexc53 ] ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #26
   %.not.i122.i = icmp eq ptr %i.ev, null
   br i1 %.not.i122.i, label %.thread, label %bb.bm
@@ -1026,7 +1020,6 @@ bb.bo:                                            ; preds = %._crit_edge.thread.
   br label %.loopexit187.i
 
 .loopexit187.i:                                   ; preds = %.loopexit187.loopexit.i, %bb.aj
-  %.lcssa149151 = phi i32 [ %i.fn, %.loopexit187.loopexit.i ], [ %.lcssa149152, %bb.aj ] ; 2 uses
   %i.jy = phi i32 [ %.pre.i47, %.loopexit187.loopexit.i ], [ %i.ez, %bb.aj ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #26
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
@@ -1035,7 +1028,6 @@ bb.bo:                                            ; preds = %._crit_edge.thread.
   br i1 %i.ka, label %bb.aj, label %._crit_edge.i, !llvm.loop !74
 
 ._crit_edge.i:                                    ; preds = %.loopexit187.i
-  store i32 %.lcssa149151, ptr %i.o, align 4
   %i.kb = icmp eq i32 %i.jy, 1
   br i1 %i.kb, label %bb.bp, label %._crit_edge.thread.i
 

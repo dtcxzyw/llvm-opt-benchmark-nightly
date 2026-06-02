@@ -201,7 +201,7 @@ bb.ap:                                            ; preds = %bb.an
 bb.aq:                                            ; preds = %bb.ap, %bb.ao
   %.024.i = phi ptr [ %i.ck, %bb.ao ], [ %spec.store.select.i, %bb.ap ] ; 4 uses
   tail call void @umtx_lock_78(ptr noundef nonnull @_ZL9resbMutex) #17
-  %i.cn = tail call fastcc noundef ptr @_ZL10init_entryPKcS0_P10UErrorCode(ptr noundef %.024.i, ptr noundef %1, ptr noundef nonnull %4) ; 13 uses
+  %i.cn = tail call fastcc noundef ptr @_ZL10init_entryPKcS0_P10UErrorCode(ptr noundef %.024.i, ptr noundef %1, ptr noundef nonnull %4) ; 11 uses
   %i.co = load i32, ptr %4, align 4
   %i.cp = icmp sgt i32 %i.co, 0
   br i1 %i.cp, label %.thread.i59, label %bb.ar
@@ -270,14 +270,10 @@ bb.ay:                                            ; preds = %bb.ax
 bb.az:                                            ; preds = %bb.ay
   %i.do = call fastcc noundef signext i8 @_ZL21loadParentsExceptRootRP18UResourceDataEntryPciaS2_P10UErrorCode(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef %i.b, ptr noundef nonnull %4)
   %.not33.i = icmp eq i8 %i.do, 0
-  br i1 %.not33.i, label %bb.bc, label %._ZL10chopLocalePc.exit.thread_crit_edge.i
+  br i1 %.not33.i, label %bb.bc, label %_ZL10chopLocalePc.exit.thread.i
 
-._ZL10chopLocalePc.exit.thread_crit_edge.i:       ; preds = %bb.az
-  %.pre.i61 = load ptr, ptr %i.a, align 8
-  br label %_ZL10chopLocalePc.exit.thread.i
-
-_ZL10chopLocalePc.exit.thread.i:                  ; preds = %._ZL10chopLocalePc.exit.thread_crit_edge.i, %bb.ay, %bb.ax
-  %6 = phi ptr [ %.pre.i61, %._ZL10chopLocalePc.exit.thread_crit_edge.i ], [ %i.cn, %bb.ax ], [ %i.cn, %bb.ay ] ; 2 uses
+_ZL10chopLocalePc.exit.thread.i:                  ; preds = %bb.az, %bb.ay, %bb.ax
+  %6 = load ptr, ptr %i.a, align 8                ; 2 uses
   %i.dp = load ptr, ptr %6, align 8
   %i.dq = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.dp, ptr noundef nonnull dereferenceable(5) @.str) #20
   %.not34.i = icmp eq i32 %i.dq, 0

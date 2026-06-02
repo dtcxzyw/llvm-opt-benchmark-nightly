@@ -201,7 +201,7 @@ _ZNK4geos4geom8Envelope10intersectsEPKS1_.exit.thread: ; preds = %bb.j, %bb.k, %
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 80
   %i.bo = load ptr, ptr %i.bn, align 8
   %i.bp = tail call noundef i64 %i.bo(ptr noundef nonnull align 8 dereferenceable(40) %2) ; 3 uses
-  %i.bq = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #26 ; 13 uses
+  %i.bq = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #26 ; 16 uses
   %i.br = add i64 %i.bp, %i.bl                    ; 4 uses
   %i.bs = icmp ugt i64 %i.br, 1152921504606846975
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bq, i8 0, i64 24, i1 false)
@@ -212,7 +212,7 @@ bb.m:                                             ; preds = %_ZNK4geos4geom8Enve
   unreachable
 
 bb.n:                                             ; preds = %_ZNK4geos4geom8Envelope10intersectsEPKS1_.exit.thread
-  %i.bt = getelementptr inbounds nuw i8, ptr %i.bq, i64 16 ; 5 uses
+  %i.bt = getelementptr inbounds nuw i8, ptr %i.bq, i64 16 ; 7 uses
   %.not138 = icmp eq i64 %i.br, 0
   br i1 %.not138, label %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE7reserveEm.exit, label %_ZNSt12_Vector_baseIPN4geos4geom8GeometryESaIS3_EE11_M_allocateEm.exit.i
 
@@ -227,8 +227,8 @@ _ZNSt12_Vector_baseIPN4geos4geom8GeometryESaIS3_EE11_M_allocateEm.exit.i: ; pred
   br label %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE7reserveEm.exit
 
 _ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE7reserveEm.exit: ; preds = %bb.n, %_ZNSt12_Vector_baseIPN4geos4geom8GeometryESaIS3_EE11_M_allocateEm.exit.i
-  %i.by = phi ptr [ null, %bb.n ], [ %i.bx, %_ZNSt12_Vector_baseIPN4geos4geom8GeometryESaIS3_EE11_M_allocateEm.exit.i ] ; 5 uses
-  %i.bz = phi ptr [ null, %bb.n ], [ %i.bw, %_ZNSt12_Vector_baseIPN4geos4geom8GeometryESaIS3_EE11_M_allocateEm.exit.i ] ; 9 uses
+  %i.by = phi ptr [ null, %bb.n ], [ %i.bx, %_ZNSt12_Vector_baseIPN4geos4geom8GeometryESaIS3_EE11_M_allocateEm.exit.i ] ; 4 uses
+  %i.bz = phi ptr [ null, %bb.n ], [ %i.bw, %_ZNSt12_Vector_baseIPN4geos4geom8GeometryESaIS3_EE11_M_allocateEm.exit.i ] ; 5 uses
   %i.ca = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN4geos4geom8GeometryE, ptr nonnull @_ZTIN4geos4geom18GeometryCollectionE, i64 0) #27 ; 3 uses
   %.not = icmp eq ptr %i.ca, null
   br i1 %.not, label %bb.t, label %.preheader108
@@ -238,13 +238,10 @@ _ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE7reserveEm.exit: ; preds = %bb.n, %_Z
   br i1 %.not112, label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit54, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader108
-  %i.cb = getelementptr inbounds nuw i8, ptr %i.bq, i64 8 ; 2 uses
+  %i.cb = getelementptr inbounds nuw i8, ptr %i.bq, i64 8 ; 3 uses
   br label %bb.o
 
 bb.o:                                             ; preds = %.lr.ph, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit
-  %3 = phi ptr [ %i.bz, %.lr.ph ], [ %6, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit ] ; 5 uses
-  %4 = phi ptr [ %i.by, %.lr.ph ], [ %i.da, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit ] ; 3 uses
-  %5 = phi ptr [ %i.bz, %.lr.ph ], [ %i.db, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit ] ; 3 uses
   %.033109 = phi i64 [ 0, %.lr.ph ], [ %i.dc, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit ] ; 2 uses
   %i.cc = load ptr, ptr %i.ca, align 8, !tbaa !15
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 88
@@ -254,18 +251,21 @@ bb.o:                                             ; preds = %.lr.ph, %_ZNSt10uni
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 416
   %i.ci = load ptr, ptr %i.ch, align 8, !noalias !107
   %i.cj = tail call noundef ptr %i.ci(ptr noundef nonnull align 8 dereferenceable(40) %i.cf), !noalias !107, !inline_history !97 ; 2 uses
-  %.not.i.i = icmp eq ptr %5, %4
+  %3 = load ptr, ptr %i.cb, align 8, !tbaa !105   ; 4 uses
+  %4 = load ptr, ptr %i.bt, align 8, !tbaa !106   ; 2 uses
+  %.not.i.i = icmp eq ptr %3, %4
   br i1 %.not.i.i, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  store ptr %i.cj, ptr %5, align 8, !tbaa !98
-  %i.ck = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
+  store ptr %i.cj, ptr %3, align 8, !tbaa !98
+  %i.ck = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   store ptr %i.ck, ptr %i.cb, align 8, !tbaa !105
   br label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit
 
 bb.q:                                             ; preds = %bb.o
-  %i.cl = ptrtoint ptr %4 to i64
-  %i.cm = ptrtoint ptr %3 to i64
+  %5 = load ptr, ptr %i.bq, align 8, !tbaa !102   ; 4 uses
+  %i.cl = ptrtoint ptr %3 to i64
+  %i.cm = ptrtoint ptr %5 to i64
   %i.cn = sub i64 %i.cl, %i.cm                    ; 5 uses
   %i.co = icmp eq i64 %i.cn, 9223372036854775800
   br i1 %i.co, label %.noexc, label %_ZNKSt6vectorIPN4geos4geom8GeometryESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -284,23 +284,23 @@ _ZNKSt6vectorIPN4geos4geom8GeometryESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i: ; pr
   %.not.i.i.i.i = icmp ne i64 %i.ct, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.cu = shl nuw nsw i64 %i.ct, 3
-  %i.cv = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cu) #26 ; 5 uses
+  %i.cv = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cu) #26 ; 4 uses
   %i.cw = getelementptr inbounds i8, ptr %i.cv, i64 %i.cn ; 2 uses
   store ptr %i.cj, ptr %i.cw, align 8, !tbaa !98
   %i.cx = icmp sgt i64 %i.cn, 0
   br i1 %i.cx, label %bb.r, label %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
 
 bb.r:                                             ; preds = %_ZNKSt6vectorIPN4geos4geom8GeometryESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.cv, ptr align 8 %3, i64 %i.cn, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.cv, ptr align 8 %5, i64 %i.cn, i1 false)
   br label %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
 
 _ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i: ; preds = %bb.r, %_ZNKSt6vectorIPN4geos4geom8GeometryESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cw, i64 8 ; 2 uses
-  %.not.i17.i.i.i = icmp eq ptr %3, null
+  %.not.i17.i.i.i = icmp eq ptr %5, null
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i, label %bb.s
 
 bb.s:                                             ; preds = %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
-  tail call void @_ZdlPv(ptr noundef nonnull %3) #25
+  tail call void @_ZdlPv(ptr noundef nonnull %5) #25
   br label %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i: ; preds = %bb.s, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
@@ -311,9 +311,8 @@ _ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_c
   br label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit: ; preds = %bb.p, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i
-  %6 = phi ptr [ %3, %bb.p ], [ %i.cv, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ] ; 2 uses
-  %i.da = phi ptr [ %4, %bb.p ], [ %i.cz, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ] ; 2 uses
-  %i.db = phi ptr [ %i.ck, %bb.p ], [ %i.cy, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ] ; 2 uses
+  %i.da = phi ptr [ %4, %bb.p ], [ %i.cz, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ]
+  %i.db = phi ptr [ %i.ck, %bb.p ], [ %i.cy, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ]
   %i.dc = add nuw i64 %.033109, 1                 ; 2 uses
   %exitcond.not = icmp eq i64 %i.dc, %i.bl
   br i1 %exitcond.not, label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit54, label %bb.o, !llvm.loop !110
@@ -334,7 +333,7 @@ bb.u:                                             ; preds = %bb.t
   br label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit54
 
 _ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i46: ; preds = %bb.t
-  %i.dj = tail call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #26 ; 4 uses
+  %i.dj = tail call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #26 ; 3 uses
   store ptr %i.dg, ptr %i.dj, align 8, !tbaa !98
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 8 ; 4 uses
   %.not.i17.i.i.i47 = icmp eq ptr %i.by, null
@@ -351,9 +350,8 @@ _ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_c
   br label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit54
 
 _ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit54: ; preds = %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit, %.preheader108, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i48, %bb.u
-  %7 = phi ptr [ %i.bz, %bb.u ], [ %i.bz, %.preheader108 ], [ %i.dj, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i48 ], [ %6, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit ] ; 5 uses
-  %i.dl = phi ptr [ %i.by, %bb.u ], [ %i.by, %.preheader108 ], [ %i.dk, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i48 ], [ %i.da, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit ] ; 3 uses
-  %i.dm = phi ptr [ %i.di, %bb.u ], [ %i.bz, %.preheader108 ], [ %i.dk, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i48 ], [ %i.db, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit ] ; 4 uses
+  %i.dl = phi ptr [ %i.by, %bb.u ], [ %i.by, %.preheader108 ], [ %i.dk, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i48 ], [ %i.da, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit ] ; 2 uses
+  %i.dm = phi ptr [ %i.di, %bb.u ], [ %i.bz, %.preheader108 ], [ %i.dk, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i48 ], [ %i.db, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit ] ; 3 uses
   %i.dn = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN4geos4geom8GeometryE, ptr nonnull @_ZTIN4geos4geom18GeometryCollectionE, i64 0) #27 ; 3 uses
   %.not36 = icmp eq ptr %i.dn, null
   br i1 %.not36, label %bb.ab, label %.preheader
@@ -363,13 +361,10 @@ _ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit54: ; pr
   br i1 %.not113, label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit86, label %.lr.ph111
 
 .lr.ph111:                                        ; preds = %.preheader
-  %i.do = getelementptr inbounds nuw i8, ptr %i.bq, i64 8 ; 2 uses
+  %i.do = getelementptr inbounds nuw i8, ptr %i.bq, i64 8 ; 3 uses
   br label %bb.w
 
 bb.w:                                             ; preds = %.lr.ph111, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit70
-  %8 = phi ptr [ %7, %.lr.ph111 ], [ %11, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit70 ] ; 5 uses
-  %9 = phi ptr [ %i.dl, %.lr.ph111 ], [ %12, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit70 ] ; 3 uses
-  %10 = phi ptr [ %i.dm, %.lr.ph111 ], [ %13, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit70 ] ; 3 uses
   %.0110 = phi i64 [ 0, %.lr.ph111 ], [ %i.en, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit70 ] ; 2 uses
   %i.dp = load ptr, ptr %i.dn, align 8, !tbaa !15
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dp, i64 88
@@ -379,17 +374,20 @@ bb.w:                                             ; preds = %.lr.ph111, %_ZNSt10
   %i.du = getelementptr inbounds nuw i8, ptr %i.dt, i64 416
   %i.dv = load ptr, ptr %i.du, align 8, !noalias !114
   %i.dw = tail call noundef ptr %i.dv(ptr noundef nonnull align 8 dereferenceable(40) %i.ds), !noalias !114, !inline_history !97 ; 2 uses
-  %.not.i.i58 = icmp eq ptr %10, %9
+  %6 = load ptr, ptr %i.do, align 8, !tbaa !105   ; 4 uses
+  %7 = load ptr, ptr %i.bt, align 8, !tbaa !106
+  %.not.i.i58 = icmp eq ptr %6, %7
   br i1 %.not.i.i58, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  store ptr %i.dw, ptr %10, align 8, !tbaa !98
-  %i.dx = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 2 uses
+  store ptr %i.dw, ptr %6, align 8, !tbaa !98
+  %i.dx = getelementptr inbounds nuw i8, ptr %6, i64 8
   store ptr %i.dx, ptr %i.do, align 8, !tbaa !105
   br label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit70
 
 bb.y:                                             ; preds = %bb.w
-  %i.dy = ptrtoint ptr %9 to i64
+  %8 = load ptr, ptr %i.bq, align 8, !tbaa !102   ; 4 uses
+  %i.dy = ptrtoint ptr %6 to i64
   %i.dz = ptrtoint ptr %8 to i64
   %i.ea = sub i64 %i.dy, %i.dz                    ; 5 uses
   %i.eb = icmp eq i64 %i.ea, 9223372036854775800
@@ -409,7 +407,7 @@ _ZNKSt6vectorIPN4geos4geom8GeometryESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i59: ; 
   %.not.i.i.i.i61 = icmp ne i64 %i.eg, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i61)
   %i.eh = shl nuw nsw i64 %i.eg, 3
-  %i.ei = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.eh) #26 ; 5 uses
+  %i.ei = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.eh) #26 ; 4 uses
   %i.ej = getelementptr inbounds i8, ptr %i.ei, i64 %i.ea ; 2 uses
   store ptr %i.dw, ptr %i.ej, align 8, !tbaa !98
   %i.ek = icmp sgt i64 %i.ea, 0
@@ -420,7 +418,7 @@ bb.z:                                             ; preds = %_ZNKSt6vectorIPN4ge
   br label %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i62
 
 _ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i62: ; preds = %bb.z, %_ZNKSt6vectorIPN4geos4geom8GeometryESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i59
-  %i.el = getelementptr inbounds nuw i8, ptr %i.ej, i64 8 ; 2 uses
+  %i.el = getelementptr inbounds nuw i8, ptr %i.ej, i64 8
   %.not.i17.i.i.i63 = icmp eq ptr %8, null
   br i1 %.not.i17.i.i.i63, label %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i64, label %bb.aa
 
@@ -431,14 +429,11 @@ bb.aa:                                            ; preds = %_ZNSt6vectorIPN4geo
 _ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i64: ; preds = %bb.aa, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i62
   store ptr %i.ei, ptr %i.bq, align 8, !tbaa !102
   store ptr %i.el, ptr %i.do, align 8, !tbaa !105
-  %i.em = getelementptr inbounds nuw [8 x i8], ptr %i.ei, i64 %i.eg ; 2 uses
+  %i.em = getelementptr inbounds nuw [8 x i8], ptr %i.ei, i64 %i.eg
   store ptr %i.em, ptr %i.bt, align 8, !tbaa !106
   br label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit70
 
 _ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit70: ; preds = %bb.x, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i64
-  %11 = phi ptr [ %8, %bb.x ], [ %i.ei, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i64 ]
-  %12 = phi ptr [ %9, %bb.x ], [ %i.em, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i64 ]
-  %13 = phi ptr [ %i.dx, %bb.x ], [ %i.el, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i64 ]
   %i.en = add nuw i64 %.0110, 1                   ; 2 uses
   %exitcond114.not = icmp eq i64 %i.en, %i.bp
   br i1 %exitcond114.not, label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit86, label %bb.w, !llvm.loop !117
@@ -459,8 +454,9 @@ bb.ac:                                            ; preds = %bb.ab
   br label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit86
 
 bb.ad:                                            ; preds = %bb.ab
+  %9 = load ptr, ptr %i.bq, align 8, !tbaa !102   ; 4 uses
   %i.eu = ptrtoint ptr %i.dl to i64
-  %i.ev = ptrtoint ptr %7 to i64
+  %i.ev = ptrtoint ptr %9 to i64
   %i.ew = sub i64 %i.eu, %i.ev                    ; 5 uses
   %i.ex = icmp eq i64 %i.ew, 9223372036854775800
   br i1 %i.ex, label %.noexc81, label %_ZNKSt6vectorIPN4geos4geom8GeometryESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i75
@@ -486,16 +482,16 @@ _ZNKSt6vectorIPN4geos4geom8GeometryESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i75: ; 
   br i1 %i.fg, label %bb.ae, label %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i78
 
 bb.ae:                                            ; preds = %_ZNKSt6vectorIPN4geos4geom8GeometryESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i75
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.fe, ptr align 8 %7, i64 %i.ew, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.fe, ptr align 8 %9, i64 %i.ew, i1 false)
   br label %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i78
 
 _ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i78: ; preds = %bb.ae, %_ZNKSt6vectorIPN4geos4geom8GeometryESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i75
   %i.fh = getelementptr inbounds nuw i8, ptr %i.ff, i64 8
-  %.not.i17.i.i.i79 = icmp eq ptr %7, null
+  %.not.i17.i.i.i79 = icmp eq ptr %9, null
   br i1 %.not.i17.i.i.i79, label %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i80, label %bb.af
 
 bb.af:                                            ; preds = %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i78
-  tail call void @_ZdlPv(ptr noundef nonnull %7) #25
+  tail call void @_ZdlPv(ptr noundef nonnull %9) #25
   br label %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i80
 
 _ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i80: ; preds = %bb.af, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i78
@@ -691,7 +687,7 @@ _ZNK4geos4geom8Envelope10intersectsEPKS1_.exit.thread: ; preds = %bb.j, %bb.k, %
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 80
   %i.bo = load ptr, ptr %i.bn, align 8
   %i.bp = tail call noundef i64 %i.bo(ptr noundef nonnull align 8 dereferenceable(40) %2) ; 3 uses
-  %i.bq = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #26 ; 13 uses
+  %i.bq = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #26 ; 16 uses
   %i.br = add i64 %i.bp, %i.bl                    ; 4 uses
   %i.bs = icmp ugt i64 %i.br, 1152921504606846975
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bq, i8 0, i64 24, i1 false)
@@ -702,7 +698,7 @@ bb.m:                                             ; preds = %_ZNK4geos4geom8Enve
   unreachable
 
 bb.n:                                             ; preds = %_ZNK4geos4geom8Envelope10intersectsEPKS1_.exit.thread
-  %i.bt = getelementptr inbounds nuw i8, ptr %i.bq, i64 16 ; 5 uses
+  %i.bt = getelementptr inbounds nuw i8, ptr %i.bq, i64 16 ; 7 uses
   %.not137 = icmp eq i64 %i.br, 0
   br i1 %.not137, label %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE7reserveEm.exit, label %_ZNSt12_Vector_baseIPN4geos4geom8GeometryESaIS3_EE11_M_allocateEm.exit.i
 
@@ -717,8 +713,8 @@ _ZNSt12_Vector_baseIPN4geos4geom8GeometryESaIS3_EE11_M_allocateEm.exit.i: ; pred
   br label %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE7reserveEm.exit
 
 _ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE7reserveEm.exit: ; preds = %bb.n, %_ZNSt12_Vector_baseIPN4geos4geom8GeometryESaIS3_EE11_M_allocateEm.exit.i
-  %i.by = phi ptr [ null, %bb.n ], [ %i.bx, %_ZNSt12_Vector_baseIPN4geos4geom8GeometryESaIS3_EE11_M_allocateEm.exit.i ] ; 5 uses
-  %i.bz = phi ptr [ null, %bb.n ], [ %i.bw, %_ZNSt12_Vector_baseIPN4geos4geom8GeometryESaIS3_EE11_M_allocateEm.exit.i ] ; 9 uses
+  %i.by = phi ptr [ null, %bb.n ], [ %i.bx, %_ZNSt12_Vector_baseIPN4geos4geom8GeometryESaIS3_EE11_M_allocateEm.exit.i ] ; 4 uses
+  %i.bz = phi ptr [ null, %bb.n ], [ %i.bw, %_ZNSt12_Vector_baseIPN4geos4geom8GeometryESaIS3_EE11_M_allocateEm.exit.i ] ; 5 uses
   %i.ca = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN4geos4geom8GeometryE, ptr nonnull @_ZTIN4geos4geom18GeometryCollectionE, i64 0) #27 ; 3 uses
   %.not = icmp eq ptr %i.ca, null
   br i1 %.not, label %bb.t, label %.preheader107
@@ -728,13 +724,10 @@ _ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE7reserveEm.exit: ; preds = %bb.n, %_Z
   br i1 %.not111, label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit53, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader107
-  %i.cb = getelementptr inbounds nuw i8, ptr %i.bq, i64 8 ; 2 uses
+  %i.cb = getelementptr inbounds nuw i8, ptr %i.bq, i64 8 ; 3 uses
   br label %bb.o
 
 bb.o:                                             ; preds = %.lr.ph, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit
-  %3 = phi ptr [ %i.bz, %.lr.ph ], [ %6, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit ] ; 5 uses
-  %4 = phi ptr [ %i.by, %.lr.ph ], [ %i.da, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit ] ; 3 uses
-  %5 = phi ptr [ %i.bz, %.lr.ph ], [ %i.db, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit ] ; 3 uses
   %.032108 = phi i64 [ 0, %.lr.ph ], [ %i.dc, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit ] ; 2 uses
   %i.cc = load ptr, ptr %i.ca, align 8, !tbaa !15
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 88
@@ -744,18 +737,21 @@ bb.o:                                             ; preds = %.lr.ph, %_ZNSt10uni
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 416
   %i.ci = load ptr, ptr %i.ch, align 8, !noalias !130
   %i.cj = tail call noundef ptr %i.ci(ptr noundef nonnull align 8 dereferenceable(40) %i.cf), !noalias !130, !inline_history !97 ; 2 uses
-  %.not.i.i = icmp eq ptr %5, %4
+  %3 = load ptr, ptr %i.cb, align 8, !tbaa !105   ; 4 uses
+  %4 = load ptr, ptr %i.bt, align 8, !tbaa !106   ; 2 uses
+  %.not.i.i = icmp eq ptr %3, %4
   br i1 %.not.i.i, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  store ptr %i.cj, ptr %5, align 8, !tbaa !98
-  %i.ck = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
+  store ptr %i.cj, ptr %3, align 8, !tbaa !98
+  %i.ck = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   store ptr %i.ck, ptr %i.cb, align 8, !tbaa !105
   br label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit
 
 bb.q:                                             ; preds = %bb.o
-  %i.cl = ptrtoint ptr %4 to i64
-  %i.cm = ptrtoint ptr %3 to i64
+  %5 = load ptr, ptr %i.bq, align 8, !tbaa !102   ; 4 uses
+  %i.cl = ptrtoint ptr %3 to i64
+  %i.cm = ptrtoint ptr %5 to i64
   %i.cn = sub i64 %i.cl, %i.cm                    ; 5 uses
   %i.co = icmp eq i64 %i.cn, 9223372036854775800
   br i1 %i.co, label %.noexc, label %_ZNKSt6vectorIPN4geos4geom8GeometryESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -774,23 +770,23 @@ _ZNKSt6vectorIPN4geos4geom8GeometryESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i: ; pr
   %.not.i.i.i.i = icmp ne i64 %i.ct, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.cu = shl nuw nsw i64 %i.ct, 3
-  %i.cv = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cu) #26 ; 5 uses
+  %i.cv = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cu) #26 ; 4 uses
   %i.cw = getelementptr inbounds i8, ptr %i.cv, i64 %i.cn ; 2 uses
   store ptr %i.cj, ptr %i.cw, align 8, !tbaa !98
   %i.cx = icmp sgt i64 %i.cn, 0
   br i1 %i.cx, label %bb.r, label %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
 
 bb.r:                                             ; preds = %_ZNKSt6vectorIPN4geos4geom8GeometryESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.cv, ptr align 8 %3, i64 %i.cn, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.cv, ptr align 8 %5, i64 %i.cn, i1 false)
   br label %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
 
 _ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i: ; preds = %bb.r, %_ZNKSt6vectorIPN4geos4geom8GeometryESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cw, i64 8 ; 2 uses
-  %.not.i17.i.i.i = icmp eq ptr %3, null
+  %.not.i17.i.i.i = icmp eq ptr %5, null
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i, label %bb.s
 
 bb.s:                                             ; preds = %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
-  tail call void @_ZdlPv(ptr noundef nonnull %3) #25
+  tail call void @_ZdlPv(ptr noundef nonnull %5) #25
   br label %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i: ; preds = %bb.s, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
@@ -801,9 +797,8 @@ _ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_c
   br label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit: ; preds = %bb.p, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i
-  %6 = phi ptr [ %3, %bb.p ], [ %i.cv, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ] ; 2 uses
-  %i.da = phi ptr [ %4, %bb.p ], [ %i.cz, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ] ; 2 uses
-  %i.db = phi ptr [ %i.ck, %bb.p ], [ %i.cy, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ] ; 2 uses
+  %i.da = phi ptr [ %4, %bb.p ], [ %i.cz, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ]
+  %i.db = phi ptr [ %i.ck, %bb.p ], [ %i.cy, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ]
   %i.dc = add nuw i64 %.032108, 1                 ; 2 uses
   %exitcond.not = icmp eq i64 %i.dc, %i.bl
   br i1 %exitcond.not, label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit53, label %bb.o, !llvm.loop !133
@@ -824,7 +819,7 @@ bb.u:                                             ; preds = %bb.t
   br label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit53
 
 _ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i45: ; preds = %bb.t
-  %i.dj = tail call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #26 ; 4 uses
+  %i.dj = tail call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #26 ; 3 uses
   store ptr %i.dg, ptr %i.dj, align 8, !tbaa !98
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 8 ; 4 uses
   %.not.i17.i.i.i46 = icmp eq ptr %i.by, null
@@ -841,9 +836,8 @@ _ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_c
   br label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit53
 
 _ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit53: ; preds = %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit, %.preheader107, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i47, %bb.u
-  %7 = phi ptr [ %i.bz, %bb.u ], [ %i.bz, %.preheader107 ], [ %i.dj, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i47 ], [ %6, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit ] ; 5 uses
-  %i.dl = phi ptr [ %i.by, %bb.u ], [ %i.by, %.preheader107 ], [ %i.dk, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i47 ], [ %i.da, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit ] ; 3 uses
-  %i.dm = phi ptr [ %i.di, %bb.u ], [ %i.bz, %.preheader107 ], [ %i.dk, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i47 ], [ %i.db, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit ] ; 4 uses
+  %i.dl = phi ptr [ %i.by, %bb.u ], [ %i.by, %.preheader107 ], [ %i.dk, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i47 ], [ %i.da, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit ] ; 2 uses
+  %i.dm = phi ptr [ %i.di, %bb.u ], [ %i.bz, %.preheader107 ], [ %i.dk, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i47 ], [ %i.db, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit ] ; 3 uses
   %i.dn = tail call ptr @__dynamic_cast(ptr nonnull %2, ptr nonnull @_ZTIN4geos4geom8GeometryE, ptr nonnull @_ZTIN4geos4geom18GeometryCollectionE, i64 0) #27 ; 3 uses
   %.not35 = icmp eq ptr %i.dn, null
   br i1 %.not35, label %bb.ab, label %.preheader
@@ -853,13 +847,10 @@ _ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit53: ; pr
   br i1 %.not112, label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit85, label %.lr.ph110
 
 .lr.ph110:                                        ; preds = %.preheader
-  %i.do = getelementptr inbounds nuw i8, ptr %i.bq, i64 8 ; 2 uses
+  %i.do = getelementptr inbounds nuw i8, ptr %i.bq, i64 8 ; 3 uses
   br label %bb.w
 
 bb.w:                                             ; preds = %.lr.ph110, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit69
-  %8 = phi ptr [ %7, %.lr.ph110 ], [ %11, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit69 ] ; 5 uses
-  %9 = phi ptr [ %i.dl, %.lr.ph110 ], [ %12, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit69 ] ; 3 uses
-  %10 = phi ptr [ %i.dm, %.lr.ph110 ], [ %13, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit69 ] ; 3 uses
   %.0109 = phi i64 [ 0, %.lr.ph110 ], [ %i.en, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit69 ] ; 2 uses
   %i.dp = load ptr, ptr %i.dn, align 8, !tbaa !15
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dp, i64 88
@@ -869,17 +860,20 @@ bb.w:                                             ; preds = %.lr.ph110, %_ZNSt10
   %i.du = getelementptr inbounds nuw i8, ptr %i.dt, i64 416
   %i.dv = load ptr, ptr %i.du, align 8, !noalias !137
   %i.dw = tail call noundef ptr %i.dv(ptr noundef nonnull align 8 dereferenceable(40) %i.ds), !noalias !137, !inline_history !97 ; 2 uses
-  %.not.i.i57 = icmp eq ptr %10, %9
+  %6 = load ptr, ptr %i.do, align 8, !tbaa !105   ; 4 uses
+  %7 = load ptr, ptr %i.bt, align 8, !tbaa !106
+  %.not.i.i57 = icmp eq ptr %6, %7
   br i1 %.not.i.i57, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  store ptr %i.dw, ptr %10, align 8, !tbaa !98
-  %i.dx = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 2 uses
+  store ptr %i.dw, ptr %6, align 8, !tbaa !98
+  %i.dx = getelementptr inbounds nuw i8, ptr %6, i64 8
   store ptr %i.dx, ptr %i.do, align 8, !tbaa !105
   br label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit69
 
 bb.y:                                             ; preds = %bb.w
-  %i.dy = ptrtoint ptr %9 to i64
+  %8 = load ptr, ptr %i.bq, align 8, !tbaa !102   ; 4 uses
+  %i.dy = ptrtoint ptr %6 to i64
   %i.dz = ptrtoint ptr %8 to i64
   %i.ea = sub i64 %i.dy, %i.dz                    ; 5 uses
   %i.eb = icmp eq i64 %i.ea, 9223372036854775800
@@ -899,7 +893,7 @@ _ZNKSt6vectorIPN4geos4geom8GeometryESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i58: ; 
   %.not.i.i.i.i60 = icmp ne i64 %i.eg, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i60)
   %i.eh = shl nuw nsw i64 %i.eg, 3
-  %i.ei = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.eh) #26 ; 5 uses
+  %i.ei = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.eh) #26 ; 4 uses
   %i.ej = getelementptr inbounds i8, ptr %i.ei, i64 %i.ea ; 2 uses
   store ptr %i.dw, ptr %i.ej, align 8, !tbaa !98
   %i.ek = icmp sgt i64 %i.ea, 0
@@ -910,7 +904,7 @@ bb.z:                                             ; preds = %_ZNKSt6vectorIPN4ge
   br label %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i61
 
 _ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i61: ; preds = %bb.z, %_ZNKSt6vectorIPN4geos4geom8GeometryESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i58
-  %i.el = getelementptr inbounds nuw i8, ptr %i.ej, i64 8 ; 2 uses
+  %i.el = getelementptr inbounds nuw i8, ptr %i.ej, i64 8
   %.not.i17.i.i.i62 = icmp eq ptr %8, null
   br i1 %.not.i17.i.i.i62, label %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i63, label %bb.aa
 
@@ -921,14 +915,11 @@ bb.aa:                                            ; preds = %_ZNSt6vectorIPN4geo
 _ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i63: ; preds = %bb.aa, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i61
   store ptr %i.ei, ptr %i.bq, align 8, !tbaa !102
   store ptr %i.el, ptr %i.do, align 8, !tbaa !105
-  %i.em = getelementptr inbounds nuw [8 x i8], ptr %i.ei, i64 %i.eg ; 2 uses
+  %i.em = getelementptr inbounds nuw [8 x i8], ptr %i.ei, i64 %i.eg
   store ptr %i.em, ptr %i.bt, align 8, !tbaa !106
   br label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit69
 
 _ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit69: ; preds = %bb.x, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i63
-  %11 = phi ptr [ %8, %bb.x ], [ %i.ei, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i63 ]
-  %12 = phi ptr [ %9, %bb.x ], [ %i.em, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i63 ]
-  %13 = phi ptr [ %i.dx, %bb.x ], [ %i.el, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i63 ]
   %i.en = add nuw i64 %.0109, 1                   ; 2 uses
   %exitcond113.not = icmp eq i64 %i.en, %i.bp
   br i1 %exitcond113.not, label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit85, label %bb.w, !llvm.loop !140
@@ -949,8 +940,9 @@ bb.ac:                                            ; preds = %bb.ab
   br label %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EED2Ev.exit85
 
 bb.ad:                                            ; preds = %bb.ab
+  %9 = load ptr, ptr %i.bq, align 8, !tbaa !102   ; 4 uses
   %i.eu = ptrtoint ptr %i.dl to i64
-  %i.ev = ptrtoint ptr %7 to i64
+  %i.ev = ptrtoint ptr %9 to i64
   %i.ew = sub i64 %i.eu, %i.ev                    ; 5 uses
   %i.ex = icmp eq i64 %i.ew, 9223372036854775800
   br i1 %i.ex, label %.noexc80, label %_ZNKSt6vectorIPN4geos4geom8GeometryESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i74
@@ -976,16 +968,16 @@ _ZNKSt6vectorIPN4geos4geom8GeometryESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i74: ; 
   br i1 %i.fg, label %bb.ae, label %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i77
 
 bb.ae:                                            ; preds = %_ZNKSt6vectorIPN4geos4geom8GeometryESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i74
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.fe, ptr align 8 %7, i64 %i.ew, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.fe, ptr align 8 %9, i64 %i.ew, i1 false)
   br label %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i77
 
 _ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i77: ; preds = %bb.ae, %_ZNKSt6vectorIPN4geos4geom8GeometryESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i74
   %i.fh = getelementptr inbounds nuw i8, ptr %i.ff, i64 8
-  %.not.i17.i.i.i78 = icmp eq ptr %7, null
+  %.not.i17.i.i.i78 = icmp eq ptr %9, null
   br i1 %.not.i17.i.i.i78, label %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i79, label %bb.af
 
 bb.af:                                            ; preds = %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i77
-  tail call void @_ZdlPv(ptr noundef nonnull %7) #25
+  tail call void @_ZdlPv(ptr noundef nonnull %9) #25
   br label %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i79
 
 _ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i79: ; preds = %bb.af, %_ZNSt6vectorIPN4geos4geom8GeometryESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i77

@@ -201,13 +201,8 @@ bb.f:                                             ; preds = %_ZNSt13__atomic_bas
   %i.u = icmp ugt i64 %i.t, 96076792050570581
   br i1 %i.u, label %.invoke.i, label %bb.g
 
-.invoke.i.loopexit:                               ; preds = %bb.j
-  store ptr %i.au, ptr %i.w, align 8
-  store ptr %i.at, ptr %0, align 8
-  br label %.invoke.i
-
-.invoke.i:                                        ; preds = %.invoke.i.loopexit, %.noexc
-  %i.v = phi ptr [ @.str.6, %.noexc ], [ @.str.7, %.invoke.i.loopexit ]
+.invoke.i:                                        ; preds = %bb.j, %.noexc
+  %i.v = phi ptr [ @.str.6, %.noexc ], [ @.str.7, %bb.j ]
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull %i.v) #29
           to label %.cont.i unwind label %.loopexit.split-lp.i
 
@@ -215,7 +210,7 @@ bb.f:                                             ; preds = %_ZNSt13__atomic_bas
   unreachable
 
 bb.g:                                             ; preds = %.noexc
-  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !3547 ; 2 uses
   %i.y = load ptr, ptr %0, align 8, !tbaa !3550   ; 6 uses
   %i.z = ptrtoint ptr %i.x to i64
@@ -277,8 +272,8 @@ _ZNSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE7reserveEm.exit.i.i: ; pr
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader, %_ZNSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE9push_backERKS2_.exit.i.i
-  %i.at = phi ptr [ %i.bt, %_ZNSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE9push_backERKS2_.exit.i.i ], [ %.promoted7, %.lr.ph.i.i.preheader ] ; 8 uses
-  %i.au = phi ptr [ %i.bu, %_ZNSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE9push_backERKS2_.exit.i.i ], [ %.promoted, %.lr.ph.i.i.preheader ] ; 7 uses
+  %i.at = phi ptr [ %i.bt, %_ZNSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE9push_backERKS2_.exit.i.i ], [ %.promoted7, %.lr.ph.i.i.preheader ] ; 6 uses
+  %i.au = phi ptr [ %i.bu, %_ZNSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE9push_backERKS2_.exit.i.i ], [ %.promoted, %.lr.ph.i.i.preheader ] ; 5 uses
   %.sroa.08.011.i.i = phi ptr [ %i.bv, %_ZNSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE9push_backERKS2_.exit.i.i ], [ %i.ap, %.lr.ph.i.i.preheader ] ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %.sroa.08.011.i.i, i64 64
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !3468 ; 2 uses
@@ -304,7 +299,7 @@ bb.j:                                             ; preds = %.noexc5.i
   %i.be = ptrtoint ptr %i.at to i64
   %i.bf = sub i64 %i.bd, %i.be                    ; 4 uses
   %i.bg = icmp eq i64 %i.bf, 9223372036854775776
-  br i1 %i.bg, label %.invoke.i.loopexit, label %_ZNKSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i.i
+  br i1 %i.bg, label %.invoke.i, label %_ZNKSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i.i
 
 _ZNKSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i.i: ; preds = %bb.j
   %i.bh = sdiv exact i64 %i.bf, 96                ; 3 uses
@@ -317,7 +312,7 @@ _ZNKSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE12_M_check_lenEmPKc.exit
   call void @llvm.assume(i1 %.not.i.i.i.i.i)
   %i.bm = mul nuw nsw i64 %i.bl, 96
   %i.bn = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bm) #30
-          to label %.noexc7.i unwind label %.loopexit.i ; 5 uses
+          to label %.noexc7.i unwind label %.loopexit.i ; 6 uses
 
 .noexc7.i:                                        ; preds = %_ZNKSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i.i
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 %i.bf
@@ -345,23 +340,20 @@ bb.k:                                             ; preds = %_ZNSt6vectorIN5foll
   br label %_ZNSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i.i
 
 _ZNSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i.i: ; preds = %bb.k, %_ZNSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i.i.i
+  store ptr %i.bn, ptr %0, align 8, !tbaa !3550
   store ptr %i.br, ptr %i.as, align 8, !tbaa !3551
-  %i.bs = getelementptr inbounds nuw [96 x i8], ptr %i.bn, i64 %i.bl
+  %i.bs = getelementptr inbounds nuw [96 x i8], ptr %i.bn, i64 %i.bl ; 2 uses
+  store ptr %i.bs, ptr %i.w, align 8, !tbaa !3547
   br label %_ZNSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE9push_backERKS2_.exit.i.i
 
 _ZNSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE9push_backERKS2_.exit.i.i: ; preds = %_ZNSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i.i, %bb.i
-  %i.bt = phi ptr [ %i.bn, %_ZNSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i.i ], [ %i.at, %bb.i ] ; 2 uses
-  %i.bu = phi ptr [ %i.bs, %_ZNSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i.i ], [ %i.au, %bb.i ] ; 2 uses
+  %i.bt = phi ptr [ %i.bn, %_ZNSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i.i ], [ %i.at, %bb.i ]
+  %i.bu = phi ptr [ %i.bs, %_ZNSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i.i ], [ %i.au, %bb.i ]
   %i.bv = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.08.011.i.i) #31 ; 2 uses
   %i.bw = icmp eq ptr %i.bv, %i.aq
-  br i1 %i.bw, label %"_ZZN5folly8settings18getAllSettingsMetaEvENK3$_0clISt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_6detail15SettingCoreBaseESt4lessIS9_ESaISt4pairIKS9_SC_EEEEEDaRKT_.exit.i.loopexit", label %.lr.ph.i.i
+  br i1 %i.bw, label %"_ZZN5folly8settings18getAllSettingsMetaEvENK3$_0clISt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_6detail15SettingCoreBaseESt4lessIS9_ESaISt4pairIKS9_SC_EEEEEDaRKT_.exit.i", label %.lr.ph.i.i
 
-"_ZZN5folly8settings18getAllSettingsMetaEvENK3$_0clISt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_6detail15SettingCoreBaseESt4lessIS9_ESaISt4pairIKS9_SC_EEEEEDaRKT_.exit.i.loopexit": ; preds = %_ZNSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE9push_backERKS2_.exit.i.i
-  store ptr %i.bu, ptr %i.w, align 8
-  store ptr %i.bt, ptr %0, align 8
-  br label %"_ZZN5folly8settings18getAllSettingsMetaEvENK3$_0clISt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_6detail15SettingCoreBaseESt4lessIS9_ESaISt4pairIKS9_SC_EEEEEDaRKT_.exit.i"
-
-"_ZZN5folly8settings18getAllSettingsMetaEvENK3$_0clISt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_6detail15SettingCoreBaseESt4lessIS9_ESaISt4pairIKS9_SC_EEEEEDaRKT_.exit.i": ; preds = %"_ZZN5folly8settings18getAllSettingsMetaEvENK3$_0clISt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_6detail15SettingCoreBaseESt4lessIS9_ESaISt4pairIKS9_SC_EEEEEDaRKT_.exit.i.loopexit", %_ZNSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE7reserveEm.exit.i.i
+"_ZZN5folly8settings18getAllSettingsMetaEvENK3$_0clISt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_6detail15SettingCoreBaseESt4lessIS9_ESaISt4pairIKS9_SC_EEEEEDaRKT_.exit.i": ; preds = %_ZNSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE9push_backERKS2_.exit.i.i, %_ZNSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE7reserveEm.exit.i.i
   %i.bx = load i16, ptr %i.g, align 8, !tbaa !59  ; 2 uses
   %.not.i.i8.i = icmp eq i16 %i.bx, 0
   br i1 %.not.i.i8.i, label %bb.v, label %bb.l
@@ -444,8 +436,6 @@ bb.t:                                             ; preds = %bb.s, %bb.p, %bb.n
 .loopexit.i:                                      ; preds = %_ZNKSt6vectorIN5folly8settings15SettingMetadataESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i.i, %.lr.ph.i.i
   %lpad.loopexit.i = landingpad { ptr, i32 }
           cleanup
-  store ptr %i.au, ptr %i.w, align 8
-  store ptr %i.at, ptr %0, align 8
   br label %bb.u
 
 .loopexit.split-lp.i:                             ; preds = %_ZNSt12_Vector_baseIN5folly8settings15SettingMetadataESaIS2_EE11_M_allocateEm.exit.i.i.i, %.invoke.i

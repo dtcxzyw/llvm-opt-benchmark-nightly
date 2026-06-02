@@ -201,8 +201,8 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   resume { ptr, i32 } %.pn
 
 _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread15: ; preds = %bb.c, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.a, i64 40 ; 3 uses
-  %i.ae = load i64, ptr %i.ad, align 8, !tbaa !19 ; 3 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.a, i64 40 ; 2 uses
+  %i.ae = load i64, ptr %i.ad, align 8, !tbaa !19 ; 2 uses
   %i.af = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.ae) #17 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !24 ; 2 uses
@@ -211,20 +211,18 @@ _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.
 
 bb.j:                                             ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread15
   tail call void @_ZdaPv(ptr noundef nonnull %i.ah) #18
-  %.pre = load i64, ptr %i.ad, align 8, !tbaa !19
   br label %_ZN27OpenImageIO_v3_1_Imf__3_3_55ArrayIcE11resizeEraseEl.exit
 
 _ZN27OpenImageIO_v3_1_Imf__3_3_55ArrayIcE11resizeEraseEl.exit: ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread15, %bb.j
-  %3 = phi i64 [ %i.ae, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread15 ], [ %.pre, %bb.j ]
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 48
   store i64 %i.ae, ptr %i.aj, align 8, !tbaa !23
   store ptr %i.af, ptr %i.ag, align 8, !tbaa !24
+  %3 = load i64, ptr %i.ad, align 8, !tbaa !19    ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i64 %3, ptr %i.ak, align 8, !tbaa !19
   %i.al = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !24
-  %4 = load i64, ptr %i.ad, align 8, !tbaa !19
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.af, ptr align 1 %i.am, i64 %4, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.af, ptr align 1 %i.am, i64 %3, i1 false)
   ret void
 
 bb.k:                                             ; preds = %bb.f

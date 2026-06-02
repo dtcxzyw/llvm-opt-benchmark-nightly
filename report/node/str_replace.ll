@@ -201,17 +201,17 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %.not86 = icmp eq i64 %i.b, 0
   br i1 %.not86, label %._crit_edge, label %.lr.ph61
 
 .lr.ph61:                                         ; preds = %bb.c
   %i.e = mul nuw nsw i64 %i.b, 40
-  %i.f = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.e) #15 ; 6 uses
+  %i.f = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.e) #15 ; 5 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.f, ptr %0, align 8
   store ptr %i.f, ptr %i.g, align 8
-  %i.h = getelementptr inbounds nuw [40 x i8], ptr %i.f, i64 %i.b ; 3 uses
+  %i.h = getelementptr inbounds nuw [40 x i8], ptr %i.f, i64 %i.b ; 2 uses
   store ptr %i.h, ptr %i.d, align 8
   %i.i = load ptr, ptr %3, align 8                ; 2 uses
   %.idx = shl nuw nsw i64 %i.b, 5
@@ -226,8 +226,8 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph61.split:                                   ; preds = %.lr.ph61, %.critedge
   %i.o = phi ptr [ %i.bu, %.critedge ], [ %i.f, %.lr.ph61 ] ; 15 uses
   %.01659 = phi ptr [ %i.bx, %.critedge ], [ %i.i, %.lr.ph61 ] ; 6 uses
-  %i.p = phi ptr [ %i.bw, %.critedge ], [ %i.h, %.lr.ph61 ] ; 8 uses
-  %i.q = phi ptr [ %i.bv, %.critedge ], [ %i.f, %.lr.ph61 ] ; 12 uses
+  %i.p = phi ptr [ %i.bw, %.critedge ], [ %i.h, %.lr.ph61 ] ; 7 uses
+  %i.q = phi ptr [ %i.bv, %.critedge ], [ %i.f, %.lr.ph61 ] ; 11 uses
   %.sroa.0.0.copyload38 = load i64, ptr %.01659, align 8 ; 6 uses
   %.sroa.7.0..016.sroa_idx = getelementptr inbounds nuw i8, ptr %.01659, i64 8
   %.sroa.7.0.copyload = load ptr, ptr %.sroa.7.0..016.sroa_idx, align 8 ; 4 uses
@@ -301,8 +301,6 @@ bb.h:                                             ; preds = %bb.f
   br i1 %i.ak, label %bb.i, label %_ZNKSt6vectorIN4absl16strings_internal18ViableSubstitutionESaIS2_EE12_M_check_lenEmPKc.exit.i
 
 bb.i:                                             ; preds = %bb.h
-  store ptr %i.p, ptr %i.d, align 8
-  store ptr %i.q, ptr %0, align 8
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.5) #13
   unreachable
 
@@ -316,7 +314,7 @@ _ZNKSt6vectorIN4absl16strings_internal18ViableSubstitutionESaIS2_EE12_M_check_le
   %.not.i.i21 = icmp ne i64 %i.ap, 0
   tail call void @llvm.assume(i1 %.not.i.i21)
   %i.aq = mul nuw nsw i64 %i.ap, 40
-  %i.ar = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aq) #15 ; 5 uses
+  %i.ar = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aq) #15 ; 6 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 %i.aj ; 5 uses
   %.sroa.0.0.copyload.i.i25 = load i64, ptr %i.ad, align 8
   %.sroa.2.0..sroa_idx.i.i26 = getelementptr inbounds nuw i8, ptr %.01659, i64 24
@@ -353,8 +351,10 @@ bb.j:                                             ; preds = %_ZNSt6vectorIN4absl
   br label %_ZNSt6vectorIN4absl16strings_internal18ViableSubstitutionESaIS2_EE17_M_realloc_insertIJRSt17basic_string_viewIcSt11char_traitsIcEERKS9_RmEEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit
 
 _ZNSt6vectorIN4absl16strings_internal18ViableSubstitutionESaIS2_EE17_M_realloc_insertIJRSt17basic_string_viewIcSt11char_traitsIcEERKS9_RmEEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit: ; preds = %_ZNSt6vectorIN4absl16strings_internal18ViableSubstitutionESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit24.i, %bb.j
+  store ptr %i.ar, ptr %0, align 8
   store ptr %i.ax, ptr %i.n, align 8
-  %i.ay = getelementptr inbounds nuw [40 x i8], ptr %i.ar, i64 %i.ap
+  %i.ay = getelementptr inbounds nuw [40 x i8], ptr %i.ar, i64 %i.ap ; 2 uses
+  store ptr %i.ay, ptr %i.d, align 8
   br label %_ZNSt6vectorIN4absl16strings_internal18ViableSubstitutionESaIS2_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKS9_RmEEERS2_DpOT_.exit
 
 _ZNSt6vectorIN4absl16strings_internal18ViableSubstitutionESaIS2_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKS9_RmEEERS2_DpOT_.exit: ; preds = %bb.g, %_ZNSt6vectorIN4absl16strings_internal18ViableSubstitutionESaIS2_EE17_M_realloc_insertIJRSt17basic_string_viewIcSt11char_traitsIcEERKS9_RmEEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit
@@ -399,17 +399,13 @@ bb.k:                                             ; preds = %.lr.ph
 
 .critedge:                                        ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i, %bb.e, %bb.d, %bb.k, %.lr.ph, %_ZNSt6vectorIN4absl16strings_internal18ViableSubstitutionESaIS2_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKS9_RmEEERS2_DpOT_.exit, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit, %.lr.ph61.split
   %i.bu = phi ptr [ %i.az, %_ZNSt6vectorIN4absl16strings_internal18ViableSubstitutionESaIS2_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKS9_RmEEERS2_DpOT_.exit ], [ %i.o, %.lr.ph61.split ], [ %i.o, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit ], [ %i.az, %bb.k ], [ %i.az, %.lr.ph ], [ %i.o, %bb.d ], [ %i.o, %bb.e ], [ %i.o, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i ]
-  %i.bv = phi ptr [ %i.ba, %_ZNSt6vectorIN4absl16strings_internal18ViableSubstitutionESaIS2_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKS9_RmEEERS2_DpOT_.exit ], [ %i.q, %.lr.ph61.split ], [ %i.q, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit ], [ %i.ba, %bb.k ], [ %i.ba, %.lr.ph ], [ %i.q, %bb.d ], [ %i.q, %bb.e ], [ %i.q, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i ] ; 2 uses
-  %i.bw = phi ptr [ %i.bb, %_ZNSt6vectorIN4absl16strings_internal18ViableSubstitutionESaIS2_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKS9_RmEEERS2_DpOT_.exit ], [ %i.p, %.lr.ph61.split ], [ %i.p, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit ], [ %i.bb, %bb.k ], [ %i.bb, %.lr.ph ], [ %i.p, %bb.d ], [ %i.p, %bb.e ], [ %i.p, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i ] ; 2 uses
+  %i.bv = phi ptr [ %i.ba, %_ZNSt6vectorIN4absl16strings_internal18ViableSubstitutionESaIS2_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKS9_RmEEERS2_DpOT_.exit ], [ %i.q, %.lr.ph61.split ], [ %i.q, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit ], [ %i.ba, %bb.k ], [ %i.ba, %.lr.ph ], [ %i.q, %bb.d ], [ %i.q, %bb.e ], [ %i.q, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i ]
+  %i.bw = phi ptr [ %i.bb, %_ZNSt6vectorIN4absl16strings_internal18ViableSubstitutionESaIS2_EE12emplace_backIJRSt17basic_string_viewIcSt11char_traitsIcEERKS9_RmEEERS2_DpOT_.exit ], [ %i.p, %.lr.ph61.split ], [ %i.p, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit ], [ %i.bb, %bb.k ], [ %i.bb, %.lr.ph ], [ %i.p, %bb.d ], [ %i.p, %bb.e ], [ %i.p, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i ]
   %i.bx = getelementptr inbounds nuw i8, ptr %.01659, i64 32 ; 2 uses
   %.not = icmp eq ptr %i.bx, %i.j
   br i1 %.not, label %._crit_edge, label %.lr.ph61.split
 
 ._crit_edge:                                      ; preds = %.critedge, %bb.c, %.lr.ph61
-  %.lcssa56 = phi ptr [ null, %bb.c ], [ %i.f, %.lr.ph61 ], [ %i.bv, %.critedge ]
-  %.lcssa53 = phi ptr [ null, %bb.c ], [ %i.h, %.lr.ph61 ], [ %i.bw, %.critedge ]
-  store ptr %.lcssa53, ptr %i.d, align 8
-  store ptr %.lcssa56, ptr %0, align 8
   ret void
 }
 

@@ -201,7 +201,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not.i24.i, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %.split19.i
-  %i.ad = load i32, ptr %i.c, align 4, !tbaa !7   ; 2 uses
+  %i.ad = load i32, ptr %i.c, align 4, !tbaa !7
   store i32 %i.ad, ptr %i.d, align 4, !tbaa !7
   br label %pymain_err_print.exit.i
 
@@ -210,7 +210,6 @@ bb.j:                                             ; preds = %.split19.i
   br label %pymain_err_print.exit.i
 
 pymain_err_print.exit.i:                          ; preds = %bb.j, %bb.i
-  %.0.ph27 = phi i32 [ %i.ad, %bb.i ], [ undef, %bb.j ] ; 4 uses
   %.0.i.i = phi i32 [ 1, %bb.i ], [ 0, %bb.j ]    ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #13
   br i1 %i.o, label %pymain_run_startup.exit, label %bb.k
@@ -227,7 +226,6 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.ag, label %Py_XDECREF.exit.sink.split.i, label %pymain_run_startup.exit
 
 Py_XDECREF.exit.sink.split.i:                     ; preds = %bb.l, %bb.h
-  %.0.ph25 = phi i32 [ undef, %bb.h ], [ %.0.ph27, %bb.l ]
   %.1.ph.i = phi i32 [ 0, %bb.h ], [ %.0.i.i, %bb.l ]
   call void @_Py_Dealloc(ptr noundef nonnull %i.n) #13
   br label %pymain_run_startup.exit
@@ -237,7 +235,6 @@ pymain_run_startup.exit.thread:                   ; preds = %stdin_is_interactiv
   br label %bb.m
 
 pymain_run_startup.exit:                          ; preds = %pymain_err_print.exit.i, %bb.k, %bb.l, %Py_XDECREF.exit.sink.split.i
-  %.0.ph26 = phi i32 [ %.0.ph25, %Py_XDECREF.exit.sink.split.i ], [ %.0.ph27, %pymain_err_print.exit.i ], [ %.0.ph27, %bb.l ], [ %.0.ph27, %bb.k ]
   %.1.i = phi i32 [ %.1.ph.i, %Py_XDECREF.exit.sink.split.i ], [ %.0.i.i, %pymain_err_print.exit.i ], [ %.0.i.i, %bb.l ], [ %.0.i.i, %bb.k ]
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
   %.not7 = icmp eq i32 %.1.i, 0
@@ -246,14 +243,10 @@ pymain_run_startup.exit:                          ; preds = %pymain_err_print.ex
 bb.m:                                             ; preds = %pymain_run_startup.exit.thread, %pymain_run_startup.exit
   %i.ah = call fastcc i32 @pymain_run_interactive_hook(ptr noundef %i.d)
   %.not8 = icmp eq i32 %i.ah, 0
-  br i1 %.not8, label %bb.n, label %..thread_crit_edge
+  br i1 %.not8, label %bb.n, label %.thread
 
-..thread_crit_edge:                               ; preds = %bb.m
-  %.0.ph.pre = load i32, ptr %i.d, align 4
-  br label %.thread
-
-.thread:                                          ; preds = %..thread_crit_edge, %pymain_run_startup.exit
-  %.0.ph = phi i32 [ %.0.ph.pre, %..thread_crit_edge ], [ %.0.ph26, %pymain_run_startup.exit ]
+.thread:                                          ; preds = %pymain_run_startup.exit, %bb.m
+  %.0.ph = load i32, ptr %i.d, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #13
   br label %bb.aa
 

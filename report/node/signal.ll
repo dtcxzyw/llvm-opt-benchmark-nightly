@@ -201,8 +201,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #9
   %i.c = tail call ptr @__errno_location() #11    ; 5 uses
   %i.d = load i32, ptr %i.c, align 4
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i64 0, ptr %3, align 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
   br label %bb.b
 

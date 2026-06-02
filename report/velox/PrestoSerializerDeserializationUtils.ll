@@ -201,7 +201,7 @@ bb.a:
   %11 = alloca [1 x %"class.std::shared_ptr.3"], align 16 ; 8 uses
   %12 = alloca %"class.std::shared_ptr.3", align 16 ; 4 uses
   %13 = alloca %"class.boost::intrusive_ptr", align 8 ; 7 uses
-  %14 = alloca %"class.boost::intrusive_ptr", align 8 ; 6 uses
+  %14 = alloca %"class.boost::intrusive_ptr", align 8 ; 7 uses
   %i.d = load ptr, ptr %7, align 8, !tbaa !161
   %i.e = tail call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(94) %i.d, ptr nonnull @_ZTIN8facebook5velox10BaseVectorE, ptr nonnull @_ZTIN8facebook5velox11ArrayVectorE, i64 0) #22 ; 12 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 128 ; 2 uses
@@ -604,23 +604,15 @@ bb.al:                                            ; preds = %.noexc107
   %i.ex = getelementptr inbounds nuw i8, ptr %i.e, i64 112 ; 2 uses
   %i.ey = getelementptr inbounds nuw i8, ptr %i.e, i64 120
   invoke void @_ZN8facebook5velox10BaseVector13resizeIndicesEiiPNS0_6memory10MemoryPoolERN5boost13intrusive_ptrINS0_6BufferEEEPPKi(i32 noundef %i.ev, i32 noundef %i.dd, ptr noundef %i.ew, ptr noundef nonnull align 8 dereferenceable(8) %i.ex, ptr noundef nonnull %i.ey)
-          to label %.noexc111 unwind label %bb.ay
+          to label %_ZN8facebook5velox15ArrayVectorBase12mutableSizesEi.exit unwind label %bb.ay
 
-.noexc111:                                        ; preds = %bb.al
-  %15 = load ptr, ptr %i.ex, align 8, !tbaa !232, !noalias !663 ; 3 uses
+_ZN8facebook5velox15ArrayVectorBase12mutableSizesEi.exit: ; preds = %bb.al
+  %15 = load ptr, ptr %i.ex, align 8, !tbaa !232, !noalias !663, !nonnull !58, !noundef !58 ; 2 uses
   store ptr %15, ptr %14, align 8, !tbaa !232, !alias.scope !663
-  %.not.i.i110 = icmp eq ptr %15, null
-  br i1 %.not.i.i110, label %_ZN8facebook5velox15ArrayVectorBase12mutableSizesEi.exit, label %16
-
-16:                                               ; preds = %.noexc111
-  %17 = getelementptr inbounds nuw i8, ptr %15, i64 40
-  %18 = atomicrmw add ptr %17, i32 1 acq_rel, align 4, !noalias !663 ; 0 uses
-  %.pre155 = load ptr, ptr %14, align 8, !tbaa !232
-  br label %_ZN8facebook5velox15ArrayVectorBase12mutableSizesEi.exit
-
-_ZN8facebook5velox15ArrayVectorBase12mutableSizesEi.exit: ; preds = %16, %.noexc111
-  %19 = phi ptr [ %.pre155, %16 ], [ null, %.noexc111 ] ; 9 uses
-  %i.ez = getelementptr inbounds nuw i8, ptr %19, i64 44
+  %16 = getelementptr inbounds nuw i8, ptr %15, i64 40
+  %17 = atomicrmw add ptr %16, i32 1 acq_rel, align 4, !noalias !663 ; 0 uses
+  %.pre155 = load ptr, ptr %14, align 8, !tbaa !232 ; 2 uses
+  %i.ez = getelementptr inbounds nuw i8, ptr %.pre155, i64 44
   %i.fa = load i8, ptr %i.ez, align 4, !tbaa !233
   %i.fb = and i8 %i.fa, 2
   %.not.i112 = icmp eq i8 %i.fb, 0
@@ -634,7 +626,7 @@ bb.am:                                            ; preds = %_ZN8facebook5velox1
   unreachable
 
 bb.an:                                            ; preds = %_ZN8facebook5velox15ArrayVectorBase12mutableSizesEi.exit
-  %i.fc = getelementptr inbounds nuw i8, ptr %19, i64 16
+  %i.fc = getelementptr inbounds nuw i8, ptr %.pre155, i64 16
   %i.fd = load ptr, ptr %i.fc, align 8, !tbaa !238
   %i.fe = load ptr, ptr %i.co, align 8, !tbaa !7  ; 3 uses
   %i.ff = getelementptr inbounds nuw i8, ptr %i.fe, i64 16 ; 2 uses
@@ -825,31 +817,32 @@ bb.bi:                                            ; preds = %bb.bg
   br label %bb.cc
 
 bb.bj:                                            ; preds = %._crit_edge
-  %.not.i126 = icmp eq ptr %19, null
+  %18 = load ptr, ptr %14, align 8, !tbaa !232    ; 7 uses
+  %.not.i126 = icmp eq ptr %18, null
   br i1 %.not.i126, label %_ZN5boost13intrusive_ptrIN8facebook5velox6BufferEED2Ev.exit, label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj
-  %i.hf = getelementptr inbounds nuw i8, ptr %19, i64 40
+  %i.hf = getelementptr inbounds nuw i8, ptr %18, i64 40
   %i.hg = atomicrmw sub ptr %i.hf, i32 1 acq_rel, align 4
   %i.hh = icmp eq i32 %i.hg, 1
   br i1 %i.hh, label %.sink.split.i.i, label %_ZN5boost13intrusive_ptrIN8facebook5velox6BufferEED2Ev.exit
 
 .sink.split.i.i:                                  ; preds = %bb.bk
-  %i.hi = load ptr, ptr %19, align 8, !tbaa !17
+  %i.hi = load ptr, ptr %18, align 8, !tbaa !17
   %i.hj = getelementptr inbounds nuw i8, ptr %i.hi, i64 64
   %i.hk = load ptr, ptr %i.hj, align 8
-  invoke void %i.hk(ptr noundef nonnull align 8 dereferenceable(64) %19)
+  invoke void %i.hk(ptr noundef nonnull align 8 dereferenceable(64) %18)
           to label %.noexc.i unwind label %bb.bl, !inline_history !246
 
 .noexc.i:                                         ; preds = %.sink.split.i.i
-  %i.hl = getelementptr inbounds nuw i8, ptr %19, i64 8
+  %i.hl = getelementptr inbounds nuw i8, ptr %18, i64 8
   %i.hm = load ptr, ptr %i.hl, align 8, !tbaa !247
   %.not.i.i127 = icmp eq ptr %i.hm, null
-  %i.hn = load ptr, ptr %19, align 8, !tbaa !17
+  %i.hn = load ptr, ptr %18, align 8, !tbaa !17
   %..i.i = select i1 %.not.i.i127, i64 8, i64 48
   %i.ho = getelementptr inbounds nuw i8, ptr %i.hn, i64 %..i.i
   %i.hp = load ptr, ptr %i.ho, align 8
-  invoke void %i.hp(ptr noundef nonnull align 8 dereferenceable(64) %19)
+  invoke void %i.hp(ptr noundef nonnull align 8 dereferenceable(64) %18)
           to label %_ZN5boost13intrusive_ptrIN8facebook5velox6BufferEED2Ev.exit unwind label %bb.bl, !inline_history !246
 
 bb.bl:                                            ; preds = %.noexc.i, %.sink.split.i.i
@@ -1111,7 +1104,7 @@ bb.a:
   %12 = alloca %"class.std::shared_ptr.3", align 16 ; 4 uses
   %13 = alloca %"class.std::shared_ptr.3", align 16 ; 4 uses
   %14 = alloca %"class.boost::intrusive_ptr", align 8 ; 7 uses
-  %15 = alloca %"class.boost::intrusive_ptr", align 8 ; 6 uses
+  %15 = alloca %"class.boost::intrusive_ptr", align 8 ; 7 uses
   %i.e = load ptr, ptr %7, align 8, !tbaa !161
   %i.f = tail call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(94) %i.e, ptr nonnull @_ZTIN8facebook5velox10BaseVectorE, ptr nonnull @_ZTIN8facebook5velox9MapVectorE, i64 0) #22 ; 14 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 128 ; 2 uses
@@ -1514,23 +1507,15 @@ bb.ca:                                            ; preds = %.noexc137
   %i.jz = getelementptr inbounds nuw i8, ptr %i.f, i64 112 ; 2 uses
   %i.ka = getelementptr inbounds nuw i8, ptr %i.f, i64 120
   invoke void @_ZN8facebook5velox10BaseVector13resizeIndicesEiiPNS0_6memory10MemoryPoolERN5boost13intrusive_ptrINS0_6BufferEEEPPKi(i32 noundef %i.jx, i32 noundef %i.he, ptr noundef %i.jy, ptr noundef nonnull align 8 dereferenceable(8) %i.jz, ptr noundef nonnull %i.ka)
-          to label %.noexc141 unwind label %bb.ck
+          to label %_ZN8facebook5velox15ArrayVectorBase12mutableSizesEi.exit unwind label %bb.ck
 
-.noexc141:                                        ; preds = %bb.ca
-  %16 = load ptr, ptr %i.jz, align 8, !tbaa !232, !noalias !671 ; 3 uses
+_ZN8facebook5velox15ArrayVectorBase12mutableSizesEi.exit: ; preds = %bb.ca
+  %16 = load ptr, ptr %i.jz, align 8, !tbaa !232, !noalias !671, !nonnull !58, !noundef !58 ; 2 uses
   store ptr %16, ptr %15, align 8, !tbaa !232, !alias.scope !671
-  %.not.i.i140 = icmp eq ptr %16, null
-  br i1 %.not.i.i140, label %_ZN8facebook5velox15ArrayVectorBase12mutableSizesEi.exit, label %17
-
-17:                                               ; preds = %.noexc141
-  %18 = getelementptr inbounds nuw i8, ptr %16, i64 40
-  %19 = atomicrmw add ptr %18, i32 1 acq_rel, align 4, !noalias !671 ; 0 uses
-  %.pre189 = load ptr, ptr %15, align 8, !tbaa !232
-  br label %_ZN8facebook5velox15ArrayVectorBase12mutableSizesEi.exit
-
-_ZN8facebook5velox15ArrayVectorBase12mutableSizesEi.exit: ; preds = %17, %.noexc141
-  %20 = phi ptr [ %.pre189, %17 ], [ null, %.noexc141 ] ; 9 uses
-  %i.kb = getelementptr inbounds nuw i8, ptr %20, i64 44
+  %17 = getelementptr inbounds nuw i8, ptr %16, i64 40
+  %18 = atomicrmw add ptr %17, i32 1 acq_rel, align 4, !noalias !671 ; 0 uses
+  %.pre189 = load ptr, ptr %15, align 8, !tbaa !232 ; 2 uses
+  %i.kb = getelementptr inbounds nuw i8, ptr %.pre189, i64 44
   %i.kc = load i8, ptr %i.kb, align 4, !tbaa !233
   %i.kd = and i8 %i.kc, 2
   %.not.i142 = icmp eq i8 %i.kd, 0
@@ -1544,7 +1529,7 @@ bb.cb:                                            ; preds = %_ZN8facebook5velox1
   unreachable
 
 bb.cc:                                            ; preds = %_ZN8facebook5velox15ArrayVectorBase12mutableSizesEi.exit
-  %i.ke = getelementptr inbounds nuw i8, ptr %20, i64 16
+  %i.ke = getelementptr inbounds nuw i8, ptr %.pre189, i64 16
   %i.kf = load ptr, ptr %i.ke, align 8, !tbaa !238
   %i.kg = load ptr, ptr %i.fs, align 8, !tbaa !7  ; 3 uses
   %i.kh = getelementptr inbounds nuw i8, ptr %i.kg, i64 16 ; 2 uses
@@ -1708,31 +1693,32 @@ bb.cu:                                            ; preds = %bb.cs
   br label %bb.do
 
 bb.cv:                                            ; preds = %._crit_edge
-  %.not.i156 = icmp eq ptr %20, null
+  %19 = load ptr, ptr %15, align 8, !tbaa !232    ; 7 uses
+  %.not.i156 = icmp eq ptr %19, null
   br i1 %.not.i156, label %_ZN5boost13intrusive_ptrIN8facebook5velox6BufferEED2Ev.exit, label %bb.cw
 
 bb.cw:                                            ; preds = %bb.cv
-  %i.md = getelementptr inbounds nuw i8, ptr %20, i64 40
+  %i.md = getelementptr inbounds nuw i8, ptr %19, i64 40
   %i.me = atomicrmw sub ptr %i.md, i32 1 acq_rel, align 4
   %i.mf = icmp eq i32 %i.me, 1
   br i1 %i.mf, label %.sink.split.i.i, label %_ZN5boost13intrusive_ptrIN8facebook5velox6BufferEED2Ev.exit
 
 .sink.split.i.i:                                  ; preds = %bb.cw
-  %i.mg = load ptr, ptr %20, align 8, !tbaa !17
+  %i.mg = load ptr, ptr %19, align 8, !tbaa !17
   %i.mh = getelementptr inbounds nuw i8, ptr %i.mg, i64 64
   %i.mi = load ptr, ptr %i.mh, align 8
-  invoke void %i.mi(ptr noundef nonnull align 8 dereferenceable(64) %20)
+  invoke void %i.mi(ptr noundef nonnull align 8 dereferenceable(64) %19)
           to label %.noexc.i unwind label %bb.cx, !inline_history !246
 
 .noexc.i:                                         ; preds = %.sink.split.i.i
-  %i.mj = getelementptr inbounds nuw i8, ptr %20, i64 8
+  %i.mj = getelementptr inbounds nuw i8, ptr %19, i64 8
   %i.mk = load ptr, ptr %i.mj, align 8, !tbaa !247
   %.not.i.i157 = icmp eq ptr %i.mk, null
-  %i.ml = load ptr, ptr %20, align 8, !tbaa !17
+  %i.ml = load ptr, ptr %19, align 8, !tbaa !17
   %..i.i = select i1 %.not.i.i157, i64 8, i64 48
   %i.mm = getelementptr inbounds nuw i8, ptr %i.ml, i64 %..i.i
   %i.mn = load ptr, ptr %i.mm, align 8
-  invoke void %i.mn(ptr noundef nonnull align 8 dereferenceable(64) %20)
+  invoke void %i.mn(ptr noundef nonnull align 8 dereferenceable(64) %19)
           to label %_ZN5boost13intrusive_ptrIN8facebook5velox6BufferEED2Ev.exit unwind label %bb.cx, !inline_history !246
 
 bb.cx:                                            ; preds = %.noexc.i, %.sink.split.i.i

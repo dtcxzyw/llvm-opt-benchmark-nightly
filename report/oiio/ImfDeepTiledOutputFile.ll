@@ -201,8 +201,8 @@ bb.ap:                                            ; preds = %bb.ak
 
 .preheader:                                       ; preds = %bb.ap, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE9push_backEOS3_.exit
   %.sroa.0.0 = phi ptr [ %.sroa.0.2, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE9push_backEOS3_.exit ], [ null, %bb.ap ] ; 25 uses
-  %i.bs = phi ptr [ %i.ew, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE9push_backEOS3_.exit ], [ null, %bb.ap ] ; 10 uses
-  %.val58130 = phi ptr [ %.val58131, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE9push_backEOS3_.exit ], [ null, %bb.ap ] ; 7 uses
+  %i.bs = phi ptr [ %i.ew, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE9push_backEOS3_.exit ], [ null, %bb.ap ] ; 11 uses
+  %.val58130 = phi ptr [ %.val58131, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE9push_backEOS3_.exit ], [ null, %bb.ap ] ; 6 uses
   %.sroa.091.0 = phi ptr [ %i.ex, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE9push_backEOS3_.exit ], [ %i.br, %bb.ap ] ; 4 uses
   %i.bt = invoke ptr @_ZNK27OpenImageIO_v3_1_Imf__3_3_511ChannelList3endEv(ptr noundef nonnull align 8 dereferenceable(48) %i.g)
           to label %bb.aq unwind label %bb.as
@@ -269,12 +269,12 @@ bb.ax:                                            ; preds = %bb.aw
   store i32 0, ptr %i.co, align 4, !tbaa !192
   %i.cp = getelementptr inbounds nuw i8, ptr %i.cj, i64 48
   store i32 0, ptr %i.cp, align 8, !tbaa !193
-  %.not.i.i64 = icmp eq ptr %.val58130, %i.bs
+  %.not.i.i64 = icmp eq ptr %i.bs, %.val58130
   br i1 %.not.i.i64, label %bb.az, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
-  store ptr %i.cj, ptr %.val58130, align 8, !tbaa !115
-  %i.cq = getelementptr inbounds nuw i8, ptr %.val58130, i64 8
+  store ptr %i.cj, ptr %i.bs, align 8, !tbaa !115
+  %i.cq = getelementptr inbounds nuw i8, ptr %i.bs, i64 8
   br label %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE9push_backEOS3_.exit
 
 bb.az:                                            ; preds = %bb.ax
@@ -350,7 +350,7 @@ bb.be:                                            ; preds = %bb.au
 
 bb.bf:                                            ; preds = %bb.av
   %i.dj = invoke noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #25
-          to label %bb.bg unwind label %.loopexit ; 9 uses
+          to label %bb.bg unwind label %.loopexit ; 8 uses
 
 bb.bg:                                            ; preds = %bb.bf
   %i.dk = getelementptr inbounds nuw i8, ptr %i.cg, i64 288
@@ -377,11 +377,11 @@ bb.bg:                                            ; preds = %bb.bf
   store i32 %i.ds, ptr %i.ea, align 4, !tbaa !192
   %i.eb = getelementptr inbounds nuw i8, ptr %i.dj, i64 48
   store i32 %i.dv, ptr %i.eb, align 8, !tbaa !193
-  %.not.i.i66 = icmp eq ptr %.val58130, %i.bs
+  %.not.i.i66 = icmp eq ptr %i.bs, %.val58130
   br i1 %.not.i.i66, label %bb.bi, label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg
-  store ptr %i.dj, ptr %.val58130, align 8, !tbaa !115
+  store ptr %i.dj, ptr %i.bs, align 8, !tbaa !115
   br label %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE9push_backEOS3_.exit76
 
 bb.bi:                                            ; preds = %bb.bg
@@ -413,7 +413,7 @@ _ZNKSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3
           to label %.noexc75 unwind label %.loopexit ; 4 uses
 
 .noexc75:                                         ; preds = %_ZNKSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i68
-  %i.eo = getelementptr inbounds i8, ptr %i.en, i64 %i.ee ; 3 uses
+  %i.eo = getelementptr inbounds i8, ptr %i.en, i64 %i.ee ; 2 uses
   store ptr %i.dj, ptr %i.eo, align 8, !tbaa !115
   %i.ep = icmp sgt i64 %i.ee, 0
   br i1 %i.ep, label %bb.bk, label %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit20.i.i.i71
@@ -432,18 +432,17 @@ bb.bl:                                            ; preds = %_ZNSt6vectorIPN27Op
 
 _ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i73: ; preds = %bb.bl, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit20.i.i.i71
   %i.eq = getelementptr inbounds nuw [8 x i8], ptr %i.en, i64 %i.el
-  %.pre = load ptr, ptr %i.eo, align 8, !tbaa !115
   br label %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE9push_backEOS3_.exit76
 
 _ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE9push_backEOS3_.exit76: ; preds = %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i73, %bb.bh
-  %i.er = phi ptr [ %.pre, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i73 ], [ %i.dj, %bb.bh ]
-  %.sroa.0.1 = phi ptr [ %i.en, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i73 ], [ %.sroa.0.0, %bb.bh ]
-  %i.es = phi ptr [ %i.eq, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i73 ], [ %i.bs, %bb.bh ]
-  %.pn = phi ptr [ %i.eo, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i73 ], [ %.val58130, %bb.bh ]
-  %.val58129 = getelementptr inbounds nuw i8, ptr %.pn, i64 8
+  %i.er = phi ptr [ %i.en, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i73 ], [ %.sroa.0.0, %bb.bh ]
+  %.sroa.0.1 = phi ptr [ %i.eo, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i73 ], [ %i.bs, %bb.bh ] ; 2 uses
+  %i.es = phi ptr [ %i.eq, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i73 ], [ %.val58130, %bb.bh ]
+  %.sroa.11.1 = getelementptr inbounds nuw i8, ptr %.sroa.0.1, i64 8
+  %4 = load ptr, ptr %.sroa.0.1, align 8, !tbaa !115
   %i.et = getelementptr inbounds nuw i8, ptr %i.cg, i64 296
   %i.eu = load ptr, ptr %i.et, align 8, !tbaa !178
-  %i.ev = getelementptr inbounds nuw i8, ptr %i.er, i64 8
+  %i.ev = getelementptr inbounds nuw i8, ptr %4, i64 8
   store ptr %i.eu, ptr %i.ev, align 8, !tbaa !197
   br label %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE9push_backEOS3_.exit
 
@@ -458,9 +457,9 @@ _ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_
   br label %bb.ci
 
 _ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE9push_backEOS3_.exit: ; preds = %bb.ay, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE9push_backEOS3_.exit76
-  %.sroa.0.2 = phi ptr [ %i.dc, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %.sroa.0.0, %bb.ay ], [ %.sroa.0.1, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE9push_backEOS3_.exit76 ]
-  %i.ew = phi ptr [ %i.dg, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.bs, %bb.ay ], [ %i.es, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE9push_backEOS3_.exit76 ]
-  %.val58131 = phi ptr [ %i.df, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.cq, %bb.ay ], [ %.val58129, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE9push_backEOS3_.exit76 ]
+  %.sroa.0.2 = phi ptr [ %i.dc, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %.sroa.0.0, %bb.ay ], [ %i.er, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE9push_backEOS3_.exit76 ]
+  %i.ew = phi ptr [ %i.df, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.cq, %bb.ay ], [ %.sroa.11.1, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE9push_backEOS3_.exit76 ]
+  %.val58131 = phi ptr [ %i.dg, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %.val58130, %bb.ay ], [ %i.es, %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EE9push_backEOS3_.exit76 ]
   %i.ex = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.091.0) #28
   br label %.preheader, !llvm.loop !198
 
@@ -472,7 +471,7 @@ _ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_
   %.lcssa = phi i64 [ 0, %_ZN27OpenImageIO_v3_1_Imf__3_3_515DeepFrameBufferaSERKS0_.exit ], [ %i.gk, %bb.cg ] ; 5 uses
   %i.ey = getelementptr inbounds nuw i8, ptr %.lcssa149, i64 288 ; 4 uses
   %i.ez = getelementptr i8, ptr %.lcssa149, i64 296 ; 3 uses
-  %i.fa = ptrtoint ptr %.val58130 to i64          ; 2 uses
+  %i.fa = ptrtoint ptr %i.bs to i64               ; 2 uses
   %i.fb = ptrtoint ptr %.sroa.0.0 to i64          ; 2 uses
   %i.fc = sub i64 %i.fa, %i.fb                    ; 13 uses
   %i.fd = getelementptr inbounds nuw i8, ptr %.lcssa149, i64 304 ; 2 uses
@@ -640,7 +639,7 @@ bb.cg:                                            ; preds = %.lr.ph, %bb.cf
   br i1 %i.gm, label %.lr.ph, label %._crit_edge, !llvm.loop !202
 
 bb.ch:                                            ; preds = %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESt6vectorIS5_SaIS5_EEEENS1_IPS5_SA_EEET0_T_SF_SE_.exit.i.thread, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESt6vectorIS5_SaIS5_EEEENS1_IPS5_SA_EEET0_T_SF_SE_.exit.i
-  %i.gn = ptrtoint ptr %i.bs to i64
+  %i.gn = ptrtoint ptr %.val58130 to i64
   %i.go = sub i64 %i.gn, %i.fb
   tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.0, i64 noundef %i.go) #26
   br label %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EED2Ev.exit
@@ -655,7 +654,7 @@ bb.ci:                                            ; preds = %bb.as, %bb.be, %bb.
   br i1 %.not.i.i.i80, label %_ZNSt6vectorIPN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_113TOutSliceInfoESaIS3_EED2Ev.exit81, label %bb.cj
 
 bb.cj:                                            ; preds = %bb.ci
-  %i.gq = ptrtoint ptr %i.bs to i64
+  %i.gq = ptrtoint ptr %.val58130 to i64
   %i.gr = ptrtoint ptr %.sroa.0.0 to i64
   %i.gs = sub i64 %i.gq, %i.gr
   tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.0, i64 noundef %i.gs) #26

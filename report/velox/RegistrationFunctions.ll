@@ -201,7 +201,7 @@ bb.a:
   %6 = alloca %"struct.facebook::velox::core::TypeAnalysis", align 1 ; 4 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %8 = alloca %"class.std::shared_ptr.18", align 16 ; 7 uses
-  %9 = alloca %"class.std::vector.21", align 8    ; 12 uses
+  %9 = alloca %"class.std::vector.21", align 8    ; 10 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #34
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %4, i8 0, i64 24, i1 false)
@@ -399,49 +399,42 @@ _ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox4e
   %i.bu = load <2 x ptr>, ptr %8, align 16, !tbaa !86
   store <2 x ptr> %i.bu, ptr %i.bs, align 8, !tbaa !86
   %.not.i.i.i24 = icmp eq ptr %i.bt, null
-  br i1 %.not.i.i.i24, label %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit26.thread, label %bb.m
+  br i1 %.not.i.i.i24, label %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit26, label %bb.m
 
 bb.m:                                             ; preds = %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox4exec17SignatureVariableESt4lessIS5_ESaISt4pairIKS5_S9_EEEC2EOSG_.exit
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bt, i64 8 ; 3 uses
   %i.bw = load i8, ptr @__libc_single_threaded, align 1, !tbaa !26
   %.not.i.i.i.i25 = icmp eq i8 %i.bw, 0
-  br i1 %.not.i.i.i.i25, label %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit26, label %bb.n
+  br i1 %.not.i.i.i.i25, label %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit26.thread, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.bx = load i32, ptr %i.bv, align 4, !tbaa !3
   %i.by = add nsw i32 %i.bx, 1
   store i32 %i.by, ptr %i.bv, align 4, !tbaa !3
-  br label %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit26.thread
+  br label %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit26
 
-_ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit26.thread: ; preds = %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox4exec17SignatureVariableESt4lessIS5_ESaISt4pairIKS5_S9_EEEC2EOSG_.exit, %bb.n
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
-  %12 = getelementptr inbounds nuw i8, ptr %9, i64 8
-  store i64 0, ptr %11, align 8
-  br label %.noexc28.thread
+_ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit26.thread: ; preds = %bb.m
+  %11 = atomicrmw volatile add ptr %i.bv, i32 1 acq_rel, align 4 ; 0 uses
+  br label %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit26
 
-_ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit26: ; preds = %bb.m
-  %13 = atomicrmw volatile add ptr %i.bv, i32 1 acq_rel, align 4 ; 0 uses
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %9, i64 8
-  %.pre65.a = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !160 ; 3 uses
+_ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit26: ; preds = %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox4exec17SignatureVariableESt4lessIS5_ESaISt4pairIKS5_S9_EEEC2EOSG_.exit, %bb.n, %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit26.thread
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 3 uses
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
+  %.pre65.a = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !160 ; 4 uses
   %.pre66.a = load ptr, ptr %9, align 8, !tbaa !161 ; 4 uses
-  %14 = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 3 uses
-  %15 = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
   %i.bz = ptrtoint ptr %.pre65.a to i64
   %i.ca = ptrtoint ptr %.pre66.a to i64
-  %i.cb = sub i64 %i.bz, %i.ca                    ; 3 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %14, i8 0, i64 24, i1 false)
+  %i.cb = sub i64 %i.bz, %i.ca                    ; 4 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %12, i8 0, i64 24, i1 false)
   %.not.i.i.i.i27 = icmp eq ptr %.pre65.a, %.pre66.a
   br i1 %.not.i.i.i.i27, label %.noexc28.thread, label %bb.o
 
-.noexc28.thread:                                  ; preds = %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit26.thread, %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit26
-  %16 = phi ptr [ %12, %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit26.thread ], [ %15, %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit26 ]
-  %17 = phi ptr [ %11, %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit26.thread ], [ %14, %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit26 ]
-  %18 = phi ptr [ null, %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit26.thread ], [ %.pre66.a, %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit26 ]
-  store ptr null, ptr %17, align 8, !tbaa !161
-  %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 2 uses
-  store ptr null, ptr %i.cc, align 8, !tbaa !160
+.noexc28.thread:                                  ; preds = %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit26
+  %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 144
+  %13 = getelementptr inbounds nuw i8, ptr null, i64 %i.cb
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 152
-  store ptr null, ptr %i.cd, align 8, !tbaa !162
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %12, i8 0, i64 16, i1 false)
+  store ptr %13, ptr %i.cd, align 8, !tbaa !162
   br label %.loopexit
 
 bb.o:                                             ; preds = %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEC2ERKS4_.exit26
@@ -460,7 +453,7 @@ _ZNSt15__new_allocatorISt10shared_ptrIKN8facebook5velox4TypeEEE8allocateEmPKv.ex
           to label %.noexc28 unwind label %bb.au  ; 4 uses
 
 .noexc28:                                         ; preds = %_ZNSt15__new_allocatorISt10shared_ptrIKN8facebook5velox4TypeEEE8allocateEmPKv.exit.i.i.i.i
-  store ptr %i.cf, ptr %14, align 8, !tbaa !161
+  store ptr %i.cf, ptr %12, align 8, !tbaa !161
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 2 uses
   store ptr %i.cf, ptr %i.cg, align 8, !tbaa !160
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cf, i64 %i.cb
@@ -670,17 +663,17 @@ bb.af:                                            ; preds = %_ZNSt3mapINSt7__cxx
   br i1 %i.ex, label %._crit_edge, label %bb.u
 
 .loopexit.loopexit:                               ; preds = %_ZSt10_ConstructISt10shared_ptrIKN8facebook5velox4TypeEEJRKS5_EEvPT_DpOT0_.exit.i.i.i.i.i
-  %.pre67 = load ptr, ptr %9, align 8, !tbaa !161
+  %.pre65 = load ptr, ptr %9, align 8, !tbaa !161
+  %.pre67 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !160
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %.noexc28.thread
-  %i.ey = phi ptr [ %16, %.noexc28.thread ], [ %15, %.loopexit.loopexit ]
-  %i.ez = phi ptr [ %18, %.noexc28.thread ], [ %.pre67, %.loopexit.loopexit ] ; 3 uses
+  %i.ey = phi ptr [ %.pre65.a, %.noexc28.thread ], [ %.pre67, %.loopexit.loopexit ] ; 2 uses
+  %i.ez = phi ptr [ %.pre66.a, %.noexc28.thread ], [ %.pre65, %.loopexit.loopexit ] ; 3 uses
   %i.fa = phi ptr [ %i.cc, %.noexc28.thread ], [ %i.cg, %.loopexit.loopexit ]
   %.0.lcssa.i.i.i.i.i = phi ptr [ null, %.noexc28.thread ], [ %i.cs, %.loopexit.loopexit ]
   store ptr %.0.lcssa.i.i.i.i.i, ptr %i.fa, align 8, !tbaa !160
-  %19 = load ptr, ptr %i.ey, align 8, !tbaa !160  ; 2 uses
-  %.not4.i.i.i = icmp eq ptr %i.ez, %19
+  %.not4.i.i.i = icmp eq ptr %i.ez, %i.ey
   br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPSt10shared_ptrIKN8facebook5velox4TypeEES5_EvT_S7_RSaIT0_E.exit.i, label %.lr.ph.i.i.i31
 
 .lr.ph.i.i.i31:                                   ; preds = %.loopexit, %_ZSt8_DestroyISt10shared_ptrIKN8facebook5velox4TypeEEEvPT_.exit.i.i.i
@@ -736,7 +729,7 @@ bb.al:                                            ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZSt8_DestroyISt10shared_ptrIKN8facebook5velox4TypeEEEvPT_.exit.i.i.i: ; preds = %bb.al, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i.i, %bb.ah, %.lr.ph.i.i.i31
   %i.fs = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 16 ; 2 uses
-  %.not.i.i.i32 = icmp eq ptr %i.fs, %19
+  %.not.i.i.i32 = icmp eq ptr %i.fs, %i.ey
   br i1 %.not.i.i.i32, label %_ZSt8_DestroyIPSt10shared_ptrIKN8facebook5velox4TypeEES5_EvT_S7_RSaIT0_E.exitthread-pre-split.i, label %.lr.ph.i.i.i31, !llvm.loop !172
 
 _ZSt8_DestroyIPSt10shared_ptrIKN8facebook5velox4TypeEES5_EvT_S7_RSaIT0_E.exitthread-pre-split.i: ; preds = %_ZSt8_DestroyISt10shared_ptrIKN8facebook5velox4TypeEEEvPT_.exit.i.i.i
@@ -1139,9 +1132,9 @@ bb.i:                                             ; preds = %bb.g
   %i.bt = load i64, ptr %i.bs, align 8, !tbaa !159, !noalias !3729
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #34, !noalias !3720
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, ptr noundef nonnull align 16 dereferenceable(32) %5, i64 16, i1 false), !noalias !3720
-  %i.bu = load <16 x i8>, ptr %2, align 16, !tbaa !26, !noalias !3720
+  %i.bu = load <16 x i8>, ptr %2, align 16, !tbaa !26
   %i.bv = shufflevector <16 x i8> %i.bu, <16 x i8> poison, <16 x i32> <i32 15, i32 14, i32 13, i32 12, i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <16 x i8> %i.bv, ptr %2, align 16, !tbaa !26, !noalias !3720
+  store <16 x i8> %i.bv, ptr %2, align 16, !tbaa !26
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #34, !noalias !3720
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #34, !noalias !3720
   call void @_ZN5folly11IPAddressV6C1ERKSt5arrayIhLm16EE(ptr noundef nonnull align 4 dereferenceable(18) %4, ptr noundef nonnull align 1 dereferenceable(16) %2) #34, !noalias !3720
@@ -1544,9 +1537,9 @@ _ZNK8facebook5velox4exec12VectorReaderIlEixEm.exit: ; preds = %.noexc38, %bb.k, 
   %i.cf = load i64, ptr %i.ce, align 8, !tbaa !159, !noalias !3823
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #34, !noalias !3826
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, ptr noundef nonnull align 16 dereferenceable(32) %5, i64 16, i1 false), !noalias !3826
-  %i.cg = load <16 x i8>, ptr %2, align 16, !tbaa !26, !noalias !3814
+  %i.cg = load <16 x i8>, ptr %2, align 16, !tbaa !26
   %i.ch = shufflevector <16 x i8> %i.cg, <16 x i8> poison, <16 x i32> <i32 15, i32 14, i32 13, i32 12, i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <16 x i8> %i.ch, ptr %2, align 16, !tbaa !26, !noalias !3814
+  store <16 x i8> %i.ch, ptr %2, align 16, !tbaa !26
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #34, !noalias !3826
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #34, !noalias !3826
   call void @_ZN5folly11IPAddressV6C1ERKSt5arrayIhLm16EE(ptr noundef nonnull align 4 dereferenceable(18) %4, ptr noundef nonnull align 1 dereferenceable(16) %2) #34, !noalias !3826

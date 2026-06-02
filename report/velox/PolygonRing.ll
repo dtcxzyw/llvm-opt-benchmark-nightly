@@ -201,15 +201,13 @@ bb.a:
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE9push_backERKS4_.exit, %bb.a
-  %.lcssa13 = phi ptr [ null, %bb.a ], [ %i.ab, %_ZNSt6vectorIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE9push_backERKS4_.exit ]
-  store ptr %.lcssa13, ptr %0, align 8
   ret void
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNSt6vectorIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE9push_backERKS4_.exit
   %i.f = phi ptr [ null, %.lr.ph ], [ %i.z, %_ZNSt6vectorIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE9push_backERKS4_.exit ] ; 3 uses
   %i.g = phi ptr [ null, %.lr.ph ], [ %i.aa, %_ZNSt6vectorIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE9push_backERKS4_.exit ] ; 3 uses
   %.sroa.09.017 = phi ptr [ %i.b, %.lr.ph ], [ %i.ac, %_ZNSt6vectorIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE9push_backERKS4_.exit ] ; 2 uses
-  %i.h = phi ptr [ null, %.lr.ph ], [ %i.ab, %_ZNSt6vectorIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE9push_backERKS4_.exit ] ; 9 uses
+  %i.h = phi ptr [ null, %.lr.ph ], [ %i.ab, %_ZNSt6vectorIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE9push_backERKS4_.exit ] ; 7 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.09.017, i64 40 ; 2 uses
   %.not.i = icmp eq ptr %i.g, %i.f
   br i1 %.not.i, label %bb.d, label %bb.c
@@ -228,7 +226,6 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.n, label %bb.e, label %_ZNKSt6vectorIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE12_M_check_lenEmPKc.exit.i.i
 
 bb.e:                                             ; preds = %bb.d
-  store ptr %i.h, ptr %0, align 8
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #17
           to label %.noexc unwind label %.loopexit.split-lp
 
@@ -246,7 +243,7 @@ _ZNKSt6vectorIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE12_M_check_lenEm
   tail call void @llvm.assume(i1 %.not.i.i.i)
   %i.t = shl nuw nsw i64 %i.s, 3
   %i.u = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.t) #18
-          to label %.noexc6 unwind label %.loopexit ; 4 uses
+          to label %.noexc6 unwind label %.loopexit ; 5 uses
 
 .noexc6:                                          ; preds = %_ZNKSt6vectorIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE12_M_check_lenEmPKc.exit.i.i
   %i.v = getelementptr inbounds i8, ptr %i.u, i64 %i.m ; 2 uses
@@ -268,15 +265,16 @@ bb.g:                                             ; preds = %_ZNSt6vectorIPN4geo
   br label %_ZNSt6vectorIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i
 
 _ZNSt6vectorIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i: ; preds = %bb.g, %_ZNSt6vectorIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i
+  store ptr %i.u, ptr %0, align 8, !tbaa !85
   store ptr %i.x, ptr %i.d, align 8, !tbaa !83
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %i.s ; 2 uses
-  store ptr %i.y, ptr %i.e, align 8, !tbaa !85
+  store ptr %i.y, ptr %i.e, align 8, !tbaa !86
   br label %_ZNSt6vectorIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE9push_backERKS4_.exit
 
 _ZNSt6vectorIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE9push_backERKS4_.exit: ; preds = %_ZNSt6vectorIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i, %bb.c
   %i.z = phi ptr [ %i.y, %_ZNSt6vectorIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i ], [ %i.f, %bb.c ]
   %i.aa = phi ptr [ %i.x, %_ZNSt6vectorIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i ], [ %i.j, %bb.c ]
-  %i.ab = phi ptr [ %i.u, %_ZNSt6vectorIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i ], [ %i.h, %bb.c ] ; 2 uses
+  %i.ab = phi ptr [ %i.u, %_ZNSt6vectorIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i ], [ %i.h, %bb.c ]
   %i.ac = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %.sroa.09.017) #19 ; 2 uses
   %.not = icmp eq ptr %i.ac, %i.c
   br i1 %.not, label %._crit_edge, label %bb.b
@@ -284,7 +282,6 @@ _ZNSt6vectorIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE9push_backERKS4_.
 .loopexit:                                        ; preds = %_ZNKSt6vectorIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE12_M_check_lenEmPKc.exit.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
-  store ptr %i.h, ptr %0, align 8
   br label %bb.h
 
 .loopexit.split-lp:                               ; preds = %bb.e
@@ -312,29 +309,29 @@ define void @_ZN4geos9operation5valid11PolygonRing12addSelfTouchERKNS_4geom10Coo
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 4 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !86   ; 9 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !87   ; 9 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !87
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !88
   %.not.i = icmp eq ptr %i.c, %i.e
   br i1 %.not.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.c, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false), !tbaa.struct !88
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.c, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false), !tbaa.struct !89
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 24
-  store ptr %2, ptr %i.f, align 8, !tbaa !91
+  store ptr %2, ptr %i.f, align 8, !tbaa !92
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 32
-  store ptr %3, ptr %i.g, align 8, !tbaa !94
+  store ptr %3, ptr %i.g, align 8, !tbaa !95
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 40
-  store ptr %4, ptr %i.h, align 8, !tbaa !95
+  store ptr %4, ptr %i.h, align 8, !tbaa !96
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 48
-  store ptr %5, ptr %i.i, align 8, !tbaa !96
-  %i.j = load ptr, ptr %i.b, align 8, !tbaa !86
+  store ptr %5, ptr %i.i, align 8, !tbaa !97
+  %i.j = load ptr, ptr %i.b, align 8, !tbaa !87
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 56
-  store ptr %i.k, ptr %i.b, align 8, !tbaa !86
+  store ptr %i.k, ptr %i.b, align 8, !tbaa !87
   br label %_ZNSt6vectorIN4geos9operation5valid19PolygonRingSelfNodeESaIS3_EE12emplace_backIJRKNS0_4geom10CoordinateERPS9_SC_SC_SC_EEEvDpOT_.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.l = load ptr, ptr %i.a, align 8, !tbaa !97   ; 5 uses
+  %i.l = load ptr, ptr %i.a, align 8, !tbaa !98   ; 5 uses
   %i.m = ptrtoint ptr %i.c to i64
   %i.n = ptrtoint ptr %i.l to i64
   %i.o = sub i64 %i.m, %i.n                       ; 3 uses
@@ -357,26 +354,26 @@ _ZNKSt6vectorIN4geos9operation5valid19PolygonRingSelfNodeESaIS3_EE12_M_check_len
   %i.v = mul nuw nsw i64 %i.u, 56
   %i.w = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.v) #18 ; 5 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.o ; 5 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.x, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false), !tbaa.struct !88
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.x, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false), !tbaa.struct !89
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 24
-  store ptr %2, ptr %i.y, align 8, !tbaa !91
+  store ptr %2, ptr %i.y, align 8, !tbaa !92
   %i.z = getelementptr inbounds nuw i8, ptr %i.x, i64 32
-  store ptr %3, ptr %i.z, align 8, !tbaa !94
+  store ptr %3, ptr %i.z, align 8, !tbaa !95
   %i.aa = getelementptr inbounds nuw i8, ptr %i.x, i64 40
-  store ptr %4, ptr %i.aa, align 8, !tbaa !95
+  store ptr %4, ptr %i.aa, align 8, !tbaa !96
   %i.ab = getelementptr inbounds nuw i8, ptr %i.x, i64 48
-  store ptr %5, ptr %i.ab, align 8, !tbaa !96
+  store ptr %5, ptr %i.ab, align 8, !tbaa !97
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.l, %i.c
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN4geos9operation5valid19PolygonRingSelfNodeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit36.i.i, label %.lr.ph.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %_ZNKSt6vectorIN4geos9operation5valid19PolygonRingSelfNodeESaIS3_EE12_M_check_lenEmPKc.exit.i.i, %.lr.ph.i.i.i.i.i.i
   %.012.i.i.i.i.i.i = phi ptr [ %i.ad, %.lr.ph.i.i.i.i.i.i ], [ %i.w, %_ZNKSt6vectorIN4geos9operation5valid19PolygonRingSelfNodeESaIS3_EE12_M_check_lenEmPKc.exit.i.i ] ; 2 uses
   %.0911.i.i.i.i.i.i = phi ptr [ %i.ac, %.lr.ph.i.i.i.i.i.i ], [ %i.l, %_ZNKSt6vectorIN4geos9operation5valid19PolygonRingSelfNodeESaIS3_EE12_M_check_lenEmPKc.exit.i.i ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.012.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(56) %.0911.i.i.i.i.i.i, i64 56, i1 false), !tbaa.struct !98, !alias.scope !99
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.012.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(56) %.0911.i.i.i.i.i.i, i64 56, i1 false), !tbaa.struct !99, !alias.scope !100
   %i.ac = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i, i64 56 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i, i64 56 ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.ac, %i.c
-  br i1 %.not.i.i.i.i.i.i, label %_ZNSt6vectorIN4geos9operation5valid19PolygonRingSelfNodeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit36.i.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !103
+  br i1 %.not.i.i.i.i.i.i, label %_ZNSt6vectorIN4geos9operation5valid19PolygonRingSelfNodeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit36.i.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !104
 
 _ZNSt6vectorIN4geos9operation5valid19PolygonRingSelfNodeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit36.i.i: ; preds = %.lr.ph.i.i.i.i.i.i, %_ZNKSt6vectorIN4geos9operation5valid19PolygonRingSelfNodeESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %.0.lcssa.i.i.i.i.i.i = phi ptr [ %i.w, %_ZNKSt6vectorIN4geos9operation5valid19PolygonRingSelfNodeESaIS3_EE12_M_check_lenEmPKc.exit.i.i ], [ %i.ad, %.lr.ph.i.i.i.i.i.i ]
@@ -389,10 +386,10 @@ bb.e:                                             ; preds = %_ZNSt6vectorIN4geos
   br label %_ZNSt6vectorIN4geos9operation5valid19PolygonRingSelfNodeESaIS3_EE17_M_realloc_insertIJRKNS0_4geom10CoordinateERPS9_SC_SC_SC_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i
 
 _ZNSt6vectorIN4geos9operation5valid19PolygonRingSelfNodeESaIS3_EE17_M_realloc_insertIJRKNS0_4geom10CoordinateERPS9_SC_SC_SC_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i: ; preds = %bb.e, %_ZNSt6vectorIN4geos9operation5valid19PolygonRingSelfNodeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit36.i.i
-  store ptr %i.w, ptr %i.a, align 8, !tbaa !97
-  store ptr %i.ae, ptr %i.b, align 8, !tbaa !86
+  store ptr %i.w, ptr %i.a, align 8, !tbaa !98
+  store ptr %i.ae, ptr %i.b, align 8, !tbaa !87
   %i.af = getelementptr inbounds nuw [56 x i8], ptr %i.w, i64 %i.u
-  store ptr %i.af, ptr %i.d, align 8, !tbaa !87
+  store ptr %i.af, ptr %i.d, align 8, !tbaa !88
   br label %_ZNSt6vectorIN4geos9operation5valid19PolygonRingSelfNodeESaIS3_EE12emplace_backIJRKNS0_4geom10CoordinateERPS9_SC_SC_SC_EEEvDpOT_.exit
 
 _ZNSt6vectorIN4geos9operation5valid19PolygonRingSelfNodeESaIS3_EE12emplace_backIJRKNS0_4geom10CoordinateERPS9_SC_SC_SC_EEEvDpOT_.exit: ; preds = %bb.b, %_ZNSt6vectorIN4geos9operation5valid19PolygonRingSelfNodeESaIS3_EE17_M_realloc_insertIJRKNS0_4geom10CoordinateERPS9_SC_SC_SC_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i
@@ -443,7 +440,7 @@ bb.d:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   store ptr %1, ptr %i.i, align 8, !tbaa !58
   %i.j = load ptr, ptr %i.e, align 8, !tbaa !75   ; 3 uses
-  %i.k = load ptr, ptr %i.f, align 8, !tbaa !104
+  %i.k = load ptr, ptr %i.f, align 8, !tbaa !105
   %i.l = getelementptr inbounds i8, ptr %i.k, i64 -8
   %.not.i.i = icmp eq ptr %i.j, %i.l
   br i1 %.not.i.i, label %bb.f, label %bb.e
@@ -552,7 +549,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.f
   store ptr %2, ptr %i.s, align 8, !tbaa !58
   %i.x = load ptr, ptr %i.g, align 8, !tbaa !75   ; 3 uses
-  %i.y = load ptr, ptr %i.h, align 8, !tbaa !104
+  %i.y = load ptr, ptr %i.h, align 8, !tbaa !105
   %i.z = getelementptr inbounds i8, ptr %i.y, i64 -8
   %.not.i.i = icmp eq ptr %i.x, %i.z
   br i1 %.not.i.i, label %bb.j, label %bb.i
@@ -703,12 +700,12 @@ bb.a:
   %i.h = load i64, ptr %i.g, align 8, !tbaa !43
   %i.i = inttoptr i64 %i.h to ptr
   %i.j = load i32, ptr %i.d, align 4, !tbaa !3    ; 4 uses
-  store i32 %i.j, ptr %i.b, align 8, !tbaa !105
+  store i32 %i.j, ptr %i.b, align 8, !tbaa !106
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.l = load ptr, ptr %i.i, align 8, !tbaa !32
-  store ptr %i.l, ptr %i.k, align 8, !tbaa !108
+  store ptr %i.l, ptr %i.k, align 8, !tbaa !109
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.m, ptr noundef nonnull align 8 dereferenceable(24) %i.f, i64 24, i1 false), !tbaa.struct !88
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.m, ptr noundef nonnull align 8 dereferenceable(24) %i.f, i64 24, i1 false), !tbaa.struct !89
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %.02022.i = load ptr, ptr %i.n, align 8, !tbaa !29 ; 2 uses
@@ -724,7 +721,7 @@ bb.a:
   %.in.i = getelementptr inbounds nuw i8, ptr %.02024.i, i64 %.in.v.i
   %.020.i = load ptr, ptr %.in.i, align 8, !tbaa !29 ; 2 uses
   %.not.i = icmp eq ptr %.020.i, null
-  br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !109
+  br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !110
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i
   br i1 %i.r, label %._crit_edge.thread.i, label %bb.c
@@ -802,7 +799,7 @@ _ZNSt11_Deque_baseIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE15_M_alloca
   %i.c = tail call i64 @llvm.umax.i64(i64 %i.a, i64 5)
   %.sroa.speculated = add nuw nsw i64 %i.c, 3     ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.sroa.speculated, ptr %i.d, align 8, !tbaa !110
+  store i64 %.sroa.speculated, ptr %i.d, align 8, !tbaa !111
   %i.e = shl nuw nsw i64 %.sroa.speculated, 3
   %i.f = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.e) #18 ; 2 uses
   store ptr %i.f, ptr %0, align 8, !tbaa !77
@@ -822,7 +819,7 @@ _ZNSt11_Deque_baseIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE16_M_alloca
   store ptr %i.k, ptr %.011.i, align 8, !tbaa !71
   %i.l = getelementptr inbounds nuw i8, ptr %.011.i, i64 8 ; 2 uses
   %i.m = icmp ult ptr %i.l, %i.j
-  br i1 %i.m, label %.lr.ph.i, label %_ZNSt11_Deque_baseIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE15_M_create_nodesEPPS4_S8_.exit, !llvm.loop !111
+  br i1 %i.m, label %.lr.ph.i, label %_ZNSt11_Deque_baseIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE15_M_create_nodesEPPS4_S8_.exit, !llvm.loop !112
 
 bb.a:                                             ; preds = %.lr.ph.i
   %i.n = landingpad { ptr, i32 }
@@ -898,7 +895,7 @@ _ZNSt11_Deque_baseIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE15_M_create
   %i.am = getelementptr inbounds nuw i8, ptr %i.ak, i64 512
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 64
   store ptr %i.am, ptr %i.an, align 8, !tbaa !74
-  store ptr %i.ad, ptr %i.ab, align 8, !tbaa !112
+  store ptr %i.ad, ptr %i.ab, align 8, !tbaa !113
   %i.ao = and i64 %1, 63
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %i.ao
   store ptr %i.ap, ptr %i.ah, align 8, !tbaa !75
@@ -957,7 +954,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.af = load i64, ptr %i.ae, align 8, !tbaa !110
+  %i.af = load i64, ptr %i.ae, align 8, !tbaa !111
   %i.ag = load ptr, ptr %0, align 8, !tbaa !77
   %i.ah = ptrtoint ptr %i.ag to i64
   %i.ai = sub i64 %i.g, %i.ah
@@ -1002,7 +999,7 @@ bb.a:
   %i.i = add nsw i64 %i.h, 1                      ; 3 uses
   %i.j = add i64 %i.i, %1                         ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !110  ; 4 uses
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !111  ; 4 uses
   %i.m = shl i64 %i.j, 1
   %i.n = icmp ugt i64 %i.l, %i.m
   br i1 %i.n, label %bb.b, label %bb.k
@@ -1022,7 +1019,7 @@ bb.c:                                             ; preds = %bb.b
   %i.w = ptrtoint ptr %i.v to i64
   %i.x = sub i64 %i.w, %i.f                       ; 3 uses
   %i.y = icmp sgt i64 %i.x, 8
-  br i1 %i.y, label %bb.d, label %bb.e, !prof !113
+  br i1 %i.y, label %bb.d, label %bb.e, !prof !114
 
 bb.d:                                             ; preds = %bb.c
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.t, ptr nonnull align 8 %i.d, i64 %i.x, i1 false)
@@ -1043,7 +1040,7 @@ bb.g:                                             ; preds = %bb.b
   %i.ad = sub i64 %i.ac, %i.f                     ; 3 uses
   %i.ae = ashr exact i64 %i.ad, 3                 ; 2 uses
   %i.af = icmp sgt i64 %i.ae, 1
-  br i1 %i.af, label %bb.h, label %bb.i, !prof !113
+  br i1 %i.af, label %bb.h, label %bb.i, !prof !114
 
 bb.h:                                             ; preds = %bb.g
   %i.ag = sub nsw i64 0, %i.ae
@@ -1066,7 +1063,7 @@ bb.k:                                             ; preds = %bb.a
   %i.al = add i64 %i.l, 2
   %i.am = add i64 %i.al, %.sroa.speculated        ; 5 uses
   %i.an = icmp ugt i64 %i.am, 1152921504606846975
-  br i1 %i.an, label %bb.l, label %_ZNSt11_Deque_baseIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE15_M_allocate_mapEm.exit, !prof !114
+  br i1 %i.an, label %bb.l, label %_ZNSt11_Deque_baseIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE15_M_allocate_mapEm.exit, !prof !115
 
 bb.l:                                             ; preds = %bb.k
   %i.ao = icmp ugt i64 %i.am, 2305843009213693951
@@ -1092,7 +1089,7 @@ _ZNSt11_Deque_baseIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE15_M_alloca
   %i.ax = ptrtoint ptr %i.aw to i64
   %i.ay = sub i64 %i.ax, %i.f                     ; 3 uses
   %i.az = icmp sgt i64 %i.ay, 8
-  br i1 %i.az, label %bb.m, label %bb.n, !prof !113
+  br i1 %i.az, label %bb.m, label %bb.n, !prof !114
 
 bb.m:                                             ; preds = %_ZNSt11_Deque_baseIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE15_M_allocate_mapEm.exit
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.av, ptr align 8 %i.d, i64 %i.ay, i1 false)
@@ -1111,7 +1108,7 @@ _ZSt4copyIPPPN4geos9operation5valid16PolygonRingTouchES6_ET0_T_S8_S7_.exit24: ; 
   %i.bc = load ptr, ptr %0, align 8, !tbaa !77
   tail call void @_ZdlPv(ptr noundef %i.bc) #16
   store ptr %i.aq, ptr %0, align 8, !tbaa !77
-  store i64 %i.am, ptr %i.k, align 8, !tbaa !110
+  store i64 %i.am, ptr %i.k, align 8, !tbaa !111
   br label %_ZSt4copyIPPPN4geos9operation5valid16PolygonRingTouchES6_ET0_T_S8_S7_.exit
 
 _ZSt4copyIPPPN4geos9operation5valid16PolygonRingTouchES6_ET0_T_S8_S7_.exit: ; preds = %bb.j, %bb.i, %bb.h, %bb.f, %bb.e, %bb.d, %_ZSt4copyIPPPN4geos9operation5valid16PolygonRingTouchES6_ET0_T_S8_S7_.exit24
@@ -1255,34 +1252,35 @@ attributes #20 = { noreturn nounwind }
 !82 = !{!17, !20, i64 16}
 !83 = !{!84, !61, i64 8}
 !84 = !{!"_ZTSNSt12_Vector_baseIPN4geos9operation5valid16PolygonRingTouchESaIS4_EE17_Vector_impl_dataE", !61, i64 0, !61, i64 8, !61, i64 16}
-!85 = !{!84, !61, i64 16}
-!86 = !{!25, !26, i64 8}
-!87 = !{!25, !26, i64 16}
-!88 = !{i64 0, i64 8, !89, i64 8, i64 8, !89, i64 16, i64 8, !89}
-!89 = !{!90, !90, i64 0}
-!90 = !{!"double", !5, i64 0}
-!91 = !{!92, !39, i64 24}
-!92 = !{!"_ZTSN4geos9operation5valid19PolygonRingSelfNodeE", !93, i64 0, !39, i64 24, !39, i64 32, !39, i64 40, !39, i64 48}
-!93 = !{!"_ZTSN4geos4geom10CoordinateE", !90, i64 0, !90, i64 8, !90, i64 16}
-!94 = !{!92, !39, i64 32}
-!95 = !{!92, !39, i64 40}
-!96 = !{!92, !39, i64 48}
-!97 = !{!25, !26, i64 0}
-!98 = !{i64 0, i64 8, !89, i64 8, i64 8, !89, i64 16, i64 8, !89, i64 24, i64 8, !38, i64 32, i64 8, !38, i64 40, i64 8, !38, i64 48, i64 8, !38}
-!99 = !{!100, !102}
-!100 = distinct !{!100, !101, !"_ZSt19__relocate_object_aIN4geos9operation5valid19PolygonRingSelfNodeES3_SaIS3_EEvPT_PT0_RT1_: argument 0"}
-!101 = distinct !{!101, !"_ZSt19__relocate_object_aIN4geos9operation5valid19PolygonRingSelfNodeES3_SaIS3_EEvPT_PT0_RT1_"}
-!102 = distinct !{!102, !101, !"_ZSt19__relocate_object_aIN4geos9operation5valid19PolygonRingSelfNodeES3_SaIS3_EEvPT_PT0_RT1_: argument 1"}
-!103 = distinct !{!103, !31}
-!104 = !{!73, !61, i64 64}
-!105 = !{!106, !4, i64 0}
-!106 = !{!"_ZTSSt4pairIKiN4geos9operation5valid16PolygonRingTouchEE", !4, i64 0, !107, i64 8}
-!107 = !{!"_ZTSN4geos9operation5valid16PolygonRingTouchE", !9, i64 0, !93, i64 8}
-!108 = !{!107, !9, i64 0}
-!109 = distinct !{!109, !31}
-!110 = !{!73, !21, i64 8}
-!111 = distinct !{!111, !31}
-!112 = !{!73, !61, i64 16}
-!113 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!114 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!85 = !{!84, !61, i64 0}
+!86 = !{!84, !61, i64 16}
+!87 = !{!25, !26, i64 8}
+!88 = !{!25, !26, i64 16}
+!89 = !{i64 0, i64 8, !90, i64 8, i64 8, !90, i64 16, i64 8, !90}
+!90 = !{!91, !91, i64 0}
+!91 = !{!"double", !5, i64 0}
+!92 = !{!93, !39, i64 24}
+!93 = !{!"_ZTSN4geos9operation5valid19PolygonRingSelfNodeE", !94, i64 0, !39, i64 24, !39, i64 32, !39, i64 40, !39, i64 48}
+!94 = !{!"_ZTSN4geos4geom10CoordinateE", !91, i64 0, !91, i64 8, !91, i64 16}
+!95 = !{!93, !39, i64 32}
+!96 = !{!93, !39, i64 40}
+!97 = !{!93, !39, i64 48}
+!98 = !{!25, !26, i64 0}
+!99 = !{i64 0, i64 8, !90, i64 8, i64 8, !90, i64 16, i64 8, !90, i64 24, i64 8, !38, i64 32, i64 8, !38, i64 40, i64 8, !38, i64 48, i64 8, !38}
+!100 = !{!101, !103}
+!101 = distinct !{!101, !102, !"_ZSt19__relocate_object_aIN4geos9operation5valid19PolygonRingSelfNodeES3_SaIS3_EEvPT_PT0_RT1_: argument 0"}
+!102 = distinct !{!102, !"_ZSt19__relocate_object_aIN4geos9operation5valid19PolygonRingSelfNodeES3_SaIS3_EEvPT_PT0_RT1_"}
+!103 = distinct !{!103, !102, !"_ZSt19__relocate_object_aIN4geos9operation5valid19PolygonRingSelfNodeES3_SaIS3_EEvPT_PT0_RT1_: argument 1"}
+!104 = distinct !{!104, !31}
+!105 = !{!73, !61, i64 64}
+!106 = !{!107, !4, i64 0}
+!107 = !{!"_ZTSSt4pairIKiN4geos9operation5valid16PolygonRingTouchEE", !4, i64 0, !108, i64 8}
+!108 = !{!"_ZTSN4geos9operation5valid16PolygonRingTouchE", !9, i64 0, !94, i64 8}
+!109 = !{!108, !9, i64 0}
+!110 = distinct !{!110, !31}
+!111 = !{!73, !21, i64 8}
+!112 = distinct !{!112, !31}
+!113 = !{!73, !61, i64 16}
+!114 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!115 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 end_hunk_0

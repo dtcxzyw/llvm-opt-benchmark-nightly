@@ -201,11 +201,11 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.k = load ptr, ptr %i.c, align 8, !tbaa !76   ; 2 uses
-  %.promoted = load ptr, ptr %0, align 8          ; 2 uses
   %.not46 = icmp eq ptr %i.k, %i.a
   br i1 %.not46, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.d
+  %.promoted = load ptr, ptr %0, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -214,7 +214,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.b
   %i.o = landingpad { ptr, i32 }
           cleanup
-  br label %thread-pre-split
+  br label %bb.am
 
 bb.f:                                             ; preds = %bb.c
   %i.p = load ptr, ptr %2, align 8, !tbaa !27
@@ -237,7 +237,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %.critedge.i33, %.critedge.i, %bb.t, %bb.s, %bb.j, %bb.g, %bb.f
   %i.y = landingpad { ptr, i32 }
           cleanup
-  br label %thread-pre-split
+  br label %bb.am
 
 bb.j:                                             ; preds = %bb.h
   %i.z = load ptr, ptr %i.s, align 8, !tbaa !27
@@ -425,8 +425,6 @@ bb.ad:                                            ; preds = %bb.h, %bb.ac
   br label %bb.b, !llvm.loop !86
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit, %bb.d
-  %.lcssa43 = phi ptr [ %.promoted, %bb.d ], [ %i.do, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit ]
-  store ptr %.lcssa43, ptr %0, align 8
   %i.cj = load ptr, ptr %i.b, align 8, !tbaa !75
   invoke void @_ZNSt8_Rb_treeIN4geos4geom10CoordinateESt4pairIKS2_iESt10_Select1stIS5_ESt4lessIS2_ESaIS5_EE8_M_eraseEPSt13_Rb_tree_nodeIS5_E(ptr noundef nonnull align 8 dereferenceable(48) %7, ptr noundef %i.cj)
           to label %_ZNSt3mapIN4geos4geom10CoordinateEiSt4lessIS2_ESaISt4pairIKS2_iEEED2Ev.exit unwind label %bb.ae
@@ -444,7 +442,7 @@ _ZNSt3mapIN4geos4geom10CoordinateEiSt4lessIS2_ESaISt4pairIKS2_iEEED2Ev.exit: ; p
 
 bb.af:                                            ; preds = %.lr.ph, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit
   %.sroa.040.047 = phi ptr [ %i.k, %.lr.ph ], [ %i.dp, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit ] ; 3 uses
-  %i.cm = phi ptr [ %.promoted, %.lr.ph ], [ %i.do, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit ] ; 11 uses
+  %i.cm = phi ptr [ %.promoted, %.lr.ph ], [ %i.do, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit ] ; 7 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %.sroa.040.047, i64 32 ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr %.sroa.040.047, i64 56
   %i.cp = load i32, ptr %i.co, align 8, !tbaa !87
@@ -478,7 +476,6 @@ bb.aj:                                            ; preds = %bb.ah
   br i1 %i.db, label %bb.ak, label %_ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i
 
 bb.ak:                                            ; preds = %bb.aj
-  store ptr %i.cm, ptr %0, align 8
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.1) #20
           to label %.noexc37 unwind label %.loopexit.split-lp
 
@@ -496,7 +493,7 @@ _ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i: ; pr
   call void @llvm.assume(i1 %.not.i.i.i)
   %i.dh = mul nuw nsw i64 %i.dg, 24
   %i.di = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.dh) #17
-          to label %.noexc38 unwind label %.loopexit ; 5 uses
+          to label %.noexc38 unwind label %.loopexit ; 6 uses
 
 .noexc38:                                         ; preds = %_ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i
   %i.dj = getelementptr inbounds nuw i8, ptr %i.di, i64 %i.da
@@ -524,6 +521,7 @@ bb.al:                                            ; preds = %_ZNSt6vectorIN4geos
   br label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i
 
 _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i: ; preds = %bb.al, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i
+  store ptr %i.di, ptr %0, align 8, !tbaa !52
   store ptr %i.dm, ptr %i.m, align 8, !tbaa !49
   %i.dn = getelementptr inbounds nuw [24 x i8], ptr %i.di, i64 %i.dg
   store ptr %i.dn, ptr %i.n, align 8, !tbaa !89
@@ -532,7 +530,6 @@ _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__g
 .loopexit:                                        ; preds = %bb.af, %_ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
-  store ptr %i.cm, ptr %0, align 8
   br label %bb.am
 
 .loopexit.split-lp:                               ; preds = %bb.ak
@@ -541,21 +538,16 @@ _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__g
   br label %bb.am
 
 _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit: ; preds = %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i, %bb.ai, %bb.ag
-  %i.do = phi ptr [ %i.di, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ], [ %i.cm, %bb.ai ], [ %i.cm, %bb.ag ] ; 2 uses
+  %i.do = phi ptr [ %i.di, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ], [ %i.cm, %bb.ai ], [ %i.cm, %bb.ag ]
   %i.dp = call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.040.047) #21 ; 2 uses
   %.not = icmp eq ptr %i.dp, %i.a
   br i1 %.not, label %._crit_edge, label %bb.af
 
-thread-pre-split:                                 ; preds = %bb.i, %bb.e
-  %.pn.pn.ph = phi { ptr, i32 } [ %i.y, %bb.i ], [ %i.o, %bb.e ]
-  %.pr = load ptr, ptr %0, align 8, !tbaa !52
-  br label %bb.am
-
-bb.am:                                            ; preds = %thread-pre-split, %.loopexit, %.loopexit.split-lp
-  %8 = phi ptr [ %.pr, %thread-pre-split ], [ %i.cm, %.loopexit ], [ %i.cm, %.loopexit.split-lp ] ; 2 uses
-  %.pn.pn = phi { ptr, i32 } [ %.pn.pn.ph, %thread-pre-split ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+bb.am:                                            ; preds = %.loopexit, %.loopexit.split-lp, %bb.e, %bb.i
+  %.pn.pn = phi { ptr, i32 } [ %i.o, %bb.e ], [ %i.y, %bb.i ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   call void @_ZNSt3mapIN4geos4geom10CoordinateEiSt4lessIS2_ESaISt4pairIKS2_iEEED2Ev(ptr noundef nonnull align 8 dead_on_return(48) dereferenceable(48) %7) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #16
+  %8 = load ptr, ptr %0, align 8, !tbaa !52       ; 2 uses
   %.not.i.i.i39 = icmp eq ptr %8, null
   br i1 %.not.i.i.i39, label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EED2Ev.exit, label %bb.an
 

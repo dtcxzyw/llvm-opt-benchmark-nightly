@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %.not31 = icmp eq i64 %i.c, 0
   br i1 %.not31, label %._crit_edge, label %.lr.ph
 
@@ -219,10 +219,6 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIPN4LIEF10RelocationESaIS2_EE9push_backEOS2_.exit, %bb.c
-  %.lcssa11 = phi ptr [ null, %bb.c ], [ %i.ai, %_ZNSt6vectorIPN4LIEF10RelocationESaIS2_EE9push_backEOS2_.exit ]
-  %.lcssa = phi ptr [ null, %bb.c ], [ %i.aj, %_ZNSt6vectorIPN4LIEF10RelocationESaIS2_EE9push_backEOS2_.exit ]
-  store ptr %.lcssa, ptr %i.e, align 8
-  store ptr %.lcssa11, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #22
   ret void
 
@@ -230,8 +226,8 @@ bb.d:                                             ; preds = %.lr.ph, %_ZNSt6vect
   %i.m = phi ptr [ %i.h, %.lr.ph ], [ %i.ah, %_ZNSt6vectorIPN4LIEF10RelocationESaIS2_EE9push_backEOS2_.exit ] ; 4 uses
   %.sroa.8.015 = phi i64 [ 0, %.lr.ph ], [ %i.al, %_ZNSt6vectorIPN4LIEF10RelocationESaIS2_EE9push_backEOS2_.exit ]
   %.sroa.47.014 = phi ptr [ %i.k, %.lr.ph ], [ %i.ak, %_ZNSt6vectorIPN4LIEF10RelocationESaIS2_EE9push_backEOS2_.exit ] ; 2 uses
-  %i.n = phi ptr [ %i.i, %.lr.ph ], [ %i.aj, %_ZNSt6vectorIPN4LIEF10RelocationESaIS2_EE9push_backEOS2_.exit ] ; 3 uses
-  %i.o = phi ptr [ %i.h, %.lr.ph ], [ %i.ai, %_ZNSt6vectorIPN4LIEF10RelocationESaIS2_EE9push_backEOS2_.exit ] ; 6 uses
+  %i.n = phi ptr [ %i.i, %.lr.ph ], [ %i.aj, %_ZNSt6vectorIPN4LIEF10RelocationESaIS2_EE9push_backEOS2_.exit ] ; 2 uses
+  %i.o = phi ptr [ %i.h, %.lr.ph ], [ %i.ai, %_ZNSt6vectorIPN4LIEF10RelocationESaIS2_EE9push_backEOS2_.exit ] ; 5 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.sroa.47.014, i64 32
   %i.q = load ptr, ptr %i.p, align 8              ; 2 uses
   %.not.i.i = icmp eq ptr %i.m, %i.n
@@ -251,8 +247,6 @@ bb.f:                                             ; preds = %bb.d
   br i1 %i.v, label %bb.g, label %_ZNKSt6vectorIPN4LIEF10RelocationESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
 
 bb.g:                                             ; preds = %bb.f
-  store ptr %i.n, ptr %i.e, align 8
-  store ptr %i.o, ptr %0, align 8
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.56) #23
   unreachable
 
@@ -266,7 +260,7 @@ _ZNKSt6vectorIPN4LIEF10RelocationESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: ; pred
   %.not.i.i.i.i = icmp ne i64 %i.aa, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.ab = shl nuw nsw i64 %i.aa, 3
-  %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24 ; 4 uses
+  %i.ac = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #24 ; 5 uses
   %i.ad = getelementptr inbounds i8, ptr %i.ac, i64 %i.u ; 2 uses
   store ptr %i.q, ptr %i.ad, align 8
   %i.ae = icmp sgt i64 %i.u, 0
@@ -286,14 +280,16 @@ bb.i:                                             ; preds = %_ZNSt6vectorIPN4LIE
   br label %_ZNSt6vectorIPN4LIEF10RelocationESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIPN4LIEF10RelocationESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i: ; preds = %bb.i, %_ZNSt6vectorIPN4LIEF10RelocationESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i
+  store ptr %i.ac, ptr %0, align 8
   store ptr %i.af, ptr %i.l, align 8
-  %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %i.aa
+  %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %i.aa ; 2 uses
+  store ptr %i.ag, ptr %i.e, align 8
   br label %_ZNSt6vectorIPN4LIEF10RelocationESaIS2_EE9push_backEOS2_.exit
 
 _ZNSt6vectorIPN4LIEF10RelocationESaIS2_EE9push_backEOS2_.exit: ; preds = %bb.e, %_ZNSt6vectorIPN4LIEF10RelocationESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i
   %i.ah = phi ptr [ %i.r, %bb.e ], [ %i.af, %_ZNSt6vectorIPN4LIEF10RelocationESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ]
-  %i.ai = phi ptr [ %i.o, %bb.e ], [ %i.ac, %_ZNSt6vectorIPN4LIEF10RelocationESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ] ; 2 uses
-  %i.aj = phi ptr [ %i.n, %bb.e ], [ %i.ag, %_ZNSt6vectorIPN4LIEF10RelocationESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ] ; 2 uses
+  %i.ai = phi ptr [ %i.o, %bb.e ], [ %i.ac, %_ZNSt6vectorIPN4LIEF10RelocationESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ]
+  %i.aj = phi ptr [ %i.n, %bb.e ], [ %i.ag, %_ZNSt6vectorIPN4LIEF10RelocationESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ]
   %i.ak = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.47.014) #26
   %i.al = add nuw nsw i64 %.sroa.8.015, 1         ; 2 uses
   %.not = icmp eq i64 %i.al, %i.c
@@ -696,7 +692,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(read) uwtable
-define hidden noundef ptr @_ZNK4LIEF5MachO6Binary19segment_from_offsetEm(ptr noundef nonnull readonly align 8 dereferenceable(488) %0, i64 noundef %1) local_unnamed_addr #5 align 2 {
+define hidden noundef ptr @_ZNK4LIEF5MachO6Binary19segment_from_offsetEm(ptr noundef nonnull readonly align 8 captures(address) dereferenceable(488) %0, i64 noundef %1) local_unnamed_addr #5 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 376
   %i.b = load i64, ptr %i.a, align 8

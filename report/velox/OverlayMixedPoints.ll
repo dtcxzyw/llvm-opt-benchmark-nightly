@@ -201,16 +201,14 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %_ZNSt10unique_ptrIN4geos4geom5PointESt14default_deleteIS2_EED2Ev.exit, %bb.a
   ret void
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNSt10unique_ptrIN4geos4geom5PointESt14default_deleteIS2_EED2Ev.exit
-  %3 = phi ptr [ null, %.lr.ph ], [ %5, %_ZNSt10unique_ptrIN4geos4geom5PointESt14default_deleteIS2_EED2Ev.exit ] ; 5 uses
-  %4 = phi ptr [ null, %.lr.ph ], [ %6, %_ZNSt10unique_ptrIN4geos4geom5PointESt14default_deleteIS2_EED2Ev.exit ] ; 3 uses
   %.sroa.016.022 = phi ptr [ %i.b, %.lr.ph ], [ %i.be, %_ZNSt10unique_ptrIN4geos4geom5PointESt14default_deleteIS2_EED2Ev.exit ] ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.sroa.016.022, i64 32
   %i.h = load ptr, ptr %i.d, align 8, !tbaa !37
@@ -218,13 +216,15 @@ bb.b:                                             ; preds = %.lr.ph, %_ZNSt10uni
           to label %bb.c unwind label %bb.h       ; 5 uses
 
 bb.c:                                             ; preds = %bb.b
-  %.not.i.i = icmp eq ptr %4, %3
+  %3 = load ptr, ptr %i.e, align 8, !tbaa !89     ; 6 uses
+  %4 = load ptr, ptr %i.f, align 8, !tbaa !189
+  %.not.i.i = icmp eq ptr %3, %4
   br i1 %.not.i.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.j = ptrtoint ptr %i.i to i64
-  store i64 %i.j, ptr %4, align 8, !tbaa !93
-  %i.k = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  store i64 %i.j, ptr %3, align 8, !tbaa !93
+  %i.k = getelementptr inbounds nuw i8, ptr %3, i64 8
   store ptr %i.k, ptr %i.e, align 8, !tbaa !89
   br label %_ZNSt10unique_ptrIN4geos4geom5PointESt14default_deleteIS2_EED2Ev.exit
 
@@ -301,32 +301,32 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.aj = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.w, i64 %i.aj ; 4 uses
   %next.gep43 = getelementptr i8, ptr %i.l, i64 %i.aj ; 8 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !189)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !192)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !190)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !193)
   %i.ak = getelementptr i8, ptr %next.gep43, i64 32
   %i.al = getelementptr i8, ptr %next.gep43, i64 64
   %i.am = getelementptr i8, ptr %next.gep43, i64 96
-  %wide.load = load <4 x i64>, ptr %next.gep43, align 8, !tbaa !93, !alias.scope !194, !noalias !189
-  %wide.load44.a = load <4 x i64>, ptr %i.ak, align 8, !tbaa !93, !alias.scope !194, !noalias !189
-  %wide.load45.a = load <4 x i64>, ptr %i.al, align 8, !tbaa !93, !alias.scope !194, !noalias !189
-  %wide.load46 = load <4 x i64>, ptr %i.am, align 8, !tbaa !93, !alias.scope !194, !noalias !189
+  %wide.load = load <4 x i64>, ptr %next.gep43, align 8, !tbaa !93, !alias.scope !195, !noalias !190
+  %wide.load44.a = load <4 x i64>, ptr %i.ak, align 8, !tbaa !93, !alias.scope !195, !noalias !190
+  %wide.load45.a = load <4 x i64>, ptr %i.al, align 8, !tbaa !93, !alias.scope !195, !noalias !190
+  %wide.load46 = load <4 x i64>, ptr %i.am, align 8, !tbaa !93, !alias.scope !195, !noalias !190
   %i.an = getelementptr i8, ptr %next.gep, i64 32
   %i.ao = getelementptr i8, ptr %next.gep, i64 64
   %i.ap = getelementptr i8, ptr %next.gep, i64 96
-  store <4 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !93, !alias.scope !197, !noalias !194
-  store <4 x i64> %wide.load44.a, ptr %i.an, align 8, !tbaa !93, !alias.scope !197, !noalias !194
-  store <4 x i64> %wide.load45.a, ptr %i.ao, align 8, !tbaa !93, !alias.scope !197, !noalias !194
-  store <4 x i64> %wide.load46, ptr %i.ap, align 8, !tbaa !93, !alias.scope !197, !noalias !194
+  store <4 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !93, !alias.scope !198, !noalias !195
+  store <4 x i64> %wide.load44.a, ptr %i.an, align 8, !tbaa !93, !alias.scope !198, !noalias !195
+  store <4 x i64> %wide.load45.a, ptr %i.ao, align 8, !tbaa !93, !alias.scope !198, !noalias !195
+  store <4 x i64> %wide.load46, ptr %i.ap, align 8, !tbaa !93, !alias.scope !198, !noalias !195
   %i.aq = getelementptr i8, ptr %next.gep43, i64 32
   %i.ar = getelementptr i8, ptr %next.gep43, i64 64
   %i.as = getelementptr i8, ptr %next.gep43, i64 96
-  store <4 x ptr> splat (ptr null), ptr %next.gep43, align 8, !tbaa !93, !alias.scope !194, !noalias !189
-  store <4 x ptr> splat (ptr null), ptr %i.aq, align 8, !tbaa !93, !alias.scope !194, !noalias !189
-  store <4 x ptr> splat (ptr null), ptr %i.ar, align 8, !tbaa !93, !alias.scope !194, !noalias !189
-  store <4 x ptr> splat (ptr null), ptr %i.as, align 8, !tbaa !93, !alias.scope !194, !noalias !189
+  store <4 x ptr> splat (ptr null), ptr %next.gep43, align 8, !tbaa !93, !alias.scope !195, !noalias !190
+  store <4 x ptr> splat (ptr null), ptr %i.aq, align 8, !tbaa !93, !alias.scope !195, !noalias !190
+  store <4 x ptr> splat (ptr null), ptr %i.ar, align 8, !tbaa !93, !alias.scope !195, !noalias !190
+  store <4 x ptr> splat (ptr null), ptr %i.as, align 8, !tbaa !93, !alias.scope !195, !noalias !190
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.at = icmp eq i64 %index.next, %n.vec
-  br i1 %i.at, label %middle.block, label %vector.body, !llvm.loop !199
+  br i1 %i.at, label %middle.block, label %vector.body, !llvm.loop !200
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.ac, %n.vec
@@ -349,14 +349,14 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.ax = shl i64 %index50, 3                     ; 2 uses
   %next.gep51.a = getelementptr i8, ptr %i.w, i64 %i.ax
   %next.gep52 = getelementptr i8, ptr %i.l, i64 %i.ax ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !189)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !192)
-  %wide.load53 = load <4 x i64>, ptr %next.gep52, align 8, !tbaa !93, !alias.scope !194, !noalias !189
-  store <4 x i64> %wide.load53, ptr %next.gep51.a, align 8, !tbaa !93, !alias.scope !197, !noalias !194
-  store <4 x ptr> splat (ptr null), ptr %next.gep52, align 8, !tbaa !93, !alias.scope !194, !noalias !189
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !190)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !193)
+  %wide.load53 = load <4 x i64>, ptr %next.gep52, align 8, !tbaa !93, !alias.scope !195, !noalias !190
+  store <4 x i64> %wide.load53, ptr %next.gep51.a, align 8, !tbaa !93, !alias.scope !198, !noalias !195
+  store <4 x ptr> splat (ptr null), ptr %next.gep52, align 8, !tbaa !93, !alias.scope !195, !noalias !190
   %index.next54 = add nuw i64 %index50, 4         ; 2 uses
   %i.ay = icmp eq i64 %index.next54, %n.vec49
-  br i1 %i.ay, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !200
+  br i1 %i.ay, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !201
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %cmp.n55 = icmp eq i64 %i.ac, %n.vec49
@@ -370,19 +370,19 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i.i.i.i.i.i.i:                             ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i.i.i
   %.012.i.i.i.i.i.i.i = phi ptr [ %i.bb, %.lr.ph.i.i.i.i.i.i.i ], [ %.012.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.preheader ] ; 2 uses
   %.0911.i.i.i.i.i.i.i = phi ptr [ %i.ba, %.lr.ph.i.i.i.i.i.i.i ], [ %.0911.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.preheader ] ; 3 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !189)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !192)
-  %i.az = load i64, ptr %.0911.i.i.i.i.i.i.i, align 8, !tbaa !93, !alias.scope !192, !noalias !189
-  store i64 %i.az, ptr %.012.i.i.i.i.i.i.i, align 8, !tbaa !93, !alias.scope !189, !noalias !192
-  store ptr null, ptr %.0911.i.i.i.i.i.i.i, align 8, !tbaa !93, !alias.scope !192, !noalias !189
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !190)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !193)
+  %i.az = load i64, ptr %.0911.i.i.i.i.i.i.i, align 8, !tbaa !93, !alias.scope !193, !noalias !190
+  store i64 %i.az, ptr %.012.i.i.i.i.i.i.i, align 8, !tbaa !93, !alias.scope !190, !noalias !193
+  store ptr null, ptr %.0911.i.i.i.i.i.i.i, align 8, !tbaa !93, !alias.scope !193, !noalias !190
   %i.ba = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.ba, %3
-  br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4geos4geom5PointESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !201
+  br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4geos4geom5PointESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !202
 
 _ZNSt6vectorISt10unique_ptrIN4geos4geom5PointESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i, %middle.block, %vec.epilog.middle.block, %.noexc9
   %.0.lcssa.i.i.i.i.i.i.i = phi ptr [ %i.w, %.noexc9 ], [ %i.av, %vec.epilog.middle.block ], [ %i.ah, %middle.block ], [ %i.bb, %.lr.ph.i.i.i.i.i.i.i ]
-  %i.bc = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.i.i, i64 8 ; 2 uses
+  %i.bc = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.i.i, i64 8
   %.not.i23.i.i.i = icmp eq ptr %i.l, null
   br i1 %.not.i23.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4geos4geom5PointESt14default_deleteIS3_EESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i.i, label %bb.g
 
@@ -393,13 +393,11 @@ bb.g:                                             ; preds = %_ZNSt6vectorISt10un
 _ZNSt6vectorISt10unique_ptrIN4geos4geom5PointESt14default_deleteIS3_EESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i.i: ; preds = %bb.g, %_ZNSt6vectorISt10unique_ptrIN4geos4geom5PointESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i.i.i
   store ptr %i.w, ptr %0, align 8, !tbaa !92
   store ptr %i.bc, ptr %i.e, align 8, !tbaa !89
-  %i.bd = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %i.u ; 2 uses
-  store ptr %i.bd, ptr %i.f, align 8, !tbaa !202
+  %i.bd = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %i.u
+  store ptr %i.bd, ptr %i.f, align 8, !tbaa !189
   br label %_ZNSt10unique_ptrIN4geos4geom5PointESt14default_deleteIS2_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4geos4geom5PointESt14default_deleteIS2_EED2Ev.exit: ; preds = %bb.d, %_ZNSt6vectorISt10unique_ptrIN4geos4geom5PointESt14default_deleteIS3_EESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i.i
-  %5 = phi ptr [ %3, %bb.d ], [ %i.bd, %_ZNSt6vectorISt10unique_ptrIN4geos4geom5PointESt14default_deleteIS3_EESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i.i ]
-  %6 = phi ptr [ %i.k, %bb.d ], [ %i.bc, %_ZNSt6vectorISt10unique_ptrIN4geos4geom5PointESt14default_deleteIS3_EESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i.i ]
   %i.be = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.016.022) #20 ; 2 uses
   %.not = icmp eq ptr %i.be, %i.c
   br i1 %.not, label %._crit_edge, label %bb.b
@@ -802,20 +800,20 @@ attributes #20 = { nounwind willreturn memory(read) }
 !186 = !{!187}
 !187 = distinct !{!187, !188, !"_ZNK4geos4geom8Geometry5cloneEv: argument 0"}
 !188 = distinct !{!188, !"_ZNK4geos4geom8Geometry5cloneEv"}
-!189 = !{!190}
-!190 = distinct !{!190, !191, !"_ZSt19__relocate_object_aISt10unique_ptrIN4geos4geom5PointESt14default_deleteIS3_EES6_SaIS6_EEvPT_PT0_RT1_: argument 0"}
-!191 = distinct !{!191, !"_ZSt19__relocate_object_aISt10unique_ptrIN4geos4geom5PointESt14default_deleteIS3_EES6_SaIS6_EEvPT_PT0_RT1_"}
-!192 = !{!193}
-!193 = distinct !{!193, !191, !"_ZSt19__relocate_object_aISt10unique_ptrIN4geos4geom5PointESt14default_deleteIS3_EES6_SaIS6_EEvPT_PT0_RT1_: argument 1"}
-!194 = !{!193, !195}
-!195 = distinct !{!195, !196}
-!196 = distinct !{!196, !"LVerDomain"}
-!197 = !{!190, !198}
-!198 = distinct !{!198, !196}
-!199 = distinct !{!199, !99, !158, !159}
+!189 = !{!90, !91, i64 16}
+!190 = !{!191}
+!191 = distinct !{!191, !192, !"_ZSt19__relocate_object_aISt10unique_ptrIN4geos4geom5PointESt14default_deleteIS3_EES6_SaIS6_EEvPT_PT0_RT1_: argument 0"}
+!192 = distinct !{!192, !"_ZSt19__relocate_object_aISt10unique_ptrIN4geos4geom5PointESt14default_deleteIS3_EES6_SaIS6_EEvPT_PT0_RT1_"}
+!193 = !{!194}
+!194 = distinct !{!194, !192, !"_ZSt19__relocate_object_aISt10unique_ptrIN4geos4geom5PointESt14default_deleteIS3_EES6_SaIS6_EEvPT_PT0_RT1_: argument 1"}
+!195 = !{!194, !196}
+!196 = distinct !{!196, !197}
+!197 = distinct !{!197, !"LVerDomain"}
+!198 = !{!191, !199}
+!199 = distinct !{!199, !197}
 !200 = distinct !{!200, !99, !158, !159}
-!201 = distinct !{!201, !99, !158}
-!202 = !{!90, !91, i64 16}
+!201 = distinct !{!201, !99, !158, !159}
+!202 = distinct !{!202, !99, !158}
 !203 = distinct !{null, null}
 !204 = !{!132, !134, i64 24}
 !205 = !{!132, !134, i64 16}

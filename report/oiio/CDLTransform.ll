@@ -201,7 +201,7 @@ _ZNSt10shared_ptrIN16OpenColorIO_v2_516CDLTransformImplEEC2IS1_PFvPNS0_12CDLTran
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden void @_ZN16OpenColorIO_v2_56GetCDLERSt10shared_ptrINS_14GroupTransformEERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr") align 8 captures(none) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(32) %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define hidden void @_ZN16OpenColorIO_v2_56GetCDLERSt10shared_ptrINS_14GroupTransformEERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind noalias writable sret(%"class.std::shared_ptr") align 8 captures(none) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(32) %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 7 uses
   %3 = alloca %"class.std::__cxx11::basic_ostringstream", align 8 ; 9 uses
@@ -298,10 +298,12 @@ bb.l:                                             ; preds = %.lr.ph, %bb.y
   %i.ah = tail call noundef nonnull align 8 dereferenceable(16) ptr %i.ag(ptr noundef nonnull align 8 dereferenceable(8) %i.ad, i32 noundef %.03882) ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !45)
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !42, !noalias !45, !nonnull !48, !noundef !48
-  %i.aj = tail call ptr @__dynamic_cast(ptr nonnull %i.ai, ptr nonnull @_ZTIN16OpenColorIO_v2_59TransformE, ptr nonnull @_ZTIN16OpenColorIO_v2_512CDLTransformE, i64 0) #24, !noalias !45 ; 5 uses
+  %i.aj = tail call ptr @__dynamic_cast(ptr nonnull %i.ai, ptr nonnull @_ZTIN16OpenColorIO_v2_59TransformE, ptr nonnull @_ZTIN16OpenColorIO_v2_512CDLTransformE, i64 0) #24, !noalias !45 ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aj) ]
+  store ptr %i.aj, ptr %0, align 8, !tbaa !18, !alias.scope !45
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
-  %i.al = load ptr, ptr %i.ak, align 8, !tbaa !23, !noalias !45 ; 6 uses
+  %i.al = load ptr, ptr %i.ak, align 8, !tbaa !23, !noalias !45 ; 3 uses
+  store ptr %i.al, ptr %i.k, align 8, !tbaa !23, !alias.scope !45
   %.not.i.i.i.i52 = icmp eq ptr %i.al, null
   br i1 %.not.i.i.i.i52, label %_ZSt20dynamic_pointer_castIN16OpenColorIO_v2_512CDLTransformENS0_9TransformEESt10shared_ptrIT_ERKS3_IT0_E.exit55, label %bb.m
 
@@ -322,7 +324,6 @@ bb.o:                                             ; preds = %bb.m
   br label %_ZSt20dynamic_pointer_castIN16OpenColorIO_v2_512CDLTransformENS0_9TransformEESt10shared_ptrIT_ERKS3_IT0_E.exit55
 
 _ZSt20dynamic_pointer_castIN16OpenColorIO_v2_512CDLTransformENS0_9TransformEESt10shared_ptrIT_ERKS3_IT0_E.exit55: ; preds = %bb.l, %bb.n, %bb.o
-  %7 = phi ptr [ null, %bb.l ], [ %i.al, %bb.n ], [ %i.al, %bb.o ] ; 8 uses
   %i.ar = load ptr, ptr %i.aj, align 8, !tbaa !7
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 56
   %i.at = load ptr, ptr %i.as, align 8
@@ -347,15 +348,16 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q
   %i.bd = icmp eq i64 %i.ba, 0
-  br i1 %i.bd, label %_ZSt20dynamic_pointer_castIN16OpenColorIO_v2_512CDLTransformENS0_9TransformEESt10shared_ptrIT_ERKS3_IT0_E.exit.loopexit, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
+  br i1 %i.bd, label %_ZSt20dynamic_pointer_castIN16OpenColorIO_v2_512CDLTransformENS0_9TransformEESt10shared_ptrIT_ERKS3_IT0_E.exit, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit: ; preds = %bb.r
   %i.be = load ptr, ptr %2, align 8, !tbaa !15
   %bcmp.i = tail call i32 @bcmp(ptr %i.be, ptr nonnull %i.ay, i64 %i.ba)
   %i.bf = icmp eq i32 %bcmp.i, 0
-  br i1 %i.bf, label %_ZSt20dynamic_pointer_castIN16OpenColorIO_v2_512CDLTransformENS0_9TransformEESt10shared_ptrIT_ERKS3_IT0_E.exit.loopexit, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread68
+  br i1 %i.bf, label %_ZSt20dynamic_pointer_castIN16OpenColorIO_v2_512CDLTransformENS0_9TransformEESt10shared_ptrIT_ERKS3_IT0_E.exit, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread68
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread68: ; preds = %bb.q, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit, %bb.p, %_ZSt20dynamic_pointer_castIN16OpenColorIO_v2_512CDLTransformENS0_9TransformEESt10shared_ptrIT_ERKS3_IT0_E.exit55
+  %7 = load ptr, ptr %i.k, align 8, !tbaa !23     ; 8 uses
   %.not.i.i = icmp eq ptr %7, null
   br i1 %.not.i.i, label %bb.y, label %bb.s
 
@@ -411,14 +413,9 @@ bb.y:                                             ; preds = %_ZSteqIcSt11char_tr
   %i.bz = load ptr, ptr %i.by, align 8
   %i.ca = tail call noundef i32 %i.bz(ptr noundef nonnull align 8 dereferenceable(8) %i.bw) #24
   %i.cb = icmp slt i32 %i.bv, %i.ca
-  br i1 %i.cb, label %bb.l, label %_ZNSt12__shared_ptrIN16OpenColorIO_v2_512CDLTransformELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.loopexit, !llvm.loop !51
+  br i1 %i.cb, label %bb.l, label %_ZNSt12__shared_ptrIN16OpenColorIO_v2_512CDLTransformELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, !llvm.loop !51
 
-_ZNSt12__shared_ptrIN16OpenColorIO_v2_512CDLTransformELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.loopexit: ; preds = %bb.y
-  store ptr %i.aj, ptr %0, align 1
-  store ptr %i.al, ptr %i.k, align 1
-  br label %_ZNSt12__shared_ptrIN16OpenColorIO_v2_512CDLTransformELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
-
-_ZNSt12__shared_ptrIN16OpenColorIO_v2_512CDLTransformELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %_ZNSt12__shared_ptrIN16OpenColorIO_v2_512CDLTransformELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.loopexit, %.preheader
+_ZNSt12__shared_ptrIN16OpenColorIO_v2_512CDLTransformELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.y, %.preheader
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
   store i32 0, ptr %i.a, align 4, !tbaa !3
   %i.cc = load ptr, ptr %2, align 8, !tbaa !15
@@ -645,12 +642,7 @@ bb.aw:                                            ; preds = %bb.av, %bb.ai
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
   br label %bb.ax
 
-_ZSt20dynamic_pointer_castIN16OpenColorIO_v2_512CDLTransformENS0_9TransformEESt10shared_ptrIT_ERKS3_IT0_E.exit.loopexit: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit, %bb.r
-  store ptr %i.aj, ptr %0, align 1
-  store ptr %i.al, ptr %i.k, align 1
-  br label %_ZSt20dynamic_pointer_castIN16OpenColorIO_v2_512CDLTransformENS0_9TransformEESt10shared_ptrIT_ERKS3_IT0_E.exit
-
-_ZSt20dynamic_pointer_castIN16OpenColorIO_v2_512CDLTransformENS0_9TransformEESt10shared_ptrIT_ERKS3_IT0_E.exit: ; preds = %_ZSt20dynamic_pointer_castIN16OpenColorIO_v2_512CDLTransformENS0_9TransformEESt10shared_ptrIT_ERKS3_IT0_E.exit.loopexit, %_ZNSt10shared_ptrIN16OpenColorIO_v2_512CDLTransformEEC2INS0_9TransformEEERKS_IT_EPS1_.exit.i, %bb.h, %bb.g, %bb.e, %_ZSt20dynamic_pointer_castIN16OpenColorIO_v2_512CDLTransformENS0_9TransformEESt10shared_ptrIT_ERKS3_IT0_E.exit62
+_ZSt20dynamic_pointer_castIN16OpenColorIO_v2_512CDLTransformENS0_9TransformEESt10shared_ptrIT_ERKS3_IT0_E.exit: ; preds = %bb.r, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit, %_ZNSt10shared_ptrIN16OpenColorIO_v2_512CDLTransformEEC2INS0_9TransformEEERKS_IT_EPS1_.exit.i, %bb.h, %bb.g, %bb.e, %_ZSt20dynamic_pointer_castIN16OpenColorIO_v2_512CDLTransformENS0_9TransformEESt10shared_ptrIT_ERKS3_IT0_E.exit62
   ret void
 
 bb.ax:                                            ; preds = %bb.aw, %bb.k
@@ -698,7 +690,7 @@ declare void @_ZN16OpenColorIO_v2_520ExceptionMissingFileD1Ev(ptr noundef nonnul
 declare void @_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev(ptr noundef nonnull align 8 dereferenceable(112)) unnamed_addr #4 align 2
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN16OpenColorIO_v2_512CDLTransform14CreateFromFileEPKcS2_(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr") align 8 captures(none) %0, ptr noundef readonly captures(address_is_null) %1, ptr noundef readonly captures(address_is_null) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN16OpenColorIO_v2_512CDLTransform14CreateFromFileEPKcS2_(ptr dead_on_unwind noalias writable sret(%"class.std::shared_ptr") align 8 captures(none) %0, ptr noundef readonly captures(address_is_null) %1, ptr noundef readonly captures(address_is_null) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca i64, align 8                      ; 6 uses

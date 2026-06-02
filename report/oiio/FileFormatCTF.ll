@@ -201,7 +201,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 6 uses
   %i.f = tail call noundef i32 @_ZNK16OpenColorIO_v2_521XmlReaderElementStack4sizeEv(ptr noundef nonnull align 8 dereferenceable(32) %i.e)
   %.not = icmp eq i32 %i.f, 1
-  br i1 %.not, label %15, label %bb.b
+  br i1 %.not, label %bb.al, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
@@ -595,22 +595,15 @@ bb.ak:                                            ; preds = %bb.aj, %bb.af
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #26
   br label %bb.dd
 
-15:                                               ; preds = %bb.a
+bb.al:                                            ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #26
   call void @_ZNK16OpenColorIO_v2_521XmlReaderElementStack4backEv(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr.23") align 8 %8, ptr noundef nonnull align 8 dereferenceable(32) %i.e)
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #26
   call void @llvm.experimental.noalias.scope.decl(metadata !390)
-  %16 = load ptr, ptr %8, align 8, !tbaa !82, !noalias !390 ; 2 uses
-  %17 = icmp eq ptr %16, null
-  br i1 %17, label %_ZNSt10shared_ptrIN16OpenColorIO_v2_521CTFReaderTransformEltEEC2INS0_16XmlReaderElementEEERKS_IT_EPS1_.exit.i, label %18
-
-18:                                               ; preds = %15
-  %19 = call ptr @__dynamic_cast(ptr nonnull %16, ptr nonnull @_ZTIN16OpenColorIO_v2_516XmlReaderElementE, ptr nonnull @_ZTIN16OpenColorIO_v2_521CTFReaderTransformEltE, i64 0) #26, !noalias !390 ; 4 uses
-  %.not.not.i = icmp eq ptr %19, null
-  br i1 %.not.not.i, label %_ZNSt10shared_ptrIN16OpenColorIO_v2_521CTFReaderTransformEltEEC2INS0_16XmlReaderElementEEERKS_IT_EPS1_.exit.i, label %bb.al
-
-bb.al:                                            ; preds = %18
-  store ptr %19, ptr %9, align 8, !tbaa !214, !alias.scope !390
+  %15 = load ptr, ptr %8, align 8, !tbaa !82, !noalias !390, !nonnull !226, !noundef !226
+  %16 = call ptr @__dynamic_cast(ptr nonnull %15, ptr nonnull @_ZTIN16OpenColorIO_v2_516XmlReaderElementE, ptr nonnull @_ZTIN16OpenColorIO_v2_521CTFReaderTransformEltE, i64 0) #26, !noalias !390 ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %16) ]
+  store ptr %16, ptr %9, align 8, !tbaa !214, !alias.scope !390
   %i.dz = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.ea = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.eb = load ptr, ptr %i.ea, align 8, !tbaa !85, !noalias !390 ; 3 uses
@@ -635,18 +628,15 @@ bb.ao:                                            ; preds = %bb.am
   %.pre = load ptr, ptr %9, align 8, !tbaa !214
   br label %_ZSt20dynamic_pointer_castIN16OpenColorIO_v2_521CTFReaderTransformEltENS0_16XmlReaderElementEESt10shared_ptrIT_ERKS3_IT0_E.exit
 
-_ZNSt10shared_ptrIN16OpenColorIO_v2_521CTFReaderTransformEltEEC2INS0_16XmlReaderElementEEERKS_IT_EPS1_.exit.i: ; preds = %18, %15
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %9, i8 0, i64 16, i1 false), !alias.scope !390
-  br label %_ZSt20dynamic_pointer_castIN16OpenColorIO_v2_521CTFReaderTransformEltENS0_16XmlReaderElementEESt10shared_ptrIT_ERKS3_IT0_E.exit
-
-_ZSt20dynamic_pointer_castIN16OpenColorIO_v2_521CTFReaderTransformEltENS0_16XmlReaderElementEESt10shared_ptrIT_ERKS3_IT0_E.exit: ; preds = %bb.al, %bb.an, %bb.ao, %_ZNSt10shared_ptrIN16OpenColorIO_v2_521CTFReaderTransformEltEEC2INS0_16XmlReaderElementEEERKS_IT_EPS1_.exit.i
-  %20 = phi ptr [ %19, %bb.al ], [ %19, %bb.an ], [ %.pre, %bb.ao ], [ null, %_ZNSt10shared_ptrIN16OpenColorIO_v2_521CTFReaderTransformEltEEC2INS0_16XmlReaderElementEEERKS_IT_EPS1_.exit.i ] ; 5 uses
+_ZSt20dynamic_pointer_castIN16OpenColorIO_v2_521CTFReaderTransformEltENS0_16XmlReaderElementEESt10shared_ptrIT_ERKS3_IT0_E.exit: ; preds = %bb.al, %bb.an, %bb.ao
+  %17 = phi ptr [ %16, %bb.al ], [ %16, %bb.an ], [ %.pre, %bb.ao ]
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #26
-  %i.eh = invoke noundef nonnull align 4 dereferenceable(12) ptr @_ZNK16OpenColorIO_v2_521CTFReaderTransformElt10getVersionEv(ptr noundef nonnull align 8 dereferenceable(97) %20)
+  %i.eh = invoke noundef nonnull align 4 dereferenceable(12) ptr @_ZNK16OpenColorIO_v2_521CTFReaderTransformElt10getVersionEv(ptr noundef nonnull align 8 dereferenceable(97) %17)
           to label %bb.ap unwind label %bb.az
 
 bb.ap:                                            ; preds = %_ZSt20dynamic_pointer_castIN16OpenColorIO_v2_521CTFReaderTransformEltENS0_16XmlReaderElementEESt10shared_ptrIT_ERKS3_IT0_E.exit
-  %i.ei = invoke noundef zeroext i1 @_ZNK16OpenColorIO_v2_521CTFReaderTransformElt5isCLFEv(ptr noundef nonnull align 8 dereferenceable(97) %20)
+  %18 = load ptr, ptr %9, align 8, !tbaa !214     ; 4 uses
+  %i.ei = invoke noundef zeroext i1 @_ZNK16OpenColorIO_v2_521CTFReaderTransformElt5isCLFEv(ptr noundef nonnull align 8 dereferenceable(97) %18)
           to label %bb.aq unwind label %bb.az
 
 bb.aq:                                            ; preds = %bb.ap
@@ -664,7 +654,7 @@ bb.as:                                            ; preds = %bb.ar
           to label %bb.at unwind label %bb.ba
 
 bb.at:                                            ; preds = %bb.as
-  %i.ek = invoke noundef zeroext i1 @_ZNK16OpenColorIO_v2_521CTFReaderTransformElt5isCLFEv(ptr noundef nonnull align 8 dereferenceable(97) %20)
+  %i.ek = invoke noundef zeroext i1 @_ZNK16OpenColorIO_v2_521CTFReaderTransformElt5isCLFEv(ptr noundef nonnull align 8 dereferenceable(97) %18)
           to label %bb.au unwind label %bb.bb
 
 bb.au:                                            ; preds = %bb.at
@@ -676,7 +666,7 @@ bb.av:                                            ; preds = %bb.au
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit50 unwind label %bb.bb ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit50: ; preds = %bb.av
-  %i.en = invoke noundef nonnull align 4 dereferenceable(12) ptr @_ZNK16OpenColorIO_v2_521CTFReaderTransformElt13getCLFVersionEv(ptr noundef nonnull align 8 dereferenceable(97) %20)
+  %i.en = invoke noundef nonnull align 4 dereferenceable(12) ptr @_ZNK16OpenColorIO_v2_521CTFReaderTransformElt13getCLFVersionEv(ptr noundef nonnull align 8 dereferenceable(97) %18)
           to label %bb.aw unwind label %bb.bb     ; 3 uses
 
 bb.aw:                                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit50
@@ -734,7 +724,7 @@ bb.bc:                                            ; preds = %bb.au
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit58 unwind label %bb.bb ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit58: ; preds = %bb.bc
-  %i.ff = invoke noundef nonnull align 4 dereferenceable(12) ptr @_ZNK16OpenColorIO_v2_521CTFReaderTransformElt10getVersionEv(ptr noundef nonnull align 8 dereferenceable(97) %20)
+  %i.ff = invoke noundef nonnull align 4 dereferenceable(12) ptr @_ZNK16OpenColorIO_v2_521CTFReaderTransformElt10getVersionEv(ptr noundef nonnull align 8 dereferenceable(97) %18)
           to label %bb.bd unwind label %bb.bb     ; 3 uses
 
 bb.bd:                                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit58
