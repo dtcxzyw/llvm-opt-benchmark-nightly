@@ -201,17 +201,17 @@ vector.body1449:                                  ; preds = %vector.body1449, %v
   %index1450 = phi i64 [ 0, %vector.ph1446 ], [ %index.next1454, %vector.body1449 ] ; 2 uses
   %next.gep1451 = getelementptr i8, ptr %i.bv, i64 %index1450 ; 3 uses
   %i.bz = getelementptr i8, ptr %next.gep1451, i64 16 ; 2 uses
-  %wide.load1452 = load <16 x i8>, ptr %next.gep1451, align 1, !tbaa !16, !noalias !37 ; 3 uses
-  %wide.load1453 = load <16 x i8>, ptr %i.bz, align 1, !tbaa !16, !noalias !37 ; 3 uses
+  %wide.load1452 = load <16 x i8>, ptr %next.gep1451, align 1, !tbaa !16, !noalias !37 ; 2 uses
+  %wide.load1453 = load <16 x i8>, ptr %i.bz, align 1, !tbaa !16, !noalias !37 ; 2 uses
   %i.ca = add <16 x i8> %wide.load1452, splat (i8 -65)
   %i.cb = add <16 x i8> %wide.load1453, splat (i8 -65)
   %i.cc = icmp ult <16 x i8> %i.ca, splat (i8 26)
   %i.cd = icmp ult <16 x i8> %i.cb, splat (i8 26)
-  %37 = or disjoint <16 x i8> %wide.load1452, splat (i8 32)
-  %i.ce = or disjoint <16 x i8> %wide.load1453, splat (i8 32)
-  %i.cf = select <16 x i1> %i.cc, <16 x i8> %37, <16 x i8> %wide.load1452
-  %38 = select <16 x i1> %i.cd, <16 x i8> %i.ce, <16 x i8> %wide.load1453
-  store <16 x i8> %i.cf, ptr %next.gep1451, align 1, !tbaa !16, !noalias !37
+  %37 = select <16 x i1> %i.cc, <16 x i8> splat (i8 32), <16 x i8> zeroinitializer
+  %i.ce = or disjoint <16 x i8> %wide.load1452, %37
+  %i.cf = select <16 x i1> %i.cd, <16 x i8> splat (i8 32), <16 x i8> zeroinitializer
+  %38 = or disjoint <16 x i8> %wide.load1453, %i.cf
+  store <16 x i8> %i.ce, ptr %next.gep1451, align 1, !tbaa !16, !noalias !37
   store <16 x i8> %38, ptr %i.bz, align 1, !tbaa !16, !noalias !37
   %index.next1454 = add nuw i64 %index1450, 32    ; 2 uses
   %i.cg = icmp eq i64 %index.next1454, %n.vec1448
@@ -234,11 +234,11 @@ vec.epilog.ph1462:                                ; preds = %vector.main.loop.it
 vec.epilog.vector.body1465:                       ; preds = %vec.epilog.vector.body1465, %vec.epilog.ph1462
   %index1466 = phi i64 [ %vec.epilog.resume.val1457, %vec.epilog.ph1462 ], [ %index.next1469, %vec.epilog.vector.body1465 ] ; 2 uses
   %next.gep1467 = getelementptr i8, ptr %i.bv, i64 %index1466 ; 2 uses
-  %wide.load1468 = load <8 x i8>, ptr %next.gep1467, align 1, !tbaa !16, !noalias !37 ; 3 uses
+  %wide.load1468 = load <8 x i8>, ptr %next.gep1467, align 1, !tbaa !16, !noalias !37 ; 2 uses
   %i.ci = add <8 x i8> %wide.load1468, splat (i8 -65)
   %i.cj = icmp ult <8 x i8> %i.ci, splat (i8 26)
-  %39 = or disjoint <8 x i8> %wide.load1468, splat (i8 32)
-  %40 = select <8 x i1> %i.cj, <8 x i8> %39, <8 x i8> %wide.load1468
+  %39 = select <8 x i1> %i.cj, <8 x i8> splat (i8 32), <8 x i8> zeroinitializer
+  %40 = or disjoint <8 x i8> %wide.load1468, %39
   store <8 x i8> %40, ptr %next.gep1467, align 1, !tbaa !16, !noalias !37
   %index.next1469 = add nuw i64 %index1466, 8     ; 2 uses
   %i.ck = icmp eq i64 %index.next1469, %n.vec1464
@@ -604,17 +604,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %next.gep = getelementptr i8, ptr %i.gf, i64 %index ; 3 uses
   %i.gj = getelementptr i8, ptr %next.gep, i64 16 ; 2 uses
-  %wide.load = load <16 x i8>, ptr %next.gep, align 1, !tbaa !16, !noalias !55 ; 3 uses
-  %wide.load1314 = load <16 x i8>, ptr %i.gj, align 1, !tbaa !16, !noalias !55 ; 3 uses
+  %wide.load = load <16 x i8>, ptr %next.gep, align 1, !tbaa !16, !noalias !55 ; 2 uses
+  %wide.load1314 = load <16 x i8>, ptr %i.gj, align 1, !tbaa !16, !noalias !55 ; 2 uses
   %i.gk = add <16 x i8> %wide.load, splat (i8 -65)
   %i.gl = add <16 x i8> %wide.load1314, splat (i8 -65)
   %i.gm = icmp ult <16 x i8> %i.gk, splat (i8 26)
   %i.gn = icmp ult <16 x i8> %i.gl, splat (i8 26)
-  %41 = or disjoint <16 x i8> %wide.load, splat (i8 32)
-  %i.go = or disjoint <16 x i8> %wide.load1314, splat (i8 32)
-  %i.gp = select <16 x i1> %i.gm, <16 x i8> %41, <16 x i8> %wide.load
-  %42 = select <16 x i1> %i.gn, <16 x i8> %i.go, <16 x i8> %wide.load1314
-  store <16 x i8> %i.gp, ptr %next.gep, align 1, !tbaa !16, !noalias !55
+  %41 = select <16 x i1> %i.gm, <16 x i8> splat (i8 32), <16 x i8> zeroinitializer
+  %i.go = or disjoint <16 x i8> %wide.load, %41
+  %i.gp = select <16 x i1> %i.gn, <16 x i8> splat (i8 32), <16 x i8> zeroinitializer
+  %42 = or disjoint <16 x i8> %wide.load1314, %i.gp
+  store <16 x i8> %i.go, ptr %next.gep, align 1, !tbaa !16, !noalias !55
   store <16 x i8> %42, ptr %i.gj, align 1, !tbaa !16, !noalias !55
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.gq = icmp eq i64 %index.next, %n.vec
@@ -637,11 +637,11 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index1317 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next1320, %vec.epilog.vector.body ] ; 2 uses
   %next.gep1318 = getelementptr i8, ptr %i.gf, i64 %index1317 ; 2 uses
-  %wide.load1319 = load <8 x i8>, ptr %next.gep1318, align 1, !tbaa !16, !noalias !55 ; 3 uses
+  %wide.load1319 = load <8 x i8>, ptr %next.gep1318, align 1, !tbaa !16, !noalias !55 ; 2 uses
   %i.gs = add <8 x i8> %wide.load1319, splat (i8 -65)
   %i.gt = icmp ult <8 x i8> %i.gs, splat (i8 26)
-  %43 = or disjoint <8 x i8> %wide.load1319, splat (i8 32)
-  %44 = select <8 x i1> %i.gt, <8 x i8> %43, <8 x i8> %wide.load1319
+  %43 = select <8 x i1> %i.gt, <8 x i8> splat (i8 32), <8 x i8> zeroinitializer
+  %44 = or disjoint <8 x i8> %wide.load1319, %43
   store <8 x i8> %44, ptr %next.gep1318, align 1, !tbaa !16, !noalias !55
   %index.next1320 = add nuw i64 %index1317, 8     ; 2 uses
   %i.gu = icmp eq i64 %index.next1320, %n.vec1316
@@ -1044,17 +1044,17 @@ vector.body1329:                                  ; preds = %vector.body1329, %v
   %index1330 = phi i64 [ 0, %vector.ph1326 ], [ %index.next1334, %vector.body1329 ] ; 2 uses
   %next.gep1331 = getelementptr i8, ptr %i.lt, i64 %index1330 ; 3 uses
   %i.lx = getelementptr i8, ptr %next.gep1331, i64 16 ; 2 uses
-  %wide.load1332 = load <16 x i8>, ptr %next.gep1331, align 1, !tbaa !16, !noalias !61 ; 3 uses
-  %wide.load1333 = load <16 x i8>, ptr %i.lx, align 1, !tbaa !16, !noalias !61 ; 3 uses
+  %wide.load1332 = load <16 x i8>, ptr %next.gep1331, align 1, !tbaa !16, !noalias !61 ; 2 uses
+  %wide.load1333 = load <16 x i8>, ptr %i.lx, align 1, !tbaa !16, !noalias !61 ; 2 uses
   %i.ly = add <16 x i8> %wide.load1332, splat (i8 -65)
   %i.lz = add <16 x i8> %wide.load1333, splat (i8 -65)
   %i.ma = icmp ult <16 x i8> %i.ly, splat (i8 26)
   %i.mb = icmp ult <16 x i8> %i.lz, splat (i8 26)
-  %45 = or disjoint <16 x i8> %wide.load1332, splat (i8 32)
-  %i.mc = or disjoint <16 x i8> %wide.load1333, splat (i8 32)
-  %i.md = select <16 x i1> %i.ma, <16 x i8> %45, <16 x i8> %wide.load1332
-  %46 = select <16 x i1> %i.mb, <16 x i8> %i.mc, <16 x i8> %wide.load1333
-  store <16 x i8> %i.md, ptr %next.gep1331, align 1, !tbaa !16, !noalias !61
+  %45 = select <16 x i1> %i.ma, <16 x i8> splat (i8 32), <16 x i8> zeroinitializer
+  %i.mc = or disjoint <16 x i8> %wide.load1332, %45
+  %i.md = select <16 x i1> %i.mb, <16 x i8> splat (i8 32), <16 x i8> zeroinitializer
+  %46 = or disjoint <16 x i8> %wide.load1333, %i.md
+  store <16 x i8> %i.mc, ptr %next.gep1331, align 1, !tbaa !16, !noalias !61
   store <16 x i8> %46, ptr %i.lx, align 1, !tbaa !16, !noalias !61
   %index.next1334 = add nuw i64 %index1330, 32    ; 2 uses
   %i.me = icmp eq i64 %index.next1334, %n.vec1328
@@ -1077,11 +1077,11 @@ vec.epilog.ph1342:                                ; preds = %vector.main.loop.it
 vec.epilog.vector.body1345:                       ; preds = %vec.epilog.vector.body1345, %vec.epilog.ph1342
   %index1346 = phi i64 [ %vec.epilog.resume.val1337, %vec.epilog.ph1342 ], [ %index.next1349, %vec.epilog.vector.body1345 ] ; 2 uses
   %next.gep1347 = getelementptr i8, ptr %i.lt, i64 %index1346 ; 2 uses
-  %wide.load1348 = load <8 x i8>, ptr %next.gep1347, align 1, !tbaa !16, !noalias !61 ; 3 uses
+  %wide.load1348 = load <8 x i8>, ptr %next.gep1347, align 1, !tbaa !16, !noalias !61 ; 2 uses
   %i.mg = add <8 x i8> %wide.load1348, splat (i8 -65)
   %i.mh = icmp ult <8 x i8> %i.mg, splat (i8 26)
-  %47 = or disjoint <8 x i8> %wide.load1348, splat (i8 32)
-  %48 = select <8 x i1> %i.mh, <8 x i8> %47, <8 x i8> %wide.load1348
+  %47 = select <8 x i1> %i.mh, <8 x i8> splat (i8 32), <8 x i8> zeroinitializer
+  %48 = or disjoint <8 x i8> %wide.load1348, %47
   store <8 x i8> %48, ptr %next.gep1347, align 1, !tbaa !16, !noalias !61
   %index.next1349 = add nuw i64 %index1346, 8     ; 2 uses
   %i.mi = icmp eq i64 %index.next1349, %n.vec1344
@@ -1326,17 +1326,17 @@ vector.body1419:                                  ; preds = %vector.body1419, %v
   %index1420 = phi i64 [ 0, %vector.ph1416 ], [ %index.next1424, %vector.body1419 ] ; 2 uses
   %next.gep1421 = getelementptr i8, ptr %i.ox, i64 %index1420 ; 3 uses
   %i.pb = getelementptr i8, ptr %next.gep1421, i64 16 ; 2 uses
-  %wide.load1422 = load <16 x i8>, ptr %next.gep1421, align 1, !tbaa !16, !noalias !67 ; 3 uses
-  %wide.load1423 = load <16 x i8>, ptr %i.pb, align 1, !tbaa !16, !noalias !67 ; 3 uses
+  %wide.load1422 = load <16 x i8>, ptr %next.gep1421, align 1, !tbaa !16, !noalias !67 ; 2 uses
+  %wide.load1423 = load <16 x i8>, ptr %i.pb, align 1, !tbaa !16, !noalias !67 ; 2 uses
   %i.pc = add <16 x i8> %wide.load1422, splat (i8 -65)
   %i.pd = add <16 x i8> %wide.load1423, splat (i8 -65)
   %i.pe = icmp ult <16 x i8> %i.pc, splat (i8 26)
   %i.pf = icmp ult <16 x i8> %i.pd, splat (i8 26)
-  %49 = or disjoint <16 x i8> %wide.load1422, splat (i8 32)
-  %i.pg = or disjoint <16 x i8> %wide.load1423, splat (i8 32)
-  %i.ph = select <16 x i1> %i.pe, <16 x i8> %49, <16 x i8> %wide.load1422
-  %50 = select <16 x i1> %i.pf, <16 x i8> %i.pg, <16 x i8> %wide.load1423
-  store <16 x i8> %i.ph, ptr %next.gep1421, align 1, !tbaa !16, !noalias !67
+  %49 = select <16 x i1> %i.pe, <16 x i8> splat (i8 32), <16 x i8> zeroinitializer
+  %i.pg = or disjoint <16 x i8> %wide.load1422, %49
+  %i.ph = select <16 x i1> %i.pf, <16 x i8> splat (i8 32), <16 x i8> zeroinitializer
+  %50 = or disjoint <16 x i8> %wide.load1423, %i.ph
+  store <16 x i8> %i.pg, ptr %next.gep1421, align 1, !tbaa !16, !noalias !67
   store <16 x i8> %50, ptr %i.pb, align 1, !tbaa !16, !noalias !67
   %index.next1424 = add nuw i64 %index1420, 32    ; 2 uses
   %i.pi = icmp eq i64 %index.next1424, %n.vec1418
@@ -1359,11 +1359,11 @@ vec.epilog.ph1432:                                ; preds = %vector.main.loop.it
 vec.epilog.vector.body1435:                       ; preds = %vec.epilog.vector.body1435, %vec.epilog.ph1432
   %index1436 = phi i64 [ %vec.epilog.resume.val1427, %vec.epilog.ph1432 ], [ %index.next1439, %vec.epilog.vector.body1435 ] ; 2 uses
   %next.gep1437 = getelementptr i8, ptr %i.ox, i64 %index1436 ; 2 uses
-  %wide.load1438 = load <8 x i8>, ptr %next.gep1437, align 1, !tbaa !16, !noalias !67 ; 3 uses
+  %wide.load1438 = load <8 x i8>, ptr %next.gep1437, align 1, !tbaa !16, !noalias !67 ; 2 uses
   %i.pk = add <8 x i8> %wide.load1438, splat (i8 -65)
   %i.pl = icmp ult <8 x i8> %i.pk, splat (i8 26)
-  %51 = or disjoint <8 x i8> %wide.load1438, splat (i8 32)
-  %52 = select <8 x i1> %i.pl, <8 x i8> %51, <8 x i8> %wide.load1438
+  %51 = select <8 x i1> %i.pl, <8 x i8> splat (i8 32), <8 x i8> zeroinitializer
+  %52 = or disjoint <8 x i8> %wide.load1438, %51
   store <8 x i8> %52, ptr %next.gep1437, align 1, !tbaa !16, !noalias !67
   %index.next1439 = add nuw i64 %index1436, 8     ; 2 uses
   %i.pm = icmp eq i64 %index.next1439, %n.vec1434
@@ -1508,17 +1508,17 @@ vector.body1389:                                  ; preds = %vector.body1389, %v
   %index1390 = phi i64 [ 0, %vector.ph1386 ], [ %index.next1394, %vector.body1389 ] ; 2 uses
   %next.gep1391 = getelementptr i8, ptr %i.qw, i64 %index1390 ; 3 uses
   %i.ra = getelementptr i8, ptr %next.gep1391, i64 16 ; 2 uses
-  %wide.load1392 = load <16 x i8>, ptr %next.gep1391, align 1, !tbaa !16, !noalias !73 ; 3 uses
-  %wide.load1393 = load <16 x i8>, ptr %i.ra, align 1, !tbaa !16, !noalias !73 ; 3 uses
+  %wide.load1392 = load <16 x i8>, ptr %next.gep1391, align 1, !tbaa !16, !noalias !73 ; 2 uses
+  %wide.load1393 = load <16 x i8>, ptr %i.ra, align 1, !tbaa !16, !noalias !73 ; 2 uses
   %i.rb = add <16 x i8> %wide.load1392, splat (i8 -65)
   %i.rc = add <16 x i8> %wide.load1393, splat (i8 -65)
   %i.rd = icmp ult <16 x i8> %i.rb, splat (i8 26)
   %i.re = icmp ult <16 x i8> %i.rc, splat (i8 26)
-  %53 = or disjoint <16 x i8> %wide.load1392, splat (i8 32)
-  %i.rf = or disjoint <16 x i8> %wide.load1393, splat (i8 32)
-  %i.rg = select <16 x i1> %i.rd, <16 x i8> %53, <16 x i8> %wide.load1392
-  %54 = select <16 x i1> %i.re, <16 x i8> %i.rf, <16 x i8> %wide.load1393
-  store <16 x i8> %i.rg, ptr %next.gep1391, align 1, !tbaa !16, !noalias !73
+  %53 = select <16 x i1> %i.rd, <16 x i8> splat (i8 32), <16 x i8> zeroinitializer
+  %i.rf = or disjoint <16 x i8> %wide.load1392, %53
+  %i.rg = select <16 x i1> %i.re, <16 x i8> splat (i8 32), <16 x i8> zeroinitializer
+  %54 = or disjoint <16 x i8> %wide.load1393, %i.rg
+  store <16 x i8> %i.rf, ptr %next.gep1391, align 1, !tbaa !16, !noalias !73
   store <16 x i8> %54, ptr %i.ra, align 1, !tbaa !16, !noalias !73
   %index.next1394 = add nuw i64 %index1390, 32    ; 2 uses
   %i.rh = icmp eq i64 %index.next1394, %n.vec1388
@@ -1541,11 +1541,11 @@ vec.epilog.ph1402:                                ; preds = %vector.main.loop.it
 vec.epilog.vector.body1405:                       ; preds = %vec.epilog.vector.body1405, %vec.epilog.ph1402
   %index1406 = phi i64 [ %vec.epilog.resume.val1397, %vec.epilog.ph1402 ], [ %index.next1409, %vec.epilog.vector.body1405 ] ; 2 uses
   %next.gep1407 = getelementptr i8, ptr %i.qw, i64 %index1406 ; 2 uses
-  %wide.load1408 = load <8 x i8>, ptr %next.gep1407, align 1, !tbaa !16, !noalias !73 ; 3 uses
+  %wide.load1408 = load <8 x i8>, ptr %next.gep1407, align 1, !tbaa !16, !noalias !73 ; 2 uses
   %i.rj = add <8 x i8> %wide.load1408, splat (i8 -65)
   %i.rk = icmp ult <8 x i8> %i.rj, splat (i8 26)
-  %55 = or disjoint <8 x i8> %wide.load1408, splat (i8 32)
-  %56 = select <8 x i1> %i.rk, <8 x i8> %55, <8 x i8> %wide.load1408
+  %55 = select <8 x i1> %i.rk, <8 x i8> splat (i8 32), <8 x i8> zeroinitializer
+  %56 = or disjoint <8 x i8> %wide.load1408, %55
   store <8 x i8> %56, ptr %next.gep1407, align 1, !tbaa !16, !noalias !73
   %index.next1409 = add nuw i64 %index1406, 8     ; 2 uses
   %i.rl = icmp eq i64 %index.next1409, %n.vec1404
@@ -1690,17 +1690,17 @@ vector.body1359:                                  ; preds = %vector.body1359, %v
   %index1360 = phi i64 [ 0, %vector.ph1356 ], [ %index.next1364, %vector.body1359 ] ; 2 uses
   %next.gep1361 = getelementptr i8, ptr %i.sv, i64 %index1360 ; 3 uses
   %i.sz = getelementptr i8, ptr %next.gep1361, i64 16 ; 2 uses
-  %wide.load1362 = load <16 x i8>, ptr %next.gep1361, align 1, !tbaa !16, !noalias !79 ; 3 uses
-  %wide.load1363 = load <16 x i8>, ptr %i.sz, align 1, !tbaa !16, !noalias !79 ; 3 uses
+  %wide.load1362 = load <16 x i8>, ptr %next.gep1361, align 1, !tbaa !16, !noalias !79 ; 2 uses
+  %wide.load1363 = load <16 x i8>, ptr %i.sz, align 1, !tbaa !16, !noalias !79 ; 2 uses
   %i.ta = add <16 x i8> %wide.load1362, splat (i8 -65)
   %i.tb = add <16 x i8> %wide.load1363, splat (i8 -65)
   %i.tc = icmp ult <16 x i8> %i.ta, splat (i8 26)
   %i.td = icmp ult <16 x i8> %i.tb, splat (i8 26)
-  %57 = or disjoint <16 x i8> %wide.load1362, splat (i8 32)
-  %i.te = or disjoint <16 x i8> %wide.load1363, splat (i8 32)
-  %i.tf = select <16 x i1> %i.tc, <16 x i8> %57, <16 x i8> %wide.load1362
-  %58 = select <16 x i1> %i.td, <16 x i8> %i.te, <16 x i8> %wide.load1363
-  store <16 x i8> %i.tf, ptr %next.gep1361, align 1, !tbaa !16, !noalias !79
+  %57 = select <16 x i1> %i.tc, <16 x i8> splat (i8 32), <16 x i8> zeroinitializer
+  %i.te = or disjoint <16 x i8> %wide.load1362, %57
+  %i.tf = select <16 x i1> %i.td, <16 x i8> splat (i8 32), <16 x i8> zeroinitializer
+  %58 = or disjoint <16 x i8> %wide.load1363, %i.tf
+  store <16 x i8> %i.te, ptr %next.gep1361, align 1, !tbaa !16, !noalias !79
   store <16 x i8> %58, ptr %i.sz, align 1, !tbaa !16, !noalias !79
   %index.next1364 = add nuw i64 %index1360, 32    ; 2 uses
   %i.tg = icmp eq i64 %index.next1364, %n.vec1358
@@ -1723,11 +1723,11 @@ vec.epilog.ph1372:                                ; preds = %vector.main.loop.it
 vec.epilog.vector.body1375:                       ; preds = %vec.epilog.vector.body1375, %vec.epilog.ph1372
   %index1376 = phi i64 [ %vec.epilog.resume.val1367, %vec.epilog.ph1372 ], [ %index.next1379, %vec.epilog.vector.body1375 ] ; 2 uses
   %next.gep1377 = getelementptr i8, ptr %i.sv, i64 %index1376 ; 2 uses
-  %wide.load1378 = load <8 x i8>, ptr %next.gep1377, align 1, !tbaa !16, !noalias !79 ; 3 uses
+  %wide.load1378 = load <8 x i8>, ptr %next.gep1377, align 1, !tbaa !16, !noalias !79 ; 2 uses
   %i.ti = add <8 x i8> %wide.load1378, splat (i8 -65)
   %i.tj = icmp ult <8 x i8> %i.ti, splat (i8 26)
-  %59 = or disjoint <8 x i8> %wide.load1378, splat (i8 32)
-  %60 = select <8 x i1> %i.tj, <8 x i8> %59, <8 x i8> %wide.load1378
+  %59 = select <8 x i1> %i.tj, <8 x i8> splat (i8 32), <8 x i8> zeroinitializer
+  %60 = or disjoint <8 x i8> %wide.load1378, %59
   store <8 x i8> %60, ptr %next.gep1377, align 1, !tbaa !16, !noalias !79
   %index.next1379 = add nuw i64 %index1376, 8     ; 2 uses
   %i.tk = icmp eq i64 %index.next1379, %n.vec1374

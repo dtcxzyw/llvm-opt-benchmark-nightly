@@ -200,11 +200,11 @@ bb.a:
   %i.u = zext i32 %i.t to i64
   %i.v = getelementptr inbounds nuw i8, ptr %.0166204, i64 4
   %i.w = load <4 x i8>, ptr %i.v, align 1, !tbaa !17 ; 2 uses
-  %i.x = zext <4 x i8> %i.w to <4 x i32>          ; 2 uses
+  %i.x = zext <4 x i8> %i.w to <4 x i32>
   %i.y = add <4 x i8> %i.w, splat (i8 -65)
   %i.z = icmp ult <4 x i8> %i.y, splat (i8 26)
-  %3 = or disjoint <4 x i32> %i.x, splat (i32 32)
-  %4 = select <4 x i1> %i.z, <4 x i32> %3, <4 x i32> %i.x
+  %3 = select <4 x i1> %i.z, <4 x i32> splat (i32 32), <4 x i32> zeroinitializer
+  %4 = or disjoint <4 x i32> %3, %i.x
   %i.aa = zext nneg <4 x i32> %4 to <4 x i64>
   %i.ab = shl nuw <4 x i64> %i.aa, <i64 32, i64 40, i64 48, i64 56>
   %i.ac = tail call i64 @llvm.vector.reduce.or.v4i64(<4 x i64> %i.ab)

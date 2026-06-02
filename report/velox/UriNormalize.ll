@@ -201,19 +201,19 @@ vector.body434:                                   ; preds = %vector.body434, %ve
   %index435 = phi i64 [ 0, %vector.ph431 ], [ %index.next438, %vector.body434 ] ; 3 uses
   %i.ds = getelementptr inbounds nuw [4 x i8], ptr %i.dp, i64 %index435 ; 2 uses
   %i.dt = getelementptr inbounds nuw i8, ptr %i.ds, i64 16
-  %wide.load436 = load <4 x i32>, ptr %i.ds, align 4, !tbaa !3 ; 3 uses
-  %wide.load437 = load <4 x i32>, ptr %i.dt, align 4, !tbaa !3 ; 3 uses
+  %wide.load436 = load <4 x i32>, ptr %i.ds, align 4, !tbaa !3 ; 2 uses
+  %wide.load437 = load <4 x i32>, ptr %i.dt, align 4, !tbaa !3 ; 2 uses
   %i.du = add <4 x i32> %wide.load436, splat (i32 -65)
   %i.dv = add <4 x i32> %wide.load437, splat (i32 -65)
   %i.dw = icmp ult <4 x i32> %i.du, splat (i32 26)
   %i.dx = icmp ult <4 x i32> %i.dv, splat (i32 26)
-  %4 = or disjoint <4 x i32> %wide.load436, splat (i32 32)
-  %i.dy = or disjoint <4 x i32> %wide.load437, splat (i32 32)
-  %i.dz = select <4 x i1> %i.dw, <4 x i32> %4, <4 x i32> %wide.load436
-  %5 = select <4 x i1> %i.dx, <4 x i32> %i.dy, <4 x i32> %wide.load437
+  %4 = select <4 x i1> %i.dw, <4 x i32> splat (i32 32), <4 x i32> zeroinitializer
+  %i.dy = or disjoint <4 x i32> %wide.load436, %4
+  %i.dz = select <4 x i1> %i.dx, <4 x i32> splat (i32 32), <4 x i32> zeroinitializer
+  %5 = or disjoint <4 x i32> %wide.load437, %i.dz
   %i.ea = getelementptr inbounds nuw [4 x i8], ptr %i.dm, i64 %index435 ; 2 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 16
-  store <4 x i32> %i.dz, ptr %i.ea, align 4, !tbaa !3
+  store <4 x i32> %i.dy, ptr %i.ea, align 4, !tbaa !3
   store <4 x i32> %5, ptr %i.eb, align 4, !tbaa !3
   %index.next438 = add nuw i64 %index435, 8       ; 2 uses
   %i.ec = icmp eq i64 %index.next438, %n.vec433
@@ -504,19 +504,19 @@ vector.body487:                                   ; preds = %vector.body487, %ve
   %index488 = phi i64 [ 0, %vector.ph484 ], [ %index.next491, %vector.body487 ] ; 3 uses
   %i.hw = getelementptr inbounds nuw [4 x i8], ptr %i.ht, i64 %index488 ; 2 uses
   %i.hx = getelementptr inbounds nuw i8, ptr %i.hw, i64 16
-  %wide.load489 = load <4 x i32>, ptr %i.hw, align 4, !tbaa !3 ; 3 uses
-  %wide.load490 = load <4 x i32>, ptr %i.hx, align 4, !tbaa !3 ; 3 uses
+  %wide.load489 = load <4 x i32>, ptr %i.hw, align 4, !tbaa !3 ; 2 uses
+  %wide.load490 = load <4 x i32>, ptr %i.hx, align 4, !tbaa !3 ; 2 uses
   %i.hy = add <4 x i32> %wide.load489, splat (i32 -65)
   %i.hz = add <4 x i32> %wide.load490, splat (i32 -65)
   %i.ia = icmp ult <4 x i32> %i.hy, splat (i32 26)
   %i.ib = icmp ult <4 x i32> %i.hz, splat (i32 26)
-  %6 = or disjoint <4 x i32> %wide.load489, splat (i32 32)
-  %i.ic = or disjoint <4 x i32> %wide.load490, splat (i32 32)
-  %i.id = select <4 x i1> %i.ia, <4 x i32> %6, <4 x i32> %wide.load489
-  %7 = select <4 x i1> %i.ib, <4 x i32> %i.ic, <4 x i32> %wide.load490
+  %6 = select <4 x i1> %i.ia, <4 x i32> splat (i32 32), <4 x i32> zeroinitializer
+  %i.ic = or disjoint <4 x i32> %wide.load489, %6
+  %i.id = select <4 x i1> %i.ib, <4 x i32> splat (i32 32), <4 x i32> zeroinitializer
+  %7 = or disjoint <4 x i32> %wide.load490, %i.id
   %i.ie = getelementptr inbounds nuw [4 x i8], ptr %i.hq, i64 %index488 ; 2 uses
   %i.if = getelementptr inbounds nuw i8, ptr %i.ie, i64 16
-  store <4 x i32> %i.id, ptr %i.ie, align 4, !tbaa !3
+  store <4 x i32> %i.ic, ptr %i.ie, align 4, !tbaa !3
   store <4 x i32> %7, ptr %i.if, align 4, !tbaa !3
   %index.next491 = add nuw i64 %index488, 8       ; 2 uses
   %i.ig = icmp eq i64 %index.next491, %n.vec486
