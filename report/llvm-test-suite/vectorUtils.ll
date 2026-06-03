@@ -17,7 +17,7 @@ target triple = "x86_64-pc-linux-gnu"
 @str.5 = private unnamed_addr constant [32 x i8] c"\0A\0ANodeVecVec_push failed malloc\00", align 1
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, argmem: none, target_mem: none) uwtable
-define dso_local noalias noundef ptr @IntVector_new(i32 noundef %0) local_unnamed_addr #0 {
+define dso_local noundef ptr @IntVector_new(i32 noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #13 ; 6 uses
   %.not = icmp eq ptr %i.a, null
@@ -282,7 +282,7 @@ bb.h:                                             ; preds = %findNextNumber.exit
 declare ptr @__ctype_b_loc() local_unnamed_addr #7
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, argmem: none, target_mem: none) uwtable
-define dso_local noalias noundef ptr @CharVector_new(i32 noundef %0) local_unnamed_addr #0 {
+define dso_local noundef ptr @CharVector_new(i32 noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #13 ; 6 uses
   %.not = icmp eq ptr %i.a, null
@@ -495,7 +495,7 @@ declare noundef i32 @fgetc(ptr noundef captures(none)) local_unnamed_addr #6
 declare noundef i32 @feof(ptr noundef captures(none)) local_unnamed_addr #6
 
 ; Function Attrs: nounwind uwtable
-define dso_local noalias noundef ptr @NodePtrVec_new(i32 noundef %0) local_unnamed_addr #4 {
+define dso_local noundef ptr @NodePtrVec_new(i32 noundef %0) local_unnamed_addr #4 {
 bb.a:
   %i.a = sext i32 %0 to i64
   %i.b = shl nsw i64 %i.a, 3
@@ -558,7 +558,7 @@ bb.e:                                             ; preds = %bb.d, %bb.a
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local noalias noundef ptr @NodePtrVec_copy(ptr noundef readonly captures(address_is_null) %0, i1 noundef zeroext %1) local_unnamed_addr #4 {
+define dso_local noundef ptr @NodePtrVec_copy(ptr noundef readonly captures(address_is_null) %0, i1 noundef zeroext %1) local_unnamed_addr #4 {
 bb.a:
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %NodePtrVec_new.exit.thread, label %bb.b
@@ -961,7 +961,7 @@ NodePtrVec_push.exit:                             ; preds = %bb.g, %bb.h, %._cri
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local noalias noundef ptr @NodeVecVec_new(i32 noundef %0) local_unnamed_addr #4 {
+define dso_local noundef ptr @NodeVecVec_new(i32 noundef %0) local_unnamed_addr #4 {
 bb.a:
   %i.a = sext i32 %0 to i64
   %i.b = shl nsw i64 %i.a, 3

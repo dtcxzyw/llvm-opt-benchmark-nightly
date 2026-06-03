@@ -157,7 +157,7 @@ target triple = "x86_64-unknown-linux-gnu"
 @144 = private unnamed_addr constant <{ ptr, ptr }> <{ ptr inttoptr (i64 7138977279839204526 to ptr), ptr inttoptr (i64 -8957275379254221844 to ptr) }>, align 8
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noalias noundef nonnull align 8 ptr @_RINvMNtCsgO6CtM78C4N_7reqwest5errorNtB3_5Error3newNtNtCs4j34XAPZOn0_4http5error5ErrorECsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(40) %0, i8 noundef range(i8 0, 8) %1, i8 %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noundef nonnull align 8 ptr @_RINvMNtCsgO6CtM78C4N_7reqwest5errorNtB3_5Error3newNtNtCs4j34XAPZOn0_4http5error5ErrorECsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(40) %0, i8 noundef range(i8 0, 8) %1, i8 %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [40 x i8], align 8                ; 8 uses
   %i.b = alloca [144 x i8], align 8               ; 8 uses
@@ -257,7 +257,7 @@ bb.j:                                             ; preds = %bb.i
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noalias noundef nonnull align 8 ptr @_RINvMNtCsgO6CtM78C4N_7reqwest5errorNtB3_5Error3newNtNtCseqDwI8vvjGQ_10serde_json5error5ErrorECsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(40) %0, ptr noalias noundef align 8 %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noundef nonnull align 8 ptr @_RINvMNtCsgO6CtM78C4N_7reqwest5errorNtB3_5Error3newNtNtCseqDwI8vvjGQ_10serde_json5error5ErrorECsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(40) %0, ptr noalias noundef align 8 %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [40 x i8], align 8                ; 8 uses
   %i.b = alloca [144 x i8], align 8               ; 8 uses
@@ -660,7 +660,7 @@ bb.o:                                             ; preds = %_RINvNtCsbvkFyIu7lg
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noalias noundef nonnull align 8 ptr @_RINvNtCsgO6CtM78C4N_7reqwest5error6decodeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCsbvkFyIu7lgC_4core5error5ErrorNtNtB1h_6marker4SyncNtB1O_4SendEL_EECsj34PGqTgg0L_16deltalake_lakefs(ptr noundef nonnull %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(80) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noundef nonnull align 8 ptr @_RINvNtCsgO6CtM78C4N_7reqwest5error6decodeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCsbvkFyIu7lgC_4core5error5ErrorNtNtB1h_6marker4SyncNtB1O_4SendEL_EECsj34PGqTgg0L_16deltalake_lakefs(ptr noundef nonnull %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(80) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [144 x i8], align 8               ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !667
@@ -705,7 +705,7 @@ _RINvMNtCsgO6CtM78C4N_7reqwest5errorNtB3_5Error3newINtNtCs6Po7BT7Nknu_5alloc5box
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noalias noundef nonnull align 8 ptr @_RINvNtCsgO6CtM78C4N_7reqwest5error6decodeNtNtCseqDwI8vvjGQ_10serde_json5error5ErrorECsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef nonnull align 8 %0) unnamed_addr #0 {
+define hidden noundef nonnull align 8 ptr @_RINvNtCsgO6CtM78C4N_7reqwest5error6decodeNtNtCseqDwI8vvjGQ_10serde_json5error5ErrorECsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef nonnull align 8 %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [40 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1108,7 +1108,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noalias noundef nonnull align 128 ptr @_RNvMs0_NtNtNtCskQDtHcQtBkN_5tokio7runtime4task4coreINtB5_4CellINtNtNtB9_8blocking4task12BlockingTaskINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNvNtB2g_8logstore18get_latest_version00INtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs8ulvy0Wg6Ot_12delta_kernel11log_segment10LogSegmentNtNtB4E_5error5ErrorEEs_0EENtNtB13_8schedule16BlockingScheduleE3newCsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef align 8 %0, ptr noundef %1, ptr %2, i64 noundef %3, i64 noundef range(i64 1, 0) %4) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noundef nonnull align 128 ptr @_RNvMs0_NtNtNtCskQDtHcQtBkN_5tokio7runtime4task4coreINtB5_4CellINtNtNtB9_8blocking4task12BlockingTaskINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNvNtB2g_8logstore18get_latest_version00INtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs8ulvy0Wg6Ot_12delta_kernel11log_segment10LogSegmentNtNtB4E_5error5ErrorEEs_0EENtNtB13_8schedule16BlockingScheduleE3newCsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef align 8 %0, ptr noundef %1, ptr %2, i64 noundef %3, i64 noundef range(i64 1, 0) %4) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [768 x i8], align 128             ; 16 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1184,7 +1184,7 @@ bb.h:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noalias noundef nonnull align 128 ptr @_RNvMs0_NtNtNtCskQDtHcQtBkN_5tokio7runtime4task4coreINtB5_4CellINtNtNtB9_8blocking4task12BlockingTaskINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNCNCNvMs0_CsjyY8HP3IvQ6_12object_storeNtB2j_9GetResult5bytes00EENtNtB13_8schedule16BlockingScheduleE3newCsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef align 8 %0, ptr noundef %1, ptr %2, i64 noundef %3, i64 noundef range(i64 1, 0) %4) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noundef nonnull align 128 ptr @_RNvMs0_NtNtNtCskQDtHcQtBkN_5tokio7runtime4task4coreINtB5_4CellINtNtNtB9_8blocking4task12BlockingTaskINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNCNCNvMs0_CsjyY8HP3IvQ6_12object_storeNtB2j_9GetResult5bytes00EENtNtB13_8schedule16BlockingScheduleE3newCsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef align 8 %0, ptr noundef %1, ptr %2, i64 noundef %3, i64 noundef range(i64 1, 0) %4) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [256 x i8], align 128             ; 16 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1260,7 +1260,7 @@ bb.h:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noalias noundef nonnull align 128 ptr @_RNvMs0_NtNtNtCskQDtHcQtBkN_5tokio7runtime4task4coreINtB5_4CellINtNtNtB9_8blocking4task12BlockingTaskNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNvNtB1H_8logstore18get_latest_version00INtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs8ulvy0Wg6Ot_12delta_kernel11log_segment10LogSegmentNtNtB45_5error5ErrorEEs_0ENtNtB13_8schedule16BlockingScheduleE3newCsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(176) %0, ptr noundef %1, ptr %2, i64 noundef %3, i64 noundef range(i64 1, 0) %4) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noundef nonnull align 128 ptr @_RNvMs0_NtNtNtCskQDtHcQtBkN_5tokio7runtime4task4coreINtB5_4CellINtNtNtB9_8blocking4task12BlockingTaskNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNvNtB1H_8logstore18get_latest_version00INtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs8ulvy0Wg6Ot_12delta_kernel11log_segment10LogSegmentNtNtB45_5error5ErrorEEs_0ENtNtB13_8schedule16BlockingScheduleE3newCsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(176) %0, ptr noundef %1, ptr %2, i64 noundef %3, i64 noundef range(i64 1, 0) %4) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %.sroa.413 = alloca [188 x i8], align 4         ; 2 uses
   %i.a = alloca [768 x i8], align 128             ; 16 uses
@@ -1339,7 +1339,7 @@ bb.h:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noalias noundef nonnull align 128 ptr @_RNvMs0_NtNtNtCskQDtHcQtBkN_5tokio7runtime4task4coreINtB5_4CellINtNtNtB9_8blocking4task12BlockingTaskNCNCNvMs0_CsjyY8HP3IvQ6_12object_storeNtB1K_9GetResult5bytes00ENtNtB13_8schedule16BlockingScheduleE3newCsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(48) %0, ptr noundef %1, ptr %2, i64 noundef %3, i64 noundef range(i64 1, 0) %4) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noundef nonnull align 128 ptr @_RNvMs0_NtNtNtCskQDtHcQtBkN_5tokio7runtime4task4coreINtB5_4CellINtNtNtB9_8blocking4task12BlockingTaskNCNCNvMs0_CsjyY8HP3IvQ6_12object_storeNtB1K_9GetResult5bytes00ENtNtB13_8schedule16BlockingScheduleE3newCsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(48) %0, ptr noundef %1, ptr %2, i64 noundef %3, i64 noundef range(i64 1, 0) %4) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %.sroa.413 = alloca [52 x i8], align 4          ; 2 uses
   %i.a = alloca [256 x i8], align 128             ; 16 uses

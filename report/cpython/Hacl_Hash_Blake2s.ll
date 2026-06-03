@@ -201,7 +201,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, target_mem: none) uwtable
-define hidden noalias noundef ptr @_Py_LibHacl_Hacl_Hash_Blake2s_malloc_with_params_and_key(ptr noundef readonly captures(none) %0, i1 noundef zeroext %1, ptr noundef readonly captures(none) %2) local_unnamed_addr #7 {
+define hidden noundef ptr @_Py_LibHacl_Hacl_Hash_Blake2s_malloc_with_params_and_key(ptr noundef readonly captures(none) %0, i1 noundef zeroext %1, ptr noundef readonly captures(none) %2) local_unnamed_addr #7 {
 bb.a:
   %.sroa.02.0.copyload = load i8, ptr %0, align 8, !tbaa !12
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1
@@ -323,7 +323,7 @@ malloc_raw.exit:                                  ; preds = %.critedge.i, %bb.h,
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, target_mem: none) uwtable
-define hidden noalias noundef ptr @_Py_LibHacl_Hacl_Hash_Blake2s_malloc_with_key(ptr noundef readonly captures(none) %0, i8 noundef zeroext %1) local_unnamed_addr #7 {
+define hidden noundef ptr @_Py_LibHacl_Hacl_Hash_Blake2s_malloc_with_key(ptr noundef readonly captures(none) %0, i8 noundef zeroext %1) local_unnamed_addr #7 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
@@ -356,7 +356,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, target_mem: none) uwtable
-define hidden noalias noundef ptr @_Py_LibHacl_Hacl_Hash_Blake2s_malloc() local_unnamed_addr #7 {
+define hidden noundef ptr @_Py_LibHacl_Hacl_Hash_Blake2s_malloc() local_unnamed_addr #7 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
@@ -375,7 +375,7 @@ bb.a:
   store ptr %i.a, ptr %.sroa.12.0..sroa_idx.i, align 8, !tbaa !18
   %.sroa.13.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 32
   store ptr %i.b, ptr %.sroa.13.0..sroa_idx.i, align 8, !tbaa !18
-  %i.c = call noalias noundef ptr @_Py_LibHacl_Hacl_Hash_Blake2s_malloc_with_params_and_key(ptr noundef nonnull %0, i1 noundef zeroext false, ptr noundef null)
+  %i.c = call noundef ptr @_Py_LibHacl_Hacl_Hash_Blake2s_malloc_with_params_and_key(ptr noundef nonnull %0, i1 noundef zeroext false, ptr noundef null)
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
@@ -778,7 +778,7 @@ bb.a:
 declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #12
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, target_mem: none) uwtable
-define hidden noalias noundef ptr @_Py_LibHacl_Hacl_Hash_Blake2s_copy(ptr noundef readonly captures(none) %0) local_unnamed_addr #7 {
+define hidden noundef ptr @_Py_LibHacl_Hacl_Hash_Blake2s_copy(ptr noundef readonly captures(none) %0) local_unnamed_addr #7 {
 bb.a:
   %.sroa.068.0.copyload = load i8, ptr %0, align 8, !tbaa !12
   %.sroa.469.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1

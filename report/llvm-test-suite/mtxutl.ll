@@ -200,7 +200,7 @@ declare double @llvm.fmuladd.f64(double, double, double) #3
 declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #4
 
 ; Function Attrs: nofree nounwind uwtable
-define dso_local noalias nonnull ptr @AllocateCharVec(i32 noundef %0) local_unnamed_addr #5 {
+define dso_local nonnull ptr @AllocateCharVec(i32 noundef %0) local_unnamed_addr #5 {
 bb.a:
   %i.a = sext i32 %0 to i64
   %i.b = tail call noalias ptr @calloc(i64 noundef %i.a, i64 noundef 1) #16 ; 2 uses
@@ -262,7 +262,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
 declare noalias noundef ptr @realloc(ptr allocptr noundef captures(none), i64 noundef) local_unnamed_addr #9
 
 ; Function Attrs: nofree nounwind uwtable
-define dso_local noalias nonnull ptr @AllocateCharMtx(i32 noundef %0, i32 noundef %1) local_unnamed_addr #5 {
+define dso_local nonnull ptr @AllocateCharMtx(i32 noundef %0, i32 noundef %1) local_unnamed_addr #5 {
 bb.a:
   %i.a = add nsw i32 %0, 1
   %i.b = sext i32 %i.a to i64
@@ -336,7 +336,7 @@ bb.a:
 }
 
 ; Function Attrs: nofree nounwind uwtable
-define dso_local noalias nonnull ptr @AllocateFloatVec(i32 noundef %0) local_unnamed_addr #5 {
+define dso_local nonnull ptr @AllocateFloatVec(i32 noundef %0) local_unnamed_addr #5 {
 bb.a:
   %i.a = zext i32 %0 to i64
   %i.b = tail call noalias ptr @calloc(i64 noundef %i.a, i64 noundef 4) #16 ; 2 uses
@@ -361,7 +361,7 @@ bb.a:
 }
 
 ; Function Attrs: nofree nounwind uwtable
-define dso_local noalias nonnull ptr @AllocateFloatHalfMtx(i32 noundef %0) local_unnamed_addr #5 {
+define dso_local nonnull ptr @AllocateFloatHalfMtx(i32 noundef %0) local_unnamed_addr #5 {
 bb.a:
   %i.a = add i32 %0, 1
   %i.b = zext i32 %i.a to i64
@@ -416,7 +416,7 @@ bb.d:                                             ; preds = %.lr.ph
 }
 
 ; Function Attrs: nofree nounwind uwtable
-define dso_local noalias nonnull ptr @AllocateFloatMtx(i32 noundef %0, i32 noundef %1) local_unnamed_addr #5 {
+define dso_local nonnull ptr @AllocateFloatMtx(i32 noundef %0, i32 noundef %1) local_unnamed_addr #5 {
 bb.a:
   %i.a = add i32 %0, 1
   %i.b = zext i32 %i.a to i64
@@ -521,7 +521,7 @@ bb.a:
 }
 
 ; Function Attrs: nofree nounwind uwtable
-define dso_local noalias nonnull ptr @AllocateIntVec(i32 noundef %0) local_unnamed_addr #5 {
+define dso_local nonnull ptr @AllocateIntVec(i32 noundef %0) local_unnamed_addr #5 {
 bb.a:
   %i.a = sext i32 %0 to i64
   %i.b = tail call noalias ptr @calloc(i64 noundef %i.a, i64 noundef 4) #16 ; 2 uses
@@ -546,7 +546,7 @@ bb.a:
 }
 
 ; Function Attrs: nofree nounwind uwtable
-define dso_local noalias nonnull ptr @AllocateFloatTri(i32 noundef %0) local_unnamed_addr #5 {
+define dso_local nonnull ptr @AllocateFloatTri(i32 noundef %0) local_unnamed_addr #5 {
 bb.a:
   %i.a = add i32 %0, 1
   %i.b = zext i32 %i.a to i64
@@ -619,7 +619,7 @@ bb.a:
 }
 
 ; Function Attrs: nofree nounwind uwtable
-define dso_local noalias nonnull ptr @AllocateIntMtx(i32 noundef %0, i32 noundef %1) local_unnamed_addr #5 {
+define dso_local nonnull ptr @AllocateIntMtx(i32 noundef %0, i32 noundef %1) local_unnamed_addr #5 {
 bb.a:
   %i.a = add nsw i32 %0, 1
   %i.b = sext i32 %i.a to i64
@@ -671,7 +671,7 @@ AllocateIntVec.exit:                              ; preds = %bb.d
 }
 
 ; Function Attrs: nofree nounwind uwtable
-define dso_local noalias nonnull ptr @AllocateCharCub(i32 noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #5 {
+define dso_local nonnull ptr @AllocateCharCub(i32 noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #5 {
 bb.a:
   %i.a = add nsw i32 %0, 1
   %i.b = sext i32 %i.a to i64
@@ -795,7 +795,7 @@ bb.a:
 }
 
 ; Function Attrs: nofree nounwind uwtable
-define dso_local noalias nonnull ptr @AllocateCharHcu(i32 noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #5 {
+define dso_local nonnull ptr @AllocateCharHcu(i32 noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #5 {
 bb.a:
   %i.a = add nsw i32 %0, 1
   %i.b = sext i32 %i.a to i64
@@ -1018,7 +1018,7 @@ bb.a:
 }
 
 ; Function Attrs: nofree nounwind uwtable
-define dso_local noalias nonnull ptr @AllocateIntCub(i32 noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #5 {
+define dso_local nonnull ptr @AllocateIntCub(i32 noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #5 {
 bb.a:
   %i.a = add nsw i32 %0, 1
   %i.b = sext i32 %i.a to i64
@@ -1094,7 +1094,7 @@ FreeIntMtx.exit:                                  ; preds = %.lr.ph.i, %.lr.ph
 }
 
 ; Function Attrs: nofree nounwind uwtable
-define dso_local noalias nonnull ptr @AllocateDoubleMtx(i32 noundef %0, i32 noundef %1) local_unnamed_addr #5 {
+define dso_local nonnull ptr @AllocateDoubleMtx(i32 noundef %0, i32 noundef %1) local_unnamed_addr #5 {
 bb.a:
   %i.a = add nsw i32 %0, 1
   %i.b = sext i32 %i.a to i64
@@ -1158,7 +1158,7 @@ bb.a:
 }
 
 ; Function Attrs: nofree nounwind uwtable
-define dso_local noalias nonnull ptr @AllocateFloatCub(i32 noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #5 {
+define dso_local nonnull ptr @AllocateFloatCub(i32 noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #5 {
 bb.a:
   %i.a = add nsw i32 %0, 1
   %i.b = sext i32 %i.a to i64
@@ -1234,7 +1234,7 @@ FreeFloatMtx.exit:                                ; preds = %.lr.ph.i, %.lr.ph
 }
 
 ; Function Attrs: nofree nounwind uwtable
-define dso_local noalias nonnull ptr @AllocateDoubleCub(i32 noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #5 {
+define dso_local nonnull ptr @AllocateDoubleCub(i32 noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #5 {
 bb.a:
   %i.a = add nsw i32 %0, 1
   %i.b = sext i32 %i.a to i64
@@ -1354,7 +1354,7 @@ FreeDoubleMtx.exit:                               ; preds = %.lr.ph.i, %.lr.ph
 }
 
 ; Function Attrs: nofree nounwind uwtable
-define dso_local noalias nonnull ptr @AllocateShortVec(i32 noundef %0) local_unnamed_addr #5 {
+define dso_local nonnull ptr @AllocateShortVec(i32 noundef %0) local_unnamed_addr #5 {
 bb.a:
   %i.a = sext i32 %0 to i64
   %i.b = tail call noalias ptr @calloc(i64 noundef %i.a, i64 noundef 2) #16 ; 2 uses
@@ -1379,7 +1379,7 @@ bb.a:
 }
 
 ; Function Attrs: nofree nounwind uwtable
-define dso_local noalias nonnull ptr @AllocateShortMtx(i32 noundef %0, i32 noundef %1) local_unnamed_addr #5 {
+define dso_local nonnull ptr @AllocateShortMtx(i32 noundef %0, i32 noundef %1) local_unnamed_addr #5 {
 bb.a:
   %i.a = add nsw i32 %0, 1
   %i.b = sext i32 %i.a to i64

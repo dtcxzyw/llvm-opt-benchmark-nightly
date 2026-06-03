@@ -201,26 +201,26 @@ bb.a:
   br i1 %.not, label %bb.j, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !24   ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !24
   %i.d = icmp eq ptr %i.c, null
   br i1 %i.d, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = tail call ptr @OPENSSL_sk_new_null() #7  ; 3 uses
+  %i.e = tail call ptr @OPENSSL_sk_new_null() #7  ; 2 uses
   store ptr %i.e, ptr %i.b, align 8, !tbaa !24
   %i.f = icmp eq ptr %i.e, null
   br i1 %i.f, label %allocate_string_stack.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c
-  %9 = phi ptr [ %i.c, %bb.b ], [ %i.e, %bb.c ]
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 40 ; 2 uses
   store i32 %6, ptr %i.g, align 8, !tbaa !30
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 44
   store i32 %7, ptr %i.h, align 4, !tbaa !30
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 48 ; 2 uses
   store ptr %8, ptr %i.i, align 8, !tbaa !30
-  %i.j = tail call i32 @OPENSSL_sk_push(ptr noundef nonnull %9, ptr noundef nonnull %i.a) #7 ; 3 uses
+  %9 = load ptr, ptr %i.b, align 8, !tbaa !24
+  %i.j = tail call i32 @OPENSSL_sk_push(ptr noundef %9, ptr noundef nonnull %i.a) #7 ; 3 uses
   %i.k = icmp slt i32 %i.j, 1
   br i1 %i.k, label %bb.e, label %bb.j
 
@@ -408,26 +408,26 @@ bb.f:                                             ; preds = %.lr.ph, %bb.e
   br i1 %.not33, label %bb.o, label %bb.g
 
 bb.g:                                             ; preds = %._crit_edge
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !24   ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !24
   %i.l = icmp eq ptr %i.k, null
   br i1 %i.l, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.m = tail call ptr @OPENSSL_sk_new_null() #7  ; 3 uses
+  %i.m = tail call ptr @OPENSSL_sk_new_null() #7  ; 2 uses
   store ptr %i.m, ptr %i.j, align 8, !tbaa !24
   %i.n = icmp eq ptr %i.m, null
   br i1 %i.n, label %allocate_string_stack.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.g, %bb.h
-  %8 = phi ptr [ %i.k, %bb.g ], [ %i.m, %bb.h ]
   %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 40 ; 2 uses
   store ptr %2, ptr %i.o, align 8, !tbaa !30
   %i.p = getelementptr inbounds nuw i8, ptr %i.i, i64 48 ; 2 uses
   store ptr %3, ptr %i.p, align 8, !tbaa !30
   %i.q = getelementptr inbounds nuw i8, ptr %i.i, i64 56 ; 2 uses
   store ptr %4, ptr %i.q, align 8, !tbaa !30
-  %i.r = tail call i32 @OPENSSL_sk_push(ptr noundef nonnull %8, ptr noundef nonnull %i.i) #7 ; 3 uses
+  %8 = load ptr, ptr %i.j, align 8, !tbaa !24
+  %i.r = tail call i32 @OPENSSL_sk_push(ptr noundef %8, ptr noundef nonnull %i.i) #7 ; 3 uses
   %i.s = icmp slt i32 %i.r, 1
   br i1 %i.s, label %bb.j, label %bb.o
 
@@ -830,7 +830,7 @@ bb.q:                                             ; preds = %bb.p
 declare ptr @strchr(ptr noundef, i32 noundef) local_unnamed_addr #3
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc noalias ptr @general_allocate_prompt(ptr noundef %0, i32 noundef range(i32 0, 2) %1, i32 noundef range(i32 1, 6) %2, i32 noundef %3, ptr noundef %4) unnamed_addr #0 {
+define internal fastcc ptr @general_allocate_prompt(ptr noundef %0, i32 noundef range(i32 0, 2) %1, i32 noundef range(i32 1, 6) %2, i32 noundef %3, ptr noundef %4) unnamed_addr #0 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   br i1 %i.a, label %bb.b, label %bb.c

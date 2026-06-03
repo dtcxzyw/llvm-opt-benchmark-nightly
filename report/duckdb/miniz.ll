@@ -201,7 +201,7 @@ bb.h:                                             ; preds = %bb.a, %.loopexit
 }
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(write, argmem: none, inaccessiblemem: readwrite, target_mem: none) uwtable
-define noalias noundef ptr @_ZN12duckdb_miniz24tinfl_decompressor_allocEv() local_unnamed_addr #16 {
+define noundef ptr @_ZN12duckdb_miniz24tinfl_decompressor_allocEv() local_unnamed_addr #16 {
 bb.a:
   %i.a = tail call noalias dereferenceable_or_null(11000) ptr @malloc(i64 noundef 11000) #27 ; 3 uses
   %.not = icmp eq ptr %i.a, null

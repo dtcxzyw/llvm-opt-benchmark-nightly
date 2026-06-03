@@ -201,7 +201,7 @@ rb_current_ractor_raw.exit.thread3.i.i.i:         ; preds = %rb_current_ractor_r
 
 ruby_xmalloc_body.exit.i:                         ; preds = %rb_current_ractor_raw.exit.thread3.i.i.i, %rb_current_ractor_raw.exit.i.i.i, %bb.c, %bb.b
   %i.s = phi i1 [ true, %rb_current_ractor_raw.exit.i.i.i ], [ %i.r, %rb_current_ractor_raw.exit.thread3.i.i.i ], [ true, %bb.b ], [ true, %bb.c ]
-  %i.t = tail call fastcc noalias noundef ptr @rb_gc_impl_malloc(ptr noundef %i.g, i64 noundef 16, i1 noundef zeroext %i.s) ; 4 uses
+  %i.t = tail call fastcc noundef ptr @rb_gc_impl_malloc(ptr noundef %i.g, i64 noundef 16, i1 noundef zeroext %i.s) ; 4 uses
   %.not.i.i = icmp eq ptr %i.t, null
   br i1 %.not.i.i, label %bb.d, label %ruby_xmalloc.exit, !prof !60
 
@@ -277,7 +277,7 @@ rb_current_ractor_raw.exit.thread3.i.i:           ; preds = %rb_current_ractor_r
 
 ruby_xmalloc_body.exit:                           ; preds = %bb.d, %bb.e, %rb_current_ractor_raw.exit.i.i, %rb_current_ractor_raw.exit.thread3.i.i
   %i.q = phi i1 [ true, %rb_current_ractor_raw.exit.i.i ], [ %i.p, %rb_current_ractor_raw.exit.thread3.i.i ], [ true, %bb.d ], [ true, %bb.e ]
-  %i.r = tail call fastcc noalias noundef ptr @rb_gc_impl_malloc(ptr noundef %i.e, i64 noundef %0, i1 noundef zeroext %i.q) ; 2 uses
+  %i.r = tail call fastcc noundef ptr @rb_gc_impl_malloc(ptr noundef %i.e, i64 noundef %0, i1 noundef zeroext %i.q) ; 2 uses
   %.not.i = icmp eq ptr %i.r, null
   br i1 %.not.i, label %bb.f, label %handle_malloc_failure.exit, !prof !60
 
@@ -415,7 +415,7 @@ rb_current_ractor_raw.exit.thread3.i.i.i.i:       ; preds = %rb_current_ractor_r
 
 ruby_xmalloc_body.exit.i.i:                       ; preds = %rb_current_ractor_raw.exit.thread3.i.i.i.i, %rb_current_ractor_raw.exit.i.i.i.i, %bb.c, %bb.b
   %i.s = phi i1 [ true, %rb_current_ractor_raw.exit.i.i.i.i ], [ %i.r, %rb_current_ractor_raw.exit.thread3.i.i.i.i ], [ true, %bb.b ], [ true, %bb.c ]
-  %i.t = tail call fastcc noalias noundef ptr @rb_gc_impl_malloc(ptr noundef %i.g, i64 noundef 16, i1 noundef zeroext %i.s) ; 4 uses
+  %i.t = tail call fastcc noundef ptr @rb_gc_impl_malloc(ptr noundef %i.g, i64 noundef 16, i1 noundef zeroext %i.s) ; 4 uses
   %.not.i.i.i = icmp eq ptr %i.t, null
   br i1 %.not.i.i.i, label %bb.d, label %rb_gc_register_address.exit, !prof !60
 
@@ -818,7 +818,7 @@ rb_current_ractor_raw.exit.thread3.i.i:           ; preds = %rb_current_ractor_r
 ruby_xmalloc2_body.exit:                          ; preds = %bb.c, %bb.d, %rb_current_ractor_raw.exit.i.i, %rb_current_ractor_raw.exit.thread3.i.i
   %i.u = phi i1 [ true, %rb_current_ractor_raw.exit.i.i ], [ %i.t, %rb_current_ractor_raw.exit.thread3.i.i ], [ true, %bb.c ], [ true, %bb.d ]
   %i.v = extractvalue { i64, i1 } %i.f, 0
-  %i.w = tail call fastcc noalias noundef ptr @rb_gc_impl_malloc(ptr noundef %i.d, i64 noundef %i.v, i1 noundef zeroext %i.u) ; 2 uses
+  %i.w = tail call fastcc noundef ptr @rb_gc_impl_malloc(ptr noundef %i.d, i64 noundef %i.v, i1 noundef zeroext %i.u) ; 2 uses
   %.not.i = icmp eq ptr %i.w, null
   br i1 %.not.i, label %bb.e, label %handle_malloc_failure.exit, !prof !60
 
@@ -831,7 +831,7 @@ handle_malloc_failure.exit:                       ; preds = %ruby_xmalloc2_body.
 }
 
 ; Function Attrs: nounwind sspstrong allocsize(1) uwtable
-define dso_local noalias nonnull ptr @ruby_sized_xrealloc(ptr noundef %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #28 {
+define dso_local nonnull ptr @ruby_sized_xrealloc(ptr noundef %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #28 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = icmp slt i64 %1, 0
@@ -881,7 +881,7 @@ rb_current_ractor_raw.exit.thread3.i.i:           ; preds = %rb_current_ractor_r
 
 ruby_sized_xrealloc_body.exit:                    ; preds = %bb.d, %bb.e, %rb_current_ractor_raw.exit.i.i, %rb_current_ractor_raw.exit.thread3.i.i
   %i.q = phi i1 [ true, %rb_current_ractor_raw.exit.i.i ], [ %i.p, %rb_current_ractor_raw.exit.thread3.i.i ], [ true, %bb.d ], [ true, %bb.e ]
-  %i.r = tail call fastcc noalias noundef ptr @rb_gc_impl_realloc(ptr noundef %i.e, ptr noundef %0, i64 noundef %1, i64 noundef %2, i1 noundef zeroext %i.q) ; 2 uses
+  %i.r = tail call fastcc noundef ptr @rb_gc_impl_realloc(ptr noundef %i.e, ptr noundef %0, i64 noundef %1, i64 noundef %2, i1 noundef zeroext %i.q) ; 2 uses
   %.not.i = icmp eq ptr %i.r, null
   br i1 %.not.i, label %bb.f, label %handle_malloc_failure.exit, !prof !60
 
@@ -894,7 +894,7 @@ handle_malloc_failure.exit:                       ; preds = %ruby_sized_xrealloc
 }
 
 ; Function Attrs: nounwind sspstrong allocsize(1) uwtable
-define dso_local noalias nonnull ptr @ruby_xrealloc(ptr noundef %0, i64 noundef %1) local_unnamed_addr #28 {
+define dso_local nonnull ptr @ruby_xrealloc(ptr noundef %0, i64 noundef %1) local_unnamed_addr #28 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = icmp slt i64 %1, 0
@@ -944,7 +944,7 @@ rb_current_ractor_raw.exit.thread3.i.i.i:         ; preds = %rb_current_ractor_r
 
 ruby_sized_xrealloc_body.exit.i:                  ; preds = %rb_current_ractor_raw.exit.thread3.i.i.i, %rb_current_ractor_raw.exit.i.i.i, %bb.e, %bb.d
   %i.q = phi i1 [ true, %rb_current_ractor_raw.exit.i.i.i ], [ %i.p, %rb_current_ractor_raw.exit.thread3.i.i.i ], [ true, %bb.d ], [ true, %bb.e ]
-  %i.r = tail call fastcc noalias noundef ptr @rb_gc_impl_realloc(ptr noundef %i.e, ptr noundef %0, i64 noundef %1, i64 noundef 0, i1 noundef zeroext %i.q) ; 2 uses
+  %i.r = tail call fastcc noundef ptr @rb_gc_impl_realloc(ptr noundef %i.e, ptr noundef %0, i64 noundef %1, i64 noundef 0, i1 noundef zeroext %i.q) ; 2 uses
   %.not.i.i = icmp eq ptr %i.r, null
   br i1 %.not.i.i, label %bb.f, label %ruby_sized_xrealloc.exit, !prof !60
 
@@ -957,7 +957,7 @@ ruby_sized_xrealloc.exit:                         ; preds = %ruby_sized_xrealloc
 }
 
 ; Function Attrs: nounwind sspstrong allocsize(1,2) uwtable
-define dso_local noalias nonnull ptr @ruby_sized_xrealloc2(ptr noundef %0, i64 noundef %1, i64 noundef %2, i64 noundef %3) local_unnamed_addr #29 {
+define dso_local nonnull ptr @ruby_sized_xrealloc2(ptr noundef %0, i64 noundef %1, i64 noundef %2, i64 noundef %3) local_unnamed_addr #29 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = load i64, ptr @rb_eArgError, align 8, !tbaa !59
@@ -1028,7 +1028,7 @@ ruby_sized_xrealloc2_body.exit:                   ; preds = %bb.d, %bb.e, %rb_cu
   %i.w = phi i1 [ true, %rb_current_ractor_raw.exit.i.i ], [ %i.v, %rb_current_ractor_raw.exit.thread3.i.i ], [ true, %bb.d ], [ true, %bb.e ]
   %i.x = mul i64 %3, %2
   %i.y = extractvalue { i64, i1 } %i.c, 0
-  %i.z = tail call fastcc noalias noundef ptr @rb_gc_impl_realloc(ptr noundef %i.k, ptr noundef %0, i64 noundef %i.y, i64 noundef %i.x, i1 noundef zeroext %i.w) ; 2 uses
+  %i.z = tail call fastcc noundef ptr @rb_gc_impl_realloc(ptr noundef %i.k, ptr noundef %0, i64 noundef %i.y, i64 noundef %i.x, i1 noundef zeroext %i.w) ; 2 uses
   %.not.i = icmp eq ptr %i.z, null
   br i1 %.not.i, label %bb.f, label %handle_malloc_failure.exit, !prof !60
 
@@ -1041,7 +1041,7 @@ handle_malloc_failure.exit:                       ; preds = %ruby_sized_xrealloc
 }
 
 ; Function Attrs: nounwind sspstrong allocsize(1,2) uwtable
-define dso_local noalias nonnull ptr @ruby_xrealloc2(ptr noundef %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #29 {
+define dso_local nonnull ptr @ruby_xrealloc2(ptr noundef %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #29 {
 bb.a:
   %i.a = tail call nonnull ptr @ruby_sized_xrealloc2(ptr noundef %0, i64 noundef %1, i64 noundef %2, i64 noundef 0) #71
   ret ptr %i.a
@@ -1299,7 +1299,7 @@ rb_current_ractor_raw.exit.thread3.i.i.i:         ; preds = %rb_current_ractor_r
 
 ruby_xmalloc_body.exit.i:                         ; preds = %rb_current_ractor_raw.exit.thread3.i.i.i, %rb_current_ractor_raw.exit.i.i.i, %bb.g, %bb.f
   %i.ac = phi i1 [ true, %rb_current_ractor_raw.exit.i.i.i ], [ %i.ab, %rb_current_ractor_raw.exit.thread3.i.i.i ], [ true, %bb.f ], [ true, %bb.g ]
-  %i.ad = tail call fastcc noalias noundef ptr @rb_gc_impl_malloc(ptr noundef %i.q, i64 noundef %i.m, i1 noundef zeroext %i.ac) ; 2 uses
+  %i.ad = tail call fastcc noundef ptr @rb_gc_impl_malloc(ptr noundef %i.q, i64 noundef %i.m, i1 noundef zeroext %i.ac) ; 2 uses
   %.not.i.i4 = icmp eq ptr %i.ad, null
   br i1 %.not.i.i4, label %bb.h, label %ruby_xmalloc.exit, !prof !60
 
@@ -1352,7 +1352,7 @@ size_mul_add_or_raise.exit:                       ; preds = %bb.a
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden noalias nonnull ptr @rb_xrealloc_mul_add(ptr noundef %0, i64 noundef %1, i64 noundef %2, i64 noundef %3) local_unnamed_addr #2 {
+define hidden nonnull ptr @rb_xrealloc_mul_add(ptr noundef %0, i64 noundef %1, i64 noundef %2, i64 noundef %3) local_unnamed_addr #2 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = load i64, ptr @rb_eArgError, align 8, !tbaa !59
@@ -1435,7 +1435,7 @@ rb_current_ractor_raw.exit.thread3.i.i.i.i:       ; preds = %rb_current_ractor_r
 
 ruby_sized_xrealloc_body.exit.i.i:                ; preds = %rb_current_ractor_raw.exit.thread3.i.i.i.i, %rb_current_ractor_raw.exit.i.i.i.i, %bb.g, %bb.f
   %i.ac = phi i1 [ true, %rb_current_ractor_raw.exit.i.i.i.i ], [ %i.ab, %rb_current_ractor_raw.exit.thread3.i.i.i.i ], [ true, %bb.f ], [ true, %bb.g ]
-  %i.ad = tail call fastcc noalias noundef ptr @rb_gc_impl_realloc(ptr noundef %i.q, ptr noundef %0, i64 noundef %i.m, i64 noundef 0, i1 noundef zeroext %i.ac) ; 2 uses
+  %i.ad = tail call fastcc noundef ptr @rb_gc_impl_realloc(ptr noundef %i.q, ptr noundef %0, i64 noundef %i.m, i64 noundef 0, i1 noundef zeroext %i.ac) ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.ad, null
   br i1 %.not.i.i.i, label %bb.h, label %ruby_xrealloc.exit, !prof !60
 
@@ -1535,7 +1535,7 @@ rb_current_ractor_raw.exit.thread3.i.i.i:         ; preds = %rb_current_ractor_r
 
 ruby_xmalloc_body.exit.i:                         ; preds = %rb_current_ractor_raw.exit.thread3.i.i.i, %rb_current_ractor_raw.exit.i.i.i, %bb.g, %bb.f
   %i.af = phi i1 [ true, %rb_current_ractor_raw.exit.i.i.i ], [ %i.ae, %rb_current_ractor_raw.exit.thread3.i.i.i ], [ true, %bb.f ], [ true, %bb.g ]
-  %i.ag = tail call fastcc noalias noundef ptr @rb_gc_impl_malloc(ptr noundef %i.t, i64 noundef %i.p, i1 noundef zeroext %i.af) ; 2 uses
+  %i.ag = tail call fastcc noundef ptr @rb_gc_impl_malloc(ptr noundef %i.t, i64 noundef %i.p, i1 noundef zeroext %i.af) ; 2 uses
   %.not.i.i5 = icmp eq ptr %i.ag, null
   br i1 %.not.i.i5, label %bb.h, label %ruby_xmalloc.exit, !prof !60
 
@@ -1938,7 +1938,7 @@ rb_current_ractor_raw.exit.thread3.i.i.i.i:       ; preds = %rb_current_ractor_r
 
 ruby_xmalloc_body.exit.i.i:                       ; preds = %rb_current_ractor_raw.exit.thread3.i.i.i.i, %rb_current_ractor_raw.exit.i.i.i.i, %bb.c, %bb.b
   %i.s = phi i1 [ true, %rb_current_ractor_raw.exit.i.i.i.i ], [ %i.r, %rb_current_ractor_raw.exit.thread3.i.i.i.i ], [ true, %bb.b ], [ true, %bb.c ]
-  %i.t = tail call fastcc noalias noundef ptr @rb_gc_impl_malloc(ptr noundef %i.g, i64 noundef 16, i1 noundef zeroext %i.s) ; 4 uses
+  %i.t = tail call fastcc noundef ptr @rb_gc_impl_malloc(ptr noundef %i.g, i64 noundef 16, i1 noundef zeroext %i.s) ; 4 uses
   %.not.i.i.i = icmp eq ptr %i.t, null
   br i1 %.not.i.i.i, label %bb.d, label %rb_gc_register_address.exit, !prof !60
 
@@ -2341,7 +2341,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc noalias noundef ptr @rb_gc_impl_malloc(ptr noundef %0, i64 noundef %1, i1 noundef zeroext %2) unnamed_addr #2 {
+define internal fastcc noundef ptr @rb_gc_impl_malloc(ptr noundef %0, i64 noundef %1, i1 noundef zeroext %2) unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 28         ; 3 uses
   %.val.i = load i16, ptr %i.a, align 4           ; 2 uses
@@ -2744,7 +2744,7 @@ garbage_collect_with_gvl.exit:                    ; preds = %bb.k, %bb.j, %has_s
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc noalias noundef ptr @rb_gc_impl_realloc(ptr noundef %0, ptr noundef %1, i64 noundef %2, i64 noundef %3, i1 noundef zeroext %4) unnamed_addr #2 {
+define internal fastcc noundef ptr @rb_gc_impl_realloc(ptr noundef %0, ptr noundef %1, i64 noundef %2, i64 noundef %3, i1 noundef zeroext %4) unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 28         ; 4 uses
   %.val.i = load i16, ptr %i.a, align 4

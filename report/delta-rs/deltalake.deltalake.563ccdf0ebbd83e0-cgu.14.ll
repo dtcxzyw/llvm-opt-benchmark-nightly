@@ -201,7 +201,7 @@ _RINvXs7_NtCseqDwI8vvjGQ_10serde_json3serINtB6_8CompoundQINtNtCs6Po7BT7Nknu_5all
   %i.r = tail call noundef ptr @_RINvNtCseqDwI8vvjGQ_10serde_json3ser18format_escaped_strQINtNtCs6Po7BT7Nknu_5alloc3vec3VechENtB2_16CompactFormatterECs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull readonly align 8 dereferenceable(8) %i.n, ptr noalias nonnull readonly poison, ptr noalias noundef nonnull readonly captures(address, read_provenance) @57, i64 noundef 8), !noalias !1834 ; 0 uses
   %.val.i4.i.i = load ptr, ptr %i.n, align 8, !noalias !1835, !nonnull !12, !align !13, !noundef !12
   tail call void @_RNvMs1_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechE17extend_from_sliceCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(24) %.val.i4.i.i, ptr noalias noundef nonnull readonly captures(address, read_provenance) @111, i64 noundef range(i64 0, -9223372036854775808) 1), !noalias !1835
-  %i.s = tail call fastcc noalias noundef align 8 ptr @_RINvXs1I_NtNtCs1gOyXocuPRE_10serde_core3ser5implsINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema13MetadataValueENtB9_9Serialize9serializeQINtNtCseqDwI8vvjGQ_10serde_json3ser10SerializerQINtNtB1K_3vec3VechEEECs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.k, ptr noalias noundef align 8 dereferenceable(8) %i.n) #44, !noalias !1838 ; 2 uses
+  %i.s = tail call fastcc noundef align 8 ptr @_RINvXs1I_NtNtCs1gOyXocuPRE_10serde_core3ser5implsINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema13MetadataValueENtB9_9Serialize9serializeQINtNtCseqDwI8vvjGQ_10serde_json3ser10SerializerQINtNtB1K_3vec3VechEEECs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.k, ptr noalias noundef align 8 dereferenceable(8) %i.n) #44, !noalias !1838 ; 2 uses
   %.not29 = icmp eq ptr %i.s, null
   br i1 %.not29, label %_RNvXs7_NtCseqDwI8vvjGQ_10serde_json3serINtB5_8CompoundQINtNtCs6Po7BT7Nknu_5alloc3vec3VechENtB5_16CompactFormatterENtNtCs1gOyXocuPRE_10serde_core3ser15SerializeStruct3endCs7p2uQeJxui2_9deltalake.exit, label %bb.d
 
@@ -604,7 +604,7 @@ bb.g:                                             ; preds = %bb.e, %bb.d, %bb.c,
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noalias noundef align 8 ptr @_RINvXs1I_NtNtCs1gOyXocuPRE_10serde_core3ser5implsINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema13MetadataValueENtB9_9Serialize9serializeQINtNtCseqDwI8vvjGQ_10serde_json3ser10SerializerQINtNtB1K_3vec3VechEEECs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %0, ptr noalias noundef nonnull align 8 dereferenceable(8) %1) unnamed_addr #2 personality ptr @rust_eh_personality {
+define internal fastcc noundef align 8 ptr @_RINvXs1I_NtNtCs1gOyXocuPRE_10serde_core3ser5implsINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema13MetadataValueENtB9_9Serialize9serializeQINtNtCseqDwI8vvjGQ_10serde_json3ser10SerializerQINtNtB1K_3vec3VechEEECs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %0, ptr noalias noundef nonnull align 8 dereferenceable(8) %1) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [40 x i8], align 1                ; 10 uses
   %i.b = alloca [40 x i8], align 8                ; 8 uses
@@ -1007,7 +1007,7 @@ bb.dc:                                            ; preds = %bb.ct
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noalias noundef align 8 ptr @_RINvYINtNtCseqDwI8vvjGQ_10serde_json3ser8CompoundQINtNtCs6Po7BT7Nknu_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs1gOyXocuPRE_10serde_core3ser12SerializeMap15serialize_entryeINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtBR_6string6StringNtNtB8_5value5ValueEEECs7p2uQeJxui2_9deltalake(ptr noalias noundef align 8 captures(none) dereferenceable(16) %0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %3) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden noundef align 8 ptr @_RINvYINtNtCseqDwI8vvjGQ_10serde_json3ser8CompoundQINtNtCs6Po7BT7Nknu_5alloc3vec3VechENtB6_16CompactFormatterENtNtCs1gOyXocuPRE_10serde_core3ser12SerializeMap15serialize_entryeINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtBR_6string6StringNtNtB8_5value5ValueEEECs7p2uQeJxui2_9deltalake(ptr noalias noundef align 8 captures(none) dereferenceable(16) %0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %3) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [40 x i8], align 8                ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2961)
@@ -1410,7 +1410,7 @@ bb.c:                                             ; preds = %bb.b, %_RNvXs4_NtNt
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noalias noundef align 8 ptr @_RINvYINtNtNtCs6sYutav3ODB_5serde7private3ser17FlatMapSerializerINtNtCseqDwI8vvjGQ_10serde_json3ser8CompoundQINtNtCs6Po7BT7Nknu_5alloc3vec3VechENtB12_16CompactFormatterEENtNtCs1gOyXocuPRE_10serde_core3ser10Serializer11collect_mapRNtNtB1N_6string6StringRNtNtB14_5value5ValueRINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapB3F_B42_EECs7p2uQeJxui2_9deltalake(ptr noalias noundef align 8 captures(none) dereferenceable(16) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden noundef align 8 ptr @_RINvYINtNtNtCs6sYutav3ODB_5serde7private3ser17FlatMapSerializerINtNtCseqDwI8vvjGQ_10serde_json3ser8CompoundQINtNtCs6Po7BT7Nknu_5alloc3vec3VechENtB12_16CompactFormatterEENtNtCs1gOyXocuPRE_10serde_core3ser10Serializer11collect_mapRNtNtB1N_6string6StringRNtNtB14_5value5ValueRINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapB3F_B42_EECs7p2uQeJxui2_9deltalake(ptr noalias noundef align 8 captures(none) dereferenceable(16) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [40 x i8], align 8                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1813,7 +1813,7 @@ bb.j:                                             ; preds = %.noexc
   store i64 0, ptr %i.ai, align 8, !noalias !5555
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !5559
   store ptr %i.h, ptr %i.f, align 8, !noalias !5559
-  %i.aj = invoke fastcc noalias noundef align 8 ptr @_RINvXs1I_NtNtCs1gOyXocuPRE_10serde_core3ser5implsINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema13MetadataValueENtB9_9Serialize9serializeQINtNtCseqDwI8vvjGQ_10serde_json3ser10SerializerQINtNtB1K_3vec3VechEEECs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.y, ptr noalias noundef align 8 dereferenceable(8) %i.f)
+  %i.aj = invoke fastcc noundef align 8 ptr @_RINvXs1I_NtNtCs1gOyXocuPRE_10serde_core3ser5implsINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema13MetadataValueENtB9_9Serialize9serializeQINtNtCseqDwI8vvjGQ_10serde_json3ser10SerializerQINtNtB1K_3vec3VechEEECs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.y, ptr noalias noundef align 8 dereferenceable(8) %i.f)
           to label %bb.l unwind label %bb.k, !noalias !5563 ; 2 uses
 
 bb.k:                                             ; preds = %bb.j

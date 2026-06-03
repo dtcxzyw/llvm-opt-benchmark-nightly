@@ -201,7 +201,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, argmem: none, target_mem: none) uwtable
-define hidden noalias noundef ptr @_Py_LibHacl_Hacl_Hash_SHA2_malloc_256() local_unnamed_addr #6 {
+define hidden noundef ptr @_Py_LibHacl_Hacl_Hash_SHA2_malloc_256() local_unnamed_addr #6 {
 bb.a:
   %i.a = tail call noalias dereferenceable_or_null(64) ptr @calloc(i64 noundef 64, i64 noundef 1) #17 ; 4 uses
   %i.b = icmp eq ptr %i.a, null
@@ -252,7 +252,7 @@ declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #8
 declare noalias noundef ptr @malloc(i64 noundef) local_unnamed_addr #9
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, target_mem: none) uwtable
-define hidden noalias noundef ptr @_Py_LibHacl_Hacl_Hash_SHA2_copy_256(ptr noundef readonly captures(none) %0) local_unnamed_addr #10 {
+define hidden noundef ptr @_Py_LibHacl_Hacl_Hash_SHA2_copy_256(ptr noundef readonly captures(none) %0) local_unnamed_addr #10 {
 bb.a:
   %.sroa.023.0.copyload = load ptr, ptr %0, align 8, !tbaa !16
   %.sroa.424.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -604,7 +604,7 @@ _Py_LibHacl_Hacl_Hash_SHA2_sha256_update_last.exit: ; preds = %_Py_LibHacl_Hacl_
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, argmem: none, target_mem: none) uwtable
-define hidden noalias noundef ptr @_Py_LibHacl_Hacl_Hash_SHA2_malloc_224() local_unnamed_addr #6 {
+define hidden noundef ptr @_Py_LibHacl_Hacl_Hash_SHA2_malloc_224() local_unnamed_addr #6 {
 bb.a:
   %i.a = tail call noalias dereferenceable_or_null(64) ptr @calloc(i64 noundef 64, i64 noundef 1) #17 ; 4 uses
   %i.b = icmp eq ptr %i.a, null
@@ -823,7 +823,7 @@ _Py_LibHacl_Hacl_Hash_SHA2_sha224_update_last.exit: ; preds = %_Py_LibHacl_Hacl_
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, argmem: none, target_mem: none) uwtable
-define hidden noalias noundef ptr @_Py_LibHacl_Hacl_Hash_SHA2_malloc_512() local_unnamed_addr #6 {
+define hidden noundef ptr @_Py_LibHacl_Hacl_Hash_SHA2_malloc_512() local_unnamed_addr #6 {
 bb.a:
   %i.a = tail call noalias dereferenceable_or_null(128) ptr @calloc(i64 noundef 128, i64 noundef 1) #17 ; 4 uses
   %i.b = icmp eq ptr %i.a, null
@@ -877,7 +877,7 @@ bb.g:                                             ; preds = %bb.c, %bb.f, %bb.e,
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, target_mem: none) uwtable
-define hidden noalias noundef ptr @_Py_LibHacl_Hacl_Hash_SHA2_copy_512(ptr noundef readonly captures(none) %0) local_unnamed_addr #10 {
+define hidden noundef ptr @_Py_LibHacl_Hacl_Hash_SHA2_copy_512(ptr noundef readonly captures(none) %0) local_unnamed_addr #10 {
 bb.a:
   %.sroa.023.0.copyload = load ptr, ptr %0, align 8, !tbaa !22
   %.sroa.424.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1280,7 +1280,7 @@ _Py_LibHacl_Hacl_Hash_SHA2_sha512_update_last.exit: ; preds = %_Py_LibHacl_Hacl_
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, argmem: none, target_mem: none) uwtable
-define hidden noalias noundef ptr @_Py_LibHacl_Hacl_Hash_SHA2_malloc_384() local_unnamed_addr #6 {
+define hidden noundef ptr @_Py_LibHacl_Hacl_Hash_SHA2_malloc_384() local_unnamed_addr #6 {
 bb.a:
   %i.a = tail call noalias dereferenceable_or_null(128) ptr @calloc(i64 noundef 128, i64 noundef 1) #17 ; 4 uses
   %i.b = icmp eq ptr %i.a, null

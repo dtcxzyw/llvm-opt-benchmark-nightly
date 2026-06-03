@@ -47,7 +47,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.13 = private unnamed_addr constant [11 x i8] c"properties\00", align 1
 
 ; Function Attrs: nounwind uwtable
-define dso_local noalias ptr @OSSL_STORE_open_ex(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef %7) local_unnamed_addr #0 {
+define dso_local ptr @OSSL_STORE_open_ex(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef %7) local_unnamed_addr #0 {
 bb.a:
   %8 = alloca [2 x %struct.ossl_param_st], align 16 ; 11 uses
   %9 = alloca %struct.ossl_param_st, align 8      ; 8 uses
@@ -450,7 +450,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 declare void @CRYPTO_free(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #3
 
 ; Function Attrs: nounwind uwtable
-define dso_local noalias ptr @OSSL_STORE_open(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) local_unnamed_addr #0 {
+define dso_local ptr @OSSL_STORE_open(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call ptr @OSSL_STORE_open_ex(ptr noundef %0, ptr noundef null, ptr noundef null, ptr noundef %1, ptr noundef %2, ptr noundef null, ptr noundef %3, ptr noundef %4)
   ret ptr %i.a
@@ -853,7 +853,7 @@ ossl_store_close_it.exit:                         ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local noalias ptr @OSSL_STORE_INFO_new(i32 noundef %0, ptr noundef %1) local_unnamed_addr #0 {
+define dso_local ptr @OSSL_STORE_INFO_new(i32 noundef %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 24, ptr noundef nonnull @.str, i32 noundef 612) #8 ; 4 uses
   %i.b = icmp eq ptr %i.a, null
@@ -870,7 +870,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local noalias ptr @OSSL_STORE_INFO_new_NAME(ptr noundef %0) local_unnamed_addr #0 {
+define dso_local ptr @OSSL_STORE_INFO_new_NAME(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 24, ptr noundef nonnull @.str, i32 noundef 612) #8 ; 5 uses
   %i.b = icmp eq ptr %i.a, null
@@ -918,7 +918,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local noalias ptr @OSSL_STORE_INFO_new_PARAMS(ptr noundef %0) local_unnamed_addr #0 {
+define dso_local ptr @OSSL_STORE_INFO_new_PARAMS(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 24, ptr noundef nonnull @.str, i32 noundef 612) #8 ; 4 uses
   %i.b = icmp eq ptr %i.a, null
@@ -941,7 +941,7 @@ bb.c:                                             ; preds = %OSSL_STORE_INFO_new
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local noalias ptr @OSSL_STORE_INFO_new_PUBKEY(ptr noundef %0) local_unnamed_addr #0 {
+define dso_local ptr @OSSL_STORE_INFO_new_PUBKEY(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 24, ptr noundef nonnull @.str, i32 noundef 612) #8 ; 4 uses
   %i.b = icmp eq ptr %i.a, null
@@ -964,7 +964,7 @@ bb.c:                                             ; preds = %OSSL_STORE_INFO_new
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local noalias ptr @OSSL_STORE_INFO_new_PKEY(ptr noundef %0) local_unnamed_addr #0 {
+define dso_local ptr @OSSL_STORE_INFO_new_PKEY(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 24, ptr noundef nonnull @.str, i32 noundef 612) #8 ; 4 uses
   %i.b = icmp eq ptr %i.a, null
@@ -987,7 +987,7 @@ bb.c:                                             ; preds = %OSSL_STORE_INFO_new
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local noalias ptr @OSSL_STORE_INFO_new_CERT(ptr noundef %0) local_unnamed_addr #0 {
+define dso_local ptr @OSSL_STORE_INFO_new_CERT(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 24, ptr noundef nonnull @.str, i32 noundef 612) #8 ; 4 uses
   %i.b = icmp eq ptr %i.a, null
@@ -1010,7 +1010,7 @@ bb.c:                                             ; preds = %OSSL_STORE_INFO_new
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local noalias ptr @OSSL_STORE_INFO_new_CRL(ptr noundef %0) local_unnamed_addr #0 {
+define dso_local ptr @OSSL_STORE_INFO_new_CRL(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 24, ptr noundef nonnull @.str, i32 noundef 612) #8 ; 4 uses
   %i.b = icmp eq ptr %i.a, null
@@ -1413,7 +1413,7 @@ declare ptr @ossl_provider_ctx(ptr noundef) local_unnamed_addr #3
 declare ptr @OSSL_PARAM_locate_const(ptr noundef, ptr noundef) local_unnamed_addr #3
 
 ; Function Attrs: nounwind uwtable
-define dso_local noalias ptr @OSSL_STORE_SEARCH_by_name(ptr noundef %0) local_unnamed_addr #0 {
+define dso_local ptr @OSSL_STORE_SEARCH_by_name(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 48, ptr noundef nonnull @.str, i32 noundef 913) #8 ; 4 uses
   %i.b = icmp eq ptr %i.a, null
@@ -1430,7 +1430,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local noalias ptr @OSSL_STORE_SEARCH_by_issuer_serial(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 {
+define dso_local ptr @OSSL_STORE_SEARCH_by_issuer_serial(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 48, ptr noundef nonnull @.str, i32 noundef 926) #8 ; 5 uses
   %i.b = icmp eq ptr %i.a, null
@@ -1497,7 +1497,7 @@ bb.g:                                             ; preds = %bb.a, %bb.f, %bb.e,
 declare i32 @EVP_MD_get_size(ptr noundef) local_unnamed_addr #3
 
 ; Function Attrs: nounwind uwtable
-define dso_local noalias ptr @OSSL_STORE_SEARCH_by_alias(ptr noundef %0) local_unnamed_addr #0 {
+define dso_local ptr @OSSL_STORE_SEARCH_by_alias(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 48, ptr noundef nonnull @.str, i32 noundef 972) #8 ; 5 uses
   %i.b = icmp eq ptr %i.a, null

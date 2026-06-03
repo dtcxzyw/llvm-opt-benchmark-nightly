@@ -14,7 +14,7 @@ target triple = "x86_64-pc-linux-gnu"
 @switch.table._ZN10duckdb_hll12sdssplitargsEPKcPi.3 = private unnamed_addr constant [5 x i64] [i64 -2, i64 -4, i64 -6, i64 -10, i64 -18], align 8
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(readwrite, target_mem: none) uwtable
-define noalias noundef ptr @_ZN10duckdb_hll9sdsnewlenEPKvm(ptr noundef readonly captures(address_is_null) %0, i64 noundef %1) local_unnamed_addr #0 {
+define noundef ptr @_ZN10duckdb_hll9sdsnewlenEPKvm(ptr noundef readonly captures(address_is_null) %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp ult i64 %1, 32
   br i1 %i.a, label %_ZN10duckdb_hllL10sdsReqTypeEm.exit, label %bb.b
@@ -142,7 +142,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(write, argmem: none, inaccessiblemem: readwrite, target_mem: none) uwtable
-define noalias noundef ptr @_ZN10duckdb_hll8sdsemptyEv() local_unnamed_addr #4 {
+define noundef ptr @_ZN10duckdb_hll8sdsemptyEv() local_unnamed_addr #4 {
 bb.a:
   %i.a = tail call noalias dereferenceable_or_null(5) ptr @malloc(i64 noundef 5) #27 ; 5 uses
   %i.b = icmp eq ptr %i.a, null
@@ -164,7 +164,7 @@ _ZN10duckdb_hll9sdsnewlenEPKvm.exit:              ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(readwrite, target_mem: none) uwtable
-define noalias noundef ptr @_ZN10duckdb_hll6sdsnewEPKc(ptr noundef readonly captures(address_is_null) %0) local_unnamed_addr #0 {
+define noundef ptr @_ZN10duckdb_hll6sdsnewEPKc(ptr noundef readonly captures(address_is_null) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   br i1 %i.a, label %_ZN10duckdb_hll9sdsnewlenEPKvm.exit, label %.split
@@ -282,7 +282,7 @@ _ZN10duckdb_hll9sdsnewlenEPKvm.exit5:             ; preds = %bb.m, %_ZN10duckdb_
 declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #5
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(readwrite, target_mem: none) uwtable
-define noalias noundef ptr @_ZN10duckdb_hll6sdsdupEPc(ptr noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define noundef ptr @_ZN10duckdb_hll6sdsdupEPc(ptr noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds i8, ptr %0, i64 -1
   %i.b = load i8, ptr %i.a, align 1, !tbaa !21
@@ -685,7 +685,7 @@ _ZN10duckdb_hllL11sdssetallocEPcm.exit:           ; preds = %bb.t, %bb.s, %bb.r,
 declare noalias noundef ptr @realloc(ptr allocptr noundef captures(none), i64 noundef) local_unnamed_addr #10
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, target_mem: none) uwtable
-define noalias noundef ptr @_ZN10duckdb_hll18sdsRemoveFreeSpaceEPc(ptr noundef captures(none) %0) local_unnamed_addr #9 {
+define noundef ptr @_ZN10duckdb_hll18sdsRemoveFreeSpaceEPc(ptr noundef captures(none) %0) local_unnamed_addr #9 {
 bb.a:
   %i.a = getelementptr inbounds i8, ptr %0, i64 -1
   %i.b = load i8, ptr %i.a, align 1, !tbaa !21    ; 2 uses
@@ -1088,7 +1088,7 @@ bb.c:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: mustprogress nofree nounwind memory(readwrite, argmem: none, target_mem: none) uwtable
-define noalias noundef ptr @_ZN10duckdb_hll15sdsfromlonglongEx(i64 noundef %0) local_unnamed_addr #13 {
+define noundef ptr @_ZN10duckdb_hll15sdsfromlonglongEx(i64 noundef %0) local_unnamed_addr #13 {
 bb.a:
   %i.a = alloca [21 x i8], align 16               ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #29
@@ -1491,7 +1491,7 @@ _ZN10duckdb_hllL6sdslenEPc.exit17:                ; preds = %_ZN10duckdb_hllL6sd
 declare i32 @memcmp(ptr noundef captures(none), ptr noundef captures(none), i64 noundef) local_unnamed_addr #5
 
 ; Function Attrs: mustprogress nounwind memory(readwrite, target_mem: none) uwtable
-define noalias noundef ptr @_ZN10duckdb_hll11sdssplitlenEPKclS1_iPi(ptr noundef readonly captures(address_is_null) %0, i64 noundef %1, ptr noundef readonly captures(none) %2, i32 noundef %3, ptr noundef writeonly captures(none) %4) local_unnamed_addr #19 {
+define noundef ptr @_ZN10duckdb_hll11sdssplitlenEPKclS1_iPi(ptr noundef readonly captures(address_is_null) %0, i64 noundef %1, ptr noundef readonly captures(none) %2, i32 noundef %3, ptr noundef writeonly captures(none) %4) local_unnamed_addr #19 {
 bb.a:
   %i.a = icmp slt i32 %3, 1
   %i.b = icmp slt i64 %1, 0

@@ -153,7 +153,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind sspstrong willreturn memory(readwrite, argmem: none, target_mem: none) uwtable
-define dso_local noalias noundef ptr @rb_parser_st_init_table(ptr noundef %0) local_unnamed_addr #6 {
+define dso_local noundef ptr @rb_parser_st_init_table(ptr noundef %0) local_unnamed_addr #6 {
 bb.a:
   %i.a = tail call noalias dereferenceable_or_null(56) ptr @malloc(i64 noundef 56) #24 ; 13 uses
   %i.b = icmp eq ptr %i.a, null
@@ -195,7 +195,7 @@ rb_parser_st_init_table_with_size.exit:           ; preds = %rb_parser_st_init_e
 }
 
 ; Function Attrs: mustprogress nounwind sspstrong willreturn memory(readwrite, argmem: none, target_mem: none) uwtable
-define dso_local noalias noundef ptr @rb_parser_st_init_numtable() local_unnamed_addr #6 {
+define dso_local noundef ptr @rb_parser_st_init_numtable() local_unnamed_addr #6 {
 bb.a:
   %i.a = tail call noalias dereferenceable_or_null(56) ptr @malloc(i64 noundef 56) #24 ; 13 uses
   %i.b = icmp eq ptr %i.a, null
@@ -258,7 +258,7 @@ rb_parser_st_init_table_with_size.exit:           ; preds = %bb.a, %bb.b, %bb.c
 }
 
 ; Function Attrs: mustprogress nounwind sspstrong willreturn memory(readwrite, argmem: none, target_mem: none) uwtable
-define dso_local noalias noundef ptr @rb_parser_st_init_strtable() local_unnamed_addr #6 {
+define dso_local noundef ptr @rb_parser_st_init_strtable() local_unnamed_addr #6 {
 bb.a:
   %i.a = tail call noalias dereferenceable_or_null(56) ptr @malloc(i64 noundef 56) #24 ; 13 uses
   %i.b = icmp eq ptr %i.a, null
@@ -321,7 +321,7 @@ rb_parser_st_init_table_with_size.exit:           ; preds = %bb.a, %bb.b, %bb.c
 }
 
 ; Function Attrs: mustprogress nounwind sspstrong willreturn memory(readwrite, argmem: none, target_mem: none) uwtable
-define dso_local noalias noundef ptr @rb_parser_st_init_strcasetable() local_unnamed_addr #6 {
+define dso_local noundef ptr @rb_parser_st_init_strcasetable() local_unnamed_addr #6 {
 bb.a:
   %i.a = tail call noalias dereferenceable_or_null(56) ptr @malloc(i64 noundef 56) #24 ; 13 uses
   %i.b = icmp eq ptr %i.a, null

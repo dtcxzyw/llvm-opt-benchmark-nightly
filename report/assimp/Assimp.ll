@@ -201,7 +201,7 @@ _ZL21stbi__start_callbacksP13stbi__contextP17stbi_io_callbacksPv.exit: ; preds =
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden noalias noundef ptr @assimp_stbi_loadf_from_memory(ptr noundef %0, i32 noundef %1, ptr noundef captures(none) %2, ptr noundef captures(none) %3, ptr noundef captures(address_is_null) %4, i32 noundef %5) local_unnamed_addr #2 {
+define hidden noundef ptr @assimp_stbi_loadf_from_memory(ptr noundef %0, i32 noundef %1, ptr noundef captures(none) %2, ptr noundef captures(none) %3, ptr noundef captures(address_is_null) %4, i32 noundef %5) local_unnamed_addr #2 {
 bb.a:
   %6 = alloca %struct.stbi__context, align 8      ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #47
@@ -227,7 +227,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal fastcc noalias noundef ptr @_ZL16stbi__loadf_mainP13stbi__contextPiS1_S1_i(ptr noundef nonnull %0, ptr noundef captures(none) %1, ptr noundef captures(none) %2, ptr noundef captures(address_is_null) %3, i32 noundef %4) unnamed_addr #2 {
+define internal fastcc noundef ptr @_ZL16stbi__loadf_mainP13stbi__contextPiS1_S1_i(ptr noundef nonnull %0, ptr noundef captures(none) %1, ptr noundef captures(none) %2, ptr noundef captures(address_is_null) %3, i32 noundef %4) unnamed_addr #2 {
 bb.a:
   %i.a = tail call fastcc noundef ptr @_ZL31stbi__load_and_postprocess_8bitP13stbi__contextPiS1_S1_i(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, i32 noundef %4) ; 9 uses
   %.not = icmp eq ptr %i.a, null
@@ -442,7 +442,7 @@ _ZL16stbi__ldr_to_hdrPhiii.exit:                  ; preds = %.loopexit.i, %_ZL17
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden noalias noundef ptr @assimp_stbi_loadf_from_callbacks(ptr noundef readonly captures(none) %0, ptr noundef %1, ptr noundef captures(none) %2, ptr noundef captures(none) %3, ptr noundef captures(address_is_null) %4, i32 noundef %5) local_unnamed_addr #2 {
+define hidden noundef ptr @assimp_stbi_loadf_from_callbacks(ptr noundef readonly captures(none) %0, ptr noundef %1, ptr noundef captures(none) %2, ptr noundef captures(none) %3, ptr noundef captures(address_is_null) %4, i32 noundef %5) local_unnamed_addr #2 {
 bb.a:
   %6 = alloca %struct.stbi__context, align 8      ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #47
@@ -499,7 +499,7 @@ _ZL21stbi__start_callbacksP13stbi__contextP17stbi_io_callbacksPv.exit: ; preds =
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden noalias noundef ptr @assimp_stbi_loadf(ptr noundef readonly captures(none) %0, ptr noundef captures(none) %1, ptr noundef captures(none) %2, ptr noundef captures(address_is_null) %3, i32 noundef %4) local_unnamed_addr #2 {
+define hidden noundef ptr @assimp_stbi_loadf(ptr noundef readonly captures(none) %0, ptr noundef captures(none) %1, ptr noundef captures(none) %2, ptr noundef captures(address_is_null) %3, i32 noundef %4) local_unnamed_addr #2 {
 bb.a:
   %5 = alloca %struct.stbi__context, align 8      ; 14 uses
   %i.a = tail call noalias noundef ptr @fopen(ptr noundef readonly %0, ptr noundef nonnull @.str.3) ; 4 uses
@@ -560,7 +560,7 @@ assimp_stbi_loadf_from_file.exit:                 ; preds = %bb.d, %bb.e
   store ptr %.sink.i.i.i.i, ptr %i.y, align 8
   %i.z = getelementptr inbounds nuw i8, ptr %5, i64 216
   store ptr %.sink.i.i.i.i, ptr %i.z, align 8
-  %i.aa = call fastcc noalias noundef ptr @_ZL16stbi__loadf_mainP13stbi__contextPiS1_S1_i(ptr noundef %5, ptr noundef %1, ptr noundef %2, ptr noundef %3, i32 noundef %4)
+  %i.aa = call fastcc noundef ptr @_ZL16stbi__loadf_mainP13stbi__contextPiS1_S1_i(ptr noundef %5, ptr noundef %1, ptr noundef %2, ptr noundef %3, i32 noundef %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #47
   %i.ab = call i32 @fclose(ptr noundef nonnull %i.a) ; 0 uses
   br label %bb.f
@@ -571,7 +571,7 @@ bb.f:                                             ; preds = %assimp_stbi_loadf_f
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden noalias noundef ptr @assimp_stbi_loadf_from_file(ptr noundef %0, ptr noundef captures(none) %1, ptr noundef captures(none) %2, ptr noundef captures(address_is_null) %3, i32 noundef %4) local_unnamed_addr #2 {
+define hidden noundef ptr @assimp_stbi_loadf_from_file(ptr noundef %0, ptr noundef captures(none) %1, ptr noundef captures(none) %2, ptr noundef captures(address_is_null) %3, i32 noundef %4) local_unnamed_addr #2 {
 bb.a:
   %5 = alloca %struct.stbi__context, align 8      ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #47

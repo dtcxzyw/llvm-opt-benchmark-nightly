@@ -201,7 +201,7 @@ begin_hunk_0
 @SubjectPublicKeyInfo_ml_dsa_87_desc = internal constant %struct.keytype_desc_st { ptr @.str.46, ptr @ossl_ml_dsa_87_keymgmt_functions, ptr @.str.9, i32 1459, i32 2, ptr null, ptr null, ptr null, ptr null, ptr @ml_dsa_d2i_PUBKEY, ptr null, ptr null, ptr @ossl_ml_dsa_key_free }, align 8
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2dh_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2dh_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -604,7 +604,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2dh_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2dh_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -642,7 +642,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @type_specific_params_der2dh_newctx(ptr noundef %0) #0 {
+define internal ptr @type_specific_params_der2dh_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -679,7 +679,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.preheade
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @DH_der2dh_newctx(ptr noundef %0) #0 {
+define internal ptr @DH_der2dh_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -716,7 +716,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.preheade
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2dhx_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2dhx_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -745,7 +745,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2dhx_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2dhx_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -783,7 +783,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @type_specific_params_der2dhx_newctx(ptr noundef %0) #0 {
+define internal ptr @type_specific_params_der2dhx_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -820,7 +820,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.preheade
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @DHX_der2dhx_newctx(ptr noundef %0) #0 {
+define internal ptr @DHX_der2dhx_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -857,7 +857,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.preheade
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2dsa_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2dsa_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -886,7 +886,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2dsa_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2dsa_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -924,7 +924,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @type_specific_der2dsa_newctx(ptr noundef %0) #0 {
+define internal ptr @type_specific_der2dsa_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -952,7 +952,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @DSA_der2dsa_newctx(ptr noundef %0) #0 {
+define internal ptr @DSA_der2dsa_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -980,7 +980,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2ec_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2ec_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1009,7 +1009,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2ec_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2ec_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1047,7 +1047,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @type_specific_no_pub_der2ec_newctx(ptr noundef %0) #0 {
+define internal ptr @type_specific_no_pub_der2ec_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1087,7 +1087,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %bb
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @EC_der2ec_newctx(ptr noundef %0) #0 {
+define internal ptr @EC_der2ec_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1127,7 +1127,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %bb
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2x25519_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2x25519_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1156,7 +1156,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2x25519_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2x25519_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1194,7 +1194,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2x448_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2x448_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1223,7 +1223,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2x448_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2x448_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1261,7 +1261,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2ed25519_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2ed25519_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1290,7 +1290,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2ed25519_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2ed25519_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1328,7 +1328,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2ed448_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2ed448_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1357,7 +1357,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2ed448_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2ed448_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1395,7 +1395,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2sm2_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2sm2_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1424,7 +1424,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2sm2_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2sm2_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1462,7 +1462,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @type_specific_no_pub_der2sm2_newctx(ptr noundef %0) #0 {
+define internal ptr @type_specific_no_pub_der2sm2_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1502,7 +1502,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %bb
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2ml_kem_512_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2ml_kem_512_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1531,7 +1531,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2ml_kem_512_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2ml_kem_512_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1569,7 +1569,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2ml_kem_768_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2ml_kem_768_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1598,7 +1598,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2ml_kem_768_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2ml_kem_768_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1636,7 +1636,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2ml_kem_1024_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2ml_kem_1024_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1665,7 +1665,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2ml_kem_1024_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2ml_kem_1024_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1703,7 +1703,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2slh_dsa_sha2_128s_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2slh_dsa_sha2_128s_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1732,7 +1732,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2slh_dsa_sha2_128f_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2slh_dsa_sha2_128f_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1761,7 +1761,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2slh_dsa_sha2_192s_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2slh_dsa_sha2_192s_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1790,7 +1790,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2slh_dsa_sha2_192f_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2slh_dsa_sha2_192f_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1819,7 +1819,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2slh_dsa_sha2_256s_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2slh_dsa_sha2_256s_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1848,7 +1848,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2slh_dsa_sha2_256f_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2slh_dsa_sha2_256f_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1877,7 +1877,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2slh_dsa_shake_128s_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2slh_dsa_shake_128s_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1906,7 +1906,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2slh_dsa_shake_128f_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2slh_dsa_shake_128f_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1935,7 +1935,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2slh_dsa_shake_192s_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2slh_dsa_shake_192s_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1964,7 +1964,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2slh_dsa_shake_192f_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2slh_dsa_shake_192f_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -1993,7 +1993,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2slh_dsa_shake_256s_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2slh_dsa_shake_256s_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -2022,7 +2022,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2slh_dsa_shake_256f_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2slh_dsa_shake_256f_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -2051,7 +2051,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2slh_dsa_sha2_128s_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2slh_dsa_sha2_128s_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -2089,7 +2089,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2slh_dsa_sha2_128f_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2slh_dsa_sha2_128f_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -2127,7 +2127,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2slh_dsa_sha2_192s_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2slh_dsa_sha2_192s_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -2165,7 +2165,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2slh_dsa_sha2_192f_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2slh_dsa_sha2_192f_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -2203,7 +2203,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2slh_dsa_sha2_256s_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2slh_dsa_sha2_256s_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -2241,7 +2241,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2slh_dsa_sha2_256f_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2slh_dsa_sha2_256f_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -2279,7 +2279,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2slh_dsa_shake_128s_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2slh_dsa_shake_128s_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -2317,7 +2317,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2slh_dsa_shake_128f_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2slh_dsa_shake_128f_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -2355,7 +2355,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2slh_dsa_shake_192s_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2slh_dsa_shake_192s_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -2393,7 +2393,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2slh_dsa_shake_192f_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2slh_dsa_shake_192f_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -2431,7 +2431,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2slh_dsa_shake_256s_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2slh_dsa_shake_256s_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -2469,7 +2469,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2slh_dsa_shake_256f_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2slh_dsa_shake_256f_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -2507,7 +2507,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2rsa_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2rsa_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -2536,7 +2536,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2rsa_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2rsa_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -2574,7 +2574,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @type_specific_keypair_der2rsa_newctx(ptr noundef %0) #0 {
+define internal ptr @type_specific_keypair_der2rsa_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -2602,7 +2602,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @RSA_der2rsa_newctx(ptr noundef %0) #0 {
+define internal ptr @RSA_der2rsa_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -2630,7 +2630,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2rsapss_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2rsapss_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -2659,7 +2659,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2rsapss_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2rsapss_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -2697,7 +2697,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2ml_dsa_44_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2ml_dsa_44_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -2726,7 +2726,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2ml_dsa_44_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2ml_dsa_44_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -2764,7 +2764,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2ml_dsa_65_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2ml_dsa_65_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -2793,7 +2793,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2ml_dsa_65_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2ml_dsa_65_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -2831,7 +2831,7 @@ der2key_check_selection.exit:                     ; preds = %.preheader.1.i, %.p
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @PrivateKeyInfo_der2ml_dsa_87_newctx(ptr noundef %0) #0 {
+define internal ptr @PrivateKeyInfo_der2ml_dsa_87_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -2860,7 +2860,7 @@ der2key_check_selection.exit:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noalias ptr @SubjectPublicKeyInfo_der2ml_dsa_87_newctx(ptr noundef %0) #0 {
+define internal ptr @SubjectPublicKeyInfo_der2ml_dsa_87_newctx(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 280, ptr noundef nonnull @.str, i32 noundef 163) #5 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null

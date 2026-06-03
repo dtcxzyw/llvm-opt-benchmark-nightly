@@ -201,7 +201,7 @@ _ZN11duckdb_zstdL24ZSTD_createDCtx_internalENS_14ZSTD_customMemE.exit: ; preds =
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #4
 
 ; Function Attrs: mustprogress nounwind memory(write, argmem: none, inaccessiblemem: readwrite, target_mem: none) uwtable
-define noalias noundef ptr @_ZN11duckdb_zstd15ZSTD_createDCtxEv() local_unnamed_addr #5 {
+define noundef ptr @_ZN11duckdb_zstd15ZSTD_createDCtxEv() local_unnamed_addr #5 {
 _ZN11duckdb_zstdL17ZSTD_customMallocEmNS_14ZSTD_customMemE.exit.i:
   %i.a = tail call noalias dereferenceable_or_null(95976) ptr @malloc(i64 noundef 95976) #15 ; 22 uses
   %.not7.i = icmp eq ptr %i.a, null
@@ -604,7 +604,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind memory(write, argmem: none, inaccessiblemem: readwrite, target_mem: none) uwtable
-define noalias noundef ptr @_ZN11duckdb_zstd18ZSTD_createDStreamEv() local_unnamed_addr #5 {
+define noundef ptr @_ZN11duckdb_zstd18ZSTD_createDStreamEv() local_unnamed_addr #5 {
 _ZN11duckdb_zstdL17ZSTD_customMallocEmNS_14ZSTD_customMemE.exit.i:
   %i.a = tail call noalias dereferenceable_or_null(95976) ptr @malloc(i64 noundef 95976) #15 ; 22 uses
   %.not7.i = icmp eq ptr %i.a, null

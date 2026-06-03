@@ -85,7 +85,7 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: mustprogress uwtable
-define noalias noundef ptr @_ZN11duckdb_zstd15ZSTD_createCCtxEv() local_unnamed_addr #2 {
+define noundef ptr @_ZN11duckdb_zstd15ZSTD_createCCtxEv() local_unnamed_addr #2 {
 _ZN11duckdb_zstdL17ZSTD_customMallocEmNS_14ZSTD_customMemE.exit.i:
   %calloc = tail call dereferenceable_or_null(5248) ptr @calloc(i64 1, i64 5248) ; 7 uses
   %.not6.i = icmp eq ptr %calloc, null
@@ -488,7 +488,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(write, argmem: none, inaccessiblemem: readwrite, target_mem: none) uwtable
-define noalias noundef ptr @_ZN11duckdb_zstd21ZSTD_createCCtxParamsEv() local_unnamed_addr #6 {
+define noundef ptr @_ZN11duckdb_zstd21ZSTD_createCCtxParamsEv() local_unnamed_addr #6 {
 _ZN11duckdb_zstdL17ZSTD_customCallocEmNS_14ZSTD_customMemE.exit.i:
   %i.a = tail call noalias dereferenceable_or_null(216) ptr @calloc(i64 noundef 1, i64 noundef 216) #28 ; 4 uses
   %.not7.i = icmp eq ptr %i.a, null
@@ -891,7 +891,7 @@ _ZN11duckdb_zstdL33ZSTD_compress_usingCDict_internalEPNS_11ZSTD_CCtx_sEPvmPKvmPK
 }
 
 ; Function Attrs: mustprogress uwtable
-define noalias noundef ptr @_ZN11duckdb_zstd18ZSTD_createCStreamEv() local_unnamed_addr #2 {
+define noundef ptr @_ZN11duckdb_zstd18ZSTD_createCStreamEv() local_unnamed_addr #2 {
 _ZN11duckdb_zstdL17ZSTD_customMallocEmNS_14ZSTD_customMemE.exit.i.i:
   %calloc = tail call dereferenceable_or_null(5248) ptr @calloc(i64 1, i64 5248) ; 7 uses
   %.not6.i.i = icmp eq ptr %calloc, null

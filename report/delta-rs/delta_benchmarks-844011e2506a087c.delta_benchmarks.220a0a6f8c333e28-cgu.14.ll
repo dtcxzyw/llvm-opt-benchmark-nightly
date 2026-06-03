@@ -201,7 +201,7 @@ begin_hunk_0
 @switch.table._RNvXsg_NtCseo6ZV82fEK1_3url6parserNtB5_10ParseErrorNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt.664 = private unnamed_addr constant [10 x ptr] [ptr @657, ptr @658, ptr @659, ptr @660, ptr @661, ptr @662, ptr @663, ptr @664, ptr @665, ptr @666], align 8
 
 ; Function Attrs: cold nonlazybind uwtable
-define hidden noalias noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error3msgNtNtCs6Po7BT7Nknu_5alloc6string6StringECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error3msgNtNtCs6Po7BT7Nknu_5alloc6string6StringECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
   %i.b = alloca [48 x i8], align 8                ; 4 uses
@@ -216,7 +216,7 @@ bb.a:
 _RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error20construct_from_adhocNtNtCs6Po7BT7Nknu_5alloc6string6StringECs2VbMhdeEr66_16delta_benchmarks.exit: ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.b, ptr noundef nonnull align 8 dereferenceable(48) %i.a, i64 48, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %i.d = call fastcc noalias noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error9constructINtNtB5_7wrapper12MessageErrorNtNtCs6Po7BT7Nknu_5alloc6string6StringEECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.b)
+  %i.d = call fastcc noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error9constructINtNtB5_7wrapper12MessageErrorNtNtCs6Po7BT7Nknu_5alloc6string6StringEECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   ret ptr %i.d
@@ -238,18 +238,18 @@ bb.d:                                             ; preds = %bb.c
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define hidden noalias noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error3msgReECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error3msgReECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvMs2_NtCs2pqxYH9ZEk8_3std9backtraceNtB5_9Backtrace7capture(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.a)
-  %i.b = call fastcc noalias noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error9constructINtNtB5_7wrapper12MessageErrorReEECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.a)
+  %i.b = call fastcc noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error9constructINtNtB5_7wrapper12MessageErrorReEECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.b
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noalias noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error9constructINtNtB5_7wrapper12MessageErrorNtNtCs6Po7BT7Nknu_5alloc6string6StringEECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %0, ptr noalias noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error9constructINtNtB5_7wrapper12MessageErrorNtNtCs6Po7BT7Nknu_5alloc6string6StringEECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %0, ptr noalias noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [80 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -292,7 +292,7 @@ _RNvMNtCs6Po7BT7Nknu_5alloc5boxedINtB2_3BoxINtNtCsb2ODgYNwnRL_6anyhow5error9Erro
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noalias noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error9constructINtNtB5_7wrapper12MessageErrorReEECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1, ptr noalias noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error9constructINtNtB5_7wrapper12MessageErrorReEECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1, ptr noalias noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [72 x i8], align 8                ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -343,7 +343,7 @@ _RNvMNtCs6Po7BT7Nknu_5alloc5boxedINtB2_3BoxINtNtCsb2ODgYNwnRL_6anyhow5error9Erro
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noalias noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error9constructNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull readonly align 16 captures(none) dead_on_return dereferenceable(96) %0, ptr noalias noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error9constructNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull readonly align 16 captures(none) dead_on_return dereferenceable(96) %0, ptr noalias noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [160 x i8], align 16              ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -386,7 +386,7 @@ _RNvMNtCs6Po7BT7Nknu_5alloc5boxedINtB2_3BoxINtNtCsb2ODgYNwnRL_6anyhow5error9Erro
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noalias noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error9constructNtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(40) %0, ptr noalias noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error9constructNtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(40) %0, ptr noalias noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [96 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -429,7 +429,7 @@ _RNvMNtCs6Po7BT7Nknu_5alloc5boxedINtB2_3BoxINtNtCsb2ODgYNwnRL_6anyhow5error9Erro
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define internal fastcc noalias noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error9constructNtNtNtCs2pqxYH9ZEk8_3std2io5error5ErrorECs2VbMhdeEr66_16delta_benchmarks(ptr noundef nonnull %0, ptr noalias noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error9constructNtNtNtCs2pqxYH9ZEk8_3std2io5error5ErrorECs2VbMhdeEr66_16delta_benchmarks(ptr noundef nonnull %0, ptr noalias noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [64 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -832,7 +832,7 @@ bb.ds:                                            ; preds = %_RINvNtCsbvkFyIu7lg
 }
 
 ; Function Attrs: cold inlinehint nonlazybind uwtable
-define internal fastcc noalias noundef nonnull ptr @_RNCNCNvCs2VbMhdeEr66_16delta_benchmarks15run_tpcds_query00B5_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #6 personality ptr @rust_eh_personality {
+define internal fastcc noundef nonnull ptr @_RNCNCNvCs2VbMhdeEr66_16delta_benchmarks15run_tpcds_query00B5_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #6 personality ptr @rust_eh_personality {
 .split:
   %i.a = alloca [16 x i8], align 8                ; 5 uses
   %i.b = alloca [24 x i8], align 8                ; 2 uses
@@ -1235,7 +1235,7 @@ bb.f:                                             ; preds = %bb.b
 
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.by)
-  %i.cq = invoke noalias noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtNtCs2pqxYH9ZEk8_3std2io5error5ErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noundef nonnull %i.cp)
+  %i.cq = invoke noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtNtCs2pqxYH9ZEk8_3std2io5error5ErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noundef nonnull %i.cp)
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs3Tb271uPz9Q_8tempfile3dir7TempDirECs2VbMhdeEr66_16delta_benchmarks.exit unwind label %bb.m
 
 bb.h:                                             ; preds = %bb.i
@@ -1638,7 +1638,7 @@ bb.oe:                                            ; preds = %bb.od
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.2.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.3, i64 48, i1 false)
   store i64 %.sroa.0121.0.copyload122201, ptr %i.d, align 16
-  %i.ahn = invoke noalias noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 16 captures(address) dereferenceable(96) %i.d)
+  %i.ahn = invoke noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 16 captures(address) dereferenceable(96) %i.d)
           to label %bb.ov unwind label %bb.oc
 
 bb.of:                                            ; preds = %bb.od
@@ -1926,7 +1926,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvMs3_NtNtCs8Hz2sPNgbCO_10datafus
 bb.pq:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvMs3_NtNtCs8Hz2sPNgbCO_10datafusion9execution7contextNtBO_14SessionContext3sql0ECs2VbMhdeEr66_16delta_benchmarks.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.c, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.3156, i64 40, i1 false)
-  %i.ajz = invoke noalias noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 8 captures(address) dereferenceable(40) %i.c)
+  %i.ajz = invoke noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 8 captures(address) dereferenceable(40) %i.c)
           to label %bb.ps unwind label %bb.pp
 
 bb.pr:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvMs3_NtNtCs8Hz2sPNgbCO_10datafusion9execution7contextNtBO_14SessionContext3sql0ECs2VbMhdeEr66_16delta_benchmarks.exit
@@ -2011,7 +2011,7 @@ bb.qb:                                            ; preds = %bb.qa
   store i64 %i.akf, ptr %i.b, align 8
   %.sroa.3179.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   store i64 %.sroa.5176.0.copyload, ptr %.sroa.3179.0..sroa_idx, align 8
-  %i.aki = invoke noalias noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 8 captures(address) dereferenceable(40) %i.b)
+  %i.aki = invoke noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 8 captures(address) dereferenceable(40) %i.b)
           to label %bb.qs unwind label %bb.pz
 
 bb.qc:                                            ; preds = %bb.qa
@@ -2414,7 +2414,7 @@ bb.j:                                             ; preds = %bb.h
   ]
 
 bb.k:                                             ; preds = %bb.j
-  %i.ew = invoke noalias noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error3msgReECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull readonly captures(address, read_provenance) @59, i64 noundef 61)
+  %i.ew = invoke noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error3msgReECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull readonly captures(address, read_provenance) @59, i64 noundef 61)
           to label %bb.ac unwind label %bb.ai
 
 bb.l:                                             ; preds = %bb.i
@@ -2538,7 +2538,7 @@ bb.z:                                             ; preds = %bb.q, %.body.i.i
 _RNCNCNvCs2VbMhdeEr66_16delta_benchmarks4main00B5_.exit.i: ; preds = %bb.y, %bb.x
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cr), !noalias !16744
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cs), !noalias !16744
-  %i.fq = invoke noalias noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error3msgNtNtCs6Po7BT7Nknu_5alloc6string6StringECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.ct)
+  %i.fq = invoke noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error3msgNtNtCs6Po7BT7Nknu_5alloc6string6StringECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.ct)
           to label %bb.ab unwind label %bb.aa
 
 bb.aa:                                            ; preds = %_RNCNCNvCs2VbMhdeEr66_16delta_benchmarks4main00B5_.exit.i, %bb.n
@@ -2672,7 +2672,7 @@ bb.an:                                            ; preds = %bb.al
 
 bb.ao:                                            ; preds = %bb.an
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dj)
-  %i.gs = invoke noalias noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtNtCs2pqxYH9ZEk8_3std2io5error5ErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noundef nonnull %i.gr)
+  %i.gs = invoke noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtNtCs2pqxYH9ZEk8_3std2io5error5ErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noundef nonnull %i.gr)
           to label %_RNvXsq_NtCsbvkFyIu7lgC_4core6resultINtB5_6ResultuNtCsb2ODgYNwnRL_6anyhow5ErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_NtNtB7_7convert10InfallibleNtNtNtCs2pqxYH9ZEk8_3std2io5error5ErrorEE13from_residualCs2VbMhdeEr66_16delta_benchmarks.exit unwind label %bb.bl
 
 bb.ap:                                            ; preds = %bb.an
@@ -2740,7 +2740,7 @@ bb.aw:                                            ; preds = %bb.au
   call void @llvm.lifetime.start.p0(ptr nonnull %i.co)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %.sroa.2380.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(88) %.sroa.9377, i64 88, i1 false)
   store i64 %i.gz, ptr %i.co, align 16
-  %i.hb = invoke noalias noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 16 captures(address) dereferenceable(96) %i.co)
+  %i.hb = invoke noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 16 captures(address) dereferenceable(96) %i.co)
           to label %bb.bf unwind label %bb.be
 
 bb.ax:                                            ; preds = %bb.au
@@ -2919,7 +2919,7 @@ bb.bv:                                            ; preds = %bb.bt
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cn)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %.sroa.2.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(88) %.sroa.8359, i64 88, i1 false)
   store i64 %i.ht, ptr %i.cn, align 16
-  %i.hv = invoke noalias noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 16 captures(address) dereferenceable(96) %i.cn)
+  %i.hv = invoke noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 16 captures(address) dereferenceable(96) %i.cn)
           to label %bb.ch unwind label %bb.cg
 
 bb.bw:                                            ; preds = %bb.bt
@@ -3322,7 +3322,7 @@ bb.el:                                            ; preds = %bb.ej
 
 bb.em:                                            ; preds = %bb.el
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cm), !noalias !16858
-  %i.lc = invoke noalias noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtNtCs2pqxYH9ZEk8_3std2io5error5ErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noundef nonnull %i.lb)
+  %i.lc = invoke noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtNtCs2pqxYH9ZEk8_3std2io5error5ErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noundef nonnull %i.lb)
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs3Tb271uPz9Q_8tempfile3dir7TempDirECs2VbMhdeEr66_16delta_benchmarks.exit.i unwind label %bb.eo
 
 bb.en:                                            ; preds = %bb.el
@@ -3435,7 +3435,7 @@ bb.ex:                                            ; preds = %bb.ev
 bb.ey:                                            ; preds = %bb.ex
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cd), !noalias !16858
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %i.cd, ptr noundef nonnull align 16 dereferenceable(96) %.sroa.090.i, i64 96, i1 false), !noalias !16858
-  %i.lv = invoke noalias noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 16 captures(address) dereferenceable(96) %i.cd)
+  %i.lv = invoke noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 16 captures(address) dereferenceable(96) %i.cd)
           to label %bb.fd unwind label %bb.ew
 
 bb.ez:                                            ; preds = %bb.ex
@@ -3816,7 +3816,7 @@ bb.gf:                                            ; preds = %bb.ge
   %.sroa.3116.16..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.3116.i, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bx), !noalias !16858
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %i.bx, ptr noundef nonnull align 8 dereferenceable(96) %.sroa.3116.16..sroa_idx.i, i64 96, i1 false), !noalias !16858
-  %i.pc = invoke noalias noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 16 captures(address) dereferenceable(96) %i.bx)
+  %i.pc = invoke noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 16 captures(address) dereferenceable(96) %i.bx)
           to label %bb.hm unwind label %bb.gd
 
 bb.gg:                                            ; preds = %bb.ge
@@ -3853,7 +3853,7 @@ bb.gj:                                            ; preds = %bb.gi
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %.sroa.2126.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(88) %.sroa.8123.0..sroa_idx124.i, i64 88, i1 false), !noalias !16858
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cg), !noalias !16858
   store i64 %i.pg, ptr %i.bw, align 16, !noalias !16858
-  %i.ph = invoke noalias noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 16 captures(address) dereferenceable(96) %i.bw)
+  %i.ph = invoke noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 16 captures(address) dereferenceable(96) %i.bw)
           to label %bb.hc unwind label %bb.hb
 
 bb.gk:                                            ; preds = %bb.gi
@@ -4256,7 +4256,7 @@ bb.ih:                                            ; preds = %bb.ie
 
 bb.ii:                                            ; preds = %bb.ih
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bv), !noalias !16960
-  %i.su = invoke noalias noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtNtCs2pqxYH9ZEk8_3std2io5error5ErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noundef nonnull %i.st)
+  %i.su = invoke noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtNtCs2pqxYH9ZEk8_3std2io5error5ErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noundef nonnull %i.st)
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs3Tb271uPz9Q_8tempfile3dir7TempDirECs2VbMhdeEr66_16delta_benchmarks.exit.i230 unwind label %bb.ik
 
 bb.ij:                                            ; preds = %bb.ih
@@ -4367,7 +4367,7 @@ bb.it:                                            ; preds = %bb.ir
 bb.iu:                                            ; preds = %bb.it
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bi), !noalias !16960
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %i.bi, ptr noundef nonnull align 16 dereferenceable(96) %.sroa.079.i, i64 96, i1 false), !noalias !16960
-  %i.tl = invoke noalias noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 16 captures(address) dereferenceable(96) %i.bi)
+  %i.tl = invoke noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 16 captures(address) dereferenceable(96) %i.bi)
           to label %bb.jf unwind label %bb.is
 
 bb.iv:                                            ; preds = %bb.it
@@ -4452,7 +4452,7 @@ _RNvXsp_NtCsbvkFyIu7lgC_4core6resultINtB5_6ResultNtNtNtCs14kWLkQVSKO_14deltalake
 bb.ja:                                            ; preds = %_RNvXsp_NtCsbvkFyIu7lgC_4core6resultINtB5_6ResultNtNtNtCs14kWLkQVSKO_14deltalake_core10operations5merge12MergeBuilderNtNtBQ_6errors15DeltaTableErrorENtNtNtB7_3ops9try_trait3Try6branchCs2VbMhdeEr66_16delta_benchmarks.exit.i, %_RNvXsp_NtCsbvkFyIu7lgC_4core6resultINtB5_6ResultNtNtNtCs14kWLkQVSKO_14deltalake_core10operations5merge12MergeBuilderNtNtBQ_6errors15DeltaTableErrorENtNtNtB7_3ops9try_trait3Try6branchCs2VbMhdeEr66_16delta_benchmarks.exit.thread.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bh), !noalias !16960
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %i.bh, ptr noundef nonnull align 16 dereferenceable(96) %i.ub, i64 96, i1 false), !noalias !16960
-  %i.uh = invoke noalias noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 16 captures(address) dereferenceable(96) %i.bh)
+  %i.uh = invoke noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 16 captures(address) dereferenceable(96) %i.bh)
           to label %_RNvXsq_NtCsbvkFyIu7lgC_4core6resultINtB5_6ResultuNtCsb2ODgYNwnRL_6anyhow5ErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_NtNtB7_7convert10InfallibleNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorEE13from_residualCs2VbMhdeEr66_16delta_benchmarks.exit34.i unwind label %bb.jc
 
 _RNvXsq_NtCsbvkFyIu7lgC_4core6resultINtB5_6ResultuNtCsb2ODgYNwnRL_6anyhow5ErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_NtNtB7_7convert10InfallibleNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorEE13from_residualCs2VbMhdeEr66_16delta_benchmarks.exit34.i: ; preds = %bb.ja
@@ -4631,7 +4631,7 @@ bb.js:                                            ; preds = %_RINvNtCsbvkFyIu7lg
   %.sroa.391.16..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.391.i, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bg), !noalias !16960
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %i.bg, ptr noundef nonnull align 8 dereferenceable(96) %.sroa.391.16..sroa_idx.i, i64 96, i1 false), !noalias !16960
-  %i.wc = invoke noalias noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 16 captures(address) dereferenceable(96) %i.bg)
+  %i.wc = invoke noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 16 captures(address) dereferenceable(96) %i.bg)
           to label %_RNvXsq_NtCsbvkFyIu7lgC_4core6resultINtB5_6ResultuNtCsb2ODgYNwnRL_6anyhow5ErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_NtNtB7_7convert10InfallibleNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorEE13from_residualCs2VbMhdeEr66_16delta_benchmarks.exit40.i unwind label %bb.jc
 
 _RNvXsq_NtCsbvkFyIu7lgC_4core6resultINtB5_6ResultuNtCsb2ODgYNwnRL_6anyhow5ErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_NtNtB7_7convert10InfallibleNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorEE13from_residualCs2VbMhdeEr66_16delta_benchmarks.exit40.i: ; preds = %bb.js
@@ -5034,7 +5034,7 @@ bb.to:                                            ; preds = %bb.tn
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %.sroa.2404.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(88) %.sroa.3, i64 88, i1 false)
   store i64 %.sroa.0397.0.copyload398, ptr %i.a, align 16
-  %i.ane = invoke noalias noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 16 captures(address) dereferenceable(96) %i.a)
+  %i.ane = invoke noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 16 captures(address) dereferenceable(96) %i.a)
           to label %bb.ub unwind label %bb.tm     ; 2 uses
 
 bb.tp:                                            ; preds = %bb.tn
@@ -5437,7 +5437,7 @@ _RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs6Po7BT7Nknu
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noalias noundef nonnull ptr @_RNvNtCs6Po7BT7Nknu_5alloc5boxed14box_new_uninit(i64 noundef range(i64 8, 17) %0, i64 noundef range(i64 24, 3025) %1) unnamed_addr #3 {
+define internal fastcc noundef nonnull ptr @_RNvNtCs6Po7BT7Nknu_5alloc5boxed14box_new_uninit(i64 noundef range(i64 8, 17) %0, i64 noundef range(i64 24, 3025) %1) unnamed_addr #3 {
 bb.a:
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #39
   %i.a = tail call noundef ptr @_RNvCs8mYq7K4qqSA_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %1, i64 noundef range(i64 1, -9223372036854775807) %0) #39 ; 2 uses
@@ -5453,7 +5453,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: cold inlinehint nonlazybind uwtable
-define internal fastcc noalias noundef nonnull ptr @_RNvNtCsb2ODgYNwnRL_6anyhow9___private10format_err(ptr noundef nonnull %0, ptr noundef nonnull %1) unnamed_addr #6 personality ptr @rust_eh_personality {
+define internal fastcc noundef nonnull ptr @_RNvNtCsb2ODgYNwnRL_6anyhow9___private10format_err(ptr noundef nonnull %0, ptr noundef nonnull %1) unnamed_addr #6 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
   %i.b = ptrtoint ptr %1 to i64                   ; 2 uses
@@ -5856,7 +5856,7 @@ bb.a:
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define hidden noalias noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef align 16 captures(address) dead_on_return dereferenceable(96) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef align 16 captures(address) dead_on_return dereferenceable(96) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [96 x i8], align 16               ; 4 uses
   %i.b = alloca [48 x i8], align 8                ; 4 uses
@@ -5885,7 +5885,7 @@ bb.e:                                             ; preds = %bb.d
 _RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error18construct_from_stdNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorECs2VbMhdeEr66_16delta_benchmarks.exit: ; preds = %bb.e, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %i.a, ptr noundef nonnull align 16 dereferenceable(96) %0, i64 96, i1 false)
-  %i.e = call fastcc noalias noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error9constructNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull readonly align 16 captures(none) dereferenceable(96) %i.a, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.c)
+  %i.e = call fastcc noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error9constructNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull readonly align 16 captures(none) dereferenceable(96) %i.a, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.e
 
@@ -5906,7 +5906,7 @@ bb.h:                                             ; preds = %bb.g
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define hidden noalias noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef align 8 captures(address) dead_on_return dereferenceable(40) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef align 8 captures(address) dead_on_return dereferenceable(40) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [40 x i8], align 8                ; 4 uses
   %i.b = alloca [48 x i8], align 8                ; 4 uses
@@ -5935,7 +5935,7 @@ bb.e:                                             ; preds = %bb.d
 _RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error18construct_from_stdNtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorECs2VbMhdeEr66_16delta_benchmarks.exit: ; preds = %bb.e, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.a, ptr noundef nonnull align 8 dereferenceable(40) %0, i64 40, i1 false)
-  %i.e = call fastcc noalias noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error9constructNtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(40) %i.a, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.c)
+  %i.e = call fastcc noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error9constructNtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(40) %i.a, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %i.e
 
@@ -5956,7 +5956,7 @@ bb.h:                                             ; preds = %bb.g
 }
 
 ; Function Attrs: cold nonlazybind uwtable
-define hidden noalias noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtNtCs2pqxYH9ZEk8_3std2io5error5ErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noundef nonnull %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden noundef nonnull ptr @_RNvXs_NtCsb2ODgYNwnRL_6anyhow5errorNtB6_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtNtNtCs2pqxYH9ZEk8_3std2io5error5ErrorE4fromCs2VbMhdeEr66_16delta_benchmarks(ptr noundef nonnull %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
   %i.b = alloca [48 x i8], align 8                ; 3 uses
@@ -5985,7 +5985,7 @@ bb.e:                                             ; preds = %bb.d
 
 _RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error18construct_from_stdNtNtNtCs2pqxYH9ZEk8_3std2io5error5ErrorECs2VbMhdeEr66_16delta_benchmarks.exit: ; preds = %bb.e, %bb.c
   %i.e = load ptr, ptr %i.c, align 8, !nonnull !17, !noundef !17
-  %i.f = call fastcc noalias noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error9constructNtNtNtCs2pqxYH9ZEk8_3std2io5error5ErrorECs2VbMhdeEr66_16delta_benchmarks(ptr noundef nonnull %i.e, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.b)
+  %i.f = call fastcc noundef nonnull ptr @_RINvMNtCsb2ODgYNwnRL_6anyhow5errorNtB5_5Error9constructNtNtNtCs2pqxYH9ZEk8_3std2io5error5ErrorECs2VbMhdeEr66_16delta_benchmarks(ptr noundef nonnull %i.e, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.b)
   ret ptr %i.f
 
 bb.f:                                             ; preds = %bb.g
