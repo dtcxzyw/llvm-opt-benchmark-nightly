@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %bb.a, %bb.d
   %i.x = add nsw i64 %i.f, -1
   %umin55 = tail call i64 @llvm.umin.i64(i64 %i.w, i64 %i.x) ; 2 uses
   %i.y = add nuw nsw i64 %umin55, 1               ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %umin55, 19
+  %min.iters.check = icmp samesign ult i64 %umin55, 11
   br i1 %min.iters.check, label %.lr.ph.preheader62, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
