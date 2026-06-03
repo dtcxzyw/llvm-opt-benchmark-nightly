@@ -201,19 +201,20 @@ bb.aa:                                            ; preds = %bb.z, %rb_num2int_i
   %i.ce = shl nsw i64 %i.cd, 1
   %i.cf = or disjoint i64 %i.ce, 1                ; 2 uses
   %i.cg = load i64, ptr %i.e, align 8, !tbaa !38  ; 2 uses
-  %i.ch = call fastcc ptr @call_getaddrinfo(i64 noundef %i.bu, i64 noundef range(i64 1, 0) %i.bq, i64 noundef range(i64 1, 0) %i.bz, i64 noundef range(i64 1, 0) %i.cc, i64 noundef range(i64 1, 0) %i.cf, i64 noundef 2057, i32 noundef 1, i64 noundef 4) ; 3 uses
+  %i.ch = call fastcc ptr @call_getaddrinfo(i64 noundef %i.bu, i64 noundef range(i64 1, 0) %i.bq, i64 noundef range(i64 1, 0) %i.bz, i64 noundef range(i64 1, 0) %i.cc, i64 noundef range(i64 1, 0) %i.cf, i64 noundef 2057, i32 noundef 1, i64 noundef 4) ; 6 uses
   %i.ci = call i64 @rb_str_equal(i64 noundef %i.bu, i64 noundef %i.cg) #17
   %.not.i36 = icmp eq i64 %i.ci, 0
-  %.pre.i = load ptr, ptr %i.ch, align 8, !tbaa !14 ; 6 uses
   br i1 %.not.i36, label %bb.ab, label %bb.ac
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.cj = call fastcc i64 @make_inspectname(i64 noundef %i.cg, i64 noundef range(i64 1, 0) %i.bq, ptr noundef %.pre.i)
+  %4 = load ptr, ptr %i.ch, align 8, !tbaa !14
+  %i.cj = call fastcc i64 @make_inspectname(i64 noundef %i.cg, i64 noundef range(i64 1, 0) %i.bq, ptr noundef %4)
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %i.ck = phi i64 [ %i.cj, %bb.ab ], [ 4, %bb.aa ] ; 4 uses
-  %i.cl = getelementptr inbounds nuw i8, ptr %.pre.i, i64 32
+  %5 = load ptr, ptr %i.ch, align 8, !tbaa !14    ; 2 uses
+  %i.cl = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !75 ; 2 uses
   %.not24.i = icmp eq ptr %i.cm, null
   br i1 %.not24.i, label %rb_num2int_inline.exit.i, label %bb.ad
@@ -221,13 +222,15 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
 bb.ad:                                            ; preds = %bb.ac
   %i.cn = call i64 @rb_str_new_cstr(ptr noundef nonnull %i.cm) #17 ; 2 uses
   call void @rb_obj_freeze_inline(i64 noundef %i.cn) #17
+  %.pre.i = load ptr, ptr %i.ch, align 8, !tbaa !14
   br label %rb_num2int_inline.exit.i
 
 rb_num2int_inline.exit.i:                         ; preds = %bb.ad, %bb.ac
+  %6 = phi ptr [ %.pre.i, %bb.ad ], [ %5, %bb.ac ] ; 2 uses
   %.0.i37 = phi i64 [ %i.cn, %bb.ad ], [ 4, %bb.ac ] ; 4 uses
-  %i.co = getelementptr inbounds nuw i8, ptr %.pre.i, i64 24
+  %i.co = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.cp = load ptr, ptr %i.co, align 8, !tbaa !19
-  %i.cq = getelementptr inbounds nuw i8, ptr %.pre.i, i64 16
+  %i.cq = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.cr = load i32, ptr %i.cq, align 8, !tbaa !74 ; 4 uses
   %i.cs = call i64 @rb_fix2int(i64 noundef range(i64 1, 0) %i.bz) #17
   %i.ct = trunc i64 %i.cs to i32
@@ -288,15 +291,23 @@ bb.ai:                                            ; preds = %rb_obj_write.exit.i
 init_addrinfo.exit.i:                             ; preds = %bb.ai, %rb_obj_write.exit.i.i
   %i.do = getelementptr inbounds nuw i8, ptr %i.ch, i64 8
   %i.dp = load i32, ptr %i.do, align 8, !tbaa !10
-  %.not.i.i.a = icmp eq i32 %i.dp, 0
-  br i1 %.not.i.i.a, label %bb.aj, label %.lr.ph.i.i
+  %.not.i.i = icmp eq i32 %i.dp, 0
+  %7 = load ptr, ptr %i.ch, align 8, !tbaa !14    ; 3 uses
+  %.not.i.i.a = icmp eq ptr %7, null              ; 2 uses
+  br i1 %.not.i.i, label %8, label %9
 
-bb.aj:                                            ; preds = %init_addrinfo.exit.i
-  call void @freeaddrinfo(ptr noundef nonnull %.pre.i) #17
+8:                                                ; preds = %init_addrinfo.exit.i
+  br i1 %.not.i.i.a, label %init_addrinfo_getaddrinfo.exit, label %bb.aj
+
+bb.aj:                                            ; preds = %8
+  call void @freeaddrinfo(ptr noundef nonnull %7) #17
   br label %init_addrinfo_getaddrinfo.exit
 
-.lr.ph.i.i:                                       ; preds = %init_addrinfo.exit.i, %.lr.ph.i.i
-  %.014.i.i = phi ptr [ %i.dr, %.lr.ph.i.i ], [ %.pre.i, %init_addrinfo.exit.i ] ; 3 uses
+9:                                                ; preds = %init_addrinfo.exit.i
+  br i1 %.not.i.i.a, label %init_addrinfo_getaddrinfo.exit, label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %9, %.lr.ph.i.i
+  %.014.i.i = phi ptr [ %i.dr, %.lr.ph.i.i ], [ %7, %9 ] ; 3 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %.014.i.i, i64 40
   %i.dr = load ptr, ptr %i.dq, align 8, !tbaa !15 ; 2 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %.014.i.i, i64 24
@@ -306,7 +317,7 @@ bb.aj:                                            ; preds = %init_addrinfo.exit.
   %.not12.i.i = icmp eq ptr %i.dr, null
   br i1 %.not12.i.i, label %init_addrinfo_getaddrinfo.exit, label %.lr.ph.i.i, !llvm.loop !20
 
-init_addrinfo_getaddrinfo.exit:                   ; preds = %.lr.ph.i.i, %bb.aj
+init_addrinfo_getaddrinfo.exit:                   ; preds = %.lr.ph.i.i, %8, %bb.aj, %9
   call void @ruby_xfree(ptr noundef nonnull %i.ch) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #17
@@ -709,15 +720,16 @@ bb.i:                                             ; preds = %rb_scan_args_set.ex
 
 bb.j:                                             ; preds = %bb.i, %rb_scan_args_set.exit
   %i.am = phi i64 [ 4, %bb.i ], [ %i.ak, %rb_scan_args_set.exit ]
-  %i.an = call fastcc ptr @call_getaddrinfo(i64 noundef %i.k, i64 noundef %i.m, i64 noundef %i.p, i64 noundef %i.v, i64 noundef %i.ab, i64 noundef %i.ah, i32 noundef 0, i64 noundef %i.am) ; 3 uses
-  %i.ao = load ptr, ptr %i.an, align 8, !tbaa !14 ; 5 uses
+  %i.an = call fastcc ptr @call_getaddrinfo(i64 noundef %i.k, i64 noundef %i.m, i64 noundef %i.p, i64 noundef %i.v, i64 noundef %i.ab, i64 noundef %i.ah, i32 noundef 0, i64 noundef %i.am) ; 5 uses
+  %i.ao = load ptr, ptr %i.an, align 8, !tbaa !14
   %i.ap = call fastcc i64 @make_inspectname(i64 noundef %i.k, i64 noundef %i.m, ptr noundef %i.ao)
   %i.aq = call i64 @rb_ary_new() #17              ; 2 uses
-  %.not30.i = icmp eq ptr %i.ao, null
-  br i1 %.not30.i, label %addrinfo_list_new.exit, label %.lr.ph.i
+  %.02629.i = load ptr, ptr %i.an, align 8, !tbaa !52 ; 2 uses
+  %.not30.i = icmp eq ptr %.02629.i, null
+  br i1 %.not30.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.j, %bb.l
-  %.02631.i = phi ptr [ %.026.i, %bb.l ], [ %i.ao, %bb.j ] ; 7 uses
+  %.02631.i = phi ptr [ %.026.i, %bb.l ], [ %.02629.i, %bb.j ] ; 7 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %.02631.i, i64 32
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !75 ; 2 uses
   %.not28.i = icmp eq ptr %i.as, null
@@ -745,20 +757,32 @@ bb.l:                                             ; preds = %bb.k, %.lr.ph.i
   %i.bg = getelementptr inbounds nuw i8, ptr %.02631.i, i64 40
   %.026.i = load ptr, ptr %i.bg, align 8, !tbaa !52 ; 2 uses
   %.not.i1 = icmp eq ptr %.026.i, null
-  br i1 %.not.i1, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !143
+  br i1 %.not.i1, label %._crit_edge.loopexit.i, label %.lr.ph.i, !llvm.loop !143
 
-._crit_edge.i:                                    ; preds = %bb.l
+._crit_edge.loopexit.i:                           ; preds = %bb.l
+  %.pre.i = load ptr, ptr %i.an, align 8, !tbaa !14
+  br label %._crit_edge.i
+
+._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %bb.j
+  %3 = phi ptr [ %.pre.i, %._crit_edge.loopexit.i ], [ null, %bb.j ] ; 3 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.an, i64 8
   %i.bi = load i32, ptr %i.bh, align 8, !tbaa !10
-  %.not.i.i.a = icmp eq i32 %i.bi, 0
-  br i1 %.not.i.i.a, label %bb.m, label %.lr.ph.i.i
+  %.not.i.i = icmp eq i32 %i.bi, 0
+  %.not.i.i.a = icmp eq ptr %3, null              ; 2 uses
+  br i1 %.not.i.i, label %4, label %5
 
-bb.m:                                             ; preds = %._crit_edge.i
-  call void @freeaddrinfo(ptr noundef nonnull %i.ao) #17
+4:                                                ; preds = %._crit_edge.i
+  br i1 %.not.i.i.a, label %addrinfo_list_new.exit, label %bb.m
+
+bb.m:                                             ; preds = %4
+  call void @freeaddrinfo(ptr noundef nonnull %3) #17
   br label %addrinfo_list_new.exit
 
-.lr.ph.i.i:                                       ; preds = %._crit_edge.i, %.lr.ph.i.i
-  %.014.i.i = phi ptr [ %i.bk, %.lr.ph.i.i ], [ %i.ao, %._crit_edge.i ] ; 3 uses
+5:                                                ; preds = %._crit_edge.i
+  br i1 %.not.i.i.a, label %addrinfo_list_new.exit, label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %5, %.lr.ph.i.i
+  %.014.i.i = phi ptr [ %i.bk, %.lr.ph.i.i ], [ %3, %5 ] ; 3 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %.014.i.i, i64 40
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !15 ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %.014.i.i, i64 24
@@ -768,7 +792,7 @@ bb.m:                                             ; preds = %._crit_edge.i
   %.not12.i.i = icmp eq ptr %i.bk, null
   br i1 %.not12.i.i, label %addrinfo_list_new.exit, label %.lr.ph.i.i, !llvm.loop !20
 
-addrinfo_list_new.exit:                           ; preds = %.lr.ph.i.i, %bb.j, %bb.m
+addrinfo_list_new.exit:                           ; preds = %.lr.ph.i.i, %4, %bb.m, %5
   call void @ruby_xfree(ptr noundef nonnull %i.an) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
   ret i64 %i.aq
@@ -1171,7 +1195,7 @@ declare void @rb_error_arity(i32 noundef, i32 noundef, i32 noundef) local_unname
 declare i32 @rb_keyword_given_p() local_unnamed_addr #3
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc noalias nonnull ptr @call_getaddrinfo(i64 noundef %0, i64 noundef %1, i64 noundef %2, i64 noundef %3, i64 noundef %4, i64 noundef %5, i32 noundef range(i32 0, 2) %6, i64 noundef %7) unnamed_addr #0 {
+define internal fastcc nonnull ptr @call_getaddrinfo(i64 noundef %0, i64 noundef %1, i64 noundef %2, i64 noundef %3, i64 noundef %4, i64 noundef %5, i32 noundef range(i32 0, 2) %6, i64 noundef %7) unnamed_addr #0 {
 bb.a:
   %8 = alloca %struct.addrinfo, align 8           ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #17
@@ -1469,10 +1493,11 @@ declare i32 @rb_get_kwargs(i64 noundef, ptr noundef, i32 noundef, i32 noundef, p
 ; Function Attrs: nounwind uwtable
 define internal fastcc i64 @addrinfo_firstonly_new(i64 noundef %0, i64 noundef %1, i64 noundef range(i64 1, 0) %2, i64 noundef range(i64 1, 0) %3, i64 noundef range(i64 1, 0) %4) unnamed_addr #0 {
 bb.a:
-  %i.a = tail call fastcc ptr @call_getaddrinfo(i64 noundef %0, i64 noundef %1, i64 noundef %2, i64 noundef %3, i64 noundef %4, i64 noundef 1, i32 noundef 0, i64 noundef 4) ; 3 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !14   ; 9 uses
+  %i.a = tail call fastcc ptr @call_getaddrinfo(i64 noundef %0, i64 noundef %1, i64 noundef %2, i64 noundef %3, i64 noundef %4, i64 noundef 1, i32 noundef 0, i64 noundef 4) ; 6 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !14
   %i.c = tail call fastcc i64 @make_inspectname(i64 noundef %0, i64 noundef %1, ptr noundef %i.b)
-  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 32
+  %5 = load ptr, ptr %i.a, align 8, !tbaa !14     ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !75   ; 2 uses
   %.not = icmp eq ptr %i.e, null
   br i1 %.not, label %bb.c, label %bb.b
@@ -1480,32 +1505,42 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.f = tail call i64 @rb_str_new_cstr(ptr noundef nonnull %i.e) #17 ; 2 uses
   tail call void @rb_obj_freeze_inline(i64 noundef %i.f) #17
+  %.pre = load ptr, ptr %i.a, align 8, !tbaa !14
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
+  %6 = phi ptr [ %.pre, %bb.b ], [ %5, %bb.a ]    ; 5 uses
   %.0 = phi i64 [ %i.f, %bb.b ], [ 4, %bb.a ]
-  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 24
+  %i.g = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !19
-  %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
+  %i.i = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.j = load i32, ptr %i.i, align 8, !tbaa !74
-  %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 4
+  %i.k = getelementptr inbounds nuw i8, ptr %6, i64 4
   %i.l = load i32, ptr %i.k, align 4, !tbaa !68
-  %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %i.m = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.n = load i32, ptr %i.m, align 8, !tbaa !49
-  %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 12
+  %i.o = getelementptr inbounds nuw i8, ptr %6, i64 12
   %i.p = load i32, ptr %i.o, align 4, !tbaa !69
   %i.q = tail call i64 @rsock_addrinfo_new(ptr noundef %i.h, i32 noundef %i.j, i32 noundef %i.l, i32 noundef %i.n, i32 noundef %i.p, i64 noundef %.0, i64 noundef %i.c)
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.s = load i32, ptr %i.r, align 8, !tbaa !10
-  %.not.i.a = icmp eq i32 %i.s, 0
-  br i1 %.not.i.a, label %bb.d, label %.lr.ph.i
+  %.not.i = icmp eq i32 %i.s, 0
+  %7 = load ptr, ptr %i.a, align 8, !tbaa !14     ; 3 uses
+  %.not.i.a = icmp eq ptr %7, null                ; 2 uses
+  br i1 %.not.i, label %8, label %9
 
-bb.d:                                             ; preds = %bb.c
-  tail call void @freeaddrinfo(ptr noundef nonnull %i.b) #17
+8:                                                ; preds = %bb.c
+  br i1 %.not.i.a, label %rb_freeaddrinfo.exit, label %bb.d
+
+bb.d:                                             ; preds = %8
+  tail call void @freeaddrinfo(ptr noundef nonnull %7) #17
   br label %rb_freeaddrinfo.exit
 
-.lr.ph.i:                                         ; preds = %bb.c, %.lr.ph.i
-  %.014.i = phi ptr [ %i.u, %.lr.ph.i ], [ %i.b, %bb.c ] ; 3 uses
+9:                                                ; preds = %bb.c
+  br i1 %.not.i.a, label %rb_freeaddrinfo.exit, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %9, %.lr.ph.i
+  %.014.i = phi ptr [ %i.u, %.lr.ph.i ], [ %7, %9 ] ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.014.i, i64 40
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !15   ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.014.i, i64 24
@@ -1515,7 +1550,7 @@ bb.d:                                             ; preds = %bb.c
   %.not12.i = icmp eq ptr %i.u, null
   br i1 %.not12.i, label %rb_freeaddrinfo.exit, label %.lr.ph.i, !llvm.loop !20
 
-rb_freeaddrinfo.exit:                             ; preds = %.lr.ph.i, %bb.d
+rb_freeaddrinfo.exit:                             ; preds = %.lr.ph.i, %8, %bb.d, %9
   tail call void @ruby_xfree(ptr noundef nonnull %i.a) #17
   ret i64 %i.q
 }
