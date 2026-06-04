@@ -26,7 +26,7 @@ iter.check:                                       ; preds = %bb.a, %.loopexit
   %i.g = add nuw nsw i32 %i.f, 1
   %i.h = select i1 %i.d, i32 4, i32 %i.g          ; 11 uses
   %i.i = trunc i64 %indvars.iv to i8              ; 7 uses
-  %min.iters.check = icmp samesign ult i32 %i.h, 4
+  %min.iters.check = icmp samesign ult i32 %i.h, 8
   %i.j = sub nsw i32 0, %i.h
   %i.k = icmp ugt i32 %.03138, %i.j
   %or.cond = select i1 %min.iters.check, i1 true, i1 %i.k
@@ -37,7 +37,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check53, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %n.mod.vf = and i32 %i.h, 28
+  %n.mod.vf = and i32 %i.h, 24
   %n.vec = and i32 %i.h, 2147483616               ; 4 uses
   %i.l = add i32 %.03138, %n.vec                  ; 2 uses
   %i.m = and i32 %i.h, 31
@@ -67,11 +67,11 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i32 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec56 = and i32 %i.h, 2147483644             ; 3 uses
+  %n.vec56 = and i32 %i.h, 2147483640             ; 3 uses
   %i.s = add i32 %.03138, %n.vec56                ; 2 uses
-  %i.t = and i32 %i.h, 3
-  %broadcast.splatinsert57 = insertelement <4 x i8> poison, i8 %i.i, i64 0
-  %broadcast.splat58 = shufflevector <4 x i8> %broadcast.splatinsert57, <4 x i8> poison, <4 x i32> zeroinitializer
+  %i.t = and i32 %i.h, 7
+  %broadcast.splatinsert57 = insertelement <8 x i8> poison, i8 %i.i, i64 0
+  %broadcast.splat58 = shufflevector <8 x i8> %broadcast.splatinsert57, <8 x i8> poison, <8 x i32> zeroinitializer
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -79,8 +79,8 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.u = add i32 %.03138, %index59
   %i.v = zext i32 %i.u to i64
   %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.v
-  store <4 x i8> %broadcast.splat58, ptr %i.w, align 1, !tbaa !15
-  %index.next60 = add nuw i32 %index59, 4         ; 2 uses
+  store <8 x i8> %broadcast.splat58, ptr %i.w, align 1, !tbaa !15
+  %index.next60 = add nuw i32 %index59, 8         ; 2 uses
   %i.x = icmp eq i32 %index.next60, %n.vec56
   br i1 %i.x, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !21
 
@@ -483,7 +483,7 @@ attributes #8 = { nounwind }
 !17 = !{!"llvm.loop.mustprogress"}
 !18 = !{!"llvm.loop.isvectorized", i32 1}
 !19 = !{!"llvm.loop.unroll.runtime.disable"}
-!20 = !{!"branch_weights", i32 4, i32 28}
+!20 = !{!"branch_weights", i32 8, i32 24}
 !21 = distinct !{!21, !17, !18, !19}
 !22 = distinct !{!22, !23}
 !23 = !{!"llvm.loop.unroll.disable"}

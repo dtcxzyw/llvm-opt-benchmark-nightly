@@ -201,7 +201,7 @@ bb.l:                                             ; preds = %bb.g
 
 iter.check181:                                    ; preds = %.lr.ph.i
   %i.w = add i64 %1, -1                           ; 5 uses
-  %min.iters.check159 = icmp ult i64 %1, 5
+  %min.iters.check159 = icmp ult i64 %1, 9
   br i1 %min.iters.check159, label %.peel.next.i.preheader, label %vector.main.loop.iter.check160
 
 vector.main.loop.iter.check160:                   ; preds = %iter.check181
@@ -209,7 +209,7 @@ vector.main.loop.iter.check160:                   ; preds = %iter.check181
   br i1 %min.iters.check161, label %vec.epilog.ph185, label %vector.ph162
 
 vector.ph162:                                     ; preds = %vector.main.loop.iter.check160
-  %n.mod.vf163 = and i64 %i.w, 28
+  %n.mod.vf163 = and i64 %i.w, 24
   %n.vec164 = and i64 %i.w, -32                   ; 5 uses
   %broadcast.splatinsert165 = insertelement <16 x i8> poison, i8 %i.v, i64 0
   %broadcast.splat166 = shufflevector <16 x i8> %broadcast.splatinsert165, <16 x i8> poison, <16 x i32> zeroinitializer ; 4 uses
@@ -252,31 +252,31 @@ vec.epilog.iter.check183:                         ; preds = %middle.block176
 vec.epilog.ph185:                                 ; preds = %vector.main.loop.iter.check160, %vec.epilog.iter.check183
   %vec.epilog.resume.val178 = phi i64 [ %n.vec164, %vec.epilog.iter.check183 ], [ 0, %vector.main.loop.iter.check160 ]
   %bc.resume.val180 = phi i8 [ %i.aa, %vec.epilog.iter.check183 ], [ %i.u, %vector.main.loop.iter.check160 ]
-  %n.vec187 = and i64 %i.w, -4                    ; 4 uses
+  %n.vec187 = and i64 %i.w, -8                    ; 4 uses
   %i.ai = or disjoint i64 %n.vec187, 1
   %i.aj = trunc i64 %n.vec187 to i8
   %i.ak = mul i8 %i.aj, %i.v
   %i.al = add i8 %i.ak, %i.u
-  %broadcast.splatinsert188 = insertelement <4 x i8> poison, i8 %i.v, i64 0
-  %broadcast.splat189 = shufflevector <4 x i8> %broadcast.splatinsert188, <4 x i8> poison, <4 x i32> zeroinitializer ; 2 uses
-  %broadcast.splatinsert190 = insertelement <4 x i8> poison, i8 %bc.resume.val180, i64 0
-  %broadcast.splat191 = shufflevector <4 x i8> %broadcast.splatinsert190, <4 x i8> poison, <4 x i32> zeroinitializer
-  %14 = mul <4 x i8> %broadcast.splat189, <i8 0, i8 1, i8 2, i8 3>
-  %induction192 = add <4 x i8> %broadcast.splat191, %14
-  %i.am = shl i8 %i.v, 2
-  %broadcast.splatinsert193 = insertelement <4 x i8> poison, i8 %i.am, i64 0
-  %broadcast.splat194 = shufflevector <4 x i8> %broadcast.splatinsert193, <4 x i8> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert188 = insertelement <8 x i8> poison, i8 %i.v, i64 0
+  %broadcast.splat189 = shufflevector <8 x i8> %broadcast.splatinsert188, <8 x i8> poison, <8 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert190 = insertelement <8 x i8> poison, i8 %bc.resume.val180, i64 0
+  %broadcast.splat191 = shufflevector <8 x i8> %broadcast.splatinsert190, <8 x i8> poison, <8 x i32> zeroinitializer
+  %14 = mul <8 x i8> %broadcast.splat189, <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7>
+  %induction192 = add <8 x i8> %broadcast.splat191, %14
+  %i.am = shl i8 %i.v, 3
+  %broadcast.splatinsert193 = insertelement <8 x i8> poison, i8 %i.am, i64 0
+  %broadcast.splat194 = shufflevector <8 x i8> %broadcast.splatinsert193, <8 x i8> poison, <8 x i32> zeroinitializer
   br label %vec.epilog.vector.body195
 
 vec.epilog.vector.body195:                        ; preds = %vec.epilog.vector.body195, %vec.epilog.ph185
   %index196 = phi i64 [ %vec.epilog.resume.val178, %vec.epilog.ph185 ], [ %index.next198, %vec.epilog.vector.body195 ] ; 2 uses
-  %vec.ind197 = phi <4 x i8> [ %induction192, %vec.epilog.ph185 ], [ %vec.ind.next199, %vec.epilog.vector.body195 ] ; 2 uses
-  %15 = add <4 x i8> %vec.ind197, %broadcast.splat189
+  %vec.ind197 = phi <8 x i8> [ %induction192, %vec.epilog.ph185 ], [ %vec.ind.next199, %vec.epilog.vector.body195 ] ; 2 uses
+  %15 = add <8 x i8> %vec.ind197, %broadcast.splat189
   %i.an = getelementptr inbounds nuw i8, ptr %i.t, i64 %index196
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 1
-  store <4 x i8> %15, ptr %i.ao, align 1, !tbaa !37
-  %index.next198 = add nuw i64 %index196, 4       ; 2 uses
-  %vec.ind.next199 = add <4 x i8> %vec.ind197, %broadcast.splat194
+  store <8 x i8> %15, ptr %i.ao, align 1, !tbaa !37
+  %index.next198 = add nuw i64 %index196, 8       ; 2 uses
+  %vec.ind.next199 = add <8 x i8> %vec.ind197, %broadcast.splat194
   %i.ap = icmp eq i64 %index.next198, %n.vec187
   br i1 %i.ap, label %vec.epilog.middle.block200, label %vec.epilog.vector.body195, !llvm.loop !44
 
@@ -679,7 +679,7 @@ attributes #16 = { builtin allocsize(0) }
 !40 = !{!"llvm.loop.peeled.count", i32 1}
 !41 = !{!"llvm.loop.isvectorized", i32 1}
 !42 = !{!"llvm.loop.unroll.runtime.disable"}
-!43 = !{!"branch_weights", i32 4, i32 28}
+!43 = !{!"branch_weights", i32 8, i32 24}
 !44 = distinct !{!44, !39, !40, !41, !42}
 !45 = distinct !{!45, !39, !40, !42, !41}
 !46 = !{!47, !47, i64 0}

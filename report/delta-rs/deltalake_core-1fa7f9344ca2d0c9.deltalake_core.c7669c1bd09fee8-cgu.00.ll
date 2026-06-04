@@ -201,7 +201,7 @@ iter.check:                                       ; preds = %_RNvMs_NtCs6Po7BT7N
   %i.aj = ptrtoint ptr %i.ah to i64               ; 3 uses
   %i.ak = ptrtoint ptr %i.af to i64
   %i.al = sub i64 %i.aj, %i.ak                    ; 7 uses
-  %min.iters.check = icmp ult i64 %i.al, 4
+  %min.iters.check = icmp ult i64 %i.al, 8
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
@@ -215,7 +215,7 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
   br i1 %min.iters.check18, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %n.mod.vf = and i64 %i.al, 28
+  %n.mod.vf = and i64 %i.al, 24
   %n.vec = and i64 %i.al, -32                     ; 5 uses
   %i.ao = add i64 %i.ac, %n.vec                   ; 2 uses
   %i.ap = getelementptr i8, ptr %i.af, i64 %n.vec ; 2 uses
@@ -247,7 +247,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec22 = and i64 %i.al, -4                    ; 4 uses
+  %n.vec22 = and i64 %i.al, -8                    ; 4 uses
   %i.av = add i64 %i.ac, %n.vec22                 ; 2 uses
   %i.aw = getelementptr i8, ptr %i.af, i64 %n.vec22 ; 2 uses
   %i.ax = getelementptr i8, ptr %i.ab, i64 %i.ac
@@ -257,10 +257,10 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %index23 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next26, %vec.epilog.vector.body ] ; 3 uses
   %next.gep24 = getelementptr i8, ptr %i.af, i64 %index23
   call void @llvm.experimental.noalias.scope.decl(metadata !39267)
-  %wide.load25 = load <4 x i8>, ptr %next.gep24, align 1, !noalias !39269
+  %wide.load25 = load <8 x i8>, ptr %next.gep24, align 1, !noalias !39269
   %i.ay = getelementptr i8, ptr %i.ax, i64 %index23
-  store <4 x i8> %wide.load25, ptr %i.ay, align 1, !noalias !39270
-  %index.next26 = add nuw i64 %index23, 4         ; 2 uses
+  store <8 x i8> %wide.load25, ptr %i.ay, align 1, !noalias !39270
+  %index.next26 = add nuw i64 %index23, 8         ; 2 uses
   %i.az = icmp eq i64 %index.next26, %n.vec22
   br i1 %i.az, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !39277
 
@@ -663,7 +663,7 @@ begin_hunk_1_@llvm.umax.i64
 !39273 = distinct !{!39273, !39274, !"_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator8for_each4callbNCINvMsj_NtCs6Po7BT7Nknu_5alloc3vecINtB1p_3VecbE14extend_trustedINtNtB1p_5drain5DrainbEE0E0Cs14kWLkQVSKO_14deltalake_core: argument 0"}
 !39274 = distinct !{!39274, !"_RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator8for_each4callbNCINvMsj_NtCs6Po7BT7Nknu_5alloc3vecINtB1p_3VecbE14extend_trustedINtNtB1p_5drain5DrainbEE0E0Cs14kWLkQVSKO_14deltalake_core"}
 !39275 = distinct !{!39275, !15341, !15342}
-!39276 = !{!"branch_weights", i32 4, i32 28}
+!39276 = !{!"branch_weights", i32 8, i32 24}
 !39277 = distinct !{!39277, !15341, !15342}
 !39278 = distinct !{!39278, !18}
 !39279 = !{!39280, !39259, !39265, !39256, !39266}

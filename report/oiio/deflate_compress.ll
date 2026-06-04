@@ -168,7 +168,7 @@ iter.check119:                                    ; preds = %middle.block116, %b
   %i.al = shl nuw i32 1, %i.ak                    ; 5 uses
   %i.am = add i32 %i.al, %i.ah
   %i.an = trunc i64 %indvars.iv.i to i8           ; 11 uses
-  %min.iters.check105 = icmp samesign ult i64 %indvars.iv.i, 6
+  %min.iters.check105 = icmp samesign ult i64 %indvars.iv.i, 8
   %i.ao = sub i32 0, %i.al
   %i.ap = icmp ugt i32 %i.ah, %i.ao
   %or.cond177 = select i1 %min.iters.check105, i1 true, i1 %i.ap
@@ -219,9 +219,9 @@ vector.body113:                                   ; preds = %vector.body113, %ve
   br i1 %i.az, label %middle.block116, label %vector.body113, !llvm.loop !23
 
 vec.epilog.ph123:                                 ; preds = %vector.main.loop.iter.check106
-  %n.vec125 = and i32 %i.al, -4
-  %broadcast.splatinsert126 = insertelement <4 x i8> poison, i8 %i.an, i64 0
-  %broadcast.splat127 = shufflevector <4 x i8> %broadcast.splatinsert126, <4 x i8> poison, <4 x i32> zeroinitializer
+  %n.vec125 = and i32 %i.al, -8
+  %broadcast.splatinsert126 = insertelement <8 x i8> poison, i8 %i.an, i64 0
+  %broadcast.splat127 = shufflevector <8 x i8> %broadcast.splatinsert126, <8 x i8> poison, <8 x i32> zeroinitializer
   br label %vec.epilog.vector.body128
 
 vec.epilog.vector.body128:                        ; preds = %vec.epilog.vector.body128, %vec.epilog.ph123
@@ -229,8 +229,8 @@ vec.epilog.vector.body128:                        ; preds = %vec.epilog.vector.b
   %i.ba = add i32 %i.ah, %index129
   %i.bb = zext i32 %i.ba to i64
   %i.bc = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.bb
-  store <4 x i8> %broadcast.splat127, ptr %i.bc, align 1, !tbaa !20
-  %index.next130 = add nuw i32 %index129, 4       ; 2 uses
+  store <8 x i8> %broadcast.splat127, ptr %i.bc, align 1, !tbaa !20
+  %index.next130 = add nuw i32 %index129, 8       ; 2 uses
   %i.bd = icmp eq i32 %index.next130, %n.vec125
   br i1 %i.bd, label %middle.block116, label %vec.epilog.vector.body128, !llvm.loop !27
 
@@ -301,7 +301,7 @@ iter.check:                                       ; preds = %middle.block, %bb.r
   %i.cn = shl nuw i32 1, %i.cm                    ; 5 uses
   %i.co = add i32 %i.cn, %i.cj
   %i.cp = trunc i64 %indvars.iv.i70 to i8         ; 11 uses
-  %min.iters.check = icmp samesign ult i64 %indvars.iv.i70, 6
+  %min.iters.check = icmp samesign ult i64 %indvars.iv.i70, 8
   %i.cq = sub i32 0, %i.cn
   %i.cr = icmp ugt i32 %i.cj, %i.cq
   %or.cond179 = select i1 %min.iters.check, i1 true, i1 %i.cr
@@ -352,9 +352,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.db, label %middle.block, label %vector.body, !llvm.loop !31
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check
-  %n.vec97 = and i32 %i.cn, -4
-  %broadcast.splatinsert98 = insertelement <4 x i8> poison, i8 %i.cp, i64 0
-  %broadcast.splat99 = shufflevector <4 x i8> %broadcast.splatinsert98, <4 x i8> poison, <4 x i32> zeroinitializer
+  %n.vec97 = and i32 %i.cn, -8
+  %broadcast.splatinsert98 = insertelement <8 x i8> poison, i8 %i.cp, i64 0
+  %broadcast.splat99 = shufflevector <8 x i8> %broadcast.splatinsert98, <8 x i8> poison, <8 x i32> zeroinitializer
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -362,8 +362,8 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.dc = add i32 %i.cj, %index100
   %i.dd = zext i32 %i.dc to i64
   %i.de = getelementptr inbounds nuw i8, ptr %i.ch, i64 %i.dd
-  store <4 x i8> %broadcast.splat99, ptr %i.de, align 1, !tbaa !20
-  %index.next101 = add nuw i32 %index100, 4       ; 2 uses
+  store <8 x i8> %broadcast.splat99, ptr %i.de, align 1, !tbaa !20
+  %index.next101 = add nuw i32 %index100, 8       ; 2 uses
   %i.df = icmp eq i32 %index.next101, %n.vec97
   br i1 %i.df, label %middle.block, label %vec.epilog.vector.body, !llvm.loop !32
 
@@ -434,7 +434,7 @@ iter.check149:                                    ; preds = %middle.block146, %b
   %i.ep = shl nuw i32 1, %i.eo                    ; 5 uses
   %i.eq = add i32 %i.ep, %i.el
   %i.er = trunc i64 %indvars.iv.i76 to i8         ; 11 uses
-  %min.iters.check135 = icmp samesign ult i64 %indvars.iv.i76, 6
+  %min.iters.check135 = icmp samesign ult i64 %indvars.iv.i76, 8
   %i.es = sub i32 0, %i.ep
   %i.et = icmp ugt i32 %i.el, %i.es
   %or.cond181 = select i1 %min.iters.check135, i1 true, i1 %i.et
@@ -485,9 +485,9 @@ vector.body143:                                   ; preds = %vector.body143, %ve
   br i1 %i.fd, label %middle.block146, label %vector.body143, !llvm.loop !35
 
 vec.epilog.ph153:                                 ; preds = %vector.main.loop.iter.check136
-  %n.vec155 = and i32 %i.ep, -4
-  %broadcast.splatinsert156 = insertelement <4 x i8> poison, i8 %i.er, i64 0
-  %broadcast.splat157 = shufflevector <4 x i8> %broadcast.splatinsert156, <4 x i8> poison, <4 x i32> zeroinitializer
+  %n.vec155 = and i32 %i.ep, -8
+  %broadcast.splatinsert156 = insertelement <8 x i8> poison, i8 %i.er, i64 0
+  %broadcast.splat157 = shufflevector <8 x i8> %broadcast.splatinsert156, <8 x i8> poison, <8 x i32> zeroinitializer
   br label %vec.epilog.vector.body158
 
 vec.epilog.vector.body158:                        ; preds = %vec.epilog.vector.body158, %vec.epilog.ph153
@@ -495,8 +495,8 @@ vec.epilog.vector.body158:                        ; preds = %vec.epilog.vector.b
   %i.fe = add i32 %i.el, %index159
   %i.ff = zext i32 %i.fe to i64
   %i.fg = getelementptr inbounds nuw i8, ptr %i.ej, i64 %i.ff
-  store <4 x i8> %broadcast.splat157, ptr %i.fg, align 1, !tbaa !20
-  %index.next160 = add nuw i32 %index159, 4       ; 2 uses
+  store <8 x i8> %broadcast.splat157, ptr %i.fg, align 1, !tbaa !20
+  %index.next160 = add nuw i32 %index159, 8       ; 2 uses
   %i.fh = icmp eq i32 %index.next160, %n.vec155
   br i1 %i.fh, label %middle.block146, label %vec.epilog.vector.body158, !llvm.loop !36
 

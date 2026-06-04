@@ -201,7 +201,7 @@ bb.ag:                                            ; preds = %.sink.split.i.i, %b
   br i1 %or.cond98.i.i, label %decomp_block.exit.thread177, label %iter.check
 
 iter.check:                                       ; preds = %bb.ag
-  %min.iters.check = icmp ult i32 %.179.i.i, 4
+  %min.iters.check = icmp ult i32 %.179.i.i, 8
   br i1 %min.iters.check, label %.preheader.i.i.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %iter.check
@@ -227,7 +227,7 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
   br i1 %min.iters.check303, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %n.mod.vf = and i32 %.179.i.i, 28
+  %n.mod.vf = and i32 %.179.i.i, 24
   %n.vec = and i32 %.179.i.i, -32                 ; 4 uses
   %i.gw = add i32 %.074.ph.i21.i, %n.vec          ; 2 uses
   %i.gx = and i32 %.179.i.i, 31
@@ -261,9 +261,9 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i32 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec307 = and i32 %.179.i.i, -4               ; 3 uses
+  %n.vec307 = and i32 %.179.i.i, -8               ; 3 uses
   %i.hh = add i32 %.074.ph.i21.i, %n.vec307       ; 2 uses
-  %i.hi = and i32 %.179.i.i, 3
+  %i.hi = and i32 %.179.i.i, 7
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -272,11 +272,11 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.hk = add i32 %i.hj, %.neg.i.i
   %i.hl = zext i32 %i.hk to i64
   %i.hm = getelementptr inbounds nuw i8, ptr %i.br, i64 %i.hl
-  %wide.load309 = load <4 x i8>, ptr %i.hm, align 1, !tbaa !18
+  %wide.load309 = load <8 x i8>, ptr %i.hm, align 1, !tbaa !18
   %i.hn = zext i32 %i.hj to i64
   %i.ho = getelementptr inbounds nuw i8, ptr %i.br, i64 %i.hn
-  store <4 x i8> %wide.load309, ptr %i.ho, align 1, !tbaa !18
-  %index.next310 = add nuw i32 %index308, 4       ; 2 uses
+  store <8 x i8> %wide.load309, ptr %i.ho, align 1, !tbaa !18
+  %index.next310 = add nuw i32 %index308, 8       ; 2 uses
   %i.hp = icmp eq i32 %index.next310, %n.vec307
   br i1 %i.hp, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !31
 
@@ -679,7 +679,7 @@ attributes #10 = { nounwind }
 !27 = distinct !{!27, !20, !28, !29}
 !28 = !{!"llvm.loop.isvectorized", i32 1}
 !29 = !{!"llvm.loop.unroll.runtime.disable"}
-!30 = !{!"branch_weights", i32 4, i32 28}
+!30 = !{!"branch_weights", i32 8, i32 24}
 !31 = distinct !{!31, !20, !28, !29}
 !32 = distinct !{!32, !33}
 !33 = !{!"llvm.loop.unroll.disable"}

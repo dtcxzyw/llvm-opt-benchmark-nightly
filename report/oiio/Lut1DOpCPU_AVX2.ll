@@ -201,7 +201,7 @@ vector.memcheck118:                               ; preds = %.lr.ph103.preheader
   br i1 %found.conflict124, label %.lr.ph103.preheader146, label %vector.ph128
 
 vector.ph128:                                     ; preds = %vector.memcheck118
-  %n.vec130 = and i64 %i.il, 1073741822           ; 4 uses
+  %n.vec130 = and i64 %i.il, 1073741816           ; 4 uses
   %i.ip = shl nuw nsw i64 %n.vec130, 2
   %i.iq = shl nuw nsw i64 %n.vec130, 3
   %i.ir = getelementptr i8, ptr %.050.lcssa, i64 %i.iq
@@ -213,9 +213,9 @@ vector.body131:                                   ; preds = %vector.body131, %ve
   %next.gep133 = getelementptr i8, ptr %.050.lcssa, i64 %i.is
   %.idx145 = shl i64 %index132, 3
   %i.it = getelementptr inbounds nuw i8, ptr %i.b, i64 %.idx145
-  %wide.vec134 = load <8 x i16>, ptr %i.it, align 16, !tbaa !39, !alias.scope !41
-  store <8 x i16> %wide.vec134, ptr %next.gep133, align 2, !tbaa !39, !alias.scope !44, !noalias !41
-  %index.next140 = add nuw i64 %index132, 2       ; 2 uses
+  %wide.vec134 = load <32 x i16>, ptr %i.it, align 16, !tbaa !39, !alias.scope !41
+  store <32 x i16> %wide.vec134, ptr %next.gep133, align 2, !tbaa !39, !alias.scope !44, !noalias !41
+  %index.next140 = add nuw i64 %index132, 8       ; 2 uses
   %i.iu = icmp eq i64 %index.next140, %n.vec130
   br i1 %i.iu, label %middle.block141, label %vector.body131, !llvm.loop !46
 
@@ -610,7 +610,7 @@ vector.memcheck118:                               ; preds = %.lr.ph103.preheader
   br i1 %found.conflict124, label %.lr.ph103.preheader146, label %vector.ph128
 
 vector.ph128:                                     ; preds = %vector.memcheck118
-  %n.vec130 = and i64 %i.il, 1073741822           ; 4 uses
+  %n.vec130 = and i64 %i.il, 1073741816           ; 4 uses
   %i.ip = shl nuw nsw i64 %n.vec130, 2
   %i.iq = shl nuw nsw i64 %n.vec130, 3
   %i.ir = getelementptr i8, ptr %.050.lcssa, i64 %i.iq
@@ -622,9 +622,9 @@ vector.body131:                                   ; preds = %vector.body131, %ve
   %next.gep133 = getelementptr i8, ptr %.050.lcssa, i64 %i.is
   %.idx145 = shl i64 %index132, 3
   %i.it = getelementptr inbounds nuw i8, ptr %i.b, i64 %.idx145
-  %wide.vec134 = load <8 x i16>, ptr %i.it, align 16, !tbaa !39, !alias.scope !56
-  store <8 x i16> %wide.vec134, ptr %next.gep133, align 2, !tbaa !39, !alias.scope !59, !noalias !56
-  %index.next140 = add nuw i64 %index132, 2       ; 2 uses
+  %wide.vec134 = load <32 x i16>, ptr %i.it, align 16, !tbaa !39, !alias.scope !56
+  store <32 x i16> %wide.vec134, ptr %next.gep133, align 2, !tbaa !39, !alias.scope !59, !noalias !56
+  %index.next140 = add nuw i64 %index132, 8       ; 2 uses
   %i.iu = icmp eq i64 %index.next140, %n.vec130
   br i1 %i.iu, label %middle.block141, label %vector.body131, !llvm.loop !61
 
@@ -1019,7 +1019,7 @@ vector.memcheck118:                               ; preds = %.lr.ph103.preheader
   br i1 %found.conflict124, label %.lr.ph103.preheader146, label %vector.ph128
 
 vector.ph128:                                     ; preds = %vector.memcheck118
-  %n.vec130 = and i64 %i.il, 1073741822           ; 4 uses
+  %n.vec130 = and i64 %i.il, 1073741816           ; 4 uses
   %i.ip = shl nuw nsw i64 %n.vec130, 2
   %i.iq = shl nuw nsw i64 %n.vec130, 3
   %i.ir = getelementptr i8, ptr %.050.lcssa, i64 %i.iq
@@ -1031,9 +1031,9 @@ vector.body131:                                   ; preds = %vector.body131, %ve
   %next.gep133 = getelementptr i8, ptr %.050.lcssa, i64 %i.is
   %.idx145 = shl i64 %index132, 3
   %i.it = getelementptr inbounds nuw i8, ptr %i.b, i64 %.idx145
-  %wide.vec134 = load <8 x i16>, ptr %i.it, align 16, !tbaa !39, !alias.scope !71
-  store <8 x i16> %wide.vec134, ptr %next.gep133, align 2, !tbaa !39, !alias.scope !74, !noalias !71
-  %index.next140 = add nuw i64 %index132, 2       ; 2 uses
+  %wide.vec134 = load <32 x i16>, ptr %i.it, align 16, !tbaa !39, !alias.scope !71
+  store <32 x i16> %wide.vec134, ptr %next.gep133, align 2, !tbaa !39, !alias.scope !74, !noalias !71
+  %index.next140 = add nuw i64 %index132, 8       ; 2 uses
   %i.iu = icmp eq i64 %index.next140, %n.vec130
   br i1 %i.iu, label %middle.block141, label %vector.body131, !llvm.loop !76
 
@@ -1356,7 +1356,7 @@ vector.memcheck118:                               ; preds = %.lr.ph103.preheader
   br i1 %found.conflict124, label %.lr.ph103.preheader146, label %vector.ph128
 
 vector.ph128:                                     ; preds = %vector.memcheck118
-  %n.vec130 = and i64 %i.fo, 1073741822           ; 4 uses
+  %n.vec130 = and i64 %i.fo, 1073741816           ; 4 uses
   %i.fs = shl nuw nsw i64 %n.vec130, 2
   %i.ft = shl nuw nsw i64 %n.vec130, 3
   %i.fu = getelementptr i8, ptr %.050.lcssa, i64 %i.ft
@@ -1368,9 +1368,9 @@ vector.body131:                                   ; preds = %vector.body131, %ve
   %next.gep133 = getelementptr i8, ptr %.050.lcssa, i64 %i.fv
   %.idx145 = shl i64 %index132, 3
   %i.fw = getelementptr inbounds nuw i8, ptr %7, i64 %.idx145
-  %wide.vec134 = load <8 x i16>, ptr %i.fw, align 16, !tbaa !39, !alias.scope !86
-  store <8 x i16> %wide.vec134, ptr %next.gep133, align 2, !tbaa !39, !alias.scope !89, !noalias !86
-  %index.next140 = add nuw i64 %index132, 2       ; 2 uses
+  %wide.vec134 = load <32 x i16>, ptr %i.fw, align 16, !tbaa !39, !alias.scope !86
+  store <32 x i16> %wide.vec134, ptr %next.gep133, align 2, !tbaa !39, !alias.scope !89, !noalias !86
+  %index.next140 = add nuw i64 %index132, 8       ; 2 uses
   %i.fx = icmp eq i64 %index.next140, %n.vec130
   br i1 %i.fx, label %middle.block141, label %vector.body131, !llvm.loop !91
 

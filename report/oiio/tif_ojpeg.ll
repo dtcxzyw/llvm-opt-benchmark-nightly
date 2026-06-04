@@ -201,7 +201,7 @@ iter.check556:                                    ; preds = %.preheader
   %i.xg = getelementptr inbounds nuw i8, ptr %i.e, i64 497 ; 2 uses
   %i.xh = zext i8 %i.xe to i64                    ; 2 uses
   %i.xi = add nsw i64 %i.xh, -1                   ; 5 uses
-  %min.iters.check540 = icmp ult i8 %i.xe, 5
+  %min.iters.check540 = icmp ult i8 %i.xe, 9
   br i1 %min.iters.check540, label %vec.epilog.scalar.ph557.preheader, label %vector.main.loop.iter.check541
 
 vector.main.loop.iter.check541:                   ; preds = %iter.check556
@@ -209,7 +209,7 @@ vector.main.loop.iter.check541:                   ; preds = %iter.check556
   br i1 %min.iters.check542, label %vec.epilog.ph560, label %vector.ph543
 
 vector.ph543:                                     ; preds = %vector.main.loop.iter.check541
-  %n.mod.vf544 = and i64 %i.xi, 28
+  %n.mod.vf544 = and i64 %i.xi, 24
   %n.vec545 = and i64 %i.xi, -32                  ; 9 uses
   %i.xj = or disjoint i64 %n.vec545, 1            ; 2 uses
   %i.xk = getelementptr inbounds nuw i8, ptr %i.e, i64 498
@@ -272,27 +272,27 @@ middle.block552:                                  ; preds = %vector.body546.6, %
 
 vec.epilog.iter.check558:                         ; preds = %middle.block552
   %min.epilog.iters.check559 = icmp eq i64 %n.mod.vf544, 0
-  br i1 %min.epilog.iters.check559, label %vec.epilog.scalar.ph557.preheader, label %vec.epilog.ph560, !prof !195
+  br i1 %min.epilog.iters.check559, label %vec.epilog.scalar.ph557.preheader, label %vec.epilog.ph560, !prof !200
 
 vec.epilog.ph560:                                 ; preds = %vector.main.loop.iter.check541, %vec.epilog.iter.check558
   %vec.epilog.resume.val554 = phi i64 [ %n.vec545, %vec.epilog.iter.check558 ], [ 0, %vector.main.loop.iter.check541 ]
   %bc.resume.val555 = phi i64 [ %i.xj, %vec.epilog.iter.check558 ], [ 1, %vector.main.loop.iter.check541 ]
-  %n.vec562 = and i64 %i.xi, -4                   ; 3 uses
+  %n.vec562 = and i64 %i.xi, -8                   ; 3 uses
   %i.ye = or disjoint i64 %n.vec562, 1
   %i.yf = trunc i64 %bc.resume.val555 to i8
-  %broadcast.splatinsert563 = insertelement <4 x i8> poison, i8 %i.yf, i64 0
-  %broadcast.splat564 = shufflevector <4 x i8> %broadcast.splatinsert563, <4 x i8> poison, <4 x i32> zeroinitializer
-  %induction565 = add <4 x i8> %broadcast.splat564, <i8 0, i8 1, i8 2, i8 3>
+  %broadcast.splatinsert563 = insertelement <8 x i8> poison, i8 %i.yf, i64 0
+  %broadcast.splat564 = shufflevector <8 x i8> %broadcast.splatinsert563, <8 x i8> poison, <8 x i32> zeroinitializer
+  %induction565 = add <8 x i8> %broadcast.splat564, <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7>
   br label %vec.epilog.vector.body566
 
 vec.epilog.vector.body566:                        ; preds = %vec.epilog.vector.body566, %vec.epilog.ph560
   %index567 = phi i64 [ %vec.epilog.resume.val554, %vec.epilog.ph560 ], [ %index.next569, %vec.epilog.vector.body566 ] ; 2 uses
-  %vec.ind568 = phi <4 x i8> [ %induction565, %vec.epilog.ph560 ], [ %vec.ind.next570, %vec.epilog.vector.body566 ] ; 2 uses
+  %vec.ind568 = phi <8 x i8> [ %induction565, %vec.epilog.ph560 ], [ %vec.ind.next570, %vec.epilog.vector.body566 ] ; 2 uses
   %i.yg = getelementptr inbounds nuw i8, ptr %i.xg, i64 %index567
   %i.yh = getelementptr inbounds nuw i8, ptr %i.yg, i64 1
-  store <4 x i8> %vec.ind568, ptr %i.yh, align 1, !tbaa !101
-  %index.next569 = add nuw i64 %index567, 4       ; 2 uses
-  %vec.ind.next570 = add <4 x i8> %vec.ind568, splat (i8 4)
+  store <8 x i8> %vec.ind568, ptr %i.yh, align 1, !tbaa !101
+  %index.next569 = add nuw i64 %index567, 8       ; 2 uses
+  %vec.ind.next570 = add <8 x i8> %vec.ind568, splat (i8 8)
   %i.yi = icmp eq i64 %index.next569, %n.vec562
   br i1 %i.yi, label %vec.epilog.middle.block571, label %vec.epilog.vector.body566, !llvm.loop !204
 

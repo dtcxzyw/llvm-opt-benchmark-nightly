@@ -201,7 +201,7 @@ bb.r:                                             ; preds = %.lr.ph200
 
 iter.check:                                       ; preds = %bb.r
   %i.eu = sub nuw i64 %spec.select, %.8198        ; 7 uses
-  %min.iters.check = icmp ult i64 %i.eu, 4
+  %min.iters.check = icmp ult i64 %i.eu, 8
   br i1 %min.iters.check, label %.lr.ph196.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
@@ -217,7 +217,7 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
   br i1 %min.iters.check219, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %n.mod.vf = and i64 %i.eu, 28
+  %n.mod.vf = and i64 %i.eu, 24
   %n.vec = and i64 %i.eu, -32                     ; 4 uses
   %i.ez = add i64 %.8198, %n.vec
   %i.fa = getelementptr i8, ptr %4, i64 %.8198
@@ -243,11 +243,11 @@ middle.block:                                     ; preds = %vector.body
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %n.mod.vf, 0
-  br i1 %min.epilog.iters.check, label %.lr.ph196.preheader, label %vec.epilog.ph, !prof !1469
+  br i1 %min.epilog.iters.check, label %.lr.ph196.preheader, label %vec.epilog.ph, !prof !607
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec222 = and i64 %i.eu, -4                   ; 3 uses
+  %n.vec222 = and i64 %i.eu, -8                   ; 3 uses
   %i.fg = add i64 %.8198, %n.vec222
   %i.fh = getelementptr i8, ptr %4, i64 %.8198
   br label %vec.epilog.vector.body
@@ -255,10 +255,10 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index223 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next225, %vec.epilog.vector.body ] ; 3 uses
   %i.fi = getelementptr inbounds i8, ptr %i.eq, i64 %index223
-  %wide.load224 = load <4 x i8>, ptr %i.fi, align 1, !tbaa !79
+  %wide.load224 = load <8 x i8>, ptr %i.fi, align 1, !tbaa !79
   %i.fj = getelementptr i8, ptr %i.fh, i64 %index223
-  store <4 x i8> %wide.load224, ptr %i.fj, align 1, !tbaa !79
-  %index.next225 = add nuw i64 %index223, 4       ; 2 uses
+  store <8 x i8> %wide.load224, ptr %i.fj, align 1, !tbaa !79
+  %index.next225 = add nuw i64 %index223, 8       ; 2 uses
   %i.fk = icmp eq i64 %index.next225, %n.vec222
   br i1 %i.fk, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !2315
 

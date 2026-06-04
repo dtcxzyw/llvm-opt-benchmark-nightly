@@ -164,11 +164,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.q, label %vec.epilog.vector.body, label %vector.body, !llvm.loop !29
 
 vec.epilog.vector.body:                           ; preds = %vector.body
-  %i.r = getelementptr i8, ptr %0, i64 8
-  store <2 x i16> splat (i16 1024), ptr %i.r, align 2, !tbaa !28
-  %i.s = getelementptr i8, ptr %0, i64 4
-  store <2 x i16> splat (i16 1024), ptr %i.s, align 2, !tbaa !28
-  store <2 x i16> splat (i16 1024), ptr %0, align 2, !tbaa !28
+  %i.r = getelementptr i8, ptr %0, i64 4
+  store <4 x i16> splat (i16 1024), ptr %i.r, align 2, !tbaa !28
+  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 2
+  store i16 1024, ptr %i.s, align 2, !tbaa !28
+  store i16 1024, ptr %0, align 2, !tbaa !28
   %i.t = getelementptr inbounds nuw i8, ptr %9, i64 24 ; 49 uses
   store i32 0, ptr %i.t, align 8, !tbaa !33
   %i.u = getelementptr inbounds nuw i8, ptr %9, i64 20 ; 53 uses

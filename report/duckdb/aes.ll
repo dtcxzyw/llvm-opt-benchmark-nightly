@@ -201,7 +201,7 @@ _ZL29mbedtls_ctr_increment_counterPh.exit:        ; preds = %bb.b, %bb.c, %bb.d,
 
 iter.check:                                       ; preds = %.preheader
   %i.ag = sub nuw nsw i64 %spec.select, %.0.i.lcssa ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.ag, 4
+  %min.iters.check = icmp samesign ult i64 %i.ag, 8
   br i1 %min.iters.check, label %.lr.ph53.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
@@ -213,7 +213,7 @@ vector.memcheck:                                  ; preds = %iter.check
   br i1 %conflict.rdx, label %.lr.ph53.preheader, label %vec.epilog.ph
 
 vec.epilog.ph:                                    ; preds = %vector.memcheck
-  %n.mod.vf66 = and i64 %spec.select, 3           ; 2 uses
+  %n.mod.vf66 = and i64 %spec.select, 7           ; 2 uses
   %n.vec67 = sub nsw i64 %i.ag, %n.mod.vf66       ; 2 uses
   %i.ak = add i64 %.0.i.lcssa, %n.vec67
   br label %vec.epilog.vector.body
@@ -222,13 +222,13 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %index68 = phi i64 [ 0, %vec.epilog.ph ], [ %index.next71, %vec.epilog.vector.body ] ; 2 uses
   %i.al = add i64 %.0.i.lcssa, %index68           ; 3 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.ad, i64 %i.al
-  %wide.load69 = load <4 x i8>, ptr %i.am, align 1, !tbaa !10
+  %wide.load69 = load <8 x i8>, ptr %i.am, align 1, !tbaa !10
   %i.an = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.al
-  %wide.load70 = load <4 x i8>, ptr %i.an, align 1, !tbaa !10
-  %7 = xor <4 x i8> %wide.load70, %wide.load69
+  %wide.load70 = load <8 x i8>, ptr %i.an, align 1, !tbaa !10
+  %7 = xor <8 x i8> %wide.load70, %wide.load69
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.al
-  store <4 x i8> %7, ptr %i.ao, align 1, !tbaa !10
-  %index.next71 = add nuw i64 %index68, 4         ; 2 uses
+  store <8 x i8> %7, ptr %i.ao, align 1, !tbaa !10
+  %index.next71 = add nuw i64 %index68, 8         ; 2 uses
   %i.ap = icmp eq i64 %index.next71, %n.vec67
   br i1 %i.ap, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !29
 

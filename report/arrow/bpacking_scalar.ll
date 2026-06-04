@@ -201,7 +201,7 @@ _ZN5arrow8internal12unpack_exactILi13ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.ab
   %i.bnz = add nsw i32 %i.bnx, -1                 ; 2 uses
   %i.boa = zext i32 %i.bnz to i64
   %i.bob = add nuw nsw i64 %i.boa, 1              ; 2 uses
-  %min.iters.check1979 = icmp ult i32 %i.bnz, 15
+  %min.iters.check1979 = icmp ult i32 %i.bnz, 51
   br i1 %min.iters.check1979, label %.lr.ph.i391.preheader2057, label %vector.memcheck1972
 
 vector.memcheck1972:                              ; preds = %.lr.ph.i391.preheader
@@ -604,7 +604,7 @@ _ZN5arrow8internal12unpack_exactILi8ELb1EmEEiPKhPT1_ii.exit: ; preds = %.lr.ph.i
   %i.al = tail call i64 @llvm.usub.sat.i64(i64 %i.ak, i64 8) ; 2 uses
   %i.am = lshr exact i64 %i.al, 3
   %i.an = add nuw nsw i64 %i.am, 1                ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.al, 136
+  %min.iters.check = icmp samesign ult i64 %i.al, 152
   br i1 %min.iters.check, label %.lr.ph.i28.preheader43, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i28.preheader

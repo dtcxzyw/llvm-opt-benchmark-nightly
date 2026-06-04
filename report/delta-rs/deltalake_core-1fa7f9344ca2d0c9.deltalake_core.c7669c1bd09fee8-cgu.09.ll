@@ -201,7 +201,7 @@ bb.a:
 
 .lr.ph.i.i.preheader:                             ; preds = %.preheader.i.i
   %i.e = sub nuw i64 %.sroa.4.0.copyload, %.sroa.0.0.copyload ; 3 uses
-  %min.iters.check = icmp ult i64 %i.e, 12
+  %min.iters.check = icmp ult i64 %i.e, 18
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader10, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
