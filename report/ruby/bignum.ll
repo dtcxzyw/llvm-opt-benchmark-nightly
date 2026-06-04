@@ -201,9 +201,9 @@ bignorm.exit:                                     ; preds = %bb.j, %bb.o, %bb.n,
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc void @bigdivmod(i64 noundef %0, i64 noundef %1, ptr noundef %2, ptr noundef %3) unnamed_addr #0 {
+define internal fastcc void @bigdivmod(i64 noundef %0, i64 noundef %1, ptr noundef captures(address) %2, ptr noundef captures(address) %3) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca i64, align 8                      ; 6 uses
+  %i.a = alloca i64, align 8                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
   call fastcc void @bigdivrem(i64 noundef %0, i64 noundef %1, ptr noundef %2, ptr noundef nonnull %i.a)
   %i.b = inttoptr i64 %0 to ptr
@@ -216,7 +216,7 @@ bb.a:
   br i1 %.not, label %bigzero_p.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.h = load i64, ptr %i.a, align 8, !tbaa !11
+  %i.h = load i64, ptr %i.a, align 8, !tbaa !11   ; 2 uses
   %i.i = inttoptr i64 %i.h to ptr                 ; 4 uses
   %i.j = load i64, ptr %i.i, align 8, !tbaa !13   ; 3 uses
   %i.k = and i64 %i.j, 16384
@@ -318,8 +318,7 @@ bb.g:                                             ; preds = %rb_int2big.exit, %b
   br i1 %.not14, label %bb.j, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %4 = load i64, ptr %i.a, align 8, !tbaa !11
-  %i.as = call fastcc i64 @bigadd(i64 noundef %4, i64 noundef %1, i32 noundef 1)
+  %i.as = call fastcc i64 @bigadd(i64 noundef %i.h, i64 noundef %1, i32 noundef 1)
   br label %.sink.split
 
 bigzero_p.exit.thread:                            ; preds = %bb.c, %BIGNUM_LEN.exit.i, %BIGNUM_LEN.exit20.thread, %BIGNUM_LEN.exit.thread, %BIGNUM_LEN.exit20, %BIGNUM_LEN.exit, %bb.a
@@ -562,7 +561,7 @@ bignorm.exit:                                     ; preds = %bb.j, %bb.o, %bb.n,
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc void @bigdivrem(i64 noundef %0, i64 noundef %1, ptr noundef %2, ptr noundef %3) unnamed_addr #0 {
+define internal fastcc void @bigdivrem(i64 noundef %0, i64 noundef %1, ptr noundef captures(address) %2, ptr noundef captures(address) %3) unnamed_addr #0 {
 bb.a:
   %i.a = inttoptr i64 %0 to ptr                   ; 7 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !13   ; 5 uses
@@ -965,7 +964,7 @@ bb.i:                                             ; preds = %bb.h
 declare ptr @rb_nogvl(ptr noundef, ptr noundef, ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #5
 
 ; Function Attrs: nofree norecurse nosync nounwind sspstrong memory(readwrite, target_mem: none) uwtable
-define internal noalias noundef ptr @bigdivrem1(ptr noundef %0) #15 {
+define internal noalias noundef ptr @bigdivrem1(ptr noundef captures(address) %0) #15 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !tbaa !427
   %.fr = freeze i64 %i.a                          ; 9 uses
@@ -1210,7 +1209,7 @@ bary_add.exit.loopexit:                           ; preds = %bary_add.exit.loope
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind sspstrong memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable
-define internal void @rb_big_stop(ptr noundef %0) #16 {
+define internal void @rb_big_stop(ptr noundef captures(address) %0) #16 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 32
   store volatile i64 20, ptr %i.a, align 8, !tbaa !431

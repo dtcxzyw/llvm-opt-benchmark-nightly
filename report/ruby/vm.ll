@@ -201,7 +201,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden void @rb_vm_pop_frame(ptr noundef %0) local_unnamed_addr #2 {
+define hidden void @rb_vm_pop_frame(ptr noundef captures(address) %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16         ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !70
@@ -604,14 +604,14 @@ vm_setclassvariable.exit:                         ; preds = %rb_ractor_main_p.ex
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden void @rb_vm_setinstancevariable(ptr noundef readnone captures(none) %0, i64 noundef %1, i64 noundef %2, i64 noundef %3, ptr noundef %4) local_unnamed_addr #2 {
+define hidden void @rb_vm_setinstancevariable(ptr noundef readnone captures(none) %0, i64 noundef %1, i64 noundef %2, i64 noundef %3, ptr noundef captures(address) %4) local_unnamed_addr #2 {
 bb.a:
   tail call fastcc void @vm_setinstancevariable(i64 noundef %1, i64 noundef %2, i64 noundef %3, ptr noundef %4)
   ret void
 }
 
 ; Function Attrs: inlinehint nounwind sspstrong uwtable
-define internal fastcc void @vm_setinstancevariable(i64 noundef %0, i64 noundef %1, i64 noundef %2, ptr noundef %3) unnamed_addr #11 {
+define internal fastcc void @vm_setinstancevariable(i64 noundef %0, i64 noundef %1, i64 noundef %2, ptr noundef captures(address) %3) unnamed_addr #11 {
 bb.a:
   %i.a = icmp eq i64 %0, 0
   %i.b = and i64 %0, 7
@@ -743,7 +743,7 @@ bb.p:                                             ; preds = %vm_setivar.exit, %b
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden i64 @rb_vm_getinstancevariable(ptr noundef readnone captures(none) %0, i64 noundef %1, i64 noundef %2, ptr noundef %3) local_unnamed_addr #2 {
+define hidden i64 @rb_vm_getinstancevariable(ptr noundef readnone captures(none) %0, i64 noundef %1, i64 noundef %2, ptr noundef captures(address) %3) local_unnamed_addr #2 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = alloca i32, align 4                      ; 5 uses
@@ -1146,7 +1146,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden i64 @rb_vm_yield_with_cfunc(ptr noundef %0, ptr noundef readonly captures(none) %1, i32 noundef %2, ptr noundef %3) local_unnamed_addr #2 {
+define hidden i64 @rb_vm_yield_with_cfunc(ptr noundef captures(address) %0, ptr noundef readonly captures(none) %1, i32 noundef %2, ptr noundef %3) local_unnamed_addr #2 {
 bb.a:
   %i.a = load i64, ptr %1, align 8, !tbaa !208
   %i.b = getelementptr i8, ptr %1, i64 16
@@ -1226,7 +1226,7 @@ vm_yield_with_cfunc.exit:                         ; preds = %vm_push_frame.exit.
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc i64 @vm_yield_with_cfunc(ptr noundef %0, ptr noundef readonly captures(none) %1, i64 noundef %2, i32 noundef %3, ptr noundef %4, i32 noundef %5, i64 noundef %6, ptr noundef %7) unnamed_addr #2 {
+define internal fastcc i64 @vm_yield_with_cfunc(ptr noundef captures(address) %0, ptr noundef readonly captures(none) %1, i64 noundef %2, i32 noundef %3, ptr noundef %4, i32 noundef %5, i64 noundef %6, ptr noundef %7) unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr i8, ptr %1, i64 16         ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !27   ; 2 uses
@@ -1629,7 +1629,7 @@ bb.bk:                                            ; preds = %vm_invokeblock_i.ex
 ; Function Attrs: nounwind sspstrong uwtable
 define hidden i64 @rb_vm_exec(ptr noundef %0) local_unnamed_addr #2 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 5 uses
+  %i.a = alloca ptr, align 8                      ; 4 uses
   %1 = alloca %struct.rb_vm_tag, align 8          ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %0, ptr %i.a, align 8, !tbaa !28
@@ -1637,7 +1637,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 6 uses
   store i32 0, ptr %i.b, align 8, !tbaa !68
   store i64 36, ptr %1, align 8, !tbaa !262
-  %i.c = getelementptr i8, ptr %0, i64 24         ; 2 uses
+  %i.c = getelementptr i8, ptr %0, i64 24         ; 3 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !67
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   store ptr %i.d, ptr %i.e, align 8, !tbaa !263
@@ -2030,9 +2030,7 @@ bb.an:                                            ; preds = %bb.am
 vm_exec_loop.exit:                                ; preds = %bb.an, %bb.am, %bb.ac, %bb.ab, %bb.ad, %bb.s
   %.1 = phi i64 [ %i.do, %bb.ad ], [ %.1.i, %bb.ab ], [ %.0, %bb.s ], [ %i.dg, %bb.ac ], [ %i.ez, %bb.an ], [ %.1.i18, %bb.am ]
   %i.fb = load ptr, ptr %i.e, align 8, !tbaa !263
-  %.0..0..0..0.4 = load ptr, ptr %i.a, align 8, !tbaa !28
-  %2 = getelementptr i8, ptr %.0..0..0..0.4, i64 24
-  store ptr %i.fb, ptr %2, align 8, !tbaa !67
+  store ptr %i.fb, ptr %i.c, align 8, !tbaa !67
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i64 %.1
@@ -2435,7 +2433,7 @@ method_definition_release.exit:                   ; preds = %bb.c, %bb.d, %bb.f
 declare void @rb_zjit_cme_free(ptr noundef) local_unnamed_addr #4
 
 ; Function Attrs: norecurse nounwind sspstrong uwtable
-define hidden void @rb_method_definition_addref(ptr noundef %0) local_unnamed_addr #15 {
+define hidden void @rb_method_definition_addref(ptr noundef captures(address) %0) local_unnamed_addr #15 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 4
   %i.b = atomicrmw volatile add ptr %i.a, i32 1 seq_cst, align 4
@@ -2838,7 +2836,7 @@ rb_ruby_verbose_ptr.exit:                         ; preds = %bb.bi, %bb.bj
 bb.bk:                                            ; preds = %rb_ruby_verbose_ptr.exit
   %i.io = and i8 %i.hy, 32
   %i.ip = icmp ne i8 %i.io, 0
-  %or.cond7 = or i1 %i.ia, %i.ip
+  %or.cond7 = or i1 %i.ip, %i.ia
   br i1 %or.cond7, label %bb.br, label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk
@@ -3241,8 +3239,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc i64 @rb_iterate0(ptr noundef readonly captures(none) %0, i64 noundef %1, ptr noundef %2, ptr noundef %3) unnamed_addr #2 {
 bb.a:
-  %i.a = alloca i64, align 8                      ; 6 uses
-  %i.b = alloca ptr, align 8                      ; 7 uses
+  %i.a = alloca i64, align 8                      ; 5 uses
+  %i.b = alloca ptr, align 8                      ; 5 uses
   %4 = alloca %struct.rb_vm_tag, align 8          ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store volatile i64 4, ptr %i.a, align 8, !tbaa !11
@@ -3254,7 +3252,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 64
   store i32 0, ptr %i.e, align 8, !tbaa !68
   store i64 36, ptr %4, align 8, !tbaa !262
-  %i.f = getelementptr i8, ptr %3, i64 24         ; 4 uses
+  %i.f = getelementptr i8, ptr %3, i64 24         ; 5 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !67
   %i.h = getelementptr inbounds nuw i8, ptr %4, i64 56 ; 3 uses
   store ptr %i.g, ptr %i.h, align 8, !tbaa !263
@@ -3366,7 +3364,6 @@ VM_CF_BLOCK_HANDLER.exit:                         ; preds = %bb.h, %VM_CF_LEP.ex
   %i.al = getelementptr i8, ptr %3, i64 136
   store i64 %.036, ptr %i.al, align 8, !tbaa !441
   %i.am = call i64 %0(i64 noundef %1) #23
-  store volatile i64 %i.am, ptr %i.a, align 8, !tbaa !11
   br label %bb.q
 
 bb.i:                                             ; preds = %bb.d, %bb.d
@@ -3432,29 +3429,24 @@ rb_vm_rewind_cfp.exit:                            ; preds = %bb.o, %bb.j
   store i64 4, ptr %i.an, align 8, !tbaa !66
   %i.bh = getelementptr i8, ptr %i.ap, i64 16
   %.val45 = load i64, ptr %i.bh, align 8, !tbaa !492
-  store volatile i64 %.val45, ptr %i.a, align 8, !tbaa !11
-  %.0..0..0..0.1151.pre = load ptr, ptr %i.b, align 8, !tbaa !28
   br label %bb.q
 
 bb.p:                                             ; preds = %bb.i, %bb.d
-  %i.bi = load ptr, ptr %i.h, align 8, !tbaa !263
-  %.0..0..0..0.11 = load ptr, ptr %i.b, align 8, !tbaa !28
-  %5 = getelementptr i8, ptr %.0..0..0..0.11, i64 24
-  store ptr %i.bi, ptr %5, align 8, !tbaa !67
+  %i.bi = load ptr, ptr %i.h, align 8, !tbaa !263 ; 3 uses
+  store ptr %i.bi, ptr %i.f, align 8, !tbaa !67
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  %.val43 = load ptr, ptr %i.f, align 8, !tbaa !67 ; 2 uses
-  %i.bj = getelementptr i8, ptr %.val43, i64 64
+  %i.bj = getelementptr i8, ptr %i.bi, i64 64
   store i32 %i.x, ptr %i.bj, align 8, !tbaa !68
-  %i.bk = getelementptr i8, ptr %.val43, i64 16
+  %i.bk = getelementptr i8, ptr %i.bi, i64 16
   call void @llvm.eh.sjlj.longjmp(ptr %i.bk)
   unreachable
 
 bb.q:                                             ; preds = %VM_CF_BLOCK_HANDLER.exit, %rb_vm_rewind_cfp.exit
-  %.0..0..0.1151 = phi ptr [ %3, %VM_CF_BLOCK_HANDLER.exit ], [ %.0..0..0..0.1151.pre, %rb_vm_rewind_cfp.exit ]
-  %6 = load ptr, ptr %i.h, align 8, !tbaa !263
-  %7 = getelementptr i8, ptr %.0..0..0.1151, i64 24
-  store ptr %6, ptr %7, align 8, !tbaa !67
+  %.sink = phi i64 [ %i.am, %VM_CF_BLOCK_HANDLER.exit ], [ %.val45, %rb_vm_rewind_cfp.exit ]
+  store volatile i64 %.sink, ptr %i.a, align 8, !tbaa !11
+  %5 = load ptr, ptr %i.h, align 8, !tbaa !263
+  store ptr %5, ptr %i.f, align 8, !tbaa !67
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %.0..0..0..0.16 = load volatile i64, ptr %i.a, align 8, !tbaa !11
@@ -3857,7 +3849,7 @@ bb.a:
   %i.b = alloca ptr, align 8                      ; 4 uses
   %i.c = alloca i64, align 8                      ; 5 uses
   %i.d = alloca ptr, align 8                      ; 5 uses
-  %i.e = alloca ptr, align 8                      ; 6 uses
+  %i.e = alloca ptr, align 8                      ; 5 uses
   %4 = alloca %struct.rb_vm_tag, align 8          ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store volatile i64 4, ptr %i.c, align 8, !tbaa !11
@@ -3876,7 +3868,7 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %4, i64 64
   store i32 0, ptr %i.h, align 8, !tbaa !68
   store i64 36, ptr %4, align 8, !tbaa !262
-  %i.i = getelementptr i8, ptr %.0..0..0..0.5, i64 24 ; 3 uses
+  %i.i = getelementptr i8, ptr %.0..0..0..0.5, i64 24 ; 4 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !67
   %i.k = getelementptr inbounds nuw i8, ptr %4, i64 56 ; 3 uses
   store ptr %i.j, ptr %i.k, align 8, !tbaa !263
@@ -3960,9 +3952,7 @@ bb.f:                                             ; preds = %rb_ec_vm_lock_rec.e
   %.0..0..0..0.2 = load volatile ptr, ptr %i.e, align 8, !tbaa !28
   %i.at = call fastcc i32 @rb_ec_tag_state(ptr noundef %.0..0..0..0.2)
   %i.au = load ptr, ptr %i.k, align 8, !tbaa !263
-  %.0..0..0..0.4 = load ptr, ptr %i.e, align 8, !tbaa !28
-  %5 = getelementptr i8, ptr %.0..0..0..0.4, i64 24
-  store ptr %i.au, ptr %5, align 8, !tbaa !67
+  store ptr %i.au, ptr %i.i, align 8, !tbaa !67
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   %.0..0..0..0.6 = load volatile ptr, ptr %i.d, align 8, !tbaa !28
@@ -4365,7 +4355,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 2 uses
   %i.b = alloca ptr, align 8                      ; 7 uses
   %i.c = alloca ptr, align 8                      ; 4 uses
-  %i.d = alloca ptr, align 8                      ; 5 uses
+  %i.d = alloca ptr, align 8                      ; 4 uses
   %5 = alloca %struct.rb_vm_tag, align 8          ; 9 uses
   store i64 %0, ptr %i.a, align 8, !tbaa !11
   store volatile ptr %4, ptr %i.b, align 8, !tbaa !28
@@ -4380,7 +4370,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #23
   %i.g = getelementptr inbounds nuw i8, ptr %5, i64 64
   store i32 0, ptr %i.g, align 8, !tbaa !68
-  %i.h = getelementptr i8, ptr %.0..0..0..0.9, i64 24 ; 2 uses
+  %i.h = getelementptr i8, ptr %.0..0..0..0.9, i64 24 ; 3 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !67
   %i.j = getelementptr inbounds nuw i8, ptr %5, i64 56 ; 2 uses
   store ptr %i.i, ptr %i.j, align 8, !tbaa !263
@@ -4511,9 +4501,7 @@ bb.l:                                             ; preds = %bb.d, %bb.e, %rb_vm
   %.018 = phi i32 [ 0, %.thread ], [ 0, %rb_vm_rewind_cfp.exit ], [ 7, %bb.e ], [ %i.aa, %bb.d ]
   %.0 = phi i64 [ %i.z, %.thread ], [ %i.ay, %rb_vm_rewind_cfp.exit ], [ 4, %bb.e ], [ 4, %bb.d ]
   %i.ba = load ptr, ptr %i.j, align 8, !tbaa !263
-  %.0..0..0..0.4 = load ptr, ptr %i.d, align 8, !tbaa !28
-  %6 = getelementptr i8, ptr %.0..0..0..0.4, i64 24
-  store ptr %i.ba, ptr %6, align 8, !tbaa !67
+  store ptr %i.ba, ptr %i.h, align 8, !tbaa !67
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   %.not21 = icmp eq ptr %3, null
@@ -4916,7 +4904,7 @@ bb.a:
 }
 
 ; Function Attrs: noinline nounwind sspstrong uwtable
-define hidden range(i32 0, 2) i32 @rb_dtrace_setup(ptr noundef readonly captures(address_is_null) %0, i64 noundef %1, i64 noundef %2, ptr noundef %3) local_unnamed_addr #30 {
+define hidden range(i32 0, 2) i32 @rb_dtrace_setup(ptr noundef readonly captures(address_is_null) %0, i64 noundef %1, i64 noundef %2, ptr noundef captures(address) %3) local_unnamed_addr #30 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
@@ -5319,7 +5307,7 @@ vm_pop_frame.exit:                                ; preds = %bb.i, %bb.j
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden void @rb_vm_rewind_cfp(ptr noundef %0, ptr noundef readnone captures(address) %1) local_unnamed_addr #2 {
+define hidden void @rb_vm_rewind_cfp(ptr noundef captures(address) %0, ptr noundef readnone captures(address) %1) local_unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16         ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !70   ; 2 uses
@@ -5722,7 +5710,7 @@ RSHAPE_DIRECT_CHILD_P.exit.thread:                ; preds = %bb.c, %rb_obj_write
 }
 
 ; Function Attrs: noinline nounwind sspstrong uwtable
-define internal fastcc noundef i64 @vm_setivar_slowpath_ivar(i64 noundef %0, i64 noundef %1, i64 noundef returned %2, ptr noundef %3) unnamed_addr #30 {
+define internal fastcc noundef i64 @vm_setivar_slowpath_ivar(i64 noundef %0, i64 noundef %1, i64 noundef returned %2, ptr noundef captures(address) %3) unnamed_addr #30 {
 bb.a:
   %i.a = icmp ne i64 %0, 0
   %i.b = and i64 %0, 7
@@ -6125,7 +6113,7 @@ rbimpl_RB_TYPE_P_fastpath.exit79.thread:          ; preds = %bb.ad, %bb.u, %bb.a
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc i64 @vm_call_attrset_direct(ptr noundef captures(none) %0, ptr noundef %1, i64 noundef %2) unnamed_addr #2 {
+define internal fastcc i64 @vm_call_attrset_direct(ptr noundef captures(none) %0, ptr noundef captures(address) %1, i64 noundef %2) unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 8          ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !73   ; 2 uses
@@ -6528,7 +6516,7 @@ vm_push_frame.exit:                               ; preds = %.lr.ph.i, %middle.b
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal noundef i64 @vm_call_iseq_setup_tailcall_opt_start(ptr noundef %0, ptr noundef %1, ptr noundef captures(none) %2) #2 {
+define internal noundef i64 @vm_call_iseq_setup_tailcall_opt_start(ptr noundef captures(address) %0, ptr noundef %1, ptr noundef captures(none) %2) #2 {
 bb.a:
   %i.a = getelementptr i8, ptr %2, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !233
@@ -6931,7 +6919,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal noundef i64 @vm_call_iseq_setup_tailcall_0start(ptr noundef %0, ptr noundef %1, ptr noundef captures(none) %2) #2 {
+define internal noundef i64 @vm_call_iseq_setup_tailcall_0start(ptr noundef captures(address) %0, ptr noundef %1, ptr noundef captures(none) %2) #2 {
 bb.a:
   tail call fastcc void @vm_call_iseq_setup_tailcall(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef 0)
   ret i64 36
@@ -7059,7 +7047,7 @@ vm_push_frame.exit:                               ; preds = %.lr.ph.i, %middle.b
 }
 
 ; Function Attrs: inlinehint nounwind sspstrong uwtable
-define internal fastcc void @vm_call_iseq_setup_tailcall(ptr noundef %0, ptr noundef %1, ptr noundef captures(none) %2, i32 noundef %3) unnamed_addr #11 {
+define internal fastcc void @vm_call_iseq_setup_tailcall(ptr noundef captures(address) %0, ptr noundef %1, ptr noundef captures(none) %2, i32 noundef %3) unnamed_addr #11 {
 bb.a:
   %i.a = getelementptr i8, ptr %2, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !233
@@ -7462,7 +7450,7 @@ vm_push_frame.exit:                               ; preds = %.lr.ph.i, %middle.b
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal i64 @vm_invoke_ifunc_block(ptr noundef %0, ptr noundef captures(none) %1, ptr noundef captures(none) %2, ptr noundef %3, i1 zeroext %4, i64 noundef %5) unnamed_addr #2 {
+define internal i64 @vm_invoke_ifunc_block(ptr noundef captures(address) %0, ptr noundef captures(none) %1, ptr noundef captures(none) %2, ptr noundef %3, i1 zeroext %4, i64 noundef %5) unnamed_addr #2 {
 bb.a:
   %i.a = and i64 %5, -4
   %i.b = inttoptr i64 %i.a to ptr                 ; 2 uses

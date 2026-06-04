@@ -201,7 +201,7 @@ begin_hunk_0
 @.str.288 = private unnamed_addr constant [28 x i8] c"queue size must be positive\00", align 1
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden i32 @rb_vm_check_ints_blocking(ptr noundef %0) local_unnamed_addr #0 {
+define hidden i32 @rb_vm_check_ints_blocking(ptr noundef captures(address) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 48
   %.val.i = load ptr, ptr %i.a, align 8, !tbaa !11 ; 4 uses
@@ -604,7 +604,7 @@ hrtime_update_expire.exit.thread:                 ; preds = %hrtime_update_expir
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden void @rb_ec_check_ints(ptr noundef %0) local_unnamed_addr #0 {
+define hidden void @rb_ec_check_ints(ptr noundef captures(address) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 48
   %.val.i = load ptr, ptr %i.a, align 8, !tbaa !11 ; 4 uses
@@ -1007,7 +1007,7 @@ bb.a:
   %i.e = alloca i32, align 4                      ; 8 uses
   %i.f = alloca i8, align 1                       ; 4 uses
   %4 = alloca %struct.rb_io_blocking_operation, align 8 ; 8 uses
-  %i.g = alloca ptr, align 8                      ; 5 uses
+  %i.g = alloca ptr, align 8                      ; 4 uses
   %5 = alloca %struct.rb_vm_tag, align 8          ; 9 uses
   %i.h = alloca i32, align 4                      ; 4 uses
   %6 = alloca %struct.rb_blocking_region_buffer, align 4 ; 8 uses
@@ -1091,7 +1091,7 @@ rb_io_blocking_operation_enter.exit:              ; preds = %.rb_io_blocking_ope
   store ptr %4, ptr %i.ai, align 8, !tbaa !72
   store ptr %4, ptr %.phi.trans.insert.i, align 8, !tbaa !73
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
-  %.0..0..0..0.29 = load volatile ptr, ptr %i.b, align 8, !tbaa !147 ; 3 uses
+  %.0..0..0..0.29 = load volatile ptr, ptr %i.b, align 8, !tbaa !147 ; 4 uses
   store ptr %.0..0..0..0.29, ptr %i.g, align 8, !tbaa !147
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #17
   %i.aj = getelementptr inbounds nuw i8, ptr %5, i64 64
@@ -1141,7 +1141,7 @@ rb_ec_vm_lock_rec.exit:                           ; preds = %rb_ec_ractor_ptr.ex
   br i1 %.not, label %bb.g, label %bb.f, !prof !49
 
 bb.f:                                             ; preds = %rb_ec_vm_lock_rec.exit
-  %.0..0..0..0.3 = load volatile ptr, ptr %i.g, align 8, !tbaa !147
+  %.0..0..0..0.3 = load volatile ptr, ptr %i.g, align 8, !tbaa !147 ; 2 uses
   %i.bc = call fastcc i32 @rb_ec_tag_state(ptr noundef %.0..0..0..0.3)
   br label %bb.z
 
@@ -1395,10 +1395,10 @@ vm_check_ints_blocking.exit65:                    ; preds = %bb.t, %bb.w, %bb.x,
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.f, %vm_check_ints_blocking.exit65
+  %.0..0..0.5 = phi ptr [ %.0..0..0..0.29, %vm_check_ints_blocking.exit65 ], [ %.0..0..0..0.3, %bb.f ]
   %.0 = phi i32 [ %.0..0..0..0., %vm_check_ints_blocking.exit65 ], [ %i.bc, %bb.f ] ; 2 uses
   %i.fa = load ptr, ptr %i.am, align 8, !tbaa !235
-  %.0..0..0..0.5 = load ptr, ptr %i.g, align 8, !tbaa !147
-  %i.fb = getelementptr i8, ptr %.0..0..0..0.5, i64 24
+  %i.fb = getelementptr i8, ptr %.0..0..0.5, i64 24
   store ptr %i.fa, ptr %i.fb, align 8, !tbaa !234
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
@@ -1801,7 +1801,7 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 15 uses
   %6 = alloca %struct.rb_io_blocking_operation, align 8 ; 8 uses
   %i.b = alloca i32, align 4                      ; 5 uses
-  %i.c = alloca ptr, align 8                      ; 5 uses
+  %i.c = alloca ptr, align 8                      ; 4 uses
   %7 = alloca %struct.rb_vm_tag, align 8          ; 9 uses
   %i.d = alloca i64, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #17
@@ -1893,7 +1893,7 @@ thread_io_wait_events.exit.thread:                ; preds = %bb.e, %thread_io_mn
   %i.af = getelementptr inbounds nuw i8, ptr %7, i64 64
   store i32 0, ptr %i.af, align 8, !tbaa !231
   store i64 36, ptr %7, align 8, !tbaa !233
-  %i.ag = getelementptr i8, ptr %i.i, i64 24      ; 2 uses
+  %i.ag = getelementptr i8, ptr %i.i, i64 24      ; 3 uses
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !234
   %i.ai = getelementptr inbounds nuw i8, ptr %7, i64 56 ; 2 uses
   store ptr %i.ah, ptr %i.ai, align 8, !tbaa !235
@@ -2223,9 +2223,7 @@ vm_check_ints_blocking.exit69:                    ; preds = %bb.al, %bb.ao, %bb.
 bb.ar:                                            ; preds = %bb.i, %vm_check_ints_blocking.exit69
   %i.es = phi i32 [ 0, %vm_check_ints_blocking.exit69 ], [ %i.ay, %bb.i ]
   %i.et = load ptr, ptr %i.ai, align 8, !tbaa !235
-  %.0..0..0..0.4 = load ptr, ptr %i.c, align 8, !tbaa !147
-  %8 = getelementptr i8, ptr %.0..0..0..0.4, i64 24
-  store ptr %i.et, ptr %8, align 8, !tbaa !234
+  store ptr %i.et, ptr %i.ag, align 8, !tbaa !234
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   br label %bb.as
@@ -2628,7 +2626,7 @@ bb.a:
   %6 = alloca %struct.exec_recursive_params, align 8 ; 9 uses
   %i.e = alloca i32, align 4                      ; 5 uses
   %i.f = alloca i64, align 8                      ; 6 uses
-  %i.g = alloca ptr, align 8                      ; 5 uses
+  %i.g = alloca ptr, align 8                      ; 4 uses
   %7 = alloca %struct.rb_vm_tag, align 8          ; 9 uses
   %8 = alloca %struct.exec_recursive_params, align 8
   %.not = icmp eq i64 %5, 0
@@ -2697,12 +2695,12 @@ rbimpl_RB_TYPE_P_fastpath.exit.thread.i:          ; preds = %rbimpl_RB_TYPE_P_fa
   br label %recursive_list_access.exit
 
 recursive_list_access.exit:                       ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i, %rbimpl_RB_TYPE_P_fastpath.exit.thread.i
-  %i.ak = phi i64 [ %i.ai, %rbimpl_RB_TYPE_P_fastpath.exit.thread.i ], [ %i.y, %rbimpl_RB_TYPE_P_fastpath.exit.i ] ; 9 uses
-  %i.al = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 5 uses
+  %i.ak = phi i64 [ %i.ai, %rbimpl_RB_TYPE_P_fastpath.exit.thread.i ], [ %i.y, %rbimpl_RB_TYPE_P_fastpath.exit.i ] ; 11 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 4 uses
   store i64 %i.ak, ptr %i.al, align 8, !tbaa !392
-  %i.am = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 3 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
   store i64 %1, ptr %i.am, align 8, !tbaa !394
-  %i.an = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 3 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 2 uses
   store i64 %2, ptr %i.an, align 8, !tbaa !395
   %i.ao = getelementptr inbounds nuw i8, ptr %6, i64 32
   store i64 %3, ptr %i.ao, align 8, !tbaa !396
@@ -2863,14 +2861,14 @@ bb.v:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.ct = load ptr, ptr %i.i, align 8, !tbaa !147
   store volatile ptr %i.ct, ptr %i.b, align 8, !tbaa !147
-  %.0..0..0..0..0..0..i59 = load volatile ptr, ptr %i.b, align 8, !tbaa !147 ; 4 uses
+  %.0..0..0..0..0..0..i59 = load volatile ptr, ptr %i.b, align 8, !tbaa !147 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   store ptr %.0..0..0..0..0..0..i59, ptr %i.g, align 8, !tbaa !147
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #17
   %i.cu = getelementptr inbounds nuw i8, ptr %7, i64 64
   store i32 0, ptr %i.cu, align 8, !tbaa !231
   store i64 36, ptr %7, align 8, !tbaa !233
-  %i.cv = getelementptr i8, ptr %.0..0..0..0..0..0..i59, i64 24 ; 2 uses
+  %i.cv = getelementptr i8, ptr %.0..0..0..0..0..0..i59, i64 24 ; 3 uses
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !234
   %i.cx = getelementptr inbounds nuw i8, ptr %7, i64 56 ; 2 uses
   store ptr %i.cw, ptr %i.cx, align 8, !tbaa !235
@@ -2916,7 +2914,6 @@ rb_ec_vm_lock_rec.exit:                           ; preds = %rb_ec_ractor_ptr.ex
 bb.y:                                             ; preds = %rb_ec_vm_lock_rec.exit
   %.0..0..0..0.3 = load volatile ptr, ptr %i.g, align 8, !tbaa !147
   %i.dn = call fastcc i32 @rb_ec_tag_state(ptr noundef %.0..0..0..0.3)
-  %.0..0..0..0.5.pre = load ptr, ptr %i.g, align 8, !tbaa !147
   br label %bb.aa
 
 bb.z:                                             ; preds = %rb_ec_vm_lock_rec.exit
@@ -2927,20 +2924,15 @@ bb.z:                                             ; preds = %rb_ec_vm_lock_rec.e
 
 bb.aa:                                            ; preds = %bb.y, %bb.z
   %i.dp = phi i32 [ %i.dn, %bb.y ], [ 0, %bb.z ]  ; 2 uses
-  %.0..0..0.5 = phi ptr [ %.0..0..0..0.5.pre, %bb.y ], [ %.0..0..0..0..0..0..i59, %bb.z ]
   %i.dq = load ptr, ptr %i.cx, align 8, !tbaa !235
-  %9 = getelementptr i8, ptr %.0..0..0.5, i64 24
-  store ptr %i.dq, ptr %9, align 8, !tbaa !234
+  store ptr %i.dq, ptr %i.cv, align 8, !tbaa !234
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
-  %10 = load i64, ptr %i.al, align 8, !tbaa !392  ; 2 uses
-  %11 = load i64, ptr %i.am, align 8, !tbaa !394  ; 2 uses
-  %12 = load i64, ptr %i.an, align 8, !tbaa !395  ; 2 uses
-  %.not.i61 = icmp eq i64 %12, 0
+  %.not.i61 = icmp eq i64 %2, 0
   br i1 %.not.i61, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i63, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.dr = call i64 @rb_hash_lookup2(i64 noundef %10, i64 noundef %11, i64 noundef 36) #17 ; 6 uses
+  %i.dr = call i64 @rb_hash_lookup2(i64 noundef %i.ak, i64 noundef %1, i64 noundef 36) #17 ; 6 uses
   %i.ds = icmp eq i64 %i.dr, 36
   br i1 %i.ds, label %bb.ai, label %bb.ac
 
@@ -2959,7 +2951,7 @@ rbimpl_RB_TYPE_P_fastpath.exit.i62:               ; preds = %bb.ac
   br i1 %i.ea, label %bb.ad, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i63
 
 bb.ad:                                            ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i62
-  %i.eb = call i64 @rb_hash_delete_entry(i64 noundef %i.dr, i64 noundef %12) #17 ; 0 uses
+  %i.eb = call i64 @rb_hash_delete_entry(i64 noundef %i.dr, i64 noundef %2) #17 ; 0 uses
   %i.ec = load i64, ptr %i.dx, align 8, !tbaa !46 ; 2 uses
   %i.ed = and i64 %i.ec, 32768
   %.not.i.i.i.i66 = icmp eq i64 %i.ed, 0
@@ -2983,7 +2975,7 @@ RHASH_EMPTY_P.exit.i67:                           ; preds = %bb.af, %bb.ae
   br i1 %i.ek, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i63, label %bb.ag
 
 rbimpl_RB_TYPE_P_fastpath.exit.thread.i63:        ; preds = %RHASH_EMPTY_P.exit.i67, %rbimpl_RB_TYPE_P_fastpath.exit.i62, %bb.ac, %bb.aa
-  %i.el = call i64 @rb_hash_delete_entry(i64 noundef %10, i64 noundef %11) #17 ; 0 uses
+  %i.el = call i64 @rb_hash_delete_entry(i64 noundef %i.ak, i64 noundef %1) #17 ; 0 uses
   br label %bb.ag
 
 bb.ag:                                            ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.thread.i63, %RHASH_EMPTY_P.exit.i67
@@ -3386,7 +3378,7 @@ bb.a:
   %i.c = alloca ptr, align 8                      ; 4 uses
   %i.d = alloca ptr, align 8                      ; 14 uses
   %i.e = alloca i64, align 8                      ; 5 uses
-  %i.f = alloca ptr, align 8                      ; 5 uses
+  %i.f = alloca ptr, align 8                      ; 4 uses
   %2 = alloca %struct.rb_vm_tag, align 8          ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #17
   store i64 36, ptr %i.b, align 8, !tbaa !144
@@ -3524,13 +3516,13 @@ bb.n:                                             ; preds = %rb_threadptr_pendin
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   %.0..0..0..0.11 = load volatile ptr, ptr %i.d, align 8, !tbaa !63
   %i.az = getelementptr i8, ptr %.0..0..0..0.11, i64 48
-  %i.ba = load ptr, ptr %i.az, align 8, !tbaa !67 ; 4 uses
+  %i.ba = load ptr, ptr %i.az, align 8, !tbaa !67 ; 3 uses
   store ptr %i.ba, ptr %i.f, align 8, !tbaa !147
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #17
   %i.bb = getelementptr inbounds nuw i8, ptr %2, i64 64
   store i32 0, ptr %i.bb, align 8, !tbaa !231
   store i64 36, ptr %2, align 8, !tbaa !233
-  %i.bc = getelementptr i8, ptr %i.ba, i64 24     ; 2 uses
+  %i.bc = getelementptr i8, ptr %i.ba, i64 24     ; 3 uses
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !234
   %i.be = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 2 uses
   store ptr %i.bd, ptr %i.be, align 8, !tbaa !235
@@ -3576,7 +3568,6 @@ rb_ec_vm_lock_rec.exit:                           ; preds = %rb_ec_ractor_ptr.ex
 bb.q:                                             ; preds = %rb_ec_vm_lock_rec.exit
   %.0..0..0..0.2 = load volatile ptr, ptr %i.f, align 8, !tbaa !147
   %i.bu = call fastcc i32 @rb_ec_tag_state(ptr noundef %.0..0..0..0.2)
-  %.0..0..0..0.4.pre = load ptr, ptr %i.f, align 8, !tbaa !147
   br label %bb.s
 
 bb.r:                                             ; preds = %rb_ec_vm_lock_rec.exit
@@ -3586,11 +3577,9 @@ bb.r:                                             ; preds = %rb_ec_vm_lock_rec.e
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.q, %bb.r
-  %.0..0..0.4 = phi ptr [ %i.ba, %bb.r ], [ %.0..0..0..0.4.pre, %bb.q ]
   %i.bw = phi i32 [ 0, %bb.r ], [ %i.bu, %bb.q ]
   %i.bx = load ptr, ptr %i.be, align 8, !tbaa !235
-  %3 = getelementptr i8, ptr %.0..0..0.4, i64 24
-  store ptr %i.bx, ptr %3, align 8, !tbaa !234
+  store ptr %i.bx, ptr %i.bc, align 8, !tbaa !234
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   %.0..0..0..0.12 = load volatile ptr, ptr %i.d, align 8, !tbaa !63
@@ -3993,7 +3982,7 @@ bb.a:
   %i.c = alloca ptr, align 8                      ; 5 uses
   %2 = alloca %struct.rb_trace_arg_struct, align 8 ; 11 uses
   %i.d = alloca i64, align 8                      ; 8 uses
-  %i.e = alloca ptr, align 8                      ; 6 uses
+  %i.e = alloca ptr, align 8                      ; 5 uses
   %3 = alloca %struct.rb_vm_tag, align 8          ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #17
   store i64 4, ptr %i.d, align 8, !tbaa !144
@@ -4048,7 +4037,7 @@ rb_vm_unlock.exit:                                ; preds = %bb.d, %rb_vm_lock.e
   %i.z = getelementptr inbounds nuw i8, ptr %3, i64 64
   store i32 0, ptr %i.z, align 8, !tbaa !231
   store i64 36, ptr %3, align 8, !tbaa !233
-  %i.aa = getelementptr i8, ptr %i.y, i64 24
+  %i.aa = getelementptr i8, ptr %i.y, i64 24      ; 2 uses
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !234
   %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 56 ; 2 uses
   store ptr %i.ab, ptr %i.ac, align 8, !tbaa !235
@@ -4097,9 +4086,7 @@ bb.g:                                             ; preds = %rb_ec_vm_lock_rec.e
   br label %thread_do_start.exit
 
 rb_ec_hooks.exit:                                 ; preds = %rb_ec_vm_lock_rec.exit
-  %.0..0..0..0.10 = load ptr, ptr %i.e, align 8, !tbaa !147
-  %4 = getelementptr i8, ptr %.0..0..0..0.10, i64 24
-  store ptr %3, ptr %4, align 8, !tbaa !234
+  store ptr %3, ptr %i.aa, align 8, !tbaa !234
   %i.at = load ptr, ptr %i.x, align 8, !tbaa !67  ; 3 uses
   %i.au = getelementptr i8, ptr %i.at, i64 48
   %.val87 = load ptr, ptr %i.au, align 8, !tbaa !11, !nonnull !103, !noundef !103
@@ -4502,7 +4489,7 @@ declare i32 @rb_id_table_insert(ptr noundef, i64 noundef, i64 noundef) local_unn
 declare void @ruby_malloc_size_overflow(i64 noundef, i64 noundef) local_unnamed_addr #3
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc i32 @wait_for_single_fd_blocking_region(ptr noundef %0, ptr noundef nonnull %1, ptr noundef readonly captures(address_is_null) %2, ptr noundef nonnull %3) unnamed_addr #0 {
+define internal fastcc i32 @wait_for_single_fd_blocking_region(ptr noundef %0, ptr noundef nonnull %1, ptr noundef readonly captures(address_is_null) %2, ptr noundef nonnull captures(address) %3) unnamed_addr #0 {
 bb.a:
   %4 = alloca %struct.timespec, align 8           ; 5 uses
   %i.a = alloca i32, align 4                      ; 6 uses

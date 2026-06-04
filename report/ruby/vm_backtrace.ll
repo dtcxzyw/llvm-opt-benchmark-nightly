@@ -201,7 +201,7 @@ bb.a:
   %i.c = alloca ptr, align 8                      ; 4 uses
   %2 = alloca %struct.rb_debug_inspector_struct, align 8 ; 7 uses
   %i.d = alloca i64, align 8                      ; 4 uses
-  %i.e = alloca ptr, align 8                      ; 6 uses
+  %i.e = alloca ptr, align 8                      ; 5 uses
   %3 = alloca %struct.rb_vm_tag, align 8          ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
@@ -604,16 +604,13 @@ rb_ec_vm_lock_rec.exit:                           ; preds = %rb_ec_ractor_ptr.ex
 bb.aj:                                            ; preds = %rb_ec_vm_lock_rec.exit
   %.0..0..0..0.2 = load volatile ptr, ptr %i.e, align 8, !tbaa !100
   %i.hg = call fastcc i32 @rb_ec_tag_state(ptr noundef %.0..0..0..0.2)
-  %i.hh = load ptr, ptr %i.gq, align 8, !tbaa !166
-  %.0..0..0..0.4 = load ptr, ptr %i.e, align 8, !tbaa !100
-  %4 = getelementptr i8, ptr %.0..0..0..0.4, i64 24
-  store ptr %i.hh, ptr %4, align 8, !tbaa !165
+  %i.hh = load ptr, ptr %i.gq, align 8, !tbaa !166 ; 3 uses
+  store ptr %i.hh, ptr %i.go, align 8, !tbaa !165
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
-  %.val = load ptr, ptr %i.go, align 8, !tbaa !165 ; 2 uses
-  %i.hi = getelementptr i8, ptr %.val, i64 64
+  %i.hi = getelementptr i8, ptr %i.hh, i64 64
   store i32 %i.hg, ptr %i.hi, align 8, !tbaa !162
-  %i.hj = getelementptr i8, ptr %.val, i64 16
+  %i.hj = getelementptr i8, ptr %i.hh, i64 16
   call void @llvm.eh.sjlj.longjmp(ptr %i.hj)
   unreachable
 

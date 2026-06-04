@@ -201,8 +201,8 @@ _ZN2v88internal17InstructionStream17FromTargetAddressEm.exit.i.i.i.i.i.i: ; pred
 
 bb.as:                                            ; preds = %_ZN2v88internal17InstructionStream17FromTargetAddressEm.exit.i.i.i.i.i.i
   %i.gr = and i64 %.sroa.0.i.i.i.i.i.i.0..sroa.0.i.i.i.i.i.i.0..sroa.0.i.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.0..sroa.0.i.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..i.i.i.i.i.i, -262144
-  %i.gs = inttoptr i64 %i.gr to ptr               ; 2 uses
-  %i.gt = load i64, ptr %i.gs, align 262144       ; 3 uses
+  %i.gs = inttoptr i64 %i.gr to ptr
+  %i.gt = load i64, ptr %i.gs, align 262144       ; 2 uses
   %i.gu = and i64 %i.gt, 64
   %.not.i.i.i.i.i.i.i.i.i54 = icmp eq i64 %i.gu, 0
   br i1 %.not.i.i.i.i.i.i.i.i.i54, label %bb.at, label %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i.i.i.i.i.i
@@ -219,19 +219,17 @@ bb.at:                                            ; preds = %bb.as
 bb.au:                                            ; preds = %bb.at
   %i.hb = or disjoint i64 %i.gy, 1                ; 2 uses
   store atomic volatile i64 %i.hb, ptr %.sroa.0.i.i.i.i.i.i monotonic, align 8
-  %.pre.i.i.i.i.i.i.i.i55 = load i64, ptr %i.gs, align 262144
   br label %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i.i.i.i.i.i
 
 _ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i.i.i.i.i.i: ; preds = %bb.au, %bb.at, %bb.as
-  %.sroa.0.0..sroa.0.0.68.i.i.i.i.i.i = phi i64 [ %.sroa.0.i.i.i.i.i.i.0..sroa.0.i.i.i.i.i.i.0..sroa.0.i.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.0..sroa.0.i.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..i.i.i.i.i.i, %bb.as ], [ %.sroa.0.i.i.i.i.i.i.0..sroa.0.i.i.i.i.i.i.0..sroa.0.i.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.0..sroa.0.i.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..i.i.i.i.i.i, %bb.at ], [ %i.hb, %bb.au ]
-  %i.hc = phi i64 [ %i.gt, %bb.as ], [ %i.gt, %bb.at ], [ %.pre.i.i.i.i.i.i.i.i55, %bb.au ]
-  %i.hd = trunc i64 %i.hc to i32
+  %i.hc = phi i64 [ %i.hb, %bb.au ], [ %.sroa.0.i.i.i.i.i.i.0..sroa.0.i.i.i.i.i.i.0..sroa.0.i.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.0..sroa.0.i.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..i.i.i.i.i.i, %bb.at ], [ %.sroa.0.i.i.i.i.i.i.0..sroa.0.i.i.i.i.i.i.0..sroa.0.i.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.0..sroa.0.i.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..i.i.i.i.i.i, %bb.as ]
+  %i.hd = trunc i64 %i.gt to i32
   %i.he = and i32 %i.hd, 1
   %i.hf = xor i32 %i.he, 1
   br label %"_ZZZN2v88internal20MarkCompactCollector26UpdatePointersInClientHeapEPNS0_7IsolateEENK3$_2clENS0_8SlotTypeEmENKUlNS0_19FullMaybeObjectSlotEE_clES6_.exit.i.i.i.i.i.i"
 
 "_ZZZN2v88internal20MarkCompactCollector26UpdatePointersInClientHeapEPNS0_7IsolateEENK3$_2clENS0_8SlotTypeEmENKUlNS0_19FullMaybeObjectSlotEE_clES6_.exit.i.i.i.i.i.i": ; preds = %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i.i.i.i.i.i, %_ZN2v88internal17InstructionStream17FromTargetAddressEm.exit.i.i.i.i.i.i
-  %.sroa.0.0..sroa.0.0.6.i.i.i.i.i.i = phi i64 [ %.sroa.0.0..sroa.0.0.68.i.i.i.i.i.i, %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i.i.i.i.i.i ], [ %.sroa.0.i.i.i.i.i.i.0..sroa.0.i.i.i.i.i.i.0..sroa.0.i.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.0..sroa.0.i.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..i.i.i.i.i.i, %_ZN2v88internal17InstructionStream17FromTargetAddressEm.exit.i.i.i.i.i.i ] ; 2 uses
+  %.sroa.0.0..sroa.0.0.6.i.i.i.i.i.i = phi i64 [ %i.hc, %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i.i.i.i.i.i ], [ %.sroa.0.i.i.i.i.i.i.0..sroa.0.i.i.i.i.i.i.0..sroa.0.i.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.0..sroa.0.i.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..i.i.i.i.i.i, %_ZN2v88internal17InstructionStream17FromTargetAddressEm.exit.i.i.i.i.i.i ] ; 2 uses
   %.0.i.i.i.i.i.i.i.i = phi i32 [ %i.hf, %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i.i.i.i.i.i ], [ 1, %_ZN2v88internal17InstructionStream17FromTargetAddressEm.exit.i.i.i.i.i.i ] ; 3 uses
   %.not.i.i.i.i.i.i = icmp eq i64 %.sroa.0.0..sroa.0.0.6.i.i.i.i.i.i, %i.gm
   br i1 %.not.i.i.i.i.i.i, label %"_ZN2v88internal21UpdateTypedSlotHelper15UpdateTypedSlotIZZNS0_20MarkCompactCollector26UpdatePointersInClientHeapEPNS0_7IsolateEENK3$_2clENS0_8SlotTypeEmEUlNS0_19FullMaybeObjectSlotEE_EEN4heap4base18SlotCallbackResultERNS0_21WritableJitAllocationEPNS0_4HeapES7_mT_.exit.i.i.i.i", label %bb.av
@@ -256,8 +254,8 @@ bb.aw:                                            ; preds = %bb.ap
 
 bb.ax:                                            ; preds = %bb.aw
   %i.ho = and i64 %.sroa.0.i27.i.i.i.i.i.0..sroa.0.i27.i.i.i.i.i.0..sroa.0.i27.i.i.i.i.i.0..sroa.0.i27.i.i.i.i.0..sroa.0.i27.i.i.i.i.0..sroa.0.i27.i.i.i.0..sroa.0.i27.i.i.i.0..sroa.0.i27.i.i.0..sroa.0.i27.i.i.0..sroa.0.i27.i.0..sroa.0.i27.i.0..sroa.0.i27.0..sroa.0.i27.0..sroa.0.0..sroa.0.0..i28.i.i.i.i.i, -262144
-  %i.hp = inttoptr i64 %i.ho to ptr               ; 2 uses
-  %i.hq = load i64, ptr %i.hp, align 262144       ; 3 uses
+  %i.hp = inttoptr i64 %i.ho to ptr
+  %i.hq = load i64, ptr %i.hp, align 262144       ; 2 uses
   %i.hr = and i64 %i.hq, 64
   %.not.i.i.i.i32.i.i.i.i.i = icmp eq i64 %i.hr, 0
   br i1 %.not.i.i.i.i32.i.i.i.i.i, label %bb.ay, label %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i33.i.i.i.i.i
@@ -274,19 +272,17 @@ bb.ay:                                            ; preds = %bb.ax
 bb.az:                                            ; preds = %bb.ay
   %i.hy = or disjoint i64 %i.hv, 1                ; 2 uses
   store atomic volatile i64 %i.hy, ptr %.sroa.0.i27.i.i.i.i.i monotonic, align 8
-  %.pre.i.i.i34.i.i.i.i.i = load i64, ptr %i.hp, align 262144
   br label %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i33.i.i.i.i.i
 
 _ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i33.i.i.i.i.i: ; preds = %bb.az, %bb.ay, %bb.ax
-  %.sroa.0.0..sroa.0.0.79.i.i.i.i.i.i = phi i64 [ %.sroa.0.i27.i.i.i.i.i.0..sroa.0.i27.i.i.i.i.i.0..sroa.0.i27.i.i.i.i.i.0..sroa.0.i27.i.i.i.i.0..sroa.0.i27.i.i.i.i.0..sroa.0.i27.i.i.i.0..sroa.0.i27.i.i.i.0..sroa.0.i27.i.i.0..sroa.0.i27.i.i.0..sroa.0.i27.i.0..sroa.0.i27.i.0..sroa.0.i27.0..sroa.0.i27.0..sroa.0.0..sroa.0.0..i28.i.i.i.i.i, %bb.ax ], [ %.sroa.0.i27.i.i.i.i.i.0..sroa.0.i27.i.i.i.i.i.0..sroa.0.i27.i.i.i.i.i.0..sroa.0.i27.i.i.i.i.0..sroa.0.i27.i.i.i.i.0..sroa.0.i27.i.i.i.0..sroa.0.i27.i.i.i.0..sroa.0.i27.i.i.0..sroa.0.i27.i.i.0..sroa.0.i27.i.0..sroa.0.i27.i.0..sroa.0.i27.0..sroa.0.i27.0..sroa.0.0..sroa.0.0..i28.i.i.i.i.i, %bb.ay ], [ %i.hy, %bb.az ]
-  %i.hz = phi i64 [ %i.hq, %bb.ax ], [ %i.hq, %bb.ay ], [ %.pre.i.i.i34.i.i.i.i.i, %bb.az ]
-  %i.ia = trunc i64 %i.hz to i32
+  %i.hz = phi i64 [ %i.hy, %bb.az ], [ %.sroa.0.i27.i.i.i.i.i.0..sroa.0.i27.i.i.i.i.i.0..sroa.0.i27.i.i.i.i.i.0..sroa.0.i27.i.i.i.i.0..sroa.0.i27.i.i.i.i.0..sroa.0.i27.i.i.i.0..sroa.0.i27.i.i.i.0..sroa.0.i27.i.i.0..sroa.0.i27.i.i.0..sroa.0.i27.i.0..sroa.0.i27.i.0..sroa.0.i27.0..sroa.0.i27.0..sroa.0.0..sroa.0.0..i28.i.i.i.i.i, %bb.ay ], [ %.sroa.0.i27.i.i.i.i.i.0..sroa.0.i27.i.i.i.i.i.0..sroa.0.i27.i.i.i.i.i.0..sroa.0.i27.i.i.i.i.0..sroa.0.i27.i.i.i.i.0..sroa.0.i27.i.i.i.0..sroa.0.i27.i.i.i.0..sroa.0.i27.i.i.0..sroa.0.i27.i.i.0..sroa.0.i27.i.0..sroa.0.i27.i.0..sroa.0.i27.0..sroa.0.i27.0..sroa.0.0..sroa.0.0..i28.i.i.i.i.i, %bb.ax ]
+  %i.ia = trunc i64 %i.hq to i32
   %i.ib = and i32 %i.ia, 1
   %i.ic = xor i32 %i.ib, 1
   br label %"_ZZZN2v88internal20MarkCompactCollector26UpdatePointersInClientHeapEPNS0_7IsolateEENK3$_2clENS0_8SlotTypeEmENKUlNS0_19FullMaybeObjectSlotEE_clES6_.exit.i29.i.i.i.i.i"
 
 "_ZZZN2v88internal20MarkCompactCollector26UpdatePointersInClientHeapEPNS0_7IsolateEENK3$_2clENS0_8SlotTypeEmENKUlNS0_19FullMaybeObjectSlotEE_clES6_.exit.i29.i.i.i.i.i": ; preds = %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i33.i.i.i.i.i, %bb.aw
-  %.sroa.0.0..sroa.0.0.7.i.i.i.i.i.i = phi i64 [ %.sroa.0.0..sroa.0.0.79.i.i.i.i.i.i, %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i33.i.i.i.i.i ], [ %.sroa.0.i27.i.i.i.i.i.0..sroa.0.i27.i.i.i.i.i.0..sroa.0.i27.i.i.i.i.i.0..sroa.0.i27.i.i.i.i.0..sroa.0.i27.i.i.i.i.0..sroa.0.i27.i.i.i.0..sroa.0.i27.i.i.i.0..sroa.0.i27.i.i.0..sroa.0.i27.i.i.0..sroa.0.i27.i.0..sroa.0.i27.i.0..sroa.0.i27.0..sroa.0.i27.0..sroa.0.0..sroa.0.0..i28.i.i.i.i.i, %bb.aw ] ; 2 uses
+  %.sroa.0.0..sroa.0.0.7.i.i.i.i.i.i = phi i64 [ %i.hz, %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i33.i.i.i.i.i ], [ %.sroa.0.i27.i.i.i.i.i.0..sroa.0.i27.i.i.i.i.i.0..sroa.0.i27.i.i.i.i.i.0..sroa.0.i27.i.i.i.i.0..sroa.0.i27.i.i.i.i.0..sroa.0.i27.i.i.i.0..sroa.0.i27.i.i.i.0..sroa.0.i27.i.i.0..sroa.0.i27.i.i.0..sroa.0.i27.i.0..sroa.0.i27.i.0..sroa.0.i27.0..sroa.0.i27.0..sroa.0.0..sroa.0.0..i28.i.i.i.i.i, %bb.aw ] ; 2 uses
   %.0.i.i.i30.i.i.i.i.i = phi i32 [ %i.ic, %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i33.i.i.i.i.i ], [ 1, %bb.aw ]
   %.not.i31.i.i.i.i.i = icmp eq i64 %.sroa.0.0..sroa.0.0.7.i.i.i.i.i.i, %i.hj
   br i1 %.not.i31.i.i.i.i.i, label %"_ZN2v88internal21UpdateTypedSlotHelper15UpdateCodeEntryIZZNS0_20MarkCompactCollector26UpdatePointersInClientHeapEPNS0_7IsolateEENK3$_2clENS0_8SlotTypeEmEUlNS0_19FullMaybeObjectSlotEE_EEN4heap4base18SlotCallbackResultEmT_.exit.i.i.i.i.i", label %bb.ba
@@ -314,8 +310,8 @@ bb.bb:                                            ; preds = %bb.ap
 
 bb.bc:                                            ; preds = %bb.bb
   %i.ij = and i64 %.sroa.0.i35.i.i.i.i.i.0..sroa.0.i35.i.i.i.i.i.0..sroa.0.i35.i.i.i.i.i.0..sroa.0.i35.i.i.i.i.0..sroa.0.i35.i.i.i.i.0..sroa.0.i35.i.i.i.0..sroa.0.i35.i.i.i.0..sroa.0.i35.i.i.0..sroa.0.i35.i.i.0..sroa.0.i35.i.0..sroa.0.i35.i.0..sroa.0.i35.0..sroa.0.i35.0..sroa.0.0..sroa.0.0..i36.i.i.i.i.i, -262144
-  %i.ik = inttoptr i64 %i.ij to ptr               ; 2 uses
-  %i.il = load i64, ptr %i.ik, align 262144       ; 3 uses
+  %i.ik = inttoptr i64 %i.ij to ptr
+  %i.il = load i64, ptr %i.ik, align 262144       ; 2 uses
   %i.im = and i64 %i.il, 64
   %.not.i.i.i.i40.i.i.i.i.i = icmp eq i64 %i.im, 0
   br i1 %.not.i.i.i.i40.i.i.i.i.i, label %bb.bd, label %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i41.i.i.i.i.i
@@ -332,19 +328,17 @@ bb.bd:                                            ; preds = %bb.bc
 bb.be:                                            ; preds = %bb.bd
   %i.it = or disjoint i64 %i.iq, 1                ; 2 uses
   store atomic volatile i64 %i.it, ptr %.sroa.0.i35.i.i.i.i.i monotonic, align 8
-  %.pre.i.i.i42.i.i.i.i.i = load i64, ptr %i.ik, align 262144
   br label %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i41.i.i.i.i.i
 
 _ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i41.i.i.i.i.i: ; preds = %bb.be, %bb.bd, %bb.bc
-  %.sroa.0.0..sroa.0.0.1315.i.i.i.i.i.i = phi i64 [ %.sroa.0.i35.i.i.i.i.i.0..sroa.0.i35.i.i.i.i.i.0..sroa.0.i35.i.i.i.i.i.0..sroa.0.i35.i.i.i.i.0..sroa.0.i35.i.i.i.i.0..sroa.0.i35.i.i.i.0..sroa.0.i35.i.i.i.0..sroa.0.i35.i.i.0..sroa.0.i35.i.i.0..sroa.0.i35.i.0..sroa.0.i35.i.0..sroa.0.i35.0..sroa.0.i35.0..sroa.0.0..sroa.0.0..i36.i.i.i.i.i, %bb.bc ], [ %.sroa.0.i35.i.i.i.i.i.0..sroa.0.i35.i.i.i.i.i.0..sroa.0.i35.i.i.i.i.i.0..sroa.0.i35.i.i.i.i.0..sroa.0.i35.i.i.i.i.0..sroa.0.i35.i.i.i.0..sroa.0.i35.i.i.i.0..sroa.0.i35.i.i.0..sroa.0.i35.i.i.0..sroa.0.i35.i.0..sroa.0.i35.i.0..sroa.0.i35.0..sroa.0.i35.0..sroa.0.0..sroa.0.0..i36.i.i.i.i.i, %bb.bd ], [ %i.it, %bb.be ]
-  %i.iu = phi i64 [ %i.il, %bb.bc ], [ %i.il, %bb.bd ], [ %.pre.i.i.i42.i.i.i.i.i, %bb.be ]
-  %i.iv = trunc i64 %i.iu to i32
+  %i.iu = phi i64 [ %i.it, %bb.be ], [ %.sroa.0.i35.i.i.i.i.i.0..sroa.0.i35.i.i.i.i.i.0..sroa.0.i35.i.i.i.i.i.0..sroa.0.i35.i.i.i.i.0..sroa.0.i35.i.i.i.i.0..sroa.0.i35.i.i.i.0..sroa.0.i35.i.i.i.0..sroa.0.i35.i.i.0..sroa.0.i35.i.i.0..sroa.0.i35.i.0..sroa.0.i35.i.0..sroa.0.i35.0..sroa.0.i35.0..sroa.0.0..sroa.0.0..i36.i.i.i.i.i, %bb.bd ], [ %.sroa.0.i35.i.i.i.i.i.0..sroa.0.i35.i.i.i.i.i.0..sroa.0.i35.i.i.i.i.i.0..sroa.0.i35.i.i.i.i.0..sroa.0.i35.i.i.i.i.0..sroa.0.i35.i.i.i.0..sroa.0.i35.i.i.i.0..sroa.0.i35.i.i.0..sroa.0.i35.i.i.0..sroa.0.i35.i.0..sroa.0.i35.i.0..sroa.0.i35.0..sroa.0.i35.0..sroa.0.0..sroa.0.0..i36.i.i.i.i.i, %bb.bc ]
+  %i.iv = trunc i64 %i.il to i32
   %i.iw = and i32 %i.iv, 1
   %i.ix = xor i32 %i.iw, 1
   br label %"_ZZZN2v88internal20MarkCompactCollector26UpdatePointersInClientHeapEPNS0_7IsolateEENK3$_2clENS0_8SlotTypeEmENKUlNS0_19FullMaybeObjectSlotEE_clES6_.exit.i37.i.i.i.i.i"
 
 "_ZZZN2v88internal20MarkCompactCollector26UpdatePointersInClientHeapEPNS0_7IsolateEENK3$_2clENS0_8SlotTypeEmENKUlNS0_19FullMaybeObjectSlotEE_clES6_.exit.i37.i.i.i.i.i": ; preds = %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i41.i.i.i.i.i, %bb.bb
-  %.sroa.0.0..sroa.0.0.13.i.i.i.i.i.i = phi i64 [ %.sroa.0.0..sroa.0.0.1315.i.i.i.i.i.i, %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i41.i.i.i.i.i ], [ %.sroa.0.i35.i.i.i.i.i.0..sroa.0.i35.i.i.i.i.i.0..sroa.0.i35.i.i.i.i.i.0..sroa.0.i35.i.i.i.i.0..sroa.0.i35.i.i.i.i.0..sroa.0.i35.i.i.i.0..sroa.0.i35.i.i.i.0..sroa.0.i35.i.i.0..sroa.0.i35.i.i.0..sroa.0.i35.i.0..sroa.0.i35.i.0..sroa.0.i35.0..sroa.0.i35.0..sroa.0.0..sroa.0.0..i36.i.i.i.i.i, %bb.bb ] ; 2 uses
+  %.sroa.0.0..sroa.0.0.13.i.i.i.i.i.i = phi i64 [ %i.iu, %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i41.i.i.i.i.i ], [ %.sroa.0.i35.i.i.i.i.i.0..sroa.0.i35.i.i.i.i.i.0..sroa.0.i35.i.i.i.i.i.0..sroa.0.i35.i.i.i.i.0..sroa.0.i35.i.i.i.i.0..sroa.0.i35.i.i.i.0..sroa.0.i35.i.i.i.0..sroa.0.i35.i.i.0..sroa.0.i35.i.i.0..sroa.0.i35.i.0..sroa.0.i35.i.0..sroa.0.i35.0..sroa.0.i35.0..sroa.0.0..sroa.0.0..i36.i.i.i.i.i, %bb.bb ] ; 2 uses
   %.0.i.i.i38.i.i.i.i.i = phi i32 [ %i.ix, %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i41.i.i.i.i.i ], [ 1, %bb.bb ]
   %.not.i39.i.i.i.i.i = icmp eq i64 %.sroa.0.0..sroa.0.0.13.i.i.i.i.i.i, %.0.copyload.i7.i.i.i.i.i.i
   br i1 %.not.i39.i.i.i.i.i, label %"_ZN2v88internal21UpdateTypedSlotHelper21UpdateEmbeddedPointerIZZNS0_20MarkCompactCollector26UpdatePointersInClientHeapEPNS0_7IsolateEENK3$_2clENS0_8SlotTypeEmEUlNS0_19FullMaybeObjectSlotEE_EEN4heap4base18SlotCallbackResultEPNS0_4HeapEPNS0_17WritableRelocInfoET_.exit.i.i.i.i.i", label %_ZNSt14_Optional_baseIN2v88internal19RwxMemoryWriteScopeELb0ELb0EED2Ev.exit.i.i.i.i.i.i
@@ -372,8 +366,8 @@ bb.bf:                                            ; preds = %bb.ap
 
 bb.bg:                                            ; preds = %bb.bf
   %i.jd = and i64 %.sroa.0.i43.i.i.i.i.i.0..sroa.0.i43.i.i.i.i.i.0..sroa.0.i43.i.i.i.i.i.0..sroa.0.i43.i.i.i.i.0..sroa.0.i43.i.i.i.i.0..sroa.0.i43.i.i.i.0..sroa.0.i43.i.i.i.0..sroa.0.i43.i.i.0..sroa.0.i43.i.i.0..sroa.0.i43.i.0..sroa.0.i43.i.0..sroa.0.i43.0..sroa.0.i43.0..sroa.0.0..sroa.0.0..i45.i.i.i.i.i, -262144
-  %i.je = inttoptr i64 %i.jd to ptr               ; 2 uses
-  %i.jf = load i64, ptr %i.je, align 262144       ; 3 uses
+  %i.je = inttoptr i64 %i.jd to ptr
+  %i.jf = load i64, ptr %i.je, align 262144       ; 2 uses
   %i.jg = and i64 %i.jf, 64
   %.not.i.i.i.i51.i.i.i.i.i = icmp eq i64 %i.jg, 0
   br i1 %.not.i.i.i.i51.i.i.i.i.i, label %bb.bh, label %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i52.i.i.i.i.i
@@ -390,19 +384,17 @@ bb.bh:                                            ; preds = %bb.bg
 bb.bi:                                            ; preds = %bb.bh
   %i.jn = or disjoint i64 %i.jk, 1                ; 2 uses
   store atomic volatile i64 %i.jn, ptr %.sroa.0.i43.i.i.i.i.i monotonic, align 8
-  %.pre.i.i.i54.i.i.i.i.i = load i64, ptr %i.je, align 262144
   br label %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i52.i.i.i.i.i
 
 _ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i52.i.i.i.i.i: ; preds = %bb.bi, %bb.bh, %bb.bg
-  %.sroa.0.0..sroa.0.0.1315.i53.i.i.i.i.i = phi i64 [ %.sroa.0.i43.i.i.i.i.i.0..sroa.0.i43.i.i.i.i.i.0..sroa.0.i43.i.i.i.i.i.0..sroa.0.i43.i.i.i.i.0..sroa.0.i43.i.i.i.i.0..sroa.0.i43.i.i.i.0..sroa.0.i43.i.i.i.0..sroa.0.i43.i.i.0..sroa.0.i43.i.i.0..sroa.0.i43.i.0..sroa.0.i43.i.0..sroa.0.i43.0..sroa.0.i43.0..sroa.0.0..sroa.0.0..i45.i.i.i.i.i, %bb.bg ], [ %.sroa.0.i43.i.i.i.i.i.0..sroa.0.i43.i.i.i.i.i.0..sroa.0.i43.i.i.i.i.i.0..sroa.0.i43.i.i.i.i.0..sroa.0.i43.i.i.i.i.0..sroa.0.i43.i.i.i.0..sroa.0.i43.i.i.i.0..sroa.0.i43.i.i.0..sroa.0.i43.i.i.0..sroa.0.i43.i.0..sroa.0.i43.i.0..sroa.0.i43.0..sroa.0.i43.0..sroa.0.0..sroa.0.0..i45.i.i.i.i.i, %bb.bh ], [ %i.jn, %bb.bi ]
-  %i.jo = phi i64 [ %i.jf, %bb.bg ], [ %i.jf, %bb.bh ], [ %.pre.i.i.i54.i.i.i.i.i, %bb.bi ]
-  %i.jp = trunc i64 %i.jo to i32
+  %i.jo = phi i64 [ %i.jn, %bb.bi ], [ %.sroa.0.i43.i.i.i.i.i.0..sroa.0.i43.i.i.i.i.i.0..sroa.0.i43.i.i.i.i.i.0..sroa.0.i43.i.i.i.i.0..sroa.0.i43.i.i.i.i.0..sroa.0.i43.i.i.i.0..sroa.0.i43.i.i.i.0..sroa.0.i43.i.i.0..sroa.0.i43.i.i.0..sroa.0.i43.i.0..sroa.0.i43.i.0..sroa.0.i43.0..sroa.0.i43.0..sroa.0.0..sroa.0.0..i45.i.i.i.i.i, %bb.bh ], [ %.sroa.0.i43.i.i.i.i.i.0..sroa.0.i43.i.i.i.i.i.0..sroa.0.i43.i.i.i.i.i.0..sroa.0.i43.i.i.i.i.0..sroa.0.i43.i.i.i.i.0..sroa.0.i43.i.i.i.0..sroa.0.i43.i.i.i.0..sroa.0.i43.i.i.0..sroa.0.i43.i.i.0..sroa.0.i43.i.0..sroa.0.i43.i.0..sroa.0.i43.0..sroa.0.i43.0..sroa.0.0..sroa.0.0..i45.i.i.i.i.i, %bb.bg ]
+  %i.jp = trunc i64 %i.jf to i32
   %i.jq = and i32 %i.jp, 1
   %i.jr = xor i32 %i.jq, 1
   br label %"_ZZZN2v88internal20MarkCompactCollector26UpdatePointersInClientHeapEPNS0_7IsolateEENK3$_2clENS0_8SlotTypeEmENKUlNS0_19FullMaybeObjectSlotEE_clES6_.exit.i46.i.i.i.i.i"
 
 "_ZZZN2v88internal20MarkCompactCollector26UpdatePointersInClientHeapEPNS0_7IsolateEENK3$_2clENS0_8SlotTypeEmENKUlNS0_19FullMaybeObjectSlotEE_clES6_.exit.i46.i.i.i.i.i": ; preds = %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i52.i.i.i.i.i, %bb.bf
-  %.sroa.0.0..sroa.0.0.13.i47.i.i.i.i.i = phi i64 [ %.sroa.0.0..sroa.0.0.1315.i53.i.i.i.i.i, %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i52.i.i.i.i.i ], [ %.sroa.0.i43.i.i.i.i.i.0..sroa.0.i43.i.i.i.i.i.0..sroa.0.i43.i.i.i.i.i.0..sroa.0.i43.i.i.i.i.0..sroa.0.i43.i.i.i.i.0..sroa.0.i43.i.i.i.0..sroa.0.i43.i.i.i.0..sroa.0.i43.i.i.0..sroa.0.i43.i.i.0..sroa.0.i43.i.0..sroa.0.i43.i.0..sroa.0.i43.0..sroa.0.i43.0..sroa.0.0..sroa.0.0..i45.i.i.i.i.i, %bb.bf ] ; 2 uses
+  %.sroa.0.0..sroa.0.0.13.i47.i.i.i.i.i = phi i64 [ %i.jo, %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i52.i.i.i.i.i ], [ %.sroa.0.i43.i.i.i.i.i.0..sroa.0.i43.i.i.i.i.i.0..sroa.0.i43.i.i.i.i.i.0..sroa.0.i43.i.i.i.i.0..sroa.0.i43.i.i.i.i.0..sroa.0.i43.i.i.i.0..sroa.0.i43.i.i.i.0..sroa.0.i43.i.i.0..sroa.0.i43.i.i.0..sroa.0.i43.i.0..sroa.0.i43.i.0..sroa.0.i43.0..sroa.0.i43.0..sroa.0.0..sroa.0.0..i45.i.i.i.i.i, %bb.bf ] ; 2 uses
   %.0.i.i.i48.i.i.i.i.i = phi i32 [ %i.jr, %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i52.i.i.i.i.i ], [ 1, %bb.bf ]
   %.not.i49.i.i.i.i.i = icmp eq i64 %.sroa.0.0..sroa.0.0.13.i47.i.i.i.i.i, %.0.copyload.i7.i44.i.i.i.i.i
   br i1 %.not.i49.i.i.i.i.i, label %"_ZN2v88internal21UpdateTypedSlotHelper21UpdateEmbeddedPointerIZZNS0_20MarkCompactCollector26UpdatePointersInClientHeapEPNS0_7IsolateEENK3$_2clENS0_8SlotTypeEmEUlNS0_19FullMaybeObjectSlotEE_EEN4heap4base18SlotCallbackResultEPNS0_4HeapEPNS0_17WritableRelocInfoET_.exit55.i.i.i.i.i", label %_ZNSt14_Optional_baseIN2v88internal19RwxMemoryWriteScopeELb0ELb0EED2Ev.exit.i50.i.i.i.i.i
@@ -434,8 +426,8 @@ bb.bk:                                            ; preds = %bb.ap
 
 bb.bl:                                            ; preds = %bb.bk
   %i.jy = and i64 %.sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.0..sroa.0.i.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..i.i.i.i.i, -262144
-  %i.jz = inttoptr i64 %i.jy to ptr               ; 2 uses
-  %i.ka = load i64, ptr %i.jz, align 262144       ; 3 uses
+  %i.jz = inttoptr i64 %i.jy to ptr
+  %i.ka = load i64, ptr %i.jz, align 262144       ; 2 uses
   %i.kb = and i64 %i.ka, 64
   %.not.i.i.i.i.i.i.i.i53 = icmp eq i64 %i.kb, 0
   br i1 %.not.i.i.i.i.i.i.i.i53, label %bb.bm, label %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i.i.i.i.i
@@ -452,19 +444,17 @@ bb.bm:                                            ; preds = %bb.bl
 bb.bn:                                            ; preds = %bb.bm
   %i.ki = or disjoint i64 %i.kf, 1                ; 2 uses
   store atomic volatile i64 %i.ki, ptr %.sroa.0.i.i.i.i.i monotonic, align 8
-  %.pre.i.i.i.i.i.i.i = load i64, ptr %i.jz, align 262144
   br label %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i.i.i.i.i
 
 _ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i.i.i.i.i: ; preds = %bb.bn, %bb.bm, %bb.bl
-  %.sroa.0.0..sroa.0.0.1214.i.i.i.i.i = phi i64 [ %.sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.0..sroa.0.i.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..i.i.i.i.i, %bb.bl ], [ %.sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.0..sroa.0.i.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..i.i.i.i.i, %bb.bm ], [ %i.ki, %bb.bn ]
-  %i.kj = phi i64 [ %i.ka, %bb.bl ], [ %i.ka, %bb.bm ], [ %.pre.i.i.i.i.i.i.i, %bb.bn ]
-  %i.kk = trunc i64 %i.kj to i32
+  %i.kj = phi i64 [ %i.ki, %bb.bn ], [ %.sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.0..sroa.0.i.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..i.i.i.i.i, %bb.bm ], [ %.sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.0..sroa.0.i.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..i.i.i.i.i, %bb.bl ]
+  %i.kk = trunc i64 %i.ka to i32
   %i.kl = and i32 %i.kk, 1
   %i.km = xor i32 %i.kl, 1
   br label %"_ZZZN2v88internal20MarkCompactCollector26UpdatePointersInClientHeapEPNS0_7IsolateEENK3$_2clENS0_8SlotTypeEmENKUlNS0_19FullMaybeObjectSlotEE_clES6_.exit.i.i.i.i.i"
 
 "_ZZZN2v88internal20MarkCompactCollector26UpdatePointersInClientHeapEPNS0_7IsolateEENK3$_2clENS0_8SlotTypeEmENKUlNS0_19FullMaybeObjectSlotEE_clES6_.exit.i.i.i.i.i": ; preds = %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i.i.i.i.i, %bb.bk
-  %.sroa.0.0..sroa.0.0.12.i.i.i.i.i = phi i64 [ %.sroa.0.0..sroa.0.0.1214.i.i.i.i.i, %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i.i.i.i.i ], [ %.sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.0..sroa.0.i.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..i.i.i.i.i, %bb.bk ] ; 2 uses
+  %.sroa.0.0..sroa.0.0.12.i.i.i.i.i = phi i64 [ %i.kj, %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i.i.i.i.i ], [ %.sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.i.0..sroa.0.i.i.0..sroa.0.i.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..i.i.i.i.i, %bb.bk ] ; 2 uses
   %.0.i.i.i.i.i.i.i = phi i32 [ %i.km, %_ZN2v88internal12_GLOBAL__N_110UpdateSlotILNS0_23HeapObjectReferenceTypeE1ENS0_19FullMaybeObjectSlotEEEvNS0_16PtrComprCageBaseET0_NS0_6TaggedINS0_10HeapObjectEEE.exit.i.i.i.i.i.i.i ], [ 1, %bb.bk ]
   %.not.i.i.i.i.i50 = icmp eq i64 %.sroa.0.0..sroa.0.0.12.i.i.i.i.i, %i.jt
   br i1 %.not.i.i.i.i.i50, label %bb.bo, label %_ZNSt14_Optional_baseIN2v88internal19RwxMemoryWriteScopeELb0ELb0EED2Ev.exit.i.i.i.i.i

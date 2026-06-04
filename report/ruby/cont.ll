@@ -201,9 +201,9 @@ bb.a:
 define hidden void @rb_fiber_start(ptr noundef %0) local_unnamed_addr #7 {
 bb.a:
   %1 = alloca %struct.rb_trace_arg_struct, align 8 ; 11 uses
-  %i.a = alloca ptr, align 8                      ; 3 uses
+  %i.a = alloca ptr, align 8                      ; 2 uses
   %i.b = alloca ptr, align 8                      ; 13 uses
-  %i.c = alloca ptr, align 8                      ; 6 uses
+  %i.c = alloca ptr, align 8                      ; 5 uses
   %2 = alloca %struct.rb_vm_tag, align 8          ; 10 uses
   %i.d = alloca i64, align 8                      ; 4 uses
   store ptr %0, ptr %i.a, align 8, !tbaa !95
@@ -280,7 +280,7 @@ rb_ec_vm_lock_rec.exit:                           ; preds = %rb_ec_ractor_ptr.ex
 
 bb.f:                                             ; preds = %rb_ec_vm_lock_rec.exit
   store ptr %2, ptr %i.p, align 8, !tbaa !89
-  %.0..0..0..0.37 = load volatile ptr, ptr %i.a, align 8, !tbaa !95 ; 4 uses
+  %.0..0..0..0.37 = load volatile ptr, ptr %i.a, align 8, !tbaa !95 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #10
   %i.ah = getelementptr i8, ptr %.0..0..0..0.37, i64 24 ; 3 uses
   %i.ai = load i64, ptr %i.ah, align 8, !tbaa !150 ; 2 uses
@@ -386,15 +386,13 @@ bb.j:                                             ; preds = %rb_array_const_ptr.
   store ptr %i.cj, ptr %i.p, align 8, !tbaa !89
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  %.0..0..0..0.40.pre = load ptr, ptr %i.a, align 8, !tbaa !95
   br label %bb.n
 
 bb.k:                                             ; preds = %rb_ec_vm_lock_rec.exit
-  %.0..0..0..0.15 = load volatile ptr, ptr %i.c, align 8, !tbaa !66
+  %.0..0..0..0.15 = load volatile ptr, ptr %i.c, align 8, !tbaa !66 ; 2 uses
   %i.ck = call fastcc i32 @rb_ec_tag_state(ptr noundef %.0..0..0..0.15) ; 2 uses
   %i.cl = load ptr, ptr %i.r, align 8, !tbaa !129
-  %.0..0..0..0.17 = load ptr, ptr %i.c, align 8, !tbaa !66
-  %i.cm = getelementptr i8, ptr %.0..0..0..0.17, i64 24
+  %i.cm = getelementptr i8, ptr %.0..0..0..0.15, i64 24
   store ptr %i.cl, ptr %i.cm, align 8, !tbaa !89
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
@@ -422,10 +420,10 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.k, %.thread47, %bb.l, %bb.m, %.critedge
-  %.0..0..0.40 = phi ptr [ %0, %bb.k ], [ %.0..0..0..0.40.pre, %.thread47 ], [ %0, %bb.m ], [ %0, %.critedge ], [ %0, %bb.l ]
+  %.0..0..0.40 = phi ptr [ %0, %bb.k ], [ %.0..0..0..0.37, %.thread47 ], [ %0, %bb.m ], [ %0, %.critedge ], [ %0, %bb.l ]
   %.041 = phi i32 [ 1, %bb.k ], [ 1, %.thread47 ], [ 1, %bb.m ], [ 1, %.critedge ], [ 0, %bb.l ]
   %.0 = phi i64 [ %i.cq, %bb.k ], [ 0, %.thread47 ], [ %i.cq, %bb.m ], [ %i.cs, %.critedge ], [ 0, %bb.l ]
-  call fastcc void @rb_fiber_terminate(ptr noundef %.0..0..0.40, i32 noundef %.041, i64 noundef %.0) #34
+  call fastcc void @rb_fiber_terminate(ptr noundef nonnull %.0..0..0.40, i32 noundef %.041, i64 noundef %.0) #34
   unreachable
 }
 

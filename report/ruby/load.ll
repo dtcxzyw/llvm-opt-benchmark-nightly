@@ -201,7 +201,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
   %i.c = alloca ptr, align 8                      ; 4 uses
-  %i.d = alloca ptr, align 8                      ; 7 uses
+  %i.d = alloca ptr, align 8                      ; 5 uses
   %3 = alloca %struct.rb_vm_tag, align 8          ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
@@ -215,7 +215,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 64
   store i32 0, ptr %i.g, align 8, !tbaa !47
   store i64 36, ptr %3, align 8, !tbaa !49
-  %i.h = getelementptr i8, ptr %.0..0..0..0..0..0..i, i64 24 ; 2 uses
+  %i.h = getelementptr i8, ptr %.0..0..0..0..0..0..i, i64 24 ; 4 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !50
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 56 ; 3 uses
   store ptr %i.i, ptr %i.j, align 8, !tbaa !51
@@ -284,9 +284,7 @@ bb.e:                                             ; preds = %bb.d
   call fastcc void @rb_load_internal(i64 noundef %i.ab, i64 noundef %i.ad)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.ae = load ptr, ptr %i.j, align 8, !tbaa !51
-  %.0..0..0..0.411 = load ptr, ptr %i.d, align 8, !tbaa !30
-  %4 = getelementptr i8, ptr %.0..0..0..0.411, i64 24
-  store ptr %i.ae, ptr %4, align 8, !tbaa !50
+  store ptr %i.ae, ptr %i.h, align 8, !tbaa !50
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   br label %bb.g
@@ -295,9 +293,7 @@ bb.f:                                             ; preds = %rb_ec_vm_lock_rec.e
   %.0..0..0..0.2 = load volatile ptr, ptr %i.d, align 8, !tbaa !30
   %i.af = call fastcc i32 @rb_ec_tag_state(ptr noundef %.0..0..0..0.2)
   %i.ag = load ptr, ptr %i.j, align 8, !tbaa !51
-  %.0..0..0..0.4 = load ptr, ptr %i.d, align 8, !tbaa !30
-  %5 = getelementptr i8, ptr %.0..0..0..0.4, i64 24
-  store ptr %i.ag, ptr %5, align 8, !tbaa !50
+  store ptr %i.ag, ptr %i.h, align 8, !tbaa !50
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   store i32 %i.af, ptr %2, align 4, !tbaa !7
@@ -652,7 +648,7 @@ bb.d:                                             ; preds = %bb.a, %rbimpl_inter
 declare i64 @rb_str_encode_ospath(i64 noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc i32 @search_required(ptr noundef %0, i64 noundef %1, ptr noundef nonnull %2, ptr noundef readonly captures(none) %3) unnamed_addr #0 {
+define internal fastcc i32 @search_required(ptr noundef %0, i64 noundef %1, ptr noundef nonnull captures(address) %2, ptr noundef readonly captures(none) %3) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 9 uses
   %i.b = alloca ptr, align 8                      ; 15 uses
@@ -1055,7 +1051,7 @@ bb.a:
   %i.f = alloca i64, align 8                      ; 5 uses
   %i.g = alloca i8, align 1                       ; 5 uses
   %.sroa.0103 = alloca i8, align 1                ; 4 uses
-  %i.h = alloca ptr, align 8                      ; 5 uses
+  %i.h = alloca ptr, align 8                      ; 4 uses
   %4 = alloca %struct.rb_vm_tag, align 8          ; 9 uses
   %i.i = alloca ptr, align 8                      ; 5 uses
   store i64 %1, ptr %i.b, align 8, !tbaa !20
@@ -1145,9 +1141,8 @@ rb_ec_vm_lock_rec.exit:                           ; preds = %rb_ec_ractor_ptr.ex
   br i1 %.not, label %bb.e, label %bb.d, !prof !93
 
 bb.d:                                             ; preds = %rb_ec_vm_lock_rec.exit
-  %.0..0..0..0.15 = load volatile ptr, ptr %i.h, align 8, !tbaa !30
+  %.0..0..0..0.15 = load volatile ptr, ptr %i.h, align 8, !tbaa !30 ; 2 uses
   %i.ao = call fastcc i32 @rb_ec_tag_state(ptr noundef %.0..0..0..0.15)
-  %.0..0..0..0.17.pre = load ptr, ptr %i.h, align 8, !tbaa !30
   br label %bb.ab
 
 bb.e:                                             ; preds = %rb_ec_vm_lock_rec.exit
@@ -1326,7 +1321,7 @@ bb.aa:                                            ; preds = %rb_long2num_inline.
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.d, %bb.e, %bb.o, %bb.u, %bb.aa, %bb.r, %bb.m
-  %.0..0..0.17 = phi ptr [ %0, %bb.e ], [ %0, %bb.o ], [ %0, %bb.u ], [ %0, %bb.aa ], [ %0, %bb.r ], [ %0, %bb.m ], [ %.0..0..0..0.17.pre, %bb.d ]
+  %.0..0..0.17 = phi ptr [ %0, %bb.e ], [ %0, %bb.o ], [ %0, %bb.u ], [ %0, %bb.aa ], [ %0, %bb.r ], [ %0, %bb.m ], [ %.0..0..0..0.15, %bb.d ]
   %i.cj = phi i32 [ 0, %bb.e ], [ 0, %bb.o ], [ 0, %bb.u ], [ 0, %bb.aa ], [ 0, %bb.r ], [ 0, %bb.m ], [ %i.ao, %bb.d ] ; 5 uses
   %i.ck = load ptr, ptr %i.z, align 8, !tbaa !51
   %i.cl = getelementptr i8, ptr %.0..0..0.17, i64 24
@@ -1729,7 +1724,7 @@ define internal fastcc range(i32 0, 9) i32 @load_wrapping(ptr noundef initialize
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = alloca i64, align 8                      ; 4 uses
-  %i.c = alloca ptr, align 8                      ; 5 uses
+  %i.c = alloca ptr, align 8                      ; 4 uses
   %3 = alloca %struct.rb_vm_tag, align 8          ; 9 uses
   %i.d = getelementptr i8, ptr %0, i64 48         ; 2 uses
   %.val = load ptr, ptr %i.d, align 8, !tbaa !52  ; 2 uses
@@ -1777,7 +1772,7 @@ bb.e:                                             ; preds = %bb.b, %bb.c, %bb.d
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 64
   store i32 0, ptr %i.t, align 8, !tbaa !47
   store i64 36, ptr %3, align 8, !tbaa !49
-  %i.u = getelementptr i8, ptr %0, i64 24         ; 2 uses
+  %i.u = getelementptr i8, ptr %0, i64 24         ; 3 uses
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !50
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 56 ; 2 uses
   store ptr %i.v, ptr %i.w, align 8, !tbaa !51
@@ -1822,7 +1817,6 @@ rb_ec_vm_lock_rec.exit:                           ; preds = %rb_ec_ractor_ptr.ex
 bb.h:                                             ; preds = %rb_ec_vm_lock_rec.exit
   %.0..0..0..0.2 = load volatile ptr, ptr %i.c, align 8, !tbaa !30
   %i.al = call fastcc i32 @rb_ec_tag_state(ptr noundef %.0..0..0..0.2)
-  %.0..0..0..0.4.pre = load ptr, ptr %i.c, align 8, !tbaa !30
   br label %bb.j
 
 bb.i:                                             ; preds = %rb_ec_vm_lock_rec.exit
@@ -1831,11 +1825,9 @@ bb.i:                                             ; preds = %rb_ec_vm_lock_rec.e
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.h, %bb.i
-  %.0..0..0.4 = phi ptr [ %0, %bb.i ], [ %.0..0..0..0.4.pre, %bb.h ]
   %i.am = phi i32 [ 0, %bb.i ], [ %i.al, %bb.h ]
   %i.an = load ptr, ptr %i.w, align 8, !tbaa !51
-  %4 = getelementptr i8, ptr %.0..0..0.4, i64 24
-  store ptr %i.an, ptr %4, align 8, !tbaa !50
+  store ptr %i.an, ptr %i.u, align 8, !tbaa !50
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   %.0..0..0..0.5 = load volatile i64, ptr %i.b, align 8, !tbaa !20

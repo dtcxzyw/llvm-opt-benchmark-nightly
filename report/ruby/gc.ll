@@ -201,7 +201,7 @@ rb_gc_impl_shutdown_call_finalizer.exit:          ; preds = %bb.b, %gc_exit.exit
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden void @rb_objspace_free_objects(ptr noundef %0) local_unnamed_addr #2 {
+define hidden void @rb_objspace_free_objects(ptr noundef captures(address) %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 872        ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !80   ; 2 uses
@@ -604,7 +604,7 @@ rb_gc_impl_free.exit:                             ; preds = %objspace_malloc_siz
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc void @rb_gc_impl_free(ptr noundef %0, ptr noundef nonnull %1, i64 noundef %2) unnamed_addr #2 {
+define internal fastcc void @rb_gc_impl_free(ptr noundef captures(address) %0, ptr noundef nonnull %1, i64 noundef %2) unnamed_addr #2 {
 bb.a:
   %.not.i = icmp eq i64 %2, 0
   br i1 %.not.i, label %bb.b, label %objspace_malloc_size.exit
@@ -1007,7 +1007,7 @@ declare void @rb_vm_lock_leave_body_nb(ptr noundef) local_unnamed_addr #11
 declare i32 @rb_postponed_job_preregister(i32 noundef, ptr noundef, ptr noundef) local_unnamed_addr #11
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @gc_finalize_deferred(ptr noundef %0) #2 {
+define internal void @gc_finalize_deferred(ptr noundef captures(address) %0) #2 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
@@ -1047,7 +1047,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 declare ptr @rb_st_init_numtable() local_unnamed_addr #11
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc void @finalize_deferred_heap_pages(ptr noundef %0) unnamed_addr #2 {
+define internal fastcc void @finalize_deferred_heap_pages(ptr noundef captures(address) %0) unnamed_addr #2 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 5 uses
@@ -1263,7 +1263,7 @@ bb.a:
   %.sroa.11 = alloca ptr, align 8                 ; 5 uses
   %.sroa.13 = alloca i64, align 8                 ; 7 uses
   %i.c = alloca ptr, align 8                      ; 15 uses
-  %i.d = alloca ptr, align 8                      ; 5 uses
+  %i.d = alloca ptr, align 8                      ; 4 uses
   %3 = alloca %struct.rb_vm_tag, align 8          ; 9 uses
   store i64 %0, ptr %i.b, align 8, !tbaa !59
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
@@ -1302,7 +1302,7 @@ bb.a:
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 64
   store i32 0, ptr %i.o, align 8, !tbaa !407
   store i64 36, ptr %3, align 8, !tbaa !443
-  %i.p = getelementptr i8, ptr %.0..0..0..0.13, i64 24 ; 2 uses
+  %i.p = getelementptr i8, ptr %.0..0..0..0.13, i64 24 ; 3 uses
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !403
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 56 ; 2 uses
   store ptr %i.q, ptr %i.r, align 8, !tbaa !444
@@ -1401,9 +1401,7 @@ bb.g:                                             ; preds = %.thread, %bb.d, %bb
 
 ._crit_edge:                                      ; preds = %get_final.exit, %bb.g
   %i.aw = load ptr, ptr %i.r, align 8, !tbaa !444
-  %.0..0..0..0.9 = load ptr, ptr %i.d, align 8, !tbaa !14
-  %4 = getelementptr i8, ptr %.0..0..0..0.9, i64 24
-  store ptr %i.aw, ptr %4, align 8, !tbaa !403
+  store ptr %i.aw, ptr %i.p, align 8, !tbaa !403
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #46
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
@@ -1806,7 +1804,7 @@ bb.q:                                             ; preds = %bb.m, %bb.n, %rb_ob
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc noundef zeroext i1 @rb_gc_obj_free(ptr noundef %0, i64 noundef %1) unnamed_addr #2 {
+define internal fastcc noundef zeroext i1 @rb_gc_obj_free(ptr noundef captures(address) %0, i64 noundef %1) unnamed_addr #2 {
 bb.a:
   %2 = alloca %struct.classext_foreach_args, align 8 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #46
@@ -2209,7 +2207,7 @@ bb.a:
 declare void @rb_imemo_free(i64 noundef) local_unnamed_addr #11
 
 ; Function Attrs: norecurse nounwind sspstrong uwtable
-define internal fastcc void @rb_gc_impl_make_zombie(ptr noundef %0, i64 noundef %1, ptr noundef %2, ptr noundef %3) unnamed_addr #50 {
+define internal fastcc void @rb_gc_impl_make_zombie(ptr noundef captures(address) %0, i64 noundef %1, ptr noundef %2, ptr noundef %3) unnamed_addr #50 {
 bb.a:
   %i.a = inttoptr i64 %1 to ptr                   ; 5 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !553
