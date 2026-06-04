@@ -201,7 +201,7 @@ _RNCNCNCNvNtNtCs14kWLkQVSKO_14deltalake_core8protocol11checkpoints24cleanup_expi
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtCs14kWLkQVSKO_14deltalake_core8protocol11checkpoints24cleanup_expired_logs_for0sa_0Cs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #3 {
+define internal fastcc void @_RNCNCNvNtNtCs14kWLkQVSKO_14deltalake_core8protocol11checkpoints24cleanup_expired_logs_for0sa_0Cs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #3 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtCs14kWLkQVSKO_14deltalake_core8protocol11checkpoints24cleanup_expired_logs_for0s2_10___CALLSITE, align 8, !nonnull !4, !align !344, !noundef !4
@@ -245,7 +245,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtCs14kWLkQVSKO_14deltalake_core8protocol11checkpoints24cleanup_expired_logs_for0sb_0Cs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #3 {
+define internal fastcc void @_RNCNCNvNtNtCs14kWLkQVSKO_14deltalake_core8protocol11checkpoints24cleanup_expired_logs_for0sb_0Cs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #3 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtCs14kWLkQVSKO_14deltalake_core8protocol11checkpoints24cleanup_expired_logs_for0s3_10___CALLSITE, align 8, !nonnull !4, !align !344, !noundef !4
@@ -648,7 +648,7 @@ bb.am:                                            ; preds = %bb.al
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNvMsg_NtCs7p2uQeJxui2_9deltalake10filesystemNtB7_22DeltaFileSystemHandler13get_file_info0B9_(ptr dead_on_unwind noalias noundef nonnull writable align 8 captures(address) dereferenceable(64) %0, ptr captures(address, read_provenance) %.0.val, ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %3, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %4) unnamed_addr #3 personality ptr @rust_eh_personality {
+define internal fastcc void @_RNCNvMsg_NtCs7p2uQeJxui2_9deltalake10filesystemNtB7_22DeltaFileSystemHandler13get_file_info0B9_(ptr dead_on_unwind noalias noundef nonnull writable align 8 captures(address) dereferenceable(64) %0, ptr readonly captures(address, read_provenance) %.0.val, ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %3, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %4) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
@@ -1051,7 +1051,7 @@ bb.a:
   %i.ad = alloca [64 x i8], align 8               ; 10 uses
   %i.ae = alloca [8 x i8], align 8                ; 8 uses
   %i.af = alloca [64 x i8], align 8               ; 10 uses
-  %i.ag = alloca [8 x i8], align 8                ; 12 uses
+  %i.ag = alloca [8 x i8], align 8                ; 9 uses
   %i.ah = alloca [24 x i8], align 8               ; 6 uses
   %i.ai = alloca [24 x i8], align 8               ; 8 uses
   %i.aj = alloca [64 x i8], align 8               ; 6 uses
@@ -1155,8 +1155,7 @@ bb.k:                                             ; preds = %bb.i
   %.sroa.097.4.i = phi i1 [ false, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterNtNtBN_6string6StringEECs7p2uQeJxui2_9deltalake.exit.i ], [ %.sroa.097.5.i, %bb.r ], [ false, %bb.di ]
   %.pn213.i = phi { ptr, i32 } [ %.pn211.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterNtNtBN_6string6StringEECs7p2uQeJxui2_9deltalake.exit.i ], [ %i.bv, %bb.r ], [ %i.jz, %bb.di ] ; 2 uses
   call void @_Py_DecRef(ptr noundef nonnull %.sroa.0107.0.copyload.i) #41, !noalias !10894
-  %.val220.i = load ptr, ptr %i.ag, align 8, !noalias !10891, !nonnull !4, !noundef !4
-  call void @_Py_DecRef(ptr noundef nonnull %.val220.i) #41, !noalias !10894
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.0101.0.copyload.i) #41, !noalias !10894
   br i1 %.sroa.097.4.i, label %bb.dq, label %.body
 
 .thread.i:                                        ; preds = %bb.k
@@ -1168,7 +1167,7 @@ bb.l:                                             ; preds = %bb.k
   %i.bf = load i64, ptr %i.af, align 8, !range !3, !noalias !10891, !noundef !4
   %i.bg = trunc nuw i64 %i.bf to i1
   %i.bh = getelementptr inbounds nuw i8, ptr %i.af, i64 8
-  %.sroa.0101.0.copyload.i = load ptr, ptr %i.bh, align 8, !noalias !10891 ; 4 uses
+  %.sroa.0101.0.copyload.i = load ptr, ptr %i.bh, align 8, !noalias !10891 ; 7 uses
   br i1 %i.bg, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
@@ -1571,8 +1570,7 @@ bb.dl:                                            ; preds = %bb.dj
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac), !noalias !10891
   call void @_Py_DecRef(ptr noundef nonnull %.sroa.0107.0.copyload.i) #41, !noalias !10894
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ae), !noalias !10891
-  %.val.i = load ptr, ptr %i.ag, align 8, !noalias !10891, !nonnull !4, !noundef !4
-  call void @_Py_DecRef(ptr noundef nonnull %.val.i) #41, !noalias !10894
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.0101.0.copyload.i) #41, !noalias !10894
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ag), !noalias !10891
   %i.kb = inttoptr i64 %.sroa.13.0 to ptr
   br label %bb.dr
@@ -1628,8 +1626,7 @@ bb.ds:                                            ; preds = %_RNvXs4_NtNtCs6Po7B
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac), !noalias !10891
   call void @_Py_DecRef(ptr noundef nonnull %.sroa.0107.0.copyload.i) #41, !noalias !10894
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ae), !noalias !10891
-  %.val218.i = load ptr, ptr %i.ag, align 8, !noalias !10891, !nonnull !4, !noundef !4
-  call void @_Py_DecRef(ptr noundef nonnull %.val218.i) #41, !noalias !10894
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.0101.0.copyload.i) #41, !noalias !10894
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ag), !noalias !10891
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ah)
   store i64 %.sroa.13.8.copyload24, ptr %i.ah, align 8

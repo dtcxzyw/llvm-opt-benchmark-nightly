@@ -201,7 +201,7 @@ bb.ch:                                            ; preds = %.thread225, %bb.bm
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc void @_RNvMNtCsjHlmExTLNuX_14datafusion_sql5queryINtNtB4_7planner8SqlToRelNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion4expr20DeltaContextProviderE13query_to_planB19_(ptr dead_on_unwind noalias noundef nonnull writable writeonly align 16 captures(none) dereferenceable(320) %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %1, ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(1400) %2, ptr noalias noundef nonnull align 8 captures(address, read_provenance) dereferenceable(80) %3) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc void @_RNvMNtCsjHlmExTLNuX_14datafusion_sql5queryINtNtB4_7planner8SqlToRelNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion4expr20DeltaContextProviderE13query_to_planB19_(ptr dead_on_unwind noalias noundef nonnull writable writeonly align 16 captures(none) dereferenceable(320) %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %1, ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(1400) %2, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %3) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
@@ -604,7 +604,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collec
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc void @_RNvMNtNtCsjHlmExTLNuX_14datafusion_sql4expr10identifierINtNtB6_7planner8SqlToRelNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion4expr20DeltaContextProviderE22sql_identifier_to_exprB1m_(ptr dead_on_unwind noalias noundef nonnull writable writeonly align 16 captures(none) dereferenceable(112) %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %1, ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(64) %2, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %3, ptr captures(address, read_provenance) %.56.val) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc void @_RNvMNtNtCsjHlmExTLNuX_14datafusion_sql4expr10identifierINtNtB6_7planner8SqlToRelNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion4expr20DeltaContextProviderE22sql_identifier_to_exprB1m_(ptr dead_on_unwind noalias noundef nonnull writable writeonly align 16 captures(none) dereferenceable(112) %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %1, ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(64) %2, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %3, ptr readonly captures(address, read_provenance) %.56.val) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [32 x i8], align 8                ; 7 uses
@@ -1007,7 +1007,7 @@ bb.cc:                                            ; preds = %bb.e, %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc void @_RNvMNtNtCsjHlmExTLNuX_14datafusion_sql4expr10identifierINtNtB6_7planner8SqlToRelNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion4expr20DeltaContextProviderE31sql_compound_identifier_to_exprB1m_(ptr dead_on_unwind noalias noundef nonnull writable writeonly align 16 captures(none) dereferenceable(112) %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %1, ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(24) %2, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %3, ptr captures(address, read_provenance) %.56.val) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc void @_RNvMNtNtCsjHlmExTLNuX_14datafusion_sql4expr10identifierINtNtB6_7planner8SqlToRelNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion4expr20DeltaContextProviderE31sql_compound_identifier_to_exprB1m_(ptr dead_on_unwind noalias noundef nonnull writable writeonly align 16 captures(none) dereferenceable(112) %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %1, ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(24) %2, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %3, ptr readonly captures(address, read_provenance) %.56.val) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [32 x i8], align 8                ; 7 uses
@@ -1410,7 +1410,7 @@ bb.k:                                             ; preds = %bb.g
   %.sroa.569.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 64
   store ptr %i.p, ptr %.sroa.569.0..sroa_idx, align 8
   call void @_RNvCs8mYq7K4qqSA_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #46, !noalias !29493
-  %i.aa = call noundef align 8 dereferenceable_or_null(72) ptr @_RNvCs8mYq7K4qqSA_7___rustc12___rust_alloc(i64 noundef range(i64 0, 7409) 72, i64 noundef range(i64 8, 17) 8) #46, !noalias !29493 ; 3 uses
+  %i.aa = call noundef align 8 dereferenceable_or_null(72) ptr @_RNvCs8mYq7K4qqSA_7___rustc12___rust_alloc(i64 noundef range(i64 0, 7409) 72, i64 noundef range(i64 8, 17) 8) #46, !noalias !29493 ; 5 uses
   %i.ab = icmp eq ptr %i.aa, null
   br i1 %i.ab, label %bb.l, label %bb.o, !prof !308
 
@@ -1437,7 +1437,7 @@ bb.o:                                             ; preds = %bb.k
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.aa, ptr noundef nonnull align 8 dereferenceable(72) %i.e, i64 72, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  %i.ae = getelementptr inbounds nuw i8, ptr %4, i64 56 ; 4 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %4, i64 56 ; 3 uses
   %i.af = load ptr, ptr %i.ae, align 8, !alias.scope !29496, !noundef !8
   store ptr %i.aa, ptr %i.ae, align 8, !alias.scope !29496
   store ptr %i.af, ptr %i.n, align 8
@@ -1609,23 +1609,18 @@ bb.ac:                                            ; preds = %_RINvNtCsbvkFyIu7lg
 bb.ad:                                            ; preds = %bb.z
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   %i.br = load ptr, ptr %i.n, align 8, !noundef !8
-  %5 = load ptr, ptr %i.ae, align 8, !alias.scope !29499, !noundef !8 ; 3 uses
   store ptr %i.br, ptr %i.ae, align 8, !alias.scope !29499
-  store ptr %5, ptr %i.g, align 8
-  %i.bs = icmp eq ptr %5, null
-  br i1 %i.bs, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsjhHCjzi9uUI_17datafusion_common8dfschema8DFSchemaEEECs14kWLkQVSKO_14deltalake_core.exit, label %6
+  store ptr %i.aa, ptr %i.g, align 8
+  %5 = atomicrmw sub ptr %i.aa, i64 1 release, align 8, !noalias !29502
+  %i.bs = icmp eq i64 %5, 1
+  br i1 %i.bs, label %bb.ae, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsjhHCjzi9uUI_17datafusion_common8dfschema8DFSchemaEEECs14kWLkQVSKO_14deltalake_core.exit
 
-6:                                                ; preds = %bb.ad
-  %7 = atomicrmw sub ptr %5, i64 1 release, align 8, !noalias !29502
-  %8 = icmp eq i64 %7, 1
-  br i1 %8, label %bb.ae, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsjhHCjzi9uUI_17datafusion_common8dfschema8DFSchemaEEECs14kWLkQVSKO_14deltalake_core.exit
-
-bb.ae:                                            ; preds = %6
+bb.ae:                                            ; preds = %bb.ad
   fence acquire
   invoke void @_RNvMsn_NtCs6Po7BT7Nknu_5alloc4syncINtB5_3ArcNtNtCsjhHCjzi9uUI_17datafusion_common8dfschema8DFSchemaE9drop_slowCs8VI8w5SIoU4_15datafusion_expr(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.g) #45
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsjhHCjzi9uUI_17datafusion_common8dfschema8DFSchemaEEECs14kWLkQVSKO_14deltalake_core.exit unwind label %bb.ac
 
-_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsjhHCjzi9uUI_17datafusion_common8dfschema8DFSchemaEEECs14kWLkQVSKO_14deltalake_core.exit: ; preds = %6, %bb.ad, %bb.ae
+_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsjhHCjzi9uUI_17datafusion_common8dfschema8DFSchemaEEECs14kWLkQVSKO_14deltalake_core.exit: ; preds = %bb.ad, %bb.ae
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   %.val = load ptr, ptr %.sroa.425.0..sroa_idx, align 8

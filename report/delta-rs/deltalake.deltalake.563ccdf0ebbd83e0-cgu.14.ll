@@ -201,7 +201,7 @@ define internal fastcc noundef nonnull align 8 ptr @_RNCINvNtCs8ulvy0Wg6Ot_12del
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNvCs7p2uQeJxui2_9deltalake28filestats_to_expression_next0B3_(ptr dead_on_unwind noalias noundef nonnull writable align 8 captures(address) dereferenceable(64) %0, ptr captures(address, read_provenance) %.8.val, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %2, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(64) %3) unnamed_addr #2 personality ptr @rust_eh_personality {
+define internal fastcc void @_RNCNvCs7p2uQeJxui2_9deltalake28filestats_to_expression_next0B3_(ptr dead_on_unwind noalias noundef nonnull writable align 8 captures(address) dereferenceable(64) %0, ptr readonly captures(address, read_provenance) %.8.val, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %2, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(64) %3) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses
@@ -604,7 +604,7 @@ bb.a:
   %i.bb = alloca [64 x i8], align 8               ; 8 uses
   %i.bc = alloca [8 x i8], align 8                ; 7 uses
   %i.bd = alloca [64 x i8], align 8               ; 7 uses
-  %i.be = alloca [8 x i8], align 8                ; 10 uses
+  %i.be = alloca [8 x i8], align 8                ; 7 uses
   %i.bf = alloca [64 x i8], align 8               ; 7 uses
   %i.bg = alloca [64 x i8], align 8               ; 7 uses
   %i.bh = alloca [8 x i8], align 8                ; 4 uses
@@ -695,7 +695,7 @@ bb.n:                                             ; preds = %bb.k
   %i.bt = load i64, ptr %i.bd, align 8, !range !11, !noundef !12
   %i.bu = trunc nuw i64 %i.bt to i1
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bd, i64 8
-  %.sroa.0192.0.copyload = load ptr, ptr %i.bv, align 8 ; 2 uses
+  %.sroa.0192.0.copyload = load ptr, ptr %i.bv, align 8 ; 5 uses
   br i1 %i.bu, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
@@ -720,8 +720,7 @@ bb.p:                                             ; preds = %bb.n
 
 bb.q:                                             ; preds = %bb.y, %bb.v, %bb.r
   %.pn364 = phi { ptr, i32 } [ %i.bx, %bb.r ], [ %.pn360.pn.pn, %bb.y ], [ %i.cc, %bb.v ]
-  %.val421 = load ptr, ptr %i.be, align 8, !nonnull !12, !noundef !12
-  call void @_Py_DecRef(ptr noundef nonnull %.val421) #43
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.0192.0.copyload) #43
   br label %bb.l
 
 bb.r:                                             ; preds = %bb.p
@@ -1124,8 +1123,7 @@ bb.ho:                                            ; preds = %bb.bx
 
 bb.hp:                                            ; preds = %bb.ho, %bb.ia
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bc)
-  %.val417 = load ptr, ptr %i.be, align 8, !nonnull !12, !noundef !12
-  call void @_Py_DecRef(ptr noundef nonnull %.val417) #43
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.0192.0.copyload) #43
   br label %bb.ib
 
 bb.hq:                                            ; preds = %bb.fz
@@ -1202,8 +1200,7 @@ bb.hy:                                            ; preds = %_RINvNtCsbvkFyIu7lg
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ay)
   call void @_Py_DecRef(ptr noundef nonnull %.sroa.0204.0.copyload) #43
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bc)
-  %.val416 = load ptr, ptr %i.be, align 8, !nonnull !12, !noundef !12
-  call void @_Py_DecRef(ptr noundef nonnull %.val416) #43
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.0192.0.copyload) #43
   call void @llvm.lifetime.end.p0(ptr nonnull %i.be)
   call void @_Py_DecRef(ptr noundef nonnull %.sroa.0186.0.copyload) #43
   call void @_Py_DecRef(ptr noundef nonnull %.sroa.0180.0.copyload) #43
@@ -1606,7 +1603,7 @@ bb.au:                                            ; preds = %bb.at, %bb.as, %bb.
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RNvXsd_NtCs6Po7BT7Nknu_5alloc5boxedINtB5_3BoxNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema10StructTypeENtNtCsbvkFyIu7lgC_4core5clone5Clone5cloneCs7p2uQeJxui2_9deltalake(ptr captures(address, read_provenance) %.0.val) unnamed_addr #2 personality ptr @rust_eh_personality {
+define internal fastcc noundef nonnull align 8 ptr @_RNvXsd_NtCs6Po7BT7Nknu_5alloc5boxedINtB5_3BoxNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema10StructTypeENtNtCsbvkFyIu7lgC_4core5clone5Clone5cloneCs7p2uQeJxui2_9deltalake(ptr readonly captures(address, read_provenance) %.0.val) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
   %i.b = alloca [72 x i8], align 8                ; 5 uses

@@ -201,7 +201,7 @@ bb.j:                                             ; preds = %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCscTw95cGIolY_7tracing4span7EnteredECs14kWLkQVSKO_14deltalake_core(ptr captures(address, read_provenance) %.0.val) unnamed_addr #0 {
+define internal fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCscTw95cGIolY_7tracing4span7EnteredECs14kWLkQVSKO_14deltalake_core(ptr readonly captures(address, read_provenance) %.0.val) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 5 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses
@@ -604,7 +604,7 @@ _RNvYNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema10StructTypeNtNtCsbvkFyIu7lgC_4core3
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noundef zeroext i1 @_RNvXs7_NtNtCsbvkFyIu7lgC_4core3cmp5implsRNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema11StructFieldNtB7_9PartialEq2eqCs14kWLkQVSKO_14deltalake_core(ptr captures(address, read_provenance) %.0.val, ptr captures(address, read_provenance) %.0.val1) unnamed_addr #1 {
+define internal fastcc noundef zeroext i1 @_RNvXs7_NtNtCsbvkFyIu7lgC_4core3cmp5implsRNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema11StructFieldNtB7_9PartialEq2eqCs14kWLkQVSKO_14deltalake_core(ptr readonly captures(address, read_provenance) %.0.val, ptr readonly captures(address, read_provenance) %.0.val1) unnamed_addr #1 {
 bb.a:
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val1) ]
@@ -1007,7 +1007,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXs_NtCs8CRAYtH5WmW_12futures_util3fnsNCNCNCNCNvMs7_NtNtCs14kWLkQVSKO_14deltalake_core10operations8optimizeNtBQ_9MergePlan7execute0000INtB4_6FnMut1NtBQ_8MergeBinE8call_mutBU_(ptr dead_on_unwind noalias noundef writable writeonly sret([104 x i8]) align 8 captures(none) dereferenceable(104) %0, ptr noalias noundef align 8 captures(address, read_provenance) dereferenceable(72) %1, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden void @_RNvXs_NtCs8CRAYtH5WmW_12futures_util3fnsNCNCNCNCNvMs7_NtNtCs14kWLkQVSKO_14deltalake_core10operations8optimizeNtBQ_9MergePlan7execute0000INtB4_6FnMut1NtBQ_8MergeBinE8call_mutBU_(ptr dead_on_unwind noalias noundef writable writeonly sret([104 x i8]) align 8 captures(none) dereferenceable(104) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(72) %1, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [72 x i8], align 8                ; 4 uses
   %i.b = alloca [32 x i8], align 8                ; 4 uses
@@ -1095,7 +1095,7 @@ _RNCNCNCNvMs7_NtNtCs14kWLkQVSKO_14deltalake_core10operations8optimizeNtBb_9Merge
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXs_NtCs8CRAYtH5WmW_12futures_util3fnsNCNCNCNvMs7_NtNtCs14kWLkQVSKO_14deltalake_core10operations8optimizeNtBO_9MergePlan7execute00s0_0INtB4_6FnMut1TNtNtCs6Po7BT7Nknu_5alloc6string6StringTINtNtCsbpG6u9KFjWn_8indexmap3map8IndexMapB2o_NtNtNtCs8ulvy0Wg6Ot_12delta_kernel11expressions7scalars6ScalarENtBO_8MergeBinEEE8call_mutBS_(ptr dead_on_unwind noalias noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef align 8 captures(address, read_provenance) dereferenceable(96) %1, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(128) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden void @_RNvXs_NtCs8CRAYtH5WmW_12futures_util3fnsNCNCNCNvMs7_NtNtCs14kWLkQVSKO_14deltalake_core10operations8optimizeNtBO_9MergePlan7execute00s0_0INtB4_6FnMut1TNtNtCs6Po7BT7Nknu_5alloc6string6StringTINtNtCsbpG6u9KFjWn_8indexmap3map8IndexMapB2o_NtNtNtCs8ulvy0Wg6Ot_12delta_kernel11expressions7scalars6ScalarENtBO_8MergeBinEEE8call_mutBS_(ptr dead_on_unwind noalias noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(96) %1, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(128) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = alloca [24 x i8], align 8                ; 4 uses
@@ -1146,15 +1146,14 @@ bb.c:                                             ; preds = %bb.a
   store i64 %i.y, ptr %i.z, align 8, !noalias !33426
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !33426
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !33426
-  %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  %i.ab = load ptr, ptr %i.aa, align 8, !alias.scope !33424, !noalias !33428, !nonnull !4, !noundef !4
+  %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %i.ab = load ptr, ptr %i.aa, align 8, !alias.scope !33424, !noalias !33428, !nonnull !4, !noundef !4 ; 3 uses
   %i.ac = atomicrmw add ptr %i.ab, i64 1 monotonic, align 8, !noalias !33428
   %i.ad = icmp slt i64 %i.ac, 0
   br i1 %i.ad, label %bb.j, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %3 = load ptr, ptr %i.aa, align 8, !alias.scope !33424, !noalias !33428, !nonnull !4, !noundef !4 ; 2 uses
-  store ptr %3, ptr %i.o, align 8, !noalias !33426
+  store ptr %i.ab, ptr %i.o, align 8, !noalias !33426
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !33426
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !33426
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 48
@@ -1221,17 +1220,16 @@ bb.l:                                             ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !33434
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !33434
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !33426
-  %i.as = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 3 uses
-  %i.at = load ptr, ptr %i.as, align 8, !alias.scope !33424, !noalias !33428, !nonnull !4, !noundef !4
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
+  %i.as = getelementptr inbounds nuw i8, ptr %1, i64 56
+  %i.at = load ptr, ptr %i.as, align 8, !alias.scope !33424, !noalias !33428, !nonnull !4, !noundef !4 ; 5 uses
   %i.au = atomicrmw add ptr %i.at, i64 1 monotonic, align 8, !noalias !33428
   %i.av = icmp slt i64 %i.au, 0
   br i1 %i.av, label %bb.r, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %5 = load ptr, ptr %i.as, align 8, !alias.scope !33424, !noalias !33428, !nonnull !4, !noundef !4 ; 3 uses
-  %i.aw = load ptr, ptr %4, align 8, !alias.scope !33424, !noalias !33428, !nonnull !4, !align !18, !noundef !4 ; 2 uses
-  store ptr %5, ptr %i.l, align 8, !noalias !33426
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 64
+  %i.aw = load ptr, ptr %3, align 8, !alias.scope !33424, !noalias !33428, !nonnull !4, !align !18, !noundef !4 ; 4 uses
+  store ptr %i.at, ptr %i.l, align 8, !noalias !33426
   %i.ax = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   store ptr %i.aw, ptr %i.ax, align 8, !noalias !33426
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !33426
@@ -1295,7 +1293,7 @@ bb.t:                                             ; preds = %bb.p, %bb.o
   %i.bo = getelementptr inbounds nuw i8, ptr %i.k, i64 24
   store ptr %i.bg, ptr %i.bo, align 8, !alias.scope !33451, !noalias !33459
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !33426
-  invoke void @_RNvMs8_NtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion14table_providerNtB5_18DeltaTableProvider7try_new(ptr noalias noundef nonnull sret([128 x i8]) align 16 captures(none) dereferenceable(128) %i.n, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(32) %i.m, ptr noundef nonnull %5, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(192) %i.aw, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(40) %i.k)
+  invoke void @_RNvMs8_NtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion14table_providerNtB5_18DeltaTableProvider7try_new(ptr noalias noundef nonnull sret([128 x i8]) align 16 captures(none) dereferenceable(128) %i.n, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(32) %i.m, ptr noundef nonnull %i.at, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(192) %i.aw, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(40) %i.k)
           to label %bb.u unwind label %bb.s, !noalias !33428
 
 bb.u:                                             ; preds = %bb.t
@@ -1336,22 +1334,21 @@ bb.z:                                             ; preds = %bb.u
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !33426
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.q, ptr noundef nonnull align 8 dereferenceable(32) %i.p, i64 32, i1 false), !noalias !33426
   %i.bw = getelementptr inbounds nuw i8, ptr %i.q, i64 1896
-  store ptr %3, ptr %i.bw, align 8, !noalias !33426
+  store ptr %i.ab, ptr %i.bw, align 8, !noalias !33426
   %i.bx = getelementptr inbounds nuw i8, ptr %i.q, i64 1912
   store i8 0, ptr %i.bx, align 8, !noalias !33426
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o), !noalias !33426
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p), !noalias !33426
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !33426
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !33426
-  %i.by = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
-  %i.bz = load ptr, ptr %i.by, align 8, !alias.scope !33424, !noalias !33428, !nonnull !4, !noundef !4
+  %i.by = getelementptr inbounds nuw i8, ptr %1, i64 72
+  %i.bz = load ptr, ptr %i.by, align 8, !alias.scope !33424, !noalias !33428, !nonnull !4, !noundef !4 ; 4 uses
   %i.ca = atomicrmw add ptr %i.bz, i64 1 monotonic, align 8, !noalias !33428
   %i.cb = icmp slt i64 %i.ca, 0
   br i1 %i.cb, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  %6 = load ptr, ptr %i.by, align 8, !alias.scope !33424, !noalias !33428, !nonnull !4, !noundef !4 ; 3 uses
-  store ptr %6, ptr %i.i, align 8, !noalias !33426
+  store ptr %i.bz, ptr %i.i, align 8, !noalias !33426
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !33426
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.h, ptr noundef nonnull align 8 dereferenceable(72) %i.u, i64 72, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !33426
@@ -1359,17 +1356,15 @@ bb.aa:                                            ; preds = %bb.z
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !33426
   %i.cc = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.cd = getelementptr inbounds nuw i8, ptr %i.f, i64 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.cd, ptr noundef nonnull align 8 dereferenceable(16) %i.cc, i64 16, i1 false), !noalias !33428
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.cd, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.cc, i64 16, i1 false), !noalias !33428
   store i8 1, ptr %i.f, align 1, !noalias !33426
-  %7 = load ptr, ptr %i.as, align 8, !alias.scope !33424, !noalias !33428, !nonnull !4, !noundef !4
-  %8 = load ptr, ptr %4, align 8, !alias.scope !33424, !noalias !33428, !nonnull !4, !align !18, !noundef !4 ; 2 uses
-  %i.ce = getelementptr inbounds nuw i8, ptr %8, i64 16
+  %i.ce = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
   %i.cf = load i64, ptr %i.ce, align 8, !range !3, !invariant.load !4, !noalias !33428
   %i.cg = add nsw i64 %i.cf, -1
   %i.ch = and i64 %i.cg, -16
-  %i.ci = getelementptr inbounds nuw i8, ptr %7, i64 %i.ch
+  %i.ci = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.ch
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 16
-  %i.ck = getelementptr inbounds nuw i8, ptr %8, i64 112
+  %i.ck = getelementptr inbounds nuw i8, ptr %i.aw, i64 112
   %i.cl = load ptr, ptr %i.ck, align 8, !invariant.load !4, !noalias !33428, !nonnull !4
   %i.cm = invoke { ptr, ptr } %i.cl(ptr noundef nonnull %i.cj, ptr noalias noundef nonnull align 1 captures(address) dereferenceable(17) %i.f)
           to label %bb.ad unwind label %bb.ac, !noalias !33428 ; 2 uses
@@ -1391,7 +1386,7 @@ bb.ad:                                            ; preds = %bb.aa
   %i.cq = getelementptr inbounds nuw i8, ptr %i.j, i64 48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1920) %i.cq, ptr noundef nonnull align 16 dereferenceable(1920) %i.q, i64 1920, i1 false), !noalias !33426
   %i.cr = getelementptr inbounds nuw i8, ptr %i.j, i64 2088
-  store ptr %6, ptr %i.cr, align 8, !noalias !33426
+  store ptr %i.bz, ptr %i.cr, align 8, !noalias !33426
   %i.cs = getelementptr inbounds nuw i8, ptr %i.j, i64 2016
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(72) %i.cs, ptr noundef nonnull align 8 dereferenceable(72) %i.u, i64 72, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.j, ptr noundef nonnull align 8 dereferenceable(32) %i.g, i64 32, i1 false), !noalias !33426
@@ -1452,7 +1447,7 @@ bb.aj:                                            ; preds = %bb.ac
           to label %bb.ak unwind label %bb.ai, !noalias !33428
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.dd = atomicrmw sub ptr %6, i64 1 release, align 8, !noalias !33468
+  %i.dd = atomicrmw sub ptr %i.bz, i64 1 release, align 8, !noalias !33468
   %i.de = icmp eq i64 %i.dd, 1
   br i1 %i.de, label %bb.al, label %.thread28.i
 
@@ -1468,7 +1463,7 @@ bb.al:                                            ; preds = %bb.ak
 bb.am:                                            ; preds = %bb.n
   %i.df = landingpad { ptr, i32 }
           cleanup
-  %i.dg = atomicrmw sub ptr %5, i64 1 release, align 8, !noalias !33473
+  %i.dg = atomicrmw sub ptr %i.at, i64 1 release, align 8, !noalias !33473
   %i.dh = icmp eq i64 %i.dg, 1
   br i1 %i.dh, label %bb.an, label %.noexc19.i
 
@@ -1871,7 +1866,7 @@ _RNCNCNvMs7_NtNtCs14kWLkQVSKO_14deltalake_core10operations8optimizeNtB9_9MergePl
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXs_NtCs8CRAYtH5WmW_12futures_util3fnsNCNCNvNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default10filesystem14list_from_impl00INtB4_6FnMut1INtNtCsbvkFyIu7lgC_4core6result6ResultNtCsjyY8HP3IvQ6_12object_store10ObjectMetaNtB2Q_5ErrorEE8call_mutCs14kWLkQVSKO_14deltalake_core(ptr dead_on_unwind noalias noundef writable sret([112 x i8]) align 16 captures(address) dereferenceable(112) %0, ptr noalias noundef align 8 captures(address, read_provenance) dereferenceable(88) %1, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(96) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden void @_RNvXs_NtCs8CRAYtH5WmW_12futures_util3fnsNCNCNvNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default10filesystem14list_from_impl00INtB4_6FnMut1INtNtCsbvkFyIu7lgC_4core6result6ResultNtCsjyY8HP3IvQ6_12object_store10ObjectMetaNtB2Q_5ErrorEE8call_mutCs14kWLkQVSKO_14deltalake_core(ptr dead_on_unwind noalias noundef writable sret([112 x i8]) align 16 captures(address) dereferenceable(112) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(88) %1, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(96) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [72 x i8], align 8                ; 4 uses
   %i.b = alloca [24 x i8], align 8                ; 4 uses
@@ -1924,7 +1919,7 @@ bb.f:                                             ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 44
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.n = getelementptr inbounds nuw i8, ptr %i.g, i64 64
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(17) %i.n, ptr noundef nonnull align 8 dereferenceable(17) %i.m, i64 17, i1 false), !noalias !33557
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(17) %i.n, ptr noundef nonnull readonly align 8 dereferenceable(17) %i.m, i64 17, i1 false), !noalias !33557
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 60
   %i.q = load i32, ptr %i.p, align 4, !alias.scope !33552, !noalias !33557, !noundef !4
@@ -2327,7 +2322,7 @@ _RNCNvMNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion14table_provider9da
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXs_NtCs8CRAYtH5WmW_12futures_util3fnsNCNvXs2_NtCsjyY8HP3IvQ6_12object_store6prefixINtBK_11PrefixStoreINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtBM_11ObjectStoreEL_EEB2d_16list_with_offset0INtB4_6FnMut1NtBM_10ObjectMetaE8call_mutCs14kWLkQVSKO_14deltalake_core(ptr dead_on_unwind noalias noundef writable sret([96 x i8]) align 8 captures(none) dereferenceable(96) %0, ptr noalias noundef align 8 captures(address, read_provenance) dereferenceable(24) %1, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(96) %2) unnamed_addr #0 {
+define hidden void @_RNvXs_NtCs8CRAYtH5WmW_12futures_util3fnsNCNvXs2_NtCsjyY8HP3IvQ6_12object_store6prefixINtBK_11PrefixStoreINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtBM_11ObjectStoreEL_EEB2d_16list_with_offset0INtB4_6FnMut1NtBM_10ObjectMetaE8call_mutCs14kWLkQVSKO_14deltalake_core(ptr dead_on_unwind noalias noundef writable sret([96 x i8]) align 8 captures(none) dereferenceable(96) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %1, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(96) %2) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [96 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -2338,7 +2333,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXs_NtCs8CRAYtH5WmW_12futures_util3fnsNCNvXs2_NtCsjyY8HP3IvQ6_12object_store6prefixINtBK_11PrefixStoreINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtBM_11ObjectStoreEL_EEB2d_4list0INtB4_6FnMut1NtBM_10ObjectMetaE8call_mutCs14kWLkQVSKO_14deltalake_core(ptr dead_on_unwind noalias noundef writable sret([96 x i8]) align 8 captures(none) dereferenceable(96) %0, ptr noalias noundef align 8 captures(address, read_provenance) dereferenceable(24) %1, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(96) %2) unnamed_addr #0 {
+define hidden void @_RNvXs_NtCs8CRAYtH5WmW_12futures_util3fnsNCNvXs2_NtCsjyY8HP3IvQ6_12object_store6prefixINtBK_11PrefixStoreINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtBM_11ObjectStoreEL_EEB2d_4list0INtB4_6FnMut1NtBM_10ObjectMetaE8call_mutCs14kWLkQVSKO_14deltalake_core(ptr dead_on_unwind noalias noundef writable sret([96 x i8]) align 8 captures(none) dereferenceable(96) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %1, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(96) %2) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [96 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
