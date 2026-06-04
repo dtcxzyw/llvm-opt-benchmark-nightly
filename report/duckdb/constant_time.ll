@@ -7,7 +7,7 @@ target triple = "x86_64-pc-linux-gnu"
 @mbedtls_ct_zero = hidden global i64 0, align 8
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable
-define hidden noundef range(i32 0, 256) i32 @_Z17mbedtls_ct_memcmpPKvS0_m(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #0 {
+define hidden noundef range(i32 0, 256) i32 @_Z17mbedtls_ct_memcmpPKvS0_m(ptr noundef captures(address) %0, ptr noundef captures(address) %1, i64 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %.not = icmp eq i64 %2, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
@@ -94,7 +94,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable
-define hidden void @_Z23mbedtls_ct_memmove_leftPvmm(ptr noundef %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #1 {
+define hidden void @_Z23mbedtls_ct_memmove_leftPvmm(ptr noundef captures(address) %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #1 {
 bb.a:
   %.not = icmp eq i64 %1, 0
   br i1 %.not, label %._crit_edge30, label %.lr.ph29

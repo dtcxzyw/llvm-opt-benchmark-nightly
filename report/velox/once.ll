@@ -17,7 +17,7 @@ $__clang_call_terminate = comdat any
 @_ZN5boost13thread_detailL7once_cvE = internal global %union.pthread_cond_t zeroinitializer, align 8
 
 ; Function Attrs: mustprogress nounwind uwtable
-define noundef zeroext i1 @_ZN5boost13thread_detail17enter_once_regionERNS_9once_flagE(ptr noundef nonnull align 4 dereferenceable(4) %0) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define noundef zeroext i1 @_ZN5boost13thread_detail17enter_once_regionERNS_9once_flagE(ptr noundef nonnull align 4 captures(address) dereferenceable(4) %0) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 _ZN5boost7atomics6detail26core_operations_gcc_atomicILm4ELb0ELb0EE4loadERVKjNS_12memory_orderE.exit:
   %i.a = load atomic volatile i32, ptr %0 acquire, align 4
   %.not = icmp eq i32 %i.a, 2
@@ -100,7 +100,7 @@ declare ptr @__cxa_begin_catch(ptr) local_unnamed_addr
 declare void @_ZSt9terminatev() local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nounwind uwtable
-define void @_ZN5boost13thread_detail18commit_once_regionERNS_9once_flagE(ptr noundef nonnull align 4 dereferenceable(4) %0) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define void @_ZN5boost13thread_detail18commit_once_regionERNS_9once_flagE(ptr noundef nonnull align 4 captures(address) dereferenceable(4) %0) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   br label %bb.b
 
@@ -124,7 +124,7 @@ _ZN5boost7pthread25pthread_mutex_scoped_lockD2Ev.exit: ; preds = %bb.d
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define void @_ZN5boost13thread_detail20rollback_once_regionERNS_9once_flagE(ptr noundef nonnull align 4 dereferenceable(4) %0) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define void @_ZN5boost13thread_detail20rollback_once_regionERNS_9once_flagE(ptr noundef nonnull align 4 captures(address) dereferenceable(4) %0) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   br label %bb.b
 

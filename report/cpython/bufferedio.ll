@@ -201,7 +201,7 @@ Py_DECREF.exit27:                                 ; preds = %bb.g, %bb.o, %bb.n,
 }
 
 ; Function Attrs: nounwind uwtable
-define internal range(i32 -1, 1) i32 @_io_BufferedReader___init__(ptr noundef %0, ptr noundef %1, ptr noundef %2) #0 {
+define internal range(i32 -1, 1) i32 @_io_BufferedReader___init__(ptr noundef captures(address) %0, ptr noundef %1, ptr noundef %2) #0 {
 bb.a:
   %i.a = alloca [2 x ptr], align 16               ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
@@ -604,7 +604,7 @@ _io__Buffered_mode_get_impl.exit:                 ; preds = %bb.c, %bb.d, %bb.e
 declare ptr @_PyIOBase_check_readable(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc range(i32 -1, 1) i32 @_buffered_init(ptr noundef %0) unnamed_addr #0 {
+define internal fastcc range(i32 -1, 1) i32 @_buffered_init(ptr noundef captures(address) %0) unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 120        ; 3 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !75   ; 2 uses
@@ -698,7 +698,7 @@ declare ptr @PyErr_NoMemory() local_unnamed_addr #1
 declare ptr @PyThread_allocate_lock() local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define internal range(i32 -1, 1) i32 @_io_BufferedWriter___init__(ptr noundef %0, ptr noundef %1, ptr noundef %2) #0 {
+define internal range(i32 -1, 1) i32 @_io_BufferedWriter___init__(ptr noundef captures(address) %0, ptr noundef %1, ptr noundef %2) #0 {
 bb.a:
   %i.a = alloca [2 x ptr], align 16               ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
@@ -1101,7 +1101,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 declare i32 @_PyArg_NoKeywords(ptr noundef, ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define internal range(i32 -1, 1) i32 @_io_BufferedRandom___init__(ptr noundef %0, ptr noundef %1, ptr noundef %2) #0 {
+define internal range(i32 -1, 1) i32 @_io_BufferedRandom___init__(ptr noundef captures(address) %0, ptr noundef %1, ptr noundef %2) #0 {
 bb.a:
   %i.a = alloca [2 x ptr], align 16               ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9

@@ -60,7 +60,7 @@ module asm ".globl _ZSt21ios_base_library_initv"
 @.str.15 = private unnamed_addr constant [31 x i8] c"V8.InvokeApiInterruptCallbacks\00", align 1
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN2v88internal10StackGuard13SetStackLimitEm(ptr noundef nonnull align 8 dereferenceable(64) %0, i64 noundef %1) local_unnamed_addr #0 align 2 {
+define hidden void @_ZN2v88internal10StackGuard13SetStackLimitEm(ptr noundef nonnull align 8 captures(address) dereferenceable(64) %0, i64 noundef %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 58672 ; 2 uses
@@ -86,7 +86,7 @@ _ZN2v88internal10StackGuard21SetStackLimitInternalERKNS0_15ExecutionAccessEmm.ex
 declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 
 ; Function Attrs: mustprogress norecurse nounwind memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable
-define hidden void @_ZN2v88internal10StackGuard21SetStackLimitInternalERKNS0_15ExecutionAccessEmm(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull readnone align 8 captures(none) dereferenceable(8) %1, i64 noundef %2, i64 noundef %3) local_unnamed_addr #2 align 2 {
+define hidden void @_ZN2v88internal10StackGuard21SetStackLimitInternalERKNS0_15ExecutionAccessEmm(ptr noundef nonnull align 8 captures(address) dereferenceable(64) %0, ptr noundef nonnull readnone align 8 captures(none) dereferenceable(8) %1, i64 noundef %2, i64 noundef %3) local_unnamed_addr #2 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
@@ -108,7 +108,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: mustprogress norecurse nounwind memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable
-define hidden void @_ZN2v88internal10StackGuard30SetStackLimitForStackSwitchingEm(ptr noundef nonnull align 8 dereferenceable(64) %0, i64 noundef %1) local_unnamed_addr #2 align 2 {
+define hidden void @_ZN2v88internal10StackGuard30SetStackLimitForStackSwitchingEm(ptr noundef nonnull align 8 captures(address) dereferenceable(64) %0, i64 noundef %1) local_unnamed_addr #2 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -119,7 +119,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN2v88internal10StackGuard19PushInterruptsScopeEPNS0_15InterruptsScopeE(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef %1) local_unnamed_addr #0 align 2 {
+define hidden void @_ZN2v88internal10StackGuard19PushInterruptsScopeEPNS0_15InterruptsScopeE(ptr noundef nonnull align 8 captures(address) dereferenceable(64) %0, ptr noundef %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 58672 ; 2 uses
@@ -209,7 +209,7 @@ bb.e:                                             ; preds = %._crit_edge, %bb.b
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN2v88internal10StackGuard18PopInterruptsScopeEv(ptr noundef nonnull align 8 dereferenceable(64) %0) local_unnamed_addr #0 align 2 {
+define hidden void @_ZN2v88internal10StackGuard18PopInterruptsScopeEv(ptr noundef nonnull align 8 captures(address) dereferenceable(64) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 58672 ; 2 uses
@@ -487,7 +487,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN2v88internal10StackGuard16RequestInterruptENS1_13InterruptFlagE(ptr noundef nonnull align 8 dereferenceable(64) %0, i32 noundef %1) local_unnamed_addr #0 align 2 {
+define hidden void @_ZN2v88internal10StackGuard16RequestInterruptENS1_13InterruptFlagE(ptr noundef nonnull align 8 captures(address) dereferenceable(64) %0, i32 noundef %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 58672 ; 2 uses
@@ -539,7 +539,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
 declare void @_ZN2v88internal17FutexWaitListNode10NotifyWakeEv(ptr noundef nonnull align 8 dereferenceable(48)) local_unnamed_addr #3
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN2v88internal10StackGuard14ClearInterruptENS1_13InterruptFlagE(ptr noundef nonnull align 8 dereferenceable(64) %0, i32 noundef %1) local_unnamed_addr #0 align 2 {
+define hidden void @_ZN2v88internal10StackGuard14ClearInterruptENS1_13InterruptFlagE(ptr noundef nonnull align 8 captures(address) dereferenceable(64) %0, i32 noundef %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 58672 ; 2 uses
@@ -591,7 +591,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden noundef zeroext i1 @_ZN2v88internal10StackGuard21HasTerminationRequestEv(ptr noundef nonnull align 8 dereferenceable(64) %0) local_unnamed_addr #0 align 2 {
+define hidden noundef zeroext i1 @_ZN2v88internal10StackGuard21HasTerminationRequestEv(ptr noundef nonnull align 8 captures(address) dereferenceable(64) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
@@ -639,7 +639,7 @@ bb.e:                                             ; preds = %bb.a, %bb.d
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden noundef range(i32 0, 4096) i32 @_ZN2v88internal10StackGuard23FetchAndClearInterruptsENS1_14InterruptLevelE(ptr noundef nonnull align 8 dereferenceable(64) %0, i32 noundef %1) local_unnamed_addr #0 align 2 {
+define hidden noundef range(i32 0, 4096) i32 @_ZN2v88internal10StackGuard23FetchAndClearInterruptsENS1_14InterruptLevelE(ptr noundef nonnull align 8 captures(address) dereferenceable(64) %0, i32 noundef %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 58672 ; 2 uses
@@ -739,7 +739,7 @@ bb.a:
 declare noundef ptr @_ZN2v88internal7Isolate40FindOrAllocatePerThreadDataForThisThreadEv(ptr noundef nonnull align 8 dereferenceable(64320)) local_unnamed_addr #3
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN2v88internal10StackGuard11ThreadLocal10InitializeEPNS0_7IsolateERKNS0_15ExecutionAccessE(ptr noundef nonnull align 8 dereferenceable(56) initializes((0, 8)) %0, ptr noundef readnone captures(none) %1, ptr noundef nonnull readnone align 8 captures(none) dereferenceable(8) %2) local_unnamed_addr #0 align 2 {
+define hidden void @_ZN2v88internal10StackGuard11ThreadLocal10InitializeEPNS0_7IsolateERKNS0_15ExecutionAccessE(ptr noundef nonnull align 8 captures(address) dereferenceable(56) initializes((0, 8)) %0, ptr noundef readnone captures(none) %1, ptr noundef nonnull readnone align 8 captures(none) dereferenceable(8) %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1464), align 8
   %i.b = shl nsw i32 %i.a, 10
@@ -759,7 +759,7 @@ bb.a:
 declare i64 @_ZN2v84base5Stack13GetStackStartEv() local_unnamed_addr #3
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN2v88internal10StackGuard10InitThreadERKNS0_15ExecutionAccessE(ptr noundef nonnull align 8 dereferenceable(64) initializes((8, 16)) %0, ptr noundef nonnull readnone align 8 captures(none) dereferenceable(8) %1) local_unnamed_addr #0 align 2 {
+define hidden void @_ZN2v88internal10StackGuard10InitThreadERKNS0_15ExecutionAccessE(ptr noundef nonnull align 8 captures(address) dereferenceable(64) initializes((8, 16)) %0, ptr noundef nonnull readnone align 8 captures(none) dereferenceable(8) %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.b = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1464), align 8
@@ -804,7 +804,7 @@ bb.d:                                             ; preds = %_ZN2v88internal10St
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden i64 @_ZN2v88internal10StackGuard16HandleInterruptsENS1_14InterruptLevelE(ptr noundef nonnull align 8 dereferenceable(64) %0, i32 noundef %1) local_unnamed_addr #0 align 2 {
+define hidden i64 @_ZN2v88internal10StackGuard16HandleInterruptsENS1_14InterruptLevelE(ptr noundef nonnull align 8 captures(address) dereferenceable(64) %0, i32 noundef %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %2 = alloca [2 x %"class.std::unique_ptr.746"], align 16 ; 6 uses
   %3 = alloca [2 x %"class.std::unique_ptr.746"], align 16 ; 6 uses

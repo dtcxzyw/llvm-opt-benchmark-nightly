@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %bb.d, %bb.b, %bb.c,
 }
 
 ; Function Attrs: mustprogress norecurse nounwind uwtable
-define hidden noundef nonnull ptr @_ZNK2v88internal6String19PrefixForDebugPrintEv(ptr noundef nonnull align 4 dereferenceable(16) %0) local_unnamed_addr #5 align 2 {
+define hidden noundef nonnull ptr @_ZNK2v88internal6String19PrefixForDebugPrintEv(ptr noundef nonnull align 4 captures(address) dereferenceable(16) %0) local_unnamed_addr #5 align 2 {
 bb.a:
   %i.a = load atomic volatile i64, ptr %0 acquire, align 8
   %i.b = add i64 %i.a, 11
@@ -249,7 +249,7 @@ bb.f:                                             ; preds = %.sink.split, %bb.e,
 }
 
 ; Function Attrs: mustprogress norecurse nounwind uwtable
-define hidden noundef nonnull ptr @_ZNK2v88internal6String19SuffixForDebugPrintEv(ptr noundef nonnull align 4 dereferenceable(16) %0) local_unnamed_addr #5 align 2 {
+define hidden noundef nonnull ptr @_ZNK2v88internal6String19SuffixForDebugPrintEv(ptr noundef nonnull align 4 captures(address) dereferenceable(16) %0) local_unnamed_addr #5 align 2 {
 bb.a:
   %i.a = load atomic volatile i64, ptr %0 acquire, align 8
   %i.b = add i64 %i.a, 11
@@ -652,7 +652,7 @@ _ZN2v88internal21StringCharacterStream7HasMoreEv.exit: ; preds = %bb.r, %_ZN2v88
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN2v88internal6String7PrintOnEP8_IO_FILE(ptr noundef nonnull align 4 dereferenceable(16) %0, ptr noundef %1) local_unnamed_addr #0 align 2 {
+define hidden void @_ZN2v88internal6String7PrintOnEP8_IO_FILE(ptr noundef nonnull align 4 captures(address) dereferenceable(16) %0, ptr noundef %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %2 = alloca %"class.v8::internal::SharedStringAccessGuardIfNeeded", align 8 ; 8 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12
@@ -823,7 +823,7 @@ _ZN2v88internal31SharedStringAccessGuardIfNeededD2Ev.exit: ; preds = %_ZNK2v88in
 declare void @_ZN2v88internal6PrintFEP8_IO_FILEPKcz(ptr noundef, ptr noundef, ...) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN2v88internal6String7PrintOnERSo(ptr noundef nonnull align 4 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(8) %1) local_unnamed_addr #0 align 2 {
+define hidden void @_ZN2v88internal6String7PrintOnERSo(ptr noundef nonnull align 4 captures(address) dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(8) %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %2 = alloca %"class.v8::internal::SharedStringAccessGuardIfNeeded", align 8 ; 8 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12
@@ -1174,7 +1174,7 @@ bb.e:                                             ; preds = %_ZNK2v88internal9Se
 }
 
 ; Function Attrs: mustprogress norecurse nounwind memory(readwrite, target_mem: none) uwtable
-define hidden i64 @_ZNK2v88internal9SeqString22GetDataAndPaddingSizesEv(ptr noundef nonnull align 4 dereferenceable(16) %0) local_unnamed_addr #3 align 2 {
+define hidden i64 @_ZNK2v88internal9SeqString22GetDataAndPaddingSizesEv(ptr noundef nonnull align 4 captures(address) dereferenceable(16) %0) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = load atomic volatile i64, ptr %0 monotonic, align 8
   %i.b = add i64 %i.a, 11
@@ -1252,7 +1252,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden noundef zeroext i16 @_ZNK2v88internal10ConsString3GetEjRKNS0_31SharedStringAccessGuardIfNeededE(ptr noundef nonnull align 4 dereferenceable(32) %0, i32 noundef %1, ptr noundef nonnull readnone align 8 captures(none) dereferenceable(16) %2) local_unnamed_addr #0 align 2 {
+define hidden noundef zeroext i16 @_ZNK2v88internal10ConsString3GetEjRKNS0_31SharedStringAccessGuardIfNeededE(ptr noundef nonnull align 4 captures(address) dereferenceable(32) %0, i32 noundef %1, ptr noundef nonnull readnone align 8 captures(none) dereferenceable(16) %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %3 = alloca %"class.v8::internal::SharedStringAccessGuardIfNeeded", align 8 ; 8 uses
   br label %tailrecurse
@@ -1655,7 +1655,7 @@ _ZNK2v88internal11StringShape22DispatchToSpecificTypeIZNKS0_6String7GetImplEjRKN
 }
 
 ; Function Attrs: mustprogress norecurse nounwind memory(readwrite, target_mem: none) uwtable
-define hidden noundef i32 @_ZNK2v88internal14ExternalString19ExternalPayloadSizeEv(ptr noundef nonnull align 4 dereferenceable(32) %0) local_unnamed_addr #3 align 2 {
+define hidden noundef i32 @_ZNK2v88internal14ExternalString19ExternalPayloadSizeEv(ptr noundef nonnull align 4 captures(address) dereferenceable(32) %0) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = load atomic volatile i64, ptr %0 monotonic, align 8
   %i.b = add i64 %i.a, 11

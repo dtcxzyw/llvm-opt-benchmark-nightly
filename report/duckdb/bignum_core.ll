@@ -201,7 +201,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable
-define hidden noundef range(i64 -1, 1) i64 @_Z30mbedtls_mpi_core_check_zero_ctPKmm(ptr noundef %0, i64 noundef %1) local_unnamed_addr #6 {
+define hidden noundef range(i64 -1, 1) i64 @_Z30mbedtls_mpi_core_check_zero_ctPKmm(ptr noundef captures(address) %0, i64 noundef %1) local_unnamed_addr #6 {
 bb.a:
   %.not = icmp eq i64 %1, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
