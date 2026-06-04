@@ -201,7 +201,7 @@ iter.check:                                       ; preds = %bb.a
   %i.g = sub i64 %i.f, %i.e                       ; 3 uses
   %i.h = lshr i64 %i.g, 3
   %i.i = add nuw nsw i64 %i.h, 1                  ; 4 uses
-  %min.iters.check = icmp ult i64 %i.g, 32
+  %min.iters.check = icmp ult i64 %i.g, 64
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
@@ -253,36 +253,36 @@ vec.epilog.iter.check:                            ; preds = %vector.body
   %bin.rdx132 = add <8 x i32> %i.x, %bin.rdx
   %bin.rdx133 = add <8 x i32> %i.y, %bin.rdx132
   %i.aa = tail call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %bin.rdx133) ; 2 uses
-  %min.epilog.iters.check = icmp samesign ult i64 %i.k, 5
+  %min.epilog.iters.check = icmp samesign ult i64 %i.k, 9
   br i1 %min.epilog.iters.check, label %.lr.ph.i.preheader, label %vec.epilog.ph, !prof !267
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i32 [ %i.aa, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.mod.vf134 = and i64 %i.i, 3                  ; 2 uses
+  %n.mod.vf134 = and i64 %i.i, 7                  ; 2 uses
   %i.ab = icmp eq i64 %n.mod.vf134, 0
-  %i.ac = select i1 %i.ab, i64 4, i64 %n.mod.vf134
+  %i.ac = select i1 %i.ab, i64 8, i64 %n.mod.vf134
   %n.vec135 = sub nsw i64 %i.i, %i.ac             ; 2 uses
   %i.ad = shl i64 %n.vec135, 3
   %i.ae = getelementptr i8, ptr %i.a, i64 %i.ad
-  %9 = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %bc.merge.rdx, i64 0
+  %9 = insertelement <8 x i32> <i32 poison, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0>, i32 %bc.merge.rdx, i64 0
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index136 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next141, %vec.epilog.vector.body ] ; 2 uses
-  %vec.phi137 = phi <4 x i32> [ %9, %vec.epilog.ph ], [ %10, %vec.epilog.vector.body ]
+  %vec.phi137 = phi <8 x i32> [ %9, %vec.epilog.ph ], [ %10, %vec.epilog.vector.body ]
   %i.af = shl i64 %index136, 3
   %next.gep138 = getelementptr i8, ptr %i.a, i64 %i.af
   %i.ag = getelementptr inbounds nuw i8, ptr %next.gep138, i64 4
-  %wide.vec139 = load <8 x i32>, ptr %i.ag, align 4, !tbaa !264
-  %strided.vec140 = shufflevector <8 x i32> %wide.vec139, <8 x i32> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
-  %10 = add <4 x i32> %strided.vec140, %vec.phi137 ; 2 uses
-  %index.next141 = add nuw i64 %index136, 4       ; 2 uses
+  %wide.vec139 = load <16 x i32>, ptr %i.ag, align 4, !tbaa !264
+  %strided.vec140 = shufflevector <16 x i32> %wide.vec139, <16 x i32> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
+  %10 = add <8 x i32> %strided.vec140, %vec.phi137 ; 2 uses
+  %index.next141 = add nuw i64 %index136, 8       ; 2 uses
   %i.ah = icmp eq i64 %index.next141, %n.vec135
   br i1 %i.ah, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !268
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %i.ai = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %10)
+  %i.ai = tail call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %10)
   br label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
@@ -466,7 +466,7 @@ iter.check156:                                    ; preds = %bb.r
   %i.cn = sub i64 %i.cm, %i.cl                    ; 3 uses
   %i.co = lshr i64 %i.cn, 2
   %i.cp = add nuw nsw i64 %i.co, 1                ; 5 uses
-  %min.iters.check144 = icmp ult i64 %i.cn, 12
+  %min.iters.check144 = icmp ult i64 %i.cn, 28
   br i1 %min.iters.check144, label %.lr.ph.i.i.i.i.preheader, label %vector.main.loop.iter.check145
 
 vector.main.loop.iter.check145:                   ; preds = %iter.check156
@@ -474,7 +474,7 @@ vector.main.loop.iter.check145:                   ; preds = %iter.check156
   br i1 %min.iters.check146, label %vec.epilog.ph160, label %vector.ph147
 
 vector.ph147:                                     ; preds = %vector.main.loop.iter.check145
-  %n.mod.vf148 = and i64 %i.cp, 28
+  %n.mod.vf148 = and i64 %i.cp, 24
   %n.vec149 = and i64 %i.cp, 9223372036854775776  ; 4 uses
   %i.cq = shl i64 %n.vec149, 2
   %i.cr = getelementptr i8, ptr %i.cf, i64 %i.cq
@@ -507,19 +507,19 @@ vec.epilog.iter.check158:                         ; preds = %middle.block154
 
 vec.epilog.ph160:                                 ; preds = %vector.main.loop.iter.check145, %vec.epilog.iter.check158
   %vec.epilog.resume.val155 = phi i64 [ %n.vec149, %vec.epilog.iter.check158 ], [ 0, %vector.main.loop.iter.check145 ]
-  %n.vec162 = and i64 %i.cp, 9223372036854775804  ; 3 uses
+  %n.vec162 = and i64 %i.cp, 9223372036854775800  ; 3 uses
   %i.cx = shl i64 %n.vec162, 2
   %i.cy = getelementptr i8, ptr %i.cf, i64 %i.cx
-  %broadcast.splatinsert163 = insertelement <4 x i32> poison, i32 %.sroa.0.0.extract.trunc, i64 0
-  %broadcast.splat164 = shufflevector <4 x i32> %broadcast.splatinsert163, <4 x i32> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert163 = insertelement <8 x i32> poison, i32 %.sroa.0.0.extract.trunc, i64 0
+  %broadcast.splat164 = shufflevector <8 x i32> %broadcast.splatinsert163, <8 x i32> poison, <8 x i32> zeroinitializer
   br label %vec.epilog.vector.body165
 
 vec.epilog.vector.body165:                        ; preds = %vec.epilog.vector.body165, %vec.epilog.ph160
   %index166 = phi i64 [ %vec.epilog.resume.val155, %vec.epilog.ph160 ], [ %index.next168, %vec.epilog.vector.body165 ] ; 2 uses
   %i.cz = shl i64 %index166, 2
   %next.gep167 = getelementptr i8, ptr %i.cf, i64 %i.cz
-  store <4 x i32> %broadcast.splat164, ptr %next.gep167, align 4, !tbaa !3
-  %index.next168 = add nuw i64 %index166, 4       ; 2 uses
+  store <8 x i32> %broadcast.splat164, ptr %next.gep167, align 4, !tbaa !3
+  %index.next168 = add nuw i64 %index166, 8       ; 2 uses
   %i.da = icmp eq i64 %index.next168, %n.vec162
   br i1 %i.da, label %vec.epilog.middle.block169, label %vec.epilog.vector.body165, !llvm.loop !291
 
@@ -922,9 +922,6 @@ declare i64 @llvm.umax.i64(i64, i64) #18
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v8i32(<8 x i32>) #18
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #18
-
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -1226,7 +1223,7 @@ attributes #28 = { nounwind allocsize(0) }
 !264 = !{!265, !4, i64 4}
 !265 = !{!"_ZTSN8facebook5velox10IndexRangeE", !4, i64 0, !4, i64 4}
 !266 = distinct !{!266, !102, !128, !129}
-!267 = !{!"branch_weights", i32 4, i32 28}
+!267 = !{!"branch_weights", i32 8, i32 24}
 !268 = distinct !{!268, !102, !128, !129}
 !269 = distinct !{!269, !102, !129, !128}
 !270 = !{!271, !272, i64 0}

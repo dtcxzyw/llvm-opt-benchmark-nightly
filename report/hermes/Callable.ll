@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZSt20uninitialized_copy_nIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEEjSt16reverse_iteratorIPNS1_17PinnedHermesValueEEET1_T_T0_SA_.exit, %bb.c
-  %i.u = phi ptr [ %i.p, %bb.c ], [ %i.am, %_ZSt20uninitialized_copy_nIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEEjSt16reverse_iteratorIPNS1_17PinnedHermesValueEEET1_T_T0_SA_.exit ] ; 3 uses
+  %i.u = phi ptr [ %i.p, %bb.c ], [ %i.am, %_ZSt20uninitialized_copy_nIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEEjSt16reverse_iteratorIPNS1_17PinnedHermesValueEEET1_T_T0_SA_.exit ] ; 2 uses
   %.047 = phi i32 [ %i.n, %bb.c ], [ %i.ac, %_ZSt20uninitialized_copy_nIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEEjSt16reverse_iteratorIPNS1_17PinnedHermesValueEEET1_T_T0_SA_.exit ]
   %.0 = phi ptr [ %0, %bb.c ], [ %i.ba, %_ZSt20uninitialized_copy_nIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEEjSt16reverse_iteratorIPNS1_17PinnedHermesValueEEET1_T_T0_SA_.exit ] ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.0, i64 28
@@ -231,74 +231,79 @@ bb.d:                                             ; preds = %_ZSt20uninitialized
 
 bb.e:                                             ; preds = %bb.d
   %i.al = zext i32 %i.ab to i64                   ; 2 uses
-  %i.am = getelementptr [8 x i8], ptr %i.u, i64 %i.al ; 15 uses
+  %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %i.al ; 12 uses
   store ptr %i.am, ptr %i.h, align 8, !tbaa !300
-  %i.an = getelementptr i8, ptr %i.y, i64 16      ; 6 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %i.y, i64 16 ; 3 uses
   %.idx.i.i = shl nuw nsw i64 %i.al, 3            ; 2 uses
-  %i.ao = getelementptr i8, ptr %i.an, i64 %.idx.i.i ; 2 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 %.idx.i.i
   %.not4.i.i.i.i.i = icmp eq i32 %i.ab, 0
   br i1 %.not4.i.i.i.i.i, label %_ZSt20uninitialized_copy_nIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEEjSt16reverse_iteratorIPNS1_17PinnedHermesValueEEET1_T_T0_SA_.exit, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %bb.e
   %i.ap = add nsw i64 %.idx.i.i, -8               ; 2 uses
   %i.aq = lshr exact i64 %i.ap, 3
-  %i.ar = add nuw nsw i64 %i.aq, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ap, 24
-  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader147, label %vector.memcheck
+  %i.ar = add nuw nsw i64 %i.aq, 1
+  %xtraiter = and i64 %i.ar, 7                    ; 2 uses
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %vector.ph, label %vector.memcheck
 
-vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.preheader
-  %bound0 = icmp ult ptr %i.u, %i.ao
-  %bound1 = icmp ult ptr %i.an, %i.am
-  %found.conflict = and i1 %bound0, %bound1
-  br i1 %found.conflict, label %.lr.ph.i.i.i.i.i.preheader147, label %vector.ph
+vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.preheader, %vector.memcheck
+  %.06.i.i.i.i.i.prol = phi ptr [ %4, %vector.memcheck ], [ %i.an, %.lr.ph.i.i.i.i.i.preheader ] ; 2 uses
+  %storemerge5.i.i.i.i.i.prol = phi ptr [ %3, %vector.memcheck ], [ %i.am, %.lr.ph.i.i.i.i.i.preheader ]
+  %prol.iter = phi i64 [ %prol.iter.next, %vector.memcheck ], [ 0, %.lr.ph.i.i.i.i.i.preheader ]
+  %3 = getelementptr inbounds i8, ptr %storemerge5.i.i.i.i.i.prol, i64 -8 ; 3 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i.prol = load i64, ptr %.06.i.i.i.i.i.prol, align 8, !tbaa !23, !noalias !377
+  store i64 %.sroa.0.0.copyload.i.i.i.i.i.i.prol, ptr %3, align 8, !tbaa !23, !noalias !377
+  %4 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.prol, i64 8 ; 2 uses
+  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
+  br i1 %prol.iter.cmp.not, label %vector.ph, label %vector.memcheck, !llvm.loop !388
 
-vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.ar, 4611686018427387900     ; 4 uses
-  %3 = shl i64 %n.vec, 3
-  %4 = getelementptr i8, ptr %i.an, i64 %3
-  %5 = mul i64 %n.vec, -8
-  %6 = getelementptr i8, ptr %i.am, i64 %5
-  br label %vector.body
+vector.ph:                                        ; preds = %vector.memcheck, %.lr.ph.i.i.i.i.i.preheader
+  %.06.i.i.i.i.i.unr = phi ptr [ %i.an, %.lr.ph.i.i.i.i.i.preheader ], [ %4, %vector.memcheck ]
+  %storemerge5.i.i.i.i.i.unr = phi ptr [ %i.am, %.lr.ph.i.i.i.i.i.preheader ], [ %3, %vector.memcheck ]
+  %5 = icmp ult i64 %i.ap, 56
+  br i1 %5, label %_ZSt20uninitialized_copy_nIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEEjSt16reverse_iteratorIPNS1_17PinnedHermesValueEEET1_T_T0_SA_.exit, label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %7 = shl i64 %index, 3
-  %next.gep = getelementptr i8, ptr %i.an, i64 %7 ; 2 uses
-  %8 = mul i64 %index, -8
-  %next.gep143 = getelementptr i8, ptr %i.am, i64 %8 ; 2 uses
-  %i.as = getelementptr i8, ptr %next.gep, i64 16
-  %wide.load = load <2 x i64>, ptr %next.gep, align 8, !tbaa !23, !alias.scope !377, !noalias !380
-  %wide.load144 = load <2 x i64>, ptr %i.as, align 8, !tbaa !23, !alias.scope !377, !noalias !380
-  %i.at = getelementptr inbounds i8, ptr %next.gep143, i64 -16
-  %i.au = getelementptr inbounds i8, ptr %next.gep143, i64 -32
-  %reverse = shufflevector <2 x i64> %wide.load, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %reverse145 = shufflevector <2 x i64> %wide.load144, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x i64> %reverse, ptr %i.at, align 8, !tbaa !23, !alias.scope !391, !noalias !393
-  store <2 x i64> %reverse145, ptr %i.au, align 8, !tbaa !23, !alias.scope !391, !noalias !393
-  %index.next = add nuw i64 %index, 4             ; 2 uses
-  %i.av = icmp eq i64 %index.next, %n.vec
-  br i1 %i.av, label %middle.block, label %vector.body, !llvm.loop !394
+vector.body:                                      ; preds = %vector.ph, %vector.body
+  %.06.i.i.i.i.i = phi ptr [ %16, %vector.body ], [ %.06.i.i.i.i.i.unr, %vector.ph ] ; 9 uses
+  %storemerge5.i.i.i.i.i = phi ptr [ %15, %vector.body ], [ %storemerge5.i.i.i.i.i.unr, %vector.ph ] ; 8 uses
+  %6 = getelementptr inbounds i8, ptr %storemerge5.i.i.i.i.i, i64 -8
+  %.sroa.0.0.copyload.i.i.i.i.i.i = load i64, ptr %.06.i.i.i.i.i, align 8, !tbaa !23, !noalias !377
+  store i64 %.sroa.0.0.copyload.i.i.i.i.i.i, ptr %6, align 8, !tbaa !23, !noalias !377
+  %7 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i, i64 8
+  %8 = getelementptr inbounds i8, ptr %storemerge5.i.i.i.i.i, i64 -16
+  %.sroa.0.0.copyload.i.i.i.i.i.i.1 = load i64, ptr %7, align 8, !tbaa !23, !noalias !377
+  store i64 %.sroa.0.0.copyload.i.i.i.i.i.i.1, ptr %8, align 8, !tbaa !23, !noalias !377
+  %9 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i, i64 16
+  %10 = getelementptr inbounds i8, ptr %storemerge5.i.i.i.i.i, i64 -24
+  %.sroa.0.0.copyload.i.i.i.i.i.i.2 = load i64, ptr %9, align 8, !tbaa !23, !noalias !377
+  store i64 %.sroa.0.0.copyload.i.i.i.i.i.i.2, ptr %10, align 8, !tbaa !23, !noalias !377
+  %11 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i, i64 24
+  %next.gep = getelementptr inbounds i8, ptr %storemerge5.i.i.i.i.i, i64 -32
+  %.sroa.0.0.copyload.i.i.i.i.i.i.3 = load i64, ptr %11, align 8, !tbaa !23, !noalias !377
+  store i64 %.sroa.0.0.copyload.i.i.i.i.i.i.3, ptr %next.gep, align 8, !tbaa !23, !noalias !377
+  %next.gep143 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i, i64 32
+  %i.as = getelementptr inbounds i8, ptr %storemerge5.i.i.i.i.i, i64 -40
+  %.sroa.0.0.copyload.i.i.i.i.i.i.4 = load i64, ptr %next.gep143, align 8, !tbaa !23, !noalias !377
+  store i64 %.sroa.0.0.copyload.i.i.i.i.i.i.4, ptr %i.as, align 8, !tbaa !23, !noalias !377
+  %12 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i, i64 40
+  %i.at = getelementptr inbounds i8, ptr %storemerge5.i.i.i.i.i, i64 -48
+  %.sroa.0.0.copyload.i.i.i.i.i.i.5 = load i64, ptr %12, align 8, !tbaa !23, !noalias !377
+  store i64 %.sroa.0.0.copyload.i.i.i.i.i.i.5, ptr %i.at, align 8, !tbaa !23, !noalias !377
+  %i.au = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i, i64 48
+  %13 = getelementptr inbounds i8, ptr %storemerge5.i.i.i.i.i, i64 -56
+  %.sroa.0.0.copyload.i.i.i.i.i.i.6 = load i64, ptr %i.au, align 8, !tbaa !23, !noalias !377
+  store i64 %.sroa.0.0.copyload.i.i.i.i.i.i.6, ptr %13, align 8, !tbaa !23, !noalias !377
+  %14 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i, i64 56
+  %15 = getelementptr inbounds i8, ptr %storemerge5.i.i.i.i.i, i64 -64 ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i.7 = load i64, ptr %14, align 8, !tbaa !23, !noalias !377
+  store i64 %.sroa.0.0.copyload.i.i.i.i.i.i.7, ptr %15, align 8, !tbaa !23, !noalias !377
+  %16 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i, i64 64 ; 2 uses
+  %i.av = icmp eq ptr %16, %i.ao
+  br i1 %i.av, label %_ZSt20uninitialized_copy_nIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEEjSt16reverse_iteratorIPNS1_17PinnedHermesValueEEET1_T_T0_SA_.exit, label %vector.body, !llvm.loop !389
 
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %i.ar, %n.vec
-  br i1 %cmp.n, label %_ZSt20uninitialized_copy_nIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEEjSt16reverse_iteratorIPNS1_17PinnedHermesValueEEET1_T_T0_SA_.exit, label %.lr.ph.i.i.i.i.i.preheader147
-
-.lr.ph.i.i.i.i.i.preheader147:                    ; preds = %vector.memcheck, %.lr.ph.i.i.i.i.i.preheader, %middle.block
-  %.06.i.i.i.i.i.ph = phi ptr [ %i.an, %vector.memcheck ], [ %i.an, %.lr.ph.i.i.i.i.i.preheader ], [ %4, %middle.block ]
-  %storemerge5.i.i.i.i.i.ph = phi ptr [ %i.am, %vector.memcheck ], [ %i.am, %.lr.ph.i.i.i.i.i.preheader ], [ %6, %middle.block ]
-  br label %.lr.ph.i.i.i.i.i
-
-.lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i.preheader147, %.lr.ph.i.i.i.i.i
-  %.06.i.i.i.i.i = phi ptr [ %10, %.lr.ph.i.i.i.i.i ], [ %.06.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.preheader147 ] ; 2 uses
-  %storemerge5.i.i.i.i.i = phi ptr [ %9, %.lr.ph.i.i.i.i.i ], [ %storemerge5.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.preheader147 ]
-  %9 = getelementptr inbounds i8, ptr %storemerge5.i.i.i.i.i, i64 -8 ; 2 uses
-  %.sroa.0.0.copyload.i.i.i.i.i.i = load i64, ptr %.06.i.i.i.i.i, align 8, !tbaa !23, !noalias !380
-  store i64 %.sroa.0.0.copyload.i.i.i.i.i.i, ptr %9, align 8, !tbaa !23, !noalias !380
-  %10 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i, i64 8 ; 2 uses
-  %.not.i.i.i.i.i = icmp eq ptr %10, %i.ao
-  br i1 %.not.i.i.i.i.i, label %_ZSt20uninitialized_copy_nIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEEjSt16reverse_iteratorIPNS1_17PinnedHermesValueEEET1_T_T0_SA_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !395
-
-_ZSt20uninitialized_copy_nIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEEjSt16reverse_iteratorIPNS1_17PinnedHermesValueEEET1_T_T0_SA_.exit: ; preds = %.lr.ph.i.i.i.i.i, %middle.block, %bb.e
+_ZSt20uninitialized_copy_nIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEEjSt16reverse_iteratorIPNS1_17PinnedHermesValueEEET1_T_T0_SA_.exit: ; preds = %vector.ph, %vector.body, %bb.e
   %i.aw = getelementptr inbounds nuw i8, ptr %.0, i64 24
   %.sroa.0.0.copyload.i.i.i51 = load i32, ptr %i.aw, align 4, !tbaa !3 ; 2 uses
   %.not.i.i.i.i.i52 = icmp eq i32 %.sroa.0.0.copyload.i.i.i51, 0 ; 3 uses
@@ -487,9 +492,9 @@ _ZN6hermes2vm7Runtime10makeAFixedINS0_14NativeFunctionELNS0_12HasFinalizerE0ELNS
   %i.x = getelementptr inbounds nuw i8, ptr %i.l, i64 20
   store i32 0, ptr %i.x, align 4
   %i.y = getelementptr inbounds nuw i8, ptr %i.l, i64 24
-  store ptr %2, ptr %i.y, align 8, !tbaa !396
+  store ptr %2, ptr %i.y, align 8, !tbaa !390
   %i.z = getelementptr inbounds nuw i8, ptr %i.l, i64 32
-  store ptr %3, ptr %i.z, align 8, !tbaa !400
+  store ptr %3, ptr %i.z, align 8, !tbaa !394
   store i32 1157627944, ptr %i.l, align 8, !tbaa !267
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val = load ptr, ptr %i.aa, align 8, !tbaa !7  ; 3 uses
@@ -631,9 +636,9 @@ bb.d:                                             ; preds = %_ZN6hermes2vm7Hades
 
 _ZN6hermes2vm7Runtime10makeAFixedINS0_14NativeFunctionELNS0_12HasFinalizerE0ELNS0_9LongLivedE0EJRS1_RNS0_6HandleINS0_8JSObjectEEENS7_INS0_11HiddenClassEEERNS7_INS0_11EnvironmentEEERPvRPFNS0_10CallResultINS0_11HermesValueELNS0_6detail20CallResultSpecializeE2EEESG_S6_NS0_10NativeArgsEEEEEPT_DpOT2_.exit: ; preds = %_ZN6hermes2vm7HadesGC9allocWorkILb1ELNS0_12HasFinalizerE0EEEPvj.exit.i.i.i.i, %bb.d
   %i.aj = getelementptr inbounds nuw i8, ptr %i.l, i64 24
-  store ptr %3, ptr %i.aj, align 8, !tbaa !396
+  store ptr %3, ptr %i.aj, align 8, !tbaa !390
   %i.ak = getelementptr inbounds nuw i8, ptr %i.l, i64 32
-  store ptr %4, ptr %i.ak, align 8, !tbaa !400
+  store ptr %4, ptr %i.ak, align 8, !tbaa !394
   store i32 1157627944, ptr %i.l, align 8, !tbaa !267
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val = load ptr, ptr %i.al, align 8, !tbaa !7  ; 3 uses
@@ -687,7 +692,7 @@ bb.c:                                             ; preds = %bb.a
   %i.k = ptrtoint ptr %i.i to i64                 ; 2 uses
   store i64 %i.k, ptr %i.j, align 8, !tbaa !303
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 9808
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !401
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !395
   %i.n = ptrtoint ptr %i.m to i64
   %i.o = getelementptr inbounds i8, ptr %i.i, i64 -16
   store i64 %i.n, ptr %i.o, align 8, !tbaa !263
@@ -711,20 +716,20 @@ _ZN6hermes2vm7Runtime18checkAndAllocStackEjNS0_11HermesValueE.exit: ; preds = %b
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZN6hermes2vm7Runtime10allocStackEjNS0_11HermesValueE(ptr noundef nonnull align 8 dereferenceable(9816) %1, i32 noundef 1, i64 -1688849860263936) #11
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !400
+  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !394
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !396
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !402)
+  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !390
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !396)
   %i.ad = getelementptr inbounds i8, ptr %i.i, i64 -56
   %i.ae = getelementptr inbounds i8, ptr %i.i, i64 -32
-  %i.af = load i64, ptr %i.ae, align 8, !tbaa !263, !noalias !402
+  %i.af = load i64, ptr %i.ae, align 8, !tbaa !263, !noalias !396
   %i.ag = trunc i64 %i.af to i32
   %i.ah = getelementptr inbounds i8, ptr %i.i, i64 -40
-  store ptr %i.ad, ptr %2, align 8, !tbaa !359, !alias.scope !402
+  store ptr %i.ad, ptr %2, align 8, !tbaa !359, !alias.scope !396
   %i.ai = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i32 %i.ag, ptr %i.ai, align 8, !tbaa !405, !alias.scope !402
+  store i32 %i.ag, ptr %i.ai, align 8, !tbaa !399, !alias.scope !396
   %i.aj = getelementptr inbounds nuw i8, ptr %2, i64 16
-  store ptr %i.ah, ptr %i.aj, align 8, !tbaa !407, !alias.scope !402
+  store ptr %i.ah, ptr %i.aj, align 8, !tbaa !401, !alias.scope !396
   %i.ak = call { i32, i64 } %i.aa(ptr noundef %i.ac, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr noundef nonnull dead_on_return %2) #11 ; 2 uses
   %i.al = extractvalue { i32, i64 } %i.ak, 0
   %i.am = extractvalue { i32, i64 } %i.ak, 1
@@ -758,9 +763,9 @@ bb.a:
   %i.a = and i64 %.sroa.0.0.copyload.i.i, 281474976710655
   %i.b = inttoptr i64 %i.a to ptr                 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 40
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !408
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !402
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !396
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !390
   %i.g = tail call ptr %i.d(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr %2, ptr noundef %i.f) #11
   ret ptr %i.g
 }
@@ -1025,7 +1030,7 @@ define hidden ptr @_ZN6hermes2vm22GeneratorInnerFunction6createERNS0_7RuntimeENS
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 9536
   %i.b = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
-  %i.c = load i32, ptr %i.b, align 8, !tbaa !405
+  %i.c = load i32, ptr %i.b, align 8, !tbaa !399
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 1648 ; 4 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !265  ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 64 ; 2 uses
@@ -1119,17 +1124,17 @@ bb.e:                                             ; preds = %_ZN6hermes2vm8Calla
 
 _ZN6hermes2vm6GCBase13constructCellINS0_22GeneratorInnerFunctionEJRNS0_7RuntimeERNS0_6HandleINS0_6DomainEEERNS6_INS0_8JSObjectEEENS6_INS0_11HiddenClassEEERNS6_INS0_11EnvironmentEEERPNS0_9CodeBlockEjEEEPT_PvjDpOT0_.exit: ; preds = %_ZN6hermes2vm8CallableC2ERNS0_7RuntimeEPNS0_8JSObjectEPNS0_11HiddenClassENS0_6HandleINS0_11EnvironmentEEE.exit.i.i.i, %bb.e
   %i.ay = getelementptr inbounds nuw i8, ptr %i.k, i64 36
-  store i32 0, ptr %i.ay, align 4, !tbaa !410
+  store i32 0, ptr %i.ay, align 4, !tbaa !404
   %i.az = getelementptr inbounds nuw i8, ptr %i.k, i64 40
-  store i32 %i.c, ptr %i.az, align 8, !tbaa !418
+  store i32 %i.c, ptr %i.az, align 8, !tbaa !412
   %i.ba = getelementptr inbounds nuw i8, ptr %i.k, i64 44
   store i32 0, ptr %i.ba, align 4
   %i.bb = getelementptr inbounds nuw i8, ptr %i.k, i64 48
   store i32 14, ptr %i.bb, align 8, !tbaa !3
   %i.bc = getelementptr inbounds nuw i8, ptr %i.k, i64 52
-  store i32 0, ptr %i.bc, align 4, !tbaa !419
+  store i32 0, ptr %i.bc, align 4, !tbaa !413
   %i.bd = getelementptr inbounds nuw i8, ptr %i.k, i64 60
-  store i8 0, ptr %i.bd, align 4, !tbaa !420
+  store i8 0, ptr %i.bd, align 4, !tbaa !414
   store i32 1241514048, ptr %i.k, align 8, !tbaa !267
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.val = load ptr, ptr %i.be, align 8, !tbaa !7  ; 3 uses
@@ -1154,7 +1159,7 @@ bb.g:                                             ; preds = %_ZN6hermes2vm6GCBas
 
 _ZN6hermes2vm12JSObjectInitL12initToHandleINS0_22GeneratorInnerFunctionEEENS0_6HandleIT_EERNS0_7RuntimeEPS5_.exit: ; preds = %bb.f, %bb.g
   %.0.i.i.i.i.i.i.i = phi ptr [ %i.bi, %bb.f ], [ %i.bn, %bb.g ] ; 2 uses
-  %i.bo = load i32, ptr %i.b, align 8, !tbaa !405
+  %i.bo = load i32, ptr %i.b, align 8, !tbaa !399
   %i.bp = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !290 ; 3 uses
   %i.br = ptrtoint ptr %i.bq to i64
@@ -1163,7 +1168,7 @@ _ZN6hermes2vm12JSObjectInitL12initToHandleINS0_22GeneratorInnerFunctionEEENS0_6H
 
 bb.h:                                             ; preds = %_ZN6hermes2vm12JSObjectInitL12initToHandleINS0_22GeneratorInnerFunctionEEENS0_6HandleIT_EERNS0_7RuntimeEPS5_.exit
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bq, i64 19
-  %i.bu = load i32, ptr %i.bt, align 1, !tbaa !421
+  %i.bu = load i32, ptr %i.bt, align 1, !tbaa !415
   br label %_ZN6hermes2vm22GeneratorInnerFunction14getContextSizeEPNS0_9CodeBlockEj.exit
 
 bb.i:                                             ; preds = %_ZN6hermes2vm12JSObjectInitL12initToHandleINS0_22GeneratorInnerFunctionEEENS0_6HandleIT_EERNS0_7RuntimeEPS5_.exit
@@ -1242,7 +1247,7 @@ _ZN6hermes2vm15HandleRootOwner10makeHandleINS0_16ArrayStorageBaseINS0_11HermesVa
   %.0.i.i.i.i.i.i = phi ptr [ %i.cu, %bb.n ], [ %i.cz, %bb.o ] ; 2 uses
   %i.da = and i64 %.sroa.0.0.copyload.i.i, 281474976710655
   %i.db = inttoptr i64 %i.da to ptr
-  %i.dc = load ptr, ptr %5, align 8, !tbaa !359, !noalias !422
+  %i.dc = load ptr, ptr %5, align 8, !tbaa !359, !noalias !416
   %.sroa.06.0.copyload = load i64, ptr %i.dc, align 8, !tbaa !23 ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.db, i64 8 ; 3 uses
   %i.de = load ptr, ptr %i.aa, align 8, !tbaa !364
@@ -1258,7 +1263,7 @@ bb.p:                                             ; preds = %_ZN6hermes2vm15Hand
 
 _ZN6hermes2vm16ArrayStorageBaseINS0_11HermesValueEE3setILNS3_6InlineE0EEEvjS2_RNS0_7HadesGCE.exit: ; preds = %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_16ArrayStorageBaseINS0_11HermesValueEEEEENS0_6HandleIT_EES4_.exit, %bb.p
   store i64 %.sroa.06.0.copyload, ptr %i.dd, align 8, !tbaa !263
-  %i.dj = load i32, ptr %i.b, align 8, !tbaa !405 ; 2 uses
+  %i.dj = load i32, ptr %i.b, align 8, !tbaa !399 ; 2 uses
   %.not = icmp eq i32 %i.dj, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
@@ -1299,13 +1304,13 @@ _ZN6hermes2vm9GCPointerINS0_16ArrayStorageBaseINS0_11HermesValueEEEE3setERNS0_11
   %i.dw = and i64 %.sroa.0.0.copyload.i.i22, 281474976710655
   %i.dx = inttoptr i64 %i.dw to ptr
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
-  %i.dy = load i32, ptr %i.b, align 8, !tbaa !405
+  %i.dy = load i32, ptr %i.b, align 8, !tbaa !399
   %i.dz = zext i32 %i.dy to i64
   %i.ea = icmp samesign ult i64 %indvars.iv, %i.dz
   br i1 %i.ea, label %bb.r, label %_ZNK6hermes2vm10NativeArgs6getArgEj.exit
 
 bb.r:                                             ; preds = %.lr.ph
-  %i.eb = load ptr, ptr %5, align 8, !tbaa !359, !noalias !425
+  %i.eb = load ptr, ptr %5, align 8, !tbaa !359, !noalias !419
   %i.ec = sub nsw i64 0, %indvars.iv
   %i.ed = getelementptr inbounds [8 x i8], ptr %i.eb, i64 %i.ec
   %i.ee = getelementptr inbounds i8, ptr %i.ed, i64 -8
@@ -1330,7 +1335,7 @@ bb.s:                                             ; preds = %_ZNK6hermes2vm10Nat
 _ZN6hermes2vm16ArrayStorageBaseINS0_11HermesValueEE3setILNS3_6InlineE0EEEvjS2_RNS0_7HadesGCE.exit23: ; preds = %_ZNK6hermes2vm10NativeArgs6getArgEj.exit, %bb.s
   store i64 %.sroa.0.0.i, ptr %i.eg, align 8, !tbaa !263
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !428
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !422
 
 bb.t:                                             ; preds = %_ZN6hermes2vm16ArrayStorageBaseINS0_11HermesValueEE6createERNS0_7RuntimeEj.exit.i, %_ZN6hermes2vm9GCPointerINS0_16ArrayStorageBaseINS0_11HermesValueEEEE3setERNS0_11PointerBaseEPS4_RNS0_7HadesGCE.exit
   %.sroa.035.0 = phi ptr [ %.0.i.i.i.i.i.i.i, %_ZN6hermes2vm9GCPointerINS0_16ArrayStorageBaseINS0_11HermesValueEEEE3setERNS0_11PointerBaseEPS4_RNS0_7HadesGCE.exit ], [ inttoptr (i64 -1 to ptr), %_ZN6hermes2vm16ArrayStorageBaseINS0_11HermesValueEE6createERNS0_7RuntimeEj.exit.i ]
@@ -1463,9 +1468,9 @@ _ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE3setISt17integral_constant
   %.pre-phi65 = phi ptr [ %i.ao, %_ZN6hermes2vm13HermesValue3217encodeHermesValueENS0_11HermesValueERNS0_7RuntimeE.exit ], [ %.pre64, %bb.n ] ; 2 uses
   store i32 %.sroa.04.0.i, ptr %i.ap, align 4, !tbaa !340
   %i.ax = getelementptr inbounds nuw i8, ptr %.pre-phi65, i64 56
-  store i32 %3, ptr %i.ax, align 8, !tbaa !429
+  store i32 %3, ptr %i.ax, align 8, !tbaa !423
   %i.ay = getelementptr inbounds nuw i8, ptr %.pre-phi65, i64 44
-  %.sroa.0.0.copyload.i.i.i = load i32, ptr %i.ay, align 4, !tbaa !3, !noalias !430 ; 2 uses
+  %.sroa.0.0.copyload.i.i.i = load i32, ptr %i.ay, align 4, !tbaa !3, !noalias !424 ; 2 uses
   %.not.i.i.i.i.i = icmp eq i32 %.sroa.0.0.copyload.i.i.i, 0
   %i.az = ptrtoint ptr %1 to i64
   %i.ba = zext i32 %.sroa.0.0.copyload.i.i.i to i64
@@ -1473,22 +1478,22 @@ _ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE3setISt17integral_constant
   %i.bc = or i64 %i.bb, -281474976710656
   %i.bd = select i1 %.not.i.i.i.i.i, i64 -281474976710656, i64 %i.bc ; 3 uses
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.bf = load ptr, ptr %i.be, align 8, !tbaa !7, !noalias !430 ; 3 uses
+  %i.bf = load ptr, ptr %i.be, align 8, !tbaa !7, !noalias !424 ; 3 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 192 ; 2 uses
-  %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !11, !noalias !430 ; 4 uses
+  %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !11, !noalias !424 ; 4 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bf, i64 200
-  %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !21, !noalias !430
+  %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !21, !noalias !424
   %i.bk = icmp ult ptr %i.bh, %i.bj
   br i1 %i.bk, label %bb.o, label %bb.p, !prof !22
 
 bb.o:                                             ; preds = %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE3setISt17integral_constantIbLb1EEEEvS2_RNS0_7HadesGCE.exit
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bh, i64 8
-  store ptr %i.bl, ptr %i.bg, align 8, !tbaa !11, !noalias !430
-  store i64 %i.bd, ptr %i.bh, align 8, !tbaa !23, !noalias !430
+  store ptr %i.bl, ptr %i.bg, align 8, !tbaa !11, !noalias !424
+  store i64 %i.bd, ptr %i.bh, align 8, !tbaa !23, !noalias !424
   br label %_ZN6hermes2vm7Runtime17makeMutableHandleINS0_16ArrayStorageBaseINS0_11HermesValueEEEEENS0_13MutableHandleIT_EERKNS0_9GCPointerIS7_EE.exit
 
 bb.p:                                             ; preds = %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE3setISt17integral_constantIbLb1EEEEvS2_RNS0_7HadesGCE.exit
-  %i.bm = tail call noundef ptr @_ZN6hermes2vm7GCScope15_newChunkAndPHVENS0_11HermesValueE(ptr noundef nonnull align 8 dereferenceable(212) %i.bf, i64 %i.bd) #11, !noalias !430 ; 2 uses
+  %i.bm = tail call noundef ptr @_ZN6hermes2vm7GCScope15_newChunkAndPHVENS0_11HermesValueE(ptr noundef nonnull align 8 dereferenceable(212) %i.bf, i64 %i.bd) #11, !noalias !424 ; 2 uses
   %.sroa.0.0.copyload.i.i30.pre = load i64, ptr %i.bm, align 8, !tbaa !23
   br label %_ZN6hermes2vm7Runtime17makeMutableHandleINS0_16ArrayStorageBaseINS0_11HermesValueEEEEENS0_13MutableHandleIT_EERKNS0_9GCPointerIS7_EE.exit
 
@@ -1499,7 +1504,7 @@ _ZN6hermes2vm7Runtime17makeMutableHandleINS0_16ArrayStorageBaseINS0_11HermesValu
   %i.bn = and i64 %.sroa.0.0.copyload.i.i28, 281474976710655
   %i.bo = inttoptr i64 %i.bn to ptr
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 40
-  %i.bq = load i32, ptr %i.bp, align 8, !tbaa !418 ; 7 uses
+  %i.bq = load i32, ptr %i.bp, align 8, !tbaa !412 ; 7 uses
   %i.br = and i64 %.sroa.0.0.copyload.i.i30, 281474976710655
   %i.bs = inttoptr i64 %i.br to ptr
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 8
@@ -1594,7 +1599,7 @@ bb.q:                                             ; preds = %_ZN6hermes2vm7Runti
   store i64 %.sroa.0.0.copyload.i34.1, ptr %i.ds, align 8, !tbaa !263
   %niter.next.1 = add nuw i32 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !433
+  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !427
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
@@ -1653,7 +1658,7 @@ bb.r:                                             ; preds = %._crit_edge, %bb.q
 define hidden void @_ZN6hermes2vm22GeneratorInnerFunction12restoreStackERNS0_7RuntimeE(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(9816) %1) local_unnamed_addr #5 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !418  ; 2 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !412  ; 2 uses
   %i.c = add i32 %i.b, 1
   %.neg.i = xor i32 %i.b, -1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 44
@@ -1680,7 +1685,7 @@ bb.a:
 define hidden void @_ZN6hermes2vm22GeneratorInnerFunction9saveStackERNS0_7RuntimeE(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(9816) %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !418  ; 2 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !412  ; 2 uses
   %.neg.i = xor i32 %i.b, -1
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 44
   %.sroa.0.0.copyload.i.i.i = load i32, ptr %i.c, align 4, !tbaa !3
@@ -1728,7 +1733,7 @@ _ZN6hermes2vm17GCHermesValueBaseINS0_11HermesValueEE3setISt17integral_constantIb
   %i.y = getelementptr inbounds nuw i8, ptr %.011.i, i64 8 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %.0810.i, i64 8
   %.not.i = icmp eq ptr %i.y, %i.m
-  br i1 %.not.i, label %_ZN6hermes2vm17GCHermesValueBaseINS0_11HermesValueEE4copyIPNS0_17PinnedHermesValueEPS3_EET0_T_S9_S8_RNS0_7HadesGCE.exit, label %bb.b, !llvm.loop !434
+  br i1 %.not.i, label %_ZN6hermes2vm17GCHermesValueBaseINS0_11HermesValueEE4copyIPNS0_17PinnedHermesValueEPS3_EET0_T_S9_S8_RNS0_7HadesGCE.exit, label %bb.b, !llvm.loop !428
 
 _ZN6hermes2vm17GCHermesValueBaseINS0_11HermesValueEE4copyIPNS0_17PinnedHermesValueEPS3_EET0_T_S9_S8_RNS0_7HadesGCE.exit: ; preds = %_ZN6hermes2vm17GCHermesValueBaseINS0_11HermesValueEE3setISt17integral_constantIbLb1EEEEvS2_RNS0_7HadesGCE.exit.i, %bb.a
   ret void
@@ -2131,62 +2136,56 @@ begin_hunk_1_@llvm.assume
 !374 = distinct !{!374, !375}
 !375 = !{!"llvm.loop.unroll.disable"}
 !376 = !{!223, !24, i64 8}
-!377 = !{!378}
-!378 = distinct !{!378, !379}
-!379 = distinct !{!379, !"LVerDomain"}
-!380 = !{!381, !383, !385, !387, !389}
-!381 = distinct !{!381, !382, !"_ZSt16__do_uninit_copyIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEESt16reverse_iteratorIPNS1_17PinnedHermesValueEEET0_T_SB_SA_: argument 0"}
-!382 = distinct !{!382, !"_ZSt16__do_uninit_copyIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEESt16reverse_iteratorIPNS1_17PinnedHermesValueEEET0_T_SB_SA_"}
-!383 = distinct !{!383, !384, !"_ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPN6hermes2vm17GCHermesValueBaseINS3_11HermesValueEEESt16reverse_iteratorIPNS3_17PinnedHermesValueEEEET0_T_SD_SC_: argument 0"}
-!384 = distinct !{!384, !"_ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPN6hermes2vm17GCHermesValueBaseINS3_11HermesValueEEESt16reverse_iteratorIPNS3_17PinnedHermesValueEEEET0_T_SD_SC_"}
-!385 = distinct !{!385, !386, !"_ZSt18uninitialized_copyIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEESt16reverse_iteratorIPNS1_17PinnedHermesValueEEET0_T_SB_SA_: argument 0"}
-!386 = distinct !{!386, !"_ZSt18uninitialized_copyIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEESt16reverse_iteratorIPNS1_17PinnedHermesValueEEET0_T_SB_SA_"}
-!387 = distinct !{!387, !388, !"_ZSt22__uninitialized_copy_nIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEEjSt16reverse_iteratorIPNS1_17PinnedHermesValueEEET1_T_T0_SA_St26random_access_iterator_tag: argument 0"}
-!388 = distinct !{!388, !"_ZSt22__uninitialized_copy_nIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEEjSt16reverse_iteratorIPNS1_17PinnedHermesValueEEET1_T_T0_SA_St26random_access_iterator_tag"}
-!389 = distinct !{!389, !390, !"_ZSt20uninitialized_copy_nIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEEjSt16reverse_iteratorIPNS1_17PinnedHermesValueEEET1_T_T0_SA_: argument 0"}
-!390 = distinct !{!390, !"_ZSt20uninitialized_copy_nIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEEjSt16reverse_iteratorIPNS1_17PinnedHermesValueEEET1_T_T0_SA_"}
-!391 = !{!392}
-!392 = distinct !{!392, !379}
-!393 = !{!381, !383, !385, !387, !389, !378}
-!394 = distinct !{!394, !326, !327, !328}
-!395 = distinct !{!395, !326, !327}
-!396 = !{!397, !10, i64 24}
-!397 = !{!"_ZTSN6hermes2vm14NativeFunctionE", !398, i64 0, !10, i64 24, !10, i64 32}
-!398 = !{!"_ZTSN6hermes2vm8CallableE", !332, i64 0, !399, i64 20}
-!399 = !{!"_ZTSN6hermes2vm9GCPointerINS0_11EnvironmentEEE", !336, i64 0}
-!400 = !{!397, !10, i64 32}
-!401 = !{!26, !261, i64 9808}
-!402 = !{!403}
-!403 = distinct !{!403, !404, !"_ZNK6hermes2vm14StackFramePtrTILb0EE13getNativeArgsEv: argument 0"}
-!404 = distinct !{!404, !"_ZNK6hermes2vm14StackFramePtrTILb0EE13getNativeArgsEv"}
-!405 = !{!406, !4, i64 8}
-!406 = !{!"_ZTSN6hermes2vm10NativeArgsE", !360, i64 0, !4, i64 8, !20, i64 16}
-!407 = !{!406, !20, i64 16}
-!408 = !{!409, !10, i64 40}
-!409 = !{!"_ZTSN6hermes2vm17NativeConstructorE", !397, i64 0, !10, i64 40}
-!410 = !{!411, !414, i64 36}
-!411 = !{!"_ZTSN6hermes2vm22GeneratorInnerFunctionE", !412, i64 0, !414, i64 36, !4, i64 40, !415, i64 44, !416, i64 48, !4, i64 52, !417, i64 56, !36, i64 60}
-!412 = !{!"_ZTSN6hermes2vm10JSFunctionE", !398, i64 0, !289, i64 24, !413, i64 32}
-!413 = !{!"_ZTSN6hermes2vm9GCPointerINS0_6DomainEEE", !336, i64 0}
-!414 = !{!"_ZTSN6hermes2vm22GeneratorInnerFunction5StateE", !5, i64 0}
-!415 = !{!"_ZTSN6hermes2vm9GCPointerINS0_16ArrayStorageBaseINS0_11HermesValueEEEEE", !336, i64 0}
-!416 = !{!"_ZTSN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EEE", !341, i64 0}
-!417 = !{!"_ZTSN6hermes2vm22GeneratorInnerFunction6ActionE", !5, i64 0}
-!418 = !{!411, !4, i64 40}
-!419 = !{!411, !4, i64 52}
-!420 = !{!411, !36, i64 60}
-!421 = !{!293, !4, i64 20}
-!422 = !{!423}
-!423 = distinct !{!423, !424, !"_ZNK6hermes2vm10NativeArgs5beginEv: argument 0"}
-!424 = distinct !{!424, !"_ZNK6hermes2vm10NativeArgs5beginEv"}
-!425 = !{!426}
-!426 = distinct !{!426, !427, !"_ZNK6hermes2vm10NativeArgs5beginEv: argument 0"}
-!427 = distinct !{!427, !"_ZNK6hermes2vm10NativeArgs5beginEv"}
+!377 = !{!378, !380, !382, !384, !386}
+!378 = distinct !{!378, !379, !"_ZSt16__do_uninit_copyIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEESt16reverse_iteratorIPNS1_17PinnedHermesValueEEET0_T_SB_SA_: argument 0"}
+!379 = distinct !{!379, !"_ZSt16__do_uninit_copyIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEESt16reverse_iteratorIPNS1_17PinnedHermesValueEEET0_T_SB_SA_"}
+!380 = distinct !{!380, !381, !"_ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPN6hermes2vm17GCHermesValueBaseINS3_11HermesValueEEESt16reverse_iteratorIPNS3_17PinnedHermesValueEEEET0_T_SD_SC_: argument 0"}
+!381 = distinct !{!381, !"_ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPN6hermes2vm17GCHermesValueBaseINS3_11HermesValueEEESt16reverse_iteratorIPNS3_17PinnedHermesValueEEEET0_T_SD_SC_"}
+!382 = distinct !{!382, !383, !"_ZSt18uninitialized_copyIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEESt16reverse_iteratorIPNS1_17PinnedHermesValueEEET0_T_SB_SA_: argument 0"}
+!383 = distinct !{!383, !"_ZSt18uninitialized_copyIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEESt16reverse_iteratorIPNS1_17PinnedHermesValueEEET0_T_SB_SA_"}
+!384 = distinct !{!384, !385, !"_ZSt22__uninitialized_copy_nIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEEjSt16reverse_iteratorIPNS1_17PinnedHermesValueEEET1_T_T0_SA_St26random_access_iterator_tag: argument 0"}
+!385 = distinct !{!385, !"_ZSt22__uninitialized_copy_nIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEEjSt16reverse_iteratorIPNS1_17PinnedHermesValueEEET1_T_T0_SA_St26random_access_iterator_tag"}
+!386 = distinct !{!386, !387, !"_ZSt20uninitialized_copy_nIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEEjSt16reverse_iteratorIPNS1_17PinnedHermesValueEEET1_T_T0_SA_: argument 0"}
+!387 = distinct !{!387, !"_ZSt20uninitialized_copy_nIPN6hermes2vm17GCHermesValueBaseINS1_11HermesValueEEEjSt16reverse_iteratorIPNS1_17PinnedHermesValueEEET1_T_T0_SA_"}
+!388 = distinct !{!388, !375}
+!389 = distinct !{!389, !326}
+!390 = !{!391, !10, i64 24}
+!391 = !{!"_ZTSN6hermes2vm14NativeFunctionE", !392, i64 0, !10, i64 24, !10, i64 32}
+!392 = !{!"_ZTSN6hermes2vm8CallableE", !332, i64 0, !393, i64 20}
+!393 = !{!"_ZTSN6hermes2vm9GCPointerINS0_11EnvironmentEEE", !336, i64 0}
+!394 = !{!391, !10, i64 32}
+!395 = !{!26, !261, i64 9808}
+!396 = !{!397}
+!397 = distinct !{!397, !398, !"_ZNK6hermes2vm14StackFramePtrTILb0EE13getNativeArgsEv: argument 0"}
+!398 = distinct !{!398, !"_ZNK6hermes2vm14StackFramePtrTILb0EE13getNativeArgsEv"}
+!399 = !{!400, !4, i64 8}
+!400 = !{!"_ZTSN6hermes2vm10NativeArgsE", !360, i64 0, !4, i64 8, !20, i64 16}
+!401 = !{!400, !20, i64 16}
+!402 = !{!403, !10, i64 40}
+!403 = !{!"_ZTSN6hermes2vm17NativeConstructorE", !391, i64 0, !10, i64 40}
+!404 = !{!405, !408, i64 36}
+!405 = !{!"_ZTSN6hermes2vm22GeneratorInnerFunctionE", !406, i64 0, !408, i64 36, !4, i64 40, !409, i64 44, !410, i64 48, !4, i64 52, !411, i64 56, !36, i64 60}
+!406 = !{!"_ZTSN6hermes2vm10JSFunctionE", !392, i64 0, !289, i64 24, !407, i64 32}
+!407 = !{!"_ZTSN6hermes2vm9GCPointerINS0_6DomainEEE", !336, i64 0}
+!408 = !{!"_ZTSN6hermes2vm22GeneratorInnerFunction5StateE", !5, i64 0}
+!409 = !{!"_ZTSN6hermes2vm9GCPointerINS0_16ArrayStorageBaseINS0_11HermesValueEEEEE", !336, i64 0}
+!410 = !{!"_ZTSN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EEE", !341, i64 0}
+!411 = !{!"_ZTSN6hermes2vm22GeneratorInnerFunction6ActionE", !5, i64 0}
+!412 = !{!405, !4, i64 40}
+!413 = !{!405, !4, i64 52}
+!414 = !{!405, !36, i64 60}
+!415 = !{!293, !4, i64 20}
+!416 = !{!417}
+!417 = distinct !{!417, !418, !"_ZNK6hermes2vm10NativeArgs5beginEv: argument 0"}
+!418 = distinct !{!418, !"_ZNK6hermes2vm10NativeArgs5beginEv"}
+!419 = !{!420}
+!420 = distinct !{!420, !421, !"_ZNK6hermes2vm10NativeArgs5beginEv: argument 0"}
+!421 = distinct !{!421, !"_ZNK6hermes2vm10NativeArgs5beginEv"}
+!422 = distinct !{!422, !326}
+!423 = !{!405, !411, i64 56}
+!424 = !{!425}
+!425 = distinct !{!425, !426, !"_ZN6hermes2vm7Runtime17makeMutableHandleINS0_16ArrayStorageBaseINS0_11HermesValueEEEEENS0_13MutableHandleIT_EERKNS0_9GCPointerIS7_EE: argument 0"}
+!426 = distinct !{!426, !"_ZN6hermes2vm7Runtime17makeMutableHandleINS0_16ArrayStorageBaseINS0_11HermesValueEEEEENS0_13MutableHandleIT_EERKNS0_9GCPointerIS7_EE"}
+!427 = distinct !{!427, !326}
 !428 = distinct !{!428, !326}
-!429 = !{!411, !417, i64 56}
-!430 = !{!431}
-!431 = distinct !{!431, !432, !"_ZN6hermes2vm7Runtime17makeMutableHandleINS0_16ArrayStorageBaseINS0_11HermesValueEEEEENS0_13MutableHandleIT_EERKNS0_9GCPointerIS7_EE: argument 0"}
-!432 = distinct !{!432, !"_ZN6hermes2vm7Runtime17makeMutableHandleINS0_16ArrayStorageBaseINS0_11HermesValueEEEEENS0_13MutableHandleIT_EERKNS0_9GCPointerIS7_EE"}
-!433 = distinct !{!433, !326}
-!434 = distinct !{!434, !326}
 end_hunk_1

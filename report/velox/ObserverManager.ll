@@ -201,7 +201,7 @@ bb.ab:                                            ; preds = %bb.aa
   br label %_ZNSt6vectorISt10shared_ptrIN5folly15observer_detail4CoreEESaIS4_EE12emplace_backIJS4_EEERS4_DpOT_.exit
 
 bb.ac:                                            ; preds = %bb.aa
-  %i.fz = load ptr, ptr %22, align 8, !tbaa !1923 ; 12 uses
+  %i.fz = load ptr, ptr %22, align 8, !tbaa !1923 ; 11 uses
   %i.ga = ptrtoint ptr %i.fu to i64               ; 3 uses
   %i.gb = ptrtoint ptr %i.fz to i64               ; 3 uses
   %i.gc = sub i64 %i.ga, %i.gb                    ; 4 uses
@@ -226,7 +226,7 @@ _ZNKSt6vectorISt10shared_ptrIN5folly15observer_detail4CoreEESaIS4_EE12_M_check_l
   call void @llvm.assume(i1 %.not.i.i98)
   %i.gj = shl nuw nsw i64 %i.gi, 4
   %i.gk = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.gj) #37
-          to label %.noexc102 unwind label %.loopexit192 ; 13 uses
+          to label %.noexc102 unwind label %.loopexit192 ; 12 uses
 
 .noexc102:                                        ; preds = %_ZNKSt6vectorISt10shared_ptrIN5folly15observer_detail4CoreEESaIS4_EE12_M_check_lenEmPKc.exit.i
   %i.gl = getelementptr inbounds nuw i8, ptr %i.gk, i64 %i.gc ; 2 uses
@@ -270,7 +270,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i99.pr
   br i1 %conflict.rdx, label %.lr.ph.i.i.i.i99.preheader371, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.gr, 2305843009213693944     ; 3 uses
+  %n.vec = and i64 %i.gr, 2305843009213693948     ; 3 uses
   %i.gv = shl i64 %n.vec, 4                       ; 2 uses
   %i.gw = getelementptr i8, ptr %i.gk, i64 %i.gv  ; 2 uses
   %i.gx = getelementptr i8, ptr %i.fz, i64 %i.gv
@@ -278,21 +278,15 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.gy = shl i64 %index, 4                       ; 3 uses
-  %27 = or disjoint i64 %i.gy, 64                 ; 2 uses
-  %next.gep = getelementptr i8, ptr %i.gk, i64 %i.gy
-  %next.gep361 = getelementptr i8, ptr %i.gk, i64 %27
-  %next.gep362 = getelementptr i8, ptr %i.fz, i64 %i.gy ; 2 uses
-  %next.gep363 = getelementptr i8, ptr %i.fz, i64 %27 ; 2 uses
+  %i.gy = shl i64 %index, 4                       ; 2 uses
+  %next.gep362 = getelementptr i8, ptr %i.gk, i64 %i.gy
+  %next.gep363 = getelementptr i8, ptr %i.fz, i64 %i.gy ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1924)
   call void @llvm.experimental.noalias.scope.decl(metadata !1927)
-  %wide.vec = load <8 x ptr>, ptr %next.gep362, align 8, !tbaa !570, !alias.scope !1927, !noalias !1924
   %wide.vec365 = load <8 x ptr>, ptr %next.gep363, align 8, !tbaa !570, !alias.scope !1927, !noalias !1924
-  store <8 x ptr> %wide.vec, ptr %next.gep, align 8, !tbaa !570, !alias.scope !1924, !noalias !1927
-  store <8 x ptr> %wide.vec365, ptr %next.gep361, align 8, !tbaa !570, !alias.scope !1924, !noalias !1927
-  store <8 x ptr> splat (ptr null), ptr %next.gep362, align 8, !tbaa !570, !alias.scope !1927, !noalias !1924
+  store <8 x ptr> %wide.vec365, ptr %next.gep362, align 8, !tbaa !570, !alias.scope !1924, !noalias !1927
   store <8 x ptr> splat (ptr null), ptr %next.gep363, align 8, !tbaa !570, !alias.scope !1927, !noalias !1924
-  %index.next = add nuw i64 %index, 8             ; 2 uses
+  %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.gz = icmp eq i64 %index.next, %n.vec
   br i1 %i.gz, label %middle.block, label %vector.body, !llvm.loop !1929
 

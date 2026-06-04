@@ -130,7 +130,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.aq = sext i32 %i.ao to i64                   ; 7 uses
   %i.ar = sext i32 %.016.lcssa.i to i64           ; 6 uses
   %i.as = sub nsw i64 %i.aq, %i.ar                ; 3 uses
-  %min.iters.check = icmp ult i64 %i.as, 20
+  %min.iters.check = icmp ult i64 %i.as, 24
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph23.i
@@ -168,7 +168,7 @@ vector.memcheck:                                  ; preds = %.lr.ph23.i
   br i1 %conflict.rdx162, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.as, -4                      ; 3 uses
+  %n.vec = and i64 %i.as, -2                      ; 3 uses
   %i.ax = sub nsw i64 %i.aq, %n.vec
   br label %vector.body
 
@@ -176,27 +176,19 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ay = sub i64 %i.aq, %index                   ; 3 uses
   %i.az = add nsw i64 %i.ay, -1                   ; 2 uses
-  %i.ba = getelementptr inbounds [4 x i8], ptr %i.s, i64 %i.az ; 2 uses
-  %6 = getelementptr inbounds i8, ptr %i.ba, i64 -4
-  %i.bb = getelementptr inbounds i8, ptr %i.ba, i64 -12
-  %wide.load = load <2 x i32>, ptr %6, align 4, !alias.scope !7
+  %i.ba = getelementptr inbounds [4 x i8], ptr %i.s, i64 %i.az
+  %i.bb = getelementptr inbounds i8, ptr %i.ba, i64 -4
   %wide.load163 = load <2 x i32>, ptr %i.bb, align 4, !alias.scope !7
-  %i.bc = getelementptr inbounds [4 x i8], ptr %i.s, i64 %i.ay ; 2 uses
-  %7 = getelementptr inbounds i8, ptr %i.bc, i64 -4
-  %i.bd = getelementptr inbounds i8, ptr %i.bc, i64 -12
-  store <2 x i32> %wide.load, ptr %7, align 4, !alias.scope !10, !noalias !12
+  %i.bc = getelementptr inbounds [4 x i8], ptr %i.s, i64 %i.ay
+  %i.bd = getelementptr inbounds i8, ptr %i.bc, i64 -4
   store <2 x i32> %wide.load163, ptr %i.bd, align 4, !alias.scope !10, !noalias !12
-  %i.be = getelementptr inbounds [8 x i8], ptr %i.t, i64 %i.az ; 2 uses
-  %8 = getelementptr inbounds i8, ptr %i.be, i64 -8
-  %i.bf = getelementptr inbounds i8, ptr %i.be, i64 -24
-  %wide.load167 = load <2 x i64>, ptr %8, align 8, !alias.scope !15
+  %i.be = getelementptr inbounds [8 x i8], ptr %i.t, i64 %i.az
+  %i.bf = getelementptr inbounds i8, ptr %i.be, i64 -8
   %wide.load168 = load <2 x i64>, ptr %i.bf, align 8, !alias.scope !15
-  %i.bg = getelementptr inbounds [8 x i8], ptr %i.t, i64 %i.ay ; 2 uses
-  %9 = getelementptr inbounds i8, ptr %i.bg, i64 -8
-  %i.bh = getelementptr inbounds i8, ptr %i.bg, i64 -24
-  store <2 x i64> %wide.load167, ptr %9, align 8, !alias.scope !16, !noalias !17
+  %i.bg = getelementptr inbounds [8 x i8], ptr %i.t, i64 %i.ay
+  %i.bh = getelementptr inbounds i8, ptr %i.bg, i64 -8
   store <2 x i64> %wide.load168, ptr %i.bh, align 8, !alias.scope !16, !noalias !17
-  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.bi = icmp eq i64 %index.next, %n.vec
   br i1 %i.bi, label %middle.block, label %vector.body, !llvm.loop !18
 

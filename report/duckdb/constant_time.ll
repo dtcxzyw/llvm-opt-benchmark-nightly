@@ -201,7 +201,7 @@ bb.a:
 
 .lr.ph34.preheader:                               ; preds = %.preheader
   %i.h = sub nuw i64 %4, %.027.lcssa              ; 3 uses
-  %min.iters.check = icmp ult i64 %i.h, 32
+  %min.iters.check = icmp ult i64 %i.h, 48
   br i1 %min.iters.check, label %.lr.ph34.preheader40, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph34.preheader
@@ -339,10 +339,10 @@ bb.a:
   %i.a = add i64 %5, -8                           ; 2 uses
   %i.b = getelementptr i8, ptr %1, i64 %5
   %i.c = getelementptr i8, ptr %i.b, i64 %3
-  %n.mod.vf88 = and i64 %5, 3                     ; 2 uses
+  %n.mod.vf88 = and i64 %5, 7                     ; 2 uses
   %cmp.n97 = icmp eq i64 %n.mod.vf88, 0
   %invariant.gep = getelementptr i8, ptr %1, i64 %3
-  %n.mod.vf55 = and i64 %5, 3                     ; 2 uses
+  %n.mod.vf55 = and i64 %5, 7                     ; 2 uses
   %cmp.n63 = icmp eq i64 %n.mod.vf55, 0
   br label %.lr.ph.i.preheader
 
@@ -571,7 +571,7 @@ iter.check83:                                     ; preds = %.preheader.i.loopex
   %i.dg = trunc i64 %i.cx to i8                   ; 3 uses
   %i.dh = shl i64 %indvar65, 3
   %i.di = sub i64 %i.a, %i.dh                     ; 6 uses
-  %min.iters.check67 = icmp ult i64 %i.di, 4
+  %min.iters.check67 = icmp ult i64 %i.di, 8
   br i1 %min.iters.check67, label %.lr.ph34.i.preheader, label %vector.main.loop.iter.check68
 
 vector.main.loop.iter.check68:                    ; preds = %iter.check83
@@ -579,7 +579,7 @@ vector.main.loop.iter.check68:                    ; preds = %iter.check83
   br i1 %min.iters.check69, label %vec.epilog.ph87, label %vector.ph70
 
 vector.ph70:                                      ; preds = %vector.main.loop.iter.check68
-  %n.mod.vf71 = and i64 %i.di, 28
+  %n.mod.vf71 = and i64 %i.di, 24
   %n.vec72 = and i64 %i.di, -32                   ; 4 uses
   %i.dj = add i64 %i.fk, %n.vec72
   %broadcast.splatinsert73 = insertelement <16 x i8> poison, i8 %i.dg, i64 0
@@ -613,18 +613,18 @@ vec.epilog.ph87:                                  ; preds = %vector.main.loop.it
   %vec.epilog.resume.val82 = phi i64 [ %n.vec72, %vec.epilog.iter.check85 ], [ 0, %vector.main.loop.iter.check68 ]
   %n.vec89 = sub i64 %i.di, %n.mod.vf88           ; 2 uses
   %i.dq = add i64 %i.fk, %n.vec89
-  %broadcast.splatinsert90 = insertelement <4 x i8> poison, i8 %i.dg, i64 0
-  %broadcast.splat91 = shufflevector <4 x i8> %broadcast.splatinsert90, <4 x i8> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert90 = insertelement <8 x i8> poison, i8 %i.dg, i64 0
+  %broadcast.splat91 = shufflevector <8 x i8> %broadcast.splatinsert90, <8 x i8> poison, <8 x i32> zeroinitializer
   %i.dr = getelementptr i8, ptr %0, i64 %i.fk
   br label %vec.epilog.vector.body92
 
 vec.epilog.vector.body92:                         ; preds = %vec.epilog.vector.body92, %vec.epilog.ph87
   %index93 = phi i64 [ %vec.epilog.resume.val82, %vec.epilog.ph87 ], [ %index.next95, %vec.epilog.vector.body92 ] ; 2 uses
   %i.ds = getelementptr i8, ptr %i.dr, i64 %index93 ; 2 uses
-  %wide.load94 = load <4 x i8>, ptr %i.ds, align 1, !tbaa !7
-  %6 = and <4 x i8> %wide.load94, %broadcast.splat91
-  store <4 x i8> %6, ptr %i.ds, align 1, !tbaa !7
-  %index.next95 = add nuw i64 %index93, 4         ; 2 uses
+  %wide.load94 = load <8 x i8>, ptr %i.ds, align 1, !tbaa !7
+  %6 = and <8 x i8> %wide.load94, %broadcast.splat91
+  store <8 x i8> %6, ptr %i.ds, align 1, !tbaa !7
+  %index.next95 = add nuw i64 %index93, 8         ; 2 uses
   %i.dt = icmp eq i64 %index.next95, %n.vec89
   br i1 %i.dt, label %vec.epilog.middle.block96, label %vec.epilog.vector.body92, !llvm.loop !24
 
@@ -639,7 +639,7 @@ iter.check:                                       ; preds = %.preheader.i.loopex
   %i.du = trunc i64 %i.cx to i8                   ; 5 uses
   %i.dv = shl i64 %indvar49, 3
   %i.dw = sub i64 %i.a, %i.dv                     ; 6 uses
-  %min.iters.check = icmp ult i64 %i.dw, 4
+  %min.iters.check = icmp ult i64 %i.dw, 8
   br i1 %min.iters.check, label %.lr.ph34.i.us.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
@@ -656,7 +656,7 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
   br i1 %min.iters.check51, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %n.mod.vf = and i64 %i.dw, 28
+  %n.mod.vf = and i64 %i.dw, 24
   %n.vec = and i64 %i.dw, -32                     ; 4 uses
   %i.dx = add i64 %i.cy, %n.vec
   %broadcast.splatinsert = insertelement <16 x i8> poison, i8 %i.du, i64 0
@@ -696,21 +696,21 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec56 = sub i64 %i.dw, %n.mod.vf55           ; 2 uses
   %i.ei = add i64 %i.cy, %n.vec56
-  %broadcast.splatinsert57 = insertelement <4 x i8> poison, i8 %i.du, i64 0
-  %broadcast.splat58 = shufflevector <4 x i8> %broadcast.splatinsert57, <4 x i8> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert57 = insertelement <8 x i8> poison, i8 %i.du, i64 0
+  %broadcast.splat58 = shufflevector <8 x i8> %broadcast.splatinsert57, <8 x i8> poison, <8 x i32> zeroinitializer
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index59 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next62, %vec.epilog.vector.body ] ; 2 uses
   %i.ej = add i64 %i.cy, %index59                 ; 2 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %i.cu, i64 %i.ej
-  %wide.load60 = load <4 x i8>, ptr %i.ek, align 1, !tbaa !7, !alias.scope !25
+  %wide.load60 = load <8 x i8>, ptr %i.ek, align 1, !tbaa !7, !alias.scope !25
   %i.el = getelementptr inbounds nuw i8, ptr %0, i64 %i.ej ; 2 uses
-  %wide.load61 = load <4 x i8>, ptr %i.el, align 1, !tbaa !7, !alias.scope !28, !noalias !25
-  %7 = and <4 x i8> %wide.load61, %broadcast.splat58
-  %8 = or <4 x i8> %7, %wide.load60
-  store <4 x i8> %8, ptr %i.el, align 1, !tbaa !7, !alias.scope !28, !noalias !25
-  %index.next62 = add nuw i64 %index59, 4         ; 2 uses
+  %wide.load61 = load <8 x i8>, ptr %i.el, align 1, !tbaa !7, !alias.scope !28, !noalias !25
+  %7 = and <8 x i8> %wide.load61, %broadcast.splat58
+  %8 = or <8 x i8> %7, %wide.load60
+  store <8 x i8> %8, ptr %i.el, align 1, !tbaa !7, !alias.scope !28, !noalias !25
+  %index.next62 = add nuw i64 %index59, 8         ; 2 uses
   %i.em = icmp eq i64 %index.next62, %n.vec56
   br i1 %i.em, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !31
 
@@ -810,8 +810,8 @@ bb.a:
 
 iter.check:                                       ; preds = %.preheader
   %i.d = trunc i32 %i.b to i8                     ; 3 uses
-  %i.e = sub nuw i64 %2, %.0.lcssa                ; 6 uses
-  %min.iters.check = icmp ult i64 %i.e, 4
+  %i.e = sub nuw i64 %2, %.0.lcssa                ; 7 uses
+  %min.iters.check = icmp ult i64 %i.e, 8
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
@@ -819,7 +819,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check22, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %n.mod.vf = and i64 %i.e, 28
+  %n.mod.vf = and i64 %i.e, 24
   %n.vec = and i64 %i.e, -32                      ; 4 uses
   %i.f = add i64 %.0.lcssa, %n.vec
   %broadcast.splatinsert = insertelement <16 x i8> poison, i8 %i.d, i64 0
@@ -851,26 +851,25 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.mod.vf24 = and i64 %2, 3                     ; 2 uses
-  %n.vec25 = sub i64 %i.e, %n.mod.vf24            ; 2 uses
-  %i.m = add i64 %.0.lcssa, %n.vec25
-  %broadcast.splatinsert26 = insertelement <4 x i8> poison, i8 %i.d, i64 0
-  %broadcast.splat27 = shufflevector <4 x i8> %broadcast.splatinsert26, <4 x i8> poison, <4 x i32> zeroinitializer
+  %n.mod.vf24 = and i64 %i.e, -8                  ; 3 uses
+  %i.m = add i64 %.0.lcssa, %n.mod.vf24
+  %broadcast.splatinsert26 = insertelement <8 x i8> poison, i8 %i.d, i64 0
+  %broadcast.splat27 = shufflevector <8 x i8> %broadcast.splatinsert26, <8 x i8> poison, <8 x i32> zeroinitializer
   %i.n = getelementptr i8, ptr %1, i64 %.0.lcssa
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index28 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next30, %vec.epilog.vector.body ] ; 2 uses
   %i.o = getelementptr i8, ptr %i.n, i64 %index28 ; 2 uses
-  %wide.load29 = load <4 x i8>, ptr %i.o, align 1, !tbaa !7
-  %3 = and <4 x i8> %wide.load29, %broadcast.splat27
-  store <4 x i8> %3, ptr %i.o, align 1, !tbaa !7
-  %index.next30 = add nuw i64 %index28, 4         ; 2 uses
-  %i.p = icmp eq i64 %index.next30, %n.vec25
+  %wide.load29 = load <8 x i8>, ptr %i.o, align 1, !tbaa !7
+  %3 = and <8 x i8> %wide.load29, %broadcast.splat27
+  store <8 x i8> %3, ptr %i.o, align 1, !tbaa !7
+  %index.next30 = add nuw i64 %index28, 8         ; 2 uses
+  %i.p = icmp eq i64 %index.next30, %n.mod.vf24
   br i1 %i.p, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !35
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n31 = icmp eq i64 %n.mod.vf24, 0
+  %cmp.n31 = icmp eq i64 %i.e, %n.mod.vf24
   br i1 %cmp.n31, label %._crit_edge, label %vec.epilog.scalar.ph.preheader
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
@@ -937,7 +936,7 @@ attributes #3 = { nocallback nofree nosync nounwind willreturn memory(inaccessib
 !20 = distinct !{!20, !9, !17}
 !21 = distinct !{!21, !9}
 !22 = distinct !{!22, !9, !17, !18}
-!23 = !{!"branch_weights", i32 4, i32 28}
+!23 = !{!"branch_weights", i32 8, i32 24}
 !24 = distinct !{!24, !9, !17, !18}
 !25 = !{!26}
 !26 = distinct !{!26, !27}

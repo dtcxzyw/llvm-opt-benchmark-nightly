@@ -201,7 +201,7 @@ bb.a:
 
 .lr.ph34.preheader:                               ; preds = %.preheader
   %i.g = sub nuw i64 %4, %.027.lcssa              ; 3 uses
-  %min.iters.check = icmp ult i64 %i.g, 32
+  %min.iters.check = icmp ult i64 %i.g, 48
   br i1 %min.iters.check, label %.lr.ph34.preheader40, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph34.preheader
@@ -498,7 +498,7 @@ mbedtls_ct_memcpy_if.exit.loopexit.us.us:         ; preds = %.lr.ph34.i.us.us.6,
 .lr.ph34.i.preheader:                             ; preds = %.preheader.i.loopexit
   %i.cs = shl i64 %indvar26, 3
   %i.ct = sub i64 %i.a, %i.cs                     ; 3 uses
-  %min.iters.check = icmp ult i64 %i.ct, 16
+  %min.iters.check = icmp ult i64 %i.ct, 32
   br i1 %min.iters.check, label %.lr.ph34.i.preheader32, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph34.i.preheader
@@ -640,8 +640,8 @@ bb.a:
 
 iter.check:                                       ; preds = %.preheader
   %i.d = trunc i32 %i.b to i8                     ; 3 uses
-  %i.e = sub nuw i64 %2, %.0.lcssa                ; 6 uses
-  %min.iters.check = icmp ult i64 %i.e, 4
+  %i.e = sub nuw i64 %2, %.0.lcssa                ; 7 uses
+  %min.iters.check = icmp ult i64 %i.e, 8
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
@@ -649,7 +649,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check22, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %n.mod.vf = and i64 %i.e, 28
+  %n.mod.vf = and i64 %i.e, 24
   %n.vec = and i64 %i.e, -32                      ; 4 uses
   %i.f = add i64 %.0.lcssa, %n.vec
   %broadcast.splatinsert = insertelement <16 x i8> poison, i8 %i.d, i64 0
@@ -681,26 +681,25 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.mod.vf24 = and i64 %2, 3                     ; 2 uses
-  %n.vec25 = sub i64 %i.e, %n.mod.vf24            ; 2 uses
-  %i.m = add i64 %.0.lcssa, %n.vec25
-  %broadcast.splatinsert26 = insertelement <4 x i8> poison, i8 %i.d, i64 0
-  %broadcast.splat27 = shufflevector <4 x i8> %broadcast.splatinsert26, <4 x i8> poison, <4 x i32> zeroinitializer
+  %n.mod.vf24 = and i64 %i.e, -8                  ; 3 uses
+  %i.m = add i64 %.0.lcssa, %n.mod.vf24
+  %broadcast.splatinsert26 = insertelement <8 x i8> poison, i8 %i.d, i64 0
+  %broadcast.splat27 = shufflevector <8 x i8> %broadcast.splatinsert26, <8 x i8> poison, <8 x i32> zeroinitializer
   %i.n = getelementptr i8, ptr %1, i64 %.0.lcssa
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index28 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next30, %vec.epilog.vector.body ] ; 2 uses
   %i.o = getelementptr i8, ptr %i.n, i64 %index28 ; 2 uses
-  %wide.load29 = load <4 x i8>, ptr %i.o, align 1, !tbaa !8
-  %3 = and <4 x i8> %wide.load29, %broadcast.splat27
-  store <4 x i8> %3, ptr %i.o, align 1, !tbaa !8
-  %index.next30 = add nuw i64 %index28, 4         ; 2 uses
-  %i.p = icmp eq i64 %index.next30, %n.vec25
+  %wide.load29 = load <8 x i8>, ptr %i.o, align 1, !tbaa !8
+  %3 = and <8 x i8> %wide.load29, %broadcast.splat27
+  store <8 x i8> %3, ptr %i.o, align 1, !tbaa !8
+  %index.next30 = add nuw i64 %index28, 8         ; 2 uses
+  %i.p = icmp eq i64 %index.next30, %n.mod.vf24
   br i1 %i.p, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !35
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n31 = icmp eq i64 %n.mod.vf24, 0
+  %cmp.n31 = icmp eq i64 %i.e, %n.mod.vf24
   br i1 %cmp.n31, label %._crit_edge, label %vec.epilog.scalar.ph.preheader
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
@@ -779,7 +778,7 @@ attributes #4 = { nounwind }
 !31 = distinct !{!31, !10, !20, !21}
 !32 = distinct !{!32, !10, !20}
 !33 = distinct !{!33, !10, !20, !21}
-!34 = !{!"branch_weights", i32 4, i32 28}
+!34 = !{!"branch_weights", i32 8, i32 24}
 !35 = distinct !{!35, !10, !20, !21}
 !36 = distinct !{!36, !10}
 !37 = distinct !{!37, !10, !21, !20}

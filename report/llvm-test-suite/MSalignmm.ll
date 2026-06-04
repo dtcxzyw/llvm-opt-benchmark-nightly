@@ -201,7 +201,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %bb.m
 
 iter.check:                                       ; preds = %bb.q
   %i.mx = zext i32 %i.mw to i64                   ; 5 uses
-  %min.iters.check354 = icmp ult i32 %i.mw, 4
+  %min.iters.check354 = icmp ult i32 %i.mw, 8
   %i.my = sub i64 %.096143.i.i350, %.092144.i.i351
   %diff.check352 = icmp ult i64 %i.my, 32
   %or.cond381 = or i1 %min.iters.check354, %diff.check352
@@ -212,7 +212,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check355, label %vec.epilog.ph, label %vector.ph356
 
 vector.ph356:                                     ; preds = %vector.main.loop.iter.check
-  %n.mod.vf357 = and i64 %i.mx, 28
+  %n.mod.vf357 = and i64 %i.mx, 24
   %n.vec358 = and i64 %i.mx, 4294967264           ; 5 uses
   %i.mz = trunc nuw i64 %n.vec358 to i32
   %i.na = sub i32 %i.mw, %i.mz
@@ -248,7 +248,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block364
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec358, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec370 = and i64 %i.mx, 4294967292           ; 4 uses
+  %n.vec370 = and i64 %i.mx, 4294967288           ; 4 uses
   %i.nk = trunc nuw i64 %n.vec370 to i32
   %i.nl = sub i32 %i.mw, %i.nk
   %i.nm = sub nsw i64 0, %n.vec370                ; 2 uses
@@ -261,11 +261,11 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.np = sub i64 0, %index371                    ; 2 uses
   %next.gep372 = getelementptr i8, ptr %.092144.i.i, i64 %i.np
   %next.gep373 = getelementptr i8, ptr %.096143.i.i, i64 %i.np
-  %i.nq = getelementptr inbounds i8, ptr %next.gep373, i64 -4
-  store <4 x i8> splat (i8 111), ptr %i.nq, align 1, !tbaa !40
-  %i.nr = getelementptr inbounds i8, ptr %next.gep372, i64 -4
-  store <4 x i8> splat (i8 45), ptr %i.nr, align 1, !tbaa !40
-  %index.next374 = add nuw i64 %index371, 4       ; 2 uses
+  %i.nq = getelementptr inbounds i8, ptr %next.gep373, i64 -8
+  store <8 x i8> splat (i8 111), ptr %i.nq, align 1, !tbaa !40
+  %i.nr = getelementptr inbounds i8, ptr %next.gep372, i64 -8
+  store <8 x i8> splat (i8 45), ptr %i.nr, align 1, !tbaa !40
+  %index.next374 = add nuw i64 %index371, 8       ; 2 uses
   %i.ns = icmp eq i64 %index.next374, %n.vec370
   br i1 %i.ns, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !91
 
@@ -668,37 +668,29 @@ vector.memcheck174:                               ; preds = %.lr.ph62
   br i1 %conflict.rdx185, label %scalar.ph187.preheader, label %vector.ph189
 
 vector.ph189:                                     ; preds = %vector.memcheck174
-  %n.vec191 = and i64 %i.acv, 8589934584          ; 3 uses
+  %n.vec191 = and i64 %i.acv, 8589934588          ; 3 uses
   %broadcast.splatinsert192 = insertelement <4 x i32> poison, i32 %i.s, i64 0
-  %broadcast.splat193 = shufflevector <4 x i32> %broadcast.splatinsert192, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat193 = shufflevector <4 x i32> %broadcast.splatinsert192, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.adf = sub nsw i64 %i.wz, %n.vec191
   %i.adg = load float, ptr %i.acr, align 4, !tbaa !16, !alias.scope !151
-  %broadcast.splatinsert200 = insertelement <4 x float> poison, float %i.adg, i64 0 ; 2 uses
-  %14 = shufflevector <4 x float> %broadcast.splatinsert200, <4 x float> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert200 = insertelement <4 x float> poison, float %i.adg, i64 0
   %i.adh = shufflevector <4 x float> %broadcast.splatinsert200, <4 x float> poison, <4 x i32> zeroinitializer
   br label %vector.body194
 
 vector.body194:                                   ; preds = %vector.body194, %vector.ph189
   %index195 = phi i64 [ 0, %vector.ph189 ], [ %index.next204, %vector.body194 ] ; 2 uses
   %i.adi = sub i64 %i.wz, %index195               ; 3 uses
-  %i.adj = getelementptr inbounds nuw [4 x i8], ptr %.0666.lcssa, i64 %i.adi ; 2 uses
-  %15 = getelementptr inbounds i8, ptr %i.adj, i64 -12
-  %i.adk = getelementptr inbounds i8, ptr %i.adj, i64 -28
-  %wide.load196 = load <4 x float>, ptr %15, align 4, !tbaa !16, !alias.scope !154
+  %i.adj = getelementptr inbounds nuw [4 x i8], ptr %.0666.lcssa, i64 %i.adi
+  %i.adk = getelementptr inbounds i8, ptr %i.adj, i64 -12
   %wide.load197 = load <4 x float>, ptr %i.adk, align 4, !tbaa !16, !alias.scope !154
-  %i.adl = getelementptr [4 x i8], ptr %i.ri, i64 %i.adi ; 2 uses
-  %16 = getelementptr i8, ptr %i.adl, i64 -16
-  %i.adm = getelementptr i8, ptr %i.adl, i64 -32
-  %reverse202 = fadd <4 x float> %wide.load196, %14
+  %i.adl = getelementptr [4 x i8], ptr %i.ri, i64 %i.adi
+  %i.adm = getelementptr i8, ptr %i.adl, i64 -16
   %reverse203 = fadd <4 x float> %wide.load197, %i.adh
-  store <4 x float> %reverse202, ptr %16, align 4, !tbaa !16, !alias.scope !156, !noalias !158
   store <4 x float> %reverse203, ptr %i.adm, align 4, !tbaa !16, !alias.scope !156, !noalias !158
-  %i.adn = getelementptr inbounds nuw [4 x i8], ptr %i.rj, i64 %i.adi ; 2 uses
-  %17 = getelementptr inbounds i8, ptr %i.adn, i64 -12
-  %i.ado = getelementptr inbounds i8, ptr %i.adn, i64 -28
-  store <4 x i32> %broadcast.splat193, ptr %17, align 4, !tbaa !4
+  %i.adn = getelementptr inbounds nuw [4 x i8], ptr %i.rj, i64 %i.adi
+  %i.ado = getelementptr inbounds i8, ptr %i.adn, i64 -12
   store <4 x i32> %broadcast.splat193, ptr %i.ado, align 4, !tbaa !4
-  %index.next204 = add nuw i64 %index195, 8       ; 2 uses
+  %index.next204 = add nuw i64 %index195, 4       ; 2 uses
   %i.adp = icmp eq i64 %index.next204, %n.vec191
   br i1 %i.adp, label %middle.block205, label %vector.body194, !llvm.loop !159
 
@@ -1101,7 +1093,7 @@ attributes #17 = { cold noreturn nounwind }
 !87 = distinct !{!87, !14}
 !88 = distinct !{!88, !14, !25, !24}
 !89 = distinct !{!89, !14, !24, !25}
-!90 = !{!"branch_weights", i32 4, i32 28}
+!90 = !{!"branch_weights", i32 8, i32 24}
 !91 = distinct !{!91, !14, !24, !25}
 !92 = distinct !{!92, !46}
 !93 = distinct !{!93, !14, !24}

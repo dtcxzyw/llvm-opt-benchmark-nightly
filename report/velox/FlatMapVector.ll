@@ -201,7 +201,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !106  ; 5 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !87     ; 13 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !87     ; 12 uses
   %i.d = ptrtoint ptr %i.b to i64                 ; 4 uses
   %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
@@ -239,7 +239,7 @@ _ZNKSt6vectorISt10shared_ptrIN8facebook5velox10BaseVectorEESaIS4_EE12_M_check_le
   %i.r = add nuw nsw i64 %.sroa.speculated.i, %i.g
   %i.s = tail call i64 @llvm.umin.i64(i64 %i.r, i64 576460752303423487) ; 2 uses
   %i.t = shl nuw nsw i64 %i.s, 4
-  %i.u = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.t) #30 ; 12 uses
+  %i.u = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.t) #30 ; 11 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.f ; 2 uses
   %i.w = shl nuw nsw i64 %1, 4
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.v, i8 0, i64 %i.w, i1 false)
@@ -276,7 +276,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.prehea
   br i1 %conflict.rdx, label %.lr.ph.i.i.i.preheader57, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.aa, 2305843009213693944     ; 3 uses
+  %n.vec = and i64 %i.aa, 2305843009213693948     ; 3 uses
   %i.ag = shl i64 %n.vec, 4                       ; 2 uses
   %i.ah = getelementptr i8, ptr %i.u, i64 %i.ag
   %i.ai = getelementptr i8, ptr %i.c, i64 %i.ag
@@ -284,21 +284,15 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.aj = shl i64 %index, 4                       ; 3 uses
-  %2 = or disjoint i64 %i.aj, 64                  ; 2 uses
-  %next.gep = getelementptr i8, ptr %i.u, i64 %i.aj
-  %next.gep48 = getelementptr i8, ptr %i.u, i64 %2
-  %next.gep49 = getelementptr i8, ptr %i.c, i64 %i.aj ; 2 uses
-  %next.gep50 = getelementptr i8, ptr %i.c, i64 %2 ; 2 uses
+  %i.aj = shl i64 %index, 4                       ; 2 uses
+  %next.gep49 = getelementptr i8, ptr %i.u, i64 %i.aj
+  %next.gep50 = getelementptr i8, ptr %i.c, i64 %i.aj ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !534)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !537)
-  %wide.vec = load <8 x ptr>, ptr %next.gep49, align 8, !tbaa !108, !alias.scope !537, !noalias !534
   %wide.vec52 = load <8 x ptr>, ptr %next.gep50, align 8, !tbaa !108, !alias.scope !537, !noalias !534
-  store <8 x ptr> %wide.vec, ptr %next.gep, align 8, !tbaa !108, !alias.scope !534, !noalias !537
-  store <8 x ptr> %wide.vec52, ptr %next.gep48, align 8, !tbaa !108, !alias.scope !534, !noalias !537
-  store <8 x ptr> splat (ptr null), ptr %next.gep49, align 8, !tbaa !108, !alias.scope !537, !noalias !534
+  store <8 x ptr> %wide.vec52, ptr %next.gep49, align 8, !tbaa !108, !alias.scope !534, !noalias !537
   store <8 x ptr> splat (ptr null), ptr %next.gep50, align 8, !tbaa !108, !alias.scope !537, !noalias !534
-  %index.next = add nuw i64 %index, 8             ; 2 uses
+  %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ak = icmp eq i64 %index.next, %n.vec
   br i1 %i.ak, label %middle.block, label %vector.body, !llvm.loop !539
 
@@ -701,7 +695,7 @@ iter.check:                                       ; preds = %_ZNK8facebook5velox
   %i.y = sub i64 %i.w, %i.x                       ; 3 uses
   %i.z = lshr i64 %i.y, 2
   %i.aa = add nuw nsw i64 %i.z, 1                 ; 5 uses
-  %min.iters.check = icmp ult i64 %i.y, 12
+  %min.iters.check = icmp ult i64 %i.y, 28
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
@@ -709,7 +703,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check19, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %n.mod.vf = and i64 %i.aa, 28
+  %n.mod.vf = and i64 %i.aa, 24
   %n.vec = and i64 %i.aa, 9223372036854775776     ; 4 uses
   %i.ab = shl i64 %n.vec, 2
   %i.ac = getelementptr i8, ptr %i.v, i64 %i.ab
@@ -742,19 +736,19 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec21 = and i64 %i.aa, 9223372036854775804   ; 3 uses
+  %n.vec21 = and i64 %i.aa, 9223372036854775800   ; 3 uses
   %i.ai = shl i64 %n.vec21, 2
   %i.aj = getelementptr i8, ptr %i.v, i64 %i.ai
-  %broadcast.splatinsert22 = insertelement <4 x i32> poison, i32 %i.u, i64 0
-  %broadcast.splat23 = shufflevector <4 x i32> %broadcast.splatinsert22, <4 x i32> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert22 = insertelement <8 x i32> poison, i32 %i.u, i64 0
+  %broadcast.splat23 = shufflevector <8 x i32> %broadcast.splatinsert22, <8 x i32> poison, <8 x i32> zeroinitializer
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index24 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next26, %vec.epilog.vector.body ] ; 2 uses
   %i.ak = shl i64 %index24, 2
   %next.gep25 = getelementptr i8, ptr %i.v, i64 %i.ak
-  store <4 x i32> %broadcast.splat23, ptr %next.gep25, align 4, !tbaa !3
-  %index.next26 = add nuw i64 %index24, 4         ; 2 uses
+  store <8 x i32> %broadcast.splat23, ptr %next.gep25, align 4, !tbaa !3
+  %index.next26 = add nuw i64 %index24, 8         ; 2 uses
   %i.al = icmp eq i64 %index.next26, %n.vec21
   br i1 %i.al, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !602
 
@@ -1157,7 +1151,7 @@ begin_hunk_2_@llvm.vector.reduce.add.v4i32
 !598 = distinct !{!598, !599, !"_ZN3fmt3v1116make_format_argsINS0_7contextEJKmS3_ELi2ELi0ELy68EEENS0_6detail16format_arg_storeIT_XT1_EXT2_EXT3_EEEDpRT0_: argument 0"}
 !599 = distinct !{!599, !"_ZN3fmt3v1116make_format_argsINS0_7contextEJKmS3_ELi2ELi0ELy68EEENS0_6detail16format_arg_storeIT_XT1_EXT2_EXT3_EEEDpRT0_"}
 !600 = distinct !{!600, !35, !285, !286}
-!601 = !{!"branch_weights", i32 4, i32 28}
+!601 = !{!"branch_weights", i32 8, i32 24}
 !602 = distinct !{!602, !35, !285, !286}
 !603 = distinct !{!603, !35, !286, !285}
 !604 = distinct !{null, null}

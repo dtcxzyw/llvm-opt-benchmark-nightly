@@ -201,20 +201,14 @@ vector.ph:
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.ind = phi <8 x i32> [ <i32 -512, i32 -511, i32 -510, i32 -509, i32 -508, i32 -507, i32 -506, i32 -505>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %step.add = add <8 x i32> %vec.ind, splat (i32 8)
-  %0 = tail call <8 x i32> @llvm.smax.v8i32(<8 x i32> %vec.ind, <8 x i32> splat (i32 -256))
-  %1 = tail call <8 x i32> @llvm.smax.v8i32(<8 x i32> %step.add, <8 x i32> splat (i32 -256))
-  %i.a = tail call <8 x i32> @llvm.smin.v8i32(<8 x i32> %0, <8 x i32> splat (i32 255))
-  %i.b = tail call <8 x i32> @llvm.smin.v8i32(<8 x i32> %1, <8 x i32> splat (i32 255))
-  %2 = trunc nsw <8 x i32> %i.a to <8 x i16>
+  %vec.ind = phi <8 x i32> [ <i32 -512, i32 -511, i32 -510, i32 -509, i32 -508, i32 -507, i32 -506, i32 -505>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %i.a = tail call <8 x i32> @llvm.smax.v8i32(<8 x i32> %vec.ind, <8 x i32> splat (i32 -256))
+  %i.b = tail call <8 x i32> @llvm.smin.v8i32(<8 x i32> %i.a, <8 x i32> splat (i32 255))
   %i.c = trunc nsw <8 x i32> %i.b to <8 x i16>
-  %i.d = getelementptr [2 x i8], ptr @iclip, i64 %index ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  store <8 x i16> %2, ptr %i.d, align 16, !tbaa !8
-  store <8 x i16> %i.c, ptr %3, align 16, !tbaa !8
-  %index.next = add nuw i64 %index, 16            ; 2 uses
-  %vec.ind.next = add <8 x i32> %vec.ind, splat (i32 16)
+  %i.d = getelementptr [2 x i8], ptr @iclip, i64 %index
+  store <8 x i16> %i.c, ptr %i.d, align 16, !tbaa !8
+  %index.next = add nuw i64 %index, 8             ; 2 uses
+  %vec.ind.next = add <8 x i32> %vec.ind, splat (i32 8)
   %i.e = icmp eq i64 %index.next, 1024
   br i1 %i.e, label %middle.block, label %vector.body, !llvm.loop !16
 

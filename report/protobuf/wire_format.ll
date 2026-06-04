@@ -201,9 +201,9 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %.backedge, %bb.d
-  %.sroa.041.0 = phi ptr [ %0, %bb.d ], [ %.sroa.041.0.be, %.backedge ] ; 22 uses
-  %.084 = phi i64 [ %i.i, %bb.d ], [ %.084.be, %.backedge ] ; 18 uses
-  %.0 = phi i64 [ %i.f, %bb.d ], [ %.0.be, %.backedge ] ; 11 uses
+  %.sroa.041.0 = phi ptr [ %0, %bb.d ], [ %.sroa.041.0.be, %.backedge ] ; 19 uses
+  %.084 = phi i64 [ %i.i, %bb.d ], [ %.084.be, %.backedge ] ; 14 uses
+  %.0 = phi i64 [ %i.f, %bb.d ], [ %.0.be, %.backedge ] ; 10 uses
   %i.ag = sub nsw i64 %.0, %.084                  ; 10 uses
   %i.ah = icmp slt i64 %.084, %i.ag
   br i1 %i.ah, label %bb.f, label %bb.i
@@ -352,7 +352,7 @@ bb.h:                                             ; preds = %._crit_edge100
 
 bb.i:                                             ; preds = %bb.e
   %i.cb = icmp eq i64 %i.ag, 1
-  %i.cc = getelementptr [8 x i8], ptr %.sroa.041.0, i64 %.0 ; 8 uses
+  %i.cc = getelementptr inbounds [8 x i8], ptr %.sroa.041.0, i64 %.0 ; 5 uses
   br i1 %i.cb, label %bb.j, label %bb.n
 
 bb.j:                                             ; preds = %bb.i
@@ -385,89 +385,46 @@ _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf7MessageE
 
 bb.n:                                             ; preds = %bb.i
   %i.cm = sub i64 0, %i.ag
-  %i.cn = getelementptr [8 x i8], ptr %i.cc, i64 %i.cm ; 6 uses
+  %i.cn = getelementptr inbounds [8 x i8], ptr %i.cc, i64 %i.cm ; 3 uses
   %i.co = icmp sgt i64 %.084, 0
-  br i1 %i.co, label %.lr.ph.preheader, label %._crit_edge
+  br i1 %i.co, label %vector.memcheck134, label %._crit_edge
 
-.lr.ph.preheader:                                 ; preds = %bb.n
-  %min.iters.check140 = icmp ult i64 %.084, 6
-  br i1 %min.iters.check140, label %.lr.ph.preheader191, label %vector.memcheck134
-
-vector.memcheck134:                               ; preds = %.lr.ph.preheader
-  %3 = sub i64 %.0, %.084
-  %4 = shl i64 %3, 3
-  %scevgep135 = getelementptr i8, ptr %.sroa.041.0, i64 %4
-  %bound0136 = icmp ult ptr %.sroa.041.0, %i.cc
-  %bound1137 = icmp ult ptr %scevgep135, %i.cn
-  %found.conflict138 = and i1 %bound0136, %bound1137
-  br i1 %found.conflict138, label %.lr.ph.preheader191, label %vector.ph141
+vector.memcheck134:                               ; preds = %bb.n
+  %xtraiter = and i64 %.084, 3                    ; 3 uses
+  %bound1137 = icmp ult i64 %.084, 4
+  br i1 %bound1137, label %.lr.ph.preheader191, label %vector.ph141
 
 vector.ph141:                                     ; preds = %vector.memcheck134
-  %n.vec143 = and i64 %.084, 9223372036854775804  ; 4 uses
-  %5 = mul i64 %n.vec143, -8                      ; 2 uses
-  %6 = getelementptr i8, ptr %i.cc, i64 %5
-  %7 = getelementptr i8, ptr %i.cn, i64 %5
-  br label %vector.body144
+  %n.vec143 = and i64 %.084, 9223372036854775804
+  br label %.lr.ph
 
-vector.body144:                                   ; preds = %vector.body144, %vector.ph141
-  %index145 = phi i64 [ 0, %vector.ph141 ], [ %index.next159, %vector.body144 ] ; 2 uses
-  %8 = mul i64 %index145, -8                      ; 2 uses
-  %next.gep146 = getelementptr i8, ptr %i.cc, i64 %8 ; 2 uses
-  %next.gep147 = getelementptr i8, ptr %i.cn, i64 %8 ; 2 uses
-  %9 = getelementptr inbounds i8, ptr %next.gep147, i64 -16 ; 2 uses
-  %10 = getelementptr inbounds i8, ptr %next.gep147, i64 -32 ; 2 uses
-  %wide.load148 = load <2 x ptr>, ptr %9, align 8, !tbaa !170, !alias.scope !341, !noalias !344
-  %wide.load149 = load <2 x ptr>, ptr %10, align 8, !tbaa !170, !alias.scope !341, !noalias !344
-  %11 = getelementptr inbounds i8, ptr %next.gep146, i64 -16 ; 2 uses
-  %12 = getelementptr inbounds i8, ptr %next.gep146, i64 -32 ; 2 uses
-  %wide.load151 = load <2 x ptr>, ptr %11, align 8, !tbaa !170, !alias.scope !344
-  %wide.load152 = load <2 x ptr>, ptr %12, align 8, !tbaa !170, !alias.scope !344
-  store <2 x ptr> %wide.load151, ptr %9, align 8, !tbaa !170, !alias.scope !341, !noalias !344
-  store <2 x ptr> %wide.load152, ptr %10, align 8, !tbaa !170, !alias.scope !341, !noalias !344
-  store <2 x ptr> %wide.load148, ptr %11, align 8, !tbaa !170, !alias.scope !344
-  store <2 x ptr> %wide.load149, ptr %12, align 8, !tbaa !170, !alias.scope !344
-  %index.next159 = add nuw i64 %index145, 4       ; 2 uses
-  %13 = icmp eq i64 %index.next159, %n.vec143
-  br i1 %13, label %middle.block160, label %vector.body144, !llvm.loop !346
-
-middle.block160:                                  ; preds = %vector.body144
-  %cmp.n161 = icmp eq i64 %.084, %n.vec143
+middle.block160:                                  ; preds = %.lr.ph
+  %cmp.n161 = icmp eq i64 %xtraiter, 0
   br i1 %cmp.n161, label %._crit_edge, label %.lr.ph.preheader191
 
-.lr.ph.preheader191:                              ; preds = %vector.memcheck134, %.lr.ph.preheader, %middle.block160
-  %.02794.ph = phi i64 [ 0, %vector.memcheck134 ], [ 0, %.lr.ph.preheader ], [ %n.vec143, %middle.block160 ] ; 3 uses
-  %.sroa.0.093.ph = phi ptr [ %i.cc, %vector.memcheck134 ], [ %i.cc, %.lr.ph.preheader ], [ %6, %middle.block160 ] ; 2 uses
-  %.sroa.041.292.ph = phi ptr [ %i.cn, %vector.memcheck134 ], [ %i.cn, %.lr.ph.preheader ], [ %7, %middle.block160 ] ; 2 uses
-  %xtraiter = and i64 %.084, 3                    ; 2 uses
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
+.lr.ph.preheader191:                              ; preds = %middle.block160, %vector.memcheck134
+  %.sroa.0.093.epil.init = phi ptr [ %i.cc, %vector.memcheck134 ], [ %i.dh, %middle.block160 ]
+  %.sroa.041.292.epil.init = phi ptr [ %i.cn, %vector.memcheck134 ], [ %i.dg, %middle.block160 ]
+  %lcmp.mod166 = icmp ne i64 %xtraiter, 0
+  tail call void @llvm.assume(i1 %lcmp.mod166)
+  br label %.lr.ph.prol
 
-.lr.ph.prol:                                      ; preds = %.lr.ph.preheader191, %.lr.ph.prol
-  %.02794.prol = phi i64 [ %14, %.lr.ph.prol ], [ %.02794.ph, %.lr.ph.preheader191 ]
-  %.sroa.0.093.prol = phi ptr [ %i.cq, %.lr.ph.prol ], [ %.sroa.0.093.ph, %.lr.ph.preheader191 ]
-  %.sroa.041.292.prol = phi ptr [ %i.cp, %.lr.ph.prol ], [ %.sroa.041.292.ph, %.lr.ph.preheader191 ]
+.lr.ph.prol:                                      ; preds = %.lr.ph.prol, %.lr.ph.preheader191
+  %.sroa.0.093.prol = phi ptr [ %i.cq, %.lr.ph.prol ], [ %.sroa.0.093.epil.init, %.lr.ph.preheader191 ]
+  %.sroa.041.292.prol = phi ptr [ %i.cp, %.lr.ph.prol ], [ %.sroa.041.292.epil.init, %.lr.ph.preheader191 ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.prol ], [ 0, %.lr.ph.preheader191 ]
-  %i.cp = getelementptr inbounds i8, ptr %.sroa.041.292.prol, i64 -8 ; 4 uses
-  %i.cq = getelementptr inbounds i8, ptr %.sroa.0.093.prol, i64 -8 ; 4 uses
+  %i.cp = getelementptr inbounds i8, ptr %.sroa.041.292.prol, i64 -8 ; 3 uses
+  %i.cq = getelementptr inbounds i8, ptr %.sroa.0.093.prol, i64 -8 ; 3 uses
   %i.cr = load ptr, ptr %i.cp, align 8, !tbaa !170
   %i.cs = load ptr, ptr %i.cq, align 8, !tbaa !170
   store ptr %i.cs, ptr %i.cp, align 8, !tbaa !170
   store ptr %i.cr, ptr %i.cq, align 8, !tbaa !170
-  %14 = add nuw nsw i64 %.02794.prol, 1           ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol, !llvm.loop !347
+  br i1 %prol.iter.cmp.not, label %._crit_edge, label %.lr.ph.prol, !llvm.loop !341
 
-.lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader191
-  %.02794.unr = phi i64 [ %.02794.ph, %.lr.ph.preheader191 ], [ %14, %.lr.ph.prol ]
-  %.sroa.0.093.unr = phi ptr [ %.sroa.0.093.ph, %.lr.ph.preheader191 ], [ %i.cq, %.lr.ph.prol ]
-  %.sroa.041.292.unr = phi ptr [ %.sroa.041.292.ph, %.lr.ph.preheader191 ], [ %i.cp, %.lr.ph.prol ]
-  %15 = sub nsw i64 %.02794.ph, %.084
-  %16 = icmp ugt i64 %15, -4
-  br i1 %16, label %._crit_edge, label %.lr.ph
-
-._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %middle.block160, %bb.n
-  %.sroa.041.2.lcssa = phi ptr [ %i.cn, %bb.n ], [ %.sroa.041.0, %middle.block160 ], [ %.sroa.041.0, %.lr.ph ], [ %.sroa.041.0, %.lr.ph.prol.loopexit ]
+._crit_edge:                                      ; preds = %middle.block160, %.lr.ph.prol, %bb.n
+  %.sroa.041.2.lcssa = phi ptr [ %i.cn, %bb.n ], [ %.sroa.041.0, %.lr.ph.prol ], [ %.sroa.041.0, %middle.block160 ]
   %i.ct = srem i64 %.0, %i.ag                     ; 2 uses
   %.not = icmp eq i64 %i.ct, 0
   br i1 %.not, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf7MessageESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit, label %.backedge
@@ -476,39 +433,39 @@ middle.block160:                                  ; preds = %vector.body144
   %.sroa.041.0.be = phi ptr [ %.sroa.041.1.lcssa, %bb.h ], [ %.sroa.041.2.lcssa, %._crit_edge ]
   %.084.be = phi i64 [ %i.ca, %bb.h ], [ %i.ct, %._crit_edge ]
   %.0.be = phi i64 [ %.084, %bb.h ], [ %i.ag, %._crit_edge ]
-  br label %bb.e, !llvm.loop !348
+  br label %bb.e, !llvm.loop !342
 
-.lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
-  %.02794 = phi i64 [ %i.dk, %.lr.ph ], [ %.02794.unr, %.lr.ph.prol.loopexit ]
-  %.sroa.0.093.a = phi ptr [ %i.dh, %.lr.ph ], [ %.sroa.0.093.unr, %.lr.ph.prol.loopexit ] ; 4 uses
-  %.sroa.041.292 = phi ptr [ %i.dg, %.lr.ph ], [ %.sroa.041.292.unr, %.lr.ph.prol.loopexit ] ; 4 uses
-  %i.cu = getelementptr inbounds i8, ptr %.sroa.041.292, i64 -8 ; 2 uses
-  %i.cv = getelementptr inbounds i8, ptr %.sroa.0.093.a, i64 -8 ; 2 uses
+.lr.ph:                                           ; preds = %.lr.ph, %vector.ph141
+  %.sroa.0.093 = phi ptr [ %i.cc, %vector.ph141 ], [ %i.dh, %.lr.ph ] ; 4 uses
+  %.sroa.0.093.a = phi ptr [ %i.cn, %vector.ph141 ], [ %i.dg, %.lr.ph ] ; 4 uses
+  %niter = phi i64 [ 0, %vector.ph141 ], [ %i.dk, %.lr.ph ]
+  %i.cu = getelementptr inbounds i8, ptr %.sroa.0.093.a, i64 -8 ; 2 uses
+  %i.cv = getelementptr inbounds i8, ptr %.sroa.0.093, i64 -8 ; 2 uses
   %i.cw = load ptr, ptr %i.cu, align 8, !tbaa !170
   %i.cx = load ptr, ptr %i.cv, align 8, !tbaa !170
   store ptr %i.cx, ptr %i.cu, align 8, !tbaa !170
   store ptr %i.cw, ptr %i.cv, align 8, !tbaa !170
-  %i.cy = getelementptr inbounds i8, ptr %.sroa.041.292, i64 -16 ; 2 uses
-  %i.cz = getelementptr inbounds i8, ptr %.sroa.0.093.a, i64 -16 ; 2 uses
+  %i.cy = getelementptr inbounds i8, ptr %.sroa.0.093.a, i64 -16 ; 2 uses
+  %i.cz = getelementptr inbounds i8, ptr %.sroa.0.093, i64 -16 ; 2 uses
   %i.da = load ptr, ptr %i.cy, align 8, !tbaa !170
   %i.db = load ptr, ptr %i.cz, align 8, !tbaa !170
   store ptr %i.db, ptr %i.cy, align 8, !tbaa !170
   store ptr %i.da, ptr %i.cz, align 8, !tbaa !170
-  %i.dc = getelementptr inbounds i8, ptr %.sroa.041.292, i64 -24 ; 2 uses
-  %i.dd = getelementptr inbounds i8, ptr %.sroa.0.093.a, i64 -24 ; 2 uses
+  %i.dc = getelementptr inbounds i8, ptr %.sroa.0.093.a, i64 -24 ; 2 uses
+  %i.dd = getelementptr inbounds i8, ptr %.sroa.0.093, i64 -24 ; 2 uses
   %i.de = load ptr, ptr %i.dc, align 8, !tbaa !170
   %i.df = load ptr, ptr %i.dd, align 8, !tbaa !170
   store ptr %i.df, ptr %i.dc, align 8, !tbaa !170
   store ptr %i.de, ptr %i.dd, align 8, !tbaa !170
-  %i.dg = getelementptr inbounds i8, ptr %.sroa.041.292, i64 -32 ; 3 uses
-  %i.dh = getelementptr inbounds i8, ptr %.sroa.0.093.a, i64 -32 ; 3 uses
+  %i.dg = getelementptr inbounds i8, ptr %.sroa.0.093.a, i64 -32 ; 4 uses
+  %i.dh = getelementptr inbounds i8, ptr %.sroa.0.093, i64 -32 ; 4 uses
   %i.di = load ptr, ptr %i.dg, align 8, !tbaa !170
   %i.dj = load ptr, ptr %i.dh, align 8, !tbaa !170
   store ptr %i.dj, ptr %i.dg, align 8, !tbaa !170
   store ptr %i.di, ptr %i.dh, align 8, !tbaa !170
-  %i.dk = add nuw nsw i64 %.02794, 4              ; 2 uses
-  %exitcond.not.3 = icmp eq i64 %i.dk, %.084
-  br i1 %exitcond.not.3, label %._crit_edge, label %.lr.ph, !llvm.loop !349
+  %i.dk = add i64 %niter, 4                       ; 2 uses
+  %exitcond.not.3 = icmp eq i64 %i.dk, %n.vec143
+  br i1 %exitcond.not.3, label %middle.block160, label %.lr.ph, !llvm.loop !343
 
 _ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf7MessageESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit: ; preds = %._crit_edge, %._crit_edge100, %.lr.ph.i, %middle.block185, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf7MessageESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf7MessageESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit, %bb.b, %bb.a
   %.sroa.024.1 = phi ptr [ %0, %bb.b ], [ %2, %bb.a ], [ %i.af, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf7MessageESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit ], [ %i.af, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf7MessageESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit ], [ %1, %middle.block185 ], [ %1, %.lr.ph.i ], [ %i.af, %._crit_edge100 ], [ %i.af, %._crit_edge ]
@@ -911,7 +868,7 @@ bb.b:                                             ; preds = %_ZNK6google8protobu
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !21
   %i.d = load i32, ptr %i.c, align 8, !tbaa !21   ; 2 uses
   %i.e = icmp sgt i32 %i.d, 1073741819
-  br i1 %i.e, label %_ZN6google8protobuf8internal20CalculateReserveSizeIiLi8EEEiii.exit, label %.thread, !prof !350
+  br i1 %i.e, label %_ZN6google8protobuf8internal20CalculateReserveSizeIiLi8EEEiii.exit, label %.thread, !prof !344
 
 .thread:                                          ; preds = %_ZNK6google8protobuf13RepeatedFieldIiE8CapacityEb.exit.thread, %bb.b
   %i.f = phi i32 [ %i.d, %bb.b ], [ 2, %_ZNK6google8protobuf13RepeatedFieldIiE8CapacityEb.exit.thread ]
@@ -976,19 +933,19 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g
   %i.ad = tail call noundef nonnull align 32 dereferenceable(24) ptr @llvm.threadlocal.address.p0(ptr align 32 @_ZN6google8protobuf8internal15ThreadSafeArena13thread_cache_E) ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
-  %i.af = load i64, ptr %i.ae, align 8, !tbaa !351
-  %i.ag = load i64, ptr %1, align 8, !tbaa !354
+  %i.af = load i64, ptr %i.ae, align 8, !tbaa !345
+  %i.ag = load i64, ptr %1, align 8, !tbaa !348
   %i.ah = icmp eq i64 %i.af, %i.ag
   br i1 %i.ah, label %bb.j, label %_ZN6google8protobuf13RepeatedFieldIiE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit, !prof !20
 
 bb.j:                                             ; preds = %bb.i
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
-  %i.aj = load ptr, ptr %i.ai, align 16, !tbaa !380 ; 5 uses
+  %i.aj = load ptr, ptr %i.ai, align 16, !tbaa !374 ; 5 uses
   %i.ak = icmp ugt i64 %i.ac, 15
   tail call void @llvm.assume(i1 %i.ak)
   %i.al = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.ac, i1 true)
   %i.am = sub nuw nsw i64 59, %i.al               ; 2 uses
-  %i.an = load i8, ptr %i.aj, align 8, !tbaa !381 ; 3 uses
+  %i.an = load i8, ptr %i.aj, align 8, !tbaa !375 ; 3 uses
   %i.ao = zext i8 %i.an to i64                    ; 2 uses
   %.not.i.i.i.i = icmp samesign ult i64 %i.am, %i.ao
   br i1 %.not.i.i.i.i, label %bb.n, label %bb.k, !prof !20
@@ -996,7 +953,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.ap = lshr i64 %i.ac, 3                       ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.aj, i64 48 ; 2 uses
-  %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !382 ; 2 uses
+  %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !376 ; 2 uses
   %i.as = icmp ugt i8 %i.an, 1
   br i1 %i.as, label %_ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_.exit.i.i.i.i, label %bb.l, !prof !20
 
@@ -1005,14 +962,14 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.at, label %bb.m, label %.lr.ph.preheader.i.i.i.i.i.i.i
 
 bb.m:                                             ; preds = %bb.l
-  %i.au = load ptr, ptr %i.ar, align 8, !tbaa !383
-  store ptr %i.au, ptr %i.y, align 8, !tbaa !383
+  %i.au = load ptr, ptr %i.ar, align 8, !tbaa !377
+  store ptr %i.au, ptr %i.y, align 8, !tbaa !377
   br label %.lr.ph.preheader.i.i.i.i.i.i.i
 
 _ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_.exit.i.i.i.i: ; preds = %bb.k
   %.idx.i.i.i.i = shl nuw nsw i64 %i.ao, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.y, ptr align 8 %i.ar, i64 %.idx.i.i.i.i, i1 false)
-  %.pre.i.i.i.i = load i8, ptr %i.aj, align 8, !tbaa !381
+  %.pre.i.i.i.i = load i8, ptr %i.aj, align 8, !tbaa !375
   %i.av = zext i8 %.pre.i.i.i.i to i64            ; 2 uses
   %.not4.i.i.i.i.i.i.i = icmp samesign eq i64 %i.ap, %i.av
   br i1 %.not4.i.i.i.i.i.i.i, label %_ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i, label %.lr.ph.preheader.i.i.i.i.i.i.i
@@ -1023,23 +980,23 @@ _ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_
   %i.ax = getelementptr inbounds nuw i8, ptr %i.y, i64 %.idx24.i.i.i.i
   %gepdiff.i.i.i.i = sub nsw i64 %i.ac, %.idx24.i.i.i.i
   %i.ay = and i64 %gepdiff.i.i.i.i, -8
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ax, i8 0, i64 %i.ay, i1 false), !tbaa !383
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ax, i8 0, i64 %i.ay, i1 false), !tbaa !377
   br label %_ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i
 
 _ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i: ; preds = %.lr.ph.preheader.i.i.i.i.i.i.i, %_ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_.exit.i.i.i.i
-  store ptr %i.y, ptr %i.aq, align 8, !tbaa !382
+  store ptr %i.y, ptr %i.aq, align 8, !tbaa !376
   %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umin.i64(i64 %i.ap, i64 64)
   %i.az = trunc nuw nsw i64 %.sroa.speculated.i.i.i.i to i8
-  store i8 %i.az, ptr %i.aj, align 8, !tbaa !381
+  store i8 %i.az, ptr %i.aj, align 8, !tbaa !375
   br label %_ZN6google8protobuf13RepeatedFieldIiE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit
 
 bb.n:                                             ; preds = %bb.j
   %i.ba = getelementptr inbounds nuw i8, ptr %i.aj, i64 48
-  %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !382
+  %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !376
   %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %i.am ; 2 uses
-  %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !383
-  store ptr %i.bd, ptr %i.y, align 8, !tbaa !385
-  store ptr %i.y, ptr %i.bc, align 8, !tbaa !383
+  %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !377
+  store ptr %i.bd, ptr %i.y, align 8, !tbaa !379
+  store ptr %i.y, ptr %i.bc, align 8, !tbaa !377
   br label %_ZN6google8protobuf13RepeatedFieldIiE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit
 
 _ZN6google8protobuf13RepeatedFieldIiE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit: ; preds = %bb.n, %_ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i, %bb.i, %bb.h, %bb.f
@@ -1082,7 +1039,7 @@ bb.b:                                             ; preds = %_ZNK6google8protobu
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !21
   %i.d = load i32, ptr %i.c, align 8, !tbaa !21   ; 2 uses
   %i.e = icmp sgt i32 %i.d, 1073741819
-  br i1 %i.e, label %_ZN6google8protobuf8internal20CalculateReserveSizeIlLi8EEEiii.exit, label %.thread, !prof !350
+  br i1 %i.e, label %_ZN6google8protobuf8internal20CalculateReserveSizeIlLi8EEEiii.exit, label %.thread, !prof !344
 
 .thread:                                          ; preds = %_ZNK6google8protobuf13RepeatedFieldIlE8CapacityEb.exit.thread, %bb.b
   %i.f = phi i32 [ %i.d, %bb.b ], [ 1, %_ZNK6google8protobuf13RepeatedFieldIlE8CapacityEb.exit.thread ]
@@ -1145,19 +1102,19 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g
   %i.ab = tail call noundef nonnull align 32 dereferenceable(24) ptr @llvm.threadlocal.address.p0(ptr align 32 @_ZN6google8protobuf8internal15ThreadSafeArena13thread_cache_E) ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
-  %i.ad = load i64, ptr %i.ac, align 8, !tbaa !351
-  %i.ae = load i64, ptr %1, align 8, !tbaa !354
+  %i.ad = load i64, ptr %i.ac, align 8, !tbaa !345
+  %i.ae = load i64, ptr %1, align 8, !tbaa !348
   %i.af = icmp eq i64 %i.ad, %i.ae
   br i1 %i.af, label %bb.j, label %_ZN6google8protobuf13RepeatedFieldIlE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit, !prof !20
 
 bb.j:                                             ; preds = %bb.i
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
-  %i.ah = load ptr, ptr %i.ag, align 16, !tbaa !380 ; 5 uses
+  %i.ah = load ptr, ptr %i.ag, align 16, !tbaa !374 ; 5 uses
   %i.ai = icmp ugt i64 %i.aa, 15
   tail call void @llvm.assume(i1 %i.ai)
   %i.aj = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.aa, i1 true)
   %i.ak = sub nuw nsw i64 59, %i.aj               ; 2 uses
-  %i.al = load i8, ptr %i.ah, align 8, !tbaa !381 ; 3 uses
+  %i.al = load i8, ptr %i.ah, align 8, !tbaa !375 ; 3 uses
   %i.am = zext i8 %i.al to i64                    ; 2 uses
   %.not.i.i.i.i = icmp samesign ult i64 %i.ak, %i.am
   br i1 %.not.i.i.i.i, label %bb.n, label %bb.k, !prof !20
@@ -1165,7 +1122,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.an = lshr exact i64 %i.aa, 3                 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ah, i64 48 ; 2 uses
-  %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !382 ; 2 uses
+  %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !376 ; 2 uses
   %i.aq = icmp ugt i8 %i.al, 1
   br i1 %i.aq, label %_ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_.exit.i.i.i.i, label %bb.l, !prof !20
 
@@ -1174,14 +1131,14 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.ar, label %bb.m, label %.lr.ph.preheader.i.i.i.i.i.i.i
 
 bb.m:                                             ; preds = %bb.l
-  %i.as = load ptr, ptr %i.ap, align 8, !tbaa !383
-  store ptr %i.as, ptr %i.w, align 8, !tbaa !383
+  %i.as = load ptr, ptr %i.ap, align 8, !tbaa !377
+  store ptr %i.as, ptr %i.w, align 8, !tbaa !377
   br label %.lr.ph.preheader.i.i.i.i.i.i.i
 
 _ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_.exit.i.i.i.i: ; preds = %bb.k
   %.idx.i.i.i.i = shl nuw nsw i64 %i.am, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.w, ptr align 8 %i.ap, i64 %.idx.i.i.i.i, i1 false)
-  %.pre.i.i.i.i = load i8, ptr %i.ah, align 8, !tbaa !381
+  %.pre.i.i.i.i = load i8, ptr %i.ah, align 8, !tbaa !375
   %i.at = zext i8 %.pre.i.i.i.i to i64            ; 2 uses
   %.not4.i.i.i.i.i.i.i = icmp samesign eq i64 %i.an, %i.at
   br i1 %.not4.i.i.i.i.i.i.i, label %_ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i, label %.lr.ph.preheader.i.i.i.i.i.i.i
@@ -1191,23 +1148,23 @@ _ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_
   %.idx24.i.i.i.i = shl nuw nsw i64 %i.au, 3      ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.w, i64 %.idx24.i.i.i.i
   %gepdiff.i.i.i.i = sub nsw i64 %i.aa, %.idx24.i.i.i.i
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.av, i8 0, i64 %gepdiff.i.i.i.i, i1 false), !tbaa !383
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.av, i8 0, i64 %gepdiff.i.i.i.i, i1 false), !tbaa !377
   br label %_ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i
 
 _ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i: ; preds = %.lr.ph.preheader.i.i.i.i.i.i.i, %_ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_.exit.i.i.i.i
-  store ptr %i.w, ptr %i.ao, align 8, !tbaa !382
+  store ptr %i.w, ptr %i.ao, align 8, !tbaa !376
   %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umin.i64(i64 %i.an, i64 64)
   %i.aw = trunc nuw nsw i64 %.sroa.speculated.i.i.i.i to i8
-  store i8 %i.aw, ptr %i.ah, align 8, !tbaa !381
+  store i8 %i.aw, ptr %i.ah, align 8, !tbaa !375
   br label %_ZN6google8protobuf13RepeatedFieldIlE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit
 
 bb.n:                                             ; preds = %bb.j
   %i.ax = getelementptr inbounds nuw i8, ptr %i.ah, i64 48
-  %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !382
+  %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !376
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %i.ak ; 2 uses
-  %i.ba = load ptr, ptr %i.az, align 8, !tbaa !383
-  store ptr %i.ba, ptr %i.w, align 8, !tbaa !385
-  store ptr %i.w, ptr %i.az, align 8, !tbaa !383
+  %i.ba = load ptr, ptr %i.az, align 8, !tbaa !377
+  store ptr %i.ba, ptr %i.w, align 8, !tbaa !379
+  store ptr %i.w, ptr %i.az, align 8, !tbaa !377
   br label %_ZN6google8protobuf13RepeatedFieldIlE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit
 
 _ZN6google8protobuf13RepeatedFieldIlE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit: ; preds = %bb.n, %_ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i, %bb.i, %bb.h, %bb.f
@@ -1243,7 +1200,7 @@ bb.b:                                             ; preds = %_ZNK6google8protobu
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !21
   %i.d = load i32, ptr %i.c, align 8, !tbaa !21   ; 2 uses
   %i.e = icmp sgt i32 %i.d, 1073741819
-  br i1 %i.e, label %_ZN6google8protobuf8internal20CalculateReserveSizeIjLi8EEEiii.exit, label %.thread, !prof !350
+  br i1 %i.e, label %_ZN6google8protobuf8internal20CalculateReserveSizeIjLi8EEEiii.exit, label %.thread, !prof !344
 
 .thread:                                          ; preds = %_ZNK6google8protobuf13RepeatedFieldIjE8CapacityEb.exit.thread, %bb.b
   %i.f = phi i32 [ %i.d, %bb.b ], [ 2, %_ZNK6google8protobuf13RepeatedFieldIjE8CapacityEb.exit.thread ]
@@ -1308,19 +1265,19 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g
   %i.ad = tail call noundef nonnull align 32 dereferenceable(24) ptr @llvm.threadlocal.address.p0(ptr align 32 @_ZN6google8protobuf8internal15ThreadSafeArena13thread_cache_E) ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
-  %i.af = load i64, ptr %i.ae, align 8, !tbaa !351
-  %i.ag = load i64, ptr %1, align 8, !tbaa !354
+  %i.af = load i64, ptr %i.ae, align 8, !tbaa !345
+  %i.ag = load i64, ptr %1, align 8, !tbaa !348
   %i.ah = icmp eq i64 %i.af, %i.ag
   br i1 %i.ah, label %bb.j, label %_ZN6google8protobuf13RepeatedFieldIjE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit, !prof !20
 
 bb.j:                                             ; preds = %bb.i
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
-  %i.aj = load ptr, ptr %i.ai, align 16, !tbaa !380 ; 5 uses
+  %i.aj = load ptr, ptr %i.ai, align 16, !tbaa !374 ; 5 uses
   %i.ak = icmp ugt i64 %i.ac, 15
   tail call void @llvm.assume(i1 %i.ak)
   %i.al = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.ac, i1 true)
   %i.am = sub nuw nsw i64 59, %i.al               ; 2 uses
-  %i.an = load i8, ptr %i.aj, align 8, !tbaa !381 ; 3 uses
+  %i.an = load i8, ptr %i.aj, align 8, !tbaa !375 ; 3 uses
   %i.ao = zext i8 %i.an to i64                    ; 2 uses
   %.not.i.i.i.i = icmp samesign ult i64 %i.am, %i.ao
   br i1 %.not.i.i.i.i, label %bb.n, label %bb.k, !prof !20
@@ -1328,7 +1285,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.ap = lshr i64 %i.ac, 3                       ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.aj, i64 48 ; 2 uses
-  %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !382 ; 2 uses
+  %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !376 ; 2 uses
   %i.as = icmp ugt i8 %i.an, 1
   br i1 %i.as, label %_ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_.exit.i.i.i.i, label %bb.l, !prof !20
 
@@ -1337,14 +1294,14 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.at, label %bb.m, label %.lr.ph.preheader.i.i.i.i.i.i.i
 
 bb.m:                                             ; preds = %bb.l
-  %i.au = load ptr, ptr %i.ar, align 8, !tbaa !383
-  store ptr %i.au, ptr %i.y, align 8, !tbaa !383
+  %i.au = load ptr, ptr %i.ar, align 8, !tbaa !377
+  store ptr %i.au, ptr %i.y, align 8, !tbaa !377
   br label %.lr.ph.preheader.i.i.i.i.i.i.i
 
 _ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_.exit.i.i.i.i: ; preds = %bb.k
   %.idx.i.i.i.i = shl nuw nsw i64 %i.ao, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.y, ptr align 8 %i.ar, i64 %.idx.i.i.i.i, i1 false)
-  %.pre.i.i.i.i = load i8, ptr %i.aj, align 8, !tbaa !381
+  %.pre.i.i.i.i = load i8, ptr %i.aj, align 8, !tbaa !375
   %i.av = zext i8 %.pre.i.i.i.i to i64            ; 2 uses
   %.not4.i.i.i.i.i.i.i = icmp samesign eq i64 %i.ap, %i.av
   br i1 %.not4.i.i.i.i.i.i.i, label %_ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i, label %.lr.ph.preheader.i.i.i.i.i.i.i
@@ -1355,23 +1312,23 @@ _ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_
   %i.ax = getelementptr inbounds nuw i8, ptr %i.y, i64 %.idx24.i.i.i.i
   %gepdiff.i.i.i.i = sub nsw i64 %i.ac, %.idx24.i.i.i.i
   %i.ay = and i64 %gepdiff.i.i.i.i, -8
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ax, i8 0, i64 %i.ay, i1 false), !tbaa !383
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ax, i8 0, i64 %i.ay, i1 false), !tbaa !377
   br label %_ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i
 
 _ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i: ; preds = %.lr.ph.preheader.i.i.i.i.i.i.i, %_ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_.exit.i.i.i.i
-  store ptr %i.y, ptr %i.aq, align 8, !tbaa !382
+  store ptr %i.y, ptr %i.aq, align 8, !tbaa !376
   %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umin.i64(i64 %i.ap, i64 64)
   %i.az = trunc nuw nsw i64 %.sroa.speculated.i.i.i.i to i8
-  store i8 %i.az, ptr %i.aj, align 8, !tbaa !381
+  store i8 %i.az, ptr %i.aj, align 8, !tbaa !375
   br label %_ZN6google8protobuf13RepeatedFieldIjE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit
 
 bb.n:                                             ; preds = %bb.j
   %i.ba = getelementptr inbounds nuw i8, ptr %i.aj, i64 48
-  %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !382
+  %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !376
   %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %i.am ; 2 uses
-  %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !383
-  store ptr %i.bd, ptr %i.y, align 8, !tbaa !385
-  store ptr %i.y, ptr %i.bc, align 8, !tbaa !383
+  %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !377
+  store ptr %i.bd, ptr %i.y, align 8, !tbaa !379
+  store ptr %i.y, ptr %i.bc, align 8, !tbaa !377
   br label %_ZN6google8protobuf13RepeatedFieldIjE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit
 
 _ZN6google8protobuf13RepeatedFieldIjE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit: ; preds = %bb.n, %_ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i, %bb.i, %bb.h, %bb.f
@@ -1407,7 +1364,7 @@ bb.b:                                             ; preds = %_ZNK6google8protobu
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !21
   %i.d = load i32, ptr %i.c, align 8, !tbaa !21   ; 2 uses
   %i.e = icmp sgt i32 %i.d, 1073741819
-  br i1 %i.e, label %_ZN6google8protobuf8internal20CalculateReserveSizeImLi8EEEiii.exit, label %.thread, !prof !350
+  br i1 %i.e, label %_ZN6google8protobuf8internal20CalculateReserveSizeImLi8EEEiii.exit, label %.thread, !prof !344
 
 .thread:                                          ; preds = %_ZNK6google8protobuf13RepeatedFieldImE8CapacityEb.exit.thread, %bb.b
   %i.f = phi i32 [ %i.d, %bb.b ], [ 1, %_ZNK6google8protobuf13RepeatedFieldImE8CapacityEb.exit.thread ]
@@ -1470,19 +1427,19 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g
   %i.ab = tail call noundef nonnull align 32 dereferenceable(24) ptr @llvm.threadlocal.address.p0(ptr align 32 @_ZN6google8protobuf8internal15ThreadSafeArena13thread_cache_E) ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
-  %i.ad = load i64, ptr %i.ac, align 8, !tbaa !351
-  %i.ae = load i64, ptr %1, align 8, !tbaa !354
+  %i.ad = load i64, ptr %i.ac, align 8, !tbaa !345
+  %i.ae = load i64, ptr %1, align 8, !tbaa !348
   %i.af = icmp eq i64 %i.ad, %i.ae
   br i1 %i.af, label %bb.j, label %_ZN6google8protobuf13RepeatedFieldImE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit, !prof !20
 
 bb.j:                                             ; preds = %bb.i
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
-  %i.ah = load ptr, ptr %i.ag, align 16, !tbaa !380 ; 5 uses
+  %i.ah = load ptr, ptr %i.ag, align 16, !tbaa !374 ; 5 uses
   %i.ai = icmp ugt i64 %i.aa, 15
   tail call void @llvm.assume(i1 %i.ai)
   %i.aj = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.aa, i1 true)
   %i.ak = sub nuw nsw i64 59, %i.aj               ; 2 uses
-  %i.al = load i8, ptr %i.ah, align 8, !tbaa !381 ; 3 uses
+  %i.al = load i8, ptr %i.ah, align 8, !tbaa !375 ; 3 uses
   %i.am = zext i8 %i.al to i64                    ; 2 uses
   %.not.i.i.i.i = icmp samesign ult i64 %i.ak, %i.am
   br i1 %.not.i.i.i.i, label %bb.n, label %bb.k, !prof !20
@@ -1490,7 +1447,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.an = lshr exact i64 %i.aa, 3                 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ah, i64 48 ; 2 uses
-  %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !382 ; 2 uses
+  %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !376 ; 2 uses
   %i.aq = icmp ugt i8 %i.al, 1
   br i1 %i.aq, label %_ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_.exit.i.i.i.i, label %bb.l, !prof !20
 
@@ -1499,14 +1456,14 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.ar, label %bb.m, label %.lr.ph.preheader.i.i.i.i.i.i.i
 
 bb.m:                                             ; preds = %bb.l
-  %i.as = load ptr, ptr %i.ap, align 8, !tbaa !383
-  store ptr %i.as, ptr %i.w, align 8, !tbaa !383
+  %i.as = load ptr, ptr %i.ap, align 8, !tbaa !377
+  store ptr %i.as, ptr %i.w, align 8, !tbaa !377
   br label %.lr.ph.preheader.i.i.i.i.i.i.i
 
 _ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_.exit.i.i.i.i: ; preds = %bb.k
   %.idx.i.i.i.i = shl nuw nsw i64 %i.am, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.w, ptr align 8 %i.ap, i64 %.idx.i.i.i.i, i1 false)
-  %.pre.i.i.i.i = load i8, ptr %i.ah, align 8, !tbaa !381
+  %.pre.i.i.i.i = load i8, ptr %i.ah, align 8, !tbaa !375
   %i.at = zext i8 %.pre.i.i.i.i to i64            ; 2 uses
   %.not4.i.i.i.i.i.i.i = icmp samesign eq i64 %i.an, %i.at
   br i1 %.not4.i.i.i.i.i.i.i, label %_ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i, label %.lr.ph.preheader.i.i.i.i.i.i.i
@@ -1516,23 +1473,23 @@ _ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_
   %.idx24.i.i.i.i = shl nuw nsw i64 %i.au, 3      ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.w, i64 %.idx24.i.i.i.i
   %gepdiff.i.i.i.i = sub nsw i64 %i.aa, %.idx24.i.i.i.i
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.av, i8 0, i64 %gepdiff.i.i.i.i, i1 false), !tbaa !383
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.av, i8 0, i64 %gepdiff.i.i.i.i, i1 false), !tbaa !377
   br label %_ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i
 
 _ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i: ; preds = %.lr.ph.preheader.i.i.i.i.i.i.i, %_ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_.exit.i.i.i.i
-  store ptr %i.w, ptr %i.ao, align 8, !tbaa !382
+  store ptr %i.w, ptr %i.ao, align 8, !tbaa !376
   %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umin.i64(i64 %i.an, i64 64)
   %i.aw = trunc nuw nsw i64 %.sroa.speculated.i.i.i.i to i8
-  store i8 %i.aw, ptr %i.ah, align 8, !tbaa !381
+  store i8 %i.aw, ptr %i.ah, align 8, !tbaa !375
   br label %_ZN6google8protobuf13RepeatedFieldImE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit
 
 bb.n:                                             ; preds = %bb.j
   %i.ax = getelementptr inbounds nuw i8, ptr %i.ah, i64 48
-  %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !382
+  %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !376
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %i.ak ; 2 uses
-  %i.ba = load ptr, ptr %i.az, align 8, !tbaa !383
-  store ptr %i.ba, ptr %i.w, align 8, !tbaa !385
-  store ptr %i.w, ptr %i.az, align 8, !tbaa !383
+  %i.ba = load ptr, ptr %i.az, align 8, !tbaa !377
+  store ptr %i.ba, ptr %i.w, align 8, !tbaa !379
+  store ptr %i.w, ptr %i.az, align 8, !tbaa !377
   br label %_ZN6google8protobuf13RepeatedFieldImE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit
 
 _ZN6google8protobuf13RepeatedFieldImE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit: ; preds = %bb.n, %_ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i, %bb.i, %bb.h, %bb.f
@@ -1570,7 +1527,7 @@ bb.b:                                             ; preds = %_ZNK6google8protobu
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !21
   %i.d = load i32, ptr %i.c, align 8, !tbaa !21   ; 2 uses
   %i.e = icmp sgt i32 %i.d, 1073741819
-  br i1 %i.e, label %_ZN6google8protobuf8internal20CalculateReserveSizeIfLi8EEEiii.exit, label %.thread, !prof !350
+  br i1 %i.e, label %_ZN6google8protobuf8internal20CalculateReserveSizeIfLi8EEEiii.exit, label %.thread, !prof !344
 
 .thread:                                          ; preds = %_ZNK6google8protobuf13RepeatedFieldIfE8CapacityEb.exit.thread, %bb.b
   %i.f = phi i32 [ %i.d, %bb.b ], [ 2, %_ZNK6google8protobuf13RepeatedFieldIfE8CapacityEb.exit.thread ]
@@ -1635,19 +1592,19 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g
   %i.ad = tail call noundef nonnull align 32 dereferenceable(24) ptr @llvm.threadlocal.address.p0(ptr align 32 @_ZN6google8protobuf8internal15ThreadSafeArena13thread_cache_E) ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
-  %i.af = load i64, ptr %i.ae, align 8, !tbaa !351
-  %i.ag = load i64, ptr %1, align 8, !tbaa !354
+  %i.af = load i64, ptr %i.ae, align 8, !tbaa !345
+  %i.ag = load i64, ptr %1, align 8, !tbaa !348
   %i.ah = icmp eq i64 %i.af, %i.ag
   br i1 %i.ah, label %bb.j, label %_ZN6google8protobuf13RepeatedFieldIfE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit, !prof !20
 
 bb.j:                                             ; preds = %bb.i
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
-  %i.aj = load ptr, ptr %i.ai, align 16, !tbaa !380 ; 5 uses
+  %i.aj = load ptr, ptr %i.ai, align 16, !tbaa !374 ; 5 uses
   %i.ak = icmp ugt i64 %i.ac, 15
   tail call void @llvm.assume(i1 %i.ak)
   %i.al = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.ac, i1 true)
   %i.am = sub nuw nsw i64 59, %i.al               ; 2 uses
-  %i.an = load i8, ptr %i.aj, align 8, !tbaa !381 ; 3 uses
+  %i.an = load i8, ptr %i.aj, align 8, !tbaa !375 ; 3 uses
   %i.ao = zext i8 %i.an to i64                    ; 2 uses
   %.not.i.i.i.i = icmp samesign ult i64 %i.am, %i.ao
   br i1 %.not.i.i.i.i, label %bb.n, label %bb.k, !prof !20
@@ -1655,7 +1612,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.ap = lshr i64 %i.ac, 3                       ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.aj, i64 48 ; 2 uses
-  %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !382 ; 2 uses
+  %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !376 ; 2 uses
   %i.as = icmp ugt i8 %i.an, 1
   br i1 %i.as, label %_ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_.exit.i.i.i.i, label %bb.l, !prof !20
 
@@ -1664,14 +1621,14 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.at, label %bb.m, label %.lr.ph.preheader.i.i.i.i.i.i.i
 
 bb.m:                                             ; preds = %bb.l
-  %i.au = load ptr, ptr %i.ar, align 8, !tbaa !383
-  store ptr %i.au, ptr %i.y, align 8, !tbaa !383
+  %i.au = load ptr, ptr %i.ar, align 8, !tbaa !377
+  store ptr %i.au, ptr %i.y, align 8, !tbaa !377
   br label %.lr.ph.preheader.i.i.i.i.i.i.i
 
 _ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_.exit.i.i.i.i: ; preds = %bb.k
   %.idx.i.i.i.i = shl nuw nsw i64 %i.ao, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.y, ptr align 8 %i.ar, i64 %.idx.i.i.i.i, i1 false)
-  %.pre.i.i.i.i = load i8, ptr %i.aj, align 8, !tbaa !381
+  %.pre.i.i.i.i = load i8, ptr %i.aj, align 8, !tbaa !375
   %i.av = zext i8 %.pre.i.i.i.i to i64            ; 2 uses
   %.not4.i.i.i.i.i.i.i = icmp samesign eq i64 %i.ap, %i.av
   br i1 %.not4.i.i.i.i.i.i.i, label %_ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i, label %.lr.ph.preheader.i.i.i.i.i.i.i
@@ -1682,23 +1639,23 @@ _ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_
   %i.ax = getelementptr inbounds nuw i8, ptr %i.y, i64 %.idx24.i.i.i.i
   %gepdiff.i.i.i.i = sub nsw i64 %i.ac, %.idx24.i.i.i.i
   %i.ay = and i64 %gepdiff.i.i.i.i, -8
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ax, i8 0, i64 %i.ay, i1 false), !tbaa !383
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ax, i8 0, i64 %i.ay, i1 false), !tbaa !377
   br label %_ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i
 
 _ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i: ; preds = %.lr.ph.preheader.i.i.i.i.i.i.i, %_ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_.exit.i.i.i.i
-  store ptr %i.y, ptr %i.aq, align 8, !tbaa !382
+  store ptr %i.y, ptr %i.aq, align 8, !tbaa !376
   %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umin.i64(i64 %i.ap, i64 64)
   %i.az = trunc nuw nsw i64 %.sroa.speculated.i.i.i.i to i8
-  store i8 %i.az, ptr %i.aj, align 8, !tbaa !381
+  store i8 %i.az, ptr %i.aj, align 8, !tbaa !375
   br label %_ZN6google8protobuf13RepeatedFieldIfE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit
 
 bb.n:                                             ; preds = %bb.j
   %i.ba = getelementptr inbounds nuw i8, ptr %i.aj, i64 48
-  %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !382
+  %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !376
   %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %i.am ; 2 uses
-  %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !383
-  store ptr %i.bd, ptr %i.y, align 8, !tbaa !385
-  store ptr %i.y, ptr %i.bc, align 8, !tbaa !383
+  %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !377
+  store ptr %i.bd, ptr %i.y, align 8, !tbaa !379
+  store ptr %i.y, ptr %i.bc, align 8, !tbaa !377
   br label %_ZN6google8protobuf13RepeatedFieldIfE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit
 
 _ZN6google8protobuf13RepeatedFieldIfE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit: ; preds = %bb.n, %_ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i, %bb.i, %bb.h, %bb.f
@@ -1734,7 +1691,7 @@ bb.b:                                             ; preds = %_ZNK6google8protobu
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !21
   %i.d = load i32, ptr %i.c, align 8, !tbaa !21   ; 2 uses
   %i.e = icmp sgt i32 %i.d, 1073741819
-  br i1 %i.e, label %_ZN6google8protobuf8internal20CalculateReserveSizeIdLi8EEEiii.exit, label %.thread, !prof !350
+  br i1 %i.e, label %_ZN6google8protobuf8internal20CalculateReserveSizeIdLi8EEEiii.exit, label %.thread, !prof !344
 
 .thread:                                          ; preds = %_ZNK6google8protobuf13RepeatedFieldIdE8CapacityEb.exit.thread, %bb.b
   %i.f = phi i32 [ %i.d, %bb.b ], [ 1, %_ZNK6google8protobuf13RepeatedFieldIdE8CapacityEb.exit.thread ]
@@ -1797,19 +1754,19 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g
   %i.ab = tail call noundef nonnull align 32 dereferenceable(24) ptr @llvm.threadlocal.address.p0(ptr align 32 @_ZN6google8protobuf8internal15ThreadSafeArena13thread_cache_E) ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
-  %i.ad = load i64, ptr %i.ac, align 8, !tbaa !351
-  %i.ae = load i64, ptr %1, align 8, !tbaa !354
+  %i.ad = load i64, ptr %i.ac, align 8, !tbaa !345
+  %i.ae = load i64, ptr %1, align 8, !tbaa !348
   %i.af = icmp eq i64 %i.ad, %i.ae
   br i1 %i.af, label %bb.j, label %_ZN6google8protobuf13RepeatedFieldIdE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit, !prof !20
 
 bb.j:                                             ; preds = %bb.i
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
-  %i.ah = load ptr, ptr %i.ag, align 16, !tbaa !380 ; 5 uses
+  %i.ah = load ptr, ptr %i.ag, align 16, !tbaa !374 ; 5 uses
   %i.ai = icmp ugt i64 %i.aa, 15
   tail call void @llvm.assume(i1 %i.ai)
   %i.aj = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.aa, i1 true)
   %i.ak = sub nuw nsw i64 59, %i.aj               ; 2 uses
-  %i.al = load i8, ptr %i.ah, align 8, !tbaa !381 ; 3 uses
+  %i.al = load i8, ptr %i.ah, align 8, !tbaa !375 ; 3 uses
   %i.am = zext i8 %i.al to i64                    ; 2 uses
   %.not.i.i.i.i = icmp samesign ult i64 %i.ak, %i.am
   br i1 %.not.i.i.i.i, label %bb.n, label %bb.k, !prof !20
@@ -1817,7 +1774,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.an = lshr exact i64 %i.aa, 3                 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ah, i64 48 ; 2 uses
-  %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !382 ; 2 uses
+  %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !376 ; 2 uses
   %i.aq = icmp ugt i8 %i.al, 1
   br i1 %i.aq, label %_ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_.exit.i.i.i.i, label %bb.l, !prof !20
 
@@ -1826,14 +1783,14 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.ar, label %bb.m, label %.lr.ph.preheader.i.i.i.i.i.i.i
 
 bb.m:                                             ; preds = %bb.l
-  %i.as = load ptr, ptr %i.ap, align 8, !tbaa !383
-  store ptr %i.as, ptr %i.w, align 8, !tbaa !383
+  %i.as = load ptr, ptr %i.ap, align 8, !tbaa !377
+  store ptr %i.as, ptr %i.w, align 8, !tbaa !377
   br label %.lr.ph.preheader.i.i.i.i.i.i.i
 
 _ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_.exit.i.i.i.i: ; preds = %bb.k
   %.idx.i.i.i.i = shl nuw nsw i64 %i.am, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.w, ptr align 8 %i.ap, i64 %.idx.i.i.i.i, i1 false)
-  %.pre.i.i.i.i = load i8, ptr %i.ah, align 8, !tbaa !381
+  %.pre.i.i.i.i = load i8, ptr %i.ah, align 8, !tbaa !375
   %i.at = zext i8 %.pre.i.i.i.i to i64            ; 2 uses
   %.not4.i.i.i.i.i.i.i = icmp samesign eq i64 %i.an, %i.at
   br i1 %.not4.i.i.i.i.i.i.i, label %_ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i, label %.lr.ph.preheader.i.i.i.i.i.i.i
@@ -1843,23 +1800,23 @@ _ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_
   %.idx24.i.i.i.i = shl nuw nsw i64 %i.au, 3      ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.w, i64 %.idx24.i.i.i.i
   %gepdiff.i.i.i.i = sub nsw i64 %i.aa, %.idx24.i.i.i.i
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.av, i8 0, i64 %gepdiff.i.i.i.i, i1 false), !tbaa !383
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.av, i8 0, i64 %gepdiff.i.i.i.i, i1 false), !tbaa !377
   br label %_ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i
 
 _ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i: ; preds = %.lr.ph.preheader.i.i.i.i.i.i.i, %_ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_.exit.i.i.i.i
-  store ptr %i.w, ptr %i.ao, align 8, !tbaa !382
+  store ptr %i.w, ptr %i.ao, align 8, !tbaa !376
   %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umin.i64(i64 %i.an, i64 64)
   %i.aw = trunc nuw nsw i64 %.sroa.speculated.i.i.i.i to i8
-  store i8 %i.aw, ptr %i.ah, align 8, !tbaa !381
+  store i8 %i.aw, ptr %i.ah, align 8, !tbaa !375
   br label %_ZN6google8protobuf13RepeatedFieldIdE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit
 
 bb.n:                                             ; preds = %bb.j
   %i.ax = getelementptr inbounds nuw i8, ptr %i.ah, i64 48
-  %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !382
+  %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !376
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %i.ak ; 2 uses
-  %i.ba = load ptr, ptr %i.az, align 8, !tbaa !383
-  store ptr %i.ba, ptr %i.w, align 8, !tbaa !385
-  store ptr %i.w, ptr %i.az, align 8, !tbaa !383
+  %i.ba = load ptr, ptr %i.az, align 8, !tbaa !377
+  store ptr %i.ba, ptr %i.w, align 8, !tbaa !379
+  store ptr %i.w, ptr %i.az, align 8, !tbaa !377
   br label %_ZN6google8protobuf13RepeatedFieldIdE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit
 
 _ZN6google8protobuf13RepeatedFieldIdE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit: ; preds = %bb.n, %_ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i, %bb.i, %bb.h, %bb.f
@@ -1895,7 +1852,7 @@ bb.b:                                             ; preds = %_ZNK6google8protobu
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !21
   %i.d = load i32, ptr %i.c, align 8, !tbaa !21   ; 2 uses
   %i.e = icmp sgt i32 %i.d, 1073741819
-  br i1 %i.e, label %_ZN6google8protobuf8internal20CalculateReserveSizeIbLi8EEEiii.exit, label %.thread, !prof !350
+  br i1 %i.e, label %_ZN6google8protobuf8internal20CalculateReserveSizeIbLi8EEEiii.exit, label %.thread, !prof !344
 
 .thread:                                          ; preds = %_ZNK6google8protobuf13RepeatedFieldIbE8CapacityEb.exit.thread, %bb.b
   %i.f = phi i32 [ %i.d, %bb.b ], [ 8, %_ZNK6google8protobuf13RepeatedFieldIbE8CapacityEb.exit.thread ]
@@ -1957,19 +1914,19 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g
   %i.aa = tail call noundef nonnull align 32 dereferenceable(24) ptr @llvm.threadlocal.address.p0(ptr align 32 @_ZN6google8protobuf8internal15ThreadSafeArena13thread_cache_E) ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
-  %i.ac = load i64, ptr %i.ab, align 8, !tbaa !351
-  %i.ad = load i64, ptr %1, align 8, !tbaa !354
+  %i.ac = load i64, ptr %i.ab, align 8, !tbaa !345
+  %i.ad = load i64, ptr %1, align 8, !tbaa !348
   %i.ae = icmp eq i64 %i.ac, %i.ad
   br i1 %i.ae, label %bb.j, label %_ZN6google8protobuf13RepeatedFieldIbE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit, !prof !20
 
 bb.j:                                             ; preds = %bb.i
   %i.af = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
-  %i.ag = load ptr, ptr %i.af, align 16, !tbaa !380 ; 5 uses
+  %i.ag = load ptr, ptr %i.af, align 16, !tbaa !374 ; 5 uses
   %i.ah = icmp ugt i64 %i.z, 15
   tail call void @llvm.assume(i1 %i.ah)
   %i.ai = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.z, i1 true)
   %i.aj = sub nuw nsw i64 59, %i.ai               ; 2 uses
-  %i.ak = load i8, ptr %i.ag, align 8, !tbaa !381 ; 3 uses
+  %i.ak = load i8, ptr %i.ag, align 8, !tbaa !375 ; 3 uses
   %i.al = zext i8 %i.ak to i64                    ; 2 uses
   %.not.i.i.i.i = icmp samesign ult i64 %i.aj, %i.al
   br i1 %.not.i.i.i.i, label %bb.n, label %bb.k, !prof !20
@@ -1977,7 +1934,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.am = lshr i64 %i.z, 3                        ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.ag, i64 48 ; 2 uses
-  %i.ao = load ptr, ptr %i.an, align 8, !tbaa !382 ; 2 uses
+  %i.ao = load ptr, ptr %i.an, align 8, !tbaa !376 ; 2 uses
   %i.ap = icmp ugt i8 %i.ak, 1
   br i1 %i.ap, label %_ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_.exit.i.i.i.i, label %bb.l, !prof !20
 
@@ -1986,14 +1943,14 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.aq, label %bb.m, label %.lr.ph.preheader.i.i.i.i.i.i.i
 
 bb.m:                                             ; preds = %bb.l
-  %i.ar = load ptr, ptr %i.ao, align 8, !tbaa !383
-  store ptr %i.ar, ptr %i.w, align 8, !tbaa !383
+  %i.ar = load ptr, ptr %i.ao, align 8, !tbaa !377
+  store ptr %i.ar, ptr %i.w, align 8, !tbaa !377
   br label %.lr.ph.preheader.i.i.i.i.i.i.i
 
 _ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_.exit.i.i.i.i: ; preds = %bb.k
   %.idx.i.i.i.i = shl nuw nsw i64 %i.al, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.w, ptr align 8 %i.ao, i64 %.idx.i.i.i.i, i1 false)
-  %.pre.i.i.i.i = load i8, ptr %i.ag, align 8, !tbaa !381
+  %.pre.i.i.i.i = load i8, ptr %i.ag, align 8, !tbaa !375
   %i.as = zext i8 %.pre.i.i.i.i to i64            ; 2 uses
   %.not4.i.i.i.i.i.i.i = icmp samesign eq i64 %i.am, %i.as
   br i1 %.not4.i.i.i.i.i.i.i, label %_ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i, label %.lr.ph.preheader.i.i.i.i.i.i.i
@@ -2004,23 +1961,23 @@ _ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_
   %i.au = getelementptr inbounds nuw i8, ptr %i.w, i64 %.idx24.i.i.i.i
   %gepdiff.i.i.i.i = sub nsw i64 %i.z, %.idx24.i.i.i.i
   %i.av = and i64 %gepdiff.i.i.i.i, -8
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.au, i8 0, i64 %i.av, i1 false), !tbaa !383
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.au, i8 0, i64 %i.av, i1 false), !tbaa !377
   br label %_ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i
 
 _ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i: ; preds = %.lr.ph.preheader.i.i.i.i.i.i.i, %_ZSt4copyIPPN6google8protobuf8internal11SerialArena11CachedBlockES6_ET0_T_S8_S7_.exit.i.i.i.i
-  store ptr %i.w, ptr %i.an, align 8, !tbaa !382
+  store ptr %i.w, ptr %i.an, align 8, !tbaa !376
   %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umin.i64(i64 %i.am, i64 64)
   %i.aw = trunc nuw nsw i64 %.sroa.speculated.i.i.i.i to i8
-  store i8 %i.aw, ptr %i.ag, align 8, !tbaa !381
+  store i8 %i.aw, ptr %i.ag, align 8, !tbaa !375
   br label %_ZN6google8protobuf13RepeatedFieldIbE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit
 
 bb.n:                                             ; preds = %bb.j
   %i.ax = getelementptr inbounds nuw i8, ptr %i.ag, i64 48
-  %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !382
+  %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !376
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %i.aj ; 2 uses
-  %i.ba = load ptr, ptr %i.az, align 8, !tbaa !383
-  store ptr %i.ba, ptr %i.w, align 8, !tbaa !385
-  store ptr %i.w, ptr %i.az, align 8, !tbaa !383
+  %i.ba = load ptr, ptr %i.az, align 8, !tbaa !377
+  store ptr %i.ba, ptr %i.w, align 8, !tbaa !379
+  store ptr %i.w, ptr %i.az, align 8, !tbaa !377
   br label %_ZN6google8protobuf13RepeatedFieldIbE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit
 
 _ZN6google8protobuf13RepeatedFieldIbE18InternalDeallocateILb0EEEvPNS0_5ArenaE.exit: ; preds = %bb.n, %_ZSt4fillIPPN6google8protobuf8internal11SerialArena11CachedBlockEDnEvT_S7_RKT0_.exit.i.i.i.i, %bb.i, %bb.h, %bb.f
@@ -2423,50 +2380,44 @@ begin_hunk_2_@llvm.smin.i64
 !338 = distinct !{!338, !339}
 !339 = !{!"llvm.loop.unroll.disable"}
 !340 = distinct !{!340, !41, !329}
-!341 = !{!342}
-!342 = distinct !{!342, !343}
-!343 = distinct !{!343, !"LVerDomain"}
-!344 = !{!345}
-!345 = distinct !{!345, !343}
-!346 = distinct !{!346, !41, !329, !330}
-!347 = distinct !{!347, !339}
-!348 = distinct !{!348, !41}
-!349 = distinct !{!349, !41, !329}
-!350 = !{!"branch_weights", !"expected", i32 2146410, i32 2145337238}
-!351 = !{!352, !23, i64 8}
-!352 = !{!"_ZTSN6google8protobuf8internal15ThreadSafeArena11ThreadCacheE", !23, i64 0, !23, i64 8, !353, i64 16}
-!353 = !{!"p1 _ZTSN6google8protobuf8internal11SerialArenaE", !11, i64 0}
-!354 = !{!355, !23, i64 0}
-!355 = !{!"_ZTSN6google8protobuf8internal15ThreadSafeArenaE", !23, i64 0, !356, i64 8, !357, i64 16, !360, i64 24, !361, i64 32, !364, i64 40, !11, i64 160}
-!356 = !{!"_ZTSN6google8protobuf8internal25TaggedAllocationPolicyPtrE", !23, i64 0}
-!357 = !{!"_ZTSSt6atomicIPN6google8protobuf8internal15ThreadSafeArena16SerialArenaChunkEE", !358, i64 0}
-!358 = !{!"_ZTSSt13__atomic_baseIPN6google8protobuf8internal15ThreadSafeArena16SerialArenaChunkEE", !359, i64 0}
-!359 = !{!"p1 _ZTSN6google8protobuf8internal15ThreadSafeArena16SerialArenaChunkE", !11, i64 0}
-!360 = !{!"_ZTSN6google8protobuf8internal26ThreadSafeArenaStatsHandleE"}
-!361 = !{!"_ZTSN4absl12lts_202505125MutexE", !362, i64 0}
-!362 = !{!"_ZTSSt6atomicIlE", !363, i64 0}
-!363 = !{!"_ZTSSt13__atomic_baseIlE", !23, i64 0}
-!364 = !{!"_ZTSN6google8protobuf8internal11SerialArenaE", !5, i64 0, !14, i64 8, !365, i64 16, !368, i64 24, !14, i64 32, !370, i64 40, !372, i64 48, !373, i64 56, !376, i64 64, !370, i64 72, !377, i64 80, !370, i64 112}
-!365 = !{!"_ZTSSt6atomicIPN6google8protobuf8internal10ArenaBlockEE", !366, i64 0}
-!366 = !{!"_ZTSSt13__atomic_baseIPN6google8protobuf8internal10ArenaBlockEE", !367, i64 0}
-!367 = !{!"p1 _ZTSN6google8protobuf8internal10ArenaBlockE", !11, i64 0}
-!368 = !{!"_ZTSSt6atomicIPcE", !369, i64 0}
-!369 = !{!"_ZTSSt13__atomic_baseIPcE", !14, i64 0}
-!370 = !{!"_ZTSSt6atomicImE", !371, i64 0}
-!371 = !{!"_ZTSSt13__atomic_baseImE", !23, i64 0}
-!372 = !{!"p2 _ZTSN6google8protobuf8internal11SerialArena11CachedBlockE", !68, i64 0}
-!373 = !{!"_ZTSSt6atomicIPN6google8protobuf8internal11StringBlockEE", !374, i64 0}
-!374 = !{!"_ZTSSt13__atomic_baseIPN6google8protobuf8internal11StringBlockEE", !375, i64 0}
-!375 = !{!"p1 _ZTSN6google8protobuf8internal11StringBlockE", !11, i64 0}
-!376 = !{!"p1 _ZTSN6google8protobuf8internal15ThreadSafeArenaE", !11, i64 0}
-!377 = !{!"_ZTSN6google8protobuf8internal7cleanup9ChunkListE", !378, i64 0, !379, i64 8, !379, i64 16, !14, i64 24}
-!378 = !{!"p1 _ZTSN6google8protobuf8internal7cleanup9ChunkList5ChunkE", !11, i64 0}
-!379 = !{!"p1 _ZTSN6google8protobuf8internal7cleanup11CleanupNodeE", !11, i64 0}
-!380 = !{!352, !353, i64 16}
-!381 = !{!364, !5, i64 0}
-!382 = !{!364, !372, i64 48}
-!383 = !{!384, !384, i64 0}
-!384 = !{!"p1 _ZTSN6google8protobuf8internal11SerialArena11CachedBlockE", !11, i64 0}
-!385 = !{!386, !384, i64 0}
-!386 = !{!"_ZTSN6google8protobuf8internal11SerialArena11CachedBlockE", !384, i64 0}
+!341 = distinct !{!341, !339}
+!342 = distinct !{!342, !41}
+!343 = distinct !{!343, !41}
+!344 = !{!"branch_weights", !"expected", i32 2146410, i32 2145337238}
+!345 = !{!346, !23, i64 8}
+!346 = !{!"_ZTSN6google8protobuf8internal15ThreadSafeArena11ThreadCacheE", !23, i64 0, !23, i64 8, !347, i64 16}
+!347 = !{!"p1 _ZTSN6google8protobuf8internal11SerialArenaE", !11, i64 0}
+!348 = !{!349, !23, i64 0}
+!349 = !{!"_ZTSN6google8protobuf8internal15ThreadSafeArenaE", !23, i64 0, !350, i64 8, !351, i64 16, !354, i64 24, !355, i64 32, !358, i64 40, !11, i64 160}
+!350 = !{!"_ZTSN6google8protobuf8internal25TaggedAllocationPolicyPtrE", !23, i64 0}
+!351 = !{!"_ZTSSt6atomicIPN6google8protobuf8internal15ThreadSafeArena16SerialArenaChunkEE", !352, i64 0}
+!352 = !{!"_ZTSSt13__atomic_baseIPN6google8protobuf8internal15ThreadSafeArena16SerialArenaChunkEE", !353, i64 0}
+!353 = !{!"p1 _ZTSN6google8protobuf8internal15ThreadSafeArena16SerialArenaChunkE", !11, i64 0}
+!354 = !{!"_ZTSN6google8protobuf8internal26ThreadSafeArenaStatsHandleE"}
+!355 = !{!"_ZTSN4absl12lts_202505125MutexE", !356, i64 0}
+!356 = !{!"_ZTSSt6atomicIlE", !357, i64 0}
+!357 = !{!"_ZTSSt13__atomic_baseIlE", !23, i64 0}
+!358 = !{!"_ZTSN6google8protobuf8internal11SerialArenaE", !5, i64 0, !14, i64 8, !359, i64 16, !362, i64 24, !14, i64 32, !364, i64 40, !366, i64 48, !367, i64 56, !370, i64 64, !364, i64 72, !371, i64 80, !364, i64 112}
+!359 = !{!"_ZTSSt6atomicIPN6google8protobuf8internal10ArenaBlockEE", !360, i64 0}
+!360 = !{!"_ZTSSt13__atomic_baseIPN6google8protobuf8internal10ArenaBlockEE", !361, i64 0}
+!361 = !{!"p1 _ZTSN6google8protobuf8internal10ArenaBlockE", !11, i64 0}
+!362 = !{!"_ZTSSt6atomicIPcE", !363, i64 0}
+!363 = !{!"_ZTSSt13__atomic_baseIPcE", !14, i64 0}
+!364 = !{!"_ZTSSt6atomicImE", !365, i64 0}
+!365 = !{!"_ZTSSt13__atomic_baseImE", !23, i64 0}
+!366 = !{!"p2 _ZTSN6google8protobuf8internal11SerialArena11CachedBlockE", !68, i64 0}
+!367 = !{!"_ZTSSt6atomicIPN6google8protobuf8internal11StringBlockEE", !368, i64 0}
+!368 = !{!"_ZTSSt13__atomic_baseIPN6google8protobuf8internal11StringBlockEE", !369, i64 0}
+!369 = !{!"p1 _ZTSN6google8protobuf8internal11StringBlockE", !11, i64 0}
+!370 = !{!"p1 _ZTSN6google8protobuf8internal15ThreadSafeArenaE", !11, i64 0}
+!371 = !{!"_ZTSN6google8protobuf8internal7cleanup9ChunkListE", !372, i64 0, !373, i64 8, !373, i64 16, !14, i64 24}
+!372 = !{!"p1 _ZTSN6google8protobuf8internal7cleanup9ChunkList5ChunkE", !11, i64 0}
+!373 = !{!"p1 _ZTSN6google8protobuf8internal7cleanup11CleanupNodeE", !11, i64 0}
+!374 = !{!346, !347, i64 16}
+!375 = !{!358, !5, i64 0}
+!376 = !{!358, !366, i64 48}
+!377 = !{!378, !378, i64 0}
+!378 = !{!"p1 _ZTSN6google8protobuf8internal11SerialArena11CachedBlockE", !11, i64 0}
+!379 = !{!380, !378, i64 0}
+!380 = !{!"_ZTSN6google8protobuf8internal11SerialArena11CachedBlockE", !378, i64 0}
 end_hunk_2

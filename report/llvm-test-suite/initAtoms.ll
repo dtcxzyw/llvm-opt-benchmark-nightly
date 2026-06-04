@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %._crit_edge67
   %i.by = fdiv double %i.bx, f0x3F1696FE6EF7EB54
   %i.bz = fdiv double %i.by, 1.500000e+00
   %i.ca = fdiv double %1, %i.bz
-  %i.cb = call double @sqrt(double noundef %i.ca) #11, !tbaa !4 ; 3 uses
+  %i.cb = call double @sqrt(double noundef %i.ca) #11, !tbaa !4 ; 4 uses
   %i.cc = load ptr, ptr %i.c, align 8, !tbaa !32  ; 2 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 12
   %i.ce = load i32, ptr %i.cd, align 4, !tbaa !34 ; 2 uses
@@ -213,11 +213,8 @@ bb.c:                                             ; preds = %._crit_edge67
   %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !35
   %i.ci = getelementptr inbounds nuw i8, ptr %i.bt, i64 32
   %wide.trip.count = zext nneg i32 %i.ce to i64
-  %broadcast.splatinsert = insertelement <2 x double> poison, double %i.cb, i64 0 ; 2 uses
-  %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer
-  %2 = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <4 x i32> zeroinitializer
   %i.cj = insertelement <2 x double> poison, double %i.cb, i64 0
-  %i.ck = shufflevector <2 x double> %i.cj, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.ck = shufflevector <2 x double> %i.cj, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
   br label %bb.d
 
 ._crit_edge76:                                    ; preds = %._crit_edge72, %bb.c
@@ -237,75 +234,56 @@ bb.d:                                             ; preds = %.lr.ph75, %._crit_e
   %i.co = zext i32 %indvars.iv83 to i64           ; 3 uses
   %i.cp = load ptr, ptr %i.ci, align 8, !tbaa !17 ; 3 uses
   %i.cq = add i32 %i.cm, %indvars.iv83
-  %3 = zext nneg i32 %i.cm to i64                 ; 2 uses
-  %min.iters.check = icmp eq i32 %i.cm, 1
-  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
+  %xtraiter = and i32 %i.cm, 1
+  %min.iters.check = icmp eq i32 %xtraiter, 0
+  br i1 %min.iters.check, label %middle.block, label %vector.body
 
-vector.ph:                                        ; preds = %.lr.ph71
-  %n.vec = and i64 %3, 2147483646                 ; 3 uses
-  %4 = add nuw nsw i64 %n.vec, %i.co
-  br label %vector.body
-
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %5 = add i64 %index, %i.co                      ; 2 uses
-  %6 = getelementptr inbounds nuw [24 x i8], ptr %i.cp, i64 %5 ; 4 uses
-  %i.cr = getelementptr inbounds nuw [24 x i8], ptr %i.cp, i64 %5 ; 3 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.cr, i64 24
-  %8 = load double, ptr %6, align 8, !tbaa !22
-  %9 = load double, ptr %7, align 8, !tbaa !22
-  %10 = insertelement <2 x double> poison, double %8, i64 0
-  %11 = insertelement <2 x double> %10, double %9, i64 1
-  %12 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %13 = getelementptr inbounds nuw i8, ptr %i.cr, i64 32
-  %14 = load double, ptr %12, align 8, !tbaa !22
-  %15 = load double, ptr %13, align 8, !tbaa !22
-  %16 = insertelement <2 x double> poison, double %14, i64 0
-  %17 = insertelement <2 x double> %16, double %15, i64 1
-  %18 = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 40
-  %19 = load double, ptr %18, align 8, !tbaa !22
+vector.body:                                      ; preds = %.lr.ph71
+  %i.cr = getelementptr inbounds nuw [24 x i8], ptr %i.cp, i64 %i.co ; 3 uses
+  %2 = load <2 x double>, ptr %i.cr, align 8, !tbaa !22
+  %3 = fmul <2 x double> %i.ck, %2
+  store <2 x double> %3, ptr %i.cr, align 8, !tbaa !22
+  %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 16 ; 2 uses
   %i.ct = load double, ptr %i.cs, align 8, !tbaa !22
-  %20 = insertelement <2 x double> poison, double %19, i64 0
-  %21 = insertelement <2 x double> %20, double %i.ct, i64 1
-  %22 = fmul <2 x double> %broadcast.splat, %21
-  %23 = shufflevector <2 x double> %11, <2 x double> %17, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %24 = fmul <4 x double> %2, %23
-  %25 = shufflevector <2 x double> %22, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %interleaved.vec = shufflevector <4 x double> %24, <4 x double> %25, <6 x i32> <i32 0, i32 2, i32 4, i32 1, i32 3, i32 5>
-  store <6 x double> %interleaved.vec, ptr %6, align 8, !tbaa !22
-  %index.next = add nuw i64 %index, 2             ; 2 uses
-  %26 = icmp eq i64 %index.next, %n.vec
-  br i1 %26, label %middle.block, label %vector.body, !llvm.loop !42
+  %4 = fmul double %i.cb, %i.ct
+  store double %4, ptr %i.cs, align 8, !tbaa !22
+  %indvars.iv.next86.prol = or disjoint i64 %i.co, 1
+  br label %middle.block
 
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %3
-  br i1 %cmp.n, label %._crit_edge72, label %scalar.ph.preheader
+middle.block:                                     ; preds = %vector.body, %.lr.ph71
+  %indvars.iv85.unr = phi i64 [ %i.co, %.lr.ph71 ], [ %indvars.iv.next86.prol, %vector.body ]
+  %cmp.n = icmp eq i32 %i.cm, 1
+  br i1 %cmp.n, label %._crit_edge72, label %scalar.ph
 
-scalar.ph.preheader:                              ; preds = %.lr.ph71, %middle.block
-  %indvars.iv85.ph = phi i64 [ %i.co, %.lr.ph71 ], [ %4, %middle.block ]
-  br label %scalar.ph
-
-._crit_edge72:                                    ; preds = %scalar.ph, %middle.block, %bb.d
+._crit_edge72:                                    ; preds = %middle.block, %scalar.ph, %bb.d
   %indvars.iv.next89 = add nuw nsw i64 %indvars.iv88, 1 ; 2 uses
   %indvars.iv.next84 = add i32 %indvars.iv83, 64
   %exitcond91.not = icmp eq i64 %indvars.iv.next89, %wide.trip.count
   br i1 %exitcond91.not, label %._crit_edge76, label %bb.d
 
-scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %indvars.iv85 = phi i64 [ %indvars.iv.next86, %scalar.ph ], [ %indvars.iv85.ph, %scalar.ph.preheader ] ; 2 uses
-  %i.cu = getelementptr inbounds nuw [24 x i8], ptr %i.cp, i64 %indvars.iv85 ; 3 uses
-  %i.cv = load <2 x double>, ptr %i.cu, align 8, !tbaa !22
+scalar.ph:                                        ; preds = %middle.block, %scalar.ph
+  %indvars.iv85 = phi i64 [ %indvars.iv.next86, %scalar.ph ], [ %indvars.iv85.unr, %middle.block ] ; 3 uses
+  %5 = getelementptr inbounds nuw [24 x i8], ptr %i.cp, i64 %indvars.iv85 ; 3 uses
+  %6 = load <2 x double>, ptr %5, align 8, !tbaa !22
+  %7 = fmul <2 x double> %i.ck, %6
+  store <2 x double> %7, ptr %5, align 8, !tbaa !22
+  %8 = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
+  %9 = load double, ptr %8, align 8, !tbaa !22
+  %10 = fmul double %i.cb, %9
+  store double %10, ptr %8, align 8, !tbaa !22
+  %i.cu = getelementptr inbounds nuw [24 x i8], ptr %i.cp, i64 %indvars.iv85 ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %i.cu, i64 24 ; 2 uses
+  %i.cv = load <2 x double>, ptr %11, align 8, !tbaa !22
   %i.cw = fmul <2 x double> %i.ck, %i.cv
-  store <2 x double> %i.cw, ptr %i.cu, align 8, !tbaa !22
-  %i.cx = getelementptr inbounds nuw i8, ptr %i.cu, i64 16 ; 2 uses
+  store <2 x double> %i.cw, ptr %11, align 8, !tbaa !22
+  %i.cx = getelementptr inbounds nuw i8, ptr %i.cu, i64 40 ; 2 uses
   %i.cy = load double, ptr %i.cx, align 8, !tbaa !22
   %i.cz = fmul double %i.cb, %i.cy
   store double %i.cz, ptr %i.cx, align 8, !tbaa !22
-  %indvars.iv.next86 = add nuw nsw i64 %indvars.iv85, 1 ; 2 uses
+  %indvars.iv.next86 = add nuw nsw i64 %indvars.iv85, 2 ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next86 to i32
   %exitcond.not = icmp eq i32 %i.cq, %lftr.wideiv
-  br i1 %exitcond.not, label %._crit_edge72, label %scalar.ph, !llvm.loop !45
+  br i1 %exitcond.not, label %._crit_edge72, label %scalar.ph
 
 bb.e:                                             ; preds = %._crit_edge67, %._crit_edge76
   ret void
@@ -491,8 +469,4 @@ attributes #11 = { nounwind }
 !39 = !{!40, !40, i64 0}
 !40 = !{!"long", !6, i64 0}
 !41 = !{!25, !23, i64 56}
-!42 = distinct !{!42, !43, !44}
-!43 = !{!"llvm.loop.isvectorized", i32 1}
-!44 = !{!"llvm.loop.unroll.runtime.disable"}
-!45 = distinct !{!45, !44, !43}
 end_hunk_0

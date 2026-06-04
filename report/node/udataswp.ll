@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %bb.c
 iter.check:                                       ; preds = %bb.e
   %i.k = lshr exact i32 %2, 1                     ; 4 uses
   %i.l = zext nneg i32 %i.k to i64                ; 5 uses
-  %min.iters.check = icmp ult i32 %2, 8
+  %min.iters.check = icmp ult i32 %2, 16
   %i.m = sub i64 %i.b, %i.a
   %diff.check = icmp ult i64 %i.m, 32
   %or.cond55 = or i1 %min.iters.check, %diff.check
@@ -212,7 +212,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check39, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %n.mod.vf = and i64 %i.l, 12
+  %n.mod.vf = and i64 %i.l, 8
   %n.vec = and i64 %i.l, 1073741808               ; 5 uses
   %i.n = trunc nuw nsw i64 %n.vec to i32
   %i.o = sub nsw i32 %i.k, %i.n
@@ -248,7 +248,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec45 = and i64 %i.l, 1073741820             ; 4 uses
+  %n.vec45 = and i64 %i.l, 1073741816             ; 4 uses
   %i.y = trunc nuw nsw i64 %n.vec45 to i32
   %i.z = sub nsw i32 %i.k, %i.y
   %i.aa = shl nuw nsw i64 %n.vec45, 1             ; 2 uses
@@ -261,10 +261,10 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.ad = shl i64 %index46, 1                     ; 2 uses
   %next.gep47 = getelementptr i8, ptr %3, i64 %i.ad
   %next.gep48 = getelementptr i8, ptr %1, i64 %i.ad
-  %wide.load49 = load <4 x i16>, ptr %next.gep48, align 2
-  %5 = tail call <4 x i16> @llvm.bswap.v4i16(<4 x i16> %wide.load49)
-  store <4 x i16> %5, ptr %next.gep47, align 2
-  %index.next50 = add nuw i64 %index46, 4         ; 2 uses
+  %wide.load49 = load <8 x i16>, ptr %next.gep48, align 2
+  %5 = tail call <8 x i16> @llvm.bswap.v8i16(<8 x i16> %wide.load49)
+  store <8 x i16> %5, ptr %next.gep47, align 2
+  %index.next50 = add nuw i64 %index46, 8         ; 2 uses
   %i.ae = icmp eq i64 %index.next50, %n.vec45
   br i1 %i.ae, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !12
 
@@ -398,8 +398,6 @@ middle.block:                                     ; preds = %vector.body
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal noundef range(i32 0, -2147483648) i32 @_ZL16uprv_swapArray64PK12UDataSwapperPKviPvP10UErrorCode(ptr noundef readnone captures(address_is_null) %0, ptr noundef readonly captures(address_is_null) %1, i32 noundef %2, ptr noundef writeonly captures(address_is_null) %3, ptr noundef captures(address_is_null) %4) #9 {
 bb.a:
-  %5 = ptrtoaddr ptr %1 to i64
-  %6 = ptrtoaddr ptr %3 to i64
   %i.a = icmp eq ptr %4, null
   br i1 %i.a, label %.loopexit, label %bb.b
 
@@ -432,54 +430,13 @@ bb.f:                                             ; preds = %bb.d
   br i1 %.not, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.f
-  %i.j = lshr exact i32 %2, 3                     ; 3 uses
-  %7 = zext nneg i32 %i.j to i64                  ; 2 uses
-  %min.iters.check = icmp ult i32 %2, 48
-  %8 = sub i64 %6, %5
-  %diff.check = icmp ult i64 %8, 32
-  %or.cond48 = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond48, label %.lr.ph.preheader49, label %vector.ph
-
-vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %7, 268435452                  ; 4 uses
-  %9 = trunc nuw nsw i64 %n.vec to i32
-  %10 = sub nsw i32 %i.j, %9
-  %11 = shl nuw nsw i64 %n.vec, 3                 ; 2 uses
-  %12 = getelementptr i8, ptr %3, i64 %11
-  %13 = getelementptr i8, ptr %1, i64 %11
-  br label %vector.body
-
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %14 = shl i64 %index, 3                         ; 2 uses
-  %next.gep = getelementptr i8, ptr %3, i64 %14   ; 2 uses
-  %next.gep44 = getelementptr i8, ptr %1, i64 %14 ; 2 uses
-  %15 = getelementptr i8, ptr %next.gep44, i64 16
-  %wide.load = load <2 x i64>, ptr %next.gep44, align 8
-  %wide.load45 = load <2 x i64>, ptr %15, align 8
-  %16 = tail call <2 x i64> @llvm.bswap.v2i64(<2 x i64> %wide.load)
-  %17 = tail call <2 x i64> @llvm.bswap.v2i64(<2 x i64> %wide.load45)
-  %18 = getelementptr i8, ptr %next.gep, i64 16
-  store <2 x i64> %16, ptr %next.gep, align 8
-  store <2 x i64> %17, ptr %18, align 8
-  %index.next = add nuw i64 %index, 4             ; 2 uses
-  %19 = icmp eq i64 %index.next, %n.vec
-  br i1 %19, label %middle.block, label %vector.body, !llvm.loop !16
-
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %7
-  br i1 %cmp.n, label %.loopexit, label %.lr.ph.preheader49
-
-.lr.ph.preheader49:                               ; preds = %.lr.ph.preheader, %middle.block
-  %.03039.ph = phi i32 [ %i.j, %.lr.ph.preheader ], [ %10, %middle.block ]
-  %.03138.ph = phi ptr [ %3, %.lr.ph.preheader ], [ %12, %middle.block ]
-  %.03237.ph = phi ptr [ %1, %.lr.ph.preheader ], [ %13, %middle.block ]
+  %i.j = lshr exact i32 %2, 3
   br label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader49, %.lr.ph
-  %.03039 = phi i32 [ %i.o, %.lr.ph ], [ %.03039.ph, %.lr.ph.preheader49 ] ; 2 uses
-  %.03138 = phi ptr [ %i.n, %.lr.ph ], [ %.03138.ph, %.lr.ph.preheader49 ] ; 2 uses
-  %.03237 = phi ptr [ %i.k, %.lr.ph ], [ %.03237.ph, %.lr.ph.preheader49 ] ; 2 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
+  %.03039 = phi i32 [ %i.o, %.lr.ph ], [ %i.j, %.lr.ph.preheader ] ; 2 uses
+  %.03138 = phi ptr [ %i.n, %.lr.ph ], [ %3, %.lr.ph.preheader ] ; 2 uses
+  %.03237 = phi ptr [ %i.k, %.lr.ph ], [ %1, %.lr.ph.preheader ] ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.03237, i64 8
   %i.l = load i64, ptr %.03237, align 8
   %i.m = tail call i64 @llvm.bswap.i64(i64 %i.l)
@@ -487,10 +444,10 @@ middle.block:                                     ; preds = %vector.body
   store i64 %i.m, ptr %.03138, align 8
   %i.o = add nsw i32 %.03039, -1
   %i.p = icmp samesign ugt i32 %.03039, 1
-  br i1 %i.p, label %.lr.ph, label %.loopexit, !llvm.loop !17
+  br i1 %i.p, label %.lr.ph, label %.loopexit, !llvm.loop !16
 
-.loopexit:                                        ; preds = %.lr.ph, %middle.block, %bb.f, %bb.a, %bb.b, %bb.e
-  %.0 = phi i32 [ 0, %bb.a ], [ 0, %bb.e ], [ 0, %bb.b ], [ 0, %bb.f ], [ %2, %middle.block ], [ %2, %.lr.ph ]
+.loopexit:                                        ; preds = %.lr.ph, %bb.f, %bb.a, %bb.b, %bb.e
+  %.0 = phi i32 [ 0, %bb.a ], [ 0, %bb.e ], [ 0, %bb.b ], [ 0, %bb.f ], [ %2, %.lr.ph ]
   ret i32 %.0
 }
 
@@ -622,13 +579,7 @@ declare i64 @llvm.bswap.i64(i64) #10
 declare <8 x i16> @llvm.bswap.v8i16(<8 x i16>) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i16> @llvm.bswap.v4i16(<4 x i16>) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.bswap.v4i32(<4 x i32>) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x i64> @llvm.bswap.v2i64(<2 x i64>) #10
 
 attributes #0 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -658,11 +609,10 @@ attributes #12 = { nounwind allocsize(0) }
 !8 = distinct !{!8, !6, !9, !10}
 !9 = !{!"llvm.loop.isvectorized", i32 1}
 !10 = !{!"llvm.loop.unroll.runtime.disable"}
-!11 = !{!"branch_weights", i32 4, i32 12}
+!11 = !{!"branch_weights", i32 8, i32 8}
 !12 = distinct !{!12, !6, !9, !10}
 !13 = distinct !{!13, !6, !9}
 !14 = distinct !{!14, !6, !9, !10}
 !15 = distinct !{!15, !6, !9}
-!16 = distinct !{!16, !6, !9, !10}
-!17 = distinct !{!17, !6, !9}
+!16 = distinct !{!16, !6}
 end_hunk_0

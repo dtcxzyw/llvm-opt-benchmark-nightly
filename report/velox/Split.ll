@@ -201,7 +201,7 @@ bb.a:
   %i.a = ptrtoint ptr %1 to i64                   ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !33   ; 3 uses
-  %i.d = load ptr, ptr %0, align 8, !tbaa !66     ; 13 uses
+  %i.d = load ptr, ptr %0, align 8, !tbaa !66     ; 12 uses
   %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
   %i.f = ptrtoint ptr %i.d to i64                 ; 5 uses
   %i.g = sub i64 %i.e, %i.f                       ; 2 uses
@@ -224,7 +224,7 @@ _ZNKSt6vectorISt10shared_ptrIN8facebook5velox4exec17FunctionSignatureEESaIS5_EE1
   %.not.i = icmp ne i64 %i.m, 0
   tail call void @llvm.assume(i1 %.not.i)
   %i.p = shl nuw nsw i64 %i.m, 4
-  %i.q = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.p) #33 ; 13 uses
+  %i.q = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.p) #33 ; 12 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.o
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.t = load <2 x ptr>, ptr %2, align 8, !tbaa !40
@@ -264,7 +264,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.prehea
   br i1 %conflict.rdx, label %.lr.ph.i.i.i.preheader91, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.x, 2305843009213693944      ; 3 uses
+  %n.vec = and i64 %i.x, 2305843009213693948      ; 3 uses
   %i.ad = shl i64 %n.vec, 4                       ; 2 uses
   %i.ae = getelementptr i8, ptr %i.q, i64 %i.ad   ; 2 uses
   %i.af = getelementptr i8, ptr %i.d, i64 %i.ad
@@ -272,21 +272,15 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.ag = shl i64 %index, 4                       ; 3 uses
-  %3 = or disjoint i64 %i.ag, 64                  ; 2 uses
-  %next.gep = getelementptr i8, ptr %i.q, i64 %i.ag
-  %next.gep43 = getelementptr i8, ptr %i.q, i64 %3
-  %next.gep44 = getelementptr i8, ptr %i.d, i64 %i.ag ; 2 uses
-  %next.gep45 = getelementptr i8, ptr %i.d, i64 %3 ; 2 uses
+  %i.ag = shl i64 %index, 4                       ; 2 uses
+  %next.gep44 = getelementptr i8, ptr %i.q, i64 %i.ag
+  %next.gep45 = getelementptr i8, ptr %i.d, i64 %i.ag ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !93)
-  %wide.vec = load <8 x ptr>, ptr %next.gep44, align 8, !tbaa !40, !alias.scope !93, !noalias !90
   %wide.vec47 = load <8 x ptr>, ptr %next.gep45, align 8, !tbaa !40, !alias.scope !93, !noalias !90
-  store <8 x ptr> %wide.vec, ptr %next.gep, align 8, !tbaa !40, !alias.scope !90, !noalias !93
-  store <8 x ptr> %wide.vec47, ptr %next.gep43, align 8, !tbaa !40, !alias.scope !90, !noalias !93
-  store <8 x ptr> splat (ptr null), ptr %next.gep44, align 8, !tbaa !40, !alias.scope !93, !noalias !90
+  store <8 x ptr> %wide.vec47, ptr %next.gep44, align 8, !tbaa !40, !alias.scope !90, !noalias !93
   store <8 x ptr> splat (ptr null), ptr %next.gep45, align 8, !tbaa !40, !alias.scope !93, !noalias !90
-  %index.next = add nuw i64 %index, 8             ; 2 uses
+  %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ah = icmp eq i64 %index.next, %n.vec
   br i1 %i.ah, label %middle.block, label %vector.body, !llvm.loop !95
 
@@ -316,7 +310,7 @@ middle.block:                                     ; preds = %vector.body
 
 _ZNSt6vectorISt10shared_ptrIN8facebook5velox4exec17FunctionSignatureEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit: ; preds = %.lr.ph.i.i.i, %middle.block, %_ZNKSt6vectorISt10shared_ptrIN8facebook5velox4exec17FunctionSignatureEESaIS5_EE12_M_check_lenEmPKc.exit
   %.0.lcssa.i.i.i = phi ptr [ %i.q, %_ZNKSt6vectorISt10shared_ptrIN8facebook5velox4exec17FunctionSignatureEESaIS5_EE12_M_check_lenEmPKc.exit ], [ %i.ae, %middle.block ], [ %i.al, %.lr.ph.i.i.i ] ; 4 uses
-  %i.am = getelementptr i8, ptr %.0.lcssa.i.i.i, i64 16 ; 7 uses
+  %i.am = getelementptr i8, ptr %.0.lcssa.i.i.i, i64 16 ; 6 uses
   %.not10.i.i.i16 = icmp eq ptr %1, %i.c
   br i1 %.not10.i.i.i16, label %_ZNSt6vectorISt10shared_ptrIN8facebook5velox4exec17FunctionSignatureEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22, label %.lr.ph.i.i.i17.preheader
 
@@ -352,7 +346,7 @@ vector.memcheck52:                                ; preds = %.lr.ph.i.i.i17.preh
   br i1 %conflict.rdx65, label %.lr.ph.i.i.i17.preheader90, label %vector.ph68
 
 vector.ph68:                                      ; preds = %vector.memcheck52
-  %n.vec70 = and i64 %i.aq, 2305843009213693944   ; 3 uses
+  %n.vec70 = and i64 %i.aq, 2305843009213693948   ; 3 uses
   %i.ay = shl i64 %n.vec70, 4                     ; 2 uses
   %i.az = getelementptr i8, ptr %i.am, i64 %i.ay  ; 2 uses
   %i.ba = getelementptr i8, ptr %1, i64 %i.ay
@@ -360,21 +354,15 @@ vector.ph68:                                      ; preds = %vector.memcheck52
 
 vector.body71:                                    ; preds = %vector.body71, %vector.ph68
   %index72 = phi i64 [ 0, %vector.ph68 ], [ %index.next85, %vector.body71 ] ; 2 uses
-  %i.bb = shl i64 %index72, 4                     ; 3 uses
-  %4 = or disjoint i64 %i.bb, 64                  ; 2 uses
-  %next.gep73 = getelementptr i8, ptr %i.am, i64 %i.bb
-  %next.gep74 = getelementptr i8, ptr %i.am, i64 %4
-  %next.gep75 = getelementptr i8, ptr %1, i64 %i.bb ; 2 uses
-  %next.gep76 = getelementptr i8, ptr %1, i64 %4  ; 2 uses
+  %i.bb = shl i64 %index72, 4                     ; 2 uses
+  %next.gep75 = getelementptr i8, ptr %i.am, i64 %i.bb
+  %next.gep76 = getelementptr i8, ptr %1, i64 %i.bb ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !99)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !102)
-  %wide.vec77 = load <8 x ptr>, ptr %next.gep75, align 8, !tbaa !40, !alias.scope !102, !noalias !99
   %wide.vec80 = load <8 x ptr>, ptr %next.gep76, align 8, !tbaa !40, !alias.scope !102, !noalias !99
-  store <8 x ptr> %wide.vec77, ptr %next.gep73, align 8, !tbaa !40, !alias.scope !99, !noalias !102
-  store <8 x ptr> %wide.vec80, ptr %next.gep74, align 8, !tbaa !40, !alias.scope !99, !noalias !102
-  store <8 x ptr> splat (ptr null), ptr %next.gep75, align 8, !tbaa !40, !alias.scope !102, !noalias !99
+  store <8 x ptr> %wide.vec80, ptr %next.gep75, align 8, !tbaa !40, !alias.scope !99, !noalias !102
   store <8 x ptr> splat (ptr null), ptr %next.gep76, align 8, !tbaa !40, !alias.scope !102, !noalias !99
-  %index.next85 = add nuw i64 %index72, 8         ; 2 uses
+  %index.next85 = add nuw i64 %index72, 4         ; 2 uses
   %i.bc = icmp eq i64 %index.next85, %n.vec70
   br i1 %i.bc, label %middle.block86, label %vector.body71, !llvm.loop !104
 

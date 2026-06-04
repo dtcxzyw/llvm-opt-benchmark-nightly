@@ -201,7 +201,7 @@ bb.bv:                                            ; preds = %.lr.ph780, %"_ZZN8f
   %i.jy = phi ptr [ null, %.lr.ph780 ], [ %i.qs, %"_ZZN8facebook5velox6memory16SharedArbitrator24reclaimUsedMemoryBySpillEmRSt13unordered_setImSt4hashImESt8equal_toImESaImEESA_RbEN3$_1D2Ev.exit" ] ; 5 uses
   %i.jz = phi ptr [ null, %.lr.ph780 ], [ %.val118, %"_ZZN8facebook5velox6memory16SharedArbitrator24reclaimUsedMemoryBySpillEmRSt13unordered_setImSt4hashImESt8equal_toImESaImEESA_RbEN3$_1D2Ev.exit" ] ; 4 uses
   %.sroa.0318.0778 = phi ptr [ %i.ii, %.lr.ph780 ], [ %i.rz, %"_ZZN8facebook5velox6memory16SharedArbitrator24reclaimUsedMemoryBySpillEmRSt13unordered_setImSt4hashImESt8equal_toImESaImEESA_RbEN3$_1D2Ev.exit" ] ; 6 uses
-  %i.ka = phi ptr [ null, %.lr.ph780 ], [ %i.qt, %"_ZZN8facebook5velox6memory16SharedArbitrator24reclaimUsedMemoryBySpillEmRSt13unordered_setImSt4hashImESt8equal_toImESaImEESA_RbEN3$_1D2Ev.exit" ] ; 27 uses
+  %i.ka = phi ptr [ null, %.lr.ph780 ], [ %i.qt, %"_ZZN8facebook5velox6memory16SharedArbitrator24reclaimUsedMemoryBySpillEmRSt13unordered_setImSt4hashImESt8equal_toImESaImEESA_RbEN3$_1D2Ev.exit" ] ; 26 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #28
   store ptr %0, ptr %28, align 8, !tbaa !747
   %i.kb = load ptr, ptr %.sroa.0318.0778, align 8, !tbaa !225 ; 2 uses
@@ -604,7 +604,7 @@ _ZNKSt6vectorISt10shared_ptrIN8facebook5velox11AsyncSourceIZNS2_6memory16SharedA
   call void @llvm.assume(i1 %.not.i.i.i.i197)
   %i.pw = shl nuw nsw i64 %i.pv, 4
   %i.px = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.pw) #42
-          to label %.noexc200 unwind label %.loopexit400 ; 13 uses
+          to label %.noexc200 unwind label %.loopexit400 ; 12 uses
 
 .noexc200:                                        ; preds = %_ZNKSt6vectorISt10shared_ptrIN8facebook5velox11AsyncSourceIZNS2_6memory16SharedArbitrator24reclaimUsedMemoryBySpillEmRSt13unordered_setImSt4hashImESt8equal_toImESaImEESD_RbE13ReclaimResultEEESaISH_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.py = getelementptr inbounds nuw i8, ptr %i.px, i64 %i.po ; 2 uses
@@ -644,7 +644,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.
   br i1 %conflict.rdx, label %.lr.ph.i.i.i.i.i.i.preheader1751, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.qd, 2305843009213693944     ; 3 uses
+  %n.vec = and i64 %i.qd, 2305843009213693948     ; 3 uses
   %i.qh = shl i64 %n.vec, 4                       ; 2 uses
   %i.qi = getelementptr i8, ptr %i.px, i64 %i.qh  ; 2 uses
   %i.qj = getelementptr i8, ptr %i.ka, i64 %i.qh
@@ -652,21 +652,15 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.qk = shl i64 %index, 4                       ; 3 uses
-  %33 = or disjoint i64 %i.qk, 64                 ; 2 uses
-  %next.gep = getelementptr i8, ptr %i.px, i64 %i.qk
-  %next.gep1645 = getelementptr i8, ptr %i.px, i64 %33
-  %next.gep1646 = getelementptr i8, ptr %i.ka, i64 %i.qk ; 2 uses
-  %next.gep1647 = getelementptr i8, ptr %i.ka, i64 %33 ; 2 uses
+  %i.qk = shl i64 %index, 4                       ; 2 uses
+  %next.gep1646 = getelementptr i8, ptr %i.px, i64 %i.qk
+  %next.gep1647 = getelementptr i8, ptr %i.ka, i64 %i.qk ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !777)
   call void @llvm.experimental.noalias.scope.decl(metadata !780)
-  %wide.vec = load <8 x ptr>, ptr %next.gep1646, align 8, !tbaa !118, !alias.scope !780, !noalias !777
   %wide.vec1649 = load <8 x ptr>, ptr %next.gep1647, align 8, !tbaa !118, !alias.scope !780, !noalias !777
-  store <8 x ptr> %wide.vec, ptr %next.gep, align 8, !tbaa !118, !alias.scope !777, !noalias !780
-  store <8 x ptr> %wide.vec1649, ptr %next.gep1645, align 8, !tbaa !118, !alias.scope !777, !noalias !780
-  store <8 x ptr> splat (ptr null), ptr %next.gep1646, align 8, !tbaa !118, !alias.scope !780, !noalias !777
+  store <8 x ptr> %wide.vec1649, ptr %next.gep1646, align 8, !tbaa !118, !alias.scope !777, !noalias !780
   store <8 x ptr> splat (ptr null), ptr %next.gep1647, align 8, !tbaa !118, !alias.scope !780, !noalias !777
-  %index.next = add nuw i64 %index, 8             ; 2 uses
+  %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ql = icmp eq i64 %index.next, %n.vec
   br i1 %i.ql, label %middle.block, label %vector.body, !llvm.loop !782
 

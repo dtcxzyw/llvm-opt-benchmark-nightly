@@ -201,37 +201,29 @@ vector.memcheck500:                               ; preds = %.lr.ph64.i
   br i1 %conflict.rdx511, label %scalar.ph513.preheader, label %vector.ph515
 
 vector.ph515:                                     ; preds = %vector.memcheck500
-  %n.vec517 = and i64 %i.wp, 8589934584           ; 3 uses
+  %n.vec517 = and i64 %i.wp, 8589934588           ; 3 uses
   %broadcast.splatinsert518 = insertelement <4 x i32> poison, i32 %i.dg, i64 0
-  %broadcast.splat519 = shufflevector <4 x i32> %broadcast.splatinsert518, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat519 = shufflevector <4 x i32> %broadcast.splatinsert518, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.wz = sub nsw i64 %i.nu, %n.vec517
   %i.xa = load float, ptr %i.wl, align 4, !tbaa !16, !alias.scope !114
-  %broadcast.splatinsert526 = insertelement <4 x float> poison, float %i.xa, i64 0 ; 2 uses
-  %12 = shufflevector <4 x float> %broadcast.splatinsert526, <4 x float> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert526 = insertelement <4 x float> poison, float %i.xa, i64 0
   %i.xb = shufflevector <4 x float> %broadcast.splatinsert526, <4 x float> poison, <4 x i32> zeroinitializer
   br label %vector.body520
 
 vector.body520:                                   ; preds = %vector.body520, %vector.ph515
   %index521 = phi i64 [ 0, %vector.ph515 ], [ %index.next530, %vector.body520 ] ; 2 uses
   %i.xc = sub i64 %i.nu, %index521                ; 3 uses
-  %i.xd = getelementptr inbounds nuw [4 x i8], ptr %.058846.i, i64 %i.xc ; 2 uses
-  %13 = getelementptr inbounds i8, ptr %i.xd, i64 -12
-  %i.xe = getelementptr inbounds i8, ptr %i.xd, i64 -28
-  %wide.load522 = load <4 x float>, ptr %13, align 4, !tbaa !16, !alias.scope !117
+  %i.xd = getelementptr inbounds nuw [4 x i8], ptr %.058846.i, i64 %i.xc
+  %i.xe = getelementptr inbounds i8, ptr %i.xd, i64 -12
   %wide.load523 = load <4 x float>, ptr %i.xe, align 4, !tbaa !16, !alias.scope !117
-  %i.xf = getelementptr [4 x i8], ptr %i.gn, i64 %i.xc ; 2 uses
-  %14 = getelementptr i8, ptr %i.xf, i64 -16
-  %i.xg = getelementptr i8, ptr %i.xf, i64 -32
-  %reverse528 = fadd <4 x float> %wide.load522, %12
+  %i.xf = getelementptr [4 x i8], ptr %i.gn, i64 %i.xc
+  %i.xg = getelementptr i8, ptr %i.xf, i64 -16
   %reverse529 = fadd <4 x float> %wide.load523, %i.xb
-  store <4 x float> %reverse528, ptr %14, align 4, !tbaa !16, !alias.scope !119, !noalias !121
   store <4 x float> %reverse529, ptr %i.xg, align 4, !tbaa !16, !alias.scope !119, !noalias !121
-  %i.xh = getelementptr inbounds nuw [4 x i8], ptr %i.go, i64 %i.xc ; 2 uses
-  %15 = getelementptr inbounds i8, ptr %i.xh, i64 -12
-  %i.xi = getelementptr inbounds i8, ptr %i.xh, i64 -28
-  store <4 x i32> %broadcast.splat519, ptr %15, align 4, !tbaa !4
+  %i.xh = getelementptr inbounds nuw [4 x i8], ptr %i.go, i64 %i.xc
+  %i.xi = getelementptr inbounds i8, ptr %i.xh, i64 -12
   store <4 x i32> %broadcast.splat519, ptr %i.xi, align 4, !tbaa !4
-  %index.next530 = add nuw i64 %index521, 8       ; 2 uses
+  %index.next530 = add nuw i64 %index521, 4       ; 2 uses
   %i.xj = icmp eq i64 %index.next530, %n.vec517
   br i1 %i.xj, label %middle.block531, label %vector.body520, !llvm.loop !122
 
@@ -634,37 +626,29 @@ vector.memcheck504:                               ; preds = %.lr.ph64.i
   br i1 %conflict.rdx515, label %scalar.ph517.preheader, label %vector.ph519
 
 vector.ph519:                                     ; preds = %vector.memcheck504
-  %n.vec521 = and i64 %i.wp, 8589934584           ; 3 uses
+  %n.vec521 = and i64 %i.wp, 8589934588           ; 3 uses
   %broadcast.splatinsert522 = insertelement <4 x i32> poison, i32 %i.dg, i64 0
-  %broadcast.splat523 = shufflevector <4 x i32> %broadcast.splatinsert522, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat523 = shufflevector <4 x i32> %broadcast.splatinsert522, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.wz = sub nsw i64 %i.nu, %n.vec521
   %i.xa = load float, ptr %i.wl, align 4, !tbaa !16, !alias.scope !227
-  %broadcast.splatinsert530 = insertelement <4 x float> poison, float %i.xa, i64 0 ; 2 uses
-  %16 = shufflevector <4 x float> %broadcast.splatinsert530, <4 x float> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert530 = insertelement <4 x float> poison, float %i.xa, i64 0
   %i.xb = shufflevector <4 x float> %broadcast.splatinsert530, <4 x float> poison, <4 x i32> zeroinitializer
   br label %vector.body524
 
 vector.body524:                                   ; preds = %vector.body524, %vector.ph519
   %index525 = phi i64 [ 0, %vector.ph519 ], [ %index.next534, %vector.body524 ] ; 2 uses
   %i.xc = sub i64 %i.nu, %index525                ; 3 uses
-  %i.xd = getelementptr inbounds nuw [4 x i8], ptr %.058846.i, i64 %i.xc ; 2 uses
-  %17 = getelementptr inbounds i8, ptr %i.xd, i64 -12
-  %i.xe = getelementptr inbounds i8, ptr %i.xd, i64 -28
-  %wide.load526 = load <4 x float>, ptr %17, align 4, !tbaa !16, !alias.scope !230
+  %i.xd = getelementptr inbounds nuw [4 x i8], ptr %.058846.i, i64 %i.xc
+  %i.xe = getelementptr inbounds i8, ptr %i.xd, i64 -12
   %wide.load527 = load <4 x float>, ptr %i.xe, align 4, !tbaa !16, !alias.scope !230
-  %i.xf = getelementptr [4 x i8], ptr %i.gn, i64 %i.xc ; 2 uses
-  %18 = getelementptr i8, ptr %i.xf, i64 -16
-  %i.xg = getelementptr i8, ptr %i.xf, i64 -32
-  %reverse532 = fadd <4 x float> %wide.load526, %16
+  %i.xf = getelementptr [4 x i8], ptr %i.gn, i64 %i.xc
+  %i.xg = getelementptr i8, ptr %i.xf, i64 -16
   %reverse533 = fadd <4 x float> %wide.load527, %i.xb
-  store <4 x float> %reverse532, ptr %18, align 4, !tbaa !16, !alias.scope !232, !noalias !234
   store <4 x float> %reverse533, ptr %i.xg, align 4, !tbaa !16, !alias.scope !232, !noalias !234
-  %i.xh = getelementptr inbounds nuw [4 x i8], ptr %i.go, i64 %i.xc ; 2 uses
-  %19 = getelementptr inbounds i8, ptr %i.xh, i64 -12
-  %i.xi = getelementptr inbounds i8, ptr %i.xh, i64 -28
-  store <4 x i32> %broadcast.splat523, ptr %19, align 4, !tbaa !4
+  %i.xh = getelementptr inbounds nuw [4 x i8], ptr %i.go, i64 %i.xc
+  %i.xi = getelementptr inbounds i8, ptr %i.xh, i64 -12
   store <4 x i32> %broadcast.splat523, ptr %i.xi, align 4, !tbaa !4
-  %index.next534 = add nuw i64 %index525, 8       ; 2 uses
+  %index.next534 = add nuw i64 %index525, 4       ; 2 uses
   %i.xj = icmp eq i64 %index.next534, %n.vec521
   br i1 %i.xj, label %middle.block535, label %vector.body524, !llvm.loop !235
 

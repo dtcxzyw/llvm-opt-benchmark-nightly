@@ -201,7 +201,7 @@ vector.memcheck144:                               ; preds = %.lr.ph.preheader
   br i1 %found.conflict148, label %.lr.ph.preheader201, label %vector.ph151
 
 vector.ph151:                                     ; preds = %vector.memcheck144
-  %n.vec153 = and i64 %.082, 9223372036854775800  ; 4 uses
+  %n.vec153 = and i64 %.082, 9223372036854775804  ; 4 uses
   %i.cr = mul i64 %n.vec153, -4                   ; 2 uses
   %i.cs = getelementptr i8, ptr %i.cc, i64 %i.cr
   %i.ct = getelementptr i8, ptr %i.cn, i64 %i.cr
@@ -210,21 +210,15 @@ vector.ph151:                                     ; preds = %vector.memcheck144
 vector.body154:                                   ; preds = %vector.body154, %vector.ph151
   %index155 = phi i64 [ 0, %vector.ph151 ], [ %index.next169, %vector.body154 ] ; 2 uses
   %i.cu = mul i64 %index155, -4                   ; 2 uses
-  %next.gep156 = getelementptr i8, ptr %i.cc, i64 %i.cu ; 2 uses
-  %next.gep157.a = getelementptr i8, ptr %i.cn, i64 %i.cu ; 2 uses
-  %i.cv = getelementptr inbounds i8, ptr %next.gep157.a, i64 -16 ; 2 uses
-  %i.cw = getelementptr inbounds i8, ptr %next.gep157.a, i64 -32 ; 2 uses
-  %wide.load158 = load <4 x i32>, ptr %i.cv, align 4, !tbaa !3, !alias.scope !273, !noalias !276
+  %next.gep157.a = getelementptr i8, ptr %i.cc, i64 %i.cu
+  %i.cv = getelementptr i8, ptr %i.cn, i64 %i.cu
+  %i.cw = getelementptr inbounds i8, ptr %i.cv, i64 -16 ; 2 uses
   %wide.load159.a = load <4 x i32>, ptr %i.cw, align 4, !tbaa !3, !alias.scope !273, !noalias !276
-  %3 = getelementptr inbounds i8, ptr %next.gep156, i64 -16 ; 2 uses
-  %i.cx = getelementptr inbounds i8, ptr %next.gep156, i64 -32 ; 2 uses
-  %wide.load161 = load <4 x i32>, ptr %3, align 4, !tbaa !3, !alias.scope !276
+  %i.cx = getelementptr inbounds i8, ptr %next.gep157.a, i64 -16 ; 2 uses
   %wide.load162 = load <4 x i32>, ptr %i.cx, align 4, !tbaa !3, !alias.scope !276
-  store <4 x i32> %wide.load161, ptr %i.cv, align 4, !tbaa !3, !alias.scope !273, !noalias !276
   store <4 x i32> %wide.load162, ptr %i.cw, align 4, !tbaa !3, !alias.scope !273, !noalias !276
-  store <4 x i32> %wide.load158, ptr %3, align 4, !tbaa !3, !alias.scope !276
   store <4 x i32> %wide.load159.a, ptr %i.cx, align 4, !tbaa !3, !alias.scope !276
-  %index.next169 = add nuw i64 %index155, 8       ; 2 uses
+  %index.next169 = add nuw i64 %index155, 4       ; 2 uses
   %i.cy = icmp eq i64 %index.next169, %n.vec153
   br i1 %i.cy, label %middle.block170, label %vector.body154, !llvm.loop !278
 

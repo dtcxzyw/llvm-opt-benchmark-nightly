@@ -201,7 +201,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
   br i1 %found.conflict, label %.lr.ph.preheader22, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.j, 9223372036854775800      ; 4 uses
+  %n.vec = and i64 %i.j, 9223372036854775804      ; 4 uses
   %i.t = shl i64 %n.vec, 2
   %i.u = getelementptr i8, ptr %0, i64 %i.t
   %i.v = shl nuw i64 %n.vec, 1
@@ -211,37 +211,22 @@ vector.ph:                                        ; preds = %vector.memcheck
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.x = shl i64 %index, 2
-  %next.gep = getelementptr i8, ptr %0, i64 %i.x  ; 2 uses
-  %i.y = shl i64 %index, 1                        ; 2 uses
-  %next.gep17 = getelementptr i8, ptr %2, i64 %i.y
-  %3 = getelementptr i8, ptr %2, i64 %i.y
-  %next.gep18 = getelementptr i8, ptr %3, i64 8
-  %i.z = getelementptr i8, ptr %next.gep, i64 16
-  %wide.load = load <4 x i32>, ptr %next.gep, align 4, !tbaa !3, !alias.scope !55 ; 4 uses
-  %wide.load19 = load <4 x i32>, ptr %i.z, align 4, !tbaa !3, !alias.scope !55 ; 4 uses
-  %4 = lshr <4 x i32> %wide.load, splat (i32 16)
+  %next.gep = getelementptr i8, ptr %0, i64 %i.x
+  %i.y = shl i64 %index, 1
+  %i.z = getelementptr i8, ptr %2, i64 %i.y
+  %wide.load19 = load <4 x i32>, ptr %next.gep, align 4, !tbaa !3, !alias.scope !55 ; 4 uses
   %i.aa = lshr <4 x i32> %wide.load19, splat (i32 16)
-  %5 = and <4 x i32> %4, splat (i32 240)
   %i.ab = and <4 x i32> %i.aa, splat (i32 240)
-  %6 = lshr <4 x i32> %wide.load, splat (i32 12)
   %i.ac = lshr <4 x i32> %wide.load19, splat (i32 12)
-  %7 = and <4 x i32> %6, splat (i32 15)
   %i.ad = and <4 x i32> %i.ac, splat (i32 15)
-  %8 = or disjoint <4 x i32> %5, %7
   %i.ae = or disjoint <4 x i32> %i.ab, %i.ad
-  %9 = and <4 x i32> %wide.load, splat (i32 240)
   %i.af = and <4 x i32> %wide.load19, splat (i32 240)
-  %10 = lshr <4 x i32> %wide.load, splat (i32 28)
   %i.ag = lshr <4 x i32> %wide.load19, splat (i32 28)
-  %11 = or disjoint <4 x i32> %9, %10
   %i.ah = or disjoint <4 x i32> %i.af, %i.ag
-  %12 = shufflevector <4 x i32> %8, <4 x i32> %11, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
-  %interleaved.vec = trunc nuw <8 x i32> %12 to <8 x i8>
-  store <8 x i8> %interleaved.vec, ptr %next.gep17, align 1, !tbaa !24, !alias.scope !58, !noalias !55
   %i.ai = shufflevector <4 x i32> %i.ae, <4 x i32> %i.ah, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
   %interleaved.vec20 = trunc nuw <8 x i32> %i.ai to <8 x i8>
-  store <8 x i8> %interleaved.vec20, ptr %next.gep18, align 1, !tbaa !24, !alias.scope !58, !noalias !55
-  %index.next = add nuw i64 %index, 8             ; 2 uses
+  store <8 x i8> %interleaved.vec20, ptr %i.z, align 1, !tbaa !24, !alias.scope !58, !noalias !55
+  %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.aj = icmp eq i64 %index.next, %n.vec
   br i1 %i.aj, label %middle.block, label %vector.body, !llvm.loop !60
 

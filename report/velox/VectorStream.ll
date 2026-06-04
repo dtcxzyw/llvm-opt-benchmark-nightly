@@ -201,7 +201,7 @@ iter.check:                                       ; preds = %bb.a
   %i.g = sub i64 %i.f, %i.e                       ; 3 uses
   %i.h = lshr i64 %i.g, 3
   %i.i = add nuw nsw i64 %i.h, 1                  ; 4 uses
-  %min.iters.check = icmp ult i64 %i.g, 32
+  %min.iters.check = icmp ult i64 %i.g, 64
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
@@ -253,36 +253,36 @@ vec.epilog.iter.check:                            ; preds = %vector.body
   %bin.rdx47 = add <8 x i32> %i.x, %bin.rdx
   %bin.rdx48 = add <8 x i32> %i.y, %bin.rdx47
   %i.aa = tail call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %bin.rdx48) ; 2 uses
-  %min.epilog.iters.check = icmp samesign ult i64 %i.k, 5
+  %min.epilog.iters.check = icmp samesign ult i64 %i.k, 9
   br i1 %min.epilog.iters.check, label %.lr.ph.preheader, label %vec.epilog.ph, !prof !243
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i32 [ %i.aa, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.mod.vf49 = and i64 %i.i, 3                   ; 2 uses
+  %n.mod.vf49 = and i64 %i.i, 7                   ; 2 uses
   %i.ab = icmp eq i64 %n.mod.vf49, 0
-  %i.ac = select i1 %i.ab, i64 4, i64 %n.mod.vf49
+  %i.ac = select i1 %i.ab, i64 8, i64 %n.mod.vf49
   %n.vec50 = sub nsw i64 %i.i, %i.ac              ; 2 uses
   %i.ad = shl i64 %n.vec50, 3
   %i.ae = getelementptr i8, ptr %i.a, i64 %i.ad
-  %8 = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %bc.merge.rdx, i64 0
+  %8 = insertelement <8 x i32> <i32 poison, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0>, i32 %bc.merge.rdx, i64 0
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index51 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next56, %vec.epilog.vector.body ] ; 2 uses
-  %vec.phi52 = phi <4 x i32> [ %8, %vec.epilog.ph ], [ %9, %vec.epilog.vector.body ]
+  %vec.phi52 = phi <8 x i32> [ %8, %vec.epilog.ph ], [ %9, %vec.epilog.vector.body ]
   %i.af = shl i64 %index51, 3
   %next.gep53 = getelementptr i8, ptr %i.a, i64 %i.af
   %i.ag = getelementptr inbounds nuw i8, ptr %next.gep53, i64 4
-  %wide.vec54 = load <8 x i32>, ptr %i.ag, align 4, !tbaa !33
-  %strided.vec55 = shufflevector <8 x i32> %wide.vec54, <8 x i32> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
-  %9 = add <4 x i32> %strided.vec55, %vec.phi52   ; 2 uses
-  %index.next56 = add nuw i64 %index51, 4         ; 2 uses
+  %wide.vec54 = load <16 x i32>, ptr %i.ag, align 4, !tbaa !33
+  %strided.vec55 = shufflevector <16 x i32> %wide.vec54, <16 x i32> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
+  %9 = add <8 x i32> %strided.vec55, %vec.phi52   ; 2 uses
+  %index.next56 = add nuw i64 %index51, 8         ; 2 uses
   %i.ah = icmp eq i64 %index.next56, %n.vec50
   br i1 %i.ah, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !244
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %i.ai = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %9)
+  %i.ai = tail call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %9)
   br label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
@@ -685,9 +685,6 @@ declare i64 @llvm.umax.i64(i64, i64) #22
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v8i32(<8 x i32>) #22
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #22
-
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
@@ -966,7 +963,7 @@ attributes #29 = { nounwind allocsize(0) }
 !240 = distinct !{!240, !241, !242}
 !241 = !{!"llvm.loop.isvectorized", i32 1}
 !242 = !{!"llvm.loop.unroll.runtime.disable"}
-!243 = !{!"branch_weights", i32 4, i32 28}
+!243 = !{!"branch_weights", i32 8, i32 24}
 !244 = distinct !{!244, !241, !242}
 !245 = !{!246}
 !246 = distinct !{!246, !247, !"_ZN8facebook5velox9asRowTypeERKSt10shared_ptrIKNS0_4TypeEE: argument 0"}

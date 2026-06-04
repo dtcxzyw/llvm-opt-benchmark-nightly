@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 8 uses
-  %i.d = load ptr, ptr %i.c, align 8              ; 30 uses
+  %i.d = load ptr, ptr %i.c, align 8              ; 19 uses
   %i.e = ptrtoint ptr %i.b to i64
   %i.f = ptrtoint ptr %i.d to i64                 ; 6 uses
   %i.g = sub i64 %i.e, %i.f
@@ -221,7 +221,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %.neg = mul i64 %2, -8                          ; 2 uses
-  %i.o = getelementptr i8, ptr %i.d, i64 %.neg    ; 10 uses
+  %i.o = getelementptr inbounds i8, ptr %i.d, i64 %.neg ; 6 uses
   %.not11.i.i.i.i.i = icmp eq i64 %.neg, 0
   br i1 %.not11.i.i.i.i.i, label %_ZSt22__uninitialized_move_aIPSt4pairIjfES2_SaIS1_EET0_T_S5_S4_RT1_.exit, label %.lr.ph.i.i.i.i.i.preheader
 
@@ -282,98 +282,82 @@ _ZSt22__uninitialized_move_aIPSt4pairIjfES2_SaIS1_EET0_T_S5_S4_RT1_.exit: ; pred
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %2
   store ptr %i.ad, ptr %i.c, align 8
   %i.ae = ptrtoint ptr %i.o to i64
-  %i.af = sub i64 %i.ae, %i.k                     ; 3 uses
-  %i.ag = ashr exact i64 %i.af, 3                 ; 8 uses
+  %i.af = sub i64 %i.ae, %i.k
+  %i.ag = ashr exact i64 %i.af, 3                 ; 5 uses
   %i.ah = icmp sgt i64 %i.ag, 0
   br i1 %i.ah, label %.lr.ph.i.i.i.i.i69.preheader, label %_ZSt13move_backwardIPSt4pairIjfES2_ET0_T_S4_S3_.exit
 
 .lr.ph.i.i.i.i.i69.preheader:                     ; preds = %_ZSt22__uninitialized_move_aIPSt4pairIjfES2_SaIS1_EET0_T_S5_S4_RT1_.exit
-  %min.iters.check216 = icmp ult i64 %i.ag, 56
-  br i1 %min.iters.check216, label %.lr.ph.i.i.i.i.i69.preheader317, label %vector.memcheck194
+  %xtraiter = and i64 %i.ag, 3                    ; 2 uses
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %vector.body220.a, label %vector.memcheck194
 
-vector.memcheck194:                               ; preds = %.lr.ph.i.i.i.i.i69.preheader
-  %4 = mul nsw i64 %i.ag, -8                      ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.d, i64 %4   ; 3 uses
-  %scevgep195 = getelementptr i8, ptr %i.d, i64 -4 ; 3 uses
-  %5 = sub i64 4, %i.af
-  %scevgep196 = getelementptr i8, ptr %i.d, i64 %5 ; 3 uses
-  %6 = shl i64 %2, 3                              ; 3 uses
-  %7 = sub i64 %4, %6
-  %scevgep197 = getelementptr i8, ptr %i.d, i64 %7 ; 2 uses
-  %8 = sub nuw nsw i64 -4, %6
-  %scevgep198 = getelementptr i8, ptr %i.d, i64 %8 ; 2 uses
-  %9 = add i64 %i.af, %6
-  %10 = sub i64 4, %9
-  %scevgep199 = getelementptr i8, ptr %i.d, i64 %10 ; 2 uses
-  %bound0 = icmp ult ptr %scevgep, %i.d
-  %bound1 = icmp ult ptr %scevgep196, %scevgep195
-  %found.conflict = and i1 %bound0, %bound1
-  %bound0200 = icmp ult ptr %scevgep, %scevgep198
-  %bound1201 = icmp ult ptr %scevgep197, %scevgep195
-  %found.conflict202 = and i1 %bound0200, %bound1201
-  %conflict.rdx = or i1 %found.conflict, %found.conflict202
-  %bound0203 = icmp ult ptr %scevgep, %i.o
-  %bound1204 = icmp ult ptr %scevgep199, %scevgep195
-  %found.conflict205 = and i1 %bound0203, %bound1204
-  %conflict.rdx206 = or i1 %conflict.rdx, %found.conflict205
-  %bound0207 = icmp ult ptr %scevgep196, %scevgep198
-  %bound1208 = icmp ult ptr %scevgep197, %i.d
-  %found.conflict209 = and i1 %bound0207, %bound1208
-  %conflict.rdx210 = or i1 %conflict.rdx206, %found.conflict209
-  %bound0211 = icmp ult ptr %scevgep196, %i.o
-  %bound1212 = icmp ult ptr %scevgep199, %i.d
-  %found.conflict213 = and i1 %bound0211, %bound1212
-  %conflict.rdx214 = or i1 %conflict.rdx210, %found.conflict213
-  br i1 %conflict.rdx214, label %.lr.ph.i.i.i.i.i69.preheader317, label %vector.ph217
+vector.memcheck194:                               ; preds = %.lr.ph.i.i.i.i.i69.preheader, %vector.memcheck194
+  %.010.i.i.i.i.i.prol = phi i64 [ %7, %vector.memcheck194 ], [ %i.ag, %.lr.ph.i.i.i.i.i69.preheader ]
+  %.069.i.i.i.i.i.prol = phi ptr [ %scevgep198, %vector.memcheck194 ], [ %i.d, %.lr.ph.i.i.i.i.i69.preheader ] ; 2 uses
+  %.078.i.i.i.i.i.prol = phi ptr [ %scevgep197, %vector.memcheck194 ], [ %i.o, %.lr.ph.i.i.i.i.i69.preheader ] ; 2 uses
+  %prol.iter = phi i64 [ %prol.iter.next, %vector.memcheck194 ], [ 0, %.lr.ph.i.i.i.i.i69.preheader ]
+  %scevgep197 = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.prol, i64 -8 ; 3 uses
+  %scevgep198 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.prol, i64 -8 ; 3 uses
+  %4 = load i32, ptr %scevgep197, align 4
+  store i32 %4, ptr %scevgep198, align 4
+  %scevgep199 = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.prol, i64 -4
+  %5 = load float, ptr %scevgep199, align 4
+  %6 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.prol, i64 -4
+  store float %5, ptr %6, align 4
+  %7 = add nsw i64 %.010.i.i.i.i.i.prol, -1       ; 2 uses
+  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
+  br i1 %prol.iter.cmp.not, label %vector.body220.a, label %vector.memcheck194, !llvm.loop !244
 
-vector.ph217:                                     ; preds = %vector.memcheck194
-  %n.vec219 = and i64 %i.ag, 9223372036854775806  ; 3 uses
-  %11 = and i64 %i.ag, 1
-  %12 = mul i64 %n.vec219, -8                     ; 2 uses
-  %13 = getelementptr i8, ptr %i.d, i64 %12
-  %14 = getelementptr i8, ptr %i.o, i64 %12
-  br label %vector.body220.a
+vector.body220.a:                                 ; preds = %vector.memcheck194, %.lr.ph.i.i.i.i.i69.preheader
+  %index221.a = phi i64 [ %i.ag, %.lr.ph.i.i.i.i.i69.preheader ], [ %7, %vector.memcheck194 ]
+  %.069.i.i.i.i.i.unr = phi ptr [ %i.d, %.lr.ph.i.i.i.i.i69.preheader ], [ %scevgep198, %vector.memcheck194 ]
+  %.078.i.i.i.i.i.unr = phi ptr [ %i.o, %.lr.ph.i.i.i.i.i69.preheader ], [ %scevgep197, %vector.memcheck194 ]
+  %8 = icmp ult i64 %i.ag, 4
+  br i1 %8, label %_ZSt13move_backwardIPSt4pairIjfES2_ET0_T_S4_S3_.exit, label %.lr.ph.i.i.i.i.i69
 
-vector.body220.a:                                 ; preds = %vector.body220.a, %vector.ph217
-  %index221.a = phi i64 [ 0, %vector.ph217 ], [ %index.next229, %vector.body220.a ] ; 2 uses
-  %15 = mul i64 %index221.a, -8                   ; 2 uses
-  %next.gep222 = getelementptr i8, ptr %i.d, i64 %15
-  %next.gep223 = getelementptr i8, ptr %i.o, i64 %15
-  %16 = getelementptr inbounds i8, ptr %next.gep223, i64 -16
-  %wide.vec312 = load <4 x float>, ptr %16, align 4
-  %17 = getelementptr inbounds i8, ptr %next.gep222, i64 -16
-  store <4 x float> %wide.vec312, ptr %17, align 4
-  %index.next229 = add nuw i64 %index221.a, 2     ; 2 uses
-  %18 = icmp eq i64 %index.next229, %n.vec219
-  br i1 %18, label %middle.block230, label %vector.body220.a, !llvm.loop !244
-
-middle.block230:                                  ; preds = %vector.body220.a
-  %cmp.n231 = icmp eq i64 %i.ag, %n.vec219
-  br i1 %cmp.n231, label %_ZSt13move_backwardIPSt4pairIjfES2_ET0_T_S4_S3_.exit, label %.lr.ph.i.i.i.i.i69.preheader317
-
-.lr.ph.i.i.i.i.i69.preheader317:                  ; preds = %vector.memcheck194, %.lr.ph.i.i.i.i.i69.preheader, %middle.block230
-  %.010.i.i.i.i.i.ph = phi i64 [ %i.ag, %vector.memcheck194 ], [ %i.ag, %.lr.ph.i.i.i.i.i69.preheader ], [ %11, %middle.block230 ]
-  %.069.i.i.i.i.i.ph = phi ptr [ %i.d, %vector.memcheck194 ], [ %i.d, %.lr.ph.i.i.i.i.i69.preheader ], [ %13, %middle.block230 ]
-  %.078.i.i.i.i.i.ph = phi ptr [ %i.o, %vector.memcheck194 ], [ %i.o, %.lr.ph.i.i.i.i.i69.preheader ], [ %14, %middle.block230 ]
-  br label %.lr.ph.i.i.i.i.i69
-
-.lr.ph.i.i.i.i.i69:                               ; preds = %.lr.ph.i.i.i.i.i69.preheader317, %.lr.ph.i.i.i.i.i69
-  %.010.i.i.i.i.i = phi i64 [ %i.ao, %.lr.ph.i.i.i.i.i69 ], [ %.010.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i69.preheader317 ] ; 2 uses
-  %.069.i.i.i.i.i = phi ptr [ %i.aj, %.lr.ph.i.i.i.i.i69 ], [ %.069.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i69.preheader317 ] ; 2 uses
-  %.078.i.i.i.i.i = phi ptr [ %i.ai, %.lr.ph.i.i.i.i.i69 ], [ %.078.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i69.preheader317 ] ; 2 uses
-  %i.ai = getelementptr inbounds i8, ptr %.078.i.i.i.i.i, i64 -8 ; 2 uses
-  %i.aj = getelementptr inbounds i8, ptr %.069.i.i.i.i.i, i64 -8 ; 2 uses
+.lr.ph.i.i.i.i.i69:                               ; preds = %vector.body220.a, %.lr.ph.i.i.i.i.i69
+  %.010.i.i.i.i.i = phi i64 [ %i.ao, %.lr.ph.i.i.i.i.i69 ], [ %index221.a, %vector.body220.a ] ; 2 uses
+  %.069.i.i.i.i.i = phi ptr [ %i.aj, %.lr.ph.i.i.i.i.i69 ], [ %.069.i.i.i.i.i.unr, %vector.body220.a ] ; 8 uses
+  %.078.i.i.i.i.i = phi ptr [ %i.ai, %.lr.ph.i.i.i.i.i69 ], [ %.078.i.i.i.i.i.unr, %vector.body220.a ] ; 8 uses
+  %9 = getelementptr inbounds i8, ptr %.078.i.i.i.i.i, i64 -8
+  %10 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i, i64 -8
+  %11 = load i32, ptr %9, align 4
+  store i32 %11, ptr %10, align 4
+  %12 = getelementptr inbounds i8, ptr %.078.i.i.i.i.i, i64 -4
+  %13 = load float, ptr %12, align 4
+  %14 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i, i64 -4
+  store float %13, ptr %14, align 4
+  %15 = getelementptr inbounds i8, ptr %.078.i.i.i.i.i, i64 -16
+  %16 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i, i64 -16
+  %17 = load i32, ptr %15, align 4
+  store i32 %17, ptr %16, align 4
+  %18 = getelementptr inbounds i8, ptr %.078.i.i.i.i.i, i64 -12
+  %19 = load float, ptr %18, align 4
+  %20 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i, i64 -12
+  store float %19, ptr %20, align 4
+  %21 = getelementptr inbounds i8, ptr %.078.i.i.i.i.i, i64 -24
+  %22 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i, i64 -24
+  %23 = load i32, ptr %21, align 4
+  store i32 %23, ptr %22, align 4
+  %24 = getelementptr inbounds i8, ptr %.078.i.i.i.i.i, i64 -20
+  %25 = load float, ptr %24, align 4
+  %26 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i, i64 -20
+  store float %25, ptr %26, align 4
+  %i.ai = getelementptr inbounds i8, ptr %.078.i.i.i.i.i, i64 -32 ; 2 uses
+  %i.aj = getelementptr inbounds i8, ptr %.069.i.i.i.i.i, i64 -32 ; 2 uses
   %i.ak = load i32, ptr %i.ai, align 4
   store i32 %i.ak, ptr %i.aj, align 4
-  %i.al = getelementptr inbounds i8, ptr %.078.i.i.i.i.i, i64 -4
+  %i.al = getelementptr inbounds i8, ptr %.078.i.i.i.i.i, i64 -28
   %i.am = load float, ptr %i.al, align 4
-  %i.an = getelementptr inbounds i8, ptr %.069.i.i.i.i.i, i64 -4
+  %i.an = getelementptr inbounds i8, ptr %.069.i.i.i.i.i, i64 -28
   store float %i.am, ptr %i.an, align 4
-  %i.ao = add nsw i64 %.010.i.i.i.i.i, -1
-  %19 = icmp samesign ugt i64 %.010.i.i.i.i.i, 1
-  br i1 %19, label %.lr.ph.i.i.i.i.i69, label %_ZSt13move_backwardIPSt4pairIjfES2_ET0_T_S4_S3_.exit, !llvm.loop !245
+  %i.ao = add nsw i64 %.010.i.i.i.i.i, -4
+  %27 = icmp sgt i64 %.010.i.i.i.i.i, 4
+  br i1 %27, label %.lr.ph.i.i.i.i.i69, label %_ZSt13move_backwardIPSt4pairIjfES2_ET0_T_S4_S3_.exit, !llvm.loop !245
 
-_ZSt13move_backwardIPSt4pairIjfES2_ET0_T_S4_S3_.exit: ; preds = %.lr.ph.i.i.i.i.i69, %middle.block230, %_ZSt22__uninitialized_move_aIPSt4pairIjfES2_SaIS1_EET0_T_S5_S4_RT1_.exit
+_ZSt13move_backwardIPSt4pairIjfES2_ET0_T_S4_S3_.exit: ; preds = %vector.body220.a, %.lr.ph.i.i.i.i.i69, %_ZSt22__uninitialized_move_aIPSt4pairIjfES2_SaIS1_EET0_T_S5_S4_RT1_.exit
   %.idx = shl nuw nsw i64 %2, 3                   ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 %.idx
   %i.aq = add nsw i64 %.idx, -8                   ; 2 uses
@@ -776,8 +760,8 @@ begin_hunk_1_@llvm.fmuladd.v4f32
 !241 = !{!239, !236, !233, !230}
 !242 = distinct !{!242, !4, !25, !26}
 !243 = distinct !{!243, !4, !26, !25}
-!244 = distinct !{!244, !4, !25, !26}
-!245 = distinct !{!245, !4, !25}
+!244 = distinct !{!244, !30}
+!245 = distinct !{!245, !4}
 !246 = distinct !{!246, !4, !25, !26}
 !247 = distinct !{!247, !4, !26, !25}
 !248 = distinct !{!248, !4, !25, !26}

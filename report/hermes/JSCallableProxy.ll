@@ -201,8 +201,7 @@ bb.a:
   store i32 0, ptr %i.k, align 8, !tbaa !317
   store ptr %3, ptr %i.b, align 8, !tbaa !260
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 9472 ; 2 uses
-  %.sroa.0.0.copyload.i = load ptr, ptr %i.l, align 8, !tbaa !318 ; 7 uses
-  %.sroa.0.0.copyload.i125 = ptrtoaddr ptr %.sroa.0.0.copyload.i to i64
+  %.sroa.0.0.copyload.i = load ptr, ptr %i.l, align 8, !tbaa !318 ; 6 uses
   %i.m = getelementptr inbounds i8, ptr %.sroa.0.0.copyload.i, i64 -48 ; 2 uses
   %.sroa.0.0.copyload.i.i.i = load i64, ptr %i.m, align 8, !tbaa !7
   %i.n = and i64 %.sroa.0.0.copyload.i.i.i, 281474976710655
@@ -282,14 +281,14 @@ bb.f:                                             ; preds = %_ZN6hermes2vm7Runti
   %i.aw = icmp ne i64 %i.av, 0
   %i.ax = and i1 %i.au, %i.aw
   %i.ay = getelementptr inbounds i8, ptr %.sroa.0.0.copyload.i, i64 -32 ; 5 uses
-  %i.az = load i64, ptr %i.ay, align 8, !tbaa !319 ; 3 uses
+  %i.az = load i64, ptr %i.ay, align 8, !tbaa !319 ; 2 uses
   %i.ba = trunc i64 %i.az to i32                  ; 3 uses
   br i1 %i.ax, label %bb.k, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %.sroa.0.0.copyload.i44 = load i64, ptr %.0.i.i.i.i.i.i, align 8, !tbaa !7
   %.sroa.020.0.copyload = load i64, ptr %i.ap, align 8, !tbaa !7
-  %i.bb = getelementptr inbounds i8, ptr %.sroa.0.0.copyload.i, i64 -56 ; 6 uses
+  %i.bb = getelementptr inbounds i8, ptr %.sroa.0.0.copyload.i, i64 -56 ; 4 uses
   %.sroa.019.0.copyload = load i64, ptr %i.bb, align 8, !tbaa !7
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 9448 ; 3 uses
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !320 ; 3 uses
@@ -301,7 +300,7 @@ bb.g:                                             ; preds = %bb.f
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 9440
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !321
   %i.bk = ptrtoint ptr %i.bj to i64
-  %i.bl = ptrtoint ptr %i.bd to i64               ; 2 uses
+  %i.bl = ptrtoint ptr %i.bd to i64
   %i.bm = sub i64 %i.bk, %i.bl
   %i.bn = lshr exact i64 %i.bm, 3
   %i.bo = and i64 %i.bn, 4294967295
@@ -335,9 +334,9 @@ bb.i:                                             ; preds = %bb.g
   store i64 %.sroa.020.0.copyload, ptr %i.cd, align 8, !tbaa !319
   %i.ce = getelementptr inbounds i8, ptr %i.bw, i64 -48
   store i64 %.sroa.0.0.copyload.i44, ptr %i.ce, align 8, !tbaa !319
-  %i.cf = getelementptr inbounds i8, ptr %i.bw, i64 -56 ; 5 uses
+  %i.cf = getelementptr inbounds i8, ptr %i.bw, i64 -56 ; 3 uses
   store i64 %.sroa.019.0.copyload, ptr %i.cf, align 8, !tbaa !319
-  %i.cg = load i64, ptr %i.ay, align 8, !tbaa !319
+  %i.cg = load i64, ptr %i.ay, align 8, !tbaa !319 ; 2 uses
   %i.ch = and i64 %i.cg, 4294967295               ; 3 uses
   %.neg.i.i = mul nsw i64 %i.ch, -8
   %i.ci = getelementptr inbounds i8, ptr %i.bb, i64 %.neg.i.i
@@ -346,65 +345,68 @@ bb.i:                                             ; preds = %bb.g
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %bb.i
   %i.cj = add nuw nsw i64 %i.ch, 2305843009213693951
-  %i.ck = and i64 %i.cj, 2305843009213693951      ; 2 uses
-  %5 = add nuw nsw i64 %i.ck, 1                   ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.ck, 19
-  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader132, label %vector.memcheck
+  %i.ck = and i64 %i.cj, 2305843009213693951
+  %xtraiter = and i64 %i.cg, 7                    ; 2 uses
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %vector.ph, label %vector.memcheck
 
-vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.preheader
-  %6 = add i64 %.sroa.0.0.copyload.i125, -56
-  %7 = and i64 %i.az, 4294967295
-  %umin = call i64 @llvm.umin.i64(i64 %7, i64 4294967288)
-  %8 = shl nuw nsw i64 %umin, 3
-  %9 = add i64 %8, %i.bl
-  %10 = sub i64 %6, %9
-  %diff.check = icmp ult i64 %10, 32
-  br i1 %diff.check, label %.lr.ph.i.i.i.i.i.preheader132, label %vector.ph
+vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.preheader, %vector.memcheck
+  %.sroa.03.0.i.i.i.i.prol = phi ptr [ %6, %vector.memcheck ], [ %i.bb, %.lr.ph.i.i.i.i.i.preheader ]
+  %storemerge2.i.i.i.i.i.prol = phi ptr [ %5, %vector.memcheck ], [ %i.cf, %.lr.ph.i.i.i.i.i.preheader ]
+  %prol.iter = phi i64 [ %prol.iter.next, %vector.memcheck ], [ 0, %.lr.ph.i.i.i.i.i.preheader ]
+  %5 = getelementptr inbounds i8, ptr %storemerge2.i.i.i.i.i.prol, i64 -8 ; 3 uses
+  %6 = getelementptr inbounds i8, ptr %.sroa.03.0.i.i.i.i.prol, i64 -8 ; 3 uses
+  %7 = load i64, ptr %6, align 8, !noalias !322
+  store i64 %7, ptr %5, align 8, !noalias !322
+  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
+  br i1 %prol.iter.cmp.not, label %vector.ph, label %vector.memcheck, !llvm.loop !333
 
-vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %5, 4611686018427387900        ; 3 uses
-  %11 = mul i64 %n.vec, -8                        ; 2 uses
-  %12 = getelementptr i8, ptr %i.bb, i64 %11
-  %13 = getelementptr i8, ptr %i.cf, i64 %11
-  br label %vector.body
+vector.ph:                                        ; preds = %vector.memcheck, %.lr.ph.i.i.i.i.i.preheader
+  %.sroa.03.0.i.i.i.i.unr = phi ptr [ %i.bb, %.lr.ph.i.i.i.i.i.preheader ], [ %6, %vector.memcheck ]
+  %storemerge2.i.i.i.i.i.unr = phi ptr [ %i.cf, %.lr.ph.i.i.i.i.i.preheader ], [ %5, %vector.memcheck ]
+  %8 = icmp samesign ult i64 %i.ck, 7
+  br i1 %8, label %_ZSt20uninitialized_copy_nISt16reverse_iteratorIPN6hermes2vm17PinnedHermesValueEEjS5_ET1_T_T0_S6_.exit, label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %14 = mul i64 %index, -8                        ; 2 uses
-  %next.gep = getelementptr i8, ptr %i.bb, i64 %14 ; 2 uses
-  %next.gep126 = getelementptr i8, ptr %i.cf, i64 %14 ; 2 uses
-  %i.cl = getelementptr inbounds i8, ptr %next.gep, i64 -16
-  %i.cm = getelementptr inbounds i8, ptr %next.gep, i64 -32
-  %wide.load = load <2 x i64>, ptr %i.cl, align 8, !noalias !322
-  %wide.load127 = load <2 x i64>, ptr %i.cm, align 8, !noalias !322
-  %i.cn = getelementptr inbounds i8, ptr %next.gep126, i64 -16
-  %i.co = getelementptr inbounds i8, ptr %next.gep126, i64 -32
-  store <2 x i64> %wide.load, ptr %i.cn, align 8, !noalias !322
-  store <2 x i64> %wide.load127, ptr %i.co, align 8, !noalias !322
-  %index.next = add nuw i64 %index, 4             ; 2 uses
-  %i.cp = icmp eq i64 %index.next, %n.vec
-  br i1 %i.cp, label %middle.block, label %vector.body, !llvm.loop !333
-
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %5, %n.vec
-  br i1 %cmp.n, label %_ZSt20uninitialized_copy_nISt16reverse_iteratorIPN6hermes2vm17PinnedHermesValueEEjS5_ET1_T_T0_S6_.exit, label %.lr.ph.i.i.i.i.i.preheader132
-
-.lr.ph.i.i.i.i.i.preheader132:                    ; preds = %vector.memcheck, %.lr.ph.i.i.i.i.i.preheader, %middle.block
-  %.sroa.03.0.i.i.i.i.ph = phi ptr [ %i.bb, %vector.memcheck ], [ %i.bb, %.lr.ph.i.i.i.i.i.preheader ], [ %12, %middle.block ]
-  %storemerge2.i.i.i.i.i.ph = phi ptr [ %i.cf, %vector.memcheck ], [ %i.cf, %.lr.ph.i.i.i.i.i.preheader ], [ %13, %middle.block ]
-  br label %.lr.ph.i.i.i.i.i
-
-.lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i.preheader132, %.lr.ph.i.i.i.i.i
-  %.sroa.03.0.i.i.i.i = phi ptr [ %16, %.lr.ph.i.i.i.i.i ], [ %.sroa.03.0.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.preheader132 ]
-  %storemerge2.i.i.i.i.i = phi ptr [ %15, %.lr.ph.i.i.i.i.i ], [ %storemerge2.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.preheader132 ]
-  %15 = getelementptr inbounds i8, ptr %storemerge2.i.i.i.i.i, i64 -8 ; 2 uses
-  %16 = getelementptr inbounds i8, ptr %.sroa.03.0.i.i.i.i, i64 -8 ; 3 uses
+vector.body:                                      ; preds = %vector.ph, %vector.body
+  %.sroa.03.0.i.i.i.i = phi ptr [ %25, %vector.body ], [ %.sroa.03.0.i.i.i.i.unr, %vector.ph ] ; 8 uses
+  %storemerge2.i.i.i.i.i = phi ptr [ %24, %vector.body ], [ %storemerge2.i.i.i.i.i.unr, %vector.ph ] ; 8 uses
+  %9 = getelementptr inbounds i8, ptr %storemerge2.i.i.i.i.i, i64 -8
+  %10 = getelementptr inbounds i8, ptr %.sroa.03.0.i.i.i.i, i64 -8
+  %11 = load i64, ptr %10, align 8, !noalias !322
+  store i64 %11, ptr %9, align 8, !noalias !322
+  %12 = getelementptr inbounds i8, ptr %storemerge2.i.i.i.i.i, i64 -16
+  %13 = getelementptr inbounds i8, ptr %.sroa.03.0.i.i.i.i, i64 -16
+  %14 = load i64, ptr %13, align 8, !noalias !322
+  store i64 %14, ptr %12, align 8, !noalias !322
+  %15 = getelementptr inbounds i8, ptr %storemerge2.i.i.i.i.i, i64 -24
+  %16 = getelementptr inbounds i8, ptr %.sroa.03.0.i.i.i.i, i64 -24
   %17 = load i64, ptr %16, align 8, !noalias !322
   store i64 %17, ptr %15, align 8, !noalias !322
-  %.not.i.i.i.i.i46 = icmp eq ptr %16, %i.ci
-  br i1 %.not.i.i.i.i.i46, label %_ZSt20uninitialized_copy_nISt16reverse_iteratorIPN6hermes2vm17PinnedHermesValueEEjS5_ET1_T_T0_S6_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !337
+  %next.gep = getelementptr inbounds i8, ptr %storemerge2.i.i.i.i.i, i64 -32
+  %next.gep126 = getelementptr inbounds i8, ptr %.sroa.03.0.i.i.i.i, i64 -32
+  %18 = load i64, ptr %next.gep126, align 8, !noalias !322
+  store i64 %18, ptr %next.gep, align 8, !noalias !322
+  %i.cl = getelementptr inbounds i8, ptr %storemerge2.i.i.i.i.i, i64 -40
+  %i.cm = getelementptr inbounds i8, ptr %.sroa.03.0.i.i.i.i, i64 -40
+  %19 = load i64, ptr %i.cm, align 8, !noalias !322
+  store i64 %19, ptr %i.cl, align 8, !noalias !322
+  %i.cn = getelementptr inbounds i8, ptr %storemerge2.i.i.i.i.i, i64 -48
+  %i.co = getelementptr inbounds i8, ptr %.sroa.03.0.i.i.i.i, i64 -48
+  %20 = load i64, ptr %i.co, align 8, !noalias !322
+  store i64 %20, ptr %i.cn, align 8, !noalias !322
+  %21 = getelementptr inbounds i8, ptr %storemerge2.i.i.i.i.i, i64 -56
+  %22 = getelementptr inbounds i8, ptr %.sroa.03.0.i.i.i.i, i64 -56
+  %23 = load i64, ptr %22, align 8, !noalias !322
+  store i64 %23, ptr %21, align 8, !noalias !322
+  %24 = getelementptr inbounds i8, ptr %storemerge2.i.i.i.i.i, i64 -64 ; 2 uses
+  %25 = getelementptr inbounds i8, ptr %.sroa.03.0.i.i.i.i, i64 -64 ; 3 uses
+  %26 = load i64, ptr %25, align 8, !noalias !322
+  store i64 %26, ptr %24, align 8, !noalias !322
+  %i.cp = icmp eq ptr %25, %i.ci
+  br i1 %i.cp, label %_ZSt20uninitialized_copy_nISt16reverse_iteratorIPN6hermes2vm17PinnedHermesValueEEjS5_ET1_T_T0_S6_.exit, label %vector.body, !llvm.loop !335
 
-_ZSt20uninitialized_copy_nISt16reverse_iteratorIPN6hermes2vm17PinnedHermesValueEEjS5_ET1_T_T0_S6_.exit: ; preds = %.lr.ph.i.i.i.i.i, %middle.block, %bb.i
+_ZSt20uninitialized_copy_nISt16reverse_iteratorIPN6hermes2vm17PinnedHermesValueEEjS5_ET1_T_T0_S6_.exit: ; preds = %vector.ph, %vector.body, %bb.i
   %.sroa.0.0.copyload.i.i.i47 = load i64, ptr %.0.i.i.i.i.i.i, align 8, !tbaa !7
   %i.cq = and i64 %.sroa.0.0.copyload.i.i.i47, 281474976710655
   %i.cr = inttoptr i64 %i.cq to ptr
@@ -414,8 +416,8 @@ _ZSt20uninitialized_copy_nISt16reverse_iteratorIPN6hermes2vm17PinnedHermesValueE
   %i.cv = getelementptr inbounds nuw [8 x i8], ptr @_ZN6hermes2vm6VTable11vtableArrayE, i64 %i.cu
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !271
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 104
-  %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !338
-  %i.cz = call { i32, i64 } %i.cy(ptr nonnull %.0.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(9816) %1) #6, !inline_history !339 ; 2 uses
+  %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !337
+  %i.cz = call { i32, i64 } %i.cy(ptr nonnull %.0.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(9816) %1) #6, !inline_history !338 ; 2 uses
   %i.da = extractvalue { i32, i64 } %i.cz, 0
   %i.db = extractvalue { i32, i64 } %i.cz, 1
   %i.dc = icmp ne i32 %i.da, 0                    ; 2 uses
@@ -548,7 +550,7 @@ bb.y:                                             ; preds = %bb.w
 _ZN6hermes2vm11BoxedDouble6createEdRNS0_7RuntimeE.exit.i.i: ; preds = %bb.y, %bb.x
   %i.eu = phi ptr [ %i.et, %bb.x ], [ %i.eq, %bb.y ] ; 3 uses
   %i.ev = getelementptr inbounds nuw i8, ptr %i.eu, i64 8
-  store i64 %.sroa.012.0.copyload, ptr %i.ev, align 8, !tbaa !340
+  store i64 %.sroa.012.0.copyload, ptr %i.ev, align 8, !tbaa !339
   store i32 402653200, ptr %i.eu, align 8, !tbaa !258
   %i.ew = ptrtoint ptr %i.eu to i64
   %i.ex = sub i64 %i.ew, %i.q
@@ -569,7 +571,7 @@ _ZN6hermes2vm13HermesValue3217encodeHermesValueENS0_11HermesValueERNS0_7RuntimeE
   %i.ff = inttoptr i64 %i.fe to ptr               ; 2 uses
   %i.fg = select i1 %.not.i.i.i.i.i.i, ptr null, ptr %i.ff
   %i.fh = getelementptr inbounds nuw i8, ptr %i.fb, i64 20
-  %i.fi = load i32, ptr %i.fh, align 4, !tbaa !342
+  %i.fi = load i32, ptr %i.fh, align 4, !tbaa !341
   %i.fj = sub i32 %.0112, %i.fi                   ; 4 uses
   %i.fk = icmp ult i32 %i.fj, 4096
   br i1 %i.fk, label %_ZN6hermes2vm18SegmentedArrayBaseINS0_13HermesValue32EE5atRefILNS3_6InlineE0EEERNS0_17GCHermesValueBaseIS2_EERNS0_11PointerBaseEj.exit.i.i, label %bb.z, !prof !270
@@ -580,7 +582,7 @@ bb.z:                                             ; preds = %_ZN6hermes2vm13Herm
   %i.fn = getelementptr inbounds nuw i8, ptr %i.ff, i64 16392
   %i.fo = zext nneg i32 %i.fm to i64
   %i.fp = getelementptr inbounds nuw [4 x i8], ptr %i.fn, i64 %i.fo
-  %i.fq = load i32, ptr %i.fp, align 4, !tbaa !345
+  %i.fq = load i32, ptr %i.fp, align 4, !tbaa !344
   %i.fr = zext i32 %i.fq to i64
   %i.fs = add i64 %i.fr, %i.q
   %i.ft = inttoptr i64 %i.fs to ptr
@@ -605,12 +607,12 @@ bb.aa:                                            ; preds = %_ZN6hermes2vm18Segm
   br label %_ZN6hermes2vm9ArrayImpl26unsafeSetExistingElementAtEPS1_RNS0_7RuntimeEjNS0_13HermesValue32E.exit
 
 _ZN6hermes2vm9ArrayImpl26unsafeSetExistingElementAtEPS1_RNS0_7RuntimeEjNS0_13HermesValue32E.exit: ; preds = %_ZN6hermes2vm18SegmentedArrayBaseINS0_13HermesValue32EE5atRefILNS3_6InlineE0EEERNS0_17GCHermesValueBaseIS2_EERNS0_11PointerBaseEj.exit.i.i, %bb.aa
-  store i32 %.sroa.04.0.i, ptr %i.fx, align 4, !tbaa !345
+  store i32 %.sroa.04.0.i, ptr %i.fx, align 4, !tbaa !344
   %i.gd = add nuw i32 %.0112, 1                   ; 2 uses
   %i.ge = load i64, ptr %i.ay, align 8, !tbaa !319
   %i.gf = trunc i64 %i.ge to i32
   %i.gg = icmp ult i32 %i.gd, %i.gf
-  br i1 %i.gg, label %bb.m, label %._crit_edge, !llvm.loop !347
+  br i1 %i.gg, label %bb.m, label %._crit_edge, !llvm.loop !346
 
 bb.ab:                                            ; preds = %._crit_edge
   %.sroa.0.0.copyload.i52 = load i64, ptr %i.df, align 8, !tbaa !7
@@ -697,9 +699,6 @@ declare noundef ptr @_ZN6hermes2vm7GCScope15_newChunkAndPHVENS0_11HermesValueE(p
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.uadd.sat.i32(i32, i32) #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #5
 
 attributes #0 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -1046,19 +1045,18 @@ attributes #6 = { nounwind }
 !330 = distinct !{!330, !"_ZSt22__uninitialized_copy_nISt16reverse_iteratorIPN6hermes2vm17PinnedHermesValueEEjS5_ET1_T_T0_S6_St26random_access_iterator_tag"}
 !331 = distinct !{!331, !332, !"_ZSt20uninitialized_copy_nISt16reverse_iteratorIPN6hermes2vm17PinnedHermesValueEEjS5_ET1_T_T0_S6_: argument 0"}
 !332 = distinct !{!332, !"_ZSt20uninitialized_copy_nISt16reverse_iteratorIPN6hermes2vm17PinnedHermesValueEEjS5_ET1_T_T0_S6_"}
-!333 = distinct !{!333, !334, !335, !336}
-!334 = !{!"llvm.loop.mustprogress"}
-!335 = !{!"llvm.loop.isvectorized", i32 1}
-!336 = !{!"llvm.loop.unroll.runtime.disable"}
-!337 = distinct !{!337, !334, !335}
-!338 = !{!274, !13, i64 104}
-!339 = distinct !{null}
-!340 = !{!341, !60, i64 8}
-!341 = !{!"_ZTSN6hermes2vm11BoxedDoubleE", !304, i64 0, !60, i64 8}
-!342 = !{!343, !4, i64 20}
-!343 = !{!"_ZTSN6hermes2vm9ArrayImplE", !303, i64 0, !4, i64 20, !4, i64 24, !344, i64 28}
-!344 = !{!"_ZTSN6hermes2vm9GCPointerINS0_18SegmentedArrayBaseINS0_13HermesValue32EEEEE", !307, i64 0}
-!345 = !{!346, !4, i64 0}
-!346 = !{!"_ZTSN6hermes2vm13HermesValue32E", !4, i64 0}
-!347 = distinct !{!347, !334}
+!333 = distinct !{!333, !334}
+!334 = !{!"llvm.loop.unroll.disable"}
+!335 = distinct !{!335, !336}
+!336 = !{!"llvm.loop.mustprogress"}
+!337 = !{!274, !13, i64 104}
+!338 = distinct !{null}
+!339 = !{!340, !60, i64 8}
+!340 = !{!"_ZTSN6hermes2vm11BoxedDoubleE", !304, i64 0, !60, i64 8}
+!341 = !{!342, !4, i64 20}
+!342 = !{!"_ZTSN6hermes2vm9ArrayImplE", !303, i64 0, !4, i64 20, !4, i64 24, !343, i64 28}
+!343 = !{!"_ZTSN6hermes2vm9GCPointerINS0_18SegmentedArrayBaseINS0_13HermesValue32EEEEE", !307, i64 0}
+!344 = !{!345, !4, i64 0}
+!345 = !{!"_ZTSN6hermes2vm13HermesValue32E", !4, i64 0}
+!346 = distinct !{!346, !336}
 end_hunk_0
