@@ -201,58 +201,72 @@ bb.a:
   %.idx.i = shl nuw nsw i64 %i.g, 3               ; 2 uses
   %i.h = zext i8 %1 to i64
   %i.i = getelementptr [8 x i8], ptr %i.f, i64 %i.h
-  %i.j = getelementptr [8 x i8], ptr %i.i, i64 %i.g ; 3 uses
-  %i.k = getelementptr i8, ptr %i.f, i64 %.idx.i  ; 3 uses
+  %i.j = getelementptr [8 x i8], ptr %i.i, i64 %i.g ; 2 uses
+  %i.k = getelementptr i8, ptr %i.f, i64 %.idx.i  ; 2 uses
   %i.l = add nsw i64 %.idx.i, -8                  ; 2 uses
   %i.m = lshr exact i64 %i.l, 3
-  %i.n = add nuw nsw i64 %i.m, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.l, 24
-  br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph
+  %i.n = add nuw nsw i64 %i.m, 1
+  %xtraiter = and i64 %i.n, 7                     ; 2 uses
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.lr.ph.i.preheader, label %vector.body.a
 
-vector.ph:                                        ; preds = %.lr.ph.preheader.i
-  %n.vec = and i64 %i.n, 4611686018427387900      ; 3 uses
-  %4 = mul i64 %n.vec, -8                         ; 2 uses
-  %5 = getelementptr i8, ptr %i.j, i64 %4
-  %6 = getelementptr i8, ptr %i.k, i64 %4
-  br label %vector.body.a
+vector.body.a:                                    ; preds = %.lr.ph.preheader.i, %vector.body.a
+  %.017.i.prol = phi ptr [ %i.o, %vector.body.a ], [ %i.j, %.lr.ph.preheader.i ]
+  %.01416.i.prol = phi ptr [ %i.p, %vector.body.a ], [ %i.k, %.lr.ph.preheader.i ]
+  %prol.iter = phi i64 [ %index.next.a, %vector.body.a ], [ 0, %.lr.ph.preheader.i ]
+  %i.o = getelementptr inbounds i8, ptr %.017.i.prol, i64 -8 ; 3 uses
+  %i.p = getelementptr inbounds i8, ptr %.01416.i.prol, i64 -8 ; 3 uses
+  %4 = load i64, ptr %i.p, align 4
+  store i64 %4, ptr %i.o, align 4
+  %index.next.a = add i64 %prol.iter, 1           ; 2 uses
+  %i.q = icmp eq i64 %index.next.a, %xtraiter
+  br i1 %i.q, label %.lr.ph.i.preheader, label %vector.body.a, !llvm.loop !1167
 
-vector.body.a:                                    ; preds = %vector.body.a, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next.a, %vector.body.a ] ; 2 uses
-  %7 = mul i64 %index, -8                         ; 2 uses
-  %next.gep = getelementptr i8, ptr %i.j, i64 %7  ; 2 uses
-  %next.gep65 = getelementptr i8, ptr %i.k, i64 %7 ; 2 uses
-  %8 = getelementptr inbounds i8, ptr %next.gep65, i64 -16
-  %9 = getelementptr inbounds i8, ptr %next.gep65, i64 -32
-  %wide.load = load <2 x i64>, ptr %8, align 4
-  %wide.load66 = load <2 x i64>, ptr %9, align 4
-  %i.o = getelementptr inbounds i8, ptr %next.gep, i64 -16
-  %i.p = getelementptr inbounds i8, ptr %next.gep, i64 -32
-  store <2 x i64> %wide.load, ptr %i.o, align 4
-  store <2 x i64> %wide.load66, ptr %i.p, align 4
-  %index.next.a = add nuw i64 %index, 4           ; 2 uses
-  %i.q = icmp eq i64 %index.next.a, %n.vec
-  br i1 %i.q, label %middle.block, label %vector.body.a, !llvm.loop !1167
-
-middle.block:                                     ; preds = %vector.body.a
-  %cmp.n = icmp eq i64 %i.n, %n.vec
-  br i1 %cmp.n, label %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsISt4pairIiiESt4lessIS5_ESaIS5_ELi256ELb0EEEE19transfer_n_backwardEmmmPSA_PS8_.exit, label %.lr.ph.i.preheader
-
-.lr.ph.i.preheader:                               ; preds = %.lr.ph.preheader.i, %middle.block
-  %.017.i.ph = phi ptr [ %i.j, %.lr.ph.preheader.i ], [ %5, %middle.block ]
-  %.01416.i.ph = phi ptr [ %i.k, %.lr.ph.preheader.i ], [ %6, %middle.block ]
-  br label %.lr.ph.i
+.lr.ph.i.preheader:                               ; preds = %vector.body.a, %.lr.ph.preheader.i
+  %.017.i.ph = phi ptr [ %i.j, %.lr.ph.preheader.i ], [ %i.o, %vector.body.a ]
+  %.01416.i.ph = phi ptr [ %i.k, %.lr.ph.preheader.i ], [ %i.p, %vector.body.a ]
+  %5 = icmp ult i64 %i.l, 56
+  br i1 %5, label %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsISt4pairIiiESt4lessIS5_ESaIS5_ELi256ELb0EEEE19transfer_n_backwardEmmmPSA_PS8_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
-  %.017.i = phi ptr [ %i.r, %.lr.ph.i ], [ %.017.i.ph, %.lr.ph.i.preheader ]
-  %.01416.i = phi ptr [ %i.s, %.lr.ph.i ], [ %.01416.i.ph, %.lr.ph.i.preheader ]
-  %i.r = getelementptr inbounds i8, ptr %.017.i, i64 -8 ; 2 uses
-  %i.s = getelementptr inbounds i8, ptr %.01416.i, i64 -8 ; 3 uses
+  %.017.i = phi ptr [ %i.r, %.lr.ph.i ], [ %.017.i.ph, %.lr.ph.i.preheader ] ; 8 uses
+  %.01416.i = phi ptr [ %i.s, %.lr.ph.i ], [ %.01416.i.ph, %.lr.ph.i.preheader ] ; 8 uses
+  %6 = getelementptr inbounds i8, ptr %.017.i, i64 -8
+  %7 = getelementptr inbounds i8, ptr %.01416.i, i64 -8
+  %8 = load i64, ptr %7, align 4
+  store i64 %8, ptr %6, align 4
+  %9 = getelementptr inbounds i8, ptr %.017.i, i64 -16
+  %10 = getelementptr inbounds i8, ptr %.01416.i, i64 -16
+  %11 = load i64, ptr %10, align 4
+  store i64 %11, ptr %9, align 4
+  %12 = getelementptr inbounds i8, ptr %.017.i, i64 -24
+  %13 = getelementptr inbounds i8, ptr %.01416.i, i64 -24
+  %14 = load i64, ptr %13, align 4
+  store i64 %14, ptr %12, align 4
+  %15 = getelementptr inbounds i8, ptr %.017.i, i64 -32
+  %16 = getelementptr inbounds i8, ptr %.01416.i, i64 -32
+  %17 = load i64, ptr %16, align 4
+  store i64 %17, ptr %15, align 4
+  %18 = getelementptr inbounds i8, ptr %.017.i, i64 -40
+  %19 = getelementptr inbounds i8, ptr %.01416.i, i64 -40
+  %20 = load i64, ptr %19, align 4
+  store i64 %20, ptr %18, align 4
+  %21 = getelementptr inbounds i8, ptr %.017.i, i64 -48
+  %22 = getelementptr inbounds i8, ptr %.01416.i, i64 -48
+  %23 = load i64, ptr %22, align 4
+  store i64 %23, ptr %21, align 4
+  %24 = getelementptr inbounds i8, ptr %.017.i, i64 -56
+  %25 = getelementptr inbounds i8, ptr %.01416.i, i64 -56
+  %26 = load i64, ptr %25, align 4
+  store i64 %26, ptr %24, align 4
+  %i.r = getelementptr inbounds i8, ptr %.017.i, i64 -64 ; 2 uses
+  %i.s = getelementptr inbounds i8, ptr %.01416.i, i64 -64 ; 3 uses
   %i.t = load i64, ptr %i.s, align 4
   store i64 %i.t, ptr %i.r, align 4
   %.not.i = icmp eq ptr %i.s, %i.f
   br i1 %.not.i, label %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsISt4pairIiiESt4lessIS5_ESaIS5_ELi256ELb0EEEE19transfer_n_backwardEmmmPSA_PS8_.exit, label %.lr.ph.i, !llvm.loop !1168
 
-_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsISt4pairIiiESt4lessIS5_ESaIS5_ELi256ELb0EEEE19transfer_n_backwardEmmmPSA_PS8_.exit: ; preds = %.lr.ph.i, %middle.block, %bb.a
+_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsISt4pairIiiESt4lessIS5_ESaIS5_ELi256ELb0EEEE19transfer_n_backwardEmmmPSA_PS8_.exit: ; preds = %.lr.ph.i.preheader, %.lr.ph.i, %bb.a
   %i.u = add nsw i32 %i.e, -1                     ; 3 uses
   %i.v = sext i32 %i.u to i64                     ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -655,8 +669,8 @@ begin_hunk_1_@llvm.vector.reduce.add.v4i32
 !1164 = distinct !{!1164, !65, !204, !203}
 !1165 = distinct !{!1165, !65}
 !1166 = distinct !{!1166, !65}
-!1167 = distinct !{!1167, !65, !203, !204}
-!1168 = distinct !{!1168, !65, !204, !203}
+!1167 = distinct !{!1167, !1140}
+!1168 = distinct !{!1168, !65}
 !1169 = distinct !{!1169, !65, !203, !204}
 !1170 = distinct !{!1170, !65, !203}
 !1171 = distinct !{!1171, !65}

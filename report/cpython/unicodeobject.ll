@@ -201,8 +201,8 @@ bb.e:                                             ; preds = %_PyUnicode_DATA.exi
   br label %_PyUnicode_DATA.exit59
 
 _PyUnicode_DATA.exit59:                           ; preds = %bb.d, %bb.e
-  %.0.i57 = phi ptr [ %.0.i.i56, %bb.d ], [ %.val4.i58, %bb.e ] ; 10 uses
-  switch i32 %i.m, label %17 [
+  %.0.i57 = phi ptr [ %.0.i.i56, %bb.d ], [ %.val4.i58, %bb.e ] ; 8 uses
+  switch i32 %i.m, label %24 [
     i32 1, label %bb.f
     i32 2, label %bb.g
     i32 4, label %bb.h
@@ -215,7 +215,7 @@ bb.f:                                             ; preds = %_PyUnicode_DATA.exi
 .lr.ph46.i.preheader:                             ; preds = %bb.f
   %xtraiter.a = and i64 %.val, 3                  ; 3 uses
   %i.q = icmp ult i64 %.val, 4
-  br i1 %i.q, label %.lr.ph46.i.epil.preheader, label %.lr.ph46.i.preheader.new
+  br i1 %i.q, label %.lr.ph.i.preheader258, label %.lr.ph46.i.preheader.new
 
 .lr.ph46.i.preheader.new:                         ; preds = %.lr.ph46.i.preheader
   %unroll_iter.a = and i64 %.val, -4
@@ -251,7 +251,7 @@ bb.f:                                             ; preds = %_PyUnicode_DATA.exi
   %i.ao = getelementptr i8, ptr %.02844.i, i64 4  ; 2 uses
   %niter.next.3.a = add i64 %niter.a, 4           ; 2 uses
   %niter.ncmp.3.a = icmp eq i64 %niter.next.3.a, %unroll_iter.a
-  br i1 %niter.ncmp.3.a, label %make_bloom_mask.exit.loopexit.unr-lcssa, label %.lr.ph46.i, !llvm.loop !598
+  br i1 %niter.ncmp.3.a, label %middle.block, label %.lr.ph46.i, !llvm.loop !598
 
 bb.g:                                             ; preds = %_PyUnicode_DATA.exit59
   %.idx48.i = shl i64 %.val, 1                    ; 3 uses
@@ -317,8 +317,7 @@ middle.block234:                                  ; preds = %vector.body226
   br i1 %.not31.i, label %make_bloom_mask.exit, label %.lr.ph41.i, !llvm.loop !600
 
 bb.h:                                             ; preds = %_PyUnicode_DATA.exit59
-  %.idx.i = shl i64 %.val, 2                      ; 3 uses
-  %3 = getelementptr i8, ptr %.0.i57, i64 %.idx.i
+  %.idx.i = shl i64 %.val, 2                      ; 2 uses
   %.not35.i = icmp eq i64 %.idx.i, 0
   br i1 %.not35.i, label %make_bloom_mask.exit, label %.lr.ph.i.preheader
 
@@ -326,70 +325,82 @@ bb.h:                                             ; preds = %_PyUnicode_DATA.exi
   %i.bn = add i64 %.idx.i, -4                     ; 2 uses
   %i.bo = lshr exact i64 %i.bn, 2
   %i.bp = add nuw nsw i64 %i.bo, 1                ; 2 uses
+  %xtraiter = and i64 %i.bp, 3                    ; 3 uses
   %min.iters.check = icmp ult i64 %i.bn, 12
-  br i1 %min.iters.check, label %.lr.ph.i.preheader258, label %vector.ph
+  br i1 %min.iters.check, label %.lr.ph46.i.epil.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.preheader
-  %n.vec = and i64 %i.bp, 9223372036854775804     ; 3 uses
-  %4 = shl i64 %n.vec, 2
-  %5 = getelementptr i8, ptr %.0.i57, i64 %4
+  %n.vec = and i64 %i.bp, 9223372036854775804
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.phi = phi <2 x i64> [ zeroinitializer, %vector.ph ], [ %12, %vector.body ]
-  %vec.phi219 = phi <2 x i64> [ zeroinitializer, %vector.ph ], [ %13, %vector.body ]
-  %i.bq = shl i64 %index, 2
-  %next.gep = getelementptr i8, ptr %.0.i57, i64 %i.bq ; 2 uses
-  %i.br = getelementptr i8, ptr %next.gep, i64 8
-  %wide.load = load <2 x i32>, ptr %next.gep, align 4, !tbaa !7
-  %wide.load220 = load <2 x i32>, ptr %i.br, align 4, !tbaa !7
-  %6 = and <2 x i32> %wide.load, splat (i32 63)
-  %7 = and <2 x i32> %wide.load220, splat (i32 63)
-  %8 = zext nneg <2 x i32> %6 to <2 x i64>
-  %9 = zext nneg <2 x i32> %7 to <2 x i64>
-  %10 = shl nuw <2 x i64> splat (i64 1), %8
-  %11 = shl nuw <2 x i64> splat (i64 1), %9
-  %12 = or <2 x i64> %10, %vec.phi                ; 2 uses
-  %13 = or <2 x i64> %11, %vec.phi219             ; 2 uses
-  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %.237.i = phi i64 [ 0, %vector.ph ], [ %22, %vector.body ]
+  %.02936.i = phi ptr [ %.0.i57, %vector.ph ], [ %23, %vector.body ] ; 5 uses
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ]
+  %3 = load i32, ptr %.02936.i, align 4, !tbaa !7
+  %4 = and i32 %3, 63
+  %5 = zext nneg i32 %4 to i64
+  %i.bq = shl nuw i64 1, %5
+  %6 = or i64 %i.bq, %.237.i
+  %next.gep = getelementptr i8, ptr %.02936.i, i64 4
+  %7 = load i32, ptr %next.gep, align 4, !tbaa !7
+  %8 = and i32 %7, 63
+  %9 = zext nneg i32 %8 to i64
+  %10 = shl nuw i64 1, %9
+  %11 = or i64 %10, %6
+  %i.br = getelementptr i8, ptr %.02936.i, i64 8
+  %12 = load i32, ptr %i.br, align 4, !tbaa !7
+  %13 = and i32 %12, 63
+  %14 = zext nneg i32 %13 to i64
+  %15 = shl nuw i64 1, %14
+  %16 = or i64 %15, %11
+  %17 = getelementptr i8, ptr %.02936.i, i64 12
+  %18 = load i32, ptr %17, align 4, !tbaa !7
+  %19 = and i32 %18, 63
+  %20 = zext nneg i32 %19 to i64
+  %21 = shl nuw i64 1, %20
+  %22 = or i64 %21, %16                           ; 3 uses
+  %23 = getelementptr i8, ptr %.02936.i, i64 16   ; 2 uses
+  %index.next = add i64 %index, 4                 ; 2 uses
   %i.bs = icmp eq i64 %index.next, %n.vec
-  br i1 %i.bs, label %middle.block, label %vector.body, !llvm.loop !601
+  br i1 %i.bs, label %make_bloom_mask.exit.loopexit.unr-lcssa, label %vector.body, !llvm.loop !601
 
-middle.block:                                     ; preds = %vector.body
-  %bin.rdx = or <2 x i64> %13, %12
-  %14 = tail call i64 @llvm.vector.reduce.or.v2i64(<2 x i64> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i64 %i.bp, %n.vec
-  br i1 %cmp.n, label %make_bloom_mask.exit, label %.lr.ph.i.preheader258
-
-.lr.ph.i.preheader258:                            ; preds = %.lr.ph.i.preheader, %middle.block
-  %.237.i.ph = phi i64 [ 0, %.lr.ph.i.preheader ], [ %14, %middle.block ]
-  %.02936.i.ph = phi ptr [ %.0.i57, %.lr.ph.i.preheader ], [ %5, %middle.block ]
-  br label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader258, %.lr.ph.i
-  %.237.i.a = phi i64 [ %i.bv, %.lr.ph.i ], [ %.237.i.ph, %.lr.ph.i.preheader258 ]
-  %.02936.i.a = phi ptr [ %i.bw, %.lr.ph.i ], [ %.02936.i.ph, %.lr.ph.i.preheader258 ] ; 2 uses
-  %15 = load i32, ptr %.02936.i.a, align 4, !tbaa !7
-  %16 = and i32 %15, 63
-  %i.bt = zext nneg i32 %16 to i64
-  %i.bu = shl nuw i64 1, %i.bt
-  %i.bv = or i64 %i.bu, %.237.i.a                 ; 2 uses
-  %i.bw = getelementptr i8, ptr %.02936.i.a, i64 4 ; 2 uses
-  %.not.i60 = icmp eq ptr %i.bw, %3
-  br i1 %.not.i60, label %make_bloom_mask.exit, label %.lr.ph.i, !llvm.loop !602
-
-17:                                               ; preds = %_PyUnicode_DATA.exit59
+24:                                               ; preds = %_PyUnicode_DATA.exit59
   unreachable
 
-make_bloom_mask.exit.loopexit.unr-lcssa:          ; preds = %.lr.ph46.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter.a, 0
+middle.block:                                     ; preds = %.lr.ph46.i
+  %cmp.n = icmp eq i64 %xtraiter.a, 0
+  br i1 %cmp.n, label %make_bloom_mask.exit, label %.lr.ph.i.preheader258
+
+.lr.ph.i.preheader258:                            ; preds = %middle.block, %.lr.ph46.i.preheader
+  %.237.i.ph = phi i64 [ 0, %.lr.ph46.i.preheader ], [ %i.an, %middle.block ]
+  %.02936.i.ph = phi ptr [ %.0.i57, %.lr.ph46.i.preheader ], [ %i.ao, %middle.block ]
+  %lcmp.mod248 = icmp ne i64 %xtraiter.a, 0
+  tail call void @llvm.assume(i1 %lcmp.mod248)
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.i.preheader258
+  %.237.i.a = phi i64 [ %i.bv, %.lr.ph.i ], [ %.237.i.ph, %.lr.ph.i.preheader258 ]
+  %.02936.i.a = phi ptr [ %i.bw, %.lr.ph.i ], [ %.02936.i.ph, %.lr.ph.i.preheader258 ] ; 2 uses
+  %epil.iter245 = phi i64 [ %epil.iter245.next, %.lr.ph.i ], [ 0, %.lr.ph.i.preheader258 ]
+  %25 = load i8, ptr %.02936.i.a, align 1, !tbaa !205
+  %26 = and i8 %25, 63
+  %i.bt = zext nneg i8 %26 to i64
+  %i.bu = shl nuw i64 1, %i.bt
+  %i.bv = or i64 %i.bu, %.237.i.a                 ; 2 uses
+  %i.bw = getelementptr i8, ptr %.02936.i.a, i64 1
+  %epil.iter245.next = add i64 %epil.iter245, 1   ; 2 uses
+  %.not.i60 = icmp eq i64 %epil.iter245.next, %xtraiter.a
+  br i1 %.not.i60, label %make_bloom_mask.exit, label %.lr.ph.i, !llvm.loop !602
+
+make_bloom_mask.exit.loopexit.unr-lcssa:          ; preds = %vector.body
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %make_bloom_mask.exit, label %.lr.ph46.i.epil.preheader
 
-.lr.ph46.i.epil.preheader:                        ; preds = %make_bloom_mask.exit.loopexit.unr-lcssa, %.lr.ph46.i.preheader
-  %.045.i.epil.init = phi i64 [ 0, %.lr.ph46.i.preheader ], [ %i.an, %make_bloom_mask.exit.loopexit.unr-lcssa ]
-  %.02844.i.epil.init = phi ptr [ %.0.i57, %.lr.ph46.i.preheader ], [ %i.ao, %make_bloom_mask.exit.loopexit.unr-lcssa ]
-  %lcmp.mod264 = icmp ne i64 %xtraiter.a, 0
+.lr.ph46.i.epil.preheader:                        ; preds = %make_bloom_mask.exit.loopexit.unr-lcssa, %.lr.ph.i.preheader
+  %.045.i.epil.init = phi i64 [ 0, %.lr.ph.i.preheader ], [ %22, %make_bloom_mask.exit.loopexit.unr-lcssa ]
+  %.02844.i.epil.init = phi ptr [ %.0.i57, %.lr.ph.i.preheader ], [ %23, %make_bloom_mask.exit.loopexit.unr-lcssa ]
+  %lcmp.mod264 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod264)
   br label %.lr.ph46.i.epil
 
@@ -397,18 +408,18 @@ make_bloom_mask.exit.loopexit.unr-lcssa:          ; preds = %.lr.ph46.i
   %.045.i.epil = phi i64 [ %i.bz, %.lr.ph46.i.epil ], [ %.045.i.epil.init, %.lr.ph46.i.epil.preheader ]
   %.02844.i.epil = phi ptr [ %i.ca, %.lr.ph46.i.epil ], [ %.02844.i.epil.init, %.lr.ph46.i.epil.preheader ] ; 2 uses
   %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph46.i.epil ], [ 0, %.lr.ph46.i.epil.preheader ]
-  %18 = load i8, ptr %.02844.i.epil, align 1, !tbaa !205
-  %19 = and i8 %18, 63
-  %i.bx = zext nneg i8 %19 to i64
+  %27 = load i32, ptr %.02844.i.epil, align 4, !tbaa !7
+  %28 = and i32 %27, 63
+  %i.bx = zext nneg i32 %28 to i64
   %i.by = shl nuw i64 1, %i.bx
   %i.bz = or i64 %i.by, %.045.i.epil              ; 2 uses
-  %i.ca = getelementptr i8, ptr %.02844.i.epil, i64 1
+  %i.ca = getelementptr i8, ptr %.02844.i.epil, i64 4
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
-  %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter.a
+  %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %make_bloom_mask.exit, label %.lr.ph46.i.epil, !llvm.loop !603
 
-make_bloom_mask.exit:                             ; preds = %.lr.ph.i, %.lr.ph41.i, %make_bloom_mask.exit.loopexit.unr-lcssa, %.lr.ph46.i.epil, %middle.block, %middle.block234, %bb.f, %bb.g, %bb.h
-  %.3.i = phi i64 [ %i.bl, %.lr.ph41.i ], [ %i.bz, %.lr.ph46.i.epil ], [ 0, %bb.f ], [ 0, %bb.g ], [ 0, %bb.h ], [ %i.bg, %middle.block234 ], [ %14, %middle.block ], [ %i.an, %make_bloom_mask.exit.loopexit.unr-lcssa ], [ %i.bv, %.lr.ph.i ] ; 2 uses
+make_bloom_mask.exit:                             ; preds = %make_bloom_mask.exit.loopexit.unr-lcssa, %.lr.ph46.i.epil, %.lr.ph41.i, %middle.block, %.lr.ph.i, %middle.block234, %bb.f, %bb.g, %bb.h
+  %.3.i = phi i64 [ %i.bl, %.lr.ph41.i ], [ %i.bv, %.lr.ph.i ], [ 0, %bb.f ], [ 0, %bb.g ], [ 0, %bb.h ], [ %i.bg, %middle.block234 ], [ %i.an, %middle.block ], [ %22, %make_bloom_mask.exit.loopexit.unr-lcssa ], [ %i.bz, %.lr.ph46.i.epil ] ; 2 uses
   %.not = icmp eq i32 %1, 1
   br i1 %.not, label %make_bloom_mask.exit..thread99_crit_edge, label %.preheader
 
@@ -811,7 +822,7 @@ bb.av:                                            ; preds = %bb.ab
   %i.fe = and i32 %i.fd, 63
   %i.ff = zext nneg i32 %i.fe to i64
   %i.fg = shl nuw i64 1, %i.ff                    ; 2 uses
-  %min.iters.check170 = icmp ult i64 %3, 5
+  %min.iters.check170 = icmp ult i64 %3, 7
   br i1 %min.iters.check170, label %.lr.ph.i74.preheader, label %vector.ph171
 
 vector.ph171:                                     ; preds = %bb.av
@@ -1214,8 +1225,8 @@ begin_hunk_2_@llvm.experimental.vector.extract.last.active.v2i64
 !598 = distinct !{!598, !196}
 !599 = distinct !{!599, !196, !210, !211}
 !600 = distinct !{!600, !196, !211, !210}
-!601 = distinct !{!601, !196, !210, !211}
-!602 = distinct !{!602, !196, !211, !210}
+!601 = distinct !{!601, !196}
+!602 = distinct !{!602, !364}
 !603 = distinct !{!603, !364}
 !604 = !{ptr @_PyUnicode_FromASCII}
 !605 = distinct !{!605, !196}

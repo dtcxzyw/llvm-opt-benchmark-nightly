@@ -201,7 +201,7 @@ bb.j:                                             ; preds = %bb.a
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.o, %.lr.ph.i21
-  %.020.i22 = phi ptr [ %.017.i20, %.lr.ph.i21 ], [ %.0.i33, %bb.o ] ; 10 uses
+  %.020.i22 = phi ptr [ %.017.i20, %.lr.ph.i21 ], [ %.0.i33, %bb.o ] ; 9 uses
   %.pn19.i23 = phi ptr [ %0, %.lr.ph.i21 ], [ %.020.i22, %bb.o ] ; 2 uses
   %i.bv = load i32, ptr %.020.i22, align 4, !tbaa !177 ; 2 uses
   %i.bw = load i32, ptr %0, align 4, !tbaa !177   ; 2 uses
@@ -222,64 +222,83 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.i24: ; pred
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread.i39: ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.i24, %bb.k
   %i.cd = load i64, ptr %.020.i22, align 4
   %i.ce = ptrtoint ptr %.020.i22 to i64
-  %i.cf = sub i64 %i.ce, %i.b                     ; 2 uses
+  %i.cf = sub i64 %i.ce, %i.b
   %i.cg = ashr exact i64 %i.cf, 3                 ; 5 uses
   %i.ch = icmp sgt i64 %i.cg, 0
-  br i1 %i.ch, label %.lr.ph.i.i.i.i.i.preheader.i41, label %_ZSt13move_backwardIPSt4pairIjjES2_ET0_T_S4_S3_.exit.i40
+  br i1 %i.ch, label %vector.ph, label %_ZSt13move_backwardIPSt4pairIjjES2_ET0_T_S4_S3_.exit.i40
 
-.lr.ph.i.i.i.i.i.preheader.i41:                   ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread.i39
-  %2 = getelementptr inbounds nuw i8, ptr %.pn19.i23, i64 16 ; 3 uses
-  %min.iters.check = icmp eq i64 %i.cf, 8
-  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i42.preheader, label %vector.ph
+vector.ph:                                        ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread.i39
+  %2 = getelementptr inbounds nuw i8, ptr %.pn19.i23, i64 16 ; 2 uses
+  %i.ci = and i64 %i.cg, 3                        ; 2 uses
+  %lcmp.mod.not = icmp eq i64 %i.ci, 0
+  br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.i42.preheader, label %vector.body
 
-vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.preheader.i41
-  %n.vec = and i64 %i.cg, 9223372036854775806     ; 3 uses
-  %i.ci = and i64 %i.cg, 1
-  %3 = mul i64 %n.vec, -8                         ; 2 uses
-  %4 = getelementptr i8, ptr %2, i64 %3
-  %5 = getelementptr i8, ptr %.020.i22, i64 %3
-  br label %vector.body
+vector.body:                                      ; preds = %vector.ph, %vector.body
+  %index = phi i64 [ %5, %vector.body ], [ %i.cg, %vector.ph ]
+  %.069.i.i.i.i.i.i44.prol = phi ptr [ %next.gep65, %vector.body ], [ %2, %vector.ph ] ; 2 uses
+  %.078.i.i.i.i.i.i45.prol = phi ptr [ %next.gep, %vector.body ], [ %.020.i22, %vector.ph ] ; 2 uses
+  %prol.iter = phi i64 [ %index.next, %vector.body ], [ 0, %vector.ph ]
+  %next.gep = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i45.prol, i64 -8 ; 3 uses
+  %next.gep65 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i44.prol, i64 -8 ; 3 uses
+  %3 = load i32, ptr %next.gep, align 4, !tbaa !3
+  store i32 %3, ptr %next.gep65, align 4, !tbaa !177
+  %i.cj = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i45.prol, i64 -4
+  %4 = load i32, ptr %i.cj, align 4, !tbaa !3
+  %i.ck = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i44.prol, i64 -4
+  store i32 %4, ptr %i.ck, align 4, !tbaa !168
+  %5 = add nsw i64 %index, -1                     ; 2 uses
+  %index.next = add i64 %prol.iter, 1             ; 2 uses
+  %i.cl = icmp eq i64 %index.next, %i.ci
+  br i1 %i.cl, label %.lr.ph.i.i.i.i.i.i42.preheader, label %vector.body, !llvm.loop !183
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %6 = mul i64 %index, -8                         ; 2 uses
-  %next.gep = getelementptr i8, ptr %2, i64 %6
-  %next.gep65 = getelementptr i8, ptr %.020.i22, i64 %6
-  %i.cj = getelementptr inbounds i8, ptr %next.gep65, i64 -16
-  %interleaved.vec = load <4 x i32>, ptr %i.cj, align 4, !tbaa !3
-  %i.ck = getelementptr inbounds i8, ptr %next.gep, i64 -16
-  store <4 x i32> %interleaved.vec, ptr %i.ck, align 4, !tbaa !3
-  %index.next = add nuw i64 %index, 2             ; 2 uses
-  %i.cl = icmp eq i64 %index.next, %n.vec
-  br i1 %i.cl, label %middle.block, label %vector.body, !llvm.loop !183
-
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %i.cg, %n.vec
-  br i1 %cmp.n, label %_ZSt13move_backwardIPSt4pairIjjES2_ET0_T_S4_S3_.exit.i40, label %.lr.ph.i.i.i.i.i.i42.preheader
-
-.lr.ph.i.i.i.i.i.i42.preheader:                   ; preds = %.lr.ph.i.i.i.i.i.preheader.i41, %middle.block
-  %.010.i.i.i.i.i.i43.ph = phi i64 [ %i.cg, %.lr.ph.i.i.i.i.i.preheader.i41 ], [ %i.ci, %middle.block ]
-  %.069.i.i.i.i.i.i44.ph = phi ptr [ %2, %.lr.ph.i.i.i.i.i.preheader.i41 ], [ %4, %middle.block ]
-  %.078.i.i.i.i.i.i45.ph = phi ptr [ %.020.i22, %.lr.ph.i.i.i.i.i.preheader.i41 ], [ %5, %middle.block ]
-  br label %.lr.ph.i.i.i.i.i.i42
+.lr.ph.i.i.i.i.i.i42.preheader:                   ; preds = %vector.body, %vector.ph
+  %.010.i.i.i.i.i.i43.ph = phi i64 [ %i.cg, %vector.ph ], [ %5, %vector.body ]
+  %.069.i.i.i.i.i.i44.ph = phi ptr [ %2, %vector.ph ], [ %next.gep65, %vector.body ]
+  %.078.i.i.i.i.i.i45.ph = phi ptr [ %.020.i22, %vector.ph ], [ %next.gep, %vector.body ]
+  %6 = icmp ult i64 %i.cg, 4
+  br i1 %6, label %_ZSt13move_backwardIPSt4pairIjjES2_ET0_T_S4_S3_.exit.i40, label %.lr.ph.i.i.i.i.i.i42
 
 .lr.ph.i.i.i.i.i.i42:                             ; preds = %.lr.ph.i.i.i.i.i.i42.preheader, %.lr.ph.i.i.i.i.i.i42
   %.010.i.i.i.i.i.i43 = phi i64 [ %i.cs, %.lr.ph.i.i.i.i.i.i42 ], [ %.010.i.i.i.i.i.i43.ph, %.lr.ph.i.i.i.i.i.i42.preheader ] ; 2 uses
-  %.069.i.i.i.i.i.i44 = phi ptr [ %i.cn, %.lr.ph.i.i.i.i.i.i42 ], [ %.069.i.i.i.i.i.i44.ph, %.lr.ph.i.i.i.i.i.i42.preheader ] ; 2 uses
-  %.078.i.i.i.i.i.i45 = phi ptr [ %i.cm, %.lr.ph.i.i.i.i.i.i42 ], [ %.078.i.i.i.i.i.i45.ph, %.lr.ph.i.i.i.i.i.i42.preheader ] ; 2 uses
-  %i.cm = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i45, i64 -8 ; 2 uses
-  %i.cn = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i44, i64 -8 ; 2 uses
+  %.069.i.i.i.i.i.i44 = phi ptr [ %i.cn, %.lr.ph.i.i.i.i.i.i42 ], [ %.069.i.i.i.i.i.i44.ph, %.lr.ph.i.i.i.i.i.i42.preheader ] ; 8 uses
+  %.078.i.i.i.i.i.i45 = phi ptr [ %i.cm, %.lr.ph.i.i.i.i.i.i42 ], [ %.078.i.i.i.i.i.i45.ph, %.lr.ph.i.i.i.i.i.i42.preheader ] ; 8 uses
+  %7 = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i45, i64 -8
+  %8 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i44, i64 -8
+  %9 = load i32, ptr %7, align 4, !tbaa !3
+  store i32 %9, ptr %8, align 4, !tbaa !177
+  %10 = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i45, i64 -4
+  %11 = load i32, ptr %10, align 4, !tbaa !3
+  %12 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i44, i64 -4
+  store i32 %11, ptr %12, align 4, !tbaa !168
+  %13 = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i45, i64 -16
+  %14 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i44, i64 -16
+  %15 = load i32, ptr %13, align 4, !tbaa !3
+  store i32 %15, ptr %14, align 4, !tbaa !177
+  %16 = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i45, i64 -12
+  %17 = load i32, ptr %16, align 4, !tbaa !3
+  %18 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i44, i64 -12
+  store i32 %17, ptr %18, align 4, !tbaa !168
+  %19 = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i45, i64 -24
+  %20 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i44, i64 -24
+  %21 = load i32, ptr %19, align 4, !tbaa !3
+  store i32 %21, ptr %20, align 4, !tbaa !177
+  %22 = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i45, i64 -20
+  %23 = load i32, ptr %22, align 4, !tbaa !3
+  %24 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i44, i64 -20
+  store i32 %23, ptr %24, align 4, !tbaa !168
+  %i.cm = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i45, i64 -32 ; 2 uses
+  %i.cn = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i44, i64 -32 ; 2 uses
   %i.co = load i32, ptr %i.cm, align 4, !tbaa !3
   store i32 %i.co, ptr %i.cn, align 4, !tbaa !177
-  %i.cp = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i45, i64 -4
+  %i.cp = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i45, i64 -28
   %i.cq = load i32, ptr %i.cp, align 4, !tbaa !3
-  %i.cr = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i44, i64 -4
+  %i.cr = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i44, i64 -28
   store i32 %i.cq, ptr %i.cr, align 4, !tbaa !168
-  %i.cs = add nsw i64 %.010.i.i.i.i.i.i43, -1
-  %7 = icmp samesign ugt i64 %.010.i.i.i.i.i.i43, 1
-  br i1 %7, label %.lr.ph.i.i.i.i.i.i42, label %_ZSt13move_backwardIPSt4pairIjjES2_ET0_T_S4_S3_.exit.i40, !llvm.loop !186
+  %i.cs = add nsw i64 %.010.i.i.i.i.i.i43, -4
+  %25 = icmp sgt i64 %.010.i.i.i.i.i.i43, 4
+  br i1 %25, label %.lr.ph.i.i.i.i.i.i42, label %_ZSt13move_backwardIPSt4pairIjjES2_ET0_T_S4_S3_.exit.i40, !llvm.loop !179
 
-_ZSt13move_backwardIPSt4pairIjjES2_ET0_T_S4_S3_.exit.i40: ; preds = %.lr.ph.i.i.i.i.i.i42, %middle.block, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread.i39
+_ZSt13move_backwardIPSt4pairIjjES2_ET0_T_S4_S3_.exit.i40: ; preds = %.lr.ph.i.i.i.i.i.i42.preheader, %.lr.ph.i.i.i.i.i.i42, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread.i39
   store i64 %i.cd, ptr %0, align 4
   br label %bb.o
 
@@ -474,7 +493,7 @@ bb.j:                                             ; preds = %bb.i
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread.i11: ; preds = %bb.j, %bb.h
   %i.bi = getelementptr inbounds nuw i8, ptr %.1.i, i64 8
-  br label %bb.h, !llvm.loop !187
+  br label %bb.h, !llvm.loop !184
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.i10: ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.i10.backedge, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.i10.preheader
   %.013.pn.i = phi ptr [ %.013.i, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.i10.preheader ], [ %.114.i, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.i10.backedge ] ; 3 uses
@@ -495,7 +514,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.bp, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.i10.backedge, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit15.thread.i
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.i10.backedge: ; preds = %bb.l, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.i10
-  br label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.i10, !llvm.loop !188
+  br label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.i10, !llvm.loop !185
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit15.thread.i: ; preds = %bb.l, %bb.k
   %i.bq = icmp ult ptr %.1.i, %.114.i
@@ -511,7 +530,7 @@ bb.m:                                             ; preds = %_ZNK9__gnu_cxx5__op
   store i32 %i.bu, ptr %i.br, align 4, !tbaa !3
   store i32 %i.bt, ptr %i.bs, align 4, !tbaa !3
   %i.bv = getelementptr inbounds nuw i8, ptr %.1.i, i64 8
-  br label %bb.g, !llvm.loop !189
+  br label %bb.g, !llvm.loop !186
 
 _ZSt21__unguarded_partitionIPSt4pairIjjEN9__gnu_cxx5__ops15_Iter_less_iterEET_S6_S6_S6_T0_.exit: ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit15.thread.i
   ret ptr %.1.i
@@ -585,7 +604,7 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread30.i.
   %i.ai = load <2 x i32>, ptr %i.ag, align 4, !tbaa !3
   store <2 x i32> %i.ai, ptr %i.ah, align 4, !tbaa !3
   %i.aj = icmp slt i64 %i.af, %i.n
-  br i1 %i.aj, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !190
+  br i1 %i.aj, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !187
 
 ._crit_edge.i.i:                                  ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread30.i.i, %bb.b
   %.0.lcssa.i.i = phi i64 [ 0, %bb.b ], [ %i.af, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread30.i.i ] ; 5 uses
@@ -647,14 +666,14 @@ _ZNK9__gnu_cxx5__ops14_Iter_less_valclIPSt4pairIjjES4_EEbT_RT0_.exit.thread.i.i.
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 4
   store i32 %i.bc, ptr %i.be, align 4, !tbaa !168
   %.not.i = icmp eq i64 %.020.i.i78.i, 0
-  br i1 %.not.i, label %_ZSt10__pop_heapIPSt4pairIjjEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_S6_RT0_.exit, label %.lr.ph.i.i.i, !llvm.loop !191
+  br i1 %.not.i, label %_ZSt10__pop_heapIPSt4pairIjjEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_S6_RT0_.exit, label %.lr.ph.i.i.i, !llvm.loop !188
 
 _ZSt10__pop_heapIPSt4pairIjjEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_S6_RT0_.exit: ; preds = %bb.g, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPSt4pairIjjES4_EEbT_RT0_.exit.i.i.i, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPSt4pairIjjES4_EEbT_RT0_.exit.thread.i.i.i, %bb.f
   %.013.lcssa.i.i.i = phi i64 [ %.1.i.i, %bb.f ], [ %.01319.i.i.i, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPSt4pairIjjES4_EEbT_RT0_.exit.i.i.i ], [ 0, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPSt4pairIjjES4_EEbT_RT0_.exit.thread.i.i.i ], [ %.01319.i.i.i, %bb.g ]
   %i.bf = getelementptr inbounds [8 x i8], ptr %0, i64 %.013.lcssa.i.i.i
   store i64 %.sroa.01.0.copyload.i, ptr %i.bf, align 4
   %i.bg = icmp sgt i64 %i.k, 8
-  br i1 %i.bg, label %bb.b, label %._crit_edge, !llvm.loop !192
+  br i1 %i.bg, label %bb.b, label %._crit_edge, !llvm.loop !189
 
 ._crit_edge:                                      ; preds = %_ZSt10__pop_heapIPSt4pairIjjEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_S6_RT0_.exit, %bb.a
   ret void
@@ -728,7 +747,7 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread30.i:
   %i.ak = load <2 x i32>, ptr %i.ai, align 4, !tbaa !3
   store <2 x i32> %i.ak, ptr %i.aj, align 4, !tbaa !3
   %i.al = icmp slt i64 %i.ah, %i.i
-  br i1 %i.al, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !190
+  br i1 %i.al, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !187
 
 ._crit_edge.i:                                    ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread30.i, %bb.c
   %.0.lcssa.i = phi i64 [ %.013, %bb.c ], [ %i.ah, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairIjjES5_EEbT_T0_.exit.thread30.i ] ; 2 uses
@@ -780,7 +799,7 @@ _ZNK9__gnu_cxx5__ops14_Iter_less_valclIPSt4pairIjjES4_EEbT_RT0_.exit.thread.i.i:
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 4
   store i32 %i.aw, ptr %i.ay, align 4, !tbaa !168
   %i.az = icmp sgt i64 %.020.i.i, %.013
-  br i1 %i.az, label %.lr.ph.i.i, label %_ZSt13__adjust_heapIPSt4pairIjjElS1_N9__gnu_cxx5__ops15_Iter_less_iterEEvT_T0_S7_T1_T2_.exit, !llvm.loop !191
+  br i1 %i.az, label %.lr.ph.i.i, label %_ZSt13__adjust_heapIPSt4pairIjjElS1_N9__gnu_cxx5__ops15_Iter_less_iterEEvT_T0_S7_T1_T2_.exit, !llvm.loop !188
 
 _ZSt13__adjust_heapIPSt4pairIjjElS1_N9__gnu_cxx5__ops15_Iter_less_iterEEvT_T0_S7_T1_T2_.exit: ; preds = %bb.g, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPSt4pairIjjES4_EEbT_RT0_.exit.i.i, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPSt4pairIjjES4_EEbT_RT0_.exit.thread.i.i, %bb.f
   %.013.lcssa.i.i = phi i64 [ %.1.i, %bb.f ], [ %.01319.i.i, %bb.g ], [ %.020.i.i, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPSt4pairIjjES4_EEbT_RT0_.exit.thread.i.i ], [ %.01319.i.i, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPSt4pairIjjES4_EEbT_RT0_.exit.i.i ]
@@ -788,7 +807,7 @@ _ZSt13__adjust_heapIPSt4pairIjjElS1_N9__gnu_cxx5__ops15_Iter_less_iterEEvT_T0_S7
   store i64 %.sroa.01.0.copyload, ptr %i.ba, align 4
   %.not = icmp eq i64 %.013, 0
   %i.bb = add nsw i64 %.013, -1
-  br i1 %.not, label %.loopexit, label %bb.c, !llvm.loop !193
+  br i1 %.not, label %.loopexit, label %bb.c, !llvm.loop !190
 
 .loopexit:                                        ; preds = %_ZSt13__adjust_heapIPSt4pairIjjElS1_N9__gnu_cxx5__ops15_Iter_less_iterEEvT_T0_S7_T1_T2_.exit, %bb.a
   ret void
@@ -816,7 +835,7 @@ bb.a:
 
 bb.b:                                             ; preds = %_ZSt27__unguarded_partition_pivotIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops15_Iter_less_iterEET_S6_S6_T0_.exit
   %i.h = icmp eq i64 %i.ae, 0
-  br i1 %i.h, label %._crit_edge, label %.lr.ph25, !llvm.loop !194
+  br i1 %i.h, label %._crit_edge, label %.lr.ph25, !llvm.loop !191
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
   %.015.lcssa = phi ptr [ %1, %.lr.ph ], [ %.1.i.i, %bb.b ] ; 2 uses
@@ -841,13 +860,13 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
 bb.c:                                             ; preds = %bb.i, %.lr.ph25
   %.013.i.i = phi ptr [ %.01523, %.lr.ph25 ], [ %.114.i.i, %bb.i ]
   %.0.i.i = phi ptr [ %i.e, %.lr.ph25 ], [ %i.ad, %bb.i ]
-  %i.m = load i32, ptr %i.f, align 4, !tbaa !195  ; 4 uses
+  %i.m = load i32, ptr %i.f, align 4, !tbaa !192  ; 4 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread.i.i, %bb.c
   %.1.i.i = phi ptr [ %.0.i.i, %bb.c ], [ %i.u, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread.i.i ] ; 11 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 12
-  %i.o = load i32, ptr %i.n, align 4, !tbaa !195  ; 2 uses
+  %i.o = load i32, ptr %i.n, align 4, !tbaa !192  ; 2 uses
   %i.p = icmp ugt i32 %i.o, %i.m
   br i1 %i.p, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread.i.i, label %bb.e
 
@@ -859,20 +878,20 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_
   br label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.i.i
 
 bb.f:                                             ; preds = %bb.e
-  %i.r = load i32, ptr %.1.i.i, align 4, !tbaa !197
-  %i.s = load i32, ptr %0, align 4, !tbaa !197
+  %i.r = load i32, ptr %.1.i.i, align 4, !tbaa !194
+  %i.s = load i32, ptr %0, align 4, !tbaa !194
   %i.t = icmp ult i32 %i.r, %i.s
   br i1 %i.t, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread.i.i, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.i.i.preheader
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread.i.i: ; preds = %bb.f, %bb.d
   %i.u = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 16
-  br label %bb.d, !llvm.loop !198
+  br label %bb.d, !llvm.loop !195
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.i.i: ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.i.i.backedge, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.i.i.preheader
   %.013.pn.i.i = phi ptr [ %.013.i.i, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.i.i.preheader ], [ %.114.i.i, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.i.i.backedge ] ; 2 uses
   %.114.i.i = getelementptr inbounds i8, ptr %.013.pn.i.i, i64 -16 ; 6 uses
   %i.v = getelementptr inbounds i8, ptr %.013.pn.i.i, i64 -4
-  %i.w = load i32, ptr %i.v, align 4, !tbaa !195  ; 2 uses
+  %i.w = load i32, ptr %i.v, align 4, !tbaa !192  ; 2 uses
   %i.x = icmp ugt i32 %i.m, %i.w
   br i1 %i.x, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.i.i.backedge, label %bb.g
 
@@ -881,13 +900,13 @@ bb.g:                                             ; preds = %_ZNK9__gnu_cxx5__op
   br i1 %i.y, label %bb.h, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit15.thread.i.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.z = load i32, ptr %0, align 4, !tbaa !197
-  %i.aa = load i32, ptr %.114.i.i, align 4, !tbaa !197
+  %i.z = load i32, ptr %0, align 4, !tbaa !194
+  %i.aa = load i32, ptr %.114.i.i, align 4, !tbaa !194
   %i.ab = icmp ult i32 %i.z, %i.aa
   br i1 %i.ab, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.i.i.backedge, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit15.thread.i.i
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.i.i.backedge: ; preds = %bb.h, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.i.i
-  br label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.i.i, !llvm.loop !199
+  br label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.i.i, !llvm.loop !196
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit15.thread.i.i: ; preds = %bb.h, %bb.g
   %i.ac = icmp ult ptr %.1.i.i, %.114.i.i
@@ -895,10 +914,10 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_
 
 bb.i:                                             ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit15.thread.i.i
   %.sroa.0.0.copyload = load <4 x i32>, ptr %.1.i.i, align 4
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.1.i.i, ptr noundef nonnull align 4 dereferenceable(16) %.114.i.i, i64 16, i1 false), !tbaa.struct !200
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.1.i.i, ptr noundef nonnull align 4 dereferenceable(16) %.114.i.i, i64 16, i1 false), !tbaa.struct !197
   store <4 x i32> %.sroa.0.0.copyload, ptr %.114.i.i, align 4
   %i.ad = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 16
-  br label %bb.c, !llvm.loop !201
+  br label %bb.c, !llvm.loop !198
 
 _ZSt27__unguarded_partition_pivotIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops15_Iter_less_iterEET_S6_S6_T0_.exit: ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit15.thread.i.i
   %i.ae = add nsw i64 %.0121424, -1               ; 3 uses
@@ -906,7 +925,7 @@ _ZSt27__unguarded_partition_pivotIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__
   %i.af = ptrtoint ptr %.1.i.i to i64
   %i.ag = sub i64 %i.af, %i.a                     ; 2 uses
   %i.ah = icmp sgt i64 %i.ag, 256
-  br i1 %i.ah, label %bb.b, label %.loopexit, !llvm.loop !194
+  br i1 %i.ah, label %bb.b, label %.loopexit, !llvm.loop !191
 
 .loopexit:                                        ; preds = %_ZSt27__unguarded_partition_pivotIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops15_Iter_less_iterEET_S6_S6_T0_.exit, %bb.a, %._crit_edge
   ret void
@@ -931,8 +950,8 @@ bb.c:                                             ; preds = %bb.i, %bb.b
   %.pn19.i = phi ptr [ %0, %bb.b ], [ %.020.i.ptr, %bb.i ] ; 3 uses
   %.020.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.020.i.idx ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.pn19.i, i64 28
-  %i.g = load i32, ptr %i.f, align 4, !tbaa !195  ; 5 uses
-  %i.h = load i32, ptr %i.e, align 4, !tbaa !195  ; 2 uses
+  %i.g = load i32, ptr %i.f, align 4, !tbaa !192  ; 5 uses
+  %i.h = load i32, ptr %i.e, align 4, !tbaa !192  ; 2 uses
   %i.i = icmp ugt i32 %i.g, %i.h
   br i1 %i.i, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread.i, label %bb.d
 
@@ -942,7 +961,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.j, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.i, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread16.i
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.i: ; preds = %bb.d
-  %i.k = load i32, ptr %0, align 4, !tbaa !197
+  %i.k = load i32, ptr %0, align 4, !tbaa !194
   %i.l = icmp ult i32 %.sroa.0.0.copyload.i.pre.i, %i.k
   br i1 %i.l, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread.i, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread16.i
 
@@ -957,7 +976,7 @@ bb.e:                                             ; preds = %_ZNK9__gnu_cxx5__op
 
 bb.f:                                             ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread.i
   %i.n = getelementptr inbounds nuw i8, ptr %.pn19.i, i64 16
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.n, ptr noundef nonnull align 4 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !200
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.n, ptr noundef nonnull align 4 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !197
   br label %_ZSt13move_backwardIPN6hermes20ExceptionHandlerInfoES2_ET0_T_S4_S3_.exit.i
 
 _ZSt13move_backwardIPN6hermes20ExceptionHandlerInfoES2_ET0_T_S4_S3_.exit.i: ; preds = %bb.f, %bb.e
@@ -973,7 +992,7 @@ bb.g:                                             ; preds = %_ZNK9__gnu_cxx5__op
   %.09.i.i = phi ptr [ %.020.i.ptr, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread16.i ], [ %.0.i.i, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIN6hermes20ExceptionHandlerInfoEPS4_EEbRT_T0_.exit.thread.i.i ] ; 6 uses
   %.0.i.i = getelementptr inbounds i8, ptr %.09.i.i, i64 -16 ; 3 uses
   %i.p = getelementptr inbounds i8, ptr %.09.i.i, i64 -4
-  %i.q = load i32, ptr %i.p, align 4, !tbaa !195  ; 2 uses
+  %i.q = load i32, ptr %i.p, align 4, !tbaa !192  ; 2 uses
   %i.r = icmp ugt i32 %i.g, %i.q
   br i1 %i.r, label %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIN6hermes20ExceptionHandlerInfoEPS4_EEbRT_T0_.exit.thread.i.i, label %bb.h
 
@@ -982,13 +1001,13 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.s, label %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIN6hermes20ExceptionHandlerInfoEPS4_EEbRT_T0_.exit.i.i, label %_ZSt25__unguarded_linear_insertIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i
 
 _ZNK9__gnu_cxx5__ops14_Val_less_iterclIN6hermes20ExceptionHandlerInfoEPS4_EEbRT_T0_.exit.i.i: ; preds = %bb.h
-  %i.t = load i32, ptr %.0.i.i, align 4, !tbaa !197
+  %i.t = load i32, ptr %.0.i.i, align 4, !tbaa !194
   %i.u = icmp ult i32 %.sroa.0.0.copyload.i.pre.i, %i.t
   br i1 %i.u, label %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIN6hermes20ExceptionHandlerInfoEPS4_EEbRT_T0_.exit.thread.i.i, label %_ZSt25__unguarded_linear_insertIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i
 
 _ZNK9__gnu_cxx5__ops14_Val_less_iterclIN6hermes20ExceptionHandlerInfoEPS4_EEbRT_T0_.exit.thread.i.i: ; preds = %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIN6hermes20ExceptionHandlerInfoEPS4_EEbRT_T0_.exit.i.i, %bb.g
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.09.i.i, ptr noundef nonnull align 4 dereferenceable(16) %.0.i.i, i64 16, i1 false), !tbaa.struct !200
-  br label %bb.g, !llvm.loop !202
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.09.i.i, ptr noundef nonnull align 4 dereferenceable(16) %.0.i.i, i64 16, i1 false), !tbaa.struct !197
+  br label %bb.g, !llvm.loop !199
 
 _ZSt25__unguarded_linear_insertIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i: ; preds = %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIN6hermes20ExceptionHandlerInfoEPS4_EEbRT_T0_.exit.i.i, %bb.h
   store i32 %.sroa.0.0.copyload.i.pre.i, ptr %.09.i.i, align 4, !tbaa !3
@@ -1001,7 +1020,7 @@ _ZSt25__unguarded_linear_insertIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__op
 bb.i:                                             ; preds = %_ZSt25__unguarded_linear_insertIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i, %_ZSt13move_backwardIPN6hermes20ExceptionHandlerInfoES2_ET0_T_S4_S3_.exit.i
   %.020.i.add = add nuw nsw i64 %.020.i.idx, 16   ; 2 uses
   %.not.i = icmp eq i64 %.020.i.add, 256
-  br i1 %.not.i, label %_ZSt16__insertion_sortIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_T0_.exit, label %bb.c, !llvm.loop !203
+  br i1 %.not.i, label %_ZSt16__insertion_sortIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_T0_.exit, label %bb.c, !llvm.loop !200
 
 _ZSt16__insertion_sortIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_T0_.exit: ; preds = %bb.i
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 2 uses
@@ -1021,7 +1040,7 @@ bb.j:                                             ; preds = %_ZNK9__gnu_cxx5__op
   %.09.i.i9 = phi ptr [ %.06.i, %.lr.ph.i ], [ %.0.i.i10, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIN6hermes20ExceptionHandlerInfoEPS4_EEbRT_T0_.exit.thread.i.i16 ] ; 6 uses
   %.0.i.i10 = getelementptr inbounds i8, ptr %.09.i.i9, i64 -16 ; 3 uses
   %i.x = getelementptr inbounds i8, ptr %.09.i.i9, i64 -4
-  %i.y = load i32, ptr %i.x, align 4, !tbaa !195  ; 2 uses
+  %i.y = load i32, ptr %i.x, align 4, !tbaa !192  ; 2 uses
   %i.z = icmp ugt i32 %.sroa.511.0.copyload.i.i, %i.y
   br i1 %i.z, label %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIN6hermes20ExceptionHandlerInfoEPS4_EEbRT_T0_.exit.thread.i.i16, label %bb.k
 
@@ -1030,13 +1049,13 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.aa, label %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIN6hermes20ExceptionHandlerInfoEPS4_EEbRT_T0_.exit.i.i15, label %_ZSt25__unguarded_linear_insertIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i11
 
 _ZNK9__gnu_cxx5__ops14_Val_less_iterclIN6hermes20ExceptionHandlerInfoEPS4_EEbRT_T0_.exit.i.i15: ; preds = %bb.k
-  %i.ab = load i32, ptr %.0.i.i10, align 4, !tbaa !197
+  %i.ab = load i32, ptr %.0.i.i10, align 4, !tbaa !194
   %i.ac = icmp ult i32 %.sroa.0.0.copyload.i.i, %i.ab
   br i1 %i.ac, label %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIN6hermes20ExceptionHandlerInfoEPS4_EEbRT_T0_.exit.thread.i.i16, label %_ZSt25__unguarded_linear_insertIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i11
 
 _ZNK9__gnu_cxx5__ops14_Val_less_iterclIN6hermes20ExceptionHandlerInfoEPS4_EEbRT_T0_.exit.thread.i.i16: ; preds = %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIN6hermes20ExceptionHandlerInfoEPS4_EEbRT_T0_.exit.i.i15, %bb.j
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.09.i.i9, ptr noundef nonnull align 4 dereferenceable(16) %.0.i.i10, i64 16, i1 false), !tbaa.struct !200
-  br label %bb.j, !llvm.loop !202
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.09.i.i9, ptr noundef nonnull align 4 dereferenceable(16) %.0.i.i10, i64 16, i1 false), !tbaa.struct !197
+  br label %bb.j, !llvm.loop !199
 
 _ZSt25__unguarded_linear_insertIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i11: ; preds = %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIN6hermes20ExceptionHandlerInfoEPS4_EEbRT_T0_.exit.i.i15, %bb.k
   store i32 %.sroa.0.0.copyload.i.i, ptr %.09.i.i9, align 4, !tbaa !3
@@ -1046,7 +1065,7 @@ _ZSt25__unguarded_linear_insertIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__op
   store i32 %.sroa.511.0.copyload.i.i, ptr %.sroa.511.0..09.sroa_idx.i.i13, align 4, !tbaa !3
   %i.ad = getelementptr inbounds nuw i8, ptr %.06.i, i64 16 ; 2 uses
   %.not.i14 = icmp eq ptr %i.ad, %1
-  br i1 %.not.i14, label %_ZSt26__unguarded_insertion_sortIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_T0_.exit, label %.lr.ph.i, !llvm.loop !204
+  br i1 %.not.i14, label %_ZSt26__unguarded_insertion_sortIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_T0_.exit, label %.lr.ph.i, !llvm.loop !201
 
 bb.l:                                             ; preds = %bb.a
   %i.ae = icmp eq ptr %0, %1
@@ -1065,8 +1084,8 @@ bb.m:                                             ; preds = %bb.t, %.lr.ph.i18
   %.020.i19 = phi ptr [ %.017.i17, %.lr.ph.i18 ], [ %.0.i29, %bb.t ] ; 6 uses
   %.pn19.i20 = phi ptr [ %0, %.lr.ph.i18 ], [ %.020.i19, %bb.t ] ; 4 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.pn19.i20, i64 28
-  %i.ah = load i32, ptr %i.ag, align 4, !tbaa !195 ; 5 uses
-  %i.ai = load i32, ptr %i.af, align 4, !tbaa !195 ; 2 uses
+  %i.ah = load i32, ptr %i.ag, align 4, !tbaa !192 ; 5 uses
+  %i.ai = load i32, ptr %i.af, align 4, !tbaa !192 ; 2 uses
   %i.aj = icmp ugt i32 %i.ah, %i.ai
   br i1 %i.aj, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread.i34, label %bb.n
 
@@ -1076,7 +1095,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.ak, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.i33, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread16.i22
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.i33: ; preds = %bb.n
-  %i.al = load i32, ptr %0, align 4, !tbaa !197
+  %i.al = load i32, ptr %0, align 4, !tbaa !194
   %i.am = icmp ult i32 %.sroa.0.0.copyload.i.pre.i21, %i.al
   br i1 %i.am, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread.i34, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread16.i22
 
@@ -1101,7 +1120,7 @@ bb.p:                                             ; preds = %_ZNK9__gnu_cxx5__op
 
 bb.q:                                             ; preds = %bb.p
   %i.av = getelementptr inbounds nuw i8, ptr %.pn19.i20, i64 16
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.av, ptr noundef nonnull align 4 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !200
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.av, ptr noundef nonnull align 4 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !197
   br label %_ZSt13move_backwardIPN6hermes20ExceptionHandlerInfoES2_ET0_T_S4_S3_.exit.i35
 
 _ZSt13move_backwardIPN6hermes20ExceptionHandlerInfoES2_ET0_T_S4_S3_.exit.i35: ; preds = %bb.q, %bb.p, %bb.o
@@ -1117,7 +1136,7 @@ bb.r:                                             ; preds = %_ZNK9__gnu_cxx5__op
   %.09.i.i24 = phi ptr [ %.020.i19, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread16.i22 ], [ %.0.i.i25, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIN6hermes20ExceptionHandlerInfoEPS4_EEbRT_T0_.exit.thread.i.i32 ] ; 6 uses
   %.0.i.i25 = getelementptr inbounds i8, ptr %.09.i.i24, i64 -16 ; 3 uses
   %i.ax = getelementptr inbounds i8, ptr %.09.i.i24, i64 -4
-  %i.ay = load i32, ptr %i.ax, align 4, !tbaa !195 ; 2 uses
+  %i.ay = load i32, ptr %i.ax, align 4, !tbaa !192 ; 2 uses
   %i.az = icmp ugt i32 %i.ah, %i.ay
   br i1 %i.az, label %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIN6hermes20ExceptionHandlerInfoEPS4_EEbRT_T0_.exit.thread.i.i32, label %bb.s
 
@@ -1126,13 +1145,13 @@ bb.s:                                             ; preds = %bb.r
   br i1 %i.ba, label %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIN6hermes20ExceptionHandlerInfoEPS4_EEbRT_T0_.exit.i.i31, label %_ZSt25__unguarded_linear_insertIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i26
 
 _ZNK9__gnu_cxx5__ops14_Val_less_iterclIN6hermes20ExceptionHandlerInfoEPS4_EEbRT_T0_.exit.i.i31: ; preds = %bb.s
-  %i.bb = load i32, ptr %.0.i.i25, align 4, !tbaa !197
+  %i.bb = load i32, ptr %.0.i.i25, align 4, !tbaa !194
   %i.bc = icmp ult i32 %.sroa.0.0.copyload.i.pre.i21, %i.bb
   br i1 %i.bc, label %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIN6hermes20ExceptionHandlerInfoEPS4_EEbRT_T0_.exit.thread.i.i32, label %_ZSt25__unguarded_linear_insertIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i26
 
 _ZNK9__gnu_cxx5__ops14_Val_less_iterclIN6hermes20ExceptionHandlerInfoEPS4_EEbRT_T0_.exit.thread.i.i32: ; preds = %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIN6hermes20ExceptionHandlerInfoEPS4_EEbRT_T0_.exit.i.i31, %bb.r
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.09.i.i24, ptr noundef nonnull align 4 dereferenceable(16) %.0.i.i25, i64 16, i1 false), !tbaa.struct !200
-  br label %bb.r, !llvm.loop !202
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.09.i.i24, ptr noundef nonnull align 4 dereferenceable(16) %.0.i.i25, i64 16, i1 false), !tbaa.struct !197
+  br label %bb.r, !llvm.loop !199
 
 _ZSt25__unguarded_linear_insertIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i26: ; preds = %_ZNK9__gnu_cxx5__ops14_Val_less_iterclIN6hermes20ExceptionHandlerInfoEPS4_EEbRT_T0_.exit.i.i31, %bb.s
   store i32 %.sroa.0.0.copyload.i.pre.i21, ptr %.09.i.i24, align 4, !tbaa !3
@@ -1145,7 +1164,7 @@ _ZSt25__unguarded_linear_insertIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__op
 bb.t:                                             ; preds = %_ZSt25__unguarded_linear_insertIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i26, %_ZSt13move_backwardIPN6hermes20ExceptionHandlerInfoES2_ET0_T_S4_S3_.exit.i35
   %.0.i29 = getelementptr inbounds nuw i8, ptr %.020.i19, i64 16 ; 2 uses
   %.not.i30 = icmp eq ptr %.0.i29, %1
-  br i1 %.not.i30, label %_ZSt26__unguarded_insertion_sortIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_T0_.exit, label %bb.m, !llvm.loop !203
+  br i1 %.not.i30, label %_ZSt26__unguarded_insertion_sortIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_T0_.exit, label %bb.m, !llvm.loop !200
 
 _ZSt26__unguarded_insertion_sortIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_T0_.exit: ; preds = %bb.t, %_ZSt25__unguarded_linear_insertIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i11, %.preheader.i, %bb.l, %_ZSt16__insertion_sortIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_T0_.exit
   ret void
@@ -1166,7 +1185,7 @@ bb.a:
   %.sroa.01.0.copyload.i = load i64, ptr %i.e, align 4 ; 2 uses
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds i8, ptr %.07, i64 -8
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 4 ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.e, ptr noundef nonnull align 4 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !200
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.e, ptr noundef nonnull align 4 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !197
   %i.f = ptrtoint ptr %i.e to i64
   %i.g = sub i64 %i.f, %i.a                       ; 3 uses
   %i.h = ashr exact i64 %i.g, 4                   ; 3 uses
@@ -1183,9 +1202,9 @@ bb.a:
   %i.o = getelementptr [16 x i8], ptr %0, i64 %i.l ; 2 uses
   %i.p = getelementptr i8, ptr %i.o, i64 16
   %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 12
-  %i.r = load i32, ptr %i.q, align 4, !tbaa !195  ; 2 uses
+  %i.r = load i32, ptr %i.q, align 4, !tbaa !192  ; 2 uses
   %i.s = getelementptr i8, ptr %i.o, i64 28
-  %i.t = load i32, ptr %i.s, align 4, !tbaa !195  ; 2 uses
+  %i.t = load i32, ptr %i.s, align 4, !tbaa !192  ; 2 uses
   %i.u = icmp ugt i32 %i.r, %i.t
   br i1 %i.u, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread.i.i, label %bb.b
 
@@ -1198,8 +1217,8 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   br i1 %i.w, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.i.i, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread31.i.i
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.i.i: ; preds = %bb.b
-  %i.x = load i32, ptr %i.n, align 4, !tbaa !197
-  %i.y = load i32, ptr %i.p, align 4, !tbaa !197
+  %i.x = load i32, ptr %i.n, align 4, !tbaa !194
+  %i.y = load i32, ptr %i.p, align 4, !tbaa !194
   %i.z = icmp ult i32 %i.x, %i.y
   %i.aa = or disjoint i64 %i.l, 1
   %cond.fr.i.i = freeze i1 %i.z
@@ -1210,9 +1229,9 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_
   %i.ab = phi i64 [ %i.m, %bb.b ], [ %spec.select.i.i, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.i.i ], [ %i.v, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread.i.i ] ; 4 uses
   %i.ac = getelementptr inbounds [16 x i8], ptr %0, i64 %i.ab
   %i.ad = getelementptr inbounds [16 x i8], ptr %0, i64 %.033.i.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.ad, ptr noundef nonnull align 4 dereferenceable(16) %i.ac, i64 16, i1 false), !tbaa.struct !200
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.ad, ptr noundef nonnull align 4 dereferenceable(16) %i.ac, i64 16, i1 false), !tbaa.struct !197
   %i.ae = icmp slt i64 %i.ab, %i.j
-  br i1 %i.ae, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !205
+  br i1 %i.ae, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !202
 
 ._crit_edge.i.i:                                  ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread31.i.i, %.lr.ph
   %.0.lcssa.i.i = phi i64 [ 0, %.lr.ph ], [ %i.ab, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread31.i.i ] ; 5 uses
@@ -1231,7 +1250,7 @@ bb.d:                                             ; preds = %bb.c
   %i.al = or disjoint i64 %i.ak, 1                ; 2 uses
   %i.am = getelementptr inbounds [16 x i8], ptr %0, i64 %i.al
   %i.an = getelementptr inbounds [16 x i8], ptr %0, i64 %.0.lcssa.i.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.an, ptr noundef nonnull align 4 dereferenceable(16) %i.am, i64 16, i1 false), !tbaa.struct !200
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.an, ptr noundef nonnull align 4 dereferenceable(16) %i.am, i64 16, i1 false), !tbaa.struct !197
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %._crit_edge.i.i
@@ -1251,7 +1270,7 @@ bb.f:                                             ; preds = %_ZNK9__gnu_cxx5__op
   %.018.i.i78.i = lshr i64 %.018.in.i.i.i, 1      ; 3 uses
   %i.ap = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.018.i.i78.i ; 3 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 12
-  %i.ar = load i32, ptr %i.aq, align 4, !tbaa !195 ; 2 uses
+  %i.ar = load i32, ptr %i.aq, align 4, !tbaa !192 ; 2 uses
   %i.as = icmp ugt i32 %i.ar, %.sroa.3.12.extract.trunc.i.i.i
   br i1 %i.as, label %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPN6hermes20ExceptionHandlerInfoES4_EEbT_RT0_.exit.thread.i.i.i, label %bb.g
 
@@ -1260,15 +1279,15 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.at, label %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPN6hermes20ExceptionHandlerInfoES4_EEbT_RT0_.exit.i.i.i, label %_ZSt10__pop_heapIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_S6_RT0_.exit
 
 _ZNK9__gnu_cxx5__ops14_Iter_less_valclIPN6hermes20ExceptionHandlerInfoES4_EEbT_RT0_.exit.i.i.i: ; preds = %bb.g
-  %i.au = load i32, ptr %i.ap, align 4, !tbaa !197
+  %i.au = load i32, ptr %i.ap, align 4, !tbaa !194
   %i.av = icmp ult i32 %i.au, %.sroa.0.sroa.0.0.extract.trunc.i.i.i
   br i1 %i.av, label %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPN6hermes20ExceptionHandlerInfoES4_EEbT_RT0_.exit.thread.i.i.i, label %_ZSt10__pop_heapIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_S6_RT0_.exit
 
 _ZNK9__gnu_cxx5__ops14_Iter_less_valclIPN6hermes20ExceptionHandlerInfoES4_EEbT_RT0_.exit.thread.i.i.i: ; preds = %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPN6hermes20ExceptionHandlerInfoES4_EEbT_RT0_.exit.i.i.i, %bb.f
   %i.aw = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.01317.i.i.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.aw, ptr noundef nonnull align 4 dereferenceable(16) %i.ap, i64 16, i1 false), !tbaa.struct !200
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.aw, ptr noundef nonnull align 4 dereferenceable(16) %i.ap, i64 16, i1 false), !tbaa.struct !197
   %.not.i = icmp eq i64 %.018.i.i78.i, 0
-  br i1 %.not.i, label %_ZSt10__pop_heapIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_S6_RT0_.exit, label %bb.f, !llvm.loop !206
+  br i1 %.not.i, label %_ZSt10__pop_heapIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_S6_RT0_.exit, label %bb.f, !llvm.loop !203
 
 _ZSt10__pop_heapIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_S6_RT0_.exit: ; preds = %bb.g, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPN6hermes20ExceptionHandlerInfoES4_EEbT_RT0_.exit.i.i.i, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPN6hermes20ExceptionHandlerInfoES4_EEbT_RT0_.exit.thread.i.i.i, %bb.e
   %.013.lcssa.i.i.i = phi i64 [ %.1.i.i, %bb.e ], [ %.01317.i.i.i, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPN6hermes20ExceptionHandlerInfoES4_EEbT_RT0_.exit.i.i.i ], [ 0, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPN6hermes20ExceptionHandlerInfoES4_EEbT_RT0_.exit.thread.i.i.i ], [ %.01317.i.i.i, %bb.g ]
@@ -1277,7 +1296,7 @@ _ZSt10__pop_heapIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops15_Iter_less_i
   %.sroa.3.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
   store i64 %.sroa.4.0.copyload.i, ptr %.sroa.3.0..sroa_idx.i.i.i, align 4
   %i.ay = icmp sgt i64 %i.g, 16
-  br i1 %i.ay, label %.lr.ph, label %._crit_edge, !llvm.loop !207
+  br i1 %i.ay, label %.lr.ph, label %._crit_edge, !llvm.loop !204
 
 ._crit_edge:                                      ; preds = %_ZSt10__pop_heapIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_S6_RT0_.exit, %bb.a
   ret void
@@ -1323,9 +1342,9 @@ bb.c:                                             ; preds = %_ZSt13__adjust_heap
   %i.u = getelementptr [16 x i8], ptr %0, i64 %i.r ; 2 uses
   %i.v = getelementptr i8, ptr %i.u, i64 16
   %i.w = getelementptr inbounds nuw i8, ptr %i.t, i64 12
-  %i.x = load i32, ptr %i.w, align 4, !tbaa !195  ; 2 uses
+  %i.x = load i32, ptr %i.w, align 4, !tbaa !192  ; 2 uses
   %i.y = getelementptr i8, ptr %i.u, i64 28
-  %i.z = load i32, ptr %i.y, align 4, !tbaa !195  ; 2 uses
+  %i.z = load i32, ptr %i.y, align 4, !tbaa !192  ; 2 uses
   %i.aa = icmp ugt i32 %i.x, %i.z
   br i1 %i.aa, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread.i, label %bb.d
 
@@ -1338,8 +1357,8 @@ bb.d:                                             ; preds = %.lr.ph.i
   br i1 %i.ac, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.i, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread31.i
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.i: ; preds = %bb.d
-  %i.ad = load i32, ptr %i.t, align 4, !tbaa !197
-  %i.ae = load i32, ptr %i.v, align 4, !tbaa !197
+  %i.ad = load i32, ptr %i.t, align 4, !tbaa !194
+  %i.ae = load i32, ptr %i.v, align 4, !tbaa !194
   %i.af = icmp ult i32 %i.ad, %i.ae
   %i.ag = or disjoint i64 %i.r, 1
   %cond.fr.i = freeze i1 %i.af
@@ -1350,9 +1369,9 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_
   %i.ah = phi i64 [ %i.s, %bb.d ], [ %spec.select.i, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.i ], [ %i.ab, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread.i ] ; 4 uses
   %i.ai = getelementptr inbounds [16 x i8], ptr %0, i64 %i.ah
   %i.aj = getelementptr inbounds [16 x i8], ptr %0, i64 %.033.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.aj, ptr noundef nonnull align 4 dereferenceable(16) %i.ai, i64 16, i1 false), !tbaa.struct !200
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.aj, ptr noundef nonnull align 4 dereferenceable(16) %i.ai, i64 16, i1 false), !tbaa.struct !197
   %i.ak = icmp slt i64 %i.ah, %i.i
-  br i1 %i.ak, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !205
+  br i1 %i.ak, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !202
 
 ._crit_edge.i:                                    ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread31.i, %bb.c
   %.0.lcssa.i = phi i64 [ %.013, %bb.c ], [ %i.ah, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread31.i ] ; 2 uses
@@ -1361,7 +1380,7 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_
   br i1 %or.cond, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %._crit_edge.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.o, ptr noundef nonnull align 4 dereferenceable(16) %i.n, i64 16, i1 false), !tbaa.struct !200
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.o, ptr noundef nonnull align 4 dereferenceable(16) %i.n, i64 16, i1 false), !tbaa.struct !197
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %._crit_edge.i
@@ -1381,7 +1400,7 @@ bb.g:                                             ; preds = %_ZNK9__gnu_cxx5__op
   %.018.i.i = sdiv i64 %.018.in.i.i, 2            ; 4 uses
   %i.an = getelementptr inbounds [16 x i8], ptr %0, i64 %.018.i.i ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 12
-  %i.ap = load i32, ptr %i.ao, align 4, !tbaa !195 ; 2 uses
+  %i.ap = load i32, ptr %i.ao, align 4, !tbaa !192 ; 2 uses
   %i.aq = icmp ugt i32 %i.ap, %.sroa.3.12.extract.trunc.i.i
   br i1 %i.aq, label %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPN6hermes20ExceptionHandlerInfoES4_EEbT_RT0_.exit.thread.i.i, label %bb.h
 
@@ -1390,15 +1409,15 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.ar, label %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPN6hermes20ExceptionHandlerInfoES4_EEbT_RT0_.exit.i.i, label %_ZSt13__adjust_heapIPN6hermes20ExceptionHandlerInfoElS1_N9__gnu_cxx5__ops15_Iter_less_iterEEvT_T0_S7_T1_T2_.exit
 
 _ZNK9__gnu_cxx5__ops14_Iter_less_valclIPN6hermes20ExceptionHandlerInfoES4_EEbT_RT0_.exit.i.i: ; preds = %bb.h
-  %i.as = load i32, ptr %i.an, align 4, !tbaa !197
+  %i.as = load i32, ptr %i.an, align 4, !tbaa !194
   %i.at = icmp ult i32 %i.as, %.sroa.0.sroa.0.0.extract.trunc.i.i
   br i1 %i.at, label %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPN6hermes20ExceptionHandlerInfoES4_EEbT_RT0_.exit.thread.i.i, label %_ZSt13__adjust_heapIPN6hermes20ExceptionHandlerInfoElS1_N9__gnu_cxx5__ops15_Iter_less_iterEEvT_T0_S7_T1_T2_.exit
 
 _ZNK9__gnu_cxx5__ops14_Iter_less_valclIPN6hermes20ExceptionHandlerInfoES4_EEbT_RT0_.exit.thread.i.i: ; preds = %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPN6hermes20ExceptionHandlerInfoES4_EEbT_RT0_.exit.i.i, %bb.g
   %i.au = getelementptr inbounds [16 x i8], ptr %0, i64 %.01317.i.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.au, ptr noundef nonnull align 4 dereferenceable(16) %i.an, i64 16, i1 false), !tbaa.struct !200
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.au, ptr noundef nonnull align 4 dereferenceable(16) %i.an, i64 16, i1 false), !tbaa.struct !197
   %i.av = icmp sgt i64 %.018.i.i, %.013
-  br i1 %i.av, label %bb.g, label %_ZSt13__adjust_heapIPN6hermes20ExceptionHandlerInfoElS1_N9__gnu_cxx5__ops15_Iter_less_iterEEvT_T0_S7_T1_T2_.exit, !llvm.loop !206
+  br i1 %i.av, label %bb.g, label %_ZSt13__adjust_heapIPN6hermes20ExceptionHandlerInfoElS1_N9__gnu_cxx5__ops15_Iter_less_iterEEvT_T0_S7_T1_T2_.exit, !llvm.loop !203
 
 _ZSt13__adjust_heapIPN6hermes20ExceptionHandlerInfoElS1_N9__gnu_cxx5__ops15_Iter_less_iterEEvT_T0_S7_T1_T2_.exit: ; preds = %bb.h, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPN6hermes20ExceptionHandlerInfoES4_EEbT_RT0_.exit.i.i, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPN6hermes20ExceptionHandlerInfoES4_EEbT_RT0_.exit.thread.i.i, %bb.f
   %.013.lcssa.i.i = phi i64 [ %.1.i, %bb.f ], [ %.01317.i.i, %bb.h ], [ %.018.i.i, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPN6hermes20ExceptionHandlerInfoES4_EEbT_RT0_.exit.thread.i.i ], [ %.01317.i.i, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPN6hermes20ExceptionHandlerInfoES4_EEbT_RT0_.exit.i.i ]
@@ -1408,7 +1427,7 @@ _ZSt13__adjust_heapIPN6hermes20ExceptionHandlerInfoElS1_N9__gnu_cxx5__ops15_Iter
   store i64 %.sroa.4.0.copyload, ptr %.sroa.3.0..sroa_idx.i.i, align 4
   %.not = icmp eq i64 %.013, 0
   %i.ax = add nsw i64 %.013, -1
-  br i1 %.not, label %.loopexit, label %bb.c, !llvm.loop !208
+  br i1 %.not, label %.loopexit, label %bb.c, !llvm.loop !205
 
 .loopexit:                                        ; preds = %_ZSt13__adjust_heapIPN6hermes20ExceptionHandlerInfoElS1_N9__gnu_cxx5__ops15_Iter_less_iterEEvT_T0_S7_T1_T2_.exit, %bb.a
   ret void
@@ -1418,9 +1437,9 @@ _ZSt13__adjust_heapIPN6hermes20ExceptionHandlerInfoElS1_N9__gnu_cxx5__ops15_Iter
 define linkonce_odr hidden void @_ZSt22__move_median_to_firstIPN6hermes20ExceptionHandlerInfoEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_S6_S6_T0_(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 comdat {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !195  ; 6 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !192  ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 12
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !195  ; 6 uses
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !192  ; 6 uses
   %i.e = icmp ugt i32 %i.b, %i.d
   br i1 %i.e, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread, label %bb.b
 
@@ -1429,14 +1448,14 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.f, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread26
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit: ; preds = %bb.b
-  %i.g = load i32, ptr %1, align 4, !tbaa !197
-  %i.h = load i32, ptr %2, align 4, !tbaa !197
+  %i.g = load i32, ptr %1, align 4, !tbaa !194
+  %i.h = load i32, ptr %2, align 4, !tbaa !194
   %i.i = icmp ult i32 %i.g, %i.h
   br i1 %i.i, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread26
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread: ; preds = %bb.a, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 12
-  %i.k = load i32, ptr %i.j, align 4, !tbaa !195  ; 4 uses
+  %i.k = load i32, ptr %i.j, align 4, !tbaa !192  ; 4 uses
   %i.l = icmp ugt i32 %i.d, %i.k
   br i1 %i.l, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit22.thread, label %bb.c
 
@@ -1445,14 +1464,14 @@ bb.c:                                             ; preds = %_ZNK9__gnu_cxx5__op
   br i1 %i.m, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit22, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit22.thread27
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit22: ; preds = %bb.c
-  %i.n = load i32, ptr %2, align 4, !tbaa !197
-  %i.o = load i32, ptr %3, align 4, !tbaa !197
+  %i.n = load i32, ptr %2, align 4, !tbaa !194
+  %i.o = load i32, ptr %3, align 4, !tbaa !194
   %i.p = icmp ult i32 %i.n, %i.o
   br i1 %i.p, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit22.thread, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit22.thread27
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit22.thread: ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit22
   %.sroa.0.0.copyload = load <4 x i32>, ptr %0, align 4
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %0, ptr noundef nonnull align 4 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !200
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %0, ptr noundef nonnull align 4 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !197
   store <4 x i32> %.sroa.0.0.copyload, ptr %2, align 4
   br label %bb.g
 
@@ -1465,26 +1484,26 @@ bb.d:                                             ; preds = %_ZNK9__gnu_cxx5__op
   br i1 %i.r, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit23, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit23.thread28
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit23: ; preds = %bb.d
-  %i.s = load i32, ptr %1, align 4, !tbaa !197
-  %i.t = load i32, ptr %3, align 4, !tbaa !197
+  %i.s = load i32, ptr %1, align 4, !tbaa !194
+  %i.t = load i32, ptr %3, align 4, !tbaa !194
   %i.u = icmp ult i32 %i.s, %i.t
   br i1 %i.u, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit23.thread, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit23.thread28
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit23.thread: ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit22.thread27, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit23
   %.sroa.036.0.copyload = load <4 x i32>, ptr %0, align 4
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %0, ptr noundef nonnull align 4 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !200
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %0, ptr noundef nonnull align 4 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !197
   store <4 x i32> %.sroa.036.0.copyload, ptr %3, align 4
   br label %bb.g
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit23.thread28: ; preds = %bb.d, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit23
   %.sroa.038.0.copyload = load <4 x i32>, ptr %0, align 4
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %0, ptr noundef nonnull align 4 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !200
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %0, ptr noundef nonnull align 4 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !197
   store <4 x i32> %.sroa.038.0.copyload, ptr %1, align 4
   br label %bb.g
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread26: ; preds = %bb.b, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit
   %i.v = getelementptr inbounds nuw i8, ptr %3, i64 12
-  %i.w = load i32, ptr %i.v, align 4, !tbaa !195  ; 4 uses
+  %i.w = load i32, ptr %i.v, align 4, !tbaa !192  ; 4 uses
   %i.x = icmp ugt i32 %i.b, %i.w
   br i1 %i.x, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit24.thread, label %bb.e
 
@@ -1493,14 +1512,14 @@ bb.e:                                             ; preds = %_ZNK9__gnu_cxx5__op
   br i1 %i.y, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit24, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit24.thread29
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit24: ; preds = %bb.e
-  %i.z = load i32, ptr %1, align 4, !tbaa !197
-  %i.aa = load i32, ptr %3, align 4, !tbaa !197
+  %i.z = load i32, ptr %1, align 4, !tbaa !194
+  %i.aa = load i32, ptr %3, align 4, !tbaa !194
   %i.ab = icmp ult i32 %i.z, %i.aa
   br i1 %i.ab, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit24.thread, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit24.thread29
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit24.thread: ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit.thread26, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit24
   %.sroa.040.0.copyload = load <4 x i32>, ptr %0, align 4
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %0, ptr noundef nonnull align 4 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !200
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %0, ptr noundef nonnull align 4 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !197
   store <4 x i32> %.sroa.040.0.copyload, ptr %1, align 4
   br label %bb.g
 
@@ -1513,20 +1532,20 @@ bb.f:                                             ; preds = %_ZNK9__gnu_cxx5__op
   br i1 %i.ad, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit25, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit25.thread30
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit25: ; preds = %bb.f
-  %i.ae = load i32, ptr %2, align 4, !tbaa !197
-  %i.af = load i32, ptr %3, align 4, !tbaa !197
+  %i.ae = load i32, ptr %2, align 4, !tbaa !194
+  %i.af = load i32, ptr %3, align 4, !tbaa !194
   %i.ag = icmp ult i32 %i.ae, %i.af
   br i1 %i.ag, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit25.thread, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit25.thread30
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit25.thread: ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit24.thread29, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit25
   %.sroa.042.0.copyload = load <4 x i32>, ptr %0, align 4
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %0, ptr noundef nonnull align 4 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !200
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %0, ptr noundef nonnull align 4 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !197
   store <4 x i32> %.sroa.042.0.copyload, ptr %3, align 4
   br label %bb.g
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit25.thread30: ; preds = %bb.f, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPN6hermes20ExceptionHandlerInfoES5_EEbT_T0_.exit25
   %.sroa.044.0.copyload = load <4 x i32>, ptr %0, align 4
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %0, ptr noundef nonnull align 4 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !200
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %0, ptr noundef nonnull align 4 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !197
   store <4 x i32> %.sroa.044.0.copyload, ptr %2, align 4
   br label %bb.g
 
@@ -1741,30 +1760,27 @@ attributes #12 = { nounwind allocsize(0) }
 !180 = distinct !{!180, !101}
 !181 = distinct !{!181, !101}
 !182 = distinct !{!182, !101}
-!183 = distinct !{!183, !101, !184, !185}
-!184 = !{!"llvm.loop.isvectorized", i32 1}
-!185 = !{!"llvm.loop.unroll.runtime.disable"}
-!186 = distinct !{!186, !101, !185, !184}
+!183 = distinct !{!183, !128}
+!184 = distinct !{!184, !101}
+!185 = distinct !{!185, !101}
+!186 = distinct !{!186, !101}
 !187 = distinct !{!187, !101}
 !188 = distinct !{!188, !101}
 !189 = distinct !{!189, !101}
 !190 = distinct !{!190, !101}
 !191 = distinct !{!191, !101}
-!192 = distinct !{!192, !101}
-!193 = distinct !{!193, !101}
-!194 = distinct !{!194, !101}
-!195 = !{!196, !4, i64 12}
-!196 = !{!"_ZTSN6hermes20ExceptionHandlerInfoE", !4, i64 0, !4, i64 4, !4, i64 8, !4, i64 12}
-!197 = !{!196, !4, i64 0}
+!192 = !{!193, !4, i64 12}
+!193 = !{!"_ZTSN6hermes20ExceptionHandlerInfoE", !4, i64 0, !4, i64 4, !4, i64 8, !4, i64 12}
+!194 = !{!193, !4, i64 0}
+!195 = distinct !{!195, !101}
+!196 = distinct !{!196, !101}
+!197 = !{i64 0, i64 4, !3, i64 4, i64 4, !3, i64 8, i64 4, !3, i64 12, i64 4, !3}
 !198 = distinct !{!198, !101}
 !199 = distinct !{!199, !101}
-!200 = !{i64 0, i64 4, !3, i64 4, i64 4, !3, i64 8, i64 4, !3, i64 12, i64 4, !3}
+!200 = distinct !{!200, !101}
 !201 = distinct !{!201, !101}
 !202 = distinct !{!202, !101}
 !203 = distinct !{!203, !101}
 !204 = distinct !{!204, !101}
 !205 = distinct !{!205, !101}
-!206 = distinct !{!206, !101}
-!207 = distinct !{!207, !101}
-!208 = distinct !{!208, !101}
 end_hunk_0

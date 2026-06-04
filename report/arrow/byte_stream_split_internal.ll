@@ -201,7 +201,7 @@ bb.a:
 
 iter.check:                                       ; preds = %bb.a
   %i.e = sub i64 %2, %i.c                         ; 4 uses
-  %min.iters.check = icmp ult i64 %i.e, 4
+  %min.iters.check = icmp ult i64 %i.e, 8
   br i1 %min.iters.check, label %.preheader99.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %iter.check
@@ -398,57 +398,89 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %.preheader98, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
-  %min.epilog.iters.check = icmp samesign ult i64 %n.mod.vf, 4
-  br i1 %min.epilog.iters.check, label %.preheader99.preheader, label %vec.epilog.ph, !prof !36
+  %min.epilog.iters.check = icmp samesign ult i64 %n.mod.vf, 8
+  br i1 %min.epilog.iters.check, label %.preheader99.preheader, label %vec.epilog.ph, !prof !87
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.mod.vf137 = and i64 %2, 3                    ; 2 uses
+  %n.mod.vf137 = and i64 %2, 7                    ; 2 uses
   %n.vec138 = sub i64 %i.e, %n.mod.vf137          ; 2 uses
   %i.eu = add i64 %i.c, %n.vec138
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index139 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next140, %vec.epilog.vector.body ] ; 2 uses
-  %i.ev = add i64 %i.c, %index139                 ; 5 uses
-  %i.ew = shl nsw i64 %i.ev, 1
+  %i.ev = add i64 %i.c, %index139                 ; 9 uses
+  %4 = shl nsw i64 %i.ev, 1
+  %5 = shl i64 %i.ev, 1
+  %6 = shl i64 %i.ev, 1
+  %7 = shl i64 %i.ev, 1
+  %i.ew = shl i64 %i.ev, 1
   %i.ex = shl i64 %i.ev, 1
   %i.ey = shl i64 %i.ev, 1
   %i.ez = shl i64 %i.ev, 1
-  %i.fa = getelementptr i8, ptr %0, i64 %i.ew     ; 2 uses
+  %8 = getelementptr i8, ptr %0, i64 %4           ; 2 uses
+  %9 = getelementptr i8, ptr %0, i64 %5           ; 2 uses
+  %10 = getelementptr i8, ptr %9, i64 2
+  %11 = getelementptr i8, ptr %0, i64 %6          ; 2 uses
+  %12 = getelementptr i8, ptr %11, i64 4
+  %13 = getelementptr i8, ptr %0, i64 %7          ; 2 uses
+  %14 = getelementptr i8, ptr %13, i64 6
+  %15 = getelementptr i8, ptr %0, i64 %i.ew       ; 2 uses
+  %i.fa = getelementptr i8, ptr %15, i64 8
   %i.fb = getelementptr i8, ptr %0, i64 %i.ex     ; 2 uses
-  %i.fc = getelementptr i8, ptr %i.fb, i64 2
+  %i.fc = getelementptr i8, ptr %i.fb, i64 10
   %i.fd = getelementptr i8, ptr %0, i64 %i.ey     ; 2 uses
-  %i.fe = getelementptr i8, ptr %i.fd, i64 4
+  %i.fe = getelementptr i8, ptr %i.fd, i64 12
   %i.ff = getelementptr i8, ptr %0, i64 %i.ez     ; 2 uses
-  %i.fg = getelementptr i8, ptr %i.ff, i64 6
+  %i.fg = getelementptr i8, ptr %i.ff, i64 14
   %i.fh = getelementptr i8, ptr %3, i64 %i.ev     ; 2 uses
+  %16 = load i8, ptr %8, align 1, !tbaa !23, !alias.scope !78
+  %17 = load i8, ptr %10, align 1, !tbaa !23, !alias.scope !78
+  %18 = load i8, ptr %12, align 1, !tbaa !23, !alias.scope !78
+  %19 = load i8, ptr %14, align 1, !tbaa !23, !alias.scope !78
   %i.fi = load i8, ptr %i.fa, align 1, !tbaa !23, !alias.scope !78
   %i.fj = load i8, ptr %i.fc, align 1, !tbaa !23, !alias.scope !78
   %i.fk = load i8, ptr %i.fe, align 1, !tbaa !23, !alias.scope !78
   %i.fl = load i8, ptr %i.fg, align 1, !tbaa !23, !alias.scope !78
-  %4 = insertelement <4 x i8> poison, i8 %i.fi, i64 0
-  %5 = insertelement <4 x i8> %4, i8 %i.fj, i64 1
-  %6 = insertelement <4 x i8> %5, i8 %i.fk, i64 2
-  %7 = insertelement <4 x i8> %6, i8 %i.fl, i64 3
-  store <4 x i8> %7, ptr %i.fh, align 1, !tbaa !23, !alias.scope !81, !noalias !83
-  %i.fm = getelementptr i8, ptr %i.fa, i64 1
-  %i.fn = getelementptr i8, ptr %i.fb, i64 3
-  %i.fo = getelementptr i8, ptr %i.fd, i64 5
-  %i.fp = getelementptr i8, ptr %i.ff, i64 7
+  %20 = insertelement <8 x i8> poison, i8 %16, i64 0
+  %21 = insertelement <8 x i8> %20, i8 %17, i64 1
+  %22 = insertelement <8 x i8> %21, i8 %18, i64 2
+  %23 = insertelement <8 x i8> %22, i8 %19, i64 3
+  %24 = insertelement <8 x i8> %23, i8 %i.fi, i64 4
+  %25 = insertelement <8 x i8> %24, i8 %i.fj, i64 5
+  %26 = insertelement <8 x i8> %25, i8 %i.fk, i64 6
+  %27 = insertelement <8 x i8> %26, i8 %i.fl, i64 7
+  store <8 x i8> %27, ptr %i.fh, align 1, !tbaa !23, !alias.scope !81, !noalias !83
+  %28 = getelementptr i8, ptr %8, i64 1
+  %29 = getelementptr i8, ptr %9, i64 3
+  %30 = getelementptr i8, ptr %11, i64 5
+  %31 = getelementptr i8, ptr %13, i64 7
+  %i.fm = getelementptr i8, ptr %15, i64 9
+  %i.fn = getelementptr i8, ptr %i.fb, i64 11
+  %i.fo = getelementptr i8, ptr %i.fd, i64 13
+  %i.fp = getelementptr i8, ptr %i.ff, i64 15
+  %32 = load i8, ptr %28, align 1, !tbaa !23, !alias.scope !78
+  %33 = load i8, ptr %29, align 1, !tbaa !23, !alias.scope !78
+  %34 = load i8, ptr %30, align 1, !tbaa !23, !alias.scope !78
+  %35 = load i8, ptr %31, align 1, !tbaa !23, !alias.scope !78
   %i.fq = load i8, ptr %i.fm, align 1, !tbaa !23, !alias.scope !78
   %i.fr = load i8, ptr %i.fn, align 1, !tbaa !23, !alias.scope !78
   %i.fs = load i8, ptr %i.fo, align 1, !tbaa !23, !alias.scope !78
   %i.ft = load i8, ptr %i.fp, align 1, !tbaa !23, !alias.scope !78
-  %8 = insertelement <4 x i8> poison, i8 %i.fq, i64 0
-  %9 = insertelement <4 x i8> %8, i8 %i.fr, i64 1
-  %10 = insertelement <4 x i8> %9, i8 %i.fs, i64 2
-  %11 = insertelement <4 x i8> %10, i8 %i.ft, i64 3
+  %36 = insertelement <8 x i8> poison, i8 %32, i64 0
+  %37 = insertelement <8 x i8> %36, i8 %33, i64 1
+  %38 = insertelement <8 x i8> %37, i8 %34, i64 2
+  %39 = insertelement <8 x i8> %38, i8 %35, i64 3
+  %40 = insertelement <8 x i8> %39, i8 %i.fq, i64 4
+  %41 = insertelement <8 x i8> %40, i8 %i.fr, i64 5
+  %42 = insertelement <8 x i8> %41, i8 %i.fs, i64 6
+  %43 = insertelement <8 x i8> %42, i8 %i.ft, i64 7
   %i.fu = getelementptr i8, ptr %i.fh, i64 %2
-  store <4 x i8> %11, ptr %i.fu, align 1, !tbaa !23, !alias.scope !85, !noalias !78
-  %index.next140 = add nuw i64 %index139, 4       ; 2 uses
+  store <8 x i8> %43, ptr %i.fu, align 1, !tbaa !23, !alias.scope !85, !noalias !78
+  %index.next140 = add nuw i64 %index139, 8       ; 2 uses
   %i.fv = icmp eq i64 %index.next140, %n.vec138
-  br i1 %i.fv, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !87
+  br i1 %i.fv, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !88
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %cmp.n141 = icmp eq i64 %n.mod.vf137, 0
@@ -503,7 +535,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   store i8 %i.go, ptr %gep.1.1, align 1, !tbaa !23
   %i.gp = add nsw i64 %.073102, 2                 ; 2 uses
   %exitcond.not.1 = icmp eq i64 %i.gp, %2
-  br i1 %exitcond.not.1, label %.preheader98, label %.preheader99, !llvm.loop !88
+  br i1 %exitcond.not.1, label %.preheader98, label %.preheader99, !llvm.loop !89
 
 .preheader98:                                     ; preds = %.preheader99.prol.loopexit, %.preheader99, %middle.block, %vec.epilog.middle.block, %bb.a
   %i.gq = icmp sgt i64 %2, 15
@@ -528,7 +560,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   store <16 x i8> %i.gx, ptr %i.ha, align 1, !tbaa !23
   %i.hb = add nuw nsw i64 %.079106, 1             ; 2 uses
   %exitcond113.not = icmp eq i64 %i.hb, %i.b
-  br i1 %exitcond113.not, label %._crit_edge, label %.preheader.preheader, !llvm.loop !89
+  br i1 %exitcond113.not, label %._crit_edge, label %.preheader.preheader, !llvm.loop !90
 }
 
 declare void @_ZN5arrow4util8internal25ByteStreamSplitEncodeAvx2ILi2EEEvPKhilPh(ptr noundef, i32 noundef, i64 noundef, ptr noundef) #3
@@ -758,22 +790,22 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.cb = getelementptr i8, ptr %0, i64 %i.ax     ; 4 uses
   %i.cc = getelementptr i8, ptr %i.cb, i64 60
   %i.cd = getelementptr i8, ptr %3, i64 %i.ah     ; 4 uses
-  %i.ce = load i8, ptr %i.ay, align 1, !tbaa !23, !alias.scope !90
-  %i.cf = load i8, ptr %i.ba, align 1, !tbaa !23, !alias.scope !90
-  %i.cg = load i8, ptr %i.bc, align 1, !tbaa !23, !alias.scope !90
-  %i.ch = load i8, ptr %i.be, align 1, !tbaa !23, !alias.scope !90
-  %i.ci = load i8, ptr %i.bg, align 1, !tbaa !23, !alias.scope !90
-  %i.cj = load i8, ptr %i.bi, align 1, !tbaa !23, !alias.scope !90
-  %i.ck = load i8, ptr %i.bk, align 1, !tbaa !23, !alias.scope !90
-  %i.cl = load i8, ptr %i.bm, align 1, !tbaa !23, !alias.scope !90
-  %i.cm = load i8, ptr %i.bo, align 1, !tbaa !23, !alias.scope !90
-  %i.cn = load i8, ptr %i.bq, align 1, !tbaa !23, !alias.scope !90
-  %i.co = load i8, ptr %i.bs, align 1, !tbaa !23, !alias.scope !90
-  %i.cp = load i8, ptr %i.bu, align 1, !tbaa !23, !alias.scope !90
-  %i.cq = load i8, ptr %i.bw, align 1, !tbaa !23, !alias.scope !90
-  %i.cr = load i8, ptr %i.by, align 1, !tbaa !23, !alias.scope !90
-  %i.cs = load i8, ptr %i.ca, align 1, !tbaa !23, !alias.scope !90
-  %i.ct = load i8, ptr %i.cc, align 1, !tbaa !23, !alias.scope !90
+  %i.ce = load i8, ptr %i.ay, align 1, !tbaa !23, !alias.scope !91
+  %i.cf = load i8, ptr %i.ba, align 1, !tbaa !23, !alias.scope !91
+  %i.cg = load i8, ptr %i.bc, align 1, !tbaa !23, !alias.scope !91
+  %i.ch = load i8, ptr %i.be, align 1, !tbaa !23, !alias.scope !91
+  %i.ci = load i8, ptr %i.bg, align 1, !tbaa !23, !alias.scope !91
+  %i.cj = load i8, ptr %i.bi, align 1, !tbaa !23, !alias.scope !91
+  %i.ck = load i8, ptr %i.bk, align 1, !tbaa !23, !alias.scope !91
+  %i.cl = load i8, ptr %i.bm, align 1, !tbaa !23, !alias.scope !91
+  %i.cm = load i8, ptr %i.bo, align 1, !tbaa !23, !alias.scope !91
+  %i.cn = load i8, ptr %i.bq, align 1, !tbaa !23, !alias.scope !91
+  %i.co = load i8, ptr %i.bs, align 1, !tbaa !23, !alias.scope !91
+  %i.cp = load i8, ptr %i.bu, align 1, !tbaa !23, !alias.scope !91
+  %i.cq = load i8, ptr %i.bw, align 1, !tbaa !23, !alias.scope !91
+  %i.cr = load i8, ptr %i.by, align 1, !tbaa !23, !alias.scope !91
+  %i.cs = load i8, ptr %i.ca, align 1, !tbaa !23, !alias.scope !91
+  %i.ct = load i8, ptr %i.cc, align 1, !tbaa !23, !alias.scope !91
   %i.cu = insertelement <16 x i8> poison, i8 %i.ce, i64 0
   %i.cv = insertelement <16 x i8> %i.cu, i8 %i.cf, i64 1
   %i.cw = insertelement <16 x i8> %i.cv, i8 %i.cg, i64 2
@@ -790,7 +822,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.dh = insertelement <16 x i8> %i.dg, i8 %i.cr, i64 13
   %i.di = insertelement <16 x i8> %i.dh, i8 %i.cs, i64 14
   %i.dj = insertelement <16 x i8> %i.di, i8 %i.ct, i64 15
-  store <16 x i8> %i.dj, ptr %i.cd, align 1, !tbaa !23, !alias.scope !93, !noalias !95
+  store <16 x i8> %i.dj, ptr %i.cd, align 1, !tbaa !23, !alias.scope !94, !noalias !96
   %i.dk = getelementptr i8, ptr %i.ay, i64 1
   %i.dl = getelementptr i8, ptr %i.az, i64 5
   %i.dm = getelementptr i8, ptr %i.bb, i64 9
@@ -807,22 +839,22 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.dx = getelementptr i8, ptr %i.bx, i64 53
   %i.dy = getelementptr i8, ptr %i.bz, i64 57
   %i.dz = getelementptr i8, ptr %i.cb, i64 61
-  %i.ea = load i8, ptr %i.dk, align 1, !tbaa !23, !alias.scope !90
-  %i.eb = load i8, ptr %i.dl, align 1, !tbaa !23, !alias.scope !90
-  %i.ec = load i8, ptr %i.dm, align 1, !tbaa !23, !alias.scope !90
-  %i.ed = load i8, ptr %i.dn, align 1, !tbaa !23, !alias.scope !90
-  %i.ee = load i8, ptr %i.do, align 1, !tbaa !23, !alias.scope !90
-  %i.ef = load i8, ptr %i.dp, align 1, !tbaa !23, !alias.scope !90
-  %i.eg = load i8, ptr %i.dq, align 1, !tbaa !23, !alias.scope !90
-  %i.eh = load i8, ptr %i.dr, align 1, !tbaa !23, !alias.scope !90
-  %i.ei = load i8, ptr %i.ds, align 1, !tbaa !23, !alias.scope !90
-  %i.ej = load i8, ptr %i.dt, align 1, !tbaa !23, !alias.scope !90
-  %i.ek = load i8, ptr %i.du, align 1, !tbaa !23, !alias.scope !90
-  %i.el = load i8, ptr %i.dv, align 1, !tbaa !23, !alias.scope !90
-  %i.em = load i8, ptr %i.dw, align 1, !tbaa !23, !alias.scope !90
-  %i.en = load i8, ptr %i.dx, align 1, !tbaa !23, !alias.scope !90
-  %i.eo = load i8, ptr %i.dy, align 1, !tbaa !23, !alias.scope !90
-  %i.ep = load i8, ptr %i.dz, align 1, !tbaa !23, !alias.scope !90
+  %i.ea = load i8, ptr %i.dk, align 1, !tbaa !23, !alias.scope !91
+  %i.eb = load i8, ptr %i.dl, align 1, !tbaa !23, !alias.scope !91
+  %i.ec = load i8, ptr %i.dm, align 1, !tbaa !23, !alias.scope !91
+  %i.ed = load i8, ptr %i.dn, align 1, !tbaa !23, !alias.scope !91
+  %i.ee = load i8, ptr %i.do, align 1, !tbaa !23, !alias.scope !91
+  %i.ef = load i8, ptr %i.dp, align 1, !tbaa !23, !alias.scope !91
+  %i.eg = load i8, ptr %i.dq, align 1, !tbaa !23, !alias.scope !91
+  %i.eh = load i8, ptr %i.dr, align 1, !tbaa !23, !alias.scope !91
+  %i.ei = load i8, ptr %i.ds, align 1, !tbaa !23, !alias.scope !91
+  %i.ej = load i8, ptr %i.dt, align 1, !tbaa !23, !alias.scope !91
+  %i.ek = load i8, ptr %i.du, align 1, !tbaa !23, !alias.scope !91
+  %i.el = load i8, ptr %i.dv, align 1, !tbaa !23, !alias.scope !91
+  %i.em = load i8, ptr %i.dw, align 1, !tbaa !23, !alias.scope !91
+  %i.en = load i8, ptr %i.dx, align 1, !tbaa !23, !alias.scope !91
+  %i.eo = load i8, ptr %i.dy, align 1, !tbaa !23, !alias.scope !91
+  %i.ep = load i8, ptr %i.dz, align 1, !tbaa !23, !alias.scope !91
   %i.eq = insertelement <16 x i8> poison, i8 %i.ea, i64 0
   %i.er = insertelement <16 x i8> %i.eq, i8 %i.eb, i64 1
   %i.es = insertelement <16 x i8> %i.er, i8 %i.ec, i64 2
@@ -840,7 +872,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.fe = insertelement <16 x i8> %i.fd, i8 %i.eo, i64 14
   %i.ff = insertelement <16 x i8> %i.fe, i8 %i.ep, i64 15
   %i.fg = getelementptr i8, ptr %i.cd, i64 %2
-  store <16 x i8> %i.ff, ptr %i.fg, align 1, !tbaa !23, !alias.scope !99, !noalias !100
+  store <16 x i8> %i.ff, ptr %i.fg, align 1, !tbaa !23, !alias.scope !100, !noalias !101
   %i.fh = getelementptr i8, ptr %i.ay, i64 2
   %i.fi = getelementptr i8, ptr %i.az, i64 6
   %i.fj = getelementptr i8, ptr %i.bb, i64 10
@@ -857,22 +889,22 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.fu = getelementptr i8, ptr %i.bx, i64 54
   %i.fv = getelementptr i8, ptr %i.bz, i64 58
   %i.fw = getelementptr i8, ptr %i.cb, i64 62
-  %i.fx = load i8, ptr %i.fh, align 1, !tbaa !23, !alias.scope !90
-  %i.fy = load i8, ptr %i.fi, align 1, !tbaa !23, !alias.scope !90
-  %i.fz = load i8, ptr %i.fj, align 1, !tbaa !23, !alias.scope !90
-  %i.ga = load i8, ptr %i.fk, align 1, !tbaa !23, !alias.scope !90
-  %i.gb = load i8, ptr %i.fl, align 1, !tbaa !23, !alias.scope !90
-  %i.gc = load i8, ptr %i.fm, align 1, !tbaa !23, !alias.scope !90
-  %i.gd = load i8, ptr %i.fn, align 1, !tbaa !23, !alias.scope !90
-  %i.ge = load i8, ptr %i.fo, align 1, !tbaa !23, !alias.scope !90
-  %i.gf = load i8, ptr %i.fp, align 1, !tbaa !23, !alias.scope !90
-  %i.gg = load i8, ptr %i.fq, align 1, !tbaa !23, !alias.scope !90
-  %i.gh = load i8, ptr %i.fr, align 1, !tbaa !23, !alias.scope !90
-  %i.gi = load i8, ptr %i.fs, align 1, !tbaa !23, !alias.scope !90
-  %i.gj = load i8, ptr %i.ft, align 1, !tbaa !23, !alias.scope !90
-  %i.gk = load i8, ptr %i.fu, align 1, !tbaa !23, !alias.scope !90
-  %i.gl = load i8, ptr %i.fv, align 1, !tbaa !23, !alias.scope !90
-  %i.gm = load i8, ptr %i.fw, align 1, !tbaa !23, !alias.scope !90
+  %i.fx = load i8, ptr %i.fh, align 1, !tbaa !23, !alias.scope !91
+  %i.fy = load i8, ptr %i.fi, align 1, !tbaa !23, !alias.scope !91
+  %i.fz = load i8, ptr %i.fj, align 1, !tbaa !23, !alias.scope !91
+  %i.ga = load i8, ptr %i.fk, align 1, !tbaa !23, !alias.scope !91
+  %i.gb = load i8, ptr %i.fl, align 1, !tbaa !23, !alias.scope !91
+  %i.gc = load i8, ptr %i.fm, align 1, !tbaa !23, !alias.scope !91
+  %i.gd = load i8, ptr %i.fn, align 1, !tbaa !23, !alias.scope !91
+  %i.ge = load i8, ptr %i.fo, align 1, !tbaa !23, !alias.scope !91
+  %i.gf = load i8, ptr %i.fp, align 1, !tbaa !23, !alias.scope !91
+  %i.gg = load i8, ptr %i.fq, align 1, !tbaa !23, !alias.scope !91
+  %i.gh = load i8, ptr %i.fr, align 1, !tbaa !23, !alias.scope !91
+  %i.gi = load i8, ptr %i.fs, align 1, !tbaa !23, !alias.scope !91
+  %i.gj = load i8, ptr %i.ft, align 1, !tbaa !23, !alias.scope !91
+  %i.gk = load i8, ptr %i.fu, align 1, !tbaa !23, !alias.scope !91
+  %i.gl = load i8, ptr %i.fv, align 1, !tbaa !23, !alias.scope !91
+  %i.gm = load i8, ptr %i.fw, align 1, !tbaa !23, !alias.scope !91
   %i.gn = insertelement <16 x i8> poison, i8 %i.fx, i64 0
   %i.go = insertelement <16 x i8> %i.gn, i8 %i.fy, i64 1
   %i.gp = insertelement <16 x i8> %i.go, i8 %i.fz, i64 2
@@ -890,7 +922,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.hb = insertelement <16 x i8> %i.ha, i8 %i.gl, i64 14
   %i.hc = insertelement <16 x i8> %i.hb, i8 %i.gm, i64 15
   %i.hd = getelementptr i8, ptr %i.cd, i64 %i.b
-  store <16 x i8> %i.hc, ptr %i.hd, align 1, !tbaa !23, !alias.scope !101, !noalias !102
+  store <16 x i8> %i.hc, ptr %i.hd, align 1, !tbaa !23, !alias.scope !102, !noalias !103
   %i.he = getelementptr i8, ptr %i.ay, i64 3
   %i.hf = getelementptr i8, ptr %i.az, i64 7
   %i.hg = getelementptr i8, ptr %i.bb, i64 11
@@ -907,22 +939,22 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.hr = getelementptr i8, ptr %i.bx, i64 55
   %i.hs = getelementptr i8, ptr %i.bz, i64 59
   %i.ht = getelementptr i8, ptr %i.cb, i64 63
-  %i.hu = load i8, ptr %i.he, align 1, !tbaa !23, !alias.scope !90
-  %i.hv = load i8, ptr %i.hf, align 1, !tbaa !23, !alias.scope !90
-  %i.hw = load i8, ptr %i.hg, align 1, !tbaa !23, !alias.scope !90
-  %i.hx = load i8, ptr %i.hh, align 1, !tbaa !23, !alias.scope !90
-  %i.hy = load i8, ptr %i.hi, align 1, !tbaa !23, !alias.scope !90
-  %i.hz = load i8, ptr %i.hj, align 1, !tbaa !23, !alias.scope !90
-  %i.ia = load i8, ptr %i.hk, align 1, !tbaa !23, !alias.scope !90
-  %i.ib = load i8, ptr %i.hl, align 1, !tbaa !23, !alias.scope !90
-  %i.ic = load i8, ptr %i.hm, align 1, !tbaa !23, !alias.scope !90
-  %i.id = load i8, ptr %i.hn, align 1, !tbaa !23, !alias.scope !90
-  %i.ie = load i8, ptr %i.ho, align 1, !tbaa !23, !alias.scope !90
-  %i.if = load i8, ptr %i.hp, align 1, !tbaa !23, !alias.scope !90
-  %i.ig = load i8, ptr %i.hq, align 1, !tbaa !23, !alias.scope !90
-  %i.ih = load i8, ptr %i.hr, align 1, !tbaa !23, !alias.scope !90
-  %i.ii = load i8, ptr %i.hs, align 1, !tbaa !23, !alias.scope !90
-  %i.ij = load i8, ptr %i.ht, align 1, !tbaa !23, !alias.scope !90
+  %i.hu = load i8, ptr %i.he, align 1, !tbaa !23, !alias.scope !91
+  %i.hv = load i8, ptr %i.hf, align 1, !tbaa !23, !alias.scope !91
+  %i.hw = load i8, ptr %i.hg, align 1, !tbaa !23, !alias.scope !91
+  %i.hx = load i8, ptr %i.hh, align 1, !tbaa !23, !alias.scope !91
+  %i.hy = load i8, ptr %i.hi, align 1, !tbaa !23, !alias.scope !91
+  %i.hz = load i8, ptr %i.hj, align 1, !tbaa !23, !alias.scope !91
+  %i.ia = load i8, ptr %i.hk, align 1, !tbaa !23, !alias.scope !91
+  %i.ib = load i8, ptr %i.hl, align 1, !tbaa !23, !alias.scope !91
+  %i.ic = load i8, ptr %i.hm, align 1, !tbaa !23, !alias.scope !91
+  %i.id = load i8, ptr %i.hn, align 1, !tbaa !23, !alias.scope !91
+  %i.ie = load i8, ptr %i.ho, align 1, !tbaa !23, !alias.scope !91
+  %i.if = load i8, ptr %i.hp, align 1, !tbaa !23, !alias.scope !91
+  %i.ig = load i8, ptr %i.hq, align 1, !tbaa !23, !alias.scope !91
+  %i.ih = load i8, ptr %i.hr, align 1, !tbaa !23, !alias.scope !91
+  %i.ii = load i8, ptr %i.hs, align 1, !tbaa !23, !alias.scope !91
+  %i.ij = load i8, ptr %i.ht, align 1, !tbaa !23, !alias.scope !91
   %i.ik = insertelement <16 x i8> poison, i8 %i.hu, i64 0
   %i.il = insertelement <16 x i8> %i.ik, i8 %i.hv, i64 1
   %i.im = insertelement <16 x i8> %i.il, i8 %i.hw, i64 2
@@ -940,10 +972,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.iy = insertelement <16 x i8> %i.ix, i8 %i.ii, i64 14
   %i.iz = insertelement <16 x i8> %i.iy, i8 %i.ij, i64 15
   %i.ja = getelementptr i8, ptr %i.cd, i64 %i.d
-  store <16 x i8> %i.iz, ptr %i.ja, align 1, !tbaa !23, !alias.scope !103, !noalias !90
+  store <16 x i8> %i.iz, ptr %i.ja, align 1, !tbaa !23, !alias.scope !104, !noalias !91
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.jb = icmp eq i64 %index.next, %n.vec
-  br i1 %i.jb, label %middle.block, label %vector.body, !llvm.loop !104
+  br i1 %i.jb, label %middle.block, label %vector.body, !llvm.loop !105
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.mod.vf, 0
@@ -951,7 +983,7 @@ middle.block:                                     ; preds = %vector.body
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp samesign ult i64 %n.mod.vf, 8
-  br i1 %min.epilog.iters.check, label %.preheader101.preheader, label %vec.epilog.ph, !prof !105
+  br i1 %min.epilog.iters.check, label %.preheader101.preheader, label %vec.epilog.ph, !prof !87
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -987,14 +1019,14 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.jz = getelementptr i8, ptr %0, i64 %i.jl     ; 4 uses
   %i.ka = getelementptr i8, ptr %i.jz, i64 28
   %i.kb = getelementptr i8, ptr %3, i64 %i.jd     ; 4 uses
-  %i.kc = load i8, ptr %i.jm, align 1, !tbaa !23, !alias.scope !90
-  %i.kd = load i8, ptr %i.jo, align 1, !tbaa !23, !alias.scope !90
-  %i.ke = load i8, ptr %i.jq, align 1, !tbaa !23, !alias.scope !90
-  %i.kf = load i8, ptr %i.js, align 1, !tbaa !23, !alias.scope !90
-  %i.kg = load i8, ptr %i.ju, align 1, !tbaa !23, !alias.scope !90
-  %i.kh = load i8, ptr %i.jw, align 1, !tbaa !23, !alias.scope !90
-  %i.ki = load i8, ptr %i.jy, align 1, !tbaa !23, !alias.scope !90
-  %i.kj = load i8, ptr %i.ka, align 1, !tbaa !23, !alias.scope !90
+  %i.kc = load i8, ptr %i.jm, align 1, !tbaa !23, !alias.scope !91
+  %i.kd = load i8, ptr %i.jo, align 1, !tbaa !23, !alias.scope !91
+  %i.ke = load i8, ptr %i.jq, align 1, !tbaa !23, !alias.scope !91
+  %i.kf = load i8, ptr %i.js, align 1, !tbaa !23, !alias.scope !91
+  %i.kg = load i8, ptr %i.ju, align 1, !tbaa !23, !alias.scope !91
+  %i.kh = load i8, ptr %i.jw, align 1, !tbaa !23, !alias.scope !91
+  %i.ki = load i8, ptr %i.jy, align 1, !tbaa !23, !alias.scope !91
+  %i.kj = load i8, ptr %i.ka, align 1, !tbaa !23, !alias.scope !91
   %i.kk = insertelement <8 x i8> poison, i8 %i.kc, i64 0
   %i.kl = insertelement <8 x i8> %i.kk, i8 %i.kd, i64 1
   %i.km = insertelement <8 x i8> %i.kl, i8 %i.ke, i64 2
@@ -1003,7 +1035,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.kp = insertelement <8 x i8> %i.ko, i8 %i.kh, i64 5
   %i.kq = insertelement <8 x i8> %i.kp, i8 %i.ki, i64 6
   %i.kr = insertelement <8 x i8> %i.kq, i8 %i.kj, i64 7
-  store <8 x i8> %i.kr, ptr %i.kb, align 1, !tbaa !23, !alias.scope !93, !noalias !95
+  store <8 x i8> %i.kr, ptr %i.kb, align 1, !tbaa !23, !alias.scope !94, !noalias !96
   %i.ks = getelementptr i8, ptr %i.jm, i64 1
   %i.kt = getelementptr i8, ptr %i.jn, i64 5
   %i.ku = getelementptr i8, ptr %i.jp, i64 9
@@ -1012,14 +1044,14 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.kx = getelementptr i8, ptr %i.jv, i64 21
   %i.ky = getelementptr i8, ptr %i.jx, i64 25
   %i.kz = getelementptr i8, ptr %i.jz, i64 29
-  %i.la = load i8, ptr %i.ks, align 1, !tbaa !23, !alias.scope !90
-  %i.lb = load i8, ptr %i.kt, align 1, !tbaa !23, !alias.scope !90
-  %i.lc = load i8, ptr %i.ku, align 1, !tbaa !23, !alias.scope !90
-  %i.ld = load i8, ptr %i.kv, align 1, !tbaa !23, !alias.scope !90
-  %i.le = load i8, ptr %i.kw, align 1, !tbaa !23, !alias.scope !90
-  %i.lf = load i8, ptr %i.kx, align 1, !tbaa !23, !alias.scope !90
-  %i.lg = load i8, ptr %i.ky, align 1, !tbaa !23, !alias.scope !90
-  %i.lh = load i8, ptr %i.kz, align 1, !tbaa !23, !alias.scope !90
+  %i.la = load i8, ptr %i.ks, align 1, !tbaa !23, !alias.scope !91
+  %i.lb = load i8, ptr %i.kt, align 1, !tbaa !23, !alias.scope !91
+  %i.lc = load i8, ptr %i.ku, align 1, !tbaa !23, !alias.scope !91
+  %i.ld = load i8, ptr %i.kv, align 1, !tbaa !23, !alias.scope !91
+  %i.le = load i8, ptr %i.kw, align 1, !tbaa !23, !alias.scope !91
+  %i.lf = load i8, ptr %i.kx, align 1, !tbaa !23, !alias.scope !91
+  %i.lg = load i8, ptr %i.ky, align 1, !tbaa !23, !alias.scope !91
+  %i.lh = load i8, ptr %i.kz, align 1, !tbaa !23, !alias.scope !91
   %i.li = insertelement <8 x i8> poison, i8 %i.la, i64 0
   %i.lj = insertelement <8 x i8> %i.li, i8 %i.lb, i64 1
   %i.lk = insertelement <8 x i8> %i.lj, i8 %i.lc, i64 2
@@ -1029,7 +1061,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.lo = insertelement <8 x i8> %i.ln, i8 %i.lg, i64 6
   %i.lp = insertelement <8 x i8> %i.lo, i8 %i.lh, i64 7
   %i.lq = getelementptr i8, ptr %i.kb, i64 %2
-  store <8 x i8> %i.lp, ptr %i.lq, align 1, !tbaa !23, !alias.scope !99, !noalias !100
+  store <8 x i8> %i.lp, ptr %i.lq, align 1, !tbaa !23, !alias.scope !100, !noalias !101
   %i.lr = getelementptr i8, ptr %i.jm, i64 2
   %i.ls = getelementptr i8, ptr %i.jn, i64 6
   %i.lt = getelementptr i8, ptr %i.jp, i64 10
@@ -1038,14 +1070,14 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.lw = getelementptr i8, ptr %i.jv, i64 22
   %i.lx = getelementptr i8, ptr %i.jx, i64 26
   %i.ly = getelementptr i8, ptr %i.jz, i64 30
-  %i.lz = load i8, ptr %i.lr, align 1, !tbaa !23, !alias.scope !90
-  %i.ma = load i8, ptr %i.ls, align 1, !tbaa !23, !alias.scope !90
-  %i.mb = load i8, ptr %i.lt, align 1, !tbaa !23, !alias.scope !90
-  %i.mc = load i8, ptr %i.lu, align 1, !tbaa !23, !alias.scope !90
-  %i.md = load i8, ptr %i.lv, align 1, !tbaa !23, !alias.scope !90
-  %i.me = load i8, ptr %i.lw, align 1, !tbaa !23, !alias.scope !90
-  %i.mf = load i8, ptr %i.lx, align 1, !tbaa !23, !alias.scope !90
-  %i.mg = load i8, ptr %i.ly, align 1, !tbaa !23, !alias.scope !90
+  %i.lz = load i8, ptr %i.lr, align 1, !tbaa !23, !alias.scope !91
+  %i.ma = load i8, ptr %i.ls, align 1, !tbaa !23, !alias.scope !91
+  %i.mb = load i8, ptr %i.lt, align 1, !tbaa !23, !alias.scope !91
+  %i.mc = load i8, ptr %i.lu, align 1, !tbaa !23, !alias.scope !91
+  %i.md = load i8, ptr %i.lv, align 1, !tbaa !23, !alias.scope !91
+  %i.me = load i8, ptr %i.lw, align 1, !tbaa !23, !alias.scope !91
+  %i.mf = load i8, ptr %i.lx, align 1, !tbaa !23, !alias.scope !91
+  %i.mg = load i8, ptr %i.ly, align 1, !tbaa !23, !alias.scope !91
   %i.mh = insertelement <8 x i8> poison, i8 %i.lz, i64 0
   %i.mi = insertelement <8 x i8> %i.mh, i8 %i.ma, i64 1
   %i.mj = insertelement <8 x i8> %i.mi, i8 %i.mb, i64 2
@@ -1055,7 +1087,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.mn = insertelement <8 x i8> %i.mm, i8 %i.mf, i64 6
   %i.mo = insertelement <8 x i8> %i.mn, i8 %i.mg, i64 7
   %i.mp = getelementptr i8, ptr %i.kb, i64 %i.b
-  store <8 x i8> %i.mo, ptr %i.mp, align 1, !tbaa !23, !alias.scope !101, !noalias !102
+  store <8 x i8> %i.mo, ptr %i.mp, align 1, !tbaa !23, !alias.scope !102, !noalias !103
   %i.mq = getelementptr i8, ptr %i.jm, i64 3
   %i.mr = getelementptr i8, ptr %i.jn, i64 7
   %i.ms = getelementptr i8, ptr %i.jp, i64 11
@@ -1064,14 +1096,14 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.mv = getelementptr i8, ptr %i.jv, i64 23
   %i.mw = getelementptr i8, ptr %i.jx, i64 27
   %i.mx = getelementptr i8, ptr %i.jz, i64 31
-  %i.my = load i8, ptr %i.mq, align 1, !tbaa !23, !alias.scope !90
-  %i.mz = load i8, ptr %i.mr, align 1, !tbaa !23, !alias.scope !90
-  %i.na = load i8, ptr %i.ms, align 1, !tbaa !23, !alias.scope !90
-  %i.nb = load i8, ptr %i.mt, align 1, !tbaa !23, !alias.scope !90
-  %i.nc = load i8, ptr %i.mu, align 1, !tbaa !23, !alias.scope !90
-  %i.nd = load i8, ptr %i.mv, align 1, !tbaa !23, !alias.scope !90
-  %i.ne = load i8, ptr %i.mw, align 1, !tbaa !23, !alias.scope !90
-  %i.nf = load i8, ptr %i.mx, align 1, !tbaa !23, !alias.scope !90
+  %i.my = load i8, ptr %i.mq, align 1, !tbaa !23, !alias.scope !91
+  %i.mz = load i8, ptr %i.mr, align 1, !tbaa !23, !alias.scope !91
+  %i.na = load i8, ptr %i.ms, align 1, !tbaa !23, !alias.scope !91
+  %i.nb = load i8, ptr %i.mt, align 1, !tbaa !23, !alias.scope !91
+  %i.nc = load i8, ptr %i.mu, align 1, !tbaa !23, !alias.scope !91
+  %i.nd = load i8, ptr %i.mv, align 1, !tbaa !23, !alias.scope !91
+  %i.ne = load i8, ptr %i.mw, align 1, !tbaa !23, !alias.scope !91
+  %i.nf = load i8, ptr %i.mx, align 1, !tbaa !23, !alias.scope !91
   %i.ng = insertelement <8 x i8> poison, i8 %i.my, i64 0
   %i.nh = insertelement <8 x i8> %i.ng, i8 %i.mz, i64 1
   %i.ni = insertelement <8 x i8> %i.nh, i8 %i.na, i64 2
@@ -1081,7 +1113,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.nm = insertelement <8 x i8> %i.nl, i8 %i.ne, i64 6
   %i.nn = insertelement <8 x i8> %i.nm, i8 %i.nf, i64 7
   %i.no = getelementptr i8, ptr %i.kb, i64 %i.d
-  store <8 x i8> %i.nn, ptr %i.no, align 1, !tbaa !23, !alias.scope !103, !noalias !90
+  store <8 x i8> %i.nn, ptr %i.no, align 1, !tbaa !23, !alias.scope !104, !noalias !91
   %index.next192 = add nuw i64 %index191, 8       ; 2 uses
   %i.np = icmp eq i64 %index.next192, %n.vec190
   br i1 %i.np, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !106
@@ -1484,7 +1516,7 @@ middle.block:                                     ; preds = %vector.body
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp samesign ult i64 %n.mod.vf, 8
-  br i1 %min.epilog.iters.check, label %.preheader101.preheader, label %vec.epilog.ph, !prof !105
+  br i1 %min.epilog.iters.check, label %.preheader101.preheader, label %vec.epilog.ph, !prof !87
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -1887,25 +1919,25 @@ attributes #7 = { nounwind }
 !84 = distinct !{!84, !80}
 !85 = !{!84}
 !86 = distinct !{!86, !33, !34, !35}
-!87 = distinct !{!87, !33, !34, !35}
-!88 = distinct !{!88, !33, !34}
-!89 = distinct !{!89, !33}
-!90 = !{!91}
-!91 = distinct !{!91, !92}
-!92 = distinct !{!92, !"LVerDomain"}
-!93 = !{!94}
-!94 = distinct !{!94, !92}
-!95 = !{!96, !97, !98, !91}
-!96 = distinct !{!96, !92}
-!97 = distinct !{!97, !92}
-!98 = distinct !{!98, !92}
-!99 = !{!96}
-!100 = !{!97, !98, !91}
-!101 = !{!97}
-!102 = !{!98, !91}
-!103 = !{!98}
-!104 = distinct !{!104, !33, !34, !35}
-!105 = !{!"branch_weights", i32 8, i32 8}
+!87 = !{!"branch_weights", i32 8, i32 8}
+!88 = distinct !{!88, !33, !34, !35}
+!89 = distinct !{!89, !33, !34}
+!90 = distinct !{!90, !33}
+!91 = !{!92}
+!92 = distinct !{!92, !93}
+!93 = distinct !{!93, !"LVerDomain"}
+!94 = !{!95}
+!95 = distinct !{!95, !93}
+!96 = !{!97, !98, !99, !92}
+!97 = distinct !{!97, !93}
+!98 = distinct !{!98, !93}
+!99 = distinct !{!99, !93}
+!100 = !{!97}
+!101 = !{!98, !99, !92}
+!102 = !{!98}
+!103 = !{!99, !92}
+!104 = !{!99}
+!105 = distinct !{!105, !33, !34, !35}
 !106 = distinct !{!106, !33, !34, !35}
 !107 = distinct !{!107, !33, !34}
 !108 = distinct !{!108, !33}

@@ -201,53 +201,65 @@ bb.a:
   br i1 %i.e, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.f = sub nuw i64 %5, %i.d                     ; 3 uses
-  %min.iters.check = icmp ult i64 %i.f, 4
-  br i1 %min.iters.check, label %.lr.ph.preheader81, label %vector.ph
+  %i.f = sub nuw i64 %5, %i.d                     ; 2 uses
+  %xtraiter = and i64 %i.f, 3                     ; 3 uses
+  %8 = sub i64 %i.d, %5
+  %9 = icmp ugt i64 %8, -4
+  br i1 %9, label %.lr.ph.preheader81, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %i.f, -4                       ; 3 uses
-  %8 = add i64 %i.d, %n.vec
-  %9 = getelementptr [8 x i8], ptr %1, i64 %i.d
+  %n.vec = and i64 %i.f, -4
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.phi = phi <2 x i64> [ zeroinitializer, %vector.ph ], [ %10, %vector.body ]
-  %vec.phi79 = phi <2 x i64> [ zeroinitializer, %vector.ph ], [ %11, %vector.body ]
-  %i.g = getelementptr [8 x i8], ptr %9, i64 %index ; 2 uses
+  %.04556 = phi i64 [ 0, %vector.ph ], [ %..045.3, %vector.body ]
+  %.04655 = phi i64 [ %i.d, %vector.ph ], [ %19, %vector.body ] ; 5 uses
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ]
+  %10 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.04655
+  %11 = load i64, ptr %10, align 8, !tbaa !7
+  %..045 = tail call i64 @llvm.umax.i64(i64 %11, i64 %.04556)
+  %12 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.04655
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 8
+  %14 = load i64, ptr %13, align 8, !tbaa !7
+  %..045.1 = tail call i64 @llvm.umax.i64(i64 %14, i64 %..045)
+  %i.g = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.04655
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 16
-  %wide.load = load <2 x i64>, ptr %i.g, align 8, !tbaa !7
-  %wide.load80 = load <2 x i64>, ptr %i.h, align 8, !tbaa !7
-  %10 = tail call <2 x i64> @llvm.umax.v2i64(<2 x i64> %wide.load, <2 x i64> %vec.phi) ; 2 uses
-  %11 = tail call <2 x i64> @llvm.umax.v2i64(<2 x i64> %wide.load80, <2 x i64> %vec.phi79) ; 2 uses
-  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %15 = load i64, ptr %i.h, align 8, !tbaa !7
+  %..045.2 = tail call i64 @llvm.umax.i64(i64 %15, i64 %..045.1)
+  %16 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.04655
+  %17 = getelementptr inbounds nuw i8, ptr %16, i64 24
+  %18 = load i64, ptr %17, align 8, !tbaa !7
+  %..045.3 = tail call i64 @llvm.umax.i64(i64 %18, i64 %..045.2) ; 3 uses
+  %19 = add nuw i64 %.04655, 4                    ; 2 uses
+  %index.next = add i64 %index, 4                 ; 2 uses
   %i.i = icmp eq i64 %index.next, %n.vec
   br i1 %i.i, label %middle.block, label %vector.body, !llvm.loop !73
 
 middle.block:                                     ; preds = %vector.body
-  %rdx.minmax = tail call <2 x i64> @llvm.umax.v2i64(<2 x i64> %10, <2 x i64> %11)
-  %12 = tail call i64 @llvm.vector.reduce.umax.v2i64(<2 x i64> %rdx.minmax) ; 2 uses
-  %cmp.n = icmp eq i64 %i.f, %n.vec
+  %cmp.n = icmp eq i64 %xtraiter, 0
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader81
 
-.lr.ph.preheader81:                               ; preds = %.lr.ph.preheader, %middle.block
-  %.04556.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %12, %middle.block ]
-  %.04655.ph = phi i64 [ %i.d, %.lr.ph.preheader ], [ %8, %middle.block ]
+.lr.ph.preheader81:                               ; preds = %middle.block, %.lr.ph.preheader
+  %.04556.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %..045.3, %middle.block ]
+  %.04655.ph = phi i64 [ %i.d, %.lr.ph.preheader ], [ %19, %middle.block ]
+  %lcmp.mod80 = icmp ne i64 %xtraiter, 0
+  tail call void @llvm.assume(i1 %lcmp.mod80)
   br label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader81, %.lr.ph
-  %.04556.a = phi i64 [ %..045.a, %.lr.ph ], [ %.04556.ph, %.lr.ph.preheader81 ]
-  %.04655.a = phi i64 [ %i.l, %.lr.ph ], [ %.04655.ph, %.lr.ph.preheader81 ] ; 2 uses
-  %i.j = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.04655.a
+.lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader81
+  %.04556.epil = phi i64 [ %..045.a, %.lr.ph ], [ %.04556.ph, %.lr.ph.preheader81 ]
+  %.04556.a = phi i64 [ %20, %.lr.ph ], [ %.04655.ph, %.lr.ph.preheader81 ] ; 2 uses
+  %.04655.a = phi i64 [ %i.l, %.lr.ph ], [ 0, %.lr.ph.preheader81 ]
+  %i.j = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.04556.a
   %i.k = load i64, ptr %i.j, align 8, !tbaa !7
-  %..045.a = tail call i64 @llvm.umax.i64(i64 %i.k, i64 %.04556.a) ; 2 uses
-  %i.l = add nuw i64 %.04655.a, 1                 ; 2 uses
-  %exitcond.not = icmp eq i64 %i.l, %5
+  %..045.a = tail call i64 @llvm.umax.i64(i64 %i.k, i64 %.04556.epil) ; 2 uses
+  %20 = add nuw i64 %.04556.a, 1
+  %i.l = add i64 %.04655.a, 1                     ; 2 uses
+  %exitcond.not = icmp eq i64 %i.l, %xtraiter
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !74
 
-._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.a
-  %.045.lcssa = phi i64 [ 0, %bb.a ], [ %12, %middle.block ], [ %..045.a, %.lr.ph ]
+._crit_edge:                                      ; preds = %middle.block, %.lr.ph, %bb.a
+  %.045.lcssa = phi i64 [ 0, %bb.a ], [ %..045.3, %middle.block ], [ %..045.a, %.lr.ph ]
   %i.m = tail call noundef i64 @_ZN11duckdb_zstd18ZSTD_compressBoundEm(i64 noundef %.045.lcssa) ; 2 uses
   %i.n = tail call noalias ptr @malloc(i64 noundef %i.m) #25 ; 3 uses
   %i.o = tail call noundef ptr @_ZN11duckdb_zstd15ZSTD_createCCtxEv() ; 3 uses
@@ -650,12 +662,6 @@ declare void @llvm.assume(i1 noundef) #21
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #19
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x i64> @llvm.umax.v2i64(<2 x i64>, <2 x i64>) #19
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.vector.reduce.umax.v2i64(<2 x i64>) #19
-
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { mustprogress nofree nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -761,8 +767,8 @@ attributes #26 = { nounwind willreturn memory(read) }
 !70 = distinct !{!70, !10}
 !71 = !{!18, !4, i64 4}
 !72 = distinct !{!72, !10}
-!73 = distinct !{!73, !10, !11, !12}
-!74 = distinct !{!74, !10, !12, !11}
+!73 = distinct !{!73, !10}
+!74 = distinct !{!74, !51}
 !75 = !{!18, !4, i64 32}
 !76 = distinct !{!76, !10}
 !77 = !{!78, !8, i64 80}

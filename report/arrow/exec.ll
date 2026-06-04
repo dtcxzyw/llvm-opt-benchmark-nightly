@@ -201,7 +201,7 @@ bb.a:
   %25 = alloca %"class.arrow::Status", align 8    ; 4 uses
   %26 = alloca %"class.arrow::Status", align 8    ; 6 uses
   %27 = alloca %"struct.arrow::Datum", align 8    ; 6 uses
-  %i.c = load ptr, ptr %2, align 8, !tbaa !75     ; 41 uses
+  %i.c = load ptr, ptr %2, align 8, !tbaa !75     ; 45 uses
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !75   ; 3 uses
   %i.f = icmp eq ptr %i.c, %i.e
@@ -214,7 +214,7 @@ iter.check:                                       ; preds = %bb.a
   %i.j = sub i64 %i.i, %i.h                       ; 3 uses
   %i.k = udiv i64 %i.j, 24
   %i.l = add nuw nsw i64 %i.k, 1                  ; 5 uses
-  %min.iters.check = icmp ult i64 %i.j, 72
+  %min.iters.check = icmp ult i64 %i.j, 168
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
@@ -222,7 +222,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check286, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %n.mod.vf = and i64 %i.l, 28
+  %n.mod.vf = and i64 %i.l, 24
   %n.vec = and i64 %i.l, 2305843009213693920      ; 4 uses
   %i.m = mul i64 %n.vec, 24
   %i.n = getelementptr i8, ptr %i.c, i64 %i.m
@@ -384,43 +384,59 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i1 [ %i.es, %vec.epilog.iter.check ], [ false, %vector.main.loop.iter.check ]
-  %n.vec320 = and i64 %i.l, 2305843009213693948   ; 3 uses
+  %n.vec320 = and i64 %i.l, 2305843009213693944   ; 3 uses
   %i.et = mul i64 %n.vec320, 24
   %i.eu = getelementptr i8, ptr %i.c, i64 %i.et
-  %broadcast.splatinsert = insertelement <4 x i1> poison, i1 %bc.merge.rdx, i64 0
-  %broadcast.splat = shufflevector <4 x i1> %broadcast.splatinsert, <4 x i1> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert = insertelement <8 x i1> poison, i1 %bc.merge.rdx, i64 0
+  %broadcast.splat = shufflevector <8 x i1> %broadcast.splatinsert, <8 x i1> poison, <8 x i32> zeroinitializer
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index321 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next327, %vec.epilog.vector.body ] ; 2 uses
-  %vec.phi322 = phi <4 x i1> [ %broadcast.splat, %vec.epilog.ph ], [ %33, %vec.epilog.vector.body ]
-  %i.ev = mul i64 %index321, 24                   ; 4 uses
-  %next.gep323.a = getelementptr i8, ptr %i.c, i64 %i.ev
-  %i.ew = getelementptr i8, ptr %i.c, i64 %i.ev
-  %i.ex = getelementptr i8, ptr %i.c, i64 %i.ev
-  %i.ey = getelementptr i8, ptr %i.c, i64 %i.ev
-  %i.ez = getelementptr inbounds nuw i8, ptr %next.gep323.a, i64 16
-  %i.fa = getelementptr i8, ptr %i.ew, i64 40
-  %i.fb = getelementptr i8, ptr %i.ex, i64 64
-  %i.fc = getelementptr i8, ptr %i.ey, i64 88
+  %vec.phi322 = phi <8 x i1> [ %broadcast.splat, %vec.epilog.ph ], [ %48, %vec.epilog.vector.body ]
+  %i.ev = mul i64 %index321, 24                   ; 8 uses
+  %next.gep323 = getelementptr i8, ptr %i.c, i64 %i.ev
+  %28 = getelementptr i8, ptr %i.c, i64 %i.ev
+  %29 = getelementptr i8, ptr %i.c, i64 %i.ev
+  %30 = getelementptr i8, ptr %i.c, i64 %i.ev
+  %31 = getelementptr i8, ptr %i.c, i64 %i.ev
+  %32 = getelementptr i8, ptr %i.c, i64 %i.ev
+  %33 = getelementptr i8, ptr %i.c, i64 %i.ev
+  %34 = getelementptr i8, ptr %i.c, i64 %i.ev
+  %next.gep323.a = getelementptr inbounds nuw i8, ptr %next.gep323, i64 16
+  %i.ew = getelementptr i8, ptr %28, i64 40
+  %i.ex = getelementptr i8, ptr %29, i64 64
+  %i.ey = getelementptr i8, ptr %30, i64 88
+  %i.ez = getelementptr i8, ptr %31, i64 112
+  %i.fa = getelementptr i8, ptr %32, i64 136
+  %i.fb = getelementptr i8, ptr %33, i64 160
+  %i.fc = getelementptr i8, ptr %34, i64 184
+  %35 = load i8, ptr %next.gep323.a, align 8, !tbaa !76
+  %36 = load i8, ptr %i.ew, align 8, !tbaa !76
+  %37 = load i8, ptr %i.ex, align 8, !tbaa !76
+  %38 = load i8, ptr %i.ey, align 8, !tbaa !76
   %i.fd = load i8, ptr %i.ez, align 8, !tbaa !76
   %i.fe = load i8, ptr %i.fa, align 8, !tbaa !76
   %i.ff = load i8, ptr %i.fb, align 8, !tbaa !76
   %i.fg = load i8, ptr %i.fc, align 8, !tbaa !76
-  %28 = insertelement <4 x i8> poison, i8 %i.fd, i64 0
-  %29 = insertelement <4 x i8> %28, i8 %i.fe, i64 1
-  %30 = insertelement <4 x i8> %29, i8 %i.ff, i64 2
-  %31 = insertelement <4 x i8> %30, i8 %i.fg, i64 3
-  %.fr332 = freeze <4 x i8> %31
-  %32 = icmp eq <4 x i8> %.fr332, splat (i8 3)
-  %33 = or <4 x i1> %vec.phi322, %32              ; 2 uses
-  %index.next327 = add nuw i64 %index321, 4       ; 2 uses
+  %39 = insertelement <8 x i8> poison, i8 %35, i64 0
+  %40 = insertelement <8 x i8> %39, i8 %36, i64 1
+  %41 = insertelement <8 x i8> %40, i8 %37, i64 2
+  %42 = insertelement <8 x i8> %41, i8 %38, i64 3
+  %43 = insertelement <8 x i8> %42, i8 %i.fd, i64 4
+  %44 = insertelement <8 x i8> %43, i8 %i.fe, i64 5
+  %45 = insertelement <8 x i8> %44, i8 %i.ff, i64 6
+  %46 = insertelement <8 x i8> %45, i8 %i.fg, i64 7
+  %.fr336 = freeze <8 x i8> %46
+  %47 = icmp eq <8 x i8> %.fr336, splat (i8 3)
+  %48 = or <8 x i1> %vec.phi322, %47              ; 2 uses
+  %index.next327 = add nuw i64 %index321, 8       ; 2 uses
   %i.fh = icmp eq i64 %index.next327, %n.vec320
   br i1 %i.fh, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !888
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %34 = bitcast <4 x i1> %33 to i4
-  %i.fi = icmp ne i4 %34, 0                       ; 2 uses
+  %49 = bitcast <8 x i1> %48 to i8
+  %i.fi = icmp ne i8 %49, 0                       ; 2 uses
   %cmp.n328 = icmp eq i64 %i.l, %n.vec320
   br i1 %cmp.n328, label %._crit_edge, label %.lr.ph.preheader
 
@@ -823,7 +839,7 @@ begin_hunk_1_@llvm.umax.i64
 !884 = distinct !{!884, !885, !"_ZN5arrow6Status2OKEv: argument 0"}
 !885 = distinct !{!885, !"_ZN5arrow6Status2OKEv"}
 !886 = distinct !{!886, !510, !511}
-!887 = !{!"branch_weights", i32 4, i32 28}
+!887 = !{!"branch_weights", i32 8, i32 24}
 !888 = distinct !{!888, !510, !511}
 !889 = !{!875, !215, i64 24}
 !890 = !{!875, !4, i64 48}
