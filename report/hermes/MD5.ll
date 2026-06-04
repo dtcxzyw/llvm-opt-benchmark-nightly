@@ -201,7 +201,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden void @_ZN4llvh3MD56updateENS_8ArrayRefIhEE(ptr noundef nonnull align 4 captures(none) dereferenceable(152) %0, ptr captures(none) %1, i64 %2) local_unnamed_addr #3 align 2 {
+define hidden void @_ZN4llvh3MD56updateENS_8ArrayRefIhEE(ptr noundef nonnull align 4 captures(none) dereferenceable(152) %0, ptr readonly captures(none) %1, i64 %2) local_unnamed_addr #3 align 2 {
 ._crit_edge:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !15   ; 3 uses
@@ -269,7 +269,7 @@ bb.g:                                             ; preds = %bb.f, %bb.b
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden void @_ZN4llvh3MD56updateENS_9StringRefE(ptr noundef nonnull align 4 captures(none) dereferenceable(152) %0, ptr captures(none) %1, i64 %2) local_unnamed_addr #3 align 2 {
+define hidden void @_ZN4llvh3MD56updateENS_9StringRefE(ptr noundef nonnull align 4 captures(none) dereferenceable(152) %0, ptr readonly captures(none) %1, i64 %2) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !15   ; 3 uses
@@ -299,11 +299,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.q, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.s, ptr align 1 %1, i64 %2, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.s, ptr readonly align 1 %1, i64 %2, i1 false)
   br label %_ZN4llvh3MD56updateENS_8ArrayRefIhEE.exit
 
 bb.d:                                             ; preds = %bb.b
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.s, ptr noundef nonnull align 1 dereferenceable(1) %1, i64 %i.p, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.s, ptr noundef nonnull readonly align 1 dereferenceable(1) %1, i64 %i.p, i1 false)
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 %i.p
   %i.u = sub nuw i64 %2, %i.p
   %i.v = tail call noundef ptr @_ZN4llvh3MD54bodyENS_8ArrayRefIhEE(ptr noundef nonnull align 4 dereferenceable(152) %0, ptr nonnull %i.r, i64 64) ; 0 uses
@@ -587,7 +587,7 @@ _ZN4llvh11SmallVectorIcLj32EED2Ev.exit:           ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden { i64, i64 } @_ZN4llvh3MD54hashENS_8ArrayRefIhEE(ptr captures(none) %0, i64 %1) local_unnamed_addr #3 align 2 {
+define hidden { i64, i64 } @_ZN4llvh3MD54hashENS_8ArrayRefIhEE(ptr readonly captures(none) %0, i64 %1) local_unnamed_addr #3 align 2 {
 bb.a:
   %2 = alloca %"class.llvh::MD5", align 16        ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #12

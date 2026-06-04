@@ -201,7 +201,7 @@ pm_parser_scope_forwarding_param_check.exit.i:    ; preds = %bb.m
 
 bb.n:                                             ; preds = %bb.j
   %i.al = call fastcc ptr @parse_expression(ptr noundef nonnull %0, i32 noundef 14, i1 noundef zeroext false, i1 noundef zeroext false, i32 noundef 28, i16 noundef zeroext %i.n), !inline_history !297 ; 3 uses
-  %i.am = call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef %i.al) ; 3 uses
+  %i.am = call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef readonly %i.al) ; 3 uses
   %.not.i2979 = icmp eq ptr %i.am, null
   br i1 %.not.i2979, label %pm_parser_scope_forwarding_positionals_check.exit, label %bb.o
 
@@ -308,7 +308,7 @@ bb.v:                                             ; preds = %pm_keyword_hash_nod
 
 bb.w:                                             ; preds = %bb.i
   %i.bg = call fastcc ptr @parse_expression(ptr noundef nonnull %0, i32 noundef 14, i1 noundef zeroext false, i1 noundef zeroext true, i32 noundef 27, i16 noundef zeroext %i.n), !inline_history !297 ; 6 uses
-  %i.bh = call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef %i.bg) ; 3 uses
+  %i.bh = call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef readonly %i.bg) ; 3 uses
   %.not.i2981 = icmp eq ptr %i.bh, null
   br i1 %.not.i2981, label %pm_assert_value_expression.exit2984, label %bb.x
 
@@ -711,7 +711,7 @@ bb.ho:                                            ; preds = %bb.hn
   %.sroa.33231.0.copyload = load ptr, ptr %.sroa.33234.0..sroa_idx, align 8, !tbaa !14 ; 2 uses
   %.sroa.43232.0.copyload = load ptr, ptr %.sroa.43235.0..sroa_idx, align 8, !tbaa !14 ; 2 uses
   %i.vo = call fastcc ptr @parse_expression(ptr noundef nonnull %0, i32 noundef 14, i1 noundef zeroext false, i1 noundef zeroext false, i32 noundef 101, i16 noundef zeroext %i.uz), !inline_history !297 ; 5 uses
-  %i.vp = call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef %i.vo) ; 3 uses
+  %i.vp = call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef readonly %i.vo) ; 3 uses
   %.not.i2985 = icmp eq ptr %i.vp, null
   br i1 %.not.i2985, label %pm_assert_value_expression.exit2988, label %bb.hp
 
@@ -769,7 +769,7 @@ pm_splat_node_create.exit2447.cont:               ; preds = %pm_splat_node_creat
 
 accept1.exit2433:                                 ; preds = %bb.hn
   %i.wa = call fastcc ptr @parse_expression(ptr noundef nonnull %0, i32 noundef 14, i1 noundef zeroext false, i1 noundef zeroext false, i32 noundef 43, i16 noundef zeroext %i.uz), !inline_history !297 ; 7 uses
-  %i.wb = call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef %i.wa) ; 3 uses
+  %i.wb = call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef readonly %i.wa) ; 3 uses
   %.not.i2989 = icmp eq ptr %i.wb, null
   br i1 %.not.i2989, label %pm_assert_value_expression.exit2992, label %bb.hr
 
@@ -994,7 +994,7 @@ bb.ii:                                            ; preds = %bb.ih
   %.sroa.33224.0.copyload = load ptr, ptr %.sroa.33227.0..sroa_idx, align 8, !tbaa !14
   %.sroa.43225.0.copyload = load ptr, ptr %.sroa.43228.0..sroa_idx, align 8, !tbaa !14
   %i.yg = call fastcc ptr @parse_expression(ptr noundef nonnull %0, i32 noundef 8, i1 noundef zeroext true, i1 noundef zeroext false, i32 noundef 54, i16 noundef zeroext %i.xz), !inline_history !297 ; 2 uses
-  %i.yh = call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef %i.yg) ; 3 uses
+  %i.yh = call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef readonly %i.yg) ; 3 uses
   %.not.i2993 = icmp eq ptr %i.yh, null
   br i1 %.not.i2993, label %pm_assert_value_expression.exit2996, label %bb.ij
 
@@ -1015,7 +1015,7 @@ bb.ik:                                            ; preds = %bb.ih
   %.sroa.33221.0.copyload = load ptr, ptr %.sroa.33227.0..sroa_idx, align 8, !tbaa !14
   %.sroa.43222.0.copyload = load ptr, ptr %.sroa.43228.0..sroa_idx, align 8, !tbaa !14
   %i.ym = call fastcc ptr @parse_expression(ptr noundef nonnull %0, i32 noundef 8, i1 noundef zeroext true, i1 noundef zeroext false, i32 noundef 58, i16 noundef zeroext %i.xz), !inline_history !297 ; 2 uses
-  %i.yn = call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef %i.ym) ; 3 uses
+  %i.yn = call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef readonly %i.ym) ; 3 uses
   %.not.i2997 = icmp eq ptr %i.yn, null
   br i1 %.not.i2997, label %pm_assert_value_expression.exit3000, label %bb.il
 
@@ -1418,7 +1418,7 @@ bb.cd:                                            ; preds = %bb.a, %bb.a
   %i.lv = icmp eq i32 %i.lu, 74
   %narrow934 = add nuw nsw i16 %5, 1
   %i.lw = tail call fastcc ptr @parse_expression(ptr noundef nonnull %0, i32 noundef %3, i1 noundef zeroext %i.lv, i1 noundef zeroext false, i32 noundef 96, i16 noundef zeroext %narrow934) ; 2 uses
-  %i.lx = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef %1) ; 3 uses
+  %i.lx = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef readonly %1) ; 3 uses
   %.not.i.i = icmp eq ptr %i.lx, null
   br i1 %.not.i.i, label %pm_assert_value_expression.exit.i, label %bb.ce
 
@@ -1474,7 +1474,7 @@ bb.cg:                                            ; preds = %bb.a, %bb.a
   %i.mq = icmp eq i32 %i.mp, 92
   %narrow933 = add nuw nsw i16 %5, 1
   %i.mr = tail call fastcc ptr @parse_expression(ptr noundef nonnull %0, i32 noundef %3, i1 noundef zeroext %i.mq, i1 noundef zeroext false, i32 noundef 96, i16 noundef zeroext %narrow933) ; 2 uses
-  %i.ms = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef %1) ; 3 uses
+  %i.ms = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef readonly %1) ; 3 uses
   %.not.i.i1057 = icmp eq ptr %i.ms, null
   br i1 %.not.i.i1057, label %pm_assert_value_expression.exit.i1060, label %bb.ch
 
@@ -1877,7 +1877,7 @@ bb.d:                                             ; preds = %accept1.exit
 bb.e:                                             ; preds = %bb.d
   store ptr %1, ptr %i.r, align 8, !tbaa !305
   %i.z = tail call fastcc ptr @parse_expression(ptr noundef nonnull %0, i32 noundef 14, i1 noundef zeroext false, i1 noundef zeroext false, i32 noundef 100, i16 noundef zeroext %i.p), !inline_history !297 ; 3 uses
-  %i.aa = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef %i.z) ; 3 uses
+  %i.aa = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef readonly %i.z) ; 3 uses
   %.not.i87 = icmp eq ptr %i.aa, null
   br i1 %.not.i87, label %pm_assert_value_expression.exit, label %bb.f
 
@@ -1895,7 +1895,7 @@ bb.g:                                             ; preds = %bb.d
 
 bb.h:                                             ; preds = %bb.g
   %i.af = tail call fastcc ptr @parse_expression(ptr noundef nonnull %0, i32 noundef 14, i1 noundef zeroext false, i1 noundef zeroext false, i32 noundef 100, i16 noundef zeroext %i.p), !inline_history !297 ; 3 uses
-  %i.ag = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef %i.af) ; 3 uses
+  %i.ag = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef readonly %i.af) ; 3 uses
   %.not.i90 = icmp eq ptr %i.ag, null
   br i1 %.not.i90, label %pm_assert_value_expression.exit, label %bb.i
 
@@ -2009,7 +2009,7 @@ bb.p:                                             ; preds = %accept1.exit
 
 bb.q:                                             ; preds = %bb.p
   %i.ay = tail call fastcc ptr @parse_expression(ptr noundef nonnull %0, i32 noundef 14, i1 noundef zeroext false, i1 noundef zeroext false, i32 noundef 132, i16 noundef zeroext %i.p), !inline_history !297 ; 3 uses
-  %i.az = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef %i.ay) ; 3 uses
+  %i.az = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef readonly %i.ay) ; 3 uses
   %.not.i94 = icmp eq ptr %i.az, null
   br i1 %.not.i94, label %pm_assert_value_expression.exit97, label %bb.r
 
@@ -2285,7 +2285,7 @@ pm_assert_value_expression.exit97:                ; preds = %bb.r, %bb.q, %pm_im
 
 bb.am:                                            ; preds = %accept1.exit
   %i.eh = tail call fastcc ptr @parse_expression(ptr noundef nonnull %0, i32 noundef 14, i1 noundef zeroext false, i1 noundef zeroext true, i32 noundef 133, i16 noundef zeroext %i.p), !inline_history !297 ; 7 uses
-  %i.ei = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef %i.eh) ; 3 uses
+  %i.ei = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef readonly %i.eh) ; 3 uses
   %.not.i104 = icmp eq ptr %i.ei, null
   br i1 %.not.i104, label %pm_assert_value_expression.exit107, label %bb.an
 
@@ -2364,7 +2364,7 @@ expect1.exit:                                     ; preds = %accept1.exit.thread
 
 bb.at:                                            ; preds = %expect1.exit, %bb.as
   %i.ez = tail call fastcc ptr @parse_expression(ptr noundef nonnull %0, i32 noundef 14, i1 noundef zeroext false, i1 noundef zeroext false, i32 noundef 136, i16 noundef zeroext %i.p), !inline_history !297 ; 2 uses
-  %i.fa = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef %i.ez) ; 3 uses
+  %i.fa = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef readonly %i.ez) ; 3 uses
   %.not.i108 = icmp eq ptr %i.fa, null
   br i1 %.not.i108, label %pm_assert_value_expression.exit111, label %bb.au
 
@@ -2767,7 +2767,7 @@ pm_node_alloc.exit:                               ; preds = %bb.c
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc nonnull ptr @pm_constant_path_node_create(ptr noundef %0, ptr noundef %1, ptr noundef nonnull readonly captures(none) %2, ptr noundef readonly captures(none) %3) unnamed_addr #1 {
 bb.a:
-  %i.a = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef %1) ; 3 uses
+  %i.a = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef readonly %1) ; 3 uses
   %.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i, label %pm_assert_value_expression.exit, label %bb.b
 
@@ -2870,7 +2870,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc nonnull ptr @pm_range_node_create(ptr noundef %0, ptr noundef %1, ptr noundef nonnull readonly captures(none) %2, ptr noundef %3) unnamed_addr #1 {
 bb.a:
-  %i.a = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef %1) ; 3 uses
+  %i.a = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef readonly %1) ; 3 uses
   %.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i, label %pm_assert_value_expression.exit, label %bb.b
 
@@ -2884,7 +2884,7 @@ bb.b:                                             ; preds = %bb.a
   br label %pm_assert_value_expression.exit
 
 pm_assert_value_expression.exit:                  ; preds = %bb.a, %bb.b
-  %i.f = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef %3) ; 3 uses
+  %i.f = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef readonly %3) ; 3 uses
   %.not.i37 = icmp eq ptr %i.f, null
   br i1 %.not.i37, label %pm_assert_value_expression.exit40, label %bb.c
 
@@ -3287,7 +3287,7 @@ bb.k:                                             ; preds = %bb.j
   %.sroa.3220.0.copyload = load ptr, ptr %i.c, align 8, !tbaa !14 ; 2 uses
   %.sroa.4221.0.copyload = load ptr, ptr %i.d, align 8, !tbaa !14 ; 2 uses
   %i.ad = tail call fastcc ptr @parse_expression(ptr noundef nonnull %0, i32 noundef 14, i1 noundef zeroext false, i1 noundef zeroext false, i32 noundef 101, i16 noundef zeroext %i.g), !inline_history !493 ; 4 uses
-  %i.ae = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef %i.ad), !inline_history !493 ; 3 uses
+  %i.ae = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef readonly %i.ad), !inline_history !493 ; 3 uses
   %.not.i.i210 = icmp eq ptr %i.ae, null
   br i1 %.not.i.i210, label %parse_value_expression.exit213, label %bb.l
 
@@ -3341,7 +3341,7 @@ pm_splat_node_create.exit.cont:                   ; preds = %pm_splat_node_creat
 
 accept1.exit215:                                  ; preds = %bb.j
   %i.an = tail call fastcc ptr @parse_expression(ptr noundef nonnull %0, i32 noundef 14, i1 noundef zeroext false, i1 noundef zeroext false, i32 noundef 255, i16 noundef zeroext %i.e), !inline_history !493 ; 3 uses
-  %i.ao = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef %i.an), !inline_history !493 ; 3 uses
+  %i.ao = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef readonly %i.an), !inline_history !493 ; 3 uses
   %.not.i.i = icmp eq ptr %i.ao, null
   br i1 %.not.i.i, label %parse_starred_expression.exit, label %bb.n
 
@@ -3744,7 +3744,7 @@ bb.r:                                             ; preds = %bb.f
 
 bb.s:                                             ; preds = %bb.r
   %i.cb = call fastcc ptr @parse_expression(ptr noundef nonnull %0, i32 noundef 14, i1 noundef zeroext false, i1 noundef zeroext false, i32 noundef 89, i16 noundef zeroext %i.ac), !inline_history !297 ; 3 uses
-  %i.cc = call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef %i.cb) ; 3 uses
+  %i.cc = call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef readonly %i.cb) ; 3 uses
   %.not.i273 = icmp eq ptr %i.cc, null
   br i1 %.not.i273, label %pm_assert_value_expression.exit, label %bb.t
 
@@ -4004,7 +4004,7 @@ bb.an:                                            ; preds = %pm_splat_node_creat
 
 bb.ao:                                            ; preds = %bb.ai
   %i.ee = call fastcc ptr @parse_expression(ptr noundef nonnull %0, i32 noundef 14, i1 noundef zeroext false, i1 noundef zeroext false, i32 noundef 99, i16 noundef zeroext %i.ac), !inline_history !297 ; 5 uses
-  %i.ef = call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef %i.ee) ; 3 uses
+  %i.ef = call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef readonly %i.ee) ; 3 uses
   %.not.i275 = icmp eq ptr %i.ef, null
   br i1 %.not.i275, label %pm_assert_value_expression.exit278, label %bb.ap
 
@@ -4322,7 +4322,7 @@ bb.bu:                                            ; preds = %bb.bd, %bb.be
 bb.bv:                                            ; preds = %bb.f, %bb.bb
   %i.hv = xor i1 %.0146, true
   %i.hw = call fastcc ptr @parse_expression(ptr noundef nonnull %0, i32 noundef 14, i1 noundef zeroext %i.hv, i1 noundef zeroext true, i32 noundef 89, i16 noundef zeroext %i.ac), !inline_history !297 ; 3 uses
-  %i.hx = call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef %i.hw) ; 3 uses
+  %i.hx = call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef readonly %i.hw) ; 3 uses
   %.not.i279 = icmp eq ptr %i.hx, null
   br i1 %.not.i279, label %pm_assert_value_expression.exit282, label %bb.bw
 
@@ -4445,7 +4445,7 @@ pm_keyword_hash_node_create.exit258:              ; preds = %bb.ci
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %8, i8 0, i64 128, i1 false)
   call fastcc void @pm_hash_key_static_literals_add(ptr noundef nonnull %0, ptr noundef %8, ptr noundef nonnull %.2159)
   %i.jd = call fastcc ptr @parse_expression(ptr noundef nonnull %0, i32 noundef 14, i1 noundef zeroext false, i1 noundef zeroext false, i32 noundef 136, i16 noundef zeroext %i.ac), !inline_history !297 ; 2 uses
-  %i.je = call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef %i.jd) ; 3 uses
+  %i.je = call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef readonly %i.jd) ; 3 uses
   %.not.i283 = icmp eq ptr %i.je, null
   br i1 %.not.i283, label %pm_assert_value_expression.exit286, label %bb.ck
 
@@ -4848,7 +4848,7 @@ bb.ap:                                            ; preds = %bb.ao
 
 bb.aq:                                            ; preds = %bb.ap, %bb.ao
   %i.gn = tail call fastcc ptr @parse_expression(ptr noundef nonnull %0, i32 noundef %1, i1 noundef zeroext false, i1 noundef zeroext false, i32 noundef 211, i16 noundef zeroext %i.ae), !inline_history !297 ; 3 uses
-  %i.go = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef %i.gn) ; 3 uses
+  %i.go = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef readonly %i.gn) ; 3 uses
   %.not.i493 = icmp eq ptr %i.go, null
   br i1 %.not.i493, label %pm_assert_value_expression.exit, label %bb.ar
 
@@ -5251,7 +5251,7 @@ bb.ck:                                            ; preds = %bb.cj
 
 bb.cl:                                            ; preds = %bb.ck, %bb.cj
   %i.nw = tail call fastcc ptr @parse_expression(ptr noundef %0, i32 noundef %1, i1 noundef zeroext false, i1 noundef zeroext false, i32 noundef 212, i16 noundef zeroext %i.ae), !inline_history !297 ; 3 uses
-  %i.nx = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef %i.nw) ; 3 uses
+  %i.nx = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef readonly %i.nw) ; 3 uses
   %.not.i495 = icmp eq ptr %i.nx, null
   br i1 %.not.i495, label %pm_assert_value_expression.exit498, label %bb.cm
 
@@ -5654,7 +5654,7 @@ context_push.exit:                                ; preds = %bb.a, %bb.b
   %i.m = select i1 %i.l, i32 54, i32 58
   %i.n = add i16 %4, 2                            ; 2 uses
   %i.o = call fastcc ptr @parse_expression(ptr noundef nonnull %0, i32 noundef 6, i1 noundef zeroext true, i1 noundef zeroext false, i32 noundef range(i32 26, 256) %i.m, i16 noundef zeroext %i.n), !inline_history !541 ; 5 uses
-  %i.p = call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef %i.o), !inline_history !541 ; 3 uses
+  %i.p = call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef readonly %i.o), !inline_history !541 ; 3 uses
   %.not.i.i = icmp eq ptr %i.p, null
   br i1 %.not.i.i, label %parse_value_expression.exit, label %bb.c
 
@@ -5865,7 +5865,7 @@ bb.o:                                             ; preds = %parser_end_of_line_
 
 context_push.exit147:                             ; preds = %parser_end_of_line_p.exit, %bb.o
   %i.cg = call fastcc ptr @parse_expression(ptr noundef nonnull %0, i32 noundef 6, i1 noundef zeroext true, i1 noundef zeroext false, i32 noundef 58, i16 noundef zeroext %i.n), !inline_history !541 ; 2 uses
-  %i.ch = call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef %i.cg), !inline_history !541 ; 3 uses
+  %i.ch = call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef readonly %i.cg), !inline_history !541 ; 3 uses
   %.not.i.i141 = icmp eq ptr %i.ch, null
   br i1 %.not.i.i141, label %parse_value_expression.exit144, label %bb.p
 
@@ -6268,7 +6268,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %parse
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc nonnull ptr @pm_call_node_not_create(ptr noundef %0, ptr noundef %1, ptr noundef nonnull readonly captures(none) %2, ptr noundef nonnull readonly captures(none) %3) unnamed_addr #1 {
 bb.a:
-  %i.a = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef %1) ; 3 uses
+  %i.a = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef readonly %1) ; 3 uses
   %.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i, label %pm_assert_value_expression.exit, label %bb.b
 
@@ -6671,7 +6671,7 @@ bb.e:                                             ; preds = %context_p.exit21.th
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc nonnull ptr @pm_call_node_unary_create(ptr noundef %0, ptr noundef nonnull readonly captures(none) %1, ptr noundef %2, ptr noundef %3) unnamed_addr #1 {
 bb.a:
-  %i.a = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef %2) ; 3 uses
+  %i.a = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef readonly %2) ; 3 uses
   %.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i, label %pm_assert_value_expression.exit, label %bb.b
 
@@ -7074,7 +7074,7 @@ pm_parser_warn_conditional_predicate_literal.exit: ; preds = %bb.e, %bb.f, %bb.b
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc nonnull ptr @pm_call_node_binary_create(ptr noundef %0, ptr noundef %1, ptr noundef nonnull readonly captures(none) %2, ptr noundef %3, i16 noundef zeroext range(i16 0, 129) %4) unnamed_addr #1 {
 bb.a:
-  %i.a = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef %1) ; 3 uses
+  %i.a = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef readonly %1) ; 3 uses
   %.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i, label %pm_assert_value_expression.exit, label %bb.b
 
@@ -7088,7 +7088,7 @@ bb.b:                                             ; preds = %bb.a
   br label %pm_assert_value_expression.exit
 
 pm_assert_value_expression.exit:                  ; preds = %bb.a, %bb.b
-  %i.f = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef %3) ; 3 uses
+  %i.f = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef readonly %3) ; 3 uses
   %.not.i38 = icmp eq ptr %i.f, null
   br i1 %.not.i38, label %pm_assert_value_expression.exit41, label %bb.c
 
@@ -7491,7 +7491,7 @@ switch.lookup:                                    ; preds = %bb.a
 }
 
 ; Function Attrs: inlinehint nounwind sspstrong uwtable
-define internal fastcc void @pm_assert_value_expression(ptr noundef %0, ptr noundef captures(address) %1) unnamed_addr #8 {
+define internal fastcc void @pm_assert_value_expression(ptr noundef %0, ptr noundef readonly captures(address) %1) unnamed_addr #8 {
 bb.a:
   %i.a = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef %1) ; 3 uses
   %.not = icmp eq ptr %i.a, null
@@ -7894,7 +7894,7 @@ bb.a:                                             ; preds = %._crit_edge
   %.sroa.4119.0.copyload = load ptr, ptr %.sroa.4119.0..sroa_idx, align 8, !tbaa !14 ; 2 uses
   %i.d = add nuw nsw i16 %4, 2
   %i.e = tail call fastcc ptr @parse_expression(ptr noundef nonnull %0, i32 noundef %2, i1 noundef zeroext false, i1 noundef zeroext false, i32 noundef 101, i16 noundef zeroext %i.d), !inline_history !493 ; 4 uses
-  %i.f = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef %i.e), !inline_history !493 ; 3 uses
+  %i.f = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef readonly %i.e), !inline_history !493 ; 3 uses
   %.not.i.i84 = icmp eq ptr %i.f, null
   br i1 %.not.i.i84, label %parse_value_expression.exit87, label %bb.b
 
@@ -7952,7 +7952,7 @@ accept1.exit89:                                   ; preds = %._crit_edge
   %i.q = icmp ult i32 %1, 6
   %.in = select i1 %i.p, i1 %3, i1 %i.q
   %i.r = tail call fastcc ptr @parse_expression(ptr noundef nonnull %0, i32 noundef %2, i1 noundef zeroext %.in, i1 noundef zeroext false, i32 noundef 93, i16 noundef zeroext %narrow), !inline_history !493 ; 3 uses
-  %i.s = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef %i.r), !inline_history !493 ; 3 uses
+  %i.s = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef readonly %i.r), !inline_history !493 ; 3 uses
   %.not.i.i = icmp eq ptr %i.s, null
   br i1 %.not.i.i, label %parse_starred_expression.exit, label %bb.d
 
@@ -8079,7 +8079,7 @@ bb.q:                                             ; preds = %bb.p
   %.sroa.3122.0.copyload = load ptr, ptr %.sroa.3122.0..sroa_idx, align 8, !tbaa !14 ; 2 uses
   %.sroa.4123.0.copyload = load ptr, ptr %.sroa.4123.0..sroa_idx, align 8, !tbaa !14 ; 2 uses
   %i.bd = tail call fastcc ptr @parse_expression(ptr noundef nonnull %0, i32 noundef %2, i1 noundef zeroext false, i1 noundef zeroext false, i32 noundef 101, i16 noundef zeroext %i.bb), !inline_history !493 ; 4 uses
-  %i.be = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef %i.bd), !inline_history !493 ; 3 uses
+  %i.be = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef readonly %i.bd), !inline_history !493 ; 3 uses
   %.not.i.i108 = icmp eq ptr %i.be, null
   br i1 %.not.i.i108, label %parse_value_expression.exit111, label %bb.r
 
@@ -8133,7 +8133,7 @@ pm_splat_node_create.exit107.cont:                ; preds = %pm_splat_node_creat
 
 accept1.exit113:                                  ; preds = %bb.p
   %i.bn = tail call fastcc ptr @parse_expression(ptr noundef nonnull %0, i32 noundef %2, i1 noundef zeroext false, i1 noundef zeroext false, i32 noundef 26, i16 noundef zeroext %narrow), !inline_history !493 ; 3 uses
-  %i.bo = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef %i.bn), !inline_history !493 ; 3 uses
+  %i.bo = tail call fastcc ptr @pm_check_value_expression(ptr noundef nonnull %0, ptr noundef readonly %i.bn), !inline_history !493 ; 3 uses
   %.not.i.i90 = icmp eq ptr %i.bo, null
   br i1 %.not.i.i90, label %parse_starred_expression.exit67, label %bb.t
 
@@ -8536,7 +8536,7 @@ bb.a:
   %.in = select i1 %i.a, i1 %3, i1 %i.b
   %narrow = add nuw nsw i16 %5, 1                 ; 2 uses
   %i.c = tail call fastcc ptr @parse_expression(ptr noundef %0, i32 noundef %2, i1 noundef zeroext %.in, i1 noundef zeroext false, i32 noundef range(i32 26, 256) %4, i16 noundef zeroext %narrow), !inline_history !297 ; 4 uses
-  %i.d = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef %i.c) ; 3 uses
+  %i.d = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef readonly %i.c) ; 3 uses
   %.not.i = icmp eq ptr %i.d, null
   br i1 %.not.i, label %pm_assert_value_expression.exit, label %bb.b
 
@@ -8939,7 +8939,7 @@ bb.a:
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc nonnull ptr @pm_call_node_shorthand_create(ptr noundef %0, ptr noundef %1, ptr noundef nonnull readonly captures(none) %2, ptr noundef nonnull readonly captures(none) %3) unnamed_addr #1 {
 bb.a:
-  %i.a = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef %1) ; 3 uses
+  %i.a = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef readonly %1) ; 3 uses
   %.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i, label %pm_assert_value_expression.exit, label %bb.b
 
@@ -9075,7 +9075,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc nonnull ptr @pm_call_node_call_create(ptr noundef %0, ptr noundef %1, ptr noundef nonnull readonly captures(none) %2, ptr noundef nonnull readonly captures(none) %3, ptr noundef nonnull readonly captures(none) %4) unnamed_addr #1 {
 bb.a:
-  %i.a = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef %1) ; 3 uses
+  %i.a = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef readonly %1) ; 3 uses
   %.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i, label %pm_assert_value_expression.exit, label %bb.b
 
@@ -9411,7 +9411,7 @@ pm_loop_modifier_block_exits.exit:                ; preds = %bb.e, %bb.f, %bb.d
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc nonnull ptr @pm_if_node_ternary_create(ptr noundef %0, ptr noundef %1, ptr %.8.val, ptr %.16.val, ptr noundef %2, ptr %.8.val1, ptr %.16.val3, ptr noundef %3) unnamed_addr #1 {
 bb.a:
-  %i.a = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef %1) ; 3 uses
+  %i.a = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef readonly %1) ; 3 uses
   %.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i, label %pm_assert_value_expression.exit, label %bb.b
 
@@ -9577,7 +9577,7 @@ pm_node_alloc.exit:                               ; preds = %pm_else_node_create
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc nonnull ptr @pm_call_node_aref_create(ptr noundef %0, ptr noundef %1, ptr noundef nonnull readonly captures(none) %2) unnamed_addr #1 {
 bb.a:
-  %i.a = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef %1) ; 3 uses
+  %i.a = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef readonly %1) ; 3 uses
   %.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i, label %pm_assert_value_expression.exit, label %bb.b
 
@@ -9711,7 +9711,7 @@ pm_arguments_end.exit:                            ; preds = %bb.g, %bb.h, %bb.j,
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc nonnull ptr @pm_match_predicate_node_create(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %2, ptr %.8.val, ptr %.16.val) unnamed_addr #1 {
 bb.a:
-  %i.a = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef %1) ; 3 uses
+  %i.a = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef readonly %1) ; 3 uses
   %.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i, label %pm_assert_value_expression.exit, label %bb.b
 
@@ -9764,7 +9764,7 @@ pm_node_alloc.exit:                               ; preds = %pm_assert_value_exp
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc nonnull ptr @pm_match_required_node_create(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %2, ptr %.8.val, ptr %.16.val) unnamed_addr #1 {
 bb.a:
-  %i.a = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef %1) ; 3 uses
+  %i.a = tail call fastcc ptr @pm_check_value_expression(ptr noundef %0, ptr noundef readonly %1) ; 3 uses
   %.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i, label %pm_assert_value_expression.exit, label %bb.b
 

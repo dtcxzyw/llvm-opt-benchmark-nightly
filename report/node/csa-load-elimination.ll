@@ -201,7 +201,7 @@ bb.r:                                             ; preds = %.loopexit
 
 bb.s:                                             ; preds = %.loopexit
   %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.ef = tail call noundef ptr @_ZN2v88internal8compiler18CsaLoadElimination11UpdateStateEPNS1_4NodeEPKNS2_13AbstractStateE(ptr noundef nonnull align 8 dereferenceable(672) %0, ptr noundef nonnull %1, ptr noundef nonnull %i.ee)
+  %i.ef = tail call noundef ptr @_ZN2v88internal8compiler18CsaLoadElimination11UpdateStateEPNS1_4NodeEPKNS2_13AbstractStateE(ptr noundef nonnull align 8 dereferenceable(672) %0, ptr noundef nonnull readonly %1, ptr noundef nonnull %i.ee)
   br label %bb.u
 
 bb.t:                                             ; preds = %.loopexit
@@ -604,7 +604,7 @@ _ZNK2v88internal8compiler11NodeAuxDataIPKNS1_18CsaLoadElimination13AbstractState
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden noundef ptr @_ZN2v88internal8compiler18CsaLoadElimination11ReduceStartEPNS1_4NodeE(ptr noundef nonnull align 8 dereferenceable(672) %0, ptr noundef captures(ret: address, provenance) %1) local_unnamed_addr #0 align 2 {
+define hidden noundef ptr @_ZN2v88internal8compiler18CsaLoadElimination11ReduceStartEPNS1_4NodeE(ptr noundef nonnull align 8 dereferenceable(672) %0, ptr noundef readonly captures(ret: address, provenance) %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = tail call ptr @_ZN2v88internal8compiler18CsaLoadElimination11UpdateStateEPNS1_4NodeEPKNS2_13AbstractStateE(ptr noundef nonnull align 8 dereferenceable(672) %0, ptr noundef %1, ptr noundef nonnull %i.a)

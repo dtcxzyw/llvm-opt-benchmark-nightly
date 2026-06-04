@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %.lr.ph35, %_ZNSt7__
   %i.d = getelementptr inbounds [8 x i8], ptr %1, i64 %i.c
   call void @_ZN7testing8internal18StreamableToStringIPcEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %2, ptr noundef nonnull align 8 dereferenceable(8) %i.d)
   %i.e = load ptr, ptr %2, align 8, !tbaa !7      ; 2 uses
-  %i.f = invoke fastcc noundef ptr @_ZN7testing8internalL24ParseGoogleMockFlagValueEPKcS2_b(ptr noundef %i.e, ptr noundef nonnull @.str.121, i1 noundef zeroext true)
+  %i.f = invoke fastcc noundef ptr @_ZN7testing8internalL24ParseGoogleMockFlagValueEPKcS2_b(ptr noundef readonly %i.e, ptr noundef nonnull @.str.121, i1 noundef zeroext true)
           to label %.noexc unwind label %bb.f     ; 2 uses
 
 .noexc:                                           ; preds = %bb.b
@@ -365,7 +365,7 @@ bb.b:                                             ; preds = %.lr.ph35, %_ZNSt7__
   %i.d = getelementptr inbounds [8 x i8], ptr %1, i64 %i.c
   call void @_ZN7testing8internal18StreamableToStringIPwEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %2, ptr noundef nonnull align 8 dereferenceable(8) %i.d)
   %i.e = load ptr, ptr %2, align 8, !tbaa !7      ; 2 uses
-  %i.f = invoke fastcc noundef ptr @_ZN7testing8internalL24ParseGoogleMockFlagValueEPKcS2_b(ptr noundef %i.e, ptr noundef nonnull @.str.121, i1 noundef zeroext true)
+  %i.f = invoke fastcc noundef ptr @_ZN7testing8internalL24ParseGoogleMockFlagValueEPKcS2_b(ptr noundef readonly %i.e, ptr noundef nonnull @.str.121, i1 noundef zeroext true)
           to label %.noexc unwind label %bb.f     ; 2 uses
 
 .noexc:                                           ; preds = %bb.b

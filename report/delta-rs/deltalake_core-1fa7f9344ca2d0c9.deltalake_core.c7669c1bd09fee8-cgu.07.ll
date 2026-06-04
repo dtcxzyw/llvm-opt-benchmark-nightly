@@ -201,7 +201,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXs4_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_6SenderINtNtCsbvkFyIu7lgC_4core6result6ResultINtNtBT_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemIBP_IB1H_DNtNtCs8ulvy0Wg6Ot_12delta_kernel11engine_data10EngineDataEL_ENtNtB3k_5error5ErrorENtNtBT_6marker4SendEL_EEB4f_EENtNtNtBT_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
+define hidden void @_RNvXs4_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_6SenderINtNtCsbvkFyIu7lgC_4core6result6ResultINtNtBT_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemIBP_IB1H_DNtNtCs8ulvy0Wg6Ot_12delta_kernel11engine_data10EngineDataEL_ENtNtB3k_5error5ErrorENtNtBT_6marker4SendEL_EEB4f_EENtNtNtBT_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !128, !noundef !3
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -231,7 +231,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXs4_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_6SenderINtNtCsbvkFyIu7lgC_4core6result6ResultINtNtBT_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemIBP_NtCs8ulvy0Wg6Ot_12delta_kernel8FileMetaNtNtB3c_5error5ErrorENtNtBT_6marker4SendEL_EEB3N_EENtNtNtBT_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
+define hidden void @_RNvXs4_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_6SenderINtNtCsbvkFyIu7lgC_4core6result6ResultINtNtBT_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemIBP_NtCs8ulvy0Wg6Ot_12delta_kernel8FileMetaNtNtB3c_5error5ErrorENtNtBT_6marker4SendEL_EEB3N_EENtNtNtBT_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !128, !noundef !3
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -261,7 +261,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXs4_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_6SenderINtNtCsbvkFyIu7lgC_4core6result6ResultINtNtBT_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemIBP_NtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtNtCs8ulvy0Wg6Ot_12delta_kernel5error5ErrorENtNtBT_6marker4SendEL_EEB3K_EENtNtNtBT_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
+define hidden void @_RNvXs4_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_6SenderINtNtCsbvkFyIu7lgC_4core6result6ResultINtNtBT_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemIBP_NtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtNtCs8ulvy0Wg6Ot_12delta_kernel5error5ErrorENtNtBT_6marker4SendEL_EEB3K_EENtNtNtBT_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !128, !noundef !3
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -291,7 +291,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXs4_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_6SenderINtNtCsbvkFyIu7lgC_4core6result6ResultNtCs8ulvy0Wg6Ot_12delta_kernel13ParquetFooterNtNtB1s_5error5ErrorEENtNtNtBT_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
+define hidden void @_RNvXs4_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_6SenderINtNtCsbvkFyIu7lgC_4core6result6ResultNtCs8ulvy0Wg6Ot_12delta_kernel13ParquetFooterNtNtB1s_5error5ErrorEENtNtNtBT_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !128, !noundef !3
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -321,7 +321,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXs4_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_6SenderINtNtCsbvkFyIu7lgC_4core6result6ResultNtCs8ulvy0Wg6Ot_12delta_kernel8FileMetaNtNtB1s_5error5ErrorEENtNtNtBT_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
+define hidden void @_RNvXs4_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_6SenderINtNtCsbvkFyIu7lgC_4core6result6ResultNtCs8ulvy0Wg6Ot_12delta_kernel8FileMetaNtNtB1s_5error5ErrorEENtNtNtBT_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !128, !noundef !3
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -351,7 +351,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXs4_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_6SenderINtNtCsbvkFyIu7lgC_4core6result6ResultuNtNtCs8ulvy0Wg6Ot_12delta_kernel5error5ErrorEENtNtNtBT_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
+define hidden void @_RNvXs4_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_6SenderINtNtCsbvkFyIu7lgC_4core6result6ResultuNtNtCs8ulvy0Wg6Ot_12delta_kernel5error5ErrorEENtNtNtBT_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !128, !noundef !3
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -381,7 +381,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXs4_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_6SenderTINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtBU_6result6ResultINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs8ulvy0Wg6Ot_12delta_kernel11engine_data10EngineDataEL_ENtNtB2r_5error5ErrorEEINtNtBU_3pin3PinIB1O_DNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemB1r_NtNtBU_6marker4SendEL_EEEENtNtNtBU_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
+define hidden void @_RNvXs4_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_6SenderTINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtBU_6result6ResultINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs8ulvy0Wg6Ot_12delta_kernel11engine_data10EngineDataEL_ENtNtB2r_5error5ErrorEEINtNtBU_3pin3PinIB1O_DNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemB1r_NtNtBU_6marker4SendEL_EEEENtNtNtBU_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !128, !noundef !3
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -411,7 +411,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXs4_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_6SenderTINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtBU_6result6ResultNtCs8ulvy0Wg6Ot_12delta_kernel8FileMetaNtNtB1P_5error5ErrorEEINtNtBU_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemB1r_NtNtBU_6marker4SendEL_EEEENtNtNtBU_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
+define hidden void @_RNvXs4_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_6SenderTINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtBU_6result6ResultNtCs8ulvy0Wg6Ot_12delta_kernel8FileMetaNtNtB1P_5error5ErrorEEINtNtBU_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemB1r_NtNtBU_6marker4SendEL_EEEENtNtNtBU_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !128, !noundef !3
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -441,7 +441,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXs4_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_6SenderTINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtBU_6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtNtCs8ulvy0Wg6Ot_12delta_kernel5error5ErrorEEINtNtBU_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemB1r_NtNtBU_6marker4SendEL_EEEENtNtNtBU_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
+define hidden void @_RNvXs4_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_6SenderTINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtBU_6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtNtCs8ulvy0Wg6Ot_12delta_kernel5error5ErrorEEINtNtBU_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemB1r_NtNtBU_6marker4SendEL_EEEENtNtNtBU_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !128, !noundef !3
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -844,7 +844,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RNvXsd_NtCs6Po7BT7Nknu_5alloc5boxedINtB5_3BoxNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema10StructTypeENtNtCsbvkFyIu7lgC_4core5clone5Clone5cloneCs14kWLkQVSKO_14deltalake_core(ptr captures(address, read_provenance) %.0.val) unnamed_addr #3 personality ptr @rust_eh_personality {
+define internal fastcc noundef nonnull align 8 ptr @_RNvXsd_NtCs6Po7BT7Nknu_5alloc5boxedINtB5_3BoxNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema10StructTypeENtNtCsbvkFyIu7lgC_4core5clone5Clone5cloneCs14kWLkQVSKO_14deltalake_core(ptr readonly captures(address, read_provenance) %.0.val) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 5 uses
   %i.b = alloca [72 x i8], align 8                ; 5 uses
@@ -1247,7 +1247,7 @@ _RINvNtNtCsbvkFyIu7lgC_4core5slice3cmp13chaining_implNtNtCs4lawaffTVVK_9sqlparse
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXsi_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_8ReceiverINtNtCsbvkFyIu7lgC_4core6result6ResultINtNtBV_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemIBR_IB1J_DNtNtCs8ulvy0Wg6Ot_12delta_kernel11engine_data10EngineDataEL_ENtNtB3m_5error5ErrorENtNtBV_6marker4SendEL_EEB4h_EENtNtNtBV_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
+define hidden void @_RNvXsi_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_8ReceiverINtNtCsbvkFyIu7lgC_4core6result6ResultINtNtBV_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemIBR_IB1J_DNtNtCs8ulvy0Wg6Ot_12delta_kernel11engine_data10EngineDataEL_ENtNtB3m_5error5ErrorENtNtBV_6marker4SendEL_EEB4h_EENtNtNtBV_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !128, !noundef !3
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -1277,7 +1277,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXsi_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_8ReceiverINtNtCsbvkFyIu7lgC_4core6result6ResultINtNtBV_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemIBR_NtCs8ulvy0Wg6Ot_12delta_kernel8FileMetaNtNtB3e_5error5ErrorENtNtBV_6marker4SendEL_EEB3P_EENtNtNtBV_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
+define hidden void @_RNvXsi_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_8ReceiverINtNtCsbvkFyIu7lgC_4core6result6ResultINtNtBV_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemIBR_NtCs8ulvy0Wg6Ot_12delta_kernel8FileMetaNtNtB3e_5error5ErrorENtNtBV_6marker4SendEL_EEB3P_EENtNtNtBV_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !128, !noundef !3
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -1307,7 +1307,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXsi_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_8ReceiverINtNtCsbvkFyIu7lgC_4core6result6ResultINtNtBV_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemIBR_NtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtNtCs8ulvy0Wg6Ot_12delta_kernel5error5ErrorENtNtBV_6marker4SendEL_EEB3M_EENtNtNtBV_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
+define hidden void @_RNvXsi_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_8ReceiverINtNtCsbvkFyIu7lgC_4core6result6ResultINtNtBV_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemIBR_NtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtNtCs8ulvy0Wg6Ot_12delta_kernel5error5ErrorENtNtBV_6marker4SendEL_EEB3M_EENtNtNtBV_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !128, !noundef !3
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -1337,7 +1337,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXsi_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_8ReceiverINtNtCsbvkFyIu7lgC_4core6result6ResultNtCs8ulvy0Wg6Ot_12delta_kernel13ParquetFooterNtNtB1u_5error5ErrorEENtNtNtBV_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
+define hidden void @_RNvXsi_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_8ReceiverINtNtCsbvkFyIu7lgC_4core6result6ResultNtCs8ulvy0Wg6Ot_12delta_kernel13ParquetFooterNtNtB1u_5error5ErrorEENtNtNtBV_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !128, !noundef !3
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -1367,7 +1367,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXsi_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_8ReceiverINtNtCsbvkFyIu7lgC_4core6result6ResultNtCs8ulvy0Wg6Ot_12delta_kernel8FileMetaNtNtB1u_5error5ErrorEENtNtNtBV_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
+define hidden void @_RNvXsi_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_8ReceiverINtNtCsbvkFyIu7lgC_4core6result6ResultNtCs8ulvy0Wg6Ot_12delta_kernel8FileMetaNtNtB1u_5error5ErrorEENtNtNtBV_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !128, !noundef !3
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -1397,7 +1397,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXsi_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_8ReceiverINtNtCsbvkFyIu7lgC_4core6result6ResultuNtNtCs8ulvy0Wg6Ot_12delta_kernel5error5ErrorEENtNtNtBV_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
+define hidden void @_RNvXsi_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_8ReceiverINtNtCsbvkFyIu7lgC_4core6result6ResultuNtNtCs8ulvy0Wg6Ot_12delta_kernel5error5ErrorEENtNtNtBV_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !128, !noundef !3
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -1427,7 +1427,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXsi_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_8ReceiverTINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtBW_6result6ResultINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs8ulvy0Wg6Ot_12delta_kernel11engine_data10EngineDataEL_ENtNtB2t_5error5ErrorEEINtNtBW_3pin3PinIB1Q_DNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemB1t_NtNtBW_6marker4SendEL_EEEENtNtNtBW_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
+define hidden void @_RNvXsi_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_8ReceiverTINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtBW_6result6ResultINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs8ulvy0Wg6Ot_12delta_kernel11engine_data10EngineDataEL_ENtNtB2t_5error5ErrorEEINtNtBW_3pin3PinIB1Q_DNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemB1t_NtNtBW_6marker4SendEL_EEEENtNtNtBW_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !128, !noundef !3
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -1457,7 +1457,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXsi_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_8ReceiverTINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtBW_6result6ResultNtCs8ulvy0Wg6Ot_12delta_kernel8FileMetaNtNtB1R_5error5ErrorEEINtNtBW_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemB1t_NtNtBW_6marker4SendEL_EEEENtNtNtBW_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
+define hidden void @_RNvXsi_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_8ReceiverTINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtBW_6result6ResultNtCs8ulvy0Wg6Ot_12delta_kernel8FileMetaNtNtB1R_5error5ErrorEEINtNtBW_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemB1t_NtNtBW_6marker4SendEL_EEEENtNtNtBW_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !128, !noundef !3
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -1487,7 +1487,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXsi_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_8ReceiverTINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtBW_6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtNtCs8ulvy0Wg6Ot_12delta_kernel5error5ErrorEEINtNtBW_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemB1t_NtNtBW_6marker4SendEL_EEEENtNtNtBW_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
+define hidden void @_RNvXsi_NtNtCs2pqxYH9ZEk8_3std4sync4mpmcINtB5_8ReceiverTINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtBW_6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtNtCs8ulvy0Wg6Ot_12delta_kernel5error5ErrorEEINtNtBW_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemB1t_NtNtBW_6marker4SendEL_EEEENtNtNtBW_3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %0) unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !128, !noundef !3
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses

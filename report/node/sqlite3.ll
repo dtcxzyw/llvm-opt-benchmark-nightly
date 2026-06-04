@@ -201,7 +201,7 @@ bb.ae:                                            ; preds = %bb.ad
   %i.dh = load ptr, ptr %0, align 8, !tbaa !651
   %i.di = getelementptr inbounds nuw i8, ptr %i.dh, i64 100
   %i.dj = load i8, ptr %i.di, align 4, !tbaa !844
-  %i.dk = tail call fastcc ptr @sqlite3GetCollSeq(ptr noundef nonnull %0, i8 noundef zeroext %i.dj, ptr noundef nonnull %.3, ptr noundef %i.dg)
+  %i.dk = tail call fastcc ptr @sqlite3GetCollSeq(ptr noundef nonnull %0, i8 noundef zeroext %i.dj, ptr noundef nonnull readonly %.3, ptr noundef %i.dg)
   %.not12.not.i = icmp eq ptr %i.dk, null
   %spec.select = select i1 %.not12.not.i, ptr null, ptr %.3
   br label %sqlite3CheckCollSeq.exit

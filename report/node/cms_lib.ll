@@ -201,7 +201,7 @@ bb.g:                                             ; preds = %bb.a, %bb.f, %.thre
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local ptr @ossl_cms_content_bio(ptr noundef captures(address) %0) local_unnamed_addr #0 {
+define dso_local ptr @ossl_cms_content_bio(ptr noundef readonly captures(address) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call ptr @CMS_get0_content(ptr noundef %0) ; 2 uses
   %i.b = icmp eq ptr %i.a, null
@@ -342,7 +342,7 @@ bb.a:
   br i1 %.not, label %bb.b, label %ossl_cms_content_bio.exit.thread24
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call ptr @CMS_get0_content(ptr noundef %0) ; 2 uses
+  %i.a = tail call ptr @CMS_get0_content(ptr noundef readonly %0) ; 2 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %ossl_cms_content_bio.exit.thread, label %bb.c
 
@@ -702,7 +702,7 @@ declare ptr @OBJ_dup(ptr noundef) local_unnamed_addr #1
 declare void @ASN1_OBJECT_free(ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define dso_local range(i32 -1, 2) i32 @CMS_is_detached(ptr noundef captures(address) %0) local_unnamed_addr #0 {
+define dso_local range(i32 -1, 2) i32 @CMS_is_detached(ptr noundef readonly captures(address) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call ptr @CMS_get0_content(ptr noundef %0) ; 2 uses
   %i.b = icmp eq ptr %i.a, null

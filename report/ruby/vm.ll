@@ -201,7 +201,7 @@ rb_obj_written.exit:                              ; preds = %bb.n, %.thread35, %
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden ptr @rb_resolve_refined_method(i64 noundef %0, ptr noundef captures(address_is_null, ret: address, provenance) %1) local_unnamed_addr #2 {
+define hidden ptr @rb_resolve_refined_method(i64 noundef %0, ptr noundef readonly captures(address_is_null, ret: address, provenance) %1) local_unnamed_addr #2 {
 bb.a:
   %i.a = tail call fastcc ptr @resolve_refined_method(i64 noundef %0, ptr noundef %1, ptr noundef null)
   ret ptr %i.a
@@ -377,7 +377,7 @@ bb.p:                                             ; preds = %bb.o
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden ptr @rb_resolve_refined_method_callable(i64 noundef %0, ptr noundef captures(address, ret: address, provenance) %1) local_unnamed_addr #2 {
+define hidden ptr @rb_resolve_refined_method_callable(i64 noundef %0, ptr noundef readonly captures(address, ret: address, provenance) %1) local_unnamed_addr #2 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
@@ -780,7 +780,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.m, label %bb.g, label %.thread53.thread
 
 bb.g:                                             ; preds = %bb.f
-  %i.n = tail call fastcc ptr @resolve_refined_method(i64 noundef 4, ptr noundef nonnull %i.h, ptr noundef null) ; 2 uses
+  %i.n = tail call fastcc ptr @resolve_refined_method(i64 noundef 4, ptr noundef nonnull readonly %i.h, ptr noundef null) ; 2 uses
   %.not47 = icmp eq ptr %i.n, null
   br i1 %.not47, label %.thread, label %.thread53
 
@@ -1183,7 +1183,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.k, label %bb.f, label %.thread77.thread
 
 bb.f:                                             ; preds = %bb.e
-  %i.l = call fastcc ptr @resolve_refined_method(i64 noundef 4, ptr noundef nonnull %i.f, ptr noundef null) ; 3 uses
+  %i.l = call fastcc ptr @resolve_refined_method(i64 noundef 4, ptr noundef nonnull readonly %i.f, ptr noundef null) ; 3 uses
   %.not63 = icmp eq ptr %i.l, null
   br i1 %.not63, label %.thread, label %.thread77
 
@@ -1586,7 +1586,7 @@ bb.r:                                             ; preds = %bb.q
   ], !prof !464
 
 bb.s:                                             ; preds = %bb.r
-  %i.x = tail call ptr @rb_resolve_refined_method_callable(i64 noundef 4, ptr noundef nonnull %i.s) ; 2 uses
+  %i.x = tail call ptr @rb_resolve_refined_method_callable(i64 noundef 4, ptr noundef nonnull readonly %i.s) ; 2 uses
   %.not35.i.i = icmp eq ptr %i.x, null
   br i1 %.not35.i.i, label %rb_search_method_entry.exit.thread, label %bb.t
 
@@ -1766,7 +1766,7 @@ bb.s:                                             ; preds = %bb.r
   ], !prof !464
 
 bb.t:                                             ; preds = %bb.s
-  %i.x = tail call ptr @rb_resolve_refined_method_callable(i64 noundef 4, ptr noundef nonnull %i.s) ; 2 uses
+  %i.x = tail call ptr @rb_resolve_refined_method_callable(i64 noundef 4, ptr noundef nonnull readonly %i.s) ; 2 uses
   %.not35.i.i = icmp eq ptr %i.x, null
   br i1 %.not35.i.i, label %rb_search_method_entry.exit.thread, label %bb.u
 
@@ -2169,7 +2169,7 @@ bb.p:                                             ; preds = %bb.o
   ], !prof !477
 
 bb.q:                                             ; preds = %bb.p
-  %i.be = call ptr @rb_resolve_refined_method_callable(i64 noundef 4, ptr noundef nonnull %.val54) ; 3 uses
+  %i.be = call ptr @rb_resolve_refined_method_callable(i64 noundef 4, ptr noundef nonnull readonly %.val54) ; 3 uses
   %.not35.i28 = icmp eq ptr %i.be, null
   br i1 %.not35.i28, label %rb_method_call_status.exit.thread, label %bb.r
 
@@ -2572,7 +2572,7 @@ rb_callable_method_entry.exit:                    ; preds = %bb.m
   %i.ak = getelementptr i8, ptr %i.ae, i64 8
   %i.al = load i64, ptr %i.ak, align 8, !tbaa !200
   store i64 %i.al, ptr %i.c, align 8, !tbaa !11
-  %i.am = call fastcc ptr @resolve_refined_method(i64 noundef %i.l, ptr noundef nonnull %i.ae, ptr noundef nonnull %i.c) ; 4 uses
+  %i.am = call fastcc ptr @resolve_refined_method(i64 noundef %i.l, ptr noundef nonnull readonly %i.ae, ptr noundef nonnull %i.c) ; 4 uses
   %.not.i = icmp eq ptr %i.am, null
   br i1 %.not.i, label %rb_resolve_refined_method_callable.exit.thread, label %bb.n
 
@@ -2975,7 +2975,7 @@ callable_method_entry_refinements0.exit.thread109.thread: ; preds = %bb.z, %call
   ], !prof !477
 
 bb.aa:                                            ; preds = %callable_method_entry_refinements0.exit.thread109.thread
-  %i.bj = call ptr @rb_resolve_refined_method_callable(i64 noundef 4, ptr noundef nonnull %.0.i73112144) ; 3 uses
+  %i.bj = call ptr @rb_resolve_refined_method_callable(i64 noundef 4, ptr noundef nonnull readonly %.0.i73112144) ; 3 uses
   %.not35.i76 = icmp eq ptr %i.bj, null
   br i1 %.not35.i76, label %callable_method_entry_refinements0.exit.thread, label %bb.ab
 
@@ -3082,7 +3082,7 @@ bb.an:                                            ; preds = %bb.am
   ], !prof !477
 
 bb.ao:                                            ; preds = %bb.an
-  %i.cs = call ptr @rb_resolve_refined_method_callable(i64 noundef 4, ptr noundef nonnull %.val) ; 2 uses
+  %i.cs = call ptr @rb_resolve_refined_method_callable(i64 noundef 4, ptr noundef nonnull readonly %.val) ; 2 uses
   %.not35.i81 = icmp eq ptr %i.cs, null
   br i1 %.not35.i81, label %rb_method_call_status.exit91, label %bb.ap
 

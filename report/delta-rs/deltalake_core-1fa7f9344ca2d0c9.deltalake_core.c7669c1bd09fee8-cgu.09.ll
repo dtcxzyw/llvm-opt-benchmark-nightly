@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i, label %_RINvXs_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters4takeINtB5_4TakeINtNtNtBb_5slice4iter4IterRNtNtCs6Po7BT7Nknu_5alloc6string6StringEENtNtNtB9_6traits8iterator8Iterator4folduNCINvNtB7_3map8map_foldRB1o_B1p_uNCNCNvNtNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion14table_provider4next4scan12replay_files0s0_0NCINvNvB23_8for_each4callB1p_NCINvMsj_NtB1t_3vecINtB5z_3VecB1p_E14extend_trustedINtB2M_3MapBN_B3e_EE0E0E0EB3s_.exit, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.b
-  %.val10.i.i.pre = load ptr, ptr %i.b, align 8, !alias.scope !5423, !noalias !5424
+  %.val10.i.i.pre = load ptr, ptr %i.b, align 8, !alias.scope !5423, !noalias !5424, !nonnull !4, !noundef !4
   br label %.lr.ph.i.i
 
 .loopexit.i.i:                                    ; preds = %.lr.ph.i.i
@@ -221,9 +221,9 @@ bb.c:                                             ; preds = %.loopexit.split-lp.
   store i64 %.val9.i.i, ptr %.sroa.0.0.copyload, align 8, !noalias !5424
   resume { ptr, i32 } %lpad.phi.i.i
 
-.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader, %_RNCINvNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map8map_foldRRNtNtCs6Po7BT7Nknu_5alloc6string6StringBW_uNCNCNvNtNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion14table_provider4next4scan12replay_files0s0_0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBW_NCINvMsj_NtB10_3vecINtB4q_3VecBW_E14extend_trustedINtB4_3MapINtNtB6_4take4TakeINtNtNtBa_5slice4iter4IterBV_EEB1C_EE0E0E0B1Q_.exit.i.i
-  %i.f = phi i64 [ %i.n, %_RNCINvNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map8map_foldRRNtNtCs6Po7BT7Nknu_5alloc6string6StringBW_uNCNCNvNtNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion14table_provider4next4scan12replay_files0s0_0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBW_NCINvMsj_NtB10_3vecINtB4q_3VecBW_E14extend_trustedINtB4_3MapINtNtB6_4take4TakeINtNtNtBa_5slice4iter4IterBV_EEB1C_EE0E0E0B1Q_.exit.i.i ], [ %.sroa.5.0.copyload, %.lr.ph.i.i.preheader ] ; 3 uses
-  %.sroa.0.012.i.i = phi i64 [ %i.l, %_RNCINvNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map8map_foldRRNtNtCs6Po7BT7Nknu_5alloc6string6StringBW_uNCNCNvNtNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion14table_provider4next4scan12replay_files0s0_0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBW_NCINvMsj_NtB10_3vecINtB4q_3VecBW_E14extend_trustedINtB4_3MapINtNtB6_4take4TakeINtNtNtBa_5slice4iter4IterBV_EEB1C_EE0E0E0B1Q_.exit.i.i ], [ 0, %.lr.ph.i.i.preheader ] ; 2 uses
+.lr.ph.i.i:                                       ; preds = %_RNCINvNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map8map_foldRRNtNtCs6Po7BT7Nknu_5alloc6string6StringBW_uNCNCNvNtNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion14table_provider4next4scan12replay_files0s0_0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBW_NCINvMsj_NtB10_3vecINtB4q_3VecBW_E14extend_trustedINtB4_3MapINtNtB6_4take4TakeINtNtNtBa_5slice4iter4IterBV_EEB1C_EE0E0E0B1Q_.exit.i.i, %.lr.ph.i.i.preheader
+  %i.f = phi i64 [ %.sroa.5.0.copyload, %.lr.ph.i.i.preheader ], [ %i.n, %_RNCINvNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map8map_foldRRNtNtCs6Po7BT7Nknu_5alloc6string6StringBW_uNCNCNvNtNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion14table_provider4next4scan12replay_files0s0_0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBW_NCINvMsj_NtB10_3vecINtB4q_3VecBW_E14extend_trustedINtB4_3MapINtNtB6_4take4TakeINtNtNtBa_5slice4iter4IterBV_EEB1C_EE0E0E0B1Q_.exit.i.i ] ; 3 uses
+  %.sroa.0.012.i.i = phi i64 [ 0, %.lr.ph.i.i.preheader ], [ %i.l, %_RNCINvNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map8map_foldRRNtNtCs6Po7BT7Nknu_5alloc6string6StringBW_uNCNCNvNtNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion14table_provider4next4scan12replay_files0s0_0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBW_NCINvMsj_NtB10_3vecINtB4q_3VecBW_E14extend_trustedINtB4_3MapINtNtB6_4take4TakeINtNtNtBa_5slice4iter4IterBV_EEB1C_EE0E0E0B1Q_.exit.i.i ] ; 2 uses
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %.val10.i.i.pre, i64 %.sroa.0.012.i.i
   %.val11.i.i = load ptr, ptr %i.g, align 8, !noalias !5424, !nonnull !4, !align !8, !noundef !4 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !5427
@@ -626,7 +626,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RINvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3mapINtB6_3MapINtNtNtCsbpG6u9KFjWn_8indexmap3map4iter4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtNtCs8ulvy0Wg6Ot_12delta_kernel11expressions7scalars6ScalarENCINvNtNtCs14kWLkQVSKO_14deltalake_core6writer5stats10create_addB1F_E0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB4r_8for_each4callTB1F_INtNtBc_6option6OptionB1F_EENCINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB6b_7HashMapB1F_B5z_NtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateEINtNtB4v_7collect6ExtendB5u_E6extendBN_E0E0EB3r_(ptr noundef nonnull captures(address, read_provenance) %0, ptr noundef readnone captures(address) %1, ptr noalias noundef align 8 dereferenceable(48) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden void @_RINvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3mapINtB6_3MapINtNtNtCsbpG6u9KFjWn_8indexmap3map4iter4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtNtCs8ulvy0Wg6Ot_12delta_kernel11expressions7scalars6ScalarENCINvNtNtCs14kWLkQVSKO_14deltalake_core6writer5stats10create_addB1F_E0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB4r_8for_each4callTB1F_INtNtBc_6option6OptionB1F_EENCINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB6b_7HashMapB1F_B5z_NtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateEINtNtB4v_7collect6ExtendB5u_E6extendBN_E0E0EB3r_(ptr noundef nonnull readonly captures(address, read_provenance) %0, ptr noundef readnone captures(address) %1, ptr noalias noundef align 8 dereferenceable(48) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
   %i.b = alloca [24 x i8], align 8                ; 5 uses
@@ -730,7 +730,7 @@ _RINvYINtNtNtCsbpG6u9KFjWn_8indexmap3map4iter4IterNtNtCs6Po7BT7Nknu_5alloc6strin
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RINvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3mapINtB6_3MapINtNtNtCsbpG6u9KFjWn_8indexmap3map4iter4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtNtCs8ulvy0Wg6Ot_12delta_kernel11expressions7scalars6ScalarENCNvNtNtCs14kWLkQVSKO_14deltalake_core10operations8optimize13create_remove0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB4w_8for_each4callTB1F_INtNtBc_6option6OptionB1F_EENCINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB6g_7HashMapB1F_B5E_NtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateEINtNtB4A_7collect6ExtendB5z_E6extendBN_E0E0EB3q_(ptr noundef nonnull captures(address, read_provenance) %0, ptr noundef readnone captures(address) %1, ptr noalias noundef align 8 dereferenceable(48) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden void @_RINvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3mapINtB6_3MapINtNtNtCsbpG6u9KFjWn_8indexmap3map4iter4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtNtCs8ulvy0Wg6Ot_12delta_kernel11expressions7scalars6ScalarENCNvNtNtCs14kWLkQVSKO_14deltalake_core10operations8optimize13create_remove0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB4w_8for_each4callTB1F_INtNtBc_6option6OptionB1F_EENCINvXs1i_NtCs3gpiEk3WpjL_9hashbrown3mapINtB6g_7HashMapB1F_B5E_NtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateEINtNtB4A_7collect6ExtendB5z_E6extendBN_E0E0EB3q_(ptr noundef nonnull readonly captures(address, read_provenance) %0, ptr noundef readnone captures(address) %1, ptr noalias noundef align 8 dereferenceable(48) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
   %i.b = alloca [24 x i8], align 8                ; 5 uses
@@ -1133,7 +1133,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc noundef nonnull align 8 ptr @_RNvXsd_NtCs6Po7BT7Nknu_5alloc5boxedINtB5_3BoxNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema10StructTypeENtNtCsbvkFyIu7lgC_4core5clone5Clone5cloneCs14kWLkQVSKO_14deltalake_core(ptr captures(address, read_provenance) %.0.val) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc noundef nonnull align 8 ptr @_RNvXsd_NtCs6Po7BT7Nknu_5alloc5boxedINtB5_3BoxNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema10StructTypeENtNtCsbvkFyIu7lgC_4core5clone5Clone5cloneCs14kWLkQVSKO_14deltalake_core(ptr readonly captures(address, read_provenance) %.0.val) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
   %i.b = alloca [72 x i8], align 8                ; 5 uses

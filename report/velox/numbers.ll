@@ -201,7 +201,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: write) uwtable
-define noundef ptr @_ZN4absl12lts_2024011616numbers_internal15FastIntToBufferEjPc(i32 noundef %0, ptr noundef captures(ret: address, provenance) %1) local_unnamed_addr #5 {
+define noundef ptr @_ZN4absl12lts_2024011616numbers_internal15FastIntToBufferEjPc(i32 noundef %0, ptr noundef writeonly captures(ret: address, provenance) %1) local_unnamed_addr #5 {
 bb.a:
   %i.a = icmp ult i32 %0, 100
   br i1 %i.a, label %._crit_edge.i, label %.lr.ph.i, !prof !31
@@ -251,14 +251,14 @@ _ZN4absl12lts_2024011616numbers_internal12Base10DigitsIjEENSt9enable_ifIXsr3std1
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define noundef nonnull ptr @_ZN4absl12lts_2024011616numbers_internal23FastIntToBufferBackwardEjPcj(i32 noundef %0, ptr noundef captures(ret: address, provenance) %1, i32 noundef %2) local_unnamed_addr #4 {
+define noundef nonnull ptr @_ZN4absl12lts_2024011616numbers_internal23FastIntToBufferBackwardEjPcj(i32 noundef %0, ptr noundef writeonly captures(ret: address, provenance) %1, i32 noundef %2) local_unnamed_addr #4 {
 bb.a:
   %i.a = tail call fastcc noundef ptr @_ZN4absl12lts_2024011612_GLOBAL__N_125DoFastIntToBufferBackwardIjPcEENSt9enable_ifIXsr3std11is_unsignedIT_EE5valueET0_E4typeES5_S6_j(i32 noundef %0, ptr noundef %1)
   ret ptr %i.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: write) uwtable
-define noundef ptr @_ZN4absl12lts_2024011616numbers_internal15FastIntToBufferEiPc(i32 noundef %0, ptr noundef captures(ret: address, provenance) %1) local_unnamed_addr #5 {
+define noundef ptr @_ZN4absl12lts_2024011616numbers_internal15FastIntToBufferEiPc(i32 noundef %0, ptr noundef writeonly captures(ret: address, provenance) %1) local_unnamed_addr #5 {
 bb.a:
   %.lobit = lshr i32 %0, 31
   %i.a = zext nneg i32 %.lobit to i64
@@ -321,7 +321,7 @@ _ZN4absl12lts_2024011616numbers_internal23FastIntToBufferBackwardEiPcj.exit: ; p
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define noundef nonnull ptr @_ZN4absl12lts_2024011616numbers_internal23FastIntToBufferBackwardEiPcj(i32 noundef %0, ptr noundef captures(ret: address, provenance) %1, i32 noundef %2) local_unnamed_addr #4 {
+define noundef nonnull ptr @_ZN4absl12lts_2024011616numbers_internal23FastIntToBufferBackwardEiPcj(i32 noundef %0, ptr noundef writeonly captures(ret: address, provenance) %1, i32 noundef %2) local_unnamed_addr #4 {
 bb.a:
   %i.a = icmp slt i32 %0, 0
   br i1 %i.a, label %bb.b, label %_ZN4absl12lts_2024011612_GLOBAL__N_125DoFastIntToBufferBackwardIiPcEENSt9enable_ifIXsr3std9is_signedIT_EE5valueET0_E4typeES5_S6_j.exit
@@ -340,7 +340,7 @@ _ZN4absl12lts_2024011612_GLOBAL__N_125DoFastIntToBufferBackwardIiPcEENSt9enable_
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: write) uwtable
-define noundef ptr @_ZN4absl12lts_2024011616numbers_internal15FastIntToBufferEmPc(i64 noundef %0, ptr noundef captures(ret: address, provenance) %1) local_unnamed_addr #5 {
+define noundef ptr @_ZN4absl12lts_2024011616numbers_internal15FastIntToBufferEmPc(i64 noundef %0, ptr noundef writeonly captures(ret: address, provenance) %1) local_unnamed_addr #5 {
 bb.a:
   %i.a = icmp ult i64 %0, 100
   br i1 %i.a, label %._crit_edge.i, label %.lr.ph.i, !prof !31
@@ -390,14 +390,14 @@ _ZN4absl12lts_2024011616numbers_internal12Base10DigitsImEENSt9enable_ifIXsr3std1
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define noundef nonnull ptr @_ZN4absl12lts_2024011616numbers_internal23FastIntToBufferBackwardEmPcj(i64 noundef %0, ptr noundef captures(ret: address, provenance) %1, i32 noundef %2) local_unnamed_addr #4 {
+define noundef nonnull ptr @_ZN4absl12lts_2024011616numbers_internal23FastIntToBufferBackwardEmPcj(i64 noundef %0, ptr noundef writeonly captures(ret: address, provenance) %1, i32 noundef %2) local_unnamed_addr #4 {
 bb.a:
   %i.a = tail call fastcc noundef ptr @_ZN4absl12lts_2024011612_GLOBAL__N_125DoFastIntToBufferBackwardImPcEENSt9enable_ifIXsr3std11is_unsignedIT_EE5valueET0_E4typeES5_S6_j(i64 noundef %0, ptr noundef %1)
   ret ptr %i.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: write) uwtable
-define noundef ptr @_ZN4absl12lts_2024011616numbers_internal15FastIntToBufferElPc(i64 noundef %0, ptr noundef captures(ret: address, provenance) %1) local_unnamed_addr #5 {
+define noundef ptr @_ZN4absl12lts_2024011616numbers_internal15FastIntToBufferElPc(i64 noundef %0, ptr noundef writeonly captures(ret: address, provenance) %1) local_unnamed_addr #5 {
 bb.a:
   %.lobit = lshr i64 %0, 63
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 %.lobit ; 2 uses
@@ -459,7 +459,7 @@ _ZN4absl12lts_2024011616numbers_internal23FastIntToBufferBackwardElPcj.exit: ; p
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define noundef nonnull ptr @_ZN4absl12lts_2024011616numbers_internal23FastIntToBufferBackwardElPcj(i64 noundef %0, ptr noundef captures(ret: address, provenance) %1, i32 noundef %2) local_unnamed_addr #4 {
+define noundef nonnull ptr @_ZN4absl12lts_2024011616numbers_internal23FastIntToBufferBackwardElPcj(i64 noundef %0, ptr noundef writeonly captures(ret: address, provenance) %1, i32 noundef %2) local_unnamed_addr #4 {
 bb.a:
   %i.a = icmp slt i64 %0, 0
   br i1 %i.a, label %bb.b, label %_ZN4absl12lts_2024011612_GLOBAL__N_125DoFastIntToBufferBackwardIlPcEENSt9enable_ifIXsr3std9is_signedIT_EE5valueET0_E4typeES5_S6_j.exit

@@ -201,7 +201,7 @@ lpGetWithBuf.exit:                                ; preds = %bb.d, %bb.f, %bb.h,
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local ptr @lpGetValue(ptr noundef captures(address, ret: address, provenance) %0, ptr noundef writeonly captures(none) %1, ptr noundef writeonly captures(none) %2) local_unnamed_addr #3 {
+define dso_local ptr @lpGetValue(ptr noundef readonly captures(address, ret: address, provenance) %0, ptr noundef writeonly captures(none) %1, ptr noundef writeonly captures(none) %2) local_unnamed_addr #3 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
@@ -225,7 +225,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local range(i32 0, 2) i32 @lpGetIntegerValue(ptr noundef captures(address) %0, ptr noundef writeonly captures(none) %1) local_unnamed_addr #3 {
+define dso_local range(i32 0, 2) i32 @lpGetIntegerValue(ptr noundef readonly captures(address) %0, ptr noundef writeonly captures(none) %1) local_unnamed_addr #3 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
@@ -628,7 +628,7 @@ lpGetValue.exit:                                  ; preds = %lpNext.exit, %.preh
   %i.er = getelementptr inbounds nuw i8, ptr %i.ae, i64 4
   %i.es = load i32, ptr %i.er, align 4, !tbaa !51
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
-  %i.et = call ptr @lpGet(ptr noundef %.1.lcssa, ptr noundef nonnull %i.a, ptr noundef null) ; 2 uses
+  %i.et = call ptr @lpGet(ptr noundef readonly %.1.lcssa, ptr noundef nonnull %i.a, ptr noundef null) ; 2 uses
   %.not.i40 = icmp eq ptr %i.et, null             ; 2 uses
   %i.eu = load i64, ptr %i.a, align 8, !tbaa !16  ; 2 uses
   %i.ev = trunc i64 %i.eu to i32

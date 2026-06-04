@@ -201,7 +201,7 @@ bb.a:
   %i.m = alloca i32, align 4                      ; 6 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
   %i.n = alloca i8, align 1                       ; 5 uses
-  %i.o = tail call fastcc noundef ptr @_ZN7testing8internalL14ParseFlagValueEPKcS2_b(ptr noundef %0, ptr noundef nonnull @.str.6, i1 noundef zeroext true) ; 2 uses
+  %i.o = tail call fastcc noundef ptr @_ZN7testing8internalL14ParseFlagValueEPKcS2_b(ptr noundef readonly %0, ptr noundef nonnull @.str.6, i1 noundef zeroext true) ; 2 uses
   %.not = icmp eq ptr %i.o, null
   br i1 %.not, label %bb.d, label %bb.b
 
@@ -223,7 +223,7 @@ _ZN7testing8internalL9ParseFlagEPKcS2_Pb.exit:    ; preds = %bb.c, %bb.b, %bb.b
   br label %bb.bj
 
 bb.d:                                             ; preds = %bb.a
-  %i.s = tail call fastcc noundef ptr @_ZN7testing8internalL14ParseFlagValueEPKcS2_b(ptr noundef %0, ptr noundef nonnull @.str.8, i1 noundef zeroext true) ; 2 uses
+  %i.s = tail call fastcc noundef ptr @_ZN7testing8internalL14ParseFlagValueEPKcS2_b(ptr noundef readonly %0, ptr noundef nonnull @.str.8, i1 noundef zeroext true) ; 2 uses
   %.not133 = icmp eq ptr %i.s, null
   br i1 %.not133, label %bb.g, label %bb.e
 
@@ -245,7 +245,7 @@ _ZN7testing8internalL9ParseFlagEPKcS2_Pb.exit91:  ; preds = %bb.f, %bb.e, %bb.e
   br label %bb.bj
 
 bb.g:                                             ; preds = %bb.d
-  %i.w = tail call fastcc noundef ptr @_ZN7testing8internalL14ParseFlagValueEPKcS2_b(ptr noundef %0, ptr noundef nonnull @.str.10, i1 noundef zeroext true) ; 2 uses
+  %i.w = tail call fastcc noundef ptr @_ZN7testing8internalL14ParseFlagValueEPKcS2_b(ptr noundef readonly %0, ptr noundef nonnull @.str.10, i1 noundef zeroext true) ; 2 uses
   %.not134 = icmp eq ptr %i.w, null
   br i1 %.not134, label %bb.j, label %bb.h
 
@@ -648,7 +648,7 @@ bb.m:                                             ; preds = %bb.h, %bb.i, %bb.k,
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define internal fastcc noundef zeroext i1 @_ZN7testing8internalL9ParseFlagEPKcS2_Pb(ptr noundef captures(address) %0, ptr noundef %1, ptr noundef nonnull writeonly captures(none) %2) unnamed_addr #2 {
+define internal fastcc noundef zeroext i1 @_ZN7testing8internalL9ParseFlagEPKcS2_Pb(ptr noundef readonly captures(address) %0, ptr noundef %1, ptr noundef nonnull writeonly captures(none) %2) unnamed_addr #2 {
 bb.a:
   %i.a = tail call fastcc noundef ptr @_ZN7testing8internalL14ParseFlagValueEPKcS2_b(ptr noundef %0, ptr noundef %1, i1 noundef zeroext true) ; 2 uses
   %i.b = icmp ne ptr %i.a, null                   ; 2 uses

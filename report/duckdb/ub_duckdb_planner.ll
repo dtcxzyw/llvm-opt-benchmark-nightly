@@ -201,7 +201,7 @@ _ZN6duckdb6vectorINS_11LogicalTypeELb1ESaIS1_EE3getILb1EEERS1_m.exit: ; preds = 
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZNK6duckdb7Binding8GetAliasB5cxx11Ev(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull align 8 captures(none) dereferenceable(224) %1) local_unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZNK6duckdb7Binding8GetAliasB5cxx11Ev(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(224) %1) local_unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -604,7 +604,7 @@ _ZN6duckdb7Binding18TryGetBindingIndexERKNSt7__cxx1112basic_stringIcSt11char_tra
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZNK6duckdb7Binding19ColumnNotFoundErrorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind noalias writable sret(%"class.duckdb::ErrorData") align 8 %0, ptr noundef nonnull align 8 captures(none) dereferenceable(224) %1, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(32) %2) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZNK6duckdb7Binding19ColumnNotFoundErrorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind noalias writable sret(%"class.duckdb::ErrorData") align 8 %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(224) %1, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(32) %2) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 .noexc.i:
   %3 = alloca %"class.std::vector.2052", align 8  ; 9 uses
   %i.a = alloca i64, align 8                      ; 6 uses
@@ -631,7 +631,7 @@ define void @_ZNK6duckdb7Binding19ColumnNotFoundErrorERKNSt7__cxx1112basic_strin
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #32
   call void @llvm.experimental.noalias.scope.decl(metadata !399)
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.j = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNK6duckdb12BindingAlias8GetAliasB5cxx11Ev(ptr noundef nonnull align 8 dereferenceable(96) %i.i)
+  %i.j = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNK6duckdb12BindingAlias8GetAliasB5cxx11Ev(ptr noundef nonnull readonly align 8 dereferenceable(96) %i.i)
           to label %.noexc11 unwind label %bb.l   ; 2 uses
 
 .noexc11:                                         ; preds = %.noexc.i
@@ -1034,7 +1034,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = load ptr, ptr %i.e, align 8, !tbaa !1119
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1120)
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 16
-  %i.i = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNK6duckdb12BindingAlias8GetAliasB5cxx11Ev(ptr noundef nonnull align 8 dereferenceable(96) %i.h), !noalias !1120 ; 2 uses
+  %i.i = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNK6duckdb12BindingAlias8GetAliasB5cxx11Ev(ptr noundef nonnull readonly align 8 dereferenceable(96) %i.h), !noalias !1120 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 4 uses
   store ptr %i.j, ptr %6, align 8, !tbaa !7, !alias.scope !1120
   %i.k = load ptr, ptr %i.i, align 8, !tbaa !15   ; 2 uses
@@ -1437,7 +1437,7 @@ _ZN6duckdb10unique_ptrINS_19ColumnRefExpressionESt14default_deleteIS1_ELb1EE13As
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN6duckdb17GetCandidateAliasB5cxx11ERKNS_12BindingAliasES2_(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(96) %1, ptr noundef nonnull align 8 captures(none) dereferenceable(96) %2) local_unnamed_addr #2 personality ptr @__gxx_personality_v0 {
+define void @_ZN6duckdb17GetCandidateAliasB5cxx11ERKNS_12BindingAliasES2_(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(96) %1, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(96) %2) local_unnamed_addr #2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
@@ -1840,7 +1840,7 @@ bb.b:                                             ; preds = %.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #32
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1344)
   %i.x = getelementptr inbounds nuw i8, ptr %i.m, i64 16
-  %i.y = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNK6duckdb12BindingAlias8GetAliasB5cxx11Ev(ptr noundef nonnull align 8 dereferenceable(96) %i.x), !noalias !1344 ; 2 uses
+  %i.y = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNK6duckdb12BindingAlias8GetAliasB5cxx11Ev(ptr noundef nonnull readonly align 8 dereferenceable(96) %i.x), !noalias !1344 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 8 uses
   store ptr %i.z, ptr %6, align 8, !tbaa !7, !alias.scope !1344
   %i.aa = load ptr, ptr %i.y, align 8, !tbaa !15  ; 2 uses
@@ -1985,7 +1985,7 @@ bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #32
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1347)
   %i.bn = getelementptr inbounds nuw i8, ptr %i.m, i64 16
-  %i.bo = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNK6duckdb12BindingAlias8GetAliasB5cxx11Ev(ptr noundef nonnull align 8 dereferenceable(96) %i.bn), !noalias !1347 ; 2 uses
+  %i.bo = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNK6duckdb12BindingAlias8GetAliasB5cxx11Ev(ptr noundef nonnull readonly align 8 dereferenceable(96) %i.bn), !noalias !1347 ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 8 uses
   store ptr %i.bp, ptr %7, align 8, !tbaa !7, !alias.scope !1347
   %i.bq = load ptr, ptr %i.bo, align 8, !tbaa !15 ; 2 uses
@@ -2388,7 +2388,7 @@ bb.dx:                                            ; preds = %.noexc327
   %i.rc = load ptr, ptr %24, align 8, !tbaa !1228
   call void @llvm.experimental.noalias.scope.decl(metadata !1429)
   %i.rd = getelementptr inbounds nuw i8, ptr %i.rc, i64 16
-  %i.re = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNK6duckdb12BindingAlias8GetAliasB5cxx11Ev(ptr noundef nonnull align 8 dereferenceable(96) %i.rd)
+  %i.re = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNK6duckdb12BindingAlias8GetAliasB5cxx11Ev(ptr noundef nonnull readonly align 8 dereferenceable(96) %i.rd)
           to label %.noexc332 unwind label %bb.em ; 2 uses
 
 .noexc332:                                        ; preds = %bb.dx

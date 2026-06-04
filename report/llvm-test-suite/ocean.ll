@@ -201,7 +201,7 @@ bb.a:
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #3
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local void @_ZN4Cell21getEmptyNeighborCoordEv(ptr dead_on_unwind noalias writable writeonly sret(%class.Coordinate) align 4 captures(none) initializes((0, 8)) %0, ptr noundef nonnull align 8 captures(none) dereferenceable(17) %1) local_unnamed_addr #2 align 2 {
+define dso_local void @_ZN4Cell21getEmptyNeighborCoordEv(ptr dead_on_unwind noalias writable writeonly sret(%class.Coordinate) align 4 captures(none) initializes((0, 8)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(17) %1) local_unnamed_addr #2 align 2 {
 bb.a:
   %i.a = tail call noundef ptr @_ZN4Cell20getNeighborWithImageEc(ptr noundef nonnull align 8 dereferenceable(17) %1, i8 noundef signext 45)
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -212,7 +212,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local void @_ZN4Cell20getPreyNeighborCoordEv(ptr dead_on_unwind noalias writable writeonly sret(%class.Coordinate) align 4 captures(none) initializes((0, 8)) %0, ptr noundef nonnull align 8 captures(none) dereferenceable(17) %1) local_unnamed_addr #2 align 2 {
+define dso_local void @_ZN4Cell20getPreyNeighborCoordEv(ptr dead_on_unwind noalias writable writeonly sret(%class.Coordinate) align 4 captures(none) initializes((0, 8)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(17) %1) local_unnamed_addr #2 align 2 {
 bb.a:
   %i.a = tail call noundef ptr @_ZN4Cell20getNeighborWithImageEc(ptr noundef nonnull align 8 dereferenceable(17) %1, i8 noundef signext 102)
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -453,7 +453,7 @@ bb.d:                                             ; preds = %bb.b
   resume { ptr, i32 } %i.z
 
 bb.e:                                             ; preds = %bb.a
-  %i.aa = tail call noundef ptr @_ZN4Cell20getNeighborWithImageEc(ptr noundef nonnull align 8 dereferenceable(17) %0, i8 noundef signext 102), !noalias !34
+  %i.aa = tail call noundef ptr @_ZN4Cell20getNeighborWithImageEc(ptr noundef nonnull readonly align 8 dereferenceable(17) %0, i8 noundef signext 102), !noalias !34
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !14 ; 2 uses
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !10, !noalias !34 ; 2 uses
@@ -488,7 +488,7 @@ bb.f:                                             ; preds = %bb.e
 _ZN4Prey7processEv.exit:                          ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  %i.as = tail call noundef ptr @_ZN4Cell20getNeighborWithImageEc(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 noundef signext 45), !noalias !37
+  %i.as = tail call noundef ptr @_ZN4Cell20getNeighborWithImageEc(ptr noundef nonnull readonly align 8 dereferenceable(24) %0, i8 noundef signext 45), !noalias !37
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 8
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !14
   %i.av = load ptr, ptr %i.ag, align 8, !tbaa !14
@@ -510,7 +510,7 @@ define linkonce_odr dso_local void @_ZN4Prey7processEv(ptr noundef nonnull align
 bb.a:
   %1 = alloca %class.Coordinate, align 8          ; 2 uses
   %2 = alloca %class.Coordinate, align 8          ; 2 uses
-  %i.a = tail call noundef ptr @_ZN4Cell20getNeighborWithImageEc(ptr noundef nonnull align 8 dereferenceable(17) %0, i8 noundef signext 45), !noalias !40
+  %i.a = tail call noundef ptr @_ZN4Cell20getNeighborWithImageEc(ptr noundef nonnull readonly align 8 dereferenceable(17) %0, i8 noundef signext 45), !noalias !40
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !14
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8

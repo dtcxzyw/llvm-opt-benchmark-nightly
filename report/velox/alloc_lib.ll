@@ -201,7 +201,7 @@ dlmemalign.exit:                                  ; preds = %bb.d, %bb.e
 }
 
 ; Function Attrs: nounwind uwtable
-define ptr @dlindependent_calloc(i64 noundef %0, i64 noundef %1, ptr noundef captures(address_is_null, ret: address, provenance) %2) local_unnamed_addr #0 {
+define ptr @dlindependent_calloc(i64 noundef %0, i64 noundef %1, ptr noundef writeonly captures(address_is_null, ret: address, provenance) %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
@@ -604,7 +604,7 @@ bb.ab:                                            ; preds = %._crit_edge, %bb.aa
 }
 
 ; Function Attrs: nounwind uwtable
-define ptr @dlindependent_comalloc(i64 noundef %0, ptr noundef readonly captures(none) %1, ptr noundef captures(address_is_null, ret: address, provenance) %2) local_unnamed_addr #0 {
+define ptr @dlindependent_comalloc(i64 noundef %0, ptr noundef readonly captures(none) %1, ptr noundef writeonly captures(address_is_null, ret: address, provenance) %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call fastcc ptr @ialloc(ptr noundef nonnull @_gm_, i64 noundef %0, ptr noundef %1, i32 noundef 0, ptr noundef %2)
   ret ptr %i.a
@@ -1007,7 +1007,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: nounwind uwtable
-define ptr @mspace_independent_calloc(ptr noundef %0, i64 noundef %1, i64 noundef %2, ptr noundef captures(address_is_null, ret: address, provenance) %3) local_unnamed_addr #0 {
+define ptr @mspace_independent_calloc(ptr noundef %0, i64 noundef %1, i64 noundef %2, ptr noundef writeonly captures(address_is_null, ret: address, provenance) %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
@@ -1018,7 +1018,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define ptr @mspace_independent_comalloc(ptr noundef %0, i64 noundef %1, ptr noundef readonly captures(none) %2, ptr noundef captures(address_is_null, ret: address, provenance) %3) local_unnamed_addr #0 {
+define ptr @mspace_independent_comalloc(ptr noundef %0, i64 noundef %1, ptr noundef readonly captures(none) %2, ptr noundef writeonly captures(address_is_null, ret: address, provenance) %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call fastcc ptr @ialloc(ptr noundef %0, i64 noundef %1, ptr noundef %2, i32 noundef 0, ptr noundef %3)
   ret ptr %i.a

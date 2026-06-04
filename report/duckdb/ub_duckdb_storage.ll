@@ -201,7 +201,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal noundef ptr @_ZN6duckdbL23ArenaAllocateReallocateEPNS_20PrivateAllocatorDataEPhmm(ptr noundef readonly captures(none) %0, ptr noundef captures(address, ret: address, provenance) %1, i64 noundef %2, i64 noundef %3) #0 {
+define internal noundef ptr @_ZN6duckdbL23ArenaAllocateReallocateEPNS_20PrivateAllocatorDataEPhmm(ptr noundef readonly captures(none) %0, ptr noundef readonly captures(address, ret: address, provenance) %1, i64 noundef %2, i64 noundef %3) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !65, !nonnull !67, !align !68
@@ -481,7 +481,7 @@ _ZN6duckdb14ArenaAllocator8AllocateEm.exit:       ; preds = %bb.d, %bb.e
 }
 
 ; Function Attrs: mustprogress uwtable
-define noundef ptr @_ZN6duckdb14ArenaAllocator17ReallocateAlignedEPhmm(ptr noundef nonnull align 8 captures(none) dereferenceable(72) %0, ptr noundef captures(address, ret: address, provenance) %1, i64 noundef %2, i64 noundef %3) local_unnamed_addr #0 align 2 {
+define noundef ptr @_ZN6duckdb14ArenaAllocator17ReallocateAlignedEPhmm(ptr noundef nonnull align 8 captures(none) dereferenceable(72) %0, ptr noundef readonly captures(address, ret: address, provenance) %1, i64 noundef %2, i64 noundef %3) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !24   ; 2 uses

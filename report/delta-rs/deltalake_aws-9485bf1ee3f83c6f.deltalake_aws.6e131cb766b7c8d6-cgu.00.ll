@@ -201,7 +201,7 @@ bb.j:                                             ; preds = %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCscTw95cGIolY_7tracing4span7EnteredECs9rVkZwOUgsI_13deltalake_aws(ptr captures(address, read_provenance) %.0.val) unnamed_addr #1 {
+define internal fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCscTw95cGIolY_7tracing4span7EnteredECs9rVkZwOUgsI_13deltalake_aws(ptr readonly captures(address, read_provenance) %.0.val) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 5 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses
@@ -604,7 +604,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6Str
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNCNvNtCs14kWLkQVSKO_14deltalake_core8logstore17read_commit_entry000Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNCNvNtCs14kWLkQVSKO_14deltalake_core8logstore17read_commit_entry000Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNCNvNtCs14kWLkQVSKO_14deltalake_core8logstore17read_commit_entry0010___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -648,7 +648,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNCNvNtCs14kWLkQVSKO_14deltalake_core8logstore17read_commit_entry00s0_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNCNvNtCs14kWLkQVSKO_14deltalake_core8logstore17read_commit_entry00s0_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNCNvNtCs14kWLkQVSKO_14deltalake_core8logstore17read_commit_entry00s0_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -692,7 +692,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNCNvNtCs14kWLkQVSKO_14deltalake_core8logstore17read_commit_entry00s_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNCNvNtCs14kWLkQVSKO_14deltalake_core8logstore17read_commit_entry00s_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNCNvNtCs14kWLkQVSKO_14deltalake_core8logstore17read_commit_entry00s_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -736,7 +736,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s0_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s0_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op0010___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -780,7 +780,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s1_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s1_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -824,7 +824,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s2_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s2_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s1_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -868,7 +868,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s3_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s3_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s2_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -912,7 +912,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s4_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s4_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s3_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -956,7 +956,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s5_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s5_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s4_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -1000,7 +1000,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s6_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s6_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s5_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -1044,7 +1044,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s7_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s7_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s6_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -1088,7 +1088,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s8_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s8_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s7_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -1132,7 +1132,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s9_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s9_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s8_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -1176,7 +1176,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00sb_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00sb_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00s9_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -1220,7 +1220,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00sc_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00sc_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00sa_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -1264,7 +1264,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00se_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00se_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00sc_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -1308,7 +1308,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00si_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00si_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00sg_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -1352,7 +1352,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00sj_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00sj_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00sh_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -1396,7 +1396,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00sl_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00sl_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator6try_op00si_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -1440,7 +1440,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s0_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s0_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -1484,7 +1484,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s1_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s1_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s0_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -1528,7 +1528,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s2_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s2_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s2_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -1572,7 +1572,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s3_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s3_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s3_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -1616,7 +1616,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s4_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s4_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s4_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -1660,7 +1660,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s5_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s5_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s5_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -1704,7 +1704,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s6_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s6_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s6_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -1748,7 +1748,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s7_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s7_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s7_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -1792,7 +1792,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s8_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s8_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s8_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -1836,7 +1836,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s9_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s9_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s9_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -1880,7 +1880,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0s_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt010___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -1924,7 +1924,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0sa_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0sa_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0sa_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -1968,7 +1968,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0sc_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0sc_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0sb_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -2012,7 +2012,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0sd_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0sd_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0sc_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -2056,7 +2056,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0se_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0se_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0sd_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -2100,7 +2100,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0sf_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0sf_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0se_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -2144,7 +2144,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0sg_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0sg_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0sf_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -2188,7 +2188,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0sh_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0sh_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0sg_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -2232,7 +2232,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0si_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0si_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0si_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -2276,7 +2276,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0sj_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0sj_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator11try_attempt0sj_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -2679,7 +2679,7 @@ bb.acs:                                           ; preds = %bb.acr
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtCsat9blWvDIpa_11aws_runtime10env_config6source16load_config_file0s1_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtCsat9blWvDIpa_11aws_runtime10env_config6source16load_config_file0s1_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtCsat9blWvDIpa_11aws_runtime10env_config6source16load_config_file010___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -2723,7 +2723,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtCsat9blWvDIpa_11aws_runtime10env_config6source16load_config_file0s2_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtCsat9blWvDIpa_11aws_runtime10env_config6source16load_config_file0s2_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtCsat9blWvDIpa_11aws_runtime10env_config6source16load_config_file0s_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -2767,7 +2767,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtCsat9blWvDIpa_11aws_runtime10env_config6source16load_config_file0s3_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtCsat9blWvDIpa_11aws_runtime10env_config6source16load_config_file0s3_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtCsat9blWvDIpa_11aws_runtime10env_config6source16load_config_file0s0_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -2811,7 +2811,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtCsat9blWvDIpa_11aws_runtime10env_config6source16load_config_file0s4_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtCsat9blWvDIpa_11aws_runtime10env_config6source16load_config_file0s4_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtCsat9blWvDIpa_11aws_runtime10env_config6source16load_config_file0s1_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -2855,7 +2855,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator4auth16resolve_identity00Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator4auth16resolve_identity00Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator4auth16resolve_identity010___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -2899,7 +2899,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator4auth16resolve_identity0s0_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator4auth16resolve_identity0s0_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator4auth16resolve_identity0s0_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -2943,7 +2943,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator4auth16resolve_identity0s_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator4auth16resolve_identity0s_0Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator4auth16resolve_identity0s_10___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -2987,7 +2987,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNCNCNvNtNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator4auth27legacy_try_resolve_endpoint00Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
+define internal fastcc void @_RNCNCNvNtNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator4auth27legacy_try_resolve_endpoint00Cs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = load ptr, ptr @_RNvNCNvNtNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator4auth27legacy_try_resolve_endpoint010___CALLSITE, align 8, !nonnull !7, !align !47, !noundef !7
@@ -3390,7 +3390,7 @@ _RINvNvXs0_NvNtCscTw95cGIolY_7tracing10instruments_1__INtBa_12InstrumentedpENtNt
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXs0_NvNtCscTw95cGIolY_7tracing10instruments_1__INtB7_12InstrumentedNCNCNvNtCs14kWLkQVSKO_14deltalake_core8logstore18abort_commit_entry00ENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs9rVkZwOUgsI_13deltalake_aws(ptr noundef nonnull align 8 captures(address, read_provenance) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden void @_RNvXs0_NvNtCscTw95cGIolY_7tracing10instruments_1__INtB7_12InstrumentedNCNCNvNtCs14kWLkQVSKO_14deltalake_core8logstore18abort_commit_entry00ENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs9rVkZwOUgsI_13deltalake_aws(ptr noundef nonnull readonly align 8 captures(address, read_provenance) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 5 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses
@@ -3483,7 +3483,7 @@ bb.k:                                             ; preds = %bb.j
   br label %.body.i
 
 .body.i:                                          ; preds = %bb.k, %bb.j
-  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCscTw95cGIolY_7tracing4span7EnteredECs9rVkZwOUgsI_13deltalake_aws(ptr nonnull align 8 %0) #24
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCscTw95cGIolY_7tracing4span7EnteredECs9rVkZwOUgsI_13deltalake_aws(ptr nonnull readonly align 8 %0) #24
           to label %bb.q unwind label %bb.p
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNCNvNtCs14kWLkQVSKO_14deltalake_core8logstore18abort_commit_entry00ECs9rVkZwOUgsI_13deltalake_aws.exit.i: ; preds = %bb.i, %bb.h, %_RNvMNtCscTw95cGIolY_7tracing4spanNtB2_4Span8do_enter.exit.i
@@ -3728,7 +3728,7 @@ _RINvNvXs0_NvNtCscTw95cGIolY_7tracing10instruments_1__INtBa_12InstrumentedpENtNt
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXs0_NvNtCscTw95cGIolY_7tracing10instruments_1__INtB7_12InstrumentedNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator10finally_op00ENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs9rVkZwOUgsI_13deltalake_aws(ptr noundef nonnull align 8 captures(address, read_provenance) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden void @_RNvXs0_NvNtCscTw95cGIolY_7tracing10instruments_1__INtB7_12InstrumentedNCNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator10finally_op00ENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs9rVkZwOUgsI_13deltalake_aws(ptr noundef nonnull readonly align 8 captures(address, read_provenance) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 5 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses
@@ -4044,7 +4044,7 @@ _RINvNvXs0_NvNtCscTw95cGIolY_7tracing10instruments_1__INtBa_12InstrumentedpENtNt
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXs0_NvNtCscTw95cGIolY_7tracing10instruments_1__INtB7_12InstrumentedNCNCNvYDNtCsjyY8HP3IvQ6_12object_store11ObjectStoreEL_NtNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore7storage9retry_ext19ObjectStoreRetryExt19delete_with_retries00ENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs9rVkZwOUgsI_13deltalake_aws(ptr noundef nonnull align 8 captures(address, read_provenance) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden void @_RNvXs0_NvNtCscTw95cGIolY_7tracing10instruments_1__INtB7_12InstrumentedNCNCNvYDNtCsjyY8HP3IvQ6_12object_store11ObjectStoreEL_NtNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore7storage9retry_ext19ObjectStoreRetryExt19delete_with_retries00ENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs9rVkZwOUgsI_13deltalake_aws(ptr noundef nonnull readonly align 8 captures(address, read_provenance) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 5 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses
@@ -4137,7 +4137,7 @@ bb.k:                                             ; preds = %bb.j
   br label %.body.i
 
 .body.i:                                          ; preds = %bb.k, %bb.j
-  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCscTw95cGIolY_7tracing4span7EnteredECs9rVkZwOUgsI_13deltalake_aws(ptr nonnull align 8 %0) #24
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCscTw95cGIolY_7tracing4span7EnteredECs9rVkZwOUgsI_13deltalake_aws(ptr nonnull readonly align 8 %0) #24
           to label %bb.q unwind label %bb.p
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNCNvYDNtCsjyY8HP3IvQ6_12object_store11ObjectStoreEL_NtNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore7storage9retry_ext19ObjectStoreRetryExt19delete_with_retries00ECs9rVkZwOUgsI_13deltalake_aws.exit.i: ; preds = %bb.i, %bb.h, %_RNvMNtCscTw95cGIolY_7tracing4spanNtB2_4Span8do_enter.exit.i
@@ -4516,7 +4516,7 @@ _RINvNvXs0_NvNtCscTw95cGIolY_7tracing10instruments_1__INtBa_12InstrumentedpENtNt
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXs0_NvNtCscTw95cGIolY_7tracing10instruments_1__INtB7_12InstrumentedNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator15finally_attempt0ENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs9rVkZwOUgsI_13deltalake_aws(ptr noundef nonnull align 8 captures(address, read_provenance) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden void @_RNvXs0_NvNtCscTw95cGIolY_7tracing10instruments_1__INtB7_12InstrumentedNCNvNtNtCs2HJ6gJZ22Qg_18aws_smithy_runtime6client12orchestrator15finally_attempt0ENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs9rVkZwOUgsI_13deltalake_aws(ptr noundef nonnull readonly align 8 captures(address, read_provenance) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 5 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses

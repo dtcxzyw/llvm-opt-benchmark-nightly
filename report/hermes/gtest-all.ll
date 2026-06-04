@@ -201,7 +201,7 @@ bb.l:                                             ; preds = %bb.a, %_ZNSt7__cxx1
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef zeroext i1 @_ZN7testing8internal13ParseBoolFlagEPKcS2_Pb(ptr noundef captures(address) %0, ptr noundef %1, ptr noundef writeonly captures(none) %2) local_unnamed_addr #0 {
+define hidden noundef zeroext i1 @_ZN7testing8internal13ParseBoolFlagEPKcS2_Pb(ptr noundef readonly captures(address) %0, ptr noundef %1, ptr noundef writeonly captures(none) %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call noundef ptr @_ZN7testing8internal14ParseFlagValueEPKcS2_b(ptr noundef %0, ptr noundef %1, i1 noundef zeroext true) ; 2 uses
   %i.b = icmp ne ptr %i.a, null                   ; 2 uses
@@ -370,7 +370,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: mustprogress uwtable
 define hidden noundef zeroext i1 @_ZN7testing8internal19ParseGoogleTestFlagEPKc(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call noundef ptr @_ZN7testing8internal14ParseFlagValueEPKcS2_b(ptr noundef %0, ptr noundef nonnull @.str, i1 noundef zeroext true) ; 2 uses
+  %i.a = tail call noundef ptr @_ZN7testing8internal14ParseFlagValueEPKcS2_b(ptr noundef readonly %0, ptr noundef nonnull @.str, i1 noundef zeroext true) ; 2 uses
   %.not = icmp eq ptr %i.a, null
   br i1 %.not, label %_ZN7testing8internal13ParseBoolFlagEPKcS2_Pb.exit, label %bb.b
 
@@ -392,7 +392,7 @@ _ZN7testing8internal13ParseBoolFlagEPKcS2_Pb.exit.thread: ; preds = %bb.b, %bb.b
   br label %bb.t
 
 _ZN7testing8internal13ParseBoolFlagEPKcS2_Pb.exit: ; preds = %bb.a
-  %i.f = tail call noundef ptr @_ZN7testing8internal14ParseFlagValueEPKcS2_b(ptr noundef %0, ptr noundef nonnull @.str.2, i1 noundef zeroext true) ; 2 uses
+  %i.f = tail call noundef ptr @_ZN7testing8internal14ParseFlagValueEPKcS2_b(ptr noundef readonly %0, ptr noundef nonnull @.str.2, i1 noundef zeroext true) ; 2 uses
   %.not21 = icmp eq ptr %i.f, null
   br i1 %.not21, label %_ZN7testing8internal13ParseBoolFlagEPKcS2_Pb.exit17, label %bb.d
 
@@ -414,7 +414,7 @@ _ZN7testing8internal13ParseBoolFlagEPKcS2_Pb.exit17.thread: ; preds = %bb.d, %bb
   br label %bb.t
 
 _ZN7testing8internal13ParseBoolFlagEPKcS2_Pb.exit17: ; preds = %_ZN7testing8internal13ParseBoolFlagEPKcS2_Pb.exit
-  %i.k = tail call noundef ptr @_ZN7testing8internal14ParseFlagValueEPKcS2_b(ptr noundef %0, ptr noundef nonnull @.str.4, i1 noundef zeroext true) ; 2 uses
+  %i.k = tail call noundef ptr @_ZN7testing8internal14ParseFlagValueEPKcS2_b(ptr noundef readonly %0, ptr noundef nonnull @.str.4, i1 noundef zeroext true) ; 2 uses
   %.not22 = icmp eq ptr %i.k, null
   br i1 %.not22, label %_ZN7testing8internal13ParseBoolFlagEPKcS2_Pb.exit18, label %bb.f
 
@@ -458,7 +458,7 @@ _ZN7testing8internal15ParseStringFlagEPKcS2_PNSt7__cxx1112basic_stringIcSt11char
   br label %bb.t
 
 _ZN7testing8internal15ParseStringFlagEPKcS2_PNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit19: ; preds = %_ZN7testing8internal15ParseStringFlagEPKcS2_PNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
-  %i.x = tail call noundef ptr @_ZN7testing8internal14ParseFlagValueEPKcS2_b(ptr noundef %0, ptr noundef nonnull @.str.256, i1 noundef zeroext true) ; 2 uses
+  %i.x = tail call noundef ptr @_ZN7testing8internal14ParseFlagValueEPKcS2_b(ptr noundef readonly %0, ptr noundef nonnull @.str.256, i1 noundef zeroext true) ; 2 uses
   %.not25 = icmp eq ptr %i.x, null
   br i1 %.not25, label %_ZN7testing8internal13ParseBoolFlagEPKcS2_Pb.exit20, label %bb.h
 

@@ -201,7 +201,7 @@ bb.at:                                            ; preds = %.lr.ph.i134
 bb.au:                                            ; preds = %bb.at
   %i.ft = load ptr, ptr %i.fm, align 8, !tbaa !195 ; 2 uses
   %i.fu = load ptr, ptr %0, align 8, !tbaa !244
-  %i.fv = call fastcc ptr @sqlite3GetCollSeq(ptr noundef %i.fu, ptr noundef nonnull %i.fm, ptr noundef %i.ft)
+  %i.fv = call fastcc ptr @sqlite3GetCollSeq(ptr noundef %i.fu, ptr noundef nonnull readonly %i.fm, ptr noundef %i.ft)
   %.not13.i.i = icmp eq ptr %i.fv, null
   br i1 %.not13.i.i, label %bb.av, label %sqlite3ExprCollSeq.exit
 
@@ -604,7 +604,7 @@ bb.g:                                             ; preds = %.lr.ph.i
 bb.h:                                             ; preds = %bb.g
   %i.al = load ptr, ptr %i.ae, align 8, !tbaa !195 ; 2 uses
   %i.am = load ptr, ptr %0, align 8, !tbaa !244
-  %i.an = tail call fastcc ptr @sqlite3GetCollSeq(ptr noundef %i.am, ptr noundef nonnull %i.ae, ptr noundef %i.al)
+  %i.an = tail call fastcc ptr @sqlite3GetCollSeq(ptr noundef %i.am, ptr noundef nonnull readonly %i.ae, ptr noundef %i.al)
   %.not13.i.i = icmp eq ptr %i.an, null
   br i1 %.not13.i.i, label %bb.i, label %sqlite3ExprCollSeq.exit
 
@@ -1007,7 +1007,7 @@ bb.eh:                                            ; preds = %.lr.ph.i.i350.i
 bb.ei:                                            ; preds = %bb.eh
   %i.xp = load ptr, ptr %i.xi, align 8, !tbaa !195 ; 2 uses
   %i.xq = load ptr, ptr %i.tq, align 8, !tbaa !244
-  %i.xr = call fastcc ptr @sqlite3GetCollSeq(ptr noundef %i.xq, ptr noundef nonnull %i.xi, ptr noundef %i.xp)
+  %i.xr = call fastcc ptr @sqlite3GetCollSeq(ptr noundef %i.xq, ptr noundef nonnull readonly %i.xi, ptr noundef %i.xp)
   %.not13.i.i.i358.i = icmp eq ptr %i.xr, null
   br i1 %.not13.i.i.i358.i, label %bb.ej, label %sqlite3BinaryCompareCollSeq.exit.thread421.i
 
@@ -1056,7 +1056,7 @@ bb.el:                                            ; preds = %.lr.ph.i17.i.i
 bb.em:                                            ; preds = %bb.el
   %i.yf = load ptr, ptr %i.xy, align 8, !tbaa !195 ; 2 uses
   %i.yg = load ptr, ptr %i.tq, align 8, !tbaa !244
-  %i.yh = call fastcc ptr @sqlite3GetCollSeq(ptr noundef %i.yg, ptr noundef nonnull %i.xy, ptr noundef %i.yf)
+  %i.yh = call fastcc ptr @sqlite3GetCollSeq(ptr noundef %i.yg, ptr noundef nonnull readonly %i.xy, ptr noundef %i.yf)
   %.not13.i.i25.i.i = icmp eq ptr %i.yh, null
   br i1 %.not13.i.i25.i.i, label %bb.en, label %sqlite3BinaryCompareCollSeq.exit.thread421.i
 
@@ -1365,7 +1365,7 @@ bb.fg:                                            ; preds = %.lr.ph.i.i319.i
 bb.fh:                                            ; preds = %bb.fg
   %i.acw = load ptr, ptr %i.acp, align 8, !tbaa !195 ; 2 uses
   %i.acx = load ptr, ptr %0, align 8, !tbaa !244
-  %i.acy = call fastcc ptr @sqlite3GetCollSeq(ptr noundef %i.acx, ptr noundef nonnull %i.acp, ptr noundef %i.acw)
+  %i.acy = call fastcc ptr @sqlite3GetCollSeq(ptr noundef %i.acx, ptr noundef nonnull readonly %i.acp, ptr noundef %i.acw)
   %.not13.i.i.i.i = icmp eq ptr %i.acy, null
   br i1 %.not13.i.i.i.i, label %bb.fi, label %sqlite3ExprCollSeq.exit.i.i
 
@@ -1768,7 +1768,7 @@ bb.w:                                             ; preds = %.lr.ph.i
 bb.x:                                             ; preds = %bb.w
   %i.dl = load ptr, ptr %i.de, align 8, !tbaa !195 ; 2 uses
   %i.dm = load ptr, ptr %0, align 8, !tbaa !244
-  %i.dn = tail call fastcc ptr @sqlite3GetCollSeq(ptr noundef %i.dm, ptr noundef nonnull %i.de, ptr noundef %i.dl)
+  %i.dn = tail call fastcc ptr @sqlite3GetCollSeq(ptr noundef %i.dm, ptr noundef nonnull readonly %i.de, ptr noundef %i.dl)
   %.not13.i.i = icmp eq ptr %i.dn, null
   br i1 %.not13.i.i, label %bb.y, label %sqlite3ExprCollSeq.exit.thread
 
@@ -2171,7 +2171,7 @@ bb.c:                                             ; preds = %.lr.ph.i
 bb.d:                                             ; preds = %bb.c
   %i.s = load ptr, ptr %i.l, align 8, !tbaa !195  ; 2 uses
   %i.t = load ptr, ptr %0, align 8, !tbaa !244
-  %i.u = tail call fastcc ptr @sqlite3GetCollSeq(ptr noundef %i.t, ptr noundef nonnull %i.l, ptr noundef %i.s)
+  %i.u = tail call fastcc ptr @sqlite3GetCollSeq(ptr noundef %i.t, ptr noundef nonnull readonly %i.l, ptr noundef %i.s)
   %.not13.i.i = icmp eq ptr %i.u, null
   br i1 %.not13.i.i, label %bb.e, label %sqlite3ExprCollSeq.exit
 
@@ -2574,7 +2574,7 @@ bb.f:                                             ; preds = %.lr.ph.i
 bb.g:                                             ; preds = %bb.f
   %i.s = load ptr, ptr %i.l, align 8, !tbaa !195  ; 2 uses
   %i.t = load ptr, ptr %0, align 8, !tbaa !244
-  %i.u = tail call fastcc ptr @sqlite3GetCollSeq(ptr noundef %i.t, ptr noundef nonnull %i.l, ptr noundef %i.s)
+  %i.u = tail call fastcc ptr @sqlite3GetCollSeq(ptr noundef %i.t, ptr noundef nonnull readonly %i.l, ptr noundef %i.s)
   %.not13.i.i = icmp eq ptr %i.u, null
   br i1 %.not13.i.i, label %bb.h, label %sqlite3ExprCollSeq.exit
 
@@ -2623,7 +2623,7 @@ bb.j:                                             ; preds = %.lr.ph.i17
 bb.k:                                             ; preds = %bb.j
   %i.ai = load ptr, ptr %i.ab, align 8, !tbaa !195 ; 2 uses
   %i.aj = load ptr, ptr %0, align 8, !tbaa !244
-  %i.ak = tail call fastcc ptr @sqlite3GetCollSeq(ptr noundef %i.aj, ptr noundef nonnull %i.ab, ptr noundef %i.ai)
+  %i.ak = tail call fastcc ptr @sqlite3GetCollSeq(ptr noundef %i.aj, ptr noundef nonnull readonly %i.ab, ptr noundef %i.ai)
   %.not13.i.i25 = icmp eq ptr %i.ak, null
   br i1 %.not13.i.i25, label %bb.l, label %sqlite3ExprCollSeq.exit
 
@@ -3026,7 +3026,7 @@ bb.cq:                                            ; preds = %.lr.ph.i
 bb.cr:                                            ; preds = %bb.cq
   %i.sa = load ptr, ptr %i.rt, align 8, !tbaa !195 ; 2 uses
   %i.sb = load ptr, ptr %0, align 8, !tbaa !244
-  %i.sc = call fastcc ptr @sqlite3GetCollSeq(ptr noundef %i.sb, ptr noundef nonnull %i.rt, ptr noundef %i.sa)
+  %i.sc = call fastcc ptr @sqlite3GetCollSeq(ptr noundef %i.sb, ptr noundef nonnull readonly %i.rt, ptr noundef %i.sa)
   %.not13.i.i = icmp eq ptr %i.sc, null
   br i1 %.not13.i.i, label %bb.cs, label %sqlite3ExprCollSeq.exit
 

@@ -201,7 +201,7 @@ _ZN2v88internal12_GLOBAL__N_131SloppyArgumentsElementsAccessorINS1_35FastSloppyA
   %i.bz = inttoptr i64 %i.by to ptr
   store ptr %i.bz, ptr %i.az, align 8
   store i64 %i.ay, ptr %.0.i.i.i, align 8
-  %i.ca = call fastcc ptr @_ZN2v88internal12_GLOBAL__N_120ElementsAccessorBaseINS1_31FastHoleyObjectElementsAccessorENS1_18ElementsKindTraitsILNS0_12ElementsKindE3EEEE31DirectCollectElementIndicesImplEPNS0_7IsolateENS0_12DirectHandleINS0_8JSObjectEEENSA_INS0_14FixedArrayBaseEEENS0_17GetKeysConversionENS0_14PropertyFilterENS0_6HandleINS0_10FixedArrayEEEPjj(ptr noundef nonnull %1, ptr nonnull readonly %2, ptr nonnull %.0.i.i.i, i32 noundef 1, ptr %.sroa.063.0.i, ptr noundef nonnull %i.a, i32 noundef %.0.lcssa.i) ; 0 uses
+  %i.ca = call fastcc ptr @_ZN2v88internal12_GLOBAL__N_120ElementsAccessorBaseINS1_31FastHoleyObjectElementsAccessorENS1_18ElementsKindTraitsILNS0_12ElementsKindE3EEEE31DirectCollectElementIndicesImplEPNS0_7IsolateENS0_12DirectHandleINS0_8JSObjectEEENSA_INS0_14FixedArrayBaseEEENS0_17GetKeysConversionENS0_14PropertyFilterENS0_6HandleINS0_10FixedArrayEEEPjj(ptr noundef nonnull %1, ptr nonnull readonly %2, ptr nonnull %.0.i.i.i, i32 noundef 1, ptr readonly %.sroa.063.0.i, ptr noundef nonnull %i.a, i32 noundef %.0.lcssa.i) ; 0 uses
   %i.cb = load i32, ptr %i.a, align 4             ; 7 uses
   tail call fastcc void @_ZN2v88internal12_GLOBAL__N_111SortIndicesEPNS0_7IsolateENS0_12DirectHandleINS0_10FixedArrayEEEj(ptr noundef nonnull %1, ptr %.sroa.063.0.i, i32 noundef %i.cb)
   %i.cc = icmp eq i32 %5, 0
@@ -604,7 +604,7 @@ _ZN2v88internal12_GLOBAL__N_131SloppyArgumentsElementsAccessorINS1_35FastSloppyA
   %i.bd = inttoptr i64 %i.bc to ptr
   store ptr %i.bd, ptr %i.ad, align 8
   store i64 %i.ac, ptr %.0.i.i.i, align 8
-  %i.be = call fastcc ptr @_ZN2v88internal12_GLOBAL__N_120ElementsAccessorBaseINS1_31FastHoleyObjectElementsAccessorENS1_18ElementsKindTraitsILNS0_12ElementsKindE3EEEE31DirectCollectElementIndicesImplEPNS0_7IsolateENS0_12DirectHandleINS0_8JSObjectEEENSA_INS0_14FixedArrayBaseEEENS0_17GetKeysConversionENS0_14PropertyFilterENS0_6HandleINS0_10FixedArrayEEEPjj(ptr noundef nonnull %i.b, ptr readonly %0, ptr nonnull %.0.i.i.i, i32 noundef 1, ptr %i.s, ptr noundef nonnull %i.a, i32 noundef %.0.lcssa.i) ; 0 uses
+  %i.be = call fastcc ptr @_ZN2v88internal12_GLOBAL__N_120ElementsAccessorBaseINS1_31FastHoleyObjectElementsAccessorENS1_18ElementsKindTraitsILNS0_12ElementsKindE3EEEE31DirectCollectElementIndicesImplEPNS0_7IsolateENS0_12DirectHandleINS0_8JSObjectEEENSA_INS0_14FixedArrayBaseEEENS0_17GetKeysConversionENS0_14PropertyFilterENS0_6HandleINS0_10FixedArrayEEEPjj(ptr noundef nonnull %i.b, ptr readonly %0, ptr nonnull %.0.i.i.i, i32 noundef 1, ptr readonly %i.s, ptr noundef nonnull %i.a, i32 noundef %.0.lcssa.i) ; 0 uses
   %i.bf = load i32, ptr %i.a, align 4             ; 3 uses
   tail call fastcc void @_ZN2v88internal12_GLOBAL__N_111SortIndicesEPNS0_7IsolateENS0_12DirectHandleINS0_10FixedArrayEEEj(ptr noundef nonnull %i.b, ptr %i.s, i32 noundef %i.bf)
   %.not31 = icmp eq i32 %i.bf, 0
@@ -1007,7 +1007,7 @@ _ZN2v88internal12_GLOBAL__N_131SloppyArgumentsElementsAccessorINS1_35SlowSloppyA
   %i.br = inttoptr i64 %i.bq to ptr
   store ptr %i.br, ptr %i.ar, align 8
   store i64 %i.aq, ptr %.0.i.i.i, align 8
-  %i.bs = call fastcc ptr @_ZN2v88internal12_GLOBAL__N_126DictionaryElementsAccessor31DirectCollectElementIndicesImplEPNS0_7IsolateENS0_12DirectHandleINS0_8JSObjectEEENS5_INS0_14FixedArrayBaseEEENS0_17GetKeysConversionENS0_14PropertyFilterENS0_6HandleINS0_10FixedArrayEEEPjj(ptr noundef nonnull %1, ptr nonnull %.0.i.i.i, i32 noundef %6, ptr %.sroa.060.0.i, ptr noundef nonnull %i.a, i32 noundef %.0.lcssa.i) ; 0 uses
+  %i.bs = call fastcc ptr @_ZN2v88internal12_GLOBAL__N_126DictionaryElementsAccessor31DirectCollectElementIndicesImplEPNS0_7IsolateENS0_12DirectHandleINS0_8JSObjectEEENS5_INS0_14FixedArrayBaseEEENS0_17GetKeysConversionENS0_14PropertyFilterENS0_6HandleINS0_10FixedArrayEEEPjj(ptr noundef nonnull %1, ptr nonnull %.0.i.i.i, i32 noundef %6, ptr readonly %.sroa.060.0.i, ptr noundef nonnull %i.a, i32 noundef %.0.lcssa.i) ; 0 uses
   %i.bt = load i32, ptr %i.a, align 4             ; 7 uses
   tail call fastcc void @_ZN2v88internal12_GLOBAL__N_111SortIndicesEPNS0_7IsolateENS0_12DirectHandleINS0_10FixedArrayEEEj(ptr noundef nonnull %1, ptr %.sroa.060.0.i, i32 noundef %i.bt)
   %i.bu = icmp eq i32 %5, 0
@@ -1410,7 +1410,7 @@ _ZN2v88internal12_GLOBAL__N_131SloppyArgumentsElementsAccessorINS1_35SlowSloppyA
   %i.bd = inttoptr i64 %i.bc to ptr
   store ptr %i.bd, ptr %i.ad, align 8
   store i64 %i.ac, ptr %.0.i.i.i, align 8
-  %i.be = call fastcc ptr @_ZN2v88internal12_GLOBAL__N_126DictionaryElementsAccessor31DirectCollectElementIndicesImplEPNS0_7IsolateENS0_12DirectHandleINS0_8JSObjectEEENS5_INS0_14FixedArrayBaseEEENS0_17GetKeysConversionENS0_14PropertyFilterENS0_6HandleINS0_10FixedArrayEEEPjj(ptr noundef nonnull %i.b, ptr nonnull %.0.i.i.i, i32 noundef 18, ptr %i.s, ptr noundef nonnull %i.a, i32 noundef %.0.lcssa.i) ; 0 uses
+  %i.be = call fastcc ptr @_ZN2v88internal12_GLOBAL__N_126DictionaryElementsAccessor31DirectCollectElementIndicesImplEPNS0_7IsolateENS0_12DirectHandleINS0_8JSObjectEEENS5_INS0_14FixedArrayBaseEEENS0_17GetKeysConversionENS0_14PropertyFilterENS0_6HandleINS0_10FixedArrayEEEPjj(ptr noundef nonnull %i.b, ptr nonnull %.0.i.i.i, i32 noundef 18, ptr readonly %i.s, ptr noundef nonnull %i.a, i32 noundef %.0.lcssa.i) ; 0 uses
   %i.bf = load i32, ptr %i.a, align 4             ; 3 uses
   tail call fastcc void @_ZN2v88internal12_GLOBAL__N_111SortIndicesEPNS0_7IsolateENS0_12DirectHandleINS0_10FixedArrayEEEj(ptr noundef nonnull %i.b, ptr %i.s, i32 noundef %i.bf)
   %.not31 = icmp eq i32 %i.bf, 0

@@ -201,7 +201,7 @@ remove_begin.exit:                                ; preds = %bb.b, %bb.c, %bb.d
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc noundef ptr @call_uni_op(ptr noundef %0, ptr noundef %1, i64 noundef range(i64 33, 134) %2, ptr noundef readonly captures(none) %3, ptr noundef nonnull readonly captures(none) %4) unnamed_addr #0 {
 bb.a:
-  %i.a = tail call fastcc ptr @value_expr_check(ptr noundef %0, ptr noundef %1) ; 2 uses
+  %i.a = tail call fastcc ptr @value_expr_check(ptr noundef %0, ptr noundef readonly %1) ; 2 uses
   %.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i, label %value_expr.exit, label %bb.b
 
@@ -258,7 +258,7 @@ bb.a:
   %i.b = icmp eq i64 %1, 148
   %i.c = or i1 %i.a, %i.b
   %i.d = select i1 %i.c, i32 22, i32 23           ; 2 uses
-  %i.e = tail call fastcc ptr @value_expr_check(ptr noundef %0, ptr noundef %2) ; 2 uses
+  %i.e = tail call fastcc ptr @value_expr_check(ptr noundef %0, ptr noundef readonly %2) ; 2 uses
   %.not.i = icmp eq ptr %i.e, null
   br i1 %.not.i, label %value_expr.exit, label %bb.b
 
@@ -392,7 +392,7 @@ bb.g:                                             ; preds = %bb.f, %.critedge
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc void @value_expr(ptr noundef %0, ptr noundef captures(address) %1) unnamed_addr #0 {
+define internal fastcc void @value_expr(ptr noundef %0, ptr noundef readonly captures(address) %1) unnamed_addr #0 {
 bb.a:
   %i.a = tail call fastcc ptr @value_expr_check(ptr noundef %0, ptr noundef %1) ; 2 uses
   %.not = icmp eq ptr %i.a, null
@@ -795,7 +795,7 @@ bb.a:
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc noundef ptr @call_bin_op(ptr noundef %0, ptr noundef %1, i64 noundef %2, ptr noundef %3, ptr noundef readonly captures(none) %4, ptr noundef nonnull readonly captures(none) %5) unnamed_addr #0 {
 bb.a:
-  %i.a = tail call fastcc ptr @value_expr_check(ptr noundef %0, ptr noundef %1) ; 2 uses
+  %i.a = tail call fastcc ptr @value_expr_check(ptr noundef %0, ptr noundef readonly %1) ; 2 uses
   %.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i, label %value_expr.exit, label %bb.b
 
@@ -817,7 +817,7 @@ bb.c:                                             ; preds = %bb.b
   br label %value_expr.exit
 
 value_expr.exit:                                  ; preds = %bb.a, %bb.b, %bb.c
-  %i.k = tail call fastcc ptr @value_expr_check(ptr noundef %0, ptr noundef %3) ; 2 uses
+  %i.k = tail call fastcc ptr @value_expr_check(ptr noundef %0, ptr noundef readonly %3) ; 2 uses
   %.not.i13 = icmp eq ptr %i.k, null
   br i1 %.not.i13, label %value_expr.exit15, label %bb.d
 
@@ -895,7 +895,7 @@ value_expr.exit15:                                ; preds = %value_expr.exit, %b
 define internal fastcc noundef ptr @match_op(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 %.0.val, ptr noundef nonnull %3) unnamed_addr #0 {
 bb.a:
   %4 = alloca %struct.reg_named_capture_assign_t, align 8 ; 8 uses
-  %i.a = tail call fastcc ptr @value_expr_check(ptr noundef %0, ptr noundef %1) ; 2 uses
+  %i.a = tail call fastcc ptr @value_expr_check(ptr noundef %0, ptr noundef readonly %1) ; 2 uses
   %.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i, label %value_expr.exit, label %bb.b
 
@@ -917,7 +917,7 @@ bb.c:                                             ; preds = %bb.b
   br label %value_expr.exit
 
 value_expr.exit:                                  ; preds = %bb.a, %bb.b, %bb.c
-  %i.k = tail call fastcc ptr @value_expr_check(ptr noundef %0, ptr noundef %2) ; 2 uses
+  %i.k = tail call fastcc ptr @value_expr_check(ptr noundef %0, ptr noundef readonly %2) ; 2 uses
   %.not.i52 = icmp eq ptr %i.k, null
   br i1 %.not.i52, label %value_expr.exit54, label %bb.d
 
@@ -1320,7 +1320,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = load i64, ptr %1, align 8, !tbaa !69
-  %i.c = tail call fastcc ptr @value_expr_check(ptr noundef %0, ptr noundef nonnull %1) ; 2 uses
+  %i.c = tail call fastcc ptr @value_expr_check(ptr noundef %0, ptr noundef nonnull readonly %1) ; 2 uses
   %.not.i = icmp eq ptr %i.c, null
   br i1 %.not.i, label %value_expr.exit, label %bb.c
 

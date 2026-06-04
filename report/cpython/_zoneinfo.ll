@@ -201,7 +201,7 @@ zoneinfo_ZoneInfo_from_file_impl.exit:            ; preds = %bb.m, %bb.l, %.spli
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noundef ptr @zoneinfo_ZoneInfo_utcoffset(ptr noundef captures(address) %0, ptr noundef readonly captures(none) %1, ptr noundef %2, i64 noundef %3, ptr noundef %4) #2 {
+define internal noundef ptr @zoneinfo_ZoneInfo_utcoffset(ptr noundef readonly captures(address) %0, ptr noundef readonly captures(none) %1, ptr noundef %2, i64 noundef %3, ptr noundef %4) #2 {
 bb.a:
   %i.a = alloca [1 x ptr], align 8                ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
@@ -224,7 +224,7 @@ bb.b:                                             ; preds = %bb.a
   %.val = load ptr, ptr %i.h, align 8, !tbaa !87
   %i.i = getelementptr i8, ptr %.val, i64 24
   %.val.val = load ptr, ptr %i.i, align 8, !tbaa !96
-  %i.j = call fastcc ptr @find_ttinfo(ptr noundef %.val.val, ptr noundef %0, ptr noundef %i.g) ; 2 uses
+  %i.j = call fastcc ptr @find_ttinfo(ptr noundef readonly %.val.val, ptr noundef readonly %0, ptr noundef %i.g) ; 2 uses
   %i.k = icmp eq ptr %i.j, null
   br i1 %i.k, label %zoneinfo_ZoneInfo_utcoffset_impl.exit, label %bb.c
 
@@ -246,7 +246,7 @@ zoneinfo_ZoneInfo_utcoffset_impl.exit:            ; preds = %bb.d, %bb.c, %.thre
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noundef ptr @zoneinfo_ZoneInfo_dst(ptr noundef captures(address) %0, ptr noundef readonly captures(none) %1, ptr noundef %2, i64 noundef %3, ptr noundef %4) #2 {
+define internal noundef ptr @zoneinfo_ZoneInfo_dst(ptr noundef readonly captures(address) %0, ptr noundef readonly captures(none) %1, ptr noundef %2, i64 noundef %3, ptr noundef %4) #2 {
 bb.a:
   %i.a = alloca [1 x ptr], align 8                ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
@@ -269,7 +269,7 @@ bb.b:                                             ; preds = %bb.a
   %.val = load ptr, ptr %i.h, align 8, !tbaa !87
   %i.i = getelementptr i8, ptr %.val, i64 24
   %.val.val = load ptr, ptr %i.i, align 8, !tbaa !96
-  %i.j = call fastcc ptr @find_ttinfo(ptr noundef %.val.val, ptr noundef %0, ptr noundef %i.g) ; 2 uses
+  %i.j = call fastcc ptr @find_ttinfo(ptr noundef readonly %.val.val, ptr noundef readonly %0, ptr noundef %i.g) ; 2 uses
   %i.k = icmp eq ptr %i.j, null
   br i1 %i.k, label %zoneinfo_ZoneInfo_dst_impl.exit, label %bb.c
 
@@ -292,7 +292,7 @@ zoneinfo_ZoneInfo_dst_impl.exit:                  ; preds = %bb.d, %bb.c, %.thre
 }
 
 ; Function Attrs: nounwind uwtable
-define internal noundef ptr @zoneinfo_ZoneInfo_tzname(ptr noundef captures(address) %0, ptr noundef readonly captures(none) %1, ptr noundef %2, i64 noundef %3, ptr noundef %4) #2 {
+define internal noundef ptr @zoneinfo_ZoneInfo_tzname(ptr noundef readonly captures(address) %0, ptr noundef readonly captures(none) %1, ptr noundef %2, i64 noundef %3, ptr noundef %4) #2 {
 bb.a:
   %i.a = alloca [1 x ptr], align 8                ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
@@ -315,7 +315,7 @@ bb.b:                                             ; preds = %bb.a
   %.val = load ptr, ptr %i.h, align 8, !tbaa !87
   %i.i = getelementptr i8, ptr %.val, i64 24
   %.val.val = load ptr, ptr %i.i, align 8, !tbaa !96
-  %i.j = call fastcc ptr @find_ttinfo(ptr noundef %.val.val, ptr noundef %0, ptr noundef %i.g) ; 2 uses
+  %i.j = call fastcc ptr @find_ttinfo(ptr noundef readonly %.val.val, ptr noundef readonly %0, ptr noundef %i.g) ; 2 uses
   %i.k = icmp eq ptr %i.j, null
   br i1 %i.k, label %zoneinfo_ZoneInfo_tzname_impl.exit, label %bb.c
 

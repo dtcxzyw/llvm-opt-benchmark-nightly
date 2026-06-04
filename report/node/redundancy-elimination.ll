@@ -201,7 +201,7 @@ _ZN2v88internal8compiler21RedundancyElimination16EffectPathChecks5MergeEPKS3_.ex
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden noundef ptr @_ZN2v88internal8compiler21RedundancyElimination11ReduceStartEPNS1_4NodeE(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef captures(ret: address, provenance) %1) local_unnamed_addr #2 align 2 {
+define hidden noundef ptr @_ZN2v88internal8compiler21RedundancyElimination11ReduceStartEPNS1_4NodeE(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef readonly captures(ret: address, provenance) %1) local_unnamed_addr #2 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.b = load ptr, ptr %i.a, align 8              ; 3 uses
