@@ -201,7 +201,7 @@ $_ZZN13geos_nlohmann6detail9dtoa_impl36get_cached_power_for_binary_exponentEiE13
 @switch.table._ZNK13geos_nlohmann10basic_jsonINS_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES2_IhSaIhEEE9type_nameEv = private unnamed_addr constant [10 x ptr] [ptr @.str.38, ptr @.str.55, ptr @.str.56, ptr @.str.57, ptr @.str.58, ptr @.str.61, ptr @.str.61, ptr @.str.61, ptr @.str.59, ptr @.str.60], align 8
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN4geos2io13GeoJSONWriter5writeB5cxx11EPKNS_4geom8GeometryENS0_11GeoJSONTypeE(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull readnone align 1 captures(none) dereferenceable(1) %1, ptr noundef %2, i32 noundef %3) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN4geos2io13GeoJSONWriter5writeB5cxx11EPKNS_4geom8GeometryENS0_11GeoJSONTypeE(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr nofree noundef nonnull readnone align 1 captures(none) dereferenceable(1) %1, ptr noundef %2, i32 noundef %3) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %"class.geos_nlohmann::basic_json", align 8 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
@@ -249,7 +249,7 @@ bb.f:                                             ; preds = %bb.d, %bb.c, %bb.b,
 declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN4geos2io13GeoJSONWriter6encodeEPKNS_4geom8GeometryENS0_11GeoJSONTypeERN13geos_nlohmann10basic_jsonINS7_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS7_14adl_serializerESA_IhSaIhEEEE(ptr noundef nonnull readnone align 1 captures(none) dereferenceable(1) %0, ptr noundef %1, i32 noundef %2, ptr noundef nonnull align 8 dereferenceable(16) %3) local_unnamed_addr #0 align 2 {
+define void @_ZN4geos2io13GeoJSONWriter6encodeEPKNS_4geom8GeometryENS0_11GeoJSONTypeERN13geos_nlohmann10basic_jsonINS7_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS7_14adl_serializerESA_IhSaIhEEEE(ptr nofree noundef nonnull readnone align 1 captures(none) dereferenceable(1) %0, ptr noundef %1, i32 noundef %2, ptr noundef nonnull align 8 dereferenceable(16) %3) local_unnamed_addr #0 align 2 {
 bb.a:
   switch i32 %2, label %bb.e [
     i32 0, label %bb.b
@@ -533,7 +533,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.y,
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN4geos2io13GeoJSONWriter14writeFormattedB5cxx11EPKNS_4geom8GeometryENS0_11GeoJSONTypeEi(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull readnone align 1 captures(none) dereferenceable(1) %1, ptr noundef %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN4geos2io13GeoJSONWriter14writeFormattedB5cxx11EPKNS_4geom8GeometryENS0_11GeoJSONTypeEi(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr nofree noundef nonnull readnone align 1 captures(none) dereferenceable(1) %1, ptr noundef %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %5 = alloca %"class.geos_nlohmann::basic_json", align 8 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #24
@@ -936,7 +936,7 @@ bb.w:                                             ; preds = %.sink.split, %bb.a
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN4geos2io13GeoJSONWriter14encodeGeometryEPKNS_4geom8GeometryERN13geos_nlohmann10basic_jsonINS6_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS6_14adl_serializerES9_IhSaIhEEEE(ptr noundef nonnull readnone align 1 captures(none) dereferenceable(1) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 align 2 {
+define void @_ZN4geos2io13GeoJSONWriter14encodeGeometryEPKNS_4geom8GeometryERN13geos_nlohmann10basic_jsonINS6_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS6_14adl_serializerES9_IhSaIhEEEE(ptr nofree noundef nonnull readnone align 1 captures(none) dereferenceable(1) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !25
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 72
@@ -999,7 +999,7 @@ declare void @_ZN4geos2io12GeoJSONValueC1ERKS1_(ptr noundef nonnull align 8 dere
 declare void @_ZN4geos2io12GeoJSONValueD1Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56)) unnamed_addr #3
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN4geos2io13GeoJSONWriter13encodeFeatureEPKNS_4geom8GeometryERN13geos_nlohmann10basic_jsonINS6_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS6_14adl_serializerES9_IhSaIhEEEE(ptr noundef nonnull readnone align 1 captures(none) dereferenceable(1) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN4geos2io13GeoJSONWriter13encodeFeatureEPKNS_4geom8GeometryERN13geos_nlohmann10basic_jsonINS6_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS6_14adl_serializerES9_IhSaIhEEEE(ptr nofree noundef nonnull readnone align 1 captures(none) dereferenceable(1) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.geos_nlohmann::basic_json", align 8 ; 9 uses
   %4 = alloca %"class.geos_nlohmann::basic_json", align 8 ; 3 uses
@@ -1092,7 +1092,7 @@ bb.h:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN4geos2io13GeoJSONWriter23encodeFeatureCollectionEPKNS_4geom8GeometryERN13geos_nlohmann10basic_jsonINS6_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS6_14adl_serializerES9_IhSaIhEEEE(ptr noundef nonnull readnone align 1 captures(none) dereferenceable(1) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN4geos2io13GeoJSONWriter23encodeFeatureCollectionEPKNS_4geom8GeometryERN13geos_nlohmann10basic_jsonINS6_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS6_14adl_serializerES9_IhSaIhEEEE(ptr nofree noundef nonnull readnone align 1 captures(none) dereferenceable(1) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   %3 = alloca %"class.geos_nlohmann::basic_json", align 8 ; 9 uses
@@ -1297,7 +1297,7 @@ _ZNSt12_Vector_baseIN13geos_nlohmann10basic_jsonINS0_11ordered_mapESt6vectorNSt7
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN4geos2io13GeoJSONWriter11encodePointEPKNS_4geom5PointERN13geos_nlohmann10basic_jsonINS6_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS6_14adl_serializerES9_IhSaIhEEEE(ptr nonnull readnone align 1 captures(none) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN4geos2io13GeoJSONWriter11encodePointEPKNS_4geom5PointERN13geos_nlohmann10basic_jsonINS6_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS6_14adl_serializerES9_IhSaIhEEEE(ptr nofree nonnull readnone align 1 captures(none) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 ._crit_edge.i.i.i.i.i.i.i.i:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
@@ -1421,7 +1421,7 @@ bb.i:                                             ; preds = %bb.g, %bb.c
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN4geos2io13GeoJSONWriter16encodeLineStringEPKNS_4geom10LineStringERN13geos_nlohmann10basic_jsonINS6_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS6_14adl_serializerES9_IhSaIhEEEE(ptr noundef nonnull readnone align 1 captures(none) dereferenceable(1) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN4geos2io13GeoJSONWriter16encodeLineStringEPKNS_4geom10LineStringERN13geos_nlohmann10basic_jsonINS6_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS6_14adl_serializerES9_IhSaIhEEEE(ptr nofree noundef nonnull readnone align 1 captures(none) dereferenceable(1) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 ._crit_edge.i.i.i.i.i.i.i.i:
   %3 = alloca %"class.geos_nlohmann::basic_json", align 8 ; 3 uses
   %4 = alloca %"class.geos_nlohmann::basic_json", align 8 ; 3 uses
@@ -1585,7 +1585,7 @@ _ZNSt10unique_ptrIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EED2Ev.e
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN4geos2io13GeoJSONWriter13encodePolygonEPKNS_4geom7PolygonERN13geos_nlohmann10basic_jsonINS6_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS6_14adl_serializerES9_IhSaIhEEEE(ptr noundef nonnull readnone align 1 captures(none) dereferenceable(1) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN4geos2io13GeoJSONWriter13encodePolygonEPKNS_4geom7PolygonERN13geos_nlohmann10basic_jsonINS6_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS6_14adl_serializerES9_IhSaIhEEEE(ptr nofree noundef nonnull readnone align 1 captures(none) dereferenceable(1) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 ._crit_edge.i.i.i.i.i.i.i.i:
   %3 = alloca %"class.__gnu_cxx::__normal_iterator.237", align 8 ; 4 uses
   %4 = alloca %"class.__gnu_cxx::__normal_iterator.237", align 8 ; 4 uses
@@ -1988,7 +1988,7 @@ bb.aj:                                            ; preds = %bb.t, %_ZNSt10uniqu
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN4geos2io13GeoJSONWriter16encodeMultiPointEPKNS_4geom10MultiPointERN13geos_nlohmann10basic_jsonINS6_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS6_14adl_serializerES9_IhSaIhEEEE(ptr noundef nonnull readnone align 1 captures(none) dereferenceable(1) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN4geos2io13GeoJSONWriter16encodeMultiPointEPKNS_4geom10MultiPointERN13geos_nlohmann10basic_jsonINS6_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS6_14adl_serializerES9_IhSaIhEEEE(ptr nofree noundef nonnull readnone align 1 captures(none) dereferenceable(1) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 ._crit_edge.i.i.i.i.i.i.i.i:
   %3 = alloca %"class.geos_nlohmann::basic_json", align 8 ; 3 uses
   %4 = alloca %"class.geos_nlohmann::basic_json", align 8 ; 3 uses
@@ -2152,7 +2152,7 @@ _ZNSt10unique_ptrIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EED2Ev.e
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN4geos2io13GeoJSONWriter21encodeMultiLineStringEPKNS_4geom15MultiLineStringERN13geos_nlohmann10basic_jsonINS6_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS6_14adl_serializerES9_IhSaIhEEEE(ptr noundef nonnull readnone align 1 captures(none) dereferenceable(1) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN4geos2io13GeoJSONWriter21encodeMultiLineStringEPKNS_4geom15MultiLineStringERN13geos_nlohmann10basic_jsonINS6_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS6_14adl_serializerES9_IhSaIhEEEE(ptr nofree noundef nonnull readnone align 1 captures(none) dereferenceable(1) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 ._crit_edge.i.i.i.i.i.i.i.i:
   %3 = alloca %"class.__gnu_cxx::__normal_iterator.237", align 8 ; 4 uses
   %4 = alloca %"class.__gnu_cxx::__normal_iterator.237", align 8 ; 4 uses
@@ -2495,7 +2495,7 @@ bb.aa:                                            ; preds = %bb.k, %_ZNSt10uniqu
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN4geos2io13GeoJSONWriter18encodeMultiPolygonEPKNS_4geom12MultiPolygonERN13geos_nlohmann10basic_jsonINS6_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS6_14adl_serializerES9_IhSaIhEEEE(ptr noundef nonnull readnone align 1 captures(none) dereferenceable(1) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN4geos2io13GeoJSONWriter18encodeMultiPolygonEPKNS_4geom12MultiPolygonERN13geos_nlohmann10basic_jsonINS6_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS6_14adl_serializerES9_IhSaIhEEEE(ptr nofree noundef nonnull readnone align 1 captures(none) dereferenceable(1) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 ._crit_edge.i.i.i.i.i.i.i.i:
   %3 = alloca %"class.__gnu_cxx::__normal_iterator.263", align 8 ; 4 uses
   %4 = alloca %"class.__gnu_cxx::__normal_iterator.263", align 8 ; 4 uses
@@ -2898,7 +2898,7 @@ bb.bk:                                            ; preds = %bb.k, %bb.bd, %bb.z
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN4geos2io13GeoJSONWriter24encodeGeometryCollectionEPKNS_4geom18GeometryCollectionERN13geos_nlohmann10basic_jsonINS6_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS6_14adl_serializerES9_IhSaIhEEEE(ptr noundef nonnull readnone align 1 captures(none) dereferenceable(1) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN4geos2io13GeoJSONWriter24encodeGeometryCollectionEPKNS_4geom18GeometryCollectionERN13geos_nlohmann10basic_jsonINS6_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS6_14adl_serializerES9_IhSaIhEEEE(ptr nofree noundef nonnull readnone align 1 captures(none) dereferenceable(1) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 .noexc.i.i.i.i.i.i.i:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
@@ -3082,7 +3082,7 @@ bb.r:                                             ; preds = %bb.f, %bb.m, %bb.q,
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define { double, double } @_ZN4geos2io13GeoJSONWriter17convertCoordinateEPKNS_4geom10CoordinateE(ptr noundef nonnull readnone align 1 captures(none) dereferenceable(1) %0, ptr noundef readonly captures(none) %1) local_unnamed_addr #5 align 2 {
+define { double, double } @_ZN4geos2io13GeoJSONWriter17convertCoordinateEPKNS_4geom10CoordinateE(ptr nofree noundef nonnull readnone align 1 captures(none) dereferenceable(1) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #5 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load double, ptr %1, align 8, !tbaa !110
@@ -3093,7 +3093,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN4geos2io13GeoJSONWriter25convertCoordinateSequenceEPKNS_4geom18CoordinateSequenceE(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::vector.56") align 8 captures(none) initializes((0, 24)) %0, ptr nonnull readnone align 1 captures(none) %1, ptr noundef %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN4geos2io13GeoJSONWriter25convertCoordinateSequenceEPKNS_4geom18CoordinateSequenceE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::vector.56") align 8 captures(none) initializes((0, 24)) %0, ptr nofree nonnull readnone align 1 captures(none) %1, ptr noundef %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 _ZNK4geos4geom18CoordinateSequence4sizeEv.exit:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   %i.a = load ptr, ptr %2, align 8, !tbaa !25
@@ -3496,13 +3496,13 @@ bb.a:
   %i.f = ptrtoint ptr %i.d to i64                 ; 2 uses
   %i.g = sub i64 %i.e, %i.f                       ; 2 uses
   %i.h = icmp eq i64 %i.g, 9223372036854775776
-  br i1 %i.h, label %bb.b, label %_ZNKSt6vectorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapES_S6_blmdSaNS8_14adl_serializerES_IhSaIhEEEEESaISF_EE12_M_check_lenEmPKc.exit
+  br i1 %i.h, label %bb.b, label %_ZNSt12_Vector_baseISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEESaISG_EE11_M_allocateEm.exit
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.26) #28
   unreachable
 
-_ZNKSt6vectorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapES_S6_blmdSaNS8_14adl_serializerES_IhSaIhEEEEESaISF_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
+_ZNSt12_Vector_baseISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEESaISG_EE11_M_allocateEm.exit: ; preds = %bb.a
   %4 = sdiv exact i64 %i.g, 48                    ; 3 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %4, i64 1)
   %5 = add nsw i64 %.sroa.speculated.i, %4        ; 2 uses
@@ -3511,17 +3511,11 @@ _ZNKSt6vectorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13ge
   %8 = select i1 %6, i64 192153584101141162, i64 %7 ; 3 uses
   %9 = ptrtoint ptr %1 to i64
   %10 = sub i64 %9, %i.f
-  %.not.i = icmp eq i64 %8, 0
-  br i1 %.not.i, label %_ZNSt12_Vector_baseISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEESaISG_EE11_M_allocateEm.exit, label %11
-
-11:                                               ; preds = %_ZNKSt6vectorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapES_S6_blmdSaNS8_14adl_serializerES_IhSaIhEEEEESaISF_EE12_M_check_lenEmPKc.exit
-  %12 = mul nuw nsw i64 %8, 48
-  %13 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %12) #25
-  br label %_ZNSt12_Vector_baseISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEESaISG_EE11_M_allocateEm.exit
-
-_ZNSt12_Vector_baseISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEESaISG_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapES_S6_blmdSaNS8_14adl_serializerES_IhSaIhEEEEESaISF_EE12_M_check_lenEmPKc.exit, %11
-  %14 = phi ptr [ %13, %11 ], [ null, %_ZNKSt6vectorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapES_S6_blmdSaNS8_14adl_serializerES_IhSaIhEEEEESaISF_EE12_M_check_lenEmPKc.exit ] ; 9 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %14, i64 %10 ; 9 uses
+  %.not.i = icmp ne i64 %8, 0
+  tail call void @llvm.assume(i1 %.not.i)
+  %11 = mul nuw nsw i64 %8, 48
+  %12 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %11) #25 ; 9 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %12, i64 %10 ; 9 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 4 uses
   store ptr %i.j, ptr %i.i, align 8, !tbaa !12
   %i.k = load ptr, ptr %2, align 8, !tbaa !54     ; 2 uses
@@ -3582,7 +3576,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br label %.body.thread
 
 _ZNSt16allocator_traitsISaISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEEEE9constructISG_JRS7_RSF_EEEvRSH_PT_DpOT0_.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i
-  %i.aa = invoke noundef ptr @_ZSt16__do_uninit_copyIPKSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEEPSG_ET0_T_SL_SK_(ptr noundef %i.d, ptr noundef %1, ptr noundef nonnull %14)
+  %i.aa = invoke noundef ptr @_ZSt16__do_uninit_copyIPKSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEEPSG_ET0_T_SL_SK_(ptr noundef %i.d, ptr noundef %1, ptr noundef nonnull %12)
           to label %_ZSt34__uninitialized_move_if_noexcept_aIPSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEESH_SaISG_EET0_T_SK_SJ_RT1_.exit unwind label %bb.g
 
 _ZSt34__uninitialized_move_if_noexcept_aIPSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEESH_SaISG_EET0_T_SK_SJ_RT1_.exit: ; preds = %_ZNSt16allocator_traitsISaISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEEEE9constructISG_JRS7_RSF_EEEvRSH_PT_DpOT0_.exit
@@ -3624,14 +3618,14 @@ bb.f:                                             ; preds = %_ZSt8_DestroyIPSt4p
 
 _ZNSt12_Vector_baseISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEESaISG_EE13_M_deallocateEPSG_m.exit: ; preds = %_ZSt8_DestroyIPSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEEEvT_SI_.exit, %bb.f
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %14, ptr %0, align 8, !tbaa !86
+  store ptr %12, ptr %0, align 8, !tbaa !86
   store ptr %i.ac, ptr %i.b, align 8, !tbaa !83
-  %i.al = getelementptr inbounds nuw [48 x i8], ptr %14, i64 %8
+  %i.al = getelementptr inbounds nuw [48 x i8], ptr %12, i64 %8
   store ptr %i.al, ptr %i.ak, align 8, !tbaa !88
   ret void
 
 .body.thread46:                                   ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEESH_SaISG_EET0_T_SK_SJ_RT1_.exit, %.noexc.i.i
-  %.0.ph = phi ptr [ %14, %.noexc.i.i ], [ %i.ab, %_ZSt34__uninitialized_move_if_noexcept_aIPSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEESH_SaISG_EET0_T_SK_SJ_RT1_.exit ]
+  %.0.ph = phi ptr [ %12, %.noexc.i.i ], [ %i.ab, %_ZSt34__uninitialized_move_if_noexcept_aIPSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEESH_SaISG_EET0_T_SK_SJ_RT1_.exit ]
   %lpad.thr_comm = landingpad { ptr, i32 }
           catch ptr null
   br label %.body.thread
@@ -3646,10 +3640,10 @@ bb.g:                                             ; preds = %_ZNSt16allocator_tr
 
 .body.thread:                                     ; preds = %bb.e, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i, %.body.thread46
   %lpad.thr_comm.sink = phi { ptr, i32 } [ %lpad.thr_comm, %.body.thread46 ], [ %i.x, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i ], [ %i.x, %bb.e ]
-  %.0.lpad-body44 = phi ptr [ %.0.ph, %.body.thread46 ], [ %14, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i ], [ %14, %bb.e ]
+  %.0.lpad-body44 = phi ptr [ %.0.ph, %.body.thread46 ], [ %12, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i ], [ %12, %bb.e ]
   %i.ao = extractvalue { ptr, i32 } %lpad.thr_comm.sink, 0
   %i.ap = call ptr @__cxa_begin_catch(ptr %i.ao) #24 ; 0 uses
-  invoke void @_ZSt8_DestroyIPSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEEEvT_SI_(ptr noundef nonnull %14, ptr noundef nonnull %.0.lpad-body44)
+  invoke void @_ZSt8_DestroyIPSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEEEvT_SI_(ptr noundef nonnull %12, ptr noundef nonnull %.0.lpad-body44)
           to label %bb.i unwind label %bb.h
 
 bb.h:                                             ; preds = %.body.thread, %bb.i
@@ -3659,7 +3653,7 @@ bb.h:                                             ; preds = %.body.thread, %bb.i
           to label %bb.j unwind label %bb.k
 
 bb.i:                                             ; preds = %bb.g, %.body.thread
-  call void @_ZdlPv(ptr noundef nonnull %14) #26
+  call void @_ZdlPv(ptr noundef nonnull %12) #26
   invoke void @__cxa_rethrow() #28
           to label %bb.l unwind label %bb.h
 

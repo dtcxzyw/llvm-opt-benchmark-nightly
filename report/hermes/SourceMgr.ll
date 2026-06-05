@@ -201,7 +201,7 @@ _ZN4llvh9SourceMgr9SrcBufferD2Ev.exit:            ; preds = %bb.d, %_ZNKSt14defa
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden noundef i32 @_ZNK4llvh9SourceMgr23FindBufferContainingLocENS_5SMLocE(ptr noundef nonnull align 8 captures(address) dereferenceable(120) %0, ptr readnone captures(address) %1) local_unnamed_addr #3 align 2 {
+define hidden noundef i32 @_ZNK4llvh9SourceMgr23FindBufferContainingLocENS_5SMLocE(ptr nofree noundef nonnull align 8 captures(address) dereferenceable(120) %0, ptr nofree readnone captures(address) %1) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !58   ; 3 uses
@@ -272,7 +272,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_ZN4llvh9SourceMgr9SrcBufferC2EOS1_(ptr noundef nonnull writeonly align 8 captures(none) dereferenceable(24) initializes((0, 24)) %0, ptr noundef nonnull align 8 captures(none) dereferenceable(24) %1) unnamed_addr #4 align 2 {
+define hidden void @_ZN4llvh9SourceMgr9SrcBufferC2EOS1_(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) initializes((0, 24)) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(24) %1) unnamed_addr #4 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load <2 x i64>, ptr %1, align 8, !tbaa !11
@@ -287,7 +287,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN4llvh9SourceMgr9SrcBufferD2Ev(ptr noundef nonnull align 8 captures(none) dead_on_return(24) dereferenceable(24) %0) unnamed_addr #0 align 2 {
+define hidden void @_ZN4llvh9SourceMgr9SrcBufferD2Ev(ptr nofree noundef nonnull align 8 captures(none) dead_on_return(24) dereferenceable(24) %0) unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !53   ; 2 uses
@@ -335,7 +335,7 @@ _ZNSt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS1_EED2Ev.exit: ; pred
 declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #5
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZNK4llvh9SourceMgr8FindLineENS_5SMLocEj(ptr dead_on_unwind noalias writable writeonly sret(%"struct.std::pair.36") align 8 captures(none) %0, ptr noundef nonnull align 8 captures(address) dereferenceable(120) %1, ptr %2, i32 noundef %3) local_unnamed_addr #0 align 2 {
+define hidden void @_ZNK4llvh9SourceMgr8FindLineENS_5SMLocEj(ptr dead_on_unwind noalias nofree writable writeonly sret(%"struct.std::pair.36") align 8 captures(none) %0, ptr nofree noundef nonnull align 8 captures(address) dereferenceable(120) %1, ptr %2, i32 noundef %3) local_unnamed_addr #0 align 2 {
 bb.a:
   %.not = icmp eq i32 %3, 0
   br i1 %.not, label %bb.b, label %_ZNK4llvh9SourceMgr23FindBufferContainingLocENS_5SMLocE.exit
@@ -734,7 +734,7 @@ bb.y:                                             ; preds = %_ZNK4llvh9SourceMgr
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden { ptr, i64 } @_ZNK4llvh9SourceMgr10getLineRefEjj(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(120) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 align 2 {
+define hidden { ptr, i64 } @_ZNK4llvh9SourceMgr10getLineRefEjj(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(120) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = add i32 %2, -1
   %i.b = zext i32 %i.a to i64
@@ -1053,7 +1053,7 @@ _ZNK4llvh9SourceMgr9SrcBuffer10getLineRefIhEENS_9StringRefEj.exit: ; preds = %bb
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden i64 @_ZNK4llvh9SourceMgr16getLineAndColumnENS_5SMLocEj(ptr noundef nonnull align 8 captures(address) dereferenceable(120) %0, ptr %1, i32 noundef %2) local_unnamed_addr #0 align 2 {
+define hidden i64 @_ZNK4llvh9SourceMgr16getLineAndColumnENS_5SMLocEj(ptr nofree noundef nonnull align 8 captures(address) dereferenceable(120) %0, ptr %1, i32 noundef %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %3 = alloca %"struct.std::pair.36", align 8     ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
@@ -1073,7 +1073,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZNK4llvh9SourceMgr17PrintIncludeStackENS_5SMLocERNS_11raw_ostreamE(ptr noundef nonnull align 8 captures(address) dereferenceable(120) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(36) %2) local_unnamed_addr #0 align 2 {
+define hidden void @_ZNK4llvh9SourceMgr17PrintIncludeStackENS_5SMLocERNS_11raw_ostreamE(ptr nofree noundef nonnull align 8 captures(address) dereferenceable(120) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(36) %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %3 = alloca %"struct.std::pair.36", align 8     ; 4 uses
   %i.a = icmp eq ptr %1, null
@@ -1273,7 +1273,7 @@ _ZN4llvh11raw_ostreamlsEPKc.exit14:               ; preds = %bb.o, %bb.n, %bb.a
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #6
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZNK4llvh9SourceMgr10GetMessageENS_5SMLocENS0_8DiagKindERKNS_5TwineENS_8ArrayRefINS_7SMRangeEEENS6_INS_7SMFixItEEE(ptr dead_on_unwind noalias writable sret(%"class.llvh::SMDiagnostic") align 8 %0, ptr noundef nonnull align 8 dereferenceable(120) %1, ptr %2, i32 noundef %3, ptr noundef nonnull align 8 dereferenceable(18) %4, ptr noundef readonly byval(%"class.llvh::ArrayRef") align 8 captures(none) %5, ptr noundef readonly byval(%"class.llvh::ArrayRef.41") align 8 captures(none) %6) local_unnamed_addr #0 align 2 {
+define hidden void @_ZNK4llvh9SourceMgr10GetMessageENS_5SMLocENS0_8DiagKindERKNS_5TwineENS_8ArrayRefINS_7SMRangeEEENS6_INS_7SMFixItEEE(ptr dead_on_unwind noalias writable sret(%"class.llvh::SMDiagnostic") align 8 %0, ptr noundef nonnull align 8 dereferenceable(120) %1, ptr %2, i32 noundef %3, ptr noundef nonnull align 8 dereferenceable(18) %4, ptr nofree noundef readonly byval(%"class.llvh::ArrayRef") align 8 captures(none) %5, ptr nofree noundef readonly byval(%"class.llvh::ArrayRef.41") align 8 captures(none) %6) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = ptrtoint ptr %2 to i64                   ; 4 uses
   %7 = alloca %"struct.std::pair.36", align 8     ; 5 uses
@@ -1676,7 +1676,7 @@ _ZN4llvh11SmallVectorISt4pairIjjELj4EED2Ev.exit:  ; preds = %_ZNSt7__cxx1112basi
 declare void @_ZNK4llvh5Twine3strB5cxx11Ev(ptr dead_on_unwind writable sret(%"class.std::__cxx11::basic_string") align 8, ptr noundef nonnull align 8 dereferenceable(18)) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZNK4llvh9SourceMgr12PrintMessageERNS_11raw_ostreamERKNS_12SMDiagnosticEb(ptr noundef nonnull align 8 captures(address) dereferenceable(120) %0, ptr noundef nonnull align 8 dereferenceable(36) %1, ptr noundef nonnull align 8 dereferenceable(360) %2, i1 noundef zeroext %3) local_unnamed_addr #0 align 2 {
+define hidden void @_ZNK4llvh9SourceMgr12PrintMessageERNS_11raw_ostreamERKNS_12SMDiagnosticEb(ptr nofree noundef nonnull align 8 captures(address) dereferenceable(120) %0, ptr noundef nonnull align 8 dereferenceable(36) %1, ptr noundef nonnull align 8 dereferenceable(360) %2, i1 noundef zeroext %3) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !142  ; 2 uses
@@ -1783,7 +1783,7 @@ bb.j:                                             ; preds = %bb.i, %bb.b
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZNK4llvh12SMDiagnostic5printEPKcRNS_11raw_ostreamEbb(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(360) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(36) %2, i1 noundef zeroext %3, i1 noundef zeroext %4) local_unnamed_addr #0 align 2 {
+define hidden void @_ZNK4llvh12SMDiagnostic5printEPKcRNS_11raw_ostreamEbb(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(360) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(36) %2, i1 noundef zeroext %3, i1 noundef zeroext %4) local_unnamed_addr #0 align 2 {
 bb.a:
   %5 = alloca %"class.llvh::StringRef", align 8   ; 5 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 17 uses
@@ -2186,7 +2186,7 @@ bb.ct:                                            ; preds = %_ZN4llvh11raw_ostre
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZNK4llvh9SourceMgr12PrintMessageERNS_11raw_ostreamENS_5SMLocENS0_8DiagKindERKNS_5TwineENS_8ArrayRefINS_7SMRangeEEENS8_INS_7SMFixItEEEb(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef nonnull align 8 dereferenceable(36) %1, ptr %2, i32 noundef %3, ptr noundef nonnull align 8 dereferenceable(18) %4, ptr noundef readonly byval(%"class.llvh::ArrayRef") align 8 captures(none) %5, ptr noundef readonly byval(%"class.llvh::ArrayRef.41") align 8 captures(none) %6, i1 noundef zeroext %7) local_unnamed_addr #0 align 2 {
+define hidden void @_ZNK4llvh9SourceMgr12PrintMessageERNS_11raw_ostreamENS_5SMLocENS0_8DiagKindERKNS_5TwineENS_8ArrayRefINS_7SMRangeEEENS8_INS_7SMFixItEEEb(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef nonnull align 8 dereferenceable(36) %1, ptr %2, i32 noundef %3, ptr noundef nonnull align 8 dereferenceable(18) %4, ptr nofree noundef readonly byval(%"class.llvh::ArrayRef") align 8 captures(none) %5, ptr nofree noundef readonly byval(%"class.llvh::ArrayRef.41") align 8 captures(none) %6, i1 noundef zeroext %7) local_unnamed_addr #0 align 2 {
 bb.a:
   %8 = alloca %"class.llvh::SMDiagnostic", align 8 ; 15 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #19
@@ -2298,7 +2298,7 @@ _ZN4llvh12SMDiagnosticD2Ev.exit:                  ; preds = %_ZNSt7__cxx1112basi
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZNK4llvh9SourceMgr12PrintMessageENS_5SMLocENS0_8DiagKindERKNS_5TwineENS_8ArrayRefINS_7SMRangeEEENS6_INS_7SMFixItEEEb(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr %1, i32 noundef %2, ptr noundef nonnull align 8 dereferenceable(18) %3, ptr %4, i64 %5, ptr noundef readonly byval(%"class.llvh::ArrayRef.41") align 8 captures(none) %6, i1 noundef zeroext %7) local_unnamed_addr #0 align 2 {
+define hidden void @_ZNK4llvh9SourceMgr12PrintMessageENS_5SMLocENS0_8DiagKindERKNS_5TwineENS_8ArrayRefINS_7SMRangeEEENS6_INS_7SMFixItEEEb(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr %1, i32 noundef %2, ptr noundef nonnull align 8 dereferenceable(18) %3, ptr %4, i64 %5, ptr nofree noundef readonly byval(%"class.llvh::ArrayRef.41") align 8 captures(none) %6, i1 noundef zeroext %7) local_unnamed_addr #0 align 2 {
 bb.a:
   %8 = alloca %"class.llvh::ArrayRef", align 8    ; 3 uses
   %i.a = tail call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh4errsEv() #19
@@ -2312,7 +2312,7 @@ bb.a:
 declare noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh4errsEv() local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN4llvh12SMDiagnosticC2ERKNS_9SourceMgrENS_5SMLocENS_9StringRefEiiNS1_8DiagKindES5_S5_NS_8ArrayRefISt4pairIjjEEENS7_INS_7SMFixItEEE(ptr noundef nonnull align 8 dereferenceable(360) initializes((0, 16)) %0, ptr noundef nonnull align 8 dereferenceable(120) %1, ptr %2, ptr readonly captures(address_is_null) %3, i64 %4, i32 noundef %5, i32 noundef %6, i32 noundef %7, ptr noundef readonly byval(%"class.llvh::StringRef") align 8 captures(none) %8, ptr noundef readonly byval(%"class.llvh::StringRef") align 8 captures(none) %9, ptr noundef readonly byval(%"class.llvh::ArrayRef.56") align 8 captures(none) %10, ptr noundef readonly byval(%"class.llvh::ArrayRef.41") align 8 captures(none) %11) unnamed_addr #0 align 2 {
+define hidden void @_ZN4llvh12SMDiagnosticC2ERKNS_9SourceMgrENS_5SMLocENS_9StringRefEiiNS1_8DiagKindES5_S5_NS_8ArrayRefISt4pairIjjEEENS7_INS_7SMFixItEEE(ptr noundef nonnull align 8 dereferenceable(360) initializes((0, 16)) %0, ptr noundef nonnull align 8 dereferenceable(120) %1, ptr %2, ptr nofree readonly captures(address_is_null) %3, i64 %4, i32 noundef %5, i32 noundef %6, i32 noundef %7, ptr nofree noundef readonly byval(%"class.llvh::StringRef") align 8 captures(none) %8, ptr nofree noundef readonly byval(%"class.llvh::StringRef") align 8 captures(none) %9, ptr nofree noundef readonly byval(%"class.llvh::ArrayRef.56") align 8 captures(none) %10, ptr nofree noundef readonly byval(%"class.llvh::ArrayRef.41") align 8 captures(none) %11) unnamed_addr #0 align 2 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca i64, align 8                      ; 6 uses
@@ -2715,26 +2715,20 @@ _ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.g
   %i.ae = icmp ult i64 %i.ad, %i.ab
   %i.af = tail call i64 @llvm.umin.i64(i64 %i.ad, i64 9223372036854775807)
   %i.ag = select i1 %i.ae, i64 9223372036854775807, i64 %i.af ; 3 uses
-  %.not.i.i.i.i7 = icmp eq i64 %i.ag, 0
-  br i1 %.not.i.i.i.i7, label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i, label %1
+  %.not.i.i.i.i7 = icmp ne i64 %i.ag, 0
+  tail call void @llvm.assume(i1 %.not.i.i.i.i7)
+  %1 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ag) #23 ; 4 uses
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 %i.ab ; 2 uses
+  store i8 %i.u, ptr %2, align 1, !tbaa !11
+  %3 = icmp sgt i64 %i.ab, 0
+  br i1 %3, label %bb.i, label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i
 
-1:                                                ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i
-  %2 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ag) #23
-  br label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i
-
-_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i: ; preds = %1, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i
-  %3 = phi ptr [ %2, %1 ], [ null, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i ] ; 4 uses
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 %i.ab ; 2 uses
-  store i8 %i.u, ptr %4, align 1, !tbaa !11
-  %5 = icmp sgt i64 %i.ab, 0
-  br i1 %5, label %bb.i, label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i
-
-bb.i:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %3, ptr align 1 %i.y, i64 %i.ab, i1 false)
+bb.i:                                             ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %1, ptr align 1 %i.y, i64 %i.ab, i1 false)
   br label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i
 
-_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i: ; preds = %bb.i, %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i
-  %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 1 ; 2 uses
+_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i: ; preds = %bb.i, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i
+  %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 2 uses
   %.not.i17.i.i.i = icmp eq ptr %i.y, null
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i, label %bb.j
 
@@ -2743,9 +2737,9 @@ bb.j:                                             ; preds = %_ZNSt6vectorIhSaIhE
   br label %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i: ; preds = %bb.j, %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i
-  store ptr %3, ptr %i.e, align 8, !tbaa !110
+  store ptr %1, ptr %i.e, align 8, !tbaa !110
   store ptr %i.ah, ptr %i.o, align 8, !tbaa !108
-  %i.ai = getelementptr inbounds nuw i8, ptr %3, i64 %i.ag
+  %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 %i.ag
   store ptr %i.ai, ptr %i.p, align 8, !tbaa !216
   br label %_ZNSt6vectorIhSaIhEE9push_backEOh.exit
 

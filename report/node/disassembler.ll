@@ -201,7 +201,7 @@ declare noundef ptr @_ZN2v88internal4wasm23GetWasmCodeKindAsStringENS1_8WasmCode
 declare noundef ptr @_ZNK6disasm13NameConverter13NameOfAddressEPh(ptr noundef nonnull align 8 dereferenceable(152), ptr noundef) unnamed_addr #2
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define hidden noundef ptr @_ZNK2v88internal15V8NameConverter10NameInCodeEPh(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(376) %0, ptr noundef readnone captures(ret: address, provenance) %1) unnamed_addr #3 align 2 {
+define hidden noundef ptr @_ZNK2v88internal15V8NameConverter10NameInCodeEPh(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(376) %0, ptr nofree noundef readnone captures(ret: address, provenance) %1) unnamed_addr #3 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.b = load i32, ptr %i.a, align 8
@@ -390,7 +390,7 @@ _ZNSt13unordered_mapIiPKcSt4hashIiESt8equal_toIiESaISt4pairIKiS1_EEE4findERS7_.e
 declare noundef ptr @_ZN2v88internal8Builtins4nameENS0_7BuiltinE(i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden noundef i32 @_ZN2v88internal12Disassembler6DecodeEPNS0_7IsolateERSoPhS5_NS0_13CodeReferenceEmm(ptr noundef %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %2, ptr noundef readnone captures(address) %3, ptr noundef readonly byval(%"class.v8::internal::CodeReference") align 8 captures(none) %4, i64 noundef %5, i64 noundef %6) local_unnamed_addr #0 align 2 {
+define hidden noundef i32 @_ZN2v88internal12Disassembler6DecodeEPNS0_7IsolateERSoPhS5_NS0_13CodeReferenceEmm(ptr noundef %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %2, ptr nofree noundef readnone captures(address) %3, ptr nofree noundef readonly byval(%"class.v8::internal::CodeReference") align 8 captures(none) %4, i64 noundef %5, i64 noundef %6) local_unnamed_addr #0 align 2 {
 bb.a:
   %7 = alloca %"class.v8::internal::V8NameConverter", align 8 ; 20 uses
   %8 = alloca %"class.v8::internal::ExternalReferenceEncoder", align 8 ; 4 uses
@@ -473,7 +473,7 @@ _ZN2v88internal15V8NameConverterD2Ev.exit:        ; preds = %_ZNSt10_HashtableIi
 declare void @_ZN2v88internal24ExternalReferenceEncoderC1EPNS0_7IsolateE(ptr noundef nonnull align 8 dereferenceable(8), ptr noundef) unnamed_addr #2
 
 ; Function Attrs: mustprogress nounwind uwtable
-define internal fastcc noundef i32 @_ZN2v88internalL8DecodeItEPNS0_7IsolateEPNS0_24ExternalReferenceEncoderERSoNS0_13CodeReferenceERKNS0_15V8NameConverterEPhSA_mm(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef byval(%"class.v8::internal::CodeReference") align 8 %3, ptr noundef nonnull align 8 dereferenceable(376) %4, ptr noundef %5, ptr noundef readnone captures(address) %6, i64 noundef %7, i64 noundef %8) unnamed_addr #0 {
+define internal fastcc noundef i32 @_ZN2v88internalL8DecodeItEPNS0_7IsolateEPNS0_24ExternalReferenceEncoderERSoNS0_13CodeReferenceERKNS0_15V8NameConverterEPhSA_mm(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef byval(%"class.v8::internal::CodeReference") align 8 %3, ptr noundef nonnull align 8 dereferenceable(376) %4, ptr noundef %5, ptr nofree noundef readnone captures(address) %6, i64 noundef %7, i64 noundef %8) unnamed_addr #0 {
 bb.a:
   %9 = alloca %"class.v8::base::EmbeddedVector", align 8 ; 12 uses
   %10 = alloca %"class.std::__cxx11::basic_ostringstream", align 8 ; 48 uses
@@ -868,25 +868,19 @@ _ZNKSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE12_M_check_lenEmPKc.exit.i.i.
   %i.fa = icmp ult i64 %i.ez, %i.ex
   %i.fb = call i64 @llvm.umin.i64(i64 %i.ez, i64 9223372036854775807)
   %i.fc = select i1 %i.fa, i64 9223372036854775807, i64 %i.fb ; 3 uses
-  %.not.i.i.i.i139 = icmp eq i64 %i.fc, 0
-  br i1 %.not.i.i.i.i139, label %_ZNSt12_Vector_baseIN2v88internal9RelocInfo4ModeESaIS3_EE11_M_allocateEm.exit.i.i.i, label %16
+  %.not.i.i.i.i139 = icmp ne i64 %i.fc, 0
+  call void @llvm.assume(i1 %.not.i.i.i.i139)
+  %16 = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fc) #18 ; 4 uses
+  %17 = getelementptr inbounds nuw i8, ptr %16, i64 %i.ex ; 2 uses
+  store i8 %i.eu, ptr %17, align 1
+  %18 = icmp sgt i64 %i.ex, 0
+  br i1 %18, label %bb.ah, label %_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
 
-16:                                               ; preds = %_ZNKSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
-  %17 = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fc) #18
-  br label %_ZNSt12_Vector_baseIN2v88internal9RelocInfo4ModeESaIS3_EE11_M_allocateEm.exit.i.i.i
-
-_ZNSt12_Vector_baseIN2v88internal9RelocInfo4ModeESaIS3_EE11_M_allocateEm.exit.i.i.i: ; preds = %16, %_ZNKSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
-  %18 = phi ptr [ %17, %16 ], [ null, %_ZNKSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i ] ; 4 uses
-  %19 = getelementptr inbounds nuw i8, ptr %18, i64 %i.ex ; 2 uses
-  store i8 %i.eu, ptr %19, align 1
-  %20 = icmp sgt i64 %i.ex, 0
-  br i1 %20, label %bb.ah, label %_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
-
-bb.ah:                                            ; preds = %_ZNSt12_Vector_baseIN2v88internal9RelocInfo4ModeESaIS3_EE11_M_allocateEm.exit.i.i.i
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %18, ptr align 1 %.sroa.0177.0280, i64 %i.ex, i1 false)
+bb.ah:                                            ; preds = %_ZNKSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %16, ptr align 1 %.sroa.0177.0280, i64 %i.ex, i1 false)
   br label %_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
 
-_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i: ; preds = %bb.ah, %_ZNSt12_Vector_baseIN2v88internal9RelocInfo4ModeESaIS3_EE11_M_allocateEm.exit.i.i.i
+_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i: ; preds = %bb.ah, %_ZNKSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
   %.not.i17.i.i.i140 = icmp eq ptr %.sroa.0177.0280, null
   br i1 %.not.i17.i.i.i140, label %_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i, label %bb.ai
 
@@ -895,13 +889,13 @@ bb.ai:                                            ; preds = %_ZNSt6vectorIN2v88i
   br label %_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i: ; preds = %bb.ai, %_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
-  %i.fd = getelementptr inbounds nuw i8, ptr %18, i64 %i.fc
+  %i.fd = getelementptr inbounds nuw i8, ptr %16, i64 %i.fc
   br label %_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE9push_backEOS3_.exit
 
 _ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE9push_backEOS3_.exit: ; preds = %bb.ae, %_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i
-  %.pn248 = phi ptr [ %19, %_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %.sroa.7180.0275, %bb.ae ]
+  %.pn248 = phi ptr [ %17, %_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %.sroa.7180.0275, %bb.ae ]
   %.sroa.11182.1 = phi ptr [ %i.fd, %_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %.sroa.11182.0276, %bb.ae ] ; 2 uses
-  %.sroa.0177.1 = phi ptr [ %18, %_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %.sroa.0177.0280, %bb.ae ] ; 2 uses
+  %.sroa.0177.1 = phi ptr [ %16, %_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %.sroa.0177.0280, %bb.ae ] ; 2 uses
   %.sroa.7180.1 = getelementptr inbounds nuw i8, ptr %.pn248, i64 1
   %i.fe = load i64, ptr %i.cn, align 8            ; 2 uses
   %.not.i.i141 = icmp eq ptr %.sroa.7.0278, %.sroa.11.0279
@@ -1304,7 +1298,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit5: ; preds = %_ZNS
 declare noundef i64 @_ZNK2v88internal13CodeReference13constant_poolEv(ptr noundef nonnull align 8 dereferenceable(16)) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nounwind uwtable
-define internal fastcc void @_ZN2v88internalL14PrintRelocInfoERNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEEPNS0_7IsolateEPKNS0_24ExternalReferenceEncoderERSoNS0_13CodeReferenceEPNS0_9RelocInfoEb(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr noundef %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(8) %3, i32 %.0.val, ptr readonly captures(none) %.8.val, ptr noundef %4, i1 noundef zeroext %5) unnamed_addr #0 {
+define internal fastcc void @_ZN2v88internalL14PrintRelocInfoERNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEEPNS0_7IsolateEPKNS0_24ExternalReferenceEncoderERSoNS0_13CodeReferenceEPNS0_9RelocInfoEb(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr noundef %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(8) %3, i32 %.0.val, ptr nofree readonly captures(none) %.8.val, ptr noundef %4, i1 noundef zeroext %5) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i8, align 1                       ; 4 uses
   %6 = alloca %"class.v8::internal::HeapStringAllocator", align 8 ; 6 uses

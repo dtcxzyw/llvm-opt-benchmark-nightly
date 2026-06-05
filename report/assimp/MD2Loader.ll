@@ -127,7 +127,7 @@ $_ZTV17DeadlyImportError = comdat any
 @_ZN6Assimp11MD2ImporterC1Ev = hidden unnamed_addr alias void (ptr), ptr @_ZN6Assimp11MD2ImporterC2Ev
 
 ; Function Attrs: mustprogress uwtable
-define hidden void @_ZN6Assimp3MD217LookupNormalIndexEhR10aiVector3tIfE(i8 noundef zeroext %0, ptr noundef nonnull writeonly align 4 captures(none) dereferenceable(12) initializes((0, 12)) %1) local_unnamed_addr #0 {
+define hidden void @_ZN6Assimp3MD217LookupNormalIndexEhR10aiVector3tIfE(i8 noundef zeroext %0, ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(12) initializes((0, 12)) %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp ugt i8 %0, -95
   br i1 %i.a, label %bb.b, label %bb.c
@@ -168,7 +168,7 @@ bb.a:
 declare void @_ZN6Assimp12BaseImporterC2Ev(ptr noundef nonnull align 8 dereferenceable(72)) unnamed_addr #4
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef zeroext i1 @_ZNK6Assimp11MD2Importer7CanReadERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS_8IOSystemEb(ptr nonnull readnone align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef %2, i1 zeroext %3) unnamed_addr #0 align 2 {
+define hidden noundef zeroext i1 @_ZNK6Assimp11MD2Importer7CanReadERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS_8IOSystemEb(ptr nofree nonnull readnone align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef %2, i1 zeroext %3) unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef zeroext i1 @_ZN6Assimp12BaseImporter15CheckMagicTokenEPNS_8IOSystemERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKvmjj(ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull @_ZZNK6Assimp11MD2Importer7CanReadERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS_8IOSystemEbE6tokens, i64 noundef 1, i32 noundef 0, i32 noundef 4)
   ret i1 %i.a
@@ -177,13 +177,13 @@ bb.a:
 declare noundef zeroext i1 @_ZN6Assimp12BaseImporter15CheckMagicTokenEPNS_8IOSystemERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKvmjj(ptr noundef, ptr noundef nonnull align 8 dereferenceable(32), ptr noundef, i64 noundef, i32 noundef, i32 noundef) local_unnamed_addr #1
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden noundef nonnull ptr @_ZNK6Assimp11MD2Importer7GetInfoEv(ptr nonnull readnone align 8 captures(none) %0) unnamed_addr #5 align 2 {
+define hidden noundef nonnull ptr @_ZNK6Assimp11MD2Importer7GetInfoEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #5 align 2 {
 bb.a:
   ret ptr @_ZL4desc
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden void @_ZN6Assimp11MD2Importer15SetupPropertiesEPKNS_8ImporterE(ptr noundef nonnull writeonly align 8 captures(none) dereferenceable(100) initializes((72, 76)) %0, ptr noundef nonnull %1) unnamed_addr #0 align 2 {
+define hidden void @_ZN6Assimp11MD2Importer15SetupPropertiesEPKNS_8ImporterE(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(100) initializes((72, 76)) %0, ptr noundef nonnull %1) unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZNK6Assimp8Importer18GetPropertyIntegerEPKci(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.1, i32 noundef -1) ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
@@ -586,7 +586,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden void @_ZN6Assimp11MD2Importer14InternReadFileERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEP7aiScenePNS_8IOSystemE(ptr noundef nonnull align 8 dereferenceable(100) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef captures(none) %2, ptr noundef %3) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define hidden void @_ZN6Assimp11MD2Importer14InternReadFileERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEP7aiScenePNS_8IOSystemE(ptr noundef nonnull align 8 dereferenceable(100) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr nofree noundef captures(none) %2, ptr noundef %3) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 ._crit_edge.i.i:
   %i.a = alloca i64, align 8                      ; 5 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -696,40 +696,35 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZNKSt14default_deleteIN6Assimp8IOStreamEEclEPS1_.exit.i210
 
 bb.h:                                             ; preds = %bb.e
-  %i.ah = and i64 %i.z, 4294967295                ; 5 uses
-  %.not.i.i.i.i = icmp eq i64 %i.ah, 0
-  br i1 %.not.i.i.i.i, label %_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit, label %11
+  %i.ah = and i64 %i.z, 4294967295                ; 6 uses
+  %.not.i.i.i.i = icmp ne i64 %i.ah, 0
+  call void @llvm.assume(i1 %.not.i.i.i.i)
+  %11 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ah) #20
+          to label %.noexc176 unwind label %bb.ab ; 7 uses
 
-11:                                               ; preds = %bb.h
-  %12 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ah) #20
-          to label %.noexc176 unwind label %bb.ab ; 5 uses
-
-.noexc176:                                        ; preds = %11
-  %13 = getelementptr i8, ptr %12, i64 %i.ah      ; 2 uses
-  store i8 0, ptr %12, align 1
+.noexc176:                                        ; preds = %bb.h
+  store i8 0, ptr %11, align 1
   %i.ai = add nsw i64 %i.ah, -1                   ; 2 uses
   %i.aj = icmp eq i64 %i.ai, 0
   br i1 %i.aj, label %_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit, label %bb.i
 
 bb.i:                                             ; preds = %.noexc176
-  %i.ak = getelementptr inbounds nuw i8, ptr %12, i64 1
+  %i.ak = getelementptr inbounds nuw i8, ptr %11, i64 1
   call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.ak, i8 0, i64 %i.ai, i1 false)
   br label %_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit
 
-_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit:               ; preds = %bb.i, %.noexc176, %bb.h
-  %.sroa.11220.0 = phi ptr [ %13, %bb.i ], [ %13, %.noexc176 ], [ null, %bb.h ] ; 2 uses
-  %.sroa.0215.0 = phi ptr [ %12, %bb.i ], [ %12, %.noexc176 ], [ null, %bb.h ] ; 7 uses
+_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit:               ; preds = %bb.i, %.noexc176
   %i.al = load ptr, ptr %i.j, align 8
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 16
   %i.an = load ptr, ptr %i.am, align 8
-  %i.ao = invoke noundef i64 %i.an(ptr noundef nonnull align 8 dereferenceable(8) %i.j, ptr noundef nonnull %.sroa.0215.0, i64 noundef 1, i64 noundef %i.ah)
+  %i.ao = invoke noundef i64 %i.an(ptr noundef nonnull align 8 dereferenceable(8) %i.j, ptr noundef nonnull %11, i64 noundef 1, i64 noundef %i.ah)
           to label %bb.j unwind label %bb.ac      ; 0 uses
 
 bb.j:                                             ; preds = %_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 88
-  store ptr %.sroa.0215.0, ptr %i.ap, align 8
+  store ptr %11, ptr %i.ap, align 8
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 19 uses
-  store ptr %.sroa.0215.0, ptr %i.aq, align 8
+  store ptr %11, ptr %i.aq, align 8
   invoke void @_ZN6Assimp11MD2Importer14ValidateHeaderEv(ptr noundef nonnull align 8 dereferenceable(100) %0)
           to label %bb.k unwind label %bb.ac
 
@@ -1004,7 +999,7 @@ bb.aa:                                            ; preds = %bb.z
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #16
   br label %bb.ao
 
-bb.ab:                                            ; preds = %11
+bb.ab:                                            ; preds = %bb.h
   %i.fe = landingpad { ptr, i32 }
           cleanup
   br label %_ZNKSt14default_deleteIN6Assimp8IOStreamEEclEPS1_.exit.i210
@@ -1323,10 +1318,7 @@ _ZNSt10unique_ptrIN6Assimp8IOStreamESt14default_deleteIS1_EED2Ev.exit: ; preds =
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.13.0..sroa_idx, i8 0, i64 20, i1 false)
   store float 1.000000e+00, ptr %.sroa.18.0..sroa_idx, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #16
-  %14 = ptrtoint ptr %.sroa.11220.0 to i64
-  %15 = ptrtoint ptr %.sroa.0215.0 to i64
-  %16 = sub i64 %14, %15
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0215.0, i64 noundef %16) #18
+  call void @_ZdlPvm(ptr noundef nonnull %11, i64 noundef %i.ah) #18
   %i.id = load ptr, ptr %i.j, align 8
   %i.ie = getelementptr inbounds nuw i8, ptr %i.id, i64 8
   %i.if = load ptr, ptr %i.ie, align 8
@@ -1729,10 +1721,7 @@ bb.db:                                            ; preds = %bb.bo, %bb.ca, %bb.
 
 .thread:                                          ; preds = %bb.db, %bb.ac, %bb.ad, %bb.ae, %bb.ag, %bb.af, %.thread233
   %.pn160.pn.pn.pn.pn.pn.pn230 = phi { ptr, i32 } [ %.pn160.pn.pn.pn.ph, %.thread233 ], [ %.pn160.pn.pn.pn, %bb.db ], [ %i.fj, %bb.ag ], [ %i.fi, %bb.af ], [ %i.fh, %bb.ae ], [ %i.ff, %bb.ac ], [ %i.fg, %bb.ad ]
-  %17 = ptrtoint ptr %.sroa.11220.0 to i64
-  %18 = ptrtoint ptr %.sroa.0215.0 to i64
-  %19 = sub i64 %17, %18
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0215.0, i64 noundef %19) #18
+  call void @_ZdlPvm(ptr noundef nonnull %11, i64 noundef %i.ah) #18
   br label %_ZNSt6vectorIhSaIhEED2Ev.exit208
 
 _ZNSt6vectorIhSaIhEED2Ev.exit208:                 ; preds = %.thread, %bb.c

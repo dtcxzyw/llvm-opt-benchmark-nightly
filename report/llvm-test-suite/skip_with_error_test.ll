@@ -180,7 +180,7 @@ $_ZGVZN9benchmark8internal19GetErrorLogInstanceEvE9error_log = comdat any
 declare noundef i32 @_ZN9benchmark8internal17InitializeStreamsEv() local_unnamed_addr #0
 
 ; Function Attrs: mustprogress nounwind uwtable
-define internal void @_ZNSt6vectorIN12_GLOBAL__N_18TestCaseESaIS1_EED2Ev(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
+define internal void @_ZNSt6vectorIN12_GLOBAL__N_18TestCaseESaIS1_EED2Ev(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !8      ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -311,7 +311,7 @@ declare noundef nonnull ptr @_Znwm(i64 noundef) local_unnamed_addr #5
 declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #6
 
 ; Function Attrs: mustprogress uwtable
-define internal fastcc void @_ZN12_GLOBAL__N_18AddCasesERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt16initializer_listINS_8TestCaseEE(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0, ptr readonly captures(address) %.0.val, i64 %.8.val) unnamed_addr #3 personality ptr @__gxx_personality_v0 {
+define internal fastcc void @_ZN12_GLOBAL__N_18AddCasesERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt16initializer_listINS_8TestCaseEE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0, ptr nofree readonly captures(address) %.0.val, i64 %.8.val) unnamed_addr #3 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca i64, align 8                      ; 6 uses
@@ -676,17 +676,14 @@ _ZNKSt6vectorIN12_GLOBAL__N_18TestCaseESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ;
   %i.df = icmp ult i64 %i.de, %i.dc
   %i.dg = call i64 @llvm.umin.i64(i64 %i.de, i64 128102389400760775)
   %i.dh = select i1 %i.df, i64 128102389400760775, i64 %i.dg ; 3 uses
-  %.not.i.i.i.i = icmp eq i64 %i.dh, 0
-  br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseIN12_GLOBAL__N_18TestCaseESaIS1_EE11_M_allocateEm.exit.i.i.i, label %3
+  %.not.i.i.i.i = icmp ne i64 %i.dh, 0
+  call void @llvm.assume(i1 %.not.i.i.i.i)
+  %3 = mul nuw nsw i64 %i.dh, 72
+  %4 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %3) #28
+          to label %_ZNSt12_Vector_baseIN12_GLOBAL__N_18TestCaseESaIS1_EE11_M_allocateEm.exit.i.i.i unwind label %.loopexit1 ; 5 uses
 
-3:                                                ; preds = %_ZNKSt6vectorIN12_GLOBAL__N_18TestCaseESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
-  %4 = mul nuw nsw i64 %i.dh, 72
-  %5 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %4) #28
-          to label %_ZNSt12_Vector_baseIN12_GLOBAL__N_18TestCaseESaIS1_EE11_M_allocateEm.exit.i.i.i unwind label %.loopexit1
-
-_ZNSt12_Vector_baseIN12_GLOBAL__N_18TestCaseESaIS1_EE11_M_allocateEm.exit.i.i.i: ; preds = %3, %_ZNKSt6vectorIN12_GLOBAL__N_18TestCaseESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
-  %6 = phi ptr [ null, %_ZNKSt6vectorIN12_GLOBAL__N_18TestCaseESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i ], [ %5, %3 ] ; 5 uses
-  %i.di = getelementptr inbounds nuw i8, ptr %6, i64 %i.da ; 8 uses
+_ZNSt12_Vector_baseIN12_GLOBAL__N_18TestCaseESaIS1_EE11_M_allocateEm.exit.i.i.i: ; preds = %_ZNKSt6vectorIN12_GLOBAL__N_18TestCaseESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
+  %i.di = getelementptr inbounds nuw i8, ptr %4, i64 %i.da ; 8 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %i.di, i64 16 ; 3 uses
   store ptr %i.dj, ptr %i.di, align 8, !tbaa !22
   %i.dk = load ptr, ptr %1, align 8, !tbaa !13    ; 2 uses
@@ -750,7 +747,7 @@ _ZN12_GLOBAL__N_18TestCaseC2EOS0_.exit.i.i.i:     ; preds = %_ZNKSt7__cxx1112bas
   br i1 %i.dd, label %_ZNSt6vectorIN12_GLOBAL__N_18TestCaseESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit31.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %_ZN12_GLOBAL__N_18TestCaseC2EOS0_.exit.i.i.i, %_ZSt19__relocate_object_aIN12_GLOBAL__N_18TestCaseES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i.i.i.i
-  %.03.i.i.i.i.i.i = phi ptr [ %i.fi, %_ZSt19__relocate_object_aIN12_GLOBAL__N_18TestCaseES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i.i.i.i ], [ %6, %_ZN12_GLOBAL__N_18TestCaseC2EOS0_.exit.i.i.i ] ; 9 uses
+  %.03.i.i.i.i.i.i = phi ptr [ %i.fi, %_ZSt19__relocate_object_aIN12_GLOBAL__N_18TestCaseES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i.i.i.i ], [ %4, %_ZN12_GLOBAL__N_18TestCaseC2EOS0_.exit.i.i.i ] ; 9 uses
   %.092.i.i.i.i.i.i = phi ptr [ %i.fh, %_ZSt19__relocate_object_aIN12_GLOBAL__N_18TestCaseES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i.i.i.i ], [ %i.cx, %_ZN12_GLOBAL__N_18TestCaseC2EOS0_.exit.i.i.i ] ; 13 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !36)
   call void @llvm.experimental.noalias.scope.decl(metadata !39)
@@ -830,7 +827,7 @@ _ZSt19__relocate_object_aIN12_GLOBAL__N_18TestCaseES1_SaIS1_EEvPT_PT0_RT1_.exit.
   br i1 %.not.i.i.i.i.i.i, label %_ZNSt6vectorIN12_GLOBAL__N_18TestCaseESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit31.i.i.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !42
 
 _ZNSt6vectorIN12_GLOBAL__N_18TestCaseESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit31.i.i.i: ; preds = %_ZSt19__relocate_object_aIN12_GLOBAL__N_18TestCaseES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i.i.i.i, %_ZN12_GLOBAL__N_18TestCaseC2EOS0_.exit.i.i.i
-  %.0.lcssa.i.i.i.i.i.i = phi ptr [ %6, %_ZN12_GLOBAL__N_18TestCaseC2EOS0_.exit.i.i.i ], [ %i.fi, %_ZSt19__relocate_object_aIN12_GLOBAL__N_18TestCaseES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i.i.i.i ]
+  %.0.lcssa.i.i.i.i.i.i = phi ptr [ %4, %_ZN12_GLOBAL__N_18TestCaseC2EOS0_.exit.i.i.i ], [ %i.fi, %_ZSt19__relocate_object_aIN12_GLOBAL__N_18TestCaseES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i.i.i.i ]
   %i.fj = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.i, i64 72
   %.not.i32.i.i.i = icmp eq ptr %i.cx, null
   br i1 %.not.i32.i.i.i, label %_ZNSt6vectorIN12_GLOBAL__N_18TestCaseESaIS1_EE9push_backEOS1_.exit, label %bb.x
@@ -843,9 +840,9 @@ bb.x:                                             ; preds = %_ZNSt6vectorIN12_GL
   br label %_ZNSt6vectorIN12_GLOBAL__N_18TestCaseESaIS1_EE9push_backEOS1_.exit
 
 _ZNSt6vectorIN12_GLOBAL__N_18TestCaseESaIS1_EE9push_backEOS1_.exit: ; preds = %_ZNSt6vectorIN12_GLOBAL__N_18TestCaseESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit31.i.i.i, %bb.x
-  store ptr %6, ptr @_ZN12_GLOBAL__N_115ExpectedResultsE, align 8, !tbaa !8
+  store ptr %4, ptr @_ZN12_GLOBAL__N_115ExpectedResultsE, align 8, !tbaa !8
   store ptr %i.fj, ptr getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_115ExpectedResultsE, i64 8), align 8, !tbaa !12
-  %i.fn = getelementptr inbounds nuw [72 x i8], ptr %6, i64 %i.dh
+  %i.fn = getelementptr inbounds nuw [72 x i8], ptr %4, i64 %i.dh
   store ptr %i.fn, ptr getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_115ExpectedResultsE, i64 16), align 8, !tbaa !21
   %.pre27 = load ptr, ptr %i.g, align 8, !tbaa !13 ; 2 uses
   %i.fo = icmp eq ptr %.pre27, %i.h
@@ -878,7 +875,7 @@ _ZN12_GLOBAL__N_18TestCaseD2Ev.exit:              ; preds = %_ZNSt7__cxx1112basi
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #26
   br label %bb.y
 
-.loopexit1:                                       ; preds = %3
+.loopexit1:                                       ; preds = %_ZNKSt6vectorIN12_GLOBAL__N_18TestCaseESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
   %lpad.loopexit3 = landingpad { ptr, i32 }
           cleanup
   br label %bb.y
@@ -896,7 +893,7 @@ bb.y:                                             ; preds = %.loopexit1, %.loope
 }
 
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
-define internal fastcc void @_ZN12_GLOBAL__N_18TestCaseD2Ev(ptr noundef nonnull readonly align 8 captures(address) dead_on_return(72) dereferenceable(72) %0) unnamed_addr #7 align 2 personality ptr @__gxx_personality_v0 {
+define internal fastcc void @_ZN12_GLOBAL__N_18TestCaseD2Ev(ptr nofree noundef nonnull readonly align 8 captures(address) dead_on_return(72) dereferenceable(72) %0) unnamed_addr #7 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !13   ; 2 uses

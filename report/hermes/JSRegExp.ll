@@ -201,7 +201,7 @@ $_ZGVZN4llvh7hashing6detail18get_execution_seedEvE4seed = comdat any
 @_ZN6hermes2vm8JSRegExpD1Ev = hidden unnamed_addr alias void (ptr), ptr @_ZN6hermes2vm8JSRegExpD2Ev
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN6hermes2vm8JSRegExp13_finalizeImplEPNS0_6GCCellERNS0_7HadesGCE(ptr noundef readonly captures(none) %0, ptr noundef nonnull align 8 dereferenceable(8112) %1) #0 align 2 {
+define hidden void @_ZN6hermes2vm8JSRegExp13_finalizeImplEPNS0_6GCCellERNS0_7HadesGCE(ptr nofree noundef readonly captures(none) %0, ptr noundef nonnull align 8 dereferenceable(8112) %1) #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !7    ; 2 uses
@@ -221,7 +221,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define hidden noundef range(i64 0, 4294967296) i64 @_ZN6hermes2vm8JSRegExp15_mallocSizeImplEPNS0_6GCCellE(ptr noundef readonly captures(none) %0) #1 align 2 {
+define hidden noundef range(i64 0, 4294967296) i64 @_ZN6hermes2vm8JSRegExp15_mallocSizeImplEPNS0_6GCCellE(ptr nofree noundef readonly captures(none) %0) #1 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load i32, ptr %i.a, align 8, !tbaa !22
@@ -318,7 +318,7 @@ bb.a:
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #3
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN6hermes2vm8JSRegExp10initializeENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_15StringPrimitiveEEES7_N4llvh8ArrayRefIhEE(ptr %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr readonly captures(none) %2, ptr readnone captures(none) %3, ptr readonly captures(none) %4, i64 %5) local_unnamed_addr #0 align 2 {
+define hidden void @_ZN6hermes2vm8JSRegExp10initializeENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_15StringPrimitiveEEES7_N4llvh8ArrayRefIhEE(ptr %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr nofree readonly captures(none) %2, ptr nofree readnone captures(none) %3, ptr nofree readonly captures(none) %4, i64 %5) local_unnamed_addr #0 align 2 {
 bb.a:
   %.sroa.0.0.copyload.i.i = load i64, ptr %0, align 8, !tbaa !45
   %i.a = and i64 %.sroa.0.0.copyload.i.i, 281474976710655
@@ -370,7 +370,7 @@ _ZN6hermes2vm9GCPointerINS0_15StringPrimitiveEE3setERNS0_11PointerBaseEPS2_RNS0_
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #4
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN6hermes2vm8JSRegExp18initializeBytecodeEN4llvh8ArrayRefIhEE(ptr noundef nonnull writeonly align 8 captures(none) dereferenceable(48) initializes((24, 37)) %0, ptr readonly captures(none) %1, i64 %2) local_unnamed_addr #0 align 2 {
+define hidden void @_ZN6hermes2vm8JSRegExp18initializeBytecodeEN4llvh8ArrayRefIhEE(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(48) initializes((24, 37)) %0, ptr nofree readonly captures(none) %1, i64 %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.b = load i8, ptr %i.a, align 1, !tbaa !50
@@ -388,7 +388,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden noundef i32 @_ZN6hermes2vm8JSRegExp10initializeENS0_6HandleIS1_EERNS0_7RuntimeES3_NS2_INS0_15StringPrimitiveEEE(ptr %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr readonly captures(none) %2, ptr readonly captures(none) %3) local_unnamed_addr #0 align 2 {
+define hidden noundef i32 @_ZN6hermes2vm8JSRegExp10initializeENS0_6HandleIS1_EERNS0_7RuntimeES3_NS2_INS0_15StringPrimitiveEEE(ptr %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr nofree readonly captures(none) %2, ptr nofree readonly captures(none) %3) local_unnamed_addr #0 align 2 {
 bb.a:
   %4 = alloca %"class.llvh::SmallVector.165", align 8 ; 9 uses
   %5 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 8 uses
@@ -599,7 +599,7 @@ declare void @_ZNK6hermes2vm15StringPrimitive17appendUTF16StringERN4llvh15SmallV
 declare noundef i32 @_ZN6hermes2vm7Runtime16raiseSyntaxErrorERKNS0_11TwineChar16E(ptr noundef nonnull align 8 dereferenceable(9816), ptr noundef nonnull align 8 dereferenceable(48)) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define hidden ptr @_ZN6hermes2vm8JSRegExp10getPatternEPS1_RNS0_11PointerBaseE(ptr noundef readonly captures(none) %0, ptr noundef nonnull align 1 dereferenceable(1) %1) local_unnamed_addr #1 align 2 {
+define hidden ptr @_ZN6hermes2vm8JSRegExp10getPatternEPS1_RNS0_11PointerBaseE(ptr nofree noundef readonly captures(none) %0, ptr noundef nonnull align 1 dereferenceable(1) %1) local_unnamed_addr #1 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20
   %.sroa.0.0.copyload.i.i = load i32, ptr %i.a, align 4, !tbaa !3 ; 2 uses
@@ -613,7 +613,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden noundef i32 @_ZN6hermes2vm8JSRegExp10initializeENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_15StringPrimitiveEEES7_(ptr %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr readonly captures(none) %2, ptr readonly captures(none) %3) local_unnamed_addr #0 align 2 {
+define hidden noundef i32 @_ZN6hermes2vm8JSRegExp10initializeENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_15StringPrimitiveEEES7_(ptr %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr nofree readonly captures(none) %2, ptr nofree readonly captures(none) %3) local_unnamed_addr #0 align 2 {
 bb.a:
   %4 = alloca %"struct.hermes::regex::RegexBytecodeHeader", align 2 ; 8 uses
   %5 = alloca %"class.hermes::regex::RegexBytecodeStream", align 8 ; 8 uses
@@ -968,7 +968,7 @@ _ZN6hermes5regex11SyntaxFlags10fromStringEN4llvh8ArrayRefIDsEE.exit.thread: ; pr
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden noundef range(i32 0, 2) i32 @_ZN6hermes2vm8JSRegExp29initializeGroupNameMappingObjERNS0_7RuntimeENS0_6HandleIS1_EERSt5dequeIN4llvh11SmallVectorIDsLj5EEESaIS9_EERNS7_8DenseMapINS7_8ArrayRefIDsEEjNS7_12DenseMapInfoISF_EENS7_6detail12DenseMapPairISF_jEEEE(ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr readonly captures(none) %1, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(80) %2, ptr noundef nonnull align 8 dereferenceable(20) %3) local_unnamed_addr #0 align 2 {
+define hidden noundef range(i32 0, 2) i32 @_ZN6hermes2vm8JSRegExp29initializeGroupNameMappingObjERNS0_7RuntimeENS0_6HandleIS1_EERSt5dequeIN4llvh11SmallVectorIDsLj5EEESaIS9_EERNS7_8DenseMapINS7_8ArrayRefIDsEEjNS7_12DenseMapInfoISF_EENS7_6detail12DenseMapPairISF_jEEEE(ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr nofree readonly captures(none) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(80) %2, ptr noundef nonnull align 8 dereferenceable(20) %3) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %4 = alloca %"class.hermes::vm::GCScope", align 8 ; 14 uses
@@ -1371,7 +1371,7 @@ declare noundef i32 @_ZN6hermes2vm8JSObject20defineNewOwnPropertyENS0_6HandleIS1
 declare void @_ZN6hermes2vm7GCScopeD1Ev(ptr noundef nonnull align 8 dereferenceable(212)) unnamed_addr #6
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden ptr @_ZN6hermes2vm8JSRegExp20getGroupNameMappingsERNS0_7RuntimeE(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(9816) %1) local_unnamed_addr #0 align 2 {
+define hidden ptr @_ZN6hermes2vm8JSRegExp20getGroupNameMappingsERNS0_7RuntimeE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(9816) %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
   %.sroa.0.0.copyload.i.i = load i32, ptr %i.a, align 8, !tbaa !3 ; 2 uses
@@ -1440,7 +1440,7 @@ _ZN6hermes2vm9GCPointerINS0_8JSObjectEE3setERNS0_11PointerBaseEPS2_RNS0_7HadesGC
 declare noalias noundef nonnull ptr @_ZN6hermes13checkedMallocEm(i64 noundef) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN6hermes2vm8JSRegExp6searchENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_15StringPrimitiveEEEj(ptr dead_on_unwind noalias writable sret(%"class.hermes::vm::CallResult.222") align 8 initializes((64, 65)) %0, ptr readonly captures(none) %1, ptr noundef nonnull align 8 dereferenceable(9816) %2, ptr %3, i32 noundef %4) local_unnamed_addr #0 align 2 {
+define hidden void @_ZN6hermes2vm8JSRegExp6searchENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_15StringPrimitiveEEEj(ptr dead_on_unwind noalias writable sret(%"class.hermes::vm::CallResult.222") align 8 initializes((64, 65)) %0, ptr nofree readonly captures(none) %1, ptr noundef nonnull align 8 dereferenceable(9816) %2, ptr %3, i32 noundef %4) local_unnamed_addr #0 align 2 {
 bb.a:
   %5 = alloca %"class.hermes::vm::CallResult.222", align 8 ; 21 uses
   %6 = alloca %"class.hermes::vm::CallResult.222", align 8 ; 9 uses
@@ -1843,7 +1843,7 @@ _ZNSt6vectorIN6hermes5regex13CapturedRangeESaIS2_EED2Ev.exit: ; preds = %bb.k, %
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, target_mem: none) uwtable
-define hidden void @_ZN6hermes2vm8JSRegExpD2Ev(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(48) %0) unnamed_addr #7 align 2 {
+define hidden void @_ZN6hermes2vm8JSRegExpD2Ev(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %0) unnamed_addr #7 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !7
@@ -2246,26 +2246,20 @@ _ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i: ; preds = %bb.n
   %i.ba = icmp ult i64 %i.az, %i.ax
   %i.bb = call i64 @llvm.umin.i64(i64 %i.az, i64 9223372036854775807)
   %i.bc = select i1 %i.ba, i64 9223372036854775807, i64 %i.bb ; 3 uses
-  %.not.i.i.i.i.i = icmp eq i64 %i.bc, 0
-  br i1 %.not.i.i.i.i.i, label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i.i, label %4
+  %.not.i.i.i.i.i = icmp ne i64 %i.bc, 0
+  call void @llvm.assume(i1 %.not.i.i.i.i.i)
+  %4 = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bc) #22 ; 4 uses
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 %i.ax ; 2 uses
+  store i8 %i.aq, ptr %5, align 1, !tbaa !53
+  %6 = icmp sgt i64 %i.ax, 0
+  br i1 %6, label %bb.p, label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i.i
 
-4:                                                ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i
-  %5 = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bc) #22
-  br label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i.i
-
-_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i.i: ; preds = %4, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i
-  %6 = phi ptr [ %5, %4 ], [ null, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i ] ; 4 uses
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 %i.ax ; 2 uses
-  store i8 %i.aq, ptr %7, align 1, !tbaa !53
-  %8 = icmp sgt i64 %i.ax, 0
-  br i1 %8, label %bb.p, label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i.i
-
-bb.p:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i.i
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %6, ptr align 1 %i.au, i64 %i.ax, i1 false)
+bb.p:                                             ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %4, ptr align 1 %i.au, i64 %i.ax, i1 false)
   br label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i.i
 
-_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i.i: ; preds = %bb.p, %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i.i
-  %i.bd = getelementptr inbounds nuw i8, ptr %7, i64 1 ; 2 uses
+_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i.i: ; preds = %bb.p, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i
+  %i.bd = getelementptr inbounds nuw i8, ptr %5, i64 1 ; 2 uses
   %.not.i17.i.i.i.i = icmp eq ptr %i.au, null
   br i1 %.not.i17.i.i.i.i, label %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i, label %bb.q
 
@@ -2274,9 +2268,9 @@ bb.q:                                             ; preds = %_ZNSt6vectorIhSaIhE
   br label %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i
 
 _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i: ; preds = %bb.q, %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i.i
-  store ptr %6, ptr %3, align 8, !tbaa !126
+  store ptr %4, ptr %3, align 8, !tbaa !126
   store ptr %i.bd, ptr %i.g, align 8, !tbaa !131
-  %i.be = getelementptr inbounds nuw i8, ptr %6, i64 %i.bc
+  %i.be = getelementptr inbounds nuw i8, ptr %4, i64 %i.bc
   store ptr %i.be, ptr %i.h, align 8, !tbaa !132
   br label %_ZN6hermes5regex19RegexBytecodeStream9emitChar8Ec.exit
 

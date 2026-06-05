@@ -201,7 +201,7 @@ $_ZTSZN6google8protobuf2io7Printer8WithVarsIRKN4absl12lts_2025051213flat_hash_ma
 @.str.65 = private unnamed_addr constant [138 x i8] c"\0A    if (oneof_needs_init) {\0A      _this->$field$ = $pb$::Arena::Create<absl::Cord>(arena);\0A    }\0A    *_this->$field$ = *from.$field$;\0A  \00", align 1
 
 ; Function Attrs: mustprogress uwtable
-define hidden void @_ZN6google8protobuf8compiler3cpp25MakeSingularCordGeneratorEPKNS0_15FieldDescriptorERKNS2_7OptionsE(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::unique_ptr") align 8 captures(none) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(217) %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define hidden void @_ZN6google8protobuf8compiler3cpp25MakeSingularCordGeneratorEPKNS0_15FieldDescriptorERKNS2_7OptionsE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::unique_ptr") align 8 captures(none) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(217) %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = tail call noalias noundef nonnull dereferenceable(72) ptr @_Znwm(i64 noundef 72) #26, !noalias !7 ; 3 uses
   invoke fastcc void @_ZN6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGeneratorC2EPKNS0_15FieldDescriptorERKNS2_7OptionsE(ptr noundef nonnull align 8 dereferenceable(71) %i.a, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(217) %2)
@@ -225,7 +225,7 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: mustprogress uwtable
-define hidden void @_ZN6google8protobuf8compiler3cpp22MakeOneofCordGeneratorEPKNS0_15FieldDescriptorERKNS2_7OptionsE(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::unique_ptr") align 8 captures(none) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(217) %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define hidden void @_ZN6google8protobuf8compiler3cpp22MakeOneofCordGeneratorEPKNS0_15FieldDescriptorERKNS2_7OptionsE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::unique_ptr") align 8 captures(none) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(217) %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = tail call noalias noundef nonnull dereferenceable(72) ptr @_Znwm(i64 noundef 72) #26, !noalias !14 ; 4 uses
   invoke fastcc void @_ZN6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGeneratorC2EPKNS0_15FieldDescriptorERKNS2_7OptionsE(ptr noundef nonnull align 8 dereferenceable(71) %i.a, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(217) %2)
@@ -628,7 +628,7 @@ bb.f:                                             ; preds = %_ZN6google8protobuf
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal void @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator34GenerateMemberConstexprConstructorEPNS0_2io7PrinterE(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(71) %0, ptr noundef %1) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define internal void @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator34GenerateMemberConstexprConstructorEPNS0_2io7PrinterE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(71) %0, ptr noundef %1) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %3 = alloca [1 x %"class.google::protobuf::io::Printer::Sub"], align 8 ; 19 uses
@@ -935,7 +935,7 @@ bb.e:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal void @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator28GenerateAggregateInitializerEPNS0_2io7PrinterE(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(71) %0, ptr noundef %1) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define internal void @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator28GenerateAggregateInitializerEPNS0_2io7PrinterE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(71) %0, ptr noundef %1) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.b = load i8, ptr %i.a, align 8, !tbaa !147, !range !30, !noundef !36
@@ -955,7 +955,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal void @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator37GenerateConstexprAggregateInitializerEPNS0_2io7PrinterE(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(71) %0, ptr noundef %1) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define internal void @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator37GenerateConstexprAggregateInitializerEPNS0_2io7PrinterE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(71) %0, ptr noundef %1) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %3 = alloca [1 x %"class.google::protobuf::io::Printer::Sub"], align 8 ; 18 uses
@@ -1358,7 +1358,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal noundef i32 @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator20NeedsArenaDestructorEv(ptr nonnull readnone align 8 captures(none) %0) unnamed_addr #6 align 2 {
+define internal noundef i32 @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator20NeedsArenaDestructorEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #6 align 2 {
 bb.a:
   ret i32 1
 }
@@ -1761,36 +1761,30 @@ _ZNKSt6vectorISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb
   %i.i = add nsw i64 %.sroa.speculated.i, %i.h    ; 2 uses
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 288230376151711743)
-  %i.l = select i1 %i.j, i64 288230376151711743, i64 %i.k ; 4 uses
+  %i.l = select i1 %i.j, i64 288230376151711743, i64 %i.k ; 3 uses
   %i.m = ptrtoint ptr %1 to i64
   %i.n = sub i64 %i.m, %i.e
-  %.not.i = icmp eq i64 %i.l, 0
-  br i1 %.not.i, label %_ZNSt12_Vector_baseISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEESaISE_EE11_M_allocateEm.exit, label %3
-
-3:                                                ; preds = %_ZNKSt6vectorISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEESaISE_EE12_M_check_lenEmPKc.exit
-  %4 = shl nuw nsw i64 %i.l, 5
-  %5 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %4) #26
-  br label %_ZNSt12_Vector_baseISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEESaISE_EE11_M_allocateEm.exit
-
-_ZNSt12_Vector_baseISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEESaISE_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEESaISE_EE12_M_check_lenEmPKc.exit, %3
-  %6 = phi ptr [ %5, %3 ], [ null, %_ZNKSt6vectorISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEESaISE_EE12_M_check_lenEmPKc.exit ] ; 6 uses
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 %i.n ; 4 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %7, i8 0, i64 32, i1 false)
-  %8 = invoke noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #26
+  %.not.i = icmp ne i64 %i.l, 0
+  tail call void @llvm.assume(i1 %.not.i)
+  %3 = shl nuw nsw i64 %i.l, 5                    ; 2 uses
+  %4 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %3) #26 ; 6 uses
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 %i.n ; 4 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %5, i8 0, i64 32, i1 false)
+  %6 = invoke noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #26
           to label %bb.c unwind label %bb.f       ; 2 uses
 
-bb.c:                                             ; preds = %_ZNSt12_Vector_baseISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEESaISE_EE11_M_allocateEm.exit
-  %i.o = getelementptr inbounds nuw i8, ptr %7, i64 24
-  %i.p = getelementptr inbounds nuw i8, ptr %7, i64 16
-  tail call void @_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEEC2EOSJ_(ptr noundef nonnull align 8 dereferenceable(32) %8, ptr noundef nonnull align 8 dereferenceable(32) %2) #28
-  store ptr %8, ptr %7, align 8, !tbaa !242
+bb.c:                                             ; preds = %_ZNKSt6vectorISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEESaISE_EE12_M_check_lenEmPKc.exit
+  %i.o = getelementptr inbounds nuw i8, ptr %5, i64 24
+  %i.p = getelementptr inbounds nuw i8, ptr %5, i64 16
+  tail call void @_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEEC2EOSJ_(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(32) %2) #28
+  store ptr %6, ptr %5, align 8, !tbaa !242
   store ptr @_ZNSt17_Function_handlerIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEZNS4_8WithVarsIRKN4absl12lts_2025051213flat_hash_mapISB_NSt7__cxx1112basic_stringIcSA_SaIcEEENSF_18container_internal10StringHashENSL_8StringEqESaISt4pairIKSB_SK_EEEEvvEEDaOT_EUlSB_E_E9_M_invokeERKSt9_Any_dataOSB_, ptr %i.o, align 8, !tbaa !192
   store ptr @_ZNSt17_Function_handlerIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEZNS4_8WithVarsIRKN4absl12lts_2025051213flat_hash_mapISB_NSt7__cxx1112basic_stringIcSA_SaIcEEENSF_18container_internal10StringHashENSL_8StringEqESaISt4pairIKSB_SK_EEEEvvEEDaOT_EUlSB_E_E10_M_managerERSt9_Any_dataRKSZ_St18_Manager_operation, ptr %i.p, align 8, !tbaa !128
   %.not10.i.i.i = icmp eq ptr %i.c, %1
   br i1 %.not10.i.i.i, label %_ZNSt6vectorISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEESaISE_EE11_S_relocateEPSE_SH_SH_RSF_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.c, %_ZSt19__relocate_object_aISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEESE_SaISE_EEvPT_PT0_RT1_.exit.i.i.i
-  %.012.i.i.i = phi ptr [ %i.x, %_ZSt19__relocate_object_aISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEESE_SaISE_EEvPT_PT0_RT1_.exit.i.i.i ], [ %6, %bb.c ] ; 5 uses
+  %.012.i.i.i = phi ptr [ %i.x, %_ZSt19__relocate_object_aISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEESE_SaISE_EEvPT_PT0_RT1_.exit.i.i.i ], [ %4, %bb.c ] ; 5 uses
   %.0911.i.i.i = phi ptr [ %i.w, %_ZSt19__relocate_object_aISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEESE_SaISE_EEvPT_PT0_RT1_.exit.i.i.i ], [ %i.c, %bb.c ] ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !315)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !318)
@@ -1818,7 +1812,7 @@ _ZSt19__relocate_object_aISt8functionIFSt8optionalIN6google8protobuf2io7Printer9
   br i1 %.not.i.i.i, label %_ZNSt6vectorISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEESaISE_EE11_S_relocateEPSE_SH_SH_RSF_.exit, label %.lr.ph.i.i.i, !llvm.loop !210
 
 _ZNSt6vectorISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEESaISE_EE11_S_relocateEPSE_SH_SH_RSF_.exit: ; preds = %_ZSt19__relocate_object_aISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEESE_SaISE_EEvPT_PT0_RT1_.exit.i.i.i, %bb.c
-  %.0.lcssa.i.i.i = phi ptr [ %6, %bb.c ], [ %i.x, %_ZSt19__relocate_object_aISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEESE_SaISE_EEvPT_PT0_RT1_.exit.i.i.i ]
+  %.0.lcssa.i.i.i = phi ptr [ %4, %bb.c ], [ %i.x, %_ZSt19__relocate_object_aISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEESE_SaISE_EEvPT_PT0_RT1_.exit.i.i.i ]
   %i.y = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 32 ; 2 uses
   %.not10.i.i.i26 = icmp eq ptr %1, %i.b
   br i1 %.not10.i.i.i26, label %_ZNSt6vectorISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEESaISE_EE11_S_relocateEPSE_SH_SH_RSF_.exit35, label %.lr.ph.i.i.i27
@@ -1865,9 +1859,9 @@ bb.d:                                             ; preds = %_ZNSt6vectorISt8fun
   br label %_ZNSt12_Vector_baseISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEESaISE_EE13_M_deallocateEPSE_m.exit
 
 _ZNSt12_Vector_baseISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEESaISE_EE13_M_deallocateEPSE_m.exit: ; preds = %_ZNSt6vectorISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEESaISE_EE11_S_relocateEPSE_SH_SH_RSF_.exit35, %bb.d
-  store ptr %6, ptr %0, align 8, !tbaa !202
+  store ptr %4, ptr %0, align 8, !tbaa !202
   store ptr %.0.lcssa.i.i.i34, ptr %i.a, align 8, !tbaa !125
-  %i.al = getelementptr inbounds nuw [32 x i8], ptr %6, i64 %i.l
+  %i.al = getelementptr inbounds nuw [32 x i8], ptr %4, i64 %i.l
   store ptr %i.al, ptr %i.ah, align 8, !tbaa !190
   ret void
 
@@ -1877,13 +1871,12 @@ bb.e:                                             ; preds = %bb.f
   invoke void @__cxa_end_catch()
           to label %bb.g unwind label %bb.h
 
-bb.f:                                             ; preds = %_ZNSt12_Vector_baseISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEESaISE_EE11_M_allocateEm.exit
+bb.f:                                             ; preds = %_ZNKSt6vectorISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEESaISE_EE12_M_check_lenEmPKc.exit
   %i.an = landingpad { ptr, i32 }
           catch ptr null
   %i.ao = extractvalue { ptr, i32 } %i.an, 0
   %i.ap = tail call ptr @__cxa_begin_catch(ptr %i.ao) #28 ; 0 uses
-  %9 = shl nuw nsw i64 %i.l, 5
-  tail call void @_ZdlPvm(ptr noundef nonnull %6, i64 noundef %9) #27
+  tail call void @_ZdlPvm(ptr noundef nonnull %4, i64 noundef %3) #27
   invoke void @__cxa_rethrow() #31
           to label %bb.i unwind label %bb.e
 
@@ -2286,7 +2279,7 @@ _ZN6google8protobuf8compiler3cpp18FieldGeneratorBaseD2Ev.exit: ; preds = %bb.a, 
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal noundef zeroext i1 @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGenerator13RequiresArenaENS2_18FieldGeneratorBase17GeneratorFunctionE(ptr nonnull readnone align 8 captures(none) %0, i32 noundef %1) unnamed_addr #6 align 2 {
+define internal noundef zeroext i1 @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGenerator13RequiresArenaENS2_18FieldGeneratorBase17GeneratorFunctionE(ptr nofree nonnull readnone align 8 captures(none) %0, i32 noundef %1) unnamed_addr #6 align 2 {
 bb.a:
   %cond = icmp eq i32 %1, 0
   ret i1 %cond
@@ -2689,26 +2682,26 @@ bb.f:                                             ; preds = %_ZN6google8protobuf
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal void @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGenerator19GenerateMergingCodeEPNS0_2io7PrinterE(ptr nonnull readnone align 8 captures(none) %0, ptr noundef nonnull %1) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define internal void @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGenerator19GenerateMergingCodeEPNS0_2io7PrinterE(ptr nofree nonnull readnone align 8 captures(none) %0, ptr noundef nonnull %1) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   tail call void @_ZN6google8protobuf2io7Printer4EmitEN4absl12lts_202505124SpanIKNS2_3SubEEESt17basic_string_viewIcSt11char_traitsIcEENS2_14SourceLocationE(ptr noundef nonnull align 16 dereferenceable(296) %1, ptr null, i64 0, i64 137, ptr nonnull @.str.65)
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal void @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGenerator20GenerateSwappingCodeEPNS0_2io7PrinterE(ptr nonnull readnone align 8 captures(none) %0, ptr readnone captures(none) %1) unnamed_addr #6 align 2 {
+define internal void @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGenerator20GenerateSwappingCodeEPNS0_2io7PrinterE(ptr nofree nonnull readnone align 8 captures(none) %0, ptr nofree readnone captures(none) %1) unnamed_addr #6 align 2 {
 bb.a:
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal void @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGenerator27GenerateArenaDestructorCodeEPNS0_2io7PrinterE(ptr nonnull readnone align 8 captures(none) %0, ptr readnone captures(none) %1) unnamed_addr #6 align 2 {
+define internal void @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGenerator27GenerateArenaDestructorCodeEPNS0_2io7PrinterE(ptr nofree nonnull readnone align 8 captures(none) %0, ptr nofree readnone captures(none) %1) unnamed_addr #6 align 2 {
 bb.a:
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal noundef i32 @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGenerator20NeedsArenaDestructorEv(ptr nonnull readnone align 8 captures(none) %0) unnamed_addr #6 align 2 {
+define internal noundef i32 @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGenerator20NeedsArenaDestructorEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #6 align 2 {
 bb.a:
   ret i32 0
 }

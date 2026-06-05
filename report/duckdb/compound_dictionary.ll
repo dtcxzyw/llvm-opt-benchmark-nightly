@@ -31,40 +31,34 @@ bb.a:
 ._crit_edge:                                      ; preds = %.lr.ph.3, %.lr.ph, %.lr.ph.1, %.lr.ph.2, %bb.a
   %.014.lcssa = phi i32 [ 7, %bb.a ], [ 8, %.lr.ph ], [ 9, %.lr.ph.1 ], [ 10, %.lr.ph.2 ], [ %spec.select56, %.lr.ph.3 ] ; 5 uses
   %.013.lcssa = phi i32 [ 17, %bb.a ], [ 18, %.lr.ph ], [ 19, %.lr.ph.1 ], [ 20, %.lr.ph.2 ], [ %spec.select, %.lr.ph.3 ] ; 6 uses
-  %3 = shl nuw i32 1, %.014.lcssa                 ; 2 uses
-  %i.f = shl nuw nsw i32 1, %.013.lcssa
+  %i.f = shl nuw i32 1, %.014.lcssa               ; 2 uses
   %i.g = sub nuw nsw i32 64, %.013.lcssa
-  %i.h = add i32 %3, -1
+  %i.h = add i32 %i.f, -1
   %i.i = zext nneg i32 %.014.lcssa to i64         ; 2 uses
-  %4 = shl i64 4, %i.i
-  %i.j = shl i64 8, %i.i
+  %i.j = shl i64 4, %i.i
   %i.k = zext nneg i32 %.013.lcssa to i64         ; 2 uses
-  %5 = shl nuw nsw i64 2, %i.k                    ; 2 uses
-  %6 = shl nuw nsw i64 4, %i.k
-  %i.l = shl i64 %2, 2
-  %7 = add i64 %i.j, %i.l
-  %8 = add i64 %7, %5
-  %9 = add i64 %8, %6                             ; 2 uses
+  %i.l = shl nuw nsw i64 2, %i.k                  ; 2 uses
   %i.m = icmp ugt i32 %.014.lcssa, %.013.lcssa
   %i.n = sub nuw nsw i32 %.013.lcssa, %.014.lcssa
   %i.o = icmp samesign ugt i32 %i.n, 15
   %or.cond199.i = select i1 %i.m, i1 true, i1 %i.o
-  br i1 %or.cond199.i, label %_ZL34CreatePreparedDictionaryWithParamsPN13duckdb_brotli13MemoryManagerEPKhmjjjt.exit, label %10
+  br i1 %or.cond199.i, label %_ZL34CreatePreparedDictionaryWithParamsPN13duckdb_brotli13MemoryManagerEPKhmjjjt.exit, label %bb.b
 
-10:                                               ; preds = %._crit_edge
-  %.not.i = icmp eq i64 %9, 0
-  br i1 %.not.i, label %bb.b, label %11
-
-11:                                               ; preds = %10
-  %12 = tail call noundef ptr @_ZN13duckdb_brotli14BrotliAllocateEPNS_13MemoryManagerEm(ptr noundef %0, i64 noundef %9)
-  br label %bb.b
-
-bb.b:                                             ; preds = %11, %10
-  %13 = phi ptr [ %12, %11 ], [ null, %10 ]       ; 6 uses
-  %i.p = zext i32 %3 to i64                       ; 7 uses
-  %i.q = getelementptr inbounds nuw [4 x i8], ptr %13, i64 %i.p ; 3 uses
+bb.b:                                             ; preds = %._crit_edge
+  %3 = shl nuw nsw i32 1, %.013.lcssa
+  %4 = shl nuw nsw i64 8, %i.i
+  %5 = shl nuw nsw i64 4, %i.k
+  %6 = shl i64 %2, 2
+  %7 = add i64 %4, %6
+  %8 = add i64 %7, %i.l
+  %9 = add i64 %8, %5                             ; 2 uses
+  %.not.i = icmp ne i64 %9, 0
+  tail call void @llvm.assume(i1 %.not.i)
+  %10 = tail call noundef ptr @_ZN13duckdb_brotli14BrotliAllocateEPNS_13MemoryManagerEm(ptr noundef %0, i64 noundef %9) ; 6 uses
+  %i.p = zext i32 %i.f to i64                     ; 7 uses
+  %i.q = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %i.p ; 3 uses
   %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %i.p ; 5 uses
-  %i.s = zext nneg i32 %i.f to i64                ; 7 uses
+  %i.s = zext nneg i32 %3 to i64                  ; 7 uses
   %i.t = getelementptr inbounds nuw [2 x i8], ptr %i.r, i64 %i.s ; 4 uses
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %i.s ; 6 uses
   %i.v = shl nuw nsw i64 %i.s, 1
@@ -148,7 +142,7 @@ bb.h:                                             ; preds = %bb.f
   %storemerge.i = phi i32 [ 32, %.preheader214.i ], [ %storemerge223.us.i, %bb.g ]
   %.0168.lcssa.i = phi i32 [ 0, %.preheader214.i ], [ %i.ax, %bb.g ] ; 2 uses
   store i32 %storemerge.i, ptr %i.ar, align 4, !tbaa !3
-  %i.bb = getelementptr inbounds nuw [4 x i8], ptr %13, i64 %indvars.iv.i
+  %i.bb = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %indvars.iv.i
   store i32 %.0168.lcssa.i, ptr %i.bb, align 4, !tbaa !3
   %i.bc = add i32 %.0168.lcssa.i, %.0176228.i     ; 3 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
@@ -158,8 +152,8 @@ bb.h:                                             ; preds = %bb.f
 .new:                                             ; preds = %._crit_edge.i
   %i.bd = zext i32 %i.bc to i64                   ; 2 uses
   %i.be = shl nuw nsw i64 %i.bd, 2
-  %i.bf = add nuw nsw i64 %4, 32
-  %i.bg = add nuw i64 %i.bf, %5
+  %i.bf = add nuw nsw i64 %i.j, 32
+  %i.bg = add nuw i64 %i.bf, %i.l
   %i.bh = add i64 %i.bg, %i.be                    ; 2 uses
   %.not193.i = icmp ne i64 %i.bh, 0
   tail call void @llvm.assume(i1 %.not193.i)
@@ -191,14 +185,14 @@ bb.i:                                             ; preds = %bb.i, %.new
   %niter = phi i64 [ 0, %.new ], [ %niter.next.1, %bb.i ]
   %i.bt = getelementptr inbounds nuw [4 x i8], ptr %i.bj, i64 %indvars.iv238.i
   store i32 %.3230.i, ptr %i.bt, align 4, !tbaa !3
-  %i.bu = getelementptr inbounds nuw [4 x i8], ptr %13, i64 %indvars.iv238.i ; 2 uses
+  %i.bu = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %indvars.iv238.i ; 2 uses
   %i.bv = load i32, ptr %i.bu, align 4, !tbaa !3
   %i.bw = add i32 %i.bv, %.3230.i                 ; 2 uses
   store i32 0, ptr %i.bu, align 4, !tbaa !3
   %indvars.iv.next239.i = or disjoint i64 %indvars.iv238.i, 1 ; 2 uses
   %i.bx = getelementptr inbounds nuw [4 x i8], ptr %i.bj, i64 %indvars.iv.next239.i
   store i32 %i.bw, ptr %i.bx, align 4, !tbaa !3
-  %i.by = getelementptr inbounds nuw [4 x i8], ptr %13, i64 %indvars.iv.next239.i ; 2 uses
+  %i.by = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %indvars.iv.next239.i ; 2 uses
   %i.bz = load i32, ptr %i.by, align 4, !tbaa !3
   %i.ca = add i32 %i.bz, %i.bw
   store i32 0, ptr %i.by, align 4, !tbaa !3
@@ -232,7 +226,7 @@ bb.j:                                             ; preds = %.preheader.i
   br label %bb.n
 
 bb.k:                                             ; preds = %.preheader.i
-  %i.cl = getelementptr inbounds nuw [4 x i8], ptr %13, i64 %i.cg ; 2 uses
+  %i.cl = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %i.cg ; 2 uses
   %i.cm = load i32, ptr %i.cl, align 4, !tbaa !3  ; 3 uses
   %i.cn = zext i32 %i.cm to i64
   %i.co = trunc i32 %i.cm to i16
@@ -326,7 +320,7 @@ bb.n:                                             ; preds = %.epilog-lcssa, %bb.
   br i1 %exitcond249.not.i, label %bb.o, label %.preheader.i, !llvm.loop !24
 
 bb.o:                                             ; preds = %bb.n
-  tail call void @_ZN13duckdb_brotli10BrotliFreeEPNS_13MemoryManagerEPv(ptr noundef %0, ptr noundef nonnull %13)
+  tail call void @_ZN13duckdb_brotli10BrotliFreeEPNS_13MemoryManagerEPv(ptr noundef %0, ptr noundef nonnull %10)
   br label %_ZL34CreatePreparedDictionaryWithParamsPN13duckdb_brotli13MemoryManagerEPKhmjjjt.exit
 
 _ZL34CreatePreparedDictionaryWithParamsPN13duckdb_brotli13MemoryManagerEPKhmjjjt.exit: ; preds = %._crit_edge, %bb.o
@@ -351,7 +345,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 declare void @_ZN13duckdb_brotli10BrotliFreeEPNS_13MemoryManagerEPv(ptr noundef, ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define hidden noundef range(i32 0, 2) i32 @_ZN13duckdb_brotli24AttachPreparedDictionaryEPNS_18CompoundDictionaryEPKNS_18PreparedDictionaryE(ptr noundef captures(none) %0, ptr noundef %1) local_unnamed_addr #2 {
+define hidden noundef range(i32 0, 2) i32 @_ZN13duckdb_brotli24AttachPreparedDictionaryEPNS_18CompoundDictionaryEPKNS_18PreparedDictionaryE(ptr nofree noundef captures(none) %0, ptr noundef %1) local_unnamed_addr #2 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !tbaa !25     ; 4 uses
   %i.b = icmp eq i64 %i.a, 15

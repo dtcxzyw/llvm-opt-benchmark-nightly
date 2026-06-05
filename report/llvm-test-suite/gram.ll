@@ -189,7 +189,7 @@ lookup_production.exit:                           ; preds = %bb.c, %bb.k
 declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local ptr @lookup_production(ptr noundef readonly captures(none) %0, ptr noundef readonly captures(none) %1, i32 noundef %2) local_unnamed_addr #2 {
+define dso_local ptr @lookup_production(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) local_unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i32, ptr %i.a, align 8, !tbaa !8    ; 2 uses
@@ -243,7 +243,7 @@ declare void @vec_add_internal(ptr noundef, ptr noundef) local_unnamed_addr #6
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(write, argmem: read, inaccessiblemem: readwrite, target_mem: none) uwtable
-define dso_local noundef ptr @new_rule(ptr noundef readonly captures(none) %0, ptr noundef %1) local_unnamed_addr #7 {
+define dso_local noundef ptr @new_rule(ptr nofree noundef readonly captures(none) %0, ptr noundef %1) local_unnamed_addr #7 {
 bb.a:
   %calloc = tail call dereferenceable_or_null(168) ptr @calloc(i64 1, i64 168) ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %calloc, i64 8
@@ -273,7 +273,7 @@ bb.a:
 }
 
 ; Function Attrs: nofree nounwind memory(write, argmem: read, inaccessiblemem: readwrite, target_mem: none) uwtable
-define dso_local noalias noundef ptr @escape_string_for_regex(ptr noundef readonly captures(none) %0) local_unnamed_addr #9 {
+define dso_local noalias noundef ptr @escape_string_for_regex(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #9 {
 bb.a:
   %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #24
   %i.b = shl i64 %i.a, 1
@@ -676,7 +676,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(readwrite, target_mem: none) uwtable
-define dso_local noalias noundef ptr @dup_elem(ptr noundef readonly captures(none) %0, ptr noundef %1) local_unnamed_addr #10 {
+define dso_local noalias noundef ptr @dup_elem(ptr nofree noundef readonly captures(none) %0, ptr noundef %1) local_unnamed_addr #10 {
 bb.a:
   %i.a = tail call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #26 ; 3 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.a, ptr noundef nonnull align 8 dereferenceable(32) %0, i64 32, i1 false)
@@ -686,7 +686,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local void @add_global_code(ptr noundef captures(none) %0, ptr noundef %1, ptr noundef %2, i32 noundef %3) local_unnamed_addr #0 {
+define dso_local void @add_global_code(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !68   ; 2 uses
@@ -937,7 +937,7 @@ new_declaration.exit:                             ; preds = %bb.t, %bb.s, %bb.q,
 declare void @d_fail(ptr noundef, ...) local_unnamed_addr #6
 
 ; Function Attrs: nofree nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local ptr @find_pass(ptr noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #12 {
+define dso_local ptr @find_pass(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #12 {
 bb.a:
   %i.a = load i8, ptr %1, align 1, !tbaa !51      ; 2 uses
   %.not23 = icmp eq i8 %i.a, 0
@@ -1158,7 +1158,7 @@ bb.n:                                             ; preds = %bb.g, %bb.j, %bb.l,
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local void @add_pass_code(ptr noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, i32 noundef %6, i32 noundef %7) local_unnamed_addr #0 {
+define dso_local void @add_pass_code(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, i32 noundef %6, i32 noundef %7) local_unnamed_addr #0 {
 bb.a:
   %i.a = load i8, ptr %2, align 1, !tbaa !51      ; 2 uses
   %.not23.i = icmp eq i8 %i.a, 0
@@ -1227,12 +1227,11 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 .loopexit:                                        ; preds = %bb.f, %.critedge.i
   %i.aa = tail call ptr @dup_str(ptr noundef nonnull %2, ptr noundef %3) #25
   tail call void (ptr, ...) @d_fail(ptr noundef nonnull @.str.3, ptr noundef %i.aa, i32 noundef %6) #25
-  br label %find_pass.exit
+  unreachable
 
-find_pass.exit:                                   ; preds = %bb.e, %.loopexit
-  %.0.i36 = phi ptr [ null, %.loopexit ], [ %i.u, %bb.e ]
+find_pass.exit:                                   ; preds = %bb.e
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 6 uses
-  %i.ac = getelementptr inbounds nuw i8, ptr %.0.i36, i64 16 ; 4 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.u, i64 16 ; 4 uses
   %i.ad = load i32, ptr %i.ab, align 8, !tbaa !98 ; 2 uses
   %i.ae = load i32, ptr %i.ac, align 8, !tbaa !97 ; 2 uses
   %.not3140 = icmp ugt i32 %i.ad, %i.ae
@@ -1321,7 +1320,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %bb.k,
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local ptr @new_internal_production(ptr noundef %0, ptr noundef readonly captures(address) %1) local_unnamed_addr #0 {
+define dso_local ptr @new_internal_production(ptr noundef %0, ptr nofree noundef readonly captures(address) %1) local_unnamed_addr #0 {
 bb.a:
   %.not = icmp eq ptr %1, null                    ; 2 uses
   br i1 %.not, label %bb.c, label %bb.b
@@ -1724,7 +1723,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.e,
 declare noalias ptr @strdup(ptr noundef readonly captures(none)) local_unnamed_addr #15
 
 ; Function Attrs: nounwind uwtable
-define dso_local void @finish_productions(ptr noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define dso_local void @finish_productions(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !28   ; 4 uses
@@ -1817,7 +1816,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.e,
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local void @print_term(ptr noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define dso_local void @print_term(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !55   ; 2 uses
@@ -1893,7 +1892,7 @@ declare noundef i32 @printf(ptr noundef readonly captures(none), ...) local_unna
 declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #16
 
 ; Function Attrs: nounwind uwtable
-define dso_local void @print_elem(ptr noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define dso_local void @print_elem(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = load i32, ptr %0, align 8, !tbaa !46
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1921,7 +1920,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local void @print_rule(ptr noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define dso_local void @print_rule(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !39
@@ -1994,7 +1993,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local void @print_grammar(ptr noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define dso_local void @print_grammar(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !8
@@ -2344,7 +2343,7 @@ bb.ax:                                            ; preds = %bb.a, %._crit_edge7
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local void @print_states(ptr noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define dso_local void @print_states(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !123
@@ -2747,7 +2746,7 @@ print_state.exit:                                 ; preds = %bb.bu, %bb.bv, %pri
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local range(i32 0, 2) i32 @state_for_declaration(ptr noundef readonly captures(none) %0, i32 noundef %1) local_unnamed_addr #2 {
+define dso_local range(i32 0, 2) i32 @state_for_declaration(ptr nofree noundef readonly captures(none) %0, i32 noundef %1) local_unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.b = load i32, ptr %i.a, align 8, !tbaa !75   ; 2 uses
@@ -3150,7 +3149,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, target_mem: none) uwtable
-define dso_local void @free_D_Grammar(ptr noundef readonly captures(none) %0) local_unnamed_addr #17 {
+define dso_local void @free_D_Grammar(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #17 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !186
   tail call void @free(ptr noundef %i.a) #25
@@ -3553,7 +3552,7 @@ bb.bg:                                            ; preds = %bb.a, %bb.bf
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc void @set_declaration_group(ptr noundef captures(none) %0, ptr noundef %1, ptr noundef %2) unnamed_addr #0 {
+define internal fastcc void @set_declaration_group(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr noundef %2) unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8

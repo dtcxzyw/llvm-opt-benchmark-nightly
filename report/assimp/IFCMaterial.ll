@@ -201,10 +201,9 @@ _ZNKSt18unordered_multimapImmSt4hashImESt8equal_toImESaISt4pairIKmmEEE11equal_ra
   %i.am = getelementptr inbounds nuw i8, ptr %.sroa.0232.0305, i64 16
   %i.an = load i64, ptr %i.am, align 8            ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.al, i64 112
-  %i.ap = load ptr, ptr %i.ao, align 8            ; 2 uses
+  %i.ap = load ptr, ptr %i.ao, align 8, !nonnull !3, !noundef !3
   %i.aq = getelementptr inbounds nuw i8, ptr %i.al, i64 104 ; 2 uses
-  %.not10.i.i.i.i = icmp eq ptr %i.ap, null
-  br i1 %.not10.i.i.i.i, label %_ZNK6Assimp4STEP2DB9GetObjectEm.exit, label %.lr.ph.i.i.i.i
+  br label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %.lr.ph306, %.lr.ph.i.i.i.i
   %.012.i.i.i.i = phi ptr [ %.1.i.i.i.i, %.lr.ph.i.i.i.i ], [ %i.ap, %.lr.ph306 ] ; 3 uses
@@ -217,32 +216,24 @@ _ZNKSt18unordered_multimapImmSt4hashImESt8equal_toImESaISt4pairIKmmEEE11equal_ra
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %.1.i.i.i.i, null
-  br i1 %.not.i.i.i.i, label %_ZNKSt8_Rb_treeImSt4pairIKmPKN6Assimp4STEP10LazyObjectEESt10_Select1stIS7_ESt4lessImESaIS7_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS7_EPKSt18_Rb_tree_node_baseRS1_.exit.i.i.i, label %.lr.ph.i.i.i.i, !llvm.loop !9
+  br i1 %.not.i.i.i.i, label %_ZNK6Assimp4STEP2DB9GetObjectEm.exit, label %.lr.ph.i.i.i.i, !llvm.loop !9
 
-_ZNKSt8_Rb_treeImSt4pairIKmPKN6Assimp4STEP10LazyObjectEESt10_Select1stIS7_ESt4lessImESaIS7_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS7_EPKSt18_Rb_tree_node_baseRS1_.exit.i.i.i: ; preds = %.lr.ph.i.i.i.i
-  %21 = icmp eq ptr %.19.i.i.i.i, %i.aq
-  br i1 %21, label %_ZNK6Assimp4STEP2DB9GetObjectEm.exit, label %_ZNKSt3mapImPKN6Assimp4STEP10LazyObjectESt4lessImESaISt4pairIKmS4_EEE4findERS8_.exit.i
-
-_ZNKSt3mapImPKN6Assimp4STEP10LazyObjectESt4lessImESaISt4pairIKmS4_EEE4findERS8_.exit.i: ; preds = %_ZNKSt8_Rb_treeImSt4pairIKmPKN6Assimp4STEP10LazyObjectEESt10_Select1stIS7_ESt4lessImESaIS7_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS7_EPKSt18_Rb_tree_node_baseRS1_.exit.i.i.i
+_ZNK6Assimp4STEP2DB9GetObjectEm.exit:             ; preds = %.lr.ph.i.i.i.i
+  %21 = icmp ne ptr %.19.i.i.i.i, %i.aq
+  tail call void @llvm.assume(i1 %21)
   %22 = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i, i64 32
   %23 = load i64, ptr %22, align 8
-  %24 = icmp ult i64 %i.an, %23
-  br i1 %24, label %_ZNK6Assimp4STEP2DB9GetObjectEm.exit, label %25
-
-25:                                               ; preds = %_ZNKSt3mapImPKN6Assimp4STEP10LazyObjectESt4lessImESaISt4pairIKmS4_EEE4findERS8_.exit.i
-  %26 = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i, i64 40
-  %27 = load ptr, ptr %26, align 8
-  br label %_ZNK6Assimp4STEP2DB9GetObjectEm.exit
-
-_ZNK6Assimp4STEP2DB9GetObjectEm.exit:             ; preds = %.lr.ph306, %_ZNKSt8_Rb_treeImSt4pairIKmPKN6Assimp4STEP10LazyObjectEESt10_Select1stIS7_ESt4lessImESaIS7_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS7_EPKSt18_Rb_tree_node_baseRS1_.exit.i.i.i, %_ZNKSt3mapImPKN6Assimp4STEP10LazyObjectESt4lessImESaISt4pairIKmS4_EEE4findERS8_.exit.i, %25
-  %.0.i = phi ptr [ %27, %25 ], [ null, %_ZNKSt3mapImPKN6Assimp4STEP10LazyObjectESt4lessImESaISt4pairIKmS4_EEE4findERS8_.exit.i ], [ null, %.lr.ph306 ], [ null, %_ZNKSt8_Rb_treeImSt4pairIKmPKN6Assimp4STEP10LazyObjectEESt10_Select1stIS7_ESt4lessImESaIS7_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS7_EPKSt18_Rb_tree_node_baseRS1_.exit.i.i.i ] ; 2 uses
-  %i.au = getelementptr inbounds nuw i8, ptr %.0.i, i64 32 ; 2 uses
+  %24 = icmp uge i64 %i.an, %23
+  tail call void @llvm.assume(i1 %24)
+  %25 = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i, i64 40
+  %26 = load ptr, ptr %25, align 8                ; 2 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %26, i64 32 ; 2 uses
   %i.av = load ptr, ptr %i.au, align 8            ; 2 uses
   %.not.i.i = icmp eq ptr %i.av, null
   br i1 %.not.i.i, label %bb.k, label %_ZNK6Assimp4STEP10LazyObject5ToPtrINS_3IFC10Schema_2x313IfcStyledItemEEEPKT_v.exit
 
 bb.k:                                             ; preds = %_ZNK6Assimp4STEP2DB9GetObjectEm.exit
-  tail call void @_ZNK6Assimp4STEP10LazyObject8LazyInitEv(ptr noundef nonnull align 8 dereferenceable(40) %.0.i)
+  tail call void @_ZNK6Assimp4STEP10LazyObject8LazyInitEv(ptr noundef nonnull align 8 dereferenceable(40) %26)
   %.pre.i.i = load ptr, ptr %i.au, align 8
   br label %_ZNK6Assimp4STEP10LazyObject5ToPtrINS_3IFC10Schema_2x313IfcStyledItemEEEPKT_v.exit
 

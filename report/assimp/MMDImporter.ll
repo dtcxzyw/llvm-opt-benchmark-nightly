@@ -201,7 +201,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef zeroext i1 @_ZNK6Assimp11MMDImporter7CanReadERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS_8IOSystemEb(ptr nonnull readnone align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef %2, i1 zeroext %3) unnamed_addr #0 align 2 {
+define hidden noundef zeroext i1 @_ZNK6Assimp11MMDImporter7CanReadERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS_8IOSystemEb(ptr nofree nonnull readnone align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef %2, i1 zeroext %3) unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef zeroext i1 @_ZN6Assimp12BaseImporter24SearchFileHeaderForTokenEPNS_8IOSystemERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPPKcmjbb(ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull @_ZZNK6Assimp11MMDImporter7CanReadERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS_8IOSystemEbE6tokens, i64 noundef 1, i32 noundef 200, i1 noundef zeroext false, i1 noundef zeroext false)
   ret i1 %i.a
@@ -210,13 +210,13 @@ bb.a:
 declare noundef zeroext i1 @_ZN6Assimp12BaseImporter24SearchFileHeaderForTokenEPNS_8IOSystemERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPPKcmjbb(ptr noundef, ptr noundef nonnull align 8 dereferenceable(32), ptr noundef, i64 noundef, i32 noundef, i1 noundef zeroext, i1 noundef zeroext) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden noundef nonnull ptr @_ZNK6Assimp11MMDImporter7GetInfoEv(ptr nonnull readnone align 8 captures(none) %0) unnamed_addr #6 align 2 {
+define hidden noundef nonnull ptr @_ZNK6Assimp11MMDImporter7GetInfoEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #6 align 2 {
 bb.a:
   ret ptr @_ZL4desc
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden void @_ZN6Assimp11MMDImporter14InternReadFileERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEP7aiScenePNS_8IOSystemE(ptr noundef nonnull readnone align 8 captures(none) dereferenceable(128) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef %2, ptr noundef %3) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define hidden void @_ZN6Assimp11MMDImporter14InternReadFileERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEP7aiScenePNS_8IOSystemE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(128) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef %2, ptr noundef %3) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca ptr, align 8                      ; 3 uses
@@ -619,7 +619,7 @@ declare void @_ZNSt7__cxx1119basic_istringstreamIcSt11char_traitsIcESaIcEEC1ERKN
 declare void @_ZN3pmx8PmxModel4ReadEPSi(ptr noundef nonnull align 8 dereferenceable(304), ptr noundef) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress uwtable
-define hidden void @_ZN6Assimp11MMDImporter20CreateDataFromImportEPKN3pmx8PmxModelEP7aiScene(ptr noundef nonnull readnone align 8 captures(none) dereferenceable(128) %0, ptr noundef readonly captures(address_is_null) %1, ptr noundef %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define hidden void @_ZN6Assimp11MMDImporter20CreateDataFromImportEPKN3pmx8PmxModelEP7aiScene(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(128) %0, ptr nofree noundef readonly captures(address_is_null) %1, ptr noundef %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca ptr, align 8                      ; 8 uses
@@ -1022,7 +1022,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit52: ; preds = %_ZN
 declare void @_ZNSt7__cxx1119basic_istringstreamIcSt11char_traitsIcESaIcEED1Ev(ptr noundef nonnull align 8 dereferenceable(120)) unnamed_addr #5 align 2
 
 ; Function Attrs: mustprogress nounwind uwtable
-define internal fastcc void @"_ZNSt10unique_ptrIN6Assimp8IOStreamEZNS0_11MMDImporter14InternReadFileERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEP7aiScenePNS0_8IOSystemEE3$_0ED2Ev"(ptr noundef nonnull readonly align 8 captures(none) dead_on_return(16) dereferenceable(16) %0) unnamed_addr #5 align 2 personality ptr @__gxx_personality_v0 {
+define internal fastcc void @"_ZNSt10unique_ptrIN6Assimp8IOStreamEZNS0_11MMDImporter14InternReadFileERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEP7aiScenePNS0_8IOSystemEE3$_0ED2Ev"(ptr nofree noundef nonnull readonly align 8 captures(none) dead_on_return(16) dereferenceable(16) %0) unnamed_addr #5 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
@@ -1063,7 +1063,7 @@ declare void @_ZN6aiNode11addChildrenEjPPS_(ptr noundef nonnull align 8 derefere
 declare noundef nonnull ptr @_Znam(i64 noundef) local_unnamed_addr #10
 
 ; Function Attrs: mustprogress uwtable
-define hidden noalias noundef nonnull ptr @_ZN6Assimp11MMDImporter10CreateMeshEPKN3pmx8PmxModelEii(ptr nonnull readnone align 8 captures(none) %0, ptr noundef readonly captures(none) %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
+define hidden noalias noundef nonnull ptr @_ZN6Assimp11MMDImporter10CreateMeshEPKN3pmx8PmxModelEii(ptr nofree nonnull readnone align 8 captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %"class.std::tuple.238", align 8    ; 4 uses
   %5 = alloca %"class.std::tuple.241", align 1    ; 3 uses
@@ -1378,8 +1378,8 @@ bb.c:                                             ; preds = %.lr.ph652, %_ZNSt6v
 
 ._crit_edge649:                                   ; preds = %bb.d, %bb.c
   %i.eh = getelementptr inbounds nuw i8, ptr %i.dk, i64 104
-  %i.ei = load ptr, ptr %i.eh, align 8            ; 6 uses
-  %i.ej = icmp eq ptr %i.ei, null                 ; 2 uses
+  %i.ei = load ptr, ptr %i.eh, align 8            ; 7 uses
+  %i.ej = icmp eq ptr %i.ei, null
   br i1 %i.ej, label %.thread571, label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph648, %bb.d
@@ -1419,7 +1419,7 @@ bb.e:                                             ; preds = %._crit_edge649
     i8 1, label %bb.n
     i8 2, label %bb.ab
     i8 3, label %bb.ba
-    i8 4, label %31
+    i8 4, label %bb.bo
   ]
 
 bb.f:                                             ; preds = %.thread571
@@ -1822,16 +1822,10 @@ _ZNSt6vectorI14aiVertexWeightSaIS0_EE17_M_realloc_insertIJRifEEEvN9__gnu_cxx17__
           cleanup
   br label %bb.cy
 
-31:                                               ; preds = %.thread571
-  br i1 %i.ej, label %bb.bo, label %32
-
-32:                                               ; preds = %31
-  %33 = call ptr @__dynamic_cast(ptr nonnull %i.ei, ptr nonnull @_ZTIN3pmx17PmxVertexSkinningE, ptr nonnull @_ZTIN3pmx21PmxVertexSkinningQDEFE, i64 0) #22
-  br label %bb.bo
-
-bb.bo:                                            ; preds = %31, %32
-  %34 = phi ptr [ %33, %32 ], [ null, %31 ]       ; 8 uses
-  %i.ya = getelementptr inbounds nuw i8, ptr %34, i64 8 ; 2 uses
+bb.bo:                                            ; preds = %.thread571
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ei) ]
+  %31 = call ptr @__dynamic_cast(ptr nonnull %i.ei, ptr nonnull @_ZTIN3pmx17PmxVertexSkinningE, ptr nonnull @_ZTIN3pmx21PmxVertexSkinningQDEFE, i64 0) #22 ; 8 uses
+  %i.ya = getelementptr inbounds nuw i8, ptr %31, i64 8 ; 2 uses
   %i.yb = load ptr, ptr %i.cm, align 8            ; 2 uses
   %.not10.i.i.i.i398 = icmp eq ptr %i.yb, null
   br i1 %.not10.i.i.i.i398, label %.critedge.i409, label %.lr.ph.i.i.i.i399
@@ -1880,7 +1874,7 @@ bb.bq:                                            ; preds = %_ZNSt3mapIiSt6vecto
 bb.br:                                            ; preds = %.noexc411, %bb.bq
   %.sroa.06.0.i408 = phi ptr [ %i.yj, %.noexc411 ], [ %.19.i.i.i.i402, %bb.bq ] ; 3 uses
   %i.yk = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i408, i64 40 ; 2 uses
-  %i.yl = getelementptr inbounds nuw i8, ptr %34, i64 24 ; 2 uses
+  %i.yl = getelementptr inbounds nuw i8, ptr %31, i64 24 ; 2 uses
   %i.ym = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i408, i64 48 ; 4 uses
   %i.yn = load ptr, ptr %i.ym, align 8            ; 6 uses
   %i.yo = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i408, i64 56 ; 2 uses
@@ -2012,7 +2006,7 @@ _ZNSt6vectorI14aiVertexWeightSaIS0_EE17_M_realloc_insertIJRiRfEEEvN9__gnu_cxx17_
   br label %_ZNSt6vectorI14aiVertexWeightSaIS0_EE12emplace_backIJRiRfEEERS0_DpOT_.exit428
 
 _ZNSt6vectorI14aiVertexWeightSaIS0_EE12emplace_backIJRiRfEEERS0_DpOT_.exit428: ; preds = %_ZNSt6vectorI14aiVertexWeightSaIS0_EE17_M_realloc_insertIJRiRfEEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i425, %bb.bs
-  %i.aad = getelementptr inbounds nuw i8, ptr %34, i64 12 ; 2 uses
+  %i.aad = getelementptr inbounds nuw i8, ptr %31, i64 12 ; 2 uses
   %i.aae = load ptr, ptr %i.cm, align 8           ; 2 uses
   %.not10.i.i.i.i429 = icmp eq ptr %i.aae, null
   br i1 %.not10.i.i.i.i429, label %.critedge.i440, label %.lr.ph.i.i.i.i430
@@ -2061,7 +2055,7 @@ bb.bw:                                            ; preds = %_ZNSt3mapIiSt6vecto
 bb.bx:                                            ; preds = %.noexc442, %bb.bw
   %.sroa.06.0.i439 = phi ptr [ %i.aam, %.noexc442 ], [ %.19.i.i.i.i433, %bb.bw ] ; 3 uses
   %i.aan = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i439, i64 40 ; 2 uses
-  %i.aao = getelementptr inbounds nuw i8, ptr %34, i64 28 ; 2 uses
+  %i.aao = getelementptr inbounds nuw i8, ptr %31, i64 28 ; 2 uses
   %i.aap = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i439, i64 48 ; 4 uses
   %i.aaq = load ptr, ptr %i.aap, align 8          ; 6 uses
   %i.aar = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i439, i64 56 ; 2 uses
@@ -2186,7 +2180,7 @@ _ZNSt6vectorI14aiVertexWeightSaIS0_EE17_M_realloc_insertIJRiRfEEEvN9__gnu_cxx17_
   br label %_ZNSt6vectorI14aiVertexWeightSaIS0_EE12emplace_backIJRiRfEEERS0_DpOT_.exit459
 
 _ZNSt6vectorI14aiVertexWeightSaIS0_EE12emplace_backIJRiRfEEERS0_DpOT_.exit459: ; preds = %_ZNSt6vectorI14aiVertexWeightSaIS0_EE17_M_realloc_insertIJRiRfEEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i456, %bb.by
-  %i.acg = getelementptr inbounds nuw i8, ptr %34, i64 16 ; 2 uses
+  %i.acg = getelementptr inbounds nuw i8, ptr %31, i64 16 ; 2 uses
   %i.ach = load ptr, ptr %i.cm, align 8           ; 2 uses
   %.not10.i.i.i.i460 = icmp eq ptr %i.ach, null
   br i1 %.not10.i.i.i.i460, label %.critedge.i471, label %.lr.ph.i.i.i.i461
@@ -2235,7 +2229,7 @@ bb.cc:                                            ; preds = %_ZNSt3mapIiSt6vecto
 bb.cd:                                            ; preds = %.noexc473, %bb.cc
   %.sroa.06.0.i470 = phi ptr [ %i.acp, %.noexc473 ], [ %.19.i.i.i.i464, %bb.cc ] ; 3 uses
   %i.acq = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i470, i64 40 ; 2 uses
-  %i.acr = getelementptr inbounds nuw i8, ptr %34, i64 32 ; 2 uses
+  %i.acr = getelementptr inbounds nuw i8, ptr %31, i64 32 ; 2 uses
   %i.acs = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i470, i64 48 ; 4 uses
   %i.act = load ptr, ptr %i.acs, align 8          ; 6 uses
   %i.acu = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i470, i64 56 ; 2 uses
@@ -2360,7 +2354,7 @@ _ZNSt6vectorI14aiVertexWeightSaIS0_EE17_M_realloc_insertIJRiRfEEEvN9__gnu_cxx17_
   br label %_ZNSt6vectorI14aiVertexWeightSaIS0_EE12emplace_backIJRiRfEEERS0_DpOT_.exit490
 
 _ZNSt6vectorI14aiVertexWeightSaIS0_EE12emplace_backIJRiRfEEERS0_DpOT_.exit490: ; preds = %_ZNSt6vectorI14aiVertexWeightSaIS0_EE17_M_realloc_insertIJRiRfEEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i487, %bb.ce
-  %i.aej = getelementptr inbounds nuw i8, ptr %34, i64 20 ; 2 uses
+  %i.aej = getelementptr inbounds nuw i8, ptr %31, i64 20 ; 2 uses
   %i.aek = load ptr, ptr %i.cm, align 8           ; 2 uses
   %.not10.i.i.i.i491 = icmp eq ptr %i.aek, null
   br i1 %.not10.i.i.i.i491, label %.critedge.i502, label %.lr.ph.i.i.i.i492
@@ -2409,7 +2403,7 @@ bb.ci:                                            ; preds = %_ZNSt3mapIiSt6vecto
 bb.cj:                                            ; preds = %.noexc504, %bb.ci
   %.sroa.06.0.i501 = phi ptr [ %i.aes, %.noexc504 ], [ %.19.i.i.i.i495, %bb.ci ] ; 3 uses
   %i.aet = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i501, i64 40 ; 2 uses
-  %i.aeu = getelementptr inbounds nuw i8, ptr %34, i64 36 ; 2 uses
+  %i.aeu = getelementptr inbounds nuw i8, ptr %31, i64 36 ; 2 uses
   %i.aev = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i501, i64 48 ; 4 uses
   %i.aew = load ptr, ptr %i.aev, align 8          ; 6 uses
   %i.aex = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i501, i64 56 ; 2 uses
@@ -2750,7 +2744,7 @@ bb.cy:                                            ; preds = %.loopexit574, %.loo
 declare void @_ZN6aiNodeC1ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(1144), ptr noundef nonnull align 8 dereferenceable(32)) unnamed_addr #4
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef nonnull ptr @_ZN6Assimp11MMDImporter14CreateMaterialEPKN3pmx11PmxMaterialEPKNS1_8PmxModelE(ptr nonnull readnone align 8 captures(none) %0, ptr noundef readonly captures(none) %1, ptr noundef readonly captures(none) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define hidden noundef nonnull ptr @_ZN6Assimp11MMDImporter14CreateMaterialEPKN3pmx11PmxMaterialEPKNS1_8PmxModelE(ptr nofree nonnull readnone align 8 captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %struct.aiString, align 4           ; 5 uses
   %4 = alloca %struct.aiColor3D, align 8          ; 5 uses

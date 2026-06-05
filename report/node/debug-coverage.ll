@@ -162,7 +162,7 @@ $_ZN2v88internal15IsCompiledScopeC2ENS0_6TaggedINS0_18SharedFunctionInfoEEEPNS0_
 @.str.10 = private unnamed_addr constant [29 x i8] c"kind() == CodeKind::BASELINE\00", align 1
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN2v88internal8Coverage14CollectPreciseEPNS0_7IsolateE(ptr dead_on_unwind noalias writable sret(%"class.std::unique_ptr") align 8 captures(none) %0, ptr noundef %1) local_unnamed_addr #0 align 2 {
+define hidden void @_ZN2v88internal8Coverage14CollectPreciseEPNS0_7IsolateE(ptr dead_on_unwind noalias nofree writable sret(%"class.std::unique_ptr") align 8 captures(none) %0, ptr noundef %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 59176 ; 3 uses
   %i.b = load atomic i32, ptr %i.a monotonic, align 4
@@ -187,7 +187,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN2v88internal8Coverage7CollectEPNS0_7IsolateENS_5debug12CoverageModeE(ptr dead_on_unwind noalias writable sret(%"class.std::unique_ptr") align 8 captures(none) %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #0 align 2 {
+define hidden void @_ZN2v88internal8Coverage7CollectEPNS0_7IsolateENS_5debug12CoverageModeE(ptr dead_on_unwind noalias nofree writable sret(%"class.std::unique_ptr") align 8 captures(none) %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %3 = alloca %"class.v8::internal::(anonymous namespace)::CoverageBlockIterator", align 8 ; 14 uses
   %4 = alloca %"class.v8::internal::(anonymous namespace)::CoverageBlockIterator", align 8 ; 14 uses
@@ -590,14 +590,14 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN2v88internal8Coverage17CollectBestEffortEPNS0_7IsolateE(ptr dead_on_unwind noalias writable sret(%"class.std::unique_ptr") align 8 captures(none) %0, ptr noundef %1) local_unnamed_addr #0 align 2 {
+define hidden void @_ZN2v88internal8Coverage17CollectBestEffortEPNS0_7IsolateE(ptr dead_on_unwind noalias nofree writable sret(%"class.std::unique_ptr") align 8 captures(none) %0, ptr noundef %1) local_unnamed_addr #0 align 2 {
 bb.a:
   tail call void @_ZN2v88internal8Coverage7CollectEPNS0_7IsolateENS_5debug12CoverageModeE(ptr dead_on_unwind writable sret(%"class.std::unique_ptr") align 8 %0, ptr noundef %1, i32 noundef 0)
   ret void
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN2v88internal8Coverage15CollectWasmDataEPNS0_7IsolateE(ptr dead_on_unwind noalias writable sret(%"class.std::unique_ptr") align 8 captures(none) initializes((0, 8)) %0, ptr noundef %1) local_unnamed_addr #0 align 2 {
+define hidden void @_ZN2v88internal8Coverage15CollectWasmDataEPNS0_7IsolateE(ptr dead_on_unwind noalias nofree writable sret(%"class.std::unique_ptr") align 8 captures(none) initializes((0, 8)) %0, ptr noundef %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %2 = alloca %"struct.std::_Sp_locker", align 1  ; 6 uses
   %3 = alloca %"class.std::vector.456", align 8   ; 11 uses
@@ -1000,13 +1000,13 @@ bb.a:
   %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = icmp eq i64 %i.f, 9223372036854775776
-  br i1 %i.g, label %bb.b, label %_ZNKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12_M_check_lenEmPKc.exit
+  br i1 %i.g, label %bb.b, label %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.2) #21
   unreachable
 
-_ZNKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
+_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit: ; preds = %bb.a
   %4 = ashr exact i64 %i.f, 5                     ; 3 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %4, i64 1)
   %5 = add nsw i64 %.sroa.speculated.i, %4        ; 2 uses
@@ -1015,17 +1015,11 @@ _ZNKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12_M_c
   %8 = select i1 %6, i64 288230376151711743, i64 %7 ; 3 uses
   %9 = ptrtoint ptr %1 to i64
   %10 = sub i64 %9, %i.e
-  %.not.i = icmp eq i64 %8, 0
-  br i1 %.not.i, label %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit, label %11
-
-11:                                               ; preds = %_ZNKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12_M_check_lenEmPKc.exit
-  %12 = shl nuw nsw i64 %8, 5
-  %13 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %12) #22
-  br label %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit
-
-_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12_M_check_lenEmPKc.exit, %11
-  %14 = phi ptr [ %13, %11 ], [ null, %_ZNKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12_M_check_lenEmPKc.exit ] ; 5 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %14, i64 %10 ; 4 uses
+  %.not.i = icmp ne i64 %8, 0
+  tail call void @llvm.assume(i1 %.not.i)
+  %11 = shl nuw nsw i64 %8, 5
+  %12 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %11) #22 ; 5 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %12, i64 %10 ; 4 uses
   %i.i = load ptr, ptr %2, align 8                ; 3 uses
   %i.j = load i64, ptr %3, align 8                ; 9 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 3 uses
@@ -1091,7 +1085,7 @@ _ZSt12construct_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJPKcmEEDT
   br i1 %.not10.i.i.i, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZSt12construct_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJPKcmEEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPS9_DpOSA_.exit, %_ZSt19__relocate_object_aINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_SaIS5_EEvPT_PT0_RT1_.exit.i.i.i
-  %.012.i.i.i = phi ptr [ %i.aj, %_ZSt19__relocate_object_aINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_SaIS5_EEvPT_PT0_RT1_.exit.i.i.i ], [ %14, %_ZSt12construct_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJPKcmEEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPS9_DpOSA_.exit ] ; 5 uses
+  %.012.i.i.i = phi ptr [ %i.aj, %_ZSt19__relocate_object_aINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_SaIS5_EEvPT_PT0_RT1_.exit.i.i.i ], [ %12, %_ZSt12construct_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJPKcmEEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPS9_DpOSA_.exit ] ; 5 uses
   %.0911.i.i.i = phi ptr [ %i.ai, %_ZSt19__relocate_object_aINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_SaIS5_EEvPT_PT0_RT1_.exit.i.i.i ], [ %i.c, %_ZSt12construct_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJPKcmEEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPS9_DpOSA_.exit ] ; 7 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !115)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !118)
@@ -1133,7 +1127,7 @@ _ZSt19__relocate_object_aINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5
   br i1 %.not.i.i.i, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit, label %.lr.ph.i.i.i, !llvm.loop !121
 
 _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit: ; preds = %_ZSt19__relocate_object_aINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_SaIS5_EEvPT_PT0_RT1_.exit.i.i.i, %_ZSt12construct_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJPKcmEEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPS9_DpOSA_.exit
-  %.0.lcssa.i.i.i = phi ptr [ %14, %_ZSt12construct_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJPKcmEEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPS9_DpOSA_.exit ], [ %i.aj, %_ZSt19__relocate_object_aINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_SaIS5_EEvPT_PT0_RT1_.exit.i.i.i ]
+  %.0.lcssa.i.i.i = phi ptr [ %12, %_ZSt12construct_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJPKcmEEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPS9_DpOSA_.exit ], [ %i.aj, %_ZSt19__relocate_object_aINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_SaIS5_EEvPT_PT0_RT1_.exit.i.i.i ]
   %i.ak = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 32 ; 2 uses
   %.not10.i.i.i17 = icmp eq ptr %1, %i.b
   br i1 %.not10.i.i.i17, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit27, label %.lr.ph.i.i.i18
@@ -1194,9 +1188,9 @@ bb.m:                                             ; preds = %_ZNSt6vectorINSt7__
   br label %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE13_M_deallocateEPS5_m.exit
 
 _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE13_M_deallocateEPS5_m.exit: ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit27, %bb.m
-  store ptr %14, ptr %0, align 8
+  store ptr %12, ptr %0, align 8
   store ptr %.0.lcssa.i.i.i26, ptr %i.a, align 8
-  %i.bd = getelementptr inbounds nuw [32 x i8], ptr %14, i64 %8
+  %i.bd = getelementptr inbounds nuw [32 x i8], ptr %12, i64 %8
   store ptr %i.bd, ptr %i.az, align 8
   ret void
 }
@@ -1599,7 +1593,7 @@ _ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN2v88internal12_GLOBAL__N_1
 }
 
 ; Function Attrs: mustprogress norecurse nounwind memory(readwrite, target_mem: none) uwtable
-define internal fastcc void @_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal12_GLOBAL__N_126SharedFunctionInfoAndCountESt6vectorIS5_SaIS5_EEEElS5_NS0_5__ops15_Iter_less_iterEEvT_T0_SE_T1_T2_(ptr captures(none) %0, i64 noundef %1, i64 noundef range(i64 -384307168202282325, 384307168202282326) %2, ptr noundef readonly byval(%"struct.v8::internal::(anonymous namespace)::SharedFunctionInfoAndCount") align 8 captures(none) %3) unnamed_addr #12 {
+define internal fastcc void @_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal12_GLOBAL__N_126SharedFunctionInfoAndCountESt6vectorIS5_SaIS5_EEEElS5_NS0_5__ops15_Iter_less_iterEEvT_T0_SE_T1_T2_(ptr nofree captures(none) %0, i64 noundef %1, i64 noundef range(i64 -384307168202282325, 384307168202282326) %2, ptr nofree noundef readonly byval(%"struct.v8::internal::(anonymous namespace)::SharedFunctionInfoAndCount") align 8 captures(none) %3) unnamed_addr #12 {
 bb.a:
   %i.a = add nsw i64 %2, -1
   %i.b = sdiv i64 %i.a, 2                         ; 2 uses
@@ -1781,7 +1775,7 @@ _ZSt11__push_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal12_GLOBAL__N_126S
 declare i64 @llvm.ctlz.i64(i64, i1 immarg) #13
 
 ; Function Attrs: mustprogress norecurse nounwind memory(readwrite, target_mem: none) uwtable
-define internal fastcc void @_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN2v88internal12_GLOBAL__N_126SharedFunctionInfoAndCountESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_T0_(ptr %0, ptr readnone captures(address) %1) unnamed_addr #12 {
+define internal fastcc void @_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN2v88internal12_GLOBAL__N_126SharedFunctionInfoAndCountESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_T0_(ptr %0, ptr nofree readnone captures(address) %1) unnamed_addr #12 {
 bb.a:
   %2 = alloca %"struct.v8::internal::(anonymous namespace)::SharedFunctionInfoAndCount", align 8 ; 4 uses
   %i.a = icmp eq ptr %0, %1
@@ -2184,7 +2178,7 @@ bb.f:                                             ; preds = %_ZSt27__uninitializ
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define internal noundef zeroext i1 @_ZN2v88internal12_GLOBAL__N_120CompareCoverageBlockERKNS0_13CoverageBlockES4_(ptr noundef nonnull readonly align 4 captures(none) dereferenceable(12) %0, ptr noundef nonnull readonly align 4 captures(none) dereferenceable(12) %1) #14 {
+define internal noundef zeroext i1 @_ZN2v88internal12_GLOBAL__N_120CompareCoverageBlockERKNS0_13CoverageBlockES4_(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(12) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(12) %1) #14 {
 bb.a:
   %i.a = load i32, ptr %0, align 4                ; 2 uses
   %i.b = load i32, ptr %1, align 4                ; 2 uses

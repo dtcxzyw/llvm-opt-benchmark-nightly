@@ -93,28 +93,24 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = tail call noundef i32 %i.b(ptr noundef nonnull align 8 dereferenceable(8) %0)
   %i.d = icmp eq i32 %i.c, 7
-  br i1 %i.d, label %2, label %5
+  br i1 %i.d, label %bb.b, label %4
 
-2:                                                ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %4 = load ptr, ptr %3, align 8, !tbaa !10
-  br label %bb.b
-
-5:                                                ; preds = %bb.a
-  tail call void @_ZN2kc21kc_no_default_in_withEPKciS1_(ptr noundef nonnull @.str, i32 noundef 63, ptr noundef nonnull @.str.1)
-  br label %bb.b
-
-bb.b:                                             ; preds = %5, %2
-  %.0 = phi ptr [ %4, %2 ], [ undef, %5 ]         ; 4 uses
+bb.b:                                             ; preds = %bb.a
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %3 = load ptr, ptr %2, align 8, !tbaa !10       ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   store ptr %1, ptr %i.e, align 8, !tbaa !18
-  %i.f = getelementptr inbounds nuw i8, ptr %.0, i64 8 ; 15 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 15 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !19   ; 2 uses
   %i.h = load ptr, ptr %1, align 8, !tbaa !8
   %i.i = load ptr, ptr %i.h, align 8
   %i.j = tail call noundef i32 %i.i(ptr noundef nonnull align 8 dereferenceable(8) %1)
   %i.k = icmp eq i32 %i.j, 172
   br i1 %i.k, label %.critedge, label %bb.c
+
+4:                                                ; preds = %bb.a
+  tail call void @_ZN2kc21kc_no_default_in_withEPKciS1_(ptr noundef nonnull @.str, i32 noundef 63, ptr noundef nonnull @.str.1)
+  unreachable
 
 bb.c:                                             ; preds = %bb.b
   %i.l = load ptr, ptr %i.g, align 8, !tbaa !8
@@ -127,11 +123,11 @@ bb.d:                                             ; preds = %bb.c
   store ptr %1, ptr %i.f, align 8, !tbaa !19
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.q = load i32, ptr %i.p, align 8, !tbaa !22
-  %i.r = getelementptr inbounds nuw i8, ptr %.0, i64 16
+  %i.r = getelementptr inbounds nuw i8, ptr %3, i64 16
   store i32 %i.q, ptr %i.r, align 8, !tbaa !23
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !24
-  %i.u = getelementptr inbounds nuw i8, ptr %.0, i64 24
+  %i.u = getelementptr inbounds nuw i8, ptr %3, i64 24
   store ptr %i.t, ptr %i.u, align 8, !tbaa !25
   br label %.critedge
 
@@ -239,7 +235,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.cg, label %bb.r, label %bb.t
 
 bb.r:                                             ; preds = %bb.q
-  %i.ch = getelementptr inbounds nuw i8, ptr %.0, i64 24
+  %i.ch = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !25
   %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.ck = load ptr, ptr %i.cj, align 8, !tbaa !24
@@ -642,28 +638,24 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = tail call noundef i32 %i.b(ptr noundef nonnull align 8 dereferenceable(8) %0)
   %i.d = icmp eq i32 %i.c, 7
-  br i1 %i.d, label %3, label %6
+  br i1 %i.d, label %bb.b, label %5
 
-3:                                                ; preds = %bb.a
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %5 = load ptr, ptr %4, align 8, !tbaa !10
-  br label %bb.b
-
-6:                                                ; preds = %bb.a
-  tail call void @_ZN2kc21kc_no_default_in_withEPKciS1_(ptr noundef nonnull @.str.55, i32 noundef 277, ptr noundef nonnull @.str.1)
-  br label %bb.b
-
-bb.b:                                             ; preds = %6, %3
-  %.0 = phi ptr [ %5, %3 ], [ undef, %6 ]         ; 6 uses
+bb.b:                                             ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %4 = load ptr, ptr %3, align 8, !tbaa !10       ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   store ptr %1, ptr %i.e, align 8, !tbaa !18
-  %i.f = getelementptr inbounds nuw i8, ptr %.0, i64 8 ; 17 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 17 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !19   ; 2 uses
   %i.h = load ptr, ptr %1, align 8, !tbaa !8
   %i.i = load ptr, ptr %i.h, align 8
   %i.j = tail call noundef i32 %i.i(ptr noundef nonnull align 8 dereferenceable(8) %1)
   %i.k = icmp eq i32 %i.j, 172
   br i1 %i.k, label %.critedge, label %bb.c
+
+5:                                                ; preds = %bb.a
+  tail call void @_ZN2kc21kc_no_default_in_withEPKciS1_(ptr noundef nonnull @.str.55, i32 noundef 277, ptr noundef nonnull @.str.1)
+  unreachable
 
 bb.c:                                             ; preds = %bb.b
   %i.l = load ptr, ptr %i.g, align 8, !tbaa !8
@@ -676,11 +668,11 @@ bb.d:                                             ; preds = %bb.c
   store ptr %1, ptr %i.f, align 8, !tbaa !19
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.q = load i32, ptr %i.p, align 8, !tbaa !22
-  %i.r = getelementptr inbounds nuw i8, ptr %.0, i64 16
+  %i.r = getelementptr inbounds nuw i8, ptr %4, i64 16
   store i32 %i.q, ptr %i.r, align 8, !tbaa !23
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !24
-  %i.u = getelementptr inbounds nuw i8, ptr %.0, i64 24
+  %i.u = getelementptr inbounds nuw i8, ptr %4, i64 24
   store ptr %i.t, ptr %i.u, align 8, !tbaa !25
   br label %.critedge
 
@@ -727,13 +719,13 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.g
   %i.as = load ptr, ptr %i.f, align 8, !tbaa !19
-  %i.at = getelementptr inbounds nuw i8, ptr %.0, i64 24 ; 2 uses
+  %i.at = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !25
-  %i.av = getelementptr inbounds nuw i8, ptr %.0, i64 16 ; 2 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   %i.aw = load i32, ptr %i.av, align 8, !tbaa !23
   %i.ax = tail call noundef ptr @_ZN2kc9mkintegerEi(i32 noundef %i.aw)
   %i.ay = tail call noundef ptr @_ZN2kc17ScopeTypeFileLineEPNS_17impl_integer__IntEPNS_11impl_IDtypeEPNS_20impl_casestring__StrES1_(ptr noundef %i.ai, ptr noundef %i.as, ptr noundef %i.au, ptr noundef %i.ax)
-  %i.az = getelementptr inbounds nuw i8, ptr %.0, i64 32 ; 2 uses
+  %i.az = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !35
   %i.bb = tail call noundef ptr @_ZN2kc26ConsscopetypefilelinestackEPNS_22impl_scopetypefilelineEPNS_27impl_scopetypefilelinestackE(ptr noundef %i.ay, ptr noundef %i.ba)
   store ptr %i.bb, ptr %i.az, align 8, !tbaa !35

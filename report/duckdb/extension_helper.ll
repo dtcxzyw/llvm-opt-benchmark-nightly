@@ -201,7 +201,7 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define void @_ZN6duckdb15ExtensionHelper19GetDefaultExtensionEm(ptr dead_on_unwind noalias writable writeonly sret(%"struct.duckdb::DefaultExtension") align 8 captures(none) initializes((0, 24)) %0, i64 noundef %1) local_unnamed_addr #2 align 2 {
+define void @_ZN6duckdb15ExtensionHelper19GetDefaultExtensionEm(ptr dead_on_unwind noalias nofree writable writeonly sret(%"struct.duckdb::DefaultExtension") align 8 captures(none) initializes((0, 24)) %0, i64 noundef %1) local_unnamed_addr #2 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw [24 x i8], ptr @_ZN6duckdbL19internal_extensionsE, i64 %1
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false), !tbaa.struct !7
@@ -312,7 +312,7 @@ declare void @_ZN6duckdb15ExtensionHelper19ApplyExtensionAliasERKNSt7__cxx1112ba
 declare i32 @__gxx_personality_v0(...)
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define noundef zeroext i1 @_ZN6duckdb15ExtensionHelper20CanAutoloadExtensionERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0) local_unnamed_addr #5 align 2 {
+define noundef zeroext i1 @_ZN6duckdb15ExtensionHelper20CanAutoloadExtensionERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0) local_unnamed_addr #5 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i64, ptr %i.a, align 8, !tbaa !13   ; 3 uses
@@ -347,7 +347,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN6duckdb15ExtensionHelper33AddExtensionInstallHintToErrorMsgERNS_13ClientContextERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull align 8 dereferenceable(512) %1, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(32) %2, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(32) %3) local_unnamed_addr #3 align 2 {
+define void @_ZN6duckdb15ExtensionHelper33AddExtensionInstallHintToErrorMsgERNS_13ClientContextERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull align 8 dereferenceable(512) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %3) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = tail call noundef nonnull align 8 dereferenceable(1560) ptr @_ZN6duckdb16DatabaseInstance11GetDatabaseERNS_13ClientContextE(ptr noundef nonnull align 8 dereferenceable(512) %1)
   tail call void @_ZN6duckdb15ExtensionHelper33AddExtensionInstallHintToErrorMsgERNS_16DatabaseInstanceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_(ptr dead_on_unwind writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull align 8 dereferenceable(1560) %i.a, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %3)
@@ -355,7 +355,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN6duckdb15ExtensionHelper33AddExtensionInstallHintToErrorMsgERNS_16DatabaseInstanceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull align 8 dereferenceable(1560) %1, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(32) %2, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(32) %3) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN6duckdb15ExtensionHelper33AddExtensionInstallHintToErrorMsgERNS_16DatabaseInstanceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull align 8 dereferenceable(1560) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %3) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 21 uses
@@ -758,7 +758,7 @@ declare void @_ZN6duckdb17InternalExceptionC2ERKNSt7__cxx1112basic_stringIcSt11c
 declare noundef zeroext i1 @_ZN6duckdb8Settings21TryGetSettingInternalERKNS_16DatabaseInstanceEmRNS_5ValueE(ptr noundef nonnull align 8 dereferenceable(1560), i64 noundef, ptr noundef nonnull align 8 dereferenceable(64)) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress uwtable
-define internal void @"_ZNSt17_Function_handlerIFvRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEbEZN6duckdb15ExtensionHelper16UpdateExtensionsERNS9_13ClientContextEE3$_0E9_M_invokeERKSt9_Any_dataS7_Ob"(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr nonnull readonly align 1 captures(none) %2) #3 align 2 personality ptr @__gxx_personality_v0 {
+define internal void @"_ZNSt17_Function_handlerIFvRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEbEZN6duckdb15ExtensionHelper16UpdateExtensionsERNS9_13ClientContextEE3$_0E9_M_invokeERKSt9_Any_dataS7_Ob"(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr nofree nonnull readonly align 1 captures(none) %2) #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"struct.std::__detail::_AllocNode", align 8 ; 4 uses
   %i.a = alloca i64, align 8                      ; 6 uses
@@ -1161,7 +1161,7 @@ bb.ad:                                            ; preds = %_ZNSt7__cxx1112basi
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal noundef zeroext i1 @"_ZNSt17_Function_handlerIFvRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEbEZN6duckdb15ExtensionHelper16UpdateExtensionsERNS9_13ClientContextEE3$_0E10_M_managerERSt9_Any_dataRKSF_St18_Manager_operation"(ptr noundef nonnull align 8 captures(none) dereferenceable(16) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1, i32 noundef %2) #3 align 2 {
+define internal noundef zeroext i1 @"_ZNSt17_Function_handlerIFvRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEbEZN6duckdb15ExtensionHelper16UpdateExtensionsERNS9_13ClientContextEE3$_0E10_M_managerERSt9_Any_dataRKSF_St18_Manager_operation"(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(16) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1, i32 noundef %2) #3 align 2 {
 bb.a:
   switch i32 %2, label %"_ZNSt14_Function_base13_Base_managerIZN6duckdb15ExtensionHelper16UpdateExtensionsERNS1_13ClientContextEE3$_0E10_M_managerERSt9_Any_dataRKS7_St18_Manager_operation.exit" [
     i32 0, label %bb.b
@@ -1564,68 +1564,62 @@ _ZNKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12_M_c
   %i.m = select i1 %i.k, i64 288230376151711743, i64 %i.l ; 3 uses
   %i.n = ptrtoint ptr %1 to i64
   %i.o = sub i64 %i.n, %i.f
-  %.not.i.a = icmp eq i64 %i.m, 0
-  br i1 %.not.i.a, label %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit, label %3
+  %.not.i = icmp ne i64 %i.m, 0
+  tail call void @llvm.assume(i1 %.not.i)
+  %3 = shl nuw nsw i64 %i.m, 5
+  %4 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %3) #27 ; 6 uses
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 %i.o ; 6 uses
+  %6 = load ptr, ptr %2, align 8, !tbaa !8        ; 4 uses
+  %7 = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 3 uses
+  store ptr %7, ptr %5, align 8, !tbaa !17
+  %.not.i.a = icmp eq ptr %6, null
+  br i1 %.not.i.a, label %bb.c, label %bb.d
 
-3:                                                ; preds = %_ZNKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12_M_check_lenEmPKc.exit
-  %4 = shl nuw nsw i64 %i.m, 5
-  %5 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %4) #27
-  br label %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit
-
-_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12_M_check_lenEmPKc.exit, %3
-  %6 = phi ptr [ %5, %3 ], [ null, %_ZNKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12_M_check_lenEmPKc.exit ] ; 6 uses
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 %i.o ; 6 uses
-  %8 = load ptr, ptr %2, align 8, !tbaa !8        ; 4 uses
-  %9 = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 3 uses
-  store ptr %9, ptr %7, align 8, !tbaa !17
-  %10 = icmp eq ptr %8, null
-  br i1 %10, label %bb.c, label %bb.d
-
-bb.c:                                             ; preds = %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit
+bb.c:                                             ; preds = %_ZNKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12_M_check_lenEmPKc.exit
   invoke void @_ZSt19__throw_logic_errorPKc(ptr noundef nonnull @.str.118) #25
           to label %.noexc unwind label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
 .noexc:                                           ; preds = %bb.c
   unreachable
 
-bb.d:                                             ; preds = %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit
-  %i.p = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %8) #23 ; 4 uses
+bb.d:                                             ; preds = %_ZNKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12_M_check_lenEmPKc.exit
+  %i.p = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %6) #23 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
   store i64 %i.p, ptr %i.a, align 8, !tbaa !85
   %i.q = icmp ugt i64 %i.p, 15
   br i1 %i.q, label %.noexc.i, label %._crit_edge.i.i
 
 .noexc.i:                                         ; preds = %bb.d
-  %i.r = invoke noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef 0)
+  %i.r = invoke noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %5, ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef 0)
           to label %.noexc26 unwind label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ; 2 uses
 
 .noexc26:                                         ; preds = %.noexc.i
-  store ptr %i.r, ptr %7, align 8, !tbaa !24
+  store ptr %i.r, ptr %5, align 8, !tbaa !24
   %i.s = load i64, ptr %i.a, align 8, !tbaa !85
-  store i64 %i.s, ptr %9, align 8, !tbaa !18
+  store i64 %i.s, ptr %7, align 8, !tbaa !18
   br label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %.noexc26, %bb.d
-  %i.t = phi ptr [ %i.r, %.noexc26 ], [ %9, %bb.d ] ; 2 uses
+  %i.t = phi ptr [ %i.r, %.noexc26 ], [ %7, %bb.d ] ; 2 uses
   switch i64 %i.p, label %bb.f [
     i64 1, label %bb.e
     i64 0, label %bb.g
   ]
 
 bb.e:                                             ; preds = %._crit_edge.i.i
-  %i.u = load i8, ptr %8, align 1, !tbaa !18
+  %i.u = load i8, ptr %6, align 1, !tbaa !18
   store i8 %i.u, ptr %i.t, align 1, !tbaa !18
   br label %bb.g
 
 bb.f:                                             ; preds = %._crit_edge.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.t, ptr nonnull align 1 %8, i64 %i.p, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.t, ptr nonnull align 1 %6, i64 %i.p, i1 false)
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e, %._crit_edge.i.i
   %i.v = load i64, ptr %i.a, align 8, !tbaa !85   ; 2 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.w = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i64 %i.v, ptr %i.w, align 8, !tbaa !13
-  %i.x = load ptr, ptr %7, align 8, !tbaa !24
+  %i.x = load ptr, ptr %5, align 8, !tbaa !24
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.v
   store i8 0, ptr %i.y, align 1, !tbaa !18
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
@@ -1633,7 +1627,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %._cri
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.g, %_ZSt19__relocate_object_aINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_SaIS5_EEvPT_PT0_RT1_.exit.i.i.i.i
-  %.012.i.i.i.i = phi ptr [ %i.am, %_ZSt19__relocate_object_aINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_SaIS5_EEvPT_PT0_RT1_.exit.i.i.i.i ], [ %6, %bb.g ] ; 5 uses
+  %.012.i.i.i.i = phi ptr [ %i.am, %_ZSt19__relocate_object_aINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_SaIS5_EEvPT_PT0_RT1_.exit.i.i.i.i ], [ %4, %bb.g ] ; 5 uses
   %.0911.i.i.i.i = phi ptr [ %i.al, %_ZSt19__relocate_object_aINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_SaIS5_EEvPT_PT0_RT1_.exit.i.i.i.i ], [ %i.d, %bb.g ] ; 7 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !248)
   call void @llvm.experimental.noalias.scope.decl(metadata !251)
@@ -1675,7 +1669,7 @@ _ZSt19__relocate_object_aINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5
   br i1 %.not.i.i.i.i, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit, label %.lr.ph.i.i.i.i, !llvm.loop !254
 
 _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit: ; preds = %_ZSt19__relocate_object_aINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_SaIS5_EEvPT_PT0_RT1_.exit.i.i.i.i, %bb.g
-  %.0.lcssa.i.i.i.i = phi ptr [ %6, %bb.g ], [ %i.am, %_ZSt19__relocate_object_aINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_SaIS5_EEvPT_PT0_RT1_.exit.i.i.i.i ]
+  %.0.lcssa.i.i.i.i = phi ptr [ %4, %bb.g ], [ %i.am, %_ZSt19__relocate_object_aINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_SaIS5_EEvPT_PT0_RT1_.exit.i.i.i.i ]
   %i.an = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i, i64 32 ; 2 uses
   %.not10.i.i.i.i27 = icmp eq ptr %1, %i.c
   br i1 %.not10.i.i.i.i27, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit37, label %.lr.ph.i.i.i.i28
@@ -1733,9 +1727,9 @@ bb.j:                                             ; preds = %_ZNSt6vectorINSt7__
 
 _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE13_M_deallocateEPS5_m.exit: ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit37, %bb.j
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %6, ptr %0, align 8, !tbaa !190
+  store ptr %4, ptr %0, align 8, !tbaa !190
   store ptr %.0.lcssa.i.i.i.i36, ptr %i.b, align 8, !tbaa !187
-  %i.bd = getelementptr inbounds nuw [32 x i8], ptr %6, i64 %i.m
+  %i.bd = getelementptr inbounds nuw [32 x i8], ptr %4, i64 %i.m
   store ptr %i.bd, ptr %i.bc, align 8, !tbaa !189
   ret void
 
@@ -1750,7 +1744,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.c,
           catch ptr null
   %i.bg = extractvalue { ptr, i32 } %i.bf, 0
   %i.bh = call ptr @__cxa_begin_catch(ptr %i.bg) #23 ; 0 uses
-  call void @_ZdlPv(ptr noundef nonnull %6) #24
+  call void @_ZdlPv(ptr noundef nonnull %4) #24
   invoke void @__cxa_rethrow() #25
           to label %bb.n unwind label %bb.k
 

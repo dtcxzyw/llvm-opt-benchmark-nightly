@@ -201,7 +201,7 @@ $_ZZN2v88internal8compiler10turboshaft12VectorForRepENS2_22RegisterRepresentatio
 @switch.table._ZNK2v88internal8compiler10turboshaft18LoadTypedElementOp11outputs_repEv = private unnamed_addr constant [12 x i64] [i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 2, i64 3, i64 0, i64 1, i64 1], align 8
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN2v88internal8compiler10turboshaft25BlockInstrumentationPhase3RunEPNS2_12PipelineDataEPNS0_4ZoneE(ptr noundef nonnull readnone align 1 captures(none) dereferenceable(1) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 align 2 {
+define hidden void @_ZN2v88internal8compiler10turboshaft25BlockInstrumentationPhase3RunEPNS2_12PipelineDataEPNS0_4ZoneE(ptr nofree noundef nonnull readnone align 1 captures(none) dereferenceable(1) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 248
   %i.b = load ptr, ptr %i.a, align 8
@@ -604,7 +604,7 @@ bb.a:
   %5 = alloca %"class.v8::internal::ZoneVector.72", align 8 ; 7 uses
   %6 = alloca %"class.v8::internal::ZoneVector.72", align 8 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
-  %i.a = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   store ptr %i.a, ptr %3, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 6 uses
   store ptr %i.a, ptr %i.b, align 8
@@ -613,21 +613,14 @@ bb.a:
   store ptr %i.d, ptr %i.c, align 8
   %.idx = shl nuw nsw i64 %2, 2
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 %.idx
-  %.not117 = icmp eq i64 %2, 0
-  br i1 %.not117, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %bb.a
+  %.not117 = icmp ne i64 %2, 0
+  call void @llvm.assume(i1 %.not117)
   %7 = getelementptr inbounds i8, ptr %0, i64 -8
   br label %bb.b
 
-._crit_edge.loopexit:                             ; preds = %_ZN2v84base11SmallVectorIPKNS_8internal8compiler10turboshaft12FrameStateOpELm32ESaIS7_EE9push_backES7_.exit
-  %.pre = load ptr, ptr %3, align 8               ; 2 uses
-  %.pre143 = load ptr, ptr %.pre, align 8
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %8 = phi ptr [ %.pre143, %._crit_edge.loopexit ], [ undef, %bb.a ] ; 9 uses
-  %9 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %i.a, %bb.a ] ; 2 uses
+._crit_edge:                                      ; preds = %_ZN2v84base11SmallVectorIPKNS_8internal8compiler10turboshaft12FrameStateOpELm32ESaIS7_EE9push_backES7_.exit
+  %.pre = load ptr, ptr %3, align 8               ; 3 uses
+  %.pre143 = load ptr, ptr %.pre, align 8         ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 3 uses
   store ptr %i.f, ptr %4, align 8
@@ -636,13 +629,13 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 5 uses
   %i.i = getelementptr inbounds nuw i8, ptr %4, i64 152
   store ptr %i.i, ptr %i.h, align 8
-  %i.j = getelementptr inbounds nuw i8, ptr %8, i64 4 ; 5 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %.pre143, i64 4 ; 5 uses
   %i.k = load i8, ptr %i.j, align 4, !range !24, !noundef !6
   %i.l = trunc nuw i8 %i.k to i1
   br i1 %i.l, label %bb.d, label %bb.j
 
-bb.b:                                             ; preds = %.lr.ph, %_ZN2v84base11SmallVectorIPKNS_8internal8compiler10turboshaft12FrameStateOpELm32ESaIS7_EE9push_backES7_.exit
-  %.0118 = phi ptr [ %1, %.lr.ph ], [ %i.y, %_ZN2v84base11SmallVectorIPKNS_8internal8compiler10turboshaft12FrameStateOpELm32ESaIS7_EE9push_backES7_.exit ] ; 2 uses
+bb.b:                                             ; preds = %bb.a, %_ZN2v84base11SmallVectorIPKNS_8internal8compiler10turboshaft12FrameStateOpELm32ESaIS7_EE9push_backES7_.exit
+  %.0118 = phi ptr [ %1, %bb.a ], [ %i.y, %_ZN2v84base11SmallVectorIPKNS_8internal8compiler10turboshaft12FrameStateOpELm32ESaIS7_EE9push_backES7_.exit ] ; 2 uses
   %.sroa.053.0.copyload = load i32, ptr %.0118, align 4
   %i.m = load ptr, ptr %7, align 8, !nonnull !6, !align !7
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 8
@@ -668,7 +661,7 @@ _ZN2v84base11SmallVectorIPKNS_8internal8compiler10turboshaft12FrameStateOpELm32E
   store ptr %i.s, ptr %i.w, align 8
   %i.y = getelementptr inbounds nuw i8, ptr %.0118, i64 4 ; 2 uses
   %.not = icmp eq ptr %i.y, %i.e
-  br i1 %.not, label %._crit_edge.loopexit, label %bb.b
+  br i1 %.not, label %._crit_edge, label %bb.b
 
 bb.d:                                             ; preds = %._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
@@ -678,18 +671,18 @@ bb.d:                                             ; preds = %._crit_edge
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ab, i8 0, i64 24, i1 false)
   %i.ac = load ptr, ptr %i.b, align 8             ; 3 uses
-  %.not67119 = icmp eq ptr %9, %i.ac
+  %.not67119 = icmp eq ptr %.pre, %i.ac
   br i1 %.not67119, label %.critedge.thread, label %.lr.ph123
 
 .critedge.thread:                                 ; preds = %bb.d
-  %i.ad = getelementptr inbounds nuw i8, ptr %8, i64 16
+  %i.ad = getelementptr inbounds nuw i8, ptr %.pre143, i64 16
   %.sroa.0.0.copyload.i.i72164 = load i32, ptr %i.ad, align 4
   br label %_ZN2v84base11SmallVectorINS_8internal8compiler10turboshaft7OpIndexELm32ESaIS5_EE9push_backES5_.exit
 
 .lr.ph123:                                        ; preds = %bb.d
   %i.ae = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 4 uses
   %i.af = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %i.ag = getelementptr inbounds nuw i8, ptr %8, i64 16
+  %i.ag = getelementptr inbounds nuw i8, ptr %.pre143, i64 16
   br label %.backedge168
 
 ._crit_edge124:                                   ; preds = %bb.f
@@ -697,7 +690,7 @@ bb.d:                                             ; preds = %._crit_edge
 
 .backedge168:                                     ; preds = %.backedge168.backedge, %.lr.ph123
   %.062121 = phi i1 [ true, %.lr.ph123 ], [ %.062121.be, %.backedge168.backedge ]
-  %.063120 = phi ptr [ %9, %.lr.ph123 ], [ %.063120.be, %.backedge168.backedge ] ; 3 uses
+  %.063120 = phi ptr [ %.pre, %.lr.ph123 ], [ %.063120.be, %.backedge168.backedge ] ; 3 uses
   %i.ah = load ptr, ptr %.063120, align 8
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 16 ; 2 uses
   %.sroa.0.0.copyload.i.i = load i32, ptr %i.ai, align 4
@@ -746,7 +739,7 @@ bb.f:                                             ; preds = %_ZN2v88internal10Zo
   %.pre144 = load ptr, ptr %i.g, align 8          ; 2 uses
   %.pre145 = load ptr, ptr %i.h, align 8
   %i.ax = icmp eq ptr %.pre144, %.pre145
-  %i.ay = getelementptr inbounds nuw i8, ptr %8, i64 16
+  %i.ay = getelementptr inbounds nuw i8, ptr %.pre143, i64 16
   %.sroa.0.0.copyload.i.i72 = load i32, ptr %i.ay, align 4 ; 2 uses
   br i1 %i.ax, label %bb.g, label %_ZN2v84base11SmallVectorINS_8internal8compiler10turboshaft7OpIndexELm32ESaIS5_EE9push_backES5_.exit, !prof !229
 
@@ -795,7 +788,7 @@ bb.i:                                             ; preds = %_ZN2v84base11SmallV
 
 bb.j:                                             ; preds = %bb.i, %._crit_edge
   %i.bn = phi i8 [ %.pre146, %bb.i ], [ 0, %._crit_edge ] ; 3 uses
-  %i.bo = getelementptr inbounds nuw i8, ptr %8, i64 2 ; 2 uses
+  %i.bo = getelementptr inbounds nuw i8, ptr %.pre143, i64 2 ; 2 uses
   %i.bp = load i16, ptr %i.bo, align 2
   %i.bq = zext nneg i8 %i.bn to i16
   %.not138 = icmp eq i16 %i.bp, %i.bq
@@ -806,7 +799,7 @@ bb.j:                                             ; preds = %bb.i, %._crit_edge
   %i.bs = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 4 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %6, i64 24
-  %i.bv = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %i.bv = getelementptr inbounds nuw i8, ptr %.pre143, i64 8
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 1040
   br label %bb.l
 
@@ -818,7 +811,7 @@ bb.j:                                             ; preds = %bb.i, %._crit_edge
   br i1 %i.bz, label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_27BlockInstrumentationReducerENS2_30LoadStoreSimplificationReducerENS2_21ValueNumberingReducerENS2_13TSReducerBaseEEEEEEE10FrameStateENS5_6VectorIKNS2_7OpIndexEEEbPKNS2_14FrameStateDataE.exit, label %bb.k, !prof !5
 
 bb.k:                                             ; preds = %._crit_edge135
-  %i.ca = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %i.ca = getelementptr inbounds nuw i8, ptr %.pre143, i64 8
   %i.cb = load ptr, ptr %i.ca, align 8
   %i.cc = trunc nuw i8 %.lcssa to i1
   %i.cd = load ptr, ptr %i.g, align 8
@@ -851,7 +844,7 @@ bb.l:                                             ; preds = %.lr.ph134, %bb.ab
   br i1 %.not68125, label %.critedge137, label %.lr.ph129
 
 .lr.ph129:                                        ; preds = %bb.l
-  %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %indvars.iv
+  %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %.pre143, i64 %indvars.iv
   br label %.backedge
 
 ._crit_edge130:                                   ; preds = %bb.n
@@ -926,7 +919,7 @@ bb.n:                                             ; preds = %_ZN2v88internal10Zo
   %i.dm = phi i8 [ %.pre147, %._crit_edge130..critedge137_crit_edge ], [ %i.ck, %bb.l ]
   %i.dn = trunc nuw i8 %i.dm to i1
   %.sroa.0.0.v.i.i86 = select i1 %i.dn, i64 20, i64 16
-  %.sroa.0.0.i.i87 = getelementptr inbounds nuw i8, ptr %8, i64 %.sroa.0.0.v.i.i86
+  %.sroa.0.0.i.i87 = getelementptr inbounds nuw i8, ptr %.pre143, i64 %.sroa.0.0.v.i.i86
   %i.do = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0.i.i87, i64 %indvars.iv
   %.sroa.0.0.copyload.i88 = load i32, ptr %i.do, align 4
   %i.dp = load ptr, ptr %i.g, align 8             ; 2 uses

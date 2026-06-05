@@ -201,7 +201,7 @@ $_ZSt19piecewise_construct = comdat any
 @llvm.compiler.used = appending global [2 x ptr] [ptr @_ZN5folly15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEE25wakeRegisteredWaitersImplERjj, ptr @_ZN5folly15SharedMutexImplILb1EvSt6atomicNS_24SharedMutexPolicyDefaultEE25wakeRegisteredWaitersImplERjj], section "llvm.metadata"
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN8facebook5velox9functions9prestosql14typeFromStringERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEb(ptr dead_on_unwind noalias writable sret(%"class.std::shared_ptr") align 8 %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1, i1 noundef zeroext %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define void @_ZN8facebook5velox9functions9prestosql14typeFromStringERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEb(ptr dead_on_unwind noalias writable sret(%"class.std::shared_ptr") align 8 %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1, i1 noundef zeroext %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"struct.fmt::v11::detail::format_arg_store", align 16 ; 5 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
@@ -560,7 +560,7 @@ _ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.a, 
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN8facebook5velox9functions9prestosql22customTypeWithChildrenERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorISt10shared_ptrIKNS0_4TypeEESaISF_EE(ptr dead_on_unwind noalias writable sret(%"class.std::shared_ptr") align 8 %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define void @_ZN8facebook5velox9functions9prestosql22customTypeWithChildrenERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorISt10shared_ptrIKNS0_4TypeEESaISF_EE(ptr dead_on_unwind noalias writable sret(%"class.std::shared_ptr") align 8 %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"struct.fmt::v11::detail::format_arg_store", align 16 ; 5 uses
   %4 = alloca %"class.std::vector", align 8       ; 17 uses
@@ -811,7 +811,7 @@ bb.v:                                             ; preds = %_ZNSt7__cxx1112basi
 declare void @_ZN8facebook5velox6detail14veloxCheckFailINS0_17VeloxRuntimeErrorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvRKNS1_18VeloxCheckFailArgsET0_NS0_24CompileTimeStringLiteralE(ptr noundef nonnull align 8 dereferenceable(56), ptr noundef nonnull align 8 dereferenceable(32), ptr) local_unnamed_addr #6
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN8facebook5velox9functions9prestosql19inferTypeWithSpacesERSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS9_EEb(ptr dead_on_unwind noalias writable sret(%"struct.std::pair") align 8 %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, i1 noundef zeroext %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define void @_ZN8facebook5velox9functions9prestosql19inferTypeWithSpacesERSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS9_EEb(ptr dead_on_unwind noalias writable sret(%"struct.std::pair") align 8 %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, i1 noundef zeroext %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"struct.fmt::v11::detail::format_arg_store.89", align 16 ; 5 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
@@ -1214,7 +1214,7 @@ _ZNSt12__shared_ptrIKN8facebook5velox4TypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.ex
 declare ptr @llvm.invariant.start.p0(i64 immarg, ptr captures(none)) #1
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN8facebook5velox9functions9prestosql11getEnumTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_SA_(ptr dead_on_unwind noalias writable sret(%"class.std::shared_ptr") align 8 %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(32) %2, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(32) %3) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define void @_ZN8facebook5velox9functions9prestosql11getEnumTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_SA_(ptr dead_on_unwind noalias writable sret(%"class.std::shared_ptr") align 8 %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %3) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %"struct.fmt::v11::detail::format_arg_store", align 16 ; 5 uses
   %5 = alloca %"struct.fmt::v11::detail::format_arg_store.132", align 16 ; 7 uses
@@ -1617,22 +1617,19 @@ _ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i.i: ; preds = %bb.em
   %i.ul = icmp ult i64 %i.uk, %i.ui
   %i.um = call i64 @llvm.umin.i64(i64 %i.uk, i64 9223372036854775807)
   %i.un = select i1 %i.ul, i64 9223372036854775807, i64 %i.um ; 3 uses
-  %.not.i.i.i.i.i.i = icmp eq i64 %i.un, 0
-  br i1 %.not.i.i.i.i.i.i, label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i.i.i, label %64
+  %.not.i.i.i.i.i.i = icmp ne i64 %i.un, 0
+  call void @llvm.assume(i1 %.not.i.i.i.i.i.i)
+  %64 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.un) #27
+          to label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i.i.i unwind label %.loopexit.i.i, !noalias !203 ; 4 uses
 
-64:                                               ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i.i
-  %65 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.un) #27
-          to label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i.i.i unwind label %.loopexit.i.i, !noalias !203
-
-_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i.i.i: ; preds = %64, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i.i
-  %66 = phi ptr [ null, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i.i ], [ %65, %64 ] ; 4 uses
-  %i.uo = getelementptr inbounds nuw i8, ptr %66, i64 %i.ui ; 2 uses
+_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i.i.i: ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i.i
+  %i.uo = getelementptr inbounds nuw i8, ptr %64, i64 %i.ui ; 2 uses
   store i8 %i.ue, ptr %i.uo, align 1, !tbaa !16, !noalias !203
   %i.up = icmp sgt i64 %i.ui, 0
   br i1 %i.up, label %bb.eo, label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i.i.i
 
 bb.eo:                                            ; preds = %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i.i.i
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %66, ptr align 1 %.sroa.045.074.i.i, i64 %i.ui, i1 false), !noalias !203
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %64, ptr align 1 %.sroa.045.074.i.i, i64 %i.ui, i1 false), !noalias !203
   br label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i.i.i
 
 _ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i.i.i: ; preds = %bb.eo, %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i.i.i
@@ -1645,10 +1642,10 @@ bb.ep:                                            ; preds = %_ZNSt6vectorIhSaIhE
   br label %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i
 
 _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i: ; preds = %bb.ep, %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i.i.i
-  %i.ur = getelementptr inbounds nuw i8, ptr %66, i64 %i.un
+  %i.ur = getelementptr inbounds nuw i8, ptr %64, i64 %i.un
   br label %_ZNSt6vectorIhSaIhEE9push_backEOh.exit.i.i
 
-.loopexit.i.i:                                    ; preds = %64
+.loopexit.i.i:                                    ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i.i
   %lpad.loopexit.i.i = landingpad { ptr, i32 }
           cleanup
   br label %bb.es
@@ -1661,7 +1658,7 @@ _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS
 _ZNSt6vectorIhSaIhEE9push_backEOh.exit.i.i:       ; preds = %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i, %bb.el, %bb.ej, %bb.ec, %.lr.ph.i.i
   %.sroa.14.2.i.i = phi ptr [ %.sroa.14.072.i.i, %.lr.ph.i.i ], [ %.sroa.14.072.i.i, %bb.ec ], [ %.sroa.14.072.i.i, %bb.ej ], [ %i.ur, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i ], [ %.sroa.14.072.i.i, %bb.el ] ; 2 uses
   %.sroa.9.2.i.i = phi ptr [ %.sroa.9.073.i.i, %.lr.ph.i.i ], [ %.sroa.9.073.i.i, %bb.ec ], [ %.sroa.9.073.i.i, %bb.ej ], [ %i.uq, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i ], [ %i.uf, %bb.el ] ; 2 uses
-  %.sroa.045.2.i.i = phi ptr [ %.sroa.045.074.i.i, %.lr.ph.i.i ], [ %.sroa.045.074.i.i, %bb.ec ], [ %.sroa.045.074.i.i, %bb.ej ], [ %66, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i ], [ %.sroa.045.074.i.i, %bb.el ] ; 2 uses
+  %.sroa.045.2.i.i = phi ptr [ %.sroa.045.074.i.i, %.lr.ph.i.i ], [ %.sroa.045.074.i.i, %bb.ec ], [ %.sroa.045.074.i.i, %bb.ej ], [ %64, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i ], [ %.sroa.045.074.i.i, %bb.el ] ; 2 uses
   %.2.i.i = phi i32 [ %.01375.i.i, %.lr.ph.i.i ], [ %.01375.i.i, %bb.ec ], [ %i.ua, %bb.ej ], [ %i.uc, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i ], [ %i.uc, %bb.el ]
   %.1.i.i = phi i32 [ %.076.i.i, %.lr.ph.i.i ], [ %.076.i.i, %bb.ec ], [ %i.tz, %bb.ej ], [ %i.tz, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i ], [ %i.tz, %bb.el ]
   %i.us = getelementptr inbounds nuw i8, ptr %.sroa.042.071.i.i, i64 1 ; 2 uses
@@ -2064,7 +2061,7 @@ bb.m:                                             ; preds = %_ZNSt12_Vector_base
   invoke void @__cxa_end_catch()
           to label %bb.n unwind label %bb.o
 
-_ZNSt12_Vector_baseIN8facebook5velox13TypeParameterESaIS2_EE13_M_deallocateEPS2_m.exit51: ; preds = %.lr.ph.i.i46, %_ZSt8_DestroyIPN8facebook5velox13TypeParameterES2_EvT_S4_RSaIT0_E.exit.thread, %.thread, %bb.l
+_ZNSt12_Vector_baseIN8facebook5velox13TypeParameterESaIS2_EE13_M_deallocateEPS2_m.exit51: ; preds = %.lr.ph.i.i46, %.thread, %bb.l, %_ZSt8_DestroyIPN8facebook5velox13TypeParameterES2_EvT_S4_RSaIT0_E.exit.thread
   tail call void @_ZdlPvm(ptr noundef nonnull %i.p, i64 noundef %i.o) #28
   invoke void @__cxa_rethrow() #26
           to label %bb.p unwind label %bb.m

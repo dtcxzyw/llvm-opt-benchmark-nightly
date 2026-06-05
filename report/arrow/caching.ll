@@ -201,7 +201,7 @@ $_ZTSSt14default_deleteIN5arrow10FutureImplEE = comdat any
 @_ZN5arrow2io8internal14ReadRangeCacheD1Ev = unnamed_addr alias void (ptr), ptr @_ZN5arrow2io8internal14ReadRangeCacheD2Ev
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define void @_ZN5arrow2io12CacheOptions8DefaultsEv(ptr dead_on_unwind noalias writable writeonly sret(%"struct.arrow::io::CacheOptions") align 8 captures(none) initializes((0, 17), (24, 32)) %0) local_unnamed_addr #0 align 2 {
+define void @_ZN5arrow2io12CacheOptions8DefaultsEv(ptr dead_on_unwind noalias nofree writable writeonly sret(%"struct.arrow::io::CacheOptions") align 8 captures(none) initializes((0, 17), (24, 32)) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   store i64 8192, ptr %0, align 8, !tbaa !7
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -214,7 +214,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define void @_ZN5arrow2io12CacheOptions12LazyDefaultsEv(ptr dead_on_unwind noalias writable writeonly sret(%"struct.arrow::io::CacheOptions") align 8 captures(none) initializes((0, 17), (24, 32)) %0) local_unnamed_addr #0 align 2 {
+define void @_ZN5arrow2io12CacheOptions12LazyDefaultsEv(ptr dead_on_unwind noalias nofree writable writeonly sret(%"struct.arrow::io::CacheOptions") align 8 captures(none) initializes((0, 17), (24, 32)) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   store i64 8192, ptr %0, align 8, !tbaa !7
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -227,7 +227,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define void @_ZN5arrow2io12CacheOptions22MakeFromNetworkMetricsElldl(ptr dead_on_unwind noalias writable writeonly sret(%"struct.arrow::io::CacheOptions") align 8 captures(none) initializes((0, 17), (24, 32)) %0, i64 noundef %1, i64 noundef %2, double noundef %3, i64 noundef %4) local_unnamed_addr #0 align 2 {
+define void @_ZN5arrow2io12CacheOptions22MakeFromNetworkMetricsElldl(ptr dead_on_unwind noalias nofree writable writeonly sret(%"struct.arrow::io::CacheOptions") align 8 captures(none) initializes((0, 17), (24, 32)) %0, i64 noundef %1, i64 noundef %2, double noundef %3, i64 noundef %4) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = sitofp i64 %1 to double
   %i.b = fdiv nnan double %i.a, 1.000000e+03
@@ -264,7 +264,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 declare double @llvm.round.f64(double) #2
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN5arrow2io8internal14ReadRangeCacheC2ESt10shared_ptrINS0_16RandomAccessFileEEPS4_NS0_9IOContextENS0_12CacheOptionsE(ptr noundef nonnull align 8 captures(none) dereferenceable(8) %0, ptr noundef captures(none) %1, ptr noundef %2, ptr noundef captures(none) %3, ptr noundef readonly byval(%"struct.arrow::io::CacheOptions") align 8 captures(none) %4) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN5arrow2io8internal14ReadRangeCacheC2ESt10shared_ptrINS0_16RandomAccessFileEEPS4_NS0_9IOContextENS0_12CacheOptionsE(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(8) %0, ptr nofree noundef captures(none) %1, ptr noundef %2, ptr nofree noundef captures(none) %3, ptr nofree noundef readonly byval(%"struct.arrow::io::CacheOptions") align 8 captures(none) %4) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.b = load i8, ptr %i.a, align 8, !tbaa !12, !range !14, !noundef !15
@@ -462,7 +462,7 @@ declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #6
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
 ; Function Attrs: mustprogress nounwind uwtable
-define void @_ZN5arrow2io8internal14ReadRangeCacheD2Ev(ptr noundef nonnull readonly align 8 captures(none) dead_on_return(8) dereferenceable(8) %0) unnamed_addr #7 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN5arrow2io8internal14ReadRangeCacheD2Ev(ptr nofree noundef nonnull readonly align 8 captures(none) dead_on_return(8) dereferenceable(8) %0) unnamed_addr #7 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !18     ; 3 uses
   %.not.i = icmp eq ptr %i.a, null
@@ -480,7 +480,7 @@ _ZNSt10unique_ptrIN5arrow2io8internal14ReadRangeCache4ImplESt14default_deleteIS4
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN5arrow2io8internal14ReadRangeCache5CacheESt6vectorINS0_9ReadRangeESaIS4_EE(ptr dead_on_unwind noalias writable sret(%"class.arrow::Status") align 8 %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(8) %1, ptr noundef captures(none) %2) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN5arrow2io8internal14ReadRangeCache5CacheESt6vectorINS0_9ReadRangeESaIS4_EE(ptr dead_on_unwind noalias writable sret(%"class.arrow::Status") align 8 %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %1, ptr nofree noundef captures(none) %2) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.std::vector.5", align 16    ; 5 uses
   %i.a = load ptr, ptr %1, align 8, !tbaa !18     ; 2 uses
@@ -533,7 +533,7 @@ _ZNSt6vectorIN5arrow2io9ReadRangeESaIS2_EED2Ev.exit3: ; preds = %bb.d, %bb.e
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN5arrow2io8internal14ReadRangeCache4ReadENS0_9ReadRangeE(ptr dead_on_unwind noalias writable sret(%"class.arrow::Result") align 8 %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(8) %1, i64 %2, i64 %3) local_unnamed_addr #3 align 2 {
+define void @_ZN5arrow2io8internal14ReadRangeCache4ReadENS0_9ReadRangeE(ptr dead_on_unwind noalias writable sret(%"class.arrow::Result") align 8 %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %1, i64 %2, i64 %3) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !18     ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !16
@@ -544,7 +544,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN5arrow2io8internal14ReadRangeCache4WaitEv(ptr dead_on_unwind noalias writable sret(%"class.arrow::Future") align 8 %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(8) %1) local_unnamed_addr #3 align 2 {
+define void @_ZN5arrow2io8internal14ReadRangeCache4WaitEv(ptr dead_on_unwind noalias writable sret(%"class.arrow::Future") align 8 %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %1) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !18     ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !16
@@ -555,7 +555,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN5arrow2io8internal14ReadRangeCache7WaitForESt6vectorINS0_9ReadRangeESaIS4_EE(ptr dead_on_unwind noalias writable sret(%"class.arrow::Future") align 8 %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(8) %1, ptr noundef captures(none) %2) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN5arrow2io8internal14ReadRangeCache7WaitForESt6vectorINS0_9ReadRangeESaIS4_EE(ptr dead_on_unwind noalias writable sret(%"class.arrow::Future") align 8 %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %1, ptr nofree noundef captures(none) %2) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.std::vector.5", align 16    ; 5 uses
   %i.a = load ptr, ptr %1, align 8, !tbaa !18     ; 2 uses
@@ -958,13 +958,13 @@ bb.a:
   %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = icmp eq i64 %i.f, 9223372036854775792
-  br i1 %i.g, label %bb.b, label %_ZNKSt6vectorIN5arrow6FutureINS0_8internal5EmptyEEESaIS4_EE12_M_check_lenEmPKc.exit
+  br i1 %i.g, label %bb.b, label %_ZNSt12_Vector_baseIN5arrow6FutureINS0_8internal5EmptyEEESaIS4_EE11_M_allocateEm.exit
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.8) #23
   unreachable
 
-_ZNKSt6vectorIN5arrow6FutureINS0_8internal5EmptyEEESaIS4_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
+_ZNSt12_Vector_baseIN5arrow6FutureINS0_8internal5EmptyEEESaIS4_EE11_M_allocateEm.exit: ; preds = %bb.a
   %3 = ashr exact i64 %i.f, 4                     ; 3 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %3, i64 1)
   %4 = add nsw i64 %.sroa.speculated.i, %3        ; 2 uses
@@ -973,17 +973,11 @@ _ZNKSt6vectorIN5arrow6FutureINS0_8internal5EmptyEEESaIS4_EE12_M_check_lenEmPKc.e
   %7 = select i1 %5, i64 576460752303423487, i64 %6 ; 3 uses
   %8 = ptrtoint ptr %1 to i64
   %9 = sub i64 %8, %i.e
-  %.not.i = icmp eq i64 %7, 0
-  br i1 %.not.i, label %_ZNSt12_Vector_baseIN5arrow6FutureINS0_8internal5EmptyEEESaIS4_EE11_M_allocateEm.exit, label %10
-
-10:                                               ; preds = %_ZNKSt6vectorIN5arrow6FutureINS0_8internal5EmptyEEESaIS4_EE12_M_check_lenEmPKc.exit
-  %11 = shl nuw nsw i64 %7, 4
-  %12 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %11) #20
-  br label %_ZNSt12_Vector_baseIN5arrow6FutureINS0_8internal5EmptyEEESaIS4_EE11_M_allocateEm.exit
-
-_ZNSt12_Vector_baseIN5arrow6FutureINS0_8internal5EmptyEEESaIS4_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorIN5arrow6FutureINS0_8internal5EmptyEEESaIS4_EE12_M_check_lenEmPKc.exit, %10
-  %13 = phi ptr [ %12, %10 ], [ null, %_ZNKSt6vectorIN5arrow6FutureINS0_8internal5EmptyEEESaIS4_EE12_M_check_lenEmPKc.exit ] ; 5 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %13, i64 %9 ; 2 uses
+  %.not.i = icmp ne i64 %7, 0
+  tail call void @llvm.assume(i1 %.not.i)
+  %10 = shl nuw nsw i64 %7, 4
+  %11 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %10) #20 ; 5 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %11, i64 %9 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !230)
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
   store i64 0, ptr %i.i, align 8, !alias.scope !230
@@ -1019,7 +1013,7 @@ _ZNSt16allocator_traitsISaIN5arrow6FutureINS0_8internal5EmptyEEEEE9constructIS4_
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN5arrow6FutureINS0_8internal5EmptyEEESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNSt16allocator_traitsISaIN5arrow6FutureINS0_8internal5EmptyEEEEE9constructIS4_JNS1_ISt10shared_ptrINS0_6BufferEEEEEEEvRS5_PT_DpOT0_.exit, %.lr.ph.i.i.i
-  %.012.i.i.i = phi ptr [ %i.u, %.lr.ph.i.i.i ], [ %13, %_ZNSt16allocator_traitsISaIN5arrow6FutureINS0_8internal5EmptyEEEEE9constructIS4_JNS1_ISt10shared_ptrINS0_6BufferEEEEEEEvRS5_PT_DpOT0_.exit ] ; 2 uses
+  %.012.i.i.i = phi ptr [ %i.u, %.lr.ph.i.i.i ], [ %11, %_ZNSt16allocator_traitsISaIN5arrow6FutureINS0_8internal5EmptyEEEEE9constructIS4_JNS1_ISt10shared_ptrINS0_6BufferEEEEEEEvRS5_PT_DpOT0_.exit ] ; 2 uses
   %.0911.i.i.i = phi ptr [ %i.t, %.lr.ph.i.i.i ], [ %i.c, %_ZNSt16allocator_traitsISaIN5arrow6FutureINS0_8internal5EmptyEEEEE9constructIS4_JNS1_ISt10shared_ptrINS0_6BufferEEEEEEEvRS5_PT_DpOT0_.exit ] ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !233)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !236)
@@ -1034,7 +1028,7 @@ _ZNSt16allocator_traitsISaIN5arrow6FutureINS0_8internal5EmptyEEEEE9constructIS4_
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN5arrow6FutureINS0_8internal5EmptyEEESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit, label %.lr.ph.i.i.i, !llvm.loop !238
 
 _ZNSt6vectorIN5arrow6FutureINS0_8internal5EmptyEEESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit: ; preds = %.lr.ph.i.i.i, %_ZNSt16allocator_traitsISaIN5arrow6FutureINS0_8internal5EmptyEEEEE9constructIS4_JNS1_ISt10shared_ptrINS0_6BufferEEEEEEEvRS5_PT_DpOT0_.exit
-  %.0.lcssa.i.i.i = phi ptr [ %13, %_ZNSt16allocator_traitsISaIN5arrow6FutureINS0_8internal5EmptyEEEEE9constructIS4_JNS1_ISt10shared_ptrINS0_6BufferEEEEEEEvRS5_PT_DpOT0_.exit ], [ %i.u, %.lr.ph.i.i.i ]
+  %.0.lcssa.i.i.i = phi ptr [ %11, %_ZNSt16allocator_traitsISaIN5arrow6FutureINS0_8internal5EmptyEEEEE9constructIS4_JNS1_ISt10shared_ptrINS0_6BufferEEEEEEEvRS5_PT_DpOT0_.exit ], [ %i.u, %.lr.ph.i.i.i ]
   %i.v = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 16 ; 2 uses
   %.not10.i.i.i26 = icmp eq ptr %1, %i.b
   br i1 %.not10.i.i.i26, label %_ZNSt6vectorIN5arrow6FutureINS0_8internal5EmptyEEESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit32, label %.lr.ph.i.i.i27
@@ -1068,9 +1062,9 @@ bb.f:                                             ; preds = %_ZNSt6vectorIN5arro
   br label %_ZNSt12_Vector_baseIN5arrow6FutureINS0_8internal5EmptyEEESaIS4_EE13_M_deallocateEPS4_m.exit
 
 _ZNSt12_Vector_baseIN5arrow6FutureINS0_8internal5EmptyEEESaIS4_EE13_M_deallocateEPS4_m.exit: ; preds = %_ZNSt6vectorIN5arrow6FutureINS0_8internal5EmptyEEESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit32, %bb.f
-  store ptr %13, ptr %0, align 8, !tbaa !139
+  store ptr %11, ptr %0, align 8, !tbaa !139
   store ptr %.0.lcssa.i.i.i31, ptr %i.a, align 8, !tbaa !132
-  %i.ae = getelementptr inbounds nuw [16 x i8], ptr %13, i64 %7
+  %i.ae = getelementptr inbounds nuw [16 x i8], ptr %11, i64 %7
   store ptr %i.ae, ptr %i.aa, align 8, !tbaa !135
   ret void
 }

@@ -108,7 +108,7 @@ bb.a:
 declare noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi4readEPcl(ptr noundef nonnull align 8 dereferenceable(16), ptr noundef, i64 noundef) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN8facebook5velox4date12load_indicesERSii(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::vector") align 8 captures(none) initializes((0, 24)) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define void @_ZN8facebook5velox4date12load_indicesERSii(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::vector") align 8 captures(none) initializes((0, 24)) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i8, align 1                       ; 6 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
@@ -173,23 +173,20 @@ _ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.e
   %i.t = icmp ult i64 %i.s, %i.q
   %i.u = call i64 @llvm.umin.i64(i64 %i.s, i64 9223372036854775807)
   %i.v = select i1 %i.t, i64 9223372036854775807, i64 %i.u ; 3 uses
-  %.not.i.i.i = icmp eq i64 %i.v, 0
-  br i1 %.not.i.i.i, label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i, label %3
+  %.not.i.i.i = icmp ne i64 %i.v, 0
+  call void @llvm.assume(i1 %.not.i.i.i)
+  %3 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.v) #12
+          to label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i unwind label %.loopexit ; 4 uses
 
-3:                                                ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i
-  %4 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.v) #12
-          to label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i unwind label %.loopexit
-
-_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i: ; preds = %3, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i
-  %5 = phi ptr [ null, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i ], [ %4, %3 ] ; 4 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %5, i64 %i.q ; 2 uses
+_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i: ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i
+  %i.w = getelementptr inbounds nuw i8, ptr %3, i64 %i.q ; 2 uses
   %i.x = load i8, ptr %i.a, align 1, !tbaa !13
   store i8 %i.x, ptr %i.w, align 1, !tbaa !13
   %i.y = icmp sgt i64 %i.q, 0
   br i1 %i.y, label %bb.g, label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i
 
 bb.g:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %5, ptr align 1 %i.k, i64 %i.q, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %3, ptr align 1 %i.k, i64 %i.q, i1 false)
   br label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i
 
 _ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i: ; preds = %bb.g, %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i
@@ -203,19 +200,19 @@ bb.h:                                             ; preds = %_ZNSt6vectorIhSaIhE
 
 _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i: ; preds = %bb.h, %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i
   store ptr %i.z, ptr %i.h, align 8, !tbaa !11
-  %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 %i.v
+  %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 %i.v
   br label %_ZNSt6vectorIhSaIhEE12emplace_backIJRhEEES3_DpOT_.exit
 
 _ZNSt6vectorIhSaIhEE12emplace_backIJRhEEES3_DpOT_.exit: ; preds = %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i, %bb.d
   %i.ab = phi ptr [ %i.z, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i ], [ %i.n, %bb.d ]
-  %i.ac = phi ptr [ %5, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i ], [ %i.k, %bb.d ] ; 2 uses
+  %i.ac = phi ptr [ %3, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i ], [ %i.k, %bb.d ] ; 2 uses
   %i.ad = phi ptr [ %i.aa, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i ], [ %i.j, %bb.d ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
   %i.ae = add nuw nsw i32 %.019, 1                ; 2 uses
   %exitcond.not = icmp eq i32 %i.ae, %2
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !14
 
-.loopexit:                                        ; preds = %bb.b, %3
+.loopexit:                                        ; preds = %bb.b, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
   store ptr %i.j, ptr %i.b, align 8
@@ -254,7 +251,7 @@ _ZNSt6vectorIhSaIhEED2Ev.exit:                    ; preds = %bb.i, %bb.j
 declare i32 @__gxx_personality_v0(...)
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN8facebook5velox4date11load_ttinfoERSii(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::vector.0") align 8 captures(none) initializes((0, 24)) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define void @_ZN8facebook5velox4date11load_ttinfoERSii(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::vector.0") align 8 captures(none) initializes((0, 24)) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"struct.facebook::velox::date::ttinfo", align 8 ; 8 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)

@@ -77,7 +77,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.46 = private unnamed_addr constant [2 x i8] c"#\00", align 1
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden i32 @rb_vm_get_sourceline(ptr noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define hidden i32 @rb_vm_get_sourceline(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 32
   %.val = load ptr, ptr %i.a, align 8, !tbaa !11
@@ -392,14 +392,14 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden i64 @rb_ec_backtrace_object(ptr noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define hidden i64 @rb_ec_backtrace_object(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call fastcc i64 @rb_ec_partial_backtrace_object(ptr noundef %0, i64 noundef 0, i64 noundef -1, ptr noundef null, i1 noundef zeroext false, i1 noundef zeroext false)
   ret i64 %i.a
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc i64 @rb_ec_partial_backtrace_object(ptr noundef readonly captures(none) %0, i64 noundef %1, i64 noundef %2, ptr noundef writeonly captures(address_is_null) %3, i1 noundef zeroext %4, i1 noundef zeroext %5) unnamed_addr #0 {
+define internal fastcc i64 @rb_ec_partial_backtrace_object(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, i64 noundef %2, ptr nofree noundef writeonly captures(address_is_null) %3, i1 noundef zeroext %4, i1 noundef zeroext %5) unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !71   ; 3 uses
@@ -802,7 +802,7 @@ rbimpl_RB_TYPE_P_fastpath.exit.thread:            ; preds = %rb_array_len.exit36
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden i64 @rb_ec_backtrace_str_ary(ptr noundef readonly captures(none) %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #0 {
+define hidden i64 @rb_ec_backtrace_str_ary(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call fastcc i64 @rb_ec_partial_backtrace_object(ptr noundef %0, i64 noundef %1, i64 noundef %2, ptr noundef null, i1 noundef zeroext false, i1 noundef zeroext false) ; 6 uses
   %i.b = icmp eq i64 %i.a, 0
@@ -878,7 +878,7 @@ rb_backtrace_to_str_ary.exit:                     ; preds = %rbimpl_check_typedd
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden i64 @rb_ec_backtrace_location_ary(ptr noundef readonly captures(none) %0, i64 noundef %1, i64 noundef %2, i1 noundef zeroext %3) local_unnamed_addr #0 {
+define hidden i64 @rb_ec_backtrace_location_ary(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, i64 noundef %2, i1 noundef zeroext %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call fastcc i64 @rb_ec_partial_backtrace_object(ptr noundef %0, i64 noundef %1, i64 noundef %2, ptr noundef null, i1 noundef zeroext %3, i1 noundef zeroext false) ; 6 uses
   %i.b = icmp eq i64 %i.a, 0
@@ -1281,7 +1281,7 @@ vm_backtrace_print.exit:                          ; preds = %oldbt_print.exit.i,
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden void @rb_backtrace_each(ptr noundef readonly captures(none) %0, i64 noundef %1) local_unnamed_addr #0 {
+define hidden void @rb_backtrace_each(ptr nofree noundef readonly captures(none) %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1417,7 +1417,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden i64 @rb_vm_thread_backtrace(i32 noundef %0, ptr noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #0 {
+define hidden i64 @rb_vm_thread_backtrace(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = alloca i64, align 8                      ; 4 uses
@@ -1482,7 +1482,7 @@ thread_backtrace_to_ary.exit:                     ; preds = %bb.a, %ec_backtrace
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden i64 @rb_vm_thread_backtrace_locations(i32 noundef %0, ptr noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #0 {
+define hidden i64 @rb_vm_thread_backtrace_locations(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = alloca i64, align 8                      ; 4 uses
@@ -1547,7 +1547,7 @@ thread_backtrace_to_ary.exit:                     ; preds = %bb.a, %ec_backtrace
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden i64 @rb_vm_backtrace(i32 noundef %0, ptr noundef readonly captures(none) %1, ptr noundef readonly captures(none) %2) local_unnamed_addr #0 {
+define hidden i64 @rb_vm_backtrace(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = alloca i64, align 8                      ; 4 uses
@@ -1595,7 +1595,7 @@ ec_backtrace_to_ary.exit:                         ; preds = %bb.a, %bb.c, %bb.d,
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden i64 @rb_vm_backtrace_locations(i32 noundef %0, ptr noundef readonly captures(none) %1, ptr noundef readonly captures(none) %2) local_unnamed_addr #0 {
+define hidden i64 @rb_vm_backtrace_locations(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = alloca i64, align 8                      ; 4 uses
@@ -1998,7 +1998,7 @@ location_ptr.exit:                                ; preds = %bb.d, %RTYPEDDATA_G
 declare extern_weak void @rb_define_global_function(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal i64 @rb_f_caller(i32 noundef %0, ptr noundef readonly captures(none) %1, i64 %2) #0 {
+define internal i64 @rb_f_caller(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 %2) #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = alloca i64, align 8                      ; 4 uses
@@ -2053,7 +2053,7 @@ ec_backtrace_to_ary.exit:                         ; preds = %bb.a, %bb.c, %bb.d,
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal i64 @rb_f_caller_locations(i32 noundef %0, ptr noundef readonly captures(none) %1, i64 %2) #0 {
+define internal i64 @rb_f_caller_locations(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 %2) #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = alloca i64, align 8                      ; 4 uses
@@ -2108,7 +2108,7 @@ ec_backtrace_to_ary.exit:                         ; preds = %bb.a, %bb.c, %bb.d,
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal noundef i64 @each_caller_location(i32 noundef %0, ptr noundef readonly captures(none) %1, i64 %2) #0 {
+define internal noundef i64 @each_caller_location(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 %2) #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca i64, align 8                      ; 4 uses
@@ -2136,7 +2136,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define dso_local i64 @rb_debug_inspector_open(ptr noundef readonly captures(none) %0, ptr noundef %1) local_unnamed_addr #0 {
+define dso_local i64 @rb_debug_inspector_open(ptr nofree noundef readonly captures(none) %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = alloca i64, align 8                      ; 4 uses
@@ -2539,32 +2539,23 @@ bb.ag:                                            ; preds = %rb_array_len.exit
   %i.gq = getelementptr inbounds nuw i8, ptr %3, i64 56 ; 3 uses
   store ptr %i.gp, ptr %i.gq, align 8, !tbaa !166
   %i.gr = getelementptr i8, ptr %.0..0..0..0..0..0..i, i64 48
-  %.0.1.val.a = load ptr, ptr %i.gr, align 8, !tbaa !167 ; 3 uses
-  %.not.i.i22 = icmp eq ptr %.0.1.val.a, null
-  br i1 %.not.i.i22, label %rb_ec_ractor_ptr.exit.i, label %4
+  %.0.1.val = load ptr, ptr %i.gr, align 8, !tbaa !167, !nonnull !49, !noundef !49 ; 2 uses
+  %4 = getelementptr i8, ptr %.0.1.val, i64 32
+  %5 = load ptr, ptr %4, align 8, !tbaa !168      ; 2 uses
+  %6 = getelementptr i8, ptr %.0.1.val, i64 24
+  %7 = load ptr, ptr %6, align 8, !tbaa !169
+  %8 = getelementptr i8, ptr %5, i64 88
+  %.0.1.val.a = load ptr, ptr %8, align 8, !tbaa !170
+  %.not.i.i22 = icmp eq ptr %.0.1.val.a, %7
+  br i1 %.not.i.i22, label %bb.ah, label %rb_ec_vm_lock_rec.exit
 
-4:                                                ; preds = %bb.ag
-  %5 = getelementptr i8, ptr %.0.1.val.a, i64 32
-  %6 = load ptr, ptr %5, align 8, !tbaa !168
-  %7 = getelementptr i8, ptr %.0.1.val.a, i64 24
-  %8 = load ptr, ptr %7, align 8, !tbaa !169
-  br label %rb_ec_ractor_ptr.exit.i
-
-rb_ec_ractor_ptr.exit.i:                          ; preds = %4, %bb.ag
-  %.0.i2.i = phi ptr [ %6, %4 ], [ null, %bb.ag ] ; 2 uses
-  %.0.i7.i = phi ptr [ %8, %4 ], [ null, %bb.ag ]
-  %9 = getelementptr i8, ptr %.0.i2.i, i64 88
-  %.val5.i = load ptr, ptr %9, align 8, !tbaa !170
-  %10 = icmp eq ptr %.val5.i, %.0.i7.i
-  br i1 %10, label %bb.ah, label %rb_ec_vm_lock_rec.exit
-
-bb.ah:                                            ; preds = %rb_ec_ractor_ptr.exit.i
-  %i.gs = getelementptr i8, ptr %.0.i2.i, i64 96
+bb.ah:                                            ; preds = %bb.ag
+  %i.gs = getelementptr i8, ptr %5, i64 96
   %i.gt = load i32, ptr %i.gs, align 8, !tbaa !171
   br label %rb_ec_vm_lock_rec.exit
 
-rb_ec_vm_lock_rec.exit:                           ; preds = %rb_ec_ractor_ptr.exit.i, %bb.ah
-  %.0.i23 = phi i32 [ %i.gt, %bb.ah ], [ 0, %rb_ec_ractor_ptr.exit.i ]
+rb_ec_vm_lock_rec.exit:                           ; preds = %bb.ag, %bb.ah
+  %.0.i23 = phi i32 [ %i.gt, %bb.ah ], [ 0, %bb.ag ]
   %i.gu = getelementptr inbounds nuw i8, ptr %3, i64 68
   store i32 %.0.i23, ptr %i.gu, align 4, !tbaa !172
   %i.gv = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
@@ -2633,32 +2624,23 @@ bb.a:
   %i.e = getelementptr i8, ptr %i.b, i64 68
   %i.f = load i32, ptr %i.e, align 4, !tbaa !172  ; 2 uses
   %i.g = getelementptr i8, ptr %0, i64 48
-  %.val.i.a = load ptr, ptr %i.g, align 8, !tbaa !167 ; 3 uses
-  %.not.i.i.i = icmp eq ptr %.val.i.a, null
-  br i1 %.not.i.i.i, label %rb_ec_ractor_ptr.exit.i.i, label %1
+  %.val.i = load ptr, ptr %i.g, align 8, !tbaa !167, !nonnull !49, !noundef !49 ; 2 uses
+  %1 = getelementptr i8, ptr %.val.i, i64 32
+  %2 = load ptr, ptr %1, align 8, !tbaa !168      ; 2 uses
+  %3 = getelementptr i8, ptr %.val.i, i64 24
+  %4 = load ptr, ptr %3, align 8, !tbaa !169
+  %5 = getelementptr i8, ptr %2, i64 88
+  %.val.i.a = load ptr, ptr %5, align 8, !tbaa !170
+  %.not.i.i.i = icmp eq ptr %.val.i.a, %4
+  br i1 %.not.i.i.i, label %bb.b, label %rb_ec_vm_lock_rec.exit.i
 
-1:                                                ; preds = %bb.a
-  %2 = getelementptr i8, ptr %.val.i.a, i64 32
-  %3 = load ptr, ptr %2, align 8, !tbaa !168
-  %4 = getelementptr i8, ptr %.val.i.a, i64 24
-  %5 = load ptr, ptr %4, align 8, !tbaa !169
-  br label %rb_ec_ractor_ptr.exit.i.i
-
-rb_ec_ractor_ptr.exit.i.i:                        ; preds = %1, %bb.a
-  %.0.i2.i.i = phi ptr [ %3, %1 ], [ null, %bb.a ] ; 2 uses
-  %.0.i7.i.i = phi ptr [ %5, %1 ], [ null, %bb.a ]
-  %6 = getelementptr i8, ptr %.0.i2.i.i, i64 88
-  %.val5.i.i = load ptr, ptr %6, align 8, !tbaa !170
-  %7 = icmp eq ptr %.val5.i.i, %.0.i7.i.i
-  br i1 %7, label %bb.b, label %rb_ec_vm_lock_rec.exit.i
-
-bb.b:                                             ; preds = %rb_ec_ractor_ptr.exit.i.i
-  %i.h = getelementptr i8, ptr %.0.i2.i.i, i64 96
+bb.b:                                             ; preds = %bb.a
+  %i.h = getelementptr i8, ptr %2, i64 96
   %i.i = load i32, ptr %i.h, align 8, !tbaa !171
   br label %rb_ec_vm_lock_rec.exit.i
 
-rb_ec_vm_lock_rec.exit.i:                         ; preds = %bb.b, %rb_ec_ractor_ptr.exit.i.i
-  %.0.i.i = phi i32 [ %i.i, %bb.b ], [ 0, %rb_ec_ractor_ptr.exit.i.i ] ; 2 uses
+rb_ec_vm_lock_rec.exit.i:                         ; preds = %bb.b, %bb.a
+  %.0.i.i = phi i32 [ %i.i, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %.not.i = icmp eq i32 %.0.i.i, %i.f
   br i1 %.not.i, label %rb_ec_vm_lock_rec_check.exit, label %bb.c
 
@@ -2675,7 +2657,7 @@ rb_ec_vm_lock_rec_check.exit:                     ; preds = %rb_ec_vm_lock_rec.e
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define dso_local i64 @rb_debug_inspector_frame_self_get(ptr noundef readonly captures(none) %0, i64 noundef %1) local_unnamed_addr #0 {
+define dso_local i64 @rb_debug_inspector_frame_self_get(ptr nofree noundef readonly captures(none) %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp slt i64 %1, 0
   br i1 %i.a, label %bb.e, label %bb.b
@@ -2716,7 +2698,7 @@ frame_get.exit:                                   ; preds = %rb_array_len.exit.i
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define dso_local i64 @rb_debug_inspector_frame_class_get(ptr noundef readonly captures(none) %0, i64 noundef %1) local_unnamed_addr #0 {
+define dso_local i64 @rb_debug_inspector_frame_class_get(ptr nofree noundef readonly captures(none) %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp slt i64 %1, 0
   br i1 %i.a, label %bb.e, label %bb.b
@@ -2757,7 +2739,7 @@ frame_get.exit:                                   ; preds = %rb_array_len.exit.i
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define dso_local i64 @rb_debug_inspector_frame_binding_get(ptr noundef readonly captures(none) %0, i64 noundef %1) local_unnamed_addr #0 {
+define dso_local i64 @rb_debug_inspector_frame_binding_get(ptr nofree noundef readonly captures(none) %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp slt i64 %1, 0
   br i1 %i.a, label %bb.e, label %bb.b
@@ -2798,7 +2780,7 @@ frame_get.exit:                                   ; preds = %rb_array_len.exit.i
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define dso_local i64 @rb_debug_inspector_frame_iseq_get(ptr noundef readonly captures(none) %0, i64 noundef %1) local_unnamed_addr #0 {
+define dso_local i64 @rb_debug_inspector_frame_iseq_get(ptr nofree noundef readonly captures(none) %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp slt i64 %1, 0
   br i1 %i.a, label %bb.e, label %bb.b
@@ -2852,7 +2834,7 @@ bb.g:                                             ; preds = %frame_get.exit, %bb
 declare i64 @rb_iseqw_new(ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind sspstrong uwtable
-define dso_local i64 @rb_debug_inspector_frame_depth(ptr noundef readonly captures(none) %0, i64 noundef %1) local_unnamed_addr #0 {
+define dso_local i64 @rb_debug_inspector_frame_depth(ptr nofree noundef readonly captures(none) %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp slt i64 %1, 0
   br i1 %i.a, label %bb.e, label %bb.b
@@ -2919,7 +2901,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: read) uwtable
-define dso_local i64 @rb_debug_inspector_backtrace_locations(ptr noundef readonly captures(none) %0) local_unnamed_addr #10 {
+define dso_local i64 @rb_debug_inspector_backtrace_locations(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #10 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 24
   %i.b = load i64, ptr %i.a, align 8, !tbaa !160
@@ -2927,7 +2909,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define dso_local i32 @rb_profile_frames(i32 noundef %0, i32 noundef %1, ptr noundef nonnull writeonly captures(none) %2, ptr noundef writeonly captures(address_is_null) %3) local_unnamed_addr #0 {
+define dso_local i32 @rb_profile_frames(i32 noundef %0, i32 noundef %1, ptr nofree noundef nonnull writeonly captures(none) %2, ptr nofree noundef writeonly captures(address_is_null) %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -2949,7 +2931,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc i32 @thread_profile_frames(ptr noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, ptr noundef writeonly captures(none) %3, ptr noundef writeonly captures(address_is_null) %4) unnamed_addr #0 {
+define internal fastcc i32 @thread_profile_frames(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef writeonly captures(none) %3, ptr nofree noundef writeonly captures(address_is_null) %4) unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !71   ; 4 uses
@@ -3132,7 +3114,7 @@ bb.y:                                             ; preds = %bb.q, %bb.x, %bb.s,
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define dso_local i32 @rb_profile_thread_frames(i64 noundef %0, i32 noundef %1, i32 noundef %2, ptr noundef writeonly captures(none) %3, ptr noundef writeonly captures(address_is_null) %4) local_unnamed_addr #0 {
+define dso_local i32 @rb_profile_thread_frames(i64 noundef %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef writeonly captures(none) %3, ptr nofree noundef writeonly captures(address_is_null) %4) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call ptr @rb_check_typeddata(i64 noundef %0, ptr noundef nonnull @ruby_threadptr_data_type) #7
   %i.b = getelementptr i8, ptr %i.a, i64 48
@@ -3535,7 +3517,7 @@ declare i32 @rb_iseq_line_no(ptr noundef, i64 noundef) local_unnamed_addr #2
 declare i32 @rb_iseq_node_id(ptr noundef, i64 noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @location_mark(ptr noundef readonly captures(none) %0) #0 {
+define internal void @location_mark(ptr nofree noundef readonly captures(none) %0) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 8
   %i.b = load i64, ptr %i.a, align 8, !tbaa !178
@@ -3544,7 +3526,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @location_ref_update(ptr noundef captures(none) %0) #0 {
+define internal void @location_ref_update(ptr nofree noundef captures(none) %0) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 8          ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !178
@@ -3558,7 +3540,7 @@ declare void @rb_gc_mark_movable(i64 noundef) local_unnamed_addr #2
 declare i64 @rb_gc_location(i64 noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @backtrace_mark(ptr noundef readonly captures(none) %0) #0 {
+define internal void @backtrace_mark(ptr nofree noundef readonly captures(none) %0) #0 {
 bb.a:
   %i.a = load i32, ptr %0, align 8, !tbaa !83     ; 2 uses
   %i.b = sext i32 %i.a to i64
@@ -3601,7 +3583,7 @@ location_mark_entry.exit:                         ; preds = %bb.b, %bb.c
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @backtrace_update(ptr noundef captures(none) %0) #0 {
+define internal void @backtrace_update(ptr nofree noundef captures(none) %0) #0 {
 bb.a:
   %i.a = load i32, ptr %0, align 8, !tbaa !83     ; 2 uses
   %i.b = sext i32 %i.a to i64
@@ -3739,7 +3721,7 @@ declare ptr @rb_check_typeddata(i64 noundef, ptr noundef) local_unnamed_addr #2
 declare i64 @rb_ary_new_capa(i64 noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc i64 @location_to_str(ptr noundef readonly captures(none) %0) unnamed_addr #0 {
+define internal fastcc i64 @location_to_str(ptr nofree noundef readonly captures(none) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
@@ -3966,7 +3948,7 @@ location_format.exit:                             ; preds = %bb.t, %RSTRING_PTR.
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc i64 @calculate_iseq_label(i64 noundef %0, ptr noundef readonly captures(address) %1) unnamed_addr #0 {
+define internal fastcc i64 @calculate_iseq_label(i64 noundef %0, ptr nofree noundef readonly captures(address) %1) unnamed_addr #0 {
 bb.a:
   br label %bb.b
 
@@ -4070,7 +4052,7 @@ declare i32 @__fprintf_chk(ptr noundef, i32 noundef, ptr noundef, ...) local_unn
 declare nonnull ptr @llvm.threadlocal.address.p0(ptr nonnull) #15
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc i64 @ec_backtrace_range(ptr noundef readonly captures(none) %0, i32 noundef %1, ptr noundef readonly captures(none) %2, i32 noundef range(i32 0, 2) %3, i32 noundef range(i32 0, 2) %4, ptr noundef nonnull writeonly captures(none) %5) unnamed_addr #0 {
+define internal fastcc i64 @ec_backtrace_range(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2, i32 noundef range(i32 0, 2) %3, i32 noundef range(i32 0, 2) %4, ptr nofree noundef nonnull writeonly captures(none) %5) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [1 x i64], align 8                ; 2 uses
   %i.b = alloca i64, align 8                      ; 5 uses

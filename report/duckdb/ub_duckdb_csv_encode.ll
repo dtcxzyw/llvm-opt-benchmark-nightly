@@ -65,7 +65,7 @@ $_ZTSN6duckdb17InternalExceptionE = comdat any
 @_ZN6duckdb10CSVEncoderC1ERNS_13ClientContextERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEm = unnamed_addr alias void (ptr, ptr, ptr, i64), ptr @_ZN6duckdb10CSVEncoderC2ERNS_13ClientContextERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEm
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN6duckdb16CSVEncoderBuffer10InitializeEm(ptr noundef nonnull align 8 captures(none) dereferenceable(40) initializes((32, 40)) %0, i64 noundef %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN6duckdb16CSVEncoderBuffer10InitializeEm(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(40) initializes((32, 40)) %0, i64 noundef %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i64 %1, ptr %i.a, align 8, !tbaa !7
@@ -94,7 +94,7 @@ declare noundef nonnull ptr @_Znam(i64 noundef) local_unnamed_addr #2
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define noundef ptr @_ZNK6duckdb16CSVEncoderBuffer3PtrEv(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0) local_unnamed_addr #3 align 2 {
+define noundef ptr @_ZNK6duckdb16CSVEncoderBuffer3PtrEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !20
@@ -102,7 +102,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define noundef i64 @_ZNK6duckdb16CSVEncoderBuffer11GetCapacityEv(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0) local_unnamed_addr #3 align 2 {
+define noundef i64 @_ZNK6duckdb16CSVEncoderBuffer11GetCapacityEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load i64, ptr %i.a, align 8, !tbaa !7
@@ -110,7 +110,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define noundef i64 @_ZNK6duckdb16CSVEncoderBuffer7GetSizeEv(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0) local_unnamed_addr #3 align 2 {
+define noundef i64 @_ZNK6duckdb16CSVEncoderBuffer7GetSizeEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i64, ptr %i.a, align 8, !tbaa !21
@@ -118,7 +118,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define void @_ZN6duckdb16CSVEncoderBuffer7SetSizeEm(ptr noundef nonnull writeonly align 8 captures(none) dereferenceable(40) initializes((8, 16)) %0, i64 noundef %1) local_unnamed_addr #4 align 2 {
+define void @_ZN6duckdb16CSVEncoderBuffer7SetSizeEm(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(40) initializes((8, 16)) %0, i64 noundef %1) local_unnamed_addr #4 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %1, ptr %i.a, align 8, !tbaa !21
@@ -126,7 +126,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define noundef zeroext i1 @_ZNK6duckdb16CSVEncoderBuffer13HasDataToReadEv(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0) local_unnamed_addr #3 align 2 {
+define noundef zeroext i1 @_ZNK6duckdb16CSVEncoderBuffer13HasDataToReadEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !tbaa !22
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -136,7 +136,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define void @_ZN6duckdb16CSVEncoderBuffer5ResetEv(ptr noundef nonnull writeonly align 8 captures(none) dereferenceable(40) initializes((0, 16)) %0) local_unnamed_addr #4 align 2 {
+define void @_ZN6duckdb16CSVEncoderBuffer5ResetEv(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(40) initializes((0, 16)) %0) local_unnamed_addr #4 align 2 {
 bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
   ret void
@@ -539,7 +539,7 @@ _ZN6duckdb12optional_ptrINS_16EncodingFunctionELb1EEptEv.exit41: ; preds = %bb.g
   %i.bf = icmp ult i64 %.03090, %i.be
   br i1 %i.bf, label %bb.m, label %.loopexit
 
-.loopexit77:                                      ; preds = %6
+.loopexit77:                                      ; preds = %_ZNKSt6vectorIcSaIcEE12_M_check_lenEmPKc.exit.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
   br label %.body50
@@ -580,23 +580,20 @@ _ZNKSt6vectorIcSaIcEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.o
   %i.bo = icmp ult i64 %i.bn, %i.bl
   %i.bp = call i64 @llvm.umin.i64(i64 %i.bn, i64 9223372036854775807)
   %i.bq = select i1 %i.bo, i64 9223372036854775807, i64 %i.bp ; 3 uses
-  %.not.i.i.i = icmp eq i64 %i.bq, 0
-  br i1 %.not.i.i.i, label %_ZNSt12_Vector_baseIcSaIcEE11_M_allocateEm.exit.i.i, label %6
+  %.not.i.i.i = icmp ne i64 %i.bq, 0
+  call void @llvm.assume(i1 %.not.i.i.i)
+  %6 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bq) #15
+          to label %_ZNSt12_Vector_baseIcSaIcEE11_M_allocateEm.exit.i.i unwind label %.loopexit77 ; 4 uses
 
-6:                                                ; preds = %_ZNKSt6vectorIcSaIcEE12_M_check_lenEmPKc.exit.i.i
-  %7 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bq) #15
-          to label %_ZNSt12_Vector_baseIcSaIcEE11_M_allocateEm.exit.i.i unwind label %.loopexit77
-
-_ZNSt12_Vector_baseIcSaIcEE11_M_allocateEm.exit.i.i: ; preds = %6, %_ZNKSt6vectorIcSaIcEE12_M_check_lenEmPKc.exit.i.i
-  %8 = phi ptr [ null, %_ZNKSt6vectorIcSaIcEE12_M_check_lenEmPKc.exit.i.i ], [ %7, %6 ] ; 4 uses
-  %i.br = getelementptr inbounds nuw i8, ptr %8, i64 %i.bl ; 2 uses
+_ZNSt12_Vector_baseIcSaIcEE11_M_allocateEm.exit.i.i: ; preds = %_ZNKSt6vectorIcSaIcEE12_M_check_lenEmPKc.exit.i.i
+  %i.br = getelementptr inbounds nuw i8, ptr %6, i64 %i.bl ; 2 uses
   %i.bs = load i8, ptr %i.bh, align 1, !tbaa !27
   store i8 %i.bs, ptr %i.br, align 1, !tbaa !27
   %i.bt = icmp sgt i64 %i.bl, 0
   br i1 %i.bt, label %bb.q, label %_ZNSt6vectorIcSaIcEE11_S_relocateEPcS2_S2_RS0_.exit16.i.i
 
 bb.q:                                             ; preds = %_ZNSt12_Vector_baseIcSaIcEE11_M_allocateEm.exit.i.i
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %8, ptr align 1 %.sroa.0.087, i64 %i.bl, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %6, ptr align 1 %.sroa.0.087, i64 %i.bl, i1 false)
   br label %_ZNSt6vectorIcSaIcEE11_S_relocateEPcS2_S2_RS0_.exit16.i.i
 
 _ZNSt6vectorIcSaIcEE11_S_relocateEPcS2_S2_RS0_.exit16.i.i: ; preds = %bb.q, %_ZNSt12_Vector_baseIcSaIcEE11_M_allocateEm.exit.i.i
@@ -608,11 +605,11 @@ bb.r:                                             ; preds = %_ZNSt6vectorIcSaIcE
   br label %_ZNSt6vectorIcSaIcEE17_M_realloc_insertIJRKcEEEvN9__gnu_cxx17__normal_iteratorIPcS1_EEDpOT_.exit.i
 
 _ZNSt6vectorIcSaIcEE17_M_realloc_insertIJRKcEEEvN9__gnu_cxx17__normal_iteratorIPcS1_EEDpOT_.exit.i: ; preds = %bb.r, %_ZNSt6vectorIcSaIcEE11_S_relocateEPcS2_S2_RS0_.exit16.i.i
-  %i.bu = getelementptr inbounds nuw i8, ptr %8, i64 %i.bq
+  %i.bu = getelementptr inbounds nuw i8, ptr %6, i64 %i.bq
   br label %_ZNSt6vectorIcSaIcEE9push_backERKc.exit
 
 _ZNSt6vectorIcSaIcEE9push_backERKc.exit:          ; preds = %_ZNSt6vectorIcSaIcEE17_M_realloc_insertIJRKcEEEvN9__gnu_cxx17__normal_iteratorIPcS1_EEDpOT_.exit.i, %bb.n
-  %.sroa.0.3 = phi ptr [ %8, %_ZNSt6vectorIcSaIcEE17_M_realloc_insertIJRKcEEEvN9__gnu_cxx17__normal_iteratorIPcS1_EEDpOT_.exit.i ], [ %.sroa.0.087, %bb.n ] ; 4 uses
+  %.sroa.0.3 = phi ptr [ %6, %_ZNSt6vectorIcSaIcEE17_M_realloc_insertIJRKcEEEvN9__gnu_cxx17__normal_iteratorIPcS1_EEDpOT_.exit.i ], [ %.sroa.0.087, %bb.n ] ; 4 uses
   %.pn = phi ptr [ %i.br, %_ZNSt6vectorIcSaIcEE17_M_realloc_insertIJRKcEEEvN9__gnu_cxx17__normal_iteratorIPcS1_EEDpOT_.exit.i ], [ %.sroa.15.088, %bb.n ]
   %.sroa.26.1 = phi ptr [ %i.bu, %_ZNSt6vectorIcSaIcEE17_M_realloc_insertIJRKcEEEvN9__gnu_cxx17__normal_iteratorIPcS1_EEDpOT_.exit.i ], [ %.sroa.26.089, %bb.n ]
   %.sroa.15.2 = getelementptr inbounds nuw i8, ptr %.pn, i64 1

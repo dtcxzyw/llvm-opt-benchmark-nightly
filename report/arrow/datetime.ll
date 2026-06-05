@@ -201,7 +201,7 @@ $_ZNSt6vectorIN14arrow_vendored4date6detail10transitionESaIS3_EE14_M_emplace_aux
 @_ZN14arrow_vendored4date11leap_secondC1ERKNSt6chrono10time_pointINS2_3_V212system_clockENS2_8durationIlSt5ratioILl1ELl1EEEEEENS0_6detail12undocumentedE = unnamed_addr alias void (ptr, ptr), ptr @_ZN14arrow_vendored4date11leap_secondC2ERKNSt6chrono10time_pointINS2_3_V212system_clockENS2_8durationIlSt5ratioILl1ELl1EEEEEENS0_6detail12undocumentedE
 
 ; Function Attrs: mustprogress nounwind uwtable
-define void @_ZN14arrow_vendored4date9tzdb_listD2Ev(ptr noundef nonnull align 8 captures(none) dead_on_return(8) dereferenceable(8) %0) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN14arrow_vendored4date9tzdb_listD2Ev(ptr nofree noundef nonnull align 8 captures(none) dead_on_return(8) dereferenceable(8) %0) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load atomic ptr, ptr %0 seq_cst, align 8 ; 2 uses
   store atomic ptr null, ptr %0 seq_cst, align 8
@@ -286,7 +286,7 @@ declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #2
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
-define void @_ZN14arrow_vendored4date9tzdb_listC2EOS1_(ptr noundef nonnull writeonly align 8 captures(none) dereferenceable(8) initializes((0, 8)) %0, ptr noundef nonnull align 8 captures(none) dereferenceable(8) %1) unnamed_addr #3 align 2 {
+define void @_ZN14arrow_vendored4date9tzdb_listC2EOS1_(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(8) initializes((0, 8)) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(8) %1) unnamed_addr #3 align 2 {
 bb.a:
   %i.a = atomicrmw xchg ptr %1, ptr null seq_cst, align 8
   store ptr %i.a, ptr %0, align 8, !tbaa !34
@@ -294,7 +294,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
-define void @_ZN14arrow_vendored4date9tzdb_list10push_frontEPNS0_4tzdbE(ptr noundef nonnull align 8 captures(none) dereferenceable(8) %0, ptr noundef initializes((80, 88)) %1) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN14arrow_vendored4date9tzdb_list10push_frontEPNS0_4tzdbE(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(8) %0, ptr noundef initializes((80, 88)) %1) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load atomic ptr, ptr %0 seq_cst, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 80
@@ -304,7 +304,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define ptr @_ZN14arrow_vendored4date9tzdb_list11erase_afterENS1_14const_iteratorE(ptr noundef nonnull readnone align 8 captures(none) dereferenceable(8) %0, ptr captures(none) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define ptr @_ZN14arrow_vendored4date9tzdb_list11erase_afterENS1_14const_iteratorE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(8) %0, ptr nofree captures(none) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !7    ; 9 uses
@@ -457,7 +457,7 @@ declare void @__cxa_guard_abort(ptr) local_unnamed_addr #5
 declare void @__cxa_guard_release(ptr) local_unnamed_addr #5
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN14arrow_vendored4date9time_zoneC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_6detail12undocumentedE(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1) unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN14arrow_vendored4date9time_zoneC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_6detail12undocumentedE(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1) unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   store ptr %i.a, ptr %0, align 8, !tbaa !38
@@ -860,7 +860,7 @@ bb.d:                                             ; preds = %bb.b, %bb.a
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZNK14arrow_vendored4date9time_zone13load_sys_infoEN9__gnu_cxx17__normal_iteratorIPKNS0_6detail10transitionESt6vectorIS5_SaIS5_EEEE(ptr dead_on_unwind noalias writable sret(%"struct.arrow_vendored::date::sys_info") align 8 initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(88) %1, ptr readonly captures(address) %2) local_unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZNK14arrow_vendored4date9time_zone13load_sys_infoEN9__gnu_cxx17__normal_iteratorIPKNS0_6detail10transitionESt6vectorIS5_SaIS5_EEEE(ptr dead_on_unwind noalias writable sret(%"struct.arrow_vendored::date::sys_info") align 8 initializes((0, 16)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(88) %1, ptr nofree readonly captures(address) %2) local_unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 4 uses
@@ -1263,7 +1263,7 @@ bb.e:                                             ; preds = %_ZStlsISt11char_tra
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define void @_ZN14arrow_vendored4date11leap_secondC2ERKNSt6chrono10time_pointINS2_3_V212system_clockENS2_8durationIlSt5ratioILl1ELl1EEEEEENS0_6detail12undocumentedE(ptr noundef nonnull writeonly align 8 captures(none) dereferenceable(8) initializes((0, 8)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(8) %1) unnamed_addr #13 align 2 {
+define void @_ZN14arrow_vendored4date11leap_secondC2ERKNSt6chrono10time_pointINS2_3_V212system_clockENS2_8durationIlSt5ratioILl1ELl1EEEEEENS0_6detail12undocumentedE(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(8) initializes((0, 8)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %1) unnamed_addr #13 align 2 {
 bb.a:
   %i.a = load i64, ptr %1, align 8, !tbaa !75
   store i64 %i.a, ptr %0, align 8, !tbaa !75
@@ -1424,7 +1424,7 @@ _ZN14arrow_vendored4date13get_tzdb_listEv.exit:   ; preds = %bb.a, %bb.b, %bb.d
 }
 
 ; Function Attrs: mustprogress uwtable
-define noundef nonnull ptr @_ZNK14arrow_vendored4date4tzdb11locate_zoneESt17basic_string_viewIcSt11char_traitsIcEE(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(88) %0, i64 %1, ptr %2) local_unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
+define noundef nonnull ptr @_ZNK14arrow_vendored4date4tzdb11locate_zoneESt17basic_string_viewIcSt11char_traitsIcEE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(88) %0, i64 %1, ptr %2) local_unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
@@ -1827,7 +1827,7 @@ _ZN14arrow_vendored4date8get_tzdbEv.exit:         ; preds = %bb.a, %bb.b, %bb.d
 }
 
 ; Function Attrs: mustprogress uwtable
-define noundef nonnull align 8 dereferenceable(8) ptr @_ZN14arrow_vendored4datelsERSoRKNS0_4tzdbE(ptr noundef nonnull returned align 8 dereferenceable(8) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(88) %1) local_unnamed_addr #4 {
+define noundef nonnull align 8 dereferenceable(8) ptr @_ZN14arrow_vendored4datelsERSoRKNS0_4tzdbE(ptr noundef nonnull returned align 8 dereferenceable(8) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(88) %1) local_unnamed_addr #4 {
 bb.a:
   %i.a = alloca i8, align 1                       ; 4 uses
   %i.b = alloca i8, align 1                       ; 4 uses
@@ -1936,7 +1936,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit19: ; preds = %bb.f, %
 }
 
 ; Function Attrs: mustprogress uwtable
-define noundef ptr @_ZNK14arrow_vendored4date4tzdb12current_zoneEv(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(88) %0) local_unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
+define noundef ptr @_ZNK14arrow_vendored4date4tzdb12current_zoneEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(88) %0) local_unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %struct.stat, align 8               ; 7 uses
   %2 = alloca %struct.stat, align 8               ; 7 uses
@@ -2339,7 +2339,7 @@ bb.i:                                             ; preds = %._crit_edge.i.i, %.
 declare noundef zeroext i1 @_ZNKSt12__basic_fileIcE7is_openEv(ptr noundef nonnull align 8 dereferenceable(9)) local_unnamed_addr #22
 
 ; Function Attrs: mustprogress uwtable
-define internal fastcc void @_ZN14arrow_vendored4dateL12load_indicesERSii(ptr dead_on_unwind noalias nonnull writable align 8 captures(none) initializes((0, 24)) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef %2) unnamed_addr #4 personality ptr @__gxx_personality_v0 {
+define internal fastcc void @_ZN14arrow_vendored4dateL12load_indicesERSii(ptr dead_on_unwind noalias nofree nonnull writable align 8 captures(none) initializes((0, 24)) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef %2) unnamed_addr #4 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i8, align 1                       ; 6 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
@@ -2402,23 +2402,20 @@ _ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.e
   %i.t = icmp ult i64 %i.s, %i.q
   %i.u = call i64 @llvm.umin.i64(i64 %i.s, i64 9223372036854775807)
   %i.v = select i1 %i.t, i64 9223372036854775807, i64 %i.u ; 3 uses
-  %.not.i.i.i = icmp eq i64 %i.v, 0
-  br i1 %.not.i.i.i, label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i, label %3
+  %.not.i.i.i = icmp ne i64 %i.v, 0
+  call void @llvm.assume(i1 %.not.i.i.i)
+  %3 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.v) #32
+          to label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i unwind label %.loopexit ; 4 uses
 
-3:                                                ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i
-  %4 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.v) #32
-          to label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i unwind label %.loopexit
-
-_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i: ; preds = %3, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i
-  %5 = phi ptr [ null, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i ], [ %4, %3 ] ; 4 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %5, i64 %i.q ; 2 uses
+_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i: ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i
+  %i.w = getelementptr inbounds nuw i8, ptr %3, i64 %i.q ; 2 uses
   %i.x = load i8, ptr %i.a, align 1, !tbaa !31
   store i8 %i.x, ptr %i.w, align 1, !tbaa !31
   %i.y = icmp sgt i64 %i.q, 0
   br i1 %i.y, label %bb.g, label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i
 
 bb.g:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %5, ptr align 1 %i.n, i64 %i.q, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %3, ptr align 1 %i.n, i64 %i.q, i1 false)
   br label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i
 
 _ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i: ; preds = %bb.g, %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i
@@ -2431,9 +2428,9 @@ bb.h:                                             ; preds = %_ZNSt6vectorIhSaIhE
   br label %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i
 
 _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i: ; preds = %bb.h, %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i
-  store ptr %5, ptr %0, align 8, !tbaa !114
+  store ptr %3, ptr %0, align 8, !tbaa !114
   store ptr %i.z, ptr %i.h, align 8, !tbaa !422
-  %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 %i.v
+  %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 %i.v
   store ptr %i.aa, ptr %i.b, align 8, !tbaa !117
   br label %_ZNSt6vectorIhSaIhEE12emplace_backIJRhEEES3_DpOT_.exit
 
@@ -2444,7 +2441,7 @@ _ZNSt6vectorIhSaIhEE12emplace_backIJRhEEES3_DpOT_.exit: ; preds = %_ZNSt6vectorI
   %exitcond.not = icmp eq i32 %i.ac, %2
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !423
 
-.loopexit:                                        ; preds = %bb.b, %3
+.loopexit:                                        ; preds = %bb.b, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
   %.pre.pre = load ptr, ptr %0, align 8, !tbaa !114
@@ -2478,7 +2475,7 @@ _ZNSt6vectorIhSaIhEED2Ev.exit:                    ; preds = %bb.i, %bb.j
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal fastcc void @_ZN14arrow_vendored4dateL11load_ttinfoERSii(ptr dead_on_unwind noalias nonnull writable align 8 captures(none) initializes((0, 24)) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef %2) unnamed_addr #4 personality ptr @__gxx_personality_v0 {
+define internal fastcc void @_ZN14arrow_vendored4dateL11load_ttinfoERSii(ptr dead_on_unwind noalias nofree nonnull writable align 8 captures(none) initializes((0, 24)) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef %2) unnamed_addr #4 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"struct.arrow_vendored::date::detail::ttinfo", align 8 ; 8 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)

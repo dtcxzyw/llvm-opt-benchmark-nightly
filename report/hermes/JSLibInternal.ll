@@ -201,7 +201,7 @@ $_ZGVZN4llvh7hashing6detail18get_execution_seedEvE4seed = comdat any
 @switch.table._ZN6hermes2vm21createDynamicFunctionERNS0_7RuntimeENS0_10NativeArgsENS0_19DynamicFunctionKindE = private unnamed_addr constant [3 x i64] [i64 208, i64 648, i64 616], align 8
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden ptr @_ZN6hermes2vm23defineSystemConstructorERNS0_7RuntimeENS0_8SymbolIDEPFNS0_10CallResultINS0_11HermesValueELNS0_6detail20CallResultSpecializeE2EEEPvS2_NS0_10NativeArgsEENS0_6HandleINS0_8JSObjectEEESF_jPFNS4_INS0_12PseudoHandleISE_EELS7_6EEES2_SF_S9_ENS0_8CellKindE(ptr noundef nonnull align 8 dereferenceable(9816) %0, i32 %1, ptr noundef %2, ptr %3, ptr readonly captures(none) %4, i32 noundef %5, ptr noundef %6, i32 %7) local_unnamed_addr #0 {
+define hidden ptr @_ZN6hermes2vm23defineSystemConstructorERNS0_7RuntimeENS0_8SymbolIDEPFNS0_10CallResultINS0_11HermesValueELNS0_6detail20CallResultSpecializeE2EEEPvS2_NS0_10NativeArgsEENS0_6HandleINS0_8JSObjectEEESF_jPFNS4_INS0_12PseudoHandleISE_EELS7_6EEES2_SF_S9_ENS0_8CellKindE(ptr noundef nonnull align 8 dereferenceable(9816) %0, i32 %1, ptr noundef %2, ptr %3, ptr nofree readonly captures(none) %4, i32 noundef %5, ptr noundef %6, i32 %7) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1648 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !7    ; 2 uses
@@ -604,7 +604,7 @@ declare noundef zeroext i1 @_ZN6hermes2vm18isUncatchableErrorENS0_11HermesValueE
 declare noundef i32 @_ZN6hermes2vm13iteratorCloseERNS0_7RuntimeENS0_6HandleINS0_8JSObjectEEENS3_INS0_11HermesValueEEE(ptr noundef nonnull align 8 dereferenceable(9816), ptr, ptr) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden { i32, i64 } @_ZN6hermes2vm21createDynamicFunctionERNS0_7RuntimeENS0_10NativeArgsENS0_19DynamicFunctionKindE(ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr noundef readonly captures(none) dead_on_return %1, i32 noundef %2) local_unnamed_addr #0 {
+define hidden { i32, i64 } @_ZN6hermes2vm21createDynamicFunctionERNS0_7RuntimeENS0_10NativeArgsENS0_19DynamicFunctionKindE(ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr nofree noundef readonly captures(none) dead_on_return %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %3 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 8 uses
   %4 = alloca %"class.hermes::StackOverflowGuard", align 8 ; 6 uses
@@ -1007,26 +1007,20 @@ _ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i: ; preds = %bb.n
   %i.ba = icmp ult i64 %i.az, %i.ax
   %i.bb = call i64 @llvm.umin.i64(i64 %i.az, i64 9223372036854775807)
   %i.bc = select i1 %i.ba, i64 9223372036854775807, i64 %i.bb ; 3 uses
-  %.not.i.i.i.i.i = icmp eq i64 %i.bc, 0
-  br i1 %.not.i.i.i.i.i, label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i.i, label %4
+  %.not.i.i.i.i.i = icmp ne i64 %i.bc, 0
+  call void @llvm.assume(i1 %.not.i.i.i.i.i)
+  %4 = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bc) #19 ; 4 uses
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 %i.ax ; 2 uses
+  store i8 %i.aq, ptr %5, align 1, !tbaa !32
+  %6 = icmp sgt i64 %i.ax, 0
+  br i1 %6, label %bb.p, label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i.i
 
-4:                                                ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i
-  %5 = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bc) #19
-  br label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i.i
-
-_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i.i: ; preds = %4, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i
-  %6 = phi ptr [ %5, %4 ], [ null, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i ] ; 4 uses
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 %i.ax ; 2 uses
-  store i8 %i.aq, ptr %7, align 1, !tbaa !32
-  %8 = icmp sgt i64 %i.ax, 0
-  br i1 %8, label %bb.p, label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i.i
-
-bb.p:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i.i
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %6, ptr align 1 %i.au, i64 %i.ax, i1 false)
+bb.p:                                             ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %4, ptr align 1 %i.au, i64 %i.ax, i1 false)
   br label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i.i
 
-_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i.i: ; preds = %bb.p, %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i.i
-  %i.bd = getelementptr inbounds nuw i8, ptr %7, i64 1 ; 2 uses
+_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i.i: ; preds = %bb.p, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i
+  %i.bd = getelementptr inbounds nuw i8, ptr %5, i64 1 ; 2 uses
   %.not.i17.i.i.i.i = icmp eq ptr %i.au, null
   br i1 %.not.i17.i.i.i.i, label %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i, label %bb.q
 
@@ -1035,9 +1029,9 @@ bb.q:                                             ; preds = %_ZNSt6vectorIhSaIhE
   br label %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i
 
 _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i: ; preds = %bb.q, %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i.i
-  store ptr %6, ptr %3, align 8, !tbaa !81
+  store ptr %4, ptr %3, align 8, !tbaa !81
   store ptr %i.bd, ptr %i.g, align 8, !tbaa !83
-  %i.be = getelementptr inbounds nuw i8, ptr %6, i64 %i.bc
+  %i.be = getelementptr inbounds nuw i8, ptr %4, i64 %i.bc
   store ptr %i.be, ptr %i.h, align 8, !tbaa !458
   br label %_ZN6hermes5regex19RegexBytecodeStream9emitChar8Ec.exit
 

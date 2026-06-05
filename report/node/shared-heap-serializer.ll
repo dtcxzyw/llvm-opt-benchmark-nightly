@@ -201,7 +201,7 @@ _ZNK2v88internal20SharedHeapSerializer48ShouldReconstructSharedHeapObjectCacheFo
 declare void @_ZN2v88internal15RootsSerializerC2EPNS0_7IsolateENS_4base5FlagsINS0_8Snapshot14SerializerFlagEiiEENS0_9RootIndexE(ptr noundef nonnull align 8 dereferenceable(833), ptr noundef, i32, i16 noundef zeroext) unnamed_addr #1
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden noundef zeroext i1 @_ZNK2v88internal20SharedHeapSerializer48ShouldReconstructSharedHeapObjectCacheForTestingEv(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(833) %0) local_unnamed_addr #0 align 2 {
+define hidden noundef zeroext i1 @_ZNK2v88internal20SharedHeapSerializer48ShouldReconstructSharedHeapObjectCacheForTestingEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(833) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 496
   %i.b = load i32, ptr %i.a, align 8
@@ -604,26 +604,20 @@ _ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.p
   %i.dh = icmp ult i64 %i.dg, %i.de
   %i.di = tail call i64 @llvm.umin.i64(i64 %i.dg, i64 9223372036854775807)
   %i.dj = select i1 %i.dh, i64 9223372036854775807, i64 %i.di ; 3 uses
-  %.not.i.i.i.i17 = icmp eq i64 %i.dj, 0
-  br i1 %.not.i.i.i.i17, label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i, label %3
+  %.not.i.i.i.i17 = icmp ne i64 %i.dj, 0
+  tail call void @llvm.assume(i1 %.not.i.i.i.i17)
+  %3 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.dj) #22 ; 4 uses
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 %i.de ; 2 uses
+  store i8 9, ptr %4, align 1
+  %5 = icmp sgt i64 %i.de, 0
+  br i1 %5, label %bb.r, label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i
 
-3:                                                ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i
-  %4 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.dj) #22
-  br label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i
-
-_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i: ; preds = %3, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i
-  %5 = phi ptr [ %4, %3 ], [ null, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i ] ; 4 uses
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 %i.de ; 2 uses
-  store i8 9, ptr %6, align 1
-  %7 = icmp sgt i64 %i.de, 0
-  br i1 %7, label %bb.r, label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i
-
-bb.r:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %5, ptr align 1 %i.db, i64 %i.de, i1 false)
+bb.r:                                             ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %3, ptr align 1 %i.db, i64 %i.de, i1 false)
   br label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i
 
-_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i: ; preds = %bb.r, %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i
-  %i.dk = getelementptr inbounds nuw i8, ptr %6, i64 1
+_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i: ; preds = %bb.r, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i
+  %i.dk = getelementptr inbounds nuw i8, ptr %4, i64 1
   %.not.i17.i.i.i = icmp eq ptr %i.db, null
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i, label %bb.s
 
@@ -632,9 +626,9 @@ bb.s:                                             ; preds = %_ZNSt6vectorIhSaIhE
   br label %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i: ; preds = %bb.s, %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i
-  store ptr %5, ptr %1, align 8
+  store ptr %3, ptr %1, align 8
   store ptr %i.dk, ptr %i.cv, align 8
-  %i.dl = getelementptr inbounds nuw i8, ptr %5, i64 %i.dj
+  %i.dl = getelementptr inbounds nuw i8, ptr %3, i64 %i.dj
   store ptr %i.dl, ptr %i.cx, align 8
   br label %_ZN2v88internal16SnapshotByteSink3PutEhPKc.exit
 
@@ -1037,14 +1031,14 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress noreturn nounwind uwtable
-define internal void @_ZZN2v88internal20SharedHeapSerializer20SerializeStringTableEPNS0_11StringTableEEN38SharedHeapSerializerStringTableVisitor17VisitRootPointersENS0_4RootEPKcNS0_14FullObjectSlotES8_(ptr nonnull readnone align 8 captures(none) %0, i32 %1, ptr readnone captures(none) %2, i64 %3, i64 %4) unnamed_addr #14 align 2 {
+define internal void @_ZZN2v88internal20SharedHeapSerializer20SerializeStringTableEPNS0_11StringTableEEN38SharedHeapSerializerStringTableVisitor17VisitRootPointersENS0_4RootEPKcNS0_14FullObjectSlotES8_(ptr nofree nonnull readnone align 8 captures(none) %0, i32 %1, ptr nofree readnone captures(none) %2, i64 %3, i64 %4) unnamed_addr #14 align 2 {
 bb.a:
   tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.5) #20
   unreachable
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define internal void @_ZZN2v88internal20SharedHeapSerializer20SerializeStringTableEPNS0_11StringTableEEN38SharedHeapSerializerStringTableVisitor17VisitRootPointersENS0_4RootEPKcNS0_21OffHeapFullObjectSlotES8_(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, i32 %1, ptr readnone captures(none) %2, i64 %3, i64 %4) unnamed_addr #0 align 2 {
+define internal void @_ZZN2v88internal20SharedHeapSerializer20SerializeStringTableEPNS0_11StringTableEEN38SharedHeapSerializerStringTableVisitor17VisitRootPointersENS0_4RootEPKcNS0_21OffHeapFullObjectSlotES8_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, i32 %1, ptr nofree readnone captures(none) %2, i64 %3, i64 %4) unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8

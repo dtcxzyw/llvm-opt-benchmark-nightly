@@ -201,7 +201,7 @@ declare void @rb_undef_alloc_func(i64 noundef) local_unnamed_addr #1
 declare extern_weak void @rb_define_singleton_method(i64 noundef, ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal i64 @ractor_selector_new(i32 noundef %0, ptr noundef readonly captures(none) %1, i64 noundef %2) #0 {
+define internal i64 @ractor_selector_new(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) #0 {
 bb.a:
   %i.a = tail call i64 @rb_data_typed_object_zalloc(i64 noundef %2, i64 noundef 8, ptr noundef nonnull @ractor_selector_data_type) #21 ; 3 uses
   %i.b = inttoptr i64 %i.a to ptr                 ; 2 uses
@@ -453,7 +453,7 @@ declare ptr @rb_gc_ractor_cache_alloc(ptr noundef) local_unnamed_addr #1
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #3
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden void @rb_ractor_atfork(ptr noundef writeonly captures(none) initializes((24, 32)) %0, ptr noundef initializes((0, 16)) %1) local_unnamed_addr #0 {
+define hidden void @rb_ractor_atfork(ptr nofree noundef writeonly captures(none) initializes((24, 32)) %0, ptr noundef initializes((0, 16)) %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 24
   store i32 0, ptr %i.a, align 8, !tbaa !89
@@ -698,7 +698,7 @@ vm_insert_ractor.exit:                            ; preds = %vm_ractor_blocking_
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden void @rb_ractor_terminate_atfork(ptr noundef readnone captures(none) %0, ptr noundef initializes((352, 356)) %1) local_unnamed_addr #0 {
+define hidden void @rb_ractor_terminate_atfork(ptr nofree noundef readnone captures(none) %0, ptr noundef initializes((352, 356)) %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %1, i64 456        ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !86
@@ -759,7 +759,7 @@ ractor_sync_terminate_atfork.exit:                ; preds = %bb.c, %ractor_queue
 declare void @rb_gc_ractor_cache_free(ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden void @rb_ractor_main_setup(ptr noundef readnone captures(none) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 {
+define hidden void @rb_ractor_main_setup(ptr nofree noundef readnone captures(none) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
@@ -975,7 +975,7 @@ rb_obj_set_shareable.exit16:                      ; preds = %bb.h, %imemo_type_p
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden void @rb_ractor_atexit(ptr noundef readonly captures(none) %0, i64 noundef %1) local_unnamed_addr #0 {
+define hidden void @rb_ractor_atexit(ptr nofree noundef readonly captures(none) %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 48
   %.val = load ptr, ptr %i.a, align 8, !tbaa !11  ; 2 uses
@@ -1104,7 +1104,7 @@ ractor_notify_exit.exit:                          ; preds = %.lr.ph.i, %ractor_u
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden void @rb_ractor_atexit_exception(ptr noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define hidden void @rb_ractor_atexit_exception(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 48
   %.val = load ptr, ptr %i.a, align 8, !tbaa !11  ; 2 uses
@@ -1125,7 +1125,7 @@ rb_ec_ractor_ptr.exit:                            ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden void @rb_ractor_teardown(ptr noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define hidden void @rb_ractor_teardown(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = getelementptr i8, ptr %0, i64 48
@@ -1172,7 +1172,7 @@ bb.c:                                             ; preds = %rb_vm_lock_enter.ex
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden void @rb_ractor_receive_parameters(ptr noundef %0, ptr noundef readonly captures(none) %1, i32 noundef %2, ptr noundef writeonly captures(none) %3) local_unnamed_addr #0 {
+define hidden void @rb_ractor_receive_parameters(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, ptr nofree noundef writeonly captures(none) %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
@@ -1387,7 +1387,7 @@ ractor_receive.exit:                              ; preds = %ractor_try_receive.
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden void @rb_ractor_send_parameters(ptr noundef readnone captures(none) %0, ptr noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #0 {
+define hidden void @rb_ractor_send_parameters(ptr nofree noundef readnone captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = inttoptr i64 %2 to ptr                   ; 5 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !119  ; 2 uses
@@ -1477,7 +1477,7 @@ rb_ec_vm_ptr.exit:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: read) uwtable
-define hidden i32 @rb_ractor_living_thread_num(ptr noundef readonly captures(none) %0) local_unnamed_addr #7 {
+define hidden i32 @rb_ractor_living_thread_num(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #7 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 200
   %i.b = load i32, ptr %i.a, align 8, !tbaa !109
@@ -1545,7 +1545,7 @@ declare i64 @rb_ary_new() local_unnamed_addr #1
 declare i64 @rb_ary_push(i64 noundef, i64 noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden void @rb_vm_ractor_blocking_cnt_inc(ptr noundef captures(none) %0, ptr noundef captures(none) %1, ptr noundef readnone captures(none) %2, i32 noundef %3) local_unnamed_addr #0 {
+define hidden void @rb_vm_ractor_blocking_cnt_inc(ptr nofree noundef captures(none) %0, ptr nofree noundef captures(none) %1, ptr nofree noundef readnone captures(none) %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %1, i64 352        ; 2 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !106
@@ -1566,7 +1566,7 @@ vm_ractor_blocking_cnt_inc.exit:                  ; preds = %bb.a
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden void @rb_vm_ractor_blocking_cnt_dec(ptr noundef captures(none) %0, ptr noundef captures(none) %1, ptr noundef readnone captures(none) %2, i32 noundef %3) local_unnamed_addr #0 {
+define hidden void @rb_vm_ractor_blocking_cnt_dec(ptr nofree noundef captures(none) %0, ptr nofree noundef captures(none) %1, ptr nofree noundef readnone captures(none) %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 28         ; 2 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !105
@@ -1760,7 +1760,7 @@ vm_remove_ractor.exit:                            ; preds = %bb.m, %ractor_statu
 declare void @rb_threadptr_remove(ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden void @rb_ractor_blocking_threads_inc(ptr noundef captures(none) %0, ptr noundef readnone captures(none) %1, i32 noundef %2) local_unnamed_addr #0 {
+define hidden void @rb_ractor_blocking_threads_inc(ptr nofree noundef captures(none) %0, ptr nofree noundef readnone captures(none) %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = getelementptr i8, ptr %0, i64 200
@@ -1823,7 +1823,7 @@ ractor_check_blocking.exit:                       ; preds = %bb.a, %bb.b, %rb_vm
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden void @rb_ractor_blocking_threads_dec(ptr noundef captures(none) %0, ptr noundef readnone captures(none) %1, i32 noundef %2) local_unnamed_addr #0 {
+define hidden void @rb_ractor_blocking_threads_dec(ptr nofree noundef captures(none) %0, ptr nofree noundef readnone captures(none) %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = getelementptr i8, ptr %0, i64 200
@@ -1935,7 +1935,7 @@ ractor_unlock.exit:                               ; preds = %bb.d, %rb_ec_ractor
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden void @rb_ractor_terminate_interrupt_main_thread(ptr noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define hidden void @rb_ractor_terminate_interrupt_main_thread(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 320
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !120  ; 4 uses
@@ -2210,7 +2210,7 @@ declare void @rb_vm_cond_timedwait(ptr noundef, ptr noundef, i64 noundef) local_
 declare void @rb_add_running_thread(ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define hidden ptr @rb_vm_main_ractor_ec(ptr noundef readonly captures(none) %0) local_unnamed_addr #2 {
+define hidden ptr @rb_vm_main_ractor_ec(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 32
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !147
@@ -2299,7 +2299,7 @@ bb.a:
 declare i64 @rb_define_class(ptr noundef, i64 noundef) local_unnamed_addr #1
 
 ; Function Attrs: noreturn nounwind sspstrong uwtable
-define internal noundef i64 @ractor_moved_missing(i32 %0, ptr readnone captures(none) %1, i64 %2) #8 {
+define internal noundef i64 @ractor_moved_missing(i32 %0, ptr nofree readnone captures(none) %1, i64 %2) #8 {
 bb.a:
   %i.a = load i64, ptr @rb_eRactorMovedError, align 8, !tbaa !57
   tail call void (i64, ptr, ...) @rb_raise(i64 noundef %i.a, ptr noundef nonnull @.str.100) #22
@@ -2686,14 +2686,14 @@ rb_obj_write.exit:                                ; preds = %bb.b, %rb_current_r
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define hidden noundef ptr @rb_ractor_hooks(ptr noundef readnone captures(ret: address, provenance) %0) local_unnamed_addr #9 {
+define hidden noundef ptr @rb_ractor_hooks(ptr nofree noundef readnone captures(ret: address, provenance) %0) local_unnamed_addr #9 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
   ret ptr %i.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: read) uwtable
-define hidden ptr @rb_ractor_targeted_hooks(ptr noundef readonly captures(none) %0) local_unnamed_addr #7 {
+define hidden ptr @rb_ractor_targeted_hooks(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #7 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 40
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !126
@@ -3096,7 +3096,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc noundef i64 @ractor_port_close(ptr readonly captures(address_is_null) %.48.val, i64 noundef returned %0) unnamed_addr #0 {
+define internal fastcc noundef i64 @ractor_port_close(ptr nofree readonly captures(address_is_null) %.48.val, i64 noundef returned %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
@@ -3499,7 +3499,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(read, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
-define internal range(i64 0, 21) i64 @builtin_inline_class_232(ptr readnone captures(none) %0, i64 %1) #13 {
+define internal range(i64 0, 21) i64 @builtin_inline_class_232(ptr nofree readnone captures(none) %0, i64 %1) #13 {
 bb.a:
   %i.a = load ptr, ptr @ruby_single_main_ractor, align 8, !tbaa !88
   %.not = icmp eq ptr %i.a, null
@@ -3508,7 +3508,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal i64 @ractor_create(ptr noundef readonly captures(none) %0, i64 noundef %1, i64 noundef %2, i64 noundef %3, i64 noundef %4, i64 noundef %5) #0 {
+define internal i64 @ractor_create(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, i64 noundef %2, i64 noundef %3, i64 noundef %4, i64 noundef %5) #0 {
 ractor_alloc.exit:
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
@@ -3556,7 +3556,7 @@ ractor_alloc.exit:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define internal i64 @builtin_inline_class_245(ptr noundef readonly captures(none) %0, i64 %1) #2 {
+define internal i64 @builtin_inline_class_245(ptr nofree noundef readonly captures(none) %0, i64 %1) #2 {
 rb_ec_ractor_ptr.exit:
   %i.a = getelementptr i8, ptr %0, i64 48
   %.val = load ptr, ptr %i.a, align 8, !tbaa !11, !nonnull !25, !noundef !25
@@ -3567,7 +3567,7 @@ rb_ec_ractor_ptr.exit:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define internal range(i64 1, 8589934592) i64 @builtin_inline_class_259(ptr readnone captures(none) %0, i64 %1) #2 {
+define internal range(i64 1, 8589934592) i64 @builtin_inline_class_259(ptr nofree readnone captures(none) %0, i64 %1) #2 {
 bb.a:
   %i.a = load ptr, ptr @ruby_current_vm_ptr, align 8, !tbaa !150
   %i.b = getelementptr i8, ptr %i.a, i64 24
@@ -3714,7 +3714,7 @@ ractor_selector__wait.exit:                       ; preds = %.lr.ph.i5, %rb_ec_r
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define internal i64 @builtin_inline_class_375(ptr readnone captures(none) %0, i64 noundef %1) #2 {
+define internal i64 @builtin_inline_class_375(ptr nofree readnone captures(none) %0, i64 noundef %1) #2 {
 bb.a:
   %i.a = inttoptr i64 %1 to ptr
   %i.b = getelementptr i8, ptr %i.a, i64 32
@@ -3725,7 +3725,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define internal i64 @builtin_inline_class_376(ptr readnone captures(none) %0, i64 noundef %1) #2 {
+define internal i64 @builtin_inline_class_376(ptr nofree readnone captures(none) %0, i64 noundef %1) #2 {
 bb.a:
   %i.a = inttoptr i64 %1 to ptr
   %i.b = getelementptr i8, ptr %i.a, i64 32
@@ -3736,7 +3736,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define internal range(i64 1, 8589934592) i64 @builtin_inline_class_377(ptr readnone captures(none) %0, i64 noundef %1) #2 {
+define internal range(i64 1, 8589934592) i64 @builtin_inline_class_377(ptr nofree readnone captures(none) %0, i64 noundef %1) #2 {
 bb.a:
   %i.a = inttoptr i64 %1 to ptr
   %i.b = getelementptr i8, ptr %i.a, i64 32
@@ -3750,7 +3750,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal i64 @builtin_inline_class_378(ptr readnone captures(none) %0, i64 noundef %1) #0 {
+define internal i64 @builtin_inline_class_378(ptr nofree readnone captures(none) %0, i64 noundef %1) #0 {
 bb.a:
   %i.a = inttoptr i64 %1 to ptr
   %i.b = getelementptr i8, ptr %i.a, i64 32
@@ -3773,7 +3773,7 @@ switch.lookup:                                    ; preds = %bb.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define internal i64 @builtin_inline_class_388(ptr readnone captures(none) %0, i64 noundef %1) #2 {
+define internal i64 @builtin_inline_class_388(ptr nofree readnone captures(none) %0, i64 noundef %1) #2 {
 bb.a:
   %i.a = inttoptr i64 %1 to ptr
   %i.b = getelementptr i8, ptr %i.a, i64 32
@@ -3784,7 +3784,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal range(i64 0, 21) i64 @builtin_inline_class_419(ptr noundef readonly captures(none) %0, i64 %1) #0 {
+define internal range(i64 0, 21) i64 @builtin_inline_class_419(ptr nofree noundef readonly captures(none) %0, i64 %1) #0 {
 bb.a:
   %2 = alloca %struct.obj_traverse_data, align 8  ; 8 uses
   %3 = alloca %struct.rb_obj_traverse_final_data, align 8 ; 6 uses
@@ -3856,7 +3856,7 @@ bb.e:                                             ; preds = %rb_ractor_shareable
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal range(i64 37, 36) i64 @builtin_inline_class_461(ptr noundef readonly captures(none) %0, i64 %1) #0 {
+define internal range(i64 37, 36) i64 @builtin_inline_class_461(ptr nofree noundef readonly captures(none) %0, i64 %1) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !213
@@ -3869,7 +3869,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal noundef i64 @builtin_inline_class_465(ptr noundef readonly captures(none) %0, i64 %1) #0 {
+define internal noundef i64 @builtin_inline_class_465(ptr nofree noundef readonly captures(none) %0, i64 %1) #0 {
 bb.a:
   %2 = alloca %struct.obj_traverse_data, align 8  ; 6 uses
   %3 = alloca %struct.rb_obj_traverse_final_data, align 8 ; 6 uses
@@ -3912,7 +3912,7 @@ rb_ractor_make_shareable.exit:                    ; preds = %bb.a, %bb.b, %bb.c
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal i64 @ractor_local_value(ptr noundef readonly captures(none) %0, i64 %1, i64 noundef %2) #0 {
+define internal i64 @ractor_local_value(ptr nofree noundef readonly captures(none) %0, i64 %1, i64 noundef %2) #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 2 uses
   %i.b = alloca i64, align 8                      ; 4 uses
@@ -3952,7 +3952,7 @@ bb.d:                                             ; preds = %bb.c, %rb_ec_ractor
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal noundef i64 @ractor_local_value_set(ptr noundef readonly captures(none) %0, i64 %1, i64 noundef %2, i64 noundef returned %3) #0 {
+define internal noundef i64 @ractor_local_value_set(ptr nofree noundef readonly captures(none) %0, i64 %1, i64 noundef %2, i64 noundef returned %3) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 48
   %.val = load ptr, ptr %i.a, align 8, !tbaa !11  ; 2 uses
@@ -3986,33 +3986,26 @@ bb.d:                                             ; preds = %bb.c, %rb_ec_ractor
 
 ; Function Attrs: nounwind sspstrong uwtable
 define internal i64 @ractor_local_value_store_if_absent(ptr noundef %0, i64 %1, i64 noundef %2) #0 {
-  %4 = alloca %struct.ractor_local_storage_store_data, align 8 ; 7 uses
-  %5 = alloca i64, align 8                        ; 4 uses
-  %6 = getelementptr i8, ptr %0, i64 48
-  %.val = load ptr, ptr %6, align 8, !tbaa !11    ; 2 uses
-  %.not.i = icmp eq ptr %.val, null
-  br i1 %.not.i, label %rb_ec_ractor_ptr.exit, label %7
-
-7:                                                ; preds = %3
-  %8 = getelementptr i8, ptr %.val, i64 24
-  %9 = load ptr, ptr %8, align 8, !tbaa !26
-  br label %rb_ec_ractor_ptr.exit
-
-rb_ec_ractor_ptr.exit:                            ; preds = %3, %7
-  %.0.i = phi ptr [ %9, %7 ], [ null, %3 ]        ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
-  store ptr %0, ptr %4, align 8, !tbaa !218
-  %i.a = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %i.b = getelementptr i8, ptr %.0.i, i64 392     ; 2 uses
+rb_ec_ractor_ptr.exit:
+  %3 = alloca %struct.ractor_local_storage_store_data, align 8 ; 7 uses
+  %4 = alloca i64, align 8                        ; 4 uses
+  %5 = getelementptr i8, ptr %0, i64 48
+  %.val = load ptr, ptr %5, align 8, !tbaa !11, !nonnull !25, !noundef !25
+  %6 = getelementptr i8, ptr %.val, i64 24
+  %7 = load ptr, ptr %6, align 8, !tbaa !26       ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
+  store ptr %0, ptr %3, align 8, !tbaa !218
+  %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  %i.b = getelementptr i8, ptr %7, i64 392        ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !217  ; 3 uses
   store ptr %i.c, ptr %i.a, align 8, !tbaa !220
-  %i.d = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.d = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.e = tail call i64 @rb_to_symbol(i64 noundef %2) #21
   %i.f = tail call i64 @rb_sym2id(i64 noundef %i.e) #21 ; 2 uses
   store i64 %i.f, ptr %i.d, align 8, !tbaa !221
-  %i.g = getelementptr inbounds nuw i8, ptr %4, i64 24
+  %i.g = getelementptr inbounds nuw i8, ptr %3, i64 24
   store i64 %2, ptr %i.g, align 8, !tbaa !222
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #21
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
   %i.h = icmp eq ptr %i.c, null
   br i1 %i.h, label %bb.a, label %bb.b
 
@@ -4023,16 +4016,16 @@ bb.a:                                             ; preds = %rb_ec_ractor_ptr.ex
   br label %bb.d
 
 bb.b:                                             ; preds = %rb_ec_ractor_ptr.exit
-  %i.j = call i32 @rb_id_table_lookup(ptr noundef nonnull %i.c, i64 noundef %i.f, ptr noundef nonnull %5) #21
+  %i.j = call i32 @rb_id_table_lookup(ptr noundef nonnull %i.c, i64 noundef %i.f, ptr noundef nonnull %4) #21
   %.not = icmp eq i32 %i.j, 0
   br i1 %.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.k = load i64, ptr %5, align 8, !tbaa !57
+  %i.k = load i64, ptr %4, align 8, !tbaa !57
   br label %bb.g
 
 bb.d:                                             ; preds = %bb.b, %bb.a
-  %i.l = getelementptr i8, ptr %.0.i, i64 400     ; 2 uses
+  %i.l = getelementptr i8, ptr %7, i64 400        ; 2 uses
   %i.m = load i64, ptr %i.l, align 8, !tbaa !223  ; 2 uses
   %.not10 = icmp eq i64 %i.m, 0
   br i1 %.not10, label %bb.e, label %bb.f
@@ -4044,19 +4037,19 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %i.o = phi i64 [ %i.n, %bb.e ], [ %i.m, %bb.d ]
-  %i.p = ptrtoint ptr %4 to i64
+  %i.p = ptrtoint ptr %3 to i64
   %i.q = call i64 @rb_mutex_synchronize(i64 noundef %i.o, ptr noundef nonnull @ractor_local_value_store_i, i64 noundef %i.p) #21
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.c
   %.0 = phi i64 [ %i.q, %bb.f ], [ %i.k, %bb.c ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #21
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #21
   ret i64 %.0
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define internal i64 @builtin_inline_class_520(ptr readnone captures(none) %0, i64 %1) #2 {
+define internal i64 @builtin_inline_class_520(ptr nofree readnone captures(none) %0, i64 %1) #2 {
 bb.a:
   %i.a = load ptr, ptr @ruby_current_vm_ptr, align 8, !tbaa !150
   %i.b = getelementptr i8, ptr %i.a, i64 32
@@ -4066,7 +4059,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define internal range(i64 0, 21) i64 @builtin_inline_class_527(ptr noundef readonly captures(none) %0, i64 %1) #2 {
+define internal range(i64 0, 21) i64 @builtin_inline_class_527(ptr nofree noundef readonly captures(none) %0, i64 %1) #2 {
 bb.a:
   %i.a = load ptr, ptr @ruby_current_vm_ptr, align 8, !tbaa !150
   %i.b = getelementptr i8, ptr %i.a, i64 32
@@ -4089,14 +4082,14 @@ rb_ec_ractor_ptr.exit:                            ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal i64 @ractor_require(ptr readnone captures(none) %0, i64 %1, i64 noundef %2) #0 {
+define internal i64 @ractor_require(ptr nofree readnone captures(none) %0, i64 %1, i64 noundef %2) #0 {
 bb.a:
   %i.a = tail call i64 @rb_ractor_require(i64 noundef %2, i1 noundef zeroext false)
   ret i64 %i.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define internal i64 @builtin_inline_class_567(ptr readnone captures(none) %0, i64 noundef %1) #2 {
+define internal i64 @builtin_inline_class_567(ptr nofree readnone captures(none) %0, i64 noundef %1) #2 {
 bb.a:
   %i.a = inttoptr i64 %1 to ptr
   %i.b = getelementptr i8, ptr %i.a, i64 32
@@ -4107,7 +4100,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal i64 @ractor_value(ptr noundef readonly captures(none) %0, i64 noundef %1) #0 {
+define internal i64 @ractor_value(ptr nofree noundef readonly captures(none) %0, i64 noundef %1) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 48
   %.val = load ptr, ptr %i.a, align 8, !tbaa !11  ; 2 uses
@@ -4166,7 +4159,7 @@ bb.g:                                             ; preds = %ractor_set_successo
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal range(i64 0, 21) i64 @ractor_monitor(ptr readnone captures(none) %0, i64 noundef %1, i64 noundef %2) #0 {
+define internal range(i64 0, 21) i64 @ractor_monitor(ptr nofree readnone captures(none) %0, i64 noundef %1, i64 noundef %2) #0 {
 bb.a:
   %i.a = inttoptr i64 %1 to ptr
   %i.b = getelementptr i8, ptr %i.a, i64 32
@@ -4256,7 +4249,7 @@ bb.c:                                             ; preds = %ractor_unlock.exit,
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal noundef i64 @ractor_unmonitor(ptr readnone captures(none) %0, i64 noundef returned %1, i64 noundef %2) #0 {
+define internal noundef i64 @ractor_unmonitor(ptr nofree readnone captures(none) %0, i64 noundef returned %1, i64 noundef %2) #0 {
 bb.a:
   %i.a = inttoptr i64 %1 to ptr
   %i.b = getelementptr i8, ptr %i.a, i64 32
@@ -4338,7 +4331,7 @@ ractor_unlock.exit:                               ; preds = %.loopexit, %rb_ec_r
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal i64 @builtin_inline_class_670(ptr noundef readonly captures(none) %0, i64 %1) #0 {
+define internal i64 @builtin_inline_class_670(ptr nofree noundef readonly captures(none) %0, i64 %1) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !213
@@ -4351,7 +4344,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal i64 @builtin_inline_class_684(ptr noundef readonly captures(none) %0, i64 %1) #0 {
+define internal i64 @builtin_inline_class_684(ptr nofree noundef readonly captures(none) %0, i64 %1) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !213
@@ -4408,7 +4401,7 @@ ractor_port_receive.exit:                         ; preds = %.lr.ph.i.i, %rb_ec_
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal noundef i64 @builtin_inline_class_785(ptr noundef readonly captures(none) %0, i64 noundef returned %1) #0 {
+define internal noundef i64 @builtin_inline_class_785(ptr nofree noundef readonly captures(none) %0, i64 noundef returned %1) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !213
@@ -4429,7 +4422,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal noundef i64 @builtin_inline_class_807(ptr noundef readonly captures(none) %0, i64 noundef returned %1) #0 {
+define internal noundef i64 @builtin_inline_class_807(ptr nofree noundef readonly captures(none) %0, i64 noundef returned %1) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 48
   %.val = load ptr, ptr %i.a, align 8, !tbaa !11
@@ -4438,7 +4431,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal range(i64 0, 21) i64 @builtin_inline_class_818(ptr readnone captures(none) %0, i64 noundef %1) #0 {
+define internal range(i64 0, 21) i64 @builtin_inline_class_818(ptr nofree readnone captures(none) %0, i64 noundef %1) #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = inttoptr i64 %1 to ptr
@@ -4479,7 +4472,7 @@ ractor_port_closed_p.exit:                        ; preds = %ractor_closed_port_
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define internal range(i64 1, 8589934592) i64 @builtin_inline_class_828(ptr readnone captures(none) %0, i64 noundef %1) #2 {
+define internal range(i64 1, 8589934592) i64 @builtin_inline_class_828(ptr nofree readnone captures(none) %0, i64 noundef %1) #2 {
 bb.a:
   %i.a = inttoptr i64 %1 to ptr
   %i.b = getelementptr i8, ptr %i.a, i64 32
@@ -4494,7 +4487,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal i64 @builtin_inline_class_830(ptr readnone captures(none) %0, i64 noundef %1) #0 {
+define internal i64 @builtin_inline_class_830(ptr nofree readnone captures(none) %0, i64 noundef %1) #0 {
 bb.a:
   %i.a = inttoptr i64 %1 to ptr
   %i.b = getelementptr i8, ptr %i.a, i64 32
@@ -4795,7 +4788,7 @@ ractor_sync_free.exit:                            ; preds = %bb.h, %bb.i
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal i64 @ractor_memsize(ptr noundef readonly captures(none) %0) #0 {
+define internal i64 @ractor_memsize(ptr nofree noundef readonly captures(none) %0) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 128
   %.val = load ptr, ptr %i.a, align 8, !tbaa !115 ; 2 uses
@@ -4886,7 +4879,7 @@ declare i32 @rb_st_delete(ptr noundef, ptr noundef, ptr noundef) local_unnamed_a
 declare void @rb_id_table_foreach_values(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal noundef i32 @idkey_local_storage_mark_i(i64 noundef %0, ptr readnone captures(none) %1) #0 {
+define internal noundef i32 @idkey_local_storage_mark_i(i64 noundef %0, ptr nofree readnone captures(none) %1) #0 {
 bb.a:
   tail call void @rb_gc_mark(i64 noundef %0) #21
   ret i32 0
@@ -4967,7 +4960,7 @@ declare i64 @rb_st_table_size(ptr noundef) local_unnamed_addr #1
 declare ptr @rb_st_init_numtable() local_unnamed_addr #1
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @ractor_selector_mark(ptr noundef readonly captures(none) %0) #0 {
+define internal void @ractor_selector_mark(ptr nofree noundef readonly captures(none) %0) #0 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !62     ; 2 uses
   %.not = icmp eq ptr %i.a, null
@@ -4991,7 +4984,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree nounwind sspstrong willreturn memory(read) uwtable
-define internal i64 @ractor_selector_memsize(ptr noundef readonly captures(none) %0) #14 {
+define internal i64 @ractor_selector_memsize(ptr nofree noundef readonly captures(none) %0) #14 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !62     ; 2 uses
   %.not = icmp eq ptr %i.a, null
@@ -5022,7 +5015,7 @@ declare i32 @rb_st_lookup(ptr noundef, i64 noundef, ptr noundef) local_unnamed_a
 declare i32 @rb_st_insert(ptr noundef, i64 noundef, i64 noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @ractor_port_mark(ptr noundef readonly captures(none) %0) #0 {
+define internal void @ractor_port_mark(ptr nofree noundef readonly captures(none) %0) #0 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !205    ; 2 uses
   %.not = icmp eq ptr %i.a, null
@@ -5045,7 +5038,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define internal noundef i64 @ractor_port_memsize(ptr readnone captures(none) %0) #9 {
+define internal noundef i64 @ractor_port_memsize(ptr nofree readnone captures(none) %0) #9 {
 bb.a:
   ret i64 16
 }
@@ -5280,7 +5273,7 @@ ractor_queue_deq.exit.thread:                     ; preds = %ractor_queue_deq.ex
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc i64 @ractor_try_receive(ptr noundef %0, ptr noundef readonly captures(none) %1) unnamed_addr #0 {
+define internal fastcc i64 @ractor_try_receive(ptr noundef %0, ptr nofree noundef readonly captures(none) %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = getelementptr i8, ptr %1, i64 8          ; 2 uses
@@ -5536,7 +5529,7 @@ declare i64 @rb_intern2(ptr noundef, i64 noundef) local_unnamed_addr #1
 declare void @rb_ractor_sched_wait(ptr noundef, ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @ubf_ractor_wait(ptr noundef captures(none) %0) #0 {
+define internal void @ubf_ractor_wait(ptr nofree noundef captures(none) %0) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 8          ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !245  ; 3 uses
@@ -5651,7 +5644,7 @@ declare i32 @rb_enc_dummy_p(ptr noundef) local_unnamed_addr #15
 declare i64 @rb_id2sym(i64 noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc void @ractor_send0(ptr noundef readonly captures(none) %0, i64 noundef %1, i64 noundef range(i64 0, 2) %2, i1 noundef zeroext %3) unnamed_addr #0 {
+define internal fastcc void @ractor_send0(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, i64 noundef range(i64 0, 2) %2, i1 noundef zeroext %3) unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
   %4 = alloca %struct.obj_traverse_replace_data, align 8 ; 8 uses
@@ -5969,7 +5962,7 @@ ractor_send_basket.exit:                          ; preds = %ractor_wakeup_all.e
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal range(i32 0, 2) i32 @move_enter(i64 noundef %0, ptr noundef writeonly captures(none) initializes((32, 40)) %1) #0 {
+define internal range(i32 0, 2) i32 @move_enter(i64 noundef %0, ptr nofree noundef writeonly captures(none) initializes((32, 40)) %1) #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %2 = alloca %struct.obj_traverse_data, align 8  ; 8 uses
@@ -6071,7 +6064,7 @@ rb_ractor_shareable_p.exit.thread:                ; preds = %rb_ractor_shareable
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal noundef i32 @move_leave(i64 noundef %0, ptr noundef readonly captures(none) %1) #0 {
+define internal noundef i32 @move_leave(i64 noundef %0, ptr nofree noundef readonly captures(none) %1) #0 {
 bb.a:
   %i.a = inttoptr i64 %0 to ptr                   ; 6 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !119
@@ -6474,7 +6467,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal range(i32 0, 2) i32 @obj_iv_hash_traverse_replace_i(ptr readnone captures(none) %0, ptr noundef captures(none) %1, i64 noundef %2, i32 %3) #0 {
+define internal range(i32 0, 2) i32 @obj_iv_hash_traverse_replace_i(ptr nofree readnone captures(none) %0, ptr nofree noundef captures(none) %1, i64 noundef %2, i32 %3) #0 {
 bb.a:
   %i.a = inttoptr i64 %2 to ptr                   ; 3 uses
   %i.b = getelementptr i8, ptr %i.a, i64 16
@@ -6530,7 +6523,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal range(i32 0, 2) i32 @obj_hash_traverse_replace_i(ptr noundef captures(none) %0, ptr noundef captures(none) %1, i64 noundef %2, i32 %3) #0 {
+define internal range(i32 0, 2) i32 @obj_hash_traverse_replace_i(ptr nofree noundef captures(none) %0, ptr nofree noundef captures(none) %1, i64 noundef %2, i32 %3) #0 {
 bb.a:
   %i.a = inttoptr i64 %2 to ptr                   ; 5 uses
   %i.b = getelementptr i8, ptr %i.a, i64 16
@@ -6696,7 +6689,7 @@ declare void @rb_ary_ptr_use_end(i64 noundef) local_unnamed_addr #1
 declare void @rb_objspace_reachable_objects_from(i64 noundef, ptr noundef, ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @obj_refer_only_shareables_p_i(i64 noundef %0, ptr noundef captures(none) %1) #0 {
+define internal void @obj_refer_only_shareables_p_i(i64 noundef %0, ptr nofree noundef captures(none) %1) #0 {
 bb.a:
   %2 = alloca %struct.obj_traverse_data, align 8  ; 8 uses
   %3 = alloca %struct.rb_obj_traverse_final_data, align 8 ; 6 uses
@@ -7099,7 +7092,7 @@ bb.c:                                             ; preds = %.sink.split, %bb.b
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @obj_traverse_reachable_i(i64 noundef %0, ptr noundef captures(none) %1) #0 {
+define internal void @obj_traverse_reachable_i(i64 noundef %0, ptr nofree noundef captures(none) %1) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %1, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !281
@@ -7122,7 +7115,7 @@ declare i64 @rb_proc_ractor_make_shareable(i64 noundef, i64 noundef) local_unnam
 declare i64 @rb_obj_id(i64 noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal range(i32 0, 2) i32 @copy_enter(i64 noundef %0, ptr noundef writeonly captures(none) initializes((32, 40)) %1) #0 {
+define internal range(i32 0, 2) i32 @copy_enter(i64 noundef %0, ptr nofree noundef writeonly captures(none) initializes((32, 40)) %1) #0 {
 bb.a:
   %2 = alloca %struct.obj_traverse_data, align 8  ; 8 uses
   %3 = alloca %struct.rb_obj_traverse_final_data, align 8 ; 6 uses
@@ -7191,7 +7184,7 @@ rb_ractor_shareable_p.exit.thread:                ; preds = %rb_ractor_shareable
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define internal noundef i32 @copy_leave(i64 %0, ptr readnone captures(none) %1) #9 {
+define internal noundef i32 @copy_leave(i64 %0, ptr nofree readnone captures(none) %1) #9 {
 bb.a:
   ret i32 0
 }

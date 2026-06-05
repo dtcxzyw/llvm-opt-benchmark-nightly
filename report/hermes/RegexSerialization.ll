@@ -201,7 +201,7 @@ $_ZGVZN4llvh7hashing6detail18get_execution_seedEvE4seed = comdat any
 @_ZN6hermes14CompiledRegExpC1ESt6vectorIhSaIhEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_OSt5dequeIN4llvh11SmallVectorIDsLj5EEESaISD_EEONSB_8DenseMapINSB_8ArrayRefIDsEEjNSB_12DenseMapInfoISJ_EENSB_6detail12DenseMapPairISJ_jEEEE = hidden unnamed_addr alias void (ptr, ptr, ptr, ptr, ptr, ptr), ptr @_ZN6hermes14CompiledRegExpC2ESt6vectorIhSaIhEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_OSt5dequeIN4llvh11SmallVectorIDsLj5EEESaISD_EEONSB_8DenseMapINSB_8ArrayRefIDsEEjNSB_12DenseMapInfoISJ_EENSB_6detail12DenseMapPairISJ_jEEEE
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN6hermes17dumpRegexBytecodeEN4llvh8ArrayRefIhEERNS0_11raw_ostreamE(ptr readonly captures(none) %0, i64 %1, ptr noundef nonnull align 8 dereferenceable(36) %2) local_unnamed_addr #0 {
+define hidden void @_ZN6hermes17dumpRegexBytecodeEN4llvh8ArrayRefIhEERNS0_11raw_ostreamE(ptr nofree readonly captures(none) %0, i64 %1, ptr noundef nonnull align 8 dereferenceable(36) %2) local_unnamed_addr #0 {
 bb.a:
   %3 = alloca %"class.llvh::format_object.95", align 16 ; 7 uses
   %4 = alloca %"class.llvh::FormattedNumber", align 8 ; 9 uses
@@ -604,7 +604,7 @@ _ZN4llvh11raw_ostreamlsEPKc.exit:                 ; preds = %bb.cj, %bb.ci, %bb.
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define internal fastcc void @_ZN12_GLOBAL__N_115dumpInstructionEPKN6hermes5regex11BracketInsnERN4llvh11raw_ostreamE(ptr noundef readonly captures(none) %0, ptr noundef nonnull align 8 dereferenceable(36) %1) unnamed_addr #0 {
+define internal fastcc void @_ZN12_GLOBAL__N_115dumpInstructionEPKN6hermes5regex11BracketInsnERN4llvh11raw_ostreamE(ptr nofree noundef readonly captures(none) %0, ptr noundef nonnull align 8 dereferenceable(36) %1) unnamed_addr #0 {
 bb.a:
   %2 = alloca %"class.llvh::FormattedNumber", align 8 ; 9 uses
   %3 = alloca %"class.llvh::FormattedNumber", align 8 ; 9 uses
@@ -1007,7 +1007,7 @@ _ZNSt6vectorIhSaIhEED2Ev.exit:                    ; preds = %_ZNSt7__cxx1112basi
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN6hermes14CompiledRegExpC2ESt6vectorIhSaIhEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_OSt5dequeIN4llvh11SmallVectorIDsLj5EEESaISD_EEONSB_8DenseMapINSB_8ArrayRefIDsEEjNSB_12DenseMapInfoISJ_EENSB_6detail12DenseMapPairISJ_jEEEE(ptr noundef nonnull align 8 dereferenceable(192) initializes((0, 24)) %0, ptr noundef captures(none) %1, ptr noundef %2, ptr noundef %3, ptr noundef nonnull align 8 captures(none) dereferenceable(80) %4, ptr noundef nonnull align 8 captures(none) dereferenceable(20) %5) unnamed_addr #0 align 2 {
+define hidden void @_ZN6hermes14CompiledRegExpC2ESt6vectorIhSaIhEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_OSt5dequeIN4llvh11SmallVectorIDsLj5EEESaISD_EEONSB_8DenseMapINSB_8ArrayRefIDsEEjNSB_12DenseMapInfoISJ_EENSB_6detail12DenseMapPairISJ_jEEEE(ptr noundef nonnull align 8 dereferenceable(192) initializes((0, 24)) %0, ptr nofree noundef captures(none) %1, ptr noundef %2, ptr noundef %3, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(80) %4, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(20) %5) unnamed_addr #0 align 2 {
 bb.a:
   %.sroa.0.i.i.i.i = alloca { ptr, i64 }, align 8 ; 4 uses
   %i.a = load <2 x ptr>, ptr %1, align 8, !tbaa !184
@@ -1160,7 +1160,7 @@ _ZNSt5dequeIN4llvh11SmallVectorIDsLj5EEESaIS2_EEC2EOS4_.exit: ; preds = %_ZNSt7_
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN6hermes14CompiledRegExp10tryCompileEN4llvh9StringRefES2_PS2_(ptr dead_on_unwind noalias writable sret(%"class.llvh::Optional") align 8 %0, ptr %1, i64 %2, ptr %3, i64 %4, ptr noundef writeonly captures(address_is_null) %5) local_unnamed_addr #0 align 2 {
+define hidden void @_ZN6hermes14CompiledRegExp10tryCompileEN4llvh9StringRefES2_PS2_(ptr dead_on_unwind noalias writable sret(%"class.llvh::Optional") align 8 %0, ptr %1, i64 %2, ptr %3, i64 %4, ptr nofree noundef writeonly captures(address_is_null) %5) local_unnamed_addr #0 align 2 {
 bb.a:
   %6 = alloca %"struct.std::_Deque_iterator", align 8 ; 6 uses
   %7 = alloca %"struct.std::_Deque_iterator", align 8 ; 6 uses
@@ -1563,7 +1563,7 @@ _ZN6hermes5regex16UTF16RegexTraitsD2Ev.exit:      ; preds = %_ZNSt6vectorIPN6her
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define hidden { ptr, i64 } @_ZNK6hermes14CompiledRegExp11getBytecodeEv(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(192) %0) local_unnamed_addr #4 align 2 {
+define hidden { ptr, i64 } @_ZNK6hermes14CompiledRegExp11getBytecodeEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(192) %0) local_unnamed_addr #4 align 2 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !210    ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1577,7 +1577,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZNK6hermes19UniquingRegExpTable12getEntryListEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::vector.36") align 8 captures(none) initializes((0, 24)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(48) %1) local_unnamed_addr #0 align 2 {
+define hidden void @_ZNK6hermes19UniquingRegExpTable12getEntryListEv(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::vector.36") align 8 captures(none) initializes((0, 24)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %1) local_unnamed_addr #0 align 2 {
 bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -1711,7 +1711,7 @@ _ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE9push_backEOS1_.exit: ; preds = 
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZNK6hermes19UniquingRegExpTable17getBytecodeBufferEv(ptr dead_on_unwind noalias writable sret(%"class.std::vector") align 8 initializes((0, 24)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(48) %1) local_unnamed_addr #0 align 2 {
+define hidden void @_ZNK6hermes19UniquingRegExpTable17getBytecodeBufferEv(ptr dead_on_unwind noalias writable sret(%"class.std::vector") align 8 initializes((0, 24)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %1) local_unnamed_addr #0 align 2 {
 bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   %i.a = load ptr, ptr %1, align 8, !tbaa !343    ; 2 uses
@@ -1750,7 +1750,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZNK6hermes19UniquingRegExpTable11disassembleERN4llvh11raw_ostreamE(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(36) %1) local_unnamed_addr #0 align 2 {
+define hidden void @_ZNK6hermes19UniquingRegExpTable11disassembleERN4llvh11raw_ostreamE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(36) %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !343    ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -2153,26 +2153,20 @@ _ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i: ; preds = %bb.n
   %i.ba = icmp ult i64 %i.az, %i.ax
   %i.bb = call i64 @llvm.umin.i64(i64 %i.az, i64 9223372036854775807)
   %i.bc = select i1 %i.ba, i64 9223372036854775807, i64 %i.bb ; 3 uses
-  %.not.i.i.i.i.i = icmp eq i64 %i.bc, 0
-  br i1 %.not.i.i.i.i.i, label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i.i, label %4
+  %.not.i.i.i.i.i = icmp ne i64 %i.bc, 0
+  call void @llvm.assume(i1 %.not.i.i.i.i.i)
+  %4 = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bc) #21 ; 4 uses
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 %i.ax ; 2 uses
+  store i8 %i.aq, ptr %5, align 1, !tbaa !19
+  %6 = icmp sgt i64 %i.ax, 0
+  br i1 %6, label %bb.p, label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i.i
 
-4:                                                ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i
-  %5 = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bc) #21
-  br label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i.i
-
-_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i.i: ; preds = %4, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i
-  %6 = phi ptr [ %5, %4 ], [ null, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i ] ; 4 uses
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 %i.ax ; 2 uses
-  store i8 %i.aq, ptr %7, align 1, !tbaa !19
-  %8 = icmp sgt i64 %i.ax, 0
-  br i1 %8, label %bb.p, label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i.i
-
-bb.p:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i.i
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %6, ptr align 1 %i.au, i64 %i.ax, i1 false)
+bb.p:                                             ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %4, ptr align 1 %i.au, i64 %i.ax, i1 false)
   br label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i.i
 
-_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i.i: ; preds = %bb.p, %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i.i
-  %i.bd = getelementptr inbounds nuw i8, ptr %7, i64 1 ; 2 uses
+_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i.i: ; preds = %bb.p, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i
+  %i.bd = getelementptr inbounds nuw i8, ptr %5, i64 1 ; 2 uses
   %.not.i17.i.i.i.i = icmp eq ptr %i.au, null
   br i1 %.not.i17.i.i.i.i, label %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i, label %bb.q
 
@@ -2181,9 +2175,9 @@ bb.q:                                             ; preds = %_ZNSt6vectorIhSaIhE
   br label %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i
 
 _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i: ; preds = %bb.q, %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i.i
-  store ptr %6, ptr %3, align 8, !tbaa !210
+  store ptr %4, ptr %3, align 8, !tbaa !210
   store ptr %i.bd, ptr %i.g, align 8, !tbaa !331
-  %i.be = getelementptr inbounds nuw i8, ptr %6, i64 %i.bc
+  %i.be = getelementptr inbounds nuw i8, ptr %4, i64 %i.bc
   store ptr %i.be, ptr %i.h, align 8, !tbaa !185
   br label %_ZN6hermes5regex19RegexBytecodeStream9emitChar8Ec.exit
 

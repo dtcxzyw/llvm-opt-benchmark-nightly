@@ -148,7 +148,7 @@ bb.a:
 declare ptr @mremap(ptr noundef, i64 noundef, i64 noundef, i32 noundef, ...) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local void @_ZN2v84base2OS29GetFirstFreeMemoryRangeWithinEmmmm(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::optional") align 8 captures(none) %0, i64 noundef %1, i64 noundef %2, i64 noundef %3, i64 noundef %4) local_unnamed_addr #0 align 2 {
+define dso_local void @_ZN2v84base2OS29GetFirstFreeMemoryRangeWithinEmmmm(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::optional") align 8 captures(none) %0, i64 noundef %1, i64 noundef %2, i64 noundef %3, i64 noundef %4) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = alloca i64, align 8                      ; 5 uses
@@ -366,7 +366,7 @@ _ZN2v84base12MemoryRegionD2Ev.exit:               ; preds = %bb.d, %.thread, %_Z
 declare i32 @__isoc23_sscanf(ptr noundef, ptr noundef, ...) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local void @_ZN2v84base25GetSharedLibraryAddressesEP8_IO_FILE(ptr dead_on_unwind noalias writable sret(%"class.std::vector") align 8 initializes((0, 24)) %0, ptr noundef captures(address_is_null) %1) local_unnamed_addr #0 {
+define dso_local void @_ZN2v84base25GetSharedLibraryAddressesEP8_IO_FILE(ptr dead_on_unwind noalias writable sret(%"class.std::vector") align 8 initializes((0, 24)) %0, ptr nofree noundef captures(address_is_null) %1) local_unnamed_addr #0 {
 bb.a:
   %2 = alloca %"class.std::unique_ptr", align 8   ; 5 uses
   %3 = alloca %"class.std::function", align 8     ; 6 uses
@@ -475,7 +475,7 @@ _ZNSt10unique_ptrISt6vectorIN2v84base12MemoryRegionESaIS3_EESt14default_deleteIS
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define internal fastcc void @_ZN2v84base12_GLOBAL__N_117ParseProcSelfMapsEP8_IO_FILESt8functionIFbRKNS0_12MemoryRegionEEEb(ptr dead_on_unwind noalias nonnull writable writeonly align 8 captures(none) %0, ptr noundef captures(address_is_null) %1, ptr noundef nonnull %2, i1 noundef zeroext %3) unnamed_addr #0 {
+define internal fastcc void @_ZN2v84base12_GLOBAL__N_117ParseProcSelfMapsEP8_IO_FILESt8functionIFbRKNS0_12MemoryRegionEEEb(ptr dead_on_unwind noalias nofree nonnull writable writeonly align 8 captures(none) %0, ptr nofree noundef captures(address_is_null) %1, ptr noundef nonnull %2, i1 noundef zeroext %3) unnamed_addr #0 {
 bb.a:
   %4 = alloca %"class.std::optional.0", align 8   ; 10 uses
   %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #19, !noalias !8 ; 11 uses
@@ -878,13 +878,13 @@ bb.a:
   %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = icmp eq i64 %i.f, 9223372036854775800
-  br i1 %i.g, label %bb.b, label %_ZNKSt6vectorIN2v84base2OS20SharedLibraryAddressESaIS3_EE12_M_check_lenEmPKc.exit
+  br i1 %i.g, label %bb.b, label %_ZNSt12_Vector_baseIN2v84base2OS20SharedLibraryAddressESaIS3_EE11_M_allocateEm.exit
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.9) #21
   unreachable
 
-_ZNKSt6vectorIN2v84base2OS20SharedLibraryAddressESaIS3_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
+_ZNSt12_Vector_baseIN2v84base2OS20SharedLibraryAddressESaIS3_EE11_M_allocateEm.exit: ; preds = %bb.a
   %5 = sdiv exact i64 %i.f, 56                    ; 3 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %5, i64 1)
   %6 = add nsw i64 %.sroa.speculated.i, %5        ; 2 uses
@@ -893,17 +893,11 @@ _ZNKSt6vectorIN2v84base2OS20SharedLibraryAddressESaIS3_EE12_M_check_lenEmPKc.exi
   %9 = select i1 %7, i64 164703072086692425, i64 %8 ; 3 uses
   %10 = ptrtoint ptr %1 to i64
   %11 = sub i64 %10, %i.e
-  %.not.i = icmp eq i64 %9, 0
-  br i1 %.not.i, label %_ZNSt12_Vector_baseIN2v84base2OS20SharedLibraryAddressESaIS3_EE11_M_allocateEm.exit, label %12
-
-12:                                               ; preds = %_ZNKSt6vectorIN2v84base2OS20SharedLibraryAddressESaIS3_EE12_M_check_lenEmPKc.exit
-  %13 = mul nuw nsw i64 %9, 56
-  %14 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %13) #19
-  br label %_ZNSt12_Vector_baseIN2v84base2OS20SharedLibraryAddressESaIS3_EE11_M_allocateEm.exit
-
-_ZNSt12_Vector_baseIN2v84base2OS20SharedLibraryAddressESaIS3_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorIN2v84base2OS20SharedLibraryAddressESaIS3_EE12_M_check_lenEmPKc.exit, %12
-  %15 = phi ptr [ %14, %12 ], [ null, %_ZNKSt6vectorIN2v84base2OS20SharedLibraryAddressESaIS3_EE12_M_check_lenEmPKc.exit ] ; 5 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %15, i64 %11 ; 7 uses
+  %.not.i = icmp ne i64 %9, 0
+  tail call void @llvm.assume(i1 %.not.i)
+  %12 = mul nuw nsw i64 %9, 56
+  %13 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %12) #19 ; 5 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %13, i64 %11 ; 7 uses
   %i.i = load i64, ptr %3, align 8
   %i.j = load i64, ptr %4, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 3 uses
@@ -968,7 +962,7 @@ _ZSt12construct_atIN2v84base2OS20SharedLibraryAddressEJRKNSt7__cxx1112basic_stri
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN2v84base2OS20SharedLibraryAddressESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZSt12construct_atIN2v84base2OS20SharedLibraryAddressEJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERmRKmEEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPSG_DpOSH_.exit, %_ZSt19__relocate_object_aIN2v84base2OS20SharedLibraryAddressES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i
-  %.012.i.i.i = phi ptr [ %i.ap, %_ZSt19__relocate_object_aIN2v84base2OS20SharedLibraryAddressES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i ], [ %15, %_ZSt12construct_atIN2v84base2OS20SharedLibraryAddressEJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERmRKmEEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPSG_DpOSH_.exit ] ; 6 uses
+  %.012.i.i.i = phi ptr [ %i.ap, %_ZSt19__relocate_object_aIN2v84base2OS20SharedLibraryAddressES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i ], [ %13, %_ZSt12construct_atIN2v84base2OS20SharedLibraryAddressEJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERmRKmEEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPSG_DpOSH_.exit ] ; 6 uses
   %.0911.i.i.i = phi ptr [ %i.ao, %_ZSt19__relocate_object_aIN2v84base2OS20SharedLibraryAddressES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i ], [ %i.c, %_ZSt12construct_atIN2v84base2OS20SharedLibraryAddressEJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERmRKmEEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPSG_DpOSH_.exit ] ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !36)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !39)
@@ -1013,7 +1007,7 @@ _ZSt19__relocate_object_aIN2v84base2OS20SharedLibraryAddressES3_SaIS3_EEvPT_PT0_
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN2v84base2OS20SharedLibraryAddressESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit, label %.lr.ph.i.i.i, !llvm.loop !42
 
 _ZNSt6vectorIN2v84base2OS20SharedLibraryAddressESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit: ; preds = %_ZSt19__relocate_object_aIN2v84base2OS20SharedLibraryAddressES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i, %_ZSt12construct_atIN2v84base2OS20SharedLibraryAddressEJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERmRKmEEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPSG_DpOSH_.exit
-  %.0.lcssa.i.i.i = phi ptr [ %15, %_ZSt12construct_atIN2v84base2OS20SharedLibraryAddressEJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERmRKmEEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPSG_DpOSH_.exit ], [ %i.ap, %_ZSt19__relocate_object_aIN2v84base2OS20SharedLibraryAddressES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i ]
+  %.0.lcssa.i.i.i = phi ptr [ %13, %_ZSt12construct_atIN2v84base2OS20SharedLibraryAddressEJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERmRKmEEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPSG_DpOSH_.exit ], [ %i.ap, %_ZSt19__relocate_object_aIN2v84base2OS20SharedLibraryAddressES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i ]
   %i.aq = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 56 ; 2 uses
   %.not10.i.i.i18 = icmp eq ptr %1, %i.b
   br i1 %.not10.i.i.i18, label %_ZNSt6vectorIN2v84base2OS20SharedLibraryAddressESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit28, label %.lr.ph.i.i.i19
@@ -1077,15 +1071,15 @@ bb.k:                                             ; preds = %_ZNSt6vectorIN2v84b
   br label %_ZNSt12_Vector_baseIN2v84base2OS20SharedLibraryAddressESaIS3_EE13_M_deallocateEPS3_m.exit
 
 _ZNSt12_Vector_baseIN2v84base2OS20SharedLibraryAddressESaIS3_EE13_M_deallocateEPS3_m.exit: ; preds = %_ZNSt6vectorIN2v84base2OS20SharedLibraryAddressESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit28, %bb.k
-  store ptr %15, ptr %0, align 8
+  store ptr %13, ptr %0, align 8
   store ptr %.0.lcssa.i.i.i27, ptr %i.a, align 8
-  %i.bl = getelementptr inbounds nuw [56 x i8], ptr %15, i64 %9
+  %i.bl = getelementptr inbounds nuw [56 x i8], ptr %13, i64 %9
   store ptr %i.bl, ptr %i.bh, align 8
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define internal noundef zeroext i1 @"_ZNSt17_Function_handlerIFbRKN2v84base12MemoryRegionEEZNS1_12_GLOBAL__N_120FindEnclosingMappingEmmE3$_0E9_M_invokeERKSt9_Any_dataS4_"(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(80) %1) #13 align 2 {
+define internal noundef zeroext i1 @"_ZNSt17_Function_handlerIFbRKN2v84base12MemoryRegionEEZNS1_12_GLOBAL__N_120FindEnclosingMappingEmmE3$_0E9_M_invokeERKSt9_Any_dataS4_"(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(80) %1) #13 align 2 {
 bb.a:
   %.val = load i64, ptr %0, align 8               ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1101,7 +1095,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define internal noundef zeroext i1 @"_ZNSt17_Function_handlerIFbRKN2v84base12MemoryRegionEEZNS1_12_GLOBAL__N_120FindEnclosingMappingEmmE3$_0E10_M_managerERSt9_Any_dataRKS9_St18_Manager_operation"(ptr noundef nonnull writeonly align 8 captures(none) dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef %2) #14 align 2 {
+define internal noundef zeroext i1 @"_ZNSt17_Function_handlerIFbRKN2v84base12MemoryRegionEEZNS1_12_GLOBAL__N_120FindEnclosingMappingEmmE3$_0E10_M_managerERSt9_Any_dataRKS9_St18_Manager_operation"(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef %2) #14 align 2 {
 bb.a:
   switch i32 %2, label %"_ZNSt14_Function_base13_Base_managerIZN2v84base12_GLOBAL__N_120FindEnclosingMappingEmmE3$_0E10_M_managerERSt9_Any_dataRKS6_St18_Manager_operation.exit" [
     i32 1, label %bb.b
@@ -1126,7 +1120,7 @@ bb.d:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define internal noundef zeroext i1 @"_ZNSt17_Function_handlerIFbRKN2v84base12MemoryRegionEEZNS1_25GetSharedLibraryAddressesEP8_IO_FILEE3$_0E9_M_invokeERKSt9_Any_dataS4_"(ptr nonnull readnone align 8 captures(none) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(80) %1) #13 align 2 {
+define internal noundef zeroext i1 @"_ZNSt17_Function_handlerIFbRKN2v84base12MemoryRegionEEZNS1_25GetSharedLibraryAddressesEP8_IO_FILEE3$_0E9_M_invokeERKSt9_Any_dataS4_"(ptr nofree nonnull readnone align 8 captures(none) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(80) %1) #13 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.b = load i8, ptr %i.a, align 8
@@ -1143,7 +1137,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define internal noundef zeroext i1 @"_ZNSt17_Function_handlerIFbRKN2v84base12MemoryRegionEEZNS1_25GetSharedLibraryAddressesEP8_IO_FILEE3$_0E10_M_managerERSt9_Any_dataRKSA_St18_Manager_operation"(ptr noundef nonnull writeonly align 8 captures(none) dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef %2) #15 align 2 {
+define internal noundef zeroext i1 @"_ZNSt17_Function_handlerIFbRKN2v84base12MemoryRegionEEZNS1_25GetSharedLibraryAddressesEP8_IO_FILEE3$_0E10_M_managerERSt9_Any_dataRKSA_St18_Manager_operation"(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef %2) #15 align 2 {
 bb.a:
   switch i32 %2, label %"_ZNSt14_Function_base13_Base_managerIZN2v84base25GetSharedLibraryAddressesEP8_IO_FILEE3$_0E10_M_managerERSt9_Any_dataRKS7_St18_Manager_operation.exit" [
     i32 1, label %"_ZNSt14_Function_base13_Base_managerIZN2v84base25GetSharedLibraryAddressesEP8_IO_FILEE3$_0E10_M_managerERSt9_Any_dataRKS7_St18_Manager_operation.exit.sink.split"

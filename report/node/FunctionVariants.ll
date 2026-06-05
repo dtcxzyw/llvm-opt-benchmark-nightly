@@ -201,7 +201,7 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #0
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #0
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN4LIEF5MachO16FunctionVariantsC2ERKNS0_7details21linkedit_data_commandE(ptr noundef nonnull align 8 dereferenceable(104) %0, ptr noundef nonnull readonly align 4 captures(none) dereferenceable(16) %1) unnamed_addr #1 align 2 {
+define hidden void @_ZN4LIEF5MachO16FunctionVariantsC2ERKNS0_7details21linkedit_data_commandE(ptr noundef nonnull align 8 dereferenceable(104) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %1) unnamed_addr #1 align 2 {
 bb.a:
   %i.a = load i32, ptr %1, align 4
   %i.b = zext i32 %i.a to i64
@@ -460,7 +460,7 @@ declare noundef nonnull align 8 dereferenceable(8) ptr @_ZNK4LIEF5MachO11LoadCom
 declare void @_ZN4LIEF6indentERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEm(ptr dead_on_unwind writable sret(%"class.std::__cxx11::basic_string") align 8, ptr noundef nonnull align 8 dereferenceable(32), i64 noundef) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZNK4LIEF5MachO16FunctionVariants12RuntimeTable9to_stringB5cxx11Ev(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1) local_unnamed_addr #1 align 2 {
+define hidden void @_ZNK4LIEF5MachO16FunctionVariants12RuntimeTable9to_stringB5cxx11Ev(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1) local_unnamed_addr #1 align 2 {
 bb.a:
   %2 = alloca %"struct.fmt::v11::detail::format_handler", align 8 ; 10 uses
   %i.a = alloca i8, align 1                       ; 4 uses
@@ -784,7 +784,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit7: ; preds = %bb.m, %b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_ZN4LIEF5MachO16FunctionVariants17RuntimeTableEntryC2ERKNS0_7details21runtime_table_entry_tE(ptr noundef nonnull writeonly align 8 captures(none) dereferenceable(40) initializes((0, 1), (4, 12), (16, 40)) %0, ptr noundef nonnull readonly align 4 captures(none) dereferenceable(8) %1) unnamed_addr #3 align 2 {
+define hidden void @_ZN4LIEF5MachO16FunctionVariants17RuntimeTableEntryC2ERKNS0_7details21runtime_table_entry_tE(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(40) initializes((0, 1), (4, 12), (16, 40)) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(8) %1) unnamed_addr #3 align 2 {
 bb.a:
   %i.a = load i32, ptr %1, align 4
   %.lobit = lshr i32 %i.a, 31
@@ -927,7 +927,7 @@ bb.k:                                             ; preds = %"_ZSt7find_ifIPKhZN
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #0
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN4LIEF5MachO20get_high_level_flagsEN3tcb4spanIKhLm18446744073709551615EEENS0_16FunctionVariants12RuntimeTable4KINDE(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::vector.53") align 8 captures(none) initializes((0, 24)) %0, ptr readonly captures(address) %1, i64 %2, i32 noundef %3) local_unnamed_addr #1 {
+define hidden void @_ZN4LIEF5MachO20get_high_level_flagsEN3tcb4spanIKhLm18446744073709551615EEENS0_16FunctionVariants12RuntimeTable4KINDE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::vector.53") align 8 captures(none) initializes((0, 24)) %0, ptr nofree readonly captures(address) %1, i64 %2, i32 noundef %3) local_unnamed_addr #1 {
 bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   %i.a = icmp ugt i64 %2, 2305843009213693951
@@ -1328,7 +1328,7 @@ _ZNSt6vectorIN4LIEF5MachO16FunctionVariants17RuntimeTableEntry5FLAGSESaIS4_EE9pu
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZNK4LIEF5MachO16FunctionVariants17RuntimeTableEntry9to_stringB5cxx11Ev(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) local_unnamed_addr #1 align 2 {
+define hidden void @_ZNK4LIEF5MachO16FunctionVariants17RuntimeTableEntry9to_stringB5cxx11Ev(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) local_unnamed_addr #1 align 2 {
 bb.a:
   %2 = alloca %"struct.fmt::v11::detail::format_handler", align 8 ; 10 uses
   %3 = alloca %"struct.fmt::v11::detail::format_handler", align 8 ; 10 uses
@@ -1731,25 +1731,19 @@ _ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.ad
   %i.fi = icmp ult i64 %i.fh, %i.ff
   %i.fj = call i64 @llvm.umin.i64(i64 %i.fh, i64 9223372036854775807)
   %i.fk = select i1 %i.fi, i64 9223372036854775807, i64 %i.fj ; 3 uses
-  %.not.i.i.i.i23 = icmp eq i64 %i.fk, 0
-  br i1 %.not.i.i.i.i23, label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i, label %17
+  %.not.i.i.i.i23 = icmp ne i64 %i.fk, 0
+  call void @llvm.assume(i1 %.not.i.i.i.i23)
+  %17 = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fk) #28 ; 4 uses
+  %18 = getelementptr inbounds nuw i8, ptr %17, i64 %i.ff ; 2 uses
+  store i8 %i.fc, ptr %18, align 1
+  %19 = icmp sgt i64 %i.ff, 0
+  br i1 %19, label %bb.af, label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i
 
-17:                                               ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i
-  %18 = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fk) #28
-  br label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i
-
-_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i: ; preds = %17, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i
-  %19 = phi ptr [ %18, %17 ], [ null, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i ] ; 4 uses
-  %20 = getelementptr inbounds nuw i8, ptr %19, i64 %i.ff ; 2 uses
-  store i8 %i.fc, ptr %20, align 1
-  %21 = icmp sgt i64 %i.ff, 0
-  br i1 %21, label %bb.af, label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i
-
-bb.af:                                            ; preds = %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %19, ptr align 1 %.sroa.074.0120, i64 %i.ff, i1 false)
+bb.af:                                            ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %17, ptr align 1 %.sroa.074.0120, i64 %i.ff, i1 false)
   br label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i
 
-_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i: ; preds = %bb.af, %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i
+_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i: ; preds = %bb.af, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i
   %.not.i17.i.i.i = icmp eq ptr %.sroa.074.0120, null
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i, label %bb.ag
 
@@ -1758,13 +1752,13 @@ bb.ag:                                            ; preds = %_ZNSt6vectorIhSaIhE
   br label %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i: ; preds = %bb.ag, %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i
-  %i.fl = getelementptr inbounds nuw i8, ptr %19, i64 %i.fk
+  %i.fl = getelementptr inbounds nuw i8, ptr %17, i64 %i.fk
   br label %_ZNSt6vectorIhSaIhEE9push_backEOh.exit
 
 _ZNSt6vectorIhSaIhEE9push_backEOh.exit:           ; preds = %bb.ac, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i
   %.sroa.1280.1 = phi ptr [ %i.fl, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i ], [ %.sroa.1280.0118, %bb.ac ] ; 2 uses
-  %.pn = phi ptr [ %20, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i ], [ %.sroa.777.0119, %bb.ac ]
-  %.sroa.074.1 = phi ptr [ %19, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i ], [ %.sroa.074.0120, %bb.ac ] ; 5 uses
+  %.pn = phi ptr [ %18, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i ], [ %.sroa.777.0119, %bb.ac ]
+  %.sroa.074.1 = phi ptr [ %17, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i ], [ %.sroa.074.0120, %bb.ac ] ; 5 uses
   %.sroa.777.1 = getelementptr inbounds nuw i8, ptr %.pn, i64 1 ; 2 uses
   switch i32 %i.fb, label %bb.cv [
     i32 3145728, label %_ZN4LIEF5MachOL11pretty_nameENS0_16FunctionVariants17RuntimeTableEntry5FLAGSE.exit
@@ -2167,7 +2161,7 @@ _ZNSt6vectorIN4LIEF5MachO16FunctionVariants12RuntimeTableESaIS3_EED2Ev.exit: ; p
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN4LIEF5MachO16FunctionVariants11parse_entryERNS_12BinaryStreamE(ptr dead_on_unwind noalias writable writeonly sret(%"class.LIEF::result.75") align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(24) %1) local_unnamed_addr #1 align 2 {
+define hidden void @_ZN4LIEF5MachO16FunctionVariants11parse_entryERNS_12BinaryStreamE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.LIEF::result.75") align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(24) %1) local_unnamed_addr #1 align 2 {
 bb.a:
   %2 = alloca %"struct.LIEF::MachO::details::runtime_table_entry_t", align 8 ; 5 uses
   %i.a = alloca i32, align 4                      ; 7 uses
