@@ -201,7 +201,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultuNtNtCs7JU2D1
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SyncNtB1B_4SendEL_EECs7JU2D1aBbVY_15deltalake_mount(ptr %.0.val, ptr readonly captures(none) %.8.val) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SyncNtB1B_4SendEL_EECs7JU2D1aBbVY_15deltalake_mount(ptr %.0.val, ptr nofree readonly captures(none) %.8.val) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
   %i.a = load ptr, ptr %.8.val, align 8, !invariant.load !4 ; 2 uses
@@ -604,7 +604,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCskQDtHcQtBkN_5tokio7runtime4
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCskQDtHcQtBkN_5tokio7runtime4task5error9JoinErrorECs7JU2D1aBbVY_15deltalake_mount(ptr %.8.val, ptr readonly captures(none) %.16.val) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCskQDtHcQtBkN_5tokio7runtime4task5error9JoinErrorECs7JU2D1aBbVY_15deltalake_mount(ptr %.8.val, ptr nofree readonly captures(none) %.16.val) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = icmp eq ptr %.8.val, null
   br i1 %i.a, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCskQDtHcQtBkN_5tokio7runtime4task5error4ReprECs7JU2D1aBbVY_15deltalake_mount.exit, label %bb.b
