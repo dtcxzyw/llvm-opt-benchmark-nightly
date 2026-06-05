@@ -201,7 +201,6 @@ define dso_local noundef nonnull ptr @_Z6createiRK3Vecd(i32 noundef %0, ptr nofr
 bb.a:
   %3 = alloca %"class.std::__cxx11::list", align 8 ; 22 uses
   %4 = alloca %struct.Vec, align 16               ; 19 uses
-  %.sroa.1 = alloca %struct.Vec, align 8          ; 2 uses
   %5 = alloca %"class.std::__cxx11::list", align 8 ; 19 uses
   %i.a = tail call noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #15 ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -349,7 +348,7 @@ bb.k:                                             ; preds = %bb.i, %bb.h, %bb.g,
   br label %bb.p
 
 bb.l:                                             ; preds = %bb.j
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.1, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
+  %.sroa.1.sroa.0.0.copyload79 = load <3 x double>, ptr %1, align 8
   %i.bj = getelementptr inbounds nuw i8, ptr %5, i64 8
   store ptr %5, ptr %i.bj, align 8, !tbaa !37
   store ptr %5, ptr %5, align 8, !tbaa !41
@@ -401,7 +400,7 @@ _ZNSt7__cxx114listIP5SceneSaIS2_EEC2ERKS4_.exit:  ; preds = %_ZNSt7__cxx114listI
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bh, i64 8
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTV6Sphere, i64 16), ptr %i.bx, align 8, !tbaa !19
   %i.by = getelementptr inbounds nuw i8, ptr %i.bh, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.by, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.1, i64 24, i1 false)
+  store <3 x double> %.sroa.1.sroa.0.0.copyload79, ptr %i.by, align 8
   %.sroa.3.8..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bh, i64 40
   store double %i.k, ptr %.sroa.3.8..sroa_idx, align 8
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bh, i64 48 ; 7 uses

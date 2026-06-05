@@ -201,10 +201,7 @@ _ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgra
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_(ptr %0, ptr %1) local_unnamed_addr #5 comdat {
 bb.a:
-  %.sroa.03.i.i14 = alloca %"class.geos::geom::Coordinate", align 8 ; 4 uses
   %2 = alloca %"class.geos::geomgraph::EdgeIntersection", align 8 ; 4 uses
-  %.sroa.03.i.i6 = alloca %"class.geos::geom::Coordinate", align 8 ; 4 uses
-  %.sroa.03.i.i = alloca %"class.geos::geom::Coordinate", align 8 ; 4 uses
   %3 = alloca %"class.geos::geomgraph::EdgeIntersection", align 8 ; 4 uses
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64                   ; 2 uses
@@ -260,8 +257,7 @@ _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeInters
   br label %bb.l
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit.i: ; preds = %bb.d, %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.03.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.03.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.019.i.ptr, i64 24, i1 false), !tbaa.struct !161
+  %.sroa.03.i.i.sroa.0.0.copyload = load <3 x double>, ptr %.sroa.0.019.i.ptr, align 8
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.k, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit.i
@@ -287,12 +283,11 @@ bb.k:                                             ; preds = %bb.j, %bb.h
   br label %bb.h, !llvm.loop !212
 
 _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i: ; preds = %bb.j, %bb.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.08.0.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.03.i.i, i64 24, i1 false), !tbaa.struct !161
+  store <3 x double> %.sroa.03.i.i.sroa.0.0.copyload, ptr %.sroa.08.0.i.i, align 8
   %.sroa.4.0..sroa_idx4.i.i = getelementptr inbounds nuw i8, ptr %.sroa.08.0.i.i, i64 24
   store double %i.m, ptr %.sroa.4.0..sroa_idx4.i.i, align 8, !tbaa !106
   %.sroa.5.0..sroa_idx6.i.i = getelementptr inbounds nuw i8, ptr %.sroa.08.0.i.i, i64 32
   store i64 %i.h, ptr %.sroa.5.0..sroa_idx6.i.i, align 8, !tbaa !118
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.03.i.i)
   br label %bb.l
 
 bb.l:                                             ; preds = %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i
@@ -307,8 +302,7 @@ _ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeInt
 
 .lr.ph.i7:                                        ; preds = %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_.exit, %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i10
   %.sroa.0.05.i = phi ptr [ %i.ag, %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i10 ], [ %i.y, %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_.exit ] ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.03.i.i6)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.03.i.i6, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.05.i, i64 24, i1 false), !tbaa.struct !161
+  %.sroa.03.i.i6.sroa.0.0.copyload = load <3 x double>, ptr %.sroa.0.05.i, align 8
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.05.i, i64 24
   %.sroa.4.0.copyload.i.i = load double, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !tbaa !106 ; 2 uses
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.05.i, i64 32
@@ -338,12 +332,11 @@ bb.p:                                             ; preds = %bb.o, %bb.m
   br label %bb.m, !llvm.loop !212
 
 _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i10: ; preds = %bb.o, %bb.n
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.08.0.i.i8, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.03.i.i6, i64 24, i1 false), !tbaa.struct !161
+  store <3 x double> %.sroa.03.i.i6.sroa.0.0.copyload, ptr %.sroa.08.0.i.i8, align 8
   %.sroa.4.0..sroa_idx4.i.i11 = getelementptr inbounds nuw i8, ptr %.sroa.08.0.i.i8, i64 24
   store double %.sroa.4.0.copyload.i.i, ptr %.sroa.4.0..sroa_idx4.i.i11, align 8, !tbaa !106
   %.sroa.5.0..sroa_idx6.i.i12 = getelementptr inbounds nuw i8, ptr %.sroa.08.0.i.i8, i64 32
   store i64 %.sroa.5.0.copyload.i.i, ptr %.sroa.5.0..sroa_idx6.i.i12, align 8, !tbaa !118
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.03.i.i6)
   %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.0.05.i, i64 40 ; 2 uses
   %.not.i13 = icmp eq ptr %i.ag, %1
   br i1 %.not.i13, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_.exit, label %.lr.ph.i7, !llvm.loop !214
@@ -413,8 +406,7 @@ _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeInters
   br label %bb.ac
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit.i21: ; preds = %bb.t, %bb.s
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.03.i.i14)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.03.i.i14, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.019.i19, i64 24, i1 false), !tbaa.struct !161
+  %.sroa.03.i.i14.sroa.0.0.copyload = load <3 x double>, ptr %.sroa.0.019.i19, align 8
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.ab, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit.i21
@@ -440,12 +432,11 @@ bb.ab:                                            ; preds = %bb.aa, %bb.y
   br label %bb.y, !llvm.loop !212
 
 _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i24: ; preds = %bb.aa, %bb.z
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.08.0.i.i22, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.03.i.i14, i64 24, i1 false), !tbaa.struct !161
+  store <3 x double> %.sroa.03.i.i14.sroa.0.0.copyload, ptr %.sroa.08.0.i.i22, align 8
   %.sroa.4.0..sroa_idx4.i.i25 = getelementptr inbounds nuw i8, ptr %.sroa.08.0.i.i22, i64 24
   store double %i.aq, ptr %.sroa.4.0..sroa_idx4.i.i25, align 8, !tbaa !106
   %.sroa.5.0..sroa_idx6.i.i26 = getelementptr inbounds nuw i8, ptr %.sroa.08.0.i.i22, i64 32
   store i64 %i.al, ptr %.sroa.5.0..sroa_idx6.i.i26, align 8, !tbaa !118
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.03.i.i14)
   br label %bb.ac
 
 bb.ac:                                            ; preds = %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i24, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i29
@@ -460,7 +451,6 @@ _ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgrap
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZSt11__sort_heapIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_RT0_(ptr %0, ptr %1, ptr noundef nonnull align 1 dereferenceable(1) %2) local_unnamed_addr #5 comdat {
 bb.a:
-  %.sroa.05.i = alloca %"class.geos::geom::Coordinate", align 8 ; 4 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = ptrtoint ptr %1 to i64
   %i.c = sub i64 %i.b, %i.a
@@ -470,8 +460,7 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_SC_RT0_.exit
   %.sroa.0.05 = phi ptr [ %i.e, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_SC_RT0_.exit ], [ %1, %bb.a ] ; 3 uses
   %i.e = getelementptr inbounds i8, ptr %.sroa.0.05, i64 -40 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.05.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.05.i, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false)
+  %.sroa.05.i.sroa.0.0.copyload = load <3 x double>, ptr %i.e, align 8
   %.sroa.48.0..sroa.0.0..sroa_idx.i = getelementptr inbounds i8, ptr %.sroa.0.05, i64 -16
   %.sroa.48.0.copyload.i = load double, ptr %.sroa.48.0..sroa.0.0..sroa_idx.i, align 8, !tbaa !106 ; 2 uses
   %.sroa.59.0..sroa.0.0..sroa_idx.i = getelementptr inbounds i8, ptr %.sroa.0.05, i64 -8
@@ -576,12 +565,11 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph.i.i.i
 _ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_SC_RT0_.exit: ; preds = %bb.h, %bb.i, %bb.j, %bb.g
   %.0.lcssa.i.i.i = phi i64 [ %.1.i.i, %bb.g ], [ 0, %bb.j ], [ %.019.i.i.i, %bb.h ], [ %.019.i.i.i, %bb.i ]
   %i.ay = getelementptr inbounds [40 x i8], ptr %0, i64 %.0.lcssa.i.i.i ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ay, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.05.i, i64 24, i1 false)
+  store <3 x double> %.sroa.05.i.sroa.0.0.copyload, ptr %i.ay, align 8
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ay, i64 24
   store double %.sroa.48.0.copyload.i, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !tbaa !106
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ay, i64 32
   store i64 %.sroa.59.0.copyload.i, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !tbaa !118
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.05.i)
   %i.az = icmp sgt i64 %i.g, 40
   br i1 %i.az, label %.lr.ph, label %._crit_edge, !llvm.loop !217
 
@@ -592,7 +580,6 @@ _ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeIntersect
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_RT0_(ptr %0, ptr %1, ptr noundef nonnull align 1 dereferenceable(1) %2) local_unnamed_addr #5 comdat {
 bb.a:
-  %.sroa.013 = alloca %"class.geos::geom::Coordinate", align 8 ; 4 uses
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
@@ -616,8 +603,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_less_iterEEvT_T0_SD_T1_T2_.exit, %bb.b
   %.07 = phi i64 [ %i.g, %bb.b ], [ %i.ay, %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_less_iterEEvT_T0_SD_T1_T2_.exit ] ; 8 uses
   %i.p = getelementptr inbounds [40 x i8], ptr %0, i64 %.07 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.013)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.013, ptr noundef nonnull align 8 dereferenceable(24) %i.p, i64 24, i1 false)
+  %.sroa.013.sroa.0.0.copyload25 = load <3 x double>, ptr %i.p, align 8
   %.sroa.416.0..sroa.0.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.p, i64 24
   %.sroa.416.0.copyload = load double, ptr %.sroa.416.0..sroa.0.0..sroa_idx, align 8, !tbaa !106 ; 2 uses
   %.sroa.517.0..sroa.0.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.p, i64 32
@@ -706,12 +692,11 @@ bb.k:                                             ; preds = %bb.j, %.lr.ph.i.i
 _ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN4geos9geomgraph16EdgeIntersectionESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_less_iterEEvT_T0_SD_T1_T2_.exit: ; preds = %bb.i, %bb.j, %bb.k, %bb.h
   %.0.lcssa.i.i = phi i64 [ %.1.i, %bb.h ], [ %.019.i.i, %bb.j ], [ %.019.i.i, %bb.i ], [ %.0920.i.i, %bb.k ]
   %i.ax = getelementptr inbounds [40 x i8], ptr %0, i64 %.0.lcssa.i.i ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ax, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.013, i64 24, i1 false)
+  store <3 x double> %.sroa.013.sroa.0.0.copyload25, ptr %i.ax, align 8
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ax, i64 24
   store double %.sroa.416.0.copyload, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !106
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ax, i64 32
   store i64 %.sroa.517.0.copyload, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !118
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.013)
   %.not = icmp eq i64 %.07, 0
   %i.ay = add nsw i64 %.07, -1
   br i1 %.not, label %.loopexit, label %bb.c, !llvm.loop !218

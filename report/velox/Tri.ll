@@ -6,7 +6,6 @@ target triple = "x86_64-pc-linux-gnu"
 
 module asm ".globl _ZSt21ios_base_library_initv"
 
-%"class.geos::geom::Coordinate" = type { double, double, double }
 %"class.std::vector" = type { %"struct.std::_Vector_base" }
 %"struct.std::_Vector_base" = type { %"struct.std::_Vector_base<geos::triangulate::tri::Tri *, std::allocator<geos::triangulate::tri::Tri *>>::_Vector_impl" }
 %"struct.std::_Vector_base<geos::triangulate::tri::Tri *, std::allocator<geos::triangulate::tri::Tri *>>::_Vector_impl" = type { %"struct.std::_Vector_base<geos::triangulate::tri::Tri *, std::allocator<geos::triangulate::tri::Tri *>>::_Vector_impl_data" }
@@ -16,6 +15,7 @@ module asm ".globl _ZSt21ios_base_library_initv"
 %union.anon.3 = type { i64, [8 x i8] }
 %"class.std::allocator.0" = type { i8 }
 %"class.geos::algorithm::LineIntersector" = type <{ ptr, i64, [2 x [2 x ptr]], [2 x %"class.geos::geom::Coordinate"], [2 x [2 x i64]], i8, [7 x i8] }>
+%"class.geos::geom::Coordinate" = type { double, double, double }
 %"class.std::unique_ptr" = type { %"struct.std::__uniq_ptr_data" }
 %"struct.std::__uniq_ptr_data" = type { %"class.std::__uniq_ptr_impl" }
 %"class.std::__uniq_ptr_impl" = type { %"class.std::tuple" }
@@ -247,10 +247,6 @@ bb.g:                                             ; preds = %bb.d, %bb.f, %bb.e,
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define void @_ZN4geos11triangulate3tri3Tri4flipEi(ptr noundef nonnull align 8 dereferenceable(96) %0, i32 noundef %1) local_unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 switch.lookup:
-  %2 = alloca %"class.geos::geom::Coordinate", align 8 ; 6 uses
-  %3 = alloca %"class.geos::geom::Coordinate", align 8 ; 8 uses
-  %4 = alloca %"class.geos::geom::Coordinate", align 8 ; 7 uses
-  %5 = alloca %"class.geos::geom::Coordinate", align 8 ; 4 uses
   %switch.idx.cast = zext i32 %1 to i64
   %switch.idx.mult = shl nuw nsw i64 %switch.idx.cast, 3
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %switch.idx.mult
@@ -276,7 +272,6 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNK4geos11triangulate3tri3Tri8getIndexEPS2_.exit: ; preds = %switch.lookup, %bb.a, %bb.b
   %.0.i10 = phi i32 [ 1, %bb.a ], [ 0, %switch.lookup ], [ %..i, %bb.b ] ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
   switch i32 %1, label %_ZNK4geos11triangulate3tri3Tri13getCoordinateEi.exit14.thread29 [
     i32 0, label %bb.c
     i32 1, label %_ZNK4geos11triangulate3tri3Tri13getCoordinateEi.exit.thread22
@@ -284,35 +279,26 @@ _ZNK4geos11triangulate3tri3Tri8getIndexEPS2_.exit: ; preds = %switch.lookup, %bb
 
 _ZNK4geos11triangulate3tri3Tri13getCoordinateEi.exit.thread22: ; preds = %_ZNK4geos11triangulate3tri3Tri8getIndexEPS2_.exit
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %i.l, i64 24, i1 false), !tbaa.struct !16
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 48
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %i.m, i64 24, i1 false), !tbaa.struct !16
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
   br label %_ZNK4geos11triangulate3tri3Tri13getCoordinateEi.exit16
 
 _ZNK4geos11triangulate3tri3Tri13getCoordinateEi.exit14.thread29: ; preds = %_ZNK4geos11triangulate3tri3Tri8getIndexEPS2_.exit
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 48
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %i.n, i64 24, i1 false), !tbaa.struct !16
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %0, i64 24, i1 false), !tbaa.struct !16
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 24
   br label %_ZNK4geos11triangulate3tri3Tri13getCoordinateEi.exit16
 
 bb.c:                                             ; preds = %_ZNK4geos11triangulate3tri3Tri8getIndexEPS2_.exit
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %0, i64 24, i1 false), !tbaa.struct !16
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %i.p, i64 24, i1 false), !tbaa.struct !16
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 48
   br label %_ZNK4geos11triangulate3tri3Tri13getCoordinateEi.exit16
 
 _ZNK4geos11triangulate3tri3Tri13getCoordinateEi.exit16: ; preds = %_ZNK4geos11triangulate3tri3Tri13getCoordinateEi.exit.thread22, %_ZNK4geos11triangulate3tri3Tri13getCoordinateEi.exit14.thread29, %bb.c
-  %.0.i15 = phi ptr [ %i.q, %bb.c ], [ %i.o, %_ZNK4geos11triangulate3tri3Tri13getCoordinateEi.exit14.thread29 ], [ %0, %_ZNK4geos11triangulate3tri3Tri13getCoordinateEi.exit.thread22 ]
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %.0.i15, i64 24, i1 false), !tbaa.struct !16
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
+  %.sroa.052.0.in = phi ptr [ %0, %_ZNK4geos11triangulate3tri3Tri13getCoordinateEi.exit14.thread29 ], [ %i.p, %bb.c ], [ %i.m, %_ZNK4geos11triangulate3tri3Tri13getCoordinateEi.exit.thread22 ]
+  %.sroa.056.0.in = phi ptr [ %i.n, %_ZNK4geos11triangulate3tri3Tri13getCoordinateEi.exit14.thread29 ], [ %0, %bb.c ], [ %i.l, %_ZNK4geos11triangulate3tri3Tri13getCoordinateEi.exit.thread22 ]
+  %.0.i15 = phi ptr [ %i.o, %_ZNK4geos11triangulate3tri3Tri13getCoordinateEi.exit14.thread29 ], [ %i.q, %bb.c ], [ %0, %_ZNK4geos11triangulate3tri3Tri13getCoordinateEi.exit.thread22 ]
+  %.sroa.056.0 = load <3 x double>, ptr %.sroa.056.0.in, align 8
+  %.sroa.052.0 = load <3 x double>, ptr %.sroa.052.0.in, align 8
+  %.sroa.049.0.copyload = load <3 x double>, ptr %.0.i15, align 8 ; 2 uses
   switch i32 %.0.i10, label %bb.d [
     i32 2, label %_ZN4geos11triangulate3tri3Tri9oppVertexEi.exit18
     i32 1, label %_ZNK4geos11triangulate3tri3Tri13getCoordinateEi.exit20
@@ -328,17 +314,17 @@ bb.d:                                             ; preds = %_ZNK4geos11triangul
 
 _ZNK4geos11triangulate3tri3Tri13getCoordinateEi.exit20: ; preds = %_ZNK4geos11triangulate3tri3Tri13getCoordinateEi.exit16, %_ZN4geos11triangulate3tri3Tri9oppVertexEi.exit18, %bb.d
   %.0.i19 = phi ptr [ %i.s, %bb.d ], [ %i.r, %_ZN4geos11triangulate3tri3Tri9oppVertexEi.exit18 ], [ %.0.i, %_ZNK4geos11triangulate3tri3Tri13getCoordinateEi.exit16 ] ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(24) %.0.i19, i64 24, i1 false), !tbaa.struct !16
+  %.sroa.0.0.copyload = load <3 x double>, ptr %.0.i19, align 8
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %.0.i19, i64 24, i1 false)
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.t, ptr noundef nonnull readonly align 8 dereferenceable(24) %4, i64 24, i1 false), !tbaa.struct !16
+  store <3 x double> %.sroa.049.0.copyload, ptr %i.t, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 48
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.u, ptr noundef nonnull readonly align 8 dereferenceable(24) %2, i64 24, i1 false), !tbaa.struct !16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %.0.i, ptr noundef nonnull readonly align 8 dereferenceable(24) %4, i64 24, i1 false), !tbaa.struct !16
+  store <3 x double> %.sroa.056.0, ptr %i.u, align 8
+  store <3 x double> %.sroa.049.0.copyload, ptr %.0.i, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %.0.i, i64 24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.v, ptr noundef nonnull readonly align 8 dereferenceable(24) %5, i64 24, i1 false), !tbaa.struct !16
+  store <3 x double> %.sroa.0.0.copyload, ptr %i.v, align 8
   %i.w = getelementptr inbounds nuw i8, ptr %.0.i, i64 48
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.w, ptr noundef nonnull readonly align 8 dereferenceable(24) %3, i64 24, i1 false), !tbaa.struct !16
+  store <3 x double> %.sroa.052.0, ptr %i.w, align 8
   %i.x = zext nneg i32 %1 to i64
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii, i64 %i.x
   %switch.load = load i64, ptr %switch.gep, align 8
@@ -452,10 +438,6 @@ bb.p:                                             ; preds = %bb.o
   br label %_ZN4geos11triangulate3tri3Tri4flipEPS2_iiRKNS_4geom10CoordinateES7_S7_S7_.exit
 
 _ZN4geos11triangulate3tri3Tri4flipEPS2_iiRKNS_4geom10CoordinateES7_S7_S7_.exit: ; preds = %_ZN4geos11triangulate3tri3Tri7replaceEPS2_S3_.exit.i, %bb.l, %bb.n, %bb.o, %bb.p
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
   ret void
 }
 

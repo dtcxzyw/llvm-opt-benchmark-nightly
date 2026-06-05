@@ -6,8 +6,8 @@ target triple = "x86_64-pc-linux-gnu"
 
 module asm ".globl _ZSt21ios_base_library_initv"
 
-%"class.geos::geom::Coordinate" = type { double, double, double }
 %"struct.std::array" = type { [2 x %"class.geos::geom::Coordinate"] }
+%"class.geos::geom::Coordinate" = type { double, double, double }
 %"class.geos::algorithm::LineIntersector" = type <{ ptr, i64, [2 x [2 x ptr]], [2 x %"class.geos::geom::Coordinate"], [2 x [2 x i64]], i8, [7 x i8] }>
 %"class.std::__cxx11::basic_string" = type { %"struct.std::__cxx11::basic_string<char>::_Alloc_hider", i64, %union.anon.0 }
 %"struct.std::__cxx11::basic_string<char>::_Alloc_hider" = type { ptr }
@@ -62,13 +62,10 @@ $_ZTVN4geos4util13GEOSExceptionE = comdat any
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define void @_ZN4geos4geom11LineSegment7reverseEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(48) %0) local_unnamed_addr #0 align 2 {
 bb.a:
-  %1 = alloca %"class.geos::geom::Coordinate", align 8 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %1)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %0, i64 24, i1 false), !tbaa.struct !7
+  %.sroa.0.0.copyload = load <3 x double>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false), !tbaa.struct !7
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false), !tbaa.struct !7
-  call void @llvm.lifetime.end.p0(ptr nonnull %1)
+  store <3 x double> %.sroa.0.0.copyload, ptr %i.a, align 8
   ret void
 }
 

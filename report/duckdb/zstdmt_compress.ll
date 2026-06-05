@@ -94,7 +94,7 @@ bb.i:                                             ; preds = %bb.h
   br label %_ZN11duckdb_zstdL20ZSTDMT_releaseBufferEPNS_19ZSTDMT_bufferPool_sENS_8buffer_sE.exit.i
 
 bb.j:                                             ; preds = %bb.h
-  tail call void @free(ptr noundef nonnull %.sroa.0.0.copyload.i) #15
+  tail call void @free(ptr noundef nonnull %.sroa.0.0.copyload.i) #14
   br label %_ZN11duckdb_zstdL20ZSTDMT_releaseBufferEPNS_19ZSTDMT_bufferPool_sENS_8buffer_sE.exit.i
 
 _ZN11duckdb_zstdL20ZSTDMT_releaseBufferEPNS_19ZSTDMT_bufferPool_sENS_8buffer_sE.exit.i: ; preds = %bb.j, %bb.i, %bb.g, %bb.e
@@ -127,7 +127,7 @@ bb.k:                                             ; preds = %.preheader.preheade
   br label %_ZN11duckdb_zstdL20ZSTDMT_freeJobsTableEPNS_21ZSTDMT_jobDescriptionEjNS_14ZSTD_customMemE.exit
 
 bb.l:                                             ; preds = %.preheader.preheader.i
-  tail call void @free(ptr noundef nonnull %i.ac) #15
+  tail call void @free(ptr noundef nonnull %i.ac) #14
   br label %_ZN11duckdb_zstdL20ZSTDMT_freeJobsTableEPNS_21ZSTDMT_jobDescriptionEjNS_14ZSTD_customMemE.exit
 
 _ZN11duckdb_zstdL20ZSTDMT_freeJobsTableEPNS_21ZSTDMT_jobDescriptionEjNS_14ZSTD_customMemE.exit: ; preds = %bb.k, %bb.l
@@ -181,7 +181,7 @@ bb.n:                                             ; preds = %._crit_edge.thread.
   br label %bb.p
 
 bb.o:                                             ; preds = %._crit_edge.thread.i
-  tail call void @free(ptr noundef nonnull %i.ay) #15
+  tail call void @free(ptr noundef nonnull %i.ay) #14
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n, %._crit_edge.i, %bb.m
@@ -197,7 +197,7 @@ bb.q:                                             ; preds = %bb.p
   br label %_ZN11duckdb_zstdL19ZSTDMT_freeCCtxPoolEPNS_15ZSTDMT_CCtxPoolE.exit
 
 bb.r:                                             ; preds = %bb.p
-  tail call void @free(ptr noundef nonnull %i.al) #15
+  tail call void @free(ptr noundef nonnull %i.al) #14
   br label %_ZN11duckdb_zstdL19ZSTDMT_freeCCtxPoolEPNS_15ZSTDMT_CCtxPoolE.exit
 
 _ZN11duckdb_zstdL19ZSTDMT_freeCCtxPoolEPNS_15ZSTDMT_CCtxPoolE.exit: ; preds = %_ZN11duckdb_zstdL20ZSTDMT_freeJobsTableEPNS_21ZSTDMT_jobDescriptionEjNS_14ZSTD_customMemE.exit, %bb.q, %bb.r
@@ -228,7 +228,7 @@ _ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit.i: ; preds = %bb.
   br i1 %.not.i6.i, label %_ZN11duckdb_zstdL23ZSTDMT_serialState_freeEPNS_13serialState_tE.exit, label %bb.u
 
 _ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit.thread.i: ; preds = %bb.s
-  tail call void @free(ptr noundef nonnull %i.bc) #15
+  tail call void @free(ptr noundef nonnull %i.bc) #14
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 624
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !64 ; 2 uses
   %.not.i613.i = icmp eq ptr %i.bg, null
@@ -244,7 +244,7 @@ bb.v:                                             ; preds = %bb.u
 
 .thread.i:                                        ; preds = %bb.u, %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit.thread.i
   %i.bh = phi ptr [ %i.be, %bb.u ], [ %i.bg, %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit.thread.i ]
-  tail call void @free(ptr noundef nonnull %i.bh) #15
+  tail call void @free(ptr noundef nonnull %i.bh) #14
   br label %_ZN11duckdb_zstdL23ZSTDMT_serialState_freeEPNS_13serialState_tE.exit
 
 _ZN11duckdb_zstdL23ZSTDMT_serialState_freeEPNS_13serialState_tE.exit: ; preds = %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit.i, %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit.thread.i, %bb.v, %.thread.i
@@ -267,7 +267,7 @@ bb.x:                                             ; preds = %bb.w
   br label %bb.z
 
 bb.y:                                             ; preds = %bb.w
-  tail call void @free(ptr noundef nonnull %i.bm) #15
+  tail call void @free(ptr noundef nonnull %i.bm) #14
   br label %bb.z
 
 bb.z:                                             ; preds = %_ZN11duckdb_zstdL23ZSTDMT_serialState_freeEPNS_13serialState_tE.exit, %bb.x, %bb.y
@@ -281,7 +281,7 @@ bb.aa:                                            ; preds = %bb.z
   br label %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit36
 
 bb.ab:                                            ; preds = %bb.z
-  tail call void @free(ptr noundef nonnull %0) #15
+  tail call void @free(ptr noundef nonnull %0) #14
   br label %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit36
 
 _ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit36: ; preds = %bb.ab, %bb.aa, %bb.a
@@ -335,7 +335,7 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit
 
 bb.f:                                             ; preds = %bb.d
-  tail call void @free(ptr noundef nonnull %i.g) #15
+  tail call void @free(ptr noundef nonnull %i.g) #14
   br label %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit
 
 _ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit: ; preds = %bb.c, %bb.e, %bb.f
@@ -365,7 +365,7 @@ bb.g:                                             ; preds = %._crit_edge.thread
   br label %bb.i
 
 bb.h:                                             ; preds = %._crit_edge.thread
-  tail call void @free(ptr noundef nonnull %i.k) #15
+  tail call void @free(ptr noundef nonnull %i.k) #14
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.b, %._crit_edge, %bb.g, %bb.h
@@ -381,7 +381,7 @@ bb.j:                                             ; preds = %bb.i
   br label %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit23
 
 bb.k:                                             ; preds = %bb.i
-  tail call void @free(ptr noundef nonnull %0) #15
+  tail call void @free(ptr noundef nonnull %0) #14
   br label %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit23
 
 _ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit23: ; preds = %bb.k, %bb.j, %bb.a
@@ -602,11 +602,11 @@ bb.a:
   %i.d = load i32, ptr %i.c, align 4, !tbaa !80
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 84
   store i32 %i.d, ptr %i.e, align 4, !tbaa !81
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #14
   call void @_ZN11duckdb_zstd29ZSTD_getCParamsFromCCtxParamsEPKNS_18ZSTD_CCtx_params_sEmmNS_17ZSTD_cParamMode_eE(ptr dead_on_unwind nonnull writable sret(%"struct.duckdb_zstd::ZSTD_compressionParameters") align 4 %2, ptr noundef %1, i64 noundef -1, i64 noundef 0, i32 noundef 0)
   store i32 %i.b, ptr %2, align 4, !tbaa !82
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %i.a, ptr noundef nonnull align 4 dereferenceable(28) %2, i64 28, i1 false), !tbaa.struct !83
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #14
   ret void
 }
 
@@ -790,7 +790,7 @@ bb.e:                                             ; preds = %.preheader.preheade
   br label %_ZN11duckdb_zstdL20ZSTDMT_freeJobsTableEPNS_21ZSTDMT_jobDescriptionEjNS_14ZSTD_customMemE.exit.i.i
 
 bb.f:                                             ; preds = %.preheader.preheader.i.i.i
-  tail call void @free(ptr noundef nonnull %i.o) #15
+  tail call void @free(ptr noundef nonnull %i.o) #14
   br label %_ZN11duckdb_zstdL20ZSTDMT_freeJobsTableEPNS_21ZSTDMT_jobDescriptionEjNS_14ZSTD_customMemE.exit.i.i
 
 _ZN11duckdb_zstdL20ZSTDMT_freeJobsTableEPNS_21ZSTDMT_jobDescriptionEjNS_14ZSTD_customMemE.exit.i.i: ; preds = %bb.f, %bb.e, %bb.d
@@ -812,7 +812,7 @@ bb.g:                                             ; preds = %_ZN11duckdb_zstdL20
   br label %_ZN11duckdb_zstdL17ZSTD_customCallocEmNS_14ZSTD_customMemE.exit.i.i.i
 
 bb.h:                                             ; preds = %_ZN11duckdb_zstdL20ZSTDMT_freeJobsTableEPNS_21ZSTDMT_jobDescriptionEjNS_14ZSTD_customMemE.exit.i.i
-  %i.y = tail call noalias ptr @calloc(i64 noundef 1, i64 noundef range(i64 -17179869184, 1580547964561) %i.w) #16
+  %i.y = tail call noalias ptr @calloc(i64 noundef 1, i64 noundef range(i64 -17179869184, 1580547964561) %i.w) #15
   br label %_ZN11duckdb_zstdL17ZSTD_customCallocEmNS_14ZSTD_customMemE.exit.i.i.i
 
 _ZN11duckdb_zstdL17ZSTD_customCallocEmNS_14ZSTD_customMemE.exit.i.i.i: ; preds = %bb.h, %bb.g
@@ -896,7 +896,7 @@ bb.n:                                             ; preds = %._crit_edge.thread.
   br label %bb.p
 
 bb.o:                                             ; preds = %._crit_edge.thread.i.i.i
-  tail call void @free(ptr noundef nonnull %i.ax) #15
+  tail call void @free(ptr noundef nonnull %i.ax) #14
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n, %._crit_edge.i.i.i, %bb.m
@@ -912,7 +912,7 @@ bb.q:                                             ; preds = %bb.p
   br label %_ZN11duckdb_zstdL19ZSTDMT_freeCCtxPoolEPNS_15ZSTDMT_CCtxPoolE.exit.i.i
 
 bb.r:                                             ; preds = %bb.p
-  tail call void @free(ptr noundef nonnull %i.ai) #15
+  tail call void @free(ptr noundef nonnull %i.ai) #14
   br label %_ZN11duckdb_zstdL19ZSTDMT_freeCCtxPoolEPNS_15ZSTDMT_CCtxPoolE.exit.i.i
 
 _ZN11duckdb_zstdL19ZSTDMT_freeCCtxPoolEPNS_15ZSTDMT_CCtxPoolE.exit.i.i: ; preds = %bb.r, %bb.q
@@ -921,7 +921,7 @@ _ZN11duckdb_zstdL19ZSTDMT_freeCCtxPoolEPNS_15ZSTDMT_CCtxPoolE.exit.i.i: ; preds 
   br i1 %.not.i.i9.i.i, label %_ZN11duckdb_zstdL17ZSTD_customCallocEmNS_14ZSTD_customMemE.exit.i.i25.i, label %bb.s
 
 _ZN11duckdb_zstdL17ZSTD_customCallocEmNS_14ZSTD_customMemE.exit.i.i25.i: ; preds = %_ZN11duckdb_zstdL19ZSTDMT_freeCCtxPoolEPNS_15ZSTDMT_CCtxPoolE.exit.i.i
-  %i.ay = tail call noalias dereferenceable_or_null(48) ptr @calloc(i64 noundef 1, i64 noundef 48) #16 ; 3 uses
+  %i.ay = tail call noalias dereferenceable_or_null(48) ptr @calloc(i64 noundef 1, i64 noundef 48) #15 ; 3 uses
   %.not.i10.i.i = icmp eq ptr %i.ay, null
   br i1 %.not.i10.i.i, label %_ZN11duckdb_zstdL21ZSTDMT_expandCCtxPoolEPNS_15ZSTDMT_CCtxPoolEi.exit.thread.i, label %bb.t
 
@@ -943,7 +943,7 @@ bb.t:                                             ; preds = %_ZN11duckdb_zstdL17
   store i32 %i.b, ptr %i.be, align 4, !tbaa !56
   %i.bf = sext i32 %i.b to i64
   %i.bg = shl nsw i64 %i.bf, 3
-  %i.bh = tail call noalias ptr @calloc(i64 noundef 1, i64 noundef range(i64 -17179869184, 1580547964561) %i.bg) #16
+  %i.bh = tail call noalias ptr @calloc(i64 noundef 1, i64 noundef range(i64 -17179869184, 1580547964561) %i.bg) #15
   br label %_ZN11duckdb_zstdL17ZSTD_customCallocEmNS_14ZSTD_customMemE.exit21.i.i.i
 
 _ZN11duckdb_zstdL17ZSTD_customCallocEmNS_14ZSTD_customMemE.exit21.i.i.i: ; preds = %bb.t, %bb.s
@@ -968,7 +968,7 @@ bb.v:                                             ; preds = %bb.u
   br label %_ZN11duckdb_zstdL21ZSTDMT_expandCCtxPoolEPNS_15ZSTDMT_CCtxPoolEi.exit.thread.i
 
 bb.w:                                             ; preds = %bb.u
-  tail call void @free(ptr noundef nonnull %.0.i5052.i.i.i) #15
+  tail call void @free(ptr noundef nonnull %.0.i5052.i.i.i) #14
   br label %_ZN11duckdb_zstdL21ZSTDMT_expandCCtxPoolEPNS_15ZSTDMT_CCtxPoolEi.exit.thread.i
 
 bb.x:                                             ; preds = %_ZN11duckdb_zstdL17ZSTD_customCallocEmNS_14ZSTD_customMemE.exit21.i.i.i
@@ -1016,7 +1016,7 @@ bb.y:                                             ; preds = %._crit_edge.thread.
   br label %bb.aa
 
 bb.z:                                             ; preds = %._crit_edge.thread.i26.i.i.i
-  tail call void @free(ptr noundef nonnull %i.bw) #15
+  tail call void @free(ptr noundef nonnull %i.bw) #14
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.y, %._crit_edge.i40.i.i.i
@@ -1032,7 +1032,7 @@ bb.ab:                                            ; preds = %bb.aa
   br label %_ZN11duckdb_zstdL21ZSTDMT_expandCCtxPoolEPNS_15ZSTDMT_CCtxPoolEi.exit.thread.i
 
 bb.ac:                                            ; preds = %bb.aa
-  tail call void @free(ptr noundef nonnull %.0.i5052.i.i.i) #15
+  tail call void @free(ptr noundef nonnull %.0.i5052.i.i.i) #14
   br label %_ZN11duckdb_zstdL21ZSTDMT_expandCCtxPoolEPNS_15ZSTDMT_CCtxPoolEi.exit.thread.i
 
 bb.ad:                                            ; preds = %bb.x
@@ -1150,7 +1150,7 @@ bb.an:                                            ; preds = %bb.am
   br label %_ZN11duckdb_zstdL20ZSTDMT_releaseBufferEPNS_19ZSTDMT_bufferPool_sENS_8buffer_sE.exit.i
 
 bb.ao:                                            ; preds = %bb.am
-  tail call void @free(ptr noundef nonnull %.sroa.0.0.copyload.i) #15
+  tail call void @free(ptr noundef nonnull %.sroa.0.0.copyload.i) #14
   br label %_ZN11duckdb_zstdL20ZSTDMT_releaseBufferEPNS_19ZSTDMT_bufferPool_sENS_8buffer_sE.exit.i
 
 _ZN11duckdb_zstdL20ZSTDMT_releaseBufferEPNS_19ZSTDMT_bufferPool_sENS_8buffer_sE.exit.i: ; preds = %bb.ao, %bb.an, %bb.al, %bb.aj
@@ -1423,7 +1423,7 @@ bb.bl:                                            ; preds = %bb.bk
   br label %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit
 
 bb.bm:                                            ; preds = %bb.bk
-  tail call void @free(ptr noundef nonnull %i.ih) #15
+  tail call void @free(ptr noundef nonnull %i.ih) #14
   br label %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit
 
 _ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit: ; preds = %bb.bm, %bb.bl, %bb.bj
@@ -1439,7 +1439,7 @@ bb.bn:                                            ; preds = %_ZN11duckdb_zstdL15
   br label %_ZN11duckdb_zstdL17ZSTD_customMallocEmNS_14ZSTD_customMemE.exit
 
 bb.bo:                                            ; preds = %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit
-  %i.ik = tail call noalias ptr @malloc(i64 noundef %i.ic) #17
+  %i.ik = tail call noalias ptr @malloc(i64 noundef %i.ic) #16
   br label %_ZN11duckdb_zstdL17ZSTD_customMallocEmNS_14ZSTD_customMemE.exit
 
 _ZN11duckdb_zstdL17ZSTD_customMallocEmNS_14ZSTD_customMemE.exit: ; preds = %bb.bn, %bb.bo
@@ -1559,7 +1559,7 @@ bb.ca:                                            ; preds = %bb.bz
   br label %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit.i
 
 bb.cb:                                            ; preds = %bb.bz
-  call void @free(ptr noundef nonnull %i.kd) #15
+  call void @free(ptr noundef nonnull %i.kd) #14
   br label %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit.i
 
 _ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit.i: ; preds = %bb.cb, %bb.ca, %bb.bx
@@ -1571,7 +1571,7 @@ bb.cc:                                            ; preds = %_ZN11duckdb_zstdL15
   br label %_ZN11duckdb_zstdL17ZSTD_customMallocEmNS_14ZSTD_customMemE.exit.i
 
 bb.cd:                                            ; preds = %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit.i
-  %i.ki = call noalias ptr @malloc(i64 noundef %i.ji) #17
+  %i.ki = call noalias ptr @malloc(i64 noundef %i.ji) #16
   br label %_ZN11duckdb_zstdL17ZSTD_customMallocEmNS_14ZSTD_customMemE.exit.i
 
 _ZN11duckdb_zstdL17ZSTD_customMallocEmNS_14ZSTD_customMemE.exit.i: ; preds = %bb.cd, %bb.cc
@@ -1600,7 +1600,7 @@ bb.ch:                                            ; preds = %bb.cg
   br label %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit64.i
 
 bb.ci:                                            ; preds = %bb.cg
-  call void @free(ptr noundef nonnull %i.kl) #15
+  call void @free(ptr noundef nonnull %i.kl) #14
   br label %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit64.i
 
 _ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit64.i: ; preds = %bb.ci, %bb.ch, %bb.cf
@@ -1612,7 +1612,7 @@ bb.cj:                                            ; preds = %_ZN11duckdb_zstdL15
   br label %bb.cl
 
 bb.ck:                                            ; preds = %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit64.i
-  %i.kp = call noalias ptr @malloc(i64 noundef %i.js) #17
+  %i.kp = call noalias ptr @malloc(i64 noundef %i.js) #16
   br label %bb.cl
 
 bb.cl:                                            ; preds = %bb.ck, %bb.cj
@@ -2015,7 +2015,7 @@ bb.af:                                            ; preds = %bb.ae
   br label %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit.i.i.i
 
 bb.ag:                                            ; preds = %bb.ae
-  tail call void @free(ptr noundef nonnull %.sroa.0.0.copyload.i.i.i) #15
+  tail call void @free(ptr noundef nonnull %.sroa.0.0.copyload.i.i.i) #14
   br label %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit.i.i.i
 
 _ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit.i.i.i: ; preds = %bb.ag, %bb.af, %bb.ad, %.critedge.i
@@ -2031,7 +2031,7 @@ bb.ah:                                            ; preds = %_ZN11duckdb_zstdL15
   br label %_ZN11duckdb_zstdL17ZSTD_customMallocEmNS_14ZSTD_customMemE.exit.i.i.i
 
 bb.ai:                                            ; preds = %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit.i.i.i
-  %i.zc = tail call noalias ptr @malloc(i64 noundef %i.yp) #17
+  %i.zc = tail call noalias ptr @malloc(i64 noundef %i.yp) #16
   br label %_ZN11duckdb_zstdL17ZSTD_customMallocEmNS_14ZSTD_customMemE.exit.i.i.i
 
 _ZN11duckdb_zstdL17ZSTD_customMallocEmNS_14ZSTD_customMemE.exit.i.i.i: ; preds = %bb.ai, %bb.ah
@@ -2165,7 +2165,7 @@ bb.ar:                                            ; preds = %bb.aq
   br label %_ZN11duckdb_zstdL20ZSTDMT_releaseBufferEPNS_19ZSTDMT_bufferPool_sENS_8buffer_sE.exit.i.i
 
 bb.as:                                            ; preds = %bb.aq
-  tail call void @free(ptr noundef nonnull %.sroa.0.0.copyload.i.i74) #15
+  tail call void @free(ptr noundef nonnull %.sroa.0.0.copyload.i.i74) #14
   br label %_ZN11duckdb_zstdL20ZSTDMT_releaseBufferEPNS_19ZSTDMT_bufferPool_sENS_8buffer_sE.exit.i.i
 
 _ZN11duckdb_zstdL20ZSTDMT_releaseBufferEPNS_19ZSTDMT_bufferPool_sENS_8buffer_sE.exit.i.i: ; preds = %bb.as, %bb.ar, %bb.ap, %bb.an
@@ -2308,7 +2308,7 @@ bb.bd:                                            ; preds = %bb.bc
   br label %_ZN11duckdb_zstdL20ZSTDMT_releaseBufferEPNS_19ZSTDMT_bufferPool_sENS_8buffer_sE.exit.i
 
 bb.be:                                            ; preds = %bb.bc
-  tail call void @free(ptr noundef nonnull %.sroa.0.0.copyload.i) #15
+  tail call void @free(ptr noundef nonnull %.sroa.0.0.copyload.i) #14
   br label %_ZN11duckdb_zstdL20ZSTDMT_releaseBufferEPNS_19ZSTDMT_bufferPool_sENS_8buffer_sE.exit.i
 
 _ZN11duckdb_zstdL20ZSTDMT_releaseBufferEPNS_19ZSTDMT_bufferPool_sENS_8buffer_sE.exit.i: ; preds = %bb.be, %bb.bd, %bb.bb, %bb.az
@@ -2429,7 +2429,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i, label %_ZN11duckdb_zstdL17ZSTD_customCallocEmNS_14ZSTD_customMemE.exit.i, label %bb.d
 
 _ZN11duckdb_zstdL17ZSTD_customCallocEmNS_14ZSTD_customMemE.exit.i: ; preds = %bb.c
-  %i.h = tail call noalias dereferenceable_or_null(56) ptr @calloc(i64 noundef 1, i64 noundef 56) #16 ; 2 uses
+  %i.h = tail call noalias dereferenceable_or_null(56) ptr @calloc(i64 noundef 1, i64 noundef 56) #15 ; 2 uses
   %i.i = icmp eq ptr %i.h, null
   br i1 %i.i, label %_ZN11duckdb_zstdL23ZSTDMT_createBufferPoolEjNS_14ZSTD_customMemE.exit.thread, label %bb.e
 
@@ -2445,7 +2445,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %_ZN11duckdb_zstdL17ZSTD_customCallocEmNS_14ZSTD_customMemE.exit.i
   %i.n = zext i32 %1 to i64
   %i.o = shl nuw nsw i64 %i.n, 4
-  %i.p = tail call noalias ptr @calloc(i64 noundef 1, i64 noundef range(i64 -17179869184, 1580547964561) %i.o) #16
+  %i.p = tail call noalias ptr @calloc(i64 noundef 1, i64 noundef range(i64 -17179869184, 1580547964561) %i.o) #15
   br label %_ZN11duckdb_zstdL17ZSTD_customCallocEmNS_14ZSTD_customMemE.exit17.i
 
 _ZN11duckdb_zstdL17ZSTD_customCallocEmNS_14ZSTD_customMemE.exit17.i: ; preds = %bb.e, %bb.d
@@ -2511,8 +2511,7 @@ define internal void @_ZN11duckdb_zstdL21ZSTDMT_compressionJobEPv(ptr nofree nou
 bb.a:
   %1 = alloca %"struct.duckdb_zstd::rawSeqStore_t", align 8 ; 8 uses
   %2 = alloca %"struct.duckdb_zstd::ZSTD_CCtx_params_s", align 8 ; 10 uses
-  %.sroa.7 = alloca { i64, i64, i64 }, align 8    ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #14
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 120
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(216) %2, ptr noundef nonnull align 8 dereferenceable(216) %i.a, i64 216, i1 false), !tbaa.struct !108
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
@@ -2539,18 +2538,12 @@ bb.c:                                             ; preds = %bb.a
 
 _ZN11duckdb_zstdL14ZSTDMT_getCCtxEPNS_15ZSTDMT_CCtxPoolE.exit: ; preds = %bb.b, %bb.c
   %.0.i = phi ptr [ %i.k, %bb.b ], [ %i.m, %bb.c ] ; 12 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7)
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !169  ; 7 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !188)
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.q = load i64, ptr %i.p, align 8, !tbaa !127, !noalias !188 ; 6 uses
   %i.r = icmp eq i64 %i.q, 0
-  br i1 %i.r, label %3, label %bb.d
-
-3:                                                ; preds = %_ZN11duckdb_zstdL14ZSTDMT_getCCtxEPNS_15ZSTDMT_CCtxPoolE.exit
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.7, i8 0, i64 24, i1 false), !alias.scope !188
-  br label %_ZN11duckdb_zstdL13ZSTDMT_getSeqEPNS_19ZSTDMT_bufferPool_sE.exit
+  br i1 %i.r, label %_ZN11duckdb_zstdL13ZSTDMT_getSeqEPNS_19ZSTDMT_bufferPool_sE.exit, label %bb.d
 
 bb.d:                                             ; preds = %_ZN11duckdb_zstdL14ZSTDMT_getCCtxEPNS_15ZSTDMT_CCtxPoolE.exit
   %i.s = getelementptr inbounds nuw i8, ptr %i.o, i64 20 ; 2 uses
@@ -2592,7 +2585,7 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit.i.i
 
 bb.i:                                             ; preds = %bb.g
-  tail call void @free(ptr noundef nonnull %.sroa.0.0.copyload.i.i) #15, !noalias !188
+  tail call void @free(ptr noundef nonnull %.sroa.0.0.copyload.i.i) #14, !noalias !188
   br label %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit.i.i
 
 _ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit.i.i: ; preds = %bb.i, %bb.h, %bb.f, %bb.d
@@ -2608,7 +2601,7 @@ bb.j:                                             ; preds = %_ZN11duckdb_zstdL15
   br label %_ZN11duckdb_zstdL17ZSTD_customMallocEmNS_14ZSTD_customMemE.exit.i.i
 
 bb.k:                                             ; preds = %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit.i.i
-  %i.ae = tail call noalias ptr @malloc(i64 noundef %i.q) #17, !noalias !188
+  %i.ae = tail call noalias ptr @malloc(i64 noundef %i.q) #16, !noalias !188
   br label %_ZN11duckdb_zstdL17ZSTD_customMallocEmNS_14ZSTD_customMemE.exit.i.i
 
 _ZN11duckdb_zstdL17ZSTD_customMallocEmNS_14ZSTD_customMemE.exit.i.i: ; preds = %bb.k, %bb.j
@@ -2620,13 +2613,12 @@ _ZN11duckdb_zstdL17ZSTD_customMallocEmNS_14ZSTD_customMemE.exit.i.i: ; preds = %
 _ZN11duckdb_zstdL16ZSTDMT_getBufferEPNS_19ZSTDMT_bufferPool_sE.exit.i: ; preds = %_ZN11duckdb_zstdL17ZSTD_customMallocEmNS_14ZSTD_customMemE.exit.i.i, %bb.e
   %.sroa.0.0.i.i = phi ptr [ %.0.i.i.i, %_ZN11duckdb_zstdL17ZSTD_customMallocEmNS_14ZSTD_customMemE.exit.i.i ], [ %.sroa.0.0.copyload.i.i, %bb.e ]
   %.sroa.4.0.i.i = phi i64 [ %i.ag, %_ZN11duckdb_zstdL17ZSTD_customMallocEmNS_14ZSTD_customMemE.exit.i.i ], [ %.sroa.4.0.copyload.i.i, %bb.e ]
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.7, i8 0, i64 24, i1 false), !alias.scope !193
   %i.ah = udiv i64 %.sroa.4.0.i.i, 12
   br label %_ZN11duckdb_zstdL13ZSTDMT_getSeqEPNS_19ZSTDMT_bufferPool_sE.exit
 
-_ZN11duckdb_zstdL13ZSTDMT_getSeqEPNS_19ZSTDMT_bufferPool_sE.exit: ; preds = %3, %_ZN11duckdb_zstdL16ZSTDMT_getBufferEPNS_19ZSTDMT_bufferPool_sE.exit.i
-  %.sroa.0.0 = phi ptr [ null, %3 ], [ %.sroa.0.0.i.i, %_ZN11duckdb_zstdL16ZSTDMT_getBufferEPNS_19ZSTDMT_bufferPool_sE.exit.i ] ; 6 uses
-  %.sroa.8.0 = phi i64 [ 0, %3 ], [ %i.ah, %_ZN11duckdb_zstdL16ZSTDMT_getBufferEPNS_19ZSTDMT_bufferPool_sE.exit.i ] ; 2 uses
+_ZN11duckdb_zstdL13ZSTDMT_getSeqEPNS_19ZSTDMT_bufferPool_sE.exit: ; preds = %_ZN11duckdb_zstdL14ZSTDMT_getCCtxEPNS_15ZSTDMT_CCtxPoolE.exit, %_ZN11duckdb_zstdL16ZSTDMT_getBufferEPNS_19ZSTDMT_bufferPool_sE.exit.i
+  %.sroa.0.0 = phi ptr [ %.sroa.0.0.i.i, %_ZN11duckdb_zstdL16ZSTDMT_getBufferEPNS_19ZSTDMT_bufferPool_sE.exit.i ], [ null, %_ZN11duckdb_zstdL14ZSTDMT_getCCtxEPNS_15ZSTDMT_CCtxPoolE.exit ] ; 6 uses
+  %.sroa.8.0 = phi i64 [ %i.ah, %_ZN11duckdb_zstdL16ZSTDMT_getBufferEPNS_19ZSTDMT_bufferPool_sE.exit.i ], [ 0, %_ZN11duckdb_zstdL14ZSTDMT_getCCtxEPNS_15ZSTDMT_CCtxPoolE.exit ] ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.aj = icmp eq ptr %.0.i, null                 ; 2 uses
@@ -2683,11 +2675,11 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not4.i.i, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  tail call void %.sroa.1.0.copyload.i(ptr noundef %.sroa.229.0.copyload.i, ptr noundef nonnull %.sroa.0.0.copyload.i), !inline_history !196
+  tail call void %.sroa.1.0.copyload.i(ptr noundef %.sroa.229.0.copyload.i, ptr noundef nonnull %.sroa.0.0.copyload.i), !inline_history !193
   br label %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit.i
 
 bb.s:                                             ; preds = %bb.q
-  tail call void @free(ptr noundef nonnull %.sroa.0.0.copyload.i) #15
+  tail call void @free(ptr noundef nonnull %.sroa.0.0.copyload.i) #14
   br label %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit.i
 
 _ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit.i: ; preds = %bb.s, %bb.r, %bb.p, %bb.n
@@ -2699,11 +2691,11 @@ _ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit.i: ; preds = %bb.
 bb.t:                                             ; preds = %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit.i
   %.sroa.227.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.an, i64 40
   %.sroa.227.0.copyload.i = load ptr, ptr %.sroa.227.0..sroa_idx.i, align 8, !tbaa !38
-  %i.bb = tail call noundef ptr %.sroa.0.0.copyload26.i(ptr noundef %.sroa.227.0.copyload.i, i64 noundef %i.ap), !inline_history !197
+  %i.bb = tail call noundef ptr %.sroa.0.0.copyload26.i(ptr noundef %.sroa.227.0.copyload.i, i64 noundef %i.ap), !inline_history !194
   br label %_ZN11duckdb_zstdL17ZSTD_customMallocEmNS_14ZSTD_customMemE.exit.i
 
 bb.u:                                             ; preds = %_ZN11duckdb_zstdL15ZSTD_customFreeEPvNS_14ZSTD_customMemE.exit.i
-  %i.bc = tail call noalias ptr @malloc(i64 noundef %i.ap) #17
+  %i.bc = tail call noalias ptr @malloc(i64 noundef %i.ap) #16
   br label %_ZN11duckdb_zstdL17ZSTD_customMallocEmNS_14ZSTD_customMemE.exit.i
 
 _ZN11duckdb_zstdL17ZSTD_customMallocEmNS_14ZSTD_customMemE.exit.i: ; preds = %bb.u, %bb.t
@@ -2809,9 +2801,9 @@ bb.ai:                                            ; preds = %bb.ah
 
 .thread184:                                       ; preds = %bb.ah, %bb.ag
   %i.ci = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.cj = load ptr, ptr %i.ci, align 8, !tbaa !198
+  %i.cj = load ptr, ptr %i.ci, align 8, !tbaa !195
   %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.cl = load i64, ptr %i.ck, align 8, !tbaa !199
+  %i.cl = load i64, ptr %i.ck, align 8, !tbaa !196
   %i.cm = call noundef i64 @_ZN11duckdb_zstd36ZSTD_compressBegin_advanced_internalEPNS_11ZSTD_CCtx_sEPKvmNS_22ZSTD_dictContentType_eENS_26ZSTD_dictTableLoadMethod_eEPKNS_12ZSTD_CDict_sEPKNS_18ZSTD_CCtx_params_sEy(ptr noundef nonnull %.0.i, ptr noundef %i.cj, i64 noundef %i.cl, i32 noundef 1, i32 noundef 0, ptr noundef null, ptr noundef nonnull %2, i64 noundef %i.bz) ; 2 uses
   %i.cn = icmp ult i64 %i.cm, -119
   br i1 %i.cn, label %.thread, label %bb.aj
@@ -2826,7 +2818,7 @@ bb.aj:                                            ; preds = %.thread184
   %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !170 ; 14 uses
   %.sroa.2178.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.2178.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.7, i64 24, i1 false)
+  store <3 x i64> zeroinitializer, ptr %.sroa.2178.0..sroa_idx, align 8
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 3 uses
   %.sroa.0.0.copyload = load ptr, ptr %i.cr, align 8, !tbaa !38 ; 6 uses
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 3 uses
@@ -2844,7 +2836,7 @@ bb.aj:                                            ; preds = %.thread184
 
 bb.ak:                                            ; preds = %.thread
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cq, i64 104 ; 2 uses
-  %i.cy = load i32, ptr %i.cx, align 8, !tbaa !200
+  %i.cy = load i32, ptr %i.cx, align 8, !tbaa !197
   %i.cz = icmp eq i32 %i.cy, 1
   br i1 %i.cz, label %bb.al, label %bb.ar
 
@@ -2925,7 +2917,7 @@ _ZN11duckdb_zstdL18ZSTD_window_updateEPNS_13ZSTD_window_tEPKvmi.exit.i: ; preds 
 
 bb.ar:                                            ; preds = %_ZN11duckdb_zstdL18ZSTD_window_updateEPNS_13ZSTD_window_tEPKvmi.exit.i, %bb.ak
   %i.ek = getelementptr inbounds nuw i8, ptr %i.cq, i64 44
-  %i.el = load i32, ptr %i.ek, align 4, !tbaa !201
+  %i.el = load i32, ptr %i.ek, align 4, !tbaa !198
   %i.em = icmp ne i32 %i.el, 0
   %i.en = icmp ne i64 %.sroa.2.0.copyload, 0
   %or.cond.i = select i1 %i.em, i1 %i.en, i1 false
@@ -2941,12 +2933,12 @@ bb.at:                                            ; preds = %bb.as, %bb.ar, %.th
   %i.er = add i32 %i.eq, 1
   store i32 %i.er, ptr %i.ct, align 8, !tbaa !131
   %i.es = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.et = load i64, ptr %i.es, align 8, !tbaa !202 ; 2 uses
+  %i.et = load i64, ptr %i.es, align 8, !tbaa !199 ; 2 uses
   %.not.i162 = icmp eq i64 %i.et, 0
   br i1 %.not.i162, label %_ZN11duckdb_zstdL25ZSTDMT_serialState_updateEPNS_13serialState_tEPNS_11ZSTD_CCtx_sENS_13rawSeqStore_tENS_7range_tEj.exit, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  %i.eu = load ptr, ptr %1, align 8, !tbaa !204
+  %i.eu = load ptr, ptr %1, align 8, !tbaa !201
   call void @_ZN11duckdb_zstd31ZSTD_referenceExternalSequencesEPNS_11ZSTD_CCtx_sEPNS_6rawSeqEm(ptr noundef nonnull %.0.i, ptr noundef %i.eu, i64 noundef %i.et)
   br label %_ZN11duckdb_zstdL25ZSTDMT_serialState_updateEPNS_13serialState_tEPNS_11ZSTD_CCtx_sENS_13rawSeqStore_tENS_7range_tEj.exit
 
@@ -3012,7 +3004,7 @@ bb.az:                                            ; preds = %bb.ay
   store i64 %i.fs, ptr %0, align 8, !tbaa !97
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.ay, !llvm.loop !205
+  br i1 %exitcond.not, label %._crit_edge, label %bb.ay, !llvm.loop !202
 
 ._crit_edge:                                      ; preds = %bb.az, %bb.ax
   %.0137.lcssa = phi ptr [ %.sroa.059.0, %bb.ax ], [ %i.fp, %bb.az ] ; 3 uses
@@ -3124,11 +3116,11 @@ bb.bi:                                            ; preds = %bb.bg
 bb.bj:                                            ; preds = %bb.bi
   %.sroa.2.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.hd, i64 40
   %.sroa.2.0.copyload.i.i = load ptr, ptr %.sroa.2.0..sroa_idx.i.i, align 8, !tbaa !38
-  call void %.sroa.1.0.copyload.i.i167(ptr noundef %.sroa.2.0.copyload.i.i, ptr noundef nonnull %.sroa.0.0), !inline_history !206
+  call void %.sroa.1.0.copyload.i.i167(ptr noundef %.sroa.2.0.copyload.i.i, ptr noundef nonnull %.sroa.0.0), !inline_history !203
   br label %_ZN11duckdb_zstdL17ZSTDMT_releaseSeqEPNS_19ZSTDMT_bufferPool_sENS_13rawSeqStore_tE.exit
 
 bb.bk:                                            ; preds = %bb.bi
-  call void @free(ptr noundef nonnull %.sroa.0.0) #15
+  call void @free(ptr noundef nonnull %.sroa.0.0) #14
   br label %_ZN11duckdb_zstdL17ZSTDMT_releaseSeqEPNS_19ZSTDMT_bufferPool_sENS_13rawSeqStore_tE.exit
 
 _ZN11duckdb_zstdL17ZSTDMT_releaseSeqEPNS_19ZSTDMT_bufferPool_sENS_13rawSeqStore_tE.exit: ; preds = %_ZN11duckdb_zstdL33ZSTDMT_serialState_ensureFinishedEPNS_13serialState_tEjm.exit, %bb.bh, %bb.bj, %bb.bk
@@ -3165,8 +3157,7 @@ _ZN11duckdb_zstdL18ZSTDMT_releaseCCtxEPNS_15ZSTDMT_CCtxPoolEPNS_11ZSTD_CCtx_sE.e
   %i.if = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.ig = load i64, ptr %i.if, align 8, !tbaa !96
   store i64 %i.ig, ptr %0, align 8, !tbaa !97
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7)
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #14
   ret void
 }
 
@@ -3208,9 +3199,6 @@ declare i32 @llvm.smax.i32(i32, i32) #12
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #12
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #14
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #12
 
@@ -3228,10 +3216,9 @@ attributes #10 = { nocallback nofree nosync nounwind speculatable willreturn mem
 attributes #11 = { mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #12 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #13 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #14 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #15 = { nounwind }
-attributes #16 = { nounwind allocsize(0,1) }
-attributes #17 = { nounwind allocsize(0) }
+attributes #14 = { nounwind }
+attributes #15 = { nounwind allocsize(0,1) }
+attributes #16 = { nounwind allocsize(0) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}
@@ -3430,18 +3417,15 @@ attributes #17 = { nounwind allocsize(0) }
 !190 = distinct !{!190, !"_ZN11duckdb_zstdL13ZSTDMT_getSeqEPNS_19ZSTDMT_bufferPool_sE"}
 !191 = distinct !{null, null, null}
 !192 = distinct !{null, null, null}
-!193 = !{!194, !189}
-!194 = distinct !{!194, !195, !"_ZN11duckdb_zstdL11bufferToSeqENS_8buffer_sE: argument 0"}
-!195 = distinct !{!195, !"_ZN11duckdb_zstdL11bufferToSeqENS_8buffer_sE"}
-!196 = distinct !{null, null}
-!197 = distinct !{null, null}
-!198 = !{!94, !10, i64 72}
-!199 = !{!94, !17, i64 80}
-!200 = !{!29, !19, i64 104}
-!201 = !{!29, !4, i64 44}
-!202 = !{!203, !17, i64 24}
-!203 = !{!"_ZTSN11duckdb_zstd13rawSeqStore_tE", !10, i64 0, !17, i64 8, !17, i64 16, !17, i64 24, !17, i64 32}
-!204 = !{!203, !10, i64 0}
-!205 = distinct !{!205, !48}
-!206 = distinct !{null, null, null}
+!193 = distinct !{null, null}
+!194 = distinct !{null, null}
+!195 = !{!94, !10, i64 72}
+!196 = !{!94, !17, i64 80}
+!197 = !{!29, !19, i64 104}
+!198 = !{!29, !4, i64 44}
+!199 = !{!200, !17, i64 24}
+!200 = !{!"_ZTSN11duckdb_zstd13rawSeqStore_tE", !10, i64 0, !17, i64 8, !17, i64 16, !17, i64 24, !17, i64 32}
+!201 = !{!200, !10, i64 0}
+!202 = distinct !{!202, !48}
+!203 = distinct !{null, null, null}
 end_hunk_1

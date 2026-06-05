@@ -201,7 +201,6 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
   %5 = alloca %"class.std::vector.12", align 8    ; 2 uses
   %6 = alloca %"class.std::shared_ptr.19", align 8 ; 2 uses
-  %7 = alloca %"struct.arrow::Field::MergeOptions", align 1 ; 2 uses
   %i.b = tail call noalias noundef nonnull dereferenceable(112) ptr @_Znwm(i64 noundef 112) #36 ; 16 uses
   %i.c = load ptr, ptr %1, align 8, !tbaa !792    ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -211,7 +210,7 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, i8 0, i64 24, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, i8 0, i64 16, i1 false)
   %i.h = load i32, ptr %3, align 4, !tbaa !1776
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %7, ptr noundef nonnull align 1 dereferenceable(12) %4, i64 12, i1 false)
+  %.sroa.0.0.copyload = load <12 x i8>, ptr %4, align 1
   store ptr %i.c, ptr %i.b, align 8, !tbaa !792
   store <2 x ptr> %i.f, ptr %i.e, align 8, !tbaa !873
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
@@ -273,7 +272,7 @@ _ZNSt6vectorISt10shared_ptrIN5arrow5FieldEESaIS3_EED2Ev.exit: ; preds = %_ZNSt18
   %i.af = getelementptr inbounds nuw i8, ptr %i.b, i64 96
   store i32 %i.h, ptr %i.af, align 8, !tbaa !1772
   %i.ag = getelementptr inbounds nuw i8, ptr %i.b, i64 100
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.ag, ptr noundef nonnull align 1 dereferenceable(12) %7, i64 12, i1 false)
+  store <12 x i8> %.sroa.0.0.copyload, ptr %i.ag, align 4
   store ptr %i.b, ptr %0, align 8, !tbaa !1775
   ret void
 }
@@ -539,7 +538,6 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
   %5 = alloca %"class.std::vector.12", align 8    ; 7 uses
   %6 = alloca %"class.std::shared_ptr.19", align 8 ; 4 uses
-  %7 = alloca %"struct.arrow::Field::MergeOptions", align 1 ; 2 uses
   %i.b = tail call noalias noundef nonnull dereferenceable(112) ptr @_Znwm(i64 noundef 112) #36 ; 17 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !874  ; 3 uses
@@ -629,7 +627,7 @@ _ZSt10_ConstructISt10shared_ptrIN5arrow5FieldEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i
   store ptr %i.ae, ptr %i.ac, align 8, !tbaa !355
   store ptr null, ptr %2, align 8, !tbaa !567
   %i.af = load i32, ptr %3, align 4, !tbaa !1776
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %7, ptr noundef nonnull align 1 dereferenceable(12) %4, i64 12, i1 false)
+  %.sroa.0.0.copyload = load <12 x i8>, ptr %4, align 1
   store ptr %i.aa, ptr %i.b, align 8, !tbaa !792
   %i.ag = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   store ptr %.0.lcssa.i.i.i.i.i, ptr %i.ag, align 8, !tbaa !874
@@ -695,7 +693,7 @@ _ZNSt12__shared_ptrIKN5arrow16KeyValueMetadataELN9__gnu_cxx12_Lock_policyE2EED2E
   %i.bf = getelementptr inbounds nuw i8, ptr %i.b, i64 96
   store i32 %i.af, ptr %i.bf, align 8, !tbaa !1772
   %i.bg = getelementptr inbounds nuw i8, ptr %i.b, i64 100
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.bg, ptr noundef nonnull align 1 dereferenceable(12) %7, i64 12, i1 false)
+  store <12 x i8> %.sroa.0.0.copyload, ptr %i.bg, align 4
   store ptr %i.b, ptr %0, align 8, !tbaa !1775
   ret void
 
