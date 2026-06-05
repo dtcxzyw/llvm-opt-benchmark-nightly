@@ -201,7 +201,6 @@ define linkonce_odr void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorI
 bb.a:
   %4 = alloca %"struct.__gnu_cxx::__ops::_Iter_comp_iter.478", align 8 ; 4 uses
   %5 = alloca %"struct.__gnu_cxx::__ops::_Iter_comp_iter.478", align 8 ; 5 uses
-  %.sroa.0 = alloca %class.anon.473, align 8      ; 4 uses
   %6 = alloca %"struct.__gnu_cxx::__ops::_Iter_comp_iter.478", align 8 ; 4 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = ptrtoint ptr %1 to i64
@@ -235,14 +234,13 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %storemerge1522 = phi ptr [ %.sroa.012.1.i.i, %bb.b ], [ %1, %.lr.ph ] ; 3 uses
   %.01621 = phi i64 [ %i.v, %bb.b ], [ %2, %.lr.ph ]
   %i.i = phi i64 [ %i.y, %bb.b ], [ %i.d, %.lr.ph ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false)
+  %.sroa.0.0.copyload25 = load <3 x ptr>, ptr %3, align 8
   %i.j = lshr i64 %i.i, 1
   %i.k = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.j
   %i.l = getelementptr inbounds i8, ptr %storemerge1522, i64 -4
   call void @_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_NSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SH_EUliE0_EEvT0_T1_SG_SH_EUliiE_EEEvT_SO_SO_SO_SK_(ptr %0, ptr nonnull %i.f, ptr %i.k, ptr nonnull %i.l, ptr noundef nonnull byval(%"struct.__gnu_cxx::__ops::_Iter_comp_iter.478") align 8 %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0, i64 24, i1 false)
+  store <3 x ptr> %.sroa.0.0.copyload25, ptr %5, align 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.f, %.lr.ph23
@@ -280,7 +278,6 @@ bb.f:                                             ; preds = %bb.e
 _ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_NSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SH_EUliE0_EEvT0_T1_SG_SH_EUliiE_EEET_SO_SO_SK_.exit: ; preds = %bb.e
   %i.v = add nsw i64 %.01621, -1                  ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_NSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SH_EUliE0_EEvT0_T1_SG_SH_EUliiE_EEEvT_SO_SK_SL_(ptr nonnull %.sroa.012.1.i.i, ptr %storemerge1522, i64 noundef %i.v, ptr noundef nonnull byval(%"struct.__gnu_cxx::__ops::_Iter_comp_iter.478") align 8 %3)
   %i.w = ptrtoint ptr %.sroa.012.1.i.i to i64
   %i.x = sub i64 %i.w, %i.a
@@ -298,7 +295,6 @@ bb.a:
   %3 = alloca %"struct.__gnu_cxx::__ops::_Val_comp_iter.480", align 8 ; 5 uses
   %4 = alloca %"struct.__gnu_cxx::__ops::_Iter_comp_iter.478", align 8 ; 5 uses
   %5 = alloca %"struct.__gnu_cxx::__ops::_Val_comp_iter.480", align 8 ; 5 uses
-  %.sroa.033 = alloca %class.anon.473, align 8    ; 4 uses
   %6 = alloca %"struct.__gnu_cxx::__ops::_Val_comp_iter.480", align 8 ; 5 uses
   %7 = alloca %"struct.__gnu_cxx::__ops::_Iter_comp_iter.478", align 8 ; 5 uses
   %i.a = ptrtoint ptr %1 to i64
@@ -373,15 +369,14 @@ bb.g:                                             ; preds = %_ZSt25__unguarded_l
 _ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_NSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SH_EUliE0_EEvT0_T1_SG_SH_EUliiE_EEEvT_SO_SK_.exit: ; preds = %bb.g
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.033)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.033, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false)
+  %.sroa.033.sroa.0.0.copyload38 = load <3 x ptr>, ptr %2, align 8
   %i.t = icmp eq ptr %i.s, %1
-  br i1 %i.t, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_NSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SH_EUliE0_EEvT0_T1_SG_SH_EUliiE_EEEvT_SO_SK_.exit, label %.lr.ph.i6
+  br i1 %i.t, label %bb.o, label %.lr.ph.i6
 
 .lr.ph.i6:                                        ; preds = %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_NSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SH_EUliE0_EEvT0_T1_SG_SH_EUliiE_EEEvT_SO_SK_.exit, %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops14_Val_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_NSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SH_EUliE0_EEvT0_T1_SG_SH_EUliiE_EEEvT_SK_.exit.i7
   %.sroa.03.07.i = phi ptr [ %i.aa, %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops14_Val_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_NSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SH_EUliE0_EEvT0_T1_SG_SH_EUliiE_EEEvT_SK_.exit.i7 ], [ %i.s, %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_NSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SH_EUliE0_EEvT0_T1_SG_SH_EUliiE_EEEvT_SO_SK_.exit ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.033, i64 24, i1 false)
+  store <3 x ptr> %.sroa.033.sroa.0.0.copyload38, ptr %5, align 8
   %i.u = load i32, ptr %.sroa.03.07.i, align 4, !tbaa !3 ; 3 uses
   %.sroa.0.07.i.i = getelementptr inbounds i8, ptr %.sroa.03.07.i, i64 -4 ; 2 uses
   %i.v = load i32, ptr %.sroa.0.07.i.i, align 4, !tbaa !3
@@ -404,11 +399,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIi
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.03.07.i, i64 4 ; 2 uses
   %i.ab = icmp eq ptr %i.aa, %1
-  br i1 %i.ab, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_NSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SH_EUliE0_EEvT0_T1_SG_SH_EUliiE_EEEvT_SO_SK_.exit, label %.lr.ph.i6, !llvm.loop !2083
-
-_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_NSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SH_EUliE0_EEvT0_T1_SG_SH_EUliiE_EEEvT_SO_SK_.exit: ; preds = %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops14_Val_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_NSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SH_EUliE0_EEvT0_T1_SG_SH_EUliiE_EEEvT_SK_.exit.i7, %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_NSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SH_EUliE0_EEvT0_T1_SG_SH_EUliiE_EEEvT_SO_SK_.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.033)
-  br label %bb.o
+  br i1 %i.ab, label %bb.o, label %.lr.ph.i6, !llvm.loop !2083
 
 bb.h:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
@@ -489,7 +480,7 @@ _ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
   br label %bb.o
 
-bb.o:                                             ; preds = %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_NSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SH_EUliE0_EEvT0_T1_SG_SH_EUliiE_EEEvT_SO_SK_.exit26, %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_NSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SH_EUliE0_EEvT0_T1_SG_SH_EUliiE_EEEvT_SO_SK_.exit
+bb.o:                                             ; preds = %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_NSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SH_EUliE0_EEvT0_T1_SG_SH_EUliiE_EEEvT_SO_SK_.exit, %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops14_Val_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_NSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SH_EUliE0_EEvT0_T1_SG_SH_EUliiE_EEEvT_SK_.exit.i7, %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_NSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SH_EUliE0_EEvT0_T1_SG_SH_EUliiE_EEEvT_SO_SK_.exit26
   ret void
 }
 
@@ -892,7 +883,6 @@ define linkonce_odr void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorI
 bb.a:
   %4 = alloca %"struct.__gnu_cxx::__ops::_Iter_comp_iter.498", align 8 ; 4 uses
   %5 = alloca %"struct.__gnu_cxx::__ops::_Iter_comp_iter.498", align 8 ; 5 uses
-  %.sroa.0 = alloca %class.anon.493, align 8      ; 4 uses
   %6 = alloca %"struct.__gnu_cxx::__ops::_Iter_comp_iter.498", align 8 ; 4 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = ptrtoint ptr %1 to i64
@@ -926,14 +916,13 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %storemerge1522 = phi ptr [ %.sroa.012.1.i.i, %bb.b ], [ %1, %.lr.ph ] ; 3 uses
   %.01621 = phi i64 [ %i.v, %bb.b ], [ %2, %.lr.ph ]
   %i.i = phi i64 [ %i.y, %bb.b ], [ %i.d, %.lr.ph ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false)
+  %.sroa.0.0.copyload25 = load <3 x ptr>, ptr %3, align 8
   %i.j = lshr i64 %i.i, 1
   %i.k = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.j
   %i.l = getelementptr inbounds i8, ptr %storemerge1522, i64 -4
   call void @_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_PKiNSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SI_SJ_EUliE0_EEvT0_T1_SG_SJ_EUliiE_EEEvT_SQ_SQ_SQ_SM_(ptr %0, ptr nonnull %i.f, ptr %i.k, ptr nonnull %i.l, ptr noundef nonnull byval(%"struct.__gnu_cxx::__ops::_Iter_comp_iter.498") align 8 %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0, i64 24, i1 false)
+  store <3 x ptr> %.sroa.0.0.copyload25, ptr %5, align 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.f, %.lr.ph23
@@ -971,7 +960,6 @@ bb.f:                                             ; preds = %bb.e
 _ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_PKiNSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SI_SJ_EUliE0_EEvT0_T1_SG_SJ_EUliiE_EEET_SQ_SQ_SM_.exit: ; preds = %bb.e
   %i.v = add nsw i64 %.01621, -1                  ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_PKiNSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SI_SJ_EUliE0_EEvT0_T1_SG_SJ_EUliiE_EEEvT_SQ_SM_SN_(ptr nonnull %.sroa.012.1.i.i, ptr %storemerge1522, i64 noundef %i.v, ptr noundef nonnull byval(%"struct.__gnu_cxx::__ops::_Iter_comp_iter.498") align 8 %3)
   %i.w = ptrtoint ptr %.sroa.012.1.i.i to i64
   %i.x = sub i64 %i.w, %i.a
@@ -989,7 +977,6 @@ bb.a:
   %3 = alloca %"struct.__gnu_cxx::__ops::_Val_comp_iter.500", align 8 ; 5 uses
   %4 = alloca %"struct.__gnu_cxx::__ops::_Iter_comp_iter.498", align 8 ; 5 uses
   %5 = alloca %"struct.__gnu_cxx::__ops::_Val_comp_iter.500", align 8 ; 5 uses
-  %.sroa.033 = alloca %class.anon.493, align 8    ; 4 uses
   %6 = alloca %"struct.__gnu_cxx::__ops::_Val_comp_iter.500", align 8 ; 5 uses
   %7 = alloca %"struct.__gnu_cxx::__ops::_Iter_comp_iter.498", align 8 ; 5 uses
   %i.a = ptrtoint ptr %1 to i64
@@ -1064,15 +1051,14 @@ bb.g:                                             ; preds = %_ZSt25__unguarded_l
 _ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_PKiNSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SI_SJ_EUliE0_EEvT0_T1_SG_SJ_EUliiE_EEEvT_SQ_SM_.exit: ; preds = %bb.g
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.033)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.033, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false)
+  %.sroa.033.sroa.0.0.copyload38 = load <3 x ptr>, ptr %2, align 8
   %i.t = icmp eq ptr %i.s, %1
-  br i1 %i.t, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_PKiNSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SI_SJ_EUliE0_EEvT0_T1_SG_SJ_EUliiE_EEEvT_SQ_SM_.exit, label %.lr.ph.i6
+  br i1 %i.t, label %bb.o, label %.lr.ph.i6
 
 .lr.ph.i6:                                        ; preds = %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_PKiNSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SI_SJ_EUliE0_EEvT0_T1_SG_SJ_EUliiE_EEEvT_SQ_SM_.exit, %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops14_Val_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_PKiNSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SI_SJ_EUliE0_EEvT0_T1_SG_SJ_EUliiE_EEEvT_SM_.exit.i7
   %.sroa.03.07.i = phi ptr [ %i.aa, %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops14_Val_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_PKiNSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SI_SJ_EUliE0_EEvT0_T1_SG_SJ_EUliiE_EEEvT_SM_.exit.i7 ], [ %i.s, %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_PKiNSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SI_SJ_EUliE0_EEvT0_T1_SG_SJ_EUliiE_EEEvT_SQ_SM_.exit ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.033, i64 24, i1 false)
+  store <3 x ptr> %.sroa.033.sroa.0.0.copyload38, ptr %5, align 8
   %i.u = load i32, ptr %.sroa.03.07.i, align 4, !tbaa !3 ; 3 uses
   %.sroa.0.07.i.i = getelementptr inbounds i8, ptr %.sroa.03.07.i, i64 -4 ; 2 uses
   %i.v = load i32, ptr %.sroa.0.07.i.i, align 4, !tbaa !3
@@ -1095,11 +1081,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIi
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.03.07.i, i64 4 ; 2 uses
   %i.ab = icmp eq ptr %i.aa, %1
-  br i1 %i.ab, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_PKiNSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SI_SJ_EUliE0_EEvT0_T1_SG_SJ_EUliiE_EEEvT_SQ_SM_.exit, label %.lr.ph.i6, !llvm.loop !2263
-
-_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_PKiNSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SI_SJ_EUliE0_EEvT0_T1_SG_SJ_EUliiE_EEEvT_SQ_SM_.exit: ; preds = %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops14_Val_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_PKiNSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SI_SJ_EUliE0_EEvT0_T1_SG_SJ_EUliiE_EEEvT_SM_.exit.i7, %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_PKiNSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SI_SJ_EUliE0_EEvT0_T1_SG_SJ_EUliiE_EEEvT_SQ_SM_.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.033)
-  br label %bb.o
+  br i1 %i.ab, label %bb.o, label %.lr.ph.i6, !llvm.loop !2263
 
 bb.h:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
@@ -1180,7 +1162,7 @@ _ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
   br label %bb.o
 
-bb.o:                                             ; preds = %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_PKiNSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SI_SJ_EUliE0_EEvT0_T1_SG_SJ_EUliiE_EEEvT_SQ_SM_.exit26, %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_PKiNSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SI_SJ_EUliE0_EEvT0_T1_SG_SJ_EUliiE_EEEvT_SQ_SM_.exit
+bb.o:                                             ; preds = %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_PKiNSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SI_SJ_EUliE0_EEvT0_T1_SG_SJ_EUliiE_EEEvT_SQ_SM_.exit, %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops14_Val_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_PKiNSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SI_SJ_EUliE0_EEvT0_T1_SG_SJ_EUliiE_EEEvT_SM_.exit.i7, %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZNK8facebook5velox10FlatVectorISt10shared_ptrIvEE11sortIndicesILb1EZNKSE_11sortIndicesERS5_PKiNSA_12CompareFlagsEEUliE_ZNKSE_11sortIndicesESG_SI_SJ_EUliE0_EEvT0_T1_SG_SJ_EUliiE_EEEvT_SQ_SM_.exit26
   ret void
 }
 

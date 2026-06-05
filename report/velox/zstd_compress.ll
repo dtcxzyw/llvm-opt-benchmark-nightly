@@ -201,15 +201,13 @@ ZSTD_compressBegin_internal.exit.thread:          ; preds = %bb.h, %bb.c, %bb.j
 define i64 @ZSTD_compress_usingDict(ptr noundef initializes((448, 664)) %0, ptr noundef %1, i64 noundef %2, ptr noundef %3, i64 noundef %4, ptr noundef %5, i64 noundef %6, i32 noundef %7) local_unnamed_addr #2 {
 bb.a:
   %8 = alloca %struct.ZSTD_compressionParameters, align 4 ; 6 uses
-  %.sroa.7 = alloca { i32, i32, i32, i32, i32 }, align 8 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7)
   %.not = icmp eq ptr %5, null
   %i.a = select i1 %.not, i64 0, i64 %6
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #28, !noalias !311
   call fastcc void @ZSTD_getCParams_internal(ptr dead_on_unwind noalias nonnull writable align 4 %8, i32 noundef %7, i64 noundef %4, i64 noundef %i.a, i32 noundef 0), !noalias !311
   %.sroa.0.0.copyload = load i32, ptr %8, align 4, !tbaa !3 ; 4 uses
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %8, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %.sroa.7, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.7.0..sroa_idx, i64 20, i1 false), !tbaa.struct !128
+  %.sroa.7.sroa.0.0.copyload = load <5 x i32>, ptr %.sroa.7.0..sroa_idx, align 4
   %.sroa.718.0..sroa_idx = getelementptr inbounds nuw i8, ptr %8, i64 24
   %.sroa.718.0.copyload = load i32, ptr %.sroa.718.0..sroa_idx, align 4, !tbaa !3 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #28, !noalias !311
@@ -220,7 +218,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 452
   store i32 %.sroa.0.0.copyload, ptr %i.e, align 4, !tbaa !3
   %.sroa.7.0..sroa_idx17 = getelementptr inbounds nuw i8, ptr %0, i64 456
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.7.0..sroa_idx17, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.7, i64 20, i1 false), !tbaa.struct !128
+  store <5 x i32> %.sroa.7.sroa.0.0.copyload, ptr %.sroa.7.0..sroa_idx17, align 4
   %.sroa.718.0..sroa_idx19 = getelementptr inbounds nuw i8, ptr %0, i64 476
   store i32 %.sroa.718.0.copyload, ptr %.sroa.718.0..sroa_idx19, align 4, !tbaa !3
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 480
@@ -268,7 +266,6 @@ ZSTD_CCtxParams_init_internal.exit:               ; preds = %bb.c, %.thread26, %
   %i.v = icmp slt i32 %i.d, 10
   %..i27.i = select i1 %i.v, i32 2, i32 1
   store i32 %..i27.i, ptr %i.u, align 8, !tbaa !80
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7)
   %i.w = tail call i64 @ZSTD_compress_advanced_internal(ptr noundef nonnull %0, ptr noundef %1, i64 noundef %2, ptr noundef %3, i64 noundef %4, ptr noundef %5, i64 noundef %6, ptr noundef nonnull %i.b)
   ret i64 %i.w
 }
@@ -277,13 +274,11 @@ ZSTD_CCtxParams_init_internal.exit:               ; preds = %bb.c, %.thread26, %
 define i64 @ZSTD_compressCCtx(ptr noundef initializes((448, 664)) %0, ptr noundef %1, i64 noundef %2, ptr noundef %3, i64 noundef %4, i32 noundef %5) local_unnamed_addr #2 {
 bb.a:
   %6 = alloca %struct.ZSTD_compressionParameters, align 4 ; 6 uses
-  %.sroa.7.i = alloca { i32, i32, i32, i32, i32 }, align 8 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #28, !noalias !314
   call fastcc void @ZSTD_getCParams_internal(ptr dead_on_unwind noalias nonnull writable align 4 %6, i32 noundef %5, i64 noundef %4, i64 noundef 0, i32 noundef 0), !noalias !314
   %.sroa.0.0.copyload.i = load i32, ptr %6, align 4, !tbaa !3 ; 4 uses
   %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %.sroa.7.i, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.7.0..sroa_idx.i, i64 20, i1 false), !tbaa.struct !128
+  %.sroa.7.i.sroa.0.0.copyload = load <5 x i32>, ptr %.sroa.7.0..sroa_idx.i, align 4
   %.sroa.718.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 24
   %.sroa.718.0.copyload.i = load i32, ptr %.sroa.718.0..sroa_idx.i, align 4, !tbaa !3 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #28, !noalias !314
@@ -294,7 +289,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 452
   store i32 %.sroa.0.0.copyload.i, ptr %i.d, align 4, !tbaa !3
   %.sroa.7.0..sroa_idx17.i = getelementptr inbounds nuw i8, ptr %0, i64 456
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.7.0..sroa_idx17.i, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.7.i, i64 20, i1 false), !tbaa.struct !128
+  store <5 x i32> %.sroa.7.i.sroa.0.0.copyload, ptr %.sroa.7.0..sroa_idx17.i, align 4
   %.sroa.718.0..sroa_idx19.i = getelementptr inbounds nuw i8, ptr %0, i64 476
   store i32 %.sroa.718.0.copyload.i, ptr %.sroa.718.0..sroa_idx19.i, align 4, !tbaa !3
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 480
@@ -342,7 +337,6 @@ ZSTD_compress_usingDict.exit:                     ; preds = %.thread26.i, %bb.c,
   %i.u = icmp slt i32 %i.c, 10
   %..i27.i.i = select i1 %i.u, i32 2, i32 1
   store i32 %..i27.i.i, ptr %i.t, align 8, !tbaa !80
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i)
   %.not66.i.i = icmp eq ptr @ZSTD_trace_compress_begin, null
   br i1 %.not66.i.i, label %bb.f, label %bb.e
 
@@ -745,14 +739,12 @@ bb.a:
 define internal fastcc range(i64 -119, 1) i64 @ZSTD_compressBegin_usingCDict_internal(ptr noundef %0, ptr noundef %1, i64 %2, i32 %3, i64 noundef %4) unnamed_addr #2 {
 bb.a:
   %5 = alloca %struct.ZSTD_CCtx_params_s, align 8 ; 16 uses
-  %.sroa.8 = alloca { i32, i32, i32, i32, i32 }, align 8 ; 5 uses
   %6 = alloca %struct.ZSTD_compressionParameters, align 4 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #28
   %i.a = icmp eq ptr %1, null
   br i1 %i.a, label %bb.m, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8)
   %i.b = icmp ult i64 %4, 131072
   br i1 %i.b, label %bb.e, label %bb.c
 
@@ -775,7 +767,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 360
   %.sroa.042.0.copyload = load i32, ptr %i.k, align 8, !tbaa !3
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 364
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %.sroa.8, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.4.0..sroa_idx, i64 20, i1 false)
+  %.sroa.8.sroa.0.0.copyload52 = load <5 x i32>, ptr %.sroa.4.0..sroa_idx, align 4
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 384
   %.sroa.5.0.copyload = load i32, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !3
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 6068
@@ -787,13 +779,14 @@ bb.f:                                             ; preds = %bb.d
   call fastcc void @ZSTD_getCParams_internal(ptr dead_on_unwind noalias nonnull writable align 4 %6, i32 noundef %i.i, i64 noundef %4, i64 noundef %i.d, i32 noundef 3), !alias.scope !328
   %.sroa.0.0.copyload = load i32, ptr %6, align 4, !tbaa !3
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %.sroa.8, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.8.0..sroa_idx, i64 20, i1 false), !tbaa.struct !128
+  %.sroa.8.sroa.0.0.copyload = load <5 x i32>, ptr %.sroa.8.0..sroa_idx, align 4
   %.sroa.835.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 24
   %.sroa.835.0.copyload = load i32, ptr %.sroa.835.0..sroa_idx, align 4, !tbaa !3
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #28
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
+  %.sroa.8.sroa.0.0 = phi <5 x i32> [ %.sroa.8.sroa.0.0.copyload52, %bb.e ], [ %.sroa.8.sroa.0.0.copyload, %bb.f ]
   %i.l = phi i32 [ %.pre, %bb.e ], [ %i.i, %bb.f ] ; 2 uses
   %.sroa.835.0 = phi i32 [ %.sroa.5.0.copyload, %bb.e ], [ %.sroa.835.0.copyload, %bb.f ] ; 3 uses
   %.sroa.0.0 = phi i32 [ %.sroa.042.0.copyload, %bb.e ], [ %.sroa.0.0.copyload, %bb.f ] ; 5 uses
@@ -801,7 +794,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.m = getelementptr inbounds nuw i8, ptr %5, i64 4 ; 2 uses
   store i32 %.sroa.0.0, ptr %i.m, align 4, !tbaa !3
   %.sroa.8.0..sroa_idx34 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %.sroa.8.0..sroa_idx34, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.8, i64 20, i1 false), !tbaa.struct !128
+  store <5 x i32> %.sroa.8.sroa.0.0, ptr %.sroa.8.0..sroa_idx34, align 8
   %.sroa.835.0..sroa_idx38 = getelementptr inbounds nuw i8, ptr %5, i64 28
   store i32 %.sroa.835.0, ptr %.sroa.835.0..sroa_idx38, align 4, !tbaa !3
   %i.n = getelementptr inbounds nuw i8, ptr %5, i64 32
@@ -851,7 +844,6 @@ ZSTD_CCtxParams_init_internal.exit:               ; preds = %bb.i, %.thread46, %
   %i.ad = icmp slt i32 %i.l, 10
   %..i27.i = select i1 %i.ad, i32 2, i32 1
   store i32 %..i27.i, ptr %i.ac, align 8, !tbaa !80
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8)
   %.not = icmp eq i64 %4, -1
   br i1 %.not, label %.sink.split, label %bb.k
 

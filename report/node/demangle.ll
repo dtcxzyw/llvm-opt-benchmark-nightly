@@ -201,7 +201,6 @@ _ZNK4absl18debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTooComplexEv.exi
 ; Function Attrs: mustprogress nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl18debugging_internalL13ParseEncodingEPNS0_5StateE(ptr noundef %0) unnamed_addr #4 {
 bb.a:
-  %.sroa.0.i = alloca { i32, i32, i32 }, align 8  ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 9 uses
   %i.b = load i32, ptr %i.a, align 4              ; 2 uses
   %i.c = add nsw i32 %i.b, 1                      ; 2 uses
@@ -235,9 +234,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond.i, label %_ZNK4absl18debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTooComplexEv.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 4 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0.i, ptr noundef nonnull align 4 dereferenceable(12) %i.p, i64 12, i1 false)
+  %.sroa.0.i.sroa.0.0.copyload = load <3 x i32>, ptr %i.p, align 4
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %.sroa.4.0.copyload.i = load i32, ptr %.sroa.4.0..sroa_idx.i, align 8 ; 3 uses
   %i.q = and i32 %.sroa.4.0.copyload.i, 2147483647
@@ -279,13 +277,12 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g, %_ZN4absl18debugging_internalL17ParseOneCharTokenEPNS0_5StateEc.exit.thread.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.p, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0.i, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.i.sroa.0.0.copyload, ptr %i.p, align 4
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   %storemerge.i = phi i32 [ %i.ae, %bb.h ], [ %.sroa.4.0.copyload.i, %bb.i ]
   store i32 %storemerge.i, ptr %.sroa.4.0..sroa_idx.i, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
   %.pre.i = load i32, ptr %i.a, align 4
   %i.af = add nsw i32 %.pre.i, -1
   br label %_ZNK4absl18debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTooComplexEv.exit.thread
@@ -306,7 +303,6 @@ _ZNK4absl18debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTooComplexEv.exi
 ; Function Attrs: mustprogress nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl18debugging_internalL9ParseNameEPNS0_5StateE(ptr noundef %0) unnamed_addr #4 {
 bb.a:
-  %.sroa.0.i = alloca { i32, i32, i32 }, align 8  ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 18 uses
   %i.b = load i32, ptr %i.a, align 4              ; 6 uses
   %i.c = add nsw i32 %i.b, 1
@@ -328,9 +324,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond56, label %_ZN4absl18debugging_internalL15ParseNestedNameEPNS0_5StateE.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 8 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0.i, ptr noundef nonnull align 4 dereferenceable(12) %i.m, i64 12, i1 false)
+  %.sroa.0.i.sroa.0.0.copyload = load <3 x i32>, ptr %i.m, align 4
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 5 uses
   %.sroa.4.0.copyload.i = load i32, ptr %.sroa.4.0..sroa_idx.i, align 8 ; 3 uses
   %i.n = add nsw i32 %i.b, 3
@@ -419,16 +414,14 @@ bb.i:                                             ; preds = %bb.h
 _ZN4absl18debugging_internalL15ParseNestedNameEPNS0_5StateE.exit.thread45: ; preds = %bb.i
   %i.av = add nsw i32 %.val6.i, 1
   store i32 %i.av, ptr %i.m, align 4
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
   %i.aw = add nsw i32 %storemerge.in.pre.pre, -1
   br label %_ZNK4absl18debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTooComplexEv.exit.thread
 
 _ZN4absl18debugging_internalL15ParseNestedNameEPNS0_5StateE.exit: ; preds = %bb.i, %bb.h, %bb.d, %bb.c, %_ZN4absl18debugging_internalL17ParseRefQualifierEPNS0_5StateE.exit
   %.pre = phi i32 [ %.pre.pre, %_ZN4absl18debugging_internalL17ParseRefQualifierEPNS0_5StateE.exit ], [ %i.o, %bb.d ], [ %i.o, %bb.c ], [ %i.ao, %bb.h ], [ %i.ao, %bb.i ]
   %storemerge.in.pre = phi i32 [ %storemerge.in.pre.pre, %_ZN4absl18debugging_internalL17ParseRefQualifierEPNS0_5StateE.exit ], [ %i.i, %bb.d ], [ %i.i, %bb.c ], [ %storemerge.in.pre.pre, %bb.h ], [ %storemerge.in.pre.pre, %bb.i ]
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.m, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0.i, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.i.sroa.0.0.copyload, ptr %i.m, align 4
   store i32 %.sroa.4.0.copyload.i, ptr %.sroa.4.0..sroa_idx.i, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
   br label %_ZN4absl18debugging_internalL15ParseNestedNameEPNS0_5StateE.exit.thread
 
 _ZN4absl18debugging_internalL15ParseNestedNameEPNS0_5StateE.exit.thread: ; preds = %bb.b, %_ZN4absl18debugging_internalL15ParseNestedNameEPNS0_5StateE.exit
@@ -570,7 +563,6 @@ _ZNK4absl18debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTooComplexEv.exi
 ; Function Attrs: mustprogress nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl18debugging_internalL21ParseBareFunctionTypeEPNS0_5StateE(ptr noundef %0) unnamed_addr #4 {
 bb.a:
-  %.sroa.0 = alloca { i32, i32, i32 }, align 8    ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 8 uses
   %i.b = load i32, ptr %i.a, align 4              ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 6 uses
@@ -583,9 +575,8 @@ bb.a:
   br i1 %or.cond, label %_ZNK4absl18debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTooComplexEv.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 6 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, ptr noundef nonnull align 4 dereferenceable(12) %i.h, i64 12, i1 false)
+  %.sroa.0.sroa.0.0.copyload = load <3 x i32>, ptr %i.h, align 4
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 5 uses
   %.sroa.4.0.copyload = load i32, ptr %.sroa.4.0..sroa_idx, align 8 ; 4 uses
   %i.i = and i32 %.sroa.4.0.copyload, 2147483647
@@ -683,12 +674,11 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit
 
 _ZN4absl18debugging_internalL9OneOrMoreEPFbPNS0_5StateEES2_.exit: ; preds = %_ZN4absl18debugging_internalL10ZeroOrMoreEPFbPNS0_5StateEES2_.exit
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.h, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.sroa.0.0.copyload, ptr %i.h, align 4
   store i32 %.sroa.4.0.copyload, ptr %.sroa.4.0..sroa_idx, align 8
   br label %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit
 
 _ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit: ; preds = %bb.g, %bb.f, %_ZN4absl18debugging_internalL9OneOrMoreEPFbPNS0_5StateEES2_.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   %.pre = load i32, ptr %i.a, align 4
   %i.aq = add nsw i32 %.pre, -1
   br label %_ZNK4absl18debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTooComplexEv.exit.thread
@@ -703,7 +693,6 @@ _ZNK4absl18debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTooComplexEv.exi
 ; Function Attrs: mustprogress nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @_ZN4absl18debugging_internalL24ParseQRequiresClauseExprEPNS0_5StateE(ptr noundef %0) unnamed_addr #4 {
 bb.a:
-  %.sroa.0 = alloca { i32, i32, i32 }, align 8    ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 6 uses
   %i.b = load i32, ptr %i.a, align 4              ; 5 uses
   %i.c = add nsw i32 %i.b, 1                      ; 2 uses
@@ -717,9 +706,8 @@ bb.a:
   br i1 %or.cond, label %_ZNK4absl18debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTooComplexEv.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 4 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, ptr noundef nonnull align 4 dereferenceable(12) %i.i, i64 12, i1 false)
+  %.sroa.0.sroa.0.0.copyload = load <3 x i32>, ptr %i.i, align 4
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %.sroa.4.0.copyload = load i32, ptr %.sroa.4.0..sroa_idx, align 8 ; 3 uses
   %i.j = and i32 %.sroa.4.0.copyload, 2147483647
@@ -761,13 +749,12 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.f:                                             ; preds = %_ZN4absl18debugging_internalL17ParseOneCharTokenEPNS0_5StateEc.exit.thread, %bb.d
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.sroa.0.0.copyload, ptr %i.i, align 4
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %storemerge = phi i32 [ %i.x, %bb.e ], [ %.sroa.4.0.copyload, %bb.f ]
   store i32 %storemerge, ptr %.sroa.4.0..sroa_idx, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   %.pre = load i32, ptr %i.a, align 4
   %i.y = add nsw i32 %.pre, -1
   br label %_ZNK4absl18debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTooComplexEv.exit.thread
@@ -781,7 +768,6 @@ _ZNK4absl18debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTooComplexEv.exi
 ; Function Attrs: mustprogress nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl18debugging_internalL16ParseSpecialNameEPNS0_5StateE(ptr noundef %0) unnamed_addr #4 {
 bb.a:
-  %.sroa.0 = alloca { i32, i32, i32 }, align 8    ; 17 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 54 uses
   %i.b = load i32, ptr %i.a, align 4              ; 5 uses
   %i.c = add nsw i32 %i.b, 1                      ; 7 uses
@@ -795,9 +781,8 @@ bb.a:
   br i1 %or.cond176, label %_ZNK4absl18debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTooComplexEv.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 44 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, ptr noundef nonnull align 4 dereferenceable(12) %i.i, i64 12, i1 false)
+  %.sroa.0.sroa.0.0.copyload = load <3 x i32>, ptr %i.i, align 4 ; 14 uses
   %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 22 uses
   %.sroa.17.0.copyload = load i32, ptr %.sroa.17.0..sroa_idx, align 8 ; 21 uses
   %i.j = add nsw i32 %i.b, 2                      ; 2 uses
@@ -840,7 +825,7 @@ _ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit: ; preds = %bb.e
   br i1 %i.v, label %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit221, label %bb.g
 
 bb.g:                                             ; preds = %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.sroa.0.0.copyload, ptr %i.i, align 4
   store i32 %.sroa.17.0.copyload, ptr %.sroa.17.0..sroa_idx, align 8
   br label %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit221
 
@@ -882,7 +867,7 @@ _ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit107: ; preds = %b
   br i1 %i.ag, label %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit221, label %bb.m
 
 bb.m:                                             ; preds = %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit107
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.sroa.0.0.copyload, ptr %i.i, align 4
   store i32 %.sroa.17.0.copyload, ptr %.sroa.17.0..sroa_idx, align 8
   br label %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit221
 
@@ -937,7 +922,7 @@ bb.r:                                             ; preds = %bb.q, %bb.q, %bb.q,
 _ZN4absl18debugging_internalL17ParseOneCharTokenEPNS0_5StateEc.exit.thread: ; preds = %bb.p, %bb.q, %bb.o, %bb.n, %._crit_edge
   %i.av = phi i32 [ %.pre177, %._crit_edge ], [ %i.ah, %bb.o ], [ %i.ah, %bb.n ], [ 131073, %bb.p ], [ %i.ao, %bb.q ] ; 2 uses
   %i.aw = phi i32 [ %.pre, %._crit_edge ], [ %i.c, %bb.o ], [ %i.c, %bb.n ], [ %i.c, %bb.p ], [ %i.c, %bb.q ] ; 4 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.sroa.0.0.copyload, ptr %i.i, align 4
   store i32 %.sroa.17.0.copyload, ptr %.sroa.17.0..sroa_idx, align 8
   %i.ax = add nsw i32 %i.aw, 1
   store i32 %i.ax, ptr %i.a, align 4
@@ -983,7 +968,7 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.bl, label %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit221, label %bb.x
 
 bb.x:                                             ; preds = %_ZN4absl18debugging_internalL17ParseTwoCharTokenEPNS0_5StateEPKc.exit115.thread, %bb.w, %bb.v, %bb.u
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.sroa.0.0.copyload, ptr %i.i, align 4
   store i32 %.sroa.17.0.copyload, ptr %.sroa.17.0..sroa_idx, align 8
   %i.bm = load i32, ptr %i.a, align 4             ; 6 uses
   %i.bn = add nsw i32 %i.bm, 1                    ; 4 uses
@@ -1028,7 +1013,7 @@ _ZN4absl18debugging_internalL17ParseTwoCharTokenEPNS0_5StateEPKc.exit120.thread:
   %.pre-phi = phi i32 [ %.pre188, %._crit_edge178 ], [ %i.bn, %bb.x ], [ %i.bn, %bb.z ], [ %i.bn, %bb.y ]
   %i.cb = phi i32 [ %.pre180, %._crit_edge178 ], [ %i.bp, %bb.x ], [ %i.bp, %bb.z ], [ %i.bp, %bb.y ] ; 2 uses
   %i.cc = phi i32 [ %.pre179, %._crit_edge178 ], [ %i.bm, %bb.x ], [ %i.bm, %bb.z ], [ %i.bm, %bb.y ] ; 4 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.sroa.0.0.copyload, ptr %i.i, align 4
   store i32 %.sroa.17.0.copyload, ptr %.sroa.17.0..sroa_idx, align 8
   store i32 %.pre-phi, ptr %i.a, align 4
   %i.cd = add nsw i32 %i.cb, 1                    ; 3 uses
@@ -1098,7 +1083,7 @@ _ZN4absl18debugging_internalL13ParseEncodingEPNS0_5StateE.exit._crit_edge: ; pre
 _ZN4absl18debugging_internalL17ParseOneCharTokenEPNS0_5StateEc.exit125.thread: ; preds = %bb.ad, %bb.ab, %_ZN4absl18debugging_internalL17ParseTwoCharTokenEPNS0_5StateEPKc.exit120.thread, %_ZN4absl18debugging_internalL13ParseEncodingEPNS0_5StateE.exit._crit_edge, %bb.ac
   %i.cx = phi i32 [ %i.cd, %bb.ab ], [ %.pre237, %bb.ac ], [ %.pre236, %_ZN4absl18debugging_internalL13ParseEncodingEPNS0_5StateE.exit._crit_edge ], [ %i.cd, %_ZN4absl18debugging_internalL17ParseTwoCharTokenEPNS0_5StateEPKc.exit120.thread ], [ %i.cn, %bb.ad ] ; 2 uses
   %i.cy = phi i32 [ %i.cc, %bb.ab ], [ %.pre235, %bb.ac ], [ %i.cw, %_ZN4absl18debugging_internalL13ParseEncodingEPNS0_5StateE.exit._crit_edge ], [ %i.cc, %_ZN4absl18debugging_internalL17ParseTwoCharTokenEPNS0_5StateEPKc.exit120.thread ], [ %.pre235, %bb.ad ] ; 4 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.sroa.0.0.copyload, ptr %i.i, align 4
   store i32 %.sroa.17.0.copyload, ptr %.sroa.17.0..sroa_idx, align 8
   %i.cz = add nsw i32 %i.cy, 1
   store i32 %i.cz, ptr %i.a, align 4
@@ -1159,7 +1144,7 @@ bb.an:                                            ; preds = %bb.am
   br label %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit221
 
 bb.ao:                                            ; preds = %_ZN4absl18debugging_internalL17ParseTwoCharTokenEPNS0_5StateEPKc.exit130.thread, %bb.am, %bb.al, %bb.ak, %bb.aj
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.sroa.0.0.copyload, ptr %i.i, align 4
   store i32 %.sroa.17.0.copyload, ptr %.sroa.17.0..sroa_idx, align 8
   %i.dv = load i32, ptr %i.a, align 4             ; 7 uses
   %i.dw = add nsw i32 %i.dv, 1                    ; 6 uses
@@ -1216,7 +1201,7 @@ _ZN4absl18debugging_internalL17ParseOneCharTokenEPNS0_5StateEc.exit135.thread: ;
   %.pre-phi190 = phi i32 [ %.pre189, %._crit_edge181 ], [ %i.dw, %bb.ap ], [ %i.dw, %bb.ao ], [ %i.dw, %bb.aq ], [ %i.dw, %bb.ar ] ; 4 uses
   %i.en = phi i32 [ %.pre183, %._crit_edge181 ], [ %i.dy, %bb.ap ], [ %i.dy, %bb.ao ], [ 131073, %bb.aq ], [ %i.eg, %bb.ar ] ; 6 uses
   %i.eo = phi i32 [ %.pre182, %._crit_edge181 ], [ %i.dv, %bb.ap ], [ %i.dv, %bb.ao ], [ %i.dv, %bb.aq ], [ %i.dv, %bb.ar ] ; 7 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.sroa.0.0.copyload, ptr %i.i, align 4
   store i32 %.sroa.17.0.copyload, ptr %.sroa.17.0..sroa_idx, align 8
   store i32 %.pre-phi190, ptr %i.a, align 4
   %i.ep = add nsw i32 %i.en, 1
@@ -1257,7 +1242,7 @@ _ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit152: ; preds = %b
   br i1 %i.fa, label %bb.ay, label %bb.ax
 
 bb.ax:                                            ; preds = %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit152
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.sroa.0.0.copyload, ptr %i.i, align 4
   store i32 %.sroa.17.0.copyload, ptr %.sroa.17.0..sroa_idx, align 8
   br label %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit221
 
@@ -1269,7 +1254,7 @@ bb.ay:                                            ; preds = %_ZN4absl18debugging
   br i1 %or.cond, label %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit221, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.sroa.0.0.copyload, ptr %i.i, align 4
   store i32 %.sroa.17.0.copyload, ptr %.sroa.17.0..sroa_idx, align 8
   br label %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit221
 
@@ -1338,7 +1323,7 @@ _ZN4absl18debugging_internalL17ParseTwoCharTokenEPNS0_5StateEPKc.exit157.thread:
   %.pre-phi192 = phi i32 [ %.pre-phi190, %bb.bb ], [ %.pre-phi190, %bb.ba ], [ %.pre-phi190, %bb.bc ], [ %i.fv, %_ZN4absl18debugging_internalL13ParseEncodingEPNS0_5StateE.exit207.._crit_edge184_crit_edge ], [ %i.fn, %bb.bd ]
   %i.fx = phi i32 [ %i.fd, %bb.bb ], [ %i.fd, %bb.ba ], [ %i.fd, %bb.bc ], [ %.pre186.pre, %_ZN4absl18debugging_internalL13ParseEncodingEPNS0_5StateE.exit207.._crit_edge184_crit_edge ], [ 131073, %bb.bd ] ; 2 uses
   %i.fy = phi i32 [ %i.eo, %bb.bb ], [ %i.eo, %bb.ba ], [ %i.eo, %bb.bc ], [ %i.fw, %_ZN4absl18debugging_internalL13ParseEncodingEPNS0_5StateE.exit207.._crit_edge184_crit_edge ], [ %i.eo, %bb.bd ] ; 6 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.sroa.0.0.copyload, ptr %i.i, align 4
   store i32 %.sroa.17.0.copyload, ptr %.sroa.17.0..sroa_idx, align 8
   store i32 %.pre-phi192, ptr %i.a, align 4
   %i.fz = add nsw i32 %i.fx, 1                    ; 5 uses
@@ -1385,7 +1370,7 @@ bb.bk:                                            ; preds = %bb.bj
 _ZN4absl18debugging_internalL19ParseThreeCharTokenEPNS0_5StateEPKc.exit.thread: ; preds = %bb.bh, %bb.bi, %bb.bj, %_ZN4absl18debugging_internalL17ParseTwoCharTokenEPNS0_5StateEPKc.exit157.thread, %._crit_edge239
   %i.go = phi i32 [ %.pre241, %._crit_edge239 ], [ %i.fz, %_ZN4absl18debugging_internalL17ParseTwoCharTokenEPNS0_5StateEPKc.exit157.thread ], [ %i.fz, %bb.bj ], [ %i.fz, %bb.bi ], [ %i.fz, %bb.bh ] ; 4 uses
   %i.gp = phi i32 [ %.pre240, %._crit_edge239 ], [ %i.fy, %_ZN4absl18debugging_internalL17ParseTwoCharTokenEPNS0_5StateEPKc.exit157.thread ], [ %i.fy, %bb.bj ], [ %i.fy, %bb.bi ], [ %i.fy, %bb.bh ] ; 7 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.sroa.0.0.copyload, ptr %i.i, align 4
   store i32 %.sroa.17.0.copyload, ptr %.sroa.17.0..sroa_idx, align 8
   %i.gq = add nsw i32 %i.gp, 1                    ; 2 uses
   store i32 %i.gq, ptr %i.a, align 4
@@ -1474,7 +1459,7 @@ _ZN4absl18debugging_internalL13ParseEncodingEPNS0_5StateE.exit215._crit_edge: ; 
 _ZN4absl18debugging_internalL17ParseOneCharTokenEPNS0_5StateEc.exit.thread228: ; preds = %bb.bp, %bb.bm, %bb.bn, %bb.bl, %_ZN4absl18debugging_internalL19ParseThreeCharTokenEPNS0_5StateEPKc.exit.thread, %_ZN4absl18debugging_internalL13ParseEncodingEPNS0_5StateE.exit215._crit_edge, %bb.bo
   %i.hr = phi i32 [ 131073, %bb.bm ], [ %i.gr, %bb.bl ], [ %.pre244, %bb.bo ], [ %.pre243, %_ZN4absl18debugging_internalL13ParseEncodingEPNS0_5StateE.exit215._crit_edge ], [ %i.gr, %_ZN4absl18debugging_internalL19ParseThreeCharTokenEPNS0_5StateEPKc.exit.thread ], [ %i.hh, %bb.bp ], [ %i.gz, %bb.bn ] ; 2 uses
   %i.hs = phi i32 [ %i.gp, %bb.bm ], [ %i.gp, %bb.bl ], [ %.pre242, %bb.bo ], [ %i.hq, %_ZN4absl18debugging_internalL13ParseEncodingEPNS0_5StateE.exit215._crit_edge ], [ %i.gp, %_ZN4absl18debugging_internalL19ParseThreeCharTokenEPNS0_5StateEPKc.exit.thread ], [ %.pre242, %bb.bp ], [ %i.gp, %bb.bn ] ; 4 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.sroa.0.0.copyload, ptr %i.i, align 4
   store i32 %.sroa.17.0.copyload, ptr %.sroa.17.0..sroa_idx, align 8
   %i.ht = add nsw i32 %i.hs, 1
   store i32 %i.ht, ptr %i.a, align 4
@@ -1527,13 +1512,12 @@ bb.bx:                                            ; preds = %bb.bw
   br label %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit221
 
 .critedge:                                        ; preds = %_ZN4absl18debugging_internalL17ParseTwoCharTokenEPNS0_5StateEPKc.exit.thread, %bb.bv
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.sroa.0.0.copyload, ptr %i.i, align 4
   store i32 %.sroa.17.0.copyload, ptr %.sroa.17.0..sroa_idx, align 8
   br label %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit221
 
 _ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit221: ; preds = %bb.bx, %bb.bw, %_ZN4absl18debugging_internalL13ParseEncodingEPNS0_5StateE.exit215.thread, %_ZN4absl18debugging_internalL13ParseEncodingEPNS0_5StateE.exit207.thread, %_ZN4absl18debugging_internalL13ParseEncodingEPNS0_5StateE.exit.thread, %_ZN4absl18debugging_internalL13ParseEncodingEPNS0_5StateE.exit215, %bb.bk, %_ZN4absl18debugging_internalL13ParseEncodingEPNS0_5StateE.exit207, %bb.az, %bb.ay, %bb.as, %_ZN4absl18debugging_internalL13ParseEncodingEPNS0_5StateE.exit, %bb.aa, %bb.w, %bb.r, %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit107, %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit, %.critedge, %bb.ax, %bb.an, %bb.m, %bb.g
   %.2 = phi i1 [ true, %_ZN4absl18debugging_internalL13ParseEncodingEPNS0_5StateE.exit215.thread ], [ false, %bb.g ], [ true, %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit ], [ false, %bb.m ], [ true, %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit107 ], [ true, %bb.r ], [ true, %bb.w ], [ true, %bb.aa ], [ true, %bb.an ], [ true, %_ZN4absl18debugging_internalL13ParseEncodingEPNS0_5StateE.exit ], [ true, %bb.as ], [ false, %bb.ax ], [ false, %bb.az ], [ true, %_ZN4absl18debugging_internalL13ParseEncodingEPNS0_5StateE.exit207 ], [ true, %bb.bk ], [ false, %.critedge ], [ true, %bb.ay ], [ true, %_ZN4absl18debugging_internalL13ParseEncodingEPNS0_5StateE.exit215 ], [ true, %_ZN4absl18debugging_internalL13ParseEncodingEPNS0_5StateE.exit.thread ], [ true, %_ZN4absl18debugging_internalL13ParseEncodingEPNS0_5StateE.exit207.thread ], [ true, %bb.bw ], [ true, %bb.bx ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   %.pre187 = load i32, ptr %i.a, align 4
   %i.il = add nsw i32 %.pre187, -1
   br label %_ZNK4absl18debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTooComplexEv.exit.thread
@@ -1811,8 +1795,6 @@ _ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit: ; preds = %.cri
 ; Function Attrs: mustprogress nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl18debugging_internalL17ParseTemplateArgsEPNS0_5StateE(ptr noundef %0) unnamed_addr #4 {
 bb.a:
-  %.sroa.0.i = alloca { i32, i32, i32 }, align 8  ; 4 uses
-  %.sroa.0 = alloca { i32, i32, i32 }, align 8    ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 13 uses
   %i.b = load i32, ptr %i.a, align 4              ; 5 uses
   %i.c = add nsw i32 %i.b, 1                      ; 3 uses
@@ -1826,9 +1808,8 @@ bb.a:
   br i1 %or.cond, label %_ZNK4absl18debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTooComplexEv.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 10 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, ptr noundef nonnull align 4 dereferenceable(12) %i.i, i64 12, i1 false)
+  %.sroa.0.sroa.0.0.copyload = load <3 x i32>, ptr %i.i, align 4
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 9 uses
   %.sroa.4.0.copyload = load i32, ptr %.sroa.4.0..sroa_idx, align 8 ; 4 uses
   %i.j = and i32 %.sroa.4.0.copyload, 2147483647
@@ -1873,8 +1854,7 @@ bb.e:                                             ; preds = %.preheader.i
   br i1 %or.cond.i27, label %_ZN4absl18debugging_internalL24ParseQRequiresClauseExprEPNS0_5StateE.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0.i, ptr noundef nonnull align 4 dereferenceable(12) %i.i, i64 12, i1 false)
+  %.sroa.0.i.sroa.0.0.copyload = load <3 x i32>, ptr %i.i, align 4
   %.sroa.4.0.copyload.i = load i32, ptr %.sroa.4.0..sroa_idx, align 8 ; 3 uses
   %i.ab = and i32 %.sroa.4.0.copyload.i, 2147483647
   store i32 %i.ab, ptr %.sroa.4.0..sroa_idx, align 8
@@ -1915,13 +1895,12 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.h, %_ZN4absl18debugging_internalL17ParseOneCharTokenEPNS0_5StateEc.exit.thread.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0.i, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.i.sroa.0.0.copyload, ptr %i.i, align 4
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
   %storemerge.i = phi i32 [ %i.ap, %bb.i ], [ %.sroa.4.0.copyload.i, %bb.j ]
   store i32 %storemerge.i, ptr %.sroa.4.0..sroa_idx, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
   %.pre.i = load i32, ptr %i.a, align 4           ; 2 uses
   %i.aq = add nsw i32 %.pre.i, -1
   %.pre28 = load i32, ptr %i.d, align 8
@@ -1970,13 +1949,12 @@ _ZN4absl18debugging_internalL9OneOrMoreEPFbPNS0_5StateEES2_.exit.sink.split: ; p
   br label %_ZN4absl18debugging_internalL9OneOrMoreEPFbPNS0_5StateEES2_.exit
 
 _ZN4absl18debugging_internalL9OneOrMoreEPFbPNS0_5StateEES2_.exit: ; preds = %_ZN4absl18debugging_internalL9OneOrMoreEPFbPNS0_5StateEES2_.exit.sink.split, %bb.d
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.sroa.0.0.copyload, ptr %i.i, align 4
   store i32 %.sroa.4.0.copyload, ptr %.sroa.4.0..sroa_idx, align 8
   br label %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit
 
 _ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit: ; preds = %bb.n, %bb.m, %_ZN4absl18debugging_internalL9OneOrMoreEPFbPNS0_5StateEES2_.exit
   %.0 = phi i1 [ false, %_ZN4absl18debugging_internalL9OneOrMoreEPFbPNS0_5StateEES2_.exit ], [ true, %bb.m ], [ true, %bb.n ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   %.pre = load i32, ptr %i.a, align 4
   %i.bf = add nsw i32 %.pre, -1
   br label %_ZNK4absl18debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTooComplexEv.exit.thread
@@ -2379,7 +2357,6 @@ _ZNK4absl18debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTooComplexEv.exi
 define internal fastcc noundef zeroext i1 @_ZN4absl18debugging_internalL20ParseUnnamedTypeNameEPNS0_5StateE(ptr noundef %0) unnamed_addr #4 {
 bb.a:
   %i.a = alloca [20 x i8], align 16               ; 7 uses
-  %.sroa.0 = alloca { i32, i32, i32 }, align 8    ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 20 uses
   %i.c = load i32, ptr %i.b, align 4              ; 9 uses
   %i.d = add nsw i32 %i.c, 1                      ; 6 uses
@@ -2393,9 +2370,8 @@ bb.a:
   br i1 %or.cond, label %_ZNK4absl18debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTooComplexEv.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 15 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, ptr noundef nonnull align 4 dereferenceable(12) %i.j, i64 12, i1 false)
+  %.sroa.0.sroa.0.0.copyload = load <3 x i32>, ptr %i.j, align 4 ; 2 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 7 uses
   %.sroa.5.0.copyload = load i32, ptr %.sroa.5.0..sroa_idx, align 8 ; 4 uses
   %i.k = add nsw i32 %i.c, 2                      ; 3 uses
@@ -2616,7 +2592,7 @@ bb.r:                                             ; preds = %_ZN4absl18debugging
 
 _ZN4absl18debugging_internalL17ParseTwoCharTokenEPNS0_5StateEPKc.exit.thread: ; preds = %bb.i, %_ZN4absl18debugging_internalL11ParseNumberEPNS0_5StateEPi.exit.thread, %bb.c, %bb.d, %bb.b, %_ZN4absl18debugging_internalL11ParseNumberEPNS0_5StateEPi.exit
   %i.cv = phi i32 [ %i.l, %bb.c ], [ %i.z, %_ZN4absl18debugging_internalL11ParseNumberEPNS0_5StateEPi.exit ], [ %i.l, %bb.b ], [ %i.l, %bb.d ], [ %i.bc, %_ZN4absl18debugging_internalL11ParseNumberEPNS0_5StateEPi.exit.thread ], [ %i.bc, %bb.i ] ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.j, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.sroa.0.0.copyload, ptr %i.j, align 4
   %i.cw = add nsw i32 %i.c, 2
   store i32 %i.cw, ptr %i.b, align 4
   %i.cx = add nsw i32 %i.cv, 1
@@ -2789,13 +2765,12 @@ _ZN4absl18debugging_internalL9OneOrMoreEPFbPNS0_5StateEES2_.exit.sink.split: ; p
   br label %_ZN4absl18debugging_internalL9OneOrMoreEPFbPNS0_5StateEES2_.exit
 
 _ZN4absl18debugging_internalL9OneOrMoreEPFbPNS0_5StateEES2_.exit: ; preds = %_ZN4absl18debugging_internalL9OneOrMoreEPFbPNS0_5StateEES2_.exit.sink.split, %_ZN4absl18debugging_internalL10ZeroOrMoreEPFbPNS0_5StateEES2_.exit, %_ZN4absl18debugging_internalL11ParseNumberEPNS0_5StateEPi.exit61
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.j, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.sroa.0.0.copyload, ptr %i.j, align 4
   store i32 %.sroa.5.0.copyload, ptr %.sroa.5.0..sroa_idx, align 8
   br label %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit36
 
 _ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit36: ; preds = %bb.r, %_ZN4absl18debugging_internalL18MaybeAppendDecimalEPNS0_5StateEi.exit, %_ZN4absl18debugging_internalL18MaybeAppendDecimalEPNS0_5StateEi.exit.thread, %_ZN4absl18debugging_internalL9OneOrMoreEPFbPNS0_5StateEES2_.exit, %bb.ad
   %.0 = phi i1 [ false, %_ZN4absl18debugging_internalL9OneOrMoreEPFbPNS0_5StateEES2_.exit ], [ true, %bb.ad ], [ true, %_ZN4absl18debugging_internalL18MaybeAppendDecimalEPNS0_5StateEi.exit.thread ], [ true, %_ZN4absl18debugging_internalL18MaybeAppendDecimalEPNS0_5StateEi.exit ], [ true, %bb.r ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   %.pre102 = load i32, ptr %i.b, align 4
   %i.fp = add nsw i32 %.pre102, -1
   br label %_ZNK4absl18debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTooComplexEv.exit.thread
@@ -3198,7 +3173,6 @@ _ZNK4absl18debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTooComplexEv.exi
 ; Function Attrs: mustprogress nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl18debugging_internalL17ParseOperatorNameEPNS0_5StateEPi(ptr noundef %0, ptr nofree noundef writeonly captures(address_is_null) %1) unnamed_addr #4 {
 bb.a:
-  %.sroa.0 = alloca { i32, i32, i32 }, align 8    ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 21 uses
   %i.b = load i32, ptr %i.a, align 4              ; 7 uses
   %i.c = add nsw i32 %i.b, 1                      ; 6 uses
@@ -3229,8 +3203,7 @@ bb.a:
   br i1 %.not.i.1, label %_ZN4absl18debugging_internalL24AtLeastNumCharsRemainingEPKcm.exit, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i.1
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, ptr noundef nonnull align 4 dereferenceable(12) %i.i, i64 12, i1 false)
+  %.sroa.0.sroa.0.0.copyload = load <3 x i32>, ptr %i.i, align 4 ; 3 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 9 uses
   %.sroa.6.0.copyload = load i32, ptr %.sroa.6.0..sroa_idx, align 8 ; 7 uses
   %i.o = add nsw i32 %i.b, 2
@@ -3405,7 +3378,7 @@ bb.i:                                             ; preds = %_ZN4absl18debugging
 _ZN4absl18debugging_internalL17ParseTwoCharTokenEPNS0_5StateEPKc.exit.thread: ; preds = %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit, %bb.c, %bb.d, %bb.b, %_ZN4absl18debugging_internalL27ParseConversionOperatorTypeEPNS0_5StateE.exit.thread101
   %i.be = phi i32 [ %.pre124, %_ZN4absl18debugging_internalL27ParseConversionOperatorTypeEPNS0_5StateE.exit.thread101 ], [ %i.p, %bb.c ], [ %i.p, %bb.b ], [ %i.p, %bb.d ], [ %i.ac, %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit ] ; 2 uses
   %i.bf = phi i32 [ %i.as, %_ZN4absl18debugging_internalL27ParseConversionOperatorTypeEPNS0_5StateE.exit.thread101 ], [ %i.c, %bb.c ], [ %i.c, %bb.b ], [ %i.c, %bb.d ], [ %i.y, %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit ] ; 6 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.sroa.0.0.copyload, ptr %i.i, align 4
   store i32 %.sroa.6.0.copyload, ptr %.sroa.6.0..sroa_idx, align 8
   %i.bg = add nsw i32 %i.bf, 1                    ; 4 uses
   store i32 %i.bg, ptr %i.a, align 4
@@ -3456,7 +3429,7 @@ _ZN4absl18debugging_internalL17ParseTwoCharTokenEPNS0_5StateEPKc.exit75.thread: 
   %.pre-phi = phi i32 [ %.pre128, %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit78._crit_edge ], [ %i.bg, %_ZN4absl18debugging_internalL17ParseTwoCharTokenEPNS0_5StateEPKc.exit.thread ], [ %i.bg, %bb.k ], [ %i.bg, %bb.j ] ; 2 uses
   %i.bt = phi i32 [ %.pre126, %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit78._crit_edge ], [ %i.bh, %_ZN4absl18debugging_internalL17ParseTwoCharTokenEPNS0_5StateEPKc.exit.thread ], [ %i.bh, %bb.k ], [ %i.bh, %bb.j ] ; 4 uses
   %i.bu = phi i32 [ %.pre125, %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit78._crit_edge ], [ %i.bf, %_ZN4absl18debugging_internalL17ParseTwoCharTokenEPNS0_5StateEPKc.exit.thread ], [ %i.bf, %bb.k ], [ %i.bf, %bb.j ] ; 4 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.sroa.0.0.copyload, ptr %i.i, align 4
   store i32 %.sroa.6.0.copyload, ptr %.sroa.6.0..sroa_idx, align 8
   store i32 %.pre-phi, ptr %i.a, align 4
   %i.bv = add nsw i32 %i.bt, 1
@@ -3516,7 +3489,7 @@ bb.r:                                             ; preds = %_ZN4absl18debugging
   br label %bb.s
 
 bb.s:                                             ; preds = %.sink.split, %bb.r
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i64 12, i1 false)
+  store <3 x i32> %.sroa.0.sroa.0.0.copyload, ptr %i.i, align 4
   store i32 %.sroa.6.0.copyload, ptr %.sroa.6.0..sroa_idx, align 8
   %.val56 = load ptr, ptr %0, align 8
   %.val57 = load i32, ptr %i.i, align 4
@@ -3604,7 +3577,6 @@ bb.aa:                                            ; preds = %bb.z, %.preheader.1
 
 .loopexit:                                        ; preds = %bb.aa, %bb.y, %bb.s, %bb.t, %bb.r, %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit78, %_ZN4absl18debugging_internalL27ParseConversionOperatorTypeEPNS0_5StateE.exit.thread100, %bb.i
   %.1 = phi i1 [ true, %bb.r ], [ true, %_ZN4absl18debugging_internalL27ParseConversionOperatorTypeEPNS0_5StateE.exit.thread100 ], [ true, %_ZN4absl18debugging_internalL11MaybeAppendEPNS0_5StateEPKc.exit78 ], [ false, %bb.s ], [ true, %bb.i ], [ false, %bb.t ], [ true, %bb.y ], [ false, %bb.aa ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   %.pre127 = load i32, ptr %i.a, align 4
   %i.dw = add nsw i32 %.pre127, -1
   br label %_ZN4absl18debugging_internalL24AtLeastNumCharsRemainingEPKcm.exit

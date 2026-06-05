@@ -14,7 +14,6 @@ module asm ".globl _ZSt21ios_base_library_initv"
 %"struct.std::_Head_base.1" = type { ptr }
 %"class.geos::precision::PrecisionReducerTransformer" = type <{ %"class.geos::geom::util::GeometryTransformer.base", [4 x i8], ptr, i8, [7 x i8] }>
 %"class.geos::geom::util::GeometryTransformer.base" = type <{ ptr, ptr, ptr, i8, i8, i8, i8 }>
-%"class.geos::geom::Coordinate" = type { double, double, double }
 %"class.std::unique_ptr.10" = type { %"struct.std::__uniq_ptr_data.11" }
 %"struct.std::__uniq_ptr_data.11" = type { %"class.std::__uniq_ptr_impl.12" }
 %"class.std::__uniq_ptr_impl.12" = type { %"class.std::tuple.13" }
@@ -27,6 +26,7 @@ module asm ".globl _ZSt21ios_base_library_initv"
 %"struct.std::_Vector_base" = type { %"struct.std::_Vector_base<geos::geom::Coordinate, std::allocator<geos::geom::Coordinate>>::_Vector_impl" }
 %"struct.std::_Vector_base<geos::geom::Coordinate, std::allocator<geos::geom::Coordinate>>::_Vector_impl" = type { %"struct.std::_Vector_base<geos::geom::Coordinate, std::allocator<geos::geom::Coordinate>>::_Vector_impl_data" }
 %"struct.std::_Vector_base<geos::geom::Coordinate, std::allocator<geos::geom::Coordinate>>::_Vector_impl_data" = type { ptr, ptr, ptr }
+%"class.geos::geom::Coordinate" = type { double, double, double }
 
 $_ZN4geos4geom4util19GeometryTransformerD2Ev = comdat any
 
@@ -99,7 +99,6 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress uwtable
 define void @_ZN4geos9precision27PrecisionReducerTransformer6extendERSt6vectorINS_4geom10CoordinateESaIS4_EEm(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(41) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(24) %1, i64 noundef %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.geos::geom::Coordinate", align 8 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !18   ; 2 uses
   %i.c = load ptr, ptr %1, align 8, !tbaa !21     ; 2 uses
@@ -119,10 +118,9 @@ bb.b:                                             ; preds = %.lr.ph, %_ZNSt6vect
   %i.j = phi i64 [ %i.f, %.lr.ph ], [ %i.ag, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit ] ; 2 uses
   %i.k = phi ptr [ %i.c, %.lr.ph ], [ %i.ac, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit ] ; 4 uses
   %i.l = phi ptr [ %i.b, %.lr.ph ], [ %i.ad, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit ] ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
   %i.m = getelementptr inbounds i8, ptr %i.l, i64 -24 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %i.m, i64 24, i1 false), !tbaa.struct !22
-  %i.n = load ptr, ptr %i.h, align 8, !tbaa !25
+  %.sroa.0.0.copyload = load <3 x double>, ptr %i.m, align 8
+  %i.n = load ptr, ptr %i.h, align 8, !tbaa !22
   %.not.i = icmp eq ptr %i.l, %i.n
   br i1 %.not.i, label %bb.d, label %bb.c
 
@@ -153,14 +151,14 @@ _ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i: ; pr
   %i.v = mul nuw nsw i64 %i.u, 24
   %i.w = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.v) #14 ; 6 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.j
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.x, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false), !tbaa.struct !22
+  store <3 x double> %.sroa.0.0.copyload, ptr %i.x, align 8
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.k, %i.l
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i, label %.lr.ph.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %_ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i, %.lr.ph.i.i.i.i.i.i
   %.012.i.i.i.i.i.i = phi ptr [ %i.z, %.lr.ph.i.i.i.i.i.i ], [ %i.w, %_ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i ] ; 2 uses
   %.0911.i.i.i.i.i.i = phi ptr [ %i.y, %.lr.ph.i.i.i.i.i.i ], [ %i.k, %_ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.012.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.0911.i.i.i.i.i.i, i64 24, i1 false), !tbaa.struct !22, !alias.scope !26
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.012.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.0911.i.i.i.i.i.i, i64 24, i1 false), !tbaa.struct !23, !alias.scope !26
   %i.y = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i, i64 24 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i, i64 24 ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.y, %i.l
@@ -180,13 +178,12 @@ _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__g
   store ptr %i.w, ptr %1, align 8, !tbaa !21
   store ptr %i.aa, ptr %i.a, align 8, !tbaa !18
   %i.ab = getelementptr inbounds nuw [24 x i8], ptr %i.w, i64 %i.u
-  store ptr %i.ab, ptr %i.h, align 8, !tbaa !25
+  store ptr %i.ab, ptr %i.h, align 8, !tbaa !22
   br label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit
 
 _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit: ; preds = %bb.c, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i
   %i.ac = phi ptr [ %.pre, %bb.c ], [ %i.w, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ] ; 2 uses
   %i.ad = phi ptr [ %i.p, %bb.c ], [ %i.aa, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ] ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
   %i.ae = ptrtoint ptr %i.ad to i64
   %i.af = ptrtoint ptr %i.ac to i64
   %i.ag = sub i64 %i.ae, %i.af                    ; 2 uses
@@ -204,9 +201,8 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: mustprogress uwtable
 define void @_ZN4geos9precision27PrecisionReducerTransformer20transformCoordinatesEPKNS_4geom18CoordinateSequenceEPKNS2_8GeometryE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::unique_ptr.10") align 8 captures(none) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(41) %1, ptr noundef %2, ptr noundef %3) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = alloca %"class.geos::geom::Coordinate", align 8 ; 4 uses
-  %5 = alloca %"class.geos::precision::PrecisionReducerFilter", align 8 ; 13 uses
-  %6 = alloca %"class.std::vector", align 8       ; 11 uses
+  %4 = alloca %"class.geos::precision::PrecisionReducerFilter", align 8 ; 13 uses
+  %5 = alloca %"class.std::vector", align 8       ; 11 uses
   %i.a = load ptr, ptr %2, align 8, !tbaa !7
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   %i.c = load ptr, ptr %i.b, align 8
@@ -249,34 +245,34 @@ _ZNSt10unique_ptrIN4geos4geom23CoordinateArraySequenceESt14default_deleteIS2_EED
   br label %bb.z
 
 bb.f:                                             ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !40, !nonnull !41, !align !42
-  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN4geos9precision22PrecisionReducerFilterE, i64 16), ptr %5, align 8, !tbaa !7
-  %i.r = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 5 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %5, i64 32
-  %i.t = getelementptr inbounds nuw i8, ptr %5, i64 48
+  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN4geos9precision22PrecisionReducerFilterE, i64 16), ptr %4, align 8, !tbaa !7
+  %i.r = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 5 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %4, i64 32
+  %i.t = getelementptr inbounds nuw i8, ptr %4, i64 48
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.r, i8 0, i64 24, i1 false)
-  %i.u = getelementptr inbounds nuw i8, ptr %5, i64 56
+  %i.u = getelementptr inbounds nuw i8, ptr %4, i64 56
   store i8 1, ptr %i.u, align 8, !tbaa !43
-  %i.v = getelementptr inbounds nuw i8, ptr %5, i64 64
+  %i.v = getelementptr inbounds nuw i8, ptr %4, i64 64
   store ptr %i.q, ptr %i.v, align 8, !tbaa !9
-  store <2 x double> splat (double +qnan), ptr %i.s, align 8, !tbaa !23
+  store <2 x double> splat (double +qnan), ptr %i.s, align 8, !tbaa !24
   store double +qnan, ptr %i.t, align 8, !tbaa !50
   %i.w = load ptr, ptr %2, align 8, !tbaa !7
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 144
   %i.y = load ptr, ptr %i.x, align 8
-  invoke void %i.y(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull %5)
+  invoke void %i.y(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull %4)
           to label %bb.g unwind label %bb.i
 
 bb.g:                                             ; preds = %bb.f
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
   call void @llvm.experimental.noalias.scope.decl(metadata !51)
   %i.z = load ptr, ptr %i.r, align 8, !tbaa !21, !noalias !51 ; 7 uses
-  store ptr %i.z, ptr %6, align 8, !tbaa !21, !alias.scope !51
-  %i.aa = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 4 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
-  %i.ac = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
+  store ptr %i.z, ptr %5, align 8, !tbaa !21, !alias.scope !51
+  %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %i.ad = load <2 x ptr>, ptr %i.ab, align 8, !tbaa !54, !noalias !51
   %i.ae = load ptr, ptr %i.ab, align 8, !tbaa !18, !noalias !51 ; 2 uses
   store <2 x ptr> %i.ad, ptr %i.aa, align 8, !tbaa !54, !alias.scope !51
@@ -333,10 +329,9 @@ bb.k:                                             ; preds = %bb.j
   %i.ba = phi i64 [ %i.bv, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit.i ], [ %i.at, %bb.k ] ; 2 uses
   %i.bb = phi ptr [ %i.br, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit.i ], [ %i.z, %bb.k ] ; 6 uses
   %i.bc = phi ptr [ %i.bs, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit.i ], [ %i.ae, %bb.k ] ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
   %i.bd = getelementptr inbounds i8, ptr %i.bc, i64 -24 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %i.bd, i64 24, i1 false), !tbaa.struct !22
-  %i.be = load ptr, ptr %i.ac, align 8, !tbaa !25
+  %.sroa.0.0.copyload = load <3 x double>, ptr %i.bd, align 8
+  %i.be = load ptr, ptr %i.ac, align 8, !tbaa !22
   %.not.i.i = icmp eq ptr %i.bc, %i.be
   br i1 %.not.i.i, label %bb.m, label %bb.l
 
@@ -345,7 +340,7 @@ bb.l:                                             ; preds = %.lr.ph.i
   %i.bf = load ptr, ptr %i.aa, align 8, !tbaa !18
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 24 ; 2 uses
   store ptr %i.bg, ptr %i.aa, align 8, !tbaa !18
-  %.pre.i = load ptr, ptr %6, align 8, !tbaa !21
+  %.pre.i = load ptr, ptr %5, align 8, !tbaa !21
   br label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit.i
 
 bb.m:                                             ; preds = %.lr.ph.i
@@ -369,14 +364,14 @@ _ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: ; 
 
 .noexc21:                                         ; preds = %_ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.ba
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bm, ptr noundef nonnull align 8 dereferenceable(24) %4, i64 24, i1 false), !tbaa.struct !22
+  store <3 x double> %.sroa.0.0.copyload, ptr %i.bm, align 8
   %.not10.i.i.i.i.i.i.i = icmp eq ptr %i.bb, %i.bc
   br i1 %.not10.i.i.i.i.i.i.i, label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i:                             ; preds = %.noexc21, %.lr.ph.i.i.i.i.i.i.i
   %.012.i.i.i.i.i.i.i = phi ptr [ %i.bo, %.lr.ph.i.i.i.i.i.i.i ], [ %i.bl, %.noexc21 ] ; 2 uses
   %.0911.i.i.i.i.i.i.i = phi ptr [ %i.bn, %.lr.ph.i.i.i.i.i.i.i ], [ %i.bb, %.noexc21 ] ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.012.i.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.0911.i.i.i.i.i.i.i, i64 24, i1 false), !tbaa.struct !22, !alias.scope !56
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.012.i.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.0911.i.i.i.i.i.i.i, i64 24, i1 false), !tbaa.struct !23, !alias.scope !56
   %i.bn = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i.i, i64 24 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i.i, i64 24 ; 2 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.bn, %i.bc
@@ -393,16 +388,15 @@ bb.o:                                             ; preds = %_ZNSt6vectorIN4geos
   br label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i: ; preds = %bb.o, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i.i
-  store ptr %i.bl, ptr %6, align 8, !tbaa !21
+  store ptr %i.bl, ptr %5, align 8, !tbaa !21
   store ptr %i.bp, ptr %i.aa, align 8, !tbaa !18
   %i.bq = getelementptr inbounds nuw [24 x i8], ptr %i.bl, i64 %i.bj
-  store ptr %i.bq, ptr %i.ac, align 8, !tbaa !25
+  store ptr %i.bq, ptr %i.ac, align 8, !tbaa !22
   br label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit.i
 
 _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit.i: ; preds = %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i, %bb.l
   %i.br = phi ptr [ %.pre.i, %bb.l ], [ %i.bl, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ] ; 3 uses
   %i.bs = phi ptr [ %i.bg, %bb.l ], [ %i.bp, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ] ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
   %i.bt = ptrtoint ptr %i.bs to i64
   %i.bu = ptrtoint ptr %i.br to i64
   %i.bv = sub i64 %i.bt, %i.bu                    ; 2 uses
@@ -416,11 +410,11 @@ _ZN4geos9precision27PrecisionReducerTransformer6extendERSt6vectorINS_4geom10Coor
           to label %bb.p unwind label %bb.q       ; 3 uses
 
 bb.p:                                             ; preds = %_ZN4geos9precision27PrecisionReducerTransformer6extendERSt6vectorINS_4geom10CoordinateESaIS4_EEm.exit
-  invoke void @_ZN4geos4geom23CoordinateArraySequenceC1EOSt6vectorINS0_10CoordinateESaIS3_EEm(ptr noundef nonnull align 8 dereferenceable(40) %i.bz, ptr noundef nonnull align 8 dereferenceable(24) %6, i64 noundef 0)
+  invoke void @_ZN4geos4geom23CoordinateArraySequenceC1EOSt6vectorINS0_10CoordinateESaIS3_EEm(ptr noundef nonnull align 8 dereferenceable(40) %i.bz, ptr noundef nonnull align 8 dereferenceable(24) %5, i64 noundef 0)
           to label %._crit_edge unwind label %bb.r
 
 ._crit_edge:                                      ; preds = %bb.p
-  %.pre29 = load ptr, ptr %6, align 8, !tbaa !21
+  %.pre29 = load ptr, ptr %5, align 8, !tbaa !21
   br label %bb.s
 
 bb.q:                                             ; preds = %_ZN4geos9precision27PrecisionReducerTransformer6extendERSt6vectorINS_4geom10CoordinateESaIS4_EEm.exit
@@ -432,7 +426,7 @@ bb.r:                                             ; preds = %bb.p
   %i.cb = landingpad { ptr, i32 }
           cleanup
   call void @_ZdlPv(ptr noundef nonnull %i.bz) #15
-  %.pre = load ptr, ptr %6, align 8, !tbaa !21
+  %.pre = load ptr, ptr %5, align 8, !tbaa !21
   br label %bb.v
 
 bb.s:                                             ; preds = %._crit_edge, %bb.k
@@ -447,8 +441,8 @@ bb.t:                                             ; preds = %bb.s
   br label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EED2Ev.exit
 
 _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EED2Ev.exit: ; preds = %bb.s, %bb.t
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
-  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN4geos9precision22PrecisionReducerFilterE, i64 16), ptr %5, align 8, !tbaa !7
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
+  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN4geos9precision22PrecisionReducerFilterE, i64 16), ptr %4, align 8, !tbaa !7
   %i.cd = load ptr, ptr %i.r, align 8, !tbaa !21  ; 2 uses
   %.not.i.i.i.i22 = icmp eq ptr %i.cd, null
   br i1 %.not.i.i.i.i22, label %_ZN4geos9precision22PrecisionReducerFilterD2Ev.exit, label %bb.u
@@ -458,7 +452,7 @@ bb.u:                                             ; preds = %_ZNSt6vectorIN4geos
   br label %_ZN4geos9precision22PrecisionReducerFilterD2Ev.exit
 
 _ZN4geos9precision22PrecisionReducerFilterD2Ev.exit: ; preds = %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EED2Ev.exit, %bb.u
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   br label %bb.z
 
 bb.v:                                             ; preds = %.loopexit, %.loopexit.split-lp, %bb.q, %bb.r
@@ -472,12 +466,12 @@ bb.w:                                             ; preds = %bb.v
   br label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EED2Ev.exit24
 
 _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EED2Ev.exit24: ; preds = %bb.v, %bb.w
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
   br label %bb.x
 
 bb.x:                                             ; preds = %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EED2Ev.exit24, %bb.i
   %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EED2Ev.exit24 ], [ %i.an, %bb.i ]
-  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN4geos9precision22PrecisionReducerFilterE, i64 16), ptr %5, align 8, !tbaa !7
+  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN4geos9precision22PrecisionReducerFilterE, i64 16), ptr %4, align 8, !tbaa !7
   %i.cf = load ptr, ptr %i.r, align 8, !tbaa !21  ; 2 uses
   %.not.i.i.i.i25 = icmp eq ptr %i.cf, null
   br i1 %.not.i.i.i.i25, label %_ZN4geos9precision22PrecisionReducerFilterD2Ev.exit26, label %bb.y
@@ -487,7 +481,7 @@ bb.y:                                             ; preds = %bb.x
   br label %_ZN4geos9precision22PrecisionReducerFilterD2Ev.exit26
 
 _ZN4geos9precision22PrecisionReducerFilterD2Ev.exit26: ; preds = %bb.x, %bb.y
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   br label %common.resume
 
 bb.z:                                             ; preds = %_ZN4geos9precision22PrecisionReducerFilterD2Ev.exit, %_ZNSt10unique_ptrIN4geos4geom23CoordinateArraySequenceESt14default_deleteIS2_EED2Ev.exit, %bb.b
@@ -599,11 +593,11 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN4geos9precision22PrecisionReducerFilter9filter_roEPKNS_4geom10CoordinateE(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr noundef %1) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.0.0.copyload = load double, ptr %1, align 8, !tbaa !23 ; 2 uses
+  %.sroa.0.0.copyload = load double, ptr %1, align 8, !tbaa !24 ; 2 uses
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.sroa.9.0.copyload = load double, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !23 ; 2 uses
+  %.sroa.9.0.copyload = load double, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !24 ; 2 uses
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.sroa.12.0.copyload = load double, ptr %.sroa.12.0..sroa_idx, align 8, !tbaa !23 ; 3 uses
+  %.sroa.12.0.copyload = load double, ptr %.sroa.12.0..sroa_idx, align 8, !tbaa !24 ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !68, !nonnull !41, !align !42 ; 3 uses
   %i.c = load i32, ptr %i.b, align 8, !tbaa !69
@@ -648,16 +642,16 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %_ZNK4
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !18   ; 8 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %i.z = load ptr, ptr %i.y, align 8, !tbaa !25
+  %i.z = load ptr, ptr %i.y, align 8, !tbaa !22
   %.not.i = icmp eq ptr %i.x, %i.z
   br i1 %.not.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  store double %.sroa.0.0, ptr %i.x, align 8, !tbaa !23
+  store double %.sroa.0.0, ptr %i.x, align 8, !tbaa !24
   %.sroa.9.0..sroa_idx8 = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  store double %.sroa.9.0, ptr %.sroa.9.0..sroa_idx8, align 8, !tbaa !23
+  store double %.sroa.9.0, ptr %.sroa.9.0..sroa_idx8, align 8, !tbaa !24
   %.sroa.12.0..sroa_idx15 = getelementptr inbounds nuw i8, ptr %i.x, i64 16
-  store double %.sroa.12.0.copyload, ptr %.sroa.12.0..sroa_idx15, align 8, !tbaa !23
+  store double %.sroa.12.0.copyload, ptr %.sroa.12.0..sroa_idx15, align 8, !tbaa !24
   %i.aa = getelementptr inbounds nuw i8, ptr %i.x, i64 24
   store ptr %i.aa, ptr %i.w, align 8, !tbaa !18
   br label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit
@@ -686,18 +680,18 @@ _ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i: ; pr
   %i.al = mul nuw nsw i64 %i.ak, 24
   %i.am = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.al) #14 ; 5 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.ae ; 3 uses
-  store double %.sroa.0.0, ptr %i.an, align 8, !tbaa !23
+  store double %.sroa.0.0, ptr %i.an, align 8, !tbaa !24
   %.sroa.9.0..sroa_idx10 = getelementptr inbounds nuw i8, ptr %i.an, i64 8
-  store double %.sroa.9.0, ptr %.sroa.9.0..sroa_idx10, align 8, !tbaa !23
+  store double %.sroa.9.0, ptr %.sroa.9.0..sroa_idx10, align 8, !tbaa !24
   %.sroa.12.0..sroa_idx17 = getelementptr inbounds nuw i8, ptr %i.an, i64 16
-  store double %.sroa.12.0.copyload, ptr %.sroa.12.0..sroa_idx17, align 8, !tbaa !23
+  store double %.sroa.12.0.copyload, ptr %.sroa.12.0..sroa_idx17, align 8, !tbaa !24
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.ab, %i.x
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i, label %.lr.ph.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %_ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i, %.lr.ph.i.i.i.i.i.i
   %.012.i.i.i.i.i.i = phi ptr [ %i.ap, %.lr.ph.i.i.i.i.i.i ], [ %i.am, %_ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i ] ; 2 uses
   %.0911.i.i.i.i.i.i = phi ptr [ %i.ao, %.lr.ph.i.i.i.i.i.i ], [ %i.ab, %_ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.012.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.0911.i.i.i.i.i.i, i64 24, i1 false), !tbaa.struct !22, !alias.scope !73
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.012.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.0911.i.i.i.i.i.i, i64 24, i1 false), !tbaa.struct !23, !alias.scope !73
   %i.ao = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i, i64 24 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i, i64 24 ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.ao, %i.x
@@ -717,16 +711,16 @@ _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__g
   store ptr %i.am, ptr %i.v, align 8, !tbaa !21
   store ptr %i.aq, ptr %i.w, align 8, !tbaa !18
   %i.ar = getelementptr inbounds nuw [24 x i8], ptr %i.am, i64 %i.ak
-  store ptr %i.ar, ptr %i.y, align 8, !tbaa !25
+  store ptr %i.ar, ptr %i.y, align 8, !tbaa !22
   br label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit
 
 _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit: ; preds = %bb.f, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store double %.sroa.0.0, ptr %i.as, align 8, !tbaa !23
+  store double %.sroa.0.0, ptr %i.as, align 8, !tbaa !24
   %.sroa.9.0..sroa_idx6 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store double %.sroa.9.0, ptr %.sroa.9.0..sroa_idx6, align 8, !tbaa !23
+  store double %.sroa.9.0, ptr %.sroa.9.0..sroa_idx6, align 8, !tbaa !24
   %.sroa.12.0..sroa_idx13 = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store double %.sroa.12.0.copyload, ptr %.sroa.12.0..sroa_idx13, align 8, !tbaa !23
+  store double %.sroa.12.0.copyload, ptr %.sroa.12.0..sroa_idx13, align 8, !tbaa !24
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.d, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit
@@ -795,10 +789,10 @@ attributes #15 = { builtin nounwind }
 !19 = !{!"_ZTSNSt12_Vector_baseIN4geos4geom10CoordinateESaIS2_EE17_Vector_impl_dataE", !20, i64 0, !20, i64 8, !20, i64 16}
 !20 = !{!"p1 _ZTSN4geos4geom10CoordinateE", !11, i64 0}
 !21 = !{!19, !20, i64 0}
-!22 = !{i64 0, i64 8, !23, i64 8, i64 8, !23, i64 16, i64 8, !23}
-!23 = !{!24, !24, i64 0}
-!24 = !{!"double", !5, i64 0}
-!25 = !{!19, !20, i64 16}
+!22 = !{!19, !20, i64 16}
+!23 = !{i64 0, i64 8, !24, i64 8, i64 8, !24, i64 16, i64 8, !24}
+!24 = !{!25, !25, i64 0}
+!25 = !{!"double", !5, i64 0}
 !26 = !{!27, !29}
 !27 = distinct !{!27, !28, !"_ZSt19__relocate_object_aIN4geos4geom10CoordinateES2_SaIS2_EEvPT_PT0_RT1_: argument 0"}
 !28 = distinct !{!28, !"_ZSt19__relocate_object_aIN4geos4geom10CoordinateES2_SaIS2_EEvPT_PT0_RT1_"}
@@ -822,8 +816,8 @@ attributes #15 = { builtin nounwind }
 !46 = !{!"_ZTSSt6vectorIN4geos4geom10CoordinateESaIS2_EE", !47, i64 0}
 !47 = !{!"_ZTSSt12_Vector_baseIN4geos4geom10CoordinateESaIS2_EE", !48, i64 0}
 !48 = !{!"_ZTSNSt12_Vector_baseIN4geos4geom10CoordinateESaIS2_EE12_Vector_implE", !19, i64 0}
-!49 = !{!"_ZTSN4geos4geom10CoordinateE", !24, i64 0, !24, i64 8, !24, i64 16}
-!50 = !{!49, !24, i64 16}
+!49 = !{!"_ZTSN4geos4geom10CoordinateE", !25, i64 0, !25, i64 8, !25, i64 16}
+!50 = !{!49, !25, i64 16}
 !51 = !{!52}
 !52 = distinct !{!52, !53, !"_ZN4geos9precision22PrecisionReducerFilter9getCoordsEv: argument 0"}
 !53 = distinct !{!53, !"_ZN4geos9precision22PrecisionReducerFilter9getCoordsEv"}
@@ -843,9 +837,9 @@ attributes #15 = { builtin nounwind }
 !67 = distinct !{!67, !"_ZN4geos9precision27PrecisionReducerTransformer10reduceAreaEPKNS_4geom8GeometryE"}
 !68 = !{!44, !10, i64 64}
 !69 = !{!70, !71, i64 0}
-!70 = !{!"_ZTSN4geos4geom14PrecisionModelE", !71, i64 0, !24, i64 8}
+!70 = !{!"_ZTSN4geos4geom14PrecisionModelE", !71, i64 0, !25, i64 8}
 !71 = !{!"_ZTSN4geos4geom14PrecisionModel4TypeE", !5, i64 0}
-!72 = !{!49, !24, i64 0}
+!72 = !{!49, !25, i64 0}
 !73 = !{!74, !76}
 !74 = distinct !{!74, !75, !"_ZSt19__relocate_object_aIN4geos4geom10CoordinateES2_SaIS2_EEvPT_PT0_RT1_: argument 0"}
 !75 = distinct !{!75, !"_ZSt19__relocate_object_aIN4geos4geom10CoordinateES2_SaIS2_EEvPT_PT0_RT1_"}

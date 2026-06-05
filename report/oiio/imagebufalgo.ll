@@ -201,7 +201,6 @@ bb.a:
   %25 = alloca %"class.OpenImageIO::v3_1::basic_string_view", align 8 ; 3 uses
   %26 = alloca %"class.OpenImageIO::v3_1::basic_string_view", align 8 ; 3 uses
   %27 = alloca %"struct.OpenImageIO::v3_1::ROI", align 8 ; 4 uses
-  %.sroa.0 = alloca { i32, i32, i32, i32, i32, i32 }, align 8 ; 5 uses
   %28 = alloca %"struct.OpenImageIO::v3_1::ROI", align 8 ; 4 uses
   %i.b = icmp ne ptr %2, null                     ; 13 uses
   %.sroa.gep = getelementptr inbounds nuw i8, ptr %9, i64 4 ; 7 uses
@@ -604,32 +603,26 @@ bb.fg:                                            ; preds = %bb.ff
   br i1 %i.tj, label %bb.fh, label %bb.fk
 
 bb.fh:                                            ; preds = %bb.fg
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0, ptr noundef nonnull align 4 dereferenceable(24) %0, i64 24, i1 false), !tbaa.struct !14
+  %.sroa.0.sroa.0.0.copyload = load <6 x i32>, ptr %0, align 4
   %i.tk = load i32, ptr %.sroa.gep808, align 4, !tbaa !9
   %i.tl = invoke noundef i32 @_ZNK11OpenImageIO4v3_18ImageBuf9nchannelsEv(ptr noundef nonnull align 8 dereferenceable(16) %1)
           to label %bb.fi unwind label %bb.fj
 
 bb.fi:                                            ; preds = %bb.fh
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %28, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0, i64 24, i1 false), !tbaa.struct !14
+  store <6 x i32> %.sroa.0.sroa.0.0.copyload, ptr %28, align 8
   %.sroa.5.0..sroa_idx18 = getelementptr inbounds nuw i8, ptr %28, i64 24
   store i32 %i.tk, ptr %.sroa.5.0..sroa_idx18, align 8, !tbaa !3
   %.sroa.6.0..sroa_idx20 = getelementptr inbounds nuw i8, ptr %28, i64 28
   store i32 %i.tl, ptr %.sroa.6.0..sroa_idx20, align 4, !tbaa !3
   %i.tm = invoke noundef zeroext i1 @_ZN11OpenImageIO4v3_112ImageBufAlgo4zeroERNS0_8ImageBufENS0_3ROIEi(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull byval(%"struct.OpenImageIO::v3_1::ROI") align 8 %28, i32 noundef 1)
-          to label %29 unwind label %bb.fj        ; 0 uses
-
-29:                                               ; preds = %bb.fi
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  br label %bb.fk
+          to label %bb.fk unwind label %bb.fj     ; 0 uses
 
 bb.fj:                                            ; preds = %bb.fi, %bb.fh
   %i.tn = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br label %bb.fo
 
-bb.fk:                                            ; preds = %bb.fg, %29, %bb.fb
+bb.fk:                                            ; preds = %bb.fi, %bb.fg, %bb.fb
   %i.to = getelementptr inbounds nuw i8, ptr %17, i64 136 ; 2 uses
   %i.tp = load ptr, ptr %i.to, align 8, !tbaa !85 ; 3 uses
   %i.tq = getelementptr inbounds nuw i8, ptr %17, i64 144
@@ -1032,7 +1025,6 @@ bb.a:
   %37 = alloca %"class.OpenImageIO::v3_1::basic_string_view", align 8 ; 3 uses
   %38 = alloca %"class.OpenImageIO::v3_1::basic_string_view", align 8 ; 3 uses
   %39 = alloca %"struct.OpenImageIO::v3_1::ROI", align 8 ; 4 uses
-  %.sroa.04 = alloca { i32, i32, i32, i32, i32, i32 }, align 8 ; 5 uses
   %40 = alloca %"struct.OpenImageIO::v3_1::ROI", align 8 ; 4 uses
   %41 = alloca %"class.OpenImageIO::v3_1::basic_string_view", align 8 ; 3 uses
   %42 = alloca %"class.OpenImageIO::v3_1::basic_string_view", align 8 ; 3 uses
@@ -1435,32 +1427,26 @@ bb.do:                                            ; preds = %bb.dn
   br i1 %i.tf, label %bb.dp, label %bb.ds
 
 bb.dp:                                            ; preds = %bb.do
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.04)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.04, ptr noundef nonnull align 4 dereferenceable(24) %0, i64 24, i1 false), !tbaa.struct !14
+  %.sroa.04.sroa.0.0.copyload = load <6 x i32>, ptr %0, align 4
   %i.tg = load i32, ptr %.sroa.gep939, align 4, !tbaa !9
   %i.th = invoke noundef i32 @_ZNK11OpenImageIO4v3_18ImageBuf9nchannelsEv(ptr noundef nonnull align 8 dereferenceable(16) %1)
           to label %bb.dq unwind label %bb.dr
 
 bb.dq:                                            ; preds = %bb.dp
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %40, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.04, i64 24, i1 false), !tbaa.struct !14
+  store <6 x i32> %.sroa.04.sroa.0.0.copyload, ptr %40, align 8
   %.sroa.5.0..sroa_idx5 = getelementptr inbounds nuw i8, ptr %40, i64 24
   store i32 %i.tg, ptr %.sroa.5.0..sroa_idx5, align 8, !tbaa !3
   %.sroa.6.0..sroa_idx7 = getelementptr inbounds nuw i8, ptr %40, i64 28
   store i32 %i.th, ptr %.sroa.6.0..sroa_idx7, align 4, !tbaa !3
   %i.ti = invoke noundef zeroext i1 @_ZN11OpenImageIO4v3_112ImageBufAlgo4zeroERNS0_8ImageBufENS0_3ROIEi(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull byval(%"struct.OpenImageIO::v3_1::ROI") align 8 %40, i32 noundef 1)
-          to label %55 unwind label %bb.dr        ; 0 uses
-
-55:                                               ; preds = %bb.dq
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.04)
-  br label %bb.ds
+          to label %bb.ds unwind label %bb.dr     ; 0 uses
 
 bb.dr:                                            ; preds = %bb.dq, %bb.dp
   %i.tj = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.04)
   br label %bb.dw
 
-bb.ds:                                            ; preds = %bb.do, %55, %bb.dj
+bb.ds:                                            ; preds = %bb.dq, %bb.do, %bb.dj
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #32
   %i.tk = getelementptr inbounds nuw i8, ptr %16, i64 136 ; 2 uses
   %i.tl = load ptr, ptr %i.tk, align 8, !tbaa !85 ; 3 uses

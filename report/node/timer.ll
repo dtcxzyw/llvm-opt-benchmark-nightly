@@ -4,7 +4,6 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-%struct.heap_node = type { ptr, ptr, ptr }
 %struct.uv__queue = type { ptr, ptr }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
@@ -41,7 +40,6 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local range(i32 -22, 1) i32 @uv_timer_start(ptr noundef %0, ptr noundef %1, i64 noundef %2, i64 noundef %3) local_unnamed_addr #1 {
 bb.a:
-  %4 = alloca %struct.heap_node, align 8          ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 3 uses
   %i.b = load i32, ptr %i.a, align 8
   %i.c = and i32 %i.b, 3
@@ -187,10 +185,9 @@ timer_less_than.exit.i:                           ; preds = %bb.c
   br i1 %.not6.i, label %timer_less_than.exit.thread3.i, label %heap_insert.exit
 
 timer_less_than.exit.thread3.i:                   ; preds = %timer_less_than.exit.i, %.lr.ph20.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %i.bd, i64 24, i1 false)
+  %.sroa.0.0.copyload = load <3 x ptr>, ptr %i.bd, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bd, ptr noundef nonnull align 8 dereferenceable(24) %i.t, i64 16, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.t, ptr noundef nonnull align 8 dereferenceable(24) %4, i64 24, i1 false)
+  store <3 x ptr> %.sroa.0.0.copyload, ptr %i.t, align 8
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bd, i64 16
   store ptr %i.t, ptr %i.bm, align 8
   %i.bn = load ptr, ptr %i.t, align 8             ; 2 uses
@@ -261,7 +258,6 @@ bb.p:                                             ; preds = %bb.n
   br label %heap_node_swap.exit.i
 
 heap_node_swap.exit.i:                            ; preds = %bb.p, %bb.o, %bb.m
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
   %i.ca = load ptr, ptr %i.v, align 8             ; 2 uses
   %.not35.i = icmp eq ptr %i.ca, null
   br i1 %.not35.i, label %heap_insert.exit, label %.lr.ph20.i, !llvm.loop !13
@@ -298,8 +294,6 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #2
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local noundef i32 @uv_timer_stop(ptr noundef %0) local_unnamed_addr #1 {
 bb.a:
-  %1 = alloca %struct.heap_node, align 8          ; 4 uses
-  %2 = alloca %struct.heap_node, align 8          ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 3 uses
   %i.b = load i32, ptr %i.a, align 8
   %i.c = and i32 %i.b, 4
@@ -529,10 +523,9 @@ timer_less_than.exit92.thread.i:                  ; preds = %timer_less_than.exi
   br i1 %.not8831.i, label %heap_remove.exit, label %.lr.ph32.i
 
 bb.t:                                             ; preds = %timer_less_than.exit92.thread.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %i.aj, i64 24, i1 false)
+  %.sroa.0.0.copyload = load <3 x ptr>, ptr %i.aj, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aj, ptr noundef nonnull align 8 dereferenceable(24) %.169.i, i64 16, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.169.i, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false)
+  store <3 x ptr> %.sroa.0.0.copyload, ptr %.169.i, align 8
   store ptr %.169.i, ptr %i.at, align 8
   %i.ca = load ptr, ptr %.169.i, align 8          ; 2 uses
   %i.cb = icmp eq ptr %i.ca, %.169.i
@@ -604,7 +597,6 @@ bb.ag:                                            ; preds = %bb.ae
   br label %heap_node_swap.exit.i
 
 heap_node_swap.exit.i:                            ; preds = %bb.ag, %bb.af, %bb.ad
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
   br label %bb.o
 
 .lr.ph32.i:                                       ; preds = %.preheader.i, %heap_node_swap.exit101.i
@@ -627,10 +619,9 @@ timer_less_than.exit95.i:                         ; preds = %bb.ah
   br i1 %.not18.i, label %timer_less_than.exit95.thread13.i, label %heap_remove.exit
 
 timer_less_than.exit95.thread13.i:                ; preds = %timer_less_than.exit95.i, %.lr.ph32.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %1)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %i.cp, i64 24, i1 false)
+  %.sroa.038.0.copyload = load <3 x ptr>, ptr %i.cp, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.cp, ptr noundef nonnull align 8 dereferenceable(24) %i.aj, i64 16, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aj, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
+  store <3 x ptr> %.sroa.038.0.copyload, ptr %i.aj, align 8
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cp, i64 16
   store ptr %i.aj, ptr %i.cy, align 8
   %i.cz = load ptr, ptr %i.aj, align 8            ; 2 uses
@@ -701,7 +692,6 @@ bb.au:                                            ; preds = %bb.as
   br label %heap_node_swap.exit101.i
 
 heap_node_swap.exit101.i:                         ; preds = %bb.au, %bb.at, %bb.ar
-  call void @llvm.lifetime.end.p0(ptr nonnull %1)
   %i.dm = load ptr, ptr %i.at, align 8            ; 2 uses
   %.not88.i = icmp eq ptr %i.dm, null
   br i1 %.not88.i, label %heap_remove.exit, label %.lr.ph32.i, !llvm.loop !17
