@@ -78,7 +78,7 @@ $_ZGVZN4llvh7hashing6detail18get_execution_seedEvE4seed = comdat any
 @_ZZN4llvh7hashing6detail18get_execution_seedEvE4seed = linkonce_odr hidden local_unnamed_addr global i64 0, comdat, align 8
 @_ZGVZN4llvh7hashing6detail18get_execution_seedEvE4seed = linkonce_odr hidden global i64 0, comdat, align 8
 @_ZN4llvh7hashing6detail19fixed_seed_overrideE = external local_unnamed_addr global i64, align 8
-@switch.table._ZN6hermes18BinaryOperatorInst21tryGetReverseOperatorENS0_6OpKindE = private unnamed_addr constant [19 x i32] [i32 1, i32 2, i32 3, i32 4, i32 7, i32 8, i32 5, i32 6, i32 undef, i32 undef, i32 undef, i32 12, i32 undef, i32 14, i32 undef, i32 undef, i32 17, i32 18, i32 19], align 4
+@switch.table._ZN6hermes18BinaryOperatorInst21tryGetReverseOperatorENS0_6OpKindE = private unnamed_addr constant [19 x i8] [i8 1, i8 2, i8 3, i8 4, i8 7, i8 8, i8 5, i8 6, i8 undef, i8 undef, i8 undef, i8 12, i8 undef, i8 14, i8 undef, i8 undef, i8 17, i8 18, i8 19], align 4
 @switch.table._ZN6hermes18BinaryOperatorInst21tryGetReverseOperatorENS0_6OpKindE.90 = private unnamed_addr constant [19 x i64] [i64 4294967296, i64 4294967296, i64 4294967296, i64 4294967296, i64 4294967296, i64 4294967296, i64 4294967296, i64 4294967296, i64 0, i64 0, i64 0, i64 4294967296, i64 0, i64 4294967296, i64 0, i64 0, i64 4294967296, i64 4294967296, i64 4294967296], align 8
 
 @_ZN6hermes10SwitchInstC1EPNS_5ValueEPNS_10BasicBlockERKN4llvh11SmallVectorIPNS_7LiteralELj8EEERKNS6_IS4_Lj8EEE = hidden unnamed_addr alias void (ptr, ptr, ptr, ptr, ptr), ptr @_ZN6hermes10SwitchInstC2EPNS_5ValueEPNS_10BasicBlockERKN4llvh11SmallVectorIPNS_7LiteralELj8EEERKNS6_IS4_Lj8EEE
@@ -481,12 +481,12 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6hermes18BinaryOperatorInst21tryGetReverseOperatorENS0_6OpKindE, i64 %i.b
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6hermes18BinaryOperatorInst21tryGetReverseOperatorENS0_6OpKindE, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
   %i.c = zext nneg i32 %switch.tableidx to i64
   %switch.gep5 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6hermes18BinaryOperatorInst21tryGetReverseOperatorENS0_6OpKindE.90, i64 %i.c
   %switch.load6 = load i64, ptr %switch.gep5, align 8
-  %i.d = zext i32 %switch.load to i64
+  %i.d = zext i8 %switch.load to i64
   %i.e = or disjoint i64 %switch.load6, %i.d
   br label %bb.b
 
