@@ -201,15 +201,15 @@ begin_hunk_0
 @"_ZTSZ29duckdb_register_copy_functionE3$_0" = internal constant [38 x i8] c"Z29duckdb_register_copy_functionE3$_0\00", align 1
 @switch.table.duckdb_create_logical_type = private unnamed_addr constant [39 x i8] c"\0A\0B\0C\0D\0E\1C\1D\1E\1F\16\17\13\0F\10\1B2\19\1A\15\11\12\14h\00\00\006k$\22 1l\03'\01%&#", align 1
 @switch.table._ZN6duckdb18LogicalTypeIdFromCE11DUCKDB_TYPE = private unnamed_addr constant [39 x i8] c"\0A\0B\0C\0D\0E\1C\1D\1E\1F\16\17\13\0F\10\1B2\19\1A\15\11\12\14hedf6k$\22 1l\03'\01%&#", align 1
-@switch.table._ZN6duckdb16LogicalTypeIdToCENS_13LogicalTypeIdE = private unnamed_addr constant [108 x i32] [i32 36, i32 0, i32 34, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 13, i32 14, i32 20, i32 21, i32 12, i32 22, i32 19, i32 10, i32 11, i32 0, i32 17, i32 18, i32 15, i32 6, i32 7, i32 8, i32 9, i32 31, i32 0, i32 30, i32 39, i32 29, i32 37, i32 38, i32 35, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 32, i32 16, i32 0, i32 0, i32 0, i32 27, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 25, i32 24, i32 26, i32 0, i32 23, i32 0, i32 0, i32 28, i32 33], align 4
-@switch.table._ZN6duckdb12GetCTypeSizeE11DUCKDB_TYPE = private unnamed_addr constant [39 x i64] [i64 1, i64 1, i64 2, i64 4, i64 8, i64 1, i64 2, i64 4, i64 8, i64 4, i64 8, i64 8, i64 4, i64 8, i64 16, i64 16, i64 8, i64 16, i64 16, i64 8, i64 8, i64 8, i64 0, i64 0, i64 0, i64 0, i64 16, i64 0, i64 0, i64 0, i64 8, i64 16, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 8], align 8
-@switch.table.duckdb_enum_internal_type = private unnamed_addr constant [5 x i32] [i32 6, i32 0, i32 7, i32 0, i32 8], align 4
-@switch.table.duckdb_pending_execute_check_state = private unnamed_addr constant [5 x i32] [i32 0, i32 1, i32 2, i32 0, i32 3], align 4
-@switch.table.duckdb_pending_execute_task = private unnamed_addr constant [6 x i32] [i32 0, i32 1, i32 2, i32 3, i32 3, i32 0], align 4
-@switch.table._ZN6duckdb34deprecated_duckdb_translate_columnERNS_23MaterializedQueryResultEP13duckdb_columnm = private unnamed_addr constant [39 x i64] [i64 1, i64 1, i64 2, i64 4, i64 8, i64 1, i64 2, i64 4, i64 8, i64 4, i64 8, i64 8, i64 4, i64 8, i64 16, i64 16, i64 8, i64 16, i64 16, i64 8, i64 8, i64 8, i64 poison, i64 poison, i64 poison, i64 poison, i64 16, i64 poison, i64 poison, i64 poison, i64 8, i64 16, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 8], align 8
-@switch.table.duckdb_result_return_type = private unnamed_addr constant [3 x i32] [i32 3, i32 1, i32 2], align 4
-@switch.table.duckdb_result_statement_type = private unnamed_addr constant [27 x i32] [i32 1, i32 2, i32 3, i32 7, i32 5, i32 6, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 4, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27], align 4
-@switch.table.duckdb_file_open_options_set_flag = private unnamed_addr constant [5 x i64] [i64 1, i64 2, i64 8, i64 512, i64 32], align 8
+@switch.table._ZN6duckdb16LogicalTypeIdToCENS_13LogicalTypeIdE = private unnamed_addr constant [108 x i8] c"$\00\22\00\00\00\00\00\00\01\02\03\04\05\0D\0E\14\15\0C\16\13\0A\0B\00\11\12\0F\06\07\08\09\1F\00\1E'\1D%&#\00\00\00\00\00\00\00\00\00 \10\00\00\00\1B\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\19\18\1A\00\17\00\00\1C!", align 4
+@switch.table._ZN6duckdb12GetCTypeSizeE11DUCKDB_TYPE = private unnamed_addr constant [39 x i8] c"\01\01\02\04\08\01\02\04\08\04\08\08\04\08\10\10\08\10\10\08\08\08\00\00\00\00\10\00\00\00\08\10\00\00\00\00\00\00\08", align 8
+@switch.table.duckdb_enum_internal_type = private unnamed_addr constant [5 x i8] c"\06\00\07\00\08", align 4
+@switch.table.duckdb_pending_execute_check_state = private unnamed_addr constant [5 x i8] c"\00\01\02\00\03", align 4
+@switch.table.duckdb_pending_execute_task = private unnamed_addr constant [6 x i8] c"\00\01\02\03\03\00", align 4
+@switch.table._ZN6duckdb34deprecated_duckdb_translate_columnERNS_23MaterializedQueryResultEP13duckdb_columnm = private unnamed_addr constant [39 x i8] [i8 1, i8 1, i8 2, i8 4, i8 8, i8 1, i8 2, i8 4, i8 8, i8 4, i8 8, i8 8, i8 4, i8 8, i8 16, i8 16, i8 8, i8 16, i8 16, i8 8, i8 8, i8 8, i8 poison, i8 poison, i8 poison, i8 poison, i8 16, i8 poison, i8 poison, i8 poison, i8 8, i8 16, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 8], align 8
+@switch.table.duckdb_result_return_type = private unnamed_addr constant [3 x i8] c"\03\01\02", align 4
+@switch.table.duckdb_result_statement_type = private unnamed_addr constant [27 x i8] c"\01\02\03\07\05\06\08\09\0A\0B\0C\0D\0E\04\0F\10\11\12\13\14\15\16\17\18\19\1A\1B", align 4
+@switch.table.duckdb_file_open_options_set_flag = private unnamed_addr constant [5 x i16] [i16 1, i16 2, i16 8, i16 512, i16 32], align 8
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull align 8 dereferenceable(368) ptr @_ZN6duckdb21GetCAggregateFunctionEP26_duckdb_aggregate_function(ptr nofree noundef readnone returned captures(ret: address, provenance) %0) local_unnamed_addr #0 {
@@ -612,12 +612,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6duckdb16LogicalTypeIdToCENS_13LogicalTypeIdE, i64 %i.b
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6duckdb16LogicalTypeIdToCENS_13LogicalTypeIdE, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %switch.lookup
-  %.0 = phi i32 [ %switch.load, %switch.lookup ], [ 0, %bb.a ]
+  %.0 = phi i32 [ %switch.ext, %switch.lookup ], [ 0, %bb.a ]
   ret i32 %.0
 }
 
@@ -630,12 +631,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6duckdb12GetCTypeSizeE11DUCKDB_TYPE, i64 %i.b
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6duckdb12GetCTypeSizeE11DUCKDB_TYPE, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %switch.lookup
-  %.0 = phi i64 [ %switch.load, %switch.lookup ], [ 0, %bb.a ]
+  %.0 = phi i64 [ %switch.ext, %switch.lookup ], [ 0, %bb.a ]
   ret i64 %.0
 }
 
@@ -648,12 +650,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.duckdb_result_statement_type, i64 %i.b
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.duckdb_result_statement_type, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %switch.lookup
-  %.0 = phi i32 [ %switch.load, %switch.lookup ], [ 0, %bb.a ]
+  %.0 = phi i32 [ %switch.ext, %switch.lookup ], [ 0, %bb.a ]
   ret i32 %.0
 }
 
@@ -1056,12 +1059,13 @@ bb.b:                                             ; preds = %_ZL19AssertLogicalT
 
 switch.lookup:                                    ; preds = %bb.b
   %i.e = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.duckdb_enum_internal_type, i64 %i.e
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.duckdb_enum_internal_type, i64 %i.e
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZL19AssertLogicalTypeIdP20_duckdb_logical_typeN6duckdb13LogicalTypeIdE.exit.thread
 
 _ZL19AssertLogicalTypeIdP20_duckdb_logical_typeN6duckdb13LogicalTypeIdE.exit.thread: ; preds = %bb.b, %switch.lookup, %bb.a, %_ZL19AssertLogicalTypeIdP20_duckdb_logical_typeN6duckdb13LogicalTypeIdE.exit
-  %.1 = phi i32 [ 0, %_ZL19AssertLogicalTypeIdP20_duckdb_logical_typeN6duckdb13LogicalTypeIdE.exit ], [ 0, %bb.a ], [ %switch.load, %switch.lookup ], [ 0, %bb.b ]
+  %.1 = phi i32 [ 0, %_ZL19AssertLogicalTypeIdP20_duckdb_logical_typeN6duckdb13LogicalTypeIdE.exit ], [ 0, %bb.a ], [ %switch.ext, %switch.lookup ], [ 0, %bb.b ]
   ret i32 %.1
 }
 
@@ -1464,12 +1468,13 @@ bb.o:                                             ; preds = %bb.n, %bb.g
 
 switch.lookup:                                    ; preds = %bb.f
   %i.p = zext nneg i8 %i.e to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.duckdb_pending_execute_check_state, i64 %i.p
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.duckdb_pending_execute_check_state, i64 %i.p
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.f, %switch.lookup, %bb.b, %bb.c, %bb.k, %bb.a
-  %.2 = phi i32 [ 2, %bb.a ], [ 2, %bb.b ], [ 2, %bb.c ], [ %switch.load, %switch.lookup ], [ 2, %bb.k ], [ 2, %bb.f ]
+  %.2 = phi i32 [ 2, %bb.a ], [ 2, %bb.b ], [ 2, %bb.c ], [ %switch.ext, %switch.lookup ], [ 2, %bb.k ], [ 2, %bb.f ]
   ret i32 %.2
 
 bb.q:                                             ; preds = %bb.n
@@ -1563,12 +1568,13 @@ bb.o:                                             ; preds = %bb.n, %bb.g
 
 switch.lookup:                                    ; preds = %bb.f
   %i.p = zext nneg i8 %i.e to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.duckdb_pending_execute_task, i64 %i.p
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.duckdb_pending_execute_task, i64 %i.p
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.f, %switch.lookup, %bb.b, %bb.c, %bb.k, %bb.a
-  %.2 = phi i32 [ 2, %bb.a ], [ 2, %bb.b ], [ 2, %bb.c ], [ %switch.load, %switch.lookup ], [ 2, %bb.k ], [ 2, %bb.f ]
+  %.2 = phi i32 [ 2, %bb.a ], [ 2, %bb.b ], [ 2, %bb.c ], [ %switch.ext, %switch.lookup ], [ 2, %bb.k ], [ 2, %bb.f ]
   ret i32 %.2
 
 bb.q:                                             ; preds = %bb.n
@@ -1971,12 +1977,13 @@ bb.b:                                             ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %bb.b
   %i.e = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.duckdb_result_statement_type, i64 %i.e
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.duckdb_result_statement_type, i64 %i.e
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZN6duckdb16StatementTypeToCENS_13StatementTypeE.exit
 
 _ZN6duckdb16StatementTypeToCENS_13StatementTypeE.exit: ; preds = %bb.b, %switch.lookup, %bb.a
-  %.0 = phi i32 [ 0, %bb.a ], [ %switch.load, %switch.lookup ], [ 0, %bb.b ]
+  %.0 = phi i32 [ 0, %bb.a ], [ %switch.ext, %switch.lookup ], [ 0, %bb.b ]
   ret i32 %.0
 }
 
@@ -2379,9 +2386,10 @@ _ZN6duckdb12GetCTypeSizeE11DUCKDB_TYPE.exit.preheader185: ; preds = %_ZN6duckdb1
 
 switch.lookup:                                    ; preds = %bb.a
   %i.l = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6duckdb34deprecated_duckdb_translate_columnERNS_23MaterializedQueryResultEP13duckdb_columnm, i64 %i.l
-  %switch.load = load i64, ptr %switch.gep, align 8
-  %i.m = mul i64 %switch.load, %i.f
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6duckdb34deprecated_duckdb_translate_columnERNS_23MaterializedQueryResultEP13duckdb_columnm, i64 %i.l
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
+  %i.m = mul i64 %i.f, %switch.ext
   %i.n = tail call noalias noundef ptr @malloc(i64 noundef %i.m) #41 ; 2 uses
   store ptr %i.n, ptr %1, align 8, !tbaa !870
   %.not = icmp eq ptr %i.g, null
@@ -2784,12 +2792,13 @@ duckdb_result_error.exit.thread:                  ; preds = %bb.b, %duckdb_resul
 
 switch.lookup:                                    ; preds = %duckdb_result_error.exit.thread
   %i.l = zext nneg i8 %i.j to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.duckdb_result_return_type, i64 %i.l
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.duckdb_result_return_type, i64 %i.l
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.c
 
 bb.c:                                             ; preds = %duckdb_result_error.exit.thread, %switch.lookup, %bb.a, %duckdb_result_error.exit
-  %.1 = phi i32 [ 0, %bb.a ], [ 0, %duckdb_result_error.exit ], [ %switch.load, %switch.lookup ], [ 0, %duckdb_result_error.exit.thread ]
+  %.1 = phi i32 [ 0, %bb.a ], [ 0, %duckdb_result_error.exit ], [ %switch.ext, %switch.lookup ], [ 0, %duckdb_result_error.exit.thread ]
   ret i32 %.1
 }
 
@@ -2823,12 +2832,13 @@ duckdb_result_error.exit.thread:                  ; preds = %bb.b, %duckdb_resul
 
 switch.lookup:                                    ; preds = %duckdb_result_error.exit.thread
   %i.l = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.duckdb_result_statement_type, i64 %i.l
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.duckdb_result_statement_type, i64 %i.l
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZN6duckdb16StatementTypeToCENS_13StatementTypeE.exit
 
 _ZN6duckdb16StatementTypeToCENS_13StatementTypeE.exit: ; preds = %duckdb_result_error.exit.thread, %switch.lookup, %bb.a, %duckdb_result_error.exit
-  %.0 = phi i32 [ 0, %bb.a ], [ 0, %duckdb_result_error.exit ], [ %switch.load, %switch.lookup ], [ 0, %duckdb_result_error.exit.thread ]
+  %.0 = phi i32 [ 0, %bb.a ], [ 0, %duckdb_result_error.exit ], [ %switch.ext, %switch.lookup ], [ 0, %duckdb_result_error.exit.thread ]
   ret i32 %.0
 }
 
@@ -3231,10 +3241,11 @@ bb.b:                                             ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %bb.b
   %i.b = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.duckdb_file_open_options_set_flag, i64 %i.b
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table.duckdb_file_open_options_set_flag, i64 %i.b
+  %switch.load = load i16, ptr %switch.gep, align 2
+  %switch.ext = zext i16 %switch.load to i64
   %i.c = load i64, ptr %0, align 8, !tbaa !1366
-  %i.d = or i64 %i.c, %switch.load
+  %i.d = or i64 %i.c, %switch.ext
   store i64 %i.d, ptr %0, align 8, !tbaa !1366
   br label %bb.c
 

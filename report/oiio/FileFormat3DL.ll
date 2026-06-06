@@ -106,7 +106,7 @@ module asm ".globl _ZSt21ios_base_library_initv"
 @.str.31 = private unnamed_addr constant [11 x i8] c"gamma 1.0\0A\00", align 1
 @.str.33 = private unnamed_addr constant [49 x i8] c"cannot create std::vector larger than max_size()\00", align 1
 @.str.34 = private unnamed_addr constant [42 x i8] c"Cannot build .3dl Op. Invalid cache type.\00", align 1
-@switch.table._ZNK16OpenColorIO_v2_512_GLOBAL__N_115LocalFileFormat4readERSiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_13InterpolationE = private unnamed_addr constant [9 x i32] [i32 1, i32 poison, i32 2, i32 poison, i32 3, i32 poison, i32 poison, i32 poison, i32 5], align 4
+@switch.table._ZNK16OpenColorIO_v2_512_GLOBAL__N_115LocalFileFormat4readERSiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_13InterpolationE = private unnamed_addr constant [9 x i8] [i8 1, i8 poison, i8 2, i8 poison, i8 3, i8 poison, i8 poison, i8 poison, i8 5], align 4
 
 ; Function Attrs: mustprogress uwtable
 define hidden noalias noundef nonnull ptr @_ZN16OpenColorIO_v2_519CreateFileFormat3DLEv() local_unnamed_addr #0 {
@@ -509,8 +509,9 @@ _ZN16OpenColorIO_v2_512_GLOBAL__N_120GetLikelyLutBitDepthEi.exit371: ; preds = %
           to label %switch.lookup unwind label %bb.ew
 
 switch.lookup:                                    ; preds = %_ZN16OpenColorIO_v2_512_GLOBAL__N_120GetLikelyLutBitDepthEi.exit371
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZNK16OpenColorIO_v2_512_GLOBAL__N_115LocalFileFormat4readERSiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_13InterpolationE, i64 %spec.select.i360
-  %switch.load = load i32, ptr %switch.gep, align 4 ; 2 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK16OpenColorIO_v2_512_GLOBAL__N_115LocalFileFormat4readERSiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_13InterpolationE, i64 %spec.select.i360
+  %switch.load = load i8, ptr %switch.gep, align 2
+  %switch.ext = zext i8 %switch.load to i32       ; 2 uses
   %i.qx = invoke noalias noundef nonnull dereferenceable(248) ptr @_Znwm(i64 noundef 248) #22
           to label %.noexc385 unwind label %bb.ey ; 6 uses
 
@@ -614,8 +615,8 @@ bb.ey:                                            ; preds = %switch.lookup
 bb.ez:                                            ; preds = %bb.ev, %bb.eu
   %i.sa = load ptr, ptr %i.rd, align 8, !tbaa !131
   %i.sb = getelementptr inbounds nuw i8, ptr %i.sa, i64 228
-  store i32 %switch.load, ptr %i.sb, align 4, !tbaa !133
-  %i.sc = invoke noundef double @_ZN16OpenColorIO_v2_519GetBitDepthMaxValueENS_8BitDepthE(i32 noundef %switch.load)
+  store i32 %switch.ext, ptr %i.sb, align 4, !tbaa !133
+  %i.sc = invoke noundef double @_ZN16OpenColorIO_v2_519GetBitDepthMaxValueENS_8BitDepthE(i32 noundef %switch.ext)
           to label %.lr.ph725 unwind label %bb.fa
 
 .lr.ph725:                                        ; preds = %bb.ez

@@ -66,7 +66,7 @@ $_ZN4llvh11ms_demangle14ArenaAllocator5allocINS0_17PrimitiveTypeNodeEJNS0_13Prim
 @switch.table._Z30translateIntrinsicFunctionCodec27FunctionIdentifierCodeGroup = private unnamed_addr constant [3 x ptr] [ptr @_ZZ30translateIntrinsicFunctionCodec27FunctionIdentifierCodeGroupE5Basic, ptr @_ZZ30translateIntrinsicFunctionCodec27FunctionIdentifierCodeGroupE5Under, ptr @_ZZ30translateIntrinsicFunctionCodec27FunctionIdentifierCodeGroupE11DoubleUnder], align 8
 @switch.table._ZN12_GLOBAL__N_19Demangler5parseER10StringView = private unnamed_addr constant [16 x ptr] [ptr @.str.35, ptr @.str.36, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @.str.38, ptr @.str.37], align 8
 @switch.table._ZN12_GLOBAL__N_19Demangler5parseER10StringView.5 = private unnamed_addr constant [16 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @.str.35, i64 9), ptr getelementptr inbounds nuw (i8, ptr @.str.36, i64 9), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @.str.38, i64 30), ptr getelementptr inbounds nuw (i8, ptr @.str.37, i64 15)], align 8
-@switch.table._ZN12_GLOBAL__N_19Demangler21demangleStringLiteralER10StringView = private unnamed_addr constant [4 x i32] [i32 0, i32 1, i32 poison, i32 2], align 4
+@switch.table._ZN12_GLOBAL__N_19Demangler21demangleStringLiteralER10StringView = private unnamed_addr constant [4 x i8] [i8 0, i8 1, i8 poison, i8 2], align 4
 @switch.table._ZN12_GLOBAL__N_19Demangler20demangleFunctionTypeER10StringViewb.10 = private unnamed_addr constant [17 x i8] c"\01\01\02\02\03\03\04\04\05\05\00\00\06\06\07\07\08", align 1
 @switch.table._ZN12_GLOBAL__N_19Demangler24demangleVariableEncodingER10StringViewN4llvh11ms_demangle12StorageClassE.11 = private unnamed_addr constant [20 x i8] [i8 0, i8 1, i8 2, i8 3, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 1, i8 2, i8 3], align 1
 
@@ -469,10 +469,11 @@ switch.lookup:                                    ; preds = %bb.bl, %bb.bk
   %i.ig = trunc i64 %.sroa.0.4.i to i32
   %i.ih = call noundef i32 @_Z17guessCharByteSizePKhjj(ptr noundef nonnull %i.a, i32 noundef %.055, i32 noundef %i.ig) ; 7 uses
   %i.ii = zext nneg i32 %i.ih to i64
-  %3 = getelementptr [4 x i8], ptr @switch.table._ZN12_GLOBAL__N_19Demangler21demangleStringLiteralER10StringView, i64 %i.ii
-  %switch.gep = getelementptr i8, ptr %3, i64 -4
-  %switch.load = load i32, ptr %switch.gep, align 4
-  store i32 %switch.load, ptr %i.z, align 4, !tbaa !104
+  %3 = getelementptr i8, ptr @switch.table._ZN12_GLOBAL__N_19Demangler21demangleStringLiteralER10StringView, i64 %i.ii
+  %switch.gep = getelementptr i8, ptr %3, i64 -1
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  store i32 %switch.ext, ptr %i.z, align 4, !tbaa !104
   %.not99 = icmp ugt i32 %i.ih, %.055
   br i1 %.not99, label %._crit_edge, label %.lr.ph
 

@@ -201,7 +201,7 @@ begin_hunk_0
 @.str.64 = private unnamed_addr constant [3 x i8] c"()\00", align 1
 @.str.65 = private unnamed_addr constant [5 x i8] c" := \00", align 1
 @switch.table.append_ast_expr = private unnamed_addr constant [4 x ptr] [ptr @.str.20, ptr @.str.21, ptr @.str.22, ptr @.str.23], align 8
-@switch.table.append_ast_expr.6 = private unnamed_addr constant [4 x i32] [i32 12, i32 4, i32 12, i32 12], align 4
+@switch.table.append_ast_expr.6 = private unnamed_addr constant [4 x i8] c"\0C\04\0C\0C", align 4
 @switch.table.append_ast_expr.7 = private unnamed_addr constant [10 x ptr] [ptr @.str.41, ptr @.str.42, ptr @.str.43, ptr @.str.44, ptr @.str.45, ptr @.str.46, ptr @.str.47, ptr @.str.48, ptr @.str.36, ptr @.str.49], align 8
 
 ; Function Attrs: nounwind uwtable
@@ -454,9 +454,10 @@ switch.lookup:                                    ; preds = %bb.ag
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.append_ast_expr, i64 %i.bc
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.bd = zext nneg i32 %switch.tableidx to i64
-  %switch.gep319 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.append_ast_expr.6, i64 %i.bd
-  %switch.load320 = load i32, ptr %switch.gep319, align 4 ; 2 uses
-  %i.be = icmp samesign ugt i32 %2, %switch.load320 ; 2 uses
+  %switch.gep319 = getelementptr inbounds nuw i8, ptr @switch.table.append_ast_expr.6, i64 %i.bd
+  %switch.load320 = load i8, ptr %switch.gep319, align 1
+  %switch.ext = zext i8 %switch.load320 to i32    ; 2 uses
+  %i.be = icmp samesign ugt i32 %2, %switch.ext   ; 2 uses
   br i1 %i.be, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %switch.lookup
@@ -472,7 +473,7 @@ bb.aj:                                            ; preds = %bb.ai, %switch.look
 bb.ak:                                            ; preds = %bb.aj
   %i.bj = getelementptr i8, ptr %1, i64 16
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !14
-  %i.bl = tail call fastcc i32 @append_ast_expr(ptr noundef nonnull %0, ptr noundef %i.bk, i32 noundef %switch.load320), !inline_history !29
+  %i.bl = tail call fastcc i32 @append_ast_expr(ptr noundef nonnull %0, ptr noundef %i.bk, i32 noundef %switch.ext), !inline_history !29
   %i.bm = icmp eq i32 %i.bl, -1
   br i1 %i.bm, label %common.ret332, label %bb.al
 

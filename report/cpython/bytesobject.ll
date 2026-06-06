@@ -201,7 +201,7 @@ begin_hunk_0
 @striter_methods = internal global [4 x { ptr, ptr, i32, [4 x i8], ptr }] [{ ptr, ptr, i32, [4 x i8], ptr } { ptr @.str.170, ptr @striter_len, i32 4, [4 x i8] zeroinitializer, ptr @length_hint_doc }, { ptr, ptr, i32, [4 x i8], ptr } { ptr @.str.171, ptr @striter_reduce, i32 4, [4 x i8] zeroinitializer, ptr @reduce_doc }, { ptr, ptr, i32, [4 x i8], ptr } { ptr @.str.172, ptr @striter_setstate, i32 8, [4 x i8] zeroinitializer, ptr @setstate_doc }, { ptr, ptr, i32, [4 x i8], ptr } zeroinitializer], align 16
 @.str.174 = private unnamed_addr constant [6 x i8] c"N(O)n\00", align 1
 @.str.175 = private unnamed_addr constant [6 x i8] c"N(())\00", align 1
-@switch.table._PyBytes_FormatEx = private unnamed_addr constant [21 x i32] [i32 10, i32 poison, i32 poison, i32 poison, i32 poison, i32 10, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 8, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 10, i32 poison, i32 poison, i32 16], align 4
+@switch.table._PyBytes_FormatEx = private unnamed_addr constant [21 x i8] [i8 10, i8 poison, i8 poison, i8 poison, i8 poison, i8 10, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 8, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 10, i8 poison, i8 poison, i8 16], align 4
 @switch.table.bytes_richcompare = private unnamed_addr constant [6 x ptr] [ptr @_Py_FalseStruct, ptr @_Py_TrueStruct, ptr @_Py_TrueStruct, ptr @_Py_FalseStruct, ptr @_Py_FalseStruct, ptr @_Py_TrueStruct], align 8
 
 ; Function Attrs: nounwind uwtable
@@ -604,10 +604,11 @@ bb.dz:                                            ; preds = %bb.dy
 switch.lookup:                                    ; preds = %bb.dz
   %i.lx = and i32 %.2383691717, 8
   %i.ly = sext i32 %.7371 to i64
-  %4 = getelementptr [4 x i8], ptr @switch.table._PyBytes_FormatEx, i64 %i.ly
-  %switch.gep = getelementptr i8, ptr %4, i64 -400
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %i.lz = tail call ptr @_PyLong_FormatBytesWriter(ptr noundef nonnull %i.d, ptr noundef %.03861256, ptr noundef nonnull %.0.i567, i32 noundef %switch.load, i32 noundef %i.lx) #19 ; 2 uses
+  %4 = getelementptr i8, ptr @switch.table._PyBytes_FormatEx, i64 %i.ly
+  %switch.gep = getelementptr i8, ptr %4, i64 -100
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  %i.lz = tail call ptr @_PyLong_FormatBytesWriter(ptr noundef nonnull %i.d, ptr noundef %.03861256, ptr noundef nonnull %.0.i567, i32 noundef %switch.ext, i32 noundef %i.lx) #19 ; 2 uses
   %i.ma = icmp eq ptr %i.lz, null
   br i1 %i.ma, label %Py_XDECREF.exit.thread, label %Py_XDECREF.exit
 

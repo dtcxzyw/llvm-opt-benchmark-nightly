@@ -201,7 +201,7 @@ $_ZZN4absl12lts_2025051218container_internal5btreeINS1_10map_paramsIiN6google8pr
 @_ZN6google8protobuf8internal15ThreadSafeArena13thread_cache_E = external thread_local local_unnamed_addr global %"struct.google::protobuf::internal::ThreadSafeArena::ThreadCache", align 32
 @_ZN6google8protobuf8internal14WireFormatLite21kWireTypeForFieldTypeE = external local_unnamed_addr constant [0 x i32], align 4
 @.str.23 = private unnamed_addr constant [74 x i8] c"/opt-bench/work/protobuf/protobuf/src/google/protobuf/extension_set_inl.h\00", align 1
-@"switch.table._ZN6google8protobuf8internal12ExtensionSet15AnyOfNoPrefetchIN4absl12lts_2025051218container_internal14btree_iteratorINS6_10btree_nodeINS6_10map_paramsIiNS2_9ExtensionESt4lessIiESaISt4pairIKiSA_EELi256ELb0EEEEERSF_PSF_EEZNKS2_7IsEmptyEvE3$_0EEbT_SN_T0_" = private unnamed_addr constant [10 x i64] [i64 4, i64 4, i64 4, i64 4, i64 4, i64 4, i64 4, i64 4, i64 8, i64 8], align 8
+@"switch.table._ZN6google8protobuf8internal12ExtensionSet15AnyOfNoPrefetchIN4absl12lts_2025051218container_internal14btree_iteratorINS6_10btree_nodeINS6_10map_paramsIiNS2_9ExtensionESt4lessIiESaISt4pairIKiSA_EELi256ELb0EEEEERSF_PSF_EEZNKS2_7IsEmptyEvE3$_0EEbT_SN_T0_" = private unnamed_addr constant [10 x i8] c"\04\04\04\04\04\04\04\04\08\08", align 8
 
 @_ZN6google8protobuf8internal12ExtensionSetD1Ev = unnamed_addr alias void (ptr), ptr @_ZN6google8protobuf8internal12ExtensionSetD2Ev
 
@@ -604,10 +604,11 @@ bb.g:                                             ; preds = %_ZN4absl12lts_20250
 
 switch.lookup:                                    ; preds = %bb.e
   %i.ae = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN6google8protobuf8internal12ExtensionSet15AnyOfNoPrefetchIN4absl12lts_2025051218container_internal14btree_iteratorINS6_10btree_nodeINS6_10map_paramsIiNS2_9ExtensionESt4lessIiESaISt4pairIKiSA_EELi256ELb0EEEEERSF_PSF_EEZNKS2_7IsEmptyEvE3$_0EEbT_SN_T0_", i64 %i.ae
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @"switch.table._ZN6google8protobuf8internal12ExtensionSet15AnyOfNoPrefetchIN4absl12lts_2025051218container_internal14btree_iteratorINS6_10btree_nodeINS6_10map_paramsIiNS2_9ExtensionESt4lessIiESaISt4pairIKiSA_EELi256ELb0EEEEERSF_PSF_EEZNKS2_7IsEmptyEvE3$_0EEbT_SN_T0_", i64 %i.ae
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.af = load ptr, ptr %i.t, align 8, !tbaa !13
-  %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 %switch.load
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 %switch.ext
   %.0.i.i.i.i.i = load i32, ptr %i.ag, align 4, !tbaa !3
   %i.ah = icmp sgt i32 %.0.i.i.i.i.i, 0
   br i1 %i.ah, label %"_ZNK6google8protobuf8internal12ExtensionSet15AnyOfNoPrefetchIZNKS2_7IsEmptyEvE3$_0EEbT_.exit", label %bb.h
@@ -1010,10 +1011,11 @@ bb.g:                                             ; preds = %_ZN4absl12lts_20250
 
 switch.lookup:                                    ; preds = %bb.e
   %i.v = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN6google8protobuf8internal12ExtensionSet15AnyOfNoPrefetchIN4absl12lts_2025051218container_internal14btree_iteratorINS6_10btree_nodeINS6_10map_paramsIiNS2_9ExtensionESt4lessIiESaISt4pairIKiSA_EELi256ELb0EEEEERSF_PSF_EEZNKS2_7IsEmptyEvE3$_0EEbT_SN_T0_", i64 %i.v
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @"switch.table._ZN6google8protobuf8internal12ExtensionSet15AnyOfNoPrefetchIN4absl12lts_2025051218container_internal14btree_iteratorINS6_10btree_nodeINS6_10map_paramsIiNS2_9ExtensionESt4lessIiESaISt4pairIKiSA_EELi256ELb0EEEEERSF_PSF_EEZNKS2_7IsEmptyEvE3$_0EEbT_SN_T0_", i64 %i.v
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.w = load ptr, ptr %.1.i6, align 8, !tbaa !13
-  %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 %switch.load
+  %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 %switch.ext
   %.0.i = load i32, ptr %i.x, align 4, !tbaa !3
   br label %_ZNK6google8protobuf8internal12ExtensionSet10FindOrNullEi.exit.thread
 
@@ -1057,10 +1059,11 @@ bb.c:                                             ; preds = %_ZN4absl12lts_20250
 
 switch.lookup:                                    ; preds = %bb.a
   %i.h = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN6google8protobuf8internal12ExtensionSet15AnyOfNoPrefetchIN4absl12lts_2025051218container_internal14btree_iteratorINS6_10btree_nodeINS6_10map_paramsIiNS2_9ExtensionESt4lessIiESaISt4pairIKiSA_EELi256ELb0EEEEERSF_PSF_EEZNKS2_7IsEmptyEvE3$_0EEbT_SN_T0_", i64 %i.h
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @"switch.table._ZN6google8protobuf8internal12ExtensionSet15AnyOfNoPrefetchIN4absl12lts_2025051218container_internal14btree_iteratorINS6_10btree_nodeINS6_10map_paramsIiNS2_9ExtensionESt4lessIiESaISt4pairIKiSA_EELi256ELb0EEEEERSF_PSF_EEZNKS2_7IsEmptyEvE3$_0EEbT_SN_T0_", i64 %i.h
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.i = load ptr, ptr %0, align 8, !tbaa !13
-  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 %switch.load
+  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 %switch.ext
   %.0 = load i32, ptr %i.j, align 4, !tbaa !3
   ret i32 %.0
 }
@@ -1463,10 +1466,11 @@ bb.d:                                             ; preds = %_ZN4absl12lts_20250
 
 switch.lookup:                                    ; preds = %bb.b
   %i.q = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @"switch.table._ZN6google8protobuf8internal12ExtensionSet15AnyOfNoPrefetchIN4absl12lts_2025051218container_internal14btree_iteratorINS6_10btree_nodeINS6_10map_paramsIiNS2_9ExtensionESt4lessIiESaISt4pairIKiSA_EELi256ELb0EEEEERSF_PSF_EEZNKS2_7IsEmptyEvE3$_0EEbT_SN_T0_", i64 %i.q
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @"switch.table._ZN6google8protobuf8internal12ExtensionSet15AnyOfNoPrefetchIN4absl12lts_2025051218container_internal14btree_iteratorINS6_10btree_nodeINS6_10map_paramsIiNS2_9ExtensionESt4lessIiESaISt4pairIKiSA_EELi256ELb0EEEEERSF_PSF_EEZNKS2_7IsEmptyEvE3$_0EEbT_SN_T0_", i64 %i.q
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.r = load ptr, ptr %i.f, align 8, !tbaa !13
-  %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 %switch.load
+  %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 %switch.ext
   %.0.i.i.i = load i32, ptr %i.s, align 4, !tbaa !3
   %i.t = icmp sgt i32 %.0.i.i.i, 0
   br i1 %i.t, label %.thread, label %bb.e

@@ -72,10 +72,10 @@ $_ZTSN6icu_787UMemoryE = comdat any
 @_ZTVN6icu_7813UnicodeStringE = external unnamed_addr constant { [13 x ptr] }, align 8
 @_ZTVN6icu_786number4impl30PropertiesAffixPatternProviderE = external unnamed_addr constant { [14 x ptr] }, align 8
 @_ZTVN6icu_786number4impl31CurrencyPluralInfoAffixProviderE = external unnamed_addr constant { [14 x ptr] }, align 8
-@switch.table._ZN6icu_786number4impl18PatternStringUtils18resolveSignDisplayE18UNumberSignDisplayNS1_6SignumE = private unnamed_addr constant [4 x i32] [i32 2, i32 2, i32 0, i32 0], align 4
-@switch.table._ZN6icu_786number4impl18PatternStringUtils18resolveSignDisplayE18UNumberSignDisplayNS1_6SignumE.1 = private unnamed_addr constant [4 x i32] [i32 2, i32 2, i32 1, i32 1], align 4
-@switch.table._ZN6icu_786number4impl18PatternStringUtils18resolveSignDisplayE18UNumberSignDisplayNS1_6SignumE.2 = private unnamed_addr constant [4 x i32] [i32 2, i32 0, i32 0, i32 1], align 4
-@switch.table._ZN6icu_786number4impl18PatternStringUtils18resolveSignDisplayE18UNumberSignDisplayNS1_6SignumE.3 = private unnamed_addr constant [4 x i32] [i32 2, i32 0, i32 0, i32 0], align 4
+@switch.table._ZN6icu_786number4impl18PatternStringUtils18resolveSignDisplayE18UNumberSignDisplayNS1_6SignumE = private unnamed_addr constant [4 x i8] c"\02\02\00\00", align 4
+@switch.table._ZN6icu_786number4impl18PatternStringUtils18resolveSignDisplayE18UNumberSignDisplayNS1_6SignumE.1 = private unnamed_addr constant [4 x i8] c"\02\02\01\01", align 4
+@switch.table._ZN6icu_786number4impl18PatternStringUtils18resolveSignDisplayE18UNumberSignDisplayNS1_6SignumE.2 = private unnamed_addr constant [4 x i8] c"\02\00\00\01", align 4
+@switch.table._ZN6icu_786number4impl18PatternStringUtils18resolveSignDisplayE18UNumberSignDisplayNS1_6SignumE.3 = private unnamed_addr constant [4 x i8] c"\02\00\00\00", align 4
 
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZN6icu_786number4impl13PatternParser18parseToPatternInfoERKNS_13UnicodeStringERNS1_17ParsedPatternInfoER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(433) %1, ptr nofree noundef nonnull align 4 captures(none) dereferenceable(4) %2) local_unnamed_addr #0 align 2 {
@@ -478,12 +478,13 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c,
 .sink.split:                                      ; preds = %bb.e, %bb.d, %bb.c, %bb.b
   %switch.table._ZN6icu_786number4impl18PatternStringUtils18resolveSignDisplayE18UNumberSignDisplayNS1_6SignumE.3.sink = phi ptr [ @switch.table._ZN6icu_786number4impl18PatternStringUtils18resolveSignDisplayE18UNumberSignDisplayNS1_6SignumE.2, %bb.d ], [ @switch.table._ZN6icu_786number4impl18PatternStringUtils18resolveSignDisplayE18UNumberSignDisplayNS1_6SignumE.1, %bb.c ], [ @switch.table._ZN6icu_786number4impl18PatternStringUtils18resolveSignDisplayE18UNumberSignDisplayNS1_6SignumE, %bb.b ], [ @switch.table._ZN6icu_786number4impl18PatternStringUtils18resolveSignDisplayE18UNumberSignDisplayNS1_6SignumE.3, %bb.e ]
   %i.e = zext nneg i32 %1 to i64
-  %switch.gep13 = getelementptr inbounds nuw [4 x i8], ptr %switch.table._ZN6icu_786number4impl18PatternStringUtils18resolveSignDisplayE18UNumberSignDisplayNS1_6SignumE.3.sink, i64 %i.e
-  %switch.load14 = load i32, ptr %switch.gep13, align 4
+  %switch.gep15 = getelementptr inbounds nuw i8, ptr %switch.table._ZN6icu_786number4impl18PatternStringUtils18resolveSignDisplayE18UNumberSignDisplayNS1_6SignumE.3.sink, i64 %i.e
+  %switch.load16 = load i8, ptr %switch.gep15, align 1
+  %switch.ext17 = zext i8 %switch.load16 to i32
   br label %bb.g
 
 bb.g:                                             ; preds = %.sink.split, %bb.a
-  %.0 = phi i32 [ 0, %bb.a ], [ %switch.load14, %.sink.split ]
+  %.0 = phi i32 [ 0, %bb.a ], [ %switch.ext17, %.sink.split ]
   ret i32 %.0
 }
 

@@ -10,7 +10,7 @@ target triple = "x86_64-pc-linux-gnu"
 
 @.str = private unnamed_addr constant [53 x i8] c"../../deps/openssl/openssl/ssl/quic/quic_record_tx.c\00", align 1
 @__func__.qtx_encrypt_into_txe = private unnamed_addr constant [21 x i8] c"qtx_encrypt_into_txe\00", align 1
-@switch.table.ossl_qtx_write_pkt = private unnamed_addr constant [5 x i32] [i32 0, i32 1, i32 2, i32 poison, i32 3], align 4
+@switch.table.ossl_qtx_write_pkt = private unnamed_addr constant [5 x i8] [i8 0, i8 1, i8 2, i8 poison, i8 3], align 4
 
 ; Function Attrs: nounwind uwtable
 define dso_local ptr @ossl_qtx_new(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
@@ -258,8 +258,9 @@ bb.b:                                             ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %bb.b
   %i.o = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.ossl_qtx_write_pkt, i64 %i.o
-  %switch.load = load i32, ptr %switch.gep, align 4 ; 9 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.ossl_qtx_write_pkt, i64 %i.o
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32       ; 9 uses
   %i.p = and i32 %i.m, 253
   %switch.selectcmp.i.i.not = icmp eq i32 %i.p, 4
   br i1 %switch.selectcmp.i.i.not, label %bb.c, label %bb.m
@@ -270,7 +271,7 @@ ossl_quic_pkt_type_to_enc_level.exit.thread:      ; preds = %bb.b
   br i1 %switch.selectcmp.i.i95.not, label %bb.c, label %ossl_qtx_finish_dgram.exit93
 
 bb.c:                                             ; preds = %ossl_quic_pkt_type_to_enc_level.exit.thread, %switch.lookup
-  %.0.i99 = phi i32 [ 4, %ossl_quic_pkt_type_to_enc_level.exit.thread ], [ %switch.load, %switch.lookup ]
+  %.0.i99 = phi i32 [ 4, %ossl_quic_pkt_type_to_enc_level.exit.thread ], [ %switch.ext, %switch.lookup ]
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 944 ; 2 uses
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !31   ; 12 uses
   %i.t = icmp eq ptr %i.s, null
@@ -353,7 +354,7 @@ ossl_list_txe_insert_tail.exit.i:                 ; preds = %qtx_add_to_pending.
 
 bb.m:                                             ; preds = %switch.lookup
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.at = tail call i32 @ossl_qrl_enc_level_set_have_el(ptr noundef nonnull %i.as, i32 noundef %switch.load) #10
+  %i.at = tail call i32 @ossl_qrl_enc_level_set_have_el(ptr noundef nonnull %i.as, i32 noundef %switch.ext) #10
   %.not51 = icmp eq i32 %i.at, 1
   br i1 %.not51, label %ossl_qtx_finish_dgram.exit, label %ossl_qtx_finish_dgram.exit93
 
@@ -507,7 +508,7 @@ ossl_list_txe_insert_tail.exit.i67:               ; preds = %qtx_add_to_pending.
 
 ossl_qtx_finish_dgram.exit71:                     ; preds = %ossl_qtx_finish_dgram.exit.thread, %bb.s, %bb.t, %ossl_qtx_finish_dgram.exit, %ossl_list_txe_insert_tail.exit.i67, %addr_eq.exit.thread104, %addr_eq.exit64, %bb.n
   %i.cp = phi ptr [ %i.av, %addr_eq.exit64 ], [ %i.av, %ossl_qtx_finish_dgram.exit ], [ %i.av, %bb.n ], [ %i.av, %ossl_list_txe_insert_tail.exit.i67 ], [ %i.av, %addr_eq.exit.thread104 ], [ %i.av, %bb.t ], [ %i.av, %bb.s ], [ %i.au, %ossl_qtx_finish_dgram.exit.thread ] ; 6 uses
-  %.0.i98203 = phi i32 [ %switch.load, %addr_eq.exit64 ], [ %switch.load, %ossl_qtx_finish_dgram.exit ], [ %switch.load, %bb.n ], [ %switch.load, %ossl_list_txe_insert_tail.exit.i67 ], [ %switch.load, %addr_eq.exit.thread104 ], [ %switch.load, %bb.t ], [ %switch.load, %bb.s ], [ %.0.i99, %ossl_qtx_finish_dgram.exit.thread ] ; 3 uses
+  %.0.i98203 = phi i32 [ %switch.ext, %addr_eq.exit64 ], [ %switch.ext, %ossl_qtx_finish_dgram.exit ], [ %switch.ext, %bb.n ], [ %switch.ext, %ossl_list_txe_insert_tail.exit.i67 ], [ %switch.ext, %addr_eq.exit.thread104 ], [ %switch.ext, %bb.t ], [ %switch.ext, %bb.s ], [ %.0.i99, %ossl_qtx_finish_dgram.exit.thread ] ; 3 uses
   %i.cq = phi i1 [ false, %addr_eq.exit64 ], [ true, %ossl_qtx_finish_dgram.exit ], [ true, %bb.n ], [ true, %ossl_list_txe_insert_tail.exit.i67 ], [ true, %addr_eq.exit.thread104 ], [ false, %bb.t ], [ false, %bb.s ], [ true, %ossl_qtx_finish_dgram.exit.thread ]
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 872 ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 880 ; 8 uses

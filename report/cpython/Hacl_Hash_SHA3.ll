@@ -12,10 +12,9 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.1 = private unnamed_addr constant [34 x i8] c"../Modules/_hacl/Hacl_Hash_SHA3.c\00", align 1
 @stderr = external local_unnamed_addr global ptr, align 8
 @.str.2 = private unnamed_addr constant [35 x i8] c"KaRaMeL incomplete match at %s:%d\0A\00", align 1
-@switch.table.digest_.19 = private unnamed_addr constant [6 x i64] [i64 136, i64 144, i64 104, i64 72, i64 168, i64 136], align 8
-@switch.table.digest_.20 = private unnamed_addr constant [4 x i32] [i32 136, i32 144, i32 104, i32 72], align 4
-@switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len = private unnamed_addr constant [6 x i32] [i32 136, i32 144, i32 104, i32 72, i32 168, i32 136], align 4
-@switch.table._Py_LibHacl_Hacl_Hash_SHA3_hash_len = private unnamed_addr constant [4 x i32] [i32 32, i32 28, i32 48, i32 64], align 4
+@switch.table.digest_.20 = private unnamed_addr constant [4 x i8] c"\88\90hH", align 4
+@switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len = private unnamed_addr constant [6 x i8] c"\88\90hH\A8\88", align 8
+@switch.table._Py_LibHacl_Hacl_Hash_SHA3_hash_len = private unnamed_addr constant [4 x i8] c" \1C0@", align 4
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define hidden void @_Py_LibHacl_Hacl_Hash_SHA3_init_(i8 noundef zeroext %0, ptr nofree noundef writeonly captures(none) initializes((0, 200)) %1) local_unnamed_addr #0 {
@@ -43,14 +42,16 @@ bb.b:                                             ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %bb.a
   %i.e = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.e
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %i.f = mul i32 %switch.load, %3
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.e
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  %i.f = mul i32 %3, %switch.ext
   %i.g = zext nneg i8 %0 to i64
-  %4 = getelementptr [4 x i8], ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.g
-  %switch.gep49 = getelementptr i8, ptr %4, i64 -32
-  %switch.load50 = load i32, ptr %switch.gep49, align 4
-  %i.h = udiv i32 %i.f, %switch.load50
+  %4 = getelementptr i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.g
+  %switch.gep49 = getelementptr i8, ptr %4, i64 -8
+  %switch.load50 = load i8, ptr %switch.gep49, align 1
+  %switch.ext51 = zext i8 %switch.load50 to i32
+  %i.h = udiv i32 %i.f, %switch.ext51
   %i.i = zext nneg i32 %i.h to i64
   br label %switch.lookup48
 
@@ -453,9 +454,10 @@ bb.b:                                             ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %bb.a
   %i.i = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.i
-  %switch.load = load i32, ptr %switch.gep, align 4 ; 3 uses
-  %i.j = icmp eq i32 %3, %switch.load
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.i
+  %switch.load = load i8, ptr %switch.gep, align 1 ; 2 uses
+  %switch.ext = zext i8 %switch.load to i32       ; 2 uses
+  %i.j = icmp eq i32 %3, %switch.ext
   br i1 %i.j, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %switch.lookup
@@ -481,7 +483,7 @@ bb.c:                                             ; preds = %switch.lookup
 bb.d:                                             ; preds = %switch.lookup
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.c, i8 0, i64 256, i1 false)
-  %i.p = urem i32 %3, %switch.load
+  %i.p = urem i32 %3, %switch.ext
   %i.q = zext i32 %3 to i64
   %i.r = getelementptr i8, ptr %2, i64 %i.q
   %i.s = zext nneg i32 %i.p to i64                ; 3 uses
@@ -568,7 +570,7 @@ bb.d:                                             ; preds = %switch.lookup
   store i64 %i.cf, ptr %i.cd, align 8, !tbaa !15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.d, i8 0, i64 256, i1 false)
-  %i.cg = zext nneg i32 %switch.load to i64
+  %i.cg = zext i8 %switch.load to i64
   %i.ch = getelementptr i8, ptr %i.d, i64 %i.cg
   %i.ci = getelementptr i8, ptr %i.ch, i64 -1
   store i8 -128, ptr %i.ci, align 1, !tbaa !18
@@ -603,10 +605,11 @@ bb.b:                                             ; preds = %bb.a
 
 block_len.exit:                                   ; preds = %bb.a
   %i.c = zext nneg i8 %0 to i64
-  %1 = getelementptr [8 x i8], ptr @switch.table.digest_.19, i64 %i.c
-  %switch.gep = getelementptr i8, ptr %1, i64 -64
-  %switch.load = load i64, ptr %switch.gep, align 8
-  %i.d = tail call noalias ptr @calloc(i64 noundef %switch.load, i64 noundef 1) #20 ; 4 uses
+  %1 = getelementptr i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.c
+  %switch.gep = getelementptr i8, ptr %1, i64 -8
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
+  %i.d = tail call noalias ptr @calloc(i64 noundef %switch.ext, i64 noundef 1) #20 ; 4 uses
   %i.e = icmp eq ptr %i.d, null
   br i1 %i.e, label %bb.h, label %bb.c
 
@@ -698,18 +701,20 @@ bb.b:                                             ; preds = %bb.a
 block_len.exit:                                   ; preds = %bb.a
   %switch.tableidx = add i64 %.sroa.038.0.copyload, 248
   %i.c = and i64 %switch.tableidx, 255
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.digest_.19, i64 %i.c
-  %switch.load = load i64, ptr %switch.gep, align 8
-  %i.d = tail call noalias ptr @calloc(i64 noundef %switch.load, i64 noundef 1) #20 ; 5 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.c
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
+  %i.d = tail call noalias ptr @calloc(i64 noundef %switch.ext, i64 noundef 1) #20 ; 5 uses
   %i.e = icmp eq ptr %i.d, null
   br i1 %i.e, label %bb.g, label %switch.lookup
 
 switch.lookup:                                    ; preds = %block_len.exit
   %switch.tableidx56 = add i64 %.sroa.038.0.copyload, 248
   %i.f = and i64 %switch.tableidx56, 255
-  %switch.gep57 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.digest_.19, i64 %i.f
-  %switch.load58 = load i64, ptr %switch.gep57, align 8
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.d, ptr noundef nonnull align 1 dereferenceable(1) %.sroa.540.0.copyload, i64 %switch.load58, i1 false)
+  %switch.gep57 = getelementptr inbounds nuw i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.f
+  %switch.load58 = load i8, ptr %switch.gep57, align 1
+  %switch.ext59 = zext i8 %switch.load58 to i64
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.d, ptr noundef nonnull align 1 dereferenceable(1) %.sroa.540.0.copyload, i64 %switch.ext59, i1 false)
   %i.g = tail call noalias dereferenceable_or_null(200) ptr @calloc(i64 noundef 25, i64 noundef 8) #20 ; 4 uses
   %i.h = icmp eq ptr %i.g, null
   %i.i = and i64 %.sroa.038.0.copyload, 255
@@ -795,9 +800,10 @@ bb.c:                                             ; preds = %bb.b
 
 switch.lookup:                                    ; preds = %bb.b
   %i.g = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.digest_.19, i64 %i.g
-  %switch.load = load i64, ptr %switch.gep, align 8
-  %i.h = urem i64 %.sroa.5162.0.copyload, %switch.load
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.g
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
+  %i.h = urem i64 %.sroa.5162.0.copyload, %switch.ext
   %i.i = icmp eq i64 %i.h, 0
   %i.j = icmp ne i64 %.sroa.5162.0.copyload, 0    ; 4 uses
   %or.cond = and i1 %i.j, %i.i
@@ -827,10 +833,11 @@ default.unreachable:                              ; preds = %bb.d
 
 switch.lookup398:                                 ; preds = %switch.lookup
   %i.k = zext nneg i8 %.sroa.0159.0.copyload to i64
-  %5 = getelementptr [8 x i8], ptr @switch.table.digest_.19, i64 %i.k
-  %switch.gep399 = getelementptr i8, ptr %5, i64 -64
-  %switch.load400 = load i64, ptr %switch.gep399, align 8
-  %i.l = urem i64 %.sroa.5162.0.copyload, %switch.load400
+  %5 = getelementptr i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.k
+  %switch.gep399 = getelementptr i8, ptr %5, i64 -8
+  %switch.load400 = load i8, ptr %switch.gep399, align 1
+  %switch.ext401 = zext i8 %switch.load400 to i64
+  %i.l = urem i64 %.sroa.5162.0.copyload, %switch.ext401
   %i.m = trunc nuw nsw i64 %i.l to i32
   br label %block_len.exit208
 
@@ -871,10 +878,11 @@ switch.lookup402:                                 ; preds = %block_len.exit212
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false)
   %.sroa.4119.0.copyload = load ptr, ptr %.sroa.5161.0..sroa_idx, align 8, !tbaa !21 ; 2 uses
   %i.o = zext nneg i8 %.sroa.0159.0.copyload to i64
-  %6 = getelementptr [8 x i8], ptr @switch.table.digest_.19, i64 %i.o
-  %switch.gep403 = getelementptr i8, ptr %6, i64 -64
-  %switch.load404 = load i64, ptr %switch.gep403, align 8
-  %i.p = urem i64 %.sroa.5162.0.copyload, %switch.load404
+  %6 = getelementptr i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.o
+  %switch.gep403 = getelementptr i8, ptr %6, i64 -8
+  %switch.load405 = load i8, ptr %switch.gep403, align 1
+  %switch.ext406 = zext i8 %switch.load405 to i64
+  %i.p = urem i64 %.sroa.5162.0.copyload, %switch.ext406
   %i.q = icmp eq i64 %i.p, 0
   %or.cond3 = and i1 %i.j, %i.q
   %switch.tableidx405 = add nsw i8 %.sroa.0159.0.copyload, -8
@@ -882,18 +890,20 @@ switch.lookup402:                                 ; preds = %block_len.exit212
   br i1 %or.cond3, label %switch.lookup406, label %switch.lookup410
 
 switch.lookup406:                                 ; preds = %switch.lookup402
-  %switch.gep407 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.digest_.19, i64 %i.r
-  %switch.load408 = load i64, ptr %switch.gep407, align 8
+  %switch.gep409 = getelementptr inbounds nuw i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.r
+  %switch.load410 = load i8, ptr %switch.gep409, align 1
+  %switch.ext411 = zext i8 %switch.load410 to i64
   br label %block_len.exit216
 
 switch.lookup410:                                 ; preds = %switch.lookup402
-  %switch.gep411 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.digest_.19, i64 %i.r
-  %switch.load412 = load i64, ptr %switch.gep411, align 8
-  %i.s = urem i64 %.sroa.5162.0.copyload, %switch.load412
+  %switch.gep414 = getelementptr inbounds nuw i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.r
+  %switch.load415 = load i8, ptr %switch.gep414, align 1
+  %switch.ext416 = zext i8 %switch.load415 to i64
+  %i.s = urem i64 %.sroa.5162.0.copyload, %switch.ext416
   br label %block_len.exit216
 
 block_len.exit216:                                ; preds = %switch.lookup406, %switch.lookup410
-  %.0195 = phi i64 [ %i.s, %switch.lookup410 ], [ %switch.load408, %switch.lookup406 ]
+  %.0195 = phi i64 [ %i.s, %switch.lookup410 ], [ %switch.ext411, %switch.lookup406 ]
   %i.t = getelementptr i8, ptr %.sroa.4119.0.copyload, i64 %.0195
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.t, ptr align 1 %1, i64 %i.a, i1 false)
   %i.u = add i64 %.sroa.5162.0.copyload, %i.a
@@ -910,20 +920,22 @@ switch.lookup414:                                 ; preds = %bb.i
   %.sroa.5103.0.copyload = load ptr, ptr %.sroa.5103.0..sroa_idx, align 8, !tbaa !19 ; 3 uses
   %.sroa.6104.0.copyload = load ptr, ptr %.sroa.5161.0..sroa_idx, align 8, !tbaa !21 ; 3 uses
   %i.w = zext nneg i8 %.sroa.0159.0.copyload to i64
-  %7 = getelementptr [8 x i8], ptr @switch.table.digest_.19, i64 %i.w
-  %switch.gep415 = getelementptr i8, ptr %7, i64 -64
-  %switch.load416 = load i64, ptr %switch.gep415, align 8
-  %i.x = urem i64 %.sroa.5162.0.copyload, %switch.load416
+  %7 = getelementptr i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.w
+  %switch.gep415 = getelementptr i8, ptr %7, i64 -8
+  %switch.load420 = load i8, ptr %switch.gep415, align 1
+  %switch.ext421 = zext i8 %switch.load420 to i64
+  %i.x = urem i64 %.sroa.5162.0.copyload, %switch.ext421
   %i.y = icmp eq i64 %i.x, 0
   %or.cond5 = and i1 %i.j, %i.y
   br i1 %or.cond5, label %block_len.exit222, label %switch.lookup418
 
 switch.lookup418:                                 ; preds = %switch.lookup414
   %i.z = zext nneg i8 %.sroa.0159.0.copyload to i64
-  %8 = getelementptr [8 x i8], ptr @switch.table.digest_.19, i64 %i.z
-  %switch.gep419 = getelementptr i8, ptr %8, i64 -64
-  %switch.load420 = load i64, ptr %switch.gep419, align 8
-  %i.aa = urem i64 %.sroa.5162.0.copyload, %switch.load420
+  %8 = getelementptr i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.z
+  %switch.gep419 = getelementptr i8, ptr %8, i64 -8
+  %switch.load425 = load i8, ptr %switch.gep419, align 1
+  %switch.ext426 = zext i8 %switch.load425 to i64
+  %i.aa = urem i64 %.sroa.5162.0.copyload, %switch.ext426
   %i.ab = icmp eq i64 %i.aa, 0
   br i1 %i.ab, label %switch.lookup422, label %block_len.exit222
 
@@ -933,10 +945,11 @@ block_len.exit222:                                ; preds = %switch.lookup414, %
 
 switch.lookup422:                                 ; preds = %block_len.exit222, %switch.lookup418
   %i.ac = zext nneg i8 %.sroa.0159.0.copyload to i64
-  %9 = getelementptr [4 x i8], ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.ac
-  %switch.gep423 = getelementptr i8, ptr %9, i64 -32
-  %switch.load424 = load i32, ptr %switch.gep423, align 4
-  %i.ad = urem i32 %2, %switch.load424
+  %9 = getelementptr i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.ac
+  %switch.gep423 = getelementptr i8, ptr %9, i64 -8
+  %switch.load430 = load i8, ptr %switch.gep423, align 1
+  %switch.ext431 = zext i8 %switch.load430 to i32
+  %i.ad = urem i32 %2, %switch.ext431
   %i.ae = icmp eq i32 %i.ad, 0
   br i1 %i.ae, label %bb.j, label %switch.lookup426
 
@@ -971,10 +984,11 @@ default.unreachable367:                           ; preds = %bb.j
 
 switch.lookup426:                                 ; preds = %switch.lookup422
   %i.aj = zext nneg i8 %.sroa.0159.0.copyload to i64
-  %10 = getelementptr [4 x i8], ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.aj
-  %switch.gep427 = getelementptr i8, ptr %10, i64 -32
-  %switch.load428 = load i32, ptr %switch.gep427, align 4
-  %i.ak = urem i32 %2, %switch.load428
+  %10 = getelementptr i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.aj
+  %switch.gep427 = getelementptr i8, ptr %10, i64 -8
+  %switch.load435 = load i8, ptr %switch.gep427, align 1
+  %switch.ext436 = zext i8 %switch.load435 to i32
+  %i.ak = urem i32 %2, %switch.ext436
   br label %block_len.exit232
 
 block_len.exit232:                                ; preds = %bb.j, %bb.j, %switch.lookup426
@@ -1177,18 +1191,20 @@ block_len.exit244:                                ; preds = %block_len.exit242.t
   br i1 %or.cond10, label %switch.lookup430, label %switch.lookup434
 
 switch.lookup430:                                 ; preds = %block_len.exit244
-  %switch.gep431 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.digest_.19, i64 %i.cg
-  %switch.load432 = load i64, ptr %switch.gep431, align 8
+  %switch.gep439 = getelementptr inbounds nuw i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.cg
+  %switch.load440 = load i8, ptr %switch.gep439, align 1
+  %switch.ext441 = zext i8 %switch.load440 to i64
   br label %block_len.exit246
 
 switch.lookup434:                                 ; preds = %block_len.exit244
-  %switch.gep435 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.digest_.19, i64 %i.cg
-  %switch.load436 = load i64, ptr %switch.gep435, align 8
-  %i.ch = urem i64 %.sroa.5162.0.copyload, %switch.load436
+  %switch.gep444 = getelementptr inbounds nuw i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.cg
+  %switch.load445 = load i8, ptr %switch.gep444, align 1
+  %switch.ext446 = zext i8 %switch.load445 to i64
+  %i.ch = urem i64 %.sroa.5162.0.copyload, %switch.ext446
   br label %block_len.exit246
 
 block_len.exit246:                                ; preds = %switch.lookup430, %switch.lookup434
-  %.0198 = phi i64 [ %i.ch, %switch.lookup434 ], [ %switch.load432, %switch.lookup430 ]
+  %.0198 = phi i64 [ %i.ch, %switch.lookup434 ], [ %switch.ext441, %switch.lookup430 ]
   %i.ci = getelementptr i8, ptr %.sroa.454.0.copyload328, i64 %.0198
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ci, ptr align 1 %1, i64 %i.cc, i1 false)
   %i.cj = add i64 %i.cc, %.sroa.5162.0.copyload   ; 5 uses
@@ -1200,10 +1216,11 @@ block_len.exit246:                                ; preds = %switch.lookup430, %
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !19 ; 3 uses
   %i.cl = zext nneg i8 %.sroa.0159.0.copyload to i64
-  %11 = getelementptr [8 x i8], ptr @switch.table.digest_.19, i64 %i.cl
-  %switch.gep439.a = getelementptr i8, ptr %11, i64 -64
-  %switch.load440 = load i64, ptr %switch.gep439.a, align 8
-  %i.cm = urem i64 %i.cj, %switch.load440
+  %11 = getelementptr i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.cl
+  %switch.gep439.a = getelementptr i8, ptr %11, i64 -8
+  %switch.load450 = load i8, ptr %switch.gep439.a, align 1
+  %switch.ext451 = zext i8 %switch.load450 to i64
+  %i.cm = urem i64 %i.cj, %switch.ext451
   %i.cn = icmp eq i64 %i.cm, 0
   %i.co = icmp ne i64 %i.cj, 0
   %or.cond12 = and i1 %i.co, %i.cn
@@ -1211,10 +1228,11 @@ block_len.exit246:                                ; preds = %switch.lookup430, %
 
 switch.lookup442:                                 ; preds = %block_len.exit246
   %i.cp = zext nneg i8 %.sroa.0159.0.copyload to i64
-  %12 = getelementptr [8 x i8], ptr @switch.table.digest_.19, i64 %i.cp
-  %switch.gep443 = getelementptr i8, ptr %12, i64 -64
-  %switch.load444 = load i64, ptr %switch.gep443, align 8
-  %i.cq = urem i64 %i.cj, %switch.load444
+  %12 = getelementptr i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.cp
+  %switch.gep443 = getelementptr i8, ptr %12, i64 -8
+  %switch.load455 = load i8, ptr %switch.gep443, align 1
+  %switch.ext456 = zext i8 %switch.load455 to i64
+  %i.cq = urem i64 %i.cj, %switch.ext456
   %i.cr = icmp eq i64 %i.cq, 0
   br i1 %i.cr, label %switch.lookup448, label %block_len.exit252
 
@@ -1248,10 +1266,11 @@ switch.lookup448:                                 ; preds = %switch.lookup460.a,
   %i.cy = sub i32 %2, %i.cd                       ; 9 uses
   %i.cz = zext i32 %i.cy to i64
   %i.da = zext nneg i8 %.sroa.0159.0.copyload to i64
-  %13 = getelementptr [4 x i8], ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.da
-  %switch.gep449 = getelementptr i8, ptr %13, i64 -32
-  %switch.load450 = load i32, ptr %switch.gep449, align 4
-  %i.db = urem i32 %i.cy, %switch.load450
+  %13 = getelementptr i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.da
+  %switch.gep449 = getelementptr i8, ptr %13, i64 -8
+  %switch.load462 = load i8, ptr %switch.gep449, align 1
+  %switch.ext463 = zext i8 %switch.load462 to i32
+  %i.db = urem i32 %i.cy, %switch.ext463
   %i.dc = icmp ne i32 %i.db, 0
   %.not203 = icmp eq i32 %2, %i.cd
   %or.cond206 = select i1 %i.dc, i1 true, i1 %.not203
@@ -1288,10 +1307,11 @@ default.unreachable386:                           ; preds = %bb.u
 
 switch.lookup452:                                 ; preds = %switch.lookup448
   %i.dh = zext nneg i8 %.sroa.0159.0.copyload to i64
-  %14 = getelementptr [4 x i8], ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.dh
-  %switch.gep453 = getelementptr i8, ptr %14, i64 -32
-  %switch.load454 = load i32, ptr %switch.gep453, align 4
-  %i.di = urem i32 %i.cy, %switch.load454
+  %14 = getelementptr i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.dh
+  %switch.gep453 = getelementptr i8, ptr %14, i64 -8
+  %switch.load467 = load i8, ptr %switch.gep453, align 1
+  %switch.ext468 = zext i8 %switch.load467 to i32
+  %i.di = urem i32 %i.cy, %switch.ext468
   br label %block_len.exit262
 
 block_len.exit262:                                ; preds = %bb.u, %bb.u, %switch.lookup452
@@ -1374,9 +1394,10 @@ switch.lookup456:                                 ; preds = %block_len.exit268
   %i.dv = getelementptr i8, ptr %i.cb, i64 %i.du
   %i.dw = sub i32 %i.cy, %i.dt
   %i.dx = zext nneg i8 %switch.tableidx455 to i64
-  %switch.gep457 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.dx
-  %switch.load458 = load i32, ptr %switch.gep457, align 4
-  %i.dy = udiv i32 %i.dt, %switch.load458
+  %switch.gep471 = getelementptr inbounds nuw i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.dx
+  %switch.load472 = load i8, ptr %switch.gep471, align 1
+  %switch.ext473 = zext i8 %switch.load472 to i32
+  %i.dy = udiv i32 %i.dt, %switch.ext473
   tail call void @_Py_LibHacl_Hacl_Hash_SHA3_update_multi_sha3(i8 noundef zeroext %.sroa.0.0.copyload, ptr noundef %.sroa.5.0.copyload, ptr noundef %i.cb, i32 noundef %i.dy)
   %i.dz = zext i32 %i.dw to i64
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.sroa.454.0.copyload328, ptr align 1 %i.dv, i64 %i.dz, i1 false)
@@ -1419,9 +1440,10 @@ bb.c:                                             ; preds = %bb.b
 
 switch.lookup:                                    ; preds = %bb.b
   %i.e = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_hash_len, i64 %i.e
-  %switch.load = load i32, ptr %switch.gep, align 4
-  tail call fastcc void @digest_(i8 noundef zeroext %.sroa.0.0.copyload.i, ptr noundef nonnull %0, ptr noundef %1, i32 noundef %switch.load)
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_hash_len, i64 %i.e
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  tail call fastcc void @digest_(i8 noundef zeroext %.sroa.0.0.copyload.i, ptr noundef nonnull %0, ptr noundef %1, i32 noundef %switch.ext)
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %switch.lookup
@@ -1451,9 +1473,10 @@ bb.b:                                             ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %bb.a
   %i.e = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.digest_.19, i64 %i.e
-  %switch.load = load i64, ptr %switch.gep, align 8
-  %i.f = urem i64 %.sroa.6.0.copyload, %switch.load
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.e
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
+  %i.f = urem i64 %.sroa.6.0.copyload, %switch.ext
   %i.g = icmp eq i64 %i.f, 0
   %i.h = icmp ne i64 %.sroa.6.0.copyload, 0
   %or.cond = and i1 %i.h, %i.g
@@ -1494,10 +1517,11 @@ default.unreachable:                              ; preds = %bb.c
 
 switch.lookup112:                                 ; preds = %switch.lookup
   %i.i = zext nneg i8 %0 to i64
-  %4 = getelementptr [8 x i8], ptr @switch.table.digest_.19, i64 %i.i
-  %switch.gep113 = getelementptr i8, ptr %4, i64 -64
-  %switch.load114 = load i64, ptr %switch.gep113, align 8
-  %i.j = urem i64 %.sroa.6.0.copyload, %switch.load114
+  %4 = getelementptr i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.i
+  %switch.gep113 = getelementptr i8, ptr %4, i64 -8
+  %switch.load114 = load i8, ptr %switch.gep113, align 1
+  %switch.ext115 = zext i8 %switch.load114 to i64
+  %i.j = urem i64 %.sroa.6.0.copyload, %switch.ext115
   %i.k = trunc nuw nsw i64 %i.j to i32
   br label %block_len.exit57
 
@@ -1611,12 +1635,14 @@ block_len.exit69:                                 ; preds = %block_len.exit67
 switch.lookup118:                                 ; preds = %block_len.exit67
   %switch.tableidx117 = add nsw i8 %0, -8         ; 2 uses
   %i.ak = zext nneg i8 %switch.tableidx117 to i64
-  %switch.gep119 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.digest_.20, i64 %i.ak
-  %switch.load120 = load i32, ptr %switch.gep119, align 4
+  %switch.gep120 = getelementptr inbounds nuw i8, ptr @switch.table.digest_.20, i64 %i.ak
+  %switch.load121 = load i8, ptr %switch.gep120, align 1
+  %switch.ext122 = zext i8 %switch.load121 to i32
   %i.al = zext nneg i8 %switch.tableidx117 to i64
-  %switch.gep121 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_hash_len, i64 %i.al
-  %switch.load122 = load i32, ptr %switch.gep121, align 4
-  call fastcc void @squeeze(ptr noundef %i.a, i32 noundef %switch.load120, i32 noundef %switch.load122, ptr noundef %2)
+  %switch.gep123 = getelementptr inbounds nuw i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_hash_len, i64 %i.al
+  %switch.load124 = load i8, ptr %switch.gep123, align 1
+  %switch.ext125 = zext i8 %switch.load124 to i32
+  call fastcc void @squeeze(ptr noundef %i.a, i32 noundef %switch.ext122, i32 noundef %switch.ext125, ptr noundef %2)
   br label %bb.i
 
 bb.i:                                             ; preds = %switch.lookup118, %block_len.exit69
@@ -1661,9 +1687,10 @@ bb.b:                                             ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %bb.a
   %i.d = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.d
-  %switch.load = load i32, ptr %switch.gep, align 4
-  ret i32 %switch.load
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_block_len, i64 %i.d
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  ret i32 %switch.ext
 }
 
 ; Function Attrs: nofree nounwind uwtable
@@ -1682,9 +1709,10 @@ bb.b:                                             ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %bb.a
   %i.d = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_hash_len, i64 %i.d
-  %switch.load = load i32, ptr %switch.gep, align 4
-  ret i32 %switch.load
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._Py_LibHacl_Hacl_Hash_SHA3_hash_len, i64 %i.d
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  ret i32 %switch.ext
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable

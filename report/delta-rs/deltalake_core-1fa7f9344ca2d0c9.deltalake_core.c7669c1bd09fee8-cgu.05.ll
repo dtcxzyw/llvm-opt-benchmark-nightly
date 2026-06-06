@@ -201,11 +201,11 @@ begin_hunk_0
 @697 = private unnamed_addr constant <{ ptr, ptr }> <{ ptr inttoptr (i64 -4914948277808166054 to ptr), ptr inttoptr (i64 2111995574219228527 to ptr) }>, align 8
 @698 = private unnamed_addr constant [75 x i8] c"Default planner compound identifier hasn't been implemented for ExprPlanner", align 1
 @switch.table._RNvXs1g_NtCsbvkFyIu7lgC_4core3fmtRNtNtCs4tdlwR1I4n2_7parquet5basic19FieldRepetitionTypeNtB6_5Debug3fmtCs14kWLkQVSKO_14deltalake_core = private unnamed_addr constant [3 x ptr] [ptr @404, ptr @405, ptr @406], align 8
-@switch.table._RNvXs1g_NtCsbvkFyIu7lgC_4core3fmtRNtNtCs4tdlwR1I4n2_7parquet5basic8TimeUnitNtB6_5Debug3fmtCs14kWLkQVSKO_14deltalake_core = private unnamed_addr constant [3 x i64] [i64 6, i64 6, i64 5], align 8
+@switch.table._RNvXs1g_NtCsbvkFyIu7lgC_4core3fmtRNtNtCs4tdlwR1I4n2_7parquet5basic8TimeUnitNtB6_5Debug3fmtCs14kWLkQVSKO_14deltalake_core = private unnamed_addr constant [3 x i8] c"\06\06\05", align 8
 @switch.table._RNvXs1g_NtCsbvkFyIu7lgC_4core3fmtRNtNtCs4tdlwR1I4n2_7parquet5basic8TimeUnitNtB6_5Debug3fmtCs14kWLkQVSKO_14deltalake_core.496 = private unnamed_addr constant [3 x ptr] [ptr @562, ptr @563, ptr @564], align 8
-@switch.table._RNvXs1g_NtCsbvkFyIu7lgC_4core3fmtRNtNtCshmPyUV8PP35_6chrono6format14ParseErrorKindNtB6_5Debug3fmtCs14kWLkQVSKO_14deltalake_core = private unnamed_addr constant [8 x i64] [i64 10, i64 10, i64 9, i64 7, i64 8, i64 7, i64 9, i64 15], align 8
+@switch.table._RNvXs1g_NtCsbvkFyIu7lgC_4core3fmtRNtNtCshmPyUV8PP35_6chrono6format14ParseErrorKindNtB6_5Debug3fmtCs14kWLkQVSKO_14deltalake_core = private unnamed_addr constant [8 x i8] c"\0A\0A\09\07\08\07\09\0F", align 8
 @switch.table._RNvXs1g_NtCsbvkFyIu7lgC_4core3fmtRNtNtCshmPyUV8PP35_6chrono6format14ParseErrorKindNtB6_5Debug3fmtCs14kWLkQVSKO_14deltalake_core.497 = private unnamed_addr constant [8 x ptr] [ptr @396, ptr @397, ptr @398, ptr @399, ptr @400, ptr @401, ptr @402, ptr @403], align 8
-@switch.table._RNvXsa_NtCsfYVtenZkBsn_12arrow_schema8datatypeNtB5_8TimeUnitNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt = private unnamed_addr constant [4 x i64] [i64 6, i64 11, i64 11, i64 10], align 8
+@switch.table._RNvXsa_NtCsfYVtenZkBsn_12arrow_schema8datatypeNtB5_8TimeUnitNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt = private unnamed_addr constant [4 x i8] c"\06\0B\0B\0A", align 8
 @switch.table._RNvXsa_NtCsfYVtenZkBsn_12arrow_schema8datatypeNtB5_8TimeUnitNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt.498 = private unnamed_addr constant [4 x ptr] [ptr @621, ptr @622, ptr @623, ptr @624], align 8
 
 ; Function Attrs: nonlazybind uwtable
@@ -608,12 +608,13 @@ switch.lookup:
   %i.a = load ptr, ptr %0, align 8, !nonnull !9, !noundef !9
   %.val = load i8, ptr %i.a, align 1, !range !414, !noundef !9 ; 2 uses
   %i.b = zext nneg i8 %.val to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs1g_NtCsbvkFyIu7lgC_4core3fmtRNtNtCs4tdlwR1I4n2_7parquet5basic8TimeUnitNtB6_5Debug3fmtCs14kWLkQVSKO_14deltalake_core, i64 %i.b
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs1g_NtCsbvkFyIu7lgC_4core3fmtRNtNtCs4tdlwR1I4n2_7parquet5basic8TimeUnitNtB6_5Debug3fmtCs14kWLkQVSKO_14deltalake_core, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %.val to i64
   %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs1g_NtCsbvkFyIu7lgC_4core3fmtRNtNtCs4tdlwR1I4n2_7parquet5basic8TimeUnitNtB6_5Debug3fmtCs14kWLkQVSKO_14deltalake_core.496, i64 %i.c
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
-  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load2, i64 noundef %switch.load)
+  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load2, i64 noundef %switch.ext)
   ret i1 %i.d
 }
 
@@ -635,12 +636,13 @@ switch.lookup:
   %i.a = load ptr, ptr %0, align 8, !nonnull !9, !noundef !9
   %.val = load i8, ptr %i.a, align 1, !range !17805, !noundef !9 ; 2 uses
   %i.b = zext nneg i8 %.val to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs1g_NtCsbvkFyIu7lgC_4core3fmtRNtNtCshmPyUV8PP35_6chrono6format14ParseErrorKindNtB6_5Debug3fmtCs14kWLkQVSKO_14deltalake_core, i64 %i.b
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs1g_NtCsbvkFyIu7lgC_4core3fmtRNtNtCshmPyUV8PP35_6chrono6format14ParseErrorKindNtB6_5Debug3fmtCs14kWLkQVSKO_14deltalake_core, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %.val to i64
   %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs1g_NtCsbvkFyIu7lgC_4core3fmtRNtNtCshmPyUV8PP35_6chrono6format14ParseErrorKindNtB6_5Debug3fmtCs14kWLkQVSKO_14deltalake_core.497, i64 %i.c
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
-  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load2, i64 noundef %switch.load)
+  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load2, i64 noundef %switch.ext)
   ret i1 %i.d
 }
 
@@ -1043,12 +1045,13 @@ define internal noundef zeroext i1 @_RNvXsa_NtCsfYVtenZkBsn_12arrow_schema8datat
 switch.lookup:
   %i.a = load i8, ptr %0, align 1, !range !528, !noundef !9 ; 2 uses
   %i.b = zext nneg i8 %i.a to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXsa_NtCsfYVtenZkBsn_12arrow_schema8datatypeNtB5_8TimeUnitNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt, i64 %i.b
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXsa_NtCsfYVtenZkBsn_12arrow_schema8datatypeNtB5_8TimeUnitNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %i.a to i64
   %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXsa_NtCsfYVtenZkBsn_12arrow_schema8datatypeNtB5_8TimeUnitNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt.498, i64 %i.c
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
-  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.load)
+  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.ext)
   ret i1 %i.d
 }
 

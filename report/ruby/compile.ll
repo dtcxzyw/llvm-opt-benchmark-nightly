@@ -201,11 +201,9 @@ begin_hunk_0
 @.str.344 = private unnamed_addr constant [5 x i8] c"... \00", align 1
 @.str.345 = private unnamed_addr constant [6 x i8] c" ...\0A\00", align 1
 @.str.346 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
-@switch.table.rb_insn_unified_local_var_level = private unnamed_addr constant [6 x i32] [i32 0, i32 1, i32 0, i32 1, i32 1, i32 3], align 4
-@switch.table.iseq_peephole_optimize = private unnamed_addr constant [37 x i64] [i64 19, i64 poison, i64 poison, i64 poison, i64 17, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 18, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 22], align 8
-@switch.table.rb_type = private unnamed_addr constant [37 x i32] [i32 19, i32 poison, i32 poison, i32 poison, i32 17, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 18, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 22], align 4
-@switch.table.iseq_compile_each0 = private unnamed_addr constant [3 x i32] [i32 22, i32 21, i32 19], align 4
-@switch.table.ibf_dump_object_list_i = private unnamed_addr constant [37 x i8] [i8 19, i8 poison, i8 poison, i8 poison, i8 17, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 18, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 22], align 1
+@switch.table.rb_insn_unified_local_var_level = private unnamed_addr constant [6 x i8] c"\00\01\00\01\01\03", align 4
+@switch.table.iseq_compile_each0 = private unnamed_addr constant [3 x i8] c"\16\15\13", align 4
+@switch.table.ibf_dump_object_list_i = private unnamed_addr constant [37 x i8] [i8 19, i8 poison, i8 poison, i8 poison, i8 17, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 18, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 22], align 8
 @switch.table.ibf_load_object_class = private unnamed_addr constant [6 x ptr] [ptr @rb_cObject, ptr @rb_cArray, ptr @rb_eStandardError, ptr @rb_eNoMatchingPatternError, ptr @rb_eTypeError, ptr @rb_eNoMatchingPatternKeyError], align 8
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
@@ -216,12 +214,13 @@ bb.a:
   br i1 %i.a, label %switch.lookup, label %bb.b
 
 switch.lookup:                                    ; preds = %bb.a
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.rb_insn_unified_local_var_level, i64 %switch.tableidx
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.rb_insn_unified_local_var_level, i64 %switch.tableidx
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.b
 
 bb.b:                                             ; preds = %switch.lookup, %bb.a
-  %.0 = phi i32 [ -1, %bb.a ], [ %switch.load, %switch.lookup ]
+  %.0 = phi i32 [ -1, %bb.a ], [ %switch.ext, %switch.lookup ]
   ret i32 %.0
 }
 
@@ -624,12 +623,13 @@ bb.g:                                             ; preds = %bb.f
   br label %rb_type.exit.i
 
 switch.lookup:                                    ; preds = %bb.e
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.iseq_peephole_optimize, i64 %i.m
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.ibf_dump_object_list_i, i64 %i.m
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   br label %rb_type.exit.i
 
 rb_type.exit.i:                                   ; preds = %switch.lookup, %bb.g, %bb.f, %bb.d
-  %.0.i.i = phi i64 [ %i.t, %bb.d ], [ %spec.select.i.i, %bb.g ], [ 21, %bb.f ], [ %switch.load, %switch.lookup ]
+  %.0.i.i = phi i64 [ %i.t, %bb.d ], [ %spec.select.i.i, %bb.g ], [ 21, %bb.f ], [ %switch.ext, %switch.lookup ]
   %i.y = shl nuw nsw i64 %.0.i.i, 1
   %i.z = or disjoint i64 %i.y, 1
   br label %bb.h
@@ -1032,12 +1032,13 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 switch.lookup:                                    ; preds = %bb.c
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.rb_type, i64 %0
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.ibf_dump_object_list_i, i64 %0
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.f
 
 bb.f:                                             ; preds = %switch.lookup, %bb.e, %bb.d, %bb.b
-  %.0 = phi i32 [ %i.h, %bb.b ], [ %spec.select, %bb.e ], [ 21, %bb.d ], [ %switch.load, %switch.lookup ]
+  %.0 = phi i32 [ %i.h, %bb.b ], [ %spec.select, %bb.e ], [ 21, %bb.d ], [ %switch.ext, %switch.lookup ]
   ret i32 %.0
 }
 
@@ -1440,14 +1441,15 @@ bb.ed:                                            ; preds = %bb.ec
 
 switch.lookup:                                    ; preds = %bb.ec
   %i.abf = zext nneg i16 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.iseq_compile_each0, i64 %i.abf
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.iseq_compile_each0, i64 %i.abf
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.abg = load i64, ptr %2, align 8, !tbaa !176
   %i.abh = lshr i64 %i.abg, 15
   %i.abi = trunc i64 %i.abh to i32
   %i.abj = getelementptr i8, ptr %2, i64 24
   %i.abk = load i32, ptr %i.abj, align 8, !tbaa !278
-  %i.abl = tail call ptr (ptr, i32, i32, i32, i32, ...) @new_insn_body(ptr noundef nonnull %0, i32 noundef %i.abi, i32 noundef %i.abk, i32 noundef %switch.load, i32 noundef 1, i64 noundef %.01031) ; 3 uses
+  %i.abl = tail call ptr (ptr, i32, i32, i32, i32, ...) @new_insn_body(ptr noundef nonnull %0, i32 noundef %i.abi, i32 noundef %i.abk, i32 noundef %switch.ext, i32 noundef 1, i64 noundef %.01031) ; 3 uses
   %i.abm = getelementptr i8, ptr %1, i64 24       ; 2 uses
   %i.abn = load ptr, ptr %i.abm, align 8, !tbaa !11 ; 2 uses
   %i.abo = getelementptr i8, ptr %i.abl, i64 16

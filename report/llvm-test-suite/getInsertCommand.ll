@@ -9,7 +9,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.3 = private unnamed_addr constant [19 x i8] c"allocation failure\00", align 1
 @.str.4 = private unnamed_addr constant [20 x i8] c"low-level I/O error\00", align 1
 @.str.5 = private unnamed_addr constant [41 x i8] c"allocation failure for non-key attribute\00", align 1
-@switch.table.getInsertCommand = private unnamed_addr constant [3 x i64] [i64 18, i64 25, i64 51], align 8
+@switch.table.getInsertCommand = private unnamed_addr constant [3 x i8] c"\12\193", align 8
 
 ; Function Attrs: nounwind uwtable
 define dso_local range(i64 0, 5) i64 @getInsertCommand(ptr noundef %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #0 {
@@ -54,8 +54,9 @@ bb.f:                                             ; preds = %bb.e
 switch.lookup:                                    ; preds = %bb.e
   %switch.idx.cast = trunc nuw i64 %switch.tableidx to i32
   %switch.offset = add nuw nsw i32 %switch.idx.cast, 1
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.getInsertCommand, i64 %switch.tableidx
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.getInsertCommand, i64 %switch.tableidx
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.g = call ptr @createDataObject(i32 noundef %switch.offset) #3 ; 2 uses
   store ptr %i.g, ptr %1, align 8, !tbaa !10
   %i.h = icmp eq ptr %i.g, null
@@ -276,7 +277,7 @@ bb.r:                                             ; preds = %.preheader
 bb.s:                                             ; preds = %.preheader, %bb.r
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #3
   %i.br = add nuw nsw i64 %.13960, 1              ; 2 uses
-  %exitcond.not = icmp eq i64 %i.br, %switch.load
+  %exitcond.not = icmp eq i64 %i.br, %switch.ext
   br i1 %exitcond.not, label %.loopexit, label %.preheader, !llvm.loop !20
 
 .loopexit:                                        ; preds = %bb.s, %.loopexit72, %bb.j, %bb.g, %bb.f, %bb.d, %bb.c, %bb.b

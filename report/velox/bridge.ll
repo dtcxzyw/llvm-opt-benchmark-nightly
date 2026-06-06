@@ -201,7 +201,7 @@ $_ZTSFN5arrow6ResultISt10shared_ptrINS_13MemoryManagerEEEEilE = comdat any
 @_ZTSSt23_Sp_counted_ptr_inplaceIN5arrow12_GLOBAL__N_122ArrayStreamArrayReaderILb1EEESaIvELN9__gnu_cxx12_Lock_policyE2EE = internal constant [116 x i8] c"St23_Sp_counted_ptr_inplaceIN5arrow12_GLOBAL__N_122ArrayStreamArrayReaderILb1EEESaIvELN9__gnu_cxx12_Lock_policyE2EE\00", align 1
 @switch.table._ZN5arrow15VisitTypeInlineINS_12_GLOBAL__N_114SchemaExporterEJEEENS_6StatusERKNS_8DataTypeEPT_DpOT0_ = private unnamed_addr constant [4 x ptr] [ptr @.str.28, ptr @.str.29, ptr @.str.30, ptr @.str.31], align 8
 @switch.table._ZN5arrow15VisitTypeInlineINS_12_GLOBAL__N_114SchemaExporterEJEEENS_6StatusERKNS_8DataTypeEPT_DpOT0_.385 = private unnamed_addr constant [4 x ptr] [ptr @.str.35, ptr @.str.36, ptr @.str.37, ptr @.str.38], align 8
-@switch.table._ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE13StaticGetNextEP22ArrowDeviceArrayStreamP16ArrowDeviceArray = private unnamed_addr constant [10 x i32] [i32 12, i32 22, i32 22, i32 22, i32 5, i32 22, i32 22, i32 22, i32 22, i32 38], align 4
+@switch.table._ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE13StaticGetNextEP22ArrowDeviceArrayStreamP16ArrowDeviceArray = private unnamed_addr constant [10 x i8] c"\0C\16\16\16\05\16\16\16\16&", align 4
 
 ; Function Attrs: mustprogress uwtable
 define void @_ZN5arrow10ExportTypeERKNS_8DataTypeEP11ArrowSchema(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.arrow::Status") align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(72) %1, ptr nofree noundef writeonly captures(none) %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
@@ -604,12 +604,13 @@ _ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_17RecordBatchReaderELb0EE8ToCErr
 
 switch.lookup:                                    ; preds = %_ZNK5arrow6Status4codeEv.exit.i
   %i.an = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE13StaticGetNextEP22ArrowDeviceArrayStreamP16ArrowDeviceArray, i64 %i.an
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE13StaticGetNextEP22ArrowDeviceArrayStreamP16ArrowDeviceArray, i64 %i.an
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_17RecordBatchReaderELb0EE8ToCErrorERKNS_6StatusE.exit.thread
 
 _ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_17RecordBatchReaderELb0EE8ToCErrorERKNS_6StatusE.exit.thread: ; preds = %_ZNK5arrow6Status4codeEv.exit.i, %switch.lookup, %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_17RecordBatchReaderELb0EE8ToCErrorERKNS_6StatusE.exit
-  %.0.i8 = phi i32 [ 0, %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_17RecordBatchReaderELb0EE8ToCErrorERKNS_6StatusE.exit ], [ 22, %_ZNK5arrow6Status4codeEv.exit.i ], [ %switch.load, %switch.lookup ]
+  %.0.i8 = phi i32 [ 0, %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_17RecordBatchReaderELb0EE8ToCErrorERKNS_6StatusE.exit ], [ 22, %_ZNK5arrow6Status4codeEv.exit.i ], [ %switch.ext, %switch.lookup ]
   call void @_ZN5arrow6Status11DeleteStateEv(ptr noundef nonnull align 8 dereferenceable(8) %4)
   br label %_ZN5arrow6StatusD2Ev.exit
 
@@ -805,12 +806,13 @@ _ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_17RecordBatchReaderELb0EE8ToCErr
 
 switch.lookup:                                    ; preds = %_ZNK5arrow6Status4codeEv.exit.i
   %i.au = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE13StaticGetNextEP22ArrowDeviceArrayStreamP16ArrowDeviceArray, i64 %i.au
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE13StaticGetNextEP22ArrowDeviceArrayStreamP16ArrowDeviceArray, i64 %i.au
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_17RecordBatchReaderELb0EE8ToCErrorERKNS_6StatusE.exit.thread
 
 _ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_17RecordBatchReaderELb0EE8ToCErrorERKNS_6StatusE.exit.thread: ; preds = %_ZNK5arrow6Status4codeEv.exit.i, %switch.lookup, %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_17RecordBatchReaderELb0EE8ToCErrorERKNS_6StatusE.exit
-  %.0.i8 = phi i32 [ 0, %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_17RecordBatchReaderELb0EE8ToCErrorERKNS_6StatusE.exit ], [ 22, %_ZNK5arrow6Status4codeEv.exit.i ], [ %switch.load, %switch.lookup ]
+  %.0.i8 = phi i32 [ 0, %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_17RecordBatchReaderELb0EE8ToCErrorERKNS_6StatusE.exit ], [ 22, %_ZNK5arrow6Status4codeEv.exit.i ], [ %switch.ext, %switch.lookup ]
   call void @_ZN5arrow6Status11DeleteStateEv(ptr noundef nonnull align 8 dereferenceable(8) %5)
   br label %_ZN5arrow6StatusD2Ev.exit
 
@@ -1005,12 +1007,13 @@ _ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb0EE8ToCErrorERK
 
 switch.lookup:                                    ; preds = %_ZNK5arrow6Status4codeEv.exit.i
   %i.s = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE13StaticGetNextEP22ArrowDeviceArrayStreamP16ArrowDeviceArray, i64 %i.s
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE13StaticGetNextEP22ArrowDeviceArrayStreamP16ArrowDeviceArray, i64 %i.s
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb0EE8ToCErrorERKNS_6StatusE.exit.thread
 
 _ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb0EE8ToCErrorERKNS_6StatusE.exit.thread: ; preds = %_ZNK5arrow6Status4codeEv.exit.i, %switch.lookup, %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb0EE8ToCErrorERKNS_6StatusE.exit
-  %.0.i8 = phi i32 [ 0, %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb0EE8ToCErrorERKNS_6StatusE.exit ], [ 22, %_ZNK5arrow6Status4codeEv.exit.i ], [ %switch.load, %switch.lookup ]
+  %.0.i8 = phi i32 [ 0, %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb0EE8ToCErrorERKNS_6StatusE.exit ], [ 22, %_ZNK5arrow6Status4codeEv.exit.i ], [ %switch.ext, %switch.lookup ]
   call void @_ZN5arrow6Status11DeleteStateEv(ptr noundef nonnull align 8 dereferenceable(8) %3)
   br label %_ZN5arrow6StatusD2Ev.exit
 
@@ -1126,12 +1129,13 @@ _ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb0EE8ToCErrorERK
 
 switch.lookup:                                    ; preds = %_ZNK5arrow6Status4codeEv.exit.i
   %i.ac = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE13StaticGetNextEP22ArrowDeviceArrayStreamP16ArrowDeviceArray, i64 %i.ac
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE13StaticGetNextEP22ArrowDeviceArrayStreamP16ArrowDeviceArray, i64 %i.ac
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb0EE8ToCErrorERKNS_6StatusE.exit.thread
 
 _ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb0EE8ToCErrorERKNS_6StatusE.exit.thread: ; preds = %_ZNK5arrow6Status4codeEv.exit.i, %switch.lookup, %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb0EE8ToCErrorERKNS_6StatusE.exit
-  %.0.i9 = phi i32 [ 0, %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb0EE8ToCErrorERKNS_6StatusE.exit ], [ 22, %_ZNK5arrow6Status4codeEv.exit.i ], [ %switch.load, %switch.lookup ]
+  %.0.i9 = phi i32 [ 0, %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb0EE8ToCErrorERKNS_6StatusE.exit ], [ 22, %_ZNK5arrow6Status4codeEv.exit.i ], [ %switch.ext, %switch.lookup ]
   call void @_ZN5arrow6Status11DeleteStateEv(ptr noundef nonnull align 8 dereferenceable(8) %3)
   br label %_ZN5arrow6StatusD2Ev.exit
 
@@ -1396,12 +1400,13 @@ _ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_17RecordBatchReaderELb1EE8ToCErr
 
 switch.lookup:                                    ; preds = %_ZNK5arrow6Status4codeEv.exit.i
   %i.an = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE13StaticGetNextEP22ArrowDeviceArrayStreamP16ArrowDeviceArray, i64 %i.an
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE13StaticGetNextEP22ArrowDeviceArrayStreamP16ArrowDeviceArray, i64 %i.an
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_17RecordBatchReaderELb1EE8ToCErrorERKNS_6StatusE.exit.thread
 
 _ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_17RecordBatchReaderELb1EE8ToCErrorERKNS_6StatusE.exit.thread: ; preds = %_ZNK5arrow6Status4codeEv.exit.i, %switch.lookup, %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_17RecordBatchReaderELb1EE8ToCErrorERKNS_6StatusE.exit
-  %.0.i8 = phi i32 [ 0, %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_17RecordBatchReaderELb1EE8ToCErrorERKNS_6StatusE.exit ], [ 22, %_ZNK5arrow6Status4codeEv.exit.i ], [ %switch.load, %switch.lookup ]
+  %.0.i8 = phi i32 [ 0, %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_17RecordBatchReaderELb1EE8ToCErrorERKNS_6StatusE.exit ], [ 22, %_ZNK5arrow6Status4codeEv.exit.i ], [ %switch.ext, %switch.lookup ]
   call void @_ZN5arrow6Status11DeleteStateEv(ptr noundef nonnull align 8 dereferenceable(8) %4)
   br label %_ZN5arrow6StatusD2Ev.exit
 
@@ -1687,12 +1692,13 @@ _ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_17RecordBatchReaderELb1EE8ToCErr
 
 switch.lookup:                                    ; preds = %_ZNK5arrow6Status4codeEv.exit.i
   %i.by = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE13StaticGetNextEP22ArrowDeviceArrayStreamP16ArrowDeviceArray, i64 %i.by
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE13StaticGetNextEP22ArrowDeviceArrayStreamP16ArrowDeviceArray, i64 %i.by
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_17RecordBatchReaderELb1EE8ToCErrorERKNS_6StatusE.exit.thread
 
 _ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_17RecordBatchReaderELb1EE8ToCErrorERKNS_6StatusE.exit.thread: ; preds = %_ZNK5arrow6Status4codeEv.exit.i, %switch.lookup, %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_17RecordBatchReaderELb1EE8ToCErrorERKNS_6StatusE.exit
-  %.0.i8 = phi i32 [ 0, %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_17RecordBatchReaderELb1EE8ToCErrorERKNS_6StatusE.exit ], [ 22, %_ZNK5arrow6Status4codeEv.exit.i ], [ %switch.load, %switch.lookup ]
+  %.0.i8 = phi i32 [ 0, %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_17RecordBatchReaderELb1EE8ToCErrorERKNS_6StatusE.exit ], [ 22, %_ZNK5arrow6Status4codeEv.exit.i ], [ %switch.ext, %switch.lookup ]
   call void @_ZN5arrow6Status11DeleteStateEv(ptr noundef nonnull align 8 dereferenceable(8) %6)
   br label %_ZN5arrow6StatusD2Ev.exit
 
@@ -1887,12 +1893,13 @@ _ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE8ToCErrorERK
 
 switch.lookup:                                    ; preds = %_ZNK5arrow6Status4codeEv.exit.i
   %i.s = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE13StaticGetNextEP22ArrowDeviceArrayStreamP16ArrowDeviceArray, i64 %i.s
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE13StaticGetNextEP22ArrowDeviceArrayStreamP16ArrowDeviceArray, i64 %i.s
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE8ToCErrorERKNS_6StatusE.exit.thread
 
 _ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE8ToCErrorERKNS_6StatusE.exit.thread: ; preds = %_ZNK5arrow6Status4codeEv.exit.i, %switch.lookup, %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE8ToCErrorERKNS_6StatusE.exit
-  %.0.i8 = phi i32 [ 0, %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE8ToCErrorERKNS_6StatusE.exit ], [ 22, %_ZNK5arrow6Status4codeEv.exit.i ], [ %switch.load, %switch.lookup ]
+  %.0.i8 = phi i32 [ 0, %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE8ToCErrorERKNS_6StatusE.exit ], [ 22, %_ZNK5arrow6Status4codeEv.exit.i ], [ %switch.ext, %switch.lookup ]
   call void @_ZN5arrow6Status11DeleteStateEv(ptr noundef nonnull align 8 dereferenceable(8) %3)
   br label %_ZN5arrow6StatusD2Ev.exit
 
@@ -2076,12 +2083,13 @@ _ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE8ToCErrorERK
 
 switch.lookup:                                    ; preds = %_ZNK5arrow6Status4codeEv.exit.i
   %i.au = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE13StaticGetNextEP22ArrowDeviceArrayStreamP16ArrowDeviceArray, i64 %i.au
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE13StaticGetNextEP22ArrowDeviceArrayStreamP16ArrowDeviceArray, i64 %i.au
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE8ToCErrorERKNS_6StatusE.exit.thread
 
 _ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE8ToCErrorERKNS_6StatusE.exit.thread: ; preds = %_ZNK5arrow6Status4codeEv.exit.i, %switch.lookup, %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE8ToCErrorERKNS_6StatusE.exit
-  %.0.i9 = phi i32 [ 0, %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE8ToCErrorERKNS_6StatusE.exit ], [ 22, %_ZNK5arrow6Status4codeEv.exit.i ], [ %switch.load, %switch.lookup ]
+  %.0.i9 = phi i32 [ 0, %_ZN5arrow12_GLOBAL__N_119ExportedArrayStreamINS_12ChunkedArrayELb1EE8ToCErrorERKNS_6StatusE.exit ], [ 22, %_ZNK5arrow6Status4codeEv.exit.i ], [ %switch.ext, %switch.lookup ]
   call void @_ZN5arrow6Status11DeleteStateEv(ptr noundef nonnull align 8 dereferenceable(8) %4)
   br label %_ZN5arrow6StatusD2Ev.exit
 

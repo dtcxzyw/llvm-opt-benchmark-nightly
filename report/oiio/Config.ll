@@ -201,9 +201,9 @@ begin_hunk_0
 @_ZTIN16OpenColorIO_v2_514RangeTransformE = linkonce_odr constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN16OpenColorIO_v2_514RangeTransformE, ptr @_ZTIN16OpenColorIO_v2_59TransformE }, align 8
 @_ZTSN16OpenColorIO_v2_514RangeTransformE = linkonce_odr constant [37 x i8] c"N16OpenColorIO_v2_514RangeTransformE\00", align 1
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @_GLOBAL__sub_I_Config.cpp, ptr null }]
-@switch.table._ZNK16OpenColorIO_v2_56Config21getNumNamedTransformsENS_24NamedTransformVisibilityE = private unnamed_addr constant [3 x i64] [i64 760, i64 784, i64 736], align 8
-@switch.table._ZNK16OpenColorIO_v2_56Config21getNumNamedTransformsENS_24NamedTransformVisibilityE.9 = private unnamed_addr constant [3 x i64] [i64 768, i64 792, i64 744], align 8
-@switch.table._ZNK16OpenColorIO_v2_56Config21getNumNamedTransformsENS_24NamedTransformVisibilityE.10 = private unnamed_addr constant [3 x i64] [i64 5, i64 5, i64 4], align 8
+@switch.table._ZNK16OpenColorIO_v2_56Config21getNumNamedTransformsENS_24NamedTransformVisibilityE = private unnamed_addr constant [3 x i16] [i16 760, i16 784, i16 736], align 8
+@switch.table._ZNK16OpenColorIO_v2_56Config21getNumNamedTransformsENS_24NamedTransformVisibilityE.9 = private unnamed_addr constant [3 x i16] [i16 768, i16 792, i16 744], align 8
+@switch.table._ZNK16OpenColorIO_v2_56Config21getNumNamedTransformsENS_24NamedTransformVisibilityE.10 = private unnamed_addr constant [3 x i8] c"\05\05\04", align 8
 
 @_ZN16OpenColorIO_v2_56ConfigC1Ev = unnamed_addr alias void (ptr), ptr @_ZN16OpenColorIO_v2_56ConfigC2Ev
 @_ZN16OpenColorIO_v2_56ConfigD1Ev = unnamed_addr alias void (ptr), ptr @_ZN16OpenColorIO_v2_56ConfigD2Ev
@@ -606,23 +606,26 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i32 %1 to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK16OpenColorIO_v2_56Config21getNumNamedTransformsENS_24NamedTransformVisibilityE, i64 %i.b
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK16OpenColorIO_v2_56Config21getNumNamedTransformsENS_24NamedTransformVisibilityE, i64 %i.b
+  %switch.load = load i16, ptr %switch.gep, align 2
+  %switch.ext = zext i16 %switch.load to i64
   %i.c = zext nneg i32 %1 to i64
-  %switch.gep12 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK16OpenColorIO_v2_56Config21getNumNamedTransformsENS_24NamedTransformVisibilityE.9, i64 %i.c
-  %switch.load13 = load i64, ptr %switch.gep12, align 8
+  %switch.gep12 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK16OpenColorIO_v2_56Config21getNumNamedTransformsENS_24NamedTransformVisibilityE.9, i64 %i.c
+  %switch.load13 = load i16, ptr %switch.gep12, align 2
+  %switch.ext14 = zext i16 %switch.load13 to i64
   %i.d = zext nneg i32 %1 to i64
-  %switch.gep14 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK16OpenColorIO_v2_56Config21getNumNamedTransformsENS_24NamedTransformVisibilityE.10, i64 %i.d
-  %switch.load15 = load i64, ptr %switch.gep14, align 8
+  %switch.gep15 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK16OpenColorIO_v2_56Config21getNumNamedTransformsENS_24NamedTransformVisibilityE.10, i64 %i.d
+  %switch.load16 = load i8, ptr %switch.gep15, align 1
+  %switch.ext17 = zext nneg i8 %switch.load16 to i64
   %i.e = load ptr, ptr %0, align 8, !tbaa !36     ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 %switch.load
-  %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 %switch.load13
+  %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 %switch.ext
+  %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 %switch.ext14
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !13
   %i.i = load ptr, ptr %i.f, align 8, !tbaa !13
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %i.i to i64
   %i.l = sub i64 %i.j, %i.k
-  %i.m = lshr exact i64 %i.l, %switch.load15
+  %i.m = lshr exact i64 %i.l, %switch.ext17
   %i.n = trunc i64 %i.m to i32
   br label %bb.b
 

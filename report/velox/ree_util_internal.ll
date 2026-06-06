@@ -146,7 +146,7 @@ $_ZZNSt19_Sp_make_shared_tag5_S_tiEvE5__tag = comdat any
 @_ZTSSt23_Sp_counted_ptr_inplaceIN5arrow17RunEndEncodedTypeESaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr constant [91 x i8] c"St23_Sp_counted_ptr_inplaceIN5arrow17RunEndEncodedTypeESaIvELN9__gnu_cxx12_Lock_policyE2EE\00", comdat, align 1
 @_ZTSSt19_Sp_make_shared_tag = linkonce_odr constant [24 x i8] c"St19_Sp_make_shared_tag\00", comdat, align 1
 @_ZZNSt19_Sp_make_shared_tag5_S_tiEvE5__tag = linkonce_odr constant [16 x i8] zeroinitializer, comdat, align 8
-@switch.table._ZN5arrow7compute8internal8ree_util22PreallocateValuesArrayERKSt10shared_ptrINS_8DataTypeEEblPNS_10MemoryPoolEl = private unnamed_addr constant [23 x i64] [i64 4, i64 4, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 8, i64 8], align 8
+@switch.table._ZN5arrow7compute8internal8ree_util22PreallocateValuesArrayERKSt10shared_ptrINS_8DataTypeEEblPNS_10MemoryPoolEl = private unnamed_addr constant [23 x i8] [i8 4, i8 4, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 8, i8 8], align 8
 
 ; Function Attrs: mustprogress uwtable
 define void @_ZN5arrow7compute8internal8ree_util20AllocateValuesBufferElRKNS_8DataTypeEPNS_10MemoryPoolEl(ptr dead_on_unwind noalias writable sret(%"class.arrow::Result") align 8 %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(72) %2, ptr noundef %3, i64 noundef %4) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
@@ -549,11 +549,12 @@ bb.p:                                             ; preds = %bb.m
 
 switch.lookup:                                    ; preds = %bb.p
   %i.ak = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN5arrow7compute8internal8ree_util22PreallocateValuesArrayERKSt10shared_ptrINS_8DataTypeEEblPNS_10MemoryPoolEl, i64 %i.ak
-  %switch.load = load i64, ptr %switch.gep, align 8 ; 2 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5arrow7compute8internal8ree_util22PreallocateValuesArrayERKSt10shared_ptrINS_8DataTypeEEblPNS_10MemoryPoolEl, i64 %i.ak
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64       ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #16
   %i.al = add nsw i64 %3, 1
-  %i.am = mul nsw i64 %switch.load, %i.al
+  %i.am = mul nsw i64 %i.al, %switch.ext
   invoke void @_ZN5arrow14AllocateBufferElPNS_10MemoryPoolE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Result.4") align 8 %11, i64 noundef %i.am, ptr noundef %4)
           to label %bb.q unwind label %bb.s
 
@@ -582,7 +583,7 @@ bb.t:                                             ; preds = %bb.q
   %.cast = inttoptr i64 %i.ar to ptr
   %i.as = getelementptr inbounds nuw i8, ptr %.cast, i64 16
   %i.at = load ptr, ptr %i.as, align 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.at, i8 0, i64 %switch.load, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.at, i8 0, i64 %switch.ext, i1 false)
   %i.au = load ptr, ptr %12, align 8, !tbaa !35   ; 5 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 32
   %i.aw = load i64, ptr %i.av, align 8, !tbaa !114 ; 2 uses

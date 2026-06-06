@@ -78,7 +78,7 @@ target triple = "x86_64-pc-linux-gnu"
 @shacrypt.rounds_prefix = internal constant [8 x i8] c"rounds=\00", align 1
 @shacrypt.out_buf = internal global [124 x i8] zeroinitializer, align 16
 @.str.59 = private unnamed_addr constant [10 x i8] c"rounds=%u\00", align 1
-@switch.table.do_passwd = private unnamed_addr constant [5 x i64] [i64 8, i64 8, i64 0, i64 0, i64 8], align 8
+@switch.table.do_passwd = private unnamed_addr constant [5 x i8] c"\08\08\00\00\08", align 8
 
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 0, 2) i32 @passwd_main(i32 noundef %0, ptr noundef %1) local_unnamed_addr #0 {
@@ -414,12 +414,13 @@ bb.b:                                             ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %bb.b
   %i.h = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.do_passwd, i64 %i.h
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.do_passwd, i64 %i.h
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %switch.lookup, %bb.b
-  %.067 = phi i64 [ %switch.load, %switch.lookup ], [ 0, %bb.b ]
+  %.067 = phi i64 [ %switch.ext, %switch.lookup ], [ 0, %bb.b ]
   %i.i = add nsw i32 %8, -3
   %or.cond5 = icmp ult i32 %i.i, 2
   %spec.select = select i1 %or.cond5, i64 16, i64 %.067 ; 8 uses
@@ -455,7 +456,7 @@ bb.e:                                             ; preds = %._crit_edge, %bb.d
   br i1 %i.r, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %spec.select, -2
+  %unroll_iter = and i64 %spec.select, 254
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new

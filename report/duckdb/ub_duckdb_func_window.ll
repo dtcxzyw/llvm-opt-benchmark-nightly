@@ -201,7 +201,7 @@ begin_hunk_0
 @_ZTIN6duckdb21WindowFillGlobalStateE = linkonce_odr constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN6duckdb21WindowFillGlobalStateE, ptr @_ZTIN6duckdb24WindowLeadLagGlobalStateE }, comdat, align 8
 @_ZTSN6duckdb21WindowFillGlobalStateE = linkonce_odr constant [33 x i8] c"N6duckdb21WindowFillGlobalStateE\00", comdat, align 1
 @switch.table._ZN6duckdbL20GetFillValueFunctionERKNS_11LogicalTypeE = private unnamed_addr constant [18 x ptr] [ptr @_ZN6duckdb17FillValueFunctionINS_6date_tEEEbmRNS_12WindowCursorE, ptr poison, ptr @_ZN6duckdb17FillValueFunctionINS_11timestamp_tEEEbmRNS_12WindowCursorE, ptr @_ZN6duckdb17FillValueFunctionINS_11timestamp_tEEEbmRNS_12WindowCursorE, ptr @_ZN6duckdb17FillValueFunctionINS_11timestamp_tEEEbmRNS_12WindowCursorE, ptr @_ZN6duckdb17FillValueFunctionINS_11timestamp_tEEEbmRNS_12WindowCursorE, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @_ZN6duckdb17FillValueFunctionINS_11timestamp_tEEEbmRNS_12WindowCursorE], align 8
-@switch.table._ZN6duckdb21WindowValueLocalStateC2ERNS_16ExecutionContextERKNS_22WindowValueGlobalStateE = private unnamed_addr constant [4 x i64] [i64 1, i64 2, i64 2, i64 3], align 8
+@switch.table._ZN6duckdb21WindowValueLocalStateC2ERNS_16ExecutionContextERKNS_22WindowValueGlobalStateE = private unnamed_addr constant [4 x i8] c"\01\02\02\03", align 8
 
 @_ZN6duckdb23WindowAggregateExecutorC1ERNS_21BoundWindowExpressionERNS_13ClientContextERNS_23WindowSharedExpressionsENS_21WindowAggregationModeE = unnamed_addr alias void (ptr, ptr, ptr, ptr, i32), ptr @_ZN6duckdb23WindowAggregateExecutorC2ERNS_21BoundWindowExpressionERNS_13ClientContextERNS_23WindowSharedExpressionsENS_21WindowAggregationModeE
 @_ZN6duckdb34WindowAggregateExecutorGlobalStateC1ERNS_13ClientContextERKNS_23WindowAggregateExecutorEmRKNS_12ValidityMaskES8_ = unnamed_addr alias void (ptr, ptr, ptr, i64, ptr, ptr), ptr @_ZN6duckdb34WindowAggregateExecutorGlobalStateC2ERNS_13ClientContextERKNS_23WindowAggregateExecutorEmRKNS_12ValidityMaskES8_
@@ -604,12 +604,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i8 %1 to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6duckdb21WindowValueLocalStateC2ERNS_16ExecutionContextERKNS_22WindowValueGlobalStateE, i64 %i.b
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6duckdb21WindowValueLocalStateC2ERNS_16ExecutionContextERKNS_22WindowValueGlobalStateE, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %switch.lookup, %bb.a
-  %.0 = phi i64 [ 0, %bb.a ], [ %switch.load, %switch.lookup ] ; 4 uses
+  %.0 = phi i64 [ 0, %bb.a ], [ %switch.ext, %switch.lookup ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #29
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
@@ -1012,12 +1013,13 @@ bb.r:                                             ; preds = %.noexc24
 
 switch.lookup:                                    ; preds = %bb.r
   %i.bd = zext nneg i8 %3 to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6duckdb21WindowValueLocalStateC2ERNS_16ExecutionContextERKNS_22WindowValueGlobalStateE, i64 %i.bd
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6duckdb21WindowValueLocalStateC2ERNS_16ExecutionContextERKNS_22WindowValueGlobalStateE, i64 %i.bd
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   br label %bb.s
 
 bb.s:                                             ; preds = %switch.lookup, %bb.r
-  %.0.i = phi i64 [ 0, %bb.r ], [ %switch.load, %switch.lookup ] ; 4 uses
+  %.0.i = phi i64 [ 0, %bb.r ], [ %switch.ext, %switch.lookup ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   %i.be = load ptr, ptr %i.aw, align 8, !tbaa !398 ; 3 uses
@@ -1420,11 +1422,12 @@ bb.p:                                             ; preds = %bb.o
 
 switch.lookup:                                    ; preds = %bb.p
   %i.ac = zext nneg i8 %i.aa to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6duckdb21WindowValueLocalStateC2ERNS_16ExecutionContextERKNS_22WindowValueGlobalStateE, i64 %i.ac
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6duckdb21WindowValueLocalStateC2ERNS_16ExecutionContextERKNS_22WindowValueGlobalStateE, i64 %i.ac
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #29
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
-  invoke void @_ZNSt6vectorIN6duckdb11FrameBoundsESaIS1_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS1_S3_EEmRKS1_(ptr noundef nonnull align 8 dereferenceable(24) %i.w, ptr null, i64 noundef %switch.load, ptr noundef nonnull align 8 dereferenceable(16) %3)
+  invoke void @_ZNSt6vectorIN6duckdb11FrameBoundsESaIS1_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS1_S3_EEmRKS1_(ptr noundef nonnull align 8 dereferenceable(24) %i.w, ptr null, i64 noundef %switch.ext, ptr noundef nonnull align 8 dereferenceable(16) %3)
           to label %bb.r unwind label %bb.ag
 
 bb.q:                                             ; preds = %bb.p
@@ -1827,12 +1830,13 @@ bb.o:                                             ; preds = %bb.n
 
 switch.lookup:                                    ; preds = %bb.o
   %i.ai = zext nneg i8 %i.ag to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6duckdb21WindowValueLocalStateC2ERNS_16ExecutionContextERKNS_22WindowValueGlobalStateE, i64 %i.ai
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6duckdb21WindowValueLocalStateC2ERNS_16ExecutionContextERKNS_22WindowValueGlobalStateE, i64 %i.ai
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   br label %bb.p
 
 bb.p:                                             ; preds = %switch.lookup, %bb.o
-  %.0.i = phi i64 [ 0, %bb.o ], [ %switch.load, %switch.lookup ] ; 4 uses
+  %.0.i = phi i64 [ 0, %bb.o ], [ %switch.ext, %switch.lookup ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #29
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 480 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
@@ -2235,11 +2239,12 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.m = zext nneg i8 %i.k to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6duckdb21WindowValueLocalStateC2ERNS_16ExecutionContextERKNS_22WindowValueGlobalStateE, i64 %i.m
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6duckdb21WindowValueLocalStateC2ERNS_16ExecutionContextERKNS_22WindowValueGlobalStateE, i64 %i.m
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #29
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
-  invoke void @_ZNSt6vectorIN6duckdb11FrameBoundsESaIS1_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS1_S3_EEmRKS1_(ptr noundef nonnull align 8 dereferenceable(24) %i.d, ptr null, i64 noundef %switch.load, ptr noundef nonnull align 8 dereferenceable(16) %3)
+  invoke void @_ZNSt6vectorIN6duckdb11FrameBoundsESaIS1_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS1_S3_EEmRKS1_(ptr noundef nonnull align 8 dereferenceable(24) %i.d, ptr null, i64 noundef %switch.ext, ptr noundef nonnull align 8 dereferenceable(16) %3)
           to label %bb.c unwind label %bb.i
 
 bb.b:                                             ; preds = %bb.a

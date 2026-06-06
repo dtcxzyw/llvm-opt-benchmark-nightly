@@ -87,7 +87,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.76 = private unnamed_addr constant [41 x i8] c"Error while writing ftyp data to stream\0A\00", align 1
 @.str.77 = private unnamed_addr constant [43 x i8] c"Not enough memory to hold JP2 Header data\0A\00", align 1
 @.str.78 = private unnamed_addr constant [43 x i8] c"Stream error while writing JP2 Header box\0A\00", align 1
-@switch.table.opj_jp2_setup_encoder = private unnamed_addr constant [3 x i32] [i32 3, i32 1, i32 3], align 4
+@switch.table.opj_jp2_setup_encoder = private unnamed_addr constant [3 x i8] c"\03\01\03", align 4
 @switch.table.opj_jp2_read_header = private unnamed_addr constant [13 x i32] [i32 5, i32 -1, i32 -1, i32 -1, i32 1, i32 2, i32 3, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 4], align 4
 
 ; Function Attrs: nounwind uwtable
@@ -490,13 +490,14 @@ bb.w:                                             ; preds = %._crit_edge185
 
 switch.lookup:                                    ; preds = %bb.w
   %i.ek = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.opj_jp2_setup_encoder, i64 %i.ek
-  %switch.load = load i32, ptr %switch.gep, align 4 ; 5 uses
-  %.not164 = icmp ugt i32 %i.da, %switch.load
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.opj_jp2_setup_encoder, i64 %i.ek
+  %switch.load = load i8, ptr %switch.gep, align 1 ; 3 uses
+  %switch.ext = zext i8 %switch.load to i32       ; 3 uses
+  %.not164 = icmp ugt i32 %i.da, %switch.ext
   br i1 %.not164, label %bb.x, label %.critedge.sink.split
 
 bb.x:                                             ; preds = %switch.lookup
-  %i.el = icmp ult i32 %spec.select171.lcssa, %switch.load
+  %i.el = icmp ult i32 %spec.select171.lcssa, %switch.ext
   br i1 %i.el, label %.critedge.sink.split, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
@@ -529,13 +530,13 @@ bb.ac:                                            ; preds = %bb.aa
   %i.ew = trunc i32 %i.ev to i16
   %i.ex = getelementptr inbounds nuw i8, ptr %i.et, i64 8
   store i16 %i.ew, ptr %i.ex, align 8, !tbaa !27
-  %wide.trip.count208 = zext nneg i32 %switch.load to i64 ; 2 uses
+  %wide.trip.count208 = zext i8 %switch.load to i64 ; 2 uses
   %xtraiter243 = and i64 %wide.trip.count208, 1
   %i.ey = icmp eq i32 %switch.tableidx, 1
   br i1 %i.ey, label %.epil.preheader, label %.new
 
 .new:                                             ; preds = %bb.ac
-  %unroll_iter247 = and i64 %wide.trip.count208, 2147483646
+  %unroll_iter247 = and i64 %wide.trip.count208, 254
   br label %bb.ad
 
 .preheader.unr-lcssa:                             ; preds = %bb.ad
@@ -546,7 +547,7 @@ bb.ac:                                            ; preds = %bb.aa
 .epil.preheader:                                  ; preds = %.preheader.unr-lcssa, %bb.ac
   %indvars.iv210.epil.init = phi i64 [ 1, %bb.ac ], [ %indvars.iv.next211.1, %.preheader.unr-lcssa ]
   %indvars.iv205.epil.init = phi i64 [ 0, %bb.ac ], [ %indvars.iv.next206.1, %.preheader.unr-lcssa ] ; 3 uses
-  %lcmp.mod246 = trunc i32 %switch.load to i1
+  %lcmp.mod246 = trunc i8 %switch.load to i1
   tail call void @llvm.assume(i1 %lcmp.mod246)
   %i.ez = trunc i64 %indvars.iv205.epil.init to i16
   %i.fa = getelementptr inbounds nuw [6 x i8], ptr %i.es, i64 %indvars.iv205.epil.init ; 3 uses
@@ -561,7 +562,7 @@ bb.ac:                                            ; preds = %bb.aa
 
 .preheader:                                       ; preds = %.preheader.unr-lcssa, %.epil.preheader
   %indvars.iv210.lcssa = phi i64 [ %indvars.iv.next211, %.preheader.unr-lcssa ], [ %indvars.iv210.epil.init, %.epil.preheader ]
-  %4 = icmp ult i32 %switch.load, %i.ev
+  %4 = icmp ugt i32 %i.ev, %switch.ext
   br i1 %4, label %.lr.ph191, label %.critedge
 
 .lr.ph191:                                        ; preds = %.preheader

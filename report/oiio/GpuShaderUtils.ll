@@ -159,7 +159,7 @@ module asm ".globl _ZSt21ios_base_library_initv"
 @.str.139 = private unnamed_addr constant [12 x i8] c", float4x4(\00", align 1
 @.str.140 = private unnamed_addr constant [10 x i8] c"float4x4(\00", align 1
 @switch.table._ZN16OpenColorIO_v2_513getVecKeywordILi4EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11GpuLanguageE = private unnamed_addr constant [10 x ptr] [ptr @.str.4, ptr @.str.110, ptr @.str.110, ptr @.str.110, ptr @.str.110, ptr @.str.5, ptr @.str.30, ptr @.str.110, ptr @.str.110, ptr @.str.5], align 8
-@switch.table._ZN16OpenColorIO_v2_513getVecKeywordILi4EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11GpuLanguageE.3 = private unnamed_addr constant [10 x i64] [i64 4, i64 3, i64 3, i64 3, i64 3, i64 5, i64 6, i64 3, i64 3, i64 5], align 8
+@switch.table._ZN16OpenColorIO_v2_513getVecKeywordILi4EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11GpuLanguageE.3 = private unnamed_addr constant [10 x i8] c"\04\03\03\03\03\05\06\03\03\05", align 8
 
 @_ZN16OpenColorIO_v2_513GpuShaderText13GpuShaderLineC1EPS0_ = hidden unnamed_addr alias void (ptr, ptr), ptr @_ZN16OpenColorIO_v2_513GpuShaderText13GpuShaderLineC2EPS0_
 @_ZN16OpenColorIO_v2_513GpuShaderText13GpuShaderLineD1Ev = hidden unnamed_addr alias void (ptr), ptr @_ZN16OpenColorIO_v2_513GpuShaderText13GpuShaderLineD2Ev
@@ -562,9 +562,10 @@ switch.lookup:                                    ; preds = %bb.a
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN16OpenColorIO_v2_513getVecKeywordILi4EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11GpuLanguageE, i64 %i.c
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.d = zext nneg i32 %1 to i64
-  %switch.gep10 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN16OpenColorIO_v2_513getVecKeywordILi4EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11GpuLanguageE.3, i64 %i.d
-  %switch.load11 = load i64, ptr %switch.gep10, align 8
-  %i.e = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull %switch.load, i64 noundef %switch.load11)
+  %switch.gep10 = getelementptr inbounds nuw i8, ptr @switch.table._ZN16OpenColorIO_v2_513getVecKeywordILi4EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11GpuLanguageE.3, i64 %i.d
+  %switch.load11 = load i8, ptr %switch.gep10, align 1
+  %switch.ext = zext i8 %switch.load11 to i64
+  %i.e = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull %switch.load, i64 noundef %switch.ext)
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit6.invoke unwind label %bb.b ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit6.invoke: ; preds = %switch.lookup
@@ -967,9 +968,10 @@ switch.lookup:                                    ; preds = %bb.a
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN16OpenColorIO_v2_513getVecKeywordILi4EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11GpuLanguageE, i64 %i.c
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.d = zext nneg i32 %1 to i64
-  %switch.gep10 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN16OpenColorIO_v2_513getVecKeywordILi4EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11GpuLanguageE.3, i64 %i.d
-  %switch.load11 = load i64, ptr %switch.gep10, align 8
-  %i.e = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull %switch.load, i64 noundef %switch.load11)
+  %switch.gep10 = getelementptr inbounds nuw i8, ptr @switch.table._ZN16OpenColorIO_v2_513getVecKeywordILi4EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11GpuLanguageE.3, i64 %i.d
+  %switch.load11 = load i8, ptr %switch.gep10, align 1
+  %switch.ext = zext i8 %switch.load11 to i64
+  %i.e = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull %switch.load, i64 noundef %switch.ext)
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit6.invoke unwind label %bb.b ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit6.invoke: ; preds = %switch.lookup
@@ -1372,9 +1374,10 @@ switch.lookup:                                    ; preds = %bb.a
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN16OpenColorIO_v2_513getVecKeywordILi4EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11GpuLanguageE, i64 %i.c
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.d = zext nneg i32 %1 to i64
-  %switch.gep10 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN16OpenColorIO_v2_513getVecKeywordILi4EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11GpuLanguageE.3, i64 %i.d
-  %switch.load11 = load i64, ptr %switch.gep10, align 8
-  %i.e = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull %switch.load, i64 noundef %switch.load11)
+  %switch.gep10 = getelementptr inbounds nuw i8, ptr @switch.table._ZN16OpenColorIO_v2_513getVecKeywordILi4EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_11GpuLanguageE.3, i64 %i.d
+  %switch.load11 = load i8, ptr %switch.gep10, align 1
+  %switch.ext = zext i8 %switch.load11 to i64
+  %i.e = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull %switch.load, i64 noundef %switch.ext)
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit6.invoke unwind label %bb.b ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit6.invoke: ; preds = %switch.lookup

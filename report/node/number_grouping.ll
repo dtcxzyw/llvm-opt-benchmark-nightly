@@ -6,7 +6,7 @@ target triple = "x86_64-pc-linux-gnu"
 
 @.str = private unnamed_addr constant [37 x i8] c"NumberElements/minimumGroupingDigits\00", align 1
 @switch.table._ZN6icu_786number4impl7Grouper11forStrategyE23UNumberGroupingStrategy = private unnamed_addr constant [5 x i64] [i64 281466386776064, i64 281462091808768, i64 281466386776064, i64 4294967296, i64 4294967296], align 8
-@switch.table._ZN6icu_786number4impl7Grouper11forStrategyE23UNumberGroupingStrategy.1 = private unnamed_addr constant [5 x i64] [i64 65535, i64 65534, i64 65534, i64 65532, i64 3], align 8
+@switch.table._ZN6icu_786number4impl7Grouper11forStrategyE23UNumberGroupingStrategy.1 = private unnamed_addr constant [5 x i16] [i16 -1, i16 -2, i16 -2, i16 -4, i16 3], align 8
 
 ; Function Attrs: mustprogress nofree nounwind uwtable
 define dso_local { i64, i32 } @_ZN6icu_786number4impl7Grouper11forStrategyE23UNumberGroupingStrategy(i32 noundef %0) local_unnamed_addr #0 align 2 {
@@ -23,11 +23,12 @@ switch.lookup:                                    ; preds = %bb.a
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6icu_786number4impl7Grouper11forStrategyE23UNumberGroupingStrategy, i64 %i.b
   %switch.load = load i64, ptr %switch.gep, align 8
   %i.c = zext nneg i32 %0 to i64
-  %switch.gep11 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6icu_786number4impl7Grouper11forStrategyE23UNumberGroupingStrategy.1, i64 %i.c
-  %switch.load12 = load i64, ptr %switch.gep11, align 8 ; 2 uses
-  %.sroa.6.0.insert.shift = shl nuw nsw i64 %switch.load12, 16
+  %switch.gep11 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN6icu_786number4impl7Grouper11forStrategyE23UNumberGroupingStrategy.1, i64 %i.c
+  %switch.load12 = load i16, ptr %switch.gep11, align 2
+  %switch.ext = zext i16 %switch.load12 to i64    ; 2 uses
+  %.sroa.6.0.insert.shift = shl nuw nsw i64 %switch.ext, 16
   %.sroa.6.0.insert.insert = or disjoint i64 %.sroa.6.0.insert.shift, %switch.load
-  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.6.0.insert.insert, %switch.load12
+  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.6.0.insert.insert, %switch.ext
   %.fca.0.insert = insertvalue { i64, i32 } poison, i64 %.sroa.0.0.insert.insert, 0
   %.fca.1.insert = insertvalue { i64, i32 } %.fca.0.insert, i32 %0, 1
   ret { i64, i32 } %.fca.1.insert

@@ -201,10 +201,9 @@ begin_hunk_0
 @_ZTIN5glTF29AnimationE = linkonce_odr hidden constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN5glTF29AnimationE, ptr @_ZTIN5glTF26ObjectE }, comdat, align 8
 @_ZTSN5glTF29AnimationE = linkonce_odr hidden constant [19 x i8] c"N5glTF29AnimationE\00", comdat, align 1
 @_ZTVN6Assimp12BaseImporterE = external unnamed_addr constant { [8 x ptr] }, align 8
-@switch.table._ZN6Assimp13glTF2Importer12ImportMeshesERN5glTF25AssetE = private unnamed_addr constant [7 x i32] [i32 1, i32 2, i32 2, i32 2, i32 4, i32 4, i32 4], align 4
+@switch.table._ZN6Assimp13glTF2Importer12ImportMeshesERN5glTF25AssetE = private unnamed_addr constant [7 x i8] c"\01\02\02\02\04\04\04", align 4
 @switch.table._ZN9rapidjson16GetParseError_EnENS_14ParseErrorCodeE = private unnamed_addr constant [18 x ptr] [ptr @.str.237, ptr @.str.238, ptr @.str.239, ptr @.str.240, ptr @.str.241, ptr @.str.242, ptr @.str.243, ptr @.str.244, ptr @.str.245, ptr @.str.246, ptr @.str.247, ptr @.str.248, ptr @.str.249, ptr @.str.250, ptr @.str.251, ptr @.str.252, ptr @.str.253, ptr @.str.254], align 8
-@switch.table._ZN5glTF28Accessor6Sparse9PatchDataEj = private unnamed_addr constant [7 x i64] [i64 1, i64 1, i64 2, i64 2, i64 poison, i64 4, i64 4], align 8
-@switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE = private unnamed_addr constant [7 x i32] [i32 1, i32 1, i32 2, i32 2, i32 poison, i32 4, i32 4], align 4
+@switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE = private unnamed_addr constant [7 x i8] [i8 1, i8 1, i8 2, i8 2, i8 poison, i8 4, i8 4], align 8
 
 @_ZN6Assimp13glTF2ImporterC1Ev = hidden unnamed_addr alias void (ptr), ptr @_ZN6Assimp13glTF2ImporterC2Ev
 
@@ -607,10 +606,11 @@ bb.by:                                            ; preds = %_ZN6Assimp13ASSIMP_
 
 switch.lookup:                                    ; preds = %bb.by
   %i.st = zext nneg i32 %i.sr to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6Assimp13glTF2Importer12ImportMeshesERN5glTF25AssetE, i64 %i.st
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6Assimp13glTF2Importer12ImportMeshesERN5glTF25AssetE, i64 %i.st
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.su = load i32, ptr %i.pl, align 8
-  %i.sv = or i32 %i.su, %switch.load
+  %i.sv = or i32 %i.su, %switch.ext
   store i32 %i.sv, ptr %i.pl, align 8
   br label %bb.bz
 
@@ -1013,9 +1013,10 @@ switch.lookup:                                    ; preds = %bb.s
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 8
   %i.cu = load i32, ptr %i.ct, align 8
   %i.cv = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.cv
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %i.cw = mul i32 %switch.load, %i.cu             ; 3 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.cv
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  %i.cw = mul i32 %i.cu, %switch.ext              ; 3 uses
   %i.cx = zext i32 %i.cw to i64                   ; 6 uses
   store i64 %i.cx, ptr %i.a, align 8
   %i.cy = mul i64 %.fr149, %i.cx
@@ -1418,9 +1419,10 @@ switch.lookup:                                    ; preds = %bb.s
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 8
   %i.cu = load i32, ptr %i.ct, align 8
   %i.cv = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.cv
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %i.cw = mul i32 %switch.load, %i.cu             ; 3 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.cv
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  %i.cw = mul i32 %i.cu, %switch.ext              ; 3 uses
   %i.cx = zext i32 %i.cw to i64                   ; 6 uses
   store i64 %i.cx, ptr %i.a, align 8
   %i.cy = mul i64 %i.cd, %i.cx
@@ -1823,9 +1825,10 @@ switch.lookup:                                    ; preds = %bb.s
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 8
   %i.cu = load i32, ptr %i.ct, align 8
   %i.cv = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.cv
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %i.cw = mul i32 %switch.load, %i.cu             ; 3 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.cv
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  %i.cw = mul i32 %i.cu, %switch.ext              ; 3 uses
   %i.cx = zext i32 %i.cw to i64                   ; 6 uses
   store i64 %i.cx, ptr %i.a, align 8
   %i.cy = mul i64 %i.cd, %i.cx
@@ -2228,8 +2231,8 @@ bb.am:                                            ; preds = %bb.aj
 
 switch.lookup:                                    ; preds = %._crit_edge.i
   %i.ku = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.ku
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.ku
+  %switch.load = load i8, ptr %switch.gep, align 1
   %i.kv = load ptr, ptr %i.jf, align 8            ; 2 uses
   %i.kw = ptrtoint ptr %i.kv to i64
   %i.kx = ptrtoint ptr %.pre.i to i64
@@ -2240,7 +2243,8 @@ switch.lookup:                                    ; preds = %._crit_edge.i
           to label %.noexc164 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ; 6 uses
 
 .noexc164:                                        ; preds = %switch.lookup
-  %i.lc = mul i32 %switch.load, %i.kk
+  %switch.ext = zext i8 %switch.load to i32
+  %i.lc = mul i32 %i.kk, %switch.ext
   %i.ld = icmp eq i32 %i.lc, 4
   %.not297.i = icmp eq ptr %i.kv, %.pre.i         ; 2 uses
   br i1 %i.ld, label %bb.cm, label %bb.el
@@ -2500,9 +2504,10 @@ switch.lookup823:                                 ; preds = %bb.bf
   %i.pb = getelementptr inbounds nuw i8, ptr %i.pa, i64 8
   %i.pc = load i32, ptr %i.pb, align 8
   %i.pd = zext nneg i32 %switch.tableidx821 to i64
-  %switch.gep827 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.pd
-  %switch.load828 = load i32, ptr %switch.gep827, align 4
-  %i.pe = mul i32 %switch.load828, %i.pc          ; 3 uses
+  %switch.gep827 = getelementptr inbounds nuw i8, ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.pd
+  %switch.load828 = load i8, ptr %switch.gep827, align 1
+  %switch.ext829 = zext i8 %switch.load828 to i32
+  %i.pe = mul i32 %i.pc, %switch.ext829           ; 3 uses
   %i.pf = zext i32 %i.pe to i64                   ; 6 uses
   store i64 %i.pf, ptr %i.k, align 8
   %i.pg = mul i64 %i.ol, %i.pf
@@ -2905,9 +2910,10 @@ switch.lookup832:                                 ; preds = %bb.de
   %i.xa = getelementptr inbounds nuw i8, ptr %i.wz, i64 8
   %i.xb = load i32, ptr %i.xa, align 8
   %i.xc = zext nneg i32 %switch.tableidx830 to i64
-  %switch.gep836 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.xc
-  %switch.load837 = load i32, ptr %switch.gep836, align 4
-  %i.xd = mul i32 %switch.load837, %i.xb          ; 3 uses
+  %switch.gep837 = getelementptr inbounds nuw i8, ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.xc
+  %switch.load838 = load i8, ptr %switch.gep837, align 1
+  %switch.ext839 = zext i8 %switch.load838 to i32
+  %i.xd = mul i32 %i.xb, %switch.ext839           ; 3 uses
   %i.xe = zext i32 %i.xd to i64                   ; 8 uses
   store i64 %i.xe, ptr %i.f, align 8
   %i.xf = mul i64 %i.wk, %i.xe
@@ -3310,9 +3316,10 @@ switch.lookup841:                                 ; preds = %bb.fd
   %i.afi = getelementptr inbounds nuw i8, ptr %i.afh, i64 8
   %i.afj = load i32, ptr %i.afi, align 8
   %i.afk = zext nneg i32 %switch.tableidx839 to i64
-  %switch.gep845 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.afk
-  %switch.load846 = load i32, ptr %switch.gep845, align 4
-  %i.afl = mul i32 %switch.load846, %i.afj        ; 3 uses
+  %switch.gep847 = getelementptr inbounds nuw i8, ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.afk
+  %switch.load848 = load i8, ptr %switch.gep847, align 1
+  %switch.ext849 = zext i8 %switch.load848 to i32
+  %i.afl = mul i32 %i.afj, %switch.ext849         ; 3 uses
   %i.afm = zext i32 %i.afl to i64                 ; 8 uses
   store i64 %i.afm, ptr %i.a, align 8
   %i.afn = mul i64 %i.aes, %i.afm
@@ -3715,9 +3722,10 @@ switch.lookup:                                    ; preds = %bb.s
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 8
   %i.cu = load i32, ptr %i.ct, align 8
   %i.cv = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.cv
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %i.cw = mul i32 %switch.load, %i.cu             ; 3 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.cv
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  %i.cw = mul i32 %i.cu, %switch.ext              ; 3 uses
   %i.cx = zext i32 %i.cw to i64                   ; 6 uses
   store i64 %i.cx, ptr %i.a, align 8
   %i.cy = mul i64 %i.cd, %i.cx
@@ -4120,9 +4128,10 @@ switch.lookup:                                    ; preds = %bb.s
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 8
   %i.cu = load i32, ptr %i.ct, align 8
   %i.cv = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.cv
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %i.cw = mul i32 %switch.load, %i.cu             ; 3 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.cv
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  %i.cw = mul i32 %i.cu, %switch.ext              ; 3 uses
   %i.cx = zext i32 %i.cw to i64                   ; 6 uses
   store i64 %i.cx, ptr %i.a, align 8
   %i.cy = mul i64 %i.cd, %i.cx
@@ -4525,9 +4534,10 @@ switch.lookup:                                    ; preds = %bb.s
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 8
   %i.cu = load i32, ptr %i.ct, align 8
   %i.cv = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.cv
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %i.cw = mul i32 %switch.load, %i.cu             ; 3 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.cv
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  %i.cw = mul i32 %i.cu, %switch.ext              ; 3 uses
   %i.cx = zext i32 %i.cw to i64                   ; 6 uses
   store i64 %i.cx, ptr %i.a, align 8
   %i.cy = mul i64 %i.cd, %i.cx
@@ -4930,9 +4940,10 @@ switch.lookup:                                    ; preds = %bb.s
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 8
   %i.cu = load i32, ptr %i.ct, align 8
   %i.cv = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.cv
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %i.cw = mul i32 %switch.load, %i.cu             ; 3 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.cv
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  %i.cw = mul i32 %i.cu, %switch.ext              ; 3 uses
   %i.cx = zext i32 %i.cw to i64                   ; 6 uses
   store i64 %i.cx, ptr %i.a, align 8
   %i.cy = mul i64 %i.cd, %i.cx
@@ -5335,10 +5346,11 @@ switch.lookup:                                    ; preds = %_ZN5glTF28Accessor1
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
   %i.bw = load i32, ptr %i.bv, align 8
   %i.bx = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.bx
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.bx
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.bz = mul i32 %switch.load, %i.bw
+  %i.bz = mul i32 %i.bw, %switch.ext
   %i.ca = zext i32 %i.bz to i64
   store i64 %i.ca, ptr %i.by, align 8
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -5513,9 +5525,10 @@ bb.n:                                             ; preds = %bb.l
   %.sink26.in = getelementptr inbounds nuw i8, ptr %.pn, i64 8
   %.sink26 = load i32, ptr %.sink26.in, align 8
   %i.ap = zext nneg i32 %switch.tableidx17.sink to i64
-  %switch.gep23 = getelementptr inbounds nuw [4 x i8], ptr %switch.table._ZN5glTF28Accessor9GetStrideEv.31.sink, i64 %i.ap
-  %switch.load24 = load i32, ptr %switch.gep23, align 4
-  %i.aq = mul i32 %switch.load24, %.sink26
+  %switch.gep23 = getelementptr inbounds nuw i8, ptr %switch.table._ZN5glTF28Accessor9GetStrideEv.31.sink, i64 %i.ap
+  %switch.load24 = load i8, ptr %switch.gep23, align 1
+  %switch.ext25 = zext i8 %switch.load24 to i32
+  %i.aq = mul i32 %.sink26, %switch.ext25
   br label %bb.o
 
 bb.o:                                             ; preds = %.sink.split, %bb.i
@@ -5918,9 +5931,10 @@ bb.ao:                                            ; preds = %bb.al
 
 switch.lookup:                                    ; preds = %bb.ai
   %i.io = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN5glTF28Accessor6Sparse9PatchDataEj, i64 %i.io
-  %switch.load = load i64, ptr %switch.gep, align 8
-  %i.ip = mul nuw nsw i64 %switch.load, %i.eu     ; 2 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.io
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
+  %i.ip = mul nuw nsw i64 %switch.ext, %i.eu      ; 2 uses
   store i64 %i.ip, ptr %i.d, align 8
   %i.iq = load i64, ptr %i.br, align 8
   %i.ir = add i64 %i.iq, %i.ip                    ; 2 uses
@@ -6323,9 +6337,10 @@ switch.lookup642:                                 ; preds = %bb.cr
   %i.xn = getelementptr inbounds nuw i8, ptr %i.xm, i64 8
   %i.xo = load i32, ptr %i.xn, align 8
   %i.xp = zext nneg i32 %switch.tableidx640 to i64
-  %switch.gep646 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.xp
-  %switch.load647 = load i32, ptr %switch.gep646, align 4
-  %i.xq = mul i32 %switch.load647, %i.xo          ; 2 uses
+  %switch.gep646 = getelementptr inbounds nuw i8, ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.xp
+  %switch.load647 = load i8, ptr %switch.gep646, align 1
+  %switch.ext648 = zext i8 %switch.load647 to i32
+  %i.xq = mul i32 %i.xo, %switch.ext648           ; 2 uses
   %i.xr = load i64, ptr %i.ev, align 8
   %i.xs = zext i32 %i.xq to i64
   %i.xt = mul i64 %i.xr, %i.xs                    ; 10 uses
@@ -6728,10 +6743,11 @@ bb.l:                                             ; preds = %bb.i
 
 switch.lookup:                                    ; preds = %_ZN5glTF210BufferView21GetPointerAndTailSizeEmRm.exit
   %i.bf = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN5glTF28Accessor6Sparse9PatchDataEj, i64 %i.bf
-  %switch.load = load i64, ptr %switch.gep, align 8 ; 2 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.bf
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64       ; 2 uses
   %i.bg = load i64, ptr %0, align 8               ; 2 uses
-  %i.bh = mul i64 %i.bg, %switch.load             ; 2 uses
+  %i.bh = mul i64 %i.bg, %switch.ext              ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %.3.i, i64 %i.bh ; 2 uses
   %i.bj = ptrtoint ptr %i.bi to i64
   %i.bk = ptrtoint ptr %.3.i to i64
@@ -6933,7 +6949,7 @@ bb.aj:                                            ; preds = %bb.af
   %i.ej = getelementptr inbounds nuw i8, ptr %i.ec, i64 %i.dz
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ej, ptr align 1 %.02350, i64 %i.dj, i1 false)
   %i.ek = getelementptr inbounds nuw i8, ptr %.02350, i64 %i.dj
-  %i.el = getelementptr inbounds nuw i8, ptr %.02849, i64 %switch.load ; 2 uses
+  %i.el = getelementptr inbounds nuw i8, ptr %.02849, i64 %switch.ext ; 2 uses
   %.not = icmp eq ptr %i.el, %i.bi
   br i1 %.not, label %._crit_edge, label %bb.y, !llvm.loop !905
 
@@ -7336,9 +7352,10 @@ switch.lookup:                                    ; preds = %bb.s
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 8
   %i.cu = load i32, ptr %i.ct, align 8
   %i.cv = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.cv
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %i.cw = mul i32 %switch.load, %i.cu             ; 3 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.cv
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  %i.cw = mul i32 %i.cu, %switch.ext              ; 3 uses
   %i.cx = zext i32 %i.cw to i64                   ; 6 uses
   store i64 %i.cx, ptr %i.a, align 8
   %i.cy = mul i64 %i.cd, %i.cx
@@ -7741,9 +7758,10 @@ switch.lookup:                                    ; preds = %bb.s
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 8
   %i.cu = load i32, ptr %i.ct, align 8
   %i.cv = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.cv
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %i.cw = mul i32 %switch.load, %i.cu             ; 3 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5glTF28Accessor11ExtractDataI9aiColor4tItEEEmRPT_PKSt6vectorIjSaIjEE, i64 %i.cv
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  %i.cw = mul i32 %i.cu, %switch.ext              ; 3 uses
   %i.cx = zext i32 %i.cw to i64                   ; 6 uses
   store i64 %i.cx, ptr %i.a, align 8
   %i.cy = mul i64 %i.cd, %i.cx

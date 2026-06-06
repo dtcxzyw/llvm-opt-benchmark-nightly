@@ -5,7 +5,7 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 @rgb_pixelsize = internal unnamed_addr constant [17 x i32] [i32 -1, i32 -1, i32 3, i32 -1, i32 -1, i32 -1, i32 3, i32 4, i32 3, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 -1], align 16
-@switch.table.jpeg_calc_output_dimensions = private unnamed_addr constant [16 x i32] [i32 1, i32 3, i32 3, i32 4, i32 4, i32 3, i32 4, i32 3, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 3], align 4
+@switch.table.jpeg_calc_output_dimensions = private unnamed_addr constant [16 x i8] c"\01\03\03\04\04\03\04\03\04\04\04\04\04\04\04\03", align 4
 
 ; Function Attrs: nounwind uwtable
 define void @jpeg_core_output_dimensions(ptr nofree noundef initializes((136, 144)) %0) local_unnamed_addr #0 {
@@ -408,7 +408,7 @@ bb.d:                                             ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.o = load i32, ptr %i.n, align 8, !tbaa !42   ; 5 uses
   %i.p = icmp sgt i32 %i.o, 0
-  br i1 %i.p, label %.lr.ph75, label %.loopexit.a
+  br i1 %i.p, label %.lr.ph75, label %.loopexit
 
 .lr.ph75:                                         ; preds = %bb.d
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 416
@@ -580,25 +580,36 @@ bb.h:                                             ; preds = %.lr.ph, %bb.h
   %i.cr = getelementptr inbounds nuw i8, ptr %.177, i64 96
   %i.cs = load i32, ptr %i.n, align 8, !tbaa !42
   %i.ct = icmp slt i32 %i.cq, %i.cs
-  br i1 %i.ct, label %bb.h, label %.loopexit.a, !llvm.loop !67
+  br i1 %i.ct, label %bb.h, label %.loopexit, !llvm.loop !67
 
 bb.i:                                             ; preds = %bb.c
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.cw = load <2 x i32>, ptr %i.cu, align 8, !tbaa !3
   store <2 x i32> %i.cw, ptr %i.cv, align 8, !tbaa !3
-  br label %.loopexit.a
+  br label %.loopexit
 
-.loopexit.a:                                      ; preds = %bb.h, %bb.d, %bb.i
+.loopexit:                                        ; preds = %bb.h, %bb.d, %bb.i
   %1 = getelementptr inbounds nuw i8, ptr %0, i64 64
   %2 = load i32, ptr %1, align 8, !tbaa !68       ; 3 uses
   %switch.tableidx = add i32 %2, -1               ; 2 uses
   %3 = icmp ult i32 %switch.tableidx, 16
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %5 = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.jpeg_calc_output_dimensions, i64 %5
-  %.sink.in = select i1 %3, ptr %switch.gep, ptr %4
-  %.sink = load i32, ptr %.sink.in, align 4       ; 4 uses
+  br i1 %3, label %switch.lookup, label %4
+
+4:                                                ; preds = %.loopexit
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %6 = load i32, ptr %5, align 8, !tbaa !42
+  br label %.loopexit.a
+
+switch.lookup:                                    ; preds = %.loopexit
+  %7 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.jpeg_calc_output_dimensions, i64 %7
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  br label %.loopexit.a
+
+.loopexit.a:                                      ; preds = %switch.lookup, %4
+  %.sink = phi i32 [ %6, %4 ], [ %switch.ext, %switch.lookup ] ; 4 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 144
   store i32 %.sink, ptr %i.cx, align 8, !tbaa !69
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 108

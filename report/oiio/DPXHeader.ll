@@ -147,9 +147,9 @@ module asm ".globl _ZSt21ios_base_library_initv"
 @.str.44 = private unnamed_addr constant [32 x i8] c"\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\00\00\00\00\00\00\00\00\02\02\02\02\03\03\04\00", align 1
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @__cxx_global_var_init, ptr @_ZN3fmt3v1212format_facetISt6localeE2idE }]
 @llvm.used = appending global [1 x ptr] [ptr @_ZN3fmt3v1212format_facetISt6localeE2idE], section "llvm.metadata"
-@switch.table._ZNK3dpx13GenericHeader17ComponentDataSizeEi = private unnamed_addr constant [25 x i32] [i32 0, i32 4, i32 1, i32 4, i32 1, i32 4, i32 4, i32 4, i32 1, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 3], align 4
-@switch.table._ZNK3dpx13GenericHeader18ComponentByteCountEi = private unnamed_addr constant [25 x i32] [i32 1, i32 8, i32 2, i32 8, i32 2, i32 8, i32 8, i32 8, i32 2, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 4], align 4
-@switch.table._ZN3dpx13GenericHeader17DataSizeByteCountENS_8DataSizeE = private unnamed_addr constant [4 x i32] [i32 1, i32 2, i32 4, i32 4], align 4
+@switch.table._ZNK3dpx13GenericHeader17ComponentDataSizeEi = private unnamed_addr constant [25 x i8] c"\00\04\01\04\01\04\04\04\01\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\03", align 4
+@switch.table._ZNK3dpx13GenericHeader18ComponentByteCountEi = private unnamed_addr constant [25 x i8] c"\01\08\02\08\02\08\08\08\02\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\04", align 4
+@switch.table._ZN3dpx13GenericHeader17DataSizeByteCountENS_8DataSizeE = private unnamed_addr constant [4 x i8] c"\01\02\04\04", align 4
 
 @_ZN3dpx6HeaderC1Ev = hidden unnamed_addr alias void (ptr), ptr @_ZN3dpx6HeaderC2Ev
 @_ZN3dpx13GenericHeaderC1Ev = hidden unnamed_addr alias void (ptr), ptr @_ZN3dpx13GenericHeaderC2Ev
@@ -552,12 +552,13 @@ bb.b:                                             ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %bb.b
   %i.f = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZNK3dpx13GenericHeader17ComponentDataSizeEi, i64 %i.f
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK3dpx13GenericHeader17ComponentDataSizeEi, i64 %i.f
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %switch.lookup, %bb.a
-  %.06 = phi i32 [ 0, %bb.a ], [ %switch.load, %switch.lookup ], [ 4, %bb.b ]
+  %.06 = phi i32 [ 0, %bb.a ], [ %switch.ext, %switch.lookup ], [ 4, %bb.b ]
   ret i32 %.06
 }
 
@@ -578,12 +579,13 @@ bb.b:                                             ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %bb.b
   %i.f = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZNK3dpx13GenericHeader18ComponentByteCountEi, i64 %i.f
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK3dpx13GenericHeader18ComponentByteCountEi, i64 %i.f
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %switch.lookup, %bb.a
-  %.06 = phi i32 [ 0, %bb.a ], [ %switch.load, %switch.lookup ], [ 8, %bb.b ]
+  %.06 = phi i32 [ 0, %bb.a ], [ %switch.ext, %switch.lookup ], [ 8, %bb.b ]
   ret i32 %.06
 }
 
@@ -595,12 +597,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i32 %0 to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN3dpx13GenericHeader17DataSizeByteCountENS_8DataSizeE, i64 %i.b
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN3dpx13GenericHeader17DataSizeByteCountENS_8DataSizeE, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %switch.lookup
-  %.0 = phi i32 [ %switch.load, %switch.lookup ], [ 8, %bb.a ]
+  %.0 = phi i32 [ %switch.ext, %switch.lookup ], [ 8, %bb.a ]
   ret i32 %.0
 }
 
