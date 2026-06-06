@@ -1,0 +1,676 @@
+diff --git a/llvm/lib/Transforms/Scalar/LoopIdiomRecognize.cpp b/llvm/lib/Transforms/Scalar/LoopIdiomRecognize.cpp
+index 7a08d99a9e505..b3198e496ab7a 100644
+--- a/llvm/lib/Transforms/Scalar/LoopIdiomRecognize.cpp
++++ b/llvm/lib/Transforms/Scalar/LoopIdiomRecognize.cpp
+@@ -82,6 +82,7 @@
+ #include "llvm/Support/CommandLine.h"
+ #include "llvm/Support/Debug.h"
+ #include "llvm/Support/InstructionCost.h"
++#include "llvm/Support/MathExtras.h"
+ #include "llvm/Support/raw_ostream.h"
+ #include "llvm/Transforms/Utils/BuildLibCalls.h"
+ #include "llvm/Transforms/Utils/Local.h"
+@@ -106,6 +107,10 @@ STATISTIC(
+     "Number of uncountable loops recognized as 'shift until bitttest' idiom");
+ STATISTIC(NumShiftUntilZero,
+           "Number of uncountable loops recognized as 'shift until zero' idiom");
++STATISTIC(NumPrecheckedShiftCount,
++          "Number of prechecked shift count loops recognized");
++STATISTIC(NumDoWhileShiftCount,
++          "Number of do-while shift count loops recognized");
+ 
+ namespace llvm {
+ bool DisableLIRP::All;
+@@ -275,6 +280,8 @@ class LoopIdiomRecognize {
+                              Instruction *DefX, PHINode *CntPhi,
+                              Instruction *CntInst);
+   bool recognizeAndInsertFFS();  /// Find First Set: ctlz or cttz
++  bool recognizePrecheckedShiftCount();
++  bool recognizeDoWhileShiftCount();
+   bool recognizeShiftUntilLessThan();
+   void transformLoopToCountable(Intrinsic::ID IntrinID, BasicBlock *PreCondBB,
+                                 Instruction *CntInst, PHINode *CntPhi,
+@@ -1707,6 +1714,7 @@ bool LoopIdiomRecognize::runOnNoncountableLoop() {
+                     << CurLoop->getHeader()->getName() << "\n");
+ 
+   return recognizePopcount() || recognizeAndInsertFFS() ||
++         recognizePrecheckedShiftCount() || recognizeDoWhileShiftCount() ||
+          recognizeShiftUntilBitTest() || recognizeShiftUntilZero() ||
+          recognizeShiftUntilLessThan() || recognizeAndInsertStrLen();
+ }
+@@ -2484,6 +2492,613 @@ bool LoopIdiomRecognize::recognizeAndInsertFFS() {
+   return insertFFSIfProfitable(IntrinID, InitX, DefX, CntPhi, CntInst);
+ }
+ 
++namespace {
++struct PrecheckedShiftCountIdiom {
++  Value *InitX = nullptr;
++  Instruction *ValueNext = nullptr;
++  Instruction *CountNext = nullptr;
++  PHINode *CountPhi = nullptr;
++  PHINode *ExitPhi = nullptr;
++  Value *ExitCount = nullptr;
++  unsigned ShiftAmount = 0;
++};
++
++struct DoWhileShiftCountIdiom {
++  Value *InitX = nullptr;
++  Instruction *ValueNext = nullptr;
++  Instruction *CountNext = nullptr;
++  PHINode *CountPhi = nullptr;
++  SmallVector<PHINode *, 2> CountNextLCSSAPhis;
++  SmallVector<PHINode *, 2> CountPhiLCSSAPhis;
++  bool CountPhiUsedOutsideLoop = false;
++  unsigned ShiftAmount = 0;
++};
++} // namespace
++
++static bool isOnlyUsedInLoopBy(Value *V, const Loop *CurLoop,
++                               Instruction *AllowedInst) {
++  for (User *U : V->users()) {
++    auto *UI = dyn_cast<Instruction>(U);
++    if (!UI || !CurLoop->contains(UI) || UI != AllowedInst)
++      return false;
++  }
++  return true;
++}
++
++static bool isOnlyUsedByLoopRecurrenceAndExitPhi(Instruction *CountNext,
++                                                 PHINode *CountPhi,
++                                                 Value *ExitCount,
++                                                 const Loop *CurLoop) {
++  for (User *U : CountNext->users()) {
++    auto *UI = dyn_cast<Instruction>(U);
++    if (!UI)
++      return false;
++    if (UI == CountPhi || UI == ExitCount)
++      continue;
++    return false;
++  }
++  return true;
++}
++
++static bool isLoopExitIncomingBlock(BasicBlock *IncomingBlock,
++                                    const Loop *CurLoop) {
++  return IncomingBlock == CurLoop->getHeader() ||
++         IncomingBlock->getSinglePredecessor() == CurLoop->getHeader();
++}
++
++static bool matchFinalPrecheckedShiftCountExitPhi(PHINode *ExitPhi,
++                                                  Value *ExitCount,
++                                                  BasicBlock *PreCondBB,
++                                                  BasicBlock *ZeroExitBB,
++                                                  const Loop *CurLoop) {
++  if (!ExitPhi || ExitPhi->getParent() != ZeroExitBB)
++    return false;
++
++  bool HasZeroPrecheckIncoming = false;
++  bool HasExitCountIncoming = false;
++  for (unsigned I = 0, E = ExitPhi->getNumIncomingValues(); I != E; ++I) {
++    Value *IncomingValue = ExitPhi->getIncomingValue(I);
++    BasicBlock *IncomingBlock = ExitPhi->getIncomingBlock(I);
++    if (IncomingBlock == PreCondBB) {
++      auto *IncomingConstant = dyn_cast<ConstantInt>(IncomingValue);
++      if (!IncomingConstant || !IncomingConstant->isZero())
++        return false;
++      HasZeroPrecheckIncoming = true;
++      continue;
++    }
++    if (IncomingValue == ExitCount) {
++      if (!isLoopExitIncomingBlock(IncomingBlock, CurLoop))
++        return false;
++      HasExitCountIncoming = true;
++      continue;
++    }
++    return false;
++  }
++  if (!HasZeroPrecheckIncoming || !HasExitCountIncoming)
++    return false;
++
++  if (!ExitPhi->hasOneUse() || !isa<ReturnInst>(*ExitPhi->user_begin()))
++    return false;
++
++  return true;
++}
++
++static bool matchCountNextLCSSAPhi(PHINode *PN, Instruction *CountNext,
++                                   const Loop *CurLoop) {
++  return PN && PN->getNumIncomingValues() == 1 &&
++         PN->getIncomingValue(0) == CountNext &&
++         isLoopExitIncomingBlock(PN->getIncomingBlock(0), CurLoop) &&
++         PN->hasOneUse();
++}
++
++static bool matchDoWhileLCSSAPhi(PHINode *PN, Value *IncomingValue,
++                                 const Loop *CurLoop) {
++  return PN && PN->getNumIncomingValues() == 1 &&
++         PN->getIncomingValue(0) == IncomingValue &&
++         isLoopExitIncomingBlock(PN->getIncomingBlock(0), CurLoop);
++}
++
++static PHINode *matchPrecheckedShiftCountExitPhi(Instruction *CountNext,
++                                                 BasicBlock *PreCondBB,
++                                                 BasicBlock *ZeroExitBB,
++                                                 const Loop *CurLoop,
++                                                 Value *&ExitCount) {
++  ExitCount = nullptr;
++  for (User *U : CountNext->users()) {
++    auto *PN = dyn_cast<PHINode>(U);
++    if (!PN || CurLoop->contains(PN))
++      continue;
++
++    if (matchFinalPrecheckedShiftCountExitPhi(PN, CountNext, PreCondBB,
++                                              ZeroExitBB, CurLoop)) {
++      ExitCount = CountNext;
++      return PN;
++    }
++
++    if (!matchCountNextLCSSAPhi(PN, CountNext, CurLoop))
++      return nullptr;
++
++    auto *ExitPhi = dyn_cast<PHINode>(*PN->user_begin());
++    if (!matchFinalPrecheckedShiftCountExitPhi(ExitPhi, PN, PreCondBB,
++                                               ZeroExitBB, CurLoop))
++      return nullptr;
++
++    ExitCount = PN;
++    return ExitPhi;
++  }
++
++  return nullptr;
++}
++
++static bool detectPrecheckedShiftCountIdiom(Loop *CurLoop,
++                                            PrecheckedShiftCountIdiom &Idiom) {
++  LLVM_DEBUG(dbgs() << DEBUG_TYPE
++                    << " Performing prechecked shift count idiom detection.\n");
++
++  if (CurLoop->getNumBackEdges() != 1 || CurLoop->getNumBlocks() != 1) {
++    LLVM_DEBUG(dbgs() << DEBUG_TYPE << " Bad block/backedge count.\n");
++    return false;
++  }
++
++  BasicBlock *LoopHeader = CurLoop->getHeader();
++  BasicBlock *Preheader = CurLoop->getLoopPreheader();
++  if (!Preheader)
++    return false;
++
++  auto *LoopTerm = dyn_cast<CondBrInst>(LoopHeader->getTerminator());
++  if (!LoopTerm)
++    return false;
++
++  auto *ValueNext =
++      dyn_cast_or_null<Instruction>(matchCondition(LoopTerm, LoopHeader));
++  if (!ValueNext || ValueNext->getOpcode() != Instruction::LShr ||
++      !ValueNext->getType()->isIntegerTy(32))
++    return false;
++
++  auto *ShiftAmount = dyn_cast<ConstantInt>(ValueNext->getOperand(1));
++  if (!ShiftAmount || ShiftAmount->isZero() ||
++      !ShiftAmount->getValue().isPowerOf2())
++    return false;
++  uint64_t ShiftAmountValue = ShiftAmount->getZExtValue();
++  if (ShiftAmountValue >= ValueNext->getType()->getScalarSizeInBits())
++    return false;
++
++  auto *ValuePhi =
++      getRecurrenceVar(ValueNext->getOperand(0), ValueNext, LoopHeader);
++  if (!ValuePhi)
++    return false;
++  if (!isOnlyUsedInLoopBy(ValuePhi, CurLoop, ValueNext))
++    return false;
++
++  Value *InitX = ValuePhi->getIncomingValueForBlock(Preheader);
++  if (!InitX || InitX->getType() != ValueNext->getType())
++    return false;
++
++  auto *PreCondBB = Preheader->getSinglePredecessor();
++  if (!PreCondBB)
++    return false;
++  auto *PreCondBI = dyn_cast<CondBrInst>(PreCondBB->getTerminator());
++  if (!PreCondBI || matchCondition(PreCondBI, Preheader) != InitX)
++    return false;
++
++  BasicBlock *ZeroExitBB = PreCondBI->getSuccessor(0) == Preheader
++                               ? PreCondBI->getSuccessor(1)
++                               : PreCondBI->getSuccessor(0);
++
++  auto *LoopCond = dyn_cast<ICmpInst>(LoopTerm->getCondition());
++  if (!LoopCond || !LoopCond->hasOneUse())
++    return false;
++  for (User *U : ValueNext->users()) {
++    auto *UI = dyn_cast<Instruction>(U);
++    if (UI != ValuePhi && UI != LoopCond)
++      return false;
++  }
++
++  Instruction *CountNext = nullptr;
++  PHINode *CountPhi = nullptr;
++  PHINode *ExitPhi = nullptr;
++  Value *ExitCount = nullptr;
++  for (Instruction &Inst :
++       llvm::make_range(LoopHeader->getFirstNonPHIIt(), LoopHeader->end())) {
++    if (Inst.getOpcode() != Instruction::Add ||
++        !Inst.getType()->isIntegerTy(32))
++      continue;
++
++    auto *Inc = dyn_cast<ConstantInt>(Inst.getOperand(1));
++    if (!Inc || !Inc->isOne())
++      continue;
++
++    PHINode *Phi = getRecurrenceVar(Inst.getOperand(0), &Inst, LoopHeader);
++    if (!Phi || !Phi->getType()->isIntegerTy(32))
++      continue;
++
++    auto *CountInit =
++        dyn_cast<ConstantInt>(Phi->getIncomingValueForBlock(Preheader));
++    if (!CountInit || !CountInit->isZero())
++      continue;
++
++    if (!isOnlyUsedInLoopBy(Phi, CurLoop, &Inst))
++      continue;
++
++    PHINode *CandidateExitPhi = matchPrecheckedShiftCountExitPhi(
++        &Inst, PreCondBB, ZeroExitBB, CurLoop, ExitCount);
++    if (!CandidateExitPhi)
++      continue;
++
++    CountNext = &Inst;
++    CountPhi = Phi;
++    ExitPhi = CandidateExitPhi;
++    break;
++  }
++  if (!CountNext)
++    return false;
++
++  if (!isOnlyUsedByLoopRecurrenceAndExitPhi(CountNext, CountPhi, ExitCount,
++                                            CurLoop))
++    return false;
++
++  for (Instruction &Inst : *LoopHeader) {
++    if (&Inst == ValuePhi || &Inst == CountPhi || &Inst == ValueNext ||
++        &Inst == CountNext || &Inst == LoopCond || &Inst == LoopTerm ||
++        isa<DbgInfoIntrinsic>(&Inst))
++      continue;
++    return false;
++  }
++
++  Idiom.InitX = InitX;
++  Idiom.ValueNext = ValueNext;
++  Idiom.CountNext = CountNext;
++  Idiom.CountPhi = CountPhi;
++  Idiom.ExitPhi = ExitPhi;
++  Idiom.ExitCount = ExitCount;
++  Idiom.ShiftAmount = ShiftAmountValue;
++  return true;
++}
++
++bool LoopIdiomRecognize::recognizePrecheckedShiftCount() {
++  PrecheckedShiftCountIdiom Idiom;
++  if (!detectPrecheckedShiftCountIdiom(CurLoop, Idiom))
++    return false;
++
++  Type *Ty = Idiom.InitX->getType();
++  TargetTransformInfo::TargetCostKind CostKind =
++      TargetTransformInfo::TCK_SizeAndLatency;
++  IntrinsicCostAttributes Attrs(
++      Intrinsic::ctlz, Ty,
++      {PoisonValue::get(Ty), ConstantInt::getTrue(Ty->getContext())});
++  if (TTI->getIntrinsicInstrCost(Attrs, CostKind) >
++      TargetTransformInfo::TCC_Basic) {
++    LLVM_DEBUG(dbgs() << DEBUG_TYPE
++                      << " Intrinsic is too costly, not beneficial\n");
++    return false;
++  }
++  if (TTI->getArithmeticInstrCost(Instruction::LShr, Ty, CostKind) >
++      TargetTransformInfo::TCC_Basic) {
++    LLVM_DEBUG(dbgs() << DEBUG_TYPE
++                      << " Shift is too costly, not beneficial\n");
++    return false;
++  }
++
++  BasicBlock *LoopHeader = CurLoop->getHeader();
++  BasicBlock *Preheader = CurLoop->getLoopPreheader();
++  auto *LoopTerm = cast<CondBrInst>(LoopHeader->getTerminator());
++  auto *LoopCond = cast<ICmpInst>(LoopTerm->getCondition());
++
++  IRBuilder<> Builder(Preheader->getTerminator());
++  Builder.SetCurrentDebugLocation(Idiom.ValueNext->getDebugLoc());
++
++  Value *LeadingZeros = Builder.CreateIntrinsic(
++      Intrinsic::ctlz, Ty, {Idiom.InitX, /*is_zero_poison=*/Builder.getTrue()},
++      /*FMFSource=*/nullptr, Idiom.InitX->getName() + ".numleadingzeros");
++  Value *ActiveBits = Builder.CreateSub(
++      ConstantInt::get(Ty, Ty->getScalarSizeInBits()), LeadingZeros,
++      Idiom.InitX->getName() + ".numactivebits", /*HasNUW=*/true,
++      /*HasNSW=*/true);
++  Value *BiasedActiveBits = ActiveBits;
++  if (Idiom.ShiftAmount != 1)
++    BiasedActiveBits = Builder.CreateAdd(
++        ActiveBits, ConstantInt::get(Ty, Idiom.ShiftAmount - 1),
++        Idiom.InitX->getName() + ".numactivebits.biased", /*HasNUW=*/true,
++        /*HasNSW=*/true);
++  Value *TripCount = BiasedActiveBits;
++  unsigned ShiftLog = Log2_32(Idiom.ShiftAmount);
++  if (ShiftLog != 0)
++    TripCount =
++        Builder.CreateLShr(BiasedActiveBits, ConstantInt::get(Ty, ShiftLog),
++                           CurLoop->getName() + ".shiftcount");
++
++  PHINode *TripCountPhi = PHINode::Create(Ty, 2, "shiftcount.tcphi");
++  TripCountPhi->insertBefore(LoopHeader->begin());
++
++  Builder.SetInsertPoint(LoopCond);
++  auto *TripCountDec = cast<Instruction>(Builder.CreateSub(
++      TripCountPhi, ConstantInt::get(Ty, 1), "shiftcount.tcdec",
++      /*HasNUW=*/true, /*HasNSW=*/true));
++
++  TripCountPhi->addIncoming(TripCount, Preheader);
++  TripCountPhi->addIncoming(TripCountDec, LoopHeader);
++
++  CmpInst::Predicate Pred = LoopTerm->getSuccessor(0) == LoopHeader
++                                ? CmpInst::ICMP_NE
++                                : CmpInst::ICMP_EQ;
++  LoopCond->setPredicate(Pred);
++  LoopCond->setOperand(0, TripCountDec);
++  LoopCond->setOperand(1, ConstantInt::get(Ty, 0));
++
++  if (Idiom.ExitCount == Idiom.CountNext)
++    Idiom.CountNext->replaceUsesOutsideBlock(TripCount, LoopHeader);
++  else {
++    Idiom.ExitCount->replaceAllUsesWith(TripCount);
++    RecursivelyDeleteDeadPHINode(cast<PHINode>(Idiom.ExitCount));
++  }
++  SE->forgetLoop(CurLoop);
++
++  ++NumPrecheckedShiftCount;
++  LLVM_DEBUG(dbgs() << DEBUG_TYPE
++                    << " prechecked shift count idiom optimized!\n");
++  ORE.emit([&]() {
++    return OptimizationRemark(DEBUG_TYPE, "recognizePrecheckedShiftCount",
++                              CurLoop->getStartLoc(), Preheader)
++           << "recognized prechecked shift count loop idiom";
++  });
++  return true;
++}
++
++static bool hasZeroBypassPrecheck(BasicBlock *Preheader, Value *InitX) {
++  auto *PreCondBB = Preheader->getSinglePredecessor();
++  if (!PreCondBB)
++    return false;
++  auto *PreCondBI = dyn_cast<CondBrInst>(PreCondBB->getTerminator());
++  return PreCondBI && matchCondition(PreCondBI, Preheader) == InitX;
++}
++
++static bool collectDoWhileShiftCountValueUses(
++    Value *V, Instruction *AllowedLoopUse, const Loop *CurLoop,
++    SmallVectorImpl<PHINode *> &LCSSAPhis, bool &HasOutsideUse) {
++  HasOutsideUse = false;
++  for (User *U : V->users()) {
++    auto *UI = dyn_cast<Instruction>(U);
++    if (!UI)
++      return false;
++
++    if (UI == AllowedLoopUse)
++      continue;
++
++    if (CurLoop->contains(UI))
++      return false;
++
++    if (auto *PN = dyn_cast<PHINode>(UI)) {
++      if (!matchDoWhileLCSSAPhi(PN, V, CurLoop))
++        return false;
++      LCSSAPhis.push_back(PN);
++    }
++    HasOutsideUse = true;
++  }
++  return true;
++}
++
++static bool detectDoWhileShiftCountIdiom(Loop *CurLoop,
++                                         DoWhileShiftCountIdiom &Idiom) {
++  LLVM_DEBUG(dbgs() << DEBUG_TYPE
++                    << " Performing do-while shift count idiom detection.\n");
++
++  if (CurLoop->getNumBackEdges() != 1 || CurLoop->getNumBlocks() != 1)
++    return false;
++
++  BasicBlock *LoopHeader = CurLoop->getHeader();
++  BasicBlock *Preheader = CurLoop->getLoopPreheader();
++  if (!Preheader || !isa<UncondBrInst>(Preheader->getTerminator()))
++    return false;
++
++  auto *LoopTerm = dyn_cast<CondBrInst>(LoopHeader->getTerminator());
++  if (!LoopTerm)
++    return false;
++
++  auto *ValueNext =
++      dyn_cast_or_null<Instruction>(matchCondition(LoopTerm, LoopHeader));
++  if (!ValueNext || ValueNext->getOpcode() != Instruction::LShr)
++    return false;
++
++  Type *ValueTy = ValueNext->getType();
++  if (!ValueTy->isIntegerTy(32) && !ValueTy->isIntegerTy(64))
++    return false;
++
++  auto *ShiftAmount = dyn_cast<ConstantInt>(ValueNext->getOperand(1));
++  if (!ShiftAmount || !ShiftAmount->equalsInt(3))
++    return false;
++
++  auto *ValuePhi =
++      getRecurrenceVar(ValueNext->getOperand(0), ValueNext, LoopHeader);
++  if (!ValuePhi)
++    return false;
++  if (!isOnlyUsedInLoopBy(ValuePhi, CurLoop, ValueNext))
++    return false;
++
++  Value *InitX = ValuePhi->getIncomingValueForBlock(Preheader);
++  if (!InitX || InitX->getType() != ValueTy)
++    return false;
++  if (hasZeroBypassPrecheck(Preheader, InitX))
++    return false;
++
++  auto *LoopCond = dyn_cast<ICmpInst>(LoopTerm->getCondition());
++  if (!LoopCond || !LoopCond->hasOneUse())
++    return false;
++  for (User *U : ValueNext->users()) {
++    auto *UI = dyn_cast<Instruction>(U);
++    if (UI != ValuePhi && UI != LoopCond)
++      return false;
++  }
++
++  Instruction *CountNext = nullptr;
++  PHINode *CountPhi = nullptr;
++  SmallVector<PHINode *, 2> CountNextLCSSAPhis;
++  SmallVector<PHINode *, 2> CountPhiLCSSAPhis;
++  bool CountPhiUsedOutsideLoop = false;
++  for (Instruction &Inst :
++       llvm::make_range(LoopHeader->getFirstNonPHIIt(), LoopHeader->end())) {
++    if (Inst.getOpcode() != Instruction::Add ||
++        !Inst.getType()->isIntegerTy(32))
++      continue;
++
++    auto *Inc = dyn_cast<ConstantInt>(Inst.getOperand(1));
++    if (!Inc || !Inc->isOne())
++      continue;
++
++    PHINode *Phi = getRecurrenceVar(Inst.getOperand(0), &Inst, LoopHeader);
++    if (!Phi || !Phi->getType()->isIntegerTy(32))
++      continue;
++
++    auto *CountInit =
++        dyn_cast<ConstantInt>(Phi->getIncomingValueForBlock(Preheader));
++    if (!CountInit || !CountInit->isZero())
++      continue;
++
++    CountNextLCSSAPhis.clear();
++    CountPhiLCSSAPhis.clear();
++    bool CountNextUsedOutsideLoop = false;
++    CountPhiUsedOutsideLoop = false;
++    if (!collectDoWhileShiftCountValueUses(
++            &Inst, Phi, CurLoop, CountNextLCSSAPhis, CountNextUsedOutsideLoop))
++      continue;
++    if (!collectDoWhileShiftCountValueUses(
++            Phi, &Inst, CurLoop, CountPhiLCSSAPhis, CountPhiUsedOutsideLoop))
++      continue;
++    if (!CountNextUsedOutsideLoop && !CountPhiUsedOutsideLoop)
++      continue;
++
++    CountNext = &Inst;
++    CountPhi = Phi;
++    break;
++  }
++  if (!CountNext)
++    return false;
++
++  for (Instruction &Inst : *LoopHeader) {
++    if (&Inst == ValuePhi || &Inst == CountPhi || &Inst == ValueNext ||
++        &Inst == CountNext || &Inst == LoopCond || &Inst == LoopTerm ||
++        isa<DbgInfoIntrinsic>(&Inst))
++      continue;
++    return false;
++  }
++
++  Idiom.InitX = InitX;
++  Idiom.ValueNext = ValueNext;
++  Idiom.CountNext = CountNext;
++  Idiom.CountPhi = CountPhi;
++  Idiom.CountNextLCSSAPhis = CountNextLCSSAPhis;
++  Idiom.CountPhiLCSSAPhis = CountPhiLCSSAPhis;
++  Idiom.CountPhiUsedOutsideLoop = CountPhiUsedOutsideLoop;
++  Idiom.ShiftAmount = ShiftAmount->getZExtValue();
++  return true;
++}
++
++bool LoopIdiomRecognize::recognizeDoWhileShiftCount() {
++  DoWhileShiftCountIdiom Idiom;
++  if (!detectDoWhileShiftCountIdiom(CurLoop, Idiom))
++    return false;
++
++  Type *ValueTy = Idiom.InitX->getType();
++  Type *CountTy = Idiom.CountNext->getType();
++  TargetTransformInfo::TargetCostKind CostKind =
++      TargetTransformInfo::TCK_SizeAndLatency;
++  IntrinsicCostAttributes Attrs(Intrinsic::ctlz, ValueTy,
++                                {PoisonValue::get(ValueTy),
++                                 ConstantInt::getFalse(ValueTy->getContext())});
++  if (TTI->getIntrinsicInstrCost(Attrs, CostKind) >
++      TargetTransformInfo::TCC_Basic) {
++    LLVM_DEBUG(dbgs() << DEBUG_TYPE
++                      << " Intrinsic is too costly, not beneficial\n");
++    return false;
++  }
++
++  BasicBlock *LoopHeader = CurLoop->getHeader();
++  BasicBlock *Preheader = CurLoop->getLoopPreheader();
++  auto *LoopTerm = cast<CondBrInst>(LoopHeader->getTerminator());
++  auto *LoopCond = cast<ICmpInst>(LoopTerm->getCondition());
++
++  IRBuilder<> Builder(Preheader->getTerminator());
++  Builder.SetCurrentDebugLocation(Idiom.ValueNext->getDebugLoc());
++
++  Value *LeadingZeros = Builder.CreateIntrinsic(
++      Intrinsic::ctlz, ValueTy,
++      {Idiom.InitX, /*is_zero_poison=*/Builder.getFalse()},
++      /*FMFSource=*/nullptr, Idiom.InitX->getName() + ".numleadingzeros");
++  Value *ActiveBits = Builder.CreateSub(
++      ConstantInt::get(ValueTy, ValueTy->getScalarSizeInBits()), LeadingZeros,
++      Idiom.InitX->getName() + ".numactivebits", /*HasNUW=*/true,
++      /*HasNSW=*/true);
++  Value *BiasedActiveBits = Builder.CreateAdd(
++      ActiveBits, ConstantInt::get(ValueTy, Idiom.ShiftAmount - 1),
++      Idiom.InitX->getName() + ".numactivebits.biased", /*HasNUW=*/true,
++      /*HasNSW=*/true);
++  // The matched do-while idiom is currently restricted to shift-by-3, and
++  // BiasedActiveBits is in [2, 66].  For that range, x / 3 is exactly
++  // (x * 43) >> 7, which avoids introducing a division libcall on targets
++  // without native integer division.
++  Value *ScaledActiveBits = Builder.CreateMul(
++      BiasedActiveBits, ConstantInt::get(ValueTy, 43),
++      Idiom.InitX->getName() + ".numactivebits.scaled", /*HasNUW=*/true,
++      /*HasNSW=*/true);
++  Value *TripCountWide =
++      Builder.CreateLShr(ScaledActiveBits, ConstantInt::get(ValueTy, 7),
++                         CurLoop->getName() + ".shiftcount.wide");
++  Value *TripCount = Builder.CreateTrunc(
++      TripCountWide, CountTy, CurLoop->getName() + ".shiftcount", true, true);
++  TripCount = Builder.CreateIntrinsic(
++      CountTy, Intrinsic::umax, {TripCount, ConstantInt::get(CountTy, 1)},
++      /*FMFSource=*/nullptr, CurLoop->getName() + ".shiftcount.atleastone");
++  Value *TripCountMinusOne = nullptr;
++  if (Idiom.CountPhiUsedOutsideLoop)
++    TripCountMinusOne = Builder.CreateSub(
++        TripCount, ConstantInt::get(CountTy, 1),
++        CurLoop->getName() + ".shiftcount.minusone", /*HasNUW=*/true,
++        /*HasNSW=*/true);
++
++  PHINode *TripCountPhi = PHINode::Create(CountTy, 2, "shiftcount.tcphi");
++  TripCountPhi->insertBefore(LoopHeader->begin());
++
++  Builder.SetInsertPoint(LoopCond);
++  Builder.SetCurrentDebugLocation(LoopCond->getDebugLoc());
++  auto *TripCountDec = cast<Instruction>(Builder.CreateSub(
++      TripCountPhi, ConstantInt::get(CountTy, 1), "shiftcount.tcdec",
++      /*HasNUW=*/true, /*HasNSW=*/true));
++
++  TripCountPhi->addIncoming(TripCount, Preheader);
++  TripCountPhi->addIncoming(TripCountDec, LoopHeader);
++
++  CmpInst::Predicate Pred = LoopTerm->getSuccessor(0) == LoopHeader
++                                ? CmpInst::ICMP_NE
++                                : CmpInst::ICMP_EQ;
++  Value *NewLoopCond = Builder.CreateICmp(
++      Pred, TripCountDec, ConstantInt::get(CountTy, 0), LoopCond->getName());
++  LoopTerm->setCondition(NewLoopCond);
++  LoopCond->eraseFromParent();
++
++  for (PHINode *PN : Idiom.CountNextLCSSAPhis) {
++    PN->replaceAllUsesWith(TripCount);
++    RecursivelyDeleteDeadPHINode(PN);
++  }
++  Idiom.CountNext->replaceUsesOutsideBlock(TripCount, LoopHeader);
++  if (Idiom.CountPhiUsedOutsideLoop) {
++    for (PHINode *PN : Idiom.CountPhiLCSSAPhis) {
++      PN->replaceAllUsesWith(TripCountMinusOne);
++      RecursivelyDeleteDeadPHINode(PN);
++    }
++    Idiom.CountPhi->replaceUsesOutsideBlock(TripCountMinusOne, LoopHeader);
++  }
++  SE->forgetLoop(CurLoop);
++
++  ++NumDoWhileShiftCount;
++  LLVM_DEBUG(dbgs() << DEBUG_TYPE
++                    << " do-while shift count idiom optimized!\n");
++  ORE.emit([&]() {
++    return OptimizationRemark(DEBUG_TYPE, "recognizeDoWhileShiftCount",
++                              CurLoop->getStartLoc(), Preheader)
++           << "recognized do-while shift count loop idiom";
++  });
++  return true;
++}
++
+ bool LoopIdiomRecognize::recognizeShiftUntilLessThan() {
+   // Give up if the loop has multiple blocks or multiple backedges.
+   if (CurLoop->getNumBackEdges() != 1 || CurLoop->getNumBlocks() != 1)
+@@ -2829,9 +3444,8 @@ void LoopIdiomRecognize::transformLoopToPopcount(BasicBlock *PreCondBB,
+     TcPhi->insertBefore(Body->begin());
+ 
+     Builder.SetInsertPoint(LbCond);
+-    Instruction *TcDec = cast<Instruction>(
+-        Builder.CreateSub(TcPhi, ConstantInt::get(Ty, 1),
+-                          "tcdec", false, true));
++    Instruction *TcDec = cast<Instruction>(Builder.CreateSub(
++        TcPhi, ConstantInt::get(Ty, 1), "tcdec", false, true));
+ 
+     TcPhi->addIncoming(TripCnt, PreHead);
+     TcPhi->addIncoming(TcDec, Body);
+@@ -3471,7 +4085,8 @@ bool LoopIdiomRecognize::recognizeShiftUntilZero() {
+   // intrinsic we'll use are not cheap. Note that we are okay with *just*
+   // making the loop countable, even if nothing else changes.
+   IntrinsicCostAttributes Attrs(
+-      IntrID, Ty, {PoisonValue::get(Ty), /*is_zero_poison=*/Builder.getFalse()});
++      IntrID, Ty,
++      {PoisonValue::get(Ty), /*is_zero_poison=*/Builder.getFalse()});
+   InstructionCost Cost = TTI->getIntrinsicInstrCost(Attrs, CostKind);
+   if (Cost > TargetTransformInfo::TCC_Basic) {
+     LLVM_DEBUG(dbgs() << DEBUG_TYPE
