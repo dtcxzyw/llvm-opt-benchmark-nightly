@@ -1,0 +1,273 @@
+diff --git a/llvm/include/llvm/IR/PatternMatch.h b/llvm/include/llvm/IR/PatternMatch.h
+index 430f867875f43..1930503efec93 100644
+--- a/llvm/include/llvm/IR/PatternMatch.h
++++ b/llvm/include/llvm/IR/PatternMatch.h
+@@ -1978,6 +1978,10 @@ struct m_SpecificMask {
+   bool match(ArrayRef<int> Mask) const { return Val == Mask; }
+ };
+ 
++struct m_SplatMask {
++  bool match(ArrayRef<int> Mask) const { return all_equal(Mask); }
++};
++
+ struct m_SplatOrPoisonMask {
+   int &SplatIndex;
+   m_SplatOrPoisonMask(int &SplatIndex) : SplatIndex(SplatIndex) {}
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
+index d371218e61108..ca42263f47fa6 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
+@@ -269,7 +269,7 @@ Instruction *InstCombinerImpl::commonCastTransforms(CastInst &CI) {
+   // cast (shuffle X, Mask) --> shuffle (cast X), Mask
+   Value *X;
+   ArrayRef<int> Mask;
+-  if (match(Src, m_OneUse(m_Shuffle(m_Value(X), m_Undef(), m_Mask(Mask))))) {
++  if (match(Src, m_OneUse(m_Shuffle(m_Value(X), m_Poison(), m_Mask(Mask))))) {
+     // TODO: Allow scalable vectors?
+     auto *SrcTy = dyn_cast<FixedVectorType>(X->getType());
+     auto *DestTy = dyn_cast<FixedVectorType>(Ty);
+@@ -977,25 +977,26 @@ Instruction *InstCombinerImpl::narrowBinOp(TruncInst &Trunc) {
+ /// creating a shuffle type that targets may not be able to lower effectively.
+ static Instruction *shrinkSplatShuffle(TruncInst &Trunc,
+                                        InstCombiner::BuilderTy &Builder) {
+-  auto *Shuf = dyn_cast<ShuffleVectorInst>(Trunc.getOperand(0));
+-  if (Shuf && Shuf->hasOneUse() && match(Shuf->getOperand(1), m_Undef()) &&
+-      all_equal(Shuf->getShuffleMask()) &&
+-      ElementCount::isKnownGE(Shuf->getType()->getElementCount(),
+-                              cast<VectorType>(Shuf->getOperand(0)->getType())
+-                                  ->getElementCount())) {
+-    // trunc (shuf X, Undef, SplatMask) --> shuf (trunc X), Poison, SplatMask
+-    // trunc (shuf X, Poison, SplatMask) --> shuf (trunc X), Poison, SplatMask
+-    Type *NewTruncTy = Shuf->getOperand(0)->getType()->getWithNewType(
+-        Trunc.getType()->getScalarType());
+-    Value *NarrowOp = Builder.CreateTrunc(Shuf->getOperand(0), NewTruncTy);
+-    return new ShuffleVectorInst(NarrowOp, Shuf->getShuffleMask());
++  Value *Shuf = Trunc.getOperand(0), *ShufVec;
++  ArrayRef<int> SplatMask;
++  if (match(Shuf, m_OneUse(m_Shuffle(m_Value(ShufVec), m_Poison(),
++                                     m_Mask(SplatMask)))) &&
++      match(SplatMask, m_SplatMask()) &&
++      ElementCount::isKnownGE(
++          cast<VectorType>(Shuf->getType())->getElementCount(),
++          cast<VectorType>(ShufVec->getType())->getElementCount())) {
++    // trunc (shuf X, poison, SplatMask) --> shuf (trunc X), poison, SplatMask
++    Type *NewTruncTy =
++        ShufVec->getType()->getWithNewType(Trunc.getType()->getScalarType());
++    Value *NarrowOp = Builder.CreateTrunc(ShufVec, NewTruncTy);
++    return new ShuffleVectorInst(NarrowOp, SplatMask);
+   }
+ 
+   return nullptr;
+ }
+ 
+ /// Try to narrow the width of an insert element. This could be generalized for
+-/// any vector constant, but we limit the transform to insertion into undef to
++/// any vector constant, but we limit the transform to insertion into poison to
+ /// avoid potential backend problems from unsupported insertion widths. This
+ /// could also be extended to handle the case of inserting a scalar constant
+ /// into a vector variable.
+@@ -1005,22 +1006,15 @@ static Instruction *shrinkInsertElt(CastInst &Trunc,
+   assert((Opcode == Instruction::Trunc || Opcode == Instruction::FPTrunc) &&
+          "Unexpected instruction for shrinking");
+ 
+-  auto *InsElt = dyn_cast<InsertElementInst>(Trunc.getOperand(0));
+-  if (!InsElt || !InsElt->hasOneUse())
+-    return nullptr;
+-
+-  Type *DestTy = Trunc.getType();
+-  Type *DestScalarTy = DestTy->getScalarType();
+-  Value *VecOp = InsElt->getOperand(0);
+-  Value *ScalarOp = InsElt->getOperand(1);
+-  Value *Index = InsElt->getOperand(2);
+-
+-  if (match(VecOp, m_Undef())) {
+-    // trunc   (inselt undef, X, Index) --> inselt undef,   (trunc X), Index
+-    // fptrunc (inselt undef, X, Index) --> inselt undef, (fptrunc X), Index
+-    UndefValue *NarrowUndef = UndefValue::get(DestTy);
+-    Value *NarrowOp = Builder.CreateCast(Opcode, ScalarOp, DestScalarTy);
+-    return InsertElementInst::Create(NarrowUndef, NarrowOp, Index);
++  Value *Elt, *Index;
++  if (match(Trunc.getOperand(0),
++            m_OneUse(m_InsertElt(m_Poison(), m_Value(Elt), m_Value(Index))))) {
++    // trunc   (inselt poison, X, Index) --> inselt poison,   (trunc X), Index
++    // fptrunc (inselt poison, X, Index) --> inselt poison, (fptrunc X), Index
++    auto *NarrowPoison = PoisonValue::get(Trunc.getType());
++    Value *NarrowOp =
++        Builder.CreateCast(Opcode, Elt, Trunc.getType()->getScalarType());
++    return InsertElementInst::Create(NarrowPoison, NarrowOp, Index);
+   }
+ 
+   return nullptr;
+@@ -2069,11 +2063,11 @@ static Type *shrinkFPConstantVector(Value *V, bool PreferBFloat) {
+ 
+   // For fixed-width vectors we find the minimal type by looking
+   // through the constant values of the vector.
+-  for (unsigned i = 0; i != NumElts; ++i) {
+-    if (isa<UndefValue>(CV->getAggregateElement(i)))
++  for (unsigned I = 0; I != NumElts; ++I) {
++    if (match(CV->getAggregateElement(I), m_Poison()))
+       continue;
+ 
+-    auto *CFP = dyn_cast_or_null<ConstantFP>(CV->getAggregateElement(i));
++    auto *CFP = dyn_cast_or_null<ConstantFP>(CV->getAggregateElement(I));
+     if (!CFP)
+       return nullptr;
+ 
+@@ -2763,8 +2757,9 @@ static bool collectInsertionElements(Value *V, unsigned Shift,
+   assert(isMultipleOfTypeSize(Shift, VecEltTy) &&
+          "Shift should be a multiple of the element type size");
+ 
+-  // Undef values never contribute useful bits to the result.
+-  if (isa<UndefValue>(V)) return true;
++  // Poison values never contribute useful bits to the result.
++  if (match(V, m_Poison()))
++    return true;
+ 
+   // If we got down to a value of the right type, we win, try inserting into the
+   // right element.
+diff --git a/llvm/test/Transforms/InstCombine/fpextend.ll b/llvm/test/Transforms/InstCombine/fpextend.ll
+index 28599613fd159..32327f5daea3c 100644
+--- a/llvm/test/Transforms/InstCombine/fpextend.ll
++++ b/llvm/test/Transforms/InstCombine/fpextend.ll
+@@ -82,14 +82,14 @@ define <2 x float> @test6(<2 x float> %x) nounwind  {
+   ret <2 x float> %t34
+ }
+ 
+-; Test with an undef element
+-define <2 x float> @test6_undef(<2 x float> %x) nounwind  {
+-; CHECK-LABEL: @test6_undef(
+-; CHECK-NEXT:    [[T34:%.*]] = fadd <2 x float> [[X:%.*]], <float 0.000000e+00, float undef>
++; Test with a poison element
++define <2 x float> @test6_poison(<2 x float> %x) nounwind  {
++; CHECK-LABEL: @test6_poison(
++; CHECK-NEXT:    [[T34:%.*]] = fadd <2 x float> [[X:%.*]], <float 0.000000e+00, float poison>
+ ; CHECK-NEXT:    ret <2 x float> [[T34]]
+ ;
+   %t1 = fpext <2 x float> %x to <2 x double>
+-  %t3 = fadd <2 x double> %t1, <double 0.000000e+00, double undef>
++  %t3 = fadd <2 x double> %t1, <double 0.000000e+00, double poison>
+   %t34 = fptrunc <2 x double> %t3 to <2 x float>
+   ret <2 x float> %t34
+ }
+diff --git a/llvm/test/Transforms/InstCombine/vector-casts-inseltpoison.ll b/llvm/test/Transforms/InstCombine/vector-casts-inseltpoison.ll
+index 5770e2ce72020..3d47f99a9bc5e 100644
+--- a/llvm/test/Transforms/InstCombine/vector-casts-inseltpoison.ll
++++ b/llvm/test/Transforms/InstCombine/vector-casts-inseltpoison.ll
+@@ -288,30 +288,30 @@ define <8 x i32> @pr24458(<8 x float> %n) {
+   ret <8 x i32> %wrong
+ }
+ 
+-; Hoist a trunc to a scalar if we're inserting into an undef vector.
+-; trunc (inselt undef, X, Index) --> inselt undef, (trunc X), Index
++; Hoist a trunc to a scalar if we're inserting into a poison vector.
++; trunc (inselt poison, X, Index) --> inselt poison, (trunc X), Index
+ 
+-define <3 x i16> @trunc_inselt_undef(i32 %x) {
+-; CHECK-LABEL: @trunc_inselt_undef(
++define <3 x i16> @trunc_inselt_poison(i32 %x, i32 %index) {
++; CHECK-LABEL: @trunc_inselt_poison(
+ ; CHECK-NEXT:    [[TMP1:%.*]] = trunc i32 [[X:%.*]] to i16
+-; CHECK-NEXT:    [[TRUNC:%.*]] = insertelement <3 x i16> <i16 undef, i16 poison, i16 undef>, i16 [[TMP1]], i64 1
++; CHECK-NEXT:    [[TRUNC:%.*]] = insertelement <3 x i16> poison, i16 [[TMP1]], i32 [[INDEX:%.*]]
+ ; CHECK-NEXT:    ret <3 x i16> [[TRUNC]]
+ ;
+-  %vec = insertelement <3 x i32> poison, i32 %x, i32 1
++  %vec = insertelement <3 x i32> poison, i32 %x, i32 %index
+   %trunc = trunc <3 x i32> %vec to <3 x i16>
+   ret <3 x i16> %trunc
+ }
+ 
+-; Hoist a trunc to a scalar if we're inserting into an undef vector.
+-; trunc (inselt undef, X, Index) --> inselt undef, (trunc X), Index
++; Hoist a trunc to a scalar if we're inserting into a poison vector.
++; trunc (inselt poison, X, Index) --> inselt poison, (trunc X), Index
+ 
+-define <2 x float> @fptrunc_inselt_undef(double %x, i32 %index) {
+-; CHECK-LABEL: @fptrunc_inselt_undef(
++define <2 x float> @fptrunc_inselt_poison(double %x, i32 %index) {
++; CHECK-LABEL: @fptrunc_inselt_poison(
+ ; CHECK-NEXT:    [[TMP1:%.*]] = fptrunc double [[X:%.*]] to float
+-; CHECK-NEXT:    [[TRUNC:%.*]] = insertelement <2 x float> undef, float [[TMP1]], i32 [[INDEX:%.*]]
++; CHECK-NEXT:    [[TRUNC:%.*]] = insertelement <2 x float> poison, float [[TMP1]], i32 [[INDEX:%.*]]
+ ; CHECK-NEXT:    ret <2 x float> [[TRUNC]]
+ ;
+-  %vec = insertelement <2 x double> <double undef, double undef>, double %x, i32 %index
++  %vec = insertelement <2 x double> poison, double %x, i32 %index
+   %trunc = fptrunc <2 x double> %vec to <2 x float>
+   ret <2 x float> %trunc
+ }
+@@ -337,11 +337,11 @@ define <3 x i16> @trunc_inselt1(i32 %x) {
+ 
+ define <2 x float> @fptrunc_inselt1(double %x, i32 %index) {
+ ; CHECK-LABEL: @fptrunc_inselt1(
+-; CHECK-NEXT:    [[VEC:%.*]] = insertelement <2 x double> <double undef, double 3.000000e+00>, double [[X:%.*]], i32 [[INDEX:%.*]]
++; CHECK-NEXT:    [[VEC:%.*]] = insertelement <2 x double> <double poison, double 3.000000e+00>, double [[X:%.*]], i32 [[INDEX:%.*]]
+ ; CHECK-NEXT:    [[TRUNC:%.*]] = fptrunc <2 x double> [[VEC]] to <2 x float>
+ ; CHECK-NEXT:    ret <2 x float> [[TRUNC]]
+ ;
+-  %vec = insertelement <2 x double> <double undef, double 3.0>, double %x, i32 %index
++  %vec = insertelement <2 x double> <double poison, double 3.0>, double %x, i32 %index
+   %trunc = fptrunc <2 x double> %vec to <2 x float>
+   ret <2 x float> %trunc
+ }
+diff --git a/llvm/test/Transforms/InstCombine/vector-casts.ll b/llvm/test/Transforms/InstCombine/vector-casts.ll
+index 56e957d543078..2a2448a9e6ad9 100644
+--- a/llvm/test/Transforms/InstCombine/vector-casts.ll
++++ b/llvm/test/Transforms/InstCombine/vector-casts.ll
+@@ -288,30 +288,30 @@ define <8 x i32> @pr24458(<8 x float> %n) {
+   ret <8 x i32> %wrong
+ }
+ 
+-; Hoist a trunc to a scalar if we're inserting into an undef vector.
+-; trunc (inselt undef, X, Index) --> inselt undef, (trunc X), Index
++; Hoist a trunc to a scalar if we're inserting into a poison vector.
++; trunc (inselt poison, X, Index) --> inselt poison, (trunc X), Index
+ 
+-define <3 x i16> @trunc_inselt_undef(i32 %x) {
+-; CHECK-LABEL: @trunc_inselt_undef(
++define <3 x i16> @trunc_inselt_poison(i32 %x, i32 %index) {
++; CHECK-LABEL: @trunc_inselt_poison(
+ ; CHECK-NEXT:    [[TMP1:%.*]] = trunc i32 [[X:%.*]] to i16
+-; CHECK-NEXT:    [[TRUNC:%.*]] = insertelement <3 x i16> <i16 undef, i16 poison, i16 undef>, i16 [[TMP1]], i64 1
++; CHECK-NEXT:    [[TRUNC:%.*]] = insertelement <3 x i16> poison, i16 [[TMP1]], i32 [[INDEX:%.*]]
+ ; CHECK-NEXT:    ret <3 x i16> [[TRUNC]]
+ ;
+-  %vec = insertelement <3 x i32> undef, i32 %x, i32 1
++  %vec = insertelement <3 x i32> poison, i32 %x, i32 %index
+   %trunc = trunc <3 x i32> %vec to <3 x i16>
+   ret <3 x i16> %trunc
+ }
+ 
+-; Hoist a trunc to a scalar if we're inserting into an undef vector.
+-; trunc (inselt undef, X, Index) --> inselt undef, (trunc X), Index
++; Hoist a trunc to a scalar if we're inserting into a poison vector.
++; trunc (inselt poison, X, Index) --> inselt poison, (trunc X), Index
+ 
+-define <2 x float> @fptrunc_inselt_undef(double %x, i32 %index) {
+-; CHECK-LABEL: @fptrunc_inselt_undef(
++define <2 x float> @fptrunc_inselt_poison(double %x, i32 %index) {
++; CHECK-LABEL: @fptrunc_inselt_poison(
+ ; CHECK-NEXT:    [[TMP1:%.*]] = fptrunc double [[X:%.*]] to float
+-; CHECK-NEXT:    [[TRUNC:%.*]] = insertelement <2 x float> undef, float [[TMP1]], i32 [[INDEX:%.*]]
++; CHECK-NEXT:    [[TRUNC:%.*]] = insertelement <2 x float> poison, float [[TMP1]], i32 [[INDEX:%.*]]
+ ; CHECK-NEXT:    ret <2 x float> [[TRUNC]]
+ ;
+-  %vec = insertelement <2 x double> <double undef, double undef>, double %x, i32 %index
++  %vec = insertelement <2 x double> poison, double %x, i32 %index
+   %trunc = fptrunc <2 x double> %vec to <2 x float>
+   ret <2 x float> %trunc
+ }
+@@ -337,11 +337,11 @@ define <3 x i16> @trunc_inselt1(i32 %x) {
+ 
+ define <2 x float> @fptrunc_inselt1(double %x, i32 %index) {
+ ; CHECK-LABEL: @fptrunc_inselt1(
+-; CHECK-NEXT:    [[VEC:%.*]] = insertelement <2 x double> <double undef, double 3.000000e+00>, double [[X:%.*]], i32 [[INDEX:%.*]]
++; CHECK-NEXT:    [[VEC:%.*]] = insertelement <2 x double> <double poison, double 3.000000e+00>, double [[X:%.*]], i32 [[INDEX:%.*]]
+ ; CHECK-NEXT:    [[TRUNC:%.*]] = fptrunc <2 x double> [[VEC]] to <2 x float>
+ ; CHECK-NEXT:    ret <2 x float> [[TRUNC]]
+ ;
+-  %vec = insertelement <2 x double> <double undef, double 3.0>, double %x, i32 %index
++  %vec = insertelement <2 x double> <double poison, double 3.0>, double %x, i32 %index
+   %trunc = fptrunc <2 x double> %vec to <2 x float>
+   ret <2 x float> %trunc
+ }
