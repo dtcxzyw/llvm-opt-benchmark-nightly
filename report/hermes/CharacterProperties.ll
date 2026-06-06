@@ -201,8 +201,8 @@ _ZN6hermes12CodePointSetC2ERKS0_.exit31:          ; preds = %._crit_edge, %.sink
   br i1 %.not20120, label %._crit_edge123, label %.lr.ph122
 
 .lr.ph122:                                        ; preds = %_ZN6hermes12CodePointSetC2ERKS0_.exit31
-  %i.an = select i1 %2, ptr getelementptr inbounds nuw (i8, ptr @_ZN6hermesL13UNICODE_FOLDSE, i64 1608), ptr getelementptr inbounds nuw (i8, ptr @_ZN6hermesL13LEGACY_CANONSE, i64 1400)
-  %i.ao = select i1 %2, ptr @_ZN6hermesL13UNICODE_FOLDSE, ptr @_ZN6hermesL13LEGACY_CANONSE
+  %i.an = select i1 %2, ptr @_ZN6hermesL13UNICODE_FOLDSE, ptr @_ZN6hermesL13LEGACY_CANONSE
+  %i.ao = select i1 %2, ptr getelementptr inbounds nuw (i8, ptr @_ZN6hermesL13UNICODE_FOLDSE, i64 1608), ptr getelementptr inbounds nuw (i8, ptr @_ZN6hermesL13LEGACY_CANONSE, i64 1400)
   br label %bb.w
 
 bb.d:                                             ; preds = %.lr.ph, %_ZN6hermesL17canonicalizeRangeENS_14CodePointRangeEPNS_12CodePointSetEb.exit
@@ -605,7 +605,7 @@ bb.w:                                             ; preds = %.lr.ph122, %_ZN6her
   br label %bb.x
 
 bb.x:                                             ; preds = %.loopexit.i, %.lr.ph54.i
-  %.053.i = phi ptr [ %i.ao, %.lr.ph54.i ], [ %i.mr, %.loopexit.i ] ; 2 uses
+  %.053.i = phi ptr [ %i.an, %.lr.ph54.i ], [ %i.mr, %.loopexit.i ] ; 2 uses
   %i.gv = load i64, ptr %.053.i, align 4          ; 4 uses
   %i.gw = trunc i64 %i.gv to i32                  ; 2 uses
   %i.gx = and i32 %i.gw, 16777215                 ; 2 uses
@@ -955,7 +955,7 @@ bb.aq:                                            ; preds = %_ZN6hermes12CodePoi
 
 .loopexit.i:                                      ; preds = %bb.aq, %bb.x
   %i.mr = getelementptr inbounds nuw i8, ptr %.053.i, i64 8 ; 2 uses
-  %.not.i40 = icmp eq ptr %i.mr, %i.an
+  %.not.i40 = icmp eq ptr %i.mr, %i.ao
   br i1 %.not.i40, label %_ZN6hermesL25addPrecanonicalCharactersENS_14CodePointRangeEPNS_12CodePointSetEb.exit, label %bb.x, !llvm.loop !25
 
 _ZN6hermesL25addPrecanonicalCharactersENS_14CodePointRangeEPNS_12CodePointSetEb.exit: ; preds = %.loopexit.i, %bb.w
@@ -983,7 +983,7 @@ bb.a:
   %i.e = sub i64 %i.c, %i.d
   %i.f = ashr exact i64 %i.e, 3                   ; 2 uses
   %i.g = icmp sgt i64 %i.f, 0
-  br i1 %i.g, label %_ZSt9__advanceIPKN6hermes21UnicodeTransformRangeElEvRT_T0_St26random_access_iterator_tag.exit.i.i, label %_ZSt11lower_boundIPKN6hermes21UnicodeTransformRangeEjET_S4_S4_RKT0_.exit
+  br i1 %i.g, label %_ZSt9__advanceIPKN6hermes21UnicodeTransformRangeElEvRT_T0_St26random_access_iterator_tag.exit.i.i, label %bb.b
 
 _ZSt9__advanceIPKN6hermes21UnicodeTransformRangeElEvRT_T0_St26random_access_iterator_tag.exit.i.i: ; preds = %bb.a, %_ZSt9__advanceIPKN6hermes21UnicodeTransformRangeElEvRT_T0_St26random_access_iterator_tag.exit.i.i
   %.017.i.i = phi ptr [ %.1.i.i, %_ZSt9__advanceIPKN6hermes21UnicodeTransformRangeElEvRT_T0_St26random_access_iterator_tag.exit.i.i ], [ %i.a, %bb.a ] ; 2 uses
@@ -1000,17 +1000,17 @@ _ZSt9__advanceIPKN6hermes21UnicodeTransformRangeElEvRT_T0_St26random_access_iter
   %i.o = xor i64 %i.h, -1
   %i.p = add nsw i64 %.01116.i.i, %i.o
   %.112.i.i = select i1 %.not.i.i, i64 %i.h, i64 %i.p ; 2 uses
-  %.1.i.i = select i1 %.not.i.i, ptr %.017.i.i, ptr %i.n ; 2 uses
+  %.1.i.i = select i1 %.not.i.i, ptr %.017.i.i, ptr %i.n ; 3 uses
   %i.q = icmp sgt i64 %.112.i.i, 0
   br i1 %i.q, label %_ZSt9__advanceIPKN6hermes21UnicodeTransformRangeElEvRT_T0_St26random_access_iterator_tag.exit.i.i, label %_ZSt11lower_boundIPKN6hermes21UnicodeTransformRangeEjET_S4_S4_RKT0_.exit, !llvm.loop !14
 
-_ZSt11lower_boundIPKN6hermes21UnicodeTransformRangeEjET_S4_S4_RKT0_.exit: ; preds = %_ZSt9__advanceIPKN6hermes21UnicodeTransformRangeElEvRT_T0_St26random_access_iterator_tag.exit.i.i, %bb.a
-  %.0.lcssa.i.i = phi ptr [ %i.a, %bb.a ], [ %.1.i.i, %_ZSt9__advanceIPKN6hermes21UnicodeTransformRangeElEvRT_T0_St26random_access_iterator_tag.exit.i.i ] ; 2 uses
-  %.not = icmp eq ptr %.0.lcssa.i.i, %i.b
+_ZSt11lower_boundIPKN6hermes21UnicodeTransformRangeEjET_S4_S4_RKT0_.exit: ; preds = %_ZSt9__advanceIPKN6hermes21UnicodeTransformRangeElEvRT_T0_St26random_access_iterator_tag.exit.i.i
+  %.not = icmp eq ptr %.1.i.i, %i.b
   br i1 %.not, label %bb.e, label %bb.b
 
-bb.b:                                             ; preds = %_ZSt11lower_boundIPKN6hermes21UnicodeTransformRangeEjET_S4_S4_RKT0_.exit
-  %i.r = load i64, ptr %.0.lcssa.i.i, align 4     ; 3 uses
+bb.b:                                             ; preds = %bb.a, %_ZSt11lower_boundIPKN6hermes21UnicodeTransformRangeEjET_S4_S4_RKT0_.exit
+  %.0.lcssa.i.i18 = phi ptr [ %.1.i.i, %_ZSt11lower_boundIPKN6hermes21UnicodeTransformRangeEjET_S4_S4_RKT0_.exit ], [ %i.a, %bb.a ]
+  %i.r = load i64, ptr %.0.lcssa.i.i18, align 4   ; 3 uses
   %i.s = trunc i64 %i.r to i32                    ; 2 uses
   %i.t = and i32 %i.s, 16777215                   ; 3 uses
   %.not13 = icmp ugt i32 %i.t, %0
