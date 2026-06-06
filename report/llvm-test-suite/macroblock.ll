@@ -201,22 +201,18 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #17
   %i.f = icmp eq i32 %0, -1                       ; 2 uses
   %i.g = add nuw nsw i32 %0, 1
-  %.048 = select i1 %i.f, i32 0, i32 %0           ; 4 uses
-  %.047 = select i1 %i.f, i32 4, i32 %i.g         ; 2 uses
-  %2 = icmp slt i32 %.048, %.047
-  br i1 %2, label %.lr.ph.preheader, label %._crit_edge
-
-.lr.ph.preheader:                                 ; preds = %bb.a
-  %3 = shl i32 %.048, 3
-  %4 = shl i32 %.048, 2
+  %.048 = select i1 %i.f, i32 0, i32 %0           ; 3 uses
+  %.047 = select i1 %i.f, i32 4, i32 %i.g
+  %2 = shl i32 %.048, 3
+  %3 = shl i32 %.048, 2
   br label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
-  %indvars.iv88 = phi i32 [ %4, %.lr.ph.preheader ], [ %indvars.iv.next89, %bb.b ] ; 2 uses
-  %indvars.iv = phi i32 [ %3, %.lr.ph.preheader ], [ %indvars.iv.next84, %bb.b ] ; 2 uses
-  %.04570 = phi i32 [ 0, %.lr.ph.preheader ], [ %i.ey, %bb.b ]
-  %.04669 = phi i32 [ 0, %.lr.ph.preheader ], [ %i.fb, %bb.b ]
-  %.14968 = phi i32 [ %.048, %.lr.ph.preheader ], [ %i.fc, %bb.b ] ; 3 uses
+.lr.ph:                                           ; preds = %bb.a, %bb.b
+  %indvars.iv88 = phi i32 [ %3, %bb.a ], [ %indvars.iv.next89, %bb.b ] ; 2 uses
+  %indvars.iv = phi i32 [ %2, %bb.a ], [ %indvars.iv.next84, %bb.b ] ; 2 uses
+  %.04570 = phi i32 [ 0, %bb.a ], [ %i.ey, %bb.b ]
+  %.04669 = phi i32 [ 0, %bb.a ], [ %i.fb, %bb.b ]
+  %.14968 = phi i32 [ %.048, %bb.a ], [ %i.fc, %bb.b ] ; 3 uses
   %i.h = and i32 %indvars.iv88, -8
   %i.i = sext i32 %i.h to i64
   %.lobit = and i32 %indvars.iv, 8                ; 2 uses
@@ -393,34 +389,32 @@ bb.a:
   store <4 x i32> %i.ew, ptr %i.er, align 4, !tbaa !4
   %indvars.iv.next.3.3.1 = add nsw i64 %i.eo, 4
   %i.ex = tail call i32 @distortion4x4(ptr noundef nonnull %i.da) #17
-  %i.ey = add nsw i32 %i.ex, %i.cl                ; 3 uses
+  %i.ey = add nsw i32 %i.ex, %i.cl                ; 4 uses
   %indvars.iv.next91 = add nsw i64 %indvars.iv90, 4
   %i.ez = icmp slt i64 %indvars.iv90, %i.s
   br i1 %i.ez, label %.preheader, label %bb.b, !llvm.loop !209
 
 bb.b:                                             ; preds = %.preheader
   %i.fa = tail call i32 @distortion8x8(ptr noundef nonnull @diff64) #17
-  %i.fb = add nsw i32 %i.fa, %.04669              ; 2 uses
-  %i.fc = add i32 %.14968, 1                      ; 2 uses
+  %i.fb = add nsw i32 %i.fa, %.04669              ; 3 uses
+  %i.fc = add nsw i32 %.14968, 1                  ; 2 uses
+  %4 = icmp slt i32 %i.fc, %.047
   %indvars.iv.next84 = add i32 %indvars.iv, 8
   %indvars.iv.next89 = add i32 %indvars.iv88, 4
-  %exitcond.not = icmp eq i32 %i.fc, %.047
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !210
+  br i1 %4, label %.lr.ph, label %._crit_edge, !llvm.loop !210
 
-._crit_edge:                                      ; preds = %bb.b, %bb.a
-  %.046.lcssa = phi i32 [ 0, %bb.a ], [ %i.fb, %bb.b ] ; 2 uses
-  %.045.lcssa = phi i32 [ 0, %bb.a ], [ %i.ey, %bb.b ] ; 2 uses
+._crit_edge:                                      ; preds = %bb.b
   %i.fd = load ptr, ptr @input, align 8, !tbaa !8
   %i.fe = getelementptr inbounds nuw i8, ptr %i.fd, i64 5100
   %i.ff = load i32, ptr %i.fe, align 4, !tbaa !61
   %i.fg = icmp eq i32 %i.ff, 2
-  %i.fh = icmp slt i32 %.046.lcssa, %.045.lcssa
+  %i.fh = icmp slt i32 %i.fb, %i.ey
   %or.cond = select i1 %i.fg, i1 true, i1 %i.fh
   br i1 %or.cond, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge
   %i.fi = load i32, ptr %1, align 4, !tbaa !4
-  %i.fj = sub i32 %.045.lcssa, %.046.lcssa
+  %i.fj = sub i32 %i.ey, %i.fb
   %i.fk = add i32 %i.fj, %i.fi
   store i32 %i.fk, ptr %1, align 4, !tbaa !4
   br label %bb.d

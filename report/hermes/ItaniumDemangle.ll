@@ -201,21 +201,17 @@ bb.a:
 
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZNK4llvh16itanium_demangle8BoolExpr9printLeftER12OutputStream(ptr noundef nonnull align 8 dereferenceable(13) %0, ptr noundef nonnull align 8 dereferenceable(32) %1) unnamed_addr #2 comdat align 2 {
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %4 = load i8, ptr %3, align 4, !tbaa !224, !range !111, !noundef !112
-  %5 = trunc nuw i8 %4 to i1                      ; 2 uses
-  %. = select i1 %5, ptr getelementptr inbounds nuw (i8, ptr @.str.94, i64 4), ptr getelementptr inbounds nuw (i8, ptr @.str.95, i64 5) ; 2 uses
-  %.str.94..str.95 = select i1 %5, ptr @.str.94, ptr @.str.95 ; 3 uses
-  %6 = ptrtoint ptr %. to i64
-  %7 = ptrtoint ptr %.str.94..str.95 to i64
-  %8 = sub i64 %6, %7                             ; 3 uses
-  %9 = icmp eq ptr %., %.str.94..str.95
-  br i1 %9, label %_ZN12OutputStreampLE10StringView.exit, label %bb.a
-
-bb.a:                                             ; preds = %2
+bb.a:
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 12
+  %3 = load i8, ptr %2, align 4, !tbaa !224, !range !111, !noundef !112
+  %4 = trunc nuw i8 %3 to i1                      ; 2 uses
+  %.str.94..str.95 = select i1 %4, ptr @.str.94, ptr @.str.95 ; 2 uses
+  %5 = select i1 %4, i64 ptrtoint (ptr getelementptr inbounds nuw (i8, ptr @.str.94, i64 4) to i64), i64 ptrtoint (ptr getelementptr inbounds nuw (i8, ptr @.str.95, i64 5) to i64)
+  %6 = ptrtoint ptr %.str.94..str.95 to i64
+  %7 = sub i64 %5, %6                             ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !44   ; 2 uses
-  %i.c = add i64 %i.b, %8                         ; 2 uses
+  %i.c = add i64 %i.b, %7                         ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !46   ; 2 uses
   %.not.i.i = icmp ult i64 %i.c, %i.e
@@ -239,17 +235,14 @@ bb.c:                                             ; preds = %bb.b
   tail call void @_ZSt9terminatev() #23
   unreachable
 
-_ZN12OutputStream4growEm.exit.i:                  ; preds = %._ZN12OutputStream4growEm.exit_crit_edge.i, %bb.a
+_ZN12OutputStream4growEm.exit.i:                  ; preds = %bb.a, %._ZN12OutputStream4growEm.exit_crit_edge.i
   %i.i = phi i64 [ %i.b, %bb.a ], [ %.pre6.i, %._ZN12OutputStream4growEm.exit_crit_edge.i ]
   %i.j = phi ptr [ %.pre.i, %bb.a ], [ %i.g, %._ZN12OutputStream4growEm.exit_crit_edge.i ]
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.k, ptr nonnull align 1 %.str.94..str.95, i64 %8, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.k, ptr nonnull align 1 %.str.94..str.95, i64 %7, i1 false)
   %i.l = load i64, ptr %i.a, align 8, !tbaa !44
-  %i.m = add i64 %i.l, %8
+  %i.m = add i64 %i.l, %7
   store i64 %i.m, ptr %i.a, align 8, !tbaa !44
-  br label %_ZN12OutputStreampLE10StringView.exit
-
-_ZN12OutputStreampLE10StringView.exit:            ; preds = %2, %_ZN12OutputStream4growEm.exit.i
   ret void
 }
 

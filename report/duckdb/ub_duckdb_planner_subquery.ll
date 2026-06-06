@@ -201,17 +201,7 @@ bb.a:
   %7 = alloca %"struct.duckdb::JoinCondition", align 8 ; 13 uses
   %8 = alloca %"class.duckdb::unique_ptr.217", align 8 ; 7 uses
   %9 = alloca %"class.duckdb::unique_ptr.217", align 8 ; 7 uses
-  br i1 %4, label %.thread, label %bb.b
-
-.thread:                                          ; preds = %bb.a
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %11 = load ptr, ptr %10, align 8, !tbaa !42
-  %12 = load ptr, ptr %1, align 8, !tbaa !45
-  %13 = ptrtoint ptr %11 to i64
-  %14 = ptrtoint ptr %12 to i64
-  %15 = sub i64 %13, %14
-  %16 = sdiv exact i64 %15, 80
-  br label %bb.c
+  br i1 %4, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -227,15 +217,22 @@ bb.b:                                             ; preds = %bb.a
   %i.k = add nuw i64 %i.b, 1
   %spec.select = select i1 %i.j, i64 %i.k, i64 1
   %spec.select63 = select i1 %i.j, i64 %i.b, i64 0
-  br label %bb.c
+  br label %.lr.ph
 
-bb.c:                                             ; preds = %bb.b, %.thread
-  %.027 = phi i64 [ %16, %.thread ], [ %spec.select, %bb.b ] ; 2 uses
-  %.026 = phi i64 [ 0, %.thread ], [ %spec.select63, %bb.b ] ; 2 uses
-  %17 = icmp ult i64 %.026, %.027
-  br i1 %17, label %.lr.ph, label %._crit_edge
+bb.c:                                             ; preds = %bb.a
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %11 = load ptr, ptr %10, align 8, !tbaa !42     ; 2 uses
+  %12 = load ptr, ptr %1, align 8, !tbaa !45      ; 2 uses
+  %13 = ptrtoint ptr %11 to i64
+  %14 = ptrtoint ptr %12 to i64
+  %15 = sub i64 %13, %14
+  %16 = sdiv exact i64 %15, 80
+  %.not109 = icmp eq ptr %11, %12
+  br i1 %.not109, label %._crit_edge, label %.lr.ph
 
-.lr.ph:                                           ; preds = %bb.c
+.lr.ph:                                           ; preds = %bb.b, %bb.c
+  %.02698 = phi i64 [ %spec.select63, %bb.b ], [ 0, %bb.c ]
+  %.02797 = phi i64 [ %spec.select, %bb.b ], [ %16, %bb.c ]
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.n = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 6 uses
@@ -249,7 +246,7 @@ bb.c:                                             ; preds = %bb.b, %.thread
   ret void
 
 bb.d:                                             ; preds = %.lr.ph, %_ZN6duckdb13JoinConditionD2Ev.exit
-  %storemerge73 = phi i64 [ %.026, %.lr.ph ], [ %i.bt, %_ZN6duckdb13JoinConditionD2Ev.exit ] ; 5 uses
+  %storemerge73 = phi i64 [ %.02698, %.lr.ph ], [ %i.bt, %_ZN6duckdb13JoinConditionD2Ev.exit ] ; 5 uses
   %i.s = load ptr, ptr %i.l, align 8, !tbaa !42
   %i.t = load ptr, ptr %1, align 8, !tbaa !45     ; 2 uses
   %i.u = ptrtoint ptr %i.s to i64
@@ -442,7 +439,7 @@ _ZNKSt14default_deleteIN6duckdb10ExpressionEEclEPS1_.exit.i2.i: ; preds = %_ZNSt
 _ZN6duckdb13JoinConditionD2Ev.exit:               ; preds = %_ZNSt10unique_ptrIN6duckdb10ExpressionESt14default_deleteIS1_EED2Ev.exit.i, %_ZNKSt14default_deleteIN6duckdb10ExpressionEEclEPS1_.exit.i2.i
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #22
   %i.bt = add nuw i64 %storemerge73, 1            ; 2 uses
-  %exitcond.not = icmp eq i64 %i.bt, %.027
+  %exitcond.not = icmp eq i64 %i.bt, %.02797
   br i1 %exitcond.not, label %._crit_edge, label %bb.d, !llvm.loop !382
 
 bb.p:                                             ; preds = %bb.k

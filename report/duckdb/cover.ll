@@ -201,12 +201,12 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %5, i64 4
   %i.h = load i32, ptr %i.g, align 4, !tbaa !71   ; 3 uses
   %i.i = icmp eq i32 %i.h, 0                      ; 3 uses
-  %i.j = select i1 %i.i, i32 6, i32 %i.h          ; 2 uses
-  %i.k = select i1 %i.i, i32 8, i32 %i.h          ; 3 uses
+  %i.j = select i1 %i.i, i32 6, i32 %i.h
+  %i.k = select i1 %i.i, i32 8, i32 %i.h          ; 2 uses
   %i.l = load i32, ptr %5, align 8, !tbaa !61     ; 3 uses
   %i.m = icmp eq i32 %i.l, 0                      ; 3 uses
-  %i.n = select i1 %i.m, i32 50, i32 %i.l         ; 3 uses
-  %i.o = select i1 %i.m, i32 2000, i32 %i.l       ; 2 uses
+  %i.n = select i1 %i.m, i32 50, i32 %i.l         ; 2 uses
+  %i.o = select i1 %i.m, i32 2000, i32 %i.l
   %i.p = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.q = load i32, ptr %i.p, align 8, !tbaa !134  ; 2 uses
   %i.r = icmp eq i32 %i.q, 0
@@ -240,9 +240,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a
   %i.ai = icmp ult i32 %i.n, %i.k
-  %8 = icmp ult i32 %i.o, %i.n
-  %or.cond = or i1 %i.ai, %8
-  br i1 %or.cond, label %bb.e, label %bb.g
+  br i1 %i.ai, label %bb.e, label %bb.g
 
 bb.e:                                             ; preds = %bb.d
   %i.aj = icmp sgt i32 %i.ab, 0
@@ -308,20 +306,16 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.bi = tail call i32 @llvm.usub.sat.i32(i32 %i.ab, i32 1)
   store i32 %i.bi, ptr @_ZL14g_displayLevel, align 4, !tbaa !3
   %i.bj = icmp sgt i32 %i.ab, 1                   ; 3 uses
-  br i1 %i.bj, label %bb.p, label %9
+  br i1 %i.bj, label %bb.p, label %.lr.ph200
 
 bb.p:                                             ; preds = %bb.o
   %i.bk = load ptr, ptr @stderr, align 8, !tbaa !14
   %i.bl = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.bk, ptr noundef nonnull @.str.8, i32 noundef %i.z) #22 ; 0 uses
   %i.bm = load ptr, ptr @stderr, align 8, !tbaa !14
   %i.bn = tail call i32 @fflush(ptr noundef %i.bm) ; 0 uses
-  br label %9
+  br label %.lr.ph200
 
-9:                                                ; preds = %bb.p, %bb.o
-  %.not143195 = icmp ugt i32 %i.j, %i.k
-  br i1 %.not143195, label %._crit_edge201, label %.lr.ph200
-
-.lr.ph200:                                        ; preds = %9
+.lr.ph200:                                        ; preds = %bb.p, %bb.o
   %i.bo = icmp sgt i32 %i.ab, 2                   ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %7, i64 56
   %i.bq = uitofp i64 %1 to double
@@ -393,13 +387,13 @@ bb.z:                                             ; preds = %bb.y
   %i.cs = call i32 @fflush(ptr noundef %i.cr)     ; 0 uses
   br label %.lr.ph.preheader
 
-.lr.ph.preheader:                                 ; preds = %bb.x, %bb.y, %bb.z
+.lr.ph.preheader:                                 ; preds = %bb.z, %bb.y, %bb.x
   %i.ct = add i32 %.0117197, -1
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.aw
-  %.1114194 = phi i32 [ %.2115.ph, %bb.aw ], [ %.0113198, %.lr.ph.preheader ] ; 3 uses
-  %.0118193 = phi i32 [ %i.eo, %bb.aw ], [ %i.n, %.lr.ph.preheader ] ; 5 uses
+  %.1114194 = phi i32 [ %.0113198, %.lr.ph.preheader ], [ %.2115.ph, %bb.aw ] ; 3 uses
+  %.0118193 = phi i32 [ %i.n, %.lr.ph.preheader ], [ %i.eo, %bb.aw ] ; 5 uses
   %i.cu = call noalias dereferenceable_or_null(72) ptr @malloc(i64 noundef 72) #25 ; 13 uses
   br i1 %i.bo, label %bb.aa, label %bb.ab
 
@@ -612,7 +606,7 @@ bb.be:                                            ; preds = %bb.bc, %bb.bd
   %.not143 = icmp ugt i32 %i.et, %i.k
   br i1 %.not143, label %._crit_edge201, label %bb.q, !llvm.loop !147
 
-._crit_edge201:                                   ; preds = %bb.be, %9
+._crit_edge201:                                   ; preds = %bb.be
   br i1 %i.bj, label %bb.bf, label %bb.bg
 
 bb.bf:                                            ; preds = %._crit_edge201

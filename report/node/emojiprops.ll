@@ -201,21 +201,17 @@ bb.e:                                             ; preds = %bb.d
   %i.k = add i32 %2, -72
   %or.cond5.i = icmp ult i32 %i.k, -7
   %or.cond41.i = or i1 %or.cond5.i, %i.j
-  br i1 %or.cond41.i, label %_ZNK6icu_7810EmojiProps21hasBinaryPropertyImplEPKDsi9UProperty.exit, label %5
+  br i1 %or.cond41.i, label %_ZNK6icu_7810EmojiProps21hasBinaryPropertyImplEPKDsi9UProperty.exit, label %.lr.ph.i
 
 bb.f:                                             ; preds = %bb.c
   %.old.i = add i32 %2, -72
   %or.cond5.old.i = icmp ult i32 %.old.i, -7
-  br i1 %or.cond5.old.i, label %_ZNK6icu_7810EmojiProps21hasBinaryPropertyImplEPKDsi9UProperty.exit, label %5
+  br i1 %or.cond5.old.i, label %_ZNK6icu_7810EmojiProps21hasBinaryPropertyImplEPKDsi9UProperty.exit, label %.lr.ph.i
 
-5:                                                ; preds = %bb.f, %bb.e
-  %6 = icmp eq i32 %2, 71                         ; 2 uses
-  %spec.select.i = select i1 %6, i32 70, i32 %2   ; 2 uses
-  %spec.select39.i = select i1 %6, i32 65, i32 %2 ; 2 uses
-  %.not43.not.i = icmp samesign ugt i32 %spec.select39.i, %spec.select.i
-  br i1 %.not43.not.i, label %_ZNK6icu_7810EmojiProps21hasBinaryPropertyImplEPKDsi9UProperty.exit, label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %5
+.lr.ph.i:                                         ; preds = %bb.f, %bb.e
+  %5 = icmp eq i32 %2, 71                         ; 2 uses
+  %spec.select.i = select i1 %5, i32 70, i32 %2
+  %spec.select39.i = select i1 %5, i32 65, i32 %2
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -252,13 +248,13 @@ bb.h:                                             ; preds = %bb.g
   %.not.i = icmp sgt i32 %spec.select.i, %i.v
   br i1 %.not.i, label %bb.g, label %_ZNK6icu_7810EmojiProps21hasBinaryPropertyImplEPKDsi9UProperty.exit, !llvm.loop !8
 
-_ZNK6icu_7810EmojiProps21hasBinaryPropertyImplEPKDsi9UProperty.exit: ; preds = %bb.h, %.critedge.i, %bb.b, %bb.d, %bb.e, %bb.f, %5
-  %7 = phi i8 [ 0, %bb.f ], [ 0, %bb.b ], [ 0, %bb.d ], [ 0, %bb.e ], [ 0, %5 ], [ 0, %.critedge.i ], [ 1, %bb.h ]
+_ZNK6icu_7810EmojiProps21hasBinaryPropertyImplEPKDsi9UProperty.exit: ; preds = %bb.h, %.critedge.i, %bb.b, %bb.d, %bb.e, %bb.f
+  %6 = phi i8 [ 0, %bb.f ], [ 0, %bb.b ], [ 0, %bb.d ], [ 0, %bb.e ], [ 1, %bb.h ], [ 0, %.critedge.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
   br label %bb.i
 
 bb.i:                                             ; preds = %_ZNK6icu_7810EmojiProps21hasBinaryPropertyImplEPKDsi9UProperty.exit, %bb.a
-  %i.w = phi i8 [ 0, %bb.a ], [ %7, %_ZNK6icu_7810EmojiProps21hasBinaryPropertyImplEPKDsi9UProperty.exit ]
+  %i.w = phi i8 [ 0, %bb.a ], [ %6, %_ZNK6icu_7810EmojiProps21hasBinaryPropertyImplEPKDsi9UProperty.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret i8 %i.w
 }
@@ -287,21 +283,17 @@ bb.d:                                             ; preds = %bb.c
   %i.g = add i32 %3, -72
   %or.cond5 = icmp ult i32 %i.g, -7
   %or.cond41 = or i1 %or.cond5, %i.f
-  br i1 %or.cond41, label %._crit_edge, label %6
+  br i1 %or.cond41, label %._crit_edge, label %.lr.ph
 
 bb.e:                                             ; preds = %bb.b
   %.old = add i32 %3, -72
   %or.cond5.old = icmp ult i32 %.old, -7
-  br i1 %or.cond5.old, label %._crit_edge, label %6
+  br i1 %or.cond5.old, label %._crit_edge, label %.lr.ph
 
-6:                                                ; preds = %bb.d, %bb.e
-  %7 = icmp eq i32 %3, 71                         ; 2 uses
-  %spec.select = select i1 %7, i32 70, i32 %3     ; 2 uses
-  %spec.select39 = select i1 %7, i32 65, i32 %3   ; 2 uses
-  %.not43.not = icmp samesign ugt i32 %spec.select39, %spec.select
-  br i1 %.not43.not, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %6
+.lr.ph:                                           ; preds = %bb.d, %bb.e
+  %6 = icmp eq i32 %3, 71                         ; 2 uses
+  %spec.select = select i1 %6, i32 70, i32 %3
+  %spec.select39 = select i1 %6, i32 65, i32 %3
   %i.h = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.i = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.j = getelementptr inbounds nuw i8, ptr %4, i64 24
@@ -338,8 +330,8 @@ bb.g:                                             ; preds = %bb.f
   %.not = icmp sgt i32 %spec.select, %i.r
   br i1 %.not, label %bb.f, label %._crit_edge, !llvm.loop !8
 
-._crit_edge:                                      ; preds = %bb.g, %.critedge, %6, %bb.e, %bb.c, %bb.d, %bb.a
-  %.6 = phi i8 [ 0, %bb.e ], [ 0, %bb.a ], [ 0, %bb.c ], [ 0, %bb.d ], [ 0, %6 ], [ 1, %bb.g ], [ 0, %.critedge ]
+._crit_edge:                                      ; preds = %.critedge, %bb.g, %bb.e, %bb.c, %bb.d, %bb.a
+  %.6 = phi i8 [ 0, %bb.e ], [ 0, %bb.a ], [ 0, %bb.c ], [ 0, %bb.d ], [ 0, %.critedge ], [ 1, %bb.g ]
   ret i8 %.6
 }
 
@@ -358,16 +350,12 @@ bb.a:
   %i.c = add i32 %2, -72
   %or.cond = icmp ult i32 %i.c, -7
   %or.cond27 = or i1 %or.cond, %i.b
-  br i1 %or.cond27, label %.loopexit, label %6
+  br i1 %or.cond27, label %.loopexit, label %.lr.ph33
 
-6:                                                ; preds = %bb.a
-  %7 = icmp eq i32 %2, 71                         ; 2 uses
-  %spec.select = select i1 %7, i32 70, i32 %2     ; 2 uses
-  %spec.select28 = select i1 %7, i32 65, i32 %2   ; 2 uses
-  %.not2430 = icmp samesign ugt i32 %spec.select28, %spec.select
-  br i1 %.not2430, label %.loopexit, label %.lr.ph33
-
-.lr.ph33:                                         ; preds = %6
+.lr.ph33:                                         ; preds = %bb.a
+  %6 = icmp eq i32 %2, 71                         ; 2 uses
+  %spec.select = select i1 %6, i32 70, i32 %2
+  %spec.select28 = select i1 %6, i32 65, i32 %2
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 48
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 50
@@ -426,7 +414,7 @@ bb.d:                                             ; preds = %._crit_edge, %bb.b
   %.not24.not = icmp sgt i32 %spec.select, %i.aa
   br i1 %.not24.not, label %bb.b, label %.loopexit, !llvm.loop !10
 
-.loopexit:                                        ; preds = %bb.d, %6, %bb.a
+.loopexit:                                        ; preds = %bb.d, %bb.a
   ret void
 }
 
