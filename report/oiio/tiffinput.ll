@@ -201,9 +201,9 @@ begin_hunk_0
 @"_ZTSZN11OpenImageIO4v3_111thread_pool4pushIZNS0_9TIFFInput24read_native_tiles_lockedEiiiiiiiimNS0_4spanISt4byteLm18446744073709551615EEEE3$_0EESt6futureIDTclfp_Li0EEEEOT_EUliE_" = internal constant [173 x i8] c"ZN11OpenImageIO4v3_111thread_pool4pushIZNS0_9TIFFInput24read_native_tiles_lockedEiiiiiiiimNS0_4spanISt4byteLm18446744073709551615EEEE3$_0EESt6futureIDTclfp_Li0EEEEOT_EUliE_\00", align 1
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @__cxx_global_var_init, ptr @_ZN3fmt3v1212format_facetISt6localeE2idE }]
 @llvm.used = appending global [1 x ptr] [ptr @_ZN3fmt3v1212format_facetISt6localeE2idE], section "llvm.metadata"
-@switch.table._ZN11OpenImageIO4v3_19TIFFInput8readspecEb = private unnamed_addr constant [3 x i64] [i64 260, i64 261, i64 266], align 8
-@switch.table._ZN11OpenImageIO4v3_19TIFFInput8readspecEb.98 = private unnamed_addr constant [3 x i64] [i64 262, i64 263, i64 267], align 8
-@switch.table._ZN11OpenImageIO4v3_19TIFFInput8readspecEb.99 = private unnamed_addr constant [5 x i32] [i32 1, i32 1, i32 3, i32 1, i32 1], align 4
+@switch.table._ZN11OpenImageIO4v3_19TIFFInput8readspecEb = private unnamed_addr constant [3 x i16] [i16 260, i16 261, i16 266], align 8
+@switch.table._ZN11OpenImageIO4v3_19TIFFInput8readspecEb.98 = private unnamed_addr constant [3 x i16] [i16 262, i16 263, i16 267], align 8
+@switch.table._ZN11OpenImageIO4v3_19TIFFInput8readspecEb.99 = private unnamed_addr constant [5 x i8] c"\01\01\03\01\01", align 4
 
 @_ZN11OpenImageIO4v3_19TIFFInputC1Ev = hidden unnamed_addr alias void (ptr), ptr @_ZN11OpenImageIO4v3_19TIFFInputC2Ev
 @_ZN11OpenImageIO4v3_19TIFFInputD1Ev = hidden unnamed_addr alias void (ptr), ptr @_ZN11OpenImageIO4v3_19TIFFInputD2Ev
@@ -606,18 +606,20 @@ bb.ab:                                            ; preds = %bb.x
 
 switch.lookup:                                    ; preds = %bb.z
   %i.gn = zext nneg i16 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN11OpenImageIO4v3_19TIFFInput8readspecEb, i64 %i.gn
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN11OpenImageIO4v3_19TIFFInput8readspecEb, i64 %i.gn
+  %switch.load = load i16, ptr %switch.gep, align 2
+  %switch.ext = zext i16 %switch.load to i64
   br label %bb.ac
 
 switch.lookup570:                                 ; preds = %bb.aa
   %i.go = zext nneg i16 %switch.tableidx569 to i64
-  %switch.gep571 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN11OpenImageIO4v3_19TIFFInput8readspecEb.98, i64 %i.go
-  %switch.load572 = load i64, ptr %switch.gep571, align 8
+  %switch.gep571 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN11OpenImageIO4v3_19TIFFInput8readspecEb.98, i64 %i.go
+  %switch.load572 = load i16, ptr %switch.gep571, align 2
+  %switch.ext573 = zext i16 %switch.load572 to i64
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.z, %bb.aa, %switch.lookup570, %switch.lookup, %bb.x, %bb.ab, %bb.y
-  %.sink = phi i64 [ %., %bb.ab ], [ %switch.load572, %switch.lookup570 ], [ %switch.load, %switch.lookup ], [ %switch.select, %bb.y ], [ 256, %bb.x ], [ 256, %bb.aa ], [ 256, %bb.z ]
+  %.sink = phi i64 [ %., %bb.ab ], [ %switch.ext573, %switch.lookup570 ], [ %switch.ext, %switch.lookup ], [ %switch.select, %bb.y ], [ 256, %bb.x ], [ 256, %bb.aa ], [ 256, %bb.z ]
   call void @_ZN11OpenImageIO4v3_19ImageSpec10set_formatENS0_8TypeDescE(ptr noundef nonnull align 8 dereferenceable(160) %i.en, i64 %.sink) #36
   br i1 %1, label %bb.ad, label %.loopexit
 
@@ -978,12 +980,13 @@ bb.aq:                                            ; preds = %bb.ap
 
 switch.lookup573:                                 ; preds = %bb.aq
   %i.kb = zext nneg i16 %i.jz to i64
-  %switch.gep574 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN11OpenImageIO4v3_19TIFFInput8readspecEb.99, i64 %i.kb
-  %switch.load575 = load i32, ptr %switch.gep574, align 4
+  %switch.gep575 = getelementptr inbounds nuw i8, ptr @switch.table._ZN11OpenImageIO4v3_19TIFFInput8readspecEb.99, i64 %i.kb
+  %switch.load576 = load i8, ptr %switch.gep575, align 1
+  %switch.ext577 = zext i8 %switch.load576 to i32
   br label %bb.ar
 
 bb.ar:                                            ; preds = %switch.lookup573, %bb.aq
-  %.085 = phi i32 [ %switch.load575, %switch.lookup573 ], [ 3, %bb.aq ] ; 2 uses
+  %.085 = phi i32 [ %switch.ext577, %switch.lookup573 ], [ 3, %bb.aq ] ; 2 uses
   %i.kc = load i16, ptr %i.aw, align 2
   %i.kd = zext i16 %i.kc to i32
   %i.ke = icmp samesign ult i32 %.085, %i.kd

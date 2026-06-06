@@ -41,8 +41,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.35 = private unnamed_addr constant [36 x i8] c"zipEntrySafe(zl, zlbytes, p, &e, 0)\00", align 1
 @str = private unnamed_addr constant [7 x i8] c"{end}\0A\00", align 1
 @str.1 = private unnamed_addr constant [3 x i8] c"\0A}\00", align 1
-@switch.table.zipEntrySafe = private unnamed_addr constant [32 x i32] [i32 2, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 4, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 8, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 1], align 4
-@switch.table.__ziplistInsert = private unnamed_addr constant [32 x i64] [i64 2, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 4, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 8, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 3, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 1], align 8
+@switch.table.__ziplistInsert = private unnamed_addr constant [32 x i8] [i8 2, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 4, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 8, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 3, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 1], align 8
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define dso_local range(i32 0, 2) i32 @ziplistSafeToAdd(ptr nofree noundef readonly captures(address_is_null) %0, i64 noundef %1) local_unnamed_addr #0 {
@@ -445,12 +444,13 @@ switch.hole_check:                                ; preds = %bb.j
 
 switch.lookup:                                    ; preds = %switch.hole_check
   %i.ak = zext nneg i8 %i.ag to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.zipEntrySafe, i64 %i.ak
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.__ziplistInsert, i64 %i.ak
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %.sink.split
 
 .sink.split:                                      ; preds = %switch.lookup, %bb.f, %bb.h, %bb.g
-  %.sink70 = phi i32 [ %i.z, %bb.g ], [ %i.ac, %bb.h ], [ %i.r, %bb.f ], [ %switch.load, %switch.lookup ]
+  %.sink70 = phi i32 [ %i.z, %bb.g ], [ %i.ac, %bb.h ], [ %i.r, %bb.f ], [ %switch.ext, %switch.lookup ]
   %.ph.ph = phi i32 [ 2, %bb.g ], [ 5, %bb.h ], [ 1, %bb.f ], [ 1, %switch.lookup ]
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 12
   store i32 %.sink70, ptr %i.al, align 4, !tbaa !23
@@ -588,12 +588,13 @@ switch.hole_check:                                ; preds = %bb.k
 
 switch.lookup:                                    ; preds = %switch.hole_check
   %i.as = zext nneg i8 %i.am to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.zipEntrySafe, i64 %i.as
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.__ziplistInsert, i64 %i.as
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %.sink.split
 
 .sink.split:                                      ; preds = %switch.lookup, %bb.h, %bb.i, %bb.g
-  %.sink = phi i32 [ %i.af, %bb.h ], [ %i.ai, %bb.i ], [ %switch.load, %switch.lookup ], [ %i.x, %bb.g ] ; 2 uses
+  %.sink = phi i32 [ %i.af, %bb.h ], [ %i.ai, %bb.i ], [ %switch.ext, %switch.lookup ], [ %i.x, %bb.g ] ; 2 uses
   %.ph233.ph = phi i32 [ 2, %bb.h ], [ 5, %bb.i ], [ 1, %switch.lookup ], [ 1, %bb.g ]
   %i.at = getelementptr inbounds nuw i8, ptr %3, i64 12
   store i32 %.sink, ptr %i.at, align 4, !tbaa !23
@@ -996,12 +997,13 @@ bb.s:                                             ; preds = %bb.r
 
 switch.lookup:                                    ; preds = %bb.o
   %i.ar = zext nneg i32 %i.ai to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.__ziplistInsert, i64 %i.ar
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.__ziplistInsert, i64 %i.ar
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   br label %bb.t
 
 bb.t:                                             ; preds = %switch.lookup, %bb.p
-  %.093.in.ph = phi i64 [ 0, %bb.p ], [ %switch.load, %switch.lookup ]
+  %.093.in.ph = phi i64 [ 0, %bb.p ], [ %switch.ext, %switch.lookup ]
   %i.as = icmp ult i32 %.1, 254                   ; 2 uses
   %i.at = select i1 %i.as, i32 1, i32 5           ; 2 uses
   %i.au = zext nneg i32 %i.at to i64

@@ -201,9 +201,8 @@ $_ZSt19piecewise_construct = comdat any
 @_ZTVSt15basic_streambufIcSt11char_traitsIcEE = external unnamed_addr constant { [16 x ptr] }, align 8
 @_ZSt19piecewise_construct = linkonce_odr constant %"struct.std::piecewise_construct_t" zeroinitializer, comdat, align 1
 @.str.56 = private unnamed_addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1
-@switch.table._ZN6Assimp4Ogre13VertexElement14ComponentCountENS1_4TypeE = private unnamed_addr constant [28 x i64] [i64 1, i64 2, i64 3, i64 4, i64 1, i64 1, i64 2, i64 3, i64 4, i64 4, i64 1, i64 1, i64 1, i64 2, i64 3, i64 4, i64 1, i64 2, i64 3, i64 4, i64 1, i64 2, i64 3, i64 4, i64 1, i64 2, i64 3, i64 4], align 8
-@switch.table._ZN6Assimp4Ogre7SubMesh19ConvertToAssimpMeshEPNS0_4MeshE.3 = private unnamed_addr constant [28 x i64] [i64 4, i64 8, i64 12, i64 16, i64 4, i64 2, i64 4, i64 6, i64 8, i64 4, i64 4, i64 4, i64 8, i64 16, i64 24, i64 32, i64 2, i64 4, i64 6, i64 8, i64 4, i64 8, i64 12, i64 16, i64 4, i64 8, i64 12, i64 16], align 8
-@switch.table._ZN6Assimp4Ogre7SubMesh19ConvertToAssimpMeshEPNS0_4MeshE.7 = private unnamed_addr constant [28 x i32] [i32 4, i32 8, i32 12, i32 16, i32 4, i32 2, i32 4, i32 6, i32 8, i32 4, i32 4, i32 4, i32 8, i32 16, i32 24, i32 32, i32 2, i32 4, i32 6, i32 8, i32 4, i32 8, i32 12, i32 16, i32 4, i32 8, i32 12, i32 16], align 4
+@switch.table._ZN6Assimp4Ogre13VertexElement14ComponentCountENS1_4TypeE = private unnamed_addr constant [28 x i8] c"\01\02\03\04\01\01\02\03\04\04\01\01\01\02\03\04\01\02\03\04\01\02\03\04\01\02\03\04", align 8
+@switch.table._ZN6Assimp4Ogre7SubMesh19ConvertToAssimpMeshEPNS0_4MeshE.7 = private unnamed_addr constant [28 x i8] c"\04\08\0C\10\04\02\04\06\08\04\04\04\08\10\18 \02\04\06\08\04\08\0C\10\04\08\0C\10", align 8
 
 @_ZN6Assimp4Ogre13VertexElementC1Ev = hidden unnamed_addr alias void (ptr), ptr @_ZN6Assimp4Ogre13VertexElementC2Ev
 @_ZN6Assimp4Ogre11IVertexDataC1Ev = hidden unnamed_addr alias void (ptr), ptr @_ZN6Assimp4Ogre11IVertexDataC2Ev
@@ -254,12 +253,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.d = zext nneg i32 %i.b to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6Assimp4Ogre7SubMesh19ConvertToAssimpMeshEPNS0_4MeshE.3, i64 %i.d
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6Assimp4Ogre7SubMesh19ConvertToAssimpMeshEPNS0_4MeshE.7, i64 %i.d
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   br label %_ZN6Assimp4Ogre13VertexElement8TypeSizeENS1_4TypeE.exit
 
 _ZN6Assimp4Ogre13VertexElement8TypeSizeENS1_4TypeE.exit: ; preds = %bb.a, %switch.lookup
-  %.0.i = phi i64 [ %switch.load, %switch.lookup ], [ 0, %bb.a ]
+  %.0.i = phi i64 [ %switch.ext, %switch.lookup ], [ 0, %bb.a ]
   ret i64 %.0.i
 }
 
@@ -271,12 +271,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i32 %0 to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6Assimp4Ogre7SubMesh19ConvertToAssimpMeshEPNS0_4MeshE.3, i64 %i.b
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6Assimp4Ogre7SubMesh19ConvertToAssimpMeshEPNS0_4MeshE.7, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %switch.lookup
-  %.0 = phi i64 [ %switch.load, %switch.lookup ], [ 0, %bb.a ]
+  %.0 = phi i64 [ %switch.ext, %switch.lookup ], [ 0, %bb.a ]
   ret i64 %.0
 }
 
@@ -290,12 +291,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.d = zext nneg i32 %i.b to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6Assimp4Ogre13VertexElement14ComponentCountENS1_4TypeE, i64 %i.d
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6Assimp4Ogre13VertexElement14ComponentCountENS1_4TypeE, i64 %i.d
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   br label %_ZN6Assimp4Ogre13VertexElement14ComponentCountENS1_4TypeE.exit
 
 _ZN6Assimp4Ogre13VertexElement14ComponentCountENS1_4TypeE.exit: ; preds = %bb.a, %switch.lookup
-  %.0.i = phi i64 [ %switch.load, %switch.lookup ], [ 0, %bb.a ]
+  %.0.i = phi i64 [ %switch.ext, %switch.lookup ], [ 0, %bb.a ]
   ret i64 %.0.i
 }
 
@@ -307,12 +309,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i32 %0 to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6Assimp4Ogre13VertexElement14ComponentCountENS1_4TypeE, i64 %i.b
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6Assimp4Ogre13VertexElement14ComponentCountENS1_4TypeE, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %switch.lookup
-  %.0 = phi i64 [ %switch.load, %switch.lookup ], [ 0, %bb.a ]
+  %.0 = phi i64 [ %switch.ext, %switch.lookup ], [ 0, %bb.a ]
   ret i64 %.0
 }
 
@@ -715,12 +718,13 @@ bb.b:                                             ; preds = %.lr.ph
 
 switch.lookup:                                    ; preds = %bb.b
   %i.k = zext nneg i32 %i.i to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6Assimp4Ogre7SubMesh19ConvertToAssimpMeshEPNS0_4MeshE.7, i64 %i.k
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6Assimp4Ogre7SubMesh19ConvertToAssimpMeshEPNS0_4MeshE.7, i64 %i.k
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit
 
 _ZNK6Assimp4Ogre13VertexElement4SizeEv.exit:      ; preds = %bb.b, %switch.lookup
-  %.0.i.i = phi i32 [ %switch.load, %switch.lookup ], [ 0, %bb.b ]
+  %.0.i.i = phi i32 [ %switch.ext, %switch.lookup ], [ 0, %bb.b ]
   %i.l = add i32 %.0.i.i, %.012
   br label %bb.c
 
@@ -1123,12 +1127,13 @@ bb.am:                                            ; preds = %bb.aj, %_ZN6Assimp4
 
 switch.lookup:                                    ; preds = %bb.am
   %i.ha = zext nneg i32 %i.gy to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6Assimp4Ogre7SubMesh19ConvertToAssimpMeshEPNS0_4MeshE.3, i64 %i.ha
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6Assimp4Ogre7SubMesh19ConvertToAssimpMeshEPNS0_4MeshE.7, i64 %i.ha
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   br label %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit
 
 _ZNK6Assimp4Ogre13VertexElement4SizeEv.exit:      ; preds = %bb.am, %switch.lookup
-  %.0.i.i = phi i64 [ %switch.load, %switch.lookup ], [ 0, %bb.am ] ; 3 uses
+  %.0.i.i = phi i64 [ %switch.ext, %switch.lookup ], [ 0, %bb.am ] ; 3 uses
   br i1 %.not213, label %bb.an, label %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit324
 
 bb.an:                                            ; preds = %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit
@@ -1139,12 +1144,13 @@ bb.an:                                            ; preds = %_ZNK6Assimp4Ogre13V
 
 switch.lookup521:                                 ; preds = %bb.an
   %i.he = zext nneg i32 %i.hc to i64
-  %switch.gep522 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6Assimp4Ogre7SubMesh19ConvertToAssimpMeshEPNS0_4MeshE.3, i64 %i.he
-  %switch.load523 = load i64, ptr %switch.gep522, align 8
+  %switch.gep522 = getelementptr inbounds nuw i8, ptr @switch.table._ZN6Assimp4Ogre7SubMesh19ConvertToAssimpMeshEPNS0_4MeshE.7, i64 %i.he
+  %switch.load523 = load i8, ptr %switch.gep522, align 1
+  %switch.ext524 = zext i8 %switch.load523 to i64
   br label %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit324
 
 _ZNK6Assimp4Ogre13VertexElement4SizeEv.exit324:   ; preds = %bb.an, %switch.lookup521, %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit
-  %i.hf = phi i64 [ 0, %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit ], [ %switch.load523, %switch.lookup521 ], [ 0, %bb.an ] ; 3 uses
+  %i.hf = phi i64 [ 0, %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit ], [ %switch.ext524, %switch.lookup521 ], [ 0, %bb.an ] ; 3 uses
   br i1 %.not215, label %bb.ao, label %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit326
 
 bb.ao:                                            ; preds = %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit324
@@ -1155,12 +1161,13 @@ bb.ao:                                            ; preds = %_ZNK6Assimp4Ogre13V
 
 switch.lookup524:                                 ; preds = %bb.ao
   %i.hj = zext nneg i32 %i.hh to i64
-  %switch.gep525 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6Assimp4Ogre7SubMesh19ConvertToAssimpMeshEPNS0_4MeshE.3, i64 %i.hj
-  %switch.load526 = load i64, ptr %switch.gep525, align 8
+  %switch.gep526 = getelementptr inbounds nuw i8, ptr @switch.table._ZN6Assimp4Ogre7SubMesh19ConvertToAssimpMeshEPNS0_4MeshE.7, i64 %i.hj
+  %switch.load527 = load i8, ptr %switch.gep526, align 1
+  %switch.ext528 = zext i8 %switch.load527 to i64
   br label %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit326
 
 _ZNK6Assimp4Ogre13VertexElement4SizeEv.exit326:   ; preds = %bb.ao, %switch.lookup524, %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit324
-  %i.hk = phi i64 [ 0, %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit324 ], [ %switch.load526, %switch.lookup524 ], [ 0, %bb.ao ] ; 3 uses
+  %i.hk = phi i64 [ 0, %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit324 ], [ %switch.ext528, %switch.lookup524 ], [ 0, %bb.ao ] ; 3 uses
   br i1 %.not216, label %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit328, label %bb.ap
 
 bb.ap:                                            ; preds = %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit326
@@ -1171,12 +1178,13 @@ bb.ap:                                            ; preds = %_ZNK6Assimp4Ogre13V
 
 switch.lookup527:                                 ; preds = %bb.ap
   %i.ho = zext nneg i32 %i.hm to i64
-  %switch.gep528 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6Assimp4Ogre7SubMesh19ConvertToAssimpMeshEPNS0_4MeshE.3, i64 %i.ho
-  %switch.load529 = load i64, ptr %switch.gep528, align 8
+  %switch.gep530 = getelementptr inbounds nuw i8, ptr @switch.table._ZN6Assimp4Ogre7SubMesh19ConvertToAssimpMeshEPNS0_4MeshE.7, i64 %i.ho
+  %switch.load531 = load i8, ptr %switch.gep530, align 1
+  %switch.ext532 = zext i8 %switch.load531 to i64
   br label %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit328
 
 _ZNK6Assimp4Ogre13VertexElement4SizeEv.exit328:   ; preds = %bb.ap, %switch.lookup527, %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit326
-  %i.hp = phi i64 [ 0, %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit326 ], [ %switch.load529, %switch.lookup527 ], [ 0, %bb.ap ] ; 3 uses
+  %i.hp = phi i64 [ 0, %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit326 ], [ %switch.ext532, %switch.lookup527 ], [ 0, %bb.ap ] ; 3 uses
   %i.hq = load i16, ptr %i.dq, align 2
   %i.hr = load ptr, ptr %i.ai, align 8            ; 5 uses
   %i.hs = load ptr, ptr %i.ak, align 8            ; 5 uses
@@ -1199,12 +1207,13 @@ bb.aq:                                            ; preds = %.lr.ph.i329
 
 switch.lookup530:                                 ; preds = %bb.aq
   %i.hz = zext nneg i32 %i.hx to i64
-  %switch.gep531 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6Assimp4Ogre7SubMesh19ConvertToAssimpMeshEPNS0_4MeshE.7, i64 %i.hz
-  %switch.load532 = load i32, ptr %switch.gep531, align 4
+  %switch.gep534 = getelementptr inbounds nuw i8, ptr @switch.table._ZN6Assimp4Ogre7SubMesh19ConvertToAssimpMeshEPNS0_4MeshE.7, i64 %i.hz
+  %switch.load535 = load i8, ptr %switch.gep534, align 1
+  %switch.ext536 = zext i8 %switch.load535 to i32
   br label %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit.i
 
 _ZNK6Assimp4Ogre13VertexElement4SizeEv.exit.i:    ; preds = %bb.aq, %switch.lookup530
-  %.0.i.i.i = phi i32 [ %switch.load532, %switch.lookup530 ], [ 0, %bb.aq ]
+  %.0.i.i.i = phi i32 [ %switch.ext536, %switch.lookup530 ], [ 0, %bb.aq ]
   %i.ia = add i32 %.0.i.i.i, %.012.i
   br label %bb.ar
 
@@ -1242,12 +1251,13 @@ bb.at:                                            ; preds = %.lr.ph.i332
 
 switch.lookup533:                                 ; preds = %bb.at
   %i.ik = zext nneg i32 %i.ii to i64
-  %switch.gep534 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6Assimp4Ogre7SubMesh19ConvertToAssimpMeshEPNS0_4MeshE.7, i64 %i.ik
-  %switch.load535 = load i32, ptr %switch.gep534, align 4
+  %switch.gep538 = getelementptr inbounds nuw i8, ptr @switch.table._ZN6Assimp4Ogre7SubMesh19ConvertToAssimpMeshEPNS0_4MeshE.7, i64 %i.ik
+  %switch.load539 = load i8, ptr %switch.gep538, align 1
+  %switch.ext540 = zext i8 %switch.load539 to i32
   br label %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit.i338
 
 _ZNK6Assimp4Ogre13VertexElement4SizeEv.exit.i338: ; preds = %bb.at, %switch.lookup533
-  %.0.i.i.i339 = phi i32 [ %switch.load535, %switch.lookup533 ], [ 0, %bb.at ]
+  %.0.i.i.i339 = phi i32 [ %switch.ext540, %switch.lookup533 ], [ 0, %bb.at ]
   %i.il = add i32 %.0.i.i.i339, %.012.i333
   br label %bb.au
 
@@ -1286,12 +1296,13 @@ bb.aw:                                            ; preds = %.lr.ph.i342
 
 switch.lookup536:                                 ; preds = %bb.aw
   %i.ix = zext nneg i32 %i.iv to i64
-  %switch.gep537 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6Assimp4Ogre7SubMesh19ConvertToAssimpMeshEPNS0_4MeshE.7, i64 %i.ix
-  %switch.load538 = load i32, ptr %switch.gep537, align 4
+  %switch.gep542 = getelementptr inbounds nuw i8, ptr @switch.table._ZN6Assimp4Ogre7SubMesh19ConvertToAssimpMeshEPNS0_4MeshE.7, i64 %i.ix
+  %switch.load543 = load i8, ptr %switch.gep542, align 1
+  %switch.ext544 = zext i8 %switch.load543 to i32
   br label %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit.i348
 
 _ZNK6Assimp4Ogre13VertexElement4SizeEv.exit.i348: ; preds = %bb.aw, %switch.lookup536
-  %.0.i.i.i349 = phi i32 [ %switch.load538, %switch.lookup536 ], [ 0, %bb.aw ]
+  %.0.i.i.i349 = phi i32 [ %switch.ext544, %switch.lookup536 ], [ 0, %bb.aw ]
   %i.iy = add i32 %.0.i.i.i349, %.012.i343
   br label %bb.ax
 
@@ -1332,12 +1343,13 @@ bb.az:                                            ; preds = %.lr.ph.i352
 
 switch.lookup539:                                 ; preds = %bb.az
   %i.jl = zext nneg i32 %i.jj to i64
-  %switch.gep540 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6Assimp4Ogre7SubMesh19ConvertToAssimpMeshEPNS0_4MeshE.7, i64 %i.jl
-  %switch.load541 = load i32, ptr %switch.gep540, align 4
+  %switch.gep546 = getelementptr inbounds nuw i8, ptr @switch.table._ZN6Assimp4Ogre7SubMesh19ConvertToAssimpMeshEPNS0_4MeshE.7, i64 %i.jl
+  %switch.load547 = load i8, ptr %switch.gep546, align 1
+  %switch.ext548 = zext i8 %switch.load547 to i32
   br label %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit.i358
 
 _ZNK6Assimp4Ogre13VertexElement4SizeEv.exit.i358: ; preds = %bb.az, %switch.lookup539
-  %.0.i.i.i359 = phi i32 [ %switch.load541, %switch.lookup539 ], [ 0, %bb.az ]
+  %.0.i.i.i359 = phi i32 [ %switch.ext548, %switch.lookup539 ], [ 0, %bb.az ]
   %i.jm = add i32 %.0.i.i.i359, %.012.i353
   br label %bb.ba
 

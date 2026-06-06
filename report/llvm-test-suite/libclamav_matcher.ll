@@ -21,7 +21,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.14 = private unnamed_addr constant [51 x i8] c"Detected false positive MD5 match. Please report.\0A\00", align 1
 @.str.15 = private unnamed_addr constant [44 x i8] c"cli_checkfp(): Can't generate MD5 checksum\0A\00", align 1
 @.str.16 = private unnamed_addr constant [46 x i8] c"Eliminated false positive match (fp sig: %s)\0A\00", align 1
-@switch.table.cli_scandesc = private unnamed_addr constant [28 x i64] [i64 1, i64 6, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 2, i64 poison, i64 poison, i64 poison, i64 poison, i64 5, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 3, i64 4], align 8
+@switch.table.cli_scandesc = private unnamed_addr constant [28 x i8] [i8 1, i8 6, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 2, i8 poison, i8 poison, i8 poison, i8 poison, i8 5, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 3, i8 4], align 8
 
 ; Function Attrs: nounwind uwtable
 define dso_local i32 @cli_scanbuff(ptr noundef %0, i32 noundef %1, ptr noundef %2, ptr nofree noundef readonly captures(address_is_null) %3, i32 noundef %4) local_unnamed_addr #0 {
@@ -48,9 +48,10 @@ bb.c:                                             ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %bb.c
   %i.e = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.cli_scandesc, i64 %i.e
-  %switch.load = load i64, ptr %switch.gep, align 8
-  %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %switch.load
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.cli_scandesc, i64 %i.e
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
+  %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %switch.ext
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !13   ; 5 uses
   %.not49 = icmp eq ptr %i.g, null
   br i1 %.not49, label %.thread, label %bb.d
@@ -453,11 +454,12 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 switch.lookup:                                    ; preds = %bb.e
   %i.h = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.cli_scandesc, i64 %i.h
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.cli_scandesc, i64 %i.h
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !8
-  %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %switch.load
+  %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %switch.ext
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !13
   br label %.loopexit
 

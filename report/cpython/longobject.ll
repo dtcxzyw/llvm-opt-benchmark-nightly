@@ -201,7 +201,7 @@ begin_hunk_0
 @.str.107 = private unnamed_addr constant [44 x i8] c"maximum string conversion digits limitation\00", align 1
 @.str.108 = private unnamed_addr constant [27 x i8] c"str_digits_check_threshold\00", align 1
 @.str.109 = private unnamed_addr constant [46 x i8] c"minimum positive value for int_max_str_digits\00", align 1
-@switch.table.long_format_binary = private unnamed_addr constant [15 x i32] [i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 4], align 4
+@switch.table.long_format_binary = private unnamed_addr constant [15 x i8] [i8 1, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 3, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 4], align 4
 
 ; Function Attrs: nounwind uwtable
 define dso_local noundef ptr @_PyLong_New(i64 noundef %0) local_unnamed_addr #0 {
@@ -604,9 +604,10 @@ switch.lookup:                                    ; preds = %bb.b
   %i.g = and i64 %.val, 3
   %i.h = icmp eq i64 %i.g, 2                      ; 5 uses
   %i.i = sext i32 %1 to i64
-  %7 = getelementptr [4 x i8], ptr @switch.table.long_format_binary, i64 %i.i
-  %switch.gep = getelementptr i8, ptr %7, i64 -8
-  %switch.load = load i32, ptr %switch.gep, align 4 ; 14 uses
+  %7 = getelementptr i8, ptr @switch.table.long_format_binary, i64 %i.i
+  %switch.gep = getelementptr i8, ptr %7, i64 -2
+  %switch.load = load i8, ptr %switch.gep, align 1 ; 6 uses
+  %switch.ext = zext i8 %switch.load to i32       ; 9 uses
   %i.j = icmp eq i64 %i.f, 0                      ; 5 uses
   br i1 %i.j, label %bb.f, label %bb.d
 
@@ -624,11 +625,11 @@ bb.d:                                             ; preds = %switch.lookup
   %i.r = sub nuw nsw i32 32, %i.q
   %i.s = zext nneg i32 %i.r to i64
   %i.t = zext i1 %i.h to i64
-  %i.u = add nsw i32 %switch.load, -1
+  %i.u = add nsw i32 %switch.ext, -1
   %i.v = zext nneg i32 %i.u to i64
   %i.w = add nuw nsw i64 %i.m, %i.v
   %i.x = add nuw nsw i64 %i.w, %i.s
-  %i.y = zext nneg i32 %switch.load to i64
+  %i.y = zext i8 %switch.load to i64
   %i.z = udiv i64 %i.x, %i.y
   %i.aa = add nuw nsw i64 %i.z, %i.t
   br label %bb.f
@@ -705,7 +706,7 @@ bb.m:                                             ; preds = %bb.k
   %i.aw = getelementptr i8, ptr %0, i64 24
   %i.ax = add nuw nsw i32 %1, 255
   %i.ay = zext nneg i32 %i.ax to i64
-  %i.az = zext nneg i32 %switch.load to i64
+  %i.az = zext nneg i8 %switch.load to i64
   %i.ba = add nsw i64 %i.f, -1
   br label %bb.o
 
@@ -740,9 +741,9 @@ bb.p:                                             ; preds = %bb.p, %bb.o
   %i.bo = add i8 %i.bn, %i.bl
   %i.bp = getelementptr i8, ptr %.1247, i64 -1    ; 4 uses
   store i8 %i.bo, ptr %i.bp, align 1, !tbaa !24
-  %i.bq = sub i32 %.1243, %switch.load            ; 3 uses
+  %i.bq = sub i32 %.1243, %switch.ext             ; 3 uses
   %i.br = lshr i64 %.1245, %i.az                  ; 3 uses
-  %i.bs = icmp sge i32 %i.bq, %switch.load
+  %i.bs = icmp sge i32 %i.bq, %switch.ext
   %i.bt = icmp ne i64 %i.br, 0
   %.in275 = select i1 %i.bj, i1 %i.bs, i1 %i.bt
   br i1 %.in275, label %bb.p, label %bb.q, !llvm.loop !199
@@ -854,7 +855,7 @@ _PyUnicode_DATA.exit286:                          ; preds = %bb.ad, %bb.ac, %_Py
   %i.cr = getelementptr i8, ptr %0, i64 24
   %i.cs = add nuw nsw i32 %1, 255
   %i.ct = zext nneg i32 %i.cs to i64
-  %i.cu = zext nneg i32 %switch.load to i64
+  %i.cu = zext nneg i8 %switch.load to i64
   %i.cv = add nsw i64 %i.f, -1
   br label %bb.af
 
@@ -889,9 +890,9 @@ bb.ag:                                            ; preds = %bb.ag, %bb.af
   %i.dj = add i8 %i.di, %i.dg
   %i.dk = getelementptr i8, ptr %.2235, i64 -1    ; 4 uses
   store i8 %i.dj, ptr %i.dk, align 1, !tbaa !24
-  %i.dl = sub i32 %.1230, %switch.load            ; 3 uses
+  %i.dl = sub i32 %.1230, %switch.ext             ; 3 uses
   %i.dm = lshr i64 %.1232, %i.cu                  ; 3 uses
-  %i.dn = icmp sge i32 %i.dl, %switch.load
+  %i.dn = icmp sge i32 %i.dl, %switch.ext
   %i.do = icmp ne i64 %i.dm, 0
   %.in274 = select i1 %i.de, i1 %i.dn, i1 %i.do
   br i1 %.in274, label %bb.ag, label %bb.ah, !llvm.loop !201
@@ -983,7 +984,7 @@ _PyUnicode_DATA.exit302:                          ; preds = %bb.ar, %bb.aq, %_Py
   %i.ef = getelementptr i8, ptr %0, i64 24
   %i.eg = add nuw nsw i32 %1, 255
   %i.eh = zext nneg i32 %i.eg to i64
-  %i.ei = zext nneg i32 %switch.load to i64
+  %i.ei = zext nneg i8 %switch.load to i64
   %i.ej = add nsw i64 %i.f, -1
   br label %bb.at
 
@@ -1019,9 +1020,9 @@ bb.au:                                            ; preds = %bb.au, %bb.at
   %i.ey = sext i8 %i.ex to i16
   %i.ez = getelementptr i8, ptr %.2221, i64 -2    ; 4 uses
   store i16 %i.ey, ptr %i.ez, align 2, !tbaa !159
-  %i.fa = sub i32 %.1216, %switch.load            ; 3 uses
+  %i.fa = sub i32 %.1216, %switch.ext             ; 3 uses
   %i.fb = lshr i64 %.1218, %i.ei                  ; 3 uses
-  %i.fc = icmp sge i32 %i.fa, %switch.load
+  %i.fc = icmp sge i32 %i.fa, %switch.ext
   %i.fd = icmp ne i64 %i.fb, 0
   %.in272 = select i1 %i.es, i1 %i.fc, i1 %i.fd
   br i1 %.in272, label %bb.au, label %bb.av, !llvm.loop !203
@@ -1113,7 +1114,7 @@ _PyUnicode_DATA.exit318:                          ; preds = %bb.bf, %bb.be, %_Py
   %i.fu = getelementptr i8, ptr %0, i64 24
   %i.fv = add nuw nsw i32 %1, 255
   %i.fw = zext nneg i32 %i.fv to i64
-  %i.fx = zext nneg i32 %switch.load to i64
+  %i.fx = zext nneg i8 %switch.load to i64
   %i.fy = add nsw i64 %i.f, -1
   br label %bb.bh
 
@@ -1149,9 +1150,9 @@ bb.bi:                                            ; preds = %bb.bi, %bb.bh
   %i.gn = sext i8 %i.gm to i32
   %i.go = getelementptr i8, ptr %.2, i64 -4       ; 4 uses
   store i32 %i.gn, ptr %i.go, align 4, !tbaa !7
-  %i.gp = sub i32 %.1208, %switch.load            ; 3 uses
+  %i.gp = sub i32 %.1208, %switch.ext             ; 3 uses
   %i.gq = lshr i64 %.1210, %i.fx                  ; 3 uses
-  %i.gr = icmp sge i32 %i.gp, %switch.load
+  %i.gr = icmp sge i32 %i.gp, %switch.ext
   %i.gs = icmp ne i64 %i.gq, 0
   %.in = select i1 %i.gh, i1 %i.gr, i1 %i.gs
   br i1 %.in, label %bb.bi, label %bb.bj, !llvm.loop !205

@@ -181,10 +181,10 @@ target triple = "x86_64-pc-linux-gnu"
 @pattern_data = internal unnamed_addr constant <{ <{ [4 x i32], [4 x i32], [4 x i32], [4 x i32], [8 x [4 x i32]] }>, [12 x [4 x i32]], [12 x [4 x i32]], [12 x [4 x i32]], [12 x [4 x i32]] }> <{ <{ [4 x i32], [4 x i32], [4 x i32], [4 x i32], [8 x [4 x i32]] }> <{ [4 x i32] [i32 0, i32 4, i32 3, i32 3], [4 x i32] [i32 4, i32 0, i32 0, i32 3], [4 x i32] [i32 0, i32 -4, i32 1, i32 3], [4 x i32] [i32 -4, i32 0, i32 2, i32 3], [8 x [4 x i32]] zeroinitializer }>, [12 x [4 x i32]] [[4 x i32] [i32 0, i32 4, i32 7, i32 3], [4 x i32] [i32 4, i32 4, i32 7, i32 5], [4 x i32] [i32 4, i32 0, i32 1, i32 3], [4 x i32] [i32 4, i32 -4, i32 1, i32 5], [4 x i32] [i32 0, i32 -4, i32 3, i32 3], [4 x i32] [i32 -4, i32 -4, i32 3, i32 5], [4 x i32] [i32 -4, i32 0, i32 5, i32 3], [4 x i32] [i32 -4, i32 4, i32 5, i32 5], [4 x i32] zeroinitializer, [4 x i32] zeroinitializer, [4 x i32] zeroinitializer, [4 x i32] zeroinitializer], [12 x [4 x i32]] [[4 x i32] [i32 -4, i32 4, i32 10, i32 5], [4 x i32] [i32 0, i32 8, i32 10, i32 8], [4 x i32] [i32 0, i32 4, i32 10, i32 7], [4 x i32] [i32 4, i32 4, i32 1, i32 5], [4 x i32] [i32 8, i32 0, i32 1, i32 8], [4 x i32] [i32 4, i32 0, i32 1, i32 7], [4 x i32] [i32 4, i32 -4, i32 4, i32 5], [4 x i32] [i32 0, i32 -8, i32 4, i32 8], [4 x i32] [i32 0, i32 -4, i32 4, i32 7], [4 x i32] [i32 -4, i32 -4, i32 7, i32 5], [4 x i32] [i32 -8, i32 0, i32 7, i32 8], [4 x i32] [i32 -4, i32 0, i32 7, i32 7]], [12 x [4 x i32]] [[4 x i32] [i32 0, i32 8, i32 6, i32 5], [4 x i32] [i32 4, i32 4, i32 0, i32 3], [4 x i32] [i32 8, i32 0, i32 0, i32 5], [4 x i32] [i32 4, i32 -4, i32 2, i32 3], [4 x i32] [i32 0, i32 -8, i32 2, i32 5], [4 x i32] [i32 -4, i32 -4, i32 4, i32 3], [4 x i32] [i32 -8, i32 0, i32 4, i32 5], [4 x i32] [i32 -4, i32 4, i32 6, i32 3], [4 x i32] zeroinitializer, [4 x i32] zeroinitializer, [4 x i32] zeroinitializer, [4 x i32] zeroinitializer], [12 x [4 x i32]] [[4 x i32] [i32 0, i32 8, i32 6, i32 12], [4 x i32] [i32 4, i32 4, i32 0, i32 12], [4 x i32] [i32 8, i32 0, i32 0, i32 12], [4 x i32] [i32 4, i32 -4, i32 2, i32 12], [4 x i32] [i32 0, i32 -8, i32 2, i32 12], [4 x i32] [i32 -4, i32 -4, i32 4, i32 12], [4 x i32] [i32 -8, i32 0, i32 4, i32 12], [4 x i32] [i32 -4, i32 4, i32 6, i32 12], [4 x i32] [i32 0, i32 2, i32 6, i32 12], [4 x i32] [i32 2, i32 0, i32 0, i32 12], [4 x i32] [i32 0, i32 -2, i32 2, i32 12], [4 x i32] [i32 -2, i32 0, i32 4, i32 12]] }>, align 16
 @blk_parent = internal unnamed_addr constant [8 x i16] [i16 1, i16 1, i16 1, i16 1, i16 2, i16 4, i16 4, i16 5], align 16
 @switch.table.EPZSInit.4 = private unnamed_addr constant [5 x ptr] [ptr @square, ptr @ediamond, ptr @ldiamond, ptr @sbdiamond, ptr @pmvfast], align 8
-@switch.table.EPZSSubPelBlockSearchBiPred = private unnamed_addr constant [8 x i32] [i32 5, i32 8, i32 5, i32 poison, i32 poison, i32 6, i32 poison, i32 7], align 4
-@switch.table.EPZSSubPelBlockSearchBiPred.5 = private unnamed_addr constant [8 x i32] [i32 5, i32 10, i32 7, i32 poison, i32 poison, i32 8, i32 poison, i32 9], align 4
-@switch.table.EPZSSubPelBlockSearchBiPred.6 = private unnamed_addr constant [7 x i32] [i32 8, i32 5, i32 poison, i32 poison, i32 6, i32 poison, i32 7], align 4
-@switch.table.EPZSSubPelBlockSearchBiPred.7 = private unnamed_addr constant [7 x i32] [i32 10, i32 7, i32 poison, i32 poison, i32 8, i32 poison, i32 9], align 4
+@switch.table.EPZSSubPelBlockSearchBiPred = private unnamed_addr constant [8 x i8] [i8 5, i8 8, i8 5, i8 poison, i8 poison, i8 6, i8 poison, i8 7], align 4
+@switch.table.EPZSSubPelBlockSearchBiPred.5 = private unnamed_addr constant [8 x i8] [i8 5, i8 10, i8 7, i8 poison, i8 poison, i8 8, i8 poison, i8 9], align 4
+@switch.table.EPZSSubPelBlockSearchBiPred.6 = private unnamed_addr constant [7 x i8] [i8 8, i8 5, i8 poison, i8 poison, i8 6, i8 poison, i8 7], align 4
+@switch.table.EPZSSubPelBlockSearchBiPred.7 = private unnamed_addr constant [7 x i8] [i8 10, i8 7, i8 poison, i8 poison, i8 8, i8 poison, i8 9], align 4
 
 ; Function Attrs: nounwind uwtable
 define dso_local noundef ptr @allocEPZScolocated(i32 noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 {
@@ -587,16 +587,18 @@ bb.ae:                                            ; preds = %bb.ab
 
 switch.lookup:                                    ; preds = %._crit_edge.thread
   %i.jm = zext nneg i32 %i.jk to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.EPZSSubPelBlockSearchBiPred, i64 %i.jm
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.EPZSSubPelBlockSearchBiPred, i64 %i.jm
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.jn = zext nneg i32 %i.jk to i64
-  %switch.gep568 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.EPZSSubPelBlockSearchBiPred.5, i64 %i.jn
-  %switch.load569 = load i32, ptr %switch.gep568, align 4
+  %switch.gep568 = getelementptr inbounds nuw i8, ptr @switch.table.EPZSSubPelBlockSearchBiPred.5, i64 %i.jn
+  %switch.load569 = load i8, ptr %switch.gep568, align 1
+  %switch.ext570 = zext i8 %switch.load569 to i32
   br label %bb.af
 
 bb.af:                                            ; preds = %switch.lookup, %._crit_edge.thread
-  %.0321 = phi i32 [ %switch.load, %switch.lookup ], [ 5, %._crit_edge.thread ] ; 2 uses
-  %.0 = phi i32 [ %switch.load569, %switch.lookup ], [ %i.ax, %._crit_edge.thread ] ; 2 uses
+  %.0321 = phi i32 [ %switch.ext, %switch.lookup ], [ 5, %._crit_edge.thread ] ; 2 uses
+  %.0 = phi i32 [ %switch.ext570, %switch.lookup ], [ %i.ax, %._crit_edge.thread ] ; 2 uses
   br i1 %i.jj, label %.thread433, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
@@ -920,16 +922,18 @@ bb.ax:                                            ; preds = %bb.au
 
 switch.lookup572:                                 ; preds = %._crit_edge475.thread
   %i.qj = zext nneg i32 %switch.tableidx to i64
-  %switch.gep576 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.EPZSSubPelBlockSearchBiPred.6, i64 %i.qj
-  %switch.load577 = load i32, ptr %switch.gep576, align 4
+  %switch.gep577 = getelementptr inbounds nuw i8, ptr @switch.table.EPZSSubPelBlockSearchBiPred.6, i64 %i.qj
+  %switch.load578 = load i8, ptr %switch.gep577, align 1
+  %switch.ext579 = zext i8 %switch.load578 to i32
   %i.qk = zext nneg i32 %switch.tableidx to i64
-  %switch.gep578 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.EPZSSubPelBlockSearchBiPred.7, i64 %i.qk
-  %switch.load579 = load i32, ptr %switch.gep578, align 4
+  %switch.gep580 = getelementptr inbounds nuw i8, ptr @switch.table.EPZSSubPelBlockSearchBiPred.7, i64 %i.qk
+  %switch.load581 = load i8, ptr %switch.gep580, align 1
+  %switch.ext582 = zext i8 %switch.load581 to i32
   br label %bb.ay
 
 bb.ay:                                            ; preds = %switch.lookup572, %._crit_edge475.thread
-  %.1322 = phi i32 [ 5, %._crit_edge475.thread ], [ %switch.load577, %switch.lookup572 ] ; 2 uses
-  %.1 = phi i32 [ %11, %._crit_edge475.thread ], [ %switch.load579, %switch.lookup572 ] ; 2 uses
+  %.1322 = phi i32 [ 5, %._crit_edge475.thread ], [ %switch.ext579, %switch.lookup572 ] ; 2 uses
+  %.1 = phi i32 [ %11, %._crit_edge475.thread ], [ %switch.ext582, %switch.lookup572 ] ; 2 uses
   br i1 %i.qg, label %.thread444, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay

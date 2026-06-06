@@ -56,8 +56,8 @@ $_ZTS12btConeShapeX = comdat any
 @_ZTI12btConeShapeX = linkonce_odr dso_local constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTS12btConeShapeX, ptr @_ZTI11btConeShape }, comdat, align 8
 @_ZTS12btConeShapeX = linkonce_odr dso_local constant [15 x i8] c"12btConeShapeX\00", comdat, align 1
 @.str = private unnamed_addr constant [5 x i8] c"Cone\00", align 1
-@switch.table._ZN11btConeShape14setConeUpIndexEi = private unnamed_addr constant [3 x i32] [i32 1, i32 0, i32 0], align 4
-@switch.table._ZN11btConeShape14setConeUpIndexEi.1 = private unnamed_addr constant [3 x i32] [i32 2, i32 2, i32 1], align 4
+@switch.table._ZN11btConeShape14setConeUpIndexEi = private unnamed_addr constant [3 x i8] c"\01\00\00", align 4
+@switch.table._ZN11btConeShape14setConeUpIndexEi.1 = private unnamed_addr constant [3 x i8] c"\02\02\01", align 4
 
 @_ZN11btConeShapeC1Eff = dso_local unnamed_addr alias void (ptr, float, float), ptr @_ZN11btConeShapeC2Eff
 @_ZN12btConeShapeZC1Eff = dso_local unnamed_addr alias void (ptr, float, float), ptr @_ZN12btConeShapeZC2Eff
@@ -99,17 +99,19 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i32 %1 to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN11btConeShape14setConeUpIndexEi, i64 %i.b
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN11btConeShape14setConeUpIndexEi, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.c = zext nneg i32 %1 to i64
-  %switch.gep6 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN11btConeShape14setConeUpIndexEi.1, i64 %i.c
-  %switch.load7 = load i32, ptr %switch.gep6, align 4
+  %switch.gep6 = getelementptr inbounds nuw i8, ptr @switch.table._ZN11btConeShape14setConeUpIndexEi.1, i64 %i.c
+  %switch.load7 = load i8, ptr %switch.gep6, align 1
+  %switch.ext8 = zext i8 %switch.load7 to i32
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 76
-  store i32 %switch.load, ptr %i.d, align 4, !tbaa !4
+  store i32 %switch.ext, ptr %i.d, align 4, !tbaa !4
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 80
   store i32 %1, ptr %i.e, align 8, !tbaa !4
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 84
-  store i32 %switch.load7, ptr %i.f, align 4, !tbaa !4
+  store i32 %switch.ext8, ptr %i.f, align 4, !tbaa !4
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %switch.lookup

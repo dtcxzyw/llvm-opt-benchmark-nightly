@@ -201,7 +201,7 @@ begin_hunk_0
 @_ZTVN6duckdb8LoadInfoE = external unnamed_addr constant { [5 x ptr] }, align 8
 @_ZTVN6duckdb10PragmaInfoE = external unnamed_addr constant { [5 x ptr] }, align 8
 @switch.table._ZNK6duckdb15TransactionInfo8ToStringB5cxx11Ev = private unnamed_addr constant [3 x ptr] [ptr @.str.114, ptr @.str.115, ptr @.str.116], align 8
-@switch.table._ZNK6duckdb15TransactionInfo8ToStringB5cxx11Ev.9 = private unnamed_addr constant [3 x i64] [i64 5, i64 6, i64 8], align 8
+@switch.table._ZNK6duckdb15TransactionInfo8ToStringB5cxx11Ev.9 = private unnamed_addr constant [3 x i8] c"\05\06\08", align 8
 
 @_ZN6duckdb9AlterInfoD1Ev = unnamed_addr alias void (ptr), ptr @_ZN6duckdb9AlterInfoD2Ev
 @_ZN6duckdb23AlterScalarFunctionInfoD2Ev = unnamed_addr alias void (ptr), ptr @_ZN6duckdb9AlterInfoD2Ev
@@ -604,9 +604,10 @@ switch.lookup:                                    ; preds = %._crit_edge.i.i
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK6duckdb15TransactionInfo8ToStringB5cxx11Ev, i64 %i.g
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.h = zext nneg i8 %switch.tableidx to i64
-  %switch.gep94 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK6duckdb15TransactionInfo8ToStringB5cxx11Ev.9, i64 %i.h
-  %switch.load95 = load i64, ptr %switch.gep94, align 8
-  %i.i = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %switch.load, i64 noundef %switch.load95)
+  %switch.gep94 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK6duckdb15TransactionInfo8ToStringB5cxx11Ev.9, i64 %i.h
+  %switch.load95 = load i8, ptr %switch.gep94, align 1
+  %switch.ext = zext i8 %switch.load95 to i64
+  %i.i = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %switch.load, i64 noundef %switch.ext)
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit unwind label %bb.a ; 0 uses
 
 bb.b:                                             ; preds = %._crit_edge.i.i

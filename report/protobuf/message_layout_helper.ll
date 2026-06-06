@@ -132,7 +132,7 @@ $_ZSt17__rotate_adaptiveIN9__gnu_cxx17__normal_iteratorIPN6google8protobuf8compi
 @.str.11 = private unnamed_addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1
 @_ZSt7nothrow = external global %"struct.std::nothrow_t", align 1
 @.str.12 = private unnamed_addr constant [16 x i8] c"vector::reserve\00", align 1
-@switch.table._ZN6google8protobuf8compiler3cppltENS2_19MessageLayoutHelper12FieldHotnessES4_.36 = private unnamed_addr constant [5 x i64] [i64 1, i64 2, i64 3, i64 5, i64 4], align 8
+@switch.table._ZN6google8protobuf8compiler3cppltENS2_19MessageLayoutHelper12FieldHotnessES4_.36 = private unnamed_addr constant [5 x i8] c"\01\02\03\05\04", align 8
 
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN6google8protobuf8compiler3cpp10FieldGroup6AppendERKS3_(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1) local_unnamed_addr #0 align 2 {
@@ -506,12 +506,13 @@ bb.s:                                             ; preds = %bb.q
 
 switch.lookup:                                    ; preds = %bb.s
   %i.bn = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6google8protobuf8compiler3cppltENS2_19MessageLayoutHelper12FieldHotnessES4_.36, i64 %i.bn
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6google8protobuf8compiler3cppltENS2_19MessageLayoutHelper12FieldHotnessES4_.36, i64 %i.bn
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   br label %_ZN6google8protobuf8compiler3cpp19MessageLayoutHelper17FieldHotnessIndexENS3_12FieldHotnessE.exit
 
 _ZN6google8protobuf8compiler3cpp19MessageLayoutHelper17FieldHotnessIndexENS3_12FieldHotnessE.exit: ; preds = %bb.s, %switch.lookup
-  %.0.i42 = phi i64 [ %switch.load, %switch.lookup ], [ 0, %bb.s ]
+  %.0.i42 = phi i64 [ %switch.ext, %switch.lookup ], [ 0, %bb.s ]
   %i.bo = getelementptr inbounds nuw [24 x i8], ptr %i.bl, i64 %.0.i42 ; 3 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 8 ; 3 uses
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !47 ; 7 uses
@@ -600,12 +601,13 @@ bb.y:                                             ; preds = %bb.q
 
 switch.lookup145:                                 ; preds = %bb.y
   %i.cw = zext nneg i32 %switch.tableidx144 to i64
-  %switch.gep146 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6google8protobuf8compiler3cppltENS2_19MessageLayoutHelper12FieldHotnessES4_.36, i64 %i.cw
-  %switch.load147 = load i64, ptr %switch.gep146, align 8
+  %switch.gep146 = getelementptr inbounds nuw i8, ptr @switch.table._ZN6google8protobuf8compiler3cppltENS2_19MessageLayoutHelper12FieldHotnessES4_.36, i64 %i.cw
+  %switch.load147 = load i8, ptr %switch.gep146, align 1
+  %switch.ext148 = zext i8 %switch.load147 to i64
   br label %_ZN6google8protobuf8compiler3cpp19MessageLayoutHelper17FieldHotnessIndexENS3_12FieldHotnessE.exit48
 
 _ZN6google8protobuf8compiler3cpp19MessageLayoutHelper17FieldHotnessIndexENS3_12FieldHotnessE.exit48: ; preds = %bb.y, %switch.lookup145
-  %.0.i47 = phi i64 [ %switch.load147, %switch.lookup145 ], [ 0, %bb.y ]
+  %.0.i47 = phi i64 [ %switch.ext148, %switch.lookup145 ], [ 0, %bb.y ]
   %i.cx = getelementptr inbounds nuw [24 x i8], ptr %i.cu, i64 %.0.i47 ; 3 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 8 ; 3 uses
   %i.cz = load ptr, ptr %i.cy, align 8, !tbaa !47 ; 7 uses
@@ -681,12 +683,13 @@ bb.ae:                                            ; preds = %bb.q
 
 switch.lookup149:                                 ; preds = %bb.ae
   %i.ed = zext nneg i32 %switch.tableidx148 to i64
-  %switch.gep150 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6google8protobuf8compiler3cppltENS2_19MessageLayoutHelper12FieldHotnessES4_.36, i64 %i.ed
-  %switch.load151 = load i64, ptr %switch.gep150, align 8
+  %switch.gep151 = getelementptr inbounds nuw i8, ptr @switch.table._ZN6google8protobuf8compiler3cppltENS2_19MessageLayoutHelper12FieldHotnessES4_.36, i64 %i.ed
+  %switch.load152 = load i8, ptr %switch.gep151, align 1
+  %switch.ext153 = zext i8 %switch.load152 to i64
   br label %_ZN6google8protobuf8compiler3cpp19MessageLayoutHelper17FieldHotnessIndexENS3_12FieldHotnessE.exit59
 
 _ZN6google8protobuf8compiler3cpp19MessageLayoutHelper17FieldHotnessIndexENS3_12FieldHotnessE.exit59: ; preds = %bb.ae, %switch.lookup149
-  %.0.i58 = phi i64 [ %switch.load151, %switch.lookup149 ], [ 0, %bb.ae ]
+  %.0.i58 = phi i64 [ %switch.ext153, %switch.lookup149 ], [ 0, %bb.ae ]
   %i.ee = getelementptr inbounds nuw [24 x i8], ptr %i.eb, i64 %.0.i58 ; 3 uses
   %i.ef = getelementptr inbounds nuw i8, ptr %i.ee, i64 8 ; 3 uses
   %i.eg = load ptr, ptr %i.ef, align 8, !tbaa !47 ; 7 uses
@@ -1089,21 +1092,23 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6google8protobuf8compiler3cppltENS2_19MessageLayoutHelper12FieldHotnessES4_.36, i64 %i.b
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6google8protobuf8compiler3cppltENS2_19MessageLayoutHelper12FieldHotnessES4_.36, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   br label %_ZN6google8protobuf8compiler3cpp19MessageLayoutHelper17FieldHotnessIndexENS3_12FieldHotnessE.exit
 
 _ZN6google8protobuf8compiler3cpp19MessageLayoutHelper17FieldHotnessIndexENS3_12FieldHotnessE.exit: ; preds = %bb.a, %switch.lookup
-  %.0.i = phi i64 [ %switch.load, %switch.lookup ], [ 0, %bb.a ]
+  %.0.i = phi i64 [ %switch.ext, %switch.lookup ], [ 0, %bb.a ]
   %switch.tableidx4 = add i32 %1, -1              ; 2 uses
   %i.c = icmp ult i32 %switch.tableidx4, 5
   br i1 %i.c, label %switch.lookup5, label %_ZN6google8protobuf8compiler3cpp19MessageLayoutHelper17FieldHotnessIndexENS3_12FieldHotnessE.exit3
 
 switch.lookup5:                                   ; preds = %_ZN6google8protobuf8compiler3cpp19MessageLayoutHelper17FieldHotnessIndexENS3_12FieldHotnessE.exit
   %i.d = zext nneg i32 %switch.tableidx4 to i64
-  %switch.gep6 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6google8protobuf8compiler3cppltENS2_19MessageLayoutHelper12FieldHotnessES4_.36, i64 %i.d
-  %switch.load7 = load i64, ptr %switch.gep6, align 8
-  %i.e = icmp samesign ult i64 %.0.i, %switch.load7
+  %switch.gep6 = getelementptr inbounds nuw i8, ptr @switch.table._ZN6google8protobuf8compiler3cppltENS2_19MessageLayoutHelper12FieldHotnessES4_.36, i64 %i.d
+  %switch.load7 = load i8, ptr %switch.gep6, align 1
+  %switch.ext8 = zext i8 %switch.load7 to i64
+  %i.e = icmp samesign ult i64 %.0.i, %switch.ext8
   br label %_ZN6google8protobuf8compiler3cpp19MessageLayoutHelper17FieldHotnessIndexENS3_12FieldHotnessE.exit3
 
 _ZN6google8protobuf8compiler3cpp19MessageLayoutHelper17FieldHotnessIndexENS3_12FieldHotnessE.exit3: ; preds = %_ZN6google8protobuf8compiler3cpp19MessageLayoutHelper17FieldHotnessIndexENS3_12FieldHotnessE.exit, %switch.lookup5

@@ -37,8 +37,8 @@ target triple = "x86_64-pc-linux-gnu"
 @LogK1 = internal unnamed_addr global float 0.000000e+00, align 4
 @LogK2 = internal unnamed_addr global float 0.000000e+00, align 4
 @PixarLogVSetField.module = internal constant [18 x i8] c"PixarLogVSetField\00", align 16
-@switch.table.PixarLogVSetField = private unnamed_addr constant [6 x i32] [i32 8, i32 8, i32 16, i32 16, i32 16, i32 32], align 4
-@switch.table.PixarLogVSetField.2 = private unnamed_addr constant [6 x i32] [i32 1, i32 1, i32 1, i32 2, i32 1, i32 3], align 4
+@switch.table.PixarLogVSetField = private unnamed_addr constant [6 x i8] c"\08\08\10\10\10 ", align 4
+@switch.table.PixarLogVSetField.2 = private unnamed_addr constant [6 x i8] c"\01\01\01\02\01\03", align 4
 
 ; Function Attrs: nounwind uwtable
 define range(i32 0, 2) i32 @TIFFInitPixarLog(ptr noundef %0, i32 noundef %1) local_unnamed_addr #0 {
@@ -441,13 +441,15 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 
 switch.lookup:                                    ; preds = %bb.l
   %i.am = zext nneg i32 %i.aj to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.PixarLogVSetField, i64 %i.am
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.PixarLogVSetField, i64 %i.am
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.an = zext nneg i32 %i.aj to i64
-  %switch.gep44 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.PixarLogVSetField.2, i64 %i.an
-  %switch.load45 = load i32, ptr %switch.gep44, align 4
-  %i.ao = tail call i32 (ptr, i32, ...) @TIFFSetField(ptr noundef nonnull %0, i32 noundef 258, i32 noundef %switch.load) #7 ; 0 uses
-  %i.ap = tail call i32 (ptr, i32, ...) @TIFFSetField(ptr noundef nonnull %0, i32 noundef 339, i32 noundef %switch.load45) #7 ; 0 uses
+  %switch.gep44 = getelementptr inbounds nuw i8, ptr @switch.table.PixarLogVSetField.2, i64 %i.an
+  %switch.load45 = load i8, ptr %switch.gep44, align 1
+  %switch.ext46 = zext i8 %switch.load45 to i32
+  %i.ao = tail call i32 (ptr, i32, ...) @TIFFSetField(ptr noundef nonnull %0, i32 noundef 258, i32 noundef %switch.ext) #7 ; 0 uses
+  %i.ap = tail call i32 (ptr, i32, ...) @TIFFSetField(ptr noundef nonnull %0, i32 noundef 339, i32 noundef %switch.ext46) #7 ; 0 uses
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %switch.lookup

@@ -201,7 +201,7 @@ $_ZTVN2v88internal8OFStreamE = comdat any
 @.str.129 = private unnamed_addr constant [20 x i8] c"NullOrIs<To>(value)\00", align 1
 @.str.130 = private unnamed_addr constant [16 x i8] c"ObjectData for \00", align 1
 @.str.131 = private unnamed_addr constant [44 x i8] c"../../deps/v8/src/compiler/js-heap-broker.h\00", align 1
-@switch.table._ZNK2v88internal8compiler6MapRef16GetFieldIndexForENS0_13InternalIndexE = private unnamed_addr constant [5 x i64] [i64 0, i64 0, i64 32768, i64 0, i64 0], align 8
+@switch.table._ZNK2v88internal8compiler6MapRef16GetFieldIndexForENS0_13InternalIndexE = private unnamed_addr constant [5 x i16] [i16 0, i16 0, i16 -32768, i16 0, i16 0], align 8
 @switch.table._ZNK2v88internal14Representation8MnemonicEv = private unnamed_addr constant [6 x ptr] [ptr @.str.104, ptr @.str.106, ptr @.str.107, ptr @.str.108, ptr @.str.105, ptr @.str.109], align 8
 
 @_ZN2v88internal8compiler16PropertyCellDataC1EPNS1_12JSHeapBrokerEPPNS1_10ObjectDataENS0_6HandleINS0_12PropertyCellEEENS1_14ObjectDataKindE = hidden unnamed_addr alias void (ptr, ptr, ptr, ptr, i32), ptr @_ZN2v88internal8compiler16PropertyCellDataC2EPNS1_12JSHeapBrokerEPPNS1_10ObjectDataENS0_6HandleINS0_12PropertyCellEEENS1_14ObjectDataKindE
@@ -604,8 +604,9 @@ bb.g:                                             ; preds = %bb.f
 
 switch.lookup:                                    ; preds = %bb.f
   %i.av = and i64 %i.w, 7
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK2v88internal8compiler6MapRef16GetFieldIndexForENS0_13InternalIndexE, i64 %i.av
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK2v88internal8compiler6MapRef16GetFieldIndexForENS0_13InternalIndexE, i64 %i.av
+  %switch.load = load i16, ptr %switch.gep, align 2
+  %switch.ext = zext i16 %switch.load to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
   %i.aw = select i1 %i.ai, i64 16384, i64 0
   %i.ax = sext i32 %.013.i.i.i.i to i64
@@ -614,7 +615,7 @@ switch.lookup:                                    ; preds = %bb.f
   %i.ba = or disjoint i64 %i.az, %i.aw
   %i.bb = or i64 %i.ba, %i.ax
   %i.bc = or i64 %i.bb, %.0.i.i.i.i
-  %i.bd = or i64 %i.bc, %switch.load
+  %i.bd = or i64 %i.bc, %switch.ext
   ret i64 %i.bd
 }
 

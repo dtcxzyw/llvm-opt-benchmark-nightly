@@ -201,8 +201,7 @@ begin_hunk_0
 @.str.673 = private unnamed_addr constant [12 x i8] c"unclosed %R\00", align 1
 @PyExc_Warning = external local_unnamed_addr global ptr, align 8
 @.str.674 = private unnamed_addr constant [45 x i8] c"Exception ignored while finalizing socket %R\00", align 1
-@switch.table.sock_getsockname.33 = private unnamed_addr constant [42 x i64] [i64 110, i64 16, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 28, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 12, i64 20, i64 poison, i64 poison, i64 poison, i64 16, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 24, i64 16, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 88, i64 poison, i64 16, i64 poison, i64 12], align 8
-@switch.table.sock_recvmsg_guts = private unnamed_addr constant [42 x i32] [i32 110, i32 16, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 28, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 12, i32 20, i32 poison, i32 poison, i32 poison, i32 16, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 24, i32 16, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 88, i32 poison, i32 16, i32 poison, i32 12], align 4
+@switch.table.sock_recvmsg_guts = private unnamed_addr constant [42 x i8] [i8 110, i8 16, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 28, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 12, i8 20, i8 poison, i8 poison, i8 poison, i8 16, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 24, i8 16, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 88, i8 poison, i8 16, i8 poison, i8 12], align 8
 
 ; Function Attrs: nounwind uwtable
 define hidden ptr @unicode_fsdecode(ptr noundef %0) #0 {
@@ -605,13 +604,15 @@ getsockaddrlen.exit:                              ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %bb.a
   %i.e = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.sock_recvmsg_guts, i64 %i.e
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.sock_recvmsg_guts, i64 %i.e
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.f = zext nneg i32 %switch.tableidx to i64
-  %switch.gep42 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.sock_getsockname.33, i64 %i.f
-  %switch.load43 = load i64, ptr %switch.gep42, align 8
-  store i32 %switch.load, ptr %i.a, align 4, !tbaa !6
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %2, i8 0, i64 %switch.load43, i1 false)
+  %switch.gep42 = getelementptr inbounds nuw i8, ptr @switch.table.sock_recvmsg_guts, i64 %i.f
+  %switch.load43 = load i8, ptr %switch.gep42, align 1
+  %switch.ext44 = zext i8 %switch.load43 to i64
+  store i32 %switch.ext, ptr %i.a, align 4, !tbaa !6
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %2, i8 0, i64 %switch.ext44, i1 false)
   store ptr %i.a, ptr %3, align 8, !tbaa !132
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 8
   store ptr %2, ptr %i.g, align 8, !tbaa !136
@@ -891,13 +892,15 @@ getsockaddrlen.exit:                              ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %bb.a
   %i.e = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.sock_recvmsg_guts, i64 %i.e
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.sock_recvmsg_guts, i64 %i.e
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.f = zext nneg i32 %switch.tableidx to i64
-  %switch.gep10 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.sock_getsockname.33, i64 %i.f
-  %switch.load11 = load i64, ptr %switch.gep10, align 8
-  store i32 %switch.load, ptr %i.a, align 4, !tbaa !6
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %2, i8 0, i64 %switch.load11, i1 false)
+  %switch.gep10 = getelementptr inbounds nuw i8, ptr @switch.table.sock_recvmsg_guts, i64 %i.f
+  %switch.load11 = load i8, ptr %switch.gep10, align 1
+  %switch.ext12 = zext i8 %switch.load11 to i64
+  store i32 %switch.ext, ptr %i.a, align 4, !tbaa !6
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %2, i8 0, i64 %switch.ext12, i1 false)
   %i.g = tail call ptr @PyEval_SaveThread() #11
   %i.h = getelementptr i8, ptr %0, i64 16         ; 2 uses
   %i.i = load atomic i32, ptr %i.h monotonic, align 4
@@ -952,13 +955,15 @@ getsockaddrlen.exit:                              ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %bb.a
   %i.e = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.sock_recvmsg_guts, i64 %i.e
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.sock_recvmsg_guts, i64 %i.e
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.f = zext nneg i32 %switch.tableidx to i64
-  %switch.gep10 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.sock_getsockname.33, i64 %i.f
-  %switch.load11 = load i64, ptr %switch.gep10, align 8
-  store i32 %switch.load, ptr %i.a, align 4, !tbaa !6
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %2, i8 0, i64 %switch.load11, i1 false)
+  %switch.gep10 = getelementptr inbounds nuw i8, ptr @switch.table.sock_recvmsg_guts, i64 %i.f
+  %switch.load11 = load i8, ptr %switch.gep10, align 1
+  %switch.ext12 = zext i8 %switch.load11 to i64
+  store i32 %switch.ext, ptr %i.a, align 4, !tbaa !6
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %2, i8 0, i64 %switch.ext12, i1 false)
   %i.g = tail call ptr @PyEval_SaveThread() #11
   %i.h = getelementptr i8, ptr %0, i64 16         ; 2 uses
   %i.i = load atomic i32, ptr %i.h monotonic, align 4
@@ -1361,9 +1366,10 @@ getsockaddrlen.exit:                              ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %bb.a
   %i.e = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.sock_recvmsg_guts, i64 %i.e
-  %switch.load = load i32, ptr %switch.gep, align 4
-  store i32 %switch.load, ptr %i.a, align 4, !tbaa !6
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.sock_recvmsg_guts, i64 %i.e
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  store i32 %switch.ext, ptr %i.a, align 4, !tbaa !6
   store ptr %1, ptr %6, align 8, !tbaa !212
   %i.f = getelementptr inbounds nuw i8, ptr %6, i64 8
   store i64 %2, ptr %i.f, align 8, !tbaa !214
@@ -1521,9 +1527,10 @@ getsockaddrlen.exit:                              ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %bb.a
   %i.e = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.sock_recvmsg_guts, i64 %i.e
-  %switch.load = load i32, ptr %switch.gep, align 4 ; 3 uses
-  %i.f = zext nneg i32 %switch.load to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.sock_recvmsg_guts, i64 %i.e
+  %switch.load = load i8, ptr %switch.gep, align 1 ; 2 uses
+  %switch.ext = zext i8 %switch.load to i32       ; 2 uses
+  %i.f = zext i8 %switch.load to i64
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %7, i8 0, i64 %i.f, i1 false)
   store i16 0, ptr %7, align 8, !tbaa !23
   %or.cond = icmp ugt i64 %4, 2147483647
@@ -1551,7 +1558,7 @@ bb.f:                                             ; preds = %bb.d, %bb.c
   %.054 = phi ptr [ %i.h, %bb.d ], [ null, %bb.c ] ; 2 uses
   store ptr %7, ptr %8, align 8, !tbaa !170
   %i.k = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
-  store i32 %switch.load, ptr %i.k, align 8, !tbaa !173
+  store i32 %switch.ext, ptr %i.k, align 8, !tbaa !173
   %i.l = getelementptr inbounds nuw i8, ptr %8, i64 16
   store ptr %1, ptr %i.l, align 8, !tbaa !188
   %i.m = sext i32 %2 to i64
@@ -1721,7 +1728,7 @@ __cmsg_nxthdr.exit:                               ; preds = %bb.s
   %i.cf = getelementptr i8, ptr %0, i64 16
   %i.cg = load atomic i32, ptr %i.cf monotonic, align 8
   %i.ch = load i32, ptr %i.k, align 8, !tbaa !173
-  %i.ci = call i32 @llvm.umin.i32(i32 %i.ch, i32 %switch.load)
+  %i.ci = call i32 @llvm.umin.i32(i32 %i.ch, i32 %switch.ext)
   %i.cj = zext nneg i32 %i.ci to i64
   %i.ck = getelementptr i8, ptr %0, i64 28
   %i.cl = load i32, ptr %i.ck, align 4, !tbaa !91

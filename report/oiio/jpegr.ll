@@ -201,9 +201,9 @@ begin_hunk_0
 @"_ZTIZN8ultrahdr5JpegR7toneMapEP14uhdr_raw_imageS2_E3$_0" = internal constant { ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv117__class_type_infoE, i64 2), ptr @"_ZTSZN8ultrahdr5JpegR7toneMapEP14uhdr_raw_imageS2_E3$_0" }, align 8
 @"_ZTSZN8ultrahdr5JpegR7toneMapEP14uhdr_raw_imageS2_E3$_0" = internal constant [52 x i8] c"ZN8ultrahdr5JpegR7toneMapEP14uhdr_raw_imageS2_E3$_0\00", align 1
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @_GLOBAL__sub_I_jpegr.cpp, ptr null }]
-@switch.table._ZN8ultrahdr5JpegR11encodeJPEGREP14uhdr_raw_imageP21uhdr_compressed_imageiP14uhdr_mem_block = private unnamed_addr constant [13 x i32] [i32 1, i32 poison, i32 poison, i32 poison, i32 3, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 6], align 4
-@switch.table._ZN8ultrahdr5JpegR11decodeJPEGREPNS_23jpegr_compressed_structEPNS_25jpegr_uncompressed_structEfPNS_17jpegr_exif_structENS_22ultrahdr_output_formatES4_PNS_24ultrahdr_metadata_structE = private unnamed_addr constant [3 x i32] [i32 0, i32 2, i32 1], align 4
-@switch.table._ZN8ultrahdr5JpegR11decodeJPEGREPNS_23jpegr_compressed_structEPNS_25jpegr_uncompressed_structEfPNS_17jpegr_exif_structENS_22ultrahdr_output_formatES4_PNS_24ultrahdr_metadata_structE.29 = private unnamed_addr constant [3 x i32] [i32 4, i32 5, i32 5], align 4
+@switch.table._ZN8ultrahdr5JpegR11encodeJPEGREP14uhdr_raw_imageP21uhdr_compressed_imageiP14uhdr_mem_block = private unnamed_addr constant [13 x i8] [i8 1, i8 poison, i8 poison, i8 poison, i8 3, i8 3, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 6], align 4
+@switch.table._ZN8ultrahdr5JpegR11decodeJPEGREPNS_23jpegr_compressed_structEPNS_25jpegr_uncompressed_structEfPNS_17jpegr_exif_structENS_22ultrahdr_output_formatES4_PNS_24ultrahdr_metadata_structE = private unnamed_addr constant [3 x i8] c"\00\02\01", align 4
+@switch.table._ZN8ultrahdr5JpegR11decodeJPEGREPNS_23jpegr_compressed_structEPNS_25jpegr_uncompressed_structEfPNS_17jpegr_exif_structENS_22ultrahdr_output_formatES4_PNS_24ultrahdr_metadata_structE.29 = private unnamed_addr constant [3 x i8] c"\04\05\05", align 4
 
 @_ZN8ultrahdr5JpegRC1EPviibf15uhdr_enc_presetfff = unnamed_addr alias void (ptr, ptr, i32, i32, i1, float, i32, float, float, float), ptr @_ZN8ultrahdr5JpegRC2EPviibf15uhdr_enc_presetfff
 
@@ -515,8 +515,9 @@ bb.b:                                             ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %bb.a
   %i.f = zext nneg i32 %i.a to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN8ultrahdr5JpegR11encodeJPEGREP14uhdr_raw_imageP21uhdr_compressed_imageiP14uhdr_mem_block, i64 %i.f
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN8ultrahdr5JpegR11encodeJPEGREP14uhdr_raw_imageP21uhdr_compressed_imageiP14uhdr_mem_block, i64 %i.f
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #28
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 20
@@ -524,7 +525,7 @@ switch.lookup:                                    ; preds = %bb.a
   %i.i = tail call noalias noundef nonnull dereferenceable(72) ptr @_Znwm(i64 noundef 72) #31, !noalias !83 ; 10 uses
   %i.j = load i32, ptr %i.g, align 8, !tbaa !3, !noalias !83
   %i.k = load i32, ptr %i.h, align 4, !tbaa !3, !noalias !83
-  invoke void @_ZN8ultrahdr18uhdr_raw_image_extC1E12uhdr_img_fmt16uhdr_color_gamut19uhdr_color_transfer16uhdr_color_rangejjj(ptr noundef nonnull align 8 dereferenceable(72) %i.i, i32 noundef %switch.load, i32 noundef -1, i32 noundef -1, i32 noundef -1, i32 noundef %i.j, i32 noundef %i.k, i32 noundef 64)
+  invoke void @_ZN8ultrahdr18uhdr_raw_image_extC1E12uhdr_img_fmt16uhdr_color_gamut19uhdr_color_transfer16uhdr_color_rangejjj(ptr noundef nonnull align 8 dereferenceable(72) %i.i, i32 noundef %switch.ext, i32 noundef -1, i32 noundef -1, i32 noundef -1, i32 noundef %i.j, i32 noundef %i.k, i32 noundef 64)
           to label %_ZSt11make_uniqueIN8ultrahdr18uhdr_raw_image_extEJR12uhdr_img_fmt16uhdr_color_gamut19uhdr_color_transfer16uhdr_color_rangeRjS7_iEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit unwind label %bb.c, !noalias !83
 
 common.resume:                                    ; preds = %bb.ba, %bb.c
@@ -927,16 +928,18 @@ bb.q:                                             ; preds = %bb.o
 
 switch.lookup:                                    ; preds = %bb.q
   %i.af = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN8ultrahdr5JpegR11decodeJPEGREPNS_23jpegr_compressed_structEPNS_25jpegr_uncompressed_structEfPNS_17jpegr_exif_structENS_22ultrahdr_output_formatES4_PNS_24ultrahdr_metadata_structE, i64 %i.af
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN8ultrahdr5JpegR11decodeJPEGREPNS_23jpegr_compressed_structEPNS_25jpegr_uncompressed_structEfPNS_17jpegr_exif_structENS_22ultrahdr_output_formatES4_PNS_24ultrahdr_metadata_structE, i64 %i.af
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.ag = zext nneg i32 %switch.tableidx to i64
-  %switch.gep137 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN8ultrahdr5JpegR11decodeJPEGREPNS_23jpegr_compressed_structEPNS_25jpegr_uncompressed_structEfPNS_17jpegr_exif_structENS_22ultrahdr_output_formatES4_PNS_24ultrahdr_metadata_structE.29, i64 %i.ag
-  %switch.load138 = load i32, ptr %switch.gep137, align 4
+  %switch.gep137 = getelementptr inbounds nuw i8, ptr @switch.table._ZN8ultrahdr5JpegR11decodeJPEGREPNS_23jpegr_compressed_structEPNS_25jpegr_uncompressed_structEfPNS_17jpegr_exif_structENS_22ultrahdr_output_formatES4_PNS_24ultrahdr_metadata_structE.29, i64 %i.ag
+  %switch.load138 = load i8, ptr %switch.gep137, align 1
+  %switch.ext139 = zext i8 %switch.load138 to i32
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %switch.lookup
-  %.063 = phi i32 [ %switch.load, %switch.lookup ], [ 3, %bb.q ]
-  %.062 = phi i32 [ %switch.load138, %switch.lookup ], [ 3, %bb.q ] ; 2 uses
+  %.063 = phi i32 [ %switch.ext, %switch.lookup ], [ 3, %bb.q ]
+  %.062 = phi i32 [ %switch.ext139, %switch.lookup ], [ 3, %bb.q ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #28
   store ptr %i.b, ptr %10, align 8, !tbaa !218
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 8

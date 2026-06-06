@@ -201,7 +201,7 @@ $_ZTVN2v88internal8OFStreamE = comdat any
 @.str.43 = private unnamed_addr constant [26 x i8] c"Builtins::IsBuiltinId(id)\00", align 1
 @.str.44 = private unnamed_addr constant [8 x i8] c"IsMap()\00", align 1
 @.str.45 = private unnamed_addr constant [53 x i8] c"std::numeric_limits<size_t>::max() - size() >= count\00", align 1
-@switch.table._ZNK2v88internal8compiler17AccessInfoFactory26ComputeDataFieldAccessInfoENS1_6MapRefES3_NS1_7NameRefENS1_11OptionalRefINS1_11JSObjectRefEEENS0_13InternalIndexENS1_10AccessModeE = private unnamed_addr constant [4 x i64] [i64 0, i64 32768, i64 0, i64 0], align 8
+@switch.table._ZNK2v88internal8compiler17AccessInfoFactory26ComputeDataFieldAccessInfoENS1_6MapRefES3_NS1_7NameRefENS1_11OptionalRefINS1_11JSObjectRefEEENS0_13InternalIndexENS1_10AccessModeE = private unnamed_addr constant [4 x i16] [i16 0, i16 -32768, i16 0, i16 0], align 8
 @switch.table._ZNK2v88internal14Representation8MnemonicEv = private unnamed_addr constant [6 x ptr] [ptr @.str.23, ptr @.str.25, ptr @.str.26, ptr @.str.27, ptr @.str.24, ptr @.str.28], align 8
 
 @_ZN2v88internal8compiler17ElementAccessInfoC1EONS0_10ZoneVectorINS1_6MapRefEEENS0_12ElementsKindEPNS0_4ZoneE = hidden unnamed_addr alias void (ptr, ptr, i8, ptr), ptr @_ZN2v88internal8compiler17ElementAccessInfoC2EONS0_10ZoneVectorINS1_6MapRefEEENS0_12ElementsKindEPNS0_4ZoneE
@@ -604,9 +604,10 @@ bb.g:                                             ; preds = %bb.f
 
 switch.lookup:                                    ; preds = %bb.f
   %i.az = and i64 %sum.shift, 7
-  %13 = getelementptr [8 x i8], ptr @switch.table._ZNK2v88internal8compiler17AccessInfoFactory26ComputeDataFieldAccessInfoENS1_6MapRefES3_NS1_7NameRefENS1_11OptionalRefINS1_11JSObjectRefEEENS0_13InternalIndexENS1_10AccessModeE, i64 %i.az
-  %switch.gep = getelementptr i8, ptr %13, i64 -8
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %13 = getelementptr [2 x i8], ptr @switch.table._ZNK2v88internal8compiler17AccessInfoFactory26ComputeDataFieldAccessInfoENS1_6MapRefES3_NS1_7NameRefENS1_11OptionalRefINS1_11JSObjectRefEEENS0_13InternalIndexENS1_10AccessModeE, i64 %i.az
+  %switch.gep = getelementptr i8, ptr %13, i64 -2
+  %switch.load = load i16, ptr %switch.gep, align 2
+  %switch.ext = zext i16 %switch.load to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %8)
   %i.ba = select i1 %i.am, i64 16384, i64 0
   %i.bb = sext i32 %.013.i to i64
@@ -615,7 +616,7 @@ switch.lookup:                                    ; preds = %bb.f
   %i.be = or disjoint i64 %i.bd, %i.ba
   %i.bf = or i64 %i.be, %i.bb
   %i.bg = or i64 %i.bf, %.0.i
-  %i.bh = or i64 %i.bg, %switch.load              ; 2 uses
+  %i.bh = or i64 %i.bg, %switch.ext               ; 2 uses
   %i.bi = call ptr @_ZNK2v88internal8compiler7NameRef6objectEv(ptr noundef nonnull align 8 dereferenceable(8) %10) #22
   %i.bj = load i64, ptr %i.bi, align 8
   %i.bk = add i64 %i.bj, -1

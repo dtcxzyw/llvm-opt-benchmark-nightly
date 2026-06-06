@@ -15,9 +15,8 @@ target triple = "x86_64-pc-linux-gnu"
 @uriConstPwdW = local_unnamed_addr constant ptr @.str.4, align 8
 @.str.5 = private unnamed_addr constant [3 x i32] [i32 46, i32 46, i32 0], align 4
 @uriConstParentW = local_unnamed_addr constant ptr @.str.5, align 8
-@switch.table.uriHexToLetterA = private unnamed_addr constant [15 x i8] c"0123456789ABCDE", align 1
 @switch.table.uriHexdigToIntW = private unnamed_addr constant [55 x i8] c"\00\01\02\03\04\05\06\07\08\09\00\00\00\00\00\00\00\0A\0B\0C\0D\0E\0F\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\0A\0B\0C\0D\0E\0F", align 1
-@switch.table.uriHexToLetterW = private unnamed_addr constant [15 x i32] [i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 65, i32 66, i32 67, i32 68, i32 69], align 4
+@switch.table.uriHexToLetterW = private unnamed_addr constant [15 x i8] c"0123456789ABCDE", align 4
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define void @uriResetUriA(ptr nofree noundef writeonly captures(address_is_null) %0) local_unnamed_addr #0 {
@@ -420,7 +419,7 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i32 %0 to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.uriHexToLetterA, i64 %i.b
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.uriHexToLetterW, i64 %i.b
   %switch.load = load i8, ptr %switch.gep, align 1
   br label %uriHexToLetterExA.exit
 
@@ -823,12 +822,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i32 %0 to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.uriHexToLetterW, i64 %i.b
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.uriHexToLetterW, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %uriHexToLetterExW.exit
 
 uriHexToLetterExW.exit:                           ; preds = %bb.a, %switch.lookup
-  %.0.i = phi i32 [ %switch.load, %switch.lookup ], [ 70, %bb.a ]
+  %.0.i = phi i32 [ %switch.ext, %switch.lookup ], [ 70, %bb.a ]
   ret i32 %.0.i
 }
 

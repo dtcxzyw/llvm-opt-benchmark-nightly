@@ -201,7 +201,7 @@ begin_hunk_0
 @_PyRuntime = external global %struct.pyruntimestate, align 8
 @.str.6 = private unnamed_addr constant [3 x i8] c"%d\00", align 1
 @.str.7 = private unnamed_addr constant [4 x i8] c".%d\00", align 1
-@switch.table.optimize_format.16 = private unnamed_addr constant [17 x i32] [i32 4, i32 poison, i32 poison, i32 8, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 2, i32 poison, i32 1, i32 poison, i32 poison, i32 16], align 4
+@switch.table.optimize_format.16 = private unnamed_addr constant [17 x i8] [i8 4, i8 poison, i8 poison, i8 8, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 2, i8 poison, i8 1, i8 poison, i8 poison, i8 16], align 4
 
 ; Function Attrs: nounwind uwtable
 define hidden range(i32 -1, 2) i32 @_PyAST_Preprocess(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %6, ptr noundef %7) local_unnamed_addr #0 {
@@ -604,9 +604,10 @@ switch.hole_check:                                ; preds = %_PyUnicode_DATA.exi
 
 switch.lookup:                                    ; preds = %switch.hole_check
   %i.bz = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.optimize_format.16, i64 %i.bz
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %i.ca = or i32 %switch.load, %.049.us.us.i
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.optimize_format.16, i64 %i.bz
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  %i.ca = or i32 %.049.us.us.i, %switch.ext
   %exitcond.not.i.us.us.i = icmp eq i64 %i.bx, %.val
   br i1 %exitcond.not.i.us.us.i, label %parse_format.exit.thread, label %_PyUnicode_DATA.exit.i.i.us.us.i
 
@@ -628,9 +629,10 @@ switch.hole_check356:                             ; preds = %_PyUnicode_DATA.exi
 
 switch.lookup357:                                 ; preds = %switch.hole_check356
   %i.cf = zext nneg i8 %switch.tableidx354 to i64
-  %switch.gep361 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.optimize_format.16, i64 %i.cf
-  %switch.load362 = load i32, ptr %switch.gep361, align 4
-  %i.cg = or i32 %switch.load362, %.049.us.i
+  %switch.gep361 = getelementptr inbounds nuw i8, ptr @switch.table.optimize_format.16, i64 %i.cf
+  %switch.load362 = load i8, ptr %switch.gep361, align 1
+  %switch.ext363 = zext i8 %switch.load362 to i32
+  %i.cg = or i32 %.049.us.i, %switch.ext363
   %exitcond.not.i.us.i = icmp eq i64 %i.cd, %.val
   br i1 %exitcond.not.i.us.i, label %parse_format.exit.thread, label %_PyUnicode_DATA.exit.i.i.us.i
 
@@ -659,9 +661,10 @@ switch.hole_check365:                             ; preds = %_PyUnicode_DATA.exi
 
 switch.lookup366:                                 ; preds = %switch.hole_check365
   %i.cl = zext nneg i16 %switch.tableidx363 to i64
-  %switch.gep370 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.optimize_format.16, i64 %i.cl
-  %switch.load371 = load i32, ptr %switch.gep370, align 4
-  %i.cm = or i32 %switch.load371, %.049.us76.us.i
+  %switch.gep371 = getelementptr inbounds nuw i8, ptr @switch.table.optimize_format.16, i64 %i.cl
+  %switch.load372 = load i8, ptr %switch.gep371, align 1
+  %switch.ext373 = zext i8 %switch.load372 to i32
+  %i.cm = or i32 %.049.us76.us.i, %switch.ext373
   %exitcond.not.i.us82.us.i = icmp eq i64 %i.cj, %.val
   br i1 %exitcond.not.i.us82.us.i, label %parse_format.exit.thread, label %_PyUnicode_DATA.exit17.i.i.us.us.i
 
@@ -683,9 +686,10 @@ switch.hole_check374:                             ; preds = %_PyUnicode_DATA.exi
 
 switch.lookup375:                                 ; preds = %switch.hole_check374
   %i.cr = zext nneg i16 %switch.tableidx372 to i64
-  %switch.gep379 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.optimize_format.16, i64 %i.cr
-  %switch.load380 = load i32, ptr %switch.gep379, align 4
-  %i.cs = or i32 %switch.load380, %.049.us76.i
+  %switch.gep381 = getelementptr inbounds nuw i8, ptr @switch.table.optimize_format.16, i64 %i.cr
+  %switch.load382 = load i8, ptr %switch.gep381, align 1
+  %switch.ext383 = zext i8 %switch.load382 to i32
+  %i.cs = or i32 %.049.us76.i, %switch.ext383
   %exitcond.not.i.us82.i = icmp eq i64 %i.cp, %.val
   br i1 %exitcond.not.i.us82.i, label %parse_format.exit.thread, label %_PyUnicode_DATA.exit17.i.i.us.i
 
@@ -711,9 +715,10 @@ _PyUnicode_DATA.exit25.i.i.us.i:                  ; preds = %switch.lookup384, %
 
 switch.lookup384:                                 ; preds = %_PyUnicode_DATA.exit25.i.i.us.i
   %i.cx = zext nneg i32 %switch.tableidx381 to i64
-  %switch.gep387 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.optimize_format.16, i64 %i.cx
-  %switch.load388 = load i32, ptr %switch.gep387, align 4
-  %i.cy = or i32 %switch.load388, %.049.us97.i
+  %switch.gep390 = getelementptr inbounds nuw i8, ptr @switch.table.optimize_format.16, i64 %i.cx
+  %switch.load391 = load i8, ptr %switch.gep390, align 1
+  %switch.ext392 = zext i8 %switch.load391 to i32
+  %i.cy = or i32 %.049.us97.i, %switch.ext392
   %exitcond.not.i.us101.i = icmp eq i64 %i.cv, %.val
   br i1 %exitcond.not.i.us101.i, label %parse_format.exit.thread, label %_PyUnicode_DATA.exit25.i.i.us.i
 
@@ -732,9 +737,10 @@ _PyUnicode_DATA.exit25.i.i.i:                     ; preds = %.lr.ph.i.split.i, %
 
 switch.lookup392:                                 ; preds = %_PyUnicode_DATA.exit25.i.i.i
   %i.dd = zext nneg i32 %switch.tableidx389 to i64
-  %switch.gep395 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.optimize_format.16, i64 %i.dd
-  %switch.load396 = load i32, ptr %switch.gep395, align 4
-  %i.de = or i32 %switch.load396, %.049.i
+  %switch.gep399 = getelementptr inbounds nuw i8, ptr @switch.table.optimize_format.16, i64 %i.dd
+  %switch.load400 = load i8, ptr %switch.gep399, align 1
+  %switch.ext401 = zext i8 %switch.load400 to i32
+  %i.de = or i32 %.049.i, %switch.ext401
   %exitcond.not.i.i = icmp eq i64 %i.db, %.val
   br i1 %exitcond.not.i.i, label %parse_format.exit.thread, label %_PyUnicode_DATA.exit25.i.i.i
 

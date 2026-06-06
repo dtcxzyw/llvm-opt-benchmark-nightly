@@ -74,7 +74,7 @@ $_ZNSt6vectorI6aiFaceSaIS0_EE17_M_realloc_insertIJEEEvN9__gnu_cxx17__normal_iter
 @.str.10 = private unnamed_addr constant [16 x i8] c"vector::reserve\00", align 1
 @.str.11 = private unnamed_addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1
 @.str.12 = private unnamed_addr constant [23 x i8] c"vector::_M_fill_insert\00", align 1
-@switch.table._ZN6Assimp30SplitLargeMeshesProcess_Vertex9SplitMeshEjP6aiMeshRSt6vectorISt4pairIS2_jESaIS5_EE = private unnamed_addr constant [3 x i32] [i32 1, i32 2, i32 4], align 4
+@switch.table._ZN6Assimp30SplitLargeMeshesProcess_Vertex9SplitMeshEjP6aiMeshRSt6vectorISt4pairIS2_jESaIS5_EE = private unnamed_addr constant [3 x i8] c"\01\02\04", align 4
 
 @_ZN6Assimp32SplitLargeMeshesProcess_TriangleC1Ev = unnamed_addr alias void (ptr), ptr @_ZN6Assimp32SplitLargeMeshesProcess_TriangleC2Ev
 @_ZN6Assimp30SplitLargeMeshesProcess_VertexC1Ev = unnamed_addr alias void (ptr), ptr @_ZN6Assimp30SplitLargeMeshesProcess_VertexC2Ev
@@ -477,9 +477,10 @@ bb.ah:                                            ; preds = %bb.ag
 
 switch.lookup:                                    ; preds = %bb.ag
   %i.mk = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6Assimp30SplitLargeMeshesProcess_Vertex9SplitMeshEjP6aiMeshRSt6vectorISt4pairIS2_jESaIS5_EE, i64 %i.mk
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %i.ml = or i32 %i.mh, %switch.load
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6Assimp30SplitLargeMeshesProcess_Vertex9SplitMeshEjP6aiMeshRSt6vectorISt4pairIS2_jESaIS5_EE, i64 %i.mk
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  %i.ml = or i32 %i.mh, %switch.ext
   store i32 %i.ml, ptr %i.ax, align 8
   br label %.lr.ph323.preheader
 
@@ -882,12 +883,13 @@ bb.bm:                                            ; preds = %_ZNSt6vectorI6aiFac
 
 switch.lookup:                                    ; preds = %bb.bk
   %i.kw = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6Assimp30SplitLargeMeshesProcess_Vertex9SplitMeshEjP6aiMeshRSt6vectorISt4pairIS2_jESaIS5_EE, i64 %i.kw
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6Assimp30SplitLargeMeshesProcess_Vertex9SplitMeshEjP6aiMeshRSt6vectorISt4pairIS2_jESaIS5_EE, i64 %i.kw
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bk, %switch.lookup
-  %.sink491 = phi i32 [ %switch.load, %switch.lookup ], [ 8, %bb.bk ]
+  %.sink491 = phi i32 [ %switch.ext, %switch.lookup ], [ 8, %bb.bk ]
   %i.kx = or i32 %i.ks, %.sink491
   store i32 %i.kx, ptr %i.bv, align 8
   br i1 %.not352, label %._crit_edge342, label %.lr.ph341

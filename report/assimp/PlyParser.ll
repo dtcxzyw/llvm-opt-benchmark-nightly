@@ -201,7 +201,7 @@ $_ZTV17DeadlyImportError = comdat any
 @.str.104 = private unnamed_addr constant [37 x i8] c"\22 into a value resulted in overflow.\00", align 1
 @.str.105 = private unnamed_addr constant [49 x i8] c"cannot create std::vector larger than max_size()\00", align 1
 @.str.106 = private unnamed_addr constant [24 x i8] c"vector::_M_range_insert\00", align 1
-@switch.table._ZN6Assimp3PLY16PropertyInstance16ParseValueBinaryERNS_14IOStreamBufferIcEERSt6vectorIcSaIcEERPKcRjNS0_9EDataTypeEPNS1_10ValueUnionEb = private unnamed_addr constant [8 x i32] [i32 1, i32 1, i32 2, i32 2, i32 4, i32 4, i32 4, i32 8], align 4
+@switch.table._ZN6Assimp3PLY16PropertyInstance16ParseValueBinaryERNS_14IOStreamBufferIcEERSt6vectorIcSaIcEERPKcRjNS0_9EDataTypeEPNS1_10ValueUnionEb = private unnamed_addr constant [8 x i8] c"\01\01\02\02\04\04\04\08", align 4
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define hidden void @_ZN6Assimp9to_stringB5cxx11ENS_3PLY16EElementSemanticE(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, i32 noundef %1) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
@@ -604,10 +604,11 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i32 %4 to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6Assimp3PLY16PropertyInstance16ParseValueBinaryERNS_14IOStreamBufferIcEERSt6vectorIcSaIcEERPKcRjNS0_9EDataTypeEPNS1_10ValueUnionEb, i64 %i.b
-  %switch.load = load i32, ptr %switch.gep, align 4 ; 3 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6Assimp3PLY16PropertyInstance16ParseValueBinaryERNS_14IOStreamBufferIcEERSt6vectorIcSaIcEERPKcRjNS0_9EDataTypeEPNS1_10ValueUnionEb, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32       ; 3 uses
   %i.c = load i32, ptr %3, align 4
-  %i.d = icmp ult i32 %i.c, %switch.load
+  %i.d = icmp ult i32 %i.c, %switch.ext
   br i1 %i.d, label %bb.b, label %.thread
 
 bb.b:                                             ; preds = %switch.lookup
@@ -771,7 +772,7 @@ _ZNSt6vectorIcSaIcEED2Ev.exit67:                  ; preds = %.body, %bb.o
   resume { ptr, i32 } %.pn
 
 .thread:                                          ; preds = %bb.a, %_ZNSt6vectorIcSaIcEED2Ev.exit64, %switch.lookup
-  %.0123 = phi i32 [ %switch.load, %switch.lookup ], [ %switch.load, %_ZNSt6vectorIcSaIcEED2Ev.exit64 ], [ 0, %bb.a ]
+  %.0123 = phi i32 [ %switch.ext, %switch.lookup ], [ %switch.ext, %_ZNSt6vectorIcSaIcEED2Ev.exit64 ], [ 0, %bb.a ]
   switch i32 %4, label %bb.ab [
     i32 5, label %bb.p
     i32 3, label %bb.s

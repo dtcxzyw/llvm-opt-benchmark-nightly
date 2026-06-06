@@ -201,10 +201,10 @@ $_ZTSN5arrow7compute11NullOptionsE = comdat any
 @_ZTVN5arrow7compute11NullOptionsE = linkonce_odr unnamed_addr constant { [4 x ptr] } { [4 x ptr] [ptr null, ptr @_ZTIN5arrow7compute11NullOptionsE, ptr @_ZN5arrow4util18EqualityComparableINS_7compute15FunctionOptionsEED2Ev, ptr @_ZN5arrow7compute11NullOptionsD0Ev] }, comdat, align 8
 @_ZTIN5arrow7compute11NullOptionsE = linkonce_odr constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN5arrow7compute11NullOptionsE, ptr @_ZTIN5arrow7compute15FunctionOptionsE }, comdat, align 8
 @_ZTSN5arrow7compute11NullOptionsE = linkonce_odr constant [30 x i8] c"N5arrow7compute11NullOptionsE\00", comdat, align 1
-@"switch.table._ZZN5arrow7compute12CanonicalizeENS0_10ExpressionEPNS0_11ExecContextEENK3$_1clES1_" = private unnamed_addr constant [6 x i32] [i32 1, i32 4, i32 5, i32 2, i32 3, i32 6], align 4
-@"switch.table._ZZN5arrow7compute21SimplifyWithGuaranteeENS0_10ExpressionERKS1_ENK3$_2clES1_z" = private unnamed_addr constant [5 x i32] [i32 4, i32 5, i32 2, i32 3, i32 6], align 4
-@switch.table._ZN5arrow7compute10Comparison25StripOrderPreservingCastsERKNS0_10ExpressionE = private unnamed_addr constant [44 x i32] [i32 1, i32 8, i32 8, i32 16, i32 16, i32 32, i32 32, i32 64, i32 64, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 32, i32 64, i32 64, i32 32, i32 64, i32 32, i32 64, i32 128, i32 256, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 64, i32 0, i32 0, i32 0, i32 128, i32 0, i32 0, i32 0, i32 0, i32 0, i32 32, i32 64], align 4
-@switch.table._ZN5arrow9bit_widthENS_4Type4typeE = private unnamed_addr constant [44 x i32] [i32 1, i32 8, i32 8, i32 16, i32 16, i32 32, i32 32, i32 64, i32 64, i32 16, i32 32, i32 64, i32 0, i32 0, i32 0, i32 32, i32 64, i32 64, i32 32, i32 64, i32 32, i32 64, i32 128, i32 256, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 64, i32 0, i32 0, i32 0, i32 128, i32 0, i32 0, i32 0, i32 0, i32 0, i32 32, i32 64], align 4
+@"switch.table._ZZN5arrow7compute12CanonicalizeENS0_10ExpressionEPNS0_11ExecContextEENK3$_1clES1_" = private unnamed_addr constant [6 x i8] c"\01\04\05\02\03\06", align 4
+@"switch.table._ZZN5arrow7compute21SimplifyWithGuaranteeENS0_10ExpressionERKS1_ENK3$_2clES1_z" = private unnamed_addr constant [5 x i8] c"\04\05\02\03\06", align 4
+@switch.table._ZN5arrow7compute10Comparison25StripOrderPreservingCastsERKNS0_10ExpressionE = private unnamed_addr constant [44 x i16] [i16 1, i16 8, i16 8, i16 16, i16 16, i16 32, i16 32, i16 64, i16 64, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 32, i16 64, i16 64, i16 32, i16 64, i16 32, i16 64, i16 128, i16 256, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 64, i16 0, i16 0, i16 0, i16 128, i16 0, i16 0, i16 0, i16 0, i16 0, i16 32, i16 64], align 4
+@switch.table._ZN5arrow9bit_widthENS_4Type4typeE = private unnamed_addr constant [44 x i16] [i16 1, i16 8, i16 8, i16 16, i16 16, i16 32, i16 32, i16 64, i16 64, i16 16, i16 32, i16 64, i16 0, i16 0, i16 0, i16 32, i16 64, i16 64, i16 32, i16 64, i16 32, i16 64, i16 128, i16 256, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 64, i16 0, i16 0, i16 0, i16 128, i16 0, i16 0, i16 0, i16 0, i16 0, i16 32, i16 64], align 4
 
 @_ZN5arrow18TypedChunkLocationIiEC1Eii = weak_odr unnamed_addr alias void (ptr, i32, i32), ptr @_ZN5arrow18TypedChunkLocationIiEC2Eii
 @_ZN5arrow18TypedChunkLocationIsEC1Ess = weak_odr unnamed_addr alias void (ptr, i16, i16), ptr @_ZN5arrow18TypedChunkLocationIsEC2Ess
@@ -607,12 +607,13 @@ bb.ev:                                            ; preds = %_ZSt6get_ifIN5arrow
 
 switch.lookup:                                    ; preds = %bb.ev
   %i.xa = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @"switch.table._ZZN5arrow7compute12CanonicalizeENS0_10ExpressionEPNS0_11ExecContextEENK3$_1clES1_", i64 %i.xa
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @"switch.table._ZZN5arrow7compute12CanonicalizeENS0_10ExpressionEPNS0_11ExecContextEENK3$_1clES1_", i64 %i.xa
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZN5arrow7compute10Comparison10GetFlippedENS1_4typeE.exit
 
 _ZN5arrow7compute10Comparison10GetFlippedENS1_4typeE.exit: ; preds = %bb.ev, %switch.lookup
-  %.0.i119 = phi i32 [ %switch.load, %switch.lookup ], [ 0, %bb.ev ]
+  %.0.i119 = phi i32 [ %switch.ext, %switch.lookup ], [ 0, %bb.ev ]
   invoke void @_ZN5arrow7compute10Comparison7GetNameB5cxx11ENS1_4typeE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %33, i32 noundef %.0.i119)
           to label %bb.ew unwind label %bb.ey
 
@@ -1015,9 +1016,10 @@ bb.fh:                                            ; preds = %bb.ff
 switch.lookup:                                    ; preds = %bb.fh
   %i.qh = load i32, ptr %i.om, align 4, !tbaa !160, !noalias !1695
   %i.qi = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @"switch.table._ZZN5arrow7compute21SimplifyWithGuaranteeENS0_10ExpressionERKS1_ENK3$_2clES1_z", i64 %i.qi
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %i.qj = and i32 %switch.load, %i.qh
+  %switch.gep = getelementptr inbounds nuw i8, ptr @"switch.table._ZZN5arrow7compute21SimplifyWithGuaranteeENS0_10ExpressionERKS1_ENK3$_2clES1_z", i64 %i.qi
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  %i.qj = and i32 %i.qh, %switch.ext
   %i.qk = icmp ne i32 %i.qj, 0
   br label %.invoke.i
 
@@ -1232,21 +1234,23 @@ bb.g:                                             ; preds = %bb.f
 
 switch.lookup:                                    ; preds = %bb.g
   %i.am = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5arrow7compute10Comparison25StripOrderPreservingCastsERKNS0_10ExpressionE, i64 %i.am
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN5arrow7compute10Comparison25StripOrderPreservingCastsERKNS0_10ExpressionE, i64 %i.am
+  %switch.load = load i16, ptr %switch.gep, align 2
+  %switch.ext = zext i16 %switch.load to i32
   br label %_ZN5arrow9bit_widthENS_4Type4typeE.exit
 
 _ZN5arrow9bit_widthENS_4Type4typeE.exit:          ; preds = %bb.g, %switch.lookup
-  %.0.i41 = phi i32 [ %switch.load, %switch.lookup ], [ 0, %bb.g ]
+  %.0.i41 = phi i32 [ %switch.ext, %switch.lookup ], [ 0, %bb.g ]
   %switch.tableidx69 = add i32 %i.ad, -1          ; 2 uses
   %i.an = icmp ult i32 %switch.tableidx69, 44
   br i1 %i.an, label %switch.lookup70, label %tailrecurse.backedge
 
 switch.lookup70:                                  ; preds = %_ZN5arrow9bit_widthENS_4Type4typeE.exit
   %i.ao = zext nneg i32 %switch.tableidx69 to i64
-  %switch.gep71 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5arrow9bit_widthENS_4Type4typeE, i64 %i.ao
-  %switch.load72 = load i32, ptr %switch.gep71, align 4
-  %i.ap = icmp samesign ult i32 %.0.i41, %switch.load72
+  %switch.gep71 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN5arrow9bit_widthENS_4Type4typeE, i64 %i.ao
+  %switch.load72 = load i16, ptr %switch.gep71, align 2
+  %switch.ext73 = zext i16 %switch.load72 to i32
+  %i.ap = icmp samesign ult i32 %.0.i41, %switch.ext73
   br i1 %i.ap, label %_ZNK5arrow7compute10Expression4callEv.exit.thread, label %tailrecurse.backedge
 
 bb.h:                                             ; preds = %bb.e
@@ -1649,12 +1653,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5arrow9bit_widthENS_4Type4typeE, i64 %i.b
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN5arrow9bit_widthENS_4Type4typeE, i64 %i.b
+  %switch.load = load i16, ptr %switch.gep, align 2
+  %switch.ext = zext i16 %switch.load to i32
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %switch.lookup
-  %.0 = phi i32 [ %switch.load, %switch.lookup ], [ 0, %bb.a ]
+  %.0 = phi i32 [ %switch.ext, %switch.lookup ], [ 0, %bb.a ]
   ret i32 %.0
 }
 

@@ -39,8 +39,8 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.11 = private unnamed_addr constant [31 x i8] c"unblock_on_nokey_entry != NULL\00", align 1
 @.str.12 = private unnamed_addr constant [104 x i8] c"c->bstate.btype == BLOCKED_STREAM || c->bstate.btype == BLOCKED_LIST || c->bstate.btype == BLOCKED_ZSET\00", align 1
 @getMonotonicUs = external local_unnamed_addr global ptr, align 8
-@switch.table.handleClientsBlockedOnKeys = private unnamed_addr constant [6 x i32] [i32 1, i32 0, i32 6, i32 0, i32 4, i32 5], align 4
-@switch.table.signalKeyAsReadyLogic = private unnamed_addr constant [6 x i64] [i64 1, i64 poison, i64 6, i64 poison, i64 4, i64 5], align 8
+@switch.table.handleClientsBlockedOnKeys = private unnamed_addr constant [6 x i8] c"\01\00\06\00\04\05", align 4
+@switch.table.signalKeyAsReadyLogic = private unnamed_addr constant [6 x i8] [i8 1, i8 poison, i8 6, i8 poison, i8 4, i8 5], align 8
 
 ; Function Attrs: nounwind uwtable
 define dso_local void @initClientBlockingState(ptr nofree noundef writeonly captures(none) initializes((592, 596), (600, 612), (616, 628), (632, 640), (648, 656)) %0) local_unnamed_addr #0 {
@@ -443,12 +443,13 @@ bb.e:                                             ; preds = %.lr.ph35
 
 switch.lookup:                                    ; preds = %bb.e
   %i.ao = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.handleClientsBlockedOnKeys, i64 %i.ao
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.handleClientsBlockedOnKeys, i64 %i.ao
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %getBlockedTypeByType.exit.i
 
 getBlockedTypeByType.exit.i:                      ; preds = %bb.e, %switch.lookup
-  %.0.i.i = phi i32 [ %switch.load, %switch.lookup ], [ 0, %bb.e ]
+  %.0.i.i = phi i32 [ %switch.ext, %switch.lookup ], [ 0, %bb.e ]
   %i.ap = icmp eq i32 %i.aj, %.0.i.i
   %i.aq = icmp eq i32 %i.aj, 4
   %or.cond.i = or i1 %i.aq, %i.ap
@@ -851,9 +852,10 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.c = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.signalKeyAsReadyLogic, i64 %i.c
-  %switch.load = load i64, ptr %switch.gep, align 8
-  %i.d = getelementptr inbounds nuw [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @server, i64 7824), i64 %switch.load
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.signalKeyAsReadyLogic, i64 %i.c
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
+  %i.d = getelementptr inbounds nuw [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @server, i64 7824), i64 %switch.ext
   %i.e = load i32, ptr %i.d, align 4, !tbaa !9
   %i.f = icmp ne i32 %i.e, 0
   %i.g = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 7840), align 8

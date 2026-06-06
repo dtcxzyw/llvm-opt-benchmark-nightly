@@ -20,7 +20,7 @@ $_ZNK12aiMatrix4x4tIfE9DecomposeER10aiVector3tIfER13aiQuaterniontIfES3_ = comdat
 @.str.6 = private unnamed_addr constant [58 x i8] c"ScenePreprocessor: Dummy scaling track has been generated\00", align 1
 @.str.7 = private unnamed_addr constant [59 x i8] c"ScenePreprocessor: Dummy position track has been generated\00", align 1
 @.str.8 = private unnamed_addr constant [46 x i8] c"ScenePreprocessor: Setting animation duration\00", align 1
-@switch.table._ZN6Assimp17ScenePreprocessor11ProcessMeshEP6aiMesh = private unnamed_addr constant [3 x i32] [i32 1, i32 2, i32 4], align 4
+@switch.table._ZN6Assimp17ScenePreprocessor11ProcessMeshEP6aiMesh = private unnamed_addr constant [3 x i8] c"\01\02\04", align 4
 
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6Assimp17ScenePreprocessor12ProcessSceneEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
@@ -362,12 +362,13 @@ bb.g:                                             ; preds = %bb.i, %.lr.ph93.new
 
 switch.lookup:                                    ; preds = %bb.g
   %i.aw = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6Assimp17ScenePreprocessor11ProcessMeshEP6aiMesh, i64 %i.aw
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6Assimp17ScenePreprocessor11ProcessMeshEP6aiMesh, i64 %i.aw
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %switch.lookup
-  %.sink116 = phi i32 [ %switch.load, %switch.lookup ], [ 8, %bb.g ]
+  %.sink116 = phi i32 [ %switch.ext, %switch.lookup ], [ 8, %bb.g ]
   %i.ax = or i32 %i.as, %.sink116                 ; 2 uses
   store i32 %i.ax, ptr %1, align 8
   %i.ay = getelementptr inbounds nuw [16 x i8], ptr %i.h, i64 %indvars.iv102
@@ -379,12 +380,13 @@ bb.h:                                             ; preds = %bb.g, %switch.looku
 
 switch.lookup.1:                                  ; preds = %bb.h
   %i.bc = zext nneg i32 %switch.tableidx.1 to i64
-  %switch.gep.1 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6Assimp17ScenePreprocessor11ProcessMeshEP6aiMesh, i64 %i.bc
-  %switch.load.1 = load i32, ptr %switch.gep.1, align 4
+  %switch.gep.1 = getelementptr inbounds nuw i8, ptr @switch.table._ZN6Assimp17ScenePreprocessor11ProcessMeshEP6aiMesh, i64 %i.bc
+  %switch.load.1 = load i8, ptr %switch.gep.1, align 1
+  %switch.ext.1 = zext i8 %switch.load.1 to i32
   br label %bb.i
 
 bb.i:                                             ; preds = %switch.lookup.1, %bb.h
-  %.sink116.1 = phi i32 [ %switch.load.1, %switch.lookup.1 ], [ 8, %bb.h ]
+  %.sink116.1 = phi i32 [ %switch.ext.1, %switch.lookup.1 ], [ 8, %bb.h ]
   %i.bd = or i32 %i.ax, %.sink116.1               ; 3 uses
   store i32 %i.bd, ptr %1, align 8
   %indvars.iv.next103.1 = add nuw nsw i64 %indvars.iv102, 2 ; 2 uses
@@ -409,12 +411,13 @@ bb.i:                                             ; preds = %switch.lookup.1, %b
 
 switch.lookup.epil:                               ; preds = %.epil.preheader
   %i.bh = zext nneg i32 %switch.tableidx.epil to i64
-  %switch.gep.epil = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6Assimp17ScenePreprocessor11ProcessMeshEP6aiMesh, i64 %i.bh
-  %switch.load.epil = load i32, ptr %switch.gep.epil, align 4
+  %switch.gep.epil = getelementptr inbounds nuw i8, ptr @switch.table._ZN6Assimp17ScenePreprocessor11ProcessMeshEP6aiMesh, i64 %i.bh
+  %switch.load.epil = load i8, ptr %switch.gep.epil, align 1
+  %switch.ext.epil = zext i8 %switch.load.epil to i32
   br label %.loopexit76.loopexit.epilog-lcssa
 
 .loopexit76.loopexit.epilog-lcssa:                ; preds = %switch.lookup.epil, %.epil.preheader
-  %.sink116.epil = phi i32 [ %switch.load.epil, %switch.lookup.epil ], [ 8, %.epil.preheader ]
+  %.sink116.epil = phi i32 [ %switch.ext.epil, %switch.lookup.epil ], [ 8, %.epil.preheader ]
   %i.bi = or i32 %.epil.init, %.sink116.epil
   store i32 %i.bi, ptr %1, align 8
   br label %.loopexit76

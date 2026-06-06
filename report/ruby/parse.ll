@@ -201,9 +201,9 @@ begin_hunk_0
 @stringpool_contents = internal constant %struct.stringpool_t { [6 x i8] c"break\00", [5 x i8] c"else\00", [4 x i8] c"nil\00", [7 x i8] c"ensure\00", [4 x i8] c"end\00", [5 x i8] c"then\00", [4 x i8] c"not\00", [6 x i8] c"false\00", [5 x i8] c"self\00", [6 x i8] c"elsif\00", [7 x i8] c"rescue\00", [5 x i8] c"true\00", [6 x i8] c"until\00", [7 x i8] c"unless\00", [7 x i8] c"return\00", [4 x i8] c"def\00", [4 x i8] c"and\00", [3 x i8] c"do\00", [6 x i8] c"yield\00", [4 x i8] c"for\00", [6 x i8] c"undef\00", [3 x i8] c"or\00", [3 x i8] c"in\00", [5 x i8] c"when\00", [6 x i8] c"retry\00", [3 x i8] c"if\00", [5 x i8] c"case\00", [5 x i8] c"redo\00", [5 x i8] c"next\00", [6 x i8] c"super\00", [7 x i8] c"module\00", [6 x i8] c"begin\00", [9 x i8] c"__LINE__\00", [9 x i8] c"__FILE__\00", [13 x i8] c"__ENCODING__\00", [4 x i8] c"END\00", [6 x i8] c"alias\00", [6 x i8] c"BEGIN\00", [9 x i8] c"defined?\00", [6 x i8] c"class\00", [6 x i8] c"while\00" }, align 1
 @hash.asso_values = internal unnamed_addr constant [256 x i8] c"333333333333333333333333333333333333333333333333333333333333333\1A33\0E3\10\08\0B\0D3333\0A3\0D3333333333333333\0B3\0D\01\1A\04\01\08\1C3\173\01\01\1B\05\13\153\08\03\03\0B3\15\18\1033333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333", align 16
 @.str.950 = private unnamed_addr constant [10 x i8] c"cur_table\00", align 1
-@switch.table.parse_qmark = private unnamed_addr constant [24 x i32] [i32 116, i32 110, i32 118, i32 102, i32 114, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 115], align 4
-@switch.table.simple_re_meta = private unnamed_addr constant [90 x i32] [i32 1, i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 0, i32 0, i32 1, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 1], align 4
-@switch.table.escaped_control_code = private unnamed_addr constant [24 x i32] [i32 116, i32 110, i32 118, i32 102, i32 114, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 115], align 4
+@switch.table.parse_qmark = private unnamed_addr constant [24 x i8] [i8 116, i8 110, i8 118, i8 102, i8 114, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 115], align 4
+@switch.table.simple_re_meta = private unnamed_addr constant [90 x i8] c"\01\00\00\00\00\01\01\01\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\01\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\01\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\01\01", align 4
+@switch.table.escaped_control_code = private unnamed_addr constant [24 x i8] c"tnvfr\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00s", align 4
 @switch.table.parser_set_encode = private unnamed_addr constant [40 x ptr] [ptr @.str.819, ptr @.str.821, ptr poison, ptr poison, ptr @.str.820, ptr poison, ptr poison, ptr @.str.822, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @.str.819, ptr @.str.821, ptr poison, ptr poison, ptr @.str.820, ptr poison, ptr poison, ptr @.str.822], align 8
 
 ; Function Attrs: nounwind sspstrong uwtable
@@ -606,13 +606,14 @@ switch.hole_check:                                ; preds = %bb.m
 
 switch.lookup:                                    ; preds = %switch.hole_check
   %i.ak = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.parse_qmark, i64 %i.ak
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.parse_qmark, i64 %i.ak
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.al = getelementptr i8, ptr %0, i64 200
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !86
   %i.an = getelementptr i8, ptr %0, i64 196
   %i.ao = load i32, ptr %i.an, align 4, !tbaa !29
-  tail call void (ptr, i32, ptr, ...) @rb_compile_warn(ptr noundef %i.am, i32 noundef %i.ao, ptr noundef nonnull @.str.840, i32 noundef %switch.load) #31
+  tail call void (ptr, i32, ptr, ...) @rb_compile_warn(ptr noundef %i.am, i32 noundef %i.ao, ptr noundef nonnull @.str.840, i32 noundef %switch.ext) #31
   br label %escaped_control_code.exit
 
 escaped_control_code.exit:                        ; preds = %switch.hole_check, %bb.m, %.critedge, %bb.l, %is_identchar.exit118.thread, %switch.lookup
@@ -1015,12 +1016,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.simple_re_meta, i64 %i.b
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.simple_re_meta, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %switch.lookup
-  %.0 = phi i32 [ %switch.load, %switch.lookup ], [ 0, %bb.a ]
+  %.0 = phi i32 [ %switch.ext, %switch.lookup ], [ 0, %bb.a ]
   ret i32 %.0
 }
 
@@ -1423,12 +1425,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.escaped_control_code, i64 %i.b
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.escaped_control_code, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.b
 
 bb.b:                                             ; preds = %switch.lookup, %bb.a
-  %.0 = phi i32 [ 0, %bb.a ], [ %switch.load, %switch.lookup ]
+  %.0 = phi i32 [ 0, %bb.a ], [ %switch.ext, %switch.lookup ]
   ret i32 %.0
 }
 

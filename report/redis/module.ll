@@ -201,9 +201,9 @@ begin_hunk_0
 @.str.597 = private unnamed_addr constant [11 x i8] c"*redacted*\00", align 1
 @.str.598 = private unnamed_addr constant [20 x i8] c"endOfPrefix != NULL\00", align 1
 @configerr = internal global [256 x i8] zeroinitializer, align 16
-@switch.table.RM_KeyType = private unnamed_addr constant [7 x i32] [i32 1, i32 2, i32 4, i32 5, i32 3, i32 6, i32 7], align 4
-@switch.table.RM_ACLAddLogEntryByUserName = private unnamed_addr constant [4 x i32] [i32 3, i32 1, i32 2, i32 4], align 4
-@switch.table.RM_ConfigGetType = private unnamed_addr constant [6 x i32] [i32 3, i32 2, i32 0, i32 0, i32 1, i32 0], align 4
+@switch.table.RM_KeyType = private unnamed_addr constant [7 x i8] c"\01\02\04\05\03\06\07", align 4
+@switch.table.RM_ACLAddLogEntryByUserName = private unnamed_addr constant [4 x i8] c"\03\01\02\04", align 4
+@switch.table.RM_ConfigGetType = private unnamed_addr constant [6 x i8] c"\03\02\00\00\01\00", align 4
 
 ; Function Attrs: nounwind uwtable
 define dso_local ptr @RM_Alloc(i64 noundef %0) #0 {
@@ -606,12 +606,13 @@ bb.c:                                             ; preds = %bb.b
 
 switch.lookup:                                    ; preds = %bb.c
   %i.h = and i64 %i.e, 15
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.RM_KeyType, i64 %i.h
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.RM_KeyType, i64 %i.h
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %switch.lookup, %bb.a, %bb.b
-  %.0 = phi i32 [ 0, %bb.b ], [ %switch.load, %switch.lookup ], [ 0, %bb.a ], [ 0, %bb.c ]
+  %.0 = phi i32 [ 0, %bb.b ], [ %switch.ext, %switch.lookup ], [ 0, %bb.a ], [ 0, %bb.c ]
   ret i32 %.0
 }
 
@@ -1014,12 +1015,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i32 %0 to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.RM_ACLAddLogEntryByUserName, i64 %i.b
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.RM_ACLAddLogEntryByUserName, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.b
 
 bb.b:                                             ; preds = %switch.lookup, %bb.a
-  %.0 = phi i32 [ 0, %bb.a ], [ %switch.load, %switch.lookup ]
+  %.0 = phi i32 [ 0, %bb.a ], [ %switch.ext, %switch.lookup ]
   ret i32 %.0
 }
 
@@ -1031,8 +1033,9 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i32 %3 to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.RM_ACLAddLogEntryByUserName, i64 %i.b
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.RM_ACLAddLogEntryByUserName, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !110
   %i.e = load ptr, ptr %1, align 8, !tbaa !555
@@ -1040,7 +1043,7 @@ switch.lookup:                                    ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !282
   %i.i = tail call ptr @sdsdup(ptr noundef %i.h) #31
-  tail call void @addACLLogEntry(ptr noundef %i.d, i32 noundef %switch.load, i32 noundef 3, i32 noundef -1, ptr noundef %i.f, ptr noundef %i.i) #31
+  tail call void @addACLLogEntry(ptr noundef %i.d, i32 noundef %switch.ext, i32 noundef 3, i32 noundef -1, ptr noundef %i.f, ptr noundef %i.i) #31
   br label %moduleGetACLLogEntryReason.exit
 
 moduleGetACLLogEntryReason.exit:                  ; preds = %bb.a, %switch.lookup
@@ -1056,8 +1059,9 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i32 %3 to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.RM_ACLAddLogEntryByUserName, i64 %i.b
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.RM_ACLAddLogEntryByUserName, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !110
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -1065,7 +1069,7 @@ switch.lookup:                                    ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !282
   %i.i = tail call ptr @sdsdup(ptr noundef %i.h) #31
-  tail call void @addACLLogEntry(ptr noundef %i.d, i32 noundef %switch.load, i32 noundef 3, i32 noundef -1, ptr noundef %i.f, ptr noundef %i.i) #31
+  tail call void @addACLLogEntry(ptr noundef %i.d, i32 noundef %switch.ext, i32 noundef 3, i32 noundef -1, ptr noundef %i.f, ptr noundef %i.i) #31
   br label %moduleGetACLLogEntryReason.exit
 
 moduleGetACLLogEntryReason.exit:                  ; preds = %bb.a, %switch.lookup
@@ -1468,9 +1472,10 @@ bb.c:                                             ; preds = %bb.b
 
 switch.lookup:                                    ; preds = %bb.b
   %i.f = zext nneg i32 %i.d to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.RM_ConfigGetType, i64 %i.f
-  %switch.load = load i32, ptr %switch.gep, align 4
-  store i32 %switch.load, ptr %1, align 4, !tbaa !9
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.RM_ConfigGetType, i64 %i.f
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  store i32 %switch.ext, ptr %1, align 4, !tbaa !9
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %switch.lookup

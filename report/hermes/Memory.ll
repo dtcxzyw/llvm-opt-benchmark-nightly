@@ -10,7 +10,7 @@ target triple = "x86_64-pc-linux-gnu"
 @_ZGVZN4llvh3sys6Memory20allocateMappedMemoryEmPKNS0_11MemoryBlockEjRSt10error_codeE8PageSize = internal global i64 0, align 8
 @_ZZN4llvh3sys6Memory19protectMappedMemoryERKNS0_11MemoryBlockEjE8PageSize = internal global i64 0, align 8
 @_ZGVZN4llvh3sys6Memory19protectMappedMemoryERKNS0_11MemoryBlockEjE8PageSize = internal global i64 0, align 8
-@switch.table._ZN4llvh3sys6Memory19protectMappedMemoryERKNS0_11MemoryBlockEj = private unnamed_addr constant [7 x i32] [i32 1, i32 2, i32 3, i32 4, i32 5, i32 poison, i32 7], align 4
+@switch.table._ZN4llvh3sys6Memory19protectMappedMemoryERKNS0_11MemoryBlockEj = private unnamed_addr constant [7 x i8] [i8 1, i8 2, i8 3, i8 4, i8 5, i8 poison, i8 7], align 4
 
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden { ptr, i64 } @_ZN4llvh3sys6Memory20allocateMappedMemoryEmPKNS0_11MemoryBlockEjRSt10error_code(i64 noundef %0, ptr nofree noundef readonly captures(address_is_null) %1, i32 noundef %2, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(16) initializes((0, 16)) %3) local_unnamed_addr #0 align 2 {
@@ -49,8 +49,9 @@ switch.lookup:                                    ; preds = %bb.d, %bb.c, %bb.b
   %i.m = add i32 %2, -16777216                    ; 2 uses
   %i.n = tail call i32 @llvm.fshl.i32(i32 %i.m, i32 %i.m, i32 8)
   %i.o = zext nneg i32 %i.n to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN4llvh3sys6Memory19protectMappedMemoryERKNS0_11MemoryBlockEj, i64 %i.o
-  %switch.load = load i32, ptr %switch.gep, align 4 ; 2 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN4llvh3sys6Memory19protectMappedMemoryERKNS0_11MemoryBlockEj, i64 %i.o
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32       ; 2 uses
   %.not33 = icmp eq ptr %1, null
   br i1 %.not33, label %.thread46, label %bb.e
 
@@ -77,13 +78,13 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.0 = phi i64 [ %i.w, %bb.g ], [ %i.t, %bb.f ], [ 0, %bb.e ]
   %i.x = inttoptr i64 %.0 to ptr
   %i.y = mul i64 %i.l, %i.i
-  %i.z = tail call ptr @mmap(ptr noundef %i.x, i64 noundef %i.y, i32 noundef %switch.load, i32 noundef 34, i32 noundef -1, i64 noundef 0) #9 ; 2 uses
+  %i.z = tail call ptr @mmap(ptr noundef %i.x, i64 noundef %i.y, i32 noundef %switch.ext, i32 noundef 34, i32 noundef -1, i64 noundef 0) #9 ; 2 uses
   %i.aa = icmp eq ptr %i.z, inttoptr (i64 -1 to ptr)
   br i1 %i.aa, label %bb.i, label %bb.j
 
 .thread46:                                        ; preds = %switch.lookup
   %i.ab = mul i64 %i.l, %i.i
-  %i.ac = tail call ptr @mmap(ptr noundef null, i64 noundef %i.ab, i32 noundef %switch.load, i32 noundef 34, i32 noundef -1, i64 noundef 0) #9 ; 2 uses
+  %i.ac = tail call ptr @mmap(ptr noundef null, i64 noundef %i.ab, i32 noundef %switch.ext, i32 noundef 34, i32 noundef -1, i64 noundef 0) #9 ; 2 uses
   %i.ad = icmp eq ptr %i.ac, inttoptr (i64 -1 to ptr)
   br i1 %i.ad, label %.thread48, label %bb.j
 
@@ -214,8 +215,9 @@ switch.lookup:                                    ; preds = %bb.g
   %i.n = add i32 %1, -16777216                    ; 2 uses
   %i.o = tail call i32 @llvm.fshl.i32(i32 %i.n, i32 %i.n, i32 8)
   %i.p = zext nneg i32 %i.o to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN4llvh3sys6Memory19protectMappedMemoryERKNS0_11MemoryBlockEj, i64 %i.p
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN4llvh3sys6Memory19protectMappedMemoryERKNS0_11MemoryBlockEj, i64 %i.p
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.q = load i64, ptr @_ZZN4llvh3sys6Memory19protectMappedMemoryERKNS0_11MemoryBlockEjE8PageSize, align 8, !tbaa !11 ; 2 uses
   %i.r = sub i64 0, %i.q                          ; 3 uses
   %i.s = getelementptr inbounds i8, ptr %i.g, i64 %i.r
@@ -230,7 +232,7 @@ switch.lookup:                                    ; preds = %bb.g
   %i.ab = and i64 %i.aa, %i.r
   %i.ac = inttoptr i64 %i.x to ptr
   %i.ad = sub i64 %i.ab, %i.x
-  %i.ae = tail call i32 @mprotect(ptr noundef %i.ac, i64 noundef %i.ad, i32 noundef %switch.load) #9
+  %i.ae = tail call i32 @mprotect(ptr noundef %i.ac, i64 noundef %i.ad, i32 noundef %switch.ext) #9
   %.not17 = icmp eq i32 %i.ae, 0
   br i1 %.not17, label %bb.j, label %bb.i
 

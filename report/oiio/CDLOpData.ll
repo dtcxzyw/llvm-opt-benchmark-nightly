@@ -84,8 +84,8 @@ module asm ".globl _ZSt21ios_base_library_initv"
 @_ZTSSt23_Sp_counted_ptr_inplaceIN16OpenColorIO_v2_512MatrixOpDataESaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr hidden constant [98 x i8] c"St23_Sp_counted_ptr_inplaceIN16OpenColorIO_v2_512MatrixOpDataESaIvELN9__gnu_cxx12_Lock_policyE2EE\00", align 1
 @.str.18 = private unnamed_addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1
 @llvm.global_ctors = appending global [0 x { i32, ptr, ptr }] zeroinitializer
-@switch.table._ZN16OpenColorIO_v2_59CDLOpData12ConvertStyleENS0_5StyleE = private unnamed_addr constant [4 x i32] [i32 0, i32 0, i32 1, i32 1], align 4
-@switch.table._ZNK16OpenColorIO_v2_59CDLOpData7inverseEv = private unnamed_addr constant [4 x i32] [i32 1, i32 0, i32 3, i32 2], align 4
+@switch.table._ZN16OpenColorIO_v2_59CDLOpData12ConvertStyleENS0_5StyleE = private unnamed_addr constant [4 x i8] c"\00\00\01\01", align 4
+@switch.table._ZNK16OpenColorIO_v2_59CDLOpData7inverseEv = private unnamed_addr constant [4 x i8] c"\01\00\03\02", align 4
 @switch.table._ZNK16OpenColorIO_v2_59CDLOpData10getCacheIDB5cxx11Ev = private unnamed_addr constant [4 x ptr] [ptr @_ZN16OpenColorIO_v2_5L17V1_2_FWD_CLF_NAMEE, ptr @_ZN16OpenColorIO_v2_5L17V1_2_REV_CLF_NAMEE, ptr @_ZN16OpenColorIO_v2_5L21NO_CLAMP_FWD_CLF_NAMEE, ptr @_ZN16OpenColorIO_v2_5L21NO_CLAMP_REV_CLF_NAMEE], align 8
 
 @_ZN16OpenColorIO_v2_59CDLOpDataC1Ev = hidden unnamed_addr alias void (ptr), ptr @_ZN16OpenColorIO_v2_59CDLOpDataC2Ev
@@ -488,9 +488,10 @@ bb.n:                                             ; preds = %bb.m, %_ZNSt7__cxx1
 
 switch.lookup:                                    ; preds = %bb.a
   %i.z = zext nneg i32 %0 to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN16OpenColorIO_v2_59CDLOpData12ConvertStyleENS0_5StyleE, i64 %i.z
-  %switch.load = load i32, ptr %switch.gep, align 4
-  ret i32 %switch.load
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN16OpenColorIO_v2_59CDLOpData12ConvertStyleENS0_5StyleE, i64 %i.z
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  ret i32 %switch.ext
 
 bb.o:                                             ; preds = %bb.g
   unreachable
@@ -813,9 +814,10 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.f = zext nneg i32 %i.b to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZNK16OpenColorIO_v2_59CDLOpData7inverseEv, i64 %i.f
-  %switch.load = load i32, ptr %switch.gep, align 4
-  store i32 %switch.load, ptr %i.a, align 8, !tbaa !19
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK16OpenColorIO_v2_59CDLOpData7inverseEv, i64 %i.f
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  store i32 %switch.ext, ptr %i.a, align 8, !tbaa !19
   br label %_ZN16OpenColorIO_v2_59CDLOpData6invertEv.exit
 
 _ZN16OpenColorIO_v2_59CDLOpData6invertEv.exit:    ; preds = %switch.lookup, %bb.a
@@ -832,9 +834,10 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.d = zext nneg i32 %i.b to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZNK16OpenColorIO_v2_59CDLOpData7inverseEv, i64 %i.d
-  %switch.load = load i32, ptr %switch.gep, align 4
-  store i32 %switch.load, ptr %i.a, align 8, !tbaa !19
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK16OpenColorIO_v2_59CDLOpData7inverseEv, i64 %i.d
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  store i32 %switch.ext, ptr %i.a, align 8, !tbaa !19
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %switch.lookup
@@ -1237,9 +1240,10 @@ _ZNK16OpenColorIO_v2_59CDLOpData5cloneEv.exit.i:  ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %_ZNK16OpenColorIO_v2_59CDLOpData5cloneEv.exit.i
   %i.l = zext nneg i32 %i.j to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZNK16OpenColorIO_v2_59CDLOpData7inverseEv, i64 %i.l
-  %switch.load = load i32, ptr %switch.gep, align 4
-  store i32 %switch.load, ptr %i.h, align 8, !tbaa !19, !noalias !123
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK16OpenColorIO_v2_59CDLOpData7inverseEv, i64 %i.l
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  store i32 %switch.ext, ptr %i.h, align 8, !tbaa !19, !noalias !123
   br label %_ZNK16OpenColorIO_v2_59CDLOpData7inverseEv.exit
 
 _ZNK16OpenColorIO_v2_59CDLOpData7inverseEv.exit:  ; preds = %_ZNK16OpenColorIO_v2_59CDLOpData5cloneEv.exit.i, %switch.lookup
@@ -1349,9 +1353,10 @@ _ZNK16OpenColorIO_v2_59CDLOpData5cloneEv.exit:    ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %_ZNK16OpenColorIO_v2_59CDLOpData5cloneEv.exit
   %i.k = zext nneg i32 %i.i to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZNK16OpenColorIO_v2_59CDLOpData7inverseEv, i64 %i.k
-  %switch.load = load i32, ptr %switch.gep, align 4
-  store i32 %switch.load, ptr %i.g, align 8, !tbaa !19
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK16OpenColorIO_v2_59CDLOpData7inverseEv, i64 %i.k
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  store i32 %switch.ext, ptr %i.g, align 8, !tbaa !19
   br label %_ZN16OpenColorIO_v2_59CDLOpData6invertEv.exit
 
 _ZN16OpenColorIO_v2_59CDLOpData6invertEv.exit:    ; preds = %_ZNK16OpenColorIO_v2_59CDLOpData5cloneEv.exit, %switch.lookup

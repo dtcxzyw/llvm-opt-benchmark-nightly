@@ -201,25 +201,25 @@ begin_hunk_0
 @1511 = private unnamed_addr constant [40 x i8] c"description() is deprecated; use Display", align 1
 @1512 = private unnamed_addr constant <{ ptr, ptr }> <{ ptr inttoptr (i64 1464263742937214355 to ptr), ptr inttoptr (i64 8124377696161729827 to ptr) }>, align 8
 @1513 = private unnamed_addr constant <{ ptr, ptr }> <{ ptr inttoptr (i64 -3401953897994664374 to ptr), ptr inttoptr (i64 837029190390031305 to ptr) }>, align 8
-@switch.table._RNvXs0_NtNtCs4lawaffTVVK_9sqlparser3ast8operatorNtB5_13UnaryOperatorNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt = private unnamed_addr constant [15 x i64] [i64 4, i64 5, i64 3, i64 12, i64 12, i64 10, i64 18, i64 17, i64 5, i64 7, i64 4, i64 8, i64 8, i64 12, i64 12], align 8
+@switch.table._RNvXs0_NtNtCs4lawaffTVVK_9sqlparser3ast8operatorNtB5_13UnaryOperatorNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt = private unnamed_addr constant [15 x i8] c"\04\05\03\0C\0C\0A\12\11\05\07\04\08\08\0C\0C", align 8
 @switch.table._RNvXs0_NtNtCs4lawaffTVVK_9sqlparser3ast8operatorNtB5_13UnaryOperatorNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt.266 = private unnamed_addr constant [15 x ptr] [ptr @2, ptr @3, ptr @4, ptr @5, ptr @6, ptr @7, ptr @8, ptr @9, ptr @10, ptr @11, ptr @12, ptr @13, ptr @14, ptr @15, ptr @16], align 8
-@switch.table._RNvXs1W_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_11SetOperatorNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt = private unnamed_addr constant [4 x i64] [i64 5, i64 6, i64 9, i64 5], align 8
+@switch.table._RNvXs1W_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_11SetOperatorNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt = private unnamed_addr constant [4 x i8] c"\05\06\09\05", align 8
 @switch.table._RNvXs1W_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_11SetOperatorNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt.267 = private unnamed_addr constant [4 x ptr] [ptr @118, ptr @119, ptr @120, ptr @3], align 8
-@switch.table._RNvXs28_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_13SetQuantifierNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt = private unnamed_addr constant [6 x i64] [i64 3, i64 8, i64 6, i64 9, i64 14, i64 4], align 8
+@switch.table._RNvXs28_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_13SetQuantifierNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt = private unnamed_addr constant [6 x i8] c"\03\08\06\09\0E\04", align 8
 @switch.table._RNvXs28_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_13SetQuantifierNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt.268 = private unnamed_addr constant [6 x ptr] [ptr @150, ptr @151, ptr @152, ptr @153, ptr @154, ptr @155], align 8
-@switch.table._RNvXs62_NtCs4lawaffTVVK_9sqlparser3astNtB6_8CastKindNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt = private unnamed_addr constant [4 x i64] [i64 4, i64 7, i64 8, i64 11], align 8
+@switch.table._RNvXs62_NtCs4lawaffTVVK_9sqlparser3astNtB6_8CastKindNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt = private unnamed_addr constant [4 x i8] c"\04\07\08\0B", align 8
 @switch.table._RNvXs62_NtCs4lawaffTVVK_9sqlparser3astNtB6_8CastKindNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt.269 = private unnamed_addr constant [4 x ptr] [ptr @52, ptr @54, ptr @324, ptr @325], align 8
-@switch.table._RNvXs8M_NtCs4lawaffTVVK_9sqlparser3astNtB6_16ShowCreateObjectNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt = private unnamed_addr constant [6 x i64] [i64 5, i64 8, i64 9, i64 5, i64 7, i64 4], align 8
+@switch.table._RNvXs8M_NtCs4lawaffTVVK_9sqlparser3astNtB6_16ShowCreateObjectNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt = private unnamed_addr constant [6 x i8] c"\05\08\09\05\07\04", align 8
 @switch.table._RNvXs8M_NtCs4lawaffTVVK_9sqlparser3astNtB6_16ShowCreateObjectNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt.270 = private unnamed_addr constant [6 x ptr] [ptr @558, ptr @422, ptr @559, ptr @117, ptr @560, ptr @561], align 8
-@switch.table._RNvXs8Y_NtCs4lawaffTVVK_9sqlparser3astNtB6_13CommentObjectNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt = private unnamed_addr constant [7 x i64] [i64 6, i64 5, i64 9, i64 6, i64 8, i64 4, i64 4], align 8
+@switch.table._RNvXs8Y_NtCs4lawaffTVVK_9sqlparser3astNtB6_13CommentObjectNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt = private unnamed_addr constant [7 x i8] c"\06\05\09\06\08\04\04", align 8
 @switch.table._RNvXs8Y_NtCs4lawaffTVVK_9sqlparser3astNtB6_13CommentObjectNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt.271 = private unnamed_addr constant [7 x ptr] [ptr @25, ptr @117, ptr @562, ptr @563, ptr @564, ptr @565, ptr @566], align 8
-@switch.table._RNvXsa_NtCsfYVtenZkBsn_12arrow_schema8datatypeNtB5_8TimeUnitNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt = private unnamed_addr constant [4 x i64] [i64 6, i64 11, i64 11, i64 10], align 8
+@switch.table._RNvXsa_NtCsfYVtenZkBsn_12arrow_schema8datatypeNtB5_8TimeUnitNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt = private unnamed_addr constant [4 x i8] c"\06\0B\0B\0A", align 8
 @switch.table._RNvXsa_NtCsfYVtenZkBsn_12arrow_schema8datatypeNtB5_8TimeUnitNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt.272 = private unnamed_addr constant [4 x ptr] [ptr @598, ptr @613, ptr @609, ptr @615], align 8
-@switch.table._RNvXsks_NtCs4lawaffTVVK_9sqlparser3astNtB6_10ObjectTypeNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt = private unnamed_addr constant [12 x i64] [i64 5, i64 4, i64 16, i64 5, i64 6, i64 8, i64 4, i64 8, i64 5, i64 4, i64 4, i64 6], align 8
+@switch.table._RNvXsks_NtCs4lawaffTVVK_9sqlparser3astNtB6_10ObjectTypeNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt = private unnamed_addr constant [12 x i8] c"\05\04\10\05\06\08\04\08\05\04\04\06", align 8
 @switch.table._RNvXsks_NtCs4lawaffTVVK_9sqlparser3astNtB6_10ObjectTypeNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt.273 = private unnamed_addr constant [12 x ptr] [ptr @117, ptr @561, ptr @1482, ptr @1483, ptr @563, ptr @564, ptr @566, ptr @1484, ptr @1485, ptr @1486, ptr @565, ptr @1487], align 8
-@switch.table._RNvXslS_NtCs4lawaffTVVK_9sqlparser3astNtB6_13DescribeAliasNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt = private unnamed_addr constant [3 x i64] [i64 8, i64 7, i64 4], align 8
+@switch.table._RNvXslS_NtCs4lawaffTVVK_9sqlparser3astNtB6_13DescribeAliasNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt = private unnamed_addr constant [3 x i8] c"\08\07\04", align 8
 @switch.table._RNvXslS_NtCs4lawaffTVVK_9sqlparser3astNtB6_13DescribeAliasNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt.274 = private unnamed_addr constant [3 x ptr] [ptr @1488, ptr @1164, ptr @1489], align 8
-@switch.table._RNvXssj_NtCs4lawaffTVVK_9sqlparser3astNtB6_9FlushTypeNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt = private unnamed_addr constant [13 x i64] [i64 10, i64 10, i64 9, i64 11, i64 5, i64 4, i64 10, i64 14, i64 9, i64 8, i64 6, i64 13, i64 6], align 8
+@switch.table._RNvXssj_NtCs4lawaffTVVK_9sqlparser3astNtB6_9FlushTypeNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt = private unnamed_addr constant [13 x i8] c"\0A\0A\09\0B\05\04\0A\0E\09\08\06\0D\06", align 8
 @switch.table._RNvXssj_NtCs4lawaffTVVK_9sqlparser3astNtB6_9FlushTypeNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt.275 = private unnamed_addr constant [13 x ptr] [ptr @1495, ptr @1496, ptr @1497, ptr @1498, ptr @1499, ptr @1500, ptr @1501, ptr @1502, ptr @1503, ptr @1504, ptr @1505, ptr @1506, ptr @1507], align 8
 
 ; Function Attrs: nonlazybind uwtable
@@ -622,12 +622,13 @@ define internal noundef zeroext i1 @_RNvXs0_NtNtCs4lawaffTVVK_9sqlparser3ast8ope
 switch.lookup:
   %i.a = load i8, ptr %0, align 1, !range !3208, !noundef !5 ; 2 uses
   %i.b = zext nneg i8 %i.a to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs0_NtNtCs4lawaffTVVK_9sqlparser3ast8operatorNtB5_13UnaryOperatorNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt, i64 %i.b
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs0_NtNtCs4lawaffTVVK_9sqlparser3ast8operatorNtB5_13UnaryOperatorNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %i.a to i64
   %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs0_NtNtCs4lawaffTVVK_9sqlparser3ast8operatorNtB5_13UnaryOperatorNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt.266, i64 %i.c
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
-  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.load)
+  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.ext)
   ret i1 %i.d
 }
 
@@ -1030,12 +1031,13 @@ define internal noundef zeroext i1 @_RNvXs1W_NtNtCs4lawaffTVVK_9sqlparser3ast5qu
 switch.lookup:
   %i.a = load i8, ptr %0, align 1, !range !2265, !noundef !5 ; 2 uses
   %i.b = zext nneg i8 %i.a to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs1W_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_11SetOperatorNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt, i64 %i.b
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs1W_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_11SetOperatorNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %i.a to i64
   %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs1W_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_11SetOperatorNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt.267, i64 %i.c
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
-  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.load)
+  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.ext)
   ret i1 %i.d
 }
 
@@ -1438,12 +1440,13 @@ define internal noundef zeroext i1 @_RNvXs28_NtNtCs4lawaffTVVK_9sqlparser3ast5qu
 switch.lookup:
   %i.a = load i8, ptr %0, align 1, !range !2273, !noundef !5 ; 2 uses
   %i.b = zext nneg i8 %i.a to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs28_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_13SetQuantifierNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt, i64 %i.b
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs28_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_13SetQuantifierNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %i.a to i64
   %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs28_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_13SetQuantifierNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt.268, i64 %i.c
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
-  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.load)
+  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.ext)
   ret i1 %i.d
 }
 
@@ -1846,12 +1849,13 @@ define internal noundef zeroext i1 @_RNvXs62_NtCs4lawaffTVVK_9sqlparser3astNtB6_
 switch.lookup:
   %i.a = load i8, ptr %0, align 1, !range !2265, !noundef !5 ; 2 uses
   %i.b = zext nneg i8 %i.a to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs62_NtCs4lawaffTVVK_9sqlparser3astNtB6_8CastKindNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt, i64 %i.b
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs62_NtCs4lawaffTVVK_9sqlparser3astNtB6_8CastKindNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %i.a to i64
   %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs62_NtCs4lawaffTVVK_9sqlparser3astNtB6_8CastKindNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt.269, i64 %i.c
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
-  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.load)
+  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.ext)
   ret i1 %i.d
 }
 
@@ -2254,12 +2258,13 @@ define internal noundef zeroext i1 @_RNvXs8M_NtCs4lawaffTVVK_9sqlparser3astNtB6_
 switch.lookup:
   %i.a = load i8, ptr %0, align 1, !range !2273, !noundef !5 ; 2 uses
   %i.b = zext nneg i8 %i.a to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs8M_NtCs4lawaffTVVK_9sqlparser3astNtB6_16ShowCreateObjectNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt, i64 %i.b
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs8M_NtCs4lawaffTVVK_9sqlparser3astNtB6_16ShowCreateObjectNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %i.a to i64
   %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs8M_NtCs4lawaffTVVK_9sqlparser3astNtB6_16ShowCreateObjectNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt.270, i64 %i.c
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
-  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.load)
+  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.ext)
   ret i1 %i.d
 }
 
@@ -2550,12 +2555,13 @@ define internal noundef zeroext i1 @_RNvXs8Y_NtCs4lawaffTVVK_9sqlparser3astNtB6_
 switch.lookup:
   %i.a = load i8, ptr %0, align 1, !range !4732, !noundef !5 ; 2 uses
   %i.b = zext nneg i8 %i.a to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs8Y_NtCs4lawaffTVVK_9sqlparser3astNtB6_13CommentObjectNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt, i64 %i.b
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs8Y_NtCs4lawaffTVVK_9sqlparser3astNtB6_13CommentObjectNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %i.a to i64
   %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs8Y_NtCs4lawaffTVVK_9sqlparser3astNtB6_13CommentObjectNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt.271, i64 %i.c
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
-  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.load)
+  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.ext)
   ret i1 %i.d
 }
 
@@ -2958,12 +2964,13 @@ define internal noundef zeroext i1 @_RNvXsa_NtCsfYVtenZkBsn_12arrow_schema8datat
 switch.lookup:
   %i.a = load i8, ptr %0, align 1, !range !2265, !noundef !5 ; 2 uses
   %i.b = zext nneg i8 %i.a to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXsa_NtCsfYVtenZkBsn_12arrow_schema8datatypeNtB5_8TimeUnitNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt, i64 %i.b
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXsa_NtCsfYVtenZkBsn_12arrow_schema8datatypeNtB5_8TimeUnitNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %i.a to i64
   %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXsa_NtCsfYVtenZkBsn_12arrow_schema8datatypeNtB5_8TimeUnitNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt.272, i64 %i.c
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
-  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.load)
+  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.ext)
   ret i1 %i.d
 }
 
@@ -3366,12 +3373,13 @@ define internal noundef zeroext i1 @_RNvXsks_NtCs4lawaffTVVK_9sqlparser3astNtB6_
 switch.lookup:
   %i.a = load i8, ptr %0, align 1, !range !7341, !noundef !5 ; 2 uses
   %i.b = zext nneg i8 %i.a to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXsks_NtCs4lawaffTVVK_9sqlparser3astNtB6_10ObjectTypeNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt, i64 %i.b
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXsks_NtCs4lawaffTVVK_9sqlparser3astNtB6_10ObjectTypeNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %i.a to i64
   %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXsks_NtCs4lawaffTVVK_9sqlparser3astNtB6_10ObjectTypeNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt.273, i64 %i.c
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
-  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.load)
+  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.ext)
   ret i1 %i.d
 }
 
@@ -3380,12 +3388,13 @@ define internal noundef zeroext i1 @_RNvXslS_NtCs4lawaffTVVK_9sqlparser3astNtB6_
 switch.lookup:
   %i.a = load i8, ptr %0, align 1, !range !1798, !noundef !5 ; 2 uses
   %i.b = zext nneg i8 %i.a to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXslS_NtCs4lawaffTVVK_9sqlparser3astNtB6_13DescribeAliasNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt, i64 %i.b
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXslS_NtCs4lawaffTVVK_9sqlparser3astNtB6_13DescribeAliasNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %i.a to i64
   %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXslS_NtCs4lawaffTVVK_9sqlparser3astNtB6_13DescribeAliasNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt.274, i64 %i.c
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
-  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.load)
+  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.ext)
   ret i1 %i.d
 }
 
@@ -3788,12 +3797,13 @@ define internal noundef zeroext i1 @_RNvXssj_NtCs4lawaffTVVK_9sqlparser3astNtB6_
 switch.lookup:
   %i.a = load i8, ptr %0, align 1, !range !7460, !noundef !5 ; 2 uses
   %i.b = zext nneg i8 %i.a to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXssj_NtCs4lawaffTVVK_9sqlparser3astNtB6_9FlushTypeNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt, i64 %i.b
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXssj_NtCs4lawaffTVVK_9sqlparser3astNtB6_9FlushTypeNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %i.a to i64
   %switch.gep2 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXssj_NtCs4lawaffTVVK_9sqlparser3astNtB6_9FlushTypeNtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmt.275, i64 %i.c
   %switch.load3 = load ptr, ptr %switch.gep2, align 8
-  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.load)
+  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load3, i64 noundef %switch.ext)
   ret i1 %i.d
 }
 

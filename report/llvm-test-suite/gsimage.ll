@@ -16,8 +16,8 @@ target triple = "x86_64-pc-linux-gnu"
 @.str = private unnamed_addr constant [13 x i8] c"image buffer\00", align 1
 @image_init.procs = internal unnamed_addr constant [4 x ptr] [ptr @image_unpack_0, ptr @image_unpack_1, ptr @image_unpack_2, ptr @image_unpack_3], align 16
 @image_init.spread_procs = internal unnamed_addr constant [4 x ptr] [ptr @image_unpack_0_spread, ptr @image_unpack_1_spread, ptr @image_unpack_2, ptr @image_unpack_3_spread], align 16
-@switch.table.gs_image_init = private unnamed_addr constant [9 x i32] [i32 4, i32 3, i32 poison, i32 poison, i32 poison, i32 1, i32 poison, i32 3, i32 4], align 4
-@switch.table.gs_image_init.1 = private unnamed_addr constant [9 x i32] [i32 4, i32 3, i32 poison, i32 poison, i32 poison, i32 1, i32 poison, i32 1, i32 1], align 4
+@switch.table.gs_image_init = private unnamed_addr constant [9 x i8] [i8 4, i8 3, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 3, i8 4], align 4
+@switch.table.gs_image_init.1 = private unnamed_addr constant [9 x i8] [i8 4, i8 3, i8 poison, i8 poison, i8 poison, i8 1, i8 poison, i8 1, i8 1], align 4
 
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 -2147483648, 1) i32 @gs_image_init(ptr noundef %0, ptr noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, ptr noundef %6) local_unnamed_addr #0 {
@@ -57,18 +57,20 @@ bb.d:                                             ; preds = %.split, %bb.c
 
 switch.lookup:                                    ; preds = %bb.d
   %i.h = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.gs_image_init, i64 %i.h
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.gs_image_init, i64 %i.h
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.i = zext nneg i32 %switch.tableidx to i64
-  %switch.gep19 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.gs_image_init.1, i64 %i.i
-  %switch.load20 = load i32, ptr %switch.gep19, align 4
+  %switch.gep19 = getelementptr inbounds nuw i8, ptr @switch.table.gs_image_init.1, i64 %i.i
+  %switch.load20 = load i8, ptr %switch.gep19, align 1
+  %switch.ext21 = zext i8 %switch.load20 to i32
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 448
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !25   ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 24
   %i.m = load i64, ptr %i.l, align 8, !tbaa !26
   %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %i.o = load i64, ptr %i.n, align 8, !tbaa !29
-  %i.p = tail call i32 @image_init(ptr noundef %0, i32 noundef %2, i32 noundef %3, i32 noundef %.016, i32 noundef %switch.load, i32 noundef %switch.load20, ptr noundef %6, ptr noundef nonnull %1, i64 noundef %i.m, i64 noundef %i.o)
+  %i.p = tail call i32 @image_init(ptr noundef %0, i32 noundef %2, i32 noundef %3, i32 noundef %.016, i32 noundef %switch.ext, i32 noundef %switch.ext21, ptr noundef %6, ptr noundef nonnull %1, i64 noundef %i.m, i64 noundef %i.o)
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %.split, %bb.b, %bb.a, %switch.lookup

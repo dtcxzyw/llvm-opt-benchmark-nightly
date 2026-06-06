@@ -134,7 +134,7 @@ $_ZZNSt19_Sp_make_shared_tag5_S_tiEvE5__tag = comdat any
 @_ZTVSt23_Sp_counted_ptr_inplaceIN4llvh3sys2fs6detail12DirIterStateESaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr hidden unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr null, ptr @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EED2Ev, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN4llvh3sys2fs6detail12DirIterStateESaIvELN9__gnu_cxx12_Lock_policyE2EED0Ev, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN4llvh3sys2fs6detail12DirIterStateESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN4llvh3sys2fs6detail12DirIterStateESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_destroyEv, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN4llvh3sys2fs6detail12DirIterStateESaIvELN9__gnu_cxx12_Lock_policyE2EE14_M_get_deleterERKSt9type_info] }, comdat, align 8
 @_ZZNSt19_Sp_make_shared_tag5_S_tiEvE5__tag = linkonce_odr constant [16 x i8] zeroinitializer, comdat, align 8
 @__libc_single_threaded = external local_unnamed_addr global i8, align 1
-@switch.table._ZNK4llvh3sys2fs15directory_entry6statusEv = private unnamed_addr constant [12 x i32] [i32 7, i32 6, i32 9, i32 3, i32 9, i32 5, i32 9, i32 2, i32 9, i32 4, i32 9, i32 8], align 4
+@switch.table._ZNK4llvh3sys2fs15directory_entry6statusEv = private unnamed_addr constant [12 x i8] c"\07\06\09\03\09\05\09\02\09\04\09\08", align 4
 
 @_ZN4llvh3sys2fs18mapped_file_regionC1EiNS2_7mapmodeEmmRSt10error_code = hidden unnamed_addr alias void (ptr, i32, i32, i64, i64, ptr), ptr @_ZN4llvh3sys2fs18mapped_file_regionC2EiNS2_7mapmodeEmmRSt10error_code
 @_ZN4llvh3sys2fs18mapped_file_regionD1Ev = hidden unnamed_addr alias void (ptr), ptr @_ZN4llvh3sys2fs18mapped_file_regionD2Ev
@@ -537,12 +537,13 @@ bb.b:                                             ; preds = %bb.a
 switch.lookup:                                    ; preds = %bb.b
   %i.l = lshr exact i32 %i.j, 12
   %i.m = zext nneg i32 %i.l to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZNK4llvh3sys2fs15directory_entry6statusEv, i64 %i.m
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvh3sys2fs15directory_entry6statusEv, i64 %i.m
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZN4llvh3sys2fsL10fillStatusEiRK4statRNS1_11file_statusE.exit
 
 _ZN4llvh3sys2fsL10fillStatusEiRK4statRNS1_11file_statusE.exit: ; preds = %bb.b, %switch.lookup, %bb.a
-  %.sroa.025.0.i = phi i32 [ 0, %bb.a ], [ %switch.load, %switch.lookup ], [ 9, %bb.b ]
+  %.sroa.025.0.i = phi i32 [ 0, %bb.a ], [ %switch.ext, %switch.lookup ], [ 9, %bb.b ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #30
   %i.n = load ptr, ptr %2, align 8, !tbaa !36     ; 2 uses
   %i.o = icmp eq ptr %i.n, %i.a
@@ -945,12 +946,13 @@ bb.e:                                             ; preds = %bb.a
 switch.lookup:                                    ; preds = %bb.e
   %i.k = lshr exact i32 %i.i, 12
   %i.l = zext nneg i32 %i.k to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZNK4llvh3sys2fs15directory_entry6statusEv, i64 %i.l
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvh3sys2fs15directory_entry6statusEv, i64 %i.l
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZN4llvh3sys2fsL11typeForModeEj.exit
 
 _ZN4llvh3sys2fsL11typeForModeEj.exit:             ; preds = %bb.e, %switch.lookup
-  %.0.i = phi i32 [ %switch.load, %switch.lookup ], [ 9, %bb.e ]
+  %.0.i = phi i32 [ %switch.ext, %switch.lookup ], [ 9, %bb.e ]
   %i.m = load i64, ptr %1, align 8, !tbaa !180
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 72
@@ -1353,12 +1355,13 @@ bb.e:                                             ; preds = %bb.d
 switch.lookup:                                    ; preds = %.thread
   %i.ae = lshr exact i32 %i.ac, 12
   %i.af = zext nneg i32 %i.ae to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZNK4llvh3sys2fs15directory_entry6statusEv, i64 %i.af
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvh3sys2fs15directory_entry6statusEv, i64 %i.af
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZN4llvh3sys2fsL10direntTypeEP6dirent.exit
 
 _ZN4llvh3sys2fsL10direntTypeEP6dirent.exit:       ; preds = %.thread, %switch.lookup
-  %.0.i.i = phi i32 [ %switch.load, %switch.lookup ], [ 9, %.thread ]
+  %.0.i.i = phi i32 [ %switch.ext, %switch.lookup ], [ 9, %.thread ]
   %i.ag = getelementptr inbounds nuw i8, ptr %4, i64 36
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %4, i8 0, i64 40, i1 false)
   store i32 65535, ptr %i.ag, align 4, !tbaa !198
@@ -1547,12 +1550,13 @@ bb.c:                                             ; preds = %bb.a
 switch.lookup:                                    ; preds = %bb.c
   %i.v = lshr exact i32 %i.t, 12
   %i.w = zext nneg i32 %i.v to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZNK4llvh3sys2fs15directory_entry6statusEv, i64 %i.w
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4llvh3sys2fs15directory_entry6statusEv, i64 %i.w
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZN4llvh3sys2fsL11typeForModeEj.exit.i
 
 _ZN4llvh3sys2fsL11typeForModeEj.exit.i:           ; preds = %bb.c, %switch.lookup
-  %.0.i.i = phi i32 [ %switch.load, %switch.lookup ], [ 9, %bb.c ]
+  %.0.i.i = phi i32 [ %switch.ext, %switch.lookup ], [ 9, %bb.c ]
   %i.x = getelementptr inbounds nuw i8, ptr %3, i64 72
   %i.y = load i64, ptr %i.x, align 8, !tbaa !184
   %i.z = getelementptr inbounds nuw i8, ptr %3, i64 88

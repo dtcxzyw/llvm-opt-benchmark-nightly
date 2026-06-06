@@ -56,8 +56,8 @@ $__clang_call_terminate = comdat any
 @switch.table._ZNK12btBox2dShape32getPreferredPenetrationDirectionEiR9btVector3 = private unnamed_addr constant [6 x float] [float 1.000000e+00, float -1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00], align 4
 @switch.table._ZNK12btBox2dShape32getPreferredPenetrationDirectionEiR9btVector3.1 = private unnamed_addr constant [6 x float] [float 0.000000e+00, float 0.000000e+00, float 1.000000e+00, float -1.000000e+00, float 0.000000e+00, float 0.000000e+00], align 4
 @switch.table._ZNK12btBox2dShape32getPreferredPenetrationDirectionEiR9btVector3.2 = private unnamed_addr constant [6 x float] [float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00, float -1.000000e+00], align 4
-@switch.table._ZNK12btBox2dShape7getEdgeEiR9btVector3S1_ = private unnamed_addr constant [12 x i32] [i32 0, i32 0, i32 1, i32 2, i32 0, i32 1, i32 2, i32 3, i32 4, i32 4, i32 5, i32 6], align 4
-@switch.table._ZNK12btBox2dShape7getEdgeEiR9btVector3S1_.3 = private unnamed_addr constant [12 x i32] [i32 1, i32 2, i32 3, i32 3, i32 4, i32 5, i32 6, i32 7, i32 5, i32 6, i32 7, i32 7], align 4
+@switch.table._ZNK12btBox2dShape7getEdgeEiR9btVector3S1_ = private unnamed_addr constant [12 x i8] c"\00\00\01\02\00\01\02\03\04\04\05\06", align 4
+@switch.table._ZNK12btBox2dShape7getEdgeEiR9btVector3S1_.3 = private unnamed_addr constant [12 x i8] c"\01\02\03\03\04\05\06\07\05\06\07\07", align 4
 
 ; Function Attrs: uwtable
 define dso_local void @_ZNK12btBox2dShape7getAabbERK11btTransformR9btVector3S4_(ptr noundef nonnull align 8 dereferenceable(208) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(64) %1, ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(16) initializes((0, 16)) %2, ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(16) initializes((0, 16)) %3) unnamed_addr #0 align 2 {
@@ -460,16 +460,18 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i32 %1 to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZNK12btBox2dShape7getEdgeEiR9btVector3S1_, i64 %i.b
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK12btBox2dShape7getEdgeEiR9btVector3S1_, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.c = zext nneg i32 %1 to i64
-  %switch.gep6 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZNK12btBox2dShape7getEdgeEiR9btVector3S1_.3, i64 %i.c
-  %switch.load7 = load i32, ptr %switch.gep6, align 4
+  %switch.gep6 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK12btBox2dShape7getEdgeEiR9btVector3S1_.3, i64 %i.c
+  %switch.load7 = load i8, ptr %switch.gep6, align 1
+  %switch.ext8 = zext i8 %switch.load7 to i32
   br label %bb.b
 
 bb.b:                                             ; preds = %switch.lookup, %bb.a
-  %.05 = phi i32 [ 0, %bb.a ], [ %switch.load, %switch.lookup ]
-  %.0 = phi i32 [ 0, %bb.a ], [ %switch.load7, %switch.lookup ]
+  %.05 = phi i32 [ 0, %bb.a ], [ %switch.ext, %switch.lookup ]
+  %.0 = phi i32 [ 0, %bb.a ], [ %switch.ext8, %switch.lookup ]
   %i.d = load ptr, ptr %0, align 8, !tbaa !8
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 168
   %i.f = load ptr, ptr %i.e, align 8

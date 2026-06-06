@@ -116,7 +116,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.96 = private unnamed_addr constant [52 x i8] c"Invalid type for [Strip|Tile][Offset/ByteCount] tag\00", align 1
 @.str.97 = private unnamed_addr constant [38 x i8] c"Cannot read offset/size for strile %d\00", align 1
 @.str.98 = private unnamed_addr constant [46 x i8] c"Cannot read offset/size for strile around ~%d\00", align 1
-@switch.table._TIFFGetStrileOffsetOrByteCountValue = private unnamed_addr constant [15 x i64] [i64 2, i64 4, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 8, i64 8], align 8
+@switch.table._TIFFGetStrileOffsetOrByteCountValue = private unnamed_addr constant [15 x i8] [i8 2, i8 4, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 8, i8 8], align 8
 
 ; Function Attrs: nounwind uwtable
 define range(i32 0, 2) i32 @TIFFReadDirectory(ptr noundef %0) local_unnamed_addr #0 {
@@ -519,8 +519,9 @@ bb.u:                                             ; preds = %bb.t
 
 switch.lookup:                                    ; preds = %bb.t
   %i.bt = zext nneg i16 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._TIFFGetStrileOffsetOrByteCountValue, i64 %i.bt
-  %switch.load = load i64, ptr %switch.gep, align 8 ; 6 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._TIFFGetStrileOffsetOrByteCountValue, i64 %i.bt
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64       ; 6 uses
   %i.bu = and i32 %i.bm, 524288
   %.not116.i.i = icmp eq i32 %i.bu, 0
   %i.bv = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
@@ -570,16 +571,16 @@ bb.aa:                                            ; preds = %bb.z
 bb.ab:                                            ; preds = %bb.z, %.thread.i.i
   %.0107122.i.i = phi i64 [ %i.bz, %.thread.i.i ], [ %i.ca, %bb.z ] ; 2 uses
   %i.ce = sext i32 %1 to i64                      ; 3 uses
-  %i.cf = mul nsw i64 %switch.load, %i.ce
+  %i.cf = mul nsw i64 %switch.ext, %i.ce
   %i.cg = add i64 %.0107122.i.i, %i.cf            ; 4 uses
   %i.ch = and i64 %i.cg, -4096                    ; 5 uses
   %i.ci = add i64 %i.ch, 4096                     ; 2 uses
-  %i.cj = add i64 %i.cg, %switch.load
+  %i.cj = add i64 %i.cg, %switch.ext
   %i.ck = icmp ugt i64 %i.cj, %i.ci
   %i.cl = add i64 %i.ch, 8192
   %spec.select.i.i = select i1 %i.ck, i64 %i.cl, i64 %i.ci
   %i.cm = zext i32 %i.bi to i64
-  %i.cn = mul nuw nsw i64 %switch.load, %i.cm
+  %i.cn = mul nuw nsw i64 %switch.ext, %i.cm
   %i.co = add nuw i64 %.0107122.i.i, %i.cn
   %.1.i.i = call i64 @llvm.umin.i64(i64 %i.co, i64 %spec.select.i.i) ; 3 uses
   %.not117.i.i = icmp ult i64 %i.ch, %.1.i.i
@@ -617,7 +618,7 @@ bb.ag:                                            ; preds = %bb.af
 
 bb.ah:                                            ; preds = %bb.af
   %i.cz = and i64 %i.cg, 4095                     ; 2 uses
-  %i.da = call range(i64 1, 65) i64 @llvm.cttz.i64(i64 %switch.load, i1 true)
+  %i.da = call range(i64 1, 65) i64 @llvm.cttz.i64(i64 %switch.ext, i1 true)
   %i.db = lshr i64 %i.cz, %i.da
   %i.dc = trunc nuw nsw i64 %i.db to i32
   %spec.select120.i.i = call i32 @llvm.smin.i32(i32 %1, i32 %i.dc) ; 2 uses
@@ -635,14 +636,14 @@ bb.ai:                                            ; preds = %bb.aw, %.lr.ph.i.i
   %indvars.iv.i.i = phi i64 [ %i.dg, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.aw ] ; 2 uses
   %i.dh = phi i32 [ %i.dd, %.lr.ph.i.i ], [ %i.eg, %bb.aw ] ; 4 uses
   %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, 1 ; 3 uses
-  %i.di = mul nsw i64 %indvars.iv.next.i.i, %switch.load
+  %i.di = mul nsw i64 %indvars.iv.next.i.i, %switch.ext
   %i.dj = add i64 %i.di, %i.cg
   %.not119.i.i = icmp ugt i64 %i.dj, %.1.i.i
   br i1 %.not119.i.i, label %_TIFFPartialReadStripArray.exit.i, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
   %i.dk = load i16, ptr %i.bo, align 2, !tbaa !46
-  %i.dl = mul nsw i64 %indvars.iv.i.i, %switch.load
+  %i.dl = mul nsw i64 %indvars.iv.i.i, %switch.ext
   %i.dm = getelementptr inbounds i8, ptr %i.df, i64 %i.dl ; 4 uses
   switch i16 %i.dk, label %bb.at [
     i16 3, label %bb.ak

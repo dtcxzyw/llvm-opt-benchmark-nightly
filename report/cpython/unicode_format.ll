@@ -62,10 +62,10 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.41 = private unnamed_addr constant [58 x i8] c"format argument %R: %%c argument not in range(0x110000)%s\00", align 1
 @.str.42 = private unnamed_addr constant [59 x i8] c"format argument %zd: %%c argument not in range(0x110000)%s\00", align 1
 @.str.43 = private unnamed_addr constant [55 x i8] c"format argument: %%c argument not in range(0x110000)%s\00", align 1
-@switch.table._PyUnicode_FormatLong = private unnamed_addr constant [33 x i32] [i32 16, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 10, i32 poison, i32 poison, i32 poison, i32 poison, i32 10, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 8, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 10, i32 poison, i32 poison, i32 16], align 4
-@switch.table._PyUnicode_FormatLong.11 = private unnamed_addr constant [33 x i32] [i32 2, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 2, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 poison, i32 poison, i32 2], align 4
-@switch.table.PyUnicode_Format = private unnamed_addr constant [17 x i32] [i32 4, i32 poison, i32 poison, i32 8, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 2, i32 poison, i32 1, i32 poison, i32 poison, i32 16], align 4
-@switch.table.PyUnicode_Format.12 = private unnamed_addr constant [21 x i32] [i32 10, i32 poison, i32 poison, i32 poison, i32 poison, i32 10, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 8, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 10, i32 poison, i32 poison, i32 16], align 4
+@switch.table._PyUnicode_FormatLong = private unnamed_addr constant [33 x i8] [i8 16, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 10, i8 poison, i8 poison, i8 poison, i8 poison, i8 10, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 8, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 10, i8 poison, i8 poison, i8 16], align 4
+@switch.table._PyUnicode_FormatLong.11 = private unnamed_addr constant [33 x i8] [i8 2, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 2, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 poison, i8 poison, i8 2], align 4
+@switch.table.PyUnicode_Format = private unnamed_addr constant [17 x i8] [i8 4, i8 poison, i8 poison, i8 8, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 2, i8 poison, i8 1, i8 poison, i8 poison, i8 16], align 4
+@switch.table.PyUnicode_Format.12 = private unnamed_addr constant [21 x i8] [i8 10, i8 poison, i8 poison, i8 poison, i8 poison, i8 10, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 8, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 10, i8 poison, i8 poison, i8 16], align 4
 
 ; Function Attrs: nounwind uwtable
 define hidden ptr @_PyUnicode_FormatLong(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 {
@@ -83,12 +83,14 @@ bb.b:                                             ; preds = %bb.a
 switch.lookup:                                    ; preds = %bb.a
   %switch.tableidx = add nsw i32 %3, -88          ; 2 uses
   %i.d = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._PyUnicode_FormatLong, i64 %i.d
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._PyUnicode_FormatLong, i64 %i.d
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.e = zext nneg i32 %switch.tableidx to i64
-  %switch.gep253 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._PyUnicode_FormatLong.11, i64 %i.e
-  %switch.load254 = load i32, ptr %switch.gep253, align 4 ; 2 uses
-  %i.f = tail call ptr @PyNumber_ToBase(ptr noundef %0, i32 noundef %switch.load) #8 ; 11 uses
+  %switch.gep253 = getelementptr inbounds nuw i8, ptr @switch.table._PyUnicode_FormatLong.11, i64 %i.e
+  %switch.load254 = load i8, ptr %switch.gep253, align 1
+  %switch.ext255 = zext i8 %switch.load254 to i32 ; 2 uses
+  %i.f = tail call ptr @PyNumber_ToBase(ptr noundef %0, i32 noundef %switch.ext) #8 ; 11 uses
   store ptr %i.f, ptr %i.a, align 8, !tbaa !11
   %.not = icmp eq ptr %i.f, null
   br i1 %.not, label %Py_DECREF.exit109.thread, label %bb.c
@@ -154,7 +156,7 @@ bb.j:                                             ; preds = %_PyUnicode_DATA.exi
   %i.q = load i8, ptr %.0.i, align 1, !tbaa !14
   %i.r = icmp eq i8 %i.q, 45                      ; 2 uses
   %i.s = zext i1 %i.r to i32                      ; 2 uses
-  %i.t = or disjoint i32 %switch.load254, %i.s    ; 4 uses
+  %i.t = or disjoint i32 %switch.ext255, %i.s     ; 4 uses
   %i.u = sub i32 %i.p, %i.t                       ; 3 uses
   %i.v = icmp eq i32 %1, 0
   br i1 %i.v, label %bb.k, label %bb.n
@@ -307,7 +309,7 @@ bb.s:                                             ; preds = %bb.o
 
 iter.check:                                       ; preds = %.preheader135
   %.189.lcssa172 = ptrtoaddr ptr %.189.lcssa to i64
-  %i.bs = or disjoint i32 %switch.load254, %i.s
+  %i.bs = or disjoint i32 %switch.ext255, %i.s
   %i.bt = sub i32 %i.p, %i.bs                     ; 4 uses
   %i.bu = sext i32 %i.bt to i64                   ; 7 uses
   %min.iters.check = icmp ult i32 %i.bt, 4
@@ -710,9 +712,10 @@ PyUnicode_READ.exit210.i.i:                       ; preds = %bb.ax, %bb.aw, %bb.
 
 switch.lookup:                                    ; preds = %PyUnicode_READ.exit210.i.i
   %i.fn = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.PyUnicode_Format, i64 %i.fn
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %i.fo = or i32 %switch.load, %i.fa              ; 2 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.PyUnicode_Format, i64 %i.fn
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  %i.fo = or i32 %i.fa, %switch.ext               ; 2 uses
   %i.fp = add nsw i64 %i.fc, -1                   ; 2 uses
   store i64 %i.fp, ptr %i.t, align 8, !tbaa !50
   %i.fq = icmp sgt i64 %i.fc, 0
@@ -1115,10 +1118,11 @@ bb.eo:                                            ; preds = %_Py_NewRef.exit.i.i
 switch.lookup779:                                 ; preds = %bb.eo
   %i.pe = and i32 %i.jg, 8
   %i.pf = sext i32 %.0.i68.i to i64
-  %4 = getelementptr [4 x i8], ptr @switch.table.PyUnicode_Format.12, i64 %i.pf
-  %switch.gep780 = getelementptr i8, ptr %4, i64 -400
-  %switch.load781 = load i32, ptr %switch.gep780, align 4
-  %i.pg = call i32 @_PyLong_FormatWriter(ptr noundef nonnull %i.v, ptr noundef nonnull %.0.i.i27.i, i32 noundef %switch.load781, i32 noundef %i.pe) #8
+  %4 = getelementptr i8, ptr @switch.table.PyUnicode_Format.12, i64 %i.pf
+  %switch.gep780 = getelementptr i8, ptr %4, i64 -100
+  %switch.load781 = load i8, ptr %switch.gep780, align 1
+  %switch.ext782 = zext i8 %switch.load781 to i32
+  %i.pg = call i32 @_PyLong_FormatWriter(ptr noundef nonnull %i.v, ptr noundef nonnull %.0.i.i27.i, i32 noundef %switch.ext782, i32 noundef %i.pe) #8
   %i.ph = icmp eq i32 %i.pg, -1
   %i.pi = load i32, ptr %.162.i.i.i, align 8, !tbaa !14 ; 2 uses
   %.not.i76.i.i.i = icmp sgt i32 %i.pi, -1

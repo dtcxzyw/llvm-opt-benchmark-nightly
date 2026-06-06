@@ -201,7 +201,7 @@ $_ZGVZN4llvh7hashing6detail18get_execution_seedEvE4seed = comdat any
 @.str.14 = private unnamed_addr constant [28 x i8] c"String length exceeds limit\00", align 1
 @.str.15 = private unnamed_addr constant [34 x i8] c"Unhandled out of memory exception\00", align 1
 @_ZN6hermes2vm15HandleRootOwner12nullPointer_E = external global %"class.hermes::vm::PinnedHermesValue", align 8
-@switch.table._ZN6hermes2vm21createDynamicFunctionERNS0_7RuntimeENS0_10NativeArgsENS0_19DynamicFunctionKindE = private unnamed_addr constant [3 x i64] [i64 208, i64 648, i64 616], align 8
+@switch.table._ZN6hermes2vm21createDynamicFunctionERNS0_7RuntimeENS0_10NativeArgsENS0_19DynamicFunctionKindE = private unnamed_addr constant [3 x i16] [i16 208, i16 648, i16 616], align 8
 
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden ptr @_ZN6hermes2vm23defineSystemConstructorERNS0_7RuntimeENS0_8SymbolIDEPFNS0_10CallResultINS0_11HermesValueELNS0_6detail20CallResultSpecializeE2EEEPvS2_NS0_10NativeArgsEENS0_6HandleINS0_8JSObjectEEESF_jPFNS4_INS0_12PseudoHandleISE_EELS7_6EEES2_SF_S9_ENS0_8CellKindE(ptr noundef nonnull align 8 dereferenceable(9816) %0, i32 %1, ptr noundef %2, ptr %3, ptr nofree readonly captures(none) %4, i32 noundef %5, ptr noundef %6, i32 %7) local_unnamed_addr #0 {
@@ -604,9 +604,10 @@ bb.f:                                             ; preds = %_ZN6hermes2vm13Muta
 switch.lookup:                                    ; preds = %bb.f, %bb.e
   %.0.i.i.i.i.i.i107 = phi ptr [ %i.y, %bb.e ], [ %i.ag, %bb.f ] ; 2 uses
   %i.ah = zext nneg i32 %2 to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6hermes2vm21createDynamicFunctionERNS0_7RuntimeENS0_10NativeArgsENS0_19DynamicFunctionKindE, i64 %i.ah
-  %switch.load = load i64, ptr %switch.gep, align 8
-  %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 %switch.load
+  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN6hermes2vm21createDynamicFunctionERNS0_7RuntimeENS0_10NativeArgsENS0_19DynamicFunctionKindE, i64 %i.ah
+  %switch.load = load i16, ptr %switch.gep, align 2
+  %switch.ext = zext i16 %switch.load to i64
+  %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 %switch.ext
   %.sroa.0.0.copyload.i.i.i.i109 = load i64, ptr %i.ai, align 8, !tbaa !15
   %i.aj = or i64 %.sroa.0.0.copyload.i.i.i.i109, -281474976710656
   store i64 %i.aj, ptr %.0.i.i.i.i.i.i107, align 8, !tbaa !64

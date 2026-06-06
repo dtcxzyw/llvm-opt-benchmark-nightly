@@ -5,7 +5,7 @@ target triple = "x86_64-pc-linux-gnu"
 @createDataObject.name = internal global [17 x i8] c"createDataObject\00", align 16
 @.str = private unnamed_addr constant [26 x i8] c"memory allocation failure\00", align 1
 @.str.1 = private unnamed_addr constant [30 x i8] c"invalid object type to create\00", align 1
-@switch.table.createDataObject = private unnamed_addr constant [3 x i64] [i64 144, i64 200, i64 408], align 8
+@switch.table.createDataObject = private unnamed_addr constant [3 x i16] [i16 144, i16 200, i16 408], align 8
 
 ; Function Attrs: nounwind uwtable
 define dso_local noundef ptr @createDataObject(i32 noundef %0) local_unnamed_addr #0 {
@@ -32,10 +32,11 @@ bb.d:                                             ; preds = %bb.c
 
 switch.lookup:                                    ; preds = %bb.c
   %i.d = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.createDataObject, i64 %i.d
-  %switch.load = load i64, ptr %switch.gep, align 8 ; 2 uses
+  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table.createDataObject, i64 %i.d
+  %switch.load = load i16, ptr %switch.gep, align 2
+  %switch.ext = zext i16 %switch.load to i64      ; 2 uses
   store i32 %0, ptr %i.a, align 8, !tbaa !8
-  %i.e = tail call noalias ptr @malloc(i64 noundef %switch.load) #5 ; 11 uses
+  %i.e = tail call noalias ptr @malloc(i64 noundef %switch.ext) #5 ; 11 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %i.e, ptr %i.f, align 8, !tbaa !11
   %i.g = icmp eq ptr %i.e, null
@@ -58,7 +59,7 @@ switch.lookup:                                    ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %i.e, i64 56
   store float f0xFF7FFFFF, ptr %i.n, align 8, !tbaa !12
   %scevgep = getelementptr i8, ptr %i.e, i64 64
-  %i.o = add nsw i64 %switch.load, -64
+  %i.o = add nsw i64 %switch.ext, -64
   tail call void @llvm.memset.p0.i64(ptr align 8 %scevgep, i8 0, i64 %i.o, i1 false), !tbaa !12
   br label %.loopexit
 

@@ -52,9 +52,9 @@ target triple = "x86_64-unknown-linux-gnu"
 @44 = private unnamed_addr constant [13 x i8] c"MainProtected", align 1
 @45 = private unnamed_addr constant [5 x i8] c"Other", align 1
 @46 = private unnamed_addr constant <{ ptr, [16 x i8], ptr }> <{ ptr @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNCINvMNtNtCs95DO3lnzZ3L_4moka6future11housekeeperNtBO_11Housekeeper20do_run_pending_tasksNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models25TemporaryTableCredentialsNtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateE00EB2P_, [16 x i8] c"H\06\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNCNCINvMNtNtCs95DO3lnzZ3L_4moka6future11housekeeperNtB7_11Housekeeper20do_run_pending_tasksNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models25TemporaryTableCredentialsNtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateE00B28_ }>, align 8
-@switch.table._RNCNvMsd_NtNtCs95DO3lnzZ3L_4moka6future10base_cacheINtB7_5InnerNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models25TemporaryTableCredentialsNtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateE17remove_expired_ao0B1F_ = private unnamed_addr constant [4 x i64] [i64 6, i64 14, i64 14, i64 5], align 8
+@switch.table._RNCNvMsd_NtNtCs95DO3lnzZ3L_4moka6future10base_cacheINtB7_5InnerNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models25TemporaryTableCredentialsNtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateE17remove_expired_ao0B1F_ = private unnamed_addr constant [4 x i8] c"\06\0E\0E\05", align 8
 @switch.table._RNCNvMsd_NtNtCs95DO3lnzZ3L_4moka6future10base_cacheINtB7_5InnerNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models25TemporaryTableCredentialsNtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateE17remove_expired_ao0B1F_.127 = private unnamed_addr constant [4 x ptr] [ptr @37, ptr @38, ptr @39, ptr @40], align 8
-@switch.table._RNvXs1g_NtCsbvkFyIu7lgC_4core3fmtRNtNtCs95DO3lnzZ3L_4moka6common11CacheRegionNtB6_5Debug3fmtCsgO8S5jLFugx_23deltalake_catalog_unity = private unnamed_addr constant [4 x i64] [i64 6, i64 13, i64 13, i64 5], align 8
+@switch.table._RNvXs1g_NtCsbvkFyIu7lgC_4core3fmtRNtNtCs95DO3lnzZ3L_4moka6common11CacheRegionNtB6_5Debug3fmtCsgO8S5jLFugx_23deltalake_catalog_unity = private unnamed_addr constant [4 x i8] c"\06\0D\0D\05", align 8
 @switch.table._RNvXs1g_NtCsbvkFyIu7lgC_4core3fmtRNtNtCs95DO3lnzZ3L_4moka6common11CacheRegionNtB6_5Debug3fmtCsgO8S5jLFugx_23deltalake_catalog_unity.128 = private unnamed_addr constant [4 x ptr] [ptr @42, ptr @43, ptr @44, ptr @45], align 8
 
 ; Function Attrs: cold inlinehint nonlazybind uwtable
@@ -457,15 +457,16 @@ _RNvMsa_NtNtCs95DO3lnzZ3L_4moka6future10base_cacheINtB5_5InnerNtNtCs6Po7BT7Nknu_
   store ptr %i.aj, ptr %i.an, align 8
   %i.ao = load i8, ptr %i.l, align 4, !range !33, !noundef !8 ; 2 uses
   %i.ap = zext nneg i8 %i.ao to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNCNvMsd_NtNtCs95DO3lnzZ3L_4moka6future10base_cacheINtB7_5InnerNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models25TemporaryTableCredentialsNtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateE17remove_expired_ao0B1F_, i64 %i.ap
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNCNvMsd_NtNtCs95DO3lnzZ3L_4moka6future10base_cacheINtB7_5InnerNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models25TemporaryTableCredentialsNtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateE17remove_expired_ao0B1F_, i64 %i.ap
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.aq = zext nneg i8 %i.ao to i64
   %switch.gep105 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNCNvMsd_NtNtCs95DO3lnzZ3L_4moka6future10base_cacheINtB7_5InnerNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models25TemporaryTableCredentialsNtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateE17remove_expired_ao0B1F_.127, i64 %i.aq
   %switch.load106 = load ptr, ptr %switch.gep105, align 8
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 64
   store ptr %switch.load106, ptr %i.ar, align 8
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store i64 %switch.load, ptr %i.as, align 8
+  store i64 %switch.ext, ptr %i.as, align 8
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 245
   store i8 1, ptr %i.at, align 1
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 144
@@ -868,12 +869,13 @@ switch.lookup:
   %i.a = load ptr, ptr %0, align 8, !nonnull !8, !noundef !8
   %.val = load i8, ptr %i.a, align 1, !range !33, !noundef !8 ; 2 uses
   %i.b = zext nneg i8 %.val to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs1g_NtCsbvkFyIu7lgC_4core3fmtRNtNtCs95DO3lnzZ3L_4moka6common11CacheRegionNtB6_5Debug3fmtCsgO8S5jLFugx_23deltalake_catalog_unity, i64 %i.b
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs1g_NtCsbvkFyIu7lgC_4core3fmtRNtNtCs95DO3lnzZ3L_4moka6common11CacheRegionNtB6_5Debug3fmtCsgO8S5jLFugx_23deltalake_catalog_unity, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i8 %.val to i64
   %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs1g_NtCsbvkFyIu7lgC_4core3fmtRNtNtCs95DO3lnzZ3L_4moka6common11CacheRegionNtB6_5Debug3fmtCsgO8S5jLFugx_23deltalake_catalog_unity.128, i64 %i.c
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
-  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load2, i64 noundef %switch.load)
+  %i.d = tail call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter9write_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %switch.load2, i64 noundef %switch.ext)
   ret i1 %i.d
 }
 

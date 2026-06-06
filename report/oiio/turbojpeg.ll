@@ -197,9 +197,9 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.127 = private unnamed_addr constant [16 x i8] c"JSIMD_FORCESSE2\00", align 1
 @_tjInitDecompress.buffer = internal global [1 x i8] zeroinitializer, align 1
 @.str.128 = private unnamed_addr constant [61 x i8] c"The cropping region exceeds the destination image dimensions\00", align 1
-@switch.table.setCompDefaults = private unnamed_addr constant [5 x i32] [i32 2, i32 3, i32 1, i32 4, i32 5], align 4
-@switch.table.tj3DecompressToYUV8 = private unnamed_addr constant [5 x i32] [i32 2, i32 0, i32 1, i32 3, i32 4], align 4
-@switch.table.getTransformedSpecs = private unnamed_addr constant [6 x i32] [i32 4, i32 poison, i32 poison, i32 1, i32 6, i32 5], align 4
+@switch.table.setCompDefaults = private unnamed_addr constant [5 x i8] c"\02\03\01\04\05", align 4
+@switch.table.tj3DecompressToYUV8 = private unnamed_addr constant [5 x i8] c"\02\00\01\03\04", align 4
+@switch.table.getTransformedSpecs = private unnamed_addr constant [6 x i8] [i8 4, i8 poison, i8 poison, i8 1, i8 6, i8 5], align 4
 
 ; Function Attrs: nounwind uwtable
 define noundef ptr @tj3Init(i32 noundef %0) local_unnamed_addr #0 {
@@ -602,12 +602,13 @@ bb.e:                                             ; preds = %bb.d
 
 switch.lookup:                                    ; preds = %bb.c
   %i.as = zext nneg i32 %i.ao to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.setCompDefaults, i64 %i.as
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.setCompDefaults, i64 %i.as
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.f
 
 bb.f:                                             ; preds = %switch.lookup, %bb.e, %bb.d
-  %.sink = phi i32 [ %switch.load, %switch.lookup ], [ 1, %bb.d ], [ %., %bb.e ]
+  %.sink = phi i32 [ %switch.ext, %switch.lookup ], [ 1, %bb.d ], [ %., %bb.e ]
   tail call void @jpeg_set_colorspace(ptr noundef nonnull %0, i32 noundef %.sink) #25
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.au = load i32, ptr %i.at, align 8, !tbaa !116
@@ -819,12 +820,13 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 
 switch.lookup:                                    ; preds = %bb.l
   %i.bf = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.tj3DecompressToYUV8, i64 %i.bf
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.tj3DecompressToYUV8, i64 %i.bf
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %setDecompParameters.exit
 
 setDecompParameters.exit:                         ; preds = %bb.l, %switch.lookup
-  %.sink.i = phi i32 [ %switch.load, %switch.lookup ], [ -1, %bb.l ]
+  %.sink.i = phi i32 [ %switch.ext, %switch.lookup ], [ -1, %bb.l ]
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 1860
   store i32 %.sink.i, ptr %i.bg, align 4, !tbaa !49
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 900
@@ -1227,12 +1229,13 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 
 switch.lookup:                                    ; preds = %bb.l
   %i.bf = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.tj3DecompressToYUV8, i64 %i.bf
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.tj3DecompressToYUV8, i64 %i.bf
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %setDecompParameters.exit
 
 setDecompParameters.exit:                         ; preds = %bb.l, %switch.lookup
-  %.sink.i = phi i32 [ %switch.load, %switch.lookup ], [ -1, %bb.l ]
+  %.sink.i = phi i32 [ %switch.ext, %switch.lookup ], [ -1, %bb.l ]
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 1860
   store i32 %.sink.i, ptr %i.bg, align 4, !tbaa !49
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 900
@@ -1635,12 +1638,13 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 
 switch.lookup:                                    ; preds = %bb.l
   %i.bd = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.tj3DecompressToYUV8, i64 %i.bd
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.tj3DecompressToYUV8, i64 %i.bd
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %setDecompParameters.exit
 
 setDecompParameters.exit:                         ; preds = %bb.l, %switch.lookup
-  %.sink.i = phi i32 [ %switch.load, %switch.lookup ], [ -1, %bb.l ]
+  %.sink.i = phi i32 [ %switch.ext, %switch.lookup ], [ -1, %bb.l ]
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 1860
   store i32 %.sink.i, ptr %i.be, align 4, !tbaa !49
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 900
@@ -2043,12 +2047,13 @@ bb.i:                                             ; preds = %bb.h
 
 switch.lookup:                                    ; preds = %bb.i
   %i.af = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.tj3DecompressToYUV8, i64 %i.af
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.tj3DecompressToYUV8, i64 %i.af
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %setDecompParameters.exit
 
 setDecompParameters.exit:                         ; preds = %bb.i, %switch.lookup
-  %.sink.i = phi i32 [ %switch.load, %switch.lookup ], [ -1, %bb.i ]
+  %.sink.i = phi i32 [ %switch.ext, %switch.lookup ], [ -1, %bb.i ]
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 1860 ; 2 uses
   store i32 %.sink.i, ptr %i.ag, align 4, !tbaa !49
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 900
@@ -2451,12 +2456,13 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 
 switch.lookup:                                    ; preds = %bb.m
   %i.bj = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.tj3DecompressToYUV8, i64 %i.bj
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.tj3DecompressToYUV8, i64 %i.bj
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %setDecompParameters.exit
 
 setDecompParameters.exit:                         ; preds = %bb.m, %switch.lookup
-  %.sink.i = phi i32 [ %switch.load, %switch.lookup ], [ -1, %bb.m ]
+  %.sink.i = phi i32 [ %switch.ext, %switch.lookup ], [ -1, %bb.m ]
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 1860
   store i32 %.sink.i, ptr %i.bk, align 4, !tbaa !49
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 900
@@ -2859,12 +2865,13 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 switch.lookup:                                    ; preds = %bb.g
   %i.ah = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.tj3DecompressToYUV8, i64 %i.ah
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.tj3DecompressToYUV8, i64 %i.ah
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %setDecompParameters.exit
 
 setDecompParameters.exit:                         ; preds = %bb.g, %switch.lookup
-  %.sink.i = phi i32 [ %switch.load, %switch.lookup ], [ -1, %bb.g ]
+  %.sink.i = phi i32 [ %switch.ext, %switch.lookup ], [ -1, %bb.g ]
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 1860
   store i32 %.sink.i, ptr %i.ai, align 4, !tbaa !49
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 900
@@ -3267,12 +3274,13 @@ bb.k:                                             ; preds = %bb.j, %bb.j, %bb.j,
 
 switch.lookup:                                    ; preds = %bb.k
   %i.aa = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.getTransformedSpecs, i64 %i.aa
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.getTransformedSpecs, i64 %i.aa
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %getDstSubsamp.exit
 
 getDstSubsamp.exit:                               ; preds = %bb.k, %switch.lookup, %bb.j
-  %.013.i = phi i32 [ %switch.load, %switch.lookup ], [ %i.y, %bb.j ], [ %i.y, %bb.k ] ; 3 uses
+  %.013.i = phi i32 [ %switch.ext, %switch.lookup ], [ %i.y, %bb.j ], [ %i.y, %bb.k ] ; 3 uses
   %i.ab = and i32 %i.w, 4
   %.not122 = icmp eq i32 %i.ab, 0
   br i1 %.not122, label %bb.y, label %bb.l

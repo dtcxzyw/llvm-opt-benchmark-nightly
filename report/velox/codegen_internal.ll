@@ -97,8 +97,8 @@ $_ZN5arrow15BasicDecimal25613kMaxPrecisionE = comdat any
 @.str.8 = private unnamed_addr constant [38 x i8] c"Constructed with a non-error status: \00", align 1
 @.str.11 = private unnamed_addr constant [21 x i8] c"basic_string::append\00", align 1
 @.str.12 = private unnamed_addr constant [50 x i8] c"basic_string: construction from null is not valid\00", align 1
-@switch.table._ZN5arrow7compute8internal13CommonNumericEPKNS_10TypeHolderEm = private unnamed_addr constant [44 x i32] [i32 1, i32 8, i32 8, i32 16, i32 16, i32 32, i32 32, i32 64, i32 64, i32 16, i32 32, i32 64, i32 0, i32 0, i32 0, i32 32, i32 64, i32 64, i32 32, i32 64, i32 32, i32 64, i32 128, i32 256, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 64, i32 0, i32 0, i32 0, i32 128, i32 0, i32 0, i32 0, i32 0, i32 0, i32 32, i32 64], align 4
-@switch.table._ZN5arrow7compute8internal15CastDecimalArgsEPNS_10TypeHolderEm = private unnamed_addr constant [8 x i32] [i32 3, i32 3, i32 5, i32 5, i32 10, i32 10, i32 20, i32 19], align 4
+@switch.table._ZN5arrow7compute8internal13CommonNumericEPKNS_10TypeHolderEm = private unnamed_addr constant [44 x i16] [i16 1, i16 8, i16 8, i16 16, i16 16, i16 32, i16 32, i16 64, i16 64, i16 16, i16 32, i16 64, i16 0, i16 0, i16 0, i16 32, i16 64, i16 64, i16 32, i16 64, i16 32, i16 64, i16 128, i16 256, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 64, i16 0, i16 0, i16 0, i16 128, i16 0, i16 0, i16 0, i16 0, i16 0, i16 32, i16 64], align 4
+@switch.table._ZN5arrow7compute8internal15CastDecimalArgsEPNS_10TypeHolderEm = private unnamed_addr constant [8 x i8] c"\03\03\05\05\0A\0A\14\13", align 4
 
 ; Function Attrs: mustprogress uwtable
 define noundef nonnull align 8 dereferenceable(24) ptr @_ZN5arrow7compute8internal22ExampleParametricTypesEv() local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
@@ -501,12 +501,13 @@ bb.o:                                             ; preds = %bb.k, %bb.m, %bb.n
 
 switch.lookup:                                    ; preds = %.lr.ph136
   %i.at = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5arrow7compute8internal13CommonNumericEPKNS_10TypeHolderEm, i64 %i.at
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN5arrow7compute8internal13CommonNumericEPKNS_10TypeHolderEm, i64 %i.at
+  %switch.load = load i16, ptr %switch.gep, align 2
+  %switch.ext = zext i16 %switch.load to i32
   br label %_ZN5arrowL9bit_widthENS_4Type4typeE.exit
 
 _ZN5arrowL9bit_widthENS_4Type4typeE.exit:         ; preds = %.lr.ph136, %switch.lookup
-  %.0.i = phi i32 [ %switch.load, %switch.lookup ], [ 0, %.lr.ph136 ]
+  %.0.i = phi i32 [ %switch.ext, %switch.lookup ], [ 0, %.lr.ph136 ]
   %.sroa.speculated104 = select i1 %switch.selectcmp.i, i32 %.0121133, i32 %.0119134
   %.sroa.speculated = tail call i32 @llvm.smax.i32(i32 %.0.i, i32 %.sroa.speculated104) ; 2 uses
   %spec.select = select i1 %switch.selectcmp.i, i32 %.sroa.speculated, i32 %.0121133 ; 4 uses
@@ -909,8 +910,9 @@ bb.y:                                             ; preds = %bb.x
 
 switch.lookup:                                    ; preds = %_ZN5arrow10is_decimalENS_4Type4typeE.exit
   %i.bv = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5arrow7compute8internal15CastDecimalArgsEPNS_10TypeHolderEm, i64 %i.bv
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5arrow7compute8internal15CastDecimalArgsEPNS_10TypeHolderEm, i64 %i.bv
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %_ZN5arrow6ResultIiED2Ev.exit95._crit_edge
 
@@ -959,7 +961,7 @@ _ZN5arrow6ResultIiED2Ev.exit95.thread:            ; preds = %bb.ac, %bb.ad
   br label %bb.da
 
 _ZN5arrow6ResultIiED2Ev.exit95._crit_edge:        ; preds = %switch.lookup, %_ZN5arrow26MaxDecimalDigitsForIntegerENS_4Type4typeE.exit._crit_edge
-  %.057.ph = phi i32 [ %switch.load, %switch.lookup ], [ %.pre, %_ZN5arrow26MaxDecimalDigitsForIntegerENS_4Type4typeE.exit._crit_edge ]
+  %.057.ph = phi i32 [ %switch.ext, %switch.lookup ], [ %.pre, %_ZN5arrow26MaxDecimalDigitsForIntegerENS_4Type4typeE.exit._crit_edge ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #22
   %.pre234 = load i32, ptr %i.i, align 8, !tbaa !74
   br label %bb.ae
@@ -1004,8 +1006,9 @@ bb.ah:                                            ; preds = %bb.ag
 
 switch.lookup261:                                 ; preds = %_ZN5arrow10is_decimalENS_4Type4typeE.exit97
   %i.ch = zext nneg i32 %switch.tableidx260 to i64
-  %switch.gep262 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5arrow7compute8internal15CastDecimalArgsEPNS_10TypeHolderEm, i64 %i.ch
-  %switch.load263 = load i32, ptr %switch.gep262, align 4
+  %switch.gep262 = getelementptr inbounds nuw i8, ptr @switch.table._ZN5arrow7compute8internal15CastDecimalArgsEPNS_10TypeHolderEm, i64 %i.ch
+  %switch.load263 = load i8, ptr %switch.gep262, align 1
+  %switch.ext264 = zext i8 %switch.load263 to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %_ZN5arrow6ResultIiED2Ev.exit106
 
@@ -1054,7 +1057,7 @@ _ZN5arrow6ResultIiED2Ev.exit106.thread:           ; preds = %bb.al, %bb.am
   br label %bb.da
 
 _ZN5arrow6ResultIiED2Ev.exit106:                  ; preds = %_ZN5arrow26MaxDecimalDigitsForIntegerENS_4Type4typeE.exit100._crit_edge, %switch.lookup261
-  %.059.ph = phi i32 [ %switch.load263, %switch.lookup261 ], [ %.pre236, %_ZN5arrow26MaxDecimalDigitsForIntegerENS_4Type4typeE.exit100._crit_edge ]
+  %.059.ph = phi i32 [ %switch.ext264, %switch.lookup261 ], [ %.pre236, %_ZN5arrow26MaxDecimalDigitsForIntegerENS_4Type4typeE.exit100._crit_edge ]
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #22
   br label %bb.an
 
@@ -1457,10 +1460,11 @@ bb.aa:                                            ; preds = %.lr.ph180, %.crited
 
 switch.lookup:                                    ; preds = %bb.aa
   %i.bk = zext nneg i32 %i.bj to i64
-  %5 = getelementptr [4 x i8], ptr @switch.table._ZN5arrow7compute8internal15CastDecimalArgsEPNS_10TypeHolderEm, i64 %i.bk
-  %switch.gep = getelementptr i8, ptr %5, i64 -8
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %i.bl = add nuw nsw i32 %switch.load, %.1.ph
+  %5 = getelementptr i8, ptr @switch.table._ZN5arrow7compute8internal15CastDecimalArgsEPNS_10TypeHolderEm, i64 %i.bk
+  %switch.gep = getelementptr i8, ptr %5, i64 -2
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  %i.bl = add nuw nsw i32 %.1.ph, %switch.ext
   %.sroa.speculated131 = tail call i32 @llvm.smax.i32(i32 %i.bg, i32 %i.bl) ; 2 uses
   br label %.critedge
 

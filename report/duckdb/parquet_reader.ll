@@ -201,9 +201,9 @@ $_ZTSN6duckdb17PartitionRowGroupE = comdat any
 @_ZTSN6duckdb24ParquetPartitionRowGroupE = linkonce_odr hidden constant [36 x i8] c"N6duckdb24ParquetPartitionRowGroupE\00", comdat, align 1
 @_ZTIN6duckdb17PartitionRowGroupE = linkonce_odr hidden constant { ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv117__class_type_infoE, i64 2), ptr @_ZTSN6duckdb17PartitionRowGroupE }, comdat, align 8
 @_ZTSN6duckdb17PartitionRowGroupE = linkonce_odr hidden constant [29 x i8] c"N6duckdb17PartitionRowGroupE\00", comdat, align 1
-@switch.table._ZN6duckdb13ParquetReader17DeriveLogicalTypeERKN14duckdb_parquet13SchemaElementERKNS_14ParquetOptionsERNS_19ParquetColumnSchemaE = private unnamed_addr constant [7 x i32] [i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 5, i32 5], align 4
+@switch.table._ZN6duckdb13ParquetReader17DeriveLogicalTypeERKN14duckdb_parquet13SchemaElementERKNS_14ParquetOptionsERNS_19ParquetColumnSchemaE = private unnamed_addr constant [7 x i8] [i8 6, i8 7, i8 poison, i8 poison, i8 poison, i8 5, i8 5], align 4
 @switch.table._ZNK13duckdb_apache6thrift8protocol18TProtocolException4whatEv = private unnamed_addr constant [6 x ptr] [ptr @.str.84, ptr @.str.85, ptr @.str.86, ptr @.str.87, ptr @.str.88, ptr @.str.89], align 8
-@switch.table._ZN13duckdb_apache6thrift8protocol17TCompactProtocolTIN6duckdb19ThriftFileTransportEE8getTTypeEa = private unnamed_addr constant [13 x i32] [i32 0, i32 2, i32 2, i32 3, i32 6, i32 8, i32 10, i32 4, i32 11, i32 15, i32 14, i32 13, i32 12], align 4
+@switch.table._ZN13duckdb_apache6thrift8protocol17TCompactProtocolTIN6duckdb19ThriftFileTransportEE8getTTypeEa = private unnamed_addr constant [13 x i8] c"\00\02\02\03\06\08\0A\04\0B\0F\0E\0D\0C", align 4
 
 @_ZN6duckdb14ParquetOptionsC1ERNS_13ClientContextE = hidden unnamed_addr alias void (ptr, ptr), ptr @_ZN6duckdb14ParquetOptionsC2ERNS_13ClientContextE
 @_ZN6duckdb13ParquetReaderC1ERNS_13ClientContextENS_12OpenFileInfoENS_14ParquetOptionsENS_10shared_ptrINS_24ParquetFileMetadataCacheELb1EEE = hidden unnamed_addr alias void (ptr, ptr, ptr, ptr, ptr), ptr @_ZN6duckdb13ParquetReaderC2ERNS_13ClientContextENS_12OpenFileInfoENS_14ParquetOptionsENS_10shared_ptrINS_24ParquetFileMetadataCacheELb1EEE
@@ -606,10 +606,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit253: ; preds = %bb
 
 switch.lookup:                                    ; preds = %bb.do
   %i.fx = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6duckdb13ParquetReader17DeriveLogicalTypeERKN14duckdb_parquet13SchemaElementERKNS_14ParquetOptionsERNS_19ParquetColumnSchemaE, i64 %i.fx
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6duckdb13ParquetReader17DeriveLogicalTypeERKN14duckdb_parquet13SchemaElementERKNS_14ParquetOptionsERNS_19ParquetColumnSchemaE, i64 %i.fx
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.fy = getelementptr inbounds nuw i8, ptr %3, i64 116
-  store i32 %switch.load, ptr %i.fy, align 4, !tbaa !70
+  store i32 %switch.ext, ptr %i.fy, align 4, !tbaa !70
   %i.fz = load i32, ptr %i.fj, align 4, !tbaa !78
   %i.ga = trunc i32 %i.fz to i8
   %i.gb = load i32, ptr %i.ff, align 8, !tbaa !76
@@ -1012,9 +1013,10 @@ bb.g:                                             ; preds = %.sink.split, %_ZNKS
 
 switch.lookup:                                    ; preds = %bb.a
   %i.o = zext nneg i8 %1 to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN13duckdb_apache6thrift8protocol17TCompactProtocolTIN6duckdb19ThriftFileTransportEE8getTTypeEa, i64 %i.o
-  %switch.load = load i32, ptr %switch.gep, align 4
-  ret i32 %switch.load
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN13duckdb_apache6thrift8protocol17TCompactProtocolTIN6duckdb19ThriftFileTransportEE8getTTypeEa, i64 %i.o
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  ret i32 %switch.ext
 
 bb.h:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i12, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit14, %bb.g
   %.pn.pn17 = phi { ptr, i32 } [ %i.d, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit14 ], [ %.pn.pn18, %bb.g ], [ %i.d, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i12 ]

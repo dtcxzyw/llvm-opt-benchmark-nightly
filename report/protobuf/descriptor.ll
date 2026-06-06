@@ -201,9 +201,9 @@ begin_hunk_0
 @"_ZZN4absl12lts_2025051213base_internal12CallOnceImplIZN6google8protobuf8internal14LazyDescriptor4OnceEPKNS4_17ServiceDescriptorEE3$_0JEEEvPSt6atomicIjENS1_14SchedulingModeEOT_DpOT0_E5trans" = internal constant [3 x %"struct.absl::lts_20250512::base_internal::SpinLockWaitTransition"] [%"struct.absl::lts_20250512::base_internal::SpinLockWaitTransition" { i32 0, i32 1707250555, i8 1 }, %"struct.absl::lts_20250512::base_internal::SpinLockWaitTransition" { i32 1707250555, i32 94570706, i8 0 }, %"struct.absl::lts_20250512::base_internal::SpinLockWaitTransition" { i32 221, i32 221, i8 1 }], align 16
 @.str.473 = private unnamed_addr constant [25 x i8] c"file->finished_building_\00", align 1
 @switch.table._ZN6google8protobuf14DescriptorPool14ErrorCollector17ErrorLocationNameENS2_13ErrorLocationE = private unnamed_addr constant [13 x ptr] [ptr @.str.39, ptr @.str.40, ptr @.str.41, ptr @.str.42, ptr @.str.43, ptr @.str.46, ptr @.str.47, ptr @.str.44, ptr @.str.45, ptr @.str.48, ptr @.str.49, ptr @.str.50, ptr @.str.51], align 8
-@switch.table._ZN6google8protobuf14DescriptorPool14ErrorCollector17ErrorLocationNameENS2_13ErrorLocationE.1943 = private unnamed_addr constant [13 x i64] [i64 4, i64 6, i64 4, i64 8, i64 13, i64 10, i64 11, i64 11, i64 12, i64 6, i64 8, i64 6, i64 5], align 8
+@switch.table._ZN6google8protobuf14DescriptorPool14ErrorCollector17ErrorLocationNameENS2_13ErrorLocationE.1943 = private unnamed_addr constant [13 x i8] c"\04\06\04\08\0D\0A\0B\0B\0C\06\08\06\05", align 8
 @switch.table._ZN6google8protobuf17DescriptorBuilder16ValidateMapEntryEPKNS0_15FieldDescriptorERKNS0_20FieldDescriptorProtoE = private unnamed_addr constant [14 x ptr] [ptr @.str.220, ptr @.str.220, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @.str.220, ptr @.str.220, ptr @.str.220, ptr poison, ptr @.str.219], align 8
-@switch.table._ZNK6google8protobuf6Symbol18GetVisibilityErrorB5cxx11EPNS0_14FileDescriptorESt17basic_string_viewIcSt11char_traitsIcEE = private unnamed_addr constant [4 x i64] [i64 56, i64 72, i64 40, i64 48], align 8
+@switch.table._ZNK6google8protobuf6Symbol18GetVisibilityErrorB5cxx11EPNS0_14FileDescriptorESt17basic_string_viewIcSt11char_traitsIcEE = private unnamed_addr constant [4 x i8] c"8H(0", align 8
 
 @_ZN6google8protobuf14DescriptorPool6TablesC1Ev = unnamed_addr alias void (ptr), ptr @_ZN6google8protobuf14DescriptorPool6TablesC2Ev
 @_ZN6google8protobuf14DescriptorPool6TablesD1Ev = unnamed_addr alias void (ptr), ptr @_ZN6google8protobuf14DescriptorPool6TablesD2Ev
@@ -606,13 +606,14 @@ switch.lookup:                                    ; preds = %bb.a
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6google8protobuf14DescriptorPool14ErrorCollector17ErrorLocationNameENS2_13ErrorLocationE, i64 %i.b
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.c = zext nneg i32 %0 to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6google8protobuf14DescriptorPool14ErrorCollector17ErrorLocationNameENS2_13ErrorLocationE.1943, i64 %i.c
-  %switch.load2 = load i64, ptr %switch.gep1, align 8
+  %switch.gep1 = getelementptr inbounds nuw i8, ptr @switch.table._ZN6google8protobuf14DescriptorPool14ErrorCollector17ErrorLocationNameENS2_13ErrorLocationE.1943, i64 %i.c
+  %switch.load2 = load i8, ptr %switch.gep1, align 1
+  %switch.ext = zext i8 %switch.load2 to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %switch.lookup
   %.sroa.15.0 = phi ptr [ %switch.load, %switch.lookup ], [ @.str.52, %bb.a ]
-  %.sroa.0.0 = phi i64 [ %switch.load2, %switch.lookup ], [ 7, %bb.a ]
+  %.sroa.0.0 = phi i64 [ %switch.ext, %switch.lookup ], [ 7, %bb.a ]
   %.fca.0.insert = insertvalue { i64, ptr } poison, i64 %.sroa.0.0, 0
   %.fca.1.insert = insertvalue { i64, ptr } %.fca.0.insert, ptr %.sroa.15.0, 1
   ret { i64, ptr } %.fca.1.insert
@@ -1015,10 +1016,11 @@ _ZNK6google8protobuf6Symbol18visibility_keywordEv.exit.i: ; preds = %bb.m, %bb.l
 
 _ZNK6google8protobuf6Symbol18visibility_keywordEv.exit.thread.i: ; preds = %_ZNK6google8protobuf6Symbol18visibility_keywordEv.exit.i
   %i.at = sext i8 %i.b to i64
-  %2 = getelementptr [8 x i8], ptr @switch.table._ZNK6google8protobuf6Symbol18GetVisibilityErrorB5cxx11EPNS0_14FileDescriptorESt17basic_string_viewIcSt11char_traitsIcEE, i64 %i.at
-  %switch.gep = getelementptr i8, ptr %2, i64 -8
-  %switch.load = load i64, ptr %switch.gep, align 8
-  %i.au = getelementptr inbounds nuw i8, ptr %i.a, i64 %switch.load
+  %2 = getelementptr i8, ptr @switch.table._ZNK6google8protobuf6Symbol18GetVisibilityErrorB5cxx11EPNS0_14FileDescriptorESt17basic_string_viewIcSt11char_traitsIcEE, i64 %i.at
+  %switch.gep = getelementptr i8, ptr %2, i64 -1
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
+  %i.au = getelementptr inbounds nuw i8, ptr %i.a, i64 %switch.ext
   %.0.i4.i = load ptr, ptr %i.au, align 8, !tbaa !531
   %i.av = getelementptr inbounds nuw i8, ptr %.0.i4.i, i64 68
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !22
@@ -1421,10 +1423,11 @@ switch.lookup:                                    ; preds = %_ZNK6google8protobu
   %i.bq = getelementptr inbounds nuw i8, ptr %11, i64 8
   store ptr @.str.395, ptr %i.bq, align 8
   %i.br = sext i8 %i.aw to i64
-  %14 = getelementptr [8 x i8], ptr @switch.table._ZNK6google8protobuf6Symbol18GetVisibilityErrorB5cxx11EPNS0_14FileDescriptorESt17basic_string_viewIcSt11char_traitsIcEE, i64 %i.br
-  %switch.gep = getelementptr i8, ptr %14, i64 -8
-  %switch.load = load i64, ptr %switch.gep, align 8
-  %i.bs = getelementptr inbounds nuw i8, ptr %i.av, i64 %switch.load
+  %14 = getelementptr i8, ptr @switch.table._ZNK6google8protobuf6Symbol18GetVisibilityErrorB5cxx11EPNS0_14FileDescriptorESt17basic_string_viewIcSt11char_traitsIcEE, i64 %i.br
+  %switch.gep = getelementptr i8, ptr %14, i64 -1
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
+  %i.bs = getelementptr inbounds nuw i8, ptr %i.av, i64 %switch.ext
   %.0.i43 = load ptr, ptr %i.bs, align 8, !tbaa !531
   %i.bt = getelementptr inbounds nuw i8, ptr %.0.i43, i64 68
   %i.bu = load i32, ptr %i.bt, align 4, !tbaa !22 ; 3 uses

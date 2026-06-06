@@ -201,7 +201,7 @@ begin_hunk_0
 @memoryview._kwtuple = internal global %struct.anon.918 { %struct.PyGC_Head zeroinitializer, %struct.PyVarObject { %struct._object { %union.anon { i64 1407378104778752 }, ptr @PyTuple_Type }, i64 1 }, i64 -1, [1 x ptr] [ptr getelementptr (i8, ptr @_PyRuntime, i64 93680)] }, align 8
 @memoryview._keywords = internal constant [2 x ptr] [ptr @.str.123, ptr null], align 16
 @memoryview._parser = internal global { ptr, ptr, ptr, ptr, %struct._PyOnceFlag, [3 x i8], i32, i32, i32, i32, [4 x i8], ptr, ptr } { ptr null, ptr @memoryview._keywords, ptr @.str.6, ptr null, %struct._PyOnceFlag zeroinitializer, [3 x i8] zeroinitializer, i32 0, i32 0, i32 0, i32 0, [4 x i8] zeroinitializer, ptr getelementptr (i8, ptr @memoryview._kwtuple, i64 16), ptr null }, align 8
-@switch.table.cast_to_1D = private unnamed_addr constant [51 x i64] [i64 1, i64 poison, i64 poison, i64 1, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 2, i64 4, i64 poison, i64 poison, i64 8, i64 poison, i64 8, i64 poison, i64 8, i64 8, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 1, i64 1, i64 8, i64 2, i64 4, i64 poison, i64 2, i64 4, i64 poison, i64 poison, i64 8, i64 poison, i64 8, i64 poison, i64 poison, i64 8], align 8
+@switch.table.cast_to_1D = private unnamed_addr constant [51 x i8] [i8 1, i8 poison, i8 poison, i8 1, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 2, i8 4, i8 poison, i8 poison, i8 8, i8 poison, i8 8, i8 poison, i8 8, i8 8, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 1, i8 1, i8 8, i8 2, i8 4, i8 poison, i8 2, i8 4, i8 poison, i8 poison, i8 8, i8 poison, i8 8, i8 poison, i8 poison, i8 8], align 8
 
 ; Function Attrs: nounwind uwtable
 define internal void @mbuf_dealloc(ptr noundef %0) #0 {
@@ -604,8 +604,9 @@ switch.hole_check:                                ; preds = %bb.b
 
 switch.lookup:                                    ; preds = %switch.hole_check
   %i.h = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.cast_to_1D, i64 %i.h
-  %switch.load = load i64, ptr %switch.gep, align 8 ; 3 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.cast_to_1D, i64 %i.h
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64       ; 3 uses
   %i.i = getelementptr i8, ptr %spec.select.i, i64 1
   %i.j = load i8, ptr %i.i, align 1, !tbaa !36
   %i.k = icmp eq i8 %i.j, 0
@@ -683,7 +684,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f
 bb.h:                                             ; preds = %bb.e, %bb.e, %bb.e, %bb.f, %bb.f, %switch.early.test, %switch.early.test, %switch.early.test, %get_native_fmtchar.exit43
   %i.w = getelementptr i8, ptr %0, i64 72
   %i.x = load i64, ptr %i.w, align 8, !tbaa !79   ; 2 uses
-  %i.y = add nsw i64 %switch.load, -1
+  %i.y = add nsw i64 %switch.ext, -1
   %i.z = and i64 %i.x, %i.y
   %.not = icmp eq i64 %i.z, 0
   br i1 %.not, label %bb.j, label %bb.i
@@ -797,10 +798,10 @@ init_flags.exit:                                  ; preds = %bb.aa, %bb.z, %bb.y
   %.024.i.ph = phi ptr [ %i.ar, %bb.aa ], [ %i.aq, %bb.z ], [ %i.ap, %bb.y ], [ %i.ao, %bb.x ], [ %i.an, %bb.w ], [ %i.am, %bb.v ], [ %i.al, %bb.u ], [ %i.ak, %bb.t ], [ %i.aj, %bb.s ], [ %i.ai, %bb.r ], [ %i.ah, %bb.q ], [ %i.ag, %bb.p ], [ %i.af, %bb.o ], [ %i.ae, %bb.n ], [ %i.ad, %bb.m ], [ %i.ac, %bb.l ], [ %i.ab, %bb.k ], [ %i.as, %bb.ab ]
   store ptr %.024.i.ph, ptr %i.m, align 8, !tbaa !54
   %i.au = getelementptr i8, ptr %0, i64 80        ; 2 uses
-  store i64 %switch.load, ptr %i.au, align 8, !tbaa !66
+  store i64 %switch.ext, ptr %i.au, align 8, !tbaa !66
   %i.av = getelementptr i8, ptr %0, i64 92
   store i32 1, ptr %i.av, align 4, !tbaa !37
-  %i.aw = sdiv i64 %i.x, %switch.load
+  %i.aw = sdiv i64 %i.x, %switch.ext
   %i.ax = getelementptr i8, ptr %0, i64 104
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !64
   store i64 %i.aw, ptr %i.ay, align 8, !tbaa !52
