@@ -201,9 +201,9 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   %.0187 = phi i1 [ true, %bb.i ], [ %i.aq, %bb.h ] ; 2 uses
-  %.0180.sroa.phi = phi ptr [ %.0180.sroa.gep, %bb.i ], [ inttoptr (i64 228 to ptr), %bb.h ] ; 7 uses
-  %.0180.sroa.phi269 = phi ptr [ %.0180.sroa.gep270, %bb.i ], [ inttoptr (i64 8 to ptr), %bb.h ] ; 14 uses
-  %.0180.sroa.phi271 = phi ptr [ %.0180.sroa.gep272, %bb.i ], [ inttoptr (i64 4 to ptr), %bb.h ] ; 21 uses
+  %.0180.sroa.phi = phi ptr [ %.0180.sroa.gep, %bb.i ], [ getelementptr inbounds nuw (i8, ptr null, i64 228), %bb.h ] ; 7 uses
+  %.0180.sroa.phi269 = phi ptr [ %.0180.sroa.gep270, %bb.i ], [ getelementptr inbounds nuw (i8, ptr null, i64 8), %bb.h ] ; 14 uses
+  %.0180.sroa.phi271 = phi ptr [ %.0180.sroa.gep272, %bb.i ], [ getelementptr inbounds nuw (i8, ptr null, i64 4), %bb.h ] ; 21 uses
   %.0180 = phi ptr [ %9, %bb.i ], [ null, %bb.h ] ; 24 uses
   call void @WebPInitConvertARGBToYUV() #9
   %i.bc = call i32 @pthread_mutex_lock(ptr noundef nonnull @InitGammaTables.InitGammaTables_body_lock) #9

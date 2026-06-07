@@ -201,7 +201,7 @@ _ZNSt10unique_ptrIN6duckdb12_GLOBAL__N_112MaxValueCompINS0_12NumericStatsEEESt14
   br label %.sink.split.i
 
 .sink.split.i:                                    ; preds = %_ZNSt10unique_ptrIN6duckdb12_GLOBAL__N_112MaxValueCompINS0_12NumericStatsEEESt14default_deleteIS4_EED2Ev.exit.i.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i10.i, %_ZNSt10unique_ptrIN6duckdb12_GLOBAL__N_112MaxValueCompINS0_11StringStatsEEESt14default_deleteIS4_EED2Ev.exit.i.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i.i
-  %.sink.i9.sink.i = phi ptr [ getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN6duckdb12_GLOBAL__N_112MinValueCompINS_11StringStatsEEE, i64 16), %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i.i ], [ getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN6duckdb12_GLOBAL__N_112MaxValueCompINS_11StringStatsEEE, i64 16), %_ZNSt10unique_ptrIN6duckdb12_GLOBAL__N_112MaxValueCompINS0_11StringStatsEEESt14default_deleteIS4_EED2Ev.exit.i.i ], [ getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN6duckdb12_GLOBAL__N_112MaxValueCompINS_12NumericStatsEEE, i64 16), %_ZNSt10unique_ptrIN6duckdb12_GLOBAL__N_112MaxValueCompINS0_12NumericStatsEEESt14default_deleteIS4_EED2Ev.exit.i.i ], [ getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN6duckdb12_GLOBAL__N_112MinValueCompINS_12NumericStatsEEE, i64 16), %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i10.i ] ; 2 uses
+  %.sink.i9.sink.i = phi ptr [ getelementptr inbounds inrange(-16, 32) ({ [6 x ptr] }, ptr @_ZTVN6duckdb12_GLOBAL__N_112MinValueCompINS_11StringStatsEEE, i32 0, i32 0, i32 2), %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i.i ], [ getelementptr inbounds inrange(-16, 32) ({ [6 x ptr] }, ptr @_ZTVN6duckdb12_GLOBAL__N_112MaxValueCompINS_11StringStatsEEE, i32 0, i32 0, i32 2), %_ZNSt10unique_ptrIN6duckdb12_GLOBAL__N_112MaxValueCompINS0_11StringStatsEEESt14default_deleteIS4_EED2Ev.exit.i.i ], [ getelementptr inbounds inrange(-16, 32) ({ [6 x ptr] }, ptr @_ZTVN6duckdb12_GLOBAL__N_112MaxValueCompINS_12NumericStatsEEE, i32 0, i32 0, i32 2), %_ZNSt10unique_ptrIN6duckdb12_GLOBAL__N_112MaxValueCompINS0_12NumericStatsEEESt14default_deleteIS4_EED2Ev.exit.i.i ], [ getelementptr inbounds inrange(-16, 32) ({ [6 x ptr] }, ptr @_ZTVN6duckdb12_GLOBAL__N_112MinValueCompINS_12NumericStatsEEE, i32 0, i32 0, i32 2), %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i10.i ] ; 2 uses
   %i.di = invoke noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #25
           to label %bb.ad unwind label %bb.ac     ; 5 uses
 
@@ -604,7 +604,7 @@ bb.a:
           to label %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EED2Ev.exit unwind label %bb.b
 
 _ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EED2Ev.exit: ; preds = %bb.a
-  store ptr getelementptr inbounds nuw inrange(-16, 128) (i8, ptr @_ZTVN6duckdb20LogicalExpressionGetE, i64 16), ptr %i.a, align 8, !tbaa !43
+  store ptr getelementptr inbounds inrange(-16, 128) ({ [18 x ptr] }, ptr @_ZTVN6duckdb20LogicalExpressionGetE, i32 0, i32 0, i32 2), ptr %i.a, align 8, !tbaa !43
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 104
   store i64 %i.b, ptr %i.q, align 8, !tbaa !329
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 112
@@ -845,7 +845,7 @@ bb.a:
           to label %bb.b unwind label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  store ptr getelementptr inbounds nuw inrange(-16, 128) (i8, ptr @_ZTVN6duckdb16LogicalDummyScanE, i64 16), ptr %i.a, align 8, !tbaa !43
+  store ptr getelementptr inbounds inrange(-16, 128) ({ [18 x ptr] }, ptr @_ZTVN6duckdb16LogicalDummyScanE, i32 0, i32 0, i32 2), ptr %i.a, align 8, !tbaa !43
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 104
   store i64 %i.b, ptr %i.c, align 8, !tbaa !348
   store ptr %i.a, ptr %0, align 8, !tbaa !296

@@ -201,7 +201,7 @@ _RNvXs1_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtBb_5
           to label %.noexc.i.i.i unwind label %bb.co, !noalias !17477
 
 .noexc.i.i.i:                                     ; preds = %_RNvXs1_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtBb_5slice4iter7IterMutNtNtNtNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion14table_provider4next4scan6replay15ScanFileContextEINtNtBb_6option6OptionTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB3L_4sync3ArcNtNtCs8ulvy0Wg6Ot_12delta_kernel11expressions10ExpressionEEENCNCNvB1B_12replay_files0s1_0ENtNtNtB9_6traits8iterator8Iterator9size_hintB1J_.exit.i.i.i
-  %i.lr = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtNtCsjTPIcpFZL1T_8foldhash4seed6global19GLOBAL_SEED_STORAGE, i64 48) acquire, align 8, !noalias !17465
+  %i.lr = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNtNtCsjTPIcpFZL1T_8foldhash4seed6global19GLOBAL_SEED_STORAGE, i64 48) acquire, align 8, !noalias !17465
   %i.ls = icmp eq i8 %i.lr, 2
   br i1 %i.ls, label %_RNvXs2_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB5_18DefaultHashBuilderNtNtCsbvkFyIu7lgC_4core7default7Default7default.exit.i.i.i, label %bb.cp, !prof !984
 
@@ -604,7 +604,7 @@ bb.if:                                            ; preds = %.thread696, %bb.ie
           to label %.noexc.i108 unwind label %bb.ii, !noalias !17661
 
 .noexc.i108:                                      ; preds = %bb.if
-  %i.xh = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtNtCsjTPIcpFZL1T_8foldhash4seed6global19GLOBAL_SEED_STORAGE, i64 48) acquire, align 8, !noalias !17670
+  %i.xh = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNtNtCsjTPIcpFZL1T_8foldhash4seed6global19GLOBAL_SEED_STORAGE, i64 48) acquire, align 8, !noalias !17670
   %i.xi = icmp eq i8 %i.xh, 2
   br i1 %i.xi, label %bb.ij, label %bb.ig, !prof !984
 
@@ -1007,7 +1007,7 @@ bb.m:                                             ; preds = %bb.j
   br i1 %i.at, label %bb.n, label %bb.x
 
 bb.n:                                             ; preds = %bb.m
-  %i.au = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6schema4cast19normalize_for_delta10___CALLSITE, i64 16) monotonic, align 8 ; 3 uses
+  %i.au = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNvNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6schema4cast19normalize_for_delta10___CALLSITE, i64 16) monotonic, align 8 ; 3 uses
   switch i8 %i.au, label %bb.o [
     i8 0, label %bb.x
     i8 1, label %bb.p

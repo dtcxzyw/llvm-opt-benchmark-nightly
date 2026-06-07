@@ -201,8 +201,8 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.c, i8 0, i64 20, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-24, 72) (i8, ptr @_ZTVN5arrow2io22CompressedOutputStreamE, i64 24), ptr %i.a, align 8, !tbaa !7
-  store ptr getelementptr inbounds nuw inrange(-64, 56) (i8, ptr @_ZTVN5arrow2io22CompressedOutputStreamE, i64 160), ptr %i.b, align 8, !tbaa !7
+  store ptr getelementptr inbounds inrange(-24, 72) ({ [12 x ptr], [15 x ptr] }, ptr @_ZTVN5arrow2io22CompressedOutputStreamE, i32 0, i32 0, i32 3), ptr %i.a, align 8, !tbaa !7
+  store ptr getelementptr inbounds inrange(-64, 56) ({ [12 x ptr], [15 x ptr] }, ptr @_ZTVN5arrow2io22CompressedOutputStreamE, i32 0, i32 1, i32 8), ptr %i.b, align 8, !tbaa !7
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr null, ptr %i.d, align 8, !tbaa !9
   call void @_ZNSt12__shared_ptrIN5arrow2io22CompressedOutputStreamELN9__gnu_cxx12_Lock_policyE2EEC2IS2_vEEPT_(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull %i.a)
@@ -605,9 +605,9 @@ declare void @_ZSt9terminatev() local_unnamed_addr #7
 ; Function Attrs: mustprogress nounwind uwtable
 define void @_ZN5arrow2io22CompressedOutputStreamD1Ev(ptr noundef nonnull align 8 dereferenceable(16) initializes((0, 8), (16, 24)) %0) unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-24, 72) (i8, ptr @_ZTVN5arrow2io22CompressedOutputStreamE, i64 24), ptr %0, align 8, !tbaa !7
+  store ptr getelementptr inbounds inrange(-24, 72) ({ [12 x ptr], [15 x ptr] }, ptr @_ZTVN5arrow2io22CompressedOutputStreamE, i32 0, i32 0, i32 3), ptr %0, align 8, !tbaa !7
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  store ptr getelementptr inbounds nuw inrange(-64, 56) (i8, ptr @_ZTVN5arrow2io22CompressedOutputStreamE, i64 160), ptr %i.a, align 8, !tbaa !7
+  store ptr getelementptr inbounds inrange(-64, 56) ({ [12 x ptr], [15 x ptr] }, ptr @_ZTVN5arrow2io22CompressedOutputStreamE, i32 0, i32 1, i32 8), ptr %i.a, align 8, !tbaa !7
   invoke void @_ZN5arrow2io8internal19CloseFromDestructorEPNS0_13FileInterfaceE(ptr noundef nonnull %i.a)
           to label %bb.b unwind label %bb.c
 
@@ -644,9 +644,9 @@ bb.a:
   %i.b = getelementptr inbounds i8, ptr %i.a, i64 -24
   %i.c = load i64, ptr %i.b, align 8
   %i.d = getelementptr inbounds i8, ptr %0, i64 %i.c ; 3 uses
-  store ptr getelementptr inbounds nuw inrange(-24, 72) (i8, ptr @_ZTVN5arrow2io22CompressedOutputStreamE, i64 24), ptr %i.d, align 8, !tbaa !7
+  store ptr getelementptr inbounds inrange(-24, 72) ({ [12 x ptr], [15 x ptr] }, ptr @_ZTVN5arrow2io22CompressedOutputStreamE, i32 0, i32 0, i32 3), ptr %i.d, align 8, !tbaa !7
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 3 uses
-  store ptr getelementptr inbounds nuw inrange(-64, 56) (i8, ptr @_ZTVN5arrow2io22CompressedOutputStreamE, i64 160), ptr %i.e, align 8, !tbaa !7
+  store ptr getelementptr inbounds inrange(-64, 56) ({ [12 x ptr], [15 x ptr] }, ptr @_ZTVN5arrow2io22CompressedOutputStreamE, i32 0, i32 1, i32 8), ptr %i.e, align 8, !tbaa !7
   invoke void @_ZN5arrow2io8internal19CloseFromDestructorEPNS0_13FileInterfaceE(ptr noundef nonnull %i.e)
           to label %bb.b unwind label %bb.c, !inline_history !84
 
@@ -676,9 +676,9 @@ _ZN5arrow2io22CompressedOutputStreamD1Ev.exit:    ; preds = %bb.b, %_ZNKSt14defa
 ; Function Attrs: mustprogress nounwind uwtable
 define void @_ZN5arrow2io22CompressedOutputStreamD0Ev(ptr noundef nonnull align 8 dereferenceable(16) initializes((0, 8), (16, 24)) %0) unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-24, 72) (i8, ptr @_ZTVN5arrow2io22CompressedOutputStreamE, i64 24), ptr %0, align 8, !tbaa !7
+  store ptr getelementptr inbounds inrange(-24, 72) ({ [12 x ptr], [15 x ptr] }, ptr @_ZTVN5arrow2io22CompressedOutputStreamE, i32 0, i32 0, i32 3), ptr %0, align 8, !tbaa !7
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  store ptr getelementptr inbounds nuw inrange(-64, 56) (i8, ptr @_ZTVN5arrow2io22CompressedOutputStreamE, i64 160), ptr %i.a, align 8, !tbaa !7
+  store ptr getelementptr inbounds inrange(-64, 56) ({ [12 x ptr], [15 x ptr] }, ptr @_ZTVN5arrow2io22CompressedOutputStreamE, i32 0, i32 1, i32 8), ptr %i.a, align 8, !tbaa !7
   invoke void @_ZN5arrow2io8internal19CloseFromDestructorEPNS0_13FileInterfaceE(ptr noundef nonnull %i.a)
           to label %bb.b unwind label %bb.c, !inline_history !84
 
@@ -713,9 +713,9 @@ bb.a:
   %i.b = getelementptr inbounds i8, ptr %i.a, i64 -24
   %i.c = load i64, ptr %i.b, align 8
   %i.d = getelementptr inbounds i8, ptr %0, i64 %i.c ; 4 uses
-  store ptr getelementptr inbounds nuw inrange(-24, 72) (i8, ptr @_ZTVN5arrow2io22CompressedOutputStreamE, i64 24), ptr %i.d, align 8, !tbaa !7
+  store ptr getelementptr inbounds inrange(-24, 72) ({ [12 x ptr], [15 x ptr] }, ptr @_ZTVN5arrow2io22CompressedOutputStreamE, i32 0, i32 0, i32 3), ptr %i.d, align 8, !tbaa !7
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 3 uses
-  store ptr getelementptr inbounds nuw inrange(-64, 56) (i8, ptr @_ZTVN5arrow2io22CompressedOutputStreamE, i64 160), ptr %i.e, align 8, !tbaa !7
+  store ptr getelementptr inbounds inrange(-64, 56) ({ [12 x ptr], [15 x ptr] }, ptr @_ZTVN5arrow2io22CompressedOutputStreamE, i32 0, i32 1, i32 8), ptr %i.e, align 8, !tbaa !7
   invoke void @_ZN5arrow2io8internal19CloseFromDestructorEPNS0_13FileInterfaceE(ptr noundef nonnull %i.e)
           to label %bb.b unwind label %bb.c, !inline_history !85
 
@@ -1118,8 +1118,8 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.c, i8 0, i64 20, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-64, 56) (i8, ptr @_ZTCN5arrow2io21CompressedInputStreamE0_NS0_8internal29InputStreamConcurrencyWrapperIS1_EE, i64 240), ptr %i.b, align 8, !tbaa !7
-  store ptr getelementptr inbounds nuw inrange(-64, 112) (i8, ptr @_ZTCN5arrow2io21CompressedInputStreamE0_NS0_8internal29InputStreamConcurrencyWrapperIS1_EE, i64 64), ptr %i.a, align 8, !tbaa !7
+  store ptr getelementptr inbounds inrange(-64, 56) ({ [22 x ptr], [15 x ptr] }, ptr @_ZTCN5arrow2io21CompressedInputStreamE0_NS0_8internal29InputStreamConcurrencyWrapperIS1_EE, i32 0, i32 1, i32 8), ptr %i.b, align 8, !tbaa !7
+  store ptr getelementptr inbounds inrange(-64, 112) ({ [22 x ptr], [15 x ptr] }, ptr @_ZTCN5arrow2io21CompressedInputStreamE0_NS0_8internal29InputStreamConcurrencyWrapperIS1_EE, i32 0, i32 0, i32 8), ptr %i.a, align 8, !tbaa !7
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   invoke void @_ZN5arrow2io8internal22SharedExclusiveCheckerC1Ev(ptr noundef nonnull align 8 dereferenceable(16) %i.d)
           to label %bb.b unwind label %.body
@@ -1132,8 +1132,8 @@ bb.a:
   br label %bb.u
 
 bb.b:                                             ; preds = %bb.a
-  store ptr getelementptr inbounds nuw inrange(-64, 56) (i8, ptr @_ZTVN5arrow2io21CompressedInputStreamE, i64 248), ptr %i.b, align 8, !tbaa !7
-  store ptr getelementptr inbounds nuw inrange(-64, 120) (i8, ptr @_ZTVN5arrow2io21CompressedInputStreamE, i64 64), ptr %i.a, align 8, !tbaa !7
+  store ptr getelementptr inbounds inrange(-64, 56) ({ [23 x ptr], [15 x ptr] }, ptr @_ZTVN5arrow2io21CompressedInputStreamE, i32 0, i32 1, i32 8), ptr %i.b, align 8, !tbaa !7
+  store ptr getelementptr inbounds inrange(-64, 120) ({ [23 x ptr], [15 x ptr] }, ptr @_ZTVN5arrow2io21CompressedInputStreamE, i32 0, i32 0, i32 8), ptr %i.a, align 8, !tbaa !7
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store ptr null, ptr %i.f, align 8, !tbaa !165
   call void @_ZNSt12__shared_ptrIN5arrow2io21CompressedInputStreamELN9__gnu_cxx12_Lock_policyE2EEC2IS2_vEEPT_(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull %i.a)
@@ -1536,7 +1536,7 @@ bb.c:                                             ; preds = %bb.b
   store i32 1, ptr %i.e, align 8, !tbaa !54
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 12 ; 2 uses
   store i32 1, ptr %i.f, align 4, !tbaa !56
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt19_Sp_counted_deleterIPN5arrow15ResizableBufferESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.d, align 8, !tbaa !7
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt19_Sp_counted_deleterIPN5arrow15ResizableBufferESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.d, align 8, !tbaa !7
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store ptr %i.a, ptr %i.g, align 8, !tbaa !323
   %i.h = load i8, ptr @__libc_single_threaded, align 1, !tbaa !36
@@ -1939,7 +1939,7 @@ bb.c:                                             ; preds = %bb.b
   store i32 1, ptr %i.e, align 8, !tbaa !54
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 12 ; 2 uses
   store i32 1, ptr %i.f, align 4, !tbaa !56
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt19_Sp_counted_deleterIPN5arrow15ResizableBufferESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.d, align 8, !tbaa !7
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt19_Sp_counted_deleterIPN5arrow15ResizableBufferESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.d, align 8, !tbaa !7
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store ptr %i.a, ptr %i.g, align 8, !tbaa !323
   %i.h = load i8, ptr @__libc_single_threaded, align 1, !tbaa !36
@@ -2261,7 +2261,7 @@ _ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EEC2IPN5arrow2io22CompressedOu
   store i32 1, ptr %i.m, align 8, !tbaa !54
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 3 uses
   store i32 1, ptr %i.n, align 4, !tbaa !56
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt15_Sp_counted_ptrIPN5arrow2io22CompressedOutputStreamELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.b, align 8, !tbaa !7
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt15_Sp_counted_ptrIPN5arrow2io22CompressedOutputStreamELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.b, align 8, !tbaa !7
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store ptr %1, ptr %i.o, align 8, !tbaa !396
   store ptr %i.b, ptr %i.a, align 8, !tbaa !34
@@ -2664,7 +2664,7 @@ _ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EEC2IPN5arrow2io21CompressedIn
   store i32 1, ptr %i.m, align 8, !tbaa !54
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 3 uses
   store i32 1, ptr %i.n, align 4, !tbaa !56
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt15_Sp_counted_ptrIPN5arrow2io21CompressedInputStreamELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.b, align 8, !tbaa !7
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt15_Sp_counted_ptrIPN5arrow2io21CompressedInputStreamELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.b, align 8, !tbaa !7
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store ptr %1, ptr %i.o, align 8, !tbaa !408
   store ptr %i.b, ptr %i.a, align 8, !tbaa !34

@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
           to label %_ZN6duckdb7roaring16RoaringScanState12ScanInternalERNS0_18ContainerScanStateEmRNS_6VectorEm.exit unwind label %bb.h, !inline_history !186
 
 _ZN6duckdb7roaring16RoaringScanState12ScanInternalERNS0_18ContainerScanStateEmRNS_6VectorEm.exit: ; preds = %bb.b
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN6duckdb7roaring16RoaringScanStateE, i64 16), ptr %5, align 8, !tbaa !149
+  store ptr getelementptr inbounds inrange(-16, 16) ({ [4 x ptr] }, ptr @_ZTVN6duckdb7roaring16RoaringScanStateE, i32 0, i32 0, i32 2), ptr %5, align 8, !tbaa !149
   %i.g = getelementptr inbounds nuw i8, ptr %5, i64 176
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !190  ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.h, null
@@ -421,7 +421,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ak, label %bb.l, label %bb.n
 
 bb.l:                                             ; preds = %bb.k
-  store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN6duckdb7roaring33CompressedArrayContainerScanStateILb1EEE, i64 16), ptr %i.al, align 8, !tbaa !149, !noalias !231
+  store ptr getelementptr inbounds inrange(-16, 48) ({ [8 x ptr] }, ptr @_ZTVN6duckdb7roaring33CompressedArrayContainerScanStateILb1EEE, i32 0, i32 0, i32 2), ptr %i.al, align 8, !tbaa !149, !noalias !231
   store ptr %i.p, ptr %i.at, align 8, !tbaa !234, !noalias !231
   invoke void @_ZN6duckdb7roaring20ContainerSegmentScanC1EPh(ptr noundef nonnull align 8 dereferenceable(10) %i.au, ptr noundef %i.p)
           to label %_ZN6duckdb9make_uniqINS_7roaring33CompressedArrayContainerScanStateILb1EEEJRmS4_S4_RPhS6_EEENS_17TemplatedUniqueIfIT_Lb1EE25templated_unique_single_tEDpOT0_.exit unwind label %bb.m, !noalias !231
@@ -438,7 +438,7 @@ _ZN6duckdb9make_uniqINS_7roaring33CompressedArrayContainerScanStateILb1EEEJRmS4_
   br i1 %.not.i.i.i.i.i24, label %_ZNSt10unique_ptrIN6duckdb7roaring24BitsetContainerScanStateESt14default_deleteIS2_EED2Ev.exit, label %_ZNSt10unique_ptrIN6duckdb7roaring24BitsetContainerScanStateESt14default_deleteIS2_EED2Ev.exit.sink.split
 
 bb.n:                                             ; preds = %bb.k
-  store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN6duckdb7roaring33CompressedArrayContainerScanStateILb0EEE, i64 16), ptr %i.al, align 8, !tbaa !149, !noalias !238
+  store ptr getelementptr inbounds inrange(-16, 48) ({ [8 x ptr] }, ptr @_ZTVN6duckdb7roaring33CompressedArrayContainerScanStateILb0EEE, i32 0, i32 0, i32 2), ptr %i.al, align 8, !tbaa !149, !noalias !238
   store ptr %i.p, ptr %i.at, align 8, !tbaa !241, !noalias !238
   invoke void @_ZN6duckdb7roaring20ContainerSegmentScanC1EPh(ptr noundef nonnull align 8 dereferenceable(10) %i.au, ptr noundef %i.p)
           to label %_ZN6duckdb9make_uniqINS_7roaring33CompressedArrayContainerScanStateILb0EEEJRmS4_S4_RPhS6_EEENS_17TemplatedUniqueIfIT_Lb1EE25templated_unique_single_tEDpOT0_.exit unwind label %bb.o, !noalias !238
@@ -470,7 +470,7 @@ bb.p:                                             ; preds = %bb.j
   br i1 %i.az, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
-  store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN6duckdb7roaring23ArrayContainerScanStateILb1EEE, i64 16), ptr %i.ba, align 8, !tbaa !149, !noalias !244
+  store ptr getelementptr inbounds inrange(-16, 48) ({ [8 x ptr] }, ptr @_ZTVN6duckdb7roaring23ArrayContainerScanStateILb1EEE, i32 0, i32 0, i32 2), ptr %i.ba, align 8, !tbaa !149, !noalias !244
   store ptr %i.p, ptr %i.be, align 8, !tbaa !247, !noalias !244
   store i8 0, ptr %i.bf, align 8, !tbaa !248, !noalias !244
   store i64 %.sroa.7.0.extract.trunc, ptr %i.bg, align 8, !tbaa !249, !noalias !244
@@ -481,7 +481,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not.i.i.i.i.i38, label %_ZNSt10unique_ptrIN6duckdb7roaring24BitsetContainerScanStateESt14default_deleteIS2_EED2Ev.exit, label %_ZNSt10unique_ptrIN6duckdb7roaring24BitsetContainerScanStateESt14default_deleteIS2_EED2Ev.exit.sink.split
 
 bb.r:                                             ; preds = %bb.p
-  store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN6duckdb7roaring23ArrayContainerScanStateILb0EEE, i64 16), ptr %i.ba, align 8, !tbaa !149, !noalias !251
+  store ptr getelementptr inbounds inrange(-16, 48) ({ [8 x ptr] }, ptr @_ZTVN6duckdb7roaring23ArrayContainerScanStateILb0EEE, i32 0, i32 0, i32 2), ptr %i.ba, align 8, !tbaa !149, !noalias !251
   store ptr %i.p, ptr %i.be, align 8, !tbaa !254, !noalias !251
   store i8 0, ptr %i.bf, align 8, !tbaa !255, !noalias !251
   store i64 %.sroa.7.0.extract.trunc, ptr %i.bg, align 8, !tbaa !256, !noalias !251
@@ -547,7 +547,7 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr void @_ZN6duckdb7roaring16RoaringScanStateD2Ev(ptr noundef nonnull align 8 dereferenceable(200) %0) unnamed_addr #7 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN6duckdb7roaring16RoaringScanStateE, i64 16), ptr %0, align 8, !tbaa !149
+  store ptr getelementptr inbounds inrange(-16, 16) ({ [4 x ptr] }, ptr @_ZTVN6duckdb7roaring16RoaringScanStateE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !149
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 176
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !190  ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.b, null
@@ -653,7 +653,7 @@ _ZN6duckdb7roaring16RoaringScanState12ScanInternalERNS0_18ContainerScanStateEmRN
 bb.e:                                             ; preds = %_ZN6duckdb7roaring16RoaringScanState12ScanInternalERNS0_18ContainerScanStateEmRNS_6VectorEm.exit
   call void @_ZN6duckdb6VectorD2Ev(ptr noundef nonnull align 8 dead_on_return(104) dereferenceable(104) %6) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #26
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN6duckdb7roaring16RoaringScanStateE, i64 16), ptr %5, align 8, !tbaa !149
+  store ptr getelementptr inbounds inrange(-16, 16) ({ [4 x ptr] }, ptr @_ZTVN6duckdb7roaring16RoaringScanStateE, i32 0, i32 0, i32 2), ptr %5, align 8, !tbaa !149
   %i.g = getelementptr inbounds nuw i8, ptr %5, i64 176
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !190  ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.h, null
@@ -1056,7 +1056,7 @@ define void @_ZN6duckdb7roaring19RoaringAnalyzeStateC2ERKNS_15CompressionInfoE(p
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i64, ptr %1, align 8, !tbaa !93
   store i64 %i.b, ptr %i.a, align 8, !tbaa !93
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN6duckdb7roaring19RoaringAnalyzeStateE, i64 16), ptr %0, align 8, !tbaa !149
+  store ptr getelementptr inbounds inrange(-16, 16) ({ [4 x ptr] }, ptr @_ZTVN6duckdb7roaring19RoaringAnalyzeStateE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !149
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !304)
   %i.d = tail call noalias noundef nonnull dereferenceable(512) ptr @_Znam(i64 noundef 512) #29 ; 25 uses
@@ -1459,7 +1459,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load i64, ptr %i.b, align 8, !tbaa !93
   store i64 %i.d, ptr %i.c, align 8, !tbaa !93
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN6duckdb7roaring20RoaringCompressStateE, i64 16), ptr %0, align 8, !tbaa !149
+  store ptr getelementptr inbounds inrange(-16, 16) ({ [4 x ptr] }, ptr @_ZTVN6duckdb7roaring20RoaringCompressStateE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !149
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.f = load i64, ptr %2, align 8, !tbaa !148
   store i64 %i.f, ptr %i.e, align 8, !tbaa !148
@@ -1862,7 +1862,7 @@ bb.a:
   store i64 %2, ptr %i.b, align 8, !tbaa !180
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 0, ptr %i.c, align 8, !tbaa !182
-  store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN6duckdb7roaring21RunContainerScanStateE, i64 16), ptr %0, align 8, !tbaa !149
+  store ptr getelementptr inbounds inrange(-16, 48) ({ [8 x ptr] }, ptr @_ZTVN6duckdb7roaring21RunContainerScanStateE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !149
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 36
   store i8 0, ptr %i.d, align 4, !tbaa !425
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -2080,7 +2080,7 @@ bb.a:
   store i64 %3, ptr %i.f, align 8, !tbaa !428
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 56
   store ptr %5, ptr %i.g, align 8, !tbaa !429
-  store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN6duckdb7roaring31CompressedRunContainerScanStateE, i64 16), ptr %0, align 8, !tbaa !149
+  store ptr getelementptr inbounds inrange(-16, 48) ({ [8 x ptr] }, ptr @_ZTVN6duckdb7roaring31CompressedRunContainerScanStateE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !149
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 64
   store ptr %4, ptr %i.h, align 8, !tbaa !434
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 72
@@ -2251,7 +2251,7 @@ bb.a:
   store i64 %2, ptr %i.b, align 8, !tbaa !180
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 0, ptr %i.c, align 8, !tbaa !182
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN6duckdb7roaring24BitsetContainerScanStateE, i64 16), ptr %0, align 8, !tbaa !149
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVN6duckdb7roaring24BitsetContainerScanStateE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !149
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   store ptr %3, ptr %i.d, align 8, !tbaa !436
   ret void
@@ -2319,7 +2319,7 @@ bb.a:
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %6 = alloca %"class.std::allocator", align 1    ; 5 uses
   %7 = alloca %"struct.duckdb::roaring::ContainerMetadataCollectionScanner", align 8 ; 9 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN6duckdb7roaring16RoaringScanStateE, i64 16), ptr %0, align 8, !tbaa !149
+  store ptr getelementptr inbounds inrange(-16, 16) ({ [4 x ptr] }, ptr @_ZTVN6duckdb7roaring16RoaringScanStateE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !149
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   tail call void @_ZN6duckdb12BufferHandleC1Ev(ptr noundef nonnull align 8 dereferenceable(24) %i.a)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -2722,7 +2722,7 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr void @_ZN6duckdb7roaring19RoaringAnalyzeStateD2Ev(ptr noundef nonnull align 8 dereferenceable(208) %0) unnamed_addr #7 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN6duckdb7roaring19RoaringAnalyzeStateE, i64 16), ptr %0, align 8, !tbaa !149
+  store ptr getelementptr inbounds inrange(-16, 16) ({ [4 x ptr] }, ptr @_ZTVN6duckdb7roaring19RoaringAnalyzeStateE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !149
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !135  ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.b, null
@@ -2779,7 +2779,7 @@ _ZNSt10unique_ptrIA_N6duckdb7roaring17BitmaskTableEntryESt14default_deleteIS3_EE
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr void @_ZN6duckdb7roaring19RoaringAnalyzeStateD0Ev(ptr noundef nonnull align 8 dereferenceable(208) %0) unnamed_addr #7 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN6duckdb7roaring19RoaringAnalyzeStateE, i64 16), ptr %0, align 8, !tbaa !149
+  store ptr getelementptr inbounds inrange(-16, 16) ({ [4 x ptr] }, ptr @_ZTVN6duckdb7roaring19RoaringAnalyzeStateE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !149
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !135  ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.b, null
@@ -2837,7 +2837,7 @@ _ZN6duckdb7roaring19RoaringAnalyzeStateD2Ev.exit: ; preds = %_ZN6duckdb7roaring2
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr void @_ZN6duckdb7roaring20RoaringCompressStateD2Ev(ptr noundef nonnull align 8 dereferenceable(1144) %0) unnamed_addr #7 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN6duckdb7roaring20RoaringCompressStateE, i64 16), ptr %0, align 8, !tbaa !149
+  store ptr getelementptr inbounds inrange(-16, 16) ({ [4 x ptr] }, ptr @_ZTVN6duckdb7roaring20RoaringCompressStateE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !149
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1096
   tail call void @_ZN6duckdb12BufferHandleD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.a) #26
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1088
@@ -2900,7 +2900,7 @@ _ZNSt10unique_ptrIN6duckdb12AnalyzeStateESt14default_deleteIS1_EED2Ev.exit: ; pr
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr void @_ZN6duckdb7roaring20RoaringCompressStateD0Ev(ptr noundef nonnull align 8 dereferenceable(1144) %0) unnamed_addr #7 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN6duckdb7roaring20RoaringCompressStateE, i64 16), ptr %0, align 8, !tbaa !149
+  store ptr getelementptr inbounds inrange(-16, 16) ({ [4 x ptr] }, ptr @_ZTVN6duckdb7roaring20RoaringCompressStateE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !149
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1096
   tail call void @_ZN6duckdb12BufferHandleD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.a) #26, !inline_history !464
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1088
@@ -2964,7 +2964,7 @@ _ZN6duckdb7roaring20RoaringCompressStateD2Ev.exit: ; preds = %_ZN6duckdb7roaring
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr void @_ZN6duckdb7roaring16RoaringScanStateD0Ev(ptr noundef nonnull align 8 dereferenceable(200) %0) unnamed_addr #7 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN6duckdb7roaring16RoaringScanStateE, i64 16), ptr %0, align 8, !tbaa !149
+  store ptr getelementptr inbounds inrange(-16, 16) ({ [4 x ptr] }, ptr @_ZTVN6duckdb7roaring16RoaringScanStateE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !149
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 176
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !190  ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.b, null
@@ -3367,7 +3367,7 @@ bb.a:
   store i32 1, ptr %i.b, align 8, !tbaa !173, !noalias !496
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 12 ; 2 uses
   store i32 1, ptr %i.c, align 4, !tbaa !175, !noalias !496
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN6duckdb21TemplatedValidityDataImEESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.a, align 8, !tbaa !149, !noalias !496
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN6duckdb21TemplatedValidityDataImEESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.a, align 8, !tbaa !149, !noalias !496
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 3 uses
   %i.e = load i64, ptr %1, align 8, !tbaa !7, !noalias !496
   store ptr null, ptr %i.d, align 8, !tbaa !499, !noalias !496

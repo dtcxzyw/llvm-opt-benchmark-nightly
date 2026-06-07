@@ -201,7 +201,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   store ptr %i.a, ptr %0, align 8
   %i.b = tail call noundef ptr @_ZN6Assimp6Intern22AllocateFromAssimpHeapnwEm(i64 noundef 8) ; 2 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN6Assimp22DefaultProgressHandlerE, i64 16), ptr %i.b, align 8
+  store ptr getelementptr inbounds inrange(-16, 48) ({ [8 x ptr] }, ptr @_ZTVN6Assimp22DefaultProgressHandlerE, i32 0, i32 0, i32 2), ptr %i.b, align 8
   %i.c = load ptr, ptr %0, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   store ptr %i.b, ptr %i.d, align 8
@@ -225,7 +225,7 @@ bb.a:
   %i.b = tail call noundef ptr @_ZN6Assimp6Intern22AllocateFromAssimpHeapnwEm(i64 noundef 32) ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, i8 0, i64 24, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN6Assimp15DefaultIOSystemE, i64 16), ptr %i.b, align 8
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVN6Assimp15DefaultIOSystemE, i32 0, i32 0, i32 2), ptr %i.b, align 8
   store ptr %i.b, ptr %i.a, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   store ptr null, ptr %i.d, align 8
@@ -267,7 +267,7 @@ _ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EEC2IPN6Assimp15DefaultIOSyste
   store i32 1, ptr %i.l, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 12
   store i32 1, ptr %i.m, align 4
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt15_Sp_counted_ptrIPN6Assimp15DefaultIOSystemELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.e, align 8
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt15_Sp_counted_ptrIPN6Assimp15DefaultIOSystemELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.e, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   store ptr %i.b, ptr %i.n, align 8
   store ptr %i.e, ptr %i.d, align 8
@@ -670,7 +670,7 @@ _ZNSt12__shared_ptrIN6Assimp8IOSystemELN9__gnu_cxx12_Lock_policyE2EEC2IS1_vEEPT_
   store i32 1, ptr %i.l, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 12
   store i32 1, ptr %i.m, align 4
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt15_Sp_counted_ptrIPN6Assimp8IOSystemELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.a, align 8
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt15_Sp_counted_ptrIPN6Assimp8IOSystemELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.a, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store ptr %1, ptr %i.n, align 8
   store ptr %1, ptr %0, align 8
@@ -755,7 +755,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = tail call noundef ptr @_ZN6Assimp6Intern22AllocateFromAssimpHeapnwEm(i64 noundef 8) ; 2 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN6Assimp22DefaultProgressHandlerE, i64 16), ptr %i.b, align 8
+  store ptr getelementptr inbounds inrange(-16, 48) ({ [8 x ptr] }, ptr @_ZTVN6Assimp22DefaultProgressHandlerE, i32 0, i32 0, i32 2), ptr %i.b, align 8
   %i.c = load ptr, ptr %0, align 8
   br label %.sink.split
 
@@ -936,7 +936,7 @@ _ZNSt10shared_ptrIN6Assimp8IOSystemEEC2ERKS2_.exit: ; preds = %.critedge55, %bb.
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN6Assimp8IOSystemEEC2ERKS2_.exit
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aq, i8 0, i64 24, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN6Assimp12BlobIOSystemE, i64 16), ptr %i.ap, align 8
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVN6Assimp12BlobIOSystemE, i32 0, i32 0, i32 2), ptr %i.ap, align 8
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ap, i64 32 ; 5 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ap, i64 48 ; 3 uses
   store ptr %i.as, ptr %i.ar, align 8
@@ -1033,7 +1033,7 @@ bb.q:                                             ; preds = %bb.l
   store i32 1, ptr %i.bs, align 8
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bl, i64 12
   store i32 1, ptr %i.bt, align 4
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt15_Sp_counted_ptrIPN6Assimp12BlobIOSystemELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.bl, align 8
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt15_Sp_counted_ptrIPN6Assimp12BlobIOSystemELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.bl, align 8
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bl, i64 16
   store ptr %i.ap, ptr %i.bu, align 8
   %i.bv = load ptr, ptr %0, align 8               ; 2 uses
@@ -1436,7 +1436,7 @@ bb.q:                                             ; preds = %.thread134
 bb.r:                                             ; preds = %bb.q
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #30
   call void @_ZN6Assimp11BaseProcessC2Ev(ptr noundef nonnull align 8 dereferenceable(24) %7) #30
-  store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN6Assimp24MakeVerboseFormatProcessE, i64 16), ptr %7, align 8
+  store ptr getelementptr inbounds inrange(-16, 48) ({ [8 x ptr] }, ptr @_ZTVN6Assimp24MakeVerboseFormatProcessE, i32 0, i32 0, i32 2), ptr %7, align 8
   invoke void @_ZN6Assimp24MakeVerboseFormatProcess7ExecuteEP7aiScene(ptr noundef nonnull align 8 dereferenceable(24) %7, ptr noundef %i.ao)
           to label %bb.s unwind label %bb.u
 
@@ -1479,7 +1479,7 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.w
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #30
   call void @_ZN6Assimp11BaseProcessC2Ev(ptr noundef nonnull align 8 dereferenceable(24) %8) #30
-  store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN6Assimp23FlipWindingOrderProcessE, i64 16), ptr %8, align 8
+  store ptr getelementptr inbounds inrange(-16, 48) ({ [8 x ptr] }, ptr @_ZTVN6Assimp23FlipWindingOrderProcessE, i32 0, i32 0, i32 2), ptr %8, align 8
   %i.cv = invoke noundef zeroext i1 @_ZNK6Assimp23FlipWindingOrderProcess8IsActiveEj(ptr noundef nonnull align 8 dereferenceable(24) %8, i32 noundef %i.bc)
           to label %bb.y unwind label %bb.ab
 
@@ -1538,7 +1538,7 @@ bb.ai:                                            ; preds = %bb.af, %bb.ae
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #30
   call void @_ZN6Assimp11BaseProcessC2Ev(ptr noundef nonnull align 8 dereferenceable(24) %10) #30
-  store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN6Assimp21MakeLeftHandedProcessE, i64 16), ptr %10, align 8
+  store ptr getelementptr inbounds inrange(-16, 48) ({ [8 x ptr] }, ptr @_ZTVN6Assimp21MakeLeftHandedProcessE, i32 0, i32 0, i32 2), ptr %10, align 8
   %i.db = invoke noundef zeroext i1 @_ZNK6Assimp21MakeLeftHandedProcess8IsActiveEj(ptr noundef nonnull align 8 dereferenceable(24) %10, i32 noundef %i.bc)
           to label %bb.aj unwind label %bb.am
 
@@ -1624,13 +1624,13 @@ bb.ar:                                            ; preds = %.lr.ph152.split.us
 
 bb.as:                                            ; preds = %bb.ar
   %i.dy = load ptr, ptr %i.dt, align 8            ; 3 uses
-  %.not108.us = icmp eq ptr %i.dy, getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN6Assimp14FlipUVsProcessE, i64 16)
+  %.not108.us = icmp eq ptr %i.dy, getelementptr inbounds inrange(-16, 48) ({ [8 x ptr] }, ptr @_ZTVN6Assimp14FlipUVsProcessE, i32 0, i32 0, i32 2)
   br i1 %.not108.us, label %bb.av, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
   %i.dz = call ptr @__dynamic_cast(ptr nonnull %i.dt, ptr nonnull @_ZTIN6Assimp11BaseProcessE, ptr nonnull @_ZTIN6Assimp23FlipWindingOrderProcessE, i64 0) #30
   %.not109.us = icmp ne ptr %i.dz, null
-  %.not111.us = icmp eq ptr %i.dy, getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN6Assimp21MakeLeftHandedProcessE, i64 16)
+  %.not111.us = icmp eq ptr %i.dy, getelementptr inbounds inrange(-16, 48) ({ [8 x ptr] }, ptr @_ZTVN6Assimp21MakeLeftHandedProcessE, i32 0, i32 0, i32 2)
   %or.cond143.us = select i1 %.not109.us, i1 true, i1 %.not111.us
   br i1 %or.cond143.us, label %bb.av, label %bb.au
 
@@ -1687,7 +1687,7 @@ bb.aw:                                            ; preds = %.lr.ph152.split
 
 bb.ax:                                            ; preds = %bb.aw
   %i.fc = load ptr, ptr %i.ex, align 8            ; 3 uses
-  %.not108 = icmp eq ptr %i.fc, getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN6Assimp14FlipUVsProcessE, i64 16)
+  %.not108 = icmp eq ptr %i.fc, getelementptr inbounds inrange(-16, 48) ({ [8 x ptr] }, ptr @_ZTVN6Assimp14FlipUVsProcessE, i32 0, i32 0, i32 2)
   br i1 %.not108, label %bb.bb, label %bb.ay
 
 .split:                                           ; preds = %bb.ba, %.lr.ph152.split
@@ -1699,7 +1699,7 @@ bb.ax:                                            ; preds = %bb.aw
 bb.ay:                                            ; preds = %bb.ax
   %i.fe = call ptr @__dynamic_cast(ptr nonnull %i.ex, ptr nonnull @_ZTIN6Assimp11BaseProcessE, ptr nonnull @_ZTIN6Assimp23FlipWindingOrderProcessE, i64 0) #30
   %.not109 = icmp ne ptr %i.fe, null
-  %.not111 = icmp eq ptr %i.fc, getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN6Assimp21MakeLeftHandedProcessE, i64 16)
+  %.not111 = icmp eq ptr %i.fc, getelementptr inbounds inrange(-16, 48) ({ [8 x ptr] }, ptr @_ZTVN6Assimp21MakeLeftHandedProcessE, i32 0, i32 0, i32 2)
   %or.cond143 = select i1 %.not109, i1 true, i1 %.not111
   br i1 %or.cond143, label %bb.bb, label %bb.az
 
@@ -1745,7 +1745,7 @@ bb.bd:                                            ; preds = %bb.bc
 bb.be:                                            ; preds = %bb.bd
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #30
   call void @_ZN6Assimp11BaseProcessC2Ev(ptr noundef nonnull align 8 dereferenceable(24) %11) #30
-  store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN6Assimp19JoinVerticesProcessE, i64 16), ptr %11, align 8
+  store ptr getelementptr inbounds inrange(-16, 48) ({ [8 x ptr] }, ptr @_ZTVN6Assimp19JoinVerticesProcessE, i32 0, i32 0, i32 2), ptr %11, align 8
   invoke void @_ZN6Assimp19JoinVerticesProcess7ExecuteEP7aiScene(ptr noundef nonnull align 8 dereferenceable(24) %11, ptr noundef %i.ao)
           to label %bb.bf unwind label %bb.bg
 
@@ -2148,7 +2148,7 @@ declare void @_ZN6Assimp33GetPostProcessingStepInstanceListERSt6vectorIPNS_11Bas
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZN6Assimp8IOSystemD2Ev(ptr noundef nonnull align 8 dereferenceable(32) %0) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN6Assimp8IOSystemE, i64 16), ptr %0, align 8
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVN6Assimp8IOSystemE, i32 0, i32 0, i32 2), ptr %0, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -2212,7 +2212,7 @@ bb.a:
   br i1 %i.c, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN6Assimp8IOSystemE, i64 16), ptr %i.b, align 8
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVN6Assimp8IOSystemE, i32 0, i32 0, i32 2), ptr %i.b, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8              ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 16
@@ -2477,7 +2477,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_EED2Ev.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN6Assimp8IOSystemE, i64 16), ptr %0, align 8
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVN6Assimp8IOSystemE, i32 0, i32 0, i32 2), ptr %0, align 8
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.ac = load ptr, ptr %i.ab, align 8            ; 3 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -2880,7 +2880,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %._cri
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 %i.bh
   store i8 0, ptr %i.bk, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #30
-  store ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTVN6Assimp12BlobIOStreamE, i64 16), ptr %i.az, align 8
+  store ptr getelementptr inbounds inrange(-16, 64) ({ [10 x ptr] }, ptr @_ZTVN6Assimp12BlobIOStreamE, i32 0, i32 0, i32 2), ptr %i.az, align 8
   %i.bl = getelementptr inbounds nuw i8, ptr %i.az, i64 8
   %i.bm = getelementptr inbounds nuw i8, ptr %i.az, i64 40
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bl, i8 0, i64 32, i1 false)

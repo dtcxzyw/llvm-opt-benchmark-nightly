@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 bb.e:                                             ; preds = %bb.c
   %i.f = load ptr, ptr %0, align 8
-  %i.g = icmp eq ptr %i.f, getelementptr inbounds nuw inrange(-16, 312) (i8, ptr @_ZTVN6icu_7817RuleBasedCollatorE, i64 16)
+  %i.g = icmp eq ptr %i.f, getelementptr inbounds inrange(-16, 312) ({ [41 x ptr] }, ptr @_ZTVN6icu_7817RuleBasedCollatorE, i32 0, i32 0, i32 2)
   br i1 %i.g, label %_ZN6icu_7817RuleBasedCollator16rbcFromUCollatorEPK9UCollator.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e

@@ -201,7 +201,7 @@ bb.m:                                             ; preds = %bb.l
   br label %.thread.i
 
 .thread.i:                                        ; preds = %bb.l, %bb.m
-  %.094157.i.sroa.phi = phi ptr [ %.094157.i.sroa.gep, %bb.m ], [ inttoptr (i64 16 to ptr), %bb.l ] ; 3 uses
+  %.094157.i.sroa.phi = phi ptr [ %.094157.i.sroa.gep, %bb.m ], [ getelementptr (i8, ptr null, i64 16), %bb.l ] ; 3 uses
   %.094157.i = phi ptr [ %5, %bb.m ], [ null, %bb.l ] ; 3 uses
   %i.aq = add i64 %i.aj, 3
   %i.ar = lshr i64 %i.aq, 2

@@ -201,7 +201,7 @@ bb.ev:                                            ; preds = %bb.eu
   %i.qw = getelementptr inbounds nuw i8, ptr %i.qq, i64 16
   %i.qx = load i64, ptr %i.qw, align 8, !alias.scope !7370, !noalias !7371, !noundef !4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !7375
-  %i.qy = load atomic i32, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs14kWLkQVSKO_14deltalake_core8logstore15DELTA_LOG_REGEX, i64 32) acquire, align 8, !noalias !7375
+  %i.qy = load atomic i32, ptr getelementptr inbounds (i8, ptr @_RNvNtCs14kWLkQVSKO_14deltalake_core8logstore15DELTA_LOG_REGEX, i64 32) acquire, align 8, !noalias !7375
   %i.qz = icmp eq i32 %i.qy, 0
   br i1 %i.qz, label %_RINvMs0_NtNtCs2pqxYH9ZEk8_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockNtNtNtCsonPGffhQyS_5regex5regex6string5RegexE5force0ECs7p2uQeJxui2_9deltalake.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.ew, !prof !5
 
@@ -210,7 +210,7 @@ bb.ew:                                            ; preds = %bb.ev
   store ptr @_RNvNtCs14kWLkQVSKO_14deltalake_core8logstore15DELTA_LOG_REGEX, ptr %i.k, align 8, !noalias !7375
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !7375
   store ptr %i.k, ptr %i.j, align 8, !noalias !7375
-  invoke void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds nuw (i8, ptr @_RNvNtCs14kWLkQVSKO_14deltalake_core8logstore15DELTA_LOG_REGEX, i64 32), i1 noundef zeroext true, ptr noundef nonnull %i.j, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @25, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @27)
+  invoke void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds (i8, ptr @_RNvNtCs14kWLkQVSKO_14deltalake_core8logstore15DELTA_LOG_REGEX, i64 32), i1 noundef zeroext true, ptr noundef nonnull %i.j, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @25, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @27)
           to label %.noexc222.i.i unwind label %.loopexit409.i.i, !noalias !7254
 
 .noexc222.i.i:                                    ; preds = %bb.ew
@@ -613,7 +613,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.h = load i64, ptr %i.g, align 8, !noundef !4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  %i.i = load atomic i32, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtNtCs14kWLkQVSKO_14deltalake_core8protocol11checkpoints16CHECKPOINT_REGEX, i64 32) acquire, align 8
+  %i.i = load atomic i32, ptr getelementptr inbounds (i8, ptr @_RNvNtNtCs14kWLkQVSKO_14deltalake_core8protocol11checkpoints16CHECKPOINT_REGEX, i64 32) acquire, align 8
   %i.j = icmp eq i32 %i.i, 0
   br i1 %i.j, label %_RINvMs0_NtNtCs2pqxYH9ZEk8_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockNtNtNtCsonPGffhQyS_5regex5regex6string5RegexE5force0ECs7p2uQeJxui2_9deltalake.exit, label %bb.b, !prof !5
 
@@ -622,7 +622,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr @_RNvNtNtCs14kWLkQVSKO_14deltalake_core8protocol11checkpoints16CHECKPOINT_REGEX, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %i.b, ptr %i.a, align 8
-  call void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds nuw (i8, ptr @_RNvNtNtCs14kWLkQVSKO_14deltalake_core8protocol11checkpoints16CHECKPOINT_REGEX, i64 32), i1 noundef zeroext true, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @25, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @27)
+  call void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds (i8, ptr @_RNvNtNtCs14kWLkQVSKO_14deltalake_core8protocol11checkpoints16CHECKPOINT_REGEX, i64 32), i1 noundef zeroext true, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @25, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @27)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %_RINvMs0_NtNtCs2pqxYH9ZEk8_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockNtNtNtCsonPGffhQyS_5regex5regex6string5RegexE5force0ECs7p2uQeJxui2_9deltalake.exit
@@ -1025,7 +1025,7 @@ bb.ac:                                            ; preds = %bb.ab
 bb.ad:                                            ; preds = %bb.ab
   %i.bg = extractvalue { i64, i64 } %i.be, 0
   %i.bh = extractvalue { i64, i64 } %i.be, 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.521.sroa.0.i, ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @10, i64 8), i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.521.sroa.0.i, ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds (i8, ptr @10, i64 8), i64 24, i1 false)
   %.pre.i = load ptr, ptr %i.e, align 8, !noalias !10802
   %.pre5.i = load ptr, ptr %i.av, align 8, !noalias !10802
   br label %bb.an
@@ -1428,7 +1428,7 @@ bb.as:                                            ; preds = %bb.ar
 bb.at:                                            ; preds = %bb.ar
   %i.do = extractvalue { i64, i64 } %i.dm, 0
   %i.dp = extractvalue { i64, i64 } %i.dm, 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.551.sroa.0.i.i, ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds nuw (i8, ptr @10, i64 8), i64 24, i1 false), !noalias !11425
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.551.sroa.0.i.i, ptr noundef nonnull align 8 dereferenceable(24) getelementptr inbounds (i8, ptr @10, i64 8), i64 24, i1 false), !noalias !11425
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.at, %bb.aq

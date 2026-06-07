@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.a
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
   store i64 %i.ag, ptr %i.ai, align 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1672)
-  %i.aj = load atomic i32, ptr getelementptr inbounds nuw (i8, ptr @_RNvCs9rVkZwOUgsI_13deltalake_aws15DELTA_LOG_REGEX, i64 32) acquire, align 8, !noalias !1672
+  %i.aj = load atomic i32, ptr getelementptr inbounds (i8, ptr @_RNvCs9rVkZwOUgsI_13deltalake_aws15DELTA_LOG_REGEX, i64 32) acquire, align 8, !noalias !1672
   %i.ak = icmp eq i32 %i.aj, 0
   br i1 %i.ak, label %_RINvMs0_NtNtCs2pqxYH9ZEk8_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockNtNtNtCsonPGffhQyS_5regex5regex6string5RegexE5force0ECs9rVkZwOUgsI_13deltalake_aws.exit.i, label %bb.d, !prof !47
 
@@ -210,7 +210,7 @@ bb.d:                                             ; preds = %bb.c
   store ptr @_RNvCs9rVkZwOUgsI_13deltalake_aws15DELTA_LOG_REGEX, ptr %i.p, align 8, !noalias !1672
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !1672
   store ptr %i.p, ptr %i.o, align 8, !noalias !1672
-  call void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds nuw (i8, ptr @_RNvCs9rVkZwOUgsI_13deltalake_aws15DELTA_LOG_REGEX, i64 32), i1 noundef zeroext true, ptr noundef nonnull %i.o, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @3, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2)
+  call void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds (i8, ptr @_RNvCs9rVkZwOUgsI_13deltalake_aws15DELTA_LOG_REGEX, i64 32), i1 noundef zeroext true, ptr noundef nonnull %i.o, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @3, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o), !noalias !1672
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p), !noalias !1672
   br label %_RINvMs0_NtNtCs2pqxYH9ZEk8_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockNtNtNtCsonPGffhQyS_5regex5regex6string5RegexE5force0ECs9rVkZwOUgsI_13deltalake_aws.exit.i
@@ -613,7 +613,7 @@ bb.bj:                                            ; preds = %.loopexit227
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.x)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w)
-  %i.ij = load atomic i32, ptr getelementptr inbounds nuw (i8, ptr @_RNvCs9rVkZwOUgsI_13deltalake_aws14DELTA_LOG_PATH, i64 24) acquire, align 8
+  %i.ij = load atomic i32, ptr getelementptr inbounds (i8, ptr @_RNvCs9rVkZwOUgsI_13deltalake_aws14DELTA_LOG_PATH, i64 24) acquire, align 8
   %i.ik = icmp eq i32 %i.ij, 0
   br i1 %i.ik, label %_RINvMs0_NtNtCs2pqxYH9ZEk8_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockNtNtCsjyY8HP3IvQ6_12object_store4path4PathE5force0ECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.bk, !prof !47
 
@@ -622,7 +622,7 @@ bb.bk:                                            ; preds = %bb.bj
   store ptr @_RNvCs9rVkZwOUgsI_13deltalake_aws14DELTA_LOG_PATH, ptr %i.h, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   store ptr %i.h, ptr %i.g, align 8
-  call void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds nuw (i8, ptr @_RNvCs9rVkZwOUgsI_13deltalake_aws14DELTA_LOG_PATH, i64 24), i1 noundef zeroext true, ptr noundef nonnull %i.g, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2)
+  call void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds (i8, ptr @_RNvCs9rVkZwOUgsI_13deltalake_aws14DELTA_LOG_PATH, i64 24), i1 noundef zeroext true, ptr noundef nonnull %i.g, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
   br label %_RINvMs0_NtNtCs2pqxYH9ZEk8_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockNtNtCsjyY8HP3IvQ6_12object_store4path4PathE5force0ECs9rVkZwOUgsI_13deltalake_aws.exit
@@ -1025,7 +1025,7 @@ bb.cv:                                            ; preds = %bb.cs
   br i1 %i.lw, label %bb.cw, label %bb.de
 
 bb.cw:                                            ; preds = %bb.cv
-  %i.lx = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXs_Cs9rVkZwOUgsI_13deltalake_awsNtB6_17S3LogStoreFactoryNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore9factories15LogStoreFactory12with_optionss0_10___CALLSITE, i64 16) monotonic, align 8 ; 3 uses
+  %i.lx = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNvXs_Cs9rVkZwOUgsI_13deltalake_awsNtB6_17S3LogStoreFactoryNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore9factories15LogStoreFactory12with_optionss0_10___CALLSITE, i64 16) monotonic, align 8 ; 3 uses
   switch i8 %i.lx, label %bb.cx [
     i8 0, label %bb.de
     i8 1, label %bb.cy
@@ -1295,7 +1295,7 @@ bb.dz:                                            ; preds = %.noexc106
   br i1 %i.op, label %bb.ea, label %bb.ek
 
 bb.ea:                                            ; preds = %bb.dz
-  %i.oq = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXs_Cs9rVkZwOUgsI_13deltalake_awsNtB6_17S3LogStoreFactoryNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore9factories15LogStoreFactory12with_options10___CALLSITE, i64 16) monotonic, align 8 ; 3 uses
+  %i.oq = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNvXs_Cs9rVkZwOUgsI_13deltalake_awsNtB6_17S3LogStoreFactoryNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore9factories15LogStoreFactory12with_options10___CALLSITE, i64 16) monotonic, align 8 ; 3 uses
   switch i8 %i.oq, label %bb.eb [
     i8 0, label %bb.ek
     i8 1, label %bb.ec
@@ -1464,7 +1464,7 @@ bb.er:                                            ; preds = %bb.ej, %bb.ek, %bb.
   br i1 %i.ql, label %bb.es, label %bb.fd
 
 bb.es:                                            ; preds = %bb.er
-  %i.qm = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXs_Cs9rVkZwOUgsI_13deltalake_awsNtB6_17S3LogStoreFactoryNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore9factories15LogStoreFactory12with_optionss_10___CALLSITE, i64 16) monotonic, align 8 ; 3 uses
+  %i.qm = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNvXs_Cs9rVkZwOUgsI_13deltalake_awsNtB6_17S3LogStoreFactoryNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore9factories15LogStoreFactory12with_optionss_10___CALLSITE, i64 16) monotonic, align 8 ; 3 uses
   switch i8 %i.qm, label %bb.et [
     i8 0, label %bb.fd
     i8 1, label %bb.eu

@@ -201,7 +201,7 @@ bb.a:
   store i32 1, ptr %i.d, align 8, !tbaa !257
   %i.e = getelementptr inbounds nuw i8, ptr %7, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.e, i8 0, i64 24, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 96) (i8, ptr @_ZTVN4llvh19raw_svector_ostreamE, i64 16), ptr %7, align 8, !tbaa !82
+  store ptr getelementptr inbounds inrange(-16, 96) ({ [14 x ptr] }, ptr @_ZTVN4llvh19raw_svector_ostreamE, i32 0, i32 0, i32 2), ptr %7, align 8, !tbaa !82
   %i.f = getelementptr inbounds nuw i8, ptr %7, i64 40 ; 3 uses
   store ptr %6, ptr %i.f, align 8, !tbaa !260
   call void @_ZN4llvh11raw_ostream16SetBufferAndModeEPcmNS0_10BufferKindE(ptr noundef nonnull align 8 dereferenceable(48) %7, ptr noundef null, i64 noundef 0, i32 noundef 0) #17
@@ -604,7 +604,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.fj = getelementptr inbounds nuw i8, ptr %.0.i.i.i107, i64 56
   store ptr %.057, ptr %i.fj, align 8, !tbaa !472
   %.sroa.0130.0171.sroa.gep = getelementptr inbounds nuw i8, ptr %.sroa.0130.0171, i64 24
-  %spec.select.i102.sroa.sel = select i1 %.not199, ptr %.sroa.0130.0171.sroa.gep, ptr inttoptr (i64 24 to ptr) ; 2 uses
+  %spec.select.i102.sroa.sel = select i1 %.not199, ptr %.sroa.0130.0171.sroa.gep, ptr getelementptr inbounds nuw (i8, ptr null, i64 24) ; 2 uses
   %.sroa.0.0.copyload.i.i.i = load ptr, ptr %spec.select.i102.sroa.sel, align 8, !tbaa !229
   %i.fk = getelementptr inbounds nuw i8, ptr %.0.i.i.i107, i64 24
   store ptr %.sroa.0.0.copyload.i.i.i, ptr %i.fk, align 8, !tbaa !229
@@ -1007,7 +1007,7 @@ bb.a:
   store i32 1, ptr %i.b, align 8, !tbaa !781, !noalias !783
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 12 ; 2 uses
   store i32 1, ptr %i.c, align 4, !tbaa !784, !noalias !783
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN6hermes6parser6detail12_GLOBAL__N_19PreParserESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.a, align 8, !tbaa !82, !noalias !783
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN6hermes6parser6detail12_GLOBAL__N_19PreParserESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.a, align 8, !tbaa !82, !noalias !783
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store ptr %1, ptr %i.d, align 8, !tbaa !785, !noalias !783
   %i.e = tail call noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #19, !noalias !783 ; 7 uses

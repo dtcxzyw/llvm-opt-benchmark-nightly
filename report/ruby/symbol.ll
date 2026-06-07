@@ -201,7 +201,7 @@ bb.ab:                                            ; preds = %bb.aa
 bb.ac:                                            ; preds = %bb.ab
   %i.cd = getelementptr i8, ptr %2, i64 80
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !44
-  %i.cf = tail call i32 %i.ce(ptr noundef nonnull %2, ptr noundef nonnull @rb_sym_constant_char_p.cname, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @rb_sym_constant_char_p.cname, i64 15)) #20, !inline_history !45 ; 2 uses
+  %i.cf = tail call i32 %i.ce(ptr noundef nonnull %2, ptr noundef nonnull @rb_sym_constant_char_p.cname, ptr noundef getelementptr (i8, ptr @rb_sym_constant_char_p.cname, i64 15)) #20, !inline_history !45 ; 2 uses
   store i32 %i.cf, ptr @rb_sym_constant_char_p.ctype_titlecase, align 4, !tbaa !7
   br label %bb.ad
 

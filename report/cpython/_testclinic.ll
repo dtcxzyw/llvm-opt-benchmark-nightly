@@ -201,7 +201,7 @@ bb.h:                                             ; preds = %bb.a
   br i1 %.not23, label %bb.i, label %.thread27
 
 .thread27:                                        ; preds = %.thread, %bb.h
-  %i.h = call ptr @PyUnicode_FromString(ptr noundef nonnull @.str.63) #11
+  %i.h = call ptr @PyUnicode_FromString(ptr noundef nonnull inttoptr (i64 ptrtoint (ptr @.str.63 to i64) to ptr)) #11
   br label %bb.i
 
 bb.i:                                             ; preds = %.thread, %.thread27
@@ -259,7 +259,7 @@ bb.h:                                             ; preds = %bb.a
   br i1 %.not23, label %bb.i, label %.thread27
 
 .thread27:                                        ; preds = %.thread, %bb.h
-  %i.h = call ptr @PyUnicode_FromString(ptr noundef nonnull @.str.64) #11
+  %i.h = call ptr @PyUnicode_FromString(ptr noundef nonnull inttoptr (i64 ptrtoint (ptr @.str.64 to i64) to ptr)) #11
   br label %bb.i
 
 bb.i:                                             ; preds = %.thread, %.thread27

@@ -201,7 +201,7 @@ bb.a:
   store i64 %i.h, ptr %i.e, align 8, !tbaa !99
   %i.i = getelementptr inbounds nuw i8, ptr %18, i64 120
   store i64 0, ptr %i.i, align 8, !tbaa !100
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5arrow3ipc12_GLOBAL__N_120DictionarySerializerE, i64 16), ptr %18, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN5arrow3ipc12_GLOBAL__N_120DictionarySerializerE, i32 0, i32 0, i32 2), ptr %18, align 8, !tbaa !55
   %i.j = getelementptr inbounds nuw i8, ptr %18, i64 128
   store i64 %1, ptr %i.j, align 8, !tbaa !101
   %i.k = getelementptr inbounds nuw i8, ptr %18, i64 136
@@ -604,7 +604,7 @@ _ZN5arrow3ipc12_GLOBAL__N_121RecordBatchSerializerC2ElRKSt10shared_ptrIKNS_16Key
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, i8 0, i64 16, i1 false)
   store i32 3, ptr %3, align 8, !tbaa !59, !noalias !168
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #28, !noalias !168
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5arrow3ipc12_GLOBAL__N_121RecordBatchSerializerE, i64 16), ptr %4, align 8, !tbaa !55, !noalias !168
+  store ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN5arrow3ipc12_GLOBAL__N_121RecordBatchSerializerE, i32 0, i32 0, i32 2), ptr %4, align 8, !tbaa !55, !noalias !168
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 8
   store ptr %3, ptr %i.a, align 8, !tbaa !70, !noalias !168
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 16
@@ -644,7 +644,7 @@ bb.a:
   store i32 3, ptr %4, align 8, !tbaa !59
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #28
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5arrow3ipc12_GLOBAL__N_121RecordBatchSerializerE, i64 16), ptr %5, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN5arrow3ipc12_GLOBAL__N_121RecordBatchSerializerE, i32 0, i32 0, i32 2), ptr %5, align 8, !tbaa !55
   %i.b = getelementptr inbounds nuw i8, ptr %5, i64 8
   store ptr %4, ptr %i.b, align 8, !tbaa !70
   %i.c = getelementptr inbounds nuw i8, ptr %5, i64 16
@@ -1047,7 +1047,7 @@ _ZN5arrow10WeakFutureINS_8internal5EmptyEEC2ERKNS_6FutureIS2_EE.exit.i.i.i.i.i: 
           to label %bb.ak unwind label %_ZN5arrow8internal6FnOnceIFvvEED2Ev.exit44.i.i.i.i.i, !noalias !234 ; 6 uses
 
 bb.ak:                                            ; preds = %_ZN5arrow10WeakFutureINS_8internal5EmptyEEC2ERKNS_6FutureIS2_EE.exit.i.i.i.i.i
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5arrow8internal6FnOnceIFvvEE6FnImplISt5_BindIFNS_6detail14ContinueFutureENS_6FutureINS0_5EmptyEEEZNS_3ipc12_GLOBAL__N_121RecordBatchSerializer19CompressBodyBuffersEvEUlmE_iEEEE, i64 16), ptr %i.fh, align 8, !tbaa !55, !noalias !234
+  store ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN5arrow8internal6FnOnceIFvvEE6FnImplISt5_BindIFNS_6detail14ContinueFutureENS_6FutureINS0_5EmptyEEEZNS_3ipc12_GLOBAL__N_121RecordBatchSerializer19CompressBodyBuffersEvEUlmE_iEEEE, i32 0, i32 0, i32 2), ptr %i.fh, align 8, !tbaa !55, !noalias !234
   %i.fi = getelementptr inbounds nuw i8, ptr %i.fh, i64 16
   %i.fj = trunc nuw nsw i64 %indvars.iv.i.i.i to i32
   store i32 %i.fj, ptr %i.fi, align 8, !tbaa !3, !noalias !234
@@ -1067,7 +1067,7 @@ bb.ak:                                            ; preds = %_ZN5arrow10WeakFutu
           to label %bb.al unwind label %_ZN5arrow8internal6FnOnceIFvRKNS_6StatusEEED2Ev.exit36.i.i.i.i.i, !noalias !234 ; 4 uses
 
 bb.al:                                            ; preds = %bb.ak
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @"_ZTVN5arrow8internal6FnOnceIFvRKNS_6StatusEEE6FnImplIZNS0_8Executor6SubmitIRZNS_3ipc12_GLOBAL__N_121RecordBatchSerializer19CompressBodyBuffersEvEUlmE_JRiENS_6FutureINS0_5EmptyEEEEENS_6ResultIT1_EENS0_9TaskHintsENS_9StopTokenEOT_DpOT0_E3$_0EE", i64 16), ptr %i.fo, align 8, !tbaa !55, !noalias !234
+  store ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @"_ZTVN5arrow8internal6FnOnceIFvRKNS_6StatusEEE6FnImplIZNS0_8Executor6SubmitIRZNS_3ipc12_GLOBAL__N_121RecordBatchSerializer19CompressBodyBuffersEvEUlmE_JRiENS_6FutureINS0_5EmptyEEEEENS_6ResultIT1_EENS0_9TaskHintsENS_9StopTokenEOT_DpOT0_E3$_0EE", i32 0, i32 0, i32 2), ptr %i.fo, align 8, !tbaa !55, !noalias !234
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fo, i64 8
   store ptr %i.ff, ptr %i.fp, align 8, !tbaa !246, !noalias !234
   %i.fq = getelementptr inbounds nuw i8, ptr %i.fo, i64 16
@@ -1470,7 +1470,7 @@ _ZNSt6vectorIN5arrow3ipc8internal14BufferMetadataESaIS3_EE9push_backEOS3_.exit: 
 ; Function Attrs: mustprogress nounwind uwtable
 define internal void @_ZN5arrow3ipc12_GLOBAL__N_121RecordBatchSerializerD2Ev(ptr nofree noundef nonnull align 8 captures(none) dead_on_return(128) dereferenceable(128) initializes((0, 8)) %0) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5arrow3ipc12_GLOBAL__N_121RecordBatchSerializerE, i64 16), ptr %0, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN5arrow3ipc12_GLOBAL__N_121RecordBatchSerializerE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !55
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !289  ; 3 uses
   %.not.i.i.i = icmp eq ptr %i.b, null
@@ -1583,7 +1583,7 @@ _ZNSt12__shared_ptrIKN5arrow16KeyValueMetadataELN9__gnu_cxx12_Lock_policyE2EED2E
   %i.a = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.a, i8 0, i64 80, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #28
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5arrow3ipc12_GLOBAL__N_121RecordBatchSerializerE, i64 16), ptr %11, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN5arrow3ipc12_GLOBAL__N_121RecordBatchSerializerE, i32 0, i32 0, i32 2), ptr %11, align 8, !tbaa !55
   %i.b = getelementptr inbounds nuw i8, ptr %11, i64 8
   store ptr %10, ptr %i.b, align 8, !tbaa !70
   %i.c = getelementptr inbounds nuw i8, ptr %11, i64 16
@@ -1986,7 +1986,7 @@ define void @_ZN5arrow3ipc16MakeStreamWriterEPNS_2io12OutputStreamERKSt10shared_
 bb.a:
   %4 = alloca %"class.std::unique_ptr.168", align 8 ; 6 uses
   %i.a = tail call noalias noundef nonnull dereferenceable(104) ptr @_Znwm(i64 noundef 104) #29, !noalias !320 ; 11 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN5arrow3ipc8internal16IpcPayloadWriterE, i64 16), ptr %i.a, align 8, !tbaa !55, !noalias !320
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVN5arrow3ipc8internal16IpcPayloadWriterE, i32 0, i32 0, i32 2), ptr %i.a, align 8, !tbaa !55, !noalias !320
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.b, ptr noundef nonnull align 8 dereferenceable(60) %3, i64 24, i1 false), !noalias !320
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 32
@@ -2024,7 +2024,7 @@ _ZSt11make_uniqueIN5arrow3ipc8internal19PayloadStreamWriterEJRPNS0_2io12OutputSt
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.p, i8 0, i64 16, i1 false), !noalias !320
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 96
   store i64 -1, ptr %i.q, align 8, !tbaa !328, !noalias !320
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN5arrow3ipc8internal19PayloadStreamWriterE, i64 16), ptr %i.a, align 8, !tbaa !55, !noalias !320
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVN5arrow3ipc8internal19PayloadStreamWriterE, i32 0, i32 0, i32 2), ptr %i.a, align 8, !tbaa !55, !noalias !320
   %i.r = invoke noalias noundef nonnull dereferenceable(256) ptr @_Znwm(i64 noundef 256) #29
           to label %.noexc unwind label %_ZNKSt14default_deleteIN5arrow3ipc8internal19PayloadStreamWriterEEclEPS3_.exit.i6 ; 6 uses
 
@@ -2033,7 +2033,7 @@ _ZSt11make_uniqueIN5arrow3ipc8internal19PayloadStreamWriterEJRPNS0_2io12OutputSt
   store i32 1, ptr %i.s, align 8, !tbaa !125, !noalias !329
   %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 12
   store i32 1, ptr %i.t, align 4, !tbaa !127, !noalias !329
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow3ipc8internal15IpcFormatWriterESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.r, align 8, !tbaa !55, !noalias !329
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow3ipc8internal15IpcFormatWriterESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.r, align 8, !tbaa !55, !noalias !329
   %i.u = getelementptr inbounds nuw i8, ptr %i.r, i64 16 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4), !noalias !329
   store ptr %i.a, ptr %4, align 8, !tbaa !332, !noalias !329
@@ -2436,7 +2436,7 @@ _ZN5arrow6StatusD2Ev.exit:                        ; preds = %bb.b, %_ZN5arrow6Re
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZN5arrow6TensorD2Ev(ptr noundef nonnull align 8 dead_on_return(112) dereferenceable(112) %0) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN5arrow6TensorE, i64 16), ptr %0, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-16, 16) ({ [4 x ptr] }, ptr @_ZTVN5arrow6TensorE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !55
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !379  ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 96
@@ -2839,8 +2839,8 @@ bb.a:
   %i.h = load i64, ptr %i.g, align 8, !noalias !451
   %i.i = getelementptr inbounds i8, ptr %3, i64 %i.h
   store ptr %i.f, ptr %i.i, align 8, !tbaa !55, !noalias !451
-  store ptr getelementptr inbounds nuw inrange(-24, 64) (i8, ptr @_ZTVN5arrow2io16MockOutputStreamE, i64 24), ptr %3, align 8, !tbaa !55, !noalias !451
-  store ptr getelementptr inbounds nuw inrange(-64, 56) (i8, ptr @_ZTVN5arrow2io16MockOutputStreamE, i64 152), ptr %i.c, align 8, !tbaa !55, !noalias !451
+  store ptr getelementptr inbounds inrange(-24, 64) ({ [11 x ptr], [15 x ptr] }, ptr @_ZTVN5arrow2io16MockOutputStreamE, i32 0, i32 0, i32 3), ptr %3, align 8, !tbaa !55, !noalias !451
+  store ptr getelementptr inbounds inrange(-64, 56) ({ [11 x ptr], [15 x ptr] }, ptr @_ZTVN5arrow2io16MockOutputStreamE, i32 0, i32 1, i32 8), ptr %i.c, align 8, !tbaa !55, !noalias !451
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   store i64 0, ptr %i.j, align 8, !tbaa !454, !noalias !451
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 16
@@ -2955,8 +2955,8 @@ bb.a:
   %i.i = load i64, ptr %i.h, align 8
   %i.j = getelementptr inbounds i8, ptr %4, i64 %i.i
   store ptr %i.g, ptr %i.j, align 8, !tbaa !55
-  store ptr getelementptr inbounds nuw inrange(-24, 64) (i8, ptr @_ZTVN5arrow2io16MockOutputStreamE, i64 24), ptr %4, align 8, !tbaa !55
-  store ptr getelementptr inbounds nuw inrange(-64, 56) (i8, ptr @_ZTVN5arrow2io16MockOutputStreamE, i64 152), ptr %i.c, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-24, 64) ({ [11 x ptr], [15 x ptr] }, ptr @_ZTVN5arrow2io16MockOutputStreamE, i32 0, i32 0, i32 3), ptr %4, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-64, 56) ({ [11 x ptr], [15 x ptr] }, ptr @_ZTVN5arrow2io16MockOutputStreamE, i32 0, i32 1, i32 8), ptr %i.c, align 8, !tbaa !55
   %i.k = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   store i64 0, ptr %i.k, align 8, !tbaa !454
   %i.l = getelementptr inbounds nuw i8, ptr %4, i64 16
@@ -3019,8 +3019,8 @@ bb.a:
   %i.i = load i64, ptr %i.h, align 8
   %i.j = getelementptr inbounds i8, ptr %3, i64 %i.i
   store ptr %i.g, ptr %i.j, align 8, !tbaa !55
-  store ptr getelementptr inbounds nuw inrange(-24, 64) (i8, ptr @_ZTVN5arrow2io16MockOutputStreamE, i64 24), ptr %3, align 8, !tbaa !55
-  store ptr getelementptr inbounds nuw inrange(-64, 56) (i8, ptr @_ZTVN5arrow2io16MockOutputStreamE, i64 152), ptr %i.c, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-24, 64) ({ [11 x ptr], [15 x ptr] }, ptr @_ZTVN5arrow2io16MockOutputStreamE, i32 0, i32 0, i32 3), ptr %3, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-64, 56) ({ [11 x ptr], [15 x ptr] }, ptr @_ZTVN5arrow2io16MockOutputStreamE, i32 0, i32 1, i32 8), ptr %i.c, align 8, !tbaa !55
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   store i64 0, ptr %i.k, align 8, !tbaa !454
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 16
@@ -3351,7 +3351,7 @@ _ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.a, 
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr void @_ZN5arrow16TableBatchReaderD2Ev(ptr noundef nonnull align 8 dereferenceable(120) %0) unnamed_addr #4 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN5arrow16TableBatchReaderE, i64 16), ptr %0, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-16, 56) ({ [9 x ptr] }, ptr @_ZTVN5arrow16TableBatchReaderE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !55
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !289  ; 3 uses
   %.not.i.i.i = icmp eq ptr %i.b, null
@@ -3489,7 +3489,7 @@ bb.a:
   %i.b = load <2 x ptr>, ptr %1, align 8, !tbaa !119, !noalias !492
   %i.c = load ptr, ptr %1, align 8, !tbaa !495, !noalias !492
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, i8 0, i64 16, i1 false), !noalias !492
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN5arrow3ipc8internal16IpcPayloadWriterE, i64 16), ptr %i.a, align 8, !tbaa !55, !noalias !492
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVN5arrow3ipc8internal16IpcPayloadWriterE, i32 0, i32 0, i32 2), ptr %i.a, align 8, !tbaa !55, !noalias !492
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.d, ptr noundef nonnull align 8 dereferenceable(60) %3, i64 24, i1 false), !noalias !492
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 32
@@ -3527,7 +3527,7 @@ _ZSt11make_uniqueIN5arrow3ipc8internal19PayloadStreamWriterEJSt10shared_ptrINS0_
   store <2 x ptr> %i.b, ptr %i.r, align 8, !tbaa !119, !noalias !492
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 96
   store i64 -1, ptr %i.s, align 8, !tbaa !328, !noalias !492
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN5arrow3ipc8internal19PayloadStreamWriterE, i64 16), ptr %i.a, align 8, !tbaa !55, !noalias !492
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVN5arrow3ipc8internal19PayloadStreamWriterE, i32 0, i32 0, i32 2), ptr %i.a, align 8, !tbaa !55, !noalias !492
   %i.t = invoke noalias noundef nonnull dereferenceable(256) ptr @_Znwm(i64 noundef 256) #29
           to label %.noexc unwind label %_ZNKSt14default_deleteIN5arrow3ipc8internal19PayloadStreamWriterEEclEPS3_.exit.i6 ; 6 uses
 
@@ -3536,7 +3536,7 @@ _ZSt11make_uniqueIN5arrow3ipc8internal19PayloadStreamWriterEJSt10shared_ptrINS0_
   store i32 1, ptr %i.u, align 8, !tbaa !125, !noalias !496
   %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 12
   store i32 1, ptr %i.v, align 4, !tbaa !127, !noalias !496
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow3ipc8internal15IpcFormatWriterESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.t, align 8, !tbaa !55, !noalias !496
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow3ipc8internal15IpcFormatWriterESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.t, align 8, !tbaa !55, !noalias !496
   %i.w = getelementptr inbounds nuw i8, ptr %i.t, i64 16 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4), !noalias !496
   store ptr %i.a, ptr %4, align 8, !tbaa !332, !noalias !496
@@ -3599,7 +3599,7 @@ define void @_ZN5arrow3ipc14MakeFileWriterEPNS_2io12OutputStreamERKSt10shared_pt
 bb.a:
   %5 = alloca %"class.std::unique_ptr.168", align 8 ; 6 uses
   %i.a = tail call noalias noundef nonnull dereferenceable(184) ptr @_Znwm(i64 noundef 184) #29, !noalias !499 ; 14 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN5arrow3ipc8internal16IpcPayloadWriterE, i64 16), ptr %i.a, align 8, !tbaa !55, !noalias !499
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVN5arrow3ipc8internal16IpcPayloadWriterE, i32 0, i32 0, i32 2), ptr %i.a, align 8, !tbaa !55, !noalias !499
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.b, ptr noundef nonnull align 8 dereferenceable(60) %3, i64 24, i1 false), !noalias !499
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 32
@@ -3637,7 +3637,7 @@ _ZN5arrow3ipc8internal16StreamBookKeeperC2ERKNS0_15IpcWriteOptionsEPNS_2io12Outp
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.p, i8 0, i64 16, i1 false), !noalias !499
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 96
   store i64 -1, ptr %i.q, align 8, !tbaa !328, !noalias !499
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN5arrow3ipc8internal17PayloadFileWriterE, i64 16), ptr %i.a, align 8, !tbaa !55, !noalias !499
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVN5arrow3ipc8internal17PayloadFileWriterE, i32 0, i32 0, i32 2), ptr %i.a, align 8, !tbaa !55, !noalias !499
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 104
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !118, !noalias !499 ; 2 uses
@@ -3698,7 +3698,7 @@ _ZSt11make_uniqueIN5arrow3ipc8internal17PayloadFileWriterEJRKNS1_15IpcWriteOptio
   store i32 1, ptr %i.al, align 8, !tbaa !125, !noalias !502
   %i.am = getelementptr inbounds nuw i8, ptr %i.ak, i64 12
   store i32 1, ptr %i.am, align 4, !tbaa !127, !noalias !502
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow3ipc8internal15IpcFormatWriterESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.ak, align 8, !tbaa !55, !noalias !502
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow3ipc8internal15IpcFormatWriterESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.ak, align 8, !tbaa !55, !noalias !502
   %i.an = getelementptr inbounds nuw i8, ptr %i.ak, i64 16 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5), !noalias !502
   store ptr %i.a, ptr %5, align 8, !tbaa !332, !noalias !502
@@ -3766,7 +3766,7 @@ bb.a:
   %i.b = load <2 x ptr>, ptr %1, align 8, !tbaa !119, !noalias !507
   %i.c = load ptr, ptr %1, align 8, !tbaa !495, !noalias !507
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, i8 0, i64 16, i1 false), !noalias !507
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN5arrow3ipc8internal16IpcPayloadWriterE, i64 16), ptr %i.a, align 8, !tbaa !55, !noalias !507
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVN5arrow3ipc8internal16IpcPayloadWriterE, i32 0, i32 0, i32 2), ptr %i.a, align 8, !tbaa !55, !noalias !507
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.d, ptr noundef nonnull align 8 dereferenceable(60) %3, i64 24, i1 false), !noalias !507
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 32
@@ -3804,7 +3804,7 @@ _ZNSt12__shared_ptrIN5arrow2io12OutputStreamELN9__gnu_cxx12_Lock_policyE2EED2Ev.
   store <2 x ptr> %i.b, ptr %i.r, align 8, !tbaa !119, !noalias !507
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 96
   store i64 -1, ptr %i.s, align 8, !tbaa !328, !noalias !507
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN5arrow3ipc8internal17PayloadFileWriterE, i64 16), ptr %i.a, align 8, !tbaa !55, !noalias !507
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVN5arrow3ipc8internal17PayloadFileWriterE, i32 0, i32 0, i32 2), ptr %i.a, align 8, !tbaa !55, !noalias !507
   %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 104
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !118, !noalias !507 ; 2 uses
@@ -3865,7 +3865,7 @@ _ZSt11make_uniqueIN5arrow3ipc8internal17PayloadFileWriterEJRKNS1_15IpcWriteOptio
   store i32 1, ptr %i.an, align 8, !tbaa !125, !noalias !510
   %i.ao = getelementptr inbounds nuw i8, ptr %i.am, i64 12
   store i32 1, ptr %i.ao, align 4, !tbaa !127, !noalias !510
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow3ipc8internal15IpcFormatWriterESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.am, align 8, !tbaa !55, !noalias !510
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow3ipc8internal15IpcFormatWriterESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.am, align 8, !tbaa !55, !noalias !510
   %i.ap = getelementptr inbounds nuw i8, ptr %i.am, i64 16 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5), !noalias !510
   store ptr %i.a, ptr %5, align 8, !tbaa !332, !noalias !510
@@ -4249,7 +4249,7 @@ bb.f:                                             ; preds = %_ZN5arrow6StatusD2E
 define void @_ZN5arrow3ipc8internal23MakePayloadStreamWriterEPNS_2io12OutputStreamERKNS0_15IpcWriteOptionsE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.arrow::Result.197") align 8 captures(none) initializes((0, 16)) %0, ptr noundef %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(60) %2) local_unnamed_addr #1 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = tail call noalias noundef nonnull dereferenceable(104) ptr @_Znwm(i64 noundef 104) #29, !noalias !555 ; 9 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN5arrow3ipc8internal16IpcPayloadWriterE, i64 16), ptr %i.a, align 8, !tbaa !55, !noalias !555
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVN5arrow3ipc8internal16IpcPayloadWriterE, i32 0, i32 0, i32 2), ptr %i.a, align 8, !tbaa !55, !noalias !555
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.b, ptr noundef nonnull align 8 dereferenceable(60) %2, i64 24, i1 false), !noalias !555
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 32
@@ -4287,7 +4287,7 @@ _ZNSt10unique_ptrIN5arrow3ipc8internal19PayloadStreamWriterESt14default_deleteIS
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.p, i8 0, i64 16, i1 false), !noalias !555
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 96
   store i64 -1, ptr %i.q, align 8, !tbaa !328, !noalias !555
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN5arrow3ipc8internal19PayloadStreamWriterE, i64 16), ptr %i.a, align 8, !tbaa !55, !noalias !555
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVN5arrow3ipc8internal19PayloadStreamWriterE, i32 0, i32 0, i32 2), ptr %i.a, align 8, !tbaa !55, !noalias !555
   store ptr null, ptr %0, align 8, !tbaa !39
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.a, ptr %i.r, align 8, !tbaa !332
@@ -4298,7 +4298,7 @@ _ZNSt10unique_ptrIN5arrow3ipc8internal19PayloadStreamWriterESt14default_deleteIS
 define void @_ZN5arrow3ipc8internal21MakePayloadFileWriterEPNS_2io12OutputStreamERKSt10shared_ptrINS_6SchemaEERKNS0_15IpcWriteOptionsERKS5_IKNS_16KeyValueMetadataEE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.arrow::Result.197") align 8 captures(none) initializes((0, 16)) %0, ptr noundef %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(60) %3, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %4) local_unnamed_addr #1 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = tail call noalias noundef nonnull dereferenceable(184) ptr @_Znwm(i64 noundef 184) #29, !noalias !558 ; 12 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN5arrow3ipc8internal16IpcPayloadWriterE, i64 16), ptr %i.a, align 8, !tbaa !55, !noalias !558
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVN5arrow3ipc8internal16IpcPayloadWriterE, i32 0, i32 0, i32 2), ptr %i.a, align 8, !tbaa !55, !noalias !558
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.b, ptr noundef nonnull align 8 dereferenceable(60) %3, i64 24, i1 false), !noalias !558
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 32
@@ -4336,7 +4336,7 @@ _ZN5arrow3ipc8internal16StreamBookKeeperC2ERKNS0_15IpcWriteOptionsEPNS_2io12Outp
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.p, i8 0, i64 16, i1 false), !noalias !558
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 96
   store i64 -1, ptr %i.q, align 8, !tbaa !328, !noalias !558
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN5arrow3ipc8internal17PayloadFileWriterE, i64 16), ptr %i.a, align 8, !tbaa !55, !noalias !558
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVN5arrow3ipc8internal17PayloadFileWriterE, i32 0, i32 0, i32 2), ptr %i.a, align 8, !tbaa !55, !noalias !558
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 104
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !118, !noalias !558 ; 2 uses
@@ -4432,8 +4432,8 @@ bb.a:
   %i.j = load i64, ptr %i.i, align 8, !noalias !561
   %i.k = getelementptr inbounds i8, ptr %3, i64 %i.j
   store ptr %i.h, ptr %i.k, align 8, !tbaa !55, !noalias !561
-  store ptr getelementptr inbounds nuw inrange(-24, 64) (i8, ptr @_ZTVN5arrow2io16MockOutputStreamE, i64 24), ptr %3, align 8, !tbaa !55, !noalias !561
-  store ptr getelementptr inbounds nuw inrange(-64, 56) (i8, ptr @_ZTVN5arrow2io16MockOutputStreamE, i64 152), ptr %i.e, align 8, !tbaa !55, !noalias !561
+  store ptr getelementptr inbounds inrange(-24, 64) ({ [11 x ptr], [15 x ptr] }, ptr @_ZTVN5arrow2io16MockOutputStreamE, i32 0, i32 0, i32 3), ptr %3, align 8, !tbaa !55, !noalias !561
+  store ptr getelementptr inbounds inrange(-64, 56) ({ [11 x ptr], [15 x ptr] }, ptr @_ZTVN5arrow2io16MockOutputStreamE, i32 0, i32 1, i32 8), ptr %i.e, align 8, !tbaa !55, !noalias !561
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   store i64 0, ptr %i.l, align 8, !tbaa !454, !noalias !561
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 16
@@ -4836,8 +4836,8 @@ bb.a:
   %i.j = load i64, ptr %i.i, align 8, !noalias !601
   %i.k = getelementptr inbounds i8, ptr %3, i64 %i.j
   store ptr %i.h, ptr %i.k, align 8, !tbaa !55, !noalias !601
-  store ptr getelementptr inbounds nuw inrange(-24, 64) (i8, ptr @_ZTVN5arrow2io16MockOutputStreamE, i64 24), ptr %3, align 8, !tbaa !55, !noalias !601
-  store ptr getelementptr inbounds nuw inrange(-64, 56) (i8, ptr @_ZTVN5arrow2io16MockOutputStreamE, i64 152), ptr %i.e, align 8, !tbaa !55, !noalias !601
+  store ptr getelementptr inbounds inrange(-24, 64) ({ [11 x ptr], [15 x ptr] }, ptr @_ZTVN5arrow2io16MockOutputStreamE, i32 0, i32 0, i32 3), ptr %3, align 8, !tbaa !55, !noalias !601
+  store ptr getelementptr inbounds inrange(-64, 56) ({ [11 x ptr], [15 x ptr] }, ptr @_ZTVN5arrow2io16MockOutputStreamE, i32 0, i32 1, i32 8), ptr %i.e, align 8, !tbaa !55, !noalias !601
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   store i64 0, ptr %i.l, align 8, !tbaa !454, !noalias !601
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 16
@@ -5181,7 +5181,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.i = load ptr, ptr %7, align 8, !tbaa !625
   store ptr null, ptr %7, align 8, !tbaa !625
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN5arrow3ipc8internal15IpcFormatWriterE, i64 16), ptr %6, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-16, 56) ({ [9 x ptr] }, ptr @_ZTVN5arrow3ipc8internal15IpcFormatWriterE, i32 0, i32 0, i32 2), ptr %6, align 8, !tbaa !55
   %i.j = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   %i.k = ptrtoint ptr %i.i to i64
   store i64 %i.k, ptr %i.j, align 8, !tbaa !335
@@ -5561,7 +5561,7 @@ bb.a:
           to label %bb.b unwind label %bb.m
 
 bb.b:                                             ; preds = %bb.a
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN5arrow3ipc8internal16IpcPayloadWriterE, i64 16), ptr %i.a, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVN5arrow3ipc8internal16IpcPayloadWriterE, i32 0, i32 0, i32 2), ptr %i.a, align 8, !tbaa !55
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.c, ptr noundef nonnull align 8 dereferenceable(60) %2, i64 24, i1 false)
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 32
@@ -5601,7 +5601,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.b
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.r, i8 0, i64 16, i1 false)
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 96
   store i64 -1, ptr %i.s, align 8, !tbaa !328
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN5arrow3ipc8internal19PayloadStreamWriterE, i64 16), ptr %i.a, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVN5arrow3ipc8internal19PayloadStreamWriterE, i32 0, i32 0, i32 2), ptr %i.a, align 8, !tbaa !55
   store ptr %i.a, ptr %0, align 8, !tbaa !625
   %.not.i.i.i = icmp eq ptr %i.n, null
   br i1 %.not.i.i.i, label %_ZN5arrow3ipc15IpcWriteOptionsD2Ev.exit, label %bb.g
@@ -5667,7 +5667,7 @@ declare void @_ZN5arrow2io18BufferOutputStream6FinishEv(ptr dead_on_unwind writa
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr void @_ZN5arrow3ipc8internal15IpcFormatWriterD2Ev(ptr noundef nonnull align 8 dereferenceable(240) %0) unnamed_addr #4 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN5arrow3ipc8internal15IpcFormatWriterE, i64 16), ptr %0, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-16, 56) ({ [9 x ptr] }, ptr @_ZTVN5arrow3ipc8internal15IpcFormatWriterE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !55
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !118  ; 8 uses
   %.not.i.i.i = icmp eq ptr %i.b, null
@@ -6070,7 +6070,7 @@ bb.a:
   store i32 1, ptr %i.b, align 8, !tbaa !125
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 12
   store i32 1, ptr %i.c, align 4, !tbaa !127
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow6BufferESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.a, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow6BufferESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.a, align 8, !tbaa !55
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   %i.e = load i32, ptr %2, align 4, !tbaa !3
   %i.f = sext i32 %i.e to i64
@@ -6473,7 +6473,7 @@ _ZNKSt9type_infoeqERKS_.exit.thread8:             ; preds = %bb.c, %_ZNKSt9type_
 define linkonce_odr void @_ZN5arrow6BufferC2EPKhl(ptr noundef nonnull align 8 dereferenceable(80) %0, ptr noundef %1, i64 noundef %2) unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.std::shared_ptr.12", align 16 ; 5 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5arrow6BufferE, i64 16), ptr %0, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN5arrow6BufferE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !55
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.a, align 8, !tbaa !674
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 9 ; 2 uses
@@ -6635,7 +6635,7 @@ declare void @_ZN5arrow26default_cpu_memory_managerEv(ptr dead_on_unwind writabl
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZN5arrow6BufferD2Ev(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %0) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5arrow6BufferE, i64 16), ptr %0, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN5arrow6BufferE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !55
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !118  ; 8 uses
   %.not.i.i = icmp eq ptr %i.b, null
@@ -7038,7 +7038,7 @@ _ZNK5arrow15BaseBinaryArrayINS_10BinaryTypeEE13value_offsetsEv.exit82.i.i: ; pre
   store i32 1, ptr %i.bdg, align 8, !tbaa !125, !noalias !924
   %i.bdh = getelementptr inbounds nuw i8, ptr %i.bde, i64 12
   store i32 1, ptr %i.bdh, align 4, !tbaa !127, !noalias !924
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow6BufferESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.bde, align 8, !tbaa !55, !noalias !924
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow6BufferESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.bde, align 8, !tbaa !55, !noalias !924
   %i.bdi = getelementptr inbounds nuw i8, ptr %i.bde, i64 16 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %151), !noalias !924
   %i.bdj = load <2 x ptr>, ptr %156, align 16, !tbaa !119, !noalias !924
@@ -7441,7 +7441,7 @@ _ZNK5arrow15BaseBinaryArrayINS_10BinaryTypeEE13value_offsetsEv.exit82.i.i413: ; 
   store i32 1, ptr %i.btb, align 8, !tbaa !125, !noalias !981
   %i.btc = getelementptr inbounds nuw i8, ptr %i.bsz, i64 12
   store i32 1, ptr %i.btc, align 4, !tbaa !127, !noalias !981
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow6BufferESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.bsz, align 8, !tbaa !55, !noalias !981
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow6BufferESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.bsz, align 8, !tbaa !55, !noalias !981
   %i.btd = getelementptr inbounds nuw i8, ptr %i.bsz, i64 16 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %140), !noalias !981
   %i.bte = load <2 x ptr>, ptr %145, align 16, !tbaa !119, !noalias !981
@@ -7844,7 +7844,7 @@ _ZNK5arrow15BaseBinaryArrayINS_15LargeBinaryTypeEE13value_offsetsEv.exit82.i.i: 
   store i32 1, ptr %i.cht, align 8, !tbaa !125, !noalias !1038
   %i.chu = getelementptr inbounds nuw i8, ptr %i.chr, i64 12
   store i32 1, ptr %i.chu, align 4, !tbaa !127, !noalias !1038
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow6BufferESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.chr, align 8, !tbaa !55, !noalias !1038
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow6BufferESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.chr, align 8, !tbaa !55, !noalias !1038
   %i.chv = getelementptr inbounds nuw i8, ptr %i.chr, i64 16 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %129), !noalias !1038
   %i.chw = load <2 x ptr>, ptr %134, align 16, !tbaa !119, !noalias !1038
@@ -8247,7 +8247,7 @@ _ZNK5arrow15BaseBinaryArrayINS_15LargeBinaryTypeEE13value_offsetsEv.exit82.i.i62
   store i32 1, ptr %i.cwj, align 8, !tbaa !125, !noalias !1093
   %i.cwk = getelementptr inbounds nuw i8, ptr %i.cwh, i64 12
   store i32 1, ptr %i.cwk, align 4, !tbaa !127, !noalias !1093
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow6BufferESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.cwh, align 8, !tbaa !55, !noalias !1093
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow6BufferESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.cwh, align 8, !tbaa !55, !noalias !1093
   %i.cwl = getelementptr inbounds nuw i8, ptr %i.cwh, i64 16 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %118), !noalias !1093
   %i.cwm = load <2 x ptr>, ptr %123, align 16, !tbaa !119, !noalias !1093
@@ -8650,7 +8650,7 @@ bb.a:
   store i32 1, ptr %i.a, align 8, !tbaa !125
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 1, ptr %i.b, align 4, !tbaa !127
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow6BufferESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %0, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow6BufferESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !55
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -9053,7 +9053,7 @@ bb.c:                                             ; preds = %bb.b
   store i32 1, ptr %i.e, align 8, !tbaa !125
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 12 ; 2 uses
   store i32 1, ptr %i.f, align 4, !tbaa !127
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt19_Sp_counted_deleterIPN5arrow6BufferESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.d, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt19_Sp_counted_deleterIPN5arrow6BufferESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.d, align 8, !tbaa !55
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store ptr %i.a, ptr %i.g, align 8, !tbaa !1617
   %i.h = load i8, ptr @__libc_single_threaded, align 1, !tbaa !111
@@ -9456,7 +9456,7 @@ _ZNSt10shared_ptrIN5arrow6BufferEEC2INS0_15ResizableBufferESt14default_deleteIS4
   store i32 1, ptr %i.dh, align 8, !tbaa !125, !noalias !1679
   %i.di = getelementptr inbounds nuw i8, ptr %i.df, i64 12
   store i32 1, ptr %i.di, align 4, !tbaa !127, !noalias !1679
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow6BufferESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.df, align 8, !tbaa !55, !noalias !1679
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow6BufferESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.df, align 8, !tbaa !55, !noalias !1679
   %i.dj = getelementptr inbounds nuw i8, ptr %i.df, i64 16 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2), !noalias !1679
   %i.dk = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
@@ -9859,7 +9859,7 @@ bb.c:                                             ; preds = %bb.b
   store i32 1, ptr %i.e, align 8, !tbaa !125
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 12 ; 2 uses
   store i32 1, ptr %i.f, align 4, !tbaa !127
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt19_Sp_counted_deleterIPN5arrow10FutureImplESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.d, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt19_Sp_counted_deleterIPN5arrow10FutureImplESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.d, align 8, !tbaa !55
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store ptr %i.a, ptr %i.g, align 8, !tbaa !1700
   %i.h = load i8, ptr @__libc_single_threaded, align 1, !tbaa !111
@@ -10109,7 +10109,7 @@ _ZNKSt9type_infoeqERKS_.exit.thread3:             ; preds = %bb.b, %_ZNKSt9type_
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define internal void @_ZN5arrow8internal6FnOnceIFvvEE6FnImplISt5_BindIFNS_6detail14ContinueFutureENS_6FutureINS0_5EmptyEEEZNS_3ipc12_GLOBAL__N_121RecordBatchSerializer19CompressBodyBuffersEvEUlmE_iEEED2Ev(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(48) initializes((0, 8)) %0) unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5arrow8internal6FnOnceIFvvEE6FnImplISt5_BindIFNS_6detail14ContinueFutureENS_6FutureINS0_5EmptyEEEZNS_3ipc12_GLOBAL__N_121RecordBatchSerializer19CompressBodyBuffersEvEUlmE_iEEEE, i64 16), ptr %0, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN5arrow8internal6FnOnceIFvvEE6FnImplISt5_BindIFNS_6detail14ContinueFutureENS_6FutureINS0_5EmptyEEEZNS_3ipc12_GLOBAL__N_121RecordBatchSerializer19CompressBodyBuffersEvEUlmE_iEEEE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !55
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
   %.val = load ptr, ptr %i.a, align 8, !tbaa !118 ; 8 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %.val, null
@@ -10166,7 +10166,7 @@ _ZNSt5_BindIFN5arrow6detail14ContinueFutureENS0_6FutureINS0_8internal5EmptyEEEZN
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define internal void @_ZN5arrow8internal6FnOnceIFvvEE6FnImplISt5_BindIFNS_6detail14ContinueFutureENS_6FutureINS0_5EmptyEEEZNS_3ipc12_GLOBAL__N_121RecordBatchSerializer19CompressBodyBuffersEvEUlmE_iEEED0Ev(ptr noundef nonnull align 8 dereferenceable(48) initializes((0, 8)) %0) unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5arrow8internal6FnOnceIFvvEE6FnImplISt5_BindIFNS_6detail14ContinueFutureENS_6FutureINS0_5EmptyEEEZNS_3ipc12_GLOBAL__N_121RecordBatchSerializer19CompressBodyBuffersEvEUlmE_iEEEE, i64 16), ptr %0, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN5arrow8internal6FnOnceIFvvEE6FnImplISt5_BindIFNS_6detail14ContinueFutureENS_6FutureINS0_5EmptyEEEZNS_3ipc12_GLOBAL__N_121RecordBatchSerializer19CompressBodyBuffersEvEUlmE_iEEEE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !55
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
   %.val.i = load ptr, ptr %i.a, align 8, !tbaa !118 ; 8 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %.val.i, null
@@ -10569,7 +10569,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_disposeEv.exit: ; pred
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define internal void @"_ZN5arrow8internal6FnOnceIFvRKNS_6StatusEEE6FnImplIZNS0_8Executor6SubmitIRZNS_3ipc12_GLOBAL__N_121RecordBatchSerializer19CompressBodyBuffersEvEUlmE_JRiENS_6FutureINS0_5EmptyEEEEENS_6ResultIT1_EENS0_9TaskHintsENS_9StopTokenEOT_DpOT0_E3$_0ED2Ev"(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(24) initializes((0, 8)) %0) unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @"_ZTVN5arrow8internal6FnOnceIFvRKNS_6StatusEEE6FnImplIZNS0_8Executor6SubmitIRZNS_3ipc12_GLOBAL__N_121RecordBatchSerializer19CompressBodyBuffersEvEUlmE_JRiENS_6FutureINS0_5EmptyEEEEENS_6ResultIT1_EENS0_9TaskHintsENS_9StopTokenEOT_DpOT0_E3$_0EE", i64 16), ptr %0, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @"_ZTVN5arrow8internal6FnOnceIFvRKNS_6StatusEEE6FnImplIZNS0_8Executor6SubmitIRZNS_3ipc12_GLOBAL__N_121RecordBatchSerializer19CompressBodyBuffersEvEUlmE_JRiENS_6FutureINS0_5EmptyEEEEENS_6ResultIT1_EENS0_9TaskHintsENS_9StopTokenEOT_DpOT0_E3$_0EE", i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !55
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val = load ptr, ptr %i.a, align 8, !tbaa !249 ; 4 uses
   %.not.i.i.i.i = icmp eq ptr %.val, null
@@ -10610,7 +10610,7 @@ bb.e:                                             ; preds = %_ZN9__gnu_cxx27__ex
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define internal void @"_ZN5arrow8internal6FnOnceIFvRKNS_6StatusEEE6FnImplIZNS0_8Executor6SubmitIRZNS_3ipc12_GLOBAL__N_121RecordBatchSerializer19CompressBodyBuffersEvEUlmE_JRiENS_6FutureINS0_5EmptyEEEEENS_6ResultIT1_EENS0_9TaskHintsENS_9StopTokenEOT_DpOT0_E3$_0ED0Ev"(ptr noundef nonnull align 8 dereferenceable(24) initializes((0, 8)) %0) unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @"_ZTVN5arrow8internal6FnOnceIFvRKNS_6StatusEEE6FnImplIZNS0_8Executor6SubmitIRZNS_3ipc12_GLOBAL__N_121RecordBatchSerializer19CompressBodyBuffersEvEUlmE_JRiENS_6FutureINS0_5EmptyEEEEENS_6ResultIT1_EENS0_9TaskHintsENS_9StopTokenEOT_DpOT0_E3$_0EE", i64 16), ptr %0, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @"_ZTVN5arrow8internal6FnOnceIFvRKNS_6StatusEEE6FnImplIZNS0_8Executor6SubmitIRZNS_3ipc12_GLOBAL__N_121RecordBatchSerializer19CompressBodyBuffersEvEUlmE_JRiENS_6FutureINS0_5EmptyEEEEENS_6ResultIT1_EENS0_9TaskHintsENS_9StopTokenEOT_DpOT0_E3$_0EE", i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !55
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val.i = load ptr, ptr %i.a, align 8, !tbaa !249 ; 4 uses
   %.not.i.i.i.i.i = icmp eq ptr %.val.i, null
@@ -10874,7 +10874,7 @@ bb.c:                                             ; preds = %bb.b
   store i32 1, ptr %i.e, align 8, !tbaa !125
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 12 ; 2 uses
   store i32 1, ptr %i.f, align 4, !tbaa !127
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt19_Sp_counted_deleterIPN5arrow15ResizableBufferESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.d, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt19_Sp_counted_deleterIPN5arrow15ResizableBufferESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.d, align 8, !tbaa !55
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store ptr %i.a, ptr %i.g, align 8, !tbaa !1726
   %i.h = load i8, ptr @__libc_single_threaded, align 1, !tbaa !111
@@ -11234,7 +11234,7 @@ bb.c:                                             ; preds = %bb.b
   store i32 1, ptr %i.e, align 8, !tbaa !125
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 12 ; 2 uses
   store i32 1, ptr %i.f, align 4, !tbaa !127
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt19_Sp_counted_deleterIPN5arrow15ResizableBufferESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.d, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt19_Sp_counted_deleterIPN5arrow15ResizableBufferESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.d, align 8, !tbaa !55
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store ptr %i.a, ptr %i.g, align 8, !tbaa !1726
   %i.h = load i8, ptr @__libc_single_threaded, align 1, !tbaa !111
@@ -11556,7 +11556,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit60: ; preds = %_ZN
   %i.bo = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 72), align 8
   store ptr %i.bo, ptr %i.k, align 8, !tbaa !55
   %i.bp = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 2 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVNSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEEE, i64 16), ptr %i.bp, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVNSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEEE, i32 0, i32 0, i32 2), ptr %i.bp, align 8, !tbaa !55
   %i.bq = getelementptr inbounds nuw i8, ptr %7, i64 96
   %i.br = load ptr, ptr %i.bq, align 8, !tbaa !134 ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %7, i64 112 ; 2 uses
@@ -11570,7 +11570,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br label %_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEED1Ev.exit
 
 _ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEED1Ev.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit60, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 16), ptr %i.bp, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i32 0, i32 0, i32 2), ptr %i.bp, align 8, !tbaa !55
   %i.bw = getelementptr inbounds nuw i8, ptr %7, i64 80
   call void @_ZNSt6localeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.bw) #28
   %i.bx = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 16), align 8 ; 2 uses
@@ -11973,7 +11973,7 @@ bb.f:                                             ; preds = %_ZN5arrow6StatusD2E
   store i32 3, ptr %8, align 8, !tbaa !59, !noalias !1818
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #28, !noalias !1818
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5arrow3ipc12_GLOBAL__N_121RecordBatchSerializerE, i64 16), ptr %5, align 8, !tbaa !55, !noalias !1818
+  store ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN5arrow3ipc12_GLOBAL__N_121RecordBatchSerializerE, i32 0, i32 0, i32 2), ptr %5, align 8, !tbaa !55, !noalias !1818
   %i.r = getelementptr inbounds nuw i8, ptr %5, i64 8
   store ptr %8, ptr %i.r, align 8, !tbaa !70, !noalias !1818
   %i.s = getelementptr inbounds nuw i8, ptr %5, i64 16
@@ -12376,7 +12376,7 @@ bb.a:
   %i.a = load i64, ptr %1, align 8, !tbaa !335
   store ptr null, ptr %1, align 8, !tbaa !335
   %i.b = load ptr, ptr %2, align 8, !tbaa !135    ; 2 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN5arrow3ipc8internal15IpcFormatWriterE, i64 16), ptr %0, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-16, 56) ({ [9 x ptr] }, ptr @_ZTVN5arrow3ipc8internal15IpcFormatWriterE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !55
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   store i64 %i.a, ptr %i.c, align 8, !tbaa !335
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
@@ -12543,7 +12543,7 @@ _ZNSt10unique_ptrIN5arrow3ipc8internal16IpcPayloadWriterESt14default_deleteIS3_E
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZN5arrow3ipc8internal17PayloadFileWriterD2Ev(ptr noundef nonnull align 8 dereferenceable(184) %0) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN5arrow3ipc8internal17PayloadFileWriterE, i64 16), ptr %0, align 8, !tbaa !55
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVN5arrow3ipc8internal17PayloadFileWriterE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !55
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !1944 ; 3 uses
   %.not.i.i.i = icmp eq ptr %i.b, null

@@ -201,7 +201,7 @@ bb.f:                                             ; preds = %bb.d, %bb.b
 
 bb.g:                                             ; preds = %bb.e, %bb.c
   %.sroa.4.0.i = phi i64 [ %i.h, %bb.e ], [ 0, %bb.c ]
-  %.sroa.10.0.i = phi i64 [ %i.n, %bb.e ], [ 8, %bb.c ]
+  %.sroa.10.0.i = phi i64 [ %i.n, %bb.e ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.c ]
   %i.o = inttoptr i64 %.sroa.10.0.i to ptr        ; 2 uses
   store i64 %.sroa.4.0.i, ptr %i.e, align 8, !alias.scope !9424
   %i.p = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 3 uses
@@ -506,7 +506,7 @@ bb.g:                                             ; preds = %bb.e, %bb.c
   %i.p = phi ptr [ %.pre19, %bb.e ], [ %1, %bb.c ]
   %i.q = phi ptr [ %.pre, %bb.e ], [ %0, %bb.c ]  ; 3 uses
   %.sroa.4.0.i = phi i64 [ %i.i, %bb.e ], [ 0, %bb.c ]
-  %.sroa.10.0.i = phi i64 [ %i.o, %bb.e ], [ 8, %bb.c ]
+  %.sroa.10.0.i = phi i64 [ %i.o, %bb.e ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.c ]
   %i.r = inttoptr i64 %.sroa.10.0.i to ptr        ; 2 uses
   store i64 %.sroa.4.0.i, ptr %i.f, align 8, !alias.scope !9492
   %i.s = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 3 uses
@@ -723,7 +723,7 @@ bb.g:                                             ; preds = %bb.e, %bb.c
   %i.o = phi ptr [ %.pre19, %bb.e ], [ %1, %bb.c ]
   %i.p = phi ptr [ %.pre, %bb.e ], [ %0, %bb.c ]  ; 3 uses
   %.sroa.4.0.i = phi i64 [ %i.h, %bb.e ], [ 0, %bb.c ]
-  %.sroa.10.0.i = phi i64 [ %i.n, %bb.e ], [ 8, %bb.c ]
+  %.sroa.10.0.i = phi i64 [ %i.n, %bb.e ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.c ]
   %i.q = inttoptr i64 %.sroa.10.0.i to ptr        ; 2 uses
   store i64 %.sroa.4.0.i, ptr %i.e, align 8, !alias.scope !9542
   %i.r = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 3 uses
@@ -1126,7 +1126,7 @@ bb.ct:                                            ; preds = %bb.cs, %bb.cq
 
 _RNvMs4_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs14kWLkQVSKO_14deltalake_core.exit.thread359.i: ; preds = %bb.cu, %bb.cr
   %i.gu = phi ptr [ %i.gs, %bb.cu ], [ inttoptr (i64 1 to ptr), %bb.cr ]
-  %.sroa.10.2364.i = phi i64 [ %i.gw, %bb.cu ], [ 1, %bb.cr ]
+  %.sroa.10.2364.i = phi i64 [ %i.gw, %bb.cu ], [ ptrtoint (ptr inttoptr (i64 1 to ptr) to i64), %bb.cr ]
   store i64 %i.gq, ptr %i.at, align 8, !noalias !18857
   store ptr %i.gu, ptr %.sroa.4220.0..sroa_idx.i, align 16, !noalias !18857
   store i64 %i.gq, ptr %.sroa.5221.0..sroa_idx.i, align 8, !noalias !18857
@@ -1186,7 +1186,7 @@ bb.db:                                            ; preds = %bb.cz, %bb.cx
 
 _RNvMs4_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs14kWLkQVSKO_14deltalake_core.exit281.thread371.i: ; preds = %bb.dc, %bb.cy
   %i.hc = phi ptr [ %i.ha, %bb.dc ], [ inttoptr (i64 1 to ptr), %bb.cy ]
-  %.sroa.10302.2376.i = phi i64 [ %i.hf, %bb.dc ], [ 1, %bb.cy ]
+  %.sroa.10302.2376.i = phi i64 [ %i.hf, %bb.dc ], [ ptrtoint (ptr inttoptr (i64 1 to ptr) to i64), %bb.cy ]
   %.sroa.0222.0.extract.trunc.i = trunc i64 %i.gy to i8
   %.sroa.0222.1.extract.shift.i = lshr i64 %i.gy, 8
   %.sroa.0222.1.extract.trunc.i = trunc i64 %.sroa.0222.1.extract.shift.i to i8
@@ -1285,7 +1285,7 @@ bb.di:                                            ; preds = %bb.el, %bb.ek, %bb.
 
 _RNvMs4_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs14kWLkQVSKO_14deltalake_core.exit284.thread383.i: ; preds = %bb.dj, %bb.dg
   %i.hs = phi ptr [ %i.ho, %bb.dj ], [ inttoptr (i64 1 to ptr), %bb.dg ]
-  %.sroa.10306.2388.i = phi i64 [ %i.ht, %bb.dj ], [ 1, %bb.dg ]
+  %.sroa.10306.2388.i = phi i64 [ %i.ht, %bb.dj ], [ ptrtoint (ptr inttoptr (i64 1 to ptr) to i64), %bb.dg ]
   store i64 %i.hm, ptr %i.o, align 8, !noalias !18857
   store ptr %i.hs, ptr %.sroa.4240.0..sroa_idx.i, align 8, !noalias !18857
   store i64 %i.hm, ptr %.sroa.6241.0..sroa_idx.i, align 8, !noalias !18857
@@ -1339,7 +1339,7 @@ bb.dp:                                            ; preds = %bb.do
 
 _RNvMs4_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs14kWLkQVSKO_14deltalake_core.exit288.thread396.i: ; preds = %bb.dq, %bb.do
   %i.ic = phi ptr [ %i.ia, %bb.dq ], [ inttoptr (i64 1 to ptr), %bb.do ]
-  %.sroa.10310.2402.i = phi i64 [ %i.id, %bb.dq ], [ 1, %bb.do ]
+  %.sroa.10310.2402.i = phi i64 [ %i.id, %bb.dq ], [ ptrtoint (ptr inttoptr (i64 1 to ptr) to i64), %bb.do ]
   store i64 %i.hy, ptr %i.l, align 8, !noalias !18857
   store ptr %i.ic, ptr %.sroa.4243.0..sroa_idx.i, align 8, !noalias !18857
   store i64 %i.hy, ptr %.sroa.6244.0..sroa_idx.i, align 8, !noalias !18857
@@ -1393,7 +1393,7 @@ bb.dw:                                            ; preds = %bb.dv
 
 _RNvMs4_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs14kWLkQVSKO_14deltalake_core.exit293.thread410.i: ; preds = %bb.dx, %bb.dv
   %i.im = phi ptr [ %i.ik, %bb.dx ], [ inttoptr (i64 1 to ptr), %bb.dv ]
-  %.sroa.10314.2416.i = phi i64 [ %i.in, %bb.dx ], [ 1, %bb.dv ]
+  %.sroa.10314.2416.i = phi i64 [ %i.in, %bb.dx ], [ ptrtoint (ptr inttoptr (i64 1 to ptr) to i64), %bb.dv ]
   store i64 %i.ii, ptr %i.i, align 8, !noalias !18857
   store ptr %i.im, ptr %.sroa.4246.0..sroa_idx.i, align 8, !noalias !18857
   store i64 %i.ii, ptr %.sroa.6247.0..sroa_idx.i, align 8, !noalias !18857

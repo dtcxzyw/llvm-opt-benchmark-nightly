@@ -201,7 +201,7 @@ _ZNSt10unique_ptrIN6duckdb15SelectStatementESt14default_deleteIS1_EED2Ev.exit: ;
   %i.r = getelementptr inbounds nuw i8, ptr %i.g, i64 96
   store i64 0, ptr %i.r, align 8, !tbaa !28, !noalias !193
   store i8 0, ptr %i.q, align 8, !tbaa !10, !noalias !193
-  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN6duckdb15SelectStatementE, i64 16), ptr %i.g, align 8, !tbaa !66, !noalias !193
+  store ptr getelementptr inbounds inrange(-16, 32) ({ [6 x ptr] }, ptr @_ZTVN6duckdb15SelectStatementE, i32 0, i32 0, i32 2), ptr %i.g, align 8, !tbaa !66, !noalias !193
   %i.s = getelementptr inbounds nuw i8, ptr %i.g, i64 120
   store ptr null, ptr %i.s, align 8, !tbaa !197, !noalias !193
   store ptr %i.g, ptr %5, align 8, !tbaa !73
@@ -209,7 +209,7 @@ _ZNSt10unique_ptrIN6duckdb15SelectStatementESt14default_deleteIS1_EED2Ev.exit: ;
           to label %.noexc unwind label %.body.thread ; 13 uses
 
 .noexc:                                           ; preds = %_ZNSt10unique_ptrIN6duckdb15SelectStatementESt14default_deleteIS1_EED2Ev.exit
-  store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN6duckdb9QueryNodeE, i64 16), ptr %i.t, align 8, !tbaa !66, !noalias !200
+  store ptr getelementptr inbounds inrange(-16, 48) ({ [8 x ptr] }, ptr @_ZTVN6duckdb9QueryNodeE, i32 0, i32 0, i32 2), ptr %i.t, align 8, !tbaa !66, !noalias !200
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   store i8 4, ptr %i.u, align 8, !tbaa !203, !noalias !200
   %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 16 ; 2 uses
@@ -226,7 +226,7 @@ _ZNSt10unique_ptrIN6duckdb15SelectStatementESt14default_deleteIS1_EED2Ev.exit: ;
   br label %.body
 
 bb.c:                                             ; preds = %.noexc
-  store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN6duckdb16RecursiveCTENodeE, i64 16), ptr %i.t, align 8, !tbaa !66, !noalias !200
+  store ptr getelementptr inbounds inrange(-16, 48) ({ [8 x ptr] }, ptr @_ZTVN6duckdb16RecursiveCTENodeE, i32 0, i32 0, i32 2), ptr %i.t, align 8, !tbaa !66, !noalias !200
   %i.y = getelementptr inbounds nuw i8, ptr %i.t, i64 120
   %i.z = getelementptr inbounds nuw i8, ptr %i.t, i64 136 ; 2 uses
   store ptr %i.z, ptr %i.y, align 8, !tbaa !22, !noalias !200
@@ -629,7 +629,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.gf = getelementptr inbounds nuw i8, ptr %i.fu, i64 96
   store i64 0, ptr %i.gf, align 8, !tbaa !28, !noalias !249
   store i8 0, ptr %i.ge, align 8, !tbaa !10, !noalias !249
-  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN6duckdb15SelectStatementE, i64 16), ptr %i.fu, align 8, !tbaa !66, !noalias !249
+  store ptr getelementptr inbounds inrange(-16, 32) ({ [6 x ptr] }, ptr @_ZTVN6duckdb15SelectStatementE, i32 0, i32 0, i32 2), ptr %i.fu, align 8, !tbaa !66, !noalias !249
   %i.gg = getelementptr inbounds nuw i8, ptr %i.fu, i64 120
   store ptr null, ptr %i.gg, align 8, !tbaa !197, !noalias !249
   store ptr %i.fu, ptr %0, align 8, !tbaa !73, !alias.scope !249
@@ -842,7 +842,7 @@ _ZNSt10unique_ptrIN6duckdb15SelectStatementESt14default_deleteIS1_EED2Ev.exit107
   br label %_ZNKSt14default_deleteIN6duckdb15SelectStatementEEclEPS1_.exit.i109
 
 _ZNKSt14default_deleteIN6duckdb15SelectStatementEEclEPS1_.exit.i109: ; preds = %.body._ZNKSt14default_deleteIN6duckdb15SelectStatementEEclEPS1_.exit.i109_crit_edge, %.body.thread
-  %i.hw = phi ptr [ getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN6duckdb15SelectStatementE, i64 16), %.body.thread ], [ %.pre, %.body._ZNKSt14default_deleteIN6duckdb15SelectStatementEEclEPS1_.exit.i109_crit_edge ]
+  %i.hw = phi ptr [ getelementptr inbounds inrange(-16, 32) ({ [6 x ptr] }, ptr @_ZTVN6duckdb15SelectStatementE, i32 0, i32 0, i32 2), %.body.thread ], [ %.pre, %.body._ZNKSt14default_deleteIN6duckdb15SelectStatementEEclEPS1_.exit.i109_crit_edge ]
   %.pn52.pn.pn138 = phi { ptr, i32 } [ %i.cd, %.body.thread ], [ %.pn52.pn.pn.ph, %.body._ZNKSt14default_deleteIN6duckdb15SelectStatementEEclEPS1_.exit.i109_crit_edge ]
   %i.hx = phi ptr [ %i.g, %.body.thread ], [ %.pr135, %.body._ZNKSt14default_deleteIN6duckdb15SelectStatementEEclEPS1_.exit.i109_crit_edge ]
   %i.hy = getelementptr inbounds nuw i8, ptr %i.hw, i64 8

@@ -201,7 +201,7 @@ bb.ch:                                            ; preds = %bb.cf
   br i1 %i.hn, label %bb.ci, label %bb.ct
 
 bb.ci:                                            ; preds = %bb.ch
-  %i.ho = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXs_Csj34PGqTgg0L_16deltalake_lakefsNtB6_21LakeFSLogStoreFactoryNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore9factories15LogStoreFactory12with_options10___CALLSITE, i64 16) monotonic, align 8 ; 3 uses
+  %i.ho = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNvXs_Csj34PGqTgg0L_16deltalake_lakefsNtB6_21LakeFSLogStoreFactoryNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore9factories15LogStoreFactory12with_options10___CALLSITE, i64 16) monotonic, align 8 ; 3 uses
   switch i8 %i.ho, label %bb.cj [
     i8 0, label %bb.ct
     i8 1, label %bb.ck
@@ -604,7 +604,7 @@ bb.ea:                                            ; preds = %bb.dz
 
 bb.eb:                                            ; preds = %bb.dz, %bb.fa
   %.sroa.18.1 = phi i64 [ %.sroa.18.0, %bb.fa ], [ 0, %bb.dz ]
-  %.sroa.14.1 = phi i64 [ %.sroa.14.0, %bb.fa ], [ 1, %bb.dz ]
+  %.sroa.14.1 = phi i64 [ %.sroa.14.0, %bb.fa ], [ ptrtoint (ptr inttoptr (i64 1 to ptr) to i64), %bb.dz ]
   %.sroa.8221.1 = phi i64 [ %.sroa.8221.0, %bb.fa ], [ 0, %bb.dz ]
   %.sroa.0.1 = phi i64 [ %.sroa.0.0, %bb.fa ], [ -9223372036854775802, %bb.dz ]
   invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.ax)

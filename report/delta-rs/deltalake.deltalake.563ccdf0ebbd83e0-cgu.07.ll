@@ -201,7 +201,7 @@ bb.ez:                                            ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.rg = getelementptr inbounds nuw i8, ptr %i.ra, i64 16
   %i.rh = load i64, ptr %i.rg, align 8, !alias.scope !2742, !noalias !2743, !noundef !3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !2747
-  %i.ri = load atomic i32, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs14kWLkQVSKO_14deltalake_core8logstore15DELTA_LOG_REGEX, i64 32) acquire, align 8, !noalias !2747
+  %i.ri = load atomic i32, ptr getelementptr inbounds (i8, ptr @_RNvNtCs14kWLkQVSKO_14deltalake_core8logstore15DELTA_LOG_REGEX, i64 32) acquire, align 8, !noalias !2747
   %i.rj = icmp eq i32 %i.ri, 0
   br i1 %i.rj, label %_RINvMs0_NtNtCs2pqxYH9ZEk8_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockNtNtNtCsonPGffhQyS_5regex5regex6string5RegexE5force0ECs7p2uQeJxui2_9deltalake.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.fa, !prof !46
 
@@ -210,7 +210,7 @@ bb.fa:                                            ; preds = %bb.ez
   store ptr @_RNvNtCs14kWLkQVSKO_14deltalake_core8logstore15DELTA_LOG_REGEX, ptr %i.i, align 8, !noalias !2747
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !2747
   store ptr %i.i, ptr %i.h, align 8, !noalias !2747
-  invoke void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds nuw (i8, ptr @_RNvNtCs14kWLkQVSKO_14deltalake_core8logstore15DELTA_LOG_REGEX, i64 32), i1 noundef zeroext true, ptr noundef nonnull %i.h, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @10, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @8)
+  invoke void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds (i8, ptr @_RNvNtCs14kWLkQVSKO_14deltalake_core8logstore15DELTA_LOG_REGEX, i64 32), i1 noundef zeroext true, ptr noundef nonnull %i.h, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @10, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @8)
           to label %.noexc233.i.i.i.i unwind label %.loopexit431.i.i.i.i, !noalias !2599
 
 .noexc233.i.i.i.i:                                ; preds = %bb.fa
@@ -613,7 +613,7 @@ bb.e:                                             ; preds = %bb.ba
   unreachable
 
 bb.f:                                             ; preds = %bb.d
-  %i.cu = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNCNvMs0_NtNtCscq8Lx7CD32J_17opentelemetry_sdk5trace14span_processorNtB9_18BatchSpanProcessor3new010___CALLSITE, i64 16) monotonic, align 8, !noalias !9654 ; 3 uses
+  %i.cu = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNCNvMs0_NtNtCscq8Lx7CD32J_17opentelemetry_sdk5trace14span_processorNtB9_18BatchSpanProcessor3new010___CALLSITE, i64 16) monotonic, align 8, !noalias !9654 ; 3 uses
   switch i8 %i.cu, label %bb.g [
     i8 0, label %bb.q
     i8 1, label %bb.h
@@ -1016,7 +1016,7 @@ bb.be:                                            ; preds = %bb.ba
   br i1 %i.jj, label %bb.bf, label %bb.bq
 
 bb.bf:                                            ; preds = %bb.be
-  %i.jk = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNCNvMs0_NtNtCscq8Lx7CD32J_17opentelemetry_sdk5trace14span_processorNtB9_18BatchSpanProcessor3new0s_10___CALLSITE, i64 16) monotonic, align 8, !noalias !9654 ; 3 uses
+  %i.jk = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNCNvMs0_NtNtCscq8Lx7CD32J_17opentelemetry_sdk5trace14span_processorNtB9_18BatchSpanProcessor3new0s_10___CALLSITE, i64 16) monotonic, align 8, !noalias !9654 ; 3 uses
   switch i8 %i.jk, label %bb.bg [
     i8 0, label %bb.bq
     i8 1, label %bb.bh
@@ -1240,7 +1240,7 @@ bb.ce:                                            ; preds = %bb.ba
   br i1 %i.ll, label %bb.cf, label %bb.cq
 
 bb.cf:                                            ; preds = %bb.ce
-  %i.lm = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNCNvMs0_NtNtCscq8Lx7CD32J_17opentelemetry_sdk5trace14span_processorNtB9_18BatchSpanProcessor3new0s0_10___CALLSITE, i64 16) monotonic, align 8, !noalias !9654 ; 3 uses
+  %i.lm = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNCNvMs0_NtNtCscq8Lx7CD32J_17opentelemetry_sdk5trace14span_processorNtB9_18BatchSpanProcessor3new0s0_10___CALLSITE, i64 16) monotonic, align 8, !noalias !9654 ; 3 uses
   switch i8 %i.lm, label %bb.cg [
     i8 0, label %bb.cq
     i8 1, label %bb.ch
@@ -1454,7 +1454,7 @@ bb.dd:                                            ; preds = %bb.ba
   br i1 %i.nk, label %bb.de, label %bb.dp
 
 bb.de:                                            ; preds = %bb.dd
-  %i.nl = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNCNvMs0_NtNtCscq8Lx7CD32J_17opentelemetry_sdk5trace14span_processorNtB9_18BatchSpanProcessor3new0s1_10___CALLSITE, i64 16) monotonic, align 8, !noalias !9654 ; 3 uses
+  %i.nl = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNCNvMs0_NtNtCscq8Lx7CD32J_17opentelemetry_sdk5trace14span_processorNtB9_18BatchSpanProcessor3new0s1_10___CALLSITE, i64 16) monotonic, align 8, !noalias !9654 ; 3 uses
   switch i8 %i.nl, label %bb.df [
     i8 0, label %bb.dp
     i8 1, label %bb.dg
@@ -1673,7 +1673,7 @@ bb.eb:                                            ; preds = %_RINvNtCsbvkFyIu7lg
   br i1 %i.pq, label %bb.ec, label %bb.en
 
 bb.ec:                                            ; preds = %bb.eb
-  %i.pr = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNCNvMs0_NtNtCscq8Lx7CD32J_17opentelemetry_sdk5trace14span_processorNtB9_18BatchSpanProcessor3new0s2_10___CALLSITE, i64 16) monotonic, align 8, !noalias !9654 ; 3 uses
+  %i.pr = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNCNvMs0_NtNtCscq8Lx7CD32J_17opentelemetry_sdk5trace14span_processorNtB9_18BatchSpanProcessor3new0s2_10___CALLSITE, i64 16) monotonic, align 8, !noalias !9654 ; 3 uses
   switch i8 %i.pr, label %bb.ed [
     i8 0, label %bb.en
     i8 1, label %bb.ee
@@ -1900,7 +1900,7 @@ bb.ez:                                            ; preds = %bb.az
   br i1 %i.ix, label %bb.fa, label %bb.fl
 
 bb.fa:                                            ; preds = %bb.ez
-  %i.sa = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNCNvMs0_NtNtCscq8Lx7CD32J_17opentelemetry_sdk5trace14span_processorNtB9_18BatchSpanProcessor3new0s3_10___CALLSITE, i64 16) monotonic, align 8, !noalias !9654 ; 3 uses
+  %i.sa = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNCNvMs0_NtNtCscq8Lx7CD32J_17opentelemetry_sdk5trace14span_processorNtB9_18BatchSpanProcessor3new0s3_10___CALLSITE, i64 16) monotonic, align 8, !noalias !9654 ; 3 uses
   switch i8 %i.sa, label %bb.fb [
     i8 0, label %bb.fl
     i8 1, label %bb.fc
@@ -2089,7 +2089,7 @@ bb.fw:                                            ; preds = %bb.az
   br i1 %i.ix, label %bb.fx, label %bb.gh
 
 bb.fx:                                            ; preds = %bb.fw
-  %i.tv = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNCNvMs0_NtNtCscq8Lx7CD32J_17opentelemetry_sdk5trace14span_processorNtB9_18BatchSpanProcessor3new0s4_10___CALLSITE, i64 16) monotonic, align 8, !noalias !9654 ; 3 uses
+  %i.tv = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNCNvMs0_NtNtCscq8Lx7CD32J_17opentelemetry_sdk5trace14span_processorNtB9_18BatchSpanProcessor3new0s4_10___CALLSITE, i64 16) monotonic, align 8, !noalias !9654 ; 3 uses
   switch i8 %i.tv, label %bb.fy [
     i8 0, label %bb.gh
     i8 1, label %bb.fz
@@ -2275,7 +2275,7 @@ bb.go:                                            ; preds = %bb.gn, %bb.gl, %bb.
   br i1 %i.vy, label %bb.gp, label %bb.hb
 
 bb.gp:                                            ; preds = %bb.go
-  %i.vz = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNCNvMs0_NtNtCscq8Lx7CD32J_17opentelemetry_sdk5trace14span_processorNtB9_18BatchSpanProcessor3new0s5_10___CALLSITE, i64 16) monotonic, align 8, !noalias !9654 ; 3 uses
+  %i.vz = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNCNvMs0_NtNtCscq8Lx7CD32J_17opentelemetry_sdk5trace14span_processorNtB9_18BatchSpanProcessor3new0s5_10___CALLSITE, i64 16) monotonic, align 8, !noalias !9654 ; 3 uses
   switch i8 %i.vz, label %bb.gq [
     i8 0, label %bb.hb
     i8 1, label %bb.gr
@@ -2678,7 +2678,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.h = load i64, ptr %i.g, align 8, !noundef !3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  %i.i = load atomic i32, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtNtCs14kWLkQVSKO_14deltalake_core8protocol11checkpoints16CHECKPOINT_REGEX, i64 32) acquire, align 8
+  %i.i = load atomic i32, ptr getelementptr inbounds (i8, ptr @_RNvNtNtCs14kWLkQVSKO_14deltalake_core8protocol11checkpoints16CHECKPOINT_REGEX, i64 32) acquire, align 8
   %i.j = icmp eq i32 %i.i, 0
   br i1 %i.j, label %_RINvMs0_NtNtCs2pqxYH9ZEk8_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockNtNtNtCsonPGffhQyS_5regex5regex6string5RegexE5force0ECs7p2uQeJxui2_9deltalake.exit, label %bb.b, !prof !46
 
@@ -2687,7 +2687,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr @_RNvNtNtCs14kWLkQVSKO_14deltalake_core8protocol11checkpoints16CHECKPOINT_REGEX, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %i.b, ptr %i.a, align 8
-  call void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds nuw (i8, ptr @_RNvNtNtCs14kWLkQVSKO_14deltalake_core8protocol11checkpoints16CHECKPOINT_REGEX, i64 32), i1 noundef zeroext true, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @10, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @8)
+  call void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds (i8, ptr @_RNvNtNtCs14kWLkQVSKO_14deltalake_core8protocol11checkpoints16CHECKPOINT_REGEX, i64 32), i1 noundef zeroext true, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @10, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @8)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %_RINvMs0_NtNtCs2pqxYH9ZEk8_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockNtNtNtCsonPGffhQyS_5regex5regex6string5RegexE5force0ECs7p2uQeJxui2_9deltalake.exit
@@ -3090,7 +3090,7 @@ define internal void @_RNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB5_1
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
-  %i.c = load atomic i32, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB7_15ScanFileVisitorpENtNtBb_11engine_data10RowVisitor31selected_column_names_and_types15NAMES_AND_TYPES, i64 48) acquire, align 8
+  %i.c = load atomic i32, ptr getelementptr inbounds (i8, ptr @_RNvNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB7_15ScanFileVisitorpENtNtBb_11engine_data10RowVisitor31selected_column_names_and_types15NAMES_AND_TYPES, i64 48) acquire, align 8
   %i.d = icmp eq i32 %i.c, 0
   br i1 %i.d, label %_RINvMs0_NtNtCs2pqxYH9ZEk8_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema19ColumnNamesAndTypesE5force0ECs7p2uQeJxui2_9deltalake.exit, label %bb.b, !prof !46
 
@@ -3099,16 +3099,16 @@ bb.b:                                             ; preds = %bb.a
   store ptr @_RNvNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB7_15ScanFileVisitorpENtNtBb_11engine_data10RowVisitor31selected_column_names_and_types15NAMES_AND_TYPES, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %i.b, ptr %i.a, align 8
-  call void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds nuw (i8, ptr @_RNvNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB7_15ScanFileVisitorpENtNtBb_11engine_data10RowVisitor31selected_column_names_and_types15NAMES_AND_TYPES, i64 48), i1 noundef zeroext true, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @9, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @8)
+  call void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds (i8, ptr @_RNvNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB7_15ScanFileVisitorpENtNtBb_11engine_data10RowVisitor31selected_column_names_and_types15NAMES_AND_TYPES, i64 48), i1 noundef zeroext true, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @9, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @8)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %_RINvMs0_NtNtCs2pqxYH9ZEk8_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema19ColumnNamesAndTypesE5force0ECs7p2uQeJxui2_9deltalake.exit
 
 _RINvMs0_NtNtCs2pqxYH9ZEk8_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema19ColumnNamesAndTypesE5force0ECs7p2uQeJxui2_9deltalake.exit: ; preds = %bb.a, %bb.b
-  %i.e = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB7_15ScanFileVisitorpENtNtBb_11engine_data10RowVisitor31selected_column_names_and_types15NAMES_AND_TYPES, i64 8), align 8, !nonnull !3, !noundef !3
-  %i.f = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB7_15ScanFileVisitorpENtNtBb_11engine_data10RowVisitor31selected_column_names_and_types15NAMES_AND_TYPES, i64 16), align 8, !noundef !3
-  %i.g = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB7_15ScanFileVisitorpENtNtBb_11engine_data10RowVisitor31selected_column_names_and_types15NAMES_AND_TYPES, i64 32), align 8, !nonnull !3, !noundef !3
-  %i.h = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB7_15ScanFileVisitorpENtNtBb_11engine_data10RowVisitor31selected_column_names_and_types15NAMES_AND_TYPES, i64 40), align 8, !noundef !3
+  %i.e = load ptr, ptr getelementptr inbounds (i8, ptr @_RNvNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB7_15ScanFileVisitorpENtNtBb_11engine_data10RowVisitor31selected_column_names_and_types15NAMES_AND_TYPES, i64 8), align 8, !nonnull !3, !noundef !3
+  %i.f = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB7_15ScanFileVisitorpENtNtBb_11engine_data10RowVisitor31selected_column_names_and_types15NAMES_AND_TYPES, i64 16), align 8, !noundef !3
+  %i.g = load ptr, ptr getelementptr inbounds (i8, ptr getelementptr inbounds (i8, ptr @_RNvNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB7_15ScanFileVisitorpENtNtBb_11engine_data10RowVisitor31selected_column_names_and_types15NAMES_AND_TYPES, i64 24), i64 8), align 8, !nonnull !3, !noundef !3
+  %i.h = load i64, ptr getelementptr inbounds (i8, ptr getelementptr inbounds (i8, ptr @_RNvNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB7_15ScanFileVisitorpENtNtBb_11engine_data10RowVisitor31selected_column_names_and_types15NAMES_AND_TYPES, i64 24), i64 16), align 8, !noundef !3
   store ptr %i.e, ptr %0, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.f, ptr %i.i, align 8
@@ -3468,7 +3468,7 @@ bb.ab:                                            ; preds = %bb.v
   br i1 %i.cx, label %bb.ac, label %bb.ar
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.cy = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNCNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB9_15ScanFileVisitorpENtNtBd_11engine_data10RowVisitor5visit010___CALLSITE, i64 16) monotonic, align 8, !noalias !12497 ; 3 uses
+  %i.cy = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNCNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB9_15ScanFileVisitorpENtNtBd_11engine_data10RowVisitor5visit010___CALLSITE, i64 16) monotonic, align 8, !noalias !12497 ; 3 uses
   switch i8 %i.cy, label %bb.ad [
     i8 0, label %bb.ar
     i8 1, label %bb.ae
@@ -3674,7 +3674,7 @@ bb.az:                                            ; preds = %bb.aa, %.body.i
 bb.ba:                                            ; preds = %bb.s, %bb.bc
   %.sroa.348.0 = phi i64 [ %.sroa.3.0.i, %bb.bc ], [ undef, %bb.s ]
   %.sroa.047.0 = phi i64 [ %.sroa.0.0.i, %bb.bc ], [ 0, %bb.s ]
-  %i.eu = load atomic i32, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan10log_replay15SCAN_ROW_SCHEMA, i64 8) acquire, align 8
+  %i.eu = load atomic i32, ptr getelementptr inbounds (i8, ptr @_RNvNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan10log_replay15SCAN_ROW_SCHEMA, i64 8) acquire, align 8
   %i.ev = icmp eq i32 %i.eu, 0
   br i1 %i.ev, label %_RINvMs0_NtNtCs2pqxYH9ZEk8_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema10StructTypeEE5force0ECs7p2uQeJxui2_9deltalake.exit, label %bb.bb, !prof !46
 
@@ -3683,7 +3683,7 @@ bb.bb:                                            ; preds = %bb.ba
   store ptr @_RNvNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan10log_replay15SCAN_ROW_SCHEMA, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %i.b, ptr %i.a, align 8
-  invoke void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds nuw (i8, ptr @_RNvNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan10log_replay15SCAN_ROW_SCHEMA, i64 8), i1 noundef zeroext true, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @6, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @8)
+  invoke void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds (i8, ptr @_RNvNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan10log_replay15SCAN_ROW_SCHEMA, i64 8), i1 noundef zeroext true, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @6, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @8)
           to label %.noexc unwind label %.loopexit
 
 .noexc:                                           ; preds = %bb.bb
@@ -4086,7 +4086,7 @@ bb.v:                                             ; preds = %bb.q
   %i.cq = getelementptr inbounds nuw i8, ptr %i.aj, i64 32 ; 2 uses
   %i.cr = load ptr, ptr %i.cq, align 8, !alias.scope !12768, !noalias !12769, !nonnull !3, !align !39, !noundef !3
   call void @llvm.experimental.noalias.scope.decl(metadata !12771)
-  %i.cs = load atomic i32, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB7_15ScanFileVisitorpENtNtBb_11engine_data10RowVisitor31selected_column_names_and_types15NAMES_AND_TYPES, i64 48) acquire, align 8, !noalias !12774
+  %i.cs = load atomic i32, ptr getelementptr inbounds (i8, ptr @_RNvNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB7_15ScanFileVisitorpENtNtBb_11engine_data10RowVisitor31selected_column_names_and_types15NAMES_AND_TYPES, i64 48) acquire, align 8, !noalias !12774
   %i.ct = icmp eq i32 %i.cs, 0
   br i1 %i.ct, label %_RNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB5_15ScanFileVisitorNtNtNtNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion14table_provider4next4scan6replay11ScanContextENtNtB9_11engine_data10RowVisitor31selected_column_names_and_typesCs7p2uQeJxui2_9deltalake.exit.i.i.i.i, label %bb.w, !prof !46
 
@@ -4095,7 +4095,7 @@ bb.w:                                             ; preds = %bb.v
   store ptr @_RNvNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB7_15ScanFileVisitorpENtNtBb_11engine_data10RowVisitor31selected_column_names_and_types15NAMES_AND_TYPES, ptr %i.c, align 8, !noalias !12774
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !12774
   store ptr %i.c, ptr %i.b, align 8, !noalias !12774
-  invoke void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds nuw (i8, ptr @_RNvNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB7_15ScanFileVisitorpENtNtBb_11engine_data10RowVisitor31selected_column_names_and_types15NAMES_AND_TYPES, i64 48), i1 noundef zeroext true, ptr noundef nonnull %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @9, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @8)
+  invoke void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds (i8, ptr @_RNvNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB7_15ScanFileVisitorpENtNtBb_11engine_data10RowVisitor31selected_column_names_and_types15NAMES_AND_TYPES, i64 48), i1 noundef zeroext true, ptr noundef nonnull %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @9, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @8)
           to label %.noexc.i.i.i unwind label %bb.x, !noalias !12779
 
 .noexc.i.i.i:                                     ; preds = %bb.w
@@ -4104,8 +4104,8 @@ bb.w:                                             ; preds = %bb.v
   br label %_RNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB5_15ScanFileVisitorNtNtNtNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion14table_provider4next4scan6replay11ScanContextENtNtB9_11engine_data10RowVisitor31selected_column_names_and_typesCs7p2uQeJxui2_9deltalake.exit.i.i.i.i
 
 _RNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB5_15ScanFileVisitorNtNtNtNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion14table_provider4next4scan6replay11ScanContextENtNtB9_11engine_data10RowVisitor31selected_column_names_and_typesCs7p2uQeJxui2_9deltalake.exit.i.i.i.i: ; preds = %.noexc.i.i.i, %bb.v
-  %i.cu = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB7_15ScanFileVisitorpENtNtBb_11engine_data10RowVisitor31selected_column_names_and_types15NAMES_AND_TYPES, i64 8), align 8, !noalias !12774, !nonnull !3, !noundef !3
-  %i.cv = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB7_15ScanFileVisitorpENtNtBb_11engine_data10RowVisitor31selected_column_names_and_types15NAMES_AND_TYPES, i64 16), align 8, !noalias !12774, !noundef !3
+  %i.cu = load ptr, ptr getelementptr inbounds (i8, ptr @_RNvNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB7_15ScanFileVisitorpENtNtBb_11engine_data10RowVisitor31selected_column_names_and_types15NAMES_AND_TYPES, i64 8), align 8, !noalias !12774, !nonnull !3, !noundef !3
+  %i.cv = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXs1_NtNtCs8ulvy0Wg6Ot_12delta_kernel4scan5stateINtB7_15ScanFileVisitorpENtNtBb_11engine_data10RowVisitor31selected_column_names_and_types15NAMES_AND_TYPES, i64 16), align 8, !noalias !12774, !noundef !3
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cr, i64 64
   %i.cx = load ptr, ptr %i.cw, align 8, !invariant.load !3, !alias.scope !12771, !noalias !12780, !nonnull !3
   invoke void %i.cx(ptr noalias noundef nonnull sret([96 x i8]) align 16 captures(address) dereferenceable(96) %i.d, ptr noundef nonnull %i.cp, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) %i.cu, i64 noundef %i.cv, ptr noundef nonnull align 8 dereferenceable(184) %i.e, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @457) #32

@@ -201,7 +201,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.b, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #35
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt12system_error, i64 16), ptr %0, align 8, !tbaa !94
+  store ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVSt12system_error, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !94
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i32 %1, ptr %i.i, align 8, !tbaa !3
   %.sroa.35.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -604,7 +604,7 @@ bb.f:                                             ; preds = %.lr.ph, %_ZNSt10uni
           to label %bb.g unwind label %bb.l       ; 6 uses
 
 bb.g:                                             ; preds = %bb.f
-  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVZN8facebook6hermes7tracing12_GLOBAL__N_110bufConvertESt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS5_EEE17OwnedMemoryBuffer, i64 16), ptr %i.v, align 8, !tbaa !94, !noalias !244
+  store ptr getelementptr inbounds inrange(-16, 32) ({ [6 x ptr] }, ptr @_ZTVZN8facebook6hermes7tracing12_GLOBAL__N_110bufConvertESt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS5_EEE17OwnedMemoryBuffer, i32 0, i32 0, i32 2), ptr %i.v, align 8, !tbaa !94, !noalias !244
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   store i64 %i.u, ptr %i.w, align 8, !tbaa !160, !noalias !244
   %.not.i = icmp eq ptr %i.s, %i.r
@@ -759,7 +759,7 @@ _ZNSt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS1_EED2Ev.exit: ; pred
   br label %.thread
 
 .thread:                                          ; preds = %.thread.loopexit.split-lp, %.thread.loopexit
-  %i.bi = phi ptr [ getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVZN8facebook6hermes7tracing12_GLOBAL__N_110bufConvertESt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS5_EEE17OwnedMemoryBuffer, i64 16), %.thread.loopexit ], [ %.pre, %.thread.loopexit.split-lp ]
+  %i.bi = phi ptr [ getelementptr inbounds inrange(-16, 32) ({ [6 x ptr] }, ptr @_ZTVZN8facebook6hermes7tracing12_GLOBAL__N_110bufConvertESt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS5_EEE17OwnedMemoryBuffer, i32 0, i32 0, i32 2), %.thread.loopexit ], [ %.pre, %.thread.loopexit.split-lp ]
   %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.thread.loopexit ], [ %lpad.loopexit.split-lp, %.thread.loopexit.split-lp ]
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 8
   %i.bk = load ptr, ptr %i.bj, align 8
@@ -1162,7 +1162,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 248
-  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN6hermes2vm15NopCrashManagerE, i64 16), ptr %i.x, align 8, !tbaa !94
+  store ptr getelementptr inbounds inrange(-16, 88) ({ [13 x ptr] }, ptr @_ZTVN6hermes2vm15NopCrashManagerE, i32 0, i32 0, i32 2), ptr %i.x, align 8, !tbaa !94
   store ptr %i.x, ptr %i.y, align 8, !tbaa !336
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 256
   invoke void @_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EEC2IPN6hermes2vm15NopCrashManagerEEET_(ptr noundef nonnull align 8 dereferenceable(8) %i.z, ptr noundef nonnull %i.x)
@@ -1565,9 +1565,9 @@ bb.a:
   store i32 1, ptr %i.c, align 8, !tbaa !187, !noalias !468
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 12
   store i32 1, ptr %i.d, align 4, !tbaa !189, !noalias !468
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIZN8facebook6hermes7tracing16TraceInterpreter16createHostObjectEmE14FakeHostObjectSaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.b, align 8, !tbaa !94, !noalias !468
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIZN8facebook6hermes7tracing16TraceInterpreter16createHostObjectEmE14FakeHostObjectSaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.b, align 8, !tbaa !94, !noalias !468
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 3 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVZN8facebook6hermes7tracing16TraceInterpreter16createHostObjectEmE14FakeHostObject, i64 16), ptr %i.e, align 8, !tbaa !94, !noalias !468
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVZN8facebook6hermes7tracing16TraceInterpreter16createHostObjectEmE14FakeHostObject, i32 0, i32 0, i32 2), ptr %i.e, align 8, !tbaa !94, !noalias !468
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   store ptr %1, ptr %i.f, align 8, !tbaa !461, !noalias !468
   store ptr %i.e, ptr %4, align 8, !tbaa !472
@@ -1970,7 +1970,7 @@ declare void @_ZNSt13runtime_errorC2ERKNSt7__cxx1112basic_stringIcSt11char_trait
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define internal void @_ZZN8facebook6hermes7tracing12_GLOBAL__N_110bufConvertESt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS5_EEEN17OwnedMemoryBufferD2Ev(ptr noundef nonnull align 8 dereferenceable(16) initializes((0, 8)) %0) unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVZN8facebook6hermes7tracing12_GLOBAL__N_110bufConvertESt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS5_EEE17OwnedMemoryBuffer, i64 16), ptr %0, align 8, !tbaa !94
+  store ptr getelementptr inbounds inrange(-16, 32) ({ [6 x ptr] }, ptr @_ZTVZN8facebook6hermes7tracing12_GLOBAL__N_110bufConvertESt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS5_EEE17OwnedMemoryBuffer, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !94
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !160  ; 3 uses
   %.not.i = icmp eq ptr %i.b, null
@@ -1991,7 +1991,7 @@ _ZNSt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS1_EED2Ev.exit: ; pred
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define internal void @_ZZN8facebook6hermes7tracing12_GLOBAL__N_110bufConvertESt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS5_EEEN17OwnedMemoryBufferD0Ev(ptr noundef nonnull align 8 dereferenceable(16) initializes((0, 8)) %0) unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVZN8facebook6hermes7tracing12_GLOBAL__N_110bufConvertESt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS5_EEE17OwnedMemoryBuffer, i64 16), ptr %0, align 8, !tbaa !94
+  store ptr getelementptr inbounds inrange(-16, 32) ({ [6 x ptr] }, ptr @_ZTVZN8facebook6hermes7tracing12_GLOBAL__N_110bufConvertESt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS5_EEE17OwnedMemoryBuffer, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !94
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !160  ; 3 uses
   %.not.i.i = icmp eq ptr %i.b, null
@@ -2058,7 +2058,7 @@ bb.b:                                             ; preds = %_ZNSt16allocator_tr
   store i32 1, ptr %i.e, align 8, !tbaa !187
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 12 ; 2 uses
   store i32 1, ptr %i.f, align 4, !tbaa !189
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt19_Sp_counted_deleterIPKN8facebook3jsi6BufferESt14default_deleteIS3_ESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.d, align 8, !tbaa !94
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt19_Sp_counted_deleterIPKN8facebook3jsi6BufferESt14default_deleteIS3_ESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.d, align 8, !tbaa !94
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store ptr %i.a, ptr %i.g, align 8, !tbaa !1029
   %i.h = load i8, ptr @__libc_single_threaded, align 1, !tbaa !74
@@ -2357,7 +2357,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 1, ptr %i.b, align 8, !tbaa !187
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 12
   store i32 1, ptr %i.c, align 4, !tbaa !189
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt15_Sp_counted_ptrIPN6hermes2vm15NopCrashManagerELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.a, align 8, !tbaa !94
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt15_Sp_counted_ptrIPN6hermes2vm15NopCrashManagerELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.a, align 8, !tbaa !94
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store ptr %1, ptr %i.d, align 8, !tbaa !1039
   store ptr %i.a, ptr %0, align 8, !tbaa !184
@@ -2760,7 +2760,7 @@ bb.b:                                             ; preds = %_ZNSt16allocator_tr
   store i32 1, ptr %i.e, align 8, !tbaa !187
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 12 ; 2 uses
   store i32 1, ptr %i.f, align 4, !tbaa !189
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt19_Sp_counted_deleterIPN8facebook6hermes13HermesRuntimeESt14default_deleteIS2_ESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.d, align 8, !tbaa !94
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt19_Sp_counted_deleterIPN8facebook6hermes13HermesRuntimeESt14default_deleteIS2_ESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.d, align 8, !tbaa !94
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store ptr %i.a, ptr %i.g, align 8, !tbaa !1079
   %i.h = load i8, ptr @__libc_single_threaded, align 1, !tbaa !74

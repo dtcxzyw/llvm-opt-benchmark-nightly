@@ -201,7 +201,7 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.t
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #20
-  store ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTVN6Assimp17AssbinChunkWriterE, i64 16), ptr %10, align 8
+  store ptr getelementptr inbounds inrange(-16, 64) ({ [10 x ptr] }, ptr @_ZTVN6Assimp17AssbinChunkWriterE, i32 0, i32 0, i32 2), ptr %10, align 8
   %i.cr = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 4 uses
   store ptr null, ptr %i.cr, align 8
   %i.cs = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 2 uses
@@ -604,7 +604,7 @@ bb.a:
   %i.c = alloca i32, align 4                      ; 4 uses
   %3 = alloca %"class.Assimp::AssbinChunkWriter", align 8 ; 23 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
-  store ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTVN6Assimp17AssbinChunkWriterE, i64 16), ptr %3, align 8
+  store ptr getelementptr inbounds inrange(-16, 64) ({ [10 x ptr] }, ptr @_ZTVN6Assimp17AssbinChunkWriterE, i32 0, i32 0, i32 2), ptr %3, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   store ptr null, ptr %i.d, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
@@ -946,7 +946,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds i8, ptr %2, i64 %i.d
   store ptr %i.b, ptr %i.e, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVNSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEEE, i64 16), ptr %i.f, align 8
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVNSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEEE, i32 0, i32 0, i32 2), ptr %i.f, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 80
   %i.h = load ptr, ptr %i.g, align 8              ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 96 ; 2 uses
@@ -960,12 +960,12 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br label %_ZN6Assimp9Formatter15basic_formatterIcSt11char_traitsIcESaIcEED2Ev.exit
 
 _ZN6Assimp9Formatter15basic_formatterIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.b, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 16), ptr %i.f, align 8
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i32 0, i32 0, i32 2), ptr %i.f, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 64
   call void @_ZNSt6localeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.m) #20
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 112
   call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dereferenceable(264) %i.n) #20
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTV17DeadlyExportError, i64 16), ptr %0, align 8
+  store ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTV17DeadlyExportError, i32 0, i32 0, i32 2), ptr %0, align 8
   ret void
 
 bb.c:                                             ; preds = %bb.a
@@ -1081,7 +1081,7 @@ bb.a:
   %i.e = getelementptr inbounds i8, ptr %0, i64 %i.d
   store ptr %i.b, ptr %i.e, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVNSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEEE, i64 16), ptr %i.f, align 8
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVNSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEEE, i32 0, i32 0, i32 2), ptr %i.f, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.h = load ptr, ptr %i.g, align 8              ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
@@ -1095,7 +1095,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br label %_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev.exit
 
 _ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev.exit: ; preds = %bb.a, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 16), ptr %i.f, align 8
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i32 0, i32 0, i32 2), ptr %i.f, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 64
   tail call void @_ZNSt6localeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.m) #20
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 112
@@ -1367,7 +1367,7 @@ bb.a:
   %3 = alloca %"class.Assimp::AssbinChunkWriter", align 8 ; 49 uses
   %i.e = alloca i16, align 2                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
-  store ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTVN6Assimp17AssbinChunkWriterE, i64 16), ptr %3, align 8
+  store ptr getelementptr inbounds inrange(-16, 64) ({ [10 x ptr] }, ptr @_ZTVN6Assimp17AssbinChunkWriterE, i32 0, i32 0, i32 2), ptr %3, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 5 uses
   store ptr null, ptr %i.f, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
@@ -1438,7 +1438,7 @@ _ZN6Assimp5WriteI8aiStringEEmPNS_8IOStreamERKT_.exit: ; preds = %_ZN6Assimp17Ass
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.noexc54, %_ZN6Assimp5WriteI8aiStringEEmPNS_8IOStreamERKT_.exit
-  %i.am = phi ptr [ getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTVN6Assimp17AssbinChunkWriterE, i64 16), %_ZN6Assimp5WriteI8aiStringEEmPNS_8IOStreamERKT_.exit ], [ %.pre, %.noexc54 ]
+  %i.am = phi ptr [ getelementptr inbounds inrange(-16, 64) ({ [10 x ptr] }, ptr @_ZTVN6Assimp17AssbinChunkWriterE, i32 0, i32 0, i32 2), %_ZN6Assimp5WriteI8aiStringEEmPNS_8IOStreamERKT_.exit ], [ %.pre, %.noexc54 ]
   %.0721.i = phi i32 [ 0, %_ZN6Assimp5WriteI8aiStringEEmPNS_8IOStreamERKT_.exit ], [ %i.bt, %.noexc54 ] ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 24
   %i.ao = load ptr, ptr %i.an, align 8            ; 2 uses
@@ -1819,7 +1819,7 @@ bb.a:
   %i.f = alloca i16, align 2                      ; 5 uses
   %i.g = alloca i16, align 2                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
-  store ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTVN6Assimp17AssbinChunkWriterE, i64 16), ptr %3, align 8
+  store ptr getelementptr inbounds inrange(-16, 64) ({ [10 x ptr] }, ptr @_ZTVN6Assimp17AssbinChunkWriterE, i32 0, i32 0, i32 2), ptr %3, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   store ptr null, ptr %i.h, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
@@ -2222,7 +2222,7 @@ define linkonce_odr hidden void @_ZN6Assimp16AssbinFileWriter19WriteBinaryMateri
 bb.a:
   %3 = alloca %"class.Assimp::AssbinChunkWriter", align 8 ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
-  store ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTVN6Assimp17AssbinChunkWriterE, i64 16), ptr %3, align 8
+  store ptr getelementptr inbounds inrange(-16, 64) ({ [10 x ptr] }, ptr @_ZTVN6Assimp17AssbinChunkWriterE, i32 0, i32 0, i32 2), ptr %3, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   store ptr null, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
@@ -2339,7 +2339,7 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %3 = alloca %"class.Assimp::AssbinChunkWriter", align 8 ; 16 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
-  store ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTVN6Assimp17AssbinChunkWriterE, i64 16), ptr %3, align 8
+  store ptr getelementptr inbounds inrange(-16, 64) ({ [10 x ptr] }, ptr @_ZTVN6Assimp17AssbinChunkWriterE, i32 0, i32 0, i32 2), ptr %3, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 6 uses
   store ptr null, ptr %i.b, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
@@ -2527,7 +2527,7 @@ define linkonce_odr hidden void @_ZN6Assimp16AssbinFileWriter18WriteBinaryTextur
 bb.a:
   %3 = alloca %"class.Assimp::AssbinChunkWriter", align 8 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
-  store ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTVN6Assimp17AssbinChunkWriterE, i64 16), ptr %3, align 8
+  store ptr getelementptr inbounds inrange(-16, 64) ({ [10 x ptr] }, ptr @_ZTVN6Assimp17AssbinChunkWriterE, i32 0, i32 0, i32 2), ptr %3, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 5 uses
   store ptr null, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
@@ -2674,7 +2674,7 @@ define linkonce_odr hidden void @_ZN6Assimp16AssbinFileWriter16WriteBinaryLightE
 bb.a:
   %3 = alloca %"class.Assimp::AssbinChunkWriter", align 8 ; 57 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
-  store ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTVN6Assimp17AssbinChunkWriterE, i64 16), ptr %3, align 8
+  store ptr getelementptr inbounds inrange(-16, 64) ({ [10 x ptr] }, ptr @_ZTVN6Assimp17AssbinChunkWriterE, i32 0, i32 0, i32 2), ptr %3, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 6 uses
   store ptr null, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
@@ -3012,7 +3012,7 @@ define linkonce_odr hidden void @_ZN6Assimp16AssbinFileWriter17WriteBinaryCamera
 bb.a:
   %3 = alloca %"class.Assimp::AssbinChunkWriter", align 8 ; 35 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
-  store ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTVN6Assimp17AssbinChunkWriterE, i64 16), ptr %3, align 8
+  store ptr getelementptr inbounds inrange(-16, 64) ({ [10 x ptr] }, ptr @_ZTVN6Assimp17AssbinChunkWriterE, i32 0, i32 0, i32 2), ptr %3, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 6 uses
   store ptr null, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
@@ -3415,7 +3415,7 @@ bb.a:
   %4 = alloca %struct.aiVertexWeight, align 8     ; 5 uses
   %5 = alloca %"class.Assimp::AssbinChunkWriter", align 8 ; 38 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
-  store ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTVN6Assimp17AssbinChunkWriterE, i64 16), ptr %5, align 8
+  store ptr getelementptr inbounds inrange(-16, 64) ({ [10 x ptr] }, ptr @_ZTVN6Assimp17AssbinChunkWriterE, i32 0, i32 0, i32 2), ptr %5, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 6 uses
   store ptr null, ptr %i.d, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
@@ -3799,7 +3799,7 @@ bb.a:
   %i.c = alloca i32, align 4                      ; 4 uses
   %3 = alloca %"class.Assimp::AssbinChunkWriter", align 8 ; 17 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
-  store ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTVN6Assimp17AssbinChunkWriterE, i64 16), ptr %3, align 8
+  store ptr getelementptr inbounds inrange(-16, 64) ({ [10 x ptr] }, ptr @_ZTVN6Assimp17AssbinChunkWriterE, i32 0, i32 0, i32 2), ptr %3, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 9 uses
   store ptr null, ptr %i.d, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
@@ -4029,7 +4029,7 @@ bb.a:
   %i.d = alloca i32, align 4                      ; 4 uses
   %3 = alloca %"class.Assimp::AssbinChunkWriter", align 8 ; 48 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
-  store ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTVN6Assimp17AssbinChunkWriterE, i64 16), ptr %3, align 8
+  store ptr getelementptr inbounds inrange(-16, 64) ({ [10 x ptr] }, ptr @_ZTVN6Assimp17AssbinChunkWriterE, i32 0, i32 0, i32 2), ptr %3, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 6 uses
   store ptr null, ptr %i.e, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
@@ -4432,7 +4432,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds i8, ptr %3, i64 %i.f
   store ptr %i.d, ptr %i.g, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVNSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEEE, i64 16), ptr %i.h, align 8
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVNSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEEE, i32 0, i32 0, i32 2), ptr %i.h, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 80
   %i.j = load ptr, ptr %i.i, align 8              ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 96 ; 2 uses
@@ -4446,7 +4446,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br label %_ZN6Assimp9Formatter15basic_formatterIcSt11char_traitsIcESaIcEED2Ev.exit
 
 _ZN6Assimp9Formatter15basic_formatterIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.b, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 16), ptr %i.h, align 8
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i32 0, i32 0, i32 2), ptr %i.h, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 64
   call void @_ZNSt6localeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.o) #20
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 112

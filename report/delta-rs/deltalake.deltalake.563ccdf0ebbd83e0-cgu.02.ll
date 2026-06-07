@@ -201,7 +201,7 @@ bb.af:                                            ; preds = %bb.ae
   br label %bb.ac
 
 .loopexit:                                        ; preds = %bb.l, %bb.i, %bb.k, %.loopexit171
-  %.sroa.8.1 = phi i64 [ %i.ar, %bb.i ], [ %i.au, %bb.k ], [ %.sroa.8.0, %.loopexit171 ], [ 163208757251, %bb.l ]
+  %.sroa.8.1 = phi i64 [ %i.ar, %bb.i ], [ %i.au, %bb.k ], [ %.sroa.8.0, %.loopexit171 ], [ ptrtoint (ptr inttoptr (i64 163208757251 to ptr) to i64), %bb.l ]
   %.sroa.010.1 = phi i64 [ 1, %bb.i ], [ 0, %bb.k ], [ %.sroa.010.0, %.loopexit171 ], [ 1, %bb.l ]
   %i.dp = inttoptr i64 %.sroa.8.1 to ptr
   br label %bb.ag
@@ -604,7 +604,7 @@ bb.bn:                                            ; preds = %bb.be
   br i1 %i.ex, label %bb.bo, label %bb.cj
 
 bb.bo:                                            ; preds = %bb.bn
-  %i.ey = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvMs1_NtNtCskFSgV2vI2Ct_13opentelemetry5trace7contextNtB7_7SpanRef14with_inner_mut10___CALLSITE, i64 16) monotonic, align 8, !noalias !15132 ; 3 uses
+  %i.ey = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNvMs1_NtNtCskFSgV2vI2Ct_13opentelemetry5trace7contextNtB7_7SpanRef14with_inner_mut10___CALLSITE, i64 16) monotonic, align 8, !noalias !15132 ; 3 uses
   switch i8 %i.ey, label %bb.bp [
     i8 0, label %bb.cj
     i8 1, label %bb.bq
@@ -1007,7 +1007,7 @@ bb.dv:                                            ; preds = %bb.dm
   br i1 %i.ki, label %bb.dw, label %bb.er
 
 bb.dw:                                            ; preds = %bb.dv
-  %i.kj = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvMs1_NtNtCskFSgV2vI2Ct_13opentelemetry5trace7contextNtB7_7SpanRef14with_inner_mut10___CALLSITE, i64 16) monotonic, align 8, !noalias !15245 ; 3 uses
+  %i.kj = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNvMs1_NtNtCskFSgV2vI2Ct_13opentelemetry5trace7contextNtB7_7SpanRef14with_inner_mut10___CALLSITE, i64 16) monotonic, align 8, !noalias !15245 ; 3 uses
   switch i8 %i.kj, label %bb.dx [
     i8 0, label %bb.er
     i8 1, label %bb.dy
