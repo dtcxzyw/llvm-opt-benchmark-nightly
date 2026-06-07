@@ -21,10 +21,9 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.11 = private unnamed_addr constant [97 x i8] c"(incr >= 0 && sh->alloc-sh->len >= (uint64_t)incr) || (incr < 0 && sh->len >= (uint64_t)(-incr))\00", align 1
 @.str.13 = private unnamed_addr constant [4 x i8] c"\\%c\00", align 1
 @.str.19 = private unnamed_addr constant [7 x i8] c"\\x%02x\00", align 1
-@switch.table.sdsnewplacement.3 = private unnamed_addr constant [5 x i64] [i64 1, i64 3, i64 5, i64 9, i64 17], align 8
-@switch.table.sdsResize = private unnamed_addr constant [5 x i32] [i32 1, i32 3, i32 5, i32 9, i32 17], align 4
-@switch.table.sdsResize.6 = private unnamed_addr constant [3 x i64] [i64 255, i64 65535, i64 4294967295], align 8
-@switch.table.hex_digit_to_int = private unnamed_addr constant [54 x i32] [i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15], align 4
+@switch.table.sdsResize = private unnamed_addr constant [5 x i8] c"\01\03\05\09\11", align 8
+@switch.table.sdsResize.6 = private unnamed_addr constant [3 x i32] [i32 255, i32 65535, i32 -1], align 8
+@switch.table.hex_digit_to_int = private unnamed_addr constant [54 x i8] c"\01\02\03\04\05\06\07\08\09\00\00\00\00\00\00\00\0A\0B\0C\0D\0E\0F\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\0A\0B\0C\0D\0E\0F", align 4
 @switch.table.sdstemplate.9 = private unnamed_addr constant [5 x i64] [i64 -1, i64 -3, i64 -5, i64 -9, i64 -17], align 8
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
@@ -78,10 +77,11 @@ sdsReqType.exit:                                  ; preds = %bb.a, %bb.b, %bb.c,
   %or.cond = and i1 %i.g, %i.f
   %spec.store.select = select i1 %or.cond, i8 1, i8 %.0.i ; 4 uses
   %i.h = zext nneg i8 %spec.store.select to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.sdsResize, i64 %i.h
-  %switch.load = load i32, ptr %switch.gep, align 4 ; 2 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.sdsResize, i64 %i.h
+  %switch.load = load i8, ptr %switch.gep, align 1 ; 2 uses
+  %switch.ext = zext i8 %switch.load to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
-  %i.i = zext nneg i32 %switch.load to i64
+  %i.i = zext i8 %switch.load to i64
   %i.j = add i64 %1, 1
   %i.k = add i64 %i.j, %i.i                       ; 3 uses
   %i.l = icmp ugt i64 %i.k, %1
@@ -111,18 +111,18 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 bb.j:                                             ; preds = %bb.i
   %i.q = load i64, ptr %i.a, align 8, !tbaa !14   ; 2 uses
-  %3 = xor i32 %switch.load, -1
-  %4 = sext i32 %3 to i64
-  %i.r = add i64 %i.q, %4                         ; 3 uses
+  %3 = xor i64 %switch.ext, -1
+  %i.r = add i64 %i.q, %3                         ; 3 uses
   %switch.tableidx = add nsw i8 %spec.store.select, -1 ; 2 uses
   %i.s = icmp ult i8 %switch.tableidx, 3
   br i1 %i.s, label %switch.lookup, label %adjustTypeIfNeeded.exit
 
 switch.lookup:                                    ; preds = %bb.j
   %i.t = zext nneg i8 %switch.tableidx to i64
-  %switch.gep27 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.sdsResize.6, i64 %i.t
-  %switch.load28 = load i64, ptr %switch.gep27, align 8
-  %i.u = icmp ugt i64 %i.r, %switch.load28
+  %switch.gep27 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.sdsResize.6, i64 %i.t
+  %switch.load28 = load i32, ptr %switch.gep27, align 4
+  %switch.ext29 = zext i32 %switch.load28 to i64
+  %i.u = icmp ugt i64 %i.r, %switch.ext29
   br i1 %i.u, label %bb.k, label %adjustTypeIfNeeded.exit
 
 bb.k:                                             ; preds = %switch.lookup
@@ -166,12 +166,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.c = zext nneg i8 %i.a to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.sdsnewplacement.3, i64 %i.c
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.sdsResize, i64 %i.c
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   br label %sdsReqSize.exit
 
 sdsReqSize.exit:                                  ; preds = %bb.a, %switch.lookup
-  %.0.i.i = phi i64 [ %switch.load, %switch.lookup ], [ 0, %bb.a ]
+  %.0.i.i = phi i64 [ %switch.ext, %switch.lookup ], [ 0, %bb.a ]
   %i.d = add i64 %4, 1
   %i.e = add i64 %i.d, %.0.i.i
   %.not = icmp ult i64 %1, %i.e
@@ -188,12 +189,13 @@ bb.c:                                             ; preds = %sdsReqSize.exit
 
 switch.lookup57:                                  ; preds = %bb.c
   %i.g = zext nneg i8 %i.a to i64
-  %switch.gep58 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.sdsnewplacement.3, i64 %i.g
-  %switch.load59 = load i64, ptr %switch.gep58, align 8
+  %switch.gep58 = getelementptr inbounds nuw i8, ptr @switch.table.sdsResize, i64 %i.g
+  %switch.load59 = load i8, ptr %switch.gep58, align 1
+  %switch.ext60 = zext i8 %switch.load59 to i64
   br label %sdsHdrSize.exit
 
 sdsHdrSize.exit:                                  ; preds = %bb.c, %switch.lookup57
-  %.0.i = phi i64 [ %switch.load59, %switch.lookup57 ], [ 0, %bb.c ] ; 2 uses
+  %.0.i = phi i64 [ %switch.ext60, %switch.lookup57 ], [ 0, %bb.c ] ; 2 uses
   %i.h = xor i64 %.0.i, -1
   %i.i = add i64 %1, %i.h                         ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 %.0.i ; 13 uses
@@ -596,9 +598,10 @@ bb.r:                                             ; preds = %bb.q
 
 switch.lookup:                                    ; preds = %bb.r
   %i.bm = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.sdsResize.6, i64 %i.bm
-  %switch.load = load i64, ptr %switch.gep, align 8
-  %i.bn = icmp ugt i64 %i.bk, %switch.load
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.sdsResize.6, i64 %i.bm
+  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.ext = zext i32 %switch.load to i64
+  %i.bn = icmp ugt i64 %i.bk, %switch.ext
   br i1 %i.bn, label %bb.s, label %adjustTypeIfNeeded.exit.thread
 
 bb.s:                                             ; preds = %switch.lookup
@@ -663,10 +666,11 @@ adjustTypeIfNeeded.exit73.thread128:              ; preds = %bb.w
 
 switch.lookup191:                                 ; preds = %bb.w
   %i.cn = zext nneg i8 %.0.i58153 to i64
-  %3 = getelementptr [8 x i8], ptr @switch.table.sdsResize.6, i64 %i.cn
-  %switch.gep192 = getelementptr i8, ptr %3, i64 -8
-  %switch.load193 = load i64, ptr %switch.gep192, align 8
-  %i.co = icmp ugt i64 %i.cg, %switch.load193
+  %3 = getelementptr [4 x i8], ptr @switch.table.sdsResize.6, i64 %i.cn
+  %switch.gep192 = getelementptr i8, ptr %3, i64 -4
+  %switch.load193 = load i32, ptr %switch.gep192, align 4
+  %switch.ext194 = zext i32 %switch.load193 to i64
+  %i.co = icmp ugt i64 %i.cg, %switch.ext194
   br i1 %i.co, label %bb.x, label %adjustTypeIfNeeded.exit73
 
 bb.x:                                             ; preds = %switch.lookup191
@@ -990,14 +994,15 @@ sdsReqType.exit:                                  ; preds = %bb.b, %bb.c, %bb.d,
   %or.cond = and i1 %i.ai, %i.aj
   %spec.store.select = select i1 %or.cond, i8 1, i8 %.0.i62 ; 7 uses
   %i.ak = zext nneg i8 %spec.store.select to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.sdsResize, i64 %i.ak
-  %switch.load = load i32, ptr %switch.gep, align 4 ; 4 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.sdsResize, i64 %i.ak
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32       ; 4 uses
   %i.al = icmp eq i8 %i.c, %spec.store.select
   %i.am = icmp samesign ult i8 %spec.store.select, %i.c
   %i.an = icmp samesign ugt i8 %spec.store.select, 1
   %i.ao = and i1 %i.am, %i.an
   %i.ap = select i1 %i.al, i1 true, i1 %i.ao      ; 2 uses
-  %.pn.in.sroa.speculated = select i1 %i.ap, i32 %.0.i114130, i32 %switch.load
+  %.pn.in.sroa.speculated = select i1 %i.ap, i32 %.0.i114130, i32 %switch.ext
   %.pn = zext nneg i32 %.pn.in.sroa.speculated to i64
   %.in = add i64 %1, 1
   %i.aq = add i64 %.in, %.pn                      ; 3 uses
@@ -1071,9 +1076,10 @@ bb.m:                                             ; preds = %bb.l
 
 switch.lookup:                                    ; preds = %bb.m
   %i.bs = zext nneg i8 %switch.tableidx to i64
-  %switch.gep172 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.sdsResize.6, i64 %i.bs
-  %switch.load173 = load i64, ptr %switch.gep172, align 8
-  %i.bt = icmp ugt i64 %i.bq, %switch.load173
+  %switch.gep172 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.sdsResize.6, i64 %i.bs
+  %switch.load173 = load i32, ptr %switch.gep172, align 4
+  %switch.ext174 = zext i32 %switch.load173 to i64
+  %i.bt = icmp ugt i64 %i.bq, %switch.ext174
   br i1 %i.bt, label %bb.n, label %sdssetlen.exit
 
 bb.n:                                             ; preds = %switch.lookup
@@ -1130,7 +1136,7 @@ bb.q:                                             ; preds = %sdsReqType.exit
 
 bb.r:                                             ; preds = %bb.q
   %i.cn = load i64, ptr %i.a, align 8, !tbaa !14
-  %i.co = xor i32 %switch.load, -1
+  %i.co = xor i32 %switch.ext, -1
   %i.cp = sext i32 %i.co to i64
   %i.cq = add i64 %i.cn, %i.cp                    ; 3 uses
   %switch.tableidx174 = add nsw i8 %spec.store.select, -1 ; 2 uses
@@ -1139,9 +1145,10 @@ bb.r:                                             ; preds = %bb.q
 
 switch.lookup175:                                 ; preds = %bb.r
   %i.cs = zext nneg i8 %switch.tableidx174 to i64
-  %switch.gep176 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.sdsResize.6, i64 %i.cs
-  %switch.load177 = load i64, ptr %switch.gep176, align 8
-  %i.ct = icmp ugt i64 %i.cq, %switch.load177
+  %switch.gep177 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.sdsResize.6, i64 %i.cs
+  %switch.load178 = load i32, ptr %switch.gep177, align 4
+  %switch.ext179 = zext i32 %switch.load178 to i64
+  %i.ct = icmp ugt i64 %i.cq, %switch.ext179
   br i1 %i.ct, label %bb.s, label %adjustTypeIfNeeded.exit79
 
 bb.s:                                             ; preds = %switch.lookup175
@@ -1156,7 +1163,7 @@ sdsReqType.exit.i73:                              ; preds = %bb.s
 
 adjustTypeIfNeeded.exit79:                        ; preds = %bb.r, %sdsReqType.exit.i73, %bb.s, %switch.lookup175
   %.1111 = phi i8 [ %spec.store.select, %bb.r ], [ %spec.store.select, %switch.lookup175 ], [ %..i.i74, %sdsReqType.exit.i73 ], [ 2, %bb.s ] ; 2 uses
-  %.0107 = phi i32 [ %switch.load, %bb.r ], [ %switch.load, %switch.lookup175 ], [ %..i75, %sdsReqType.exit.i73 ], [ 5, %bb.s ] ; 2 uses
+  %.0107 = phi i32 [ %switch.ext, %bb.r ], [ %switch.ext, %switch.lookup175 ], [ %..i75, %sdsReqType.exit.i73 ], [ 5, %bb.s ] ; 2 uses
   %i.cw = zext nneg i32 %.0107 to i64
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cl, i64 %i.cw ; 3 uses
   %i.cy = add i64 %spec.select, 1
@@ -1559,12 +1566,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.hex_digit_to_int, i64 %i.b
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.hex_digit_to_int, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %switch.lookup
-  %.0 = phi i32 [ %switch.load, %switch.lookup ], [ 0, %bb.a ]
+  %.0 = phi i32 [ %switch.ext, %switch.lookup ], [ 0, %bb.a ]
   ret i32 %.0
 }
 

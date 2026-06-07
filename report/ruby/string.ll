@@ -201,11 +201,11 @@ begin_hunk_0
 @rb_cTrueClass = external local_unnamed_addr global i64, align 8
 @rb_cInteger = external local_unnamed_addr global i64, align 8
 @rb_cFloat = external local_unnamed_addr global i64, align 8
-@switch.table.rb_str_append_as_bytes = private unnamed_addr constant [37 x i32] [i32 19, i32 poison, i32 poison, i32 poison, i32 17, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 18, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 22], align 4
+@switch.table.rb_str_append_as_bytes = private unnamed_addr constant [37 x i8] [i8 19, i8 poison, i8 poison, i8 poison, i8 17, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 18, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 22], align 4
 @switch.table.rb_str_inspect = private unnamed_addr constant [21 x i8] [i8 97, i8 98, i8 116, i8 110, i8 118, i8 102, i8 114, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 101], align 1
 @switch.table.enc_str_scrub = private unnamed_addr constant [4 x ptr] [ptr @enc_str_scrub.replace.210, ptr @enc_str_scrub.replace.211, ptr @enc_str_scrub.replace.212, ptr @enc_str_scrub.replace.213], align 8
-@switch.table.enc_str_scrub.8 = private unnamed_addr constant [4 x i64] [i64 2, i64 2, i64 4, i64 4], align 8
-@switch.table.rb_str_each_grapheme_cluster_size = private unnamed_addr constant [4 x i64] [i64 4, i64 4, i64 8, i64 8], align 8
+@switch.table.enc_str_scrub.8 = private unnamed_addr constant [4 x i8] c"\02\02\04\04", align 8
+@switch.table.rb_str_each_grapheme_cluster_size = private unnamed_addr constant [4 x i8] c"\04\04\08\08", align 8
 @switch.table.rb_str_each_grapheme_cluster_size.10 = private unnamed_addr constant [4 x ptr] [ptr @get_reg_grapheme_cluster.source_UTF_16BE, ptr @get_reg_grapheme_cluster.source_UTF_16LE, ptr @get_reg_grapheme_cluster.source_UTF_32BE, ptr @get_reg_grapheme_cluster.source_UTF_32LE], align 8
 
 @rb_str_dup_frozen = dso_local alias i64 (i64), ptr @rb_str_new_frozen
@@ -608,12 +608,13 @@ bb.w:                                             ; preds = %bb.v
   br label %rb_type.exit.thread
 
 switch.lookup:                                    ; preds = %bb.u
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.rb_str_append_as_bytes, i64 %i.bx
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.rb_str_append_as_bytes, i64 %i.bx
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %rb_type.exit.thread
 
 rb_type.exit.thread:                              ; preds = %switch.lookup, %bb.w
-  %.0.i.ph = phi i32 [ %switch.load, %switch.lookup ], [ %spec.select, %bb.w ]
+  %.0.i.ph = phi i32 [ %switch.ext, %switch.lookup ], [ %spec.select, %bb.w ]
   %i.ch = getelementptr [4 x i8], ptr %i.l, i64 %indvars.iv
   store i32 %.0.i.ph, ptr %i.ch, align 4, !tbaa !7
   br label %.loopexit98
@@ -1016,13 +1017,14 @@ switch.lookup:                                    ; preds = %bb.bw
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.enc_str_scrub, i64 %i.hx
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.hy = zext nneg i32 %switch.tableidx to i64
-  %switch.gep578 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.enc_str_scrub.8, i64 %i.hy
-  %switch.load579 = load i64, ptr %switch.gep578, align 8
+  %switch.gep578 = getelementptr inbounds nuw i8, ptr @switch.table.enc_str_scrub.8, i64 %i.hy
+  %switch.load579 = load i8, ptr %switch.gep578, align 1
+  %switch.ext = zext i8 %switch.load579 to i64
   br label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw, %switch.lookup, %rb_enc_asciicompat.exit, %RSTRING_PTR.exit350
   %.1250 = phi ptr [ null, %rb_enc_asciicompat.exit ], [ %switch.load, %switch.lookup ], [ %i.ht, %RSTRING_PTR.exit350 ], [ @enc_str_scrub.replace.214, %bb.bw ] ; 4 uses
-  %.2248 = phi i64 [ 0, %rb_enc_asciicompat.exit ], [ %switch.load579, %switch.lookup ], [ %i.hv, %RSTRING_PTR.exit350 ], [ 1, %bb.bw ] ; 6 uses
+  %.2248 = phi i64 [ 0, %rb_enc_asciicompat.exit ], [ %switch.ext, %switch.lookup ], [ %i.hv, %RSTRING_PTR.exit350 ], [ 1, %bb.bw ] ; 6 uses
   %i.hz = icmp ult ptr %i.ac, %i.ad
   br i1 %i.hz, label %.lr.ph444, label %.thread392.thread
 
@@ -1425,15 +1427,16 @@ get_cached_reg_grapheme_cluster.exit.thread:      ; preds = %bb.g, %get_cached_r
 
 switch.lookup:                                    ; preds = %get_cached_reg_grapheme_cluster.exit.thread
   %i.aj = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.rb_str_each_grapheme_cluster_size, i64 %i.aj
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.rb_str_each_grapheme_cluster_size, i64 %i.aj
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.ak = zext nneg i32 %switch.tableidx to i64
   %switch.gep69 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.rb_str_each_grapheme_cluster_size.10, i64 %i.ak
   %switch.load70 = load ptr, ptr %switch.gep69, align 8
   br label %bb.k
 
 bb.k:                                             ; preds = %switch.lookup, %get_cached_reg_grapheme_cluster.exit.thread
-  %.07.i = phi i64 [ 2, %get_cached_reg_grapheme_cluster.exit.thread ], [ %switch.load, %switch.lookup ]
+  %.07.i = phi i64 [ 2, %get_cached_reg_grapheme_cluster.exit.thread ], [ %switch.ext, %switch.lookup ]
   %.0.i38 = phi ptr [ %i.a, %get_cached_reg_grapheme_cluster.exit.thread ], [ %switch.load70, %switch.lookup ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #28
@@ -1836,15 +1839,16 @@ get_cached_reg_grapheme_cluster.exit.thread:      ; preds = %bb.f, %get_cached_r
 
 switch.lookup:                                    ; preds = %get_cached_reg_grapheme_cluster.exit.thread
   %i.af = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.rb_str_each_grapheme_cluster_size, i64 %i.af
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.rb_str_each_grapheme_cluster_size, i64 %i.af
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.ag = zext nneg i32 %switch.tableidx to i64
   %switch.gep51 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.rb_str_each_grapheme_cluster_size.10, i64 %i.ag
   %switch.load52 = load ptr, ptr %switch.gep51, align 8
   br label %bb.j
 
 bb.j:                                             ; preds = %switch.lookup, %get_cached_reg_grapheme_cluster.exit.thread
-  %.07.i = phi i64 [ 2, %get_cached_reg_grapheme_cluster.exit.thread ], [ %switch.load, %switch.lookup ]
+  %.07.i = phi i64 [ 2, %get_cached_reg_grapheme_cluster.exit.thread ], [ %switch.ext, %switch.lookup ]
   %.0.i33 = phi ptr [ %i.a, %get_cached_reg_grapheme_cluster.exit.thread ], [ %switch.load52, %switch.lookup ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #28

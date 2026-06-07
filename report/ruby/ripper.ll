@@ -201,9 +201,9 @@ begin_hunk_0
 @.str.749 = private unnamed_addr constant [26 x i8] c"no anonymous %s parameter\00", align 1
 @.str.750 = private unnamed_addr constant [49 x i8] c"anonymous %s parameter is also used within block\00", align 1
 @.str.754 = private unnamed_addr constant [38 x i8] c"probable buffer overflow: %ld for %ld\00", align 1
-@switch.table.parse_qmark = private unnamed_addr constant [24 x i64] [i64 233, i64 221, i64 237, i64 205, i64 229, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 231], align 8
-@switch.table.simple_re_meta = private unnamed_addr constant [90 x i32] [i32 1, i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 0, i32 0, i32 1, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 1], align 4
-@switch.table.escaped_control_code = private unnamed_addr constant [24 x i32] [i32 116, i32 110, i32 118, i32 102, i32 114, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 115], align 4
+@switch.table.parse_qmark = private unnamed_addr constant [24 x i8] [i8 -23, i8 -35, i8 -19, i8 -51, i8 -27, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 -25], align 8
+@switch.table.simple_re_meta = private unnamed_addr constant [90 x i8] c"\01\00\00\00\00\01\01\01\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\01\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\01\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\01\01", align 4
+@switch.table.escaped_control_code = private unnamed_addr constant [24 x i8] c"tnvfr\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00s", align 4
 @switch.table.parser_set_encode = private unnamed_addr constant [40 x ptr] [ptr @.str.633, ptr @.str.635, ptr poison, ptr poison, ptr @.str.634, ptr poison, ptr poison, ptr @.str.636, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @.str.633, ptr @.str.635, ptr poison, ptr poison, ptr @.str.634, ptr poison, ptr poison, ptr @.str.636], align 8
 
 ; Function Attrs: nounwind uwtable
@@ -606,13 +606,14 @@ switch.hole_check:                                ; preds = %bb.m
 
 switch.lookup:                                    ; preds = %switch.hole_check
   %i.ak = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.parse_qmark, i64 %i.ak
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.parse_qmark, i64 %i.ak
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 368
   %i.am = load i64, ptr %i.al, align 8, !tbaa !46
   %i.an = load i64, ptr @id_warn, align 8, !tbaa !11
   %i.ao = tail call i64 @rb_usascii_str_new_static(ptr noundef nonnull @.str.654, i64 noundef 34) #29
-  %i.ap = tail call i64 (i64, i64, i32, ...) @rb_funcall(i64 noundef %i.am, i64 noundef %i.an, i32 noundef 2, i64 noundef %i.ao, i64 noundef %switch.load) #29 ; 0 uses
+  %i.ap = tail call i64 (i64, i64, i32, ...) @rb_funcall(i64 noundef %i.am, i64 noundef %i.an, i32 noundef 2, i64 noundef %i.ao, i64 noundef %switch.ext) #29 ; 0 uses
   br label %escaped_control_code.exit
 
 escaped_control_code.exit:                        ; preds = %switch.hole_check, %bb.m, %.critedge, %bb.l, %is_identchar.exit128.thread, %switch.lookup
@@ -1015,12 +1016,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.simple_re_meta, i64 %i.b
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.simple_re_meta, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %switch.lookup
-  %.0 = phi i32 [ %switch.load, %switch.lookup ], [ 0, %bb.a ]
+  %.0 = phi i32 [ %switch.ext, %switch.lookup ], [ 0, %bb.a ]
   ret i32 %.0
 }
 
@@ -1423,12 +1425,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.escaped_control_code, i64 %i.b
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.escaped_control_code, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.b
 
 bb.b:                                             ; preds = %switch.lookup, %bb.a
-  %.0 = phi i32 [ 0, %bb.a ], [ %switch.load, %switch.lookup ]
+  %.0 = phi i32 [ 0, %bb.a ], [ %switch.ext, %switch.lookup ]
   ret i32 %.0
 }
 

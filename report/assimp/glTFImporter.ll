@@ -201,10 +201,10 @@ begin_hunk_0
 @__const._ZNSt8__detail18__to_chars_10_implIjEEvPcjT_.__digits = private unnamed_addr constant [201 x i8] c"00010203040506070809101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899\00", align 16
 @_ZTVN6Assimp12BaseImporterE = external unnamed_addr constant { [8 x ptr] }, align 8
 @.str.256 = private unnamed_addr constant [23 x i8] c"vector::_M_fill_insert\00", align 1
-@switch.table._ZN6Assimp12glTFImporter12ImportMeshesERN4glTF5AssetE = private unnamed_addr constant [7 x i32] [i32 1, i32 2, i32 2, i32 2, i32 4, i32 4, i32 4], align 4
-@switch.table._ZNK6Assimp12glTFImporter12ImportLightsERN4glTF5AssetE = private unnamed_addr constant [4 x i32] [i32 4, i32 1, i32 2, i32 3], align 4
+@switch.table._ZN6Assimp12glTFImporter12ImportMeshesERN4glTF5AssetE = private unnamed_addr constant [7 x i8] c"\01\02\02\02\04\04\04", align 4
+@switch.table._ZNK6Assimp12glTFImporter12ImportLightsERN4glTF5AssetE = private unnamed_addr constant [4 x i8] c"\04\01\02\03", align 4
 @switch.table._ZN9rapidjson16GetParseError_EnENS_14ParseErrorCodeE = private unnamed_addr constant [18 x ptr] [ptr @.str.150, ptr @.str.151, ptr @.str.152, ptr @.str.153, ptr @.str.154, ptr @.str.155, ptr @.str.156, ptr @.str.157, ptr @.str.158, ptr @.str.159, ptr @.str.160, ptr @.str.161, ptr @.str.162, ptr @.str.163, ptr @.str.164, ptr @.str.165, ptr @.str.166, ptr @.str.167], align 8
-@switch.table._ZN4glTF17ComponentTypeSizeENS_13ComponentTypeE = private unnamed_addr constant [7 x i32] [i32 1, i32 1, i32 2, i32 2, i32 poison, i32 4, i32 4], align 4
+@switch.table._ZN4glTF17ComponentTypeSizeENS_13ComponentTypeE = private unnamed_addr constant [7 x i8] [i8 1, i8 1, i8 2, i8 2, i8 poison, i8 4, i8 4], align 4
 
 @_ZN6Assimp12glTFImporterC1Ev = hidden unnamed_addr alias void (ptr), ptr @_ZN6Assimp12glTFImporterC2Ev
 
@@ -607,10 +607,11 @@ bb.ap:                                            ; preds = %_ZN6Assimp13ASSIMP_
 
 switch.lookup:                                    ; preds = %bb.ap
   %i.hw = zext nneg i32 %i.hu to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6Assimp12glTFImporter12ImportMeshesERN4glTF5AssetE, i64 %i.hw
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6Assimp12glTFImporter12ImportMeshesERN4glTF5AssetE, i64 %i.hw
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.hx = load i32, ptr %i.fm, align 8
-  %i.hy = or i32 %i.hx, %switch.load
+  %i.hy = or i32 %i.hx, %switch.ext
   store i32 %i.hy, ptr %i.fm, align 8
   br label %bb.aq
 
@@ -1013,9 +1014,10 @@ switch.lookup1736:                                ; preds = %bb.bt
   %i.un = getelementptr inbounds nuw i8, ptr %i.um, i64 8
   %i.uo = load i32, ptr %i.un, align 8
   %i.up = zext nneg i32 %switch.tableidx to i64
-  %switch.gep1737 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN4glTF17ComponentTypeSizeENS_13ComponentTypeE, i64 %i.up
-  %switch.load1738 = load i32, ptr %switch.gep1737, align 4
-  %i.uq = mul i32 %switch.load1738, %i.uo         ; 2 uses
+  %switch.gep1737 = getelementptr inbounds nuw i8, ptr @switch.table._ZN4glTF17ComponentTypeSizeENS_13ComponentTypeE, i64 %i.up
+  %switch.load1738 = load i8, ptr %switch.gep1737, align 1
+  %switch.ext1739 = zext i8 %switch.load1738 to i32
+  %i.uq = mul i32 %i.uo, %switch.ext1739          ; 2 uses
   %i.ur = zext i32 %i.uq to i64                   ; 4 uses
   %i.us = getelementptr inbounds nuw i8, ptr %i.rm, i64 100 ; 3 uses
   %i.ut = load i32, ptr %i.us, align 4            ; 2 uses
@@ -1322,9 +1324,10 @@ switch.lookup1741:                                ; preds = %_ZN4glTF8Accessor7I
   %i.aad = getelementptr inbounds nuw i8, ptr %i.aac, i64 8
   %i.aae = load i32, ptr %i.aad, align 8, !noalias !30
   %i.aaf = zext nneg i32 %switch.tableidx1739 to i64
-  %switch.gep1745 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN4glTF17ComponentTypeSizeENS_13ComponentTypeE, i64 %i.aaf
-  %switch.load1746 = load i32, ptr %switch.gep1745, align 4
-  %i.aag = mul i32 %switch.load1746, %i.aae
+  %switch.gep1746 = getelementptr inbounds nuw i8, ptr @switch.table._ZN4glTF17ComponentTypeSizeENS_13ComponentTypeE, i64 %i.aaf
+  %switch.load1747 = load i8, ptr %switch.gep1746, align 1
+  %switch.ext1748 = zext i8 %switch.load1747 to i32
+  %i.aag = mul i32 %i.aae, %switch.ext1748
   %i.aah = zext i32 %i.aag to i64                 ; 18 uses
   %i.aai = getelementptr inbounds nuw i8, ptr %i.xb, i64 92
   %i.aaj = load i32, ptr %i.aai, align 4, !noalias !30 ; 2 uses
@@ -1727,12 +1730,13 @@ bb.b:                                             ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %.lr.ph
   %i.ar = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZNK6Assimp12glTFImporter12ImportLightsERN4glTF5AssetE, i64 %i.ar
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK6Assimp12glTFImporter12ImportLightsERN4glTF5AssetE, i64 %i.ar
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %switch.lookup
-  %.sink = phi i32 [ %switch.load, %switch.lookup ], [ 2, %.lr.ph ]
+  %.sink = phi i32 [ %switch.ext, %switch.lookup ], [ 2, %.lr.ph ]
   store i32 %.sink, ptr %i.ap, align 4
   %i.as = getelementptr inbounds nuw i8, ptr %i.ad, i64 76 ; 3 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.ae, i64 1104
@@ -2135,9 +2139,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit14: ; preds = %bb.
 
 switch.lookup:                                    ; preds = %bb.a
   %i.v = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN4glTF17ComponentTypeSizeENS_13ComponentTypeE, i64 %i.v
-  %switch.load = load i32, ptr %switch.gep, align 4
-  ret i32 %switch.load
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN4glTF17ComponentTypeSizeENS_13ComponentTypeE, i64 %i.v
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  ret i32 %switch.ext
 
 bb.i:                                             ; preds = %bb.d
   unreachable

@@ -8,8 +8,8 @@ target triple = "x86_64-pc-linux-gnu"
 %"class.arrow_vendored::double_conversion::Bignum" = type { i16, i16, [128 x i32] }
 
 @_ZN14arrow_vendored17double_conversionL19exact_powers_of_tenE = internal unnamed_addr constant [23 x double] [double 1.000000e+00, double 1.000000e+01, double 1.000000e+02, double 1.000000e+03, double 1.000000e+04, double 1.000000e+05, double 1.000000e+06, double 1.000000e+07, double 1.000000e+08, double 1.000000e+09, double 1.000000e+10, double 1.000000e+11, double 1.000000e+12, double 1.000000e+13, double 1.000000e+14, double 1.000000e+15, double 1.000000e+16, double 1.000000e+17, double 1.000000e+18, double 1.000000e+19, double 1.000000e+20, double 1.000000e+21, double 1.000000e+22], align 16
-@switch.table._ZN14arrow_vendored17double_conversionL12ComputeGuessENS0_6VectorIKcEEiPd = private unnamed_addr constant [7 x i32] [i32 4, i32 7, i32 10, i32 14, i32 17, i32 20, i32 24], align 4
-@switch.table._ZN14arrow_vendored17double_conversionL12ComputeGuessENS0_6VectorIKcEEiPd.1 = private unnamed_addr constant [7 x i64] [i64 2684354560, i64 3355443200, i64 4194304000, i64 2621440000, i64 3276800000, i64 4096000000, i64 2560000000], align 8
+@switch.table._ZN14arrow_vendored17double_conversionL12ComputeGuessENS0_6VectorIKcEEiPd = private unnamed_addr constant [7 x i8] c"\04\07\0A\0E\11\14\18", align 4
+@switch.table._ZN14arrow_vendored17double_conversionL12ComputeGuessENS0_6VectorIKcEEiPd.1 = private unnamed_addr constant [7 x i32] [i32 -1610612736, i32 -939524096, i32 -100663296, i32 -1673527296, i32 -1018167296, i32 -198967296, i32 -1734967296], align 8
 
 ; Function Attrs: mustprogress uwtable
 define noundef double @_ZN14arrow_vendored17double_conversion13StrtodTrimmedENS0_6VectorIKcEEi(ptr %0, i32 %1, i32 noundef %2) local_unnamed_addr #0 {
@@ -348,18 +348,20 @@ bb.o:                                             ; preds = %bb.n
 switch.lookup:                                    ; preds = %bb.n
   %switch.tableidx = add nsw i32 %i.cu, -1        ; 2 uses
   %i.cw = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN14arrow_vendored17double_conversionL12ComputeGuessENS0_6VectorIKcEEiPd, i64 %i.cw
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN14arrow_vendored17double_conversionL12ComputeGuessENS0_6VectorIKcEEiPd, i64 %i.cw
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.cx = zext nneg i32 %switch.tableidx to i64
-  %switch.gep96 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN14arrow_vendored17double_conversionL12ComputeGuessENS0_6VectorIKcEEiPd.1, i64 %i.cx
-  %switch.load97 = load i64, ptr %switch.gep96, align 8 ; 2 uses
+  %switch.gep96 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN14arrow_vendored17double_conversionL12ComputeGuessENS0_6VectorIKcEEiPd.1, i64 %i.cx
+  %switch.load97 = load i32, ptr %switch.gep96, align 4
+  %switch.ext98 = zext i32 %switch.load97 to i64  ; 2 uses
   %i.cy = lshr i64 %.1.lcssa.i.i, 32
   %i.cz = and i64 %.1.lcssa.i.i, 4294967295
-  %i.da = mul nuw i64 %switch.load97, %i.cy
-  %i.db = mul nuw i64 %switch.load97, %i.cz       ; 2 uses
+  %i.da = mul nuw i64 %i.cy, %switch.ext98
+  %i.db = mul nuw i64 %i.cz, %switch.ext98        ; 2 uses
   %i.dc = and i64 %i.db, 2147483648
   %i.dd = add nuw nsw i64 %i.dc, 2147483648
-  %i.de = add nsw i32 %switch.load, %.19.lcssa.i.i
+  %i.de = add nsw i32 %.19.lcssa.i.i, %switch.ext
   %i.df = lshr i64 %i.db, 32
   %i.dg = add nuw i64 %i.df, %i.da
   %i.dh = lshr i64 %i.dd, 32

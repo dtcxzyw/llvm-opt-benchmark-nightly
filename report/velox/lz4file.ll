@@ -6,7 +6,7 @@ target triple = "x86_64-pc-linux-gnu"
 
 %struct.LZ4F_frameInfo_t = type { i32, i32, i32, i32, i64, i32, i32 }
 
-@switch.table.LZ4F_writeOpen = private unnamed_addr constant [8 x i64] [i64 65536, i64 poison, i64 poison, i64 poison, i64 65536, i64 262144, i64 1048576, i64 4194304], align 8
+@switch.table.LZ4F_writeOpen = private unnamed_addr constant [8 x i32] [i32 65536, i32 poison, i32 poison, i32 poison, i32 65536, i32 262144, i32 1048576, i32 4194304], align 8
 
 ; Function Attrs: nounwind uwtable
 define noundef i64 @LZ4F_readOpen(ptr nofree noundef captures(address_is_null) %0, ptr noundef %1) local_unnamed_addr #0 {
@@ -124,13 +124,14 @@ bb.n:                                             ; preds = %bb.m, %LZ4F_freeAnd
 
 switch.lookup:                                    ; preds = %bb.l
   %i.ai = zext nneg i32 %i.ag to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.LZ4F_writeOpen, i64 %i.ai
-  %switch.load = load i64, ptr %switch.gep, align 8 ; 2 uses
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.LZ4F_writeOpen, i64 %i.ai
+  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.ext = zext i32 %switch.load to i64      ; 2 uses
   %i.aj = load ptr, ptr %0, align 8, !tbaa !7     ; 3 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 40
-  store i64 %switch.load, ptr %i.ak, align 8, !tbaa !22
+  store i64 %switch.ext, ptr %i.ak, align 8, !tbaa !22
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #8
-  %i.al = call noalias ptr @malloc(i64 noundef %switch.load) #10 ; 3 uses
+  %i.al = call noalias ptr @malloc(i64 noundef %switch.ext) #10 ; 3 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.aj, i64 16
   store ptr %i.al, ptr %i.am, align 8, !tbaa !16
   %i.an = icmp eq ptr %i.al, null
@@ -348,12 +349,13 @@ LZ4F_freeAndNullWriteFile.exit:                   ; preds = %bb.d
 
 switch.lookup:                                    ; preds = %bb.d
   %i.k = zext nneg i32 %i.f to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.LZ4F_writeOpen, i64 %i.k
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.LZ4F_writeOpen, i64 %i.k
+  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.ext = zext i32 %switch.load to i64
   br label %bb.e
 
 bb.e:                                             ; preds = %switch.lookup, %bb.c
-  %.sink = phi i64 [ %switch.load, %switch.lookup ], [ 65536, %bb.c ] ; 2 uses
+  %.sink = phi i64 [ %switch.ext, %switch.lookup ], [ 65536, %bb.c ] ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   store i64 %.sink, ptr %i.l, align 8, !tbaa !32
   %i.m = tail call i64 @LZ4F_compressBound(i64 noundef %.sink, ptr noundef %2) #8 ; 2 uses

@@ -201,8 +201,8 @@ begin_hunk_0
 @_ZTVSo = external unnamed_addr constant { [5 x ptr], [5 x ptr] }, align 8
 @llvm.global_ctors = appending global [2 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @__cxx_global_var_init.189, ptr @_ZN3fmt3v1212format_facetISt6localeE2idE }, { i32, ptr, ptr } { i32 65535, ptr @_GLOBAL__sub_I_exroutput.cpp, ptr null }]
 @llvm.used = appending global [1 x ptr] [ptr @_ZN3fmt3v1212format_facetISt6localeE2idE], section "llvm.metadata"
-@switch.table._ZN11OpenImageIO4v3_113OpenEXROutput14spec_to_headerERNS0_9ImageSpecEiRN27OpenImageIO_v3_1_Imf__3_3_56HeaderE = private unnamed_addr constant [7 x i64] [i64 262, i64 266, i64 266, i64 266, i64 266, i64 267, i64 267], align 8
-@switch.table._ZN11OpenImageIO4v3_113OpenEXROutput12imfpixeltypeENS0_8TypeDescE = private unnamed_addr constant [7 x i32] [i32 0, i32 1, i32 1, i32 1, i32 1, i32 2, i32 2], align 4
+@switch.table._ZN11OpenImageIO4v3_113OpenEXROutput14spec_to_headerERNS0_9ImageSpecEiRN27OpenImageIO_v3_1_Imf__3_3_56HeaderE = private unnamed_addr constant [7 x i16] [i16 262, i16 266, i16 266, i16 266, i16 266, i16 267, i16 267], align 8
+@switch.table._ZN11OpenImageIO4v3_113OpenEXROutput12imfpixeltypeENS0_8TypeDescE = private unnamed_addr constant [7 x i8] c"\00\01\01\01\01\02\02", align 4
 
 @_ZN11OpenImageIO4v3_113OpenEXROutputC1Ev = hidden unnamed_addr alias void (ptr), ptr @_ZN11OpenImageIO4v3_113OpenEXROutputC2Ev
 @_ZN11OpenImageIO4v3_113OpenEXROutputD1Ev = hidden unnamed_addr alias void (ptr), ptr @_ZN11OpenImageIO4v3_113OpenEXROutputD2Ev
@@ -605,12 +605,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.o = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN11OpenImageIO4v3_113OpenEXROutput14spec_to_headerERNS0_9ImageSpecEiRN27OpenImageIO_v3_1_Imf__3_3_56HeaderE, i64 %i.o
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN11OpenImageIO4v3_113OpenEXROutput14spec_to_headerERNS0_9ImageSpecEiRN27OpenImageIO_v3_1_Imf__3_3_56HeaderE, i64 %i.o
+  %switch.load = load i16, ptr %switch.gep, align 2
+  %switch.ext = zext i16 %switch.load to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %switch.lookup
-  %.sink = phi i64 [ %switch.load, %switch.lookup ], [ 266, %bb.a ]
+  %.sink = phi i64 [ %switch.ext, %switch.lookup ], [ 266, %bb.a ]
   store i64 %.sink, ptr %i.l, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #34
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 12
@@ -1013,12 +1014,13 @@ _ZNK11OpenImageIO4v3_19ImageSpec13channelformatEi.exit: ; preds = %_ZNK11OpenIma
 
 switch.lookup:                                    ; preds = %_ZNK11OpenImageIO4v3_19ImageSpec13channelformatEi.exit
   %i.ba = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN11OpenImageIO4v3_113OpenEXROutput12imfpixeltypeENS0_8TypeDescE, i64 %i.ba
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN11OpenImageIO4v3_113OpenEXROutput12imfpixeltypeENS0_8TypeDescE, i64 %i.ba
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZN11OpenImageIO4v3_113OpenEXROutput12imfpixeltypeENS0_8TypeDescE.exit
 
 _ZN11OpenImageIO4v3_113OpenEXROutput12imfpixeltypeENS0_8TypeDescE.exit: ; preds = %_ZNK11OpenImageIO4v3_19ImageSpec13channelformatEi.exit, %switch.lookup
-  %.0.i = phi i32 [ %switch.load, %switch.lookup ], [ 1, %_ZNK11OpenImageIO4v3_19ImageSpec13channelformatEi.exit ] ; 2 uses
+  %.0.i = phi i32 [ %switch.ext, %switch.lookup ], [ 1, %_ZNK11OpenImageIO4v3_19ImageSpec13channelformatEi.exit ] ; 2 uses
   %.not.i.i7 = icmp eq ptr %i.ap, %i.ao
   br i1 %.not.i.i7, label %bb.g, label %bb.f
 
@@ -1169,12 +1171,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN11OpenImageIO4v3_113OpenEXROutput12imfpixeltypeENS0_8TypeDescE, i64 %i.b
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN11OpenImageIO4v3_113OpenEXROutput12imfpixeltypeENS0_8TypeDescE, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %switch.lookup
-  %.0 = phi i32 [ %switch.load, %switch.lookup ], [ 1, %bb.a ]
+  %.0 = phi i32 [ %switch.ext, %switch.lookup ], [ 1, %bb.a ]
   ret i32 %.0
 }
 

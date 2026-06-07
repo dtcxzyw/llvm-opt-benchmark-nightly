@@ -201,8 +201,8 @@ begin_hunk_0
 @.str.113 = private unnamed_addr constant [49 x i8] c"cannot create std::vector larger than max_size()\00", align 1
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @__cxx_global_var_init, ptr @_ZN3fmt3v1212format_facetISt6localeE2idE }]
 @llvm.used = appending global [1 x ptr] [ptr @_ZN3fmt3v1212format_facetISt6localeE2idE], section "llvm.metadata"
-@switch.table._ZN11OpenImageIO4v3_19ICOOutput4openERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_9ImageSpecENS0_11ImageOutput8OpenModeE.1 = private unnamed_addr constant [4 x i32] [i32 24, i32 32, i32 24, i32 32], align 4
-@switch.table._ZN11OpenImageIO4v3_17PNG_pvt19create_write_structB5cxx11ERP14png_struct_defRP12png_info_defRiRNS0_9ImageSpecEPNS0_11ImageOutputE = private unnamed_addr constant [4 x i32] [i32 0, i32 4, i32 2, i32 6], align 4
+@switch.table._ZN11OpenImageIO4v3_19ICOOutput4openERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_9ImageSpecENS0_11ImageOutput8OpenModeE.1 = private unnamed_addr constant [4 x i8] c"\18 \18 ", align 4
+@switch.table._ZN11OpenImageIO4v3_17PNG_pvt19create_write_structB5cxx11ERP14png_struct_defRP12png_info_defRiRNS0_9ImageSpecEPNS0_11ImageOutputE = private unnamed_addr constant [4 x i8] c"\00\04\02\06", align 4
 @switch.table._ZN11OpenImageIO4v3_17PNG_pvt19create_write_structB5cxx11ERP14png_struct_defRP12png_info_defRiRNS0_9ImageSpecEPNS0_11ImageOutputE.2 = private unnamed_addr constant [4 x i32] [i32 -1, i32 1, i32 -1, i32 3], align 4
 
 @_ZN11OpenImageIO4v3_19ICOOutputC1Ev = hidden unnamed_addr alias void (ptr), ptr @_ZN11OpenImageIO4v3_19ICOOutputC2Ev
@@ -605,16 +605,18 @@ bb.l:                                             ; preds = %bb.k
 
 switch.lookup:                                    ; preds = %bb.k
   %i.bf = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN11OpenImageIO4v3_17PNG_pvt19create_write_structB5cxx11ERP14png_struct_defRP12png_info_defRiRNS0_9ImageSpecEPNS0_11ImageOutputE, i64 %i.bf
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN11OpenImageIO4v3_17PNG_pvt19create_write_structB5cxx11ERP14png_struct_defRP12png_info_defRiRNS0_9ImageSpecEPNS0_11ImageOutputE, i64 %i.bf
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.bg = zext nneg i32 %switch.tableidx to i64
-  %switch.gep160 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN11OpenImageIO4v3_19ICOOutput4openERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_9ImageSpecENS0_11ImageOutput8OpenModeE.1, i64 %i.bg
-  %switch.load161 = load i32, ptr %switch.gep160, align 4 ; 2 uses
+  %switch.gep160 = getelementptr inbounds nuw i8, ptr @switch.table._ZN11OpenImageIO4v3_19ICOOutput4openERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_9ImageSpecENS0_11ImageOutput8OpenModeE.1, i64 %i.bg
+  %switch.load161 = load i8, ptr %switch.gep160, align 1
+  %switch.ext162 = zext i8 %switch.load161 to i32 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 224
-  store i32 %switch.load, ptr %i.bh, align 8, !tbaa !85
+  store i32 %switch.ext, ptr %i.bh, align 8, !tbaa !85
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 268
-  store i32 %switch.load161, ptr %i.bi, align 4, !tbaa !86
-  %i.bj = mul nsw i32 %switch.load161, %i.af
+  store i32 %switch.ext162, ptr %i.bi, align 4, !tbaa !86
+  %i.bj = mul nsw i32 %i.af, %switch.ext162
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 260
   %i.bl = add nsw i32 %i.af, 7
   %i.bm = or disjoint i32 %i.bj, 7
@@ -1017,12 +1019,13 @@ bb.f:                                             ; preds = %bb.e
 
 switch.lookup:                                    ; preds = %bb.e
   %i.w = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN11OpenImageIO4v3_17PNG_pvt19create_write_structB5cxx11ERP14png_struct_defRP12png_info_defRiRNS0_9ImageSpecEPNS0_11ImageOutputE, i64 %i.w
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN11OpenImageIO4v3_17PNG_pvt19create_write_structB5cxx11ERP14png_struct_defRP12png_info_defRiRNS0_9ImageSpecEPNS0_11ImageOutputE, i64 %i.w
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.x = zext nneg i32 %switch.tableidx to i64
   %switch.gep56 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN11OpenImageIO4v3_17PNG_pvt19create_write_structB5cxx11ERP14png_struct_defRP12png_info_defRiRNS0_9ImageSpecEPNS0_11ImageOutputE.2, i64 %i.x
   %switch.load57 = load i32, ptr %switch.gep56, align 4
-  store i32 %switch.load, ptr %3, align 4, !tbaa !3
+  store i32 %switch.ext, ptr %3, align 4, !tbaa !3
   %i.y = getelementptr inbounds nuw i8, ptr %4, i64 120
   store i32 %switch.load57, ptr %i.y, align 8, !tbaa !123
   %i.z = call noalias ptr @png_create_write_struct(ptr noundef nonnull @.str.18, ptr noundef %5, ptr noundef nonnull @_ZN11OpenImageIO4v3_17PNG_pvtL13wrerr_handlerEP14png_struct_defPKc, ptr noundef nonnull @_ZN11OpenImageIO4v3_17PNG_pvtL16null_png_handlerEP14png_struct_defPKc) ; 3 uses

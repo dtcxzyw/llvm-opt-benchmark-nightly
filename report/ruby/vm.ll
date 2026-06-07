@@ -201,7 +201,7 @@ begin_hunk_0
 @vm_empty_cc = internal constant { i64, i64, ptr, ptr, { i64 } } { i64 1093658, i64 36, ptr null, ptr @vm_call_general, { i64 } zeroinitializer }, align 8
 @vm_empty_cc_for_super = internal constant { i64, i64, ptr, ptr, { i64 } } { i64 1093658, i64 36, ptr null, ptr @vm_call_super_method, { i64 } zeroinitializer }, align 8
 @switch.table.vm_objtostring.122 = private unnamed_addr constant [37 x ptr] [ptr @rb_cFalseClass, ptr poison, ptr poison, ptr poison, ptr @rb_cNilClass, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @rb_cTrueClass, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @rb_cFloat], align 8
-@switch.table.vm_exec_core = private unnamed_addr constant [37 x i32] [i32 19, i32 poison, i32 poison, i32 poison, i32 17, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 18, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 22], align 4
+@switch.table.vm_exec_core = private unnamed_addr constant [37 x i8] [i8 19, i8 poison, i8 poison, i8 poison, i8 17, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 18, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 22], align 4
 @switch.table.setup_method_cfunc_struct = private unnamed_addr constant [18 x ptr] [ptr @call_cfunc_m2, ptr @call_cfunc_m1, ptr @call_cfunc_0, ptr @call_cfunc_1, ptr @call_cfunc_2, ptr @call_cfunc_3, ptr @call_cfunc_4, ptr @call_cfunc_5, ptr @call_cfunc_6, ptr @call_cfunc_7, ptr @call_cfunc_8, ptr @call_cfunc_9, ptr @call_cfunc_10, ptr @call_cfunc_11, ptr @call_cfunc_12, ptr @call_cfunc_13, ptr @call_cfunc_14, ptr @call_cfunc_15], align 8
 @switch.table.setup_method_cfunc_struct.123 = private unnamed_addr constant [18 x ptr] [ptr @ractor_safe_call_cfunc_m2, ptr @ractor_safe_call_cfunc_m1, ptr @ractor_safe_call_cfunc_0, ptr @ractor_safe_call_cfunc_1, ptr @ractor_safe_call_cfunc_2, ptr @ractor_safe_call_cfunc_3, ptr @ractor_safe_call_cfunc_4, ptr @ractor_safe_call_cfunc_5, ptr @ractor_safe_call_cfunc_6, ptr @ractor_safe_call_cfunc_7, ptr @ractor_safe_call_cfunc_8, ptr @ractor_safe_call_cfunc_9, ptr @ractor_safe_call_cfunc_10, ptr @ractor_safe_call_cfunc_11, ptr @ractor_safe_call_cfunc_12, ptr @ractor_safe_call_cfunc_13, ptr @ractor_safe_call_cfunc_14, ptr @ractor_safe_call_cfunc_15], align 8
 @switch.table.rb_type_str = private unnamed_addr constant [31 x ptr] [ptr @.str.30, ptr @.str.31, ptr @.str.32, ptr @.str.33, ptr @.str.34, ptr @.str.35, ptr @.str.36, ptr @.str.37, ptr @.str.38, ptr @.str.39, ptr @.str.40, ptr @.str.41, ptr @.str.42, ptr @.str.43, ptr @.str.44, ptr @.str.45, ptr null, ptr @.str.46, ptr @.str.47, ptr @.str.48, ptr @.str.49, ptr @.str.50, ptr @.str.52, ptr null, ptr null, ptr null, ptr @.str.51, ptr @.str.53, ptr @.str.54, ptr @.str.55, ptr @.str.56], align 8
@@ -604,14 +604,15 @@ bb.e:                                             ; preds = %bb.c
   br label %rb_class_of.exit.i
 
 switch.lookup:                                    ; preds = %bb.b
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.vm_exec_core, i64 %1
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.vm_exec_core, i64 %1
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %switch.gep91 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.vm_objtostring.122, i64 %1
   %switch.load92 = load ptr, ptr %switch.gep91, align 8
   br label %rb_class_of.exit.i
 
 rb_class_of.exit.i:                               ; preds = %switch.lookup, %bb.e, %bb.c, %bb.d
-  %.0.i5254 = phi i32 [ %i.j, %bb.d ], [ %switch.load, %switch.lookup ], [ 21, %bb.c ], [ %spec.select.i, %bb.e ]
+  %.0.i5254 = phi i32 [ %i.j, %bb.d ], [ %switch.ext, %switch.lookup ], [ 21, %bb.c ], [ %spec.select.i, %bb.e ]
   %.0.in.i.i = phi ptr [ %i.l, %bb.d ], [ %switch.load92, %switch.lookup ], [ @rb_cInteger, %bb.c ], [ %spec.select, %bb.e ]
   %i.p = ptrtoint ptr %0 to i64
   %.0.i5.i = load i64, ptr %.0.in.i.i, align 8, !tbaa !11 ; 2 uses
@@ -638,14 +639,15 @@ bb.g:                                             ; preds = %bb.f, %rb_class_of.
 
 vm_search_method.exit:                            ; preds = %bb.f, %bb.g
   %.0.i.val.i = phi ptr [ %.0.i.val.pre.i, %bb.g ], [ %.val.i, %bb.f ] ; 12 uses
-  switch i32 %.0.i5254, label %check_method_basic_definition.exit.thread [
-    i32 20, label %bb.h
-    i32 3, label %bb.j
-    i32 2, label %bb.j
-    i32 17, label %bb.n
-    i32 18, label %bb.q
-    i32 19, label %bb.t
-    i32 21, label %bb.w
+  %trunc = trunc nuw i32 %.0.i5254 to i8
+  switch i8 %trunc, label %check_method_basic_definition.exit.thread [
+    i8 20, label %bb.h
+    i8 3, label %bb.j
+    i8 2, label %bb.j
+    i8 17, label %bb.n
+    i8 18, label %bb.q
+    i8 19, label %bb.t
+    i8 21, label %bb.w
   ]
 
 bb.h:                                             ; preds = %vm_search_method.exit
@@ -1048,12 +1050,13 @@ bb.gi:                                            ; preds = %bb.gh
   br label %rb_type.exit
 
 switch.lookup:                                    ; preds = %bb.gg
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.vm_exec_core, i64 %i.ava
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.vm_exec_core, i64 %i.ava
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %rb_type.exit
 
 rb_type.exit:                                     ; preds = %switch.lookup, %bb.gf, %bb.gh, %bb.gi
-  %.0.i2479 = phi i32 [ %i.avj, %bb.gf ], [ %spec.select.i, %bb.gi ], [ 21, %bb.gh ], [ %switch.load, %switch.lookup ]
+  %.0.i2479 = phi i32 [ %i.avj, %bb.gf ], [ %spec.select.i, %bb.gi ], [ 21, %bb.gh ], [ %switch.ext, %switch.lookup ]
   %i.avo = trunc i64 %i.auw to i32
   %i.avp = icmp eq i32 %.0.i2479, %i.avo
   %i.avq = select i1 %i.avp, i64 20, i64 0

@@ -192,8 +192,8 @@ $_ZN4pugi15xpath_exceptionD0Ev = comdat any
 @switch.table._ZN4pugi4impl12_GLOBAL__N_116load_buffer_implEPNS1_19xml_document_structEPNS_15xml_node_structEPvmjNS_12xml_encodingEbbPPc = private unnamed_addr constant [16 x ptr] [ptr @_ZN4pugi4impl12_GLOBAL__N_122strconv_attribute_implINS1_9opt_falseEE12parse_simpleEPcc, ptr @_ZN4pugi4impl12_GLOBAL__N_122strconv_attribute_implINS1_8opt_trueEE12parse_simpleEPcc, ptr @_ZN4pugi4impl12_GLOBAL__N_122strconv_attribute_implINS1_9opt_falseEE9parse_eolEPcc, ptr @_ZN4pugi4impl12_GLOBAL__N_122strconv_attribute_implINS1_8opt_trueEE9parse_eolEPcc, ptr @_ZN4pugi4impl12_GLOBAL__N_122strconv_attribute_implINS1_9opt_falseEE11parse_wconvEPcc, ptr @_ZN4pugi4impl12_GLOBAL__N_122strconv_attribute_implINS1_8opt_trueEE11parse_wconvEPcc, ptr @_ZN4pugi4impl12_GLOBAL__N_122strconv_attribute_implINS1_9opt_falseEE11parse_wconvEPcc, ptr @_ZN4pugi4impl12_GLOBAL__N_122strconv_attribute_implINS1_8opt_trueEE11parse_wconvEPcc, ptr @_ZN4pugi4impl12_GLOBAL__N_122strconv_attribute_implINS1_9opt_falseEE11parse_wnormEPcc, ptr @_ZN4pugi4impl12_GLOBAL__N_122strconv_attribute_implINS1_8opt_trueEE11parse_wnormEPcc, ptr @_ZN4pugi4impl12_GLOBAL__N_122strconv_attribute_implINS1_9opt_falseEE11parse_wnormEPcc, ptr @_ZN4pugi4impl12_GLOBAL__N_122strconv_attribute_implINS1_8opt_trueEE11parse_wnormEPcc, ptr @_ZN4pugi4impl12_GLOBAL__N_122strconv_attribute_implINS1_9opt_falseEE11parse_wnormEPcc, ptr @_ZN4pugi4impl12_GLOBAL__N_122strconv_attribute_implINS1_8opt_trueEE11parse_wnormEPcc, ptr @_ZN4pugi4impl12_GLOBAL__N_122strconv_attribute_implINS1_9opt_falseEE11parse_wnormEPcc, ptr @_ZN4pugi4impl12_GLOBAL__N_122strconv_attribute_implINS1_8opt_trueEE11parse_wnormEPcc], align 8
 @switch.table._ZN4pugi4impl12_GLOBAL__N_116load_buffer_implEPNS1_19xml_document_structEPNS_15xml_node_structEPvmjNS_12xml_encodingEbbPPc.83 = private unnamed_addr constant [8 x ptr] [ptr @_ZN4pugi4impl12_GLOBAL__N_119strconv_pcdata_implINS1_9opt_falseES3_S3_E5parseEPc, ptr @_ZN4pugi4impl12_GLOBAL__N_119strconv_pcdata_implINS1_9opt_falseES3_NS1_8opt_trueEE5parseEPc, ptr @_ZN4pugi4impl12_GLOBAL__N_119strconv_pcdata_implINS1_9opt_falseENS1_8opt_trueES3_E5parseEPc, ptr @_ZN4pugi4impl12_GLOBAL__N_119strconv_pcdata_implINS1_9opt_falseENS1_8opt_trueES4_E5parseEPc, ptr @_ZN4pugi4impl12_GLOBAL__N_119strconv_pcdata_implINS1_8opt_trueENS1_9opt_falseES4_E5parseEPc, ptr @_ZN4pugi4impl12_GLOBAL__N_119strconv_pcdata_implINS1_8opt_trueENS1_9opt_falseES3_E5parseEPc, ptr @_ZN4pugi4impl12_GLOBAL__N_119strconv_pcdata_implINS1_8opt_trueES3_NS1_9opt_falseEE5parseEPc, ptr @_ZN4pugi4impl12_GLOBAL__N_119strconv_pcdata_implINS1_8opt_trueES3_S3_E5parseEPc], align 8
 @switch.table._ZNK4pugi16xml_parse_result11descriptionEv = private unnamed_addr constant [17 x ptr] [ptr @.str.2, ptr @.str.3, ptr @.str.4, ptr @.str.5, ptr @.str.6, ptr @.str.7, ptr @.str.8, ptr @.str.9, ptr @.str.10, ptr @.str.11, ptr @.str.12, ptr @.str.13, ptr @.str.14, ptr @.str.15, ptr @.str.16, ptr @.str.17, ptr @.str.18], align 8
-@switch.table._ZNK4pugi12xml_document4saveERNS_10xml_writerEPKcjNS_12xml_encodingE = private unnamed_addr constant [9 x i32] [i32 1, i32 poison, i32 poison, i32 poison, i32 2, i32 poison, i32 poison, i32 5, i32 5], align 4
-@switch.table._ZN4pugi4impl12_GLOBAL__N_112xpath_parser30parse_path_or_unary_expressionEv = private unnamed_addr constant [4 x i64] [i64 56, i64 24, i64 24, i64 17], align 8
+@switch.table._ZNK4pugi12xml_document4saveERNS_10xml_writerEPKcjNS_12xml_encodingE = private unnamed_addr constant [9 x i8] [i8 1, i8 poison, i8 poison, i8 poison, i8 2, i8 poison, i8 poison, i8 5, i8 5], align 4
+@switch.table._ZN4pugi4impl12_GLOBAL__N_112xpath_parser30parse_path_or_unary_expressionEv = private unnamed_addr constant [4 x i8] c"8\18\18\11", align 8
 
 @_ZN4pugi10xml_writerD1Ev = unnamed_addr alias void (ptr), ptr @_ZN4pugi10xml_writerD2Ev
 @_ZN4pugi15xml_writer_fileC1EPv = unnamed_addr alias void (ptr, ptr), ptr @_ZN4pugi15xml_writer_fileC2EPv
@@ -596,12 +596,13 @@ bb.b:                                             ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %bb.b
   %i.e = zext nneg i32 %4 to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZNK4pugi12xml_document4saveERNS_10xml_writerEPKcjNS_12xml_encodingE, i64 %i.e
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4pugi12xml_document4saveERNS_10xml_writerEPKcjNS_12xml_encodingE, i64 %i.e
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZN4pugi4impl12_GLOBAL__N_119xml_buffered_writerC2ERNS_10xml_writerENS_12xml_encodingE.exit
 
 _ZN4pugi4impl12_GLOBAL__N_119xml_buffered_writerC2ERNS_10xml_writerENS_12xml_encodingE.exit: ; preds = %switch.lookup, %bb.b
-  %.0.i.i = phi i32 [ %switch.load, %switch.lookup ], [ %4, %bb.b ]
+  %.0.i.i = phi i32 [ %switch.ext, %switch.lookup ], [ %4, %bb.b ]
   %i.f = getelementptr inbounds nuw i8, ptr %6, i64 10256
   store i32 %.0.i.i, ptr %i.f, align 8
   call fastcc void @_ZN4pugi4impl12_GLOBAL__N_111node_outputERNS1_19xml_buffered_writerEPNS_15xml_node_structEPKcjj(ptr noundef nonnull align 8 dereferenceable(10260) %6, ptr noundef nonnull %i.a, ptr noundef %2, i32 noundef %3, i32 noundef %5)
@@ -1004,12 +1005,13 @@ bb.b:                                             ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %bb.b
   %i.e = zext nneg i32 %4 to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZNK4pugi12xml_document4saveERNS_10xml_writerEPKcjNS_12xml_encodingE, i64 %i.e
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4pugi12xml_document4saveERNS_10xml_writerEPKcjNS_12xml_encodingE, i64 %i.e
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZN4pugi4impl12_GLOBAL__N_119xml_buffered_writerC2ERNS_10xml_writerENS_12xml_encodingE.exit.i
 
 _ZN4pugi4impl12_GLOBAL__N_119xml_buffered_writerC2ERNS_10xml_writerENS_12xml_encodingE.exit.i: ; preds = %switch.lookup, %bb.b
-  %.0.i.i.i = phi i32 [ %switch.load, %switch.lookup ], [ %4, %bb.b ]
+  %.0.i.i.i = phi i32 [ %switch.ext, %switch.lookup ], [ %4, %bb.b ]
   %i.f = getelementptr inbounds nuw i8, ptr %6, i64 10256
   store i32 %.0.i.i.i, ptr %i.f, align 8
   call fastcc void @_ZN4pugi4impl12_GLOBAL__N_111node_outputERNS1_19xml_buffered_writerEPNS_15xml_node_structEPKcjj(ptr noundef nonnull align 8 dereferenceable(10260) %6, ptr noundef nonnull %i.a, ptr noundef %2, i32 noundef %3, i32 noundef %5)
@@ -1412,12 +1414,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.d = zext nneg i32 %4 to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZNK4pugi12xml_document4saveERNS_10xml_writerEPKcjNS_12xml_encodingE, i64 %i.d
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4pugi12xml_document4saveERNS_10xml_writerEPKcjNS_12xml_encodingE, i64 %i.d
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZN4pugi4impl12_GLOBAL__N_119xml_buffered_writerC2ERNS_10xml_writerENS_12xml_encodingE.exit
 
 _ZN4pugi4impl12_GLOBAL__N_119xml_buffered_writerC2ERNS_10xml_writerENS_12xml_encodingE.exit: ; preds = %switch.lookup, %bb.a
-  %.0.i.i = phi i32 [ %switch.load, %switch.lookup ], [ %4, %bb.a ] ; 2 uses
+  %.0.i.i = phi i32 [ %switch.ext, %switch.lookup ], [ %4, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %5, i64 10256 ; 2 uses
   store i32 %.0.i.i, ptr %i.e, align 8
   %i.f = and i32 %3, 2
@@ -1820,10 +1823,11 @@ _ZN4pugi4impl12_GLOBAL__N_111hash_stringEPKc.exit: ; preds = %bb.a, %._crit_edge
   %.0914 = phi ptr [ %.09, %bb.b ], [ %.0912, %_ZN4pugi4impl12_GLOBAL__N_111hash_stringEPKc.exit ] ; 4 uses
   %i.p = load i32, ptr %.0914, align 8
   %i.q = sext i32 %i.p to i64
-  %2 = getelementptr [8 x i8], ptr @switch.table._ZN4pugi4impl12_GLOBAL__N_112xpath_parser30parse_path_or_unary_expressionEv, i64 %i.q
-  %switch.gep = getelementptr i8, ptr %2, i64 -8
-  %switch.load = load i64, ptr %switch.gep, align 8
-  %i.r = getelementptr inbounds nuw i8, ptr %.0914, i64 %switch.load
+  %2 = getelementptr i8, ptr @switch.table._ZN4pugi4impl12_GLOBAL__N_112xpath_parser30parse_path_or_unary_expressionEv, i64 %i.q
+  %switch.gep = getelementptr i8, ptr %2, i64 -1
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
+  %i.r = getelementptr inbounds nuw i8, ptr %.0914, i64 %switch.ext
   %i.s = tail call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %i.r, ptr noundef nonnull readonly dereferenceable(1) %1) #51
   %i.t = icmp eq i32 %i.s, 0
   br i1 %i.t, label %_ZNK4pugi14xpath_variable4nameEv.exit._crit_edge, label %bb.b
@@ -1982,10 +1986,11 @@ _ZN4pugi4impl12_GLOBAL__N_111hash_stringEPKc.exit: ; preds = %bb.a, %._crit_edge
   %.02029 = phi ptr [ %.020, %bb.b ], [ %.02027, %_ZN4pugi4impl12_GLOBAL__N_111hash_stringEPKc.exit ] ; 4 uses
   %i.p = load i32, ptr %.02029, align 8           ; 2 uses
   %i.q = sext i32 %i.p to i64
-  %3 = getelementptr [8 x i8], ptr @switch.table._ZN4pugi4impl12_GLOBAL__N_112xpath_parser30parse_path_or_unary_expressionEv, i64 %i.q
-  %switch.gep = getelementptr i8, ptr %3, i64 -8
-  %switch.load = load i64, ptr %switch.gep, align 8
-  %i.r = getelementptr inbounds nuw i8, ptr %.02029, i64 %switch.load
+  %3 = getelementptr i8, ptr @switch.table._ZN4pugi4impl12_GLOBAL__N_112xpath_parser30parse_path_or_unary_expressionEv, i64 %i.q
+  %switch.gep = getelementptr i8, ptr %3, i64 -1
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
+  %i.r = getelementptr inbounds nuw i8, ptr %.02029, i64 %switch.ext
   %i.s = tail call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %i.r, ptr noundef nonnull readonly dereferenceable(1) %1) #51
   %i.t = icmp eq i32 %i.s, 0
   br i1 %i.t, label %bb.c, label %bb.b
@@ -2171,10 +2176,11 @@ _ZN4pugi4impl12_GLOBAL__N_111hash_stringEPKc.exit.i: ; preds = %._crit_edge.loop
   %.02029.i = phi ptr [ %.020.i, %bb.b ], [ %.02027.i, %_ZN4pugi4impl12_GLOBAL__N_111hash_stringEPKc.exit.i ] ; 4 uses
   %i.p = load i32, ptr %.02029.i, align 8         ; 2 uses
   %i.q = sext i32 %i.p to i64
-  %3 = getelementptr [8 x i8], ptr @switch.table._ZN4pugi4impl12_GLOBAL__N_112xpath_parser30parse_path_or_unary_expressionEv, i64 %i.q
-  %switch.gep = getelementptr i8, ptr %3, i64 -8
-  %switch.load = load i64, ptr %switch.gep, align 8
-  %i.r = getelementptr inbounds nuw i8, ptr %.02029.i, i64 %switch.load
+  %3 = getelementptr i8, ptr @switch.table._ZN4pugi4impl12_GLOBAL__N_112xpath_parser30parse_path_or_unary_expressionEv, i64 %i.q
+  %switch.gep = getelementptr i8, ptr %3, i64 -1
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
+  %i.r = getelementptr inbounds nuw i8, ptr %.02029.i, i64 %switch.ext
   %i.s = tail call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %i.r, ptr noundef nonnull readonly dereferenceable(1) %1) #51
   %i.t = icmp eq i32 %i.s, 0
   br i1 %i.t, label %bb.c, label %bb.b
@@ -2266,10 +2272,11 @@ _ZN4pugi4impl12_GLOBAL__N_111hash_stringEPKc.exit.i: ; preds = %._crit_edge.loop
   %.02029.i = phi ptr [ %.020.i, %bb.b ], [ %.02027.i, %_ZN4pugi4impl12_GLOBAL__N_111hash_stringEPKc.exit.i ] ; 4 uses
   %i.p = load i32, ptr %.02029.i, align 8         ; 2 uses
   %i.q = sext i32 %i.p to i64
-  %3 = getelementptr [8 x i8], ptr @switch.table._ZN4pugi4impl12_GLOBAL__N_112xpath_parser30parse_path_or_unary_expressionEv, i64 %i.q
-  %switch.gep = getelementptr i8, ptr %3, i64 -8
-  %switch.load = load i64, ptr %switch.gep, align 8
-  %i.r = getelementptr inbounds nuw i8, ptr %.02029.i, i64 %switch.load
+  %3 = getelementptr i8, ptr @switch.table._ZN4pugi4impl12_GLOBAL__N_112xpath_parser30parse_path_or_unary_expressionEv, i64 %i.q
+  %switch.gep = getelementptr i8, ptr %3, i64 -1
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
+  %i.r = getelementptr inbounds nuw i8, ptr %.02029.i, i64 %switch.ext
   %i.s = tail call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %i.r, ptr noundef nonnull readonly dereferenceable(1) %1) #51
   %i.t = icmp eq i32 %i.s, 0
   br i1 %i.t, label %bb.c, label %bb.b
@@ -2549,10 +2556,11 @@ _ZN4pugi4impl12_GLOBAL__N_111hash_stringEPKc.exit.i: ; preds = %._crit_edge.loop
   %.0914.i = phi ptr [ %.09.i, %bb.b ], [ %.0912.i, %_ZN4pugi4impl12_GLOBAL__N_111hash_stringEPKc.exit.i ] ; 4 uses
   %i.p = load i32, ptr %.0914.i, align 8
   %i.q = sext i32 %i.p to i64
-  %2 = getelementptr [8 x i8], ptr @switch.table._ZN4pugi4impl12_GLOBAL__N_112xpath_parser30parse_path_or_unary_expressionEv, i64 %i.q
-  %switch.gep = getelementptr i8, ptr %2, i64 -8
-  %switch.load = load i64, ptr %switch.gep, align 8
-  %i.r = getelementptr inbounds nuw i8, ptr %.0914.i, i64 %switch.load
+  %2 = getelementptr i8, ptr @switch.table._ZN4pugi4impl12_GLOBAL__N_112xpath_parser30parse_path_or_unary_expressionEv, i64 %i.q
+  %switch.gep = getelementptr i8, ptr %2, i64 -1
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
+  %i.r = getelementptr inbounds nuw i8, ptr %.0914.i, i64 %switch.ext
   %i.s = tail call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %i.r, ptr noundef nonnull readonly dereferenceable(1) %1) #51
   %i.t = icmp eq i32 %i.s, 0
   br i1 %i.t, label %_ZNK4pugi18xpath_variable_set5_findEPKc.exit, label %bb.b
@@ -2608,10 +2616,11 @@ _ZN4pugi4impl12_GLOBAL__N_111hash_stringEPKc.exit.i: ; preds = %._crit_edge.loop
   %.0914.i = phi ptr [ %.09.i, %bb.b ], [ %.0912.i, %_ZN4pugi4impl12_GLOBAL__N_111hash_stringEPKc.exit.i ] ; 4 uses
   %i.p = load i32, ptr %.0914.i, align 8
   %i.q = sext i32 %i.p to i64
-  %2 = getelementptr [8 x i8], ptr @switch.table._ZN4pugi4impl12_GLOBAL__N_112xpath_parser30parse_path_or_unary_expressionEv, i64 %i.q
-  %switch.gep = getelementptr i8, ptr %2, i64 -8
-  %switch.load = load i64, ptr %switch.gep, align 8
-  %i.r = getelementptr inbounds nuw i8, ptr %.0914.i, i64 %switch.load
+  %2 = getelementptr i8, ptr @switch.table._ZN4pugi4impl12_GLOBAL__N_112xpath_parser30parse_path_or_unary_expressionEv, i64 %i.q
+  %switch.gep = getelementptr i8, ptr %2, i64 -1
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
+  %i.r = getelementptr inbounds nuw i8, ptr %.0914.i, i64 %switch.ext
   %i.s = tail call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %i.r, ptr noundef nonnull readonly dereferenceable(1) %1) #51
   %i.t = icmp eq i32 %i.s, 0
   br i1 %i.t, label %_ZNK4pugi18xpath_variable_set5_findEPKc.exit, label %bb.b
@@ -3014,10 +3023,11 @@ _ZN4pugi4impl12_GLOBAL__N_111hash_stringEPKc.exit.i.i.i.i: ; preds = %._crit_edg
   %.0914.i.i.i.i = phi ptr [ %.09.i.i.i.i, %bb.l ], [ %.0912.i.i.i.i, %_ZN4pugi4impl12_GLOBAL__N_111hash_stringEPKc.exit.i.i.i.i ] ; 4 uses
   %i.az = load i32, ptr %.0914.i.i.i.i, align 8
   %i.ba = sext i32 %i.az to i64
-  %1 = getelementptr [8 x i8], ptr @switch.table._ZN4pugi4impl12_GLOBAL__N_112xpath_parser30parse_path_or_unary_expressionEv, i64 %i.ba
-  %switch.gep = getelementptr i8, ptr %1, i64 -8
-  %switch.load = load i64, ptr %switch.gep, align 8
-  %i.bb = getelementptr inbounds nuw i8, ptr %.0914.i.i.i.i, i64 %switch.load
+  %1 = getelementptr i8, ptr @switch.table._ZN4pugi4impl12_GLOBAL__N_112xpath_parser30parse_path_or_unary_expressionEv, i64 %i.ba
+  %switch.gep = getelementptr i8, ptr %1, i64 -1
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
+  %i.bb = getelementptr inbounds nuw i8, ptr %.0914.i.i.i.i, i64 %switch.ext
   %i.bc = tail call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %i.bb, ptr noundef nonnull readonly dereferenceable(1) %.0.i.i) #51, !inline_history !404
   %i.bd = icmp eq i32 %i.bc, 0
   br i1 %i.bd, label %_ZN4pugi18xpath_variable_set3getEPKc.exit.i.i, label %bb.l

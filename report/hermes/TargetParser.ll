@@ -201,11 +201,11 @@ begin_hunk_0
 @_ZN12_GLOBAL__N_18R600GPUsE = internal constant [26 x { { ptr, i64 }, { ptr, i64 }, i32, i32 }] [{ { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.382, i64 4 }, { ptr, i64 } { ptr @.str.382, i64 4 }, i32 1, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.383, i64 5 }, { ptr, i64 } { ptr @.str.382, i64 4 }, i32 1, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.384, i64 5 }, { ptr, i64 } { ptr @.str.382, i64 4 }, i32 1, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.385, i64 4 }, { ptr, i64 } { ptr @.str.385, i64 4 }, i32 2, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.386, i64 5 }, { ptr, i64 } { ptr @.str.387, i64 5 }, i32 3, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.387, i64 5 }, { ptr, i64 } { ptr @.str.387, i64 5 }, i32 3, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.388, i64 5 }, { ptr, i64 } { ptr @.str.387, i64 5 }, i32 3, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.389, i64 5 }, { ptr, i64 } { ptr @.str.387, i64 5 }, i32 3, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.390, i64 5 }, { ptr, i64 } { ptr @.str.390, i64 5 }, i32 4, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.391, i64 5 }, { ptr, i64 } { ptr @.str.391, i64 5 }, i32 5, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.392, i64 5 }, { ptr, i64 } { ptr @.str.392, i64 5 }, i32 6, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.393, i64 5 }, { ptr, i64 } { ptr @.str.394, i64 5 }, i32 7, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.394, i64 5 }, { ptr, i64 } { ptr @.str.394, i64 5 }, i32 7, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.395, i64 5 }, { ptr, i64 } { ptr @.str.395, i64 5 }, i32 8, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.396, i64 4 }, { ptr, i64 } { ptr @.str.395, i64 5 }, i32 8, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.397, i64 7 }, { ptr, i64 } { ptr @.str.397, i64 7 }, i32 9, i32 2 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.398, i64 7 }, { ptr, i64 } { ptr @.str.397, i64 7 }, i32 9, i32 2 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.399, i64 7 }, { ptr, i64 } { ptr @.str.399, i64 7 }, i32 10, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.400, i64 7 }, { ptr, i64 } { ptr @.str.400, i64 7 }, i32 11, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.401, i64 4 }, { ptr, i64 } { ptr @.str.401, i64 4 }, i32 12, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.402, i64 5 }, { ptr, i64 } { ptr @.str.401, i64 4 }, i32 12, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.403, i64 5 }, { ptr, i64 } { ptr @.str.403, i64 5 }, i32 13, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.404, i64 6 }, { ptr, i64 } { ptr @.str.404, i64 6 }, i32 14, i32 0 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.405, i64 5 }, { ptr, i64 } { ptr @.str.406, i64 6 }, i32 15, i32 2 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.406, i64 6 }, { ptr, i64 } { ptr @.str.406, i64 6 }, i32 15, i32 2 }, { { ptr, i64 }, { ptr, i64 }, i32, i32 } { { ptr, i64 } { ptr @.str.407, i64 5 }, { ptr, i64 } { ptr @.str.407, i64 5 }, i32 16, i32 0 }], align 16
 @.str.409 = private unnamed_addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1
 @switch.table._ZN4llvh3ARM12getHWDivNameEj = private unnamed_addr constant [49 x ptr] [ptr @_ZN12_GLOBAL__N_110HWDivNamesE, ptr getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_110HWDivNamesE, i64 24), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_110HWDivNamesE, i64 48), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_110HWDivNamesE, i64 72), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_110HWDivNamesE, i64 96)], align 8
-@switch.table._ZN4llvh3ARM16parseArchProfileENS_9StringRefE = private unnamed_addr constant [34 x i32] [i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 3, i32 1, i32 1, i32 2, i32 3, i32 3, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 2, i32 3, i32 3, i32 0, i32 0, i32 0, i32 0, i32 1], align 4
-@switch.table._ZN4llvh3ARM16parseArchVersionENS_9StringRefE = private unnamed_addr constant [34 x i32] [i32 0, i32 2, i32 2, i32 3, i32 3, i32 4, i32 4, i32 5, i32 5, i32 5, i32 6, i32 6, i32 6, i32 6, i32 6, i32 7, i32 7, i32 7, i32 7, i32 7, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 5, i32 5, i32 5, i32 7, i32 7], align 4
+@switch.table._ZN4llvh3ARM16parseArchProfileENS_9StringRefE = private unnamed_addr constant [34 x i8] c"\00\00\00\00\00\00\00\00\00\00\00\00\00\00\03\01\01\02\03\03\01\01\01\01\01\01\02\03\03\00\00\00\00\01", align 4
+@switch.table._ZN4llvh3ARM16parseArchVersionENS_9StringRefE = private unnamed_addr constant [34 x i8] c"\00\02\02\03\03\04\04\05\05\05\06\06\06\06\06\07\07\07\07\07\08\08\08\08\08\08\08\08\08\05\05\05\07\07", align 4
 @switch.table._ZN4llvh3ARM23computeDefaultTargetABIERKNS_6TripleENS_9StringRefE = private unnamed_addr constant [10 x ptr] [ptr @.str.148, ptr @.str.148, ptr poison, ptr poison, ptr @.str.145, ptr @.str.145, ptr @.str.148, ptr poison, ptr @.str.148, ptr @.str.148], align 8
-@switch.table._ZN4llvh3ARM23computeDefaultTargetABIERKNS_6TripleENS_9StringRefE.21 = private unnamed_addr constant [10 x i64] [i64 11, i64 11, i64 poison, i64 poison, i64 5, i64 5, i64 11, i64 poison, i64 11, i64 11], align 8
-@switch.table._ZN4llvh6AMDGPU13getIsaVersionENS_9StringRefE = private unnamed_addr constant [32 x i32] [i32 0, i32 1, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 2, i32 3, i32 4, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 2, i32 3, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 2, i32 4, i32 6], align 4
+@switch.table._ZN4llvh3ARM23computeDefaultTargetABIERKNS_6TripleENS_9StringRefE.21 = private unnamed_addr constant [10 x i8] [i8 11, i8 11, i8 poison, i8 poison, i8 5, i8 5, i8 11, i8 poison, i8 11, i8 11], align 8
+@switch.table._ZN4llvh6AMDGPU13getIsaVersionENS_9StringRefE = private unnamed_addr constant [32 x i8] c"\00\01\00\00\00\00\00\00\00\01\02\03\04\00\00\00\00\00\01\02\03\00\00\00\00\00\00\00\00\02\04\06", align 4
 @switch.table._ZN4llvh6AMDGPU13getIsaVersionENS_9StringRefE.22 = private unnamed_addr constant [32 x i64] [i64 6, i64 6, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 7, i64 7, i64 7, i64 7, i64 7, i64 0, i64 0, i64 0, i64 0, i64 0, i64 8, i64 8, i64 8, i64 4294967304, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 9, i64 9, i64 9, i64 9], align 8
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
@@ -608,12 +608,13 @@ _ZN4llvh3ARM9parseArchENS_9StringRefE.exit:       ; preds = %bb.a, %.thread.spli
   %spec.select.i.in = phi ptr [ %.sroa.524.0..017.ptr.sroa_idx.le.i, %.thread.split.loop.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_19ARCHNamesE, i64 56), %bb.a ]
   %spec.select.i = load i32, ptr %spec.select.i.in, align 8, !tbaa !230
   %i.o = zext nneg i32 %spec.select.i to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN4llvh3ARM16parseArchProfileENS_9StringRefE, i64 %i.o
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN4llvh3ARM16parseArchProfileENS_9StringRefE, i64 %i.o
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZN4llvh3ARM9parseArchENS_9StringRefE.exit.thread
 
 _ZN4llvh3ARM9parseArchENS_9StringRefE.exit.thread: ; preds = %_ZNK4llvh9StringRef8endswithES0_.exit.thread.i, %_ZN4llvh3ARM9parseArchENS_9StringRefE.exit
-  %.0 = phi i32 [ %switch.load, %_ZN4llvh3ARM9parseArchENS_9StringRefE.exit ], [ 0, %_ZNK4llvh9StringRef8endswithES0_.exit.thread.i ]
+  %.0 = phi i32 [ %switch.ext, %_ZN4llvh3ARM9parseArchENS_9StringRefE.exit ], [ 0, %_ZNK4llvh9StringRef8endswithES0_.exit.thread.i ]
   ret i32 %.0
 }
 
@@ -663,12 +664,13 @@ _ZN4llvh3ARM9parseArchENS_9StringRefE.exit:       ; preds = %bb.a, %.thread.spli
   %spec.select.i.in = phi ptr [ %.sroa.524.0..017.ptr.sroa_idx.le.i, %.thread.split.loop.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_19ARCHNamesE, i64 56), %bb.a ]
   %spec.select.i = load i32, ptr %spec.select.i.in, align 8, !tbaa !230
   %i.o = zext nneg i32 %spec.select.i to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN4llvh3ARM16parseArchVersionENS_9StringRefE, i64 %i.o
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN4llvh3ARM16parseArchVersionENS_9StringRefE, i64 %i.o
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZN4llvh3ARM9parseArchENS_9StringRefE.exit.thread
 
 _ZN4llvh3ARM9parseArchENS_9StringRefE.exit.thread: ; preds = %_ZNK4llvh9StringRef8endswithES0_.exit.thread.i, %_ZN4llvh3ARM9parseArchENS_9StringRefE.exit
-  %.0 = phi i32 [ %switch.load, %_ZN4llvh3ARM9parseArchENS_9StringRefE.exit ], [ 0, %_ZNK4llvh9StringRef8endswithES0_.exit.thread.i ]
+  %.0 = phi i32 [ %switch.ext, %_ZN4llvh3ARM9parseArchENS_9StringRefE.exit ], [ 0, %_ZNK4llvh9StringRef8endswithES0_.exit.thread.i ]
   ret i32 %.0
 }
 
@@ -783,13 +785,14 @@ switch.lookup:                                    ; preds = %bb.h
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh3ARM23computeDefaultTargetABIERKNS_6TripleENS_9StringRefE, i64 %i.ac
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.ad = zext nneg i32 %switch.tableidx to i64
-  %switch.gep22 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh3ARM23computeDefaultTargetABIERKNS_6TripleENS_9StringRefE.21, i64 %i.ad
-  %switch.load23 = load i64, ptr %switch.gep22, align 8
+  %switch.gep22 = getelementptr inbounds nuw i8, ptr @switch.table._ZN4llvh3ARM23computeDefaultTargetABIERKNS_6TripleENS_9StringRefE.21, i64 %i.ad
+  %switch.load23 = load i8, ptr %switch.gep22, align 1
+  %switch.ext = zext i8 %switch.load23 to i64
   br label %bb.l
 
 bb.l:                                             ; preds = %switch.lookup, %bb.i, %bb.g, %bb.f, %bb.d, %bb.e, %bb.k, %bb.j
   %.sroa.014.0 = phi ptr [ @.str.147, %bb.i ], [ %.str.146..str.147, %bb.f ], [ @.str.145, %bb.d ], [ @.str.145, %bb.e ], [ %switch.load, %switch.lookup ], [ @.str.148, %bb.j ], [ @.str.145, %bb.k ], [ @.str.145, %bb.g ]
-  %.sroa.10.0 = phi i64 [ 8, %bb.i ], [ %., %bb.f ], [ 5, %bb.d ], [ 5, %bb.e ], [ %switch.load23, %switch.lookup ], [ 11, %bb.j ], [ 5, %bb.k ], [ 5, %bb.g ]
+  %.sroa.10.0 = phi i64 [ 8, %bb.i ], [ %., %bb.f ], [ 5, %bb.d ], [ 5, %bb.e ], [ %switch.ext, %switch.lookup ], [ 11, %bb.j ], [ 5, %bb.k ], [ 5, %bb.g ]
   %.fca.0.insert = insertvalue { ptr, i64 } poison, ptr %.sroa.014.0, 0
   %.fca.1.insert = insertvalue { ptr, i64 } %.fca.0.insert, i64 %.sroa.10.0, 1
   ret { ptr, i64 } %.fca.1.insert
@@ -1192,15 +1195,16 @@ _ZN4llvh6AMDGPU15parseArchAMDGCNENS_9StringRefE.exit: ; preds = %_ZNK4llvh9Strin
 
 switch.lookup:                                    ; preds = %_ZN4llvh6AMDGPU15parseArchAMDGCNENS_9StringRefE.exit
   %i.n = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN4llvh6AMDGPU13getIsaVersionENS_9StringRefE, i64 %i.n
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN4llvh6AMDGPU13getIsaVersionENS_9StringRefE, i64 %i.n
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.o = zext nneg i32 %switch.tableidx to i64
   %switch.gep21 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh6AMDGPU13getIsaVersionENS_9StringRefE.22, i64 %i.o
   %switch.load22 = load i64, ptr %switch.gep21, align 8
   br label %_ZNK4llvh9StringRef6equalsES0_.exit.thread10
 
 _ZNK4llvh9StringRef6equalsES0_.exit.thread10:     ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit.thread.i, %switch.lookup, %_ZN4llvh6AMDGPU15parseArchAMDGCNENS_9StringRefE.exit, %bb.a, %_ZNK4llvh9StringRef6equalsES0_.exit
-  %.sroa.37.1 = phi i32 [ 0, %_ZNK4llvh9StringRef6equalsES0_.exit ], [ 0, %bb.a ], [ 0, %_ZN4llvh6AMDGPU15parseArchAMDGCNENS_9StringRefE.exit ], [ %switch.load, %switch.lookup ], [ 0, %_ZNK4llvh9StringRef6equalsES0_.exit.thread.i ]
+  %.sroa.37.1 = phi i32 [ 0, %_ZNK4llvh9StringRef6equalsES0_.exit ], [ 0, %bb.a ], [ 0, %_ZN4llvh6AMDGPU15parseArchAMDGCNENS_9StringRefE.exit ], [ %switch.ext, %switch.lookup ], [ 0, %_ZNK4llvh9StringRef6equalsES0_.exit.thread.i ]
   %.sroa.08.0.insert.insert = phi i64 [ 7, %_ZNK4llvh9StringRef6equalsES0_.exit ], [ %.fr14, %bb.a ], [ 0, %_ZN4llvh6AMDGPU15parseArchAMDGCNENS_9StringRefE.exit ], [ %switch.load22, %switch.lookup ], [ 0, %_ZNK4llvh9StringRef6equalsES0_.exit.thread.i ]
   %.fca.0.insert = insertvalue { i64, i32 } poison, i64 %.sroa.08.0.insert.insert, 0
   %.fca.1.insert = insertvalue { i64, i32 } %.fca.0.insert, i32 %.sroa.37.1, 1

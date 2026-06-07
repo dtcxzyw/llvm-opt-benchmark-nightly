@@ -201,7 +201,7 @@ $_ZTVN2v88internal23OptimizedCompilationJobE = comdat any
 @.str.98 = private unnamed_addr constant [18 x i8] c"aborted compiling\00", align 1
 @.str.99 = private unnamed_addr constant [24 x i8] c"V8.RecompileSynchronous\00", align 1
 @.str.100 = private unnamed_addr constant [11 x i8] c"!is_null()\00", align 1
-@switch.table._ZN2v88internal12_GLOBAL__N_123ScriptCompileTimerScopeD2Ev = private unnamed_addr constant [16 x i32] [i32 7, i32 10, i32 8, i32 4, i32 11, i32 12, i32 9, i32 5, i32 6, i32 13, i32 16, i32 17, i32 18, i32 19, i32 0, i32 21], align 4
+@switch.table._ZN2v88internal12_GLOBAL__N_123ScriptCompileTimerScopeD2Ev = private unnamed_addr constant [16 x i8] c"\07\0A\08\04\0B\0C\09\05\06\0D\10\11\12\13\00\15", align 4
 
 @_ZN2v88internal22CompilationHandleScopeD1Ev = hidden unnamed_addr alias void (ptr), ptr @_ZN2v88internal22CompilationHandleScopeD2Ev
 @_ZN2v88internal34FinalizeUnoptimizedCompilationDataC1EPNS0_12LocalIsolateENS0_6HandleINS0_18SharedFunctionInfoEEENS0_11MaybeHandleINS0_12CoverageInfoEEENS_4base9TimeDeltaESB_ = hidden unnamed_addr alias void (ptr, ptr, ptr, ptr, i64, i64), ptr @_ZN2v88internal34FinalizeUnoptimizedCompilationDataC2EPNS0_12LocalIsolateENS0_6HandleINS0_18SharedFunctionInfoEEENS0_11MaybeHandleINS0_12CoverageInfoEEENS_4base9TimeDeltaESB_
@@ -604,12 +604,13 @@ bb.g:                                             ; preds = %bb.f
 
 switch.lookup:                                    ; preds = %bb.f
   %i.m = zext nneg i32 %i.k to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN2v88internal12_GLOBAL__N_123ScriptCompileTimerScopeD2Ev, i64 %i.m
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN2v88internal12_GLOBAL__N_123ScriptCompileTimerScopeD2Ev, i64 %i.m
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZN2v88internal12_GLOBAL__N_123ScriptCompileTimerScope17GetCacheBehaviourEv.exit
 
 _ZN2v88internal12_GLOBAL__N_123ScriptCompileTimerScope17GetCacheBehaviourEv.exit: ; preds = %switch.lookup, %bb.b, %bb.c, %bb.e
-  %.0.i = phi i32 [ %switch.select3.i, %bb.e ], [ %..i, %bb.c ], [ 15, %bb.b ], [ %switch.load, %switch.lookup ] ; 2 uses
+  %.0.i = phi i32 [ %switch.select3.i, %bb.e ], [ %..i, %bb.c ], [ 15, %bb.b ], [ %switch.ext, %switch.lookup ] ; 2 uses
   %i.n = load ptr, ptr %0, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 58656
   %i.p = load ptr, ptr %i.o, align 8              ; 3 uses

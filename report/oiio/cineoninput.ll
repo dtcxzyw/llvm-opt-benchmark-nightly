@@ -201,10 +201,10 @@ begin_hunk_0
 @.str.112 = private unnamed_addr constant [26 x i8] c"vector::_M_default_append\00", align 1
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @__cxx_global_var_init, ptr @_ZN3fmt3v1212format_facetISt6localeE2idE }]
 @llvm.used = appending global [1 x ptr] [ptr @_ZN3fmt3v1212format_facetISt6localeE2idE], section "llvm.metadata"
-@switch.table._ZN11OpenImageIO4v3_111CineonInput4openERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_9ImageSpecE = private unnamed_addr constant [4 x i64] [i64 258, i64 260, i64 262, i64 262], align 8
-@switch.table._ZN11OpenImageIO4v3_111CineonInput4openERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_9ImageSpecE.1 = private unnamed_addr constant [8 x i32] [i32 1, i32 2, i32 4, i32 3, i32 5, i32 6, i32 8, i32 7], align 4
+@switch.table._ZN11OpenImageIO4v3_111CineonInput4openERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_9ImageSpecE = private unnamed_addr constant [4 x i16] [i16 258, i16 260, i16 262, i16 262], align 8
+@switch.table._ZN11OpenImageIO4v3_111CineonInput4openERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_9ImageSpecE.1 = private unnamed_addr constant [8 x i8] c"\01\02\04\03\05\06\08\07", align 4
 @switch.table._ZN11OpenImageIO4v3_111CineonInput4openERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_9ImageSpecE.3 = private unnamed_addr constant [7 x ptr] [ptr @.str.46, ptr @.str.47, ptr @.str.48, ptr @.str.49, ptr @.str.50, ptr @.str.51, ptr @.str.52], align 8
-@switch.table._ZN11OpenImageIO4v3_111CineonInput4openERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_9ImageSpecE.4 = private unnamed_addr constant [7 x i64] [i64 6, i64 30, i64 31, i64 31, i64 32, i64 31, i64 32], align 8
+@switch.table._ZN11OpenImageIO4v3_111CineonInput4openERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_9ImageSpecE.4 = private unnamed_addr constant [7 x i8] c"\06\1E\1F\1F \1F ", align 8
 @switch.table._ZN11OpenImageIO4v3_111CineonInput21get_descriptor_stringEN6cineon10DescriptorE = private unnamed_addr constant [7 x ptr] [ptr @.str.58, ptr @.str.59, ptr @.str.61, ptr @.str.63, ptr @.str.60, ptr @.str.62, ptr @.str.64], align 8
 
 ; Function Attrs: mustprogress uwtable
@@ -534,14 +534,15 @@ bb.h:                                             ; preds = %._crit_edge, %._cri
 
 switch.lookup:                                    ; preds = %._crit_edge
   %i.aw = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN11OpenImageIO4v3_111CineonInput4openERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_9ImageSpecE, i64 %i.aw
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN11OpenImageIO4v3_111CineonInput4openERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_9ImageSpecE, i64 %i.aw
+  %switch.load = load i16, ptr %switch.gep, align 2
+  %switch.ext = zext i16 %switch.load to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #27
   %i.ax = tail call noundef i32 @_ZNK6cineon6Header5WidthEv(ptr noundef nonnull align 4 dereferenceable(2048) %i.ad)
   %i.ay = tail call noundef i32 @_ZNK6cineon6Header6HeightEv(ptr noundef nonnull align 4 dereferenceable(2048) %i.ad)
   %i.az = load i8, ptr %i.ae, align 1, !tbaa !62
   %i.ba = zext i8 %i.az to i32
-  call void @_ZN11OpenImageIO4v3_19ImageSpecC1EiiiNS0_8TypeDescE(ptr noundef nonnull align 8 dereferenceable(160) %18, i32 noundef %i.ax, i32 noundef %i.ay, i32 noundef %i.ba, i64 %switch.load) #27
+  call void @_ZN11OpenImageIO4v3_19ImageSpecC1EiiiNS0_8TypeDescE(ptr noundef nonnull align 8 dereferenceable(160) %18, i32 noundef %i.ax, i32 noundef %i.ay, i32 noundef %i.ba, i64 %switch.ext) #27
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 38 uses
   %i.bc = call noundef nonnull align 8 dereferenceable(160) ptr @_ZN11OpenImageIO4v3_19ImageSpecaSEOS1_(ptr noundef nonnull align 8 dereferenceable(160) %i.bb, ptr noundef nonnull align 8 dereferenceable(160) %18) #27 ; 0 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %18, i64 136 ; 2 uses
@@ -944,12 +945,13 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 
 switch.lookup701:                                 ; preds = %._crit_edge509
   %i.kc = zext nneg i8 %i.dj to i64
-  %switch.gep702 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN11OpenImageIO4v3_111CineonInput4openERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_9ImageSpecE.1, i64 %i.kc
-  %switch.load703 = load i32, ptr %switch.gep702, align 4
+  %switch.gep702 = getelementptr inbounds nuw i8, ptr @switch.table._ZN11OpenImageIO4v3_111CineonInput4openERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_9ImageSpecE.1, i64 %i.kc
+  %switch.load703 = load i8, ptr %switch.gep702, align 1
+  %switch.ext704 = zext i8 %switch.load703 to i32
   br label %bb.bb
 
 bb.bb:                                            ; preds = %._crit_edge509, %switch.lookup701
-  %.066 = phi i32 [ %switch.load703, %switch.lookup701 ], [ 0, %._crit_edge509 ]
+  %.066 = phi i32 [ %switch.ext704, %switch.lookup701 ], [ 0, %._crit_edge509 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.start.p0(ptr nonnull %11)
   store i32 %.066, ptr %i.g, align 4, !tbaa !3
@@ -1352,9 +1354,10 @@ switch.lookup707:                                 ; preds = %bb.da
   %switch.gep708 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN11OpenImageIO4v3_111CineonInput4openERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_9ImageSpecE.3, i64 %i.wq
   %switch.load709 = load ptr, ptr %switch.gep708, align 8
   %i.wr = zext nneg i8 %i.wn to i64
-  %switch.gep710 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN11OpenImageIO4v3_111CineonInput4openERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_9ImageSpecE.4, i64 %i.wr
-  %switch.load711 = load i64, ptr %switch.gep710, align 8
-  %i.ws = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %59, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %switch.load709, i64 noundef %switch.load711)
+  %switch.gep711 = getelementptr inbounds nuw i8, ptr @switch.table._ZN11OpenImageIO4v3_111CineonInput4openERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_9ImageSpecE.4, i64 %i.wr
+  %switch.load712 = load i8, ptr %switch.gep711, align 1
+  %switch.ext713 = zext i8 %switch.load712 to i64
+  %i.ws = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %59, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %switch.load709, i64 noundef %switch.ext713)
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exitthread-pre-split unwind label %bb.db ; 0 uses
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exitthread-pre-split: ; preds = %switch.lookup707

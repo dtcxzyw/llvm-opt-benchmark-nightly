@@ -201,8 +201,8 @@ begin_hunk_0
 @.str.364 = private unnamed_addr constant [24 x i8] c"vector::_M_range_insert\00", align 1
 @.str.365 = private unnamed_addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1
 @switch.table._ZN6Assimp15ColladaExporter14WriteMaterialsEv = private unnamed_addr constant [8 x ptr] [ptr @.str.145, ptr @.str.141, ptr @.str.143, ptr poison, ptr poison, ptr poison, ptr poison, ptr @.str.144], align 8
-@switch.table._ZN6Assimp15ColladaExporter14WriteMaterialsEv.1 = private unnamed_addr constant [8 x i64] [i64 7, i64 5, i64 5, i64 poison, i64 poison, i64 poison, i64 poison, i64 8], align 8
-@switch.table._ZN6Assimp15ColladaExporter15WriteFloatArrayERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_13FloatDataTypeEPKfm = private unnamed_addr constant [7 x i64] [i64 3, i64 2, i64 3, i64 3, i64 16, i64 1, i64 1], align 8
+@switch.table._ZN6Assimp15ColladaExporter14WriteMaterialsEv.1 = private unnamed_addr constant [8 x i8] [i8 7, i8 5, i8 5, i8 poison, i8 poison, i8 poison, i8 poison, i8 8], align 8
+@switch.table._ZN6Assimp15ColladaExporter15WriteFloatArrayERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_13FloatDataTypeEPKfm = private unnamed_addr constant [7 x i8] c"\03\02\03\03\10\01\01", align 8
 
 @_ZN6Assimp15ColladaExporterC1EPK7aiScenePNS_8IOSystemERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESD_ = hidden unnamed_addr alias void (ptr, ptr, ptr, ptr, ptr), ptr @_ZN6Assimp15ColladaExporterC2EPK7aiScenePNS_8IOSystemERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESD_
 
@@ -605,10 +605,11 @@ switch.lookup:                                    ; preds = %bb.u
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6Assimp15ColladaExporter14WriteMaterialsEv, i64 %i.cm
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.cn = zext nneg i32 %switch.tableidx to i64
-  %switch.gep2503 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6Assimp15ColladaExporter14WriteMaterialsEv.1, i64 %i.cn
-  %switch.load2504 = load i64, ptr %switch.gep2503, align 8
+  %switch.gep2503 = getelementptr inbounds nuw i8, ptr @switch.table._ZN6Assimp15ColladaExporter14WriteMaterialsEv.1, i64 %i.cn
+  %switch.load2504 = load i8, ptr %switch.gep2503, align 1
+  %switch.ext = zext i8 %switch.load2504 to i64
   %i.co = load i64, ptr %i.bu, align 8
-  %i.cp = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.bt, i64 noundef 0, i64 noundef %i.co, ptr noundef nonnull %switch.load, i64 noundef %switch.load2504)
+  %i.cp = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.bt, i64 noundef 0, i64 noundef %i.co, ptr noundef nonnull %switch.load, i64 noundef %switch.ext)
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit233 unwind label %bb.x ; 0 uses
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit233: ; preds = %bb.u, %switch.lookup, %.thread
@@ -1011,8 +1012,9 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i32 %2 to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6Assimp15ColladaExporter15WriteFloatArrayERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_13FloatDataTypeEPKfm, i64 %i.b
-  %switch.load = load i64, ptr %switch.gep, align 8 ; 2 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6Assimp15ColladaExporter15WriteFloatArrayERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_13FloatDataTypeEPKfm, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64       ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25
   call fastcc void @_ZN6AssimpL11XMLIDEncodeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind noalias writable align 8 %6, ptr noundef nonnull align 8 dereferenceable(32) %1)
@@ -1192,7 +1194,7 @@ _ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit70 unwind label %bb.f ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit70: ; preds = %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit68
-  %i.bs = mul i64 %switch.load, %4                ; 3 uses
+  %i.bs = mul i64 %4, %switch.ext                 ; 3 uses
   %i.bt = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertImEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.bq, i64 noundef %i.bs)
           to label %_ZNSolsEm.exit unwind label %bb.f
 
@@ -1477,7 +1479,7 @@ _ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit136 unwind label %bb.f ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit136: ; preds = %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit134
-  %i.fh = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertImEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.ff, i64 noundef %switch.load)
+  %i.fh = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertImEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.ff, i64 noundef %switch.ext)
           to label %_ZNSolsEm.exit138 unwind label %bb.f ; 2 uses
 
 _ZNSolsEm.exit138:                                ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit136

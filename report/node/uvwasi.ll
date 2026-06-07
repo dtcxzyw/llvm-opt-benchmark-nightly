@@ -119,7 +119,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.75 = private unnamed_addr constant [19 x i8] c"UVWASI_ENOTCAPABLE\00", align 1
 @.str.76 = private unnamed_addr constant [16 x i8] c"UVWASI_ESUCCESS\00", align 1
 @.str.77 = private unnamed_addr constant [21 x i8] c"UVWASI_UNKNOWN_ERROR\00", align 1
-@switch.table.uvwasi_fd_advise = private unnamed_addr constant [6 x i32] [i32 0, i32 2, i32 1, i32 3, i32 4, i32 5], align 4
+@switch.table.uvwasi_fd_advise = private unnamed_addr constant [6 x i8] c"\00\02\01\03\04\05", align 4
 @switch.table.uvwasi_embedder_err_code_to_string = private unnamed_addr constant [77 x ptr] [ptr @.str.76, ptr @.str, ptr @.str.1, ptr @.str.2, ptr @.str.3, ptr @.str.4, ptr @.str.5, ptr @.str.6, ptr @.str.7, ptr @.str.8, ptr @.str.9, ptr @.str.10, ptr @.str.11, ptr @.str.12, ptr @.str.13, ptr @.str.14, ptr @.str.15, ptr @.str.16, ptr @.str.17, ptr @.str.18, ptr @.str.19, ptr @.str.20, ptr @.str.21, ptr @.str.22, ptr @.str.23, ptr @.str.24, ptr @.str.25, ptr @.str.26, ptr @.str.27, ptr @.str.28, ptr @.str.29, ptr @.str.30, ptr @.str.31, ptr @.str.32, ptr @.str.33, ptr @.str.34, ptr @.str.35, ptr @.str.36, ptr @.str.37, ptr @.str.38, ptr @.str.39, ptr @.str.40, ptr @.str.41, ptr @.str.42, ptr @.str.43, ptr @.str.44, ptr @.str.45, ptr @.str.46, ptr @.str.47, ptr @.str.48, ptr @.str.49, ptr @.str.50, ptr @.str.51, ptr @.str.52, ptr @.str.53, ptr @.str.54, ptr @.str.55, ptr @.str.56, ptr @.str.57, ptr @.str.58, ptr @.str.59, ptr @.str.60, ptr @.str.61, ptr @.str.62, ptr @.str.63, ptr @.str.64, ptr @.str.65, ptr @.str.66, ptr @.str.67, ptr @.str.68, ptr @.str.69, ptr @.str.70, ptr @.str.71, ptr @.str.72, ptr @.str.73, ptr @.str.74, ptr @.str.75], align 8
 
 ; Function Attrs: nounwind uwtable
@@ -522,8 +522,9 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.d = zext nneg i8 %4 to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.uvwasi_fd_advise, i64 %i.d
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.uvwasi_fd_advise, i64 %i.d
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.e = load ptr, ptr %0, align 8, !tbaa !30
   %i.f = call zeroext i16 @uvwasi_fd_table_get(ptr noundef %i.e, i32 noundef %1, ptr noundef nonnull %i.a, i64 noundef 128, i64 noundef 0) #21 ; 2 uses
   %.not = icmp eq i16 %i.f, 0
@@ -548,7 +549,7 @@ bb.d:                                             ; preds = %bb.c
   %i.p = load ptr, ptr %i.a, align 8, !tbaa !79
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 4
   %i.r = load i32, ptr %i.q, align 4, !tbaa !81
-  %i.s = call i32 @posix_fadvise64(i32 noundef %i.r, i64 noundef %2, i64 noundef %3, i32 noundef %switch.load) #21 ; 2 uses
+  %i.s = call i32 @posix_fadvise64(i32 noundef %i.r, i64 noundef %2, i64 noundef %3, i32 noundef %switch.ext) #21 ; 2 uses
   %.not19 = icmp eq i32 %i.s, 0
   br i1 %.not19, label %bb.f, label %bb.e
 

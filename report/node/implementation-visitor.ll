@@ -201,9 +201,9 @@ begin_hunk_0
 @.str.843 = private unnamed_addr constant [8 x i8] c"return \00", align 1
 @.str.844 = private unnamed_addr constant [3 x i8] c");\00", align 1
 @switch.table._ZN2v88internal6torque21ImplementationVisitor24GeneratePrintDefinitionsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE = private unnamed_addr constant [3 x ptr] [ptr @.str.788, ptr @.str.789, ptr @.str.790], align 8
-@switch.table._ZN2v88internal6torque21ImplementationVisitor24GeneratePrintDefinitionsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.79 = private unnamed_addr constant [3 x i64] [i64 4, i64 16, i64 16], align 8
+@switch.table._ZN2v88internal6torque21ImplementationVisitor24GeneratePrintDefinitionsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.79 = private unnamed_addr constant [3 x i8] c"\04\10\10", align 8
 @switch.table._ZN2v88internal6torque21ImplementationVisitor24GeneratePrintDefinitionsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.80 = private unnamed_addr constant [3 x ptr] [ptr @.str.792, ptr @.str.793, ptr @.str.794], align 8
-@switch.table._ZN2v88internal6torque21ImplementationVisitor24GeneratePrintDefinitionsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.81 = private unnamed_addr constant [3 x i64] [i64 5, i64 17, i64 17], align 8
+@switch.table._ZN2v88internal6torque21ImplementationVisitor24GeneratePrintDefinitionsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.81 = private unnamed_addr constant [3 x i8] c"\05\11\11", align 8
 
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN2v88internal6torque21ImplementationVisitor5VisitEPNS1_10ExpressionE(ptr dead_on_unwind noalias writable sret(%"class.v8::internal::torque::VisitResult") align 8 %0, ptr noundef nonnull align 8 dereferenceable(1460) %1, ptr noundef %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
@@ -606,13 +606,14 @@ _ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic
   %switch.gep988 = getelementptr inbounds nuw [8 x i8], ptr %switch.table._ZN2v88internal6torque21ImplementationVisitor24GeneratePrintDefinitionsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.80.sink, i64 %i.qm
   %switch.load989 = load ptr, ptr %switch.gep988, align 8
   %i.qn = zext nneg i32 %.sink996 to i64
-  %switch.gep990 = getelementptr inbounds nuw [8 x i8], ptr %switch.table._ZN2v88internal6torque21ImplementationVisitor24GeneratePrintDefinitionsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.81.sink, i64 %i.qn
-  %switch.load991 = load i64, ptr %switch.gep990, align 8
+  %switch.gep990 = getelementptr inbounds nuw i8, ptr %switch.table._ZN2v88internal6torque21ImplementationVisitor24GeneratePrintDefinitionsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.81.sink, i64 %i.qn
+  %switch.load991 = load i8, ptr %switch.gep990, align 1
+  %switch.ext992 = zext i8 %switch.load991 to i64
   br label %.invoke.i
 
 .invoke.i:                                        ; preds = %.invoke.i.sink.split, %bb.ct
   %i.qo = phi ptr [ @.str.787, %bb.ct ], [ %switch.load989, %.invoke.i.sink.split ]
-  %i.qp = phi i64 [ 48, %bb.ct ], [ %switch.load991, %.invoke.i.sink.split ]
+  %i.qp = phi i64 [ 48, %bb.ct ], [ %switch.ext992, %.invoke.i.sink.split ]
   %i.qq = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.c, ptr noundef nonnull %i.qo, i64 noundef %i.qp)
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit80.i unwind label %bb.cu ; 0 uses
 

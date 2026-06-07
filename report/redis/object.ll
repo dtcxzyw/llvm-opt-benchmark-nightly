@@ -155,7 +155,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.125 = private unnamed_addr constant [7 x i8] c"doctor\00", align 1
 @.str.126 = private unnamed_addr constant [6 x i8] c"purge\00", align 1
 @.str.127 = private unnamed_addr constant [26 x i8] c"Error purging dirty pages\00", align 1
-@switch.table.kvobjSet = private unnamed_addr constant [5 x i64] [i64 1, i64 3, i64 5, i64 9, i64 17], align 8
+@switch.table.kvobjSet = private unnamed_addr constant [5 x i8] c"\01\03\05\09\11", align 8
 @switch.table.objectCommand = private unnamed_addr constant [13 x ptr] [ptr @.str.29, ptr @.str.30, ptr @.str.31, ptr @.str.39, ptr @.str.39, ptr @.str.39, ptr @.str.35, ptr @.str.36, ptr @.str.37, ptr @.str.32, ptr @.str.38, ptr @.str.33, ptr @.str.34], align 8
 
 ; Function Attrs: nounwind uwtable
@@ -279,12 +279,13 @@ sdslen.exit.thread:                               ; preds = %sdslen.exit, %bb.c,
 
 switch.lookup:                                    ; preds = %sdslen.exit.thread
   %i.y = zext nneg i8 %i.w to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.kvobjSet, i64 %i.y
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.kvobjSet, i64 %i.y
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   br label %sdsReqSize.exit
 
 sdsReqSize.exit:                                  ; preds = %sdslen.exit.thread, %switch.lookup
-  %.0.i.i = phi i64 [ %switch.load, %switch.lookup ], [ 0, %sdslen.exit.thread ]
+  %.0.i.i = phi i64 [ %switch.ext, %switch.lookup ], [ 0, %sdslen.exit.thread ]
   %i.z = add i64 %.0.i37, 1
   %i.aa = add i64 %i.z, %.0.i.i                   ; 2 uses
   %i.ab = zext nneg i16 %i.u to i64               ; 2 uses
@@ -667,12 +668,13 @@ sdslen.exit.i:                                    ; preds = %bb.r, %bb.q, %bb.p,
 
 switch.lookup:                                    ; preds = %sdslen.exit.i
   %i.bf = zext nneg i8 %i.bd to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.kvobjSet, i64 %i.bf
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.kvobjSet, i64 %i.bf
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   br label %sdsReqSize.exit.i
 
 sdsReqSize.exit.i:                                ; preds = %sdslen.exit.i, %switch.lookup
-  %.0.i.i.i = phi i64 [ %switch.load, %switch.lookup ], [ 0, %sdslen.exit.i ]
+  %.0.i.i.i = phi i64 [ %switch.ext, %switch.lookup ], [ 0, %sdslen.exit.i ]
   %i.bg = add i64 %.0.i.i, 1
   %i.bh = add i64 %i.bg, %.0.i.i.i                ; 4 uses
   %i.bi = zext nneg i16 %i.ao to i64              ; 3 uses

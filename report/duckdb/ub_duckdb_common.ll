@@ -201,11 +201,11 @@ begin_hunk_0
 @_ZTVSt23_Sp_counted_ptr_inplaceIN6duckdb24CachingFileSystemWrapperESaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr @_ZTISt23_Sp_counted_ptr_inplaceIN6duckdb24CachingFileSystemWrapperESaIvELN9__gnu_cxx12_Lock_policyE2EE, ptr @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EED2Ev, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN6duckdb24CachingFileSystemWrapperESaIvELN9__gnu_cxx12_Lock_policyE2EED0Ev, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN6duckdb24CachingFileSystemWrapperESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN6duckdb24CachingFileSystemWrapperESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_destroyEv, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN6duckdb24CachingFileSystemWrapperESaIvELN9__gnu_cxx12_Lock_policyE2EE14_M_get_deleterERKSt9type_info] }, comdat, align 8
 @_ZTISt23_Sp_counted_ptr_inplaceIN6duckdb24CachingFileSystemWrapperESaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSSt23_Sp_counted_ptr_inplaceIN6duckdb24CachingFileSystemWrapperESaIvELN9__gnu_cxx12_Lock_policyE2EE, ptr @_ZTISt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE }, comdat, align 8
 @_ZTSSt23_Sp_counted_ptr_inplaceIN6duckdb24CachingFileSystemWrapperESaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr constant [99 x i8] c"St23_Sp_counted_ptr_inplaceIN6duckdb24CachingFileSystemWrapperESaIvELN9__gnu_cxx12_Lock_policyE2EE\00", comdat, align 1
-@switch.table._ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE = private unnamed_addr constant [40 x i32] [i32 2, i32 2, i32 2, i32 2, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 2, i32 2, i32 2, i32 0, i32 0, i32 0, i32 0, i32 2, i32 2, i32 2, i32 2, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 2, i32 2], align 4
+@switch.table._ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE = private unnamed_addr constant [40 x i8] c"\02\02\02\02\00\00\00\00\00\00\02\02\02\00\00\00\00\02\02\02\02\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\02\02", align 4
 @switch.table._ZN6duckdb9Exception21ExceptionTypeToStringB5cxx11ENS_13ExceptionTypeE = private unnamed_addr constant [43 x ptr] [ptr @_ZN6duckdbL13EXCEPTION_MAPE, ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 49), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 98), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 147), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 196), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 245), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 294), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 343), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 392), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 441), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 490), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 539), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 588), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 637), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 686), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 784), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 833), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 882), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 931), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 980), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1029), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1078), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1127), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1176), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 735), ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1225), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1274), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1323), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1372), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1421), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1470), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1519), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1568), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1617), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1666), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1715), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1764), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1862), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1813), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1911), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 1960), ptr getelementptr inbounds nuw (i8, ptr @_ZN6duckdbL13EXCEPTION_MAPE, i64 2009)], align 8
-@switch.table._ZN6duckdbL13StatsInternalEiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE = private unnamed_addr constant [12 x i32] [i32 2, i32 6, i32 7, i32 1, i32 7, i32 5, i32 7, i32 0, i32 7, i32 4, i32 7, i32 3], align 4
-@switch.table._ZN6duckdbL19GetLogicalTypeScoreERKNS_11LogicalTypeE = private unnamed_addr constant [110 x i64] [i64 0, i64 0, i64 0, i64 0, i64 1000, i64 0, i64 1000, i64 1000, i64 1000, i64 1000, i64 10, i64 12, i64 14, i64 16, i64 18, i64 52, i64 50, i64 53, i64 54, i64 55, i64 56, i64 21, i64 22, i64 23, i64 75, i64 77, i64 101, i64 58, i64 11, i64 13, i64 15, i64 17, i64 55, i64 1000, i64 50, i64 51, i64 100, i64 0, i64 0, i64 103, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 19, i64 20, i64 1000, i64 1000, i64 1000, i64 102, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 104, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 1000, i64 125, i64 126, i64 127, i64 150, i64 78, i64 1000, i64 1000, i64 150, i64 126, i64 150], align 8
-@switch.table._ZNK6duckdb26RadixPartitionedColumnData10BufferSizeEv = private unnamed_addr constant [6 x i64] [i64 1024, i64 1024, i64 1024, i64 1024, i64 512, i64 256], align 8
+@switch.table._ZN6duckdbL13StatsInternalEiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE = private unnamed_addr constant [12 x i8] c"\02\06\07\01\07\05\07\00\07\04\07\03", align 4
+@switch.table._ZN6duckdbL19GetLogicalTypeScoreERKNS_11LogicalTypeE = private unnamed_addr constant [110 x i16] [i16 0, i16 0, i16 0, i16 0, i16 1000, i16 0, i16 1000, i16 1000, i16 1000, i16 1000, i16 10, i16 12, i16 14, i16 16, i16 18, i16 52, i16 50, i16 53, i16 54, i16 55, i16 56, i16 21, i16 22, i16 23, i16 75, i16 77, i16 101, i16 58, i16 11, i16 13, i16 15, i16 17, i16 55, i16 1000, i16 50, i16 51, i16 100, i16 0, i16 0, i16 103, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 19, i16 20, i16 1000, i16 1000, i16 1000, i16 102, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 104, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 1000, i16 125, i16 126, i16 127, i16 150, i16 78, i16 1000, i16 1000, i16 150, i16 126, i16 150], align 8
+@switch.table._ZNK6duckdb26RadixPartitionedColumnData10BufferSizeEv = private unnamed_addr constant [6 x i16] [i16 1024, i16 1024, i16 1024, i16 1024, i16 512, i16 256], align 8
 
 @_ZN6duckdb13AllocatedDataC1Ev = unnamed_addr alias void (ptr), ptr @_ZN6duckdb13AllocatedDataC2Ev
 @_ZN6duckdb13AllocatedDataC1ERNS_9AllocatorEPhm = unnamed_addr alias void (ptr, ptr, ptr, i64), ptr @_ZN6duckdb13AllocatedDataC2ERNS_9AllocatorEPhm
@@ -608,12 +608,13 @@ bb.cx:                                            ; preds = %bb.cs
 
 switch.lookup:                                    ; preds = %bb.cx
   %i.lg = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE, i64 %i.lg
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE, i64 %i.lg
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE.exit
 
 _ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE.exit: ; preds = %bb.cx, %switch.lookup
-  %.0.i215 = phi i32 [ %switch.load, %switch.lookup ], [ 0, %bb.cx ]
+  %.0.i215 = phi i32 [ %switch.ext, %switch.lookup ], [ 0, %bb.cx ]
   store i32 %.0.i215, ptr %i.s, align 4, !tbaa !395
   br label %bb.di
 
@@ -1016,12 +1017,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.c = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE, i64 %i.c
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6duckdb25BoxRendererImplementation13TypeAlignmentERKNS_11LogicalTypeE, i64 %i.c
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %switch.lookup
-  %.0 = phi i32 [ %switch.load, %switch.lookup ], [ 0, %bb.a ]
+  %.0 = phi i32 [ %switch.ext, %switch.lookup ], [ 0, %bb.a ]
   ret i32 %.0
 }
 
@@ -1424,12 +1426,13 @@ bb.m:                                             ; preds = %bb.k
 switch.lookup:                                    ; preds = %bb.l
   %i.am = lshr exact i32 %i.aj, 12
   %i.an = zext nneg i32 %i.am to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6duckdbL13StatsInternalEiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE, i64 %i.an
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6duckdbL13StatsInternalEiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE, i64 %i.an
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.l, %switch.lookup
-  %.sink = phi i32 [ %switch.load, %switch.lookup ], [ 7, %bb.l ]
+  %.sink = phi i32 [ %switch.ext, %switch.lookup ], [ 7, %bb.l ]
   store i32 %.sink, ptr %i.u, align 8, !tbaa !2650
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #58
   ret void
@@ -1832,12 +1835,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i8 %.0.val to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6duckdbL19GetLogicalTypeScoreERKNS_11LogicalTypeE, i64 %i.b
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN6duckdbL19GetLogicalTypeScoreERKNS_11LogicalTypeE, i64 %i.b
+  %switch.load = load i16, ptr %switch.gep, align 2
+  %switch.ext = zext i16 %switch.load to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %switch.lookup
-  %.0 = phi i64 [ %switch.load, %switch.lookup ], [ 1000, %bb.a ]
+  %.0 = phi i64 [ %switch.ext, %switch.lookup ], [ 1000, %bb.a ]
   ret i64 %.0
 }
 
@@ -2240,12 +2244,13 @@ bb.a:
   br i1 %i.c, label %switch.lookup, label %bb.b
 
 switch.lookup:                                    ; preds = %bb.a
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK6duckdb26RadixPartitionedColumnData10BufferSizeEv, i64 %switch.tableidx
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK6duckdb26RadixPartitionedColumnData10BufferSizeEv, i64 %switch.tableidx
+  %switch.load = load i16, ptr %switch.gep, align 2
+  %switch.ext = zext i16 %switch.load to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %switch.lookup
-  %.0 = phi i64 [ %switch.load, %switch.lookup ], [ 128, %bb.a ]
+  %.0 = phi i64 [ %switch.ext, %switch.lookup ], [ 128, %bb.a ]
   ret i64 %.0
 }
 

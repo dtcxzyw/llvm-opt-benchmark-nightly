@@ -201,7 +201,7 @@ begin_hunk_0
 @switch.table._ZN6Assimp3FBX12FBXConverter30NameTransformationCompPropertyENS1_18TransformationCompE = private unnamed_addr constant [17 x ptr] [ptr @.str.26, ptr @.str.27, ptr @.str.28, ptr @.str.29, ptr @.str.13, ptr @.str.14, ptr @.str.15, ptr @.str.30, ptr @.str.17, ptr @.str.18, ptr @.str.19, ptr @.str.20, ptr @.str.31, ptr @.str.22, ptr @.str.25, ptr @.str.24, ptr @.str.23], align 8
 @switch.table._ZN6Assimp3FBX12FBXConverter31NeedsComplexTransformationChainERKNS0_5ModelE = private unnamed_addr constant [17 x ptr] [ptr @.str.26, ptr @.str.27, ptr @.str.28, ptr poison, ptr @.str.13, ptr @.str.14, ptr @.str.15, ptr @.str.30, ptr @.str.17, ptr @.str.18, ptr @.str.19, ptr @.str.20, ptr poison, ptr @.str.22, ptr @.str.25, ptr @.str.24, ptr @.str.23], align 8
 @switch.table._ZN6Assimp3FBX12FBXConverter27NameTransformationChainNodeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS1_18TransformationCompE = private unnamed_addr constant [17 x ptr] [ptr @.str.26, ptr @.str.27, ptr @.str.28, ptr @.str.12, ptr @.str.13, ptr @.str.14, ptr @.str.15, ptr @.str.16, ptr @.str.17, ptr @.str.18, ptr @.str.19, ptr @.str.20, ptr @.str.21, ptr @.str.22, ptr @.str.25, ptr @.str.24, ptr @.str.23], align 8
-@switch.table._ZN6Assimp3FBX12FBXConverter24ConvertMeshMultiMaterialERKNS0_12MeshGeometryERKNS0_5ModelERK12aiMatrix4x4tIfEiP6aiNodeSD_ = private unnamed_addr constant [3 x i32] [i32 1, i32 2, i32 4], align 4
+@switch.table._ZN6Assimp3FBX12FBXConverter24ConvertMeshMultiMaterialERKNS0_12MeshGeometryERKNS0_5ModelERK12aiMatrix4x4tIfEiP6aiNodeSD_ = private unnamed_addr constant [3 x i8] c"\01\02\04", align 4
 @switch.table._ZN6Assimp3FBX12FBXConverter22GenerateNodeAnimationsERSt6vectorIP10aiNodeAnimSaIS4_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKS2_IPKNS0_18AnimationCurveNodeESaISI_EERKSt3mapISI_PKNS0_14AnimationLayerESt4lessISI_ESaISt4pairIKSI_SQ_EEEllRdS10_ = private unnamed_addr constant [17 x ptr] [ptr @.str.26, ptr @.str.27, ptr @.str.28, ptr @.str.29, ptr @.str.13, ptr @.str.14, ptr @.str.15, ptr @.str.30, ptr @.str.17, ptr poison, ptr @.str.19, ptr @.str.20, ptr @.str.31, ptr @.str.22, ptr @.str.25, ptr @.str.24, ptr @.str.23], align 8
 
 @_ZN6Assimp3FBX12FBXConverterC1EP7aiSceneRKNS0_8DocumentEb = hidden unnamed_addr alias void (ptr, ptr, ptr, i1), ptr @_ZN6Assimp3FBX12FBXConverterC2EP7aiSceneRKNS0_8DocumentEb
@@ -604,9 +604,10 @@ bb.f:                                             ; preds = %.lr.ph642
 
 switch.lookup:                                    ; preds = %.lr.ph642
   %i.dh = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6Assimp3FBX12FBXConverter24ConvertMeshMultiMaterialERKNS0_12MeshGeometryERKNS0_5ModelERK12aiMatrix4x4tIfEiP6aiNodeSD_, i64 %i.dh
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %i.di = or i32 %i.dc, %switch.load
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6Assimp3FBX12FBXConverter24ConvertMeshMultiMaterialERKNS0_12MeshGeometryERKNS0_5ModelERK12aiMatrix4x4tIfEiP6aiNodeSD_, i64 %i.dh
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  %i.di = or i32 %i.dc, %switch.ext
   store i32 %i.di, ptr %i.h, align 8
   br label %.lr.ph.preheader
 
@@ -1009,9 +1010,10 @@ bb.ch:                                            ; preds = %bb.cf
 
 switch.lookup:                                    ; preds = %bb.cf
   %i.ky = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6Assimp3FBX12FBXConverter24ConvertMeshMultiMaterialERKNS0_12MeshGeometryERKNS0_5ModelERK12aiMatrix4x4tIfEiP6aiNodeSD_, i64 %i.ky
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %i.kz = or i32 %i.ku, %switch.load
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6Assimp3FBX12FBXConverter24ConvertMeshMultiMaterialERKNS0_12MeshGeometryERKNS0_5ModelERK12aiMatrix4x4tIfEiP6aiNodeSD_, i64 %i.ky
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  %i.kz = or i32 %i.ku, %switch.ext
   store i32 %i.kz, ptr %i.d, align 8
   br label %.lr.ph611.preheader
 

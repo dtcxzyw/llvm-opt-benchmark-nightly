@@ -201,9 +201,9 @@ $_ZTSFvRN6duckdb9DataChunkERNS_15ExpressionStateERNS_6VectorEE = comdat any
 @.str.101 = private unnamed_addr constant [28 x i8] c"vector<bool>::_M_insert_aux\00", align 1
 @switch.table._ZN6duckdb12_GLOBAL__N_122DecodeSortKeyRecursiveEPNS0_17DecodeSortKeyDataERNS0_23DecodeSortKeyVectorDataERNS_6VectorEmm.144 = private unnamed_addr constant [3 x float] [float +inf, float +qnan, float -inf], align 4
 @switch.table._ZN6duckdb12_GLOBAL__N_122DecodeSortKeyRecursiveEPNS0_17DecodeSortKeyDataERNS0_23DecodeSortKeyVectorDataERNS_6VectorEmm.146 = private unnamed_addr constant [3 x double] [double +inf, double +qnan, double -inf], align 8
-@switch.table._ZN6duckdb14StrfTimeFormat18AddFormatSpecifierENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_16StrTimeSpecifierE = private unnamed_addr constant [36 x i64] [i64 3, i64 poison, i64 1, i64 2, i64 poison, i64 3, i64 poison, i64 2, i64 poison, i64 2, i64 poison, i64 poison, i64 2, i64 poison, i64 2, i64 poison, i64 2, i64 2, i64 poison, i64 2, i64 poison, i64 6, i64 3, i64 poison, i64 poison, i64 3, i64 poison, i64 2, i64 2, i64 poison, i64 poison, i64 poison, i64 9, i64 4, i64 1, i64 2], align 8
+@switch.table._ZN6duckdb14StrfTimeFormat18AddFormatSpecifierENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_16StrTimeSpecifierE = private unnamed_addr constant [36 x i8] [i8 3, i8 poison, i8 1, i8 2, i8 poison, i8 3, i8 poison, i8 2, i8 poison, i8 2, i8 poison, i8 poison, i8 2, i8 poison, i8 2, i8 poison, i8 2, i8 2, i8 poison, i8 2, i8 poison, i8 6, i8 3, i8 poison, i8 poison, i8 3, i8 poison, i8 2, i8 2, i8 poison, i8 poison, i8 poison, i8 9, i8 4, i8 1, i8 2], align 8
 @switch.table._ZN6duckdb13StrTimeFormat20ParseFormatSpecifierERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS0_ = private unnamed_addr constant [37 x ptr] [ptr @.str.13, ptr poison, ptr poison, ptr poison, ptr @.str.13, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @.str.11, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @.str.12], align 8
-@switch.table._ZN6duckdb13StrTimeFormat20ParseFormatSpecifierERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS0_.147 = private unnamed_addr constant [37 x i64] [i64 8, i64 poison, i64 poison, i64 poison, i64 8, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 17, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 8], align 8
+@switch.table._ZN6duckdb13StrTimeFormat20ParseFormatSpecifierERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS0_.147 = private unnamed_addr constant [37 x i8] [i8 8, i8 poison, i8 poison, i8 poison, i8 8, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 17, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 8], align 8
 @switch.table._ZN6duckdb14StrpTimeFormat21NumericSpecifierWidthENS_16StrTimeSpecifierE = private unnamed_addr constant [34 x i32] [i32 1, i32 2, i32 2, i32 -1, i32 -1, i32 2, i32 2, i32 2, i32 2, i32 4, i32 2, i32 2, i32 2, i32 2, i32 -1, i32 2, i32 2, i32 2, i32 2, i32 6, i32 3, i32 -1, i32 -1, i32 3, i32 3, i32 2, i32 2, i32 -1, i32 -1, i32 -1, i32 9, i32 4, i32 1, i32 2], align 4
 
 ; Function Attrs: mustprogress uwtable
@@ -606,11 +606,12 @@ switch.hole_check:                                ; preds = %_ZNSt6vectorIbSaIbE
 
 switch.lookup24:                                  ; preds = %switch.hole_check
   %i.al = zext nneg i8 %2 to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6duckdb14StrfTimeFormat18AddFormatSpecifierENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_16StrTimeSpecifierE, i64 %i.al
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6duckdb14StrfTimeFormat18AddFormatSpecifierENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_16StrTimeSpecifierE, i64 %i.al
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.an = load i64, ptr %i.am, align 8, !tbaa !381
-  %i.ao = add i64 %i.an, %switch.load
+  %i.ao = add i64 %i.an, %switch.ext
   store i64 %i.ao, ptr %i.am, align 8, !tbaa !381
   br label %_ZNSt6vectorIN6duckdb16StrTimeSpecifierESaIS1_EE9push_backERKS1_.exit
 
@@ -1013,9 +1014,10 @@ switch.lookup:                                    ; preds = %switch.hole_check
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6duckdb13StrTimeFormat20ParseFormatSpecifierERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS0_, i64 %i.dg
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.dh = zext nneg i8 %switch.tableidx to i64
-  %switch.gep478 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6duckdb13StrTimeFormat20ParseFormatSpecifierERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS0_.147, i64 %i.dh
-  %switch.load479 = load i64, ptr %switch.gep478, align 8
-  %i.di = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %6, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %switch.load, i64 noundef %switch.load479)
+  %switch.gep478 = getelementptr inbounds nuw i8, ptr @switch.table._ZN6duckdb13StrTimeFormat20ParseFormatSpecifierERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS0_.147, i64 %i.dh
+  %switch.load479 = load i8, ptr %switch.gep478, align 1
+  %switch.ext = zext i8 %switch.load479 to i64
+  %i.di = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %6, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %switch.load, i64 noundef %switch.ext)
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit unwind label %bb.ay ; 0 uses
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit: ; preds = %switch.hole_check, %bb.ax, %switch.lookup

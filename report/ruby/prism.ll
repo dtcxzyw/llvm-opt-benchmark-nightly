@@ -201,11 +201,11 @@ begin_hunk_0
 @.str.257 = private unnamed_addr constant [6 x i8] c"PRISM\00", align 1
 @switch.table.pm_string_query_local = private unnamed_addr constant [5 x i32] [i32 -1, i32 0, i32 1, i32 0, i32 0], align 4
 @switch.table.pm_string_query_constant = private unnamed_addr constant [5 x i32] [i32 -1, i32 0, i32 0, i32 1, i32 0], align 4
-@switch.table.parse_expression_prefix.108 = private unnamed_addr constant [6 x i32] [i32 6, i32 poison, i32 8, i32 9, i32 poison, i32 11], align 4
-@switch.table.pm_integer_node_rational_create = private unnamed_addr constant [4 x i32] [i32 1, i32 3, i32 2, i32 4], align 4
-@switch.table.parse_rescues = private unnamed_addr constant [7 x i32] [i32 4, i32 10, i32 16, i32 20, i32 34, i32 40, i32 50], align 4
-@switch.table.parse_rescues.109 = private unnamed_addr constant [7 x i32] [i32 3, i32 8, i32 15, i32 19, i32 33, i32 39, i32 49], align 4
-@switch.table.parse_rescues.110 = private unnamed_addr constant [7 x i32] [i32 2, i32 7, i32 14, i32 18, i32 32, i32 38, i32 48], align 4
+@switch.table.parse_expression_prefix.108 = private unnamed_addr constant [6 x i8] [i8 6, i8 poison, i8 8, i8 9, i8 poison, i8 11], align 4
+@switch.table.pm_integer_node_rational_create = private unnamed_addr constant [4 x i8] c"\01\03\02\04", align 4
+@switch.table.parse_rescues = private unnamed_addr constant [7 x i8] c"\04\0A\10\14\22(2", align 4
+@switch.table.parse_rescues.109 = private unnamed_addr constant [7 x i8] c"\03\08\0F\13!'1", align 4
+@switch.table.parse_rescues.110 = private unnamed_addr constant [7 x i8] c"\02\07\0E\12 &0", align 4
 @switch.table.context_human = private unnamed_addr constant [54 x ptr] [ptr @.str.200, ptr @.str.214, ptr @.str.211, ptr @.str.228, ptr @.str.201, ptr @.str.202, ptr @.str.214, ptr @.str.211, ptr @.str.203, ptr @.str.228, ptr @.str.204, ptr @.str.205, ptr @.str.206, ptr @.str.214, ptr @.str.211, ptr @.str.228, ptr @.str.207, ptr @.str.214, ptr @.str.211, ptr @.str.228, ptr @.str.208, ptr @.str.210, ptr @.str.209, ptr @.str.211, ptr @.str.212, ptr @.str.213, ptr @.str.215, ptr @.str.216, ptr @.str.217, ptr @.str.218, ptr @.str.219, ptr @.str.214, ptr @.str.211, ptr @.str.228, ptr @.str.220, ptr @.str.221, ptr @.str.222, ptr @.str.214, ptr @.str.211, ptr @.str.228, ptr @.str.223, ptr @.str.224, ptr @.str.225, ptr @.str.226, ptr @.str.227, ptr @.str.228, ptr @.str.229, ptr @.str.214, ptr @.str.211, ptr @.str.228, ptr @.str.230, ptr @.str.231, ptr @.str.232, ptr @.str.233], align 8
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
@@ -608,17 +608,19 @@ bb.ni:                                            ; preds = %accept2.exit2546
   %i.ano = load i32, ptr %i.anf, align 8, !tbaa !7
   %i.anp = lshr i32 %i.ano, 1
   store i32 %i.anp, ptr %i.anf, align 8, !tbaa !7
+  %.val2160.pre = load i32, ptr %i.b, align 8, !tbaa !170
   br label %bb.nj
 
 switch.lookup:                                    ; preds = %accept2.exit2546
   %i.anq = zext nneg i32 %switch.tableidx3706 to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.parse_expression_prefix.108, i64 %i.anq
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.parse_expression_prefix.108, i64 %i.anq
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.nj
 
 bb.nj:                                            ; preds = %switch.lookup, %bb.ni
-  %.val2160.in = phi ptr [ %switch.gep, %switch.lookup ], [ %i.b, %bb.ni ]
+  %.val2160 = phi i32 [ %switch.ext, %switch.lookup ], [ %.val2160.pre, %bb.ni ]
   %.01938 = phi ptr [ null, %switch.lookup ], [ %i.ann, %bb.ni ] ; 4 uses
-  %.val2160 = load i32, ptr %.val2160.in, align 4
   switch i32 %.val2160, label %bb.nn [
     i32 11, label %bb.nk
     i32 9, label %bb.nk
@@ -1021,17 +1023,19 @@ bb.qb:                                            ; preds = %accept2.exit2604
   %i.awn = load i32, ptr %i.awj, align 8, !tbaa !7
   %i.awo = lshr i32 %i.awn, 1
   store i32 %i.awo, ptr %i.awj, align 8, !tbaa !7
+  %.val2159.pre = load i32, ptr %i.b, align 8, !tbaa !170
   br label %bb.qc
 
 switch.lookup3713:                                ; preds = %accept2.exit2604
   %i.awp = zext nneg i32 %switch.tableidx3711 to i64
-  %switch.gep3717 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.parse_expression_prefix.108, i64 %i.awp
+  %switch.gep3717 = getelementptr inbounds nuw i8, ptr @switch.table.parse_expression_prefix.108, i64 %i.awp
+  %switch.load3718 = load i8, ptr %switch.gep3717, align 1
+  %switch.ext3719 = zext i8 %switch.load3718 to i32
   br label %bb.qc
 
 bb.qc:                                            ; preds = %switch.lookup3713, %bb.qb
-  %.val2159.in = phi ptr [ %switch.gep3717, %switch.lookup3713 ], [ %i.b, %bb.qb ]
+  %.val2159 = phi i32 [ %switch.ext3719, %switch.lookup3713 ], [ %.val2159.pre, %bb.qb ]
   %.01957 = phi ptr [ null, %switch.lookup3713 ], [ %i.awm, %bb.qb ] ; 4 uses
-  %.val2159 = load i32, ptr %.val2159.in, align 4
   switch i32 %.val2159, label %bb.qg [
     i32 11, label %bb.qd
     i32 9, label %bb.qd
@@ -1434,10 +1438,11 @@ bb.e:                                             ; preds = %.split, %pm_node_al
 
 switch.lookup:                                    ; preds = %.split
   %i.s = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.pm_integer_node_rational_create, i64 %i.s
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.pm_integer_node_rational_create, i64 %i.s
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %.sroa.6.0..sroa_idx = getelementptr i8, ptr %i.c, i64 24
-  tail call void @pm_integer_parse(ptr noundef nonnull %.sroa.6.0..sroa_idx, i32 noundef %switch.load, ptr noundef %i.l, ptr noundef %i.n) #27
+  tail call void @pm_integer_parse(ptr noundef nonnull %.sroa.6.0..sroa_idx, i32 noundef %switch.ext, ptr noundef %i.l, ptr noundef %i.n) #27
   ret ptr %i.c
 }
 
@@ -1554,11 +1559,12 @@ bb.e:                                             ; preds = %.split, %pm_node_al
 
 switch.lookup:                                    ; preds = %.split
   %i.s = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.pm_integer_node_rational_create, i64 %i.s
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.pm_integer_node_rational_create, i64 %i.s
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %.sroa.6.0..sroa_idx = getelementptr i8, ptr %i.c, i64 24
   %i.t = getelementptr i8, ptr %i.n, i64 -1
-  tail call void @pm_integer_parse(ptr noundef nonnull %.sroa.6.0..sroa_idx, i32 noundef %switch.load, ptr noundef %i.l, ptr noundef %i.t) #27
+  tail call void @pm_integer_parse(ptr noundef nonnull %.sroa.6.0..sroa_idx, i32 noundef %switch.ext, ptr noundef %i.l, ptr noundef %i.t) #27
   ret ptr %i.c
 }
 
@@ -1961,8 +1967,8 @@ bb.a:
   %i.k = getelementptr i8, ptr %3, i64 16
   %i.l = getelementptr i8, ptr %3, i64 48
   %i.m = zext nneg i32 %4 to i64
-  %7 = getelementptr [4 x i8], ptr @switch.table.parse_rescues, i64 %i.m
-  %switch.gep = getelementptr i8, ptr %7, i64 -4
+  %7 = getelementptr i8, ptr @switch.table.parse_rescues, i64 %i.m
+  %switch.gep = getelementptr i8, ptr %7, i64 -1
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.ab
@@ -2223,8 +2229,9 @@ switch.lookup:                                    ; preds = %accept1.exit168
   %i.bq = load i32, ptr %i.h, align 8, !tbaa !7
   %i.br = shl i32 %i.bq, 1
   store i32 %i.br, ptr %i.h, align 8, !tbaa !7
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %i.bs = tail call fastcc ptr @parse_statements(ptr noundef nonnull %0, i32 noundef %switch.load, i16 noundef zeroext %i.e) ; 4 uses
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  %i.bs = tail call fastcc ptr @parse_statements(ptr noundef nonnull %0, i32 noundef %switch.ext, i16 noundef zeroext %i.e) ; 4 uses
   %.not148 = icmp eq ptr %i.bs, null
   br i1 %.not148, label %pm_rescue_node_statements_set.exit, label %bb.v
 
@@ -2367,11 +2374,12 @@ switch.lookup278:                                 ; preds = %accept2.exit177
   %i.dd = shl i32 %i.dc, 1
   store i32 %i.dd, ptr %i.db, align 8, !tbaa !7
   %i.de = zext nneg i32 %4 to i64
-  %8 = getelementptr [4 x i8], ptr @switch.table.parse_rescues.109, i64 %i.de
-  %switch.gep279 = getelementptr i8, ptr %8, i64 -4
-  %switch.load280 = load i32, ptr %switch.gep279, align 4
+  %8 = getelementptr i8, ptr @switch.table.parse_rescues.109, i64 %i.de
+  %switch.gep279 = getelementptr i8, ptr %8, i64 -1
+  %switch.load280 = load i8, ptr %switch.gep279, align 1
+  %switch.ext281 = zext i8 %switch.load280 to i32
   %i.df = add i16 %5, 1
-  %i.dg = tail call fastcc ptr @parse_statements(ptr noundef nonnull %0, i32 noundef %switch.load280, i16 noundef zeroext %i.df) ; 2 uses
+  %i.dg = tail call fastcc ptr @parse_statements(ptr noundef nonnull %0, i32 noundef %switch.ext281, i16 noundef zeroext %i.df) ; 2 uses
   %i.dh = load i32, ptr %i.db, align 8, !tbaa !7
   %i.di = lshr i32 %i.dh, 1
   store i32 %i.di, ptr %i.db, align 8, !tbaa !7
@@ -2498,11 +2506,12 @@ switch.lookup282:                                 ; preds = %accept2.exit187
   %i.ee = shl i32 %i.ed, 1
   store i32 %i.ee, ptr %i.ec, align 8, !tbaa !7
   %i.ef = zext nneg i32 %4 to i64
-  %9 = getelementptr [4 x i8], ptr @switch.table.parse_rescues.110, i64 %i.ef
-  %switch.gep283 = getelementptr i8, ptr %9, i64 -4
-  %switch.load284 = load i32, ptr %switch.gep283, align 4
+  %9 = getelementptr i8, ptr @switch.table.parse_rescues.110, i64 %i.ef
+  %switch.gep283 = getelementptr i8, ptr %9, i64 -1
+  %switch.load285 = load i8, ptr %switch.gep283, align 1
+  %switch.ext286 = zext i8 %switch.load285 to i32
   %i.eg = add i16 %5, 1
-  %i.eh = call fastcc ptr @parse_statements(ptr noundef nonnull %0, i32 noundef %switch.load284, i16 noundef zeroext %i.eg) ; 2 uses
+  %i.eh = call fastcc ptr @parse_statements(ptr noundef nonnull %0, i32 noundef %switch.ext286, i16 noundef zeroext %i.eg) ; 2 uses
   %i.ei = load i32, ptr %i.ec, align 8, !tbaa !7
   %i.ej = lshr i32 %i.ei, 1
   store i32 %i.ej, ptr %i.ec, align 8, !tbaa !7

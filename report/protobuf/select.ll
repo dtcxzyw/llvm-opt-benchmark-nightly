@@ -87,7 +87,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.79 = private unnamed_addr constant [39 x i8] c"upb_DecodeFast_Message_Packed_Tag2Byte\00", align 1
 @.str.80 = private unnamed_addr constant [31 x i8] c"_upb_FastDecoder_DecodeGeneric\00", align 1
 @upb_DecodeFast_GetFieldType.types = internal unnamed_addr constant [19 x i8] c"\00\06\05\02\02\01\06\05\00\07\00\09\08\01\01\05\06\03\04", align 16
-@switch.table.upb_DecodeFast_BuildTable.18 = private unnamed_addr constant [18 x i32] [i32 1, i32 5, i32 0, i32 0, i32 0, i32 1, i32 5, i32 0, i32 2, i32 3, i32 2, i32 2, i32 0, i32 0, i32 5, i32 1, i32 0, i32 0], align 4
+@switch.table.upb_DecodeFast_BuildTable.18 = private unnamed_addr constant [18 x i8] c"\01\05\00\00\00\01\05\00\02\03\02\02\00\00\05\01\00\00", align 4
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define hidden range(i32 0, 6) i32 @GetWireTypeForField(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
@@ -105,13 +105,14 @@ bb.a:
   %.not.i = icmp eq i8 %i.d, 0
   %switch.table.GetWireTypeForField.17.switch.table.GetWireTypeForField = select i1 %.not.i, ptr @switch.table.upb_DecodeFast_BuildTable.18, ptr @switch.table.upb_DecodeFast_BuildTable.18
   %i.e = sext i8 %.val2 to i64
-  %1 = getelementptr [4 x i8], ptr %switch.table.GetWireTypeForField.17.switch.table.GetWireTypeForField, i64 %i.e
-  %switch.gep11 = getelementptr i8, ptr %1, i64 -4
-  %switch.load12 = load i32, ptr %switch.gep11, align 4
+  %1 = getelementptr i8, ptr %switch.table.GetWireTypeForField.17.switch.table.GetWireTypeForField, i64 %i.e
+  %switch.gep11 = getelementptr i8, ptr %1, i64 -1
+  %switch.load12 = load i8, ptr %switch.gep11, align 1
+  %switch.ext13 = zext i8 %switch.load12 to i32
   br label %bb.b
 
 bb.b:                                             ; preds = %.sink.split, %bb.a
-  %.0 = phi i32 [ 2, %bb.a ], [ %switch.load12, %.sink.split ]
+  %.0 = phi i32 [ 2, %bb.a ], [ %switch.ext13, %.sink.split ]
   ret i32 %.0
 }
 
@@ -287,13 +288,14 @@ GetWireTypeForField.exit.i.i.sink.split:          ; preds = %bb.c
   %.not.i.i.i.i = icmp eq i8 %i.bw, 0
   %switch.table.upb_DecodeFast_BuildTable.18.switch.table.upb_DecodeFast_BuildTable = select i1 %.not.i.i.i.i, ptr @switch.table.upb_DecodeFast_BuildTable.18, ptr @switch.table.upb_DecodeFast_BuildTable.18
   %i.bx = sext i8 %.val2.i.i.i to i64
-  %2 = getelementptr [4 x i8], ptr %switch.table.upb_DecodeFast_BuildTable.18.switch.table.upb_DecodeFast_BuildTable, i64 %i.bx
-  %switch.gep43 = getelementptr i8, ptr %2, i64 -4
-  %switch.load44 = load i32, ptr %switch.gep43, align 4
+  %2 = getelementptr i8, ptr %switch.table.upb_DecodeFast_BuildTable.18.switch.table.upb_DecodeFast_BuildTable, i64 %i.bx
+  %switch.gep43 = getelementptr i8, ptr %2, i64 -1
+  %switch.load44 = load i8, ptr %switch.gep43, align 1
+  %switch.ext45 = zext i8 %switch.load44 to i32
   br label %GetWireTypeForField.exit.i.i
 
 GetWireTypeForField.exit.i.i:                     ; preds = %GetWireTypeForField.exit.i.i.sink.split, %bb.c
-  %.0.i.i.i = phi i32 [ 2, %bb.c ], [ %switch.load44, %GetWireTypeForField.exit.i.i.sink.split ] ; 2 uses
+  %.0.i.i.i = phi i32 [ 2, %bb.c ], [ %switch.ext45, %GetWireTypeForField.exit.i.i.sink.split ] ; 2 uses
   %i.by = icmp ult i32 %.val.i.i, 2048
   br i1 %i.by, label %bb.d, label %upb_DecodeFast_TryFillEntry.exit.thread
 

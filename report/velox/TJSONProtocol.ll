@@ -201,8 +201,8 @@ $_ZTVN5boost6locale4conv16conversion_errorE = comdat any
 @.str.63 = private unnamed_addr constant [14 x i8] c"invalid TType\00", align 1
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @_GLOBAL__sub_I_TJSONProtocol.cpp, ptr null }]
 @switch.table._ZN6apache6thrift8protocolL20getTypeNameForTypeIDB5cxx11ENS1_5TTypeE = private unnamed_addr constant [14 x ptr] [ptr @_ZN6apache6thrift8protocolL13kTypeNameBoolB5cxx11E, ptr @_ZN6apache6thrift8protocolL13kTypeNameByteB5cxx11E, ptr @_ZN6apache6thrift8protocolL15kTypeNameDoubleB5cxx11E, ptr poison, ptr @_ZN6apache6thrift8protocolL12kTypeNameI16B5cxx11E, ptr poison, ptr @_ZN6apache6thrift8protocolL12kTypeNameI32B5cxx11E, ptr poison, ptr @_ZN6apache6thrift8protocolL12kTypeNameI64B5cxx11E, ptr @_ZN6apache6thrift8protocolL15kTypeNameStringB5cxx11E, ptr @_ZN6apache6thrift8protocolL15kTypeNameStructB5cxx11E, ptr @_ZN6apache6thrift8protocolL12kTypeNameMapB5cxx11E, ptr @_ZN6apache6thrift8protocolL12kTypeNameSetB5cxx11E, ptr @_ZN6apache6thrift8protocolL13kTypeNameListB5cxx11E], align 8
-@switch.table._ZN6apache6thrift8protocolL20getTypeIDForTypeNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE = private unnamed_addr constant [8 x i32] [i32 6, i32 poison, i32 8, i32 poison, i32 poison, i32 10, i32 poison, i32 3], align 4
-@switch.table._ZN6apache6thrift8protocol13TJSONProtocol20getMinSerializedSizeENS1_5TTypeE = private unnamed_addr constant [16 x i32] [i32 0, i32 0, i32 1, i32 1, i32 1, i32 poison, i32 1, i32 poison, i32 1, i32 poison, i32 1, i32 2, i32 2, i32 2, i32 2, i32 2], align 4
+@switch.table._ZN6apache6thrift8protocolL20getTypeIDForTypeNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE = private unnamed_addr constant [8 x i8] [i8 6, i8 poison, i8 8, i8 poison, i8 poison, i8 10, i8 poison, i8 3], align 4
+@switch.table._ZN6apache6thrift8protocol13TJSONProtocol20getMinSerializedSizeENS1_5TTypeE = private unnamed_addr constant [16 x i8] [i8 0, i8 0, i8 1, i8 1, i8 1, i8 poison, i8 1, i8 poison, i8 1, i8 poison, i8 1, i8 2, i8 2, i8 2, i8 2, i8 2], align 4
 @switch.table._ZNK6apache6thrift8protocol18TProtocolException4whatEv = private unnamed_addr constant [7 x ptr] [ptr @.str.42, ptr @.str.43, ptr @.str.44, ptr @.str.45, ptr @.str.46, ptr @.str.47, ptr @.str.48], align 8
 
 @_ZN6apache6thrift8protocol13TJSONProtocolC1ESt10shared_ptrINS0_9transport10TTransportEE = unnamed_addr alias void (ptr, ptr), ptr @_ZN6apache6thrift8protocol13TJSONProtocolC2ESt10shared_ptrINS0_9transport10TTransportEE
@@ -605,12 +605,13 @@ bb.m:                                             ; preds = %_ZNKSt7__cxx1112bas
 
 switch.lookup:                                    ; preds = %bb.c
   %i.p = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6apache6thrift8protocolL20getTypeIDForTypeNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE, i64 %i.p
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6apache6thrift8protocolL20getTypeIDForTypeNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE, i64 %i.p
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %.thread
 
 .thread:                                          ; preds = %switch.lookup, %bb.g, %.thread.fold.split, %bb.f, %bb.e, %bb.d, %bb.b, %bb.h
-  %.0112 = phi i32 [ %switch.load, %switch.lookup ], [ 12, %bb.f ], [ 13, %bb.e ], [ 15, %bb.d ], [ 2, %bb.h ], [ 11, %bb.g ], [ 14, %.thread.fold.split ], [ 4, %bb.b ]
+  %.0112 = phi i32 [ %switch.ext, %switch.lookup ], [ 12, %bb.f ], [ 13, %bb.e ], [ 15, %bb.d ], [ 2, %bb.h ], [ 11, %bb.g ], [ 14, %.thread.fold.split ], [ 4, %bb.b ]
   ret i32 %.0112
 
 bb.n:                                             ; preds = %bb.j
@@ -1013,9 +1014,10 @@ bb.f:                                             ; preds = %_ZNKSt7__cxx1112bas
 
 switch.lookup:                                    ; preds = %bb.a
   %i.j = zext nneg i32 %1 to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN6apache6thrift8protocol13TJSONProtocol20getMinSerializedSizeENS1_5TTypeE, i64 %i.j
-  %switch.load = load i32, ptr %switch.gep, align 4
-  ret i32 %switch.load
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6apache6thrift8protocol13TJSONProtocol20getMinSerializedSizeENS1_5TTypeE, i64 %i.j
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  ret i32 %switch.ext
 
 bb.g:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.f
   %.pn10 = phi { ptr, i32 } [ %i.d, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.pn11, %bb.f ], [ %i.d, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ]

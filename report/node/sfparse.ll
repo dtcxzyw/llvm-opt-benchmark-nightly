@@ -33,7 +33,7 @@ target triple = "x86_64-pc-linux-gnu"
 @__PRETTY_FUNCTION__.parser_dispstring = private unnamed_addr constant [57 x i8] c"int parser_dispstring(sfparse_parser *, sfparse_value *)\00", align 1
 @utf8d = internal unnamed_addr constant [364 x i8] c"\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\08\08\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\0A\03\03\03\03\03\03\03\03\03\03\03\03\04\03\03\0B\06\06\06\05\08\08\08\08\08\08\08\08\08\08\08\00\0C\18$<`T\0C\0C\0C0H\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\00\0C\0C\0C\0C\0C\00\0C\00\0C\0C\0C\18\0C\0C\0C\0C\0C\18\0C\18\0C\0C\0C\0C\0C\0C\0C\0C\0C\18\0C\0C\0C\0C\0C\18\0C\0C\0C\0C\0C\0C\0C\18\0C\0C\0C\0C\0C\0C\0C\0C\0C$\0C$\0C\0C\0C$\0C\0C\0C\0C\0C$\0C$\0C\0C\0C$\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C", align 16
 @__PRETTY_FUNCTION__.parser_skip_inner_list = private unnamed_addr constant [45 x i8] c"int parser_skip_inner_list(sfparse_parser *)\00", align 1
-@switch.table.parser_number = private unnamed_addr constant [3 x i64] [i64 10, i64 100, i64 1000], align 8
+@switch.table.parser_number = private unnamed_addr constant [3 x i16] [i16 10, i16 100, i16 1000], align 8
 @switch.table.parser_dispstring = private unnamed_addr constant [55 x i8] [i8 0, i8 16, i8 32, i8 48, i8 64, i8 80, i8 96, i8 112, i8 -128, i8 -112, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 -96, i8 -80, i8 -64, i8 -48, i8 -32, i8 -16], align 1
 @switch.table.parser_dispstring.3 = private unnamed_addr constant [55 x i8] [i8 -48, i8 -48, i8 -48, i8 -48, i8 -48, i8 -48, i8 -48, i8 -48, i8 -48, i8 -48, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 -87, i8 -87, i8 -87, i8 -87, i8 -87, i8 -87], align 1
 
@@ -436,14 +436,15 @@ switch.lookup:                                    ; preds = %bb.z
   %i.dg = mul nsw i64 %.146.lcssa, %.047
   %i.dh = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i64 %i.dg, ptr %i.dh, align 8, !tbaa !16
-  %2 = getelementptr [8 x i8], ptr @switch.table.parser_number, i64 %i.dd
-  %switch.gep = getelementptr i8, ptr %2, i64 -8
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %2 = getelementptr [2 x i8], ptr @switch.table.parser_number, i64 %i.dd
+  %switch.gep = getelementptr i8, ptr %2, i64 -2
+  %switch.load = load i16, ptr %switch.gep, align 2
+  %switch.ext = zext i16 %switch.load to i64
   br label %.loopexit.sink.split
 
 .loopexit.sink.split:                             ; preds = %switch.lookup, %bb.u
   %.sink144 = phi i64 [ 8, %bb.u ], [ 16, %switch.lookup ]
-  %.sink = phi i64 [ %i.cs, %bb.u ], [ %switch.load, %switch.lookup ]
+  %.sink = phi i64 [ %i.cs, %bb.u ], [ %switch.ext, %switch.lookup ]
   %i.di = getelementptr inbounds nuw i8, ptr %1, i64 %.sink144
   store i64 %.sink, ptr %i.di, align 8, !tbaa !16
   br label %.loopexit

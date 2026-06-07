@@ -13,7 +13,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str = private unnamed_addr constant [2 x i8] c"'\00", align 1
 @.str.1 = private unnamed_addr constant [40 x i8] c"' value invalid for file size argument!\00", align 1
 @.str.2 = private unnamed_addr constant [21 x i8] c"basic_string::append\00", align 1
-@switch.table._ZN2cl16MemorySizeParser5parseERN4llvh2cl6OptionENS1_9StringRefERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS_10MemorySizeE = private unnamed_addr constant [39 x i32] [i32 30, i32 poison, i32 poison, i32 poison, i32 10, i32 poison, i32 20, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 30, i32 poison, i32 poison, i32 poison, i32 10, i32 poison, i32 20], align 4
+@switch.table._ZN2cl16MemorySizeParser5parseERN4llvh2cl6OptionENS1_9StringRefERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS_10MemorySizeE = private unnamed_addr constant [39 x i8] [i8 30, i8 poison, i8 poison, i8 poison, i8 10, i8 poison, i8 20, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 30, i8 poison, i8 poison, i8 poison, i8 10, i8 poison, i8 20], align 4
 
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef zeroext i1 @_ZN2cl16MemorySizeParser5parseERN4llvh2cl6OptionENS1_9StringRefERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS_10MemorySizeE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(352) %0, ptr noundef nonnull align 8 dereferenceable(145) %1, ptr nofree readnone captures(none) %2, i64 %3, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %4, ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(4) initializes((0, 4)) %5) local_unnamed_addr #0 align 2 {
@@ -416,9 +416,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit55: ; preds = %_ZN
 
 switch.lookup:                                    ; preds = %switch.hole_check.peel
   %i.ef = zext nneg i8 %switch.tableidx.peel to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN2cl16MemorySizeParser5parseERN4llvh2cl6OptionENS1_9StringRefERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS_10MemorySizeE, i64 %i.ef
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %i.eg = shl i32 %.ph97, %switch.load            ; 2 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN2cl16MemorySizeParser5parseERN4llvh2cl6OptionENS1_9StringRefERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS_10MemorySizeE, i64 %i.ef
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext nneg i8 %switch.load to i32
+  %i.eg = shl i32 %.ph97, %switch.ext             ; 2 uses
   store i32 %i.eg, ptr %5, align 4, !tbaa !13
   br label %.preheader.outer, !llvm.loop !53
 

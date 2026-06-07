@@ -201,8 +201,8 @@ begin_hunk_0
 @.str.175 = private unnamed_addr constant [42 x i8] c"uninitialized class variable %1$s in %2$s\00", align 1
 @.str.176 = private unnamed_addr constant [26 x i8] c"already initialized class\00", align 1
 @.str.177 = private unnamed_addr constant [34 x i8] c"can't inherit uninitialized class\00", align 1
-@switch.table.rb_get_freeze_opt = private unnamed_addr constant [37 x i64] [i64 0, i64 poison, i64 poison, i64 poison, i64 4, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 20, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 36], align 8
-@switch.table.rb_check_convert_type_with_id = private unnamed_addr constant [37 x i32] [i32 19, i32 poison, i32 poison, i32 poison, i32 17, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 18, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 22], align 4
+@switch.table.rb_get_freeze_opt = private unnamed_addr constant [37 x i8] [i8 0, i8 poison, i8 poison, i8 poison, i8 4, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 20, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 36], align 8
+@switch.table.rb_check_convert_type_with_id = private unnamed_addr constant [37 x i8] [i8 19, i8 poison, i8 poison, i8 poison, i8 17, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 18, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 22], align 4
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
 define hidden range(i64 16, 34359738377) i64 @rb_obj_embedded_size(i32 noundef %0) local_unnamed_addr #0 {
@@ -605,12 +605,13 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 switch.lookup:                                    ; preds = %bb.f
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.rb_get_freeze_opt, i64 %i.p
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.rb_get_freeze_opt, i64 %i.p
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   br label %obj_freeze_opt.exit
 
 obj_freeze_opt.exit:                              ; preds = %switch.lookup, %bb.d, %rb_scan_args_set.exit
-  %i.t = phi i64 [ %switch.load, %switch.lookup ], [ 4, %bb.d ], [ 4, %rb_scan_args_set.exit ]
+  %i.t = phi i64 [ %switch.ext, %switch.lookup ], [ 4, %bb.d ], [ 4, %rb_scan_args_set.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   ret i64 %i.t
 }
@@ -1013,12 +1014,13 @@ bb.g:                                             ; preds = %bb.f
   br label %rb_type.exit14
 
 switch.lookup:                                    ; preds = %bb.e
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.rb_check_convert_type_with_id, i64 %1
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.rb_check_convert_type_with_id, i64 %1
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %rb_type.exit14
 
 rb_type.exit14:                                   ; preds = %switch.lookup, %bb.d, %bb.f, %bb.g
-  %.0.i12 = phi i32 [ %i.u, %bb.d ], [ %spec.select.i13, %bb.g ], [ 21, %bb.f ], [ %switch.load, %switch.lookup ]
+  %.0.i12 = phi i32 [ %i.u, %bb.d ], [ %spec.select.i13, %bb.g ], [ 21, %bb.f ], [ %switch.ext, %switch.lookup ]
   %.not = icmp eq i32 %i.m, %.0.i12
   br i1 %.not, label %rb_class_of.exit.i, label %bb.p
 
@@ -1421,12 +1423,13 @@ bb.e:                                             ; preds = %bb.d
   br label %rb_type.exit
 
 switch.lookup:                                    ; preds = %bb.c
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.rb_check_convert_type_with_id, i64 %0
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.rb_check_convert_type_with_id, i64 %0
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %rb_type.exit
 
 rb_type.exit:                                     ; preds = %switch.lookup, %bb.b, %bb.d, %bb.e
-  %.0.i = phi i32 [ %i.h, %bb.b ], [ %spec.select.i, %bb.e ], [ 21, %bb.d ], [ %switch.load, %switch.lookup ]
+  %.0.i = phi i32 [ %i.h, %bb.b ], [ %spec.select.i, %bb.e ], [ 21, %bb.d ], [ %switch.ext, %switch.lookup ]
   %i.m = icmp eq i32 %.0.i, %1
   br i1 %i.m, label %bb.p, label %bb.f
 
@@ -1544,12 +1547,13 @@ bb.e:                                             ; preds = %bb.d
   br label %rb_type.exit
 
 switch.lookup:                                    ; preds = %bb.c
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.rb_check_convert_type_with_id, i64 %0
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.rb_check_convert_type_with_id, i64 %0
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %rb_type.exit
 
 rb_type.exit:                                     ; preds = %switch.lookup, %bb.b, %bb.d, %bb.e
-  %.0.i = phi i32 [ %i.h, %bb.b ], [ %spec.select.i, %bb.e ], [ 21, %bb.d ], [ %switch.load, %switch.lookup ]
+  %.0.i = phi i32 [ %i.h, %bb.b ], [ %spec.select.i, %bb.e ], [ 21, %bb.d ], [ %switch.ext, %switch.lookup ]
   %i.m = icmp eq i32 %.0.i, %1
   br i1 %i.m, label %bb.o, label %bb.f
 
@@ -1703,12 +1707,13 @@ bb.e:                                             ; preds = %bb.d
   br label %rb_type.exit
 
 switch.lookup:                                    ; preds = %bb.c
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.rb_check_convert_type_with_id, i64 %0
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.rb_check_convert_type_with_id, i64 %0
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %rb_type.exit
 
 rb_type.exit:                                     ; preds = %switch.lookup, %bb.b, %bb.d, %bb.e
-  %.0.i = phi i32 [ %i.h, %bb.b ], [ %spec.select.i, %bb.e ], [ 21, %bb.d ], [ %switch.load, %switch.lookup ]
+  %.0.i = phi i32 [ %i.h, %bb.b ], [ %spec.select.i, %bb.e ], [ 21, %bb.d ], [ %switch.ext, %switch.lookup ]
   %i.m = icmp eq i32 %.0.i, %1
   %i.n = icmp ne i32 %1, 12
   %or.cond = and i1 %i.n, %i.m
@@ -1820,12 +1825,13 @@ bb.e:                                             ; preds = %bb.d
   br label %rb_type.exit
 
 switch.lookup:                                    ; preds = %bb.c
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.rb_check_convert_type_with_id, i64 %0
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.rb_check_convert_type_with_id, i64 %0
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %rb_type.exit
 
 rb_type.exit:                                     ; preds = %switch.lookup, %bb.b, %bb.d, %bb.e
-  %.0.i = phi i32 [ %i.h, %bb.b ], [ %spec.select.i, %bb.e ], [ 21, %bb.d ], [ %switch.load, %switch.lookup ]
+  %.0.i = phi i32 [ %i.h, %bb.b ], [ %spec.select.i, %bb.e ], [ 21, %bb.d ], [ %switch.ext, %switch.lookup ]
   %i.m = icmp eq i32 %.0.i, %1
   %i.n = icmp ne i32 %1, 12
   %or.cond = and i1 %i.n, %i.m

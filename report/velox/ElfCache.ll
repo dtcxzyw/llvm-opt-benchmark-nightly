@@ -166,8 +166,8 @@ $_ZTSSt23_Sp_counted_ptr_inplaceIN5folly10symbolizer8ElfCache5EntryESaIvELN9__gn
 @_ZTSSt23_Sp_counted_ptr_inplaceIN5folly10symbolizer8ElfCache5EntryESaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr constant [99 x i8] c"St23_Sp_counted_ptr_inplaceIN5folly10symbolizer8ElfCache5EntryESaIvELN9__gnu_cxx12_Lock_policyE2EE\00", comdat, align 1
 @.str.4 = private unnamed_addr constant [50 x i8] c"basic_string: construction from null is not valid\00", align 1
 @.str.5 = private unnamed_addr constant [24 x i8] c"basic_string::_M_create\00", align 1
-@switch.table._ZN5boost9intrusive18avltree_algorithmsINS0_19avltree_node_traitsIPvLb0EEEE25rebalance_after_insertionEPNS0_12avltree_nodeIS3_EES8_.16 = private unnamed_addr constant [3 x i32] [i32 2, i32 1, i32 1], align 4
-@switch.table._ZN5boost9intrusive18avltree_algorithmsINS0_19avltree_node_traitsIPvLb0EEEE25rebalance_after_insertionEPNS0_12avltree_nodeIS3_EES8_.17 = private unnamed_addr constant [3 x i32] [i32 1, i32 1, i32 0], align 4
+@switch.table._ZN5boost9intrusive18avltree_algorithmsINS0_19avltree_node_traitsIPvLb0EEEE25rebalance_after_insertionEPNS0_12avltree_nodeIS3_EES8_.16 = private unnamed_addr constant [3 x i8] c"\02\01\01", align 4
+@switch.table._ZN5boost9intrusive18avltree_algorithmsINS0_19avltree_node_traitsIPvLb0EEEE25rebalance_after_insertionEPNS0_12avltree_nodeIS3_EES8_.17 = private unnamed_addr constant [3 x i8] c"\01\01\00", align 4
 
 @_ZN5folly10symbolizer18SignalSafeElfCache4PathC1EPKcmRKNS_19reentrant_allocatorIcEE = unnamed_addr alias void (ptr, ptr, i64, ptr), ptr @_ZN5folly10symbolizer18SignalSafeElfCache4PathC2EPKcmRKNS_19reentrant_allocatorIcEE
 
@@ -570,13 +570,15 @@ _ZN5boost9intrusive17bstree_algorithmsINS0_19avltree_node_traitsIPvLb0EEEE11rota
 
 switch.lookup:                                    ; preds = %_ZN5boost9intrusive17bstree_algorithmsINS0_19avltree_node_traitsIPvLb0EEEE11rotate_leftEPNS0_12avltree_nodeIS3_EES8_S8_S8_.exit.i
   %i.ab = zext nneg i32 %i.z to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5boost9intrusive18avltree_algorithmsINS0_19avltree_node_traitsIPvLb0EEEE25rebalance_after_insertionEPNS0_12avltree_nodeIS3_EES8_.16, i64 %i.ab
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5boost9intrusive18avltree_algorithmsINS0_19avltree_node_traitsIPvLb0EEEE25rebalance_after_insertionEPNS0_12avltree_nodeIS3_EES8_.16, i64 %i.ab
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.ac = zext nneg i32 %i.z to i64
-  %switch.gep111 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5boost9intrusive18avltree_algorithmsINS0_19avltree_node_traitsIPvLb0EEEE25rebalance_after_insertionEPNS0_12avltree_nodeIS3_EES8_.17, i64 %i.ac
-  %switch.load112 = load i32, ptr %switch.gep111, align 4
-  store i32 %switch.load, ptr %i.i, align 8, !tbaa !315
-  store i32 %switch.load112, ptr %i.f, align 8, !tbaa !315
+  %switch.gep111 = getelementptr inbounds nuw i8, ptr @switch.table._ZN5boost9intrusive18avltree_algorithmsINS0_19avltree_node_traitsIPvLb0EEEE25rebalance_after_insertionEPNS0_12avltree_nodeIS3_EES8_.17, i64 %i.ac
+  %switch.load112 = load i8, ptr %switch.gep111, align 1
+  %switch.ext113 = zext i8 %switch.load112 to i32
+  store i32 %switch.ext, ptr %i.i, align 8, !tbaa !315
+  store i32 %switch.ext113, ptr %i.f, align 8, !tbaa !315
   br label %.critedge
 
 bb.m:                                             ; preds = %bb.e
@@ -698,13 +700,15 @@ _ZN5boost9intrusive17bstree_algorithmsINS0_19avltree_node_traitsIPvLb0EEEE12rota
 
 switch.lookup113:                                 ; preds = %_ZN5boost9intrusive17bstree_algorithmsINS0_19avltree_node_traitsIPvLb0EEEE12rotate_rightEPNS0_12avltree_nodeIS3_EES8_S8_S8_.exit.i
   %i.bg = zext nneg i32 %i.be to i64
-  %switch.gep114 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5boost9intrusive18avltree_algorithmsINS0_19avltree_node_traitsIPvLb0EEEE25rebalance_after_insertionEPNS0_12avltree_nodeIS3_EES8_.16, i64 %i.bg
-  %switch.load115 = load i32, ptr %switch.gep114, align 4
+  %switch.gep115 = getelementptr inbounds nuw i8, ptr @switch.table._ZN5boost9intrusive18avltree_algorithmsINS0_19avltree_node_traitsIPvLb0EEEE25rebalance_after_insertionEPNS0_12avltree_nodeIS3_EES8_.16, i64 %i.bg
+  %switch.load116 = load i8, ptr %switch.gep115, align 1
+  %switch.ext117 = zext i8 %switch.load116 to i32
   %i.bh = zext nneg i32 %i.be to i64
-  %switch.gep116 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5boost9intrusive18avltree_algorithmsINS0_19avltree_node_traitsIPvLb0EEEE25rebalance_after_insertionEPNS0_12avltree_nodeIS3_EES8_.17, i64 %i.bh
-  %switch.load117 = load i32, ptr %switch.gep116, align 4
-  store i32 %switch.load115, ptr %i.f, align 8, !tbaa !315
-  store i32 %switch.load117, ptr %i.ao, align 8, !tbaa !315
+  %switch.gep118 = getelementptr inbounds nuw i8, ptr @switch.table._ZN5boost9intrusive18avltree_algorithmsINS0_19avltree_node_traitsIPvLb0EEEE25rebalance_after_insertionEPNS0_12avltree_nodeIS3_EES8_.17, i64 %i.bh
+  %switch.load119 = load i8, ptr %switch.gep118, align 1
+  %switch.ext120 = zext i8 %switch.load119 to i32
+  store i32 %switch.ext117, ptr %i.f, align 8, !tbaa !315
+  store i32 %switch.ext120, ptr %i.ao, align 8, !tbaa !315
   br label %.critedge
 
 bb.ab:                                            ; preds = %bb.t

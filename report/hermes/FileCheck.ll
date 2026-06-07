@@ -201,7 +201,7 @@ $_ZSt19piecewise_construct = comdat any
 @.str.89 = private unnamed_addr constant [22 x i8] c"basic_string::replace\00", align 1
 @.str.90 = private unnamed_addr constant [55 x i8] c"%s: __pos (which is %zu) > this->size() (which is %zu)\00", align 1
 @.str.91 = private unnamed_addr constant [18 x i8] c"Allocation failed\00", align 1
-@switch.table._ZN4llvh9FileCheck13ReadCheckFileERNS_9SourceMgrENS_9StringRefERNS_5RegexERSt6vectorINS_15FileCheckStringESaIS7_EE = private unnamed_addr constant [10 x i64] [i64 0, i64 1, i64 6, i64 6, i64 5, i64 5, i64 7, i64 7, i64 poison, i64 0], align 8
+@switch.table._ZN4llvh9FileCheck13ReadCheckFileERNS_9SourceMgrENS_9StringRefERNS_5RegexERSt6vectorINS_15FileCheckStringESaIS7_EE = private unnamed_addr constant [10 x i8] [i8 0, i8 1, i8 6, i8 6, i8 5, i8 5, i8 7, i8 7, i8 poison, i8 0], align 8
 
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef zeroext i1 @_ZN4llvh16FileCheckPattern12ParsePatternENS_9StringRefES1_RNS_9SourceMgrEjRKNS_16FileCheckRequestE(ptr noundef nonnull align 8 dereferenceable(136) initializes((0, 8), (132, 136)) %0, ptr %1, i64 %2, ptr %3, i64 %4, ptr noundef nonnull align 8 dereferenceable(120) %5, i32 noundef %6, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(86) %7) local_unnamed_addr #0 align 2 {
@@ -604,9 +604,10 @@ _ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheck
 
 switch.lookup:                                    ; preds = %_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit
   %i.mx = zext nneg i32 %.2295 to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4llvh9FileCheck13ReadCheckFileERNS_9SourceMgrENS_9StringRefERNS_5RegexERSt6vectorINS_15FileCheckStringESaIS7_EE, i64 %i.mx
-  %switch.load = load i64, ptr %switch.gep, align 8
-  %i.my = add i64 %switch.load, %.sroa.8.0.i
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN4llvh9FileCheck13ReadCheckFileERNS_9SourceMgrENS_9StringRefERNS_5RegexERSt6vectorINS_15FileCheckStringESaIS7_EE, i64 %i.mx
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
+  %i.my = add i64 %.sroa.8.0.i, %switch.ext
   %i.mz = load i64, ptr %i.d, align 8, !tbaa !44  ; 2 uses
   %.sroa.speculated287 = call i64 @llvm.umin.i64(i64 %i.mz, i64 %i.my) ; 3 uses
   %i.na = load ptr, ptr %8, align 8, !tbaa !71    ; 2 uses

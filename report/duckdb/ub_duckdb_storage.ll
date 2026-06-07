@@ -201,8 +201,8 @@ begin_hunk_0
 @_ZTISt23_Sp_counted_ptr_inplaceIN6duckdb20StorageLockInternalsESaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSSt23_Sp_counted_ptr_inplaceIN6duckdb20StorageLockInternalsESaIvELN9__gnu_cxx12_Lock_policyE2EE, ptr @_ZTISt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE }, comdat, align 8
 @_ZTSSt23_Sp_counted_ptr_inplaceIN6duckdb20StorageLockInternalsESaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr constant [95 x i8] c"St23_Sp_counted_ptr_inplaceIN6duckdb20StorageLockInternalsESaIvELN9__gnu_cxx12_Lock_policyE2EE\00", comdat, align 1
 @_ZN6duckdb20SequenceCatalogEntry4NameE = external constant ptr, align 8
-@switch.table._ZN6duckdb16CheckpointWriter10WriteEntryERNS_12CatalogEntryERNS_10SerializerE = private unnamed_addr constant [31 x i64] [i64 64, i64 56, i64 72, i64 104, i64 poison, i64 80, i64 poison, i64 112, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 88, i64 96], align 8
-@switch.table._ZN6duckdb16CheckpointReader9ReadEntryENS_18CatalogTransactionERNS_12DeserializerE = private unnamed_addr constant [31 x i64] [i64 40, i64 32, i64 48, i64 80, i64 poison, i64 56, i64 poison, i64 88, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 64, i64 72], align 8
+@switch.table._ZN6duckdb16CheckpointWriter10WriteEntryERNS_12CatalogEntryERNS_10SerializerE = private unnamed_addr constant [31 x i8] [i8 64, i8 56, i8 72, i8 104, i8 poison, i8 80, i8 poison, i8 112, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 88, i8 96], align 8
+@switch.table._ZN6duckdb16CheckpointReader9ReadEntryENS_18CatalogTransactionERNS_12DeserializerE = private unnamed_addr constant [31 x i8] [i8 40, i8 32, i8 48, i8 80, i8 poison, i8 56, i8 poison, i8 88, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 64, i8 72], align 8
 
 @_ZN6duckdb10ArenaChunkC1ERNS_9AllocatorEm = unnamed_addr alias void (ptr, ptr, i64), ptr @_ZN6duckdb10ArenaChunkC2ERNS_9AllocatorEm
 @_ZN6duckdb10ArenaChunkD1Ev = unnamed_addr alias void (ptr), ptr @_ZN6duckdb10ArenaChunkD2Ev
@@ -605,10 +605,11 @@ switch.hole_check:                                ; preds = %_ZN6duckdb10Seriali
 
 switch.lookup:                                    ; preds = %switch.hole_check
   %i.aa = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6duckdb16CheckpointWriter10WriteEntryERNS_12CatalogEntryERNS_10SerializerE, i64 %i.aa
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6duckdb16CheckpointWriter10WriteEntryERNS_12CatalogEntryERNS_10SerializerE, i64 %i.aa
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.ab = load ptr, ptr %0, align 8, !tbaa !45
-  %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 %switch.load
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 %switch.ext
   %i.ad = load ptr, ptr %i.ac, align 8
   tail call void %i.ad(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(248) %1, ptr noundef nonnull align 8 dereferenceable(680) %2)
   ret void
@@ -783,10 +784,11 @@ switch.hole_check:                                ; preds = %_ZN6duckdb12Deseria
 
 switch.lookup:                                    ; preds = %switch.hole_check
   %i.ag = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6duckdb16CheckpointReader9ReadEntryENS_18CatalogTransactionERNS_12DeserializerE, i64 %i.ag
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6duckdb16CheckpointReader9ReadEntryENS_18CatalogTransactionERNS_12DeserializerE, i64 %i.ag
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.ah = load ptr, ptr %0, align 8, !tbaa !45
-  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 %switch.load
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 %switch.ext
   %i.aj = load ptr, ptr %i.ai, align 8
   call void %i.aj(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull byval(%"struct.duckdb::CatalogTransaction") align 8 %1, ptr noundef nonnull align 8 dereferenceable(632) %2)
   ret void

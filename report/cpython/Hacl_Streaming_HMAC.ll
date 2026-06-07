@@ -12,13 +12,10 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.2 = private unnamed_addr constant [51 x i8] c"unreachable (pattern matches are exhaustive in F*)\00", align 1
 @.str.4 = private unnamed_addr constant [35 x i8] c"KaRaMeL incomplete match at %s:%d\0A\00", align 1
 @.str.5 = private unnamed_addr constant [76 x i8] c"provably unreachable code: did an unverified caller violate a precondition?\00", align 1
-@switch.table._Py_LibHacl_Hacl_Streaming_HMAC_malloc_.9 = private unnamed_addr constant [13 x i64] [i64 64, i64 64, i64 64, i64 64, i64 128, i64 128, i64 144, i64 136, i64 104, i64 72, i64 64, i64 64, i64 128], align 8
-@switch.table._Py_LibHacl_Hacl_Streaming_HMAC_malloc_.10 = private unnamed_addr constant [13 x i64] [i64 64, i64 64, i64 64, i64 64, i64 128, i64 128, i64 144, i64 136, i64 104, i64 72, i64 64, i64 poison, i64 128], align 8
-@switch.table._Py_LibHacl_Hacl_Streaming_HMAC_digest.27 = private unnamed_addr constant [14 x i8] c"@@@@\80\80\90\88hH@@\80\80", align 1
-@switch.table._Py_LibHacl_Hacl_Streaming_HMAC_copy.28 = private unnamed_addr constant [14 x i64] [i64 64, i64 64, i64 64, i64 64, i64 128, i64 128, i64 144, i64 136, i64 104, i64 72, i64 64, i64 64, i64 128, i64 128], align 8
-@switch.table.init0 = private unnamed_addr constant [14 x i32] [i32 64, i32 64, i32 64, i32 64, i32 128, i32 128, i32 144, i32 136, i32 104, i32 72, i32 64, i32 64, i32 128, i32 128], align 4
-@switch.table.init0.30 = private unnamed_addr constant [12 x i64] [i64 64, i64 64, i64 128, i64 128, i64 64, i64 64, i64 64, i64 128, i64 136, i64 144, i64 104, i64 72], align 8
-@switch.table.init0.31 = private unnamed_addr constant [12 x i32] [i32 64, i32 64, i32 128, i32 128, i32 64, i32 64, i32 64, i32 128, i32 136, i32 144, i32 104, i32 72], align 4
+@switch.table._Py_LibHacl_Hacl_Streaming_HMAC_malloc_.9 = private unnamed_addr constant [13 x i8] c"@@@@\80\80\90\88hH@@\80", align 8
+@switch.table._Py_LibHacl_Hacl_Streaming_HMAC_malloc_.10 = private unnamed_addr constant [13 x i8] [i8 64, i8 64, i8 64, i8 64, i8 -128, i8 -128, i8 -112, i8 -120, i8 104, i8 72, i8 64, i8 poison, i8 -128], align 8
+@switch.table.init0 = private unnamed_addr constant [14 x i8] c"@@@@\80\80\90\88hH@@\80\80", align 8
+@switch.table.init0.31 = private unnamed_addr constant [12 x i8] c"@@\80\80@@@\80\88\90hH", align 8
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define hidden ptr @_Py_LibHacl_Hacl_Streaming_HMAC_s1(i64 %0, ptr nofree noundef readonly byval(%struct.Hacl_Streaming_HMAC_Definitions_two_state_s) align 8 captures(none) %1) local_unnamed_addr #0 {
@@ -97,9 +94,10 @@ switch.hole_check:                                ; preds = %bb.b
 
 switch.lookup19:                                  ; preds = %switch.hole_check
   %i.d = zext nneg i8 %0 to i64
-  %switch.gep20 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._Py_LibHacl_Hacl_Streaming_HMAC_malloc_.10, i64 %i.d
-  %switch.load21 = load i64, ptr %switch.gep20, align 8
-  %i.e = tail call noalias ptr @calloc(i64 noundef %switch.load21, i64 noundef 1) #13 ; 4 uses
+  %switch.gep21 = getelementptr inbounds nuw i8, ptr @switch.table._Py_LibHacl_Hacl_Streaming_HMAC_malloc_.10, i64 %i.d
+  %switch.load22 = load i8, ptr %switch.gep21, align 1
+  %switch.ext23 = zext i8 %switch.load22 to i64
+  %i.e = tail call noalias ptr @calloc(i64 noundef %switch.ext23, i64 noundef 1) #13 ; 4 uses
   %i.f = icmp eq ptr %i.e, null
   br i1 %i.f, label %malloc_internal.exit.thread, label %bb.d
 
@@ -122,8 +120,8 @@ switch.lookup15:                                  ; preds = %bb.e
   %.sroa.12.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 16
   store ptr %i.i, ptr %.sroa.12.8..sroa_idx.i, align 8
   %i.k = zext nneg i8 %0 to i64
-  %switch.gep16 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._Py_LibHacl_Hacl_Streaming_HMAC_malloc_.9, i64 %i.k
-  %switch.load17 = load i64, ptr %switch.gep16, align 8
+  %switch.gep16 = getelementptr inbounds nuw i8, ptr @switch.table._Py_LibHacl_Hacl_Streaming_HMAC_malloc_.9, i64 %i.k
+  %switch.load17 = load i8, ptr %switch.gep16, align 1
   %i.l = tail call noalias dereferenceable_or_null(40) ptr @malloc(i64 noundef 40) #14 ; 5 uses
   %cond.i10 = icmp eq ptr %i.l, null
   br i1 %cond.i10, label %bb.f, label %bb.i
@@ -174,11 +172,12 @@ malloc_internal.exit.thread:                      ; preds = %malloc_internal.exi
   br label %bb.j
 
 bb.i:                                             ; preds = %switch.lookup15
+  %switch.ext18 = zext i8 %switch.load17 to i64
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %4, i64 24, i1 false)
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.l, i64 24
   store ptr %i.e, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !19
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.l, i64 32
-  store i64 %switch.load17, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !21
+  store i64 %switch.ext18, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !21
   tail call fastcc void @init0(ptr noundef %1, ptr noundef nonnull %i.e, ptr noundef nonnull byval(%struct.Hacl_Streaming_HMAC_Definitions_two_state_s) align 8 %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
   store ptr %i.l, ptr %3, align 8, !tbaa !23
@@ -241,16 +240,17 @@ _Py_LibHacl_Hacl_Streaming_HMAC_index_of_state.exit.i: ; preds = %_Py_LibHacl_Ha
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %.sroa.44.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.c = zext nneg i8 %.val.i.i to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._Py_LibHacl_Hacl_Streaming_HMAC_copy.28, i64 %i.c
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.init0, i64 %i.c
   %.sroa.55.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 32
   %.sroa.44.0.copyload.i = load ptr, ptr %.sroa.44.0..sroa_idx.i, align 8, !tbaa !19
   %i.d = load <2 x ptr>, ptr %.sroa.5.0..sroa_idx, align 8
   tail call fastcc void @init0(ptr noundef %1, ptr noundef %.sroa.44.0.copyload.i, ptr noundef nonnull byval(%struct.Hacl_Streaming_HMAC_Definitions_two_state_s) align 8 %0)
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   store i64 %.sroa.0.0.copyload, ptr %0, align 8
   store ptr %.sroa.54.0.copyload.i, ptr %.sroa.54.0..sroa_idx.i, align 8
   store <2 x ptr> %i.d, ptr %.sroa.5.0..sroa_idx, align 8
-  store i64 %switch.load, ptr %.sroa.55.0..sroa_idx.i, align 8, !tbaa !21
+  store i64 %switch.ext, ptr %.sroa.55.0..sroa_idx.i, align 8, !tbaa !21
   br label %bb.c
 
 bb.c:                                             ; preds = %_Py_LibHacl_Hacl_Streaming_HMAC_get_impl.exit, %_Py_LibHacl_Hacl_Streaming_HMAC_index_of_state.exit.i
@@ -292,9 +292,10 @@ default.unreachable1013:                          ; preds = %block_len.exit375, 
 
 switch.lookup:                                    ; preds = %_Py_LibHacl_Hacl_Streaming_HMAC_index_of_state.exit
   %i.f = zext nneg i8 %.val.i to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._Py_LibHacl_Hacl_Streaming_HMAC_copy.28, i64 %i.f
-  %switch.load = load i64, ptr %switch.gep, align 8
-  %i.g = urem i64 %.sroa.4159.0.copyload, %switch.load
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.init0, i64 %i.f
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
+  %i.g = urem i64 %.sroa.4159.0.copyload, %switch.ext
   %i.h = icmp eq i64 %i.g, 0
   %i.i = icmp ne i64 %.sroa.4159.0.copyload, 0    ; 4 uses
   %or.cond = and i1 %i.i, %i.h
@@ -335,9 +336,10 @@ block_len.exit219.thread435:                      ; preds = %bb.c
 
 switch.lookup1014:                                ; preds = %switch.lookup
   %i.j = zext nneg i8 %.val.i to i64
-  %switch.gep1015 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._Py_LibHacl_Hacl_Streaming_HMAC_copy.28, i64 %i.j
-  %switch.load1016 = load i64, ptr %switch.gep1015, align 8
-  %i.k = urem i64 %.sroa.4159.0.copyload, %switch.load1016
+  %switch.gep1015 = getelementptr inbounds nuw i8, ptr @switch.table.init0, i64 %i.j
+  %switch.load1016 = load i8, ptr %switch.gep1015, align 1
+  %switch.ext1017 = zext i8 %switch.load1016 to i64
+  %i.k = urem i64 %.sroa.4159.0.copyload, %switch.ext1017
   %i.l = trunc nuw nsw i64 %i.k to i32
   br label %block_len.exit219
 
@@ -386,27 +388,30 @@ switch.lookup1017:                                ; preds = %block_len.exit231
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %0, i64 24, i1 false)
   %.sroa.4119.0.copyload = load ptr, ptr %.sroa.0158.sroa.7.0..sroa_idx, align 8, !tbaa !19 ; 2 uses
   %i.n = zext nneg i8 %.val.i to i64
-  %switch.gep1018 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._Py_LibHacl_Hacl_Streaming_HMAC_copy.28, i64 %i.n
-  %switch.load1019 = load i64, ptr %switch.gep1018, align 8
-  %i.o = urem i64 %.sroa.4159.0.copyload, %switch.load1019
+  %switch.gep1019 = getelementptr inbounds nuw i8, ptr @switch.table.init0, i64 %i.n
+  %switch.load1020 = load i8, ptr %switch.gep1019, align 1
+  %switch.ext1021 = zext i8 %switch.load1020 to i64
+  %i.o = urem i64 %.sroa.4159.0.copyload, %switch.ext1021
   %i.p = icmp eq i64 %i.o, 0
   %or.cond3 = and i1 %i.i, %i.p
   %i.q = zext nneg i8 %.val.i to i64              ; 2 uses
   br i1 %or.cond3, label %switch.lookup1020, label %switch.lookup1023
 
 switch.lookup1023:                                ; preds = %switch.lookup1017
-  %switch.gep1024 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._Py_LibHacl_Hacl_Streaming_HMAC_copy.28, i64 %i.q
-  %switch.load1025 = load i64, ptr %switch.gep1024, align 8
-  %i.r = urem i64 %.sroa.4159.0.copyload, %switch.load1025
+  %switch.gep1027 = getelementptr inbounds nuw i8, ptr @switch.table.init0, i64 %i.q
+  %switch.load1028 = load i8, ptr %switch.gep1027, align 1
+  %switch.ext1029 = zext i8 %switch.load1028 to i64
+  %i.r = urem i64 %.sroa.4159.0.copyload, %switch.ext1029
   br label %block_len.exit243
 
 switch.lookup1020:                                ; preds = %switch.lookup1017
-  %switch.gep1021 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._Py_LibHacl_Hacl_Streaming_HMAC_copy.28, i64 %i.q
-  %switch.load1022 = load i64, ptr %switch.gep1021, align 8
+  %switch.gep1023 = getelementptr inbounds nuw i8, ptr @switch.table.init0, i64 %i.q
+  %switch.load1024 = load i8, ptr %switch.gep1023, align 1
+  %switch.ext1025 = zext i8 %switch.load1024 to i64
   br label %block_len.exit243
 
 block_len.exit243:                                ; preds = %switch.lookup1020, %switch.lookup1023
-  %.0192 = phi i64 [ %i.r, %switch.lookup1023 ], [ %switch.load1022, %switch.lookup1020 ]
+  %.0192 = phi i64 [ %i.r, %switch.lookup1023 ], [ %switch.ext1025, %switch.lookup1020 ]
   %i.s = getelementptr i8, ptr %.sroa.4119.0.copyload, i64 %.0192
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.s, ptr align 1 %1, i64 %i.c, i1 false)
   %i.t = add i64 %.sroa.4159.0.copyload, %i.c
@@ -424,9 +429,10 @@ switch.lookup1026:                                ; preds = %bb.h
   %.sroa.6104.0.copyload = load ptr, ptr %.sroa.0158.sroa.7.0..sroa_idx, align 8, !tbaa !19 ; 2 uses
   %i.v = load <2 x ptr>, ptr %.sroa.0158.sroa.6.0..sroa_idx, align 8, !tbaa !26
   %i.w = zext nneg i8 %.val.i to i64
-  %switch.gep1027 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._Py_LibHacl_Hacl_Streaming_HMAC_copy.28, i64 %i.w
-  %switch.load1028 = load i64, ptr %switch.gep1027, align 8
-  %i.x = urem i64 %.sroa.4159.0.copyload, %switch.load1028
+  %switch.gep1031 = getelementptr inbounds nuw i8, ptr @switch.table.init0, i64 %i.w
+  %switch.load1032 = load i8, ptr %switch.gep1031, align 1
+  %switch.ext1033 = zext i8 %switch.load1032 to i64
+  %i.x = urem i64 %.sroa.4159.0.copyload, %switch.ext1033
   %i.y = icmp eq i64 %i.x, 0
   %or.cond5 = and i1 %i.i, %i.y
   br i1 %or.cond5, label %bb.i, label %switch.lookup1029
@@ -478,9 +484,10 @@ block_len.exit261.thread.thread967:               ; preds = %bb.i
 
 switch.lookup1029:                                ; preds = %switch.lookup1026
   %i.af = zext nneg i8 %.val.i to i64
-  %switch.gep1030 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._Py_LibHacl_Hacl_Streaming_HMAC_copy.28, i64 %i.af
-  %switch.load1031 = load i64, ptr %switch.gep1030, align 8
-  %i.ag = urem i64 %.sroa.4159.0.copyload, %switch.load1031 ; 2 uses
+  %switch.gep1035 = getelementptr inbounds nuw i8, ptr @switch.table.init0, i64 %i.af
+  %switch.load1036 = load i8, ptr %switch.gep1035, align 1
+  %switch.ext1037 = zext i8 %switch.load1036 to i64
+  %i.ag = urem i64 %.sroa.4159.0.copyload, %switch.ext1037 ; 2 uses
   %i.ah = icmp eq i64 %i.ag, 0
   br i1 %i.ah, label %switch.lookup1032, label %block_len.exit261.thread
 
@@ -529,9 +536,10 @@ block_len.exit273:                                ; preds = %block_len.exit261.t
 
 switch.lookup1032:                                ; preds = %switch.lookup1029, %block_len.exit273
   %i.al = zext nneg i8 %.val.i to i64
-  %switch.gep1033 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.init0, i64 %i.al
-  %switch.load1034 = load i32, ptr %switch.gep1033, align 4
-  %i.am = urem i32 %2, %switch.load1034
+  %switch.gep1039 = getelementptr inbounds nuw i8, ptr @switch.table.init0, i64 %i.al
+  %switch.load1040 = load i8, ptr %switch.gep1039, align 1
+  %switch.ext1041 = zext i8 %switch.load1040 to i32
+  %i.am = urem i32 %2, %switch.ext1041
   %i.an = icmp eq i32 %i.am, 0
   br i1 %i.an, label %bb.m, label %switch.lookup1035
 
@@ -582,9 +590,10 @@ block_len.exit285.thread575:                      ; preds = %bb.m
 
 switch.lookup1035:                                ; preds = %switch.lookup1032
   %i.au = zext nneg i8 %.val.i to i64
-  %switch.gep1036 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.init0, i64 %i.au
-  %switch.load1037 = load i32, ptr %switch.gep1036, align 4
-  %i.av = urem i32 %2, %switch.load1037
+  %switch.gep1043 = getelementptr inbounds nuw i8, ptr @switch.table.init0, i64 %i.au
+  %switch.load1044 = load i8, ptr %switch.gep1043, align 1
+  %switch.ext1045 = zext i8 %switch.load1044 to i32
+  %i.av = urem i32 %2, %switch.ext1045
   br label %block_len.exit285
 
 block_len.exit285:                                ; preds = %bb.m, %bb.m, %alg_of_impl.exit282.thread, %switch.lookup1035
@@ -910,9 +919,10 @@ block_len.exit321.thread765:                      ; preds = %bb.w
 
 switch.lookup1038:                                ; preds = %block_len.exit315
   %i.de = zext nneg i8 %.val.i to i64
-  %switch.gep1039 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._Py_LibHacl_Hacl_Streaming_HMAC_copy.28, i64 %i.de
-  %switch.load1040 = load i64, ptr %switch.gep1039, align 8
-  %i.df = urem i64 %.sroa.4159.0.copyload, %switch.load1040
+  %switch.gep1047 = getelementptr inbounds nuw i8, ptr @switch.table.init0, i64 %i.de
+  %switch.load1048 = load i8, ptr %switch.gep1047, align 1
+  %switch.ext1049 = zext i8 %switch.load1048 to i64
+  %i.df = urem i64 %.sroa.4159.0.copyload, %switch.ext1049
   br label %block_len.exit321
 
 block_len.exit321:                                ; preds = %bb.w, %bb.w, %alg_of_impl.exit318.thread, %switch.lookup1038
@@ -1015,9 +1025,10 @@ block_len.exit339.thread.thread978:               ; preds = %bb.ab
 
 switch.lookup1041:                                ; preds = %block_len.exit333
   %i.du = zext nneg i8 %.val.i to i64
-  %switch.gep1042 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._Py_LibHacl_Hacl_Streaming_HMAC_copy.28, i64 %i.du
-  %switch.load1043 = load i64, ptr %switch.gep1042, align 8
-  %i.dv = urem i64 %i.dj, %switch.load1043        ; 2 uses
+  %switch.gep1051 = getelementptr inbounds nuw i8, ptr @switch.table.init0, i64 %i.du
+  %switch.load1052 = load i8, ptr %switch.gep1051, align 1
+  %switch.ext1053 = zext i8 %switch.load1052 to i64
+  %i.dv = urem i64 %i.dj, %switch.ext1053         ; 2 uses
   %i.dw = icmp eq i64 %i.dv, 0
   br i1 %i.dw, label %switch.lookup1044, label %block_len.exit339.thread
 
@@ -1070,9 +1081,10 @@ switch.lookup1044:                                ; preds = %block_len.exit351, 
   %i.eb = sub i32 %2, %i.ch                       ; 11 uses
   %i.ec = zext i32 %i.eb to i64
   %i.ed = zext nneg i8 %.val.i to i64
-  %switch.gep1045 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.init0, i64 %i.ed
-  %switch.load1046 = load i32, ptr %switch.gep1045, align 4
-  %i.ee = urem i32 %i.eb, %switch.load1046
+  %switch.gep1055 = getelementptr inbounds nuw i8, ptr @switch.table.init0, i64 %i.ed
+  %switch.load1056 = load i8, ptr %switch.gep1055, align 1
+  %switch.ext1057 = zext i8 %switch.load1056 to i32
+  %i.ee = urem i32 %i.eb, %switch.ext1057
   %i.ef = icmp ne i32 %i.ee, 0
   %.not200 = icmp eq i32 %2, %i.ch
   %or.cond201 = select i1 %i.ef, i1 true, i1 %.not200
@@ -1125,9 +1137,10 @@ block_len.exit363.thread900:                      ; preds = %bb.af
 
 switch.lookup1047:                                ; preds = %switch.lookup1044
   %i.em = zext nneg i8 %.val.i to i64
-  %switch.gep1048 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.init0, i64 %i.em
-  %switch.load1049 = load i32, ptr %switch.gep1048, align 4
-  %i.en = urem i32 %i.eb, %switch.load1049
+  %switch.gep1059 = getelementptr inbounds nuw i8, ptr @switch.table.init0, i64 %i.em
+  %switch.load1060 = load i8, ptr %switch.gep1059, align 1
+  %switch.ext1061 = zext i8 %switch.load1060 to i32
+  %i.en = urem i32 %i.eb, %switch.ext1061
   br label %block_len.exit363
 
 block_len.exit363:                                ; preds = %bb.af, %bb.af, %alg_of_impl.exit360.thread, %switch.lookup1047
@@ -1368,9 +1381,10 @@ _Py_LibHacl_Hacl_Streaming_HMAC_index_of_state.exit: ; preds = %bb.a
   %.sroa.772.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   %.sroa.772.0.copyload = load i64, ptr %.sroa.772.0..sroa_idx, align 8, !tbaa !21 ; 4 uses
   %i.c = zext nneg i8 %.val.i to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._Py_LibHacl_Hacl_Streaming_HMAC_copy.28, i64 %i.c
-  %switch.load = load i64, ptr %switch.gep, align 8
-  %i.d = urem i64 %.sroa.772.0.copyload, %switch.load
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.init0, i64 %i.c
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
+  %i.d = urem i64 %.sroa.772.0.copyload, %switch.ext
   %i.e = icmp eq i64 %i.d, 0
   %i.f = icmp ne i64 %.sroa.772.0.copyload, 0
   %or.cond = and i1 %i.f, %i.e
@@ -1381,19 +1395,21 @@ default.unreachable239:                           ; preds = %impl_of_state.exit.
   unreachable
 
 switch.lookup242:                                 ; preds = %_Py_LibHacl_Hacl_Streaming_HMAC_index_of_state.exit
-  %switch.gep243 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._Py_LibHacl_Hacl_Streaming_HMAC_copy.28, i64 %i.g
-  %switch.load244 = load i64, ptr %switch.gep243, align 8
-  %i.h = urem i64 %.sroa.772.0.copyload, %switch.load244
+  %switch.gep244 = getelementptr inbounds nuw i8, ptr @switch.table.init0, i64 %i.g
+  %switch.load245 = load i8, ptr %switch.gep244, align 1
+  %switch.ext246 = zext i8 %switch.load245 to i64
+  %i.h = urem i64 %.sroa.772.0.copyload, %switch.ext246
   %i.i = trunc nuw nsw i64 %i.h to i32
   br label %block_len.exit103
 
 switch.lookup:                                    ; preds = %_Py_LibHacl_Hacl_Streaming_HMAC_index_of_state.exit
-  %switch.gep240 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.init0, i64 %i.g
-  %switch.load241 = load i32, ptr %switch.gep240, align 4
+  %switch.gep240 = getelementptr inbounds nuw i8, ptr @switch.table.init0, i64 %i.g
+  %switch.load241 = load i8, ptr %switch.gep240, align 1
+  %switch.ext242 = zext i8 %switch.load241 to i32
   br label %block_len.exit103
 
 block_len.exit103:                                ; preds = %switch.lookup, %switch.lookup242
-  %.086 = phi i32 [ %i.i, %switch.lookup242 ], [ %switch.load241, %switch.lookup ] ; 4 uses
+  %.086 = phi i32 [ %i.i, %switch.lookup242 ], [ %switch.ext242, %switch.lookup ] ; 4 uses
   %i.j = tail call fastcc ptr @malloc_(i8 noundef zeroext %.val.i) ; 9 uses
   %i.k = icmp eq ptr %i.j, null
   br i1 %i.k, label %.critedge, label %bb.c
@@ -1415,7 +1431,7 @@ switch.lookup245:                                 ; preds = %bb.c
   %i.p = zext nneg i32 %.086 to i64               ; 2 uses
   %i.q = sub i64 %.sroa.772.0.copyload, %i.p      ; 2 uses
   %i.r = zext nneg i8 %.val.i to i64
-  %switch.gep246 = getelementptr inbounds nuw i8, ptr @switch.table._Py_LibHacl_Hacl_Streaming_HMAC_digest.27, i64 %i.r
+  %switch.gep246 = getelementptr inbounds nuw i8, ptr @switch.table.init0, i64 %i.r
   %switch.load247 = load i8, ptr %switch.gep246, align 1
   %.lhs.trunc = trunc nuw i32 %.086 to i8         ; 2 uses
   %i.s = urem i8 %.lhs.trunc, %switch.load247
@@ -1426,21 +1442,21 @@ switch.lookup245:                                 ; preds = %bb.c
   br i1 %or.cond3, label %switch.lookup248, label %switch.lookup251
 
 switch.lookup251:                                 ; preds = %switch.lookup245
-  %switch.gep252 = getelementptr inbounds nuw i8, ptr @switch.table._Py_LibHacl_Hacl_Streaming_HMAC_digest.27, i64 %i.v
+  %switch.gep252 = getelementptr inbounds nuw i8, ptr @switch.table.init0, i64 %i.v
   %switch.load253 = load i8, ptr %switch.gep252, align 1
   %i.w = urem i8 %.lhs.trunc, %switch.load253
-  %3 = zext i8 %i.w to i64
   br label %block_len.exit123
 
 switch.lookup248:                                 ; preds = %switch.lookup245
-  %switch.gep249 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._Py_LibHacl_Hacl_Streaming_HMAC_copy.28, i64 %i.v
-  %switch.load250 = load i64, ptr %switch.gep249, align 8
+  %switch.gep251 = getelementptr inbounds nuw i8, ptr @switch.table.init0, i64 %i.v
+  %switch.load252 = load i8, ptr %switch.gep251, align 1
   br label %block_len.exit123
 
 block_len.exit123:                                ; preds = %switch.lookup248, %switch.lookup251
-  %.087 = phi i64 [ %3, %switch.lookup251 ], [ %switch.load250, %switch.lookup248 ]
+  %switch.load252.sink = phi i8 [ %switch.load252, %switch.lookup248 ], [ %i.w, %switch.lookup251 ]
+  %switch.ext253 = zext i8 %switch.load252.sink to i64
   %i.x = getelementptr i8, ptr %.sroa.671.0.copyload, i64 %i.p
-  %i.y = sub nsw i64 0, %.087
+  %i.y = sub nsw i64 0, %switch.ext253
   %i.z = getelementptr i8, ptr %i.x, i64 %i.y
   %.sroa.11.1.val = load i8, ptr %i.j, align 8, !tbaa !18
   %i.aa = getelementptr i8, ptr %i.j, i64 8       ; 4 uses
@@ -1843,21 +1859,23 @@ _Py_LibHacl_Hacl_Streaming_HMAC_index_of_state.exit: ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %_Py_LibHacl_Hacl_Streaming_HMAC_index_of_state.exit
   %i.d = zext nneg i8 %.val.i to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._Py_LibHacl_Hacl_Streaming_HMAC_copy.28, i64 %i.d
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.init0, i64 %i.d
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   br label %block_len.exit84
 
 block_len.exit84:                                 ; preds = %_Py_LibHacl_Hacl_Streaming_HMAC_index_of_state.exit, %switch.lookup
-  %.0.i82 = phi i64 [ 128, %_Py_LibHacl_Hacl_Streaming_HMAC_index_of_state.exit ], [ %switch.load, %switch.lookup ]
+  %.0.i82 = phi i64 [ 128, %_Py_LibHacl_Hacl_Streaming_HMAC_index_of_state.exit ], [ %switch.ext, %switch.lookup ]
   %i.e = tail call noalias ptr @calloc(i64 noundef %.0.i82, i64 noundef 1) #13 ; 5 uses
   %i.f = icmp eq ptr %i.e, null
   br i1 %i.f, label %bb.i, label %switch.lookup144
 
 switch.lookup144:                                 ; preds = %block_len.exit84
   %i.g = zext nneg i8 %.val.i to i64
-  %switch.gep145 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._Py_LibHacl_Hacl_Streaming_HMAC_copy.28, i64 %i.g
-  %switch.load146 = load i64, ptr %switch.gep145, align 8
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.e, ptr noundef nonnull align 1 dereferenceable(1) %.sroa.466.0.copyload, i64 %switch.load146, i1 false)
+  %switch.gep145 = getelementptr inbounds nuw i8, ptr @switch.table.init0, i64 %i.g
+  %switch.load146 = load i8, ptr %switch.gep145, align 1
+  %switch.ext147 = zext i8 %switch.load146 to i64
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.e, ptr noundef nonnull align 1 dereferenceable(1) %.sroa.466.0.copyload, i64 %switch.ext147, i1 false)
   %i.h = tail call fastcc ptr @malloc_(i8 noundef zeroext %.val.i) ; 7 uses
   %i.i = icmp eq ptr %i.h, null
   br i1 %i.i, label %.critedge, label %bb.c
@@ -2092,12 +2110,13 @@ alg_of_impl.exit25.i:                             ; preds = %hash_len.exit.i
 
 switch.lookup:                                    ; preds = %block_len.exit.i
   %i.n = zext nneg i8 %.val to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.init0, i64 %i.n
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.init0, i64 %i.n
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %block_len.exit28.i
 
 block_len.exit28.i:                               ; preds = %hash_len.exit.i, %hash_len.exit.i, %hash_len.exit.i, %hash_len.exit.i, %switch.lookup, %alg_of_impl.exit25.i, %hash_len.exit.thread58.i, %hash_len.exit.thread57.i, %alg_of_impl.exit25.thread.i
-  %.0.i26.i = phi i32 [ 64, %alg_of_impl.exit25.thread.i ], [ 72, %alg_of_impl.exit25.i ], [ 104, %hash_len.exit.thread58.i ], [ 136, %hash_len.exit.thread57.i ], [ %switch.load, %switch.lookup ], [ 128, %hash_len.exit.i ], [ 128, %hash_len.exit.i ], [ 128, %hash_len.exit.i ], [ 128, %hash_len.exit.i ]
+  %.0.i26.i = phi i32 [ 64, %alg_of_impl.exit25.thread.i ], [ 72, %alg_of_impl.exit25.i ], [ 104, %hash_len.exit.thread58.i ], [ 136, %hash_len.exit.thread57.i ], [ %switch.ext, %switch.lookup ], [ 128, %hash_len.exit.i ], [ 128, %hash_len.exit.i ], [ 128, %hash_len.exit.i ], [ 128, %hash_len.exit.i ]
   %.not17.i = icmp ugt i32 %i.d, %.0.i26.i
   br i1 %.not17.i, label %bb.i, label %block_len.exit28.thread.i
 
@@ -2182,19 +2201,21 @@ wrap_key.exit:                                    ; preds = %block_len.exit28.th
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #15
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(168) %i.c, i8 92, i64 168, i1 false)
   %i.p = zext nneg i8 %.0.i47 to i64
-  %switch.gep73 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.init0.30, i64 %i.p
-  %switch.load74 = load i64, ptr %switch.gep73, align 8
+  %switch.gep73 = getelementptr inbounds nuw i8, ptr @switch.table.init0.31, i64 %i.p
+  %switch.load74 = load i8, ptr %switch.gep73, align 1
+  %switch.ext75 = zext i8 %switch.load74 to i64
   br label %switch.lookup72
 
 switch.lookup72:                                  ; preds = %wrap_key.exit, %bb.v
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.v ], [ 0, %wrap_key.exit ] ; 5 uses
-  %i.q = icmp samesign ult i64 %indvars.iv, %switch.load74
+  %i.q = icmp samesign ult i64 %indvars.iv, %switch.ext75
   br i1 %i.q, label %bb.v, label %switch.lookup75.preheader
 
 switch.lookup75.preheader:                        ; preds = %switch.lookup72
   %i.r = zext nneg i8 %.0.i47 to i64
-  %switch.gep76 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.init0.30, i64 %i.r
-  %switch.load77 = load i64, ptr %switch.gep76, align 8
+  %switch.gep77 = getelementptr inbounds nuw i8, ptr @switch.table.init0.31, i64 %i.r
+  %switch.load78 = load i8, ptr %switch.gep77, align 1
+  %switch.ext79 = zext i8 %switch.load78 to i64
   br label %switch.lookup75
 
 bb.v:                                             ; preds = %switch.lookup72
@@ -2210,16 +2231,17 @@ bb.v:                                             ; preds = %switch.lookup72
 
 switch.lookup75:                                  ; preds = %switch.lookup75.preheader, %bb.w
   %indvars.iv66 = phi i64 [ %indvars.iv.next67, %bb.w ], [ 0, %switch.lookup75.preheader ] ; 4 uses
-  %i.y = icmp samesign ult i64 %indvars.iv66, %switch.load77
+  %i.y = icmp samesign ult i64 %indvars.iv66, %switch.ext79
   br i1 %i.y, label %bb.w, label %switch.lookup78
 
 switch.lookup78:                                  ; preds = %switch.lookup75
   %i.z = zext nneg i8 %.0.i47 to i64
-  %switch.gep79 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.init0.31, i64 %i.z
-  %switch.load80 = load i32, ptr %switch.gep79, align 4
+  %switch.gep81 = getelementptr inbounds nuw i8, ptr @switch.table.init0.31, i64 %i.z
+  %switch.load82 = load i8, ptr %switch.gep81, align 1
+  %switch.ext83 = zext i8 %switch.load82 to i32
   %.val37 = load i8, ptr %i.h, align 8, !tbaa !18
   %.val38 = load ptr, ptr %i.j, align 8, !tbaa !18
-  call fastcc void @update_multi(i8 %.val37, ptr %.val38, i64 noundef 0, ptr noundef nonnull %i.c, i32 noundef %switch.load80)
+  call fastcc void @update_multi(i8 %.val37, ptr %.val38, i64 noundef 0, ptr noundef nonnull %i.c, i32 noundef %switch.ext83)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15

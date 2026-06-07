@@ -62,10 +62,10 @@ $_ZTVN4geos4util13GEOSExceptionE = comdat any
 @.str.5 = private unnamed_addr constant [3 x i8] c": \00", align 1
 @_ZTVN4geos4util13GEOSExceptionE = linkonce_odr unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN4geos4util13GEOSExceptionE, ptr @_ZNSt13runtime_errorD2Ev, ptr @_ZN4geos4util13GEOSExceptionD0Ev, ptr @_ZNKSt13runtime_error4whatEv] }, comdat, align 8
 @.str.6 = private unnamed_addr constant [21 x i8] c"basic_string::append\00", align 1
-@switch.table._ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii = private unnamed_addr constant [3 x i64] [i64 88, i64 72, i64 80], align 8
-@switch.table._ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii.7 = private unnamed_addr constant [3 x i64] [i64 80, i64 88, i64 72], align 8
-@switch.table._ZN4geos11triangulate3tri3Tri4prevEi = private unnamed_addr constant [3 x i32] [i32 2, i32 0, i32 1], align 4
-@switch.table._ZN4geos11triangulate3tri3Tri7oppEdgeEi = private unnamed_addr constant [3 x i32] [i32 1, i32 2, i32 0], align 4
+@switch.table._ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii = private unnamed_addr constant [3 x i8] c"XHP", align 8
+@switch.table._ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii.7 = private unnamed_addr constant [3 x i8] c"PXH", align 8
+@switch.table._ZN4geos11triangulate3tri3Tri4prevEi = private unnamed_addr constant [3 x i8] c"\02\00\01", align 4
+@switch.table._ZN4geos11triangulate3tri3Tri7oppEdgeEi = private unnamed_addr constant [3 x i8] c"\01\02\00", align 4
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define void @_ZN4geos11triangulate3tri3Tri11setAdjacentEPS2_S3_S3_(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(96) initializes((72, 96)) %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 align 2 {
@@ -340,14 +340,16 @@ _ZNK4geos11triangulate3tri3Tri13getCoordinateEi.exit20: ; preds = %_ZNK4geos11tr
   %i.w = getelementptr inbounds nuw i8, ptr %.0.i, i64 48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.w, ptr noundef nonnull readonly align 8 dereferenceable(24) %3, i64 24, i1 false), !tbaa.struct !16
   %i.x = zext nneg i32 %1 to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii, i64 %i.x
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii, i64 %i.x
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.y = zext nneg i32 %1 to i64
-  %switch.gep41 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii.7, i64 %i.y
-  %switch.load42 = load i64, ptr %switch.gep41, align 8
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 %switch.load
+  %switch.gep41 = getelementptr inbounds nuw i8, ptr @switch.table._ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii.7, i64 %i.y
+  %switch.load42 = load i8, ptr %switch.gep41, align 1
+  %switch.ext43 = zext i8 %switch.load42 to i64
+  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 %switch.ext
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !15, !noalias !19 ; 2 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 %switch.load42
+  %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 %switch.ext43
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !15, !noalias !19 ; 5 uses
   %i.ad = icmp ult i32 %.0.i10, 3
   br i1 %i.ad, label %switch.lookup43, label %_ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii.exit.thread.i
@@ -363,14 +365,16 @@ _ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii.exit.thread.i: ; preds = %
 
 switch.lookup43:                                  ; preds = %_ZNK4geos11triangulate3tri3Tri13getCoordinateEi.exit20
   %i.ah = zext nneg i32 %.0.i10 to i64
-  %switch.gep44 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii.7, i64 %i.ah
-  %switch.load45 = load i64, ptr %switch.gep44, align 8
+  %switch.gep45 = getelementptr inbounds nuw i8, ptr @switch.table._ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii.7, i64 %i.ah
+  %switch.load46 = load i8, ptr %switch.gep45, align 1
+  %switch.ext47 = zext i8 %switch.load46 to i64
   %i.ai = zext nneg i32 %.0.i10 to i64
-  %switch.gep46 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii, i64 %i.ai
-  %switch.load47 = load i64, ptr %switch.gep46, align 8
-  %i.aj = getelementptr inbounds nuw i8, ptr %.0.i, i64 %switch.load45
+  %switch.gep48 = getelementptr inbounds nuw i8, ptr @switch.table._ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii, i64 %i.ai
+  %switch.load49 = load i8, ptr %switch.gep48, align 1
+  %switch.ext50 = zext i8 %switch.load49 to i64
+  %i.aj = getelementptr inbounds nuw i8, ptr %.0.i, i64 %switch.ext47
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !15, !noalias !19 ; 5 uses
-  %i.al = getelementptr inbounds nuw i8, ptr %.0.i, i64 %switch.load47
+  %i.al = getelementptr inbounds nuw i8, ptr %.0.i, i64 %switch.ext50
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !15, !noalias !19 ; 5 uses
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 72
   store ptr %.0.i, ptr %i.an, align 8, !tbaa !7
@@ -543,12 +547,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i32 %0 to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN4geos11triangulate3tri3Tri7oppEdgeEi, i64 %i.b
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN4geos11triangulate3tri3Tri7oppEdgeEi, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %switch.lookup
-  %.0 = phi i32 [ %switch.load, %switch.lookup ], [ -1, %bb.a ]
+  %.0 = phi i32 [ %switch.ext, %switch.lookup ], [ -1, %bb.a ]
   ret i32 %.0
 }
 
@@ -560,12 +565,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i32 %0 to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN4geos11triangulate3tri3Tri4prevEi, i64 %i.b
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN4geos11triangulate3tri3Tri4prevEi, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZN4geos11triangulate3tri3Tri4prevEi.exit
 
 _ZN4geos11triangulate3tri3Tri4prevEi.exit:        ; preds = %bb.a, %switch.lookup
-  %.0.i = phi i32 [ %switch.load, %switch.lookup ], [ -1, %bb.a ]
+  %.0.i = phi i32 [ %switch.ext, %switch.lookup ], [ -1, %bb.a ]
   ret i32 %.0.i
 }
 
@@ -587,14 +593,16 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.f = zext nneg i32 %2 to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii, i64 %i.f
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii, i64 %i.f
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.g = zext nneg i32 %2 to i64
-  %switch.gep36 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii.7, i64 %i.g
-  %switch.load37 = load i64, ptr %switch.gep36, align 8
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 %switch.load
+  %switch.gep36 = getelementptr inbounds nuw i8, ptr @switch.table._ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii.7, i64 %i.g
+  %switch.load37 = load i8, ptr %switch.gep36, align 1
+  %switch.ext38 = zext i8 %switch.load37 to i64
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 %switch.ext
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !15, !noalias !22
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 %switch.load37
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 %switch.ext38
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !15, !noalias !22
   br label %_ZNK4geos11triangulate3tri3Tri11getAdjacentEi.exit12.i
 
@@ -615,14 +623,16 @@ _ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii.exit.thread: ; preds = %_Z
 
 switch.lookup38:                                  ; preds = %_ZNK4geos11triangulate3tri3Tri11getAdjacentEi.exit12.i
   %i.r = zext nneg i32 %3 to i64
-  %switch.gep39 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii.7, i64 %i.r
-  %switch.load40 = load i64, ptr %switch.gep39, align 8
+  %switch.gep40 = getelementptr inbounds nuw i8, ptr @switch.table._ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii.7, i64 %i.r
+  %switch.load41 = load i8, ptr %switch.gep40, align 1
+  %switch.ext42 = zext i8 %switch.load41 to i64
   %i.s = zext nneg i32 %3 to i64
-  %switch.gep41 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii, i64 %i.s
-  %switch.load42 = load i64, ptr %switch.gep41, align 8
-  %i.t = getelementptr inbounds nuw i8, ptr %1, i64 %switch.load40
+  %switch.gep43 = getelementptr inbounds nuw i8, ptr @switch.table._ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii, i64 %i.s
+  %switch.load44 = load i8, ptr %switch.gep43, align 1
+  %switch.ext45 = zext i8 %switch.load44 to i64
+  %i.t = getelementptr inbounds nuw i8, ptr %1, i64 %switch.ext42
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !15, !noalias !22 ; 5 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %1, i64 %switch.load42
+  %i.v = getelementptr inbounds nuw i8, ptr %1, i64 %switch.ext45
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !15, !noalias !22 ; 5 uses
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 72
   store ptr %1, ptr %i.x, align 8, !tbaa !7
@@ -725,15 +735,17 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.g = zext nneg i32 %3 to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii, i64 %i.g
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii, i64 %i.g
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.h = zext nneg i32 %3 to i64
-  %switch.gep53 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii.7, i64 %i.h
-  %switch.load54 = load i64, ptr %switch.gep53, align 8
-  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 %switch.load
+  %switch.gep53 = getelementptr inbounds nuw i8, ptr @switch.table._ZN4geos11triangulate3tri3Tri15getAdjacentTrisEPS2_ii.7, i64 %i.h
+  %switch.load54 = load i8, ptr %switch.gep53, align 1
+  %switch.ext55 = zext i8 %switch.load54 to i64
+  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 %switch.ext
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !15
   store ptr %i.j, ptr %i.a, align 8, !tbaa !15
-  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 %switch.load54
+  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 %switch.ext55
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !15
   br label %_ZNK4geos11triangulate3tri3Tri11getAdjacentEi.exit12
 
@@ -795,12 +807,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i32 %0 to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN4geos11triangulate3tri3Tri4prevEi, i64 %i.b
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN4geos11triangulate3tri3Tri4prevEi, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %switch.lookup
-  %.0 = phi i32 [ %switch.load, %switch.lookup ], [ -1, %bb.a ]
+  %.0 = phi i32 [ %switch.ext, %switch.lookup ], [ -1, %bb.a ]
   ret i32 %.0
 }
 
@@ -1200,12 +1213,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i32 %0 to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN4geos11triangulate3tri3Tri7oppEdgeEi, i64 %i.b
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN4geos11triangulate3tri3Tri7oppEdgeEi, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %_ZN4geos11triangulate3tri3Tri4nextEi.exit
 
 _ZN4geos11triangulate3tri3Tri4nextEi.exit:        ; preds = %bb.a, %switch.lookup
-  %.0.i = phi i32 [ %switch.load, %switch.lookup ], [ -1, %bb.a ]
+  %.0.i = phi i32 [ %switch.ext, %switch.lookup ], [ -1, %bb.a ]
   ret i32 %.0.i
 }
 

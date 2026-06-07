@@ -39,8 +39,7 @@ module asm ".globl _ZSt21ios_base_library_initv"
 @_ZTISt19__codecvt_utf8_baseIwE = external constant ptr
 @.str.14 = private unnamed_addr constant [28 x i8] c"wstring_convert::from_bytes\00", align 1
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @_GLOBAL__sub_I_ImfMisc.cpp, ptr null }]
-@switch.table._ZN27OpenImageIO_v3_1_Imf__3_3_513pixelTypeSizeENS_9PixelTypeE = private unnamed_addr constant [3 x i32] [i32 4, i32 2, i32 4], align 4
-@switch.table._ZN27OpenImageIO_v3_1_Imf__3_3_521bytesPerDeepLineTableERKNS_6HeaderEiiPKciiRSt6vectorImSaImEE = private unnamed_addr constant [3 x i64] [i64 4, i64 2, i64 4], align 8
+@switch.table._ZN27OpenImageIO_v3_1_Imf__3_3_521bytesPerDeepLineTableERKNS_6HeaderEiiPKciiRSt6vectorImSaImEE = private unnamed_addr constant [3 x i8] c"\04\02\04", align 8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.start.p0(ptr captures(none)) #0
@@ -79,9 +78,10 @@ bb.d:                                             ; preds = %bb.b
 
 switch.lookup:                                    ; preds = %bb.a
   %i.d = zext nneg i32 %0 to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN27OpenImageIO_v3_1_Imf__3_3_513pixelTypeSizeENS_9PixelTypeE, i64 %i.d
-  %switch.load = load i32, ptr %switch.gep, align 4
-  ret i32 %switch.load
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN27OpenImageIO_v3_1_Imf__3_3_521bytesPerDeepLineTableERKNS_6HeaderEiiPKciiRSt6vectorImSaImEE, i64 %i.d
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  ret i32 %switch.ext
 }
 
 declare ptr @__cxa_allocate_exception(i64) local_unnamed_addr
@@ -292,14 +292,15 @@ bb.g:                                             ; preds = %bb.e
 
 switch.lookup:                                    ; preds = %.lr.ph45
   %i.an = zext nneg i32 %i.aj to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN27OpenImageIO_v3_1_Imf__3_3_521bytesPerDeepLineTableERKNS_6HeaderEiiPKciiRSt6vectorImSaImEE, i64 %i.an
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN27OpenImageIO_v3_1_Imf__3_3_521bytesPerDeepLineTableERKNS_6HeaderEiiPKciiRSt6vectorImSaImEE, i64 %i.an
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.ao = load i32, ptr %i.c, align 4, !tbaa !26
   %i.ap = load i32, ptr %i.a, align 4, !tbaa !27
   %i.aq = add i32 %i.ao, 1
   %i.ar = sub i32 %i.aq, %i.ap
   %i.as = sext i32 %i.ar to i64
-  %i.at = mul nsw i64 %switch.load, %i.as
+  %i.at = mul nsw i64 %switch.ext, %i.as
   %i.au = getelementptr inbounds nuw i8, ptr %.sroa.033.044, i64 292
   %i.av = load i32, ptr %i.au, align 4, !tbaa !28
   %i.aw = sext i32 %i.av to i64
@@ -519,8 +520,9 @@ switch.lookup:                                    ; preds = %bb.b
   %i.ai = tail call i32 @llvm.abs.i32(i32 %i.ad, i1 false) ; 3 uses
   %i.aj = tail call i32 @llvm.abs.i32(i32 %i.ab, i1 true) ; 3 uses
   %i.ak = zext nneg i32 %i.ae to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN27OpenImageIO_v3_1_Imf__3_3_521bytesPerDeepLineTableERKNS_6HeaderEiiPKciiRSt6vectorImSaImEE, i64 %i.ak
-  %switch.load = load i64, ptr %switch.gep, align 8
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN27OpenImageIO_v3_1_Imf__3_3_521bytesPerDeepLineTableERKNS_6HeaderEiiPKciiRSt6vectorImSaImEE, i64 %i.ak
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
   %i.al = add i32 %i.e, %i.aj                     ; 2 uses
   %i.am = srem i32 %i.al, %i.aj
   %i.an = sub nsw i32 %i.al, %i.am                ; 2 uses
@@ -584,7 +586,7 @@ bb.f:                                             ; preds = %.preheader62, %bb.f
   %i.bq = getelementptr inbounds i8, ptr %i.bi, i64 %i.bp
   %i.br = load i32, ptr %i.bq, align 4, !tbaa !3
   %i.bs = sext i32 %i.br to i64
-  %i.bt = mul nsw i64 %switch.load, %i.bs
+  %i.bt = mul nsw i64 %switch.ext, %i.bs
   %i.bu = add i64 %i.bt, %.05364                  ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, %smax ; 2 uses
   %.not55 = icmp sgt i64 %indvars.iv.next, %i.bc

@@ -10,9 +10,9 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.3 = private unnamed_addr constant [5 x i8] c"'msg\00", align 1
 @.str.4 = private unnamed_addr constant [3 x i8] c"'_\00", align 1
 @switch.table._ZN6google8protobuf8compiler4rust12ViewReceiverENS2_12AccessorCaseE = private unnamed_addr constant [3 x ptr] [ptr @.str.1, ptr @.str.1, ptr @.str], align 8
-@switch.table._ZN6google8protobuf8compiler4rust12ViewReceiverENS2_12AccessorCaseE.1 = private unnamed_addr constant [3 x i64] [i64 5, i64 5, i64 4], align 8
+@switch.table._ZN6google8protobuf8compiler4rust12ViewReceiverENS2_12AccessorCaseE.1 = private unnamed_addr constant [3 x i8] c"\05\05\04", align 8
 @switch.table._ZN6google8protobuf8compiler4rust12ViewLifetimeENS2_12AccessorCaseE = private unnamed_addr constant [3 x ptr] [ptr @.str.4, ptr @.str.4, ptr @.str.3], align 8
-@switch.table._ZN6google8protobuf8compiler4rust12ViewLifetimeENS2_12AccessorCaseE.2 = private unnamed_addr constant [3 x i64] [i64 2, i64 2, i64 4], align 8
+@switch.table._ZN6google8protobuf8compiler4rust12ViewLifetimeENS2_12AccessorCaseE.2 = private unnamed_addr constant [3 x i8] c"\02\02\04", align 8
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define hidden { i64, ptr } @_ZN6google8protobuf8compiler4rust12ViewReceiverENS2_12AccessorCaseE(i32 noundef %0) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
@@ -25,13 +25,14 @@ switch.lookup:                                    ; preds = %bb.a
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6google8protobuf8compiler4rust12ViewReceiverENS2_12AccessorCaseE, i64 %i.b
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.c = zext nneg i32 %0 to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6google8protobuf8compiler4rust12ViewReceiverENS2_12AccessorCaseE.1, i64 %i.c
-  %switch.load2 = load i64, ptr %switch.gep1, align 8
+  %switch.gep1 = getelementptr inbounds nuw i8, ptr @switch.table._ZN6google8protobuf8compiler4rust12ViewReceiverENS2_12AccessorCaseE.1, i64 %i.c
+  %switch.load2 = load i8, ptr %switch.gep1, align 1
+  %switch.ext = zext i8 %switch.load2 to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %switch.lookup
   %.sroa.4.0 = phi ptr [ %switch.load, %switch.lookup ], [ @.str.2, %bb.a ]
-  %.sroa.0.0 = phi i64 [ %switch.load2, %switch.lookup ], [ 0, %bb.a ]
+  %.sroa.0.0 = phi i64 [ %switch.ext, %switch.lookup ], [ 0, %bb.a ]
   %.fca.0.insert = insertvalue { i64, ptr } poison, i64 %.sroa.0.0, 0
   %.fca.1.insert = insertvalue { i64, ptr } %.fca.0.insert, ptr %.sroa.4.0, 1
   ret { i64, ptr } %.fca.1.insert
@@ -48,13 +49,14 @@ switch.lookup:                                    ; preds = %bb.a
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6google8protobuf8compiler4rust12ViewLifetimeENS2_12AccessorCaseE, i64 %i.b
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.c = zext nneg i32 %0 to i64
-  %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6google8protobuf8compiler4rust12ViewLifetimeENS2_12AccessorCaseE.2, i64 %i.c
-  %switch.load2 = load i64, ptr %switch.gep1, align 8
+  %switch.gep1 = getelementptr inbounds nuw i8, ptr @switch.table._ZN6google8protobuf8compiler4rust12ViewLifetimeENS2_12AccessorCaseE.2, i64 %i.c
+  %switch.load2 = load i8, ptr %switch.gep1, align 1
+  %switch.ext = zext i8 %switch.load2 to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %switch.lookup
   %.sroa.4.0 = phi ptr [ %switch.load, %switch.lookup ], [ @.str.2, %bb.a ]
-  %.sroa.0.0 = phi i64 [ %switch.load2, %switch.lookup ], [ 0, %bb.a ]
+  %.sroa.0.0 = phi i64 [ %switch.ext, %switch.lookup ], [ 0, %bb.a ]
   %.fca.0.insert = insertvalue { i64, ptr } poison, i64 %.sroa.0.0, 0
   %.fca.1.insert = insertvalue { i64, ptr } %.fca.0.insert, ptr %.sroa.4.0, 1
   ret { i64, ptr } %.fca.1.insert

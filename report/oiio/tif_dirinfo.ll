@@ -201,14 +201,14 @@ begin_hunk_0
 @.str.281 = private unnamed_addr constant [10 x i8] c"DateStamp\00", align 1
 @.str.282 = private unnamed_addr constant [13 x i8] c"Differential\00", align 1
 @.str.283 = private unnamed_addr constant [27 x i8] c"HorizontalPositioningError\00", align 1
-@switch.table.TIFFDataWidth = private unnamed_addr constant [19 x i32] [i32 1, i32 1, i32 1, i32 2, i32 4, i32 8, i32 1, i32 1, i32 2, i32 4, i32 8, i32 4, i32 8, i32 4, i32 0, i32 0, i32 8, i32 8, i32 8], align 4
-@switch.table.TIFFFieldSetGetSize = private unnamed_addr constant [52 x i32] [i32 1, i32 1, i32 1, i32 1, i32 2, i32 2, i32 4, i32 4, i32 8, i32 8, i32 4, i32 8, i32 8, i32 4, i32 4, i32 1, i32 1, i32 1, i32 2, i32 2, i32 4, i32 4, i32 8, i32 8, i32 4, i32 8, i32 8, i32 1, i32 1, i32 1, i32 2, i32 2, i32 4, i32 4, i32 8, i32 8, i32 4, i32 8, i32 8, i32 1, i32 1, i32 1, i32 2, i32 2, i32 4, i32 4, i32 8, i32 8, i32 4, i32 8, i32 8, i32 1], align 4
-@switch.table.TIFFFieldSetGetCountSize = private unnamed_addr constant [24 x i32] [i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4], align 4
-@switch.table.TIFFMergeFieldInfo = private unnamed_addr constant [18 x i32] [i32 2, i32 1, i32 4, i32 6, i32 10, i32 3, i32 2, i32 5, i32 7, i32 10, i32 10, i32 11, i32 12, i32 0, i32 0, i32 8, i32 9, i32 12], align 4
-@switch.table.TIFFMergeFieldInfo.2 = private unnamed_addr constant [18 x i32] [i32 16, i32 15, i32 18, i32 20, i32 24, i32 17, i32 16, i32 19, i32 21, i32 24, i32 24, i32 25, i32 26, i32 0, i32 0, i32 22, i32 23, i32 26], align 4
-@switch.table.TIFFMergeFieldInfo.3 = private unnamed_addr constant [18 x i32] [i32 28, i32 27, i32 30, i32 32, i32 36, i32 29, i32 28, i32 31, i32 33, i32 36, i32 36, i32 37, i32 38, i32 0, i32 0, i32 34, i32 35, i32 38], align 4
-@switch.table.TIFFMergeFieldInfo.4 = private unnamed_addr constant [18 x i32] [i32 40, i32 39, i32 42, i32 44, i32 48, i32 41, i32 40, i32 43, i32 45, i32 48, i32 48, i32 49, i32 50, i32 0, i32 0, i32 46, i32 47, i32 50], align 4
-@switch.table._TIFFCheckFieldIsValidForCodec = private unnamed_addr constant [10 x i32] [i32 1, i32 1, i32 1, i32 1, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1], align 4
+@switch.table.TIFFDataWidth = private unnamed_addr constant [19 x i8] c"\01\01\01\02\04\08\01\01\02\04\08\04\08\04\00\00\08\08\08", align 4
+@switch.table.TIFFFieldSetGetSize = private unnamed_addr constant [52 x i8] c"\01\01\01\01\02\02\04\04\08\08\04\08\08\04\04\01\01\01\02\02\04\04\08\08\04\08\08\01\01\01\02\02\04\04\08\08\04\08\08\01\01\01\02\02\04\04\08\08\04\08\08\01", align 4
+@switch.table.TIFFFieldSetGetCountSize = private unnamed_addr constant [24 x i8] c"\02\02\02\02\02\02\02\02\02\02\02\02\04\04\04\04\04\04\04\04\04\04\04\04", align 4
+@switch.table.TIFFMergeFieldInfo = private unnamed_addr constant [18 x i8] c"\02\01\04\06\0A\03\02\05\07\0A\0A\0B\0C\00\00\08\09\0C", align 4
+@switch.table.TIFFMergeFieldInfo.2 = private unnamed_addr constant [18 x i8] c"\10\0F\12\14\18\11\10\13\15\18\18\19\1A\00\00\16\17\1A", align 4
+@switch.table.TIFFMergeFieldInfo.3 = private unnamed_addr constant [18 x i8] c"\1C\1B\1E $\1D\1C\1F!$$%&\00\00\22#&", align 4
+@switch.table.TIFFMergeFieldInfo.4 = private unnamed_addr constant [18 x i8] c"('*,0)(+-0012\00\00./2", align 4
+@switch.table._TIFFCheckFieldIsValidForCodec = private unnamed_addr constant [10 x i8] c"\01\01\01\01\00\00\00\01\01\01", align 4
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull ptr @_TIFFGetFields() local_unnamed_addr #0 {
@@ -611,12 +611,13 @@ bb.a:
 
 switch.lookup:                                    ; preds = %bb.a
   %i.b = zext nneg i32 %0 to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.TIFFDataWidth, i64 %i.b
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.TIFFDataWidth, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %switch.lookup
-  %.0 = phi i32 [ %switch.load, %switch.lookup ], [ 0, %bb.a ]
+  %.0 = phi i32 [ %switch.ext, %switch.lookup ], [ 0, %bb.a ]
   ret i32 %.0
 }
 
@@ -634,12 +635,13 @@ bb.b:                                             ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %bb.b
   %i.e = zext nneg i32 %i.c to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.TIFFFieldSetGetSize, i64 %i.e
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.TIFFFieldSetGetSize, i64 %i.e
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %switch.lookup, %bb.a
-  %.0 = phi i32 [ %switch.load, %switch.lookup ], [ 0, %bb.a ], [ 0, %bb.b ]
+  %.0 = phi i32 [ %switch.ext, %switch.lookup ], [ 0, %bb.a ], [ 0, %bb.b ]
   ret i32 %.0
 }
 
@@ -658,12 +660,13 @@ bb.b:                                             ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %bb.b
   %i.e = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.TIFFFieldSetGetCountSize, i64 %i.e
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.TIFFFieldSetGetCountSize, i64 %i.e
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %switch.lookup, %bb.a
-  %.0 = phi i32 [ %switch.load, %switch.lookup ], [ 0, %bb.a ], [ 0, %bb.b ]
+  %.0 = phi i32 [ %switch.ext, %switch.lookup ], [ 0, %bb.a ], [ 0, %bb.b ]
   ret i32 %.0
 }
 
@@ -994,12 +997,13 @@ bb.b:                                             ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %bb.b
   %i.i = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.TIFFMergeFieldInfo.4, i64 %i.i
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.TIFFMergeFieldInfo.4, i64 %i.i
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %switch.lookup
-  %.sink = phi i32 [ %switch.load, %switch.lookup ], [ 0, %bb.b ]
+  %.sink = phi i32 [ %switch.ext, %switch.lookup ], [ 0, %bb.b ]
   store i32 %.sink, ptr %i.g, align 8, !tbaa !44
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 20
   store i16 65, ptr %i.j, align 4, !tbaa !31
@@ -1195,12 +1199,13 @@ _TIFFSetGetType.exit.sink.split:                  ; preds = %bb.r, %bb.q, %bb.o,
   %switch.tableidx152.sink = phi i32 [ %switch.tableidx148, %bb.q ], [ %switch.tableidx144, %bb.o ], [ %switch.tableidx, %bb.m ], [ %switch.tableidx152, %bb.r ]
   %switch.table.TIFFMergeFieldInfo.4.sink = phi ptr [ @switch.table.TIFFMergeFieldInfo.3, %bb.q ], [ @switch.table.TIFFMergeFieldInfo.2, %bb.o ], [ @switch.table.TIFFMergeFieldInfo, %bb.m ], [ @switch.table.TIFFMergeFieldInfo.4, %bb.r ]
   %i.bc = zext nneg i32 %switch.tableidx152.sink to i64
-  %switch.gep154 = getelementptr inbounds nuw [4 x i8], ptr %switch.table.TIFFMergeFieldInfo.4.sink, i64 %i.bc
-  %switch.load155 = load i32, ptr %switch.gep154, align 4
+  %switch.gep156 = getelementptr inbounds nuw i8, ptr %switch.table.TIFFMergeFieldInfo.4.sink, i64 %i.bc
+  %switch.load157 = load i8, ptr %switch.gep156, align 1
+  %switch.ext158 = zext i8 %switch.load157 to i32
   br label %_TIFFSetGetType.exit
 
 _TIFFSetGetType.exit:                             ; preds = %_TIFFSetGetType.exit.sink.split, %bb.m, %bb.o, %bb.q, %bb.k, %bb.r
-  %.0.i = phi i32 [ %switch.load155, %_TIFFSetGetType.exit.sink.split ], [ 0, %bb.r ], [ 1, %bb.k ], [ 0, %bb.q ], [ 0, %bb.o ], [ 0, %bb.m ]
+  %.0.i = phi i32 [ %switch.ext158, %_TIFFSetGetType.exit.sink.split ], [ 0, %bb.r ], [ 1, %bb.k ], [ 0, %bb.q ], [ 0, %bb.o ], [ 0, %bb.m ]
   %i.bd = getelementptr inbounds nuw i8, ptr %.093108, i64 16
   store i32 %.0.i, ptr %i.bd, align 8, !tbaa !44
   %i.be = getelementptr inbounds nuw i8, ptr %i.u, i64 12
@@ -1341,12 +1346,13 @@ bb.o:                                             ; preds = %bb.f, %bb.n, %bb.m,
 
 switch.lookup:                                    ; preds = %bb.f
   %i.o = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._TIFFCheckFieldIsValidForCodec, i64 %i.o
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._TIFFCheckFieldIsValidForCodec, i64 %i.o
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.p
 
 bb.p:                                             ; preds = %switch.lookup, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.g, %bb.g, %bb.e, %bb.d, %bb.b, %bb.a, %bb.o
-  %.0 = phi i32 [ 1, %bb.a ], [ 0, %bb.o ], [ 0, %bb.b ], [ 1, %bb.m ], [ 1, %bb.l ], [ 1, %bb.k ], [ 1, %bb.d ], [ 1, %bb.e ], [ %switch.load, %switch.lookup ], [ 1, %bb.g ], [ 1, %bb.h ], [ 1, %bb.j ], [ 1, %bb.i ], [ 1, %bb.n ], [ 1, %bb.g ], [ 1, %bb.g ]
+  %.0 = phi i32 [ 1, %bb.a ], [ 0, %bb.o ], [ 0, %bb.b ], [ 1, %bb.m ], [ 1, %bb.l ], [ 1, %bb.k ], [ 1, %bb.d ], [ 1, %bb.e ], [ %switch.ext, %switch.lookup ], [ 1, %bb.g ], [ 1, %bb.h ], [ 1, %bb.j ], [ 1, %bb.i ], [ 1, %bb.n ], [ 1, %bb.g ], [ 1, %bb.g ]
   ret i32 %.0
 }
 

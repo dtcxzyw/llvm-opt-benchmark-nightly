@@ -13,10 +13,10 @@ target triple = "x86_64-pc-linux-gnu"
 @w2c_hermes_t9 = external local_unnamed_addr constant ptr, align 8
 @w2c_hermes_t8 = external local_unnamed_addr constant ptr, align 8
 @w2c_hermes_t5 = external local_unnamed_addr constant ptr, align 8
-@switch.table.w2c_hermes_hermes0x3A0x3AisUnicodeOnlySpace0x28unsigned0x20int0x29 = private unnamed_addr constant [96 x i32] [i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1], align 4
-@switch.table.w2c_hermes_hermes0x3A0x3AisSimpleSideEffectFreeInstruction0x28hermes0x3A0x3AInstruction0x2A0x29 = private unnamed_addr constant [36 x i32] [i32 1, i32 1, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1], align 4
+@switch.table.w2c_hermes_hermes0x3A0x3AisUnicodeOnlySpace0x28unsigned0x20int0x29 = private unnamed_addr constant [96 x i8] c"\01\01\01\01\01\01\01\01\01\01\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\01", align 4
+@switch.table.w2c_hermes_hermes0x3A0x3AisSimpleSideEffectFreeInstruction0x28hermes0x3A0x3AInstruction0x2A0x29 = private unnamed_addr constant [36 x i8] c"\01\01\00\00\00\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\01", align 4
 @switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29 = private unnamed_addr constant [4 x i64] [i64 188978561025, i64 120259084289, i64 68719476737, i64 107374182401], align 8
-@switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29.23 = private unnamed_addr constant [4 x i32] [i32 22326, i32 55442, i32 40304, i32 46386], align 4
+@switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29.23 = private unnamed_addr constant [4 x i16] [i16 22326, i16 -10094, i16 -25232, i16 -19150], align 4
 
 ; Function Attrs: nounwind uwtable
 define hidden noundef i32 @w2c_hermes_hermes0x3A0x3Aparser0x3A0x3AJSLexer0x3A0x3Aadvance0x28hermes0x3A0x3Aparser0x3A0x3AJSLexer0x3A0x3AGrammarContext0x29(ptr noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 {
@@ -419,12 +419,13 @@ bb.e:                                             ; preds = %bb.d
 
 switch.lookup:                                    ; preds = %bb.d
   %i.f = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.w2c_hermes_hermes0x3A0x3AisUnicodeOnlySpace0x28unsigned0x20int0x29, i64 %i.f
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.w2c_hermes_hermes0x3A0x3AisUnicodeOnlySpace0x28unsigned0x20int0x29, i64 %i.f
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %switch.lookup, %bb.c, %bb.a
-  %.0 = phi i32 [ 0, %bb.a ], [ %switch.load, %switch.lookup ], [ %spec.select, %bb.e ], [ %i.c, %bb.c ]
+  %.0 = phi i32 [ 0, %bb.a ], [ %switch.ext, %switch.lookup ], [ %spec.select, %bb.e ], [ %i.c, %bb.c ]
   ret i32 %.0
 }
 
@@ -827,8 +828,9 @@ switch.lookup:                                    ; preds = %bb.a
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29, i64 %i.e
   %switch.load = load i64, ptr %switch.gep, align 8
   %i.f = zext nneg i32 %switch.tableidx to i64
-  %switch.gep145 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29.23, i64 %i.f
-  %switch.load146 = load i32, ptr %switch.gep145, align 4
+  %switch.gep145 = getelementptr inbounds nuw [2 x i8], ptr @switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29.23, i64 %i.f
+  %switch.load146 = load i16, ptr %switch.gep145, align 2
+  %switch.ext = zext i16 %switch.load146 to i32
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %i.h = zext i32 %i.c to i64                     ; 4 uses
   %.val114 = load ptr, ptr %i.g, align 8, !tbaa !18
@@ -846,7 +848,7 @@ switch.lookup:                                    ; preds = %bb.a
   %.val = load ptr, ptr %i.g, align 8, !tbaa !18
   %i.o = getelementptr inbounds nuw i8, ptr %.val, i64 %i.h
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 8
-  store i32 %switch.load146, ptr %i.p, align 1
+  store i32 %switch.ext, ptr %i.p, align 1
   %i.q = add i32 %i.b, -40
   %i.r = tail call i32 @w2c_hermes_hermes0x3A0x3Avm0x3A0x3ARuntime0x3A0x3AraiseRangeError0x28hermes0x3A0x3Avm0x3A0x3ATwineChar160x20const0x260x29(ptr noundef nonnull %0, i32 noundef %1, i32 noundef %i.q) #7
   br label %bb.b
@@ -1249,12 +1251,13 @@ bb.c:                                             ; preds = %bb.b
 
 switch.lookup:                                    ; preds = %bb.b
   %i.h = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.w2c_hermes_hermes0x3A0x3AisSimpleSideEffectFreeInstruction0x28hermes0x3A0x3AInstruction0x2A0x29, i64 %i.h
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.w2c_hermes_hermes0x3A0x3AisSimpleSideEffectFreeInstruction0x28hermes0x3A0x3AInstruction0x2A0x29, i64 %i.h
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.d
 
 bb.d:                                             ; preds = %switch.lookup, %bb.c, %bb.a
-  %.0 = phi i32 [ 0, %bb.a ], [ %switch.load, %switch.lookup ], [ %i.g, %bb.c ]
+  %.0 = phi i32 [ 0, %bb.a ], [ %switch.ext, %switch.lookup ], [ %i.g, %bb.c ]
   ret i32 %.0
 }
 
@@ -1657,8 +1660,9 @@ switch.lookup:                                    ; preds = %bb.g
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29, i64 %i.de
   %switch.load = load i64, ptr %switch.gep, align 8
   %i.df = zext nneg i32 %switch.tableidx to i64
-  %switch.gep329 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29.23, i64 %i.df
-  %switch.load330 = load i32, ptr %switch.gep329, align 4
+  %switch.gep329 = getelementptr inbounds nuw [2 x i8], ptr @switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29.23, i64 %i.df
+  %switch.load330 = load i16, ptr %switch.gep329, align 2
+  %switch.ext = zext i16 %switch.load330 to i32
   %i.dg = zext i32 %i.dc to i64                   ; 4 uses
   %.val114.i = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.dh = getelementptr inbounds nuw i8, ptr %.val114.i, i64 %i.dg
@@ -1675,7 +1679,7 @@ switch.lookup:                                    ; preds = %bb.g
   %.val.i = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.dn = getelementptr inbounds nuw i8, ptr %.val.i, i64 %i.dg
   %i.do = getelementptr inbounds nuw i8, ptr %i.dn, i64 8
-  store i32 %switch.load330, ptr %i.do, align 1
+  store i32 %switch.ext, ptr %i.do, align 1
   %i.dp = add i32 %i.db, -40
   %i.dq = tail call i32 @w2c_hermes_hermes0x3A0x3Avm0x3A0x3ARuntime0x3A0x3AraiseRangeError0x28hermes0x3A0x3Avm0x3A0x3ATwineChar160x20const0x260x29(ptr noundef nonnull %0, i32 noundef %2, i32 noundef %i.dp) #7
   br label %w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AraiseOnError0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20hermes0x3A0x3Abigint0x3A0x3AOperationStatus0x29.exit
@@ -2067,8 +2071,9 @@ switch.lookup:                                    ; preds = %bb.p
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29, i64 %i.eu
   %switch.load = load i64, ptr %switch.gep, align 8
   %i.ev = zext nneg i32 %switch.tableidx to i64
-  %switch.gep509 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29.23, i64 %i.ev
-  %switch.load510 = load i32, ptr %switch.gep509, align 4
+  %switch.gep509 = getelementptr inbounds nuw [2 x i8], ptr @switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29.23, i64 %i.ev
+  %switch.load510 = load i16, ptr %switch.gep509, align 2
+  %switch.ext = zext i16 %switch.load510 to i32
   %i.ew = zext i32 %i.es to i64                   ; 4 uses
   %.val114.i = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ex = getelementptr inbounds nuw i8, ptr %.val114.i, i64 %i.ew
@@ -2085,7 +2090,7 @@ switch.lookup:                                    ; preds = %bb.p
   %.val.i = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.fd = getelementptr inbounds nuw i8, ptr %.val.i, i64 %i.ew
   %i.fe = getelementptr inbounds nuw i8, ptr %i.fd, i64 8
-  store i32 %switch.load510, ptr %i.fe, align 1
+  store i32 %switch.ext, ptr %i.fe, align 1
   %i.ff = add i32 %i.eg, -40
   %i.fg = tail call i32 @w2c_hermes_hermes0x3A0x3Avm0x3A0x3ARuntime0x3A0x3AraiseRangeError0x28hermes0x3A0x3Avm0x3A0x3ATwineChar160x20const0x260x29(ptr noundef nonnull %0, i32 noundef %2, i32 noundef %i.ff) #7
   br label %w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AraiseOnError0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20hermes0x3A0x3Abigint0x3A0x3AOperationStatus0x29.exit
@@ -2396,8 +2401,9 @@ switch.lookup:                                    ; preds = %bb.g
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29, i64 %i.dv
   %switch.load = load i64, ptr %switch.gep, align 8
   %i.dw = zext nneg i32 %switch.tableidx to i64
-  %switch.gep400 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29.23, i64 %i.dw
-  %switch.load401 = load i32, ptr %switch.gep400, align 4
+  %switch.gep400 = getelementptr inbounds nuw [2 x i8], ptr @switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29.23, i64 %i.dw
+  %switch.load401 = load i16, ptr %switch.gep400, align 2
+  %switch.ext = zext i16 %switch.load401 to i32
   %.val114.i = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.dx = getelementptr inbounds nuw i8, ptr %.val114.i, i64 %i.da
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dx, i64 40
@@ -2413,7 +2419,7 @@ switch.lookup:                                    ; preds = %bb.g
   %.val.i = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ed = getelementptr inbounds nuw i8, ptr %.val.i, i64 %i.da
   %i.ee = getelementptr inbounds nuw i8, ptr %i.ed, i64 8
-  store i32 %switch.load401, ptr %i.ee, align 1
+  store i32 %switch.ext, ptr %i.ee, align 1
   %i.ef = tail call i32 @w2c_hermes_hermes0x3A0x3Avm0x3A0x3ARuntime0x3A0x3AraiseRangeError0x28hermes0x3A0x3Avm0x3A0x3ATwineChar160x20const0x260x29(ptr noundef nonnull %0, i32 noundef %2, i32 noundef %i.ds) #7
   br label %w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AraiseOnError0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20hermes0x3A0x3Abigint0x3A0x3AOperationStatus0x29.exit
 
@@ -2687,8 +2693,9 @@ switch.lookup:                                    ; preds = %bb.g
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29, i64 %i.dg
   %switch.load = load i64, ptr %switch.gep, align 8
   %i.dh = zext nneg i32 %switch.tableidx to i64
-  %switch.gep334 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29.23, i64 %i.dh
-  %switch.load335 = load i32, ptr %switch.gep334, align 4
+  %switch.gep334 = getelementptr inbounds nuw [2 x i8], ptr @switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29.23, i64 %i.dh
+  %switch.load335 = load i16, ptr %switch.gep334, align 2
+  %switch.ext = zext i16 %switch.load335 to i32
   %i.di = zext i32 %i.de to i64                   ; 4 uses
   %.val114.i = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.dj = getelementptr inbounds nuw i8, ptr %.val114.i, i64 %i.di
@@ -2705,7 +2712,7 @@ switch.lookup:                                    ; preds = %bb.g
   %.val.i = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.dp = getelementptr inbounds nuw i8, ptr %.val.i, i64 %i.di
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dp, i64 8
-  store i32 %switch.load335, ptr %i.dq, align 1
+  store i32 %switch.ext, ptr %i.dq, align 1
   %i.dr = add i32 %i.dd, -40
   %i.ds = tail call i32 @w2c_hermes_hermes0x3A0x3Avm0x3A0x3ARuntime0x3A0x3AraiseRangeError0x28hermes0x3A0x3Avm0x3A0x3ATwineChar160x20const0x260x29(ptr noundef nonnull %0, i32 noundef %2, i32 noundef %i.dr) #7
   br label %w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AraiseOnError0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20hermes0x3A0x3Abigint0x3A0x3AOperationStatus0x29.exit
@@ -3097,8 +3104,9 @@ switch.lookup:                                    ; preds = %bb.p
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29, i64 %i.eu
   %switch.load = load i64, ptr %switch.gep, align 8
   %i.ev = zext nneg i32 %switch.tableidx to i64
-  %switch.gep509 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29.23, i64 %i.ev
-  %switch.load510 = load i32, ptr %switch.gep509, align 4
+  %switch.gep509 = getelementptr inbounds nuw [2 x i8], ptr @switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29.23, i64 %i.ev
+  %switch.load510 = load i16, ptr %switch.gep509, align 2
+  %switch.ext = zext i16 %switch.load510 to i32
   %i.ew = zext i32 %i.es to i64                   ; 4 uses
   %.val114.i = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ex = getelementptr inbounds nuw i8, ptr %.val114.i, i64 %i.ew
@@ -3115,7 +3123,7 @@ switch.lookup:                                    ; preds = %bb.p
   %.val.i = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.fd = getelementptr inbounds nuw i8, ptr %.val.i, i64 %i.ew
   %i.fe = getelementptr inbounds nuw i8, ptr %i.fd, i64 8
-  store i32 %switch.load510, ptr %i.fe, align 1
+  store i32 %switch.ext, ptr %i.fe, align 1
   %i.ff = add i32 %i.eg, -40
   %i.fg = tail call i32 @w2c_hermes_hermes0x3A0x3Avm0x3A0x3ARuntime0x3A0x3AraiseRangeError0x28hermes0x3A0x3Avm0x3A0x3ATwineChar160x20const0x260x29(ptr noundef nonnull %0, i32 noundef %2, i32 noundef %i.ff) #7
   br label %w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AraiseOnError0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20hermes0x3A0x3Abigint0x3A0x3AOperationStatus0x29.exit
@@ -3424,8 +3432,9 @@ switch.lookup:                                    ; preds = %bb.g
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29, i64 %i.dv
   %switch.load = load i64, ptr %switch.gep, align 8
   %i.dw = zext nneg i32 %switch.tableidx to i64
-  %switch.gep400 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29.23, i64 %i.dw
-  %switch.load401 = load i32, ptr %switch.gep400, align 4
+  %switch.gep400 = getelementptr inbounds nuw [2 x i8], ptr @switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29.23, i64 %i.dw
+  %switch.load401 = load i16, ptr %switch.gep400, align 2
+  %switch.ext = zext i16 %switch.load401 to i32
   %.val114.i = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.dx = getelementptr inbounds nuw i8, ptr %.val114.i, i64 %i.da
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dx, i64 40
@@ -3441,7 +3450,7 @@ switch.lookup:                                    ; preds = %bb.g
   %.val.i = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ed = getelementptr inbounds nuw i8, ptr %.val.i, i64 %i.da
   %i.ee = getelementptr inbounds nuw i8, ptr %i.ed, i64 8
-  store i32 %switch.load401, ptr %i.ee, align 1
+  store i32 %switch.ext, ptr %i.ee, align 1
   %i.ef = tail call i32 @w2c_hermes_hermes0x3A0x3Avm0x3A0x3ARuntime0x3A0x3AraiseRangeError0x28hermes0x3A0x3Avm0x3A0x3ATwineChar160x20const0x260x29(ptr noundef nonnull %0, i32 noundef %2, i32 noundef %i.ds) #7
   br label %w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AraiseOnError0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20hermes0x3A0x3Abigint0x3A0x3AOperationStatus0x29.exit
 
@@ -3844,8 +3853,9 @@ switch.lookup:                                    ; preds = %bb.i
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29, i64 %i.dj
   %switch.load = load i64, ptr %switch.gep, align 8
   %i.dk = zext nneg i32 %switch.tableidx to i64
-  %switch.gep370 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29.23, i64 %i.dk
-  %switch.load371 = load i32, ptr %switch.gep370, align 4
+  %switch.gep370 = getelementptr inbounds nuw [2 x i8], ptr @switch.table.w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AasIntN0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20long0x20long0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3E0x29.23, i64 %i.dk
+  %switch.load371 = load i16, ptr %switch.gep370, align 2
+  %switch.ext = zext i16 %switch.load371 to i32
   %i.dl = zext i32 %i.dh to i64                   ; 4 uses
   %.val114.i = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.dm = getelementptr inbounds nuw i8, ptr %.val114.i, i64 %i.dl
@@ -3862,7 +3872,7 @@ switch.lookup:                                    ; preds = %bb.i
   %.val.i = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ds = getelementptr inbounds nuw i8, ptr %.val.i, i64 %i.dl
   %i.dt = getelementptr inbounds nuw i8, ptr %i.ds, i64 8
-  store i32 %switch.load371, ptr %i.dt, align 1
+  store i32 %switch.ext, ptr %i.dt, align 1
   %i.du = add i32 %i.cq, -40
   %i.dv = tail call i32 @w2c_hermes_hermes0x3A0x3Avm0x3A0x3ARuntime0x3A0x3AraiseRangeError0x28hermes0x3A0x3Avm0x3A0x3ATwineChar160x20const0x260x29(ptr noundef nonnull %0, i32 noundef %2, i32 noundef %i.du) #7
   br label %w2c_hermes_hermes0x3A0x3Avm0x3A0x3ABigIntPrimitive0x3A0x3AraiseOnError0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20hermes0x3A0x3Abigint0x3A0x3AOperationStatus0x29.exit

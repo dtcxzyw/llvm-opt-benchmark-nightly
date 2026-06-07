@@ -163,7 +163,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.127 = private unnamed_addr constant [3 x i8] c"%d\00", align 1
 @.str.128 = private unnamed_addr constant [4 x i8] c"nil\00", align 1
 @.str.129 = private unnamed_addr constant [2 x i8] c">\00", align 1
-@switch.table.rb_char_to_option_kcode.7 = private unnamed_addr constant [16 x i32] [i32 1, i32 0, i32 0, i32 0, i32 4, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 2], align 4
+@switch.table.rb_char_to_option_kcode.7 = private unnamed_addr constant [16 x i8] c"\01\00\00\00\04\00\00\00\00\00\00\00\00\00\00\02", align 4
 
 ; Function Attrs: nofree norecurse nosync nounwind sspstrong memory(argmem: read) uwtable
 define dso_local range(i32 -255, 256) i32 @rb_memcicmp(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #0 {
@@ -566,16 +566,18 @@ bb.f:                                             ; preds = %bb.a, %bb.d, %bb.c
 
 switch.lookup:                                    ; preds = %bb.e
   %i.b = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.rb_char_to_option_kcode.7, i64 %i.b
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.rb_char_to_option_kcode.7, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.c = zext nneg i32 %switch.tableidx to i64
-  %switch.gep12 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.rb_char_to_option_kcode.7, i64 %i.c
-  %switch.load13 = load i32, ptr %switch.gep12, align 4
+  %switch.gep12 = getelementptr inbounds nuw i8, ptr @switch.table.rb_char_to_option_kcode.7, i64 %i.c
+  %switch.load13 = load i8, ptr %switch.gep12, align 1
+  %switch.ext14 = zext i8 %switch.load13 to i32
   br label %char_to_option.exit
 
 char_to_option.exit:                              ; preds = %bb.e, %switch.lookup, %bb.f, %bb.b
-  %.sink11 = phi i32 [ 16, %bb.f ], [ 32, %bb.b ], [ %switch.load, %switch.lookup ], [ 0, %bb.e ]
-  %.0 = phi i32 [ 1, %bb.f ], [ 32, %bb.b ], [ %switch.load13, %switch.lookup ], [ 0, %bb.e ]
+  %.sink11 = phi i32 [ 16, %bb.f ], [ 32, %bb.b ], [ %switch.ext, %switch.lookup ], [ 0, %bb.e ]
+  %.0 = phi i32 [ 1, %bb.f ], [ 32, %bb.b ], [ %switch.ext14, %switch.lookup ], [ 0, %bb.e ]
   store i32 %.sink11, ptr %1, align 4, !tbaa !7
   ret i32 %.0
 }

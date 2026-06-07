@@ -201,9 +201,9 @@ begin_hunk_0
 @.str.295 = private unnamed_addr constant [83 x i8] c"%.200s indices must be integers or slices, not %.200s; perhaps you missed a comma?\00", align 1
 @.str.296 = private unnamed_addr constant [50 x i8] c"too many expressions in star-unpacking assignment\00", align 1
 @.str.297 = private unnamed_addr constant [43 x i8] c"multiple starred expressions in assignment\00", align 1
-@switch.table.codegen_nameop = private unnamed_addr constant [3 x i32] [i32 84, i32 112, i32 63], align 4
-@switch.table.codegen_visit_stmt = private unnamed_addr constant [13 x i32] [i32 13, i32 23, i32 18, i32 17, i32 24, i32 19, i32 21, i32 16, i32 22, i32 20, i32 25, i32 14, i32 15], align 4
-@switch.table.codegen_comprehension = private unnamed_addr constant [3 x i32] [i32 46, i32 48, i32 47], align 4
+@switch.table.codegen_nameop = private unnamed_addr constant [3 x i8] c"Tp?", align 4
+@switch.table.codegen_visit_stmt = private unnamed_addr constant [13 x i8] c"\0D\17\12\11\18\13\15\10\16\14\19\0E\0F", align 4
+@switch.table.codegen_comprehension = private unnamed_addr constant [3 x i8] c".0/", align 4
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define hidden i32 @_PyOpcode_num_popped(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
@@ -606,12 +606,13 @@ bb.p:                                             ; preds = %bb.g
 
 switch.lookup:                                    ; preds = %bb.p
   %i.ab = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.codegen_nameop, i64 %i.ab
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.codegen_nameop, i64 %i.ab
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.q
 
 bb.q:                                             ; preds = %switch.lookup, %bb.p
-  %.045 = phi i32 [ 0, %bb.p ], [ %switch.load, %switch.lookup ]
+  %.045 = phi i32 [ 0, %bb.p ], [ %switch.ext, %switch.lookup ]
   %i.ac = call ptr @_PyCompile_Metadata(ptr noundef %0) #10
   %i.ad = getelementptr i8, ptr %i.ac, i64 32
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !64
@@ -1014,10 +1015,11 @@ switch.lookup:                                    ; preds = %bb.dv
   %.sroa.33.8.insert.ext77.i = zext i32 %i.on to i64
   %.sroa.33.12.insert.insert89.i = or disjoint i64 %.sroa.33.12.insert.shift87.i, %.sroa.33.8.insert.ext77.i
   %i.oz = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.codegen_visit_stmt, i64 %i.oz
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.codegen_visit_stmt, i64 %i.oz
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.pa = tail call ptr @_PyCompile_InstrSequence(ptr noundef %0) #10
-  %i.pb = tail call i32 @_PyInstructionSequence_Addop(ptr noundef %i.pa, i32 noundef 44, i32 noundef %switch.load, i64 %.sroa.09.4.insert.insert49.i, i64 %.sroa.33.12.insert.insert89.i) #10
+  %i.pb = tail call i32 @_PyInstructionSequence_Addop(ptr noundef %i.pa, i32 noundef 44, i32 noundef %switch.ext, i64 %.sroa.09.4.insert.insert49.i, i64 %.sroa.33.12.insert.insert89.i) #10
   %i.pc = icmp eq i32 %i.pb, -1
   br i1 %i.pc, label %codegen_class.exit, label %bb.dw
 
@@ -1420,9 +1422,10 @@ bb.ag:                                            ; preds = %.split
 
 switch.lookup:                                    ; preds = %Py_DECREF.exit296
   %i.eb = zext nneg i32 %2 to i64
-  %9 = getelementptr [4 x i8], ptr @switch.table.codegen_comprehension, i64 %i.eb
-  %switch.gep = getelementptr i8, ptr %9, i64 -4
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %9 = getelementptr i8, ptr @switch.table.codegen_comprehension, i64 %i.eb
+  %switch.gep = getelementptr i8, ptr %9, i64 -1
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.ec = call ptr @_PyCompile_InstrSequence(ptr noundef %0) #10
   %.sroa.12.0.insert.ext61 = zext i32 %i.n to i64
   %.sroa.12.0.insert.shift62 = shl nuw i64 %.sroa.12.0.insert.ext61, 32
@@ -1432,7 +1435,7 @@ switch.lookup:                                    ; preds = %Py_DECREF.exit296
   %.sroa.26141.8.insert.shift144 = shl nuw i64 %.sroa.26141.8.insert.ext143, 32
   %.sroa.14.8.insert.ext106 = zext i32 %i.p to i64
   %.sroa.14.8.insert.insert108 = or disjoint i64 %.sroa.26141.8.insert.shift144, %.sroa.14.8.insert.ext106 ; 6 uses
-  %i.ed = call i32 @_PyInstructionSequence_Addop(ptr noundef %i.ec, i32 noundef %switch.load, i32 noundef 0, i64 %.sroa.023.0.insert.insert27, i64 %.sroa.14.8.insert.insert108) #10
+  %i.ed = call i32 @_PyInstructionSequence_Addop(ptr noundef %i.ec, i32 noundef %switch.ext, i32 noundef 0, i64 %.sroa.023.0.insert.insert27, i64 %.sroa.14.8.insert.insert108) #10
   %i.ee = icmp eq i32 %i.ed, -1
   br i1 %i.ee, label %Py_XDECREF.exit318, label %bb.ah
 

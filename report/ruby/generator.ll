@@ -154,7 +154,7 @@ target triple = "x86_64-pc-linux-gnu"
 @rb_cSymbol = external local_unnamed_addr global i64, align 8
 @__cpu_model = external dso_local local_unnamed_addr global { i32, i32, i32, [1 x i32] }
 @escape_table_basic = internal unnamed_addr constant <{ [93 x i8], [163 x i8] }> <{ [93 x i8] c"\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\00\00\09\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\09", [163 x i8] zeroinitializer }>, align 16
-@switch.table.json_object_i = private unnamed_addr constant [37 x i32] [i32 19, i32 poison, i32 poison, i32 poison, i32 17, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 18, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 22], align 4
+@switch.table.json_object_i = private unnamed_addr constant [37 x i8] [i8 19, i8 poison, i8 poison, i8 poison, i8 17, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 18, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 22], align 4
 
 ; Function Attrs: nounwind uwtable
 define void @Init_generator() local_unnamed_addr #0 {
@@ -557,12 +557,13 @@ bb.e:                                             ; preds = %bb.d
   br label %rb_type.exit
 
 switch.lookup:                                    ; preds = %bb.c
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.json_object_i, i64 %0
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.json_object_i, i64 %0
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %rb_type.exit
 
 rb_type.exit:                                     ; preds = %switch.lookup, %bb.b, %bb.d, %bb.e
-  %.0.i = phi i32 [ %i.q, %bb.b ], [ %spec.select.i, %bb.e ], [ 21, %bb.d ], [ %switch.load, %switch.lookup ] ; 2 uses
+  %.0.i = phi i32 [ %i.q, %bb.b ], [ %spec.select.i, %bb.e ], [ 21, %bb.d ], [ %switch.ext, %switch.lookup ] ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 20 ; 2 uses
   %i.w = load i8, ptr %i.v, align 4, !tbaa !96, !range !48, !noundef !49
   %i.x = trunc nuw i8 %i.w to i1
@@ -623,9 +624,10 @@ bb.l:                                             ; preds = %bb.k
 
 .peel.begin:                                      ; preds = %bb.l, %bb.k
   %i.ap = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  switch i32 %.0.i, label %bb.m [
-    i32 5, label %.loopexit
-    i32 20, label %.loopexit88
+  %trunc = trunc nuw i32 %.0.i to i8
+  switch i8 %trunc, label %bb.m [
+    i8 5, label %.loopexit
+    i8 20, label %.loopexit88
   ]
 
 bb.m:                                             ; preds = %.peel.begin

@@ -201,8 +201,8 @@ begin_hunk_0
 @_ZSt11__once_call = external thread_local local_unnamed_addr global ptr, align 8
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @_GLOBAL__sub_I_type.cc, ptr null }]
 @switch.table._ZNK5arrow12DurationType8ToStringB5cxx11Eb = private unnamed_addr constant [4 x ptr] [ptr @.str.54, ptr @.str.55, ptr @.str.56, ptr @.str.57], align 8
-@switch.table._ZNK5arrow12DurationType8ToStringB5cxx11Eb.104 = private unnamed_addr constant [4 x i64] [i64 1, i64 2, i64 2, i64 2], align 8
-@switch.table._ZN5arrow12_GLOBAL__N_122MaybeMergeNumericTypesESt10shared_ptrINS_8DataTypeEES3_RKNS_5Field12MergeOptionsE.113 = private unnamed_addr constant [44 x i32] [i32 1, i32 8, i32 8, i32 16, i32 16, i32 32, i32 32, i32 64, i32 64, i32 16, i32 32, i32 64, i32 0, i32 0, i32 0, i32 32, i32 64, i32 64, i32 32, i32 64, i32 32, i32 64, i32 128, i32 256, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 64, i32 0, i32 0, i32 0, i32 128, i32 0, i32 0, i32 0, i32 0, i32 0, i32 32, i32 64], align 4
+@switch.table._ZNK5arrow12DurationType8ToStringB5cxx11Eb.104 = private unnamed_addr constant [4 x i8] c"\01\02\02\02", align 8
+@switch.table._ZN5arrow12_GLOBAL__N_122MaybeMergeNumericTypesESt10shared_ptrINS_8DataTypeEES3_RKNS_5Field12MergeOptionsE.113 = private unnamed_addr constant [44 x i16] [i16 1, i16 8, i16 8, i16 16, i16 16, i16 32, i16 32, i16 64, i16 64, i16 16, i16 32, i16 64, i16 0, i16 0, i16 0, i16 32, i16 64, i16 64, i16 32, i16 64, i16 32, i16 64, i16 128, i16 256, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 64, i16 0, i16 0, i16 0, i16 128, i16 0, i16 0, i16 0, i16 0, i16 0, i16 32, i16 64], align 4
 
 @_ZN5arrow18TypedChunkLocationIiEC1Eii = weak_odr unnamed_addr alias void (ptr, i32, i32), ptr @_ZN5arrow18TypedChunkLocationIiEC2Eii
 @_ZN5arrow18TypedChunkLocationIsEC1Ess = weak_odr unnamed_addr alias void (ptr, i16, i16), ptr @_ZN5arrow18TypedChunkLocationIsEC2Ess
@@ -605,9 +605,10 @@ switch.lookup:                                    ; preds = %_ZStlsISt11char_tra
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK5arrow12DurationType8ToStringB5cxx11Eb, i64 %i.f
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.g = zext nneg i32 %i.d to i64
-  %switch.gep10 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK5arrow12DurationType8ToStringB5cxx11Eb.104, i64 %i.g
-  %switch.load11 = load i64, ptr %switch.gep10, align 8
-  %i.h = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull %switch.load, i64 noundef %switch.load11)
+  %switch.gep10 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK5arrow12DurationType8ToStringB5cxx11Eb.104, i64 %i.g
+  %switch.load11 = load i8, ptr %switch.gep10, align 1
+  %switch.ext = zext i8 %switch.load11 to i64
+  %i.h = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull %switch.load, i64 noundef %switch.ext)
           to label %_ZN5arrowlsERSoNS_8TimeUnit4typeE.exit unwind label %bb.e ; 0 uses
 
 _ZN5arrowlsERSoNS_8TimeUnit4typeE.exit:           ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %switch.lookup
@@ -865,9 +866,10 @@ switch.lookup:                                    ; preds = %_ZStlsISt11char_tra
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK5arrow12DurationType8ToStringB5cxx11Eb, i64 %i.f
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.g = zext nneg i32 %i.d to i64
-  %switch.gep10 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK5arrow12DurationType8ToStringB5cxx11Eb.104, i64 %i.g
-  %switch.load11 = load i64, ptr %switch.gep10, align 8
-  %i.h = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull %switch.load, i64 noundef %switch.load11)
+  %switch.gep10 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK5arrow12DurationType8ToStringB5cxx11Eb.104, i64 %i.g
+  %switch.load11 = load i8, ptr %switch.gep10, align 1
+  %switch.ext = zext i8 %switch.load11 to i64
+  %i.h = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull %switch.load, i64 noundef %switch.ext)
           to label %_ZN5arrowlsERSoNS_8TimeUnit4typeE.exit unwind label %bb.e ; 0 uses
 
 _ZN5arrowlsERSoNS_8TimeUnit4typeE.exit:           ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %switch.lookup
@@ -995,9 +997,10 @@ switch.lookup:                                    ; preds = %_ZStlsISt11char_tra
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK5arrow12DurationType8ToStringB5cxx11Eb, i64 %i.f
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.g = zext nneg i32 %i.d to i64
-  %switch.gep13 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK5arrow12DurationType8ToStringB5cxx11Eb.104, i64 %i.g
-  %switch.load14 = load i64, ptr %switch.gep13, align 8
-  %i.h = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull %switch.load, i64 noundef %switch.load14)
+  %switch.gep13 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK5arrow12DurationType8ToStringB5cxx11Eb.104, i64 %i.g
+  %switch.load14 = load i8, ptr %switch.gep13, align 1
+  %switch.ext = zext i8 %switch.load14 to i64
+  %i.h = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull %switch.load, i64 noundef %switch.ext)
           to label %_ZN5arrowlsERSoNS_8TimeUnit4typeE.exit unwind label %bb.c ; 0 uses
 
 _ZN5arrowlsERSoNS_8TimeUnit4typeE.exit:           ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %switch.lookup
@@ -1142,9 +1145,10 @@ switch.lookup:                                    ; preds = %_ZStlsISt11char_tra
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK5arrow12DurationType8ToStringB5cxx11Eb, i64 %i.f
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.g = zext nneg i32 %i.d to i64
-  %switch.gep10 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK5arrow12DurationType8ToStringB5cxx11Eb.104, i64 %i.g
-  %switch.load11 = load i64, ptr %switch.gep10, align 8
-  %i.h = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull %switch.load, i64 noundef %switch.load11)
+  %switch.gep10 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK5arrow12DurationType8ToStringB5cxx11Eb.104, i64 %i.g
+  %switch.load11 = load i8, ptr %switch.gep10, align 1
+  %switch.ext = zext i8 %switch.load11 to i64
+  %i.h = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull %switch.load, i64 noundef %switch.ext)
           to label %_ZN5arrowlsERSoNS_8TimeUnit4typeE.exit unwind label %bb.e ; 0 uses
 
 _ZN5arrowlsERSoNS_8TimeUnit4typeE.exit:           ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %switch.lookup
@@ -1547,12 +1551,13 @@ bb.da:                                            ; preds = %bb.cz
 
 switch.lookup:                                    ; preds = %bb.da
   %i.jj = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_122MaybeMergeNumericTypesESt10shared_ptrINS_8DataTypeEES3_RKNS_5Field12MergeOptionsE.113, i64 %i.jj
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_122MaybeMergeNumericTypesESt10shared_ptrINS_8DataTypeEES3_RKNS_5Field12MergeOptionsE.113, i64 %i.jj
+  %switch.load = load i16, ptr %switch.gep, align 2
+  %switch.ext = zext i16 %switch.load to i32
   br label %_ZN5arrow9bit_widthENS_4Type4typeE.exit
 
 _ZN5arrow9bit_widthENS_4Type4typeE.exit:          ; preds = %bb.da, %switch.lookup
-  %.0.i149 = phi i32 [ %switch.load, %switch.lookup ], [ 0, %bb.da ]
+  %.0.i149 = phi i32 [ %switch.ext, %switch.lookup ], [ 0, %bb.da ]
   %i.jk = getelementptr inbounds nuw i8, ptr %i.je, i64 40
   %i.jl = load i32, ptr %i.jk, align 8, !tbaa !339
   %switch.tableidx370 = add i32 %i.jl, -1         ; 2 uses
@@ -1561,9 +1566,10 @@ _ZN5arrow9bit_widthENS_4Type4typeE.exit:          ; preds = %bb.da, %switch.look
 
 switch.lookup371:                                 ; preds = %_ZN5arrow9bit_widthENS_4Type4typeE.exit
   %i.jn = zext nneg i32 %switch.tableidx370 to i64
-  %switch.gep372 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_122MaybeMergeNumericTypesESt10shared_ptrINS_8DataTypeEES3_RKNS_5Field12MergeOptionsE.113, i64 %i.jn
-  %switch.load373 = load i32, ptr %switch.gep372, align 4
-  %i.jo = icmp samesign ult i32 %.0.i149, %switch.load373
+  %switch.gep372 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_122MaybeMergeNumericTypesESt10shared_ptrINS_8DataTypeEES3_RKNS_5Field12MergeOptionsE.113, i64 %i.jn
+  %switch.load373 = load i16, ptr %switch.gep372, align 2
+  %switch.ext374 = zext i16 %switch.load373 to i32
+  %i.jo = icmp samesign ult i32 %.0.i149, %switch.ext374
   br i1 %i.jo, label %bb.db, label %._crit_edge321
 
 bb.db:                                            ; preds = %switch.lookup371
@@ -1595,12 +1601,13 @@ _ZN5arrow6StatusD2Ev.exit:                        ; preds = %bb.db, %bb.dc, %bb.
 
 switch.lookup375:                                 ; preds = %._crit_edge321
   %i.ju = zext nneg i32 %switch.tableidx374 to i64
-  %switch.gep376 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_122MaybeMergeNumericTypesESt10shared_ptrINS_8DataTypeEES3_RKNS_5Field12MergeOptionsE.113, i64 %i.ju
-  %switch.load377 = load i32, ptr %switch.gep376, align 4
+  %switch.gep377 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_122MaybeMergeNumericTypesESt10shared_ptrINS_8DataTypeEES3_RKNS_5Field12MergeOptionsE.113, i64 %i.ju
+  %switch.load378 = load i16, ptr %switch.gep377, align 2
+  %switch.ext379 = zext i16 %switch.load378 to i32
   br label %_ZN5arrow9bit_widthENS_4Type4typeE.exit153
 
 _ZN5arrow9bit_widthENS_4Type4typeE.exit153:       ; preds = %._crit_edge321, %switch.lookup375
-  %.0.i152 = phi i32 [ %switch.load377, %switch.lookup375 ], [ 0, %._crit_edge321 ] ; 2 uses
+  %.0.i152 = phi i32 [ %switch.ext379, %switch.lookup375 ], [ 0, %._crit_edge321 ] ; 2 uses
   %i.jv = getelementptr inbounds nuw i8, ptr %i.je, i64 40
   %i.jw = load i32, ptr %i.jv, align 8, !tbaa !339 ; 2 uses
   %switch.tableidx378 = add i32 %i.jw, -1         ; 2 uses
@@ -1609,9 +1616,10 @@ _ZN5arrow9bit_widthENS_4Type4typeE.exit153:       ; preds = %._crit_edge321, %sw
 
 switch.lookup379:                                 ; preds = %_ZN5arrow9bit_widthENS_4Type4typeE.exit153
   %i.jy = zext nneg i32 %switch.tableidx378 to i64
-  %switch.gep380 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_122MaybeMergeNumericTypesESt10shared_ptrINS_8DataTypeEES3_RKNS_5Field12MergeOptionsE.113, i64 %i.jy
-  %switch.load381 = load i32, ptr %switch.gep380, align 4
-  %i.jz = tail call i32 @llvm.umax.i32(i32 %.0.i152, i32 %switch.load381)
+  %switch.gep382 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_122MaybeMergeNumericTypesESt10shared_ptrINS_8DataTypeEES3_RKNS_5Field12MergeOptionsE.113, i64 %i.jy
+  %switch.load383 = load i16, ptr %switch.gep382, align 2
+  %switch.ext384 = zext i16 %switch.load383 to i32
+  %i.jz = tail call i32 @llvm.umax.i32(i32 %.0.i152, i32 %switch.ext384)
   br label %_ZN5arrow9bit_widthENS_4Type4typeE.exit155
 
 _ZN5arrow9bit_widthENS_4Type4typeE.exit155:       ; preds = %_ZN5arrow9bit_widthENS_4Type4typeE.exit153, %switch.lookup379
@@ -1622,21 +1630,23 @@ _ZN5arrow9bit_widthENS_4Type4typeE.exit155:       ; preds = %_ZN5arrow9bit_width
 
 switch.lookup383:                                 ; preds = %_ZN5arrow9bit_widthENS_4Type4typeE.exit155
   %i.kb = zext nneg i32 %switch.tableidx382 to i64
-  %switch.gep384 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_122MaybeMergeNumericTypesESt10shared_ptrINS_8DataTypeEES3_RKNS_5Field12MergeOptionsE.113, i64 %i.kb
-  %switch.load385 = load i32, ptr %switch.gep384, align 4
+  %switch.gep387 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_122MaybeMergeNumericTypesESt10shared_ptrINS_8DataTypeEES3_RKNS_5Field12MergeOptionsE.113, i64 %i.kb
+  %switch.load388 = load i16, ptr %switch.gep387, align 2
+  %switch.ext389 = zext i16 %switch.load388 to i32
   br label %_ZN5arrow9bit_widthENS_4Type4typeE.exit157
 
 _ZN5arrow9bit_widthENS_4Type4typeE.exit157:       ; preds = %_ZN5arrow9bit_widthENS_4Type4typeE.exit155, %switch.lookup383
-  %.0.i156 = phi i32 [ %switch.load385, %switch.lookup383 ], [ 0, %_ZN5arrow9bit_widthENS_4Type4typeE.exit155 ]
+  %.0.i156 = phi i32 [ %switch.ext389, %switch.lookup383 ], [ 0, %_ZN5arrow9bit_widthENS_4Type4typeE.exit155 ]
   %switch.tableidx386 = add i32 %i.jw, -1         ; 2 uses
   %i.kc = icmp ult i32 %switch.tableidx386, 44
   br i1 %i.kc, label %switch.lookup387, label %_ZN5arrow9bit_widthENS_4Type4typeE.exit159
 
 switch.lookup387:                                 ; preds = %_ZN5arrow9bit_widthENS_4Type4typeE.exit157
   %i.kd = zext nneg i32 %switch.tableidx386 to i64
-  %switch.gep388 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_122MaybeMergeNumericTypesESt10shared_ptrINS_8DataTypeEES3_RKNS_5Field12MergeOptionsE.113, i64 %i.kd
-  %switch.load389 = load i32, ptr %switch.gep388, align 4
-  %i.ke = icmp samesign uge i32 %.0.i156, %switch.load389
+  %switch.gep392 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_122MaybeMergeNumericTypesESt10shared_ptrINS_8DataTypeEES3_RKNS_5Field12MergeOptionsE.113, i64 %i.kd
+  %switch.load393 = load i16, ptr %switch.gep392, align 2
+  %switch.ext394 = zext i16 %switch.load393 to i32
+  %i.ke = icmp samesign uge i32 %.0.i156, %switch.ext394
   %i.kf = zext i1 %i.ke to i32
   br label %_ZN5arrow9bit_widthENS_4Type4typeE.exit159
 
@@ -2039,12 +2049,13 @@ bb.fr:                                            ; preds = %_ZNSt10shared_ptrIN
 
 switch.lookup391:                                 ; preds = %bb.fr
   %i.qm = zext nneg i32 %switch.tableidx390 to i64
-  %switch.gep392 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_122MaybeMergeNumericTypesESt10shared_ptrINS_8DataTypeEES3_RKNS_5Field12MergeOptionsE.113, i64 %i.qm
-  %switch.load393 = load i32, ptr %switch.gep392, align 4
+  %switch.gep397 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_122MaybeMergeNumericTypesESt10shared_ptrINS_8DataTypeEES3_RKNS_5Field12MergeOptionsE.113, i64 %i.qm
+  %switch.load398 = load i16, ptr %switch.gep397, align 2
+  %switch.ext399 = zext i16 %switch.load398 to i32
   br label %_ZN5arrow9bit_widthENS_4Type4typeE.exit230
 
 _ZN5arrow9bit_widthENS_4Type4typeE.exit230:       ; preds = %bb.fr, %switch.lookup391
-  %.0.i229 = phi i32 [ %switch.load393, %switch.lookup391 ], [ 0, %bb.fr ]
+  %.0.i229 = phi i32 [ %switch.ext399, %switch.lookup391 ], [ 0, %bb.fr ]
   %i.qn = load ptr, ptr %2, align 8, !tbaa !336
   %i.qo = getelementptr inbounds nuw i8, ptr %i.qn, i64 40
   %i.qp = load i32, ptr %i.qo, align 8, !tbaa !339
@@ -2054,12 +2065,13 @@ _ZN5arrow9bit_widthENS_4Type4typeE.exit230:       ; preds = %bb.fr, %switch.look
 
 switch.lookup395:                                 ; preds = %_ZN5arrow9bit_widthENS_4Type4typeE.exit230
   %i.qr = zext nneg i32 %switch.tableidx394 to i64
-  %switch.gep396 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_122MaybeMergeNumericTypesESt10shared_ptrINS_8DataTypeEES3_RKNS_5Field12MergeOptionsE.113, i64 %i.qr
-  %switch.load397 = load i32, ptr %switch.gep396, align 4
+  %switch.gep402 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_122MaybeMergeNumericTypesESt10shared_ptrINS_8DataTypeEES3_RKNS_5Field12MergeOptionsE.113, i64 %i.qr
+  %switch.load403 = load i16, ptr %switch.gep402, align 2
+  %switch.ext404 = zext i16 %switch.load403 to i32
   br label %_ZN5arrow9bit_widthENS_4Type4typeE.exit232
 
 _ZN5arrow9bit_widthENS_4Type4typeE.exit232:       ; preds = %_ZN5arrow9bit_widthENS_4Type4typeE.exit230, %switch.lookup395
-  %.0.i231 = phi i32 [ %switch.load397, %switch.lookup395 ], [ 0, %_ZN5arrow9bit_widthENS_4Type4typeE.exit230 ]
+  %.0.i231 = phi i32 [ %switch.ext404, %switch.lookup395 ], [ 0, %_ZN5arrow9bit_widthENS_4Type4typeE.exit230 ]
   %.not = icmp eq i32 %.0.i229, %.0.i231
   br i1 %.not, label %.thread307, label %.critedge
 
@@ -2102,12 +2114,13 @@ bb.fu:                                            ; preds = %.thread307
 
 switch.lookup399:                                 ; preds = %bb.fu
   %i.rd = zext nneg i32 %switch.tableidx398 to i64
-  %switch.gep400 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_122MaybeMergeNumericTypesESt10shared_ptrINS_8DataTypeEES3_RKNS_5Field12MergeOptionsE.113, i64 %i.rd
-  %switch.load401 = load i32, ptr %switch.gep400, align 4
+  %switch.gep407 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_122MaybeMergeNumericTypesESt10shared_ptrINS_8DataTypeEES3_RKNS_5Field12MergeOptionsE.113, i64 %i.rd
+  %switch.load408 = load i16, ptr %switch.gep407, align 2
+  %switch.ext409 = zext i16 %switch.load408 to i32
   br label %_ZN5arrow9bit_widthENS_4Type4typeE.exit236
 
 _ZN5arrow9bit_widthENS_4Type4typeE.exit236:       ; preds = %bb.fu, %switch.lookup399
-  %.0.i235 = phi i32 [ %switch.load401, %switch.lookup399 ], [ 0, %bb.fu ] ; 2 uses
+  %.0.i235 = phi i32 [ %switch.ext409, %switch.lookup399 ], [ 0, %bb.fu ] ; 2 uses
   %i.re = load ptr, ptr %2, align 8, !tbaa !336
   %i.rf = getelementptr inbounds nuw i8, ptr %i.re, i64 40
   %i.rg = load i32, ptr %i.rf, align 8, !tbaa !339 ; 4 uses
@@ -2117,9 +2130,10 @@ _ZN5arrow9bit_widthENS_4Type4typeE.exit236:       ; preds = %bb.fu, %switch.look
 
 switch.lookup403:                                 ; preds = %_ZN5arrow9bit_widthENS_4Type4typeE.exit236
   %i.ri = zext nneg i32 %switch.tableidx402 to i64
-  %switch.gep404 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_122MaybeMergeNumericTypesESt10shared_ptrINS_8DataTypeEES3_RKNS_5Field12MergeOptionsE.113, i64 %i.ri
-  %switch.load405 = load i32, ptr %switch.gep404, align 4
-  %i.rj = tail call i32 @llvm.umax.i32(i32 %.0.i235, i32 %switch.load405)
+  %switch.gep412 = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN5arrow12_GLOBAL__N_122MaybeMergeNumericTypesESt10shared_ptrINS_8DataTypeEES3_RKNS_5Field12MergeOptionsE.113, i64 %i.ri
+  %switch.load413 = load i16, ptr %switch.gep412, align 2
+  %switch.ext414 = zext i16 %switch.load413 to i32
+  %i.rj = tail call i32 @llvm.umax.i32(i32 %.0.i235, i32 %switch.ext414)
   br label %_ZN5arrow9bit_widthENS_4Type4typeE.exit238
 
 _ZN5arrow9bit_widthENS_4Type4typeE.exit238:       ; preds = %_ZN5arrow9bit_widthENS_4Type4typeE.exit236, %switch.lookup403

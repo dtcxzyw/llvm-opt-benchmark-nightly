@@ -201,8 +201,8 @@ begin_hunk_0
 @.str.324 = private unnamed_addr constant [10 x i8] c"exception\00", align 1
 @.str.325 = private unnamed_addr constant [18 x i8] c"write would block\00", align 1
 @switch.table.rb_io_stdio_file.18 = private unnamed_addr constant [3 x ptr] [ptr @.str.214, ptr @.str.211, ptr @.str.212], align 8
-@switch.table.rb_io_reopen = private unnamed_addr constant [4 x i32] [i32 0, i32 0, i32 1, i32 2], align 4
-@switch.table.io_initialize = private unnamed_addr constant [4 x i32] [i32 1, i32 2, i32 3, i32 0], align 4
+@switch.table.rb_io_reopen = private unnamed_addr constant [4 x i8] c"\00\00\01\02", align 4
+@switch.table.io_initialize = private unnamed_addr constant [4 x i8] c"\01\02\03\00", align 4
 
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local i64 @rb_io_blocking_region_wait(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %3) local_unnamed_addr #0 {
@@ -605,8 +605,9 @@ define dso_local range(i32 0, 4096) i32 @rb_io_oflags_fmode(i32 noundef %0) loca
 switch.lookup:
   %i.a = and i32 %0, 3
   %i.b = zext nneg i32 %i.a to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.io_initialize, i64 %i.b
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.io_initialize, i64 %i.b
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.c = lshr i32 %0, 4
   %i.d = and i32 %i.c, 64
   %i.e = shl i32 %0, 2
@@ -618,7 +619,7 @@ switch.lookup:
   %spec.select = or disjoint i32 %i.f, %i.d
   %.2 = or disjoint i32 %spec.select, %i.h
   %.3 = or disjoint i32 %.2, %i.j
-  %.4 = or disjoint i32 %.3, %switch.load
+  %.4 = or disjoint i32 %.3, %switch.ext
   ret i32 %.4
 }
 
@@ -628,8 +629,9 @@ switch.lookup:
   %i.a = tail call i32 @rb_io_modestr_fmode(ptr noundef %0) ; 5 uses
   %i.b = and i32 %i.a, 3
   %i.c = zext nneg i32 %i.b to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.rb_io_reopen, i64 %i.c
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.rb_io_reopen, i64 %i.c
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.d = shl i32 %i.a, 4
   %i.e = and i32 %i.d, 1024
   %i.f = lshr i32 %i.a, 2
@@ -641,7 +643,7 @@ switch.lookup:
   %spec.select.i = or disjoint i32 %i.g, %i.e
   %.2.i = or disjoint i32 %spec.select.i, %i.i
   %.3.i = or disjoint i32 %.2.i, %i.k
-  %.4.i = or disjoint i32 %.3.i, %switch.load
+  %.4.i = or disjoint i32 %.3.i, %switch.ext
   ret i32 %.4.i
 }
 
@@ -1044,8 +1046,9 @@ rb_num2int_inline.exit:                           ; preds = %bb.i, %bb.j
   %.0.i = phi i64 [ %i.r, %bb.i ], [ %i.s, %bb.j ] ; 2 uses
   %i.t = trunc i64 %.0.i to i32                   ; 5 uses
   %i.u = and i64 %.0.i, 3
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.io_initialize, i64 %i.u
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.io_initialize, i64 %i.u
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.v = lshr i32 %i.t, 4
   %i.w = and i32 %i.v, 64
   %i.x = shl i32 %i.t, 2
@@ -1057,7 +1060,7 @@ rb_num2int_inline.exit:                           ; preds = %bb.i, %bb.j
   %spec.select.i = or disjoint i32 %i.y, %i.w
   %.2.i = or disjoint i32 %spec.select.i, %i.aa
   %.3.i = or disjoint i32 %.2.i, %i.ac
-  %.4.i = or disjoint i32 %.3.i, %switch.load
+  %.4.i = or disjoint i32 %.3.i, %switch.ext
   store i32 %.4.i, ptr %i.b, align 4, !tbaa !7
   br label %bb.s
 
@@ -1068,8 +1071,9 @@ switch.lookup:                                    ; preds = %bb.g
   store i32 %i.af, ptr %i.b, align 4, !tbaa !7
   %i.ag = and i32 %i.af, 3
   %i.ah = zext nneg i32 %i.ag to i64
-  %switch.gep152 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.rb_io_reopen, i64 %i.ah
-  %switch.load153 = load i32, ptr %switch.gep152, align 4
+  %switch.gep152 = getelementptr inbounds nuw i8, ptr @switch.table.rb_io_reopen, i64 %i.ah
+  %switch.load153 = load i8, ptr %switch.gep152, align 1
+  %switch.ext154 = zext i8 %switch.load153 to i32
   %i.ai = shl i32 %i.af, 4
   %i.aj = and i32 %i.ai, 1024
   %i.ak = lshr i32 %i.af, 2
@@ -1081,7 +1085,7 @@ switch.lookup:                                    ; preds = %bb.g
   %spec.select.i73 = or disjoint i32 %i.al, %i.aj
   %.2.i74 = or disjoint i32 %spec.select.i73, %i.an
   %.3.i75 = or disjoint i32 %.2.i74, %i.ap
-  %.4.i76 = or disjoint i32 %.3.i75, %switch.load153 ; 2 uses
+  %.4.i76 = or disjoint i32 %.3.i75, %switch.ext154 ; 2 uses
   %i.aq = call ptr @strchr(ptr noundef nonnull dereferenceable(1) %i.ae, i32 noundef 58) #33 ; 2 uses
   %.not62 = icmp eq ptr %i.aq, null
   br i1 %.not62, label %bb.l, label %bb.k
@@ -1245,8 +1249,9 @@ rb_num2int_inline.exit95:                         ; preds = %bb.ac, %bb.ad
   store i64 %i.cg, ptr %i.a, align 8, !tbaa !13
   %i.ch = and i32 %i.cd, 3
   %i.ci = zext nneg i32 %i.ch to i64
-  %switch.gep155 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.io_initialize, i64 %i.ci
-  %switch.load156 = load i32, ptr %switch.gep155, align 4
+  %switch.gep156 = getelementptr inbounds nuw i8, ptr @switch.table.io_initialize, i64 %i.ci
+  %switch.load157 = load i8, ptr %switch.gep156, align 1
+  %switch.ext158 = zext i8 %switch.load157 to i32
   %i.cj = lshr i32 %i.cd, 4
   %i.ck = and i32 %i.cj, 64
   %i.cl = shl i32 %i.cd, 2
@@ -1258,7 +1263,7 @@ rb_num2int_inline.exit95:                         ; preds = %bb.ac, %bb.ad
   %spec.select.i97 = or disjoint i32 %i.cm, %i.ck
   %.2.i98 = or disjoint i32 %spec.select.i97, %i.co
   %.3.i99 = or disjoint i32 %.2.i98, %i.cq
-  %.4.i100 = or disjoint i32 %.3.i99, %switch.load156
+  %.4.i100 = or disjoint i32 %.3.i99, %switch.ext158
   store i32 %.4.i100, ptr %i.b, align 4, !tbaa !7
   br label %bb.ae
 
@@ -1373,8 +1378,9 @@ rb_num2int_inline.exit.1:                         ; preds = %bb.at, %bb.as
   %.0.i.1 = phi i64 [ %i.du, %bb.at ], [ %i.dt, %bb.as ] ; 2 uses
   %i.dv = trunc i64 %.0.i.1 to i32                ; 5 uses
   %i.dw = and i64 %.0.i.1, 3
-  %switch.gep158 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.io_initialize, i64 %i.dw
-  %switch.load159 = load i32, ptr %switch.gep158, align 4
+  %switch.gep160 = getelementptr inbounds nuw i8, ptr @switch.table.io_initialize, i64 %i.dw
+  %switch.load161 = load i8, ptr %switch.gep160, align 1
+  %switch.ext162 = zext i8 %switch.load161 to i32
   %i.dx = lshr i32 %i.dv, 4
   %i.dy = and i32 %i.dx, 64
   %i.dz = shl i32 %i.dv, 2
@@ -1386,7 +1392,7 @@ rb_num2int_inline.exit.1:                         ; preds = %bb.at, %bb.as
   %spec.select.i.1 = or disjoint i32 %i.ea, %i.dy
   %.2.i.1 = or disjoint i32 %spec.select.i.1, %i.ec
   %.3.i.1 = or disjoint i32 %.2.i.1, %i.ee
-  %.4.i.1 = or disjoint i32 %.3.i.1, %switch.load159
+  %.4.i.1 = or disjoint i32 %.3.i.1, %switch.ext162
   store i32 %.4.i.1, ptr %i.b, align 4, !tbaa !7
   br label %bb.aa
 
@@ -1397,8 +1403,9 @@ switch.lookup160:                                 ; preds = %bb.aq
   store i32 %i.eh, ptr %i.b, align 4, !tbaa !7
   %i.ei = and i32 %i.eh, 3
   %i.ej = zext nneg i32 %i.ei to i64
-  %switch.gep161 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.rb_io_reopen, i64 %i.ej
-  %switch.load162 = load i32, ptr %switch.gep161, align 4
+  %switch.gep164 = getelementptr inbounds nuw i8, ptr @switch.table.rb_io_reopen, i64 %i.ej
+  %switch.load165 = load i8, ptr %switch.gep164, align 1
+  %switch.ext166 = zext i8 %switch.load165 to i32
   %i.ek = shl i32 %i.eh, 4
   %i.el = and i32 %i.ek, 1024
   %i.em = lshr i32 %i.eh, 2
@@ -1410,7 +1417,7 @@ switch.lookup160:                                 ; preds = %bb.aq
   %spec.select.i73.1 = or disjoint i32 %i.en, %i.el
   %.2.i74.1 = or disjoint i32 %spec.select.i73.1, %i.ep
   %.3.i75.1 = or disjoint i32 %.2.i74.1, %i.er
-  %.4.i76.1 = or disjoint i32 %.3.i75.1, %switch.load162 ; 2 uses
+  %.4.i76.1 = or disjoint i32 %.3.i75.1, %switch.ext166 ; 2 uses
   %i.es = call ptr @strchr(ptr noundef nonnull dereferenceable(1) %i.eg, i32 noundef 58) #33 ; 2 uses
   %.not62.1 = icmp eq ptr %i.es, null
   br i1 %.not62.1, label %bb.av, label %bb.au
@@ -1813,8 +1820,9 @@ switch.lookup:                                    ; preds = %bb.j, %bb.k
   store i64 4, ptr %i.aa, align 8, !tbaa !136
   %i.ab = and i32 %i.s, 3
   %i.ac = zext nneg i32 %i.ab to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.rb_io_reopen, i64 %i.ac
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.rb_io_reopen, i64 %i.ac
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.ad = shl i32 %i.s, 4
   %i.ae = and i32 %i.ad, 1024
   %i.af = lshr i32 %i.s, 2
@@ -1826,7 +1834,7 @@ switch.lookup:                                    ; preds = %bb.j, %bb.k
   %spec.select.i = or disjoint i32 %i.ag, %i.ae
   %.2.i = or disjoint i32 %spec.select.i, %i.ai
   %.3.i = or disjoint i32 %.2.i, %i.ak
-  %.4.i = or disjoint i32 %.3.i, %switch.load
+  %.4.i = or disjoint i32 %.3.i, %switch.ext
   %i.al = call fastcc i64 @rb_file_open_generic(i64 noundef %0, i64 noundef %1, i32 noundef %.4.i, i32 noundef %i.s, ptr noundef %3, i32 noundef 438) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
@@ -2229,8 +2237,9 @@ switch.lookup:                                    ; preds = %.tail, %.tail.threa
   %.0 = phi i64 [ %i.a, %bb.a ], [ %i.c, %.tail.thread ], [ %spec.select, %.tail ]
   %i.h = and i32 %1, 3
   %i.i = zext nneg i32 %i.h to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.io_initialize, i64 %i.i
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.io_initialize, i64 %i.i
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.j = lshr i32 %1, 4
   %i.k = and i32 %i.j, 64
   %i.l = shl i32 %1, 2
@@ -2242,7 +2251,7 @@ switch.lookup:                                    ; preds = %.tail, %.tail.threa
   %spec.select.i = or disjoint i32 %i.m, %i.k
   %.2.i = or disjoint i32 %spec.select.i, %i.o
   %.3.i = or disjoint i32 %.2.i, %i.q
-  %.4.i = or disjoint i32 %.3.i, %switch.load
+  %.4.i = or disjoint i32 %.3.i, %switch.ext
   %i.r = tail call fastcc i64 @prep_io(i32 noundef %0, i32 noundef %.4.i, i64 noundef %.0, ptr noundef %2)
   ret i64 %i.r
 }
@@ -2445,8 +2454,8 @@ switch.lookup:                                    ; preds = %bb.a
   %i.d = load i32, ptr %i.c, align 4, !tbaa !39   ; 3 uses
   %i.e = and i32 %i.d, 3
   %i.f = zext nneg i32 %i.e to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.rb_io_reopen, i64 %i.f
-  %switch.load = load i32, ptr %switch.gep, align 4 ; 2 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.rb_io_reopen, i64 %i.f
+  %switch.load = load i8, ptr %switch.gep, align 1 ; 2 uses
   %i.g = getelementptr i8, ptr %0, i64 16
   %i.h = load i32, ptr %i.g, align 8, !tbaa !20   ; 2 uses
   %i.i = and i32 %i.d, 64
@@ -2457,10 +2466,10 @@ default.unreachable:                              ; preds = %bb.b
   unreachable
 
 bb.b:                                             ; preds = %switch.lookup
-  switch i32 %switch.load, label %default.unreachable [
-    i32 0, label %bb.c
-    i32 1, label %rb_io_oflags_modestr.exit
-    i32 2, label %bb.d
+  switch i8 %switch.load, label %default.unreachable [
+    i8 0, label %bb.c
+    i8 1, label %rb_io_oflags_modestr.exit
+    i8 2, label %bb.d
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -2473,7 +2482,7 @@ bb.d:                                             ; preds = %bb.b
   br label %rb_io_oflags_modestr.exit
 
 switch.lookup10:                                  ; preds = %switch.lookup
-  %i.k = zext nneg i32 %switch.load to i64
+  %i.k = zext i8 %switch.load to i64
   %switch.gep11 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.rb_io_stdio_file.18, i64 %i.k
   %switch.load12 = load ptr, ptr %switch.gep11, align 8
   br label %rb_io_oflags_modestr.exit
@@ -2876,8 +2885,9 @@ switch.lookup:                                    ; preds = %bb.g
   %i.ab = call i32 @rb_io_modestr_fmode(ptr noundef %i.aa) ; 5 uses
   %i.ac = and i32 %i.ab, 3
   %i.ad = zext nneg i32 %i.ac to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.rb_io_reopen, i64 %i.ad
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.rb_io_reopen, i64 %i.ad
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.ae = shl i32 %i.ab, 4
   %i.af = and i32 %i.ae, 1024
   %i.ag = lshr i32 %i.ab, 2
@@ -2889,7 +2899,7 @@ switch.lookup:                                    ; preds = %bb.g
   %spec.select.i.i = or disjoint i32 %i.ah, %i.af
   %.2.i.i = or disjoint i32 %spec.select.i.i, %i.aj
   %.3.i.i = or disjoint i32 %.2.i.i, %i.al
-  %.4.i.i = or disjoint i32 %.3.i.i, %switch.load
+  %.4.i.i = or disjoint i32 %.3.i.i, %switch.ext
   br label %bb.k
 
 bb.k:                                             ; preds = %rb_scan_args_set.exit, %rb_num2int_inline.exit, %switch.lookup
@@ -3292,8 +3302,9 @@ switch.lookup:                                    ; preds = %bb.bp
   %i.ik = load i32, ptr %i.ij, align 4, !tbaa !39 ; 6 uses
   %i.il = and i32 %i.ik, 3
   %i.im = zext nneg i32 %i.il to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.rb_io_reopen, i64 %i.im
-  %switch.load = load i32, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.rb_io_reopen, i64 %i.im
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %i.in = shl i32 %i.ik, 4
   %i.io = and i32 %i.in, 1024
   %i.ip = lshr i32 %i.ik, 2
@@ -3305,7 +3316,7 @@ switch.lookup:                                    ; preds = %bb.bp
   %spec.select.i75 = or disjoint i32 %i.iq, %i.io
   %.2.i76 = or disjoint i32 %spec.select.i75, %i.is
   %.3.i = or disjoint i32 %.2.i76, %i.iu
-  %.4.i77 = or disjoint i32 %.3.i, %switch.load
+  %.4.i77 = or disjoint i32 %.3.i, %switch.ext
   store i32 %.4.i77, ptr %i.e, align 4, !tbaa !7
   br label %bb.bv
 
@@ -3708,8 +3719,9 @@ bb.j:                                             ; preds = %bb.i
 rb_update_max_fd.exit:                            ; preds = %.lr.ph.i, %bb.g
   %i.z = and i32 %i.l, 3
   %i.aa = zext nneg i32 %i.z to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.io_initialize, i64 %i.aa
-  %switch.load = load i32, ptr %switch.gep, align 4 ; 2 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.io_initialize, i64 %i.aa
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32       ; 2 uses
   %i.ab = load i64, ptr %i.a, align 8, !tbaa !13
   %i.ac = icmp eq i64 %i.ab, 4
   br i1 %i.ac, label %bb.k, label %bb.l
@@ -3726,12 +3738,12 @@ bb.k:                                             ; preds = %rb_update_max_fd.ex
   %i.aj = shl i32 %i.l, 3
   %i.ak = and i32 %i.aj, 1024
   %.3.i = or disjoint i32 %.2.i, %i.ak
-  %.4.i = or disjoint i32 %.3.i, %switch.load
+  %.4.i = or disjoint i32 %.3.i, %switch.ext
   br label %bb.n
 
 bb.l:                                             ; preds = %rb_update_max_fd.exit
   %i.al = load i32, ptr %i.c, align 4, !tbaa !7   ; 2 uses
-  %i.am = xor i32 %switch.load, 3
+  %i.am = xor i32 %switch.ext, 3
   %i.an = and i32 %i.am, %i.al
   %.not33 = icmp eq i32 %i.an, 0
   br i1 %.not33, label %bb.n, label %bb.m

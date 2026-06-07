@@ -62,8 +62,8 @@ target triple = "x86_64-pc-linux-gnu"
 @tt_check_trickyness_family.trick_names = internal constant [20 x [20 x i8]] [[20 x i8] c"cpop\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00", [20 x i8] c"DFGirl-W6-WIN-BF\00\00\00\00", [20 x i8] c"DFGothic-EB\00\00\00\00\00\00\00\00\00", [20 x i8] c"DFGyoSho-Lt\00\00\00\00\00\00\00\00\00", [20 x i8] c"DFHei\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00", [20 x i8] c"DFHSGothic-W5\00\00\00\00\00\00\00", [20 x i8] c"DFHSMincho-W3\00\00\00\00\00\00\00", [20 x i8] c"DFHSMincho-W7\00\00\00\00\00\00\00", [20 x i8] c"DFKaiSho-SB\00\00\00\00\00\00\00\00\00", [20 x i8] c"DFKaiShu\00\00\00\00\00\00\00\00\00\00\00\00", [20 x i8] c"DFKai-SB\00\00\00\00\00\00\00\00\00\00\00\00", [20 x i8] c"DFMing\00\00\00\00\00\00\00\00\00\00\00\00\00\00", [20 x i8] c"DLC\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00", [20 x i8] c"HuaTianKaiTi?\00\00\00\00\00\00\00", [20 x i8] c"HuaTianSongTi?\00\00\00\00\00\00", [20 x i8] c"Ming(for ISO10646)\00\00", [20 x i8] c"MingLiU\00\00\00\00\00\00\00\00\00\00\00\00\00", [20 x i8] c"MingMedium\00\00\00\00\00\00\00\00\00\00", [20 x i8] c"PMingLiU\00\00\00\00\00\00\00\00\00\00\00\00", [20 x i8] c"MingLi43\00\00\00\00\00\00\00\00\00\00\00\00"], align 16
 @tt_check_trickyness_sfnt_ids.sfnt_id = internal unnamed_addr constant [31 x [3 x %struct.tt_sfnt_id_rec_]] [[3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ { i64 96268376, i64 740 }, %struct.tt_sfnt_id_rec_ { i64 673397745, i64 34756 }, %struct.tt_sfnt_id_rec_ { i64 2739184106, i64 481 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ { i64 96268376, i64 740 }, %struct.tt_sfnt_id_rec_ { i64 673397745, i64 34756 }, %struct.tt_sfnt_id_rec_ { i64 2739184107, i64 481 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ { i64 314829746, i64 848 }, %struct.tt_sfnt_id_rec_ { i64 3061902948, i64 34727 }, %struct.tt_sfnt_id_rec_ { i64 3465778531, i64 1880 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ { i64 300280532, i64 848 }, %struct.tt_sfnt_id_rec_ { i64 3461961449, i64 48261 }, %struct.tt_sfnt_id_rec_ { i64 2188571670, i64 69 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ { i64 307751750, i64 848 }, %struct.tt_sfnt_id_rec_ { i64 4137275744, i64 29023 }, %struct.tt_sfnt_id_rec_ { i64 3525506408, i64 956 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ { i64 308472654, i64 848 }, %struct.tt_sfnt_id_rec_ { i64 3899284836, i64 31040 }, %struct.tt_sfnt_id_rec_ { i64 2018572073, i64 1535 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ { i64 304999178, i64 848 }, %struct.tt_sfnt_id_rec_ { i64 1024864906, i64 34203 }, %struct.tt_sfnt_id_rec_ { i64 2839528251, i64 715 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ { i64 308276006, i64 848 }, %struct.tt_sfnt_id_rec_ { i64 2779564418, i64 32481 }, %struct.tt_sfnt_id_rec_ { i64 2425983382, i64 1055 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ { i64 300280532, i64 848 }, %struct.tt_sfnt_id_rec_ { i64 1513146939, i64 36963 }, %struct.tt_sfnt_id_rec_ { i64 329524738, i64 126 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ { i64 300280532, i64 848 }, %struct.tt_sfnt_id_rec_ { i64 2800192513, i64 35224 }, %struct.tt_sfnt_id_rec_ { i64 329524738, i64 126 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ { i64 300280532, i64 864 }, %struct.tt_sfnt_id_rec_ { i64 2645721778, i64 49262 }, %struct.tt_sfnt_id_rec_ { i64 1407637450, i64 130 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ { i64 306440984, i64 848 }, %struct.tt_sfnt_id_rec_ { i64 3121253424, i64 29869 }, %struct.tt_sfnt_id_rec_ { i64 4091032585, i64 891 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ { i64 131921222, i64 776 }, %struct.tt_sfnt_id_rec_ { i64 1090419856, i64 36394 }, %struct.tt_sfnt_id_rec_ { i64 1619096757, i64 122 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ { i64 3951628856, i64 776 }, %struct.tt_sfnt_id_rec_ { i64 3538214100, i64 26479 }, %struct.tt_sfnt_id_rec_ { i64 2393240211, i64 952 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ { i64 4294705148, i64 8 }, %struct.tt_sfnt_id_rec_ { i64 2627619000, i64 48802 }, %struct.tt_sfnt_id_rec_ { i64 1879179538, i64 8 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ { i64 4294705148, i64 8 }, %struct.tt_sfnt_id_rec_ { i64 173671555, i64 97337 }, %struct.tt_sfnt_id_rec_ { i64 1879179538, i64 8 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ zeroinitializer, %struct.tt_sfnt_id_rec_ { i64 1086924117, i64 229 }, %struct.tt_sfnt_id_rec_ { i64 2744867043, i64 4476 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ zeroinitializer, %struct.tt_sfnt_id_rec_ { i64 868488786, i64 229 }, %struct.tt_sfnt_id_rec_ { i64 651609386, i64 3946 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ zeroinitializer, %struct.tt_sfnt_id_rec_ { i64 1840342301, i64 413 }, %struct.tt_sfnt_id_rec_ { i64 1819167491, i64 9362 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ zeroinitializer, %struct.tt_sfnt_id_rec_ { i64 1086924117, i64 229 }, %struct.tt_sfnt_id_rec_ { i64 3729914576, i64 4476 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ zeroinitializer, %struct.tt_sfnt_id_rec_ { i64 2246342244, i64 229 }, %struct.tt_sfnt_id_rec_ { i64 2798004273, i64 7338 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ zeroinitializer, %struct.tt_sfnt_id_rec_ { i64 763960573, i64 413 }, %struct.tt_sfnt_id_rec_ { i64 2690663987, i64 7656 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ zeroinitializer, %struct.tt_sfnt_id_rec_ { i64 1084913484, i64 459 }, %struct.tt_sfnt_id_rec_ { i64 2606541462, i64 8090 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ zeroinitializer, %struct.tt_sfnt_id_rec_ { i64 222161355, i64 321 }, %struct.tt_sfnt_id_rec_ { i64 3557980006, i64 8832 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ zeroinitializer, %struct.tt_sfnt_id_rec_ { i64 1248405144, i64 496 }, %struct.tt_sfnt_id_rec_ { i64 873284422, i64 8138 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ zeroinitializer, %struct.tt_sfnt_id_rec_ { i64 3442787844, i64 358 }, %struct.tt_sfnt_id_rec_ { i64 1827868742, i64 8880 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ zeroinitializer, %struct.tt_sfnt_id_rec_ { i64 1571246869, i64 413 }, %struct.tt_sfnt_id_rec_ { i64 1081367135, i64 8928 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ zeroinitializer, %struct.tt_sfnt_id_rec_ { i64 4032166984, i64 450 }, %struct.tt_sfnt_id_rec_ { i64 956358355, i64 7704 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ { i64 1507331, i64 96 }, %struct.tt_sfnt_id_rec_ { i64 3686019182, i64 22698 }, %struct.tt_sfnt_id_rec_ { i64 3594733610, i64 53 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ { i64 308931416, i64 848 }, %struct.tt_sfnt_id_rec_ { i64 1557501306, i64 27214 }, %struct.tt_sfnt_id_rec_ { i64 4149752378, i64 896 }], [3 x %struct.tt_sfnt_id_rec_] [%struct.tt_sfnt_id_rec_ { i64 305130251, i64 848 }, %struct.tt_sfnt_id_rec_ { i64 2131792282, i64 28841 }, %struct.tt_sfnt_id_rec_ { i64 2094524343, i64 604 }]], align 16
 @switch.table.TT_RunIns = private unnamed_addr constant [8 x ptr] [ptr @Round_To_Half_Grid, ptr @Round_To_Grid, ptr @Round_To_Double_Grid, ptr @Round_Down_To_Grid, ptr @Round_Up_To_Grid, ptr @Round_None, ptr @Round_Super, ptr @Round_Super_45], align 8
-@switch.table.TT_RunIns.37 = private unnamed_addr constant [4 x i64] [i64 8192, i64 16384, i64 32768, i64 16384], align 8
-@switch.table.TT_RunIns.38 = private unnamed_addr constant [4 x i64] [i64 5792, i64 11585, i64 23170, i64 11585], align 8
+@switch.table.TT_RunIns.37 = private unnamed_addr constant [4 x i16] [i16 8192, i16 16384, i16 -32768, i16 16384], align 8
+@switch.table.TT_RunIns.38 = private unnamed_addr constant [4 x i16] [i16 5792, i16 11585, i16 23170, i16 11585], align 8
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define internal noundef i32 @tt_driver_init(ptr nofree noundef writeonly captures(none) initializes((120, 124)) %0) #0 {
@@ -466,8 +466,9 @@ switch.lookup1302:                                ; preds = %bb.ao
   %i.cpp = trunc i64 %.val399 to i32
   %i.cpq = lshr i64 %.val399, 6
   %i.cpr = and i64 %i.cpq, 3
-  %switch.gep1303 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.TT_RunIns.37, i64 %i.cpr
-  %switch.load1304 = load i64, ptr %switch.gep1303, align 8 ; 6 uses
+  %switch.gep1303 = getelementptr inbounds nuw [2 x i8], ptr @switch.table.TT_RunIns.37, i64 %i.cpr
+  %switch.load1304 = load i16, ptr %switch.gep1303, align 2
+  %switch.ext = zext i16 %switch.load1304 to i64  ; 6 uses
   %i.cps = lshr i32 %i.cpp, 4
   %i.cpt = and i32 %i.cps, 3
   switch i32 %i.cpt, label %default.unreachable [
@@ -481,15 +482,15 @@ default.unreachable:                              ; preds = %switch.lookup1305, 
   unreachable
 
 bb.vb:                                            ; preds = %switch.lookup1302
-  %i.cpu = lshr exact i64 %switch.load1304, 2
+  %i.cpu = lshr exact i64 %switch.ext, 2
   br label %bb.ve
 
 bb.vc:                                            ; preds = %switch.lookup1302
-  %i.cpv = lshr exact i64 %switch.load1304, 1
+  %i.cpv = lshr exact i64 %switch.ext, 1
   br label %bb.ve
 
 bb.vd:                                            ; preds = %switch.lookup1302
-  %i.cpw = mul nuw nsw i64 %switch.load1304, 3
+  %i.cpw = mul nuw nsw i64 %switch.ext, 3
   %i.cpx = lshr exact i64 %i.cpw, 2
   br label %bb.ve
 
@@ -500,12 +501,12 @@ bb.ve:                                            ; preds = %bb.vd, %bb.vc, %bb.
   br i1 %i.cqa, label %bb.vf, label %bb.vg
 
 bb.vf:                                            ; preds = %bb.ve
-  %i.cqb = add nsw i64 %switch.load1304, -1
+  %i.cqb = add nsw i64 %switch.ext, -1
   br label %Ins_SROUND.exit
 
 bb.vg:                                            ; preds = %bb.ve
   %i.cqc = add nuw nsw i64 %i.cpz, 4294967292
-  %i.cqd = mul nuw nsw i64 %switch.load1304, %i.cqc
+  %i.cqd = mul nuw nsw i64 %i.cqc, %switch.ext
   %.lhs.trunc.i.i = trunc i64 %i.cqd to i32
   %i.cqe = ashr exact i32 %.lhs.trunc.i.i, 3
   %.sext.i.i = sext i32 %i.cqe to i64
@@ -513,7 +514,7 @@ bb.vg:                                            ; preds = %bb.ve
 
 Ins_SROUND.exit:                                  ; preds = %bb.vf, %bb.vg
   %.sink.i.i = phi i64 [ %i.cqb, %bb.vf ], [ %.sext.i.i, %bb.vg ]
-  %i.cqf = lshr exact i64 %switch.load1304, 8
+  %i.cqf = lshr exact i64 %switch.ext, 8
   store i64 %i.cqf, ptr %i.fe, align 8, !tbaa !465
   %i.cqg = lshr i64 %i.cpy, 8
   store i64 %i.cqg, ptr %i.ff, align 8, !tbaa !466
@@ -528,8 +529,9 @@ switch.lookup1305:                                ; preds = %bb.ao
   %i.cqi = trunc i64 %.val400 to i32
   %i.cqj = lshr i64 %.val400, 6
   %i.cqk = and i64 %i.cqj, 3
-  %switch.gep1306 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.TT_RunIns.38, i64 %i.cqk
-  %switch.load1307 = load i64, ptr %switch.gep1306, align 8 ; 6 uses
+  %switch.gep1306 = getelementptr inbounds nuw [2 x i8], ptr @switch.table.TT_RunIns.38, i64 %i.cqk
+  %switch.load1307 = load i16, ptr %switch.gep1306, align 2
+  %switch.ext1308 = zext i16 %switch.load1307 to i64 ; 6 uses
   %i.cql = lshr i32 %i.cqi, 4
   %i.cqm = and i32 %i.cql, 3
   switch i32 %i.cqm, label %default.unreachable [
@@ -540,15 +542,15 @@ switch.lookup1305:                                ; preds = %bb.ao
   ]
 
 bb.vh:                                            ; preds = %switch.lookup1305
-  %i.cqn = lshr i64 %switch.load1307, 2
+  %i.cqn = lshr i64 %switch.ext1308, 2
   br label %bb.vk
 
 bb.vi:                                            ; preds = %switch.lookup1305
-  %i.cqo = lshr i64 %switch.load1307, 1
+  %i.cqo = lshr i64 %switch.ext1308, 1
   br label %bb.vk
 
 bb.vj:                                            ; preds = %switch.lookup1305
-  %i.cqp = mul nuw nsw i64 %switch.load1307, 3
+  %i.cqp = mul nuw nsw i64 %switch.ext1308, 3
   %i.cqq = lshr i64 %i.cqp, 2
   br label %bb.vk
 
@@ -559,12 +561,12 @@ bb.vk:                                            ; preds = %bb.vj, %bb.vi, %bb.
   br i1 %i.cqt, label %bb.vl, label %bb.vm
 
 bb.vl:                                            ; preds = %bb.vk
-  %i.cqu = add nsw i64 %switch.load1307, -1
+  %i.cqu = add nsw i64 %switch.ext1308, -1
   br label %Ins_S45ROUND.exit
 
 bb.vm:                                            ; preds = %bb.vk
   %i.cqv = add nuw nsw i64 %i.cqs, 4294967292
-  %i.cqw = mul nuw nsw i64 %switch.load1307, %i.cqv
+  %i.cqw = mul nuw nsw i64 %i.cqv, %switch.ext1308
   %.lhs.trunc.i.i646 = trunc i64 %i.cqw to i32
   %i.cqx = sdiv i32 %.lhs.trunc.i.i646, 8
   %.sext.i.i647 = sext i32 %i.cqx to i64
@@ -572,7 +574,7 @@ bb.vm:                                            ; preds = %bb.vk
 
 Ins_S45ROUND.exit:                                ; preds = %bb.vl, %bb.vm
   %.sink.i.i648 = phi i64 [ %i.cqu, %bb.vl ], [ %.sext.i.i647, %bb.vm ]
-  %i.cqy = lshr i64 %switch.load1307, 8
+  %i.cqy = lshr i64 %switch.ext1308, 8
   store i64 %i.cqy, ptr %i.fe, align 8, !tbaa !465
   %i.cqz = lshr i64 %i.cqr, 8
   store i64 %i.cqz, ptr %i.ff, align 8, !tbaa !466

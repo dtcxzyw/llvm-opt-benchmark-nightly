@@ -106,7 +106,7 @@ $_ZZNSt19_Sp_make_shared_tag5_S_tiEvE5__tag = comdat any
 @__const._ZNK14arrow_vendored4date19year_month_day_last3dayEv.d = private unnamed_addr constant [12 x %"class.arrow_vendored::date::day"] [%"class.arrow_vendored::date::day" { i8 31 }, %"class.arrow_vendored::date::day" { i8 28 }, %"class.arrow_vendored::date::day" { i8 31 }, %"class.arrow_vendored::date::day" { i8 30 }, %"class.arrow_vendored::date::day" { i8 31 }, %"class.arrow_vendored::date::day" { i8 30 }, %"class.arrow_vendored::date::day" { i8 31 }, %"class.arrow_vendored::date::day" { i8 31 }, %"class.arrow_vendored::date::day" { i8 30 }, %"class.arrow_vendored::date::day" { i8 31 }, %"class.arrow_vendored::date::day" { i8 30 }, %"class.arrow_vendored::date::day" { i8 31 }], align 1
 @.str.6 = private unnamed_addr constant [8 x i8] c"iso8601\00", align 1
 @switch.table._ZNK5arrow8internal12_GLOBAL__N_113ISO8601ParserclEPKcmNS_8TimeUnit4typeEPlPb = private unnamed_addr constant [8 x i32] [i32 10, i32 100, i32 1000, i32 10000, i32 100000, i32 1000000, i32 10000000, i32 100000000], align 4
-@switch.table._ZNK5arrow8internal12_GLOBAL__N_113ISO8601ParserclEPKcmNS_8TimeUnit4typeEPlPb.25 = private unnamed_addr constant [3 x i64] [i64 1000, i64 1000000, i64 1000000000], align 8
+@switch.table._ZNK5arrow8internal12_GLOBAL__N_113ISO8601ParserclEPKcmNS_8TimeUnit4typeEPlPb.25 = private unnamed_addr constant [3 x i32] [i32 1000, i32 1000000, i32 1000000000], align 8
 
 ; Function Attrs: mustprogress nounwind uwtable
 define noundef zeroext i1 @_ZN5arrow8internal13StringToFloatEPKcmcPf(ptr noundef %0, i64 noundef %1, i8 noundef signext %2, ptr noundef nonnull %3) local_unnamed_addr #0 {
@@ -509,10 +509,11 @@ _ZN5arrow8internal6detailL15ParseSubSecondsEPKcmNS_8TimeUnit4typeEPj.exit.i: ; p
 
 switch.lookup34:                                  ; preds = %_ZN5arrow8internal6detailL15ParseSubSecondsEPKcmNS_8TimeUnit4typeEPj.exit.thread124.i, %bb.bj
   %i.iv = sext i32 %3 to i64
-  %7 = getelementptr [8 x i8], ptr @switch.table._ZNK5arrow8internal12_GLOBAL__N_113ISO8601ParserclEPKcmNS_8TimeUnit4typeEPlPb.25, i64 %i.iv
-  %switch.gep35 = getelementptr i8, ptr %7, i64 -8
-  %switch.load36 = load i64, ptr %switch.gep35, align 8
-  %i.iw = mul nsw i64 %switch.load36, %i.id
+  %7 = getelementptr [4 x i8], ptr @switch.table._ZNK5arrow8internal12_GLOBAL__N_113ISO8601ParserclEPKcmNS_8TimeUnit4typeEPlPb.25, i64 %i.iv
+  %switch.gep35 = getelementptr i8, ptr %7, i64 -4
+  %switch.load36 = load i32, ptr %switch.gep35, align 4
+  %switch.ext = zext i32 %switch.load36 to i64
+  %i.iw = mul nsw i64 %i.id, %switch.ext
   %i.ix = load i32, ptr %i.b, align 4, !tbaa !3
   %i.iy = zext i32 %i.ix to i64
   %i.iz = add nsw i64 %i.iw, %i.iy

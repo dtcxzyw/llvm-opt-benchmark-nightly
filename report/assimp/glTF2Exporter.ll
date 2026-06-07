@@ -201,7 +201,7 @@ begin_hunk_0
 @_ZTVN5glTF29AnimationE = linkonce_odr hidden unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN5glTF29AnimationE, ptr @_ZNK5glTF26Object9IsSpecialEv, ptr @_ZN5glTF29AnimationD2Ev, ptr @_ZN5glTF29AnimationD0Ev] }, comdat, align 8
 @_ZTIN5glTF29AnimationE = linkonce_odr hidden constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN5glTF29AnimationE, ptr @_ZTIN5glTF26ObjectE }, comdat, align 8
 @_ZTSN5glTF29AnimationE = linkonce_odr hidden constant [19 x i8] c"N5glTF29AnimationE\00", comdat, align 1
-@switch.table._ZN5glTF28Accessor17WriteSparseValuesEmPKvm = private unnamed_addr constant [7 x i32] [i32 1, i32 1, i32 2, i32 2, i32 poison, i32 4, i32 4], align 4
+@switch.table._ZN5glTF28Accessor17WriteSparseValuesEmPKvm = private unnamed_addr constant [7 x i8] [i8 1, i8 1, i8 2, i8 2, i8 poison, i8 4, i8 4], align 4
 
 @_ZN6Assimp13glTF2ExporterC1EPKcPNS_8IOSystemEPK7aiScenePKNS_16ExportPropertiesEb = hidden unnamed_addr alias void (ptr, ptr, ptr, ptr, ptr, i1), ptr @_ZN6Assimp13glTF2ExporterC2EPKcPNS_8IOSystemEPK7aiScenePKNS_16ExportPropertiesEb
 @_ZN6Assimp13glTF2ExporterD1Ev = hidden unnamed_addr alias void (ptr), ptr @_ZN6Assimp13glTF2ExporterD2Ev
@@ -604,10 +604,11 @@ bb.ba:                                            ; preds = %bb.ax
 
 switch.lookup:                                    ; preds = %bb.au
   %i.ma = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5glTF28Accessor17WriteSparseValuesEmPKvm, i64 %i.ma
-  %switch.load = load i32, ptr %switch.gep, align 4 ; 2 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5glTF28Accessor17WriteSparseValuesEmPKvm, i64 %i.ma
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32       ; 2 uses
   %i.mb = shl i64 %i.lo, 1
-  %i.mc = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %switch.load, i1 true)
+  %i.mc = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %switch.ext, i1 true)
   %i.md = zext nneg i32 %i.mc to i64
   %i.me = lshr i64 %i.mb, %i.md
   %i.mf = getelementptr inbounds nuw i8, ptr %i.lk, i64 264
@@ -681,7 +682,7 @@ bb.be:                                            ; preds = %.lr.ph399, %bb.be
   %i.nk = getelementptr inbounds nuw i8, ptr %i.mg, i64 %i.nj
   store i16 %i.nh, ptr %i.nk, align 1
   %i.nl = add i32 %.0148397, 1
-  %i.nm = add i32 %.0147398, %switch.load         ; 2 uses
+  %i.nm = add i32 %.0147398, %switch.ext          ; 2 uses
   %i.nn = zext i32 %i.nm to i64                   ; 2 uses
   %i.no = icmp ugt i64 %i.lo, %i.nn
   br i1 %i.no, label %bb.be, label %bb.bb, !llvm.loop !177
@@ -1084,8 +1085,9 @@ bb.h:                                             ; preds = %bb.e
 
 switch.lookup:                                    ; preds = %bb.b
   %i.t = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5glTF28Accessor17WriteSparseValuesEmPKvm, i64 %i.t
-  %switch.load = load i32, ptr %switch.gep, align 4 ; 2 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5glTF28Accessor17WriteSparseValuesEmPKvm, i64 %i.t
+  %switch.load = load i8, ptr %switch.gep, align 1 ; 2 uses
+  %switch.ext = zext i8 %switch.load to i32
   %i.u = load ptr, ptr %2, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.w = load i32, ptr %i.v, align 8
@@ -1095,7 +1097,7 @@ switch.lookup:                                    ; preds = %bb.b
   %i.aa = load ptr, ptr %i.z, align 8             ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 264 ; 3 uses
   %i.ac = load i64, ptr %i.ab, align 8            ; 4 uses
-  %i.ad = zext nneg i32 %switch.load to i64       ; 2 uses
+  %i.ad = zext i8 %switch.load to i64             ; 2 uses
   %i.ae = add nsw i64 %i.ad, -1
   %i.af = and i64 %i.ac, %i.ae                    ; 2 uses
   %i.ag = zext i32 %i.j to i64
@@ -1323,7 +1325,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit57: ; preds = %_ZN
   %i.ex = load ptr, ptr %.fca.0.extract, align 8
   %i.ey = getelementptr inbounds nuw [8 x i8], ptr %i.ex, i64 %i.ec
   %i.ez = load ptr, ptr %i.ey, align 8
-  %i.fa = mul i32 %switch.load, %i.f
+  %i.fa = mul i32 %i.f, %switch.ext
   %i.fb = zext i32 %i.fa to i64
   call void @_ZN5glTF28Accessor9WriteDataEmPKvm(ptr noundef nonnull align 8 dereferenceable(376) %i.ez, i64 noundef %3, ptr noundef nonnull %4, i64 noundef %i.fb)
   br label %bb.o
@@ -1599,8 +1601,9 @@ bb.h:                                             ; preds = %bb.e
 
 switch.lookup:                                    ; preds = %bb.b
   %i.v = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5glTF28Accessor17WriteSparseValuesEmPKvm, i64 %i.v
-  %switch.load = load i32, ptr %switch.gep, align 4 ; 4 uses
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5glTF28Accessor17WriteSparseValuesEmPKvm, i64 %i.v
+  %switch.load = load i8, ptr %switch.gep, align 1 ; 3 uses
+  %switch.ext = zext i8 %switch.load to i32       ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 216
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #31
   call void @_ZN5glTF25Asset12FindUniqueIDERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKc(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %11, ptr noundef nonnull align 8 dereferenceable(3624) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull @.str.246)
@@ -1683,7 +1686,7 @@ bb.i:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.bj = load ptr, ptr %i.bi, align 8            ; 3 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 264 ; 3 uses
   %i.bl = load i64, ptr %i.bk, align 8            ; 4 uses
-  %i.bm = zext nneg i32 %switch.load to i64       ; 2 uses
+  %i.bm = zext i8 %switch.load to i64             ; 2 uses
   %i.bn = add nsw i64 %i.bm, -1
   %i.bo = and i64 %i.bl, %i.bn                    ; 2 uses
   %i.bp = zext i32 %i.l to i64
@@ -1825,7 +1828,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit112: ; preds = %_Z
   %i.ej = load ptr, ptr %.fca.0.extract38, align 8
   %i.ek = getelementptr inbounds nuw [8 x i8], ptr %i.ej, i64 %i.ee
   %i.el = load ptr, ptr %i.ek, align 8
-  %i.em = mul i32 %switch.load, %i.h
+  %i.em = mul i32 %i.h, %switch.ext
   %i.en = zext i32 %i.em to i64
   call void @_ZN5glTF28Accessor9WriteDataEmPKvm(ptr noundef nonnull align 8 dereferenceable(376) %i.el, i64 noundef %3, ptr noundef nonnull %9, i64 noundef %i.en)
   br label %bb.p
@@ -2139,7 +2142,7 @@ _ZN5glTF28Accessor18WriteSparseIndicesEmPKvm.exit: ; preds = %_ZNSt7__cxx1112bas
   %i.li = load ptr, ptr %i.lh, align 8            ; 3 uses
   %i.lj = getelementptr inbounds nuw i8, ptr %i.li, i64 264 ; 3 uses
   %i.lk = load i64, ptr %i.lj, align 8            ; 4 uses
-  %i.ll = zext nneg i32 %switch.load to i64       ; 2 uses
+  %i.ll = zext i8 %switch.load to i64             ; 2 uses
   %i.lm = add nsw i64 %i.ll, -1
   %i.ln = and i64 %i.lk, %i.lm                    ; 2 uses
   %i.lo = zext i32 %i.l to i64
@@ -2282,7 +2285,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit143: ; preds = %_Z
   %i.oj = getelementptr inbounds nuw [8 x i8], ptr %i.oi, i64 %.pre-phi
   %i.ok = load ptr, ptr %i.oj, align 8
   %i.ol = load ptr, ptr %i.a, align 8
-  %i.om = mul i32 %switch.load, %i.h
+  %i.om = mul i32 %i.h, %switch.ext
   %i.on = zext i32 %i.om to i64
   call void @_ZN5glTF28Accessor17WriteSparseValuesEmPKvm(ptr noundef nonnull align 8 dereferenceable(376) %i.ok, i64 noundef %i.fq, ptr noundef %i.ol, i64 noundef %i.on)
   %i.oo = load ptr, ptr %i.a, align 8             ; 2 uses
@@ -2685,9 +2688,10 @@ switch.lookup:                                    ; preds = %bb.a
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 296
   %i.am = load ptr, ptr %i.al, align 8
   %i.an = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5glTF28Accessor17WriteSparseValuesEmPKvm, i64 %i.an
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %i.ao = mul i32 %switch.load, %i.q
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5glTF28Accessor17WriteSparseValuesEmPKvm, i64 %i.an
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  %i.ao = mul i32 %i.q, %switch.ext
   %i.ap = zext i32 %i.ao to i64                   ; 14 uses
   %i.aq = getelementptr i8, ptr %i.am, i64 %i.ac
   %i.ar = getelementptr i8, ptr %i.aq, i64 %i.aa  ; 5 uses
@@ -3090,9 +3094,10 @@ switch.lookup:                                    ; preds = %bb.b
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 296
   %i.ao = load ptr, ptr %i.an, align 8
   %i.ap = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN5glTF28Accessor17WriteSparseValuesEmPKvm, i64 %i.ap
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %i.aq = mul i32 %switch.load, %i.s
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN5glTF28Accessor17WriteSparseValuesEmPKvm, i64 %i.ap
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
+  %i.aq = mul i32 %i.s, %switch.ext
   %i.ar = zext i32 %i.aq to i64                   ; 14 uses
   %i.as = getelementptr i8, ptr %i.ao, i64 %i.ae
   %i.at = getelementptr i8, ptr %i.as, i64 %i.ac  ; 5 uses
