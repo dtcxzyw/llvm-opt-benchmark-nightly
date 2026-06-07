@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.ak, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.al = trunc i64 %indvars.iv to i32
+  %i.al = trunc nuw nsw i64 %indvars.iv to i32
   %i.am = and i32 %i.al, 65535
   %i.an = load i8, ptr %i.f, align 1
   %i.ao = zext i8 %i.an to i32
