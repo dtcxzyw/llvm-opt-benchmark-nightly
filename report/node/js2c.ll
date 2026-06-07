@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   %i.d = zext i16 %0 to i64
-  %i.e = getelementptr inbounds nuw [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZZN4node4js2c7GetCodeEtEDC14backing_string7offsetsE, i64 382108), i64 %i.d ; 2 uses
+  %i.e = getelementptr inbounds nuw [4 x i8], ptr getelementptr (i8, ptr @_ZZN4node4js2c7GetCodeEtEDC14backing_string7offsetsE, i64 382108), i64 %i.d ; 2 uses
   %i.f = load i32, ptr %i.e, align 4              ; 2 uses
   %i.g = zext i32 %i.f to i64
   %i.h = getelementptr inbounds nuw i8, ptr @_ZZN4node4js2c7GetCodeEtEDC14backing_string7offsetsE, i64 %i.g

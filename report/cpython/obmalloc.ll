@@ -201,45 +201,45 @@ _PyMutex_Lock.exit:                               ; preds = %bb.a, %bb.b
 
 bb.c:                                             ; preds = %_PyMutex_Lock.exit
   store ptr null, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), align 8, !tbaa !40
-  store ptr @_PyMem_RawMalloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 952), align 8, !tbaa !40
-  store ptr @_PyMem_RawCalloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 960), align 8, !tbaa !40
-  store ptr @_PyMem_RawRealloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 968), align 8, !tbaa !40
-  store ptr @_PyMem_RawFree, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 976), align 8, !tbaa !40
+  store ptr @_PyMem_RawMalloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 8), align 8, !tbaa !40
+  store ptr @_PyMem_RawCalloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 16), align 8, !tbaa !40
+  store ptr @_PyMem_RawRealloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 24), align 8, !tbaa !40
+  store ptr @_PyMem_RawFree, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 32), align 8, !tbaa !40
   store ptr null, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), align 8, !tbaa !40
-  store ptr @_PyObject_Malloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 992), align 8, !tbaa !40
-  store ptr @_PyObject_Calloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1000), align 8, !tbaa !40
-  store ptr @_PyObject_Realloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1008), align 8, !tbaa !40
-  store ptr @_PyObject_Free, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1016), align 8, !tbaa !40
+  store ptr @_PyObject_Malloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 8), align 8, !tbaa !40
+  store ptr @_PyObject_Calloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 16), align 8, !tbaa !40
+  store ptr @_PyObject_Realloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 24), align 8, !tbaa !40
+  store ptr @_PyObject_Free, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 32), align 8, !tbaa !40
   br label %.sink.split.i
 
 set_default_allocator_unlocked.exit12.i:          ; preds = %_PyMutex_Lock.exit
   store ptr null, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), align 8, !tbaa !40
-  store ptr @_PyMem_RawMalloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 952), align 8, !tbaa !40
-  store ptr @_PyMem_RawCalloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 960), align 8, !tbaa !40
-  store ptr @_PyMem_RawRealloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 968), align 8, !tbaa !40
-  store ptr @_PyMem_RawFree, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 976), align 8, !tbaa !40
+  store ptr @_PyMem_RawMalloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 8), align 8, !tbaa !40
+  store ptr @_PyMem_RawCalloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 16), align 8, !tbaa !40
+  store ptr @_PyMem_RawRealloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 24), align 8, !tbaa !40
+  store ptr @_PyMem_RawFree, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 32), align 8, !tbaa !40
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1072), ptr noundef nonnull align 8 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 40, i1 false), !tbaa.struct !349
   store ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1064), ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), align 8, !tbaa !40
-  store ptr @_PyMem_DebugRawMalloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 952), align 8, !tbaa !40
-  store ptr @_PyMem_DebugRawCalloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 960), align 8, !tbaa !40
-  store ptr @_PyMem_DebugRawRealloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 968), align 8, !tbaa !40
-  store ptr @_PyMem_DebugRawFree, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 976), align 8, !tbaa !40
+  store ptr @_PyMem_DebugRawMalloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 8), align 8, !tbaa !40
+  store ptr @_PyMem_DebugRawCalloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 16), align 8, !tbaa !40
+  store ptr @_PyMem_DebugRawRealloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 24), align 8, !tbaa !40
+  store ptr @_PyMem_DebugRawFree, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 32), align 8, !tbaa !40
   store ptr null, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), align 8, !tbaa !40
-  store ptr @_PyObject_Malloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 992), align 8, !tbaa !40
-  store ptr @_PyObject_Calloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1000), align 8, !tbaa !40
-  store ptr @_PyObject_Realloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1008), align 8, !tbaa !40
-  store ptr @_PyObject_Free, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1016), align 8, !tbaa !40
+  store ptr @_PyObject_Malloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 8), align 8, !tbaa !40
+  store ptr @_PyObject_Calloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 16), align 8, !tbaa !40
+  store ptr @_PyObject_Realloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 24), align 8, !tbaa !40
+  store ptr @_PyObject_Free, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 32), align 8, !tbaa !40
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1120), ptr noundef nonnull align 8 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 40, i1 false), !tbaa.struct !349
   store ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1112), ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), align 8, !tbaa !40
-  store ptr @_PyMem_DebugMalloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 992), align 8, !tbaa !40
-  store ptr @_PyMem_DebugCalloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1000), align 8, !tbaa !40
-  store ptr @_PyMem_DebugRealloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1008), align 8, !tbaa !40
-  store ptr @_PyMem_DebugFree, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1016), align 8, !tbaa !40
+  store ptr @_PyMem_DebugMalloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 8), align 8, !tbaa !40
+  store ptr @_PyMem_DebugCalloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 16), align 8, !tbaa !40
+  store ptr @_PyMem_DebugRealloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 24), align 8, !tbaa !40
+  store ptr @_PyMem_DebugFree, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 32), align 8, !tbaa !40
   store ptr null, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1024), align 8, !tbaa !40
-  store ptr @_PyObject_Malloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1032), align 8, !tbaa !40
-  store ptr @_PyObject_Calloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1040), align 8, !tbaa !40
-  store ptr @_PyObject_Realloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1048), align 8, !tbaa !40
-  store ptr @_PyObject_Free, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1056), align 8, !tbaa !40
+  store ptr @_PyObject_Malloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1024), i64 8), align 8, !tbaa !40
+  store ptr @_PyObject_Calloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1024), i64 16), align 8, !tbaa !40
+  store ptr @_PyObject_Realloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1024), i64 24), align 8, !tbaa !40
+  store ptr @_PyObject_Free, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1024), i64 32), align 8, !tbaa !40
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1168), ptr noundef nonnull align 8 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1024), i64 40, i1 false), !tbaa.struct !349
   br label %.sink.split.i
 
@@ -255,16 +255,16 @@ bb.d:                                             ; preds = %_PyMutex_Lock.exit,
 set_up_debug_hooks_unlocked.exit.i:               ; preds = %bb.d
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1072), ptr noundef nonnull align 8 dereferenceable(40) @__const.get_current_allocator_name_unlocked.malloc_alloc, i64 40, i1 false)
   store ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1064), ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), align 8, !tbaa !40
-  store ptr @_PyMem_DebugRawMalloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 952), align 8, !tbaa !40
-  store ptr @_PyMem_DebugRawCalloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 960), align 8, !tbaa !40
-  store ptr @_PyMem_DebugRawRealloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 968), align 8, !tbaa !40
-  store ptr @_PyMem_DebugRawFree, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 976), align 8, !tbaa !40
+  store ptr @_PyMem_DebugRawMalloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 8), align 8, !tbaa !40
+  store ptr @_PyMem_DebugRawCalloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 16), align 8, !tbaa !40
+  store ptr @_PyMem_DebugRawRealloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 24), align 8, !tbaa !40
+  store ptr @_PyMem_DebugRawFree, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 32), align 8, !tbaa !40
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1120), ptr noundef nonnull align 8 dereferenceable(40) @__const.get_current_allocator_name_unlocked.pymalloc, i64 40, i1 false)
   store ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1112), ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), align 8, !tbaa !40
-  store ptr @_PyMem_DebugMalloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 992), align 8, !tbaa !40
-  store ptr @_PyMem_DebugCalloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1000), align 8, !tbaa !40
-  store ptr @_PyMem_DebugRealloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1008), align 8, !tbaa !40
-  store ptr @_PyMem_DebugFree, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1016), align 8, !tbaa !40
+  store ptr @_PyMem_DebugMalloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 8), align 8, !tbaa !40
+  store ptr @_PyMem_DebugCalloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 16), align 8, !tbaa !40
+  store ptr @_PyMem_DebugRealloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 24), align 8, !tbaa !40
+  store ptr @_PyMem_DebugFree, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 32), align 8, !tbaa !40
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1168), ptr noundef nonnull align 8 dereferenceable(40) @__const.get_current_allocator_name_unlocked.pymalloc, i64 40, i1 false)
   br label %.sink.split.i
 
@@ -280,16 +280,16 @@ bb.e:                                             ; preds = %_PyMutex_Lock.exit,
 set_up_debug_hooks_unlocked.exit15.i:             ; preds = %bb.e
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1072), ptr noundef nonnull align 8 dereferenceable(40) @__const.get_current_allocator_name_unlocked.mimalloc_raw, i64 40, i1 false)
   store ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1064), ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), align 8, !tbaa !40
-  store ptr @_PyMem_DebugRawMalloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 952), align 8, !tbaa !40
-  store ptr @_PyMem_DebugRawCalloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 960), align 8, !tbaa !40
-  store ptr @_PyMem_DebugRawRealloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 968), align 8, !tbaa !40
-  store ptr @_PyMem_DebugRawFree, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 976), align 8, !tbaa !40
+  store ptr @_PyMem_DebugRawMalloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 8), align 8, !tbaa !40
+  store ptr @_PyMem_DebugRawCalloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 16), align 8, !tbaa !40
+  store ptr @_PyMem_DebugRawRealloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 24), align 8, !tbaa !40
+  store ptr @_PyMem_DebugRawFree, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 32), align 8, !tbaa !40
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1120), ptr noundef nonnull align 8 dereferenceable(40) @__const.get_current_allocator_name_unlocked.mimalloc, i64 40, i1 false)
   store ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1112), ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), align 8, !tbaa !40
-  store ptr @_PyMem_DebugMalloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 992), align 8, !tbaa !40
-  store ptr @_PyMem_DebugCalloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1000), align 8, !tbaa !40
-  store ptr @_PyMem_DebugRealloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1008), align 8, !tbaa !40
-  store ptr @_PyMem_DebugFree, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1016), align 8, !tbaa !40
+  store ptr @_PyMem_DebugMalloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 8), align 8, !tbaa !40
+  store ptr @_PyMem_DebugCalloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 16), align 8, !tbaa !40
+  store ptr @_PyMem_DebugRealloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 24), align 8, !tbaa !40
+  store ptr @_PyMem_DebugFree, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 32), align 8, !tbaa !40
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1168), ptr noundef nonnull align 8 dereferenceable(40) @__const.get_current_allocator_name_unlocked.mimalloc_obj, i64 40, i1 false)
   br label %.sink.split.i
 
@@ -305,16 +305,16 @@ bb.f:                                             ; preds = %_PyMutex_Lock.exit,
 set_up_debug_hooks_unlocked.exit18.i:             ; preds = %bb.f
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1072), ptr noundef nonnull align 8 dereferenceable(40) @__const.get_current_allocator_name_unlocked.malloc_alloc, i64 40, i1 false)
   store ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1064), ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), align 8, !tbaa !40
-  store ptr @_PyMem_DebugRawMalloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 952), align 8, !tbaa !40
-  store ptr @_PyMem_DebugRawCalloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 960), align 8, !tbaa !40
-  store ptr @_PyMem_DebugRawRealloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 968), align 8, !tbaa !40
-  store ptr @_PyMem_DebugRawFree, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 976), align 8, !tbaa !40
+  store ptr @_PyMem_DebugRawMalloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 8), align 8, !tbaa !40
+  store ptr @_PyMem_DebugRawCalloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 16), align 8, !tbaa !40
+  store ptr @_PyMem_DebugRawRealloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 24), align 8, !tbaa !40
+  store ptr @_PyMem_DebugRawFree, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 32), align 8, !tbaa !40
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1120), ptr noundef nonnull align 8 dereferenceable(40) @__const.get_current_allocator_name_unlocked.malloc_alloc, i64 40, i1 false)
   store ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1112), ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), align 8, !tbaa !40
-  store ptr @_PyMem_DebugMalloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 992), align 8, !tbaa !40
-  store ptr @_PyMem_DebugCalloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1000), align 8, !tbaa !40
-  store ptr @_PyMem_DebugRealloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1008), align 8, !tbaa !40
-  store ptr @_PyMem_DebugFree, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1016), align 8, !tbaa !40
+  store ptr @_PyMem_DebugMalloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 8), align 8, !tbaa !40
+  store ptr @_PyMem_DebugCalloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 16), align 8, !tbaa !40
+  store ptr @_PyMem_DebugRealloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 24), align 8, !tbaa !40
+  store ptr @_PyMem_DebugFree, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 32), align 8, !tbaa !40
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1168), ptr noundef nonnull align 8 dereferenceable(40) @__const.get_current_allocator_name_unlocked.malloc_alloc, i64 40, i1 false)
   br label %.sink.split.i
 
@@ -326,10 +326,10 @@ set_up_debug_hooks_unlocked.exit18.i:             ; preds = %bb.f
   %_PyMem_DebugFree.sink.i = phi ptr [ @_PyMem_DebugFree, %set_up_debug_hooks_unlocked.exit18.i ], [ @_PyMem_DebugFree, %set_up_debug_hooks_unlocked.exit15.i ], [ @_PyMem_DebugFree, %set_up_debug_hooks_unlocked.exit.i ], [ @_PyMem_DebugFree, %set_default_allocator_unlocked.exit12.i ], [ @_PyObject_Free, %bb.c ]
   %.sink.i = phi i32 [ 1, %set_up_debug_hooks_unlocked.exit18.i ], [ 1, %set_up_debug_hooks_unlocked.exit15.i ], [ 1, %set_up_debug_hooks_unlocked.exit.i ], [ 1, %set_default_allocator_unlocked.exit12.i ], [ 0, %bb.c ]
   store ptr %.sink19.i, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1024), align 8, !tbaa !40
-  store ptr %_PyMem_DebugMalloc.sink.i, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1032), align 8, !tbaa !40
-  store ptr %_PyMem_DebugCalloc.sink.i, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1040), align 8, !tbaa !40
-  store ptr %_PyMem_DebugRealloc.sink.i, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1048), align 8, !tbaa !40
-  store ptr %_PyMem_DebugFree.sink.i, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1056), align 8, !tbaa !40
+  store ptr %_PyMem_DebugMalloc.sink.i, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1024), i64 8), align 8, !tbaa !40
+  store ptr %_PyMem_DebugCalloc.sink.i, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1024), i64 16), align 8, !tbaa !40
+  store ptr %_PyMem_DebugRealloc.sink.i, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1024), i64 24), align 8, !tbaa !40
+  store ptr %_PyMem_DebugFree.sink.i, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1024), i64 32), align 8, !tbaa !40
   store i32 %.sink.i, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1208), align 8, !tbaa !350
   br label %bb.g
 
@@ -499,10 +499,10 @@ _PyMutex_Lock.exit:                               ; preds = %bb.a, %bb.b
 bb.c:                                             ; preds = %_PyMutex_Lock.exit
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1072), ptr noundef nonnull align 8 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 40, i1 false), !tbaa.struct !349
   store ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1064), ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), align 8, !tbaa !40
-  store ptr @_PyMem_DebugRawMalloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 952), align 8, !tbaa !40
-  store ptr @_PyMem_DebugRawCalloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 960), align 8, !tbaa !40
-  store ptr @_PyMem_DebugRawRealloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 968), align 8, !tbaa !40
-  store ptr @_PyMem_DebugRawFree, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 976), align 8, !tbaa !40
+  store ptr @_PyMem_DebugRawMalloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 8), align 8, !tbaa !40
+  store ptr @_PyMem_DebugRawCalloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 16), align 8, !tbaa !40
+  store ptr @_PyMem_DebugRawRealloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 24), align 8, !tbaa !40
+  store ptr @_PyMem_DebugRawFree, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 944), i64 32), align 8, !tbaa !40
   br label %set_up_debug_hooks_domain_unlocked.exit.i
 
 set_up_debug_hooks_domain_unlocked.exit.i:        ; preds = %bb.c, %_PyMutex_Lock.exit
@@ -513,10 +513,10 @@ set_up_debug_hooks_domain_unlocked.exit.i:        ; preds = %bb.c, %_PyMutex_Loc
 bb.d:                                             ; preds = %set_up_debug_hooks_domain_unlocked.exit.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1120), ptr noundef nonnull align 8 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 40, i1 false), !tbaa.struct !349
   store ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1112), ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), align 8, !tbaa !40
-  store ptr @_PyMem_DebugMalloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 992), align 8, !tbaa !40
-  store ptr @_PyMem_DebugCalloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1000), align 8, !tbaa !40
-  store ptr @_PyMem_DebugRealloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1008), align 8, !tbaa !40
-  store ptr @_PyMem_DebugFree, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1016), align 8, !tbaa !40
+  store ptr @_PyMem_DebugMalloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 8), align 8, !tbaa !40
+  store ptr @_PyMem_DebugCalloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 16), align 8, !tbaa !40
+  store ptr @_PyMem_DebugRealloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 24), align 8, !tbaa !40
+  store ptr @_PyMem_DebugFree, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 984), i64 32), align 8, !tbaa !40
   br label %set_up_debug_hooks_domain_unlocked.exit1.i
 
 set_up_debug_hooks_domain_unlocked.exit1.i:       ; preds = %bb.d, %set_up_debug_hooks_domain_unlocked.exit.i
@@ -527,10 +527,10 @@ set_up_debug_hooks_domain_unlocked.exit1.i:       ; preds = %bb.d, %set_up_debug
 bb.e:                                             ; preds = %set_up_debug_hooks_domain_unlocked.exit1.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1168), ptr noundef nonnull align 8 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1024), i64 40, i1 false), !tbaa.struct !349
   store ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1160), ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1024), align 8, !tbaa !40
-  store ptr @_PyMem_DebugMalloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1032), align 8, !tbaa !40
-  store ptr @_PyMem_DebugCalloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1040), align 8, !tbaa !40
-  store ptr @_PyMem_DebugRealloc, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1048), align 8, !tbaa !40
-  store ptr @_PyMem_DebugFree, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1056), align 8, !tbaa !40
+  store ptr @_PyMem_DebugMalloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1024), i64 8), align 8, !tbaa !40
+  store ptr @_PyMem_DebugCalloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1024), i64 16), align 8, !tbaa !40
+  store ptr @_PyMem_DebugRealloc, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1024), i64 24), align 8, !tbaa !40
+  store ptr @_PyMem_DebugFree, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 1024), i64 32), align 8, !tbaa !40
   br label %set_up_debug_hooks_unlocked.exit
 
 set_up_debug_hooks_unlocked.exit:                 ; preds = %set_up_debug_hooks_domain_unlocked.exit1.i, %bb.e

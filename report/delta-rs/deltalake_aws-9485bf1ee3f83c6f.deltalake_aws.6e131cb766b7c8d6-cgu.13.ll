@@ -201,7 +201,7 @@ bb.cu:                                            ; preds = %bb.dk, %bb.di, %bb.
           to label %.body.i unwind label %bb.dm, !noalias !2445
 
 bb.cv:                                            ; preds = %bb.ct
-  %i.se = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNCNCNvNtNtCsaB04DkjCm5a_10aws_config16default_provider8use_fips17use_fips_provider0010___CALLSITE, i64 16) monotonic, align 8, !noalias !2449 ; 3 uses
+  %i.se = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNCNCNvNtNtCsaB04DkjCm5a_10aws_config16default_provider8use_fips17use_fips_provider0010___CALLSITE, i64 16) monotonic, align 8, !noalias !2449 ; 3 uses
   switch i8 %i.se, label %bb.cw [
     i8 0, label %bb.df
     i8 1, label %bb.cx
@@ -604,7 +604,7 @@ bb.ff:                                            ; preds = %bb.fv, %bb.ft, %bb.
           to label %.body.i286 unwind label %bb.fx, !noalias !2524
 
 bb.fg:                                            ; preds = %bb.fe
-  %i.xd = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNCNCNvNtNtCsaB04DkjCm5a_10aws_config16default_provider14use_dual_stack23use_dual_stack_provider0010___CALLSITE, i64 16) monotonic, align 8, !noalias !2528 ; 3 uses
+  %i.xd = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNCNCNvNtNtCsaB04DkjCm5a_10aws_config16default_provider14use_dual_stack23use_dual_stack_provider0010___CALLSITE, i64 16) monotonic, align 8, !noalias !2528 ; 3 uses
   switch i8 %i.xd, label %bb.fh [
     i8 0, label %bb.fq
     i8 1, label %bb.fi
@@ -1007,7 +1007,7 @@ bb.mb:                                            ; preds = %bb.mu, %bb.ms, %bb.
           to label %.body.i351 unwind label %bb.mw, !noalias !2657
 
 bb.mc:                                            ; preds = %bb.ma
-  %i.aiw = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNCNCNvMNtNtCsaB04DkjCm5a_10aws_config16default_provider8app_nameNtB8_7Builder8app_name0s_010___CALLSITE, i64 16) monotonic, align 8, !noalias !2654 ; 3 uses
+  %i.aiw = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNCNCNvMNtNtCsaB04DkjCm5a_10aws_config16default_provider8app_nameNtB8_7Builder8app_name0s_010___CALLSITE, i64 16) monotonic, align 8, !noalias !2654 ; 3 uses
   switch i8 %i.aiw, label %bb.md [
     i8 0, label %bb.mp
     i8 1, label %bb.me
@@ -1410,7 +1410,7 @@ bb.qe:                                            ; preds = %bb.qu, %bb.qs, %bb.
           to label %.body.i388 unwind label %bb.qw, !noalias !2782
 
 bb.qf:                                            ; preds = %bb.qd
-  %i.arc = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNCNCNvNtNtCsaB04DkjCm5a_10aws_config16default_provider27disable_request_compression36disable_request_compression_provider0010___CALLSITE, i64 16) monotonic, align 8, !noalias !2786 ; 3 uses
+  %i.arc = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNCNCNvNtNtCsaB04DkjCm5a_10aws_config16default_provider27disable_request_compression36disable_request_compression_provider0010___CALLSITE, i64 16) monotonic, align 8, !noalias !2786 ; 3 uses
   switch i8 %i.arc, label %bb.qg [
     i8 0, label %bb.qp
     i8 1, label %bb.qh
@@ -1813,7 +1813,7 @@ bb.sp:                                            ; preds = %bb.tf, %bb.td, %bb.
           to label %.body.i425 unwind label %bb.th, !noalias !2861
 
 bb.sq:                                            ; preds = %bb.so
-  %i.awf = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNCNCNvNtNtCsaB04DkjCm5a_10aws_config16default_provider34request_min_compression_size_bytes43request_min_compression_size_bytes_provider0010___CALLSITE, i64 16) monotonic, align 8, !noalias !2865 ; 3 uses
+  %i.awf = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNCNCNvNtNtCsaB04DkjCm5a_10aws_config16default_provider34request_min_compression_size_bytes43request_min_compression_size_bytes_provider0010___CALLSITE, i64 16) monotonic, align 8, !noalias !2865 ; 3 uses
   switch i8 %i.awf, label %bb.sr [
     i8 0, label %bb.ta
     i8 1, label %bb.ss
@@ -2216,7 +2216,7 @@ bb.xr:                                            ; preds = %bb.yh, %bb.yf, %bb.
           to label %.body.i489 unwind label %bb.yj, !noalias !2996
 
 bb.xs:                                            ; preds = %bb.xq
-  %i.bfp = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNCNCNvNtNtCsaB04DkjCm5a_10aws_config16default_provider31ignore_configured_endpoint_urls40ignore_configured_endpoint_urls_provider0010___CALLSITE, i64 16) monotonic, align 8, !noalias !3000 ; 3 uses
+  %i.bfp = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNCNCNvNtNtCsaB04DkjCm5a_10aws_config16default_provider31ignore_configured_endpoint_urls40ignore_configured_endpoint_urls_provider0010___CALLSITE, i64 16) monotonic, align 8, !noalias !3000 ; 3 uses
   switch i8 %i.bfp, label %bb.xt [
     i8 0, label %bb.yc
     i8 1, label %bb.xu
@@ -2619,7 +2619,7 @@ bb.aaw:                                           ; preds = %bb.abm, %bb.abk, %b
           to label %.body.i539 unwind label %bb.abo, !noalias !3096
 
 bb.aax:                                           ; preds = %bb.aav
-  %i.blu = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNCNCNvNtNtCsaB04DkjCm5a_10aws_config16default_provider12endpoint_url33endpoint_url_provider_with_origin0010___CALLSITE, i64 16) monotonic, align 8, !noalias !3093 ; 3 uses
+  %i.blu = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNCNCNvNtNtCsaB04DkjCm5a_10aws_config16default_provider12endpoint_url33endpoint_url_provider_with_origin0010___CALLSITE, i64 16) monotonic, align 8, !noalias !3093 ; 3 uses
   switch i8 %i.blu, label %bb.aay [
     i8 0, label %bb.abh
     i8 1, label %bb.aaz
@@ -3022,7 +3022,7 @@ bb.agx:                                           ; preds = %bb.ahn, %bb.ahl, %b
           to label %.body.i593 unwind label %bb.ahp, !noalias !3179
 
 bb.agy:                                           ; preds = %bb.agw
-  %i.bxk = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNCNCNvNtNtCsaB04DkjCm5a_10aws_config16default_provider9checksums37request_checksum_calculation_provider0010___CALLSITE, i64 16) monotonic, align 8, !noalias !3183 ; 3 uses
+  %i.bxk = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNCNCNvNtNtCsaB04DkjCm5a_10aws_config16default_provider9checksums37request_checksum_calculation_provider0010___CALLSITE, i64 16) monotonic, align 8, !noalias !3183 ; 3 uses
   switch i8 %i.bxk, label %bb.agz [
     i8 0, label %bb.ahi
     i8 1, label %bb.aha
@@ -3425,7 +3425,7 @@ bb.ajd:                                           ; preds = %bb.ajt, %bb.ajr, %b
           to label %.body.i634 unwind label %bb.ajv, !noalias !3221
 
 bb.aje:                                           ; preds = %bb.ajc
-  %i.cbx = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNCNCNvNtNtCsaB04DkjCm5a_10aws_config16default_provider9checksums37response_checksum_validation_provider0010___CALLSITE, i64 16) monotonic, align 8, !noalias !3225 ; 3 uses
+  %i.cbx = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNCNCNvNtNtCsaB04DkjCm5a_10aws_config16default_provider9checksums37response_checksum_validation_provider0010___CALLSITE, i64 16) monotonic, align 8, !noalias !3225 ; 3 uses
   switch i8 %i.cbx, label %bb.ajf [
     i8 0, label %bb.ajo
     i8 1, label %bb.ajg
@@ -3828,7 +3828,7 @@ bb.alm:                                           ; preds = %bb.amc, %bb.ama, %b
           to label %.body.i678 unwind label %bb.ame, !noalias !3294
 
 bb.aln:                                           ; preds = %bb.all
-  %i.cgu = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNCNCNvNtNtCsaB04DkjCm5a_10aws_config16default_provider24account_id_endpoint_mode33account_id_endpoint_mode_provider0010___CALLSITE, i64 16) monotonic, align 8, !noalias !3298 ; 3 uses
+  %i.cgu = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNCNCNvNtNtCsaB04DkjCm5a_10aws_config16default_provider24account_id_endpoint_mode33account_id_endpoint_mode_provider0010___CALLSITE, i64 16) monotonic, align 8, !noalias !3298 ; 3 uses
   switch i8 %i.cgu, label %bb.alo [
     i8 0, label %bb.alx
     i8 1, label %bb.alp
@@ -4231,7 +4231,7 @@ bb.aoa:                                           ; preds = %bb.aoq, %bb.aoo, %b
           to label %bb.aox unwind label %bb.aos, !noalias !3384
 
 bb.aob:                                           ; preds = %bb.anz
-  %i.cls = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNCNCNvNtNtCsaB04DkjCm5a_10aws_config16default_provider22auth_scheme_preference31auth_scheme_preference_provider0010___CALLSITE, i64 16) monotonic, align 8, !noalias !3381 ; 3 uses
+  %i.cls = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNCNCNvNtNtCsaB04DkjCm5a_10aws_config16default_provider22auth_scheme_preference31auth_scheme_preference_provider0010___CALLSITE, i64 16) monotonic, align 8, !noalias !3381 ; 3 uses
   switch i8 %i.cls, label %bb.aoc [
     i8 0, label %bb.aol
     i8 1, label %bb.aod

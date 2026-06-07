@@ -201,7 +201,7 @@ _RNvXs2_NtNtCsbvkFyIu7lgC_4core3str7patterncNtB5_7Pattern15is_contained_in.exit.
   store ptr inttoptr (i64 1 to ptr), ptr %.sroa.412.0..sroa_idx.i.i, align 8, !noalias !311
   %.sroa.513.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 5 uses
   store i64 0, ptr %.sroa.513.0..sroa_idx.i.i, align 8, !noalias !311
-  invoke void @_RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VechE7reserveCsfY7SmN0bPrO_14deltalake_test(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.f, i64 noundef 4)
+  invoke void @_RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VechE7reserveCsfY7SmN0bPrO_14deltalake_test(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.f, i64 noundef sub nuw (i64 ptrtoint (ptr getelementptr inbounds nuw (i8, ptr @33, i64 4) to i64), i64 ptrtoint (ptr @33 to i64)))
           to label %bb.ax unwind label %bb.aw
 
 _RNvMs0_NtCsfxCIOvQJdVR_5yansi5paintINtB5_7PaintedRNtNtCs6Po7BT7Nknu_5alloc6string6StringE15color_fmt_valueCsfY7SmN0bPrO_14deltalake_test.exit.i.i: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsfY7SmN0bPrO_14deltalake_test.exit70.i.i, %bb.as, %.noexc39.i.i, %.noexc38.i.i
@@ -242,9 +242,9 @@ bb.ax:                                            ; preds = %_RNvXs2_NtNtCsbvkFy
   call void @llvm.assume(i1 %i.gt)
   %i.gu = load ptr, ptr %.sroa.412.0..sroa_idx.i.i, align 8, !alias.scope !338, !noalias !311, !nonnull !4, !noundef !4
   %i.gv = getelementptr inbounds nuw i8, ptr %i.gu, i64 %i.gs
-  store i32 1831885595, ptr %i.gv, align 1
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.gv, ptr nonnull align 1 @33, i64 sub nuw (i64 ptrtoint (ptr getelementptr inbounds nuw (i8, ptr @33, i64 4) to i64), i64 ptrtoint (ptr @33 to i64)), i1 false)
   %.pre.i.i.i = load i64, ptr %.sroa.513.0..sroa_idx.i.i, align 8, !alias.scope !338, !noalias !311
-  %i.gw = add i64 %.pre.i.i.i, 4
+  %i.gw = add i64 %.pre.i.i.i, sub nuw (i64 ptrtoint (ptr getelementptr inbounds nuw (i8, ptr @33, i64 4) to i64), i64 ptrtoint (ptr @33 to i64))
   store i64 %i.gw, ptr %.sroa.513.0..sroa_idx.i.i, align 8, !alias.scope !338, !noalias !311
   %i.gx = invoke noundef zeroext i1 @_RNvMNtCsfxCIOvQJdVR_5yansi5styleNtB2_5Style10fmt_prefix(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.r, ptr noundef nonnull %i.f, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @34)
           to label %bb.ay unwind label %bb.aw

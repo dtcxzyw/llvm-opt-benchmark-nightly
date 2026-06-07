@@ -201,7 +201,7 @@ bb.a:
   br i1 %i.t, label %bb.b, label %bb.j
 
 bb.b:                                             ; preds = %bb.a
-  %i.u = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXs2_NtCsgO8S5jLFugx_23deltalake_catalog_unity10datafusionNtB7_11TokenExpiryINtNtCs95DO3lnzZ3L_4moka6policy6ExpiryNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtB9_6models25TemporaryTableCredentialsE17expire_after_read10___CALLSITE, i64 16) monotonic, align 8 ; 3 uses
+  %i.u = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNvXs2_NtCsgO8S5jLFugx_23deltalake_catalog_unity10datafusionNtB7_11TokenExpiryINtNtCs95DO3lnzZ3L_4moka6policy6ExpiryNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtB9_6models25TemporaryTableCredentialsE17expire_after_read10___CALLSITE, i64 16) monotonic, align 8 ; 3 uses
   switch i8 %i.u, label %bb.c [
     i8 0, label %bb.j
     i8 1, label %bb.d

@@ -201,11 +201,11 @@ bb.x:                                             ; preds = %bb.u
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y), !noalias !1565
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !1565
   %i.cu = load ptr, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, align 8, !noalias !1565, !nonnull !12, !noundef !12
-  %i.cv = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 8), align 8, !noalias !1565, !noundef !12
+  %i.cv = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 8), align 8, !noalias !1565, !noundef !12
   store ptr %i.a, ptr %i.h, align 8, !noalias !1565
   store ptr %i.cu, ptr %i.br, align 8, !noalias !1565
   store i64 %i.cv, ptr %i.bs, align 8, !noalias !1565
-  %i.cw = invoke noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 16))
+  %i.cw = invoke noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 16))
           to label %.noexc unwind label %.loopexit ; 2 uses
 
 .noexc:                                           ; preds = %bb.x
@@ -213,7 +213,7 @@ bb.x:                                             ; preds = %bb.u
   br i1 %.not.i.i49, label %bb.y, label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit.i, !prof !20
 
 bb.y:                                             ; preds = %.noexc
-  %i.cx = invoke noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.h)
+  %i.cx = invoke noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.h)
           to label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit.i unwind label %.loopexit
 
 _RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit.i: ; preds = %bb.y, %.noexc
@@ -278,11 +278,11 @@ bb.ae:                                            ; preds = %bb.ac
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v), !noalias !1565
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !1565
   %i.dk = load ptr, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, align 8, !noalias !1565, !nonnull !12, !noundef !12
-  %i.dl = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 8), align 8, !noalias !1565, !noundef !12
+  %i.dl = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 8), align 8, !noalias !1565, !noundef !12
   store ptr %i.a, ptr %i.g, align 8, !noalias !1565
   store ptr %i.dk, ptr %i.bv, align 8, !noalias !1565
   store i64 %i.dl, ptr %i.bw, align 8, !noalias !1565
-  %i.dm = invoke noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 16))
+  %i.dm = invoke noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 16))
           to label %.noexc.i unwind label %bb.ah, !noalias !1570 ; 2 uses
 
 .noexc.i:                                         ; preds = %bb.ae
@@ -290,7 +290,7 @@ bb.ae:                                            ; preds = %bb.ac
   br i1 %.not.i146.i, label %bb.af, label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit149.i, !prof !20
 
 bb.af:                                            ; preds = %.noexc.i
-  %i.dn = invoke noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.g)
+  %i.dn = invoke noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.g)
           to label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit149.i unwind label %bb.ah, !noalias !1570
 
 bb.ag:                                            ; preds = %bb.an, %bb.ah
@@ -382,11 +382,11 @@ bb.ar:                                            ; preds = %bb.ao
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !noalias !1565
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !1565
   %i.eb = load ptr, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, align 8, !noalias !1565, !nonnull !12, !noundef !12
-  %i.ec = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 8), align 8, !noalias !1565, !noundef !12
+  %i.ec = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 8), align 8, !noalias !1565, !noundef !12
   store ptr %i.a, ptr %i.f, align 8, !noalias !1565
   store ptr %i.eb, ptr %i.bz, align 8, !noalias !1565
   store i64 %i.ec, ptr %i.ca, align 8, !noalias !1565
-  %i.ed = invoke noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 16))
+  %i.ed = invoke noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 16))
           to label %.noexc152.i unwind label %bb.aq, !noalias !1570 ; 2 uses
 
 .noexc152.i:                                      ; preds = %bb.ar
@@ -394,7 +394,7 @@ bb.ar:                                            ; preds = %bb.ao
   br i1 %.not.i150.i, label %bb.as, label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit154.i, !prof !20
 
 bb.as:                                            ; preds = %.noexc152.i
-  %i.ee = invoke noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.f)
+  %i.ee = invoke noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.f)
           to label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit154.i unwind label %bb.aq, !noalias !1570
 
 _RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit154.i: ; preds = %bb.as, %.noexc152.i
@@ -466,11 +466,11 @@ bb.az:                                            ; preds = %bb.ax
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !1565
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !1565
   %i.er = load ptr, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds1_8INTERNED, align 8, !noalias !1565, !nonnull !12, !noundef !12
-  %i.es = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds1_8INTERNED, i64 8), align 8, !noalias !1565, !noundef !12
+  %i.es = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds1_8INTERNED, i64 8), align 8, !noalias !1565, !noundef !12
   store ptr %i.a, ptr %i.e, align 8, !noalias !1565
   store ptr %i.er, ptr %i.cd, align 8, !noalias !1565
   store i64 %i.es, ptr %i.ce, align 8, !noalias !1565
-  %i.et = invoke noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds1_8INTERNED, i64 16))
+  %i.et = invoke noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds1_8INTERNED, i64 16))
           to label %.noexc60 unwind label %bb.bc  ; 2 uses
 
 .noexc60:                                         ; preds = %bb.az
@@ -478,7 +478,7 @@ bb.az:                                            ; preds = %bb.ax
   br i1 %.not.i, label %bb.ba, label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit, !prof !20
 
 bb.ba:                                            ; preds = %.noexc60
-  %i.eu = invoke noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds1_8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.e)
+  %i.eu = invoke noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds1_8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.e)
           to label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit unwind label %bb.bc
 
 bb.bb:                                            ; preds = %bb.bg, %bb.bc
@@ -553,11 +553,11 @@ bb.bk:                                            ; preds = %bb.bh
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !1565
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !1565
   %i.fg = load ptr, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds2_8INTERNED, align 8, !noalias !1565, !nonnull !12, !noundef !12
-  %i.fh = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds2_8INTERNED, i64 8), align 8, !noalias !1565, !noundef !12
+  %i.fh = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds2_8INTERNED, i64 8), align 8, !noalias !1565, !noundef !12
   store ptr %i.a, ptr %i.d, align 8, !noalias !1565
   store ptr %i.fg, ptr %i.ch, align 8, !noalias !1565
   store i64 %i.fh, ptr %i.ci, align 8, !noalias !1565
-  %i.fi = invoke fastcc noundef nonnull align 8 ptr @_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds2_8INTERNED, i64 16), ptr noalias noundef readonly align 8 captures(none) dereferenceable(24) %i.d)
+  %i.fi = invoke fastcc noundef nonnull align 8 ptr @_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds2_8INTERNED, i64 16), ptr noalias noundef readonly align 8 captures(none) dereferenceable(24) %i.d)
           to label %bb.bl unwind label %bb.bj, !noalias !1570
 
 bb.bl:                                            ; preds = %bb.bk
@@ -618,11 +618,11 @@ bb.bt:                                            ; preds = %bb.bq
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !1565
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !1565
   %i.fu = load ptr, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds3_8INTERNED, align 8, !noalias !1565, !nonnull !12, !noundef !12
-  %i.fv = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds3_8INTERNED, i64 8), align 8, !noalias !1565, !noundef !12
+  %i.fv = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds3_8INTERNED, i64 8), align 8, !noalias !1565, !noundef !12
   store ptr %i.a, ptr %i.b, align 8, !noalias !1565
   store ptr %i.fu, ptr %i.cl, align 8, !noalias !1565
   store i64 %i.fv, ptr %i.cm, align 8, !noalias !1565
-  %i.fw = invoke fastcc noundef nonnull align 8 ptr @_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds3_8INTERNED, i64 16), ptr noalias noundef readonly align 8 captures(none) dereferenceable(24) %i.b)
+  %i.fw = invoke fastcc noundef nonnull align 8 ptr @_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsr_Cs7p2uQeJxui2_9deltalakeNtB7_11PyAddActionNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds3_8INTERNED, i64 16), ptr noalias noundef readonly align 8 captures(none) dereferenceable(24) %i.b)
           to label %bb.bu unwind label %bb.bs, !noalias !1570
 
 bb.bu:                                            ; preds = %bb.bt
@@ -1025,18 +1025,18 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !9205
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !9205
   %i.p = load ptr, ptr @_RNvNvXsK_Cs7p2uQeJxui2_9deltalakeNtB7_18PyCommitPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, align 8, !noalias !9205, !nonnull !12, !noundef !12
-  %i.q = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXsK_Cs7p2uQeJxui2_9deltalakeNtB7_18PyCommitPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 8), align 8, !noalias !9205, !noundef !12
+  %i.q = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXsK_Cs7p2uQeJxui2_9deltalakeNtB7_18PyCommitPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 8), align 8, !noalias !9205, !noundef !12
   store ptr %i.a, ptr %i.d, align 8, !noalias !9205
   %i.r = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store ptr %i.p, ptr %i.r, align 8, !noalias !9205
   %i.s = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store i64 %i.q, ptr %i.s, align 8, !noalias !9205
-  %i.t = call noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsK_Cs7p2uQeJxui2_9deltalakeNtB7_18PyCommitPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 16)), !noalias !9207 ; 2 uses
+  %i.t = call noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsK_Cs7p2uQeJxui2_9deltalakeNtB7_18PyCommitPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 16)), !noalias !9207 ; 2 uses
   %.not.i.i = icmp eq ptr %i.t, null
   br i1 %.not.i.i, label %bb.b, label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit.i, !prof !20
 
 bb.b:                                             ; preds = %bb.a
-  %i.u = call noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsK_Cs7p2uQeJxui2_9deltalakeNtB7_18PyCommitPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.d), !noalias !9202
+  %i.u = call noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsK_Cs7p2uQeJxui2_9deltalakeNtB7_18PyCommitPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.d), !noalias !9202
   br label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit.i
 
 _RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit.i: ; preds = %bb.b, %bb.a
@@ -1101,13 +1101,13 @@ bb.h:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !9205
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !9205
   %i.ae = load ptr, ptr @_RNvNvXsK_Cs7p2uQeJxui2_9deltalakeNtB7_18PyCommitPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, align 8, !noalias !9205, !nonnull !12, !noundef !12
-  %i.af = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXsK_Cs7p2uQeJxui2_9deltalakeNtB7_18PyCommitPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 8), align 8, !noalias !9205, !noundef !12
+  %i.af = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXsK_Cs7p2uQeJxui2_9deltalakeNtB7_18PyCommitPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 8), align 8, !noalias !9205, !noundef !12
   store ptr %i.a, ptr %i.c, align 8, !noalias !9205
   %i.ag = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr %i.ae, ptr %i.ag, align 8, !noalias !9205
   %i.ah = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   store i64 %i.af, ptr %i.ah, align 8, !noalias !9205
-  %i.ai = invoke noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsK_Cs7p2uQeJxui2_9deltalakeNtB7_18PyCommitPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 16))
+  %i.ai = invoke noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsK_Cs7p2uQeJxui2_9deltalakeNtB7_18PyCommitPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 16))
           to label %.noexc.i unwind label %bb.l, !noalias !9202 ; 2 uses
 
 .noexc.i:                                         ; preds = %bb.h
@@ -1115,7 +1115,7 @@ bb.h:                                             ; preds = %bb.f
   br i1 %.not.i71.i, label %bb.i, label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit74.i, !prof !20
 
 bb.i:                                             ; preds = %.noexc.i
-  %i.aj = invoke noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsK_Cs7p2uQeJxui2_9deltalakeNtB7_18PyCommitPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.c)
+  %i.aj = invoke noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsK_Cs7p2uQeJxui2_9deltalakeNtB7_18PyCommitPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.c)
           to label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit74.i unwind label %bb.l, !noalias !9202
 
 bb.j:                                             ; preds = %bb.q, %bb.l
@@ -1208,13 +1208,13 @@ bb.v:                                             ; preds = %bb.r
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !9205
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !9205
   %i.ba = load ptr, ptr @_RNvNvXsK_Cs7p2uQeJxui2_9deltalakeNtB7_18PyCommitPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, align 8, !noalias !9205, !nonnull !12, !noundef !12
-  %i.bb = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXsK_Cs7p2uQeJxui2_9deltalakeNtB7_18PyCommitPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 8), align 8, !noalias !9205, !noundef !12
+  %i.bb = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXsK_Cs7p2uQeJxui2_9deltalakeNtB7_18PyCommitPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 8), align 8, !noalias !9205, !noundef !12
   store ptr %i.a, ptr %i.b, align 8, !noalias !9205
   %i.bc = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.ba, ptr %i.bc, align 8, !noalias !9205
   %i.bd = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i64 %i.bb, ptr %i.bd, align 8, !noalias !9205
-  %i.be = invoke noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsK_Cs7p2uQeJxui2_9deltalakeNtB7_18PyCommitPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 16))
+  %i.be = invoke noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsK_Cs7p2uQeJxui2_9deltalakeNtB7_18PyCommitPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 16))
           to label %.noexc81.i unwind label %bb.u, !noalias !9202 ; 2 uses
 
 .noexc81.i:                                       ; preds = %bb.v
@@ -1222,7 +1222,7 @@ bb.v:                                             ; preds = %bb.r
   br i1 %.not.i79.i, label %bb.w, label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit83.i, !prof !20
 
 bb.w:                                             ; preds = %.noexc81.i
-  %i.bf = invoke noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsK_Cs7p2uQeJxui2_9deltalakeNtB7_18PyCommitPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.b)
+  %i.bf = invoke noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsK_Cs7p2uQeJxui2_9deltalakeNtB7_18PyCommitPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.b)
           to label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit83.i unwind label %bb.u, !noalias !9202
 
 _RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit83.i: ; preds = %bb.w, %.noexc81.i
@@ -1409,18 +1409,18 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.al), !noalias !9229
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !9229
   %i.ao = load ptr, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, align 8, !noalias !9229, !nonnull !12, !noundef !12
-  %i.ap = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 8), align 8, !noalias !9229, !noundef !12
+  %i.ap = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 8), align 8, !noalias !9229, !noundef !12
   store ptr %i.a, ptr %i.j, align 8, !noalias !9229
   %i.aq = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   store ptr %i.ao, ptr %i.aq, align 8, !noalias !9229
   %i.ar = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   store i64 %i.ap, ptr %i.ar, align 8, !noalias !9229
-  %i.as = call noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 16)), !noalias !9231 ; 2 uses
+  %i.as = call noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 16)), !noalias !9231 ; 2 uses
   %.not.i.i = icmp eq ptr %i.as, null
   br i1 %.not.i.i, label %bb.b, label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit.i, !prof !20
 
 bb.b:                                             ; preds = %bb.a
-  %i.at = call noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.j)
+  %i.at = call noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.j)
   br label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit.i
 
 _RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit.i: ; preds = %bb.b, %bb.a
@@ -1487,18 +1487,18 @@ bb.h:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ai), !noalias !9229
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !9229
   %i.bd = load ptr, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, align 8, !noalias !9229, !nonnull !12, !noundef !12
-  %i.be = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 8), align 8, !noalias !9229, !noundef !12
+  %i.be = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 8), align 8, !noalias !9229, !noundef !12
   store ptr %i.a, ptr %i.i, align 8, !noalias !9229
   %i.bf = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   store ptr %i.bd, ptr %i.bf, align 8, !noalias !9229
   %i.bg = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   store i64 %i.be, ptr %i.bg, align 8, !noalias !9229
-  %i.bh = call noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 16)), !noalias !9235 ; 2 uses
+  %i.bh = call noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 16)), !noalias !9235 ; 2 uses
   %.not.i281.i = icmp eq ptr %i.bh, null
   br i1 %.not.i281.i, label %bb.i, label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit283.i, !prof !20
 
 bb.i:                                             ; preds = %bb.h
-  %i.bi = call noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.i)
+  %i.bi = call noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.i)
   br label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit283.i
 
 _RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit283.i: ; preds = %bb.i, %bb.h
@@ -1565,18 +1565,18 @@ bb.o:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %i.af), !noalias !9229
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !9229
   %i.bs = load ptr, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, align 8, !noalias !9229, !nonnull !12, !noundef !12
-  %i.bt = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 8), align 8, !noalias !9229, !noundef !12
+  %i.bt = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 8), align 8, !noalias !9229, !noundef !12
   store ptr %i.a, ptr %i.h, align 8, !noalias !9229
   %i.bu = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   store ptr %i.bs, ptr %i.bu, align 8, !noalias !9229
   %i.bv = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   store i64 %i.bt, ptr %i.bv, align 8, !noalias !9229
-  %i.bw = call noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 16)), !noalias !9238 ; 2 uses
+  %i.bw = call noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 16)), !noalias !9238 ; 2 uses
   %.not.i284.i = icmp eq ptr %i.bw, null
   br i1 %.not.i284.i, label %bb.p, label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit286.i, !prof !20
 
 bb.p:                                             ; preds = %bb.o
-  %i.bx = call noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.h)
+  %i.bx = call noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.h)
   br label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit286.i
 
 _RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit286.i: ; preds = %bb.p, %bb.o
@@ -1643,13 +1643,13 @@ bb.v:                                             ; preds = %bb.t
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ac), !noalias !9229
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !9229
   %i.ch = load ptr, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds1_8INTERNED, align 8, !noalias !9229, !nonnull !12, !noundef !12
-  %i.ci = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds1_8INTERNED, i64 8), align 8, !noalias !9229, !noundef !12
+  %i.ci = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds1_8INTERNED, i64 8), align 8, !noalias !9229, !noundef !12
   store ptr %i.a, ptr %i.g, align 8, !noalias !9229
   %i.cj = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   store ptr %i.ch, ptr %i.cj, align 8, !noalias !9229
   %i.ck = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   store i64 %i.ci, ptr %i.ck, align 8, !noalias !9229
-  %i.cl = call fastcc noundef nonnull align 8 ptr @_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds1_8INTERNED, i64 16), ptr noalias noundef readonly align 8 captures(none) dereferenceable(24) %i.g) #44
+  %i.cl = call fastcc noundef nonnull align 8 ptr @_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds1_8INTERNED, i64 16), ptr noalias noundef readonly align 8 captures(none) dereferenceable(24) %i.g) #44
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !9229
   call void @_RINvXs_NtNtCsgbCypRs12E4_4pyo35types3anyINtNtB9_8instance5BoundNtB5_5PyAnyENtB5_12PyAnyMethods7getattrRIBD_NtNtB7_6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull sret([64 x i8]) align 8 captures(address) dereferenceable(64) %i.ac, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.an, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.cl)
   %i.cm = load i64, ptr %i.ac, align 8, !range !11, !noalias !9229, !noundef !12
@@ -1712,13 +1712,13 @@ bb.ab:                                            ; preds = %bb.z
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z), !noalias !9229
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !9229
   %i.cv = load ptr, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds2_8INTERNED, align 8, !noalias !9229, !nonnull !12, !noundef !12
-  %i.cw = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds2_8INTERNED, i64 8), align 8, !noalias !9229, !noundef !12
+  %i.cw = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds2_8INTERNED, i64 8), align 8, !noalias !9229, !noundef !12
   store ptr %i.a, ptr %i.f, align 8, !noalias !9229
   %i.cx = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   store ptr %i.cv, ptr %i.cx, align 8, !noalias !9229
   %i.cy = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   store i64 %i.cw, ptr %i.cy, align 8, !noalias !9229
-  %i.cz = call fastcc noundef nonnull align 8 ptr @_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds2_8INTERNED, i64 16), ptr noalias noundef readonly align 8 captures(none) dereferenceable(24) %i.f) #44
+  %i.cz = call fastcc noundef nonnull align 8 ptr @_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds2_8INTERNED, i64 16), ptr noalias noundef readonly align 8 captures(none) dereferenceable(24) %i.f) #44
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !9229
   call void @_RINvXs_NtNtCsgbCypRs12E4_4pyo35types3anyINtNtB9_8instance5BoundNtB5_5PyAnyENtB5_12PyAnyMethods7getattrRIBD_NtNtB7_6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull sret([64 x i8]) align 8 captures(address) dereferenceable(64) %i.z, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.an, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.cz)
   %i.da = load i64, ptr %i.z, align 8, !range !11, !noalias !9229, !noundef !12
@@ -1781,13 +1781,13 @@ bb.ah:                                            ; preds = %bb.af
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w), !noalias !9229
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !9229
   %i.dj = load ptr, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds3_8INTERNED, align 8, !noalias !9229, !nonnull !12, !noundef !12
-  %i.dk = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds3_8INTERNED, i64 8), align 8, !noalias !9229, !noundef !12
+  %i.dk = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds3_8INTERNED, i64 8), align 8, !noalias !9229, !noundef !12
   store ptr %i.a, ptr %i.e, align 8, !noalias !9229
   %i.dl = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store ptr %i.dj, ptr %i.dl, align 8, !noalias !9229
   %i.dm = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   store i64 %i.dk, ptr %i.dm, align 8, !noalias !9229
-  %i.dn = call fastcc noundef nonnull align 8 ptr @_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds3_8INTERNED, i64 16), ptr noalias noundef readonly align 8 captures(none) dereferenceable(24) %i.e) #44
+  %i.dn = call fastcc noundef nonnull align 8 ptr @_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds3_8INTERNED, i64 16), ptr noalias noundef readonly align 8 captures(none) dereferenceable(24) %i.e) #44
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !9229
   call void @_RINvXs_NtNtCsgbCypRs12E4_4pyo35types3anyINtNtB9_8instance5BoundNtB5_5PyAnyENtB5_12PyAnyMethods7getattrRIBD_NtNtB7_6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull sret([64 x i8]) align 8 captures(address) dereferenceable(64) %i.w, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.an, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.dn)
   %i.do = load i64, ptr %i.w, align 8, !range !11, !noalias !9229, !noundef !12
@@ -1851,13 +1851,13 @@ bb.an:                                            ; preds = %bb.al
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s), !noalias !9229
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !9229
   %i.dx = load ptr, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds4_8INTERNED, align 8, !noalias !9229, !nonnull !12, !noundef !12
-  %i.dy = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds4_8INTERNED, i64 8), align 8, !noalias !9229, !noundef !12
+  %i.dy = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds4_8INTERNED, i64 8), align 8, !noalias !9229, !noundef !12
   store ptr %i.a, ptr %i.d, align 8, !noalias !9229
   %i.dz = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store ptr %i.dx, ptr %i.dz, align 8, !noalias !9229
   %i.ea = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store i64 %i.dy, ptr %i.ea, align 8, !noalias !9229
-  %i.eb = call fastcc noundef nonnull align 8 ptr @_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds4_8INTERNED, i64 16), ptr noalias noundef readonly align 8 captures(none) dereferenceable(24) %i.d) #44
+  %i.eb = call fastcc noundef nonnull align 8 ptr @_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds4_8INTERNED, i64 16), ptr noalias noundef readonly align 8 captures(none) dereferenceable(24) %i.d) #44
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !9229
   call void @_RINvXs_NtNtCsgbCypRs12E4_4pyo35types3anyINtNtB9_8instance5BoundNtB5_5PyAnyENtB5_12PyAnyMethods7getattrRIBD_NtNtB7_6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull sret([64 x i8]) align 8 captures(address) dereferenceable(64) %i.s, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.an, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.eb)
   %i.ec = load i64, ptr %i.s, align 8, !range !11, !noalias !9229, !noundef !12
@@ -1918,13 +1918,13 @@ bb.at:                                            ; preds = %bb.ar
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !9229
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !9229
   %i.el = load ptr, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds5_8INTERNED, align 8, !noalias !9229, !nonnull !12, !noundef !12
-  %i.em = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds5_8INTERNED, i64 8), align 8, !noalias !9229, !noundef !12
+  %i.em = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds5_8INTERNED, i64 8), align 8, !noalias !9229, !noundef !12
   store ptr %i.a, ptr %i.c, align 8, !noalias !9229
   %i.en = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr %i.el, ptr %i.en, align 8, !noalias !9229
   %i.eo = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   store i64 %i.em, ptr %i.eo, align 8, !noalias !9229
-  %i.ep = invoke fastcc noundef nonnull align 8 ptr @_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds5_8INTERNED, i64 16), ptr noalias noundef readonly align 8 captures(none) dereferenceable(24) %i.c)
+  %i.ep = invoke fastcc noundef nonnull align 8 ptr @_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds5_8INTERNED, i64 16), ptr noalias noundef readonly align 8 captures(none) dereferenceable(24) %i.c)
           to label %bb.aw unwind label %bb.av
 
 bb.au:                                            ; preds = %bb.ba, %bb.av
@@ -2007,13 +2007,13 @@ bb.bd:                                            ; preds = %bb.bb
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !9229
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !9229
   %i.fa = load ptr, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds6_8INTERNED, align 8, !noalias !9229, !nonnull !12, !noundef !12
-  %i.fb = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds6_8INTERNED, i64 8), align 8, !noalias !9229, !noundef !12
+  %i.fb = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds6_8INTERNED, i64 8), align 8, !noalias !9229, !noundef !12
   store ptr %i.a, ptr %i.b, align 8, !noalias !9229
   %i.fc = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.fa, ptr %i.fc, align 8, !noalias !9229
   %i.fd = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i64 %i.fb, ptr %i.fd, align 8, !noalias !9229
-  %i.fe = invoke fastcc noundef nonnull align 8 ptr @_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds6_8INTERNED, i64 16), ptr noalias noundef readonly align 8 captures(none) dereferenceable(24) %i.b)
+  %i.fe = invoke fastcc noundef nonnull align 8 ptr @_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsu_Cs7p2uQeJxui2_9deltalakeNtB7_18PyWriterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds6_8INTERNED, i64 16), ptr noalias noundef readonly align 8 captures(none) dereferenceable(24) %i.b)
           to label %bb.bh unwind label %bb.bg
 
 bb.be:                                            ; preds = %bb.bm, %bb.bg
@@ -2207,18 +2207,18 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !9253
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !9253
   %i.k = load ptr, ptr @_RNvNvXsv_Cs7p2uQeJxui2_9deltalakeNtB7_26PyPostCommitHookPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, align 8, !noalias !9253, !nonnull !12, !noundef !12
-  %i.l = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXsv_Cs7p2uQeJxui2_9deltalakeNtB7_26PyPostCommitHookPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 8), align 8, !noalias !9253, !noundef !12
+  %i.l = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXsv_Cs7p2uQeJxui2_9deltalakeNtB7_26PyPostCommitHookPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 8), align 8, !noalias !9253, !noundef !12
   store ptr %i.a, ptr %i.e, align 8, !noalias !9253
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store ptr %i.k, ptr %i.m, align 8, !noalias !9253
   %i.n = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   store i64 %i.l, ptr %i.n, align 8, !noalias !9253
-  %i.o = call noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsv_Cs7p2uQeJxui2_9deltalakeNtB7_26PyPostCommitHookPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 16)), !noalias !9255 ; 2 uses
+  %i.o = call noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsv_Cs7p2uQeJxui2_9deltalakeNtB7_26PyPostCommitHookPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 16)), !noalias !9255 ; 2 uses
   %.not.i.i = icmp eq ptr %i.o, null
   br i1 %.not.i.i, label %bb.b, label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit.i, !prof !20
 
 bb.b:                                             ; preds = %bb.a
-  %i.p = call noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsv_Cs7p2uQeJxui2_9deltalakeNtB7_26PyPostCommitHookPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.e), !noalias !9253
+  %i.p = call noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsv_Cs7p2uQeJxui2_9deltalakeNtB7_26PyPostCommitHookPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.e), !noalias !9253
   br label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit.i
 
 _RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit.i: ; preds = %bb.b, %bb.a
@@ -2276,18 +2276,18 @@ bb.h:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !9253
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !9253
   %i.ab = load ptr, ptr @_RNvNvXsv_Cs7p2uQeJxui2_9deltalakeNtB7_26PyPostCommitHookPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, align 8, !noalias !9253, !nonnull !12, !noundef !12
-  %i.ac = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXsv_Cs7p2uQeJxui2_9deltalakeNtB7_26PyPostCommitHookPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 8), align 8, !noalias !9253, !noundef !12
+  %i.ac = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXsv_Cs7p2uQeJxui2_9deltalakeNtB7_26PyPostCommitHookPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 8), align 8, !noalias !9253, !noundef !12
   store ptr %i.a, ptr %i.c, align 8, !noalias !9253
   %i.ad = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr %i.ab, ptr %i.ad, align 8, !noalias !9253
   %i.ae = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   store i64 %i.ac, ptr %i.ae, align 8, !noalias !9253
-  %i.af = call noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsv_Cs7p2uQeJxui2_9deltalakeNtB7_26PyPostCommitHookPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 16)), !noalias !9259 ; 2 uses
+  %i.af = call noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsv_Cs7p2uQeJxui2_9deltalakeNtB7_26PyPostCommitHookPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 16)), !noalias !9259 ; 2 uses
   %.not.i37.i = icmp eq ptr %i.af, null
   br i1 %.not.i37.i, label %bb.i, label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit39.i, !prof !20
 
 bb.i:                                             ; preds = %bb.h
-  %i.ag = call noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXsv_Cs7p2uQeJxui2_9deltalakeNtB7_26PyPostCommitHookPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.c), !noalias !9250
+  %i.ag = call noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXsv_Cs7p2uQeJxui2_9deltalakeNtB7_26PyPostCommitHookPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.c), !noalias !9250
   br label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit39.i
 
 _RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit39.i: ; preds = %bb.i, %bb.h
@@ -2690,18 +2690,18 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   %i.n = load ptr, ptr @_RNvNvXss_Cs7p2uQeJxui2_9deltalakeNtB7_21BloomFilterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, align 8, !nonnull !12, !noundef !12
-  %i.o = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXss_Cs7p2uQeJxui2_9deltalakeNtB7_21BloomFilterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 8), align 8, !noundef !12
+  %i.o = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXss_Cs7p2uQeJxui2_9deltalakeNtB7_21BloomFilterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 8), align 8, !noundef !12
   store ptr %i.a, ptr %i.e, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store ptr %i.n, ptr %i.p, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   store i64 %i.o, ptr %i.q, align 8
-  %i.r = call noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXss_Cs7p2uQeJxui2_9deltalakeNtB7_21BloomFilterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 16)), !noalias !9388 ; 2 uses
+  %i.r = call noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXss_Cs7p2uQeJxui2_9deltalakeNtB7_21BloomFilterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 16)), !noalias !9388 ; 2 uses
   %.not.i = icmp eq ptr %i.r, null
   br i1 %.not.i, label %bb.b, label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit, !prof !20
 
 bb.b:                                             ; preds = %bb.a
-  %i.s = call noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXss_Cs7p2uQeJxui2_9deltalakeNtB7_21BloomFilterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.e)
+  %i.s = call noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXss_Cs7p2uQeJxui2_9deltalakeNtB7_21BloomFilterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.e)
   br label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit
 
 _RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit: ; preds = %bb.a, %bb.b
@@ -2759,18 +2759,18 @@ bb.h:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.ae = load ptr, ptr @_RNvNvXss_Cs7p2uQeJxui2_9deltalakeNtB7_21BloomFilterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, align 8, !nonnull !12, !noundef !12
-  %i.af = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXss_Cs7p2uQeJxui2_9deltalakeNtB7_21BloomFilterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 8), align 8, !noundef !12
+  %i.af = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXss_Cs7p2uQeJxui2_9deltalakeNtB7_21BloomFilterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 8), align 8, !noundef !12
   store ptr %i.a, ptr %i.c, align 8
   %i.ag = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr %i.ae, ptr %i.ag, align 8
   %i.ah = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   store i64 %i.af, ptr %i.ah, align 8
-  %i.ai = call noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXss_Cs7p2uQeJxui2_9deltalakeNtB7_21BloomFilterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 16)), !noalias !9391 ; 2 uses
+  %i.ai = call noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXss_Cs7p2uQeJxui2_9deltalakeNtB7_21BloomFilterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 16)), !noalias !9391 ; 2 uses
   %.not.i90 = icmp eq ptr %i.ai, null
   br i1 %.not.i90, label %bb.i, label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit92, !prof !20
 
 bb.i:                                             ; preds = %bb.h
-  %i.aj = call noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXss_Cs7p2uQeJxui2_9deltalakeNtB7_21BloomFilterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.c)
+  %i.aj = call noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXss_Cs7p2uQeJxui2_9deltalakeNtB7_21BloomFilterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.c)
   br label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit92
 
 _RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit92: ; preds = %bb.h, %bb.i
@@ -2837,18 +2837,18 @@ bb.o:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.at = load ptr, ptr @_RNvNvXss_Cs7p2uQeJxui2_9deltalakeNtB7_21BloomFilterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, align 8, !nonnull !12, !noundef !12
-  %i.au = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXss_Cs7p2uQeJxui2_9deltalakeNtB7_21BloomFilterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 8), align 8, !noundef !12
+  %i.au = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXss_Cs7p2uQeJxui2_9deltalakeNtB7_21BloomFilterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 8), align 8, !noundef !12
   store ptr %i.a, ptr %i.b, align 8
   %i.av = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.at, ptr %i.av, align 8
   %i.aw = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i64 %i.au, ptr %i.aw, align 8
-  %i.ax = call noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXss_Cs7p2uQeJxui2_9deltalakeNtB7_21BloomFilterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 16)), !noalias !9394 ; 2 uses
+  %i.ax = call noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXss_Cs7p2uQeJxui2_9deltalakeNtB7_21BloomFilterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 16)), !noalias !9394 ; 2 uses
   %.not.i93 = icmp eq ptr %i.ax, null
   br i1 %.not.i93, label %bb.p, label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit95, !prof !20
 
 bb.p:                                             ; preds = %bb.o
-  %i.ay = call noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXss_Cs7p2uQeJxui2_9deltalakeNtB7_21BloomFilterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.b)
+  %i.ay = call noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXss_Cs7p2uQeJxui2_9deltalakeNtB7_21BloomFilterPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.b)
   br label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit95
 
 _RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit95: ; preds = %bb.o, %bb.p
@@ -2964,18 +2964,18 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   %i.s = load ptr, ptr @_RNvNvXst_Cs7p2uQeJxui2_9deltalakeNtB7_16ColumnPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, align 8, !nonnull !12, !noundef !12
-  %i.t = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXst_Cs7p2uQeJxui2_9deltalakeNtB7_16ColumnPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 8), align 8, !noundef !12
+  %i.t = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXst_Cs7p2uQeJxui2_9deltalakeNtB7_16ColumnPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 8), align 8, !noundef !12
   store ptr %i.a, ptr %i.f, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   store ptr %i.s, ptr %i.u, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   store i64 %i.t, ptr %i.v, align 8
-  %i.w = call noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXst_Cs7p2uQeJxui2_9deltalakeNtB7_16ColumnPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 16)), !noalias !9397 ; 2 uses
+  %i.w = call noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXst_Cs7p2uQeJxui2_9deltalakeNtB7_16ColumnPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 16)), !noalias !9397 ; 2 uses
   %.not.i = icmp eq ptr %i.w, null
   br i1 %.not.i, label %bb.b, label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit, !prof !20
 
 bb.b:                                             ; preds = %bb.a
-  %i.x = call noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXst_Cs7p2uQeJxui2_9deltalakeNtB7_16ColumnPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.f)
+  %i.x = call noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXst_Cs7p2uQeJxui2_9deltalakeNtB7_16ColumnPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bound8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.f)
   br label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit
 
 _RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit: ; preds = %bb.a, %bb.b
@@ -3035,18 +3035,18 @@ bb.h:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   %i.aj = load ptr, ptr @_RNvNvXst_Cs7p2uQeJxui2_9deltalakeNtB7_16ColumnPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, align 8, !nonnull !12, !noundef !12
-  %i.ak = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXst_Cs7p2uQeJxui2_9deltalakeNtB7_16ColumnPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 8), align 8, !noundef !12
+  %i.ak = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXst_Cs7p2uQeJxui2_9deltalakeNtB7_16ColumnPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 8), align 8, !noundef !12
   store ptr %i.a, ptr %i.d, align 8
   %i.al = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store ptr %i.aj, ptr %i.al, align 8
   %i.am = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store i64 %i.ak, ptr %i.am, align 8
-  %i.an = call noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXst_Cs7p2uQeJxui2_9deltalakeNtB7_16ColumnPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 16)), !noalias !9400 ; 2 uses
+  %i.an = call noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXst_Cs7p2uQeJxui2_9deltalakeNtB7_16ColumnPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 16)), !noalias !9400 ; 2 uses
   %.not.i74 = icmp eq ptr %i.an, null
   br i1 %.not.i74, label %bb.i, label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit76, !prof !20
 
 bb.i:                                             ; preds = %bb.h
-  %i.ao = call noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXst_Cs7p2uQeJxui2_9deltalakeNtB7_16ColumnPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.d)
+  %i.ao = call noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXst_Cs7p2uQeJxui2_9deltalakeNtB7_16ColumnPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds_8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.d)
   br label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit76
 
 _RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit76: ; preds = %bb.h, %bb.i
@@ -3110,13 +3110,13 @@ bb.o:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.ay = load ptr, ptr @_RNvNvXst_Cs7p2uQeJxui2_9deltalakeNtB7_16ColumnPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, align 8, !nonnull !12, !noundef !12
-  %i.az = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXst_Cs7p2uQeJxui2_9deltalakeNtB7_16ColumnPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 8), align 8, !noundef !12
+  %i.az = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXst_Cs7p2uQeJxui2_9deltalakeNtB7_16ColumnPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 8), align 8, !noundef !12
   store ptr %i.a, ptr %i.c, align 8
   %i.ba = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr %i.ay, ptr %i.ba, align 8
   %i.bb = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   store i64 %i.az, ptr %i.bb, align 8
-  %i.bc = invoke noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXst_Cs7p2uQeJxui2_9deltalakeNtB7_16ColumnPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 16))
+  %i.bc = invoke noundef align 8 ptr @_RNvMs4_NtCshEQ9D8FWP38_9once_cell4syncINtB5_8OnceCellINtNtCsgbCypRs12E4_4pyo38instance2PyNtNtNtBU_5types6string8PyStringEE3getCs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXst_Cs7p2uQeJxui2_9deltalakeNtB7_16ColumnPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 16))
           to label %.noexc unwind label %bb.r     ; 2 uses
 
 .noexc:                                           ; preds = %bb.o
@@ -3124,7 +3124,7 @@ bb.o:                                             ; preds = %bb.m
   br i1 %.not.i77, label %bb.p, label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit80, !prof !20
 
 bb.p:                                             ; preds = %.noexc
-  %i.bd = invoke noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXst_Cs7p2uQeJxui2_9deltalakeNtB7_16ColumnPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.c)
+  %i.bd = invoke noundef nonnull align 8 ptr @_RINvNtNtCsgbCypRs12E4_4pyo34sync9once_lock26init_once_cell_py_attachedNCNvMs7_B4_NtB4_8Interned3get0INtNtB6_8instance2PyNtNtNtB6_5types6string8PyStringEECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXst_Cs7p2uQeJxui2_9deltalakeNtB7_16ColumnPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds0_8INTERNED, i64 16), ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.c)
           to label %_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake.exit80 unwind label %bb.r
 
 bb.q:                                             ; preds = %bb.y, %bb.r
@@ -3231,13 +3231,13 @@ bb.ac:                                            ; preds = %bb.z
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.bs = load ptr, ptr @_RNvNvXst_Cs7p2uQeJxui2_9deltalakeNtB7_16ColumnPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds1_8INTERNED, align 8, !nonnull !12, !noundef !12
-  %i.bt = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXst_Cs7p2uQeJxui2_9deltalakeNtB7_16ColumnPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds1_8INTERNED, i64 8), align 8, !noundef !12
+  %i.bt = load i64, ptr getelementptr inbounds (i8, ptr @_RNvNvXst_Cs7p2uQeJxui2_9deltalakeNtB7_16ColumnPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds1_8INTERNED, i64 8), align 8, !noundef !12
   store ptr %i.a, ptr %i.b, align 8
   %i.bu = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.bs, ptr %i.bu, align 8
   %i.bv = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i64 %i.bt, ptr %i.bv, align 8
-  %i.bw = invoke fastcc noundef nonnull align 8 ptr @_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds nuw (i8, ptr @_RNvNvXst_Cs7p2uQeJxui2_9deltalakeNtB7_16ColumnPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds1_8INTERNED, i64 16), ptr noalias noundef readonly align 8 captures(none) dereferenceable(24) %i.b)
+  %i.bw = invoke fastcc noundef nonnull align 8 ptr @_RINvMNtNtCsgbCypRs12E4_4pyo34sync9once_lockINtB3_10PyOnceLockINtNtB7_8instance2PyNtNtNtB7_5types6string8PyStringEE11get_or_initNCNvMs7_B5_NtB5_8Interned3get0ECs7p2uQeJxui2_9deltalake(ptr noundef nonnull align 8 getelementptr inbounds (i8, ptr @_RNvNvXst_Cs7p2uQeJxui2_9deltalakeNtB7_16ColumnPropertiesNtNtCsgbCypRs12E4_4pyo310conversion12FromPyObject13extract_bounds1_8INTERNED, i64 16), ptr noalias noundef readonly align 8 captures(none) dereferenceable(24) %i.b)
           to label %bb.ad unwind label %bb.ab
 
 bb.ad:                                            ; preds = %bb.ac

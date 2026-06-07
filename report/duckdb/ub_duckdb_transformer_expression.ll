@@ -201,7 +201,7 @@ bb.cy:                                            ; preds = %bb.cx
 bb.cz:                                            ; preds = %bb.cy
   %i.kk = getelementptr inbounds nuw i8, ptr %i.kj, i64 8
   store i8 2, ptr %i.kk, align 8, !tbaa !265, !noalias !262
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN6duckdb13OrderModifierE, i64 16), ptr %i.kj, align 8, !tbaa !23, !noalias !262
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVN6duckdb13OrderModifierE, i32 0, i32 0, i32 2), ptr %i.kj, align 8, !tbaa !23, !noalias !262
   %i.kl = getelementptr inbounds nuw i8, ptr %i.kj, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.kl, i8 0, i64 24, i1 false), !noalias !262
   store ptr %i.kj, ptr %49, align 8, !tbaa !268, !alias.scope !262
@@ -604,7 +604,7 @@ bb.ij:                                            ; preds = %_ZNSt10unique_ptrIN
 bb.ik:                                            ; preds = %bb.ij
   %i.zj = getelementptr inbounds nuw i8, ptr %i.zi, i64 8
   store i8 2, ptr %i.zj, align 8, !tbaa !265, !noalias !328
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN6duckdb13OrderModifierE, i64 16), ptr %i.zi, align 8, !tbaa !23, !noalias !328
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVN6duckdb13OrderModifierE, i32 0, i32 0, i32 2), ptr %i.zi, align 8, !tbaa !23, !noalias !328
   %i.zk = getelementptr inbounds nuw i8, ptr %i.zi, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.zk, i8 0, i64 24, i1 false), !noalias !328
   store ptr %i.zi, ptr %70, align 8, !tbaa !268, !alias.scope !328
@@ -1007,7 +1007,7 @@ bb.gl:                                            ; preds = %_ZNSt10unique_ptrIN
   %i.vu = getelementptr inbounds nuw i8, ptr %i.vj, i64 96
   store i64 0, ptr %i.vu, align 8, !tbaa !168, !noalias !793
   store i8 0, ptr %i.vt, align 8, !tbaa !30, !noalias !793
-  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN6duckdb15SelectStatementE, i64 16), ptr %i.vj, align 8, !tbaa !23, !noalias !793
+  store ptr getelementptr inbounds inrange(-16, 32) ({ [6 x ptr] }, ptr @_ZTVN6duckdb15SelectStatementE, i32 0, i32 0, i32 2), ptr %i.vj, align 8, !tbaa !23, !noalias !793
   %i.vv = getelementptr inbounds nuw i8, ptr %i.vj, i64 120
   store ptr null, ptr %i.vv, align 8, !tbaa !802, !noalias !793
   store ptr %i.vj, ptr %41, align 8, !tbaa !695, !alias.scope !793
@@ -1410,7 +1410,7 @@ bb.o:                                             ; preds = %bb.n
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ag, i64 96
   store i64 0, ptr %i.ar, align 8, !tbaa !168, !noalias !1097
   store i8 0, ptr %i.aq, align 8, !tbaa !30, !noalias !1097
-  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN6duckdb15SelectStatementE, i64 16), ptr %i.ag, align 8, !tbaa !23, !noalias !1097
+  store ptr getelementptr inbounds inrange(-16, 32) ({ [6 x ptr] }, ptr @_ZTVN6duckdb15SelectStatementE, i32 0, i32 0, i32 2), ptr %i.ag, align 8, !tbaa !23, !noalias !1097
   %i.as = getelementptr inbounds nuw i8, ptr %i.ag, i64 120
   store ptr null, ptr %i.as, align 8, !tbaa !802, !noalias !1097
   store ptr %i.ag, ptr %36, align 8, !tbaa !695, !alias.scope !1097
@@ -1626,7 +1626,7 @@ bb.u:                                             ; preds = %_ZNSt10unique_ptrIN
   store i64 -1, ptr %i.dc, align 8, !tbaa !513, !noalias !1134
   %i.dd = getelementptr inbounds nuw i8, ptr %i.cw, i64 64
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.dd, i8 0, i64 40, i1 false), !noalias !1134
-  store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN6duckdb13EmptyTableRefE, i64 16), ptr %i.cw, align 8, !tbaa !23, !noalias !1134
+  store ptr getelementptr inbounds inrange(-16, 48) ({ [8 x ptr] }, ptr @_ZTVN6duckdb13EmptyTableRefE, i32 0, i32 0, i32 2), ptr %i.cw, align 8, !tbaa !23, !noalias !1134
   %i.de = invoke noundef ptr @_ZNK6duckdb10unique_ptrINS_10SelectNodeESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %37)
           to label %bb.v unwind label %_ZNSt10unique_ptrIN6duckdb13EmptyTableRefESt14default_deleteIS1_EED2Ev.exit180
 
@@ -2029,7 +2029,7 @@ _ZNKSt14default_deleteIN6duckdb10SelectNodeEEclEPS1_.exit.i201: ; preds = %_ZNSt
   br label %_ZNKSt14default_deleteIN6duckdb15SelectStatementEEclEPS1_.exit.i204
 
 _ZNKSt14default_deleteIN6duckdb15SelectStatementEEclEPS1_.exit.i204: ; preds = %.body141._ZNKSt14default_deleteIN6duckdb15SelectStatementEEclEPS1_.exit.i204_crit_edge, %.body141.thread
-  %i.ie = phi ptr [ getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN6duckdb15SelectStatementE, i64 16), %.body141.thread ], [ %.pre670, %.body141._ZNKSt14default_deleteIN6duckdb15SelectStatementEEclEPS1_.exit.i204_crit_edge ]
+  %i.ie = phi ptr [ getelementptr inbounds inrange(-16, 32) ({ [6 x ptr] }, ptr @_ZTVN6duckdb15SelectStatementE, i32 0, i32 0, i32 2), %.body141.thread ], [ %.pre670, %.body141._ZNKSt14default_deleteIN6duckdb15SelectStatementEEclEPS1_.exit.i204_crit_edge ]
   %.pn116.pn.pn617 = phi { ptr, i32 } [ %i.ew, %.body141.thread ], [ %.pn116.pn.pn.ph, %.body141._ZNKSt14default_deleteIN6duckdb15SelectStatementEEclEPS1_.exit.i204_crit_edge ]
   %i.if = phi ptr [ %i.ag, %.body141.thread ], [ %.pr, %.body141._ZNKSt14default_deleteIN6duckdb15SelectStatementEEclEPS1_.exit.i204_crit_edge ]
   %i.ig = getelementptr inbounds nuw i8, ptr %i.ie, i64 8

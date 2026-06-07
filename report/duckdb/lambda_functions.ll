@@ -201,7 +201,7 @@ _ZN6duckdb12Deserializer31ReadPropertyWithExplicitDefaultIbEET_tPKcS2_.exit: ; p
           to label %.noexc23 unwind label %bb.n   ; 8 uses
 
 .noexc23:                                         ; preds = %_ZN6duckdb12Deserializer31ReadPropertyWithExplicitDefaultIbEET_tPKcS2_.exit
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN6duckdb18ListLambdaBindDataE, i64 16), ptr %i.bl, align 8, !tbaa !67, !noalias !165
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVN6duckdb18ListLambdaBindDataE, i32 0, i32 0, i32 2), ptr %i.bl, align 8, !tbaa !67, !noalias !165
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 8
   invoke void @_ZN6duckdb11LogicalTypeC1ERKS0_(ptr noundef nonnull align 8 dereferenceable(24) %i.bm, ptr noundef nonnull align 8 dereferenceable(24) %4)
           to label %_ZNSt10unique_ptrIN6duckdb10ExpressionESt14default_deleteIS1_EED2Ev.exit29 unwind label %.body.i, !noalias !165, !inline_history !168
@@ -604,7 +604,7 @@ _ZN6duckdb11LogicalTypeaSEOS0_.exit:              ; preds = %_ZN6duckdb10shared_
   store <2 x ptr> %i.bf, ptr %i.bd, align 8, !tbaa !190
   call void @_ZN6duckdb11LogicalTypeD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %5) #19
   %i.bg = call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #22, !noalias !198 ; 8 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN6duckdb18ListLambdaBindDataE, i64 16), ptr %i.bg, align 8, !tbaa !67, !noalias !198
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVN6duckdb18ListLambdaBindDataE, i32 0, i32 0, i32 2), ptr %i.bg, align 8, !tbaa !67, !noalias !198
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 8
   invoke void @_ZN6duckdb11LogicalTypeC1ERKS0_(ptr noundef nonnull align 8 dereferenceable(24) %i.bh, ptr noundef nonnull align 8 dereferenceable(24) %i.ax)
           to label %_ZNSt10unique_ptrIN6duckdb18ListLambdaBindDataESt14default_deleteIS1_EED2Ev.exit unwind label %_ZNSt10unique_ptrIN6duckdb10ExpressionESt14default_deleteIS1_EED2Ev.exit5.i, !noalias !198, !inline_history !168
@@ -1007,7 +1007,7 @@ bb.b:                                             ; preds = %bb.a
 
 .noexc:                                           ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 208
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN6duckdb18ListLambdaBindDataE, i64 16), ptr %i.i, align 8, !tbaa !67, !noalias !206
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVN6duckdb18ListLambdaBindDataE, i32 0, i32 0, i32 2), ptr %i.i, align 8, !tbaa !67, !noalias !206
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   invoke void @_ZN6duckdb11LogicalTypeC1ERKS0_(ptr noundef nonnull align 8 dereferenceable(24) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %i.j)
           to label %bb.c unwind label %.body.i, !noalias !206, !inline_history !168
@@ -1410,7 +1410,7 @@ bb.a:
   store i32 1, ptr %i.b, align 8, !tbaa !192, !noalias !310
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 12 ; 2 uses
   store i32 1, ptr %i.c, align 4, !tbaa !194, !noalias !310
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN6duckdb13SelectionDataESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.a, align 8, !tbaa !67, !noalias !310
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN6duckdb13SelectionDataESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.a, align 8, !tbaa !67, !noalias !310
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   invoke void @_ZN6duckdb13SelectionDataC1Em(ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 noundef %1)
           to label %bb.b unwind label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN6duckdb13SelectionDataESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit10.i.i.i.i.i, !noalias !310
@@ -1813,7 +1813,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   store ptr null, ptr %2, align 8, !tbaa !142, !noalias !331
   %i.m = load i8, ptr %i.i, align 8, !tbaa !146, !range !140, !noalias !331, !noundef !141
   %i.n = load i8, ptr %i.h, align 1, !tbaa !146, !range !140, !noalias !331, !noundef !141
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN6duckdb18ListLambdaBindDataE, i64 16), ptr %i.g, align 8, !tbaa !67, !noalias !331
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVN6duckdb18ListLambdaBindDataE, i32 0, i32 0, i32 2), ptr %i.g, align 8, !tbaa !67, !noalias !331
   %i.o = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   invoke void @_ZN6duckdb11LogicalTypeC1ERKS0_(ptr noundef nonnull align 8 dereferenceable(24) %i.o, ptr noundef nonnull align 8 dereferenceable(24) %i.j)
           to label %_ZNSt10unique_ptrIN6duckdb18ListLambdaBindDataESt14default_deleteIS1_EED2Ev.exit unwind label %.body.i, !noalias !331, !inline_history !334
@@ -2216,7 +2216,7 @@ bb.a:
   store i32 1, ptr %i.b, align 8, !tbaa !192, !noalias !410
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 12 ; 2 uses
   store i32 1, ptr %i.c, align 4, !tbaa !194, !noalias !410
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN6duckdb21TemplatedValidityDataImEESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.a, align 8, !tbaa !67, !noalias !410
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN6duckdb21TemplatedValidityDataImEESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.a, align 8, !tbaa !67, !noalias !410
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 3 uses
   %i.e = load i64, ptr %1, align 8, !tbaa !20, !noalias !410
   store ptr null, ptr %i.d, align 8, !tbaa !413, !noalias !410

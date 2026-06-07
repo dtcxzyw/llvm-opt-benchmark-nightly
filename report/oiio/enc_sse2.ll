@@ -201,11 +201,12 @@ DC16Mode_SSE2.exit:                               ; preds = %bb.c, %bb.d, %bb.e,
   br i1 %.not.i, label %VerticalPred_SSE2.exit, label %bb.g
 
 bb.g:                                             ; preds = %DC16Mode_SSE2.exit
-  %.val7.i = load <2 x i64>, ptr %2, align 16, !tbaa !14, !alias.scope !33, !noalias !30
+  %.val7.i = load <2 x i64>, ptr %2, align 16, !tbaa !14, !alias.scope !33, !noalias !30 ; 2 uses
   br label %VerticalPred_SSE2.exit
 
 VerticalPred_SSE2.exit:                           ; preds = %DC16Mode_SSE2.exit, %bb.g
-  %storemerge = phi <2 x i64> [ %.val7.i, %bb.g ], [ splat (i64 9187201950435737471), %DC16Mode_SSE2.exit ] ; 16 uses
+  %storemerge = phi <2 x i64> [ %.val7.i, %bb.g ], [ splat (i64 9187201950435737471), %DC16Mode_SSE2.exit ] ; 7 uses
+  %.val7.i.sink20 = phi <2 x i64> [ %.val7.i, %bb.g ], [ bitcast (<16 x i8> splat (i8 127) to <2 x i64>), %DC16Mode_SSE2.exit ] ; 9 uses
   store <2 x i64> %storemerge, ptr %i.az, align 16, !tbaa !14, !alias.scope !30, !noalias !33
   store <2 x i64> %storemerge, ptr %i.ba, align 16, !tbaa !14, !alias.scope !30, !noalias !33
   store <2 x i64> %storemerge, ptr %i.bb, align 16, !tbaa !14, !alias.scope !30, !noalias !33
@@ -213,23 +214,23 @@ VerticalPred_SSE2.exit:                           ; preds = %DC16Mode_SSE2.exit,
   store <2 x i64> %storemerge, ptr %i.bd, align 16, !tbaa !14, !alias.scope !30, !noalias !33
   store <2 x i64> %storemerge, ptr %i.be, align 16, !tbaa !14, !alias.scope !30, !noalias !33
   store <2 x i64> %storemerge, ptr %i.bf, align 16, !tbaa !14, !alias.scope !30, !noalias !33
-  store <2 x i64> %storemerge, ptr %i.bg, align 16, !tbaa !14, !alias.scope !30, !noalias !33
+  store <2 x i64> %.val7.i.sink20, ptr %i.bg, align 16, !tbaa !14, !alias.scope !30, !noalias !33
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 768
-  store <2 x i64> %storemerge, ptr %i.bh, align 16, !tbaa !14, !alias.scope !30, !noalias !33
+  store <2 x i64> %.val7.i.sink20, ptr %i.bh, align 16, !tbaa !14, !alias.scope !30, !noalias !33
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 800
-  store <2 x i64> %storemerge, ptr %i.bi, align 16, !tbaa !14, !alias.scope !30, !noalias !33
+  store <2 x i64> %.val7.i.sink20, ptr %i.bi, align 16, !tbaa !14, !alias.scope !30, !noalias !33
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 832
-  store <2 x i64> %storemerge, ptr %i.bj, align 16, !tbaa !14, !alias.scope !30, !noalias !33
+  store <2 x i64> %.val7.i.sink20, ptr %i.bj, align 16, !tbaa !14, !alias.scope !30, !noalias !33
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 864
-  store <2 x i64> %storemerge, ptr %i.bk, align 16, !tbaa !14, !alias.scope !30, !noalias !33
+  store <2 x i64> %.val7.i.sink20, ptr %i.bk, align 16, !tbaa !14, !alias.scope !30, !noalias !33
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 896
-  store <2 x i64> %storemerge, ptr %i.bl, align 16, !tbaa !14, !alias.scope !30, !noalias !33
+  store <2 x i64> %.val7.i.sink20, ptr %i.bl, align 16, !tbaa !14, !alias.scope !30, !noalias !33
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 928
-  store <2 x i64> %storemerge, ptr %i.bm, align 16, !tbaa !14, !alias.scope !30, !noalias !33
+  store <2 x i64> %.val7.i.sink20, ptr %i.bm, align 16, !tbaa !14, !alias.scope !30, !noalias !33
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 960
-  store <2 x i64> %storemerge, ptr %i.bn, align 16, !tbaa !14, !alias.scope !30, !noalias !33
+  store <2 x i64> %.val7.i.sink20, ptr %i.bn, align 16, !tbaa !14, !alias.scope !30, !noalias !33
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 992
-  store <2 x i64> %storemerge, ptr %i.bo, align 16, !tbaa !14, !alias.scope !30, !noalias !33
+  store <2 x i64> %.val7.i.sink20, ptr %i.bo, align 16, !tbaa !14, !alias.scope !30, !noalias !33
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 528 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !35)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !38)

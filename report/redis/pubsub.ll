@@ -201,8 +201,8 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 bb.e:                                             ; preds = %bb.c
-  %pubSubShardType.sroa.3.0.copyload = load ptr, ptr getelementptr inbounds nuw (i8, ptr @pubSubShardType, i64 16), align 8
-  %pubSubShardType.sroa.420.0.copyload = load ptr, ptr getelementptr inbounds nuw (i8, ptr @pubSubShardType, i64 40), align 8
+  %pubSubShardType.sroa.3.0.copyload = load ptr, ptr getelementptr inbounds (i8, ptr @pubSubShardType, i64 16), align 8
+  %pubSubShardType.sroa.420.0.copyload = load ptr, ptr getelementptr inbounds (i8, ptr @pubSubShardType, i64 40), align 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 6 uses
   %i.p = load i64, ptr %i.o, align 8, !tbaa !42   ; 2 uses
   %i.q = or i64 %i.p, 70368744177664

@@ -1,5 +1,5 @@
-inline.NumInlined: 174
-inline.NumDeleted: 117
+inline.NumInlined: 173
+inline.NumDeleted: 116
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -51,7 +51,7 @@ $_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_col
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZN5folly10symbolizer21SafeStackTracePrinterD0Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %0) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5folly10symbolizer21SafeStackTracePrinterE, i64 16), ptr %0, align 8, !tbaa !11
+  store ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN5folly10symbolizer21SafeStackTracePrinterE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !11
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !13   ; 3 uses
   %.not.i.i = icmp eq ptr %i.b, null
@@ -147,7 +147,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZN5folly10symbolizer21SafeStackTracePrinterD2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %0) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5folly10symbolizer21SafeStackTracePrinterE, i64 16), ptr %0, align 8, !tbaa !11
+  store ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN5folly10symbolizer21SafeStackTracePrinterE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !11
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !13   ; 3 uses
   %.not.i = icmp eq ptr %i.b, null
@@ -223,7 +223,7 @@ _ZNSt10unique_ptrIN5folly10symbolizer10FrameArrayILm100EEESt14default_deleteIS3_
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr void @_ZN5folly10symbolizer35UnsafeSelfAllocateStackTracePrinterD0Ev(ptr noundef nonnull align 8 dereferenceable(64) %0) unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5folly10symbolizer21SafeStackTracePrinterE, i64 16), ptr %0, align 8, !tbaa !11
+  store ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN5folly10symbolizer21SafeStackTracePrinterE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !11
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !13   ; 3 uses
   %.not.i.i = icmp eq ptr %i.b, null
@@ -320,28 +320,32 @@ bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8
   store ptr %1, ptr %i.e, align 8, !tbaa !1118
   %i.f = load i64, ptr %i.a, align 8, !tbaa !1116 ; 5 uses
-  %i.g = call ptr @mmap(ptr noundef null, i64 noundef 1048576, i32 noundef 3, i32 noundef 34, i32 noundef -1, i64 noundef 0) #18, !noalias !1127 ; 5 uses
+  %i.g = call ptr @mmap(ptr noundef null, i64 noundef 1048576, i32 noundef 3, i32 noundef 34, i32 noundef -1, i64 noundef 0) #18, !noalias !1127 ; 6 uses
   %.not21.i = icmp eq ptr %i.g, null
   br i1 %.not21.i, label %_ZNSt10unique_ptrIcPFvPcEED2Ev.exit5, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.h = and i64 %i.f, 9223372036854251520
   %.not.i = icmp eq i64 %i.h, 0
-  br i1 %.not.i, label %bb.e, label %_ZNSt10unique_ptrIcPFvPcEED2Ev.exit5.sink.split
+  br i1 %.not.i, label %bb.e, label %3
 
 bb.e:                                             ; preds = %bb.d
   %i.i = urem i64 1048575, %i.f
   %i.j = xor i64 %i.i, 1048575                    ; 3 uses
   %i.k = call i32 @mprotect(ptr noundef nonnull %i.g, i64 noundef %i.f, i32 noundef 0) #18, !noalias !1127
   %.not11.i = icmp eq i32 %i.k, 0
-  br i1 %.not11.i, label %bb.f, label %_ZNSt10unique_ptrIcPFvPcEED2Ev.exit5.sink.split
+  br i1 %.not11.i, label %bb.f, label %3
 
 bb.f:                                             ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.j
   %i.m = sub nuw nsw i64 1048576, %i.j
   %i.n = call i32 @mprotect(ptr noundef nonnull %i.l, i64 noundef %i.m, i32 noundef 0) #18, !noalias !1127
   %.not12.i = icmp eq i32 %i.n, 0
-  br i1 %.not12.i, label %bb.g, label %_ZNSt10unique_ptrIcPFvPcEED2Ev.exit5.sink.split
+  br i1 %.not12.i, label %bb.g, label %3
+
+3:                                                ; preds = %bb.f, %bb.e, %bb.d
+  %4 = call i32 @munmap(ptr noundef nonnull %i.g, i64 noundef 1048576) #18, !noalias !1127 ; 0 uses
+  br label %_ZNSt10unique_ptrIcPFvPcEED2Ev.exit5
 
 bb.g:                                             ; preds = %bb.f
   %i.o = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.f
@@ -354,13 +358,17 @@ bb.g:                                             ; preds = %bb.f
   store i32 0, ptr %i.s, align 8, !tbaa !1132, !noalias !1127
   call void (ptr, ptr, i32, ...) @makecontext(ptr noundef nonnull %2, ptr noundef nonnull @"_ZZN5folly10symbolizer35UnsafeSelfAllocateStackTracePrinter25printSymbolizedStackTraceEvEN3$_08__invokeEPS1_", i32 noundef 1, ptr noundef nonnull %0) #18
   %i.t = call i32 @swapcontext(ptr noundef nonnull %1, ptr noundef nonnull %2) #18 ; 0 uses
-  br label %_ZNSt10unique_ptrIcPFvPcEED2Ev.exit5.sink.split
+  invoke void inttoptr (i64 ptrtoint (ptr @"_ZZN5folly10symbolizer12_GLOBAL__N_113allocateStackEP10ucontext_tmEN3$_08__invokeEPc" to i64) to ptr)(ptr noundef nonnull %i.g)
+          to label %_ZNSt10unique_ptrIcPFvPcEED2Ev.exit5 unwind label %_ZNSt10unique_ptrIcPFvPcEED2Ev.exit5.sink.split
 
-_ZNSt10unique_ptrIcPFvPcEED2Ev.exit5.sink.split:  ; preds = %bb.d, %bb.e, %bb.f, %bb.g
-  %3 = call i32 @munmap(ptr noundef nonnull %i.g, i64 noundef 1048576) #18 ; 0 uses
-  br label %_ZNSt10unique_ptrIcPFvPcEED2Ev.exit5
+_ZNSt10unique_ptrIcPFvPcEED2Ev.exit5.sink.split:  ; preds = %bb.g
+  %5 = landingpad { ptr, i32 }
+          catch ptr null
+  %6 = extractvalue { ptr, i32 } %5, 0
+  call void @__clang_call_terminate(ptr %6) #21
+  unreachable
 
-_ZNSt10unique_ptrIcPFvPcEED2Ev.exit5:             ; preds = %_ZNSt10unique_ptrIcPFvPcEED2Ev.exit5.sink.split, %bb.c, %bb.b
+_ZNSt10unique_ptrIcPFvPcEED2Ev.exit5:             ; preds = %3, %bb.c, %bb.g, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #18
   br label %bb.h
@@ -372,13 +380,13 @@ bb.h:                                             ; preds = %bb.a, %_ZNSt10uniqu
 ; Function Attrs: mustprogress uwtable
 define void @_ZN5folly10symbolizer21SafeStackTracePrinterC2Ei(ptr noundef nonnull align 8 dereferenceable(56) initializes((0, 12)) %0, i32 noundef %1) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5folly10symbolizer21SafeStackTracePrinterE, i64 16), ptr %0, align 8, !tbaa !11
+  store ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN5folly10symbolizer21SafeStackTracePrinterE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !11
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 %1, ptr %i.a, align 8, !tbaa !1097
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   tail call void @_ZN5folly10symbolizer18FDSymbolizePrinterC1Eiim(ptr noundef nonnull align 8 dereferenceable(32) %i.b, i32 noundef %1, i32 noundef 8, i64 noundef 65536)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1133)
-  %i.c = invoke noalias noundef nonnull dereferenceable(16008) ptr @_Znwm(i64 noundef 16008) #21
+  %i.c = invoke noalias noundef nonnull dereferenceable(16008) ptr @_Znwm(i64 noundef 16008) #22
           to label %.noexc unwind label %bb.d     ; 7 uses
 
 .noexc:                                           ; preds = %bb.a
@@ -460,7 +468,7 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #8
 define linkonce_odr hidden void @__clang_call_terminate(ptr noundef %0) local_unnamed_addr #9 comdat {
 bb.a:
   %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #18 ; 0 uses
-  tail call void @_ZSt9terminatev() #22
+  tail call void @_ZSt9terminatev() #21
   unreachable
 }
 
@@ -863,7 +871,7 @@ bb.ah:                                            ; preds = %.noexc.i.i.i, %bb.a
   %i.in = landingpad { ptr, i32 }
           catch ptr null
   %i.io = extractvalue { ptr, i32 } %i.in, 0
-  call void @__clang_call_terminate(ptr %i.io) #22
+  call void @__clang_call_terminate(ptr %i.io) #21
   unreachable
 
 "_ZN5folly6detail14ScopeGuardImplIZNS_10symbolizer21SafeStackTracePrinter15printStackTraceEbE3$_0Lb1EED2Ev.exit": ; preds = %.noexc.i.i.i
@@ -891,7 +899,7 @@ bb.c:                                             ; preds = %.noexc.i.i, %bb.b
   %i.f = landingpad { ptr, i32 }
           catch ptr null
   %i.g = extractvalue { ptr, i32 } %i.f, 0
-  tail call void @__clang_call_terminate(ptr %i.g) #22
+  tail call void @__clang_call_terminate(ptr %i.g) #21
   unreachable
 
 "_ZN5folly6detail14ScopeGuardImplIZNS_10symbolizer21SafeStackTracePrinter15printStackTraceEbE3$_0Lb1EE7executeEv.exit": ; preds = %.noexc.i.i, %bb.a
@@ -922,6 +930,12 @@ declare ptr @mmap(ptr noundef, i64 noundef, i32 noundef, i32 noundef, i32 nounde
 
 ; Function Attrs: nounwind
 declare i32 @mprotect(ptr noundef, i64 noundef, i32 noundef) local_unnamed_addr #4
+
+; Function Attrs: inlinehint mustprogress nounwind uwtable
+define internal void @"_ZZN5folly10symbolizer12_GLOBAL__N_113allocateStackEP10ucontext_tmEN3$_08__invokeEPc"(ptr noundef %0) #2 align 2 {
+  %2 = tail call i32 @munmap(ptr noundef %0, i64 noundef 1048576) #18 ; 0 uses
+  ret void
+}
 
 ; Function Attrs: nounwind
 declare i32 @munmap(ptr noundef, i64 noundef) local_unnamed_addr #4
@@ -985,8 +999,8 @@ attributes #17 = { nocallback nofree nosync nounwind willreturn memory(inaccessi
 attributes #18 = { nounwind }
 attributes #19 = { builtin nounwind }
 attributes #20 = { nounwind returns_twice }
-attributes #21 = { builtin allocsize(0) }
-attributes #22 = { noreturn nounwind }
+attributes #21 = { noreturn nounwind }
+attributes #22 = { builtin allocsize(0) }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5}
 !llvm.ident = !{!6}

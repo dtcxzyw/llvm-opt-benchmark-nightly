@@ -201,7 +201,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.p, %bb.q,
   %.sroa.217.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.az, i64 8
   store i64 0, ptr %.sroa.217.0..sroa_idx.i, align 8, !alias.scope !119, !noalias !122
   %.sroa.318.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.az, i64 16
-  store i64 8, ptr %.sroa.318.0..sroa_idx.i, align 8, !alias.scope !119, !noalias !122
+  store i64 ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), ptr %.sroa.318.0..sroa_idx.i, align 8, !alias.scope !119, !noalias !122
   %.sroa.419.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.az, i64 24
   store i64 0, ptr %.sroa.419.0..sroa_idx.i, align 8, !noalias !122
   %.sroa.419.i.sroa.4.0..sroa.419.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.az, i64 32
@@ -604,7 +604,7 @@ bb.bt:                                            ; preds = %bb.br
 
 bb.bu:                                            ; preds = %bb.bg, %bb.bh, %bb.bs, %bb.bo, %bb.be, %bb.bc
   %.sroa.0108.0.ph = phi i64 [ %i.hi, %bb.bc ], [ %i.hm, %bb.be ], [ %i.in, %bb.bs ], [ %i.if, %bb.bo ], [ 0, %bb.bh ], [ 0, %bb.bg ]
-  %.sroa.14110.0.ph = phi i64 [ %i.hj, %bb.bc ], [ %i.hn, %bb.be ], [ %.sroa.14110.0.copyload112, %bb.bs ], [ %.sroa.14110.0.copyload, %bb.bo ], [ 8, %bb.bh ], [ 8, %bb.bg ]
+  %.sroa.14110.0.ph = phi i64 [ %i.hj, %bb.bc ], [ %i.hn, %bb.be ], [ %.sroa.14110.0.copyload112, %bb.bs ], [ %.sroa.14110.0.copyload, %bb.bo ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.bh ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.bg ]
   %.sroa.21116.0.ph = phi i64 [ %i.hk, %bb.bc ], [ %i.ho, %bb.be ], [ %.sroa.21116.0.copyload118, %bb.bs ], [ %.sroa.21116.0.copyload, %bb.bo ], [ 0, %bb.bh ], [ 0, %bb.bg ]
   %.sroa.24.0.ph = phi i64 [ %.sroa.24.24.copyload, %bb.bc ], [ %.sroa.24.24.copyload131, %bb.be ], [ %.sroa.24.0.copyload125, %bb.bs ], [ %.sroa.24.0.copyload, %bb.bo ], [ -9223372036854775808, %bb.bh ], [ -9223372036854775808, %bb.bg ]
   %.sroa.27132.0.ph = phi ptr [ %.sroa.27132.24.copyload, %bb.bc ], [ %.sroa.27132.24.copyload140, %bb.be ], [ %.sroa.27132.0.copyload134, %bb.bs ], [ %.sroa.27132.0.copyload, %bb.bo ], [ @294, %bb.bh ], [ @294, %bb.bg ]
@@ -1007,7 +1007,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y, %bb.q,
   %.sroa.217.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   store i64 0, ptr %.sroa.217.0..sroa_idx.i.i, align 8, !alias.scope !397, !noalias !398
   %.sroa.318.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  store i64 8, ptr %.sroa.318.0..sroa_idx.i.i, align 8, !alias.scope !397, !noalias !398
+  store i64 ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), ptr %.sroa.318.0..sroa_idx.i.i, align 8, !alias.scope !397, !noalias !398
   %.sroa.419.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 24
   store i64 0, ptr %.sroa.419.0..sroa_idx.i.i, align 8, !alias.scope !397, !noalias !398
   %.sroa.419.sroa.2.0..sroa.419.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 32
@@ -1410,7 +1410,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y, %bb.q,
   %.sroa.230.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store i64 0, ptr %.sroa.230.0..sroa_idx.i.i, align 8, !alias.scope !488, !noalias !489
   %.sroa.331.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  store i64 8, ptr %.sroa.331.0..sroa_idx.i.i, align 8, !alias.scope !488, !noalias !489
+  store i64 ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), ptr %.sroa.331.0..sroa_idx.i.i, align 8, !alias.scope !488, !noalias !489
   %.sroa.432.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store i64 0, ptr %.sroa.432.0..sroa_idx.i.i, align 8, !alias.scope !488, !noalias !489
   store i64 %.sroa.21.0.ph.i.i, ptr %.sink45.i.sroa.gep38, align 8, !alias.scope !488, !noalias !489
@@ -1813,30 +1813,30 @@ bb.a:
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal fastcc void @_RNCNvXs3Y_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB8_5FieldNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier0Cs14kWLkQVSKO_14deltalake_core(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(72) %0, i8 noundef %1, ptr noalias noundef nonnull align 8 dereferenceable(48) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [72 x i8], align 8                ; 11 uses
+  %i.a = alloca [72 x i8], align 8                ; 12 uses
   %i.b = alloca [40 x i8], align 8                ; 8 uses
-  %i.c = alloca [72 x i8], align 8                ; 10 uses
-  %i.d = alloca [72 x i8], align 8                ; 11 uses
+  %i.c = alloca [72 x i8], align 8                ; 11 uses
+  %i.d = alloca [72 x i8], align 8                ; 12 uses
   %i.e = alloca [40 x i8], align 8                ; 8 uses
-  %i.f = alloca [72 x i8], align 8                ; 10 uses
-  %i.g = alloca [72 x i8], align 8                ; 11 uses
+  %i.f = alloca [72 x i8], align 8                ; 11 uses
+  %i.g = alloca [72 x i8], align 8                ; 12 uses
   %i.h = alloca [40 x i8], align 8                ; 8 uses
-  %i.i = alloca [72 x i8], align 8                ; 10 uses
-  %i.j = alloca [72 x i8], align 8                ; 11 uses
+  %i.i = alloca [72 x i8], align 8                ; 11 uses
+  %i.j = alloca [72 x i8], align 8                ; 12 uses
   %i.k = alloca [40 x i8], align 8                ; 8 uses
-  %i.l = alloca [72 x i8], align 8                ; 10 uses
-  %i.m = alloca [72 x i8], align 8                ; 11 uses
+  %i.l = alloca [72 x i8], align 8                ; 11 uses
+  %i.m = alloca [72 x i8], align 8                ; 12 uses
   %i.n = alloca [40 x i8], align 8                ; 8 uses
-  %i.o = alloca [72 x i8], align 8                ; 10 uses
-  %i.p = alloca [72 x i8], align 8                ; 11 uses
+  %i.o = alloca [72 x i8], align 8                ; 11 uses
+  %i.p = alloca [72 x i8], align 8                ; 12 uses
   %i.q = alloca [40 x i8], align 8                ; 8 uses
-  %i.r = alloca [72 x i8], align 8                ; 10 uses
-  %i.s = alloca [72 x i8], align 8                ; 11 uses
+  %i.r = alloca [72 x i8], align 8                ; 11 uses
+  %i.s = alloca [72 x i8], align 8                ; 12 uses
   %i.t = alloca [40 x i8], align 8                ; 8 uses
-  %i.u = alloca [72 x i8], align 8                ; 10 uses
-  %i.v = alloca [72 x i8], align 8                ; 11 uses
+  %i.u = alloca [72 x i8], align 8                ; 11 uses
+  %i.v = alloca [72 x i8], align 8                ; 12 uses
   %i.w = alloca [40 x i8], align 8                ; 8 uses
-  %i.x = alloca [72 x i8], align 8                ; 10 uses
+  %i.x = alloca [72 x i8], align 8                ; 11 uses
   %i.y = alloca [40 x i8], align 8                ; 8 uses
   %i.z = alloca [72 x i8], align 8                ; 19 uses
   %i.aa = alloca [72 x i8], align 8               ; 12 uses
@@ -1882,12 +1882,12 @@ bb.a:
   %i.bo = alloca [72 x i8], align 8               ; 10 uses
   %i.bp = alloca [40 x i8], align 8               ; 8 uses
   %i.bq = alloca [72 x i8], align 8               ; 9 uses
-  %i.br = alloca [72 x i8], align 8               ; 11 uses
+  %i.br = alloca [72 x i8], align 8               ; 12 uses
   %i.bs = alloca [40 x i8], align 8               ; 8 uses
-  %i.bt = alloca [72 x i8], align 8               ; 10 uses
-  %i.bu = alloca [72 x i8], align 8               ; 11 uses
+  %i.bt = alloca [72 x i8], align 8               ; 11 uses
+  %i.bu = alloca [72 x i8], align 8               ; 12 uses
   %i.bv = alloca [40 x i8], align 8               ; 8 uses
-  %i.bw = alloca [72 x i8], align 8               ; 10 uses
+  %i.bw = alloca [72 x i8], align 8               ; 11 uses
   %i.bx = alloca [40 x i8], align 8               ; 8 uses
   %i.by = alloca [72 x i8], align 8               ; 19 uses
   %i.bz = alloca [72 x i8], align 8               ; 12 uses
@@ -1945,15 +1945,15 @@ bb.a:
   %i.dz = alloca [72 x i8], align 8               ; 10 uses
   %i.ea = alloca [40 x i8], align 8               ; 8 uses
   %i.eb = alloca [72 x i8], align 8               ; 9 uses
-  %i.ec = alloca [72 x i8], align 8               ; 11 uses
+  %i.ec = alloca [72 x i8], align 8               ; 12 uses
   %i.ed = alloca [40 x i8], align 8               ; 8 uses
-  %i.ee = alloca [72 x i8], align 8               ; 10 uses
-  %i.ef = alloca [72 x i8], align 8               ; 11 uses
+  %i.ee = alloca [72 x i8], align 8               ; 11 uses
+  %i.ef = alloca [72 x i8], align 8               ; 12 uses
   %i.eg = alloca [40 x i8], align 8               ; 8 uses
-  %i.eh = alloca [72 x i8], align 8               ; 10 uses
-  %i.ei = alloca [72 x i8], align 8               ; 11 uses
+  %i.eh = alloca [72 x i8], align 8               ; 11 uses
+  %i.ei = alloca [72 x i8], align 8               ; 12 uses
   %i.ej = alloca [40 x i8], align 8               ; 8 uses
-  %i.ek = alloca [72 x i8], align 8               ; 10 uses
+  %i.ek = alloca [72 x i8], align 8               ; 11 uses
   %i.el = alloca [40 x i8], align 8               ; 8 uses
   %i.em = alloca [72 x i8], align 8               ; 19 uses
   %i.en = alloca [72 x i8], align 8               ; 12 uses
@@ -1964,9 +1964,9 @@ bb.a:
   %i.es = alloca [72 x i8], align 8               ; 11 uses
   %i.et = alloca [40 x i8], align 8               ; 8 uses
   %i.eu = alloca [72 x i8], align 8               ; 4 uses
-  %i.ev = alloca [72 x i8], align 8               ; 11 uses
+  %i.ev = alloca [72 x i8], align 8               ; 12 uses
   %i.ew = alloca [40 x i8], align 8               ; 8 uses
-  %i.ex = alloca [72 x i8], align 8               ; 10 uses
+  %i.ex = alloca [72 x i8], align 8               ; 11 uses
   switch i8 %1, label %bb.b [
     i8 1, label %bb.c
     i8 2, label %bb.p
@@ -2095,7 +2095,9 @@ bb.m:                                             ; preds = %bb.j
 
 bb.n:                                             ; preds = %bb.m
   %.sroa.624.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.ev, i64 16
-  %4 = load <2 x i64>, ptr %.sroa.624.0..sroa_idx.i.i.i, align 8, !noalias !31429
+  %.sroa.624.0.copyload.i.i.i = load i64, ptr %.sroa.624.0..sroa_idx.i.i.i, align 8, !noalias !31429
+  %.sroa.725.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.ev, i64 24
+  %.sroa.725.0.copyload.i.i.i = load i64, ptr %.sroa.725.0..sroa_idx.i.i.i, align 8, !noalias !31429
   %.sroa.826.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.ev, i64 32
   %.sroa.826.0.copyload.i.i.i = load i64, ptr %.sroa.826.0..sroa_idx.i.i.i, align 8, !noalias !31429
   %.sroa.927.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.ev, i64 40
@@ -2120,15 +2122,18 @@ _RINvMs4_NtCs2TwJzntlzha_11flatbuffers8verifierNtB6_8Verifier20verify_union_vari
   %.sroa.16.1.i = phi i64 [ 3, %bb.c ], [ 3, %bb.e ], [ 3, %bb.d ], [ undef, %bb.o ], [ %.sroa.16.40.copyload.i, %bb.n ]
   %.sroa.14.1.i = phi i64 [ ptrtoint (ptr @12 to i64), %bb.c ], [ undef, %bb.e ], [ %i.fb, %bb.d ], [ undef, %bb.o ], [ %.sroa.14.40.copyload.i, %bb.n ]
   %.sroa.12.1.i = phi i64 [ -9223372036854775808, %bb.c ], [ undef, %bb.e ], [ %3, %bb.d ], [ undef, %bb.o ], [ %.sroa.826.0.copyload.i.i.i, %bb.n ]
-  %.sroa.0.0.i.a = phi i64 [ -9223372036854775804, %bb.c ], [ -9223372036854775800, %bb.e ], [ -9223372036854775803, %bb.d ], [ -9223372036854775798, %bb.o ], [ %i.ge, %bb.n ]
-  %5 = phi <2 x i64> [ <i64 8, i64 0>, %bb.c ], [ <i64 8, i64 0>, %bb.e ], [ <i64 8, i64 0>, %bb.d ], [ undef, %bb.o ], [ %4, %bb.n ]
+  %.sroa.10.1.i = phi i64 [ 0, %bb.c ], [ 0, %bb.e ], [ 0, %bb.d ], [ undef, %bb.o ], [ %.sroa.725.0.copyload.i.i.i, %bb.n ]
+  %.sroa.0.0.i.a = phi i64 [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.c ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.e ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.d ], [ undef, %bb.o ], [ %.sroa.624.0.copyload.i.i.i, %bb.n ]
+  %.sroa.0.0.i = phi i64 [ -9223372036854775804, %bb.c ], [ -9223372036854775800, %bb.e ], [ -9223372036854775803, %bb.d ], [ -9223372036854775798, %bb.o ], [ %i.ge, %bb.n ]
   %i.gk = phi <2 x i64> [ %i.fa, %bb.c ], [ %i.fa, %bb.e ], [ %i.fa, %bb.d ], [ undef, %bb.o ], [ %i.gg, %bb.n ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ex), !noalias !31435
-  store i64 %.sroa.0.0.i.a, ptr %i.ex, align 8, !noalias !31435
+  store i64 %.sroa.0.0.i, ptr %i.ex, align 8, !noalias !31435
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ex, i64 8
   store ptr %.sroa.5.1.i, ptr %.sroa.5.0..sroa_idx.i, align 8, !noalias !31435
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ex, i64 16
-  store <2 x i64> %5, ptr %.sroa.8.0..sroa_idx.i, align 8, !noalias !31435
+  store i64 %.sroa.0.0.i.a, ptr %.sroa.8.0..sroa_idx.i, align 8, !noalias !31435
+  %.sroa.10.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ex, i64 24
+  store i64 %.sroa.10.1.i, ptr %.sroa.10.0..sroa_idx.i, align 8, !noalias !31435
   %.sroa.12.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ex, i64 32
   store i64 %.sroa.12.1.i, ptr %.sroa.12.0..sroa_idx.i, align 8, !noalias !31435
   %.sroa.14.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ex, i64 40
@@ -2470,7 +2475,7 @@ _RINvMs4_NtCs2TwJzntlzha_11flatbuffers8verifierNtB6_8Verifier20verify_union_vari
   %.sroa.17.2.i = phi i64 [ %.sroa.17.1.i19, %_RNvXs2e_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_13FloatingPointNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ undef, %bb.s ], [ %i.gs, %bb.r ], [ ptrtoint (ptr @12 to i64), %bb.q ]
   %.sroa.15.2.i = phi i64 [ %.sroa.15.1.i, %_RNvXs2e_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_13FloatingPointNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ undef, %bb.s ], [ %3, %bb.r ], [ -9223372036854775808, %bb.q ]
   %.sroa.13.2.i = phi i64 [ %.sroa.13.1.i, %_RNvXs2e_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_13FloatingPointNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ 0, %bb.s ], [ 0, %bb.r ], [ 0, %bb.q ]
-  %.sroa.11.2.i = phi i64 [ %.sroa.11.1.i, %_RNvXs2e_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_13FloatingPointNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ 8, %bb.s ], [ 8, %bb.r ], [ 8, %bb.q ]
+  %.sroa.11.2.i = phi i64 [ %.sroa.11.1.i, %_RNvXs2e_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_13FloatingPointNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.s ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.r ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.q ]
   %.sroa.0.2.i = phi i64 [ %.sroa.0.1.i, %_RNvXs2e_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_13FloatingPointNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ -9223372036854775800, %bb.s ], [ -9223372036854775803, %bb.r ], [ -9223372036854775804, %bb.q ]
   %i.jf = phi <2 x i64> [ %i.je, %_RNvXs2e_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_13FloatingPointNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ %i.gr, %bb.s ], [ %i.gr, %bb.r ], [ %i.gr, %bb.q ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.es), !noalias !31495
@@ -2599,7 +2604,9 @@ bb.bb:                                            ; preds = %bb.ay
 
 bb.bc:                                            ; preds = %bb.bb
   %.sroa.624.0..sroa_idx.i.i.i52 = getelementptr inbounds nuw i8, ptr %i.ei, i64 16
-  %6 = load <2 x i64>, ptr %.sroa.624.0..sroa_idx.i.i.i52, align 8, !noalias !31518
+  %.sroa.624.0.copyload.i.i.i53 = load i64, ptr %.sroa.624.0..sroa_idx.i.i.i52, align 8, !noalias !31518
+  %.sroa.725.0..sroa_idx.i.i.i54 = getelementptr inbounds nuw i8, ptr %i.ei, i64 24
+  %.sroa.725.0.copyload.i.i.i55 = load i64, ptr %.sroa.725.0..sroa_idx.i.i.i54, align 8, !noalias !31518
   %.sroa.826.0..sroa_idx.i.i.i56 = getelementptr inbounds nuw i8, ptr %i.ei, i64 32
   %.sroa.826.0.copyload.i.i.i57 = load i64, ptr %.sroa.826.0..sroa_idx.i.i.i56, align 8, !noalias !31518
   %.sroa.927.0..sroa_idx.i.i.i58 = getelementptr inbounds nuw i8, ptr %i.ei, i64 40
@@ -2624,15 +2631,18 @@ _RINvMs4_NtCs2TwJzntlzha_11flatbuffers8verifierNtB6_8Verifier20verify_union_vari
   %.sroa.16.1.i23 = phi i64 [ 3, %bb.ar ], [ 3, %bb.at ], [ 3, %bb.as ], [ undef, %bb.bd ], [ %.sroa.16.40.copyload.i61, %bb.bc ]
   %.sroa.14.1.i24 = phi i64 [ ptrtoint (ptr @12 to i64), %bb.ar ], [ undef, %bb.at ], [ %i.jl, %bb.as ], [ undef, %bb.bd ], [ %.sroa.14.40.copyload.i59, %bb.bc ]
   %.sroa.12.1.i25 = phi i64 [ -9223372036854775808, %bb.ar ], [ undef, %bb.at ], [ %3, %bb.as ], [ undef, %bb.bd ], [ %.sroa.826.0.copyload.i.i.i57, %bb.bc ]
-  %.sroa.0.0.i28.a = phi i64 [ -9223372036854775804, %bb.ar ], [ -9223372036854775800, %bb.at ], [ -9223372036854775803, %bb.as ], [ -9223372036854775798, %bb.bd ], [ %i.ko, %bb.bc ]
-  %7 = phi <2 x i64> [ <i64 8, i64 0>, %bb.ar ], [ <i64 8, i64 0>, %bb.at ], [ <i64 8, i64 0>, %bb.as ], [ undef, %bb.bd ], [ %6, %bb.bc ]
+  %.sroa.10.1.i26 = phi i64 [ 0, %bb.ar ], [ 0, %bb.at ], [ 0, %bb.as ], [ undef, %bb.bd ], [ %.sroa.725.0.copyload.i.i.i55, %bb.bc ]
+  %.sroa.0.0.i28.a = phi i64 [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.ar ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.at ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.as ], [ undef, %bb.bd ], [ %.sroa.624.0.copyload.i.i.i53, %bb.bc ]
+  %.sroa.0.0.i28 = phi i64 [ -9223372036854775804, %bb.ar ], [ -9223372036854775800, %bb.at ], [ -9223372036854775803, %bb.as ], [ -9223372036854775798, %bb.bd ], [ %i.ko, %bb.bc ]
   %i.ku = phi <2 x i64> [ %i.jk, %bb.ar ], [ %i.jk, %bb.at ], [ %i.jk, %bb.as ], [ undef, %bb.bd ], [ %i.kq, %bb.bc ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ek), !noalias !31524
-  store i64 %.sroa.0.0.i28.a, ptr %i.ek, align 8, !noalias !31524
+  store i64 %.sroa.0.0.i28, ptr %i.ek, align 8, !noalias !31524
   %.sroa.5.0..sroa_idx.i29 = getelementptr inbounds nuw i8, ptr %i.ek, i64 8
   store ptr %.sroa.5.1.i20, ptr %.sroa.5.0..sroa_idx.i29, align 8, !noalias !31524
   %.sroa.8.0..sroa_idx.i30 = getelementptr inbounds nuw i8, ptr %i.ek, i64 16
-  store <2 x i64> %7, ptr %.sroa.8.0..sroa_idx.i30, align 8, !noalias !31524
+  store i64 %.sroa.0.0.i28.a, ptr %.sroa.8.0..sroa_idx.i30, align 8, !noalias !31524
+  %.sroa.10.0..sroa_idx.i31 = getelementptr inbounds nuw i8, ptr %i.ek, i64 24
+  store i64 %.sroa.10.1.i26, ptr %.sroa.10.0..sroa_idx.i31, align 8, !noalias !31524
   %.sroa.12.0..sroa_idx.i32 = getelementptr inbounds nuw i8, ptr %i.ek, i64 32
   store i64 %.sroa.12.1.i25, ptr %.sroa.12.0..sroa_idx.i32, align 8, !noalias !31524
   %.sroa.14.0..sroa_idx.i33 = getelementptr inbounds nuw i8, ptr %i.ek, i64 40
@@ -2751,7 +2761,9 @@ bb.bo:                                            ; preds = %bb.bl
 
 bb.bp:                                            ; preds = %bb.bo
   %.sroa.624.0..sroa_idx.i.i.i98 = getelementptr inbounds nuw i8, ptr %i.ef, i64 16
-  %8 = load <2 x i64>, ptr %.sroa.624.0..sroa_idx.i.i.i98, align 8, !noalias !31547
+  %.sroa.624.0.copyload.i.i.i99 = load i64, ptr %.sroa.624.0..sroa_idx.i.i.i98, align 8, !noalias !31547
+  %.sroa.725.0..sroa_idx.i.i.i100 = getelementptr inbounds nuw i8, ptr %i.ef, i64 24
+  %.sroa.725.0.copyload.i.i.i101 = load i64, ptr %.sroa.725.0..sroa_idx.i.i.i100, align 8, !noalias !31547
   %.sroa.826.0..sroa_idx.i.i.i102 = getelementptr inbounds nuw i8, ptr %i.ef, i64 32
   %.sroa.826.0.copyload.i.i.i103 = load i64, ptr %.sroa.826.0..sroa_idx.i.i.i102, align 8, !noalias !31547
   %.sroa.927.0..sroa_idx.i.i.i104 = getelementptr inbounds nuw i8, ptr %i.ef, i64 40
@@ -2776,15 +2788,18 @@ _RINvMs4_NtCs2TwJzntlzha_11flatbuffers8verifierNtB6_8Verifier20verify_union_vari
   %.sroa.16.1.i69 = phi i64 [ 3, %bb.be ], [ 3, %bb.bg ], [ 3, %bb.bf ], [ undef, %bb.bq ], [ %.sroa.16.40.copyload.i107, %bb.bp ]
   %.sroa.14.1.i70 = phi i64 [ ptrtoint (ptr @12 to i64), %bb.be ], [ undef, %bb.bg ], [ %i.la, %bb.bf ], [ undef, %bb.bq ], [ %.sroa.14.40.copyload.i105, %bb.bp ]
   %.sroa.12.1.i71 = phi i64 [ -9223372036854775808, %bb.be ], [ undef, %bb.bg ], [ %3, %bb.bf ], [ undef, %bb.bq ], [ %.sroa.826.0.copyload.i.i.i103, %bb.bp ]
-  %.sroa.0.0.i74.a = phi i64 [ -9223372036854775804, %bb.be ], [ -9223372036854775800, %bb.bg ], [ -9223372036854775803, %bb.bf ], [ -9223372036854775798, %bb.bq ], [ %i.md, %bb.bp ]
-  %9 = phi <2 x i64> [ <i64 8, i64 0>, %bb.be ], [ <i64 8, i64 0>, %bb.bg ], [ <i64 8, i64 0>, %bb.bf ], [ undef, %bb.bq ], [ %8, %bb.bp ]
+  %.sroa.10.1.i72 = phi i64 [ 0, %bb.be ], [ 0, %bb.bg ], [ 0, %bb.bf ], [ undef, %bb.bq ], [ %.sroa.725.0.copyload.i.i.i101, %bb.bp ]
+  %.sroa.0.0.i74.a = phi i64 [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.be ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.bg ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.bf ], [ undef, %bb.bq ], [ %.sroa.624.0.copyload.i.i.i99, %bb.bp ]
+  %.sroa.0.0.i74 = phi i64 [ -9223372036854775804, %bb.be ], [ -9223372036854775800, %bb.bg ], [ -9223372036854775803, %bb.bf ], [ -9223372036854775798, %bb.bq ], [ %i.md, %bb.bp ]
   %i.mj = phi <2 x i64> [ %i.kz, %bb.be ], [ %i.kz, %bb.bg ], [ %i.kz, %bb.bf ], [ undef, %bb.bq ], [ %i.mf, %bb.bp ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.eh), !noalias !31553
-  store i64 %.sroa.0.0.i74.a, ptr %i.eh, align 8, !noalias !31553
+  store i64 %.sroa.0.0.i74, ptr %i.eh, align 8, !noalias !31553
   %.sroa.5.0..sroa_idx.i75 = getelementptr inbounds nuw i8, ptr %i.eh, i64 8
   store ptr %.sroa.5.1.i66, ptr %.sroa.5.0..sroa_idx.i75, align 8, !noalias !31553
   %.sroa.8.0..sroa_idx.i76 = getelementptr inbounds nuw i8, ptr %i.eh, i64 16
-  store <2 x i64> %9, ptr %.sroa.8.0..sroa_idx.i76, align 8, !noalias !31553
+  store i64 %.sroa.0.0.i74.a, ptr %.sroa.8.0..sroa_idx.i76, align 8, !noalias !31553
+  %.sroa.10.0..sroa_idx.i77 = getelementptr inbounds nuw i8, ptr %i.eh, i64 24
+  store i64 %.sroa.10.1.i72, ptr %.sroa.10.0..sroa_idx.i77, align 8, !noalias !31553
   %.sroa.12.0..sroa_idx.i78 = getelementptr inbounds nuw i8, ptr %i.eh, i64 32
   store i64 %.sroa.12.1.i71, ptr %.sroa.12.0..sroa_idx.i78, align 8, !noalias !31553
   %.sroa.14.0..sroa_idx.i79 = getelementptr inbounds nuw i8, ptr %i.eh, i64 40
@@ -2903,7 +2918,9 @@ bb.cb:                                            ; preds = %bb.by
 
 bb.cc:                                            ; preds = %bb.cb
   %.sroa.624.0..sroa_idx.i.i.i144 = getelementptr inbounds nuw i8, ptr %i.ec, i64 16
-  %10 = load <2 x i64>, ptr %.sroa.624.0..sroa_idx.i.i.i144, align 8, !noalias !31576
+  %.sroa.624.0.copyload.i.i.i145 = load i64, ptr %.sroa.624.0..sroa_idx.i.i.i144, align 8, !noalias !31576
+  %.sroa.725.0..sroa_idx.i.i.i146 = getelementptr inbounds nuw i8, ptr %i.ec, i64 24
+  %.sroa.725.0.copyload.i.i.i147 = load i64, ptr %.sroa.725.0..sroa_idx.i.i.i146, align 8, !noalias !31576
   %.sroa.826.0..sroa_idx.i.i.i148 = getelementptr inbounds nuw i8, ptr %i.ec, i64 32
   %.sroa.826.0.copyload.i.i.i149 = load i64, ptr %.sroa.826.0..sroa_idx.i.i.i148, align 8, !noalias !31576
   %.sroa.927.0..sroa_idx.i.i.i150 = getelementptr inbounds nuw i8, ptr %i.ec, i64 40
@@ -2928,15 +2945,18 @@ _RINvMs4_NtCs2TwJzntlzha_11flatbuffers8verifierNtB6_8Verifier20verify_union_vari
   %.sroa.16.1.i115 = phi i64 [ 3, %bb.br ], [ 3, %bb.bt ], [ 3, %bb.bs ], [ undef, %bb.cd ], [ %.sroa.16.40.copyload.i153, %bb.cc ]
   %.sroa.14.1.i116 = phi i64 [ ptrtoint (ptr @12 to i64), %bb.br ], [ undef, %bb.bt ], [ %i.mp, %bb.bs ], [ undef, %bb.cd ], [ %.sroa.14.40.copyload.i151, %bb.cc ]
   %.sroa.12.1.i117 = phi i64 [ -9223372036854775808, %bb.br ], [ undef, %bb.bt ], [ %3, %bb.bs ], [ undef, %bb.cd ], [ %.sroa.826.0.copyload.i.i.i149, %bb.cc ]
-  %.sroa.0.0.i120.a = phi i64 [ -9223372036854775804, %bb.br ], [ -9223372036854775800, %bb.bt ], [ -9223372036854775803, %bb.bs ], [ -9223372036854775798, %bb.cd ], [ %i.ns, %bb.cc ]
-  %11 = phi <2 x i64> [ <i64 8, i64 0>, %bb.br ], [ <i64 8, i64 0>, %bb.bt ], [ <i64 8, i64 0>, %bb.bs ], [ undef, %bb.cd ], [ %10, %bb.cc ]
+  %.sroa.10.1.i118 = phi i64 [ 0, %bb.br ], [ 0, %bb.bt ], [ 0, %bb.bs ], [ undef, %bb.cd ], [ %.sroa.725.0.copyload.i.i.i147, %bb.cc ]
+  %.sroa.0.0.i120.a = phi i64 [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.br ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.bt ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.bs ], [ undef, %bb.cd ], [ %.sroa.624.0.copyload.i.i.i145, %bb.cc ]
+  %.sroa.0.0.i120 = phi i64 [ -9223372036854775804, %bb.br ], [ -9223372036854775800, %bb.bt ], [ -9223372036854775803, %bb.bs ], [ -9223372036854775798, %bb.cd ], [ %i.ns, %bb.cc ]
   %i.ny = phi <2 x i64> [ %i.mo, %bb.br ], [ %i.mo, %bb.bt ], [ %i.mo, %bb.bs ], [ undef, %bb.cd ], [ %i.nu, %bb.cc ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ee), !noalias !31582
-  store i64 %.sroa.0.0.i120.a, ptr %i.ee, align 8, !noalias !31582
+  store i64 %.sroa.0.0.i120, ptr %i.ee, align 8, !noalias !31582
   %.sroa.5.0..sroa_idx.i121 = getelementptr inbounds nuw i8, ptr %i.ee, i64 8
   store ptr %.sroa.5.1.i112, ptr %.sroa.5.0..sroa_idx.i121, align 8, !noalias !31582
   %.sroa.8.0..sroa_idx.i122 = getelementptr inbounds nuw i8, ptr %i.ee, i64 16
-  store <2 x i64> %11, ptr %.sroa.8.0..sroa_idx.i122, align 8, !noalias !31582
+  store i64 %.sroa.0.0.i120.a, ptr %.sroa.8.0..sroa_idx.i122, align 8, !noalias !31582
+  %.sroa.10.0..sroa_idx.i123 = getelementptr inbounds nuw i8, ptr %i.ee, i64 24
+  store i64 %.sroa.10.1.i118, ptr %.sroa.10.0..sroa_idx.i123, align 8, !noalias !31582
   %.sroa.12.0..sroa_idx.i124 = getelementptr inbounds nuw i8, ptr %i.ee, i64 32
   store i64 %.sroa.12.1.i117, ptr %.sroa.12.0..sroa_idx.i124, align 8, !noalias !31582
   %.sroa.14.0..sroa_idx.i125 = getelementptr inbounds nuw i8, ptr %i.ee, i64 40
@@ -3339,7 +3359,7 @@ _RNvXs3c_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_7DecimalNtNtCs2TwJzntlzha_1
 
 _RINvMs4_NtCs2TwJzntlzha_11flatbuffers8verifierNtB6_8Verifier20verify_union_variantINtNtB8_10primitives15ForwardsUOffsetNtNtNtCsdl0l68gAy31_9arrow_ipc3gen6Schema7DecimalEReECs14kWLkQVSKO_14deltalake_core.exit: ; preds = %bb.ce, %bb.cf, %bb.cg, %_RNvXs3c_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_7DecimalNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i
   %.sroa.9.sroa.8.2.i = phi i64 [ %i.tt, %_RNvXs3c_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_7DecimalNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ 0, %bb.cg ], [ 0, %bb.cf ], [ 0, %bb.ce ]
-  %.sroa.15.2.i158 = phi i64 [ %.sroa.15.1.i175, %_RNvXs3c_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_7DecimalNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ 8, %bb.cg ], [ 8, %bb.cf ], [ 8, %bb.ce ]
+  %.sroa.15.2.i158 = phi i64 [ %.sroa.15.1.i175, %_RNvXs3c_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_7DecimalNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.cg ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.cf ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.ce ]
   %.sroa.0.2.i159 = phi i64 [ %.sroa.0.1.i176, %_RNvXs3c_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_7DecimalNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ -9223372036854775800, %bb.cg ], [ -9223372036854775803, %bb.cf ], [ -9223372036854775804, %bb.ce ]
   %i.tu = phi <2 x i64> [ %i.tp, %_RNvXs3c_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_7DecimalNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ <i64 0, i64 undef>, %bb.cg ], [ %i.oi, %bb.cf ], [ <i64 0, i64 -9223372036854775808>, %bb.ce ]
   %i.tv = phi <2 x i64> [ %i.tq, %_RNvXs3c_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_7DecimalNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ <i64 undef, i64 3>, %bb.cg ], [ %i.oj, %bb.cf ], [ <i64 ptrtoint (ptr @12 to i64), i64 3>, %bb.ce ]
@@ -3671,7 +3691,7 @@ _RINvMs4_NtCs2TwJzntlzha_11flatbuffers8verifierNtB6_8Verifier20verify_union_vari
   %.sroa.17.2.i211 = phi i64 [ %.sroa.17.1.i257, %_RNvXs3i_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_4DateNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ undef, %bb.ej ], [ %i.uc, %bb.ei ], [ ptrtoint (ptr @12 to i64), %bb.eh ]
   %.sroa.15.2.i212 = phi i64 [ %.sroa.15.1.i258, %_RNvXs3i_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_4DateNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ undef, %bb.ej ], [ %3, %bb.ei ], [ -9223372036854775808, %bb.eh ]
   %.sroa.13.2.i213 = phi i64 [ %.sroa.13.1.i259, %_RNvXs3i_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_4DateNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ 0, %bb.ej ], [ 0, %bb.ei ], [ 0, %bb.eh ]
-  %.sroa.11.2.i214 = phi i64 [ %.sroa.11.1.i260, %_RNvXs3i_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_4DateNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ 8, %bb.ej ], [ 8, %bb.ei ], [ 8, %bb.eh ]
+  %.sroa.11.2.i214 = phi i64 [ %.sroa.11.1.i260, %_RNvXs3i_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_4DateNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.ej ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.ei ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.eh ]
   %.sroa.0.2.i215 = phi i64 [ %.sroa.0.1.i261, %_RNvXs3i_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_4DateNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ -9223372036854775800, %bb.ej ], [ -9223372036854775803, %bb.ei ], [ -9223372036854775804, %bb.eh ]
   %i.wp = phi <2 x i64> [ %i.wo, %_RNvXs3i_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_4DateNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ %i.ub, %bb.ej ], [ %i.ub, %bb.ei ], [ %i.ub, %bb.eh ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dj), !noalias !31751
@@ -4074,7 +4094,7 @@ _RNvXs3o_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_4TimeNtNtCs2TwJzntlzha_11fl
 
 _RINvMs4_NtCs2TwJzntlzha_11flatbuffers8verifierNtB6_8Verifier20verify_union_variantINtNtB8_10primitives15ForwardsUOffsetNtNtNtCsdl0l68gAy31_9arrow_ipc3gen6Schema4TimeEReECs14kWLkQVSKO_14deltalake_core.exit: ; preds = %bb.fi, %bb.fj, %bb.fk, %_RNvXs3o_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_4TimeNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i
   %.sroa.8.sroa.7.2.i = phi i64 [ %i.abc, %_RNvXs3o_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_4TimeNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ 0, %bb.fk ], [ 0, %bb.fj ], [ 0, %bb.fi ]
-  %.sroa.13.2.i322 = phi i64 [ %.sroa.13.1.i350, %_RNvXs3o_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_4TimeNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ 8, %bb.fk ], [ 8, %bb.fj ], [ 8, %bb.fi ]
+  %.sroa.13.2.i322 = phi i64 [ %.sroa.13.1.i350, %_RNvXs3o_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_4TimeNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.fk ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.fj ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.fi ]
   %.sroa.0.2.i323 = phi i64 [ %.sroa.0.1.i351, %_RNvXs3o_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_4TimeNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ -9223372036854775800, %bb.fk ], [ -9223372036854775803, %bb.fj ], [ -9223372036854775804, %bb.fi ]
   %i.abd = phi <2 x i64> [ %i.aay, %_RNvXs3o_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_4TimeNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ <i64 0, i64 undef>, %bb.fk ], [ %i.wz, %bb.fj ], [ <i64 0, i64 -9223372036854775808>, %bb.fi ]
   %i.abe = phi <2 x i64> [ %i.aaz, %_RNvXs3o_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_4TimeNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ <i64 undef, i64 3>, %bb.fk ], [ %i.xa, %bb.fj ], [ <i64 ptrtoint (ptr @12 to i64), i64 3>, %bb.fi ]
@@ -4433,7 +4453,7 @@ _RINvMs4_NtCs2TwJzntlzha_11flatbuffers8verifierNtB6_8Verifier20verify_union_vari
   %.sroa.8.sroa.7.2.i387 = phi i64 [ %i.aej, %_RNvXs3u_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_9TimestampNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ 0, %bb.gz ], [ 0, %bb.gy ], [ 0, %bb.gx ]
   %.sroa.19.2.i392 = phi i64 [ %.sroa.19.1.i440, %_RNvXs3u_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_9TimestampNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ undef, %bb.gz ], [ %3, %bb.gy ], [ -9223372036854775808, %bb.gx ]
   %.sroa.16.2.i393 = phi i64 [ %.sroa.16.1.i441, %_RNvXs3u_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_9TimestampNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ 0, %bb.gz ], [ 0, %bb.gy ], [ 0, %bb.gx ]
-  %.sroa.13.2.i394 = phi i64 [ %.sroa.13.1.i442, %_RNvXs3u_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_9TimestampNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ 8, %bb.gz ], [ 8, %bb.gy ], [ 8, %bb.gx ]
+  %.sroa.13.2.i394 = phi i64 [ %.sroa.13.1.i442, %_RNvXs3u_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_9TimestampNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.gz ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.gy ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.gx ]
   %.sroa.0.2.i395 = phi i64 [ %.sroa.0.1.i443, %_RNvXs3u_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_9TimestampNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ -9223372036854775800, %bb.gz ], [ -9223372036854775803, %bb.gy ], [ -9223372036854775804, %bb.gx ]
   %i.aek = phi <2 x i64> [ %i.aeg, %_RNvXs3u_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_9TimestampNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ <i64 undef, i64 3>, %bb.gz ], [ %i.abp, %bb.gy ], [ <i64 ptrtoint (ptr @12 to i64), i64 3>, %bb.gx ]
   %i.ael = phi <2 x i64> [ %i.aeh, %_RNvXs3u_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_9TimestampNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ %i.abk, %bb.gz ], [ %i.abk, %bb.gy ], [ %i.abk, %bb.gx ]
@@ -4766,7 +4786,7 @@ _RINvMs4_NtCs2TwJzntlzha_11flatbuffers8verifierNtB6_8Verifier20verify_union_vari
   %.sroa.17.2.i480 = phi i64 [ %.sroa.17.1.i526, %_RNvXs3A_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_8IntervalNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ undef, %bb.ic ], [ %i.aer, %bb.ib ], [ ptrtoint (ptr @12 to i64), %bb.ia ]
   %.sroa.15.2.i481 = phi i64 [ %.sroa.15.1.i527, %_RNvXs3A_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_8IntervalNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ undef, %bb.ic ], [ %3, %bb.ib ], [ -9223372036854775808, %bb.ia ]
   %.sroa.13.2.i482 = phi i64 [ %.sroa.13.1.i528, %_RNvXs3A_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_8IntervalNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ 0, %bb.ic ], [ 0, %bb.ib ], [ 0, %bb.ia ]
-  %.sroa.11.2.i483 = phi i64 [ %.sroa.11.1.i529, %_RNvXs3A_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_8IntervalNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ 8, %bb.ic ], [ 8, %bb.ib ], [ 8, %bb.ia ]
+  %.sroa.11.2.i483 = phi i64 [ %.sroa.11.1.i529, %_RNvXs3A_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_8IntervalNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.ic ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.ib ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.ia ]
   %.sroa.0.2.i484 = phi i64 [ %.sroa.0.1.i530, %_RNvXs3A_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_8IntervalNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ -9223372036854775800, %bb.ic ], [ -9223372036854775803, %bb.ib ], [ -9223372036854775804, %bb.ia ]
   %i.ahe = phi <2 x i64> [ %i.ahd, %_RNvXs3A_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_8IntervalNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ %i.aeq, %bb.ic ], [ %i.aeq, %bb.ib ], [ %i.aeq, %bb.ia ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ce), !noalias !31944
@@ -4895,7 +4915,9 @@ bb.jl:                                            ; preds = %bb.ji
 
 bb.jm:                                            ; preds = %bb.jl
   %.sroa.624.0..sroa_idx.i.i.i620 = getelementptr inbounds nuw i8, ptr %i.bu, i64 16
-  %12 = load <2 x i64>, ptr %.sroa.624.0..sroa_idx.i.i.i620, align 8, !noalias !31967
+  %.sroa.624.0.copyload.i.i.i621 = load i64, ptr %.sroa.624.0..sroa_idx.i.i.i620, align 8, !noalias !31967
+  %.sroa.725.0..sroa_idx.i.i.i622 = getelementptr inbounds nuw i8, ptr %i.bu, i64 24
+  %.sroa.725.0.copyload.i.i.i623 = load i64, ptr %.sroa.725.0..sroa_idx.i.i.i622, align 8, !noalias !31967
   %.sroa.826.0..sroa_idx.i.i.i624 = getelementptr inbounds nuw i8, ptr %i.bu, i64 32
   %.sroa.826.0.copyload.i.i.i625 = load i64, ptr %.sroa.826.0..sroa_idx.i.i.i624, align 8, !noalias !31967
   %.sroa.927.0..sroa_idx.i.i.i626 = getelementptr inbounds nuw i8, ptr %i.bu, i64 40
@@ -4920,15 +4942,18 @@ _RINvMs4_NtCs2TwJzntlzha_11flatbuffers8verifierNtB6_8Verifier20verify_union_vari
   %.sroa.16.1.i591 = phi i64 [ 3, %bb.jb ], [ 3, %bb.jd ], [ 3, %bb.jc ], [ undef, %bb.jn ], [ %.sroa.16.40.copyload.i629, %bb.jm ]
   %.sroa.14.1.i592 = phi i64 [ ptrtoint (ptr @12 to i64), %bb.jb ], [ undef, %bb.jd ], [ %i.ahk, %bb.jc ], [ undef, %bb.jn ], [ %.sroa.14.40.copyload.i627, %bb.jm ]
   %.sroa.12.1.i593 = phi i64 [ -9223372036854775808, %bb.jb ], [ undef, %bb.jd ], [ %3, %bb.jc ], [ undef, %bb.jn ], [ %.sroa.826.0.copyload.i.i.i625, %bb.jm ]
-  %.sroa.0.0.i596.a = phi i64 [ -9223372036854775804, %bb.jb ], [ -9223372036854775800, %bb.jd ], [ -9223372036854775803, %bb.jc ], [ -9223372036854775798, %bb.jn ], [ %i.ain, %bb.jm ]
-  %13 = phi <2 x i64> [ <i64 8, i64 0>, %bb.jb ], [ <i64 8, i64 0>, %bb.jd ], [ <i64 8, i64 0>, %bb.jc ], [ undef, %bb.jn ], [ %12, %bb.jm ]
+  %.sroa.10.1.i594 = phi i64 [ 0, %bb.jb ], [ 0, %bb.jd ], [ 0, %bb.jc ], [ undef, %bb.jn ], [ %.sroa.725.0.copyload.i.i.i623, %bb.jm ]
+  %.sroa.0.0.i596.a = phi i64 [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.jb ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.jd ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.jc ], [ undef, %bb.jn ], [ %.sroa.624.0.copyload.i.i.i621, %bb.jm ]
+  %.sroa.0.0.i596 = phi i64 [ -9223372036854775804, %bb.jb ], [ -9223372036854775800, %bb.jd ], [ -9223372036854775803, %bb.jc ], [ -9223372036854775798, %bb.jn ], [ %i.ain, %bb.jm ]
   %i.ait = phi <2 x i64> [ %i.ahj, %bb.jb ], [ %i.ahj, %bb.jd ], [ %i.ahj, %bb.jc ], [ undef, %bb.jn ], [ %i.aip, %bb.jm ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bw), !noalias !31973
-  store i64 %.sroa.0.0.i596.a, ptr %i.bw, align 8, !noalias !31973
+  store i64 %.sroa.0.0.i596, ptr %i.bw, align 8, !noalias !31973
   %.sroa.5.0..sroa_idx.i597 = getelementptr inbounds nuw i8, ptr %i.bw, i64 8
   store ptr %.sroa.5.1.i588, ptr %.sroa.5.0..sroa_idx.i597, align 8, !noalias !31973
   %.sroa.8.0..sroa_idx.i598 = getelementptr inbounds nuw i8, ptr %i.bw, i64 16
-  store <2 x i64> %13, ptr %.sroa.8.0..sroa_idx.i598, align 8, !noalias !31973
+  store i64 %.sroa.0.0.i596.a, ptr %.sroa.8.0..sroa_idx.i598, align 8, !noalias !31973
+  %.sroa.10.0..sroa_idx.i599 = getelementptr inbounds nuw i8, ptr %i.bw, i64 24
+  store i64 %.sroa.10.1.i594, ptr %.sroa.10.0..sroa_idx.i599, align 8, !noalias !31973
   %.sroa.12.0..sroa_idx.i600 = getelementptr inbounds nuw i8, ptr %i.bw, i64 32
   store i64 %.sroa.12.1.i593, ptr %.sroa.12.0..sroa_idx.i600, align 8, !noalias !31973
   %.sroa.14.0..sroa_idx.i601 = getelementptr inbounds nuw i8, ptr %i.bw, i64 40
@@ -5047,7 +5072,9 @@ bb.jy:                                            ; preds = %bb.jv
 
 bb.jz:                                            ; preds = %bb.jy
   %.sroa.624.0..sroa_idx.i.i.i666 = getelementptr inbounds nuw i8, ptr %i.br, i64 16
-  %14 = load <2 x i64>, ptr %.sroa.624.0..sroa_idx.i.i.i666, align 8, !noalias !31996
+  %.sroa.624.0.copyload.i.i.i667 = load i64, ptr %.sroa.624.0..sroa_idx.i.i.i666, align 8, !noalias !31996
+  %.sroa.725.0..sroa_idx.i.i.i668 = getelementptr inbounds nuw i8, ptr %i.br, i64 24
+  %.sroa.725.0.copyload.i.i.i669 = load i64, ptr %.sroa.725.0..sroa_idx.i.i.i668, align 8, !noalias !31996
   %.sroa.826.0..sroa_idx.i.i.i670 = getelementptr inbounds nuw i8, ptr %i.br, i64 32
   %.sroa.826.0.copyload.i.i.i671 = load i64, ptr %.sroa.826.0..sroa_idx.i.i.i670, align 8, !noalias !31996
   %.sroa.927.0..sroa_idx.i.i.i672 = getelementptr inbounds nuw i8, ptr %i.br, i64 40
@@ -5072,15 +5099,18 @@ _RINvMs4_NtCs2TwJzntlzha_11flatbuffers8verifierNtB6_8Verifier20verify_union_vari
   %.sroa.16.1.i637 = phi i64 [ 3, %bb.jo ], [ 3, %bb.jq ], [ 3, %bb.jp ], [ undef, %bb.ka ], [ %.sroa.16.40.copyload.i675, %bb.jz ]
   %.sroa.14.1.i638 = phi i64 [ ptrtoint (ptr @12 to i64), %bb.jo ], [ undef, %bb.jq ], [ %i.aiz, %bb.jp ], [ undef, %bb.ka ], [ %.sroa.14.40.copyload.i673, %bb.jz ]
   %.sroa.12.1.i639 = phi i64 [ -9223372036854775808, %bb.jo ], [ undef, %bb.jq ], [ %3, %bb.jp ], [ undef, %bb.ka ], [ %.sroa.826.0.copyload.i.i.i671, %bb.jz ]
-  %.sroa.0.0.i642.a = phi i64 [ -9223372036854775804, %bb.jo ], [ -9223372036854775800, %bb.jq ], [ -9223372036854775803, %bb.jp ], [ -9223372036854775798, %bb.ka ], [ %i.akc, %bb.jz ]
-  %15 = phi <2 x i64> [ <i64 8, i64 0>, %bb.jo ], [ <i64 8, i64 0>, %bb.jq ], [ <i64 8, i64 0>, %bb.jp ], [ undef, %bb.ka ], [ %14, %bb.jz ]
+  %.sroa.10.1.i640 = phi i64 [ 0, %bb.jo ], [ 0, %bb.jq ], [ 0, %bb.jp ], [ undef, %bb.ka ], [ %.sroa.725.0.copyload.i.i.i669, %bb.jz ]
+  %.sroa.0.0.i642.a = phi i64 [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.jo ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.jq ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.jp ], [ undef, %bb.ka ], [ %.sroa.624.0.copyload.i.i.i667, %bb.jz ]
+  %.sroa.0.0.i642 = phi i64 [ -9223372036854775804, %bb.jo ], [ -9223372036854775800, %bb.jq ], [ -9223372036854775803, %bb.jp ], [ -9223372036854775798, %bb.ka ], [ %i.akc, %bb.jz ]
   %i.aki = phi <2 x i64> [ %i.aiy, %bb.jo ], [ %i.aiy, %bb.jq ], [ %i.aiy, %bb.jp ], [ undef, %bb.ka ], [ %i.ake, %bb.jz ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bt), !noalias !32002
-  store i64 %.sroa.0.0.i642.a, ptr %i.bt, align 8, !noalias !32002
+  store i64 %.sroa.0.0.i642, ptr %i.bt, align 8, !noalias !32002
   %.sroa.5.0..sroa_idx.i643 = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
   store ptr %.sroa.5.1.i634, ptr %.sroa.5.0..sroa_idx.i643, align 8, !noalias !32002
   %.sroa.8.0..sroa_idx.i644 = getelementptr inbounds nuw i8, ptr %i.bt, i64 16
-  store <2 x i64> %15, ptr %.sroa.8.0..sroa_idx.i644, align 8, !noalias !32002
+  store i64 %.sroa.0.0.i642.a, ptr %.sroa.8.0..sroa_idx.i644, align 8, !noalias !32002
+  %.sroa.10.0..sroa_idx.i645 = getelementptr inbounds nuw i8, ptr %i.bt, i64 24
+  store i64 %.sroa.10.1.i640, ptr %.sroa.10.0..sroa_idx.i645, align 8, !noalias !32002
   %.sroa.12.0..sroa_idx.i646 = getelementptr inbounds nuw i8, ptr %i.bt, i64 32
   store i64 %.sroa.12.1.i639, ptr %.sroa.12.0..sroa_idx.i646, align 8, !noalias !32002
   %.sroa.14.0..sroa_idx.i647 = getelementptr inbounds nuw i8, ptr %i.bt, i64 40
@@ -5483,7 +5513,7 @@ _RNvXs22_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_5UnionNtNtCs2TwJzntlzha_11f
 
 _RINvMs4_NtCs2TwJzntlzha_11flatbuffers8verifierNtB6_8Verifier20verify_union_variantINtNtB8_10primitives15ForwardsUOffsetNtNtNtCsdl0l68gAy31_9arrow_ipc3gen6Schema5UnionEReECs14kWLkQVSKO_14deltalake_core.exit: ; preds = %bb.kb, %bb.kc, %bb.kd, %_RNvXs22_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_5UnionNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i
   %.sroa.8.sroa.7.2.i680 = phi i64 [ %i.apm, %_RNvXs22_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_5UnionNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ 0, %bb.kd ], [ 0, %bb.kc ], [ 0, %bb.kb ]
-  %.sroa.13.2.i687 = phi i64 [ %.sroa.13.1.i735, %_RNvXs22_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_5UnionNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ 8, %bb.kd ], [ 8, %bb.kc ], [ 8, %bb.kb ]
+  %.sroa.13.2.i687 = phi i64 [ %.sroa.13.1.i735, %_RNvXs22_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_5UnionNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.kd ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.kc ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.kb ]
   %.sroa.0.2.i688 = phi i64 [ %.sroa.0.1.i736, %_RNvXs22_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_5UnionNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ -9223372036854775800, %bb.kd ], [ -9223372036854775803, %bb.kc ], [ -9223372036854775804, %bb.kb ]
   %i.apn = phi <2 x i64> [ %i.api, %_RNvXs22_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_5UnionNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ <i64 0, i64 undef>, %bb.kd ], [ %i.aks, %bb.kc ], [ <i64 0, i64 -9223372036854775808>, %bb.kb ]
   %i.apo = phi <2 x i64> [ %i.apj, %_RNvXs22_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_5UnionNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ <i64 undef, i64 3>, %bb.kd ], [ %i.akt, %bb.kc ], [ <i64 ptrtoint (ptr @12 to i64), i64 3>, %bb.kb ]
@@ -5815,7 +5845,7 @@ _RINvMs4_NtCs2TwJzntlzha_11flatbuffers8verifierNtB6_8Verifier20verify_union_vari
   %.sroa.17.2.i810 = phi i64 [ %.sroa.17.1.i856, %_RNvXs2U_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_15FixedSizeBinaryNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ undef, %bb.lx ], [ %i.apv, %bb.lw ], [ ptrtoint (ptr @12 to i64), %bb.lv ]
   %.sroa.15.2.i811 = phi i64 [ %.sroa.15.1.i857, %_RNvXs2U_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_15FixedSizeBinaryNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ undef, %bb.lx ], [ %3, %bb.lw ], [ -9223372036854775808, %bb.lv ]
   %.sroa.13.2.i812 = phi i64 [ %.sroa.13.1.i858, %_RNvXs2U_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_15FixedSizeBinaryNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ 0, %bb.lx ], [ 0, %bb.lw ], [ 0, %bb.lv ]
-  %.sroa.11.2.i813 = phi i64 [ %.sroa.11.1.i859, %_RNvXs2U_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_15FixedSizeBinaryNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ 8, %bb.lx ], [ 8, %bb.lw ], [ 8, %bb.lv ]
+  %.sroa.11.2.i813 = phi i64 [ %.sroa.11.1.i859, %_RNvXs2U_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_15FixedSizeBinaryNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.lx ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.lw ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.lv ]
   %.sroa.0.2.i814 = phi i64 [ %.sroa.0.1.i860, %_RNvXs2U_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_15FixedSizeBinaryNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ -9223372036854775800, %bb.lx ], [ -9223372036854775803, %bb.lw ], [ -9223372036854775804, %bb.lv ]
   %i.asi = phi <2 x i64> [ %i.ash, %_RNvXs2U_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_15FixedSizeBinaryNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ %i.apu, %bb.lx ], [ %i.apu, %bb.lw ], [ %i.apu, %bb.lv ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bd), !noalias !32145
@@ -6149,7 +6179,7 @@ _RINvMs4_NtCs2TwJzntlzha_11flatbuffers8verifierNtB6_8Verifier20verify_union_vari
   %.sroa.17.2.i922 = phi i64 [ %.sroa.17.1.i968, %_RNvXs1Q_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_13FixedSizeListNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ undef, %bb.my ], [ %i.aso, %bb.mx ], [ ptrtoint (ptr @12 to i64), %bb.mw ]
   %.sroa.15.2.i923 = phi i64 [ %.sroa.15.1.i969, %_RNvXs1Q_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_13FixedSizeListNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ undef, %bb.my ], [ %3, %bb.mx ], [ -9223372036854775808, %bb.mw ]
   %.sroa.13.2.i924 = phi i64 [ %.sroa.13.1.i970, %_RNvXs1Q_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_13FixedSizeListNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ 0, %bb.my ], [ 0, %bb.mx ], [ 0, %bb.mw ]
-  %.sroa.11.2.i925 = phi i64 [ %.sroa.11.1.i971, %_RNvXs1Q_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_13FixedSizeListNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ 8, %bb.my ], [ 8, %bb.mx ], [ 8, %bb.mw ]
+  %.sroa.11.2.i925 = phi i64 [ %.sroa.11.1.i971, %_RNvXs1Q_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_13FixedSizeListNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.my ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.mx ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.mw ]
   %.sroa.0.2.i926 = phi i64 [ %.sroa.0.1.i972, %_RNvXs1Q_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_13FixedSizeListNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ -9223372036854775800, %bb.my ], [ -9223372036854775803, %bb.mx ], [ -9223372036854775804, %bb.mw ]
   %i.avb = phi <2 x i64> [ %i.ava, %_RNvXs1Q_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_13FixedSizeListNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ %i.asn, %bb.my ], [ %i.asn, %bb.mx ], [ %i.asn, %bb.mw ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.av), !noalias !32203
@@ -6460,7 +6490,7 @@ _RINvMs4_NtCs2TwJzntlzha_11flatbuffers8verifierNtB6_8Verifier20verify_union_vari
   %.sroa.17.2.i1034 = phi i64 [ %.sroa.17.1.i1080, %_RNvXs1W_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_3MapNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ undef, %bb.nz ], [ %i.avh, %bb.ny ], [ ptrtoint (ptr @12 to i64), %bb.nx ]
   %.sroa.15.2.i1035 = phi i64 [ %.sroa.15.1.i1081, %_RNvXs1W_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_3MapNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ undef, %bb.nz ], [ %3, %bb.ny ], [ -9223372036854775808, %bb.nx ]
   %.sroa.13.2.i1036 = phi i64 [ %.sroa.13.1.i1082, %_RNvXs1W_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_3MapNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ 0, %bb.nz ], [ 0, %bb.ny ], [ 0, %bb.nx ]
-  %.sroa.11.2.i1037 = phi i64 [ %.sroa.11.1.i1083, %_RNvXs1W_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_3MapNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ 8, %bb.nz ], [ 8, %bb.ny ], [ 8, %bb.nx ]
+  %.sroa.11.2.i1037 = phi i64 [ %.sroa.11.1.i1083, %_RNvXs1W_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_3MapNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.nz ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.ny ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.nx ]
   %.sroa.0.2.i1038 = phi i64 [ %.sroa.0.1.i1084, %_RNvXs1W_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_3MapNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ -9223372036854775800, %bb.nz ], [ -9223372036854775803, %bb.ny ], [ -9223372036854775804, %bb.nx ]
   %i.axs = phi <2 x i64> [ %i.axr, %_RNvXs1W_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_3MapNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ %i.avg, %bb.nz ], [ %i.avg, %bb.ny ], [ %i.avg, %bb.nx ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.an), !noalias !32261
@@ -6794,7 +6824,7 @@ _RINvMs4_NtCs2TwJzntlzha_11flatbuffers8verifierNtB6_8Verifier20verify_union_vari
   %.sroa.17.2.i1139 = phi i64 [ %.sroa.17.1.i1185, %_RNvXs3G_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_8DurationNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ undef, %bb.oy ], [ %i.axy, %bb.ox ], [ ptrtoint (ptr @12 to i64), %bb.ow ]
   %.sroa.15.2.i1140 = phi i64 [ %.sroa.15.1.i1186, %_RNvXs3G_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_8DurationNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ undef, %bb.oy ], [ %3, %bb.ox ], [ -9223372036854775808, %bb.ow ]
   %.sroa.13.2.i1141 = phi i64 [ %.sroa.13.1.i1187, %_RNvXs3G_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_8DurationNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ 0, %bb.oy ], [ 0, %bb.ox ], [ 0, %bb.ow ]
-  %.sroa.11.2.i1142 = phi i64 [ %.sroa.11.1.i1188, %_RNvXs3G_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_8DurationNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ 8, %bb.oy ], [ 8, %bb.ox ], [ 8, %bb.ow ]
+  %.sroa.11.2.i1142 = phi i64 [ %.sroa.11.1.i1188, %_RNvXs3G_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_8DurationNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.oy ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.ox ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.ow ]
   %.sroa.0.2.i1143 = phi i64 [ %.sroa.0.1.i1189, %_RNvXs3G_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_8DurationNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ -9223372036854775800, %bb.oy ], [ -9223372036854775803, %bb.ox ], [ -9223372036854775804, %bb.ow ]
   %i.bal = phi <2 x i64> [ %i.bak, %_RNvXs3G_NtNtCsdl0l68gAy31_9arrow_ipc3gen6SchemaNtB6_8DurationNtNtCs2TwJzntlzha_11flatbuffers8verifier10Verifiable12run_verifier.exit.i.i ], [ %i.axx, %bb.oy ], [ %i.axx, %bb.ox ], [ %i.axx, %bb.ow ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.af), !noalias !32316
@@ -6923,7 +6953,9 @@ bb.qh:                                            ; preds = %bb.qe
 
 bb.qi:                                            ; preds = %bb.qh
   %.sroa.624.0..sroa_idx.i.i.i1279 = getelementptr inbounds nuw i8, ptr %i.v, i64 16
-  %16 = load <2 x i64>, ptr %.sroa.624.0..sroa_idx.i.i.i1279, align 8, !noalias !32339
+  %.sroa.624.0.copyload.i.i.i1280 = load i64, ptr %.sroa.624.0..sroa_idx.i.i.i1279, align 8, !noalias !32339
+  %.sroa.725.0..sroa_idx.i.i.i1281 = getelementptr inbounds nuw i8, ptr %i.v, i64 24
+  %.sroa.725.0.copyload.i.i.i1282 = load i64, ptr %.sroa.725.0..sroa_idx.i.i.i1281, align 8, !noalias !32339
   %.sroa.826.0..sroa_idx.i.i.i1283 = getelementptr inbounds nuw i8, ptr %i.v, i64 32
   %.sroa.826.0.copyload.i.i.i1284 = load i64, ptr %.sroa.826.0..sroa_idx.i.i.i1283, align 8, !noalias !32339
   %.sroa.927.0..sroa_idx.i.i.i1285 = getelementptr inbounds nuw i8, ptr %i.v, i64 40
@@ -6948,15 +6980,18 @@ _RINvMs4_NtCs2TwJzntlzha_11flatbuffers8verifierNtB6_8Verifier20verify_union_vari
   %.sroa.16.1.i1250 = phi i64 [ 3, %bb.px ], [ 3, %bb.pz ], [ 3, %bb.py ], [ undef, %bb.qj ], [ %.sroa.16.40.copyload.i1288, %bb.qi ]
   %.sroa.14.1.i1251 = phi i64 [ ptrtoint (ptr @12 to i64), %bb.px ], [ undef, %bb.pz ], [ %i.bar, %bb.py ], [ undef, %bb.qj ], [ %.sroa.14.40.copyload.i1286, %bb.qi ]
   %.sroa.12.1.i1252 = phi i64 [ -9223372036854775808, %bb.px ], [ undef, %bb.pz ], [ %3, %bb.py ], [ undef, %bb.qj ], [ %.sroa.826.0.copyload.i.i.i1284, %bb.qi ]
-  %.sroa.0.0.i1255.a = phi i64 [ -9223372036854775804, %bb.px ], [ -9223372036854775800, %bb.pz ], [ -9223372036854775803, %bb.py ], [ -9223372036854775798, %bb.qj ], [ %i.bbu, %bb.qi ]
-  %17 = phi <2 x i64> [ <i64 8, i64 0>, %bb.px ], [ <i64 8, i64 0>, %bb.pz ], [ <i64 8, i64 0>, %bb.py ], [ undef, %bb.qj ], [ %16, %bb.qi ]
+  %.sroa.10.1.i1253 = phi i64 [ 0, %bb.px ], [ 0, %bb.pz ], [ 0, %bb.py ], [ undef, %bb.qj ], [ %.sroa.725.0.copyload.i.i.i1282, %bb.qi ]
+  %.sroa.0.0.i1255.a = phi i64 [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.px ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.pz ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.py ], [ undef, %bb.qj ], [ %.sroa.624.0.copyload.i.i.i1280, %bb.qi ]
+  %.sroa.0.0.i1255 = phi i64 [ -9223372036854775804, %bb.px ], [ -9223372036854775800, %bb.pz ], [ -9223372036854775803, %bb.py ], [ -9223372036854775798, %bb.qj ], [ %i.bbu, %bb.qi ]
   %i.bca = phi <2 x i64> [ %i.baq, %bb.px ], [ %i.baq, %bb.pz ], [ %i.baq, %bb.py ], [ undef, %bb.qj ], [ %i.bbw, %bb.qi ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.x), !noalias !32345
-  store i64 %.sroa.0.0.i1255.a, ptr %i.x, align 8, !noalias !32345
+  store i64 %.sroa.0.0.i1255, ptr %i.x, align 8, !noalias !32345
   %.sroa.5.0..sroa_idx.i1256 = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   store ptr %.sroa.5.1.i1247, ptr %.sroa.5.0..sroa_idx.i1256, align 8, !noalias !32345
   %.sroa.8.0..sroa_idx.i1257 = getelementptr inbounds nuw i8, ptr %i.x, i64 16
-  store <2 x i64> %17, ptr %.sroa.8.0..sroa_idx.i1257, align 8, !noalias !32345
+  store i64 %.sroa.0.0.i1255.a, ptr %.sroa.8.0..sroa_idx.i1257, align 8, !noalias !32345
+  %.sroa.10.0..sroa_idx.i1258 = getelementptr inbounds nuw i8, ptr %i.x, i64 24
+  store i64 %.sroa.10.1.i1253, ptr %.sroa.10.0..sroa_idx.i1258, align 8, !noalias !32345
   %.sroa.12.0..sroa_idx.i1259 = getelementptr inbounds nuw i8, ptr %i.x, i64 32
   store i64 %.sroa.12.1.i1252, ptr %.sroa.12.0..sroa_idx.i1259, align 8, !noalias !32345
   %.sroa.14.0..sroa_idx.i1260 = getelementptr inbounds nuw i8, ptr %i.x, i64 40
@@ -7075,7 +7110,9 @@ bb.qu:                                            ; preds = %bb.qr
 
 bb.qv:                                            ; preds = %bb.qu
   %.sroa.624.0..sroa_idx.i.i.i1325 = getelementptr inbounds nuw i8, ptr %i.s, i64 16
-  %18 = load <2 x i64>, ptr %.sroa.624.0..sroa_idx.i.i.i1325, align 8, !noalias !32368
+  %.sroa.624.0.copyload.i.i.i1326 = load i64, ptr %.sroa.624.0..sroa_idx.i.i.i1325, align 8, !noalias !32368
+  %.sroa.725.0..sroa_idx.i.i.i1327 = getelementptr inbounds nuw i8, ptr %i.s, i64 24
+  %.sroa.725.0.copyload.i.i.i1328 = load i64, ptr %.sroa.725.0..sroa_idx.i.i.i1327, align 8, !noalias !32368
   %.sroa.826.0..sroa_idx.i.i.i1329 = getelementptr inbounds nuw i8, ptr %i.s, i64 32
   %.sroa.826.0.copyload.i.i.i1330 = load i64, ptr %.sroa.826.0..sroa_idx.i.i.i1329, align 8, !noalias !32368
   %.sroa.927.0..sroa_idx.i.i.i1331 = getelementptr inbounds nuw i8, ptr %i.s, i64 40
@@ -7100,15 +7137,18 @@ _RINvMs4_NtCs2TwJzntlzha_11flatbuffers8verifierNtB6_8Verifier20verify_union_vari
   %.sroa.16.1.i1296 = phi i64 [ 3, %bb.qk ], [ 3, %bb.qm ], [ 3, %bb.ql ], [ undef, %bb.qw ], [ %.sroa.16.40.copyload.i1334, %bb.qv ]
   %.sroa.14.1.i1297 = phi i64 [ ptrtoint (ptr @12 to i64), %bb.qk ], [ undef, %bb.qm ], [ %i.bcg, %bb.ql ], [ undef, %bb.qw ], [ %.sroa.14.40.copyload.i1332, %bb.qv ]
   %.sroa.12.1.i1298 = phi i64 [ -9223372036854775808, %bb.qk ], [ undef, %bb.qm ], [ %3, %bb.ql ], [ undef, %bb.qw ], [ %.sroa.826.0.copyload.i.i.i1330, %bb.qv ]
-  %.sroa.0.0.i1301.a = phi i64 [ -9223372036854775804, %bb.qk ], [ -9223372036854775800, %bb.qm ], [ -9223372036854775803, %bb.ql ], [ -9223372036854775798, %bb.qw ], [ %i.bdj, %bb.qv ]
-  %19 = phi <2 x i64> [ <i64 8, i64 0>, %bb.qk ], [ <i64 8, i64 0>, %bb.qm ], [ <i64 8, i64 0>, %bb.ql ], [ undef, %bb.qw ], [ %18, %bb.qv ]
+  %.sroa.10.1.i1299 = phi i64 [ 0, %bb.qk ], [ 0, %bb.qm ], [ 0, %bb.ql ], [ undef, %bb.qw ], [ %.sroa.725.0.copyload.i.i.i1328, %bb.qv ]
+  %.sroa.0.0.i1301.a = phi i64 [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.qk ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.qm ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.ql ], [ undef, %bb.qw ], [ %.sroa.624.0.copyload.i.i.i1326, %bb.qv ]
+  %.sroa.0.0.i1301 = phi i64 [ -9223372036854775804, %bb.qk ], [ -9223372036854775800, %bb.qm ], [ -9223372036854775803, %bb.ql ], [ -9223372036854775798, %bb.qw ], [ %i.bdj, %bb.qv ]
   %i.bdp = phi <2 x i64> [ %i.bcf, %bb.qk ], [ %i.bcf, %bb.qm ], [ %i.bcf, %bb.ql ], [ undef, %bb.qw ], [ %i.bdl, %bb.qv ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u), !noalias !32374
-  store i64 %.sroa.0.0.i1301.a, ptr %i.u, align 8, !noalias !32374
+  store i64 %.sroa.0.0.i1301, ptr %i.u, align 8, !noalias !32374
   %.sroa.5.0..sroa_idx.i1302 = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   store ptr %.sroa.5.1.i1293, ptr %.sroa.5.0..sroa_idx.i1302, align 8, !noalias !32374
   %.sroa.8.0..sroa_idx.i1303 = getelementptr inbounds nuw i8, ptr %i.u, i64 16
-  store <2 x i64> %19, ptr %.sroa.8.0..sroa_idx.i1303, align 8, !noalias !32374
+  store i64 %.sroa.0.0.i1301.a, ptr %.sroa.8.0..sroa_idx.i1303, align 8, !noalias !32374
+  %.sroa.10.0..sroa_idx.i1304 = getelementptr inbounds nuw i8, ptr %i.u, i64 24
+  store i64 %.sroa.10.1.i1299, ptr %.sroa.10.0..sroa_idx.i1304, align 8, !noalias !32374
   %.sroa.12.0..sroa_idx.i1305 = getelementptr inbounds nuw i8, ptr %i.u, i64 32
   store i64 %.sroa.12.1.i1298, ptr %.sroa.12.0..sroa_idx.i1305, align 8, !noalias !32374
   %.sroa.14.0..sroa_idx.i1306 = getelementptr inbounds nuw i8, ptr %i.u, i64 40
@@ -7227,7 +7267,9 @@ bb.rh:                                            ; preds = %bb.re
 
 bb.ri:                                            ; preds = %bb.rh
   %.sroa.624.0..sroa_idx.i.i.i1371 = getelementptr inbounds nuw i8, ptr %i.p, i64 16
-  %20 = load <2 x i64>, ptr %.sroa.624.0..sroa_idx.i.i.i1371, align 8, !noalias !32397
+  %.sroa.624.0.copyload.i.i.i1372 = load i64, ptr %.sroa.624.0..sroa_idx.i.i.i1371, align 8, !noalias !32397
+  %.sroa.725.0..sroa_idx.i.i.i1373 = getelementptr inbounds nuw i8, ptr %i.p, i64 24
+  %.sroa.725.0.copyload.i.i.i1374 = load i64, ptr %.sroa.725.0..sroa_idx.i.i.i1373, align 8, !noalias !32397
   %.sroa.826.0..sroa_idx.i.i.i1375 = getelementptr inbounds nuw i8, ptr %i.p, i64 32
   %.sroa.826.0.copyload.i.i.i1376 = load i64, ptr %.sroa.826.0..sroa_idx.i.i.i1375, align 8, !noalias !32397
   %.sroa.927.0..sroa_idx.i.i.i1377 = getelementptr inbounds nuw i8, ptr %i.p, i64 40
@@ -7252,15 +7294,18 @@ _RINvMs4_NtCs2TwJzntlzha_11flatbuffers8verifierNtB6_8Verifier20verify_union_vari
   %.sroa.16.1.i1342 = phi i64 [ 3, %bb.qx ], [ 3, %bb.qz ], [ 3, %bb.qy ], [ undef, %bb.rj ], [ %.sroa.16.40.copyload.i1380, %bb.ri ]
   %.sroa.14.1.i1343 = phi i64 [ ptrtoint (ptr @12 to i64), %bb.qx ], [ undef, %bb.qz ], [ %i.bdv, %bb.qy ], [ undef, %bb.rj ], [ %.sroa.14.40.copyload.i1378, %bb.ri ]
   %.sroa.12.1.i1344 = phi i64 [ -9223372036854775808, %bb.qx ], [ undef, %bb.qz ], [ %3, %bb.qy ], [ undef, %bb.rj ], [ %.sroa.826.0.copyload.i.i.i1376, %bb.ri ]
-  %.sroa.0.0.i1347.a = phi i64 [ -9223372036854775804, %bb.qx ], [ -9223372036854775800, %bb.qz ], [ -9223372036854775803, %bb.qy ], [ -9223372036854775798, %bb.rj ], [ %i.bey, %bb.ri ]
-  %21 = phi <2 x i64> [ <i64 8, i64 0>, %bb.qx ], [ <i64 8, i64 0>, %bb.qz ], [ <i64 8, i64 0>, %bb.qy ], [ undef, %bb.rj ], [ %20, %bb.ri ]
+  %.sroa.10.1.i1345 = phi i64 [ 0, %bb.qx ], [ 0, %bb.qz ], [ 0, %bb.qy ], [ undef, %bb.rj ], [ %.sroa.725.0.copyload.i.i.i1374, %bb.ri ]
+  %.sroa.0.0.i1347.a = phi i64 [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.qx ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.qz ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.qy ], [ undef, %bb.rj ], [ %.sroa.624.0.copyload.i.i.i1372, %bb.ri ]
+  %.sroa.0.0.i1347 = phi i64 [ -9223372036854775804, %bb.qx ], [ -9223372036854775800, %bb.qz ], [ -9223372036854775803, %bb.qy ], [ -9223372036854775798, %bb.rj ], [ %i.bey, %bb.ri ]
   %i.bfe = phi <2 x i64> [ %i.bdu, %bb.qx ], [ %i.bdu, %bb.qz ], [ %i.bdu, %bb.qy ], [ undef, %bb.rj ], [ %i.bfa, %bb.ri ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !noalias !32403
-  store i64 %.sroa.0.0.i1347.a, ptr %i.r, align 8, !noalias !32403
+  store i64 %.sroa.0.0.i1347, ptr %i.r, align 8, !noalias !32403
   %.sroa.5.0..sroa_idx.i1348 = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   store ptr %.sroa.5.1.i1339, ptr %.sroa.5.0..sroa_idx.i1348, align 8, !noalias !32403
   %.sroa.8.0..sroa_idx.i1349 = getelementptr inbounds nuw i8, ptr %i.r, i64 16
-  store <2 x i64> %21, ptr %.sroa.8.0..sroa_idx.i1349, align 8, !noalias !32403
+  store i64 %.sroa.0.0.i1347.a, ptr %.sroa.8.0..sroa_idx.i1349, align 8, !noalias !32403
+  %.sroa.10.0..sroa_idx.i1350 = getelementptr inbounds nuw i8, ptr %i.r, i64 24
+  store i64 %.sroa.10.1.i1345, ptr %.sroa.10.0..sroa_idx.i1350, align 8, !noalias !32403
   %.sroa.12.0..sroa_idx.i1351 = getelementptr inbounds nuw i8, ptr %i.r, i64 32
   store i64 %.sroa.12.1.i1344, ptr %.sroa.12.0..sroa_idx.i1351, align 8, !noalias !32403
   %.sroa.14.0..sroa_idx.i1352 = getelementptr inbounds nuw i8, ptr %i.r, i64 40
@@ -7379,7 +7424,9 @@ bb.ru:                                            ; preds = %bb.rr
 
 bb.rv:                                            ; preds = %bb.ru
   %.sroa.624.0..sroa_idx.i.i.i1417 = getelementptr inbounds nuw i8, ptr %i.m, i64 16
-  %22 = load <2 x i64>, ptr %.sroa.624.0..sroa_idx.i.i.i1417, align 8, !noalias !32426
+  %.sroa.624.0.copyload.i.i.i1418 = load i64, ptr %.sroa.624.0..sroa_idx.i.i.i1417, align 8, !noalias !32426
+  %.sroa.725.0..sroa_idx.i.i.i1419 = getelementptr inbounds nuw i8, ptr %i.m, i64 24
+  %.sroa.725.0.copyload.i.i.i1420 = load i64, ptr %.sroa.725.0..sroa_idx.i.i.i1419, align 8, !noalias !32426
   %.sroa.826.0..sroa_idx.i.i.i1421 = getelementptr inbounds nuw i8, ptr %i.m, i64 32
   %.sroa.826.0.copyload.i.i.i1422 = load i64, ptr %.sroa.826.0..sroa_idx.i.i.i1421, align 8, !noalias !32426
   %.sroa.927.0..sroa_idx.i.i.i1423 = getelementptr inbounds nuw i8, ptr %i.m, i64 40
@@ -7404,15 +7451,18 @@ _RINvMs4_NtCs2TwJzntlzha_11flatbuffers8verifierNtB6_8Verifier20verify_union_vari
   %.sroa.16.1.i1388 = phi i64 [ 3, %bb.rk ], [ 3, %bb.rm ], [ 3, %bb.rl ], [ undef, %bb.rw ], [ %.sroa.16.40.copyload.i1426, %bb.rv ]
   %.sroa.14.1.i1389 = phi i64 [ ptrtoint (ptr @12 to i64), %bb.rk ], [ undef, %bb.rm ], [ %i.bfk, %bb.rl ], [ undef, %bb.rw ], [ %.sroa.14.40.copyload.i1424, %bb.rv ]
   %.sroa.12.1.i1390 = phi i64 [ -9223372036854775808, %bb.rk ], [ undef, %bb.rm ], [ %3, %bb.rl ], [ undef, %bb.rw ], [ %.sroa.826.0.copyload.i.i.i1422, %bb.rv ]
-  %.sroa.0.0.i1393.a = phi i64 [ -9223372036854775804, %bb.rk ], [ -9223372036854775800, %bb.rm ], [ -9223372036854775803, %bb.rl ], [ -9223372036854775798, %bb.rw ], [ %i.bgn, %bb.rv ]
-  %23 = phi <2 x i64> [ <i64 8, i64 0>, %bb.rk ], [ <i64 8, i64 0>, %bb.rm ], [ <i64 8, i64 0>, %bb.rl ], [ undef, %bb.rw ], [ %22, %bb.rv ]
+  %.sroa.10.1.i1391 = phi i64 [ 0, %bb.rk ], [ 0, %bb.rm ], [ 0, %bb.rl ], [ undef, %bb.rw ], [ %.sroa.725.0.copyload.i.i.i1420, %bb.rv ]
+  %.sroa.0.0.i1393.a = phi i64 [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.rk ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.rm ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.rl ], [ undef, %bb.rw ], [ %.sroa.624.0.copyload.i.i.i1418, %bb.rv ]
+  %.sroa.0.0.i1393 = phi i64 [ -9223372036854775804, %bb.rk ], [ -9223372036854775800, %bb.rm ], [ -9223372036854775803, %bb.rl ], [ -9223372036854775798, %bb.rw ], [ %i.bgn, %bb.rv ]
   %i.bgt = phi <2 x i64> [ %i.bfj, %bb.rk ], [ %i.bfj, %bb.rm ], [ %i.bfj, %bb.rl ], [ undef, %bb.rw ], [ %i.bgp, %bb.rv ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !32432
-  store i64 %.sroa.0.0.i1393.a, ptr %i.o, align 8, !noalias !32432
+  store i64 %.sroa.0.0.i1393, ptr %i.o, align 8, !noalias !32432
   %.sroa.5.0..sroa_idx.i1394 = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   store ptr %.sroa.5.1.i1385, ptr %.sroa.5.0..sroa_idx.i1394, align 8, !noalias !32432
   %.sroa.8.0..sroa_idx.i1395 = getelementptr inbounds nuw i8, ptr %i.o, i64 16
-  store <2 x i64> %23, ptr %.sroa.8.0..sroa_idx.i1395, align 8, !noalias !32432
+  store i64 %.sroa.0.0.i1393.a, ptr %.sroa.8.0..sroa_idx.i1395, align 8, !noalias !32432
+  %.sroa.10.0..sroa_idx.i1396 = getelementptr inbounds nuw i8, ptr %i.o, i64 24
+  store i64 %.sroa.10.1.i1391, ptr %.sroa.10.0..sroa_idx.i1396, align 8, !noalias !32432
   %.sroa.12.0..sroa_idx.i1397 = getelementptr inbounds nuw i8, ptr %i.o, i64 32
   store i64 %.sroa.12.1.i1390, ptr %.sroa.12.0..sroa_idx.i1397, align 8, !noalias !32432
   %.sroa.14.0..sroa_idx.i1398 = getelementptr inbounds nuw i8, ptr %i.o, i64 40
@@ -7531,7 +7581,9 @@ bb.sh:                                            ; preds = %bb.se
 
 bb.si:                                            ; preds = %bb.sh
   %.sroa.624.0..sroa_idx.i.i.i1463 = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  %24 = load <2 x i64>, ptr %.sroa.624.0..sroa_idx.i.i.i1463, align 8, !noalias !32455
+  %.sroa.624.0.copyload.i.i.i1464 = load i64, ptr %.sroa.624.0..sroa_idx.i.i.i1463, align 8, !noalias !32455
+  %.sroa.725.0..sroa_idx.i.i.i1465 = getelementptr inbounds nuw i8, ptr %i.j, i64 24
+  %.sroa.725.0.copyload.i.i.i1466 = load i64, ptr %.sroa.725.0..sroa_idx.i.i.i1465, align 8, !noalias !32455
   %.sroa.826.0..sroa_idx.i.i.i1467 = getelementptr inbounds nuw i8, ptr %i.j, i64 32
   %.sroa.826.0.copyload.i.i.i1468 = load i64, ptr %.sroa.826.0..sroa_idx.i.i.i1467, align 8, !noalias !32455
   %.sroa.927.0..sroa_idx.i.i.i1469 = getelementptr inbounds nuw i8, ptr %i.j, i64 40
@@ -7556,15 +7608,18 @@ _RINvMs4_NtCs2TwJzntlzha_11flatbuffers8verifierNtB6_8Verifier20verify_union_vari
   %.sroa.16.1.i1434 = phi i64 [ 3, %bb.rx ], [ 3, %bb.rz ], [ 3, %bb.ry ], [ undef, %bb.sj ], [ %.sroa.16.40.copyload.i1472, %bb.si ]
   %.sroa.14.1.i1435 = phi i64 [ ptrtoint (ptr @12 to i64), %bb.rx ], [ undef, %bb.rz ], [ %i.bgz, %bb.ry ], [ undef, %bb.sj ], [ %.sroa.14.40.copyload.i1470, %bb.si ]
   %.sroa.12.1.i1436 = phi i64 [ -9223372036854775808, %bb.rx ], [ undef, %bb.rz ], [ %3, %bb.ry ], [ undef, %bb.sj ], [ %.sroa.826.0.copyload.i.i.i1468, %bb.si ]
-  %.sroa.0.0.i1439.a = phi i64 [ -9223372036854775804, %bb.rx ], [ -9223372036854775800, %bb.rz ], [ -9223372036854775803, %bb.ry ], [ -9223372036854775798, %bb.sj ], [ %i.bic, %bb.si ]
-  %25 = phi <2 x i64> [ <i64 8, i64 0>, %bb.rx ], [ <i64 8, i64 0>, %bb.rz ], [ <i64 8, i64 0>, %bb.ry ], [ undef, %bb.sj ], [ %24, %bb.si ]
+  %.sroa.10.1.i1437 = phi i64 [ 0, %bb.rx ], [ 0, %bb.rz ], [ 0, %bb.ry ], [ undef, %bb.sj ], [ %.sroa.725.0.copyload.i.i.i1466, %bb.si ]
+  %.sroa.0.0.i1439.a = phi i64 [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.rx ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.rz ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.ry ], [ undef, %bb.sj ], [ %.sroa.624.0.copyload.i.i.i1464, %bb.si ]
+  %.sroa.0.0.i1439 = phi i64 [ -9223372036854775804, %bb.rx ], [ -9223372036854775800, %bb.rz ], [ -9223372036854775803, %bb.ry ], [ -9223372036854775798, %bb.sj ], [ %i.bic, %bb.si ]
   %i.bii = phi <2 x i64> [ %i.bgy, %bb.rx ], [ %i.bgy, %bb.rz ], [ %i.bgy, %bb.ry ], [ undef, %bb.sj ], [ %i.bie, %bb.si ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !32461
-  store i64 %.sroa.0.0.i1439.a, ptr %i.l, align 8, !noalias !32461
+  store i64 %.sroa.0.0.i1439, ptr %i.l, align 8, !noalias !32461
   %.sroa.5.0..sroa_idx.i1440 = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   store ptr %.sroa.5.1.i1431, ptr %.sroa.5.0..sroa_idx.i1440, align 8, !noalias !32461
   %.sroa.8.0..sroa_idx.i1441 = getelementptr inbounds nuw i8, ptr %i.l, i64 16
-  store <2 x i64> %25, ptr %.sroa.8.0..sroa_idx.i1441, align 8, !noalias !32461
+  store i64 %.sroa.0.0.i1439.a, ptr %.sroa.8.0..sroa_idx.i1441, align 8, !noalias !32461
+  %.sroa.10.0..sroa_idx.i1442 = getelementptr inbounds nuw i8, ptr %i.l, i64 24
+  store i64 %.sroa.10.1.i1437, ptr %.sroa.10.0..sroa_idx.i1442, align 8, !noalias !32461
   %.sroa.12.0..sroa_idx.i1443 = getelementptr inbounds nuw i8, ptr %i.l, i64 32
   store i64 %.sroa.12.1.i1436, ptr %.sroa.12.0..sroa_idx.i1443, align 8, !noalias !32461
   %.sroa.14.0..sroa_idx.i1444 = getelementptr inbounds nuw i8, ptr %i.l, i64 40
@@ -7683,7 +7738,9 @@ bb.su:                                            ; preds = %bb.sr
 
 bb.sv:                                            ; preds = %bb.su
   %.sroa.624.0..sroa_idx.i.i.i1509 = getelementptr inbounds nuw i8, ptr %i.g, i64 16
-  %26 = load <2 x i64>, ptr %.sroa.624.0..sroa_idx.i.i.i1509, align 8, !noalias !32484
+  %.sroa.624.0.copyload.i.i.i1510 = load i64, ptr %.sroa.624.0..sroa_idx.i.i.i1509, align 8, !noalias !32484
+  %.sroa.725.0..sroa_idx.i.i.i1511 = getelementptr inbounds nuw i8, ptr %i.g, i64 24
+  %.sroa.725.0.copyload.i.i.i1512 = load i64, ptr %.sroa.725.0..sroa_idx.i.i.i1511, align 8, !noalias !32484
   %.sroa.826.0..sroa_idx.i.i.i1513 = getelementptr inbounds nuw i8, ptr %i.g, i64 32
   %.sroa.826.0.copyload.i.i.i1514 = load i64, ptr %.sroa.826.0..sroa_idx.i.i.i1513, align 8, !noalias !32484
   %.sroa.927.0..sroa_idx.i.i.i1515 = getelementptr inbounds nuw i8, ptr %i.g, i64 40
@@ -7708,15 +7765,18 @@ _RINvMs4_NtCs2TwJzntlzha_11flatbuffers8verifierNtB6_8Verifier20verify_union_vari
   %.sroa.16.1.i1480 = phi i64 [ 3, %bb.sk ], [ 3, %bb.sm ], [ 3, %bb.sl ], [ undef, %bb.sw ], [ %.sroa.16.40.copyload.i1518, %bb.sv ]
   %.sroa.14.1.i1481 = phi i64 [ ptrtoint (ptr @12 to i64), %bb.sk ], [ undef, %bb.sm ], [ %i.bio, %bb.sl ], [ undef, %bb.sw ], [ %.sroa.14.40.copyload.i1516, %bb.sv ]
   %.sroa.12.1.i1482 = phi i64 [ -9223372036854775808, %bb.sk ], [ undef, %bb.sm ], [ %3, %bb.sl ], [ undef, %bb.sw ], [ %.sroa.826.0.copyload.i.i.i1514, %bb.sv ]
-  %.sroa.0.0.i1485.a = phi i64 [ -9223372036854775804, %bb.sk ], [ -9223372036854775800, %bb.sm ], [ -9223372036854775803, %bb.sl ], [ -9223372036854775798, %bb.sw ], [ %i.bjr, %bb.sv ]
-  %27 = phi <2 x i64> [ <i64 8, i64 0>, %bb.sk ], [ <i64 8, i64 0>, %bb.sm ], [ <i64 8, i64 0>, %bb.sl ], [ undef, %bb.sw ], [ %26, %bb.sv ]
+  %.sroa.10.1.i1483 = phi i64 [ 0, %bb.sk ], [ 0, %bb.sm ], [ 0, %bb.sl ], [ undef, %bb.sw ], [ %.sroa.725.0.copyload.i.i.i1512, %bb.sv ]
+  %.sroa.0.0.i1485.a = phi i64 [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.sk ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.sm ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.sl ], [ undef, %bb.sw ], [ %.sroa.624.0.copyload.i.i.i1510, %bb.sv ]
+  %.sroa.0.0.i1485 = phi i64 [ -9223372036854775804, %bb.sk ], [ -9223372036854775800, %bb.sm ], [ -9223372036854775803, %bb.sl ], [ -9223372036854775798, %bb.sw ], [ %i.bjr, %bb.sv ]
   %i.bjx = phi <2 x i64> [ %i.bin, %bb.sk ], [ %i.bin, %bb.sm ], [ %i.bin, %bb.sl ], [ undef, %bb.sw ], [ %i.bjt, %bb.sv ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !32490
-  store i64 %.sroa.0.0.i1485.a, ptr %i.i, align 8, !noalias !32490
+  store i64 %.sroa.0.0.i1485, ptr %i.i, align 8, !noalias !32490
   %.sroa.5.0..sroa_idx.i1486 = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   store ptr %.sroa.5.1.i1477, ptr %.sroa.5.0..sroa_idx.i1486, align 8, !noalias !32490
   %.sroa.8.0..sroa_idx.i1487 = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  store <2 x i64> %27, ptr %.sroa.8.0..sroa_idx.i1487, align 8, !noalias !32490
+  store i64 %.sroa.0.0.i1485.a, ptr %.sroa.8.0..sroa_idx.i1487, align 8, !noalias !32490
+  %.sroa.10.0..sroa_idx.i1488 = getelementptr inbounds nuw i8, ptr %i.i, i64 24
+  store i64 %.sroa.10.1.i1483, ptr %.sroa.10.0..sroa_idx.i1488, align 8, !noalias !32490
   %.sroa.12.0..sroa_idx.i1489 = getelementptr inbounds nuw i8, ptr %i.i, i64 32
   store i64 %.sroa.12.1.i1482, ptr %.sroa.12.0..sroa_idx.i1489, align 8, !noalias !32490
   %.sroa.14.0..sroa_idx.i1490 = getelementptr inbounds nuw i8, ptr %i.i, i64 40
@@ -7835,7 +7895,9 @@ bb.th:                                            ; preds = %bb.te
 
 bb.ti:                                            ; preds = %bb.th
   %.sroa.624.0..sroa_idx.i.i.i1555 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  %28 = load <2 x i64>, ptr %.sroa.624.0..sroa_idx.i.i.i1555, align 8, !noalias !32513
+  %.sroa.624.0.copyload.i.i.i1556 = load i64, ptr %.sroa.624.0..sroa_idx.i.i.i1555, align 8, !noalias !32513
+  %.sroa.725.0..sroa_idx.i.i.i1557 = getelementptr inbounds nuw i8, ptr %i.d, i64 24
+  %.sroa.725.0.copyload.i.i.i1558 = load i64, ptr %.sroa.725.0..sroa_idx.i.i.i1557, align 8, !noalias !32513
   %.sroa.826.0..sroa_idx.i.i.i1559 = getelementptr inbounds nuw i8, ptr %i.d, i64 32
   %.sroa.826.0.copyload.i.i.i1560 = load i64, ptr %.sroa.826.0..sroa_idx.i.i.i1559, align 8, !noalias !32513
   %.sroa.927.0..sroa_idx.i.i.i1561 = getelementptr inbounds nuw i8, ptr %i.d, i64 40
@@ -7860,15 +7922,18 @@ _RINvMs4_NtCs2TwJzntlzha_11flatbuffers8verifierNtB6_8Verifier20verify_union_vari
   %.sroa.16.1.i1526 = phi i64 [ 3, %bb.sx ], [ 3, %bb.sz ], [ 3, %bb.sy ], [ undef, %bb.tj ], [ %.sroa.16.40.copyload.i1564, %bb.ti ]
   %.sroa.14.1.i1527 = phi i64 [ ptrtoint (ptr @12 to i64), %bb.sx ], [ undef, %bb.sz ], [ %i.bkd, %bb.sy ], [ undef, %bb.tj ], [ %.sroa.14.40.copyload.i1562, %bb.ti ]
   %.sroa.12.1.i1528 = phi i64 [ -9223372036854775808, %bb.sx ], [ undef, %bb.sz ], [ %3, %bb.sy ], [ undef, %bb.tj ], [ %.sroa.826.0.copyload.i.i.i1560, %bb.ti ]
-  %.sroa.0.0.i1531.a = phi i64 [ -9223372036854775804, %bb.sx ], [ -9223372036854775800, %bb.sz ], [ -9223372036854775803, %bb.sy ], [ -9223372036854775798, %bb.tj ], [ %i.blg, %bb.ti ]
-  %29 = phi <2 x i64> [ <i64 8, i64 0>, %bb.sx ], [ <i64 8, i64 0>, %bb.sz ], [ <i64 8, i64 0>, %bb.sy ], [ undef, %bb.tj ], [ %28, %bb.ti ]
+  %.sroa.10.1.i1529 = phi i64 [ 0, %bb.sx ], [ 0, %bb.sz ], [ 0, %bb.sy ], [ undef, %bb.tj ], [ %.sroa.725.0.copyload.i.i.i1558, %bb.ti ]
+  %.sroa.0.0.i1531.a = phi i64 [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.sx ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.sz ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.sy ], [ undef, %bb.tj ], [ %.sroa.624.0.copyload.i.i.i1556, %bb.ti ]
+  %.sroa.0.0.i1531 = phi i64 [ -9223372036854775804, %bb.sx ], [ -9223372036854775800, %bb.sz ], [ -9223372036854775803, %bb.sy ], [ -9223372036854775798, %bb.tj ], [ %i.blg, %bb.ti ]
   %i.blm = phi <2 x i64> [ %i.bkc, %bb.sx ], [ %i.bkc, %bb.sz ], [ %i.bkc, %bb.sy ], [ undef, %bb.tj ], [ %i.bli, %bb.ti ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !32519
-  store i64 %.sroa.0.0.i1531.a, ptr %i.f, align 8, !noalias !32519
+  store i64 %.sroa.0.0.i1531, ptr %i.f, align 8, !noalias !32519
   %.sroa.5.0..sroa_idx.i1532 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   store ptr %.sroa.5.1.i1523, ptr %.sroa.5.0..sroa_idx.i1532, align 8, !noalias !32519
   %.sroa.8.0..sroa_idx.i1533 = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  store <2 x i64> %29, ptr %.sroa.8.0..sroa_idx.i1533, align 8, !noalias !32519
+  store i64 %.sroa.0.0.i1531.a, ptr %.sroa.8.0..sroa_idx.i1533, align 8, !noalias !32519
+  %.sroa.10.0..sroa_idx.i1534 = getelementptr inbounds nuw i8, ptr %i.f, i64 24
+  store i64 %.sroa.10.1.i1529, ptr %.sroa.10.0..sroa_idx.i1534, align 8, !noalias !32519
   %.sroa.12.0..sroa_idx.i1535 = getelementptr inbounds nuw i8, ptr %i.f, i64 32
   store i64 %.sroa.12.1.i1528, ptr %.sroa.12.0..sroa_idx.i1535, align 8, !noalias !32519
   %.sroa.14.0..sroa_idx.i1536 = getelementptr inbounds nuw i8, ptr %i.f, i64 40
@@ -7987,7 +8052,9 @@ bb.tu:                                            ; preds = %bb.tr
 
 bb.tv:                                            ; preds = %bb.tu
   %.sroa.624.0..sroa_idx.i.i.i1601 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %30 = load <2 x i64>, ptr %.sroa.624.0..sroa_idx.i.i.i1601, align 8, !noalias !32542
+  %.sroa.624.0.copyload.i.i.i1602 = load i64, ptr %.sroa.624.0..sroa_idx.i.i.i1601, align 8, !noalias !32542
+  %.sroa.725.0..sroa_idx.i.i.i1603 = getelementptr inbounds nuw i8, ptr %i.a, i64 24
+  %.sroa.725.0.copyload.i.i.i1604 = load i64, ptr %.sroa.725.0..sroa_idx.i.i.i1603, align 8, !noalias !32542
   %.sroa.826.0..sroa_idx.i.i.i1605 = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %.sroa.826.0.copyload.i.i.i1606 = load i64, ptr %.sroa.826.0..sroa_idx.i.i.i1605, align 8, !noalias !32542
   %.sroa.927.0..sroa_idx.i.i.i1607 = getelementptr inbounds nuw i8, ptr %i.a, i64 40
@@ -8012,15 +8079,18 @@ _RINvMs4_NtCs2TwJzntlzha_11flatbuffers8verifierNtB6_8Verifier20verify_union_vari
   %.sroa.16.1.i1572 = phi i64 [ 3, %bb.tk ], [ 3, %bb.tm ], [ 3, %bb.tl ], [ undef, %bb.tw ], [ %.sroa.16.40.copyload.i1610, %bb.tv ]
   %.sroa.14.1.i1573 = phi i64 [ ptrtoint (ptr @12 to i64), %bb.tk ], [ undef, %bb.tm ], [ %i.bls, %bb.tl ], [ undef, %bb.tw ], [ %.sroa.14.40.copyload.i1608, %bb.tv ]
   %.sroa.12.1.i1574 = phi i64 [ -9223372036854775808, %bb.tk ], [ undef, %bb.tm ], [ %3, %bb.tl ], [ undef, %bb.tw ], [ %.sroa.826.0.copyload.i.i.i1606, %bb.tv ]
-  %.sroa.0.0.i1577.a = phi i64 [ -9223372036854775804, %bb.tk ], [ -9223372036854775800, %bb.tm ], [ -9223372036854775803, %bb.tl ], [ -9223372036854775798, %bb.tw ], [ %i.bmv, %bb.tv ]
-  %31 = phi <2 x i64> [ <i64 8, i64 0>, %bb.tk ], [ <i64 8, i64 0>, %bb.tm ], [ <i64 8, i64 0>, %bb.tl ], [ undef, %bb.tw ], [ %30, %bb.tv ]
+  %.sroa.10.1.i1575 = phi i64 [ 0, %bb.tk ], [ 0, %bb.tm ], [ 0, %bb.tl ], [ undef, %bb.tw ], [ %.sroa.725.0.copyload.i.i.i1604, %bb.tv ]
+  %.sroa.0.0.i1577.a = phi i64 [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.tk ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.tm ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.tl ], [ undef, %bb.tw ], [ %.sroa.624.0.copyload.i.i.i1602, %bb.tv ]
+  %.sroa.0.0.i1577 = phi i64 [ -9223372036854775804, %bb.tk ], [ -9223372036854775800, %bb.tm ], [ -9223372036854775803, %bb.tl ], [ -9223372036854775798, %bb.tw ], [ %i.bmv, %bb.tv ]
   %i.bnb = phi <2 x i64> [ %i.blr, %bb.tk ], [ %i.blr, %bb.tm ], [ %i.blr, %bb.tl ], [ undef, %bb.tw ], [ %i.bmx, %bb.tv ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !32548
-  store i64 %.sroa.0.0.i1577.a, ptr %i.c, align 8, !noalias !32548
+  store i64 %.sroa.0.0.i1577, ptr %i.c, align 8, !noalias !32548
   %.sroa.5.0..sroa_idx.i1578 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr %.sroa.5.1.i1569, ptr %.sroa.5.0..sroa_idx.i1578, align 8, !noalias !32548
   %.sroa.8.0..sroa_idx.i1579 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  store <2 x i64> %31, ptr %.sroa.8.0..sroa_idx.i1579, align 8, !noalias !32548
+  store i64 %.sroa.0.0.i1577.a, ptr %.sroa.8.0..sroa_idx.i1579, align 8, !noalias !32548
+  %.sroa.10.0..sroa_idx.i1580 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
+  store i64 %.sroa.10.1.i1575, ptr %.sroa.10.0..sroa_idx.i1580, align 8, !noalias !32548
   %.sroa.12.0..sroa_idx.i1581 = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   store i64 %.sroa.12.1.i1574, ptr %.sroa.12.0..sroa_idx.i1581, align 8, !noalias !32548
   %.sroa.14.0..sroa_idx.i1582 = getelementptr inbounds nuw i8, ptr %i.c, i64 40
@@ -8423,7 +8493,7 @@ _RNvXs6_NtCs2TwJzntlzha_11flatbuffers8verifierINtNtB7_10primitives15ForwardsUOff
 
 _RNvXs6_NtCs2TwJzntlzha_11flatbuffers8verifierINtNtB7_10primitives15ForwardsUOffsetNtNtNtCsdl0l68gAy31_9arrow_ipc3gen4File6FooterENtB5_10Verifiable12run_verifierCs14kWLkQVSKO_14deltalake_core.exit.thread.i: ; preds = %_RNvXs6_NtCs2TwJzntlzha_11flatbuffers8verifierINtNtB7_10primitives15ForwardsUOffsetNtNtNtCsdl0l68gAy31_9arrow_ipc3gen4File6FooterENtB5_10Verifiable12run_verifierCs14kWLkQVSKO_14deltalake_core.exit.thread143.i, %bb.b, %bb.a
   %.sroa.0.2141.i = phi i64 [ %.sroa.0.1.ph.i, %_RNvXs6_NtCs2TwJzntlzha_11flatbuffers8verifierINtNtB7_10primitives15ForwardsUOffsetNtNtNtCsdl0l68gAy31_9arrow_ipc3gen4File6FooterENtB5_10Verifiable12run_verifierCs14kWLkQVSKO_14deltalake_core.exit.thread143.i ], [ -9223372036854775803, %bb.a ], [ -9223372036854775800, %bb.b ]
-  %.sroa.21.2140.i = phi i64 [ %.sroa.21.1.ph.i, %_RNvXs6_NtCs2TwJzntlzha_11flatbuffers8verifierINtNtB7_10primitives15ForwardsUOffsetNtNtNtCsdl0l68gAy31_9arrow_ipc3gen4File6FooterENtB5_10Verifiable12run_verifierCs14kWLkQVSKO_14deltalake_core.exit.thread143.i ], [ 8, %bb.a ], [ 8, %bb.b ]
+  %.sroa.21.2140.i = phi i64 [ %.sroa.21.1.ph.i, %_RNvXs6_NtCs2TwJzntlzha_11flatbuffers8verifierINtNtB7_10primitives15ForwardsUOffsetNtNtNtCsdl0l68gAy31_9arrow_ipc3gen4File6FooterENtB5_10Verifiable12run_verifierCs14kWLkQVSKO_14deltalake_core.exit.thread143.i ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.a ], [ ptrtoint (ptr inttoptr (i64 8 to ptr) to i64), %bb.b ]
   %.sroa.29.2135.i = phi i64 [ %.sroa.29.1.ph.i, %_RNvXs6_NtCs2TwJzntlzha_11flatbuffers8verifierINtNtB7_10primitives15ForwardsUOffsetNtNtNtCsdl0l68gAy31_9arrow_ipc3gen4File6FooterENtB5_10Verifiable12run_verifierCs14kWLkQVSKO_14deltalake_core.exit.thread143.i ], [ 0, %bb.a ], [ 0, %bb.b ]
   %.sroa.25.2134.i = phi i64 [ %.sroa.25.1.ph.i, %_RNvXs6_NtCs2TwJzntlzha_11flatbuffers8verifierINtNtB7_10primitives15ForwardsUOffsetNtNtNtCsdl0l68gAy31_9arrow_ipc3gen4File6FooterENtB5_10Verifiable12run_verifierCs14kWLkQVSKO_14deltalake_core.exit.thread143.i ], [ 0, %bb.a ], [ 0, %bb.b ]
   %.sroa.13.sroa.11.2132.i = phi i64 [ %.sroa.13.sroa.11.1.ph.in.in.i, %_RNvXs6_NtCs2TwJzntlzha_11flatbuffers8verifierINtNtB7_10primitives15ForwardsUOffsetNtNtNtCsdl0l68gAy31_9arrow_ipc3gen4File6FooterENtB5_10Verifiable12run_verifierCs14kWLkQVSKO_14deltalake_core.exit.thread143.i ], [ 0, %bb.a ], [ 0, %bb.b ]

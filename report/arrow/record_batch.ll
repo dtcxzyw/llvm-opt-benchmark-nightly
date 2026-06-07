@@ -201,7 +201,7 @@ declare noundef i32 @_ZNK5arrow6Schema10num_fieldsEv(ptr noundef nonnull align 8
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define void @_ZN5arrow11RecordBatchC2ESt10shared_ptrINS_6SchemaEEl(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(32) initializes((0, 32)) %0, ptr nofree noundef captures(none) %1, i64 noundef %2) unnamed_addr #4 align 2 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 136) (i8, ptr @_ZTVN5arrow11RecordBatchE, i64 16), ptr %0, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 136) ({ [19 x ptr] }, ptr @_ZTVN5arrow11RecordBatchE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !54
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr null, ptr %i.b, align 8, !tbaa !49
@@ -225,7 +225,7 @@ bb.a:
   store i32 1, ptr %i.c, align 8, !tbaa !51, !noalias !73
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 12
   store i32 1, ptr %i.d, align 4, !tbaa !53, !noalias !73
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.b, align 8, !tbaa !54, !noalias !73
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.b, align 8, !tbaa !54, !noalias !73
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   invoke void @_ZSt10_ConstructIN5arrow17SimpleRecordBatchEJSt10shared_ptrINS0_6SchemaEERlSt6vectorIS2_INS0_5ArrayEESaIS8_EES2_INS0_6Device9SyncEventEEEEvPT_DpOT0_(ptr noundef nonnull %i.e, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(16) %4)
           to label %_ZNSt12__shared_ptrIN5arrow17SimpleRecordBatchELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit unwind label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit12.i.i.i.i, !noalias !73
@@ -255,7 +255,7 @@ bb.a:
   store i32 1, ptr %i.d, align 8, !tbaa !51, !noalias !85
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 12
   store i32 1, ptr %i.e, align 4, !tbaa !53, !noalias !85
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.c, align 8, !tbaa !54, !noalias !85
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.c, align 8, !tbaa !54, !noalias !85
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
   invoke void @_ZSt10_ConstructIN5arrow17SimpleRecordBatchEJSt10shared_ptrINS0_6SchemaEERlSt6vectorIS2_INS0_9ArrayDataEESaIS8_EERNS0_20DeviceAllocationTypeES2_INS0_6Device9SyncEventEEEEvPT_DpOT0_(ptr noundef nonnull %i.f, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 1 dereferenceable(1) %i.b, ptr noundef nonnull align 8 dereferenceable(16) %5)
           to label %_ZNSt12__shared_ptrIN5arrow17SimpleRecordBatchELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit unwind label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit13.i.i.i.i, !noalias !85, !inline_history !86
@@ -597,7 +597,7 @@ _ZN5arrow6ResultISt10shared_ptrINS_5ArrayEEED2Ev.exit: ; preds = %bb.ab, %_ZN5ar
   store i32 1, ptr %i.cw, align 8, !tbaa !51, !noalias !122
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cv, i64 12
   store i32 1, ptr %i.cx, align 4, !tbaa !53, !noalias !122
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.cv, align 8, !tbaa !54, !noalias !122
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.cv, align 8, !tbaa !54, !noalias !122
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cv, i64 16 ; 2 uses
   invoke void @_ZSt10_ConstructIN5arrow17SimpleRecordBatchEJSt10shared_ptrINS0_6SchemaEERlSt6vectorIS2_INS0_5ArrayEESaIS8_EES2_INS0_6Device9SyncEventEEEEvPT_DpOT0_(ptr noundef nonnull %i.cy, ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %7, ptr noundef nonnull align 8 dereferenceable(16) %8)
           to label %_ZNSt12__shared_ptrIN5arrow11RecordBatchELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit unwind label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit12.i.i.i.i.i, !noalias !122
@@ -1000,7 +1000,7 @@ bb.s:                                             ; preds = %.loopexit
   store i32 1, ptr %i.cc, align 8, !tbaa !51, !noalias !197
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cb, i64 12
   store i32 1, ptr %i.cd, align 4, !tbaa !53, !noalias !197
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.cb, align 8, !tbaa !54, !noalias !197
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.cb, align 8, !tbaa !54, !noalias !197
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cb, i64 16 ; 2 uses
   invoke void @_ZSt10_ConstructIN5arrow17SimpleRecordBatchEJSt10shared_ptrINS0_6SchemaEERlSt6vectorIS2_INS0_5ArrayEESaIS8_EES2_INS0_6Device9SyncEventEEEEvPT_DpOT0_(ptr noundef nonnull %i.ce, ptr noundef nonnull align 8 dereferenceable(16) %8, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %11, ptr noundef nonnull align 8 dereferenceable(16) %12)
           to label %_ZNSt12__shared_ptrIN5arrow11RecordBatchELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit unwind label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit12.i.i.i.i.i, !noalias !197
@@ -1403,7 +1403,7 @@ _ZNSt10shared_ptrIN5arrow6Device9SyncEventEEC2ERKS3_.exit: ; preds = %bb.bo, %bb
   store i32 1, ptr %i.iu, align 8, !tbaa !51, !noalias !247
   %i.iv = getelementptr inbounds nuw i8, ptr %i.it, i64 12
   store i32 1, ptr %i.iv, align 4, !tbaa !53, !noalias !247
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.it, align 8, !tbaa !54, !noalias !247
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.it, align 8, !tbaa !54, !noalias !247
   %i.iw = getelementptr inbounds nuw i8, ptr %i.it, i64 16 ; 2 uses
   invoke void @_ZSt10_ConstructIN5arrow17SimpleRecordBatchEJSt10shared_ptrINS0_6SchemaEERlSt6vectorIS2_INS0_5ArrayEESaIS8_EES2_INS0_6Device9SyncEventEEEEvPT_DpOT0_(ptr noundef nonnull %i.iw, ptr noundef nonnull align 8 dereferenceable(16) %12, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %13, ptr noundef nonnull align 8 dereferenceable(16) %14)
           to label %_ZNSt12__shared_ptrIN5arrow11RecordBatchELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit unwind label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit12.i.i.i.i.i, !noalias !247
@@ -1806,7 +1806,7 @@ _ZNSt10shared_ptrIN5arrow6Device9SyncEventEEC2ERKS3_.exit: ; preds = %bb.ap, %bb
   store i32 1, ptr %i.fi, align 8, !tbaa !51, !noalias !269
   %i.fj = getelementptr inbounds nuw i8, ptr %i.fh, i64 12
   store i32 1, ptr %i.fj, align 4, !tbaa !53, !noalias !269
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.fh, align 8, !tbaa !54, !noalias !269
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.fh, align 8, !tbaa !54, !noalias !269
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fh, i64 16 ; 2 uses
   invoke void @_ZSt10_ConstructIN5arrow17SimpleRecordBatchEJSt10shared_ptrINS0_6SchemaEERlSt6vectorIS2_INS0_5ArrayEESaIS8_EES2_INS0_6Device9SyncEventEEEEvPT_DpOT0_(ptr noundef nonnull %i.fk, ptr noundef nonnull align 8 dereferenceable(16) %9, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %12, ptr noundef nonnull align 8 dereferenceable(16) %13)
           to label %_ZNSt12__shared_ptrIN5arrow11RecordBatchELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit unwind label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit12.i.i.i.i.i, !noalias !269
@@ -2209,7 +2209,7 @@ bb.an:                                            ; preds = %.critedge34
   store i32 1, ptr %i.dx, align 8, !tbaa !51, !noalias !283
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dw, i64 12
   store i32 1, ptr %i.dy, align 4, !tbaa !53, !noalias !283
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow6SchemaESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.dw, align 8, !tbaa !54, !noalias !283
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow6SchemaESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.dw, align 8, !tbaa !54, !noalias !283
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dw, i64 16 ; 2 uses
   invoke void @_ZSt10_ConstructIN5arrow6SchemaEJSt6vectorISt10shared_ptrINS0_5FieldEESaIS5_EERKS3_IKNS0_16KeyValueMetadataEEEEvPT_DpOT0_(ptr noundef nonnull %i.dz, ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(16) %i.dv)
           to label %bb.ao unwind label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN5arrow6SchemaESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit10.i.i.i.i, !noalias !283
@@ -2278,7 +2278,7 @@ _ZNSt10shared_ptrIN5arrow6Device9SyncEventEEC2ERKS3_.exit: ; preds = %bb.ap, %bb
   store i32 1, ptr %i.ex, align 8, !tbaa !51, !noalias !289
   %i.ey = getelementptr inbounds nuw i8, ptr %i.ew, i64 12
   store i32 1, ptr %i.ey, align 4, !tbaa !53, !noalias !289
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.ew, align 8, !tbaa !54, !noalias !289
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.ew, align 8, !tbaa !54, !noalias !289
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ew, i64 16 ; 2 uses
   invoke void @_ZSt10_ConstructIN5arrow17SimpleRecordBatchEJSt10shared_ptrINS0_6SchemaEERlSt6vectorIS2_INS0_5ArrayEESaIS8_EES2_INS0_6Device9SyncEventEEEEvPT_DpOT0_(ptr noundef nonnull %i.ez, ptr noundef nonnull align 8 dereferenceable(16) %9, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %10, ptr noundef nonnull align 8 dereferenceable(16) %11)
           to label %_ZNSt12__shared_ptrIN5arrow11RecordBatchELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit unwind label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit12.i.i.i.i.i, !noalias !289
@@ -2681,7 +2681,7 @@ _ZNKRSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv.exit: ; pred
   %i.aq = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 72), align 8
   store ptr %i.aq, ptr %i.a, align 8, !tbaa !54
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVNSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEEE, i64 16), ptr %i.ar, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVNSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEEE, i32 0, i32 0, i32 2), ptr %i.ar, align 8, !tbaa !54
   %i.as = getelementptr inbounds nuw i8, ptr %2, i64 96
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !37 ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %2, i64 112 ; 2 uses
@@ -2695,7 +2695,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br label %_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEED1Ev.exit
 
 _ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEED1Ev.exit: ; preds = %_ZNKRSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 16), ptr %i.ar, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i32 0, i32 0, i32 2), ptr %i.ar, align 8, !tbaa !54
   %i.ay = getelementptr inbounds nuw i8, ptr %2, i64 80
   call void @_ZNSt6localeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.ay) #26
   %i.az = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 16), align 8 ; 2 uses
@@ -3098,7 +3098,7 @@ _ZNSt10shared_ptrIN5arrow6SchemaEEC2ERKS2_.exit:  ; preds = %.critedge, %bb.ag, 
   store i32 1, ptr %i.de, align 8, !tbaa !51, !noalias !322
   %i.df = getelementptr inbounds nuw i8, ptr %i.dd, i64 12
   store i32 1, ptr %i.df, align 4, !tbaa !53, !noalias !322
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.dd, align 8, !tbaa !54, !noalias !322
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.dd, align 8, !tbaa !54, !noalias !322
   %i.dg = getelementptr inbounds nuw i8, ptr %i.dd, i64 16 ; 2 uses
   invoke void @_ZSt10_ConstructIN5arrow17SimpleRecordBatchEJSt10shared_ptrINS0_6SchemaEERlSt6vectorIS2_INS0_5ArrayEESaIS8_EES2_INS0_6Device9SyncEventEEEEvPT_DpOT0_(ptr noundef nonnull %i.dg, ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %7, ptr noundef nonnull align 8 dereferenceable(16) %8)
           to label %_ZNSt12__shared_ptrIN5arrow11RecordBatchELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit unwind label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit12.i.i.i.i.i, !noalias !322
@@ -3501,7 +3501,7 @@ _ZNSt10shared_ptrIN5arrow6SchemaEEC2ERKS2_.exit:  ; preds = %.critedge, %bb.ag, 
   store i32 1, ptr %i.de, align 8, !tbaa !51, !noalias !340
   %i.df = getelementptr inbounds nuw i8, ptr %i.dd, i64 12
   store i32 1, ptr %i.df, align 4, !tbaa !53, !noalias !340
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.dd, align 8, !tbaa !54, !noalias !340
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.dd, align 8, !tbaa !54, !noalias !340
   %i.dg = getelementptr inbounds nuw i8, ptr %i.dd, i64 16 ; 2 uses
   invoke void @_ZSt10_ConstructIN5arrow17SimpleRecordBatchEJSt10shared_ptrINS0_6SchemaEERlSt6vectorIS2_INS0_5ArrayEESaIS8_EES2_INS0_6Device9SyncEventEEEEvPT_DpOT0_(ptr noundef nonnull %i.dg, ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %7, ptr noundef nonnull align 8 dereferenceable(16) %8)
           to label %_ZNSt12__shared_ptrIN5arrow11RecordBatchELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit unwind label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit12.i.i.i.i.i, !noalias !340
@@ -3904,7 +3904,7 @@ _ZNSt12__shared_ptrIN5arrow12ArrayBuilderELN9__gnu_cxx12_Lock_policyE2EED2Ev.exi
   store i32 1, ptr %i.lv, align 8, !tbaa !51, !noalias !373
   %i.lw = getelementptr inbounds nuw i8, ptr %i.lu, i64 12
   store i32 1, ptr %i.lw, align 4, !tbaa !53, !noalias !373
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow19Dictionary32BuilderINS0_10StringTypeEEESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.lu, align 8, !tbaa !54, !noalias !373
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow19Dictionary32BuilderINS0_10StringTypeEEESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.lu, align 8, !tbaa !54, !noalias !373
   %i.lx = getelementptr inbounds nuw i8, ptr %i.lu, i64 16 ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(392) %i.lx, i8 0, i64 392, i1 false), !noalias !373
   %i.ly = invoke noundef ptr @_ZN5arrow19default_memory_poolEv()
@@ -3922,7 +3922,7 @@ _ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN5arrow19Dictionary32Build
 
 bb.dh:                                            ; preds = %.noexc.i.i.i.i
   %i.ma = getelementptr inbounds nuw i8, ptr %27, i64 8 ; 3 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN5arrow19Dictionary32BuilderINS_10StringTypeEEE, i64 16), ptr %i.lx, align 8, !tbaa !54, !noalias !373
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVN5arrow19Dictionary32BuilderINS_10StringTypeEEE, i32 0, i32 0, i32 2), ptr %i.lx, align 8, !tbaa !54, !noalias !373
   store ptr %i.lu, ptr %i.ma, align 8, !tbaa !49, !alias.scope !373
   store ptr %i.lx, ptr %27, align 16, !tbaa !376, !alias.scope !373
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #26
@@ -4282,7 +4282,7 @@ bb.eo:                                            ; preds = %_ZNKSt14default_del
   store i32 1, ptr %i.pj, align 8, !tbaa !51, !noalias !382
   %i.pk = getelementptr inbounds nuw i8, ptr %i.pi, i64 12
   store i32 1, ptr %i.pk, align 4, !tbaa !53, !noalias !382
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17DenseUnionBuilderESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.pi, align 8, !tbaa !54, !noalias !382
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17DenseUnionBuilderESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.pi, align 8, !tbaa !54, !noalias !382
   %i.pl = getelementptr inbounds nuw i8, ptr %i.pi, i64 16 ; 4 uses
   %i.pm = load ptr, ptr %i.a, align 8, !tbaa !343, !noalias !382 ; 2 uses
   invoke void @_ZN5arrow17BasicUnionBuilderC2EPNS_10MemoryPoolElRKSt6vectorISt10shared_ptrINS_12ArrayBuilderEESaIS6_EERKS4_INS_8DataTypeEE(ptr noundef nonnull align 8 dereferenceable(368) %i.pl, ptr noundef %i.pm, i64 noundef 64, ptr noundef nonnull align 8 dereferenceable(24) %28, ptr noundef nonnull align 8 dereferenceable(16) %10)
@@ -4296,7 +4296,7 @@ _ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN5arrow17DenseUnionBuilder
 
 bb.ep:                                            ; preds = %.noexc217
   %i.po = getelementptr inbounds nuw i8, ptr %33, i64 8 ; 3 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN5arrow17DenseUnionBuilderE, i64 16), ptr %i.pl, align 8, !tbaa !54, !noalias !382
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVN5arrow17DenseUnionBuilderE, i32 0, i32 0, i32 2), ptr %i.pl, align 8, !tbaa !54, !noalias !382
   %i.pp = getelementptr inbounds nuw i8, ptr %i.pi, i64 328
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.pp, i8 0, i64 16, i1 false), !noalias !382
   %i.pq = getelementptr inbounds nuw i8, ptr %i.pi, i64 344
@@ -4379,7 +4379,7 @@ _ZSt19static_pointer_castIN5arrow12ArrayBuilderENS0_17DenseUnionBuilderEESt10sha
   store i32 1, ptr %i.qo, align 8, !tbaa !51, !noalias !402
   %i.qp = getelementptr inbounds nuw i8, ptr %i.qn, i64 12
   store i32 1, ptr %i.qp, align 4, !tbaa !53, !noalias !402
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow10MapBuilderESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.qn, align 8, !tbaa !54, !noalias !402
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow10MapBuilderESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.qn, align 8, !tbaa !54, !noalias !402
   %i.qq = getelementptr inbounds nuw i8, ptr %i.qn, i64 16 ; 2 uses
   %i.qr = load ptr, ptr %i.a, align 8, !tbaa !343, !noalias !402
   invoke void @_ZN5arrow10MapBuilderC1EPNS_10MemoryPoolERKSt10shared_ptrINS_12ArrayBuilderEES7_b(ptr noundef nonnull align 8 dereferenceable(296) %i.qq, ptr noundef %i.qr, ptr noundef nonnull align 8 dereferenceable(16) %35, ptr noundef nonnull align 8 dereferenceable(16) %36, i1 noundef zeroext false)
@@ -4782,7 +4782,7 @@ bb.gp:                                            ; preds = %_ZN5arrow6StatusD2E
   br label %bb.hj
 
 bb.gq:                                            ; preds = %_ZN5arrow6StatusD2Ev.exit263, %_ZN5arrow6StatusD2Ev.exit269
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN5arrow13StructBuilderE, i64 16), ptr %38, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVN5arrow13StructBuilderE, i32 0, i32 0, i32 2), ptr %38, align 8, !tbaa !54
   %i.vf = getelementptr inbounds nuw i8, ptr %38, i64 152
   %i.vg = load ptr, ptr %i.vf, align 8, !tbaa !49 ; 8 uses
   %.not.i.i.i270 = icmp eq ptr %i.vg, null
@@ -5185,7 +5185,7 @@ _ZNRSt8optionalISt7variantIJldEEE5valueEv.exit127: ; preds = %_ZNSt10shared_ptrI
 
 .invoke475:                                       ; preds = %_ZNRSt8optionalISt7variantIJldEEE5valueEv.exit127, %_ZNRSt8optionalISt7variantIJldEEE5valueEv.exit259, %_ZNRSt8optionalISt7variantIJldEEE5valueEv.exit238, %_ZNRSt8optionalISt7variantIJldEEE5valueEv.exit205, %_ZNRSt8optionalISt7variantIJldEEE5valueEv.exit184, %_ZNRSt8optionalISt7variantIJldEEE5valueEv.exit155
   %i.eg = call ptr @__cxa_allocate_exception(i64 16) #26 ; 3 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt18bad_variant_access, i64 16), ptr %i.eg, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVSt18bad_variant_access, i32 0, i32 0, i32 2), ptr %i.eg, align 8, !tbaa !54
   %i.eh = getelementptr inbounds nuw i8, ptr %i.eg, i64 8
   store ptr @.str.47, ptr %i.eh, align 8, !tbaa !462
   invoke void @__cxa_throw(ptr nonnull %i.eg, ptr nonnull @_ZTISt18bad_variant_access, ptr nonnull @_ZNSt9exceptionD2Ev) #29
@@ -5588,7 +5588,7 @@ declare void @_ZN5arrow12ArrayBuilder6FinishEv(ptr dead_on_unwind writable sret(
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr void @_ZN5arrow13StructBuilderD2Ev(ptr noundef nonnull align 8 dereferenceable(160) %0) unnamed_addr #7 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN5arrow13StructBuilderE, i64 16), ptr %0, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVN5arrow13StructBuilderE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !54
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !49   ; 8 uses
   %.not.i.i = icmp eq ptr %i.b, null
@@ -5991,7 +5991,7 @@ _ZNSt10shared_ptrIN5arrow6SchemaEEaSERKS2_.exit:  ; preds = %_ZNSt16_Sp_counted_
   store i32 1, ptr %i.an, align 8, !tbaa !51, !noalias !555
   %i.ao = getelementptr inbounds nuw i8, ptr %i.am, i64 12
   store i32 1, ptr %i.ao, align 4, !tbaa !53, !noalias !555
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow23SimpleRecordBatchReaderESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.am, align 8, !tbaa !54, !noalias !555
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow23SimpleRecordBatchReaderESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.am, align 8, !tbaa !54, !noalias !555
   %i.ap = getelementptr inbounds nuw i8, ptr %i.am, i64 16 ; 2 uses
   invoke void @_ZSt10_ConstructIN5arrow23SimpleRecordBatchReaderEJSt6vectorISt10shared_ptrINS0_11RecordBatchEESaIS5_EES3_INS0_6SchemaEERNS0_20DeviceAllocationTypeEEEvPT_DpOT0_(ptr noundef nonnull %i.ap, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 1 dereferenceable(1) %i.a)
           to label %_ZNSt12__shared_ptrIN5arrow23SimpleRecordBatchReaderELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit unwind label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN5arrow23SimpleRecordBatchReaderESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit11.i.i.i.i, !noalias !555
@@ -6140,7 +6140,7 @@ _ZNSt12__shared_ptrIN5arrow23SimpleRecordBatchReaderELN9__gnu_cxx12_Lock_policyE
   store i32 1, ptr %i.g, align 8, !tbaa !51, !noalias !564
   %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 12
   store i32 1, ptr %i.h, align 4, !tbaa !53, !noalias !564
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow23SimpleRecordBatchReaderESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.f, align 8, !tbaa !54, !noalias !564
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow23SimpleRecordBatchReaderESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.f, align 8, !tbaa !54, !noalias !564
   %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -6151,7 +6151,7 @@ _ZNSt12__shared_ptrIN5arrow23SimpleRecordBatchReaderELN9__gnu_cxx12_Lock_policyE
   store ptr null, ptr %i.j, align 8, !tbaa !50, !noalias !564
   %i.p = load <2 x ptr>, ptr %2, align 8, !tbaa !50, !noalias !564
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false), !noalias !564
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN5arrow23SimpleRecordBatchReaderE, i64 16), ptr %i.i, align 8, !tbaa !54, !noalias !564
+  store ptr getelementptr inbounds inrange(-16, 56) ({ [9 x ptr] }, ptr @_ZTVN5arrow23SimpleRecordBatchReaderE, i32 0, i32 0, i32 2), ptr %i.i, align 8, !tbaa !54, !noalias !564
   store <2 x ptr> %i.p, ptr %i.m, align 8, !tbaa !50, !noalias !564
   store <2 x i64> %i.o, ptr %i.n, align 8, !tbaa !50, !noalias !564
   %i.q = getelementptr inbounds nuw i8, ptr %i.f, i64 56
@@ -6554,7 +6554,7 @@ bb.ck:                                            ; preds = %.loopexit, %.loopex
   store i32 1, ptr %i.jl, align 8, !tbaa !51, !noalias !598
   %i.jm = getelementptr inbounds nuw i8, ptr %i.jk, i64 12
   store i32 1, ptr %i.jm, align 4, !tbaa !53, !noalias !598
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.jk, align 8, !tbaa !54, !noalias !598
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.jk, align 8, !tbaa !54, !noalias !598
   %i.jn = getelementptr inbounds nuw i8, ptr %i.jk, i64 16 ; 2 uses
   invoke void @_ZSt10_ConstructIN5arrow17SimpleRecordBatchEJSt10shared_ptrINS0_6SchemaEERlSt6vectorIS2_INS0_5ArrayEESaIS8_EES2_INS0_6Device9SyncEventEEEEvPT_DpOT0_(ptr noundef nonnull %i.jn, ptr noundef nonnull align 8 dereferenceable(16) %17, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %18, ptr noundef nonnull align 8 dereferenceable(16) %19)
           to label %_ZNSt12__shared_ptrIN5arrow11RecordBatchELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit unwind label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit12.i.i.i.i.i, !noalias !598
@@ -6923,7 +6923,7 @@ declare void @_ZN5arrow11ConcatenateERKSt6vectorISt10shared_ptrINS_5ArrayEESaIS3
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZN5arrow11RecordBatchD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %0) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 136) (i8, ptr @_ZTVN5arrow11RecordBatchE, i64 16), ptr %0, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 136) ({ [19 x ptr] }, ptr @_ZTVN5arrow11RecordBatchE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !54
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !49   ; 8 uses
   %.not.i.i = icmp eq ptr %i.b, null
@@ -7326,7 +7326,7 @@ declare void @_ZSt25__throw_bad_function_callv() local_unnamed_addr #15
 define linkonce_odr void @_ZSt27__throw_bad_optional_accessv() local_unnamed_addr #20 comdat {
 bb.a:
   %i.a = tail call ptr @__cxa_allocate_exception(i64 8) #26 ; 2 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt19bad_optional_access, i64 16), ptr %i.a, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVSt19bad_optional_access, i32 0, i32 0, i32 2), ptr %i.a, align 8, !tbaa !54
   tail call void @__cxa_throw(ptr nonnull %i.a, ptr nonnull @_ZTISt19bad_optional_access, ptr nonnull @_ZNSt9exceptionD2Ev) #29
   unreachable
 }
@@ -7729,7 +7729,7 @@ _ZNSt12_Vector_baseISt10shared_ptrIN5arrow12ArrayBuilderEESaIS3_EE13_M_deallocat
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZN5arrow12ArrayBuilderD2Ev(ptr noundef nonnull align 8 dead_on_return(144) dereferenceable(144) %0) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN5arrow12ArrayBuilderE, i64 16), ptr %0, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVN5arrow12ArrayBuilderE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !54
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !413  ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 128
@@ -8132,7 +8132,7 @@ _ZNSt12__shared_ptrIN5arrow6SchemaELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit:
   store <2 x ptr> %i.b, ptr %i.a, align 8, !tbaa !50
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %2, ptr %i.c, align 8, !tbaa !64
-  store ptr getelementptr inbounds nuw inrange(-16, 136) (i8, ptr @_ZTVN5arrow17SimpleRecordBatchE, i64 16), ptr %0, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 136) ({ [19 x ptr] }, ptr @_ZTVN5arrow17SimpleRecordBatchE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !54
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 5 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.d, i8 0, i64 64, i1 false)
@@ -8483,7 +8483,7 @@ _ZNSt12_Vector_baseISt10shared_ptrIN5arrow9ArrayDataEESaIS3_EED2Ev.exit: ; preds
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr void @_ZN5arrow17SimpleRecordBatchD2Ev(ptr noundef nonnull align 8 dereferenceable(144) %0) unnamed_addr #7 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 136) (i8, ptr @_ZTVN5arrow17SimpleRecordBatchE, i64 16), ptr %0, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 136) ({ [19 x ptr] }, ptr @_ZTVN5arrow17SimpleRecordBatchE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !54
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !49   ; 8 uses
   %.not.i.i = icmp eq ptr %i.b, null
@@ -8698,7 +8698,7 @@ bb.u:                                             ; preds = %_ZSt8_DestroyIPSt10
   br label %_ZNSt6vectorISt10shared_ptrIN5arrow9ArrayDataEESaIS3_EED2Ev.exit
 
 _ZNSt6vectorISt10shared_ptrIN5arrow9ArrayDataEESaIS3_EED2Ev.exit: ; preds = %_ZSt8_DestroyIPSt10shared_ptrIN5arrow9ArrayDataEES3_EvT_S5_RSaIT0_E.exit.i, %bb.u
-  store ptr getelementptr inbounds nuw inrange(-16, 136) (i8, ptr @_ZTVN5arrow11RecordBatchE, i64 16), ptr %0, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 136) ({ [19 x ptr] }, ptr @_ZTVN5arrow11RecordBatchE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !54
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.bw = load ptr, ptr %i.bv, align 8, !tbaa !49 ; 8 uses
   %.not.i.i.i12 = icmp eq ptr %i.bw, null
@@ -9101,7 +9101,7 @@ _ZNSt10shared_ptrIN5arrow6Device9SyncEventEEC2ERKS3_.exit: ; preds = %bb.ab, %bb
   store i32 1, ptr %i.eb, align 8, !tbaa !51, !noalias !705
   %i.ec = getelementptr inbounds nuw i8, ptr %i.ea, i64 12
   store i32 1, ptr %i.ec, align 4, !tbaa !53, !noalias !705
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.ea, align 8, !tbaa !54, !noalias !705
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.ea, align 8, !tbaa !54, !noalias !705
   %i.ed = getelementptr inbounds nuw i8, ptr %i.ea, i64 16 ; 2 uses
   invoke void @_ZSt10_ConstructIN5arrow17SimpleRecordBatchEJSt10shared_ptrINS0_6SchemaEERlSt6vectorIS2_INS0_9ArrayDataEESaIS8_EERNS0_20DeviceAllocationTypeES2_INS0_6Device9SyncEventEEEEvPT_DpOT0_(ptr noundef nonnull %i.ed, ptr noundef nonnull align 8 dereferenceable(16) %16, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %17, ptr noundef nonnull align 1 dereferenceable(1) %i.b, ptr noundef nonnull align 8 dereferenceable(16) %19)
           to label %_ZNSt12__shared_ptrIN5arrow11RecordBatchELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit unwind label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit13.i.i.i.i.i, !noalias !705, !inline_history !708
@@ -9504,7 +9504,7 @@ _ZNSt10shared_ptrIN5arrow6Device9SyncEventEEC2ERKS3_.exit: ; preds = %bb.ab, %bb
   store i32 1, ptr %i.eb, align 8, !tbaa !51, !noalias !729
   %i.ec = getelementptr inbounds nuw i8, ptr %i.ea, i64 12
   store i32 1, ptr %i.ec, align 4, !tbaa !53, !noalias !729
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.ea, align 8, !tbaa !54, !noalias !729
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.ea, align 8, !tbaa !54, !noalias !729
   %i.ed = getelementptr inbounds nuw i8, ptr %i.ea, i64 16 ; 2 uses
   invoke void @_ZSt10_ConstructIN5arrow17SimpleRecordBatchEJSt10shared_ptrINS0_6SchemaEERlSt6vectorIS2_INS0_9ArrayDataEESaIS8_EERNS0_20DeviceAllocationTypeES2_INS0_6Device9SyncEventEEEEvPT_DpOT0_(ptr noundef nonnull %i.ed, ptr noundef nonnull align 8 dereferenceable(16) %16, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %17, ptr noundef nonnull align 1 dereferenceable(1) %i.b, ptr noundef nonnull align 8 dereferenceable(16) %19)
           to label %_ZNSt12__shared_ptrIN5arrow11RecordBatchELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit unwind label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit13.i.i.i.i.i, !noalias !729, !inline_history !708
@@ -9907,7 +9907,7 @@ _ZNSt10shared_ptrIN5arrow6Device9SyncEventEEC2ERKS3_.exit: ; preds = %bb.d, %bb.
   store i32 1, ptr %i.ac, align 8, !tbaa !51, !noalias !740
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 12
   store i32 1, ptr %i.ad, align 4, !tbaa !53, !noalias !740
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.ab, align 8, !tbaa !54, !noalias !740
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.ab, align 8, !tbaa !54, !noalias !740
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ab, i64 16 ; 2 uses
   invoke void @_ZSt10_ConstructIN5arrow17SimpleRecordBatchEJSt10shared_ptrINS0_6SchemaEERlSt6vectorIS2_INS0_9ArrayDataEESaIS8_EERNS0_20DeviceAllocationTypeES2_INS0_6Device9SyncEventEEEEvPT_DpOT0_(ptr noundef nonnull %i.ae, ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %6, ptr noundef nonnull align 1 dereferenceable(1) %i.b, ptr noundef nonnull align 8 dereferenceable(16) %7)
           to label %_ZNSt12__shared_ptrIN5arrow11RecordBatchELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit unwind label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit13.i.i.i.i.i, !noalias !740, !inline_history !708
@@ -10310,7 +10310,7 @@ _ZNSt10shared_ptrIN5arrow6Device9SyncEventEEC2ERKS3_.exit: ; preds = %.loopexit,
   store i32 1, ptr %i.ay, align 8, !tbaa !51, !noalias !747
   %i.az = getelementptr inbounds nuw i8, ptr %i.ax, i64 12
   store i32 1, ptr %i.az, align 4, !tbaa !53, !noalias !747
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.ax, align 8, !tbaa !54, !noalias !747
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.ax, align 8, !tbaa !54, !noalias !747
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ax, i64 16 ; 2 uses
   invoke void @_ZSt10_ConstructIN5arrow17SimpleRecordBatchEJSt10shared_ptrINS0_6SchemaEERlSt6vectorIS2_INS0_9ArrayDataEESaIS8_EERNS0_20DeviceAllocationTypeES2_INS0_6Device9SyncEventEEEEvPT_DpOT0_(ptr noundef nonnull %i.ba, ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 1 dereferenceable(1) %i.b, ptr noundef nonnull align 8 dereferenceable(16) %6)
           to label %bb.i unwind label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit13.i.i.i.i.i, !noalias !747, !inline_history !708
@@ -10690,7 +10690,7 @@ _ZNSt6vectorISt10shared_ptrIN5arrow9ArrayDataEESaIS3_EE7reserveEm.exit: ; preds 
   store i32 1, ptr %i.an, align 8, !tbaa !51, !noalias !758
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ak, i64 12
   store i32 1, ptr %i.ao, align 4, !tbaa !53, !noalias !758
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.ak, align 8, !tbaa !54, !noalias !758
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.ak, align 8, !tbaa !54, !noalias !758
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ak, i64 16 ; 2 uses
   invoke void @_ZSt10_ConstructIN5arrow17SimpleRecordBatchEJRKSt10shared_ptrINS0_6SchemaEERlSt6vectorIS2_INS0_9ArrayDataEESaISA_EERKNS0_20DeviceAllocationTypeERKS2_INS0_6Device9SyncEventEEEEvPT_DpOT0_(ptr noundef nonnull %i.ap, ptr noundef nonnull align 8 dereferenceable(16) %i.b, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 1 dereferenceable(1) %i.am, ptr noundef nonnull align 8 dereferenceable(16) %i.al)
           to label %_ZNSt12__shared_ptrIN5arrow17SimpleRecordBatchELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit unwind label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN5arrow17SimpleRecordBatchESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit13.i.i.i.i, !noalias !758, !inline_history !761
@@ -11093,7 +11093,7 @@ _ZNSt12__shared_ptrIN5arrow6SchemaELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit:
   store <2 x ptr> %i.b, ptr %i.a, align 8, !tbaa !50
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %2, ptr %i.c, align 8, !tbaa !64
-  store ptr getelementptr inbounds nuw inrange(-16, 136) (i8, ptr @_ZTVN5arrow17SimpleRecordBatchE, i64 16), ptr %0, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 136) ({ [19 x ptr] }, ptr @_ZTVN5arrow17SimpleRecordBatchE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !54
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.e = load <2 x ptr>, ptr %3, align 8, !tbaa !756
   store <2 x ptr> %i.e, ptr %i.d, align 8, !tbaa !756
@@ -11496,7 +11496,7 @@ bb.a:
   store i32 1, ptr %i.b, align 8, !tbaa !51
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 12
   store i32 1, ptr %i.c, align 4, !tbaa !53
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow11StructArrayESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.a, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow11StructArrayESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.a, align 8, !tbaa !54
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9)
   %i.e = load i64, ptr %4, align 8, !tbaa !67
@@ -11899,7 +11899,7 @@ bb.a:
   store i32 1, ptr %i.b, align 8, !tbaa !51
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 12
   store i32 1, ptr %i.c, align 4, !tbaa !53
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow14NumericBuilderINS0_9Int32TypeEEESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.a, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow14NumericBuilderINS0_9Int32TypeEEESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.a, align 8, !tbaa !54
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 3 uses
   %i.e = load ptr, ptr %3, align 8, !tbaa !343    ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 24
@@ -11918,7 +11918,7 @@ bb.a:
   store i64 64, ptr %i.l, align 8, !tbaa !391
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 96
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.m, i8 0, i64 64, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN5arrow14NumericBuilderINS_9Int32TypeEEE, i64 16), ptr %i.d, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVN5arrow14NumericBuilderINS_9Int32TypeEEE, i32 0, i32 0, i32 2), ptr %i.d, align 8, !tbaa !54
   tail call void @llvm.experimental.noalias.scope.decl(metadata !855)
   %i.n = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZN5arrow5int32Ev()
           to label %.noexc.i.i.i unwind label %.body.i ; 2 uses
@@ -12030,7 +12030,7 @@ _ZNKSt9type_infoeqERKS_.exit.thread8:             ; preds = %bb.c, %_ZNKSt9type_
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr void @_ZN5arrow14NumericBuilderINS_9Int32TypeEED2Ev(ptr noundef nonnull align 8 dereferenceable(216) %0) unnamed_addr #7 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN5arrow14NumericBuilderINS_9Int32TypeEEE, i64 16), ptr %0, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVN5arrow14NumericBuilderINS_9Int32TypeEEE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !54
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !49   ; 8 uses
   %.not.i.i.i.i = icmp eq ptr %i.b, null
@@ -12138,7 +12138,7 @@ _ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; 
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr void @_ZN5arrow14NumericBuilderINS_9Int32TypeEED0Ev(ptr noundef nonnull align 8 dereferenceable(216) %0) unnamed_addr #7 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN5arrow14NumericBuilderINS_9Int32TypeEEE, i64 16), ptr %0, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVN5arrow14NumericBuilderINS_9Int32TypeEEE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !54
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !49   ; 8 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.b, null
@@ -12541,7 +12541,7 @@ bb.c:                                             ; preds = %bb.b
   store i32 1, ptr %i.e, align 8, !tbaa !51
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 12 ; 2 uses
   store i32 1, ptr %i.f, align 4, !tbaa !53
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt19_Sp_counted_deleterIPN5arrow15ResizableBufferESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.d, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt19_Sp_counted_deleterIPN5arrow15ResizableBufferESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.d, align 8, !tbaa !54
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store ptr %i.a, ptr %i.g, align 8, !tbaa !975
   %i.h = load i8, ptr @__libc_single_threaded, align 1, !tbaa !40
@@ -12944,7 +12944,7 @@ bb.c:                                             ; preds = %bb.b
   store i32 1, ptr %i.e, align 8, !tbaa !51
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 12 ; 2 uses
   store i32 1, ptr %i.f, align 4, !tbaa !53
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt19_Sp_counted_deleterIPN5arrow6BufferESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.d, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt19_Sp_counted_deleterIPN5arrow6BufferESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.d, align 8, !tbaa !54
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store ptr %i.a, ptr %i.g, align 8, !tbaa !1008
   %i.h = load i8, ptr @__libc_single_threaded, align 1, !tbaa !40
@@ -13347,7 +13347,7 @@ bb.l:                                             ; preds = %_ZN5arrow10TypeTrai
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZN5arrow8internal21DictionaryBuilderBaseINS_14NumericBuilderINS_9Int32TypeEEENS_10StringTypeEED2Ev(ptr noundef nonnull align 8 dereferenceable(392) %0) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN5arrow8internal21DictionaryBuilderBaseINS_14NumericBuilderINS_9Int32TypeEEENS_10StringTypeEEE, i64 16), ptr %0, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVN5arrow8internal21DictionaryBuilderBaseINS_14NumericBuilderINS_9Int32TypeEEENS_10StringTypeEEE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !54
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 384
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !49   ; 8 uses
   %.not.i.i = icmp eq ptr %i.b, null
@@ -13399,7 +13399,7 @@ bb.g:                                             ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.a, %bb.c, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i, %bb.g
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 2 uses
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN5arrow14NumericBuilderINS_9Int32TypeEEE, i64 16), ptr %i.r, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVN5arrow14NumericBuilderINS_9Int32TypeEEE, i32 0, i32 0, i32 2), ptr %i.r, align 8, !tbaa !54
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 328
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !49   ; 8 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.t, null
@@ -13802,7 +13802,7 @@ _ZN5arrow6Status9TypeErrorIJRA21_KcRKNS_14DictionaryTypeEEEES0_DpOT_.exit: ; pre
   br label %.critedge
 
 .critedge:                                        ; preds = %_ZN5arrow6Status9TypeErrorIJRA21_KcRKNS_14DictionaryTypeEEEES0_DpOT_.exit, %_ZN5arrow6StatusD2Ev.exit, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.l
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN5arrow5ArrayE, i64 16), ptr %6, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 16) ({ [4 x ptr] }, ptr @_ZTVN5arrow5ArrayE, i32 0, i32 0, i32 2), ptr %6, align 8, !tbaa !54
   %i.ay = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !49 ; 8 uses
   %.not.i.i.i49 = icmp eq ptr %i.az, null
@@ -14205,7 +14205,7 @@ bb.a:
   store i64 %3, ptr %i.g, align 8, !tbaa !391
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 80
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.h, i8 0, i64 64, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN5arrow8internal21DictionaryBuilderBaseINS_14NumericBuilderINS_9Int32TypeEEENS_10StringTypeEEE, i64 16), ptr %0, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVN5arrow8internal21DictionaryBuilderBaseINS_14NumericBuilderINS_9Int32TypeEEENS_10StringTypeEEE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !54
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 2 uses
   %i.j = invoke noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #28
           to label %bb.b unwind label %bb.k       ; 3 uses
@@ -14237,7 +14237,7 @@ bb.c:                                             ; preds = %bb.b
   store i64 %3, ptr %i.t, align 8, !tbaa !391
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 240
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.u, i8 0, i64 64, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN5arrow14NumericBuilderINS_9Int32TypeEEE, i64 16), ptr %i.m, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 112) ({ [16 x ptr] }, ptr @_ZTVN5arrow14NumericBuilderINS_9Int32TypeEEE, i32 0, i32 0, i32 2), ptr %i.m, align 8, !tbaa !54
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1128)
   %i.v = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZN5arrow5int32Ev()
           to label %.noexc.i unwind label %.body  ; 2 uses
@@ -14640,7 +14640,7 @@ _ZN5arrow8internal21DictionaryBuilderBaseINS_14NumericBuilderINS_9Int32TypeEEENS
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZN5arrow5ArrayD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %0) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN5arrow5ArrayE, i64 16), ptr %0, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 16) ({ [4 x ptr] }, ptr @_ZTVN5arrow5ArrayE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !54
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !49   ; 8 uses
   %.not.i.i = icmp eq ptr %i.b, null
@@ -14697,7 +14697,7 @@ _ZNSt12__shared_ptrIN5arrow9ArrayDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ;
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZN5arrow5ArrayD0Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %0) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN5arrow5ArrayE, i64 16), ptr %0, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 16) ({ [4 x ptr] }, ptr @_ZTVN5arrow5ArrayE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !54
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !49   ; 8 uses
   %.not.i.i.i = icmp eq ptr %i.b, null
@@ -14832,7 +14832,7 @@ bb.c:                                             ; preds = %bb.b
   store i32 1, ptr %i.e, align 8, !tbaa !51
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 12 ; 2 uses
   store i32 1, ptr %i.f, align 4, !tbaa !53
-  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt19_Sp_counted_deleterIPN5arrow12ArrayBuilderESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.d, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 40) ({ [7 x ptr] }, ptr @_ZTVSt19_Sp_counted_deleterIPN5arrow12ArrayBuilderESt14default_deleteIS1_ESaIvELN9__gnu_cxx12_Lock_policyE2EE, i32 0, i32 0, i32 2), ptr %i.d, align 8, !tbaa !54
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store ptr %i.a, ptr %i.g, align 8, !tbaa !1658
   %i.h = load i8, ptr @__libc_single_threaded, align 1, !tbaa !40
@@ -15235,7 +15235,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.h = load i8, ptr %3, align 1, !tbaa !77
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN5arrow23SimpleRecordBatchReaderE, i64 16), ptr %0, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 56) ({ [9 x ptr] }, ptr @_ZTVN5arrow23SimpleRecordBatchReaderE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !54
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   store ptr null, ptr %i.f, align 8, !tbaa !49
   %i.j = load <2 x ptr>, ptr %2, align 8, !tbaa !50
@@ -15295,7 +15295,7 @@ _ZNSt6vectorISt10shared_ptrIN5arrow11RecordBatchEESaIS3_EED2Ev.exit: ; preds = %
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr void @_ZN5arrow23SimpleRecordBatchReaderD2Ev(ptr noundef nonnull align 8 dereferenceable(49) %0) unnamed_addr #7 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN5arrow23SimpleRecordBatchReaderE, i64 16), ptr %0, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 56) ({ [9 x ptr] }, ptr @_ZTVN5arrow23SimpleRecordBatchReaderE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !54
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !50   ; 2 uses
   %.not.i.i = icmp eq ptr %i.b, null
@@ -15371,7 +15371,7 @@ _ZNSt12__shared_ptrIN5arrow6SchemaELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; pr
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr void @_ZN5arrow23SimpleRecordBatchReaderD0Ev(ptr noundef nonnull align 8 dereferenceable(49) %0) unnamed_addr #7 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN5arrow23SimpleRecordBatchReaderE, i64 16), ptr %0, align 8, !tbaa !54
+  store ptr getelementptr inbounds inrange(-16, 56) ({ [9 x ptr] }, ptr @_ZTVN5arrow23SimpleRecordBatchReaderE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !54
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !50   ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.b, null

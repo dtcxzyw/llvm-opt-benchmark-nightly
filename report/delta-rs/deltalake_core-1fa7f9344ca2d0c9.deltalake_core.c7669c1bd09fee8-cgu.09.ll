@@ -201,7 +201,7 @@ bb.bd:                                            ; preds = %bb.bb
   br i1 %i.dc, label %bb.be, label %bb.bf
 
 bb.be:                                            ; preds = %bb.bd
-  %i.dd = invoke noundef zeroext i1 @_RNvXs_NtCsjhHCjzi9uUI_17datafusion_common6scalarNtB4_11ScalarValueNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq(ptr noalias noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(64) %i.ah, ptr noalias noundef readonly align 16 captures(address, read_provenance) dereferenceable(64) getelementptr inbounds nuw (i8, ptr @311, i64 64))
+  %i.dd = invoke noundef zeroext i1 @_RNvXs_NtCsjhHCjzi9uUI_17datafusion_common6scalarNtB4_11ScalarValueNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq(ptr noalias noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(64) %i.ah, ptr noalias noundef readonly align 16 captures(address, read_provenance) dereferenceable(64) getelementptr inbounds (i8, ptr @311, i64 64))
           to label %bb.bg unwind label %.loopexit25.i.i, !noalias !3930
 
 bb.bf:                                            ; preds = %bb.bg, %bb.bd
@@ -219,7 +219,7 @@ bb.bi:                                            ; preds = %bb.bf
   br i1 %i.de, label %bb.bj, label %bb.bk, !prof !1206
 
 bb.bj:                                            ; preds = %bb.bi
-  %i.df = invoke noundef zeroext i1 @_RNvXs_NtCsjhHCjzi9uUI_17datafusion_common6scalarNtB4_11ScalarValueNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq(ptr noalias noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(64) %i.ah, ptr noalias noundef readonly align 16 captures(address, read_provenance) dereferenceable(64) getelementptr inbounds nuw (i8, ptr @312, i64 64))
+  %i.df = invoke noundef zeroext i1 @_RNvXs_NtCsjhHCjzi9uUI_17datafusion_common6scalarNtB4_11ScalarValueNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq(ptr noalias noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(64) %i.ah, ptr noalias noundef readonly align 16 captures(address, read_provenance) dereferenceable(64) getelementptr inbounds (i8, ptr @312, i64 64))
           to label %bb.bl unwind label %.loopexit25.i.i, !noalias !3930
 
 bb.bk:                                            ; preds = %bb.bl, %bb.bi
@@ -622,7 +622,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ak = load ptr, ptr %i.aj, align 8, !alias.scope !5466, !noalias !5467, !nonnull !4, !noundef !4 ; 8 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
   %i.am = load i64, ptr %i.al, align 8, !alias.scope !5466, !noalias !5467, !noundef !4 ; 10 uses
-  %i.an = load atomic i32, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs14kWLkQVSKO_14deltalake_core8logstore15DELTA_LOG_REGEX, i64 32) acquire, align 8, !noalias !5469
+  %i.an = load atomic i32, ptr getelementptr inbounds (i8, ptr @_RNvNtCs14kWLkQVSKO_14deltalake_core8logstore15DELTA_LOG_REGEX, i64 32) acquire, align 8, !noalias !5469
   %i.ao = icmp eq i32 %i.an, 0
   br i1 %i.ao, label %_RINvMs0_NtNtCs2pqxYH9ZEk8_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockNtNtNtCsonPGffhQyS_5regex5regex6string5RegexE5force0ECs14kWLkQVSKO_14deltalake_core.exit.i.i.i.i.i.i.i, label %bb.e, !prof !1206
 
@@ -631,7 +631,7 @@ bb.e:                                             ; preds = %bb.d
   store ptr @_RNvNtCs14kWLkQVSKO_14deltalake_core8logstore15DELTA_LOG_REGEX, ptr %i.h, align 8, !noalias !5469
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !5469
   store ptr %i.h, ptr %i.g, align 8, !noalias !5469
-  call void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds nuw (i8, ptr @_RNvNtCs14kWLkQVSKO_14deltalake_core8logstore15DELTA_LOG_REGEX, i64 32), i1 noundef zeroext true, ptr noundef nonnull %i.g, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @3, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2), !noalias !5470
+  call void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds (i8, ptr @_RNvNtCs14kWLkQVSKO_14deltalake_core8logstore15DELTA_LOG_REGEX, i64 32), i1 noundef zeroext true, ptr noundef nonnull %i.g, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @3, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2), !noalias !5470
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !5469
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !5469
   br label %_RINvMs0_NtNtCs2pqxYH9ZEk8_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockNtNtNtCsonPGffhQyS_5regex5regex6string5RegexE5force0ECs14kWLkQVSKO_14deltalake_core.exit.i.i.i.i.i.i.i
@@ -1034,7 +1034,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !13302)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !13305
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !13305
-  %i.n = load atomic i32, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXs_NtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot8log_data10datafusionNtB8_14LogDataHandlerNtNtCsjhHCjzi9uUI_17datafusion_common7pruning17PruningStatistics10row_counts15ROW_COUNTS_EVAL, i64 16) acquire, align 8, !noalias !13305
+  %i.n = load atomic i32, ptr getelementptr inbounds (i8, ptr @_RNvNvXs_NtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot8log_data10datafusionNtB8_14LogDataHandlerNtNtCsjhHCjzi9uUI_17datafusion_common7pruning17PruningStatistics10row_counts15ROW_COUNTS_EVAL, i64 16) acquire, align 8, !noalias !13305
   %i.o = icmp eq i32 %i.n, 0
   br i1 %i.o, label %_RINvMs0_NtNtCs2pqxYH9ZEk8_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtCs8ulvy0Wg6Ot_12delta_kernel19ExpressionEvaluatorEL_EE5force0ECs14kWLkQVSKO_14deltalake_core.exit.i.i.i, label %bb.c, !prof !1206
 
@@ -1043,14 +1043,14 @@ bb.c:                                             ; preds = %bb.b
   store ptr @_RNvNvXs_NtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot8log_data10datafusionNtB8_14LogDataHandlerNtNtCsjhHCjzi9uUI_17datafusion_common7pruning17PruningStatistics10row_counts15ROW_COUNTS_EVAL, ptr %i.d, align 8, !noalias !13305
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !13305
   store ptr %i.d, ptr %i.c, align 8, !noalias !13305
-  call void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds nuw (i8, ptr @_RNvNvXs_NtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot8log_data10datafusionNtB8_14LogDataHandlerNtNtCsjhHCjzi9uUI_17datafusion_common7pruning17PruningStatistics10row_counts15ROW_COUNTS_EVAL, i64 16), i1 noundef zeroext true, ptr noundef nonnull %i.c, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2), !noalias !13305
+  call void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds (i8, ptr @_RNvNvXs_NtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot8log_data10datafusionNtB8_14LogDataHandlerNtNtCsjhHCjzi9uUI_17datafusion_common7pruning17PruningStatistics10row_counts15ROW_COUNTS_EVAL, i64 16), i1 noundef zeroext true, ptr noundef nonnull %i.c, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2), !noalias !13305
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !13305
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !13305
   br label %_RINvMs0_NtNtCs2pqxYH9ZEk8_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtCs8ulvy0Wg6Ot_12delta_kernel19ExpressionEvaluatorEL_EE5force0ECs14kWLkQVSKO_14deltalake_core.exit.i.i.i
 
 _RINvMs0_NtNtCs2pqxYH9ZEk8_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtCs8ulvy0Wg6Ot_12delta_kernel19ExpressionEvaluatorEL_EE5force0ECs14kWLkQVSKO_14deltalake_core.exit.i.i.i: ; preds = %bb.c, %bb.b
   %i.p = load ptr, ptr @_RNvNvXs_NtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot8log_data10datafusionNtB8_14LogDataHandlerNtNtCsjhHCjzi9uUI_17datafusion_common7pruning17PruningStatistics10row_counts15ROW_COUNTS_EVAL, align 8, !noalias !13305, !nonnull !4, !noundef !4
-  %i.q = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXs_NtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot8log_data10datafusionNtB8_14LogDataHandlerNtNtCsjhHCjzi9uUI_17datafusion_common7pruning17PruningStatistics10row_counts15ROW_COUNTS_EVAL, i64 8), align 8, !noalias !13305, !nonnull !4, !align !8, !noundef !4 ; 2 uses
+  %i.q = load ptr, ptr getelementptr inbounds (i8, ptr @_RNvNvXs_NtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot8log_data10datafusionNtB8_14LogDataHandlerNtNtCsjhHCjzi9uUI_17datafusion_common7pruning17PruningStatistics10row_counts15ROW_COUNTS_EVAL, i64 8), align 8, !noalias !13305, !nonnull !4, !align !8, !noundef !4 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   %i.s = load i64, ptr %i.r, align 8, !range !64, !invariant.load !4, !noalias !13305
   %i.t = add nsw i64 %i.s, -1

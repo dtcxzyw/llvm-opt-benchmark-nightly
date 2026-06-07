@@ -201,7 +201,7 @@ bb.t:                                             ; preds = %bb.o
   br i1 %i.bm, label %bb.u, label %bb.af
 
 bb.u:                                             ; preds = %bb.t
-  %i.bn = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvMNtCsj34PGqTgg0L_16deltalake_lakefs8logstoreNtB4_14LakeFSLogStore15build_new_store10___CALLSITE, i64 16) monotonic, align 8 ; 3 uses
+  %i.bn = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNvMNtCsj34PGqTgg0L_16deltalake_lakefs8logstoreNtB4_14LakeFSLogStore15build_new_store10___CALLSITE, i64 16) monotonic, align 8 ; 3 uses
   switch i8 %i.bn, label %bb.v [
     i8 0, label %bb.af
     i8 1, label %bb.w
@@ -604,7 +604,7 @@ define internal noundef nonnull align 8 ptr @_RNvYNtNtCsj34PGqTgg0L_16deltalake_
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
-  %i.c = load atomic i32, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs14kWLkQVSKO_14deltalake_core8logstore14DELTA_LOG_PATH, i64 24) acquire, align 8
+  %i.c = load atomic i32, ptr getelementptr inbounds (i8, ptr @_RNvNtCs14kWLkQVSKO_14deltalake_core8logstore14DELTA_LOG_PATH, i64 24) acquire, align 8
   %i.d = icmp eq i32 %i.c, 0
   br i1 %i.d, label %_RINvMs0_NtNtCs2pqxYH9ZEk8_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockNtNtCsjyY8HP3IvQ6_12object_store4path4PathE5force0ECsj34PGqTgg0L_16deltalake_lakefs.exit, label %bb.b, !prof !1668
 
@@ -613,7 +613,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr @_RNvNtCs14kWLkQVSKO_14deltalake_core8logstore14DELTA_LOG_PATH, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %i.b, ptr %i.a, align 8
-  call void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds nuw (i8, ptr @_RNvNtCs14kWLkQVSKO_14deltalake_core8logstore14DELTA_LOG_PATH, i64 24), i1 noundef zeroext true, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2)
+  call void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds (i8, ptr @_RNvNtCs14kWLkQVSKO_14deltalake_core8logstore14DELTA_LOG_PATH, i64 24), i1 noundef zeroext true, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %_RINvMs0_NtNtCs2pqxYH9ZEk8_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockNtNtCsjyY8HP3IvQ6_12object_store4path4PathE5force0ECsj34PGqTgg0L_16deltalake_lakefs.exit

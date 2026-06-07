@@ -1,0 +1,1747 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+index 348dd162501a0..94e7393fe7737 100644
+--- a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+@@ -6062,25 +6062,6 @@ bool InstCombinerImpl::prepareWorklist(Function &F) {
+           continue;
+         }
+ 
+-      // See if we can constant fold its operands.
+-      for (Use &U : Inst.operands()) {
+-        if (!isa<ConstantVector>(U) && !isa<ConstantExpr>(U))
+-          continue;
+-
+-        auto *C = cast<Constant>(U);
+-        Constant *&FoldRes = FoldedConstants[C];
+-        if (!FoldRes)
+-          FoldRes = ConstantFoldConstant(C, DL, &TLI);
+-
+-        if (FoldRes != C) {
+-          LLVM_DEBUG(dbgs() << "IC: ConstFold operand of: " << Inst
+-                            << "\n    Old = " << *C
+-                            << "\n    New = " << *FoldRes << '\n');
+-          U = FoldRes;
+-          MadeIRChange = true;
+-        }
+-      }
+-
+       // Skip processing debug and pseudo intrinsics in InstCombine. Processing
+       // these call instructions consumes non-trivial amount of time and
+       // provides no value for the optimization.
+diff --git a/llvm/test/Other/optimize-inrange-gep.ll b/llvm/test/Other/optimize-inrange-gep.ll
+index 53b07a4f7305b..68a0aab407e0c 100644
+--- a/llvm/test/Other/optimize-inrange-gep.ll
++++ b/llvm/test/Other/optimize-inrange-gep.ll
+@@ -18,7 +18,7 @@ define void @foo(ptr %p) {
+ ;
+ ; CHECK-LABEL: define void @foo(
+ ; CHECK-SAME: ptr writeonly captures(none) initializes((0, 8)) [[P:%.*]]) local_unnamed_addr #[[ATTR0:[0-9]+]] {
+-; CHECK-NEXT:    store ptr getelementptr inbounds nuw inrange(-24, 0) (i8, ptr @vtable, i64 24), ptr [[P]], align 8
++; CHECK-NEXT:    store ptr getelementptr inrange(-24, 0) ({ [3 x ptr], [3 x ptr] }, ptr @vtable, i32 0, i32 0, i32 3), ptr [[P]], align 8
+ ; CHECK-NEXT:    ret void
+ ;
+   store ptr getelementptr inrange(-24, 0) ({ [3 x ptr], [3 x ptr] }, ptr @vtable, i32 0, i32 0, i32 3), ptr %p
+diff --git a/llvm/test/Transforms/InstCombine/X86/x86-sse4a-inseltpoison.ll b/llvm/test/Transforms/InstCombine/X86/x86-sse4a-inseltpoison.ll
+index f47ff46073d53..7defd63a776ea 100644
+--- a/llvm/test/Transforms/InstCombine/X86/x86-sse4a-inseltpoison.ll
++++ b/llvm/test/Transforms/InstCombine/X86/x86-sse4a-inseltpoison.ll
+@@ -60,9 +60,7 @@ define <2 x i64> @test_extrq_constant_poison(<2 x i64> %x, <16 x i8> %y) {
+ 
+ define <2 x i64> @test_extrq_call_constexpr(<2 x i64> %x) {
+ ; CHECK-LABEL: @test_extrq_call_constexpr(
+-; CHECK-NEXT:    [[TMP1:%.*]] = bitcast <2 x i64> [[X:%.*]] to <16 x i8>
+-; CHECK-NEXT:    [[TMP2:%.*]] = shufflevector <16 x i8> [[TMP1]], <16 x i8> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[TMP3:%.*]] = bitcast <16 x i8> [[TMP2]] to <2 x i64>
++; CHECK-NEXT:    [[TMP3:%.*]] = call <2 x i64> @llvm.x86.sse4a.extrq(<2 x i64> [[X:%.*]], <16 x i8> bitcast (<2 x i64> <i64 0, i64 poison> to <16 x i8>))
+ ; CHECK-NEXT:    ret <2 x i64> [[TMP3]]
+ ;
+   %1 = call <2 x i64> @llvm.x86.sse4a.extrq(<2 x i64> %x, <16 x i8> bitcast (<2 x i64> <i64 0, i64 poison> to <16 x i8>))
+@@ -184,7 +182,7 @@ define <2 x i64> @test_insertq_constant_poison(<2 x i64> %x, <2 x i64> %y) {
+ 
+ define <2 x i64> @test_insertq_call_constexpr(<2 x i64> %x) {
+ ; CHECK-LABEL: @test_insertq_call_constexpr(
+-; CHECK-NEXT:    [[TMP1:%.*]] = call <2 x i64> @llvm.x86.sse4a.insertqi(<2 x i64> [[X:%.*]], <2 x i64> <i64 0, i64 poison>, i8 2, i8 0)
++; CHECK-NEXT:    [[TMP1:%.*]] = tail call <2 x i64> @llvm.x86.sse4a.insertq(<2 x i64> [[X:%.*]], <2 x i64> bitcast (<16 x i8> <i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 0) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 1) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 2) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 3) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 4) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 5) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 6) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 7) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 8) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 9) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 10) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 11) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 12) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 13) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 14) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 15) to i8)> to <2 x i64>))
+ ; CHECK-NEXT:    ret <2 x i64> [[TMP1]]
+ ;
+   %1 = tail call <2 x i64> @llvm.x86.sse4a.insertq(<2 x i64> %x, <2 x i64> bitcast (<16 x i8> trunc (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>) to <16 x i8>) to <2 x i64>))
+@@ -229,7 +227,7 @@ define <2 x i64> @test_insertqi_constant(<2 x i64> %v, <2 x i64> %i) {
+ 
+ define <2 x i64> @test_insertqi_call_constexpr(<2 x i64> %x) {
+ ; CHECK-LABEL: @test_insertqi_call_constexpr(
+-; CHECK-NEXT:    [[TMP1:%.*]] = tail call <2 x i64> @llvm.x86.sse4a.insertqi(<2 x i64> [[X:%.*]], <2 x i64> <i64 0, i64 poison>, i8 48, i8 3)
++; CHECK-NEXT:    [[TMP1:%.*]] = tail call <2 x i64> @llvm.x86.sse4a.insertqi(<2 x i64> [[X:%.*]], <2 x i64> bitcast (<16 x i8> <i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 0) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 1) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 2) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 3) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 4) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 5) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 6) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 7) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 8) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 9) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 10) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 11) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 12) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 13) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 14) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>), i32 15) to i8)> to <2 x i64>), i8 48, i8 3)
+ ; CHECK-NEXT:    ret <2 x i64> [[TMP1]]
+ ;
+   %1 = tail call <2 x i64> @llvm.x86.sse4a.insertqi(<2 x i64> %x, <2 x i64> bitcast (<16 x i8> trunc (<16 x i16> bitcast (<4 x i64> <i64 0, i64 poison, i64 2, i64 poison> to <16 x i16>) to <16 x i8>) to <2 x i64>), i8 48, i8 3)
+diff --git a/llvm/test/Transforms/InstCombine/X86/x86-sse4a.ll b/llvm/test/Transforms/InstCombine/X86/x86-sse4a.ll
+index 237deac09dece..06026f0d3d792 100644
+--- a/llvm/test/Transforms/InstCombine/X86/x86-sse4a.ll
++++ b/llvm/test/Transforms/InstCombine/X86/x86-sse4a.ll
+@@ -60,9 +60,7 @@ define <2 x i64> @test_extrq_constant_undef(<2 x i64> %x, <16 x i8> %y) {
+ 
+ define <2 x i64> @test_extrq_call_constexpr(<2 x i64> %x) {
+ ; CHECK-LABEL: @test_extrq_call_constexpr(
+-; CHECK-NEXT:    [[TMP1:%.*]] = bitcast <2 x i64> [[X:%.*]] to <16 x i8>
+-; CHECK-NEXT:    [[TMP2:%.*]] = shufflevector <16 x i8> [[TMP1]], <16 x i8> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[TMP3:%.*]] = bitcast <16 x i8> [[TMP2]] to <2 x i64>
++; CHECK-NEXT:    [[TMP3:%.*]] = call <2 x i64> @llvm.x86.sse4a.extrq(<2 x i64> [[X:%.*]], <16 x i8> bitcast (<2 x i64> <i64 0, i64 undef> to <16 x i8>))
+ ; CHECK-NEXT:    ret <2 x i64> [[TMP3]]
+ ;
+   %1 = call <2 x i64> @llvm.x86.sse4a.extrq(<2 x i64> %x, <16 x i8> bitcast (<2 x i64> <i64 0, i64 undef> to <16 x i8>))
+@@ -184,7 +182,7 @@ define <2 x i64> @test_insertq_constant_undef(<2 x i64> %x, <2 x i64> %y) {
+ 
+ define <2 x i64> @test_insertq_call_constexpr(<2 x i64> %x) {
+ ; CHECK-LABEL: @test_insertq_call_constexpr(
+-; CHECK-NEXT:    [[TMP1:%.*]] = call <2 x i64> @llvm.x86.sse4a.insertqi(<2 x i64> [[X:%.*]], <2 x i64> <i64 0, i64 poison>, i8 2, i8 0)
++; CHECK-NEXT:    [[TMP1:%.*]] = tail call <2 x i64> @llvm.x86.sse4a.insertq(<2 x i64> [[X:%.*]], <2 x i64> bitcast (<16 x i8> <i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 0) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 1) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 2) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 3) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 4) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 5) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 6) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 7) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 8) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 9) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 10) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 11) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 12) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 13) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 14) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 15) to i8)> to <2 x i64>))
+ ; CHECK-NEXT:    ret <2 x i64> [[TMP1]]
+ ;
+   %1 = tail call <2 x i64> @llvm.x86.sse4a.insertq(<2 x i64> %x, <2 x i64> bitcast (<16 x i8> trunc (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>) to <16 x i8>) to <2 x i64>))
+@@ -229,7 +227,7 @@ define <2 x i64> @test_insertqi_constant(<2 x i64> %v, <2 x i64> %i) {
+ 
+ define <2 x i64> @test_insertqi_call_constexpr(<2 x i64> %x) {
+ ; CHECK-LABEL: @test_insertqi_call_constexpr(
+-; CHECK-NEXT:    [[TMP1:%.*]] = tail call <2 x i64> @llvm.x86.sse4a.insertqi(<2 x i64> [[X:%.*]], <2 x i64> <i64 0, i64 poison>, i8 48, i8 3)
++; CHECK-NEXT:    [[TMP1:%.*]] = tail call <2 x i64> @llvm.x86.sse4a.insertqi(<2 x i64> [[X:%.*]], <2 x i64> bitcast (<16 x i8> <i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 0) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 1) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 2) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 3) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 4) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 5) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 6) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 7) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 8) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 9) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 10) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 11) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 12) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 13) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 14) to i8), i8 trunc (i16 extractelement (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>), i32 15) to i8)> to <2 x i64>), i8 48, i8 3)
+ ; CHECK-NEXT:    ret <2 x i64> [[TMP1]]
+ ;
+   %1 = tail call <2 x i64> @llvm.x86.sse4a.insertqi(<2 x i64> %x, <2 x i64> bitcast (<16 x i8> trunc (<16 x i16> bitcast (<4 x i64> <i64 0, i64 undef, i64 2, i64 undef> to <16 x i16>) to <16 x i8>) to <2 x i64>), i8 48, i8 3)
+diff --git a/llvm/test/Transforms/InstCombine/addrspacecast.ll b/llvm/test/Transforms/InstCombine/addrspacecast.ll
+index 8f3270cd60609..2ba3453af0dfa 100644
+--- a/llvm/test/Transforms/InstCombine/addrspacecast.ll
++++ b/llvm/test/Transforms/InstCombine/addrspacecast.ll
+@@ -141,7 +141,7 @@ define i32 @memcpy_addrspacecast() nounwind {
+ ; CHECK-NEXT:    [[I:%.*]] = phi i32 [ 0, [[ENTRY:%.*]] ], [ [[I_INC:%.*]], [[LOOP_BODY]] ]
+ ; CHECK-NEXT:    [[SUM:%.*]] = phi i32 [ 0, [[ENTRY]] ], [ [[SUM_INC:%.*]], [[LOOP_BODY]] ]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = trunc i32 [[I]] to i16
+-; CHECK-NEXT:    [[PTR:%.*]] = getelementptr i8, ptr addrspace(2) getelementptr inbounds nuw (i8, ptr addrspace(2) @const_array, i16 4), i16 [[TMP0]]
++; CHECK-NEXT:    [[PTR:%.*]] = getelementptr i8, ptr addrspace(2) getelementptr inbounds ([60 x i8], ptr addrspace(2) @const_array, i16 0, i16 4), i16 [[TMP0]]
+ ; CHECK-NEXT:    [[LOAD:%.*]] = load i8, ptr addrspace(2) [[PTR]], align 1
+ ; CHECK-NEXT:    [[EXT:%.*]] = zext i8 [[LOAD]] to i32
+ ; CHECK-NEXT:    [[SUM_INC]] = add i32 [[SUM]], [[EXT]]
+diff --git a/llvm/test/Transforms/InstCombine/align-addr.ll b/llvm/test/Transforms/InstCombine/align-addr.ll
+index 5cc707be2c709..a915295f50db7 100644
+--- a/llvm/test/Transforms/InstCombine/align-addr.ll
++++ b/llvm/test/Transforms/InstCombine/align-addr.ll
+@@ -81,7 +81,7 @@ define <16 x i8> @test1_as1(<2 x i64> %x) {
+ 
+ define <16 x i8> @test1_as1_gep(<2 x i64> %x) {
+ ; CHECK-LABEL: @test1_as1_gep(
+-; CHECK-NEXT:    [[TMP:%.*]] = load <16 x i8>, ptr addrspace(1) getelementptr inbounds nuw (i8, ptr addrspace(1) @GLOBAL_as1_gep, i32 16), align 1
++; CHECK-NEXT:    [[TMP:%.*]] = load <16 x i8>, ptr addrspace(1) getelementptr ([8 x i32], ptr addrspace(1) @GLOBAL_as1_gep, i16 0, i16 4), align 1
+ ; CHECK-NEXT:    ret <16 x i8> [[TMP]]
+ ;
+   %tmp = load <16 x i8>, ptr addrspace(1) getelementptr ([8 x i32], ptr addrspace(1) @GLOBAL_as1_gep, i16 0, i16 4), align 1
+diff --git a/llvm/test/Transforms/InstCombine/binop-select-cast-of-select-cond.ll b/llvm/test/Transforms/InstCombine/binop-select-cast-of-select-cond.ll
+index 41367d55d8894..98695a3d5c816 100644
+--- a/llvm/test/Transforms/InstCombine/binop-select-cast-of-select-cond.ll
++++ b/llvm/test/Transforms/InstCombine/binop-select-cast-of-select-cond.ll
+@@ -231,7 +231,7 @@ define <2 x i8> @vectorized_add(<2 x i1> %c, <2 x i8> %arg) {
+ define i64 @pr64669(i64 %a) {
+ ; CHECK-LABEL: define i64 @pr64669
+ ; CHECK-SAME: (i64 [[A:%.*]]) {
+-; CHECK-NEXT:    [[CMP_NOT:%.*]] = icmp eq ptr getelementptr inbounds nuw (i8, ptr @b, i64 100), @c
++; CHECK-NEXT:    [[CMP_NOT:%.*]] = icmp eq ptr getelementptr inbounds ([72 x i32], ptr @b, i64 0, i64 25), @c
+ ; CHECK-NEXT:    [[TMP1:%.*]] = add i64 [[A]], 1
+ ; CHECK-NEXT:    [[ADD:%.*]] = select i1 [[CMP_NOT]], i64 0, i64 [[TMP1]]
+ ; CHECK-NEXT:    ret i64 [[ADD]]
+diff --git a/llvm/test/Transforms/InstCombine/bitcast-inseltpoison.ll b/llvm/test/Transforms/InstCombine/bitcast-inseltpoison.ll
+index 0c24d0ea962b7..06bd0d00f7ae1 100644
+--- a/llvm/test/Transforms/InstCombine/bitcast-inseltpoison.ll
++++ b/llvm/test/Transforms/InstCombine/bitcast-inseltpoison.ll
+@@ -487,14 +487,14 @@ define i8 @test8() {
+ 
+ define void @constant_fold_vector_to_double() {
+ ; CHECK-LABEL: @constant_fold_vector_to_double(
+-; CHECK-NEXT:    store volatile double 1.000000e+00, ptr undef, align 8
+-; CHECK-NEXT:    store volatile double 1.000000e+00, ptr undef, align 8
+-; CHECK-NEXT:    store volatile double 1.000000e+00, ptr undef, align 8
+-; CHECK-NEXT:    store volatile double 1.000000e+00, ptr undef, align 8
++; CHECK-NEXT:    store volatile double bitcast (<1 x i64> splat (i64 4607182418800017408) to double), ptr undef, align 8
++; CHECK-NEXT:    store volatile double bitcast (<2 x i32> <i32 0, i32 1072693248> to double), ptr undef, align 8
++; CHECK-NEXT:    store volatile double bitcast (<4 x i16> <i16 0, i16 0, i16 0, i16 16368> to double), ptr undef, align 8
++; CHECK-NEXT:    store volatile double bitcast (<8 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 -16, i8 63> to double), ptr undef, align 8
+ ; CHECK-NEXT:    store volatile double -nan(0x7FFFFFFFFFFFF), ptr undef, align 8
+-; CHECK-NEXT:    store volatile double f0x0000162E000004D2, ptr undef, align 8
++; CHECK-NEXT:    store volatile double bitcast (<2 x i32> <i32 1234, i32 5678> to double), ptr undef, align 8
+ ; CHECK-NEXT:    store volatile double bitcast (<2 x i32> <i32 1234, i32 ptrtoint (ptr @g to i32)> to double), ptr undef, align 8
+-; CHECK-NEXT:    store volatile double f0x400000003F800000, ptr undef, align 8
++; CHECK-NEXT:    store volatile double bitcast (<2 x float> <float 1.000000e+00, float 2.000000e+00> to double), ptr undef, align 8
+ ; CHECK-NEXT:    store volatile double 0.000000e+00, ptr undef, align 8
+ ; CHECK-NEXT:    store volatile double 0.000000e+00, ptr undef, align 8
+ ; CHECK-NEXT:    store volatile double 0.000000e+00, ptr undef, align 8
+@@ -525,10 +525,10 @@ define void @constant_fold_vector_to_double() {
+ 
+ define void @constant_fold_vector_to_float() {
+ ; CHECK-LABEL: @constant_fold_vector_to_float(
+-; CHECK-NEXT:    store volatile float 1.000000e+00, ptr undef, align 4
+-; CHECK-NEXT:    store volatile float 1.000000e+00, ptr undef, align 4
+-; CHECK-NEXT:    store volatile float 1.000000e+00, ptr undef, align 4
+-; CHECK-NEXT:    store volatile float 1.000000e+00, ptr undef, align 4
++; CHECK-NEXT:    store volatile float bitcast (<1 x i32> splat (i32 1065353216) to float), ptr undef, align 4
++; CHECK-NEXT:    store volatile float bitcast (<2 x i16> <i16 0, i16 16256> to float), ptr undef, align 4
++; CHECK-NEXT:    store volatile float bitcast (<4 x i8> <i8 0, i8 0, i8 -128, i8 63> to float), ptr undef, align 4
++; CHECK-NEXT:    store volatile float bitcast (<32 x i1> <i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 false, i1 false> to float), ptr undef, align 4
+ ; CHECK-NEXT:    ret void
+ ;
+   store volatile float bitcast (<1 x i32> <i32 1065353216> to float), ptr undef
+@@ -541,8 +541,8 @@ define void @constant_fold_vector_to_float() {
+ 
+ define void @constant_fold_vector_to_half() {
+ ; CHECK-LABEL: @constant_fold_vector_to_half(
+-; CHECK-NEXT:    store volatile half 2.000000e+00, ptr undef, align 2
+-; CHECK-NEXT:    store volatile half 2.000000e+00, ptr undef, align 2
++; CHECK-NEXT:    store volatile half bitcast (<2 x i8> <i8 0, i8 64> to half), ptr undef, align 2
++; CHECK-NEXT:    store volatile half bitcast (<4 x i4> <i4 0, i4 0, i4 0, i4 4> to half), ptr undef, align 2
+ ; CHECK-NEXT:    ret void
+ ;
+   store volatile half bitcast (<2 x i8> <i8 0, i8 64> to half), ptr undef
+diff --git a/llvm/test/Transforms/InstCombine/bitcast.ll b/llvm/test/Transforms/InstCombine/bitcast.ll
+index a81eb5000f63c..58c84aa9e7f74 100644
+--- a/llvm/test/Transforms/InstCombine/bitcast.ll
++++ b/llvm/test/Transforms/InstCombine/bitcast.ll
+@@ -613,23 +613,6 @@ define i8 @test8() {
+ @g = internal unnamed_addr global i32 undef
+ 
+ define void @constant_fold_vector_to_double() {
+-; CHECK-LABEL: @constant_fold_vector_to_double(
+-; CHECK-NEXT:    store volatile double 1.000000e+00, ptr undef, align 8
+-; CHECK-NEXT:    store volatile double 1.000000e+00, ptr undef, align 8
+-; CHECK-NEXT:    store volatile double 1.000000e+00, ptr undef, align 8
+-; CHECK-NEXT:    store volatile double 1.000000e+00, ptr undef, align 8
+-; CHECK-NEXT:    store volatile double -nan(0x7FFFFFFFFFFFF), ptr undef, align 8
+-; CHECK-NEXT:    store volatile double f0x0000162E000004D2, ptr undef, align 8
+-; CHECK-NEXT:    store volatile double bitcast (<2 x i32> <i32 1234, i32 ptrtoint (ptr @g to i32)> to double), ptr undef, align 8
+-; CHECK-NEXT:    store volatile double f0x400000003F800000, ptr undef, align 8
+-; CHECK-NEXT:    store volatile double 0.000000e+00, ptr undef, align 8
+-; CHECK-NEXT:    store volatile double 0.000000e+00, ptr undef, align 8
+-; CHECK-NEXT:    store volatile double 0.000000e+00, ptr undef, align 8
+-; CHECK-NEXT:    store volatile double 0.000000e+00, ptr undef, align 8
+-; CHECK-NEXT:    store volatile double 0.000000e+00, ptr undef, align 8
+-; CHECK-NEXT:    store volatile double 0.000000e+00, ptr undef, align 8
+-; CHECK-NEXT:    ret void
+-;
+   store volatile double bitcast (<1 x i64> <i64 4607182418800017408> to double), ptr undef
+   store volatile double bitcast (<2 x i32> <i32 0, i32 1072693248> to double), ptr undef
+   store volatile double bitcast (<4 x i16> <i16 0, i16 0, i16 0, i16 16368> to double), ptr undef
+@@ -651,13 +634,6 @@ define void @constant_fold_vector_to_double() {
+ }
+ 
+ define void @constant_fold_vector_to_float() {
+-; CHECK-LABEL: @constant_fold_vector_to_float(
+-; CHECK-NEXT:    store volatile float 1.000000e+00, ptr undef, align 4
+-; CHECK-NEXT:    store volatile float 1.000000e+00, ptr undef, align 4
+-; CHECK-NEXT:    store volatile float 1.000000e+00, ptr undef, align 4
+-; CHECK-NEXT:    store volatile float 1.000000e+00, ptr undef, align 4
+-; CHECK-NEXT:    ret void
+-;
+   store volatile float bitcast (<1 x i32> <i32 1065353216> to float), ptr undef
+   store volatile float bitcast (<2 x i16> <i16 0, i16 16256> to float), ptr undef
+   store volatile float bitcast (<4 x i8> <i8 0, i8 0, i8 128, i8 63> to float), ptr undef
+@@ -668,8 +644,8 @@ define void @constant_fold_vector_to_float() {
+ 
+ define void @constant_fold_vector_to_half() {
+ ; CHECK-LABEL: @constant_fold_vector_to_half(
+-; CHECK-NEXT:    store volatile half 2.000000e+00, ptr undef, align 2
+-; CHECK-NEXT:    store volatile half 2.000000e+00, ptr undef, align 2
++; CHECK-NEXT:    store volatile half bitcast (<2 x i8> <i8 0, i8 64> to half), ptr undef, align 2
++; CHECK-NEXT:    store volatile half bitcast (<4 x i4> <i4 0, i4 0, i4 0, i4 4> to half), ptr undef, align 2
+ ; CHECK-NEXT:    ret void
+ ;
+   store volatile half bitcast (<2 x i8> <i8 0, i8 64> to half), ptr undef
+diff --git a/llvm/test/Transforms/InstCombine/canonicalize-gep-constglob.ll b/llvm/test/Transforms/InstCombine/canonicalize-gep-constglob.ll
+index 112c25b9368a2..f4aaeb3d4b1ae 100644
+--- a/llvm/test/Transforms/InstCombine/canonicalize-gep-constglob.ll
++++ b/llvm/test/Transforms/InstCombine/canonicalize-gep-constglob.ll
+@@ -8,7 +8,8 @@ define ptr @x12(i64 %x) {
+ ; CHECK-SAME: i64 [[X:%.*]]) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[GEP_IDX:%.*]] = mul nsw i64 [[X]], 400
+-; CHECK-NEXT:    [[GEP:%.*]] = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @glob, i64 84), i64 [[GEP_IDX]]
++; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr i8, ptr getelementptr (i8, ptr @glob, i64 36), i64 [[GEP_IDX]]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr i8, ptr [[TMP0]], i64 48
+ ; CHECK-NEXT:    ret ptr [[GEP]]
+ ;
+ entry:
+@@ -22,7 +23,8 @@ define ptr @x1y(i64 %x, i64 %y) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[GEP_IDX:%.*]] = mul nsw i64 [[X]], 400
+ ; CHECK-NEXT:    [[GEP_IDX1:%.*]] = shl nsw i64 [[Y]], 2
+-; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @glob, i64 116), i64 [[GEP_IDX]]
++; CHECK-NEXT:    [[TMP1:%.*]] = getelementptr i8, ptr getelementptr (i8, ptr @glob, i64 36), i64 [[GEP_IDX]]
++; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr i8, ptr [[TMP1]], i64 80
+ ; CHECK-NEXT:    [[GEP:%.*]] = getelementptr i8, ptr [[TMP0]], i64 [[GEP_IDX1]]
+ ; CHECK-NEXT:    ret ptr [[GEP]]
+ ;
+@@ -35,7 +37,7 @@ define ptr @xzy(i64 %x, i64 %y, i64 %z) {
+ ; CHECK-LABEL: define ptr @xzy(
+ ; CHECK-SAME: i64 [[X:%.*]], i64 [[Y:%.*]], i64 [[Z:%.*]]) {
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[GEP_SPLIT:%.*]] = getelementptr inbounds [400 x i8], ptr getelementptr inbounds nuw (i8, ptr @glob, i64 40), i64 [[X]]
++; CHECK-NEXT:    [[GEP_SPLIT:%.*]] = getelementptr inbounds [400 x i8], ptr getelementptr (i8, ptr @glob, i64 40), i64 [[X]]
+ ; CHECK-NEXT:    [[GEP_SPLIT1:%.*]] = getelementptr inbounds [40 x i8], ptr [[GEP_SPLIT]], i64 [[Z]]
+ ; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [4 x i8], ptr [[GEP_SPLIT1]], i64 [[Y]]
+ ; CHECK-NEXT:    ret ptr [[GEP]]
+@@ -49,7 +51,7 @@ define ptr @zerox(i64 %x) {
+ ; CHECK-LABEL: define ptr @zerox(
+ ; CHECK-SAME: i64 [[X:%.*]]) {
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @glob, i64 32), i64 [[X]]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr (i8, ptr @glob, i64 32), i64 [[X]]
+ ; CHECK-NEXT:    ret ptr [[GEP]]
+ ;
+ entry:
+@@ -64,7 +66,8 @@ define i32 @twoloads(i64 %x) {
+ ; CHECK-NEXT:    [[GEP1_IDX:%.*]] = mul nsw i64 [[X]], 400
+ ; CHECK-NEXT:    [[GEP1:%.*]] = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @glob, i64 134), i64 [[GEP1_IDX]]
+ ; CHECK-NEXT:    [[GEP2_IDX:%.*]] = mul nsw i64 [[X]], 400
+-; CHECK-NEXT:    [[GEP2:%.*]] = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @glob, i64 132), i64 [[GEP2_IDX]]
++; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr i8, ptr getelementptr (i8, ptr @glob, i64 36), i64 [[GEP2_IDX]]
++; CHECK-NEXT:    [[GEP2:%.*]] = getelementptr i8, ptr [[TMP0]], i64 96
+ ; CHECK-NEXT:    [[A:%.*]] = load i32, ptr [[GEP1]], align 4
+ ; CHECK-NEXT:    [[B:%.*]] = load i32, ptr [[GEP2]], align 4
+ ; CHECK-NEXT:    [[C:%.*]] = add i32 [[A]], [[B]]
+diff --git a/llvm/test/Transforms/InstCombine/cast.ll b/llvm/test/Transforms/InstCombine/cast.ll
+index 8fdf9033b4e4a..c2b9a933c6f8e 100644
+--- a/llvm/test/Transforms/InstCombine/cast.ll
++++ b/llvm/test/Transforms/InstCombine/cast.ll
+@@ -1427,11 +1427,8 @@ define i64 @PR28745() {
+ }
+ 
+ define i32 @test89() {
+-; BE-LABEL: @test89(
+-; BE-NEXT:    ret i32 393216
+-;
+-; LE-LABEL: @test89(
+-; LE-NEXT:    ret i32 6
++; ALL-LABEL: @test89(
++; ALL-NEXT:    ret i32 bitcast (<2 x i16> <i16 6, i16 poison> to i32)
+ ;
+   ret i32 bitcast (<2 x i16> <i16 6, i16 poison> to i32)
+ }
+diff --git a/llvm/test/Transforms/InstCombine/constant-fold-address-space-pointer.ll b/llvm/test/Transforms/InstCombine/constant-fold-address-space-pointer.ll
+index fc85eb562e5ea..835afb707cda5 100644
+--- a/llvm/test/Transforms/InstCombine/constant-fold-address-space-pointer.ll
++++ b/llvm/test/Transforms/InstCombine/constant-fold-address-space-pointer.ll
+@@ -68,7 +68,7 @@ define ptr addrspace(3) @test_constant_fold_inttoptr_as_pointer_larger() {
+ 
+ define i8 @const_fold_ptrtoint() {
+ ; CHECK-LABEL: @const_fold_ptrtoint(
+-; CHECK-NEXT:    ret i8 4
++; CHECK-NEXT:    ret i8 ptrtoint (ptr addrspace(2) inttoptr (i4 4 to ptr addrspace(2)) to i8)
+ ;
+   ret i8 ptrtoint (ptr addrspace(2) inttoptr (i4 4 to ptr addrspace(2)) to i8)
+ }
+@@ -77,7 +77,7 @@ define i8 @const_fold_ptrtoint() {
+ ; the original
+ define i8 @const_fold_ptrtoint_mask() {
+ ; CHECK-LABEL: @const_fold_ptrtoint_mask(
+-; CHECK-NEXT:    ret i8 1
++; CHECK-NEXT:    ret i8 ptrtoint (ptr addrspace(3) inttoptr (i32 257 to ptr addrspace(3)) to i8)
+ ;
+   ret i8 ptrtoint (ptr addrspace(3) inttoptr (i32 257 to ptr addrspace(3)) to i8)
+ }
+@@ -86,7 +86,7 @@ define i8 @const_fold_ptrtoint_mask() {
+ ; 64-bits instead of 32
+ define i64 @const_fold_ptrtoint_mask_small_as0() {
+ ; CHECK-LABEL: @const_fold_ptrtoint_mask_small_as0(
+-; CHECK-NEXT:    ret i64 -1
++; CHECK-NEXT:    ret i64 ptrtoint (ptr addrspace(1) inttoptr (i128 -1 to ptr addrspace(1)) to i64)
+ ;
+   ret i64 ptrtoint (ptr addrspace(1) inttoptr (i128 -1 to ptr addrspace(1)) to i64)
+ }
+@@ -109,7 +109,7 @@ define i16 @const_ptrtoint() {
+ 
+ define i16 @const_inttoptr_ptrtoint() {
+ ; CHECK-LABEL: @const_inttoptr_ptrtoint(
+-; CHECK-NEXT:    ret i16 9
++; CHECK-NEXT:    ret i16 ptrtoint (ptr addrspace(3) inttoptr (i16 9 to ptr addrspace(3)) to i16)
+ ;
+   ret i16 ptrtoint (ptr addrspace(3) inttoptr (i16 9 to ptr addrspace(3)) to i16)
+ }
+diff --git a/llvm/test/Transforms/InstCombine/constant-fold-gep.ll b/llvm/test/Transforms/InstCombine/constant-fold-gep.ll
+index 321b97f557735..69dc395eab4dc 100644
+--- a/llvm/test/Transforms/InstCombine/constant-fold-gep.ll
++++ b/llvm/test/Transforms/InstCombine/constant-fold-gep.ll
+@@ -12,26 +12,26 @@ target datalayout = "E-p:64:64:64-p1:16:16:16-i1:8:8-i8:8:8-i16:16:16-i32:32:32-
+ define void @frob() {
+ ; CHECK-LABEL: @frob(
+ ; CHECK-NEXT:    store i32 1, ptr @Y, align 4
+-; CHECK-NEXT:    store i32 1, ptr getelementptr inbounds nuw (i8, ptr @Y, i64 4), align 4
+-; CHECK-NEXT:    store i32 1, ptr getelementptr inbounds nuw (i8, ptr @Y, i64 8), align 4
+-; CHECK-NEXT:    store i32 1, ptr getelementptr inbounds nuw (i8, ptr @Y, i64 12), align 4
+-; CHECK-NEXT:    store i32 1, ptr getelementptr inbounds nuw (i8, ptr @Y, i64 16), align 4
+-; CHECK-NEXT:    store i32 1, ptr getelementptr inbounds nuw (i8, ptr @Y, i64 20), align 4
+-; CHECK-NEXT:    store i32 1, ptr getelementptr inbounds nuw (i8, ptr @Y, i64 24), align 4
+-; CHECK-NEXT:    store i32 1, ptr getelementptr inbounds nuw (i8, ptr @Y, i64 28), align 4
+-; CHECK-NEXT:    store i32 1, ptr getelementptr inbounds nuw (i8, ptr @Y, i64 32), align 4
+-; CHECK-NEXT:    store i32 1, ptr getelementptr inbounds nuw (i8, ptr @Y, i64 36), align 4
+-; CHECK-NEXT:    store i32 1, ptr getelementptr inbounds nuw (i8, ptr @Y, i64 40), align 4
+-; CHECK-NEXT:    store i32 1, ptr getelementptr inbounds nuw (i8, ptr @Y, i64 44), align 4
+-; CHECK-NEXT:    store i32 1, ptr getelementptr inbounds nuw (i8, ptr @Y, i64 48), align 4
+-; CHECK-NEXT:    store i32 1, ptr getelementptr inbounds nuw (i8, ptr @Y, i64 52), align 4
+-; CHECK-NEXT:    store i32 1, ptr getelementptr inbounds nuw (i8, ptr @Y, i64 56), align 8
+-; CHECK-NEXT:    store i32 1, ptr getelementptr inbounds nuw (i8, ptr @Y, i64 60), align 4
+-; CHECK-NEXT:    store i32 1, ptr getelementptr inbounds nuw (i8, ptr @Y, i64 64), align 8
+-; CHECK-NEXT:    store i32 1, ptr getelementptr inbounds nuw (i8, ptr @Y, i64 68), align 4
+-; CHECK-NEXT:    store i32 1, ptr getelementptr inbounds nuw (i8, ptr @Y, i64 72), align 8
+-; CHECK-NEXT:    store i32 1, ptr getelementptr (i8, ptr @Y, i64 144), align 8
+-; CHECK-NEXT:    store i32 1, ptr getelementptr (i8, ptr @Y, i64 76), align 8
++; CHECK-NEXT:    store i32 1, ptr getelementptr ([3 x [[STRUCT_X:%.*]]], ptr @Y, i64 0, i64 0, i32 0, i64 1), align 4
++; CHECK-NEXT:    store i32 1, ptr getelementptr ([3 x [[STRUCT_X]]], ptr @Y, i64 0, i64 0, i32 0, i64 2), align 4
++; CHECK-NEXT:    store i32 1, ptr getelementptr ([3 x [[STRUCT_X]]], ptr @Y, i64 0, i64 0, i32 0, i64 3), align 4
++; CHECK-NEXT:    store i32 1, ptr getelementptr ([3 x [[STRUCT_X]]], ptr @Y, i64 0, i64 0, i32 0, i64 4), align 4
++; CHECK-NEXT:    store i32 1, ptr getelementptr ([3 x [[STRUCT_X]]], ptr @Y, i64 0, i64 0, i32 0, i64 5), align 4
++; CHECK-NEXT:    store i32 1, ptr getelementptr ([3 x [[STRUCT_X]]], ptr @Y, i64 0, i64 0, i32 0, i64 6), align 4
++; CHECK-NEXT:    store i32 1, ptr getelementptr ([3 x [[STRUCT_X]]], ptr @Y, i64 0, i64 0, i32 0, i64 7), align 4
++; CHECK-NEXT:    store i32 1, ptr getelementptr ([3 x [[STRUCT_X]]], ptr @Y, i64 0, i64 0, i32 0, i64 8), align 4
++; CHECK-NEXT:    store i32 1, ptr getelementptr ([3 x [[STRUCT_X]]], ptr @Y, i64 0, i64 0, i32 0, i64 9), align 4
++; CHECK-NEXT:    store i32 1, ptr getelementptr ([3 x [[STRUCT_X]]], ptr @Y, i64 0, i64 0, i32 0, i64 10), align 4
++; CHECK-NEXT:    store i32 1, ptr getelementptr ([3 x [[STRUCT_X]]], ptr @Y, i64 0, i64 0, i32 0, i64 11), align 4
++; CHECK-NEXT:    store i32 1, ptr getelementptr ([3 x [[STRUCT_X]]], ptr @Y, i64 0, i64 0, i32 0, i64 12), align 4
++; CHECK-NEXT:    store i32 1, ptr getelementptr ([3 x [[STRUCT_X]]], ptr @Y, i64 0, i64 0, i32 0, i64 13), align 4
++; CHECK-NEXT:    store i32 1, ptr getelementptr ([3 x [[STRUCT_X]]], ptr @Y, i64 0, i64 0, i32 0, i64 14), align 8
++; CHECK-NEXT:    store i32 1, ptr getelementptr ([3 x [[STRUCT_X]]], ptr @Y, i64 0, i64 0, i32 0, i64 15), align 4
++; CHECK-NEXT:    store i32 1, ptr getelementptr ([3 x [[STRUCT_X]]], ptr @Y, i64 0, i64 0, i32 0, i64 16), align 8
++; CHECK-NEXT:    store i32 1, ptr getelementptr ([3 x [[STRUCT_X]]], ptr @Y, i64 0, i64 0, i32 0, i64 17), align 4
++; CHECK-NEXT:    store i32 1, ptr getelementptr ([3 x [[STRUCT_X]]], ptr @Y, i64 0, i64 0, i32 0, i64 18), align 8
++; CHECK-NEXT:    store i32 1, ptr getelementptr ([3 x [[STRUCT_X]]], ptr @Y, i64 0, i64 0, i32 0, i64 36), align 8
++; CHECK-NEXT:    store i32 1, ptr getelementptr ([3 x [[STRUCT_X]]], ptr @Y, i64 0, i64 0, i32 0, i64 19), align 8
+ ; CHECK-NEXT:    ret void
+ ;
+   store i32 1, ptr @Y, align 4
+@@ -65,7 +65,7 @@ define void @frob() {
+ define i64 @test2() {
+ ; CHECK-LABEL: @test2(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    ret i64 1000
++; CHECK-NEXT:    ret i64 sub (i64 ptrtoint (ptr getelementptr inbounds nuw (i8, ptr @X, i64 1000) to i64), i64 ptrtoint (ptr @X to i64))
+ ;
+ entry:
+   %A = bitcast ptr getelementptr inbounds ([1000 x i8], ptr @X, i64 1, i64 0) to ptr
+@@ -83,7 +83,7 @@ entry:
+ define i16 @test2_as1() {
+ ; CHECK-LABEL: @test2_as1(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    ret i16 1000
++; CHECK-NEXT:    ret i16 sub (i16 ptrtoint (ptr addrspace(1) getelementptr inbounds nuw (i8, ptr addrspace(1) @X_as1, i16 1000) to i16), i16 ptrtoint (ptr addrspace(1) @X_as1 to i16))
+ ;
+ 
+ entry:
+diff --git a/llvm/test/Transforms/InstCombine/fmul.ll b/llvm/test/Transforms/InstCombine/fmul.ll
+index c93982f814e43..5ab17749ff730 100644
+--- a/llvm/test/Transforms/InstCombine/fmul.ll
++++ b/llvm/test/Transforms/InstCombine/fmul.ll
+@@ -1131,7 +1131,7 @@ for.body:
+ 
+ define double @fmul_negated_constant_expression(double %x) {
+ ; CHECK-LABEL: @fmul_negated_constant_expression(
+-; CHECK-NEXT:    [[FSUB:%.*]] = fneg double bitcast (i64 ptrtoint (ptr getelementptr inbounds nuw (i8, ptr @g, i64 16) to i64) to double)
++; CHECK-NEXT:    [[FSUB:%.*]] = fneg double bitcast (i64 ptrtoint (ptr getelementptr inbounds ({ [2 x ptr] }, ptr @g, i64 0, i32 0, i64 2) to i64) to double)
+ ; CHECK-NEXT:    [[R:%.*]] = fmul double [[X:%.*]], [[FSUB]]
+ ; CHECK-NEXT:    ret double [[R]]
+ ;
+diff --git a/llvm/test/Transforms/InstCombine/force-opaque-ptr.ll b/llvm/test/Transforms/InstCombine/force-opaque-ptr.ll
+index 7fbf8bb49abbb..1c0d1cca5cd17 100644
+--- a/llvm/test/Transforms/InstCombine/force-opaque-ptr.ll
++++ b/llvm/test/Transforms/InstCombine/force-opaque-ptr.ll
+@@ -5,14 +5,14 @@
+ 
+ define ptr @gep_constexpr_gv_1() {
+ ; CHECK-LABEL: @gep_constexpr_gv_1(
+-; CHECK-NEXT:    ret ptr getelementptr inbounds nuw (i8, ptr @g, i64 20)
++; CHECK-NEXT:    ret ptr getelementptr ([16 x i16], ptr @g, i64 0, i64 10)
+ ;
+   ret ptr getelementptr([16 x i16], ptr @g, i64 0, i64 10)
+ }
+ 
+ define ptr @gep_constexpr_gv_2() {
+ ; CHECK-LABEL: @gep_constexpr_gv_2(
+-; CHECK-NEXT:    ret ptr getelementptr inbounds nuw (i8, ptr @g, i64 24)
++; CHECK-NEXT:    ret ptr getelementptr (i32, ptr getelementptr ([16 x i16], ptr @g, i64 0, i64 10), i64 1)
+ ;
+   ret ptr getelementptr(i32, ptr getelementptr([16 x i16], ptr @g, i64 0, i64 10), i64 1)
+ }
+diff --git a/llvm/test/Transforms/InstCombine/freeze-phi.ll b/llvm/test/Transforms/InstCombine/freeze-phi.ll
+index 62bb9dc31b76b..10ea826f986cd 100644
+--- a/llvm/test/Transforms/InstCombine/freeze-phi.ll
++++ b/llvm/test/Transforms/InstCombine/freeze-phi.ll
+@@ -187,7 +187,7 @@ define i32 @one_constexpr(i8 %cond, i32 %x) {
+ ; CHECK-NEXT:      i8 1, label [[C:%.*]]
+ ; CHECK-NEXT:    ]
+ ; CHECK:       A:
+-; CHECK-NEXT:    [[TMP1:%.*]] = freeze i32 ptrtoint (ptr getelementptr inbounds nuw (i8, ptr @glb, i64 2) to i32)
++; CHECK-NEXT:    [[TMP1:%.*]] = freeze i32 ptrtoint (ptr getelementptr inbounds (i8, ptr @glb, i64 2) to i32)
+ ; CHECK-NEXT:    br label [[D:%.*]]
+ ; CHECK:       B:
+ ; CHECK-NEXT:    br label [[D]]
+diff --git a/llvm/test/Transforms/InstCombine/getelementptr.ll b/llvm/test/Transforms/InstCombine/getelementptr.ll
+index da3ae69d41a8e..f36327c745535 100644
+--- a/llvm/test/Transforms/InstCombine/getelementptr.ll
++++ b/llvm/test/Transforms/InstCombine/getelementptr.ll
+@@ -431,42 +431,42 @@ define ptr @test_index_canon_nusw_nuw(ptr %X, i32 %Idx) {
+ 
+ define ptr @test_index_canon_const_expr_inbounds() {
+ ; CHECK-LABEL: @test_index_canon_const_expr_inbounds(
+-; CHECK-NEXT:    ret ptr getelementptr inbounds nuw (i8, ptr @Global, i64 123)
++; CHECK-NEXT:    ret ptr getelementptr inbounds (i8, ptr @Global, i32 123)
+ ;
+   ret ptr getelementptr inbounds (i8, ptr @Global, i32 123)
+ }
+ 
+ define ptr @test_index_canon_const_expr_nuw_nusw() {
+ ; CHECK-LABEL: @test_index_canon_const_expr_nuw_nusw(
+-; CHECK-NEXT:    ret ptr getelementptr nusw nuw (i8, ptr @Global, i64 123)
++; CHECK-NEXT:    ret ptr getelementptr nusw nuw (i8, ptr @Global, i32 123)
+ ;
+   ret ptr getelementptr nusw nuw (i8, ptr @Global, i32 123)
+ }
+ 
+ define ptr @test_const_gep_gep_nuw() {
+ ; CHECK-LABEL: @test_const_gep_gep_nuw(
+-; CHECK-NEXT:    ret ptr getelementptr nuw (i8, ptr @Global, i64 246)
++; CHECK-NEXT:    ret ptr getelementptr nuw (i8, ptr getelementptr nuw (i8, ptr @Global, i64 123), i64 123)
+ ;
+   ret ptr getelementptr nuw (i8, ptr getelementptr nuw (i8, ptr @Global, i64 123), i64 123)
+ }
+ 
+ define ptr @test_const_gep_gep_nusw_no_overflow() {
+ ; CHECK-LABEL: @test_const_gep_gep_nusw_no_overflow(
+-; CHECK-NEXT:    ret ptr getelementptr nusw nuw (i8, ptr @Global, i64 246)
++; CHECK-NEXT:    ret ptr getelementptr nusw (i8, ptr getelementptr nusw (i8, ptr @Global, i64 123), i64 123)
+ ;
+   ret ptr getelementptr nusw (i8, ptr getelementptr nusw (i8, ptr @Global, i64 123), i64 123)
+ }
+ 
+ define ptr @test_const_gep_gep_nusw_no_overflow_neg() {
+ ; CHECK-LABEL: @test_const_gep_gep_nusw_no_overflow_neg(
+-; CHECK-NEXT:    ret ptr getelementptr nusw (i8, ptr @Global, i64 -246)
++; CHECK-NEXT:    ret ptr getelementptr nusw (i8, ptr getelementptr nusw (i8, ptr @Global, i64 -123), i64 -123)
+ ;
+   ret ptr getelementptr nusw (i8, ptr getelementptr nusw (i8, ptr @Global, i64 -123), i64 -123)
+ }
+ 
+ define ptr @test_const_gep_gep_nusw_overflow() {
+ ; CHECK-LABEL: @test_const_gep_gep_nusw_overflow(
+-; CHECK-NEXT:    ret ptr getelementptr (i8, ptr @Global, i64 -2)
++; CHECK-NEXT:    ret ptr getelementptr nusw (i8, ptr getelementptr nusw (i8, ptr @Global, i64 9223372036854775807), i64 9223372036854775807)
+ ;
+   ret ptr getelementptr nusw (i8, ptr getelementptr nusw (i8, ptr @Global, i64 u0x7fffffffffffffff), i64 u0x7fffffffffffffff)
+ }
+@@ -605,7 +605,7 @@ define i32 @test21(ptr %pbob1) {
+ 
+ define i1 @test22() {
+ ; CHECK-LABEL: @test22(
+-; CHECK-NEXT:    [[C:%.*]] = icmp ult ptr getelementptr inbounds nuw (i8, ptr @A, i64 4), getelementptr (i8, ptr @B, i64 8)
++; CHECK-NEXT:    [[C:%.*]] = icmp ult ptr getelementptr (i32, ptr @A, i64 1), getelementptr (i32, ptr @B, i64 2)
+ ; CHECK-NEXT:    ret i1 [[C]]
+ ;
+   %C = icmp ult ptr getelementptr (i32, ptr @A, i64 1),
+@@ -895,7 +895,7 @@ entry:
+ 
+ define i32 @test35() nounwind {
+ ; CHECK-LABEL: @test35(
+-; CHECK-NEXT:    [[TMP1:%.*]] = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @"\01LC8", ptr nonnull getelementptr inbounds nuw (i8, ptr @s, i64 8)) #[[ATTR0]]
++; CHECK-NEXT:    [[TMP1:%.*]] = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @"\01LC8", ptr getelementptr ([[T1:%.*]], ptr @s, i32 0, i32 1, i32 0)) #[[ATTR0]]
+ ; CHECK-NEXT:    ret i32 0
+ ;
+   call i32 (ptr, ...) @printf(ptr @"\01LC8",
+@@ -906,7 +906,7 @@ define i32 @test35() nounwind {
+ ; Don't treat signed offsets as unsigned.
+ define ptr @test36() nounwind {
+ ; CHECK-LABEL: @test36(
+-; CHECK-NEXT:    ret ptr getelementptr (i8, ptr @array, i64 -1)
++; CHECK-NEXT:    ret ptr getelementptr ([11 x i8], ptr @array, i32 0, i64 -1)
+ ;
+   ret ptr getelementptr ([11 x i8], ptr @array, i32 0, i64 -1)
+ }
+@@ -1405,14 +1405,14 @@ define ptr @gep_of_gep_multiuse_var_and_var(ptr %p, i64 %idx, i64 %idx2) {
+ 
+ define ptr @const_gep_global_di_i8_smaller() {
+ ; CHECK-LABEL: @const_gep_global_di_i8_smaller(
+-; CHECK-NEXT:    ret ptr getelementptr inbounds nuw (i8, ptr @g_i32_di, i64 3)
++; CHECK-NEXT:    ret ptr getelementptr (i8, ptr @g_i32_di, i64 3)
+ ;
+   ret ptr getelementptr (i8, ptr @g_i32_di, i64 3)
+ }
+ 
+ define ptr @const_gep_global_di_i8_exact() {
+ ; CHECK-LABEL: @const_gep_global_di_i8_exact(
+-; CHECK-NEXT:    ret ptr getelementptr inbounds nuw (i8, ptr @g_i32_di, i64 4)
++; CHECK-NEXT:    ret ptr getelementptr (i8, ptr @g_i32_di, i64 4)
+ ;
+   ret ptr getelementptr (i8, ptr @g_i32_di, i64 4)
+ }
+@@ -1426,21 +1426,21 @@ define ptr @const_gep_global_di_i8_larger() {
+ 
+ define ptr @const_gep_global_di_i64_larger() {
+ ; CHECK-LABEL: @const_gep_global_di_i64_larger(
+-; CHECK-NEXT:    ret ptr getelementptr (i8, ptr @g_i32_di, i64 8)
++; CHECK-NEXT:    ret ptr getelementptr (i64, ptr @g_i32_di, i64 1)
+ ;
+   ret ptr getelementptr (i64, ptr @g_i32_di, i64 1)
+ }
+ 
+ define ptr @const_gep_global_e_smaller() {
+ ; CHECK-LABEL: @const_gep_global_e_smaller(
+-; CHECK-NEXT:    ret ptr getelementptr inbounds nuw (i8, ptr @g_i32_e, i64 3)
++; CHECK-NEXT:    ret ptr getelementptr (i8, ptr @g_i32_e, i64 3)
+ ;
+   ret ptr getelementptr (i8, ptr @g_i32_e, i64 3)
+ }
+ 
+ define ptr @const_gep_global_e_exact() {
+ ; CHECK-LABEL: @const_gep_global_e_exact(
+-; CHECK-NEXT:    ret ptr getelementptr inbounds nuw (i8, ptr @g_i32_e, i64 4)
++; CHECK-NEXT:    ret ptr getelementptr (i8, ptr @g_i32_e, i64 4)
+ ;
+   ret ptr getelementptr (i8, ptr @g_i32_e, i64 4)
+ }
+@@ -1475,7 +1475,7 @@ define ptr @const_gep_global_ew_larger() {
+ 
+ define ptr @const_gep_0xi8_global() {
+ ; CHECK-LABEL: @const_gep_0xi8_global(
+-; CHECK-NEXT:    ret ptr getelementptr (i8, ptr @g_0xi8_e, i64 10)
++; CHECK-NEXT:    ret ptr getelementptr ([0 x i8], ptr @g_0xi8_e, i64 0, i64 10)
+ ;
+   ret ptr getelementptr ([0 x i8], ptr @g_0xi8_e, i64 0, i64 10)
+ }
+@@ -1723,7 +1723,7 @@ if.else:
+ 
+ define ptr @constexpr_gep_of_gep_with_narrow_type() {
+ ; CHECK-LABEL: @constexpr_gep_of_gep_with_narrow_type(
+-; CHECK-NEXT:    ret ptr getelementptr (i8, ptr @g, i64 254)
++; CHECK-NEXT:    ret ptr getelementptr (i8, ptr getelementptr (i8, ptr @g, i8 127), i8 127)
+ ;
+   ret ptr getelementptr (i8, ptr getelementptr (i8, ptr @g, i8 127), i8 127)
+ }
+diff --git a/llvm/test/Transforms/InstCombine/hoist-xor-by-constant-from-xor-by-value.ll b/llvm/test/Transforms/InstCombine/hoist-xor-by-constant-from-xor-by-value.ll
+index 804843779b25e..c6e999966b394 100644
+--- a/llvm/test/Transforms/InstCombine/hoist-xor-by-constant-from-xor-by-value.ll
++++ b/llvm/test/Transforms/InstCombine/hoist-xor-by-constant-from-xor-by-value.ll
+@@ -94,7 +94,7 @@ entry:
+ 
+ define i16 @constantexpr2() {
+ ; CHECK-LABEL: @constantexpr2(
+-; CHECK-NEXT:    [[I0:%.*]] = icmp ne ptr getelementptr inbounds nuw (i8, ptr @global_constant3, i64 40), @global_constant4
++; CHECK-NEXT:    [[I0:%.*]] = icmp ne ptr getelementptr inbounds ([6 x [1 x i64]], ptr @global_constant3, i16 0, i16 5, i16 0), @global_constant4
+ ; CHECK-NEXT:    [[I1:%.*]] = zext i1 [[I0]] to i16
+ ; CHECK-NEXT:    [[I2:%.*]] = load ptr, ptr @global_constant5, align 1
+ ; CHECK-NEXT:    [[I3:%.*]] = load i16, ptr [[I2]], align 1
+diff --git a/llvm/test/Transforms/InstCombine/icmp-of-trunc-ext.ll b/llvm/test/Transforms/InstCombine/icmp-of-trunc-ext.ll
+index aeb70a636682f..63ee25dcacde7 100644
+--- a/llvm/test/Transforms/InstCombine/icmp-of-trunc-ext.ll
++++ b/llvm/test/Transforms/InstCombine/icmp-of-trunc-ext.ll
+@@ -659,7 +659,7 @@ define i1 @test_slt_nuw(i32 %x, i16 %y) {
+ 
+ define i1 @constexpr_trunc() {
+ ; CHECK-LABEL: @constexpr_trunc(
+-; CHECK-NEXT:    [[CMP5:%.*]] = icmp ne i16 trunc (i64 sub (i64 sub (i64 ptrtoint (ptr @bar to i64), i64 ptrtoint (ptr @foo to i64)), i64 8) to i16), trunc (i64 sub (i64 sub (i64 0, i64 ptrtoint (ptr @foo to i64)), i64 8) to i16)
++; CHECK-NEXT:    [[CMP5:%.*]] = icmp ne i16 trunc (i64 sub (i64 sub nuw nsw (i64 ptrtoint (ptr @bar to i64), i64 ptrtoint (ptr @foo to i64)), i64 8) to i16), -8
+ ; CHECK-NEXT:    ret i1 [[CMP5]]
+ ;
+   %conv = zext i16 trunc (i64 sub (i64 sub nuw nsw (i64 ptrtoint (ptr @bar to i64), i64 ptrtoint (ptr @foo to i64)), i64 8) to i16) to i32
+diff --git a/llvm/test/Transforms/InstCombine/icmp-vec-inseltpoison.ll b/llvm/test/Transforms/InstCombine/icmp-vec-inseltpoison.ll
+index 3678946e631a2..9caa553848a3f 100644
+--- a/llvm/test/Transforms/InstCombine/icmp-vec-inseltpoison.ll
++++ b/llvm/test/Transforms/InstCombine/icmp-vec-inseltpoison.ll
+@@ -170,7 +170,7 @@ define <2 x i1> @ule_max(<2 x i3> %x) {
+ 
+ define <2 x i1> @PR27756_1(<2 x i8> %a) {
+ ; CHECK-LABEL: @PR27756_1(
+-; CHECK-NEXT:    [[CMP:%.*]] = icmp slt <2 x i8> [[A:%.*]], <i8 34, i8 1>
++; CHECK-NEXT:    [[CMP:%.*]] = icmp sle <2 x i8> [[A:%.*]], <i8 bitcast (<2 x i4> <i4 1, i4 2> to i8), i8 0>
+ ; CHECK-NEXT:    ret <2 x i1> [[CMP]]
+ ;
+   %cmp = icmp sle <2 x i8> %a, <i8 bitcast (<2 x i4> <i4 1, i4 2> to i8), i8 0>
+diff --git a/llvm/test/Transforms/InstCombine/icmp-vec.ll b/llvm/test/Transforms/InstCombine/icmp-vec.ll
+index e133533f5056d..f3cc67d9dd8ad 100644
+--- a/llvm/test/Transforms/InstCombine/icmp-vec.ll
++++ b/llvm/test/Transforms/InstCombine/icmp-vec.ll
+@@ -172,7 +172,7 @@ define <2 x i1> @ule_max(<2 x i3> %x) {
+ 
+ define <2 x i1> @PR27756_1(<2 x i8> %a) {
+ ; CHECK-LABEL: @PR27756_1(
+-; CHECK-NEXT:    [[CMP:%.*]] = icmp slt <2 x i8> [[A:%.*]], <i8 34, i8 1>
++; CHECK-NEXT:    [[CMP:%.*]] = icmp sle <2 x i8> [[A:%.*]], <i8 bitcast (<2 x i4> <i4 1, i4 2> to i8), i8 0>
+ ; CHECK-NEXT:    ret <2 x i1> [[CMP]]
+ ;
+   %cmp = icmp sle <2 x i8> %a, <i8 bitcast (<2 x i4> <i4 1, i4 2> to i8), i8 0>
+diff --git a/llvm/test/Transforms/InstCombine/icmp.ll b/llvm/test/Transforms/InstCombine/icmp.ll
+index 61ae46ba08d2d..8f1ab060f5a70 100644
+--- a/llvm/test/Transforms/InstCombine/icmp.ll
++++ b/llvm/test/Transforms/InstCombine/icmp.ll
+@@ -281,7 +281,8 @@ define <2 x i1> @test11_vec(<2 x i32> %x) {
+ define i1 @test12(i1 %A) {
+ ; CHECK-LABEL: define i1 @test12(
+ ; CHECK-SAME: i1 [[A:%.*]]) {
+-; CHECK-NEXT:    [[NOT_A:%.*]] = xor i1 [[A]], true
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[A]], i64 -4294967295, i64 8589934591
++; CHECK-NEXT:    [[NOT_A:%.*]] = icmp ne i64 [[S]], bitcast (<2 x i32> <i32 1, i32 -1> to i64)
+ ; CHECK-NEXT:    ret i1 [[NOT_A]]
+ ;
+   %S = select i1 %A, i64 -4294967295, i64 8589934591
+diff --git a/llvm/test/Transforms/InstCombine/memcpy-from-global.ll b/llvm/test/Transforms/InstCombine/memcpy-from-global.ll
+index 6ed9924f159d6..ab7aed18d567c 100644
+--- a/llvm/test/Transforms/InstCombine/memcpy-from-global.ll
++++ b/llvm/test/Transforms/InstCombine/memcpy-from-global.ll
+@@ -147,7 +147,7 @@ declare void @bar_as1(ptr addrspace(1) nocapture)
+ ;; Should be able to eliminate the alloca.
+ define void @test3_nocapture() {
+ ; CHECK-LABEL: @test3_nocapture(
+-; CHECK-NEXT:    call void @bar(ptr nonnull @G) #[[ATTR3:[0-9]+]]
++; CHECK-NEXT:    call void @bar(ptr nonnull @G) #[[ATTR2:[0-9]+]]
+ ; CHECK-NEXT:    ret void
+ ;
+   %A = alloca %T
+@@ -161,7 +161,7 @@ define void @test3_may_capture() {
+ ; CHECK-LABEL: @test3_may_capture(
+ ; CHECK-NEXT:    [[A:%.*]] = alloca [[T:%.*]], align 8
+ ; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(124) [[A]], ptr noundef nonnull align 16 dereferenceable(124) @G, i64 124, i1 false)
+-; CHECK-NEXT:    call void @bar_may_capture(ptr nonnull [[A]]) #[[ATTR3]]
++; CHECK-NEXT:    call void @bar_may_capture(ptr nonnull [[A]]) #[[ATTR2]]
+ ; CHECK-NEXT:    ret void
+ ;
+   %A = alloca %T
+@@ -172,7 +172,7 @@ define void @test3_may_capture() {
+ 
+ define void @test3_addrspacecast() {
+ ; CHECK-LABEL: @test3_addrspacecast(
+-; CHECK-NEXT:    call void @bar(ptr nonnull @G) #[[ATTR3]]
++; CHECK-NEXT:    call void @bar(ptr nonnull @G) #[[ATTR2]]
+ ; CHECK-NEXT:    ret void
+ ;
+   %A = alloca %T
+@@ -212,7 +212,7 @@ declare void @baz(ptr byval(i8))
+ 
+ define void @test6() {
+ ; CHECK-LABEL: @test6(
+-; CHECK-NEXT:    call void @bar(ptr nonnull @H) #[[ATTR3]]
++; CHECK-NEXT:    call void @bar(ptr nonnull @H) #[[ATTR2]]
+ ; CHECK-NEXT:    ret void
+ ;
+   %A = alloca %U, align 16
+@@ -223,7 +223,7 @@ define void @test6() {
+ 
+ define void @test7() {
+ ; CHECK-LABEL: @test7(
+-; CHECK-NEXT:    call void @bar(ptr nonnull @H) #[[ATTR3]]
++; CHECK-NEXT:    call void @bar(ptr nonnull @H) #[[ATTR2]]
+ ; CHECK-NEXT:    ret void
+ ;
+   %A = alloca %U, align 16
+@@ -235,8 +235,8 @@ define void @test7() {
+ define void @test8() {
+ ; CHECK-LABEL: @test8(
+ ; CHECK-NEXT:    [[AL:%.*]] = alloca [[U:%.*]], align 16
+-; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(20) [[AL]], ptr noundef nonnull align 4 dereferenceable(20) getelementptr inbounds nuw (i8, ptr @H, i64 20), i64 20, i1 false)
+-; CHECK-NEXT:    call void @bar(ptr nonnull [[AL]]) #[[ATTR3]]
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(20) [[AL]], ptr noundef nonnull align 4 dereferenceable(20) getelementptr ([2 x [[U]]], ptr @H, i64 0, i32 1), i64 20, i1 false)
++; CHECK-NEXT:    call void @bar(ptr nonnull [[AL]]) #[[ATTR2]]
+ ; CHECK-NEXT:    ret void
+ ;
+   %al = alloca %U, align 16
+@@ -249,8 +249,8 @@ define void @test8() {
+ define void @test8_addrspacecast() {
+ ; CHECK-LABEL: @test8_addrspacecast(
+ ; CHECK-NEXT:    [[AL:%.*]] = alloca [[U:%.*]], align 16
+-; CHECK-NEXT:    call void @llvm.memcpy.p0.p1.i64(ptr noundef nonnull align 16 dereferenceable(20) [[AL]], ptr addrspace(1) noundef align 4 dereferenceable(20) addrspacecast (ptr getelementptr inbounds nuw (i8, ptr @H, i64 20) to ptr addrspace(1)), i64 20, i1 false)
+-; CHECK-NEXT:    call void @bar(ptr nonnull [[AL]]) #[[ATTR3]]
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p1.i64(ptr noundef nonnull align 16 dereferenceable(20) [[AL]], ptr addrspace(1) noundef align 4 dereferenceable(20) addrspacecast (ptr getelementptr ([2 x [[U]]], ptr @H, i64 0, i32 1) to ptr addrspace(1)), i64 20, i1 false)
++; CHECK-NEXT:    call void @bar(ptr nonnull [[AL]]) #[[ATTR2]]
+ ; CHECK-NEXT:    ret void
+ ;
+   %Al = alloca %U, align 16
+@@ -261,7 +261,7 @@ define void @test8_addrspacecast() {
+ 
+ define void @test9() {
+ ; CHECK-LABEL: @test9(
+-; CHECK-NEXT:    call void @bar(ptr nonnull getelementptr inbounds nuw (i8, ptr @H, i64 20)) #[[ATTR3]]
++; CHECK-NEXT:    call void @bar(ptr getelementptr ([2 x [[U:%.*]]], ptr @H, i64 0, i32 1)) #[[ATTR2]]
+ ; CHECK-NEXT:    ret void
+ ;
+   %A = alloca %U, align 4
+@@ -272,7 +272,7 @@ define void @test9() {
+ 
+ define void @test9_addrspacecast() {
+ ; CHECK-LABEL: @test9_addrspacecast(
+-; CHECK-NEXT:    call void @bar(ptr nonnull getelementptr inbounds nuw (i8, ptr @H, i64 20)) #[[ATTR3]]
++; CHECK-NEXT:    call void @bar(ptr getelementptr ([2 x [[U:%.*]]], ptr @H, i64 0, i32 1)) #[[ATTR2]]
+ ; CHECK-NEXT:    ret void
+ ;
+   %A = alloca %U, align 4
+@@ -354,7 +354,7 @@ entry:
+ ; Tests that we can eliminate allocas copied from readonly noalias pointers.
+ define void @memcpy_from_readonly_noalias(ptr readonly noalias align 8 dereferenceable(124) %arg) {
+ ; CHECK-LABEL: @memcpy_from_readonly_noalias(
+-; CHECK-NEXT:    call void @bar(ptr nonnull [[ARG:%.*]]) #[[ATTR3]]
++; CHECK-NEXT:    call void @bar(ptr nonnull [[ARG:%.*]]) #[[ATTR2]]
+ ; CHECK-NEXT:    ret void
+ ;
+   %alloca = alloca %T, align 8
+@@ -368,7 +368,7 @@ define void @memcpy_from_just_readonly(ptr readonly align 8 dereferenceable(124)
+ ; CHECK-LABEL: @memcpy_from_just_readonly(
+ ; CHECK-NEXT:    [[ALLOCA:%.*]] = alloca [[T:%.*]], align 8
+ ; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(124) [[ALLOCA]], ptr noundef nonnull align 8 dereferenceable(124) [[ARG:%.*]], i64 124, i1 false)
+-; CHECK-NEXT:    call void @bar(ptr nonnull [[ALLOCA]]) #[[ATTR3]]
++; CHECK-NEXT:    call void @bar(ptr nonnull [[ALLOCA]]) #[[ATTR2]]
+ ; CHECK-NEXT:    ret void
+ ;
+   %alloca = alloca %T, align 8
+@@ -382,7 +382,7 @@ define void @volatile_memcpy() {
+ ; CHECK-LABEL: @volatile_memcpy(
+ ; CHECK-NEXT:    [[A:%.*]] = alloca [[U:%.*]], align 16
+ ; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 4 [[A]], ptr align 4 @H, i64 20, i1 true)
+-; CHECK-NEXT:    call void @bar(ptr nonnull [[A]]) #[[ATTR3]]
++; CHECK-NEXT:    call void @bar(ptr nonnull [[A]]) #[[ATTR2]]
+ ; CHECK-NEXT:    ret void
+ ;
+   %A = alloca %U, align 16
+diff --git a/llvm/test/Transforms/InstCombine/merging-multiple-stores-into-successor.ll b/llvm/test/Transforms/InstCombine/merging-multiple-stores-into-successor.ll
+index 292295a5853cf..5b5c09ba09835 100644
+--- a/llvm/test/Transforms/InstCombine/merging-multiple-stores-into-successor.ll
++++ b/llvm/test/Transforms/InstCombine/merging-multiple-stores-into-successor.ll
+@@ -34,9 +34,9 @@ define void @_Z4testv() {
+ ; CHECK-NEXT:    store i16 [[I4]], ptr @arr_4, align 2
+ ; CHECK-NEXT:    [[I8:%.*]] = sext i16 [[I4]] to i32
+ ; CHECK-NEXT:    store i32 [[I8]], ptr @arr_3, align 4
+-; CHECK-NEXT:    store i32 [[STOREMERGE]], ptr getelementptr inbounds nuw (i8, ptr @arr_2, i64 4), align 4
+-; CHECK-NEXT:    store i16 [[I4]], ptr getelementptr inbounds nuw (i8, ptr @arr_4, i64 2), align 2
+-; CHECK-NEXT:    store i32 [[I8]], ptr getelementptr inbounds nuw (i8, ptr @arr_3, i64 4), align 4
++; CHECK-NEXT:    store i32 [[STOREMERGE]], ptr getelementptr inbounds ([0 x i32], ptr @arr_2, i64 0, i64 1), align 4
++; CHECK-NEXT:    store i16 [[I4]], ptr getelementptr inbounds ([0 x i16], ptr @arr_4, i64 0, i64 1), align 2
++; CHECK-NEXT:    store i32 [[I8]], ptr getelementptr inbounds ([8 x i32], ptr @arr_3, i64 0, i64 1), align 4
+ ; CHECK-NEXT:    ret void
+ ;
+ bb:
+diff --git a/llvm/test/Transforms/InstCombine/objsize.ll b/llvm/test/Transforms/InstCombine/objsize.ll
+index 39f6f493782d2..baf56b9c75f06 100644
+--- a/llvm/test/Transforms/InstCombine/objsize.ll
++++ b/llvm/test/Transforms/InstCombine/objsize.ll
+@@ -62,7 +62,7 @@ define i1 @baz() nounwind {
+ define void @test1(ptr %q, i32 %x) nounwind noinline {
+ ; CHECK-LABEL: @test1(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.objectsize.i32.p0(ptr getelementptr inbounds nuw (i8, ptr @window, i32 10), i1 false, i1 false, i1 false)
++; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.objectsize.i32.p0(ptr getelementptr inbounds ([0 x i8], ptr @window, i32 0, i32 10), i1 false, i1 false, i1 false)
+ ; CHECK-NEXT:    [[TMP1:%.*]] = icmp eq i32 [[TMP0]], -1
+ ; CHECK-NEXT:    br i1 [[TMP1]], label %"47", label %"46"
+ ; CHECK:       "46":
+diff --git a/llvm/test/Transforms/InstCombine/opaque-ptr.ll b/llvm/test/Transforms/InstCombine/opaque-ptr.ll
+index b25b87f77d7e2..57a03aa11859e 100644
+--- a/llvm/test/Transforms/InstCombine/opaque-ptr.ll
++++ b/llvm/test/Transforms/InstCombine/opaque-ptr.ll
+@@ -79,21 +79,21 @@ define ptr addrspace(1) @addrspacecast_typed_to_opaque_constexpr() {
+ 
+ define ptr @gep_constexpr_1(ptr %a) {
+ ; CHECK-LABEL: @gep_constexpr_1(
+-; CHECK-NEXT:    ret ptr inttoptr (i64 6 to ptr)
++; CHECK-NEXT:    ret ptr getelementptr (i16, ptr null, i32 3)
+ ;
+   ret ptr getelementptr (i16, ptr null, i32 3)
+ }
+ 
+ define ptr @gep_constexpr_2(ptr %a) {
+ ; CHECK-LABEL: @gep_constexpr_2(
+-; CHECK-NEXT:    ret ptr getelementptr (i8, ptr @g, i64 3)
++; CHECK-NEXT:    ret ptr getelementptr (i8, ptr @g, i32 3)
+ ;
+   ret ptr getelementptr (i8, ptr @g, i32 3)
+ }
+ 
+ define ptr addrspace(1) @gep_constexpr_3(ptr %a) {
+ ; CHECK-LABEL: @gep_constexpr_3(
+-; CHECK-NEXT:    ret ptr addrspace(1) getelementptr (i8, ptr addrspace(1) addrspacecast (ptr @g to ptr addrspace(1)), i64 3)
++; CHECK-NEXT:    ret ptr addrspace(1) getelementptr ([0 x i8], ptr addrspace(1) addrspacecast (ptr @g to ptr addrspace(1)), i64 0, i32 3)
+ ;
+   ret ptr addrspace(1) getelementptr ([0 x i8], ptr addrspace(1) addrspacecast (ptr @g to ptr addrspace(1)), i64 0, i32 3)
+ }
+diff --git a/llvm/test/Transforms/InstCombine/pr25342.ll b/llvm/test/Transforms/InstCombine/pr25342.ll
+index 826070bc4e76b..2f85f99c4ce00 100644
+--- a/llvm/test/Transforms/InstCombine/pr25342.ll
++++ b/llvm/test/Transforms/InstCombine/pr25342.ll
+@@ -17,9 +17,9 @@ define void @_Z3fooi(i32 signext %n) {
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[FOR_BODY]], label [[FOR_END:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[TMP2:%.*]] = load float, ptr @dd, align 4
+-; CHECK-NEXT:    [[TMP3:%.*]] = load float, ptr getelementptr inbounds nuw (i8, ptr @dd, i64 4), align 4
++; CHECK-NEXT:    [[TMP3:%.*]] = load float, ptr getelementptr inbounds (%"struct.std::complex", ptr @dd, i64 0, i32 0, i32 1), align 4
+ ; CHECK-NEXT:    [[TMP4:%.*]] = load float, ptr @dd2, align 4
+-; CHECK-NEXT:    [[TMP5:%.*]] = load float, ptr getelementptr inbounds nuw (i8, ptr @dd2, i64 4), align 4
++; CHECK-NEXT:    [[TMP5:%.*]] = load float, ptr getelementptr inbounds (%"struct.std::complex", ptr @dd2, i64 0, i32 0, i32 1), align 4
+ ; CHECK-NEXT:    [[MUL_I:%.*]] = fmul float [[TMP2]], [[TMP4]]
+ ; CHECK-NEXT:    [[MUL4_I:%.*]] = fmul float [[TMP3]], [[TMP5]]
+ ; CHECK-NEXT:    [[SUB_I:%.*]] = fsub float [[MUL_I]], [[MUL4_I]]
+@@ -32,7 +32,7 @@ define void @_Z3fooi(i32 signext %n) {
+ ; CHECK-NEXT:    br label [[FOR_COND]]
+ ; CHECK:       for.end:
+ ; CHECK-NEXT:    store float [[TMP0]], ptr @dd, align 4
+-; CHECK-NEXT:    store float [[TMP1]], ptr getelementptr inbounds nuw (i8, ptr @dd, i64 4), align 4
++; CHECK-NEXT:    store float [[TMP1]], ptr getelementptr inbounds (%"struct.std::complex", ptr @dd, i64 0, i32 0, i32 1), align 4
+ ; CHECK-NEXT:    ret void
+ ;
+ entry:
+@@ -84,9 +84,9 @@ define void @multi_phi(i32 signext %n) {
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[FOR_BODY:%.*]], label [[FOR_END:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[TMP1:%.*]] = load float, ptr @dd, align 4
+-; CHECK-NEXT:    [[TMP2:%.*]] = load float, ptr getelementptr inbounds nuw (i8, ptr @dd, i64 4), align 4
++; CHECK-NEXT:    [[TMP2:%.*]] = load float, ptr getelementptr inbounds (%"struct.std::complex", ptr @dd, i64 0, i32 0, i32 1), align 4
+ ; CHECK-NEXT:    [[TMP3:%.*]] = load float, ptr @dd2, align 4
+-; CHECK-NEXT:    [[TMP4:%.*]] = load float, ptr getelementptr inbounds nuw (i8, ptr @dd2, i64 4), align 4
++; CHECK-NEXT:    [[TMP4:%.*]] = load float, ptr getelementptr inbounds (%"struct.std::complex", ptr @dd2, i64 0, i32 0, i32 1), align 4
+ ; CHECK-NEXT:    [[MUL_I:%.*]] = fmul float [[TMP1]], [[TMP3]]
+ ; CHECK-NEXT:    [[MUL4_I:%.*]] = fmul float [[TMP2]], [[TMP4]]
+ ; CHECK-NEXT:    [[SUB_I:%.*]] = fsub float [[MUL_I]], [[MUL4_I]]
+diff --git a/llvm/test/Transforms/InstCombine/pr33453.ll b/llvm/test/Transforms/InstCombine/pr33453.ll
+index c8688dae0089d..11bb32cfd2e58 100644
+--- a/llvm/test/Transforms/InstCombine/pr33453.ll
++++ b/llvm/test/Transforms/InstCombine/pr33453.ll
+@@ -6,7 +6,7 @@
+ 
+ define float @patatino() {
+ ; CHECK-LABEL: @patatino(
+-; CHECK-NEXT:    [[CMP:%.*]] = icmp eq ptr getelementptr inbounds nuw (i8, ptr @g2, i64 2), @g1
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq ptr getelementptr inbounds (i16, ptr @g2, i64 1), @g1
+ ; CHECK-NEXT:    [[FMUL:%.*]] = uitofp i1 [[CMP]] to float
+ ; CHECK-NEXT:    ret float [[FMUL]]
+ ;
+diff --git a/llvm/test/Transforms/InstCombine/pr38984-inseltpoison.ll b/llvm/test/Transforms/InstCombine/pr38984-inseltpoison.ll
+index 205074050cbb2..8b6b44784321a 100644
+--- a/llvm/test/Transforms/InstCombine/pr38984-inseltpoison.ll
++++ b/llvm/test/Transforms/InstCombine/pr38984-inseltpoison.ll
+@@ -26,7 +26,7 @@ define <4 x i1> @PR38984_2() {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = load i16, ptr @offsets, align 2
+ ; CHECK-NEXT:    [[TMP1:%.*]] = insertelement <4 x i16> poison, i16 [[TMP0]], i64 3
+-; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @a, i16 42), <4 x i16> [[TMP1]]
++; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr [2 x i8], ptr getelementptr ([21 x i16], ptr @a, i64 1, i32 0), <4 x i16> [[TMP1]]
+ ; CHECK-NEXT:    [[TMP3:%.*]] = getelementptr [2 x i8], ptr null, <4 x i16> [[TMP1]]
+ ; CHECK-NEXT:    [[TMP4:%.*]] = icmp eq <4 x ptr> [[TMP2]], [[TMP3]]
+ ; CHECK-NEXT:    ret <4 x i1> [[TMP4]]
+diff --git a/llvm/test/Transforms/InstCombine/pr38984.ll b/llvm/test/Transforms/InstCombine/pr38984.ll
+index d211ea5a9a22b..553c264044b98 100644
+--- a/llvm/test/Transforms/InstCombine/pr38984.ll
++++ b/llvm/test/Transforms/InstCombine/pr38984.ll
+@@ -26,7 +26,7 @@ define <4 x i1> @PR38984_2() {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = load i16, ptr @offsets, align 2
+ ; CHECK-NEXT:    [[TMP1:%.*]] = insertelement <4 x i16> <i16 undef, i16 undef, i16 undef, i16 poison>, i16 [[TMP0]], i64 3
+-; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @a, i16 42), <4 x i16> [[TMP1]]
++; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr [2 x i8], ptr getelementptr ([21 x i16], ptr @a, i64 1, i32 0), <4 x i16> [[TMP1]]
+ ; CHECK-NEXT:    [[TMP3:%.*]] = getelementptr [2 x i8], ptr null, <4 x i16> [[TMP1]]
+ ; CHECK-NEXT:    [[TMP4:%.*]] = icmp eq <4 x ptr> [[TMP2]], [[TMP3]]
+ ; CHECK-NEXT:    ret <4 x i1> [[TMP4]]
+diff --git a/llvm/test/Transforms/InstCombine/ptrtoint-nullgep.ll b/llvm/test/Transforms/InstCombine/ptrtoint-nullgep.ll
+index c70b33ec0cd1b..924fc7d1fe327 100644
+--- a/llvm/test/Transforms/InstCombine/ptrtoint-nullgep.ll
++++ b/llvm/test/Transforms/InstCombine/ptrtoint-nullgep.ll
+@@ -22,14 +22,8 @@ define i64 @constant_fold_ptrtoint_gep_zero() {
+   ret i64 ptrtoint (ptr addrspace(1) null to i64)
+ }
+ define i64 @constant_fold_ptrtoint_gep_nonzero() {
+-; LLPARSER-LABEL: define {{[^@]+}}@constant_fold_ptrtoint_gep_nonzero() {
+-; LLPARSER-NEXT:    ret i64 ptrtoint (ptr addrspace(1) getelementptr (i32, ptr addrspace(1) null, i64 1234) to i64)
+-;
+-; INSTSIMPLIFY-LABEL: define {{[^@]+}}@constant_fold_ptrtoint_gep_nonzero() {
+-; INSTSIMPLIFY-NEXT:    ret i64 ptrtoint (ptr addrspace(1) getelementptr (i32, ptr addrspace(1) null, i64 1234) to i64)
+-;
+-; INSTCOMBINE-LABEL: define {{[^@]+}}@constant_fold_ptrtoint_gep_nonzero() {
+-; INSTCOMBINE-NEXT:    ret i64 4936
++; ALL-LABEL: define {{[^@]+}}@constant_fold_ptrtoint_gep_nonzero() {
++; ALL-NEXT:    ret i64 ptrtoint (ptr addrspace(1) getelementptr (i32, ptr addrspace(1) null, i64 1234) to i64)
+ ;
+   ret i64 ptrtoint (ptr addrspace(1) getelementptr (i32, ptr addrspace(1) null, i64 1234) to i64)
+ }
+@@ -45,64 +39,28 @@ define i64 @constant_fold_ptrtoint_gep_zero_inbounds() {
+ ; implementations that don't use __builtin_offsetof.
+ ; TODO: should Clang special case ((INTEGER)&((TYPE *)0)->MEMBER) to emit a non-inbounds GEP?
+ define i64 @constant_fold_ptrtoint_gep_nonzero_inbounds() {
+-; LLPARSER-LABEL: define {{[^@]+}}@constant_fold_ptrtoint_gep_nonzero_inbounds() {
+-; LLPARSER-NEXT:    ret i64 ptrtoint (ptr addrspace(1) getelementptr inbounds (i32, ptr addrspace(1) null, i64 1234) to i64)
+-;
+-; INSTSIMPLIFY-LABEL: define {{[^@]+}}@constant_fold_ptrtoint_gep_nonzero_inbounds() {
+-; INSTSIMPLIFY-NEXT:    ret i64 ptrtoint (ptr addrspace(1) getelementptr inbounds (i32, ptr addrspace(1) null, i64 1234) to i64)
+-;
+-; INSTCOMBINE-LABEL: define {{[^@]+}}@constant_fold_ptrtoint_gep_nonzero_inbounds() {
+-; INSTCOMBINE-NEXT:    ret i64 4936
++; ALL-LABEL: define {{[^@]+}}@constant_fold_ptrtoint_gep_nonzero_inbounds() {
++; ALL-NEXT:    ret i64 ptrtoint (ptr addrspace(1) getelementptr inbounds (i32, ptr addrspace(1) null, i64 1234) to i64)
+ ;
+   ret i64 ptrtoint (ptr addrspace(1) getelementptr inbounds (i32, ptr addrspace(1) null, i64 1234) to i64)
+ }
+ 
+ ; Check all combinations of inbounds+non-inbounds GEP with the outer GEP having a non-zero offset
+ define void @constant_fold_ptrtoint_of_gep_of_nullgep() {
+-; LLPARSER-LABEL: define {{[^@]+}}@constant_fold_ptrtoint_of_gep_of_nullgep() {
+-; LLPARSER-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr inbounds (i8, ptr addrspace(1) null, i64 1234) to i64))
+-; LLPARSER-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr (i8, ptr addrspace(1) null, i64 1234) to i64))
+-; LLPARSER-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr inbounds (i8, ptr addrspace(1) null, i64 1234) to i64))
+-; LLPARSER-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr (i8, ptr addrspace(1) null, i64 1234) to i64))
+-; LLPARSER-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr inbounds (i8, ptr addrspace(1) null, i64 1234) to i64))
+-; LLPARSER-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr inbounds (i8, ptr addrspace(1) null, i64 1234) to i64))
+-; LLPARSER-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr (i8, ptr addrspace(1) null, i64 1234) to i64))
+-; LLPARSER-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr (i8, ptr addrspace(1) null, i64 1234) to i64))
+-; LLPARSER-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr inbounds (i8, ptr addrspace(1) getelementptr inbounds (i8, ptr addrspace(1) null, i64 -1), i64 1) to i64))
+-; LLPARSER-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr (i8, ptr addrspace(1) getelementptr inbounds (i8, ptr addrspace(1) null, i64 -1), i64 1) to i64))
+-; LLPARSER-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr inbounds (i8, ptr addrspace(1) getelementptr (i8, ptr addrspace(1) null, i64 -1), i64 1) to i64))
+-; LLPARSER-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr (i8, ptr addrspace(1) getelementptr (i8, ptr addrspace(1) null, i64 -1), i64 1) to i64))
+-; LLPARSER-NEXT:    ret void
+-;
+-; INSTSIMPLIFY-LABEL: define {{[^@]+}}@constant_fold_ptrtoint_of_gep_of_nullgep() {
+-; INSTSIMPLIFY-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr inbounds (i8, ptr addrspace(1) null, i64 1234) to i64))
+-; INSTSIMPLIFY-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr (i8, ptr addrspace(1) null, i64 1234) to i64))
+-; INSTSIMPLIFY-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr inbounds (i8, ptr addrspace(1) null, i64 1234) to i64))
+-; INSTSIMPLIFY-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr (i8, ptr addrspace(1) null, i64 1234) to i64))
+-; INSTSIMPLIFY-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr inbounds (i8, ptr addrspace(1) null, i64 1234) to i64))
+-; INSTSIMPLIFY-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr inbounds (i8, ptr addrspace(1) null, i64 1234) to i64))
+-; INSTSIMPLIFY-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr (i8, ptr addrspace(1) null, i64 1234) to i64))
+-; INSTSIMPLIFY-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr (i8, ptr addrspace(1) null, i64 1234) to i64))
+-; INSTSIMPLIFY-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr inbounds (i8, ptr addrspace(1) getelementptr inbounds (i8, ptr addrspace(1) null, i64 -1), i64 1) to i64))
+-; INSTSIMPLIFY-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr (i8, ptr addrspace(1) getelementptr inbounds (i8, ptr addrspace(1) null, i64 -1), i64 1) to i64))
+-; INSTSIMPLIFY-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr inbounds (i8, ptr addrspace(1) getelementptr (i8, ptr addrspace(1) null, i64 -1), i64 1) to i64))
+-; INSTSIMPLIFY-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr (i8, ptr addrspace(1) getelementptr (i8, ptr addrspace(1) null, i64 -1), i64 1) to i64))
+-; INSTSIMPLIFY-NEXT:    ret void
+-;
+-; INSTCOMBINE-LABEL: define {{[^@]+}}@constant_fold_ptrtoint_of_gep_of_nullgep() {
+-; INSTCOMBINE-NEXT:    call void @use_i64(i64 1234)
+-; INSTCOMBINE-NEXT:    call void @use_i64(i64 1234)
+-; INSTCOMBINE-NEXT:    call void @use_i64(i64 1234)
+-; INSTCOMBINE-NEXT:    call void @use_i64(i64 1234)
+-; INSTCOMBINE-NEXT:    call void @use_i64(i64 1234)
+-; INSTCOMBINE-NEXT:    call void @use_i64(i64 1234)
+-; INSTCOMBINE-NEXT:    call void @use_i64(i64 1234)
+-; INSTCOMBINE-NEXT:    call void @use_i64(i64 1234)
+-; INSTCOMBINE-NEXT:    call void @use_i64(i64 0)
+-; INSTCOMBINE-NEXT:    call void @use_i64(i64 0)
+-; INSTCOMBINE-NEXT:    call void @use_i64(i64 0)
+-; INSTCOMBINE-NEXT:    call void @use_i64(i64 0)
+-; INSTCOMBINE-NEXT:    ret void
++; ALL-LABEL: define {{[^@]+}}@constant_fold_ptrtoint_of_gep_of_nullgep() {
++; ALL-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr inbounds (i8, ptr addrspace(1) null, i64 1234) to i64))
++; ALL-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr (i8, ptr addrspace(1) null, i64 1234) to i64))
++; ALL-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr inbounds (i8, ptr addrspace(1) null, i64 1234) to i64))
++; ALL-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr (i8, ptr addrspace(1) null, i64 1234) to i64))
++; ALL-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr inbounds (i8, ptr addrspace(1) null, i64 1234) to i64))
++; ALL-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr inbounds (i8, ptr addrspace(1) null, i64 1234) to i64))
++; ALL-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr (i8, ptr addrspace(1) null, i64 1234) to i64))
++; ALL-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr (i8, ptr addrspace(1) null, i64 1234) to i64))
++; ALL-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr inbounds (i8, ptr addrspace(1) getelementptr inbounds (i8, ptr addrspace(1) null, i64 -1), i64 1) to i64))
++; ALL-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr (i8, ptr addrspace(1) getelementptr inbounds (i8, ptr addrspace(1) null, i64 -1), i64 1) to i64))
++; ALL-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr inbounds (i8, ptr addrspace(1) getelementptr (i8, ptr addrspace(1) null, i64 -1), i64 1) to i64))
++; ALL-NEXT:    call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr (i8, ptr addrspace(1) getelementptr (i8, ptr addrspace(1) null, i64 -1), i64 1) to i64))
++; ALL-NEXT:    ret void
+ ;
+   call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr inbounds (i8, ptr addrspace(1) null, i64 1234) to i64))
+   call void @use_i64(i64 ptrtoint (ptr addrspace(1) getelementptr (i8, ptr addrspace(1) null, i64 1234) to i64))
+diff --git a/llvm/test/Transforms/InstCombine/rem.ll b/llvm/test/Transforms/InstCombine/rem.ll
+index d0730cc4ecce7..fd7e58a23daa4 100644
+--- a/llvm/test/Transforms/InstCombine/rem.ll
++++ b/llvm/test/Transforms/InstCombine/rem.ll
+@@ -526,7 +526,7 @@ define i32 @pr27968_0(i1 %c0, ptr %p) {
+ ; CHECK-NEXT:    [[V:%.*]] = load volatile i32, ptr [[P:%.*]], align 4
+ ; CHECK-NEXT:    br label [[IF_END]]
+ ; CHECK:       if.end:
+-; CHECK-NEXT:    [[CMP:%.*]] = icmp eq ptr getelementptr inbounds nuw (i8, ptr @a, i64 8), @b
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq ptr getelementptr inbounds ([5 x i16], ptr @a, i64 0, i64 4), @b
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[REM_IS_SAFE:%.*]], label [[REM_IS_UNSAFE:%.*]]
+ ; CHECK:       rem.is.safe:
+ ; CHECK-NEXT:    ret i32 0
+@@ -597,7 +597,7 @@ define i32 @pr27968_2(i1 %c0, ptr %p) {
+ ; CHECK-NEXT:    [[V:%.*]] = load volatile i32, ptr [[P:%.*]], align 4
+ ; CHECK-NEXT:    br label [[IF_END]]
+ ; CHECK:       if.end:
+-; CHECK-NEXT:    [[CMP:%.*]] = icmp eq ptr getelementptr inbounds nuw (i8, ptr @a, i64 8), @b
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq ptr getelementptr inbounds ([5 x i16], ptr @a, i64 0, i64 4), @b
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[REM_IS_SAFE:%.*]], label [[REM_IS_UNSAFE:%.*]]
+ ; CHECK:       rem.is.safe:
+ ; CHECK-NEXT:    ret i32 0
+diff --git a/llvm/test/Transforms/InstCombine/select-and-or.ll b/llvm/test/Transforms/InstCombine/select-and-or.ll
+index ac1e3f05d6083..5db2a461537fa 100644
+--- a/llvm/test/Transforms/InstCombine/select-and-or.ll
++++ b/llvm/test/Transforms/InstCombine/select-and-or.ll
+@@ -477,7 +477,7 @@ define i1 @demorgan_select_infloop1(i1 %L) {
+ define i1 @demorgan_select_infloop2(i1 %L) {
+ ; CHECK-LABEL: @demorgan_select_infloop2(
+ ; CHECK-NEXT:    [[NOT_L:%.*]] = xor i1 [[L:%.*]], true
+-; CHECK-NEXT:    [[CMP2:%.*]] = icmp ne ptr getelementptr inbounds nuw (i8, ptr @g2, i64 2), @g1
++; CHECK-NEXT:    [[CMP2:%.*]] = icmp ne ptr getelementptr inbounds (i16, ptr @g2, i64 1), @g1
+ ; CHECK-NEXT:    [[C15:%.*]] = select i1 [[NOT_L]], i1 [[CMP2]], i1 false
+ ; CHECK-NEXT:    ret i1 [[C15]]
+ ;
+diff --git a/llvm/test/Transforms/InstCombine/select.ll b/llvm/test/Transforms/InstCombine/select.ll
+index a1e84fad9a827..0d8145a4d9b45 100644
+--- a/llvm/test/Transforms/InstCombine/select.ll
++++ b/llvm/test/Transforms/InstCombine/select.ll
+@@ -5365,7 +5365,7 @@ define <2 x i8> @select_freeze_constant_expression_vector_add(i1 %cond, <2 x i8>
+ define <2 x ptr> @select_freeze_constant_expression_vector_gep(i1 %cond, <2 x ptr> noundef %y) {
+ ; CHECK-LABEL: define <2 x ptr> @select_freeze_constant_expression_vector_gep(
+ ; CHECK-SAME: i1 [[COND:%.*]], <2 x ptr> noundef [[Y:%.*]]) {
+-; CHECK-NEXT:    [[FREEZE:%.*]] = freeze <2 x ptr> <ptr poison, ptr getelementptr inbounds nuw (i8, ptr @glb.struct.1, i64 800)>
++; CHECK-NEXT:    [[FREEZE:%.*]] = freeze <2 x ptr> <ptr poison, ptr getelementptr inbounds ([[STRUCT_1:%.*]], ptr @glb.struct.1, i64 100)>
+ ; CHECK-NEXT:    [[SEL:%.*]] = select i1 [[COND]], <2 x ptr> [[Y]], <2 x ptr> [[FREEZE]]
+ ; CHECK-NEXT:    ret <2 x ptr> [[SEL]]
+ ;
+diff --git a/llvm/test/Transforms/InstCombine/simplify-libcalls-i16.ll b/llvm/test/Transforms/InstCombine/simplify-libcalls-i16.ll
+index 8bbd61ac6bc09..d5f0a9b252ac1 100644
+--- a/llvm/test/Transforms/InstCombine/simplify-libcalls-i16.ll
++++ b/llvm/test/Transforms/InstCombine/simplify-libcalls-i16.ll
+@@ -29,7 +29,7 @@ define void @foo(ptr %P, ptr %X) {
+ 
+ define ptr @test1() {
+ ; CHECK32-LABEL: @test1(
+-; CHECK32-NEXT:    [[TMP3:%.*]] = tail call ptr @strchr(ptr nonnull getelementptr inbounds nuw (i8, ptr @str, i32 2), i16 103)
++; CHECK32-NEXT:    [[TMP3:%.*]] = tail call ptr @strchr(ptr getelementptr ([5 x i8], ptr @str, i32 0, i16 2), i16 103)
+ ; CHECK32-NEXT:    ret ptr [[TMP3]]
+ ;
+ ; CHECK16-LABEL: @test1(
+@@ -45,7 +45,7 @@ declare ptr @strchr(ptr, i16)
+ 
+ define ptr @test2() {
+ ; CHECK32-LABEL: @test2(
+-; CHECK32-NEXT:    [[TMP3:%.*]] = tail call ptr @strchr(ptr nonnull getelementptr inbounds nuw (i8, ptr @str1, i32 2), i16 0)
++; CHECK32-NEXT:    [[TMP3:%.*]] = tail call ptr @strchr(ptr getelementptr ([8 x i8], ptr @str1, i32 0, i32 2), i16 0)
+ ; CHECK32-NEXT:    ret ptr [[TMP3]]
+ ;
+ ; CHECK16-LABEL: @test2(
+@@ -58,7 +58,7 @@ define ptr @test2() {
+ define ptr @test3() {
+ ; CHECK32-LABEL: @test3(
+ ; CHECK32-NEXT:  entry:
+-; CHECK32-NEXT:    [[TMP3:%.*]] = tail call ptr @strchr(ptr nonnull getelementptr inbounds nuw (i8, ptr @str2, i32 1), i16 80)
++; CHECK32-NEXT:    [[TMP3:%.*]] = tail call ptr @strchr(ptr getelementptr ([5 x i8], ptr @str2, i32 0, i32 1), i16 80)
+ ; CHECK32-NEXT:    ret ptr [[TMP3]]
+ ;
+ ; CHECK16-LABEL: @test3(
+@@ -162,7 +162,7 @@ define i32 @PR4645(i1 %c1) {
+ ; CHECK16:       lor.lhs.false:
+ ; CHECK16-NEXT:    br i1 [[C1:%.*]], label [[IF_THEN]], label [[FOR_COND:%.*]]
+ ; CHECK16:       if.then:
+-; CHECK16-NEXT:    call void @exit(i16 1) #[[ATTR6:[0-9]+]]
++; CHECK16-NEXT:    call void @exit(i16 1) #[[ATTR5:[0-9]+]]
+ ; CHECK16-NEXT:    br label [[FOR_COND]]
+ ; CHECK16:       for.cond:
+ ; CHECK16-NEXT:    unreachable
+@@ -212,7 +212,7 @@ declare i16 @strcmp(ptr, ptr) #0
+ 
+ define void @test9(ptr %x) {
+ ; CHECK32-LABEL: @test9(
+-; CHECK32-NEXT:    [[Y:%.*]] = call i16 @strcmp(ptr [[X:%.*]], ptr [[X]]) #[[ATTR6:[0-9]+]]
++; CHECK32-NEXT:    [[Y:%.*]] = call i16 @strcmp(ptr [[X:%.*]], ptr [[X]]) #[[ATTR5:[0-9]+]]
+ ; CHECK32-NEXT:    ret void
+ ;
+ ; CHECK16-LABEL: @test9(
+diff --git a/llvm/test/Transforms/InstCombine/simplify-libcalls.ll b/llvm/test/Transforms/InstCombine/simplify-libcalls.ll
+index 6ce765d99931e..d183d2eb1d06b 100644
+--- a/llvm/test/Transforms/InstCombine/simplify-libcalls.ll
++++ b/llvm/test/Transforms/InstCombine/simplify-libcalls.ll
+@@ -32,7 +32,7 @@ define ptr @test1() {
+ ; CHECK32-NEXT:    ret ptr getelementptr inbounds nuw (i8, ptr @str, i32 3)
+ ;
+ ; CHECK16-LABEL: @test1(
+-; CHECK16-NEXT:    [[TMP3:%.*]] = tail call ptr @strchr(ptr nonnull getelementptr inbounds nuw (i8, ptr @str, i32 2), i32 103)
++; CHECK16-NEXT:    [[TMP3:%.*]] = tail call ptr @strchr(ptr getelementptr ([5 x i8], ptr @str, i32 0, i32 2), i32 103)
+ ; CHECK16-NEXT:    ret ptr [[TMP3]]
+ ;
+   %tmp3 = tail call ptr @strchr( ptr getelementptr ([5 x i8], ptr @str, i32 0, i32 2), i32 103 )              ; <ptr> [#uses=1]
+@@ -48,7 +48,7 @@ define ptr @test2() {
+ ; CHECK32-NEXT:    ret ptr getelementptr inbounds nuw (i8, ptr @str1, i32 7)
+ ;
+ ; CHECK16-LABEL: @test2(
+-; CHECK16-NEXT:    [[TMP3:%.*]] = tail call ptr @strchr(ptr nonnull getelementptr inbounds nuw (i8, ptr @str1, i32 2), i32 0)
++; CHECK16-NEXT:    [[TMP3:%.*]] = tail call ptr @strchr(ptr getelementptr ([8 x i8], ptr @str1, i32 0, i32 2), i32 0)
+ ; CHECK16-NEXT:    ret ptr [[TMP3]]
+ ;
+   %tmp3 = tail call ptr @strchr( ptr getelementptr ([8 x i8], ptr @str1, i32 0, i32 2), i32 0 )               ; <ptr> [#uses=1]
+@@ -62,7 +62,7 @@ define ptr @test3() {
+ ;
+ ; CHECK16-LABEL: @test3(
+ ; CHECK16-NEXT:  entry:
+-; CHECK16-NEXT:    [[TMP3:%.*]] = tail call ptr @strchr(ptr nonnull getelementptr inbounds nuw (i8, ptr @str2, i32 1), i32 80)
++; CHECK16-NEXT:    [[TMP3:%.*]] = tail call ptr @strchr(ptr getelementptr ([5 x i8], ptr @str2, i32 0, i32 1), i32 80)
+ ; CHECK16-NEXT:    ret ptr [[TMP3]]
+ ;
+ entry:
+@@ -160,7 +160,7 @@ define i32 @PR4645(i1 %c1) {
+ ; CHECK32:       lor.lhs.false:
+ ; CHECK32-NEXT:    br i1 [[C1:%.*]], label [[IF_THEN]], label [[FOR_COND:%.*]]
+ ; CHECK32:       if.then:
+-; CHECK32-NEXT:    call void @exit(i32 1) #[[ATTR6:[0-9]+]]
++; CHECK32-NEXT:    call void @exit(i32 1) #[[ATTR5:[0-9]+]]
+ ; CHECK32-NEXT:    br label [[FOR_COND]]
+ ; CHECK32:       for.cond:
+ ; CHECK32-NEXT:    unreachable
+@@ -226,7 +226,7 @@ define void @test9(ptr %x) {
+ ; CHECK32-NEXT:    ret void
+ ;
+ ; CHECK16-LABEL: @test9(
+-; CHECK16-NEXT:    [[Y:%.*]] = call i32 @strcmp(ptr [[X:%.*]], ptr [[X]]) #[[ATTR6:[0-9]+]]
++; CHECK16-NEXT:    [[Y:%.*]] = call i32 @strcmp(ptr [[X:%.*]], ptr [[X]]) #[[ATTR5:[0-9]+]]
+ ; CHECK16-NEXT:    ret void
+ ;
+   %y = call i32 @strcmp(ptr %x, ptr %x) #1
+diff --git a/llvm/test/Transforms/InstCombine/snprintf-2.ll b/llvm/test/Transforms/InstCombine/snprintf-2.ll
+index 5195b4271ab8c..fb79de9357e95 100644
+--- a/llvm/test/Transforms/InstCombine/snprintf-2.ll
++++ b/llvm/test/Transforms/InstCombine/snprintf-2.ll
+@@ -21,54 +21,54 @@ declare i32 @snprintf(ptr, i64, ptr, ...)
+ 
+ define void @fold_snprintf_fmt() {
+ ; BE-LABEL: @fold_snprintf_fmt(
+-; BE-NEXT:    [[PDIMAX:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 17179869176), align 8
++; BE-NEXT:    [[PDIMAX:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 2147483647), align 8
+ ; BE-NEXT:    store i32 825373440, ptr [[PDIMAX]], align 1
+ ; BE-NEXT:    store i32 3, ptr @asiz, align 4
+-; BE-NEXT:    [[PD5:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 40), align 8
++; BE-NEXT:    [[PD5:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 5), align 8
+ ; BE-NEXT:    store i32 825373440, ptr [[PD5]], align 1
+-; BE-NEXT:    store i32 3, ptr getelementptr (i8, ptr @asiz, i64 20), align 4
+-; BE-NEXT:    [[PD4:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 32), align 8
++; BE-NEXT:    store i32 3, ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 5), align 4
++; BE-NEXT:    [[PD4:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 4), align 8
+ ; BE-NEXT:    store i32 825373440, ptr [[PD4]], align 1
+-; BE-NEXT:    store i32 3, ptr getelementptr (i8, ptr @asiz, i64 16), align 4
+-; BE-NEXT:    [[PD3:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 24), align 8
++; BE-NEXT:    store i32 3, ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 4), align 4
++; BE-NEXT:    [[PD3:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 3), align 8
+ ; BE-NEXT:    store i16 12594, ptr [[PD3]], align 1
+ ; BE-NEXT:    [[ENDPTR:%.*]] = getelementptr inbounds nuw i8, ptr [[PD3]], i64 2
+ ; BE-NEXT:    store i8 0, ptr [[ENDPTR]], align 1
+-; BE-NEXT:    store i32 3, ptr getelementptr (i8, ptr @asiz, i64 12), align 4
+-; BE-NEXT:    [[PD2:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 16), align 8
++; BE-NEXT:    store i32 3, ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 3), align 4
++; BE-NEXT:    [[PD2:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 2), align 8
+ ; BE-NEXT:    store i8 49, ptr [[PD2]], align 1
+ ; BE-NEXT:    [[ENDPTR1:%.*]] = getelementptr inbounds nuw i8, ptr [[PD2]], i64 1
+ ; BE-NEXT:    store i8 0, ptr [[ENDPTR1]], align 1
+-; BE-NEXT:    store i32 3, ptr getelementptr (i8, ptr @asiz, i64 8), align 4
+-; BE-NEXT:    [[PD1:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 8), align 8
++; BE-NEXT:    store i32 3, ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 2), align 4
++; BE-NEXT:    [[PD1:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 1), align 8
+ ; BE-NEXT:    store i8 0, ptr [[PD1]], align 1
+-; BE-NEXT:    store i32 3, ptr getelementptr (i8, ptr @asiz, i64 4), align 4
++; BE-NEXT:    store i32 3, ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 1), align 4
+ ; BE-NEXT:    store i32 3, ptr @asiz, align 4
+ ; BE-NEXT:    ret void
+ ;
+ ; LE-LABEL: @fold_snprintf_fmt(
+-; LE-NEXT:    [[PDIMAX:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 17179869176), align 8
++; LE-NEXT:    [[PDIMAX:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 2147483647), align 8
+ ; LE-NEXT:    store i32 3355185, ptr [[PDIMAX]], align 1
+ ; LE-NEXT:    store i32 3, ptr @asiz, align 4
+-; LE-NEXT:    [[PD5:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 40), align 8
++; LE-NEXT:    [[PD5:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 5), align 8
+ ; LE-NEXT:    store i32 3355185, ptr [[PD5]], align 1
+-; LE-NEXT:    store i32 3, ptr getelementptr (i8, ptr @asiz, i64 20), align 4
+-; LE-NEXT:    [[PD4:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 32), align 8
++; LE-NEXT:    store i32 3, ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 5), align 4
++; LE-NEXT:    [[PD4:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 4), align 8
+ ; LE-NEXT:    store i32 3355185, ptr [[PD4]], align 1
+-; LE-NEXT:    store i32 3, ptr getelementptr (i8, ptr @asiz, i64 16), align 4
+-; LE-NEXT:    [[PD3:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 24), align 8
++; LE-NEXT:    store i32 3, ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 4), align 4
++; LE-NEXT:    [[PD3:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 3), align 8
+ ; LE-NEXT:    store i16 12849, ptr [[PD3]], align 1
+ ; LE-NEXT:    [[ENDPTR:%.*]] = getelementptr inbounds nuw i8, ptr [[PD3]], i64 2
+ ; LE-NEXT:    store i8 0, ptr [[ENDPTR]], align 1
+-; LE-NEXT:    store i32 3, ptr getelementptr (i8, ptr @asiz, i64 12), align 4
+-; LE-NEXT:    [[PD2:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 16), align 8
++; LE-NEXT:    store i32 3, ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 3), align 4
++; LE-NEXT:    [[PD2:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 2), align 8
+ ; LE-NEXT:    store i8 49, ptr [[PD2]], align 1
+ ; LE-NEXT:    [[ENDPTR1:%.*]] = getelementptr inbounds nuw i8, ptr [[PD2]], i64 1
+ ; LE-NEXT:    store i8 0, ptr [[ENDPTR1]], align 1
+-; LE-NEXT:    store i32 3, ptr getelementptr (i8, ptr @asiz, i64 8), align 4
+-; LE-NEXT:    [[PD1:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 8), align 8
++; LE-NEXT:    store i32 3, ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 2), align 4
++; LE-NEXT:    [[PD1:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 1), align 8
+ ; LE-NEXT:    store i8 0, ptr [[PD1]], align 1
+-; LE-NEXT:    store i32 3, ptr getelementptr (i8, ptr @asiz, i64 4), align 4
++; LE-NEXT:    store i32 3, ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 1), align 4
+ ; LE-NEXT:    store i32 3, ptr @asiz, align 4
+ ; LE-NEXT:    ret void
+ ;
+@@ -111,9 +111,9 @@ define void @fold_snprintf_fmt() {
+ 
+ define void @call_snprintf_fmt_ximax() {
+ ; ANY-LABEL: @call_snprintf_fmt_ximax(
+-; ANY-NEXT:    [[PDM1:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 8), align 8
++; ANY-NEXT:    [[PDM1:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 1), align 8
+ ; ANY-NEXT:    [[NM1:%.*]] = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) [[PDM1]], i64 -1, ptr nonnull @s)
+-; ANY-NEXT:    store i32 [[NM1]], ptr getelementptr (i8, ptr @asiz, i64 4), align 4
++; ANY-NEXT:    store i32 [[NM1]], ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 1), align 4
+ ; ANY-NEXT:    [[PDIMAXP1:%.*]] = load ptr, ptr @adst, align 8
+ ; ANY-NEXT:    [[NIMAXP1:%.*]] = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) [[PDIMAXP1]], i64 2147483648, ptr nonnull @s)
+ ; ANY-NEXT:    store i32 [[NIMAXP1]], ptr @asiz, align 4
+diff --git a/llvm/test/Transforms/InstCombine/snprintf-3.ll b/llvm/test/Transforms/InstCombine/snprintf-3.ll
+index d1375954a15ad..4586899d71d03 100644
+--- a/llvm/test/Transforms/InstCombine/snprintf-3.ll
++++ b/llvm/test/Transforms/InstCombine/snprintf-3.ll
+@@ -22,54 +22,54 @@ declare i32 @snprintf(ptr, i64, ptr, ...)
+ 
+ define void @fold_snprintf_pcnt_s() {
+ ; BE-LABEL: @fold_snprintf_pcnt_s(
+-; BE-NEXT:    [[PDIMAX:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 17179869176), align 8
++; BE-NEXT:    [[PDIMAX:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 2147483647), align 8
+ ; BE-NEXT:    store i32 825373440, ptr [[PDIMAX]], align 1
+ ; BE-NEXT:    store i32 3, ptr @asiz, align 4
+-; BE-NEXT:    [[PD5:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 40), align 8
++; BE-NEXT:    [[PD5:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 5), align 8
+ ; BE-NEXT:    store i32 825373440, ptr [[PD5]], align 1
+-; BE-NEXT:    store i32 3, ptr getelementptr (i8, ptr @asiz, i64 20), align 4
+-; BE-NEXT:    [[PD4:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 32), align 8
++; BE-NEXT:    store i32 3, ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 5), align 4
++; BE-NEXT:    [[PD4:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 4), align 8
+ ; BE-NEXT:    store i32 825373440, ptr [[PD4]], align 1
+-; BE-NEXT:    store i32 3, ptr getelementptr (i8, ptr @asiz, i64 16), align 4
+-; BE-NEXT:    [[PD3:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 24), align 8
++; BE-NEXT:    store i32 3, ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 4), align 4
++; BE-NEXT:    [[PD3:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 3), align 8
+ ; BE-NEXT:    store i16 12594, ptr [[PD3]], align 1
+ ; BE-NEXT:    [[ENDPTR:%.*]] = getelementptr inbounds nuw i8, ptr [[PD3]], i64 2
+ ; BE-NEXT:    store i8 0, ptr [[ENDPTR]], align 1
+-; BE-NEXT:    store i32 3, ptr getelementptr (i8, ptr @asiz, i64 12), align 4
+-; BE-NEXT:    [[PD2:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 16), align 8
++; BE-NEXT:    store i32 3, ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 3), align 4
++; BE-NEXT:    [[PD2:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 2), align 8
+ ; BE-NEXT:    store i8 49, ptr [[PD2]], align 1
+ ; BE-NEXT:    [[ENDPTR1:%.*]] = getelementptr inbounds nuw i8, ptr [[PD2]], i64 1
+ ; BE-NEXT:    store i8 0, ptr [[ENDPTR1]], align 1
+-; BE-NEXT:    store i32 3, ptr getelementptr (i8, ptr @asiz, i64 8), align 4
+-; BE-NEXT:    [[PD1:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 8), align 8
++; BE-NEXT:    store i32 3, ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 2), align 4
++; BE-NEXT:    [[PD1:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 1), align 8
+ ; BE-NEXT:    store i8 0, ptr [[PD1]], align 1
+-; BE-NEXT:    store i32 3, ptr getelementptr (i8, ptr @asiz, i64 4), align 4
++; BE-NEXT:    store i32 3, ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 1), align 4
+ ; BE-NEXT:    store i32 3, ptr @asiz, align 4
+ ; BE-NEXT:    ret void
+ ;
+ ; LE-LABEL: @fold_snprintf_pcnt_s(
+-; LE-NEXT:    [[PDIMAX:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 17179869176), align 8
++; LE-NEXT:    [[PDIMAX:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 2147483647), align 8
+ ; LE-NEXT:    store i32 3355185, ptr [[PDIMAX]], align 1
+ ; LE-NEXT:    store i32 3, ptr @asiz, align 4
+-; LE-NEXT:    [[PD5:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 40), align 8
++; LE-NEXT:    [[PD5:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 5), align 8
+ ; LE-NEXT:    store i32 3355185, ptr [[PD5]], align 1
+-; LE-NEXT:    store i32 3, ptr getelementptr (i8, ptr @asiz, i64 20), align 4
+-; LE-NEXT:    [[PD4:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 32), align 8
++; LE-NEXT:    store i32 3, ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 5), align 4
++; LE-NEXT:    [[PD4:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 4), align 8
+ ; LE-NEXT:    store i32 3355185, ptr [[PD4]], align 1
+-; LE-NEXT:    store i32 3, ptr getelementptr (i8, ptr @asiz, i64 16), align 4
+-; LE-NEXT:    [[PD3:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 24), align 8
++; LE-NEXT:    store i32 3, ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 4), align 4
++; LE-NEXT:    [[PD3:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 3), align 8
+ ; LE-NEXT:    store i16 12849, ptr [[PD3]], align 1
+ ; LE-NEXT:    [[ENDPTR:%.*]] = getelementptr inbounds nuw i8, ptr [[PD3]], i64 2
+ ; LE-NEXT:    store i8 0, ptr [[ENDPTR]], align 1
+-; LE-NEXT:    store i32 3, ptr getelementptr (i8, ptr @asiz, i64 12), align 4
+-; LE-NEXT:    [[PD2:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 16), align 8
++; LE-NEXT:    store i32 3, ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 3), align 4
++; LE-NEXT:    [[PD2:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 2), align 8
+ ; LE-NEXT:    store i8 49, ptr [[PD2]], align 1
+ ; LE-NEXT:    [[ENDPTR1:%.*]] = getelementptr inbounds nuw i8, ptr [[PD2]], i64 1
+ ; LE-NEXT:    store i8 0, ptr [[ENDPTR1]], align 1
+-; LE-NEXT:    store i32 3, ptr getelementptr (i8, ptr @asiz, i64 8), align 4
+-; LE-NEXT:    [[PD1:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 8), align 8
++; LE-NEXT:    store i32 3, ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 2), align 4
++; LE-NEXT:    [[PD1:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 1), align 8
+ ; LE-NEXT:    store i8 0, ptr [[PD1]], align 1
+-; LE-NEXT:    store i32 3, ptr getelementptr (i8, ptr @asiz, i64 4), align 4
++; LE-NEXT:    store i32 3, ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 1), align 4
+ ; LE-NEXT:    store i32 3, ptr @asiz, align 4
+ ; LE-NEXT:    ret void
+ ;
+@@ -112,9 +112,9 @@ define void @fold_snprintf_pcnt_s() {
+ 
+ define void @call_snprintf_pcnt_s_ximax() {
+ ; ANY-LABEL: @call_snprintf_pcnt_s_ximax(
+-; ANY-NEXT:    [[PDM1:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 8), align 8
++; ANY-NEXT:    [[PDM1:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 1), align 8
+ ; ANY-NEXT:    [[NM1:%.*]] = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) [[PDM1]], i64 -1, ptr nonnull @pcnt_s, ptr nonnull @s)
+-; ANY-NEXT:    store i32 [[NM1]], ptr getelementptr (i8, ptr @asiz, i64 4), align 4
++; ANY-NEXT:    store i32 [[NM1]], ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 1), align 4
+ ; ANY-NEXT:    [[PDIMAXP1:%.*]] = load ptr, ptr @adst, align 8
+ ; ANY-NEXT:    [[NIMAXP1:%.*]] = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) [[PDIMAXP1]], i64 2147483648, ptr nonnull @pcnt_s, ptr nonnull @s)
+ ; ANY-NEXT:    store i32 [[NIMAXP1]], ptr @asiz, align 4
+diff --git a/llvm/test/Transforms/InstCombine/snprintf-4.ll b/llvm/test/Transforms/InstCombine/snprintf-4.ll
+index 88d9ea06765d0..2268940790cb0 100644
+--- a/llvm/test/Transforms/InstCombine/snprintf-4.ll
++++ b/llvm/test/Transforms/InstCombine/snprintf-4.ll
+@@ -24,29 +24,29 @@ define void @fold_snprintf_pcnt_c(i32 %c) {
+ ; CHECK-NEXT:    [[NUL:%.*]] = getelementptr inbounds nuw i8, ptr [[PDIMAX]], i64 1
+ ; CHECK-NEXT:    store i8 0, ptr [[NUL]], align 1
+ ; CHECK-NEXT:    store i32 1, ptr @asiz, align 4
+-; CHECK-NEXT:    [[PD2:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 8), align 8
++; CHECK-NEXT:    [[PD2:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 1), align 8
+ ; CHECK-NEXT:    store i8 2, ptr [[PD2]], align 1
+ ; CHECK-NEXT:    [[NUL1:%.*]] = getelementptr inbounds nuw i8, ptr [[PD2]], i64 1
+ ; CHECK-NEXT:    store i8 0, ptr [[NUL1]], align 1
+-; CHECK-NEXT:    store i32 1, ptr getelementptr (i8, ptr @asiz, i64 4), align 4
+-; CHECK-NEXT:    [[PD2_0:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 16), align 8
++; CHECK-NEXT:    store i32 1, ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 1), align 4
++; CHECK-NEXT:    [[PD2_0:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 2), align 8
+ ; CHECK-NEXT:    store i8 0, ptr [[PD2_0]], align 1
+ ; CHECK-NEXT:    [[NUL2:%.*]] = getelementptr inbounds nuw i8, ptr [[PD2_0]], i64 1
+ ; CHECK-NEXT:    store i8 0, ptr [[NUL2]], align 1
+-; CHECK-NEXT:    store i32 1, ptr getelementptr (i8, ptr @asiz, i64 8), align 4
+-; CHECK-NEXT:    [[PD1:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 24), align 8
++; CHECK-NEXT:    store i32 1, ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 2), align 4
++; CHECK-NEXT:    [[PD1:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 3), align 8
+ ; CHECK-NEXT:    store i8 0, ptr [[PD1]], align 1
+-; CHECK-NEXT:    store i32 1, ptr getelementptr (i8, ptr @asiz, i64 12), align 4
+-; CHECK-NEXT:    store i32 1, ptr getelementptr (i8, ptr @asiz, i64 16), align 4
+-; CHECK-NEXT:    [[PD2_C:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 32), align 8
++; CHECK-NEXT:    store i32 1, ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 3), align 4
++; CHECK-NEXT:    store i32 1, ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 4), align 4
++; CHECK-NEXT:    [[PD2_C:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 4), align 8
+ ; CHECK-NEXT:    [[CHAR:%.*]] = trunc i32 [[C:%.*]] to i8
+ ; CHECK-NEXT:    store i8 [[CHAR]], ptr [[PD2_C]], align 1
+ ; CHECK-NEXT:    [[NUL3:%.*]] = getelementptr inbounds nuw i8, ptr [[PD2_C]], i64 1
+ ; CHECK-NEXT:    store i8 0, ptr [[NUL3]], align 1
+-; CHECK-NEXT:    store i32 1, ptr getelementptr (i8, ptr @asiz, i64 16), align 4
+-; CHECK-NEXT:    [[PD1_C:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 40), align 8
++; CHECK-NEXT:    store i32 1, ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 4), align 4
++; CHECK-NEXT:    [[PD1_C:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 5), align 8
+ ; CHECK-NEXT:    store i8 0, ptr [[PD1_C]], align 1
+-; CHECK-NEXT:    store i32 1, ptr getelementptr (i8, ptr @asiz, i64 20), align 4
++; CHECK-NEXT:    store i32 1, ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 5), align 4
+ ; CHECK-NEXT:    ret void
+ ;
+ 
+@@ -100,12 +100,12 @@ define void @call_snprintf_pcnt_c_ximax(i32 %c) {
+ ; CHECK-NEXT:    [[PDM1:%.*]] = load ptr, ptr @adst, align 8
+ ; CHECK-NEXT:    [[NM1:%.*]] = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) [[PDM1]], i64 -1, ptr nonnull @pcnt_c, i8 0)
+ ; CHECK-NEXT:    store i32 [[NM1]], ptr @asiz, align 4
+-; CHECK-NEXT:    [[PDIMAXP1:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 8), align 8
++; CHECK-NEXT:    [[PDIMAXP1:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 1), align 8
+ ; CHECK-NEXT:    [[NIMAXP1:%.*]] = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) [[PDIMAXP1]], i64 2147483648, ptr nonnull @pcnt_c, i8 1)
+-; CHECK-NEXT:    store i32 [[NIMAXP1]], ptr getelementptr (i8, ptr @asiz, i64 4), align 4
+-; CHECK-NEXT:    [[PDM1SL32:%.*]] = load ptr, ptr getelementptr (i8, ptr @adst, i64 16), align 8
++; CHECK-NEXT:    store i32 [[NIMAXP1]], ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 1), align 4
++; CHECK-NEXT:    [[PDM1SL32:%.*]] = load ptr, ptr getelementptr ([0 x ptr], ptr @adst, i32 0, i32 2), align 8
+ ; CHECK-NEXT:    [[NM1SL32:%.*]] = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) [[PDM1SL32]], i64 -4294967296, ptr nonnull @pcnt_c, i8 1)
+-; CHECK-NEXT:    store i32 [[NM1SL32]], ptr getelementptr (i8, ptr @asiz, i64 8), align 4
++; CHECK-NEXT:    store i32 [[NM1SL32]], ptr getelementptr ([0 x i32], ptr @asiz, i32 0, i32 2), align 4
+ ; CHECK-NEXT:    ret void
+ ;
+ 
+diff --git a/llvm/test/Transforms/InstCombine/str-int-3.ll b/llvm/test/Transforms/InstCombine/str-int-3.ll
+index 68b38ebac866b..68627f8a8474e 100644
+--- a/llvm/test/Transforms/InstCombine/str-int-3.ll
++++ b/llvm/test/Transforms/InstCombine/str-int-3.ll
+@@ -66,7 +66,7 @@ define void @fold_atoi_member(ptr %pi) {
+ 
+ define void @fold_atoi_offset_out_of_bounds(ptr %pi) {
+ ; CHECK-LABEL: @fold_atoi_offset_out_of_bounds(
+-; CHECK-NEXT:    [[IA_0_0_32:%.*]] = call i32 @atoi(ptr nonnull getelementptr inbounds nuw (i8, ptr @a, i64 32))
++; CHECK-NEXT:    [[IA_0_0_32:%.*]] = call i32 @atoi(ptr nonnull getelementptr inbounds ([2 x [[STRUCT_A:%.*]]], ptr @a, i64 1, i64 0, i32 0, i64 0))
+ ; CHECK-NEXT:    store i32 [[IA_0_0_32]], ptr [[PI:%.*]], align 4
+ ; CHECK-NEXT:    [[IA_0_0_33:%.*]] = call i32 @atoi(ptr getelementptr (i8, ptr @a, i64 33))
+ ; CHECK-NEXT:    store i32 [[IA_0_0_33]], ptr [[PI]], align 4
+diff --git a/llvm/test/Transforms/InstCombine/strlen-1.ll b/llvm/test/Transforms/InstCombine/strlen-1.ll
+index 2063df4f145c3..4c6ea9d58652d 100644
+--- a/llvm/test/Transforms/InstCombine/strlen-1.ll
++++ b/llvm/test/Transforms/InstCombine/strlen-1.ll
+@@ -264,7 +264,7 @@ define i1 @strlen0_after_write_to_first_byte_global() {
+ 
+ define i1 @strlen0_after_write_to_second_byte_global() {
+ ; CHECK-LABEL: @strlen0_after_write_to_second_byte_global(
+-; CHECK-NEXT:    store i8 49, ptr getelementptr inbounds nuw (i8, ptr @a, i32 1), align 16
++; CHECK-NEXT:    store i8 49, ptr getelementptr inbounds ([32 x i8], ptr @a, i64 0, i64 1), align 16
+ ; CHECK-NEXT:    [[CHAR0:%.*]] = load i8, ptr @a, align 1
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i8 [[CHAR0]], 0
+ ; CHECK-NEXT:    ret i1 [[CMP]]
+diff --git a/llvm/test/Transforms/InstCombine/sub-gep.ll b/llvm/test/Transforms/InstCombine/sub-gep.ll
+index a0d90da2e0d49..3d9619cf82d5e 100644
+--- a/llvm/test/Transforms/InstCombine/sub-gep.ll
++++ b/llvm/test/Transforms/InstCombine/sub-gep.ll
+@@ -317,7 +317,7 @@ define i64 @test24b(ptr %P, i64 %A){
+ define i64 @test25(ptr %P, i64 %A){
+ ; CHECK-LABEL: @test25(
+ ; CHECK-NEXT:    [[B_IDX:%.*]] = shl nsw i64 [[A:%.*]], 1
+-; CHECK-NEXT:    [[GEPDIFF:%.*]] = add nsw i64 [[B_IDX]], -84
++; CHECK-NEXT:    [[GEPDIFF:%.*]] = add i64 [[B_IDX]], -84
+ ; CHECK-NEXT:    ret i64 [[GEPDIFF]]
+ ;
+   %B = getelementptr inbounds [42 x i16], ptr @Arr, i64 0, i64 %A
+@@ -396,7 +396,7 @@ define i16 @test25_as1(ptr addrspace(1) %P, i64 %A) {
+ ; CHECK-LABEL: @test25_as1(
+ ; CHECK-NEXT:    [[TMP1:%.*]] = trunc nsw i64 [[A:%.*]] to i16
+ ; CHECK-NEXT:    [[B_IDX:%.*]] = shl nsw i16 [[TMP1]], 1
+-; CHECK-NEXT:    [[GEPDIFF:%.*]] = add nsw i16 [[B_IDX]], -84
++; CHECK-NEXT:    [[GEPDIFF:%.*]] = add i16 [[B_IDX]], -84
+ ; CHECK-NEXT:    ret i16 [[GEPDIFF]]
+ ;
+   %B = getelementptr inbounds [42 x i16], ptr addrspace(1) @Arr_as1, i64 0, i64 %A
+diff --git a/llvm/test/Transforms/InstCombine/vec_demanded_elts-inseltpoison.ll b/llvm/test/Transforms/InstCombine/vec_demanded_elts-inseltpoison.ll
+index d186fe1f5d6f4..fb7e68b178c30 100644
+--- a/llvm/test/Transforms/InstCombine/vec_demanded_elts-inseltpoison.ll
++++ b/llvm/test/Transforms/InstCombine/vec_demanded_elts-inseltpoison.ll
+@@ -563,7 +563,7 @@ define ptr @gep_cvbase_w_s_idx(<2 x ptr> %base, i64 %raw_addr) {
+ 
+ define ptr @gep_cvbase_w_cv_idx(<2 x ptr> %base, i64 %raw_addr) {
+ ; CHECK-LABEL: @gep_cvbase_w_cv_idx(
+-; CHECK-NEXT:    ret ptr getelementptr inbounds nuw (i8, ptr @GLOBAL, i64 4)
++; CHECK-NEXT:    ret ptr getelementptr (i32, ptr @GLOBAL, i64 1)
+ ;
+   %gep = getelementptr i32, <2 x ptr> <ptr @GLOBAL, ptr @GLOBAL>, <2 x i64> <i64 0, i64 1>
+   %ee = extractelement <2 x ptr> %gep, i32 1
+diff --git a/llvm/test/Transforms/InstCombine/vec_demanded_elts.ll b/llvm/test/Transforms/InstCombine/vec_demanded_elts.ll
+index 7e24ddfac5b1b..6d944e1c4160b 100644
+--- a/llvm/test/Transforms/InstCombine/vec_demanded_elts.ll
++++ b/llvm/test/Transforms/InstCombine/vec_demanded_elts.ll
+@@ -566,7 +566,7 @@ define ptr @gep_cvbase_w_s_idx(<2 x ptr> %base, i64 %raw_addr) {
+ 
+ define ptr @gep_cvbase_w_cv_idx(<2 x ptr> %base, i64 %raw_addr) {
+ ; CHECK-LABEL: @gep_cvbase_w_cv_idx(
+-; CHECK-NEXT:    ret ptr getelementptr inbounds nuw (i8, ptr @GLOBAL, i64 4)
++; CHECK-NEXT:    ret ptr getelementptr (i32, ptr @GLOBAL, i64 1)
+ ;
+   %gep = getelementptr i32, <2 x ptr> <ptr @GLOBAL, ptr @GLOBAL>, <2 x i64> <i64 0, i64 1>
+   %ee = extractelement <2 x ptr> %gep, i32 1
+diff --git a/llvm/test/Transforms/InstCombine/vec_extract_var_elt.ll b/llvm/test/Transforms/InstCombine/vec_extract_var_elt.ll
+index d99f7c88d83d5..bec3a28a95d97 100644
+--- a/llvm/test/Transforms/InstCombine/vec_extract_var_elt.ll
++++ b/llvm/test/Transforms/InstCombine/vec_extract_var_elt.ll
+@@ -31,7 +31,7 @@ define void @test_poison(float %b, ptr %p) {
+ define i32 @test_bitcast(i32 %i) {
+ ; CHECK-LABEL: define i32 @test_bitcast(
+ ; CHECK-SAME: i32 [[I:%.*]]) {
+-; CHECK-NEXT:    [[E:%.*]] = extractelement <4 x i32> <i32 1, i32 0, i32 2, i32 0>, i32 [[I]]
++; CHECK-NEXT:    [[E:%.*]] = extractelement <4 x i32> bitcast (<2 x i64> <i64 1, i64 2> to <4 x i32>), i32 [[I]]
+ ; CHECK-NEXT:    ret i32 [[E]]
+ ;
+   %e = extractelement <4 x i32> bitcast (<2 x i64> <i64 1, i64 2> to <4 x i32>), i32 %i
+diff --git a/llvm/test/Transforms/InstSimplify/ConstProp/gep-alias.ll b/llvm/test/Transforms/InstSimplify/ConstProp/gep-alias.ll
+index 097ccfe78e97c..f77a49e90be7b 100644
+--- a/llvm/test/Transforms/InstSimplify/ConstProp/gep-alias.ll
++++ b/llvm/test/Transforms/InstSimplify/ConstProp/gep-alias.ll
+@@ -14,7 +14,7 @@ target triple = "x86_64-unknown-linux-gnu"
+ 
+ define ptr @f() {
+ ; CHECK-LABEL: define ptr @f() {
+-; CHECK-NEXT:    ret ptr getelementptr (i8, ptr @b, i64 8)
++; CHECK-NEXT:    ret ptr getelementptr ([3 x ptr], ptr @b, i64 0, i64 1)
+ ;
+   ret ptr getelementptr ([3 x ptr], ptr @b, i64 0, i64 1)
+ }
+diff --git a/llvm/test/Transforms/InstSimplify/ConstProp/gep.ll b/llvm/test/Transforms/InstSimplify/ConstProp/gep.ll
+index 5b249068286f4..961b8514275f4 100644
+--- a/llvm/test/Transforms/InstSimplify/ConstProp/gep.ll
++++ b/llvm/test/Transforms/InstSimplify/ConstProp/gep.ll
+@@ -11,49 +11,49 @@ target triple = "x86_64-unknown-linux-gnu"
+ 
+ define ptr @f0() {
+ ; CHECK-LABEL: @f0(
+-; CHECK-NEXT:    ret ptr getelementptr inbounds nuw inrange(-16, 8) (i8, ptr @vt, i64 16)
++; CHECK-NEXT:    ret ptr getelementptr (ptr, ptr getelementptr inbounds inrange(-8, 16) ([3 x ptr], ptr @vt, i64 0, i64 1), i64 1)
+ ;
+   ret ptr getelementptr (ptr, ptr getelementptr inbounds inrange(-8, 16) ([3 x ptr], ptr @vt, i64 0, i64 1), i64 1)
+ }
+ 
+ define ptr @f1() {
+ ; CHECK-LABEL: @f1(
+-; CHECK-NEXT:    ret ptr getelementptr inbounds nuw inrange(-8, 0) (i8, ptr @vt, i64 16)
++; CHECK-NEXT:    ret ptr getelementptr (ptr, ptr getelementptr inbounds inrange(0, 8) ([3 x ptr], ptr @vt, i64 0, i64 1), i64 1)
+ ;
+   ret ptr getelementptr (ptr, ptr getelementptr inbounds inrange(0, 8) ([3 x ptr], ptr @vt, i64 0, i64 1), i64 1)
+ }
+ 
+ define ptr @f2() {
+ ; CHECK-LABEL: @f2(
+-; CHECK-NEXT:    ret ptr getelementptr inrange(-24, -16) (i8, ptr @vt, i64 32)
++; CHECK-NEXT:    ret ptr getelementptr (ptr, ptr getelementptr inbounds inrange(0, 8) ([3 x ptr], ptr @vt, i64 0, i64 1), i64 3)
+ ;
+   ret ptr getelementptr (ptr, ptr getelementptr inbounds inrange(0, 8) ([3 x ptr], ptr @vt, i64 0, i64 1), i64 3)
+ }
+ 
+ define ptr @f3() {
+ ; CHECK-LABEL: @f3(
+-; CHECK-NEXT:    ret ptr getelementptr inbounds nuw inrange(-8, 0) (i8, ptr @vt, i64 16)
++; CHECK-NEXT:    ret ptr getelementptr inrange(-16, 8) (ptr, ptr getelementptr inbounds inrange(0, 8) ([3 x ptr], ptr @vt, i64 0, i64 1), i64 1)
+ ;
+   ret ptr getelementptr inrange(-16, 8) (ptr, ptr getelementptr inbounds inrange(0, 8) ([3 x ptr], ptr @vt, i64 0, i64 1), i64 1)
+ }
+ 
+ define ptr @f4() {
+ ; CHECK-LABEL: @f4(
+-; CHECK-NEXT:    ret ptr getelementptr inbounds nuw inrange(-8, 8) (i8, ptr @vt, i64 16)
++; CHECK-NEXT:    ret ptr getelementptr inrange(-16, 8) (ptr, ptr getelementptr inbounds inrange(0, 24) ([3 x ptr], ptr @vt, i64 0, i64 1), i64 1)
+ ;
+   ret ptr getelementptr inrange(-16, 8) (ptr, ptr getelementptr inbounds inrange(0, 24) ([3 x ptr], ptr @vt, i64 0, i64 1), i64 1)
+ }
+ 
+ define ptr @f5() {
+ ; CHECK-LABEL: @f5(
+-; CHECK-NEXT:    ret ptr getelementptr inbounds nuw inrange(0, 0) (i8, ptr @vt, i64 16)
++; CHECK-NEXT:    ret ptr getelementptr inrange(0, 8) (ptr, ptr getelementptr inbounds inrange(0, 8) ([3 x ptr], ptr @vt, i64 0, i64 0), i64 2)
+ ;
+   ret ptr getelementptr inrange(0, 8) (ptr, ptr getelementptr inbounds inrange(0, 8) ([3 x ptr], ptr @vt, i64 0, i64 0), i64 2)
+ }
+ 
+ define ptr @f6() {
+ ; CHECK-LABEL: @f6(
+-; CHECK-NEXT:    ret ptr getelementptr inbounds nuw inrange(-8, 8) (i8, ptr @vt, i64 16)
++; CHECK-NEXT:    ret ptr getelementptr inrange(-8, 8) (ptr, ptr getelementptr inbounds inrange(-8, 16) ([3 x ptr], ptr @vt, i64 0, i64 1), i64 1)
+ ;
+   ret ptr getelementptr inrange(-8, 8) (ptr, ptr getelementptr inbounds inrange(-8, 16) ([3 x ptr], ptr @vt, i64 0, i64 1), i64 1)
+ }
+diff --git a/llvm/test/Transforms/LoopVectorize/X86/pr42674.ll b/llvm/test/Transforms/LoopVectorize/X86/pr42674.ll
+index 44e06950fb186..254d0942f487b 100644
+--- a/llvm/test/Transforms/LoopVectorize/X86/pr42674.ll
++++ b/llvm/test/Transforms/LoopVectorize/X86/pr42674.ll
+@@ -17,7 +17,7 @@ define zeroext i8 @sum() {
+ ; CHECK:       middle.block:
+ ; CHECK-NEXT:    br label [[FOR_END:%.*]]
+ ; CHECK:       for.end:
+-; CHECK-NEXT:    [[WIDE_LOAD2:%.*]] = load <64 x i8>, ptr getelementptr inbounds nuw (i8, ptr @bytes, i64 64), align 1
++; CHECK-NEXT:    [[WIDE_LOAD2:%.*]] = load <64 x i8>, ptr getelementptr inbounds (i8, ptr @bytes, i64 64), align 1
+ ; CHECK-NEXT:    [[WIDE_LOAD:%.*]] = load <64 x i8>, ptr @bytes, align 1
+ ; CHECK-NEXT:    [[BIN_RDX:%.*]] = add <64 x i8> [[WIDE_LOAD2]], [[WIDE_LOAD]]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = call i8 @llvm.vector.reduce.add.v64i8(<64 x i8> [[BIN_RDX]])
+diff --git a/llvm/test/Transforms/PhaseOrdering/SystemZ/sub-xor.ll b/llvm/test/Transforms/PhaseOrdering/SystemZ/sub-xor.ll
+index 474fcc3e64185..0089f0d7e6a68 100644
+--- a/llvm/test/Transforms/PhaseOrdering/SystemZ/sub-xor.ll
++++ b/llvm/test/Transforms/PhaseOrdering/SystemZ/sub-xor.ll
+@@ -21,35 +21,35 @@ define dso_local zeroext i32 @foo(ptr noundef %a) #0 {
+ ; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[INDVARS_IV_NEXT_7:%.*]], %[[FOR_BODY4]] ]
+ ; CHECK-NEXT:    [[SUM_11:%.*]] = phi i32 [ 0, %[[ENTRY]] ], [ [[ADD_7:%.*]], %[[FOR_BODY4]] ]
+ ; CHECK-NEXT:    [[IDX_NEG:%.*]] = sub nsw i64 0, [[INDVARS_IV]]
+-; CHECK-NEXT:    [[ADD_PTR:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @ARR, i64 396), i64 [[IDX_NEG]]
++; CHECK-NEXT:    [[ADD_PTR:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds ([100 x i32], ptr @ARR, i64 0, i64 99), i64 [[IDX_NEG]]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = load i32, ptr [[ADD_PTR]], align 4, !tbaa [[INT_TBAA3:![0-9]+]]
+ ; CHECK-NEXT:    [[ADD:%.*]] = add i32 [[TMP0]], [[SUM_11]]
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT_NEG:%.*]] = xor i64 [[INDVARS_IV]], -1
+-; CHECK-NEXT:    [[ADD_PTR_110:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @ARR, i64 396), i64 [[INDVARS_IV_NEXT_NEG]]
++; CHECK-NEXT:    [[ADD_PTR_110:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds ([100 x i32], ptr @ARR, i64 0, i64 99), i64 [[INDVARS_IV_NEXT_NEG]]
+ ; CHECK-NEXT:    [[TMP1:%.*]] = load i32, ptr [[ADD_PTR_110]], align 4, !tbaa [[INT_TBAA3]]
+ ; CHECK-NEXT:    [[ADD_111:%.*]] = add i32 [[TMP1]], [[ADD]]
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT_112_NEG:%.*]] = sub nuw nsw i64 -2, [[INDVARS_IV]]
+-; CHECK-NEXT:    [[ADD_PTR_217:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @ARR, i64 396), i64 [[INDVARS_IV_NEXT_112_NEG]]
++; CHECK-NEXT:    [[ADD_PTR_217:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds ([100 x i32], ptr @ARR, i64 0, i64 99), i64 [[INDVARS_IV_NEXT_112_NEG]]
+ ; CHECK-NEXT:    [[TMP2:%.*]] = load i32, ptr [[ADD_PTR_217]], align 4, !tbaa [[INT_TBAA3]]
+ ; CHECK-NEXT:    [[ADD_218:%.*]] = add i32 [[TMP2]], [[ADD_111]]
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT_219_NEG:%.*]] = sub nuw nsw i64 -3, [[INDVARS_IV]]
+-; CHECK-NEXT:    [[ADD_PTR_3:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @ARR, i64 396), i64 [[INDVARS_IV_NEXT_219_NEG]]
++; CHECK-NEXT:    [[ADD_PTR_3:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds ([100 x i32], ptr @ARR, i64 0, i64 99), i64 [[INDVARS_IV_NEXT_219_NEG]]
+ ; CHECK-NEXT:    [[TMP3:%.*]] = load i32, ptr [[ADD_PTR_3]], align 4, !tbaa [[INT_TBAA3]]
+ ; CHECK-NEXT:    [[ADD_3:%.*]] = add i32 [[TMP3]], [[ADD_218]]
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT_3_NEG:%.*]] = sub nuw nsw i64 -4, [[INDVARS_IV]]
+-; CHECK-NEXT:    [[ADD_PTR_4:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @ARR, i64 396), i64 [[INDVARS_IV_NEXT_3_NEG]]
++; CHECK-NEXT:    [[ADD_PTR_4:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds ([100 x i32], ptr @ARR, i64 0, i64 99), i64 [[INDVARS_IV_NEXT_3_NEG]]
+ ; CHECK-NEXT:    [[TMP4:%.*]] = load i32, ptr [[ADD_PTR_4]], align 4, !tbaa [[INT_TBAA3]]
+ ; CHECK-NEXT:    [[ADD_4:%.*]] = add i32 [[TMP4]], [[ADD_3]]
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT_4_NEG:%.*]] = sub nuw nsw i64 -5, [[INDVARS_IV]]
+-; CHECK-NEXT:    [[ADD_PTR_5:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @ARR, i64 396), i64 [[INDVARS_IV_NEXT_4_NEG]]
++; CHECK-NEXT:    [[ADD_PTR_5:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds ([100 x i32], ptr @ARR, i64 0, i64 99), i64 [[INDVARS_IV_NEXT_4_NEG]]
+ ; CHECK-NEXT:    [[TMP5:%.*]] = load i32, ptr [[ADD_PTR_5]], align 4, !tbaa [[INT_TBAA3]]
+ ; CHECK-NEXT:    [[ADD_5:%.*]] = add i32 [[TMP5]], [[ADD_4]]
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT_5_NEG:%.*]] = sub nuw nsw i64 -6, [[INDVARS_IV]]
+-; CHECK-NEXT:    [[ADD_PTR_6:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @ARR, i64 396), i64 [[INDVARS_IV_NEXT_5_NEG]]
++; CHECK-NEXT:    [[ADD_PTR_6:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds ([100 x i32], ptr @ARR, i64 0, i64 99), i64 [[INDVARS_IV_NEXT_5_NEG]]
+ ; CHECK-NEXT:    [[TMP6:%.*]] = load i32, ptr [[ADD_PTR_6]], align 4, !tbaa [[INT_TBAA3]]
+ ; CHECK-NEXT:    [[ADD_6:%.*]] = add i32 [[TMP6]], [[ADD_5]]
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT_6_NEG:%.*]] = sub nuw nsw i64 -7, [[INDVARS_IV]]
+-; CHECK-NEXT:    [[ADD_PTR_7:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @ARR, i64 396), i64 [[INDVARS_IV_NEXT_6_NEG]]
++; CHECK-NEXT:    [[ADD_PTR_7:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds ([100 x i32], ptr @ARR, i64 0, i64 99), i64 [[INDVARS_IV_NEXT_6_NEG]]
+ ; CHECK-NEXT:    [[TMP7:%.*]] = load i32, ptr [[ADD_PTR_7]], align 4, !tbaa [[INT_TBAA3]]
+ ; CHECK-NEXT:    [[ADD_7]] = add i32 [[TMP7]], [[ADD_6]]
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT_7]] = add nuw nsw i64 [[INDVARS_IV]], 8
+@@ -59,34 +59,34 @@ define dso_local zeroext i32 @foo(ptr noundef %a) #0 {
+ ; CHECK-NEXT:    [[INDVARS_IV_1:%.*]] = phi i64 [ [[INDVARS_IV_NEXT_1_7:%.*]], %[[FOR_BODY4_1]] ], [ 0, %[[FOR_BODY4]] ]
+ ; CHECK-NEXT:    [[SUM_11_1:%.*]] = phi i32 [ [[ADD_1_7:%.*]], %[[FOR_BODY4_1]] ], [ [[ADD_7]], %[[FOR_BODY4]] ]
+ ; CHECK-NEXT:    [[IDX_NEG_1:%.*]] = sub nsw i64 0, [[INDVARS_IV_1]]
+-; CHECK-NEXT:    [[ADD_PTR_1:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @ARR, i64 396), i64 [[IDX_NEG_1]]
++; CHECK-NEXT:    [[ADD_PTR_1:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds ([100 x i32], ptr @ARR, i64 0, i64 99), i64 [[IDX_NEG_1]]
+ ; CHECK-NEXT:    [[TMP8:%.*]] = load i32, ptr [[ADD_PTR_1]], align 4, !tbaa [[INT_TBAA3]]
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT_1_NEG:%.*]] = xor i64 [[INDVARS_IV_1]], -1
+-; CHECK-NEXT:    [[ADD_PTR_1_1:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @ARR, i64 396), i64 [[INDVARS_IV_NEXT_1_NEG]]
++; CHECK-NEXT:    [[ADD_PTR_1_1:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds ([100 x i32], ptr @ARR, i64 0, i64 99), i64 [[INDVARS_IV_NEXT_1_NEG]]
+ ; CHECK-NEXT:    [[TMP9:%.*]] = load i32, ptr [[ADD_PTR_1_1]], align 4, !tbaa [[INT_TBAA3]]
+ ; CHECK-NEXT:    [[TMP10:%.*]] = add i32 [[TMP8]], [[TMP9]]
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT_1_1_NEG:%.*]] = sub nuw nsw i64 -2, [[INDVARS_IV_1]]
+-; CHECK-NEXT:    [[ADD_PTR_1_2:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @ARR, i64 396), i64 [[INDVARS_IV_NEXT_1_1_NEG]]
++; CHECK-NEXT:    [[ADD_PTR_1_2:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds ([100 x i32], ptr @ARR, i64 0, i64 99), i64 [[INDVARS_IV_NEXT_1_1_NEG]]
+ ; CHECK-NEXT:    [[TMP11:%.*]] = load i32, ptr [[ADD_PTR_1_2]], align 4, !tbaa [[INT_TBAA3]]
+ ; CHECK-NEXT:    [[TMP12:%.*]] = add i32 [[TMP10]], [[TMP11]]
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT_1_2_NEG:%.*]] = sub nuw nsw i64 -3, [[INDVARS_IV_1]]
+-; CHECK-NEXT:    [[ADD_PTR_1_3:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @ARR, i64 396), i64 [[INDVARS_IV_NEXT_1_2_NEG]]
++; CHECK-NEXT:    [[ADD_PTR_1_3:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds ([100 x i32], ptr @ARR, i64 0, i64 99), i64 [[INDVARS_IV_NEXT_1_2_NEG]]
+ ; CHECK-NEXT:    [[TMP13:%.*]] = load i32, ptr [[ADD_PTR_1_3]], align 4, !tbaa [[INT_TBAA3]]
+ ; CHECK-NEXT:    [[TMP14:%.*]] = add i32 [[TMP12]], [[TMP13]]
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT_1_3_NEG:%.*]] = sub nuw nsw i64 -4, [[INDVARS_IV_1]]
+-; CHECK-NEXT:    [[ADD_PTR_1_4:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @ARR, i64 396), i64 [[INDVARS_IV_NEXT_1_3_NEG]]
++; CHECK-NEXT:    [[ADD_PTR_1_4:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds ([100 x i32], ptr @ARR, i64 0, i64 99), i64 [[INDVARS_IV_NEXT_1_3_NEG]]
+ ; CHECK-NEXT:    [[TMP15:%.*]] = load i32, ptr [[ADD_PTR_1_4]], align 4, !tbaa [[INT_TBAA3]]
+ ; CHECK-NEXT:    [[TMP16:%.*]] = add i32 [[TMP14]], [[TMP15]]
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT_1_4_NEG:%.*]] = sub nuw nsw i64 -5, [[INDVARS_IV_1]]
+-; CHECK-NEXT:    [[ADD_PTR_1_5:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @ARR, i64 396), i64 [[INDVARS_IV_NEXT_1_4_NEG]]
++; CHECK-NEXT:    [[ADD_PTR_1_5:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds ([100 x i32], ptr @ARR, i64 0, i64 99), i64 [[INDVARS_IV_NEXT_1_4_NEG]]
+ ; CHECK-NEXT:    [[TMP17:%.*]] = load i32, ptr [[ADD_PTR_1_5]], align 4, !tbaa [[INT_TBAA3]]
+ ; CHECK-NEXT:    [[TMP18:%.*]] = add i32 [[TMP16]], [[TMP17]]
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT_1_5_NEG:%.*]] = sub nuw nsw i64 -6, [[INDVARS_IV_1]]
+-; CHECK-NEXT:    [[ADD_PTR_1_6:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @ARR, i64 396), i64 [[INDVARS_IV_NEXT_1_5_NEG]]
++; CHECK-NEXT:    [[ADD_PTR_1_6:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds ([100 x i32], ptr @ARR, i64 0, i64 99), i64 [[INDVARS_IV_NEXT_1_5_NEG]]
+ ; CHECK-NEXT:    [[TMP19:%.*]] = load i32, ptr [[ADD_PTR_1_6]], align 4, !tbaa [[INT_TBAA3]]
+ ; CHECK-NEXT:    [[TMP20:%.*]] = add i32 [[TMP18]], [[TMP19]]
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT_1_6_NEG:%.*]] = sub nuw nsw i64 -7, [[INDVARS_IV_1]]
+-; CHECK-NEXT:    [[ADD_PTR_1_7:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @ARR, i64 396), i64 [[INDVARS_IV_NEXT_1_6_NEG]]
++; CHECK-NEXT:    [[ADD_PTR_1_7:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds ([100 x i32], ptr @ARR, i64 0, i64 99), i64 [[INDVARS_IV_NEXT_1_6_NEG]]
+ ; CHECK-NEXT:    [[TMP21:%.*]] = load i32, ptr [[ADD_PTR_1_7]], align 4, !tbaa [[INT_TBAA3]]
+ ; CHECK-NEXT:    [[TMP22:%.*]] = add i32 [[TMP20]], [[TMP21]]
+ ; CHECK-NEXT:    [[TMP23:%.*]] = shl i32 [[TMP22]], 1
+@@ -98,42 +98,42 @@ define dso_local zeroext i32 @foo(ptr noundef %a) #0 {
+ ; CHECK-NEXT:    [[INDVARS_IV_2:%.*]] = phi i64 [ [[INDVARS_IV_NEXT_2_7:%.*]], %[[FOR_BODY4_2]] ], [ 0, %[[FOR_BODY4_1]] ]
+ ; CHECK-NEXT:    [[SUM_11_2:%.*]] = phi i32 [ [[ADD_2_7:%.*]], %[[FOR_BODY4_2]] ], [ [[ADD_1_7]], %[[FOR_BODY4_1]] ]
+ ; CHECK-NEXT:    [[IDX_NEG_2:%.*]] = sub nsw i64 0, [[INDVARS_IV_2]]
+-; CHECK-NEXT:    [[ADD_PTR_2:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @ARR, i64 396), i64 [[IDX_NEG_2]]
++; CHECK-NEXT:    [[ADD_PTR_2:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds ([100 x i32], ptr @ARR, i64 0, i64 99), i64 [[IDX_NEG_2]]
+ ; CHECK-NEXT:    [[TMP24:%.*]] = load i32, ptr [[ADD_PTR_2]], align 4, !tbaa [[INT_TBAA3]]
+ ; CHECK-NEXT:    [[MUL_2:%.*]] = mul i32 [[TMP24]], 3
+ ; CHECK-NEXT:    [[ADD_2:%.*]] = add i32 [[MUL_2]], [[SUM_11_2]]
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT_2_NEG:%.*]] = xor i64 [[INDVARS_IV_2]], -1
+-; CHECK-NEXT:    [[ADD_PTR_2_1:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @ARR, i64 396), i64 [[INDVARS_IV_NEXT_2_NEG]]
++; CHECK-NEXT:    [[ADD_PTR_2_1:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds ([100 x i32], ptr @ARR, i64 0, i64 99), i64 [[INDVARS_IV_NEXT_2_NEG]]
+ ; CHECK-NEXT:    [[TMP25:%.*]] = load i32, ptr [[ADD_PTR_2_1]], align 4, !tbaa [[INT_TBAA3]]
+ ; CHECK-NEXT:    [[MUL_2_1:%.*]] = mul i32 [[TMP25]], 3
+ ; CHECK-NEXT:    [[ADD_2_1:%.*]] = add i32 [[MUL_2_1]], [[ADD_2]]
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT_2_1_NEG:%.*]] = sub nuw nsw i64 -2, [[INDVARS_IV_2]]
+-; CHECK-NEXT:    [[ADD_PTR_2_2:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @ARR, i64 396), i64 [[INDVARS_IV_NEXT_2_1_NEG]]
++; CHECK-NEXT:    [[ADD_PTR_2_2:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds ([100 x i32], ptr @ARR, i64 0, i64 99), i64 [[INDVARS_IV_NEXT_2_1_NEG]]
+ ; CHECK-NEXT:    [[TMP26:%.*]] = load i32, ptr [[ADD_PTR_2_2]], align 4, !tbaa [[INT_TBAA3]]
+ ; CHECK-NEXT:    [[MUL_2_2:%.*]] = mul i32 [[TMP26]], 3
+ ; CHECK-NEXT:    [[ADD_2_2:%.*]] = add i32 [[MUL_2_2]], [[ADD_2_1]]
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT_2_2_NEG:%.*]] = sub nuw nsw i64 -3, [[INDVARS_IV_2]]
+-; CHECK-NEXT:    [[ADD_PTR_2_3:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @ARR, i64 396), i64 [[INDVARS_IV_NEXT_2_2_NEG]]
++; CHECK-NEXT:    [[ADD_PTR_2_3:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds ([100 x i32], ptr @ARR, i64 0, i64 99), i64 [[INDVARS_IV_NEXT_2_2_NEG]]
+ ; CHECK-NEXT:    [[TMP27:%.*]] = load i32, ptr [[ADD_PTR_2_3]], align 4, !tbaa [[INT_TBAA3]]
+ ; CHECK-NEXT:    [[MUL_2_3:%.*]] = mul i32 [[TMP27]], 3
+ ; CHECK-NEXT:    [[ADD_2_3:%.*]] = add i32 [[MUL_2_3]], [[ADD_2_2]]
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT_2_3_NEG:%.*]] = sub nuw nsw i64 -4, [[INDVARS_IV_2]]
+-; CHECK-NEXT:    [[ADD_PTR_2_4:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @ARR, i64 396), i64 [[INDVARS_IV_NEXT_2_3_NEG]]
++; CHECK-NEXT:    [[ADD_PTR_2_4:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds ([100 x i32], ptr @ARR, i64 0, i64 99), i64 [[INDVARS_IV_NEXT_2_3_NEG]]
+ ; CHECK-NEXT:    [[TMP28:%.*]] = load i32, ptr [[ADD_PTR_2_4]], align 4, !tbaa [[INT_TBAA3]]
+ ; CHECK-NEXT:    [[MUL_2_4:%.*]] = mul i32 [[TMP28]], 3
+ ; CHECK-NEXT:    [[ADD_2_4:%.*]] = add i32 [[MUL_2_4]], [[ADD_2_3]]
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT_2_4_NEG:%.*]] = sub nuw nsw i64 -5, [[INDVARS_IV_2]]
+-; CHECK-NEXT:    [[ADD_PTR_2_5:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @ARR, i64 396), i64 [[INDVARS_IV_NEXT_2_4_NEG]]
++; CHECK-NEXT:    [[ADD_PTR_2_5:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds ([100 x i32], ptr @ARR, i64 0, i64 99), i64 [[INDVARS_IV_NEXT_2_4_NEG]]
+ ; CHECK-NEXT:    [[TMP29:%.*]] = load i32, ptr [[ADD_PTR_2_5]], align 4, !tbaa [[INT_TBAA3]]
+ ; CHECK-NEXT:    [[MUL_2_5:%.*]] = mul i32 [[TMP29]], 3
+ ; CHECK-NEXT:    [[ADD_2_5:%.*]] = add i32 [[MUL_2_5]], [[ADD_2_4]]
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT_2_5_NEG:%.*]] = sub nuw nsw i64 -6, [[INDVARS_IV_2]]
+-; CHECK-NEXT:    [[ADD_PTR_2_6:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @ARR, i64 396), i64 [[INDVARS_IV_NEXT_2_5_NEG]]
++; CHECK-NEXT:    [[ADD_PTR_2_6:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds ([100 x i32], ptr @ARR, i64 0, i64 99), i64 [[INDVARS_IV_NEXT_2_5_NEG]]
+ ; CHECK-NEXT:    [[TMP30:%.*]] = load i32, ptr [[ADD_PTR_2_6]], align 4, !tbaa [[INT_TBAA3]]
+ ; CHECK-NEXT:    [[MUL_2_6:%.*]] = mul i32 [[TMP30]], 3
+ ; CHECK-NEXT:    [[ADD_2_6:%.*]] = add i32 [[MUL_2_6]], [[ADD_2_5]]
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT_2_6_NEG:%.*]] = sub nuw nsw i64 -7, [[INDVARS_IV_2]]
+-; CHECK-NEXT:    [[ADD_PTR_2_7:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @ARR, i64 396), i64 [[INDVARS_IV_NEXT_2_6_NEG]]
++; CHECK-NEXT:    [[ADD_PTR_2_7:%.*]] = getelementptr inbounds [4 x i8], ptr getelementptr inbounds ([100 x i32], ptr @ARR, i64 0, i64 99), i64 [[INDVARS_IV_NEXT_2_6_NEG]]
+ ; CHECK-NEXT:    [[TMP31:%.*]] = load i32, ptr [[ADD_PTR_2_7]], align 4, !tbaa [[INT_TBAA3]]
+ ; CHECK-NEXT:    [[MUL_2_7:%.*]] = mul i32 [[TMP31]], 3
+ ; CHECK-NEXT:    [[ADD_2_7]] = add i32 [[MUL_2_7]], [[ADD_2_6]]

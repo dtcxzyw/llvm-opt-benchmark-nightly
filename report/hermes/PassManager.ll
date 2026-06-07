@@ -122,7 +122,7 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNSt10unique_ptrIN6hermes10ModulePassESt14default_deleteIS1_EED2Ev.exit: ; preds = %bb.b, %bb.a
   %.sink35 = phi i32 [ 1, %bb.a ], [ 0, %bb.b ]
-  %.sink30 = phi ptr [ getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN6hermes12_GLOBAL__N_110DumpModuleE, i64 16), %bb.a ], [ getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN6hermes12_GLOBAL__N_112DumpFunctionE, i64 16), %bb.b ]
+  %.sink30 = phi ptr [ getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN6hermes12_GLOBAL__N_110DumpModuleE, i32 0, i32 0, i32 2), %bb.a ], [ getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN6hermes12_GLOBAL__N_112DumpFunctionE, i32 0, i32 0, i32 2), %bb.b ]
   store ptr null, ptr %2, align 8, !tbaa !14
   %i.f = load ptr, ptr %1, align 8, !tbaa !28, !nonnull !33, !align !34
   %i.g = tail call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh4dbgsEv() #14
@@ -244,7 +244,7 @@ bb.e:                                             ; preds = %bb.d
 
 _ZNSt10unique_ptrIN6hermes4PassESt14default_deleteIS1_EED2Ev.exit: ; preds = %bb.d, %bb.c
   %.sink35.i = phi i32 [ 1, %bb.c ], [ 0, %bb.d ]
-  %.sink30.i = phi ptr [ getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN6hermes12_GLOBAL__N_110DumpModuleE, i64 16), %bb.c ], [ getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN6hermes12_GLOBAL__N_112DumpFunctionE, i64 16), %bb.d ]
+  %.sink30.i = phi ptr [ getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN6hermes12_GLOBAL__N_110DumpModuleE, i32 0, i32 0, i32 2), %bb.c ], [ getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN6hermes12_GLOBAL__N_112DumpFunctionE, i32 0, i32 0, i32 2), %bb.d ]
   %i.ac = load ptr, ptr %0, align 8, !tbaa !28, !noalias !51, !nonnull !33, !align !34
   %i.ad = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh4dbgsEv() #14, !noalias !51
   %i.ae = call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #17, !noalias !51 ; 8 uses
@@ -570,7 +570,7 @@ declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #7
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define internal void @_ZN6hermes12_GLOBAL__N_110DumpModuleD2Ev(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(56) initializes((0, 8)) %0) unnamed_addr #8 align 2 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN6hermes12_GLOBAL__N_110DumpModuleE, i64 16), ptr %0, align 8, !tbaa !16
+  store ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN6hermes12_GLOBAL__N_110DumpModuleE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !16
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !111  ; 3 uses
   %.not.i = icmp eq ptr %i.b, null
@@ -590,7 +590,7 @@ _ZNSt10unique_ptrIN6hermes10ModulePassESt14default_deleteIS1_EED2Ev.exit: ; pred
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define internal void @_ZN6hermes12_GLOBAL__N_110DumpModuleD0Ev(ptr noundef nonnull align 8 dereferenceable(56) initializes((0, 8)) %0) unnamed_addr #8 align 2 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN6hermes12_GLOBAL__N_110DumpModuleE, i64 16), ptr %0, align 8, !tbaa !16
+  store ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN6hermes12_GLOBAL__N_110DumpModuleE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !16
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !111  ; 3 uses
   %.not.i.i = icmp eq ptr %i.b, null
@@ -850,7 +850,7 @@ declare noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostream5w
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define internal void @_ZN6hermes12_GLOBAL__N_112DumpFunctionD2Ev(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(56) initializes((0, 8)) %0) unnamed_addr #8 align 2 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN6hermes12_GLOBAL__N_112DumpFunctionE, i64 16), ptr %0, align 8, !tbaa !16
+  store ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN6hermes12_GLOBAL__N_112DumpFunctionE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !16
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !130  ; 3 uses
   %.not.i = icmp eq ptr %i.b, null
@@ -870,7 +870,7 @@ _ZNSt10unique_ptrIN6hermes12FunctionPassESt14default_deleteIS1_EED2Ev.exit: ; pr
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define internal void @_ZN6hermes12_GLOBAL__N_112DumpFunctionD0Ev(ptr noundef nonnull align 8 dereferenceable(56) initializes((0, 8)) %0) unnamed_addr #8 align 2 {
 bb.a:
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN6hermes12_GLOBAL__N_112DumpFunctionE, i64 16), ptr %0, align 8, !tbaa !16
+  store ptr getelementptr inbounds inrange(-16, 24) ({ [5 x ptr] }, ptr @_ZTVN6hermes12_GLOBAL__N_112DumpFunctionE, i32 0, i32 0, i32 2), ptr %0, align 8, !tbaa !16
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !130  ; 3 uses
   %.not.i.i = icmp eq ptr %i.b, null

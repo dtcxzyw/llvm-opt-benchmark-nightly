@@ -201,40 +201,40 @@ bb.p:                                             ; preds = %bb.o, %.lr.ph
   %i.ar = add i32 %i.aq, 1                        ; 3 uses
   store i32 %i.ar, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 48), align 4, !tbaa !5
   %.sroa.0.0.copyload.i = load i32, ptr @sqlite3Prng, align 4 ; 2 uses
-  %.sroa.6.0.copyload.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 4), align 4 ; 2 uses
-  %.sroa.9.0.copyload.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 8), align 4 ; 2 uses
-  %.sroa.12.0.copyload.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 12), align 4 ; 2 uses
-  %.sroa.15.0.copyload.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 16), align 4 ; 2 uses
-  %.sroa.18.0.copyload.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 20), align 4 ; 2 uses
-  %.sroa.21.0.copyload.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 24), align 4 ; 2 uses
-  %.sroa.24.0.copyload.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 28), align 4 ; 2 uses
-  %.sroa.27.0.copyload.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 32), align 4 ; 2 uses
-  %.sroa.30.0.copyload.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 36), align 4 ; 2 uses
-  %.sroa.33.0.copyload.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 40), align 4 ; 2 uses
-  %.sroa.36.0.copyload.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 44), align 4 ; 2 uses
-  %.sroa.42.0.copyload.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 52), align 4 ; 2 uses
-  %.sroa.45.0.copyload.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 56), align 4 ; 2 uses
-  %.sroa.48.0.copyload.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 60), align 4 ; 2 uses
+  %.sroa.6.0.copyload.i = load i32, ptr getelementptr inbounds (i8, ptr @sqlite3Prng, i64 4), align 4
+  %.sroa.9.0.copyload.i = load i32, ptr getelementptr inbounds (i8, ptr @sqlite3Prng, i64 8), align 4
+  %.sroa.12.0.copyload.i = load i32, ptr getelementptr inbounds (i8, ptr @sqlite3Prng, i64 12), align 4
+  %.sroa.15.0.copyload.i = load i32, ptr getelementptr inbounds (i8, ptr @sqlite3Prng, i64 16), align 4
+  %.sroa.18.0.copyload.i = load i32, ptr getelementptr inbounds (i8, ptr @sqlite3Prng, i64 20), align 4
+  %.sroa.21.0.copyload.i = load i32, ptr getelementptr inbounds (i8, ptr @sqlite3Prng, i64 24), align 4
+  %.sroa.24.0.copyload.i = load i32, ptr getelementptr inbounds (i8, ptr @sqlite3Prng, i64 28), align 4
+  %.sroa.27.0.copyload.i = load i32, ptr getelementptr inbounds (i8, ptr @sqlite3Prng, i64 32), align 4
+  %.sroa.30.0.copyload.i = load i32, ptr getelementptr inbounds (i8, ptr @sqlite3Prng, i64 36), align 4
+  %.sroa.33.0.copyload.i = load i32, ptr getelementptr inbounds (i8, ptr @sqlite3Prng, i64 40), align 4
+  %.sroa.36.0.copyload.i = load i32, ptr getelementptr inbounds (i8, ptr @sqlite3Prng, i64 44), align 4
+  %.sroa.42.0.copyload.i = load i32, ptr getelementptr inbounds (i8, ptr @sqlite3Prng, i64 52), align 4
+  %.sroa.45.0.copyload.i = load i32, ptr getelementptr inbounds (i8, ptr @sqlite3Prng, i64 56), align 4
+  %.sroa.48.0.copyload.i = load i32, ptr getelementptr inbounds (i8, ptr @sqlite3Prng, i64 60), align 4
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.q, %bb.p
   %.031.i = phi i32 [ 0, %bb.p ], [ %i.fa, %bb.q ]
   %i.as = phi i32 [ %.sroa.15.0.copyload.i, %bb.p ], [ %i.ez, %bb.q ] ; 2 uses
   %i.at = phi i32 [ %.sroa.0.0.copyload.i, %bb.p ], [ %i.dk, %bb.q ]
-  %i.au = phi i32 [ %i.ar, %bb.p ], [ %i.dy, %bb.q ]
-  %i.av = phi i32 [ %.sroa.27.0.copyload.i, %bb.p ], [ %i.el, %bb.q ]
+  %i.au = phi i32 [ %i.ar, %bb.p ], [ %i.ek, %bb.q ]
+  %i.av = phi i32 [ %.sroa.27.0.copyload.i, %bb.p ], [ %i.er, %bb.q ]
   %i.aw = phi i32 [ %.sroa.18.0.copyload.i, %bb.p ], [ %i.dp, %bb.q ] ; 2 uses
-  %i.ax = phi i32 [ %.sroa.6.0.copyload.i, %bb.p ], [ %i.dw, %bb.q ]
-  %i.ay = phi i32 [ %.sroa.42.0.copyload.i, %bb.p ], [ %i.ek, %bb.q ]
+  %i.ax = phi i32 [ %.sroa.6.0.copyload.i, %bb.p ], [ %i.ei, %bb.q ]
+  %i.ay = phi i32 [ %.sroa.42.0.copyload.i, %bb.p ], [ %i.eq, %bb.q ]
   %i.az = phi i32 [ %.sroa.30.0.copyload.i, %bb.p ], [ %i.ex, %bb.q ]
-  %i.ba = phi i32 [ %.sroa.21.0.copyload.i, %bb.p ], [ %i.eb, %bb.q ] ; 2 uses
-  %i.bb = phi i32 [ %.sroa.9.0.copyload.i, %bb.p ], [ %i.ei, %bb.q ]
+  %i.ba = phi i32 [ %.sroa.21.0.copyload.i, %bb.p ], [ %i.en, %bb.q ] ; 2 uses
+  %i.bb = phi i32 [ %.sroa.9.0.copyload.i, %bb.p ], [ %i.eo, %bb.q ]
   %i.bc = phi i32 [ %.sroa.45.0.copyload.i, %bb.p ], [ %i.ew, %bb.q ]
   %i.bd = phi i32 [ %.sroa.33.0.copyload.i, %bb.p ], [ %i.dn, %bb.q ]
-  %i.be = phi i32 [ %.sroa.24.0.copyload.i, %bb.p ], [ %i.en, %bb.q ] ; 2 uses
+  %i.be = phi i32 [ %.sroa.24.0.copyload.i, %bb.p ], [ %i.et, %bb.q ] ; 2 uses
   %i.bf = phi i32 [ %.sroa.12.0.copyload.i, %bb.p ], [ %i.eu, %bb.q ]
   %i.bg = phi i32 [ %.sroa.48.0.copyload.i, %bb.p ], [ %i.dm, %bb.q ]
-  %i.bh = phi i32 [ %.sroa.36.0.copyload.i, %bb.p ], [ %i.dz, %bb.q ]
+  %i.bh = phi i32 [ %.sroa.36.0.copyload.i, %bb.p ], [ %i.el, %bb.q ]
   %i.bi = add i32 %i.at, %i.as                    ; 2 uses
   %i.bj = xor i32 %i.au, %i.bi                    ; 2 uses
   %i.bk = tail call i32 @llvm.fshl.i32(i32 %i.bj, i32 %i.bj, i32 16) ; 2 uses
@@ -301,35 +301,35 @@ bb.q:                                             ; preds = %bb.q, %bb.p
   %i.dt = add i32 %i.ds, %i.db                    ; 2 uses
   %i.du = xor i32 %i.dt, %i.cr                    ; 2 uses
   %i.dv = tail call i32 @llvm.fshl.i32(i32 %i.du, i32 %i.du, i32 12) ; 2 uses
-  %i.dw = add i32 %i.dv, %i.dq                    ; 3 uses
-  %i.dx = xor i32 %i.dw, %i.ds                    ; 2 uses
-  %i.dy = tail call i32 @llvm.fshl.i32(i32 %i.dx, i32 %i.dx, i32 8) ; 3 uses
-  %i.dz = add i32 %i.dy, %i.dt                    ; 3 uses
-  %i.ea = xor i32 %i.dz, %i.dv                    ; 2 uses
-  %i.eb = tail call i32 @llvm.fshl.i32(i32 %i.ea, i32 %i.ea, i32 7) ; 2 uses
-  %i.ec = add i32 %i.dd, %i.cm                    ; 2 uses
-  %i.ed = xor i32 %i.ec, %i.cc                    ; 2 uses
+  %i.dw = add i32 %i.dd, %i.cm                    ; 2 uses
+  %i.dx = xor i32 %i.dw, %i.cc                    ; 2 uses
+  %i.dy = tail call i32 @llvm.fshl.i32(i32 %i.dx, i32 %i.dx, i32 16) ; 2 uses
+  %i.dz = add i32 %i.dy, %i.br                    ; 2 uses
+  %i.ea = xor i32 %i.dz, %i.dd                    ; 2 uses
+  %i.eb = tail call i32 @llvm.fshl.i32(i32 %i.ea, i32 %i.ea, i32 12) ; 2 uses
+  %i.ec = add i32 %i.cy, %i.bt                    ; 2 uses
+  %i.ed = xor i32 %i.ec, %i.co                    ; 2 uses
   %i.ee = tail call i32 @llvm.fshl.i32(i32 %i.ed, i32 %i.ed, i32 16) ; 2 uses
-  %i.ef = add i32 %i.ee, %i.br                    ; 2 uses
-  %i.eg = xor i32 %i.ef, %i.dd                    ; 2 uses
+  %i.ef = add i32 %i.ee, %i.cd                    ; 2 uses
+  %i.eg = xor i32 %i.ef, %i.bt                    ; 2 uses
   %i.eh = tail call i32 @llvm.fshl.i32(i32 %i.eg, i32 %i.eg, i32 12) ; 2 uses
-  %i.ei = add i32 %i.eh, %i.ec                    ; 3 uses
-  %i.ej = xor i32 %i.ei, %i.ee                    ; 2 uses
+  %i.ei = add i32 %i.dv, %i.dq                    ; 3 uses
+  %i.ej = xor i32 %i.ei, %i.ds                    ; 2 uses
   %i.ek = tail call i32 @llvm.fshl.i32(i32 %i.ej, i32 %i.ej, i32 8) ; 3 uses
-  %i.el = add i32 %i.ek, %i.ef                    ; 3 uses
-  %i.em = xor i32 %i.el, %i.eh                    ; 2 uses
+  %i.el = add i32 %i.ek, %i.dt                    ; 3 uses
+  %i.em = xor i32 %i.el, %i.dv                    ; 2 uses
   %i.en = tail call i32 @llvm.fshl.i32(i32 %i.em, i32 %i.em, i32 7) ; 2 uses
-  %i.eo = add i32 %i.cy, %i.bt                    ; 2 uses
-  %i.ep = xor i32 %i.eo, %i.co                    ; 2 uses
-  %i.eq = tail call i32 @llvm.fshl.i32(i32 %i.ep, i32 %i.ep, i32 16) ; 2 uses
-  %i.er = add i32 %i.eq, %i.cd                    ; 2 uses
-  %i.es = xor i32 %i.er, %i.bt                    ; 2 uses
-  %i.et = tail call i32 @llvm.fshl.i32(i32 %i.es, i32 %i.es, i32 12) ; 2 uses
-  %i.eu = add i32 %i.et, %i.eo                    ; 3 uses
-  %i.ev = xor i32 %i.eu, %i.eq                    ; 2 uses
+  %i.eo = add i32 %i.eb, %i.dw                    ; 3 uses
+  %i.ep = xor i32 %i.eo, %i.dy                    ; 2 uses
+  %i.eq = tail call i32 @llvm.fshl.i32(i32 %i.ep, i32 %i.ep, i32 8) ; 3 uses
+  %i.er = add i32 %i.eq, %i.dz                    ; 3 uses
+  %i.es = xor i32 %i.er, %i.eb                    ; 2 uses
+  %i.et = tail call i32 @llvm.fshl.i32(i32 %i.es, i32 %i.es, i32 7) ; 2 uses
+  %i.eu = add i32 %i.eh, %i.ec                    ; 3 uses
+  %i.ev = xor i32 %i.eu, %i.ee                    ; 2 uses
   %i.ew = tail call i32 @llvm.fshl.i32(i32 %i.ev, i32 %i.ev, i32 8) ; 3 uses
-  %i.ex = add i32 %i.ew, %i.er                    ; 3 uses
-  %i.ey = xor i32 %i.ex, %i.et                    ; 2 uses
+  %i.ex = add i32 %i.ew, %i.ef                    ; 3 uses
+  %i.ey = xor i32 %i.ex, %i.eh                    ; 2 uses
   %i.ez = tail call i32 @llvm.fshl.i32(i32 %i.ey, i32 %i.ey, i32 7) ; 2 uses
   %i.fa = add nuw nsw i32 %.031.i, 1              ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.fa, 10
@@ -338,35 +338,39 @@ bb.q:                                             ; preds = %bb.q, %bb.p
 chacha_block.exit:                                ; preds = %bb.q
   %i.fb = add i32 %i.dk, %.sroa.0.0.copyload.i
   store i32 %i.fb, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 64), align 4, !tbaa !5
-  %2 = add i32 %i.dw, %.sroa.6.0.copyload.i
-  store i32 %2, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 68), align 4, !tbaa !5
-  %3 = add i32 %i.ei, %.sroa.9.0.copyload.i
-  store i32 %3, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 72), align 4, !tbaa !5
-  %4 = add i32 %i.eu, %.sroa.12.0.copyload.i
-  store i32 %4, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 76), align 4, !tbaa !5
-  %5 = add i32 %i.ez, %.sroa.15.0.copyload.i
-  store i32 %5, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 80), align 4, !tbaa !5
-  %6 = add i32 %i.dp, %.sroa.18.0.copyload.i
-  store i32 %6, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 84), align 4, !tbaa !5
-  %7 = add i32 %i.eb, %.sroa.21.0.copyload.i
-  store i32 %7, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 88), align 4, !tbaa !5
-  %8 = add i32 %i.en, %.sroa.24.0.copyload.i
-  store i32 %8, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 92), align 4, !tbaa !5
-  %i.fc = add i32 %i.el, %.sroa.27.0.copyload.i
-  store i32 %i.fc, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 96), align 4, !tbaa !5
-  %i.fd = add i32 %i.ex, %.sroa.30.0.copyload.i
-  store i32 %i.fd, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 100), align 4, !tbaa !5
-  %i.fe = add i32 %i.dn, %.sroa.33.0.copyload.i
-  store i32 %i.fe, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 104), align 4, !tbaa !5
-  %i.ff = add i32 %i.dz, %.sroa.36.0.copyload.i
-  store i32 %i.ff, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 108), align 4, !tbaa !5
-  %i.fg = add i32 %i.dy, %i.ar
-  store i32 %i.fg, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 112), align 4, !tbaa !5
-  %9 = add i32 %i.ek, %.sroa.42.0.copyload.i
-  store i32 %9, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 116), align 4, !tbaa !5
-  %10 = add i32 %i.ew, %.sroa.45.0.copyload.i
-  store i32 %10, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 120), align 4, !tbaa !5
-  %i.fh = add i32 %i.dm, %.sroa.48.0.copyload.i
+  %2 = load <4 x i32>, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 4), align 4, !tbaa !5
+  %3 = insertelement <4 x i32> poison, i32 %i.ei, i64 0
+  %4 = insertelement <4 x i32> %3, i32 %i.eo, i64 1
+  %5 = insertelement <4 x i32> %4, i32 %i.eu, i64 2
+  %6 = insertelement <4 x i32> %5, i32 %i.ez, i64 3
+  %7 = add <4 x i32> %2, %6
+  store <4 x i32> %7, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 68), align 4, !tbaa !5
+  %8 = load <4 x i32>, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 20), align 4, !tbaa !5
+  %9 = insertelement <4 x i32> poison, i32 %i.dp, i64 0
+  %10 = insertelement <4 x i32> %9, i32 %i.en, i64 1
+  %11 = insertelement <4 x i32> %10, i32 %i.et, i64 2
+  %12 = insertelement <4 x i32> %11, i32 %i.er, i64 3
+  %13 = add <4 x i32> %8, %12
+  store <4 x i32> %13, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 84), align 4, !tbaa !5
+  %14 = load i32, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 36), align 4, !tbaa !5
+  %i.fc = add i32 %14, %i.ex
+  store i32 %i.fc, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 100), align 4, !tbaa !5
+  %15 = load i32, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 40), align 4, !tbaa !5
+  %i.fd = add i32 %15, %i.dn
+  store i32 %i.fd, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 104), align 4, !tbaa !5
+  %16 = load i32, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 44), align 4, !tbaa !5
+  %i.fe = add i32 %16, %i.el
+  store i32 %i.fe, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 108), align 4, !tbaa !5
+  %i.ff = add i32 %i.ek, %i.ar
+  store i32 %i.ff, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 112), align 4, !tbaa !5
+  %17 = load i32, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 52), align 4, !tbaa !5
+  %i.fg = add i32 %17, %i.eq
+  store i32 %i.fg, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 116), align 4, !tbaa !5
+  %18 = load i32, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 56), align 4, !tbaa !5
+  %19 = add i32 %18, %i.ew
+  store i32 %19, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 120), align 4, !tbaa !5
+  %20 = load i32, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 60), align 4, !tbaa !5
+  %i.fh = add i32 %20, %i.dm
   store i32 %i.fh, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 124), align 4, !tbaa !5
   store i8 64, ptr getelementptr inbounds nuw (i8, ptr @sqlite3Prng, i64 128), align 4, !tbaa !402
   %.not23 = icmp sgt i32 %.1, 64
@@ -769,7 +773,7 @@ bb.ho:                                            ; preds = %bb.hn
 
 bb.hp:                                            ; preds = %bb.ho
   %i.amy = zext nneg i8 %i.ho to i64
-  %i.amz = getelementptr inbounds nuw i8, ptr getelementptr inbounds nuw (i8, ptr @sqlite3UpperToLower, i64 215), i64 %i.amy
+  %i.amz = getelementptr inbounds nuw i8, ptr getelementptr (i8, ptr @sqlite3UpperToLower, i64 215), i64 %i.amy
   %i.ana = load i8, ptr %i.amz, align 1, !tbaa !227
   %.not3828 = icmp eq i8 %i.ana, 0
   br i1 %.not3828, label %.critedge, label %.thread4778
@@ -780,13 +784,13 @@ bb.hq:                                            ; preds = %bb.ho
   br i1 %i.anb, label %bb.hr, label %bb.hs
 
 bb.hr:                                            ; preds = %bb.hq
-  %i.and = getelementptr inbounds nuw i8, ptr getelementptr inbounds nuw (i8, ptr @sqlite3UpperToLower, i64 203), i64 %i.anc
+  %i.and = getelementptr inbounds nuw i8, ptr getelementptr (i8, ptr @sqlite3UpperToLower, i64 203), i64 %i.anc
   %i.ane = load i8, ptr %i.and, align 1, !tbaa !227
   %.not3827 = icmp eq i8 %i.ane, 0
   br i1 %.not3827, label %.critedge, label %.thread4778
 
 bb.hs:                                            ; preds = %bb.hq
-  %i.anf = getelementptr inbounds nuw i8, ptr getelementptr inbounds nuw (i8, ptr @sqlite3UpperToLower, i64 209), i64 %i.anc
+  %i.anf = getelementptr inbounds nuw i8, ptr getelementptr (i8, ptr @sqlite3UpperToLower, i64 209), i64 %i.anc
   %i.ang = load i8, ptr %i.anf, align 1, !tbaa !227
   %.not3826 = icmp eq i8 %i.ang, 0
   br i1 %.not3826, label %.critedge, label %.thread4778
@@ -936,7 +940,7 @@ bb.in:                                            ; preds = %bb.ic, %bb.id, %bb.
 
 .thread4768:                                      ; preds = %.thread4758, %bb.hv, %bb.in, %bb.hw, %.thread4758.thread5410
   %.sink8640 = phi i8 [ %i.ho, %bb.hw ], [ %i.aoz, %.thread4758.thread5410 ], [ %.pre7292, %bb.in ], [ %.pre7292, %.thread4758 ], [ %i.ho, %bb.hv ]
-  %.sink8638 = phi ptr [ getelementptr inbounds nuw (i8, ptr @sqlite3UpperToLower, i64 203), %bb.hw ], [ getelementptr inbounds nuw (i8, ptr @sqlite3UpperToLower, i64 215), %.thread4758.thread5410 ], [ getelementptr inbounds nuw (i8, ptr @sqlite3UpperToLower, i64 203), %bb.in ], [ getelementptr inbounds nuw (i8, ptr @sqlite3UpperToLower, i64 209), %.thread4758 ], [ getelementptr inbounds nuw (i8, ptr @sqlite3UpperToLower, i64 209), %bb.hv ]
+  %.sink8638 = phi ptr [ getelementptr (i8, ptr @sqlite3UpperToLower, i64 203), %bb.hw ], [ getelementptr (i8, ptr @sqlite3UpperToLower, i64 215), %.thread4758.thread5410 ], [ getelementptr (i8, ptr @sqlite3UpperToLower, i64 203), %bb.in ], [ getelementptr (i8, ptr @sqlite3UpperToLower, i64 209), %.thread4758 ], [ getelementptr (i8, ptr @sqlite3UpperToLower, i64 209), %bb.hv ]
   %.031414767 = phi i32 [ -1, %bb.hw ], [ %.0314147665414, %.thread4758.thread5410 ], [ %i.aow, %bb.in ], [ 0, %.thread4758 ], [ 0, %bb.hv ] ; 2 uses
   %.231454764 = phi i16 [ %i.amo, %bb.hw ], [ %.2314547655415, %.thread4758.thread5410 ], [ %.13144, %bb.in ], [ %.13144, %.thread4758 ], [ %i.amo, %bb.hv ]
   %.331494762 = phi i16 [ %i.amq, %bb.hw ], [ %.3314947635416, %.thread4758.thread5410 ], [ %.23148, %bb.in ], [ %.23148, %.thread4758 ], [ %i.amq, %bb.hv ]

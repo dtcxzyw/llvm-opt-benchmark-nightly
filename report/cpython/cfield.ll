@@ -108,53 +108,53 @@ target triple = "x86_64-pc-linux-gnu"
 define hidden void @_ctypes_init_fielddesc() local_unnamed_addr #0 {
 bb.a:
   store i64 0, ptr @formattable, align 8
-  store ptr @ffi_type_sint8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 8), align 8, !tbaa !10
-  store ptr @i8_set, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 16), align 8, !tbaa !13
-  store ptr @i8_get, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 24), align 8, !tbaa !13
-  store ptr @i8_set, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 32), align 8, !tbaa !13
-  store ptr @i8_get, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 40), align 8, !tbaa !13
+  store ptr @ffi_type_sint8, ptr getelementptr inbounds (i8, ptr @formattable, i64 8), align 8, !tbaa !10
+  store ptr @i8_set, ptr getelementptr inbounds (i8, ptr @formattable, i64 16), align 8, !tbaa !13
+  store ptr @i8_get, ptr getelementptr inbounds (i8, ptr @formattable, i64 24), align 8, !tbaa !13
+  store ptr @i8_set, ptr getelementptr inbounds (i8, ptr @formattable, i64 32), align 8, !tbaa !13
+  store ptr @i8_get, ptr getelementptr inbounds (i8, ptr @formattable, i64 40), align 8, !tbaa !13
   store i64 0, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 48), align 8
-  store ptr @ffi_type_uint8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 56), align 8, !tbaa !10
-  store ptr @u8_set, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 64), align 8, !tbaa !13
-  store ptr @u8_get, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 72), align 8, !tbaa !13
-  store ptr @u8_set, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 80), align 8, !tbaa !13
-  store ptr @u8_get, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 88), align 8, !tbaa !13
+  store ptr @ffi_type_uint8, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 48), i64 8), align 8, !tbaa !10
+  store ptr @u8_set, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 48), i64 16), align 8, !tbaa !13
+  store ptr @u8_get, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 48), i64 24), align 8, !tbaa !13
+  store ptr @u8_set, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 48), i64 32), align 8, !tbaa !13
+  store ptr @u8_get, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 48), i64 40), align 8, !tbaa !13
   store i64 0, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 96), align 8
-  store ptr @ffi_type_sint16, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 104), align 8, !tbaa !10
-  store ptr @i16_set, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 112), align 8, !tbaa !13
-  store ptr @i16_get, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 120), align 8, !tbaa !13
-  store ptr @i16_set_sw, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 128), align 8, !tbaa !13
-  store ptr @i16_get_sw, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 136), align 8, !tbaa !13
+  store ptr @ffi_type_sint16, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 96), i64 8), align 8, !tbaa !10
+  store ptr @i16_set, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 96), i64 16), align 8, !tbaa !13
+  store ptr @i16_get, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 96), i64 24), align 8, !tbaa !13
+  store ptr @i16_set_sw, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 96), i64 32), align 8, !tbaa !13
+  store ptr @i16_get_sw, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 96), i64 40), align 8, !tbaa !13
   store i64 0, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 144), align 8
-  store ptr @ffi_type_uint16, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 152), align 8, !tbaa !10
-  store ptr @u16_set, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 160), align 8, !tbaa !13
-  store ptr @u16_get, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 168), align 8, !tbaa !13
-  store ptr @u16_set_sw, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 176), align 8, !tbaa !13
-  store ptr @u16_get_sw, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 184), align 8, !tbaa !13
+  store ptr @ffi_type_uint16, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 144), i64 8), align 8, !tbaa !10
+  store ptr @u16_set, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 144), i64 16), align 8, !tbaa !13
+  store ptr @u16_get, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 144), i64 24), align 8, !tbaa !13
+  store ptr @u16_set_sw, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 144), i64 32), align 8, !tbaa !13
+  store ptr @u16_get_sw, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 144), i64 40), align 8, !tbaa !13
   store i64 0, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 192), align 8
-  store ptr @ffi_type_sint32, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 200), align 8, !tbaa !10
-  store ptr @i32_set, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 208), align 8, !tbaa !13
-  store ptr @i32_get, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 216), align 8, !tbaa !13
-  store ptr @i32_set_sw, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 224), align 8, !tbaa !13
-  store ptr @i32_get_sw, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 232), align 8, !tbaa !13
+  store ptr @ffi_type_sint32, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 192), i64 8), align 8, !tbaa !10
+  store ptr @i32_set, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 192), i64 16), align 8, !tbaa !13
+  store ptr @i32_get, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 192), i64 24), align 8, !tbaa !13
+  store ptr @i32_set_sw, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 192), i64 32), align 8, !tbaa !13
+  store ptr @i32_get_sw, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 192), i64 40), align 8, !tbaa !13
   store i64 0, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 240), align 8
-  store ptr @ffi_type_uint32, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 248), align 8, !tbaa !10
-  store ptr @u32_set, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 256), align 8, !tbaa !13
-  store ptr @u32_get, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 264), align 8, !tbaa !13
-  store ptr @u32_set_sw, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 272), align 8, !tbaa !13
-  store ptr @u32_get_sw, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 280), align 8, !tbaa !13
+  store ptr @ffi_type_uint32, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 240), i64 8), align 8, !tbaa !10
+  store ptr @u32_set, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 240), i64 16), align 8, !tbaa !13
+  store ptr @u32_get, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 240), i64 24), align 8, !tbaa !13
+  store ptr @u32_set_sw, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 240), i64 32), align 8, !tbaa !13
+  store ptr @u32_get_sw, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 240), i64 40), align 8, !tbaa !13
   store i64 0, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 288), align 8
-  store ptr @ffi_type_sint64, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 296), align 8, !tbaa !10
-  store ptr @i64_set, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 304), align 8, !tbaa !13
-  store ptr @i64_get, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 312), align 8, !tbaa !13
-  store ptr @i64_set_sw, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 320), align 8, !tbaa !13
-  store ptr @i64_get_sw, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 328), align 8, !tbaa !13
+  store ptr @ffi_type_sint64, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 288), i64 8), align 8, !tbaa !10
+  store ptr @i64_set, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 288), i64 16), align 8, !tbaa !13
+  store ptr @i64_get, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 288), i64 24), align 8, !tbaa !13
+  store ptr @i64_set_sw, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 288), i64 32), align 8, !tbaa !13
+  store ptr @i64_get_sw, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 288), i64 40), align 8, !tbaa !13
   store i64 0, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 336), align 8
-  store ptr @ffi_type_uint64, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 344), align 8, !tbaa !10
-  store ptr @u64_set, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 352), align 8, !tbaa !13
-  store ptr @u64_get, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 360), align 8, !tbaa !13
-  store ptr @u64_set_sw, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 368), align 8, !tbaa !13
-  store ptr @u64_get_sw, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 376), align 8, !tbaa !13
+  store ptr @ffi_type_uint64, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 336), i64 8), align 8, !tbaa !10
+  store ptr @u64_set, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 336), i64 16), align 8, !tbaa !13
+  store ptr @u64_get, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 336), i64 24), align 8, !tbaa !13
+  store ptr @u64_set_sw, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 336), i64 32), align 8, !tbaa !13
+  store ptr @u64_get_sw, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 336), i64 40), align 8, !tbaa !13
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) getelementptr inbounds nuw (i8, ptr @formattable, i64 432), ptr noundef nonnull align 8 dereferenceable(48) @formattable, i64 48, i1 false), !tbaa.struct !14
   store i8 98, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 432), align 8, !tbaa !16
   store ptr @ffi_type_sint8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 440), align 8, !tbaa !19
@@ -184,99 +184,99 @@ bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) getelementptr inbounds nuw (i8, ptr @formattable, i64 1200), ptr noundef nonnull align 8 dereferenceable(48) getelementptr inbounds nuw (i8, ptr @formattable, i64 336), i64 48, i1 false), !tbaa.struct !14
   store i8 81, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1200), align 8, !tbaa !35
   store i8 100, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 576), align 8, !tbaa !15
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds nuw (i8, ptr @formattable, i64 577), i8 0, i64 7, i1 false)
-  store ptr @ffi_type_double, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 584), align 8, !tbaa !10
-  store ptr @d_set, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 592), align 8, !tbaa !13
-  store ptr @d_get, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 600), align 8, !tbaa !13
-  store ptr @d_set_sw, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 608), align 8, !tbaa !13
-  store ptr @d_get_sw, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 616), align 8, !tbaa !13
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 576), i64 1), i8 0, i64 7, i1 false)
+  store ptr @ffi_type_double, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 576), i64 8), align 8, !tbaa !10
+  store ptr @d_set, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 576), i64 16), align 8, !tbaa !13
+  store ptr @d_get, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 576), i64 24), align 8, !tbaa !13
+  store ptr @d_set_sw, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 576), i64 32), align 8, !tbaa !13
+  store ptr @d_get_sw, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 576), i64 40), align 8, !tbaa !13
   store i8 68, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 672), align 8, !tbaa !15
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds nuw (i8, ptr @formattable, i64 673), i8 0, i64 7, i1 false)
-  store ptr @ffi_type_complex_double, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 680), align 8, !tbaa !10
-  store ptr @D_set, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 688), align 8, !tbaa !13
-  store ptr @D_get, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 696), align 8, !tbaa !13
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @formattable, i64 704), i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 672), i64 1), i8 0, i64 7, i1 false)
+  store ptr @ffi_type_complex_double, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 672), i64 8), align 8, !tbaa !10
+  store ptr @D_set, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 672), i64 16), align 8, !tbaa !13
+  store ptr @D_get, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 672), i64 24), align 8, !tbaa !13
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 672), i64 32), i8 0, i64 16, i1 false)
   store i8 70, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 624), align 8, !tbaa !15
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds nuw (i8, ptr @formattable, i64 625), i8 0, i64 7, i1 false)
-  store ptr @ffi_type_complex_float, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 632), align 8, !tbaa !10
-  store ptr @F_set, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 640), align 8, !tbaa !13
-  store ptr @F_get, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 648), align 8, !tbaa !13
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @formattable, i64 656), i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 624), i64 1), i8 0, i64 7, i1 false)
+  store ptr @ffi_type_complex_float, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 624), i64 8), align 8, !tbaa !10
+  store ptr @F_set, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 624), i64 16), align 8, !tbaa !13
+  store ptr @F_get, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 624), i64 24), align 8, !tbaa !13
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 624), i64 32), i8 0, i64 16, i1 false)
   store i8 71, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 720), align 8, !tbaa !15
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds nuw (i8, ptr @formattable, i64 721), i8 0, i64 7, i1 false)
-  store ptr @ffi_type_complex_longdouble, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 728), align 8, !tbaa !10
-  store ptr @G_set, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 736), align 8, !tbaa !13
-  store ptr @G_get, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 744), align 8, !tbaa !13
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @formattable, i64 752), i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 720), i64 1), i8 0, i64 7, i1 false)
+  store ptr @ffi_type_complex_longdouble, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 720), i64 8), align 8, !tbaa !10
+  store ptr @G_set, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 720), i64 16), align 8, !tbaa !13
+  store ptr @G_get, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 720), i64 24), align 8, !tbaa !13
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 720), i64 32), i8 0, i64 16, i1 false)
   store i8 103, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 768), align 8, !tbaa !15
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds nuw (i8, ptr @formattable, i64 769), i8 0, i64 7, i1 false)
-  store ptr @ffi_type_longdouble, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 776), align 8, !tbaa !10
-  store ptr @g_set, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 784), align 8, !tbaa !13
-  store ptr @g_get, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 792), align 8, !tbaa !13
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @formattable, i64 800), i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 768), i64 1), i8 0, i64 7, i1 false)
+  store ptr @ffi_type_longdouble, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 768), i64 8), align 8, !tbaa !10
+  store ptr @g_set, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 768), i64 16), align 8, !tbaa !13
+  store ptr @g_get, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 768), i64 24), align 8, !tbaa !13
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 768), i64 32), i8 0, i64 16, i1 false)
   store i8 102, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 816), align 8, !tbaa !15
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds nuw (i8, ptr @formattable, i64 817), i8 0, i64 7, i1 false)
-  store ptr @ffi_type_float, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 824), align 8, !tbaa !10
-  store ptr @f_set, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 832), align 8, !tbaa !13
-  store ptr @f_get, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 840), align 8, !tbaa !13
-  store ptr @f_set_sw, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 848), align 8, !tbaa !13
-  store ptr @f_get_sw, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 856), align 8, !tbaa !13
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 816), i64 1), i8 0, i64 7, i1 false)
+  store ptr @ffi_type_float, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 816), i64 8), align 8, !tbaa !10
+  store ptr @f_set, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 816), i64 16), align 8, !tbaa !13
+  store ptr @f_get, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 816), i64 24), align 8, !tbaa !13
+  store ptr @f_set_sw, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 816), i64 32), align 8, !tbaa !13
+  store ptr @f_get_sw, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 816), i64 40), align 8, !tbaa !13
   store i8 118, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1536), align 8, !tbaa !15
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds nuw (i8, ptr @formattable, i64 1537), i8 0, i64 7, i1 false)
-  store ptr @ffi_type_sint16, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1544), align 8, !tbaa !10
-  store ptr @v_set, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1552), align 8, !tbaa !13
-  store ptr @v_get, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1560), align 8, !tbaa !13
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @formattable, i64 1568), i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1536), i64 1), i8 0, i64 7, i1 false)
+  store ptr @ffi_type_sint16, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1536), i64 8), align 8, !tbaa !10
+  store ptr @v_set, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1536), i64 16), align 8, !tbaa !13
+  store ptr @v_get, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1536), i64 24), align 8, !tbaa !13
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1536), i64 32), i8 0, i64 16, i1 false)
   %i.a = load ptr, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 8), align 8, !tbaa !36
   store i8 99, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 528), align 8, !tbaa !15
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds nuw (i8, ptr @formattable, i64 529), i8 0, i64 7, i1 false)
-  store ptr %i.a, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 536), align 8, !tbaa !10
-  store ptr @c_set, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 544), align 8, !tbaa !13
-  store ptr @c_get, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 552), align 8, !tbaa !13
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @formattable, i64 560), i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 528), i64 1), i8 0, i64 7, i1 false)
+  store ptr %i.a, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 528), i64 8), align 8, !tbaa !10
+  store ptr @c_set, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 528), i64 16), align 8, !tbaa !13
+  store ptr @c_get, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 528), i64 24), align 8, !tbaa !13
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 528), i64 32), i8 0, i64 16, i1 false)
   %i.b = load ptr, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 200), align 8, !tbaa !36
   store i8 117, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1344), align 8, !tbaa !15
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds nuw (i8, ptr @formattable, i64 1345), i8 0, i64 7, i1 false)
-  store ptr %i.b, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1352), align 8, !tbaa !10
-  store ptr @u_set, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1360), align 8, !tbaa !13
-  store ptr @u_get, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1368), align 8, !tbaa !13
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @formattable, i64 1376), i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1344), i64 1), i8 0, i64 7, i1 false)
+  store ptr %i.b, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1344), i64 8), align 8, !tbaa !10
+  store ptr @u_set, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1344), i64 16), align 8, !tbaa !13
+  store ptr @u_get, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1344), i64 24), align 8, !tbaa !13
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1344), i64 32), i8 0, i64 16, i1 false)
   store i8 115, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 384), align 8, !tbaa !15
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds nuw (i8, ptr @formattable, i64 385), i8 0, i64 7, i1 false)
-  store ptr @ffi_type_pointer, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 392), align 8, !tbaa !10
-  store ptr @s_set, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 400), align 8, !tbaa !13
-  store ptr @s_get, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 408), align 8, !tbaa !13
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @formattable, i64 416), i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 384), i64 1), i8 0, i64 7, i1 false)
+  store ptr @ffi_type_pointer, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 384), i64 8), align 8, !tbaa !10
+  store ptr @s_set, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 384), i64 16), align 8, !tbaa !13
+  store ptr @s_get, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 384), i64 24), align 8, !tbaa !13
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 384), i64 32), i8 0, i64 16, i1 false)
   store i8 80, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1248), align 8, !tbaa !15
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds nuw (i8, ptr @formattable, i64 1249), i8 0, i64 7, i1 false)
-  store ptr @ffi_type_pointer, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1256), align 8, !tbaa !10
-  store ptr @P_set, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1264), align 8, !tbaa !13
-  store ptr @P_get, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1272), align 8, !tbaa !13
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @formattable, i64 1280), i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1248), i64 1), i8 0, i64 7, i1 false)
+  store ptr @ffi_type_pointer, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1248), i64 8), align 8, !tbaa !10
+  store ptr @P_set, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1248), i64 16), align 8, !tbaa !13
+  store ptr @P_get, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1248), i64 24), align 8, !tbaa !13
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1248), i64 32), i8 0, i64 16, i1 false)
   store i8 122, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1296), align 8, !tbaa !15
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds nuw (i8, ptr @formattable, i64 1297), i8 0, i64 7, i1 false)
-  store ptr @ffi_type_pointer, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1304), align 8, !tbaa !10
-  store ptr @z_set, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1312), align 8, !tbaa !13
-  store ptr @z_get, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1320), align 8, !tbaa !13
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @formattable, i64 1328), i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1296), i64 1), i8 0, i64 7, i1 false)
+  store ptr @ffi_type_pointer, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1296), i64 8), align 8, !tbaa !10
+  store ptr @z_set, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1296), i64 16), align 8, !tbaa !13
+  store ptr @z_get, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1296), i64 24), align 8, !tbaa !13
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1296), i64 32), i8 0, i64 16, i1 false)
   store i8 85, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1392), align 8, !tbaa !15
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds nuw (i8, ptr @formattable, i64 1393), i8 0, i64 7, i1 false)
-  store ptr @ffi_type_pointer, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1400), align 8, !tbaa !10
-  store ptr @U_set, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1408), align 8, !tbaa !13
-  store ptr @U_get, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1416), align 8, !tbaa !13
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @formattable, i64 1424), i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1392), i64 1), i8 0, i64 7, i1 false)
+  store ptr @ffi_type_pointer, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1392), i64 8), align 8, !tbaa !10
+  store ptr @U_set, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1392), i64 16), align 8, !tbaa !13
+  store ptr @U_get, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1392), i64 24), align 8, !tbaa !13
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1392), i64 32), i8 0, i64 16, i1 false)
   store i8 90, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1440), align 8, !tbaa !15
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds nuw (i8, ptr @formattable, i64 1441), i8 0, i64 7, i1 false)
-  store ptr @ffi_type_pointer, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1448), align 8, !tbaa !10
-  store ptr @Z_set, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1456), align 8, !tbaa !13
-  store ptr @Z_get, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1464), align 8, !tbaa !13
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @formattable, i64 1472), i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1440), i64 1), i8 0, i64 7, i1 false)
+  store ptr @ffi_type_pointer, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1440), i64 8), align 8, !tbaa !10
+  store ptr @Z_set, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1440), i64 16), align 8, !tbaa !13
+  store ptr @Z_get, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1440), i64 24), align 8, !tbaa !13
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1440), i64 32), i8 0, i64 16, i1 false)
   store i8 79, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1584), align 8, !tbaa !15
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds nuw (i8, ptr @formattable, i64 1585), i8 0, i64 7, i1 false)
-  store ptr @ffi_type_pointer, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1592), align 8, !tbaa !10
-  store ptr @O_set, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1600), align 8, !tbaa !13
-  store ptr @O_get, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1608), align 8, !tbaa !13
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @formattable, i64 1616), i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1584), i64 1), i8 0, i64 7, i1 false)
+  store ptr @ffi_type_pointer, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1584), i64 8), align 8, !tbaa !10
+  store ptr @O_set, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1584), i64 16), align 8, !tbaa !13
+  store ptr @O_get, ptr getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1584), i64 24), align 8, !tbaa !13
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds (i8, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1584), i64 32), i8 0, i64 16, i1 false)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) getelementptr inbounds nuw (i8, ptr @formattable, i64 1632), ptr noundef nonnull align 8 dereferenceable(48) getelementptr inbounds nuw (i8, ptr @formattable, i64 48), i64 48, i1 false), !tbaa.struct !14
   store i8 63, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1632), align 8, !tbaa !37
   store ptr @bool_set, ptr getelementptr inbounds nuw (i8, ptr @formattable, i64 1648), align 8, !tbaa !38

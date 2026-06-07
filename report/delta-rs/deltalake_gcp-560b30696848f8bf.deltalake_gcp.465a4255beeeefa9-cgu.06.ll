@@ -201,7 +201,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs6Po7BT7Nknu_5alloc3vec9int
 
 .loopexit164:                                     ; preds = %bb.h, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterNtNtNtCsjyY8HP3IvQ6_12object_store3gcp7builder15GoogleConfigKeyEECs62u4JVtZyFF_13deltalake_gcp.exit97, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterNtNtNtCsjyY8HP3IvQ6_12object_store3gcp7builder15GoogleConfigKeyEECs62u4JVtZyFF_13deltalake_gcp.exit108
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
-  %i.bo = load atomic i32, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs62u4JVtZyFF_13deltalake_gcp6config15CREDENTIAL_KEYS, i64 24) acquire, align 8
+  %i.bo = load atomic i32, ptr getelementptr inbounds (i8, ptr @_RNvNtCs62u4JVtZyFF_13deltalake_gcp6config15CREDENTIAL_KEYS, i64 24) acquire, align 8
   %i.bp = icmp eq i32 %i.bo, 0
   br i1 %i.bp, label %_RINvMs0_NtNtCs2pqxYH9ZEk8_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtNtCsjyY8HP3IvQ6_12object_store3gcp7builder15GoogleConfigKeyEE5force0ECs62u4JVtZyFF_13deltalake_gcp.exit, label %bb.u, !prof !329
 
@@ -210,7 +210,7 @@ bb.u:                                             ; preds = %.loopexit164
   store ptr @_RNvNtCs62u4JVtZyFF_13deltalake_gcp6config15CREDENTIAL_KEYS, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %i.b, ptr %i.a, align 8
-  invoke void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds nuw (i8, ptr @_RNvNtCs62u4JVtZyFF_13deltalake_gcp6config15CREDENTIAL_KEYS, i64 24), i1 noundef zeroext true, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2)
+  invoke void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds (i8, ptr @_RNvNtCs62u4JVtZyFF_13deltalake_gcp6config15CREDENTIAL_KEYS, i64 24), i1 noundef zeroext true, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2)
           to label %.noexc98 unwind label %.thread136.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc98:                                         ; preds = %bb.u

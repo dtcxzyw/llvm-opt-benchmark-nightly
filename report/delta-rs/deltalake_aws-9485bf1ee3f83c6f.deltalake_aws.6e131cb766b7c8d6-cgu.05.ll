@@ -201,7 +201,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.bl, label %bb.m, label %bb.t
 
 bb.m:                                             ; preds = %bb.l
-  %i.bm = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvMs1_NtCsjPG5xYjJYir_9aws_types8app_nameNtB7_7AppName3new10___CALLSITE, i64 16) monotonic, align 8 ; 3 uses
+  %i.bm = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNvMs1_NtCsjPG5xYjJYir_9aws_types8app_nameNtB7_7AppName3new10___CALLSITE, i64 16) monotonic, align 8 ; 3 uses
   switch i8 %i.bm, label %bb.n [
     i8 0, label %bb.t
     i8 1, label %bb.o
@@ -604,7 +604,7 @@ bb.af:                                            ; preds = %bb.ae
   br label %bb.ac
 
 .loopexit:                                        ; preds = %bb.l, %bb.i, %bb.k, %.loopexit176
-  %.sroa.8.1 = phi i64 [ %i.ar, %bb.i ], [ %i.au, %bb.k ], [ %.sroa.8.0, %.loopexit176 ], [ 163208757251, %bb.l ]
+  %.sroa.8.1 = phi i64 [ %i.ar, %bb.i ], [ %i.au, %bb.k ], [ %.sroa.8.0, %.loopexit176 ], [ ptrtoint (ptr inttoptr (i64 163208757251 to ptr) to i64), %bb.l ]
   %.sroa.010.1 = phi i64 [ 1, %bb.i ], [ 0, %bb.k ], [ %.sroa.010.0, %.loopexit176 ], [ 1, %bb.l ]
   %i.dp = inttoptr i64 %.sroa.8.1 to ptr
   br label %bb.ag
@@ -1007,7 +1007,7 @@ bb.ca:                                            ; preds = %bb.by
   br i1 %i.ht, label %bb.cb, label %bb.cm
 
 bb.cb:                                            ; preds = %bb.ca
-  %i.hu = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNCNCNCNvNtCs14kWLkQVSKO_14deltalake_core8logstore18write_commit_entry00010___CALLSITE, i64 16) monotonic, align 8, !noalias !1232 ; 3 uses
+  %i.hu = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNCNCNCNvNtCs14kWLkQVSKO_14deltalake_core8logstore18write_commit_entry00010___CALLSITE, i64 16) monotonic, align 8, !noalias !1232 ; 3 uses
   switch i8 %i.hu, label %bb.cc [
     i8 0, label %bb.cm
     i8 1, label %bb.cd
@@ -1184,7 +1184,7 @@ bb.ct:                                            ; preds = %bb.by
   br i1 %i.jo, label %bb.cu, label %bb.de
 
 bb.cu:                                            ; preds = %bb.ct
-  %i.jp = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNCNCNCNvNtCs14kWLkQVSKO_14deltalake_core8logstore18write_commit_entry000s_10___CALLSITE, i64 16) monotonic, align 8, !noalias !1232 ; 3 uses
+  %i.jp = load atomic i8, ptr getelementptr inbounds (i8, ptr @_RNvNCNCNCNvNtCs14kWLkQVSKO_14deltalake_core8logstore18write_commit_entry000s_10___CALLSITE, i64 16) monotonic, align 8, !noalias !1232 ; 3 uses
   switch i8 %i.jp, label %bb.cv [
     i8 0, label %bb.de
     i8 1, label %bb.cw
@@ -1587,7 +1587,7 @@ define internal noundef nonnull align 8 ptr @_RNvYNtNtNtCs9rVkZwOUgsI_13deltalak
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
-  %i.c = load atomic i32, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs14kWLkQVSKO_14deltalake_core8logstore14DELTA_LOG_PATH, i64 24) acquire, align 8
+  %i.c = load atomic i32, ptr getelementptr inbounds (i8, ptr @_RNvNtCs14kWLkQVSKO_14deltalake_core8logstore14DELTA_LOG_PATH, i64 24) acquire, align 8
   %i.d = icmp eq i32 %i.c, 0
   br i1 %i.d, label %_RINvMs0_NtNtCs2pqxYH9ZEk8_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockNtNtCsjyY8HP3IvQ6_12object_store4path4PathE5force0ECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.b, !prof !1002
 
@@ -1596,7 +1596,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr @_RNvNtCs14kWLkQVSKO_14deltalake_core8logstore14DELTA_LOG_PATH, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %i.b, ptr %i.a, align 8
-  call void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds nuw (i8, ptr @_RNvNtCs14kWLkQVSKO_14deltalake_core8logstore14DELTA_LOG_PATH, i64 24), i1 noundef zeroext true, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3)
+  call void @_RNvMs0_NtNtNtNtCs2pqxYH9ZEk8_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 getelementptr inbounds (i8, ptr @_RNvNtCs14kWLkQVSKO_14deltalake_core8logstore14DELTA_LOG_PATH, i64 24), i1 noundef zeroext true, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %_RINvMs0_NtNtCs2pqxYH9ZEk8_3std4sync4onceNtB6_4Once15call_once_forceNCNvMNtB8_9lazy_lockINtB18_8LazyLockNtNtCsjyY8HP3IvQ6_12object_store4path4PathE5force0ECs9rVkZwOUgsI_13deltalake_aws.exit

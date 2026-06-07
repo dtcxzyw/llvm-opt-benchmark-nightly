@@ -201,7 +201,7 @@ _ZN4absl12lts_2025051215ReaderMutexLockD2Ev.exit: ; preds = %bb.e
 bb.g:                                             ; preds = %_ZN4absl12lts_2025051215ReaderMutexLockD2Ev.exit
   %i.o = call noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #28, !noalias !134 ; 6 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.o, i8 0, i64 16, i1 false), !noalias !134
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN6google8protobuf14DescriptorPool8MemoDataIbEE, i64 16), ptr %i.o, align 8, !tbaa !137, !noalias !134
+  store ptr getelementptr inbounds inrange(-16, 16) ({ [4 x ptr] }, ptr @_ZTVN6google8protobuf14DescriptorPool8MemoDataIbEE, i32 0, i32 0, i32 2), ptr %i.o, align 8, !tbaa !137, !noalias !134
   %i.p = invoke noundef zeroext i1 %1(ptr noundef nonnull %0)
           to label %bb.h unwind label %bb.l
 
@@ -318,7 +318,7 @@ bb.o:                                             ; preds = %_ZNSt4pairIS_IPKvS1
   unreachable
 
 _ZNKSt14default_deleteIN6google8protobuf14DescriptorPool8MemoDataIbEEEclEPS4_.exit.i29: ; preds = %bb.l, %bb.m
-  %i.as = phi ptr [ %.pre, %bb.m ], [ getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN6google8protobuf14DescriptorPool8MemoDataIbEE, i64 16), %bb.l ]
+  %i.as = phi ptr [ %.pre, %bb.m ], [ getelementptr inbounds inrange(-16, 16) ({ [4 x ptr] }, ptr @_ZTVN6google8protobuf14DescriptorPool8MemoDataIbEE, i32 0, i32 0, i32 2), %bb.l ]
   %.pn18.pn.pn.ph = phi { ptr, i32 } [ %i.ak, %bb.m ], [ %i.aj, %bb.l ]
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 8
   %i.au = load ptr, ptr %i.at, align 8
