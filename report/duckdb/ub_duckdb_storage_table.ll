@@ -201,8 +201,10 @@ bb.a:
   %i.a = alloca [2048 x i8], align 16             ; 16 uses
   %i.b = alloca [2048 x i32], align 16            ; 23 uses
   tail call void @_ZN6duckdb10FlatVector16VerifyFlatVectorERKNS_6VectorE(ptr noundef nonnull align 8 dereferenceable(104) %1)
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.d = load ptr, ptr %3, align 8, !tbaa !1193   ; 2 uses
+  %.val = load ptr, ptr %8, align 8               ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.f = load i64, ptr %i.e, align 8, !tbaa !1164
   %i.g = shl i64 %i.f, 11
@@ -231,7 +233,6 @@ bb.a:
   br label %.preheader.i
 
 .lr.ph157.i:                                      ; preds = %bb.a
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.u = load ptr, ptr %6, align 8, !tbaa !152    ; 2 uses
   %.not.i.i = icmp eq ptr %i.u, null
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 48
@@ -240,8 +241,7 @@ bb.a:
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.z = load i32, ptr %i.y, align 8
   %i.aa = zext i32 %i.z to i64                    ; 3 uses
-  %9 = load ptr, ptr %8, align 8                  ; 2 uses
-  %.not.i.i.i = icmp eq ptr %9, null
+  %.not.i.i.i = icmp eq ptr %.val, null
   br label %bb.b
 
 .preheader.i:                                     ; preds = %bb.k, %..preheader_crit_edge.i
@@ -361,7 +361,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %.critedge2.i
   %i.bt = lshr i64 %i.as, 6
   %i.bu = and i64 %i.as, 63
-  %i.bv = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %i.bt
+  %i.bv = getelementptr inbounds nuw [8 x i8], ptr %.val, i64 %i.bt
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !24
   %i.bx = lshr i64 %i.bw, %i.bu
   %i.by = trunc i64 %i.bx to i8

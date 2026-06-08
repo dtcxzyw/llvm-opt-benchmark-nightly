@@ -201,14 +201,14 @@ bb.p:                                             ; preds = %bb.o
   br label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE14DecodeElseImplEPNS8_9TraceLineENS1_10WasmOpcodeE.exit
 
 _ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE14DecodeElseImplEPNS8_9TraceLineENS1_10WasmOpcodeE.exit: ; preds = %bb.o, %bb.p
+  %3 = getelementptr i8, ptr %.val3, i64 -444
+  %.val6 = load i32, ptr %3, align 4              ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 1529
   %i.br = load i8, ptr %i.bq, align 1, !range !5, !noundef !6
   %i.bs = trunc nuw i8 %i.br to i1
   br i1 %i.bs, label %bb.q, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS6_7ControlE.exit
 
 bb.q:                                             ; preds = %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE14DecodeElseImplEPNS8_9TraceLineENS1_10WasmOpcodeE.exit
-  %3 = getelementptr inbounds i8, ptr %.val3, i64 -444
-  %4 = load i32, ptr %3, align 4                  ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 1480 ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 1488 ; 3 uses
   %i.bv = load ptr, ptr %i.bu, align 8            ; 2 uses
@@ -218,7 +218,7 @@ bb.q:                                             ; preds = %_ZN2v88internal4was
   %i.bz = sub i64 %i.bx, %i.by
   %i.ca = lshr exact i64 %i.bz, 2
   %i.cb = trunc i64 %i.ca to i32
-  %i.cc = icmp ult i32 %4, %i.cb
+  %i.cc = icmp ult i32 %.val6, %i.cb
   br i1 %i.cc, label %.lr.ph.i, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS6_7ControlE.exit
 
 .lr.ph.i:                                         ; preds = %bb.q
@@ -241,7 +241,7 @@ bb.r:                                             ; preds = %bb.r, %.lr.ph.i
   %i.co = sub i64 %i.cm, %i.cn
   %i.cp = lshr exact i64 %i.co, 2
   %i.cq = trunc i64 %i.cp to i32
-  %i.cr = icmp ult i32 %4, %i.cq
+  %i.cr = icmp ult i32 %.val6, %i.cq
   br i1 %i.cr, label %bb.r, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS6_7ControlE.exit, !llvm.loop !219
 
 _ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS6_7ControlE.exit: ; preds = %bb.r, %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE14DecodeElseImplEPNS8_9TraceLineENS1_10WasmOpcodeE.exit, %bb.q
@@ -641,14 +641,14 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 1528 ; 2 uses
   %i.at = zext i1 %i.ar to i8
   store i8 %i.at, ptr %i.as, align 8
+  %12 = getelementptr i8, ptr %.val3, i64 -444
+  %.val6 = load i32, ptr %12, align 4             ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 1529
   %i.av = load i8, ptr %i.au, align 1, !range !5, !noundef !6
   %i.aw = trunc nuw i8 %i.av to i1
   br i1 %i.aw, label %bb.e, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS6_7ControlE.exit
 
 bb.e:                                             ; preds = %bb.d
-  %12 = getelementptr inbounds i8, ptr %.val3, i64 -444
-  %13 = load i32, ptr %12, align 4                ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 1480 ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 1488 ; 3 uses
   %i.az = load ptr, ptr %i.ay, align 8            ; 2 uses
@@ -658,7 +658,7 @@ bb.e:                                             ; preds = %bb.d
   %i.bd = sub i64 %i.bb, %i.bc
   %i.be = lshr exact i64 %i.bd, 2
   %i.bf = trunc i64 %i.be to i32
-  %i.bg = icmp ult i32 %13, %i.bf
+  %i.bg = icmp ult i32 %.val6, %i.bf
   br i1 %i.bg, label %.lr.ph.i, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS6_7ControlE.exit
 
 .lr.ph.i:                                         ; preds = %bb.e
@@ -681,7 +681,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.i
   %i.bs = sub i64 %i.bq, %i.br
   %i.bt = lshr exact i64 %i.bs, 2
   %i.bu = trunc i64 %i.bt to i32
-  %i.bv = icmp ult i32 %13, %i.bu
+  %i.bv = icmp ult i32 %.val6, %i.bu
   br i1 %i.bv, label %bb.f, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS6_7ControlE.exit, !llvm.loop !219
 
 _ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS6_7ControlE.exit: ; preds = %bb.f, %bb.d, %bb.e
@@ -1084,14 +1084,14 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 1528 ; 2 uses
   %i.o = zext i1 %i.m to i8
   store i8 %i.o, ptr %i.n, align 8
+  %2 = getelementptr i8, ptr %.val3, i64 -444
+  %.val6 = load i32, ptr %2, align 4              ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 1529
   %i.q = load i8, ptr %i.p, align 1, !range !5, !noundef !6
   %i.r = trunc nuw i8 %i.q to i1
   br i1 %i.r, label %bb.b, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS6_7ControlE.exit
 
 bb.b:                                             ; preds = %bb.a
-  %2 = getelementptr inbounds i8, ptr %.val3, i64 -444
-  %3 = load i32, ptr %2, align 4                  ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 1480 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 1488 ; 3 uses
   %i.u = load ptr, ptr %i.t, align 8              ; 2 uses
@@ -1101,7 +1101,7 @@ bb.b:                                             ; preds = %bb.a
   %i.y = sub i64 %i.w, %i.x
   %i.z = lshr exact i64 %i.y, 2
   %i.aa = trunc i64 %i.z to i32
-  %i.ab = icmp ult i32 %3, %i.aa
+  %i.ab = icmp ult i32 %.val6, %i.aa
   br i1 %i.ab, label %.lr.ph.i, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS6_7ControlE.exit
 
 .lr.ph.i:                                         ; preds = %bb.b
@@ -1124,7 +1124,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i
   %i.an = sub i64 %i.al, %i.am
   %i.ao = lshr exact i64 %i.an, 2
   %i.ap = trunc i64 %i.ao to i32
-  %i.aq = icmp ult i32 %3, %i.ap
+  %i.aq = icmp ult i32 %.val6, %i.ap
   br i1 %i.aq, label %bb.c, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS6_7ControlE.exit, !llvm.loop !219
 
 _ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS6_7ControlE.exit: ; preds = %bb.c, %bb.a, %bb.b
@@ -1527,14 +1527,14 @@ bb.aj:                                            ; preds = %bb.aj, %.lr.ph.i
   br i1 %i.fc, label %bb.aj, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE15PushMergeValuesEPNS6_7ControlEPNS1_5MergeINS1_9ValueBaseIS4_EEEE.exit, !llvm.loop !218
 
 _ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE15PushMergeValuesEPNS6_7ControlEPNS1_5MergeINS1_9ValueBaseIS4_EEEE.exit: ; preds = %bb.aj, %_ZN2v88internal4wasm14FastZoneVectorINS1_9ValueBaseINS1_7Decoder15NoValidationTagEEEE18EnsureMoreCapacityEiPNS0_4ZoneE.exit.i, %bb.ag, %_ZN2v88internal4wasm12_GLOBAL__N_115LiftoffCompiler10PopControlEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES3_LNS1_12DecodingModeE0EEEPNS3_7ControlE.exit.thread
+  %2 = getelementptr i8, ptr %.val12, i64 -444
+  %.val14 = load i32, ptr %2, align 4             ; 2 uses
   %i.fd = getelementptr inbounds nuw i8, ptr %0, i64 1529
   %i.fe = load i8, ptr %i.fd, align 1, !range !5, !noundef !6
   %i.ff = trunc nuw i8 %i.fe to i1
   br i1 %i.ff, label %bb.ak, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS6_7ControlE.exit
 
 bb.ak:                                            ; preds = %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE15PushMergeValuesEPNS6_7ControlEPNS1_5MergeINS1_9ValueBaseIS4_EEEE.exit
-  %2 = getelementptr inbounds i8, ptr %.val12, i64 -444
-  %3 = load i32, ptr %2, align 4                  ; 2 uses
   %i.fg = getelementptr inbounds nuw i8, ptr %0, i64 1480 ; 2 uses
   %i.fh = getelementptr inbounds nuw i8, ptr %0, i64 1488 ; 3 uses
   %i.fi = load ptr, ptr %i.fh, align 8            ; 2 uses
@@ -1544,7 +1544,7 @@ bb.ak:                                            ; preds = %_ZN2v88internal4was
   %i.fm = sub i64 %i.fk, %i.fl
   %i.fn = lshr exact i64 %i.fm, 2
   %i.fo = trunc i64 %i.fn to i32
-  %i.fp = icmp ult i32 %3, %i.fo
+  %i.fp = icmp ult i32 %.val14, %i.fo
   br i1 %i.fp, label %.lr.ph.i15, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS6_7ControlE.exit
 
 .lr.ph.i15:                                       ; preds = %bb.ak
@@ -1567,7 +1567,7 @@ bb.al:                                            ; preds = %bb.al, %.lr.ph.i15
   %i.gb = sub i64 %i.fz, %i.ga
   %i.gc = lshr exact i64 %i.gb, 2
   %i.gd = trunc i64 %i.gc to i32
-  %i.ge = icmp ult i32 %3, %i.gd
+  %i.ge = icmp ult i32 %.val14, %i.gd
   br i1 %i.ge, label %bb.al, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS6_7ControlE.exit, !llvm.loop !219
 
 _ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS6_7ControlE.exit: ; preds = %bb.al, %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE15PushMergeValuesEPNS6_7ControlEPNS1_5MergeINS1_9ValueBaseIS4_EEEE.exit, %bb.ak
