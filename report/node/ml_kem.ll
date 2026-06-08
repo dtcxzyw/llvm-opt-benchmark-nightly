@@ -201,6 +201,8 @@ bb.d:                                             ; preds = %bb.c
   %bound1188 = icmp ugt ptr %scevgep151, @kModRoots
   %found.conflict189 = and i1 %bound0187, %bound1188
   %invariant.op292 = or i1 %invariant.op291, %found.conflict189
+  %7 = insertelement <4 x ptr> <ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @kModRoots, i64 256)>, ptr %scevgep105, i64 1
+  %8 = insertelement <4 x ptr> %7, ptr %scevgep107, i64 2
   %i.ax = shufflevector <2 x ptr> %i.aj, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
   br label %.preheader.i
 
@@ -382,9 +384,7 @@ scalar_mult.exit.preheader.i:                     ; preds = %vector.body193, %sc
   %i.fq = insertelement <4 x ptr> poison, ptr %scevgep, i64 0
   %i.fr = shufflevector <4 x ptr> %i.fq, <4 x ptr> poison, <4 x i32> zeroinitializer
   %i.fs = shufflevector <4 x ptr> %i.fo, <4 x ptr> poison, <4 x i32> zeroinitializer
-  %7 = insertelement <4 x ptr> <ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @kModRoots, i64 256)>, ptr %scevgep103, i64 0
-  %8 = insertelement <4 x ptr> %7, ptr %scevgep105, i64 1
-  %i.ft = insertelement <4 x ptr> %8, ptr %scevgep107, i64 2
+  %i.ft = insertelement <4 x ptr> %8, ptr %scevgep103, i64 0
   %i.fu = insertelement <4 x ptr> poison, ptr %.121.i, i64 0
   %i.fv = shufflevector <4 x ptr> %i.fk, <4 x ptr> poison, <4 x i32> zeroinitializer
   %i.fw = shufflevector <4 x ptr> %i.fp, <4 x ptr> %i.ax, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
