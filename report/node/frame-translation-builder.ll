@@ -201,19 +201,17 @@ bb.e:                                             ; preds = %bb.d
   %i.q = getelementptr inbounds nuw [28 x i8], ptr %i.k, i64 %i.g ; 3 uses
   %i.r = load i32, ptr %i.q, align 4
   %i.s = icmp eq i32 %i.r, 4
-  br i1 %i.s, label %3, label %_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandENS1_15UnsignedOperandEEEEbPjDpT_.exit.thread.i
+  br i1 %i.s, label %_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandENS1_15UnsignedOperandEEEEbPjDpT_.exit.i, label %_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandENS1_15UnsignedOperandEEEEbPjDpT_.exit.thread.i
 
-3:                                                ; preds = %bb.e
-  %4 = getelementptr inbounds nuw i8, ptr %i.q, i64 4
-  %5 = load i32, ptr %4, align 4
-  %6 = icmp eq i32 %5, %1
-  br i1 %6, label %_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandENS1_15UnsignedOperandEEEEbPjDpT_.exit.i, label %_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandENS1_15UnsignedOperandEEEEbPjDpT_.exit.thread.i
-
-_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandENS1_15UnsignedOperandEEEEbPjDpT_.exit.i: ; preds = %3
-  %i.t = getelementptr inbounds nuw i8, ptr %i.q, i64 8
+_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandENS1_15UnsignedOperandEEEEbPjDpT_.exit.i: ; preds = %bb.e
+  %3 = getelementptr inbounds nuw i8, ptr %i.q, i64 4
+  %.val.i = load i32, ptr %3, align 4
+  %i.t = getelementptr i8, ptr %i.q, i64 8
   %i.u = load i32, ptr %i.t, align 4
+  %4 = icmp eq i32 %.val.i, %1
   %i.v = icmp eq i32 %i.u, %2
-  br i1 %i.v, label %bb.f, label %_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandENS1_15UnsignedOperandEEEEbPjDpT_.exit.thread.i
+  %spec.select.i.i = select i1 %4, i1 %i.v, i1 false
+  br i1 %spec.select.i.i, label %bb.f, label %_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandENS1_15UnsignedOperandEEEEbPjDpT_.exit.thread.i
 
 bb.f:                                             ; preds = %_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandENS1_15UnsignedOperandEEEEbPjDpT_.exit.i
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
@@ -222,7 +220,7 @@ bb.f:                                             ; preds = %_ZN2v88internal12_G
   store i64 %i.y, ptr %i.w, align 8
   br label %bb.p
 
-_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandENS1_15UnsignedOperandEEEEbPjDpT_.exit.thread.i: ; preds = %_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandENS1_15UnsignedOperandEEEEbPjDpT_.exit.i, %3, %bb.e, %bb.d, %bb.c
+_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandENS1_15UnsignedOperandEEEEbPjDpT_.exit.thread.i: ; preds = %_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandENS1_15UnsignedOperandEEEEbPjDpT_.exit.i, %bb.e, %bb.d, %bb.c
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
   %i.aa = load i64, ptr %i.z, align 8             ; 5 uses
   %.not.i.i = icmp eq i64 %i.aa, 0
@@ -625,19 +623,17 @@ bb.e:                                             ; preds = %bb.d
   %i.q = getelementptr inbounds nuw [28 x i8], ptr %i.k, i64 %i.g ; 3 uses
   %i.r = load i32, ptr %i.q, align 4
   %i.s = icmp eq i32 %i.r, 43
-  br i1 %i.s, label %3, label %_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandES3_EEEbPjDpT_.exit.thread.i
+  br i1 %i.s, label %_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandES3_EEEbPjDpT_.exit.i, label %_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandES3_EEEbPjDpT_.exit.thread.i
 
-3:                                                ; preds = %bb.e
-  %4 = getelementptr inbounds nuw i8, ptr %i.q, i64 4
-  %5 = load i32, ptr %4, align 4
-  %6 = icmp eq i32 %5, %1
-  br i1 %6, label %_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandES3_EEEbPjDpT_.exit.i, label %_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandES3_EEEbPjDpT_.exit.thread.i
-
-_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandES3_EEEbPjDpT_.exit.i: ; preds = %3
-  %i.t = getelementptr inbounds nuw i8, ptr %i.q, i64 8
+_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandES3_EEEbPjDpT_.exit.i: ; preds = %bb.e
+  %3 = getelementptr inbounds nuw i8, ptr %i.q, i64 4
+  %.val.i = load i32, ptr %3, align 4
+  %i.t = getelementptr i8, ptr %i.q, i64 8
   %i.u = load i32, ptr %i.t, align 4
+  %4 = icmp eq i32 %.val.i, %1
   %i.v = icmp eq i32 %i.u, %2
-  br i1 %i.v, label %bb.f, label %_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandES3_EEEbPjDpT_.exit.thread.i
+  %spec.select.i.i = select i1 %4, i1 %i.v, i1 false
+  br i1 %spec.select.i.i, label %bb.f, label %_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandES3_EEEbPjDpT_.exit.thread.i
 
 bb.f:                                             ; preds = %_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandES3_EEEbPjDpT_.exit.i
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
@@ -646,7 +642,7 @@ bb.f:                                             ; preds = %_ZN2v88internal12_G
   store i64 %i.y, ptr %i.w, align 8
   br label %bb.p
 
-_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandES3_EEEbPjDpT_.exit.thread.i: ; preds = %_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandES3_EEEbPjDpT_.exit.i, %3, %bb.e, %bb.d, %bb.c
+_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandES3_EEEbPjDpT_.exit.thread.i: ; preds = %_ZN2v88internal12_GLOBAL__N_113OperandsEqualIJNS1_13SignedOperandES3_EEEbPjDpT_.exit.i, %bb.e, %bb.d, %bb.c
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
   %i.aa = load i64, ptr %i.z, align 8             ; 5 uses
   %.not.i.i = icmp eq i64 %i.aa, 0
