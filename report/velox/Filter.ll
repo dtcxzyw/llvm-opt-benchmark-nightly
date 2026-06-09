@@ -201,7 +201,8 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge
   %i.bi = icmp ne ptr %.043, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
   tail call void @llvm.assume(i1 %i.bi)
   %i.bj = getelementptr i8, ptr %.pn47, i64 -48
-  %i.bk = getelementptr i8, ptr %.pn48, i64 -48
+  %i.bk = getelementptr i8, ptr %.pn48, i64 -48   ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bk) ]
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %_ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit
@@ -223,8 +224,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   %.sroa.8.1.in = phi i32 [ %i.bn, %bb.g ], [ %.sroa.8.089, %bb.f ] ; 2 uses
   %i.bp = zext i32 %.sroa.8.1.in to i64           ; 2 uses
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.bj, i64 %i.bp
-  %i.br = getelementptr inbounds nuw [4 x i8], ptr %i.bk, i64 %.04590 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.br) ]
+  %i.br = getelementptr inbounds nuw [4 x i8], ptr %i.bk, i64 %.04590
   %i.bs = load i32, ptr %i.bq, align 4, !tbaa !3
   store i32 %i.bs, ptr %i.br, align 4, !tbaa !3
   %i.bt = getelementptr inbounds nuw i8, ptr %.044, i64 %.04590 ; 2 uses
@@ -627,7 +627,8 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge
   %i.bn = icmp ne ptr %.043, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
   tail call void @llvm.assume(i1 %i.bn)
   %i.bo = getelementptr i8, ptr %.pn47, i64 -240
-  %i.bp = getelementptr i8, ptr %.pn48, i64 -240
+  %i.bp = getelementptr i8, ptr %.pn48, i64 -240  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bp) ]
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %_ZN5folly3f146detail8F14ChunkInE6setTagEmm.exit
@@ -649,8 +650,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   %.sroa.8.1.in = phi i32 [ %i.bs, %bb.g ], [ %.sroa.8.085, %bb.f ] ; 2 uses
   %i.bu = zext i32 %.sroa.8.1.in to i64           ; 2 uses
   %i.bv = getelementptr inbounds nuw [16 x i8], ptr %i.bo, i64 %i.bu
-  %i.bw = getelementptr inbounds nuw [16 x i8], ptr %i.bp, i64 %.04586 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bw) ]
+  %i.bw = getelementptr inbounds nuw [16 x i8], ptr %i.bp, i64 %.04586
   %i.bx = load i128, ptr %i.bv, align 16, !tbaa !219
   store i128 %i.bx, ptr %i.bw, align 16, !tbaa !219
   %i.by = getelementptr inbounds nuw i8, ptr %.044, i64 %.04586 ; 2 uses

@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.l, align 8 ; 3 uses
+  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.l, align 8 ; 4 uses
   tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i, i32 0, i32 1, i32 1)
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.n = load i64, ptr %i.m, align 8
@@ -247,8 +247,8 @@ bb.e:                                             ; preds = %bb.g, %bb.d
   br i1 %i.am, label %.thread33.i.i, label %bb.f, !prof !25
 
 .thread33.i.i:                                    ; preds = %.lr.ph.i.i
-  %i.an = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i, i64 %i.aj ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.an) ]
+  %i.an = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i, i64 %i.aj
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i.i) ]
   br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIjN2v88internal6maglev17RegallocBlockInfo16RegallocLoopInfoEEENS_13hash_internal4HashIjEESt8equal_toIjESaISt4pairIKjS7_EEE10find_largeIjEENSI_8iteratorERSF_m.exit.i
 
 bb.f:                                             ; preds = %.lr.ph.i.i
@@ -572,7 +572,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.l, align 8 ; 3 uses
+  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.l, align 8 ; 4 uses
   tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i, i32 0, i32 1, i32 1)
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.n = load i64, ptr %i.m, align 8
@@ -618,8 +618,8 @@ bb.e:                                             ; preds = %bb.g, %bb.d
   br i1 %i.am, label %.thread33.i.i, label %bb.f, !prof !25
 
 .thread33.i.i:                                    ; preds = %.lr.ph.i.i
-  %i.an = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i, i64 %i.aj ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.an) ]
+  %i.an = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i, i64 %i.aj
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i.i) ]
   br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIjN2v88internal6maglev17RegallocBlockInfo16RegallocLoopInfoEEENS_13hash_internal4HashIjEESt8equal_toIjESaISt4pairIKjS7_EEE10find_largeIjEENSI_8iteratorERSF_m.exit.i
 
 bb.f:                                             ; preds = %.lr.ph.i.i
@@ -848,7 +848,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.l, align 8 ; 3 uses
+  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.l, align 8 ; 4 uses
   tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i, i32 0, i32 1, i32 1)
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.n = load i64, ptr %i.m, align 8
@@ -894,8 +894,8 @@ bb.e:                                             ; preds = %bb.g, %bb.d
   br i1 %i.am, label %.thread33.i.i, label %bb.f, !prof !25
 
 .thread33.i.i:                                    ; preds = %.lr.ph.i.i
-  %i.an = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i, i64 %i.aj ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.an) ]
+  %i.an = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i, i64 %i.aj
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i.i) ]
   br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIjN2v88internal6maglev17RegallocBlockInfo16RegallocLoopInfoEEENS_13hash_internal4HashIjEESt8equal_toIjESaISt4pairIKjS7_EEE10find_largeIjEENSI_8iteratorERSF_m.exit.i
 
 bb.f:                                             ; preds = %.lr.ph.i.i

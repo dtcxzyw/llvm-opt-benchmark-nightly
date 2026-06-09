@@ -201,7 +201,8 @@ bb.b:                                             ; preds = %bb.a, %._crit_edge
 .lr.ph98:                                         ; preds = %_ZN5folly3f146detail13DenseMaskIter4nextEv.exit
   %i.y = icmp ne ptr %.044, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
   tail call void @llvm.assume(i1 %i.y)
-  %i.z = getelementptr i8, ptr %.pn49, i64 -112
+  %i.z = getelementptr i8, ptr %.pn49, i64 -112   ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.z) ]
   br label %bb.e
 
 bb.c:                                             ; preds = %.lr.ph, %_ZN5folly3f146detail13DenseMaskIter4nextEv.exit
@@ -251,8 +252,7 @@ _ZN5folly3f146detail13DenseMaskIter4nextEv.exit65: ; preds = %bb.e, %bb.f
   %i.al = zext i32 %.sroa.872.1.in to i64         ; 2 uses
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %i.al
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !223 ; 2 uses
-  %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %.04697 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao) ]
+  %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %.04697
   %i.ap = tail call noalias noundef nonnull dereferenceable(80) ptr @_Znwm(i64 noundef 80) #38, !inline_history !291 ; 5 uses
   store ptr %i.ap, ptr %i.ao, align 8, !tbaa !223
   invoke void @_ZN5folly7dynamicC1ERKS0_(ptr noundef nonnull align 8 dereferenceable(80) %i.ap, ptr noundef nonnull align 8 dereferenceable(80) %i.an)

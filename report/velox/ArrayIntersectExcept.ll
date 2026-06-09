@@ -201,7 +201,8 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge
   %i.bg = icmp ne ptr %.043, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
   tail call void @llvm.assume(i1 %i.bg)
   %i.bh = getelementptr i8, ptr %.pn47, i64 -16
-  %i.bi = getelementptr i8, ptr %.pn48, i64 -16
+  %i.bi = getelementptr i8, ptr %.pn48, i64 -16   ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bi) ]
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %_ZN5folly3f146detail8F14ChunkIbE6setTagEmm.exit
@@ -223,8 +224,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   %.sroa.8.1.in = phi i32 [ %i.bl, %bb.g ], [ %.sroa.8.081, %bb.f ] ; 2 uses
   %i.bn = zext i32 %.sroa.8.1.in to i64           ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bh, i64 %i.bn
-  %i.bp = getelementptr inbounds nuw i8, ptr %i.bi, i64 %.04582 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bp) ]
+  %i.bp = getelementptr inbounds nuw i8, ptr %i.bi, i64 %.04582
   %i.bq = load i8, ptr %i.bo, align 1, !tbaa !20, !range !92, !noundef !93
   store i8 %i.bq, ptr %i.bp, align 1, !tbaa !20
   %i.br = getelementptr inbounds nuw i8, ptr %.044, i64 %.04582 ; 2 uses
@@ -627,7 +627,8 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge
   %i.bi = icmp ne ptr %.043, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
   tail call void @llvm.assume(i1 %i.bi)
   %i.bj = getelementptr i8, ptr %.pn47, i64 -48
-  %i.bk = getelementptr i8, ptr %.pn48, i64 -48
+  %i.bk = getelementptr i8, ptr %.pn48, i64 -48   ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bk) ]
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %_ZN5folly3f146detail8F14ChunkIiE6setTagEmm.exit
@@ -649,8 +650,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   %.sroa.8.1.in = phi i32 [ %i.bn, %bb.g ], [ %.sroa.8.089, %bb.f ] ; 2 uses
   %i.bp = zext i32 %.sroa.8.1.in to i64           ; 2 uses
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.bj, i64 %i.bp
-  %i.br = getelementptr inbounds nuw [4 x i8], ptr %i.bk, i64 %.04590 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.br) ]
+  %i.br = getelementptr inbounds nuw [4 x i8], ptr %i.bk, i64 %.04590
   %i.bs = load i32, ptr %i.bq, align 4, !tbaa !3
   store i32 %i.bs, ptr %i.br, align 4, !tbaa !3
   %i.bt = getelementptr inbounds nuw i8, ptr %.044, i64 %.04590 ; 2 uses
@@ -1053,7 +1053,8 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge
   %i.bg = icmp ne ptr %.043, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
   tail call void @llvm.assume(i1 %i.bg)
   %i.bh = getelementptr i8, ptr %.pn47, i64 -16
-  %i.bi = getelementptr i8, ptr %.pn48, i64 -16
+  %i.bi = getelementptr i8, ptr %.pn48, i64 -16   ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bi) ]
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %_ZN5folly3f146detail8F14ChunkIaE6setTagEmm.exit
@@ -1075,8 +1076,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   %.sroa.8.1.in = phi i32 [ %i.bl, %bb.g ], [ %.sroa.8.081, %bb.f ] ; 2 uses
   %i.bn = zext i32 %.sroa.8.1.in to i64           ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bh, i64 %i.bn
-  %i.bp = getelementptr inbounds nuw i8, ptr %i.bi, i64 %.04582 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bp) ]
+  %i.bp = getelementptr inbounds nuw i8, ptr %i.bi, i64 %.04582
   %i.bq = load i8, ptr %i.bo, align 1, !tbaa !14
   store i8 %i.bq, ptr %i.bp, align 1, !tbaa !14
   %i.br = getelementptr inbounds nuw i8, ptr %.044, i64 %.04582 ; 2 uses
@@ -1479,7 +1479,8 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge
   %i.bm = icmp ne ptr %.043, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
   tail call void @llvm.assume(i1 %i.bm)
   %i.bn = getelementptr i8, ptr %.pn47, i64 -32
-  %i.bo = getelementptr i8, ptr %.pn48, i64 -32
+  %i.bo = getelementptr i8, ptr %.pn48, i64 -32   ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bo) ]
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %_ZN5folly3f146detail8F14ChunkIsE6setTagEmm.exit
@@ -1501,8 +1502,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   %.sroa.8.1.in = phi i32 [ %i.br, %bb.g ], [ %.sroa.8.087, %bb.f ] ; 2 uses
   %i.bt = zext i32 %.sroa.8.1.in to i64           ; 2 uses
   %i.bu = getelementptr inbounds nuw [2 x i8], ptr %i.bn, i64 %i.bt
-  %i.bv = getelementptr inbounds nuw [2 x i8], ptr %i.bo, i64 %.04588 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bv) ]
+  %i.bv = getelementptr inbounds nuw [2 x i8], ptr %i.bo, i64 %.04588
   %i.bw = load i16, ptr %i.bu, align 2, !tbaa !3011
   store i16 %i.bw, ptr %i.bv, align 2, !tbaa !3011
   %i.bx = getelementptr inbounds nuw i8, ptr %.044, i64 %.04588 ; 2 uses
@@ -1905,7 +1905,8 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge
   %i.bm = icmp ne ptr %.043, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
   tail call void @llvm.assume(i1 %i.bm)
   %i.bn = getelementptr i8, ptr %.pn47, i64 -112
-  %i.bo = getelementptr i8, ptr %.pn48, i64 -112
+  %i.bo = getelementptr i8, ptr %.pn48, i64 -112  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bo) ]
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %_ZN5folly3f146detail8F14ChunkIlE6setTagEmm.exit
@@ -1927,8 +1928,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   %.sroa.8.1.in = phi i32 [ %i.br, %bb.g ], [ %.sroa.8.083, %bb.f ] ; 2 uses
   %i.bt = zext i32 %.sroa.8.1.in to i64           ; 2 uses
   %i.bu = getelementptr inbounds nuw [8 x i8], ptr %i.bn, i64 %i.bt
-  %i.bv = getelementptr inbounds nuw [8 x i8], ptr %i.bo, i64 %.04584 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bv) ]
+  %i.bv = getelementptr inbounds nuw [8 x i8], ptr %i.bo, i64 %.04584
   %i.bw = load i64, ptr %i.bu, align 8, !tbaa !106
   store i64 %i.bw, ptr %i.bv, align 8, !tbaa !106
   %i.bx = getelementptr inbounds nuw i8, ptr %.044, i64 %.04584 ; 2 uses
@@ -2331,7 +2331,8 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge
   %i.bn = icmp ne ptr %.043, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
   tail call void @llvm.assume(i1 %i.bn)
   %i.bo = getelementptr i8, ptr %.pn47, i64 -240
-  %i.bp = getelementptr i8, ptr %.pn48, i64 -240
+  %i.bp = getelementptr i8, ptr %.pn48, i64 -240  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bp) ]
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %_ZN5folly3f146detail8F14ChunkInE6setTagEmm.exit
@@ -2353,8 +2354,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   %.sroa.8.1.in = phi i32 [ %i.bs, %bb.g ], [ %.sroa.8.085, %bb.f ] ; 2 uses
   %i.bu = zext i32 %.sroa.8.1.in to i64           ; 2 uses
   %i.bv = getelementptr inbounds nuw [16 x i8], ptr %i.bo, i64 %i.bu
-  %i.bw = getelementptr inbounds nuw [16 x i8], ptr %i.bp, i64 %.04586 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bw) ]
+  %i.bw = getelementptr inbounds nuw [16 x i8], ptr %i.bp, i64 %.04586
   %i.bx = load i128, ptr %i.bv, align 16, !tbaa !3853
   store i128 %i.bx, ptr %i.bw, align 16, !tbaa !3853
   %i.by = getelementptr inbounds nuw i8, ptr %.044, i64 %.04586 ; 2 uses
@@ -2757,7 +2757,8 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge
   %i.bi = icmp ne ptr %.043, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
   tail call void @llvm.assume(i1 %i.bi)
   %i.bj = getelementptr i8, ptr %.pn47, i64 -48
-  %i.bk = getelementptr i8, ptr %.pn48, i64 -48
+  %i.bk = getelementptr i8, ptr %.pn48, i64 -48   ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bk) ]
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %_ZN5folly3f146detail8F14ChunkIfE6setTagEmm.exit
@@ -2779,8 +2780,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   %.sroa.8.1.in = phi i32 [ %i.bn, %bb.g ], [ %.sroa.8.089, %bb.f ] ; 2 uses
   %i.bp = zext i32 %.sroa.8.1.in to i64           ; 2 uses
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.bj, i64 %i.bp
-  %i.br = getelementptr inbounds nuw [4 x i8], ptr %i.bk, i64 %.04590 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.br) ]
+  %i.br = getelementptr inbounds nuw [4 x i8], ptr %i.bk, i64 %.04590
   %i.bs = load float, ptr %i.bq, align 4, !tbaa !3911
   store float %i.bs, ptr %i.br, align 4, !tbaa !3911
   %i.bt = getelementptr inbounds nuw i8, ptr %.044, i64 %.04590 ; 2 uses
@@ -3183,7 +3183,8 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge
   %i.bm = icmp ne ptr %.043, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
   tail call void @llvm.assume(i1 %i.bm)
   %i.bn = getelementptr i8, ptr %.pn47, i64 -112
-  %i.bo = getelementptr i8, ptr %.pn48, i64 -112
+  %i.bo = getelementptr i8, ptr %.pn48, i64 -112  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bo) ]
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %_ZN5folly3f146detail8F14ChunkIdE6setTagEmm.exit
@@ -3205,8 +3206,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   %.sroa.8.1.in = phi i32 [ %i.br, %bb.g ], [ %.sroa.8.083, %bb.f ] ; 2 uses
   %i.bt = zext i32 %.sroa.8.1.in to i64           ; 2 uses
   %i.bu = getelementptr inbounds nuw [8 x i8], ptr %i.bn, i64 %i.bt
-  %i.bv = getelementptr inbounds nuw [8 x i8], ptr %i.bo, i64 %.04584 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bv) ]
+  %i.bv = getelementptr inbounds nuw [8 x i8], ptr %i.bo, i64 %.04584
   %i.bw = load double, ptr %i.bu, align 8, !tbaa !4000
   store double %i.bw, ptr %i.bv, align 8, !tbaa !4000
   %i.bx = getelementptr inbounds nuw i8, ptr %.044, i64 %.04584 ; 2 uses
@@ -3609,7 +3609,8 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge
   %i.bn = icmp ne ptr %.043, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
   tail call void @llvm.assume(i1 %i.bn)
   %i.bo = getelementptr i8, ptr %.pn47, i64 -240
-  %i.bp = getelementptr i8, ptr %.pn48, i64 -240
+  %i.bp = getelementptr i8, ptr %.pn48, i64 -240  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bp) ]
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %_ZN5folly3f146detail8F14ChunkIN8facebook5velox10StringViewEE6setTagEmm.exit
@@ -3631,8 +3632,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   %.sroa.8.1.in = phi i32 [ %i.bs, %bb.g ], [ %.sroa.8.085, %bb.f ] ; 2 uses
   %i.bu = zext i32 %.sroa.8.1.in to i64           ; 2 uses
   %i.bv = getelementptr inbounds nuw [16 x i8], ptr %i.bo, i64 %i.bu
-  %i.bw = getelementptr inbounds nuw [16 x i8], ptr %i.bp, i64 %.04586 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bw) ]
+  %i.bw = getelementptr inbounds nuw [16 x i8], ptr %i.bp, i64 %.04586
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bw, ptr noundef nonnull align 8 dereferenceable(16) %i.bv, i64 16, i1 false), !tbaa.struct !4109
   %i.bx = getelementptr inbounds nuw i8, ptr %.044, i64 %.04586 ; 2 uses
   %i.by = load i8, ptr %i.bx, align 1, !tbaa !14
@@ -4035,7 +4035,8 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge
   %i.bn = icmp ne ptr %.043, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
   tail call void @llvm.assume(i1 %i.bn)
   %i.bo = getelementptr i8, ptr %.pn47, i64 -240
-  %i.bp = getelementptr i8, ptr %.pn48, i64 -240
+  %i.bp = getelementptr i8, ptr %.pn48, i64 -240  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bp) ]
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %_ZN5folly3f146detail8F14ChunkIN8facebook5velox9TimestampEE6setTagEmm.exit
@@ -4057,8 +4058,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   %.sroa.8.1.in = phi i32 [ %i.bs, %bb.g ], [ %.sroa.8.085, %bb.f ] ; 2 uses
   %i.bu = zext i32 %.sroa.8.1.in to i64           ; 2 uses
   %i.bv = getelementptr inbounds nuw [16 x i8], ptr %i.bo, i64 %i.bu
-  %i.bw = getelementptr inbounds nuw [16 x i8], ptr %i.bp, i64 %.04586 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bw) ]
+  %i.bw = getelementptr inbounds nuw [16 x i8], ptr %i.bp, i64 %.04586
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bw, ptr noundef nonnull align 8 dereferenceable(16) %i.bv, i64 16, i1 false), !tbaa.struct !4183
   %i.bx = getelementptr inbounds nuw i8, ptr %.044, i64 %.04586 ; 2 uses
   %i.by = load i8, ptr %i.bx, align 1, !tbaa !14
