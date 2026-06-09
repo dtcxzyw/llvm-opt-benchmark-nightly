@@ -201,7 +201,7 @@ bb.a:
 _ZN5folly14checkUnixErrorIJRA20_KcEEEvlDpOT_.exit: ; preds = %.critedge, %bb.a
   %.0 = phi i64 [ 0, %bb.a ], [ %i.aj, %.critedge ] ; 5 uses
   %i.e = load ptr, ptr %i.c, align 8, !tbaa !1174
-  %i.f = load ptr, ptr %1, align 8, !tbaa !1177   ; 4 uses
+  %i.f = load ptr, ptr %1, align 8, !tbaa !1177   ; 5 uses
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = sub i64 %i.g, %i.h
@@ -210,6 +210,7 @@ _ZN5folly14checkUnixErrorIJRA20_KcEEEvlDpOT_.exit: ; preds = %.critedge, %bb.a
   br i1 %i.k, label %.preheader.preheader, label %bb.c
 
 .preheader.preheader:                             ; preds = %_ZN5folly14checkUnixErrorIJRA20_KcEEEvlDpOT_.exit
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.f) ]
   %i.l = xor i64 %.0, -1
   %i.m = add i64 %i.j, %i.l                       ; 2 uses
   %min.iters.check = icmp ult i64 %i.m, 8
@@ -576,6 +577,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #24
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.a = load ptr, ptr %2, align 8, !tbaa !18, !noalias !1202
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.c = load ptr, ptr %i.b, align 8, !noalias !1202

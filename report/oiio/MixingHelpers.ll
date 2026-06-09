@@ -201,7 +201,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !47
-  %i.d = load ptr, ptr %i.a, align 8, !tbaa !43   ; 2 uses
+  %i.d = load ptr, ptr %i.a, align 8, !tbaa !43   ; 3 uses
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f
@@ -211,6 +211,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw [32 x i8], ptr %i.d, i64 %1
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d) ]
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !48
   ret ptr %i.k
 
@@ -452,7 +453,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !47   ; 2 uses
-  %i.d = load ptr, ptr %i.a, align 8, !tbaa !43   ; 3 uses
+  %i.d = load ptr, ptr %i.a, align 8, !tbaa !43   ; 4 uses
   %.not = icmp eq ptr %i.c, %i.d
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
@@ -461,6 +462,7 @@ bb.a:
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f
   %i.h = ashr exact i64 %i.g, 5
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d) ]
   %i.i = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #24 ; 3 uses
   %i.j = icmp eq i64 %i.i, 0
   br label %bb.b
@@ -611,7 +613,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !47
-  %i.d = load ptr, ptr %i.a, align 8, !tbaa !43   ; 2 uses
+  %i.d = load ptr, ptr %i.a, align 8, !tbaa !43   ; 3 uses
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f
@@ -621,6 +623,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw [32 x i8], ptr %i.d, i64 %1
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d) ]
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !48
   ret ptr %i.k
 
@@ -841,7 +844,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !47   ; 2 uses
-  %i.d = load ptr, ptr %i.a, align 8, !tbaa !43   ; 3 uses
+  %i.d = load ptr, ptr %i.a, align 8, !tbaa !43   ; 4 uses
   %.not = icmp eq ptr %i.c, %i.d
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
@@ -850,6 +853,7 @@ bb.a:
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f
   %i.h = ashr exact i64 %i.g, 5
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d) ]
   %i.i = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #24 ; 3 uses
   %i.j = icmp eq i64 %i.i, 0
   br label %bb.b
@@ -1252,12 +1256,13 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit: ; preds = %bb.b, %
 
 bb.d:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
   %i.aj = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.18, i64 noundef 17) ; 0 uses
-  %i.ak = load ptr, ptr %i.ae, align 8, !tbaa !103 ; 4 uses
+  %i.ak = load ptr, ptr %i.ae, align 8, !tbaa !103 ; 5 uses
   %i.al = load ptr, ptr %i.ag, align 8, !tbaa !103 ; 3 uses
   %.not18 = icmp eq ptr %i.ak, %i.al
   br i1 %.not18, label %._crit_edge, label %.lr.ph.preheader._crit_edge
 
 .lr.ph.preheader._crit_edge:                      ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ak) ]
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
   %.pre22 = load i64, ptr %.phi.trans.insert, align 8, !tbaa !40
   %.pre = load ptr, ptr %i.ak, align 8, !tbaa !48
@@ -1660,10 +1665,10 @@ declare float @llvm.fabs.f32(float) #6
 declare float @llvm.log10.f32(float) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #6
+declare i64 @llvm.umin.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #6
+declare i64 @llvm.umax.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #23

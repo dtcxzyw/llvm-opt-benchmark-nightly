@@ -117,7 +117,8 @@ bb.f:                                             ; preds = %bb.a
   %.val4 = load ptr, ptr %2, align 8, !tbaa !25   ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !26)
   %i.ad = getelementptr i8, ptr %.val4, i64 %i.b
-  %i.ae = getelementptr i8, ptr %i.ad, i64 -1
+  %i.ae = getelementptr i8, ptr %i.ad, i64 -1     ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ae) ]
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !21, !noalias !26
   %.not.i = icmp eq i8 %i.af, 47
   br i1 %.not.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i56.i

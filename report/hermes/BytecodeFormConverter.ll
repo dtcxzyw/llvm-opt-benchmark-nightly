@@ -201,6 +201,7 @@ bb.f:                                             ; preds = %_ZNK6hermes3hbc20BC
   %i.aq = getelementptr inbounds i8, ptr %.sroa.0.0.i.i.i, i64 -1
   %i.ar = load i32, ptr %i.aq, align 1, !tbaa !73
   %i.as = zext i32 %i.ar to i64
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
   %i.at = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i, i64 7
   %i.au = load i32, ptr %i.at, align 1, !tbaa !75
   br label %_ZNK6hermes3hbc21RuntimeFunctionHeader19bytecodeSizeInBytesEv.exit.i.i
@@ -208,6 +209,7 @@ bb.f:                                             ; preds = %_ZNK6hermes3hbc20BC
 bb.g:                                             ; preds = %_ZNK6hermes3hbc20BCProviderFromBuffer17getFunctionHeaderEj.exit.i.i
   %i.av = load i64, ptr %.sroa.0.0.i.i.i, align 1 ; 2 uses
   %i.aw = and i64 %i.av, 33554431
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
   %i.ax = lshr i64 %i.av, 32
   %i.ay = trunc nuw i64 %i.ax to i32
   %i.az = and i32 %i.ay, 32767
@@ -610,6 +612,7 @@ bb.u:                                             ; preds = %_ZNK6hermes3hbc20BC
   %i.lz = getelementptr inbounds i8, ptr %.sroa.0.0.i.i.i49, i64 -1
   %i.ma = load i32, ptr %i.lz, align 1, !tbaa !73
   %i.mb = zext i32 %i.ma to i64
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
   %i.mc = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i49, i64 7
   %i.md = load i32, ptr %i.mc, align 1, !tbaa !75
   br label %_ZNK6hermes3hbc21RuntimeFunctionHeader19bytecodeSizeInBytesEv.exit.i.i50
@@ -617,6 +620,7 @@ bb.u:                                             ; preds = %_ZNK6hermes3hbc20BC
 bb.v:                                             ; preds = %_ZNK6hermes3hbc20BCProviderFromBuffer17getFunctionHeaderEj.exit.i.i48
   %i.me = load i64, ptr %.sroa.0.0.i.i.i49, align 1 ; 2 uses
   %i.mf = and i64 %i.me, 33554431
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
   %i.mg = lshr i64 %i.me, 32
   %i.mh = trunc nuw i64 %i.mg to i32
   %i.mi = and i32 %i.mh, 32767

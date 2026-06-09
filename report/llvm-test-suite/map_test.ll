@@ -116,7 +116,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !8
-  %i.e = load ptr, ptr %i.b, align 32, !tbaa !12  ; 2 uses
+  %i.e = load ptr, ptr %i.b, align 32, !tbaa !12  ; 3 uses
   %.not = icmp eq ptr %i.d, %i.e
   br i1 %.not, label %bb.b, label %_ZNK9benchmark5State5rangeEm.exit
 
@@ -125,6 +125,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNK9benchmark5State5rangeEm.exit:                ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
   %i.f = load i64, ptr %i.e, align 8, !tbaa !13
   %.fr = freeze i64 %i.f                          ; 2 uses
   %i.g = trunc i64 %.fr to i32                    ; 5 uses
@@ -515,7 +516,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !8
-  %i.e = load ptr, ptr %i.b, align 32, !tbaa !12  ; 2 uses
+  %i.e = load ptr, ptr %i.b, align 32, !tbaa !12  ; 3 uses
   %.not = icmp eq ptr %i.d, %i.e
   br i1 %.not, label %bb.b, label %_ZNK9benchmark5State5rangeEm.exit
 
@@ -524,6 +525,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNK9benchmark5State5rangeEm.exit:                ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
   %i.f = load i64, ptr %i.e, align 8, !tbaa !13   ; 2 uses
   %i.g = trunc i64 %i.f to i32                    ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 28
@@ -926,7 +928,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !8
-  %i.d = load ptr, ptr %i.a, align 32, !tbaa !12  ; 2 uses
+  %i.d = load ptr, ptr %i.a, align 32, !tbaa !12  ; 3 uses
   %.not = icmp eq ptr %i.c, %i.d
   br i1 %.not, label %bb.b, label %_ZNK9benchmark5State5rangeEm.exit
 
@@ -935,6 +937,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNK9benchmark5State5rangeEm.exit:                ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d) ]
   %i.e = load i64, ptr %i.d, align 8, !tbaa !13
   %i.f = trunc i64 %i.e to i32
   call fastcc void @_ZN12_GLOBAL__N_118ConstructRandomMapEi(ptr dead_on_unwind noalias writable align 8 %2, i32 noundef %i.f)
@@ -1337,9 +1340,9 @@ bb.u:                                             ; preds = %bb.t, %._crit_edge.
   %spec.select21.i42 = select i1 %i.bm, ptr %.019.lcssa28.i39, ptr null
   br label %_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE24_M_get_insert_unique_posERS1_.exit
 
-_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE24_M_get_insert_unique_posERS1_.exit: ; preds = %bb.u, %._crit_edge.thread.i47, %bb.n, %._crit_edge.thread.i27, %bb.g, %._crit_edge.thread.i, %bb.r, %bb.k, %bb.o, %bb.p, %bb.i, %bb.c
-  %.sroa.070.2 = phi ptr [ null, %bb.p ], [ %spec.select, %bb.k ], [ null, %bb.c ], [ %spec.select72, %bb.r ], [ null, %._crit_edge.thread.i ], [ %i.ab, %bb.i ], [ %1, %bb.o ], [ null, %._crit_edge.thread.i27 ], [ %spec.select.i, %bb.g ], [ %spec.select.i21, %bb.n ], [ %spec.select.i41, %bb.u ], [ null, %._crit_edge.thread.i47 ]
-  %.sroa.12.2 = phi ptr [ %i.au, %bb.p ], [ %spec.select71, %bb.k ], [ %i.f, %bb.c ], [ %spec.select73, %bb.r ], [ %.019.lcssa29.i, %._crit_edge.thread.i ], [ %i.ab, %bb.i ], [ null, %bb.o ], [ %.019.lcssa29.i28, %._crit_edge.thread.i27 ], [ %spec.select21.i, %bb.g ], [ %spec.select21.i22, %bb.n ], [ %spec.select21.i42, %bb.u ], [ %.019.lcssa29.i48, %._crit_edge.thread.i47 ]
+_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE24_M_get_insert_unique_posERS1_.exit: ; preds = %bb.u, %._crit_edge.thread.i47, %bb.p, %bb.n, %._crit_edge.thread.i27, %bb.i, %bb.g, %._crit_edge.thread.i, %bb.c, %bb.r, %bb.k, %bb.o
+  %.sroa.070.2 = phi ptr [ null, %bb.c ], [ null, %bb.p ], [ %spec.select, %bb.k ], [ %spec.select72, %bb.r ], [ null, %._crit_edge.thread.i ], [ %i.ab, %bb.i ], [ %1, %bb.o ], [ null, %._crit_edge.thread.i27 ], [ %spec.select.i, %bb.g ], [ %spec.select.i21, %bb.n ], [ %spec.select.i41, %bb.u ], [ null, %._crit_edge.thread.i47 ]
+  %.sroa.12.2 = phi ptr [ %i.f, %bb.c ], [ %i.au, %bb.p ], [ %spec.select71, %bb.k ], [ %spec.select73, %bb.r ], [ %.019.lcssa29.i, %._crit_edge.thread.i ], [ %i.ab, %bb.i ], [ null, %bb.o ], [ %.019.lcssa29.i28, %._crit_edge.thread.i27 ], [ %spec.select21.i, %bb.g ], [ %spec.select21.i22, %bb.n ], [ %spec.select21.i42, %bb.u ], [ %.019.lcssa29.i48, %._crit_edge.thread.i47 ]
   %.fca.0.insert = insertvalue { ptr, ptr } poison, ptr %.sroa.070.2, 0
   %.fca.1.insert = insertvalue { ptr, ptr } %.fca.0.insert, ptr %.sroa.12.2, 1
   ret { ptr, ptr } %.fca.1.insert
@@ -1742,7 +1745,7 @@ bb.i:                                             ; preds = %_ZNKSt4lessINSt7__c
   %i.ba = extractvalue { ptr, ptr } %i.ay, 1
   br label %bb.n
 
-_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i29: ; preds = %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit18.thread68, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit18.thread
+_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i29: ; preds = %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit18.thread, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit18.thread68
   %i.bb = tail call i32 @memcmp(ptr noundef %i.aa, ptr noundef %i.ab, i64 noundef %.sroa.speculated.i.i.i10) #19 ; 2 uses
   %.not.i.i.i30 = icmp eq i32 %i.bb, 0
   br i1 %.not.i.i.i30, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i32, label %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit36
@@ -1807,9 +1810,9 @@ bb.m:                                             ; preds = %_ZNKSt4lessINSt7__c
   %i.bw = extractvalue { ptr, ptr } %i.bu, 1
   br label %bb.n
 
-bb.n:                                             ; preds = %bb.l, %bb.h, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit36, %bb.m, %bb.j, %bb.i, %bb.f, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit, %bb.d
-  %.sroa.066.2 = phi ptr [ %i.s, %bb.d ], [ %spec.select, %bb.h ], [ null, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit ], [ %spec.select74, %bb.l ], [ %i.az, %bb.i ], [ %i.aj, %bb.f ], [ %1, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit36 ], [ %i.bv, %bb.m ], [ null, %bb.j ]
-  %.sroa.12.2 = phi ptr [ %i.t, %bb.d ], [ %spec.select73, %bb.h ], [ %i.f, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit ], [ %spec.select75, %bb.l ], [ %i.ba, %bb.i ], [ %i.aj, %bb.f ], [ null, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit36 ], [ %i.bw, %bb.m ], [ %i.bf, %bb.j ]
+bb.n:                                             ; preds = %bb.j, %bb.f, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit, %bb.l, %bb.h, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit36, %bb.m, %bb.i, %bb.d
+  %.sroa.066.2 = phi ptr [ %i.s, %bb.d ], [ %i.bv, %bb.m ], [ %spec.select, %bb.h ], [ %spec.select74, %bb.l ], [ null, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit ], [ %i.az, %bb.i ], [ %1, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit36 ], [ %i.aj, %bb.f ], [ null, %bb.j ]
+  %.sroa.12.2 = phi ptr [ %i.t, %bb.d ], [ %i.bw, %bb.m ], [ %spec.select73, %bb.h ], [ %spec.select75, %bb.l ], [ %i.f, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit ], [ %i.ba, %bb.i ], [ null, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit36 ], [ %i.aj, %bb.f ], [ %i.bf, %bb.j ]
   %.fca.0.insert = insertvalue { ptr, ptr } poison, ptr %.sroa.066.2, 0
   %.fca.1.insert = insertvalue { ptr, ptr } %.fca.0.insert, ptr %.sroa.12.2, 1
   ret { ptr, ptr } %.fca.1.insert

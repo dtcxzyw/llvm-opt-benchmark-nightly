@@ -201,6 +201,7 @@ _ZNSt6vectorIPN9c_grammar10definitionIN5boost6spirit7scannerIPKcNS3_16scanner_po
 bb.f:                                             ; preds = %_ZNSt6vectorIPN9c_grammar10definitionIN5boost6spirit7scannerIPKcNS3_16scanner_policiesINS3_28skip_parser_iteration_policyI12skip_grammarNS3_16iteration_policyEEENS3_12match_policyENS3_13action_policyEEEEEEESaISH_EE6resizeEm.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #23
   %i.u = tail call noalias noundef nonnull dereferenceable(1408) ptr @_Znwm(i64 noundef 1408) #28 ; 5 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   invoke void @_ZN9c_grammar10definitionIN5boost6spirit7scannerIPKcNS2_16scanner_policiesINS2_28skip_parser_iteration_policyI12skip_grammarNS2_16iteration_policyEEENS2_12match_policyENS2_13action_policyEEEEEEC2ERKS_(ptr noundef nonnull align 8 dereferenceable(1408) %i.u, ptr noundef nonnull align 8 dereferenceable(48) %1)
           to label %bb.g unwind label %bb.m
 
@@ -278,7 +279,7 @@ _ZNSt8auto_ptrIN9c_grammar10definitionIN5boost6spirit7scannerIPKcNS3_16scanner_p
   %i.ar = load i64, ptr %i.aq, align 8, !tbaa !167
   %i.as = add i64 %i.ar, 1
   store i64 %i.as, ptr %i.aq, align 8, !tbaa !167
-  %i.at = load ptr, ptr %i.d, align 8, !tbaa !157
+  %i.at = load ptr, ptr %i.d, align 8, !tbaa !157, !nonnull !35, !noundef !35
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %i.c
   store ptr %i.u, ptr %i.au, align 8, !tbaa !162
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #23
@@ -408,7 +409,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !161
-  %i.f = load ptr, ptr %i.c, align 8, !tbaa !157  ; 3 uses
+  %i.f = load ptr, ptr %i.c, align 8, !tbaa !157  ; 4 uses
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = sub i64 %i.g, %i.h
@@ -418,6 +419,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.f) ]
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !162  ; 3 uses
   %i.m = icmp eq ptr %i.l, null
   br i1 %i.m, label %bb.d, label %bb.c
@@ -820,6 +822,7 @@ _ZNSt6vectorIPN12skip_grammar10definitionIN5boost6spirit7scannerIPKcNS3_16scanne
 bb.f:                                             ; preds = %_ZNSt6vectorIPN12skip_grammar10definitionIN5boost6spirit7scannerIPKcNS3_16scanner_policiesINS3_27no_skipper_iteration_policyINS3_28skip_parser_iteration_policyIS0_NS3_16iteration_policyEEEEENS3_12match_policyENS3_13action_policyEEEEEEESaISI_EE6resizeEm.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #23
   %i.u = tail call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #28 ; 5 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   store ptr null, ptr %i.u, align 8, !tbaa !119
   %i.v = invoke noalias noundef nonnull dereferenceable(152) ptr @_Znwm(i64 noundef 152) #28
           to label %bb.g unwind label %bb.m       ; 20 uses
@@ -975,7 +978,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !1075
-  %i.f = load ptr, ptr %i.c, align 8, !tbaa !1071 ; 3 uses
+  %i.f = load ptr, ptr %i.c, align 8, !tbaa !1071 ; 4 uses
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = sub i64 %i.g, %i.h
@@ -985,6 +988,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.f) ]
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !1076 ; 3 uses
   %i.m = icmp eq ptr %i.l, null
   br i1 %i.m, label %bb.e, label %bb.c
@@ -1387,10 +1391,10 @@ declare void @llvm.assume(i1 noundef) #20
 declare void @llvm.experimental.noalias.scope.decl(metadata) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #22
+declare i64 @llvm.umin.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #22
+declare i64 @llvm.umax.i64(i64, i64) #22
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { mustprogress norecurse uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

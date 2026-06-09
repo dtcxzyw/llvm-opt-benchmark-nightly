@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %_ZNK6hermes2vm10Nat
   %i.as = inttoptr i64 %i.am to ptr
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !52 ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 168 ; 2 uses
-  %i.av = load ptr, ptr %i.au, align 8, !tbaa !57 ; 3 uses
+  %i.av = load ptr, ptr %i.au, align 8, !tbaa !57 ; 4 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.at, i64 184
   %i.ax = load i32, ptr %i.aw, align 8, !tbaa !60 ; 2 uses
   %i.ay = icmp eq i32 %i.ax, 0
@@ -210,6 +210,7 @@ bb.b:                                             ; preds = %_ZNK6hermes2vm10Nat
 bb.c:                                             ; preds = %bb.b
   %i.az = mul i32 %i.aj, 37
   %i.ba = add i32 %i.ax, -1                       ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.av) ]
   %.02744.i.i.i = and i32 %i.ba, %i.az            ; 2 uses
   %i.bb = zext i32 %.02744.i.i.i to i64           ; 2 uses
   %i.bc = getelementptr inbounds nuw [16 x i8], ptr %i.av, i64 %i.bb
@@ -612,7 +613,8 @@ bb.e:                                             ; preds = %.lr.ph, %_ZN6hermes
   %i.al = sext i32 %.053 to i64
   %i.am = sub nsw i64 0, %i.al
   %i.an = getelementptr [8 x i8], ptr %i.l, i64 %i.am
-  %i.ao = getelementptr i8, ptr %i.an, i64 -64
+  %i.ao = getelementptr i8, ptr %i.an, i64 -64    ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao) ]
   %.sroa.02.0.copyload = load i64, ptr %i.ao, align 8, !tbaa !16 ; 9 uses
   %i.ap = ashr i64 %.sroa.02.0.copyload, 47
   switch i64 %i.ap, label %bb.m [
@@ -1015,13 +1017,14 @@ declare { i32, i64 } @_ZN6hermes2vm11toInt32_RJSERNS0_7RuntimeENS0_6HandleINS0_1
 declare noundef i32 @_ZN6hermes2vm7Runtime15raiseRangeErrorERKNS0_11TwineChar16E(ptr noundef nonnull align 8 dereferenceable(9816), ptr noundef nonnull align 8 dereferenceable(48)) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN6hermes2vm20createHermesBuiltinsERNS0_7RuntimeEN4llvh15MutableArrayRefIPNS0_8CallableEEE(ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr nofree writeonly captures(none) initializes((296, 416)) %1, i64 %2) local_unnamed_addr #0 {
+define hidden void @_ZN6hermes2vm20createHermesBuiltinsERNS0_7RuntimeEN4llvh15MutableArrayRefIPNS0_8CallableEEE(ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr nofree writeonly captures(none) %1, i64 %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 15 uses
   %i.b = tail call ptr @_ZN6hermes2vm14NativeFunction6createERNS0_7RuntimeENS0_6HandleINS0_8JSObjectEEEPvPFNS0_10CallResultINS0_11HermesValueELNS0_6detail20CallResultSpecializeE2EEES7_S3_NS0_10NativeArgsEENS0_8SymbolIDEjS6_j(ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr nonnull %i.a, ptr noundef null, ptr noundef nonnull @_ZN6hermes2vm26silentObjectSetPrototypeOfEPvRNS0_7RuntimeENS0_10NativeArgsE, i32 442, i32 noundef 2, i64 ptrtoint (ptr @_ZN6hermes2vm15HandleRootOwner12nullPointer_E to i64), i32 noundef 0) #10
   %.sroa.0.0.copyload.i.i.i.i = load i64, ptr %i.b, align 8, !tbaa !16
   %i.c = and i64 %.sroa.0.0.copyload.i.i.i.i, 281474976710655
   %i.d = inttoptr i64 %i.c to ptr
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 296
   store ptr %i.d, ptr %i.e, align 8, !tbaa !437
   %i.f = tail call ptr @_ZN6hermes2vm14NativeFunction6createERNS0_7RuntimeENS0_6HandleINS0_8JSObjectEEEPvPFNS0_10CallResultINS0_11HermesValueELNS0_6detail20CallResultSpecializeE2EEES7_S3_NS0_10NativeArgsEENS0_8SymbolIDEjS6_j(ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr nonnull %i.a, ptr noundef null, ptr noundef nonnull @_ZN6hermes2vm30hermesBuiltinGetTemplateObjectEPvRNS0_7RuntimeENS0_10NativeArgsE, i32 448, i32 noundef 0, i64 ptrtoint (ptr @_ZN6hermes2vm15HandleRootOwner12nullPointer_E to i64), i32 noundef 0) #10
@@ -1119,7 +1122,7 @@ declare i32 @_ZN6hermes2vm8JSObject25defineOwnPropertyInternalENS0_6HandleIS1_EE
 define linkonce_odr hidden noundef nonnull align 8 dereferenceable(16) ptr @_ZN4llvh12DenseMapBaseINS_8DenseMapIjPN6hermes2vm8JSObjectENS_12DenseMapInfoIjEENS_6detail12DenseMapPairIjS5_EEEEjS5_S7_SA_E16FindAndConstructERKj(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 4 dereferenceable(4) %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
-  %i.b = load ptr, ptr %0, align 8, !tbaa !57     ; 2 uses
+  %i.b = load ptr, ptr %0, align 8, !tbaa !57     ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = load i32, ptr %i.c, align 8, !tbaa !60   ; 7 uses
   %i.e = icmp eq i32 %i.d, 0
@@ -1129,6 +1132,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = load i32, ptr %1, align 4, !tbaa !3      ; 3 uses
   %i.g = mul i32 %i.f, 37
   %i.h = add i32 %i.d, -1                         ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.b) ]
   %.02744.i.i = and i32 %i.g, %i.h                ; 2 uses
   %i.i = zext i32 %.02744.i.i to i64
   %i.j = getelementptr inbounds nuw [16 x i8], ptr %i.b, i64 %i.i ; 3 uses
@@ -1230,7 +1234,7 @@ _ZN4llvh12DenseMapBaseINS_8DenseMapIjPN6hermes2vm8JSObjectENS_12DenseMapInfoIjEE
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZN4llvh12DenseMapBaseINS_8DenseMapIjPN6hermes2vm8JSObjectENS_12DenseMapInfoIjEENS_6detail12DenseMapPairIjS5_EEEEjS5_S7_SA_E15LookupBucketForIjEEbRKT_RPSA_(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 4 dereferenceable(4) %1, ptr noundef nonnull align 8 dereferenceable(8) %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !57     ; 2 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !57     ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.c = load i32, ptr %i.b, align 8, !tbaa !60   ; 2 uses
   %i.d = icmp eq i32 %i.c, 0
@@ -1240,6 +1244,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = load i32, ptr %1, align 4, !tbaa !3      ; 3 uses
   %i.f = mul i32 %i.e, 37
   %i.g = add i32 %i.c, -1                         ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.a) ]
   %.02744.i = and i32 %i.f, %i.g                  ; 2 uses
   %i.h = zext i32 %.02744.i to i64
   %i.i = getelementptr inbounds nuw [16 x i8], ptr %i.a, i64 %i.h ; 3 uses
@@ -1479,7 +1484,8 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i
   br i1 %i.ca, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIjPN6hermes2vm8JSObjectENS_12DenseMapInfoIjEENS_6detail12DenseMapPairIjS5_EEEEjS5_S7_SA_E15LookupBucketForIjEEbRKT_RPSA_.exit.i, label %.lr.ph.i.i.i, !prof !62, !llvm.loop !63
 
 _ZN4llvh12DenseMapBaseINS_8DenseMapIjPN6hermes2vm8JSObjectENS_12DenseMapInfoIjEENS_6detail12DenseMapPairIjS5_EEEEjS5_S7_SA_E15LookupBucketForIjEEbRKT_RPSA_.exit.i: ; preds = %bb.e, %bb.d, %bb.c
-  %.sink.i.i.i = phi ptr [ %i.bs, %bb.d ], [ %i.bm, %bb.c ], [ %i.by, %bb.e ] ; 2 uses
+  %.sink.i.i.i = phi ptr [ %i.bs, %bb.d ], [ %i.bm, %bb.c ], [ %i.by, %bb.e ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sink.i.i.i) ]
   store i32 %i.bj, ptr %.sink.i.i.i, align 4, !tbaa !3
   %i.cb = getelementptr inbounds nuw i8, ptr %.sink.i.i.i, i64 8
   %i.cc = getelementptr inbounds nuw i8, ptr %.019.i, i64 8

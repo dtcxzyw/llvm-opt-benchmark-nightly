@@ -192,7 +192,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.f = load ptr, ptr %0, align 8, !tbaa !14     ; 2 uses
   %i.g = getelementptr i8, ptr %i.f, i64 %i.d
-  %i.h = getelementptr i8, ptr %i.g, i64 -1
+  %i.h = getelementptr i8, ptr %i.g, i64 -1       ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   %i.i = load i8, ptr %i.h, align 1, !tbaa !15
   switch i8 %i.i, label %bb.g [
     i8 120, label %bb.c
@@ -241,7 +242,7 @@ bb.f:                                             ; preds = %_ZN9benchmark8inter
   %i.t = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %.pr24, ptr noundef nonnull @.str.2, i64 noundef 44) ; 0 uses
   br label %_ZN9benchmark8internallsIA45_cEERNS0_7LogTypeES4_RKT_.exit
 
-_ZN9benchmark8internallsIA45_cEERNS0_7LogTypeES4_RKT_.exit: ; preds = %_ZN9benchmark8internal18GetNullLogInstanceEv.exit, %_ZN9benchmark8internallsIA56_cEERNS0_7LogTypeES4_RKT_.exit, %_ZN9benchmark8internallsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERNS0_7LogTypeES9_RKT_.exit, %bb.f
+_ZN9benchmark8internallsIA45_cEERNS0_7LogTypeES4_RKT_.exit: ; preds = %_ZN9benchmark8internallsIA56_cEERNS0_7LogTypeES4_RKT_.exit, %_ZN9benchmark8internal18GetNullLogInstanceEv.exit, %_ZN9benchmark8internallsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERNS0_7LogTypeES9_RKT_.exit, %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
   br label %bb.r
 
@@ -312,7 +313,7 @@ bb.n:                                             ; preds = %_ZN9benchmark8inter
   %i.af = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %.pr30.pr, ptr noundef nonnull @.str.5, i64 noundef 85) ; 0 uses
   br label %_ZN9benchmark8internallsIA86_cEERNS0_7LogTypeES4_RKT_.exit
 
-_ZN9benchmark8internallsIA86_cEERNS0_7LogTypeES4_RKT_.exit: ; preds = %bb.b, %_ZN9benchmark8internallsIA8_cEERNS0_7LogTypeES4_RKT_.exit, %_ZN9benchmark8internal22GetLogInstanceForLevelEi.exit, %_ZN9benchmark8internallsIiEERNS0_7LogTypeES3_RKT_.exit, %bb.n, %_ZN9benchmark8internallsIA4_cEERNS0_7LogTypeES4_RKT_.exit
+_ZN9benchmark8internallsIA86_cEERNS0_7LogTypeES4_RKT_.exit: ; preds = %_ZN9benchmark8internal22GetLogInstanceForLevelEi.exit, %_ZN9benchmark8internallsIA8_cEERNS0_7LogTypeES4_RKT_.exit, %bb.n, %_ZN9benchmark8internallsIA4_cEERNS0_7LogTypeES4_RKT_.exit, %_ZN9benchmark8internallsIiEERNS0_7LogTypeES3_RKT_.exit, %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #23
   %i.ag = tail call ptr @__errno_location() #24
   store i32 0, ptr %i.ag, align 4, !tbaa !4
@@ -355,7 +356,7 @@ bb.q:                                             ; preds = %_ZN9benchmark8inter
   %i.ar = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %.pr34, ptr noundef nonnull @.str.7, i64 noundef 42) ; 0 uses
   br label %_ZN9benchmark8internallsIA43_cEERNS0_7LogTypeES4_RKT_.exit
 
-_ZN9benchmark8internallsIA43_cEERNS0_7LogTypeES4_RKT_.exit: ; preds = %_ZN9benchmark8internal18GetNullLogInstanceEv.exit18, %_ZN9benchmark8internallsIA58_cEERNS0_7LogTypeES4_RKT_.exit, %_ZN9benchmark8internallsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERNS0_7LogTypeES9_RKT_.exit21, %bb.q
+_ZN9benchmark8internallsIA43_cEERNS0_7LogTypeES4_RKT_.exit: ; preds = %_ZN9benchmark8internallsIA58_cEERNS0_7LogTypeES4_RKT_.exit, %_ZN9benchmark8internal18GetNullLogInstanceEv.exit18, %_ZN9benchmark8internallsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERNS0_7LogTypeES9_RKT_.exit21, %bb.q
   %i.as = bitcast double %i.ai to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #23
   br label %bb.r
@@ -758,7 +759,7 @@ bb.h:                                             ; preds = %_ZN9benchmark8inter
   %i.l = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %.pr96.pr, ptr noundef nonnull @.str.9, i64 noundef 8) ; 0 uses
   br label %_ZN9benchmark8internallsIA9_cEERNS0_7LogTypeES4_RKT_.exit
 
-_ZN9benchmark8internallsIA9_cEERNS0_7LogTypeES4_RKT_.exit: ; preds = %_ZN9benchmark8internallsIA8_cEERNS0_7LogTypeES4_RKT_.exit, %_ZN9benchmark8internal22GetLogInstanceForLevelEi.exit, %_ZN9benchmark8internallsIiEERNS0_7LogTypeES3_RKT_.exit, %_ZN9benchmark8internallsIA4_cEERNS0_7LogTypeES4_RKT_.exit, %bb.h
+_ZN9benchmark8internallsIA9_cEERNS0_7LogTypeES4_RKT_.exit: ; preds = %_ZN9benchmark8internal22GetLogInstanceForLevelEi.exit, %_ZN9benchmark8internallsIA8_cEERNS0_7LogTypeES4_RKT_.exit, %_ZN9benchmark8internallsIiEERNS0_7LogTypeES3_RKT_.exit, %_ZN9benchmark8internallsIA4_cEERNS0_7LogTypeES4_RKT_.exit, %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 5 uses
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !50, !nonnull !48, !align !97
@@ -987,7 +988,7 @@ _ZNKSt14default_deleteINSt6thread6_StateEEclEPS1_.exit.i12.i: ; preds = %bb.s
 
 bb.t:                                             ; preds = %_ZNKSt14default_deleteINSt6thread6_StateEEclEPS1_.exit.i.i, %bb.r
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
-  %i.cs = load ptr, ptr %i.be, align 8, !tbaa !79 ; 2 uses
+  %i.cs = load ptr, ptr %i.be, align 8, !tbaa !79, !nonnull !48, !noundef !48 ; 2 uses
   %i.ct = getelementptr inbounds nuw [8 x i8], ptr %i.cs, i64 %.014139 ; 2 uses
   %.sroa.0.0.copyload.i.i = load i64, ptr %i.ct, align 8, !tbaa !93
   %.not.i38 = icmp eq i64 %.sroa.0.0.copyload.i.i, 0
@@ -1070,7 +1071,8 @@ bb.y:                                             ; preds = %._crit_edge144
   unreachable
 
 .lr.ph143:                                        ; preds = %bb.x, %bb.z
-  %.sroa.086.0141 = phi ptr [ %i.du, %bb.z ], [ %i.dd, %bb.x ] ; 2 uses
+  %.sroa.086.0141 = phi ptr [ %i.du, %bb.z ], [ %i.dd, %bb.x ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.086.0141) ]
   invoke void @_ZNSt6thread4joinEv(ptr noundef nonnull align 8 dereferenceable(8) %.sroa.086.0141)
           to label %bb.z unwind label %bb.aa
 
@@ -1473,7 +1475,7 @@ bb.h:                                             ; preds = %_ZN9benchmark8inter
   %i.ai = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %.pr39.pr.pr, ptr noundef nonnull @.str.11, i64 noundef 1) ; 0 uses
   br label %_ZN9benchmark8internallsIA2_cEERNS0_7LogTypeES4_RKT_.exit
 
-_ZN9benchmark8internallsIA2_cEERNS0_7LogTypeES4_RKT_.exit: ; preds = %_ZN9benchmark8internallsIiEERNS0_7LogTypeES3_RKT_.exit, %_ZN9benchmark8internallsIA4_cEERNS0_7LogTypeES4_RKT_.exit, %_ZN9benchmark8internal22GetLogInstanceForLevelEi.exit, %_ZN9benchmark8internallsIA8_cEERNS0_7LogTypeES4_RKT_.exit, %_ZN9benchmark8internallsIlEERNS0_7LogTypeES3_RKT_.exit, %_ZN9benchmark8internallsIA13_cEERNS0_7LogTypeES4_RKT_.exit, %_ZN9benchmark8internallsIA3_cEERNS0_7LogTypeES4_RKT_.exit, %_ZN9benchmark8internallsIdEERNS0_7LogTypeES3_RKT_.exit, %bb.h
+_ZN9benchmark8internallsIA2_cEERNS0_7LogTypeES4_RKT_.exit: ; preds = %_ZN9benchmark8internal22GetLogInstanceForLevelEi.exit, %_ZN9benchmark8internallsIA8_cEERNS0_7LogTypeES4_RKT_.exit, %_ZN9benchmark8internallsIiEERNS0_7LogTypeES3_RKT_.exit, %_ZN9benchmark8internallsIA4_cEERNS0_7LogTypeES4_RKT_.exit, %_ZN9benchmark8internallsIA13_cEERNS0_7LogTypeES4_RKT_.exit, %_ZN9benchmark8internallsIlEERNS0_7LogTypeES3_RKT_.exit, %_ZN9benchmark8internallsIA3_cEERNS0_7LogTypeES4_RKT_.exit, %_ZN9benchmark8internallsIdEERNS0_7LogTypeES3_RKT_.exit, %bb.h
   ret i64 %.sroa.speculated20
 }
 
@@ -1843,7 +1845,8 @@ _ZNSt6vectorIN9benchmark13MemoryManager6ResultESaIS2_EE17_M_realloc_insertIJS2_E
   br label %_ZNSt6vectorIN9benchmark13MemoryManager6ResultESaIS2_EE9push_backEOS2_.exit
 
 _ZNSt6vectorIN9benchmark13MemoryManager6ResultESaIS2_EE9push_backEOS2_.exit: ; preds = %bb.b, %_ZNSt6vectorIN9benchmark13MemoryManager6ResultESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i
-  %i.z = phi ptr [ %i.g, %bb.b ], [ %.0.lcssa.i.i.i.i.i.i, %_ZNSt6vectorIN9benchmark13MemoryManager6ResultESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ] ; 2 uses
+  %i.z = phi ptr [ %.0.lcssa.i.i.i.i.i.i, %_ZNSt6vectorIN9benchmark13MemoryManager6ResultESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ], [ %i.g, %bb.b ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.z) ]
   %i.aa = load ptr, ptr @_ZN9benchmark8internal14memory_managerE, align 8, !tbaa !194 ; 2 uses
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !121
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
@@ -2246,10 +2249,10 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #21
 declare i64 @llvm.smin.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #22
+declare i64 @llvm.umin.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #22
+declare i64 @llvm.umax.i64(i64, i64) #22
 
 attributes #0 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nocallback nofree nounwind willreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

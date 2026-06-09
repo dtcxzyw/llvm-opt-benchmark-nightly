@@ -201,7 +201,8 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.o
   %i.cc = add i64 %i.bn, 24
-  %i.cd = inttoptr i64 %i.cc to ptr
+  %i.cd = inttoptr i64 %i.cc to ptr               ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cd) ]
   %i.ce = getelementptr i8, ptr %i.cd, i64 16
   %i.cf = load i64, ptr %i.ce, align 8, !tbaa !398
   br label %RHASH_EMPTY_P.exit.i
@@ -348,7 +349,8 @@ bb.ad:                                            ; preds = %bb.ac
 
 bb.ae:                                            ; preds = %bb.ac
   %i.eg = add i64 %i.dr, 24
-  %i.eh = inttoptr i64 %i.eg to ptr
+  %i.eh = inttoptr i64 %i.eg to ptr               ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.eh) ]
   %i.ei = getelementptr i8, ptr %i.eh, i64 16
   %i.ej = load i64, ptr %i.ei, align 8, !tbaa !398
   br label %RHASH_EMPTY_P.exit.i67

@@ -143,10 +143,14 @@ bb.c:                                             ; preds = %bb.a
   %i.u = load i64, ptr %i.t, align 8, !tbaa !36
   call void @llvm.memset.p0.i64(ptr align 1 %i.s, i8 0, i64 %i.u, i1 false)
   %.not5.i = icmp eq i64 %2, 0
-  br i1 %.not5.i, label %_ZN5arrow8internal12_GLOBAL__N_117FillBitsFromBytesENS_4util4spanIKhEEPh.exit, label %.lr.ph.i.a
+  br i1 %.not5.i, label %_ZN5arrow8internal12_GLOBAL__N_117FillBitsFromBytesENS_4util4spanIKhEEPh.exit, label %.lr.ph.i
 
-.lr.ph.i.a:                                       ; preds = %bb.c, %bb.e
-  %.04.i = phi i64 [ %i.ae, %bb.e ], [ 0, %bb.c ] ; 4 uses
+.lr.ph.i:                                         ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
+  br label %.lr.ph.i.a
+
+.lr.ph.i.a:                                       ; preds = %bb.e, %.lr.ph.i
+  %.04.i = phi i64 [ 0, %.lr.ph.i ], [ %i.ae, %bb.e ] ; 4 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 %.04.i
   %i.w = load i8, ptr %i.v, align 1, !tbaa !37
   %.not.i = icmp eq i8 %i.w, 0

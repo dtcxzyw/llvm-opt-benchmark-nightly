@@ -201,9 +201,7 @@ _ZNKSt6vectorIN12_GLOBAL__N_18TestCaseESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; p
   %i.o = add nsw i64 %.sroa.speculated.i.i.i, %i.m ; 2 uses
   %i.p = icmp ult i64 %i.o, %i.m
   %i.q = call i64 @llvm.umin.i64(i64 %i.o, i64 144115188075855871)
-  %i.r = select i1 %i.p, i64 144115188075855871, i64 %i.q ; 3 uses
-  %.not.i.i.i = icmp ne i64 %i.r, 0
-  call void @llvm.assume(i1 %.not.i.i.i)
+  %i.r = select i1 %i.p, i64 144115188075855871, i64 %i.q ; 2 uses
   %i.s = shl nuw nsw i64 %i.r, 6                  ; 2 uses
   %i.t = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.s) #27 ; 7 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.k ; 2 uses
@@ -606,7 +604,8 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %bb.b, %bb.f
   %.sroa.016.022 = phi ptr [ %i.p, %bb.f ], [ %_ZN12_GLOBAL__N_115ExpectedResultsE.val.i, %bb.b ] ; 3 uses
-  %.sroa.013.021 = phi ptr [ %i.q, %bb.f ], [ %i.k, %bb.b ] ; 2 uses
+  %.sroa.013.021 = phi ptr [ %i.q, %bb.f ], [ %i.k, %bb.b ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.013.021) ]
   %.val.i10 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_115ExpectedResultsE, i64 8), align 8, !tbaa !65
   %.not17 = icmp eq ptr %.sroa.016.022, %.val.i10
   br i1 %.not17, label %bb.d, label %bb.e
@@ -1009,7 +1008,8 @@ bb.l:                                             ; preds = %bb.j
 
 .lr.ph:                                           ; preds = %bb.l, %bb.o
   %.sroa.019.028 = phi ptr [ %i.ap, %bb.o ], [ %i.ag, %bb.l ] ; 3 uses
-  %.sroa.016.027 = phi ptr [ %i.aq, %bb.o ], [ %i.am, %bb.l ] ; 2 uses
+  %.sroa.016.027 = phi ptr [ %i.aq, %bb.o ], [ %i.am, %bb.l ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.016.027) ]
   %.val.i12 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_115ExpectedResultsE, i64 8), align 8, !tbaa !65
   %.not23 = icmp eq ptr %.sroa.019.028, %.val.i12
   br i1 %.not23, label %bb.m, label %bb.n
@@ -1412,7 +1412,8 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.d, %.lr.ph.i.i.i.i.i
   %.013.i.i.i.i.i = phi ptr [ %i.r, %.lr.ph.i.i.i.i.i ], [ %i.h, %bb.d ] ; 2 uses
-  %.sroa.08.012.i.i.i.i.i = phi ptr [ %i.q, %.lr.ph.i.i.i.i.i ], [ %i.p, %bb.d ] ; 2 uses
+  %.sroa.08.012.i.i.i.i.i = phi ptr [ %i.q, %.lr.ph.i.i.i.i.i ], [ %i.p, %bb.d ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.08.012.i.i.i.i.i) ]
   tail call void @_ZN9benchmark17BenchmarkReporter3RunC2EOS1_(ptr noundef nonnull align 8 dereferenceable(560) %.013.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(560) %.sroa.08.012.i.i.i.i.i) #28
   %i.q = getelementptr inbounds nuw i8, ptr %.sroa.08.012.i.i.i.i.i, i64 560 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 560
@@ -1454,7 +1455,8 @@ _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKN9benchmark17BenchmarkReporter3R
 
 .lr.ph.i.i.i.i:                                   ; preds = %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKN9benchmark17BenchmarkReporter3RunESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit, %_ZSt10_ConstructIN9benchmark17BenchmarkReporter3RunEJRKS2_EEvPT_DpOT0_.exit.i.i.i.i
   %.014.i.i.i.i = phi ptr [ %i.ag, %_ZSt10_ConstructIN9benchmark17BenchmarkReporter3RunEJRKS2_EEvPT_DpOT0_.exit.i.i.i.i ], [ %i.h, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKN9benchmark17BenchmarkReporter3RunESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit ] ; 3 uses
-  %.sroa.08.013.i.i.i.i = phi ptr [ %i.af, %_ZSt10_ConstructIN9benchmark17BenchmarkReporter3RunEJRKS2_EEvPT_DpOT0_.exit.i.i.i.i ], [ %i.ae, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKN9benchmark17BenchmarkReporter3RunESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit ] ; 2 uses
+  %.sroa.08.013.i.i.i.i = phi ptr [ %i.af, %_ZSt10_ConstructIN9benchmark17BenchmarkReporter3RunEJRKS2_EEvPT_DpOT0_.exit.i.i.i.i ], [ %i.ae, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKN9benchmark17BenchmarkReporter3RunESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.08.013.i.i.i.i) ]
   invoke void @_ZN9benchmark17BenchmarkReporter3RunC2ERKS1_(ptr noundef nonnull align 8 dereferenceable(560) %.014.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(560) %.sroa.08.013.i.i.i.i)
           to label %_ZSt10_ConstructIN9benchmark17BenchmarkReporter3RunEJRKS2_EEvPT_DpOT0_.exit.i.i.i.i unwind label %bb.e
 
@@ -1510,7 +1512,8 @@ _ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPKN9benchmark17Bench
 
 .lr.ph.i.i.i.i.i53:                               ; preds = %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPKN9benchmark17BenchmarkReporter3RunESt6vectorIS4_SaIS4_EEEEPS4_S4_ET0_T_SD_SC_RSaIT1_E.exit, %.lr.ph.i.i.i.i.i53
   %.013.i.i.i.i.i54 = phi ptr [ %i.ar, %.lr.ph.i.i.i.i.i53 ], [ %i.ap, %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPKN9benchmark17BenchmarkReporter3RunESt6vectorIS4_SaIS4_EEEEPS4_S4_ET0_T_SD_SC_RSaIT1_E.exit ] ; 2 uses
-  %.sroa.08.012.i.i.i.i.i55 = phi ptr [ %i.aq, %.lr.ph.i.i.i.i.i53 ], [ %1, %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPKN9benchmark17BenchmarkReporter3RunESt6vectorIS4_SaIS4_EEEEPS4_S4_ET0_T_SD_SC_RSaIT1_E.exit ] ; 2 uses
+  %.sroa.08.012.i.i.i.i.i55 = phi ptr [ %i.aq, %.lr.ph.i.i.i.i.i53 ], [ %1, %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPKN9benchmark17BenchmarkReporter3RunESt6vectorIS4_SaIS4_EEEEPS4_S4_ET0_T_SD_SC_RSaIT1_E.exit ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.08.012.i.i.i.i.i55) ]
   tail call void @_ZN9benchmark17BenchmarkReporter3RunC2EOS1_(ptr noundef nonnull align 8 dereferenceable(560) %.013.i.i.i.i.i54, ptr noundef nonnull align 8 dereferenceable(560) %.sroa.08.012.i.i.i.i.i55) #28
   %i.aq = getelementptr inbounds nuw i8, ptr %.sroa.08.012.i.i.i.i.i55, i64 560 ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i54, i64 560
@@ -1562,7 +1565,8 @@ _ZNSt12_Vector_baseIN9benchmark17BenchmarkReporter3RunESaIS2_EE11_M_allocateEm.e
 
 .lr.ph.i.i.i.i.i60:                               ; preds = %_ZNSt12_Vector_baseIN9benchmark17BenchmarkReporter3RunESaIS2_EE11_M_allocateEm.exit, %.lr.ph.i.i.i.i.i60
   %.013.i.i.i.i.i61 = phi ptr [ %i.bj, %.lr.ph.i.i.i.i.i60 ], [ %i.bh, %_ZNSt12_Vector_baseIN9benchmark17BenchmarkReporter3RunESaIS2_EE11_M_allocateEm.exit ] ; 2 uses
-  %.sroa.08.012.i.i.i.i.i62 = phi ptr [ %i.bi, %.lr.ph.i.i.i.i.i60 ], [ %i.av, %_ZNSt12_Vector_baseIN9benchmark17BenchmarkReporter3RunESaIS2_EE11_M_allocateEm.exit ] ; 2 uses
+  %.sroa.08.012.i.i.i.i.i62 = phi ptr [ %i.bi, %.lr.ph.i.i.i.i.i60 ], [ %i.av, %_ZNSt12_Vector_baseIN9benchmark17BenchmarkReporter3RunESaIS2_EE11_M_allocateEm.exit ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.08.012.i.i.i.i.i62) ]
   tail call void @_ZN9benchmark17BenchmarkReporter3RunC2EOS1_(ptr noundef nonnull align 8 dereferenceable(560) %.013.i.i.i.i.i61, ptr noundef nonnull align 8 dereferenceable(560) %.sroa.08.012.i.i.i.i.i62) #28
   %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.08.012.i.i.i.i.i62, i64 560 ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i61, i64 560 ; 2 uses
@@ -1575,7 +1579,8 @@ _ZSt34__uninitialized_move_if_noexcept_aIPN9benchmark17BenchmarkReporter3RunES3_
 
 .lr.ph.i.i.i.i66:                                 ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPN9benchmark17BenchmarkReporter3RunES3_SaIS2_EET0_T_S6_S5_RT1_.exit, %_ZSt10_ConstructIN9benchmark17BenchmarkReporter3RunEJRKS2_EEvPT_DpOT0_.exit.i.i.i.i70
   %.014.i.i.i.i67 = phi ptr [ %i.bl, %_ZSt10_ConstructIN9benchmark17BenchmarkReporter3RunEJRKS2_EEvPT_DpOT0_.exit.i.i.i.i70 ], [ %.0.lcssa.i.i.i.i.i64, %_ZSt34__uninitialized_move_if_noexcept_aIPN9benchmark17BenchmarkReporter3RunES3_SaIS2_EET0_T_S6_S5_RT1_.exit ] ; 3 uses
-  %.sroa.08.013.i.i.i.i68 = phi ptr [ %i.bk, %_ZSt10_ConstructIN9benchmark17BenchmarkReporter3RunEJRKS2_EEvPT_DpOT0_.exit.i.i.i.i70 ], [ %2, %_ZSt34__uninitialized_move_if_noexcept_aIPN9benchmark17BenchmarkReporter3RunES3_SaIS2_EET0_T_S6_S5_RT1_.exit ] ; 2 uses
+  %.sroa.08.013.i.i.i.i68 = phi ptr [ %i.bk, %_ZSt10_ConstructIN9benchmark17BenchmarkReporter3RunEJRKS2_EEvPT_DpOT0_.exit.i.i.i.i70 ], [ %2, %_ZSt34__uninitialized_move_if_noexcept_aIPN9benchmark17BenchmarkReporter3RunES3_SaIS2_EET0_T_S6_S5_RT1_.exit ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.08.013.i.i.i.i68) ]
   invoke void @_ZN9benchmark17BenchmarkReporter3RunC2ERKS1_(ptr noundef nonnull align 8 dereferenceable(560) %.014.i.i.i.i67, ptr noundef nonnull align 8 dereferenceable(560) %.sroa.08.013.i.i.i.i68)
           to label %_ZSt10_ConstructIN9benchmark17BenchmarkReporter3RunEJRKS2_EEvPT_DpOT0_.exit.i.i.i.i70 unwind label %bb.l
 
@@ -1619,7 +1624,8 @@ _ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPKN9benchmark17Bench
 
 .lr.ph.i.i.i.i.i75:                               ; preds = %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPKN9benchmark17BenchmarkReporter3RunESt6vectorIS4_SaIS4_EEEEPS4_S4_ET0_T_SD_SC_RSaIT1_E.exit73, %.lr.ph.i.i.i.i.i75
   %.013.i.i.i.i.i76 = phi ptr [ %i.bt, %.lr.ph.i.i.i.i.i75 ], [ %i.bl, %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPKN9benchmark17BenchmarkReporter3RunESt6vectorIS4_SaIS4_EEEEPS4_S4_ET0_T_SD_SC_RSaIT1_E.exit73 ] ; 2 uses
-  %.sroa.08.012.i.i.i.i.i77 = phi ptr [ %i.bs, %.lr.ph.i.i.i.i.i75 ], [ %1, %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPKN9benchmark17BenchmarkReporter3RunESt6vectorIS4_SaIS4_EEEEPS4_S4_ET0_T_SD_SC_RSaIT1_E.exit73 ] ; 2 uses
+  %.sroa.08.012.i.i.i.i.i77 = phi ptr [ %i.bs, %.lr.ph.i.i.i.i.i75 ], [ %1, %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPKN9benchmark17BenchmarkReporter3RunESt6vectorIS4_SaIS4_EEEEPS4_S4_ET0_T_SD_SC_RSaIT1_E.exit73 ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.08.012.i.i.i.i.i77) ]
   tail call void @_ZN9benchmark17BenchmarkReporter3RunC2EOS1_(ptr noundef nonnull align 8 dereferenceable(560) %.013.i.i.i.i.i76, ptr noundef nonnull align 8 dereferenceable(560) %.sroa.08.012.i.i.i.i.i77) #28
   %i.bs = getelementptr inbounds nuw i8, ptr %.sroa.08.012.i.i.i.i.i77, i64 560 ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i76, i64 560 ; 2 uses
@@ -2022,7 +2028,7 @@ bb.m:                                             ; preds = %_ZN9benchmark8inter
   %i.aj = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %.pr26.pr.pr, ptr noundef nonnull @.str.42, i64 noundef 10) ; 0 uses
   br label %_ZN9benchmark8internallsIA11_cEERNS0_7LogTypeES4_RKT_.exit
 
-_ZN9benchmark8internallsIA11_cEERNS0_7LogTypeES4_RKT_.exit: ; preds = %_ZN9benchmark8internallsIA2_cEERNS0_7LogTypeES4_RKT_.exit, %_ZN9benchmark8internallsIiEERNS0_7LogTypeES3_RKT_.exit, %_ZN9benchmark8internal19GetErrorLogInstanceEv.exit, %_ZN9benchmark8internallsIPKcEERNS0_7LogTypeES5_RKT_.exit, %_ZN9benchmark8internallsIPKcEERNS0_7LogTypeES5_RKT_.exit7, %_ZN9benchmark8internallsIA3_cEERNS0_7LogTypeES4_RKT_.exit, %_ZN9benchmark8internallsIA10_cEERNS0_7LogTypeES4_RKT_.exit, %_ZN9benchmark8internallsIPKcEERNS0_7LogTypeES5_RKT_.exit11, %bb.m
+_ZN9benchmark8internallsIA11_cEERNS0_7LogTypeES4_RKT_.exit: ; preds = %_ZN9benchmark8internallsIiEERNS0_7LogTypeES3_RKT_.exit, %_ZN9benchmark8internallsIA2_cEERNS0_7LogTypeES4_RKT_.exit, %_ZN9benchmark8internallsIPKcEERNS0_7LogTypeES5_RKT_.exit, %_ZN9benchmark8internal19GetErrorLogInstanceEv.exit, %_ZN9benchmark8internallsIA3_cEERNS0_7LogTypeES4_RKT_.exit, %_ZN9benchmark8internallsIPKcEERNS0_7LogTypeES5_RKT_.exit7, %_ZN9benchmark8internallsIA10_cEERNS0_7LogTypeES4_RKT_.exit, %_ZN9benchmark8internallsIPKcEERNS0_7LogTypeES5_RKT_.exit11, %bb.m
   ret void
 }
 

@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %_RINvMsi_NtCs3gpiEk
 
 _RINvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_12RawIterRangeTNtNtCs6Po7BT7Nknu_5alloc6string6StringBV_EE9next_implKb0_ECsj34PGqTgg0L_16deltalake_lakefs.exit.i.i.i: ; preds = %.lr.ph.i.i.i.i, %bb.d
   %.sroa.6.1.i.i.i = phi ptr [ %.sroa.6.015.i.i.i, %bb.d ], [ %i.q, %.lr.ph.i.i.i.i ]
-  %.sroa.05.1.i.i.i = phi ptr [ %.sroa.05.016.i.i.i, %bb.d ], [ %i.p, %.lr.ph.i.i.i.i ] ; 2 uses
+  %.sroa.05.1.i.i.i = phi ptr [ %.sroa.05.016.i.i.i, %bb.d ], [ %i.p, %.lr.ph.i.i.i.i ] ; 3 uses
   %.lcssa.i.i.i.i = phi i16 [ %.sroa.86.013.i.i.i, %bb.d ], [ %.cast.i.i.i.i, %.lr.ph.i.i.i.i ] ; 3 uses
   %i.r = add i16 %.lcssa.i.i.i.i, -1
   %i.s = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.lcssa.i.i.i.i, i1 true)
@@ -209,6 +209,7 @@ _RINvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_12RawIterRangeTNtNtCs6Po7BT7Nknu_5a
   %i.u = and i16 %i.r, %.lcssa.i.i.i.i
   %i.v = sub nsw i64 0, %i.t
   %i.w = getelementptr inbounds [48 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.05.1.i.i.i) ]
   %i.x = add i64 %.sroa.107.014.i.i.i, -1         ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -48
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringBH_EECsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef align 8 dereferenceable(48) %i.y), !noalias !123
@@ -284,7 +285,7 @@ bb.d:                                             ; preds = %_RINvMsi_NtCs3gpiEk
 
 _RINvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_12RawIterRangeTNtNtCsjyY8HP3IvQ6_12object_store10attributes9AttributeNtBX_14AttributeValueEE9next_implKb0_ECsj34PGqTgg0L_16deltalake_lakefs.exit.i.i.i: ; preds = %.lr.ph.i.i.i.i, %bb.d
   %.sroa.6.1.i.i.i = phi ptr [ %.sroa.6.015.i.i.i, %bb.d ], [ %i.q, %.lr.ph.i.i.i.i ]
-  %.sroa.05.1.i.i.i = phi ptr [ %.sroa.05.016.i.i.i, %bb.d ], [ %i.p, %.lr.ph.i.i.i.i ] ; 2 uses
+  %.sroa.05.1.i.i.i = phi ptr [ %.sroa.05.016.i.i.i, %bb.d ], [ %i.p, %.lr.ph.i.i.i.i ] ; 3 uses
   %.lcssa.i.i.i.i = phi i16 [ %.sroa.86.013.i.i.i, %bb.d ], [ %.cast.i.i.i.i, %.lr.ph.i.i.i.i ] ; 3 uses
   %i.r = add i16 %.lcssa.i.i.i.i, -1
   %i.s = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.lcssa.i.i.i.i, i1 true)
@@ -292,6 +293,7 @@ _RINvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_12RawIterRangeTNtNtCsjyY8HP3IvQ6_12
   %i.u = and i16 %i.r, %.lcssa.i.i.i.i
   %i.v = sub nsw i64 0, %i.t
   %i.w = getelementptr inbounds [48 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.05.1.i.i.i) ]
   %i.x = add i64 %.sroa.107.014.i.i.i, -1         ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -48
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCsjyY8HP3IvQ6_12object_store10attributes9AttributeNtBJ_14AttributeValueEECsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef align 8 dereferenceable(48) %i.y), !noalias !144
@@ -694,7 +696,7 @@ bb.b:                                             ; preds = %_RINvMsi_NtCs3gpiEk
 
 _RINvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_12RawIterRangeTNtNtCs6Po7BT7Nknu_5alloc6string6StringBV_EE9next_implKb0_ECsj34PGqTgg0L_16deltalake_lakefs.exit.i: ; preds = %bb.b, %._crit_edge.i.i
   %.promoted12.i.i6 = phi ptr [ %i.n, %._crit_edge.i.i ], [ %.promoted12.i.i7, %bb.b ]
-  %.lcssa13 = phi ptr [ %i.m, %._crit_edge.i.i ], [ %.lcssa14, %bb.b ] ; 2 uses
+  %.lcssa13 = phi ptr [ %i.m, %._crit_edge.i.i ], [ %.lcssa14, %bb.b ] ; 3 uses
   %.lcssa.i.i = phi i16 [ %.cast.i.i, %._crit_edge.i.i ], [ %i.g, %bb.b ] ; 3 uses
   %i.o = add i16 %.lcssa.i.i, -1
   %i.p = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.lcssa.i.i, i1 true)
@@ -703,6 +705,7 @@ _RINvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_12RawIterRangeTNtNtCs6Po7BT7Nknu_5a
   store i16 %i.r, ptr %i.e, align 8, !alias.scope !385
   %i.s = sub nsw i64 0, %i.q
   %i.t = getelementptr inbounds [48 x i8], ptr %.lcssa13, i64 %i.s
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.lcssa13) ]
   %i.u = add i64 %i.h, -1                         ; 3 uses
   store i64 %i.u, ptr %i.b, align 8, !alias.scope !382
   %i.v = getelementptr inbounds i8, ptr %i.t, i64 -48
@@ -770,7 +773,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i
   br i1 %.not.i, label %bb.c, label %._crit_edge.i
 
 _RINvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_12RawIterRangeTNtNtCs6Po7BT7Nknu_5alloc6string6StringBV_EE9next_implKb0_ECsj34PGqTgg0L_16deltalake_lakefs.exit: ; preds = %bb.b, %._crit_edge.i
-  %i.n = phi ptr [ %i.l, %._crit_edge.i ], [ %.promoted.i, %bb.b ]
+  %i.n = phi ptr [ %i.l, %._crit_edge.i ], [ %.promoted.i, %bb.b ] ; 2 uses
   %.lcssa.i = phi i16 [ %.cast.i, %._crit_edge.i ], [ %i.f, %bb.b ] ; 3 uses
   %i.o = add i16 %.lcssa.i, -1
   %i.p = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.lcssa.i, i1 true)
@@ -779,6 +782,7 @@ _RINvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_12RawIterRangeTNtNtCs6Po7BT7Nknu_5a
   store i16 %i.r, ptr %i.e, align 8, !alias.scope !392
   %i.s = sub nsw i64 0, %i.q
   %i.t = getelementptr inbounds [48 x i8], ptr %i.n, i64 %i.s
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n) ]
   %i.u = add i64 %i.b, -1
   store i64 %i.u, ptr %i.a, align 8
   %i.v = getelementptr inbounds i8, ptr %i.t, i64 -48
@@ -1181,7 +1185,7 @@ bb.d:                                             ; preds = %_RINvMsi_NtCs3gpiEk
 
 _RINvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_12RawIterRangeTNtNtCs6Po7BT7Nknu_5alloc6string6StringBV_EE9next_implKb0_ECsj34PGqTgg0L_16deltalake_lakefs.exit.i.i: ; preds = %.lr.ph.i.i.i, %bb.d
   %.sroa.6.1.i.i = phi ptr [ %.sroa.6.015.i.i, %bb.d ], [ %i.q, %.lr.ph.i.i.i ]
-  %.sroa.05.1.i.i = phi ptr [ %.sroa.05.016.i.i, %bb.d ], [ %i.p, %.lr.ph.i.i.i ] ; 2 uses
+  %.sroa.05.1.i.i = phi ptr [ %.sroa.05.016.i.i, %bb.d ], [ %i.p, %.lr.ph.i.i.i ] ; 3 uses
   %.lcssa.i.i.i = phi i16 [ %.sroa.86.013.i.i, %bb.d ], [ %.cast.i.i.i, %.lr.ph.i.i.i ] ; 3 uses
   %i.r = add i16 %.lcssa.i.i.i, -1
   %i.s = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.lcssa.i.i.i, i1 true)
@@ -1189,6 +1193,7 @@ _RINvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_12RawIterRangeTNtNtCs6Po7BT7Nknu_5a
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
   %i.w = getelementptr inbounds [48 x i8], ptr %.sroa.05.1.i.i, i64 %i.v
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.05.1.i.i) ]
   %i.x = add i64 %.sroa.107.014.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -48
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringBH_EECsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef align 8 dereferenceable(48) %i.y), !noalias !509
@@ -1263,7 +1268,7 @@ bb.d:                                             ; preds = %_RINvNtCsbvkFyIu7lg
 
 _RINvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_12RawIterRangeTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema13MetadataValueEE9next_implKb0_ECsj34PGqTgg0L_16deltalake_lakefs.exit.i.i: ; preds = %.lr.ph.i.i.i, %bb.d
   %.sroa.6.1.i.i = phi ptr [ %.sroa.6.017.i.i, %bb.d ], [ %i.q, %.lr.ph.i.i.i ]
-  %.sroa.05.1.i.i = phi ptr [ %.sroa.05.018.i.i, %bb.d ], [ %i.p, %.lr.ph.i.i.i ] ; 2 uses
+  %.sroa.05.1.i.i = phi ptr [ %.sroa.05.018.i.i, %bb.d ], [ %i.p, %.lr.ph.i.i.i ] ; 3 uses
   %.lcssa.i.i.i = phi i16 [ %.sroa.86.015.i.i, %bb.d ], [ %.cast.i.i.i, %.lr.ph.i.i.i ] ; 3 uses
   %i.r = add i16 %.lcssa.i.i.i, -1
   %i.s = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.lcssa.i.i.i, i1 true)
@@ -1271,6 +1276,7 @@ _RINvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_12RawIterRangeTNtNtCs6Po7BT7Nknu_5a
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
   %i.w = getelementptr inbounds [56 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 5 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.05.1.i.i) ]
   %i.x = add i64 %.sroa.107.016.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -56 ; 3 uses
   invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef nonnull align 8 dereferenceable(56) %i.y)
@@ -1423,7 +1429,7 @@ bb.d:                                             ; preds = %_RINvNtCsbvkFyIu7lg
 
 _RINvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_12RawIterRangeTNtNtCsbvkFyIu7lgC_4core3any6TypeIdINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs4j34XAPZOn0_4http10extensions8AnyCloneNtNtBZ_6marker4SyncNtB2N_4SendEL_EEE9next_implKb0_ECsj34PGqTgg0L_16deltalake_lakefs.exit.i.i: ; preds = %.lr.ph.i.i.i, %bb.d
   %.sroa.6.1.i.i = phi ptr [ %.sroa.6.016.i.i, %bb.d ], [ %i.q, %.lr.ph.i.i.i ]
-  %.sroa.06.1.i.i = phi ptr [ %.sroa.06.017.i.i, %bb.d ], [ %i.p, %.lr.ph.i.i.i ] ; 2 uses
+  %.sroa.06.1.i.i = phi ptr [ %.sroa.06.017.i.i, %bb.d ], [ %i.p, %.lr.ph.i.i.i ] ; 3 uses
   %.lcssa.i.i.i = phi i16 [ %.sroa.87.014.i.i, %bb.d ], [ %.cast.i.i.i, %.lr.ph.i.i.i ] ; 3 uses
   %i.r = add i16 %.lcssa.i.i.i, -1
   %i.s = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.lcssa.i.i.i, i1 true)
@@ -1431,6 +1437,7 @@ _RINvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_12RawIterRangeTNtNtCsbvkFyIu7lgC_4c
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
   %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.06.1.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.06.1.i.i) ]
   %i.x = add i64 %.sroa.108.015.i.i, -1           ; 2 uses
   %i.y = getelementptr i8, ptr %i.w, i64 -16
   %.val.i.i = load ptr, ptr %i.y, align 8, !noalias !559 ; 5 uses
@@ -1547,7 +1554,7 @@ bb.d:                                             ; preds = %_RINvMsi_NtCs3gpiEk
 
 _RINvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_12RawIterRangeTNtNtCsjyY8HP3IvQ6_12object_store10attributes9AttributeNtBX_14AttributeValueEE9next_implKb0_ECsj34PGqTgg0L_16deltalake_lakefs.exit.i.i: ; preds = %.lr.ph.i.i.i, %bb.d
   %.sroa.6.1.i.i = phi ptr [ %.sroa.6.015.i.i, %bb.d ], [ %i.q, %.lr.ph.i.i.i ]
-  %.sroa.05.1.i.i = phi ptr [ %.sroa.05.016.i.i, %bb.d ], [ %i.p, %.lr.ph.i.i.i ] ; 2 uses
+  %.sroa.05.1.i.i = phi ptr [ %.sroa.05.016.i.i, %bb.d ], [ %i.p, %.lr.ph.i.i.i ] ; 3 uses
   %.lcssa.i.i.i = phi i16 [ %.sroa.86.013.i.i, %bb.d ], [ %.cast.i.i.i, %.lr.ph.i.i.i ] ; 3 uses
   %i.r = add i16 %.lcssa.i.i.i, -1
   %i.s = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.lcssa.i.i.i, i1 true)
@@ -1555,6 +1562,7 @@ _RINvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_12RawIterRangeTNtNtCsjyY8HP3IvQ6_12
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
   %i.w = getelementptr inbounds [48 x i8], ptr %.sroa.05.1.i.i, i64 %i.v
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.05.1.i.i) ]
   %i.x = add i64 %.sroa.107.014.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -48
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCsjyY8HP3IvQ6_12object_store10attributes9AttributeNtBJ_14AttributeValueEECsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef align 8 dereferenceable(48) %i.y), !noalias !576
@@ -1629,7 +1637,7 @@ bb.d:                                             ; preds = %_RINvNtCsbvkFyIu7lg
 
 _RINvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtCsjyY8HP3IvQ6_12object_store3aws7builder17AmazonS3ConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEE9next_implKb0_ECsj34PGqTgg0L_16deltalake_lakefs.exit.i.i: ; preds = %.lr.ph.i.i.i, %bb.d
   %.sroa.6.1.i.i = phi ptr [ %.sroa.6.017.i.i, %bb.d ], [ %i.q, %.lr.ph.i.i.i ]
-  %.sroa.05.1.i.i = phi ptr [ %.sroa.05.018.i.i, %bb.d ], [ %i.p, %.lr.ph.i.i.i ] ; 2 uses
+  %.sroa.05.1.i.i = phi ptr [ %.sroa.05.018.i.i, %bb.d ], [ %i.p, %.lr.ph.i.i.i ] ; 3 uses
   %.lcssa.i.i.i = phi i16 [ %.sroa.86.015.i.i, %bb.d ], [ %.cast.i.i.i, %.lr.ph.i.i.i ] ; 3 uses
   %i.r = add i16 %.lcssa.i.i.i, -1
   %i.s = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.lcssa.i.i.i, i1 true)
@@ -1637,6 +1645,7 @@ _RINvMsi_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtCsjyY8HP3IvQ6_
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
   %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.05.1.i.i) ]
   %i.x = add i64 %.sroa.107.016.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -24 ; 3 uses
   invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.y)

@@ -123,9 +123,9 @@ bb.h:                                             ; preds = %.noexc
 
 .noexc22:                                         ; preds = %bb.h
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 40
-  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !40, !noalias !37
+  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !40, !noalias !37, !nonnull !41, !noundef !41
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 51
-  %i.ac = load i8, ptr %i.ab, align 1, !tbaa !41, !range !42, !noalias !37, !noundef !43
+  %i.ac = load i8, ptr %i.ab, align 1, !tbaa !42, !range !43, !noalias !37, !noundef !41
   %i.ad = invoke noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #13
           to label %.noexc23 unwind label %bb.an  ; 6 uses
 
@@ -508,7 +508,8 @@ _ZNSt6vectorIPKN6google8protobuf8compiler4java27ImmutableFieldLiteGeneratorESaIS
   ret void
 
 .lr.ph:                                           ; preds = %bb.a, %bb.d
-  %.sroa.04.08 = phi ptr [ %i.p, %bb.d ], [ %i.b, %bb.a ] ; 2 uses
+  %.sroa.04.08 = phi ptr [ %i.p, %bb.d ], [ %i.b, %bb.a ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.04.08) ]
   %i.k = load ptr, ptr %.sroa.04.08, align 8, !tbaa !85 ; 3 uses
   %i.l = icmp eq ptr %i.k, null
   br i1 %i.l, label %bb.d, label %bb.c
@@ -587,10 +588,10 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 declare void @llvm.assume(i1 noundef) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #11
+declare i64 @llvm.umin.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #11
+declare i64 @llvm.umax.i64(i64, i64) #11
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -656,9 +657,9 @@ attributes #17 = { noreturn nounwind }
 !38 = distinct !{!38, !39, !"_ZN6google8protobuf8compiler4java12_GLOBAL__N_128CreateImmutableLiteGeneratorEPKNS0_15FieldDescriptorEiPNS2_7ContextE: argument 0"}
 !39 = distinct !{!39, !"_ZN6google8protobuf8compiler4java12_GLOBAL__N_128CreateImmutableLiteGeneratorEPKNS0_15FieldDescriptorEiPNS2_7ContextE"}
 !40 = !{!18, !25, i64 40}
-!41 = !{!5, !5, i64 0}
-!42 = !{i8 0, i8 2}
-!43 = !{}
+!41 = !{}
+!42 = !{!5, !5, i64 0}
+!43 = !{i8 0, i8 2}
 !44 = !{!45, !38}
 !45 = distinct !{!45, !46, !"_ZSt11make_uniqueIN6google8protobuf8compiler4java30ImmutableMapFieldLiteGeneratorEJRPKNS1_15FieldDescriptorERiRPNS3_7ContextEEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_: argument 0"}
 !46 = distinct !{!46, !"_ZSt11make_uniqueIN6google8protobuf8compiler4java30ImmutableMapFieldLiteGeneratorEJRPKNS1_15FieldDescriptorERiRPNS3_7ContextEEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_"}

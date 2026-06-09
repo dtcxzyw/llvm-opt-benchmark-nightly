@@ -201,6 +201,7 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %i.gr, label %.critedge, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.gs = getelementptr inbounds nuw i8, ptr %24, i64 16 ; 39 uses
   %i.gt = getelementptr inbounds nuw i8, ptr %24, i64 8 ; 15 uses
   %i.gu = getelementptr inbounds nuw i8, ptr %.0.val, i64 16
@@ -603,6 +604,7 @@ bb.cm:                                            ; preds = %bb.cl
   br i1 %i.pi, label %bb.cu, label %bb.cn
 
 bb.cn:                                            ; preds = %bb.cm
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.pj = call fastcc noundef zeroext i1 @_ZN4llvhL10RedirectIOENS_8OptionalINS_9StringRefEEEiPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull byval(%"class.llvh::Optional.32") align 8 %.0.val, i32 noundef 0, ptr noundef %7)
   br i1 %i.pj, label %bb.cz, label %bb.co
 

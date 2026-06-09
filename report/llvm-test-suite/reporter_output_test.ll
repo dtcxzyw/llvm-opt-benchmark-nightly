@@ -201,7 +201,7 @@ bb.a:                                             ; preds = %_ZNK9benchmark5Stat
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !73
-  %i.l = load ptr, ptr %i.i, align 32, !tbaa !74  ; 2 uses
+  %i.l = load ptr, ptr %i.i, align 32, !tbaa !74  ; 3 uses
   %.not20 = icmp eq ptr %i.k, %i.l
   br i1 %.not20, label %bb.b, label %_ZNK9benchmark5State5rangeEm.exit
 
@@ -210,6 +210,7 @@ bb.b:                                             ; preds = %._crit_edge
   unreachable
 
 _ZNK9benchmark5State5rangeEm.exit:                ; preds = %._crit_edge
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ]
   %i.m = load i64, ptr %i.l, align 8, !tbaa !50
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i64 %i.m, ptr %i.n, align 8, !tbaa !75
@@ -612,7 +613,7 @@ bb.i:                                             ; preds = %_ZNKSt4lessINSt7__c
   %i.ba = extractvalue { ptr, ptr } %i.ay, 1
   br label %bb.n
 
-_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i29: ; preds = %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit18.thread68, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit18.thread
+_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i29: ; preds = %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit18.thread, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit18.thread68
   %i.bb = tail call i32 @memcmp(ptr noundef %i.aa, ptr noundef %i.ab, i64 noundef %.sroa.speculated.i.i.i10) #23 ; 2 uses
   %.not.i.i.i30 = icmp eq i32 %i.bb, 0
   br i1 %.not.i.i.i30, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i32, label %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit36
@@ -677,9 +678,9 @@ bb.m:                                             ; preds = %_ZNKSt4lessINSt7__c
   %i.bw = extractvalue { ptr, ptr } %i.bu, 1
   br label %bb.n
 
-bb.n:                                             ; preds = %bb.l, %bb.h, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit36, %bb.m, %bb.j, %bb.i, %bb.f, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit, %bb.d
-  %.sroa.066.2 = phi ptr [ %i.s, %bb.d ], [ %spec.select, %bb.h ], [ null, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit ], [ %spec.select74, %bb.l ], [ %i.az, %bb.i ], [ %i.aj, %bb.f ], [ %1, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit36 ], [ %i.bv, %bb.m ], [ null, %bb.j ]
-  %.sroa.12.2 = phi ptr [ %i.t, %bb.d ], [ %spec.select73, %bb.h ], [ %i.f, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit ], [ %spec.select75, %bb.l ], [ %i.ba, %bb.i ], [ %i.aj, %bb.f ], [ null, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit36 ], [ %i.bw, %bb.m ], [ %i.bf, %bb.j ]
+bb.n:                                             ; preds = %bb.j, %bb.f, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit, %bb.l, %bb.h, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit36, %bb.m, %bb.i, %bb.d
+  %.sroa.066.2 = phi ptr [ %i.s, %bb.d ], [ %i.bv, %bb.m ], [ %spec.select, %bb.h ], [ %spec.select74, %bb.l ], [ null, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit ], [ %i.az, %bb.i ], [ %1, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit36 ], [ %i.aj, %bb.f ], [ null, %bb.j ]
+  %.sroa.12.2 = phi ptr [ %i.t, %bb.d ], [ %i.bw, %bb.m ], [ %spec.select73, %bb.h ], [ %spec.select75, %bb.l ], [ %i.f, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit ], [ %i.ba, %bb.i ], [ null, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit36 ], [ %i.aj, %bb.f ], [ %i.bf, %bb.j ]
   %.fca.0.insert = insertvalue { ptr, ptr } poison, ptr %.sroa.066.2, 0
   %.fca.1.insert = insertvalue { ptr, ptr } %.fca.0.insert, ptr %.sroa.12.2, 1
   ret { ptr, ptr } %.fca.1.insert
@@ -833,7 +834,7 @@ define internal noundef double @"_ZN3$_08__invokeERKSt6vectorIdSaIdEE"(ptr nofre
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val = load ptr, ptr %i.a, align 8, !tbaa !98
-  %i.b = getelementptr i8, ptr %.val, i64 -8
+  %i.b = getelementptr inbounds i8, ptr %.val, i64 -8
   %.val.val = load double, ptr %i.b, align 8, !tbaa !52
   ret double %.val.val
 }
@@ -1236,10 +1237,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
           to label %bb.ei unwind label %bb.ey
 
 ._crit_edge.i.i421.i.i:                           ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit494.i.i, %._crit_edge.i.i421.lr.ph.i.i
-  %i.ajl = phi ptr [ %.pre834.i.i, %._crit_edge.i.i421.lr.ph.i.i ], [ %i.asb, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit494.i.i ]
+  %i.ajl = phi ptr [ %.pre834.i.i, %._crit_edge.i.i421.lr.ph.i.i ], [ %i.asb, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit494.i.i ] ; 2 uses
   %.0186830.i.i = phi i64 [ 0, %._crit_edge.i.i421.lr.ph.i.i ], [ %i.arz, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit494.i.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %540) #23
   %i.ajm = getelementptr inbounds nuw [48 x i8], ptr %i.ajl, i64 %.0186830.i.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ajl) ]
   %i.ajn = getelementptr inbounds nuw i8, ptr %i.ajm, i64 40
   %i.ajo = load i32, ptr %i.ajn, align 8, !tbaa !108
   %.not.i.i = icmp eq i32 %i.ajo, 0               ; 2 uses

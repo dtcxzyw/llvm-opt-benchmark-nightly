@@ -201,7 +201,7 @@ _ZNSt6vectorItSaItEE17_S_check_init_lenEmRKS0_.exit.i.i: ; preds = %bb.b
 
 _ZNSt6vectorItSaItEEC2EmRKtRKS0_.exit.i:          ; preds = %.noexc28.i, %_ZNSt6vectorItSaItEE17_S_check_init_lenEmRKS0_.exit.i.i
   %.sroa.16.0.i = phi i64 [ 0, %_ZNSt6vectorItSaItEE17_S_check_init_lenEmRKS0_.exit.i.i ], [ %i.l, %.noexc28.i ] ; 2 uses
-  %.sroa.034.0.i = phi ptr [ null, %_ZNSt6vectorItSaItEE17_S_check_init_lenEmRKS0_.exit.i.i ], [ %i.h, %.noexc28.i ] ; 7 uses
+  %.sroa.034.0.i = phi ptr [ null, %_ZNSt6vectorItSaItEE17_S_check_init_lenEmRKS0_.exit.i.i ], [ %i.h, %.noexc28.i ] ; 8 uses
   %.0.i.i.i.i.i.i.i.i = phi i64 [ 0, %_ZNSt6vectorItSaItEE17_S_check_init_lenEmRKS0_.exit.i.i ], [ %i.k, %.noexc28.i ]
   %i.m = ptrtoint ptr %.sroa.034.0.i to i64       ; 3 uses
   %i.n = sub i64 %.0.i.i.i.i.i.i.i.i, %i.m        ; 3 uses
@@ -270,6 +270,7 @@ bb.h:                                             ; preds = %bb.f, %bb.c
   %i.aa = load i32, ptr %.02350.i.ptr, align 8, !tbaa !14
   %i.ab = sext i32 %i.aa to i64
   %i.ac = getelementptr inbounds nuw [2 x i8], ptr %.sroa.034.0.i, i64 %i.ab
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.034.0.i) ]
   store i16 %i.z, ptr %i.ac, align 2, !tbaa !16
   %.02350.i.add = add nuw nsw i64 %.02350.i.idx, 16 ; 2 uses
   %.not55.i = icmp eq i64 %.02350.i.add, 64
@@ -405,7 +406,8 @@ bb.a:
   %8 = alloca %"class.OpenImageIO::v3_1::span.14", align 8 ; 3 uses
   %.idx = shl i64 %2, 4                           ; 2 uses
   %i.a = getelementptr i8, ptr %1, i64 %.idx      ; 3 uses
-  %i.b = getelementptr i8, ptr %i.a, i64 -16
+  %i.b = getelementptr i8, ptr %i.a, i64 -16      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.b) ]
   %i.c = load i32, ptr %i.b, align 8, !tbaa !14   ; 2 uses
   %i.d = add nsw i32 %i.c, 1                      ; 2 uses
   %i.e = sext i32 %i.d to i64                     ; 2 uses
@@ -432,7 +434,7 @@ _ZNSt6vectorIsSaIsEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.a
 
 _ZNSt6vectorIsSaIsEEC2EmRKsRKS0_.exit:            ; preds = %.noexc28, %_ZNSt6vectorIsSaIsEE17_S_check_init_lenEmRKS0_.exit.i
   %.sroa.16.0 = phi i64 [ 0, %_ZNSt6vectorIsSaIsEE17_S_check_init_lenEmRKS0_.exit.i ], [ %i.l, %.noexc28 ] ; 2 uses
-  %.sroa.034.0 = phi ptr [ null, %_ZNSt6vectorIsSaIsEE17_S_check_init_lenEmRKS0_.exit.i ], [ %i.h, %.noexc28 ] ; 8 uses
+  %.sroa.034.0 = phi ptr [ null, %_ZNSt6vectorIsSaIsEE17_S_check_init_lenEmRKS0_.exit.i ], [ %i.h, %.noexc28 ] ; 9 uses
   %.0.i.i.i.i.i.i.i = phi i64 [ 0, %_ZNSt6vectorIsSaIsEE17_S_check_init_lenEmRKS0_.exit.i ], [ %i.k, %.noexc28 ]
   %.not49 = icmp eq i64 %.idx, 0
   br i1 %.not49, label %.critedge, label %.lr.ph
@@ -504,6 +506,7 @@ bb.g:                                             ; preds = %bb.e, %bb.b
   %i.ab = load i32, ptr %.02350, align 8, !tbaa !14
   %i.ac = sext i32 %i.ab to i64
   %i.ad = getelementptr inbounds nuw [2 x i8], ptr %.sroa.034.0, i64 %i.ac
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.034.0) ]
   store i16 %i.aa, ptr %i.ad, align 2, !tbaa !16
   %i.ae = getelementptr inbounds nuw i8, ptr %.02350, i64 16 ; 2 uses
   %.not55 = icmp eq ptr %i.ae, %i.a
@@ -906,7 +909,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   call void @_ZNSt6localeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %4) #19
-  %i.f = load ptr, ptr %1, align 8, !tbaa !51     ; 4 uses
+  %i.f = load ptr, ptr %1, align 8, !tbaa !51     ; 5 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !51   ; 3 uses
   %.not1516 = icmp eq ptr %i.f, %i.h
@@ -914,6 +917,7 @@ bb.c:                                             ; preds = %bb.b
 
 _ZN11OpenImageIO4v3_1lsERSoRKNS0_17basic_string_viewIcSt11char_traitsIcEEE.exit.peel: ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 8
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.f) ]
   %i.j = load ptr, ptr %i.f, align 8, !tbaa !45
   %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.l = load i64, ptr %i.k, align 8, !tbaa !38
@@ -1316,10 +1320,10 @@ declare void @llvm.assume(i1 noundef) #16
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #15
+declare i64 @llvm.umin.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #15
+declare i64 @llvm.umax.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #18

@@ -201,7 +201,8 @@ bb.a:
   br i1 %i.f, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.g = extractvalue { ptr, i8 } %i.d, 0
+  %i.g = extractvalue { ptr, i8 } %i.d, 0         ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.g) ]
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 76
   %i.i = load i32, ptr %i.h, align 4, !tbaa !155, !noalias !151
   %i.j = icmp eq i32 %i.i, 1

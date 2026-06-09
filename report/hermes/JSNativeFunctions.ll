@@ -48,7 +48,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
-  %i.e = load ptr, ptr @_ZZN6hermes2vmL19getFunctionNameImplEPvE3map, align 8, !tbaa !8 ; 4 uses
+  %i.e = load ptr, ptr @_ZZN6hermes2vmL19getFunctionNameImplEPvE3map, align 8, !tbaa !8 ; 5 uses
   %i.f = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN6hermes2vmL19getFunctionNameImplEPvE3map, i64 16), align 8, !tbaa !12 ; 4 uses
   %i.g = icmp eq i32 %i.f, 0
   br i1 %i.g, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKvPKcNS_12DenseMapInfoIS3_EENS_6detail12DenseMapPairIS3_S5_EEEES3_S5_S7_SA_E15LookupBucketForIS3_EEbRKT_RPSA_.exit.i, label %bb.e
@@ -60,6 +60,7 @@ bb.e:                                             ; preds = %bb.d
   %i.k = lshr i32 %i.i, 9
   %i.l = xor i32 %i.j, %i.k
   %i.m = add i32 %i.f, -1                         ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
   %.02944.i.i.i = and i32 %i.m, %i.l              ; 2 uses
   %i.n = zext nneg i32 %.02944.i.i.i to i64
   %i.o = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %i.n ; 2 uses
@@ -462,7 +463,7 @@ declare noundef nonnull ptr @_Znwm(i64 noundef) local_unnamed_addr #4
 define linkonce_odr hidden noundef nonnull align 8 dereferenceable(16) ptr @_ZN4llvh12DenseMapBaseINS_8DenseMapIPKvPKcNS_12DenseMapInfoIS3_EENS_6detail12DenseMapPairIS3_S5_EEEES3_S5_S7_SA_E16FindAndConstructERKS3_(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 8 dereferenceable(8) %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
-  %i.b = load ptr, ptr %0, align 8, !tbaa !8      ; 2 uses
+  %i.b = load ptr, ptr %0, align 8, !tbaa !8      ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = load i32, ptr %i.c, align 8, !tbaa !12   ; 7 uses
   %i.e = icmp eq i32 %i.d, 0
@@ -476,6 +477,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = lshr i32 %i.h, 9
   %i.k = xor i32 %i.i, %i.j
   %i.l = add i32 %i.d, -1                         ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.b) ]
   %.02944.i.i = and i32 %i.k, %i.l                ; 2 uses
   %i.m = zext nneg i32 %.02944.i.i to i64
   %i.n = getelementptr inbounds nuw [16 x i8], ptr %i.b, i64 %i.m ; 3 uses
@@ -577,7 +579,7 @@ _ZN4llvh12DenseMapBaseINS_8DenseMapIPKvPKcNS_12DenseMapInfoIS3_EENS_6detail12Den
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZN4llvh12DenseMapBaseINS_8DenseMapIPKvPKcNS_12DenseMapInfoIS3_EENS_6detail12DenseMapPairIS3_S5_EEEES3_S5_S7_SA_E15LookupBucketForIS3_EEbRKT_RPSA_(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(8) %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !8      ; 2 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !8      ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.c = load i32, ptr %i.b, align 8, !tbaa !12   ; 2 uses
   %i.d = icmp eq i32 %i.c, 0
@@ -591,6 +593,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = lshr i32 %i.g, 9
   %i.j = xor i32 %i.h, %i.i
   %i.k = add i32 %i.c, -1                         ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.a) ]
   %.02944.i = and i32 %i.j, %i.k                  ; 2 uses
   %i.l = zext nneg i32 %.02944.i to i64
   %i.m = getelementptr inbounds nuw [16 x i8], ptr %i.a, i64 %i.l ; 3 uses
@@ -794,7 +797,7 @@ bb.c:                                             ; preds = %bb.g, %.lr.ph.i6
   ]
 
 bb.d:                                             ; preds = %bb.c
-  %i.bj = load ptr, ptr %0, align 8, !tbaa !8     ; 2 uses
+  %i.bj = load ptr, ptr %0, align 8, !tbaa !8, !nonnull !33, !noundef !33 ; 2 uses
   tail call void @llvm.assume(i1 %.not6.i.i)
   %i.bk = trunc i64 %magicptr.i to i32            ; 2 uses
   %i.bl = lshr i32 %i.bk, 4
@@ -836,7 +839,8 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i
   br i1 %i.cd, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKvPKcNS_12DenseMapInfoIS3_EENS_6detail12DenseMapPairIS3_S5_EEEES3_S5_S7_SA_E15LookupBucketForIS3_EEbRKT_RPSA_.exit.i, label %.lr.ph.i.i.i, !prof !16, !llvm.loop !17
 
 _ZN4llvh12DenseMapBaseINS_8DenseMapIPKvPKcNS_12DenseMapInfoIS3_EENS_6detail12DenseMapPairIS3_S5_EEEES3_S5_S7_SA_E15LookupBucketForIS3_EEbRKT_RPSA_.exit.i: ; preds = %bb.f, %bb.e, %bb.d
-  %.sink.i.i.i = phi ptr [ %i.bv, %bb.e ], [ %i.bp, %bb.d ], [ %i.cb, %bb.f ] ; 2 uses
+  %.sink.i.i.i = phi ptr [ %i.bv, %bb.e ], [ %i.bp, %bb.d ], [ %i.cb, %bb.f ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sink.i.i.i) ]
   store ptr %i.bi, ptr %.sink.i.i.i, align 8, !tbaa !13
   %i.ce = getelementptr inbounds nuw i8, ptr %.sink.i.i.i, i64 8
   %i.cf = getelementptr inbounds nuw i8, ptr %.020.i, i64 8
@@ -850,7 +854,7 @@ bb.g:                                             ; preds = %_ZN4llvh12DenseMapB
   %i.ci = phi i32 [ %i.bh, %bb.c ], [ %i.bh, %bb.c ], [ %i.ch, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKvPKcNS_12DenseMapInfoIS3_EENS_6detail12DenseMapPairIS3_S5_EEEES3_S5_S7_SA_E15LookupBucketForIS3_EEbRKT_RPSA_.exit.i ]
   %i.cj = getelementptr inbounds nuw i8, ptr %.020.i, i64 16 ; 2 uses
   %.not.i7 = icmp eq ptr %i.cj, %i.an
-  br i1 %.not.i7, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKvPKcNS_12DenseMapInfoIS3_EENS_6detail12DenseMapPairIS3_S5_EEEES3_S5_S7_SA_E18moveFromOldBucketsEPSA_SD_.exit, label %bb.c, !llvm.loop !33
+  br i1 %.not.i7, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKvPKcNS_12DenseMapInfoIS3_EENS_6detail12DenseMapPairIS3_S5_EEEES3_S5_S7_SA_E18moveFromOldBucketsEPSA_SD_.exit, label %bb.c, !llvm.loop !34
 
 _ZN4llvh12DenseMapBaseINS_8DenseMapIPKvPKcNS_12DenseMapInfoIS3_EENS_6detail12DenseMapPairIS3_S5_EEEES3_S5_S7_SA_E18moveFromOldBucketsEPSA_SD_.exit: ; preds = %bb.g, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPKvPKcNS_12DenseMapInfoIS3_EENS_6detail12DenseMapPairIS3_S5_EEEES3_S5_S7_SA_E9initEmptyEv.exit.i
   tail call void @_ZdlPv(ptr noundef nonnull %i.c) #8
@@ -917,5 +921,6 @@ attributes #9 = { nounwind allocsize(0) }
 !30 = !{!10, !10, i64 0}
 !31 = distinct !{!31, !25}
 !32 = distinct !{!32, !25}
-!33 = distinct !{!33, !18}
+!33 = !{}
+!34 = distinct !{!34, !18}
 end_hunk_1

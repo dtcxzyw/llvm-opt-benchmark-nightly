@@ -201,7 +201,7 @@ _ZNSt8__detail14__to_chars_lenIjEEjT_i.exit:      ; preds = %bb.g, %bb.a, %bb.b,
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit: ; preds = %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit
   %i.o = zext nneg i32 %.lobit to i64
-  %i.p = load ptr, ptr %0, align 8, !tbaa !24
+  %i.p = load ptr, ptr %0, align 8, !tbaa !24, !nonnull !30, !noundef !30
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.o ; 4 uses
   %i.r = icmp ugt i32 %i.a, 99
   br i1 %i.r, label %.lr.ph.preheader.i, label %._crit_edge.i
@@ -230,7 +230,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit: ; pre
   store i8 %i.ac, ptr %i.af, align 1, !tbaa !13
   %i.ag = add i32 %.01819.i, -2
   %i.ah = icmp ugt i32 %.020.i, 9999
-  br i1 %i.ah, label %.lr.ph.i11, label %._crit_edge.i, !llvm.loop !30
+  br i1 %i.ah, label %.lr.ph.i11, label %._crit_edge.i, !llvm.loop !31
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i11, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit
   %.0.lcssa.i = phi i32 [ %i.a, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit ], [ %i.v, %.lr.ph.i11 ] ; 3 uses
@@ -354,5 +354,6 @@ attributes #22 = { noreturn }
 !27 = !{!25, !19, i64 8}
 !28 = !{!26, !15, i64 0}
 !29 = distinct !{!29, !12}
-!30 = distinct !{!30, !12}
+!30 = !{}
+!31 = distinct !{!31, !12}
 end_hunk_0

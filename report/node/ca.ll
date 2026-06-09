@@ -201,7 +201,7 @@ bb.gj:                                            ; preds = %bb.gi
   br label %.thread889
 
 bb.gk:                                            ; preds = %bb.gi
-  %i.nd = call ptr @OPENSSL_sk_new_null() #11     ; 34 uses
+  %i.nd = call ptr @OPENSSL_sk_new_null() #11     ; 39 uses
   %i.ne = icmp eq ptr %i.nd, null
   br i1 %i.ne, label %bb.gl, label %bb.gm
 
@@ -237,6 +237,7 @@ bb.gp:                                            ; preds = %bb.go
   br i1 %.not801, label %.thread889, label %bb.gq
 
 bb.gq:                                            ; preds = %bb.gp
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.nd) ]
   %i.nt = load ptr, ptr %i.o, align 8, !tbaa !16
   %i.nu = call i32 @OPENSSL_sk_push(ptr noundef nonnull %i.nd, ptr noundef %i.nt) #11
   %.not802 = icmp eq i32 %i.nu, 0
@@ -280,6 +281,7 @@ bb.gv:                                            ; preds = %bb.gu
 
 bb.gw:                                            ; preds = %bb.gv
   %i.om = add nuw nsw i32 %.0613, 1
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.nd) ]
   %i.on = load ptr, ptr %i.o, align 8, !tbaa !16
   %i.oo = call i32 @OPENSSL_sk_push(ptr noundef nonnull %i.nd, ptr noundef %i.on) #11
   %.not805 = icmp eq i32 %i.oo, 0
@@ -323,6 +325,7 @@ bb.hb:                                            ; preds = %bb.ha
 
 bb.hc:                                            ; preds = %bb.hb
   %i.pf = add nuw nsw i32 %.1614, 1
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.nd) ]
   %i.pg = load ptr, ptr %i.o, align 8, !tbaa !16
   %i.ph = call i32 @OPENSSL_sk_push(ptr noundef nonnull %i.nd, ptr noundef %i.pg) #11
   %.not809 = icmp eq i32 %i.ph, 0
@@ -379,6 +382,7 @@ bb.hh:                                            ; preds = %bb.hg
 
 bb.hi:                                            ; preds = %bb.hg
   %i.qc = add nsw i32 %.36161198, 1
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.nd) ]
   %i.qd = load ptr, ptr %i.o, align 8, !tbaa !16  ; 2 uses
   %i.qe = call i32 @OPENSSL_sk_push(ptr noundef nonnull %i.nd, ptr noundef %i.qd) #11
   %.not841 = icmp eq i32 %i.qe, 0
@@ -399,6 +403,7 @@ bb.hk:                                            ; preds = %bb.hf, %bb.hi
 ._crit_edge1202:                                  ; preds = %bb.hk, %bb.he
   %.3621.lcssa = phi i32 [ %.2620, %bb.he ], [ %i.pl, %bb.hk ]
   %.3616.lcssa = phi i32 [ %.2615, %bb.he ], [ %.4617, %bb.hk ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.nd) ]
   %i.qh = call i32 @OPENSSL_sk_num(ptr noundef nonnull %i.nd) #11
   %i.qi = icmp sgt i32 %i.qh, 0
   br i1 %i.qi, label %bb.hl, label %bb.ht

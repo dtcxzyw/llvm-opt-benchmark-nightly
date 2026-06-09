@@ -201,7 +201,8 @@ _ZN5arrow6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7DestroyEv
   br i1 %i.vp, label %.critedge153.i, label %.lr.ph546.split.i
 
 .lr.ph546.split.i:                                ; preds = %.lr.ph546.i, %.critedge.i
-  %.sroa.0494.0545.i = phi ptr [ %i.xk, %.critedge.i ], [ %i.vh, %.lr.ph546.i ] ; 2 uses
+  %.sroa.0494.0545.i = phi ptr [ %i.xk, %.critedge.i ], [ %i.vh, %.lr.ph546.i ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0494.0545.i) ]
   %i.vq = load ptr, ptr %28, align 16, !tbaa !257, !noalias !217 ; 2 uses
   %i.vr = load ptr, ptr %i.sw, align 8, !tbaa !257, !noalias !217 ; 2 uses
   %i.vs = icmp eq ptr %i.vq, %i.vr
@@ -213,7 +214,8 @@ bb.bq:                                            ; preds = %_ZN5arrow6ResultINS
   br i1 %i.vu, label %.critedge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph546.split.i, %bb.bq
-  %.sroa.0490.0544.i = phi ptr [ %i.vt, %bb.bq ], [ %i.vq, %.lr.ph546.split.i ] ; 2 uses
+  %.sroa.0490.0544.i = phi ptr [ %i.vt, %bb.bq ], [ %i.vq, %.lr.ph546.split.i ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0490.0544.i) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %40) #18, !noalias !217
   call void @llvm.lifetime.start.p0(ptr nonnull %41) #18, !noalias !217
   invoke void @_ZNK5arrow8internal16PlatformFilename4JoinERKS1_(ptr dead_on_unwind nonnull writable sret(%"class.arrow::internal::PlatformFilename") align 8 %41, ptr noundef nonnull align 8 dereferenceable(8) %.sroa.0494.0545.i, ptr noundef nonnull align 8 dereferenceable(8) %.sroa.0490.0544.i)
@@ -616,7 +618,8 @@ bb.fd:                                            ; preds = %_ZN5arrow6ResultINS
   br label %.body65.i
 
 bb.fe:                                            ; preds = %bb.fc, %.lr.ph.i106
-  %.sroa.0124.0135.i = phi ptr [ %i.aji, %.lr.ph.i106 ], [ %i.ajo, %bb.fc ] ; 2 uses
+  %.sroa.0124.0135.i = phi ptr [ %i.aji, %.lr.ph.i106 ], [ %i.ajo, %bb.fc ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0124.0135.i) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #18, !noalias !308
   %i.ajr = load ptr, ptr %8, align 8, !tbaa !223, !noalias !308
   %i.ajs = load i64, ptr %i.acm, align 8, !tbaa !221, !noalias !308
@@ -1019,7 +1022,8 @@ bb.b:                                             ; preds = %_ZNKSt7__cxx1112bas
   br i1 %i.l, label %.critedge, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.b
-  %.sroa.01.06 = phi ptr [ %i.a, %.lr.ph ], [ %i.k, %bb.b ] ; 2 uses
+  %.sroa.01.06 = phi ptr [ %i.a, %.lr.ph ], [ %i.k, %bb.b ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.01.06) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
   invoke void @_ZN5arrow8internal18LoadDynamicLibraryERKNS0_16PlatformFilenameE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Result.2") align 8 %5, ptr noundef nonnull align 8 dereferenceable(8) %.sroa.01.06)
           to label %bb.d unwind label %bb.e
@@ -1422,10 +1426,11 @@ bb.b:                                             ; preds = %_ZN5arrow6ResultINS
   br i1 %.not, label %bb.c, label %_ZSt8_DestroyIPN5arrow8internal16PlatformFilenameES2_EvT_S4_RSaIT0_E.exit.i.thread, !llvm.loop !454
 
 bb.c:                                             ; preds = %.lr.ph, %bb.b
-  %i.r = phi ptr [ %i.i, %.lr.ph ], [ %i.m, %bb.b ]
+  %i.r = phi ptr [ %i.i, %.lr.ph ], [ %i.m, %bb.b ] ; 2 uses
   %.01725 = phi i64 [ 0, %.lr.ph ], [ %i.k, %bb.b ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
   %i.s = getelementptr inbounds nuw [32 x i8], ptr %i.r, i64 %.01725 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !223
   %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   %i.v = load i64, ptr %i.u, align 8, !tbaa !221
@@ -1452,7 +1457,7 @@ bb.g:                                             ; preds = %bb.d
           to label %_ZNO5arrow6ResultINS_8internal16PlatformFilenameEE11ValueUnsafeEv.exit unwind label %bb.k
 
 _ZNO5arrow6ResultINS_8internal16PlatformFilenameEE11ValueUnsafeEv.exit: ; preds = %bb.g
-  %i.z = load ptr, ptr %2, align 16, !tbaa !258
+  %i.z = load ptr, ptr %2, align 16, !tbaa !258, !nonnull !36, !noundef !36
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %.01725
   %i.ab = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN5arrow8internal16PlatformFilenameaSEOS1_(ptr noundef nonnull align 8 dereferenceable(8) %i.aa, ptr noundef nonnull align 8 dereferenceable(8) %5)
           to label %bb.h unwind label %bb.l       ; 0 uses
@@ -1855,7 +1860,7 @@ _ZN5arrow6StatusD2Ev.exit:                        ; preds = %bb.b, %_ZN5arrow6Re
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr ptr @_ZNSt6vectorIN5arrow8internal16PlatformFilenameESaIS2_EE14_M_insert_rvalEN9__gnu_cxx17__normal_iteratorIPKS2_S4_EEOS2_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(8) %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !257    ; 3 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !257    ; 4 uses
   %i.b = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.c = ptrtoint ptr %i.a to i64
   %i.d = sub i64 %i.b, %i.c                       ; 3 uses
@@ -1903,6 +1908,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.y, label %.lr.ph.i.i.i.i.i.i, label %_ZNSt6vectorIN5arrow8internal16PlatformFilenameESaIS2_EE13_M_insert_auxIS2_EEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEOT_.exit, !llvm.loop !457
 
 _ZNSt6vectorIN5arrow8internal16PlatformFilenameESaIS2_EE13_M_insert_auxIS2_EEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEOT_.exit: ; preds = %.lr.ph.i.i.i.i.i.i, %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.a) ]
   %i.z = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZN5arrow8internal16PlatformFilenameaSEOS1_(ptr noundef nonnull align 8 dereferenceable(8) %i.l, ptr noundef nonnull align 8 dereferenceable(8) %2) ; 0 uses
   br label %bb.f
 

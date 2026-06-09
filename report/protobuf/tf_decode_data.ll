@@ -201,6 +201,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit86: ; preds = %bb.
   store i32 0, ptr %i.an, align 4, !tbaa !33
   %i.ao = getelementptr inbounds nuw i8, ptr %12, i64 1 ; 6 uses
   store i8 1, ptr %i.ao, align 1, !tbaa !34
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
   br label %.lr.ph
 
 bb.p:                                             ; preds = %bb.j, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit86
@@ -208,12 +209,12 @@ bb.p:                                             ; preds = %bb.j, %_ZNSt7__cxx1
   unreachable
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.bh
-  %i.ap = phi i8 [ %i.gh, %bb.bh ], [ 0, %.lr.ph.preheader ] ; 5 uses
-  %i.aq = phi i8 [ %i.gi, %bb.bh ], [ 1, %.lr.ph.preheader ] ; 3 uses
-  %i.ar = phi i8 [ %i.gj, %bb.bh ], [ 0, %.lr.ph.preheader ] ; 7 uses
-  %i.as = phi i32 [ %i.gk, %bb.bh ], [ 0, %.lr.ph.preheader ] ; 6 uses
-  %.058167 = phi i64 [ %i.gl, %bb.bh ], [ 0, %.lr.ph.preheader ] ; 2 uses
-  %.059166 = phi i64 [ %.160, %bb.bh ], [ 0, %.lr.ph.preheader ] ; 4 uses
+  %i.ap = phi i8 [ 0, %.lr.ph.preheader ], [ %i.gh, %bb.bh ] ; 5 uses
+  %i.aq = phi i8 [ 1, %.lr.ph.preheader ], [ %i.gi, %bb.bh ] ; 3 uses
+  %i.ar = phi i8 [ 0, %.lr.ph.preheader ], [ %i.gj, %bb.bh ] ; 7 uses
+  %i.as = phi i32 [ 0, %.lr.ph.preheader ], [ %i.gk, %bb.bh ] ; 6 uses
+  %.058167 = phi i64 [ 0, %.lr.ph.preheader ], [ %i.gl, %bb.bh ] ; 2 uses
+  %.059166 = phi i64 [ 0, %.lr.ph.preheader ], [ %.160, %bb.bh ] ; 4 uses
   %i.at = getelementptr inbounds nuw i8, ptr %4, i64 %.058167
   %i.au = load i8, ptr %i.at, align 1, !tbaa !22  ; 11 uses
   %i.av = icmp eq i8 %i.au, 95
@@ -357,6 +358,7 @@ _ZN6google8protobuf8compiler10objectivec12_GLOBAL__N_118DirectDecodeStringB5cxx1
 
 bb.ad:                                            ; preds = %bb.v
   %i.ch = getelementptr inbounds nuw i8, ptr %2, i64 %.059166
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.ci = load i8, ptr %i.ch, align 1, !tbaa !22  ; 4 uses
   switch i32 %i.as, label %bb.al [
     i32 31, label %bb.ae
@@ -759,10 +761,10 @@ declare void @llvm.assume(i1 noundef) #11
 declare void @llvm.experimental.noalias.scope.decl(metadata) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #13
+declare i64 @llvm.umin.i64(i64, i64) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #13
+declare i64 @llvm.umax.i64(i64, i64) #13
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -68,6 +68,7 @@ define dso_local void @_ZN4node15EscapeJsonCharsB5cxx11ESt17basic_string_viewIcS
 .lr.ph:                                           ; preds = %.split
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   br label %bb.a
 
 bb.a:                                             ; preds = %.lr.ph, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
@@ -154,11 +155,11 @@ bb.k:                                             ; preds = %bb.j
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit
 
 bb.l:                                             ; preds = %bb.j
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.y, ptr align 1 %i.p, i64 %.sroa.speculated.i, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.y, ptr nonnull align 1 %i.p, i64 %.sroa.speculated.i, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit
 
 bb.m:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i.i
-  call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_mutateEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %.pre60, i64 noundef 0, ptr noundef %i.p, i64 noundef %.sroa.speculated.i)
+  call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_mutateEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %.pre60, i64 noundef 0, ptr noundef nonnull %i.p, i64 noundef %.sroa.speculated.i)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLISt17basic_string_viewIcS2_EEENSt9enable_ifIXsr6__and_ISt14is_convertibleIRKT_S7_ESt6__not_IS9_IPSB_PKS4_EESE_IS9_ISC_PKcEEEE5valueERS4_E4typeESC_.exit: ; preds = %bb.k, %bb.l, %bb.m

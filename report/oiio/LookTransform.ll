@@ -201,7 +201,7 @@ bb.a:
   %8 = alloca %"class.std::shared_ptr.7", align 8 ; 9 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %i.a = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK16OpenColorIO_v2_515LookParseResult10getOptionsEv(ptr noundef nonnull align 8 dereferenceable(24) %5) ; 6 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !53   ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !53   ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 3 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !53   ; 2 uses
   %i.e = icmp eq ptr %i.b, %i.d
@@ -215,6 +215,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.i, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.b) ]
   tail call fastcc void @_ZN16OpenColorIO_v2_512_GLOBAL__N_113RunLookTokensERNS_10OpRcPtrVecERSt10shared_ptrIKNS_10ColorSpaceEEbRKNS_6ConfigERKS3_IKNS_7ContextEERKSt6vectorINS_15LookParseResult5TokenESaISI_EE(ptr noundef nonnull align 8 dereferenceable(144) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i1 noundef zeroext %2, ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(24) %i.b)
   br label %bb.bd
 
@@ -395,7 +396,7 @@ _ZSt8_DestroyIPSt10shared_ptrIN16OpenColorIO_v2_52OpEES3_EvT_S5_RSaIT0_E.exit.i.
   br label %_ZN16OpenColorIO_v2_510OpRcPtrVec5clearEv.exit
 
 _ZN16OpenColorIO_v2_510OpRcPtrVec5clearEv.exit:   ; preds = %_ZNSt10shared_ptrIKN16OpenColorIO_v2_510ColorSpaceEEaSERKS3_.exit, %_ZSt8_DestroyIPSt10shared_ptrIN16OpenColorIO_v2_52OpEES3_EvT_S5_RSaIT0_E.exit.i.i.i
-  %i.bi = load ptr, ptr %i.a, align 8, !tbaa !57
+  %i.bi = load ptr, ptr %i.a, align 8, !tbaa !57, !nonnull !41, !noundef !41
   %i.bj = getelementptr inbounds nuw [24 x i8], ptr %i.bi, i64 %i.p
   invoke fastcc void @_ZN16OpenColorIO_v2_512_GLOBAL__N_113RunLookTokensERNS_10OpRcPtrVecERSt10shared_ptrIKNS_10ColorSpaceEEbRKNS_6ConfigERKS3_IKNS_7ContextEERKSt6vectorINS_15LookParseResult5TokenESaISI_EE(ptr noundef nonnull align 8 dereferenceable(144) %7, ptr noundef nonnull align 8 dereferenceable(16) %8, i1 noundef zeroext %2, ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(24) %i.bj)
           to label %bb.af unwind label %bb.x
@@ -430,7 +431,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit: ; preds = %bb.z, %
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit46 unwind label %bb.aa ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit46: ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
-  %i.bt = load ptr, ptr %i.a, align 8, !tbaa !57
+  %i.bt = load ptr, ptr %i.a, align 8, !tbaa !57, !nonnull !41, !noundef !41
   %i.bu = getelementptr inbounds nuw [24 x i8], ptr %i.bt, i64 %i.p
   invoke void @_ZN16OpenColorIO_v2_515LookParseResult9serializeERSoRKSt6vectorINS0_5TokenESaIS3_EE(ptr noundef nonnull align 8 dereferenceable(8) %6, ptr noundef nonnull align 8 dereferenceable(24) %i.bu)
           to label %bb.ab unwind label %bb.aa
@@ -833,7 +834,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.g, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #22
-  %i.s = load ptr, ptr %0, align 8, !tbaa !69
+  %i.s = load ptr, ptr %0, align 8, !tbaa !69, !nonnull !41, !noundef !41
   %i.t = invoke noundef ptr @_ZN16OpenColorIO_v2_521LooksResultColorSpaceERKNS_6ConfigERKSt10shared_ptrIKNS_7ContextEERKNS_15LookParseResultE(ptr noundef nonnull align 8 dereferenceable(8) %i.s, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(24) %3)
           to label %bb.h unwind label %bb.m
 
@@ -1236,11 +1237,12 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.fn
-  %i.u = phi ptr [ %i.a, %.lr.ph ], [ %i.mz, %bb.fn ] ; 2 uses
+  %i.u = phi ptr [ %i.a, %.lr.ph ], [ %i.mz, %bb.fn ] ; 3 uses
   %i.v = phi ptr [ %i.c, %.lr.ph ], [ %i.na, %bb.fn ]
   %i.w = phi i64 [ 0, %.lr.ph ], [ %i.nc, %bb.fn ] ; 3 uses
   %.067292 = phi i32 [ 0, %.lr.ph ], [ %i.nb, %bb.fn ]
   %i.x = getelementptr inbounds nuw [40 x i8], ptr %i.u, i64 %i.w ; 5 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.u) ]
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 8 ; 3 uses
   %i.z = load i64, ptr %i.y, align 8, !tbaa !34
   %i.aa = icmp eq i64 %i.z, 0
@@ -1418,7 +1420,7 @@ bb.v:                                             ; preds = %bb.c
           to label %bb.w unwind label %bb.x
 
 bb.w:                                             ; preds = %bb.v
-  %i.bk = load ptr, ptr %5, align 8, !tbaa !72
+  %i.bk = load ptr, ptr %5, align 8, !tbaa !72, !nonnull !41, !noundef !41
   %i.bl = getelementptr inbounds nuw [40 x i8], ptr %i.bk, i64 %i.w
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 32
   %i.bn = load i32, ptr %i.bm, align 8, !tbaa !96
@@ -1821,7 +1823,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit151: ; preds = %bb.d
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit153 unwind label %bb.dv ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit153: ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit151
-  %i.iw = load ptr, ptr %5, align 8, !tbaa !72
+  %i.iw = load ptr, ptr %5, align 8, !tbaa !72, !nonnull !41, !noundef !41
   %i.ix = getelementptr inbounds nuw [40 x i8], ptr %i.iw, i64 %i.w ; 2 uses
   %i.iy = load ptr, ptr %i.ix, align 8, !tbaa !47
   %i.iz = getelementptr inbounds nuw i8, ptr %i.ix, i64 8
@@ -2224,7 +2226,8 @@ bb.s:                                             ; preds = %_ZNSt7__cxx1112basi
 
 bb.t:                                             ; preds = %.lr.ph90, %._crit_edge
   %.288 = phi i1 [ %narrow, %.lr.ph90 ], [ %.3.lcssa, %._crit_edge ] ; 2 uses
-  %.sroa.072.087 = phi ptr [ %i.ai, %.lr.ph90 ], [ %i.bv, %._crit_edge ] ; 3 uses
+  %.sroa.072.087 = phi ptr [ %i.ai, %.lr.ph90 ], [ %i.bv, %._crit_edge ] ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.072.087) ]
   %i.bs = load ptr, ptr %.sroa.072.087, align 8, !tbaa !90 ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %.sroa.072.087, i64 8
   %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !90 ; 2 uses
@@ -2239,7 +2242,8 @@ bb.t:                                             ; preds = %.lr.ph90, %._crit_e
 
 .lr.ph:                                           ; preds = %bb.t, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_54LookELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
   %.385 = phi i1 [ %.4, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_54LookELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ %.288, %bb.t ] ; 2 uses
-  %.sroa.068.084 = phi ptr [ %i.ct, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_54LookELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ %i.bs, %bb.t ] ; 3 uses
+  %.sroa.068.084 = phi ptr [ %i.ct, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_54LookELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ %i.bs, %bb.t ] ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.068.084) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #22
   %i.bw = load ptr, ptr %.sroa.068.084, align 8, !tbaa !47
   invoke void @_ZNK16OpenColorIO_v2_56Config7getLookEPKc(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr.40") align 8 %8, ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef %i.bw)

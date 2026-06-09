@@ -201,7 +201,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !20, !nonnull !56, !align !57
   %i.c = tail call noundef nonnull align 8 dereferenceable(481) ptr @_ZNK6duckdb14BaseExpression4CastINS_23BoundFunctionExpressionEEERKT_v(ptr noundef nonnull align 8 dereferenceable(56) %i.b)
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 472
-  %i.e = tail call noundef ptr @_ZNK6duckdb10unique_ptrINS_12FunctionDataESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %i.d)
+  %i.e = tail call noundef nonnull ptr @_ZNK6duckdb10unique_ptrINS_12FunctionDataESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %i.d)
   %i.f = tail call noundef nonnull align 8 dereferenceable(104) ptr @_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef 0) ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.h = load i64, ptr %i.g, align 8, !tbaa !58
@@ -604,7 +604,7 @@ bb.a:
   %3 = alloca %"class.duckdb::optional_ptr", align 8 ; 3 uses
   store ptr %1, ptr %3, align 8
   call void @_ZNK6duckdb12optional_ptrINS_12FunctionDataELb1EE10CheckValidEv(ptr noundef nonnull align 8 dereferenceable(8) %3)
-  %i.a = load ptr, ptr %3, align 8, !tbaa !156
+  %i.a = load ptr, ptr %3, align 8, !tbaa !156, !nonnull !56, !noundef !56
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.c = load ptr, ptr %0, align 8, !tbaa !82
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16
@@ -1007,7 +1007,7 @@ bb.a:
   %3 = alloca %"class.std::allocator", align 1    ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !180
-  %i.e = load ptr, ptr %0, align 8, !tbaa !181    ; 2 uses
+  %i.e = load ptr, ptr %0, align 8, !tbaa !181    ; 3 uses
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = sub i64 %i.f, %i.g
@@ -1077,6 +1077,7 @@ _ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EE3getILb1EEERS1_m.exit: ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.p = getelementptr inbounds nuw [104 x i8], ptr %i.e, i64 %1
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
   ret ptr %i.p
 }
 
@@ -1479,7 +1480,7 @@ bb.a:
   %3 = alloca %"class.std::allocator", align 1    ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !138
-  %i.e = load ptr, ptr %0, align 8, !tbaa !141    ; 2 uses
+  %i.e = load ptr, ptr %0, align 8, !tbaa !141    ; 3 uses
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = sub i64 %i.f, %i.g
@@ -1549,6 +1550,7 @@ _ZN6duckdb6vectorINS_10unique_ptrINS_10ExpressionESt14default_deleteIS2_ELb1EEEL
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %1
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
   ret ptr %i.p
 }
 
@@ -1637,7 +1639,7 @@ bb.a:
   %3 = alloca %"class.std::allocator", align 1    ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !12
-  %i.e = load ptr, ptr %0, align 8, !tbaa !7      ; 2 uses
+  %i.e = load ptr, ptr %0, align 8, !tbaa !7      ; 3 uses
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = sub i64 %i.f, %i.g
@@ -1707,6 +1709,7 @@ _ZN6duckdb6vectorINS_11LogicalTypeELb1ESaIS1_EE3getILb1EEERS1_m.exit: ; preds = 
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.p = getelementptr inbounds nuw [24 x i8], ptr %i.e, i64 %1
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
   ret ptr %i.p
 }
 
@@ -2109,10 +2112,10 @@ declare void @llvm.assume(i1 noundef) #14
 declare void @llvm.experimental.noalias.scope.decl(metadata) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #16
+declare i64 @llvm.umin.i64(i64, i64) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #16
+declare i64 @llvm.umax.i64(i64, i64) #16
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #17

@@ -201,7 +201,8 @@ _ZNSt13unordered_setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4hash
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i, %.lr.ph.preheader.i.i
-  %.010.i.i = phi ptr [ %i.au, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i ], [ %.pre1.i, %.lr.ph.preheader.i.i ] ; 4 uses
+  %.010.i.i = phi ptr [ %i.au, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i ], [ %.pre1.i, %.lr.ph.preheader.i.i ] ; 5 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.010.i.i) ]
   %i.an = load i64, ptr %.010.i.i, align 8, !tbaa !108
   %switch.i.i = icmp ugt i64 %i.an, -3
   br i1 %switch.i.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i, label %bb.e
@@ -311,7 +312,7 @@ declare void @_ZdlPv(ptr noundef) local_unnamed_addr #9
 define linkonce_odr hidden noundef nonnull align 8 dereferenceable(40) ptr @_ZN4llvh12DenseMapBaseINS_8DenseMapImNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_12DenseMapInfoImEENS_6detail12DenseMapPairImS7_EEEEmS7_S9_SC_E16FindAndConstructERKm(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 8 dereferenceable(8) %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
-  %i.b = load ptr, ptr %0, align 8, !tbaa !107    ; 2 uses
+  %i.b = load ptr, ptr %0, align 8, !tbaa !107    ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = load i32, ptr %i.c, align 8, !tbaa !106  ; 7 uses
   %i.e = icmp eq i32 %i.d, 0
@@ -322,6 +323,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = trunc i64 %i.f to i32
   %i.h = mul i32 %i.g, 37
   %i.i = add i32 %i.d, -1                         ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.b) ]
   %.02744.i.i = and i32 %i.h, %i.i                ; 2 uses
   %i.j = zext i32 %.02744.i.i to i64
   %i.k = getelementptr inbounds nuw [40 x i8], ptr %i.b, i64 %i.j ; 3 uses
@@ -427,7 +429,7 @@ _ZN4llvh12DenseMapBaseINS_8DenseMapImNSt7__cxx1112basic_stringIcSt11char_traitsI
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZN4llvh12DenseMapBaseINS_8DenseMapImNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_12DenseMapInfoImEENS_6detail12DenseMapPairImS7_EEEEmS7_S9_SC_E15LookupBucketForImEEbRKT_RPSC_(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(8) %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !107    ; 2 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !107    ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.c = load i32, ptr %i.b, align 8, !tbaa !106  ; 2 uses
   %i.d = icmp eq i32 %i.c, 0
@@ -438,6 +440,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = trunc i64 %i.e to i32
   %i.g = mul i32 %i.f, 37
   %i.h = add i32 %i.c, -1                         ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.a) ]
   %.02744.i = and i32 %i.g, %i.h                  ; 2 uses
   %i.i = zext i32 %.02744.i to i64
   %i.j = getelementptr inbounds nuw [40 x i8], ptr %i.a, i64 %i.i ; 3 uses
@@ -600,8 +603,9 @@ bb.a:
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
 .lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader, %.lr.ph.i.prol
-  %.06.i.prol = phi ptr [ %i.k, %.lr.ph.i.prol ], [ %i.c, %.lr.ph.i.preheader ] ; 2 uses
+  %.06.i.prol = phi ptr [ %i.k, %.lr.ph.i.prol ], [ %i.c, %.lr.ph.i.preheader ] ; 3 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.prol ], [ 0, %.lr.ph.i.preheader ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.06.i.prol) ]
   store i64 -1, ptr %.06.i.prol, align 8, !tbaa !108
   %i.k = getelementptr inbounds nuw i8, ptr %.06.i.prol, i64 40 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
@@ -614,7 +618,8 @@ bb.a:
   br i1 %i.l, label %_ZN4llvh12DenseMapBaseINS_8DenseMapImNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_12DenseMapInfoImEENS_6detail12DenseMapPairImS7_EEEEmS7_S9_SC_E9initEmptyEv.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i
-  %.06.i = phi ptr [ %i.t, %.lr.ph.i ], [ %.06.i.unr, %.lr.ph.i.prol.loopexit ] ; 9 uses
+  %.06.i = phi ptr [ %i.t, %.lr.ph.i ], [ %.06.i.unr, %.lr.ph.i.prol.loopexit ] ; 10 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.06.i) ]
   store i64 -1, ptr %.06.i, align 8, !tbaa !108
   %i.m = getelementptr inbounds nuw i8, ptr %.06.i, i64 40
   store i64 -1, ptr %i.m, align 8, !tbaa !108
@@ -642,13 +647,14 @@ _ZN4llvh12DenseMapBaseINS_8DenseMapImNSt7__cxx1112basic_stringIcSt11char_traitsI
   ret void
 
 .lr.ph:                                           ; preds = %_ZN4llvh12DenseMapBaseINS_8DenseMapImNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_12DenseMapInfoImEENS_6detail12DenseMapPairImS7_EEEEmS7_S9_SC_E9initEmptyEv.exit, %bb.f
-  %.019 = phi ptr [ %i.bh, %bb.f ], [ %1, %_ZN4llvh12DenseMapBaseINS_8DenseMapImNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_12DenseMapInfoImEENS_6detail12DenseMapPairImS7_EEEEmS7_S9_SC_E9initEmptyEv.exit ] ; 6 uses
+  %.019 = phi ptr [ %i.bh, %bb.f ], [ %1, %_ZN4llvh12DenseMapBaseINS_8DenseMapImNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_12DenseMapInfoImEENS_6detail12DenseMapPairImS7_EEEEmS7_S9_SC_E9initEmptyEv.exit ] ; 7 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.019) ]
   %i.u = load i64, ptr %.019, align 8, !tbaa !108 ; 5 uses
   %switch = icmp ugt i64 %i.u, -3
   br i1 %switch, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.v = load ptr, ptr %0, align 8, !tbaa !107    ; 2 uses
+  %i.v = load ptr, ptr %0, align 8, !tbaa !107, !nonnull !53, !noundef !53 ; 2 uses
   %i.w = load i32, ptr %i.d, align 8, !tbaa !106  ; 2 uses
   %i.x = icmp ne i32 %i.w, 0
   tail call void @llvm.assume(i1 %i.x)
@@ -691,7 +697,8 @@ bb.d:                                             ; preds = %.lr.ph.i.i
   br i1 %i.aq, label %_ZN4llvh12DenseMapBaseINS_8DenseMapImNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_12DenseMapInfoImEENS_6detail12DenseMapPairImS7_EEEEmS7_S9_SC_E15LookupBucketForImEEbRKT_RPSC_.exit, label %.lr.ph.i.i, !prof !116, !llvm.loop !117
 
 _ZN4llvh12DenseMapBaseINS_8DenseMapImNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_12DenseMapInfoImEENS_6detail12DenseMapPairImS7_EEEEmS7_S9_SC_E15LookupBucketForImEEbRKT_RPSC_.exit: ; preds = %bb.d, %bb.b, %bb.c
-  %.sink.i.i = phi ptr [ %i.ai, %bb.c ], [ %i.ac, %bb.b ], [ %i.ao, %bb.d ] ; 4 uses
+  %.sink.i.i = phi ptr [ %i.ai, %bb.c ], [ %i.ac, %bb.b ], [ %i.ao, %bb.d ] ; 5 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sink.i.i) ]
   store i64 %i.u, ptr %.sink.i.i, align 8, !tbaa !108
   %i.ar = getelementptr inbounds nuw i8, ptr %.sink.i.i, i64 8 ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.019, i64 8 ; 2 uses

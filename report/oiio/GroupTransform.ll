@@ -201,7 +201,8 @@ _ZNSt12_Vector_baseISt10shared_ptrIN16OpenColorIO_v2_59TransformEESaIS3_EE11_M_a
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZNSt12_Vector_baseISt10shared_ptrIN16OpenColorIO_v2_59TransformEESaIS3_EE11_M_allocateEm.exit.i, %_ZSt10_ConstructISt10shared_ptrIN16OpenColorIO_v2_59TransformEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i
   %.09.i.i.i.i.i = phi ptr [ %i.z, %_ZSt10_ConstructISt10shared_ptrIN16OpenColorIO_v2_59TransformEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i ], [ %i.p, %_ZNSt12_Vector_baseISt10shared_ptrIN16OpenColorIO_v2_59TransformEESaIS3_EE11_M_allocateEm.exit.i ] ; 2 uses
-  %.sroa.04.08.i.i.i.i.i = phi ptr [ %i.y, %_ZSt10_ConstructISt10shared_ptrIN16OpenColorIO_v2_59TransformEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i ], [ %i.c, %_ZNSt12_Vector_baseISt10shared_ptrIN16OpenColorIO_v2_59TransformEESaIS3_EE11_M_allocateEm.exit.i ] ; 3 uses
+  %.sroa.04.08.i.i.i.i.i = phi ptr [ %i.y, %_ZSt10_ConstructISt10shared_ptrIN16OpenColorIO_v2_59TransformEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i ], [ %i.c, %_ZNSt12_Vector_baseISt10shared_ptrIN16OpenColorIO_v2_59TransformEESaIS3_EE11_M_allocateEm.exit.i ] ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.04.08.i.i.i.i.i) ]
   %i.q = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i, i64 8
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !42   ; 2 uses
   %i.s = load <2 x ptr>, ptr %.sroa.04.08.i.i.i.i.i, align 8, !tbaa !60
@@ -445,7 +446,8 @@ _ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKSt10shared_ptrIN16OpenColorIO_v2_59Tr
   br label %.lr.ph.i.i30
 
 .lr.ph.i.i30:                                     ; preds = %.lr.ph.i.i30.preheader, %_ZSt8_DestroyISt10shared_ptrIN16OpenColorIO_v2_59TransformEEEvPT_.exit.i.i35
-  %.sroa.01.05.i.i = phi ptr [ %i.de, %_ZSt8_DestroyISt10shared_ptrIN16OpenColorIO_v2_59TransformEEEvPT_.exit.i.i35 ], [ %i.cm, %.lr.ph.i.i30.preheader ] ; 2 uses
+  %.sroa.01.05.i.i = phi ptr [ %i.de, %_ZSt8_DestroyISt10shared_ptrIN16OpenColorIO_v2_59TransformEEEvPT_.exit.i.i35 ], [ %i.cm, %.lr.ph.i.i30.preheader ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.01.05.i.i) ]
   %i.cn = getelementptr inbounds nuw i8, ptr %.sroa.01.05.i.i, i64 8
   %i.co = load ptr, ptr %i.cn, align 8, !tbaa !42 ; 8 uses
   %.not.i.i.i.i.i31 = icmp eq ptr %i.co, null
@@ -829,7 +831,8 @@ bb.k:                                             ; preds = %bb.a
   ret void
 
 .lr.ph:                                           ; preds = %bb.k, %.lr.ph
-  %.sroa.014.018 = phi ptr [ %i.ad, %.lr.ph ], [ %i.w, %bb.k ] ; 2 uses
+  %.sroa.014.018 = phi ptr [ %i.ad, %.lr.ph ], [ %i.w, %bb.k ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.014.018) ]
   %i.z = load ptr, ptr %.sroa.014.018, align 8, !tbaa !53 ; 2 uses
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !7
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 32
@@ -970,7 +973,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 136
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 144
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !56
-  %i.e = load ptr, ptr %i.b, align 8, !tbaa !57   ; 2 uses
+  %i.e = load ptr, ptr %i.b, align 8, !tbaa !57   ; 3 uses
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = sub i64 %i.f, %i.g
@@ -1053,6 +1056,7 @@ bb.j:                                             ; preds = %_ZNKSt7__cxx1112bas
 bb.k:                                             ; preds = %bb.b
   %i.x = zext nneg i32 %2 to i64
   %i.y = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %i.x ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 8
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !42  ; 2 uses
   %i.ab = load <2 x ptr>, ptr %i.y, align 8, !tbaa !60
@@ -1109,7 +1113,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !56
-  %i.e = load ptr, ptr %i.b, align 8, !tbaa !57   ; 2 uses
+  %i.e = load ptr, ptr %i.b, align 8, !tbaa !57   ; 3 uses
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = sub i64 %i.f, %i.g
@@ -1192,6 +1196,7 @@ bb.j:                                             ; preds = %_ZNKSt7__cxx1112bas
 bb.k:                                             ; preds = %bb.b
   %i.x = zext nneg i32 %1 to i64
   %i.y = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %i.x
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
   ret ptr %i.y
 
 bb.l:                                             ; preds = %bb.f
@@ -1594,7 +1599,7 @@ bb.d:                                             ; preds = %.lr.ph, %_ZNSt12__s
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit13 unwind label %bb.l ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit13: ; preds = %bb.d
-  %i.ad = load ptr, ptr %2, align 8, !tbaa !96
+  %i.ad = load ptr, ptr %2, align 8, !tbaa !96, !nonnull !52, !noundef !52
   %i.ae = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN16OpenColorIO_v2_5lsERSoRKNS_9TransformE(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(8) %i.ad)
           to label %bb.e unwind label %bb.l       ; 0 uses
 
@@ -1997,6 +2002,7 @@ _ZNSt10shared_ptrIN16OpenColorIO_v2_59TransformEEaSEOS2_.exit.i.i.i.i.i: ; preds
   br i1 %i.ag, label %.lr.ph.i.i.i.i.i, label %_ZSt13move_backwardIPSt10shared_ptrIN16OpenColorIO_v2_59TransformEES4_ET0_T_S6_S5_.exit, !llvm.loop !125
 
 _ZSt13move_backwardIPSt10shared_ptrIN16OpenColorIO_v2_59TransformEES4_ET0_T_S6_S5_.exit: ; preds = %_ZNSt10shared_ptrIN16OpenColorIO_v2_59TransformEEaSEOS2_.exit.i.i.i.i.i, %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ai = load <2 x ptr>, ptr %2, align 8, !tbaa !60
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)

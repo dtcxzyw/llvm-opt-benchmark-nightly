@@ -201,7 +201,7 @@ bb.a:
 
 .loopexit:                                        ; preds = %.lr.ph.i.i, %.lr.ph
   %.sroa.6.1 = phi ptr [ %.sroa.6.021, %.lr.ph ], [ %i.i, %.lr.ph.i.i ]
-  %.sroa.0.1 = phi ptr [ %.sroa.0.022, %.lr.ph ], [ %i.h, %.lr.ph.i.i ] ; 2 uses
+  %.sroa.0.1 = phi ptr [ %.sroa.0.022, %.lr.ph ], [ %i.h, %.lr.ph.i.i ] ; 3 uses
   %.lcssa.i.i = phi i16 [ %.sroa.86.019, %.lr.ph ], [ %.cast.i.i, %.lr.ph.i.i ] ; 3 uses
   %i.j = add i16 %.lcssa.i.i, -1
   %i.k = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.lcssa.i.i, i1 true)
@@ -209,6 +209,7 @@ bb.a:
   %i.m = and i16 %i.j, %.lcssa.i.i
   %i.n = sub nsw i64 0, %i.l
   %i.o = getelementptr inbounds [40 x i8], ptr %.sroa.0.1, i64 %i.n ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.1) ]
   %i.p = add i64 %.sroa.107.020, -1               ; 2 uses
   %i.q = getelementptr inbounds i8, ptr %i.o, i64 -40
   %i.r = getelementptr inbounds i8, ptr %i.o, i64 -24
@@ -611,7 +612,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %bb.a
-  %i.g = phi ptr [ %i.i, %bb.c ], [ %.promoted.i, %bb.a ] ; 4 uses
+  %i.g = phi ptr [ %i.i, %bb.c ], [ %.promoted.i, %bb.a ] ; 5 uses
   %i.h = icmp eq ptr %i.g, %i.f
   br i1 %i.h, label %_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterTNtNtCsgbCypRs12E4_4pyo38pybacked11PyBackedStrBK_NtCs7p2uQeJxui2_9deltalake20PartitionFilterValueEENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB2q_8adapters3map12map_try_foldRBJ_RBK_uINtNtNtBa_3ops12control_flow11ControlFlowB3R_ENCNvMsl_B1y_NtB1y_13RawDeltaTable21get_active_partitionss2_0NCINvNvB2k_4find5checkB3R_QNCB4I_s3_0E0E0B3W_EB1y_.exit, label %bb.c
 
@@ -622,10 +623,14 @@ bb.c:                                             ; preds = %bb.b
   store ptr %i.g, ptr %i.a, align 8, !noalias !7033
   %i.j = call noundef zeroext i1 @_RNvXs1_NtNtNtCsbvkFyIu7lgC_4core3ops8function5implsQNCNvMsl_Cs7p2uQeJxui2_9deltalakeNtBW_13RawDeltaTable21get_active_partitionss3_0INtB7_5FnMutTRRNtNtCsgbCypRs12E4_4pyo38pybacked11PyBackedStrEE8call_mutBW_(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.b, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.a), !noalias !7019
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !7029
-  br i1 %i.j, label %_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterTNtNtCsgbCypRs12E4_4pyo38pybacked11PyBackedStrBK_NtCs7p2uQeJxui2_9deltalake20PartitionFilterValueEENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB2q_8adapters3map12map_try_foldRBJ_RBK_uINtNtNtBa_3ops12control_flow11ControlFlowB3R_ENCNvMsl_B1y_NtB1y_13RawDeltaTable21get_active_partitionss2_0NCINvNvB2k_4find5checkB3R_QNCB4I_s3_0E0E0B3W_EB1y_.exit, label %bb.b
+  br i1 %i.j, label %2, label %bb.b
 
-_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterTNtNtCsgbCypRs12E4_4pyo38pybacked11PyBackedStrBK_NtCs7p2uQeJxui2_9deltalake20PartitionFilterValueEENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB2q_8adapters3map12map_try_foldRBJ_RBK_uINtNtNtBa_3ops12control_flow11ControlFlowB3R_ENCNvMsl_B1y_NtB1y_13RawDeltaTable21get_active_partitionss2_0NCINvNvB2k_4find5checkB3R_QNCB4I_s3_0E0E0B3W_EB1y_.exit: ; preds = %bb.b, %bb.c
-  %.sroa.0.0.i = phi ptr [ null, %bb.b ], [ %i.g, %bb.c ]
+2:                                                ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.g) ]
+  br label %_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterTNtNtCsgbCypRs12E4_4pyo38pybacked11PyBackedStrBK_NtCs7p2uQeJxui2_9deltalake20PartitionFilterValueEENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB2q_8adapters3map12map_try_foldRBJ_RBK_uINtNtNtBa_3ops12control_flow11ControlFlowB3R_ENCNvMsl_B1y_NtB1y_13RawDeltaTable21get_active_partitionss2_0NCINvNvB2k_4find5checkB3R_QNCB4I_s3_0E0E0B3W_EB1y_.exit
+
+_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterTNtNtCsgbCypRs12E4_4pyo38pybacked11PyBackedStrBK_NtCs7p2uQeJxui2_9deltalake20PartitionFilterValueEENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB2q_8adapters3map12map_try_foldRBJ_RBK_uINtNtNtBa_3ops12control_flow11ControlFlowB3R_ENCNvMsl_B1y_NtB1y_13RawDeltaTable21get_active_partitionss2_0NCINvNvB2k_4find5checkB3R_QNCB4I_s3_0E0E0B3W_EB1y_.exit: ; preds = %bb.b, %2
+  %.sroa.0.0.i = phi ptr [ %i.g, %2 ], [ null, %bb.b ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret ptr %.sroa.0.0.i
 }
@@ -647,7 +652,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %bb.a
-  %i.g = phi ptr [ %i.i, %bb.c ], [ %.promoted.i, %bb.a ] ; 4 uses
+  %i.g = phi ptr [ %i.i, %bb.c ], [ %.promoted.i, %bb.a ] ; 5 uses
   %i.h = icmp eq ptr %i.g, %i.f
   br i1 %i.h, label %_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterTNtNtCsgbCypRs12E4_4pyo38pybacked11PyBackedStrBK_NtCs7p2uQeJxui2_9deltalake20PartitionFilterValueEENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB2q_8adapters3map12map_try_foldRBJ_RBK_uINtNtNtBa_3ops12control_flow11ControlFlowB3R_ENCNvMsl_B1y_NtB1y_13RawDeltaTable21get_active_partitionss4_0NCINvNvB2k_4find5checkB3R_QNCB4I_s5_0E0E0B3W_EB1y_.exit, label %bb.c
 
@@ -658,10 +663,14 @@ bb.c:                                             ; preds = %bb.b
   store ptr %i.g, ptr %i.a, align 8, !noalias !7051
   %i.j = call noundef zeroext i1 @_RNvXs1_NtNtNtCsbvkFyIu7lgC_4core3ops8function5implsQNCNvMsl_Cs7p2uQeJxui2_9deltalakeNtBW_13RawDeltaTable21get_active_partitionss5_0INtB7_5FnMutTRRNtNtCsgbCypRs12E4_4pyo38pybacked11PyBackedStrEE8call_mutBW_(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.b, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.a), !noalias !7037
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !7047
-  br i1 %i.j, label %_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterTNtNtCsgbCypRs12E4_4pyo38pybacked11PyBackedStrBK_NtCs7p2uQeJxui2_9deltalake20PartitionFilterValueEENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB2q_8adapters3map12map_try_foldRBJ_RBK_uINtNtNtBa_3ops12control_flow11ControlFlowB3R_ENCNvMsl_B1y_NtB1y_13RawDeltaTable21get_active_partitionss4_0NCINvNvB2k_4find5checkB3R_QNCB4I_s5_0E0E0B3W_EB1y_.exit, label %bb.b
+  br i1 %i.j, label %2, label %bb.b
 
-_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterTNtNtCsgbCypRs12E4_4pyo38pybacked11PyBackedStrBK_NtCs7p2uQeJxui2_9deltalake20PartitionFilterValueEENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB2q_8adapters3map12map_try_foldRBJ_RBK_uINtNtNtBa_3ops12control_flow11ControlFlowB3R_ENCNvMsl_B1y_NtB1y_13RawDeltaTable21get_active_partitionss4_0NCINvNvB2k_4find5checkB3R_QNCB4I_s5_0E0E0B3W_EB1y_.exit: ; preds = %bb.b, %bb.c
-  %.sroa.0.0.i = phi ptr [ null, %bb.b ], [ %i.g, %bb.c ]
+2:                                                ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.g) ]
+  br label %_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterTNtNtCsgbCypRs12E4_4pyo38pybacked11PyBackedStrBK_NtCs7p2uQeJxui2_9deltalake20PartitionFilterValueEENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB2q_8adapters3map12map_try_foldRBJ_RBK_uINtNtNtBa_3ops12control_flow11ControlFlowB3R_ENCNvMsl_B1y_NtB1y_13RawDeltaTable21get_active_partitionss4_0NCINvNvB2k_4find5checkB3R_QNCB4I_s5_0E0E0B3W_EB1y_.exit
+
+_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterTNtNtCsgbCypRs12E4_4pyo38pybacked11PyBackedStrBK_NtCs7p2uQeJxui2_9deltalake20PartitionFilterValueEENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB2q_8adapters3map12map_try_foldRBJ_RBK_uINtNtNtBa_3ops12control_flow11ControlFlowB3R_ENCNvMsl_B1y_NtB1y_13RawDeltaTable21get_active_partitionss4_0NCINvNvB2k_4find5checkB3R_QNCB4I_s5_0E0E0B3W_EB1y_.exit: ; preds = %bb.b, %2
+  %.sroa.0.0.i = phi ptr [ %i.g, %2 ], [ null, %bb.b ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret ptr %.sroa.0.0.i
 }

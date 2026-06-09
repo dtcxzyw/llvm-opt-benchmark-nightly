@@ -201,7 +201,7 @@ bb.s:                                             ; preds = %rbimpl_size_mul_or_
   br label %ruby_nonempty_memcpy.exit.i
 
 ruby_nonempty_memcpy.exit.i:                      ; preds = %bb.s, %rbimpl_size_mul_or_raise.exit.i
-  %i.cx = phi i64 [ %i.ci, %rbimpl_size_mul_or_raise.exit.i ], [ %.pre.i, %bb.s ] ; 2 uses
+  %i.cx = phi i64 [ %.pre.i, %bb.s ], [ %i.ci, %rbimpl_size_mul_or_raise.exit.i ] ; 2 uses
   %i.cy = and i64 %i.cx, 8192
   %.not.i41.i = icmp eq i64 %i.cy, 0
   br i1 %.not.i41.i, label %bb.u, label %bb.t
@@ -604,7 +604,8 @@ bb.cr:                                            ; preds = %bb.cq
 
 bb.cs:                                            ; preds = %bb.cq
   %i.abn = add i64 %i.abg, 24
-  %i.abo = inttoptr i64 %i.abn to ptr
+  %i.abo = inttoptr i64 %i.abn to ptr             ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.abo) ]
   %i.abp = getelementptr i8, ptr %i.abo, i64 16
   %i.abq = load i64, ptr %i.abp, align 8, !tbaa !315
   br label %RHASH_EMPTY_P.exit
@@ -1007,7 +1008,7 @@ bb.ep:                                            ; preds = %rbimpl_size_mul_or_
   br label %ruby_nonempty_memcpy.exit
 
 ruby_nonempty_memcpy.exit:                        ; preds = %rbimpl_size_mul_or_raise.exit, %bb.ep
-  %i.ano = phi ptr [ %i.anj, %rbimpl_size_mul_or_raise.exit ], [ %.pre3202, %bb.ep ]
+  %i.ano = phi ptr [ %.pre3202, %bb.ep ], [ %i.anj, %rbimpl_size_mul_or_raise.exit ]
   %i.anp = getelementptr [8 x i8], ptr %i.ano, i64 %i.ang
   store ptr %i.anp, ptr %i.ani, align 8, !tbaa !73
   br label %.backedge.backedge
@@ -1410,8 +1411,7 @@ rb_method_entry.exit:
   %i.ab = tail call i64 @rb_singleton_class(i64 noundef %i.aa) #23
   tail call void @rb_define_private_method(i64 noundef %i.ab, ptr noundef nonnull @.str.22, ptr noundef nonnull @top_ruby2_keywords, i32 noundef -1) #23
   %i.ac = load i64, ptr @rb_eException, align 8, !tbaa !11
-  %i.ad = tail call fastcc ptr @search_method0(i64 noundef %i.ac, i64 noundef 2913, ptr noundef null, i1 noundef zeroext false) ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ad) ]
+  %i.ad = tail call fastcc nonnull ptr @search_method0(i64 noundef %i.ac, i64 noundef 2913, ptr noundef null, i1 noundef zeroext false) ; 2 uses
   %i.ae = load i64, ptr @rb_eException, align 8, !tbaa !11 ; 2 uses
   %i.af = load i64, ptr %i.ad, align 8, !tbaa !217
   %i.ag = trunc i64 %i.af to i32
@@ -1419,8 +1419,7 @@ rb_method_entry.exit:
   %i.ai = and i32 %i.ah, 3
   %i.aj = tail call fastcc ptr @method_entry_set(i64 noundef %i.ae, i64 noundef 2913, ptr noundef nonnull readonly %i.ad, i32 noundef %i.ai, i64 noundef %i.ae) ; 0 uses
   %i.ak = load i64, ptr @rb_eException, align 8, !tbaa !11
-  %i.al = tail call fastcc ptr @search_method0(i64 noundef %i.ak, i64 noundef 157, ptr noundef null, i1 noundef zeroext false) ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.al) ]
+  %i.al = tail call fastcc nonnull ptr @search_method0(i64 noundef %i.ak, i64 noundef 157, ptr noundef null, i1 noundef zeroext false) ; 2 uses
   %i.am = load i64, ptr @rb_eException, align 8, !tbaa !11 ; 2 uses
   %i.an = load i64, ptr %i.al, align 8, !tbaa !217
   %i.ao = trunc i64 %i.an to i32
@@ -1428,8 +1427,7 @@ rb_method_entry.exit:
   %i.aq = and i32 %i.ap, 3
   %i.ar = tail call fastcc ptr @method_entry_set(i64 noundef %i.am, i64 noundef 157, ptr noundef nonnull readonly %i.al, i32 noundef %i.aq, i64 noundef %i.am) ; 0 uses
   %i.as = load i64, ptr @rb_eException, align 8, !tbaa !11
-  %i.at = tail call fastcc ptr @search_method0(i64 noundef %i.as, i64 noundef 158, ptr noundef null, i1 noundef zeroext false) ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.at) ]
+  %i.at = tail call fastcc nonnull ptr @search_method0(i64 noundef %i.as, i64 noundef 158, ptr noundef null, i1 noundef zeroext false) ; 2 uses
   %i.au = load i64, ptr @rb_eException, align 8, !tbaa !11 ; 2 uses
   %i.av = load i64, ptr %i.at, align 8, !tbaa !217
   %i.aw = trunc i64 %i.av to i32
@@ -1832,24 +1830,26 @@ vm_block_iseq.exit:                               ; preds = %tailrecurse.i, %tai
   br i1 %i.ah, label %rbimpl_size_mul_or_raise.exit, label %rbimpl_size_mul_or_raise.exit.thread
 
 rbimpl_size_mul_or_raise.exit.thread:             ; preds = %vm_block_iseq.exit
-  %i.ai = call noalias nonnull ptr @rb_alloc_tmp_buffer(ptr noundef nonnull %i.b, i64 noundef %i.ag) #60 ; 2 uses
+  %i.ai = call noalias nonnull ptr @rb_alloc_tmp_buffer(ptr noundef nonnull %i.b, i64 noundef %i.ag) #60 ; 3 uses
   store i32 %2, ptr %i.ai, align 8, !tbaa !7
+  %5 = getelementptr i8, ptr %i.ai, i64 8
   br label %bb.i
 
 rbimpl_size_mul_or_raise.exit:                    ; preds = %vm_block_iseq.exit
-  %i.aj = alloca i8, i64 %i.ag, align 16          ; 3 uses
+  %i.aj = alloca i8, i64 %i.ag, align 16          ; 4 uses
   store i32 %2, ptr %i.aj, align 16, !tbaa !7
+  %6 = getelementptr i8, ptr %i.aj, i64 8
   %.not.i = icmp eq i32 %2, 0
   br i1 %.not.i, label %ruby_nonempty_memcpy.exit, label %bb.i
 
 bb.i:                                             ; preds = %rbimpl_size_mul_or_raise.exit.thread, %rbimpl_size_mul_or_raise.exit
-  %i.ak = phi ptr [ %i.ai, %rbimpl_size_mul_or_raise.exit.thread ], [ %i.aj, %rbimpl_size_mul_or_raise.exit ] ; 2 uses
-  %5 = getelementptr i8, ptr %i.ak, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %5, ptr noundef nonnull readonly align 1 %3, i64 noundef %i.af, i1 noundef false) #23
+  %i.ak = phi ptr [ %5, %rbimpl_size_mul_or_raise.exit.thread ], [ %6, %rbimpl_size_mul_or_raise.exit ]
+  %7 = phi ptr [ %i.ai, %rbimpl_size_mul_or_raise.exit.thread ], [ %i.aj, %rbimpl_size_mul_or_raise.exit ]
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %i.ak, ptr noundef nonnull readonly align 1 %3, i64 noundef %i.af, i1 noundef false) #23
   br label %ruby_nonempty_memcpy.exit
 
 ruby_nonempty_memcpy.exit:                        ; preds = %rbimpl_size_mul_or_raise.exit, %bb.i
-  %i.al = phi ptr [ %i.aj, %rbimpl_size_mul_or_raise.exit ], [ %i.ak, %bb.i ]
+  %i.al = phi ptr [ %7, %bb.i ], [ %i.aj, %rbimpl_size_mul_or_raise.exit ]
   call void @rb_node_init(ptr noundef nonnull %4, i32 noundef 0) #23
   %i.am = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
   store ptr %i.al, ptr %i.am, align 8, !tbaa !563
@@ -2252,7 +2252,8 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.t
   %i.em = add i64 %.0.i, 24
-  %i.en = inttoptr i64 %i.em to ptr
+  %i.en = inttoptr i64 %i.em to ptr               ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.en) ]
   %i.eo = getelementptr i8, ptr %i.en, i64 16
   %i.ep = load i64, ptr %i.eo, align 8, !tbaa !315
   br label %RHASH_EMPTY_P.exit
@@ -2631,7 +2632,8 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.o
   %i.dc = add i64 %.0.i, 24
-  %i.dd = inttoptr i64 %i.dc to ptr
+  %i.dd = inttoptr i64 %i.dc to ptr               ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.dd) ]
   %i.de = getelementptr i8, ptr %i.dd, i64 16
   %i.df = load i64, ptr %i.de, align 8, !tbaa !315
   br label %RHASH_EMPTY_P.exit
@@ -3034,7 +3036,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.z = add i64 %i.s, 24
-  %i.aa = inttoptr i64 %i.z to ptr
+  %i.aa = inttoptr i64 %i.z to ptr                ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aa) ]
   %i.ab = getelementptr i8, ptr %i.aa, i64 16
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !315
   br label %RHASH_EMPTY_P.exit
@@ -3165,7 +3168,8 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.v
   %i.bx = add i64 %i.bk, 24
-  %i.by = inttoptr i64 %i.bx to ptr
+  %i.by = inttoptr i64 %i.bx to ptr               ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.by) ]
   %i.bz = getelementptr i8, ptr %i.by, i64 16
   %i.ca = load i64, ptr %i.bz, align 8, !tbaa !315
   br label %RHASH_EMPTY_P.exit90
@@ -3236,7 +3240,8 @@ bb.af:                                            ; preds = %bb.ae
 
 bb.ag:                                            ; preds = %bb.ae
   %i.da = add i64 %i.cp, 24
-  %i.db = inttoptr i64 %i.da to ptr
+  %i.db = inttoptr i64 %i.da to ptr               ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.db) ]
   %i.dc = getelementptr i8, ptr %i.db, i64 16
   %i.dd = load i64, ptr %i.dc, align 8, !tbaa !315
   br label %RHASH_EMPTY_P.exit96
@@ -3292,7 +3297,8 @@ bb.al:                                            ; preds = %bb.ak
 
 bb.am:                                            ; preds = %bb.ak
   %i.dv = add i64 %i.do, 24
-  %i.dw = inttoptr i64 %i.dv to ptr
+  %i.dw = inttoptr i64 %i.dv to ptr               ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.dw) ]
   %i.dx = getelementptr i8, ptr %i.dw, i64 16
   %i.dy = load i64, ptr %i.dx, align 8, !tbaa !315
   br label %RHASH_EMPTY_P.exit102
@@ -3695,7 +3701,8 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.o
   %i.bv = add i64 %i.bi, 24
-  %i.bw = inttoptr i64 %i.bv to ptr
+  %i.bw = inttoptr i64 %i.bv to ptr               ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bw) ]
   %i.bx = getelementptr i8, ptr %i.bw, i64 16
   %i.by = load i64, ptr %i.bx, align 8, !tbaa !315
   br label %RHASH_EMPTY_P.exit
@@ -3879,7 +3886,8 @@ bb.ae:                                            ; preds = %bb.ad
 
 bb.af:                                            ; preds = %bb.ad
   %i.em = add i64 %.019.i, 24
-  %i.en = inttoptr i64 %i.em to ptr
+  %i.en = inttoptr i64 %i.em to ptr               ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.en) ]
   %i.eo = getelementptr i8, ptr %i.en, i64 16
   %i.ep = load i64, ptr %i.eo, align 8, !tbaa !315
   br label %RHASH_EMPTY_P.exit.i
@@ -3939,7 +3947,8 @@ bb.am:                                            ; preds = %bb.al
 
 bb.an:                                            ; preds = %bb.al
   %i.fj = add i64 %.1.i, 24
-  %i.fk = inttoptr i64 %i.fj to ptr
+  %i.fk = inttoptr i64 %i.fj to ptr               ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.fk) ]
   %i.fl = getelementptr i8, ptr %i.fk, i64 16
   %i.fm = load i64, ptr %i.fl, align 8, !tbaa !315
   br label %RHASH_EMPTY_P.exit31.i
@@ -4342,7 +4351,8 @@ bb.bp:                                            ; preds = %bb.bo
 
 bb.bq:                                            ; preds = %bb.bo
   %i.lh = add i64 %i.kw, 24
-  %i.li = inttoptr i64 %i.lh to ptr
+  %i.li = inttoptr i64 %i.lh to ptr               ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.li) ]
   %i.lj = getelementptr i8, ptr %i.li, i64 16
   %i.lk = load i64, ptr %i.lj, align 8, !tbaa !315
   br label %RHASH_EMPTY_P.exit502
@@ -4409,7 +4419,8 @@ bb.bv:                                            ; preds = %bb.bu
 
 bb.bw:                                            ; preds = %bb.bu
   %i.md = add i64 %.019.i507, 24
-  %i.me = inttoptr i64 %i.md to ptr
+  %i.me = inttoptr i64 %i.md to ptr               ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.me) ]
   %i.mf = getelementptr i8, ptr %i.me, i64 16
   %i.mg = load i64, ptr %i.mf, align 8, !tbaa !315
   br label %RHASH_EMPTY_P.exit.i509
@@ -4440,7 +4451,8 @@ bb.by:                                            ; preds = %bb.bx
 
 bb.bz:                                            ; preds = %bb.bx
   %i.mo = add i64 %.019.i507, 24
-  %i.mp = inttoptr i64 %i.mo to ptr
+  %i.mp = inttoptr i64 %i.mo to ptr               ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.mp) ]
   %i.mq = getelementptr i8, ptr %i.mp, i64 16
   %i.mr = load i64, ptr %i.mq, align 8, !tbaa !315
   br label %RHASH_EMPTY_P.exit31.i516
@@ -4640,7 +4652,8 @@ bb.cx:                                            ; preds = %bb.cw
 
 bb.cy:                                            ; preds = %bb.cw
   %i.pb = add i64 %.019.i533, 24
-  %i.pc = inttoptr i64 %i.pb to ptr
+  %i.pc = inttoptr i64 %i.pb to ptr               ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.pc) ]
   %i.pd = getelementptr i8, ptr %i.pc, i64 16
   %i.pe = load i64, ptr %i.pd, align 8, !tbaa !315
   br label %RHASH_EMPTY_P.exit.i535
@@ -4700,7 +4713,8 @@ bb.df:                                            ; preds = %bb.de
 
 bb.dg:                                            ; preds = %bb.de
   %i.py = add i64 %.1.i538, 24
-  %i.pz = inttoptr i64 %i.py to ptr
+  %i.pz = inttoptr i64 %i.py to ptr               ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.pz) ]
   %i.qa = getelementptr i8, ptr %i.pz, i64 16
   %i.qb = load i64, ptr %i.qa, align 8, !tbaa !315
   br label %RHASH_EMPTY_P.exit31.i542
@@ -5103,7 +5117,8 @@ bb.gz:                                            ; preds = %bb.gy
 
 bb.ha:                                            ; preds = %bb.gy
   %i.ahx = add i64 %.5341731, 24
-  %i.ahy = inttoptr i64 %i.ahx to ptr
+  %i.ahy = inttoptr i64 %i.ahx to ptr             ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ahy) ]
   %i.ahz = getelementptr i8, ptr %i.ahy, i64 16
   %i.aia = load i64, ptr %i.ahz, align 8, !tbaa !315
   br label %RHASH_SIZE.exit
@@ -5506,7 +5521,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.q = add i64 %3, 24
-  %i.r = inttoptr i64 %i.q to ptr
+  %i.r = inttoptr i64 %i.q to ptr                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
   %i.s = getelementptr i8, ptr %i.r, i64 16
   %i.t = load i64, ptr %i.s, align 8, !tbaa !315
   br label %RHASH_SIZE.exit
@@ -5731,7 +5747,8 @@ bb.af:                                            ; preds = %bb.ae
 
 bb.ag:                                            ; preds = %bb.ae
   %i.bz = add i64 %3, 24
-  %i.ca = inttoptr i64 %i.bz to ptr
+  %i.ca = inttoptr i64 %i.bz to ptr               ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ca) ]
   %i.cb = getelementptr i8, ptr %i.ca, i64 16
   %i.cc = load i64, ptr %i.cb, align 8, !tbaa !315
   br label %RHASH_EMPTY_P.exit
@@ -6037,7 +6054,8 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.p
   %i.cs = add i64 %i.t, 24
-  %i.ct = inttoptr i64 %i.cs to ptr
+  %i.ct = inttoptr i64 %i.cs to ptr               ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ct) ]
   %i.cu = getelementptr i8, ptr %i.ct, i64 16
   %i.cv = load i64, ptr %i.cu, align 8, !tbaa !315
   br label %RHASH_EMPTY_P.exit
@@ -6097,7 +6115,8 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.r = add i64 %i.e, 24
-  %i.s = inttoptr i64 %i.r to ptr
+  %i.s = inttoptr i64 %i.r to ptr                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   %i.t = getelementptr i8, ptr %i.s, i64 16
   %i.u = load i64, ptr %i.t, align 8, !tbaa !315
   br label %RHASH_EMPTY_P.exit
@@ -6500,7 +6519,8 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f
   %i.t = add i64 %1, 24
-  %i.u = inttoptr i64 %i.t to ptr
+  %i.u = inttoptr i64 %i.t to ptr                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.u) ]
   %i.v = getelementptr i8, ptr %i.u, i64 16
   %i.w = load i64, ptr %i.v, align 8, !tbaa !315
   br label %RHASH_EMPTY_P.exit
@@ -6903,7 +6923,8 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.r
   %i.ay = add i64 %0, 24
-  %i.az = inttoptr i64 %i.ay to ptr
+  %i.az = inttoptr i64 %i.ay to ptr               ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.az) ]
   %i.ba = getelementptr i8, ptr %i.az, i64 16
   %i.bb = load i64, ptr %i.ba, align 8, !tbaa !315
   br label %RHASH_SIZE.exit
@@ -7306,7 +7327,8 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.o
   %i.dw = add i64 %i.dk, 24
-  %i.dx = inttoptr i64 %i.dw to ptr
+  %i.dx = inttoptr i64 %i.dw to ptr               ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.dx) ]
   %i.dy = getelementptr i8, ptr %i.dx, i64 16
   %i.dz = load i64, ptr %i.dy, align 8, !tbaa !315
   br label %RHASH_EMPTY_P.exit.i.i
@@ -7541,7 +7563,8 @@ bb.ae:                                            ; preds = %bb.ad
 
 bb.af:                                            ; preds = %bb.ad
   %i.hs = add i64 %i.hg, 24
-  %i.ht = inttoptr i64 %i.hs to ptr
+  %i.ht = inttoptr i64 %i.hs to ptr               ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ht) ]
   %i.hu = getelementptr i8, ptr %i.ht, i64 16
   %i.hv = load i64, ptr %i.hu, align 8, !tbaa !315
   br label %RHASH_EMPTY_P.exit.i
@@ -7759,7 +7782,8 @@ bb.ar:                                            ; preds = %bb.aq
 
 bb.as:                                            ; preds = %bb.aq
   %i.lp = add i64 %i.ld, 24
-  %i.lq = inttoptr i64 %i.lp to ptr
+  %i.lq = inttoptr i64 %i.lp to ptr               ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.lq) ]
   %i.lr = getelementptr i8, ptr %i.lq, i64 16
   %i.ls = load i64, ptr %i.lr, align 8, !tbaa !315
   br label %RHASH_EMPTY_P.exit.i259
@@ -8162,7 +8186,8 @@ bb.cp:                                            ; preds = %bb.co
 
 bb.cq:                                            ; preds = %bb.co
   %i.us = add i64 %i.ug, 24
-  %i.ut = inttoptr i64 %i.us to ptr
+  %i.ut = inttoptr i64 %i.us to ptr               ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ut) ]
   %i.uu = getelementptr i8, ptr %i.ut, i64 16
   %i.uv = load i64, ptr %i.uu, align 8, !tbaa !315
   br label %RHASH_EMPTY_P.exit.i293
@@ -8421,7 +8446,8 @@ bb.dh:                                            ; preds = %bb.dg
 
 bb.di:                                            ; preds = %bb.dg
   %i.za = add i64 %i.yo, 24
-  %i.zb = inttoptr i64 %i.za to ptr
+  %i.zb = inttoptr i64 %i.za to ptr               ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.zb) ]
   %i.zc = getelementptr i8, ptr %i.zb, i64 16
   %i.zd = load i64, ptr %i.zc, align 8, !tbaa !315
   br label %RHASH_EMPTY_P.exit.i319
@@ -8824,7 +8850,7 @@ rbimpl_size_mul_or_raise.exit:                    ; preds = %bb.v, %bb.u
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %i.bq, ptr noundef nonnull readonly align 1 %i.bp, i64 noundef %i.bo, i1 noundef false) #23
   br label %ruby_nonempty_memcpy.exit
 
-ruby_nonempty_memcpy.exit:                        ; preds = %rb_method_basic_definition_p.exit.thread, %rbimpl_size_mul_or_raise.exit, %bb.r, %bb.s, %RB_SYMBOL_P.exit
+ruby_nonempty_memcpy.exit:                        ; preds = %rb_method_basic_definition_p.exit.thread, %bb.r, %rbimpl_size_mul_or_raise.exit, %bb.s, %RB_SYMBOL_P.exit
   %.1 = phi ptr [ %1, %RB_SYMBOL_P.exit ], [ %1, %bb.r ], [ %i.bl, %rbimpl_size_mul_or_raise.exit ], [ %i.b, %bb.s ], [ %1, %rb_method_basic_definition_p.exit.thread ]
   %i.br = getelementptr i8, ptr %.0..0..0..0..0..0..i, i64 145
   store i8 0, ptr %i.br, align 1

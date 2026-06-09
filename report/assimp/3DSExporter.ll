@@ -201,7 +201,8 @@ bb.i:                                             ; preds = %._crit_edge.i
 
 bb.j:                                             ; preds = %_ZN6Assimp12StreamWriterILb0ELb0EE5PutI1Ea.exit6.i, %.lr.ph.i
   %i.bz = phi i64 [ %.pre.i, %.lr.ph.i ], [ %i.di, %_ZN6Assimp12StreamWriterILb0ELb0EE5PutI1Ea.exit6.i ] ; 2 uses
-  %.sroa.07.011.i = phi ptr [ %i.br, %.lr.ph.i ], [ %i.dj, %_ZN6Assimp12StreamWriterILb0ELb0EE5PutI1Ea.exit6.i ] ; 2 uses
+  %.sroa.07.011.i = phi ptr [ %i.br, %.lr.ph.i ], [ %i.dj, %_ZN6Assimp12StreamWriterILb0ELb0EE5PutI1Ea.exit6.i ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.07.011.i) ]
   %i.ca = load i8, ptr %.sroa.07.011.i, align 1
   %i.cb = add i64 %i.bz, 1                        ; 4 uses
   %i.cc = load ptr, ptr %i.i, align 8             ; 5 uses
@@ -604,7 +605,8 @@ bb.g:                                             ; preds = %._crit_edge.i
 
 bb.h:                                             ; preds = %_ZN6Assimp12StreamWriterILb0ELb0EE5PutI1Ea.exit6.i, %.lr.ph.i
   %i.bn = phi i64 [ %.pre.i, %.lr.ph.i ], [ %i.cw, %_ZN6Assimp12StreamWriterILb0ELb0EE5PutI1Ea.exit6.i ] ; 2 uses
-  %.sroa.07.011.i = phi ptr [ %i.bf, %.lr.ph.i ], [ %i.cx, %_ZN6Assimp12StreamWriterILb0ELb0EE5PutI1Ea.exit6.i ] ; 2 uses
+  %.sroa.07.011.i = phi ptr [ %i.bf, %.lr.ph.i ], [ %i.cx, %_ZN6Assimp12StreamWriterILb0ELb0EE5PutI1Ea.exit6.i ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.07.011.i) ]
   %i.bo = load i8, ptr %.sroa.07.011.i, align 1
   %i.bp = add i64 %i.bn, 1                        ; 4 uses
   %i.bq = load ptr, ptr %i.j, align 8             ; 5 uses
@@ -1007,7 +1009,8 @@ bb.ad:                                            ; preds = %._crit_edge.i119
 
 bb.ae:                                            ; preds = %_ZN6Assimp12StreamWriterILb0ELb0EE5PutI1Ea.exit6.i, %.lr.ph.i116
   %i.hm = phi i64 [ %.pre.i117, %.lr.ph.i116 ], [ %i.iv, %_ZN6Assimp12StreamWriterILb0ELb0EE5PutI1Ea.exit6.i ] ; 2 uses
-  %.sroa.07.011.i = phi ptr [ %i.he, %.lr.ph.i116 ], [ %i.iw, %_ZN6Assimp12StreamWriterILb0ELb0EE5PutI1Ea.exit6.i ] ; 2 uses
+  %.sroa.07.011.i = phi ptr [ %i.he, %.lr.ph.i116 ], [ %i.iw, %_ZN6Assimp12StreamWriterILb0ELb0EE5PutI1Ea.exit6.i ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.07.011.i) ]
   %i.hn = load i8, ptr %.sroa.07.011.i, align 1
   %i.ho = add i64 %i.hm, 1                        ; 4 uses
   %i.hp = load ptr, ptr %i.f, align 8             ; 5 uses
@@ -1410,7 +1413,8 @@ _ZN6Assimp12StreamWriterILb0ELb0EE5PutI1Ea.exit:  ; preds = %._crit_edge, %bb.b
 
 bb.c:                                             ; preds = %.lr.ph, %_ZN6Assimp12StreamWriterILb0ELb0EE5PutI1Ea.exit6
   %i.v = phi i64 [ %.pre, %.lr.ph ], [ %i.ah, %_ZN6Assimp12StreamWriterILb0ELb0EE5PutI1Ea.exit6 ] ; 2 uses
-  %.sroa.07.011 = phi ptr [ %i.c, %.lr.ph ], [ %i.ai, %_ZN6Assimp12StreamWriterILb0ELb0EE5PutI1Ea.exit6 ] ; 2 uses
+  %.sroa.07.011 = phi ptr [ %i.c, %.lr.ph ], [ %i.ai, %_ZN6Assimp12StreamWriterILb0ELb0EE5PutI1Ea.exit6 ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.07.011) ]
   %i.w = load i8, ptr %.sroa.07.011, align 1
   %i.x = add i64 %i.v, 1                          ; 2 uses
   %i.y = load ptr, ptr %i.f, align 8
@@ -1813,7 +1817,8 @@ bb.e:                                             ; preds = %._crit_edge.i
 
 bb.f:                                             ; preds = %_ZN6Assimp12StreamWriterILb0ELb0EE5PutI1Ea.exit6.i, %.lr.ph.i
   %i.as = phi i64 [ %.pre.i, %.lr.ph.i ], [ %i.be, %_ZN6Assimp12StreamWriterILb0ELb0EE5PutI1Ea.exit6.i ] ; 2 uses
-  %.sroa.07.011.i = phi ptr [ %i.ak, %.lr.ph.i ], [ %i.bf, %_ZN6Assimp12StreamWriterILb0ELb0EE5PutI1Ea.exit6.i ] ; 2 uses
+  %.sroa.07.011.i = phi ptr [ %i.ak, %.lr.ph.i ], [ %i.bf, %_ZN6Assimp12StreamWriterILb0ELb0EE5PutI1Ea.exit6.i ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.07.011.i) ]
   %i.at = load i8, ptr %.sroa.07.011.i, align 1
   %i.au = add i64 %i.as, 1                        ; 2 uses
   %i.av = load ptr, ptr %i.e, align 8
@@ -2216,9 +2221,9 @@ bb.u:                                             ; preds = %bb.t, %._crit_edge.
   %spec.select21.i42 = select i1 %i.bm, ptr %.019.lcssa28.i39, ptr null
   br label %_ZNSt8_Rb_treeIPK6aiNodeSt4pairIKS2_12aiMatrix4x4tIfEESt10_Select1stIS7_ESt4lessIS2_ESaIS7_EE24_M_get_insert_unique_posERS4_.exit
 
-_ZNSt8_Rb_treeIPK6aiNodeSt4pairIKS2_12aiMatrix4x4tIfEESt10_Select1stIS7_ESt4lessIS2_ESaIS7_EE24_M_get_insert_unique_posERS4_.exit: ; preds = %bb.u, %._crit_edge.thread.i47, %bb.n, %._crit_edge.thread.i27, %bb.g, %._crit_edge.thread.i, %bb.r, %bb.k, %bb.o, %bb.p, %bb.i, %bb.c
-  %.sroa.070.2 = phi ptr [ null, %bb.p ], [ %spec.select, %bb.k ], [ null, %bb.c ], [ %spec.select72, %bb.r ], [ null, %._crit_edge.thread.i ], [ %i.ab, %bb.i ], [ %1, %bb.o ], [ null, %._crit_edge.thread.i27 ], [ %spec.select.i, %bb.g ], [ %spec.select.i21, %bb.n ], [ %spec.select.i41, %bb.u ], [ null, %._crit_edge.thread.i47 ]
-  %.sroa.12.2 = phi ptr [ %i.au, %bb.p ], [ %spec.select71, %bb.k ], [ %i.f, %bb.c ], [ %spec.select73, %bb.r ], [ %.019.lcssa29.i, %._crit_edge.thread.i ], [ %i.ab, %bb.i ], [ null, %bb.o ], [ %.019.lcssa29.i28, %._crit_edge.thread.i27 ], [ %spec.select21.i, %bb.g ], [ %spec.select21.i22, %bb.n ], [ %spec.select21.i42, %bb.u ], [ %.019.lcssa29.i48, %._crit_edge.thread.i47 ]
+_ZNSt8_Rb_treeIPK6aiNodeSt4pairIKS2_12aiMatrix4x4tIfEESt10_Select1stIS7_ESt4lessIS2_ESaIS7_EE24_M_get_insert_unique_posERS4_.exit: ; preds = %bb.u, %._crit_edge.thread.i47, %bb.p, %bb.n, %._crit_edge.thread.i27, %bb.i, %bb.g, %._crit_edge.thread.i, %bb.c, %bb.r, %bb.k, %bb.o
+  %.sroa.070.2 = phi ptr [ null, %bb.c ], [ null, %bb.p ], [ %spec.select, %bb.k ], [ %spec.select72, %bb.r ], [ null, %._crit_edge.thread.i ], [ %i.ab, %bb.i ], [ %1, %bb.o ], [ null, %._crit_edge.thread.i27 ], [ %spec.select.i, %bb.g ], [ %spec.select.i21, %bb.n ], [ %spec.select.i41, %bb.u ], [ null, %._crit_edge.thread.i47 ]
+  %.sroa.12.2 = phi ptr [ %i.f, %bb.c ], [ %i.au, %bb.p ], [ %spec.select71, %bb.k ], [ %spec.select73, %bb.r ], [ %.019.lcssa29.i, %._crit_edge.thread.i ], [ %i.ab, %bb.i ], [ null, %bb.o ], [ %.019.lcssa29.i28, %._crit_edge.thread.i27 ], [ %spec.select21.i, %bb.g ], [ %spec.select21.i22, %bb.n ], [ %spec.select21.i42, %bb.u ], [ %.019.lcssa29.i48, %._crit_edge.thread.i47 ]
   %.fca.0.insert = insertvalue { ptr, ptr } poison, ptr %.sroa.070.2, 0
   %.fca.1.insert = insertvalue { ptr, ptr } %.fca.0.insert, ptr %.sroa.12.2, 1
   ret { ptr, ptr } %.fca.1.insert
@@ -2621,6 +2626,7 @@ bb.c:                                             ; preds = %bb.a
   br label %_ZN6Assimp9Formatter15basic_formatterIcSt11char_traitsIcESaIcEElsIPKcTnPNSt9enable_ifIXntsr3std10is_base_ofISt9exceptionT_EE5valueEvE4typeELPv0EEERS5_RKSB_.exit
 
 _ZN6Assimp9Formatter15basic_formatterIcSt11char_traitsIcESaIcEElsIPKcTnPNSt9enable_ifIXntsr3std10is_base_ofISt9exceptionT_EE5valueEvE4typeELPv0EEERS5_RKSB_.exit: ; preds = %bb.b, %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   call void @_ZN6Assimp9Formatter15basic_formatterIcSt11char_traitsIcESaIcEEC2EOS5_(ptr noundef nonnull align 8 dereferenceable(376) %4, ptr noundef nonnull align 8 dereferenceable(376) %2)
   call void @llvm.experimental.noalias.scope.decl(metadata !74)
   call void @llvm.experimental.noalias.scope.decl(metadata !77)

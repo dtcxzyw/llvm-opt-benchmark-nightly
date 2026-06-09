@@ -201,9 +201,11 @@ bb.a:
   %22 = alloca %"class.std::function", align 8    ; 10 uses
   %23 = alloca %"class.facebook::jsi::Object", align 8 ; 9 uses
   %i.b = tail call noalias noundef nonnull dereferenceable(112) ptr @_Znwm(i64 noundef 112) #21, !noalias !7 ; 34 uses
-  %i.c = load i64, ptr %1, align 8, !tbaa !10, !noalias !7 ; 2 uses
+  %i.c = load i64, ptr %1, align 8, !tbaa !10, !noalias !7 ; 3 uses
   %i.d = inttoptr i64 %i.c to ptr                 ; 3 uses
   store ptr null, ptr %1, align 8, !tbaa !10, !noalias !7
+  %24 = icmp ne i64 %i.c, 0
+  tail call void @llvm.assume(i1 %24)
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 4 uses
   store ptr %i.d, ptr %i.f, align 8, !tbaa !10, !noalias !7
@@ -606,7 +608,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 320
   %i.e = load ptr, ptr %i.d, align 8
   call void %i.e(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr.10") align 8 %3, ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef nonnull align 8 dereferenceable(8) %2)
-  %i.f = load ptr, ptr %3, align 8, !tbaa !157    ; 2 uses
+  %i.f = load ptr, ptr %3, align 8, !tbaa !157, !nonnull !45, !noundef !45 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 24
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !151  ; 2 uses
