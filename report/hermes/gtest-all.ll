@@ -201,13 +201,13 @@ bb.a:
   %i.g = tail call i32 @regcomp(ptr noundef nonnull %i.f, ptr noundef nonnull %i.d, i32 noundef 1)
   %i.h = icmp eq i32 %i.g, 0                      ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.j = zext i1 %i.h to i8                       ; 2 uses
+  %i.j = zext i1 %i.h to i8
   store i8 %i.j, ptr %i.i, align 8, !tbaa !1113
   br i1 %i.h, label %bb.b, label %.thread
 
 .thread:                                          ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #53
-  store i8 %i.j, ptr %5, align 8, !tbaa !183
+  store i8 0, ptr %5, align 8, !tbaa !183
   %i.k = getelementptr inbounds nuw i8, ptr %5, i64 8
   store ptr null, ptr %i.k, align 8, !tbaa !189
   br label %bb.c
