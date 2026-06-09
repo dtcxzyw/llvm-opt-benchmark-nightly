@@ -201,7 +201,6 @@ _ZN6duckdb10unique_ptrINS_15FixedSizeBufferESt14default_deleteIS1_ELb1EE13Assert
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr noundef ptr @_ZN6duckdb15FixedSizeBuffer13GetDeprecatedEb(ptr noundef nonnull align 8 dereferenceable(136) %0, i1 noundef zeroext %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = zext i1 %1 to i8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 3 uses
   %i.b = tail call noundef i32 @pthread_mutex_lock(ptr noundef nonnull align 8 dereferenceable(40) %i.a) #30 ; 2 uses
   %.not.i.i = icmp eq i32 %i.b, 0
@@ -234,7 +233,7 @@ bb.e:                                             ; preds = %bb.c, %_ZNK6duckdb1
 
 bb.f:                                             ; preds = %bb.e
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i8 %2, ptr %i.g, align 8, !tbaa !1343
+  store i8 1, ptr %i.g, align 8, !tbaa !1343
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
