@@ -201,10 +201,10 @@ bb.a:
   %i.d = icmp eq i64 %3, %5
   %i.e = and i1 %i.c, %i.d                        ; 2 uses
   %i.f = add i64 %5, 2                            ; 19 uses
-  %i.g = udiv i64 %i.f, 3                         ; 116 uses
+  %i.g = udiv i64 %i.f, 3                         ; 117 uses
   %i.h = add nuw nsw i64 %i.g, 1                  ; 46 uses
   %i.i = mul i64 %i.h, 6
-  %i.j = shl nuw i64 %i.g, 1                      ; 94 uses
+  %i.j = shl nuw i64 %i.g, 1                      ; 93 uses
   %i.k = add nuw i64 %i.j, 2                      ; 8 uses
   %i.l = or disjoint i64 %i.j, 1                  ; 30 uses
   %reass.add2022 = add i64 %i.k, %i.j
@@ -607,7 +607,8 @@ bb.u:                                             ; preds = %.lr.ph82.i.i707
   br i1 %i.pg, label %.lr.ph93.i.i704.preheader, label %.preheader.i.i700
 
 .lr.ph93.i.i704.preheader:                        ; preds = %.preheader67.i.i699
-  %i.ph = add i64 %.5.i.i697, %i.j
+  %8 = shl nuw i64 %i.g, 1
+  %i.ph = add i64 %.5.i.i697, %8
   %i.pi = sub i64 %3, %i.ph                       ; 3 uses
   %min.iters.check2888 = icmp ult i64 %i.pi, 8
   br i1 %min.iters.check2888, label %.lr.ph93.i.i704.preheader3341, label %vector.memcheck2885
@@ -1010,16 +1011,16 @@ bb.bc:                                            ; preds = %bary_small_rshift.e
   br i1 %or.cond1990, label %.lr.ph93.i.i1308.preheader, label %bary_2comp.exit1330
 
 .lr.ph93.i.i1308.preheader:                       ; preds = %.loopexit74.i.i1300
-  %8 = or disjoint i64 %i.j, 1
-  %9 = sub nuw i64 %8, %.5.i.i1301                ; 3 uses
-  %min.iters.check3074 = icmp ult i64 %9, 8
+  %9 = sub nuw i64 %i.j, %.5.i.i1301
+  %10 = add i64 %9, 1                             ; 3 uses
+  %min.iters.check3074 = icmp ult i64 %10, 8
   %.mask = and i64 %i.g, 576460752303423487
   %diff.check3072 = icmp eq i64 %.mask, 0
   %or.cond3220 = or i1 %min.iters.check3074, %diff.check3072
   br i1 %or.cond3220, label %.lr.ph93.i.i1308.preheader3275, label %vector.ph3075
 
 vector.ph3075:                                    ; preds = %.lr.ph93.i.i1308.preheader
-  %n.vec3077 = and i64 %9, -8                     ; 3 uses
+  %n.vec3077 = and i64 %10, -8                    ; 3 uses
   %i.bav = add i64 %.5.i.i1301, %n.vec3077
   br label %vector.body3078
 
@@ -1039,7 +1040,7 @@ vector.body3078:                                  ; preds = %vector.body3078, %v
   br i1 %i.bbb, label %middle.block3083, label %vector.body3078, !llvm.loop !118
 
 middle.block3083:                                 ; preds = %vector.body3078
-  %cmp.n3084 = icmp eq i64 %9, %n.vec3077
+  %cmp.n3084 = icmp eq i64 %10, %n.vec3077
   br i1 %cmp.n3084, label %bary_2comp.exit1330, label %.lr.ph93.i.i1308.preheader3275
 
 .lr.ph93.i.i1308.preheader3275:                   ; preds = %.lr.ph93.i.i1308.preheader, %middle.block3083

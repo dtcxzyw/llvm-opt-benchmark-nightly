@@ -195,11 +195,11 @@ bb.a:
 .preheader.lr.ph.split.us.split.us.split.us:      ; preds = %.preheader.lr.ph.split.us
   %i.u = zext nneg i32 %i.k to i64                ; 2 uses
   %wide.trip.count111 = zext nneg i32 %i.i to i64 ; 2 uses
-  %wide.trip.count106 = zext i32 %i.l to i64      ; 3 uses
-  %2 = add nsw i64 %wide.trip.count106, -10       ; 6 uses
+  %wide.trip.count106 = zext i32 %i.l to i64      ; 4 uses
   br i1 %.not47, label %.preheader.us.us.us.us.preheader, label %.preheader.us.us.us.preheader
 
 .preheader.us.us.us.preheader:                    ; preds = %.preheader.lr.ph.split.us.split.us.split.us
+  %2 = add nsw i64 %wide.trip.count106, -10       ; 3 uses
   %min.iters.check = icmp ult i64 %2, 4
   %n.vec = and i64 %2, -4                         ; 3 uses
   %i.v = add nsw i64 %n.vec, 10
@@ -211,12 +211,13 @@ bb.a:
   br label %.preheader.us.us.us
 
 .preheader.us.us.us.us.preheader:                 ; preds = %.preheader.lr.ph.split.us.split.us.split.us
-  %min.iters.check127 = icmp ult i64 %2, 4
-  %n.vec130 = and i64 %2, -4                      ; 3 uses
+  %3 = add nsw i64 %wide.trip.count106, -10       ; 3 uses
+  %min.iters.check127 = icmp ult i64 %3, 4
+  %n.vec130 = and i64 %3, -4                      ; 3 uses
   %i.w = add nsw i64 %n.vec130, 10
   %broadcast.splatinsert131 = insertelement <4 x float> poison, float %i.s, i64 0
   %broadcast.splat132 = shufflevector <4 x float> %broadcast.splatinsert131, <4 x float> poison, <4 x i32> zeroinitializer
-  %cmp.n138 = icmp eq i64 %2, %n.vec130
+  %cmp.n138 = icmp eq i64 %3, %n.vec130
   br label %.preheader.us.us.us.us
 
 .preheader.us.us.us.us:                           ; preds = %.preheader.us.us.us.us.preheader, %._crit_edge58.split.us.split.us.split.us.us.us.us.us

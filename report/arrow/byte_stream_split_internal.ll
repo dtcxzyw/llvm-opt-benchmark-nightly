@@ -201,15 +201,16 @@ bb.k:                                             ; preds = %bb.e, %bb.j, %bb.i,
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZN5arrow4util8internal25ByteStreamSplitDecodeSimdIN5xsimd6sse4_2ELi4EEEvPKhillPh(ptr noundef %0, i32 noundef %1, i64 noundef %2, i64 noundef %3, ptr noundef %4) #4 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = sdiv i64 %2, 16                          ; 3 uses
-  %i.b = shl nsw i64 %i.a, 4                      ; 10 uses
+  %i.a = sdiv i64 %2, 16                          ; 4 uses
+  %i.b = shl nsw i64 %i.a, 4                      ; 9 uses
   %i.c = icmp slt i64 %i.b, %2
   br i1 %i.c, label %.lr.ph.preheader, label %.preheader72
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.d = shl nsw i64 %3, 1                        ; 4 uses
   %i.e = mul nsw i64 %3, 3                        ; 4 uses
-  %i.f = sub i64 %2, %i.b                         ; 2 uses
+  %5 = shl nsw i64 %i.a, 4
+  %i.f = sub i64 %2, %5                           ; 2 uses
   %min.iters.check = icmp ult i64 %i.f, 20
   br i1 %min.iters.check, label %.lr.ph.preheader120, label %vector.memcheck
 
@@ -447,8 +448,8 @@ bb.k:                                             ; preds = %bb.e, %bb.j, %bb.i,
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZN5arrow4util8internal25ByteStreamSplitDecodeSimdIN5xsimd6sse4_2ELi8EEEvPKhillPh(ptr noundef %0, i32 noundef %1, i64 noundef %2, i64 noundef %3, ptr noundef %4) #4 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = sdiv i64 %2, 16                          ; 3 uses
-  %i.b = shl nsw i64 %i.a, 4                      ; 14 uses
+  %i.a = sdiv i64 %2, 16                          ; 4 uses
+  %i.b = shl nsw i64 %i.a, 4                      ; 13 uses
   %i.c = icmp slt i64 %i.b, %2
   br i1 %i.c, label %.lr.ph.preheader, label %.preheader72
 
@@ -459,7 +460,8 @@ bb.a:
   %i.g = mul nsw i64 %3, 5                        ; 4 uses
   %i.h = mul nsw i64 %3, 6                        ; 4 uses
   %i.i = mul nsw i64 %3, 7                        ; 4 uses
-  %i.j = sub i64 %2, %i.b                         ; 2 uses
+  %5 = shl nsw i64 %i.a, 4
+  %i.j = sub i64 %2, %5                           ; 2 uses
   %min.iters.check = icmp ult i64 %i.j, 20
   br i1 %min.iters.check, label %.lr.ph.preheader148, label %vector.memcheck
 
