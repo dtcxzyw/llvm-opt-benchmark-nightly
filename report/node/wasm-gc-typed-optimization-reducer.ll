@@ -1,0 +1,1390 @@
+inline.NumInlined: 1835
+inline.NumDeleted: 1081
+begin_hunk_0_@_ZN2v88internal8compiler10turboshaft18WasmGCTypeAnalyzer26RefineTypeKnowledgeNotNullENS2_7OpIndexERKNS2_9OperationE:bb.a
+  tail call void @llvm.assume(i1 %i.w)
+  %i.x = lshr i32 %.sroa.0.0.copyload.i, 6
+  %i.y = zext nneg i32 %i.x to i64
+  %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %i.y
+  %i.aa = load i64, ptr %i.z, align 8
+  %i.ab = and i32 %.sroa.0.0.copyload.i, 63
+  %i.ac = zext nneg i32 %i.ab to i64
+  %i.ad = shl nuw i64 1, %i.ac
+  %i.ae = and i64 %i.aa, %i.ad
+  %.not.i = icmp eq i64 %i.ae, 0
+  %i.af = select i1 %.not.i, ptr @.str.8, ptr @.str.7
+  %i.ag = load ptr, ptr %i.a, align 8, !nonnull !5, !align !6
+  %i.ah = ptrtoint ptr %2 to i64
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
+  %i.aj = load ptr, ptr %i.ai, align 8
+  %i.ak = ptrtoint ptr %i.aj to i64
+  %i.al = sub i64 %i.ah, %i.ak
+  %i.am = trunc i64 %i.al to i32
+  %i.an = lshr i32 %i.am, 4
+  %i.ao = load i8, ptr %2, align 4
+  %i.ap = tail call noundef ptr @_ZN2v88internal8compiler10turboshaft10OpcodeNameENS2_6OpcodeE(i8 noundef zeroext %i.ao) #19
+  %i.aq = lshr i32 %.sroa.08.0.i, 4
+  %i.ar = load ptr, ptr %i.a, align 8, !nonnull !5, !align !6
+  %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
+  %i.at = load ptr, ptr %i.as, align 8
+  %i.au = ptrtoint ptr %i.at to i64
+  %i.av = add i64 %i.au, %i.f
+  %i.aw = inttoptr i64 %i.av to ptr
+  %i.ax = load i8, ptr %i.aw, align 4
+  %i.ay = tail call noundef ptr @_ZN2v88internal8compiler10turboshaft10OpcodeNameENS2_6OpcodeE(i8 noundef zeroext %i.ax) #19
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
+  call void @_ZNK2v88internal4wasm13ValueTypeBase4nameB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %4, ptr noundef nonnull align 4 dereferenceable(4) %3) #19
+  %i.az = load ptr, ptr %4, align 8
+  %i.ba = load i32, ptr %3, align 4
+  %.fr2.i = freeze i32 %i.ba                      ; 3 uses
+  %i.bb = and i32 %.fr2.i, 268435427              ; 2 uses
+  %i.bc = icmp eq i32 %i.bb, 514
+  br i1 %i.bc, label %_ZNK2v88internal4wasm13ValueTypeBase14is_uninhabitedEv.exit, label %bb.h
+
+bb.h:                                             ; preds = %bb.g
+  %i.bd = and i32 %.fr2.i, 3
+  %i.be = and i32 %.fr2.i, 5
+  %i.bf = icmp ne i32 %i.be, 5
+  %.off.i = add nsw i32 %i.bd, -1
+  %switch.i = icmp ult i32 %.off.i, 2
+  %or.cond.i = and i1 %i.bf, %switch.i
+  br i1 %or.cond.i, label %bb.i, label %_ZNK2v88internal4wasm13ValueTypeBase14is_uninhabitedEv.exit
+
+bb.i:                                             ; preds = %bb.h
+  %i.bg = add nsw i32 %i.bb, -1153                ; 2 uses
+  %i.bh = call i32 @llvm.fshl.i32(i32 %i.bg, i32 %i.bg, i32 27) ; 2 uses
+  %i.bi = icmp ult i32 %i.bh, 29
+  br i1 %i.bi, label %switch.lookup, label %_ZNK2v88internal4wasm13ValueTypeBase14is_uninhabitedEv.exit
+
+switch.lookup:                                    ; preds = %bb.i
+  %i.bj = zext nneg i32 %i.bh to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN2v88internal8compiler10turboshaft18WasmGCTypeAnalyzer26RefineTypeKnowledgeNotNullENS2_7OpIndexERKNS2_9OperationE, i64 %i.bj
+  %switch.load = load ptr, ptr %switch.gep, align 8
+  br label %_ZNK2v88internal4wasm13ValueTypeBase14is_uninhabitedEv.exit
+
+_ZNK2v88internal4wasm13ValueTypeBase14is_uninhabitedEv.exit: ; preds = %bb.i, %switch.lookup, %bb.g, %bb.h
+  %i.bk = phi ptr [ @.str.17, %bb.g ], [ @.str.8, %bb.h ], [ %switch.load, %switch.lookup ], [ @.str.8, %bb.i ]
+  call void (ptr, ...) @_ZN2v88internal6PrintFEPKcz(ptr noundef nonnull @.str.16, i32 noundef %.sroa.0.0.copyload.i, ptr noundef nonnull %i.af, i32 noundef %i.an, ptr noundef %i.ap, i32 noundef %i.aq, ptr noundef %i.ay, ptr noundef %i.az, ptr noundef nonnull %i.bk) #19
+  %i.bl = load ptr, ptr %4, align 8               ; 2 uses
+  %i.bm = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
+  %i.bn = icmp eq ptr %i.bl, %i.bm
+  br i1 %i.bn, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %_ZNK2v88internal4wasm13ValueTypeBase14is_uninhabitedEv.exit
+  %i.bo = load i64, ptr %i.bm, align 8
+  %i.bp = add i64 %i.bo, 1
+  call void @_ZdlPvm(ptr noundef %i.bl, i64 noundef %i.bp) #21
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNK2v88internal4wasm13ValueTypeBase14is_uninhabitedEv.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #19
+  %.sroa.0.0.copyload.pre = load i32, ptr %3, align 4
+  br label %bb.j
+
+bb.j:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.f
+  %.sroa.0.0.copyload = phi i32 [ %.sroa.0.0.copyload.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.o, %bb.f ] ; 3 uses
+  %i.bq = call ptr @_ZN2v88internal8compiler10turboshaft26SparseOpIndexSnapshotTableINS0_4wasm9ValueTypeENS2_9NoKeyDataEE14GetOrCreateKeyENS2_7OpIndexE(ptr noundef nonnull align 8 dereferenceable(384) %i.k, i32 %.sroa.08.0.i) ; 3 uses
+  %i.br = load i32, ptr %i.bq, align 4            ; 2 uses
+  %.not = icmp eq i32 %i.br, %.sroa.0.0.copyload
+  br i1 %.not, label %_ZN2v88internal8compiler10turboshaft26SparseOpIndexSnapshotTableINS0_4wasm9ValueTypeENS2_9NoKeyDataEE3SetENS2_7OpIndexES5_.exit, label %bb.k
+
+bb.k:                                             ; preds = %bb.j
+  %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 3 uses
+  %i.bt = load ptr, ptr %i.bs, align 8            ; 2 uses
+  %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 264
+  %i.bv = load ptr, ptr %i.bu, align 8            ; 2 uses
+  %i.bw = icmp ult ptr %i.bt, %i.bv
+  br i1 %i.bw, label %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft13SnapshotTableINS0_4wasm9ValueTypeENS3_9NoKeyDataEE8LogEntryEE9push_backEOS9_.exit.i.i, label %bb.l, !prof !13
+
+bb.l:                                             ; preds = %bb.k
+  %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 240
+  %i.by = getelementptr inbounds nuw i8, ptr %0, i64 248
+  %i.bz = load ptr, ptr %i.by, align 8
+  %i.ca = ptrtoint ptr %i.bv to i64
+  %i.cb = ptrtoint ptr %i.bz to i64
+  %i.cc = sub i64 %i.ca, %i.cb
+  %i.cd = ashr exact i64 %i.cc, 4
+  %i.ce = add nsw i64 %i.cd, 1
+  call preserve_mostcc void @_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft13SnapshotTableINS0_4wasm9ValueTypeENS3_9NoKeyDataEE8LogEntryEE4GrowEm(ptr noundef nonnull align 8 dereferenceable(32) %i.bx, i64 noundef %i.ce)
+  %.pre.i.i.i.i = load ptr, ptr %i.bs, align 8
+  br label %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft13SnapshotTableINS0_4wasm9ValueTypeENS3_9NoKeyDataEE8LogEntryEE9push_backEOS9_.exit.i.i
+
+_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft13SnapshotTableINS0_4wasm9ValueTypeENS3_9NoKeyDataEE8LogEntryEE9push_backEOS9_.exit.i.i: ; preds = %bb.l, %bb.k
+  %i.cf = phi ptr [ %i.bt, %bb.k ], [ %.pre.i.i.i.i, %bb.l ] ; 4 uses
+  %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 16
+  store ptr %i.cg, ptr %i.bs, align 8
+  store ptr %i.bq, ptr %i.cf, align 8
+  %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.cf, i64 8
+  store i32 %i.br, ptr %.sroa.4.0..sroa_idx.i.i, align 8
+  %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.cf, i64 12
+  store i32 %.sroa.0.0.copyload, ptr %.sroa.5.0..sroa_idx.i.i, align 4
+  store i32 %.sroa.0.0.copyload, ptr %i.bq, align 4
+  br label %_ZN2v88internal8compiler10turboshaft26SparseOpIndexSnapshotTableINS0_4wasm9ValueTypeENS2_9NoKeyDataEE3SetENS2_7OpIndexES5_.exit
+
+_ZN2v88internal8compiler10turboshaft26SparseOpIndexSnapshotTableINS0_4wasm9ValueTypeENS2_9NoKeyDataEE3SetENS2_7OpIndexES5_.exit: ; preds = %bb.j, %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft13SnapshotTableINS0_4wasm9ValueTypeENS3_9NoKeyDataEE8LogEntryEE9push_backEOS9_.exit.i.i
+  %i.ch = load i32, ptr %3, align 4
+  %.fr2.i10 = freeze i32 %i.ch                    ; 3 uses
+  %i.ci = and i32 %.fr2.i10, 268435427            ; 2 uses
+  %i.cj = icmp eq i32 %i.ci, 514
+  br i1 %i.cj, label %bb.o, label %bb.m
+
+bb.m:                                             ; preds = %_ZN2v88internal8compiler10turboshaft26SparseOpIndexSnapshotTableINS0_4wasm9ValueTypeENS2_9NoKeyDataEE3SetENS2_7OpIndexES5_.exit
+  %i.ck = and i32 %.fr2.i10, 3
+  %i.cl = and i32 %.fr2.i10, 5
+  %i.cm = icmp ne i32 %i.cl, 5
+  %.off.i11 = add nsw i32 %i.ck, -1
+  %switch.i12 = icmp ult i32 %.off.i11, 2
+  %or.cond.i13 = and i1 %i.cm, %switch.i12
+  br i1 %or.cond.i13, label %bb.n, label %_ZNK2v88internal4wasm13ValueTypeBase14is_uninhabitedEv.exit15
+
+bb.n:                                             ; preds = %bb.m
+  %i.cn = add nsw i32 %i.ci, -1153                ; 2 uses
+  %i.co = call i32 @llvm.fshl.i32(i32 %i.cn, i32 %i.cn, i32 27)
+  switch i32 %i.co, label %_ZNK2v88internal4wasm13ValueTypeBase14is_uninhabitedEv.exit15 [
+    i32 0, label %bb.o
+    i32 4, label %bb.o
+    i32 12, label %bb.o
+    i32 21, label %bb.o
+    i32 28, label %bb.o
+  ]
+
+bb.o:                                             ; preds = %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %_ZN2v88internal8compiler10turboshaft26SparseOpIndexSnapshotTableINS0_4wasm9ValueTypeENS2_9NoKeyDataEE3SetENS2_7OpIndexES5_.exit
+  %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 488
+  %i.cq = load ptr, ptr %i.cp, align 8
+  %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 52
+  %.sroa.0.0.copyload.i16 = load i32, ptr %i.cr, align 4 ; 3 uses
+  %i.cs = and i32 %.sroa.0.0.copyload.i16, 63
+  %i.ct = zext nneg i32 %i.cs to i64
+  %i.cu = shl nuw i64 1, %i.ct
+  %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 472
+  %i.cw = load ptr, ptr %i.cv, align 8
+  %i.cx = icmp sgt i32 %.sroa.0.0.copyload.i16, -1
+  call void @llvm.assume(i1 %i.cx)
+  %i.cy = lshr i32 %.sroa.0.0.copyload.i16, 6
+  %i.cz = zext nneg i32 %i.cy to i64
+  %i.da = getelementptr inbounds nuw [8 x i8], ptr %i.cw, i64 %i.cz ; 2 uses
+  %i.db = load i64, ptr %i.da, align 8
+  %i.dc = or i64 %i.db, %i.cu
+  store i64 %i.dc, ptr %i.da, align 8
+  br label %_ZNK2v88internal4wasm13ValueTypeBase14is_uninhabitedEv.exit15
+
+_ZNK2v88internal4wasm13ValueTypeBase14is_uninhabitedEv.exit15: ; preds = %bb.n, %bb.m, %bb.o
+  %.sroa.08.0 = phi i32 [ 514, %bb.o ], [ %i.l, %bb.m ], [ %i.l, %bb.n ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #19
+  br label %bb.p
+
+bb.p:                                             ; preds = %_ZNK2v88internal8compiler10turboshaft18WasmGCTypeAnalyzer14ResolveAliasesENS2_7OpIndexE.exit, %_ZNK2v88internal4wasm13ValueTypeBase14is_uninhabitedEv.exit15
+  %.sroa.08.1 = phi i32 [ %.sroa.08.0, %_ZNK2v88internal4wasm13ValueTypeBase14is_uninhabitedEv.exit15 ], [ %i.l, %_ZNK2v88internal8compiler10turboshaft18WasmGCTypeAnalyzer14ResolveAliasesENS2_7OpIndexE.exit ]
+  ret i32 %.sroa.08.1
+}
+
+; Function Attrs: mustprogress nounwind uwtable
+define linkonce_odr hidden i32 @_ZNK2v88internal8compiler10turboshaft26SparseOpIndexSnapshotTableINS0_4wasm9ValueTypeENS2_9NoKeyDataEE3GetENS2_7OpIndexE(ptr noundef nonnull align 8 dereferenceable(384) %0, i32 %1) local_unnamed_addr #5 comdat align 2 {
+bb.a:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 344
+  %i.b = load i64, ptr %i.a, align 8              ; 3 uses
+  %i.c = icmp ult i64 %i.b, 2
+  br i1 %i.c, label %bb.b, label %bb.d
+
+bb.b:                                             ; preds = %bb.a
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 352
+  %i.e = load i64, ptr %i.d, align 8
+  %.not.i.i.i.i = icmp ult i64 %i.e, 131072
+  br i1 %.not.i.i.i.i, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE4findIS7_EENSO_14const_iteratorERSL_.exit, label %bb.c
+
+bb.c:                                             ; preds = %bb.b
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 360 ; 2 uses
+  %i.g = load i32, ptr %i.f, align 8
+  %i.h = icmp eq i32 %i.g, %1
+  %.fca.1.insert.i.i.i.i = insertvalue { ptr, ptr } { ptr @_ZN4absl18container_internal11kSooControlE, ptr poison }, ptr %i.f, 1
+  %spec.select.i.i.i = select i1 %i.h, { ptr, ptr } %.fca.1.insert.i.i.i.i, { ptr, ptr } { ptr null, ptr undef }
+  br label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE4findIS7_EENSO_14const_iteratorERSL_.exit
+
+bb.d:                                             ; preds = %bb.a
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 360
+  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.i, align 8 ; 3 uses
+  tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i32 0, i32 1, i32 1)
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 352
+  %i.k = load i64, ptr %i.j, align 8
+  %sext.i.i = shl i64 %i.k, 48
+  %i.l = ashr exact i64 %sext.i.i, 48
+  %i.m = zext i32 %1 to i64
+  %i.n = xor i64 %i.l, %i.m
+  %i.o = zext i64 %i.n to i128
+  %i.p = mul nuw nsw i128 %i.o, 8779197792823184629 ; 2 uses
+  %i.q = lshr i128 %i.p, 64
+  %i.r = xor i128 %i.q, %i.p
+  %i.s = trunc i128 %i.r to i64                   ; 2 uses
+  %i.t = lshr i64 %i.s, 57
+  %i.u = trunc nuw nsw i64 %i.t to i8
+  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 368
+  %.sroa.0.0.copyload.i.i.i14.i.i.i = load ptr, ptr %i.v, align 8 ; 2 uses
+  %i.w = insertelement <16 x i8> poison, i8 %i.u, i64 0
+  %i.x = shufflevector <16 x i8> %i.w, <16 x i8> poison, <16 x i32> zeroinitializer
+  br label %bb.e
+
+bb.e:                                             ; preds = %bb.g, %bb.d
+  %.pn.i8.i.i = phi i64 [ %i.s, %bb.d ], [ %i.aq, %bb.g ]
+  %.sroa.13.0.i.i.i = phi i64 [ 0, %bb.d ], [ %i.ap, %bb.g ]
+  %.sroa.6.0.i.i.i = and i64 %.pn.i8.i.i, %i.b    ; 4 uses
+  %i.y = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.copyload.i.i.i14.i.i.i, i64 %.sroa.6.0.i.i.i
+  tail call void @llvm.prefetch.p0(ptr %i.y, i32 0, i32 3, i32 1)
+  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 %.sroa.6.0.i.i.i
+  %i.aa = load <16 x i8>, ptr %i.z, align 1       ; 2 uses
+  %i.ab = icmp eq <16 x i8> %i.x, %i.aa
+  %i.ac = bitcast <16 x i1> %i.ab to i16          ; 2 uses
+  %.not46.i.i.i = icmp eq i16 %i.ac, 0
+  br i1 %.not46.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
+
+.lr.ph.i.i.i:                                     ; preds = %bb.e, %bb.f
+  %.sroa.017.047.i.i.i = phi i16 [ %i.am, %bb.f ], [ %i.ac, %bb.e ] ; 3 uses
+  %i.ad = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.sroa.017.047.i.i.i, i1 true)
+  %i.ae = zext nneg i16 %i.ad to i64
+  %i.af = add i64 %.sroa.6.0.i.i.i, %i.ae
+  %i.ag = and i64 %i.af, %i.b                     ; 2 uses
+  %i.ah = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.copyload.i.i.i14.i.i.i, i64 %i.ag ; 2 uses
+  %i.ai = load i32, ptr %i.ah, align 4
+  %i.aj = icmp eq i32 %i.ai, %1
+  br i1 %i.aj, label %.thread33.i.i.i, label %bb.f, !prof !13
+
+.thread33.i.i.i:                                  ; preds = %.lr.ph.i.i.i
+  %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 %i.ag ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ak) ]
+  br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE10find_largeIS7_EENSO_8iteratorERSL_m.exit.i.i
+
+bb.f:                                             ; preds = %.lr.ph.i.i.i
+  %i.al = add i16 %.sroa.017.047.i.i.i, -1
+  %i.am = and i16 %i.al, %.sroa.017.047.i.i.i     ; 2 uses
+  %.not.i.i.i = icmp eq i16 %i.am, 0
+  br i1 %.not.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
+
+._crit_edge.i.i.i:                                ; preds = %bb.f, %bb.e
+  %i.an = icmp eq <16 x i8> %i.aa, splat (i8 -128)
+  %i.ao = bitcast <16 x i1> %i.an to i16
+  %.not44.i.i.i = icmp eq i16 %i.ao, 0
+  br i1 %.not44.i.i.i, label %bb.g, label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE10find_largeIS7_EENSO_8iteratorERSL_m.exit.i.i, !prof !7
+
+bb.g:                                             ; preds = %._crit_edge.i.i.i
+  %i.ap = add i64 %.sroa.13.0.i.i.i, 16           ; 2 uses
+  %i.aq = add i64 %i.ap, %.sroa.6.0.i.i.i
+  br label %bb.e, !llvm.loop !50
+
+_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE10find_largeIS7_EENSO_8iteratorERSL_m.exit.i.i: ; preds = %._crit_edge.i.i.i, %.thread33.i.i.i
+  %.sroa.0.4.ph.i.i.i = phi ptr [ %i.ak, %.thread33.i.i.i ], [ null, %._crit_edge.i.i.i ]
+  %.sroa.3.4.ph.i.i.i = phi ptr [ %i.ah, %.thread33.i.i.i ], [ undef, %._crit_edge.i.i.i ]
+  %.fca.0.insert.i.i.i = insertvalue { ptr, ptr } poison, ptr %.sroa.0.4.ph.i.i.i, 0
+  %.fca.1.insert.i.i.i = insertvalue { ptr, ptr } %.fca.0.insert.i.i.i, ptr %.sroa.3.4.ph.i.i.i, 1
+  br label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE4findIS7_EENSO_14const_iteratorERSL_.exit
+
+_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE4findIS7_EENSO_14const_iteratorERSL_.exit: ; preds = %bb.b, %bb.c, %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE10find_largeIS7_EENSO_8iteratorERSL_m.exit.i.i
+  %.pn.i.i = phi { ptr, ptr } [ %.fca.1.insert.i.i.i, %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE10find_largeIS7_EENSO_8iteratorERSL_m.exit.i.i ], [ { ptr null, ptr undef }, %bb.b ], [ %spec.select.i.i.i, %bb.c ] ; 2 uses
+  %i.ar = extractvalue { ptr, ptr } %.pn.i.i, 0   ; 4 uses
+  %i.as = extractvalue { ptr, ptr } %.pn.i.i, 1
+  %i.at = icmp eq ptr %i.ar, null                 ; 2 uses
+  %i.au = icmp eq ptr %i.ar, @_ZN4absl18container_internal19kDefaultIterControlE ; 2 uses
+  %or.cond.i.i.i = or i1 %i.at, %i.au
+  br i1 %or.cond.i.i.i, label %_ZN4absl18container_internal26AssertIsValidForComparisonEPKNS0_6ctrl_tEhPKh.exit15.i.i, label %bb.h
+
+bb.h:                                             ; preds = %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE4findIS7_EENSO_14const_iteratorERSL_.exit
+  %i.av = load i8, ptr %i.ar, align 1
+  %i.aw = icmp sgt i8 %i.av, -1
+  br i1 %i.aw, label %_ZN4absl18container_internal26AssertIsValidForComparisonEPKNS0_6ctrl_tEhPKh.exit15.i.i, label %bb.i, !prof !13
+
+bb.i:                                             ; preds = %bb.h
+  tail call void @llvm.trap()
+  unreachable
+
+_ZN4absl18container_internal26AssertIsValidForComparisonEPKNS0_6ctrl_tEhPKh.exit15.i.i: ; preds = %bb.h, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE4findIS7_EENSO_14const_iteratorERSL_.exit
+  br i1 %i.au, label %bb.j, label %_ZN4absl18container_internaleqERKNS0_12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE14const_iteratorESR_.exit, !prof !7
+
+bb.j:                                             ; preds = %_ZN4absl18container_internal26AssertIsValidForComparisonEPKNS0_6ctrl_tEhPKh.exit15.i.i
+  tail call void (i32, ptr, i32, ptr, ...) @_ZN4absl16raw_log_internal6RawLogENS_11LogSeverityEPKciS3_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str.33, i64 61), i32 noundef 1350, ptr noundef nonnull @.str.34, ptr noundef nonnull @.str.31) #19
+  tail call void @llvm.trap()
+  unreachable
+
+_ZN4absl18container_internaleqERKNS0_12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE14const_iteratorESR_.exit: ; preds = %_ZN4absl18container_internal26AssertIsValidForComparisonEPKNS0_6ctrl_tEhPKh.exit15.i.i
+  br i1 %i.at, label %bb.m, label %bb.k
+
+bb.k:                                             ; preds = %_ZN4absl18container_internaleqERKNS0_12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE14const_iteratorESR_.exit
+  %i.ax = load i8, ptr %i.ar, align 1
+  %i.ay = icmp sgt i8 %i.ax, -1
+  br i1 %i.ay, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE14const_iteratorptEv.exit, label %bb.l, !prof !13
+
+bb.l:                                             ; preds = %bb.k
+  tail call void (i32, ptr, i32, ptr, ...) @_ZN4absl16raw_log_internal6RawLogENS_11LogSeverityEPKciS3_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str.33, i64 61), i32 noundef 1277, ptr noundef nonnull @.str.38, ptr noundef nonnull @.str.35) #19
+  tail call void @llvm.trap()
+  unreachable
+
+_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE14const_iteratorptEv.exit: ; preds = %bb.k
+  %i.az = getelementptr inbounds nuw i8, ptr %i.as, i64 8
+  %.sroa.0.0.copyload = load ptr, ptr %i.az, align 8
+  %i.ba = load i32, ptr %.sroa.0.0.copyload, align 4
+  br label %bb.m
+
+bb.m:                                             ; preds = %_ZN4absl18container_internaleqERKNS0_12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE14const_iteratorESR_.exit, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE14const_iteratorptEv.exit
+  %.sroa.06.0 = phi i32 [ %i.ba, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE14const_iteratorptEv.exit ], [ 2, %_ZN4absl18container_internaleqERKNS0_12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE14const_iteratorESR_.exit ]
+  ret i32 %.sroa.06.0
+}
+
+; Function Attrs: mustprogress nounwind uwtable
+define hidden i32 @_ZN2v88internal8compiler10turboshaft18WasmGCTypeAnalyzer18GetTypeForPhiInputERKNS2_5PhiOpEi(ptr noundef nonnull align 8 dereferenceable(561) %0, ptr noundef nonnull align 4 dereferenceable(5) %1, i32 noundef %2) local_unnamed_addr #0 align 2 {
+bb.a:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.b = load ptr, ptr %i.a, align 8, !nonnull !5, !align !6
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %i.d = load ptr, ptr %i.c, align 8
+  %i.e = ptrtoint ptr %i.d to i64                 ; 2 uses
+  %i.f = sext i32 %2 to i64
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.h = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.f
+  br label %bb.b
+
+bb.b:                                             ; preds = %bb.e, %bb.a
+  %.sroa.08.0.i.in = phi ptr [ %i.h, %bb.a ], [ %i.m, %bb.e ]
+  %.sroa.08.0.i = load i32, ptr %.sroa.08.0.i.in, align 4 ; 4 uses
+  %i.i = zext i32 %.sroa.08.0.i to i64
+  %i.j = add i64 %i.i, %i.e
+  %i.k = inttoptr i64 %i.j to ptr                 ; 2 uses
+  %i.l = load i8, ptr %i.k, align 4
+  switch i8 %i.l, label %_ZNK2v88internal8compiler10turboshaft18WasmGCTypeAnalyzer14ResolveAliasesENS2_7OpIndexE.exit [
+    i8 19, label %bb.e
+    i8 16, label %bb.c
+    i8 22, label %bb.d
+  ]
+
+bb.c:                                             ; preds = %bb.b
+  br label %bb.e
+
+bb.d:                                             ; preds = %bb.b
+  br label %bb.e
+
+bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
+  %.sink.i = phi i64 [ 8, %bb.d ], [ 12, %bb.c ], [ 16, %bb.b ]
+  %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 %.sink.i
+  br label %bb.b
+
+_ZNK2v88internal8compiler10turboshaft18WasmGCTypeAnalyzer14ResolveAliasesENS2_7OpIndexE.exit: ; preds = %bb.b
+  %i.n = ptrtoint ptr %1 to i64
+  %i.o = sub i64 %i.n, %i.e
+  %i.p = trunc i64 %i.o to i32
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 488
+  %i.r = load ptr, ptr %i.q, align 8
+  %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 44
+  %.sroa.0.0.copyload.i8 = load i32, ptr %i.s, align 4
+  %i.t = lshr i32 %.sroa.0.0.copyload.i8, 4
+  %i.u = lshr i32 %.sroa.08.0.i, 4                ; 2 uses
+  %.not = icmp samesign ule i32 %i.t, %i.u
+  %i.v = lshr i32 %i.p, 4
+  %i.w = icmp samesign ult i32 %i.u, %i.v
+  %or.cond = select i1 %.not, i1 %i.w, i1 false
+  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
+  br i1 %or.cond, label %bb.f, label %.critedge
+
+bb.f:                                             ; preds = %_ZNK2v88internal8compiler10turboshaft18WasmGCTypeAnalyzer14ResolveAliasesENS2_7OpIndexE.exit
+  %i.y = tail call i32 @_ZNK2v88internal8compiler10turboshaft26SparseOpIndexSnapshotTableINS0_4wasm9ValueTypeENS2_9NoKeyDataEE3GetENS2_7OpIndexE(ptr noundef nonnull align 8 dereferenceable(384) %i.x, i32 %.sroa.08.0.i)
+  br label %bb.g
+
+.critedge:                                        ; preds = %_ZNK2v88internal8compiler10turboshaft18WasmGCTypeAnalyzer14ResolveAliasesENS2_7OpIndexE.exit
+  %i.z = tail call i32 @_ZN2v88internal8compiler10turboshaft26SparseOpIndexSnapshotTableINS0_4wasm9ValueTypeENS2_9NoKeyDataEE19GetPredecessorValueENS2_7OpIndexEi(ptr noundef nonnull align 8 dereferenceable(384) %i.x, i32 %.sroa.08.0.i, i32 noundef %2)
+  br label %bb.g
+
+bb.g:                                             ; preds = %.critedge, %bb.f
+  %.sroa.07.0 = phi i32 [ %i.y, %bb.f ], [ %i.z, %.critedge ]
+  ret i32 %.sroa.07.0
+}
+
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
+define hidden i32 @_ZNK2v88internal8compiler10turboshaft18WasmGCTypeAnalyzer14ResolveAliasesENS2_7OpIndexE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(561) %0, i32 %1) local_unnamed_addr #6 align 2 {
+bb.a:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.b = load ptr, ptr %i.a, align 8, !nonnull !5, !align !6
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %i.d = load ptr, ptr %i.c, align 8
+  %i.e = ptrtoint ptr %i.d to i64
+  br label %bb.b
+
+bb.b:                                             ; preds = %bb.e, %bb.a
+  %.sroa.08.0 = phi i32 [ %1, %bb.a ], [ %.sroa.08.2, %bb.e ] ; 2 uses
+  %i.f = zext i32 %.sroa.08.0 to i64
+  %i.g = add i64 %i.e, %i.f
+  %i.h = inttoptr i64 %i.g to ptr                 ; 2 uses
+  %i.i = load i8, ptr %i.h, align 4
+  switch i8 %i.i, label %bb.f [
+    i8 19, label %bb.e
+    i8 16, label %bb.c
+    i8 22, label %bb.d
+  ]
+
+bb.c:                                             ; preds = %bb.b
+  br label %bb.e
+
+bb.d:                                             ; preds = %bb.b
+  br label %bb.e
+
+bb.e:                                             ; preds = %bb.b, %bb.c, %bb.d
+  %.sink = phi i64 [ 8, %bb.d ], [ 12, %bb.c ], [ 16, %bb.b ]
+  %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 %.sink
+  %.sroa.08.2 = load i32, ptr %i.j, align 4
+  br label %bb.b
+
+bb.f:                                             ; preds = %bb.b
+  ret i32 %.sroa.08.0
+}
+
+; Function Attrs: mustprogress nounwind uwtable
+define linkonce_odr hidden i32 @_ZN2v88internal8compiler10turboshaft26SparseOpIndexSnapshotTableINS0_4wasm9ValueTypeENS2_9NoKeyDataEE19GetPredecessorValueENS2_7OpIndexEi(ptr noundef nonnull align 8 dereferenceable(384) %0, i32 %1, i32 noundef %2) local_unnamed_addr #5 comdat align 2 {
+bb.a:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 344
+  %i.b = load i64, ptr %i.a, align 8              ; 3 uses
+  %i.c = icmp ult i64 %i.b, 2
+  br i1 %i.c, label %bb.b, label %bb.d
+
+bb.b:                                             ; preds = %bb.a
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 352
+  %i.e = load i64, ptr %i.d, align 8
+  %.not.i.i.i = icmp ult i64 %i.e, 131072
+  br i1 %.not.i.i.i, label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE4findIS7_EENSO_8iteratorERSL_.exit, label %bb.c
+
+bb.c:                                             ; preds = %bb.b
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 360 ; 2 uses
+  %i.g = load i32, ptr %i.f, align 8
+  %i.h = icmp eq i32 %i.g, %1
+  %.fca.1.insert.i.i.i = insertvalue { ptr, ptr } { ptr @_ZN4absl18container_internal11kSooControlE, ptr poison }, ptr %i.f, 1
+  %spec.select.i.i = select i1 %i.h, { ptr, ptr } %.fca.1.insert.i.i.i, { ptr, ptr } { ptr null, ptr undef }
+  br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE4findIS7_EENSO_8iteratorERSL_.exit
+
+bb.d:                                             ; preds = %bb.a
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 360
+  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.i, align 8 ; 3 uses
+  tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i, i32 0, i32 1, i32 1)
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 352
+  %i.k = load i64, ptr %i.j, align 8
+  %sext.i = shl i64 %i.k, 48
+  %i.l = ashr exact i64 %sext.i, 48
+  %i.m = zext i32 %1 to i64
+  %i.n = xor i64 %i.l, %i.m
+  %i.o = zext i64 %i.n to i128
+  %i.p = mul nuw nsw i128 %i.o, 8779197792823184629 ; 2 uses
+  %i.q = lshr i128 %i.p, 64
+  %i.r = xor i128 %i.q, %i.p
+  %i.s = trunc i128 %i.r to i64                   ; 2 uses
+  %i.t = lshr i64 %i.s, 57
+  %i.u = trunc nuw nsw i64 %i.t to i8
+  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 368
+  %.sroa.0.0.copyload.i.i.i14.i.i = load ptr, ptr %i.v, align 8 ; 2 uses
+  %i.w = insertelement <16 x i8> poison, i8 %i.u, i64 0
+  %i.x = shufflevector <16 x i8> %i.w, <16 x i8> poison, <16 x i32> zeroinitializer
+  br label %bb.e
+
+bb.e:                                             ; preds = %bb.g, %bb.d
+  %.pn.i8.i = phi i64 [ %i.s, %bb.d ], [ %i.aq, %bb.g ]
+  %.sroa.13.0.i.i = phi i64 [ 0, %bb.d ], [ %i.ap, %bb.g ]
+  %.sroa.6.0.i.i = and i64 %.pn.i8.i, %i.b        ; 4 uses
+  %i.y = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.copyload.i.i.i14.i.i, i64 %.sroa.6.0.i.i
+  tail call void @llvm.prefetch.p0(ptr %i.y, i32 0, i32 3, i32 1)
+  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i, i64 %.sroa.6.0.i.i
+  %i.aa = load <16 x i8>, ptr %i.z, align 1       ; 2 uses
+  %i.ab = icmp eq <16 x i8> %i.x, %i.aa
+  %i.ac = bitcast <16 x i1> %i.ab to i16          ; 2 uses
+  %.not46.i.i = icmp eq i16 %i.ac, 0
+  br i1 %.not46.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %bb.e, %bb.f
+  %.sroa.017.047.i.i = phi i16 [ %i.am, %bb.f ], [ %i.ac, %bb.e ] ; 3 uses
+  %i.ad = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.sroa.017.047.i.i, i1 true)
+  %i.ae = zext nneg i16 %i.ad to i64
+  %i.af = add i64 %.sroa.6.0.i.i, %i.ae
+  %i.ag = and i64 %i.af, %i.b                     ; 2 uses
+  %i.ah = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.copyload.i.i.i14.i.i, i64 %i.ag ; 2 uses
+  %i.ai = load i32, ptr %i.ah, align 4
+  %i.aj = icmp eq i32 %i.ai, %1
+  br i1 %i.aj, label %.thread33.i.i, label %bb.f, !prof !13
+
+.thread33.i.i:                                    ; preds = %.lr.ph.i.i
+  %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i, i64 %i.ag ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ak) ]
+  br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE10find_largeIS7_EENSO_8iteratorERSL_m.exit.i
+
+bb.f:                                             ; preds = %.lr.ph.i.i
+  %i.al = add i16 %.sroa.017.047.i.i, -1
+  %i.am = and i16 %i.al, %.sroa.017.047.i.i       ; 2 uses
+  %.not.i.i = icmp eq i16 %i.am, 0
+  br i1 %.not.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
+
+._crit_edge.i.i:                                  ; preds = %bb.f, %bb.e
+  %i.an = icmp eq <16 x i8> %i.aa, splat (i8 -128)
+  %i.ao = bitcast <16 x i1> %i.an to i16
+  %.not44.i.i = icmp eq i16 %i.ao, 0
+  br i1 %.not44.i.i, label %bb.g, label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE10find_largeIS7_EENSO_8iteratorERSL_m.exit.i, !prof !7
+
+bb.g:                                             ; preds = %._crit_edge.i.i
+  %i.ap = add i64 %.sroa.13.0.i.i, 16             ; 2 uses
+  %i.aq = add i64 %i.ap, %.sroa.6.0.i.i
+  br label %bb.e, !llvm.loop !50
+
+_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE10find_largeIS7_EENSO_8iteratorERSL_m.exit.i: ; preds = %._crit_edge.i.i, %.thread33.i.i
+  %.sroa.0.4.ph.i.i = phi ptr [ %i.ak, %.thread33.i.i ], [ null, %._crit_edge.i.i ]
+  %.sroa.3.4.ph.i.i = phi ptr [ %i.ah, %.thread33.i.i ], [ undef, %._crit_edge.i.i ]
+  %.fca.0.insert.i.i = insertvalue { ptr, ptr } poison, ptr %.sroa.0.4.ph.i.i, 0
+  %.fca.1.insert.i.i = insertvalue { ptr, ptr } %.fca.0.insert.i.i, ptr %.sroa.3.4.ph.i.i, 1
+  br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE4findIS7_EENSO_8iteratorERSL_.exit
+
+_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE4findIS7_EENSO_8iteratorERSL_.exit: ; preds = %bb.b, %bb.c, %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE10find_largeIS7_EENSO_8iteratorERSL_m.exit.i
+  %.pn.i = phi { ptr, ptr } [ %.fca.1.insert.i.i, %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE10find_largeIS7_EENSO_8iteratorERSL_m.exit.i ], [ { ptr null, ptr undef }, %bb.b ], [ %spec.select.i.i, %bb.c ] ; 2 uses
+  %i.ar = extractvalue { ptr, ptr } %.pn.i, 0     ; 4 uses
+  %i.as = extractvalue { ptr, ptr } %.pn.i, 1
+  %i.at = icmp eq ptr %i.ar, null                 ; 2 uses
+  %i.au = icmp eq ptr %i.ar, @_ZN4absl18container_internal19kDefaultIterControlE ; 2 uses
+  %or.cond.i.i = or i1 %i.at, %i.au
+  br i1 %or.cond.i.i, label %_ZN4absl18container_internal26AssertIsValidForComparisonEPKNS0_6ctrl_tEhPKh.exit15.i, label %bb.h
+
+bb.h:                                             ; preds = %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE4findIS7_EENSO_8iteratorERSL_.exit
+  %i.av = load i8, ptr %i.ar, align 1
+  %i.aw = icmp sgt i8 %i.av, -1
+  br i1 %i.aw, label %_ZN4absl18container_internal26AssertIsValidForComparisonEPKNS0_6ctrl_tEhPKh.exit15.i, label %bb.i, !prof !13
+
+bb.i:                                             ; preds = %bb.h
+  tail call void @llvm.trap()
+  unreachable
+
+_ZN4absl18container_internal26AssertIsValidForComparisonEPKNS0_6ctrl_tEhPKh.exit15.i: ; preds = %bb.h, %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE4findIS7_EENSO_8iteratorERSL_.exit
+  br i1 %i.au, label %bb.j, label %_ZN4absl18container_internaleqERKNS0_12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE8iteratorESR_.exit, !prof !7
+
+bb.j:                                             ; preds = %_ZN4absl18container_internal26AssertIsValidForComparisonEPKNS0_6ctrl_tEhPKh.exit15.i
+  tail call void (i32, ptr, i32, ptr, ...) @_ZN4absl16raw_log_internal6RawLogENS_11LogSeverityEPKciS3_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str.33, i64 61), i32 noundef 1350, ptr noundef nonnull @.str.34, ptr noundef nonnull @.str.31) #19
+  tail call void @llvm.trap()
+  unreachable
+
+_ZN4absl18container_internaleqERKNS0_12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE8iteratorESR_.exit: ; preds = %_ZN4absl18container_internal26AssertIsValidForComparisonEPKNS0_6ctrl_tEhPKh.exit15.i
+  br i1 %i.at, label %bb.m, label %bb.k
+
+bb.k:                                             ; preds = %_ZN4absl18container_internaleqERKNS0_12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE8iteratorESR_.exit
+  %i.ax = load i8, ptr %i.ar, align 1
+  %i.ay = icmp sgt i8 %i.ax, -1
+  br i1 %i.ay, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE8iteratorptEv.exit, label %bb.l, !prof !13
+
+bb.l:                                             ; preds = %bb.k
+  tail call void (i32, ptr, i32, ptr, ...) @_ZN4absl16raw_log_internal6RawLogENS_11LogSeverityEPKciS3_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str.33, i64 61), i32 noundef 1277, ptr noundef nonnull @.str.38, ptr noundef nonnull @.str.35) #19
+  tail call void @llvm.trap()
+  unreachable
+
+_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE8iteratorptEv.exit: ; preds = %bb.k
+  %i.az = getelementptr inbounds nuw i8, ptr %i.as, i64 8
+  %.sroa.0.0.copyload = load ptr, ptr %i.az, align 8 ; 2 uses
+  %i.ba = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload, i64 4
+  %i.bb = load i32, ptr %i.ba, align 4            ; 2 uses
+  %i.bc = icmp eq i32 %i.bb, -1
+  %i.bd = add i32 %i.bb, %2
+  %i.be = zext i32 %i.bd to i64
+  %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 288
+  %i.bg = load ptr, ptr %i.bf, align 8
+  %i.bh = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %i.be
+  %.0.i = select i1 %i.bc, ptr %.sroa.0.0.copyload, ptr %i.bh
+  %i.bi = load i32, ptr %.0.i, align 4
+  br label %bb.m
+
+bb.m:                                             ; preds = %_ZN4absl18container_internaleqERKNS0_12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE8iteratorESR_.exit, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE8iteratorptEv.exit
+  %.sroa.06.0 = phi i32 [ %i.bi, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE8iteratorptEv.exit ], [ 2, %_ZN4absl18container_internaleqERKNS0_12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE8iteratorESR_.exit ]
+  ret i32 %.sroa.06.0
+}
+
+declare { i32, ptr } @_ZN2v88internal4wasm5UnionENS1_9ValueTypeES2_PKNS1_10WasmModuleE(i32, i32, ptr noundef) local_unnamed_addr #3
+
+declare noundef ptr @_ZN2v88internal8compiler10turboshaft10OpcodeNameENS2_6OpcodeE(i8 noundef zeroext) local_unnamed_addr #3
+
+declare void @_ZNK2v88internal4wasm13ValueTypeBase4nameB5cxx11Ev(ptr dead_on_unwind writable sret(%"class.std::__cxx11::basic_string") align 8, ptr noundef nonnull align 4 dereferenceable(4)) local_unnamed_addr #3
+
+declare i32 @_ZN2v88internal4wasm14ToNullSentinelENS1_12TypeInModuleE(i32, ptr) local_unnamed_addr #3
+
+declare { i32, ptr } @_ZN2v88internal4wasm12IntersectionENS1_9ValueTypeES2_PKNS1_10WasmModuleE(i32, i32, ptr noundef) local_unnamed_addr #3
+
+declare void @_ZN2v88internal8compiler10turboshaft10LoopFinder3RunEv(ptr noundef nonnull align 8 dereferenceable(152)) local_unnamed_addr #3
+
+; Function Attrs: noreturn
+declare void @_Z8V8_FatalPKcz(ptr noundef, ...) local_unnamed_addr #7
+
+declare preserve_mostcc void @_ZN2v88internal4Zone6ExpandEm(ptr noundef nonnull align 8 dereferenceable(64), i64 noundef) local_unnamed_addr #3
+
+declare noundef i64 @_ZNKSt8__detail20_Prime_rehash_policy11_M_next_bktEm(ptr noundef nonnull align 8 dereferenceable(16), i64 noundef) local_unnamed_addr #3
+
+; Function Attrs: mustprogress noinline nounwind uwtable
+define linkonce_odr hidden preserve_mostcc void @_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft16AnalyzerIterator9StackNodeEE4GrowEm(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %1) local_unnamed_addr #8 comdat align 2 {
+bb.a:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8              ; 4 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8
+  %i.e = ptrtoint ptr %i.d to i64
+  %i.f = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.g = sub i64 %i.e, %i.f                       ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %i.i = load ptr, ptr %i.h, align 8              ; 2 uses
+  %i.j = icmp eq ptr %i.b, %i.i
+  %i.k = ptrtoint ptr %i.i to i64
+  %i.l = sub i64 %i.k, %i.f
+  %i.m = ashr exact i64 %i.l, 3
+  %i.n = select i1 %i.j, i64 2, i64 %i.m
+  %i.o = tail call noundef i64 @llvm.umax.i64(i64 %i.n, i64 %1) ; 3 uses
+  %i.p = load ptr, ptr %0, align 8                ; 3 uses
+  %i.q = icmp ult i64 %i.o, 1152921504606846975
+  br i1 %i.q, label %bb.c, label %bb.b, !prof !13
+
+bb.b:                                             ; preds = %bb.a
+  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.18, ptr noundef nonnull @.str.19) #20
+  unreachable
+
+bb.c:                                             ; preds = %bb.a
+  %i.r = shl nuw i64 %i.o, 4                      ; 3 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 24
+  %i.t = load i64, ptr %i.s, align 8
+  %i.u = getelementptr inbounds nuw i8, ptr %i.p, i64 16 ; 3 uses
+  %i.v = load i64, ptr %i.u, align 8              ; 2 uses
+  %i.w = sub i64 %i.t, %i.v
+  %i.x = icmp ugt i64 %i.r, %i.w
+  br i1 %i.x, label %bb.d, label %_ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft16AnalyzerIterator9StackNodeEA_S6_EEPT_m.exit, !prof !7
+
+bb.d:                                             ; preds = %bb.c
+  tail call preserve_mostcc void @_ZN2v88internal4Zone6ExpandEm(ptr noundef nonnull align 8 dereferenceable(64) %i.p, i64 noundef %i.r) #19
+  %.pre.i.i = load i64, ptr %i.u, align 8
+  br label %_ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft16AnalyzerIterator9StackNodeEA_S6_EEPT_m.exit
+
+_ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft16AnalyzerIterator9StackNodeEA_S6_EEPT_m.exit: ; preds = %bb.c, %bb.d
+  %i.y = phi i64 [ %.pre.i.i, %bb.d ], [ %i.v, %bb.c ] ; 2 uses
+  %i.z = inttoptr i64 %i.y to ptr                 ; 4 uses
+  %i.aa = add i64 %i.y, %i.r
+  store i64 %i.aa, ptr %i.u, align 8
+  store ptr %i.z, ptr %i.a, align 8
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.g
+  store ptr %i.ab, ptr %i.c, align 8
+  %.not = icmp eq ptr %i.b, null
+  br i1 %.not, label %bb.f, label %bb.e
+
+bb.e:                                             ; preds = %_ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft16AnalyzerIterator9StackNodeEA_S6_EEPT_m.exit
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.z, ptr nonnull align 8 %i.b, i64 %i.g, i1 false)
+  %.pre = load ptr, ptr %i.a, align 8
+  br label %bb.f
+
+bb.f:                                             ; preds = %bb.e, %_ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft16AnalyzerIterator9StackNodeEA_S6_EEPT_m.exit
+  %i.ac = phi ptr [ %.pre, %bb.e ], [ %i.z, %_ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft16AnalyzerIterator9StackNodeEA_S6_EEPT_m.exit ]
+  %i.ad = getelementptr inbounds nuw [16 x i8], ptr %i.ac, i64 %i.o
+  store ptr %i.ad, ptr %i.h, align 8
+  ret void
+}
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #9
+
+; Function Attrs: mustprogress noinline nounwind uwtable
+define linkonce_odr hidden preserve_mostcc void @_ZN2v84base11SmallVectorIPNS_8internal8compiler10turboshaft5BlockELm8ESaIS6_EE4GrowEv(ptr noundef nonnull align 8 dereferenceable(88) %0) local_unnamed_addr #8 comdat align 2 {
+bb.a:
+  tail call preserve_mostcc void @_ZN2v84base11SmallVectorIPNS_8internal8compiler10turboshaft5BlockELm8ESaIS6_EE4GrowEm(ptr noundef nonnull align 8 dereferenceable(88) %0, i64 noundef 0)
+  ret void
+}
+
+; Function Attrs: mustprogress noinline nounwind uwtable
+define linkonce_odr hidden preserve_mostcc void @_ZN2v84base11SmallVectorIPNS_8internal8compiler10turboshaft5BlockELm8ESaIS6_EE4GrowEm(ptr noundef nonnull align 8 dereferenceable(88) %0, i64 noundef %1) local_unnamed_addr #8 comdat align 2 {
+bb.a:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.b = load ptr, ptr %0, align 8                ; 3 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8
+  %i.e = ptrtoint ptr %i.d to i64
+  %i.f = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.g = sub i64 %i.e, %i.f
+  %i.h = ashr exact i64 %i.g, 2
+  %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %1, i64 %i.h)
+  %spec.select.i.i = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.speculated, i64 1) ; 3 uses
+  %i.i = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %spec.select.i.i, i1 false)
+  %i.j = sub nuw nsw i64 64, %i.i                 ; 2 uses
+  %i.k = icmp ugt i64 %spec.select.i.i, 576460752303423487
+  br i1 %i.k, label %bb.b, label %bb.e, !prof !7
+
+bb.b:                                             ; preds = %bb.a
+  %i.l = icmp ugt i64 %spec.select.i.i, 1152921504606846975
+  br i1 %i.l, label %bb.c, label %bb.d
+
+end_hunk_0
+begin_hunk_1_@_ZN2v84base11SmallVectorIbLm8ESaIbEE4GrowEm:bb.a
+  %i.g = sub i64 %i.e, %i.f
+  %i.h = shl i64 %i.g, 1
+  %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %1, i64 %i.h)
+  %spec.select.i.i = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.speculated, i64 1)
+  %i.i = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %spec.select.i.i, i1 false) ; 2 uses
+  %i.j = sub nuw nsw i64 64, %i.i
+  %i.k = shl nuw i64 1, %i.j                      ; 2 uses
+  %i.l = icmp eq i64 %i.i, 1
+  br i1 %i.l, label %bb.b, label %bb.c, !prof !7
+
+bb.b:                                             ; preds = %bb.a
+  tail call void @_ZSt17__throw_bad_allocv() #20
+  unreachable
+
+bb.c:                                             ; preds = %bb.a
+  %i.m = load ptr, ptr %i.a, align 8
+  %i.n = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.k) #22 ; 5 uses
+  %i.o = ptrtoint ptr %i.m to i64
+  %i.p = sub i64 %i.o, %i.f                       ; 4 uses
+  %i.q = icmp sgt i64 %i.p, 1
+  br i1 %i.q, label %bb.d, label %bb.e, !prof !13
+
+bb.d:                                             ; preds = %bb.c
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.n, ptr align 1 %i.b, i64 %i.p, i1 false)
+  br label %_ZSt18uninitialized_moveIPbS0_ET0_T_S2_S1_.exit
+
+bb.e:                                             ; preds = %bb.c
+  %i.r = icmp eq i64 %i.p, 1
+  br i1 %i.r, label %bb.f, label %_ZSt18uninitialized_moveIPbS0_ET0_T_S2_S1_.exit
+
+bb.f:                                             ; preds = %bb.e
+  %i.s = load i8, ptr %i.b, align 1, !range !10, !noundef !5
+  store i8 %i.s, ptr %i.n, align 1
+  br label %_ZSt18uninitialized_moveIPbS0_ET0_T_S2_S1_.exit
+
+_ZSt18uninitialized_moveIPbS0_ET0_T_S2_S1_.exit:  ; preds = %bb.d, %bb.e, %bb.f
+  tail call preserve_mostcc void @_ZN2v84base11SmallVectorIbLm8ESaIbEE11FreeStorageEv(ptr noundef nonnull align 8 dereferenceable(32) %0)
+  store ptr %i.n, ptr %0, align 8
+  %i.t = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.p
+  store ptr %i.t, ptr %i.a, align 8
+  %i.u = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.k
+  store ptr %i.u, ptr %i.c, align 8
+  ret void
+}
+
+; Function Attrs: mustprogress noinline nounwind uwtable
+define linkonce_odr hidden preserve_mostcc void @_ZN2v88internal10ZoneVectorIPNS0_8compiler10turboshaft18SnapshotTableEntryINS0_4wasm9ValueTypeENS3_9NoKeyDataEEEE4GrowEm(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %1) local_unnamed_addr #8 comdat align 2 {
+bb.a:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8              ; 4 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8
+  %i.e = ptrtoint ptr %i.d to i64
+  %i.f = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.g = sub i64 %i.e, %i.f                       ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %i.i = load ptr, ptr %i.h, align 8              ; 2 uses
+  %i.j = icmp eq ptr %i.b, %i.i
+  %i.k = ptrtoint ptr %i.i to i64
+  %i.l = sub i64 %i.k, %i.f
+  %i.m = ashr exact i64 %i.l, 2
+  %i.n = select i1 %i.j, i64 2, i64 %i.m
+  %i.o = tail call noundef i64 @llvm.umax.i64(i64 %i.n, i64 %1) ; 3 uses
+  %i.p = load ptr, ptr %0, align 8                ; 3 uses
+  %i.q = icmp ult i64 %i.o, 2305843009213693951
+  br i1 %i.q, label %bb.c, label %bb.b, !prof !13
+
+bb.b:                                             ; preds = %bb.a
+  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.18, ptr noundef nonnull @.str.19) #20
+  unreachable
+
+bb.c:                                             ; preds = %bb.a
+  %i.r = shl nuw i64 %i.o, 3                      ; 3 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 24
+  %i.t = load i64, ptr %i.s, align 8
+  %i.u = getelementptr inbounds nuw i8, ptr %i.p, i64 16 ; 3 uses
+  %i.v = load i64, ptr %i.u, align 8              ; 2 uses
+  %i.w = sub i64 %i.t, %i.v
+  %i.x = icmp ugt i64 %i.r, %i.w
+  br i1 %i.x, label %bb.d, label %_ZN2v88internal4Zone13AllocateArrayIPNS0_8compiler10turboshaft18SnapshotTableEntryINS0_4wasm9ValueTypeENS4_9NoKeyDataEEEA_SA_EEPT_m.exit, !prof !7
+
+bb.d:                                             ; preds = %bb.c
+  tail call preserve_mostcc void @_ZN2v88internal4Zone6ExpandEm(ptr noundef nonnull align 8 dereferenceable(64) %i.p, i64 noundef %i.r) #19
+  %.pre.i.i = load i64, ptr %i.u, align 8
+  br label %_ZN2v88internal4Zone13AllocateArrayIPNS0_8compiler10turboshaft18SnapshotTableEntryINS0_4wasm9ValueTypeENS4_9NoKeyDataEEEA_SA_EEPT_m.exit
+
+_ZN2v88internal4Zone13AllocateArrayIPNS0_8compiler10turboshaft18SnapshotTableEntryINS0_4wasm9ValueTypeENS4_9NoKeyDataEEEA_SA_EEPT_m.exit: ; preds = %bb.c, %bb.d
+  %i.y = phi i64 [ %.pre.i.i, %bb.d ], [ %i.v, %bb.c ] ; 2 uses
+  %i.z = inttoptr i64 %i.y to ptr                 ; 4 uses
+  %i.aa = add i64 %i.y, %i.r
+  store i64 %i.aa, ptr %i.u, align 8
+  store ptr %i.z, ptr %i.a, align 8
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.g
+  store ptr %i.ab, ptr %i.c, align 8
+  %.not = icmp eq ptr %i.b, null
+  br i1 %.not, label %bb.f, label %bb.e
+
+bb.e:                                             ; preds = %_ZN2v88internal4Zone13AllocateArrayIPNS0_8compiler10turboshaft18SnapshotTableEntryINS0_4wasm9ValueTypeENS4_9NoKeyDataEEEA_SA_EEPT_m.exit
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.z, ptr nonnull align 8 %i.b, i64 %i.g, i1 false)
+  %.pre = load ptr, ptr %i.a, align 8
+  br label %bb.f
+
+bb.f:                                             ; preds = %bb.e, %_ZN2v88internal4Zone13AllocateArrayIPNS0_8compiler10turboshaft18SnapshotTableEntryINS0_4wasm9ValueTypeENS4_9NoKeyDataEEEA_SA_EEPT_m.exit
+  %i.ac = phi ptr [ %.pre, %bb.e ], [ %i.z, %_ZN2v88internal4Zone13AllocateArrayIPNS0_8compiler10turboshaft18SnapshotTableEntryINS0_4wasm9ValueTypeENS4_9NoKeyDataEEEA_SA_EEPT_m.exit ]
+  %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %i.o
+  store ptr %i.ad, ptr %i.h, align 8
+  ret void
+}
+
+; Function Attrs: mustprogress noinline nounwind uwtable
+define linkonce_odr hidden preserve_mostcc void @_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft13SnapshotTableINS0_4wasm9ValueTypeENS3_9NoKeyDataEE8LogEntryEE4GrowEm(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %1) local_unnamed_addr #8 comdat align 2 {
+bb.a:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8              ; 4 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8
+  %i.e = ptrtoint ptr %i.d to i64
+  %i.f = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.g = sub i64 %i.e, %i.f                       ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %i.i = load ptr, ptr %i.h, align 8              ; 2 uses
+  %i.j = icmp eq ptr %i.b, %i.i
+  %i.k = ptrtoint ptr %i.i to i64
+  %i.l = sub i64 %i.k, %i.f
+  %i.m = ashr exact i64 %i.l, 3
+  %i.n = select i1 %i.j, i64 2, i64 %i.m
+  %i.o = tail call noundef i64 @llvm.umax.i64(i64 %i.n, i64 %1) ; 3 uses
+  %i.p = load ptr, ptr %0, align 8                ; 3 uses
+  %i.q = icmp ult i64 %i.o, 1152921504606846975
+  br i1 %i.q, label %bb.c, label %bb.b, !prof !13
+
+bb.b:                                             ; preds = %bb.a
+  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.18, ptr noundef nonnull @.str.19) #20
+  unreachable
+
+bb.c:                                             ; preds = %bb.a
+  %i.r = shl nuw i64 %i.o, 4                      ; 3 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 24
+  %i.t = load i64, ptr %i.s, align 8
+  %i.u = getelementptr inbounds nuw i8, ptr %i.p, i64 16 ; 3 uses
+  %i.v = load i64, ptr %i.u, align 8              ; 2 uses
+  %i.w = sub i64 %i.t, %i.v
+  %i.x = icmp ugt i64 %i.r, %i.w
+  br i1 %i.x, label %bb.d, label %_ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft13SnapshotTableINS0_4wasm9ValueTypeENS4_9NoKeyDataEE8LogEntryEA_SA_EEPT_m.exit, !prof !7
+
+bb.d:                                             ; preds = %bb.c
+  tail call preserve_mostcc void @_ZN2v88internal4Zone6ExpandEm(ptr noundef nonnull align 8 dereferenceable(64) %i.p, i64 noundef %i.r) #19
+  %.pre.i.i = load i64, ptr %i.u, align 8
+  br label %_ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft13SnapshotTableINS0_4wasm9ValueTypeENS4_9NoKeyDataEE8LogEntryEA_SA_EEPT_m.exit
+
+_ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft13SnapshotTableINS0_4wasm9ValueTypeENS4_9NoKeyDataEE8LogEntryEA_SA_EEPT_m.exit: ; preds = %bb.c, %bb.d
+  %i.y = phi i64 [ %.pre.i.i, %bb.d ], [ %i.v, %bb.c ] ; 2 uses
+  %i.z = inttoptr i64 %i.y to ptr                 ; 4 uses
+  %i.aa = add i64 %i.y, %i.r
+  store i64 %i.aa, ptr %i.u, align 8
+  store ptr %i.z, ptr %i.a, align 8
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.g
+  store ptr %i.ab, ptr %i.c, align 8
+  %.not = icmp eq ptr %i.b, null
+  br i1 %.not, label %bb.f, label %bb.e
+
+bb.e:                                             ; preds = %_ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft13SnapshotTableINS0_4wasm9ValueTypeENS4_9NoKeyDataEE8LogEntryEA_SA_EEPT_m.exit
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.z, ptr nonnull align 8 %i.b, i64 %i.g, i1 false)
+  %.pre = load ptr, ptr %i.a, align 8
+  br label %bb.f
+
+bb.f:                                             ; preds = %bb.e, %_ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft13SnapshotTableINS0_4wasm9ValueTypeENS4_9NoKeyDataEE8LogEntryEA_SA_EEPT_m.exit
+  %i.ac = phi ptr [ %.pre, %bb.e ], [ %i.z, %_ZN2v88internal4Zone13AllocateArrayINS0_8compiler10turboshaft13SnapshotTableINS0_4wasm9ValueTypeENS4_9NoKeyDataEE8LogEntryEA_SA_EEPT_m.exit ]
+  %i.ad = getelementptr inbounds nuw [16 x i8], ptr %i.ac, i64 %i.o
+  store ptr %i.ad, ptr %i.h, align 8
+  ret void
+}
+
+; Function Attrs: mustprogress nounwind uwtable
+define linkonce_odr hidden ptr @_ZN2v88internal8compiler10turboshaft26SparseOpIndexSnapshotTableINS0_4wasm9ValueTypeENS2_9NoKeyDataEE14GetOrCreateKeyENS2_7OpIndexE(ptr noundef nonnull align 8 dereferenceable(384) %0, i32 %1) local_unnamed_addr #5 comdat align 2 {
+bb.a:
+  %2 = alloca %"struct.absl::container_internal::HashKey", align 8 ; 5 uses
+  %3 = alloca %"struct.v8::internal::compiler::turboshaft::SnapshotTableEntry", align 4 ; 7 uses
+  %4 = alloca %"struct.std::pair.333", align 8    ; 6 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 344 ; 5 uses
+  %i.b = load i64, ptr %i.a, align 8              ; 3 uses
+  %i.c = icmp ult i64 %i.b, 2
+  br i1 %i.c, label %bb.b, label %bb.d
+
+bb.b:                                             ; preds = %bb.a
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 352
+  %i.e = load i64, ptr %i.d, align 8
+  %.not.i.i.i = icmp ult i64 %i.e, 131072
+  br i1 %.not.i.i.i, label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE4findIS7_EENSO_8iteratorERSL_.exit, label %bb.c
+
+bb.c:                                             ; preds = %bb.b
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 360 ; 2 uses
+  %i.g = load i32, ptr %i.f, align 8
+  %i.h = icmp eq i32 %i.g, %1
+  %.fca.1.insert.i.i.i = insertvalue { ptr, ptr } { ptr @_ZN4absl18container_internal11kSooControlE, ptr poison }, ptr %i.f, 1
+  %spec.select.i.i = select i1 %i.h, { ptr, ptr } %.fca.1.insert.i.i.i, { ptr, ptr } { ptr null, ptr undef }
+  br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE4findIS7_EENSO_8iteratorERSL_.exit
+
+bb.d:                                             ; preds = %bb.a
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 360
+  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.i, align 8 ; 3 uses
+  tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i, i32 0, i32 1, i32 1)
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 352
+  %i.k = load i64, ptr %i.j, align 8
+  %sext.i = shl i64 %i.k, 48
+  %i.l = ashr exact i64 %sext.i, 48
+  %i.m = zext i32 %1 to i64
+  %i.n = xor i64 %i.l, %i.m
+  %i.o = zext i64 %i.n to i128
+  %i.p = mul nuw nsw i128 %i.o, 8779197792823184629 ; 2 uses
+  %i.q = lshr i128 %i.p, 64
+  %i.r = xor i128 %i.q, %i.p
+  %i.s = trunc i128 %i.r to i64                   ; 2 uses
+  %i.t = lshr i64 %i.s, 57
+  %i.u = trunc nuw nsw i64 %i.t to i8
+  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 368
+  %.sroa.0.0.copyload.i.i.i14.i.i = load ptr, ptr %i.v, align 8 ; 2 uses
+  %i.w = insertelement <16 x i8> poison, i8 %i.u, i64 0
+  %i.x = shufflevector <16 x i8> %i.w, <16 x i8> poison, <16 x i32> zeroinitializer
+  br label %bb.e
+
+bb.e:                                             ; preds = %bb.g, %bb.d
+  %.pn.i8.i = phi i64 [ %i.s, %bb.d ], [ %i.aq, %bb.g ]
+  %.sroa.13.0.i.i = phi i64 [ 0, %bb.d ], [ %i.ap, %bb.g ]
+  %.sroa.6.0.i.i = and i64 %.pn.i8.i, %i.b        ; 4 uses
+  %i.y = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.copyload.i.i.i14.i.i, i64 %.sroa.6.0.i.i
+  tail call void @llvm.prefetch.p0(ptr %i.y, i32 0, i32 3, i32 1)
+  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i, i64 %.sroa.6.0.i.i
+  %i.aa = load <16 x i8>, ptr %i.z, align 1       ; 2 uses
+  %i.ab = icmp eq <16 x i8> %i.x, %i.aa
+  %i.ac = bitcast <16 x i1> %i.ab to i16          ; 2 uses
+  %.not46.i.i = icmp eq i16 %i.ac, 0
+  br i1 %.not46.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %bb.e, %bb.f
+  %.sroa.017.047.i.i = phi i16 [ %i.am, %bb.f ], [ %i.ac, %bb.e ] ; 3 uses
+  %i.ad = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.sroa.017.047.i.i, i1 true)
+  %i.ae = zext nneg i16 %i.ad to i64
+  %i.af = add i64 %.sroa.6.0.i.i, %i.ae
+  %i.ag = and i64 %i.af, %i.b                     ; 2 uses
+  %i.ah = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.copyload.i.i.i14.i.i, i64 %i.ag ; 2 uses
+  %i.ai = load i32, ptr %i.ah, align 4
+  %i.aj = icmp eq i32 %i.ai, %1
+  br i1 %i.aj, label %.thread33.i.i, label %bb.f, !prof !13
+
+.thread33.i.i:                                    ; preds = %.lr.ph.i.i
+  %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i, i64 %i.ag ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ak) ]
+  br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE10find_largeIS7_EENSO_8iteratorERSL_m.exit.i
+
+bb.f:                                             ; preds = %.lr.ph.i.i
+  %i.al = add i16 %.sroa.017.047.i.i, -1
+  %i.am = and i16 %i.al, %.sroa.017.047.i.i       ; 2 uses
+  %.not.i.i = icmp eq i16 %i.am, 0
+  br i1 %.not.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
+
+._crit_edge.i.i:                                  ; preds = %bb.f, %bb.e
+  %i.an = icmp eq <16 x i8> %i.aa, splat (i8 -128)
+  %i.ao = bitcast <16 x i1> %i.an to i16
+  %.not44.i.i = icmp eq i16 %i.ao, 0
+  br i1 %.not44.i.i, label %bb.g, label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE10find_largeIS7_EENSO_8iteratorERSL_m.exit.i, !prof !7
+
+bb.g:                                             ; preds = %._crit_edge.i.i
+  %i.ap = add i64 %.sroa.13.0.i.i, 16             ; 2 uses
+  %i.aq = add i64 %i.ap, %.sroa.6.0.i.i
+  br label %bb.e, !llvm.loop !50
+
+_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE10find_largeIS7_EENSO_8iteratorERSL_m.exit.i: ; preds = %._crit_edge.i.i, %.thread33.i.i
+  %.sroa.0.4.ph.i.i = phi ptr [ %i.ak, %.thread33.i.i ], [ null, %._crit_edge.i.i ]
+  %.sroa.3.4.ph.i.i = phi ptr [ %i.ah, %.thread33.i.i ], [ undef, %._crit_edge.i.i ]
+  %.fca.0.insert.i.i = insertvalue { ptr, ptr } poison, ptr %.sroa.0.4.ph.i.i, 0
+  %.fca.1.insert.i.i = insertvalue { ptr, ptr } %.fca.0.insert.i.i, ptr %.sroa.3.4.ph.i.i, 1
+  br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE4findIS7_EENSO_8iteratorERSL_.exit
+
+_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE4findIS7_EENSO_8iteratorERSL_.exit: ; preds = %bb.b, %bb.c, %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE10find_largeIS7_EENSO_8iteratorERSL_m.exit.i
+  %.pn.i = phi { ptr, ptr } [ %.fca.1.insert.i.i, %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE10find_largeIS7_EENSO_8iteratorERSL_m.exit.i ], [ { ptr null, ptr undef }, %bb.b ], [ %spec.select.i.i, %bb.c ] ; 2 uses
+  %i.ar = extractvalue { ptr, ptr } %.pn.i, 0     ; 4 uses
+  %i.as = extractvalue { ptr, ptr } %.pn.i, 1
+  %i.at = icmp eq ptr %i.ar, null                 ; 2 uses
+  %i.au = icmp eq ptr %i.ar, @_ZN4absl18container_internal19kDefaultIterControlE ; 2 uses
+  %or.cond.i.i.i = or i1 %i.at, %i.au
+  br i1 %or.cond.i.i.i, label %_ZN4absl18container_internal26AssertIsValidForComparisonEPKNS0_6ctrl_tEhPKh.exit15.i.i, label %bb.h
+
+bb.h:                                             ; preds = %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE4findIS7_EENSO_8iteratorERSL_.exit
+  %i.av = load i8, ptr %i.ar, align 1
+  %i.aw = icmp sgt i8 %i.av, -1
+  br i1 %i.aw, label %_ZN4absl18container_internal26AssertIsValidForComparisonEPKNS0_6ctrl_tEhPKh.exit15.i.i, label %bb.i, !prof !13
+
+bb.i:                                             ; preds = %bb.h
+  tail call void @llvm.trap()
+  unreachable
+
+_ZN4absl18container_internal26AssertIsValidForComparisonEPKNS0_6ctrl_tEhPKh.exit15.i.i: ; preds = %bb.h, %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE4findIS7_EENSO_8iteratorERSL_.exit
+  br i1 %i.au, label %bb.j, label %_ZN4absl18container_internalneERKNS0_12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE8iteratorESR_.exit, !prof !7
+
+bb.j:                                             ; preds = %_ZN4absl18container_internal26AssertIsValidForComparisonEPKNS0_6ctrl_tEhPKh.exit15.i.i
+  tail call void (i32, ptr, i32, ptr, ...) @_ZN4absl16raw_log_internal6RawLogENS_11LogSeverityEPKciS3_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str.33, i64 61), i32 noundef 1350, ptr noundef nonnull @.str.34, ptr noundef nonnull @.str.31) #19
+  tail call void @llvm.trap()
+  unreachable
+
+_ZN4absl18container_internalneERKNS0_12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE8iteratorESR_.exit: ; preds = %_ZN4absl18container_internal26AssertIsValidForComparisonEPKNS0_6ctrl_tEhPKh.exit15.i.i
+  br i1 %i.at, label %bb.m, label %bb.k
+
+bb.k:                                             ; preds = %_ZN4absl18container_internalneERKNS0_12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE8iteratorESR_.exit
+  %i.ax = load i8, ptr %i.ar, align 1
+  %i.ay = icmp sgt i8 %i.ax, -1
+  br i1 %i.ay, label %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE8iteratorptEv.exit, label %bb.l, !prof !13
+
+bb.l:                                             ; preds = %bb.k
+  tail call void (i32, ptr, i32, ptr, ...) @_ZN4absl16raw_log_internal6RawLogENS_11LogSeverityEPKciS3_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str.33, i64 61), i32 noundef 1277, ptr noundef nonnull @.str.38, ptr noundef nonnull @.str.35) #19
+  tail call void @llvm.trap()
+  unreachable
+
+_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE8iteratorptEv.exit: ; preds = %bb.k
+  %i.az = getelementptr inbounds nuw i8, ptr %i.as, i64 8
+  %i.ba = load i64, ptr %i.az, align 8
+  %i.bb = inttoptr i64 %i.ba to ptr
+  br label %bb.y
+
+bb.m:                                             ; preds = %_ZN4absl18container_internalneERKNS0_12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE8iteratorESR_.exit
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
+  store i32 2, ptr %3, align 4
+  %i.bc = getelementptr inbounds nuw i8, ptr %3, i64 4
+  store i32 -1, ptr %i.bc, align 4
+  %i.bd = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store i32 -1, ptr %i.bd, align 4
+  %i.be = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 4 uses
+  %i.bf = load ptr, ptr %i.be, align 8            ; 2 uses
+  %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 88
+  %i.bh = load ptr, ptr %i.bg, align 8
+  %i.bi = getelementptr inbounds i8, ptr %i.bh, i64 -12
+  %.not.i.i.i1 = icmp eq ptr %i.bf, %i.bi
+  br i1 %.not.i.i.i1, label %bb.o, label %bb.n
+
+bb.n:                                             ; preds = %bb.m
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.bf, ptr noundef nonnull align 4 dereferenceable(12) %3, i64 12, i1 false)
+  %i.bj = load ptr, ptr %i.be, align 8
+  %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 12 ; 2 uses
+  store ptr %i.bk, ptr %i.be, align 8
+  br label %bb.p
+
+bb.o:                                             ; preds = %bb.m
+  %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 8
+  call void @_ZNSt5dequeIN2v88internal8compiler10turboshaft18SnapshotTableEntryINS1_4wasm9ValueTypeENS3_9NoKeyDataEEENS1_22RecyclingZoneAllocatorIS8_EEE16_M_push_back_auxIJS8_EEEvDpOT_(ptr noundef nonnull align 8 dereferenceable(96) %i.bl, ptr noundef nonnull align 4 dereferenceable(12) %3)
+  %.pre.i.i.i = load ptr, ptr %i.be, align 8, !noalias !71
+  br label %bb.p
+
+bb.p:                                             ; preds = %bb.o, %bb.n
+  %i.bm = phi ptr [ %.pre.i.i.i, %bb.o ], [ %i.bk, %bb.n ] ; 2 uses
+  %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 80
+  %i.bo = load ptr, ptr %i.bn, align 8, !noalias !71
+  %i.bp = icmp eq ptr %i.bm, %i.bo
+  br i1 %i.bp, label %bb.q, label %_ZN2v88internal8compiler10turboshaft13SnapshotTableINS0_4wasm9ValueTypeENS2_9NoKeyDataEE6NewKeyES5_.exit
+
+bb.q:                                             ; preds = %bb.p
+  %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 96
+  %i.br = load ptr, ptr %i.bq, align 8, !noalias !71
+  %i.bs = getelementptr inbounds i8, ptr %i.br, i64 -8
+  %i.bt = load ptr, ptr %i.bs, align 8
+  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 504
+  br label %_ZN2v88internal8compiler10turboshaft13SnapshotTableINS0_4wasm9ValueTypeENS2_9NoKeyDataEE6NewKeyES5_.exit
+
+_ZN2v88internal8compiler10turboshaft13SnapshotTableINS0_4wasm9ValueTypeENS2_9NoKeyDataEE6NewKeyES5_.exit: ; preds = %bb.p, %bb.q
+  %i.bv = phi ptr [ %i.bu, %bb.q ], [ %i.bm, %bb.p ]
+  %i.bw = getelementptr inbounds i8, ptr %i.bv, i64 -12 ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #19
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
+  store i32 %1, ptr %4, align 8
+  %i.bx = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  %i.by = ptrtoint ptr %i.bw to i64
+  store i64 %i.by, ptr %i.bx, align 8
+  %i.bz = load i64, ptr %i.a, align 8, !noalias !74 ; 4 uses
+  %i.ca = icmp ult i64 %i.bz, 2
+  br i1 %i.ca, label %bb.r, label %bb.v
+
+bb.r:                                             ; preds = %_ZN2v88internal8compiler10turboshaft13SnapshotTableINS0_4wasm9ValueTypeENS2_9NoKeyDataEE6NewKeyES5_.exit
+  %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 2 uses
+  %i.cc = load i64, ptr %i.cb, align 8, !noalias !91
+  %.not.i.i.i.i.i.i.i.i.i.i.i = icmp ult i64 %i.cc, 131072
+  br i1 %.not.i.i.i.i.i.i.i.i.i.i.i, label %bb.s, label %bb.t
+
+bb.s:                                             ; preds = %bb.r
+  store i64 131072, ptr %i.cb, align 8, !noalias !91
+  %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 360
+  br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE22find_or_prepare_insertIS7_EESK_INSO_8iteratorEbERKT_.exit.i.i.i.i.i.i.i.thread
+
+bb.t:                                             ; preds = %bb.r
+  %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 360
+  %i.cf = load i32, ptr %i.ce, align 8, !noalias !91
+  %i.cg = icmp eq i32 %i.cf, %1
+  br i1 %i.cg, label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE6insertEOSK_IS7_SC_EQntsr29IsLifetimeBoundAssignmentFromINS0_18hash_policy_traitsIT_vE9init_typeEEE5value.exit, label %bb.u
+
+bb.u:                                             ; preds = %bb.t
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #19, !noalias !91
+  store ptr %i.a, ptr %2, align 8, !noalias !91
+  %i.ch = getelementptr inbounds nuw i8, ptr %2, i64 8
+  store ptr %4, ptr %i.ch, align 8, !noalias !91
+  %i.ci = call noundef i64 @_ZN4absl18container_internal42GrowSooTableToNextCapacityAndPrepareInsertILm16ELb1EEEmRNS0_12CommonFieldsERKNS0_15PolicyFunctionsENS_11FunctionRefIFmmEEEb(ptr noundef nonnull align 8 dereferenceable(40) %i.a, ptr noundef nonnull align 8 dereferenceable(72) @_ZZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE18GetPolicyFunctionsEvE5value, ptr nonnull %2, ptr nonnull @_ZN4absl19functional_internal12InvokeObjectINS_18container_internal7HashKeyINS_13hash_internal4HashIN2v88internal8compiler10turboshaft7OpIndexEEESA_Lb1EEEmJmEEET0_NS0_7VoidPtrEDpNS0_8ForwardTIT1_E4typeE, i1 noundef zeroext false) #19, !noalias !91
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #19, !noalias !91
+  %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 368
+  %.sroa.0.0.copyload.i.i.i2.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.cj, align 8, !noalias !91
+  %i.ck = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.copyload.i.i.i2.i.i.i.i.i.i.i.i.i.i.i, i64 %i.ci
+  %.pre = load i32, ptr %4, align 8, !noalias !96
+  br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE22find_or_prepare_insertIS7_EESK_INSO_8iteratorEbERKT_.exit.i.i.i.i.i.i.i.thread
+
+bb.v:                                             ; preds = %_ZN2v88internal8compiler10turboshaft13SnapshotTableINS0_4wasm9ValueTypeENS2_9NoKeyDataEE6NewKeyES5_.exit
+  %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 360 ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i.i2 = load ptr, ptr %i.cl, align 8, !noalias !97 ; 2 uses
+  call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i2, i32 0, i32 1, i32 1), !noalias !97
+  %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 352
+  %i.cn = load i64, ptr %i.cm, align 8, !noalias !97
+  %sext.i3 = shl i64 %i.cn, 48
+  %i.co = ashr exact i64 %sext.i3, 48
+  %i.cp = zext i32 %1 to i64
+  %i.cq = xor i64 %i.co, %i.cp
+  %i.cr = zext i64 %i.cq to i128
+  %i.cs = mul nuw nsw i128 %i.cr, 8779197792823184629 ; 2 uses
+  %i.ct = lshr i128 %i.cs, 64
+  %i.cu = xor i128 %i.ct, %i.cs
+  %i.cv = trunc i128 %i.cu to i64                 ; 3 uses
+  %i.cw = lshr i64 %i.cv, 57
+  %i.cx = trunc nuw nsw i64 %i.cw to i8
+  %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 368 ; 2 uses
+  %.sroa.0.0.copyload.i.i.i22.i = load ptr, ptr %i.cy, align 8, !noalias !97 ; 2 uses
+  %i.cz = insertelement <16 x i8> poison, i8 %i.cx, i64 0
+  %i.da = shufflevector <16 x i8> %i.cz, <16 x i8> poison, <16 x i32> zeroinitializer
+  br label %bb.w
+
+bb.w:                                             ; preds = %bb.x, %bb.v
+  %.pn.i5 = phi i64 [ %i.cv, %bb.v ], [ %i.dy, %bb.x ]
+  %.sroa.15.0.i = phi i64 [ 0, %bb.v ], [ %i.dx, %bb.x ] ; 2 uses
+  %.sroa.7.0.i = and i64 %.pn.i5, %i.bz           ; 5 uses
+  %i.db = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.copyload.i.i.i22.i, i64 %.sroa.7.0.i
+  call void @llvm.prefetch.p0(ptr %i.db, i32 0, i32 3, i32 1), !noalias !97
+  %i.dc = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i2, i64 %.sroa.7.0.i
+  %i.dd = load <16 x i8>, ptr %i.dc, align 1, !noalias !97 ; 2 uses
+  %i.de = icmp eq <16 x i8> %i.da, %i.dd
+  %i.df = bitcast <16 x i1> %i.de to i16          ; 2 uses
+  %.not64.i = icmp eq i16 %i.df, 0
+  br i1 %.not64.i, label %.critedge19.i, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.w, %.critedge.i
+  %.sroa.035.065.i = phi i16 [ %i.do, %.critedge.i ], [ %i.df, %bb.w ] ; 3 uses
+  %i.dg = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.sroa.035.065.i, i1 true)
+  %i.dh = zext nneg i16 %i.dg to i64
+  %i.di = add i64 %.sroa.7.0.i, %i.dh
+  %i.dj = and i64 %i.di, %i.bz
+  %i.dk = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.copyload.i.i.i22.i, i64 %i.dj
+  %i.dl = load i32, ptr %i.dk, align 4, !noalias !97
+  %i.dm = icmp eq i32 %i.dl, %1
+  br i1 %i.dm, label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE6insertEOSK_IS7_SC_EQntsr29IsLifetimeBoundAssignmentFromINS0_18hash_policy_traitsIT_vE9init_typeEEE5value.exit, label %.critedge.i, !prof !13
+
+.critedge.i:                                      ; preds = %.lr.ph.i
+  %i.dn = add i16 %.sroa.035.065.i, -1
+  %i.do = and i16 %i.dn, %.sroa.035.065.i         ; 2 uses
+  %.not.i = icmp eq i16 %i.do, 0
+  br i1 %.not.i, label %.critedge19.i, label %.lr.ph.i
+
+.critedge19.i:                                    ; preds = %.critedge.i, %bb.w
+  %i.dp = icmp eq <16 x i8> %i.dd, splat (i8 -128)
+  %i.dq = bitcast <16 x i1> %i.dp to i16          ; 2 uses
+  %.not57.i = icmp eq i16 %i.dq, 0
+  br i1 %.not57.i, label %bb.x, label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE22find_or_prepare_insertIS7_EESK_INSO_8iteratorEbERKT_.exit.i.i.i.i.i.i.i.thread20, !prof !7
+
+_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE22find_or_prepare_insertIS7_EESK_INSO_8iteratorEbERKT_.exit.i.i.i.i.i.i.i.thread20: ; preds = %.critedge19.i
+  %i.dr = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %i.dq, i1 true)
+  %i.ds = zext nneg i16 %i.dr to i64
+  %i.dt = add i64 %.sroa.7.0.i, %i.ds
+  %i.du = and i64 %i.dt, %i.bz
+  %i.dv = call noundef i64 @_ZN4absl18container_internal18PrepareInsertLargeERNS0_12CommonFieldsERKNS0_15PolicyFunctionsEmNS0_8FindInfoE(ptr noundef nonnull align 8 dereferenceable(40) %i.a, ptr noundef nonnull align 8 dereferenceable(72) @_ZZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE18GetPolicyFunctionsEvE5value, i64 noundef %i.cv, i64 %i.du, i64 %.sroa.15.0.i) #19, !noalias !97 ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i25.i = load ptr, ptr %i.cl, align 8, !noalias !97
+  %5 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i25.i, i64 %i.dv
+  %.sroa.0.0.copyload.i.i.i2.i26.i = load ptr, ptr %i.cy, align 8, !noalias !97
+  %i.dw = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.copyload.i.i.i2.i26.i, i64 %i.dv
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %5) ]
+  br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE22find_or_prepare_insertIS7_EESK_INSO_8iteratorEbERKT_.exit.i.i.i.i.i.i.i.thread
+
+bb.x:                                             ; preds = %.critedge19.i
+  %i.dx = add i64 %.sroa.15.0.i, 16               ; 2 uses
+  %i.dy = add i64 %i.dx, %.sroa.7.0.i
+  br label %bb.w
+
+_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE22find_or_prepare_insertIS7_EESK_INSO_8iteratorEbERKT_.exit.i.i.i.i.i.i.i.thread: ; preds = %bb.s, %bb.u, %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE22find_or_prepare_insertIS7_EESK_INSO_8iteratorEbERKT_.exit.i.i.i.i.i.i.i.thread20
+  %i.dz = phi i32 [ %1, %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE22find_or_prepare_insertIS7_EESK_INSO_8iteratorEbERKT_.exit.i.i.i.i.i.i.i.thread20 ], [ %1, %bb.s ], [ %.pre, %bb.u ]
+  %.sroa.4.017 = phi ptr [ %i.dw, %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE22find_or_prepare_insertIS7_EESK_INSO_8iteratorEbERKT_.exit.i.i.i.i.i.i.i.thread20 ], [ %i.cd, %bb.s ], [ %i.ck, %bb.u ] ; 2 uses
+  store i32 %i.dz, ptr %.sroa.4.017, align 8
+  %i.ea = getelementptr inbounds nuw i8, ptr %.sroa.4.017, i64 8
+  %i.eb = load i64, ptr %i.bx, align 8, !noalias !96
+  store i64 %i.eb, ptr %i.ea, align 8
+  br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE6insertEOSK_IS7_SC_EQntsr29IsLifetimeBoundAssignmentFromINS0_18hash_policy_traitsIT_vE9init_typeEEE5value.exit
+
+_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE6insertEOSK_IS7_SC_EQntsr29IsLifetimeBoundAssignmentFromINS0_18hash_policy_traitsIT_vE9init_typeEEE5value.exit: ; preds = %.lr.ph.i, %bb.t, %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE22find_or_prepare_insertIS7_EESK_INSO_8iteratorEbERKT_.exit.i.i.i.i.i.i.i.thread
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #19
+  br label %bb.y
+
+bb.y:                                             ; preds = %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE6insertEOSK_IS7_SC_EQntsr29IsLifetimeBoundAssignmentFromINS0_18hash_policy_traitsIT_vE9init_typeEEE5value.exit, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE8iteratorptEv.exit
+  %.sroa.015.0 = phi ptr [ %i.bb, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE8iteratorptEv.exit ], [ %i.bw, %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal8compiler10turboshaft7OpIndexENS6_16SnapshotTableKeyINS4_4wasm9ValueTypeENS6_9NoKeyDataEEEEENS_13hash_internal4HashIS7_EESt8equal_toIS7_ENS4_13ZoneAllocatorISt4pairIKS7_SC_EEEE6insertEOSK_IS7_SC_EQntsr29IsLifetimeBoundAssignmentFromINS0_18hash_policy_traitsIT_vE9init_typeEEE5value.exit ]
+  ret ptr %.sroa.015.0
+}
+
+; Function Attrs: mustprogress nounwind uwtable
+define linkonce_odr hidden void @_ZNSt5dequeIN2v88internal8compiler10turboshaft18SnapshotTableEntryINS1_4wasm9ValueTypeENS3_9NoKeyDataEEENS1_22RecyclingZoneAllocatorIS8_EEE16_M_push_back_auxIJS8_EEEvDpOT_(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull align 4 dereferenceable(12) %1) local_unnamed_addr #0 comdat align 2 {
+bb.a:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 4 uses
+  %i.d = load ptr, ptr %i.c, align 8              ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %i.f = load ptr, ptr %i.e, align 8
+  %i.g = ptrtoint ptr %i.d to i64                 ; 2 uses
+  %i.h = ptrtoint ptr %i.f to i64
+  %i.i = sub i64 %i.g, %i.h
+  %i.j = ashr exact i64 %i.i, 3
+  %i.k = icmp ne ptr %i.d, null
+  %.neg.i.i = sext i1 %i.k to i64
+  %i.l = add nsw i64 %i.j, %.neg.i.i
+  %i.m = mul nsw i64 %i.l, 42
+  %i.n = load ptr, ptr %i.a, align 8
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
+  %i.p = load ptr, ptr %i.o, align 8
+  %i.q = ptrtoint ptr %i.n to i64
+  %i.r = ptrtoint ptr %i.p to i64
+  %i.s = sub i64 %i.q, %i.r
+  %i.t = sdiv exact i64 %i.s, 12
+  %i.u = add nsw i64 %i.m, %i.t
+  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %i.w = load ptr, ptr %i.v, align 8
+  %i.x = load ptr, ptr %i.b, align 8
+  %i.y = ptrtoint ptr %i.w to i64
+  %i.z = ptrtoint ptr %i.x to i64
+  %i.aa = sub i64 %i.y, %i.z
+  %i.ab = sdiv exact i64 %i.aa, 12
+  %i.ac = add nsw i64 %i.u, %i.ab
+  %i.ad = icmp eq i64 %i.ac, 1537228672809129301
+  br i1 %i.ad, label %bb.b, label %bb.c
+
+bb.b:                                             ; preds = %bb.a
+  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.28) #20
+  unreachable
+
+bb.c:                                             ; preds = %bb.a
+  %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.ag = load i64, ptr %i.af, align 8
+  %i.ah = load ptr, ptr %i.ae, align 8
+  %i.ai = ptrtoint ptr %i.ah to i64
+  %i.aj = sub i64 %i.g, %i.ai
+  %i.ak = ashr exact i64 %i.aj, 3
+  %i.al = sub i64 %i.ag, %i.ak
+  %i.am = icmp ult i64 %i.al, 2
+  br i1 %i.am, label %bb.d, label %_ZNSt5dequeIN2v88internal8compiler10turboshaft18SnapshotTableEntryINS1_4wasm9ValueTypeENS3_9NoKeyDataEEENS1_22RecyclingZoneAllocatorIS8_EEE22_M_reserve_map_at_backEm.exit
+
+bb.d:                                             ; preds = %bb.c
+  tail call void @_ZNSt5dequeIN2v88internal8compiler10turboshaft18SnapshotTableEntryINS1_4wasm9ValueTypeENS3_9NoKeyDataEEENS1_22RecyclingZoneAllocatorIS8_EEE17_M_reallocate_mapEmb(ptr noundef nonnull align 8 dereferenceable(96) %0, i64 noundef 1, i1 noundef zeroext false)
+  br label %_ZNSt5dequeIN2v88internal8compiler10turboshaft18SnapshotTableEntryINS1_4wasm9ValueTypeENS3_9NoKeyDataEEENS1_22RecyclingZoneAllocatorIS8_EEE22_M_reserve_map_at_backEm.exit
+
+_ZNSt5dequeIN2v88internal8compiler10turboshaft18SnapshotTableEntryINS1_4wasm9ValueTypeENS3_9NoKeyDataEEENS1_22RecyclingZoneAllocatorIS8_EEE22_M_reserve_map_at_backEm.exit: ; preds = %bb.c, %bb.d
+  %i.an = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.ao = load ptr, ptr %i.an, align 8            ; 4 uses
+  %.not.i.i.i = icmp eq ptr %i.ao, null
+  br i1 %.not.i.i.i, label %bb.g, label %bb.e
+
+bb.e:                                             ; preds = %_ZNSt5dequeIN2v88internal8compiler10turboshaft18SnapshotTableEntryINS1_4wasm9ValueTypeENS3_9NoKeyDataEEENS1_22RecyclingZoneAllocatorIS8_EEE22_M_reserve_map_at_backEm.exit
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
+  %i.aq = load i64, ptr %i.ap, align 8
+  %.not5.i.i.i = icmp ult i64 %i.aq, 42
+  br i1 %.not5.i.i.i, label %bb.g, label %bb.f
+
+bb.f:                                             ; preds = %bb.e
+  %i.ar = load ptr, ptr %i.ao, align 8
+  store ptr %i.ar, ptr %i.an, align 8
+  br label %_ZNSt11_Deque_baseIN2v88internal8compiler10turboshaft18SnapshotTableEntryINS1_4wasm9ValueTypeENS3_9NoKeyDataEEENS1_22RecyclingZoneAllocatorIS8_EEE16_M_allocate_nodeEv.exit
+
+bb.g:                                             ; preds = %bb.e, %_ZNSt5dequeIN2v88internal8compiler10turboshaft18SnapshotTableEntryINS1_4wasm9ValueTypeENS3_9NoKeyDataEEENS1_22RecyclingZoneAllocatorIS8_EEE22_M_reserve_map_at_backEm.exit
+  %i.as = load ptr, ptr %0, align 8               ; 3 uses
+  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 24
+  %i.au = load i64, ptr %i.at, align 8
+  %i.av = getelementptr inbounds nuw i8, ptr %i.as, i64 16 ; 3 uses
+  %i.aw = load i64, ptr %i.av, align 8            ; 2 uses
+  %i.ax = sub i64 %i.au, %i.aw
+  %i.ay = icmp ult i64 %i.ax, 504
+  br i1 %i.ay, label %bb.h, label %_ZN2v88internal13ZoneAllocatorINS0_8compiler10turboshaft18SnapshotTableEntryINS0_4wasm9ValueTypeENS3_9NoKeyDataEEEE8allocateEm.exit.i.i.i, !prof !7
+
+bb.h:                                             ; preds = %bb.g
+  tail call preserve_mostcc void @_ZN2v88internal4Zone6ExpandEm(ptr noundef nonnull align 8 dereferenceable(64) %i.as, i64 noundef 504) #19
+  %.pre.i.i.i.i.i.i = load i64, ptr %i.av, align 8
+  br label %_ZN2v88internal13ZoneAllocatorINS0_8compiler10turboshaft18SnapshotTableEntryINS0_4wasm9ValueTypeENS3_9NoKeyDataEEEE8allocateEm.exit.i.i.i
+
+_ZN2v88internal13ZoneAllocatorINS0_8compiler10turboshaft18SnapshotTableEntryINS0_4wasm9ValueTypeENS3_9NoKeyDataEEEE8allocateEm.exit.i.i.i: ; preds = %bb.h, %bb.g
+  %i.az = phi i64 [ %.pre.i.i.i.i.i.i, %bb.h ], [ %i.aw, %bb.g ] ; 2 uses
+  %i.ba = inttoptr i64 %i.az to ptr
+  %i.bb = add i64 %i.az, 504
+  store i64 %i.bb, ptr %i.av, align 8
+  br label %_ZNSt11_Deque_baseIN2v88internal8compiler10turboshaft18SnapshotTableEntryINS1_4wasm9ValueTypeENS3_9NoKeyDataEEENS1_22RecyclingZoneAllocatorIS8_EEE16_M_allocate_nodeEv.exit
+
+_ZNSt11_Deque_baseIN2v88internal8compiler10turboshaft18SnapshotTableEntryINS1_4wasm9ValueTypeENS3_9NoKeyDataEEENS1_22RecyclingZoneAllocatorIS8_EEE16_M_allocate_nodeEv.exit: ; preds = %bb.f, %_ZN2v88internal13ZoneAllocatorINS0_8compiler10turboshaft18SnapshotTableEntryINS0_4wasm9ValueTypeENS3_9NoKeyDataEEEE8allocateEm.exit.i.i.i
+  %.0.i.i.i = phi ptr [ %i.ao, %bb.f ], [ %i.ba, %_ZN2v88internal13ZoneAllocatorINS0_8compiler10turboshaft18SnapshotTableEntryINS0_4wasm9ValueTypeENS3_9NoKeyDataEEEE8allocateEm.exit.i.i.i ]
+  %i.bc = load ptr, ptr %i.c, align 8
+  %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 8
+  store ptr %.0.i.i.i, ptr %i.bd, align 8
+  %i.be = load ptr, ptr %i.a, align 8
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.be, ptr noundef nonnull align 4 dereferenceable(12) %1, i64 12, i1 false)
+  %i.bf = load ptr, ptr %i.c, align 8
+  %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 8 ; 2 uses
+  store ptr %i.bg, ptr %i.c, align 8
+  %i.bh = load ptr, ptr %i.bg, align 8            ; 3 uses
+  store ptr %i.bh, ptr %i.o, align 8
+  %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 504
+  %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 80
+  store ptr %i.bi, ptr %i.bj, align 8
+  store ptr %i.bh, ptr %i.a, align 8
+  ret void
+}
+
+; Function Attrs: mustprogress nounwind uwtable
+define linkonce_odr hidden void @_ZNSt5dequeIN2v88internal8compiler10turboshaft18SnapshotTableEntryINS1_4wasm9ValueTypeENS3_9NoKeyDataEEENS1_22RecyclingZoneAllocatorIS8_EEE17_M_reallocate_mapEmb(ptr noundef nonnull align 8 dereferenceable(96) %0, i64 noundef %1, i1 noundef zeroext %2) local_unnamed_addr #0 comdat align 2 {
+bb.a:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 3 uses
+  %i.c = load ptr, ptr %i.b, align 8              ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
+  %i.e = load ptr, ptr %i.d, align 8              ; 6 uses
+  %i.f = ptrtoint ptr %i.c to i64
+  %i.g = ptrtoint ptr %i.e to i64                 ; 3 uses
+  %i.h = sub i64 %i.f, %i.g
+  %i.i = ashr exact i64 %i.h, 3
+  %i.j = add nsw i64 %i.i, 1                      ; 3 uses
+  %i.k = add i64 %i.j, %1                         ; 3 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
+  %i.m = load i64, ptr %i.l, align 8              ; 4 uses
+  %i.n = shl i64 %i.k, 1
+  %i.o = icmp ugt i64 %i.m, %i.n
+  br i1 %i.o, label %bb.b, label %bb.k
+
+bb.b:                                             ; preds = %bb.a
+  %i.p = load ptr, ptr %i.a, align 8
+  %i.q = sub i64 %i.m, %i.k
+  %i.r = lshr i64 %i.q, 1
+  %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %i.r
+  %i.t = select i1 %2, i64 %1, i64 0
+  %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.t ; 10 uses
+  %i.v = icmp ult ptr %i.u, %i.e
+  %i.w = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
+  br i1 %i.v, label %bb.c, label %bb.g
+
+bb.c:                                             ; preds = %bb.b
+  %i.x = ptrtoint ptr %i.w to i64
+  %i.y = sub i64 %i.x, %i.g                       ; 3 uses
+  %i.z = icmp sgt i64 %i.y, 8
+  br i1 %i.z, label %bb.d, label %bb.e, !prof !13
+
+bb.d:                                             ; preds = %bb.c
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.u, ptr nonnull align 8 %i.e, i64 %i.y, i1 false)
+  br label %_ZSt4copyIPPN2v88internal8compiler10turboshaft18SnapshotTableEntryINS1_4wasm9ValueTypeENS3_9NoKeyDataEEESA_ET0_T_SC_SB_.exit
+
+bb.e:                                             ; preds = %bb.c
+  %i.aa = icmp eq i64 %i.y, 8
+  br i1 %i.aa, label %bb.f, label %_ZSt4copyIPPN2v88internal8compiler10turboshaft18SnapshotTableEntryINS1_4wasm9ValueTypeENS3_9NoKeyDataEEESA_ET0_T_SC_SB_.exit
+
+bb.f:                                             ; preds = %bb.e
+  %i.ab = load ptr, ptr %i.e, align 8
+  store ptr %i.ab, ptr %i.u, align 8
+  br label %_ZSt4copyIPPN2v88internal8compiler10turboshaft18SnapshotTableEntryINS1_4wasm9ValueTypeENS3_9NoKeyDataEEESA_ET0_T_SC_SB_.exit
+
+bb.g:                                             ; preds = %bb.b
+  %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %i.j ; 2 uses
+  %i.ad = ptrtoint ptr %i.w to i64
+  %i.ae = sub i64 %i.ad, %i.g                     ; 3 uses
+  %i.af = ashr exact i64 %i.ae, 3                 ; 2 uses
+  %i.ag = icmp sgt i64 %i.af, 1
+  br i1 %i.ag, label %bb.h, label %bb.i, !prof !13
+
+bb.h:                                             ; preds = %bb.g
+  %i.ah = sub nsw i64 0, %i.af
+  %i.ai = getelementptr inbounds [8 x i8], ptr %i.ac, i64 %i.ah
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ai, ptr align 8 %i.e, i64 %i.ae, i1 false)
+  br label %_ZSt4copyIPPN2v88internal8compiler10turboshaft18SnapshotTableEntryINS1_4wasm9ValueTypeENS3_9NoKeyDataEEESA_ET0_T_SC_SB_.exit
+
+bb.i:                                             ; preds = %bb.g
+  %i.aj = icmp eq i64 %i.ae, 8
+  br i1 %i.aj, label %bb.j, label %_ZSt4copyIPPN2v88internal8compiler10turboshaft18SnapshotTableEntryINS1_4wasm9ValueTypeENS3_9NoKeyDataEEESA_ET0_T_SC_SB_.exit
+
+bb.j:                                             ; preds = %bb.i
+end_hunk_1
