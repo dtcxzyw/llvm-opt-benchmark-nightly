@@ -201,8 +201,8 @@ bb.ak:                                            ; preds = %bb.ai, %bb.ah
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #5
   %i.jo = add nuw nsw i64 %.0278424.i, 1          ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.jo, %i.dy
-  br i1 %exitcond.not.i, label %..thread382.loopexit_crit_edge.i, label %bb.y, !llvm.loop !68
+  %8 = icmp samesign ult i64 %i.jo, %i.dy
+  br i1 %8, label %bb.y, label %..thread382.loopexit_crit_edge.i, !llvm.loop !68
 
 ..thread382.loopexit_crit_edge.i:                 ; preds = %bb.ak
   %.pre473.i = ptrtoint ptr %.2202.ph.i to i64

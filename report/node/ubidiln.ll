@@ -201,12 +201,12 @@ vector.body293:                                   ; preds = %vector.body293, %ve
   %i.bc = shl i64 %index294, 2
   %next.gep296 = getelementptr i8, ptr %.0131172, i64 %i.bc ; 2 uses
   %i.bd = add nsw <4 x i32> %vec.ind295, splat (i32 -1)
-  %i.be = add <4 x i32> %vec.ind295, splat (i32 -5)
+  %i.be = add nsw <4 x i32> %vec.ind295, splat (i32 -5)
   %i.bf = getelementptr i8, ptr %next.gep296, i64 16
   store <4 x i32> %i.bd, ptr %next.gep296, align 4
   store <4 x i32> %i.be, ptr %i.bf, align 4
   %index.next297 = add nuw i64 %index294, 8       ; 2 uses
-  %i.bg = add <4 x i32> %vec.ind295, splat (i32 -8)
+  %i.bg = add nsw <4 x i32> %vec.ind295, splat (i32 -8)
   %i.bh = icmp eq i64 %index.next297, %n.vec290
   br i1 %i.bh, label %middle.block298, label %vector.body293, !llvm.loop !66
 

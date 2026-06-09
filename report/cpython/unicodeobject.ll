@@ -201,7 +201,7 @@ vector.body162:                                   ; preds = %vector.body162, %ve
   %vec.phi168 = phi <2 x i64> [ %i.ev, %vector.ph155 ], [ %i.fi, %vector.body162 ]
   %vec.phi169 = phi <2 x i64> [ zeroinitializer, %vector.ph155 ], [ %i.fj, %vector.body162 ]
   %vec.ind170 = phi <2 x i64> [ %i.ew, %vector.ph155 ], [ %i.fq, %vector.body162 ] ; 3 uses
-  %i.ex = add <2 x i64> %vec.ind170, splat (i64 -2)
+  %i.ex = add nsw <2 x i64> %vec.ind170, splat (i64 -2)
   %i.ey = sub i64 %i.ep, %index163
   %i.ez = getelementptr [2 x i8], ptr %2, i64 %i.ey ; 2 uses
   %i.fa = getelementptr i8, ptr %i.ez, i64 -2
@@ -225,7 +225,7 @@ vector.body162:                                   ; preds = %vector.body162, %ve
   %i.fo = or <2 x i1> %vec.phi166, %i.fk          ; 2 uses
   %i.fp = or <2 x i1> %vec.phi167, %i.fl          ; 2 uses
   %index.next174 = add nuw i64 %index163, 4       ; 2 uses
-  %i.fq = add <2 x i64> %vec.ind170, splat (i64 -4)
+  %i.fq = add nsw <2 x i64> %vec.ind170, splat (i64 -4)
   %i.fr = icmp eq i64 %index.next174, %n.vec157
   br i1 %i.fr, label %middle.block175, label %vector.body162, !llvm.loop !830
 
@@ -628,7 +628,7 @@ vector.body178:                                   ; preds = %vector.body178, %ve
   %vec.phi184 = phi <2 x i64> [ %i.fi, %vector.ph171 ], [ %i.fv, %vector.body178 ]
   %vec.phi185 = phi <2 x i64> [ zeroinitializer, %vector.ph171 ], [ %i.fw, %vector.body178 ]
   %vec.ind186 = phi <2 x i64> [ %i.fj, %vector.ph171 ], [ %i.gd, %vector.body178 ] ; 3 uses
-  %i.fk = add <2 x i64> %vec.ind186, splat (i64 -2)
+  %i.fk = add nsw <2 x i64> %vec.ind186, splat (i64 -2)
   %i.fl = sub i64 %i.fc, %index179
   %i.fm = getelementptr [4 x i8], ptr %2, i64 %i.fl ; 2 uses
   %i.fn = getelementptr i8, ptr %i.fm, i64 -4
@@ -652,7 +652,7 @@ vector.body178:                                   ; preds = %vector.body178, %ve
   %i.gb = or <2 x i1> %vec.phi182, %i.fx          ; 2 uses
   %i.gc = or <2 x i1> %vec.phi183, %i.fy          ; 2 uses
   %index.next190 = add nuw i64 %index179, 4       ; 2 uses
-  %i.gd = add <2 x i64> %vec.ind186, splat (i64 -4)
+  %i.gd = add nsw <2 x i64> %vec.ind186, splat (i64 -4)
   %i.ge = icmp eq i64 %index.next190, %n.vec173
   br i1 %i.ge, label %middle.block191, label %vector.body178, !llvm.loop !860
 
