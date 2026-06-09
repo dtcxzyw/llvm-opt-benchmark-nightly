@@ -201,8 +201,7 @@ bb.e:                                             ; preds = %bb.g, %bb.d
   br i1 %i.al, label %.thread32.i.i.i, label %bb.f, !prof !50
 
 .thread32.i.i.i:                                  ; preds = %.lr.ph.i.i.i
-  %i.am = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.ai ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.am) ]
+  %i.am = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.ai
   br label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIiSt10unique_ptrISt7variantIJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_St6vectorISA_SaISA_EESH_IiSaIiEESH_IjSaIjEESH_IlSaIlEESH_ImSaImEESH_IfSaIfEESH_IdSaIdEESH_ISG_SaISG_EESH_IS9_SaIS9_EEEESt14default_deleteIS10_EEEENS0_13hash_internal4HashIiEESt8equal_toIiESaISt4pairIKiS13_EEE10find_largeIiEENS1E_8iteratorERS1B_m.exit.i.i
 
 bb.f:                                             ; preds = %.lr.ph.i.i.i
@@ -383,8 +382,7 @@ bb.e:                                             ; preds = %bb.g, %bb.d
   br i1 %i.ak, label %.thread32.i.i.i, label %bb.f, !prof !50
 
 .thread32.i.i.i:                                  ; preds = %.lr.ph.i.i.i
-  %i.al = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.ah ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.al) ]
+  %i.al = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.ah
   br label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIiSt10unique_ptrISt7variantIJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_St6vectorISA_SaISA_EESH_IiSaIiEESH_IjSaIjEESH_IlSaIlEESH_ImSaImEESH_IfSaIfEESH_IdSaIdEESH_ISG_SaISG_EESH_IS9_SaIS9_EEEESt14default_deleteIS10_EEEENS0_13hash_internal4HashIiEESt8equal_toIiESaISt4pairIKiS13_EEE10find_largeIiEENS1E_8iteratorERS1B_m.exit.i.i
 
 bb.f:                                             ; preds = %.lr.ph.i.i.i
@@ -787,8 +785,7 @@ bb.e:                                             ; preds = %bb.g, %bb.d
   br i1 %i.al, label %.thread32.i.i.i, label %bb.f, !prof !50
 
 .thread32.i.i.i:                                  ; preds = %.lr.ph.i.i.i
-  %i.am = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.ai ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.am) ]
+  %i.am = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.ai
   br label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIiSt10unique_ptrISt7variantIJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_St6vectorISA_SaISA_EESH_IiSaIiEESH_IjSaIjEESH_IlSaIlEESH_ImSaImEESH_IfSaIfEESH_IdSaIdEESH_ISG_SaISG_EESH_IS9_SaIS9_EEEESt14default_deleteIS10_EEEENS0_13hash_internal4HashIiEESt8equal_toIiESaISt4pairIKiS13_EEE10find_largeIiEENS1E_8iteratorERS1B_m.exit.i.i
 
 bb.f:                                             ; preds = %.lr.ph.i.i.i
@@ -957,8 +954,7 @@ bb.e:                                             ; preds = %bb.g, %bb.d
   br i1 %i.al, label %.thread32.i.i.i, label %bb.f, !prof !50
 
 .thread32.i.i.i:                                  ; preds = %.lr.ph.i.i.i
-  %i.am = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.ai ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.am) ]
+  %i.am = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.ai
   br label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIiSt10unique_ptrISt7variantIJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_St6vectorISA_SaISA_EESH_IiSaIiEESH_IjSaIjEESH_IlSaIlEESH_ImSaImEESH_IfSaIfEESH_IdSaIdEESH_ISG_SaISG_EESH_IS9_SaIS9_EEEESt14default_deleteIS10_EEEENS0_13hash_internal4HashIiEESt8equal_toIiESaISt4pairIKiS13_EEE10find_largeIiEENS1E_8iteratorERS1B_m.exit.i.i
 
 bb.f:                                             ; preds = %.lr.ph.i.i.i
@@ -1127,8 +1123,7 @@ bb.e:                                             ; preds = %bb.g, %bb.d
   br i1 %i.al, label %.thread32.i.i.i, label %bb.f, !prof !50
 
 .thread32.i.i.i:                                  ; preds = %.lr.ph.i.i.i
-  %i.am = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.ai ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.am) ]
+  %i.am = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.ai
   br label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIiSt10unique_ptrISt7variantIJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_St6vectorISA_SaISA_EESH_IiSaIiEESH_IjSaIjEESH_IlSaIlEESH_ImSaImEESH_IfSaIfEESH_IdSaIdEESH_ISG_SaISG_EESH_IS9_SaIS9_EEEESt14default_deleteIS10_EEEENS0_13hash_internal4HashIiEESt8equal_toIiESaISt4pairIKiS13_EEE10find_largeIiEENS1E_8iteratorERS1B_m.exit.i.i
 
 bb.f:                                             ; preds = %.lr.ph.i.i.i
@@ -1297,8 +1292,7 @@ bb.e:                                             ; preds = %bb.g, %bb.d
   br i1 %i.al, label %.thread32.i.i.i, label %bb.f, !prof !50
 
 .thread32.i.i.i:                                  ; preds = %.lr.ph.i.i.i
-  %i.am = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.ai ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.am) ]
+  %i.am = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.ai
   br label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIiSt10unique_ptrISt7variantIJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_St6vectorISA_SaISA_EESH_IiSaIiEESH_IjSaIjEESH_IlSaIlEESH_ImSaImEESH_IfSaIfEESH_IdSaIdEESH_ISG_SaISG_EESH_IS9_SaIS9_EEEESt14default_deleteIS10_EEEENS0_13hash_internal4HashIiEESt8equal_toIiESaISt4pairIKiS13_EEE10find_largeIiEENS1E_8iteratorERS1B_m.exit.i.i
 
 bb.f:                                             ; preds = %.lr.ph.i.i.i
@@ -1467,8 +1461,7 @@ bb.e:                                             ; preds = %bb.g, %bb.d
   br i1 %i.al, label %.thread32.i.i.i, label %bb.f, !prof !50
 
 .thread32.i.i.i:                                  ; preds = %.lr.ph.i.i.i
-  %i.am = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.ai ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.am) ]
+  %i.am = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.ai
   br label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIiSt10unique_ptrISt7variantIJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_St6vectorISA_SaISA_EESH_IiSaIiEESH_IjSaIjEESH_IlSaIlEESH_ImSaImEESH_IfSaIfEESH_IdSaIdEESH_ISG_SaISG_EESH_IS9_SaIS9_EEEESt14default_deleteIS10_EEEENS0_13hash_internal4HashIiEESt8equal_toIiESaISt4pairIKiS13_EEE10find_largeIiEENS1E_8iteratorERS1B_m.exit.i.i
 
 bb.f:                                             ; preds = %.lr.ph.i.i.i
@@ -1637,8 +1630,7 @@ bb.e:                                             ; preds = %bb.g, %bb.d
   br i1 %i.al, label %.thread32.i.i.i, label %bb.f, !prof !50
 
 .thread32.i.i.i:                                  ; preds = %.lr.ph.i.i.i
-  %i.am = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.ai ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.am) ]
+  %i.am = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.ai
   br label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIiSt10unique_ptrISt7variantIJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_St6vectorISA_SaISA_EESH_IiSaIiEESH_IjSaIjEESH_IlSaIlEESH_ImSaImEESH_IfSaIfEESH_IdSaIdEESH_ISG_SaISG_EESH_IS9_SaIS9_EEEESt14default_deleteIS10_EEEENS0_13hash_internal4HashIiEESt8equal_toIiESaISt4pairIKiS13_EEE10find_largeIiEENS1E_8iteratorERS1B_m.exit.i.i
 
 bb.f:                                             ; preds = %.lr.ph.i.i.i
@@ -1807,8 +1799,7 @@ bb.e:                                             ; preds = %bb.g, %bb.d
   br i1 %i.al, label %.thread32.i.i.i, label %bb.f, !prof !50
 
 .thread32.i.i.i:                                  ; preds = %.lr.ph.i.i.i
-  %i.am = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.ai ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.am) ]
+  %i.am = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.ai
   br label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIiSt10unique_ptrISt7variantIJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_St6vectorISA_SaISA_EESH_IiSaIiEESH_IjSaIjEESH_IlSaIlEESH_ImSaImEESH_IfSaIfEESH_IdSaIdEESH_ISG_SaISG_EESH_IS9_SaIS9_EEEESt14default_deleteIS10_EEEENS0_13hash_internal4HashIiEESt8equal_toIiESaISt4pairIKiS13_EEE10find_largeIiEENS1E_8iteratorERS1B_m.exit.i.i
 
 bb.f:                                             ; preds = %.lr.ph.i.i.i
@@ -1976,8 +1967,7 @@ bb.e:                                             ; preds = %bb.g, %bb.d
   br i1 %i.al, label %.thread32.i.i.i, label %bb.f, !prof !50
 
 .thread32.i.i.i:                                  ; preds = %.lr.ph.i.i.i
-  %i.am = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.ai ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.am) ]
+  %i.am = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.ai
   br label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIiSt10unique_ptrISt7variantIJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_St6vectorISA_SaISA_EESH_IiSaIiEESH_IjSaIjEESH_IlSaIlEESH_ImSaImEESH_IfSaIfEESH_IdSaIdEESH_ISG_SaISG_EESH_IS9_SaIS9_EEEESt14default_deleteIS10_EEEENS0_13hash_internal4HashIiEESt8equal_toIiESaISt4pairIKiS13_EEE10find_largeIiEENS1E_8iteratorERS1B_m.exit.i.i
 
 bb.f:                                             ; preds = %.lr.ph.i.i.i
