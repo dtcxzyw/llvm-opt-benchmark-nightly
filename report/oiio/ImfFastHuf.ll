@@ -201,12 +201,12 @@ bb.al:                                            ; preds = %.preheader166
   br i1 %.not103216, label %._crit_edge228, label %.lr.ph218.preheader
 
 .lr.ph218.preheader:                              ; preds = %bb.al
-  %i.dy = zext i8 %i.dw to i64                    ; 7 uses
-  %i.dz = zext i8 %i.ac to i64                    ; 5 uses
+  %i.dy = zext i8 %i.dw to i64                    ; 6 uses
+  %i.dz = zext i8 %i.ac to i64                    ; 4 uses
   %i.ea = add nuw nsw i32 %i.dx, 1
   %wide.trip.count = zext nneg i32 %i.ea to i64
-  %6 = add nuw nsw i64 %i.dz, 1
-  %7 = sub nsw i64 %6, %i.dy                      ; 3 uses
+  %6 = sub nsw i64 %i.dz, %i.dy                   ; 2 uses
+  %7 = add nsw i64 %6, 1                          ; 3 uses
   %min.iters.check = icmp ult i64 %7, 2
   br i1 %min.iters.check, label %.lr.ph218.preheader403, label %vector.ph
 
@@ -284,8 +284,7 @@ bb.am:                                            ; preds = %.preheader166
   br i1 %.not110220.not, label %.lr.ph223.preheader, label %._crit_edge
 
 .lr.ph223.preheader:                              ; preds = %.lr.ph227
-  %8 = add i64 %indvar, %i.dy
-  %i.ey = sub i64 %i.dz, %8
+  %i.ey = sub i64 %6, %indvar
   %xtraiter = and i64 %i.ey, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph223.prol.loopexit, label %.lr.ph223.prol
