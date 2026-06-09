@@ -200,11 +200,11 @@ bb.a:
   %i.ae = add i32 %i.f, 1
   %i.af = mul i32 %i.b, %i.ae
   %i.ag = mul i32 %i.f, %i.b
+  %brmerge = select i1 %i.k, i1 true, i1 %i.l
+  %brmerge.a = select i1 %brmerge, i1 true, i1 %i.m
+  %brmerge534 = select i1 %i.k, i1 true, i1 %i.l
+  %brmerge537 = select i1 %brmerge534, i1 true, i1 %i.m
   %8 = add nsw i64 %wide.trip.count, -1           ; 3 uses
-  %brmerge.a = select i1 %i.k, i1 true, i1 %i.l
-  %brmerge534 = select i1 %brmerge.a, i1 true, i1 %i.m
-  %brmerge537 = select i1 %i.k, i1 true, i1 %i.l
-  %brmerge539 = select i1 %brmerge537, i1 true, i1 %i.m
   %min.iters.check = icmp ult i64 %8, 8
   %n.vec = and i64 %8, -8                         ; 3 uses
   %i.ah = or disjoint i64 %n.vec, 1
@@ -213,7 +213,7 @@ bb.a:
 
 .preheader391:                                    ; preds = %.preheader391.lr.ph, %._crit_edge
   %.0385418 = phi i32 [ 0, %.preheader391.lr.ph ], [ %i.iu, %._crit_edge ]
-  br i1 %brmerge534, label %._crit_edge, label %.preheader389.lr.ph.split.us.split.us
+  br i1 %brmerge.a, label %._crit_edge, label %.preheader389.lr.ph.split.us.split.us
 
 .preheader389.lr.ph.split.us.split.us:            ; preds = %.preheader391
   %i.ai = load ptr, ptr %1, align 8, !tbaa !8     ; 4 uses
@@ -483,7 +483,7 @@ bb.b:                                             ; preds = %bb.b, %.preheader38
   br i1 %exitcond434.not, label %.preheader390, label %.preheader389.us.us, !llvm.loop !55
 
 .preheader390:                                    ; preds = %._crit_edge397.split.us.us.us
-  br i1 %brmerge539, label %._crit_edge, label %.preheader388.lr.ph.split.us.split.us
+  br i1 %brmerge537, label %._crit_edge, label %.preheader388.lr.ph.split.us.split.us
 
 .preheader388.lr.ph.split.us.split.us:            ; preds = %.preheader390
   %i.gx = load ptr, ptr %7, align 8, !tbaa !8     ; 2 uses

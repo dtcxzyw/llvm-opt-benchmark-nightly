@@ -201,7 +201,7 @@ skiproot.exit:                                    ; preds = %.lr.ph.i, %bb.d, %r
   %i.ae = icmp ugt ptr %.0.lcssa.i, %i.ad
   %i.af = getelementptr i8, ptr %.0.lcssa.i, i64 -1
   %spec.select = select i1 %i.ae, ptr %i.af, ptr %i.s ; 3 uses
-  %i.ag = zext nneg i32 %1 to i64                 ; 4 uses
+  %i.ag = zext nneg i32 %1 to i64                 ; 6 uses
   %i.ah = ptrtoint ptr %i.x to i64
   %i.ai = ptrtoint ptr %.0.lcssa.i to i64
   %i.aj = add i64 %i.ah, 1
@@ -278,12 +278,12 @@ rb_alloc_tmp_buffer2.exit:                        ; preds = %bb.h
 
 .lr.ph.preheader:                                 ; preds = %bb.i, %rb_alloc_tmp_buffer2.exit
   %i.bd = phi ptr [ %i.ba, %bb.i ], [ %i.bc, %rb_alloc_tmp_buffer2.exit ] ; 4 uses
-  %wide.trip.count = zext nneg i32 %1 to i64      ; 3 uses
+  %wide.trip.count = zext nneg i32 %1 to i64
   %min.iters.check = icmp ult i32 %1, 4
   br i1 %min.iters.check, label %.lr.ph.preheader133, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %wide.trip.count, 2147483644   ; 3 uses
+  %n.vec = and i64 %i.ag, 2147483644              ; 3 uses
   %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %.0.lcssa.i, i64 0
   %broadcast.splat = shufflevector <2 x ptr> %broadcast.splatinsert, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body
@@ -299,7 +299,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bg, label %middle.block, label %vector.body, !llvm.loop !108
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %cmp.n = icmp eq i64 %n.vec, %i.ag
   br i1 %cmp.n, label %.preheader80, label %.lr.ph.preheader133
 
 .lr.ph.preheader133:                              ; preds = %.lr.ph.preheader, %middle.block

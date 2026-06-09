@@ -201,12 +201,12 @@ begin_hunk_0_@HUF_decompress4X4:bb.a
   br i1 %.not79105143.i, label %._crit_edge108.i, label %.lr.ph103.i.preheader
 
 .lr.ph103.i.preheader:                            ; preds = %.preheader.thread.i
-  %i.ch = zext i32 %.068.lcssa.i to i64           ; 2 uses
-  %i.ci = zext i32 %.068.lcssa.i to i64
+  %i.ch = zext i32 %.068.lcssa.i to i64
+  %i.ci = zext i32 %.068.lcssa.i to i64           ; 2 uses
   %min.iters.check = icmp ult i32 %.068.lcssa.i, 8
-  %n.vec = and i64 %i.ch, 4294967288              ; 3 uses
+  %n.vec = and i64 %i.ci, 4294967288              ; 3 uses
   %i.cj = or disjoint i64 %n.vec, 1
-  %cmp.n = icmp eq i64 %n.vec, %i.ch
+  %cmp.n = icmp eq i64 %n.vec, %i.ci
   br label %.lr.ph103.i
 
 .lr.ph99.i:                                       ; preds = %.lr.ph99.i, %.lr.ph99.preheader.i.new
@@ -271,7 +271,7 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %.lr.ph103.i, %middle.block
   %indvars.iv125.i.ph = phi i64 [ 1, %.lr.ph103.i ], [ %i.cj, %middle.block ] ; 4 uses
   %i.dg = sub nsw i64 %wide.trip.count123.i, %indvars.iv125.i.ph
-  %i.dh = sub nsw i64 %i.ci, %indvars.iv125.i.ph
+  %i.dh = sub nsw i64 %i.ch, %indvars.iv125.i.ph
   %xtraiter187 = and i64 %i.dg, 3                 ; 2 uses
   %lcmp.mod188.not = icmp eq i64 %xtraiter187, 0
   br i1 %lcmp.mod188.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol

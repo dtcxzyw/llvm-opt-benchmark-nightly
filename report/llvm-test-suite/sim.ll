@@ -201,8 +201,8 @@ bb.a:
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
   %i.m = sext i32 %.pre to i64                    ; 2 uses
   %i.n = sext i32 %i.b to i64                     ; 2 uses
-  %3 = add nsw i64 %i.f, 1
-  %4 = sub nsw i64 %3, %i.n                       ; 3 uses
+  %3 = sub nsw i64 %i.f, %i.n
+  %4 = add nsw i64 %3, 1                          ; 3 uses
   %min.iters.check = icmp ult i64 %4, 4
   br i1 %min.iters.check, label %.lr.ph.split.preheader923, label %vector.ph
 
@@ -263,8 +263,8 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
   %i.af = sext i32 %i.b to i64                    ; 2 uses
-  %5 = add nsw i64 %i.f, 1
-  %6 = sub nsw i64 %5, %i.af                      ; 3 uses
+  %5 = sub nsw i64 %i.f, %i.af
+  %6 = add nsw i64 %5, 1                          ; 3 uses
   %min.iters.check886 = icmp ult i64 %6, 8
   br i1 %min.iters.check886, label %.lr.ph.split.us.preheader922, label %vector.ph887
 

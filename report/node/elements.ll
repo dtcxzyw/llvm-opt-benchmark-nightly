@@ -201,9 +201,9 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.i:                                         ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
-  %i.l = add i32 %2, %i.h
-  %8 = add i32 %6, %5
-  %9 = sub i32 %i.l, %8                           ; 3 uses
+  %i.l = add i32 %6, %5
+  %8 = sub i32 %2, %i.l
+  %9 = add i32 %8, %i.h                           ; 3 uses
   %min.iters.check = icmp ult i32 %9, 16
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
@@ -606,9 +606,9 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.i:                                         ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
-  %i.l = add i32 %2, %i.h
-  %8 = add i32 %6, %5
-  %9 = sub i32 %i.l, %8                           ; 3 uses
+  %i.l = add i32 %6, %5
+  %8 = sub i32 %2, %i.l
+  %9 = add i32 %8, %i.h                           ; 3 uses
   %min.iters.check = icmp ult i32 %9, 16
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 

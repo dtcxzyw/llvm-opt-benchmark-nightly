@@ -201,19 +201,19 @@ bb.a:
   %i.y = add nuw nsw i64 %wide.trip.count, 2
   %i.z = sub nsw i64 %i.y, %i.s                   ; 2 uses
   %i.aa = sub i32 %i.f, %4                        ; 2 uses
-  %8 = add nuw nsw i64 %wide.trip.count, 3
-  %i.ab = sub nsw i64 %8, %i.s                    ; 3 uses
   %invariant.op168 = sub i32 3, %5
-  %min.iters.check = icmp ult i64 %i.ab, 4
+  %i.ab = sub nsw i64 %wide.trip.count, %i.s
+  %8 = add nsw i64 %i.ab, 3                       ; 3 uses
+  %min.iters.check = icmp ult i64 %8, 4
   %i.ac = trunc i64 %i.z to i32
   %i.ad = add i32 %i.aa, %i.ac
   %i.ae = icmp slt i32 %i.ad, %i.aa
   %i.af = icmp ugt i64 %i.z, 4294967295
   %i.ag = or i1 %i.ae, %i.af
-  %n.vec = and i64 %i.ab, -4                      ; 3 uses
+  %n.vec = and i64 %8, -4                         ; 3 uses
   %i.ah = add nsw i64 %i.t, %n.vec
   %invariant.op = sub i32 3, %4
-  %cmp.n = icmp eq i64 %i.ab, %n.vec
+  %cmp.n = icmp eq i64 %8, %n.vec
   %invariant.op167 = sub i32 3, %4
   br label %.preheader
 

@@ -201,7 +201,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not178, label %._crit_edge174, label %.lr.ph173.preheader
 
 .lr.ph173.preheader:                              ; preds = %.preheader
-  %wide.trip.count204 = zext i32 %i.dn to i64     ; 5 uses
+  %wide.trip.count204 = zext i32 %i.dn to i64
   %min.iters.check = icmp ult i32 %i.dn, 6
   %i.cj = sub i64 %i.a, %i.ca
   %diff.check = icmp ult i64 %i.cj, 32
@@ -209,7 +209,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %or.cond, label %.lr.ph173.preheader234, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph173.preheader
-  %n.vec = and i64 %wide.trip.count204, 4294967292 ; 3 uses
+  %n.vec = and i64 %i.do, 4294967292              ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -227,12 +227,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.co, label %middle.block, label %vector.body, !llvm.loop !678
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count204
+  %cmp.n = icmp eq i64 %n.vec, %i.do
   br i1 %cmp.n, label %._crit_edge174, label %.lr.ph173.preheader234
 
 .lr.ph173.preheader234:                           ; preds = %.lr.ph173.preheader, %middle.block
   %indvars.iv201.ph = phi i64 [ 0, %.lr.ph173.preheader ], [ %n.vec, %middle.block ] ; 3 uses
-  %xtraiter = and i64 %wide.trip.count204, 3      ; 2 uses
+  %xtraiter = and i64 %i.do, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph173.prol.loopexit, label %.lr.ph173.prol
 
@@ -250,7 +250,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph173.prol.loopexit:                          ; preds = %.lr.ph173.prol, %.lr.ph173.preheader234
   %indvars.iv201.unr = phi i64 [ %indvars.iv201.ph, %.lr.ph173.preheader234 ], [ %indvars.iv.next202.prol, %.lr.ph173.prol ]
-  %i.cs = sub nsw i64 %indvars.iv201.ph, %wide.trip.count204
+  %i.cs = sub nsw i64 %indvars.iv201.ph, %i.do
   %i.ct = icmp ugt i64 %i.cs, -4
   br i1 %i.ct, label %._crit_edge174, label %.lr.ph173
 
@@ -289,7 +289,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   store i64 %i.dl, ptr %i.dm, align 8, !tbaa !223
   %indvars.iv.next199 = add nuw nsw i64 %indvars.iv198, 1 ; 2 uses
   %i.dn = load i32, ptr %i.h, align 8, !tbaa !504 ; 4 uses
-  %i.do = zext i32 %i.dn to i64
+  %i.do = zext i32 %i.dn to i64                   ; 5 uses
   %i.dp = icmp samesign ult i64 %indvars.iv.next199, %i.do
   br i1 %i.dp, label %bb.n, label %.preheader, !llvm.loop !683
 

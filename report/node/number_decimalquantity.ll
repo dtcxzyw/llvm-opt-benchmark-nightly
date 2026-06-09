@@ -201,8 +201,8 @@ bb.v:                                             ; preds = %switch.early.test20
   br i1 %i.bp, label %.lr.ph357.split.us, label %.lr.ph357.split.preheader
 
 .lr.ph357.split.preheader:                        ; preds = %.lr.ph357
-  %5 = add nsw i32 %spec.select.i238, 1
-  %6 = sub i32 %5, %i.bn                          ; 3 uses
+  %5 = sub i32 %spec.select.i238, %i.bn
+  %6 = add i32 %5, 1                              ; 3 uses
   %min.iters.check523 = icmp ult i32 %6, 16
   br i1 %min.iters.check523, label %.lr.ph357.split.preheader548, label %vector.ph524
 
@@ -304,8 +304,8 @@ bb.x:                                             ; preds = %switch.early.test20
   br i1 %i.cq, label %.lr.ph337.split.us.preheader, label %.lr.ph337.split.preheader
 
 .lr.ph337.split.preheader:                        ; preds = %.lr.ph337
-  %7 = add nsw i32 %spec.select.i238, 1
-  %8 = sub i32 %7, %i.bn                          ; 3 uses
+  %7 = sub i32 %spec.select.i238, %i.bn
+  %8 = add i32 %7, 1                              ; 3 uses
   %min.iters.check501 = icmp ult i32 %8, 16
   br i1 %min.iters.check501, label %.lr.ph337.split.preheader553, label %vector.ph502
 
@@ -412,8 +412,8 @@ bb.ab:                                            ; preds = %switch.early.test20
   br i1 %i.dr, label %.lr.ph326.split.us, label %.lr.ph326.split.preheader
 
 .lr.ph326.split.preheader:                        ; preds = %.lr.ph326
-  %9 = add nsw i32 %spec.select.i238, 1
-  %10 = sub i32 %9, %i.bn                         ; 3 uses
+  %9 = sub i32 %spec.select.i238, %i.bn
+  %10 = add i32 %9, 1                             ; 3 uses
   %min.iters.check483 = icmp ult i32 %10, 16
   br i1 %min.iters.check483, label %.lr.ph326.split.preheader561, label %vector.ph484
 
@@ -517,8 +517,8 @@ bb.ad:                                            ; preds = %switch.early.test20
   br i1 %i.es, label %.lr.ph.split.us.preheader, label %.lr.ph.split.preheader
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
-  %11 = add nsw i32 %spec.select.i238, 1
-  %12 = sub i32 %11, %i.bn                        ; 3 uses
+  %11 = sub i32 %spec.select.i238, %i.bn
+  %12 = add i32 %11, 1                            ; 3 uses
   %min.iters.check = icmp ult i32 %12, 16
   br i1 %min.iters.check, label %.lr.ph.split.preheader568, label %vector.ph
 

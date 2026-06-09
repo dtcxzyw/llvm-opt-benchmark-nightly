@@ -200,10 +200,10 @@ bb.a:
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
-  %indvar = phi i64 [ %indvar.next, %bb.d ], [ 0, %.lr.ph.preheader ] ; 2 uses
+  %indvar = phi i64 [ %indvar.next, %bb.d ], [ 0, %.lr.ph.preheader ] ; 5 uses
   %i.h = phi i32 [ %i.be, %bb.d ], [ %i.g, %.lr.ph.preheader ]
   %.141 = phi ptr [ %i.bp, %bb.d ], [ %.045, %.lr.ph.preheader ] ; 2 uses
-  %.02439 = phi i32 [ %i.bq, %bb.d ], [ 0, %.lr.ph.preheader ] ; 6 uses
+  %.02439 = phi i32 [ %i.bq, %bb.d ], [ 0, %.lr.ph.preheader ] ; 5 uses
   %i.i = sext i32 %i.h to i64
   %i.j = shl nsw i64 %i.i, 2
   %i.k = tail call noalias ptr @malloc(i64 noundef %i.j) #16 ; 10 uses
@@ -212,12 +212,12 @@ bb.a:
 
 .lr.ph.i:                                         ; preds = %.lr.ph
   %i.l = load i32, ptr @nrow, align 4, !tbaa !4   ; 2 uses
-  %i.m = zext nneg i32 %.02439 to i64             ; 3 uses
-  %min.iters.check126 = icmp samesign ult i32 %.02439, 8
+  %i.m = zext nneg i32 %.02439 to i64
+  %min.iters.check126 = icmp ult i64 %indvar, 8
   br i1 %min.iters.check126, label %scalar.ph125.preheader, label %vector.ph127
 
 vector.ph127:                                     ; preds = %.lr.ph.i
-  %n.vec129 = and i64 %i.m, 2147483640            ; 3 uses
+  %n.vec129 = and i64 %indvar, -8                 ; 3 uses
   %broadcast.splatinsert130 = insertelement <4 x i32> poison, i32 %i.l, i64 0
   %broadcast.splat131 = shufflevector <4 x i32> %broadcast.splatinsert130, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body132
@@ -233,7 +233,7 @@ vector.body132:                                   ; preds = %vector.body132, %ve
   br i1 %i.p, label %middle.block135, label %vector.body132, !llvm.loop !61
 
 middle.block135:                                  ; preds = %vector.body132
-  %cmp.n136 = icmp eq i64 %n.vec129, %i.m
+  %cmp.n136 = icmp eq i64 %indvar, %n.vec129
   br i1 %cmp.n136, label %.preheader.i, label %scalar.ph125.preheader
 
 scalar.ph125.preheader:                           ; preds = %.lr.ph.i, %middle.block135

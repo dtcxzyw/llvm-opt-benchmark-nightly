@@ -201,7 +201,7 @@ bb.w:                                             ; preds = %bb.u
 .lr.ph:                                           ; preds = %bb.w
   %i.ec = getelementptr inbounds nuw i8, ptr %6, i64 304
   %i.ed = load ptr, ptr %i.ec, align 8, !tbaa !80
-  %wide.trip.count = zext nneg i32 %i.ea to i64   ; 3 uses
+  %wide.trip.count = zext nneg i32 %i.ea to i64   ; 4 uses
   br label %bb.y
 
 bb.x:                                             ; preds = %bb.w
@@ -283,7 +283,7 @@ bb.ae:                                            ; preds = %bb.ac
   %i.fn = sitofp i32 %i.fm to float               ; 2 uses
   %i.fo = getelementptr inbounds nuw i8, ptr %1, i64 164 ; 2 uses
   %i.fp = getelementptr inbounds nuw i8, ptr %1, i64 188 ; 2 uses
-  %wide.trip.count198 = zext nneg i32 %i.ea to i64 ; 2 uses
+  %wide.trip.count198 = zext nneg i32 %i.ea to i64
   %min.iters.check = icmp ult i32 %i.ea, 2
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -305,7 +305,7 @@ vector.memcheck:                                  ; preds = %.lr.ph166
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = add nsw i64 %wide.trip.count198, -1    ; 2 uses
+  %n.vec = add nsw i64 %wide.trip.count, -1       ; 2 uses
   %broadcast.splatinsert = insertelement <2 x float> poison, float %i.fc, i64 0
   %broadcast.splat = shufflevector <2 x float> %broadcast.splatinsert, <2 x float> poison, <2 x i32> zeroinitializer
   %broadcast.splatinsert278 = insertelement <2 x float> poison, float %i.fh, i64 0

@@ -201,7 +201,7 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt5tupleIJmmmEES
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt5tupleIJmmmEESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit._crit_edge21
   %i.ad = getelementptr inbounds nuw i8, ptr %.pn17, i64 48 ; 3 uses
-  %i.ae = udiv exact i64 %i.ab, 24                ; 2 uses
+  %i.ae = udiv i64 %i.ab, 24                      ; 2 uses
   %min.iters.check = icmp ult i64 %i.k, 4
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader, label %vector.ph
 

@@ -201,10 +201,10 @@ bb.af:                                            ; preds = %.loopexit2079
 
 .preheader2076.preheader:                         ; preds = %bb.af
   %i.eu = mul i32 %i.eo, 9
-  %i.ev = add i32 %i.ea, %i.eu
-  %7 = add i32 %i.ev, -9208
-  %i.ew = add i32 %i.ao, %.neg1916
-  %8 = sub i32 %7, %i.ew                          ; 3 uses
+  %i.ev = add i32 %i.ao, %.neg1916
+  %7 = sub i32 %i.ea, %i.ev
+  %i.ew = add i32 %7, %i.eu
+  %8 = add i32 %i.ew, -9208                       ; 3 uses
   %min.iters.check = icmp ult i32 %8, 8
   br i1 %min.iters.check, label %.preheader2076.preheader2230, label %vector.ph
 

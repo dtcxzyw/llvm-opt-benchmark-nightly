@@ -201,8 +201,8 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %i.by = load ptr, ptr %i.g, align 8, !tbaa !22  ; 9 uses
   %i.bz = sext i32 %.02343.i to i64               ; 4 uses
   %i.ca = sext i32 %.021.i to i64                 ; 2 uses
-  %3 = add nsw i64 %i.ca, 1
-  %4 = sub nsw i64 %3, %i.bz                      ; 3 uses
+  %3 = sub nsw i64 %i.ca, %i.bz
+  %4 = add nsw i64 %3, 1                          ; 3 uses
   %min.iters.check = icmp ult i64 %4, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 

@@ -200,7 +200,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 .lr.ph338:                                        ; preds = %scalar.ph, %scalar.ph510, %scalar.ph554, %middle.block, %middle.block527, %middle.block571
   %i.is = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.it = load ptr, ptr %i.is, align 8, !tbaa !45 ; 8 uses
-  %wide.trip.count377 = zext i32 %.sroa.7246.0.copyload to i64 ; 9 uses
+  %wide.trip.count377 = zext i32 %.sroa.7246.0.copyload to i64 ; 27 uses
   %min.iters.check599 = icmp ult i32 %.sroa.7246.0.copyload, 24
   br i1 %min.iters.check599, label %scalar.ph598.preheader, label %vector.memcheck574
 
@@ -322,7 +322,7 @@ scalar.ph598:                                     ; preds = %scalar.ph598.prol.l
   br i1 %exitcond378.not.1, label %.lr.ph340.preheader, label %scalar.ph598, !llvm.loop !58
 
 .lr.ph342.preheader:                              ; preds = %interpolateTable.exit
-  %wide.trip.count387 = zext nneg i32 %.sroa.7246.0.copyload to i64 ; 3 uses
+  %wide.trip.count387 = zext nneg i32 %.sroa.7246.0.copyload to i64
   %min.iters.check622 = icmp ult i32 %.sroa.7246.0.copyload, 4
   br i1 %min.iters.check622, label %.lr.ph342.preheader837, label %vector.memcheck613
 
@@ -341,7 +341,7 @@ vector.memcheck613:                               ; preds = %.lr.ph342.preheader
   br i1 %conflict.rdx620, label %.lr.ph342.preheader837, label %vector.ph623
 
 vector.ph623:                                     ; preds = %vector.memcheck613
-  %n.vec625 = and i64 %wide.trip.count387, 2147483644 ; 3 uses
+  %n.vec625 = and i64 %wide.trip.count377, 2147483644 ; 3 uses
   br label %vector.body626
 
 vector.body626:                                   ; preds = %vector.body626, %vector.ph623
@@ -366,7 +366,7 @@ vector.body626:                                   ; preds = %vector.body626, %ve
   br i1 %i.kq, label %middle.block633, label %vector.body626, !llvm.loop !59
 
 middle.block633:                                  ; preds = %vector.body626
-  %cmp.n634 = icmp eq i64 %n.vec625, %wide.trip.count387
+  %cmp.n634 = icmp eq i64 %n.vec625, %wide.trip.count377
   br i1 %cmp.n634, label %.lr.ph345.preheader, label %.lr.ph342.preheader837
 
 .lr.ph342.preheader837:                           ; preds = %vector.memcheck613, %.lr.ph342.preheader, %middle.block633
@@ -433,7 +433,7 @@ interpolateTable.exit:                            ; preds = %.lr.ph340, %bb.e
   %.0309.in = getelementptr inbounds nuw i8, ptr %0, i64 %.0309.in.v
   %.0309 = load ptr, ptr %.0309.in, align 8, !tbaa !10 ; 11 uses
   %.0309642 = ptrtoaddr ptr %.0309 to i64         ; 6 uses
-  %wide.trip.count392 = zext i32 %.sroa.7246.0.copyload to i64 ; 15 uses
+  %wide.trip.count392 = zext i32 %.sroa.7246.0.copyload to i64 ; 13 uses
   %min.iters.check656 = icmp ult i32 %.sroa.7246.0.copyload, 4
   br i1 %min.iters.check656, label %.lr.ph345.preheader836, label %vector.memcheck636
 
@@ -467,7 +467,7 @@ vector.memcheck636:                               ; preds = %.lr.ph345.preheader
   br i1 %conflict.rdx654, label %.lr.ph345.preheader836, label %vector.ph657
 
 vector.ph657:                                     ; preds = %vector.memcheck636
-  %n.vec659 = and i64 %wide.trip.count392, 4294967292 ; 3 uses
+  %n.vec659 = and i64 %wide.trip.count377, 2147483644 ; 3 uses
   %broadcast.splatinsert660 = insertelement <4 x float> poison, float %6, i64 0
   %broadcast.splat661 = shufflevector <4 x float> %broadcast.splatinsert660, <4 x float> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert662 = insertelement <4 x float> poison, float %i.be, i64 0
@@ -518,7 +518,7 @@ vector.body664:                                   ; preds = %vector.body664, %ve
   br i1 %i.nf, label %middle.block676, label %vector.body664, !llvm.loop !60
 
 middle.block676:                                  ; preds = %vector.body664
-  %cmp.n677 = icmp eq i64 %n.vec659, %wide.trip.count392
+  %cmp.n677 = icmp eq i64 %n.vec659, %wide.trip.count377
   br i1 %cmp.n677, label %.lr.ph347.preheader, label %.lr.ph345.preheader836
 
 .lr.ph345.preheader836:                           ; preds = %vector.memcheck636, %.lr.ph345.preheader, %middle.block676
@@ -563,7 +563,7 @@ middle.block676:                                  ; preds = %vector.body664
   br i1 %exitcond388.not.1, label %.lr.ph345.preheader, label %.lr.ph342, !llvm.loop !61
 
 .lr.ph347.preheader:                              ; preds = %.lr.ph345, %middle.block676
-  %wide.trip.count397 = zext nneg i32 %.sroa.7246.0.copyload to i64 ; 3 uses
+  %wide.trip.count397 = zext nneg i32 %.sroa.7246.0.copyload to i64
   %min.iters.check682 = icmp ult i32 %.sroa.7246.0.copyload, 8
   %i.oi = sub i64 %i.ac, %i.z
   %diff.check680 = icmp ult i64 %i.oi, 32
@@ -571,7 +571,7 @@ middle.block676:                                  ; preds = %vector.body664
   br i1 %or.cond, label %.lr.ph347.preheader835, label %vector.ph683
 
 vector.ph683:                                     ; preds = %.lr.ph347.preheader
-  %n.vec685 = and i64 %wide.trip.count397, 2147483640 ; 3 uses
+  %n.vec685 = and i64 %wide.trip.count377, 2147483640 ; 3 uses
   %broadcast.splatinsert686 = insertelement <4 x float> poison, float %i.bd, i64 0
   %broadcast.splat687 = shufflevector <4 x float> %broadcast.splatinsert686, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body688
@@ -593,7 +593,7 @@ vector.body688:                                   ; preds = %vector.body688, %ve
   br i1 %i.op, label %middle.block693, label %vector.body688, !llvm.loop !62
 
 middle.block693:                                  ; preds = %vector.body688
-  %cmp.n694 = icmp eq i64 %n.vec685, %wide.trip.count397
+  %cmp.n694 = icmp eq i64 %n.vec685, %wide.trip.count377
   br i1 %cmp.n694, label %.lr.ph349.preheader, label %.lr.ph347.preheader835
 
 .lr.ph347.preheader835:                           ; preds = %.lr.ph347.preheader, %middle.block693
@@ -665,7 +665,7 @@ middle.block693:                                  ; preds = %vector.body688
   br i1 %exitcond393.not, label %.lr.ph347.preheader, label %.lr.ph345, !llvm.loop !65
 
 .lr.ph349.preheader:                              ; preds = %.lr.ph347.prol.loopexit, %.lr.ph347, %middle.block693
-  %wide.trip.count402 = zext nneg i32 %.sroa.7246.0.copyload to i64 ; 3 uses
+  %wide.trip.count402 = zext nneg i32 %.sroa.7246.0.copyload to i64
   %min.iters.check703 = icmp ult i32 %.sroa.7246.0.copyload, 8
   br i1 %min.iters.check703, label %.lr.ph349.preheader834, label %vector.memcheck696
 
@@ -679,7 +679,7 @@ vector.memcheck696:                               ; preds = %.lr.ph349.preheader
   br i1 %found.conflict701, label %.lr.ph349.preheader834, label %vector.ph704
 
 vector.ph704:                                     ; preds = %vector.memcheck696
-  %n.vec706 = and i64 %wide.trip.count402, 2147483640 ; 3 uses
+  %n.vec706 = and i64 %wide.trip.count377, 2147483640 ; 3 uses
   br label %vector.body707
 
 vector.body707:                                   ; preds = %vector.body707, %vector.ph704
@@ -701,7 +701,7 @@ vector.body707:                                   ; preds = %vector.body707, %ve
   br i1 %i.qn, label %middle.block714, label %vector.body707, !llvm.loop !71
 
 middle.block714:                                  ; preds = %vector.body707
-  %cmp.n715 = icmp eq i64 %n.vec706, %wide.trip.count402
+  %cmp.n715 = icmp eq i64 %n.vec706, %wide.trip.count377
   br i1 %cmp.n715, label %.lr.ph351.preheader, label %.lr.ph349.preheader834
 
 .lr.ph349.preheader834:                           ; preds = %vector.memcheck696, %.lr.ph349.preheader, %middle.block714
@@ -760,7 +760,7 @@ middle.block714:                                  ; preds = %vector.body707
   br i1 %exitcond398.not.3, label %.lr.ph349.preheader, label %.lr.ph347, !llvm.loop !73
 
 .lr.ph351.preheader:                              ; preds = %.lr.ph349.prol.loopexit, %.lr.ph349, %middle.block714
-  %wide.trip.count407 = zext nneg i32 %.sroa.7246.0.copyload to i64 ; 3 uses
+  %wide.trip.count407 = zext nneg i32 %.sroa.7246.0.copyload to i64
   %min.iters.check724 = icmp ult i32 %.sroa.7246.0.copyload, 4
   br i1 %min.iters.check724, label %.lr.ph351.preheader833, label %vector.memcheck717
 
@@ -776,7 +776,7 @@ vector.memcheck717:                               ; preds = %.lr.ph351.preheader
   br i1 %conflict.rdx722, label %.lr.ph351.preheader833, label %vector.ph725
 
 vector.ph725:                                     ; preds = %vector.memcheck717
-  %n.vec727 = and i64 %wide.trip.count407, 2147483644 ; 3 uses
+  %n.vec727 = and i64 %wide.trip.count377, 2147483644 ; 3 uses
   br label %vector.body728
 
 vector.body728:                                   ; preds = %vector.body728, %vector.ph725
@@ -796,7 +796,7 @@ vector.body728:                                   ; preds = %vector.body728, %ve
   br i1 %i.ru, label %middle.block734, label %vector.body728, !llvm.loop !74
 
 middle.block734:                                  ; preds = %vector.body728
-  %cmp.n735 = icmp eq i64 %n.vec727, %wide.trip.count407
+  %cmp.n735 = icmp eq i64 %n.vec727, %wide.trip.count377
   br i1 %cmp.n735, label %.lr.ph353.preheader, label %.lr.ph351.preheader833
 
 .lr.ph351.preheader833:                           ; preds = %vector.memcheck717, %.lr.ph351.preheader, %middle.block734
@@ -859,7 +859,7 @@ middle.block734:                                  ; preds = %vector.body728
   br i1 %exitcond403.not.3, label %.lr.ph351.preheader, label %.lr.ph349, !llvm.loop !75
 
 .lr.ph353.preheader:                              ; preds = %.lr.ph351.prol.loopexit, %.lr.ph351, %middle.block734
-  %wide.trip.count412 = zext nneg i32 %.sroa.7246.0.copyload to i64 ; 3 uses
+  %wide.trip.count412 = zext nneg i32 %.sroa.7246.0.copyload to i64
   %min.iters.check746 = icmp ult i32 %.sroa.7246.0.copyload, 4
   br i1 %min.iters.check746, label %.lr.ph353.preheader832, label %vector.memcheck737
 
@@ -878,7 +878,7 @@ vector.memcheck737:                               ; preds = %.lr.ph353.preheader
   br i1 %conflict.rdx744, label %.lr.ph353.preheader832, label %vector.ph747
 
 vector.ph747:                                     ; preds = %vector.memcheck737
-  %n.vec749 = and i64 %wide.trip.count412, 2147483644 ; 3 uses
+  %n.vec749 = and i64 %wide.trip.count377, 2147483644 ; 3 uses
   %broadcast.splatinsert750 = insertelement <4 x float> poison, float %6, i64 0
   %broadcast.splat751 = shufflevector <4 x float> %broadcast.splatinsert750, <4 x float> poison, <4 x i32> zeroinitializer
   br label %vector.body752
@@ -904,7 +904,7 @@ vector.body752:                                   ; preds = %vector.body752, %ve
   br i1 %i.tn, label %middle.block759, label %vector.body752, !llvm.loop !76
 
 middle.block759:                                  ; preds = %vector.body752
-  %cmp.n760 = icmp eq i64 %n.vec749, %wide.trip.count412
+  %cmp.n760 = icmp eq i64 %n.vec749, %wide.trip.count377
   br i1 %cmp.n760, label %.lr.ph355.preheader, label %.lr.ph353.preheader832
 
 .lr.ph353.preheader832:                           ; preds = %vector.memcheck737, %.lr.ph353.preheader, %middle.block759
@@ -965,7 +965,7 @@ middle.block759:                                  ; preds = %vector.body752
   br i1 %exitcond408.not.1, label %.lr.ph353.preheader, label %.lr.ph351, !llvm.loop !77
 
 .lr.ph355.preheader:                              ; preds = %.lr.ph353.prol.loopexit, %.lr.ph353, %middle.block759
-  %wide.trip.count417 = zext nneg i32 %.sroa.7246.0.copyload to i64 ; 3 uses
+  %wide.trip.count417 = zext nneg i32 %.sroa.7246.0.copyload to i64
   %min.iters.check767 = icmp ult i32 %.sroa.7246.0.copyload, 8
   br i1 %min.iters.check767, label %.lr.ph355.preheader831, label %vector.memcheck762
 
@@ -978,7 +978,7 @@ vector.memcheck762:                               ; preds = %.lr.ph355.preheader
   br i1 %conflict.rdx765, label %.lr.ph355.preheader831, label %vector.ph768
 
 vector.ph768:                                     ; preds = %vector.memcheck762
-  %n.vec770 = and i64 %wide.trip.count417, 2147483640 ; 3 uses
+  %n.vec770 = and i64 %wide.trip.count377, 2147483640 ; 3 uses
   %broadcast.splatinsert771 = insertelement <4 x float> poison, float %i.be, i64 0
   %broadcast.splat772 = shufflevector <4 x float> %broadcast.splatinsert771, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body773
@@ -1006,7 +1006,7 @@ vector.body773:                                   ; preds = %vector.body773, %ve
   br i1 %i.vh, label %middle.block780, label %vector.body773, !llvm.loop !78
 
 middle.block780:                                  ; preds = %vector.body773
-  %cmp.n781 = icmp eq i64 %n.vec770, %wide.trip.count417
+  %cmp.n781 = icmp eq i64 %n.vec770, %wide.trip.count377
   br i1 %cmp.n781, label %.lr.ph357.preheader, label %.lr.ph355.preheader831
 
 .lr.ph355.preheader831:                           ; preds = %vector.memcheck762, %.lr.ph355.preheader, %middle.block780
@@ -1069,7 +1069,7 @@ middle.block780:                                  ; preds = %vector.body773
   br i1 %exitcond413.not.1, label %.lr.ph355.preheader, label %.lr.ph353, !llvm.loop !79
 
 .lr.ph357.preheader:                              ; preds = %.lr.ph355.prol.loopexit, %.lr.ph355, %middle.block780
-  %wide.trip.count422 = zext nneg i32 %.sroa.7246.0.copyload to i64 ; 3 uses
+  %wide.trip.count422 = zext nneg i32 %.sroa.7246.0.copyload to i64
   %min.iters.check788 = icmp ult i32 %.sroa.7246.0.copyload, 8
   br i1 %min.iters.check788, label %.lr.ph357.preheader830, label %vector.memcheck783
 
@@ -1082,7 +1082,7 @@ vector.memcheck783:                               ; preds = %.lr.ph357.preheader
   br i1 %conflict.rdx786, label %.lr.ph357.preheader830, label %vector.ph789
 
 vector.ph789:                                     ; preds = %vector.memcheck783
-  %n.vec791 = and i64 %wide.trip.count422, 2147483640 ; 3 uses
+  %n.vec791 = and i64 %wide.trip.count377, 2147483640 ; 3 uses
   br label %vector.body792
 
 vector.body792:                                   ; preds = %vector.body792, %vector.ph789
@@ -1108,7 +1108,7 @@ vector.body792:                                   ; preds = %vector.body792, %ve
   br i1 %i.xd, label %middle.block799, label %vector.body792, !llvm.loop !80
 
 middle.block799:                                  ; preds = %vector.body792
-  %cmp.n800 = icmp eq i64 %n.vec791, %wide.trip.count422
+  %cmp.n800 = icmp eq i64 %n.vec791, %wide.trip.count377
   br i1 %cmp.n800, label %.lr.ph359.preheader, label %.lr.ph357.preheader830
 
 .lr.ph357.preheader830:                           ; preds = %vector.memcheck783, %.lr.ph357.preheader, %middle.block799
@@ -1159,7 +1159,7 @@ middle.block799:                                  ; preds = %vector.body792
   br i1 %exitcond418.not.1, label %.lr.ph357.preheader, label %.lr.ph355, !llvm.loop !81
 
 .lr.ph359.preheader:                              ; preds = %.lr.ph357.prol.loopexit, %.lr.ph357, %middle.block799
-  %wide.trip.count427 = zext i32 %.sroa.7246.0.copyload to i64 ; 5 uses
+  %wide.trip.count427 = zext i32 %.sroa.7246.0.copyload to i64 ; 3 uses
   %min.iters.check811 = icmp ult i32 %.sroa.7246.0.copyload, 12
   br i1 %min.iters.check811, label %.lr.ph359.preheader829, label %vector.memcheck802
 
@@ -1178,7 +1178,7 @@ vector.memcheck802:                               ; preds = %.lr.ph359.preheader
   br i1 %conflict.rdx809, label %.lr.ph359.preheader829, label %vector.ph812
 
 vector.ph812:                                     ; preds = %vector.memcheck802
-  %n.vec814 = and i64 %wide.trip.count427, 2147483640 ; 3 uses
+  %n.vec814 = and i64 %wide.trip.count377, 2147483640 ; 3 uses
   br label %vector.body815
 
 vector.body815:                                   ; preds = %vector.body815, %vector.ph812
@@ -1214,7 +1214,7 @@ vector.body815:                                   ; preds = %vector.body815, %ve
   br i1 %i.yv, label %middle.block826, label %vector.body815, !llvm.loop !82
 
 middle.block826:                                  ; preds = %vector.body815
-  %cmp.n827 = icmp eq i64 %n.vec814, %wide.trip.count427
+  %cmp.n827 = icmp eq i64 %n.vec814, %wide.trip.count377
   br i1 %cmp.n827, label %._crit_edge360, label %.lr.ph359.preheader829
 
 .lr.ph359.preheader829:                           ; preds = %vector.memcheck802, %.lr.ph359.preheader, %middle.block826
@@ -1617,7 +1617,7 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.al = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !45 ; 5 uses
-  %wide.trip.count = zext nneg i32 %i.aj to i64   ; 9 uses
+  %wide.trip.count = zext nneg i32 %i.aj to i64   ; 13 uses
   %min.iters.check = icmp ult i32 %i.aj, 12
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -1719,7 +1719,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !36
   %i.bt = getelementptr inbounds [8 x i8], ptr %i.bs, i64 %i.af
   %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !10 ; 5 uses
-  %wide.trip.count92 = zext nneg i32 %i.aj to i64 ; 3 uses
+  %wide.trip.count92 = zext nneg i32 %i.aj to i64
   %min.iters.check137 = icmp ult i32 %i.aj, 8
   br i1 %min.iters.check137, label %scalar.ph136.preheader, label %vector.memcheck107
 
@@ -1762,7 +1762,7 @@ vector.memcheck107:                               ; preds = %._crit_edge
   br i1 %op.rdx176, label %scalar.ph136.preheader, label %vector.ph138
 
 vector.ph138:                                     ; preds = %vector.memcheck107
-  %n.vec140 = and i64 %wide.trip.count92, 2147483644 ; 3 uses
+  %n.vec140 = and i64 %wide.trip.count, 2147483644 ; 3 uses
   %broadcast.splatinsert141 = insertelement <4 x float> poison, float %i.ad, i64 0
   %broadcast.splat142 = shufflevector <4 x float> %broadcast.splatinsert141, <4 x float> poison, <4 x i32> zeroinitializer
   br label %vector.body143
@@ -1791,7 +1791,7 @@ vector.body143:                                   ; preds = %vector.body143, %ve
   br i1 %i.cx, label %middle.block151, label %vector.body143, !llvm.loop !162
 
 middle.block151:                                  ; preds = %vector.body143
-  %cmp.n152 = icmp eq i64 %n.vec140, %wide.trip.count92
+  %cmp.n152 = icmp eq i64 %n.vec140, %wide.trip.count
   br i1 %cmp.n152, label %.lr.ph81.preheader, label %scalar.ph136.preheader
 
 scalar.ph136.preheader:                           ; preds = %vector.memcheck107, %._crit_edge, %middle.block151
@@ -1827,7 +1827,7 @@ interpolateTable.exit:                            ; preds = %.lr.ph76, %bb.b
   br i1 %exitcond88.not, label %._crit_edge, label %.lr.ph76
 
 .lr.ph81.preheader:                               ; preds = %scalar.ph136, %middle.block151
-  %wide.trip.count97 = zext nneg i32 %i.aj to i64 ; 3 uses
+  %wide.trip.count97 = zext nneg i32 %i.aj to i64
   %min.iters.check161 = icmp ult i32 %i.aj, 8
   br i1 %min.iters.check161, label %.lr.ph81.preheader177, label %vector.memcheck154
 
@@ -1841,7 +1841,7 @@ vector.memcheck154:                               ; preds = %.lr.ph81.preheader
   br i1 %found.conflict159, label %.lr.ph81.preheader177, label %vector.ph162
 
 vector.ph162:                                     ; preds = %vector.memcheck154
-  %n.vec164 = and i64 %wide.trip.count97, 2147483640 ; 3 uses
+  %n.vec164 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   br label %vector.body165
 
 vector.body165:                                   ; preds = %vector.body165, %vector.ph162
@@ -1863,7 +1863,7 @@ vector.body165:                                   ; preds = %vector.body165, %ve
   br i1 %i.dt, label %middle.block172, label %vector.body165, !llvm.loop !168
 
 middle.block172:                                  ; preds = %vector.body165
-  %cmp.n173 = icmp eq i64 %n.vec164, %wide.trip.count97
+  %cmp.n173 = icmp eq i64 %n.vec164, %wide.trip.count
   br i1 %cmp.n173, label %._crit_edge82, label %.lr.ph81.preheader177
 
 .lr.ph81.preheader177:                            ; preds = %vector.memcheck154, %.lr.ph81.preheader, %middle.block172

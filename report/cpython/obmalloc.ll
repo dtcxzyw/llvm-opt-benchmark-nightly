@@ -201,8 +201,8 @@ bb.t:                                             ; preds = %mi_bin.exit35.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.t, %bb.k
   %.145.i = phi i64 [ %spec.select.i, %bb.t ], [ 0, %bb.k ] ; 4 uses
-  %3 = add nuw nsw i64 %i.ay, 1
-  %4 = sub nsw i64 %3, %.145.i                    ; 3 uses
+  %3 = sub nsw i64 %i.ay, %.145.i
+  %4 = add i64 %3, 1                              ; 3 uses
   %min.iters.check = icmp ult i64 %4, 4
   br i1 %min.iters.check, label %.lr.ph.i27.preheader, label %vector.ph
 
@@ -461,8 +461,8 @@ bb.o:                                             ; preds = %mi_bin.exit35.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.o, %bb.f
   %.145.i = phi i64 [ %spec.select.i, %bb.o ], [ 0, %bb.f ] ; 4 uses
-  %3 = add nuw nsw i64 %i.p, 1
-  %4 = sub nsw i64 %3, %.145.i                    ; 3 uses
+  %3 = sub nsw i64 %i.p, %.145.i
+  %4 = add i64 %3, 1                              ; 3 uses
   %min.iters.check = icmp ult i64 %4, 4
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph
 
@@ -865,8 +865,8 @@ bb.r:                                             ; preds = %mi_bin.exit35.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.r, %bb.i
   %.145.i = phi i64 [ %spec.select.i, %bb.r ], [ 0, %bb.i ] ; 4 uses
-  %3 = add nuw nsw i64 %i.s, 1
-  %4 = sub nsw i64 %3, %.145.i                    ; 3 uses
+  %3 = sub nsw i64 %i.s, %.145.i
+  %4 = add i64 %3, 1                              ; 3 uses
   %min.iters.check = icmp ult i64 %4, 4
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph
 
@@ -1024,8 +1024,8 @@ bb.ae:                                            ; preds = %mi_bin.exit35.i44
 
 .lr.ph.preheader.i49:                             ; preds = %bb.ae, %bb.v
   %.145.i50 = phi i64 [ %spec.select.i47, %bb.ae ], [ 0, %bb.v ] ; 4 uses
-  %5 = add nuw nsw i64 %i.bz, 1
-  %6 = sub nsw i64 %5, %.145.i50                  ; 3 uses
+  %5 = sub nsw i64 %i.bz, %.145.i50
+  %6 = add i64 %5, 1                              ; 3 uses
   %min.iters.check76 = icmp ult i64 %6, 4
   br i1 %min.iters.check76, label %.lr.ph.i51.preheader, label %vector.ph77
 
@@ -1306,8 +1306,8 @@ bb.r:                                             ; preds = %mi_bin.exit35.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.r, %bb.i
   %.145.i = phi i64 [ %spec.select.i, %bb.r ], [ 0, %bb.i ] ; 4 uses
-  %2 = add nuw nsw i64 %i.r, 1
-  %3 = sub nsw i64 %2, %.145.i                    ; 3 uses
+  %2 = sub nsw i64 %i.r, %.145.i
+  %3 = add i64 %2, 1                              ; 3 uses
   %min.iters.check = icmp ult i64 %3, 4
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph
 

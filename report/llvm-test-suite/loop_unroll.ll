@@ -201,7 +201,6 @@ bb.a:
   %i.l = zext i32 %i.k to i64                     ; 4 uses
   %i.m = zext nneg i32 %1 to i64                  ; 2 uses
   %i.n = icmp slt i32 %i.j, %1
-  %3 = sub nsw i64 %i.m, %i.l                     ; 3 uses
   %umax = tail call i64 @llvm.umax.i64(i64 %i.f, i64 2)
   %i.o = add nsw i64 %umax, -1
   %i.p = lshr i64 %i.o, 1
@@ -210,6 +209,7 @@ bb.a:
   %n.vec75 = and i64 %i.q, 9223372036854775800    ; 3 uses
   %i.r = shl nuw i64 %n.vec75, 1
   %cmp.n87 = icmp eq i64 %i.q, %n.vec75
+  %3 = sub nsw i64 %i.m, %i.l                     ; 3 uses
   %min.iters.check = icmp ult i64 %3, 8
   %n.vec = and i64 %3, -8                         ; 3 uses
   %i.s = add nsw i64 %n.vec, %i.l
@@ -612,7 +612,6 @@ bb.a:
   %i.l = zext i32 %i.k to i64                     ; 4 uses
   %i.m = zext nneg i32 %1 to i64                  ; 2 uses
   %i.n = icmp slt i32 %i.j, %1
-  %3 = sub nsw i64 %i.m, %i.l                     ; 3 uses
   %umax = tail call i64 @llvm.umax.i64(i64 %i.f, i64 2)
   %i.o = add nsw i64 %umax, -1
   %i.p = lshr i64 %i.o, 1
@@ -621,6 +620,7 @@ bb.a:
   %n.vec75 = and i64 %i.q, 9223372036854775800    ; 3 uses
   %i.r = shl nuw i64 %n.vec75, 1
   %cmp.n87 = icmp eq i64 %i.q, %n.vec75
+  %3 = sub nsw i64 %i.m, %i.l                     ; 3 uses
   %min.iters.check = icmp ult i64 %3, 8
   %n.vec = and i64 %3, -8                         ; 3 uses
   %i.s = add nsw i64 %n.vec, %i.l

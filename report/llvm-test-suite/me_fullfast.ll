@@ -201,7 +201,7 @@ bb.a:
   br i1 %i.s, label %.lr.ph.preheader, label %._crit_edge483
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext nneg i32 %2 to i64      ; 53 uses
+  %wide.trip.count = zext nneg i32 %2 to i64      ; 101 uses
   %min.iters.check = icmp ult i32 %2, 12
   br i1 %min.iters.check, label %.lr.ph.preheader1089, label %vector.memcheck
 
@@ -315,7 +315,7 @@ middle.block:                                     ; preds = %vector.body
   %i.bq = ptrtoaddr ptr %i.bp to i64              ; 2 uses
   %i.br = load ptr, ptr %i.bm, align 8, !tbaa !38 ; 13 uses
   %i.bs = ptrtoaddr ptr %i.br to i64              ; 2 uses
-  %wide.trip.count488 = zext nneg i32 %2 to i64   ; 3 uses
+  %wide.trip.count488 = zext nneg i32 %2 to i64
   %min.iters.check614 = icmp ult i32 %2, 12
   br i1 %min.iters.check614, label %.lr.ph390.preheader1088, label %vector.memcheck609
 
@@ -328,7 +328,7 @@ vector.memcheck609:                               ; preds = %.lr.ph390.preheader
   br i1 %conflict.rdx612, label %.lr.ph390.preheader1088, label %vector.ph615
 
 vector.ph615:                                     ; preds = %vector.memcheck609
-  %n.vec617 = and i64 %wide.trip.count488, 2147483640 ; 3 uses
+  %n.vec617 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   br label %vector.body618
 
 vector.body618:                                   ; preds = %vector.body618, %vector.ph615
@@ -352,7 +352,7 @@ vector.body618:                                   ; preds = %vector.body618, %ve
   br i1 %i.cd, label %middle.block625, label %vector.body618, !llvm.loop !54
 
 middle.block625:                                  ; preds = %vector.body618
-  %cmp.n626 = icmp eq i64 %n.vec617, %wide.trip.count488
+  %cmp.n626 = icmp eq i64 %n.vec617, %wide.trip.count
   br i1 %cmp.n626, label %.lr.ph394.preheader, label %.lr.ph390.preheader1088
 
 .lr.ph390.preheader1088:                          ; preds = %vector.memcheck609, %.lr.ph390.preheader, %middle.block625
@@ -429,7 +429,7 @@ middle.block625:                                  ; preds = %vector.body618
   %i.dq = ptrtoaddr ptr %i.dp to i64              ; 2 uses
   %i.dr = load ptr, ptr %i.dm, align 8, !tbaa !38 ; 13 uses
   %i.ds = ptrtoaddr ptr %i.dr to i64              ; 2 uses
-  %wide.trip.count493 = zext nneg i32 %2 to i64   ; 3 uses
+  %wide.trip.count493 = zext nneg i32 %2 to i64
   %min.iters.check633 = icmp ult i32 %2, 12
   br i1 %min.iters.check633, label %.lr.ph394.preheader1087, label %vector.memcheck628
 
@@ -442,7 +442,7 @@ vector.memcheck628:                               ; preds = %.lr.ph394.preheader
   br i1 %conflict.rdx631, label %.lr.ph394.preheader1087, label %vector.ph634
 
 vector.ph634:                                     ; preds = %vector.memcheck628
-  %n.vec636 = and i64 %wide.trip.count493, 2147483640 ; 3 uses
+  %n.vec636 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   br label %vector.body637
 
 vector.body637:                                   ; preds = %vector.body637, %vector.ph634
@@ -466,7 +466,7 @@ vector.body637:                                   ; preds = %vector.body637, %ve
   br i1 %i.ed, label %middle.block644, label %vector.body637, !llvm.loop !57
 
 middle.block644:                                  ; preds = %vector.body637
-  %cmp.n645 = icmp eq i64 %n.vec636, %wide.trip.count493
+  %cmp.n645 = icmp eq i64 %n.vec636, %wide.trip.count
   br i1 %cmp.n645, label %.lr.ph398.preheader, label %.lr.ph394.preheader1087
 
 .lr.ph394.preheader1087:                          ; preds = %vector.memcheck628, %.lr.ph394.preheader, %middle.block644
@@ -543,7 +543,7 @@ middle.block644:                                  ; preds = %vector.body637
   %i.fq = ptrtoaddr ptr %i.fp to i64              ; 2 uses
   %i.fr = load ptr, ptr %i.fm, align 8, !tbaa !38 ; 13 uses
   %i.fs = ptrtoaddr ptr %i.fr to i64              ; 2 uses
-  %wide.trip.count498 = zext nneg i32 %2 to i64   ; 3 uses
+  %wide.trip.count498 = zext nneg i32 %2 to i64
   %min.iters.check652 = icmp ult i32 %2, 12
   br i1 %min.iters.check652, label %.lr.ph398.preheader1086, label %vector.memcheck647
 
@@ -556,7 +556,7 @@ vector.memcheck647:                               ; preds = %.lr.ph398.preheader
   br i1 %conflict.rdx650, label %.lr.ph398.preheader1086, label %vector.ph653
 
 vector.ph653:                                     ; preds = %vector.memcheck647
-  %n.vec655 = and i64 %wide.trip.count498, 2147483640 ; 3 uses
+  %n.vec655 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   br label %vector.body656
 
 vector.body656:                                   ; preds = %vector.body656, %vector.ph653
@@ -580,7 +580,7 @@ vector.body656:                                   ; preds = %vector.body656, %ve
   br i1 %i.gd, label %middle.block663, label %vector.body656, !llvm.loop !60
 
 middle.block663:                                  ; preds = %vector.body656
-  %cmp.n664 = icmp eq i64 %n.vec655, %wide.trip.count498
+  %cmp.n664 = icmp eq i64 %n.vec655, %wide.trip.count
   br i1 %cmp.n664, label %.lr.ph402.preheader, label %.lr.ph398.preheader1086
 
 .lr.ph398.preheader1086:                          ; preds = %vector.memcheck647, %.lr.ph398.preheader, %middle.block663
@@ -657,7 +657,7 @@ middle.block663:                                  ; preds = %vector.body656
   %i.hq = ptrtoaddr ptr %i.hp to i64              ; 2 uses
   %i.hr = load ptr, ptr %i.hm, align 8, !tbaa !38 ; 13 uses
   %i.hs = ptrtoaddr ptr %i.hr to i64              ; 2 uses
-  %wide.trip.count503 = zext nneg i32 %2 to i64   ; 3 uses
+  %wide.trip.count503 = zext nneg i32 %2 to i64
   %min.iters.check671 = icmp ult i32 %2, 12
   br i1 %min.iters.check671, label %.lr.ph402.preheader1085, label %vector.memcheck666
 
@@ -670,7 +670,7 @@ vector.memcheck666:                               ; preds = %.lr.ph402.preheader
   br i1 %conflict.rdx669, label %.lr.ph402.preheader1085, label %vector.ph672
 
 vector.ph672:                                     ; preds = %vector.memcheck666
-  %n.vec674 = and i64 %wide.trip.count503, 2147483640 ; 3 uses
+  %n.vec674 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   br label %vector.body675
 
 vector.body675:                                   ; preds = %vector.body675, %vector.ph672
@@ -694,7 +694,7 @@ vector.body675:                                   ; preds = %vector.body675, %ve
   br i1 %i.id, label %middle.block682, label %vector.body675, !llvm.loop !63
 
 middle.block682:                                  ; preds = %vector.body675
-  %cmp.n683 = icmp eq i64 %n.vec674, %wide.trip.count503
+  %cmp.n683 = icmp eq i64 %n.vec674, %wide.trip.count
   br i1 %cmp.n683, label %.lr.ph406.preheader, label %.lr.ph402.preheader1085
 
 .lr.ph402.preheader1085:                          ; preds = %vector.memcheck666, %.lr.ph402.preheader, %middle.block682
@@ -771,7 +771,7 @@ middle.block682:                                  ; preds = %vector.body675
   %i.jq = ptrtoaddr ptr %i.jp to i64              ; 2 uses
   %i.jr = load ptr, ptr %i.jm, align 8, !tbaa !38 ; 13 uses
   %i.js = ptrtoaddr ptr %i.jr to i64              ; 2 uses
-  %wide.trip.count508 = zext nneg i32 %2 to i64   ; 3 uses
+  %wide.trip.count508 = zext nneg i32 %2 to i64
   %min.iters.check690 = icmp ult i32 %2, 12
   br i1 %min.iters.check690, label %.lr.ph406.preheader1084, label %vector.memcheck685
 
@@ -784,7 +784,7 @@ vector.memcheck685:                               ; preds = %.lr.ph406.preheader
   br i1 %conflict.rdx688, label %.lr.ph406.preheader1084, label %vector.ph691
 
 vector.ph691:                                     ; preds = %vector.memcheck685
-  %n.vec693 = and i64 %wide.trip.count508, 2147483640 ; 3 uses
+  %n.vec693 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   br label %vector.body694
 
 vector.body694:                                   ; preds = %vector.body694, %vector.ph691
@@ -808,7 +808,7 @@ vector.body694:                                   ; preds = %vector.body694, %ve
   br i1 %i.kd, label %middle.block701, label %vector.body694, !llvm.loop !66
 
 middle.block701:                                  ; preds = %vector.body694
-  %cmp.n702 = icmp eq i64 %n.vec693, %wide.trip.count508
+  %cmp.n702 = icmp eq i64 %n.vec693, %wide.trip.count
   br i1 %cmp.n702, label %.lr.ph410.preheader, label %.lr.ph406.preheader1084
 
 .lr.ph406.preheader1084:                          ; preds = %vector.memcheck685, %.lr.ph406.preheader, %middle.block701
@@ -885,7 +885,7 @@ middle.block701:                                  ; preds = %vector.body694
   %i.lq = ptrtoaddr ptr %i.lp to i64              ; 2 uses
   %i.lr = load ptr, ptr %i.lm, align 8, !tbaa !38 ; 13 uses
   %i.ls = ptrtoaddr ptr %i.lr to i64              ; 2 uses
-  %wide.trip.count513 = zext nneg i32 %2 to i64   ; 3 uses
+  %wide.trip.count513 = zext nneg i32 %2 to i64
   %min.iters.check709 = icmp ult i32 %2, 12
   br i1 %min.iters.check709, label %.lr.ph410.preheader1083, label %vector.memcheck704
 
@@ -898,7 +898,7 @@ vector.memcheck704:                               ; preds = %.lr.ph410.preheader
   br i1 %conflict.rdx707, label %.lr.ph410.preheader1083, label %vector.ph710
 
 vector.ph710:                                     ; preds = %vector.memcheck704
-  %n.vec712 = and i64 %wide.trip.count513, 2147483640 ; 3 uses
+  %n.vec712 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   br label %vector.body713
 
 vector.body713:                                   ; preds = %vector.body713, %vector.ph710
@@ -922,7 +922,7 @@ vector.body713:                                   ; preds = %vector.body713, %ve
   br i1 %i.md, label %middle.block720, label %vector.body713, !llvm.loop !69
 
 middle.block720:                                  ; preds = %vector.body713
-  %cmp.n721 = icmp eq i64 %n.vec712, %wide.trip.count513
+  %cmp.n721 = icmp eq i64 %n.vec712, %wide.trip.count
   br i1 %cmp.n721, label %.lr.ph414.preheader, label %.lr.ph410.preheader1083
 
 .lr.ph410.preheader1083:                          ; preds = %vector.memcheck704, %.lr.ph410.preheader, %middle.block720
@@ -999,7 +999,7 @@ middle.block720:                                  ; preds = %vector.body713
   %i.nq = ptrtoaddr ptr %i.np to i64              ; 2 uses
   %i.nr = load ptr, ptr %i.nm, align 8, !tbaa !38 ; 13 uses
   %i.ns = ptrtoaddr ptr %i.nr to i64              ; 2 uses
-  %wide.trip.count518 = zext nneg i32 %2 to i64   ; 3 uses
+  %wide.trip.count518 = zext nneg i32 %2 to i64
   %min.iters.check728 = icmp ult i32 %2, 12
   br i1 %min.iters.check728, label %.lr.ph414.preheader1082, label %vector.memcheck723
 
@@ -1012,7 +1012,7 @@ vector.memcheck723:                               ; preds = %.lr.ph414.preheader
   br i1 %conflict.rdx726, label %.lr.ph414.preheader1082, label %vector.ph729
 
 vector.ph729:                                     ; preds = %vector.memcheck723
-  %n.vec731 = and i64 %wide.trip.count518, 2147483640 ; 3 uses
+  %n.vec731 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   br label %vector.body732
 
 vector.body732:                                   ; preds = %vector.body732, %vector.ph729
@@ -1036,7 +1036,7 @@ vector.body732:                                   ; preds = %vector.body732, %ve
   br i1 %i.od, label %middle.block739, label %vector.body732, !llvm.loop !72
 
 middle.block739:                                  ; preds = %vector.body732
-  %cmp.n740 = icmp eq i64 %n.vec731, %wide.trip.count518
+  %cmp.n740 = icmp eq i64 %n.vec731, %wide.trip.count
   br i1 %cmp.n740, label %.lr.ph418.preheader, label %.lr.ph414.preheader1082
 
 .lr.ph414.preheader1082:                          ; preds = %vector.memcheck723, %.lr.ph414.preheader, %middle.block739
@@ -1107,7 +1107,7 @@ middle.block739:                                  ; preds = %vector.body732
   %i.pk = getelementptr inbounds nuw i8, ptr %i.g, i64 40
   %i.pl = load ptr, ptr %i.pk, align 8, !tbaa !36 ; 8 uses
   %i.pm = load ptr, ptr %i.pl, align 8, !tbaa !38 ; 7 uses
-  %wide.trip.count523 = zext nneg i32 %2 to i64   ; 3 uses
+  %wide.trip.count523 = zext nneg i32 %2 to i64
   %min.iters.check747 = icmp ult i32 %2, 12
   br i1 %min.iters.check747, label %.lr.ph418.preheader1081, label %vector.memcheck742
 
@@ -1121,7 +1121,7 @@ vector.memcheck742:                               ; preds = %.lr.ph418.preheader
   br i1 %conflict.rdx745, label %.lr.ph418.preheader1081, label %vector.ph748
 
 vector.ph748:                                     ; preds = %vector.memcheck742
-  %n.vec750 = and i64 %wide.trip.count523, 2147483640 ; 3 uses
+  %n.vec750 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   br label %vector.body751
 
 vector.body751:                                   ; preds = %vector.body751, %vector.ph748
@@ -1145,7 +1145,7 @@ vector.body751:                                   ; preds = %vector.body751, %ve
   br i1 %i.py, label %middle.block758, label %vector.body751, !llvm.loop !75
 
 middle.block758:                                  ; preds = %vector.body751
-  %cmp.n759 = icmp eq i64 %n.vec750, %wide.trip.count523
+  %cmp.n759 = icmp eq i64 %n.vec750, %wide.trip.count
   br i1 %cmp.n759, label %.lr.ph422.preheader, label %.lr.ph418.preheader1081
 
 .lr.ph418.preheader1081:                          ; preds = %vector.memcheck742, %.lr.ph418.preheader, %middle.block758
@@ -1215,7 +1215,7 @@ middle.block758:                                  ; preds = %vector.body751
 .lr.ph422.preheader:                              ; preds = %.lr.ph418.prol.loopexit, %.lr.ph418, %middle.block758
   %i.rf = getelementptr inbounds nuw i8, ptr %i.pl, i64 16
   %i.rg = load ptr, ptr %i.rf, align 8, !tbaa !38 ; 7 uses
-  %wide.trip.count528 = zext nneg i32 %2 to i64   ; 3 uses
+  %wide.trip.count528 = zext nneg i32 %2 to i64
   %min.iters.check766 = icmp ult i32 %2, 12
   br i1 %min.iters.check766, label %.lr.ph422.preheader1080, label %vector.memcheck761
 
@@ -1229,7 +1229,7 @@ vector.memcheck761:                               ; preds = %.lr.ph422.preheader
   br i1 %conflict.rdx764, label %.lr.ph422.preheader1080, label %vector.ph767
 
 vector.ph767:                                     ; preds = %vector.memcheck761
-  %n.vec769 = and i64 %wide.trip.count528, 2147483640 ; 3 uses
+  %n.vec769 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   br label %vector.body770
 
 vector.body770:                                   ; preds = %vector.body770, %vector.ph767
@@ -1253,7 +1253,7 @@ vector.body770:                                   ; preds = %vector.body770, %ve
   br i1 %i.rs, label %middle.block777, label %vector.body770, !llvm.loop !78
 
 middle.block777:                                  ; preds = %vector.body770
-  %cmp.n778 = icmp eq i64 %n.vec769, %wide.trip.count528
+  %cmp.n778 = icmp eq i64 %n.vec769, %wide.trip.count
   br i1 %cmp.n778, label %.lr.ph426.preheader, label %.lr.ph422.preheader1080
 
 .lr.ph422.preheader1080:                          ; preds = %vector.memcheck761, %.lr.ph422.preheader, %middle.block777
@@ -1323,7 +1323,7 @@ middle.block777:                                  ; preds = %vector.body770
 .lr.ph426.preheader:                              ; preds = %.lr.ph422.prol.loopexit, %.lr.ph422, %middle.block777
   %i.sz = getelementptr inbounds nuw i8, ptr %i.pl, i64 32
   %i.ta = load ptr, ptr %i.sz, align 8, !tbaa !38 ; 7 uses
-  %wide.trip.count533 = zext nneg i32 %2 to i64   ; 3 uses
+  %wide.trip.count533 = zext nneg i32 %2 to i64
   %min.iters.check785 = icmp ult i32 %2, 12
   br i1 %min.iters.check785, label %.lr.ph426.preheader1079, label %vector.memcheck780
 
@@ -1337,7 +1337,7 @@ vector.memcheck780:                               ; preds = %.lr.ph426.preheader
   br i1 %conflict.rdx783, label %.lr.ph426.preheader1079, label %vector.ph786
 
 vector.ph786:                                     ; preds = %vector.memcheck780
-  %n.vec788 = and i64 %wide.trip.count533, 2147483640 ; 3 uses
+  %n.vec788 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   br label %vector.body789
 
 vector.body789:                                   ; preds = %vector.body789, %vector.ph786
@@ -1361,7 +1361,7 @@ vector.body789:                                   ; preds = %vector.body789, %ve
   br i1 %i.tm, label %middle.block796, label %vector.body789, !llvm.loop !81
 
 middle.block796:                                  ; preds = %vector.body789
-  %cmp.n797 = icmp eq i64 %n.vec788, %wide.trip.count533
+  %cmp.n797 = icmp eq i64 %n.vec788, %wide.trip.count
   br i1 %cmp.n797, label %.lr.ph430.preheader, label %.lr.ph426.preheader1079
 
 .lr.ph426.preheader1079:                          ; preds = %vector.memcheck780, %.lr.ph426.preheader, %middle.block796
@@ -1431,7 +1431,7 @@ middle.block796:                                  ; preds = %vector.body789
 .lr.ph430.preheader:                              ; preds = %.lr.ph426.prol.loopexit, %.lr.ph426, %middle.block796
   %i.ut = getelementptr inbounds nuw i8, ptr %i.pl, i64 48
   %i.uu = load ptr, ptr %i.ut, align 8, !tbaa !38 ; 7 uses
-  %wide.trip.count538 = zext nneg i32 %2 to i64   ; 3 uses
+  %wide.trip.count538 = zext nneg i32 %2 to i64
   %min.iters.check804 = icmp ult i32 %2, 12
   br i1 %min.iters.check804, label %.lr.ph430.preheader1078, label %vector.memcheck799
 
@@ -1445,7 +1445,7 @@ vector.memcheck799:                               ; preds = %.lr.ph430.preheader
   br i1 %conflict.rdx802, label %.lr.ph430.preheader1078, label %vector.ph805
 
 vector.ph805:                                     ; preds = %vector.memcheck799
-  %n.vec807 = and i64 %wide.trip.count538, 2147483640 ; 3 uses
+  %n.vec807 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   br label %vector.body808
 
 vector.body808:                                   ; preds = %vector.body808, %vector.ph805
@@ -1469,7 +1469,7 @@ vector.body808:                                   ; preds = %vector.body808, %ve
   br i1 %i.vg, label %middle.block815, label %vector.body808, !llvm.loop !84
 
 middle.block815:                                  ; preds = %vector.body808
-  %cmp.n816 = icmp eq i64 %n.vec807, %wide.trip.count538
+  %cmp.n816 = icmp eq i64 %n.vec807, %wide.trip.count
   br i1 %cmp.n816, label %.lr.ph434.preheader, label %.lr.ph430.preheader1078
 
 .lr.ph430.preheader1078:                          ; preds = %vector.memcheck799, %.lr.ph430.preheader, %middle.block815
@@ -1539,7 +1539,7 @@ middle.block815:                                  ; preds = %vector.body808
 .lr.ph434.preheader:                              ; preds = %.lr.ph430.prol.loopexit, %.lr.ph430, %middle.block815
   %i.wn = getelementptr inbounds nuw i8, ptr %i.pl, i64 64
   %i.wo = load ptr, ptr %i.wn, align 8, !tbaa !38 ; 7 uses
-  %wide.trip.count543 = zext nneg i32 %2 to i64   ; 3 uses
+  %wide.trip.count543 = zext nneg i32 %2 to i64
   %min.iters.check823 = icmp ult i32 %2, 12
   br i1 %min.iters.check823, label %.lr.ph434.preheader1077, label %vector.memcheck818
 
@@ -1553,7 +1553,7 @@ vector.memcheck818:                               ; preds = %.lr.ph434.preheader
   br i1 %conflict.rdx821, label %.lr.ph434.preheader1077, label %vector.ph824
 
 vector.ph824:                                     ; preds = %vector.memcheck818
-  %n.vec826 = and i64 %wide.trip.count543, 2147483640 ; 3 uses
+  %n.vec826 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   br label %vector.body827
 
 vector.body827:                                   ; preds = %vector.body827, %vector.ph824
@@ -1577,7 +1577,7 @@ vector.body827:                                   ; preds = %vector.body827, %ve
   br i1 %i.xa, label %middle.block834, label %vector.body827, !llvm.loop !87
 
 middle.block834:                                  ; preds = %vector.body827
-  %cmp.n835 = icmp eq i64 %n.vec826, %wide.trip.count543
+  %cmp.n835 = icmp eq i64 %n.vec826, %wide.trip.count
   br i1 %cmp.n835, label %.lr.ph438.preheader, label %.lr.ph434.preheader1077
 
 .lr.ph434.preheader1077:                          ; preds = %vector.memcheck818, %.lr.ph434.preheader, %middle.block834
@@ -1647,7 +1647,7 @@ middle.block834:                                  ; preds = %vector.body827
 .lr.ph438.preheader:                              ; preds = %.lr.ph434.prol.loopexit, %.lr.ph434, %middle.block834
   %i.yh = getelementptr inbounds nuw i8, ptr %i.pl, i64 80
   %i.yi = load ptr, ptr %i.yh, align 8, !tbaa !38 ; 7 uses
-  %wide.trip.count548 = zext nneg i32 %2 to i64   ; 3 uses
+  %wide.trip.count548 = zext nneg i32 %2 to i64
   %min.iters.check842 = icmp ult i32 %2, 12
   br i1 %min.iters.check842, label %.lr.ph438.preheader1076, label %vector.memcheck837
 
@@ -1661,7 +1661,7 @@ vector.memcheck837:                               ; preds = %.lr.ph438.preheader
   br i1 %conflict.rdx840, label %.lr.ph438.preheader1076, label %vector.ph843
 
 vector.ph843:                                     ; preds = %vector.memcheck837
-  %n.vec845 = and i64 %wide.trip.count548, 2147483640 ; 3 uses
+  %n.vec845 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   br label %vector.body846
 
 vector.body846:                                   ; preds = %vector.body846, %vector.ph843
@@ -1685,7 +1685,7 @@ vector.body846:                                   ; preds = %vector.body846, %ve
   br i1 %i.yu, label %middle.block853, label %vector.body846, !llvm.loop !90
 
 middle.block853:                                  ; preds = %vector.body846
-  %cmp.n854 = icmp eq i64 %n.vec845, %wide.trip.count548
+  %cmp.n854 = icmp eq i64 %n.vec845, %wide.trip.count
   br i1 %cmp.n854, label %.lr.ph442.preheader, label %.lr.ph438.preheader1076
 
 .lr.ph438.preheader1076:                          ; preds = %vector.memcheck837, %.lr.ph438.preheader, %middle.block853
@@ -1755,7 +1755,7 @@ middle.block853:                                  ; preds = %vector.body846
 .lr.ph442.preheader:                              ; preds = %.lr.ph438.prol.loopexit, %.lr.ph438, %middle.block853
   %i.aab = getelementptr inbounds nuw i8, ptr %i.pl, i64 96
   %i.aac = load ptr, ptr %i.aab, align 8, !tbaa !38 ; 7 uses
-  %wide.trip.count553 = zext nneg i32 %2 to i64   ; 3 uses
+  %wide.trip.count553 = zext nneg i32 %2 to i64
   %min.iters.check861 = icmp ult i32 %2, 12
   br i1 %min.iters.check861, label %.lr.ph442.preheader1075, label %vector.memcheck856
 
@@ -1769,7 +1769,7 @@ vector.memcheck856:                               ; preds = %.lr.ph442.preheader
   br i1 %conflict.rdx859, label %.lr.ph442.preheader1075, label %vector.ph862
 
 vector.ph862:                                     ; preds = %vector.memcheck856
-  %n.vec864 = and i64 %wide.trip.count553, 2147483640 ; 3 uses
+  %n.vec864 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   br label %vector.body865
 
 vector.body865:                                   ; preds = %vector.body865, %vector.ph862
@@ -1793,7 +1793,7 @@ vector.body865:                                   ; preds = %vector.body865, %ve
   br i1 %i.aao, label %middle.block872, label %vector.body865, !llvm.loop !93
 
 middle.block872:                                  ; preds = %vector.body865
-  %cmp.n873 = icmp eq i64 %n.vec864, %wide.trip.count553
+  %cmp.n873 = icmp eq i64 %n.vec864, %wide.trip.count
   br i1 %cmp.n873, label %.lr.ph446.preheader, label %.lr.ph442.preheader1075
 
 .lr.ph442.preheader1075:                          ; preds = %vector.memcheck856, %.lr.ph442.preheader, %middle.block872
@@ -1863,7 +1863,7 @@ middle.block872:                                  ; preds = %vector.body865
 .lr.ph446.preheader:                              ; preds = %.lr.ph442.prol.loopexit, %.lr.ph442, %middle.block872
   %i.abv = getelementptr inbounds nuw i8, ptr %i.pl, i64 112
   %i.abw = load ptr, ptr %i.abv, align 8, !tbaa !38 ; 7 uses
-  %wide.trip.count558 = zext nneg i32 %2 to i64   ; 3 uses
+  %wide.trip.count558 = zext nneg i32 %2 to i64
   %min.iters.check880 = icmp ult i32 %2, 12
   br i1 %min.iters.check880, label %.lr.ph446.preheader1074, label %vector.memcheck875
 
@@ -1877,7 +1877,7 @@ vector.memcheck875:                               ; preds = %.lr.ph446.preheader
   br i1 %conflict.rdx878, label %.lr.ph446.preheader1074, label %vector.ph881
 
 vector.ph881:                                     ; preds = %vector.memcheck875
-  %n.vec883 = and i64 %wide.trip.count558, 2147483640 ; 3 uses
+  %n.vec883 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   br label %vector.body884
 
 vector.body884:                                   ; preds = %vector.body884, %vector.ph881
@@ -1901,7 +1901,7 @@ vector.body884:                                   ; preds = %vector.body884, %ve
   br i1 %i.aci, label %middle.block891, label %vector.body884, !llvm.loop !96
 
 middle.block891:                                  ; preds = %vector.body884
-  %cmp.n892 = icmp eq i64 %n.vec883, %wide.trip.count558
+  %cmp.n892 = icmp eq i64 %n.vec883, %wide.trip.count
   br i1 %cmp.n892, label %.lr.ph450.preheader, label %.lr.ph446.preheader1074
 
 .lr.ph446.preheader1074:                          ; preds = %vector.memcheck875, %.lr.ph446.preheader, %middle.block891
@@ -1973,7 +1973,7 @@ middle.block891:                                  ; preds = %vector.body884
   %i.adq = load ptr, ptr %i.adp, align 8, !tbaa !36 ; 4 uses
   %i.adr = load ptr, ptr %i.adq, align 8, !tbaa !38 ; 19 uses
   %i.ads = ptrtoaddr ptr %i.adr to i64            ; 4 uses
-  %wide.trip.count563 = zext nneg i32 %2 to i64   ; 3 uses
+  %wide.trip.count563 = zext nneg i32 %2 to i64
   %min.iters.check899 = icmp ult i32 %2, 12
   br i1 %min.iters.check899, label %.lr.ph450.preheader1073, label %vector.memcheck894
 
@@ -1986,7 +1986,7 @@ vector.memcheck894:                               ; preds = %.lr.ph450.preheader
   br i1 %conflict.rdx897, label %.lr.ph450.preheader1073, label %vector.ph900
 
 vector.ph900:                                     ; preds = %vector.memcheck894
-  %n.vec902 = and i64 %wide.trip.count563, 2147483640 ; 3 uses
+  %n.vec902 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   br label %vector.body903
 
 vector.body903:                                   ; preds = %vector.body903, %vector.ph900
@@ -2010,7 +2010,7 @@ vector.body903:                                   ; preds = %vector.body903, %ve
   br i1 %i.aed, label %middle.block910, label %vector.body903, !llvm.loop !99
 
 middle.block910:                                  ; preds = %vector.body903
-  %cmp.n911 = icmp eq i64 %n.vec902, %wide.trip.count563
+  %cmp.n911 = icmp eq i64 %n.vec902, %wide.trip.count
   br i1 %cmp.n911, label %.lr.ph454.preheader, label %.lr.ph450.preheader1073
 
 .lr.ph450.preheader1073:                          ; preds = %vector.memcheck894, %.lr.ph450.preheader, %middle.block910
@@ -2081,7 +2081,7 @@ middle.block910:                                  ; preds = %vector.body903
   %i.afk = getelementptr inbounds nuw i8, ptr %i.adq, i64 16
   %i.afl = load ptr, ptr %i.afk, align 8, !tbaa !38 ; 19 uses
   %i.afm = ptrtoaddr ptr %i.afl to i64            ; 4 uses
-  %wide.trip.count568 = zext nneg i32 %2 to i64   ; 3 uses
+  %wide.trip.count568 = zext nneg i32 %2 to i64
   %min.iters.check918 = icmp ult i32 %2, 12
   br i1 %min.iters.check918, label %.lr.ph454.preheader1072, label %vector.memcheck913
 
@@ -2094,7 +2094,7 @@ vector.memcheck913:                               ; preds = %.lr.ph454.preheader
   br i1 %conflict.rdx916, label %.lr.ph454.preheader1072, label %vector.ph919
 
 vector.ph919:                                     ; preds = %vector.memcheck913
-  %n.vec921 = and i64 %wide.trip.count568, 2147483640 ; 3 uses
+  %n.vec921 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   br label %vector.body922
 
 vector.body922:                                   ; preds = %vector.body922, %vector.ph919
@@ -2118,7 +2118,7 @@ vector.body922:                                   ; preds = %vector.body922, %ve
   br i1 %i.afx, label %middle.block929, label %vector.body922, !llvm.loop !102
 
 middle.block929:                                  ; preds = %vector.body922
-  %cmp.n930 = icmp eq i64 %n.vec921, %wide.trip.count568
+  %cmp.n930 = icmp eq i64 %n.vec921, %wide.trip.count
   br i1 %cmp.n930, label %.lr.ph458.preheader, label %.lr.ph454.preheader1072
 
 .lr.ph454.preheader1072:                          ; preds = %vector.memcheck913, %.lr.ph454.preheader, %middle.block929
@@ -2189,7 +2189,7 @@ middle.block929:                                  ; preds = %vector.body922
   %i.ahe = getelementptr inbounds nuw i8, ptr %i.adq, i64 64
   %i.ahf = load ptr, ptr %i.ahe, align 8, !tbaa !38 ; 19 uses
   %i.ahg = ptrtoaddr ptr %i.ahf to i64            ; 4 uses
-  %wide.trip.count573 = zext nneg i32 %2 to i64   ; 3 uses
+  %wide.trip.count573 = zext nneg i32 %2 to i64
   %min.iters.check937 = icmp ult i32 %2, 12
   br i1 %min.iters.check937, label %.lr.ph458.preheader1071, label %vector.memcheck932
 
@@ -2202,7 +2202,7 @@ vector.memcheck932:                               ; preds = %.lr.ph458.preheader
   br i1 %conflict.rdx935, label %.lr.ph458.preheader1071, label %vector.ph938
 
 vector.ph938:                                     ; preds = %vector.memcheck932
-  %n.vec940 = and i64 %wide.trip.count573, 2147483640 ; 3 uses
+  %n.vec940 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   br label %vector.body941
 
 vector.body941:                                   ; preds = %vector.body941, %vector.ph938
@@ -2226,7 +2226,7 @@ vector.body941:                                   ; preds = %vector.body941, %ve
   br i1 %i.ahr, label %middle.block948, label %vector.body941, !llvm.loop !105
 
 middle.block948:                                  ; preds = %vector.body941
-  %cmp.n949 = icmp eq i64 %n.vec940, %wide.trip.count573
+  %cmp.n949 = icmp eq i64 %n.vec940, %wide.trip.count
   br i1 %cmp.n949, label %.lr.ph462.preheader, label %.lr.ph458.preheader1071
 
 .lr.ph458.preheader1071:                          ; preds = %vector.memcheck932, %.lr.ph458.preheader, %middle.block948
@@ -2297,7 +2297,7 @@ middle.block948:                                  ; preds = %vector.body941
   %i.aiy = getelementptr inbounds nuw i8, ptr %i.adq, i64 80
   %i.aiz = load ptr, ptr %i.aiy, align 8, !tbaa !38 ; 19 uses
   %i.aja = ptrtoaddr ptr %i.aiz to i64            ; 4 uses
-  %wide.trip.count578 = zext nneg i32 %2 to i64   ; 3 uses
+  %wide.trip.count578 = zext nneg i32 %2 to i64
   %min.iters.check956 = icmp ult i32 %2, 12
   br i1 %min.iters.check956, label %.lr.ph462.preheader1070, label %vector.memcheck951
 
@@ -2310,7 +2310,7 @@ vector.memcheck951:                               ; preds = %.lr.ph462.preheader
   br i1 %conflict.rdx954, label %.lr.ph462.preheader1070, label %vector.ph957
 
 vector.ph957:                                     ; preds = %vector.memcheck951
-  %n.vec959 = and i64 %wide.trip.count578, 2147483640 ; 3 uses
+  %n.vec959 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   br label %vector.body960
 
 vector.body960:                                   ; preds = %vector.body960, %vector.ph957
@@ -2334,7 +2334,7 @@ vector.body960:                                   ; preds = %vector.body960, %ve
   br i1 %i.ajl, label %middle.block967, label %vector.body960, !llvm.loop !108
 
 middle.block967:                                  ; preds = %vector.body960
-  %cmp.n968 = icmp eq i64 %n.vec959, %wide.trip.count578
+  %cmp.n968 = icmp eq i64 %n.vec959, %wide.trip.count
   br i1 %cmp.n968, label %.lr.ph466.preheader, label %.lr.ph462.preheader1070
 
 .lr.ph462.preheader1070:                          ; preds = %vector.memcheck951, %.lr.ph462.preheader, %middle.block967
@@ -2406,7 +2406,7 @@ middle.block967:                                  ; preds = %vector.body960
   %i.akt = load ptr, ptr %i.aks, align 8, !tbaa !36 ; 2 uses
   %i.aku = load ptr, ptr %i.akt, align 8, !tbaa !38 ; 13 uses
   %i.akv = ptrtoaddr ptr %i.aku to i64            ; 3 uses
-  %wide.trip.count583 = zext nneg i32 %2 to i64   ; 3 uses
+  %wide.trip.count583 = zext nneg i32 %2 to i64
   %min.iters.check975 = icmp ult i32 %2, 12
   br i1 %min.iters.check975, label %.lr.ph466.preheader1069, label %vector.memcheck970
 
@@ -2419,7 +2419,7 @@ vector.memcheck970:                               ; preds = %.lr.ph466.preheader
   br i1 %conflict.rdx973, label %.lr.ph466.preheader1069, label %vector.ph976
 
 vector.ph976:                                     ; preds = %vector.memcheck970
-  %n.vec978 = and i64 %wide.trip.count583, 2147483640 ; 3 uses
+  %n.vec978 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   br label %vector.body979
 
 vector.body979:                                   ; preds = %vector.body979, %vector.ph976
@@ -2443,7 +2443,7 @@ vector.body979:                                   ; preds = %vector.body979, %ve
   br i1 %i.alg, label %middle.block986, label %vector.body979, !llvm.loop !111
 
 middle.block986:                                  ; preds = %vector.body979
-  %cmp.n987 = icmp eq i64 %n.vec978, %wide.trip.count583
+  %cmp.n987 = icmp eq i64 %n.vec978, %wide.trip.count
   br i1 %cmp.n987, label %.lr.ph470.preheader, label %.lr.ph466.preheader1069
 
 .lr.ph466.preheader1069:                          ; preds = %vector.memcheck970, %.lr.ph466.preheader, %middle.block986
@@ -2514,7 +2514,7 @@ middle.block986:                                  ; preds = %vector.body979
   %i.amn = getelementptr inbounds nuw i8, ptr %i.akt, i64 16
   %i.amo = load ptr, ptr %i.amn, align 8, !tbaa !38 ; 13 uses
   %i.amp = ptrtoaddr ptr %i.amo to i64            ; 3 uses
-  %wide.trip.count588 = zext nneg i32 %2 to i64   ; 3 uses
+  %wide.trip.count588 = zext nneg i32 %2 to i64
   %min.iters.check994 = icmp ult i32 %2, 12
   br i1 %min.iters.check994, label %.lr.ph470.preheader1068, label %vector.memcheck989
 
@@ -2527,7 +2527,7 @@ vector.memcheck989:                               ; preds = %.lr.ph470.preheader
   br i1 %conflict.rdx992, label %.lr.ph470.preheader1068, label %vector.ph995
 
 vector.ph995:                                     ; preds = %vector.memcheck989
-  %n.vec997 = and i64 %wide.trip.count588, 2147483640 ; 3 uses
+  %n.vec997 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   br label %vector.body998
 
 vector.body998:                                   ; preds = %vector.body998, %vector.ph995
@@ -2551,7 +2551,7 @@ vector.body998:                                   ; preds = %vector.body998, %ve
   br i1 %i.ana, label %middle.block1005, label %vector.body998, !llvm.loop !114
 
 middle.block1005:                                 ; preds = %vector.body998
-  %cmp.n1006 = icmp eq i64 %n.vec997, %wide.trip.count588
+  %cmp.n1006 = icmp eq i64 %n.vec997, %wide.trip.count
   br i1 %cmp.n1006, label %.lr.ph474.preheader, label %.lr.ph470.preheader1068
 
 .lr.ph470.preheader1068:                          ; preds = %vector.memcheck989, %.lr.ph470.preheader, %middle.block1005
@@ -2622,7 +2622,7 @@ middle.block1005:                                 ; preds = %vector.body998
   %i.aoh = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   %i.aoi = load ptr, ptr %i.aoh, align 8, !tbaa !36 ; 2 uses
   %i.aoj = load ptr, ptr %i.aoi, align 8, !tbaa !38 ; 7 uses
-  %wide.trip.count593 = zext nneg i32 %2 to i64   ; 3 uses
+  %wide.trip.count593 = zext nneg i32 %2 to i64
   %min.iters.check1013 = icmp ult i32 %2, 12
   br i1 %min.iters.check1013, label %.lr.ph474.preheader1067, label %vector.memcheck1008
 
@@ -2636,7 +2636,7 @@ vector.memcheck1008:                              ; preds = %.lr.ph474.preheader
   br i1 %conflict.rdx1011, label %.lr.ph474.preheader1067, label %vector.ph1014
 
 vector.ph1014:                                    ; preds = %vector.memcheck1008
-  %n.vec1016 = and i64 %wide.trip.count593, 2147483640 ; 3 uses
+  %n.vec1016 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   br label %vector.body1017
 
 vector.body1017:                                  ; preds = %vector.body1017, %vector.ph1014
@@ -2660,7 +2660,7 @@ vector.body1017:                                  ; preds = %vector.body1017, %v
   br i1 %i.aov, label %middle.block1024, label %vector.body1017, !llvm.loop !117
 
 middle.block1024:                                 ; preds = %vector.body1017
-  %cmp.n1025 = icmp eq i64 %n.vec1016, %wide.trip.count593
+  %cmp.n1025 = icmp eq i64 %n.vec1016, %wide.trip.count
   br i1 %cmp.n1025, label %.lr.ph478.preheader, label %.lr.ph474.preheader1067
 
 .lr.ph474.preheader1067:                          ; preds = %vector.memcheck1008, %.lr.ph474.preheader, %middle.block1024
@@ -2730,7 +2730,7 @@ middle.block1024:                                 ; preds = %vector.body1017
 .lr.ph478.preheader:                              ; preds = %.lr.ph474.prol.loopexit, %.lr.ph474, %middle.block1024
   %i.aqc = getelementptr inbounds nuw i8, ptr %i.aoi, i64 64
   %i.aqd = load ptr, ptr %i.aqc, align 8, !tbaa !38 ; 7 uses
-  %wide.trip.count598 = zext nneg i32 %2 to i64   ; 3 uses
+  %wide.trip.count598 = zext nneg i32 %2 to i64
   %min.iters.check1032 = icmp ult i32 %2, 12
   br i1 %min.iters.check1032, label %.lr.ph478.preheader1066, label %vector.memcheck1027
 
@@ -2744,7 +2744,7 @@ vector.memcheck1027:                              ; preds = %.lr.ph478.preheader
   br i1 %conflict.rdx1030, label %.lr.ph478.preheader1066, label %vector.ph1033
 
 vector.ph1033:                                    ; preds = %vector.memcheck1027
-  %n.vec1035 = and i64 %wide.trip.count598, 2147483640 ; 3 uses
+  %n.vec1035 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   br label %vector.body1036
 
 vector.body1036:                                  ; preds = %vector.body1036, %vector.ph1033
@@ -2768,7 +2768,7 @@ vector.body1036:                                  ; preds = %vector.body1036, %v
   br i1 %i.aqp, label %middle.block1043, label %vector.body1036, !llvm.loop !120
 
 middle.block1043:                                 ; preds = %vector.body1036
-  %cmp.n1044 = icmp eq i64 %n.vec1035, %wide.trip.count598
+  %cmp.n1044 = icmp eq i64 %n.vec1035, %wide.trip.count
   br i1 %cmp.n1044, label %.lr.ph482.preheader, label %.lr.ph478.preheader1066
 
 .lr.ph478.preheader1066:                          ; preds = %vector.memcheck1027, %.lr.ph478.preheader, %middle.block1043
@@ -2839,7 +2839,7 @@ middle.block1043:                                 ; preds = %vector.body1036
   %i.arw = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.arx = load ptr, ptr %i.arw, align 8, !tbaa !36
   %i.ary = load ptr, ptr %i.arx, align 8, !tbaa !38 ; 7 uses
-  %wide.trip.count603 = zext nneg i32 %2 to i64   ; 3 uses
+  %wide.trip.count603 = zext nneg i32 %2 to i64
   %min.iters.check1051 = icmp ult i32 %2, 12
   br i1 %min.iters.check1051, label %.lr.ph482.preheader1065, label %vector.memcheck1046
 
@@ -2853,7 +2853,7 @@ vector.memcheck1046:                              ; preds = %.lr.ph482.preheader
   br i1 %conflict.rdx1049, label %.lr.ph482.preheader1065, label %vector.ph1052
 
 vector.ph1052:                                    ; preds = %vector.memcheck1046
-  %n.vec1054 = and i64 %wide.trip.count603, 2147483640 ; 3 uses
+  %n.vec1054 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   br label %vector.body1055
 
 vector.body1055:                                  ; preds = %vector.body1055, %vector.ph1052
@@ -2877,7 +2877,7 @@ vector.body1055:                                  ; preds = %vector.body1055, %v
   br i1 %i.ask, label %middle.block1062, label %vector.body1055, !llvm.loop !123
 
 middle.block1062:                                 ; preds = %vector.body1055
-  %cmp.n1063 = icmp eq i64 %n.vec1054, %wide.trip.count603
+  %cmp.n1063 = icmp eq i64 %n.vec1054, %wide.trip.count
   br i1 %cmp.n1063, label %._crit_edge483, label %.lr.ph482.preheader1065
 
 .lr.ph482.preheader1065:                          ; preds = %vector.memcheck1046, %.lr.ph482.preheader, %middle.block1062
