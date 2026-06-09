@@ -201,7 +201,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit74: ; pred
   br label %.backedge
 
 bb.ay:                                            ; preds = %bb.f, %bb.g
-  %i.gt = load ptr, ptr %0, align 8, !tbaa !50
+  %i.gt = load ptr, ptr %0, align 8, !tbaa !50, !nonnull !39, !noundef !39
   %i.gu = load i8, ptr %i.gt, align 1, !tbaa !14
   %i.gv = icmp eq i8 %i.r, %i.gu
   br i1 %i.gv, label %bb.az, label %bb.ba
@@ -262,7 +262,7 @@ bb.a:
   br i1 %i.d, label %bb.d, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE2atEm.exit
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE2atEm.exit: ; preds = %bb.a
-  %i.e = load ptr, ptr %0, align 8, !tbaa !50     ; 2 uses
+  %i.e = load ptr, ptr %0, align 8, !tbaa !50, !nonnull !39, !noundef !39 ; 2 uses
   %i.f = load i8, ptr %i.e, align 1, !tbaa !14    ; 2 uses
   %i.g = and i8 %i.f, -33
   %i.h = add i8 %i.g, -65
@@ -321,7 +321,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit: ; preds =
   br i1 %.not4.i, label %_ZN6google8protobuf2ioL10AllInClassINS1_12_GLOBAL__N_112AlphanumericEEEbRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit, %.lr.ph.i
-  %.sroa.01.05.i = phi ptr [ %i.ad, %.lr.ph.i ], [ %.val, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit ] ; 2 uses
+  %.sroa.01.05.i = phi ptr [ %i.ad, %.lr.ph.i ], [ %.val, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.01.05.i) ]
   %i.x = load i8, ptr %.sroa.01.05.i, align 1, !tbaa !14 ; 3 uses
   %i.y = and i8 %i.x, -33
   %i.z = add i8 %i.y, -65
@@ -718,7 +719,8 @@ bb.f:                                             ; preds = %_ZNSt6vectorINSt7__
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.f, %_ZSt10_ConstructINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJS5_EEvPT_DpOT0_.exit.i.i.i.i.i
   %.013.i.i.i.i.i = phi ptr [ %i.ar, %_ZSt10_ConstructINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJS5_EEvPT_DpOT0_.exit.i.i.i.i.i ], [ %i.x, %bb.f ] ; 5 uses
-  %.sroa.08.012.i.i.i.i.i = phi ptr [ %i.aq, %_ZSt10_ConstructINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJS5_EEvPT_DpOT0_.exit.i.i.i.i.i ], [ %i.ad, %bb.f ] ; 6 uses
+  %.sroa.08.012.i.i.i.i.i = phi ptr [ %i.aq, %_ZSt10_ConstructINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJS5_EEvPT_DpOT0_.exit.i.i.i.i.i ], [ %i.ad, %bb.f ] ; 7 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.08.012.i.i.i.i.i) ]
   %i.ae = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i, i64 16 ; 3 uses
   store ptr %i.ae, ptr %.013.i.i.i.i.i, align 8, !tbaa !7
   %i.af = load ptr, ptr %.sroa.08.012.i.i.i.i.i, align 8, !tbaa !50 ; 2 uses
@@ -924,7 +926,8 @@ _ZSt22__uninitialized_move_aIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcE
 
 .lr.ph.i.i.i.i.i72:                               ; preds = %_ZSt24__uninitialized_fill_n_aIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmS5_S5_ET_S7_T0_RKT1_RSaIT2_E.exit, %_ZSt10_ConstructINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJS5_EEvPT_DpOT0_.exit.i.i.i.i.i76
   %.013.i.i.i.i.i73 = phi ptr [ %i.cx, %_ZSt10_ConstructINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJS5_EEvPT_DpOT0_.exit.i.i.i.i.i76 ], [ %i.ci, %_ZSt24__uninitialized_fill_n_aIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmS5_S5_ET_S7_T0_RKT1_RSaIT2_E.exit ] ; 5 uses
-  %.sroa.08.012.i.i.i.i.i74 = phi ptr [ %i.cw, %_ZSt10_ConstructINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJS5_EEvPT_DpOT0_.exit.i.i.i.i.i76 ], [ %1, %_ZSt24__uninitialized_fill_n_aIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmS5_S5_ET_S7_T0_RKT1_RSaIT2_E.exit ] ; 6 uses
+  %.sroa.08.012.i.i.i.i.i74 = phi ptr [ %i.cw, %_ZSt10_ConstructINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJS5_EEvPT_DpOT0_.exit.i.i.i.i.i76 ], [ %1, %_ZSt24__uninitialized_fill_n_aIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmS5_S5_ET_S7_T0_RKT1_RSaIT2_E.exit ] ; 7 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.08.012.i.i.i.i.i74) ]
   %i.ck = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i73, i64 16 ; 3 uses
   store ptr %i.ck, ptr %.013.i.i.i.i.i73, align 8, !tbaa !7
   %i.cl = load ptr, ptr %.sroa.08.012.i.i.i.i.i74, align 8, !tbaa !50 ; 2 uses
@@ -1032,7 +1035,8 @@ _ZSt24__uninitialized_fill_n_aIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaI
 
 .lr.ph.i.i.i.i.i92:                               ; preds = %_ZSt24__uninitialized_fill_n_aIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmS5_S5_ET_S7_T0_RKT1_RSaIT2_E.exit90, %_ZSt10_ConstructINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJS5_EEvPT_DpOT0_.exit.i.i.i.i.i96
   %.013.i.i.i.i.i93 = phi ptr [ %i.ej, %_ZSt10_ConstructINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJS5_EEvPT_DpOT0_.exit.i.i.i.i.i96 ], [ %i.dt, %_ZSt24__uninitialized_fill_n_aIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmS5_S5_ET_S7_T0_RKT1_RSaIT2_E.exit90 ] ; 5 uses
-  %.sroa.08.012.i.i.i.i.i94 = phi ptr [ %i.ei, %_ZSt10_ConstructINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJS5_EEvPT_DpOT0_.exit.i.i.i.i.i96 ], [ %i.df, %_ZSt24__uninitialized_fill_n_aIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmS5_S5_ET_S7_T0_RKT1_RSaIT2_E.exit90 ] ; 6 uses
+  %.sroa.08.012.i.i.i.i.i94 = phi ptr [ %i.ei, %_ZSt10_ConstructINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJS5_EEvPT_DpOT0_.exit.i.i.i.i.i96 ], [ %i.df, %_ZSt24__uninitialized_fill_n_aIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmS5_S5_ET_S7_T0_RKT1_RSaIT2_E.exit90 ] ; 7 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.08.012.i.i.i.i.i94) ]
   %i.dw = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i93, i64 16 ; 3 uses
   store ptr %i.dw, ptr %.013.i.i.i.i.i93, align 8, !tbaa !7
   %i.dx = load ptr, ptr %.sroa.08.012.i.i.i.i.i94, align 8, !tbaa !50 ; 2 uses
@@ -1076,7 +1080,8 @@ _ZSt34__uninitialized_move_if_noexcept_aIPNSt7__cxx1112basic_stringIcSt11char_tr
 
 .lr.ph.i.i.i.i.i100:                              ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_SaIS5_EET0_T_S9_S8_RT1_.exit, %_ZSt10_ConstructINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJS5_EEvPT_DpOT0_.exit.i.i.i.i.i104
   %.013.i.i.i.i.i101 = phi ptr [ %i.ey, %_ZSt10_ConstructINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJS5_EEvPT_DpOT0_.exit.i.i.i.i.i104 ], [ %i.ek, %_ZSt34__uninitialized_move_if_noexcept_aIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_SaIS5_EET0_T_S9_S8_RT1_.exit ] ; 5 uses
-  %.sroa.08.012.i.i.i.i.i102 = phi ptr [ %i.ex, %_ZSt10_ConstructINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJS5_EEvPT_DpOT0_.exit.i.i.i.i.i104 ], [ %1, %_ZSt34__uninitialized_move_if_noexcept_aIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_SaIS5_EET0_T_S9_S8_RT1_.exit ] ; 6 uses
+  %.sroa.08.012.i.i.i.i.i102 = phi ptr [ %i.ex, %_ZSt10_ConstructINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJS5_EEvPT_DpOT0_.exit.i.i.i.i.i104 ], [ %1, %_ZSt34__uninitialized_move_if_noexcept_aIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_SaIS5_EET0_T_S9_S8_RT1_.exit ] ; 7 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.08.012.i.i.i.i.i102) ]
   %i.el = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i101, i64 16 ; 3 uses
   store ptr %i.el, ptr %.013.i.i.i.i.i101, align 8, !tbaa !7
   %i.em = load ptr, ptr %.sroa.08.012.i.i.i.i.i102, align 8, !tbaa !50 ; 2 uses

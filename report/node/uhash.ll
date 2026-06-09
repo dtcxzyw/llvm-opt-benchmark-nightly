@@ -201,11 +201,11 @@ bb.d:                                             ; preds = %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %bb.d
   %.025 = phi i64 [ 0, %.lr.ph ], [ %i.h, %bb.d ] ; 3 uses
-  %i.j = load ptr, ptr %i.f, align 8
+  %i.j = load ptr, ptr %i.f, align 8, !nonnull !21, !noundef !21
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %.025
   %i.l = load i8, ptr %i.k, align 1
   %i.m = tail call signext i8 @uprv_asciitolower_78(i8 noundef signext %i.l) #13
-  %i.n = load ptr, ptr %i.g, align 8
+  %i.n = load ptr, ptr %i.g, align 8, !nonnull !21, !noundef !21
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 %.025
   %i.p = load i8, ptr %i.o, align 1
   %i.q = tail call signext i8 @uprv_asciitolower_78(i8 noundef signext %i.p) #13
@@ -290,4 +290,5 @@ attributes #15 = { nounwind willreturn memory(read) }
 !18 = distinct !{!18, !6}
 !19 = distinct !{!19, !6}
 !20 = distinct !{!20, !6}
+!21 = !{}
 end_hunk_0

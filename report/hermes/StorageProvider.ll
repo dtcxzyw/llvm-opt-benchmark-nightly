@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !28
   call void @free(ptr noundef %i.e) #18
-  %i.f = load ptr, ptr %i.b, align 8, !tbaa !45   ; 2 uses
+  %i.f = load ptr, ptr %i.b, align 8, !tbaa !45   ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.h = load i32, ptr %i.g, align 8, !tbaa !48   ; 2 uses
   %i.i = icmp eq i32 %i.h, 0
@@ -215,6 +215,7 @@ bb.c:                                             ; preds = %bb.b
   %i.n = lshr i32 %i.l, 9
   %i.o = xor i32 %i.m, %i.n
   %i.p = add i32 %i.h, -1                         ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.f) ]
   %.02944.i.i.i = and i32 %i.o, %i.p              ; 2 uses
   %i.q = zext nneg i32 %.02944.i.i.i to i64
   %i.r = getelementptr inbounds nuw [16 x i8], ptr %i.f, i64 %i.q ; 2 uses
@@ -261,7 +262,7 @@ declare noalias noundef nonnull ptr @_ZN6hermes13checkedMallocEm(i64 noundef) lo
 define linkonce_odr hidden noundef nonnull align 8 dereferenceable(16) ptr @_ZN4llvh12DenseMapBaseINS_8DenseMapIPvS2_NS_12DenseMapInfoIS2_EENS_6detail12DenseMapPairIS2_S2_EEEES2_S2_S4_S7_E16FindAndConstructERKS2_(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 8 dereferenceable(8) %1) local_unnamed_addr #2 comdat align 2 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
-  %i.b = load ptr, ptr %0, align 8, !tbaa !45     ; 2 uses
+  %i.b = load ptr, ptr %0, align 8, !tbaa !45     ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = load i32, ptr %i.c, align 8, !tbaa !48   ; 7 uses
   %i.e = icmp eq i32 %i.d, 0
@@ -275,6 +276,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = lshr i32 %i.h, 9
   %i.k = xor i32 %i.i, %i.j
   %i.l = add i32 %i.d, -1                         ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.b) ]
   %.02944.i.i = and i32 %i.k, %i.l                ; 2 uses
   %i.m = zext nneg i32 %.02944.i.i to i64
   %i.n = getelementptr inbounds nuw [16 x i8], ptr %i.b, i64 %i.m ; 3 uses
@@ -376,7 +378,7 @@ _ZN4llvh12DenseMapBaseINS_8DenseMapIPvS2_NS_12DenseMapInfoIS2_EENS_6detail12Dens
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZN4llvh12DenseMapBaseINS_8DenseMapIPvS2_NS_12DenseMapInfoIS2_EENS_6detail12DenseMapPairIS2_S2_EEEES2_S2_S4_S7_E15LookupBucketForIS2_EEbRKT_RPS7_(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(8) %2) local_unnamed_addr #2 comdat align 2 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !45     ; 2 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !45     ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.c = load i32, ptr %i.b, align 8, !tbaa !48   ; 2 uses
   %i.d = icmp eq i32 %i.c, 0
@@ -390,6 +392,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = lshr i32 %i.g, 9
   %i.j = xor i32 %i.h, %i.i
   %i.k = add i32 %i.c, -1                         ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.a) ]
   %.02944.i = and i32 %i.j, %i.k                  ; 2 uses
   %i.l = zext nneg i32 %.02944.i to i64
   %i.m = getelementptr inbounds nuw [16 x i8], ptr %i.a, i64 %i.l ; 3 uses
@@ -593,7 +596,7 @@ bb.c:                                             ; preds = %bb.g, %.lr.ph.i6
   ]
 
 bb.d:                                             ; preds = %bb.c
-  %i.bj = load ptr, ptr %0, align 8, !tbaa !45    ; 2 uses
+  %i.bj = load ptr, ptr %0, align 8, !tbaa !45, !nonnull !61, !noundef !61 ; 2 uses
   tail call void @llvm.assume(i1 %.not6.i.i)
   %i.bk = trunc i64 %magicptr.i to i32            ; 2 uses
   %i.bl = lshr i32 %i.bk, 4
@@ -635,7 +638,8 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i
   br i1 %i.cd, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPvS2_NS_12DenseMapInfoIS2_EENS_6detail12DenseMapPairIS2_S2_EEEES2_S2_S4_S7_E15LookupBucketForIS2_EEbRKT_RPS7_.exit.i, label %.lr.ph.i.i.i, !prof !51, !llvm.loop !52
 
 _ZN4llvh12DenseMapBaseINS_8DenseMapIPvS2_NS_12DenseMapInfoIS2_EENS_6detail12DenseMapPairIS2_S2_EEEES2_S2_S4_S7_E15LookupBucketForIS2_EEbRKT_RPS7_.exit.i: ; preds = %bb.f, %bb.e, %bb.d
-  %.sink.i.i.i = phi ptr [ %i.bv, %bb.e ], [ %i.bp, %bb.d ], [ %i.cb, %bb.f ] ; 2 uses
+  %.sink.i.i.i = phi ptr [ %i.bv, %bb.e ], [ %i.bp, %bb.d ], [ %i.cb, %bb.f ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sink.i.i.i) ]
   store ptr %i.bi, ptr %.sink.i.i.i, align 8, !tbaa !28
   %i.ce = getelementptr inbounds nuw i8, ptr %.sink.i.i.i, i64 8
   %i.cf = getelementptr inbounds nuw i8, ptr %.020.i, i64 8
@@ -649,7 +653,7 @@ bb.g:                                             ; preds = %_ZN4llvh12DenseMapB
   %i.ci = phi i32 [ %i.bh, %bb.c ], [ %i.bh, %bb.c ], [ %i.ch, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPvS2_NS_12DenseMapInfoIS2_EENS_6detail12DenseMapPairIS2_S2_EEEES2_S2_S4_S7_E15LookupBucketForIS2_EEbRKT_RPS7_.exit.i ]
   %i.cj = getelementptr inbounds nuw i8, ptr %.020.i, i64 16 ; 2 uses
   %.not.i7 = icmp eq ptr %i.cj, %i.an
-  br i1 %.not.i7, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPvS2_NS_12DenseMapInfoIS2_EENS_6detail12DenseMapPairIS2_S2_EEEES2_S2_S4_S7_E18moveFromOldBucketsEPS7_SA_.exit, label %bb.c, !llvm.loop !61
+  br i1 %.not.i7, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPvS2_NS_12DenseMapInfoIS2_EENS_6detail12DenseMapPairIS2_S2_EEEES2_S2_S4_S7_E18moveFromOldBucketsEPS7_SA_.exit, label %bb.c, !llvm.loop !62
 
 _ZN4llvh12DenseMapBaseINS_8DenseMapIPvS2_NS_12DenseMapInfoIS2_EENS_6detail12DenseMapPairIS2_S2_EEEES2_S2_S4_S7_E18moveFromOldBucketsEPS7_SA_.exit: ; preds = %bb.g, %_ZN4llvh12DenseMapBaseINS_8DenseMapIPvS2_NS_12DenseMapInfoIS2_EENS_6detail12DenseMapPairIS2_S2_EEEES2_S2_S4_S7_E9initEmptyEv.exit.i
   tail call void @_ZdlPv(ptr noundef nonnull %i.c) #18
@@ -756,7 +760,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.r = getelementptr inbounds nuw i8, ptr %i.k, i64 4194304
-  store ptr %i.r, ptr %i.j, align 8, !tbaa !62
+  store ptr %i.r, ptr %i.j, align 8, !tbaa !63
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
@@ -930,6 +934,7 @@ attributes #21 = { nounwind allocsize(0) }
 !58 = !{!"llvm.loop.unroll.disable"}
 !59 = distinct !{!59, !53}
 !60 = distinct !{!60, !58}
-!61 = distinct !{!61, !53}
-!62 = !{!19, !19, i64 0}
+!61 = !{}
+!62 = distinct !{!62, !53}
+!63 = !{!19, !19, i64 0}
 end_hunk_0

@@ -201,6 +201,7 @@ bb.n:                                             ; preds = %bb.k, %.lr.ph.split
   br i1 %i.bb, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %.lr.ph70.split.us
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %5) ]
   %i.bc = load ptr, ptr %i.ay, align 8, !tbaa !115
   %i.bd = tail call i32 @OPENSSL_sk_push(ptr noundef nonnull %5, ptr noundef %i.bc) #14
   %i.be = icmp slt i32 %i.bd, 1
@@ -217,6 +218,7 @@ bb.p:                                             ; preds = %bb.o, %.lr.ph70.spl
   %i.bg = trunc i64 %.168 to i32
   %i.bh = tail call ptr @OPENSSL_sk_value(ptr noundef nonnull %i.c, i32 noundef %i.bg) #14
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !138
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %5) ]
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !115
   %i.bk = tail call i32 @OPENSSL_sk_push(ptr noundef nonnull %5, ptr noundef %i.bj) #14
   %i.bl = icmp slt i32 %i.bk, 1
@@ -619,11 +621,11 @@ declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i16(i16, i16) #12
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #12
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #12
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #12
 
 attributes #0 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

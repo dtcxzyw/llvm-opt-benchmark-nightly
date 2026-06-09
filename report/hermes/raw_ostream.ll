@@ -201,7 +201,8 @@ bb.a:
   ret void
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN4llvh11raw_ostreamlsENS_9StringRefE.exit
-  %.sroa.023.028 = phi ptr [ %i.b, %.lr.ph ], [ %i.ax, %_ZN4llvh11raw_ostreamlsENS_9StringRefE.exit ] ; 12 uses
+  %.sroa.023.028 = phi ptr [ %i.b, %.lr.ph ], [ %i.ax, %_ZN4llvh11raw_ostreamlsENS_9StringRefE.exit ] ; 13 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.023.028) ]
   %i.l = load i32, ptr %.sroa.023.028, align 8, !tbaa !46
   switch i32 %i.l, label %bb.g [
     i32 0, label %_ZN4llvh11raw_ostreamlsENS_9StringRefE.exit
@@ -240,7 +241,7 @@ bb.g:                                             ; preds = %bb.b
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.023.028, i64 24
   %i.x = load i64, ptr %i.w, align 8, !tbaa !54   ; 2 uses
   %i.y = load ptr, ptr %i.h, align 8, !tbaa !55
-  %i.z = load ptr, ptr %i.g, align 8, !tbaa !59   ; 2 uses
+  %i.z = load ptr, ptr %i.g, align 8, !tbaa !59   ; 3 uses
   %i.aa = ptrtoint ptr %i.y to i64
   %i.ab = ptrtoint ptr %i.z to i64
   %i.ac = sub i64 %i.aa, %i.ab
@@ -278,6 +279,7 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.g
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %i.x
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.z) ]
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !60
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #26
   %i.aq = getelementptr inbounds nuw i8, ptr %.sroa.023.028, i64 40
@@ -680,7 +682,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %._crit_edge273, %_ZN4llvh11raw_ostreamlsEc.exit107
   %.048227 = phi i64 [ 0, %._crit_edge273 ], [ %i.kz, %_ZN4llvh11raw_ostreamlsEc.exit107 ] ; 2 uses
   %.sroa.6151.0226 = phi i64 [ %.fr, %._crit_edge273 ], [ %i.kx, %_ZN4llvh11raw_ostreamlsEc.exit107 ] ; 2 uses
-  %.sroa.0150.0224 = phi ptr [ %.sroa.0150.0.copyload, %._crit_edge273 ], [ %i.ky, %_ZN4llvh11raw_ostreamlsEc.exit107 ] ; 5 uses
+  %.sroa.0150.0224 = phi ptr [ %.sroa.0150.0.copyload, %._crit_edge273 ], [ %i.ky, %_ZN4llvh11raw_ostreamlsEc.exit107 ] ; 6 uses
   %i.ar = load i32, ptr %i.aj, align 8, !tbaa !98 ; 3 uses
   %i.as = icmp ult i32 %i.ar, 80
   br i1 %i.as, label %bb.f, label %.preheader.i.i
@@ -934,6 +936,7 @@ _ZN4llvh11raw_ostreamlsEPKc.exit:                 ; preds = %bb.x, %bb.w, %_ZN4l
   br i1 %.not228, label %._crit_edge212, label %_ZN4llvh11raw_ostreamlsEPKc.exit57.peel
 
 _ZN4llvh11raw_ostreamlsEPKc.exit57.peel:          ; preds = %_ZN4llvh11raw_ostreamlsEPKc.exit
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0150.0224) ]
   %i.ej = load i8, ptr %.sroa.0150.0224, align 1, !tbaa !22
   %i.ek = zext i8 %i.ej to i64
   call void @_ZN4llvh9write_hexERNS_11raw_ostreamEmNS_13HexPrintStyleENS_8OptionalImEE(ptr noundef nonnull align 8 dereferenceable(36) %0, i64 noundef %i.ek, i32 noundef %not., i64 2, i8 1) #26
@@ -1336,7 +1339,7 @@ bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #26
   %.sroa.21.0..sroa_idx.i2 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %.sroa.21.0.copyload.i = load ptr, ptr %.sroa.21.0..sroa_idx.i2, align 8, !tbaa !106 ; 2 uses
+  %.sroa.21.0.copyload.i = load ptr, ptr %.sroa.21.0..sroa_idx.i2, align 8, !tbaa !106, !nonnull !79, !noundef !79 ; 2 uses
   %i.ag = load ptr, ptr %.sroa.21.0.copyload.i, align 8, !tbaa !7, !noalias !122
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 32
   %i.ai = load ptr, ptr %i.ah, align 8, !noalias !122

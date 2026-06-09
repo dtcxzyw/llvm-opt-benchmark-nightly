@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.c
   %i.b = landingpad { ptr, i32 }
           catch ptr null
   %i.c = extractvalue { ptr, i32 } %i.b, 0
-  tail call void @__clang_call_terminate(ptr %i.c) #9
+  tail call void @__clang_call_terminate(ptr %i.c) #10
   unreachable
 }
 
@@ -393,6 +393,7 @@ bb.a:
   br i1 %i.b, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %wide.trip.count = zext nneg i32 %3 to i64      ; 4 uses
@@ -646,7 +647,7 @@ define linkonce_odr dso_local void @_ZNK12btBox2dShape8getPlaneER9btVector3S1_i(
 bb.a:
   %4 = alloca %class.btVector4, align 8           ; 5 uses
   %5 = alloca %class.btVector3, align 8           ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
   %i.a = load ptr, ptr %0, align 8, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 200
   %i.c = load ptr, ptr %i.b, align 8
@@ -659,7 +660,7 @@ bb.a:
   store float %i.e, ptr %.sroa.5.0..sroa_idx, align 4
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 12
   store float 0.000000e+00, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !15
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #11
   %i.g = fneg <2 x float> %i.f
   %i.h = fneg float %i.e
   %.sroa.3.12.vec.insert.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.h, i64 0
@@ -675,8 +676,8 @@ bb.a:
   store <2 x float> %i.n, ptr %2, align 4
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   store <2 x float> %i.o, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !15
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
   ret void
 }
 
@@ -788,8 +789,8 @@ declare i32 @__gxx_personality_v0(...)
 ; Function Attrs: noinline noreturn nounwind uwtable
 define linkonce_odr hidden void @__clang_call_terminate(ptr noundef %0) local_unnamed_addr #7 comdat {
 bb.a:
-  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #10 ; 0 uses
-  tail call void @_ZSt9terminatev() #9
+  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #11 ; 0 uses
+  tail call void @_ZSt9terminatev() #10
   unreachable
 }
 
@@ -801,6 +802,9 @@ declare void @_ZSt9terminatev() local_unnamed_addr #8
 declare void @_Z21btAlignedFreeInternalPv(ptr noundef) local_unnamed_addr #3
 
 declare void @_ZN21btConvexInternalShape15setLocalScalingERK9btVector3(ptr noundef nonnull align 8 dereferenceable(64), ptr noundef nonnull align 4 dereferenceable(16)) unnamed_addr #3
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #2
@@ -814,8 +818,9 @@ attributes #5 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-mat
 attributes #6 = { uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { noinline noreturn nounwind uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { cold nofree noreturn }
-attributes #9 = { noreturn nounwind }
-attributes #10 = { nounwind }
+attributes #9 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #10 = { noreturn nounwind }
+attributes #11 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

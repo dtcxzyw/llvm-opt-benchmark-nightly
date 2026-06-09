@@ -201,7 +201,7 @@ bb.n:                                             ; preds = %bb.a
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 8 ; 2 uses
   %i.bd = load i64, ptr %i.bc, align 8, !tbaa !11 ; 2 uses
   %i.be = add i64 %i.bd, -1                       ; 3 uses
-  %i.bf = load ptr, ptr %i.bb, align 8, !tbaa !42
+  %i.bf = load ptr, ptr %i.bb, align 8, !tbaa !42, !nonnull !34, !noundef !34
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 %i.be ; 2 uses
   %i.bh = load i8, ptr %i.bg, align 1, !tbaa !14
   %i.bi = icmp eq i8 %i.bh, 124
@@ -604,11 +604,12 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 define linkonce_odr hidden void @_ZNSt11_Deque_baseIN10duckdb_re29WalkStateIiEESaIS2_EE17_M_initialize_mapEm(ptr noundef nonnull align 8 dereferenceable(80) %0, i64 noundef %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = lshr i64 %1, 4                           ; 2 uses
-  %2 = tail call i64 @llvm.umax.i64(i64 %i.a, i64 5)
-  %.sroa.speculated = add nuw nsw i64 %2, 3       ; 3 uses
+  %2 = add nuw nsw i64 %i.a, 3
+  %3 = icmp ugt i64 %1, 95
+  %4 = select i1 %3, i64 %2, i64 8                ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.sroa.speculated, ptr %i.b, align 8, !tbaa !67
-  %i.c = icmp ugt i64 %1, -49
+  store i64 %4, ptr %i.b, align 8, !tbaa !67
+  %i.c = icmp samesign ugt i64 %4, 1152921504606846975
   br i1 %i.c, label %.noexc3.i, label %_ZNSt11_Deque_baseIN10duckdb_re29WalkStateIiEESaIS2_EE15_M_allocate_mapEm.exit, !prof !68
 
 .noexc3.i:                                        ; preds = %bb.a
@@ -617,10 +618,10 @@ bb.a:
 
 _ZNSt11_Deque_baseIN10duckdb_re29WalkStateIiEESaIS2_EE15_M_allocate_mapEm.exit: ; preds = %bb.a
   %i.d = add nuw nsw i64 %i.a, 1                  ; 2 uses
-  %i.e = shl nuw nsw i64 %.sroa.speculated, 3
+  %i.e = shl nuw nsw i64 %4, 3
   %i.f = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.e) #19 ; 2 uses
   store ptr %i.f, ptr %0, align 8, !tbaa !36
-  %i.g = sub nsw i64 %.sroa.speculated, %i.d
+  %i.g = sub nsw i64 %4, %i.d
   %i.h = lshr i64 %i.g, 1
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.h ; 6 uses
   %.idx = shl nuw nsw i64 %i.d, 3

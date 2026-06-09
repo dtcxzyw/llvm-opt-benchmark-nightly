@@ -201,11 +201,12 @@ bb.i:                                             ; preds = %bb.a, %_ZNSt7__cxx1
 
 .lr.ph.i.preheader:                               ; preds = %.lr.ph.i.preheader.lr.ph, %bb.w
   %.sroa.044.175 = phi i64 [ %.sroa.044.0, %.lr.ph.i.preheader.lr.ph ], [ %i.ao, %bb.w ] ; 6 uses
-  %.sroa.1147.174 = phi ptr [ %.sroa.1147.0, %.lr.ph.i.preheader.lr.ph ], [ %i.an, %bb.w ] ; 7 uses
+  %.sroa.1147.174 = phi ptr [ %.sroa.1147.0, %.lr.ph.i.preheader.lr.ph ], [ %i.an, %bb.w ] ; 8 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.1147.174) ]
   br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.j
-  %.01524.i = phi i64 [ %i.am, %bb.j ], [ 0, %.lr.ph.i.preheader ] ; 5 uses
+.lr.ph.i:                                         ; preds = %bb.j, %.lr.ph.i.preheader
+  %.01524.i = phi i64 [ 0, %.lr.ph.i.preheader ], [ %i.am, %bb.j ] ; 5 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.1147.174, i64 %.01524.i
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !15
   %i.am = add nuw i64 %.01524.i, 1                ; 4 uses

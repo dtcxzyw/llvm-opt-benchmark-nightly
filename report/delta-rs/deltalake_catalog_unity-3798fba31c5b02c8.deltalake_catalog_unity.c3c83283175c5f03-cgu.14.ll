@@ -201,7 +201,7 @@ _RNvYNCNKNvNtCsee2lL6QbnsJ_15crossbeam_epoch7default6HANDLE00INtNtNtCsbvkFyIu7lg
 
 _RNvYNCNKNvNtCsee2lL6QbnsJ_15crossbeam_epoch7default6HANDLE00INtNtNtCsbvkFyIu7lgC_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtNtBa_9collector11LocalHandleEEEE9call_onceCsgO8S5jLFugx_23deltalake_catalog_unity.exit.thread.i.i.i: ; preds = %.noexc154, %bb.ee
   %.sroa.0.0.i.i.i2.i.i.i = phi ptr [ %i.ry, %.noexc154 ], [ %i.ru, %bb.ee ]
-  %.val.i.i.i = load ptr, ptr %.sroa.0.0.i.i.i2.i.i.i, align 8, !noundef !8 ; 7 uses
+  %.val.i.i.i = load ptr, ptr %.sroa.0.0.i.i.i2.i.i.i, align 8, !noundef !8 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ah)
   store ptr %.val.i.i.i, ptr %i.ah, align 8
   %i.sa = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 2072 ; 2 uses
@@ -263,7 +263,7 @@ bb.em:                                            ; preds = %.noexc154
 
 .noexc157:                                        ; preds = %bb.em
   %i.sw = invoke noundef ptr @_RNvMs1_NtCsee2lL6QbnsJ_15crossbeam_epoch9collectorNtB5_9Collector8register(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.sv)
-          to label %.noexc158 unwind label %bb.ez ; 12 uses
+          to label %.noexc158 unwind label %bb.ez ; 13 uses
 
 .noexc158:                                        ; preds = %.noexc157
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ag)
@@ -338,6 +338,7 @@ bb.eu:                                            ; preds = %.body.i.i.i
 
 bb.ev:                                            ; preds = %bb.er, %bb.eq, %bb.en
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ag)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.sw) ]
   %i.ty = load i64, ptr %i.sx, align 8, !noundef !8
   %i.tz = getelementptr inbounds nuw i8, ptr %i.sw, i64 2080 ; 2 uses
   %i.ua = load i64, ptr %i.tz, align 8, !noundef !8 ; 2 uses
@@ -360,6 +361,7 @@ bb.ex:                                            ; preds = %bb.eu
 
 bb.ey:                                            ; preds = %bb.ej, %bb.ei, %bb.ef
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ah)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
   br label %_RNvNtCsee2lL6QbnsJ_15crossbeam_epoch7default3pin.exit
 
 bb.ez:                                            ; preds = %bb.ew, %.noexc157, %bb.em, %_RNvYNCNKNvNtCsee2lL6QbnsJ_15crossbeam_epoch7default6HANDLE00INtNtNtCsbvkFyIu7lgC_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtNtBa_9collector11LocalHandleEEEE9call_onceCsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i

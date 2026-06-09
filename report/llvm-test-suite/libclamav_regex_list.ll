@@ -201,9 +201,8 @@ tree_get_next.exit.i.i:                           ; preds = %bb.ay, %bb.ax, %bb.
   %i.es = zext i1 %i.dl to i64
   %i.et = add nsw i64 %i.er, %i.es
   %i.eu = shl nsw i64 %i.et, 3
-  %i.ev = call ptr @cli_realloc2(ptr noundef %i.dn, i64 noundef %i.eu) #16 ; 3 uses
+  %i.ev = call nonnull ptr @cli_realloc2(ptr noundef %i.dn, i64 noundef %i.eu) #16 ; 2 uses
   store ptr %i.ev, ptr %i.dm, align 8, !tbaa !17
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ev) ]
   %i.ew = load i32, ptr %i.df, align 4, !tbaa !25
   %i.ex = icmp eq i32 %i.ew, 2
   %.idx.i116.i = select i1 %i.ex, i64 8, i64 0

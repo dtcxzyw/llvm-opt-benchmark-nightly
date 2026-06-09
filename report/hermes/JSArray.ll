@@ -201,7 +201,7 @@ bb.a:
   %11 = alloca %"class.hermes::vm::TwineChar16", align 8 ; 8 uses
   %.sroa.0.0.copyload.i.i.i = load i64, ptr %0, align 8, !tbaa !33
   %i.b = and i64 %.sroa.0.0.copyload.i.i.i, 281474976710655
-  %i.c = inttoptr i64 %i.b to ptr                 ; 8 uses
+  %i.c = inttoptr i64 %i.b to ptr                 ; 7 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   %.sroa.0.0.copyload.i.i = load i32, ptr %i.d, align 4, !tbaa !3 ; 3 uses
   %i.e = and i32 %.sroa.0.0.copyload.i.i, 7
@@ -312,11 +312,12 @@ bb.j:                                             ; preds = %_ZN6hermes2vm7JSArr
 
 bb.k:                                             ; preds = %bb.j
   %i.ax = getelementptr inbounds nuw i8, ptr %i.c, i64 20
-  %12 = load i32, ptr %i.ax, align 4              ; 2 uses
-  %.sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 24
-  %13 = load i32, ptr %.sroa_idx, align 4
-  %.sroa.speculated61 = tail call i32 @llvm.umax.i32(i32 %12, i32 %2) ; 2 uses
-  %.sroa.speculated = tail call i32 @llvm.umin.i32(i32 %13, i32 %i.p) ; 2 uses
+  %12 = load i64, ptr %i.ax, align 4              ; 2 uses
+  %.sroa.0.0.extract.trunc = trunc i64 %12 to i32 ; 2 uses
+  %.sroa.4.0.extract.shift = lshr i64 %12, 32
+  %.sroa.4.0.extract.trunc = trunc nuw i64 %.sroa.4.0.extract.shift to i32
+  %.sroa.speculated61 = tail call i32 @llvm.umax.i32(i32 %2, i32 %.sroa.0.0.extract.trunc) ; 2 uses
+  %.sroa.speculated = tail call i32 @llvm.umin.i32(i32 %.sroa.4.0.extract.trunc, i32 %i.p) ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.c, i64 28
   %i.az = ptrtoint ptr %1 to i64                  ; 5 uses
   %i.ba = icmp ugt i32 %.sroa.speculated, %.sroa.speculated61
@@ -337,7 +338,7 @@ bb.l:                                             ; preds = %_ZNK6hermes2vm9Arra
 .lr.ph117:                                        ; preds = %.lr.ph117.preheader, %bb.l
   %.029115 = phi i32 [ %i.bg, %bb.l ], [ %.sroa.speculated, %.lr.ph117.preheader ] ; 3 uses
   %i.bg = add i32 %.029115, -1                    ; 3 uses
-  %i.bh = sub i32 %i.bg, %12                      ; 4 uses
+  %i.bh = sub i32 %i.bg, %.sroa.0.0.extract.trunc ; 4 uses
   %i.bi = icmp ult i32 %i.bh, 4096
   br i1 %i.bi, label %_ZNK6hermes2vm9ArrayImpl8unsafeAtERNS0_7RuntimeEj.exit, label %bb.m
 
@@ -367,7 +368,7 @@ bb.n:                                             ; preds = %_ZNK6hermes2vm9Arra
   store i32 %.029115, ptr %i.a, align 4, !tbaa !3
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.l, %bb.k, %..loopexit_crit_edge, %bb.n
+.loopexit:                                        ; preds = %bb.l, %bb.k, %bb.n, %..loopexit_crit_edge
   %.pre-phi103 = phi i64 [ %.pre102, %..loopexit_crit_edge ], [ %i.az, %bb.n ], [ %i.az, %bb.k ], [ %i.az, %bb.l ]
   %i.bw = phi i32 [ %2, %..loopexit_crit_edge ], [ %.029115, %bb.n ], [ %2, %bb.k ], [ %2, %bb.l ]
   %i.bx = getelementptr inbounds nuw i8, ptr %i.c, i64 12 ; 2 uses

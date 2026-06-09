@@ -129,11 +129,12 @@ bb.b:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.y = trunc i64 %i.x to i32
   %i.z = getelementptr inbounds nuw i8, ptr %3, i64 36 ; 3 uses
   store i32 %i.y, ptr %i.z, align 4, !tbaa !33
-  %.val = load ptr, ptr %2, align 8               ; 3 uses
+  %.val = load ptr, ptr %2, align 8               ; 4 uses
   %.not.i = icmp eq i64 %i.x, 0
   br i1 %.not.i, label %_ZN6google8protobuf8compilerL12ComputeCRC32ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %xtraiter = and i64 %i.x, 1
   %i.aa = icmp eq i64 %i.x, 1
   br i1 %i.aa, label %.lr.ph.i.epil.preheader, label %.lr.ph.i.preheader.new
@@ -536,7 +537,7 @@ _ZN6google8protobuf2io17CodedOutputStreamC2INS1_20ZeroCopyOutputStreamEvEEPT_.ex
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.ax
   %i.bm = phi ptr [ %.pre107, %.lr.ph.preheader ], [ %.0.i.i.i75, %bb.ax ] ; 3 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.ax ] ; 2 uses
-  %i.bn = load ptr, ptr %i.s, align 8, !tbaa !16
+  %i.bn = load ptr, ptr %i.s, align 8, !tbaa !16, !nonnull !38, !noundef !38
   %i.bo = getelementptr inbounds nuw [48 x i8], ptr %i.bn, i64 %indvars.iv ; 5 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 8 ; 2 uses
   %i.bq = load i64, ptr %i.bp, align 8, !tbaa !28
@@ -939,10 +940,10 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #12
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #14
+declare i64 @llvm.umin.i64(i64, i64) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #14
+declare i64 @llvm.umax.i64(i64, i64) #14
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

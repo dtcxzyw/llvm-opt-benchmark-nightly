@@ -201,6 +201,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not1640, label %.loopexit, label %.split
 
 .split:                                           ; preds = %bb.b
+  %3 = tail call i32 @llvm.smax.i32(i32 %1, i32 %2)
   %.sroa.speculated32 = tail call i32 @llvm.smin.i32(i32 %2, i32 %1)
   %i.v = getelementptr inbounds nuw i8, ptr %i.d, i64 104
   %i.w = getelementptr inbounds nuw i8, ptr %i.d, i64 88
@@ -234,11 +235,8 @@ bb.b:                                             ; preds = %bb.a
   %i.ay = load float, ptr %i.x, align 8, !tbaa !8, !noalias !58
   %i.az = load float, ptr %i.w, align 8, !tbaa !8, !noalias !58
   %i.ba = load float, ptr %i.v, align 8, !tbaa !8, !noalias !58
-  %3 = tail call i32 @llvm.smin.i32(i32 %2, i32 %1)
-  %smin = sext i32 %3 to i64
-  %4 = add i32 %1, %2
-  %i.bb = add i32 %4, 1
-  %5 = sub i32 %i.bb, %.sroa.speculated32
+  %smin = sext i32 %.sroa.speculated32 to i64
+  %i.bb = add i32 %3, 1
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.split, %._crit_edge
@@ -250,7 +248,7 @@ bb.b:                                             ; preds = %bb.a
 ._crit_edge:                                      ; preds = %_ZN9Imath_3_14halfaSEf.exit25
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond45.not = icmp eq i32 %5, %lftr.wideiv
+  %exitcond45.not = icmp eq i32 %i.bb, %lftr.wideiv
   br i1 %exitcond45.not, label %.loopexit, label %.lr.ph, !llvm.loop !61
 
 bb.c:                                             ; preds = %.lr.ph, %_ZN9Imath_3_14halfaSEf.exit25
@@ -651,6 +649,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #10

@@ -201,7 +201,7 @@ _ZN5arrow6StatusD2Ev.exit25:                      ; preds = %_ZN5arrow6StatusD2E
 bb.g:                                             ; preds = %.noexc28, %.lr.ph.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %.noexc28 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19, !noalias !76
-  %i.o = load ptr, ptr %i.m, align 8, !tbaa !79, !noalias !76
+  %i.o = load ptr, ptr %i.m, align 8, !tbaa !79, !noalias !76, !nonnull !74, !noundef !74
   %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv.i
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !80, !noalias !76 ; 5 uses
   %i.r = load i64, ptr %i.n, align 8, !tbaa !39, !noalias !76
@@ -436,7 +436,7 @@ _ZN5arrow6StatusD2Ev.exit:                        ; preds = %_ZN5arrow6StatusD2E
   %i.aq = call noundef nonnull align 8 dereferenceable(16) ptr @_ZNK5arrow6Schema5fieldEi(ptr noundef nonnull align 8 dereferenceable(32) %i.ao, i32 noundef %i.ap)
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !107
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 56
-  %i.at = load ptr, ptr %i.a, align 8, !tbaa !103
+  %i.at = load ptr, ptr %i.a, align 8, !tbaa !103, !nonnull !74, !noundef !74
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %indvars.iv
   call void @_ZN5arrow11MakeBuilderEPNS_10MemoryPoolERKSt10shared_ptrINS_8DataTypeEEPSt10unique_ptrINS_12ArrayBuilderESt14default_deleteIS8_EE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %2, ptr noundef %i.an, ptr noundef nonnull align 8 dereferenceable(16) %i.as, ptr noundef nonnull %i.au)
   %i.av = load ptr, ptr %2, align 8, !tbaa !59    ; 2 uses
@@ -445,10 +445,10 @@ _ZN5arrow6StatusD2Ev.exit:                        ; preds = %_ZN5arrow6StatusD2E
   br i1 %i.aw, label %_ZN5arrow6StatusD2Ev.exit17, label %.critedge
 
 _ZN5arrow6StatusD2Ev.exit17:                      ; preds = %_ZN5arrow6StatusD2Ev.exit
-  %i.ax = load ptr, ptr %i.a, align 8, !tbaa !103
+  %i.ax = load ptr, ptr %i.a, align 8, !tbaa !103, !nonnull !74, !noundef !74
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %i.ax, i64 %indvars.iv
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !80
-  %i.ba = load ptr, ptr %i.u, align 8, !tbaa !79
+  %i.ba = load ptr, ptr %i.u, align 8, !tbaa !79, !nonnull !74, !noundef !74
   %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.ba, i64 %indvars.iv
   store ptr %i.az, ptr %i.bb, align 8, !tbaa !80
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -574,7 +574,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %_ZN5arrow6StatusD2Ev.exit14
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN5arrow6StatusD2Ev.exit14 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #19
-  %i.f = load ptr, ptr %i.d, align 8, !tbaa !79
+  %i.f = load ptr, ptr %i.d, align 8, !tbaa !79, !nonnull !74, !noundef !74
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !80   ; 5 uses
   %i.i = load i64, ptr %i.e, align 8, !tbaa !39
@@ -686,7 +686,7 @@ _ZNK5arrow18RecordBatchBuilder10num_fieldsEv.exit60.peel: ; preds = %_ZNSt6vecto
 bb.d:                                             ; preds = %_ZNK5arrow18RecordBatchBuilder10num_fieldsEv.exit60.peel
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #19
-  %i.o = load ptr, ptr %i.l, align 8, !tbaa !79
+  %i.o = load ptr, ptr %i.l, align 8, !tbaa !79, !nonnull !74, !noundef !74
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !80
   invoke void @_ZN5arrow12ArrayBuilder6FinishEPSt10shared_ptrINS_5ArrayEE(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %6, ptr noundef nonnull align 8 dereferenceable(144) %i.p, ptr noundef nonnull %i.k)
           to label %_ZN5arrow6StatusD2Ev.exit.peel unwind label %.loopexit.split-lp157
@@ -737,7 +737,7 @@ bb.f:                                             ; preds = %_ZNKSt6vectorISt10s
 bb.g:                                             ; preds = %_ZNK5arrow18RecordBatchBuilder10num_fieldsEv.exit60
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #19
-  %i.ac = load ptr, ptr %i.l, align 8, !tbaa !79
+  %i.ac = load ptr, ptr %i.l, align 8, !tbaa !79, !nonnull !74, !noundef !74
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %indvars.iv
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !80
   %i.af = getelementptr inbounds nuw [16 x i8], ptr %i.x, i64 %indvars.iv
@@ -879,7 +879,8 @@ _ZNSt15__new_allocatorISt10shared_ptrIN5arrow5FieldEEE8allocateEmPKv.exit.i.i.i.
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %.noexc73, %_ZSt10_ConstructISt10shared_ptrIN5arrow5FieldEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i
   %.08.i.i.i.i.i = phi ptr [ %i.by, %_ZSt10_ConstructISt10shared_ptrIN5arrow5FieldEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i ], [ %i.bi, %.noexc73 ] ; 2 uses
-  %.sroa.04.07.i.i.i.i.i = phi ptr [ %i.bx, %_ZSt10_ConstructISt10shared_ptrIN5arrow5FieldEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i ], [ %i.bm, %.noexc73 ] ; 3 uses
+  %.sroa.04.07.i.i.i.i.i = phi ptr [ %i.bx, %_ZSt10_ConstructISt10shared_ptrIN5arrow5FieldEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i ], [ %i.bm, %.noexc73 ] ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.04.07.i.i.i.i.i) ]
   %i.bp = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i.i, i64 8
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !33 ; 2 uses
   %i.br = load <2 x ptr>, ptr %.sroa.04.07.i.i.i.i.i, align 8, !tbaa !37
@@ -943,16 +944,16 @@ bb.w:                                             ; preds = %bb.t, %bb.x
   br label %bb.co
 
 bb.x:                                             ; preds = %_ZNK5arrow18RecordBatchBuilder10num_fieldsEv.exit75
-  %i.cj = load ptr, ptr %8, align 8, !tbaa !154
+  %i.cj = load ptr, ptr %8, align 8, !tbaa !154, !nonnull !74, !noundef !74
   %i.ck = getelementptr inbounds nuw [16 x i8], ptr %i.cj, i64 %indvars.iv163
   %i.cl = load ptr, ptr %i.ck, align 8, !tbaa !107
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 56
   %i.cn = load ptr, ptr %i.cm, align 8, !tbaa !158
-  %i.co = load ptr, ptr %4, align 16, !tbaa !117
+  %i.co = load ptr, ptr %4, align 16, !tbaa !117, !nonnull !74, !noundef !74
   %i.cp = getelementptr inbounds nuw [16 x i8], ptr %i.co, i64 %indvars.iv163 ; 2 uses
   %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !122
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 8
-  %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !125
+  %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !125, !nonnull !74, !noundef !74
   %i.ct = invoke noundef zeroext i1 @_ZNK5arrow8DataType6EqualsERKSt10shared_ptrIS0_Eb(ptr noundef nonnull align 8 dereferenceable(72) %i.cn, ptr noundef nonnull align 8 dereferenceable(16) %i.cs, i1 noundef zeroext false)
           to label %bb.y unwind label %bb.w
 
@@ -961,17 +962,17 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.y
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #19
-  %i.cu = load ptr, ptr %8, align 8, !tbaa !154
+  %i.cu = load ptr, ptr %8, align 8, !tbaa !154, !nonnull !74, !noundef !74
   %i.cv = getelementptr inbounds nuw [16 x i8], ptr %i.cu, i64 %indvars.iv163
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !107
   %i.cx = load ptr, ptr %i.cp, align 8, !tbaa !122
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 8
-  %i.cz = load ptr, ptr %i.cy, align 8, !tbaa !125
+  %i.cz = load ptr, ptr %i.cy, align 8, !tbaa !125, !nonnull !74, !noundef !74
   invoke void @_ZNK5arrow5Field8WithTypeERKSt10shared_ptrINS_8DataTypeEE(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr.56") align 8 %9, ptr noundef nonnull align 8 dereferenceable(96) %i.cw, ptr noundef nonnull align 8 dereferenceable(16) %i.cz)
           to label %bb.aa unwind label %bb.an
 
 bb.aa:                                            ; preds = %bb.z
-  %i.da = load ptr, ptr %8, align 8, !tbaa !154
+  %i.da = load ptr, ptr %8, align 8, !tbaa !154, !nonnull !74, !noundef !74
   %i.db = getelementptr inbounds nuw [16 x i8], ptr %i.da, i64 %indvars.iv163 ; 2 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %i.db, i64 8
   %i.dd = load <2 x ptr>, ptr %9, align 16, !tbaa !37
@@ -1326,7 +1327,7 @@ bb.bl:                                            ; preds = %_ZNSt12__shared_ptr
 bb.bm:                                            ; preds = %.noexc94, %.lr.ph.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %.noexc94 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19, !noalias !173
-  %i.hh = load ptr, ptr %i.l, align 8, !tbaa !79, !noalias !173
+  %i.hh = load ptr, ptr %i.l, align 8, !tbaa !79, !noalias !173, !nonnull !74, !noundef !74
   %i.hi = getelementptr inbounds nuw [8 x i8], ptr %i.hh, i64 %indvars.iv.i
   %i.hj = load ptr, ptr %i.hi, align 8, !tbaa !80, !noalias !173 ; 5 uses
   %i.hk = load i64, ptr %i.hg, align 8, !tbaa !39, !noalias !173
@@ -1729,10 +1730,10 @@ declare void @llvm.assume(i1 noundef) #16
 declare void @llvm.experimental.noalias.scope.decl(metadata) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #18
+declare i64 @llvm.umin.i64(i64, i64) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #18
+declare i64 @llvm.umax.i64(i64, i64) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #18

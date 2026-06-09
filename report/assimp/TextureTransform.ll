@@ -201,7 +201,7 @@ _ZNSt6vectorINSt7__cxx114listIN6Assimp17STransformVecInfoESaIS3_EEESaIS5_EEC2EmR
 
 _ZNSt6vectorINSt7__cxx114listIN6Assimp17STransformVecInfoESaIS3_EEESaIS5_EEC2EmRKS6_.exit: ; preds = %_ZNSt6vectorINSt7__cxx114listIN6Assimp17STransformVecInfoESaIS3_EEESaIS5_EEC2EmRKS6_.exit.loopexit, %bb.a
   %.sroa.20.0 = phi i64 [ 0, %bb.a ], [ %i.aj, %_ZNSt6vectorINSt7__cxx114listIN6Assimp17STransformVecInfoESaIS3_EEESaIS5_EEC2EmRKS6_.exit.loopexit ] ; 2 uses
-  %.sroa.0545.0 = phi ptr [ null, %bb.a ], [ %i.p, %_ZNSt6vectorINSt7__cxx114listIN6Assimp17STransformVecInfoESaIS3_EEESaIS5_EEC2EmRKS6_.exit.loopexit ] ; 12 uses
+  %.sroa.0545.0 = phi ptr [ null, %bb.a ], [ %i.p, %_ZNSt6vectorINSt7__cxx114listIN6Assimp17STransformVecInfoESaIS3_EEESaIS5_EEC2EmRKS6_.exit.loopexit ] ; 14 uses
   %.0.lcssa.i.i.i.i.i = phi ptr [ null, %bb.a ], [ %.lcssa860, %_ZNSt6vectorINSt7__cxx114listIN6Assimp17STransformVecInfoESaIS3_EEESaIS5_EEC2EmRKS6_.exit.loopexit ] ; 4 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.al = load i32, ptr %i.ak, align 8            ; 2 uses
@@ -243,6 +243,7 @@ _ZNSt6vectorINSt7__cxx114listIN6Assimp17STransformVecInfoESaIS3_EEESaIS5_EEC2EmR
 
 .lr.ph676:                                        ; preds = %._crit_edge631
   %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 24
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0545.0) ]
   %i.bc = getelementptr inbounds nuw i8, ptr %i.g, i64 1
   %i.bd = getelementptr inbounds nuw i8, ptr %i.g, i64 2
   %i.be = getelementptr inbounds nuw i8, ptr %i.g, i64 3
@@ -597,6 +598,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
 
 bb.af:                                            ; preds = %bb.ab
   %i.gf = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0545.0, i64 %indvars.iv700 ; 7 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0545.0) ]
   %.sroa.0520.0615 = load ptr, ptr %i.gf, align 8 ; 2 uses
   %.not567616 = icmp eq ptr %.sroa.0520.0615, %i.gf
   br i1 %.not567616, label %.loopexit585.thread, label %.lr.ph619

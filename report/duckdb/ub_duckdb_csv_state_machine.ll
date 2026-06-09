@@ -201,7 +201,7 @@ _ZN6duckdb25InitializeTransitionArrayERNS_12StateMachineENS_8CSVStateES2_.exit: 
   br i1 %exitcond.not, label %bb.b, label %bb.e, !llvm.loop !96
 
 bb.l:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
-  %i.as = load ptr, ptr %2, align 8, !tbaa !20
+  %i.as = load ptr, ptr %2, align 8, !tbaa !20, !nonnull !18, !noundef !18
   %i.at = load i8, ptr %i.as, align 1, !tbaa !23
   br label %bb.m
 
@@ -604,7 +604,8 @@ bb.j:                                             ; preds = %bb.c
   br label %_ZNSt6vectorIcSaIcEED2Ev.exit123
 
 .lr.ph269.split:                                  ; preds = %.lr.ph269, %._crit_edge265
-  %.sroa.0148.0267 = phi ptr [ %i.bx, %._crit_edge265 ], [ %i.m, %.lr.ph269 ] ; 2 uses
+  %.sroa.0148.0267 = phi ptr [ %i.bx, %._crit_edge265 ], [ %i.m, %.lr.ph269 ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0148.0267) ]
   %i.bl = load <2 x i8>, ptr %.sroa.0148.0267, align 1, !tbaa !23 ; 3 uses
   %i.bm = load ptr, ptr %5, align 8, !tbaa !111   ; 2 uses
   %i.bn = load ptr, ptr %i.p, align 8, !tbaa !111 ; 2 uses
@@ -632,7 +633,8 @@ bb.j:                                             ; preds = %bb.c
   br i1 %.not151, label %._crit_edge270, label %.lr.ph269.split, !llvm.loop !117
 
 .lr.ph264.split:                                  ; preds = %.lr.ph264.split.preheader, %._crit_edge
-  %.sroa.0144.0262 = phi ptr [ %i.cb, %._crit_edge ], [ %i.bm, %.lr.ph264.split.preheader ] ; 5 uses
+  %.sroa.0144.0262 = phi ptr [ %i.cb, %._crit_edge ], [ %i.bm, %.lr.ph264.split.preheader ] ; 6 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0144.0262) ]
   %i.by = load ptr, ptr %6, align 8, !tbaa !116   ; 2 uses
   %i.bz = load ptr, ptr %i.q, align 8, !tbaa !116 ; 2 uses
   %.not153259 = icmp eq ptr %i.by, %i.bz
@@ -648,7 +650,8 @@ bb.j:                                             ; preds = %bb.c
   br i1 %.not152, label %._crit_edge265, label %.lr.ph264.split, !llvm.loop !119
 
 bb.k:                                             ; preds = %.lr.ph, %bb.l
-  %.sroa.0140.0260 = phi ptr [ %i.by, %.lr.ph ], [ %i.cc, %bb.l ] ; 4 uses
+  %.sroa.0140.0260 = phi ptr [ %i.by, %.lr.ph ], [ %i.cc, %bb.l ] ; 5 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0140.0260) ]
   br label %bb.m
 
 bb.l:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit103
@@ -1051,7 +1054,7 @@ _ZNKSt14default_deleteIN6duckdb25TempBufferPoolReservationEEclEPS1_.exit.i113: ;
   call void %i.kn(ptr noundef nonnull align 8 dereferenceable(32) %i.ih) #22, !inline_history !196
   br label %.body89
 
-_ZN6duckdb10shared_ptrINS_16ObjectCacheEntryELb1EEaSINS_20CSVStateMachineCacheETnNSt9enable_ifIXsr17compatible_with_tIT_S1_EE5valueEiE4typeELi0EEERS2_RKNS0_IS6_Lb1EEE.exit: ; preds = %_ZN6duckdb10shared_ptrINS_16ObjectCacheEntryELb1EED2Ev.exit99, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i100, %bb.cl, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i, %bb.ch, %_ZN6duckdb10shared_ptrINS_16ObjectCacheEntryELb1EEC2INS_20CSVStateMachineCacheETnNSt9enable_ifIXsr17compatible_with_tIT_S1_EE5valueEiE4typeELi0EEERKNS0_IS6_Lb1EEE.exit.i
+_ZN6duckdb10shared_ptrINS_16ObjectCacheEntryELb1EEaSINS_20CSVStateMachineCacheETnNSt9enable_ifIXsr17compatible_with_tIT_S1_EE5valueEiE4typeELi0EEERS2_RKNS0_IS6_Lb1EEE.exit: ; preds = %_ZN6duckdb10shared_ptrINS_16ObjectCacheEntryELb1EED2Ev.exit99, %bb.cl, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i, %bb.ch, %_ZN6duckdb10shared_ptrINS_16ObjectCacheEntryELb1EEC2INS_20CSVStateMachineCacheETnNSt9enable_ifIXsr17compatible_with_tIT_S1_EE5valueEiE4typeELi0EEERKNS0_IS6_Lb1EEE.exit.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i100
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #22
   br label %_ZN6duckdb10shared_ptrINS_16ObjectCacheEntryELb1EED2Ev.exit77
 
@@ -1454,8 +1457,8 @@ bb.f:                                             ; preds = %bb.e, %._crit_edge.
   %i.v = icmp ult i8 %i.u, %i.t
   br i1 %i.v, label %select.unfold, label %_ZNSt8_Rb_treeIN6duckdb13LogicalTypeIdESt4pairIKS1_NS0_9CSVOptionINS0_14StrpTimeFormatEEEESt10_Select1stIS7_ESt4lessIS1_ESaIS7_EE17_M_insert_unique_IRKS7_NSD_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS7_ESt23_Rb_tree_const_iteratorIS7_EOT_RT0_.exit.i
 
-select.unfold:                                    ; preds = %bb.f, %._crit_edge.thread.i.i, %bb.b
-  %.sroa.12.2.i.ph = phi ptr [ %.019.lcssa29.i.i, %._crit_edge.thread.i.i ], [ %i.h, %bb.b ], [ %.019.lcssa28.i.i, %bb.f ]
+select.unfold:                                    ; preds = %bb.f, %bb.b, %._crit_edge.thread.i.i
+  %.sroa.12.2.i.ph = phi ptr [ %i.h, %bb.b ], [ %.019.lcssa29.i.i, %._crit_edge.thread.i.i ], [ %.019.lcssa28.i.i, %bb.f ]
   %i.w = invoke ptr @_ZNSt8_Rb_treeIN6duckdb13LogicalTypeIdESt4pairIKS1_NS0_9CSVOptionINS0_14StrpTimeFormatEEEESt10_Select1stIS7_ESt4lessIS1_ESaIS7_EE10_M_insert_IRKS7_NSD_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS7_EPSt18_Rb_tree_node_baseSL_OT_RT0_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef null, ptr noundef nonnull %.sroa.12.2.i.ph, ptr noundef nonnull align 8 dereferenceable(136) %.07.i, ptr noundef nonnull align 8 dereferenceable(8) %5)
           to label %_ZNSt8_Rb_treeIN6duckdb13LogicalTypeIdESt4pairIKS1_NS0_9CSVOptionINS0_14StrpTimeFormatEEEESt10_Select1stIS7_ESt4lessIS1_ESaIS7_EE17_M_insert_unique_IRKS7_NSD_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS7_ESt23_Rb_tree_const_iteratorIS7_EOT_RT0_.exit.i unwind label %bb.g ; 0 uses
 
@@ -1784,7 +1787,8 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %bb.d
   %.014 = phi ptr [ %i.p, %bb.d ], [ %2, %bb.a ]  ; 9 uses
-  %.sroa.08.013 = phi ptr [ %i.o, %bb.d ], [ %0, %bb.a ] ; 3 uses
+  %.sroa.08.013 = phi ptr [ %i.o, %bb.d ], [ %0, %bb.a ] ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.08.013) ]
   %i.b = getelementptr inbounds nuw i8, ptr %.014, i64 16 ; 3 uses
   store ptr %i.b, ptr %.014, align 8, !tbaa !19
   %i.c = load ptr, ptr %.sroa.08.013, align 8, !tbaa !20 ; 2 uses

@@ -201,7 +201,7 @@ bb.a:
   %3 = alloca %"class.std::allocator.29", align 1 ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !67
-  %i.e = load ptr, ptr %0, align 8, !tbaa !68     ; 2 uses
+  %i.e = load ptr, ptr %0, align 8, !tbaa !68     ; 3 uses
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = sub i64 %i.f, %i.g
@@ -271,6 +271,7 @@ _ZN6duckdb6vectorINS_10unique_ptrINS_15LogicalOperatorESt14default_deleteIS2_ELb
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %1
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
   ret ptr %i.p
 }
 
@@ -290,7 +291,7 @@ bb.a:
   %3 = alloca %"class.std::allocator.29", align 1 ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !24
-  %i.e = load ptr, ptr %0, align 8, !tbaa !25     ; 2 uses
+  %i.e = load ptr, ptr %0, align 8, !tbaa !25     ; 3 uses
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = sub i64 %i.f, %i.g
@@ -360,6 +361,7 @@ _ZN6duckdb6vectorINS_10unique_ptrINS_10ExpressionESt14default_deleteIS2_ELb1EEEL
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %1
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
   ret ptr %i.p
 }
 
@@ -762,7 +764,7 @@ bb.i:                                             ; preds = %bb.h
   %i.av = call noundef nonnull align 8 dereferenceable(128) ptr @_ZN6duckdb15LogicalOperator4CastINS_13LogicalFilterEEERT_v(ptr noundef nonnull align 8 dereferenceable(97) %i.au) ; 3 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 16
   %i.ax = call noundef nonnull align 8 dereferenceable(8) ptr @_ZN6duckdb6vectorINS_10unique_ptrINS_15LogicalOperatorESt14default_deleteIS2_ELb1EEELb1ESaIS5_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.aw, i64 noundef 0)
-  %i.ay = call noundef ptr @_ZNK6duckdb10unique_ptrINS_15LogicalOperatorESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %i.ax) ; 2 uses
+  %i.ay = call noundef nonnull ptr @_ZNK6duckdb10unique_ptrINS_15LogicalOperatorESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %i.ax) ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.av, i64 40 ; 3 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.av, i64 48 ; 2 uses
   %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !24
@@ -1165,10 +1167,10 @@ declare void @_ZN6duckdb9Exception25ConstructMessageRecursiveERKNSt7__cxx1112bas
 declare void @llvm.assume(i1 noundef) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #15
+declare i64 @llvm.umin.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #15
+declare i64 @llvm.umax.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #16

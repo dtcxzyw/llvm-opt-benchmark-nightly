@@ -201,13 +201,14 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   %i.c = load ptr, ptr %i.b, align 8
   %i.d = tail call { ptr, i64 } %i.c(ptr noundef nonnull align 8 dereferenceable(280) %0, i32 noundef %1) #20 ; 2 uses
-  %i.e = extractvalue { ptr, i64 } %i.d, 0
+  %i.e = extractvalue { ptr, i64 } %i.d, 0        ; 2 uses
   %i.f = extractvalue { ptr, i64 } %i.d, 1        ; 2 uses
   %i.g = and i64 %i.f, 4294967295
   %.not1417.not = icmp eq i64 %i.g, 0
   br i1 %.not1417.not, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
   %wide.trip.count = and i64 %i.f, 4294967295
   br label %.lr.ph
 
@@ -415,7 +416,7 @@ bb.a:
   store i64 0, ptr %i.c, align 8, !tbaa !45
   store i8 0, ptr %i.b, align 8, !tbaa !118
   %i.d = zext i32 %2 to i64
-  %i.e = load ptr, ptr %1, align 8, !tbaa !124
+  %i.e = load ptr, ptr %1, align 8, !tbaa !124, !nonnull !55, !noundef !55
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %i.d
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !127  ; 2 uses
@@ -818,7 +819,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = lshr i32 %i.e, 1
   %i.i = and i32 %i.h, 8388607
   %i.j = zext nneg i32 %i.i to i64
-  %i.k = load ptr, ptr %i.g, align 8, !tbaa !178
+  %i.k = load ptr, ptr %i.g, align 8, !tbaa !178, !nonnull !55, !noundef !55
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %i.j ; 2 uses
   %.sroa.0.0.copyload = load i32, ptr %i.l, align 1, !tbaa !3
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 4

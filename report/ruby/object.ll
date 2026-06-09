@@ -201,7 +201,7 @@ bb.l:                                             ; preds = %.thread, %bb.k
   br label %ruby_nonempty_memcpy.exit
 
 ruby_nonempty_memcpy.exit:                        ; preds = %bb.k, %bb.l
-  %i.x = phi ptr [ %i.v, %bb.k ], [ %i.w, %bb.l ] ; 2 uses
+  %i.x = phi ptr [ %i.w, %bb.l ], [ %i.v, %bb.k ] ; 2 uses
   %i.y = getelementptr i8, ptr %i.x, i64 %i.n
   store i8 0, ptr %i.y, align 1, !tbaa !34
   %.pre = load i64, ptr %i.a, align 8, !tbaa !11

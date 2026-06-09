@@ -201,14 +201,14 @@ bb.v:                                             ; preds = %_ZN6duckdb21Templat
 
 bb.w:                                             ; preds = %bb.v
   call void @_ZNK6duckdb12optional_ptrIKNS_11TableFilterELb1EE10CheckValidEv(ptr noundef nonnull align 8 dereferenceable(8) %5)
-  %i.cp = load ptr, ptr %5, align 8, !tbaa !354
+  %i.cp = load ptr, ptr %5, align 8, !tbaa !354, !nonnull !23, !noundef !23
   call void @_ZNK6duckdb12optional_ptrINS_16TableFilterStateELb1EE10CheckValidEv(ptr noundef nonnull align 8 dereferenceable(8) %6)
   %i.cq = load i64, ptr %i.c, align 8, !tbaa !344
   %i.cr = icmp eq i64 %i.cq, 0
   br i1 %i.cr, label %_ZN6duckdb17DictionaryDecoder9CanFilterERKNS_11TableFilterERNS_16TableFilterStateE.exit.thread, label %_ZN6duckdb17DictionaryDecoder9CanFilterERKNS_11TableFilterERNS_16TableFilterStateE.exit
 
 _ZN6duckdb17DictionaryDecoder9CanFilterERKNS_11TableFilterERNS_16TableFilterStateE.exit: ; preds = %bb.w
-  %i.cs = load ptr, ptr %6, align 8, !tbaa !357
+  %i.cs = load ptr, ptr %6, align 8, !tbaa !357, !nonnull !23, !noundef !23
   %i.ct = call noundef zeroext i1 @_ZN6duckdb17DictionaryDecoder24DictionarySupportsFilterERKNS_11TableFilterERNS_16TableFilterStateE(ptr noundef nonnull align 8 dereferenceable(113) %0, ptr noundef nonnull align 8 dereferenceable(9) %i.cp, ptr noundef nonnull align 8 dereferenceable(8) %i.cs)
   br i1 %i.ct, label %bb.x, label %_ZN6duckdb17DictionaryDecoder9CanFilterERKNS_11TableFilterERNS_16TableFilterStateE.exit.thread
 
@@ -269,7 +269,7 @@ bb.ac:                                            ; preds = %bb.ab
 .lr.ph:                                           ; preds = %.preheader
   %i.di = load ptr, ptr %9, align 8, !tbaa !363   ; 6 uses
   %.not.i30 = icmp eq ptr %i.di, null
-  %i.dj = load ptr, ptr %i.d, align 8, !tbaa !345 ; 6 uses
+  %i.dj = load ptr, ptr %i.d, align 8, !tbaa !345, !nonnull !23, !noundef !23 ; 6 uses
   br i1 %.not.i30, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.preheader, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.preheader
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit.preheader: ; preds = %.lr.ph
@@ -282,7 +282,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.preheader.new: ; preds = %_ZNK6duc
   br label %_ZNK6duckdb15SelectionVector9get_indexEm.exit
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.preheader: ; preds = %.lr.ph
-  call void @llvm.memset.p0.i64(ptr align 1 %i.dj, i8 1, i64 %i.dh, i1 false), !tbaa !364
+  call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.dj, i8 1, i64 %i.dh, i1 false), !tbaa !364
   br label %._crit_edge
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit
@@ -685,7 +685,7 @@ _ZN6duckdb12RleBpDecoder8GetBatchIjEEvPhj.exit:   ; preds = %_ZN6duckdb12RleBpDe
   br i1 %.not70, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN6duckdb12RleBpDecoder8GetBatchIjEEvPhj.exit
-  %i.ct = load ptr, ptr %i.ay, align 8, !tbaa !363 ; 2 uses
+  %i.ct = load ptr, ptr %i.ay, align 8, !tbaa !363, !nonnull !23, !noundef !23 ; 2 uses
   %min.iters.check110 = icmp ult i64 %2, 8
   br i1 %min.iters.check110, label %scalar.ph109.preheader, label %vector.ph111
 
@@ -1088,7 +1088,7 @@ bb.a:
   %3 = alloca %"class.std::allocator", align 1    ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !402
-  %i.e = load ptr, ptr %0, align 8, !tbaa !405    ; 2 uses
+  %i.e = load ptr, ptr %0, align 8, !tbaa !405    ; 3 uses
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = sub i64 %i.f, %i.g
@@ -1158,6 +1158,7 @@ _ZNK6duckdb6vectorINS_10unique_ptrINS_11TableFilterESt14default_deleteIS2_ELb1EE
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %1
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
   ret ptr %i.p
 }
 
@@ -1237,7 +1238,7 @@ bb.a:
   %3 = alloca %"class.std::allocator", align 1    ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !410
-  %i.e = load ptr, ptr %0, align 8, !tbaa !413    ; 2 uses
+  %i.e = load ptr, ptr %0, align 8, !tbaa !413    ; 3 uses
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = sub i64 %i.f, %i.g
@@ -1307,6 +1308,7 @@ _ZN6duckdb6vectorINS_10unique_ptrINS_16TableFilterStateESt14default_deleteIS2_EL
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %1
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
   ret ptr %i.p
 }
 
@@ -1584,7 +1586,7 @@ bb.h:                                             ; preds = %bb.g
 _ZN6duckdb15SelectionVectorC2Em.exit:             ; preds = %bb.g
   store i64 0, ptr %5, align 8, !tbaa !266
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !345  ; 9 uses
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !345, !nonnull !23, !noundef !23 ; 9 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.p = load ptr, ptr %i.o, align 8              ; 4 uses
   %i.q = load ptr, ptr %6, align 8                ; 9 uses

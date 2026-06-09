@@ -30,7 +30,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr i8, ptr %4, i64 %3
-  %i.c = getelementptr i8, ptr %i.b, i64 -1
+  %i.c = getelementptr i8, ptr %i.b, i64 -1       ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   %i.d = load i8, ptr %i.c, align 1, !tbaa !7
   %i.e = icmp eq i8 %i.d, 47
   br i1 %i.e, label %bb.c, label %bb.d
@@ -85,7 +86,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 
 declare void @_ZN4absl12lts_202505126StrCatB5cxx11ERKNS0_8AlphaNumES3_S3_(ptr dead_on_unwind writable sret(%"class.std::__cxx11::basic_string") align 8, ptr noundef nonnull align 8 dereferenceable(48), ptr noundef nonnull align 8 dereferenceable(48), ptr noundef nonnull align 8 dereferenceable(48)) local_unnamed_addr #1
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read, inaccessiblemem: write) uwtable
 define hidden noundef zeroext i1 @_ZN6google8protobuf8internal16EndsWithTypeNameESt17basic_string_viewIcSt11char_traitsIcEES5_(i64 %0, ptr nofree readonly captures(none) %1, i64 %2, ptr nofree readonly captures(none) %3) local_unnamed_addr #3 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = icmp ugt i64 %0, %2
@@ -94,7 +95,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = xor i64 %2, -1
   %i.c = getelementptr i8, ptr %1, i64 %0
-  %i.d = getelementptr i8, ptr %i.c, i64 %i.b
+  %i.d = getelementptr i8, ptr %i.c, i64 %i.b     ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d) ]
   %i.e = load i8, ptr %i.d, align 1, !tbaa !7
   %i.f = icmp eq i8 %i.e, 47
   br i1 %i.f, label %bb.c, label %_ZN4absl12lts_202505128EndsWithESt17basic_string_viewIcSt11char_traitsIcEES4_.exit
@@ -130,7 +132,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr i8, ptr %2, i64 %1
-  %i.c = getelementptr i8, ptr %i.b, i64 -1
+  %i.c = getelementptr i8, ptr %i.b, i64 -1       ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   %i.d = load i8, ptr %i.c, align 1, !tbaa !7, !noalias !13
   %i.e = icmp eq i8 %i.d, 47
   br i1 %i.e, label %bb.c, label %bb.d
@@ -276,7 +279,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = xor i64 %0, -1
   %i.c = getelementptr i8, ptr %3, i64 %2
-  %i.d = getelementptr i8, ptr %i.c, i64 %i.b
+  %i.d = getelementptr i8, ptr %i.c, i64 %i.b     ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d) ]
   %i.e = load i8, ptr %i.d, align 1, !tbaa !7
   %i.f = icmp eq i8 %i.e, 47
   br i1 %i.f, label %bb.c, label %_ZN6google8protobuf8internal14InternalIsLiteESt17basic_string_viewIcSt11char_traitsIcEES5_.exit.thread
@@ -304,7 +308,7 @@ _ZN6google8protobuf8internal14InternalIsLiteESt17basic_string_viewIcSt11char_tra
   ret i1 %.0
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read, inaccessiblemem: write) uwtable
 define noundef zeroext i1 @_ZN6google8protobuf8internal14InternalIsLiteESt17basic_string_viewIcSt11char_traitsIcEES5_(i64 %0, ptr nofree readonly captures(none) %1, i64 %2, ptr nofree readonly captures(none) %3) local_unnamed_addr #3 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = icmp ugt i64 %2, %0
@@ -313,7 +317,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = xor i64 %0, -1
   %i.c = getelementptr i8, ptr %3, i64 %2
-  %i.d = getelementptr i8, ptr %i.c, i64 %i.b
+  %i.d = getelementptr i8, ptr %i.c, i64 %i.b     ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d) ]
   %i.e = load i8, ptr %i.d, align 1, !tbaa !7
   %i.f = icmp eq i8 %i.e, 47
   br i1 %i.f, label %bb.c, label %_ZN6google8protobuf8internal16EndsWithTypeNameESt17basic_string_viewIcSt11char_traitsIcEES5_.exit
@@ -650,7 +655,7 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
-attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read, inaccessiblemem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }

@@ -201,7 +201,8 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   br label %_ZN4absl12_GLOBAL__N_18Format64EPcil.exit
 
 _ZN4absl12_GLOBAL__N_18Format64EPcil.exit:        ; preds = %.preheader.i, %.lr.ph.preheader.i
-  %.18.lcssa.i = phi ptr [ %i.t, %.preheader.i ], [ %scevgep18.i, %.lr.ph.preheader.i ] ; 5 uses
+  %.18.lcssa.i = phi ptr [ %i.t, %.preheader.i ], [ %scevgep18.i, %.lr.ph.preheader.i ] ; 6 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.18.lcssa.i) ]
   %i.ad = ptrtoint ptr %i.d to i64
   %i.ae = ptrtoint ptr %.18.lcssa.i to i64
   %i.af = sub i64 %i.ad, %i.ae                    ; 5 uses
@@ -216,7 +217,7 @@ bb.d:                                             ; preds = %_ZN4absl12_GLOBAL__
   unreachable
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i: ; preds = %_ZN4absl12_GLOBAL__N_18Format64EPcil.exit
-  %i.ak = add i64 %i.af, %i.ah                    ; 3 uses
+  %i.ak = add i64 %i.ah, %i.af                    ; 3 uses
   %i.al = load ptr, ptr %0, align 8               ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 8 uses
   %i.an = icmp eq ptr %i.al, %i.am                ; 2 uses
@@ -333,7 +334,8 @@ bb.n:                                             ; preds = %bb.n, %_ZNSt7__cxx1
   br label %_ZN4absl12_GLOBAL__N_18Format64EPcil.exit38
 
 _ZN4absl12_GLOBAL__N_18Format64EPcil.exit38:      ; preds = %.preheader.i33, %.lr.ph.preheader.i35
-  %.18.lcssa.i34 = phi ptr [ %i.bm, %.preheader.i33 ], [ %scevgep18.i37, %.lr.ph.preheader.i35 ] ; 5 uses
+  %.18.lcssa.i34 = phi ptr [ %i.bm, %.preheader.i33 ], [ %scevgep18.i37, %.lr.ph.preheader.i35 ] ; 6 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.18.lcssa.i34) ]
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.o, %_ZN4absl12_GLOBAL__N_18Format64EPcil.exit38

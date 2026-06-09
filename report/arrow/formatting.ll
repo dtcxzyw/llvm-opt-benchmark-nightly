@@ -104,10 +104,10 @@ _ZNK14arrow_vendored17double_conversion23DoubleToStringConverter16ToShortestSing
   br i1 %i.g, label %_ZN14arrow_vendored17double_conversion13StringBuilderD2Ev.exit, label %bb.b
 
 bb.b:                                             ; preds = %_ZNK14arrow_vendored17double_conversion23DoubleToStringConverter16ToShortestSingleEfPNS0_13StringBuilderE.exit
-  %i.h = load ptr, ptr %4, align 8, !tbaa !21
+  %i.h = load ptr, ptr %4, align 8, !tbaa !21, !nonnull !26, !noundef !26
   %i.i = zext nneg i32 %i.f to i64
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.i
-  store i8 0, ptr %i.j, align 1, !tbaa !26
+  store i8 0, ptr %i.j, align 1, !tbaa !27
   br label %_ZN14arrow_vendored17double_conversion13StringBuilderD2Ev.exit
 
 _ZN14arrow_vendored17double_conversion13StringBuilderD2Ev.exit: ; preds = %_ZNK14arrow_vendored17double_conversion23DoubleToStringConverter16ToShortestSingleEfPNS0_13StringBuilderE.exit, %bb.b
@@ -122,10 +122,10 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.m, label %_ZN14arrow_vendored17double_conversion13StringBuilderD2Ev.exit5, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.n = load ptr, ptr %4, align 8, !tbaa !21
+  %i.n = load ptr, ptr %4, align 8, !tbaa !21, !nonnull !26, !noundef !26
   %i.o = zext nneg i32 %i.l to i64
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.o
-  store i8 0, ptr %i.p, align 1, !tbaa !26
+  store i8 0, ptr %i.p, align 1, !tbaa !27
   br label %_ZN14arrow_vendored17double_conversion13StringBuilderD2Ev.exit5
 
 _ZN14arrow_vendored17double_conversion13StringBuilderD2Ev.exit5: ; preds = %bb.c, %bb.d
@@ -159,10 +159,10 @@ _ZNK14arrow_vendored17double_conversion23DoubleToStringConverter10ToShortestEdPN
   br i1 %i.f, label %_ZN14arrow_vendored17double_conversion13StringBuilderD2Ev.exit, label %bb.b
 
 bb.b:                                             ; preds = %_ZNK14arrow_vendored17double_conversion23DoubleToStringConverter10ToShortestEdPNS0_13StringBuilderE.exit
-  %i.g = load ptr, ptr %4, align 8, !tbaa !21
+  %i.g = load ptr, ptr %4, align 8, !tbaa !21, !nonnull !26, !noundef !26
   %i.h = zext nneg i32 %i.e to i64
   %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.h
-  store i8 0, ptr %i.i, align 1, !tbaa !26
+  store i8 0, ptr %i.i, align 1, !tbaa !27
   br label %_ZN14arrow_vendored17double_conversion13StringBuilderD2Ev.exit
 
 _ZN14arrow_vendored17double_conversion13StringBuilderD2Ev.exit: ; preds = %_ZNK14arrow_vendored17double_conversion23DoubleToStringConverter10ToShortestEdPNS0_13StringBuilderE.exit, %bb.b
@@ -177,10 +177,10 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.l, label %_ZN14arrow_vendored17double_conversion13StringBuilderD2Ev.exit5, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.m = load ptr, ptr %4, align 8, !tbaa !21
+  %i.m = load ptr, ptr %4, align 8, !tbaa !21, !nonnull !26, !noundef !26
   %i.n = zext nneg i32 %i.k to i64
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.n
-  store i8 0, ptr %i.o, align 1, !tbaa !26
+  store i8 0, ptr %i.o, align 1, !tbaa !27
   br label %_ZN14arrow_vendored17double_conversion13StringBuilderD2Ev.exit5
 
 _ZN14arrow_vendored17double_conversion13StringBuilderD2Ev.exit5: ; preds = %bb.c, %bb.d
@@ -217,10 +217,10 @@ _ZNK14arrow_vendored17double_conversion23DoubleToStringConverter10ToShortestEdPN
   br i1 %i.h, label %_ZN14arrow_vendored17double_conversion13StringBuilderD2Ev.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZNK14arrow_vendored17double_conversion23DoubleToStringConverter10ToShortestEdPNS0_13StringBuilderE.exit
-  %i.i = load ptr, ptr %4, align 8, !tbaa !21
+  %i.i = load ptr, ptr %4, align 8, !tbaa !21, !nonnull !26, !noundef !26
   %i.j = zext nneg i32 %i.g to i64
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.j
-  store i8 0, ptr %i.k, align 1, !tbaa !26
+  store i8 0, ptr %i.k, align 1, !tbaa !27
   br label %_ZN14arrow_vendored17double_conversion13StringBuilderD2Ev.exit
 
 _ZN14arrow_vendored17double_conversion13StringBuilderD2Ev.exit: ; preds = %_ZNK14arrow_vendored17double_conversion23DoubleToStringConverter10ToShortestEdPNS0_13StringBuilderE.exit, %bb.c
@@ -236,10 +236,10 @@ bb.d:                                             ; preds = %bb.b, %bb.a
   br i1 %i.n, label %_ZN14arrow_vendored17double_conversion13StringBuilderD2Ev.exit5, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.o = load ptr, ptr %4, align 8, !tbaa !21
+  %i.o = load ptr, ptr %4, align 8, !tbaa !21, !nonnull !26, !noundef !26
   %i.p = zext nneg i32 %i.m to i64
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.p
-  store i8 0, ptr %i.q, align 1, !tbaa !26
+  store i8 0, ptr %i.q, align 1, !tbaa !27
   br label %_ZN14arrow_vendored17double_conversion13StringBuilderD2Ev.exit5
 
 _ZN14arrow_vendored17double_conversion13StringBuilderD2Ev.exit5: ; preds = %bb.d, %bb.e
@@ -291,5 +291,6 @@ attributes #8 = { nounwind }
 !23 = !{!22, !4, i64 8}
 !24 = !{!25, !4, i64 16}
 !25 = !{!"_ZTSN14arrow_vendored17double_conversion13StringBuilderE", !22, i64 0, !4, i64 16}
-!26 = !{!5, !5, i64 0}
+!26 = !{}
+!27 = !{!5, !5, i64 0}
 end_hunk_0

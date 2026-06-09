@@ -201,18 +201,19 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 define linkonce_odr void @_ZNSt11_Deque_baseIN4YAML14EmitFromEvents5State5valueESaIS3_EE17_M_initialize_mapEm(ptr noundef nonnull align 8 dereferenceable(80) %0, i64 noundef %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 _ZNSt11_Deque_baseIN4YAML14EmitFromEvents5State5valueESaIS3_EE15_M_allocate_mapEm.exit:
   %i.a = lshr i64 %1, 7                           ; 2 uses
-  %i.b = add nuw nsw i64 %i.a, 1                  ; 2 uses
-  %2 = tail call i64 @llvm.umax.i64(i64 %i.a, i64 5)
-  %.sroa.speculated = add nuw nsw i64 %2, 3       ; 3 uses
+  %i.b = add nuw nsw i64 %i.a, 3
+  %2 = icmp ugt i64 %1, 767
+  %3 = select i1 %2, i64 %i.b, i64 8              ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.sroa.speculated, ptr %i.c, align 8, !tbaa !129
-  %i.d = shl nuw nsw i64 %.sroa.speculated, 3
+  store i64 %3, ptr %i.c, align 8, !tbaa !129
+  %4 = add nuw nsw i64 %i.a, 1                    ; 2 uses
+  %i.d = shl nuw nsw i64 %3, 3
   %i.e = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.d) #18 ; 2 uses
   store ptr %i.e, ptr %0, align 8, !tbaa !121
-  %i.f = sub nsw i64 %.sroa.speculated, %i.b
+  %i.f = sub nsw i64 %3, %4
   %i.g = lshr i64 %i.f, 1
   %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %i.g ; 6 uses
-  %.idx = shl nuw nsw i64 %i.b, 3
+  %.idx = shl nuw nsw i64 %4, 3
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx ; 2 uses
   br label %.lr.ph.i
 

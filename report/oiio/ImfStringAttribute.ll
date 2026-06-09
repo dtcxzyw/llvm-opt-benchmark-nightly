@@ -201,7 +201,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
-  %i.g = load ptr, ptr %i.b, align 8, !tbaa !13
+  %i.g = load ptr, ptr %i.b, align 8, !tbaa !13, !nonnull !20, !noundef !20
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 %indvars.iv
   %i.i = load i8, ptr %i.h, align 1, !tbaa !18
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -209,11 +209,11 @@ bb.a:
   %i.j = load ptr, ptr %1, align 8, !tbaa !7
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   %i.l = load ptr, ptr %i.k, align 8
-  call void %i.l(ptr noundef nonnull align 8 dereferenceable(40) %1, ptr noundef nonnull %i.a, i32 noundef 1), !inline_history !20
+  call void %i.l(ptr noundef nonnull align 8 dereferenceable(40) %1, ptr noundef nonnull %i.a, i32 noundef 1), !inline_history !21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !21
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !22
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -234,15 +234,15 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
-  %i.d = load ptr, ptr %i.a, align 8, !tbaa !13
+  %i.d = load ptr, ptr %i.a, align 8, !tbaa !13, !nonnull !20, !noundef !20
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv
   %i.f = load ptr, ptr %1, align 8, !tbaa !7
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 24
   %i.h = load ptr, ptr %i.g, align 8
-  %i.i = tail call noundef zeroext i1 %i.h(ptr noundef nonnull align 8 dereferenceable(40) %1, ptr noundef nonnull align 1 dereferenceable(1) %i.e, i32 noundef 1), !inline_history !23 ; 0 uses
+  %i.i = tail call noundef zeroext i1 %i.h(ptr noundef nonnull align 8 dereferenceable(40) %1, ptr noundef nonnull align 1 dereferenceable(1) %i.e, i32 noundef 1), !inline_history !24 ; 0 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !24
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !25
 }
 
 declare void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEmc(ptr noundef nonnull align 8 dereferenceable(32), i64 noundef, i8 noundef signext) local_unnamed_addr #1
@@ -296,9 +296,10 @@ attributes #16 = { noreturn }
 !17 = !{!15, !15, i64 0}
 !18 = !{!5, !5, i64 0}
 !19 = distinct !{null}
-!20 = distinct !{null, null}
-!21 = distinct !{!21, !22}
-!22 = !{!"llvm.loop.mustprogress"}
-!23 = distinct !{null, null}
-!24 = distinct !{!24, !22}
+!20 = !{}
+!21 = distinct !{null, null}
+!22 = distinct !{!22, !23}
+!23 = !{!"llvm.loop.mustprogress"}
+!24 = distinct !{null, null}
+!25 = distinct !{!25, !23}
 end_hunk_0

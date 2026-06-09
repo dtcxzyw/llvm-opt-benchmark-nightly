@@ -122,8 +122,8 @@ bb.i:                                             ; preds = %bb.a
   unreachable
 
 bb.j:                                             ; preds = %_ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO19IndirectBindingInfoESt14default_deleteIS3_EESaIS6_EE2atEm.exit, %_ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO18ChainedBindingInfoESt14default_deleteIS3_EESaIS6_EE2atEm.exit, %_ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO15DyldBindingInfoESt14default_deleteIS3_EESaIS6_EE2atEm.exit
-  %.0.in = phi ptr [ %i.n, %_ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO15DyldBindingInfoESt14default_deleteIS3_EESaIS6_EE2atEm.exit ], [ %i.z, %_ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO18ChainedBindingInfoESt14default_deleteIS3_EESaIS6_EE2atEm.exit ], [ %i.al, %_ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO19IndirectBindingInfoESt14default_deleteIS3_EESaIS6_EE2atEm.exit ]
-  %.0 = load ptr, ptr %.0.in, align 8
+  %.0.in = phi ptr [ %i.al, %_ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO19IndirectBindingInfoESt14default_deleteIS3_EESaIS6_EE2atEm.exit ], [ %i.z, %_ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO18ChainedBindingInfoESt14default_deleteIS3_EESaIS6_EE2atEm.exit ], [ %i.n, %_ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO15DyldBindingInfoESt14default_deleteIS3_EESaIS6_EE2atEm.exit ]
+  %.0 = load ptr, ptr %.0.in, align 8, !nonnull !4, !noundef !4
   ret ptr %.0
 }
 
@@ -270,4 +270,5 @@ attributes #13 = { builtin nounwind }
 !1 = !{i32 7, !"uwtable", i32 2}
 !2 = !{i32 7, !"frame-pointer", i32 2}
 !3 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
+!4 = !{}
 end_hunk_0

@@ -201,8 +201,8 @@ bb.bc:                                            ; preds = %_ZN5arrow6ResultISt
   br i1 %.not150, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZNSt12__shared_ptrIN5arrow6BufferELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit80, %bb.bc
-  %.0137.lcssa = phi i64 [ 0, %bb.bc ], [ %i.fp, %_ZNSt12__shared_ptrIN5arrow6BufferELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit80 ]
-  %.0.lcssa = phi i64 [ %2, %bb.bc ], [ %i.fo, %_ZNSt12__shared_ptrIN5arrow6BufferELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit80 ]
+  %.0137.lcssa = phi i64 [ %2, %bb.bc ], [ %i.fo, %_ZNSt12__shared_ptrIN5arrow6BufferELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit80 ]
+  %.0.lcssa = phi i64 [ 0, %bb.bc ], [ %i.fp, %_ZNSt12__shared_ptrIN5arrow6BufferELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit80 ]
   %.026.lcssa = phi ptr [ %3, %bb.bc ], [ %i.fn, %_ZNSt12__shared_ptrIN5arrow6BufferELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit80 ]
   %.lcssa = phi ptr [ %i.ee, %bb.bc ], [ %i.gg, %_ZNSt12__shared_ptrIN5arrow6BufferELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit80 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #25
@@ -217,7 +217,7 @@ bb.bc:                                            ; preds = %_ZN5arrow6ResultISt
   store ptr null, ptr %i.ej, align 8, !tbaa !102
   %i.eo = getelementptr inbounds nuw i8, ptr %i.ek, i64 24 ; 2 uses
   %i.ep = load i64, ptr %i.eo, align 8, !tbaa !103
-  %.sroa.speculated = call i64 @llvm.smin.i64(i64 %.0.lcssa, i64 %i.ep) ; 5 uses
+  %.sroa.speculated = call i64 @llvm.smin.i64(i64 %.0137.lcssa, i64 %i.ep) ; 5 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %i.ek, i64 9
   %i.er = load i8, ptr %i.eq, align 1, !tbaa !86, !range !57, !noundef !58
   %i.es = trunc nuw i8 %i.er to i1
@@ -225,18 +225,19 @@ bb.bc:                                            ; preds = %_ZN5arrow6ResultISt
   %i.eu = load ptr, ptr %i.et, align 8
   %i.ev = select i1 %i.es, ptr %i.eu, ptr null, !prof !76
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.026.lcssa, ptr align 1 %i.ev, i64 %.sroa.speculated, i1 false)
-  %i.ew = add nsw i64 %.sroa.speculated, %.0137.lcssa ; 2 uses
+  %i.ew = add nsw i64 %.sroa.speculated, %.0.lcssa ; 2 uses
   %i.ex = load i64, ptr %i.eo, align 8, !tbaa !103 ; 2 uses
   %i.ey = icmp sgt i64 %i.ex, %.sroa.speculated
   br i1 %i.ey, label %bb.bj, label %bb.cm
 
 .lr.ph:                                           ; preds = %bb.bc, %_ZNSt12__shared_ptrIN5arrow6BufferELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit80
-  %i.ez = phi ptr [ %i.gh, %_ZNSt12__shared_ptrIN5arrow6BufferELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit80 ], [ %i.ef, %bb.bc ]
+  %i.ez = phi ptr [ %i.gh, %_ZNSt12__shared_ptrIN5arrow6BufferELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit80 ], [ %i.ef, %bb.bc ] ; 2 uses
   %.025146 = phi i64 [ %i.gf, %_ZNSt12__shared_ptrIN5arrow6BufferELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit80 ], [ 0, %bb.bc ] ; 2 uses
   %.026145 = phi ptr [ %i.fn, %_ZNSt12__shared_ptrIN5arrow6BufferELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit80 ], [ %3, %bb.bc ] ; 2 uses
-  %.0144 = phi i64 [ %i.fo, %_ZNSt12__shared_ptrIN5arrow6BufferELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit80 ], [ %2, %bb.bc ]
-  %.0137143 = phi i64 [ %i.fp, %_ZNSt12__shared_ptrIN5arrow6BufferELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit80 ], [ 0, %bb.bc ]
+  %.0144 = phi i64 [ %i.fp, %_ZNSt12__shared_ptrIN5arrow6BufferELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit80 ], [ 0, %bb.bc ]
+  %.0137143 = phi i64 [ %i.fo, %_ZNSt12__shared_ptrIN5arrow6BufferELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit80 ], [ %2, %bb.bc ]
   %i.fa = getelementptr inbounds nuw [16 x i8], ptr %i.ez, i64 %.025146 ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ez) ]
   %i.fb = load ptr, ptr %i.fa, align 8, !tbaa !102 ; 3 uses
   %i.fc = getelementptr inbounds nuw i8, ptr %i.fa, i64 8
   %i.fd = load ptr, ptr %i.fc, align 8, !tbaa !15 ; 8 uses
@@ -252,8 +253,8 @@ bb.bc:                                            ; preds = %_ZN5arrow6ResultISt
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.026145, ptr align 1 %i.fj, i64 %i.fl, i1 false)
   %i.fm = load i64, ptr %i.fk, align 8, !tbaa !103 ; 3 uses
   %i.fn = getelementptr inbounds i8, ptr %.026145, i64 %i.fm ; 2 uses
-  %i.fo = sub nsw i64 %.0144, %i.fm               ; 2 uses
-  %i.fp = add nsw i64 %i.fm, %.0137143            ; 2 uses
+  %i.fo = sub nsw i64 %.0137143, %i.fm            ; 2 uses
+  %i.fp = add nsw i64 %i.fm, %.0144               ; 2 uses
   %.not.i.i76 = icmp eq ptr %i.fd, null
   br i1 %.not.i.i76, label %_ZNSt12__shared_ptrIN5arrow6BufferELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit80, label %bb.bd
 

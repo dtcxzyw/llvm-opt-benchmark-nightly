@@ -18,17 +18,17 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.e = phi i32 [ %i.b, %.lr.ph ], [ %i.m, %bb.b ]
-  %i.f = load ptr, ptr %i.d, align 8, !tbaa !12
+  %i.f = load ptr, ptr %i.d, align 8, !tbaa !12, !nonnull !13, !noundef !13
   %i.g = sext i32 %i.e to i64
   %i.h = getelementptr [8 x i8], ptr %i.f, i64 %i.g
   %i.i = getelementptr i8, ptr %i.h, i64 -8
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !13
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !14
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !14, !nonnull !13, !noundef !13
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !15
   %i.l = tail call noundef zeroext i1 @_ZN8NWindows5NFile10NDirectory16DeleteFileAlwaysEPKw(ptr noundef %i.k) ; 0 uses
   tail call void @_ZN17CBaseRecordVector10DeleteBackEv(ptr noundef nonnull align 8 dereferenceable(32) %0)
   %i.m = load i32, ptr %i.a, align 4, !tbaa !8    ; 2 uses
   %i.n = icmp eq i32 %i.m, 0
-  br i1 %i.n, label %._crit_edge, label %bb.b, !llvm.loop !17
+  br i1 %i.n, label %._crit_edge, label %bb.b, !llvm.loop !18
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.a
   ret void
@@ -58,10 +58,11 @@ attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "t
 !10 = !{!"any pointer", !6, i64 0}
 !11 = !{!"long", !6, i64 0}
 !12 = !{!9, !10, i64 16}
-!13 = !{!10, !10, i64 0}
-!14 = !{!15, !16, i64 0}
-!15 = !{!"_ZTS11CStringBaseIwE", !16, i64 0, !5, i64 8, !5, i64 12}
-!16 = !{!"p1 wchar_t", !10, i64 0}
-!17 = distinct !{!17, !18}
-!18 = !{!"llvm.loop.mustprogress"}
+!13 = !{}
+!14 = !{!10, !10, i64 0}
+!15 = !{!16, !17, i64 0}
+!16 = !{!"_ZTS11CStringBaseIwE", !17, i64 0, !5, i64 8, !5, i64 12}
+!17 = !{!"p1 wchar_t", !10, i64 0}
+!18 = distinct !{!18, !19}
+!19 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

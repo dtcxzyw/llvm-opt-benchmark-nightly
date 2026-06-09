@@ -201,7 +201,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.aa = shl i64 %index, 3                       ; 2 uses
   %next.gep = getelementptr i8, ptr %i.p, i64 %i.aa ; 2 uses
-  %next.gep12 = getelementptr i8, ptr %i.d, i64 %i.aa ; 2 uses
+  %next.gep12 = getelementptr i8, ptr %i.d, i64 %i.aa ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep12) ]
   %i.ab = getelementptr i8, ptr %next.gep12, i64 16
   %wide.load = load <2 x i64>, ptr %next.gep12, align 8
   %wide.load13 = load <2 x i64>, ptr %i.ab, align 8
@@ -223,7 +224,8 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i.preheader15, %.lr.ph.i.i.i.i
   %.08.i.i.i.i = phi ptr [ %i.ag, %.lr.ph.i.i.i.i ], [ %.08.i.i.i.i.ph, %.lr.ph.i.i.i.i.preheader15 ] ; 2 uses
-  %.sroa.04.07.i.i.i.i = phi ptr [ %i.af, %.lr.ph.i.i.i.i ], [ %.sroa.04.07.i.i.i.i.ph, %.lr.ph.i.i.i.i.preheader15 ] ; 2 uses
+  %.sroa.04.07.i.i.i.i = phi ptr [ %i.af, %.lr.ph.i.i.i.i ], [ %.sroa.04.07.i.i.i.i.ph, %.lr.ph.i.i.i.i.preheader15 ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.04.07.i.i.i.i) ]
   %i.ae = load i64, ptr %.sroa.04.07.i.i.i.i, align 8
   store i64 %i.ae, ptr %.08.i.i.i.i, align 8
   %i.af = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i, i64 8 ; 2 uses

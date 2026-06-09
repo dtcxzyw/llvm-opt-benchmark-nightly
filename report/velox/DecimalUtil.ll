@@ -201,7 +201,7 @@ bb.ap:                                            ; preds = %_ZNKSt17basic_strin
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit.thread: ; preds = %bb.ao, %_ZN8facebook5velox12_GLOBAL__N_122parseDecimalComponentsEPKcmRNS1_17DecimalComponentsE.exit.thread, %bb.ap, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit
   %.not159245 = phi i1 [ false, %bb.ap ], [ false, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit ], [ true, %_ZN8facebook5velox12_GLOBAL__N_122parseDecimalComponentsEPKcmRNS1_17DecimalComponentsE.exit.thread ], [ false, %bb.ao ]
-  %.sroa.22.2145243 = phi ptr [ %.sroa.22.2145242, %bb.ap ], [ %.sroa.22.2145242, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit ], [ %.sroa.22.2145, %_ZN8facebook5velox12_GLOBAL__N_122parseDecimalComponentsEPKcmRNS1_17DecimalComponentsE.exit.thread ], [ %.sroa.22.2145242, %bb.ao ] ; 7 uses
+  %.sroa.22.2145243 = phi ptr [ %.sroa.22.2145242, %bb.ap ], [ %.sroa.22.2145242, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit ], [ %.sroa.22.2145, %_ZN8facebook5velox12_GLOBAL__N_122parseDecimalComponentsEPKcmRNS1_17DecimalComponentsE.exit.thread ], [ %.sroa.22.2145242, %bb.ao ] ; 10 uses
   %.sroa.32.0147241 = phi i64 [ %.sroa.32.0147240, %bb.ap ], [ %.sroa.32.0147240, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit ], [ %.sroa.32.0147, %_ZN8facebook5velox12_GLOBAL__N_122parseDecimalComponentsEPKcmRNS1_17DecimalComponentsE.exit.thread ], [ %.sroa.32.0147240, %bb.ao ] ; 2 uses
   %.sroa.37.1149239 = phi i8 [ %.sroa.37.1149238, %bb.ap ], [ %.sroa.37.1149238, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit ], [ %.sroa.37.1149, %_ZN8facebook5velox12_GLOBAL__N_122parseDecimalComponentsEPKcmRNS1_17DecimalComponentsE.exit.thread ], [ %.sroa.37.1149238, %bb.ao ]
   %.sroa.13.2151237 = phi i64 [ %.sroa.13.2151236, %bb.ap ], [ %.sroa.13.2151236, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit ], [ %.sroa.13.2151, %_ZN8facebook5velox12_GLOBAL__N_122parseDecimalComponentsEPKcmRNS1_17DecimalComponentsE.exit.thread ], [ %.sroa.13.2151236, %bb.ao ] ; 3 uses
@@ -223,6 +223,7 @@ bb.aq:                                            ; preds = %_ZNKSt17basic_strin
 bb.ar:                                            ; preds = %bb.aq
   %i.et = sext i32 %2 to i64                      ; 2 uses
   %i.eu = getelementptr inbounds nuw i8, ptr %.sroa.22.2145243, i64 %i.et
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.22.2145243) ]
   %i.ev = load i8, ptr %i.eu, align 1, !tbaa !13
   %i.ew = icmp sgt i8 %i.ev, 52
   br label %.sink.split
@@ -244,6 +245,7 @@ bb.at:                                            ; preds = %bb.as
   br i1 %i.fa, label %bb.au, label %.sink.split
 
 bb.au:                                            ; preds = %bb.at
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.22.2145243) ]
   %i.fb = load i8, ptr %.sroa.22.2145243, align 1, !tbaa !13
   %i.fc = icmp sgt i8 %i.fb, 52
   br label %.sink.split
@@ -252,6 +254,7 @@ bb.av:                                            ; preds = %bb.as
   %i.fd = add nsw i32 %2, %.sroa.32.32.extract.trunc
   %i.fe = sext i32 %i.fd to i64                   ; 2 uses
   %i.ff = getelementptr inbounds nuw i8, ptr %.sroa.22.2145243, i64 %i.fe
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.22.2145243) ]
   %i.fg = load i8, ptr %i.ff, align 1, !tbaa !13
   %i.fh = icmp sgt i8 %i.fg, 52
   br label %.sink.split
