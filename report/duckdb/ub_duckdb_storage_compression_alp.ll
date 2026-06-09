@@ -201,7 +201,7 @@ bb.g:                                             ; preds = %bb.f
   %i.aj = fdiv double %i.ad, %i.ai
   %i.ak = call double @llvm.ceil.f64(double %i.aj)
   %i.al = fptoui double %i.ak to i32              ; 2 uses
-  %.sroa.2.0.insert.ext.i = zext i32 %i.ah to i64 ; 2 uses
+  %.sroa.2.0.insert.ext.i = zext i32 %i.ah to i64
   %.sroa.0.0.insert.ext.i = zext i32 %i.ac to i64 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
@@ -487,12 +487,7 @@ _ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIfEEvPT_PKtmm.exit.loopexit1
   br i1 %epil.iter.cmp.not, label %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIfEEvPT_PKtmm.exit, label %.lr.ph.i8.i.epil, !llvm.loop !161
 
 _ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIfEEvPT_PKtmm.exit: ; preds = %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIfEEvPT_PKtmm.exit.loopexit164.unr-lcssa, %.lr.ph.i8.i.epil, %bb.q, %._crit_edge
-  br i1 %.not.i.i.i.i.i, label %._crit_edge133, label %.lr.ph132.preheader
-
-.lr.ph132.preheader:                              ; preds = %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIfEEvPT_PKtmm.exit
-  %7 = add nsw i64 %.sroa.0.0.insert.ext.i, -1
-  %8 = udiv i64 %7, %.sroa.2.0.insert.ext.i
-  br label %.lr.ph132
+  br i1 %.not.i.i.i.i.i, label %._crit_edge133, label %.lr.ph132
 
 ._crit_edge133:                                   ; preds = %bb.ac, %.preheader122, %.preheader, %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIfEEvPT_PKtmm.exit
   %i.ed = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
@@ -519,9 +514,9 @@ bb.aa:                                            ; preds = %._crit_edge133
   invoke void @_ZNSt6vectorIN6duckdb6vectorIfLb1ESaIfEEESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %i.em, ptr %i.ee, ptr noundef nonnull align 8 dereferenceable(24) %5)
           to label %_ZNSt6vectorIN6duckdb6vectorIfLb1ESaIfEEESaIS3_EE9push_backEOS3_.exit unwind label %bb.au
 
-.lr.ph132:                                        ; preds = %.lr.ph132.preheader, %bb.ac
-  %.0131 = phi i64 [ %i.er, %bb.ac ], [ 0, %.lr.ph132.preheader ] ; 2 uses
-  %.054130 = phi i64 [ %i.eq, %bb.ac ], [ 0, %.lr.ph132.preheader ] ; 3 uses
+.lr.ph132:                                        ; preds = %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIfEEvPT_PKtmm.exit, %bb.ac
+  %.0131 = phi i64 [ %i.er, %bb.ac ], [ 0, %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIfEEvPT_PKtmm.exit ] ; 2 uses
+  %.054130 = phi i64 [ %i.eq, %bb.ac ], [ 0, %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIfEEvPT_PKtmm.exit ] ; 2 uses
   %i.en = invoke noundef nonnull align 4 dereferenceable(4) ptr @_ZN6duckdb6vectorIfLb1ESaIfEEixEm(ptr noundef nonnull align 8 dereferenceable(24) %5, i64 noundef %.0131)
           to label %bb.ab unwind label %bb.ad
 
@@ -533,9 +528,9 @@ bb.ab:                                            ; preds = %.lr.ph132
 bb.ac:                                            ; preds = %bb.ab
   store float %i.eo, ptr %i.ep, align 4, !tbaa !149
   %i.eq = add nuw nsw i64 %.054130, 1
-  %i.er = add nuw nsw i64 %.0131, %.sroa.2.0.insert.ext.i
-  %exitcond139.not = icmp eq i64 %.054130, %8
-  br i1 %exitcond139.not, label %._crit_edge133, label %.lr.ph132, !llvm.loop !166
+  %i.er = add nuw nsw i64 %.0131, %.sroa.2.0.insert.ext.i ; 2 uses
+  %7 = icmp samesign ult i64 %i.er, %.sroa.0.0.insert.ext.i
+  br i1 %7, label %.lr.ph132, label %._crit_edge133, !llvm.loop !166
 
 bb.ad:                                            ; preds = %bb.ab, %.lr.ph132
   %i.es = landingpad { ptr, i32 }
@@ -938,7 +933,7 @@ bb.g:                                             ; preds = %bb.f
   %i.aj = fdiv double %i.ad, %i.ai
   %i.ak = call double @llvm.ceil.f64(double %i.aj)
   %i.al = fptoui double %i.ak to i32              ; 2 uses
-  %.sroa.2.0.insert.ext.i = zext i32 %i.ah to i64 ; 2 uses
+  %.sroa.2.0.insert.ext.i = zext i32 %i.ah to i64
   %.sroa.0.0.insert.ext.i = zext i32 %i.ac to i64 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
@@ -1224,12 +1219,7 @@ _ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIdEEvPT_PKtmm.exit.loopexit1
   br i1 %epil.iter.cmp.not, label %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIdEEvPT_PKtmm.exit, label %.lr.ph.i8.i.epil, !llvm.loop !262
 
 _ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIdEEvPT_PKtmm.exit: ; preds = %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIdEEvPT_PKtmm.exit.loopexit164.unr-lcssa, %.lr.ph.i8.i.epil, %bb.q, %._crit_edge
-  br i1 %.not.i.i.i.i.i, label %._crit_edge133, label %.lr.ph132.preheader
-
-.lr.ph132.preheader:                              ; preds = %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIdEEvPT_PKtmm.exit
-  %7 = add nsw i64 %.sroa.0.0.insert.ext.i, -1
-  %8 = udiv i64 %7, %.sroa.2.0.insert.ext.i
-  br label %.lr.ph132
+  br i1 %.not.i.i.i.i.i, label %._crit_edge133, label %.lr.ph132
 
 ._crit_edge133:                                   ; preds = %bb.ac, %.preheader122, %.preheader, %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIdEEvPT_PKtmm.exit
   %i.ed = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
@@ -1256,9 +1246,9 @@ bb.aa:                                            ; preds = %._crit_edge133
   invoke void @_ZNSt6vectorIN6duckdb6vectorIdLb1ESaIdEEESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %i.em, ptr %i.ee, ptr noundef nonnull align 8 dereferenceable(24) %5)
           to label %_ZNSt6vectorIN6duckdb6vectorIdLb1ESaIdEEESaIS3_EE9push_backEOS3_.exit unwind label %bb.au
 
-.lr.ph132:                                        ; preds = %.lr.ph132.preheader, %bb.ac
-  %.0131 = phi i64 [ %i.er, %bb.ac ], [ 0, %.lr.ph132.preheader ] ; 2 uses
-  %.054130 = phi i64 [ %i.eq, %bb.ac ], [ 0, %.lr.ph132.preheader ] ; 3 uses
+.lr.ph132:                                        ; preds = %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIdEEvPT_PKtmm.exit, %bb.ac
+  %.0131 = phi i64 [ %i.er, %bb.ac ], [ 0, %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIdEEvPT_PKtmm.exit ] ; 2 uses
+  %.054130 = phi i64 [ %i.eq, %bb.ac ], [ 0, %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIdEEvPT_PKtmm.exit ] ; 2 uses
   %i.en = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN6duckdb6vectorIdLb1ESaIdEEixEm(ptr noundef nonnull align 8 dereferenceable(24) %5, i64 noundef %.0131)
           to label %bb.ab unwind label %bb.ad
 
@@ -1270,9 +1260,9 @@ bb.ab:                                            ; preds = %.lr.ph132
 bb.ac:                                            ; preds = %bb.ab
   store double %i.eo, ptr %i.ep, align 8, !tbaa !255
   %i.eq = add nuw nsw i64 %.054130, 1
-  %i.er = add nuw nsw i64 %.0131, %.sroa.2.0.insert.ext.i
-  %exitcond139.not = icmp eq i64 %.054130, %8
-  br i1 %exitcond139.not, label %._crit_edge133, label %.lr.ph132, !llvm.loop !266
+  %i.er = add nuw nsw i64 %.0131, %.sroa.2.0.insert.ext.i ; 2 uses
+  %7 = icmp samesign ult i64 %i.er, %.sroa.0.0.insert.ext.i
+  br i1 %7, label %.lr.ph132, label %._crit_edge133, !llvm.loop !266
 
 bb.ad:                                            ; preds = %bb.ab, %.lr.ph132
   %i.es = landingpad { ptr, i32 }

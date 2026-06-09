@@ -201,7 +201,7 @@ _vp_remove_floor.exit:                            ; preds = %.preheader.i427, %.
   %i.aep = load i32, ptr %i.cr, align 8           ; 6 uses
   %i.aeq = load ptr, ptr %i.zw, align 8           ; 4 uses
   %i.aer = getelementptr inbounds nuw i8, ptr %i.aeq, i64 512
-  %i.aes = load i32, ptr %i.aer, align 8          ; 7 uses
+  %i.aes = load i32, ptr %i.aer, align 8          ; 5 uses
   %i.aet = getelementptr inbounds nuw i8, ptr %i.aeq, i64 508
   %i.aeu = load i32, ptr %i.aet, align 4
   %spec.select.i435 = call i32 @llvm.smin.i32(i32 %i.aeu, i32 %i.aep) ; 7 uses
@@ -265,33 +265,15 @@ middle.block750:                                  ; preds = %vector.body746
   br i1 %i.afh, label %.preheader85.i, label %.lr.ph.i441
 
 .preheader85.i:                                   ; preds = %.lr.ph.i441.prol.loopexit, %.lr.ph.i441, %middle.block750, %.preheader87.i
-  %.076.lcssa.i = phi i32 [ 0, %.preheader87.i ], [ %spec.select.i435, %middle.block750 ], [ %spec.select.i435, %.lr.ph.i441 ], [ %spec.select.i435, %.lr.ph.i441.prol.loopexit ] ; 6 uses
-  %i.afi = add nsw i32 %.076.lcssa.i, %i.aes      ; 2 uses
+  %.076.lcssa.i = phi i32 [ 0, %.preheader87.i ], [ %spec.select.i435, %middle.block750 ], [ %spec.select.i435, %.lr.ph.i441 ], [ %spec.select.i435, %.lr.ph.i441.prol.loopexit ] ; 3 uses
+  %i.afi = add nsw i32 %.076.lcssa.i, %i.aes      ; 3 uses
   %.not83102.i = icmp sgt i32 %i.afi, %i.aep
   br i1 %.not83102.i, label %.loopexit86.i, label %.preheader84.lr.ph.i
 
 .preheader84.lr.ph.i:                             ; preds = %.preheader85.i
   %i.afj = icmp sgt i32 %i.aes, 0
   %i.afk = getelementptr inbounds nuw i8, ptr %i.aeq, i64 520
-  br i1 %i.afj, label %.preheader84.us.preheader.i, label %.preheader84.i.preheader
-
-.preheader84.i.preheader:                         ; preds = %.preheader84.lr.ph.i
-  %1 = shl i32 %i.aes, 1                          ; 2 uses
-  %2 = add i32 %.076.lcssa.i, %1                  ; 2 uses
-  %3 = add i32 %i.aep, 1                          ; 2 uses
-  %smax = call i32 @llvm.smax.i32(i32 %2, i32 %3)
-  %4 = icmp slt i32 %2, %3                        ; 2 uses
-  %umin.neg = sext i1 %4 to i32
-  %5 = select i1 %4, i32 2, i32 1
-  %6 = add i32 %smax, %umin.neg
-  %7 = add i32 %.076.lcssa.i, %1
-  %8 = sub i32 %6, %7
-  %umax = call i32 @llvm.umax.i32(i32 %i.aes, i32 1)
-  %9 = udiv i32 %8, %umax
-  %10 = add i32 %5, %9
-  %11 = mul i32 %i.aes, %10
-  %12 = add i32 %.076.lcssa.i, %11
-  br label %.loopexit86.i
+  br i1 %i.afj, label %.preheader84.us.preheader.i, label %.preheader84.i
 
 .preheader84.us.preheader.i:                      ; preds = %.preheader84.lr.ph.i
   %i.afl = zext nneg i32 %i.aes to i64            ; 6 uses
@@ -525,8 +507,14 @@ bb.bl:                                            ; preds = %bb.bl, %.lr.ph101.u
   %exitcond.not.i444.3 = icmp eq i64 %indvars.iv.next.i443.3, %wide.trip.count.i440
   br i1 %exitcond.not.i444.3, label %.preheader85.i, label %.lr.ph.i441, !llvm.loop !898
 
-.loopexit86.i:                                    ; preds = %.loopexit.us.i, %.preheader84.i.preheader, %.preheader85.i, %_vp_remove_floor.exit
-  %.278.i = phi i32 [ 0, %_vp_remove_floor.exit ], [ %.076.lcssa.i, %.preheader85.i ], [ %12, %.preheader84.i.preheader ], [ %i.aio, %.loopexit.us.i ] ; 2 uses
+.preheader84.i:                                   ; preds = %.preheader84.lr.ph.i, %.preheader84.i
+  %1 = phi i32 [ %2, %.preheader84.i ], [ %i.afi, %.preheader84.lr.ph.i ] ; 2 uses
+  %2 = add nsw i32 %1, %i.aes                     ; 2 uses
+  %.not83.i = icmp sgt i32 %2, %i.aep
+  br i1 %.not83.i, label %.loopexit86.i, label %.preheader84.i, !llvm.loop !604
+
+.loopexit86.i:                                    ; preds = %.preheader84.i, %.loopexit.us.i, %.preheader85.i, %_vp_remove_floor.exit
+  %.278.i = phi i32 [ 0, %_vp_remove_floor.exit ], [ %.076.lcssa.i, %.preheader85.i ], [ %i.aio, %.loopexit.us.i ], [ %1, %.preheader84.i ] ; 2 uses
   %i.ajr = icmp slt i32 %.278.i, %i.aep
   br i1 %i.ajr, label %.lr.ph120.preheader.i, label %_vp_noise_normalize.exit
 

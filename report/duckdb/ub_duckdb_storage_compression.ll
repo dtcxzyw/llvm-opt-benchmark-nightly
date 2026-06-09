@@ -201,20 +201,20 @@ bb.f:                                             ; preds = %bb.e
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !429 ; 2 uses
   %i.ab = call noundef i64 @llvm.umin.i64(i64 %2, i64 1024)
   %i.ac = invoke noundef i32 @_ZN6duckdb15NumericCastImplIjmLb0EE7ConvertEm(i64 noundef %i.ab)
-          to label %bb.g unwind label %bb.l       ; 5 uses
+          to label %bb.g unwind label %bb.l       ; 3 uses
 
 bb.g:                                             ; preds = %bb.f
   %i.ad = uitofp i32 %i.ac to double              ; 2 uses
   %i.ae = fmul nnan double %i.ad, 3.125000e-02
   %i.af = call double @llvm.ceil.f64(double %i.ae)
   %i.ag = fptoui double %i.af to i32
-  %i.ah = call noundef i32 @llvm.umax.i32(i32 %i.ag, i32 1) ; 4 uses
+  %i.ah = call noundef i32 @llvm.umax.i32(i32 %i.ag, i32 1) ; 2 uses
   %i.ai = uitofp i32 %i.ah to double
   %i.aj = fdiv double %i.ad, %i.ai
   %i.ak = call double @llvm.ceil.f64(double %i.aj)
   %i.al = fptoui double %i.ak to i32              ; 2 uses
   %.sroa.2.0.insert.ext.i = zext i32 %i.ah to i64 ; 2 uses
-  %.sroa.0.0.insert.ext.i = zext i32 %i.ac to i64 ; 2 uses
+  %.sroa.0.0.insert.ext.i = zext i32 %i.ac to i64 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #30
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   %.not.i.i.i.i.i = icmp eq i32 %i.ac, 0          ; 3 uses
@@ -269,22 +269,10 @@ bb.i:                                             ; preds = %.loopexit109
   br i1 %.not.i, label %.preheader, label %.preheader107
 
 .preheader107:                                    ; preds = %.loopexit108
-  br i1 %.not.i.i.i.i.i, label %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIjEEvPT_PKtmm.exit, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %.preheader107
-  %.lhs.trunc153 = add i32 %i.ac, -1
-  %6 = udiv i32 %.lhs.trunc153, %i.ah
-  %.zext155 = zext i32 %6 to i64
-  br label %.lr.ph
+  br i1 %.not.i.i.i.i.i, label %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIjEEvPT_PKtmm.exit, label %.lr.ph
 
 .preheader:                                       ; preds = %.loopexit108
-  br i1 %.not.i.i.i.i.i, label %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIjEEvPT_PKtmm.exit, label %.lr.ph118.preheader
-
-.lr.ph118.preheader:                              ; preds = %.preheader
-  %.lhs.trunc = add i32 %i.ac, -1
-  %7 = udiv i32 %.lhs.trunc, %i.ah
-  %.zext = zext i32 %7 to i64
-  br label %.lr.ph118
+  br i1 %.not.i.i.i.i.i, label %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIjEEvPT_PKtmm.exit, label %.lr.ph118
 
 bb.j:                                             ; preds = %bb.d
   %i.bc = landingpad { ptr, i32 }
@@ -311,9 +299,9 @@ bb.n:                                             ; preds = %bb.i
           cleanup
   br label %_ZNSt6vectorIjSaIjEED2Ev.exit97
 
-.lr.ph118:                                        ; preds = %.lr.ph118.preheader, %bb.p
-  %.062117 = phi i64 [ %i.bp, %bb.p ], [ 0, %.lr.ph118.preheader ] ; 3 uses
-  %.066116 = phi i64 [ %i.bq, %bb.p ], [ 0, %.lr.ph118.preheader ] ; 3 uses
+.lr.ph118:                                        ; preds = %.preheader, %bb.p
+  %.062117 = phi i64 [ %i.bp, %bb.p ], [ 0, %.preheader ] ; 2 uses
+  %.066116 = phi i64 [ %i.bq, %bb.p ], [ 0, %.preheader ] ; 3 uses
   %i.bh = load ptr, ptr %3, align 8, !tbaa !438
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !439 ; 2 uses
   %.not.i83 = icmp eq ptr %i.bi, null
@@ -335,9 +323,9 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit:    ; preds = %bb.o, %.lr.ph118
 bb.p:                                             ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit
   store i32 %.0.copyload.i, ptr %i.bo, align 4, !tbaa !3
   %i.bp = add nuw nsw i64 %.062117, 1
-  %i.bq = add nuw nsw i64 %.066116, %.sroa.2.0.insert.ext.i
-  %exitcond127.not = icmp eq i64 %.062117, %.zext
-  br i1 %exitcond127.not, label %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIjEEvPT_PKtmm.exit.loopexit, label %.lr.ph118, !llvm.loop !847
+  %i.bq = add nuw nsw i64 %.066116, %.sroa.2.0.insert.ext.i ; 2 uses
+  %6 = icmp samesign ult i64 %i.bq, %.sroa.0.0.insert.ext.i
+  br i1 %6, label %.lr.ph118, label %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIjEEvPT_PKtmm.exit.loopexit, !llvm.loop !847
 
 bb.q:                                             ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit
   %i.br = landingpad { ptr, i32 }
@@ -414,10 +402,10 @@ _ZN6duckdb3alp8AlpUtils33FindFirstValueNotInPositionsArrayIjEET_PKS3_PKtm.exit.i
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIjEEvPT_PKtmm.exit.loopexit160.unr-lcssa, label %.lr.ph.i8.i, !llvm.loop !849
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.x
-  %.163115 = phi i64 [ %i.dp, %bb.x ], [ 0, %.lr.ph.preheader ] ; 4 uses
-  %.064114 = phi i64 [ %i.dq, %bb.x ], [ 0, %.lr.ph.preheader ] ; 3 uses
-  %.065113 = phi i64 [ %i.do, %bb.x ], [ 0, %.lr.ph.preheader ] ; 3 uses
+.lr.ph:                                           ; preds = %.preheader107, %bb.x
+  %.163115 = phi i64 [ %i.dp, %bb.x ], [ 0, %.preheader107 ] ; 3 uses
+  %.064114 = phi i64 [ %i.dq, %bb.x ], [ 0, %.preheader107 ] ; 3 uses
+  %.065113 = phi i64 [ %i.do, %bb.x ], [ 0, %.preheader107 ] ; 3 uses
   %i.cw = load ptr, ptr %3, align 8, !tbaa !438
   %i.cx = load ptr, ptr %i.cw, align 8, !tbaa !439 ; 2 uses
   %.not.i85 = icmp eq ptr %i.cx, null
@@ -462,9 +450,9 @@ bb.x:                                             ; preds = %_ZNK6duckdb21Templa
   store i16 %i.dn, ptr %i.dm, align 2, !tbaa !670
   %i.do = add i64 %.0.i89, %.065113               ; 4 uses
   %i.dp = add nuw nsw i64 %.163115, 1
-  %i.dq = add nuw nsw i64 %.064114, %.sroa.2.0.insert.ext.i
-  %exitcond.not = icmp eq i64 %.163115, %.zext155
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !850
+  %i.dq = add nuw nsw i64 %.064114, %.sroa.2.0.insert.ext.i ; 2 uses
+  %7 = icmp samesign ult i64 %i.dq, %.sroa.0.0.insert.ext.i
+  br i1 %7, label %.lr.ph, label %._crit_edge, !llvm.loop !850
 
 bb.y:                                             ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit86
   %i.dr = landingpad { ptr, i32 }
@@ -867,20 +855,20 @@ bb.f:                                             ; preds = %bb.e
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !429 ; 2 uses
   %i.ab = call noundef i64 @llvm.umin.i64(i64 %2, i64 1024)
   %i.ac = invoke noundef i32 @_ZN6duckdb15NumericCastImplIjmLb0EE7ConvertEm(i64 noundef %i.ab)
-          to label %bb.g unwind label %bb.l       ; 5 uses
+          to label %bb.g unwind label %bb.l       ; 3 uses
 
 bb.g:                                             ; preds = %bb.f
   %i.ad = uitofp i32 %i.ac to double              ; 2 uses
   %i.ae = fmul nnan double %i.ad, 3.125000e-02
   %i.af = call double @llvm.ceil.f64(double %i.ae)
   %i.ag = fptoui double %i.af to i32
-  %i.ah = call noundef i32 @llvm.umax.i32(i32 %i.ag, i32 1) ; 4 uses
+  %i.ah = call noundef i32 @llvm.umax.i32(i32 %i.ag, i32 1) ; 2 uses
   %i.ai = uitofp i32 %i.ah to double
   %i.aj = fdiv double %i.ad, %i.ai
   %i.ak = call double @llvm.ceil.f64(double %i.aj)
   %i.al = fptoui double %i.ak to i32              ; 2 uses
   %.sroa.2.0.insert.ext.i = zext i32 %i.ah to i64 ; 2 uses
-  %.sroa.0.0.insert.ext.i = zext i32 %i.ac to i64 ; 2 uses
+  %.sroa.0.0.insert.ext.i = zext i32 %i.ac to i64 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #30
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   %.not.i.i.i.i.i = icmp eq i32 %i.ac, 0          ; 3 uses
@@ -935,22 +923,10 @@ bb.i:                                             ; preds = %.loopexit109
   br i1 %.not.i, label %.preheader, label %.preheader107
 
 .preheader107:                                    ; preds = %.loopexit108
-  br i1 %.not.i.i.i.i.i, label %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorImEEvPT_PKtmm.exit, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %.preheader107
-  %.lhs.trunc153 = add i32 %i.ac, -1
-  %6 = udiv i32 %.lhs.trunc153, %i.ah
-  %.zext155 = zext i32 %6 to i64
-  br label %.lr.ph
+  br i1 %.not.i.i.i.i.i, label %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorImEEvPT_PKtmm.exit, label %.lr.ph
 
 .preheader:                                       ; preds = %.loopexit108
-  br i1 %.not.i.i.i.i.i, label %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorImEEvPT_PKtmm.exit, label %.lr.ph118.preheader
-
-.lr.ph118.preheader:                              ; preds = %.preheader
-  %.lhs.trunc = add i32 %i.ac, -1
-  %7 = udiv i32 %.lhs.trunc, %i.ah
-  %.zext = zext i32 %7 to i64
-  br label %.lr.ph118
+  br i1 %.not.i.i.i.i.i, label %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorImEEvPT_PKtmm.exit, label %.lr.ph118
 
 bb.j:                                             ; preds = %bb.d
   %i.bc = landingpad { ptr, i32 }
@@ -977,9 +953,9 @@ bb.n:                                             ; preds = %bb.i
           cleanup
   br label %_ZNSt6vectorImSaImEED2Ev.exit97
 
-.lr.ph118:                                        ; preds = %.lr.ph118.preheader, %bb.p
-  %.062117 = phi i64 [ %i.bp, %bb.p ], [ 0, %.lr.ph118.preheader ] ; 3 uses
-  %.066116 = phi i64 [ %i.bq, %bb.p ], [ 0, %.lr.ph118.preheader ] ; 3 uses
+.lr.ph118:                                        ; preds = %.preheader, %bb.p
+  %.062117 = phi i64 [ %i.bp, %bb.p ], [ 0, %.preheader ] ; 2 uses
+  %.066116 = phi i64 [ %i.bq, %bb.p ], [ 0, %.preheader ] ; 3 uses
   %i.bh = load ptr, ptr %3, align 8, !tbaa !438
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !439 ; 2 uses
   %.not.i83 = icmp eq ptr %i.bi, null
@@ -1001,9 +977,9 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit:    ; preds = %bb.o, %.lr.ph118
 bb.p:                                             ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit
   store i64 %.0.copyload.i, ptr %i.bo, align 8, !tbaa !21
   %i.bp = add nuw nsw i64 %.062117, 1
-  %i.bq = add nuw nsw i64 %.066116, %.sroa.2.0.insert.ext.i
-  %exitcond127.not = icmp eq i64 %.062117, %.zext
-  br i1 %exitcond127.not, label %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorImEEvPT_PKtmm.exit.loopexit, label %.lr.ph118, !llvm.loop !889
+  %i.bq = add nuw nsw i64 %.066116, %.sroa.2.0.insert.ext.i ; 2 uses
+  %6 = icmp samesign ult i64 %i.bq, %.sroa.0.0.insert.ext.i
+  br i1 %6, label %.lr.ph118, label %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorImEEvPT_PKtmm.exit.loopexit, !llvm.loop !889
 
 bb.q:                                             ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit
   %i.br = landingpad { ptr, i32 }
@@ -1080,10 +1056,10 @@ _ZN6duckdb3alp8AlpUtils33FindFirstValueNotInPositionsArrayImEET_PKS3_PKtm.exit.i
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorImEEvPT_PKtmm.exit.loopexit160.unr-lcssa, label %.lr.ph.i8.i, !llvm.loop !891
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.x
-  %.163115 = phi i64 [ %i.dp, %bb.x ], [ 0, %.lr.ph.preheader ] ; 4 uses
-  %.064114 = phi i64 [ %i.dq, %bb.x ], [ 0, %.lr.ph.preheader ] ; 3 uses
-  %.065113 = phi i64 [ %i.do, %bb.x ], [ 0, %.lr.ph.preheader ] ; 3 uses
+.lr.ph:                                           ; preds = %.preheader107, %bb.x
+  %.163115 = phi i64 [ %i.dp, %bb.x ], [ 0, %.preheader107 ] ; 3 uses
+  %.064114 = phi i64 [ %i.dq, %bb.x ], [ 0, %.preheader107 ] ; 3 uses
+  %.065113 = phi i64 [ %i.do, %bb.x ], [ 0, %.preheader107 ] ; 3 uses
   %i.cw = load ptr, ptr %3, align 8, !tbaa !438
   %i.cx = load ptr, ptr %i.cw, align 8, !tbaa !439 ; 2 uses
   %.not.i85 = icmp eq ptr %i.cx, null
@@ -1128,9 +1104,9 @@ bb.x:                                             ; preds = %_ZNK6duckdb21Templa
   store i16 %i.dn, ptr %i.dm, align 2, !tbaa !670
   %i.do = add i64 %.0.i89, %.065113               ; 4 uses
   %i.dp = add nuw nsw i64 %.163115, 1
-  %i.dq = add nuw nsw i64 %.064114, %.sroa.2.0.insert.ext.i
-  %exitcond.not = icmp eq i64 %.163115, %.zext155
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !892
+  %i.dq = add nuw nsw i64 %.064114, %.sroa.2.0.insert.ext.i ; 2 uses
+  %7 = icmp samesign ult i64 %i.dq, %.sroa.0.0.insert.ext.i
+  br i1 %7, label %.lr.ph, label %._crit_edge, !llvm.loop !892
 
 bb.y:                                             ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit86
   %i.dr = landingpad { ptr, i32 }
