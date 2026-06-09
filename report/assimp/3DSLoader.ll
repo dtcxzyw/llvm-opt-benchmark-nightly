@@ -201,7 +201,7 @@ bb.fc:                                            ; preds = %bb.fa
   br label %common.resume
 
 _ZN6Assimp12StreamReaderILb0ELb0EE5GetF4Ev.exit235: ; preds = %_ZN6Assimp12StreamReaderILb0ELb0EE5GetF4Ev.exit234
-  %i.vm = load float, ptr %i.vf, align 1          ; 2 uses
+  %i.vm = load float, ptr %i.vf, align 1          ; 5 uses
   store ptr %i.vg, ptr %i.ve, align 8
   %i.vn = load ptr, ptr %i.c, align 8             ; 2 uses
   %i.vo = getelementptr inbounds nuw i8, ptr %i.vn, i64 24 ; 2 uses
@@ -255,8 +255,6 @@ bb.fi:                                            ; preds = %bb.fg
   br label %common.resume
 
 _ZN6Assimp12StreamReaderILb0ELb0EE5GetF4Ev.exit237: ; preds = %_ZN6Assimp12StreamReaderILb0ELb0EE5GetF4Ev.exit236
-  %.sroa.0331.0.vec.insert = insertelement <2 x float> poison, float %i.vm, i64 0
-  %.sroa.0331.4.vec.insert338 = insertelement <2 x float> %.sroa.0331.0.vec.insert, float %i.vw, i64 1 ; 2 uses
   %i.wg = load float, ptr %i.vz, align 1          ; 5 uses
   store ptr %i.wa, ptr %i.vy, align 8
   %i.wh = fcmp une float %i.vm, 0.000000e+00
@@ -264,37 +262,33 @@ _ZN6Assimp12StreamReaderILb0ELb0EE5GetF4Ev.exit237: ; preds = %_ZN6Assimp12Strea
   %or.cond5 = select i1 %i.wh, i1 true, i1 %i.wi
   %i.wj = fcmp une float %i.wg, 0.000000e+00
   %or.cond8 = or i1 %or.cond5, %i.wj
-  %.sroa.0331.4.vec.insert = insertelement <2 x float> %.sroa.0331.4.vec.insert338, float 1.000000e+00, i64 1
-  %.sroa.0331.2 = select i1 %or.cond8, <2 x float> %.sroa.0331.4.vec.insert338, <2 x float> %.sroa.0331.4.vec.insert ; 5 uses
-  %.sroa.0.0.vec.extract8.i = extractelement <2 x float> %.sroa.0331.2, i64 0 ; 2 uses
-  %foldExtExtBinop = fmul <2 x float> %.sroa.0331.2, %.sroa.0331.2
-  %5 = extractelement <2 x float> %foldExtExtBinop, i64 1
-  %i.wk = call float @llvm.fmuladd.f32(float %.sroa.0.0.vec.extract8.i, float %.sroa.0.0.vec.extract8.i, float %5)
+  %.sroa.6333.0 = select i1 %or.cond8, float %i.vw, float 1.000000e+00 ; 4 uses
+  %5 = fmul float %.sroa.6333.0, %.sroa.6333.0
+  %i.wk = call float @llvm.fmuladd.f32(float %i.vm, float %i.vm, float %5)
   %i.wl = call noundef float @llvm.fmuladd.f32(float %i.wg, float %i.wg, float %i.wk) ; 2 uses
   %i.wm = fcmp oeq float %i.wl, 0.000000e+00
   br i1 %i.wm, label %_ZN13aiQuaterniontIfEC2E10aiVector3tIfEf.exit, label %_ZN10aiVector3tIfEdVEf.exit.i.i
 
 _ZN10aiVector3tIfEdVEf.exit.i.i:                  ; preds = %_ZN6Assimp12StreamReaderILb0ELb0EE5GetF4Ev.exit237
   %sqrt.i.i.i = call noundef float @llvm.sqrt.f32(float %i.wl)
-  %i.wn = fdiv float 1.000000e+00, %sqrt.i.i.i    ; 2 uses
-  %6 = insertelement <2 x float> poison, float %i.wn, i64 0
-  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
-  %8 = fmul <2 x float> %.sroa.0331.2, %7
+  %i.wn = fdiv float 1.000000e+00, %sqrt.i.i.i    ; 3 uses
+  %6 = fmul float %i.vm, %i.wn
+  %7 = fmul float %.sroa.6333.0, %i.wn
   %i.wo = fmul float %i.wg, %i.wn
   br label %_ZN13aiQuaterniontIfEC2E10aiVector3tIfEf.exit
 
 _ZN13aiQuaterniontIfEC2E10aiVector3tIfEf.exit:    ; preds = %_ZN6Assimp12StreamReaderILb0ELb0EE5GetF4Ev.exit237, %_ZN10aiVector3tIfEdVEf.exit.i.i
-  %.sroa.7.0.i.a = phi float [ %i.wg, %_ZN6Assimp12StreamReaderILb0ELb0EE5GetF4Ev.exit237 ], [ %i.wo, %_ZN10aiVector3tIfEdVEf.exit.i.i ]
-  %9 = phi <2 x float> [ %.sroa.0331.2, %_ZN6Assimp12StreamReaderILb0ELb0EE5GetF4Ev.exit237 ], [ %8, %_ZN10aiVector3tIfEdVEf.exit.i.i ]
+  %.sroa.0.4.vec.extract.pre-phi.i = phi float [ %.sroa.6333.0, %_ZN6Assimp12StreamReaderILb0ELb0EE5GetF4Ev.exit237 ], [ %7, %_ZN10aiVector3tIfEdVEf.exit.i.i ]
+  %.sroa.7.0.i.a = phi float [ %i.vm, %_ZN6Assimp12StreamReaderILb0ELb0EE5GetF4Ev.exit237 ], [ %6, %_ZN10aiVector3tIfEdVEf.exit.i.i ]
+  %.sroa.7.0.i = phi float [ %i.wg, %_ZN6Assimp12StreamReaderILb0ELb0EE5GetF4Ev.exit237 ], [ %i.wo, %_ZN10aiVector3tIfEdVEf.exit.i.i ]
   %i.wp = fmul float %i.vc, 5.000000e-01          ; 2 uses
-  %i.wq = call noundef float @sinf(float noundef %i.wp) #28 ; 2 uses
+  %i.wq = call noundef float @sinf(float noundef %i.wp) #28 ; 3 uses
   %i.wr = call noundef float @cosf(float noundef %i.wp) #28 ; 2 uses
-  %10 = insertelement <2 x float> poison, float %i.wq, i64 0
-  %11 = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> zeroinitializer
-  %12 = fmul <2 x float> %9, %11                  ; 2 uses
-  %i.ws = fmul float %.sroa.7.0.i.a, %i.wq        ; 2 uses
+  %8 = fmul float %.sroa.7.0.i.a, %i.wq           ; 2 uses
+  %9 = fmul float %.sroa.0.4.vec.extract.pre-phi.i, %i.wq ; 2 uses
+  %i.ws = fmul float %.sroa.7.0.i, %i.wq          ; 2 uses
   %i.wt = load ptr, ptr %i.tn, align 8            ; 5 uses
-  %i.wu = load ptr, ptr %i.uh, align 8            ; 10 uses
+  %i.wu = load ptr, ptr %i.uh, align 8            ; 11 uses
   %i.wv = icmp eq ptr %i.wt, %i.wu                ; 2 uses
   br i1 %i.wv, label %bb.fl, label %bb.fj
 
@@ -318,7 +312,9 @@ bb.fm:                                            ; preds = %bb.fl
   %.sroa.7344.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.wu, i64 8
   store float %i.wr, ptr %.sroa.7344.0..sroa_idx, align 8
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.wu, i64 12
-  store <2 x float> %12, ptr %.sroa.9.0..sroa_idx, align 4
+  store float %8, ptr %.sroa.9.0..sroa_idx, align 4
+  %.sroa.11341.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.wu, i64 16
+  store float %9, ptr %.sroa.11341.0..sroa_idx, align 8
   %.sroa.13351.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.wu, i64 20
   store float %i.ws, ptr %.sroa.13351.0..sroa_idx, align 4
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.wu, i64 24
@@ -350,15 +346,17 @@ _ZNKSt6vectorI9aiQuatKeySaIS0_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.fn
   call void @llvm.assume(i1 %.not.i.i.i240)
   %i.xl = shl nuw nsw i64 %i.xk, 5
   %i.xm = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.xl) #31 ; 5 uses
-  %i.xn = getelementptr inbounds nuw i8, ptr %i.xm, i64 %i.xe ; 5 uses
-  store double %i.us, ptr %i.xn, align 8
-  %.sroa.7344.0..sroa_idx345 = getelementptr inbounds nuw i8, ptr %i.xn, i64 8
-  store float %i.wr, ptr %.sroa.7344.0..sroa_idx345, align 8
-  %.sroa.9.0..sroa_idx347 = getelementptr inbounds nuw i8, ptr %i.xn, i64 12
-  store <2 x float> %12, ptr %.sroa.9.0..sroa_idx347, align 4
-  %.sroa.13351.0..sroa_idx352 = getelementptr inbounds nuw i8, ptr %i.xn, i64 20
+  %10 = getelementptr inbounds nuw i8, ptr %i.xm, i64 %i.xe ; 6 uses
+  store double %i.us, ptr %10, align 8
+  %i.xn = getelementptr inbounds nuw i8, ptr %10, i64 8
+  store float %i.wr, ptr %i.xn, align 8
+  %.sroa.7344.0..sroa_idx345 = getelementptr inbounds nuw i8, ptr %10, i64 12
+  store float %8, ptr %.sroa.7344.0..sroa_idx345, align 4
+  %.sroa.9.0..sroa_idx347 = getelementptr inbounds nuw i8, ptr %10, i64 16
+  store float %9, ptr %.sroa.9.0..sroa_idx347, align 8
+  %.sroa.13351.0..sroa_idx352 = getelementptr inbounds nuw i8, ptr %10, i64 20
   store float %i.ws, ptr %.sroa.13351.0..sroa_idx352, align 4
-  %.sroa.15.0..sroa_idx354 = getelementptr inbounds nuw i8, ptr %i.xn, i64 24
+  %.sroa.15.0..sroa_idx354 = getelementptr inbounds nuw i8, ptr %10, i64 24
   store i32 1, ptr %.sroa.15.0..sroa_idx354, align 8
   br i1 %i.wv, label %_ZNSt6vectorI9aiQuatKeySaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit22.i.i, label %.lr.ph.i.i.i.i.i242
 
