@@ -201,7 +201,6 @@ _RNvMs3_NtCs2TwJzntlzha_11flatbuffers7builderNtB5_17FlatBufferBuilder15ensure_ca
   %i.bg = phi i64 [ %i.ba, %_RNvMs3_NtCs2TwJzntlzha_11flatbuffers7builderNtB5_17FlatBufferBuilder15ensure_capacityCs14kWLkQVSKO_14deltalake_core.exit.i ], [ %i.bd, %.lr.ph.i5.i ] ; 2 uses
   %i.bh = add i64 %i.bg, 4                        ; 3 uses
   store i64 %i.bh, ptr %i.f, align 8, !alias.scope !999
-  %.val.i12 = load ptr, ptr %i.ab, align 8, !alias.scope !999, !nonnull !10, !noundef !10
   %i.bi = sub i64 %.val1.i11, %i.bh               ; 2 uses
   %i.bj = icmp ult i64 %.val1.i11, %i.bh
   br i1 %i.bj, label %bb.e, label %_RNvXsd_NtCs2TwJzntlzha_11flatbuffers7builderShINtNtNtCsbvkFyIu7lgC_4core3ops5index8IndexMutNtB5_17ReverseIndexRangeE9index_mutCs14kWLkQVSKO_14deltalake_core.exit.i, !prof !985
@@ -220,6 +219,7 @@ bb.f:                                             ; preds = %_RNvXsd_NtCs2TwJznt
 
 _RINvMs3_NtCs2TwJzntlzha_11flatbuffers7builderNtB6_17FlatBufferBuilder4pushmECs14kWLkQVSKO_14deltalake_core.exit: ; preds = %_RNvXsd_NtCs2TwJzntlzha_11flatbuffers7builderShINtNtNtCsbvkFyIu7lgC_4core3ops5index8IndexMutNtB5_17ReverseIndexRangeE9index_mutCs14kWLkQVSKO_14deltalake_core.exit.i
   %i.bk = trunc i64 %2 to i32
+  %.val.i12 = load ptr, ptr %i.ab, align 8, !alias.scope !999, !nonnull !10, !noundef !10
   %i.bl = getelementptr inbounds nuw i8, ptr %.val.i12, i64 %i.bi
   store i32 %i.bk, ptr %i.bl, align 1, !alias.scope !1015
   %i.bm = load i64, ptr %i.f, align 8, !alias.scope !999, !noundef !10
@@ -280,8 +280,6 @@ _RNvMs3_NtCs2TwJzntlzha_11flatbuffers7builderNtB5_17FlatBufferBuilder15ensure_ca
   %i.u = phi i64 [ %i.o, %_RNvMs3_NtCs2TwJzntlzha_11flatbuffers7builderNtB5_17FlatBufferBuilder15ensure_capacityCs14kWLkQVSKO_14deltalake_core.exit.i ], [ %i.r, %.lr.ph.i4.i ] ; 3 uses
   %i.v = add i64 %i.u, 4                          ; 3 uses
   store i64 %i.v, ptr %i.c, align 8, !alias.scope !1020
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.val.i = load ptr, ptr %3, align 8, !alias.scope !1020, !nonnull !10, !noundef !10
   %i.w = sub i64 %.val1.i, %i.v                   ; 2 uses
   %i.x = icmp ult i64 %.val1.i, %i.v
   br i1 %i.x, label %bb.b, label %_RNvXsd_NtCs2TwJzntlzha_11flatbuffers7builderShINtNtNtCsbvkFyIu7lgC_4core3ops5index8IndexMutNtB5_17ReverseIndexRangeE9index_mutCs14kWLkQVSKO_14deltalake_core.exit.i, !prof !985
@@ -299,6 +297,8 @@ bb.c:                                             ; preds = %_RNvXsd_NtCs2TwJznt
   unreachable
 
 _RINvMs3_NtCs2TwJzntlzha_11flatbuffers7builderNtB6_17FlatBufferBuilder4pushINtNtB8_10primitives9WIPOffsetINtNtB8_6vector6VectorNtNtNtCsdl0l68gAy31_9arrow_ipc3gen4File5BlockEEECs14kWLkQVSKO_14deltalake_core.exit: ; preds = %_RNvXsd_NtCs2TwJzntlzha_11flatbuffers7builderShINtNtNtCsbvkFyIu7lgC_4core3ops5index8IndexMutNtB5_17ReverseIndexRangeE9index_mutCs14kWLkQVSKO_14deltalake_core.exit.i
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %.val.i = load ptr, ptr %3, align 8, !alias.scope !1020, !nonnull !10, !noundef !10
   %i.y = getelementptr inbounds nuw i8, ptr %.val.i, i64 %i.w
   %i.z = trunc i64 %i.u to i32
   %reass.sub = sub i32 %i.z, %2
@@ -701,8 +701,6 @@ _RNvMs3_NtCs2TwJzntlzha_11flatbuffers7builderNtB5_17FlatBufferBuilder15ensure_ca
   %i.bq = phi i64 [ %i.bk, %_RNvMs3_NtCs2TwJzntlzha_11flatbuffers7builderNtB5_17FlatBufferBuilder15ensure_capacityCs14kWLkQVSKO_14deltalake_core.exit.i.i.i ], [ %i.bn, %.noexc49 ] ; 2 uses
   %i.br = add i64 %i.bq, 2                        ; 3 uses
   store i64 %i.br, ptr %i.ar, align 8, !alias.scope !18802
-  %2 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
-  %.val.i.i.i = load ptr, ptr %2, align 8, !alias.scope !18802, !nonnull !10, !noundef !10
   %i.bs = sub i64 %.val1.i.i.i, %i.br             ; 2 uses
   %i.bt = icmp ult i64 %.val1.i.i.i, %i.br
   br i1 %i.bt, label %.invoke, label %_RNvXsd_NtCs2TwJzntlzha_11flatbuffers7builderShINtNtNtCsbvkFyIu7lgC_4core3ops5index8IndexMutNtB5_17ReverseIndexRangeE9index_mutCs14kWLkQVSKO_14deltalake_core.exit.i.i.i, !prof !985
@@ -730,6 +728,8 @@ _RNvXsd_NtCs2TwJzntlzha_11flatbuffers7builderShINtNtNtCsbvkFyIu7lgC_4core3ops5in
   unreachable
 
 _RINvMs3_NtCs2TwJzntlzha_11flatbuffers7builderNtB6_17FlatBufferBuilder4pushNtNtNtCsdl0l68gAy31_9arrow_ipc3gen6Schema15MetadataVersionECs14kWLkQVSKO_14deltalake_core.exit.i.i: ; preds = %_RNvXsd_NtCs2TwJzntlzha_11flatbuffers7builderShINtNtNtCsbvkFyIu7lgC_4core3ops5index8IndexMutNtB5_17ReverseIndexRangeE9index_mutCs14kWLkQVSKO_14deltalake_core.exit.i.i.i
+  %2 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
+  %.val.i.i.i = load ptr, ptr %2, align 8, !alias.scope !18802, !nonnull !10, !noundef !10
   %i.by = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 %i.bs
   store i16 %i.au, ptr %i.by, align 1, !alias.scope !18811
   %i.bz = load i64, ptr %i.ar, align 8, !alias.scope !18802, !noundef !10
@@ -813,8 +813,6 @@ _RNvMs3_NtCs2TwJzntlzha_11flatbuffers7builderNtB5_17FlatBufferBuilder15ensure_ca
   %i.de = phi i64 [ %i.cy, %_RNvMs3_NtCs2TwJzntlzha_11flatbuffers7builderNtB5_17FlatBufferBuilder15ensure_capacityCs14kWLkQVSKO_14deltalake_core.exit.i.i.i56 ], [ %i.db, %.noexc63 ] ; 3 uses
   %i.df = add i64 %i.de, 4                        ; 3 uses
   store i64 %i.df, ptr %i.ar, align 8, !alias.scope !18819
-  %3 = getelementptr inbounds nuw i8, ptr %i.k, i64 8 ; 11 uses
-  %.val.i.i.i58 = load ptr, ptr %3, align 8, !alias.scope !18819, !nonnull !10, !noundef !10
   %i.dg = sub i64 %.val1.i.i.i57, %i.df           ; 2 uses
   %i.dh = icmp ult i64 %.val1.i.i.i57, %i.df
   br i1 %i.dh, label %.invoke, label %_RNvXsd_NtCs2TwJzntlzha_11flatbuffers7builderShINtNtNtCsbvkFyIu7lgC_4core3ops5index8IndexMutNtB5_17ReverseIndexRangeE9index_mutCs14kWLkQVSKO_14deltalake_core.exit.i.i.i59, !prof !985
@@ -824,7 +822,9 @@ _RNvXsd_NtCs2TwJzntlzha_11flatbuffers7builderShINtNtNtCsbvkFyIu7lgC_4core3ops5in
   br i1 %.not.i8.i.i.i, label %.invoke262, label %_RINvMs3_NtCs2TwJzntlzha_11flatbuffers7builderNtB6_17FlatBufferBuilder4pushINtNtB8_10primitives9WIPOffsetNtNtNtCsdl0l68gAy31_9arrow_ipc3gen6Schema6SchemaEECs14kWLkQVSKO_14deltalake_core.exit.i.i, !prof !49
 
 _RINvMs3_NtCs2TwJzntlzha_11flatbuffers7builderNtB6_17FlatBufferBuilder4pushINtNtB8_10primitives9WIPOffsetNtNtNtCsdl0l68gAy31_9arrow_ipc3gen6Schema6SchemaEECs14kWLkQVSKO_14deltalake_core.exit.i.i: ; preds = %_RNvXsd_NtCs2TwJzntlzha_11flatbuffers7builderShINtNtNtCsbvkFyIu7lgC_4core3ops5index8IndexMutNtB5_17ReverseIndexRangeE9index_mutCs14kWLkQVSKO_14deltalake_core.exit.i.i.i59
-  %i.di = getelementptr inbounds nuw i8, ptr %.val.i.i.i58, i64 %i.dg
+  %3 = getelementptr inbounds nuw i8, ptr %i.k, i64 8 ; 11 uses
+  %.val.i.i.i59 = load ptr, ptr %3, align 8, !alias.scope !18819, !nonnull !10, !noundef !10
+  %i.di = getelementptr inbounds nuw i8, ptr %.val.i.i.i59, i64 %i.dg
   %i.dj = trunc i64 %i.de to i32
   %reass.sub = sub i32 %i.dj, %i.al
   %i.dk = add i32 %reass.sub, 4
@@ -915,7 +915,6 @@ _RNvMs3_NtCs2TwJzntlzha_11flatbuffers7builderNtB5_17FlatBufferBuilder15ensure_ca
   %i.eo = phi i64 [ %i.ei, %_RNvMs3_NtCs2TwJzntlzha_11flatbuffers7builderNtB5_17FlatBufferBuilder15ensure_capacityCs14kWLkQVSKO_14deltalake_core.exit.i.i.i72 ], [ %i.el, %.noexc86 ] ; 3 uses
   %i.ep = add i64 %i.eo, 4                        ; 3 uses
   store i64 %i.ep, ptr %i.ar, align 8, !alias.scope !18838
-  %.val.i.i.i77 = load ptr, ptr %3, align 8, !alias.scope !18838, !nonnull !10, !noundef !10
   %i.eq = sub i64 %.val1.i.i.i76, %i.ep           ; 2 uses
   %i.er = icmp ult i64 %.val1.i.i.i76, %i.ep
   br i1 %i.er, label %.invoke, label %_RNvXsd_NtCs2TwJzntlzha_11flatbuffers7builderShINtNtNtCsbvkFyIu7lgC_4core3ops5index8IndexMutNtB5_17ReverseIndexRangeE9index_mutCs14kWLkQVSKO_14deltalake_core.exit.i.i.i78, !prof !985
@@ -925,7 +924,8 @@ _RNvXsd_NtCs2TwJzntlzha_11flatbuffers7builderShINtNtNtCsbvkFyIu7lgC_4core3ops5in
   br i1 %.not.i8.i.i.i79, label %.invoke262, label %_RINvMs3_NtCs2TwJzntlzha_11flatbuffers7builderNtB6_17FlatBufferBuilder4pushINtNtB8_10primitives9WIPOffsetINtNtB8_6vector6VectorINtB1d_15ForwardsUOffsetNtNtNtCsdl0l68gAy31_9arrow_ipc3gen6Schema8KeyValueEEEECs14kWLkQVSKO_14deltalake_core.exit.i.i, !prof !49
 
 _RINvMs3_NtCs2TwJzntlzha_11flatbuffers7builderNtB6_17FlatBufferBuilder4pushINtNtB8_10primitives9WIPOffsetINtNtB8_6vector6VectorINtB1d_15ForwardsUOffsetNtNtNtCsdl0l68gAy31_9arrow_ipc3gen6Schema8KeyValueEEEECs14kWLkQVSKO_14deltalake_core.exit.i.i: ; preds = %_RNvXsd_NtCs2TwJzntlzha_11flatbuffers7builderShINtNtNtCsbvkFyIu7lgC_4core3ops5index8IndexMutNtB5_17ReverseIndexRangeE9index_mutCs14kWLkQVSKO_14deltalake_core.exit.i.i.i78
-  %i.es = getelementptr inbounds nuw i8, ptr %.val.i.i.i77, i64 %i.eq
+  %.val.i.i.i79 = load ptr, ptr %3, align 8, !alias.scope !18838, !nonnull !10, !noundef !10
+  %i.es = getelementptr inbounds nuw i8, ptr %.val.i.i.i79, i64 %i.eq
   %i.et = trunc i64 %i.eo to i32
   %reass.sub197 = sub i32 %i.et, %.sroa.68.0
   %i.eu = add i32 %reass.sub197, 4
@@ -1007,7 +1007,6 @@ _RNvMs3_NtCs2TwJzntlzha_11flatbuffers7builderNtB5_17FlatBufferBuilder15ensure_ca
   %i.fv = phi i64 [ %i.fp, %_RNvMs3_NtCs2TwJzntlzha_11flatbuffers7builderNtB5_17FlatBufferBuilder15ensure_capacityCs14kWLkQVSKO_14deltalake_core.exit.i.i.i93 ], [ %i.fs, %.noexc108 ] ; 2 uses
   %i.fw = add i64 %i.fv, 4                        ; 3 uses
   store i64 %i.fw, ptr %i.ar, align 8, !alias.scope !18863
-  %.val.i.i.i98 = load ptr, ptr %3, align 8, !alias.scope !18863, !nonnull !10, !noundef !10
   %i.fx = sub i64 %.val1.i.i.i97, %i.fw           ; 2 uses
   %i.fy = icmp ult i64 %.val1.i.i.i97, %i.fw
   br i1 %i.fy, label %.invoke, label %_RNvXsd_NtCs2TwJzntlzha_11flatbuffers7builderShINtNtNtCsbvkFyIu7lgC_4core3ops5index8IndexMutNtB5_17ReverseIndexRangeE9index_mutCs14kWLkQVSKO_14deltalake_core.exit.i.i.i99, !prof !985
@@ -1017,7 +1016,8 @@ _RNvXsd_NtCs2TwJzntlzha_11flatbuffers7builderShINtNtNtCsbvkFyIu7lgC_4core3ops5in
   br i1 %.not.i9.i.i.i100, label %.invoke262, label %_RINvMs3_NtCs2TwJzntlzha_11flatbuffers7builderNtB6_17FlatBufferBuilder4pushmECs14kWLkQVSKO_14deltalake_core.exit.i.i, !prof !49
 
 _RINvMs3_NtCs2TwJzntlzha_11flatbuffers7builderNtB6_17FlatBufferBuilder4pushmECs14kWLkQVSKO_14deltalake_core.exit.i.i: ; preds = %_RNvXsd_NtCs2TwJzntlzha_11flatbuffers7builderShINtNtNtCsbvkFyIu7lgC_4core3ops5index8IndexMutNtB5_17ReverseIndexRangeE9index_mutCs14kWLkQVSKO_14deltalake_core.exit.i.i.i99
-  %i.fz = getelementptr inbounds nuw i8, ptr %.val.i.i.i98, i64 %i.fx
+  %.val.i.i.i100 = load ptr, ptr %3, align 8, !alias.scope !18863, !nonnull !10, !noundef !10
+  %i.fz = getelementptr inbounds nuw i8, ptr %.val.i.i.i100, i64 %i.fx
   store i32 -252645136, ptr %i.fz, align 1, !alias.scope !18872
   %i.ga = load i64, ptr %i.ar, align 8, !alias.scope !18863, !noundef !10 ; 3 uses
   %i.gb = trunc i64 %i.ga to i32                  ; 6 uses
@@ -1420,7 +1420,6 @@ _RNvMs3_NtCs2TwJzntlzha_11flatbuffers7builderNtB5_17FlatBufferBuilder15ensure_ca
   %i.mr = phi i64 [ %i.ml, %_RNvMs3_NtCs2TwJzntlzha_11flatbuffers7builderNtB5_17FlatBufferBuilder15ensure_capacityCs14kWLkQVSKO_14deltalake_core.exit.i.i128 ], [ %i.mo, %.noexc138 ] ; 3 uses
   %i.ms = add i64 %i.mr, 4                        ; 3 uses
   store i64 %i.ms, ptr %i.ar, align 8, !alias.scope !18905
-  %.val.i6.i = load ptr, ptr %3, align 8, !alias.scope !18905, !nonnull !10, !noundef !10
   %i.mt = sub i64 %.val1.i5.i, %i.ms              ; 2 uses
   %i.mu = icmp ult i64 %.val1.i5.i, %i.ms
   br i1 %i.mu, label %.invoke, label %_RNvXsd_NtCs2TwJzntlzha_11flatbuffers7builderShINtNtNtCsbvkFyIu7lgC_4core3ops5index8IndexMutNtB5_17ReverseIndexRangeE9index_mutCs14kWLkQVSKO_14deltalake_core.exit.i.i129, !prof !985
@@ -1430,6 +1429,7 @@ _RNvXsd_NtCs2TwJzntlzha_11flatbuffers7builderShINtNtNtCsbvkFyIu7lgC_4core3ops5in
   br i1 %.not.i8.i.i, label %.invoke262, label %bb.an, !prof !49
 
 bb.an:                                            ; preds = %_RNvXsd_NtCs2TwJzntlzha_11flatbuffers7builderShINtNtNtCsbvkFyIu7lgC_4core3ops5index8IndexMutNtB5_17ReverseIndexRangeE9index_mutCs14kWLkQVSKO_14deltalake_core.exit.i.i129
+  %.val.i6.i = load ptr, ptr %3, align 8, !alias.scope !18905, !nonnull !10, !noundef !10
   %i.mv = getelementptr inbounds nuw i8, ptr %.val.i6.i, i64 %i.mt
   %i.mw = trunc i64 %i.mr to i32
   %reass.sub198 = sub i32 %i.mw, %i.gb
@@ -1832,12 +1832,12 @@ bb.m:                                             ; preds = %.lr.ph
   br i1 %i.bj, label %bb.n, label %_RNvXsg_NtCsfYVtenZkBsn_12arrow_schema6fieldsNtB5_6FieldsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
 bb.n:                                             ; preds = %bb.m
-  %i.bk = getelementptr inbounds nuw i8, ptr %.tr2969, i64 8
+  %i.bk = getelementptr inbounds nuw i8, ptr %.tr68, i64 8
   %.val21.a = load ptr, ptr %i.bk, align 8, !nonnull !10, !noundef !10
-  %i.bl = getelementptr inbounds nuw i8, ptr %.tr68, i64 8
+  %i.bl = getelementptr inbounds nuw i8, ptr %.tr2969, i64 8
   %.val = load ptr, ptr %i.bl, align 8, !nonnull !10, !noundef !10
-  %i.bm = getelementptr inbounds nuw i8, ptr %.val21.a, i64 16
-  %i.bn = getelementptr inbounds nuw i8, ptr %.val, i64 16
+  %i.bm = getelementptr inbounds nuw i8, ptr %.val, i64 16
+  %i.bn = getelementptr inbounds nuw i8, ptr %.val21.a, i64 16
   %i.bo = tail call noundef zeroext i1 @_RNvXs2_NtNtCsbvkFyIu7lgC_4core5slice3cmpINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema5field5FieldEINtB5_14SlicePartialEqBC_E17equal_same_lengthCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull readonly align 8 %i.bn, ptr noundef nonnull readonly align 8 %i.bm, i64 noundef range(i64 0, 1152921504606846976) %.val20)
   br label %_RNvXsg_NtCsfYVtenZkBsn_12arrow_schema6fieldsNtB5_6FieldsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
@@ -1850,12 +1850,12 @@ bb.o:                                             ; preds = %.lr.ph
   br i1 %i.br, label %_RNvXsn_NtCsfYVtenZkBsn_12arrow_schema6fieldsNtB5_11UnionFieldsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit, label %_RNvXsg_NtCsfYVtenZkBsn_12arrow_schema6fieldsNtB5_6FieldsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
 _RNvXsn_NtCsfYVtenZkBsn_12arrow_schema6fieldsNtB5_11UnionFieldsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit: ; preds = %bb.o
-  %i.bs = getelementptr inbounds nuw i8, ptr %.tr2969, i64 8
+  %i.bs = getelementptr inbounds nuw i8, ptr %.tr68, i64 8
   %.val25.a = load ptr, ptr %i.bs, align 8, !nonnull !10, !noundef !10
-  %i.bt = getelementptr inbounds nuw i8, ptr %.tr68, i64 8
+  %i.bt = getelementptr inbounds nuw i8, ptr %.tr2969, i64 8
   %.val23 = load ptr, ptr %i.bt, align 8, !nonnull !10, !noundef !10
-  %i.bu = getelementptr inbounds nuw i8, ptr %.val25.a, i64 16
-  %i.bv = getelementptr inbounds nuw i8, ptr %.val23, i64 16
+  %i.bu = getelementptr inbounds nuw i8, ptr %.val23, i64 16
+  %i.bv = getelementptr inbounds nuw i8, ptr %.val25.a, i64 16
   %i.bw = tail call noundef zeroext i1 @_RNvXs2_NtNtCsbvkFyIu7lgC_4core5slice3cmpTaINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema5field5FieldEEINtB5_14SlicePartialEqBC_E17equal_same_lengthCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull readonly align 8 %i.bv, ptr noundef nonnull readonly align 8 %i.bu, i64 noundef range(i64 0, 576460752303423488) %.val24)
   br i1 %i.bw, label %bb.af, label %_RNvXsg_NtCsfYVtenZkBsn_12arrow_schema6fieldsNtB5_6FieldsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 

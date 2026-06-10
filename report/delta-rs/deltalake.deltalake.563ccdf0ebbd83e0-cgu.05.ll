@@ -201,9 +201,9 @@ bb.a:
   br i1 %i.c, label %bb.b, label %_RNvXs7_NtNtCsbvkFyIu7lgC_4core3cmp5implsReNtB7_9PartialEq2eqCs7p2uQeJxui2_9deltalake.exit
 
 bb.b:                                             ; preds = %bb.a
-  %.val2.a = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
-  %.val = load ptr, ptr %0, align 8, !nonnull !4, !noundef !4
-  %bcmp.i.i = tail call i32 @bcmp(ptr nonnull readonly %.val, ptr nonnull readonly %.val2.a, i64 %.val1), !alias.scope !11600
+  %.val2.a = load ptr, ptr %0, align 8, !nonnull !4, !noundef !4
+  %.val = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
+  %bcmp.i.i = tail call i32 @bcmp(ptr nonnull readonly %.val2.a, ptr nonnull readonly %.val, i64 %.val1), !alias.scope !11600
   %i.d = icmp eq i32 %bcmp.i.i, 0
   br label %_RNvXs7_NtNtCsbvkFyIu7lgC_4core3cmp5implsReNtB7_9PartialEq2eqCs7p2uQeJxui2_9deltalake.exit
 
