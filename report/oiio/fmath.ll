@@ -193,9 +193,9 @@ bb.a:
   br i1 %i.a, label %.lr.ph, label %.preheader
 
 .preheader:                                       ; preds = %_ZN9Imath_3_14halfaSEf.exit.3, %bb.a
-  %.011.lcssa = phi ptr [ %0, %bb.a ], [ %i.fs, %_ZN9Imath_3_14halfaSEf.exit.3 ]
-  %.09.lcssa = phi ptr [ %1, %bb.a ], [ %i.ft, %_ZN9Imath_3_14halfaSEf.exit.3 ]
-  %.0.lcssa = phi i64 [ %2, %bb.a ], [ %i.fr, %_ZN9Imath_3_14halfaSEf.exit.3 ] ; 2 uses
+  %.011.lcssa = phi ptr [ %0, %bb.a ], [ %i.fs, %_ZN9Imath_3_14halfaSEf.exit.3 ] ; 3 uses
+  %.09.lcssa = phi ptr [ %1, %bb.a ], [ %i.ft, %_ZN9Imath_3_14halfaSEf.exit.3 ] ; 3 uses
+  %.0.lcssa = phi i64 [ %2, %bb.a ], [ %i.fr, %_ZN9Imath_3_14halfaSEf.exit.3 ] ; 3 uses
   %.not23 = icmp eq i64 %.0.lcssa, 0
   br i1 %.not23, label %._crit_edge, label %.lr.ph27
 
@@ -533,14 +533,10 @@ _ZN9Imath_3_14halfaSEf.exit.3:                    ; preds = %bb.ao, %bb.an, %bb.
   %i.fu = icmp ugt i64 %i.fr, 3
   br i1 %i.fu, label %.lr.ph, label %.preheader, !llvm.loop !18
 
-.lr.ph27:                                         ; preds = %.preheader, %_ZN9Imath_3_14halfaSEf.exit16.a
-  %.126 = phi i64 [ %5, %_ZN9Imath_3_14halfaSEf.exit16.a ], [ %.0.lcssa, %.preheader ]
-  %.11025 = phi ptr [ %i.fx, %_ZN9Imath_3_14halfaSEf.exit16.a ], [ %.09.lcssa, %.preheader ] ; 2 uses
-  %.11224 = phi ptr [ %i.fv, %_ZN9Imath_3_14halfaSEf.exit16.a ], [ %.011.lcssa, %.preheader ] ; 2 uses
-  %5 = add nsw i64 %.126, -1                      ; 2 uses
-  %i.fv = getelementptr inbounds nuw i8, ptr %.11224, i64 4
-  %i.fw = load float, ptr %.11224, align 4, !tbaa !15 ; 2 uses
-  %i.fx = getelementptr inbounds nuw i8, ptr %.11025, i64 2
+.lr.ph27:                                         ; preds = %.preheader
+  %i.fv = getelementptr inbounds nuw i8, ptr %.011.lcssa, i64 4
+  %i.fw = load float, ptr %.011.lcssa, align 4, !tbaa !15 ; 2 uses
+  %i.fx = getelementptr inbounds nuw i8, ptr %.09.lcssa, i64 2
   %i.fy = bitcast float %i.fw to i32
   %i.fz = tail call float @llvm.fabs.f32(float %i.fw)
   %i.ga = bitcast float %i.fz to i32              ; 10 uses
@@ -548,7 +544,7 @@ _ZN9Imath_3_14halfaSEf.exit.3:                    ; preds = %bb.ao, %bb.an, %bb.
   %i.gc = trunc nuw i32 %i.gb to i16
   %i.gd = and i16 %i.gc, -32768                   ; 3 uses
   %i.ge = icmp samesign ugt i32 %i.ga, 947912703
-  br i1 %i.ge, label %bb.ap, label %bb.av
+  br i1 %i.ge, label %bb.ap, label %5
 
 bb.ap:                                            ; preds = %.lr.ph27
   %i.gf = icmp samesign ugt i32 %i.ga, 2139095039
@@ -557,7 +553,7 @@ bb.ap:                                            ; preds = %.lr.ph27
 bb.aq:                                            ; preds = %bb.ap
   %i.gg = or disjoint i16 %i.gd, 31744            ; 2 uses
   %i.gh = icmp eq i32 %i.ga, 2139095040
-  br i1 %i.gh, label %_ZN9Imath_3_14halfaSEf.exit16.a, label %bb.ar
+  br i1 %i.gh, label %_ZN9Imath_3_14halfaSEf.exit16, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
   %i.gi = lshr i32 %i.ga, 13
@@ -567,7 +563,7 @@ bb.ar:                                            ; preds = %bb.aq
   %i.gm = trunc nuw nsw i32 %i.gj to i16
   %i.gn = or i16 %i.gm, %i.gl
   %i.go = or disjoint i16 %i.gn, %i.gg
-  br label %_ZN9Imath_3_14halfaSEf.exit16.a
+  br label %_ZN9Imath_3_14halfaSEf.exit16
 
 bb.as:                                            ; preds = %bb.ap
   %i.gp = icmp samesign ugt i32 %i.ga, 1199566847
@@ -575,7 +571,7 @@ bb.as:                                            ; preds = %bb.ap
 
 bb.at:                                            ; preds = %bb.as
   %i.gq = or disjoint i16 %i.gd, 31744
-  br label %_ZN9Imath_3_14halfaSEf.exit16.a
+  br label %_ZN9Imath_3_14halfaSEf.exit16
 
 bb.au:                                            ; preds = %bb.as
   %i.gr = add nuw nsw i32 %i.ga, 134221823
@@ -586,21 +582,69 @@ bb.au:                                            ; preds = %bb.as
   %i.gw = and i32 %i.gb, 32768
   %i.gx = or i32 %i.gv, %i.gw
   %i.gy = trunc i32 %i.gx to i16
-  br label %_ZN9Imath_3_14halfaSEf.exit16.a
+  br label %_ZN9Imath_3_14halfaSEf.exit16
 
-bb.av:                                            ; preds = %.lr.ph27
-  %i.gz = icmp samesign ult i32 %i.ga, 855638017
+5:                                                ; preds = %.lr.ph27
+  %6 = icmp samesign ult i32 %i.ga, 855638017
+  br i1 %6, label %_ZN9Imath_3_14halfaSEf.exit16, label %7
+
+7:                                                ; preds = %5
+  %8 = lshr i32 %i.ga, 23                         ; 2 uses
+  %9 = sub nuw nsw i32 126, %8
+  %10 = and i32 %i.ga, 8388607
+  %11 = or disjoint i32 %10, 8388608              ; 2 uses
+  %12 = add nsw i32 %8, -94
+  %13 = shl i32 %11, %12                          ; 2 uses
+  %14 = lshr i32 %11, %9                          ; 2 uses
+  %15 = and i32 %i.gb, 32768
+  %16 = or i32 %14, %15
+  %17 = trunc nuw i32 %16 to i16                  ; 2 uses
+  %18 = icmp ugt i32 %13, -2147483648
+  br i1 %18, label %22, label %19
+
+19:                                               ; preds = %7
+  %20 = icmp ne i32 %13, -2147483648
+  %21 = and i32 %14, 1
+  %.not.i.i.i13 = icmp eq i32 %21, 0
+  %or.cond.i.i.i14 = select i1 %20, i1 true, i1 %.not.i.i.i13
+  br i1 %or.cond.i.i.i14, label %_ZN9Imath_3_14halfaSEf.exit16, label %22
+
+22:                                               ; preds = %19, %7
+  %23 = add nuw i16 %17, 1
+  br label %_ZN9Imath_3_14halfaSEf.exit16
+
+_ZN9Imath_3_14halfaSEf.exit16:                    ; preds = %bb.aq, %bb.ar, %bb.at, %bb.au, %5, %19, %22
+  %.0.i.i.i15 = phi i16 [ %i.gd, %5 ], [ %i.go, %bb.ar ], [ %i.gq, %bb.at ], [ %i.gy, %bb.au ], [ %i.gg, %bb.aq ], [ %23, %22 ], [ %17, %19 ]
+  store i16 %.0.i.i.i15, ptr %.09.lcssa, align 2, !tbaa !7
+  %.not = icmp eq i64 %.0.lcssa, 1
+  br i1 %.not, label %._crit_edge, label %.lr.ph27.1
+
+.lr.ph27.1:                                       ; preds = %_ZN9Imath_3_14halfaSEf.exit16
+  %24 = getelementptr inbounds nuw i8, ptr %.011.lcssa, i64 8
+  %25 = load float, ptr %i.fv, align 4, !tbaa !15 ; 2 uses
+  %26 = getelementptr inbounds nuw i8, ptr %.09.lcssa, i64 4
+  %27 = bitcast float %25 to i32
+  %28 = tail call float @llvm.fabs.f32(float %25)
+  %29 = bitcast float %28 to i32                  ; 10 uses
+  %30 = lshr i32 %27, 16                          ; 3 uses
+  %31 = trunc nuw i32 %30 to i16
+  %32 = and i16 %31, -32768                       ; 3 uses
+  %33 = icmp samesign ugt i32 %29, 947912703
+  br i1 %33, label %34, label %bb.av
+
+bb.av:                                            ; preds = %.lr.ph27.1
+  %i.gz = icmp samesign ult i32 %29, 855638017
   br i1 %i.gz, label %_ZN9Imath_3_14halfaSEf.exit16.a, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
-  %i.ha = lshr i32 %i.ga, 23                      ; 2 uses
+  %i.ha = lshr i32 %29, 23                        ; 2 uses
   %i.hb = sub nuw nsw i32 126, %i.ha
-  %i.hc = and i32 %i.ga, 8388607
+  %i.hc = and i32 %29, 8388607
   %i.hd = or disjoint i32 %i.hc, 8388608          ; 2 uses
   %i.he = add nsw i32 %i.ha, -94
   %i.hf = shl i32 %i.hd, %i.he                    ; 2 uses
   %i.hg = lshr i32 %i.hd, %i.hb                   ; 2 uses
-  %i.hh = and i32 %i.gb, 32768
+  %i.hh = and i32 %30, 32768
   %i.hi = or i32 %i.hg, %i.hh
   %i.hj = trunc nuw i32 %i.hi to i16              ; 2 uses
   %i.hk = icmp ugt i32 %i.hf, -2147483648
@@ -617,13 +661,134 @@ bb.ay:                                            ; preds = %bb.ax, %bb.aw
   %i.hn = add nuw i16 %i.hj, 1
   br label %_ZN9Imath_3_14halfaSEf.exit16.a
 
-_ZN9Imath_3_14halfaSEf.exit16.a:                  ; preds = %bb.aq, %bb.ar, %bb.at, %bb.au, %bb.av, %bb.ax, %bb.ay
-  %.0.i.i.i15.a = phi i16 [ %i.gd, %bb.av ], [ %i.go, %bb.ar ], [ %i.gq, %bb.at ], [ %i.gy, %bb.au ], [ %i.gg, %bb.aq ], [ %i.hn, %bb.ay ], [ %i.hj, %bb.ax ]
-  store i16 %.0.i.i.i15.a, ptr %.11025, align 2, !tbaa !7
-  %.not.a = icmp eq i64 %5, 0
-  br i1 %.not.a, label %._crit_edge, label %.lr.ph27, !llvm.loop !19
+34:                                               ; preds = %.lr.ph27.1
+  %35 = icmp samesign ugt i32 %29, 2139095039
+  br i1 %35, label %49, label %36, !prof !17
 
-._crit_edge:                                      ; preds = %_ZN9Imath_3_14halfaSEf.exit16.a, %.preheader
+36:                                               ; preds = %34
+  %37 = icmp samesign ugt i32 %29, 1199566847
+  br i1 %37, label %47, label %38, !prof !17
+
+38:                                               ; preds = %36
+  %39 = add nuw nsw i32 %29, 134221823
+  %40 = lshr i32 %29, 13
+  %41 = and i32 %40, 1
+  %42 = add nuw nsw i32 %39, %41
+  %43 = lshr i32 %42, 13
+  %44 = and i32 %30, 32768
+  %45 = or i32 %43, %44
+  %46 = trunc i32 %45 to i16
+  br label %_ZN9Imath_3_14halfaSEf.exit16.a
+
+47:                                               ; preds = %36
+  %48 = or disjoint i16 %32, 31744
+  br label %_ZN9Imath_3_14halfaSEf.exit16.a
+
+49:                                               ; preds = %34
+  %50 = or disjoint i16 %32, 31744                ; 2 uses
+  %51 = icmp eq i32 %29, 2139095040
+  br i1 %51, label %_ZN9Imath_3_14halfaSEf.exit16.a, label %52
+
+52:                                               ; preds = %49
+  %53 = lshr i32 %29, 13
+  %54 = and i32 %53, 1023                         ; 2 uses
+  %55 = icmp eq i32 %54, 0
+  %56 = zext i1 %55 to i16
+  %57 = trunc nuw nsw i32 %54 to i16
+  %58 = or i16 %57, %56
+  %59 = or disjoint i16 %58, %50
+  br label %_ZN9Imath_3_14halfaSEf.exit16.a
+
+_ZN9Imath_3_14halfaSEf.exit16.a:                  ; preds = %52, %49, %47, %38, %bb.ay, %bb.ax, %bb.av
+  %.0.i.i.i15.a = phi i16 [ %32, %bb.av ], [ %59, %52 ], [ %48, %47 ], [ %46, %38 ], [ %50, %49 ], [ %i.hn, %bb.ay ], [ %i.hj, %bb.ax ]
+  store i16 %.0.i.i.i15.a, ptr %i.fx, align 2, !tbaa !7
+  %.not.a = icmp eq i64 %.0.lcssa, 2
+  br i1 %.not.a, label %._crit_edge, label %.lr.ph27.2
+
+.lr.ph27.2:                                       ; preds = %_ZN9Imath_3_14halfaSEf.exit16.a
+  %60 = load float, ptr %24, align 4, !tbaa !15   ; 2 uses
+  %61 = bitcast float %60 to i32
+  %62 = tail call float @llvm.fabs.f32(float %60)
+  %63 = bitcast float %62 to i32                  ; 10 uses
+  %64 = lshr i32 %61, 16                          ; 3 uses
+  %65 = trunc nuw i32 %64 to i16
+  %66 = and i16 %65, -32768                       ; 3 uses
+  %67 = icmp samesign ugt i32 %63, 947912703
+  br i1 %67, label %87, label %68
+
+68:                                               ; preds = %.lr.ph27.2
+  %69 = icmp samesign ult i32 %63, 855638017
+  br i1 %69, label %_ZN9Imath_3_14halfaSEf.exit16.2, label %70
+
+70:                                               ; preds = %68
+  %71 = lshr i32 %63, 23                          ; 2 uses
+  %72 = sub nuw nsw i32 126, %71
+  %73 = and i32 %63, 8388607
+  %74 = or disjoint i32 %73, 8388608              ; 2 uses
+  %75 = add nsw i32 %71, -94
+  %76 = shl i32 %74, %75                          ; 2 uses
+  %77 = lshr i32 %74, %72                         ; 2 uses
+  %78 = and i32 %64, 32768
+  %79 = or i32 %77, %78
+  %80 = trunc nuw i32 %79 to i16                  ; 2 uses
+  %81 = icmp ugt i32 %76, -2147483648
+  br i1 %81, label %85, label %82
+
+82:                                               ; preds = %70
+  %83 = icmp ne i32 %76, -2147483648
+  %84 = and i32 %77, 1
+  %.not.i.i.i13.2 = icmp eq i32 %84, 0
+  %or.cond.i.i.i14.2 = select i1 %83, i1 true, i1 %.not.i.i.i13.2
+  br i1 %or.cond.i.i.i14.2, label %_ZN9Imath_3_14halfaSEf.exit16.2, label %85
+
+85:                                               ; preds = %82, %70
+  %86 = add nuw i16 %80, 1
+  br label %_ZN9Imath_3_14halfaSEf.exit16.2
+
+87:                                               ; preds = %.lr.ph27.2
+  %88 = icmp samesign ugt i32 %63, 2139095039
+  br i1 %88, label %102, label %89, !prof !17
+
+89:                                               ; preds = %87
+  %90 = icmp samesign ugt i32 %63, 1199566847
+  br i1 %90, label %100, label %91, !prof !17
+
+91:                                               ; preds = %89
+  %92 = add nuw nsw i32 %63, 134221823
+  %93 = lshr i32 %63, 13
+  %94 = and i32 %93, 1
+  %95 = add nuw nsw i32 %92, %94
+  %96 = lshr i32 %95, 13
+  %97 = and i32 %64, 32768
+  %98 = or i32 %96, %97
+  %99 = trunc i32 %98 to i16
+  br label %_ZN9Imath_3_14halfaSEf.exit16.2
+
+100:                                              ; preds = %89
+  %101 = or disjoint i16 %66, 31744
+  br label %_ZN9Imath_3_14halfaSEf.exit16.2
+
+102:                                              ; preds = %87
+  %103 = or disjoint i16 %66, 31744               ; 2 uses
+  %104 = icmp eq i32 %63, 2139095040
+  br i1 %104, label %_ZN9Imath_3_14halfaSEf.exit16.2, label %105
+
+105:                                              ; preds = %102
+  %106 = lshr i32 %63, 13
+  %107 = and i32 %106, 1023                       ; 2 uses
+  %108 = icmp eq i32 %107, 0
+  %109 = zext i1 %108 to i16
+  %110 = trunc nuw nsw i32 %107 to i16
+  %111 = or i16 %110, %109
+  %112 = or disjoint i16 %111, %103
+  br label %_ZN9Imath_3_14halfaSEf.exit16.2
+
+_ZN9Imath_3_14halfaSEf.exit16.2:                  ; preds = %105, %102, %100, %91, %85, %82, %68
+  %.0.i.i.i15.2 = phi i16 [ %66, %68 ], [ %112, %105 ], [ %101, %100 ], [ %99, %91 ], [ %103, %102 ], [ %86, %85 ], [ %80, %82 ]
+  store i16 %.0.i.i.i15.2, ptr %26, align 2, !tbaa !7
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %_ZN9Imath_3_14halfaSEf.exit16, %_ZN9Imath_3_14halfaSEf.exit16.a, %_ZN9Imath_3_14halfaSEf.exit16.2, %.preheader
   ret void
 }
 
@@ -678,5 +843,4 @@ attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 !16 = !{!"float", !5, i64 0}
 !17 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !18 = distinct !{!18, !11}
-!19 = distinct !{!19, !11}
 end_hunk_0

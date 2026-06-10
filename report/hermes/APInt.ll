@@ -201,13 +201,13 @@ bb.l:                                             ; preds = %_ZNK4llvh5APInt3ule
   %i.fm = ptrtoint ptr %i.fl to i64
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.fl, ptr nonnull align 8 %i.eu, i64 %i.fk, i1 false), !noalias !208
   %i.fn = lshr i64 %i.fi, 6                       ; 4 uses
-  %i.fo = trunc nuw nsw i64 %i.fn to i32          ; 5 uses
+  %i.fo = trunc nuw nsw i64 %i.fn to i32          ; 4 uses
   %.not.i.i = icmp eq i32 %.0351, 0
   br i1 %.not.i.i, label %bb.o, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.fp = lshr i32 %.0351, 7                      ; 2 uses
-  %.sroa.speculated.i.i = tail call i32 @llvm.umin.i32(i32 %i.fo, i32 %i.fp) ; 12 uses
+  %.sroa.speculated.i.i = tail call i32 @llvm.umin.i32(i32 %i.fo, i32 %i.fp) ; 11 uses
   %i.fq = and i32 %i.ew, 63                       ; 3 uses
   %i.fr = icmp eq i32 %i.fq, 0
   br i1 %i.fr, label %bb.n, label %.preheader.i.i
@@ -222,7 +222,7 @@ bb.m:                                             ; preds = %bb.l
   %i.fv = zext nneg i32 %i.fu to i64              ; 3 uses
   %indvars.iv.next.i1.i = add nsw i64 %i.fn, -1   ; 4 uses
   %indvars.i2.i = trunc nuw nsw i64 %indvars.iv.next.i1.i to i32 ; 2 uses
-  %i.fw = sub nsw i32 %indvars.i2.i, %.sroa.speculated.i.i
+  %i.fw = sub nsw i32 %indvars.i2.i, %.sroa.speculated.i.i ; 2 uses
   %i.fx = zext i32 %i.fw to i64
   %i.fy = getelementptr inbounds nuw [8 x i8], ptr %i.fl, i64 %i.fx
   %i.fz = load i64, ptr %i.fy, align 8, !tbaa !10
@@ -237,10 +237,9 @@ bb.m:                                             ; preds = %bb.l
   %i.ge = sext i32 %i.gd to i64
   %invariant.gep.i = getelementptr [8 x i8], ptr %i.fl, i64 %i.ge ; 3 uses
   %i.gf = add nsw i32 %i.fo, -2
-  %10 = sub nsw i32 %.sroa.speculated.i.i, %i.fo
-  %i.gg = and i32 %10, 1
+  %i.gg = and i32 %i.fw, 1
   %lcmp.mod564.not.not = icmp eq i32 %i.gg, 0
-  br i1 %lcmp.mod564.not.not, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit
+  br i1 %lcmp.mod564.not.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
 .lr.ph.i.prol:                                    ; preds = %.lr.ph.preheader.i
   %gep.i.prol = getelementptr [8 x i8], ptr %invariant.gep.i, i64 %indvars.iv.next.i1.i
@@ -643,7 +642,7 @@ _ZN4llvh5APInt8tcAssignEPmPKmj.exit:              ; preds = %.lr.ph.i.prol.loope
   br i1 %.not.i46, label %_ZN4llvh5APInt11tcShiftLeftEPmjj.exit, label %bb.e
 
 bb.e:                                             ; preds = %_ZN4llvh5APInt8tcAssignEPmPKmj.exit
-  %.sroa.speculated.i = tail call i32 @llvm.umin.i32(i32 %4, i32 %i.r) ; 12 uses
+  %.sroa.speculated.i = tail call i32 @llvm.umin.i32(i32 %4, i32 %i.r) ; 11 uses
   %i.as = icmp eq i32 %i.s, 0
   br i1 %i.as, label %bb.f, label %.preheader.i
 
@@ -657,7 +656,7 @@ bb.e:                                             ; preds = %_ZN4llvh5APInt8tcAs
   %i.aw = zext i32 %4 to i64                      ; 3 uses
   %indvars.iv.next.i4987 = add nsw i64 %i.aw, -1  ; 5 uses
   %indvars.i88 = trunc nuw i64 %indvars.iv.next.i4987 to i32 ; 2 uses
-  %i.ax = sub i32 %indvars.i88, %.sroa.speculated.i
+  %i.ax = sub i32 %indvars.i88, %.sroa.speculated.i ; 2 uses
   %i.ay = zext i32 %i.ax to i64
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.ay
   %i.ba = load i64, ptr %i.az, align 8, !tbaa !10
@@ -672,10 +671,9 @@ bb.e:                                             ; preds = %_ZN4llvh5APInt8tcAs
   %i.bf = sext i32 %i.be to i64
   %invariant.gep = getelementptr [8 x i8], ptr %3, i64 %i.bf ; 3 uses
   %i.bg = add i32 %4, -2
-  %5 = sub i32 %.sroa.speculated.i, %4
-  %i.bh = and i32 %5, 1
+  %i.bh = and i32 %i.ax, 1
   %lcmp.mod153.not.not = icmp eq i32 %i.bh, 0
-  br i1 %lcmp.mod153.not.not, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
+  br i1 %lcmp.mod153.not.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader
   %gep.prol = getelementptr [8 x i8], ptr %invariant.gep, i64 %indvars.iv.next.i4987

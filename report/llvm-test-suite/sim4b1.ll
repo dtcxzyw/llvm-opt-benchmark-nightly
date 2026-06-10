@@ -201,7 +201,7 @@ bb.r:                                             ; preds = %bb.q
   %.3292 = phi ptr [ %i.fn, %bb.r ], [ %.1290895, %.critedge ], [ %.0289, %bb.n ] ; 3 uses
   %i.fo = getelementptr inbounds nuw i8, ptr %.3292, i64 4 ; 3 uses
   %i.fp = load i32, ptr %i.fo, align 4, !tbaa !33 ; 3 uses
-  %i.fq = add i32 %i.fp, -1                       ; 4 uses
+  %i.fq = add i32 %i.fp, -1                       ; 3 uses
   %.not331 = icmp eq i32 %i.fq, 0
   br i1 %.not331, label %.thread546, label %bb.s
 
@@ -209,7 +209,7 @@ bb.s:                                             ; preds = %.critedge.thread
   %spec.select346 = call i32 @llvm.umin.i32(i32 %i.fq, i32 250) ; 12 uses
   %i.fr = shl nuw nsw i32 %spec.select346, 2
   %i.fs = load i32, ptr %.3292, align 4, !tbaa !35 ; 4 uses
-  %i.ft = add i32 %i.fs, -1                       ; 2 uses
+  %i.ft = add i32 %i.fs, -1
   %i.fu = call i32 @llvm.smin.i32(i32 %i.fr, i32 %i.ft) ; 12 uses
   %i.fv = load ptr, ptr %i.o, align 8, !tbaa !21
   %i.fw = zext i32 %i.fp to i64
@@ -222,7 +222,7 @@ bb.s:                                             ; preds = %.critedge.thread
   %i.gd = zext i32 %i.fs to i64
   %i.ge = getelementptr inbounds nuw i8, ptr %i.gc, i64 %i.gd
   %i.gf = getelementptr inbounds i8, ptr %i.ge, i64 -1
-  %i.gg = sext i32 %i.fu to i64                   ; 3 uses
+  %i.gg = sext i32 %i.fu to i64                   ; 4 uses
   %i.gh = sub nsw i64 0, %i.gg
   %i.gi = getelementptr inbounds i8, ptr %i.gf, i64 %i.gh ; 2 uses
   %i.gj = xor i32 %spec.select346, -1
@@ -372,12 +372,7 @@ scalar.ph1113:                                    ; preds = %scalar.ph1113.prehe
   %i.ih = add nsw i32 %i.fu, 2
   %i.ii = add nuw nsw i32 %spec.select346, 2
   %i.ij = sub i64 %i.hm, %i.ho
-  %11 = call i32 @llvm.umin.i32(i32 %i.fq, i32 250)
-  %12 = shl nuw nsw i32 %11, 2
-  %13 = zext nneg i32 %12 to i64
-  %14 = sext i32 %i.ft to i64
-  %smin = call i64 @llvm.smin.i64(i64 %13, i64 %14)
-  %i.ik = add nsw i64 %smin, 1
+  %i.ik = add nsw i64 %i.gg, 1
   %diff.check1099 = icmp ult i64 %i.ij, 32
   br label %bb.w
 
@@ -779,9 +774,6 @@ declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #17
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smin.i64(i64, i64) #5
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
