@@ -1,0 +1,48 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+index 22856c7d25e67..4f3fbb4d2dfb5 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+@@ -3677,8 +3677,14 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+       case BundleAttr::Dereferenceable: {
+         auto [Ptr, _, Count] = getAssumeDereferenceableInfo(OBU);
+ 
+-        if (Count && *Count == 0)
++        if (!Count)
++          break;
++
++        if (*Count == 0 || isDereferenceableAndAlignedPointer(
++                               Ptr, Align(1), APInt(64, *Count),
++                               getSimplifyQuery().getWithInstruction(II)))
+           return CallBase::removeOperandBundleAt(II, Idx);
++
+         break;
+       }
+ 
+diff --git a/llvm/test/Transforms/InstCombine/assume.ll b/llvm/test/Transforms/InstCombine/assume.ll
+index bf073b8d7ce70..e381325c807da 100644
+--- a/llvm/test/Transforms/InstCombine/assume.ll
++++ b/llvm/test/Transforms/InstCombine/assume.ll
+@@ -1257,6 +1257,23 @@ define void @assume_dereferenceable_variable_on_nullptr(i64 %count) {
+   ret void
+ }
+ 
++define void @redundant_assume_dereferenceable_2(ptr dereferenceable(2) %ptr) {
++; CHECK-LABEL: @redundant_assume_dereferenceable_2(
++; CHECK-NEXT:    ret void
++;
++  call void @llvm.assume(i1 true) [ "dereferenceable"(ptr %ptr, i64 2) ]
++  ret void
++}
++
++define void @not_redundant_assume_dereferenceable_2(ptr dereferenceable(1) %ptr) {
++; CHECK-LABEL: @not_redundant_assume_dereferenceable_2(
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "dereferenceable"(ptr [[PTR:%.*]], i64 2) ]
++; CHECK-NEXT:    ret void
++;
++  call void @llvm.assume(i1 true) [ "dereferenceable"(ptr %ptr, i64 2) ]
++  ret void
++}
++
+ declare void @use(i1)
+ declare void @llvm.dbg.value(metadata, metadata, metadata)
+ 
