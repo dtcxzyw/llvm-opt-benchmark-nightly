@@ -201,10 +201,10 @@ bb.i:                                             ; preds = %bb.e
   %i.at = extractvalue { ptr, ptr } %i.ah, 0      ; 4 uses
   %i.au = extractvalue { ptr, ptr } %i.ah, 1      ; 6 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.at) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.au) ]
   %i.av = load ptr, ptr %i.j, align 8, !nonnull !8, !align !12, !noundef !8
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 16
   store atomic i8 0, ptr %i.aw release, align 8
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.au) ]
   %i.ax = load ptr, ptr %i.au, align 8, !invariant.load !8 ; 2 uses
   %.not.i = icmp eq ptr %i.ax, null
   br i1 %.not.i, label %bb.k, label %bb.j
