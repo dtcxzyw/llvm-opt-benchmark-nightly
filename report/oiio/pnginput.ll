@@ -201,17 +201,15 @@ bb.br:                                            ; preds = %._crit_edge
 
 bb.bs:                                            ; preds = %bb.br
   %i.nq = load i32, ptr %i.t, align 4, !tbaa !3
-  %62 = uitofp i32 %i.nq to float
-  %63 = fmul nnan float %62, 2.540000e-02
   %i.nr = load i32, ptr %i.u, align 4, !tbaa !3
   %i.ns = uitofp i32 %i.nr to float
-  %64 = fmul nnan float %i.ns, 2.540000e-02
-  %65 = fmul nnan float %63, 1.000000e+01
-  %66 = call noundef float @llvm.round.f32(float %65)
-  %67 = fdiv float %66, 1.000000e+01
-  %68 = fmul nnan float %64, 1.000000e+01
-  %69 = call noundef float @llvm.round.f32(float %68)
-  %70 = fdiv float %69, 1.000000e+01
+  %62 = uitofp i32 %i.nq to float
+  %63 = insertelement <2 x float> poison, float %62, i64 0
+  %64 = insertelement <2 x float> %63, float %i.ns, i64 1
+  %65 = fmul nnan <2 x float> %64, splat (float 2.540000e-02)
+  %66 = fmul nnan <2 x float> %65, splat (float 1.000000e+01)
+  %67 = call <2 x float> @llvm.round.v2f32(<2 x float> %66)
+  %68 = fdiv <2 x float> %67, splat (float 1.000000e+01) ; 2 uses
   store ptr @.str.75, ptr %54, align 8, !tbaa !70
   %i.nt = getelementptr inbounds nuw i8, ptr %54, i64 8
   store i64 14, ptr %i.nt, align 8, !tbaa !72
@@ -221,7 +219,8 @@ bb.bs:                                            ; preds = %bb.br
   call void @_ZN11OpenImageIO4v3_19ImageSpec9attributeENS0_17basic_string_viewIcSt11char_traitsIcEEES5_(ptr noundef nonnull align 8 dereferenceable(160) %6, ptr noundef nonnull dead_on_return %54, ptr noundef nonnull dead_on_return %55)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.start.p0(ptr nonnull %13)
-  store float %67, ptr %i.f, align 4, !tbaa !133
+  %69 = extractelement <2 x float> %68, i64 0
+  store float %69, ptr %i.f, align 4, !tbaa !133
   store ptr @.str.77, ptr %13, align 8, !tbaa !70
   %i.nv = getelementptr inbounds nuw i8, ptr %13, i64 8
   store i64 11, ptr %i.nv, align 8, !tbaa !72
@@ -230,6 +229,7 @@ bb.bs:                                            ; preds = %bb.br
   call void @llvm.lifetime.end.p0(ptr nonnull %13)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.start.p0(ptr nonnull %12)
+  %70 = extractelement <2 x float> %68, i64 1
   store float %70, ptr %i.e, align 4, !tbaa !133
   store ptr @.str.78, ptr %12, align 8, !tbaa !70
   %i.nw = getelementptr inbounds nuw i8, ptr %12, i64 8
@@ -632,9 +632,6 @@ declare noundef zeroext i1 @_ZN11OpenImageIO4v3_111decode_exifENS0_17basic_strin
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(read)
 declare i32 @tolower(i32 noundef) local_unnamed_addr #27
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.round.f32(float) #24
-
 declare i32 @png_get_bKGD(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: mustprogress uwtable
@@ -1036,6 +1033,9 @@ declare i64 @llvm.smax.i64(i64, i64) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #24
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.round.v2f32(<2 x float>) #24
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

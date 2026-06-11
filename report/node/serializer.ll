@@ -201,6 +201,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.r = icmp eq ptr %i.d, null
+  %2 = insertelement <4 x ptr> <ptr getelementptr inbounds nuw inrange(-16, 184) (i8, ptr @_ZTVN2v88internal10Serializer16ObjectSerializerE, i64 16), ptr poison, ptr poison, ptr poison>, ptr %0, i64 2
   br label %.backedge
 
 ._crit_edge:                                      ; preds = %bb.i, %_ZN2v88internal11HandleScopeD2Ev.exit, %bb.c
@@ -331,8 +332,7 @@ _ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit: ; preds = %.lr.
   store i64 %i.az, ptr %.0.i8, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #22
   %i.bk = load ptr, ptr %i.c, align 8
-  %2 = insertelement <4 x ptr> <ptr getelementptr inbounds nuw inrange(-16, 184) (i8, ptr @_ZTVN2v88internal10Serializer16ObjectSerializerE, i64 16), ptr poison, ptr poison, ptr poison>, ptr %i.bk, i64 1
-  %i.bl = insertelement <4 x ptr> %2, ptr %0, i64 2
+  %i.bl = insertelement <4 x ptr> %2, ptr %i.bk, i64 1
   %i.bm = insertelement <4 x ptr> %i.bl, ptr %.0.i8, i64 3
   store <4 x ptr> %i.bm, ptr %1, align 8
   store ptr %i.m, ptr %i.o, align 8
