@@ -201,7 +201,7 @@ _ZNSt6vectorIPN2v88internal6torque5BlockESaIS4_EED2Ev.exit19: ; preds = %bb.b, %
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN2v88internal6torque12CfgAssembler11OptimizeCfgEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(144) %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca %"class.std::vector.75", align 8    ; 13 uses
+  %1 = alloca %"class.std::vector.75", align 8    ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #23
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   call void @_ZN2v88internal6torque22CountBlockPredecessorsERKNS1_16ControlFlowGraphE(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.75") align 8 %1, ptr noundef nonnull align 8 dereferenceable(112) %i.a)
@@ -235,7 +235,7 @@ bb.a:
   br i1 %i.p, label %.lr.ph.i.i.i.i.i, label %._crit_edge.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %._crit_edge
-  %.val21.val.i.i.i.i.i = load ptr, ptr %1, align 8 ; 4 uses
+  %.val21.val.i.i.i.i.i = load ptr, ptr %1, align 8 ; 8 uses
   %i.q = and i64 %i.n, -32
   %scevgep.i.i.i.i.i = getelementptr i8, ptr %i.k, i64 %i.q ; 2 uses
   br label %bb.b
@@ -296,26 +296,18 @@ bb.f:                                             ; preds = %bb.e
   %.pre-phi67.i.i.i.i.i = phi i64 [ %.pre66.i.i.i.i.i, %._crit_edge.loopexit.i.i.i.i.i ], [ %i.n, %._crit_edge ]
   %.sroa.038.0.lcssa.i.i.i.i.i = phi ptr [ %scevgep.i.i.i.i.i, %._crit_edge.loopexit.i.i.i.i.i ], [ %i.k, %._crit_edge ] ; 5 uses
   %i.ar = ashr exact i64 %.pre-phi67.i.i.i.i.i, 3
+  %.pre92 = load ptr, ptr %1, align 8             ; 7 uses
   switch i64 %i.ar, label %"_ZN2v88internal6torque16ControlFlowGraph14UnplaceBlockIfIZNS1_12CfgAssembler11OptimizeCfgEvE3$_0EEvOT_.exit" [
     i64 3, label %bb.g
-    i64 2, label %._crit_edge._crit_edge.i.i.i.i.i
-    i64 1, label %._crit_edge._crit_edge64.i.i.i.i.i
+    i64 2, label %bb.i
+    i64 1, label %bb.k
   ]
 
-._crit_edge._crit_edge64.i.i.i.i.i:               ; preds = %._crit_edge.i.i.i.i.i
-  %.val.val.pre.i.i.i.i.i = load ptr, ptr %1, align 8
-  br label %bb.k
-
-._crit_edge._crit_edge.i.i.i.i.i:                 ; preds = %._crit_edge.i.i.i.i.i
-  %.val16.val.pre.i.i.i.i.i = load ptr, ptr %1, align 8
-  br label %bb.i
-
 bb.g:                                             ; preds = %._crit_edge.i.i.i.i.i
-  %.val17.val.i.i.i.i.i = load ptr, ptr %1, align 8 ; 2 uses
   %i.as = load ptr, ptr %.sroa.038.0.lcssa.i.i.i.i.i, align 8
   %i.at = getelementptr i8, ptr %i.as, i64 96
   %.val1.i25.i.i.i.i.i = load i64, ptr %i.at, align 8
-  %i.au = getelementptr inbounds nuw [8 x i8], ptr %.val17.val.i.i.i.i.i, i64 %.val1.i25.i.i.i.i.i
+  %i.au = getelementptr inbounds nuw [8 x i8], ptr %.pre92, i64 %.val1.i25.i.i.i.i.i
   %i.av = load i64, ptr %i.au, align 8
   %i.aw = icmp eq i64 %i.av, 0
   br i1 %i.aw, label %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEENS0_5__ops10_Iter_predIZNS4_12CfgAssembler11OptimizeCfgEvE3$_0EEET_SH_SH_T0_.exit.i.i.i", label %bb.h
@@ -324,13 +316,12 @@ bb.h:                                             ; preds = %bb.g
   %i.ax = getelementptr inbounds nuw i8, ptr %.sroa.038.0.lcssa.i.i.i.i.i, i64 8
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %._crit_edge._crit_edge.i.i.i.i.i
-  %.val16.val.i.i.i.i.i = phi ptr [ %.val17.val.i.i.i.i.i, %bb.h ], [ %.val16.val.pre.i.i.i.i.i, %._crit_edge._crit_edge.i.i.i.i.i ] ; 2 uses
-  %.sroa.038.1.i.i.i.i.i = phi ptr [ %i.ax, %bb.h ], [ %.sroa.038.0.lcssa.i.i.i.i.i, %._crit_edge._crit_edge.i.i.i.i.i ] ; 3 uses
+bb.i:                                             ; preds = %._crit_edge.i.i.i.i.i, %bb.h
+  %.sroa.038.1.i.i.i.i.i = phi ptr [ %i.ax, %bb.h ], [ %.sroa.038.0.lcssa.i.i.i.i.i, %._crit_edge.i.i.i.i.i ] ; 3 uses
   %i.ay = load ptr, ptr %.sroa.038.1.i.i.i.i.i, align 8
   %i.az = getelementptr i8, ptr %i.ay, i64 96
   %.val1.i26.i.i.i.i.i = load i64, ptr %i.az, align 8
-  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %.val16.val.i.i.i.i.i, i64 %.val1.i26.i.i.i.i.i
+  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %.pre92, i64 %.val1.i26.i.i.i.i.i
   %i.bb = load i64, ptr %i.ba, align 8
   %i.bc = icmp eq i64 %i.bb, 0
   br i1 %i.bc, label %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEENS0_5__ops10_Iter_predIZNS4_12CfgAssembler11OptimizeCfgEvE3$_0EEET_SH_SH_T0_.exit.i.i.i", label %bb.j
@@ -339,13 +330,12 @@ bb.j:                                             ; preds = %bb.i
   %i.bd = getelementptr inbounds nuw i8, ptr %.sroa.038.1.i.i.i.i.i, i64 8
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.j, %._crit_edge._crit_edge64.i.i.i.i.i
-  %.val.val.i.i.i.i.i = phi ptr [ %.val16.val.i.i.i.i.i, %bb.j ], [ %.val.val.pre.i.i.i.i.i, %._crit_edge._crit_edge64.i.i.i.i.i ]
-  %.sroa.038.2.i.i.i.i.i = phi ptr [ %i.bd, %bb.j ], [ %.sroa.038.0.lcssa.i.i.i.i.i, %._crit_edge._crit_edge64.i.i.i.i.i ] ; 2 uses
+bb.k:                                             ; preds = %._crit_edge.i.i.i.i.i, %bb.j
+  %.sroa.038.2.i.i.i.i.i = phi ptr [ %i.bd, %bb.j ], [ %.sroa.038.0.lcssa.i.i.i.i.i, %._crit_edge.i.i.i.i.i ] ; 2 uses
   %i.be = load ptr, ptr %.sroa.038.2.i.i.i.i.i, align 8
   %i.bf = getelementptr i8, ptr %i.be, i64 96
   %.val1.i27.i.i.i.i.i = load i64, ptr %i.bf, align 8
-  %i.bg = getelementptr inbounds nuw [8 x i8], ptr %.val.val.i.i.i.i.i, i64 %.val1.i27.i.i.i.i.i
+  %i.bg = getelementptr inbounds nuw [8 x i8], ptr %.pre92, i64 %.val1.i27.i.i.i.i.i
   %i.bh = load i64, ptr %i.bg, align 8
   %i.bi = icmp eq i64 %i.bh, 0
   %spec.select.i.i.i.i.i = select i1 %i.bi, ptr %.sroa.038.2.i.i.i.i.i, ptr %i.j
@@ -364,7 +354,8 @@ bb.k:                                             ; preds = %bb.j, %._crit_edge.
   br label %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEENS0_5__ops10_Iter_predIZNS4_12CfgAssembler11OptimizeCfgEvE3$_0EEET_SH_SH_T0_.exit.i.i.i"
 
 "_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEENS0_5__ops10_Iter_predIZNS4_12CfgAssembler11OptimizeCfgEvE3$_0EEET_SH_SH_T0_.exit.i.i.i": ; preds = %bb.b, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEENS0_5__ops10_Iter_predIZNS4_12CfgAssembler11OptimizeCfgEvE3$_0EEET_SH_SH_T0_.exit.i.i.i.loopexit.split.loop.exit", %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEENS0_5__ops10_Iter_predIZNS4_12CfgAssembler11OptimizeCfgEvE3$_0EEET_SH_SH_T0_.exit.i.i.i.loopexit.split.loop.exit101", %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEENS0_5__ops10_Iter_predIZNS4_12CfgAssembler11OptimizeCfgEvE3$_0EEET_SH_SH_T0_.exit.i.i.i.loopexit.split.loop.exit103", %bb.k, %bb.i, %bb.g
-  %.sroa.08.0.in.sroa.speculated.i.i.i.i.i = phi ptr [ %.sroa.038.1.i.i.i.i.i, %bb.i ], [ %spec.select.i.i.i.i.i, %bb.k ], [ %.sroa.038.0.lcssa.i.i.i.i.i, %bb.g ], [ %i.bl, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEENS0_5__ops10_Iter_predIZNS4_12CfgAssembler11OptimizeCfgEvE3$_0EEET_SH_SH_T0_.exit.i.i.i.loopexit.split.loop.exit103" ], [ %i.bj, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEENS0_5__ops10_Iter_predIZNS4_12CfgAssembler11OptimizeCfgEvE3$_0EEET_SH_SH_T0_.exit.i.i.i.loopexit.split.loop.exit" ], [ %i.bk, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEENS0_5__ops10_Iter_predIZNS4_12CfgAssembler11OptimizeCfgEvE3$_0EEET_SH_SH_T0_.exit.i.i.i.loopexit.split.loop.exit101" ], [ %.sroa.038.057.i.i.i.i.i, %bb.b ] ; 4 uses
+  %.val.val.i.i.i.pre89 = phi ptr [ %.pre92, %bb.i ], [ %.pre92, %bb.k ], [ %.pre92, %bb.g ], [ %.val21.val.i.i.i.i.i, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEENS0_5__ops10_Iter_predIZNS4_12CfgAssembler11OptimizeCfgEvE3$_0EEET_SH_SH_T0_.exit.i.i.i.loopexit.split.loop.exit" ], [ %.val21.val.i.i.i.i.i, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEENS0_5__ops10_Iter_predIZNS4_12CfgAssembler11OptimizeCfgEvE3$_0EEET_SH_SH_T0_.exit.i.i.i.loopexit.split.loop.exit103" ], [ %.val21.val.i.i.i.i.i, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEENS0_5__ops10_Iter_predIZNS4_12CfgAssembler11OptimizeCfgEvE3$_0EEET_SH_SH_T0_.exit.i.i.i.loopexit.split.loop.exit101" ], [ %.val21.val.i.i.i.i.i, %bb.b ] ; 2 uses
+  %.sroa.08.0.in.sroa.speculated.i.i.i.i.i = phi ptr [ %.sroa.038.1.i.i.i.i.i, %bb.i ], [ %spec.select.i.i.i.i.i, %bb.k ], [ %.sroa.038.0.lcssa.i.i.i.i.i, %bb.g ], [ %i.bj, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEENS0_5__ops10_Iter_predIZNS4_12CfgAssembler11OptimizeCfgEvE3$_0EEET_SH_SH_T0_.exit.i.i.i.loopexit.split.loop.exit" ], [ %i.bl, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEENS0_5__ops10_Iter_predIZNS4_12CfgAssembler11OptimizeCfgEvE3$_0EEET_SH_SH_T0_.exit.i.i.i.loopexit.split.loop.exit103" ], [ %i.bk, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEENS0_5__ops10_Iter_predIZNS4_12CfgAssembler11OptimizeCfgEvE3$_0EEET_SH_SH_T0_.exit.i.i.i.loopexit.split.loop.exit101" ], [ %.sroa.038.057.i.i.i.i.i, %bb.b ] ; 4 uses
   %i.bm = icmp eq ptr %.sroa.08.0.in.sroa.speculated.i.i.i.i.i, %i.j
   %.sroa.07.026.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.08.0.in.sroa.speculated.i.i.i.i.i, i64 8 ; 2 uses
   %i.bn = icmp eq ptr %.sroa.07.026.i.i.i, %i.j
@@ -372,25 +363,27 @@ bb.k:                                             ; preds = %bb.j, %._crit_edge.
   br i1 %or.cond.i.i.i, label %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEEZNS4_12CfgAssembler11OptimizeCfgEvE3$_0ET_SE_SE_T0_.exit.i", label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEENS0_5__ops10_Iter_predIZNS4_12CfgAssembler11OptimizeCfgEvE3$_0EEET_SH_SH_T0_.exit.i.i.i", %bb.m
-  %.sroa.07.028.i.i.i.a = phi ptr [ %.sroa.07.0.i.i.i, %bb.m ], [ %.sroa.07.026.i.i.i, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEENS0_5__ops10_Iter_predIZNS4_12CfgAssembler11OptimizeCfgEvE3$_0EEET_SH_SH_T0_.exit.i.i.i" ] ; 2 uses
-  %.sroa.013.027.i.i.i.a = phi ptr [ %.sroa.013.1.i.i.i, %bb.m ], [ %.sroa.08.0.in.sroa.speculated.i.i.i.i.i, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEENS0_5__ops10_Iter_predIZNS4_12CfgAssembler11OptimizeCfgEvE3$_0EEET_SH_SH_T0_.exit.i.i.i" ] ; 3 uses
-  %.val.val.i.i.i = load ptr, ptr %1, align 8
-  %i.bo = load ptr, ptr %.sroa.07.028.i.i.i.a, align 8 ; 2 uses
+  %.sroa.07.028.i.i.i.a = phi ptr [ %.val.val.i.i.i90, %bb.m ], [ %.val.val.i.i.i.pre89, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEENS0_5__ops10_Iter_predIZNS4_12CfgAssembler11OptimizeCfgEvE3$_0EEET_SH_SH_T0_.exit.i.i.i" ] ; 2 uses
+  %.sroa.013.027.i.i.i.a = phi ptr [ %.sroa.07.0.i.i.i, %bb.m ], [ %.sroa.07.026.i.i.i, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEENS0_5__ops10_Iter_predIZNS4_12CfgAssembler11OptimizeCfgEvE3$_0EEET_SH_SH_T0_.exit.i.i.i" ] ; 2 uses
+  %.sroa.013.027.i.i.i = phi ptr [ %.sroa.013.1.i.i.i, %bb.m ], [ %.sroa.08.0.in.sroa.speculated.i.i.i.i.i, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEENS0_5__ops10_Iter_predIZNS4_12CfgAssembler11OptimizeCfgEvE3$_0EEET_SH_SH_T0_.exit.i.i.i" ] ; 3 uses
+  %i.bo = load ptr, ptr %.sroa.013.027.i.i.i.a, align 8 ; 2 uses
   %i.bp = getelementptr i8, ptr %i.bo, i64 96
   %.val1.i.i.i.i = load i64, ptr %i.bp, align 8
-  %i.bq = getelementptr inbounds nuw [8 x i8], ptr %.val.val.i.i.i, i64 %.val1.i.i.i.i
+  %i.bq = getelementptr inbounds nuw [8 x i8], ptr %.sroa.07.028.i.i.i.a, i64 %.val1.i.i.i.i
   %i.br = load i64, ptr %i.bq, align 8
   %i.bs = icmp eq i64 %i.br, 0
   br i1 %i.bs, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph.i.i.i
-  store ptr %i.bo, ptr %.sroa.013.027.i.i.i.a, align 8
-  %i.bt = getelementptr inbounds nuw i8, ptr %.sroa.013.027.i.i.i.a, i64 8
+  store ptr %i.bo, ptr %.sroa.013.027.i.i.i, align 8
+  %i.bt = getelementptr inbounds nuw i8, ptr %.sroa.013.027.i.i.i, i64 8
+  %.val.val.i.i.i.pre = load ptr, ptr %1, align 8
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %.lr.ph.i.i.i
-  %.sroa.013.1.i.i.i = phi ptr [ %.sroa.013.027.i.i.i.a, %.lr.ph.i.i.i ], [ %i.bt, %bb.l ] ; 2 uses
-  %.sroa.07.0.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.07.028.i.i.i.a, i64 8 ; 2 uses
+  %.val.val.i.i.i90 = phi ptr [ %.sroa.07.028.i.i.i.a, %.lr.ph.i.i.i ], [ %.val.val.i.i.i.pre, %bb.l ] ; 2 uses
+  %.sroa.013.1.i.i.i = phi ptr [ %.sroa.013.027.i.i.i, %.lr.ph.i.i.i ], [ %i.bt, %bb.l ] ; 2 uses
+  %.sroa.07.0.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.013.027.i.i.i.a, i64 8 ; 2 uses
   %i.bu = icmp eq ptr %.sroa.07.0.i.i.i, %i.j
   br i1 %i.bu, label %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEEZNS4_12CfgAssembler11OptimizeCfgEvE3$_0ET_SE_SE_T0_.exit.loopexit.i", label %.lr.ph.i.i.i, !llvm.loop !24
 
@@ -399,6 +392,7 @@ bb.m:                                             ; preds = %bb.l, %.lr.ph.i.i.i
   br label %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEEZNS4_12CfgAssembler11OptimizeCfgEvE3$_0ET_SE_SE_T0_.exit.i"
 
 "_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEEZNS4_12CfgAssembler11OptimizeCfgEvE3$_0ET_SE_SE_T0_.exit.i": ; preds = %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEEZNS4_12CfgAssembler11OptimizeCfgEvE3$_0ET_SE_SE_T0_.exit.loopexit.i", %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEENS0_5__ops10_Iter_predIZNS4_12CfgAssembler11OptimizeCfgEvE3$_0EEET_SH_SH_T0_.exit.i.i.i"
+  %2 = phi ptr [ %.val.val.i.i.i90, %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEEZNS4_12CfgAssembler11OptimizeCfgEvE3$_0ET_SE_SE_T0_.exit.loopexit.i" ], [ %.val.val.i.i.i.pre89, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEENS0_5__ops10_Iter_predIZNS4_12CfgAssembler11OptimizeCfgEvE3$_0EEET_SH_SH_T0_.exit.i.i.i" ] ; 2 uses
   %i.bv = phi ptr [ %.pre.i, %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEEZNS4_12CfgAssembler11OptimizeCfgEvE3$_0ET_SE_SE_T0_.exit.loopexit.i" ], [ %i.j, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEENS0_5__ops10_Iter_predIZNS4_12CfgAssembler11OptimizeCfgEvE3$_0EEET_SH_SH_T0_.exit.i.i.i" ]
   %.sroa.013.2.i.i.i = phi ptr [ %.sroa.013.1.i.i.i, %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEEZNS4_12CfgAssembler11OptimizeCfgEvE3$_0ET_SE_SE_T0_.exit.loopexit.i" ], [ %.sroa.08.0.in.sroa.speculated.i.i.i.i.i, %"_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEENS0_5__ops10_Iter_predIZNS4_12CfgAssembler11OptimizeCfgEvE3$_0EEET_SH_SH_T0_.exit.i.i.i" ] ; 2 uses
   %i.bw = icmp eq ptr %.sroa.013.2.i.i.i, %i.bv
@@ -528,18 +522,18 @@ bb.r:                                             ; preds = %_ZNSt6vectorIN2v88i
   %i.eh = icmp eq ptr %i.eg, %i.e
   br i1 %i.eh, label %._crit_edge.loopexit, label %bb.n
 
-"_ZN2v88internal6torque16ControlFlowGraph14UnplaceBlockIfIZNS1_12CfgAssembler11OptimizeCfgEvE3$_0EEvOT_.exit": ; preds = %_ZSt8_DestroyIPPN2v88internal6torque5BlockES4_EvT_S6_RSaIT0_E.exit.i.i.i.i, %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEEZNS4_12CfgAssembler11OptimizeCfgEvE3$_0ET_SE_SE_T0_.exit.i", %._crit_edge.i.i.i.i.i
-  %2 = load ptr, ptr %1, align 8                  ; 3 uses
-  %.not.i.i.i = icmp eq ptr %2, null
+"_ZN2v88internal6torque16ControlFlowGraph14UnplaceBlockIfIZNS1_12CfgAssembler11OptimizeCfgEvE3$_0EEvOT_.exit": ; preds = %._crit_edge.i.i.i.i.i, %_ZSt8_DestroyIPPN2v88internal6torque5BlockES4_EvT_S6_RSaIT0_E.exit.i.i.i.i, %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEEZNS4_12CfgAssembler11OptimizeCfgEvE3$_0ET_SE_SE_T0_.exit.i"
+  %3 = phi ptr [ %2, %"_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPPN2v88internal6torque5BlockESt6vectorIS6_SaIS6_EEEEZNS4_12CfgAssembler11OptimizeCfgEvE3$_0ET_SE_SE_T0_.exit.i" ], [ %2, %_ZSt8_DestroyIPPN2v88internal6torque5BlockES4_EvT_S6_RSaIT0_E.exit.i.i.i.i ], [ %.pre92, %._crit_edge.i.i.i.i.i ] ; 3 uses
+  %.not.i.i.i = icmp eq ptr %3, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorImSaImEED2Ev.exit, label %bb.s
 
 bb.s:                                             ; preds = %"_ZN2v88internal6torque16ControlFlowGraph14UnplaceBlockIfIZNS1_12CfgAssembler11OptimizeCfgEvE3$_0EEvOT_.exit"
   %i.ei = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ej = load ptr, ptr %i.ei, align 8
   %i.ek = ptrtoint ptr %i.ej to i64
-  %i.el = ptrtoint ptr %2 to i64
+  %i.el = ptrtoint ptr %3 to i64
   %i.em = sub i64 %i.ek, %i.el
-  tail call void @_ZdlPvm(ptr noundef nonnull %2, i64 noundef %i.em) #24
+  tail call void @_ZdlPvm(ptr noundef nonnull %3, i64 noundef %i.em) #24
   br label %_ZNSt6vectorImSaImEED2Ev.exit
 
 _ZNSt6vectorImSaImEED2Ev.exit:                    ; preds = %"_ZN2v88internal6torque16ControlFlowGraph14UnplaceBlockIfIZNS1_12CfgAssembler11OptimizeCfgEvE3$_0EEvOT_.exit", %bb.s

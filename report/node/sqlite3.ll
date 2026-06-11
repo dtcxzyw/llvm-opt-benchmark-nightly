@@ -201,11 +201,10 @@ define internal fastcc signext i8 @wherePathSatisfiesOrderBy(ptr noundef %0, ptr
 bb.a:
   %7 = alloca %struct.Walker, align 16            ; 6 uses
   %8 = alloca %struct.WhereScan, align 8          ; 16 uses
-  %i.a = alloca i64, align 8                      ; 11 uses
+  %i.a = alloca i64, align 8                      ; 7 uses
   %i.b = load ptr, ptr %0, align 8, !tbaa !820
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !651  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #59
-  store i64 0, ptr %i.a, align 8, !tbaa !18
   %.not = icmp eq i16 %4, 0
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -218,14 +217,14 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.g = load i32, ptr %1, align 8, !tbaa !5      ; 2 uses
-  %i.h = and i32 %i.g, 65535                      ; 4 uses
+  %i.h = and i32 %i.g, 65535                      ; 5 uses
   %i.i = icmp samesign ugt i32 %i.h, 63
   br i1 %i.i, label %.loopexit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.j = zext nneg i32 %i.h to i64                ; 5 uses
   %notmask = shl nsw i64 -1, %i.j
-  %i.k = xor i64 %notmask, -1                     ; 3 uses
+  %i.k = xor i64 %notmask, -1                     ; 2 uses
   %i.l = zext i16 %3 to i32                       ; 5 uses
   %i.m = and i32 %i.l, 2051
   %.not273 = icmp eq i32 %i.m, 0
@@ -259,33 +258,32 @@ bb.d:                                             ; preds = %bb.c
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 600 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 596
   %i.am = zext i16 %4 to i64                      ; 2 uses
-  %9 = load i64, ptr %i.a, align 8, !tbaa !18     ; 3 uses
-  %10 = icmp ult i64 %9, %i.k
-  br i1 %10, label %.lr.ph739, label %.critedge
+  %.not747 = icmp eq i32 %i.h, 0
+  br i1 %.not747, label %.critedge, label %.lr.ph739
 
 .lr.ph739:                                        ; preds = %bb.d, %bb.cs
-  %11 = phi i64 [ %12, %bb.cs ], [ %9, %bb.d ]    ; 4 uses
-  %.0257518736 = phi ptr [ %.2259, %bb.cs ], [ null, %bb.d ]
-  %.0244521735 = phi i64 [ %.1245, %bb.cs ], [ 0, %bb.d ] ; 2 uses
-  %.0242522734 = phi i64 [ %.1243, %bb.cs ], [ 0, %bb.d ] ; 2 uses
-  %indvars.iv579731 = phi i64 [ %indvars.iv.next580, %bb.cs ], [ 0, %bb.d ] ; 7 uses
-  %.not276 = icmp eq i64 %indvars.iv579731, 0
+  %.0257518737 = phi ptr [ %.2259, %bb.cs ], [ null, %bb.d ]
+  %.0244521736 = phi i64 [ %.1245, %bb.cs ], [ 0, %bb.d ] ; 2 uses
+  %.0244521735 = phi i64 [ %.1243, %bb.cs ], [ 0, %bb.d ] ; 2 uses
+  %.0242522734 = phi i64 [ %indvars.iv.next580, %bb.cs ], [ 0, %bb.d ] ; 7 uses
+  %indvars.iv579731 = phi i64 [ %10, %bb.cs ], [ 0, %bb.d ] ; 5 uses
+  %.not276 = icmp eq i64 %.0242522734, 0
   br i1 %.not276, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph739
-  %i.an = getelementptr inbounds nuw i8, ptr %.0257518736, i64 8
+  %i.an = getelementptr inbounds nuw i8, ptr %.0257518737, i64 8
   %i.ao = load i64, ptr %i.an, align 8, !tbaa !4305
-  %i.ap = or i64 %i.ao, %.0242522734
+  %i.ap = or i64 %i.ao, %.0244521735
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %.lr.ph739
-  %.1243 = phi i64 [ %i.ap, %bb.e ], [ %.0242522734, %.lr.ph739 ] ; 2 uses
-  %i.aq = icmp samesign ult i64 %indvars.iv579731, %i.am
+  %.1243 = phi i64 [ %i.ap, %bb.e ], [ %.0244521735, %.lr.ph739 ] ; 2 uses
+  %i.aq = icmp samesign ult i64 %.0242522734, %i.am
   br i1 %i.aq, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   %i.ar = load ptr, ptr %i.n, align 8, !tbaa !4463
-  %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.ar, i64 %indvars.iv579731
+  %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.ar, i64 %.0242522734
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !4455 ; 2 uses
   br i1 %.not277, label %bb.h, label %bb.cs
 
@@ -327,7 +325,7 @@ bb.k:                                             ; preds = %bb.h
 
 bb.l:                                             ; preds = %.lr.ph491, %.critedge3
   %indvars.iv558 = phi i64 [ 0, %.lr.ph491 ], [ %indvars.iv.next559, %.critedge3 ] ; 3 uses
-  %i.bm = phi i64 [ %11, %.lr.ph491 ], [ %i.fa, %.critedge3 ] ; 13 uses
+  %i.bm = phi i64 [ %indvars.iv579731, %.lr.ph491 ], [ %i.fa, %.critedge3 ] ; 13 uses
   %i.bn = shl nuw i64 1, %indvars.iv558           ; 2 uses
   %i.bo = and i64 %i.bm, %i.bn
   %.not314 = icmp eq i64 %i.bo, 0
@@ -627,7 +625,7 @@ sqlite3StrICmp.exit.thread:                       ; preds = %bb.an, %bb.ab, %.cr
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.k
   %i.fb = phi i32 [ %i.av, %bb.k ], [ %.pre584, %._crit_edge.loopexit ] ; 3 uses
-  %.lcssa489 = phi i64 [ %11, %bb.k ], [ %i.fa, %._crit_edge.loopexit ] ; 2 uses
+  %.lcssa489 = phi i64 [ %indvars.iv579731, %bb.k ], [ %i.fa, %._crit_edge.loopexit ] ; 6 uses
   store i64 %.lcssa489, ptr %i.a, align 8
   %i.fc = and i32 %i.fb, 4096
   %i.fd = icmp eq i32 %i.fc, 0
@@ -651,9 +649,10 @@ bb.as:                                            ; preds = %bb.ar
   br i1 %i.fj, label %bb.at, label %.lr.ph510
 
 bb.at:                                            ; preds = %bb.as
-  %i.fk = trunc nuw nsw i64 %indvars.iv579731 to i32
+  %i.fk = trunc nuw nsw i64 %.0242522734 to i32
   %i.fl = call fastcc i32 @wherePathMatchSubqueryOB(ptr noundef nonnull %0, ptr noundef nonnull %.1258, i32 noundef %i.fk, i32 noundef %i.bi, ptr noundef nonnull %1, ptr noundef %6, ptr noundef %i.a)
   %.not283 = icmp eq i32 %i.fl, 0
+  %.pre = load i64, ptr %i.a, align 8, !tbaa !18  ; 2 uses
   br i1 %.not283, label %.lr.ph510, label %.loopexit464
 
 bb.au:                                            ; preds = %bb.aq
@@ -686,12 +685,12 @@ bb.aw:                                            ; preds = %bb.av
   %.not530 = icmp eq i16 %i.fv, 0
   br i1 %.not530, label %.loopexit464, label %.lr.ph510
 
-.lr.ph510:                                        ; preds = %bb.at, %bb.as, %bb.ar, %bb.aw
-  %.2220641 = phi i8 [ %i.ga, %bb.aw ], [ 1, %bb.ar ], [ 1, %bb.as ], [ 1, %bb.at ]
-  %.0236640 = phi i32 [ %i.gb, %bb.aw ], [ 0, %bb.ar ], [ 0, %bb.as ], [ 0, %bb.at ]
-  %.1247639 = phi i64 [ %i.gc, %bb.aw ], [ 1, %bb.ar ], [ 1, %bb.as ], [ 1, %bb.at ]
-  %.0249638 = phi ptr [ %i.fn, %bb.aw ], [ null, %bb.ar ], [ null, %bb.as ], [ null, %bb.at ] ; 6 uses
-  %.promoted502 = load i64, ptr %i.a, align 8
+.lr.ph510:                                        ; preds = %bb.at, %bb.ar, %bb.as, %bb.aw
+  %.2220641 = phi i8 [ %i.ga, %bb.aw ], [ 1, %bb.as ], [ 1, %bb.ar ], [ 1, %bb.at ]
+  %.0236640 = phi i32 [ %i.gb, %bb.aw ], [ 0, %bb.as ], [ 0, %bb.ar ], [ 0, %bb.at ]
+  %.1247639 = phi i64 [ %i.gc, %bb.aw ], [ 1, %bb.as ], [ 1, %bb.ar ], [ 1, %bb.at ]
+  %.0249638 = phi ptr [ %i.fn, %bb.aw ], [ null, %bb.as ], [ null, %bb.ar ], [ null, %bb.at ] ; 6 uses
+  %.promoted502632 = phi i64 [ %.lcssa489, %bb.aw ], [ %.lcssa489, %bb.as ], [ %.lcssa489, %bb.ar ], [ %.pre, %bb.at ]
   %i.gd = getelementptr inbounds nuw i8, ptr %.1258, i64 24 ; 2 uses
   %i.ge = getelementptr inbounds nuw i8, ptr %.1258, i64 54
   %i.gf = getelementptr inbounds nuw i8, ptr %.1258, i64 64
@@ -702,7 +701,7 @@ bb.aw:                                            ; preds = %bb.av
   %i.gj = getelementptr inbounds nuw i8, ptr %.0249638, i64 80
   %i.gk = getelementptr inbounds nuw i8, ptr %.0249638, i64 64
   %i.gl = getelementptr inbounds nuw i8, ptr %.1258, i64 30
-  %i.gm = shl nuw i64 1, %indvars.iv579731
+  %i.gm = shl nuw i64 1, %.0242522734
   br label %bb.ax
 
 bb.ax:                                            ; preds = %.lr.ph510, %bb.ck
@@ -711,7 +710,7 @@ bb.ax:                                            ; preds = %.lr.ph510, %bb.ck
   %.0214507 = phi i8 [ 0, %.lr.ph510 ], [ %.2216.ph, %bb.ck ] ; 4 uses
   %.3506 = phi i8 [ %.2220641, %.lr.ph510 ], [ %.10.ph, %bb.ck ] ; 3 uses
   %.0221505 = phi i8 [ 0, %.lr.ph510 ], [ %.2223.ph, %bb.ck ] ; 3 uses
-  %i.gn = phi i64 [ %.promoted502, %.lr.ph510 ], [ %i.lp, %bb.ck ] ; 3 uses
+  %i.gn = phi i64 [ %.promoted502632, %.lr.ph510 ], [ %i.lp, %bb.ck ] ; 4 uses
   %i.go = load i16, ptr %i.gd, align 8, !tbaa !227 ; 2 uses
   %i.gp = zext i16 %i.go to i64
   %i.gq = zext i16 %i.go to i64
@@ -1093,7 +1092,7 @@ bb.cj:                                            ; preds = %bb.ci
   br label %.loopexit464
 
 bb.ck:                                            ; preds = %.critedge334, %.thread383
-  %i.lp = phi i64 [ %i.gn, %.thread383 ], [ %i.ll, %.critedge334 ]
+  %i.lp = phi i64 [ %i.gn, %.thread383 ], [ %i.ll, %.critedge334 ] ; 2 uses
   %.2223.ph = phi i8 [ %.0221505, %.thread383 ], [ %.1222, %.critedge334 ] ; 2 uses
   %.10.ph = phi i8 [ %spec.select326, %.thread383 ], [ %.8, %.critedge334 ] ; 2 uses
   %.2216.ph = phi i8 [ %.0214507, %.thread383 ], [ %.1215.ph, %.critedge334 ]
@@ -1103,19 +1102,19 @@ bb.ck:                                            ; preds = %.critedge334, %.thr
   br i1 %exitcond573.not, label %.loopexit464, label %bb.ax, !llvm.loop !4677
 
 .loopexit464:                                     ; preds = %bb.ck, %bb.at, %bb.aw, %.thread413
+  %9 = phi i64 [ %i.gn, %.thread413 ], [ %.lcssa489, %bb.aw ], [ %.pre, %bb.at ], [ %i.lp, %bb.ck ] ; 2 uses
   %.0221479 = phi i8 [ %.0221505, %.thread413 ], [ 0, %bb.aw ], [ 0, %bb.at ], [ %.2223.ph, %bb.ck ]
   %.11 = phi i8 [ %.9, %.thread413 ], [ %i.ga, %bb.aw ], [ 0, %bb.at ], [ %.10.ph, %bb.ck ]
   %.not310 = icmp eq i8 %.0221479, 0
   %.not311 = icmp eq i8 %.11, 0
   %or.cond456 = select i1 %.not310, i1 %.not311, i1 false
-  %.pre590.pre = load i64, ptr %i.a, align 8      ; 2 uses
-  br i1 %or.cond456, label %.critedge, label %.thread444, !llvm.loop !4678
+  br i1 %or.cond456, label %.critedge, label %.thread444
 
 .thread444:                                       ; preds = %.loopexit464, %._crit_edge
-  %.promoted513 = phi i64 [ %.lcssa489, %._crit_edge ], [ %.pre590.pre, %.loopexit464 ] ; 2 uses
+  %.promoted513 = phi i64 [ %9, %.loopexit464 ], [ %.lcssa489, %._crit_edge ] ; 2 uses
   %i.lq = getelementptr inbounds nuw i8, ptr %.1258, i64 8
   %i.lr = load i64, ptr %i.lq, align 8, !tbaa !4305
-  %i.ls = or i64 %i.lr, %.0244521735              ; 2 uses
+  %i.ls = or i64 %i.lr, %.0244521736              ; 2 uses
   br i1 %.not527, label %.loopexit463, label %.lr.ph516
 
 .lr.ph516:                                        ; preds = %.thread444
@@ -1211,26 +1210,26 @@ bb.cr:                                            ; preds = %sqlite3WhereExprUsa
   %i.mw = phi i64 [ %spec.select526, %sqlite3WhereExprUsage.exit.thread448 ], [ %i.lu, %bb.cl ], [ %i.lu, %sqlite3ExprIsConstant.exit ] ; 2 uses
   %indvars.iv.next575 = add nuw nsw i64 %indvars.iv574, 1 ; 2 uses
   %exitcond578.not = icmp eq i64 %indvars.iv.next575, %i.j
-  br i1 %exitcond578.not, label %.loopexit463, label %bb.cl, !llvm.loop !4679
+  br i1 %exitcond578.not, label %.loopexit463, label %bb.cl, !llvm.loop !4678
 
 .loopexit463:                                     ; preds = %bb.cr, %.thread444
-  %.lcssa514 = phi i64 [ %.promoted513, %.thread444 ], [ %i.mw, %bb.cr ]
+  %.lcssa514 = phi i64 [ %.promoted513, %.thread444 ], [ %i.mw, %bb.cr ] ; 2 uses
   store i64 %.lcssa514, ptr %i.a, align 8
   br label %bb.cs
 
 bb.cs:                                            ; preds = %.loopexit463, %bb.g
+  %10 = phi i64 [ %indvars.iv579731, %bb.g ], [ %.lcssa514, %.loopexit463 ] ; 3 uses
   %.2259 = phi ptr [ %i.at, %bb.g ], [ %.1258, %.loopexit463 ]
-  %.1245 = phi i64 [ %.0244521735, %bb.g ], [ %i.ls, %.loopexit463 ]
-  %indvars.iv.next580 = add nuw nsw i64 %indvars.iv579731, 1
-  %12 = load i64, ptr %i.a, align 8, !tbaa !18    ; 3 uses
-  %i.mx = icmp ult i64 %12, %i.k
-  %.not275 = icmp samesign ult i64 %indvars.iv579731, %i.am
+  %.1245 = phi i64 [ %.0244521736, %bb.g ], [ %i.ls, %.loopexit463 ]
+  %indvars.iv.next580 = add nuw nsw i64 %.0242522734, 1
+  %i.mx = icmp ult i64 %10, %i.k
+  %.not275 = icmp samesign ult i64 %.0242522734, %i.am
   %or.cond.not = select i1 %i.mx, i1 %.not275, i1 false
-  br i1 %or.cond.not, label %.lr.ph739, label %.critedge, !llvm.loop !4678
+  br i1 %or.cond.not, label %.lr.ph739, label %.critedge, !llvm.loop !4679
 
 .critedge:                                        ; preds = %bb.cs, %.loopexit464, %bb.d, %bb.i, %bb.j
-  %or.cond.not716 = phi i1 [ false, %bb.d ], [ true, %bb.j ], [ true, %bb.i ], [ false, %bb.cs ], [ true, %.loopexit464 ]
-  %i.my = phi i64 [ %9, %bb.d ], [ %11, %bb.j ], [ %11, %bb.i ], [ %12, %bb.cs ], [ %.pre590.pre, %.loopexit464 ] ; 2 uses
+  %or.cond.not716 = phi i1 [ true, %bb.i ], [ true, %bb.j ], [ false, %bb.d ], [ true, %.loopexit464 ], [ false, %bb.cs ]
+  %i.my = phi i64 [ %indvars.iv579731, %bb.i ], [ %indvars.iv579731, %bb.j ], [ 0, %bb.d ], [ %9, %.loopexit464 ], [ %10, %bb.cs ] ; 2 uses
   %i.mz = icmp eq i64 %i.my, %i.k
   br i1 %i.mz, label %.critedge.thread, label %bb.ct
 

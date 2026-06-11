@@ -201,14 +201,11 @@ bb.br:                                            ; preds = %bb.bk, %bb.bj, %bb.
   store i64 %.sink461, ptr %i.c, align 8, !tbaa !193
   %i.pz = call fastcc i32 @unicode_decode_call_errorhandler_writer(ptr noundef %2, ptr noundef %i.f, ptr noundef nonnull %i.r, ptr noundef nonnull %.043, ptr noundef %i.a, ptr noundef %i.e, ptr noundef %i.b, ptr noundef %i.c, ptr noundef %i.g, ptr noundef %i.d, ptr noundef nonnull %5)
   %.not54 = icmp eq i32 %i.pz, 0
-  br i1 %.not54, label %.select.unfold_crit_edge, label %.thread165
+  %.pre349 = load ptr, ptr %i.d, align 8, !tbaa !355
+  br i1 %.not54, label %select.unfold, label %.thread165
 
-.select.unfold_crit_edge:                         ; preds = %bb.br
-  %.pre349.pre = load ptr, ptr %i.d, align 8, !tbaa !355
-  br label %select.unfold
-
-select.unfold:                                    ; preds = %.select.unfold_crit_edge, %_PyUnicodeWriter_WriteCharInline.exit
-  %.pre349.a = phi ptr [ %.pre349.pre, %.select.unfold_crit_edge ], [ %i.of, %_PyUnicodeWriter_WriteCharInline.exit ]
+select.unfold:                                    ; preds = %bb.br, %_PyUnicodeWriter_WriteCharInline.exit
+  %.pre349.a = phi ptr [ %.pre349, %bb.br ], [ %i.of, %_PyUnicodeWriter_WriteCharInline.exit ]
   %.pre = load ptr, ptr %i.e, align 8, !tbaa !355
   br label %bb.o
 

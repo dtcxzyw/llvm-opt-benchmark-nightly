@@ -201,7 +201,7 @@ bb.s:                                             ; preds = %._crit_edge361
   br label %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit154.outer
 
 _ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit154.outer: ; preds = %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit154.outer.backedge, %.preheader448
-  %.val.i181.pre391.ph = phi i64 [ %.val169.pre, %.preheader448 ], [ %.val.i181.pre391.ph.be, %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit154.outer.backedge ] ; 4 uses
+  %.val.i181.pre391.ph = phi i64 [ %.val169.pre, %.preheader448 ], [ %.val.i181.pre391.ph.be, %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit154.outer.backedge ] ; 3 uses
   %.sroa.0254.0.ph508 = phi ptr [ %.sroa.0254.0.ph, %.preheader448 ], [ %.sroa.0254.0.ph508.be, %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit154.outer.backedge ]
   %.sroa.9257.0.ph509 = phi ptr [ %.sroa.9257.0.ph, %.preheader448 ], [ %.sroa.9257.0.ph509.be, %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit154.outer.backedge ]
   %i.gx = icmp eq i64 %.val.i181.pre391.ph, -1    ; 2 uses
@@ -330,8 +330,7 @@ bb.af:                                            ; preds = %bb.ad
   br label %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit154.outer510, !llvm.loop !16
 
 .preheader447:                                    ; preds = %.preheader447.preheader, %bb.ai
-  %.val.i196.pre396 = phi i64 [ %.val.i196.pre397.ph, %bb.ai ], [ %.val.i181.pre391.ph, %.preheader447.preheader ]
-  %.val.i196394 = phi i64 [ %.val.i196, %bb.ai ], [ %.val.i181.pre391.ph, %.preheader447.preheader ] ; 2 uses
+  %.val.i196394 = phi i64 [ %.val.i196.ph, %bb.ai ], [ %.val.i181.pre391.ph, %.preheader447.preheader ] ; 2 uses
   %i.ij = icmp eq i64 %.val.i196394, -1           ; 2 uses
   %.val1.i191 = load ptr, ptr %i.gs, align 8
   %.sroa.0246.0.ph.a = select i1 %i.ij, ptr null, ptr %i.gt
@@ -339,39 +338,36 @@ bb.af:                                            ; preds = %bb.ad
   br label %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit.outer
 
 _ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit.outer: ; preds = %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit.outer.backedge, %.preheader447
-  %.val.i196.pre397.ph = phi i64 [ %.val.i196.pre396, %.preheader447 ], [ %.val.i196.ph.be, %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit.outer.backedge ] ; 4 uses
-  %.val.i196.ph = phi i64 [ %.val.i196394, %.preheader447 ], [ %.val.i196.ph.be, %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit.outer.backedge ]
+  %.val.i196.ph = phi i64 [ %.val.i196394, %.preheader447 ], [ %.val.i196.ph.be, %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit.outer.backedge ] ; 4 uses
   %.sroa.0246.0.ph480 = phi ptr [ %.sroa.0246.0.ph.a, %.preheader447 ], [ %.sroa.0246.0.ph480.be, %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit.outer.backedge ]
   %.sroa.9.0.ph481 = phi ptr [ %.sroa.9.0.ph.a, %.preheader447 ], [ %.sroa.9.0.ph481.be, %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit.outer.backedge ]
   %.0125.ph = phi i1 [ false, %.preheader447 ], [ true, %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit.outer.backedge ]
+  %4 = icmp eq i64 %.val.i196.ph, -1              ; 2 uses
+  %5 = getelementptr inbounds nuw [24 x i8], ptr %i.gt, i64 %.val.i196.ph
+  %.sroa.01.0.i197 = select i1 %4, ptr null, ptr %5
   %.val156.val = load ptr, ptr %i.gp, align 8     ; 4 uses
   %.val156.val157 = load ptr, ptr %i.gr, align 8  ; 5 uses
   %.not2.not.i.i = icmp eq ptr %.val156.val, %.val156.val157
   br label %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit.outer482
 
 _ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit.outer482: ; preds = %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit.outer, %bb.ax
-  %.val.i196.ph483 = phi i64 [ %.val.i196.ph, %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit.outer ], [ %.val.i196.pre397.ph, %bb.ax ]
   %.sroa.0246.0.ph484 = phi ptr [ %.sroa.0246.0.ph480, %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit.outer ], [ null, %bb.ax ]
   %.sroa.9.0.ph485 = phi ptr [ %.sroa.9.0.ph481, %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit.outer ], [ %i.la, %bb.ax ] ; 5 uses
   %i.ik = icmp eq ptr %.sroa.9.0.ph485, %i.gu
+  %or.cond326 = select i1 %4, i1 %i.ik, i1 false
   %i.il = getelementptr inbounds nuw i8, ptr %.sroa.9.0.ph485, i64 32
   br label %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit
 
 _ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit: ; preds = %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit.outer482, %bb.aw
-  %.val.i196 = phi i64 [ %.val.i196.pre397.ph, %bb.aw ], [ %.val.i196.ph483, %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit.outer482 ] ; 3 uses
   %.sroa.0246.0 = phi ptr [ %i.kz, %bb.aw ], [ %.sroa.0246.0.ph484, %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit.outer482 ] ; 5 uses
-  %4 = icmp eq i64 %.val.i196, -1                 ; 2 uses
   %.not.i143 = icmp eq ptr %.sroa.0246.0, null    ; 2 uses
   br i1 %.not.i143, label %bb.ah, label %bb.ag
 
 bb.ag:                                            ; preds = %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit
-  %5 = getelementptr inbounds nuw [24 x i8], ptr %i.gt, i64 %.val.i196
-  %.sroa.01.0.i197 = select i1 %4, ptr null, ptr %5
   %i.im = icmp eq ptr %.sroa.0246.0, %.sroa.01.0.i197
   br i1 %i.im, label %bb.ai, label %_ZNK2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratordeEv.exit
 
 bb.ah:                                            ; preds = %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit
-  %or.cond326 = select i1 %4, i1 %i.ik, i1 false
   br i1 %or.cond326, label %bb.ai, label %_ZNK2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratordeEv.exit
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ag
@@ -508,7 +504,7 @@ bb.aq:                                            ; preds = %_ZN2v88internal8com
   br label %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit.outer.backedge
 
 _ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit.outer.backedge: ; preds = %bb.aq, %bb.av, %bb.au
-  %.val.i196.ph.be = phi i64 [ %i.ku, %bb.au ], [ %i.kt, %bb.av ], [ %.val.i196.pre.pre, %bb.aq ] ; 2 uses
+  %.val.i196.ph.be = phi i64 [ %i.ku, %bb.au ], [ %i.kt, %bb.av ], [ %.val.i196.pre.pre, %bb.aq ]
   %.sroa.0246.0.ph480.be = phi ptr [ %i.kv, %bb.au ], [ %.sroa.01.0.i.i210, %bb.av ], [ null, %bb.aq ]
   %.sroa.9.0.ph481.be = phi ptr [ null, %bb.au ], [ %.sroa.3.0.i.i211, %bb.av ], [ %i.kn, %bb.aq ]
   br label %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit.outer, !llvm.loop !18
@@ -555,7 +551,7 @@ bb.ax:                                            ; preds = %_ZNK2v88internal8co
   br label %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEmSt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitIS9_EEE8iteratorppEv.exit.outer482, !llvm.loop !18
 
 .loopexit332:                                     ; preds = %bb.ai, %bb.s
-  %.val167 = phi i64 [ %.val169.pre, %bb.s ], [ %.val.i196.pre397.ph, %bb.ai ] ; 2 uses
+  %.val167 = phi i64 [ %.val169.pre, %bb.s ], [ %.val.i196.ph, %bb.ai ] ; 2 uses
   %.val168 = load i64, ptr %i.gb, align 8
   %i.lb = icmp eq i64 %.val167, -1
   %.v.i213 = select i1 %i.lb, i64 %.val168, i64 %.val167
@@ -958,7 +954,7 @@ _ZNK2v88internal8compiler12MoveOperands11IsRedundantEv.exit.thread: ; preds = %b
 
 ._crit_edge227:                                   ; preds = %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE7emplaceIJRS6_SA_EEESt4pairINSI_8iteratorEbEDpOT_.exit
   %.val88.pre = load i64, ptr %4, align 8
-  %.val88.pre.fr = freeze i64 %.val88.pre         ; 4 uses
+  %.val88.pre.fr = freeze i64 %.val88.pre         ; 3 uses
   %i.ey = getelementptr inbounds nuw i8, ptr %4, i64 64 ; 3 uses
   %.val89 = load i64, ptr %i.ey, align 8
   %i.ez = icmp eq i64 %.val88.pre.fr, -1
@@ -1295,8 +1291,7 @@ _ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZN
   br i1 %.not72, label %._crit_edge227, label %bb.q
 
 .preheader317:                                    ; preds = %.preheader, %bb.am
-  %.val.i110.pre255 = phi i64 [ %.val88.pre.fr, %.preheader ], [ %.val.i110.pre256.ph, %bb.am ]
-  %.val.i110253 = phi i64 [ %.val88.pre.fr, %.preheader ], [ %.val.i110, %bb.am ] ; 2 uses
+  %.val.i110253 = phi i64 [ %.val88.pre.fr, %.preheader ], [ %.val.i110.ph, %bb.am ] ; 2 uses
   %i.ke = icmp eq i64 %.val.i110253, -1           ; 2 uses
   %.val1.i = load ptr, ptr %i.fb, align 8
   %.sroa.0165.0.ph.a = select i1 %i.ke, ptr null, ptr %i.fc
@@ -1304,39 +1299,36 @@ _ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZN
   br label %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratorppEv.exit.outer
 
 _ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratorppEv.exit.outer: ; preds = %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratorppEv.exit.outer.backedge, %.preheader317
-  %.val.i110.pre256.ph = phi i64 [ %.val.i110.pre255, %.preheader317 ], [ %.val.i110.ph.be, %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratorppEv.exit.outer.backedge ] ; 3 uses
-  %.val.i110.ph = phi i64 [ %.val.i110253, %.preheader317 ], [ %.val.i110.ph.be, %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratorppEv.exit.outer.backedge ]
+  %.val.i110.ph = phi i64 [ %.val.i110253, %.preheader317 ], [ %.val.i110.ph.be, %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratorppEv.exit.outer.backedge ] ; 3 uses
   %.sroa.0165.0.ph346 = phi ptr [ %.sroa.0165.0.ph.a, %.preheader317 ], [ %.sroa.0165.0.ph346.be, %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratorppEv.exit.outer.backedge ]
   %.sroa.9.0.ph347 = phi ptr [ %.sroa.9.0.ph.a, %.preheader317 ], [ %.sroa.9.0.ph347.be, %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratorppEv.exit.outer.backedge ]
   %.070.ph = phi i1 [ false, %.preheader317 ], [ true, %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratorppEv.exit.outer.backedge ]
+  %6 = icmp eq i64 %.val.i110.ph, -1              ; 2 uses
+  %7 = getelementptr inbounds nuw [24 x i8], ptr %i.fc, i64 %.val.i110.ph
+  %.sroa.01.0.i = select i1 %6, ptr null, ptr %7
   %.val84.val = load ptr, ptr %i.q, align 8       ; 4 uses
   %.val84.val87 = load ptr, ptr %i.s, align 8     ; 5 uses
   %.not2.not.i.i114 = icmp eq ptr %.val84.val, %.val84.val87
   br label %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratorppEv.exit.outer348
 
 _ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratorppEv.exit.outer348: ; preds = %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratorppEv.exit.outer, %bb.bb
-  %.val.i110.ph349 = phi i64 [ %.val.i110.ph, %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratorppEv.exit.outer ], [ %.val.i110.pre256.ph, %bb.bb ]
   %.sroa.0165.0.ph350 = phi ptr [ %.sroa.0165.0.ph346, %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratorppEv.exit.outer ], [ null, %bb.bb ]
   %.sroa.9.0.ph351 = phi ptr [ %.sroa.9.0.ph347, %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratorppEv.exit.outer ], [ %i.mv, %bb.bb ] ; 5 uses
   %i.kf = icmp eq ptr %.sroa.9.0.ph351, %i.fd
+  %or.cond = select i1 %6, i1 %i.kf, i1 false
   %i.kg = getelementptr inbounds nuw i8, ptr %.sroa.9.0.ph351, i64 32
   br label %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratorppEv.exit
 
 _ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratorppEv.exit: ; preds = %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratorppEv.exit.outer348, %bb.ba
-  %.val.i110 = phi i64 [ %.val.i110.pre256.ph, %bb.ba ], [ %.val.i110.ph349, %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratorppEv.exit.outer348 ] ; 3 uses
   %.sroa.0165.0 = phi ptr [ %i.mu, %bb.ba ], [ %.sroa.0165.0.ph350, %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratorppEv.exit.outer348 ] ; 5 uses
-  %6 = icmp eq i64 %.val.i110, -1                 ; 2 uses
   %.not.i75 = icmp eq ptr %.sroa.0165.0, null     ; 2 uses
   br i1 %.not.i75, label %bb.al, label %bb.ak
 
 bb.ak:                                            ; preds = %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratorppEv.exit
-  %7 = getelementptr inbounds nuw [24 x i8], ptr %i.fc, i64 %.val.i110
-  %.sroa.01.0.i = select i1 %6, ptr null, ptr %7
   %i.kh = icmp eq ptr %.sroa.0165.0, %.sroa.01.0.i
   br i1 %i.kh, label %bb.am, label %_ZNK2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratordeEv.exit
 
 bb.al:                                            ; preds = %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratorppEv.exit
-  %or.cond = select i1 %6, i1 %i.kf, i1 false
   br i1 %or.cond, label %bb.am, label %_ZNK2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratordeEv.exit
 
 bb.am:                                            ; preds = %bb.al, %bb.ak
@@ -1473,7 +1465,7 @@ bb.au:                                            ; preds = %_ZN2v88internal8com
   br label %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratorppEv.exit.outer.backedge
 
 _ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratorppEv.exit.outer.backedge: ; preds = %bb.au, %bb.az, %bb.ay
-  %.val.i110.ph.be = phi i64 [ %i.mp, %bb.ay ], [ %i.mo, %bb.az ], [ %.val.i110.pre.pre, %bb.au ] ; 2 uses
+  %.val.i110.ph.be = phi i64 [ %i.mp, %bb.ay ], [ %i.mo, %bb.az ], [ %.val.i110.pre.pre, %bb.au ]
   %.sroa.0165.0.ph346.be = phi ptr [ %i.mq, %bb.ay ], [ %.sroa.01.0.i.i, %bb.az ], [ null, %bb.au ]
   %.sroa.9.0.ph347.be = phi ptr [ null, %bb.ay ], [ %.sroa.3.0.i.i, %bb.az ], [ %i.mi, %bb.au ]
   br label %_ZN2v84base8SmallMapINS_8internal7ZoneMapINS2_8compiler12_GLOBAL__N_17MoveKeyEZNS4_13MoveOptimizer12MigrateMovesEPNS4_11InstructionES9_E5DummySt4lessIS6_EEELm16ESt8equal_toIS6_ENS2_11ZoneMapInitISD_EEE8iteratorppEv.exit.outer, !llvm.loop !35

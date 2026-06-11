@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: mustprogress nounwind uwtable
 define internal noundef signext range(i8 0, 2) i8 @_ZL14utf8TextAccessP5UTextla(ptr nofree noundef %0, i64 noundef %1, i8 noundef signext %2) #0 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 12 uses
+  %i.a = alloca i32, align 4                      ; 11 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.c = load ptr, ptr %i.b, align 8              ; 13 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 4 uses
@@ -604,7 +604,7 @@ bb.bo:                                            ; preds = %bb.bn
 
 bb.bp:                                            ; preds = %bb.bn, %bb.bo, %bb.bm
   %i.lw = phi ptr [ %.pre516, %bb.bo ], [ %i.cj, %bb.bn ], [ %i.cj, %bb.bm ] ; 13 uses
-  %.3 = phi i32 [ %i.lv, %bb.bo ], [ %.1391, %bb.bn ], [ %.1391, %bb.bm ] ; 3 uses
+  %.3 = phi i32 [ %i.lv, %bb.bo ], [ %.1391, %bb.bn ], [ %.1391, %bb.bm ] ; 4 uses
   %i.lx = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.ly = load ptr, ptr %i.lx, align 8
   store ptr %i.ly, ptr %i.ck, align 8
@@ -623,19 +623,19 @@ bb.bp:                                            ; preds = %bb.bn, %bb.bo, %bb.
   br label %bb.bq
 
 bb.bq:                                            ; preds = %bb.bp, %.loopexit
-  %.0385494.a = phi i32 [ 34, %bb.bp ], [ %.1, %.loopexit ] ; 2 uses
-  %.0386493.a = phi i32 [ 34, %bb.bp ], [ %.2, %.loopexit ] ; 3 uses
-  %3 = load i32, ptr %i.a, align 4                ; 4 uses
-  %i.mg = sub nsw i32 %3, %i.mc
+  %.0385494.a = phi i32 [ %.3, %bb.bp ], [ %3, %.loopexit ] ; 4 uses
+  %.0386493.a = phi i32 [ 34, %bb.bp ], [ %.1, %.loopexit ] ; 2 uses
+  %.0386493 = phi i32 [ 34, %bb.bp ], [ %.2, %.loopexit ] ; 3 uses
+  %i.mg = sub nsw i32 %.0385494.a, %i.mc
   %i.mh = icmp sgt i32 %i.mg, 5
-  %i.mi = icmp sgt i32 %3, 0
+  %i.mi = icmp sgt i32 %.0385494.a, 0
   %or.cond10 = and i1 %i.mi, %i.mh
   br i1 %or.cond10, label %bb.br, label %.critedge5
 
 bb.br:                                            ; preds = %bb.bq
-  %i.mj = add nsw i32 %3, -1                      ; 3 uses
+  %i.mj = add nsw i32 %.0385494.a, -1             ; 3 uses
   store i32 %i.mj, ptr %i.a, align 4
-  %i.mk = add nsw i32 %.0386493.a, -1             ; 5 uses
+  %i.mk = add nsw i32 %.0386493, -1               ; 5 uses
   %i.ml = zext nneg i32 %i.mj to i64
   %i.mm = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.ml
   %i.mn = load i8, ptr %i.mm, align 1             ; 3 uses
@@ -658,6 +658,7 @@ bb.bs:                                            ; preds = %bb.br
   %i.mz = trunc i32 %i.my to i8
   %i.na = getelementptr inbounds nuw i8, ptr %i.ma, i64 %i.mq
   store i8 %i.mz, ptr %i.na, align 1
+  %.pre517 = load i32, ptr %i.a, align 4
   br label %.loopexit
 
 bb.bt:                                            ; preds = %bb.br
@@ -681,7 +682,7 @@ bb.bu:                                            ; preds = %bb.bt
   %i.nn = lshr i32 %i.nc, 10
   %i.no = trunc i32 %i.nn to i16
   %i.np = add i16 %i.no, -10304
-  %i.nq = add nsw i32 %.0386493.a, -2
+  %i.nq = add nsw i32 %.0386493, -2
   br label %bb.bv
 
 bb.bv:                                            ; preds = %bb.bt, %bb.bu
@@ -705,25 +706,22 @@ bb.bw:                                            ; preds = %bb.bw, %bb.bv
   %i.nz = sub nsw i64 %indvars.iv507, %i.mf
   %i.oa = getelementptr inbounds i8, ptr %i.mb, i64 %i.nz
   store i8 %i.nx, ptr %i.oa, align 1
-  %i.ob = load i32, ptr %i.a, align 4
+  %i.ob = load i32, ptr %i.a, align 4             ; 2 uses
   %i.oc = sext i32 %i.ob to i64
   %.not449.not = icmp sgt i64 %indvars.iv507, %i.oc
   br i1 %.not449.not, label %bb.bw, label %.loopexit, !llvm.loop !17
 
 .loopexit:                                        ; preds = %bb.bw, %bb.bs
+  %3 = phi i32 [ %.pre517, %bb.bs ], [ %i.ob, %bb.bw ] ; 2 uses
   %.2 = phi i32 [ %i.mk, %bb.bs ], [ %.sink564, %bb.bw ] ; 3 uses
-  %.1 = phi i32 [ %.0385494.a, %bb.bs ], [ %.sink564, %bb.bw ] ; 2 uses
+  %.1 = phi i32 [ %.0386493.a, %bb.bs ], [ %.sink564, %bb.bw ] ; 2 uses
   %i.od = icmp sgt i32 %.2, 2
-  br i1 %i.od, label %bb.bq, label %.loopexit..critedge5_crit_edge, !llvm.loop !18
+  br i1 %i.od, label %bb.bq, label %.critedge5, !llvm.loop !18
 
-.loopexit..critedge5_crit_edge:                   ; preds = %.loopexit
-  %.pre517 = load i32, ptr %i.a, align 4
-  br label %.critedge5, !llvm.loop !18
-
-.critedge5:                                       ; preds = %bb.bq, %.loopexit..critedge5_crit_edge
-  %i.oe = phi i32 [ %.pre517, %.loopexit..critedge5_crit_edge ], [ %3, %bb.bq ]
-  %.0386.lcssa = phi i32 [ %.2, %.loopexit..critedge5_crit_edge ], [ %.0386493.a, %bb.bq ] ; 3 uses
-  %.0385.lcssa = phi i32 [ %.1, %.loopexit..critedge5_crit_edge ], [ %.0385494.a, %bb.bq ]
+.critedge5:                                       ; preds = %bb.bq, %.loopexit
+  %i.oe = phi i32 [ %.0385494.a, %bb.bq ], [ %3, %.loopexit ]
+  %.0386.lcssa = phi i32 [ %.0386493, %bb.bq ], [ %.2, %.loopexit ] ; 3 uses
+  %.0385.lcssa = phi i32 [ %.0386493.a, %bb.bq ], [ %.1, %.loopexit ]
   store i32 %i.oe, ptr %i.lw, align 4
   %i.of = getelementptr inbounds nuw i8, ptr %i.lw, i64 4 ; 2 uses
   store i32 %.3, ptr %i.of, align 4
