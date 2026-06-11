@@ -201,7 +201,7 @@ bb.a:
   %6 = alloca %"class.llvh::Twine", align 8       ; 6 uses
   %7 = alloca %"class.llvh::Twine", align 8       ; 6 uses
   %8 = alloca %"class.llvh::Twine", align 8       ; 6 uses
-  %9 = alloca %"class.llvh::SmallSet", align 8    ; 11 uses
+  %9 = alloca %"class.llvh::SmallSet", align 8    ; 10 uses
   %10 = alloca %"class.llvh::Twine", align 8      ; 7 uses
   %11 = alloca %"class.llvh::Twine", align 8      ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
@@ -604,7 +604,7 @@ bb.bc:                                            ; preds = %bb.bb
 
 bb.bd:                                            ; preds = %bb.bc, %bb.bb, %bb.ba
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #20
-  %i.hi = getelementptr inbounds nuw i8, ptr %9, i64 32 ; 2 uses
+  %i.hi = getelementptr inbounds nuw i8, ptr %9, i64 32 ; 3 uses
   store ptr %i.hi, ptr %9, align 8, !tbaa !282
   %i.hj = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 3 uses
   store ptr %i.hi, ptr %i.hj, align 8, !tbaa !284
@@ -636,8 +636,7 @@ bb.bd:                                            ; preds = %bb.bc, %bb.bb, %bb.
 
 ._crit_edge133:                                   ; preds = %.critedge
   %.pre = load ptr, ptr %i.hj, align 8, !tbaa !284 ; 2 uses
-  %.pre136 = load ptr, ptr %9, align 8, !tbaa !282
-  %i.ia = icmp eq ptr %.pre, %.pre136
+  %i.ia = icmp eq ptr %.pre, %13
   br i1 %i.ia, label %_ZN4llvh19SmallPtrSetImplBaseD2Ev.exit, label %bb.be
 
 bb.be:                                            ; preds = %._crit_edge133
@@ -649,13 +648,13 @@ _ZN4llvh19SmallPtrSetImplBaseD2Ev.exit:           ; preds = %bb.bd, %._crit_edge
   br label %bb.bk
 
 bb.bf:                                            ; preds = %.lr.ph132, %.critedge
+  %12 = phi ptr [ %i.hi, %.lr.ph132 ], [ %13, %.critedge ] ; 3 uses
   %.043130 = phi ptr [ %i.ho, %.lr.ph132 ], [ %i.ja, %.critedge ] ; 2 uses
   %i.ib = getelementptr inbounds nuw i8, ptr %.043130, i64 8 ; 2 uses
   %i.ic = load ptr, ptr %i.ib, align 8, !tbaa !288
   %i.id = getelementptr inbounds nuw i8, ptr %i.ic, i64 48
   %i.ie = load ptr, ptr %i.id, align 8, !tbaa !209 ; 4 uses
   %i.if = load ptr, ptr %i.hj, align 8, !tbaa !284, !noalias !290
-  %12 = load ptr, ptr %9, align 8, !tbaa !282, !noalias !290 ; 3 uses
   %i.ig = icmp eq ptr %i.if, %12
   br i1 %i.ig, label %bb.bg, label %_ZN4llvh15SmallPtrSetImplIPN6hermes12UniqueStringEE6insertES3_.exit
 
@@ -734,6 +733,7 @@ _ZN4llvhplERKNS_5TwineES2_.exit:                  ; preds = %.lr.ph.i.i, %_ZN4ll
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.bj, %bb.bi, %_ZN4llvhplERKNS_5TwineES2_.exit, %_ZN4llvh15SmallPtrSetImplIPN6hermes12UniqueStringEE6insertES3_.exit
+  %13 = load ptr, ptr %9, align 8, !tbaa !282, !noalias !290 ; 2 uses
   %i.ja = getelementptr inbounds nuw i8, ptr %.043130, i64 24 ; 2 uses
   %.not = icmp eq ptr %i.ja, %i.hs
   br i1 %.not, label %._crit_edge133, label %bb.bf
