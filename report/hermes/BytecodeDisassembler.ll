@@ -201,28 +201,25 @@ bb.ab:                                            ; preds = %bb.x
   %or.cond53 = and i1 %i.gs, %i.gr
   %.not3.i117 = icmp ne i16 %i.fe, 0
   %or.cond246.not = select i1 %or.cond53, i1 %.not3.i117, i1 false
-  br i1 %or.cond246.not, label %.lr.ph.i118, label %_ZN6hermes3hbc14BytecodeHasher17hashOperandStringEj.exit
+  br i1 %or.cond246.not, label %bb.ac, label %_ZN6hermes3hbc14BytecodeHasher17hashOperandStringEj.exit
 
-.lr.ph.i118:                                      ; preds = %bb.ab
-  %5 = zext i16 %i.fe to i32
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
-  %.promoted.i119 = load i32, ptr %6, align 4, !tbaa !213
-  br label %bb.ac
-
-bb.ac:                                            ; preds = %bb.ac, %.lr.ph.i118
-  %7 = phi i32 [ %.promoted.i119, %.lr.ph.i118 ], [ %i.gx, %bb.ac ]
-  %.04.i120 = phi i32 [ %5, %.lr.ph.i118 ], [ %i.gy, %bb.ac ] ; 2 uses
-  %i.gt = and i32 %.04.i120, 255
-  %i.gu = add i32 %i.gt, %7
+bb.ac:                                            ; preds = %bb.ab
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
+  %.promoted.i119 = load i32, ptr %5, align 4, !tbaa !213
+  %6 = zext i16 %i.fe to i32                      ; 2 uses
+  %i.gt = and i32 %6, 255
+  %i.gu = add i32 %i.gt, %.promoted.i119
   %i.gv = mul i32 %i.gu, 1025                     ; 2 uses
   %i.gw = lshr i32 %i.gv, 6
   %i.gx = xor i32 %i.gw, %i.gv                    ; 2 uses
-  %i.gy = lshr i32 %.04.i120, 8                   ; 2 uses
+  %i.gy = lshr i32 %6, 8                          ; 2 uses
   %.not.i121 = icmp eq i32 %i.gy, 0
-  br i1 %.not.i121, label %._crit_edge.i122, label %bb.ac, !llvm.loop !431
-
-._crit_edge.i122:                                 ; preds = %bb.ac
-  store i32 %i.gx, ptr %6, align 4, !tbaa !213
+  %7 = add i32 %i.gy, %i.gx
+  %8 = mul i32 %7, 1025                           ; 2 uses
+  %9 = lshr i32 %8, 6
+  %10 = xor i32 %9, %8
+  %.lcssa355 = select i1 %.not.i121, i32 %i.gx, i32 %10
+  store i32 %.lcssa355, ptr %5, align 4, !tbaa !213
   br label %_ZN6hermes3hbc14BytecodeHasher17hashOperandStringEj.exit
 
 bb.ad:                                            ; preds = %_ZN6hermes3hbcL17isOperandStringIDENS_4inst6OpCodeEj.exit
@@ -625,7 +622,7 @@ bb.bh:                                            ; preds = %bb.bh, %.lr.ph.i218
   store i32 %i.qg, ptr %i.qa, align 4, !tbaa !213
   br label %_ZN6hermes3hbc14BytecodeHasher17hashOperandStringEj.exit
 
-_ZN6hermes3hbc14BytecodeHasher17hashOperandStringEj.exit: ; preds = %bb.be, %bb.ay, %bb.as, %bb.am, %bb.ag, %bb.aa, %bb.v, %bb.p, %bb.k, %bb.bf, %.preheader16.i207, %.preheader.i211, %..loopexit_crit_edge.i215, %bb.bg, %._crit_edge.i222, %bb.az, %.preheader16.i187, %.preheader.i191, %..loopexit_crit_edge.i195, %._crit_edge.i202, %bb.at, %.preheader16.i167, %.preheader.i171, %..loopexit_crit_edge.i175, %._crit_edge.i182, %bb.an, %.preheader16.i147, %.preheader.i151, %..loopexit_crit_edge.i155, %._crit_edge.i162, %bb.ah, %.preheader16.i127, %.preheader.i131, %..loopexit_crit_edge.i135, %._crit_edge.i142, %bb.ab, %.preheader16.i107, %.preheader.i111, %..loopexit_crit_edge.i115, %._crit_edge.i122, %bb.w, %.preheader16.i87, %.preheader.i91, %..loopexit_crit_edge.i95, %.lr.ph.i98, %bb.q, %.preheader16.i67, %.preheader.i71, %..loopexit_crit_edge.i75, %._crit_edge.i82, %bb.l, %.preheader16.i, %.preheader.i, %..loopexit_crit_edge.i, %.lr.ph.i62, %_ZN6hermes3hbcL17isOperandStringIDENS_4inst6OpCodeEj.exit
+_ZN6hermes3hbc14BytecodeHasher17hashOperandStringEj.exit: ; preds = %bb.be, %bb.ay, %bb.as, %bb.am, %bb.ag, %bb.aa, %bb.v, %bb.p, %bb.k, %bb.bf, %.preheader16.i207, %.preheader.i211, %..loopexit_crit_edge.i215, %bb.bg, %._crit_edge.i222, %bb.az, %.preheader16.i187, %.preheader.i191, %..loopexit_crit_edge.i195, %._crit_edge.i202, %bb.at, %.preheader16.i167, %.preheader.i171, %..loopexit_crit_edge.i175, %._crit_edge.i182, %bb.an, %.preheader16.i147, %.preheader.i151, %..loopexit_crit_edge.i155, %._crit_edge.i162, %bb.ah, %.preheader16.i127, %.preheader.i131, %..loopexit_crit_edge.i135, %._crit_edge.i142, %bb.ab, %.preheader16.i107, %.preheader.i111, %..loopexit_crit_edge.i115, %bb.ac, %bb.w, %.preheader16.i87, %.preheader.i91, %..loopexit_crit_edge.i95, %.lr.ph.i98, %bb.q, %.preheader16.i67, %.preheader.i71, %..loopexit_crit_edge.i75, %._crit_edge.i82, %bb.l, %.preheader16.i, %.preheader.i, %..loopexit_crit_edge.i, %.lr.ph.i62, %_ZN6hermes3hbcL17isOperandStringIDENS_4inst6OpCodeEj.exit
   ret void
 }
 

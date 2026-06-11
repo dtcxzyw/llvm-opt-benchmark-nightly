@@ -200,41 +200,33 @@ bb.j:                                             ; preds = %bit_shifter.exit.1,
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.j, %.lr.ph.i
-  %.011.i = phi i32 [ %2, %.lr.ph.i ], [ 0, %bb.j ]
-  %.0710.i = phi i32 [ %i.dy, %.lr.ph.i ], [ 0, %bb.j ] ; 2 uses
+  %.0710.i = phi i32 [ %i.dy, %.lr.ph.i ], [ 0, %bb.j ]
   %.089.i = phi i64 [ %i.dz, %.lr.ph.i ], [ %.01217.us.6, %bb.j ] ; 2 uses
   %i.dw = trunc i64 %.089.i to i32
   %i.dx = and i32 %i.dw, 1
-  %2 = add nuw nsw i32 %i.dx, %.011.i             ; 2 uses
-  %i.dy = add nuw nsw i32 %.0710.i, 1
+  %i.dy = add nuw nsw i32 %i.dx, %.0710.i         ; 2 uses
   %i.dz = lshr i64 %.089.i, 1                     ; 2 uses
-  %3 = icmp ne i64 %i.dz, 0
-  %4 = icmp samesign ult i32 %.0710.i, 63
-  %5 = select i1 %3, i1 %4, i1 false
-  br i1 %5, label %.lr.ph.i, label %bit_shifter.exit, !llvm.loop !18
+  %.not = icmp eq i64 %i.dz, 0
+  br i1 %.not, label %bit_shifter.exit, label %.lr.ph.i, !llvm.loop !18
 
 bit_shifter.exit:                                 ; preds = %.lr.ph.i
-  %i.ea = zext nneg i32 %2 to i64
+  %i.ea = zext nneg i32 %i.dy to i64
   %i.eb = add nuw nsw i64 %.01316.us.6, %i.ea
   %i.ec = add nuw nsw i64 %.01217.us.6, 13
   br label %.lr.ph.i.1
 
 .lr.ph.i.1:                                       ; preds = %.lr.ph.i.1, %bit_shifter.exit
-  %.011.i.1 = phi i32 [ %6, %.lr.ph.i.1 ], [ 0, %bit_shifter.exit ]
-  %.0710.i.1 = phi i32 [ %i.ef, %.lr.ph.i.1 ], [ 0, %bit_shifter.exit ] ; 2 uses
+  %.0710.i.1 = phi i32 [ %i.ef, %.lr.ph.i.1 ], [ 0, %bit_shifter.exit ]
   %.089.i.1 = phi i64 [ %i.eg, %.lr.ph.i.1 ], [ %i.ec, %bit_shifter.exit ] ; 2 uses
   %i.ed = trunc i64 %.089.i.1 to i32
   %i.ee = and i32 %i.ed, 1
-  %6 = add nuw nsw i32 %i.ee, %.011.i.1           ; 2 uses
-  %i.ef = add nuw nsw i32 %.0710.i.1, 1
+  %i.ef = add nuw nsw i32 %i.ee, %.0710.i.1       ; 2 uses
   %i.eg = lshr i64 %.089.i.1, 1                   ; 2 uses
-  %7 = icmp ne i64 %i.eg, 0
-  %8 = icmp samesign ult i32 %.0710.i.1, 63
-  %9 = select i1 %7, i1 %8, i1 false
-  br i1 %9, label %.lr.ph.i.1, label %bit_shifter.exit.1, !llvm.loop !18
+  %.not.1 = icmp eq i64 %i.eg, 0
+  br i1 %.not.1, label %bit_shifter.exit.1, label %.lr.ph.i.1, !llvm.loop !18
 
 bit_shifter.exit.1:                               ; preds = %.lr.ph.i.1
-  %i.eh = zext nneg i32 %6 to i64
+  %i.eh = zext nneg i32 %i.ef to i64
   %i.ei = add nuw nsw i64 %i.eb, %i.eh            ; 3 uses
   %i.ej = add nuw nsw i64 %.01217.us.6, 26        ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
@@ -253,21 +245,17 @@ bit_shifter.exit.1:                               ; preds = %.lr.ph.i.1
   br label %.lr.ph.i.epil
 
 .lr.ph.i.epil:                                    ; preds = %.lr.ph.i.epil, %.epil.preheader
-  %.011.i.epil = phi i32 [ %10, %.lr.ph.i.epil ], [ 0, %.epil.preheader ]
-  %.0710.i.epil = phi i32 [ %i.em, %.lr.ph.i.epil ], [ 0, %.epil.preheader ] ; 2 uses
+  %.0710.i.epil = phi i32 [ %i.em, %.lr.ph.i.epil ], [ 0, %.epil.preheader ]
   %.089.i.epil = phi i64 [ %i.en, %.lr.ph.i.epil ], [ %.01217.us.6.epil.init, %.epil.preheader ] ; 2 uses
   %i.ek = trunc i64 %.089.i.epil to i32
   %i.el = and i32 %i.ek, 1
-  %10 = add nuw nsw i32 %i.el, %.011.i.epil       ; 2 uses
-  %i.em = add nuw nsw i32 %.0710.i.epil, 1
+  %i.em = add nuw nsw i32 %i.el, %.0710.i.epil    ; 2 uses
   %i.en = lshr i64 %.089.i.epil, 1                ; 2 uses
-  %11 = icmp ne i64 %i.en, 0
-  %12 = icmp samesign ult i32 %.0710.i.epil, 63
-  %13 = select i1 %11, i1 %12, i1 false
-  br i1 %13, label %.lr.ph.i.epil, label %bit_shifter.exit.epil, !llvm.loop !18
+  %.not.epil = icmp eq i64 %i.en, 0
+  br i1 %.not.epil, label %bit_shifter.exit.epil, label %.lr.ph.i.epil, !llvm.loop !18
 
 bit_shifter.exit.epil:                            ; preds = %.lr.ph.i.epil
-  %i.eo = zext nneg i32 %10 to i64
+  %i.eo = zext nneg i32 %i.em to i64
   %i.ep = add nuw nsw i64 %.01316.us.6.epil.init, %i.eo
   br label %.split20.us
 
