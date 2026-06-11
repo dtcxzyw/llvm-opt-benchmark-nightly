@@ -201,46 +201,81 @@ bb.b:                                             ; preds = %bb.a
 
 mbedtls_asn1_write_raw_buffer.exit:               ; preds = %bb.b
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.h, ptr readonly align 1 %2, i64 %3, i1 false)
-  %i.i = trunc i64 %3 to i32                      ; 4 uses
+  %i.i = trunc i64 %3 to i32                      ; 6 uses
   %i.j = icmp slt i32 %i.i, 0
   br i1 %i.j, label %mbedtls_asn1_write_len_and_tag.exit, label %bb.c
 
 bb.c:                                             ; preds = %mbedtls_asn1_write_raw_buffer.exit
-  %i.k = and i64 %3, 2147483647                   ; 4 uses
+  %i.k = and i64 %3, 2147483647                   ; 5 uses
   %i.l = icmp samesign ugt i64 %i.k, 127
-  br i1 %i.l, label %.preheader23.i.i.a, label %.loopexit.i.i
+  br i1 %i.l, label %.preheader23.i.i, label %.loopexit.i.i
 
-.preheader23.i.i.a:                               ; preds = %bb.c, %.preheader23.i.i.a
-  %.025.i.i = phi i64 [ %5, %.preheader23.i.i.a ], [ %i.k, %bb.c ]
-  %.01724.i.i = phi i32 [ %4, %.preheader23.i.i.a ], [ 1, %bb.c ]
-  %4 = add nuw nsw i32 %.01724.i.i, 1             ; 2 uses
-  %5 = lshr i64 %.025.i.i, 8                      ; 2 uses
-  %.not.i.i = icmp eq i64 %5, 0
-  br i1 %.not.i.i, label %.loopexit.i.i, label %.preheader23.i.i.a, !llvm.loop !8
+.preheader23.i.i:                                 ; preds = %bb.c
+  %.mask = and i64 %3, 2147483392
+  %.not.i.i = icmp eq i64 %.mask, 0
+  br i1 %.not.i.i, label %.loopexit.i.i, label %.preheader23.i.i.1
 
-.loopexit.i.i:                                    ; preds = %.preheader23.i.i.a, %bb.b, %bb.c
-  %6 = phi i64 [ %i.k, %bb.c ], [ 0, %bb.b ], [ %i.k, %.preheader23.i.i.a ]
-  %7 = phi i32 [ %i.i, %bb.c ], [ 0, %bb.b ], [ %i.i, %.preheader23.i.i.a ]
-  %.1.i.i = phi i32 [ 1, %bb.c ], [ 1, %bb.b ], [ %4, %.preheader23.i.i.a ] ; 4 uses
+.preheader23.i.i.1:                               ; preds = %.preheader23.i.i
+  %.mask19 = and i64 %3, 2147418112
+  %.not.i.i.1 = icmp eq i64 %.mask19, 0
+  br i1 %.not.i.i.1, label %.loopexit.i.i, label %.preheader23.i.i.a
+
+.preheader23.i.i.a:                               ; preds = %.preheader23.i.i.1
+  %.mask20 = and i64 %3, 2130706432
+  %.not.i.i.2 = icmp eq i64 %.mask20, 0
+  %spec.select = select i1 %.not.i.i.2, i32 4, i32 5
+  br label %.loopexit.i.i
+
+.loopexit.i.i:                                    ; preds = %.preheader23.i.i.a, %.preheader23.i.i, %.preheader23.i.i.1, %bb.b, %bb.c
+  %4 = phi i64 [ %i.k, %bb.c ], [ 0, %bb.b ], [ %i.k, %.preheader23.i.i ], [ %i.k, %.preheader23.i.i.a ], [ %i.k, %.preheader23.i.i.1 ] ; 4 uses
+  %5 = phi i32 [ %i.i, %bb.c ], [ 0, %bb.b ], [ %i.i, %.preheader23.i.i ], [ %i.i, %.preheader23.i.i.a ], [ %i.i, %.preheader23.i.i.1 ]
+  %.1.i.i = phi i32 [ 1, %bb.c ], [ 1, %bb.b ], [ 2, %.preheader23.i.i ], [ 3, %.preheader23.i.i.1 ], [ %spec.select, %.preheader23.i.i.a ] ; 4 uses
   %i.m = zext nneg i32 %.1.i.i to i64
   %i.n = load ptr, ptr %0, align 8, !tbaa !10
   %i.o = ptrtoint ptr %i.n to i64
   %i.p = sub i64 %i.o, %i.d
   %i.q = icmp slt i64 %i.p, %i.m
-  br i1 %i.q, label %mbedtls_asn1_write_len_and_tag.exit, label %.preheader.i.i.a
+  br i1 %i.q, label %mbedtls_asn1_write_len_and_tag.exit, label %.preheader.i.i
 
-.preheader.i.i.a:                                 ; preds = %.loopexit.i.i, %.preheader.i.i.a
-  %.018.i.i = phi i64 [ %i.u, %.preheader.i.i.a ], [ %6, %.loopexit.i.i ] ; 2 uses
-  %i.r = trunc i64 %.018.i.i to i8
+.preheader.i.i:                                   ; preds = %.loopexit.i.i
+  %6 = trunc i64 %4 to i8
+  %7 = load ptr, ptr %0, align 8, !tbaa !10
+  %8 = getelementptr inbounds i8, ptr %7, i64 -1  ; 2 uses
+  store ptr %8, ptr %0, align 8, !tbaa !10
+  store i8 %6, ptr %8, align 1, !tbaa !13
+  %9 = lshr i64 %4, 8                             ; 2 uses
+  %.not22.i.i = icmp eq i64 %9, 0
+  br i1 %.not22.i.i, label %bb.d, label %.preheader.i.i.1
+
+.preheader.i.i.1:                                 ; preds = %.preheader.i.i
+  %10 = trunc i64 %9 to i8
+  %11 = load ptr, ptr %0, align 8, !tbaa !10
+  %12 = getelementptr inbounds i8, ptr %11, i64 -1 ; 2 uses
+  store ptr %12, ptr %0, align 8, !tbaa !10
+  store i8 %10, ptr %12, align 1, !tbaa !13
+  %13 = lshr i64 %4, 16                           ; 2 uses
+  %.not22.i.i.1 = icmp eq i64 %13, 0
+  br i1 %.not22.i.i.1, label %bb.d, label %.preheader.i.i.a
+
+.preheader.i.i.a:                                 ; preds = %.preheader.i.i.1
+  %i.r = trunc i64 %13 to i8
   %i.s = load ptr, ptr %0, align 8, !tbaa !10
   %i.t = getelementptr inbounds i8, ptr %i.s, i64 -1 ; 2 uses
   store ptr %i.t, ptr %0, align 8, !tbaa !10
   store i8 %i.r, ptr %i.t, align 1, !tbaa !13
-  %i.u = lshr i64 %.018.i.i, 8                    ; 2 uses
+  %i.u = lshr i64 %4, 24                          ; 2 uses
   %.not22.i.i.a = icmp eq i64 %i.u, 0
-  br i1 %.not22.i.i.a, label %bb.d, label %.preheader.i.i.a, !llvm.loop !14
+  br i1 %.not22.i.i.a, label %bb.d, label %.preheader.i.i.3
 
-bb.d:                                             ; preds = %.preheader.i.i.a
+.preheader.i.i.3:                                 ; preds = %.preheader.i.i.a
+  %14 = trunc nuw nsw i64 %i.u to i8
+  %15 = load ptr, ptr %0, align 8, !tbaa !10
+  %16 = getelementptr inbounds i8, ptr %15, i64 -1 ; 2 uses
+  store ptr %16, ptr %0, align 8, !tbaa !10
+  store i8 %14, ptr %16, align 1, !tbaa !13
+  br label %bb.d
+
+bb.d:                                             ; preds = %.preheader.i.i.3, %.preheader.i.i.a, %.preheader.i.i.1, %.preheader.i.i
   %i.v = icmp samesign ugt i32 %.1.i.i, 1
   br i1 %i.v, label %bb.e, label %mbedtls_asn1_write_len.exit.i
 
@@ -264,7 +299,7 @@ bb.f:                                             ; preds = %mbedtls_asn1_write_
   %i.ae = getelementptr inbounds i8, ptr %i.aa, i64 -1 ; 2 uses
   store ptr %i.ae, ptr %0, align 8, !tbaa !10
   store i8 6, ptr %i.ae, align 1, !tbaa !13
-  %i.af = add nuw i32 %7, 1
+  %i.af = add nuw i32 %5, 1
   %i.ag = add i32 %i.af, %.1.i.i
   br label %mbedtls_asn1_write_len_and_tag.exit
 
@@ -334,46 +369,81 @@ bb.f:                                             ; preds = %bb.e
 
 mbedtls_asn1_write_raw_buffer.exit.i:             ; preds = %bb.f
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.t, ptr readonly align 1 %2, i64 %3, i1 false)
-  %i.u = trunc i64 %3 to i32                      ; 4 uses
+  %i.u = trunc i64 %3 to i32                      ; 6 uses
   %i.v = icmp slt i32 %i.u, 0
   br i1 %i.v, label %mbedtls_asn1_write_len_and_tag.exit, label %bb.g
 
 bb.g:                                             ; preds = %mbedtls_asn1_write_raw_buffer.exit.i
-  %i.w = and i64 %3, 2147483647                   ; 4 uses
+  %i.w = and i64 %3, 2147483647                   ; 5 uses
   %i.x = icmp samesign ugt i64 %i.w, 127
-  br i1 %i.x, label %.preheader23.i.i.i.a, label %.loopexit.i.i.i
+  br i1 %i.x, label %.preheader23.i.i.i, label %.loopexit.i.i.i
 
-.preheader23.i.i.i.a:                             ; preds = %bb.g, %.preheader23.i.i.i.a
-  %.025.i.i.i = phi i64 [ %7, %.preheader23.i.i.i.a ], [ %i.w, %bb.g ]
-  %.01724.i.i.i = phi i32 [ %6, %.preheader23.i.i.i.a ], [ 1, %bb.g ]
-  %6 = add nuw nsw i32 %.01724.i.i.i, 1           ; 2 uses
-  %7 = lshr i64 %.025.i.i.i, 8                    ; 2 uses
-  %.not.i.i.i = icmp eq i64 %7, 0
-  br i1 %.not.i.i.i, label %.loopexit.i.i.i, label %.preheader23.i.i.i.a, !llvm.loop !8
+.preheader23.i.i.i:                               ; preds = %bb.g
+  %.mask = and i64 %3, 2147483392
+  %.not.i.i.i = icmp eq i64 %.mask, 0
+  br i1 %.not.i.i.i, label %.loopexit.i.i.i, label %.preheader23.i.i.i.1
 
-.loopexit.i.i.i:                                  ; preds = %.preheader23.i.i.i.a, %bb.g, %bb.f
-  %8 = phi i64 [ %i.w, %bb.g ], [ 0, %bb.f ], [ %i.w, %.preheader23.i.i.i.a ]
-  %9 = phi i32 [ %i.u, %bb.g ], [ 0, %bb.f ], [ %i.u, %.preheader23.i.i.i.a ]
-  %.1.i.i.i = phi i32 [ 1, %bb.g ], [ 1, %bb.f ], [ %6, %.preheader23.i.i.i.a ] ; 4 uses
+.preheader23.i.i.i.1:                             ; preds = %.preheader23.i.i.i
+  %.mask43 = and i64 %3, 2147418112
+  %.not.i.i.i.1 = icmp eq i64 %.mask43, 0
+  br i1 %.not.i.i.i.1, label %.loopexit.i.i.i, label %.preheader23.i.i.i.a
+
+.preheader23.i.i.i.a:                             ; preds = %.preheader23.i.i.i.1
+  %.mask44 = and i64 %3, 2130706432
+  %.not.i.i.i.2 = icmp eq i64 %.mask44, 0
+  %spec.select = select i1 %.not.i.i.i.2, i32 4, i32 5
+  br label %.loopexit.i.i.i
+
+.loopexit.i.i.i:                                  ; preds = %.preheader23.i.i.i.a, %.preheader23.i.i.i, %.preheader23.i.i.i.1, %bb.g, %bb.f
+  %6 = phi i64 [ %i.w, %bb.g ], [ 0, %bb.f ], [ %i.w, %.preheader23.i.i.i ], [ %i.w, %.preheader23.i.i.i.a ], [ %i.w, %.preheader23.i.i.i.1 ] ; 4 uses
+  %7 = phi i32 [ %i.u, %bb.g ], [ 0, %bb.f ], [ %i.u, %.preheader23.i.i.i ], [ %i.u, %.preheader23.i.i.i.a ], [ %i.u, %.preheader23.i.i.i.1 ]
+  %.1.i.i.i = phi i32 [ 1, %bb.g ], [ 1, %bb.f ], [ 2, %.preheader23.i.i.i ], [ 3, %.preheader23.i.i.i.1 ], [ %spec.select, %.preheader23.i.i.i.a ] ; 4 uses
   %i.y = zext nneg i32 %.1.i.i.i to i64
   %i.z = load ptr, ptr %0, align 8, !tbaa !10
   %i.aa = ptrtoint ptr %i.z to i64
   %i.ab = sub i64 %i.aa, %i.p
   %i.ac = icmp slt i64 %i.ab, %i.y
-  br i1 %i.ac, label %mbedtls_asn1_write_len_and_tag.exit, label %.preheader.i.i.i24.a
+  br i1 %i.ac, label %mbedtls_asn1_write_len_and_tag.exit, label %.preheader.i.i.i24
 
-.preheader.i.i.i24.a:                             ; preds = %.loopexit.i.i.i, %.preheader.i.i.i24.a
-  %.018.i.i.i = phi i64 [ %i.ag, %.preheader.i.i.i24.a ], [ %8, %.loopexit.i.i.i ] ; 2 uses
-  %i.ad = trunc i64 %.018.i.i.i to i8
+.preheader.i.i.i24:                               ; preds = %.loopexit.i.i.i
+  %8 = trunc i64 %6 to i8
+  %9 = load ptr, ptr %0, align 8, !tbaa !10
+  %10 = getelementptr inbounds i8, ptr %9, i64 -1 ; 2 uses
+  store ptr %10, ptr %0, align 8, !tbaa !10
+  store i8 %8, ptr %10, align 1, !tbaa !13
+  %11 = lshr i64 %6, 8                            ; 2 uses
+  %.not22.i.i.i = icmp eq i64 %11, 0
+  br i1 %.not22.i.i.i, label %bb.h, label %.preheader.i.i.i24.1
+
+.preheader.i.i.i24.1:                             ; preds = %.preheader.i.i.i24
+  %12 = trunc i64 %11 to i8
+  %13 = load ptr, ptr %0, align 8, !tbaa !10
+  %14 = getelementptr inbounds i8, ptr %13, i64 -1 ; 2 uses
+  store ptr %14, ptr %0, align 8, !tbaa !10
+  store i8 %12, ptr %14, align 1, !tbaa !13
+  %15 = lshr i64 %6, 16                           ; 2 uses
+  %.not22.i.i.i.1 = icmp eq i64 %15, 0
+  br i1 %.not22.i.i.i.1, label %bb.h, label %.preheader.i.i.i24.a
+
+.preheader.i.i.i24.a:                             ; preds = %.preheader.i.i.i24.1
+  %i.ad = trunc i64 %15 to i8
   %i.ae = load ptr, ptr %0, align 8, !tbaa !10
   %i.af = getelementptr inbounds i8, ptr %i.ae, i64 -1 ; 2 uses
   store ptr %i.af, ptr %0, align 8, !tbaa !10
   store i8 %i.ad, ptr %i.af, align 1, !tbaa !13
-  %i.ag = lshr i64 %.018.i.i.i, 8                 ; 2 uses
+  %i.ag = lshr i64 %6, 24                         ; 2 uses
   %.not22.i.i.i.a = icmp eq i64 %i.ag, 0
-  br i1 %.not22.i.i.i.a, label %bb.h, label %.preheader.i.i.i24.a, !llvm.loop !14
+  br i1 %.not22.i.i.i.a, label %bb.h, label %.preheader.i.i.i24.3
 
-bb.h:                                             ; preds = %.preheader.i.i.i24.a
+.preheader.i.i.i24.3:                             ; preds = %.preheader.i.i.i24.a
+  %16 = trunc nuw nsw i64 %i.ag to i8
+  %17 = load ptr, ptr %0, align 8, !tbaa !10
+  %18 = getelementptr inbounds i8, ptr %17, i64 -1 ; 2 uses
+  store ptr %18, ptr %0, align 8, !tbaa !10
+  store i8 %16, ptr %18, align 1, !tbaa !13
+  br label %bb.h
+
+bb.h:                                             ; preds = %.preheader.i.i.i24.3, %.preheader.i.i.i24.a, %.preheader.i.i.i24.1, %.preheader.i.i.i24
   %i.ah = icmp samesign ugt i32 %.1.i.i.i, 1
   br i1 %i.ah, label %bb.i, label %mbedtls_asn1_write_len.exit.i.i
 
@@ -397,7 +467,7 @@ mbedtls_asn1_write_oid.exit:                      ; preds = %mbedtls_asn1_write_
   %i.aq = getelementptr inbounds i8, ptr %i.am, i64 -1 ; 2 uses
   store ptr %i.aq, ptr %0, align 8, !tbaa !10
   store i8 6, ptr %i.aq, align 1, !tbaa !13
-  %i.ar = add nuw i32 %9, 1
+  %i.ar = add nuw i32 %7, 1
   %i.as = add i32 %i.ar, %.1.i.i.i                ; 3 uses
   %i.at = icmp slt i32 %i.as, 0
   br i1 %i.at, label %mbedtls_asn1_write_len_and_tag.exit, label %bb.j
@@ -768,47 +838,82 @@ bb.b:                                             ; preds = %bb.a
 
 mbedtls_asn1_write_raw_buffer.exit:               ; preds = %bb.b
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.h, ptr readonly align 1 %3, i64 %4, i1 false)
-  %i.i = trunc i64 %4 to i32                      ; 4 uses
+  %i.i = trunc i64 %4 to i32                      ; 6 uses
   %i.j = icmp slt i32 %i.i, 0
   br i1 %i.j, label %mbedtls_asn1_write_len_and_tag.exit, label %bb.c
 
 bb.c:                                             ; preds = %mbedtls_asn1_write_raw_buffer.exit
-  %i.k = and i64 %4, 2147483647                   ; 4 uses
+  %i.k = and i64 %4, 2147483647                   ; 5 uses
   %i.l = icmp samesign ugt i64 %i.k, 127
-  br i1 %i.l, label %.preheader23.i.i.a, label %.loopexit.i.i
+  br i1 %i.l, label %.preheader23.i.i, label %.loopexit.i.i
 
-.preheader23.i.i.a:                               ; preds = %bb.c, %.preheader23.i.i.a
-  %.025.i.i = phi i64 [ %6, %.preheader23.i.i.a ], [ %i.k, %bb.c ]
-  %.01724.i.i = phi i32 [ %5, %.preheader23.i.i.a ], [ 1, %bb.c ]
-  %5 = add nuw nsw i32 %.01724.i.i, 1             ; 2 uses
-  %6 = lshr i64 %.025.i.i, 8                      ; 2 uses
-  %.not.i.i = icmp eq i64 %6, 0
-  br i1 %.not.i.i, label %.loopexit.i.i, label %.preheader23.i.i.a, !llvm.loop !8
+.preheader23.i.i:                                 ; preds = %bb.c
+  %.mask = and i64 %4, 2147483392
+  %.not.i.i = icmp eq i64 %.mask, 0
+  br i1 %.not.i.i, label %.loopexit.i.i, label %.preheader23.i.i.1
 
-.loopexit.i.i:                                    ; preds = %.preheader23.i.i.a, %bb.b, %bb.c
-  %7 = phi i64 [ %i.k, %bb.c ], [ 0, %bb.b ], [ %i.k, %.preheader23.i.i.a ]
-  %8 = phi i32 [ %i.i, %bb.c ], [ 0, %bb.b ], [ %i.i, %.preheader23.i.i.a ]
-  %.1.i.i = phi i32 [ 1, %bb.c ], [ 1, %bb.b ], [ %5, %.preheader23.i.i.a ] ; 4 uses
+.preheader23.i.i.1:                               ; preds = %.preheader23.i.i
+  %.mask20 = and i64 %4, 2147418112
+  %.not.i.i.1 = icmp eq i64 %.mask20, 0
+  br i1 %.not.i.i.1, label %.loopexit.i.i, label %.preheader23.i.i.a
+
+.preheader23.i.i.a:                               ; preds = %.preheader23.i.i.1
+  %.mask21 = and i64 %4, 2130706432
+  %.not.i.i.2 = icmp eq i64 %.mask21, 0
+  %spec.select = select i1 %.not.i.i.2, i32 4, i32 5
+  br label %.loopexit.i.i
+
+.loopexit.i.i:                                    ; preds = %.preheader23.i.i.a, %.preheader23.i.i, %.preheader23.i.i.1, %bb.b, %bb.c
+  %5 = phi i64 [ %i.k, %bb.c ], [ 0, %bb.b ], [ %i.k, %.preheader23.i.i ], [ %i.k, %.preheader23.i.i.a ], [ %i.k, %.preheader23.i.i.1 ] ; 4 uses
+  %6 = phi i32 [ %i.i, %bb.c ], [ 0, %bb.b ], [ %i.i, %.preheader23.i.i ], [ %i.i, %.preheader23.i.i.a ], [ %i.i, %.preheader23.i.i.1 ]
+  %.1.i.i = phi i32 [ 1, %bb.c ], [ 1, %bb.b ], [ 2, %.preheader23.i.i ], [ 3, %.preheader23.i.i.1 ], [ %spec.select, %.preheader23.i.i.a ] ; 4 uses
   %i.m = trunc i32 %2 to i8
   %i.n = zext nneg i32 %.1.i.i to i64
   %i.o = load ptr, ptr %0, align 8, !tbaa !10
   %i.p = ptrtoint ptr %i.o to i64
   %i.q = sub i64 %i.p, %i.d
   %i.r = icmp slt i64 %i.q, %i.n
-  br i1 %i.r, label %mbedtls_asn1_write_len_and_tag.exit, label %.preheader.i.i.a
+  br i1 %i.r, label %mbedtls_asn1_write_len_and_tag.exit, label %.preheader.i.i
 
-.preheader.i.i.a:                                 ; preds = %.loopexit.i.i, %.preheader.i.i.a
-  %.018.i.i = phi i64 [ %i.v, %.preheader.i.i.a ], [ %7, %.loopexit.i.i ] ; 2 uses
-  %i.s = trunc i64 %.018.i.i to i8
+.preheader.i.i:                                   ; preds = %.loopexit.i.i
+  %7 = trunc i64 %5 to i8
+  %8 = load ptr, ptr %0, align 8, !tbaa !10
+  %9 = getelementptr inbounds i8, ptr %8, i64 -1  ; 2 uses
+  store ptr %9, ptr %0, align 8, !tbaa !10
+  store i8 %7, ptr %9, align 1, !tbaa !13
+  %10 = lshr i64 %5, 8                            ; 2 uses
+  %.not22.i.i = icmp eq i64 %10, 0
+  br i1 %.not22.i.i, label %bb.d, label %.preheader.i.i.1
+
+.preheader.i.i.1:                                 ; preds = %.preheader.i.i
+  %11 = trunc i64 %10 to i8
+  %12 = load ptr, ptr %0, align 8, !tbaa !10
+  %13 = getelementptr inbounds i8, ptr %12, i64 -1 ; 2 uses
+  store ptr %13, ptr %0, align 8, !tbaa !10
+  store i8 %11, ptr %13, align 1, !tbaa !13
+  %14 = lshr i64 %5, 16                           ; 2 uses
+  %.not22.i.i.1 = icmp eq i64 %14, 0
+  br i1 %.not22.i.i.1, label %bb.d, label %.preheader.i.i.a
+
+.preheader.i.i.a:                                 ; preds = %.preheader.i.i.1
+  %i.s = trunc i64 %14 to i8
   %i.t = load ptr, ptr %0, align 8, !tbaa !10
   %i.u = getelementptr inbounds i8, ptr %i.t, i64 -1 ; 2 uses
   store ptr %i.u, ptr %0, align 8, !tbaa !10
   store i8 %i.s, ptr %i.u, align 1, !tbaa !13
-  %i.v = lshr i64 %.018.i.i, 8                    ; 2 uses
+  %i.v = lshr i64 %5, 24                          ; 2 uses
   %.not22.i.i.a = icmp eq i64 %i.v, 0
-  br i1 %.not22.i.i.a, label %bb.d, label %.preheader.i.i.a, !llvm.loop !14
+  br i1 %.not22.i.i.a, label %bb.d, label %.preheader.i.i.3
 
-bb.d:                                             ; preds = %.preheader.i.i.a
+.preheader.i.i.3:                                 ; preds = %.preheader.i.i.a
+  %15 = trunc nuw nsw i64 %i.v to i8
+  %16 = load ptr, ptr %0, align 8, !tbaa !10
+  %17 = getelementptr inbounds i8, ptr %16, i64 -1 ; 2 uses
+  store ptr %17, ptr %0, align 8, !tbaa !10
+  store i8 %15, ptr %17, align 1, !tbaa !13
+  br label %bb.d
+
+bb.d:                                             ; preds = %.preheader.i.i.3, %.preheader.i.i.a, %.preheader.i.i.1, %.preheader.i.i
   %i.w = icmp samesign ugt i32 %.1.i.i, 1
   br i1 %i.w, label %bb.e, label %mbedtls_asn1_write_len.exit.i
 
@@ -832,7 +937,7 @@ bb.f:                                             ; preds = %mbedtls_asn1_write_
   %i.af = getelementptr inbounds i8, ptr %i.ab, i64 -1 ; 2 uses
   store ptr %i.af, ptr %0, align 8, !tbaa !10
   store i8 %i.m, ptr %i.af, align 1, !tbaa !13
-  %i.ag = add nuw i32 %8, 1
+  %i.ag = add nuw i32 %6, 1
   %i.ah = add i32 %i.ag, %.1.i.i
   br label %mbedtls_asn1_write_len_and_tag.exit
 
@@ -862,46 +967,81 @@ bb.b:                                             ; preds = %bb.a
 
 mbedtls_asn1_write_raw_buffer.exit.i:             ; preds = %bb.b
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.h, ptr readonly align 1 %2, i64 %3, i1 false)
-  %i.i = trunc i64 %3 to i32                      ; 4 uses
+  %i.i = trunc i64 %3 to i32                      ; 6 uses
   %i.j = icmp slt i32 %i.i, 0
   br i1 %i.j, label %mbedtls_asn1_write_tagged_string.exit, label %bb.c
 
 bb.c:                                             ; preds = %mbedtls_asn1_write_raw_buffer.exit.i
-  %i.k = and i64 %3, 2147483647                   ; 4 uses
+  %i.k = and i64 %3, 2147483647                   ; 5 uses
   %i.l = icmp samesign ugt i64 %i.k, 127
-  br i1 %i.l, label %.preheader23.i.i.i.a, label %.loopexit.i.i.i
+  br i1 %i.l, label %.preheader23.i.i.i, label %.loopexit.i.i.i
 
-.preheader23.i.i.i.a:                             ; preds = %bb.c, %.preheader23.i.i.i.a
-  %.025.i.i.i = phi i64 [ %5, %.preheader23.i.i.i.a ], [ %i.k, %bb.c ]
-  %.01724.i.i.i = phi i32 [ %4, %.preheader23.i.i.i.a ], [ 1, %bb.c ]
-  %4 = add nuw nsw i32 %.01724.i.i.i, 1           ; 2 uses
-  %5 = lshr i64 %.025.i.i.i, 8                    ; 2 uses
-  %.not.i.i.i = icmp eq i64 %5, 0
-  br i1 %.not.i.i.i, label %.loopexit.i.i.i, label %.preheader23.i.i.i.a, !llvm.loop !8
+.preheader23.i.i.i:                               ; preds = %bb.c
+  %.mask = and i64 %3, 2147483392
+  %.not.i.i.i = icmp eq i64 %.mask, 0
+  br i1 %.not.i.i.i, label %.loopexit.i.i.i, label %.preheader23.i.i.i.1
 
-.loopexit.i.i.i:                                  ; preds = %.preheader23.i.i.i.a, %bb.c, %bb.b
-  %6 = phi i64 [ %i.k, %bb.c ], [ 0, %bb.b ], [ %i.k, %.preheader23.i.i.i.a ]
-  %7 = phi i32 [ %i.i, %bb.c ], [ 0, %bb.b ], [ %i.i, %.preheader23.i.i.i.a ]
-  %.1.i.i.i = phi i32 [ 1, %bb.c ], [ 1, %bb.b ], [ %4, %.preheader23.i.i.i.a ] ; 4 uses
+.preheader23.i.i.i.1:                             ; preds = %.preheader23.i.i.i
+  %.mask7 = and i64 %3, 2147418112
+  %.not.i.i.i.1 = icmp eq i64 %.mask7, 0
+  br i1 %.not.i.i.i.1, label %.loopexit.i.i.i, label %.preheader23.i.i.i.a
+
+.preheader23.i.i.i.a:                             ; preds = %.preheader23.i.i.i.1
+  %.mask8 = and i64 %3, 2130706432
+  %.not.i.i.i.2 = icmp eq i64 %.mask8, 0
+  %spec.select = select i1 %.not.i.i.i.2, i32 4, i32 5
+  br label %.loopexit.i.i.i
+
+.loopexit.i.i.i:                                  ; preds = %.preheader23.i.i.i.a, %.preheader23.i.i.i, %.preheader23.i.i.i.1, %bb.c, %bb.b
+  %4 = phi i64 [ %i.k, %bb.c ], [ 0, %bb.b ], [ %i.k, %.preheader23.i.i.i ], [ %i.k, %.preheader23.i.i.i.a ], [ %i.k, %.preheader23.i.i.i.1 ] ; 4 uses
+  %5 = phi i32 [ %i.i, %bb.c ], [ 0, %bb.b ], [ %i.i, %.preheader23.i.i.i ], [ %i.i, %.preheader23.i.i.i.a ], [ %i.i, %.preheader23.i.i.i.1 ]
+  %.1.i.i.i = phi i32 [ 1, %bb.c ], [ 1, %bb.b ], [ 2, %.preheader23.i.i.i ], [ 3, %.preheader23.i.i.i.1 ], [ %spec.select, %.preheader23.i.i.i.a ] ; 4 uses
   %i.m = zext nneg i32 %.1.i.i.i to i64
   %i.n = load ptr, ptr %0, align 8, !tbaa !10
   %i.o = ptrtoint ptr %i.n to i64
   %i.p = sub i64 %i.o, %i.d
   %i.q = icmp slt i64 %i.p, %i.m
-  br i1 %i.q, label %mbedtls_asn1_write_tagged_string.exit, label %.preheader.i.i.i.a
+  br i1 %i.q, label %mbedtls_asn1_write_tagged_string.exit, label %.preheader.i.i.i
 
-.preheader.i.i.i.a:                               ; preds = %.loopexit.i.i.i, %.preheader.i.i.i.a
-  %.018.i.i.i = phi i64 [ %i.u, %.preheader.i.i.i.a ], [ %6, %.loopexit.i.i.i ] ; 2 uses
-  %i.r = trunc i64 %.018.i.i.i to i8
+.preheader.i.i.i:                                 ; preds = %.loopexit.i.i.i
+  %6 = trunc i64 %4 to i8
+  %7 = load ptr, ptr %0, align 8, !tbaa !10
+  %8 = getelementptr inbounds i8, ptr %7, i64 -1  ; 2 uses
+  store ptr %8, ptr %0, align 8, !tbaa !10
+  store i8 %6, ptr %8, align 1, !tbaa !13
+  %9 = lshr i64 %4, 8                             ; 2 uses
+  %.not22.i.i.i = icmp eq i64 %9, 0
+  br i1 %.not22.i.i.i, label %bb.d, label %.preheader.i.i.i.1
+
+.preheader.i.i.i.1:                               ; preds = %.preheader.i.i.i
+  %10 = trunc i64 %9 to i8
+  %11 = load ptr, ptr %0, align 8, !tbaa !10
+  %12 = getelementptr inbounds i8, ptr %11, i64 -1 ; 2 uses
+  store ptr %12, ptr %0, align 8, !tbaa !10
+  store i8 %10, ptr %12, align 1, !tbaa !13
+  %13 = lshr i64 %4, 16                           ; 2 uses
+  %.not22.i.i.i.1 = icmp eq i64 %13, 0
+  br i1 %.not22.i.i.i.1, label %bb.d, label %.preheader.i.i.i.a
+
+.preheader.i.i.i.a:                               ; preds = %.preheader.i.i.i.1
+  %i.r = trunc i64 %13 to i8
   %i.s = load ptr, ptr %0, align 8, !tbaa !10
   %i.t = getelementptr inbounds i8, ptr %i.s, i64 -1 ; 2 uses
   store ptr %i.t, ptr %0, align 8, !tbaa !10
   store i8 %i.r, ptr %i.t, align 1, !tbaa !13
-  %i.u = lshr i64 %.018.i.i.i, 8                  ; 2 uses
+  %i.u = lshr i64 %4, 24                          ; 2 uses
   %.not22.i.i.i.a = icmp eq i64 %i.u, 0
-  br i1 %.not22.i.i.i.a, label %bb.d, label %.preheader.i.i.i.a, !llvm.loop !14
+  br i1 %.not22.i.i.i.a, label %bb.d, label %.preheader.i.i.i.3
 
-bb.d:                                             ; preds = %.preheader.i.i.i.a
+.preheader.i.i.i.3:                               ; preds = %.preheader.i.i.i.a
+  %14 = trunc nuw nsw i64 %i.u to i8
+  %15 = load ptr, ptr %0, align 8, !tbaa !10
+  %16 = getelementptr inbounds i8, ptr %15, i64 -1 ; 2 uses
+  store ptr %16, ptr %0, align 8, !tbaa !10
+  store i8 %14, ptr %16, align 1, !tbaa !13
+  br label %bb.d
+
+bb.d:                                             ; preds = %.preheader.i.i.i.3, %.preheader.i.i.i.a, %.preheader.i.i.i.1, %.preheader.i.i.i
   %i.v = icmp samesign ugt i32 %.1.i.i.i, 1
   br i1 %i.v, label %bb.e, label %mbedtls_asn1_write_len.exit.i.i
 
@@ -925,7 +1065,7 @@ bb.f:                                             ; preds = %mbedtls_asn1_write_
   %i.ae = getelementptr inbounds i8, ptr %i.aa, i64 -1 ; 2 uses
   store ptr %i.ae, ptr %0, align 8, !tbaa !10
   store i8 12, ptr %i.ae, align 1, !tbaa !13
-  %i.af = add nuw i32 %7, 1
+  %i.af = add nuw i32 %5, 1
   %i.ag = add i32 %i.af, %.1.i.i.i
   br label %mbedtls_asn1_write_tagged_string.exit
 
@@ -955,46 +1095,81 @@ bb.b:                                             ; preds = %bb.a
 
 mbedtls_asn1_write_raw_buffer.exit.i:             ; preds = %bb.b
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.h, ptr readonly align 1 %2, i64 %3, i1 false)
-  %i.i = trunc i64 %3 to i32                      ; 4 uses
+  %i.i = trunc i64 %3 to i32                      ; 6 uses
   %i.j = icmp slt i32 %i.i, 0
   br i1 %i.j, label %mbedtls_asn1_write_tagged_string.exit, label %bb.c
 
 bb.c:                                             ; preds = %mbedtls_asn1_write_raw_buffer.exit.i
-  %i.k = and i64 %3, 2147483647                   ; 4 uses
+  %i.k = and i64 %3, 2147483647                   ; 5 uses
   %i.l = icmp samesign ugt i64 %i.k, 127
-  br i1 %i.l, label %.preheader23.i.i.i.a, label %.loopexit.i.i.i
+  br i1 %i.l, label %.preheader23.i.i.i, label %.loopexit.i.i.i
 
-.preheader23.i.i.i.a:                             ; preds = %bb.c, %.preheader23.i.i.i.a
-  %.025.i.i.i = phi i64 [ %5, %.preheader23.i.i.i.a ], [ %i.k, %bb.c ]
-  %.01724.i.i.i = phi i32 [ %4, %.preheader23.i.i.i.a ], [ 1, %bb.c ]
-  %4 = add nuw nsw i32 %.01724.i.i.i, 1           ; 2 uses
-  %5 = lshr i64 %.025.i.i.i, 8                    ; 2 uses
-  %.not.i.i.i = icmp eq i64 %5, 0
-  br i1 %.not.i.i.i, label %.loopexit.i.i.i, label %.preheader23.i.i.i.a, !llvm.loop !8
+.preheader23.i.i.i:                               ; preds = %bb.c
+  %.mask = and i64 %3, 2147483392
+  %.not.i.i.i = icmp eq i64 %.mask, 0
+  br i1 %.not.i.i.i, label %.loopexit.i.i.i, label %.preheader23.i.i.i.1
 
-.loopexit.i.i.i:                                  ; preds = %.preheader23.i.i.i.a, %bb.c, %bb.b
-  %6 = phi i64 [ %i.k, %bb.c ], [ 0, %bb.b ], [ %i.k, %.preheader23.i.i.i.a ]
-  %7 = phi i32 [ %i.i, %bb.c ], [ 0, %bb.b ], [ %i.i, %.preheader23.i.i.i.a ]
-  %.1.i.i.i = phi i32 [ 1, %bb.c ], [ 1, %bb.b ], [ %4, %.preheader23.i.i.i.a ] ; 4 uses
+.preheader23.i.i.i.1:                             ; preds = %.preheader23.i.i.i
+  %.mask7 = and i64 %3, 2147418112
+  %.not.i.i.i.1 = icmp eq i64 %.mask7, 0
+  br i1 %.not.i.i.i.1, label %.loopexit.i.i.i, label %.preheader23.i.i.i.a
+
+.preheader23.i.i.i.a:                             ; preds = %.preheader23.i.i.i.1
+  %.mask8 = and i64 %3, 2130706432
+  %.not.i.i.i.2 = icmp eq i64 %.mask8, 0
+  %spec.select = select i1 %.not.i.i.i.2, i32 4, i32 5
+  br label %.loopexit.i.i.i
+
+.loopexit.i.i.i:                                  ; preds = %.preheader23.i.i.i.a, %.preheader23.i.i.i, %.preheader23.i.i.i.1, %bb.c, %bb.b
+  %4 = phi i64 [ %i.k, %bb.c ], [ 0, %bb.b ], [ %i.k, %.preheader23.i.i.i ], [ %i.k, %.preheader23.i.i.i.a ], [ %i.k, %.preheader23.i.i.i.1 ] ; 4 uses
+  %5 = phi i32 [ %i.i, %bb.c ], [ 0, %bb.b ], [ %i.i, %.preheader23.i.i.i ], [ %i.i, %.preheader23.i.i.i.a ], [ %i.i, %.preheader23.i.i.i.1 ]
+  %.1.i.i.i = phi i32 [ 1, %bb.c ], [ 1, %bb.b ], [ 2, %.preheader23.i.i.i ], [ 3, %.preheader23.i.i.i.1 ], [ %spec.select, %.preheader23.i.i.i.a ] ; 4 uses
   %i.m = zext nneg i32 %.1.i.i.i to i64
   %i.n = load ptr, ptr %0, align 8, !tbaa !10
   %i.o = ptrtoint ptr %i.n to i64
   %i.p = sub i64 %i.o, %i.d
   %i.q = icmp slt i64 %i.p, %i.m
-  br i1 %i.q, label %mbedtls_asn1_write_tagged_string.exit, label %.preheader.i.i.i.a
+  br i1 %i.q, label %mbedtls_asn1_write_tagged_string.exit, label %.preheader.i.i.i
 
-.preheader.i.i.i.a:                               ; preds = %.loopexit.i.i.i, %.preheader.i.i.i.a
-  %.018.i.i.i = phi i64 [ %i.u, %.preheader.i.i.i.a ], [ %6, %.loopexit.i.i.i ] ; 2 uses
-  %i.r = trunc i64 %.018.i.i.i to i8
+.preheader.i.i.i:                                 ; preds = %.loopexit.i.i.i
+  %6 = trunc i64 %4 to i8
+  %7 = load ptr, ptr %0, align 8, !tbaa !10
+  %8 = getelementptr inbounds i8, ptr %7, i64 -1  ; 2 uses
+  store ptr %8, ptr %0, align 8, !tbaa !10
+  store i8 %6, ptr %8, align 1, !tbaa !13
+  %9 = lshr i64 %4, 8                             ; 2 uses
+  %.not22.i.i.i = icmp eq i64 %9, 0
+  br i1 %.not22.i.i.i, label %bb.d, label %.preheader.i.i.i.1
+
+.preheader.i.i.i.1:                               ; preds = %.preheader.i.i.i
+  %10 = trunc i64 %9 to i8
+  %11 = load ptr, ptr %0, align 8, !tbaa !10
+  %12 = getelementptr inbounds i8, ptr %11, i64 -1 ; 2 uses
+  store ptr %12, ptr %0, align 8, !tbaa !10
+  store i8 %10, ptr %12, align 1, !tbaa !13
+  %13 = lshr i64 %4, 16                           ; 2 uses
+  %.not22.i.i.i.1 = icmp eq i64 %13, 0
+  br i1 %.not22.i.i.i.1, label %bb.d, label %.preheader.i.i.i.a
+
+.preheader.i.i.i.a:                               ; preds = %.preheader.i.i.i.1
+  %i.r = trunc i64 %13 to i8
   %i.s = load ptr, ptr %0, align 8, !tbaa !10
   %i.t = getelementptr inbounds i8, ptr %i.s, i64 -1 ; 2 uses
   store ptr %i.t, ptr %0, align 8, !tbaa !10
   store i8 %i.r, ptr %i.t, align 1, !tbaa !13
-  %i.u = lshr i64 %.018.i.i.i, 8                  ; 2 uses
+  %i.u = lshr i64 %4, 24                          ; 2 uses
   %.not22.i.i.i.a = icmp eq i64 %i.u, 0
-  br i1 %.not22.i.i.i.a, label %bb.d, label %.preheader.i.i.i.a, !llvm.loop !14
+  br i1 %.not22.i.i.i.a, label %bb.d, label %.preheader.i.i.i.3
 
-bb.d:                                             ; preds = %.preheader.i.i.i.a
+.preheader.i.i.i.3:                               ; preds = %.preheader.i.i.i.a
+  %14 = trunc nuw nsw i64 %i.u to i8
+  %15 = load ptr, ptr %0, align 8, !tbaa !10
+  %16 = getelementptr inbounds i8, ptr %15, i64 -1 ; 2 uses
+  store ptr %16, ptr %0, align 8, !tbaa !10
+  store i8 %14, ptr %16, align 1, !tbaa !13
+  br label %bb.d
+
+bb.d:                                             ; preds = %.preheader.i.i.i.3, %.preheader.i.i.i.a, %.preheader.i.i.i.1, %.preheader.i.i.i
   %i.v = icmp samesign ugt i32 %.1.i.i.i, 1
   br i1 %i.v, label %bb.e, label %mbedtls_asn1_write_len.exit.i.i
 
@@ -1018,7 +1193,7 @@ bb.f:                                             ; preds = %mbedtls_asn1_write_
   %i.ae = getelementptr inbounds i8, ptr %i.aa, i64 -1 ; 2 uses
   store ptr %i.ae, ptr %0, align 8, !tbaa !10
   store i8 19, ptr %i.ae, align 1, !tbaa !13
-  %i.af = add nuw i32 %7, 1
+  %i.af = add nuw i32 %5, 1
   %i.ag = add i32 %i.af, %.1.i.i.i
   br label %mbedtls_asn1_write_tagged_string.exit
 
@@ -1048,46 +1223,81 @@ bb.b:                                             ; preds = %bb.a
 
 mbedtls_asn1_write_raw_buffer.exit.i:             ; preds = %bb.b
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.h, ptr readonly align 1 %2, i64 %3, i1 false)
-  %i.i = trunc i64 %3 to i32                      ; 4 uses
+  %i.i = trunc i64 %3 to i32                      ; 6 uses
   %i.j = icmp slt i32 %i.i, 0
   br i1 %i.j, label %mbedtls_asn1_write_tagged_string.exit, label %bb.c
 
 bb.c:                                             ; preds = %mbedtls_asn1_write_raw_buffer.exit.i
-  %i.k = and i64 %3, 2147483647                   ; 4 uses
+  %i.k = and i64 %3, 2147483647                   ; 5 uses
   %i.l = icmp samesign ugt i64 %i.k, 127
-  br i1 %i.l, label %.preheader23.i.i.i.a, label %.loopexit.i.i.i
+  br i1 %i.l, label %.preheader23.i.i.i, label %.loopexit.i.i.i
 
-.preheader23.i.i.i.a:                             ; preds = %bb.c, %.preheader23.i.i.i.a
-  %.025.i.i.i = phi i64 [ %5, %.preheader23.i.i.i.a ], [ %i.k, %bb.c ]
-  %.01724.i.i.i = phi i32 [ %4, %.preheader23.i.i.i.a ], [ 1, %bb.c ]
-  %4 = add nuw nsw i32 %.01724.i.i.i, 1           ; 2 uses
-  %5 = lshr i64 %.025.i.i.i, 8                    ; 2 uses
-  %.not.i.i.i = icmp eq i64 %5, 0
-  br i1 %.not.i.i.i, label %.loopexit.i.i.i, label %.preheader23.i.i.i.a, !llvm.loop !8
+.preheader23.i.i.i:                               ; preds = %bb.c
+  %.mask = and i64 %3, 2147483392
+  %.not.i.i.i = icmp eq i64 %.mask, 0
+  br i1 %.not.i.i.i, label %.loopexit.i.i.i, label %.preheader23.i.i.i.1
 
-.loopexit.i.i.i:                                  ; preds = %.preheader23.i.i.i.a, %bb.c, %bb.b
-  %6 = phi i64 [ %i.k, %bb.c ], [ 0, %bb.b ], [ %i.k, %.preheader23.i.i.i.a ]
-  %7 = phi i32 [ %i.i, %bb.c ], [ 0, %bb.b ], [ %i.i, %.preheader23.i.i.i.a ]
-  %.1.i.i.i = phi i32 [ 1, %bb.c ], [ 1, %bb.b ], [ %4, %.preheader23.i.i.i.a ] ; 4 uses
+.preheader23.i.i.i.1:                             ; preds = %.preheader23.i.i.i
+  %.mask7 = and i64 %3, 2147418112
+  %.not.i.i.i.1 = icmp eq i64 %.mask7, 0
+  br i1 %.not.i.i.i.1, label %.loopexit.i.i.i, label %.preheader23.i.i.i.a
+
+.preheader23.i.i.i.a:                             ; preds = %.preheader23.i.i.i.1
+  %.mask8 = and i64 %3, 2130706432
+  %.not.i.i.i.2 = icmp eq i64 %.mask8, 0
+  %spec.select = select i1 %.not.i.i.i.2, i32 4, i32 5
+  br label %.loopexit.i.i.i
+
+.loopexit.i.i.i:                                  ; preds = %.preheader23.i.i.i.a, %.preheader23.i.i.i, %.preheader23.i.i.i.1, %bb.c, %bb.b
+  %4 = phi i64 [ %i.k, %bb.c ], [ 0, %bb.b ], [ %i.k, %.preheader23.i.i.i ], [ %i.k, %.preheader23.i.i.i.a ], [ %i.k, %.preheader23.i.i.i.1 ] ; 4 uses
+  %5 = phi i32 [ %i.i, %bb.c ], [ 0, %bb.b ], [ %i.i, %.preheader23.i.i.i ], [ %i.i, %.preheader23.i.i.i.a ], [ %i.i, %.preheader23.i.i.i.1 ]
+  %.1.i.i.i = phi i32 [ 1, %bb.c ], [ 1, %bb.b ], [ 2, %.preheader23.i.i.i ], [ 3, %.preheader23.i.i.i.1 ], [ %spec.select, %.preheader23.i.i.i.a ] ; 4 uses
   %i.m = zext nneg i32 %.1.i.i.i to i64
   %i.n = load ptr, ptr %0, align 8, !tbaa !10
   %i.o = ptrtoint ptr %i.n to i64
   %i.p = sub i64 %i.o, %i.d
   %i.q = icmp slt i64 %i.p, %i.m
-  br i1 %i.q, label %mbedtls_asn1_write_tagged_string.exit, label %.preheader.i.i.i.a
+  br i1 %i.q, label %mbedtls_asn1_write_tagged_string.exit, label %.preheader.i.i.i
 
-.preheader.i.i.i.a:                               ; preds = %.loopexit.i.i.i, %.preheader.i.i.i.a
-  %.018.i.i.i = phi i64 [ %i.u, %.preheader.i.i.i.a ], [ %6, %.loopexit.i.i.i ] ; 2 uses
-  %i.r = trunc i64 %.018.i.i.i to i8
+.preheader.i.i.i:                                 ; preds = %.loopexit.i.i.i
+  %6 = trunc i64 %4 to i8
+  %7 = load ptr, ptr %0, align 8, !tbaa !10
+  %8 = getelementptr inbounds i8, ptr %7, i64 -1  ; 2 uses
+  store ptr %8, ptr %0, align 8, !tbaa !10
+  store i8 %6, ptr %8, align 1, !tbaa !13
+  %9 = lshr i64 %4, 8                             ; 2 uses
+  %.not22.i.i.i = icmp eq i64 %9, 0
+  br i1 %.not22.i.i.i, label %bb.d, label %.preheader.i.i.i.1
+
+.preheader.i.i.i.1:                               ; preds = %.preheader.i.i.i
+  %10 = trunc i64 %9 to i8
+  %11 = load ptr, ptr %0, align 8, !tbaa !10
+  %12 = getelementptr inbounds i8, ptr %11, i64 -1 ; 2 uses
+  store ptr %12, ptr %0, align 8, !tbaa !10
+  store i8 %10, ptr %12, align 1, !tbaa !13
+  %13 = lshr i64 %4, 16                           ; 2 uses
+  %.not22.i.i.i.1 = icmp eq i64 %13, 0
+  br i1 %.not22.i.i.i.1, label %bb.d, label %.preheader.i.i.i.a
+
+.preheader.i.i.i.a:                               ; preds = %.preheader.i.i.i.1
+  %i.r = trunc i64 %13 to i8
   %i.s = load ptr, ptr %0, align 8, !tbaa !10
   %i.t = getelementptr inbounds i8, ptr %i.s, i64 -1 ; 2 uses
   store ptr %i.t, ptr %0, align 8, !tbaa !10
   store i8 %i.r, ptr %i.t, align 1, !tbaa !13
-  %i.u = lshr i64 %.018.i.i.i, 8                  ; 2 uses
+  %i.u = lshr i64 %4, 24                          ; 2 uses
   %.not22.i.i.i.a = icmp eq i64 %i.u, 0
-  br i1 %.not22.i.i.i.a, label %bb.d, label %.preheader.i.i.i.a, !llvm.loop !14
+  br i1 %.not22.i.i.i.a, label %bb.d, label %.preheader.i.i.i.3
 
-bb.d:                                             ; preds = %.preheader.i.i.i.a
+.preheader.i.i.i.3:                               ; preds = %.preheader.i.i.i.a
+  %14 = trunc nuw nsw i64 %i.u to i8
+  %15 = load ptr, ptr %0, align 8, !tbaa !10
+  %16 = getelementptr inbounds i8, ptr %15, i64 -1 ; 2 uses
+  store ptr %16, ptr %0, align 8, !tbaa !10
+  store i8 %14, ptr %16, align 1, !tbaa !13
+  br label %bb.d
+
+bb.d:                                             ; preds = %.preheader.i.i.i.3, %.preheader.i.i.i.a, %.preheader.i.i.i.1, %.preheader.i.i.i
   %i.v = icmp samesign ugt i32 %.1.i.i.i, 1
   br i1 %i.v, label %bb.e, label %mbedtls_asn1_write_len.exit.i.i
 
@@ -1111,7 +1321,7 @@ bb.f:                                             ; preds = %mbedtls_asn1_write_
   %i.ae = getelementptr inbounds i8, ptr %i.aa, i64 -1 ; 2 uses
   store ptr %i.ae, ptr %0, align 8, !tbaa !10
   store i8 22, ptr %i.ae, align 1, !tbaa !13
-  %i.af = add nuw i32 %7, 1
+  %i.af = add nuw i32 %5, 1
   %i.ag = add i32 %i.af, %.1.i.i.i
   br label %mbedtls_asn1_write_tagged_string.exit
 
@@ -1320,46 +1530,81 @@ bb.b:                                             ; preds = %bb.a
 
 mbedtls_asn1_write_raw_buffer.exit:               ; preds = %bb.b
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.h, ptr readonly align 1 %2, i64 %3, i1 false)
-  %i.i = trunc i64 %3 to i32                      ; 4 uses
+  %i.i = trunc i64 %3 to i32                      ; 6 uses
   %i.j = icmp slt i32 %i.i, 0
   br i1 %i.j, label %mbedtls_asn1_write_len_and_tag.exit, label %bb.c
 
 bb.c:                                             ; preds = %mbedtls_asn1_write_raw_buffer.exit
-  %i.k = and i64 %3, 2147483647                   ; 4 uses
+  %i.k = and i64 %3, 2147483647                   ; 5 uses
   %i.l = icmp samesign ugt i64 %i.k, 127
-  br i1 %i.l, label %.preheader23.i.i.a, label %.loopexit.i.i
+  br i1 %i.l, label %.preheader23.i.i, label %.loopexit.i.i
 
-.preheader23.i.i.a:                               ; preds = %bb.c, %.preheader23.i.i.a
-  %.025.i.i = phi i64 [ %5, %.preheader23.i.i.a ], [ %i.k, %bb.c ]
-  %.01724.i.i = phi i32 [ %4, %.preheader23.i.i.a ], [ 1, %bb.c ]
-  %4 = add nuw nsw i32 %.01724.i.i, 1             ; 2 uses
-  %5 = lshr i64 %.025.i.i, 8                      ; 2 uses
-  %.not.i.i = icmp eq i64 %5, 0
-  br i1 %.not.i.i, label %.loopexit.i.i, label %.preheader23.i.i.a, !llvm.loop !8
+.preheader23.i.i:                                 ; preds = %bb.c
+  %.mask = and i64 %3, 2147483392
+  %.not.i.i = icmp eq i64 %.mask, 0
+  br i1 %.not.i.i, label %.loopexit.i.i, label %.preheader23.i.i.1
 
-.loopexit.i.i:                                    ; preds = %.preheader23.i.i.a, %bb.b, %bb.c
-  %6 = phi i64 [ %i.k, %bb.c ], [ 0, %bb.b ], [ %i.k, %.preheader23.i.i.a ]
-  %7 = phi i32 [ %i.i, %bb.c ], [ 0, %bb.b ], [ %i.i, %.preheader23.i.i.a ]
-  %.1.i.i = phi i32 [ 1, %bb.c ], [ 1, %bb.b ], [ %4, %.preheader23.i.i.a ] ; 4 uses
+.preheader23.i.i.1:                               ; preds = %.preheader23.i.i
+  %.mask19 = and i64 %3, 2147418112
+  %.not.i.i.1 = icmp eq i64 %.mask19, 0
+  br i1 %.not.i.i.1, label %.loopexit.i.i, label %.preheader23.i.i.a
+
+.preheader23.i.i.a:                               ; preds = %.preheader23.i.i.1
+  %.mask20 = and i64 %3, 2130706432
+  %.not.i.i.2 = icmp eq i64 %.mask20, 0
+  %spec.select = select i1 %.not.i.i.2, i32 4, i32 5
+  br label %.loopexit.i.i
+
+.loopexit.i.i:                                    ; preds = %.preheader23.i.i.a, %.preheader23.i.i, %.preheader23.i.i.1, %bb.b, %bb.c
+  %4 = phi i64 [ %i.k, %bb.c ], [ 0, %bb.b ], [ %i.k, %.preheader23.i.i ], [ %i.k, %.preheader23.i.i.a ], [ %i.k, %.preheader23.i.i.1 ] ; 4 uses
+  %5 = phi i32 [ %i.i, %bb.c ], [ 0, %bb.b ], [ %i.i, %.preheader23.i.i ], [ %i.i, %.preheader23.i.i.a ], [ %i.i, %.preheader23.i.i.1 ]
+  %.1.i.i = phi i32 [ 1, %bb.c ], [ 1, %bb.b ], [ 2, %.preheader23.i.i ], [ 3, %.preheader23.i.i.1 ], [ %spec.select, %.preheader23.i.i.a ] ; 4 uses
   %i.m = zext nneg i32 %.1.i.i to i64
   %i.n = load ptr, ptr %0, align 8, !tbaa !10
   %i.o = ptrtoint ptr %i.n to i64
   %i.p = sub i64 %i.o, %i.d
   %i.q = icmp slt i64 %i.p, %i.m
-  br i1 %i.q, label %mbedtls_asn1_write_len_and_tag.exit, label %.preheader.i.i.a
+  br i1 %i.q, label %mbedtls_asn1_write_len_and_tag.exit, label %.preheader.i.i
 
-.preheader.i.i.a:                                 ; preds = %.loopexit.i.i, %.preheader.i.i.a
-  %.018.i.i = phi i64 [ %i.u, %.preheader.i.i.a ], [ %6, %.loopexit.i.i ] ; 2 uses
-  %i.r = trunc i64 %.018.i.i to i8
+.preheader.i.i:                                   ; preds = %.loopexit.i.i
+  %6 = trunc i64 %4 to i8
+  %7 = load ptr, ptr %0, align 8, !tbaa !10
+  %8 = getelementptr inbounds i8, ptr %7, i64 -1  ; 2 uses
+  store ptr %8, ptr %0, align 8, !tbaa !10
+  store i8 %6, ptr %8, align 1, !tbaa !13
+  %9 = lshr i64 %4, 8                             ; 2 uses
+  %.not22.i.i = icmp eq i64 %9, 0
+  br i1 %.not22.i.i, label %bb.d, label %.preheader.i.i.1
+
+.preheader.i.i.1:                                 ; preds = %.preheader.i.i
+  %10 = trunc i64 %9 to i8
+  %11 = load ptr, ptr %0, align 8, !tbaa !10
+  %12 = getelementptr inbounds i8, ptr %11, i64 -1 ; 2 uses
+  store ptr %12, ptr %0, align 8, !tbaa !10
+  store i8 %10, ptr %12, align 1, !tbaa !13
+  %13 = lshr i64 %4, 16                           ; 2 uses
+  %.not22.i.i.1 = icmp eq i64 %13, 0
+  br i1 %.not22.i.i.1, label %bb.d, label %.preheader.i.i.a
+
+.preheader.i.i.a:                                 ; preds = %.preheader.i.i.1
+  %i.r = trunc i64 %13 to i8
   %i.s = load ptr, ptr %0, align 8, !tbaa !10
   %i.t = getelementptr inbounds i8, ptr %i.s, i64 -1 ; 2 uses
   store ptr %i.t, ptr %0, align 8, !tbaa !10
   store i8 %i.r, ptr %i.t, align 1, !tbaa !13
-  %i.u = lshr i64 %.018.i.i, 8                    ; 2 uses
+  %i.u = lshr i64 %4, 24                          ; 2 uses
   %.not22.i.i.a = icmp eq i64 %i.u, 0
-  br i1 %.not22.i.i.a, label %bb.d, label %.preheader.i.i.a, !llvm.loop !14
+  br i1 %.not22.i.i.a, label %bb.d, label %.preheader.i.i.3
 
-bb.d:                                             ; preds = %.preheader.i.i.a
+.preheader.i.i.3:                                 ; preds = %.preheader.i.i.a
+  %14 = trunc nuw nsw i64 %i.u to i8
+  %15 = load ptr, ptr %0, align 8, !tbaa !10
+  %16 = getelementptr inbounds i8, ptr %15, i64 -1 ; 2 uses
+  store ptr %16, ptr %0, align 8, !tbaa !10
+  store i8 %14, ptr %16, align 1, !tbaa !13
+  br label %bb.d
+
+bb.d:                                             ; preds = %.preheader.i.i.3, %.preheader.i.i.a, %.preheader.i.i.1, %.preheader.i.i
   %i.v = icmp samesign ugt i32 %.1.i.i, 1
   br i1 %i.v, label %bb.e, label %mbedtls_asn1_write_len.exit.i
 
@@ -1383,7 +1628,7 @@ bb.f:                                             ; preds = %mbedtls_asn1_write_
   %i.ae = getelementptr inbounds i8, ptr %i.aa, i64 -1 ; 2 uses
   store ptr %i.ae, ptr %0, align 8, !tbaa !10
   store i8 4, ptr %i.ae, align 1, !tbaa !13
-  %i.af = add nuw i32 %7, 1
+  %i.af = add nuw i32 %5, 1
   %i.ag = add i32 %i.af, %.1.i.i
   br label %mbedtls_asn1_write_len_and_tag.exit
 

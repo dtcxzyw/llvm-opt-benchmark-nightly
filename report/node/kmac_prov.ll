@@ -201,7 +201,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 
 bb.l:                                             ; preds = %bb.k
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 24
-  %i.t = load i64, ptr %i.s, align 8, !tbaa !31   ; 7 uses
+  %i.t = load i64, ptr %i.s, align 8, !tbaa !31   ; 5 uses
   %i.u = icmp ugt i64 %i.t, 512
   br i1 %i.u, label %bb.m, label %bb.n
 
@@ -212,7 +212,7 @@ bb.m:                                             ; preds = %bb.l
   br label %ossl_param_is_empty.exit.thread
 
 bb.n:                                             ; preds = %bb.l
-  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 740 ; 10 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 740 ; 7 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.r, i64 16
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !30   ; 2 uses
@@ -224,84 +224,86 @@ bb.o:                                             ; preds = %bb.n
   br label %ossl_param_is_empty.exit.thread
 
 get_encode_size.exit.i.a:                         ; preds = %bb.n
+  %2 = shl nuw nsw i64 %i.t, 3                    ; 3 uses
   %.not.i.i = icmp eq i64 %i.t, 0
-  %.not45 = icmp ult i64 %i.t, 32
-  %spec.select = select i1 %.not45, i32 1, i32 2
-  %.07.lcssa.i.i = select i1 %.not.i.i, i32 1, i32 %spec.select ; 2 uses
-  %2 = zext nneg i32 %.07.lcssa.i.i to i64        ; 10 uses
-  %3 = add nuw nsw i64 %i.t, 1
-  %4 = add nuw nsw i64 %3, %2                     ; 2 uses
-  %5 = icmp samesign ugt i64 %4, 516
-  br i1 %5, label %encode_string.exit, label %bb.p
+  br i1 %.not.i.i, label %bb.q, label %bb.p
 
-bb.p:                                             ; preds = %get_encode_size.exit.i.a
-  %6 = trunc nuw nsw i32 %.07.lcssa.i.i to i8
-  store i8 %6, ptr %i.v, align 1, !tbaa !23
-  %.tr = trunc i64 %i.t to i8
-  %7 = shl i8 %.tr, 3
-  %8 = getelementptr inbounds nuw i8, ptr %i.v, i64 %2
-  store i8 %7, ptr %8, align 1, !tbaa !23
-  %9 = add nsw i64 %2, -1                         ; 2 uses
-  %.not.i = icmp eq i64 %9, 0
-  br i1 %.not.i, label %bb.v, label %bb.q
+bb.p:                                             ; preds = %get_encode_size.exit.i.a, %bb.p
+  %.09.i.i = phi i64 [ %4, %bb.p ], [ %2, %get_encode_size.exit.i.a ]
+  %.078.i.i = phi i32 [ %3, %bb.p ], [ 0, %get_encode_size.exit.i.a ]
+  %3 = add nuw nsw i32 %.078.i.i, 1               ; 2 uses
+  %4 = lshr i64 %.09.i.i, 8                       ; 2 uses
+  %.not.i = icmp eq i64 %4, 0
+  br i1 %.not.i, label %bb.q, label %bb.p, !llvm.loop !32
 
-bb.q:                                             ; preds = %bb.p
-  %10 = lshr i64 %i.t, 5
-  %11 = trunc nuw i64 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.v, i64 %9
-  store i8 %11, ptr %12, align 1, !tbaa !23
-  %i.aa = add nsw i64 %2, -2                      ; 2 uses
-  %.not.i.1 = icmp eq i64 %i.aa, 0
-  br i1 %.not.i.1, label %bb.v, label %13
+bb.q:                                             ; preds = %bb.p, %get_encode_size.exit.i.a
+  %.07.lcssa.i.i = phi i32 [ 1, %get_encode_size.exit.i.a ], [ %3, %bb.p ] ; 3 uses
+  %5 = zext nneg i32 %.07.lcssa.i.i to i64        ; 5 uses
+  %6 = add nuw nsw i64 %i.t, 1
+  %i.aa = add nuw nsw i64 %6, %5                  ; 2 uses
+  %7 = icmp samesign ugt i64 %i.aa, 516
+  br i1 %7, label %encode_string.exit, label %bb.r
 
-13:                                               ; preds = %bb.q
-  %14 = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.aa
-  store i8 0, ptr %14, align 1, !tbaa !23
-  %15 = add nsw i64 %2, -3                        ; 2 uses
-  %.not.i.2 = icmp eq i64 %15, 0
-  br i1 %.not.i.2, label %bb.v, label %bb.r
+bb.r:                                             ; preds = %bb.q
+  %8 = trunc nuw nsw i32 %.07.lcssa.i.i to i8
+  store i8 %8, ptr %i.v, align 1, !tbaa !23
+  %xtraiter = and i64 %5, 3                       ; 2 uses
+  %.not.i.3.a = icmp eq i64 %xtraiter, 0
+  br i1 %.not.i.3.a, label %bb.t, label %bb.s
 
-bb.r:                                             ; preds = %13
-  %16 = getelementptr inbounds nuw i8, ptr %i.v, i64 %15
-  store i8 0, ptr %16, align 1, !tbaa !23
-  %17 = add nsw i64 %2, -4                        ; 2 uses
-  %.not.i.3.a = icmp eq i64 %17, 0
-  br i1 %.not.i.3.a, label %bb.v, label %bb.s
+bb.s:                                             ; preds = %bb.r, %bb.s
+  %.02530.i.prol = phi i64 [ %11, %bb.s ], [ %5, %bb.r ] ; 2 uses
+  %.02629.i.prol = phi i64 [ %10, %bb.s ], [ %2, %bb.r ] ; 2 uses
+  %prol.iter = phi i64 [ %i.ac, %bb.s ], [ 0, %bb.r ]
+  %9 = trunc i64 %.02629.i.prol to i8
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.v, i64 %.02530.i.prol
+  store i8 %9, ptr %i.ab, align 1, !tbaa !23
+  %10 = lshr i64 %.02629.i.prol, 8                ; 2 uses
+  %11 = add nsw i64 %.02530.i.prol, -1            ; 2 uses
+  %i.ac = add i64 %prol.iter, 1                   ; 2 uses
+  %.not.i.4 = icmp eq i64 %i.ac, %xtraiter
+  br i1 %.not.i.4, label %bb.t, label %bb.s, !llvm.loop !33
 
-bb.s:                                             ; preds = %bb.r
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.v, i64 %17
-  store i8 0, ptr %i.ab, align 1, !tbaa !23
-  %i.ac = add nsw i64 %2, -5                      ; 2 uses
-  %.not.i.4 = icmp eq i64 %i.ac, 0
-  br i1 %.not.i.4, label %bb.v, label %bb.t
+bb.t:                                             ; preds = %bb.s, %bb.r
+  %.02530.i.unr = phi i64 [ %5, %bb.r ], [ %11, %bb.s ]
+  %.02629.i.unr = phi i64 [ %2, %bb.r ], [ %10, %bb.s ]
+  %12 = icmp ult i32 %.07.lcssa.i.i, 4
+  br i1 %12, label %bb.v, label %bb.u
 
-bb.t:                                             ; preds = %bb.s
-  %18 = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.ac
-  store i8 0, ptr %18, align 1, !tbaa !23
-  %19 = add nsw i64 %2, -6                        ; 2 uses
-  %.not.i.5 = icmp eq i64 %19, 0
-  br i1 %.not.i.5, label %bb.v, label %bb.u
-
-bb.u:                                             ; preds = %bb.t
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.v, i64 %19
-  store i8 0, ptr %i.ad, align 1, !tbaa !23
-  %i.ae = add nsw i64 %2, -7                      ; 2 uses
+bb.u:                                             ; preds = %bb.t, %bb.u
+  %.02530.i = phi i64 [ %i.ae, %bb.u ], [ %.02530.i.unr, %bb.t ] ; 5 uses
+  %.02629.i = phi i64 [ %26, %bb.u ], [ %.02629.i.unr, %bb.t ] ; 5 uses
+  %13 = trunc i64 %.02629.i to i8
+  %14 = getelementptr inbounds nuw i8, ptr %i.v, i64 %.02530.i
+  store i8 %13, ptr %14, align 1, !tbaa !23
+  %15 = lshr i64 %.02629.i, 8
+  %16 = trunc i64 %15 to i8
+  %17 = getelementptr i8, ptr %i.v, i64 %.02530.i
+  %18 = getelementptr i8, ptr %17, i64 -1
+  store i8 %16, ptr %18, align 1, !tbaa !23
+  %19 = lshr i64 %.02629.i, 16
+  %20 = trunc i64 %19 to i8
+  %21 = getelementptr i8, ptr %i.v, i64 %.02530.i
+  %22 = getelementptr i8, ptr %21, i64 -2
+  store i8 %20, ptr %22, align 1, !tbaa !23
+  %23 = lshr i64 %.02629.i, 24
+  %24 = trunc i64 %23 to i8
+  %25 = getelementptr i8, ptr %i.v, i64 %.02530.i
+  %i.ad = getelementptr i8, ptr %25, i64 -3
+  store i8 %24, ptr %i.ad, align 1, !tbaa !23
+  %26 = lshr i64 %.02629.i, 32
+  %i.ae = add nsw i64 %.02530.i, -4               ; 2 uses
   %.not.i.6 = icmp eq i64 %i.ae, 0
-  br i1 %.not.i.6, label %bb.v, label %20
+  br i1 %.not.i.6, label %bb.v, label %bb.u, !llvm.loop !35
 
-20:                                               ; preds = %bb.u
-  %21 = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.ae
-  store i8 0, ptr %21, align 1, !tbaa !23
-  br label %bb.v
-
-bb.v:                                             ; preds = %20, %bb.u, %bb.t, %bb.s, %bb.r, %13, %bb.q, %bb.p
-  %i.af = getelementptr inbounds nuw i8, ptr %i.v, i64 %2
+bb.v:                                             ; preds = %bb.u, %bb.t
+  %i.af = getelementptr inbounds nuw i8, ptr %i.v, i64 %5
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 1
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ag, ptr nonnull readonly align 1 %i.y, i64 range(i64 0, 513) %i.t, i1 false)
-  store i64 %4, ptr %i.w, align 8, !tbaa !20
+  store i64 %i.aa, ptr %i.w, align 8, !tbaa !20
   br label %ossl_param_is_empty.exit.thread
 
-encode_string.exit:                               ; preds = %get_encode_size.exit.i.a
+encode_string.exit:                               ; preds = %bb.q
   call void @ERR_new() #5
   call void @ERR_set_debug(ptr noundef nonnull @.str.2, i32 noundef 575, ptr noundef nonnull @__func__.encode_string) #5
   call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 57, i32 noundef 202, ptr noundef null) #5
@@ -467,7 +469,7 @@ declare void @CRYPTO_free(ptr noundef, ptr noundef, i32 noundef) local_unnamed_a
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 2) i32 @kmac_setkey(ptr noundef %0, ptr nofree noundef readonly captures(address_is_null) %1, i64 noundef %2) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [516 x i8], align 16              ; 14 uses
+  %i.a = alloca [516 x i8], align 16              ; 11 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.c = tail call ptr @ossl_prov_digest_md(ptr noundef nonnull %i.b) #5
   %i.d = tail call i32 @EVP_MD_get_block_size(ptr noundef %i.c) #5 ; 5 uses
@@ -500,88 +502,92 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.j, label %bb.m, label %.lr.ph.i.i.i.a
 
 .lr.ph.i.i.i.a:                                   ; preds = %bb.e
-  %.not = icmp ult i64 %2, 32
-  %spec.select = select i1 %.not, i32 1, i32 2    ; 2 uses
-  %3 = zext nneg i32 %spec.select to i64          ; 10 uses
-  %4 = add nuw nsw i64 %2, 1
-  %5 = add nuw nsw i64 %4, %3                     ; 2 uses
-  %6 = icmp samesign ugt i64 %5, 516
-  br i1 %6, label %encode_string.exit.i, label %bb.f
+  %3 = shl nuw nsw i64 %2, 3                      ; 3 uses
+  br label %bb.f
 
-bb.f:                                             ; preds = %.lr.ph.i.i.i.a
-  %7 = trunc nuw nsw i32 %spec.select to i8
-  store i8 %7, ptr %i.a, align 16, !tbaa !23
-  %.tr = trunc i64 %2 to i8
-  %8 = shl i8 %.tr, 3
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 %3
-  store i8 %8, ptr %9, align 1, !tbaa !23
-  %i.k = add nsw i64 %3, -1                       ; 2 uses
-  %.not.i.i = icmp eq i64 %i.k, 0
-  br i1 %.not.i.i, label %bb.l, label %10
+bb.f:                                             ; preds = %bb.f, %.lr.ph.i.i.i.a
+  %indvar = phi i64 [ %i.k, %bb.f ], [ 0, %.lr.ph.i.i.i.a ] ; 2 uses
+  %.09.i.i.i = phi i64 [ %5, %bb.f ], [ %3, %.lr.ph.i.i.i.a ]
+  %.078.i.i.i = phi i32 [ %4, %bb.f ], [ 0, %.lr.ph.i.i.i.a ]
+  %4 = add nuw nsw i32 %.078.i.i.i, 1             ; 3 uses
+  %5 = lshr i64 %.09.i.i.i, 8                     ; 2 uses
+  %.not32.i.i = icmp eq i64 %5, 0
+  %i.k = add i64 %indvar, 1
+  br i1 %.not32.i.i, label %bb.g, label %bb.f, !llvm.loop !32
 
-10:                                               ; preds = %bb.f
-  %11 = lshr i64 %2, 5
-  %12 = trunc nuw i64 %11 to i8
-  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.k
-  store i8 %12, ptr %13, align 1, !tbaa !23
-  %14 = add nsw i64 %3, -2                        ; 2 uses
-  %.not.i.i.1 = icmp eq i64 %14, 0
-  br i1 %.not.i.i.1, label %bb.l, label %bb.g
-
-bb.g:                                             ; preds = %10
-  %15 = getelementptr inbounds nuw i8, ptr %i.a, i64 %14
-  store i8 0, ptr %15, align 1, !tbaa !23
-  %i.l = add nsw i64 %3, -3                       ; 2 uses
-  %.not.i.i.2 = icmp eq i64 %i.l, 0
-  br i1 %.not.i.i.2, label %bb.l, label %bb.h
+bb.g:                                             ; preds = %bb.f
+  %6 = zext nneg i32 %4 to i64                    ; 5 uses
+  %7 = add nuw nsw i64 %2, 1
+  %i.l = add nuw nsw i64 %7, %6                   ; 2 uses
+  %8 = icmp samesign ugt i64 %i.l, 516
+  br i1 %8, label %encode_string.exit.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.l
-  store i8 0, ptr %16, align 1, !tbaa !23
-  %17 = add nsw i64 %3, -4                        ; 2 uses
-  %.not.i.i.3.a = icmp eq i64 %17, 0
-  br i1 %.not.i.i.3.a, label %bb.l, label %bb.i
+  %9 = trunc nuw nsw i32 %4 to i8
+  store i8 %9, ptr %i.a, align 16, !tbaa !23
+  %xtraiter = and i64 %6, 3                       ; 2 uses
+  %.not.i.i.3.a = icmp eq i64 %xtraiter, 0
+  br i1 %.not.i.i.3.a, label %bb.j, label %bb.i
 
-bb.i:                                             ; preds = %bb.h
-  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 %17
-  store i8 0, ptr %i.m, align 1, !tbaa !23
-  %i.n = add nsw i64 %3, -5                       ; 2 uses
-  %.not.i.i.4 = icmp eq i64 %i.n, 0
-  br i1 %.not.i.i.4, label %bb.l, label %bb.j
+bb.i:                                             ; preds = %bb.h, %bb.i
+  %.02530.i.i.prol = phi i64 [ %12, %bb.i ], [ %6, %bb.h ] ; 2 uses
+  %.02629.i.i.prol = phi i64 [ %11, %bb.i ], [ %3, %bb.h ] ; 2 uses
+  %prol.iter = phi i64 [ %i.n, %bb.i ], [ 0, %bb.h ]
+  %10 = trunc i64 %.02629.i.i.prol to i8
+  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 %.02530.i.i.prol
+  store i8 %10, ptr %i.m, align 1, !tbaa !23
+  %11 = lshr i64 %.02629.i.i.prol, 8              ; 2 uses
+  %12 = add nsw i64 %.02530.i.i.prol, -1          ; 2 uses
+  %i.n = add i64 %prol.iter, 1                    ; 2 uses
+  %.not.i.i.4 = icmp eq i64 %i.n, %xtraiter
+  br i1 %.not.i.i.4, label %bb.j, label %bb.i, !llvm.loop !36
 
-bb.j:                                             ; preds = %bb.i
-  %18 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.n
-  store i8 0, ptr %18, align 1, !tbaa !23
-  %19 = add nsw i64 %3, -6                        ; 2 uses
-  %.not.i.i.5 = icmp eq i64 %19, 0
-  br i1 %.not.i.i.5, label %bb.l, label %bb.k
+bb.j:                                             ; preds = %bb.i, %bb.h
+  %.02530.i.i.unr = phi i64 [ %6, %bb.h ], [ %12, %bb.i ]
+  %.02629.i.i.unr = phi i64 [ %3, %bb.h ], [ %11, %bb.i ]
+  %13 = icmp ult i64 %indvar, 3
+  br i1 %13, label %bb.l, label %bb.k
 
-bb.k:                                             ; preds = %bb.j
-  %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 %19
-  store i8 0, ptr %i.o, align 1, !tbaa !23
-  %i.p = add nsw i64 %3, -7                       ; 2 uses
+bb.k:                                             ; preds = %bb.j, %bb.k
+  %.02530.i.i = phi i64 [ %i.p, %bb.k ], [ %.02530.i.i.unr, %bb.j ] ; 5 uses
+  %.02629.i.i = phi i64 [ %27, %bb.k ], [ %.02629.i.i.unr, %bb.j ] ; 5 uses
+  %14 = trunc i64 %.02629.i.i to i8
+  %15 = getelementptr inbounds nuw i8, ptr %i.a, i64 %.02530.i.i
+  store i8 %14, ptr %15, align 1, !tbaa !23
+  %16 = lshr i64 %.02629.i.i, 8
+  %17 = trunc i64 %16 to i8
+  %18 = getelementptr i8, ptr %i.a, i64 %.02530.i.i
+  %19 = getelementptr i8, ptr %18, i64 -1
+  store i8 %17, ptr %19, align 1, !tbaa !23
+  %20 = lshr i64 %.02629.i.i, 16
+  %21 = trunc i64 %20 to i8
+  %22 = getelementptr i8, ptr %i.a, i64 %.02530.i.i
+  %23 = getelementptr i8, ptr %22, i64 -2
+  store i8 %21, ptr %23, align 1, !tbaa !23
+  %24 = lshr i64 %.02629.i.i, 24
+  %25 = trunc i64 %24 to i8
+  %26 = getelementptr i8, ptr %i.a, i64 %.02530.i.i
+  %i.o = getelementptr i8, ptr %26, i64 -3
+  store i8 %25, ptr %i.o, align 1, !tbaa !23
+  %27 = lshr i64 %.02629.i.i, 32
+  %i.p = add nsw i64 %.02530.i.i, -4              ; 2 uses
   %.not.i.i.6 = icmp eq i64 %i.p, 0
-  br i1 %.not.i.i.6, label %bb.l, label %20
+  br i1 %.not.i.i.6, label %bb.l, label %bb.k, !llvm.loop !35
 
-20:                                               ; preds = %bb.k
-  %21 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.p
-  store i8 0, ptr %21, align 1, !tbaa !23
-  br label %bb.l
-
-bb.l:                                             ; preds = %20, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %10, %bb.f
-  %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 %3
+bb.l:                                             ; preds = %bb.k, %bb.j
+  %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 %6
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.r, ptr noundef nonnull readonly align 1 dereferenceable(1) %1, i64 range(i64 4, 513) %2, i1 false)
   br label %bb.m
 
-encode_string.exit.i:                             ; preds = %.lr.ph.i.i.i.a
+encode_string.exit.i:                             ; preds = %bb.g
   tail call void @ERR_new() #5
   tail call void @ERR_set_debug(ptr noundef nonnull @.str.2, i32 noundef 575, ptr noundef nonnull @__func__.encode_string) #5
   tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 57, i32 noundef 202, ptr noundef null) #5
   br label %bb.p
 
 bb.m:                                             ; preds = %bb.l, %bb.e
-  %.013.ph.i = phi i64 [ 0, %bb.e ], [ %5, %bb.l ] ; 3 uses
+  %.013.ph.i = phi i64 [ 0, %bb.e ], [ %i.l, %bb.l ] ; 3 uses
   %sext57.i.i = add nuw nsw i64 %i.i, 1
   %i.s = add nuw nsw i64 %sext57.i.i, %.013.ph.i  ; 2 uses
   %.lhs.trunc.i = trunc nuw i64 %i.s to i32
@@ -591,8 +597,8 @@ bb.m:                                             ; preds = %bb.l, %bb.e
   store i64 %i.u, ptr %i.h, align 8, !tbaa !20
   %i.v = icmp ult i64 %i.u, 673
   %i.w = icmp samesign ult i32 %i.d, 256
-  %or.cond15 = select i1 %i.v, i1 %i.w, i1 false, !prof !32
-  br i1 %or.cond15, label %bb.n, label %bb.p, !prof !32
+  %or.cond15 = select i1 %i.v, i1 %i.w, i1 false, !prof !37
+  br i1 %or.cond15, label %bb.n, label %bb.p, !prof !37
 
 bb.n:                                             ; preds = %bb.m
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 69
@@ -711,5 +717,10 @@ attributes #5 = { nounwind }
 !29 = !{!"p1 omnipotent char", !11, i64 0}
 !30 = !{!28, !11, i64 16}
 !31 = !{!28, !16, i64 24}
-!32 = !{!"branch_weights", i32 4000000, i32 4001}
+!32 = distinct !{!32, !26}
+!33 = distinct !{!33, !34}
+!34 = !{!"llvm.loop.unroll.disable"}
+!35 = distinct !{!35, !26}
+!36 = distinct !{!36, !34}
+!37 = !{!"branch_weights", i32 4000000, i32 4001}
 end_hunk_0

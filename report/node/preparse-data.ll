@@ -201,10 +201,10 @@ define hidden noundef zeroext i1 @_ZN2v88internal19PreparseDataBuilder28SaveData
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.b = load ptr, ptr %i.a, align 8              ; 5 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 9 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 104
   %i.e = load i32, ptr %i.d, align 8
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 13 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 17 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
@@ -261,19 +261,32 @@ _ZN2v88internal19PreparseDataBuilder8ByteData13WriteVarint32Ej.exit21: ; preds =
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
   %i.ai = load i32, ptr %i.ah, align 8
   %i.aj = icmp eq i32 %i.ag, %i.ai                ; 2 uses
+  %2 = shl i32 %i.ag, 2                           ; 2 uses
   %i.ak = zext i1 %i.ae to i32
   %i.al = select i1 %i.aj, i32 2, i32 0
-  %2 = shl i32 %i.ag, 2
-  %i.am = and i32 %2, 262140
-  %3 = or disjoint i32 %i.am, %i.ak
-  %4 = or disjoint i32 %3, %i.al
-  br label %bb.d
+  %3 = or disjoint i32 %i.al, %i.ak
+  %4 = or disjoint i32 %3, %2
+  %5 = trunc i32 %4 to i8
+  %6 = and i8 %5, 127
+  %7 = lshr i32 %2, 7                             ; 2 uses
+  %i.am = and i32 %7, 2047                        ; 2 uses
+  %.not.i23 = icmp eq i32 %i.am, 0                ; 2 uses
+  %masksel.i24 = select i1 %.not.i23, i8 0, i8 -128
+  %.0.i25 = or disjoint i8 %masksel.i24, %6
+  %8 = load ptr, ptr %i.c, align 8
+  %9 = load i32, ptr %i.f, align 8                ; 2 uses
+  %10 = add nsw i32 %9, 1
+  store i32 %10, ptr %i.f, align 8
+  %11 = sext i32 %9 to i64
+  %12 = load ptr, ptr %8, align 8
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 %11
+  store i8 %.0.i25, ptr %13, align 1
+  br i1 %.not.i23, label %_ZN2v88internal19PreparseDataBuilder8ByteData13WriteVarint32Ej.exit26, label %bb.d
 
-bb.d:                                             ; preds = %bb.d, %_ZN2v88internal19PreparseDataBuilder8ByteData13WriteVarint32Ej.exit21
-  %.06.i22 = phi i32 [ %4, %_ZN2v88internal19PreparseDataBuilder8ByteData13WriteVarint32Ej.exit21 ], [ %i.ap, %bb.d ] ; 2 uses
-  %i.an = trunc i32 %.06.i22 to i8
+bb.d:                                             ; preds = %_ZN2v88internal19PreparseDataBuilder8ByteData13WriteVarint32Ej.exit21
+  %i.an = trunc i32 %7 to i8
   %i.ao = and i8 %i.an, 127
-  %i.ap = lshr i32 %.06.i22, 7                    ; 2 uses
+  %i.ap = lshr i32 %i.am, 7                       ; 2 uses
   %.not.i23.a = icmp eq i32 %i.ap, 0              ; 2 uses
   %masksel.i24.a = select i1 %.not.i23.a, i8 0, i8 -128
   %.0.i25.a = or disjoint i8 %masksel.i24.a, %i.ao
@@ -285,9 +298,21 @@ bb.d:                                             ; preds = %bb.d, %_ZN2v88inter
   %i.au = load ptr, ptr %i.aq, align 8
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 %i.at
   store i8 %.0.i25.a, ptr %i.av, align 1
-  br i1 %.not.i23.a, label %_ZN2v88internal19PreparseDataBuilder8ByteData13WriteVarint32Ej.exit26, label %bb.d, !llvm.loop !9
+  br i1 %.not.i23.a, label %_ZN2v88internal19PreparseDataBuilder8ByteData13WriteVarint32Ej.exit26, label %14
 
-_ZN2v88internal19PreparseDataBuilder8ByteData13WriteVarint32Ej.exit26: ; preds = %bb.d
+14:                                               ; preds = %bb.d
+  %15 = trunc nuw nsw i32 %i.ap to i8
+  %16 = load ptr, ptr %i.c, align 8
+  %17 = load i32, ptr %i.f, align 8               ; 2 uses
+  %18 = add nsw i32 %17, 1
+  store i32 %18, ptr %i.f, align 8
+  %19 = sext i32 %17 to i64
+  %20 = load ptr, ptr %16, align 8
+  %21 = getelementptr inbounds nuw i8, ptr %20, i64 %19
+  store i8 %15, ptr %21, align 1
+  br label %_ZN2v88internal19PreparseDataBuilder8ByteData13WriteVarint32Ej.exit26
+
+_ZN2v88internal19PreparseDataBuilder8ByteData13WriteVarint32Ej.exit26: ; preds = %14, %bb.d, %_ZN2v88internal19PreparseDataBuilder8ByteData13WriteVarint32Ej.exit21
   store i8 0, ptr %i.p, align 8
   br i1 %i.aj, label %bb.g, label %bb.e
 

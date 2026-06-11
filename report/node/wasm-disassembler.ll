@@ -201,7 +201,7 @@ _ZN2v88internal4wasmlsERNS1_13StringBuilderEm.exit: ; preds = %_ZN2v88internal4w
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN2v88internal4wasm17ImmediatesPrinterINS1_7Decoder17FullValidationTagEE8F32ConstERNS1_15ImmF32ImmediateE(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 4 dereferenceable(8) %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = alloca [18 x i8], align 16               ; 3 uses
+  %i.a = alloca [18 x i8], align 16               ; 9 uses
   %2 = alloca %"class.std::__cxx11::basic_ostringstream", align 8 ; 29 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %i.b = load float, ptr %1, align 4              ; 7 uses
@@ -324,29 +324,72 @@ _ZN2v88internal4wasmlsERNS1_13StringBuilderEPKc.exit14: ; preds = %bb.k, %bb.l
   store i64 %i.ba, ptr %i.at, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.ay, ptr noundef nonnull align 1 dereferenceable(6) %.str.1200..str.1201, i64 6, i1 false)
   %i.bb = load ptr, ptr %0, align 8, !nonnull !11, !align !12 ; 3 uses
-  %i.bc = zext nneg i32 %i.ag to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
-  %i.bd = getelementptr inbounds nuw i8, ptr %i.a, i64 18 ; 2 uses
-  br label %bb.m
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 18 ; 2 uses
+  %i.bc = zext nneg i32 %i.ag to i64              ; 6 uses
+  %5 = and i64 %i.bc, 15
+  %6 = getelementptr inbounds nuw i8, ptr @_ZN2v88internal4wasmL9kHexCharsE, i64 %5
+  %7 = load i8, ptr %6, align 1
+  %i.bd = getelementptr inbounds nuw i8, ptr %i.a, i64 17 ; 2 uses
+  store i8 %7, ptr %i.bd, align 1
+  %8 = lshr i64 %i.bc, 4                          ; 2 uses
+  %.not.i = icmp eq i64 %8, 0
+  br i1 %.not.i, label %bb.n, label %9
 
-bb.m:                                             ; preds = %bb.m, %_ZN2v88internal4wasmlsERNS1_13StringBuilderEPKc.exit14
-  %.013.i = phi ptr [ %i.bd, %_ZN2v88internal4wasmlsERNS1_13StringBuilderEPKc.exit14 ], [ %i.bh, %bb.m ] ; 3 uses
-  %.0.i = phi i64 [ %i.bc, %_ZN2v88internal4wasmlsERNS1_13StringBuilderEPKc.exit14 ], [ %i.bi, %bb.m ] ; 2 uses
-  %i.be = and i64 %.0.i, 15
+9:                                                ; preds = %_ZN2v88internal4wasmlsERNS1_13StringBuilderEPKc.exit14
+  %10 = and i64 %8, 15
+  %11 = getelementptr inbounds nuw i8, ptr @_ZN2v88internal4wasmL9kHexCharsE, i64 %10
+  %12 = load i8, ptr %11, align 1
+  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
+  store i8 %12, ptr %13, align 16
+  %14 = lshr i64 %i.bc, 8                         ; 2 uses
+  %.not.i.1 = icmp eq i64 %14, 0
+  br i1 %.not.i.1, label %bb.n, label %15
+
+15:                                               ; preds = %9
+  %16 = and i64 %14, 15
+  %17 = getelementptr inbounds nuw i8, ptr @_ZN2v88internal4wasmL9kHexCharsE, i64 %16
+  %18 = load i8, ptr %17, align 1
+  %19 = getelementptr inbounds nuw i8, ptr %i.a, i64 15 ; 2 uses
+  store i8 %18, ptr %19, align 1
+  %20 = lshr i64 %i.bc, 12                        ; 2 uses
+  %.not.i.2 = icmp eq i64 %20, 0
+  br i1 %.not.i.2, label %bb.n, label %21
+
+21:                                               ; preds = %15
+  %22 = and i64 %20, 15
+  %23 = getelementptr inbounds nuw i8, ptr @_ZN2v88internal4wasmL9kHexCharsE, i64 %22
+  %24 = load i8, ptr %23, align 1
+  %25 = getelementptr inbounds nuw i8, ptr %i.a, i64 14 ; 2 uses
+  store i8 %24, ptr %25, align 2
+  %26 = lshr i64 %i.bc, 16                        ; 2 uses
+  %.not.i.3 = icmp eq i64 %26, 0
+  br i1 %.not.i.3, label %bb.n, label %bb.m
+
+bb.m:                                             ; preds = %21
+  %i.be = and i64 %26, 15
   %i.bf = getelementptr inbounds nuw i8, ptr @_ZN2v88internal4wasmL9kHexCharsE, i64 %i.be
   %i.bg = load i8, ptr %i.bf, align 1
-  %i.bh = getelementptr inbounds i8, ptr %.013.i, i64 -1 ; 2 uses
+  %i.bh = getelementptr inbounds nuw i8, ptr %i.a, i64 13 ; 2 uses
   store i8 %i.bg, ptr %i.bh, align 1
-  %i.bi = lshr i64 %.0.i, 4                       ; 2 uses
+  %i.bi = lshr i64 %i.bc, 20                      ; 2 uses
   %.not.i.a = icmp eq i64 %i.bi, 0
-  br i1 %.not.i.a, label %bb.n, label %bb.m, !llvm.loop !67
+  br i1 %.not.i.a, label %bb.n, label %27
 
-bb.n:                                             ; preds = %bb.m
-  %i.bj = getelementptr inbounds i8, ptr %.013.i, i64 -2
+27:                                               ; preds = %bb.m
+  %28 = getelementptr inbounds nuw i8, ptr @_ZN2v88internal4wasmL9kHexCharsE, i64 %i.bi
+  %29 = load i8, ptr %28, align 1
+  %30 = getelementptr inbounds nuw i8, ptr %i.a, i64 12
+  store i8 %29, ptr %30, align 1
+  br label %bb.n
+
+bb.n:                                             ; preds = %27, %bb.m, %21, %15, %9, %_ZN2v88internal4wasmlsERNS1_13StringBuilderEPKc.exit14
+  %.013.i.lcssa = phi ptr [ %4, %_ZN2v88internal4wasmlsERNS1_13StringBuilderEPKc.exit14 ], [ %i.bd, %9 ], [ %13, %15 ], [ %19, %21 ], [ %25, %bb.m ], [ %i.bh, %27 ] ; 2 uses
+  %i.bj = getelementptr inbounds i8, ptr %.013.i.lcssa, i64 -2
   store i8 120, ptr %i.bj, align 1
-  %i.bk = getelementptr inbounds i8, ptr %.013.i, i64 -3 ; 3 uses
+  %i.bk = getelementptr inbounds i8, ptr %.013.i.lcssa, i64 -3 ; 3 uses
   store i8 48, ptr %i.bk, align 1
-  %i.bl = ptrtoint ptr %i.bd to i64
+  %i.bl = ptrtoint ptr %4 to i64
   %i.bm = ptrtoint ptr %i.bk to i64
   %i.bn = sub i64 %i.bl, %i.bm                    ; 5 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bb, i64 296 ; 3 uses

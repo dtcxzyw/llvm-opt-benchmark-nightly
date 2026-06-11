@@ -201,26 +201,32 @@ bb.i:                                             ; preds = %bb.i, %bb.h
   br i1 %.not.i, label %_ZN2v88internal4wasm9LEBHelper11sizeof_u32vEm.exit, label %bb.i, !llvm.loop !14
 
 _ZN2v88internal4wasm9LEBHelper11sizeof_u32vEm.exit: ; preds = %bb.i
-  %i.az = load i32, ptr %i.a, align 8
-  %2 = zext i32 %i.az to i64
-  br label %bb.j
+  %i.az = load i32, ptr %i.a, align 8             ; 4 uses
+  %.not.i9 = icmp ult i32 %i.az, 128
+  br i1 %.not.i9, label %_ZN2v88internal4wasm9LEBHelper11sizeof_u32vEm.exit10, label %2
 
-bb.j:                                             ; preds = %bb.j, %_ZN2v88internal4wasm9LEBHelper11sizeof_u32vEm.exit
-  %.04.i7 = phi i64 [ %2, %_ZN2v88internal4wasm9LEBHelper11sizeof_u32vEm.exit ], [ %4, %bb.j ]
-  %.0.i8 = phi i64 [ 0, %_ZN2v88internal4wasm9LEBHelper11sizeof_u32vEm.exit ], [ %3, %bb.j ]
-  %3 = add nuw nsw i64 %.0.i8, 1                  ; 2 uses
-  %4 = lshr i64 %.04.i7, 7                        ; 2 uses
-  %.not.i9 = icmp eq i64 %4, 0
-  br i1 %.not.i9, label %_ZN2v88internal4wasm9LEBHelper11sizeof_u32vEm.exit10, label %bb.j, !llvm.loop !14
+2:                                                ; preds = %_ZN2v88internal4wasm9LEBHelper11sizeof_u32vEm.exit
+  %.not.i9.1 = icmp ult i32 %i.az, 16384
+  br i1 %.not.i9.1, label %_ZN2v88internal4wasm9LEBHelper11sizeof_u32vEm.exit10, label %3
 
-_ZN2v88internal4wasm9LEBHelper11sizeof_u32vEm.exit10: ; preds = %bb.j
+3:                                                ; preds = %2
+  %.not.i9.2 = icmp ult i32 %i.az, 2097152
+  br i1 %.not.i9.2, label %_ZN2v88internal4wasm9LEBHelper11sizeof_u32vEm.exit10, label %bb.j
+
+bb.j:                                             ; preds = %3
+  %.not.i9.3 = icmp ult i32 %i.az, 268435456
+  %spec.select = select i1 %.not.i9.3, i64 4, i64 5
+  br label %_ZN2v88internal4wasm9LEBHelper11sizeof_u32vEm.exit10
+
+_ZN2v88internal4wasm9LEBHelper11sizeof_u32vEm.exit10: ; preds = %bb.j, %3, %2, %_ZN2v88internal4wasm9LEBHelper11sizeof_u32vEm.exit
+  %.lcssa = phi i64 [ 1, %_ZN2v88internal4wasm9LEBHelper11sizeof_u32vEm.exit ], [ 2, %2 ], [ 3, %3 ], [ %spec.select, %bb.j ]
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 2 uses
   %i.bb = load ptr, ptr %i.ba, align 8
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 2 uses
   %i.bd = load ptr, ptr %i.bc, align 8
   %i.be = ptrtoint ptr %i.bb to i64
   %i.bf = ptrtoint ptr %i.bd to i64
-  %i.bg = add nuw i64 %3, %i.ax
+  %i.bg = add nuw i64 %.lcssa, %i.ax
   %i.bh = add i64 %i.bg, %i.be
   %i.bi = sub i64 %i.bh, %i.bf
   tail call void @_ZN2v88internal4wasm10ZoneBuffer10write_sizeEm(ptr noundef nonnull align 8 dereferenceable(32) %1, i64 noundef %i.bi)
@@ -623,7 +629,7 @@ bb.a:
   %3 = alloca %"class.v8::internal::wasm::ValueType", align 4 ; 4 uses
   %4 = alloca %"class.v8::internal::wasm::ValueType", align 4 ; 4 uses
   %5 = alloca %"class.v8::internal::wasm::ValueType", align 4 ; 4 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 250 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 274 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 103 uses
@@ -1026,13 +1032,13 @@ _ZN2v88internal4wasm10ZoneBuffer8write_u8Eh.exit463: ; preds = %bb.dv, %_ZN2v88i
   store ptr %i.aug, ptr %i.a, align 8
   store i8 %i.asw, ptr %i.auf, align 1
   %i.auh = getelementptr inbounds nuw i8, ptr %.0265906, i64 4
-  %i.aui = load i32, ptr %i.auh, align 4          ; 3 uses
+  %i.aui = load i32, ptr %i.auh, align 4          ; 7 uses
   %.val323.val = load i8, ptr %i.asm, align 2
   %i.auj = icmp eq i8 %.val323.val, 1
   br i1 %i.auj, label %bb.ea, label %bb.ed
 
 bb.ea:                                            ; preds = %_ZN2v88internal4wasm10ZoneBuffer8write_u8Eh.exit463
-  %i.auk = zext i32 %i.aui to i64                 ; 2 uses
+  %i.auk = zext i32 %i.aui to i64                 ; 5 uses
   %i.aul = load ptr, ptr %i.a, align 8            ; 2 uses
   %i.aum = getelementptr inbounds nuw i8, ptr %i.aul, i64 10
   %i.aun = load ptr, ptr %i.d, align 8            ; 2 uses
@@ -1088,27 +1094,59 @@ _ZN2v88internal4Zone13AllocateArrayIhNS0_4wasm10ZoneBuffer6BufferEEEPT_m.exit.i.
 _ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i: ; preds = %_ZN2v88internal4Zone13AllocateArrayIhNS0_4wasm10ZoneBuffer6BufferEEEPT_m.exit.i.i.i, %bb.ea
   %i.avt = phi ptr [ %i.aul, %bb.ea ], [ %i.avq, %_ZN2v88internal4Zone13AllocateArrayIhNS0_4wasm10ZoneBuffer6BufferEEEPT_m.exit.i.i.i ]
   %i.avu = icmp ugt i32 %i.aui, 127
-  br i1 %i.avu, label %.lr.ph.i.i.i.a, label %_ZN2v88internal4wasm10ZoneBuffer10write_u64vEm.exit.i
+  br i1 %i.avu, label %.lr.ph.i.i.i, label %_ZN2v88internal4wasm10ZoneBuffer10write_u64vEm.exit.i
 
-.lr.ph.i.i.i.a:                                   ; preds = %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i, %.lr.ph.i.i.i.a
-  %.05.i.i.i = phi i64 [ %i.avz, %.lr.ph.i.i.i.a ], [ %i.auk, %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i ] ; 3 uses
-  %i.avv = trunc i64 %.05.i.i.i to i8
+.lr.ph.i.i.i:                                     ; preds = %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i
+  %6 = trunc i32 %i.aui to i8
+  %7 = or i8 %6, -128
+  %8 = load ptr, ptr %i.a, align 8                ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 1
+  store ptr %9, ptr %i.a, align 8
+  store i8 %7, ptr %8, align 1
+  %10 = lshr i64 %i.auk, 7                        ; 2 uses
+  %11 = icmp ugt i32 %i.aui, 16383
+  br i1 %11, label %.lr.ph.i.i.i.1, label %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i
+
+.lr.ph.i.i.i.1:                                   ; preds = %.lr.ph.i.i.i
+  %12 = trunc i64 %10 to i8
+  %13 = or i8 %12, -128
+  %14 = load ptr, ptr %i.a, align 8               ; 2 uses
+  %15 = getelementptr inbounds nuw i8, ptr %14, i64 1
+  store ptr %15, ptr %i.a, align 8
+  store i8 %13, ptr %14, align 1
+  %16 = lshr i64 %i.auk, 14                       ; 2 uses
+  %17 = icmp ugt i32 %i.aui, 2097151
+  br i1 %17, label %.lr.ph.i.i.i.a, label %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i
+
+.lr.ph.i.i.i.a:                                   ; preds = %.lr.ph.i.i.i.1
+  %i.avv = trunc i64 %16 to i8
   %i.avw = or i8 %i.avv, -128
   %i.avx = load ptr, ptr %i.a, align 8            ; 2 uses
   %i.avy = getelementptr inbounds nuw i8, ptr %i.avx, i64 1
   store ptr %i.avy, ptr %i.a, align 8
   store i8 %i.avw, ptr %i.avx, align 1
-  %i.avz = lshr i64 %.05.i.i.i, 7                 ; 2 uses
-  %i.awa = icmp samesign ugt i64 %.05.i.i.i, 16383
-  br i1 %i.awa, label %.lr.ph.i.i.i.a, label %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i, !llvm.loop !10
+  %i.avz = lshr i64 %i.auk, 21                    ; 2 uses
+  %i.awa = icmp ugt i32 %i.aui, 268435455
+  br i1 %i.awa, label %.lr.ph.i.i.i.3, label %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i
 
-_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i: ; preds = %.lr.ph.i.i.i.a
+.lr.ph.i.i.i.3:                                   ; preds = %.lr.ph.i.i.i.a
+  %18 = trunc i64 %i.avz to i8
+  %19 = or i8 %18, -128
+  %20 = load ptr, ptr %i.a, align 8               ; 2 uses
+  %21 = getelementptr inbounds nuw i8, ptr %20, i64 1
+  store ptr %21, ptr %i.a, align 8
+  store i8 %19, ptr %20, align 1
+  %22 = lshr i64 %i.auk, 28
+  br label %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i
+
+_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i: ; preds = %.lr.ph.i.i.i.3, %.lr.ph.i.i.i.a, %.lr.ph.i.i.i.1, %.lr.ph.i.i.i
+  %.lcssa1211 = phi i64 [ %10, %.lr.ph.i.i.i ], [ %16, %.lr.ph.i.i.i.1 ], [ %i.avz, %.lr.ph.i.i.i.a ], [ %22, %.lr.ph.i.i.i.3 ]
   %.pre.i.i = load ptr, ptr %i.a, align 8
   br label %_ZN2v88internal4wasm10ZoneBuffer10write_u64vEm.exit.i
 
 _ZN2v88internal4wasm10ZoneBuffer10write_u64vEm.exit.i: ; preds = %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i, %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i
   %i.awb = phi ptr [ %i.avt, %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i ], [ %.pre.i.i, %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i ] ; 2 uses
-  %.0.lcssa.i.i.i = phi i64 [ %i.auk, %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i ], [ %i.avz, %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i ]
+  %.0.lcssa.i.i.i = phi i64 [ %i.auk, %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i ], [ %.lcssa1211, %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i ]
   %i.awc = trunc nuw nsw i64 %.0.lcssa.i.i.i to i8
   %i.awd = getelementptr inbounds nuw i8, ptr %i.awb, i64 1
   store ptr %i.awd, ptr %i.a, align 8
@@ -1126,13 +1164,13 @@ bb.ed:                                            ; preds = %_ZN2v88internal4was
 
 bb.ee:                                            ; preds = %"_ZZNK2v88internal4wasm17WasmModuleBuilder7WriteToEPNS1_10ZoneBufferEENK3$_1clEj.exit"
   %i.awg = getelementptr inbounds nuw i8, ptr %.0265906, i64 8
-  %i.awh = load i32, ptr %i.awg, align 8          ; 3 uses
+  %i.awh = load i32, ptr %i.awg, align 8          ; 7 uses
   %.val321.val = load i8, ptr %i.asm, align 2
   %i.awi = icmp eq i8 %.val321.val, 1
   br i1 %i.awi, label %bb.ef, label %bb.ei
 
 bb.ef:                                            ; preds = %bb.ee
-  %i.awj = zext i32 %i.awh to i64                 ; 2 uses
+  %i.awj = zext i32 %i.awh to i64                 ; 5 uses
   %i.awk = load ptr, ptr %i.a, align 8            ; 2 uses
   %i.awl = getelementptr inbounds nuw i8, ptr %i.awk, i64 10
   %i.awm = load ptr, ptr %i.d, align 8            ; 2 uses
@@ -1188,27 +1226,59 @@ _ZN2v88internal4Zone13AllocateArrayIhNS0_4wasm10ZoneBuffer6BufferEEEPT_m.exit.i.
 _ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i464: ; preds = %_ZN2v88internal4Zone13AllocateArrayIhNS0_4wasm10ZoneBuffer6BufferEEEPT_m.exit.i.i.i471, %bb.ef
   %i.axs = phi ptr [ %i.awk, %bb.ef ], [ %i.axp, %_ZN2v88internal4Zone13AllocateArrayIhNS0_4wasm10ZoneBuffer6BufferEEEPT_m.exit.i.i.i471 ]
   %i.axt = icmp ugt i32 %i.awh, 127
-  br i1 %i.axt, label %.lr.ph.i.i.i467.a, label %_ZN2v88internal4wasm10ZoneBuffer10write_u64vEm.exit.i465
+  br i1 %i.axt, label %.lr.ph.i.i.i467, label %_ZN2v88internal4wasm10ZoneBuffer10write_u64vEm.exit.i465
 
-.lr.ph.i.i.i467.a:                                ; preds = %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i464, %.lr.ph.i.i.i467.a
-  %.05.i.i.i468 = phi i64 [ %i.axy, %.lr.ph.i.i.i467.a ], [ %i.awj, %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i464 ] ; 3 uses
-  %i.axu = trunc i64 %.05.i.i.i468 to i8
+.lr.ph.i.i.i467:                                  ; preds = %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i464
+  %23 = trunc i32 %i.awh to i8
+  %24 = or i8 %23, -128
+  %25 = load ptr, ptr %i.a, align 8               ; 2 uses
+  %26 = getelementptr inbounds nuw i8, ptr %25, i64 1
+  store ptr %26, ptr %i.a, align 8
+  store i8 %24, ptr %25, align 1
+  %27 = lshr i64 %i.awj, 7                        ; 2 uses
+  %28 = icmp ugt i32 %i.awh, 16383
+  br i1 %28, label %.lr.ph.i.i.i467.1, label %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i469
+
+.lr.ph.i.i.i467.1:                                ; preds = %.lr.ph.i.i.i467
+  %29 = trunc i64 %27 to i8
+  %30 = or i8 %29, -128
+  %31 = load ptr, ptr %i.a, align 8               ; 2 uses
+  %32 = getelementptr inbounds nuw i8, ptr %31, i64 1
+  store ptr %32, ptr %i.a, align 8
+  store i8 %30, ptr %31, align 1
+  %33 = lshr i64 %i.awj, 14                       ; 2 uses
+  %34 = icmp ugt i32 %i.awh, 2097151
+  br i1 %34, label %.lr.ph.i.i.i467.a, label %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i469
+
+.lr.ph.i.i.i467.a:                                ; preds = %.lr.ph.i.i.i467.1
+  %i.axu = trunc i64 %33 to i8
   %i.axv = or i8 %i.axu, -128
   %i.axw = load ptr, ptr %i.a, align 8            ; 2 uses
   %i.axx = getelementptr inbounds nuw i8, ptr %i.axw, i64 1
   store ptr %i.axx, ptr %i.a, align 8
   store i8 %i.axv, ptr %i.axw, align 1
-  %i.axy = lshr i64 %.05.i.i.i468, 7              ; 2 uses
-  %i.axz = icmp samesign ugt i64 %.05.i.i.i468, 16383
-  br i1 %i.axz, label %.lr.ph.i.i.i467.a, label %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i469, !llvm.loop !10
+  %i.axy = lshr i64 %i.awj, 21                    ; 2 uses
+  %i.axz = icmp ugt i32 %i.awh, 268435455
+  br i1 %i.axz, label %.lr.ph.i.i.i467.3, label %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i469
 
-_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i469: ; preds = %.lr.ph.i.i.i467.a
+.lr.ph.i.i.i467.3:                                ; preds = %.lr.ph.i.i.i467.a
+  %35 = trunc i64 %i.axy to i8
+  %36 = or i8 %35, -128
+  %37 = load ptr, ptr %i.a, align 8               ; 2 uses
+  %38 = getelementptr inbounds nuw i8, ptr %37, i64 1
+  store ptr %38, ptr %i.a, align 8
+  store i8 %36, ptr %37, align 1
+  %39 = lshr i64 %i.awj, 28
+  br label %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i469
+
+_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i469: ; preds = %.lr.ph.i.i.i467.3, %.lr.ph.i.i.i467.a, %.lr.ph.i.i.i467.1, %.lr.ph.i.i.i467
+  %.lcssa1212 = phi i64 [ %27, %.lr.ph.i.i.i467 ], [ %33, %.lr.ph.i.i.i467.1 ], [ %i.axy, %.lr.ph.i.i.i467.a ], [ %39, %.lr.ph.i.i.i467.3 ]
   %.pre.i.i470 = load ptr, ptr %i.a, align 8
   br label %_ZN2v88internal4wasm10ZoneBuffer10write_u64vEm.exit.i465
 
 _ZN2v88internal4wasm10ZoneBuffer10write_u64vEm.exit.i465: ; preds = %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i469, %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i464
   %i.aya = phi ptr [ %i.axs, %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i464 ], [ %.pre.i.i470, %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i469 ] ; 2 uses
-  %.0.lcssa.i.i.i466 = phi i64 [ %i.awj, %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i464 ], [ %i.axy, %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i469 ]
+  %.0.lcssa.i.i.i466 = phi i64 [ %i.awj, %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i464 ], [ %.lcssa1212, %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i469 ]
   %i.ayb = trunc nuw nsw i64 %.0.lcssa.i.i.i466 to i8
   %i.ayc = getelementptr inbounds nuw i8, ptr %i.aya, i64 1
   store ptr %i.ayc, ptr %i.a, align 8
@@ -1435,13 +1505,13 @@ _ZN2v88internal4wasm10ZoneBuffer8write_u8Eh.exit484: ; preds = %bb.er, %_ZN2v88i
   %i.bcu = getelementptr inbounds nuw i8, ptr %i.bct, i64 1
   store ptr %i.bcu, ptr %i.a, align 8
   store i8 %i.bbk, ptr %i.bct, align 1
-  %i.bcv = load i32, ptr %.0266911, align 4       ; 3 uses
+  %i.bcv = load i32, ptr %.0266911, align 4       ; 7 uses
   %.val327.val = load i8, ptr %i.bba, align 2
   %i.bcw = icmp eq i8 %.val327.val, 1
   br i1 %i.bcw, label %bb.ew, label %bb.ez
 
 bb.ew:                                            ; preds = %_ZN2v88internal4wasm10ZoneBuffer8write_u8Eh.exit484
-  %i.bcx = zext i32 %i.bcv to i64                 ; 2 uses
+  %i.bcx = zext i32 %i.bcv to i64                 ; 5 uses
   %i.bcy = load ptr, ptr %i.a, align 8            ; 2 uses
   %i.bcz = getelementptr inbounds nuw i8, ptr %i.bcy, i64 10
   %i.bda = load ptr, ptr %i.d, align 8            ; 2 uses
@@ -1497,27 +1567,59 @@ _ZN2v88internal4Zone13AllocateArrayIhNS0_4wasm10ZoneBuffer6BufferEEEPT_m.exit.i.
 _ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i485: ; preds = %_ZN2v88internal4Zone13AllocateArrayIhNS0_4wasm10ZoneBuffer6BufferEEEPT_m.exit.i.i.i492, %bb.ew
   %i.beg = phi ptr [ %i.bcy, %bb.ew ], [ %i.bed, %_ZN2v88internal4Zone13AllocateArrayIhNS0_4wasm10ZoneBuffer6BufferEEEPT_m.exit.i.i.i492 ]
   %i.beh = icmp ugt i32 %i.bcv, 127
-  br i1 %i.beh, label %.lr.ph.i.i.i488.a, label %_ZN2v88internal4wasm10ZoneBuffer10write_u64vEm.exit.i486
+  br i1 %i.beh, label %.lr.ph.i.i.i488, label %_ZN2v88internal4wasm10ZoneBuffer10write_u64vEm.exit.i486
 
-.lr.ph.i.i.i488.a:                                ; preds = %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i485, %.lr.ph.i.i.i488.a
-  %.05.i.i.i489 = phi i64 [ %i.bem, %.lr.ph.i.i.i488.a ], [ %i.bcx, %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i485 ] ; 3 uses
-  %i.bei = trunc i64 %.05.i.i.i489 to i8
+.lr.ph.i.i.i488:                                  ; preds = %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i485
+  %40 = trunc i32 %i.bcv to i8
+  %41 = or i8 %40, -128
+  %42 = load ptr, ptr %i.a, align 8               ; 2 uses
+  %43 = getelementptr inbounds nuw i8, ptr %42, i64 1
+  store ptr %43, ptr %i.a, align 8
+  store i8 %41, ptr %42, align 1
+  %44 = lshr i64 %i.bcx, 7                        ; 2 uses
+  %45 = icmp ugt i32 %i.bcv, 16383
+  br i1 %45, label %.lr.ph.i.i.i488.1, label %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i490
+
+.lr.ph.i.i.i488.1:                                ; preds = %.lr.ph.i.i.i488
+  %46 = trunc i64 %44 to i8
+  %47 = or i8 %46, -128
+  %48 = load ptr, ptr %i.a, align 8               ; 2 uses
+  %49 = getelementptr inbounds nuw i8, ptr %48, i64 1
+  store ptr %49, ptr %i.a, align 8
+  store i8 %47, ptr %48, align 1
+  %50 = lshr i64 %i.bcx, 14                       ; 2 uses
+  %51 = icmp ugt i32 %i.bcv, 2097151
+  br i1 %51, label %.lr.ph.i.i.i488.a, label %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i490
+
+.lr.ph.i.i.i488.a:                                ; preds = %.lr.ph.i.i.i488.1
+  %i.bei = trunc i64 %50 to i8
   %i.bej = or i8 %i.bei, -128
   %i.bek = load ptr, ptr %i.a, align 8            ; 2 uses
   %i.bel = getelementptr inbounds nuw i8, ptr %i.bek, i64 1
   store ptr %i.bel, ptr %i.a, align 8
   store i8 %i.bej, ptr %i.bek, align 1
-  %i.bem = lshr i64 %.05.i.i.i489, 7              ; 2 uses
-  %i.ben = icmp samesign ugt i64 %.05.i.i.i489, 16383
-  br i1 %i.ben, label %.lr.ph.i.i.i488.a, label %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i490, !llvm.loop !10
+  %i.bem = lshr i64 %i.bcx, 21                    ; 2 uses
+  %i.ben = icmp ugt i32 %i.bcv, 268435455
+  br i1 %i.ben, label %.lr.ph.i.i.i488.3, label %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i490
 
-_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i490: ; preds = %.lr.ph.i.i.i488.a
+.lr.ph.i.i.i488.3:                                ; preds = %.lr.ph.i.i.i488.a
+  %52 = trunc i64 %i.bem to i8
+  %53 = or i8 %52, -128
+  %54 = load ptr, ptr %i.a, align 8               ; 2 uses
+  %55 = getelementptr inbounds nuw i8, ptr %54, i64 1
+  store ptr %55, ptr %i.a, align 8
+  store i8 %53, ptr %54, align 1
+  %56 = lshr i64 %i.bcx, 28
+  br label %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i490
+
+_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i490: ; preds = %.lr.ph.i.i.i488.3, %.lr.ph.i.i.i488.a, %.lr.ph.i.i.i488.1, %.lr.ph.i.i.i488
+  %.lcssa1209 = phi i64 [ %44, %.lr.ph.i.i.i488 ], [ %50, %.lr.ph.i.i.i488.1 ], [ %i.bem, %.lr.ph.i.i.i488.a ], [ %56, %.lr.ph.i.i.i488.3 ]
   %.pre.i.i491 = load ptr, ptr %i.a, align 8
   br label %_ZN2v88internal4wasm10ZoneBuffer10write_u64vEm.exit.i486
 
 _ZN2v88internal4wasm10ZoneBuffer10write_u64vEm.exit.i486: ; preds = %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i490, %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i485
   %i.beo = phi ptr [ %i.beg, %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i485 ], [ %.pre.i.i491, %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i490 ] ; 2 uses
-  %.0.lcssa.i.i.i487 = phi i64 [ %i.bcx, %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i485 ], [ %i.bem, %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i490 ]
+  %.0.lcssa.i.i.i487 = phi i64 [ %i.bcx, %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i485 ], [ %.lcssa1209, %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i490 ]
   %i.bep = trunc nuw nsw i64 %.0.lcssa.i.i.i487 to i8
   %i.beq = getelementptr inbounds nuw i8, ptr %i.beo, i64 1
   store ptr %i.beq, ptr %i.a, align 8
@@ -1535,13 +1637,13 @@ bb.ez:                                            ; preds = %_ZN2v88internal4was
 
 bb.fa:                                            ; preds = %"_ZZNK2v88internal4wasm17WasmModuleBuilder7WriteToEPNS1_10ZoneBufferEENK3$_2clEj.exit"
   %i.bet = getelementptr inbounds nuw i8, ptr %.0266911, i64 4
-  %i.beu = load i32, ptr %i.bet, align 4          ; 3 uses
+  %i.beu = load i32, ptr %i.bet, align 4          ; 7 uses
   %.val325.val = load i8, ptr %i.bba, align 2
   %i.bev = icmp eq i8 %.val325.val, 1
   br i1 %i.bev, label %bb.fb, label %bb.fe
 
 bb.fb:                                            ; preds = %bb.fa
-  %i.bew = zext i32 %i.beu to i64                 ; 2 uses
+  %i.bew = zext i32 %i.beu to i64                 ; 5 uses
   %i.bex = load ptr, ptr %i.a, align 8            ; 2 uses
   %i.bey = getelementptr inbounds nuw i8, ptr %i.bex, i64 10
   %i.bez = load ptr, ptr %i.d, align 8            ; 2 uses
@@ -1597,27 +1699,59 @@ _ZN2v88internal4Zone13AllocateArrayIhNS0_4wasm10ZoneBuffer6BufferEEEPT_m.exit.i.
 _ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i494: ; preds = %_ZN2v88internal4Zone13AllocateArrayIhNS0_4wasm10ZoneBuffer6BufferEEEPT_m.exit.i.i.i501, %bb.fb
   %i.bgf = phi ptr [ %i.bex, %bb.fb ], [ %i.bgc, %_ZN2v88internal4Zone13AllocateArrayIhNS0_4wasm10ZoneBuffer6BufferEEEPT_m.exit.i.i.i501 ]
   %i.bgg = icmp ugt i32 %i.beu, 127
-  br i1 %i.bgg, label %.lr.ph.i.i.i497.a, label %_ZN2v88internal4wasm10ZoneBuffer10write_u64vEm.exit.i495
+  br i1 %i.bgg, label %.lr.ph.i.i.i497, label %_ZN2v88internal4wasm10ZoneBuffer10write_u64vEm.exit.i495
 
-.lr.ph.i.i.i497.a:                                ; preds = %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i494, %.lr.ph.i.i.i497.a
-  %.05.i.i.i498 = phi i64 [ %i.bgl, %.lr.ph.i.i.i497.a ], [ %i.bew, %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i494 ] ; 3 uses
-  %i.bgh = trunc i64 %.05.i.i.i498 to i8
+.lr.ph.i.i.i497:                                  ; preds = %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i494
+  %57 = trunc i32 %i.beu to i8
+  %58 = or i8 %57, -128
+  %59 = load ptr, ptr %i.a, align 8               ; 2 uses
+  %60 = getelementptr inbounds nuw i8, ptr %59, i64 1
+  store ptr %60, ptr %i.a, align 8
+  store i8 %58, ptr %59, align 1
+  %61 = lshr i64 %i.bew, 7                        ; 2 uses
+  %62 = icmp ugt i32 %i.beu, 16383
+  br i1 %62, label %.lr.ph.i.i.i497.1, label %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i499
+
+.lr.ph.i.i.i497.1:                                ; preds = %.lr.ph.i.i.i497
+  %63 = trunc i64 %61 to i8
+  %64 = or i8 %63, -128
+  %65 = load ptr, ptr %i.a, align 8               ; 2 uses
+  %66 = getelementptr inbounds nuw i8, ptr %65, i64 1
+  store ptr %66, ptr %i.a, align 8
+  store i8 %64, ptr %65, align 1
+  %67 = lshr i64 %i.bew, 14                       ; 2 uses
+  %68 = icmp ugt i32 %i.beu, 2097151
+  br i1 %68, label %.lr.ph.i.i.i497.a, label %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i499
+
+.lr.ph.i.i.i497.a:                                ; preds = %.lr.ph.i.i.i497.1
+  %i.bgh = trunc i64 %67 to i8
   %i.bgi = or i8 %i.bgh, -128
   %i.bgj = load ptr, ptr %i.a, align 8            ; 2 uses
   %i.bgk = getelementptr inbounds nuw i8, ptr %i.bgj, i64 1
   store ptr %i.bgk, ptr %i.a, align 8
   store i8 %i.bgi, ptr %i.bgj, align 1
-  %i.bgl = lshr i64 %.05.i.i.i498, 7              ; 2 uses
-  %i.bgm = icmp samesign ugt i64 %.05.i.i.i498, 16383
-  br i1 %i.bgm, label %.lr.ph.i.i.i497.a, label %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i499, !llvm.loop !10
+  %i.bgl = lshr i64 %i.bew, 21                    ; 2 uses
+  %i.bgm = icmp ugt i32 %i.beu, 268435455
+  br i1 %i.bgm, label %.lr.ph.i.i.i497.3, label %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i499
 
-_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i499: ; preds = %.lr.ph.i.i.i497.a
+.lr.ph.i.i.i497.3:                                ; preds = %.lr.ph.i.i.i497.a
+  %69 = trunc i64 %i.bgl to i8
+  %70 = or i8 %69, -128
+  %71 = load ptr, ptr %i.a, align 8               ; 2 uses
+  %72 = getelementptr inbounds nuw i8, ptr %71, i64 1
+  store ptr %72, ptr %i.a, align 8
+  store i8 %70, ptr %71, align 1
+  %73 = lshr i64 %i.bew, 28
+  br label %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i499
+
+_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i499: ; preds = %.lr.ph.i.i.i497.3, %.lr.ph.i.i.i497.a, %.lr.ph.i.i.i497.1, %.lr.ph.i.i.i497
+  %.lcssa1210 = phi i64 [ %61, %.lr.ph.i.i.i497 ], [ %67, %.lr.ph.i.i.i497.1 ], [ %i.bgl, %.lr.ph.i.i.i497.a ], [ %73, %.lr.ph.i.i.i497.3 ]
   %.pre.i.i500 = load ptr, ptr %i.a, align 8
   br label %_ZN2v88internal4wasm10ZoneBuffer10write_u64vEm.exit.i495
 
 _ZN2v88internal4wasm10ZoneBuffer10write_u64vEm.exit.i495: ; preds = %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i499, %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i494
   %i.bgn = phi ptr [ %i.bgf, %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i494 ], [ %.pre.i.i500, %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i499 ] ; 2 uses
-  %.0.lcssa.i.i.i496 = phi i64 [ %i.bew, %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i494 ], [ %i.bgl, %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i499 ]
+  %.0.lcssa.i.i.i496 = phi i64 [ %i.bew, %_ZN2v88internal4wasm10ZoneBuffer11EnsureSpaceEm.exit.i.i494 ], [ %.lcssa1210, %_ZN2v88internal4wasm9LEBHelper10write_u64vEPPhm.exit.loopexit.i.i499 ]
   %i.bgo = trunc nuw nsw i64 %.0.lcssa.i.i.i496 to i8
   %i.bgp = getelementptr inbounds nuw i8, ptr %i.bgn, i64 1
   store ptr %i.bgp, ptr %i.a, align 8

@@ -107,19 +107,29 @@ _ZN2v88internal4wasm9LEBHelper11sizeof_u32vEm.exit._crit_edge: ; preds = %_ZN2v8
 .lr.ph:                                           ; preds = %_ZN2v88internal4wasm9LEBHelper11sizeof_u32vEm.exit.preheader, %_ZN2v88internal4wasm9LEBHelper11sizeof_i32vEi.exit
   %.028 = phi i64 [ %i.af, %_ZN2v88internal4wasm9LEBHelper11sizeof_i32vEi.exit ], [ %i.i, %_ZN2v88internal4wasm9LEBHelper11sizeof_u32vEm.exit.preheader ]
   %.0827 = phi ptr [ %i.ag, %_ZN2v88internal4wasm9LEBHelper11sizeof_i32vEi.exit ], [ %i.d, %_ZN2v88internal4wasm9LEBHelper11sizeof_u32vEm.exit.preheader ] ; 2 uses
-  %i.k = load i64, ptr %.0827, align 4            ; 3 uses
-  %i.l = and i64 %i.k, 4294967295
-  br label %bb.c
+  %i.k = load i64, ptr %.0827, align 4            ; 6 uses
+  %i.l = and i64 %i.k, 4294967168
+  %.not.i11 = icmp eq i64 %i.l, 0
+  br i1 %.not.i11, label %_ZN2v88internal4wasm9LEBHelper11sizeof_u32vEm.exit12, label %2
 
-bb.c:                                             ; preds = %bb.c, %.lr.ph
-  %.04.i9 = phi i64 [ %i.l, %.lr.ph ], [ %3, %bb.c ]
-  %.0.i10 = phi i64 [ 0, %.lr.ph ], [ %2, %bb.c ] ; 2 uses
-  %2 = add nuw nsw i64 %.0.i10, 1
-  %3 = lshr i64 %.04.i9, 7                        ; 2 uses
-  %.not.i11 = icmp eq i64 %3, 0
-  br i1 %.not.i11, label %_ZN2v88internal4wasm9LEBHelper11sizeof_u32vEm.exit12, label %bb.c, !llvm.loop !6
+2:                                                ; preds = %.lr.ph
+  %3 = and i64 %i.k, 4294950912
+  %.not.i11.1 = icmp eq i64 %3, 0
+  br i1 %.not.i11.1, label %_ZN2v88internal4wasm9LEBHelper11sizeof_u32vEm.exit12, label %4
 
-_ZN2v88internal4wasm9LEBHelper11sizeof_u32vEm.exit12: ; preds = %bb.c
+4:                                                ; preds = %2
+  %5 = and i64 %i.k, 4292870144
+  %.not.i11.2 = icmp eq i64 %5, 0
+  br i1 %.not.i11.2, label %_ZN2v88internal4wasm9LEBHelper11sizeof_u32vEm.exit12, label %bb.c
+
+bb.c:                                             ; preds = %4
+  %6 = and i64 %i.k, 4026531840
+  %.not.i11.3 = icmp eq i64 %6, 0
+  %spec.select42 = select i1 %.not.i11.3, i64 3, i64 4
+  br label %_ZN2v88internal4wasm9LEBHelper11sizeof_u32vEm.exit12
+
+_ZN2v88internal4wasm9LEBHelper11sizeof_u32vEm.exit12: ; preds = %bb.c, %4, %2, %.lr.ph
+  %.0.i10.lcssa = phi i64 [ 0, %.lr.ph ], [ 1, %2 ], [ 2, %4 ], [ %spec.select42, %bb.c ]
   %.sroa.4.0.extract.shift = lshr i64 %i.k, 32
   %.sroa.4.0.extract.trunc = trunc nuw i64 %.sroa.4.0.extract.shift to i32 ; 6 uses
   %i.m = and i32 %.sroa.4.0.extract.trunc, 19
@@ -168,20 +178,17 @@ _ZNK2v88internal4wasm8HeapType4codeEv.exit:       ; preds = %_ZNK2v88internal4wa
   %spec.select = select i1 %.not14.i, i64 1, i64 2
   br label %_ZN2v88internal4wasm9LEBHelper11sizeof_i32vEi.exit
 
-.lr.ph19.i:                                       ; preds = %_ZNK2v88internal4wasm8HeapType4codeEv.exit.thread, %.lr.ph19.i
-  %.018.i = phi i64 [ %4, %.lr.ph19.i ], [ 1, %_ZNK2v88internal4wasm8HeapType4codeEv.exit.thread ]
-  %.0817.i = phi i32 [ %5, %.lr.ph19.i ], [ %i.v, %_ZNK2v88internal4wasm8HeapType4codeEv.exit.thread ] ; 2 uses
-  %4 = add nuw nsw i64 %.018.i, 1                 ; 2 uses
-  %5 = lshr i32 %.0817.i, 7
-  %6 = icmp samesign ugt i32 %.0817.i, 8191
-  br i1 %6, label %.lr.ph19.i, label %_ZN2v88internal4wasm9LEBHelper11sizeof_i32vEi.exit, !llvm.loop !8
+.lr.ph19.i:                                       ; preds = %_ZNK2v88internal4wasm8HeapType4codeEv.exit.thread
+  %7 = icmp samesign ugt i32 %i.v, 8191
+  %spec.select43 = select i1 %7, i64 3, i64 2
+  br label %_ZN2v88internal4wasm9LEBHelper11sizeof_i32vEi.exit
 
 _ZN2v88internal4wasm9LEBHelper11sizeof_i32vEi.exit: ; preds = %.lr.ph19.i, %_ZNK2v88internal4wasm8HeapType4codeEv.exit, %_ZNK2v88internal4wasm8HeapType4codeEv.exit.thread, %_ZNK2v88internal4wasm13ValueTypeBase24encoding_needs_heap_typeEv.exit.thread19, %_ZNK2v88internal4wasm13ValueTypeBase24encoding_needs_heap_typeEv.exit
-  %i.aa = phi i64 [ 0, %_ZNK2v88internal4wasm13ValueTypeBase24encoding_needs_heap_typeEv.exit.thread19 ], [ 0, %_ZNK2v88internal4wasm13ValueTypeBase24encoding_needs_heap_typeEv.exit ], [ %spec.select, %_ZNK2v88internal4wasm8HeapType4codeEv.exit ], [ 1, %_ZNK2v88internal4wasm8HeapType4codeEv.exit.thread ], [ %4, %.lr.ph19.i ]
+  %i.aa = phi i64 [ 0, %_ZNK2v88internal4wasm13ValueTypeBase24encoding_needs_heap_typeEv.exit.thread19 ], [ 0, %_ZNK2v88internal4wasm13ValueTypeBase24encoding_needs_heap_typeEv.exit ], [ %spec.select, %_ZNK2v88internal4wasm8HeapType4codeEv.exit ], [ 1, %_ZNK2v88internal4wasm8HeapType4codeEv.exit.thread ], [ %spec.select43, %.lr.ph19.i ]
   %i.ab = add i64 %.028, 2
   %i.ac = add i64 %i.ab, %.lobit
   %i.ad = add i64 %i.ac, %i.o
-  %i.ae = add i64 %i.ad, %.0.i10
+  %i.ae = add i64 %i.ad, %.0.i10.lcssa
   %i.af = add i64 %i.ae, %i.aa                    ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #7
   %i.ag = getelementptr inbounds nuw i8, ptr %.0827, i64 8 ; 2 uses
@@ -215,7 +222,7 @@ bb.a:
   store i8 %i.l, ptr %.4, align 1
   %i.n = lshr i32 %.05.i, 7                       ; 2 uses
   %i.o = icmp ugt i32 %.05.i, 16383
-  br i1 %i.o, label %.lr.ph.i, label %_ZN2v88internal4wasm9LEBHelper10write_u32vEPPhj.exit, !llvm.loop !9
+  br i1 %i.o, label %.lr.ph.i, label %_ZN2v88internal4wasm9LEBHelper10write_u32vEPPhj.exit, !llvm.loop !8
 
 _ZN2v88internal4wasm9LEBHelper10write_u32vEPPhj.exit: ; preds = %.lr.ph.i, %bb.a
   %.5 = phi ptr [ %1, %bb.a ], [ %i.m, %.lr.ph.i ] ; 2 uses
@@ -255,7 +262,7 @@ _ZN2v88internal4wasm9LEBHelper10write_u32vEPPhj.exit: ; preds = %.lr.ph.i, %bb.a
   store i8 %i.ab, ptr %.6, align 1
   %i.ad = lshr i32 %.05.i13, 7                    ; 2 uses
   %i.ae = icmp ugt i32 %.05.i13, 16383
-  br i1 %i.ae, label %.lr.ph.i12, label %_ZN2v88internal4wasm9LEBHelper10write_u32vEPPhj.exit14, !llvm.loop !9
+  br i1 %i.ae, label %.lr.ph.i12, label %_ZN2v88internal4wasm9LEBHelper10write_u32vEPPhj.exit14, !llvm.loop !8
 
 _ZN2v88internal4wasm9LEBHelper10write_u32vEPPhj.exit14: ; preds = %.lr.ph.i12, %.lr.ph
   %.7 = phi ptr [ %.03246, %.lr.ph ], [ %i.ac, %.lr.ph.i12 ] ; 4 uses
@@ -339,7 +346,7 @@ bb.i:                                             ; preds = %_ZNK2v88internal4wa
 
 bb.j:                                             ; preds = %bb.i, %_ZNK2v88internal4wasm13ValueTypeBase24encoding_needs_heap_typeEv.exit.thread
   %.sroa.0.0.copyload.i = phi i32 [ %.sroa.0.0.copyload.i.pre, %bb.i ], [ %i.aw, %_ZNK2v88internal4wasm13ValueTypeBase24encoding_needs_heap_typeEv.exit.thread ] ; 3 uses
-  %.2 = phi ptr [ %i.ba, %bb.i ], [ %.1, %_ZNK2v88internal4wasm13ValueTypeBase24encoding_needs_heap_typeEv.exit.thread ] ; 5 uses
+  %.2 = phi ptr [ %i.ba, %bb.i ], [ %.1, %_ZNK2v88internal4wasm13ValueTypeBase24encoding_needs_heap_typeEv.exit.thread ] ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
   store i32 %.sroa.0.0.copyload.i, ptr %3, align 4
   %i.bb = and i32 %.sroa.0.0.copyload.i, 3
@@ -347,8 +354,8 @@ bb.j:                                             ; preds = %bb.i, %_ZNK2v88inte
   br i1 %i.bc, label %_ZNK2v88internal4wasm8HeapType4codeEv.exit.thread, label %_ZNK2v88internal4wasm8HeapType4codeEv.exit
 
 _ZNK2v88internal4wasm8HeapType4codeEv.exit.thread: ; preds = %bb.j
-  %i.bd = lshr i32 %.sroa.0.0.copyload.i, 8
-  %i.be = and i32 %i.bd, 1048575                  ; 3 uses
+  %i.bd = lshr i32 %.sroa.0.0.copyload.i, 8       ; 2 uses
+  %i.be = and i32 %i.bd, 1048575                  ; 5 uses
   %i.bf = icmp samesign ugt i32 %i.be, 63
   br i1 %i.bf, label %.lr.ph18.i, label %._crit_edge19.i
 
@@ -359,20 +366,26 @@ _ZNK2v88internal4wasm8HeapType4codeEv.exit:       ; preds = %bb.j
   %.not15.i = icmp samesign ugt i32 %i.bi, -65
   br i1 %.not15.i, label %._crit_edge.i, label %.lr.ph.i17
 
-.lr.ph18.i:                                       ; preds = %_ZNK2v88internal4wasm8HeapType4codeEv.exit.thread, %.lr.ph18.i
-  %.11 = phi ptr [ %i.bl, %.lr.ph18.i ], [ %.2, %_ZNK2v88internal4wasm8HeapType4codeEv.exit.thread ] ; 2 uses
-  %.017.i = phi i32 [ %i.bm, %.lr.ph18.i ], [ %i.be, %_ZNK2v88internal4wasm8HeapType4codeEv.exit.thread ] ; 3 uses
-  %i.bj = trunc i32 %.017.i to i8
+.lr.ph18.i:                                       ; preds = %_ZNK2v88internal4wasm8HeapType4codeEv.exit.thread
+  %i.bj = trunc i32 %i.bd to i8
   %i.bk = or i8 %i.bj, -128
-  %i.bl = getelementptr inbounds nuw i8, ptr %.11, i64 1 ; 2 uses
-  store i8 %i.bk, ptr %.11, align 1
-  %i.bm = lshr i32 %.017.i, 7                     ; 2 uses
-  %i.bn = icmp samesign ugt i32 %.017.i, 8191
-  br i1 %i.bn, label %.lr.ph18.i, label %._crit_edge19.i, !llvm.loop !10
+  %i.bl = getelementptr inbounds nuw i8, ptr %.2, i64 1 ; 2 uses
+  store i8 %i.bk, ptr %.2, align 1
+  %i.bm = lshr i32 %i.be, 7                       ; 2 uses
+  %i.bn = icmp samesign ugt i32 %i.be, 8191
+  br i1 %i.bn, label %.lr.ph18.i.1, label %._crit_edge19.i
 
-._crit_edge19.i:                                  ; preds = %.lr.ph18.i, %_ZNK2v88internal4wasm8HeapType4codeEv.exit.thread
-  %.10 = phi ptr [ %.2, %_ZNK2v88internal4wasm8HeapType4codeEv.exit.thread ], [ %i.bl, %.lr.ph18.i ]
-  %.0.lcssa.i18 = phi i32 [ %i.be, %_ZNK2v88internal4wasm8HeapType4codeEv.exit.thread ], [ %i.bm, %.lr.ph18.i ]
+.lr.ph18.i.1:                                     ; preds = %.lr.ph18.i
+  %4 = trunc i32 %i.bm to i8
+  %5 = or i8 %4, -128
+  %6 = getelementptr inbounds nuw i8, ptr %.2, i64 2
+  store i8 %5, ptr %i.bl, align 1
+  %7 = lshr i32 %i.be, 14
+  br label %._crit_edge19.i
+
+._crit_edge19.i:                                  ; preds = %.lr.ph18.i, %.lr.ph18.i.1, %_ZNK2v88internal4wasm8HeapType4codeEv.exit.thread
+  %.10 = phi ptr [ %.2, %_ZNK2v88internal4wasm8HeapType4codeEv.exit.thread ], [ %i.bl, %.lr.ph18.i ], [ %6, %.lr.ph18.i.1 ]
+  %.0.lcssa.i18 = phi i32 [ %i.be, %_ZNK2v88internal4wasm8HeapType4codeEv.exit.thread ], [ %i.bm, %.lr.ph18.i ], [ %7, %.lr.ph18.i.1 ]
   %i.bo = trunc nuw nsw i32 %.0.lcssa.i18 to i8
   br label %_ZN2v88internal4wasm9LEBHelper10write_i32vEPPhi.exit
 
@@ -380,7 +393,7 @@ _ZNK2v88internal4wasm8HeapType4codeEv.exit:       ; preds = %bb.j
   %i.bp = trunc nsw i32 %i.bi to i8
   %i.bq = getelementptr inbounds nuw i8, ptr %.2, i64 1
   store i8 %i.bp, ptr %.2, align 1
-  br label %._crit_edge.i, !llvm.loop !11
+  br label %._crit_edge.i, !llvm.loop !9
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i17, %_ZNK2v88internal4wasm8HeapType4codeEv.exit
   %.9 = phi ptr [ %.2, %_ZNK2v88internal4wasm8HeapType4codeEv.exit ], [ %i.bq, %.lr.ph.i17 ]
@@ -457,7 +470,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.w = load ptr, ptr %i.v, align 8              ; 2 uses
   %i.x = icmp ult ptr %i.u, %i.w
-  br i1 %i.x, label %_ZN2v88internal10ZoneVectorISt4pairIjNS0_4wasm9ValueTypeEEE9push_backEOS5_.exit, label %bb.g, !prof !12
+  br i1 %i.x, label %_ZN2v88internal10ZoneVectorISt4pairIjNS0_4wasm9ValueTypeEEE9push_backEOS5_.exit, label %bb.g, !prof !10
 
 bb.g:                                             ; preds = %bb.f
   %i.y = ptrtoint ptr %i.w to i64
@@ -513,7 +526,7 @@ bb.a:
   %i.p = tail call noundef i64 @llvm.umax.i64(i64 %i.o, i64 %1) ; 3 uses
   %i.q = load ptr, ptr %0, align 8                ; 3 uses
   %i.r = icmp ult i64 %i.p, 2305843009213693951
-  br i1 %i.r, label %bb.c, label %bb.b, !prof !12
+  br i1 %i.r, label %bb.c, label %bb.b, !prof !10
 
 bb.b:                                             ; preds = %bb.a
   tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1) #6
@@ -580,7 +593,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x i64> %wide.load15, ptr %i.ap, align 4
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.aq = icmp eq i64 %index.next, %n.vec
-  br i1 %i.aq, label %middle.block, label %vector.body, !llvm.loop !13
+  br i1 %i.aq, label %middle.block, label %vector.body, !llvm.loop !11
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.ai, %n.vec
@@ -599,7 +612,7 @@ middle.block:                                     ; preds = %vector.body
   %i.as = getelementptr inbounds nuw i8, ptr %.0.i10, i64 8
   %i.at = getelementptr inbounds nuw i8, ptr %.07.i9, i64 8 ; 2 uses
   %i.au = icmp ult ptr %i.at, %i.e
-  br i1 %i.au, label %.lr.ph, label %_ZN2v88internal10ZoneVectorISt4pairIjNS0_4wasm9ValueTypeEEE16MoveToNewStorageEPS5_S7_PKS5_.exit.loopexit, !llvm.loop !16
+  br i1 %i.au, label %.lr.ph, label %_ZN2v88internal10ZoneVectorISt4pairIjNS0_4wasm9ValueTypeEEE16MoveToNewStorageEPS5_S7_PKS5_.exit.loopexit, !llvm.loop !14
 
 _ZN2v88internal10ZoneVectorISt4pairIjNS0_4wasm9ValueTypeEEE16MoveToNewStorageEPS5_S7_PKS5_.exit.loopexit: ; preds = %.lr.ph, %middle.block
   %.pre = load ptr, ptr %i.a, align 8
@@ -637,11 +650,9 @@ attributes #7 = { nounwind }
 !7 = !{!"llvm.loop.mustprogress"}
 !8 = distinct !{!8, !7}
 !9 = distinct !{!9, !7}
-!10 = distinct !{!10, !7}
-!11 = distinct !{!11, !7}
-!12 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!13 = distinct !{!13, !7, !14, !15}
-!14 = !{!"llvm.loop.isvectorized", i32 1}
-!15 = !{!"llvm.loop.unroll.runtime.disable"}
-!16 = distinct !{!16, !7, !14}
+!10 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!11 = distinct !{!11, !7, !12, !13}
+!12 = !{!"llvm.loop.isvectorized", i32 1}
+!13 = !{!"llvm.loop.unroll.runtime.disable"}
+!14 = distinct !{!14, !7, !12}
 end_hunk_0

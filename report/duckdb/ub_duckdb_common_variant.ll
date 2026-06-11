@@ -201,23 +201,32 @@ bb.au:                                            ; preds = %_ZN6duckdb13GetVari
 
 bb.av:                                            ; preds = %bb.j, %bb.j, %bb.j, %bb.j, %bb.j
   %i.en = tail call { i64, ptr } @_ZNK6duckdb5Value14GetValueUnsafeINS_8string_tEEET_v(ptr noundef nonnull align 8 dereferenceable(64) %i.bp)
-  %i.eo = extractvalue { i64, ptr } %i.en, 0      ; 2 uses
-  %i.ep = and i64 %i.eo, 4294967295
-  br label %bb.aw
+  %i.eo = extractvalue { i64, ptr } %i.en, 0      ; 5 uses
+  %i.ep = and i64 %i.eo, 4294967168
+  %.not.i139 = icmp eq i64 %i.ep, 0
+  br i1 %.not.i139, label %_ZN6duckdb13GetVarintSizeImEEhT_.exit140, label %13
 
-bb.aw:                                            ; preds = %bb.aw, %bb.av
-  %.04.i137 = phi i64 [ %i.ep, %bb.av ], [ %13, %bb.aw ]
-  %.0.i138 = phi i8 [ 0, %bb.av ], [ %14, %bb.aw ]
-  %13 = lshr i64 %.04.i137, 7                     ; 2 uses
-  %14 = add nuw nsw i8 %.0.i138, 1                ; 2 uses
-  %.not.i139 = icmp eq i64 %13, 0
-  br i1 %.not.i139, label %_ZN6duckdb13GetVarintSizeImEEhT_.exit140, label %bb.aw, !llvm.loop !192
+13:                                               ; preds = %bb.av
+  %14 = and i64 %i.eo, 4294950912
+  %.not.i139.1 = icmp eq i64 %14, 0
+  br i1 %.not.i139.1, label %_ZN6duckdb13GetVarintSizeImEEhT_.exit140, label %15
 
-_ZN6duckdb13GetVarintSizeImEEhT_.exit140:         ; preds = %bb.aw
+15:                                               ; preds = %13
+  %16 = and i64 %i.eo, 4292870144
+  %.not.i139.2 = icmp eq i64 %16, 0
+  br i1 %.not.i139.2, label %_ZN6duckdb13GetVarintSizeImEEhT_.exit140, label %bb.aw
+
+bb.aw:                                            ; preds = %15
+  %17 = and i64 %i.eo, 4026531840
+  %.not.i139.3 = icmp eq i64 %17, 0
+  %spec.select = select i1 %.not.i139.3, i32 4, i32 5
+  br label %_ZN6duckdb13GetVarintSizeImEEhT_.exit140
+
+_ZN6duckdb13GetVarintSizeImEEhT_.exit140:         ; preds = %bb.aw, %15, %13, %bb.av
+  %.lcssa253 = phi i32 [ 1, %bb.av ], [ 2, %13 ], [ 3, %15 ], [ %spec.select, %bb.aw ]
   %.sroa.0.0.extract.trunc = trunc i64 %i.eo to i32
-  %15 = zext nneg i8 %14 to i32
   %i.eq = load i32, ptr %i.r, align 4, !tbaa !3
-  %i.er = add i32 %15, %.sroa.0.0.extract.trunc
+  %i.er = add i32 %.lcssa253, %.sroa.0.0.extract.trunc
   %i.es = add i32 %i.er, %i.eq
   store i32 %i.es, ptr %i.r, align 4, !tbaa !3
   br label %.loopexit
@@ -620,27 +629,20 @@ bb.av:                                            ; preds = %bb.t
   %i.tq = call noundef zeroext i1 @_ZNK6duckdb11LogicalType20GetDecimalPropertiesERhS1_(ptr noundef nonnull align 8 dereferenceable(24) %i.hq, ptr noundef nonnull align 1 dereferenceable(1) %i.a, ptr noundef nonnull align 1 dereferenceable(1) %i.b) ; 0 uses
   %i.tr = getelementptr inbounds nuw i8, ptr %0, i64 81
   %i.ts = load i8, ptr %i.tr, align 1, !tbaa !195 ; 2 uses
-  %16 = load i8, ptr %i.a, align 1, !tbaa !95
-  %17 = zext i8 %16 to i32
-  %18 = load i32, ptr %i.am, align 4, !tbaa !3
-  %19 = zext i32 %18 to i64
-  %20 = getelementptr inbounds nuw i8, ptr %i.k, i64 %19
-  br label %bb.aw
+  %16 = load i32, ptr %i.am, align 4, !tbaa !3
+  %17 = zext i32 %16 to i64
+  %18 = getelementptr inbounds nuw i8, ptr %i.k, i64 %17 ; 2 uses
+  %19 = load i8, ptr %i.a, align 1, !tbaa !95     ; 2 uses
+  %.not.i421 = icmp sgt i8 %19, -1
+  store i8 %19, ptr %18, align 1, !tbaa !95
+  br i1 %.not.i421, label %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit424, label %bb.aw
 
-bb.aw:                                            ; preds = %bb.aw, %bb.av
-  %.011.i418 = phi i32 [ %17, %bb.av ], [ %23, %bb.aw ] ; 2 uses
-  %.010.i419 = phi ptr [ %20, %bb.av ], [ %24, %bb.aw ] ; 2 uses
-  %21 = trunc nuw i32 %.011.i418 to i8
-  %22 = and i8 %21, 127
-  %23 = lshr i32 %.011.i418, 7                    ; 2 uses
-  %.not.i421 = icmp eq i32 %23, 0                 ; 2 uses
-  %masksel.i422 = select i1 %.not.i421, i8 0, i8 -128
-  %.0.i423 = or disjoint i8 %masksel.i422, %22
-  store i8 %.0.i423, ptr %.010.i419, align 1, !tbaa !95
-  %24 = getelementptr inbounds nuw i8, ptr %.010.i419, i64 1
-  br i1 %.not.i421, label %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit424, label %bb.aw, !llvm.loop !197
+bb.aw:                                            ; preds = %bb.av
+  %20 = getelementptr inbounds nuw i8, ptr %18, i64 1
+  store i8 1, ptr %20, align 1, !tbaa !95
+  br label %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit424
 
-_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit424:        ; preds = %bb.aw
+_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit424:        ; preds = %bb.aw, %bb.av
   %i.tt = load i8, ptr %i.a, align 1, !tbaa !95
   br label %bb.ax
 
@@ -657,26 +659,19 @@ _ZN6duckdb13GetVarintSizeIhEEhT_.exit:            ; preds = %bb.ax
   %i.tx = load i32, ptr %i.am, align 4, !tbaa !3
   %i.ty = add i32 %i.tx, %i.tw                    ; 2 uses
   store i32 %i.ty, ptr %i.am, align 4, !tbaa !3
-  %25 = load i8, ptr %i.b, align 1, !tbaa !95
-  %26 = zext i8 %25 to i32
-  %27 = zext i32 %i.ty to i64
-  %28 = getelementptr inbounds nuw i8, ptr %i.k, i64 %27
-  br label %bb.ay
+  %21 = zext i32 %i.ty to i64
+  %22 = getelementptr inbounds nuw i8, ptr %i.k, i64 %21 ; 2 uses
+  %23 = load i8, ptr %i.b, align 1, !tbaa !95     ; 2 uses
+  %.not.i431 = icmp sgt i8 %23, -1
+  store i8 %23, ptr %22, align 1, !tbaa !95
+  br i1 %.not.i431, label %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit434, label %bb.ay
 
-bb.ay:                                            ; preds = %bb.ay, %_ZN6duckdb13GetVarintSizeIhEEhT_.exit
-  %.011.i428 = phi i32 [ %26, %_ZN6duckdb13GetVarintSizeIhEEhT_.exit ], [ %31, %bb.ay ] ; 2 uses
-  %.010.i429 = phi ptr [ %28, %_ZN6duckdb13GetVarintSizeIhEEhT_.exit ], [ %32, %bb.ay ] ; 2 uses
-  %29 = trunc nuw i32 %.011.i428 to i8
-  %30 = and i8 %29, 127
-  %31 = lshr i32 %.011.i428, 7                    ; 2 uses
-  %.not.i431 = icmp eq i32 %31, 0                 ; 2 uses
-  %masksel.i432 = select i1 %.not.i431, i8 0, i8 -128
-  %.0.i433 = or disjoint i8 %masksel.i432, %30
-  store i8 %.0.i433, ptr %.010.i429, align 1, !tbaa !95
-  %32 = getelementptr inbounds nuw i8, ptr %.010.i429, i64 1
-  br i1 %.not.i431, label %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit434, label %bb.ay, !llvm.loop !197
+bb.ay:                                            ; preds = %_ZN6duckdb13GetVarintSizeIhEEhT_.exit
+  %24 = getelementptr inbounds nuw i8, ptr %22, i64 1
+  store i8 1, ptr %24, align 1, !tbaa !95
+  br label %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit434
 
-_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit434:        ; preds = %bb.ay
+_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit434:        ; preds = %bb.ay, %_ZN6duckdb13GetVarintSizeIhEEhT_.exit
   %i.tz = load i8, ptr %i.b, align 1, !tbaa !95
   br label %bb.az
 
@@ -854,7 +849,7 @@ bb.bq:                                            ; preds = %bb.t, %bb.bm, %bb.b
   store i8 %.sink, ptr %i.vr, align 1, !tbaa !95
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #21
   %i.vs = tail call { i64, ptr } @_ZNK6duckdb5Value14GetValueUnsafeINS_8string_tEEET_v(ptr noundef nonnull align 8 dereferenceable(64) %i.hq) ; 2 uses
-  %i.vt = extractvalue { i64, ptr } %i.vs, 0      ; 3 uses
+  %i.vt = extractvalue { i64, ptr } %i.vs, 0      ; 7 uses
   store i64 %i.vt, ptr %10, align 8
   %i.vu = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.vv = extractvalue { i64, ptr } %i.vs, 1      ; 2 uses
@@ -876,24 +871,34 @@ bb.br:                                            ; preds = %bb.br, %bb.bq
   %.0.i447 = or disjoint i8 %masksel.i446, %i.wb
   store i8 %.0.i447, ptr %.010.i443, align 1, !tbaa !95
   %i.wd = getelementptr inbounds nuw i8, ptr %.010.i443, i64 1
-  br i1 %.not.i445, label %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448.preheader.a, label %bb.br, !llvm.loop !197
+  br i1 %.not.i445, label %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448.preheader, label %bb.br, !llvm.loop !197
 
-_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448.preheader.a: ; preds = %bb.br
-  %i.we = and i64 %i.vt, 4294967295               ; 2 uses
-  br label %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448
+_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448.preheader: ; preds = %bb.br
+  %25 = and i64 %i.vt, 4294967295
+  %.mask = and i64 %i.vt, 4294967168
+  %.not.i451 = icmp eq i64 %.mask, 0
+  br i1 %.not.i451, label %_ZN6duckdb13GetVarintSizeImEEhT_.exit452, label %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448.1
 
-_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448:        ; preds = %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448.preheader.a, %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448
-  %.04.i449 = phi i64 [ %33, %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448 ], [ %i.we, %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448.preheader.a ]
-  %.0.i450 = phi i8 [ %34, %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448 ], [ 0, %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448.preheader.a ]
-  %33 = lshr i64 %.04.i449, 7                     ; 2 uses
-  %34 = add nuw nsw i8 %.0.i450, 1                ; 2 uses
-  %.not.i451 = icmp eq i64 %33, 0
-  br i1 %.not.i451, label %_ZN6duckdb13GetVarintSizeImEEhT_.exit452, label %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448, !llvm.loop !192
+_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448.1:      ; preds = %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448.preheader
+  %.mask587 = and i64 %i.vt, 4294950912
+  %.not.i451.1 = icmp eq i64 %.mask587, 0
+  br i1 %.not.i451.1, label %_ZN6duckdb13GetVarintSizeImEEhT_.exit452, label %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448.preheader.a
 
-_ZN6duckdb13GetVarintSizeImEEhT_.exit452:         ; preds = %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448
-  %35 = zext nneg i8 %34 to i32
+_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448.preheader.a: ; preds = %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448.1
+  %i.we = and i64 %i.vt, 4292870144
+  %.not.i451.2 = icmp eq i64 %i.we, 0
+  br i1 %.not.i451.2, label %_ZN6duckdb13GetVarintSizeImEEhT_.exit452, label %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448
+
+_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448:        ; preds = %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448.preheader.a
+  %.mask589 = and i64 %i.vt, 4026531840
+  %.not.i451.3 = icmp eq i64 %.mask589, 0
+  %spec.select = select i1 %.not.i451.3, i32 4, i32 5
+  br label %_ZN6duckdb13GetVarintSizeImEEhT_.exit452
+
+_ZN6duckdb13GetVarintSizeImEEhT_.exit452:         ; preds = %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448, %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448.preheader.a, %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448.1, %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448.preheader
+  %.lcssa586 = phi i32 [ 1, %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448.preheader ], [ 2, %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448.1 ], [ 3, %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448.preheader.a ], [ %spec.select, %_ZN6duckdb12VarintEncodeIjEEmT_Ph.exit448 ]
   %i.wf = load i32, ptr %i.am, align 4, !tbaa !3
-  %i.wg = add i32 %i.wf, %35                      ; 2 uses
+  %i.wg = add i32 %i.wf, %.lcssa586               ; 2 uses
   store i32 %i.wg, ptr %i.am, align 4, !tbaa !3
   %i.wh = zext i32 %i.wg to i64
   %i.wi = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.wh
@@ -901,7 +906,7 @@ _ZN6duckdb13GetVarintSizeImEEhT_.exit452:         ; preds = %_ZN6duckdb12VarintE
   %i.wk = icmp ult i32 %i.wj, 13
   %i.wl = getelementptr inbounds nuw i8, ptr %10, i64 4
   %i.wm = select i1 %i.wk, ptr %i.wl, ptr %i.vv
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.wi, ptr align 1 %i.wm, i64 %i.we, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.wi, ptr align 1 %i.wm, i64 %25, i1 false)
   %i.wn = load i32, ptr %i.am, align 4, !tbaa !3
   %i.wo = add i32 %i.wn, %i.vw
   store i32 %i.wo, ptr %i.am, align 4, !tbaa !3
