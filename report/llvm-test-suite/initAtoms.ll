@@ -138,7 +138,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 define dso_local void @createFccLattice(i32 noundef %0, i32 noundef %1, i32 noundef %2, double noundef %3, ptr nofree noundef readonly captures(none) %4) local_unnamed_addr #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !24   ; 10 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !24   ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 96 ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 120 ; 5 uses
   %i.e = load double, ptr %i.c, align 8, !tbaa !22
@@ -150,42 +150,42 @@ bb.a:
   %i.k = tail call double @llvm.ceil.f64(double %i.j)
   %i.l = fptosi double %i.k to i32                ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 104
-  %5 = load double, ptr %i.m, align 8, !tbaa !22
-  %6 = fdiv double %5, %3
-  %7 = tail call double @llvm.floor.f64(double %6)
-  %8 = fptosi double %7 to i32                    ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 128
-  %9 = load double, ptr %i.n, align 8, !tbaa !22
-  %10 = fdiv double %9, %3
-  %11 = tail call double @llvm.ceil.f64(double %10)
-  %12 = fptosi double %11 to i32                  ; 2 uses
-  %13 = getelementptr inbounds nuw i8, ptr %i.b, i64 112
-  %14 = load double, ptr %13, align 8, !tbaa !22
-  %15 = fdiv double %14, %3
-  %16 = tail call double @llvm.floor.f64(double %15)
-  %17 = fptosi double %16 to i32                  ; 2 uses
-  %18 = getelementptr inbounds nuw i8, ptr %i.b, i64 136
-  %19 = load double, ptr %18, align 8, !tbaa !22
-  %20 = fdiv double %19, %3
-  %21 = tail call double @llvm.ceil.f64(double %20)
-  %22 = fptosi double %21 to i32                  ; 2 uses
+  %5 = load <2 x double>, ptr %i.m, align 8, !tbaa !22
+  %6 = insertelement <2 x double> poison, double %3, i64 0
+  %7 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %8 = fdiv <2 x double> %5, %7
+  %9 = tail call <2 x double> @llvm.floor.v2f64(<2 x double> %8)
+  %10 = load <2 x double>, ptr %i.n, align 8, !tbaa !22
+  %11 = fdiv <2 x double> %10, %7
+  %12 = tail call <2 x double> @llvm.ceil.v2f64(<2 x double> %11)
+  %13 = fptosi <2 x double> %9 to <2 x i32>       ; 3 uses
+  %14 = fptosi <2 x double> %12 to <2 x i32>      ; 3 uses
   %i.o = icmp slt i32 %i.h, %i.l
   br i1 %i.o, label %.lr.ph73, label %._crit_edge
 
 .lr.ph73:                                         ; preds = %bb.a
-  %23 = icmp slt i32 %8, %12
+  %15 = icmp slt <2 x i32> %13, %14               ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 104 ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 128 ; 4 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 112 ; 4 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 136 ; 4 uses
   %i.t = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 4 uses
   %i.u = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 4 uses
-  %24 = icmp slt i32 %17, %22
-  %or.cond = select i1 %23, i1 %24, i1 false
-  br i1 %or.cond, label %.lr.ph.us.us, label %._crit_edge
+  %16 = extractelement <2 x i1> %15, i64 0
+  %17 = extractelement <2 x i1> %15, i64 1
+  %or.cond = select i1 %16, i1 %17, i1 false
+  br i1 %or.cond, label %.lr.ph.us.us.preheader, label %._crit_edge
 
-.lr.ph.us.us:                                     ; preds = %.lr.ph73, %._crit_edge71.split.us.us.us
-  %.05972.us.us = phi i32 [ %i.cy, %._crit_edge71.split.us.us.us ], [ %i.h, %.lr.ph73 ] ; 3 uses
+.lr.ph.us.us.preheader:                           ; preds = %.lr.ph73
+  %18 = extractelement <2 x i32> %13, i64 0
+  %19 = extractelement <2 x i32> %13, i64 1
+  %20 = extractelement <2 x i32> %14, i64 0
+  %21 = extractelement <2 x i32> %14, i64 1
+  br label %.lr.ph.us.us
+
+.lr.ph.us.us:                                     ; preds = %.lr.ph.us.us.preheader, %._crit_edge71.split.us.us.us
+  %.05972.us.us = phi i32 [ %i.cy, %._crit_edge71.split.us.us.us ], [ %i.h, %.lr.ph.us.us.preheader ] ; 3 uses
   %i.v = sitofp i32 %.05972.us.us to double       ; 2 uses
   %i.w = mul nsw i32 %.05972.us.us, %1
   %i.x = fadd nnan double %i.v, 2.500000e-01
@@ -195,7 +195,7 @@ bb.a:
   br label %.preheader.lr.ph.us.us.us
 
 .preheader.lr.ph.us.us.us:                        ; preds = %._crit_edge.us.us.us, %.lr.ph.us.us
-  %.06069.us.us.us = phi i32 [ %8, %.lr.ph.us.us ], [ %i.cx, %._crit_edge.us.us.us ] ; 3 uses
+  %.06069.us.us.us = phi i32 [ %18, %.lr.ph.us.us ], [ %i.cx, %._crit_edge.us.us.us ] ; 3 uses
   %i.ab = sitofp i32 %.06069.us.us.us to double   ; 2 uses
   %i.ac = add nsw i32 %.06069.us.us.us, %i.w
   %i.ad = mul nsw i32 %i.ac, %2
@@ -354,11 +354,11 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v
   %i.cp = add i32 %.06268.us.us.us, 1             ; 2 uses
-  %exitcond.not = icmp eq i32 %i.cp, %22
+  %exitcond.not = icmp eq i32 %i.cp, %21
   br i1 %exitcond.not, label %._crit_edge.us.us.us, label %.preheader.us.us.us
 
 .preheader.us.us.us:                              ; preds = %bb.ac, %.preheader.lr.ph.us.us.us
-  %.06268.us.us.us = phi i32 [ %17, %.preheader.lr.ph.us.us.us ], [ %i.cp, %bb.ac ] ; 3 uses
+  %.06268.us.us.us = phi i32 [ %19, %.preheader.lr.ph.us.us.us ], [ %i.cp, %bb.ac ] ; 3 uses
   %i.cq = sitofp i32 %.06268.us.us.us to double   ; 2 uses
   %i.cr = add nsw i32 %.06268.us.us.us, %i.ad
   %i.cs = shl nsw i32 %i.cr, 2                    ; 4 uses
@@ -370,7 +370,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa, %bb.
 
 ._crit_edge.us.us.us:                             ; preds = %bb.ac
   %i.cx = add i32 %.06069.us.us.us, 1             ; 2 uses
-  %exitcond81.not = icmp eq i32 %i.cx, %12
+  %exitcond81.not = icmp eq i32 %i.cx, %20
   br i1 %exitcond81.not, label %._crit_edge71.split.us.us.us, label %.preheader.lr.ph.us.us.us
 
 ._crit_edge71.split.us.us.us:                     ; preds = %._crit_edge.us.us.us
@@ -771,6 +771,12 @@ declare noalias noundef ptr @malloc(i64 noundef) local_unnamed_addr #8
 declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #9
 
 declare void @addRealParallel(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.floor.v2f64(<2 x double>) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.ceil.v2f64(<2 x double>) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #4

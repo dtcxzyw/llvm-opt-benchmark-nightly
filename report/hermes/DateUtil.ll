@@ -201,12 +201,14 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 40
   store ptr %2, ptr %i.c, align 8, !tbaa !24
   call void @_ZN4llvh11raw_ostream16SetBufferAndModeEPcmNS0_10BufferKindE(ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef null, i64 noundef 0, i32 noundef 0) #19
-  %6 = fdiv double %0, 3.600000e+06
-  %7 = call double @llvm.floor.f64(double %6)
-  %8 = call double @fmod(double noundef %7, double noundef 2.400000e+01) #19, !tbaa !3
-  %9 = fdiv double %0, 6.000000e+04
-  %10 = call double @llvm.floor.f64(double %9)
-  %i.d = call double @fmod(double noundef %10, double noundef 6.000000e+01) #19, !tbaa !3
+  %6 = insertelement <2 x double> poison, double %0, i64 0
+  %7 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
+  %8 = fdiv <2 x double> %7, <double 3.600000e+06, double 6.000000e+04>
+  %9 = call <2 x double> @llvm.floor.v2f64(<2 x double> %8) ; 2 uses
+  %10 = extractelement <2 x double> %9, i64 0
+  %11 = call double @fmod(double noundef %10, double noundef 2.400000e+01) #19, !tbaa !3
+  %12 = extractelement <2 x double> %9, i64 1
+  %i.d = call double @fmod(double noundef %12, double noundef 6.000000e+01) #19, !tbaa !3
   %i.e = fdiv double %0, 1.000000e+03
   %i.f = call double @llvm.floor.f64(double %i.e)
   %i.g = call double @fmod(double noundef %i.f, double noundef 6.000000e+01) #19, !tbaa !3
@@ -214,7 +216,7 @@ bb.a:
   %i.i = insertelement <4 x double> poison, double %i.h, i64 0
   %i.j = insertelement <4 x double> %i.i, double %i.g, i64 1
   %i.k = insertelement <4 x double> %i.j, double %i.d, i64 2
-  %i.l = insertelement <4 x double> %i.k, double %8, i64 3 ; 3 uses
+  %i.l = insertelement <4 x double> %i.k, double %11, i64 3 ; 3 uses
   %i.m = fcmp olt <4 x double> %i.l, zeroinitializer
   %i.n = fadd <4 x double> %i.l, <double 1.000000e+03, double 6.000000e+01, double 6.000000e+01, double 2.400000e+01>
   %i.o = select <4 x i1> %i.m, <4 x double> %i.n, <4 x double> %i.l
@@ -236,17 +238,19 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.u = fcmp oge double %1, 0.000000e+00
   %i.v = select i1 %i.u, i8 43, i8 45
-  %i.w = call noundef double @llvm.fabs.f64(double %1) ; 2 uses
-  %11 = fdiv double %i.w, 3.600000e+06
-  %12 = call double @llvm.floor.f64(double %11)
-  %i.x = call double @fmod(double noundef %12, double noundef 2.400000e+01) #19, !tbaa !3 ; 3 uses
+  %i.w = call noundef double @llvm.fabs.f64(double %1)
+  %13 = insertelement <2 x double> poison, double %i.w, i64 0
+  %14 = shufflevector <2 x double> %13, <2 x double> poison, <2 x i32> zeroinitializer
+  %15 = fdiv <2 x double> %14, <double 3.600000e+06, double 6.000000e+04>
+  %16 = call <2 x double> @llvm.floor.v2f64(<2 x double> %15) ; 2 uses
+  %17 = extractelement <2 x double> %16, i64 0
+  %i.x = call double @fmod(double noundef %17, double noundef 2.400000e+01) #19, !tbaa !3 ; 3 uses
   %i.y = fcmp olt double %i.x, 0.000000e+00
   %i.z = fadd double %i.x, 2.400000e+01
   %i.aa = select i1 %i.y, double %i.z, double %i.x
   %i.ab = fptosi double %i.aa to i32
-  %13 = fdiv double %i.w, 6.000000e+04
-  %14 = call double @llvm.floor.f64(double %13)
-  %i.ac = call double @fmod(double noundef %14, double noundef 6.000000e+01) #19, !tbaa !3 ; 3 uses
+  %18 = extractelement <2 x double> %16, i64 1
+  %i.ac = call double @fmod(double noundef %18, double noundef 6.000000e+01) #19, !tbaa !3 ; 3 uses
   %i.ad = fcmp olt double %i.ac, 0.000000e+00
   %i.ae = fadd double %i.ac, 6.000000e+01
   %i.af = select i1 %i.ad, double %i.ae, double %i.ac
@@ -392,16 +396,18 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 40
   store ptr %2, ptr %i.c, align 8, !tbaa !24
   call void @_ZN4llvh11raw_ostream16SetBufferAndModeEPcmNS0_10BufferKindE(ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef null, i64 noundef 0, i32 noundef 0) #19
-  %5 = fdiv double %0, 3.600000e+06
-  %6 = call double @llvm.floor.f64(double %5)
-  %i.d = call double @fmod(double noundef %6, double noundef 2.400000e+01) #19, !tbaa !3 ; 3 uses
+  %5 = insertelement <2 x double> poison, double %0, i64 0
+  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
+  %7 = fdiv <2 x double> %6, <double 3.600000e+06, double 6.000000e+04>
+  %8 = call <2 x double> @llvm.floor.v2f64(<2 x double> %7) ; 2 uses
+  %9 = extractelement <2 x double> %8, i64 0
+  %i.d = call double @fmod(double noundef %9, double noundef 2.400000e+01) #19, !tbaa !3 ; 3 uses
   %i.e = fcmp olt double %i.d, 0.000000e+00
   %i.f = fadd double %i.d, 2.400000e+01
   %i.g = select i1 %i.e, double %i.f, double %i.d
   %i.h = fptosi double %i.g to i32
-  %7 = fdiv double %0, 6.000000e+04
-  %8 = call double @llvm.floor.f64(double %7)
-  %i.i = call double @fmod(double noundef %8, double noundef 6.000000e+01) #19, !tbaa !3 ; 3 uses
+  %10 = extractelement <2 x double> %8, i64 1
+  %i.i = call double @fmod(double noundef %10, double noundef 6.000000e+01) #19, !tbaa !3 ; 3 uses
   %i.j = fcmp olt double %i.i, 0.000000e+00
   %i.k = fadd double %i.i, 6.000000e+01
   %i.l = select i1 %i.j, double %i.k, double %i.i
@@ -446,17 +452,19 @@ bb.a:
   call void @_ZN4llvh11raw_ostream16SetBufferAndModeEPcmNS0_10BufferKindE(ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef null, i64 noundef 0, i32 noundef 0) #19
   %i.d = fcmp oge double %1, 0.000000e+00
   %i.e = select i1 %i.d, i8 43, i8 45
-  %i.f = call noundef double @llvm.fabs.f64(double %1) ; 2 uses
-  %5 = fdiv double %i.f, 6.000000e+04
-  %6 = call double @llvm.floor.f64(double %5)
-  %i.g = call double @fmod(double noundef %6, double noundef 6.000000e+01) #19, !tbaa !3 ; 3 uses
+  %i.f = call noundef double @llvm.fabs.f64(double %1)
+  %5 = insertelement <2 x double> poison, double %i.f, i64 0
+  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
+  %7 = fdiv <2 x double> %6, <double 6.000000e+04, double 3.600000e+06>
+  %8 = call <2 x double> @llvm.floor.v2f64(<2 x double> %7) ; 2 uses
+  %9 = extractelement <2 x double> %8, i64 0
+  %i.g = call double @fmod(double noundef %9, double noundef 6.000000e+01) #19, !tbaa !3 ; 3 uses
   %i.h = fcmp olt double %i.g, 0.000000e+00
   %i.i = fadd double %i.g, 6.000000e+01
   %i.j = select i1 %i.h, double %i.i, double %i.g
   %i.k = fptosi double %i.j to i32
-  %7 = fdiv double %i.f, 3.600000e+06
-  %8 = call double @llvm.floor.f64(double %7)
-  %i.l = call double @fmod(double noundef %8, double noundef 2.400000e+01) #19, !tbaa !3 ; 3 uses
+  %10 = extractelement <2 x double> %8, i64 1
+  %i.l = call double @fmod(double noundef %10, double noundef 2.400000e+01) #19, !tbaa !3 ; 3 uses
   %i.m = fcmp olt double %i.l, 0.000000e+00
   %i.n = fadd double %i.l, 2.400000e+01
   %i.o = select i1 %i.m, double %i.n, double %i.l
@@ -569,61 +577,62 @@ _ZN4llvh11raw_ostreamlsEPKc.exit:                 ; preds = %bb.b, %bb.c
   %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr %2, ptr %i.ap, align 8, !tbaa !24
   call void @_ZN4llvh11raw_ostream16SetBufferAndModeEPcmNS0_10BufferKindE(ptr noundef nonnull align 8 dereferenceable(48) %5, ptr noundef null, i64 noundef 0, i32 noundef 0) #19
-  %10 = fdiv double %0, 3.600000e+06
-  %11 = call double @llvm.floor.f64(double %10)
-  %12 = call double @fmod(double noundef %11, double noundef 2.400000e+01) #19, !tbaa !3 ; 3 uses
-  %13 = fcmp olt double %12, 0.000000e+00
-  %14 = fadd double %12, 2.400000e+01
-  %15 = select i1 %13, double %14, double %12
-  %16 = fptosi double %15 to i32
-  %17 = fdiv double %0, 6.000000e+04
-  %i.aq = call double @llvm.floor.f64(double %17)
-  %i.ar = call double @fmod(double noundef %i.aq, double noundef 6.000000e+01) #19, !tbaa !3 ; 3 uses
+  %10 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %11 = getelementptr inbounds nuw i8, ptr %6, i64 16
+  %12 = getelementptr inbounds nuw i8, ptr %6, i64 20
+  %13 = getelementptr inbounds nuw i8, ptr %6, i64 24
+  %14 = getelementptr inbounds nuw i8, ptr %3, i64 32
+  %15 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %16 = getelementptr inbounds nuw i8, ptr %3, i64 40
+  %17 = fcmp oge double %1, 0.000000e+00
+  %18 = select i1 %17, i8 43, i8 45
+  %i.aq = call noundef double @llvm.fabs.f64(double %1) ; 2 uses
+  %19 = insertelement <4 x double> poison, double %0, i64 0
+  %20 = insertelement <4 x double> %19, double %i.aq, i64 1
+  %21 = shufflevector <4 x double> %20, <4 x double> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
+  %22 = fdiv <4 x double> %21, <double 3.600000e+06, double 6.000000e+04, double 1.000000e+03, double 6.000000e+04>
+  %23 = call <4 x double> @llvm.floor.v4f64(<4 x double> %22) ; 4 uses
+  %24 = extractelement <4 x double> %23, i64 0
+  %i.ar = call double @fmod(double noundef %24, double noundef 2.400000e+01) #19, !tbaa !3 ; 3 uses
   %i.as = fcmp olt double %i.ar, 0.000000e+00
-  %i.at = fadd double %i.ar, 6.000000e+01
+  %i.at = fadd double %i.ar, 2.400000e+01
   %i.au = select i1 %i.as, double %i.at, double %i.ar
   %i.av = fptosi double %i.au to i32
-  %18 = fdiv double %0, 1.000000e+03
-  %19 = call double @llvm.floor.f64(double %18)
-  %i.aw = call double @fmod(double noundef %19, double noundef 6.000000e+01) #19, !tbaa !3 ; 3 uses
+  %25 = extractelement <4 x double> %23, i64 1
+  %i.aw = call double @fmod(double noundef %25, double noundef 6.000000e+01) #19, !tbaa !3 ; 3 uses
   %i.ax = fcmp olt double %i.aw, 0.000000e+00
   %i.ay = fadd double %i.aw, 6.000000e+01
   %i.az = select i1 %i.ax, double %i.ay, double %i.aw
   %i.ba = fptosi double %i.az to i32
+  %26 = extractelement <4 x double> %23, i64 2
+  %27 = call double @fmod(double noundef %26, double noundef 6.000000e+01) #19, !tbaa !3 ; 3 uses
+  %28 = fcmp olt double %27, 0.000000e+00
+  %29 = fadd double %27, 6.000000e+01
+  %30 = select i1 %28, double %29, double %27
+  %31 = fptosi double %30 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #19
-  %20 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  store ptr @.str.5, ptr %20, align 8, !tbaa !26, !alias.scope !78
+  store ptr @.str.5, ptr %10, align 8, !tbaa !26, !alias.scope !78
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvh13format_objectIJiiiEEE, i64 16), ptr %6, align 8, !tbaa !22, !alias.scope !78
-  %21 = getelementptr inbounds nuw i8, ptr %6, i64 16
-  store i32 %i.ba, ptr %21, align 8, !tbaa !31, !alias.scope !78
-  %22 = getelementptr inbounds nuw i8, ptr %6, i64 20
-  store i32 %i.av, ptr %22, align 4, !tbaa !33, !alias.scope !78
-  %23 = getelementptr inbounds nuw i8, ptr %6, i64 24
-  store i32 %16, ptr %23, align 8, !tbaa !35, !alias.scope !78
+  store i32 %31, ptr %11, align 8, !tbaa !31, !alias.scope !78
+  store i32 %i.ba, ptr %12, align 4, !tbaa !33, !alias.scope !78
+  store i32 %i.av, ptr %13, align 8, !tbaa !35, !alias.scope !78
   %i.bb = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostreamlsERKNS_18format_object_baseE(ptr noundef nonnull align 8 dereferenceable(36) %5, ptr noundef nonnull align 8 dereferenceable(16) %6) #19 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #19
   call void @_ZN4llvh11raw_ostreamD2Ev(ptr noundef nonnull align 8 dereferenceable(48) %5) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
-  %24 = getelementptr inbounds nuw i8, ptr %3, i64 32
-  store i32 1, ptr %24, align 8, !tbaa !19
-  %25 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %25, i8 0, i64 24, i1 false)
+  store i32 1, ptr %14, align 8, !tbaa !19
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %15, i8 0, i64 24, i1 false)
   store ptr getelementptr inbounds nuw inrange(-16, 96) (i8, ptr @_ZTVN4llvh19raw_svector_ostreamE, i64 16), ptr %3, align 8, !tbaa !22
-  %26 = getelementptr inbounds nuw i8, ptr %3, i64 40
-  store ptr %2, ptr %26, align 8, !tbaa !24
+  store ptr %2, ptr %16, align 8, !tbaa !24
   call void @_ZN4llvh11raw_ostream16SetBufferAndModeEPcmNS0_10BufferKindE(ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef null, i64 noundef 0, i32 noundef 0) #19
-  %27 = fcmp oge double %1, 0.000000e+00
-  %28 = select i1 %27, i8 43, i8 45
-  %29 = call noundef double @llvm.fabs.f64(double %1) ; 2 uses
-  %30 = fdiv double %29, 6.000000e+04
-  %31 = call double @llvm.floor.f64(double %30)
-  %i.bc = call double @fmod(double noundef %31, double noundef 6.000000e+01) #19, !tbaa !3 ; 3 uses
+  %32 = extractelement <4 x double> %23, i64 3
+  %i.bc = call double @fmod(double noundef %32, double noundef 6.000000e+01) #19, !tbaa !3 ; 3 uses
   %i.bd = fcmp olt double %i.bc, 0.000000e+00
   %i.be = fadd double %i.bc, 6.000000e+01
   %i.bf = select i1 %i.bd, double %i.be, double %i.bc
   %i.bg = fptosi double %i.bf to i32
-  %i.bh = fdiv double %29, 3.600000e+06
+  %i.bh = fdiv double %i.aq, 3.600000e+06
   %i.bi = call double @llvm.floor.f64(double %i.bh)
   %i.bj = call double @fmod(double noundef %i.bi, double noundef 2.400000e+01) #19, !tbaa !3 ; 3 uses
   %i.bk = fcmp olt double %i.bj, 0.000000e+00
@@ -639,7 +648,7 @@ _ZN4llvh11raw_ostreamlsEPKc.exit:                 ; preds = %bb.b, %bb.c
   %i.bq = getelementptr inbounds nuw i8, ptr %4, i64 20
   store i32 %i.bn, ptr %i.bq, align 4, !tbaa !33, !alias.scope !81
   %i.br = getelementptr inbounds nuw i8, ptr %4, i64 24
-  store i8 %28, ptr %i.br, align 8, !tbaa !71, !alias.scope !81
+  store i8 %18, ptr %i.br, align 8, !tbaa !71, !alias.scope !81
   %i.bs = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostreamlsERKNS_18format_object_baseE(ptr noundef nonnull align 8 dereferenceable(36) %3, ptr noundef nonnull align 8 dereferenceable(16) %4) #19 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #19
   call void @_ZN4llvh11raw_ostreamD2Ev(ptr noundef nonnull align 8 dereferenceable(48) %3) #19
@@ -708,16 +717,18 @@ bb.a:
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 40
   store ptr %2, ptr %i.ae, align 8, !tbaa !24
   call void @_ZN4llvh11raw_ostream16SetBufferAndModeEPcmNS0_10BufferKindE(ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef null, i64 noundef 0, i32 noundef 0) #19
-  %7 = fdiv double %0, 3.600000e+06
-  %8 = call double @llvm.floor.f64(double %7)
-  %i.af = call double @fmod(double noundef %8, double noundef 2.400000e+01) #19, !tbaa !3 ; 3 uses
+  %7 = insertelement <2 x double> poison, double %0, i64 0
+  %8 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
+  %9 = fdiv <2 x double> %8, <double 3.600000e+06, double 6.000000e+04>
+  %10 = call <2 x double> @llvm.floor.v2f64(<2 x double> %9) ; 2 uses
+  %11 = extractelement <2 x double> %10, i64 0
+  %i.af = call double @fmod(double noundef %11, double noundef 2.400000e+01) #19, !tbaa !3 ; 3 uses
   %i.ag = fcmp olt double %i.af, 0.000000e+00
   %i.ah = fadd double %i.af, 2.400000e+01
   %i.ai = select i1 %i.ag, double %i.ah, double %i.af
   %i.aj = fptosi double %i.ai to i32
-  %9 = fdiv double %0, 6.000000e+04
-  %10 = call double @llvm.floor.f64(double %9)
-  %i.ak = call double @fmod(double noundef %10, double noundef 6.000000e+01) #19, !tbaa !3 ; 3 uses
+  %12 = extractelement <2 x double> %10, i64 1
+  %i.ak = call double @fmod(double noundef %12, double noundef 6.000000e+01) #19, !tbaa !3 ; 3 uses
   %i.al = fcmp olt double %i.ak, 0.000000e+00
   %i.am = fadd double %i.ak, 6.000000e+01
   %i.an = select i1 %i.al, double %i.am, double %i.ak
@@ -764,61 +775,62 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %5, i64 40
   store ptr %2, ptr %i.c, align 8, !tbaa !24
   call void @_ZN4llvh11raw_ostream16SetBufferAndModeEPcmNS0_10BufferKindE(ptr noundef nonnull align 8 dereferenceable(48) %5, ptr noundef null, i64 noundef 0, i32 noundef 0) #19
-  %7 = fdiv double %0, 3.600000e+06
-  %8 = call double @llvm.floor.f64(double %7)
-  %9 = call double @fmod(double noundef %8, double noundef 2.400000e+01) #19, !tbaa !3 ; 3 uses
-  %10 = fcmp olt double %9, 0.000000e+00
-  %11 = fadd double %9, 2.400000e+01
-  %12 = select i1 %10, double %11, double %9
-  %13 = fptosi double %12 to i32
-  %14 = fdiv double %0, 6.000000e+04
-  %i.d = call double @llvm.floor.f64(double %14)
-  %i.e = call double @fmod(double noundef %i.d, double noundef 6.000000e+01) #19, !tbaa !3 ; 3 uses
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %8 = getelementptr inbounds nuw i8, ptr %6, i64 16
+  %9 = getelementptr inbounds nuw i8, ptr %6, i64 20
+  %10 = getelementptr inbounds nuw i8, ptr %6, i64 24
+  %11 = getelementptr inbounds nuw i8, ptr %3, i64 32
+  %12 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %13 = getelementptr inbounds nuw i8, ptr %3, i64 40
+  %14 = fcmp oge double %1, 0.000000e+00
+  %15 = select i1 %14, i8 43, i8 45
+  %i.d = call noundef double @llvm.fabs.f64(double %1) ; 2 uses
+  %16 = insertelement <4 x double> poison, double %0, i64 0
+  %17 = insertelement <4 x double> %16, double %i.d, i64 1
+  %18 = shufflevector <4 x double> %17, <4 x double> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
+  %19 = fdiv <4 x double> %18, <double 3.600000e+06, double 6.000000e+04, double 1.000000e+03, double 6.000000e+04>
+  %20 = call <4 x double> @llvm.floor.v4f64(<4 x double> %19) ; 4 uses
+  %21 = extractelement <4 x double> %20, i64 0
+  %i.e = call double @fmod(double noundef %21, double noundef 2.400000e+01) #19, !tbaa !3 ; 3 uses
   %i.f = fcmp olt double %i.e, 0.000000e+00
-  %i.g = fadd double %i.e, 6.000000e+01
+  %i.g = fadd double %i.e, 2.400000e+01
   %i.h = select i1 %i.f, double %i.g, double %i.e
   %i.i = fptosi double %i.h to i32
-  %15 = fdiv double %0, 1.000000e+03
-  %16 = call double @llvm.floor.f64(double %15)
-  %i.j = call double @fmod(double noundef %16, double noundef 6.000000e+01) #19, !tbaa !3 ; 3 uses
+  %22 = extractelement <4 x double> %20, i64 1
+  %i.j = call double @fmod(double noundef %22, double noundef 6.000000e+01) #19, !tbaa !3 ; 3 uses
   %i.k = fcmp olt double %i.j, 0.000000e+00
   %i.l = fadd double %i.j, 6.000000e+01
   %i.m = select i1 %i.k, double %i.l, double %i.j
   %i.n = fptosi double %i.m to i32
+  %23 = extractelement <4 x double> %20, i64 2
+  %24 = call double @fmod(double noundef %23, double noundef 6.000000e+01) #19, !tbaa !3 ; 3 uses
+  %25 = fcmp olt double %24, 0.000000e+00
+  %26 = fadd double %24, 6.000000e+01
+  %27 = select i1 %25, double %26, double %24
+  %28 = fptosi double %27 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #19
-  %17 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  store ptr @.str.5, ptr %17, align 8, !tbaa !26, !alias.scope !94
+  store ptr @.str.5, ptr %7, align 8, !tbaa !26, !alias.scope !94
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvh13format_objectIJiiiEEE, i64 16), ptr %6, align 8, !tbaa !22, !alias.scope !94
-  %18 = getelementptr inbounds nuw i8, ptr %6, i64 16
-  store i32 %i.n, ptr %18, align 8, !tbaa !31, !alias.scope !94
-  %19 = getelementptr inbounds nuw i8, ptr %6, i64 20
-  store i32 %i.i, ptr %19, align 4, !tbaa !33, !alias.scope !94
-  %20 = getelementptr inbounds nuw i8, ptr %6, i64 24
-  store i32 %13, ptr %20, align 8, !tbaa !35, !alias.scope !94
+  store i32 %28, ptr %8, align 8, !tbaa !31, !alias.scope !94
+  store i32 %i.n, ptr %9, align 4, !tbaa !33, !alias.scope !94
+  store i32 %i.i, ptr %10, align 8, !tbaa !35, !alias.scope !94
   %i.o = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostreamlsERKNS_18format_object_baseE(ptr noundef nonnull align 8 dereferenceable(36) %5, ptr noundef nonnull align 8 dereferenceable(16) %6) #19 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #19
   call void @_ZN4llvh11raw_ostreamD2Ev(ptr noundef nonnull align 8 dereferenceable(48) %5) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
-  %21 = getelementptr inbounds nuw i8, ptr %3, i64 32
-  store i32 1, ptr %21, align 8, !tbaa !19
-  %22 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %22, i8 0, i64 24, i1 false)
+  store i32 1, ptr %11, align 8, !tbaa !19
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %12, i8 0, i64 24, i1 false)
   store ptr getelementptr inbounds nuw inrange(-16, 96) (i8, ptr @_ZTVN4llvh19raw_svector_ostreamE, i64 16), ptr %3, align 8, !tbaa !22
-  %23 = getelementptr inbounds nuw i8, ptr %3, i64 40
-  store ptr %2, ptr %23, align 8, !tbaa !24
+  store ptr %2, ptr %13, align 8, !tbaa !24
   call void @_ZN4llvh11raw_ostream16SetBufferAndModeEPcmNS0_10BufferKindE(ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef null, i64 noundef 0, i32 noundef 0) #19
-  %24 = fcmp oge double %1, 0.000000e+00
-  %25 = select i1 %24, i8 43, i8 45
-  %26 = call noundef double @llvm.fabs.f64(double %1) ; 2 uses
-  %27 = fdiv double %26, 6.000000e+04
-  %28 = call double @llvm.floor.f64(double %27)
-  %i.p = call double @fmod(double noundef %28, double noundef 6.000000e+01) #19, !tbaa !3 ; 3 uses
+  %29 = extractelement <4 x double> %20, i64 3
+  %i.p = call double @fmod(double noundef %29, double noundef 6.000000e+01) #19, !tbaa !3 ; 3 uses
   %i.q = fcmp olt double %i.p, 0.000000e+00
   %i.r = fadd double %i.p, 6.000000e+01
   %i.s = select i1 %i.q, double %i.r, double %i.p
   %i.t = fptosi double %i.s to i32
-  %i.u = fdiv double %26, 3.600000e+06
+  %i.u = fdiv double %i.d, 3.600000e+06
   %i.v = call double @llvm.floor.f64(double %i.u)
   %i.w = call double @fmod(double noundef %i.v, double noundef 2.400000e+01) #19, !tbaa !3 ; 3 uses
   %i.x = fcmp olt double %i.w, 0.000000e+00
@@ -834,7 +846,7 @@ bb.a:
   %i.ad = getelementptr inbounds nuw i8, ptr %4, i64 20
   store i32 %i.aa, ptr %i.ad, align 4, !tbaa !33, !alias.scope !97
   %i.ae = getelementptr inbounds nuw i8, ptr %4, i64 24
-  store i8 %25, ptr %i.ae, align 8, !tbaa !71, !alias.scope !97
+  store i8 %15, ptr %i.ae, align 8, !tbaa !71, !alias.scope !97
   %i.af = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostreamlsERKNS_18format_object_baseE(ptr noundef nonnull align 8 dereferenceable(36) %3, ptr noundef nonnull align 8 dereferenceable(16) %4) #19 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #19
   call void @_ZN4llvh11raw_ostreamD2Ev(ptr noundef nonnull align 8 dereferenceable(48) %3) #19
@@ -1236,6 +1248,12 @@ bb.a:
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.floor.v2f64(<2 x double>) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x double> @llvm.floor.v4f64(<4 x double>) #4
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

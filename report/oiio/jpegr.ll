@@ -201,8 +201,10 @@ bb.a:
   %i.ao = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.ap = getelementptr inbounds nuw i8, ptr %.val, i64 56 ; 2 uses
   %i.aq = select i1 %i.af, i32 4, i32 1
-  %i.ar = uitofp nneg i32 %i.aq to float          ; 2 uses
+  %i.ar = uitofp nneg i32 %i.aq to float
   %i.as = zext i1 %i.af to i64                    ; 2 uses
+  %3 = insertelement <2 x float> poison, float %i.ar, i64 0
+  %4 = shufflevector <2 x float> %3, <2 x float> poison, <2 x i32> zeroinitializer
   %i.at = insertelement <2 x i1> poison, i1 %.not162.i.i.i, i64 0
   %i.au = shufflevector <2 x i1> %i.at, <2 x i1> poison, <2 x i32> zeroinitializer
   br label %bb.b
@@ -397,34 +399,27 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.g
-  %i.ek = phi <2 x float> [ %i.br, %bb.g ], [ %i.ej, %bb.k ] ; 4 uses
+  %i.ek = phi <2 x float> [ %i.br, %bb.g ], [ %i.ej, %bb.k ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #28
   %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i, %i.ag
   br i1 %exitcond.not.i.i.i, label %bb.d, label %bb.e, !llvm.loop !668
 
 bb.m:                                             ; preds = %bb.c
-  %3 = extractelement <2 x float> %i.ek, i64 0
-  %4 = fdiv contract float %3, %i.ar
-  %5 = extractelement <2 x float> %i.ek, i64 1
-  %6 = fdiv contract float %5, %i.ar
-  %7 = fmul contract float %4, 2.550000e+02
-  %8 = call contract noundef float @llvm.round.f32(float %7)
-  %9 = fptosi float %8 to i32
-  %.sroa.speculate.load.false.i155.i.i.i = call i32 @llvm.smax.i32(i32 %9, i32 0)
-  %10 = call i32 @llvm.umin.i32(i32 %.sroa.speculate.load.false.i155.i.i.i, i32 255)
-  %11 = trunc nuw i32 %10 to i8
-  %12 = lshr i64 %.0142171.i.i.i, %i.as           ; 2 uses
-  %gep173.i.i.i = getelementptr i8, ptr %invariant.gep172.i.i.i, i64 %12
-  store i8 %11, ptr %gep173.i.i.i, align 1, !tbaa !93
-  %13 = fmul contract float %6, 2.550000e+02
-  %14 = call contract noundef float @llvm.round.f32(float %13)
-  %15 = fptosi float %14 to i32
-  %.sroa.speculate.load.false.i156.i.i.i = call i32 @llvm.smax.i32(i32 %15, i32 0)
-  %16 = call i32 @llvm.umin.i32(i32 %.sroa.speculate.load.false.i156.i.i.i, i32 255)
-  %17 = trunc nuw i32 %16 to i8
-  %gep175.i.i.i = getelementptr i8, ptr %invariant.gep174.i.i.i, i64 %12
-  store i8 %17, ptr %gep175.i.i.i, align 1, !tbaa !93
+  %5 = fdiv contract <2 x float> %i.ek, %4
+  %6 = lshr i64 %.0142171.i.i.i, %i.as            ; 2 uses
+  %gep173.i.i.i = getelementptr i8, ptr %invariant.gep172.i.i.i, i64 %6
+  %7 = fmul contract <2 x float> %5, splat (float 2.550000e+02)
+  %8 = call contract <2 x float> @llvm.round.v2f32(<2 x float> %7)
+  %9 = fptosi <2 x float> %8 to <2 x i32>
+  %10 = call <2 x i32> @llvm.smax.v2i32(<2 x i32> %9, <2 x i32> zeroinitializer)
+  %11 = call <2 x i32> @llvm.umin.v2i32(<2 x i32> %10, <2 x i32> splat (i32 255))
+  %12 = trunc nuw <2 x i32> %11 to <2 x i8>       ; 2 uses
+  %13 = extractelement <2 x i8> %12, i64 0
+  store i8 %13, ptr %gep173.i.i.i, align 1, !tbaa !93
+  %gep175.i.i.i = getelementptr i8, ptr %invariant.gep174.i.i.i, i64 %6
+  %14 = extractelement <2 x i8> %12, i64 1
+  store i8 %14, ptr %gep175.i.i.i, align 1, !tbaa !93
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.c
@@ -562,6 +557,15 @@ declare i64 @llvm.usub.sat.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #27
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.round.v2f32(<2 x float>) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x i32> @llvm.umin.v2i32(<2 x i32>, <2 x i32>) #11
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

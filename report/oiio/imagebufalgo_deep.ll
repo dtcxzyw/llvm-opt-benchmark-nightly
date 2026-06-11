@@ -201,6 +201,7 @@ bb.aj:                                            ; preds = %bb.ai
 
 .lr.ph342.preheader:                              ; preds = %bb.an, %.preheader297
   %.1220.lcssa = phi i32 [ %.0219346, %.preheader297 ], [ %.5224, %bb.an ] ; 2 uses
+  %8 = insertelement <4 x float> poison, float %i.bq, i64 1
   br label %.lr.ph342
 
 bb.ak:                                            ; preds = %bb.ai
@@ -272,8 +273,7 @@ bb.aq:                                            ; preds = %.lr.ph342
           to label %bb.ar unwind label %bb.at
 
 bb.ar:                                            ; preds = %bb.aq
-  %8 = insertelement <4 x float> poison, float %i.ck, i64 0
-  %i.cm = insertelement <4 x float> %8, float %i.bq, i64 1 ; 2 uses
+  %i.cm = insertelement <4 x float> %8, float %i.ck, i64 0 ; 2 uses
   %i.cn = insertelement <4 x float> %i.cm, float %i.cl, i64 2
   %i.co = insertelement <4 x float> %i.cn, float %i.br, i64 3 ; 3 uses
   %i.cp = shufflevector <4 x float> %i.cm, <4 x float> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0>
@@ -316,7 +316,11 @@ bb.at:                                            ; preds = %bb.aq
 
 bb.au:                                            ; preds = %.lr.ph357
   %i.df = invoke noundef float @_ZNK11OpenImageIO4v3_18DeepData10deep_valueElii(ptr noundef nonnull align 8 dereferenceable(20) %i.i, i64 noundef %i.bg, i32 noundef %i.m, i32 noundef %.0218356)
-          to label %.lr.ph352 unwind label %bb.aw
+          to label %.lr.ph352.preheader unwind label %bb.aw
+
+.lr.ph352.preheader:                              ; preds = %bb.au
+  %9 = insertelement <4 x float> poison, float %i.de, i64 1
+  br label %.lr.ph352
 
 ._crit_edge353:                                   ; preds = %bb.ay
   %i.dg = add nuw nsw i32 %.0218356, 1            ; 2 uses
@@ -333,9 +337,9 @@ bb.aw:                                            ; preds = %bb.au
           cleanup
   br label %bb.bm
 
-.lr.ph352:                                        ; preds = %bb.au, %bb.ay
-  %.0215351 = phi i32 [ %i.dw, %bb.ay ], [ %.0218356, %bb.au ] ; 3 uses
-  %.7232350 = phi i32 [ %op.rdx, %bb.ay ], [ %.6231355, %bb.au ]
+.lr.ph352:                                        ; preds = %.lr.ph352.preheader, %bb.ay
+  %.0215351 = phi i32 [ %i.dw, %bb.ay ], [ %.0218356, %.lr.ph352.preheader ] ; 3 uses
+  %.7232350 = phi i32 [ %op.rdx, %bb.ay ], [ %.6231355, %.lr.ph352.preheader ]
   %i.dj = invoke noundef float @_ZNK11OpenImageIO4v3_18DeepData10deep_valueElii(ptr noundef nonnull align 8 dereferenceable(20) %i.i, i64 noundef %i.bg, i32 noundef %i.l, i32 noundef %.0215351)
           to label %bb.ax unwind label %bb.az
 
@@ -344,8 +348,7 @@ bb.ax:                                            ; preds = %.lr.ph352
           to label %bb.ay unwind label %bb.ba
 
 bb.ay:                                            ; preds = %bb.ax
-  %9 = insertelement <4 x float> poison, float %i.dj, i64 0
-  %i.dl = insertelement <4 x float> %9, float %i.de, i64 1 ; 2 uses
+  %i.dl = insertelement <4 x float> %9, float %i.dj, i64 0 ; 2 uses
   %i.dm = insertelement <4 x float> %i.dl, float %i.dk, i64 2
   %i.dn = insertelement <4 x float> %i.dm, float %i.df, i64 3 ; 3 uses
   %i.do = shufflevector <4 x float> %i.dl, <4 x float> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0>

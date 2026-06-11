@@ -201,22 +201,24 @@ png_muldiv.exit160:                               ; preds = %png_fp_sub.exit153.
 
 bb.as:                                            ; preds = %png_muldiv.exit160
   %i.ec = uitofp nneg i32 %i.x to double
-  %2 = fdiv double 1.000000e+10, %i.ec
-  %3 = fadd double %2, 5.000000e-01
-  %4 = tail call double @llvm.floor.f64(double %3) ; 3 uses
-  %5 = fcmp ole double %4, f0x41DFFFFFFFC00000
-  %6 = fcmp oge double %4, f0xC1E0000000000000
-  %or.cond.i161 = and i1 %5, %6
-  %7 = fptosi double %4 to i32
-  %.0.i162 = select i1 %or.cond.i161, i32 %7, i32 0 ; 5 uses
-  %8 = uitofp nneg i32 %.0262 to double           ; 4 uses
-  %9 = fdiv double 1.000000e+10, %8
-  %10 = fadd double %9, 5.000000e-01
-  %11 = tail call double @llvm.floor.f64(double %10) ; 3 uses
-  %12 = fcmp ole double %11, f0x41DFFFFFFFC00000
-  %i.ed = fcmp oge double %11, f0xC1E0000000000000
-  %or.cond.i163 = and i1 %12, %i.ed
-  %i.ee = fptosi double %11 to i32
+  %2 = uitofp nneg i32 %.0262 to double           ; 4 uses
+  %3 = insertelement <2 x double> poison, double %2, i64 0
+  %4 = insertelement <2 x double> %3, double %i.ec, i64 1
+  %5 = fdiv <2 x double> splat (double 1.000000e+10), %4
+  %6 = fadd <2 x double> %5, splat (double 5.000000e-01)
+  %7 = tail call <2 x double> @llvm.floor.v2f64(<2 x double> %6) ; 3 uses
+  %8 = extractelement <2 x double> %7, i64 1      ; 2 uses
+  %9 = fcmp oge double %8, f0xC1E0000000000000
+  %10 = fcmp ole <2 x double> %7, splat (double f0x41DFFFFFFFC00000) ; 2 uses
+  %11 = extractelement <2 x i1> %10, i64 1
+  %or.cond.i161 = and i1 %11, %9
+  %12 = fptosi double %8 to i32
+  %.0.i162 = select i1 %or.cond.i161, i32 %12, i32 0 ; 5 uses
+  %13 = extractelement <2 x double> %7, i64 0     ; 2 uses
+  %i.ed = fcmp oge double %13, f0xC1E0000000000000
+  %14 = extractelement <2 x i1> %10, i64 0
+  %or.cond.i163 = and i1 %14, %i.ed
+  %i.ee = fptosi double %13 to i32
   %.0.i164 = select i1 %or.cond.i163, i32 %i.ee, i32 0 ; 6 uses
   %i.ef = icmp sgt i32 %.0.i164, 0
   br i1 %i.ef, label %bb.at, label %bb.au
@@ -289,7 +291,7 @@ bb.bb:                                            ; preds = %png_fp_sub.exit174
 bb.bc:                                            ; preds = %bb.bb
   %i.fa = uitofp nneg i32 %i.a to double
   %i.fb = fmul nnan double %i.fa, 1.000000e+05
-  %i.fc = fdiv double %i.fb, %8
+  %i.fc = fdiv double %i.fb, %2
   %i.fd = fadd double %i.fc, 5.000000e-01
   %i.fe = tail call double @llvm.floor.f64(double %i.fd) ; 3 uses
   %i.ff = fcmp ole double %i.fe, f0x41DFFFFFFFC00000
@@ -312,7 +314,7 @@ bb.be:                                            ; preds = %bb.bb, %bb.bd
 bb.bf:                                            ; preds = %bb.be
   %i.fl = sitofp i32 %i.fj to double
   %i.fm = fmul nnan double %i.fl, 1.000000e+05
-  %i.fn = fdiv double %i.fm, %8
+  %i.fn = fdiv double %i.fm, %2
   %i.fo = fadd double %i.fn, 5.000000e-01
   %i.fp = tail call double @llvm.floor.f64(double %i.fo) ; 3 uses
   %i.fq = fcmp ole double %i.fp, f0x41DFFFFFFFC00000
@@ -338,7 +340,7 @@ bb.bi:                                            ; preds = %bb.bh
   %i.fy = sub i32 100000, %i.fw
   %i.fz = sitofp i32 %i.fy to double
   %i.ga = fmul nnan double %i.fz, 1.000000e+05
-  %i.gb = fdiv double %i.ga, %8
+  %i.gb = fdiv double %i.ga, %2
   %i.gc = fadd double %i.gb, 5.000000e-01
   %i.gd = tail call double @llvm.floor.f64(double %i.gc) ; 3 uses
   %i.ge = fcmp ole double %i.gd, f0x41DFFFFFFFC00000
@@ -739,6 +741,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #24
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #25
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.floor.v2f64(<2 x double>) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #19

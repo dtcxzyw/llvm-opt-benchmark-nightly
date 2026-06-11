@@ -201,17 +201,18 @@ bb.ah:                                            ; preds = %bb.ag, %bb.ae, %.th
 bb.ai:                                            ; preds = %bb.ah
   %i.dr = fsub double f0x4340000000000000, %i.dp
   %i.ds = fptosi double %i.dr to i64
-  %2 = fdiv double %i.bo, 1.000000e+03
-  %3 = tail call noundef double @llvm.fabs.f64(double %2)
-  %4 = tail call double @llvm.floor.f64(double %3)
-  %5 = fdiv double %i.bs, 1.000000e+06
-  %6 = tail call noundef double @llvm.fabs.f64(double %5)
-  %7 = tail call double @llvm.floor.f64(double %6)
-  %8 = fadd double %4, %7
+  %2 = insertelement <2 x double> poison, double %i.bo, i64 0
+  %3 = insertelement <2 x double> %2, double %i.bs, i64 1
+  %4 = fdiv <2 x double> %3, <double 1.000000e+03, double 1.000000e+06>
+  %5 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %4)
+  %6 = tail call <2 x double> @llvm.floor.v2f64(<2 x double> %5) ; 2 uses
+  %shift = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fadd <2 x double> %6, %shift
+  %7 = extractelement <2 x double> %foldExtExtBinop, i64 0
   %i.dt = fdiv double %.fr147, 1.000000e+09
   %i.du = tail call noundef double @llvm.fabs.f64(double %i.dt)
   %i.dv = tail call double @llvm.floor.f64(double %i.du)
-  %i.dw = fadd double %8, %i.dv                   ; 2 uses
+  %i.dw = fadd double %7, %i.dv                   ; 2 uses
   %i.dx = sitofp i64 %i.ds to double              ; 2 uses
   %i.dy = fcmp ult double %i.dw, %i.dx
   br i1 %i.dy, label %bb.aj, label %bb.al
@@ -613,6 +614,12 @@ declare ptr @_ZN2v88internal7Factory12NewTypeErrorENS0_15MessageTemplateENS_4bas
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.trunc.f64(double) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.floor.v2f64(<2 x double>) #2
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
