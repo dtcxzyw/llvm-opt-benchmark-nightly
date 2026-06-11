@@ -201,10 +201,10 @@ _ZN9benchmark5State13StateIteratorC2EPS0_.exit:
 
 .lr.ph:                                           ; preds = %.lr.ph24.split, %bb.b
   %i.s = phi i64 [ %i.aa, %bb.b ], [ %i.m, %.lr.ph24.split ]
+  %1 = phi i32 [ %2, %bb.b ], [ 0, %.lr.ph24.split ] ; 2 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.b ], [ 1, %.lr.ph24.split ] ; 3 uses
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv
   %i.u = load double, ptr %i.t, align 8, !tbaa !11
-  %1 = load i32, ptr %i.a, align 4, !tbaa !4
   %i.v = sext i32 %1 to i64
   %i.w = getelementptr inbounds [8 x i8], ptr %i.d, i64 %i.v
   %i.x = load double, ptr %i.w, align 8, !tbaa !11
@@ -215,12 +215,14 @@ bb.a:                                             ; preds = %.lr.ph
   %i.z = trunc nuw nsw i64 %indvars.iv to i32     ; 2 uses
   store i32 %i.z, ptr %i.a, align 4, !tbaa !4
   call void asm sideeffect "", "=*r|m,0,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) align 4 dereferenceable(4) %i.a, i32 %i.z) #9, !srcloc !60
+  %.pre = load i32, ptr %i.a, align 4, !tbaa !4
   %.pre.a = load ptr, ptr %i.i, align 32, !tbaa !40
   %.pre29 = load i64, ptr %.pre.a, align 8, !tbaa !41
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.a
   %i.aa = phi i64 [ %i.s, %.lr.ph ], [ %.pre29, %bb.a ] ; 4 uses
+  %2 = phi i32 [ %1, %.lr.ph ], [ %.pre, %bb.a ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ab = icmp sgt i64 %i.aa, %indvars.iv.next
   br i1 %i.ab, label %.lr.ph, label %._crit_edge, !llvm.loop !294

@@ -201,7 +201,7 @@ bb.a:
   %9 = alloca %"class.arrow::Status", align 8     ; 4 uses
   %10 = alloca %"class.arrow::Status", align 8    ; 4 uses
   %11 = alloca %"class.std::shared_ptr.3", align 8 ; 7 uses
-  %12 = alloca %"class.std::vector", align 8      ; 11 uses
+  %12 = alloca %"class.std::vector", align 8      ; 12 uses
   %13 = alloca %"struct.std::less", align 1       ; 3 uses
   %14 = alloca %"class.arrow::Result.23", align 8 ; 11 uses
   %15 = alloca %"class.arrow::Result.27", align 8 ; 12 uses
@@ -604,17 +604,21 @@ bb.aw:                                            ; preds = %bb.au
 
 _ZSt6copy_nIPKhiPhET1_T_T0_S3_.exit.i:            ; preds = %bb.aw, %bb.av, %bb.at
   %i.fn = getelementptr inbounds i8, ptr %.0163550.i, i64 %i.bh
-  br i1 %.not.i.i.i.i237.i, label %.critedge215.i, label %.lr.ph.i
+  br i1 %.not.i.i.i.i237.i, label %.critedge215.i, label %.lr.ph.preheader.i
+
+.lr.ph.preheader.i:                               ; preds = %_ZSt6copy_nIPKhiPhET1_T_T0_S3_.exit.i
+  %.pre579.i = load ptr, ptr %12, align 8, !tbaa !49, !noalias !23
+  br label %.lr.ph.i
 
 bb.ax:                                            ; preds = %.critedge215.i
   %i.fo = landingpad { ptr, i32 }
           cleanup
   br label %bb.eo
 
-.lr.ph.i:                                         ; preds = %_ZSt6copy_nIPKhiPhET1_T_T0_S3_.exit.i, %.critedge.i
-  %.0161548.i = phi i64 [ %i.ht, %.critedge.i ], [ 0, %_ZSt6copy_nIPKhiPhET1_T_T0_S3_.exit.i ] ; 7 uses
-  %.0162547.i = phi i1 [ %i.hs, %.critedge.i ], [ false, %_ZSt6copy_nIPKhiPhET1_T_T0_S3_.exit.i ]
-  %31 = load ptr, ptr %12, align 8, !tbaa !49, !noalias !23
+.lr.ph.i:                                         ; preds = %.critedge.i, %.lr.ph.preheader.i
+  %31 = phi ptr [ %32, %.critedge.i ], [ %.pre579.i, %.lr.ph.preheader.i ] ; 2 uses
+  %.0161548.i = phi i64 [ %i.ht, %.critedge.i ], [ 0, %.lr.ph.preheader.i ] ; 7 uses
+  %.0162547.i = phi i1 [ %i.hs, %.critedge.i ], [ false, %.lr.ph.preheader.i ]
   %i.fp = getelementptr inbounds nuw [8 x i8], ptr %31, i64 %.0161548.i
   %i.fq = load i64, ptr %i.fp, align 8, !tbaa !51 ; 3 uses
   br i1 %.0162547.i, label %.thread510.i, label %bb.ay
@@ -752,9 +756,11 @@ _ZN5arrow6StatusD2Ev.exit279.i:                   ; preds = %_ZN5arrow6StatusD2E
   %i.hq = load i64, ptr %i.hp, align 8, !tbaa !51
   %i.hr = add nsw i64 %i.hq, 1
   store i64 %i.hr, ptr %i.hp, align 8, !tbaa !51
+  %.pre578.i = load ptr, ptr %12, align 8, !tbaa !49, !noalias !23
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %_ZN5arrow6StatusD2Ev.exit279.i, %bb.ay
+  %32 = phi ptr [ %.pre578.i, %_ZN5arrow6StatusD2Ev.exit279.i ], [ %31, %bb.ay ]
   %i.hs = phi i1 [ true, %_ZN5arrow6StatusD2Ev.exit279.i ], [ false, %bb.ay ]
   %i.ht = add nuw nsw i64 %.0161548.i, 1          ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ht, %i.do

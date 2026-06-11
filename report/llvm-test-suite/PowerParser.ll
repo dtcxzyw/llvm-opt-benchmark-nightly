@@ -201,6 +201,7 @@ _ZNKSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv.exit: ; preds
   %i.y = trunc i64 %i.x to i32                    ; 3 uses
   %i.z = load i32, ptr %i.t, align 8, !tbaa !4    ; 2 uses
   %.not.i = icmp slt i32 %i.z, %i.y               ; 2 uses
+  %.pre13 = load ptr, ptr %2, align 8, !tbaa !27  ; 2 uses
   br i1 %.not.i, label %.preheader.i, label %_ZN2PP11PowerParser20get_line_from_stringERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_Ri.exit
 
 .preheader.i:                                     ; preds = %.noexc
@@ -209,8 +210,8 @@ _ZNKSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv.exit: ; preds
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.j, %.preheader.i
+  %3 = phi ptr [ %.pre13, %.preheader.i ], [ %4, %bb.j ] ; 3 uses
   %indvars.iv.i = phi i64 [ %i.ab, %.preheader.i ], [ %indvars.iv.next.i, %bb.j ] ; 3 uses
-  %3 = load ptr, ptr %2, align 8, !tbaa !27
   %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 %indvars.iv.i
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !33  ; 2 uses
   switch i8 %i.ad, label %bb.g [
@@ -257,15 +258,18 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit.i: ; preds = %.no
   %i.aq = load ptr, ptr %1, align 8, !tbaa !27
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 %i.ah
   store i8 0, ptr %i.ar, align 1, !tbaa !33
+  %.pre = load ptr, ptr %2, align 8, !tbaa !27
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit.i, %bb.e
+  %4 = phi ptr [ %.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit.i ], [ %3, %bb.e ] ; 2 uses
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, 1 ; 2 uses
   %lftr.wideiv.i = trunc i64 %indvars.iv.next.i to i32
   %exitcond.not.i = icmp eq i32 %lftr.wideiv.i, %i.y
   br i1 %exitcond.not.i, label %.sink.split.i, label %bb.e, !llvm.loop !437
 
 .sink.split.i:                                    ; preds = %bb.j, %bb.f
+  %5 = phi ptr [ %3, %bb.f ], [ %4, %bb.j ]
   %.sink.i = phi i32 [ %i.af, %bb.f ], [ %i.y, %bb.j ]
   store i32 %.sink.i, ptr %i.t, align 8, !tbaa !4
   br label %_ZN2PP11PowerParser20get_line_from_stringERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_Ri.exit
@@ -297,14 +301,14 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.k,
   br label %common.resume
 
 _ZN2PP11PowerParser20get_line_from_stringERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_Ri.exit: ; preds = %.sink.split.i, %.noexc
-  %4 = load ptr, ptr %2, align 8, !tbaa !27       ; 2 uses
-  %i.aw = icmp eq ptr %4, %i.a
+  %6 = phi ptr [ %5, %.sink.split.i ], [ %.pre13, %.noexc ] ; 2 uses
+  %i.aw = icmp eq ptr %6, %i.a
   br i1 %i.aw, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit7, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i5
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i5: ; preds = %_ZN2PP11PowerParser20get_line_from_stringERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_Ri.exit
   %i.ax = load i64, ptr %i.a, align 8, !tbaa !33
   %i.ay = add i64 %i.ax, 1
-  call void @_ZdlPvm(ptr noundef %4, i64 noundef %i.ay) #32
+  call void @_ZdlPvm(ptr noundef %6, i64 noundef %i.ay) #32
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit7
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit7: ; preds = %_ZN2PP11PowerParser20get_line_from_stringERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_Ri.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i5

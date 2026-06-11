@@ -201,7 +201,7 @@ define hidden noundef zeroext i1 @_ZN4llvh9FileCheck21ValidateCheckPrefixesEv(pt
 bb.a:
   %1 = alloca %"class.llvh::Regex", align 8       ; 5 uses
   %2 = alloca %"struct.std::pair.115", align 8    ; 5 uses
-  %3 = alloca %"class.llvh::StringSet", align 8   ; 9 uses
+  %3 = alloca %"class.llvh::StringSet", align 8   ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 20
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(25) %3, i8 0, i64 20, i1 false)
@@ -210,7 +210,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !162  ; 2 uses
   %.not27 = icmp eq ptr %i.b, %i.d
-  br i1 %.not27, label %_ZN4llvh9StringMapIcNS_15MallocAllocatorEED2Ev.exit, label %.lr.ph
+  br i1 %.not27, label %.critedge._ZN4llvh9StringMapIcNS_15MallocAllocatorEED2Ev.exit_crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
   %.sroa.0.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -254,12 +254,18 @@ bb.d:                                             ; preds = %_ZNK4llvh9StringRef
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %3, i64 12
   %.pre = load i32, ptr %.phi.trans.insert, align 4, !tbaa !318
   %i.m = icmp eq i32 %.pre, 0
-  br i1 %i.m, label %_ZN4llvh9StringMapIcNS_15MallocAllocatorEED2Ev.exit, label %bb.e
+  br i1 %i.m, label %.critedge._ZN4llvh9StringMapIcNS_15MallocAllocatorEED2Ev.exit_crit_edge, label %bb.e
+
+.critedge._ZN4llvh9StringMapIcNS_15MallocAllocatorEED2Ev.exit_crit_edge: ; preds = %bb.a, %.critedge
+  %.not.lcssa45 = phi i1 [ %.not.lcssa.ph, %.critedge ], [ true, %bb.a ]
+  %.pre37 = load ptr, ptr %3, align 8, !tbaa !319
+  br label %_ZN4llvh9StringMapIcNS_15MallocAllocatorEED2Ev.exit
 
 bb.e:                                             ; preds = %.critedge
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.o = load i32, ptr %i.n, align 8, !tbaa !319  ; 2 uses
+  %i.o = load i32, ptr %i.n, align 8, !tbaa !320  ; 2 uses
   %.not10.i = icmp eq i32 %i.o, 0
+  %.pre38 = load ptr, ptr %3, align 8, !tbaa !319 ; 2 uses
   br i1 %.not10.i, label %_ZN4llvh9StringMapIcNS_15MallocAllocatorEED2Ev.exit, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.e
@@ -267,8 +273,8 @@ bb.e:                                             ; preds = %.critedge
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.g, %.lr.ph.preheader.i
+  %4 = phi ptr [ %.pre38, %.lr.ph.preheader.i ], [ %5, %bb.g ] ; 3 uses
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.g ] ; 2 uses
-  %4 = load ptr, ptr %3, align 8, !tbaa !320
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv.i
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !117  ; 2 uses
   %magicptr.i = ptrtoint ptr %i.r to i64
@@ -279,19 +285,21 @@ bb.e:                                             ; preds = %.critedge
 
 bb.f:                                             ; preds = %.lr.ph.i
   call void @free(ptr noundef nonnull align 8 dereferenceable(9) %i.r) #18
+  %.pre35 = load ptr, ptr %3, align 8, !tbaa !319
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %.lr.ph.i, %.lr.ph.i
+  %5 = phi ptr [ %.pre35, %bb.f ], [ %4, %.lr.ph.i ], [ %4, %.lr.ph.i ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %.not.i = icmp eq i64 %indvars.iv.next.i, %i.p
   br i1 %.not.i, label %_ZN4llvh9StringMapIcNS_15MallocAllocatorEED2Ev.exit, label %.lr.ph.i, !llvm.loop !321
 
-_ZN4llvh9StringMapIcNS_15MallocAllocatorEED2Ev.exit: ; preds = %bb.g, %bb.a, %.critedge, %bb.e
-  %.not.lcssa40 = phi i1 [ true, %bb.a ], [ %.not.lcssa.ph, %bb.e ], [ %.not.lcssa.ph, %.critedge ], [ %.not.lcssa.ph, %bb.g ]
-  %5 = load ptr, ptr %3, align 8, !tbaa !320
-  call void @free(ptr noundef %5) #18
+_ZN4llvh9StringMapIcNS_15MallocAllocatorEED2Ev.exit: ; preds = %bb.g, %.critedge._ZN4llvh9StringMapIcNS_15MallocAllocatorEED2Ev.exit_crit_edge, %bb.e
+  %.not.lcssa44 = phi i1 [ %.not.lcssa45, %.critedge._ZN4llvh9StringMapIcNS_15MallocAllocatorEED2Ev.exit_crit_edge ], [ %.not.lcssa.ph, %bb.e ], [ %.not.lcssa.ph, %bb.g ]
+  %6 = phi ptr [ %.pre37, %.critedge._ZN4llvh9StringMapIcNS_15MallocAllocatorEED2Ev.exit_crit_edge ], [ %.pre38, %bb.e ], [ %5, %bb.g ]
+  call void @free(ptr noundef %6) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
-  ret i1 %.not.lcssa40
+  ret i1 %.not.lcssa44
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -471,7 +479,7 @@ bb.a:
   %6 = alloca %"class.llvh::SmallVector.101", align 8 ; 10 uses
   %7 = alloca %"struct.std::pair.30", align 8     ; 6 uses
   %i.a = alloca i8, align 1                       ; 4 uses
-  %8 = alloca %"class.llvh::StringMap", align 8   ; 15 uses
+  %8 = alloca %"class.llvh::StringMap", align 8   ; 16 uses
   %9 = alloca %"class.llvh::StringRef", align 8   ; 7 uses
   %i.b = alloca i64, align 8                      ; 6 uses
   %i.c = alloca i64, align 8                      ; 6 uses
@@ -609,8 +617,8 @@ bb.h:                                             ; preds = %.loopexit206
   store ptr %i.l, ptr %6, align 8, !tbaa !119
   store i32 0, ptr %i.m, align 8, !tbaa !121
   store i32 16, ptr %i.n, align 4, !tbaa !122
-  %i.as = load ptr, ptr %8, align 8, !tbaa !320   ; 3 uses
-  %i.at = load i32, ptr %i.o, align 8, !tbaa !319 ; 2 uses
+  %i.as = load ptr, ptr %8, align 8, !tbaa !319   ; 3 uses
+  %i.at = load i32, ptr %i.o, align 8, !tbaa !320 ; 2 uses
   %i.au = icmp eq i32 %i.at, 0
   br i1 %i.au, label %_ZN4llvh9StringMapINS_9StringRefENS_15MallocAllocatorEE5beginEv.exit.i, label %.preheader.i.i.i.i
 
@@ -790,11 +798,16 @@ bb.r:                                             ; preds = %.thread163, %bb.q
   %i.cl = getelementptr inbounds nuw i8, ptr %8, i64 12
   %i.cm = load i32, ptr %i.cl, align 4, !tbaa !318
   %i.cn = icmp eq i32 %i.cm, 0
-  br i1 %i.cn, label %_ZN4llvh9StringMapINS_9StringRefENS_15MallocAllocatorEED2Ev.exit, label %bb.s
+  br i1 %i.cn, label %._ZN4llvh9StringMapINS_9StringRefENS_15MallocAllocatorEED2Ev.exit_crit_edge, label %bb.s
+
+._ZN4llvh9StringMapINS_9StringRefENS_15MallocAllocatorEED2Ev.exit_crit_edge: ; preds = %bb.r
+  %.pre192 = load ptr, ptr %8, align 8, !tbaa !319
+  br label %_ZN4llvh9StringMapINS_9StringRefENS_15MallocAllocatorEED2Ev.exit
 
 bb.s:                                             ; preds = %bb.r
-  %i.co = load i32, ptr %i.o, align 8, !tbaa !319 ; 2 uses
+  %i.co = load i32, ptr %i.o, align 8, !tbaa !320 ; 2 uses
   %.not10.i = icmp eq i32 %i.co, 0
+  %.pre193 = load ptr, ptr %8, align 8, !tbaa !319 ; 2 uses
   br i1 %.not10.i, label %_ZN4llvh9StringMapINS_9StringRefENS_15MallocAllocatorEED2Ev.exit, label %.lr.ph.preheader.i75
 
 .lr.ph.preheader.i75:                             ; preds = %bb.s
@@ -802,8 +815,8 @@ bb.s:                                             ; preds = %bb.r
   br label %.lr.ph.i76
 
 .lr.ph.i76:                                       ; preds = %bb.u, %.lr.ph.preheader.i75
+  %10 = phi ptr [ %.pre193, %.lr.ph.preheader.i75 ], [ %11, %bb.u ] ; 3 uses
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i75 ], [ %indvars.iv.next.i, %bb.u ] ; 2 uses
-  %10 = load ptr, ptr %8, align 8, !tbaa !320
   %i.cq = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %indvars.iv.i
   %i.cr = load ptr, ptr %i.cq, align 8, !tbaa !117 ; 2 uses
   %magicptr.i = ptrtoint ptr %i.cr to i64
@@ -814,16 +827,18 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %.lr.ph.i76
   call void @free(ptr noundef nonnull align 8 dereferenceable(24) %i.cr) #18
+  %.pre = load ptr, ptr %8, align 8, !tbaa !319
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %.lr.ph.i76, %.lr.ph.i76
+  %11 = phi ptr [ %.pre, %bb.t ], [ %10, %.lr.ph.i76 ], [ %10, %.lr.ph.i76 ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %.not.i77 = icmp eq i64 %indvars.iv.next.i, %i.cp
   br i1 %.not.i77, label %_ZN4llvh9StringMapINS_9StringRefENS_15MallocAllocatorEED2Ev.exit, label %.lr.ph.i76, !llvm.loop !334
 
-_ZN4llvh9StringMapINS_9StringRefENS_15MallocAllocatorEED2Ev.exit: ; preds = %bb.u, %bb.r, %bb.s
-  %11 = load ptr, ptr %8, align 8, !tbaa !320
-  call void @free(ptr noundef %11) #18
+_ZN4llvh9StringMapINS_9StringRefENS_15MallocAllocatorEED2Ev.exit: ; preds = %bb.u, %._ZN4llvh9StringMapINS_9StringRefENS_15MallocAllocatorEED2Ev.exit_crit_edge, %bb.s
+  %12 = phi ptr [ %.pre192, %._ZN4llvh9StringMapINS_9StringRefENS_15MallocAllocatorEED2Ev.exit_crit_edge ], [ %.pre193, %bb.s ], [ %11, %bb.u ]
+  call void @free(ptr noundef %12) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #18
   ret i1 %.5
 }
@@ -1226,7 +1241,7 @@ declare noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr nounde
 define linkonce_odr hidden { ptr, i8 } @_ZN4llvh9StringMapINS_9StringRefENS_15MallocAllocatorEE11try_emplaceIJEEESt4pairINS_17StringMapIteratorIS1_EEbES1_DpOT_(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr %1, i64 %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4llvh13StringMapImpl15LookupBucketForENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, i64 %2) #18 ; 2 uses
-  %i.b = load ptr, ptr %0, align 8, !tbaa !320
+  %i.b = load ptr, ptr %0, align 8, !tbaa !319
   %i.c = zext i32 %i.a to i64
   %i.d = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.c ; 3 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !117  ; 2 uses
@@ -1288,7 +1303,7 @@ _ZN4llvh14StringMapEntryINS_9StringRefEE6CreateINS_15MallocAllocatorEJEEEPS2_S1_
   %i.s = add i32 %i.r, 1
   store i32 %i.s, ptr %i.q, align 4, !tbaa !318
   %i.t = tail call noundef i32 @_ZN4llvh13StringMapImpl11RehashTableEj(ptr noundef nonnull align 8 dereferenceable(24) %0, i32 noundef %i.a) #18
-  %i.u = load ptr, ptr %0, align 8, !tbaa !320
+  %i.u = load ptr, ptr %0, align 8, !tbaa !319
   %i.v = zext i32 %i.t to i64
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %i.v
   br label %.preheader.i.i22
@@ -1691,7 +1706,7 @@ declare void @_ZNSt8__detail15_List_node_base7_M_hookEPS0_(ptr noundef nonnull a
 define linkonce_odr hidden { ptr, i8 } @_ZN4llvh9StringMapIcNS_15MallocAllocatorEE11try_emplaceIJcEEESt4pairINS_17StringMapIteratorIcEEbENS_9StringRefEDpOT_(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr %1, i64 %2, ptr noundef nonnull align 1 dereferenceable(1) %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4llvh13StringMapImpl15LookupBucketForENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, i64 %2) #18 ; 2 uses
-  %i.b = load ptr, ptr %0, align 8, !tbaa !320
+  %i.b = load ptr, ptr %0, align 8, !tbaa !319
   %i.c = zext i32 %i.a to i64
   %i.d = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.c ; 3 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !117  ; 2 uses
@@ -1754,7 +1769,7 @@ _ZN4llvh14StringMapEntryIcE6CreateINS_15MallocAllocatorEJcEEEPS1_NS_9StringRefER
   %i.t = add i32 %i.s, 1
   store i32 %i.t, ptr %i.r, align 4, !tbaa !318
   %i.u = tail call noundef i32 @_ZN4llvh13StringMapImpl11RehashTableEj(ptr noundef nonnull align 8 dereferenceable(24) %0, i32 noundef %i.a) #18
-  %i.v = load ptr, ptr %0, align 8, !tbaa !320
+  %i.v = load ptr, ptr %0, align 8, !tbaa !319
   %i.w = zext i32 %i.u to i64
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %i.w
   br label %.preheader.i.i23
@@ -1960,7 +1975,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
 define linkonce_odr hidden { ptr, i8 } @_ZN4llvh9StringMapINS_9StringRefENS_15MallocAllocatorEE11try_emplaceIJS1_EEESt4pairINS_17StringMapIteratorIS1_EEbES1_DpOT_(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr %1, i64 %2, ptr noundef nonnull align 8 dereferenceable(16) %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4llvh13StringMapImpl15LookupBucketForENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, i64 %2) #18 ; 2 uses
-  %i.b = load ptr, ptr %0, align 8, !tbaa !320
+  %i.b = load ptr, ptr %0, align 8, !tbaa !319
   %i.c = zext i32 %i.a to i64
   %i.d = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.c ; 3 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !117  ; 2 uses
@@ -2022,7 +2037,7 @@ _ZN4llvh14StringMapEntryINS_9StringRefEE6CreateINS_15MallocAllocatorEJS1_EEEPS2_
   %i.s = add i32 %i.r, 1
   store i32 %i.s, ptr %i.q, align 4, !tbaa !318
   %i.t = tail call noundef i32 @_ZN4llvh13StringMapImpl11RehashTableEj(ptr noundef nonnull align 8 dereferenceable(24) %0, i32 noundef %i.a) #18
-  %i.u = load ptr, ptr %0, align 8, !tbaa !320
+  %i.u = load ptr, ptr %0, align 8, !tbaa !319
   %i.v = zext i32 %i.t to i64
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %i.v
   br label %.preheader.i.i23
@@ -2415,8 +2430,8 @@ attributes #24 = { nounwind allocsize(0) }
 !316 = !{!"_ZTSN4llvh13StringMapImplE", !317, i64 0, !4, i64 8, !4, i64 12, !4, i64 16, !4, i64 20}
 !317 = !{!"p2 _ZTSN4llvh18StringMapEntryBaseE", !256, i64 0}
 !318 = !{!316, !4, i64 12}
-!319 = !{!316, !4, i64 8}
-!320 = !{!316, !317, i64 0}
+!319 = !{!316, !317, i64 0}
+!320 = !{!316, !4, i64 8}
 !321 = distinct !{!321, !46}
 !322 = !{!12, !13, i64 16}
 !323 = !{!324}

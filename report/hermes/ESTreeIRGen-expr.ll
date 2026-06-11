@@ -201,8 +201,8 @@ define hidden noundef ptr @_ZN6hermes5irgen11ESTreeIRGen13genObjectExprEPNS_6EST
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca i64, align 8                      ; 6 uses
-  %2 = alloca %"class.llvh::StringMap", align 8   ; 11 uses
-  %3 = alloca %"class.llvh::StringMap.210", align 8 ; 9 uses
+  %2 = alloca %"class.llvh::StringMap", align 8   ; 12 uses
+  %3 = alloca %"class.llvh::StringMap.210", align 8 ; 10 uses
   %4 = alloca %"class.llvh::SmallVector.212", align 8 ; 15 uses
   %5 = alloca %"class.llvh::StringRef", align 8   ; 6 uses
   %6 = alloca %"class.llvh::Twine", align 8       ; 6 uses
@@ -605,12 +605,17 @@ _ZN4llvh11SmallVectorIcLj32EED2Ev.exit:           ; preds = %._crit_edge401, %bb
   %i.gd = getelementptr inbounds nuw i8, ptr %3, i64 12
   %i.ge = load i32, ptr %i.gd, align 4, !tbaa !338
   %i.gf = icmp eq i32 %i.ge, 0
-  br i1 %i.gf, label %_ZN4llvh9StringMapINS_7SMRangeENS_15MallocAllocatorEED2Ev.exit, label %bb.x
+  br i1 %i.gf, label %_ZN4llvh11SmallVectorIcLj32EED2Ev.exit._ZN4llvh9StringMapINS_7SMRangeENS_15MallocAllocatorEED2Ev.exit_crit_edge, label %bb.x
+
+_ZN4llvh11SmallVectorIcLj32EED2Ev.exit._ZN4llvh9StringMapINS_7SMRangeENS_15MallocAllocatorEED2Ev.exit_crit_edge: ; preds = %_ZN4llvh11SmallVectorIcLj32EED2Ev.exit
+  %.pre404 = load ptr, ptr %3, align 8, !tbaa !339
+  br label %_ZN4llvh9StringMapINS_7SMRangeENS_15MallocAllocatorEED2Ev.exit
 
 bb.x:                                             ; preds = %_ZN4llvh11SmallVectorIcLj32EED2Ev.exit
   %i.gg = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.gh = load i32, ptr %i.gg, align 8, !tbaa !339 ; 2 uses
+  %i.gh = load i32, ptr %i.gg, align 8, !tbaa !340 ; 2 uses
   %.not10.i = icmp eq i32 %i.gh, 0
+  %.pre405 = load ptr, ptr %3, align 8, !tbaa !339 ; 2 uses
   br i1 %.not10.i, label %_ZN4llvh9StringMapINS_7SMRangeENS_15MallocAllocatorEED2Ev.exit, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.x
@@ -618,8 +623,8 @@ bb.x:                                             ; preds = %_ZN4llvh11SmallVect
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.z, %.lr.ph.preheader.i
+  %18 = phi ptr [ %.pre405, %.lr.ph.preheader.i ], [ %19, %bb.z ] ; 3 uses
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.z ] ; 2 uses
-  %18 = load ptr, ptr %3, align 8, !tbaa !340
   %i.gj = getelementptr inbounds nuw [8 x i8], ptr %18, i64 %indvars.iv.i
   %i.gk = load ptr, ptr %i.gj, align 8, !tbaa !336 ; 2 uses
   %magicptr.i = ptrtoint ptr %i.gk to i64
@@ -630,25 +635,32 @@ bb.x:                                             ; preds = %_ZN4llvh11SmallVect
 
 bb.y:                                             ; preds = %.lr.ph.i
   call void @free(ptr noundef nonnull align 8 dereferenceable(24) %i.gk) #16
+  %.pre = load ptr, ptr %3, align 8, !tbaa !339
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %.lr.ph.i, %.lr.ph.i
+  %19 = phi ptr [ %.pre, %bb.y ], [ %18, %.lr.ph.i ], [ %18, %.lr.ph.i ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %.not.i191 = icmp eq i64 %indvars.iv.next.i, %i.gi
   br i1 %.not.i191, label %_ZN4llvh9StringMapINS_7SMRangeENS_15MallocAllocatorEED2Ev.exit, label %.lr.ph.i, !llvm.loop !341
 
-_ZN4llvh9StringMapINS_7SMRangeENS_15MallocAllocatorEED2Ev.exit: ; preds = %bb.z, %_ZN4llvh11SmallVectorIcLj32EED2Ev.exit, %bb.x
-  %19 = load ptr, ptr %3, align 8, !tbaa !340
-  call void @free(ptr noundef %19) #16
+_ZN4llvh9StringMapINS_7SMRangeENS_15MallocAllocatorEED2Ev.exit: ; preds = %bb.z, %_ZN4llvh11SmallVectorIcLj32EED2Ev.exit._ZN4llvh9StringMapINS_7SMRangeENS_15MallocAllocatorEED2Ev.exit_crit_edge, %bb.x
+  %20 = phi ptr [ %.pre404, %_ZN4llvh11SmallVectorIcLj32EED2Ev.exit._ZN4llvh9StringMapINS_7SMRangeENS_15MallocAllocatorEED2Ev.exit_crit_edge ], [ %.pre405, %bb.x ], [ %19, %bb.z ]
+  call void @free(ptr noundef %20) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #16
   %i.gl = load i32, ptr %i.fk, align 4, !tbaa !338
   %i.gm = icmp eq i32 %i.gl, 0
-  br i1 %i.gm, label %_ZN4llvh9StringMapIZN6hermes5irgen11ESTreeIRGen13genObjectExprEPNS1_6ESTree20ObjectExpressionNodeEE13PropertyValueNS_15MallocAllocatorEED2Ev.exit, label %bb.aa
+  br i1 %i.gm, label %_ZN4llvh9StringMapINS_7SMRangeENS_15MallocAllocatorEED2Ev.exit._ZN4llvh9StringMapIZN6hermes5irgen11ESTreeIRGen13genObjectExprEPNS1_6ESTree20ObjectExpressionNodeEE13PropertyValueNS_15MallocAllocatorEED2Ev.exit_crit_edge, label %bb.aa
+
+_ZN4llvh9StringMapINS_7SMRangeENS_15MallocAllocatorEED2Ev.exit._ZN4llvh9StringMapIZN6hermes5irgen11ESTreeIRGen13genObjectExprEPNS1_6ESTree20ObjectExpressionNodeEE13PropertyValueNS_15MallocAllocatorEED2Ev.exit_crit_edge: ; preds = %_ZN4llvh9StringMapINS_7SMRangeENS_15MallocAllocatorEED2Ev.exit
+  %.pre408 = load ptr, ptr %2, align 8, !tbaa !339
+  br label %_ZN4llvh9StringMapIZN6hermes5irgen11ESTreeIRGen13genObjectExprEPNS1_6ESTree20ObjectExpressionNodeEE13PropertyValueNS_15MallocAllocatorEED2Ev.exit
 
 bb.aa:                                            ; preds = %_ZN4llvh9StringMapINS_7SMRangeENS_15MallocAllocatorEED2Ev.exit
   %i.gn = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.go = load i32, ptr %i.gn, align 8, !tbaa !339 ; 2 uses
+  %i.go = load i32, ptr %i.gn, align 8, !tbaa !340 ; 2 uses
   %.not10.i192 = icmp eq i32 %i.go, 0
+  %.pre409 = load ptr, ptr %2, align 8, !tbaa !339 ; 2 uses
   br i1 %.not10.i192, label %_ZN4llvh9StringMapIZN6hermes5irgen11ESTreeIRGen13genObjectExprEPNS1_6ESTree20ObjectExpressionNodeEE13PropertyValueNS_15MallocAllocatorEED2Ev.exit, label %.lr.ph.preheader.i193
 
 .lr.ph.preheader.i193:                            ; preds = %bb.aa
@@ -656,9 +668,9 @@ bb.aa:                                            ; preds = %_ZN4llvh9StringMapI
   br label %.lr.ph.i194
 
 .lr.ph.i194:                                      ; preds = %bb.ac, %.lr.ph.preheader.i193
+  %21 = phi ptr [ %.pre409, %.lr.ph.preheader.i193 ], [ %22, %bb.ac ] ; 3 uses
   %indvars.iv.i195 = phi i64 [ 0, %.lr.ph.preheader.i193 ], [ %indvars.iv.next.i197, %bb.ac ] ; 2 uses
-  %20 = load ptr, ptr %2, align 8, !tbaa !340
-  %i.gq = getelementptr inbounds nuw [8 x i8], ptr %20, i64 %indvars.iv.i195
+  %i.gq = getelementptr inbounds nuw [8 x i8], ptr %21, i64 %indvars.iv.i195
   %i.gr = load ptr, ptr %i.gq, align 8, !tbaa !336 ; 2 uses
   %magicptr.i196 = ptrtoint ptr %i.gr to i64
   switch i64 %magicptr.i196, label %bb.ab [
@@ -668,19 +680,21 @@ bb.aa:                                            ; preds = %_ZN4llvh9StringMapI
 
 bb.ab:                                            ; preds = %.lr.ph.i194
   call void @free(ptr noundef nonnull align 8 dereferenceable(40) %i.gr) #16
+  %.pre406 = load ptr, ptr %2, align 8, !tbaa !339
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %.lr.ph.i194, %.lr.ph.i194
+  %22 = phi ptr [ %.pre406, %bb.ab ], [ %21, %.lr.ph.i194 ], [ %21, %.lr.ph.i194 ] ; 2 uses
   %indvars.iv.next.i197 = add nuw nsw i64 %indvars.iv.i195, 1 ; 2 uses
   %.not.i198 = icmp eq i64 %indvars.iv.next.i197, %i.gp
   br i1 %.not.i198, label %_ZN4llvh9StringMapIZN6hermes5irgen11ESTreeIRGen13genObjectExprEPNS1_6ESTree20ObjectExpressionNodeEE13PropertyValueNS_15MallocAllocatorEED2Ev.exit, label %.lr.ph.i194, !llvm.loop !342
 
-_ZN4llvh9StringMapIZN6hermes5irgen11ESTreeIRGen13genObjectExprEPNS1_6ESTree20ObjectExpressionNodeEE13PropertyValueNS_15MallocAllocatorEED2Ev.exit: ; preds = %bb.ac, %_ZN4llvh9StringMapINS_7SMRangeENS_15MallocAllocatorEED2Ev.exit, %bb.aa
+_ZN4llvh9StringMapIZN6hermes5irgen11ESTreeIRGen13genObjectExprEPNS1_6ESTree20ObjectExpressionNodeEE13PropertyValueNS_15MallocAllocatorEED2Ev.exit: ; preds = %bb.ac, %_ZN4llvh9StringMapINS_7SMRangeENS_15MallocAllocatorEED2Ev.exit._ZN4llvh9StringMapIZN6hermes5irgen11ESTreeIRGen13genObjectExprEPNS1_6ESTree20ObjectExpressionNodeEE13PropertyValueNS_15MallocAllocatorEED2Ev.exit_crit_edge, %bb.aa
+  %23 = phi ptr [ %.pre408, %_ZN4llvh9StringMapINS_7SMRangeENS_15MallocAllocatorEED2Ev.exit._ZN4llvh9StringMapIZN6hermes5irgen11ESTreeIRGen13genObjectExprEPNS1_6ESTree20ObjectExpressionNodeEE13PropertyValueNS_15MallocAllocatorEED2Ev.exit_crit_edge ], [ %.pre409, %bb.aa ], [ %22, %bb.ac ]
   %i.gs = icmp eq ptr %i.fn, null
   %i.gt = getelementptr inbounds nuw i8, ptr %i.fn, i64 16
   %i.gu = select i1 %i.gs, ptr null, ptr %i.gt
-  %21 = load ptr, ptr %2, align 8, !tbaa !340
-  call void @free(ptr noundef %21) #16
+  call void @free(ptr noundef %23) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #16
   ret ptr %i.gu
 
@@ -1083,7 +1097,7 @@ declare noundef ptr @_ZN6hermes9IRBuilder20createDirectEvalInstEPNS_5ValueEPNS_1
 define internal fastcc noundef nonnull align 8 dereferenceable(32) ptr @_ZN4llvh9StringMapIZN6hermes5irgen11ESTreeIRGen13genObjectExprEPNS1_6ESTree20ObjectExpressionNodeEE13PropertyValueNS_15MallocAllocatorEEixENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr %1, i64 %2) unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4llvh13StringMapImpl15LookupBucketForENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr %1, i64 %2) #16 ; 2 uses
-  %i.b = load ptr, ptr %0, align 8, !tbaa !340
+  %i.b = load ptr, ptr %0, align 8, !tbaa !339
   %i.c = zext i32 %i.a to i64
   %i.d = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.c ; 3 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !336  ; 2 uses
@@ -1145,7 +1159,7 @@ _ZN4llvh14StringMapEntryIZN6hermes5irgen11ESTreeIRGen13genObjectExprEPNS1_6ESTre
   %i.s = add i32 %i.r, 1
   store i32 %i.s, ptr %i.q, align 4, !tbaa !338
   %i.t = tail call noundef i32 @_ZN4llvh13StringMapImpl11RehashTableEj(ptr noundef nonnull align 8 dereferenceable(25) %0, i32 noundef %i.a) #16
-  %i.u = load ptr, ptr %0, align 8, !tbaa !340
+  %i.u = load ptr, ptr %0, align 8, !tbaa !339
   %i.v = zext i32 %i.t to i64
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %i.v
   br label %bb.f
@@ -1175,7 +1189,7 @@ declare void @_ZNK4llvh5Twine3strB5cxx11Ev(ptr dead_on_unwind writable sret(%"cl
 define linkonce_odr hidden { ptr, i8 } @_ZN4llvh9StringMapINS_7SMRangeENS_15MallocAllocatorEE11try_emplaceIJS1_EEESt4pairINS_17StringMapIteratorIS1_EEbENS_9StringRefEDpOT_(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr %1, i64 %2, ptr noundef nonnull align 8 dereferenceable(16) %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4llvh13StringMapImpl15LookupBucketForENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, i64 %2) #16 ; 2 uses
-  %i.b = load ptr, ptr %0, align 8, !tbaa !340
+  %i.b = load ptr, ptr %0, align 8, !tbaa !339
   %i.c = zext i32 %i.a to i64
   %i.d = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.c ; 3 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !336  ; 2 uses
@@ -1237,7 +1251,7 @@ _ZN4llvh14StringMapEntryINS_7SMRangeEE6CreateINS_15MallocAllocatorEJS1_EEEPS2_NS
   %i.s = add i32 %i.r, 1
   store i32 %i.s, ptr %i.q, align 4, !tbaa !338
   %i.t = tail call noundef i32 @_ZN4llvh13StringMapImpl11RehashTableEj(ptr noundef nonnull align 8 dereferenceable(24) %0, i32 noundef %i.a) #16
-  %i.u = load ptr, ptr %0, align 8, !tbaa !340
+  %i.u = load ptr, ptr %0, align 8, !tbaa !339
   %i.v = zext i32 %i.t to i64
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %i.v
   br label %.preheader.i.i23
@@ -1640,8 +1654,8 @@ begin_hunk_3_@llvm.umax.i64
 !336 = !{!337, !337, i64 0}
 !337 = !{!"p1 _ZTSN4llvh18StringMapEntryBaseE", !9, i64 0}
 !338 = !{!306, !4, i64 12}
-!339 = !{!306, !4, i64 8}
-!340 = !{!306, !307, i64 0}
+!339 = !{!306, !307, i64 0}
+!340 = !{!306, !4, i64 8}
 !341 = distinct !{!341, !203}
 !342 = distinct !{!342, !203}
 !343 = !{!344, !44, i64 48}

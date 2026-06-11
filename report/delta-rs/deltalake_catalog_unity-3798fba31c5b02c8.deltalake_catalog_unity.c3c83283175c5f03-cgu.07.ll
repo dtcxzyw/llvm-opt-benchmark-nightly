@@ -201,7 +201,7 @@ bb.a:
   %i.e = alloca [16 x i8], align 8                ; 5 uses
   %i.f = alloca [8 x i8], align 8                 ; 4 uses
   %i.g = alloca [8 x i8], align 8                 ; 4 uses
-  %i.h = alloca [104 x i8], align 8               ; 13 uses
+  %i.h = alloca [104 x i8], align 8               ; 14 uses
   %i.i = alloca [8 x i8], align 8                 ; 4 uses
   %i.j = alloca [8 x i8], align 8                 ; 5 uses
   %i.k = alloca [8 x i8], align 8                 ; 5 uses
@@ -602,6 +602,7 @@ bb.ai:                                            ; preds = %bb.ag
 .split.preheader.i.i.i.i.i:                       ; preds = %.noexc49.i, %.noexc47.i, %bb.ag
   %i.ei = phi i64 [ 0, %bb.ag ], [ 1, %.noexc49.i ], [ 0, %.noexc47.i ] ; 2 uses
   %.sroa.614.0.i.i = phi i64 [ undef, %bb.ag ], [ %i.fg, %.noexc49.i ], [ undef, %.noexc47.i ]
+  store i64 1, ptr %i.h, align 8, !noalias !91
   %.sroa.087.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
   %.sroa.087.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   store i64 3, ptr %.sroa.087.sroa.5.0..sroa_idx.i.i, align 8, !noalias !91
@@ -645,7 +646,7 @@ bb.aj:                                            ; preds = %.split.i.i.i.1.i.i,
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !110
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.d, ptr noundef nonnull align 8 dereferenceable(64) %.sroa.087.sroa.4.0..sroa_idx.i.i, i64 64, i1 false), !noalias !91
   call void @llvm.experimental.noalias.scope.decl(metadata !115)
-  %i.en = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  %i.en = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !118)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !121
   store ptr %i.en, ptr %i.c, align 8, !noalias !122
@@ -664,12 +665,12 @@ bb.aj:                                            ; preds = %.split.i.i.i.1.i.i,
   br label %bb.ak
 
 bb.ak:                                            ; preds = %_RNCINvMs6_NtNtNtCsbvkFyIu7lgC_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitINtNtBe_6option6OptionNtNtNtNtCs95DO3lnzZ3L_4moka6common4time7instant7InstantEEE8try_foldB2j_NCINvMs0_NtNtBe_3ops9try_traitINtB3B_17NeverShortCircuitB2j_E10wrap_mut_2B2j_B1X_NCINvNtNtNtBe_4iter8adapters7flatten11flatten_oneB1X_B2j_NCINvNvNtNtNtB4U_6traits8iterator8Iterator6min_by4foldB2j_NvYB2j_NtNtBe_3cmp3Ord3cmpE0E0E0B3W_E0CsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i
+  %5 = phi ptr [ %i.en, %.lr.ph.i.i.i.i.i.i.i ], [ %6, %_RNCINvMs6_NtNtNtCsbvkFyIu7lgC_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitINtNtBe_6option6OptionNtNtNtNtCs95DO3lnzZ3L_4moka6common4time7instant7InstantEEE8try_foldB2j_NCINvMs0_NtNtBe_3ops9try_traitINtB3B_17NeverShortCircuitB2j_E10wrap_mut_2B2j_B1X_NCINvNtNtNtBe_4iter8adapters7flatten11flatten_oneB1X_B2j_NCINvNvNtNtNtB4U_6traits8iterator8Iterator6min_by4foldB2j_NvYB2j_NtNtBe_3cmp3Ord3cmpE0E0E0B3W_E0CsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i.i.i.i.i ] ; 2 uses
   %.sroa.0.08.i.i.i.i.i.i.i = phi i64 [ %i.em, %.lr.ph.i.i.i.i.i.i.i ], [ %.sroa.0.0.i.i.i.i.i.i.i.i.i.i, %_RNCINvMs6_NtNtNtCsbvkFyIu7lgC_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitINtNtBe_6option6OptionNtNtNtNtCs95DO3lnzZ3L_4moka6common4time7instant7InstantEEE8try_foldB2j_NCINvMs0_NtNtBe_3ops9try_traitINtB3B_17NeverShortCircuitB2j_E10wrap_mut_2B2j_B1X_NCINvNtNtNtBe_4iter8adapters7flatten11flatten_oneB1X_B2j_NCINvNvNtNtNtB4U_6traits8iterator8Iterator6min_by4foldB2j_NvYB2j_NtNtBe_3cmp3Ord3cmpE0E0E0B3W_E0CsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i.i.i.i.i ] ; 3 uses
   %i.eu = phi i64 [ %i.ep, %.lr.ph.i.i.i.i.i.i.i ], [ %i.ev, %_RNCINvMs6_NtNtNtCsbvkFyIu7lgC_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitINtNtBe_6option6OptionNtNtNtNtCs95DO3lnzZ3L_4moka6common4time7instant7InstantEEE8try_foldB2j_NCINvMs0_NtNtBe_3ops9try_traitINtB3B_17NeverShortCircuitB2j_E10wrap_mut_2B2j_B1X_NCINvNtNtNtBe_4iter8adapters7flatten11flatten_oneB1X_B2j_NCINvNvNtNtNtB4U_6traits8iterator8Iterator6min_by4foldB2j_NvYB2j_NtNtBe_3cmp3Ord3cmpE0E0E0B3W_E0CsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i.i.i.i.i ] ; 3 uses
   %i.ev = add nuw i64 %i.eu, 1                    ; 3 uses
   store i64 %i.ev, ptr %i.d, align 8, !alias.scope !124, !noalias !125
   call void @llvm.experimental.noalias.scope.decl(metadata !126)
-  %5 = load ptr, ptr %i.c, align 8, !alias.scope !126, !noalias !122, !nonnull !3, !align !4, !noundef !3
   %i.ew = load i64, ptr %i.eo, align 8, !alias.scope !126, !noalias !122, !noundef !3
   %i.ex = icmp ult i64 %i.eu, %i.ew
   call void @llvm.assume(i1 %i.ex)
@@ -693,9 +694,11 @@ bb.ak:                                            ; preds = %_RNCINvMs6_NtNtNtCs
   %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.fe, i64 %.sroa.0.08.i.i.i.i.i.i.i, i64 %i.fc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !131
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !131
+  %.pre.i.i.i.i.i.i.i = load ptr, ptr %i.c, align 8, !alias.scope !126, !noalias !122
   br label %_RNCINvMs6_NtNtNtCsbvkFyIu7lgC_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitINtNtBe_6option6OptionNtNtNtNtCs95DO3lnzZ3L_4moka6common4time7instant7InstantEEE8try_foldB2j_NCINvMs0_NtNtBe_3ops9try_traitINtB3B_17NeverShortCircuitB2j_E10wrap_mut_2B2j_B1X_NCINvNtNtNtBe_4iter8adapters7flatten11flatten_oneB1X_B2j_NCINvNvNtNtNtB4U_6traits8iterator8Iterator6min_by4foldB2j_NvYB2j_NtNtBe_3cmp3Ord3cmpE0E0E0B3W_E0CsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i.i.i.i.i
 
 _RNCINvMs6_NtNtNtCsbvkFyIu7lgC_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitINtNtBe_6option6OptionNtNtNtNtCs95DO3lnzZ3L_4moka6common4time7instant7InstantEEE8try_foldB2j_NCINvMs0_NtNtBe_3ops9try_traitINtB3B_17NeverShortCircuitB2j_E10wrap_mut_2B2j_B1X_NCINvNtNtNtBe_4iter8adapters7flatten11flatten_oneB1X_B2j_NCINvNvNtNtNtB4U_6traits8iterator8Iterator6min_by4foldB2j_NvYB2j_NtNtBe_3cmp3Ord3cmpE0E0E0B3W_E0CsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i.i.i.i.i: ; preds = %.noexc48.i, %bb.ak
+  %6 = phi ptr [ %5, %bb.ak ], [ %.pre.i.i.i.i.i.i.i, %.noexc48.i ]
   %.sroa.0.0.i.i.i.i.i.i.i.i.i.i = phi i64 [ %.sroa.0.08.i.i.i.i.i.i.i, %bb.ak ], [ %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i, %.noexc48.i ] ; 2 uses
   %.not.i.i.i.i.i.i.i = icmp eq i64 %i.ev, %i.er
   br i1 %.not.i.i.i.i.i.i.i, label %.loopexit.i.i, label %bb.ak
@@ -948,7 +951,7 @@ bb.a:
   %i.e = alloca [16 x i8], align 8                ; 5 uses
   %i.f = alloca [8 x i8], align 8                 ; 4 uses
   %i.g = alloca [8 x i8], align 8                 ; 4 uses
-  %i.h = alloca [104 x i8], align 8               ; 13 uses
+  %i.h = alloca [104 x i8], align 8               ; 14 uses
   %i.i = alloca [8 x i8], align 8                 ; 4 uses
   %i.j = alloca [8 x i8], align 8                 ; 5 uses
   %i.k = alloca [8 x i8], align 8                 ; 5 uses
@@ -1351,6 +1354,7 @@ bb.ai:                                            ; preds = %bb.ag
 .split.preheader.i.i.i.i.i:                       ; preds = %.noexc49.i, %.noexc47.i, %bb.ag
   %i.ei = phi i64 [ 0, %bb.ag ], [ 1, %.noexc49.i ], [ 0, %.noexc47.i ] ; 2 uses
   %.sroa.614.0.i.i = phi i64 [ undef, %bb.ag ], [ %i.fg, %.noexc49.i ], [ undef, %.noexc47.i ]
+  store i64 1, ptr %i.h, align 8, !noalias !188
   %.sroa.087.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
   %.sroa.087.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   store i64 3, ptr %.sroa.087.sroa.5.0..sroa_idx.i.i, align 8, !noalias !188
@@ -1394,7 +1398,7 @@ bb.aj:                                            ; preds = %.split.i.i.i.1.i.i,
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !207
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.d, ptr noundef nonnull align 8 dereferenceable(64) %.sroa.087.sroa.4.0..sroa_idx.i.i, i64 64, i1 false), !noalias !188
   call void @llvm.experimental.noalias.scope.decl(metadata !212)
-  %i.en = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  %i.en = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !215)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !218
   store ptr %i.en, ptr %i.c, align 8, !noalias !219
@@ -1413,12 +1417,12 @@ bb.aj:                                            ; preds = %.split.i.i.i.1.i.i,
   br label %bb.ak
 
 bb.ak:                                            ; preds = %_RNCINvMs6_NtNtNtCsbvkFyIu7lgC_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitINtNtBe_6option6OptionNtNtNtNtCs95DO3lnzZ3L_4moka6common4time7instant7InstantEEE8try_foldB2j_NCINvMs0_NtNtBe_3ops9try_traitINtB3B_17NeverShortCircuitB2j_E10wrap_mut_2B2j_B1X_NCINvNtNtNtBe_4iter8adapters7flatten11flatten_oneB1X_B2j_NCINvNvNtNtNtB4U_6traits8iterator8Iterator6min_by4foldB2j_NvYB2j_NtNtBe_3cmp3Ord3cmpE0E0E0B3W_E0CsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i
+  %5 = phi ptr [ %i.en, %.lr.ph.i.i.i.i.i.i.i ], [ %6, %_RNCINvMs6_NtNtNtCsbvkFyIu7lgC_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitINtNtBe_6option6OptionNtNtNtNtCs95DO3lnzZ3L_4moka6common4time7instant7InstantEEE8try_foldB2j_NCINvMs0_NtNtBe_3ops9try_traitINtB3B_17NeverShortCircuitB2j_E10wrap_mut_2B2j_B1X_NCINvNtNtNtBe_4iter8adapters7flatten11flatten_oneB1X_B2j_NCINvNvNtNtNtB4U_6traits8iterator8Iterator6min_by4foldB2j_NvYB2j_NtNtBe_3cmp3Ord3cmpE0E0E0B3W_E0CsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i.i.i.i.i ] ; 2 uses
   %.sroa.0.08.i.i.i.i.i.i.i = phi i64 [ %i.em, %.lr.ph.i.i.i.i.i.i.i ], [ %.sroa.0.0.i.i.i.i.i.i.i.i.i.i, %_RNCINvMs6_NtNtNtCsbvkFyIu7lgC_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitINtNtBe_6option6OptionNtNtNtNtCs95DO3lnzZ3L_4moka6common4time7instant7InstantEEE8try_foldB2j_NCINvMs0_NtNtBe_3ops9try_traitINtB3B_17NeverShortCircuitB2j_E10wrap_mut_2B2j_B1X_NCINvNtNtNtBe_4iter8adapters7flatten11flatten_oneB1X_B2j_NCINvNvNtNtNtB4U_6traits8iterator8Iterator6min_by4foldB2j_NvYB2j_NtNtBe_3cmp3Ord3cmpE0E0E0B3W_E0CsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i.i.i.i.i ] ; 3 uses
   %i.eu = phi i64 [ %i.ep, %.lr.ph.i.i.i.i.i.i.i ], [ %i.ev, %_RNCINvMs6_NtNtNtCsbvkFyIu7lgC_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitINtNtBe_6option6OptionNtNtNtNtCs95DO3lnzZ3L_4moka6common4time7instant7InstantEEE8try_foldB2j_NCINvMs0_NtNtBe_3ops9try_traitINtB3B_17NeverShortCircuitB2j_E10wrap_mut_2B2j_B1X_NCINvNtNtNtBe_4iter8adapters7flatten11flatten_oneB1X_B2j_NCINvNvNtNtNtB4U_6traits8iterator8Iterator6min_by4foldB2j_NvYB2j_NtNtBe_3cmp3Ord3cmpE0E0E0B3W_E0CsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i.i.i.i.i ] ; 3 uses
   %i.ev = add nuw i64 %i.eu, 1                    ; 3 uses
   store i64 %i.ev, ptr %i.d, align 8, !alias.scope !221, !noalias !222
   call void @llvm.experimental.noalias.scope.decl(metadata !223)
-  %5 = load ptr, ptr %i.c, align 8, !alias.scope !223, !noalias !219, !nonnull !3, !align !4, !noundef !3
   %i.ew = load i64, ptr %i.eo, align 8, !alias.scope !223, !noalias !219, !noundef !3
   %i.ex = icmp ult i64 %i.eu, %i.ew
   call void @llvm.assume(i1 %i.ex)
@@ -1442,9 +1446,11 @@ bb.ak:                                            ; preds = %_RNCINvMs6_NtNtNtCs
   %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i = select i1 %i.fe, i64 %.sroa.0.08.i.i.i.i.i.i.i, i64 %i.fc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !227
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !227
+  %.pre.i.i.i.i.i.i.i = load ptr, ptr %i.c, align 8, !alias.scope !223, !noalias !219
   br label %_RNCINvMs6_NtNtNtCsbvkFyIu7lgC_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitINtNtBe_6option6OptionNtNtNtNtCs95DO3lnzZ3L_4moka6common4time7instant7InstantEEE8try_foldB2j_NCINvMs0_NtNtBe_3ops9try_traitINtB3B_17NeverShortCircuitB2j_E10wrap_mut_2B2j_B1X_NCINvNtNtNtBe_4iter8adapters7flatten11flatten_oneB1X_B2j_NCINvNvNtNtNtB4U_6traits8iterator8Iterator6min_by4foldB2j_NvYB2j_NtNtBe_3cmp3Ord3cmpE0E0E0B3W_E0CsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i.i.i.i.i
 
 _RNCINvMs6_NtNtNtCsbvkFyIu7lgC_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitINtNtBe_6option6OptionNtNtNtNtCs95DO3lnzZ3L_4moka6common4time7instant7InstantEEE8try_foldB2j_NCINvMs0_NtNtBe_3ops9try_traitINtB3B_17NeverShortCircuitB2j_E10wrap_mut_2B2j_B1X_NCINvNtNtNtBe_4iter8adapters7flatten11flatten_oneB1X_B2j_NCINvNvNtNtNtB4U_6traits8iterator8Iterator6min_by4foldB2j_NvYB2j_NtNtBe_3cmp3Ord3cmpE0E0E0B3W_E0CsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i.i.i.i.i: ; preds = %.noexc48.i, %bb.ak
+  %6 = phi ptr [ %5, %bb.ak ], [ %.pre.i.i.i.i.i.i.i, %.noexc48.i ]
   %.sroa.0.0.i.i.i.i.i.i.i.i.i.i = phi i64 [ %.sroa.0.08.i.i.i.i.i.i.i, %bb.ak ], [ %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i, %.noexc48.i ] ; 2 uses
   %.not.i.i.i.i.i.i.i = icmp eq i64 %i.ev, %i.er
   br i1 %.not.i.i.i.i.i.i.i, label %.loopexit.i.i, label %bb.ak
@@ -1847,7 +1853,7 @@ bb.a:
   %i.e = alloca [16 x i8], align 8                ; 5 uses
   %i.f = alloca [8 x i8], align 8                 ; 4 uses
   %i.g = alloca [8 x i8], align 8                 ; 4 uses
-  %i.h = alloca [104 x i8], align 8               ; 15 uses
+  %i.h = alloca [104 x i8], align 8               ; 16 uses
   %i.i = alloca [8 x i8], align 8                 ; 2 uses
   store i64 %7, ptr %i.i, align 8
   %i.j = tail call { i64, i32 } @_RNvMs_NtNtNtCs95DO3lnzZ3L_4moka6common4time5clockNtB4_5Clock14to_std_instant(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %8, i64 noundef %7) ; 2 uses
@@ -1895,6 +1901,7 @@ bb.e:                                             ; preds = %bb.c
 .split.preheader.i.i.i:                           ; preds = %bb.c, %bb.e, %bb.h
   %i.ad = phi i64 [ 0, %bb.c ], [ 1, %bb.h ], [ 0, %bb.e ] ; 2 uses
   %.sroa.614.0 = phi i64 [ undef, %bb.c ], [ %i.bd, %bb.h ], [ undef, %bb.e ]
+  store i64 1, ptr %i.h, align 8
   %.sroa.087.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
   %.sroa.087.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   store i64 3, ptr %.sroa.087.sroa.5.0..sroa_idx, align 8
@@ -1940,7 +1947,7 @@ bb.f:                                             ; preds = %.split.i.i.i.1, %.s
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !331
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.d, ptr noundef nonnull align 8 dereferenceable(64) %.sroa.087.sroa.4.0..sroa_idx, i64 64, i1 false)
   call void @llvm.experimental.noalias.scope.decl(metadata !336)
-  %i.ak = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !339)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !342
   store ptr %i.ak, ptr %i.c, align 8, !noalias !343
@@ -1959,12 +1966,12 @@ bb.f:                                             ; preds = %.split.i.i.i.1, %.s
   br label %bb.g
 
 bb.g:                                             ; preds = %_RNCINvMs6_NtNtNtCsbvkFyIu7lgC_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitINtNtBe_6option6OptionNtNtNtNtCs95DO3lnzZ3L_4moka6common4time7instant7InstantEEE8try_foldB2j_NCINvMs0_NtNtBe_3ops9try_traitINtB3B_17NeverShortCircuitB2j_E10wrap_mut_2B2j_B1X_NCINvNtNtNtBe_4iter8adapters7flatten11flatten_oneB1X_B2j_NCINvNvNtNtNtB4U_6traits8iterator8Iterator6min_by4foldB2j_NvYB2j_NtNtBe_3cmp3Ord3cmpE0E0E0B3W_E0CsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i.i.i, %.lr.ph.i.i.i.i.i
+  %9 = phi ptr [ %i.ak, %.lr.ph.i.i.i.i.i ], [ %10, %_RNCINvMs6_NtNtNtCsbvkFyIu7lgC_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitINtNtBe_6option6OptionNtNtNtNtCs95DO3lnzZ3L_4moka6common4time7instant7InstantEEE8try_foldB2j_NCINvMs0_NtNtBe_3ops9try_traitINtB3B_17NeverShortCircuitB2j_E10wrap_mut_2B2j_B1X_NCINvNtNtNtBe_4iter8adapters7flatten11flatten_oneB1X_B2j_NCINvNvNtNtNtB4U_6traits8iterator8Iterator6min_by4foldB2j_NvYB2j_NtNtBe_3cmp3Ord3cmpE0E0E0B3W_E0CsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i.i.i ] ; 2 uses
   %.sroa.0.08.i.i.i.i.i = phi i64 [ %i.aj, %.lr.ph.i.i.i.i.i ], [ %.sroa.0.0.i.i.i.i.i.i.i.i, %_RNCINvMs6_NtNtNtCsbvkFyIu7lgC_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitINtNtBe_6option6OptionNtNtNtNtCs95DO3lnzZ3L_4moka6common4time7instant7InstantEEE8try_foldB2j_NCINvMs0_NtNtBe_3ops9try_traitINtB3B_17NeverShortCircuitB2j_E10wrap_mut_2B2j_B1X_NCINvNtNtNtBe_4iter8adapters7flatten11flatten_oneB1X_B2j_NCINvNvNtNtNtB4U_6traits8iterator8Iterator6min_by4foldB2j_NvYB2j_NtNtBe_3cmp3Ord3cmpE0E0E0B3W_E0CsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i.i.i ] ; 3 uses
   %i.ar = phi i64 [ %i.am, %.lr.ph.i.i.i.i.i ], [ %i.as, %_RNCINvMs6_NtNtNtCsbvkFyIu7lgC_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitINtNtBe_6option6OptionNtNtNtNtCs95DO3lnzZ3L_4moka6common4time7instant7InstantEEE8try_foldB2j_NCINvMs0_NtNtBe_3ops9try_traitINtB3B_17NeverShortCircuitB2j_E10wrap_mut_2B2j_B1X_NCINvNtNtNtBe_4iter8adapters7flatten11flatten_oneB1X_B2j_NCINvNvNtNtNtB4U_6traits8iterator8Iterator6min_by4foldB2j_NvYB2j_NtNtBe_3cmp3Ord3cmpE0E0E0B3W_E0CsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i.i.i ] ; 3 uses
   %i.as = add nuw i64 %i.ar, 1                    ; 3 uses
   store i64 %i.as, ptr %i.d, align 8, !alias.scope !345, !noalias !346
   call void @llvm.experimental.noalias.scope.decl(metadata !347)
-  %9 = load ptr, ptr %i.c, align 8, !alias.scope !347, !noalias !343, !nonnull !3, !align !4, !noundef !3
   %i.at = load i64, ptr %i.al, align 8, !alias.scope !347, !noalias !343, !noundef !3
   %i.au = icmp ult i64 %i.ar, %i.at
   call void @llvm.assume(i1 %i.au)
@@ -1985,9 +1992,11 @@ bb.g:                                             ; preds = %_RNCINvMs6_NtNtNtCs
   %.sroa.0.0.i.i.i.i.i.i.i.i.i.i = select i1 %i.bb, i64 %.sroa.0.08.i.i.i.i.i, i64 %i.az
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !351
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !351
+  %.pre.i.i.i.i.i = load ptr, ptr %i.c, align 8, !alias.scope !347, !noalias !343
   br label %_RNCINvMs6_NtNtNtCsbvkFyIu7lgC_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitINtNtBe_6option6OptionNtNtNtNtCs95DO3lnzZ3L_4moka6common4time7instant7InstantEEE8try_foldB2j_NCINvMs0_NtNtBe_3ops9try_traitINtB3B_17NeverShortCircuitB2j_E10wrap_mut_2B2j_B1X_NCINvNtNtNtBe_4iter8adapters7flatten11flatten_oneB1X_B2j_NCINvNvNtNtNtB4U_6traits8iterator8Iterator6min_by4foldB2j_NvYB2j_NtNtBe_3cmp3Ord3cmpE0E0E0B3W_E0CsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i.i.i
 
 _RNCINvMs6_NtNtNtCsbvkFyIu7lgC_4core5array4iter10iter_innerINtB8_15PolymorphicIterSINtNtNtBe_3mem12maybe_uninit11MaybeUninitINtNtBe_6option6OptionNtNtNtNtCs95DO3lnzZ3L_4moka6common4time7instant7InstantEEE8try_foldB2j_NCINvMs0_NtNtBe_3ops9try_traitINtB3B_17NeverShortCircuitB2j_E10wrap_mut_2B2j_B1X_NCINvNtNtNtBe_4iter8adapters7flatten11flatten_oneB1X_B2j_NCINvNvNtNtNtB4U_6traits8iterator8Iterator6min_by4foldB2j_NvYB2j_NtNtBe_3cmp3Ord3cmpE0E0E0B3W_E0CsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i.i.i: ; preds = %.noexc.i.i.i.i, %bb.g
+  %10 = phi ptr [ %9, %bb.g ], [ %.pre.i.i.i.i.i, %.noexc.i.i.i.i ]
   %.sroa.0.0.i.i.i.i.i.i.i.i = phi i64 [ %.sroa.0.08.i.i.i.i.i, %bb.g ], [ %.sroa.0.0.i.i.i.i.i.i.i.i.i.i, %.noexc.i.i.i.i ] ; 2 uses
   %.not.i.i.i.i.i = icmp eq i64 %i.as, %i.ao
   br i1 %.not.i.i.i.i.i, label %.loopexit, label %bb.g

@@ -201,7 +201,7 @@ bb.a:
   %13 = alloca %"class.v8::internal::torque::MessageBuilder", align 8 ; 7 uses
   %14 = alloca %"class.v8::internal::torque::MessageBuilder", align 8 ; 7 uses
   %15 = alloca %"class.std::unique_ptr", align 8  ; 4 uses
-  %16 = alloca %"class.std::unique_ptr", align 8  ; 8 uses
+  %16 = alloca %"class.std::unique_ptr", align 8  ; 7 uses
   %17 = alloca %"class.std::unique_ptr", align 8  ; 4 uses
   %18 = alloca %"class.std::unique_ptr", align 8  ; 4 uses
   %19 = alloca %"class.std::unique_ptr", align 8  ; 4 uses
@@ -604,11 +604,11 @@ _ZNSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14defau
   %.sroa.0331.0372 = phi ptr [ %i.rj, %_ZNSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS4_EED2Ev.exit267 ], [ %.val144, %_ZNSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS4_EED2Ev.exit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #20
   %i.ox = getelementptr inbounds nuw i8, ptr %.sroa.0331.0372, i64 40 ; 2 uses
-  %.val.i.i.i222 = load i64, ptr %i.ox, align 8   ; 3 uses
+  %.val.i.i.i222 = load i64, ptr %i.ox, align 8   ; 4 uses
   store i64 %.val.i.i.i222, ptr %16, align 8
   store ptr null, ptr %i.ox, align 8
   %i.oy = trunc nuw i8 %.056373 to i1
-  %i.oz = inttoptr i64 %.val.i.i.i222 to ptr      ; 2 uses
+  %i.oz = inttoptr i64 %.val.i.i.i222 to ptr      ; 3 uses
   br i1 %i.oy, label %bb.bu, label %bb.bz
 
 bb.bu:                                            ; preds = %.lr.ph375
@@ -649,13 +649,9 @@ bb.bz:                                            ; preds = %bb.bv, %bb.bx, %bb.
   %i.pm = icmp eq ptr %.val149, %i.ad
   br i1 %i.pm, label %._crit_edge371, label %.lr.ph370
 
-._crit_edge371.loopexit:                          ; preds = %bb.cj
-  %.val.i.i.i223.pre = load i64, ptr %16, align 8
-  br label %._crit_edge371
-
-._crit_edge371:                                   ; preds = %._crit_edge371.loopexit, %bb.bz
-  %.val.i.i.i223 = phi i64 [ %.val.i.i.i222, %bb.bz ], [ %.val.i.i.i223.pre, %._crit_edge371.loopexit ]
-  %.3.lcssa = phi i32 [ %.2, %bb.bz ], [ %.4, %._crit_edge371.loopexit ]
+._crit_edge371:                                   ; preds = %bb.cj, %bb.bz
+  %.val.i.i.i223 = phi i64 [ %.val.i.i.i222, %bb.bz ], [ %.val.i.i.i223410, %bb.cj ]
+  %.3.lcssa = phi i32 [ %.2, %bb.bz ], [ %.4, %bb.cj ]
   store i64 %.val.i.i.i223, ptr %18, align 8
   store ptr null, ptr %16, align 8
   %.val95 = load ptr, ptr %0, align 8
@@ -664,6 +660,8 @@ bb.bz:                                            ; preds = %bb.bv, %bb.bx, %bb.
           to label %bb.ck unwind label %bb.cn     ; 3 uses
 
 .lr.ph370:                                        ; preds = %bb.bz, %bb.cj
+  %.val.i.i.i223408 = phi i64 [ %.val.i.i.i223410, %bb.cj ], [ %.val.i.i.i222, %bb.bz ]
+  %.val97 = phi ptr [ %.val97406, %bb.cj ], [ %i.oz, %bb.bz ] ; 2 uses
   %.3368 = phi i32 [ %.4, %bb.cj ], [ %.2, %bb.bz ] ; 3 uses
   %.sroa.0329.0367 = phi ptr [ %.sroa.0329.1, %bb.cj ], [ %.val149, %bb.bz ] ; 4 uses
   %i.pp = getelementptr inbounds nuw i8, ptr %.sroa.0329.0367, i64 40 ; 2 uses
@@ -671,7 +669,6 @@ bb.bz:                                            ; preds = %bb.bv, %bb.bx, %bb.
   %i.pq = getelementptr inbounds nuw i8, ptr %.val98, i64 44
   %i.pr = load i32, ptr %i.pq, align 4
   %i.ps = add nsw i32 %i.pr, %.3368
-  %.val97 = load ptr, ptr %16, align 8
   %i.pt = getelementptr inbounds nuw i8, ptr %.val97, i64 32
   %i.pu = load i32, ptr %i.pt, align 8
   %.not60 = icmp sgt i32 %i.ps, %i.pu
@@ -734,6 +731,8 @@ _ZNSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14defau
   %i.qk = getelementptr i8, ptr %i.qj, i64 40
   %.val.i.i.i.i238 = load ptr, ptr %i.qk, align 8 ; 5 uses
   %.not.i.i.i.i.i.i.i.i239 = icmp eq ptr %.val.i.i.i.i238, null
+  %.val97.pre = load ptr, ptr %16, align 8        ; 2 uses
+  %21 = ptrtoint ptr %.val97.pre to i64
   br i1 %.not.i.i.i.i.i.i.i.i239, label %bb.cg, label %bb.ce
 
 bb.ce:                                            ; preds = %_ZNSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS4_EED2Ev.exit237
@@ -791,10 +790,12 @@ bb.ci:                                            ; preds = %.lr.ph370
   br label %bb.cj
 
 bb.cj:                                            ; preds = %bb.ci, %bb.cg
+  %.val.i.i.i223410 = phi i64 [ %.val.i.i.i223408, %bb.ci ], [ %21, %bb.cg ] ; 2 uses
+  %.val97406 = phi ptr [ %.val97, %bb.ci ], [ %.val97.pre, %bb.cg ]
   %.sroa.0329.1 = phi ptr [ %i.qx, %bb.ci ], [ %i.qi, %bb.cg ] ; 2 uses
   %.4 = phi i32 [ %.3368, %bb.ci ], [ %i.px, %bb.cg ] ; 2 uses
   %i.qy = icmp eq ptr %.sroa.0329.1, %i.ad
-  br i1 %i.qy, label %._crit_edge371.loopexit, label %.lr.ph370, !llvm.loop !231
+  br i1 %i.qy, label %._crit_edge371, label %.lr.ph370, !llvm.loop !231
 
 bb.ck:                                            ; preds = %._crit_edge371
   %i.qz = load ptr, ptr %18, align 8              ; 5 uses

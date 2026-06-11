@@ -201,7 +201,7 @@ bb.z:                                             ; preds = %bb.y
 
 _ZNSt6vectorIPN5glTF24MeshESaIS2_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS2_S4_EE.exit: ; preds = %bb.v, %bb.x, %bb.y, %bb.z
   %.pre-phi116 = phi i64 [ %.pre-phi, %bb.v ], [ %.pre115.a, %bb.x ], [ %.pre-phi, %bb.y ], [ %.pre-phi, %bb.z ] ; 2 uses
-  %i.cr = phi i32 [ %i.cf, %bb.v ], [ %.pre113, %bb.x ], [ %i.cf, %bb.y ], [ %i.cf, %bb.z ]
+  %i.cr = phi i32 [ %i.cf, %bb.v ], [ %.pre113, %bb.x ], [ %i.cf, %bb.y ], [ %i.cf, %bb.z ] ; 3 uses
   %i.cs = load ptr, ptr %i.cj, align 8
   %i.ct = getelementptr inbounds i8, ptr %i.cs, i64 -8 ; 2 uses
   store ptr %i.ct, ptr %i.cj, align 8
@@ -263,6 +263,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit59: ; preds = %bb.
   br i1 %i.du, label %.lr.ph, label %._crit_edge, !llvm.loop !188
 
 ._crit_edge103:                                   ; preds = %bb.ad, %._crit_edge
+  %8 = phi i32 [ %i.cr, %._crit_edge ], [ %11, %bb.ad ]
   %i.dv = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.sroa.060.0104 = load ptr, ptr %i.dv, align 8  ; 2 uses
   %.not94105 = icmp eq ptr %.sroa.060.0104, null
@@ -273,29 +274,35 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit59: ; preds = %bb.
   br label %bb.ae
 
 .lr.ph102:                                        ; preds = %._crit_edge, %bb.ad
+  %9 = phi i32 [ %11, %bb.ad ], [ %i.cr, %._crit_edge ] ; 2 uses
   %.sroa.066.0100 = phi ptr [ %.sroa.066.0, %bb.ad ], [ %.sroa.066.098, %._crit_edge ] ; 3 uses
-  %8 = getelementptr inbounds nuw i8, ptr %.sroa.066.0100, i64 40
-  %9 = load i32, ptr %8, align 8                  ; 2 uses
-  %i.dx = load i32, ptr %i.c, align 4
-  %.not28 = icmp ugt i32 %9, %i.dx
+  %10 = getelementptr inbounds nuw i8, ptr %.sroa.066.0100, i64 40
+  %i.dx = load i32, ptr %10, align 8              ; 2 uses
+  %.not28 = icmp ugt i32 %i.dx, %9
   br i1 %.not28, label %bb.ac, label %bb.ad
 
 bb.ac:                                            ; preds = %.lr.ph102
   %i.dy = getelementptr inbounds nuw i8, ptr %.sroa.066.0100, i64 8
-  %i.dz = add i32 %9, -1
+  %i.dz = add i32 %i.dx, -1
   %i.ea = call noundef nonnull align 4 dereferenceable(4) ptr @_ZNSt8__detail9_Map_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS6_jESaIS9_ENS_10_Select1stESt8equal_toIS6_ESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_20_Prime_rehash_policyENS_17_Hashtable_traitsILb1ELb0ELb1EEELb1EEixERS8_(ptr noundef nonnull align 8 dereferenceable(56) %i.d, ptr noundef nonnull align 8 dereferenceable(32) %i.dy)
   store i32 %i.dz, ptr %i.ea, align 4
+  %.pre114 = load i32, ptr %i.c, align 4
   br label %bb.ad
 
 bb.ad:                                            ; preds = %.lr.ph102, %bb.ac
+  %11 = phi i32 [ %9, %.lr.ph102 ], [ %.pre114, %bb.ac ] ; 2 uses
   %.sroa.066.0 = load ptr, ptr %.sroa.066.0100, align 8 ; 2 uses
   %.not93 = icmp eq ptr %.sroa.066.0, null
   br i1 %.not93, label %._crit_edge103, label %.lr.ph102, !llvm.loop !189
 
-._crit_edge109:                                   ; preds = %bb.aj, %._crit_edge103
-  %10 = load i32, ptr %i.c, align 4
+._crit_edge109.loopexit:                          ; preds = %bb.aj
+  %.pre116 = load i32, ptr %i.c, align 4
+  br label %._crit_edge109
+
+._crit_edge109:                                   ; preds = %._crit_edge109.loopexit, %._crit_edge103
+  %12 = phi i32 [ %.pre116, %._crit_edge109.loopexit ], [ %8, %._crit_edge103 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #31
-  ret i32 %10
+  ret i32 %12
 
 bb.ae:                                            ; preds = %.lr.ph108, %bb.aj
   %.sroa.060.0106 = phi ptr [ %.sroa.060.0104, %.lr.ph108 ], [ %.sroa.060.0, %bb.aj ] ; 3 uses
@@ -375,7 +382,7 @@ _ZNSt13unordered_mapIjjSt4hashIjESt8equal_toIjESaISt4pairIKjjEEEixERS5_.exit: ; 
 bb.aj:                                            ; preds = %bb.ae, %_ZNSt13unordered_mapIjjSt4hashIjESt8equal_toIjESaISt4pairIKjjEEEixERS5_.exit
   %.sroa.060.0 = load ptr, ptr %.sroa.060.0106, align 8 ; 2 uses
   %.not94 = icmp eq ptr %.sroa.060.0, null
-  br i1 %.not94, label %._crit_edge109, label %bb.ae, !llvm.loop !191
+  br i1 %.not94, label %._crit_edge109.loopexit, label %bb.ae, !llvm.loop !191
 
 bb.ak:                                            ; preds = %bb.k
   unreachable

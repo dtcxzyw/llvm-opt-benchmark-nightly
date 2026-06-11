@@ -138,11 +138,12 @@ _ZN4llvh15SmallVectorImplIZN6hermes17PostOrderAnalysis14visitPostOrderEPNS1_10Ba
   store i32 %i.o, ptr %i.g, align 8, !tbaa !17
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %.val824.pre28 = load ptr, ptr %3, align 8, !tbaa !15
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZNSt6vectorIPN6hermes10BasicBlockESaIS2_EE9push_backERKS2_.exit, %_ZN4llvh15SmallVectorImplIZN6hermes17PostOrderAnalysis14visitPostOrderEPNS1_10BasicBlockERSt6vectorIS4_SaIS4_EEE5StateE12emplace_backIJRS4_EEEvDpOT_.exit
   %.val925 = phi i32 [ %i.ck, %_ZNSt6vectorIPN6hermes10BasicBlockESaIS2_EE9push_backERKS2_.exit ], [ %i.o, %_ZN4llvh15SmallVectorImplIZN6hermes17PostOrderAnalysis14visitPostOrderEPNS1_10BasicBlockERSt6vectorIS4_SaIS4_EEE5StateE12emplace_backIJRS4_EEEvDpOT_.exit ] ; 2 uses
-  %.val824 = load ptr, ptr %3, align 8, !tbaa !15
+  %.val824 = phi ptr [ %4, %_ZNSt6vectorIPN6hermes10BasicBlockESaIS2_EE9push_backERKS2_.exit ], [ %.val824.pre28, %_ZN4llvh15SmallVectorImplIZN6hermes17PostOrderAnalysis14visitPostOrderEPNS1_10BasicBlockERSt6vectorIS4_SaIS4_EEE5StateE12emplace_backIJRS4_EEEvDpOT_.exit ] ; 2 uses
   %i.r = zext i32 %.val925 to i64
   %i.s = getelementptr inbounds nuw [40 x i8], ptr %.val824, i64 %i.r ; 4 uses
   %i.t = getelementptr inbounds i8, ptr %i.s, i64 -24 ; 2 uses
@@ -263,7 +264,7 @@ _ZN4llvh15SmallVectorImplIZN6hermes17PostOrderAnalysis14visitPostOrderEPNS1_10Ba
 
 bb.m:                                             ; preds = %_ZN4llvh15SmallVectorImplIZN6hermes17PostOrderAnalysis14visitPostOrderEPNS1_10BasicBlockERSt6vectorIS4_SaIS4_EEE5StateE12emplace_backIJRS4_EEEvDpOT_.exit16, %_ZN4llvh15SmallPtrSetImplIPN6hermes10BasicBlockEE6insertES3_.exit
   %.val9 = phi i32 [ %i.bf, %_ZN4llvh15SmallVectorImplIZN6hermes17PostOrderAnalysis14visitPostOrderEPNS1_10BasicBlockERSt6vectorIS4_SaIS4_EEE5StateE12emplace_backIJRS4_EEEvDpOT_.exit16 ], [ %.val9.pre, %_ZN4llvh15SmallPtrSetImplIPN6hermes10BasicBlockEE6insertES3_.exit ] ; 2 uses
-  %.val8 = load ptr, ptr %3, align 8, !tbaa !15
+  %.val8 = load ptr, ptr %3, align 8, !tbaa !15   ; 2 uses
   %i.bg = zext i32 %.val9 to i64
   %i.bh = getelementptr inbounds nuw [40 x i8], ptr %.val8, i64 %i.bg ; 4 uses
   %i.bi = getelementptr inbounds i8, ptr %i.bh, i64 -24 ; 2 uses
@@ -275,6 +276,7 @@ bb.m:                                             ; preds = %_ZN4llvh15SmallVect
 
 ._crit_edge:                                      ; preds = %bb.m, %bb.c
   %i.bm = phi i32 [ %.val925, %bb.c ], [ %.val9, %bb.m ] ; 2 uses
+  %.val82431 = phi ptr [ %.val824, %bb.c ], [ %.val8, %bb.m ] ; 2 uses
   %.lcssa23 = phi ptr [ %i.s, %bb.c ], [ %i.bh, %bb.m ]
   %i.bn = getelementptr inbounds i8, ptr %.lcssa23, i64 -40 ; 2 uses
   %i.bo = load ptr, ptr %i.p, align 8, !tbaa !33  ; 4 uses
@@ -329,11 +331,13 @@ _ZNSt6vectorIPN6hermes10BasicBlockESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i
 
 bb.r:                                             ; preds = %_ZNSt6vectorIPN6hermes10BasicBlockESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i
   call void @_ZdlPvm(ptr noundef nonnull %i.bs, i64 noundef %i.bv) #14
+  %.val824.pre = load ptr, ptr %3, align 8, !tbaa !15
   %.pre.pre = load i32, ptr %i.g, align 8, !tbaa !17
   br label %_ZNSt6vectorIPN6hermes10BasicBlockESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i
 
 _ZNSt6vectorIPN6hermes10BasicBlockESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i: ; preds = %bb.r, %_ZNSt6vectorIPN6hermes10BasicBlockESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i
   %.pre = phi i32 [ %.pre.pre, %bb.r ], [ %i.bm, %_ZNSt6vectorIPN6hermes10BasicBlockESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i ]
+  %.val82430 = phi ptr [ %.val824.pre, %bb.r ], [ %.val82431, %_ZNSt6vectorIPN6hermes10BasicBlockESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i ]
   store ptr %i.cd, ptr %1, align 8, !tbaa !38
   store ptr %i.ch, ptr %i.p, align 8, !tbaa !33
   %i.ci = getelementptr inbounds nuw [8 x i8], ptr %i.cd, i64 %i.cb
@@ -342,13 +346,13 @@ _ZNSt6vectorIPN6hermes10BasicBlockESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu
 
 _ZNSt6vectorIPN6hermes10BasicBlockESaIS2_EE9push_backERKS2_.exit: ; preds = %bb.n, %_ZNSt6vectorIPN6hermes10BasicBlockESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i
   %i.cj = phi i32 [ %i.bm, %bb.n ], [ %.pre, %_ZNSt6vectorIPN6hermes10BasicBlockESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ]
+  %4 = phi ptr [ %.val82431, %bb.n ], [ %.val82430, %_ZNSt6vectorIPN6hermes10BasicBlockESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ] ; 3 uses
   %i.ck = add i32 %i.cj, -1                       ; 3 uses
   store i32 %i.ck, ptr %i.g, align 8, !tbaa !17
   %.not.i18 = icmp eq i32 %i.ck, 0
   br i1 %.not.i18, label %bb.s, label %bb.c, !llvm.loop !39
 
 bb.s:                                             ; preds = %_ZNSt6vectorIPN6hermes10BasicBlockESaIS2_EE9push_backERKS2_.exit
-  %4 = load ptr, ptr %3, align 8, !tbaa !15       ; 2 uses
   %i.cl = icmp eq ptr %4, %i.f
   br i1 %i.cl, label %_ZN4llvh11SmallVectorIZN6hermes17PostOrderAnalysis14visitPostOrderEPNS1_10BasicBlockERSt6vectorIS4_SaIS4_EEE5StateLj32EED2Ev.exit, label %bb.t
 

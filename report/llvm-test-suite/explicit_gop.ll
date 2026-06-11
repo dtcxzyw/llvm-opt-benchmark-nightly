@@ -201,7 +201,7 @@ declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #6
 define dso_local void @interpret_gop_structure() local_unnamed_addr #3 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
-  %i.b = alloca i32, align 4                      ; 5 uses
+  %i.b = alloca i32, align 4                      ; 6 uses
   %i.c = load ptr, ptr @input, align 8, !tbaa !8
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 2976
   %i.e = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.d) #14
@@ -314,16 +314,17 @@ bb.k:                                             ; preds = %bb.j, %._crit_edge
 .lr.ph.preheader:                                 ; preds = %bb.k
   %wide.trip.count = zext nneg i32 %.082 to i64
   %.pre86 = load ptr, ptr @gop_structure, align 8, !tbaa !8
+  %.pre88 = load i32, ptr %i.b, align 4, !tbaa !4
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.m
+  %0 = phi i32 [ %.pre88, %.lr.ph.preheader ], [ %1, %bb.m ] ; 3 uses
   %i.at = phi ptr [ %.pre86, %.lr.ph.preheader ], [ %i.ba, %bb.m ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.m ] ; 3 uses
   %i.au = getelementptr inbounds nuw [24 x i8], ptr %i.at, i64 %indvars.iv
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 4
-  %0 = load i32, ptr %i.av, align 4, !tbaa !18    ; 2 uses
-  %i.aw = load i32, ptr %i.b, align 4, !tbaa !4
-  %i.ax = icmp eq i32 %0, %i.aw
+  %i.aw = load i32, ptr %i.av, align 4, !tbaa !18
+  %i.ax = icmp eq i32 %i.aw, %0
   br i1 %i.ax, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %.lr.ph
@@ -331,9 +332,11 @@ bb.l:                                             ; preds = %.lr.ph
   %i.az = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) @errortext, i64 noundef 300, ptr noundef nonnull @.str.6, i32 noundef %0, i32 noundef %.082, i32 noundef %i.ay) #13 ; 0 uses
   call void @error(ptr noundef nonnull @errortext, i32 noundef 400) #13
   %.pre85 = load ptr, ptr @gop_structure, align 8, !tbaa !8
+  %.pre87 = load i32, ptr %i.b, align 4, !tbaa !4
   br label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph, %bb.l
+  %1 = phi i32 [ %0, %.lr.ph ], [ %.pre87, %bb.l ]
   %i.ba = phi ptr [ %i.at, %.lr.ph ], [ %.pre85, %bb.l ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count

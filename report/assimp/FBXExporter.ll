@@ -201,7 +201,7 @@ bb.ci:                                            ; preds = %bb.ch
 
 bb.cj:                                            ; preds = %bb.ch
   %i.sq = load ptr, ptr %i.eo, align 8
-  %i.sr = load ptr, ptr %7, align 8               ; 4 uses
+  %i.sr = load ptr, ptr %7, align 8               ; 5 uses
   %i.ss = ptrtoint ptr %i.sq to i64
   %i.st = ptrtoint ptr %i.sr to i64               ; 2 uses
   %i.su = sub i64 %i.ss, %i.st                    ; 2 uses
@@ -215,7 +215,7 @@ _ZNSt12_Vector_baseIdSaIdEE11_M_allocateEm.exit.i: ; preds = %bb.cj
   %i.sz = sub i64 %i.sy, %i.st                    ; 3 uses
   %i.ta = mul i64 %i.sn, 24
   %i.tb = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ta) #34
-          to label %.noexc462 unwind label %.loopexit1477 ; 4 uses
+          to label %.noexc462 unwind label %.loopexit1477 ; 5 uses
 
 .noexc462:                                        ; preds = %_ZNSt12_Vector_baseIdSaIdEE11_M_allocateEm.exit.i
   %i.tc = icmp sgt i64 %i.sz, 0
@@ -242,6 +242,7 @@ _ZNSt12_Vector_baseIdSaIdEE13_M_deallocateEPdm.exit.i: ; preds = %bb.cl, %_ZNSt6
   br label %_ZNSt6vectorIdSaIdEE7reserveEm.exit
 
 _ZNSt6vectorIdSaIdEE7reserveEm.exit:              ; preds = %bb.cj, %_ZNSt12_Vector_baseIdSaIdEE13_M_deallocateEPdm.exit.i
+  %.pre30253035 = phi ptr [ %i.sr, %bb.cj ], [ %i.tb, %_ZNSt12_Vector_baseIdSaIdEE13_M_deallocateEPdm.exit.i ]
   %i.tf = load i32, ptr %i.oh, align 8            ; 2 uses
   %.not2463 = icmp eq i32 %i.tf, 0
   br i1 %.not2463, label %.loopexit1457, label %.lr.ph2383
@@ -261,6 +262,7 @@ _ZNSt6vectorIdSaIdEE7reserveEm.exit:              ; preds = %bb.cj, %_ZNSt12_Vec
   br label %bb.gh
 
 bb.cm:                                            ; preds = %.lr.ph2383, %._crit_edge2381
+  %.pre3025 = phi ptr [ %.pre30253035, %.lr.ph2383 ], [ %.pre30253034, %._crit_edge2381 ] ; 2 uses
   %i.th = phi i32 [ %i.tf, %.lr.ph2383 ], [ %i.tm, %._crit_edge2381 ]
   %.02472382 = phi i64 [ 0, %.lr.ph2383 ], [ %i.tn, %._crit_edge2381 ] ; 2 uses
   %i.ti = load ptr, ptr %i.tg, align 8
@@ -279,6 +281,7 @@ bb.cm:                                            ; preds = %.lr.ph2383, %._crit
   br label %._crit_edge2381
 
 ._crit_edge2381:                                  ; preds = %._crit_edge2381.loopexit, %bb.cm
+  %.pre30253034 = phi ptr [ %79, %._crit_edge2381.loopexit ], [ %.pre3025, %bb.cm ]
   %i.tm = phi i32 [ %.pre3024.a, %._crit_edge2381.loopexit ], [ %i.th, %bb.cm ] ; 2 uses
   %i.tn = add nuw nsw i64 %.02472382, 1           ; 2 uses
   %i.to = zext i32 %i.tm to i64
@@ -286,6 +289,7 @@ bb.cm:                                            ; preds = %.lr.ph2383, %._crit
   br i1 %i.tp, label %bb.cm, label %.loopexit1457, !llvm.loop !715
 
 bb.cn:                                            ; preds = %.lr.ph2380, %bb.cv
+  %78 = phi ptr [ %.pre3025, %.lr.ph2380 ], [ %79, %bb.cv ] ; 5 uses
   %i.tq = phi ptr [ %.pre3023, %.lr.ph2380 ], [ %i.vf, %bb.cv ] ; 3 uses
   %.02482378 = phi i64 [ 0, %.lr.ph2380 ], [ %i.vg, %bb.cv ] ; 2 uses
   %i.tr = load ptr, ptr %i.sc, align 8
@@ -299,7 +303,6 @@ bb.cn:                                            ; preds = %.lr.ph2380, %bb.cv
   %i.tz = getelementptr inbounds nuw i8, ptr %i.tw, i64 8
   %i.ua = load float, ptr %i.tz, align 4
   %i.ub = fpext float %i.ua to double             ; 3 uses
-  %78 = load ptr, ptr %7, align 8                 ; 5 uses
   %i.uc = ptrtoint ptr %i.tq to i64               ; 2 uses
   %i.ud = ptrtoint ptr %78 to i64                 ; 2 uses
   %i.ue = sub i64 %i.uc, %i.ud                    ; 5 uses
@@ -316,6 +319,7 @@ _ZSt9__advanceIPKdlEvRT_T0_St26random_access_iterator_tag.exit.i: ; preds = %bb.
   %i.ui = load ptr, ptr %i.ep, align 8
   %i.uj = getelementptr inbounds nuw i8, ptr %i.ui, i64 24 ; 2 uses
   store ptr %i.uj, ptr %i.ep, align 8
+  %.pre3024 = load ptr, ptr %7, align 8
   br label %bb.cv
 
 bb.co:                                            ; preds = %bb.cn
@@ -346,7 +350,7 @@ bb.cq:                                            ; preds = %_ZNKSt6vectorIdSaId
           to label %_ZNSt12_Vector_baseIdSaIdEE11_M_allocateEm.exit.i1201 unwind label %.loopexit1445
 
 _ZNSt12_Vector_baseIdSaIdEE11_M_allocateEm.exit.i1201: ; preds = %bb.cq, %_ZNKSt6vectorIdSaIdEE12_M_check_lenEmPKc.exit.i
-  %i.ut = phi ptr [ null, %_ZNKSt6vectorIdSaIdEE12_M_check_lenEmPKc.exit.i ], [ %i.us, %bb.cq ] ; 8 uses
+  %i.ut = phi ptr [ null, %_ZNKSt6vectorIdSaIdEE12_M_check_lenEmPKc.exit.i ], [ %i.us, %bb.cq ] ; 9 uses
   %i.uu = icmp sgt i64 %i.ue, 8
   br i1 %i.uu, label %bb.cr, label %bb.cs, !prof !181
 
@@ -392,6 +396,7 @@ _ZNSt12_Vector_baseIdSaIdEE13_M_deallocateEPdm.exit.i1202: ; preds = %bb.cu, %bb
   br label %bb.cv
 
 bb.cv:                                            ; preds = %_ZSt9__advanceIPKdlEvRT_T0_St26random_access_iterator_tag.exit.i, %_ZNSt12_Vector_baseIdSaIdEE13_M_deallocateEPdm.exit.i1202
+  %79 = phi ptr [ %.pre3024, %_ZSt9__advanceIPKdlEvRT_T0_St26random_access_iterator_tag.exit.i ], [ %i.ut, %_ZNSt12_Vector_baseIdSaIdEE13_M_deallocateEPdm.exit.i1202 ] ; 2 uses
   %i.vf = phi ptr [ %i.uj, %_ZSt9__advanceIPKdlEvRT_T0_St26random_access_iterator_tag.exit.i ], [ %i.vd, %_ZNSt12_Vector_baseIdSaIdEE13_M_deallocateEPdm.exit.i1202 ]
   %i.vg = add nuw nsw i64 %.02482378, 1           ; 2 uses
   %i.vh = load i32, ptr %i.tj, align 8
@@ -436,7 +441,7 @@ bb.cx:                                            ; preds = %bb.cw
 
 bb.cy:                                            ; preds = %bb.cw
   %i.vv = load ptr, ptr %i.eq, align 8
-  %i.vw = load ptr, ptr %8, align 8               ; 4 uses
+  %i.vw = load ptr, ptr %8, align 8               ; 5 uses
   %i.vx = ptrtoint ptr %i.vv to i64
   %i.vy = ptrtoint ptr %i.vw to i64               ; 2 uses
   %i.vz = sub i64 %i.vx, %i.vy                    ; 2 uses
@@ -450,7 +455,7 @@ _ZNSt12_Vector_baseIdSaIdEE11_M_allocateEm.exit.i466: ; preds = %bb.cy
   %i.we = sub i64 %i.wd, %i.vy                    ; 3 uses
   %i.wf = shl nuw nsw i64 %i.vt, 3
   %i.wg = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.wf) #34
-          to label %.noexc471 unwind label %.loopexit1489 ; 4 uses
+          to label %.noexc471 unwind label %.loopexit1489 ; 5 uses
 
 .noexc471:                                        ; preds = %_ZNSt12_Vector_baseIdSaIdEE11_M_allocateEm.exit.i466
   %i.wh = icmp sgt i64 %i.we, 0
@@ -477,6 +482,7 @@ _ZNSt12_Vector_baseIdSaIdEE13_M_deallocateEPdm.exit.i469: ; preds = %bb.da, %_ZN
   br label %_ZNSt6vectorIdSaIdEE7reserveEm.exit472
 
 _ZNSt6vectorIdSaIdEE7reserveEm.exit472:           ; preds = %bb.cy, %_ZNSt12_Vector_baseIdSaIdEE13_M_deallocateEPdm.exit.i469
+  %.pre30293038 = phi ptr [ %i.vw, %bb.cy ], [ %i.wg, %_ZNSt12_Vector_baseIdSaIdEE13_M_deallocateEPdm.exit.i469 ]
   %i.wk = load i32, ptr %i.oh, align 8            ; 2 uses
   %.not2465 = icmp eq i32 %i.wk, 0
   br i1 %.not2465, label %.loopexit1456, label %.lr.ph2389
@@ -496,6 +502,7 @@ _ZNSt6vectorIdSaIdEE7reserveEm.exit472:           ; preds = %bb.cy, %_ZNSt12_Vec
   br label %bb.gh
 
 bb.db:                                            ; preds = %.lr.ph2389, %._crit_edge2387
+  %.pre3029 = phi ptr [ %.pre30293038, %.lr.ph2389 ], [ %.pre30293037, %._crit_edge2387 ] ; 2 uses
   %i.wm = phi i32 [ %i.wk, %.lr.ph2389 ], [ %i.wr, %._crit_edge2387 ]
   %.02492388 = phi i64 [ 0, %.lr.ph2389 ], [ %i.ws, %._crit_edge2387 ] ; 2 uses
   %i.wn = load ptr, ptr %i.wl, align 8
@@ -514,6 +521,7 @@ bb.db:                                            ; preds = %.lr.ph2389, %._crit
   br label %._crit_edge2387
 
 ._crit_edge2387:                                  ; preds = %._crit_edge2387.loopexit, %bb.db
+  %.pre30293037 = phi ptr [ %81, %._crit_edge2387.loopexit ], [ %.pre3029, %bb.db ]
   %i.wr = phi i32 [ %.pre3026, %._crit_edge2387.loopexit ], [ %i.wm, %bb.db ] ; 2 uses
   %i.ws = add nuw nsw i64 %.02492388, 1           ; 2 uses
   %i.wt = zext i32 %i.wr to i64
@@ -521,6 +529,7 @@ bb.db:                                            ; preds = %.lr.ph2389, %._crit
   br i1 %i.wu, label %bb.db, label %.loopexit1456, !llvm.loop !717
 
 bb.dc:                                            ; preds = %.lr.ph2386, %bb.dk
+  %80 = phi ptr [ %.pre3029, %.lr.ph2386 ], [ %81, %bb.dk ] ; 5 uses
   %i.wv = phi ptr [ %.pre3025.a, %.lr.ph2386 ], [ %i.yk, %bb.dk ] ; 3 uses
   %.02502384 = phi i64 [ 0, %.lr.ph2386 ], [ %i.yl, %bb.dk ] ; 2 uses
   %i.ww = load ptr, ptr %i.vk, align 8
@@ -534,9 +543,8 @@ bb.dc:                                            ; preds = %.lr.ph2386, %bb.dk
   %i.xe = getelementptr inbounds nuw i8, ptr %i.xb, i64 8
   %i.xf = load <2 x float>, ptr %i.xe, align 4
   %i.xg = fpext <2 x float> %i.xf to <2 x double> ; 3 uses
-  %79 = load ptr, ptr %8, align 8                 ; 5 uses
   %i.xh = ptrtoint ptr %i.wv to i64               ; 2 uses
-  %i.xi = ptrtoint ptr %79 to i64                 ; 2 uses
+  %i.xi = ptrtoint ptr %80 to i64                 ; 2 uses
   %i.xj = sub i64 %i.xh, %i.xi                    ; 6 uses
   %i.xk = load ptr, ptr %i.eq, align 8
   %i.xl = ptrtoint ptr %i.xk to i64               ; 2 uses
@@ -551,6 +559,7 @@ _ZSt9__advanceIPKdlEvRT_T0_St26random_access_iterator_tag.exit.i1208: ; preds = 
   %i.xn = load ptr, ptr %i.er, align 8
   %i.xo = getelementptr inbounds nuw i8, ptr %i.xn, i64 32 ; 2 uses
   store ptr %i.xo, ptr %i.er, align 8
+  %.pre3028 = load ptr, ptr %8, align 8
   br label %bb.dk
 
 bb.dd:                                            ; preds = %bb.dc
@@ -581,12 +590,12 @@ bb.df:                                            ; preds = %_ZNKSt6vectorIdSaId
           to label %_ZNSt12_Vector_baseIdSaIdEE11_M_allocateEm.exit.i1216 unwind label %.loopexit1440
 
 _ZNSt12_Vector_baseIdSaIdEE11_M_allocateEm.exit.i1216: ; preds = %bb.df, %_ZNKSt6vectorIdSaIdEE12_M_check_lenEmPKc.exit.i1213
-  %i.xy = phi ptr [ null, %_ZNKSt6vectorIdSaIdEE12_M_check_lenEmPKc.exit.i1213 ], [ %i.xx, %bb.df ] ; 8 uses
+  %i.xy = phi ptr [ null, %_ZNKSt6vectorIdSaIdEE12_M_check_lenEmPKc.exit.i1213 ], [ %i.xx, %bb.df ] ; 9 uses
   %i.xz = icmp sgt i64 %i.xj, 8
   br i1 %i.xz, label %bb.dg, label %bb.dh, !prof !181
 
 bb.dg:                                            ; preds = %_ZNSt12_Vector_baseIdSaIdEE11_M_allocateEm.exit.i1216
-  call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.xy, ptr align 8 %79, i64 %i.xj, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.xy, ptr align 8 %80, i64 %i.xj, i1 false)
   br label %bb.di
 
 bb.dh:                                            ; preds = %_ZNSt12_Vector_baseIdSaIdEE11_M_allocateEm.exit.i1216
@@ -594,7 +603,7 @@ bb.dh:                                            ; preds = %_ZNSt12_Vector_base
   br i1 %i.ya, label %.thread1412, label %bb.di
 
 .thread1412:                                      ; preds = %bb.dh
-  %i.yb = load double, ptr %79, align 8
+  %i.yb = load double, ptr %80, align 8
   store double %i.yb, ptr %i.xy, align 8
   %i.yc = getelementptr inbounds nuw i8, ptr %i.xy, i64 8
   store <2 x double> %i.xd, ptr %i.yc, align 8
@@ -609,13 +618,13 @@ bb.di:                                            ; preds = %bb.dh, %bb.dg
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ye, i64 16
   store <2 x double> %i.xg, ptr %.sroa.8.0..sroa_idx, align 8
   %i.yf = getelementptr inbounds nuw i8, ptr %i.ye, i64 32 ; 2 uses
-  %.not.i59.i1217 = icmp eq ptr %79, null
+  %.not.i59.i1217 = icmp eq ptr %80, null
   br i1 %.not.i59.i1217, label %_ZNSt12_Vector_baseIdSaIdEE13_M_deallocateEPdm.exit.i1218, label %bb.dj
 
 bb.dj:                                            ; preds = %.thread1412, %bb.di
   %i.yg = phi ptr [ %i.yd, %.thread1412 ], [ %i.yf, %bb.di ]
   %i.yh = sub i64 %i.xl, %i.xi
-  call void @_ZdlPvm(ptr noundef nonnull %79, i64 noundef %i.yh) #32
+  call void @_ZdlPvm(ptr noundef nonnull %80, i64 noundef %i.yh) #32
   br label %_ZNSt12_Vector_baseIdSaIdEE13_M_deallocateEPdm.exit.i1218
 
 _ZNSt12_Vector_baseIdSaIdEE13_M_deallocateEPdm.exit.i1218: ; preds = %bb.dj, %bb.di
@@ -627,6 +636,7 @@ _ZNSt12_Vector_baseIdSaIdEE13_M_deallocateEPdm.exit.i1218: ; preds = %bb.dj, %bb
   br label %bb.dk
 
 bb.dk:                                            ; preds = %_ZSt9__advanceIPKdlEvRT_T0_St26random_access_iterator_tag.exit.i1208, %_ZNSt12_Vector_baseIdSaIdEE13_M_deallocateEPdm.exit.i1218
+  %81 = phi ptr [ %.pre3028, %_ZSt9__advanceIPKdlEvRT_T0_St26random_access_iterator_tag.exit.i1208 ], [ %i.xy, %_ZNSt12_Vector_baseIdSaIdEE13_M_deallocateEPdm.exit.i1218 ] ; 2 uses
   %i.yk = phi ptr [ %i.xo, %_ZSt9__advanceIPKdlEvRT_T0_St26random_access_iterator_tag.exit.i1208 ], [ %i.yi, %_ZNSt12_Vector_baseIdSaIdEE13_M_deallocateEPdm.exit.i1218 ]
   %i.yl = add nuw nsw i64 %.02502384, 1           ; 2 uses
   %i.ym = load i32, ptr %i.wo, align 8

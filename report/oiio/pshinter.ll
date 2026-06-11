@@ -18,7 +18,7 @@ target triple = "x86_64-pc-linux-gnu"
 define hidden i32 @ps_hints_apply(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 8 uses
-  %4 = alloca %struct.PSH_GlyphRec_, align 8      ; 51 uses
+  %4 = alloca %struct.PSH_GlyphRec_, align 8      ; 52 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 2 ; 2 uses
   %i.c = load i16, ptr %i.b, align 2, !tbaa !7    ; 2 uses
@@ -421,13 +421,14 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai
   %i.jv = getelementptr inbounds nuw i8, ptr %2, i64 3948 ; 2 uses
   %i.jw = getelementptr inbounds nuw i8, ptr %2, i64 3940 ; 2 uses
   %i.jx = getelementptr inbounds nuw i8, ptr %2, i64 1600
+  %.pre197 = load i32, ptr %4, align 8, !tbaa !29
   br label %bb.al
 
 bb.al:                                            ; preds = %.thread, %bb.dd
+  %5 = phi i32 [ %.pre197, %.thread ], [ %10, %bb.dd ] ; 10 uses
   %i.jy = phi i1 [ true, %.thread ], [ false, %bb.dd ] ; 3 uses
   %i.jz = phi i1 [ false, %.thread ], [ true, %bb.dd ]
   %indvars.iv = phi i64 [ 0, %.thread ], [ 1, %bb.dd ] ; 3 uses
-  %5 = load i32, ptr %4, align 8, !tbaa !29       ; 10 uses
   %.not19.i = icmp eq i32 %5, 0
   br i1 %.not19.i, label %psh_glyph_load_points.exit, label %.lr.ph.i83
 
@@ -805,7 +806,7 @@ psh_hint_table_align_hints.exit:                  ; preds = %psh_hint_table_alig
   br i1 %i.pu, label %bb.be, label %bb.br
 
 bb.be:                                            ; preds = %psh_hint_table_align_hints.exit
-  %i.pv = load i32, ptr %4, align 8, !tbaa !29    ; 2 uses
+  %i.pv = load i32, ptr %4, align 8, !tbaa !29    ; 3 uses
   %.not.i97 = icmp eq i32 %i.pv, 0
   br i1 %.not.i97, label %psh_glyph_find_strong_points.exit, label %.lr.ph.i98
 
@@ -818,14 +819,14 @@ bb.be:                                            ; preds = %psh_hint_table_alig
   br label %bb.bf
 
 bb.bf:                                            ; preds = %bb.bq, %.lr.ph.i98
+  %6 = phi i32 [ %i.pv, %.lr.ph.i98 ], [ %7, %bb.bq ] ; 2 uses
   %.pn120.i = phi ptr [ %i.pm, %.lr.ph.i98 ], [ %.056121.i, %bb.bq ] ; 3 uses
   %.057119.i = phi i32 [ %i.pn, %.lr.ph.i98 ], [ %i.sn, %bb.bq ]
   %.058118.i = phi i32 [ %..i, %.lr.ph.i98 ], [ %.69.i, %bb.bq ] ; 3 uses
   %.056121.i = getelementptr inbounds nuw i8, ptr %.pn120.i, i64 24 ; 2 uses
   %i.qa = getelementptr inbounds nuw i8, ptr %.pn120.i, i64 40
-  %6 = load i32, ptr %i.qa, align 8, !tbaa !105
-  %i.qb = load i32, ptr %4, align 8, !tbaa !29
-  %.69.i = call i32 @llvm.umin.i32(i32 %6, i32 %i.qb) ; 3 uses
+  %i.qb = load i32, ptr %i.qa, align 8, !tbaa !105
+  %.69.i = call i32 @llvm.umin.i32(i32 %i.qb, i32 %6) ; 3 uses
   %i.qc = icmp ugt i32 %.69.i, %.058118.i
   br i1 %i.qc, label %bb.bg, label %bb.bq
 
@@ -1014,19 +1015,25 @@ psh_hint_table_activate_mask.exit.i:              ; preds = %._crit_edge11.i.i, 
   %.val75.i = phi ptr [ %i.ry, %._crit_edge.i.i ], [ %.val75.pre.i, %._crit_edge.thread.i.i ], [ %i.ry, %._crit_edge11.i.i ]
   %.val74.i = phi i32 [ %.3.i.i, %._crit_edge.i.i ], [ 0, %._crit_edge.thread.i.i ], [ %.3.i.i, %._crit_edge11.i.i ]
   call fastcc void @psh_hint_table_find_strong_points(i32 %.val74.i, ptr %.val75.i, ptr noundef %i.qg, i32 noundef %i.qd, i32 noundef %spec.store.select.i95, i32 noundef %i.po)
+  %.pre199 = load i32, ptr %4, align 8, !tbaa !29
   br label %bb.bq
 
 bb.bq:                                            ; preds = %psh_hint_table_activate_mask.exit.i, %bb.bf
+  %7 = phi i32 [ %.pre199, %psh_hint_table_activate_mask.exit.i ], [ %6, %bb.bf ] ; 2 uses
   %i.sn = add i32 %.057119.i, -1                  ; 2 uses
   %i.so = icmp ugt i32 %i.sn, 1
   br i1 %i.so, label %bb.bf, label %.thread.i, !llvm.loop !121
 
 bb.br:                                            ; preds = %psh_hint_table_align_hints.exit
   %i.sp = icmp eq i32 %i.pn, 1
-  br i1 %i.sp, label %.thread.i, label %.thread115.i
+  br i1 %i.sp, label %..thread.i_crit_edge, label %.thread115.i
 
-.thread.i:                                        ; preds = %bb.bq, %bb.br
-  %7 = load i32, ptr %4, align 8, !tbaa !29
+..thread.i_crit_edge:                             ; preds = %bb.br
+  %.pre201 = load i32, ptr %4, align 8, !tbaa !29
+  br label %.thread.i
+
+.thread.i:                                        ; preds = %bb.bq, %..thread.i_crit_edge
+  %8 = phi i32 [ %.pre201, %..thread.i_crit_edge ], [ %7, %bb.bq ]
   %i.sq = load ptr, ptr %i.k, align 8, !tbaa !27
   %i.sr = load ptr, ptr %i.pj, align 8, !tbaa !100
   %i.ss = getelementptr inbounds nuw i8, ptr %i.sr, i64 8
@@ -1214,7 +1221,7 @@ bb.ca:                                            ; preds = %bb.bz
 psh_hint_table_activate_mask.exit113.i:           ; preds = %._crit_edge11.i109.i, %._crit_edge.i101.i, %._crit_edge.thread.i112.i
   %.val73.i = phi ptr [ %i.uo, %._crit_edge.i101.i ], [ %.val73.pre.i, %._crit_edge.thread.i112.i ], [ %i.uo, %._crit_edge11.i109.i ]
   %.val72.i = phi i32 [ %.3.i98.i, %._crit_edge.i101.i ], [ 0, %._crit_edge.thread.i112.i ], [ %.3.i98.i, %._crit_edge11.i109.i ]
-  call fastcc void @psh_hint_table_find_strong_points(i32 %.val72.i, ptr %.val73.i, ptr noundef %i.sq, i32 noundef %7, i32 noundef %spec.store.select.i95, i32 noundef %i.po)
+  call fastcc void @psh_hint_table_find_strong_points(i32 %.val72.i, ptr %.val73.i, ptr noundef %i.sq, i32 noundef %8, i32 noundef %spec.store.select.i95, i32 noundef %i.po)
   br label %.thread115.i
 
 .thread115.i:                                     ; preds = %psh_hint_table_activate_mask.exit113.i, %bb.br
@@ -1345,7 +1352,7 @@ bb.ci:                                            ; preds = %.lr.ph.split.us.i10
   br label %bb.cj
 
 bb.cj:                                            ; preds = %bb.ci, %.lr.ph.split.us.i105
-  %i.ws = phi i32 [ %.pre26.i, %bb.ci ], [ %i.wi, %.lr.ph.split.us.i105 ] ; 2 uses
+  %i.ws = phi i32 [ %.pre26.i, %bb.ci ], [ %i.wi, %.lr.ph.split.us.i105 ] ; 3 uses
   %i.wt = getelementptr inbounds nuw i8, ptr %.01718.us.i, i64 72
   %indvars.iv.next24.i = add nuw nsw i64 %indvars.iv23.i, 1 ; 2 uses
   %i.wu = zext i32 %i.ws to i64
@@ -1550,7 +1557,7 @@ bb.da:                                            ; preds = %.lr.ph.split.i117
   br label %bb.db
 
 bb.db:                                            ; preds = %bb.da, %.lr.ph.split.i117
-  %i.aac = phi i32 [ %.pre.i120, %bb.da ], [ %i.zr, %.lr.ph.split.i117 ] ; 2 uses
+  %i.aac = phi i32 [ %.pre.i120, %bb.da ], [ %i.zr, %.lr.ph.split.i117 ] ; 3 uses
   %i.aad = getelementptr inbounds nuw i8, ptr %.01718.i, i64 72
   %indvars.iv.next.i121 = add nuw nsw i64 %indvars.iv.i118, 1 ; 2 uses
   %i.aae = zext i32 %i.aac to i64
@@ -1558,14 +1565,17 @@ bb.db:                                            ; preds = %bb.da, %.lr.ph.spli
   br i1 %i.aaf, label %.lr.ph.split.i117, label %psh_glyph_save_points.exit, !llvm.loop !125
 
 psh_glyph_save_points.exit:                       ; preds = %bb.cj, %bb.db, %psh_glyph_find_blue_points.exit, %.split
+  %9 = phi i32 [ %i.aac, %bb.db ], [ 0, %.split ], [ 0, %psh_glyph_find_blue_points.exit ], [ %i.ws, %bb.cj ]
   br i1 %.not79, label %bb.dd, label %bb.dc
 
 bb.dc:                                            ; preds = %psh_glyph_save_points.exit
   %i.aag = load ptr, ptr %i.ig, align 8, !tbaa !48
   call void @psh_globals_set_scale(ptr noundef %i.aag, i64 noundef %i.ij, i64 noundef %i.il, i64 noundef 0, i64 noundef 0)
+  %.pre = load i32, ptr %4, align 8, !tbaa !29
   br label %bb.dd
 
 bb.dd:                                            ; preds = %psh_glyph_save_points.exit, %bb.dc
+  %10 = phi i32 [ %9, %psh_glyph_save_points.exit ], [ %.pre, %bb.dc ]
   br i1 %i.jy, label %bb.al, label %.loopexit, !llvm.loop !137
 
 .loopexit:                                        ; preds = %bb.dd, %psh_glyph_init.exit.thread, %psh_glyph_init.exit

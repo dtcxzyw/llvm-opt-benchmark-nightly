@@ -201,7 +201,7 @@ bb.a:
   %18 = alloca %"class.std::unique_ptr.120", align 8 ; 7 uses
   %19 = alloca %"class.arrow::Status", align 8    ; 8 uses
   %20 = alloca %"class.arrow::Status", align 8    ; 5 uses
-  %21 = alloca %"class.arrow::internal::BitRunReader", align 8 ; 11 uses
+  %21 = alloca %"class.arrow::internal::BitRunReader", align 8 ; 12 uses
   %22 = alloca %"class.arrow::Status", align 8    ; 8 uses
   %23 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %24 = alloca %"class.std::shared_ptr.48", align 16 ; 5 uses
@@ -604,16 +604,20 @@ bb.agq:                                           ; preds = %_ZNK5arrow9ArrayDat
 
 bb.agr:                                           ; preds = %.lr.ph146.i.i
   %i.ddz = icmp slt i64 %i.ddw, %i.ddn
-  br i1 %i.ddz, label %.preheader.i.i, label %.loopexit.i.i418, !prof !54
+  br i1 %i.ddz, label %.preheader.preheader.i.i, label %.loopexit.i.i418, !prof !54
 
-.preheader.i.i:                                   ; preds = %bb.agr, %bb.agw
-  %i.dea = phi i8 [ %i.dfc, %bb.agw ], [ %i.ddq, %bb.agr ]
-  %118 = phi i64 [ %i.dfi, %bb.agw ], [ %i.ddw, %bb.agr ]
-  %i.deb = phi i64 [ %i.dfl, %bb.agw ], [ %i.ddn, %bb.agr ]
-  %119 = load ptr, ptr %21, align 8, !tbaa !591, !noalias !576
-  %i.dec = getelementptr inbounds nuw i8, ptr %119, i64 8 ; 3 uses
+.preheader.preheader.i.i:                         ; preds = %bb.agr
+  %.pre156.i.i = load ptr, ptr %21, align 8, !tbaa !591, !noalias !576
+  br label %.preheader.i.i
+
+.preheader.i.i:                                   ; preds = %bb.agw, %.preheader.preheader.i.i
+  %i.dea = phi i8 [ %i.dfc, %bb.agw ], [ %i.ddq, %.preheader.preheader.i.i ]
+  %118 = phi ptr [ %120, %bb.agw ], [ %.pre156.i.i, %.preheader.preheader.i.i ]
+  %i.deb = phi i64 [ %i.dfi, %bb.agw ], [ %i.ddw, %.preheader.preheader.i.i ]
+  %119 = phi i64 [ %i.dfl, %bb.agw ], [ %i.ddn, %.preheader.preheader.i.i ]
+  %i.dec = getelementptr inbounds nuw i8, ptr %118, i64 8 ; 4 uses
   store ptr %i.dec, ptr %21, align 8, !tbaa !591, !noalias !576
-  %i.ded = sub nsw i64 %i.deb, %118               ; 6 uses
+  %i.ded = sub nsw i64 %119, %i.deb               ; 6 uses
   store i64 0, ptr %i.dbr, align 8, !tbaa !590, !noalias !576
   %i.dee = icmp sgt i64 %i.ded, 63
   br i1 %i.dee, label %bb.ags, label %bb.agt, !prof !54
@@ -650,11 +654,13 @@ bb.agt:                                           ; preds = %.preheader.i.i
   %i.dfb = xor i8 %i.dfa, %i.dev
   store i8 %i.dfb, ptr %i.deu, align 1, !tbaa !45, !noalias !576
   %.pre4.pre.i.i.i = load i64, ptr %i.dbr, align 8, !tbaa !590, !noalias !576
+  %.pre.i71.i = load ptr, ptr %21, align 8, !tbaa !591, !noalias !576
   %.pre.i71.i.a = load i8, ptr %i.dbq, align 8, !tbaa !589, !range !65, !noalias !576
   br label %bb.agu
 
 bb.agu:                                           ; preds = %bb.agt, %bb.ags
   %i.dfc = phi i8 [ %.pre.i71.i.a, %bb.agt ], [ %i.dea, %bb.ags ] ; 4 uses
+  %120 = phi ptr [ %.pre.i71.i, %bb.agt ], [ %i.dec, %bb.ags ]
   %.pre4.i.i.i = phi i64 [ %.pre4.pre.i.i.i, %bb.agt ], [ %i.def, %bb.ags ] ; 2 uses
   %i.dfd = trunc nuw i8 %i.dfc to i1
   br i1 %i.dfd, label %bb.agv, label %_ZN5arrow8internal12BitRunReader12LoadNextWordEv.exit.i.i.i

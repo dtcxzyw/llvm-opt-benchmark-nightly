@@ -201,7 +201,7 @@ define noundef i64 @_ZN6duckdb10CSVEncoder6EncodeERNS_10FileHandleEPcm(ptr nound
 bb.a:
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %5 = alloca %"class.std::allocator", align 1    ; 5 uses
-  %i.a = alloca i64, align 8                      ; 9 uses
+  %i.a = alloca i64, align 8                      ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
   store i64 0, ptr %i.a, align 8, !tbaa !48
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 4 uses
@@ -221,7 +221,7 @@ bb.a:
   %i.j = phi i64 [ %i.m, %.lr.ph ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.i
   %i.l = load i8, ptr %i.k, align 1, !tbaa !27
-  %i.m = add i64 %i.j, 1                          ; 2 uses
+  %i.m = add i64 %i.j, 1                          ; 3 uses
   store i64 %i.m, ptr %i.a, align 8, !tbaa !48
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 %i.j
   store i8 %i.l, ptr %i.n, align 1, !tbaa !27
@@ -237,6 +237,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge, %bb.a
+  %.pre107112 = phi i64 [ %i.m, %._crit_edge ], [ 0, %bb.a ]
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 7 uses
   %i.t = load i64, ptr %i.s, align 8, !tbaa !22
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 4 uses
@@ -253,9 +254,11 @@ bb.c:                                             ; preds = %bb.b
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !20
   call void %i.aa(ptr noundef nonnull align 8 dereferenceable(40) %i.s, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef %3, ptr noundef %i.ac, ptr noundef nonnull align 8 dereferenceable(8) %i.d, ptr noundef %i.y)
+  %.pre107.pre = load i64, ptr %i.a, align 8, !tbaa !48
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
+  %.pre107 = phi i64 [ %.pre107.pre, %bb.c ], [ %.pre107112, %bb.b ]
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 5 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 8 uses
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 129 ; 4 uses
@@ -267,7 +270,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZNSt6vectorIcSaIcEED2Ev.exit, %bb.d
-  %6 = load i64, ptr %i.a, align 8, !tbaa !48     ; 3 uses
+  %6 = phi i64 [ %7, %_ZNSt6vectorIcSaIcEED2Ev.exit ], [ %.pre107, %bb.d ] ; 3 uses
   %i.al = icmp ult i64 %6, %3
   br i1 %i.al, label %bb.f, label %bb.ae
 
@@ -582,16 +585,18 @@ bb.aa:                                            ; preds = %bb.z
           to label %bb.ab unwind label %bb.v
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.ee = load i64, ptr %i.a, align 8, !tbaa !48
+  %i.ee = load i64, ptr %i.a, align 8, !tbaa !48  ; 2 uses
   %.not38 = icmp eq i64 %i.ee, %6
   %.not.i.i.i46 = icmp eq ptr %.sroa.0.1119, null
   br i1 %.not.i.i.i46, label %_ZNSt6vectorIcSaIcEED2Ev.exit, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
   call void @_ZdlPv(ptr noundef nonnull %.sroa.0.1119) #16
+  %.pre = load i64, ptr %i.a, align 8, !tbaa !48
   br label %_ZNSt6vectorIcSaIcEED2Ev.exit
 
 _ZNSt6vectorIcSaIcEED2Ev.exit:                    ; preds = %bb.ab, %bb.ac
+  %7 = phi i64 [ %i.ee, %bb.ab ], [ %.pre, %bb.ac ]
   br i1 %.not38, label %bb.ae, label %bb.e, !llvm.loop !69
 
 .body50:                                          ; preds = %.loopexit77, %.loopexit.split-lp, %bb.k, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i, %bb.v, %bb.y

@@ -201,7 +201,7 @@ declare void @_ZN6duckdb14IntegerLiteral7GetTypeERKNS_11LogicalTypeE(ptr dead_on
 define internal void @_ZN6duckdb12_GLOBAL__N_121LeastGreatestFunctionIaNS_8LessThanENS0_21StandardLeastGreatestILb0EEEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr nofree nonnull readnone align 8 captures(none) %1, ptr noundef nonnull align 8 dereferenceable(104) %2) #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca [2048 x i8], align 16             ; 7 uses
-  %3 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 13 uses
+  %3 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 15 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !536  ; 2 uses
   %i.d = load ptr, ptr %0, align 8, !tbaa !537    ; 2 uses
@@ -352,10 +352,18 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not.i70, label %.preheader, label %.preheader81
 
 .preheader81:                                     ; preds = %bb.k
-  br i1 %.not98, label %.loopexit, label %.lr.ph87
+  br i1 %.not98, label %.loopexit, label %.lr.ph87.preheader
+
+.lr.ph87.preheader:                               ; preds = %.preheader81
+  %.pre100 = load ptr, ptr %3, align 8, !tbaa !130
+  br label %.lr.ph87
 
 .preheader:                                       ; preds = %bb.k
-  br i1 %.not98, label %.loopexit, label %.lr.ph89
+  br i1 %.not98, label %.loopexit, label %.lr.ph89.preheader
+
+.lr.ph89.preheader:                               ; preds = %.preheader
+  %.pre103 = load ptr, ptr %3, align 8, !tbaa !130
+  br label %.lr.ph89
 
 bb.l:                                             ; preds = %bb.i, %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread
   %i.bh = landingpad { ptr, i32 }
@@ -367,10 +375,10 @@ bb.m:                                             ; preds = %bb.j
           cleanup
   br label %bb.ai
 
-.lr.ph87:                                         ; preds = %.preheader81, %bb.q
-  %i.bj = phi i64 [ %i.cf, %bb.q ], [ %i.bg, %.preheader81 ] ; 2 uses
-  %.05686 = phi i64 [ %i.cg, %bb.q ], [ 0, %.preheader81 ] ; 6 uses
-  %4 = load ptr, ptr %3, align 8, !tbaa !130
+.lr.ph87:                                         ; preds = %.lr.ph87.preheader, %bb.q
+  %i.bj = phi i64 [ %i.cf, %bb.q ], [ %i.bg, %.lr.ph87.preheader ] ; 2 uses
+  %4 = phi ptr [ %5, %bb.q ], [ %.pre100, %.lr.ph87.preheader ] ; 3 uses
+  %.05686 = phi i64 [ %i.cg, %bb.q ], [ 0, %.lr.ph87.preheader ] ; 6 uses
   %i.bk = load ptr, ptr %4, align 8, !tbaa !127   ; 2 uses
   %.not.i71 = icmp eq ptr %i.bk, null
   br i1 %.not.i71, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, label %bb.n
@@ -415,20 +423,22 @@ bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb2
   store i8 1, ptr %i.by, align 1, !tbaa !131
   %i.ce = getelementptr inbounds nuw i8, ptr %i.k, i64 %.05686
   store i8 %i.bx, ptr %i.ce, align 1, !tbaa !84
+  %.pre = load ptr, ptr %3, align 8, !tbaa !130
   %.pre.a = load i64, ptr %i.n, align 8, !tbaa !103
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.o, %bb.p, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit
   %i.cf = phi i64 [ %i.bj, %bb.o ], [ %.pre.a, %bb.p ], [ %i.bj, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit ] ; 2 uses
+  %5 = phi ptr [ %4, %bb.o ], [ %.pre, %bb.p ], [ %4, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit ]
   %i.cg = add nuw i64 %.05686, 1                  ; 2 uses
   %i.ch = icmp ult i64 %i.cg, %i.cf
   br i1 %i.ch, label %.lr.ph87, label %.loopexit, !llvm.loop !706
 
-.lr.ph89:                                         ; preds = %.preheader, %bb.u
-  %i.ci = phi i64 [ %i.cx, %bb.u ], [ %i.bg, %.preheader ]
-  %.05488 = phi i64 [ %i.cy, %bb.u ], [ 0, %.preheader ] ; 6 uses
-  %5 = load ptr, ptr %3, align 8, !tbaa !130
-  %i.cj = load ptr, ptr %5, align 8, !tbaa !127   ; 2 uses
+.lr.ph89:                                         ; preds = %.lr.ph89.preheader, %bb.u
+  %i.ci = phi i64 [ %i.cx, %bb.u ], [ %i.bg, %.lr.ph89.preheader ]
+  %6 = phi ptr [ %7, %bb.u ], [ %.pre103, %.lr.ph89.preheader ] ; 2 uses
+  %.05488 = phi i64 [ %i.cy, %bb.u ], [ 0, %.lr.ph89.preheader ] ; 6 uses
+  %i.cj = load ptr, ptr %6, align 8, !tbaa !127   ; 2 uses
   %.not.i73 = icmp eq ptr %i.cj, null
   br i1 %.not.i73, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit74, label %bb.r
 
@@ -457,11 +467,13 @@ bb.t:                                             ; preds = %bb.s, %_ZNK6duckdb1
   store i8 1, ptr %i.cq, align 1, !tbaa !131
   %i.cw = getelementptr inbounds nuw i8, ptr %i.k, i64 %.05488
   store i8 %i.cp, ptr %i.cw, align 1, !tbaa !84
+  %.pre102 = load ptr, ptr %3, align 8, !tbaa !130
   %.pre100.a = load i64, ptr %i.n, align 8, !tbaa !103
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s
   %i.cx = phi i64 [ %.pre100.a, %bb.t ], [ %i.ci, %bb.s ] ; 2 uses
+  %7 = phi ptr [ %.pre102, %bb.t ], [ %6, %bb.s ]
   %i.cy = add nuw i64 %.05488, 1                  ; 2 uses
   %i.cz = icmp ult i64 %i.cy, %i.cx
   br i1 %i.cz, label %.lr.ph89, label %.loopexit, !llvm.loop !707
@@ -864,7 +876,7 @@ bb.am:                                            ; preds = %_ZN6duckdb12_GLOBAL
 define internal void @_ZN6duckdb12_GLOBAL__N_121LeastGreatestFunctionINS_8string_tENS_8LessThanENS0_21StandardLeastGreatestILb1EEEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr nofree nonnull readnone align 8 captures(none) %1, ptr noundef nonnull align 8 dereferenceable(104) %2) #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca [2048 x i8], align 16             ; 7 uses
-  %3 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 13 uses
+  %3 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 15 uses
   %4 = alloca %"struct.duckdb::string_t", align 8 ; 6 uses
   %5 = alloca %"struct.duckdb::string_t", align 8 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
@@ -1023,10 +1035,18 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not.i73, label %.preheader, label %.preheader92
 
 .preheader92:                                     ; preds = %bb.k
-  br i1 %.not110, label %.loopexit, label %.lr.ph99
+  br i1 %.not110, label %.loopexit, label %.lr.ph99.preheader
+
+.lr.ph99.preheader:                               ; preds = %.preheader92
+  %.pre112 = load ptr, ptr %3, align 8, !tbaa !130
+  br label %.lr.ph99
 
 .preheader:                                       ; preds = %bb.k
-  br i1 %.not110, label %.loopexit, label %.lr.ph101
+  br i1 %.not110, label %.loopexit, label %.lr.ph101.preheader
+
+.lr.ph101.preheader:                              ; preds = %.preheader
+  %.pre115 = load ptr, ptr %3, align 8, !tbaa !130
+  br label %.lr.ph101
 
 bb.l:                                             ; preds = %bb.i, %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread
   %i.bm = landingpad { ptr, i32 }
@@ -1038,11 +1058,11 @@ bb.m:                                             ; preds = %bb.j
           cleanup
   br label %bb.al
 
-.lr.ph99:                                         ; preds = %.preheader92, %bb.s
-  %.pre113.a = phi i64 [ %.pre114.a, %bb.s ], [ %i.bl, %.preheader92 ] ; 3 uses
-  %i.bo = phi i64 [ %i.da, %bb.s ], [ %i.bl, %.preheader92 ]
-  %.05997 = phi i64 [ %i.db, %bb.s ], [ 0, %.preheader92 ] ; 6 uses
-  %6 = load ptr, ptr %3, align 8, !tbaa !130
+.lr.ph99:                                         ; preds = %.lr.ph99.preheader, %bb.s
+  %.pre113.a = phi i64 [ %.pre114.a, %bb.s ], [ %i.bl, %.lr.ph99.preheader ] ; 3 uses
+  %i.bo = phi i64 [ %i.da, %bb.s ], [ %i.bl, %.lr.ph99.preheader ]
+  %6 = phi ptr [ %8, %bb.s ], [ %.pre112, %.lr.ph99.preheader ] ; 4 uses
+  %.05997 = phi i64 [ %i.db, %bb.s ], [ 0, %.lr.ph99.preheader ] ; 6 uses
   %i.bp = load ptr, ptr %6, align 8, !tbaa !127   ; 2 uses
   %.not.i74 = icmp eq ptr %i.bp, null
   br i1 %.not.i74, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, label %bb.n
@@ -1116,26 +1136,29 @@ _ZN6duckdb8LessThan9OperationINS_8string_tEEEbRKT_S5_.exit.thread: ; preds = %bb
   store i8 1, ptr %i.cc, align 1, !tbaa !131
   %i.cz = getelementptr inbounds nuw [16 x i8], ptr %i.k, i64 %.05997
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cz, ptr noundef nonnull align 8 dereferenceable(16) %i.cb, i64 16, i1 false)
+  %.pre = load ptr, ptr %3, align 8, !tbaa !130
   %.pre.pre = load i64, ptr %i.n, align 8, !tbaa !103
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p, %_ZN6duckdb8LessThan9OperationINS_8string_tEEEbRKT_S5_.exit.thread
   %.pre.a = phi i64 [ %.pre113.a, %bb.q ], [ %.pre113.a, %bb.p ], [ %.pre.pre, %_ZN6duckdb8LessThan9OperationINS_8string_tEEEbRKT_S5_.exit.thread ] ; 2 uses
+  %7 = phi ptr [ %6, %bb.q ], [ %6, %bb.p ], [ %.pre, %_ZN6duckdb8LessThan9OperationINS_8string_tEEEbRKT_S5_.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #23
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit
   %.pre114.a = phi i64 [ %.pre.a, %bb.r ], [ %.pre113.a, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit ]
   %i.da = phi i64 [ %.pre.a, %bb.r ], [ %i.bo, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit ] ; 2 uses
+  %8 = phi ptr [ %7, %bb.r ], [ %6, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit ]
   %i.db = add nuw i64 %.05997, 1                  ; 2 uses
   %i.dc = icmp ult i64 %i.db, %i.da
   br i1 %i.dc, label %.lr.ph99, label %.loopexit, !llvm.loop !733
 
-.lr.ph101:                                        ; preds = %.preheader, %bb.x
-  %i.dd = phi i64 [ %i.ei, %bb.x ], [ %i.bl, %.preheader ] ; 2 uses
-  %.057100 = phi i64 [ %i.ej, %bb.x ], [ 0, %.preheader ] ; 6 uses
-  %7 = load ptr, ptr %3, align 8, !tbaa !130
-  %i.de = load ptr, ptr %7, align 8, !tbaa !127   ; 2 uses
+.lr.ph101:                                        ; preds = %.lr.ph101.preheader, %bb.x
+  %i.dd = phi i64 [ %i.ei, %bb.x ], [ %i.bl, %.lr.ph101.preheader ] ; 2 uses
+  %9 = phi ptr [ %10, %bb.x ], [ %.pre115, %.lr.ph101.preheader ] ; 3 uses
+  %.057100 = phi i64 [ %i.ej, %bb.x ], [ 0, %.lr.ph101.preheader ] ; 6 uses
+  %i.de = load ptr, ptr %9, align 8, !tbaa !127   ; 2 uses
   %.not.i76 = icmp eq ptr %i.de, null
   br i1 %.not.i76, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit77, label %bb.t
 
@@ -1193,11 +1216,13 @@ _ZN6duckdb8LessThan9OperationINS_8string_tEEEbRKT_S5_.exit83.thread: ; preds = %
   store i8 1, ptr %i.dk, align 1, !tbaa !131
   %i.eh = getelementptr inbounds nuw [16 x i8], ptr %i.k, i64 %.057100
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.eh, ptr noundef nonnull align 8 dereferenceable(16) %i.dj, i64 16, i1 false)
+  %.pre114 = load ptr, ptr %3, align 8, !tbaa !130
   %.pre112.a = load i64, ptr %i.n, align 8, !tbaa !103
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.v, %_ZN6duckdb8LessThan9OperationINS_8string_tEEEbRKT_S5_.exit83.thread
   %i.ei = phi i64 [ %i.dd, %bb.w ], [ %i.dd, %bb.v ], [ %.pre112.a, %_ZN6duckdb8LessThan9OperationINS_8string_tEEEbRKT_S5_.exit83.thread ] ; 2 uses
+  %10 = phi ptr [ %9, %bb.w ], [ %9, %bb.v ], [ %.pre114, %_ZN6duckdb8LessThan9OperationINS_8string_tEEEbRKT_S5_.exit83.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #23
   %i.ej = add nuw i64 %.057100, 1                 ; 2 uses
   %i.ek = icmp ult i64 %i.ej, %i.ei
@@ -1332,7 +1357,7 @@ define internal void @_ZN6duckdb12_GLOBAL__N_121LeastGreatestFunctionINS_8string
 bb.a:
   %3 = alloca %"class.duckdb::optional_ptr.699", align 8 ; 5 uses
   %i.a = alloca [2048 x i8], align 16             ; 7 uses
-  %4 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 13 uses
+  %4 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 15 uses
   %5 = alloca %"struct.duckdb::string_t", align 8 ; 6 uses
   %6 = alloca %"struct.duckdb::string_t", align 8 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1459,10 +1484,18 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not.i, label %.preheader, label %.preheader89
 
 .preheader89:                                     ; preds = %bb.h
-  br i1 %.not106, label %.loopexit, label %.lr.ph95
+  br i1 %.not106, label %.loopexit, label %.lr.ph95.preheader
+
+.lr.ph95.preheader:                               ; preds = %.preheader89
+  %.pre108 = load ptr, ptr %4, align 8, !tbaa !130
+  br label %.lr.ph95
 
 .preheader:                                       ; preds = %bb.h
-  br i1 %.not106, label %.loopexit, label %.lr.ph97
+  br i1 %.not106, label %.loopexit, label %.lr.ph97.preheader
+
+.lr.ph97.preheader:                               ; preds = %.preheader
+  %.pre111 = load ptr, ptr %4, align 8, !tbaa !130
+  br label %.lr.ph97
 
 bb.i:                                             ; preds = %bb.f, %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread
   %i.bc = landingpad { ptr, i32 }
@@ -1474,11 +1507,11 @@ bb.j:                                             ; preds = %bb.g
           cleanup
   br label %bb.ai
 
-.lr.ph95:                                         ; preds = %.preheader89, %bb.p
-  %.pre109.a = phi i64 [ %.pre110.a, %bb.p ], [ %i.bb, %.preheader89 ] ; 3 uses
-  %i.be = phi i64 [ %i.cq, %bb.p ], [ %i.bb, %.preheader89 ]
-  %.05693 = phi i64 [ %i.cr, %bb.p ], [ 0, %.preheader89 ] ; 6 uses
-  %7 = load ptr, ptr %4, align 8, !tbaa !130
+.lr.ph95:                                         ; preds = %.lr.ph95.preheader, %bb.p
+  %.pre109.a = phi i64 [ %.pre110.a, %bb.p ], [ %i.bb, %.lr.ph95.preheader ] ; 3 uses
+  %i.be = phi i64 [ %i.cq, %bb.p ], [ %i.bb, %.lr.ph95.preheader ]
+  %7 = phi ptr [ %9, %bb.p ], [ %.pre108, %.lr.ph95.preheader ] ; 4 uses
+  %.05693 = phi i64 [ %i.cr, %bb.p ], [ 0, %.lr.ph95.preheader ] ; 6 uses
   %i.bf = load ptr, ptr %7, align 8, !tbaa !127   ; 2 uses
   %.not.i71 = icmp eq ptr %i.bf, null
   br i1 %.not.i71, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, label %bb.k
@@ -1552,26 +1585,29 @@ _ZN6duckdb8LessThan9OperationINS_8string_tEEEbRKT_S5_.exit.thread: ; preds = %bb
   store i8 1, ptr %i.bs, align 1, !tbaa !131
   %i.cp = getelementptr inbounds nuw [16 x i8], ptr %i.r, i64 %.05693
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cp, ptr noundef nonnull align 8 dereferenceable(16) %i.br, i64 16, i1 false)
+  %.pre = load ptr, ptr %4, align 8, !tbaa !130
   %.pre.pre = load i64, ptr %i.u, align 8, !tbaa !103
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m, %_ZN6duckdb8LessThan9OperationINS_8string_tEEEbRKT_S5_.exit.thread
   %.pre.a = phi i64 [ %.pre109.a, %bb.n ], [ %.pre109.a, %bb.m ], [ %.pre.pre, %_ZN6duckdb8LessThan9OperationINS_8string_tEEEbRKT_S5_.exit.thread ] ; 2 uses
+  %8 = phi ptr [ %7, %bb.n ], [ %7, %bb.m ], [ %.pre, %_ZN6duckdb8LessThan9OperationINS_8string_tEEEbRKT_S5_.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #23
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit
   %.pre110.a = phi i64 [ %.pre.a, %bb.o ], [ %.pre109.a, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit ]
   %i.cq = phi i64 [ %.pre.a, %bb.o ], [ %i.be, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit ] ; 2 uses
+  %9 = phi ptr [ %8, %bb.o ], [ %7, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit ]
   %i.cr = add nuw i64 %.05693, 1                  ; 2 uses
   %i.cs = icmp ult i64 %i.cr, %i.cq
   br i1 %i.cs, label %.lr.ph95, label %.loopexit, !llvm.loop !741
 
-.lr.ph97:                                         ; preds = %.preheader, %bb.u
-  %i.ct = phi i64 [ %i.dy, %bb.u ], [ %i.bb, %.preheader ] ; 2 uses
-  %.05496 = phi i64 [ %i.dz, %bb.u ], [ 0, %.preheader ] ; 6 uses
-  %8 = load ptr, ptr %4, align 8, !tbaa !130
-  %i.cu = load ptr, ptr %8, align 8, !tbaa !127   ; 2 uses
+.lr.ph97:                                         ; preds = %.lr.ph97.preheader, %bb.u
+  %i.ct = phi i64 [ %i.dy, %bb.u ], [ %i.bb, %.lr.ph97.preheader ] ; 2 uses
+  %10 = phi ptr [ %11, %bb.u ], [ %.pre111, %.lr.ph97.preheader ] ; 3 uses
+  %.05496 = phi i64 [ %i.dz, %bb.u ], [ 0, %.lr.ph97.preheader ] ; 6 uses
+  %i.cu = load ptr, ptr %10, align 8, !tbaa !127  ; 2 uses
   %.not.i73 = icmp eq ptr %i.cu, null
   br i1 %.not.i73, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit74, label %bb.q
 
@@ -1629,11 +1665,13 @@ _ZN6duckdb8LessThan9OperationINS_8string_tEEEbRKT_S5_.exit80.thread: ; preds = %
   store i8 1, ptr %i.da, align 1, !tbaa !131
   %i.dx = getelementptr inbounds nuw [16 x i8], ptr %i.r, i64 %.05496
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dx, ptr noundef nonnull align 8 dereferenceable(16) %i.cz, i64 16, i1 false)
+  %.pre110 = load ptr, ptr %4, align 8, !tbaa !130
   %.pre108.a = load i64, ptr %i.u, align 8, !tbaa !103
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s, %_ZN6duckdb8LessThan9OperationINS_8string_tEEEbRKT_S5_.exit80.thread
   %i.dy = phi i64 [ %i.ct, %bb.t ], [ %i.ct, %bb.s ], [ %.pre108.a, %_ZN6duckdb8LessThan9OperationINS_8string_tEEEbRKT_S5_.exit80.thread ] ; 2 uses
+  %11 = phi ptr [ %10, %bb.t ], [ %10, %bb.s ], [ %.pre110, %_ZN6duckdb8LessThan9OperationINS_8string_tEEEbRKT_S5_.exit80.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #23
   %i.dz = add nuw i64 %.05496, 1                  ; 2 uses
   %i.ea = icmp ult i64 %i.dz, %i.dy
@@ -2036,7 +2074,7 @@ bb.cg:                                            ; preds = %bb.w, %bb.l
 define internal void @_ZN6duckdb12_GLOBAL__N_121LeastGreatestFunctionIaNS_11GreaterThanENS0_21StandardLeastGreatestILb0EEEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr nofree nonnull readnone align 8 captures(none) %1, ptr noundef nonnull align 8 dereferenceable(104) %2) #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca [2048 x i8], align 16             ; 7 uses
-  %3 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 13 uses
+  %3 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 15 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !536  ; 2 uses
   %i.d = load ptr, ptr %0, align 8, !tbaa !537    ; 2 uses
@@ -2187,10 +2225,18 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not.i65, label %.preheader, label %.preheader76
 
 .preheader76:                                     ; preds = %bb.k
-  br i1 %.not93, label %.loopexit, label %.lr.ph82
+  br i1 %.not93, label %.loopexit, label %.lr.ph82.preheader
+
+.lr.ph82.preheader:                               ; preds = %.preheader76
+  %.pre95 = load ptr, ptr %3, align 8, !tbaa !130
+  br label %.lr.ph82
 
 .preheader:                                       ; preds = %bb.k
-  br i1 %.not93, label %.loopexit, label %.lr.ph84
+  br i1 %.not93, label %.loopexit, label %.lr.ph84.preheader
+
+.lr.ph84.preheader:                               ; preds = %.preheader
+  %.pre98 = load ptr, ptr %3, align 8, !tbaa !130
+  br label %.lr.ph84
 
 bb.l:                                             ; preds = %bb.i, %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread
   %i.bh = landingpad { ptr, i32 }
@@ -2202,10 +2248,10 @@ bb.m:                                             ; preds = %bb.j
           cleanup
   br label %bb.ai
 
-.lr.ph82:                                         ; preds = %.preheader76, %bb.q
-  %i.bj = phi i64 [ %i.cf, %bb.q ], [ %i.bg, %.preheader76 ] ; 2 uses
-  %.05681 = phi i64 [ %i.cg, %bb.q ], [ 0, %.preheader76 ] ; 6 uses
-  %4 = load ptr, ptr %3, align 8, !tbaa !130
+.lr.ph82:                                         ; preds = %.lr.ph82.preheader, %bb.q
+  %i.bj = phi i64 [ %i.cf, %bb.q ], [ %i.bg, %.lr.ph82.preheader ] ; 2 uses
+  %4 = phi ptr [ %5, %bb.q ], [ %.pre95, %.lr.ph82.preheader ] ; 3 uses
+  %.05681 = phi i64 [ %i.cg, %bb.q ], [ 0, %.lr.ph82.preheader ] ; 6 uses
   %i.bk = load ptr, ptr %4, align 8, !tbaa !127   ; 2 uses
   %.not.i66 = icmp eq ptr %i.bk, null
   br i1 %.not.i66, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, label %bb.n
@@ -2250,20 +2296,22 @@ bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb2
   store i8 1, ptr %i.by, align 1, !tbaa !131
   %i.ce = getelementptr inbounds nuw i8, ptr %i.k, i64 %.05681
   store i8 %i.bx, ptr %i.ce, align 1, !tbaa !84
+  %.pre = load ptr, ptr %3, align 8, !tbaa !130
   %.pre.a = load i64, ptr %i.n, align 8, !tbaa !103
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.o, %bb.p, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit
   %i.cf = phi i64 [ %i.bj, %bb.o ], [ %.pre.a, %bb.p ], [ %i.bj, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit ] ; 2 uses
+  %5 = phi ptr [ %4, %bb.o ], [ %.pre, %bb.p ], [ %4, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit ]
   %i.cg = add nuw i64 %.05681, 1                  ; 2 uses
   %i.ch = icmp ult i64 %i.cg, %i.cf
   br i1 %i.ch, label %.lr.ph82, label %.loopexit, !llvm.loop !760
 
-.lr.ph84:                                         ; preds = %.preheader, %bb.u
-  %i.ci = phi i64 [ %i.cx, %bb.u ], [ %i.bg, %.preheader ]
-  %.05483 = phi i64 [ %i.cy, %bb.u ], [ 0, %.preheader ] ; 6 uses
-  %5 = load ptr, ptr %3, align 8, !tbaa !130
-  %i.cj = load ptr, ptr %5, align 8, !tbaa !127   ; 2 uses
+.lr.ph84:                                         ; preds = %.lr.ph84.preheader, %bb.u
+  %i.ci = phi i64 [ %i.cx, %bb.u ], [ %i.bg, %.lr.ph84.preheader ]
+  %6 = phi ptr [ %7, %bb.u ], [ %.pre98, %.lr.ph84.preheader ] ; 2 uses
+  %.05483 = phi i64 [ %i.cy, %bb.u ], [ 0, %.lr.ph84.preheader ] ; 6 uses
+  %i.cj = load ptr, ptr %6, align 8, !tbaa !127   ; 2 uses
   %.not.i68 = icmp eq ptr %i.cj, null
   br i1 %.not.i68, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit69, label %bb.r
 
@@ -2292,11 +2340,13 @@ bb.t:                                             ; preds = %bb.s, %_ZNK6duckdb1
   store i8 1, ptr %i.cq, align 1, !tbaa !131
   %i.cw = getelementptr inbounds nuw i8, ptr %i.k, i64 %.05483
   store i8 %i.cp, ptr %i.cw, align 1, !tbaa !84
+  %.pre97 = load ptr, ptr %3, align 8, !tbaa !130
   %.pre95.a = load i64, ptr %i.n, align 8, !tbaa !103
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s
   %i.cx = phi i64 [ %.pre95.a, %bb.t ], [ %i.ci, %bb.s ] ; 2 uses
+  %7 = phi ptr [ %.pre97, %bb.t ], [ %6, %bb.s ]
   %i.cy = add nuw i64 %.05483, 1                  ; 2 uses
   %i.cz = icmp ult i64 %i.cy, %i.cx
   br i1 %i.cz, label %.lr.ph84, label %.loopexit, !llvm.loop !761
@@ -2699,7 +2749,7 @@ bb.ao:                                            ; preds = %_ZN6duckdb12_GLOBAL
 define internal void @_ZN6duckdb12_GLOBAL__N_121LeastGreatestFunctionINS_8string_tENS_11GreaterThanENS0_21StandardLeastGreatestILb1EEEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr nofree nonnull readnone align 8 captures(none) %1, ptr noundef nonnull align 8 dereferenceable(104) %2) #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca [2048 x i8], align 16             ; 7 uses
-  %3 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 13 uses
+  %3 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 15 uses
   %4 = alloca %"struct.duckdb::string_t", align 8 ; 6 uses
   %5 = alloca %"struct.duckdb::string_t", align 8 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
@@ -2858,10 +2908,18 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not.i73, label %.preheader, label %.preheader92
 
 .preheader92:                                     ; preds = %bb.k
-  br i1 %.not110, label %.loopexit, label %.lr.ph99
+  br i1 %.not110, label %.loopexit, label %.lr.ph99.preheader
+
+.lr.ph99.preheader:                               ; preds = %.preheader92
+  %.pre112 = load ptr, ptr %3, align 8, !tbaa !130
+  br label %.lr.ph99
 
 .preheader:                                       ; preds = %bb.k
-  br i1 %.not110, label %.loopexit, label %.lr.ph101
+  br i1 %.not110, label %.loopexit, label %.lr.ph101.preheader
+
+.lr.ph101.preheader:                              ; preds = %.preheader
+  %.pre115 = load ptr, ptr %3, align 8, !tbaa !130
+  br label %.lr.ph101
 
 bb.l:                                             ; preds = %bb.i, %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread
   %i.bm = landingpad { ptr, i32 }
@@ -2873,11 +2931,11 @@ bb.m:                                             ; preds = %bb.j
           cleanup
   br label %bb.al
 
-.lr.ph99:                                         ; preds = %.preheader92, %bb.s
-  %.pre113.a = phi i64 [ %.pre114.a, %bb.s ], [ %i.bl, %.preheader92 ] ; 3 uses
-  %i.bo = phi i64 [ %i.da, %bb.s ], [ %i.bl, %.preheader92 ]
-  %.05997 = phi i64 [ %i.db, %bb.s ], [ 0, %.preheader92 ] ; 6 uses
-  %6 = load ptr, ptr %3, align 8, !tbaa !130
+.lr.ph99:                                         ; preds = %.lr.ph99.preheader, %bb.s
+  %.pre113.a = phi i64 [ %.pre114.a, %bb.s ], [ %i.bl, %.lr.ph99.preheader ] ; 3 uses
+  %i.bo = phi i64 [ %i.da, %bb.s ], [ %i.bl, %.lr.ph99.preheader ]
+  %6 = phi ptr [ %8, %bb.s ], [ %.pre112, %.lr.ph99.preheader ] ; 4 uses
+  %.05997 = phi i64 [ %i.db, %bb.s ], [ 0, %.lr.ph99.preheader ] ; 6 uses
   %i.bp = load ptr, ptr %6, align 8, !tbaa !127   ; 2 uses
   %.not.i74 = icmp eq ptr %i.bp, null
   br i1 %.not.i74, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, label %bb.n
@@ -2951,26 +3009,29 @@ _ZN6duckdb11GreaterThan9OperationINS_8string_tEEEbRKT_S5_.exit.thread: ; preds =
   store i8 1, ptr %i.cc, align 1, !tbaa !131
   %i.cz = getelementptr inbounds nuw [16 x i8], ptr %i.k, i64 %.05997
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cz, ptr noundef nonnull align 8 dereferenceable(16) %i.cb, i64 16, i1 false)
+  %.pre = load ptr, ptr %3, align 8, !tbaa !130
   %.pre.pre = load i64, ptr %i.n, align 8, !tbaa !103
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p, %_ZN6duckdb11GreaterThan9OperationINS_8string_tEEEbRKT_S5_.exit.thread
   %.pre.a = phi i64 [ %.pre113.a, %bb.q ], [ %.pre113.a, %bb.p ], [ %.pre.pre, %_ZN6duckdb11GreaterThan9OperationINS_8string_tEEEbRKT_S5_.exit.thread ] ; 2 uses
+  %7 = phi ptr [ %6, %bb.q ], [ %6, %bb.p ], [ %.pre, %_ZN6duckdb11GreaterThan9OperationINS_8string_tEEEbRKT_S5_.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #23
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit
   %.pre114.a = phi i64 [ %.pre.a, %bb.r ], [ %.pre113.a, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit ]
   %i.da = phi i64 [ %.pre.a, %bb.r ], [ %i.bo, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit ] ; 2 uses
+  %8 = phi ptr [ %7, %bb.r ], [ %6, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit ]
   %i.db = add nuw i64 %.05997, 1                  ; 2 uses
   %i.dc = icmp ult i64 %i.db, %i.da
   br i1 %i.dc, label %.lr.ph99, label %.loopexit, !llvm.loop !784
 
-.lr.ph101:                                        ; preds = %.preheader, %bb.x
-  %i.dd = phi i64 [ %i.ei, %bb.x ], [ %i.bl, %.preheader ] ; 2 uses
-  %.057100 = phi i64 [ %i.ej, %bb.x ], [ 0, %.preheader ] ; 6 uses
-  %7 = load ptr, ptr %3, align 8, !tbaa !130
-  %i.de = load ptr, ptr %7, align 8, !tbaa !127   ; 2 uses
+.lr.ph101:                                        ; preds = %.lr.ph101.preheader, %bb.x
+  %i.dd = phi i64 [ %i.ei, %bb.x ], [ %i.bl, %.lr.ph101.preheader ] ; 2 uses
+  %9 = phi ptr [ %10, %bb.x ], [ %.pre115, %.lr.ph101.preheader ] ; 3 uses
+  %.057100 = phi i64 [ %i.ej, %bb.x ], [ 0, %.lr.ph101.preheader ] ; 6 uses
+  %i.de = load ptr, ptr %9, align 8, !tbaa !127   ; 2 uses
   %.not.i76 = icmp eq ptr %i.de, null
   br i1 %.not.i76, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit77, label %bb.t
 
@@ -3028,11 +3089,13 @@ _ZN6duckdb11GreaterThan9OperationINS_8string_tEEEbRKT_S5_.exit83.thread: ; preds
   store i8 1, ptr %i.dk, align 1, !tbaa !131
   %i.eh = getelementptr inbounds nuw [16 x i8], ptr %i.k, i64 %.057100
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.eh, ptr noundef nonnull align 8 dereferenceable(16) %i.dj, i64 16, i1 false)
+  %.pre114 = load ptr, ptr %3, align 8, !tbaa !130
   %.pre112.a = load i64, ptr %i.n, align 8, !tbaa !103
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.v, %_ZN6duckdb11GreaterThan9OperationINS_8string_tEEEbRKT_S5_.exit83.thread
   %i.ei = phi i64 [ %i.dd, %bb.w ], [ %i.dd, %bb.v ], [ %.pre112.a, %_ZN6duckdb11GreaterThan9OperationINS_8string_tEEEbRKT_S5_.exit83.thread ] ; 2 uses
+  %10 = phi ptr [ %9, %bb.w ], [ %9, %bb.v ], [ %.pre114, %_ZN6duckdb11GreaterThan9OperationINS_8string_tEEEbRKT_S5_.exit83.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #23
   %i.ej = add nuw i64 %.057100, 1                 ; 2 uses
   %i.ek = icmp ult i64 %i.ej, %i.ei
@@ -3167,7 +3230,7 @@ define internal void @_ZN6duckdb12_GLOBAL__N_121LeastGreatestFunctionINS_8string
 bb.a:
   %3 = alloca %"class.duckdb::optional_ptr.699", align 8 ; 5 uses
   %i.a = alloca [2048 x i8], align 16             ; 7 uses
-  %4 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 13 uses
+  %4 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 15 uses
   %5 = alloca %"struct.duckdb::string_t", align 8 ; 6 uses
   %6 = alloca %"struct.duckdb::string_t", align 8 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -3294,10 +3357,18 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not.i, label %.preheader, label %.preheader89
 
 .preheader89:                                     ; preds = %bb.h
-  br i1 %.not106, label %.loopexit, label %.lr.ph95
+  br i1 %.not106, label %.loopexit, label %.lr.ph95.preheader
+
+.lr.ph95.preheader:                               ; preds = %.preheader89
+  %.pre108 = load ptr, ptr %4, align 8, !tbaa !130
+  br label %.lr.ph95
 
 .preheader:                                       ; preds = %bb.h
-  br i1 %.not106, label %.loopexit, label %.lr.ph97
+  br i1 %.not106, label %.loopexit, label %.lr.ph97.preheader
+
+.lr.ph97.preheader:                               ; preds = %.preheader
+  %.pre111 = load ptr, ptr %4, align 8, !tbaa !130
+  br label %.lr.ph97
 
 bb.i:                                             ; preds = %bb.f, %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread
   %i.bc = landingpad { ptr, i32 }
@@ -3309,11 +3380,11 @@ bb.j:                                             ; preds = %bb.g
           cleanup
   br label %bb.ai
 
-.lr.ph95:                                         ; preds = %.preheader89, %bb.p
-  %.pre109.a = phi i64 [ %.pre110.a, %bb.p ], [ %i.bb, %.preheader89 ] ; 3 uses
-  %i.be = phi i64 [ %i.cq, %bb.p ], [ %i.bb, %.preheader89 ]
-  %.05693 = phi i64 [ %i.cr, %bb.p ], [ 0, %.preheader89 ] ; 6 uses
-  %7 = load ptr, ptr %4, align 8, !tbaa !130
+.lr.ph95:                                         ; preds = %.lr.ph95.preheader, %bb.p
+  %.pre109.a = phi i64 [ %.pre110.a, %bb.p ], [ %i.bb, %.lr.ph95.preheader ] ; 3 uses
+  %i.be = phi i64 [ %i.cq, %bb.p ], [ %i.bb, %.lr.ph95.preheader ]
+  %7 = phi ptr [ %9, %bb.p ], [ %.pre108, %.lr.ph95.preheader ] ; 4 uses
+  %.05693 = phi i64 [ %i.cr, %bb.p ], [ 0, %.lr.ph95.preheader ] ; 6 uses
   %i.bf = load ptr, ptr %7, align 8, !tbaa !127   ; 2 uses
   %.not.i71 = icmp eq ptr %i.bf, null
   br i1 %.not.i71, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, label %bb.k
@@ -3387,26 +3458,29 @@ _ZN6duckdb11GreaterThan9OperationINS_8string_tEEEbRKT_S5_.exit.thread: ; preds =
   store i8 1, ptr %i.bs, align 1, !tbaa !131
   %i.cp = getelementptr inbounds nuw [16 x i8], ptr %i.r, i64 %.05693
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cp, ptr noundef nonnull align 8 dereferenceable(16) %i.br, i64 16, i1 false)
+  %.pre = load ptr, ptr %4, align 8, !tbaa !130
   %.pre.pre = load i64, ptr %i.u, align 8, !tbaa !103
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m, %_ZN6duckdb11GreaterThan9OperationINS_8string_tEEEbRKT_S5_.exit.thread
   %.pre.a = phi i64 [ %.pre109.a, %bb.n ], [ %.pre109.a, %bb.m ], [ %.pre.pre, %_ZN6duckdb11GreaterThan9OperationINS_8string_tEEEbRKT_S5_.exit.thread ] ; 2 uses
+  %8 = phi ptr [ %7, %bb.n ], [ %7, %bb.m ], [ %.pre, %_ZN6duckdb11GreaterThan9OperationINS_8string_tEEEbRKT_S5_.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #23
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit
   %.pre110.a = phi i64 [ %.pre.a, %bb.o ], [ %.pre109.a, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit ]
   %i.cq = phi i64 [ %.pre.a, %bb.o ], [ %i.be, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit ] ; 2 uses
+  %9 = phi ptr [ %8, %bb.o ], [ %7, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit ]
   %i.cr = add nuw i64 %.05693, 1                  ; 2 uses
   %i.cs = icmp ult i64 %i.cr, %i.cq
   br i1 %i.cs, label %.lr.ph95, label %.loopexit, !llvm.loop !788
 
-.lr.ph97:                                         ; preds = %.preheader, %bb.u
-  %i.ct = phi i64 [ %i.dy, %bb.u ], [ %i.bb, %.preheader ] ; 2 uses
-  %.05496 = phi i64 [ %i.dz, %bb.u ], [ 0, %.preheader ] ; 6 uses
-  %8 = load ptr, ptr %4, align 8, !tbaa !130
-  %i.cu = load ptr, ptr %8, align 8, !tbaa !127   ; 2 uses
+.lr.ph97:                                         ; preds = %.lr.ph97.preheader, %bb.u
+  %i.ct = phi i64 [ %i.dy, %bb.u ], [ %i.bb, %.lr.ph97.preheader ] ; 2 uses
+  %10 = phi ptr [ %11, %bb.u ], [ %.pre111, %.lr.ph97.preheader ] ; 3 uses
+  %.05496 = phi i64 [ %i.dz, %bb.u ], [ 0, %.lr.ph97.preheader ] ; 6 uses
+  %i.cu = load ptr, ptr %10, align 8, !tbaa !127  ; 2 uses
   %.not.i73 = icmp eq ptr %i.cu, null
   br i1 %.not.i73, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit74, label %bb.q
 
@@ -3464,11 +3538,13 @@ _ZN6duckdb11GreaterThan9OperationINS_8string_tEEEbRKT_S5_.exit80.thread: ; preds
   store i8 1, ptr %i.da, align 1, !tbaa !131
   %i.dx = getelementptr inbounds nuw [16 x i8], ptr %i.r, i64 %.05496
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dx, ptr noundef nonnull align 8 dereferenceable(16) %i.cz, i64 16, i1 false)
+  %.pre110 = load ptr, ptr %4, align 8, !tbaa !130
   %.pre108.a = load i64, ptr %i.u, align 8, !tbaa !103
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s, %_ZN6duckdb11GreaterThan9OperationINS_8string_tEEEbRKT_S5_.exit80.thread
   %i.dy = phi i64 [ %i.ct, %bb.t ], [ %i.ct, %bb.s ], [ %.pre108.a, %_ZN6duckdb11GreaterThan9OperationINS_8string_tEEEbRKT_S5_.exit80.thread ] ; 2 uses
+  %11 = phi ptr [ %10, %bb.t ], [ %10, %bb.s ], [ %.pre110, %_ZN6duckdb11GreaterThan9OperationINS_8string_tEEEbRKT_S5_.exit80.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #23
   %i.dz = add nuw i64 %.05496, 1                  ; 2 uses
   %i.ea = icmp ult i64 %i.dz, %i.dy

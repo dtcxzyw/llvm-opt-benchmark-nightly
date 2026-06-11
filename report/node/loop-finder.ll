@@ -201,7 +201,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN2v88internal8compiler10turboshaft10LoopFinder11GetLoopBodyEPKNS2_5BlockE(ptr dead_on_unwind noalias nonnull writable sret(%"class.v8::internal::ZoneSet") align 8 initializes((0, 8), (16, 20), (24, 32)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(152) %1, ptr noundef %2) local_unnamed_addr #0 align 2 {
 _ZN2v88internal10ZoneVectorIPKNS0_8compiler10turboshaft5BlockEE9push_backEOS6_.exit:
-  %i.a = alloca ptr, align 8                      ; 4 uses
+  %i.a = alloca ptr, align 8                      ; 5 uses
   %3 = alloca %"class.v8::internal::ZoneVector.0", align 8 ; 8 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
   store ptr %2, ptr %i.a, align 8
@@ -288,12 +288,16 @@ _ZNSt3setIPKN2v88internal8compiler10turboshaft5BlockENS3_10LoopFinder8BlockCmpEN
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 56
   %storemerge8 = load ptr, ptr %i.al, align 8     ; 2 uses
   %.not9 = icmp eq ptr %storemerge8, null
-  br i1 %.not9, label %.loopexit, label %.lr.ph
+  br i1 %.not9, label %.loopexit, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %_ZNSt3setIPKN2v88internal8compiler10turboshaft5BlockENS3_10LoopFinder8BlockCmpENS1_13ZoneAllocatorIS6_EEE4findERKS6_.exit.thread, %bb.d
-  %storemerge10.a = phi ptr [ %storemerge, %bb.d ], [ %storemerge8, %_ZNSt3setIPKN2v88internal8compiler10turboshaft5BlockENS3_10LoopFinder8BlockCmpENS1_13ZoneAllocatorIS6_EEE4findERKS6_.exit.thread ] ; 3 uses
-  %4 = load ptr, ptr %i.a, align 8
-  %i.am = icmp eq ptr %storemerge10.a, %4
+.lr.ph.preheader:                                 ; preds = %_ZNSt3setIPKN2v88internal8compiler10turboshaft5BlockENS3_10LoopFinder8BlockCmpENS1_13ZoneAllocatorIS6_EEE4findERKS6_.exit.thread
+  %.pre12 = load ptr, ptr %i.a, align 8
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
+  %storemerge10.a = phi ptr [ %4, %bb.d ], [ %.pre12, %.lr.ph.preheader ] ; 2 uses
+  %storemerge10 = phi ptr [ %storemerge, %bb.d ], [ %storemerge8, %.lr.ph.preheader ] ; 3 uses
+  %i.am = icmp eq ptr %storemerge10, %storemerge10.a
   br i1 %i.am, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
@@ -317,11 +321,13 @@ _ZN2v88internal10ZoneVectorIPKNS0_8compiler10turboshaft5BlockEE9push_backERKS6_.
   %i.aw = phi ptr [ %i.an, %bb.b ], [ %.pre.i, %bb.c ] ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
   store ptr %i.ax, ptr %i.p, align 8
-  store ptr %storemerge10.a, ptr %i.aw, align 8
+  store ptr %storemerge10, ptr %i.aw, align 8
+  %.pre = load ptr, ptr %i.a, align 8
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %_ZN2v88internal10ZoneVectorIPKNS0_8compiler10turboshaft5BlockEE9push_backERKS6_.exit
-  %i.ay = getelementptr inbounds nuw i8, ptr %storemerge10.a, i64 64
+  %4 = phi ptr [ %storemerge10.a, %.lr.ph ], [ %.pre, %_ZN2v88internal10ZoneVectorIPKNS0_8compiler10turboshaft5BlockEE9push_backERKS6_.exit ]
+  %i.ay = getelementptr inbounds nuw i8, ptr %storemerge10, i64 64
   %storemerge = load ptr, ptr %i.ay, align 8      ; 2 uses
   %.not = icmp eq ptr %storemerge, null
   br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !18

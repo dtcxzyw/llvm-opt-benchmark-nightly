@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %.lr.ph27, %bb.g
   %.025 = phi i64 [ 0, %.lr.ph27 ], [ %.1, %bb.g ] ; 2 uses
   %.02224 = phi i64 [ 0, %.lr.ph27 ], [ %i.bl, %bb.g ] ; 3 uses
   %i.w = load ptr, ptr %2, align 8, !tbaa !1498
-  %i.x = getelementptr inbounds nuw [1192 x i8], ptr %i.w, i64 %.02224 ; 3 uses
+  %i.x = getelementptr inbounds nuw [1192 x i8], ptr %i.w, i64 %.02224 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #29
   store i8 1, ptr %i.a, align 1, !tbaa !219
   call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE13SetKeepPinnedERKb(ptr noundef nonnull align 8 dereferenceable(1192) %i.x, ptr noundef nonnull align 1 dereferenceable(1) %i.a)
@@ -239,23 +239,25 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph:                                           ; preds = %bb.e, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEdeEv.exit
   %i.ao = phi i64 [ %i.bf, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEdeEv.exit ], [ %i.ai, %bb.e ]
-  %5 = phi i64 [ %i.be, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEdeEv.exit ], [ %i.ag, %bb.e ] ; 2 uses
-  %6 = load ptr, ptr %4, align 8, !tbaa !11245    ; 3 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %5 = phi ptr [ %7, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEdeEv.exit ], [ %i.x, %bb.e ] ; 4 uses
+  %6 = phi i64 [ %i.be, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEdeEv.exit ], [ %i.ag, %bb.e ] ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !1478
-  %.not.i.i = icmp eq i64 %5, %i.aq
+  %.not.i.i = icmp eq i64 %6, %i.aq
   br i1 %.not.i.i, label %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEdeEv.exit, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph
-  call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE15InitializeChunkINS_7SortKeyILNS_11SortKeyTypeE1EEEEEvRKm(ptr noundef nonnull align 8 dereferenceable(1192) %6, ptr noundef nonnull align 8 dereferenceable(8) %i.t)
+  call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE15InitializeChunkINS_7SortKeyILNS_11SortKeyTypeE1EEEEEvRKm(ptr noundef nonnull align 8 dereferenceable(1192) %5, ptr noundef nonnull align 8 dereferenceable(8) %i.t)
+  %.pre30 = load ptr, ptr %4, align 8, !tbaa !11245
   %.pre30.a = load i64, ptr %i.u, align 8, !tbaa !168
   %.pre31 = load i64, ptr %i.t, align 8, !tbaa !168
   br label %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEdeEv.exit
 
 _ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEdeEv.exit: ; preds = %.lr.ph, %bb.f
-  %i.ar = phi i64 [ %5, %.lr.ph ], [ %.pre31, %bb.f ]
+  %i.ar = phi i64 [ %6, %.lr.ph ], [ %.pre31, %bb.f ]
   %i.as = phi i64 [ %i.ao, %.lr.ph ], [ %.pre30.a, %bb.f ] ; 2 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %6, i64 584
+  %7 = phi ptr [ %5, %.lr.ph ], [ %.pre30, %bb.f ]
+  %i.at = getelementptr inbounds nuw i8, ptr %5, i64 584
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !1487
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %i.as
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !1175
@@ -358,7 +360,7 @@ bb.d:                                             ; preds = %.lr.ph27, %bb.g
   %.025 = phi i64 [ 0, %.lr.ph27 ], [ %.1, %bb.g ] ; 2 uses
   %.02224 = phi i64 [ 0, %.lr.ph27 ], [ %i.bk, %bb.g ] ; 3 uses
   %i.w = load ptr, ptr %2, align 8, !tbaa !1498
-  %i.x = getelementptr inbounds nuw [1192 x i8], ptr %i.w, i64 %.02224 ; 3 uses
+  %i.x = getelementptr inbounds nuw [1192 x i8], ptr %i.w, i64 %.02224 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #29
   store i8 1, ptr %i.a, align 1, !tbaa !219
   call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE13SetKeepPinnedERKb(ptr noundef nonnull align 8 dereferenceable(1192) %i.x, ptr noundef nonnull align 1 dereferenceable(1) %i.a)
@@ -396,23 +398,25 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph:                                           ; preds = %bb.e, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEdeEv.exit
   %i.ao = phi i64 [ %i.be, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEdeEv.exit ], [ %i.ai, %bb.e ]
-  %5 = phi i64 [ %i.bd, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEdeEv.exit ], [ %i.ag, %bb.e ] ; 2 uses
-  %6 = load ptr, ptr %4, align 8, !tbaa !11252    ; 3 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %5 = phi ptr [ %7, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEdeEv.exit ], [ %i.x, %bb.e ] ; 4 uses
+  %6 = phi i64 [ %i.bd, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEdeEv.exit ], [ %i.ag, %bb.e ] ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !1478
-  %.not.i.i = icmp eq i64 %5, %i.aq
+  %.not.i.i = icmp eq i64 %6, %i.aq
   br i1 %.not.i.i, label %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEdeEv.exit, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph
-  call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE15InitializeChunkINS_7SortKeyILNS_11SortKeyTypeE2EEEEEvRKm(ptr noundef nonnull align 8 dereferenceable(1192) %6, ptr noundef nonnull align 8 dereferenceable(8) %i.t)
+  call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE15InitializeChunkINS_7SortKeyILNS_11SortKeyTypeE2EEEEEvRKm(ptr noundef nonnull align 8 dereferenceable(1192) %5, ptr noundef nonnull align 8 dereferenceable(8) %i.t)
+  %.pre30 = load ptr, ptr %4, align 8, !tbaa !11252
   %.pre30.a = load i64, ptr %i.u, align 8, !tbaa !168
   %.pre31 = load i64, ptr %i.t, align 8, !tbaa !168
   br label %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEdeEv.exit
 
 _ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEdeEv.exit: ; preds = %.lr.ph, %bb.f
-  %i.ar = phi i64 [ %5, %.lr.ph ], [ %.pre31, %bb.f ]
+  %i.ar = phi i64 [ %6, %.lr.ph ], [ %.pre31, %bb.f ]
   %i.as = phi i64 [ %i.ao, %.lr.ph ], [ %.pre30.a, %bb.f ] ; 2 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %6, i64 584
+  %7 = phi ptr [ %5, %.lr.ph ], [ %.pre30, %bb.f ]
+  %i.at = getelementptr inbounds nuw i8, ptr %5, i64 584
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !1487
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %i.as
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !1181
@@ -514,7 +518,7 @@ bb.d:                                             ; preds = %.lr.ph27, %bb.g
   %.025 = phi i64 [ 0, %.lr.ph27 ], [ %.1, %bb.g ] ; 2 uses
   %.02224 = phi i64 [ 0, %.lr.ph27 ], [ %i.bk, %bb.g ] ; 3 uses
   %i.w = load ptr, ptr %2, align 8, !tbaa !1498
-  %i.x = getelementptr inbounds nuw [1192 x i8], ptr %i.w, i64 %.02224 ; 3 uses
+  %i.x = getelementptr inbounds nuw [1192 x i8], ptr %i.w, i64 %.02224 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #29
   store i8 1, ptr %i.a, align 1, !tbaa !219
   call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE13SetKeepPinnedERKb(ptr noundef nonnull align 8 dereferenceable(1192) %i.x, ptr noundef nonnull align 1 dereferenceable(1) %i.a)
@@ -552,23 +556,25 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph:                                           ; preds = %bb.e, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEdeEv.exit
   %i.ao = phi i64 [ %i.be, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEdeEv.exit ], [ %i.ai, %bb.e ]
-  %5 = phi i64 [ %i.bd, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEdeEv.exit ], [ %i.ag, %bb.e ] ; 2 uses
-  %6 = load ptr, ptr %4, align 8, !tbaa !11259    ; 3 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %5 = phi ptr [ %7, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEdeEv.exit ], [ %i.x, %bb.e ] ; 4 uses
+  %6 = phi i64 [ %i.bd, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEdeEv.exit ], [ %i.ag, %bb.e ] ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !1478
-  %.not.i.i = icmp eq i64 %5, %i.aq
+  %.not.i.i = icmp eq i64 %6, %i.aq
   br i1 %.not.i.i, label %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEdeEv.exit, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph
-  call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE15InitializeChunkINS_7SortKeyILNS_11SortKeyTypeE3EEEEEvRKm(ptr noundef nonnull align 8 dereferenceable(1192) %6, ptr noundef nonnull align 8 dereferenceable(8) %i.t)
+  call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE15InitializeChunkINS_7SortKeyILNS_11SortKeyTypeE3EEEEEvRKm(ptr noundef nonnull align 8 dereferenceable(1192) %5, ptr noundef nonnull align 8 dereferenceable(8) %i.t)
+  %.pre30 = load ptr, ptr %4, align 8, !tbaa !11259
   %.pre30.a = load i64, ptr %i.u, align 8, !tbaa !168
   %.pre31 = load i64, ptr %i.t, align 8, !tbaa !168
   br label %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEdeEv.exit
 
 _ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEdeEv.exit: ; preds = %.lr.ph, %bb.f
-  %i.ar = phi i64 [ %5, %.lr.ph ], [ %.pre31, %bb.f ]
+  %i.ar = phi i64 [ %6, %.lr.ph ], [ %.pre31, %bb.f ]
   %i.as = phi i64 [ %i.ao, %.lr.ph ], [ %.pre30.a, %bb.f ] ; 2 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %6, i64 584
+  %7 = phi ptr [ %5, %.lr.ph ], [ %.pre30, %bb.f ]
+  %i.at = getelementptr inbounds nuw i8, ptr %5, i64 584
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !1487
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %i.as
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !1186
@@ -670,7 +676,7 @@ bb.d:                                             ; preds = %.lr.ph27, %bb.g
   %.025 = phi i64 [ 0, %.lr.ph27 ], [ %.1, %bb.g ] ; 2 uses
   %.02224 = phi i64 [ 0, %.lr.ph27 ], [ %i.bk, %bb.g ] ; 3 uses
   %i.w = load ptr, ptr %2, align 8, !tbaa !1498
-  %i.x = getelementptr inbounds nuw [1192 x i8], ptr %i.w, i64 %.02224 ; 3 uses
+  %i.x = getelementptr inbounds nuw [1192 x i8], ptr %i.w, i64 %.02224 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #29
   store i8 1, ptr %i.a, align 1, !tbaa !219
   call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE13SetKeepPinnedERKb(ptr noundef nonnull align 8 dereferenceable(1192) %i.x, ptr noundef nonnull align 1 dereferenceable(1) %i.a)
@@ -708,23 +714,25 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph:                                           ; preds = %bb.e, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEdeEv.exit
   %i.ao = phi i64 [ %i.be, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEdeEv.exit ], [ %i.ai, %bb.e ]
-  %5 = phi i64 [ %i.bd, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEdeEv.exit ], [ %i.ag, %bb.e ] ; 2 uses
-  %6 = load ptr, ptr %4, align 8, !tbaa !11266    ; 3 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %5 = phi ptr [ %7, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEdeEv.exit ], [ %i.x, %bb.e ] ; 4 uses
+  %6 = phi i64 [ %i.bd, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEdeEv.exit ], [ %i.ag, %bb.e ] ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !1478
-  %.not.i.i = icmp eq i64 %5, %i.aq
+  %.not.i.i = icmp eq i64 %6, %i.aq
   br i1 %.not.i.i, label %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEdeEv.exit, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph
-  call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE15InitializeChunkINS_7SortKeyILNS_11SortKeyTypeE4EEEEEvRKm(ptr noundef nonnull align 8 dereferenceable(1192) %6, ptr noundef nonnull align 8 dereferenceable(8) %i.t)
+  call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE15InitializeChunkINS_7SortKeyILNS_11SortKeyTypeE4EEEEEvRKm(ptr noundef nonnull align 8 dereferenceable(1192) %5, ptr noundef nonnull align 8 dereferenceable(8) %i.t)
+  %.pre30 = load ptr, ptr %4, align 8, !tbaa !11266
   %.pre30.a = load i64, ptr %i.u, align 8, !tbaa !168
   %.pre31 = load i64, ptr %i.t, align 8, !tbaa !168
   br label %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEdeEv.exit
 
 _ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEdeEv.exit: ; preds = %.lr.ph, %bb.f
-  %i.ar = phi i64 [ %5, %.lr.ph ], [ %.pre31, %bb.f ]
+  %i.ar = phi i64 [ %6, %.lr.ph ], [ %.pre31, %bb.f ]
   %i.as = phi i64 [ %i.ao, %.lr.ph ], [ %.pre30.a, %bb.f ] ; 2 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %6, i64 584
+  %7 = phi ptr [ %5, %.lr.ph ], [ %.pre30, %bb.f ]
+  %i.at = getelementptr inbounds nuw i8, ptr %5, i64 584
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !1487
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %i.as
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !1191
@@ -826,7 +834,7 @@ bb.d:                                             ; preds = %.lr.ph27, %bb.g
   %.025 = phi i64 [ 0, %.lr.ph27 ], [ %.1, %bb.g ] ; 2 uses
   %.02224 = phi i64 [ 0, %.lr.ph27 ], [ %i.bk, %bb.g ] ; 3 uses
   %i.w = load ptr, ptr %2, align 8, !tbaa !1498
-  %i.x = getelementptr inbounds nuw [1192 x i8], ptr %i.w, i64 %.02224 ; 3 uses
+  %i.x = getelementptr inbounds nuw [1192 x i8], ptr %i.w, i64 %.02224 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #29
   store i8 1, ptr %i.a, align 1, !tbaa !219
   call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE13SetKeepPinnedERKb(ptr noundef nonnull align 8 dereferenceable(1192) %i.x, ptr noundef nonnull align 1 dereferenceable(1) %i.a)
@@ -864,23 +872,25 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph:                                           ; preds = %bb.e, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEdeEv.exit
   %i.ao = phi i64 [ %i.be, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEdeEv.exit ], [ %i.ai, %bb.e ]
-  %5 = phi i64 [ %i.bd, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEdeEv.exit ], [ %i.ag, %bb.e ] ; 2 uses
-  %6 = load ptr, ptr %4, align 8, !tbaa !11273    ; 3 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %5 = phi ptr [ %7, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEdeEv.exit ], [ %i.x, %bb.e ] ; 4 uses
+  %6 = phi i64 [ %i.bd, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEdeEv.exit ], [ %i.ag, %bb.e ] ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !1478
-  %.not.i.i = icmp eq i64 %5, %i.aq
+  %.not.i.i = icmp eq i64 %6, %i.aq
   br i1 %.not.i.i, label %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEdeEv.exit, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph
-  call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE15InitializeChunkINS_7SortKeyILNS_11SortKeyTypeE5EEEEEvRKm(ptr noundef nonnull align 8 dereferenceable(1192) %6, ptr noundef nonnull align 8 dereferenceable(8) %i.t)
+  call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE15InitializeChunkINS_7SortKeyILNS_11SortKeyTypeE5EEEEEvRKm(ptr noundef nonnull align 8 dereferenceable(1192) %5, ptr noundef nonnull align 8 dereferenceable(8) %i.t)
+  %.pre30 = load ptr, ptr %4, align 8, !tbaa !11273
   %.pre30.a = load i64, ptr %i.u, align 8, !tbaa !168
   %.pre31 = load i64, ptr %i.t, align 8, !tbaa !168
   br label %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEdeEv.exit
 
 _ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEdeEv.exit: ; preds = %.lr.ph, %bb.f
-  %i.ar = phi i64 [ %5, %.lr.ph ], [ %.pre31, %bb.f ]
+  %i.ar = phi i64 [ %6, %.lr.ph ], [ %.pre31, %bb.f ]
   %i.as = phi i64 [ %i.ao, %.lr.ph ], [ %.pre30.a, %bb.f ] ; 2 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %6, i64 584
+  %7 = phi ptr [ %5, %.lr.ph ], [ %.pre30, %bb.f ]
+  %i.at = getelementptr inbounds nuw i8, ptr %5, i64 584
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !1487
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %i.as
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !1196
@@ -982,7 +992,7 @@ bb.d:                                             ; preds = %.lr.ph27, %bb.g
   %.025 = phi i64 [ 0, %.lr.ph27 ], [ %.1, %bb.g ] ; 2 uses
   %.02224 = phi i64 [ 0, %.lr.ph27 ], [ %i.bk, %bb.g ] ; 3 uses
   %i.w = load ptr, ptr %2, align 8, !tbaa !1498
-  %i.x = getelementptr inbounds nuw [1192 x i8], ptr %i.w, i64 %.02224 ; 3 uses
+  %i.x = getelementptr inbounds nuw [1192 x i8], ptr %i.w, i64 %.02224 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #29
   store i8 1, ptr %i.a, align 1, !tbaa !219
   call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE13SetKeepPinnedERKb(ptr noundef nonnull align 8 dereferenceable(1192) %i.x, ptr noundef nonnull align 1 dereferenceable(1) %i.a)
@@ -1020,23 +1030,25 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph:                                           ; preds = %bb.e, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEdeEv.exit
   %i.ao = phi i64 [ %i.be, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEdeEv.exit ], [ %i.ai, %bb.e ]
-  %5 = phi i64 [ %i.bd, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEdeEv.exit ], [ %i.ag, %bb.e ] ; 2 uses
-  %6 = load ptr, ptr %4, align 8, !tbaa !11280    ; 3 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %5 = phi ptr [ %7, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEdeEv.exit ], [ %i.x, %bb.e ] ; 4 uses
+  %6 = phi i64 [ %i.bd, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEdeEv.exit ], [ %i.ag, %bb.e ] ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !1478
-  %.not.i.i = icmp eq i64 %5, %i.aq
+  %.not.i.i = icmp eq i64 %6, %i.aq
   br i1 %.not.i.i, label %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEdeEv.exit, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph
-  call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE15InitializeChunkINS_7SortKeyILNS_11SortKeyTypeE6EEEEEvRKm(ptr noundef nonnull align 8 dereferenceable(1192) %6, ptr noundef nonnull align 8 dereferenceable(8) %i.t)
+  call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE15InitializeChunkINS_7SortKeyILNS_11SortKeyTypeE6EEEEEvRKm(ptr noundef nonnull align 8 dereferenceable(1192) %5, ptr noundef nonnull align 8 dereferenceable(8) %i.t)
+  %.pre30 = load ptr, ptr %4, align 8, !tbaa !11280
   %.pre30.a = load i64, ptr %i.u, align 8, !tbaa !168
   %.pre31 = load i64, ptr %i.t, align 8, !tbaa !168
   br label %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEdeEv.exit
 
 _ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEdeEv.exit: ; preds = %.lr.ph, %bb.f
-  %i.ar = phi i64 [ %5, %.lr.ph ], [ %.pre31, %bb.f ]
+  %i.ar = phi i64 [ %6, %.lr.ph ], [ %.pre31, %bb.f ]
   %i.as = phi i64 [ %i.ao, %.lr.ph ], [ %.pre30.a, %bb.f ] ; 2 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %6, i64 584
+  %7 = phi ptr [ %5, %.lr.ph ], [ %.pre30, %bb.f ]
+  %i.at = getelementptr inbounds nuw i8, ptr %5, i64 584
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !1487
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %i.as
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !1044
@@ -1138,7 +1150,7 @@ bb.d:                                             ; preds = %.lr.ph27, %bb.g
   %.025 = phi i64 [ 0, %.lr.ph27 ], [ %.1, %bb.g ] ; 2 uses
   %.02224 = phi i64 [ 0, %.lr.ph27 ], [ %i.bk, %bb.g ] ; 3 uses
   %i.w = load ptr, ptr %2, align 8, !tbaa !1498
-  %i.x = getelementptr inbounds nuw [1192 x i8], ptr %i.w, i64 %.02224 ; 3 uses
+  %i.x = getelementptr inbounds nuw [1192 x i8], ptr %i.w, i64 %.02224 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #29
   store i8 1, ptr %i.a, align 1, !tbaa !219
   call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE13SetKeepPinnedERKb(ptr noundef nonnull align 8 dereferenceable(1192) %i.x, ptr noundef nonnull align 1 dereferenceable(1) %i.a)
@@ -1176,23 +1188,25 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph:                                           ; preds = %bb.e, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEdeEv.exit
   %i.ao = phi i64 [ %i.be, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEdeEv.exit ], [ %i.ai, %bb.e ]
-  %5 = phi i64 [ %i.bd, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEdeEv.exit ], [ %i.ag, %bb.e ] ; 2 uses
-  %6 = load ptr, ptr %4, align 8, !tbaa !11287    ; 3 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %5 = phi ptr [ %7, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEdeEv.exit ], [ %i.x, %bb.e ] ; 4 uses
+  %6 = phi i64 [ %i.bd, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEdeEv.exit ], [ %i.ag, %bb.e ] ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !1478
-  %.not.i.i = icmp eq i64 %5, %i.aq
+  %.not.i.i = icmp eq i64 %6, %i.aq
   br i1 %.not.i.i, label %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEdeEv.exit, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph
-  call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE15InitializeChunkINS_7SortKeyILNS_11SortKeyTypeE7EEEEEvRKm(ptr noundef nonnull align 8 dereferenceable(1192) %6, ptr noundef nonnull align 8 dereferenceable(8) %i.t)
+  call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE15InitializeChunkINS_7SortKeyILNS_11SortKeyTypeE7EEEEEvRKm(ptr noundef nonnull align 8 dereferenceable(1192) %5, ptr noundef nonnull align 8 dereferenceable(8) %i.t)
+  %.pre30 = load ptr, ptr %4, align 8, !tbaa !11287
   %.pre30.a = load i64, ptr %i.u, align 8, !tbaa !168
   %.pre31 = load i64, ptr %i.t, align 8, !tbaa !168
   br label %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEdeEv.exit
 
 _ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEdeEv.exit: ; preds = %.lr.ph, %bb.f
-  %i.ar = phi i64 [ %5, %.lr.ph ], [ %.pre31, %bb.f ]
+  %i.ar = phi i64 [ %6, %.lr.ph ], [ %.pre31, %bb.f ]
   %i.as = phi i64 [ %i.ao, %.lr.ph ], [ %.pre30.a, %bb.f ] ; 2 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %6, i64 584
+  %7 = phi ptr [ %5, %.lr.ph ], [ %.pre30, %bb.f ]
+  %i.at = getelementptr inbounds nuw i8, ptr %5, i64 584
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !1487
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %i.as
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !1048
@@ -1294,7 +1308,7 @@ bb.d:                                             ; preds = %.lr.ph27, %bb.g
   %.025 = phi i64 [ 0, %.lr.ph27 ], [ %.1, %bb.g ] ; 2 uses
   %.02224 = phi i64 [ 0, %.lr.ph27 ], [ %i.bk, %bb.g ] ; 3 uses
   %i.w = load ptr, ptr %2, align 8, !tbaa !1498
-  %i.x = getelementptr inbounds nuw [1192 x i8], ptr %i.w, i64 %.02224 ; 3 uses
+  %i.x = getelementptr inbounds nuw [1192 x i8], ptr %i.w, i64 %.02224 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #29
   store i8 1, ptr %i.a, align 1, !tbaa !219
   call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE13SetKeepPinnedERKb(ptr noundef nonnull align 8 dereferenceable(1192) %i.x, ptr noundef nonnull align 1 dereferenceable(1) %i.a)
@@ -1332,23 +1346,25 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph:                                           ; preds = %bb.e, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEdeEv.exit
   %i.ao = phi i64 [ %i.be, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEdeEv.exit ], [ %i.ai, %bb.e ]
-  %5 = phi i64 [ %i.bd, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEdeEv.exit ], [ %i.ag, %bb.e ] ; 2 uses
-  %6 = load ptr, ptr %4, align 8, !tbaa !11294    ; 3 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %5 = phi ptr [ %7, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEdeEv.exit ], [ %i.x, %bb.e ] ; 4 uses
+  %6 = phi i64 [ %i.bd, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEdeEv.exit ], [ %i.ag, %bb.e ] ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !1478
-  %.not.i.i = icmp eq i64 %5, %i.aq
+  %.not.i.i = icmp eq i64 %6, %i.aq
   br i1 %.not.i.i, label %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEdeEv.exit, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph
-  call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE15InitializeChunkINS_7SortKeyILNS_11SortKeyTypeE8EEEEEvRKm(ptr noundef nonnull align 8 dereferenceable(1192) %6, ptr noundef nonnull align 8 dereferenceable(8) %i.t)
+  call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE15InitializeChunkINS_7SortKeyILNS_11SortKeyTypeE8EEEEEvRKm(ptr noundef nonnull align 8 dereferenceable(1192) %5, ptr noundef nonnull align 8 dereferenceable(8) %i.t)
+  %.pre30 = load ptr, ptr %4, align 8, !tbaa !11294
   %.pre30.a = load i64, ptr %i.u, align 8, !tbaa !168
   %.pre31 = load i64, ptr %i.t, align 8, !tbaa !168
   br label %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEdeEv.exit
 
 _ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEdeEv.exit: ; preds = %.lr.ph, %bb.f
-  %i.ar = phi i64 [ %5, %.lr.ph ], [ %.pre31, %bb.f ]
+  %i.ar = phi i64 [ %6, %.lr.ph ], [ %.pre31, %bb.f ]
   %i.as = phi i64 [ %i.ao, %.lr.ph ], [ %.pre30.a, %bb.f ] ; 2 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %6, i64 584
+  %7 = phi ptr [ %5, %.lr.ph ], [ %.pre30, %bb.f ]
+  %i.at = getelementptr inbounds nuw i8, ptr %5, i64 584
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !1487
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %i.as
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !1051
@@ -1450,7 +1466,7 @@ bb.d:                                             ; preds = %.lr.ph27, %bb.g
   %.025 = phi i64 [ 0, %.lr.ph27 ], [ %.1, %bb.g ] ; 2 uses
   %.02224 = phi i64 [ 0, %.lr.ph27 ], [ %i.bk, %bb.g ] ; 3 uses
   %i.w = load ptr, ptr %2, align 8, !tbaa !1498
-  %i.x = getelementptr inbounds nuw [1192 x i8], ptr %i.w, i64 %.02224 ; 3 uses
+  %i.x = getelementptr inbounds nuw [1192 x i8], ptr %i.w, i64 %.02224 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #29
   store i8 1, ptr %i.a, align 1, !tbaa !219
   call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE13SetKeepPinnedERKb(ptr noundef nonnull align 8 dereferenceable(1192) %i.x, ptr noundef nonnull align 1 dereferenceable(1) %i.a)
@@ -1488,23 +1504,25 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph:                                           ; preds = %bb.e, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEdeEv.exit
   %i.ao = phi i64 [ %i.be, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEdeEv.exit ], [ %i.ai, %bb.e ]
-  %5 = phi i64 [ %i.bd, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEdeEv.exit ], [ %i.ag, %bb.e ] ; 2 uses
-  %6 = load ptr, ptr %4, align 8, !tbaa !11301    ; 3 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %5 = phi ptr [ %7, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEdeEv.exit ], [ %i.x, %bb.e ] ; 4 uses
+  %6 = phi i64 [ %i.bd, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEdeEv.exit ], [ %i.ag, %bb.e ] ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !1478
-  %.not.i.i = icmp eq i64 %5, %i.aq
+  %.not.i.i = icmp eq i64 %6, %i.aq
   br i1 %.not.i.i, label %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEdeEv.exit, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph
-  call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE15InitializeChunkINS_7SortKeyILNS_11SortKeyTypeE9EEEEEvRKm(ptr noundef nonnull align 8 dereferenceable(1192) %6, ptr noundef nonnull align 8 dereferenceable(8) %i.t)
+  call void @_ZN6duckdb18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EE15InitializeChunkINS_7SortKeyILNS_11SortKeyTypeE9EEEEEvRKm(ptr noundef nonnull align 8 dereferenceable(1192) %5, ptr noundef nonnull align 8 dereferenceable(8) %i.t)
+  %.pre30 = load ptr, ptr %4, align 8, !tbaa !11301
   %.pre30.a = load i64, ptr %i.u, align 8, !tbaa !168
   %.pre31 = load i64, ptr %i.t, align 8, !tbaa !168
   br label %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEdeEv.exit
 
 _ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEdeEv.exit: ; preds = %.lr.ph, %bb.f
-  %i.ar = phi i64 [ %5, %.lr.ph ], [ %.pre31, %bb.f ]
+  %i.ar = phi i64 [ %6, %.lr.ph ], [ %.pre31, %bb.f ]
   %i.as = phi i64 [ %i.ao, %.lr.ph ], [ %.pre30.a, %bb.f ] ; 2 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %6, i64 584
+  %7 = phi ptr [ %5, %.lr.ph ], [ %.pre30, %bb.f ]
+  %i.at = getelementptr inbounds nuw i8, ptr %5, i64 584
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !1487
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %i.as
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !1054

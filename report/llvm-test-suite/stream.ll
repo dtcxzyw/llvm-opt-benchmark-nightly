@@ -200,10 +200,10 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 -1, 256) i32 @sxread(ptr noundef initializes((0, 8)) %0) #6 {
 bb.a:
-  %1 = alloca %struct.stream_s, align 8           ; 17 uses
+  %1 = alloca %struct.stream_s, align 8           ; 18 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !8    ; 9 uses
-  %i.c = getelementptr inbounds i8, ptr %i.b, i64 -1 ; 4 uses
+  %i.c = getelementptr inbounds i8, ptr %i.b, i64 -1 ; 6 uses
   store ptr %i.c, ptr %0, align 8, !tbaa !17
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
@@ -329,18 +329,19 @@ bb.j:                                             ; preds = %sgets.exit
   %i.bb = icmp eq i32 %i.ba, 0
   br i1 %i.bb, label %.loopexit.i, label %bb.k
 
-bb.k:                                             ; preds = %bb.w, %bb.j
-  %.034.i = phi ptr [ %i.cf, %bb.w ], [ %i.b, %bb.j ] ; 2 uses
+bb.k:                                             ; preds = %._crit_edge, %bb.j
+  %.pre37 = phi ptr [ %.pre37.pre, %._crit_edge ], [ %i.c, %bb.j ]
+  %.034.i = phi ptr [ %i.cf, %._crit_edge ], [ %i.b, %bb.j ] ; 2 uses
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.p, %bb.k
-  %2 = load ptr, ptr %1, align 8, !tbaa !17       ; 2 uses
+  %2 = phi ptr [ %3, %bb.p ], [ %.pre37, %bb.k ]  ; 2 uses
   %i.bc = load ptr, ptr %i.h, align 8, !tbaa !18
   %i.bd = icmp ult ptr %2, %i.bc
   br i1 %i.bd, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %i.be = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 2 uses
+  %i.be = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 3 uses
   store ptr %i.be, ptr %1, align 8, !tbaa !17
   %i.bf = load i8, ptr %i.be, align 1, !tbaa !28
   %i.bg = zext i8 %i.bf to i32
@@ -349,9 +350,11 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.l
   %i.bh = load ptr, ptr %i.l, align 8, !tbaa !33
   %i.bi = call i32 %i.bh(ptr noundef nonnull %1) #10, !inline_history !35
+  %.pre36 = load ptr, ptr %1, align 8, !tbaa !17
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
+  %3 = phi ptr [ %i.be, %bb.m ], [ %.pre36, %bb.n ] ; 2 uses
   %i.bj = phi i32 [ %i.bg, %bb.m ], [ %i.bi, %bb.n ]
   %i.bk = sext i32 %i.bj to i64
   %i.bl = getelementptr inbounds i8, ptr getelementptr inbounds nuw (i8, ptr @scan_char_array, i64 1), i64 %i.bk
@@ -364,18 +367,19 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.bo, label %.loopexit43.i, label %bb.l, !llvm.loop !36
 
 .loopexit.i:                                      ; preds = %bb.o, %bb.j
+  %.pre35 = phi ptr [ %i.c, %bb.j ], [ %3, %bb.o ]
   %.035.i = phi i8 [ %i.az, %bb.j ], [ %i.bm, %bb.o ] ; 2 uses
   %.1.i = phi ptr [ %i.b, %bb.j ], [ %.034.i, %bb.o ] ; 3 uses
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.u, %.loopexit.i
-  %3 = load ptr, ptr %1, align 8, !tbaa !17       ; 2 uses
+  %4 = phi ptr [ %5, %bb.u ], [ %.pre35, %.loopexit.i ] ; 2 uses
   %i.bp = load ptr, ptr %i.h, align 8, !tbaa !18
-  %i.bq = icmp ult ptr %3, %i.bp
+  %i.bq = icmp ult ptr %4, %i.bp
   br i1 %i.bq, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
-  %i.br = getelementptr inbounds nuw i8, ptr %3, i64 1 ; 2 uses
+  %i.br = getelementptr inbounds nuw i8, ptr %4, i64 1 ; 3 uses
   store ptr %i.br, ptr %1, align 8, !tbaa !17
   %i.bs = load i8, ptr %i.br, align 1, !tbaa !28
   %i.bt = zext i8 %i.bs to i32
@@ -384,9 +388,11 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.q
   %i.bu = load ptr, ptr %i.l, align 8, !tbaa !33
   %i.bv = call i32 %i.bu(ptr noundef nonnull %1) #10, !inline_history !35
+  %.pre = load ptr, ptr %1, align 8, !tbaa !17
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r
+  %5 = phi ptr [ %i.br, %bb.r ], [ %.pre, %bb.s ]
   %i.bw = phi i32 [ %i.bt, %bb.r ], [ %i.bv, %bb.s ]
   %i.bx = sext i32 %i.bw to i64
   %i.by = getelementptr inbounds i8, ptr getelementptr inbounds nuw (i8, ptr @scan_char_array, i64 1), i64 %i.bx
@@ -408,7 +414,11 @@ bb.w:                                             ; preds = %bb.t
   %i.cf = getelementptr inbounds nuw i8, ptr %.1.i, i64 1 ; 2 uses
   store i8 %i.ce, ptr %.1.i, align 1, !tbaa !28
   %i.cg = icmp ult ptr %i.cf, %i.ax
-  br i1 %i.cg, label %bb.k, label %sreadhex.exit
+  br i1 %i.cg, label %._crit_edge, label %sreadhex.exit
+
+._crit_edge:                                      ; preds = %bb.w
+  %.pre37.pre = load ptr, ptr %1, align 8, !tbaa !17
+  br label %bb.k
 
 .loopexit43.i:                                    ; preds = %bb.p, %bb.v
   %storemerge.i = phi i32 [ %i.cc, %bb.v ], [ -1, %bb.p ]

@@ -201,6 +201,7 @@ bb.bj:                                            ; preds = %_ZN5arrow6StatusD2E
   %i.gg = getelementptr inbounds nuw i8, ptr %11, i64 144
   %i.gh = getelementptr inbounds nuw i8, ptr %11, i64 176
   %i.gi = getelementptr inbounds nuw i8, ptr %11, i64 192 ; 3 uses
+  %.pre141.i = load ptr, ptr %7, align 16, !tbaa !784, !noalias !732 ; 2 uses
   br label %bb.bm
 
 ._crit_edge.i:                                    ; preds = %bb.ci, %bb.bj
@@ -231,12 +232,13 @@ bb.bl:                                            ; preds = %_ZN5arrow6StatusD2E
   br label %bb.eb
 
 bb.bm:                                            ; preds = %bb.ci, %.lr.ph.i
+  %21 = phi ptr [ %.pre141.i, %.lr.ph.i ], [ %26, %bb.ci ] ; 8 uses
+  %22 = phi ptr [ %.pre141.i, %.lr.ph.i ], [ %27, %bb.ci ] ; 6 uses
   %.030135.i = phi i64 [ 0, %.lr.ph.i ], [ %i.jw, %bb.ci ] ; 8 uses
-  %21 = load ptr, ptr %7, align 16, !tbaa !784, !noalias !732 ; 2 uses
-  %i.gl = getelementptr inbounds nuw i8, ptr %21, i64 24
+  %i.gl = getelementptr inbounds nuw i8, ptr %22, i64 24
   %i.gm = load ptr, ptr %i.gl, align 8, !tbaa !141 ; 2 uses
   %.not.i79.i = icmp eq ptr %i.gm, null
-  %i.gn = getelementptr inbounds nuw i8, ptr %21, i64 8 ; 2 uses
+  %i.gn = getelementptr inbounds nuw i8, ptr %22, i64 8 ; 2 uses
   %i.go = load ptr, ptr %i.gn, align 8, !tbaa !138 ; 6 uses
   br i1 %.not.i79.i, label %bb.bo, label %bb.bn
 
@@ -288,12 +290,14 @@ bb.bs:                                            ; preds = %bb.bo
   %i.hi = getelementptr inbounds nuw i8, ptr %i.hh, i64 16
   %i.hj = load i64, ptr %i.hi, align 8, !tbaa !788
   %.not.i = icmp eq i64 %i.hg, %i.hj
+  %.pre140.i = load ptr, ptr %7, align 16, !tbaa !784, !noalias !732 ; 3 uses
   br i1 %.not.i, label %bb.ch, label %bb.bt
 
 _ZNK5arrow5Array7IsValidEl.exit.i:                ; preds = %bb.bp
   br i1 %i.hc, label %bb.ch, label %bb.bt
 
 bb.bt:                                            ; preds = %_ZNK5arrow5Array7IsValidEl.exit.i, %bb.bs, %.noexc82.i, %.noexc81.i, %bb.bn
+  %23 = phi ptr [ %21, %.noexc81.i ], [ %21, %.noexc82.i ], [ %.pre140.i, %bb.bs ], [ %21, %bb.bn ], [ %21, %_ZNK5arrow5Array7IsValidEl.exit.i ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #25, !noalias !732
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %15, i8 0, i64 16, i1 false), !noalias !732
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #25, !noalias !732
@@ -355,10 +359,9 @@ bb.by:                                            ; preds = %bb.bx
   store i64 %i.ig, ptr %i.ga, align 8, !noalias !732
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #25, !noalias !732
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #25, !noalias !732
-  %22 = load ptr, ptr %7, align 16, !tbaa !784, !noalias !732 ; 2 uses
-  %i.ih = getelementptr inbounds nuw i8, ptr %22, i64 32
+  %i.ih = getelementptr inbounds nuw i8, ptr %23, i64 32
   %i.ii = load ptr, ptr %i.ih, align 8, !tbaa !145
-  %i.ij = getelementptr inbounds nuw i8, ptr %22, i64 8
+  %i.ij = getelementptr inbounds nuw i8, ptr %23, i64 8
   %i.ik = load ptr, ptr %i.ij, align 8, !tbaa !138
   %i.il = getelementptr inbounds nuw i8, ptr %i.ik, i64 32
   %i.im = load i64, ptr %i.il, align 8, !tbaa !148
@@ -419,6 +422,8 @@ bb.cg:                                            ; preds = %bb.ce, %bb.cb
   br label %bb.eb
 
 bb.ch:                                            ; preds = %_ZNK5arrow5Array7IsValidEl.exit.i, %bb.bs, %.noexc82.i, %.noexc81.i, %bb.bn
+  %24 = phi ptr [ %21, %.noexc81.i ], [ %21, %.noexc82.i ], [ %.pre140.i, %bb.bs ], [ %21, %bb.bn ], [ %21, %_ZNK5arrow5Array7IsValidEl.exit.i ]
+  %25 = phi ptr [ %22, %.noexc81.i ], [ %22, %.noexc82.i ], [ %.pre140.i, %bb.bs ], [ %22, %bb.bn ], [ %22, %_ZNK5arrow5Array7IsValidEl.exit.i ]
   %i.jb = load ptr, ptr %i.gd, align 8, !tbaa !791, !noalias !732
   %i.jc = load i64, ptr %i.ge, align 8, !tbaa !792, !noalias !732 ; 2 uses
   %i.jd = sdiv i64 %i.jc, 8
@@ -448,6 +453,8 @@ bb.ch:                                            ; preds = %_ZNK5arrow5Array7Is
   br label %bb.ci
 
 bb.ci:                                            ; preds = %bb.ch, %bb.cf
+  %26 = phi ptr [ %24, %bb.ch ], [ %23, %bb.cf ]
+  %27 = phi ptr [ %25, %bb.ch ], [ %23, %bb.cf ]
   %i.jw = add nuw nsw i64 %.030135.i, 1           ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.jw, %3
   br i1 %exitcond.not.i, label %._crit_edge.i, label %bb.bm, !llvm.loop !796
@@ -850,6 +857,7 @@ bb.aw:                                            ; preds = %_ZN5arrow6StatusD2E
   %i.ej = getelementptr inbounds nuw i8, ptr %11, i64 144
   %i.ek = getelementptr inbounds nuw i8, ptr %11, i64 176
   %i.el = getelementptr inbounds nuw i8, ptr %11, i64 192 ; 3 uses
+  %.pre131.i = load ptr, ptr %7, align 16, !tbaa !784, !noalias !802 ; 2 uses
   %i.em = getelementptr inbounds nuw i8, ptr %9, i64 16
   %i.en = getelementptr inbounds nuw i8, ptr %9, i64 32
   %i.eo = getelementptr inbounds nuw i8, ptr %9, i64 48
@@ -883,12 +891,13 @@ bb.ay:                                            ; preds = %_ZN5arrow6StatusD2E
   br label %bb.dj
 
 bb.az:                                            ; preds = %bb.cc, %.lr.ph.i
+  %23 = phi ptr [ %.pre131.i, %.lr.ph.i ], [ %28, %bb.cc ] ; 8 uses
+  %24 = phi ptr [ %.pre131.i, %.lr.ph.i ], [ %29, %bb.cc ] ; 6 uses
   %.028125.i = phi i64 [ 0, %.lr.ph.i ], [ %i.hz, %bb.cc ] ; 10 uses
-  %23 = load ptr, ptr %7, align 16, !tbaa !784, !noalias !802 ; 2 uses
-  %i.er = getelementptr inbounds nuw i8, ptr %23, i64 24
+  %i.er = getelementptr inbounds nuw i8, ptr %24, i64 24
   %i.es = load ptr, ptr %i.er, align 8, !tbaa !141 ; 2 uses
   %.not.i79.i = icmp eq ptr %i.es, null
-  %i.et = getelementptr inbounds nuw i8, ptr %23, i64 8 ; 2 uses
+  %i.et = getelementptr inbounds nuw i8, ptr %24, i64 8 ; 2 uses
   %i.eu = load ptr, ptr %i.et, align 8, !tbaa !138 ; 6 uses
   br i1 %.not.i79.i, label %bb.bb, label %bb.ba
 
@@ -940,12 +949,14 @@ bb.bf:                                            ; preds = %bb.bb
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fn, i64 16
   %i.fp = load i64, ptr %i.fo, align 8, !tbaa !788
   %.not.i = icmp eq i64 %i.fm, %i.fp
+  %.pre.i = load ptr, ptr %7, align 16, !tbaa !784, !noalias !802 ; 3 uses
   br i1 %.not.i, label %bb.cb, label %bb.bg
 
 _ZNK5arrow5Array7IsValidEl.exit.i:                ; preds = %bb.bc
   br i1 %i.fi, label %bb.cb, label %bb.bg
 
 bb.bg:                                            ; preds = %_ZNK5arrow5Array7IsValidEl.exit.i, %bb.bf, %.noexc82.i, %.noexc81.i, %bb.ba
+  %25 = phi ptr [ %23, %.noexc81.i ], [ %23, %.noexc82.i ], [ %.pre.i, %bb.bf ], [ %23, %bb.ba ], [ %23, %_ZNK5arrow5Array7IsValidEl.exit.i ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #25, !noalias !802
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %15, i8 0, i64 32, i1 false), !noalias !802
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #25, !noalias !802
@@ -1041,10 +1052,9 @@ bb.bp:                                            ; preds = %bb.bo
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #25, !noalias !802
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #25, !noalias !802
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #25, !noalias !802
-  %24 = load ptr, ptr %7, align 16, !tbaa !784, !noalias !802 ; 2 uses
-  %i.gl = getelementptr inbounds nuw i8, ptr %24, i64 32
+  %i.gl = getelementptr inbounds nuw i8, ptr %25, i64 32
   %i.gm = load ptr, ptr %i.gl, align 8, !tbaa !145
-  %i.gn = getelementptr inbounds nuw i8, ptr %24, i64 8
+  %i.gn = getelementptr inbounds nuw i8, ptr %25, i64 8
   %i.go = load ptr, ptr %i.gn, align 8, !tbaa !138
   %i.gp = getelementptr inbounds nuw i8, ptr %i.go, i64 32
   %i.gq = load i64, ptr %i.gp, align 8, !tbaa !148
@@ -1114,6 +1124,8 @@ bb.ca:                                            ; preds = %bb.by, %bb.bw, %bb.
   br label %bb.dj
 
 bb.cb:                                            ; preds = %_ZNK5arrow5Array7IsValidEl.exit.i, %bb.bf, %.noexc82.i, %.noexc81.i, %bb.ba
+  %26 = phi ptr [ %23, %.noexc81.i ], [ %23, %.noexc82.i ], [ %.pre.i, %bb.bf ], [ %23, %bb.ba ], [ %23, %_ZNK5arrow5Array7IsValidEl.exit.i ]
+  %27 = phi ptr [ %24, %.noexc81.i ], [ %24, %.noexc82.i ], [ %.pre.i, %bb.bf ], [ %24, %bb.ba ], [ %24, %_ZNK5arrow5Array7IsValidEl.exit.i ]
   %i.he = load ptr, ptr %i.eg, align 8, !tbaa !791, !noalias !802
   %i.hf = load i64, ptr %i.eh, align 8, !tbaa !792, !noalias !802 ; 2 uses
   %i.hg = sdiv i64 %i.hf, 8
@@ -1143,6 +1155,8 @@ bb.cb:                                            ; preds = %_ZNK5arrow5Array7Is
   br label %bb.cc
 
 bb.cc:                                            ; preds = %bb.cb, %bb.bz
+  %28 = phi ptr [ %26, %bb.cb ], [ %25, %bb.bz ]
+  %29 = phi ptr [ %27, %bb.cb ], [ %25, %bb.bz ]
   %i.hz = add nuw nsw i64 %.028125.i, 1           ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.hz, %3
   br i1 %exitcond.not.i, label %._crit_edge.i, label %bb.az, !llvm.loop !831
@@ -1545,6 +1559,7 @@ _ZNSt6vectorIhSaIhEEC2EmRKS0_.exit.i:             ; preds = %bb.ab, %.noexc62.i,
   %i.cq = getelementptr inbounds nuw i8, ptr %13, i64 240
   %i.cr = getelementptr inbounds nuw i8, ptr %13, i64 184 ; 3 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %13, i64 96 ; 2 uses
+  %.pre39.i = load ptr, ptr %11, align 8, !tbaa !686, !noalias !836 ; 2 uses
   br label %bb.ae
 
 ._crit_edge.i:                                    ; preds = %bb.bq, %_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit.i
@@ -1564,13 +1579,14 @@ bb.ad:                                            ; preds = %bb.aa, %bb.z
   br label %_ZNSt6vectorIhSaIhEED2Ev.exit132.i
 
 bb.ae:                                            ; preds = %bb.bq, %.lr.ph.i
+  %20 = phi ptr [ %.pre39.i, %.lr.ph.i ], [ %24, %bb.bq ] ; 8 uses
+  %21 = phi ptr [ %.pre39.i, %.lr.ph.i ], [ %25, %bb.bq ] ; 6 uses
   %.034.i = phi i64 [ 0, %.lr.ph.i ], [ %i.iz, %bb.bq ] ; 7 uses
   %.sroa.77.033.i = phi i32 [ %i.bp, %.lr.ph.i ], [ %.sroa.77.1.i, %bb.bq ] ; 3 uses
-  %20 = load ptr, ptr %11, align 8, !tbaa !686, !noalias !836 ; 6 uses
-  %i.cv = getelementptr inbounds nuw i8, ptr %20, i64 24
+  %i.cv = getelementptr inbounds nuw i8, ptr %21, i64 24
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !141 ; 2 uses
   %.not.i63.i = icmp eq ptr %i.cw, null
-  %i.cx = getelementptr inbounds nuw i8, ptr %20, i64 8 ; 2 uses
+  %i.cx = getelementptr inbounds nuw i8, ptr %21, i64 8 ; 2 uses
   %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !138 ; 6 uses
   br i1 %.not.i63.i, label %bb.ag, label %bb.af
 
@@ -1622,17 +1638,14 @@ bb.ak:                                            ; preds = %bb.ag
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dr, i64 16
   %i.dt = load i64, ptr %i.ds, align 8, !tbaa !788
   %.not.i = icmp eq i64 %i.dq, %i.dt
-  br i1 %.not.i, label %bb.bb, label %._crit_edge38.i
-
-._crit_edge38.i:                                  ; preds = %bb.ak
-  %.pre39.i = load ptr, ptr %11, align 8, !tbaa !686, !noalias !836
-  br label %bb.al
+  %.pre38.i = load ptr, ptr %11, align 8, !tbaa !686, !noalias !836 ; 3 uses
+  br i1 %.not.i, label %bb.bb, label %bb.al
 
 _ZNK5arrow5Array7IsValidEl.exit.i:                ; preds = %bb.ah
   br i1 %i.dm, label %bb.bb, label %bb.al
 
-bb.al:                                            ; preds = %_ZNK5arrow5Array7IsValidEl.exit.i, %._crit_edge38.i, %.noexc66.i, %.noexc65.i, %bb.af
-  %i.du = phi ptr [ %.pre39.i, %._crit_edge38.i ], [ %20, %.noexc65.i ], [ %20, %.noexc66.i ], [ %20, %bb.af ], [ %20, %_ZNK5arrow5Array7IsValidEl.exit.i ]
+bb.al:                                            ; preds = %_ZNK5arrow5Array7IsValidEl.exit.i, %bb.ak, %.noexc66.i, %.noexc65.i, %bb.af
+  %i.du = phi ptr [ %20, %.noexc65.i ], [ %20, %.noexc66.i ], [ %.pre38.i, %bb.ak ], [ %20, %bb.af ], [ %20, %_ZNK5arrow5Array7IsValidEl.exit.i ] ; 3 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 40 ; 2 uses
   %i.dw = load ptr, ptr %i.dv, align 8, !tbaa !382
   %i.dx = getelementptr inbounds nuw [4 x i8], ptr %i.dw, i64 %.034.i
@@ -1848,6 +1861,8 @@ _ZN5arrow6StatusD2Ev.exit85.i:                    ; preds = %bb.ba, %.body75.i, 
   br label %bb.cy
 
 bb.bb:                                            ; preds = %_ZNK5arrow5Array7IsValidEl.exit.i, %bb.ak, %.noexc66.i, %.noexc65.i, %bb.af
+  %22 = phi ptr [ %20, %.noexc65.i ], [ %20, %.noexc66.i ], [ %.pre38.i, %bb.ak ], [ %20, %bb.af ], [ %20, %_ZNK5arrow5Array7IsValidEl.exit.i ]
+  %23 = phi ptr [ %21, %.noexc65.i ], [ %21, %.noexc66.i ], [ %.pre38.i, %bb.ak ], [ %21, %bb.af ], [ %21, %_ZNK5arrow5Array7IsValidEl.exit.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #25, !noalias !836
   call void @llvm.experimental.noalias.scope.decl(metadata !848)
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #25, !noalias !851
@@ -2045,6 +2060,8 @@ _ZN5arrow6StatusD2Ev.exit105.i:                   ; preds = %bb.bp, %.body95.i, 
   br label %bb.cy
 
 bb.bq:                                            ; preds = %_ZN5arrow6StatusD2Ev.exit103.i, %_ZN5arrow6StatusD2Ev.exit83.i
+  %24 = phi ptr [ %i.du, %_ZN5arrow6StatusD2Ev.exit83.i ], [ %22, %_ZN5arrow6StatusD2Ev.exit103.i ]
+  %25 = phi ptr [ %i.du, %_ZN5arrow6StatusD2Ev.exit83.i ], [ %23, %_ZN5arrow6StatusD2Ev.exit103.i ]
   %.sroa.77.1.i = phi i32 [ %i.ea, %_ZN5arrow6StatusD2Ev.exit83.i ], [ %.sroa.77.033.i, %_ZN5arrow6StatusD2Ev.exit103.i ]
   %i.iz = add nuw nsw i64 %.034.i, 1              ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.iz, %2
@@ -2447,6 +2464,7 @@ _ZNSt6vectorIhSaIhEEC2EmRKS0_.exit.i:             ; preds = %bb.ab, %.noexc62.i,
   %i.cr = getelementptr inbounds nuw i8, ptr %13, i64 240
   %i.cs = getelementptr inbounds nuw i8, ptr %13, i64 184 ; 3 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %13, i64 96 ; 2 uses
+  %.pre39.i = load ptr, ptr %11, align 8, !tbaa !716, !noalias !867 ; 2 uses
   br label %bb.ae
 
 ._crit_edge.i:                                    ; preds = %bb.bq, %_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit.i
@@ -2466,13 +2484,14 @@ bb.ad:                                            ; preds = %bb.aa, %bb.z
   br label %_ZNSt6vectorIhSaIhEED2Ev.exit132.i
 
 bb.ae:                                            ; preds = %bb.bq, %.lr.ph.i
+  %20 = phi ptr [ %.pre39.i, %.lr.ph.i ], [ %24, %bb.bq ] ; 8 uses
+  %21 = phi ptr [ %.pre39.i, %.lr.ph.i ], [ %25, %bb.bq ] ; 6 uses
   %.034.i = phi i64 [ 0, %.lr.ph.i ], [ %i.iy, %bb.bq ] ; 7 uses
   %.sroa.77.033.i = phi i32 [ %i.br, %.lr.ph.i ], [ %.sroa.77.1.i, %bb.bq ] ; 3 uses
-  %20 = load ptr, ptr %11, align 8, !tbaa !716, !noalias !867 ; 6 uses
-  %i.cw = getelementptr inbounds nuw i8, ptr %20, i64 24
+  %i.cw = getelementptr inbounds nuw i8, ptr %21, i64 24
   %i.cx = load ptr, ptr %i.cw, align 8, !tbaa !141 ; 2 uses
   %.not.i63.i = icmp eq ptr %i.cx, null
-  %i.cy = getelementptr inbounds nuw i8, ptr %20, i64 8 ; 2 uses
+  %i.cy = getelementptr inbounds nuw i8, ptr %21, i64 8 ; 2 uses
   %i.cz = load ptr, ptr %i.cy, align 8, !tbaa !138 ; 6 uses
   br i1 %.not.i63.i, label %bb.ag, label %bb.af
 
@@ -2524,17 +2543,14 @@ bb.ak:                                            ; preds = %bb.ag
   %i.dt = getelementptr inbounds nuw i8, ptr %i.ds, i64 16
   %i.du = load i64, ptr %i.dt, align 8, !tbaa !788
   %.not.i = icmp eq i64 %i.dr, %i.du
-  br i1 %.not.i, label %bb.bb, label %._crit_edge38.i
-
-._crit_edge38.i:                                  ; preds = %bb.ak
-  %.pre39.i = load ptr, ptr %11, align 8, !tbaa !716, !noalias !867
-  br label %bb.al
+  %.pre38.i = load ptr, ptr %11, align 8, !tbaa !716, !noalias !867 ; 3 uses
+  br i1 %.not.i, label %bb.bb, label %bb.al
 
 _ZNK5arrow5Array7IsValidEl.exit.i:                ; preds = %bb.ah
   br i1 %i.dn, label %bb.bb, label %bb.al
 
-bb.al:                                            ; preds = %_ZNK5arrow5Array7IsValidEl.exit.i, %._crit_edge38.i, %.noexc66.i, %.noexc65.i, %bb.af
-  %i.dv = phi ptr [ %.pre39.i, %._crit_edge38.i ], [ %20, %.noexc65.i ], [ %20, %.noexc66.i ], [ %20, %bb.af ], [ %20, %_ZNK5arrow5Array7IsValidEl.exit.i ]
+bb.al:                                            ; preds = %_ZNK5arrow5Array7IsValidEl.exit.i, %bb.ak, %.noexc66.i, %.noexc65.i, %bb.af
+  %i.dv = phi ptr [ %20, %.noexc65.i ], [ %20, %.noexc66.i ], [ %.pre38.i, %bb.ak ], [ %20, %bb.af ], [ %20, %_ZNK5arrow5Array7IsValidEl.exit.i ] ; 3 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dv, i64 40 ; 2 uses
   %i.dx = load ptr, ptr %i.dw, align 8, !tbaa !475
   %i.dy = getelementptr inbounds nuw [8 x i8], ptr %i.dx, i64 %.034.i
@@ -2749,6 +2765,8 @@ _ZN5arrow6StatusD2Ev.exit85.i:                    ; preds = %bb.ba, %.body75.i, 
   br label %bb.cy
 
 bb.bb:                                            ; preds = %_ZNK5arrow5Array7IsValidEl.exit.i, %bb.ak, %.noexc66.i, %.noexc65.i, %bb.af
+  %22 = phi ptr [ %20, %.noexc65.i ], [ %20, %.noexc66.i ], [ %.pre38.i, %bb.ak ], [ %20, %bb.af ], [ %20, %_ZNK5arrow5Array7IsValidEl.exit.i ]
+  %23 = phi ptr [ %21, %.noexc65.i ], [ %21, %.noexc66.i ], [ %.pre38.i, %bb.ak ], [ %21, %bb.af ], [ %21, %_ZNK5arrow5Array7IsValidEl.exit.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #25, !noalias !867
   call void @llvm.experimental.noalias.scope.decl(metadata !875)
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #25, !noalias !878
@@ -2945,6 +2963,8 @@ _ZN5arrow6StatusD2Ev.exit105.i:                   ; preds = %bb.bp, %.body95.i, 
   br label %bb.cy
 
 bb.bq:                                            ; preds = %_ZN5arrow6StatusD2Ev.exit103.i, %_ZN5arrow6StatusD2Ev.exit83.i
+  %24 = phi ptr [ %i.dv, %_ZN5arrow6StatusD2Ev.exit83.i ], [ %22, %_ZN5arrow6StatusD2Ev.exit103.i ]
+  %25 = phi ptr [ %i.dv, %_ZN5arrow6StatusD2Ev.exit83.i ], [ %23, %_ZN5arrow6StatusD2Ev.exit103.i ]
   %.sroa.77.1.i = phi i32 [ %i.ea, %_ZN5arrow6StatusD2Ev.exit83.i ], [ %.sroa.77.033.i, %_ZN5arrow6StatusD2Ev.exit103.i ]
   %i.iy = add nuw nsw i64 %.034.i, 1              ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.iy, %2
@@ -3347,6 +3367,7 @@ _ZN5arrow13StringBuilderC2Ev.exit:                ; preds = %_ZSt20dynamic_point
   %i.ax = getelementptr inbounds nuw i8, ptr %15, i64 240
   %i.ay = getelementptr inbounds nuw i8, ptr %15, i64 184 ; 3 uses
   %i.az = getelementptr inbounds nuw i8, ptr %15, i64 96 ; 2 uses
+  %.pre134 = load ptr, ptr %14, align 8, !tbaa !716 ; 2 uses
   br label %bb.r
 
 ._crit_edge:                                      ; preds = %bb.bc, %_ZN5arrow13StringBuilderC2Ev.exit
@@ -3373,12 +3394,13 @@ bb.q:                                             ; preds = %_ZSt20dynamic_point
   br label %bb.dc
 
 bb.r:                                             ; preds = %.lr.ph, %bb.bc
+  %22 = phi ptr [ %.pre134, %.lr.ph ], [ %26, %bb.bc ] ; 8 uses
+  %23 = phi ptr [ %.pre134, %.lr.ph ], [ %27, %bb.bc ] ; 6 uses
   %.035132 = phi i64 [ 0, %.lr.ph ], [ %i.gp, %bb.bc ] ; 6 uses
-  %22 = load ptr, ptr %14, align 8, !tbaa !716    ; 6 uses
-  %i.bd = getelementptr inbounds nuw i8, ptr %22, i64 24
+  %i.bd = getelementptr inbounds nuw i8, ptr %23, i64 24
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !141 ; 2 uses
   %.not.i = icmp eq ptr %i.be, null
-  %i.bf = getelementptr inbounds nuw i8, ptr %22, i64 8 ; 2 uses
+  %i.bf = getelementptr inbounds nuw i8, ptr %23, i64 8 ; 2 uses
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !138 ; 6 uses
   br i1 %.not.i, label %bb.t, label %bb.s
 
@@ -3430,17 +3452,14 @@ bb.x:                                             ; preds = %bb.t
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 16
   %i.cb = load i64, ptr %i.ca, align 8, !tbaa !788
   %.not131 = icmp eq i64 %i.by, %i.cb
-  br i1 %.not131, label %bb.an, label %._crit_edge134
-
-._crit_edge134:                                   ; preds = %bb.x
-  %.pre = load ptr, ptr %14, align 8, !tbaa !716
-  br label %bb.y
+  %.pre = load ptr, ptr %14, align 8, !tbaa !716  ; 3 uses
+  br i1 %.not131, label %bb.an, label %bb.y
 
 _ZNK5arrow5Array7IsValidEl.exit:                  ; preds = %bb.u
   br i1 %i.bu, label %bb.an, label %bb.y
 
-bb.y:                                             ; preds = %._crit_edge134, %.noexc53, %.noexc54, %bb.s, %_ZNK5arrow5Array7IsValidEl.exit
-  %i.cc = phi ptr [ %.pre, %._crit_edge134 ], [ %22, %.noexc53 ], [ %22, %.noexc54 ], [ %22, %bb.s ], [ %22, %_ZNK5arrow5Array7IsValidEl.exit ]
+bb.y:                                             ; preds = %.noexc53, %.noexc54, %bb.x, %bb.s, %_ZNK5arrow5Array7IsValidEl.exit
+  %i.cc = phi ptr [ %22, %.noexc53 ], [ %22, %.noexc54 ], [ %.pre, %bb.x ], [ %22, %bb.s ], [ %22, %_ZNK5arrow5Array7IsValidEl.exit ] ; 3 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 40
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !475
   %i.cf = getelementptr inbounds nuw [8 x i8], ptr %i.ce, i64 %.035132
@@ -3609,6 +3628,8 @@ _ZN5arrow6StatusD2Ev.exit64:                      ; preds = %bb.am, %.body, %bb.
   br label %bb.db
 
 bb.an:                                            ; preds = %.noexc53, %.noexc54, %bb.x, %bb.s, %_ZNK5arrow5Array7IsValidEl.exit
+  %24 = phi ptr [ %22, %.noexc53 ], [ %22, %.noexc54 ], [ %.pre, %bb.x ], [ %22, %bb.s ], [ %22, %_ZNK5arrow5Array7IsValidEl.exit ]
+  %25 = phi ptr [ %23, %.noexc53 ], [ %23, %.noexc54 ], [ %.pre, %bb.x ], [ %23, %bb.s ], [ %23, %_ZNK5arrow5Array7IsValidEl.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #25
   call void @llvm.experimental.noalias.scope.decl(metadata !921)
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #25, !noalias !921
@@ -3806,6 +3827,8 @@ _ZN5arrow6StatusD2Ev.exit84:                      ; preds = %bb.bb, %.body74, %b
   br label %bb.db
 
 bb.bc:                                            ; preds = %_ZN5arrow6StatusD2Ev.exit62, %_ZN5arrow6StatusD2Ev.exit82
+  %26 = phi ptr [ %i.cc, %_ZN5arrow6StatusD2Ev.exit62 ], [ %24, %_ZN5arrow6StatusD2Ev.exit82 ]
+  %27 = phi ptr [ %i.cc, %_ZN5arrow6StatusD2Ev.exit62 ], [ %25, %_ZN5arrow6StatusD2Ev.exit82 ]
   %i.gp = add nuw nsw i64 %.035132, 1             ; 2 uses
   %exitcond.not = icmp eq i64 %i.gp, %2
   br i1 %exitcond.not, label %._crit_edge, label %bb.r, !llvm.loop !931
@@ -4208,6 +4231,7 @@ bb.ag:                                            ; preds = %bb.ad, %bb.ac
   %i.cs = getelementptr inbounds nuw i8, ptr %14, i64 112
   %i.ct = getelementptr inbounds nuw i8, ptr %14, i64 184 ; 3 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %14, i64 96 ; 2 uses
+  %.pre39.i = load ptr, ptr %12, align 8, !tbaa !686, !noalias !937 ; 2 uses
   br label %bb.ah
 
 ._crit_edge.i:                                    ; preds = %bb.bt, %bb.ag
@@ -4217,13 +4241,14 @@ bb.ag:                                            ; preds = %bb.ad, %bb.ac
           to label %bb.bu unwind label %bb.ce
 
 bb.ah:                                            ; preds = %bb.bt, %.lr.ph.i
+  %21 = phi ptr [ %.pre39.i, %.lr.ph.i ], [ %25, %bb.bt ] ; 8 uses
+  %22 = phi ptr [ %.pre39.i, %.lr.ph.i ], [ %26, %bb.bt ] ; 6 uses
   %.034.i = phi i64 [ 0, %.lr.ph.i ], [ %i.iy, %bb.bt ] ; 7 uses
   %.sroa.77.033.i = phi i32 [ %i.bp, %.lr.ph.i ], [ %.sroa.77.1.i, %bb.bt ] ; 3 uses
-  %21 = load ptr, ptr %12, align 8, !tbaa !686, !noalias !937 ; 6 uses
-  %i.cv = getelementptr inbounds nuw i8, ptr %21, i64 24
+  %i.cv = getelementptr inbounds nuw i8, ptr %22, i64 24
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !141 ; 2 uses
   %.not.i63.i = icmp eq ptr %i.cw, null
-  %i.cx = getelementptr inbounds nuw i8, ptr %21, i64 8 ; 2 uses
+  %i.cx = getelementptr inbounds nuw i8, ptr %22, i64 8 ; 2 uses
   %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !138 ; 6 uses
   br i1 %.not.i63.i, label %bb.aj, label %bb.ai
 
@@ -4275,17 +4300,14 @@ bb.an:                                            ; preds = %bb.aj
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dr, i64 16
   %i.dt = load i64, ptr %i.ds, align 8, !tbaa !788
   %.not.i = icmp eq i64 %i.dq, %i.dt
-  br i1 %.not.i, label %bb.be, label %._crit_edge38.i
-
-._crit_edge38.i:                                  ; preds = %bb.an
-  %.pre39.i = load ptr, ptr %12, align 8, !tbaa !686, !noalias !937
-  br label %bb.ao
+  %.pre38.i = load ptr, ptr %12, align 8, !tbaa !686, !noalias !937 ; 3 uses
+  br i1 %.not.i, label %bb.be, label %bb.ao
 
 _ZNK5arrow5Array7IsValidEl.exit.i:                ; preds = %bb.ak
   br i1 %i.dm, label %bb.be, label %bb.ao
 
-bb.ao:                                            ; preds = %_ZNK5arrow5Array7IsValidEl.exit.i, %._crit_edge38.i, %.noexc66.i, %.noexc65.i, %bb.ai
-  %i.du = phi ptr [ %.pre39.i, %._crit_edge38.i ], [ %21, %.noexc65.i ], [ %21, %.noexc66.i ], [ %21, %bb.ai ], [ %21, %_ZNK5arrow5Array7IsValidEl.exit.i ]
+bb.ao:                                            ; preds = %_ZNK5arrow5Array7IsValidEl.exit.i, %bb.an, %.noexc66.i, %.noexc65.i, %bb.ai
+  %i.du = phi ptr [ %21, %.noexc65.i ], [ %21, %.noexc66.i ], [ %.pre38.i, %bb.an ], [ %21, %bb.ai ], [ %21, %_ZNK5arrow5Array7IsValidEl.exit.i ] ; 3 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 40 ; 2 uses
   %i.dw = load ptr, ptr %i.dv, align 8, !tbaa !382
   %i.dx = getelementptr inbounds nuw [4 x i8], ptr %i.dw, i64 %.034.i
@@ -4502,6 +4524,8 @@ _ZN5arrow6StatusD2Ev.exit85.i:                    ; preds = %bb.bd, %.body75.i, 
   br label %bb.cp
 
 bb.be:                                            ; preds = %_ZNK5arrow5Array7IsValidEl.exit.i, %bb.an, %.noexc66.i, %.noexc65.i, %bb.ai
+  %23 = phi ptr [ %21, %.noexc65.i ], [ %21, %.noexc66.i ], [ %.pre38.i, %bb.an ], [ %21, %bb.ai ], [ %21, %_ZNK5arrow5Array7IsValidEl.exit.i ]
+  %24 = phi ptr [ %22, %.noexc65.i ], [ %22, %.noexc66.i ], [ %.pre38.i, %bb.an ], [ %22, %bb.ai ], [ %22, %_ZNK5arrow5Array7IsValidEl.exit.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #25, !noalias !937
   call void @llvm.experimental.noalias.scope.decl(metadata !954)
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #25, !noalias !957
@@ -4697,6 +4721,8 @@ _ZN5arrow6StatusD2Ev.exit105.i:                   ; preds = %bb.bs, %.body95.i, 
   br label %bb.cp
 
 bb.bt:                                            ; preds = %_ZN5arrow6StatusD2Ev.exit103.i, %_ZN5arrow6StatusD2Ev.exit83.i
+  %25 = phi ptr [ %i.du, %_ZN5arrow6StatusD2Ev.exit83.i ], [ %23, %_ZN5arrow6StatusD2Ev.exit103.i ]
+  %26 = phi ptr [ %i.du, %_ZN5arrow6StatusD2Ev.exit83.i ], [ %24, %_ZN5arrow6StatusD2Ev.exit103.i ]
   %.sroa.77.1.i = phi i32 [ %i.ea, %_ZN5arrow6StatusD2Ev.exit83.i ], [ %.sroa.77.033.i, %_ZN5arrow6StatusD2Ev.exit103.i ]
   %i.iy = add nuw nsw i64 %.034.i, 1              ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.iy, %2

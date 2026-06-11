@@ -201,7 +201,7 @@ define void @_ZN6duckdb17DependencyManager13PrintSubjectsENS_18CatalogTransactio
   %5 = alloca %"struct.duckdb::MangledEntryName", align 8 ; 10 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
-  %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
+  %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %9 = alloca %"class.duckdb::DependencyCatalogSet", align 8 ; 14 uses
   %10 = alloca %"class.std::function.513", align 8 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #34
@@ -261,13 +261,17 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i: ; preds = 
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #34, !noalias !1070
   %i.p = load i64, ptr %i.m, align 8, !tbaa !64, !alias.scope !1070 ; 2 uses
   %.not.i = icmp eq i64 %i.p, 0
-  br i1 %.not.i, label %_ZN6duckdbL12FormatStringB5cxx11ERKNS_16MangledEntryNameE.exit, label %.lr.ph.i
+  br i1 %.not.i, label %_ZN6duckdbL12FormatStringB5cxx11ERKNS_16MangledEntryNameE.exit, label %.lr.ph.i.preheader
 
-.lr.ph.i:                                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i, %bb.d
-  %11 = phi i64 [ %i.t, %bb.d ], [ %i.p, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i ]
-  %.01.i.a = phi i64 [ %i.u, %bb.d ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i ] ; 2 uses
-  %12 = load ptr, ptr %8, align 8, !tbaa !63, !alias.scope !1070
-  %i.q = getelementptr inbounds nuw i8, ptr %12, i64 %.01.i.a ; 2 uses
+.lr.ph.i.preheader:                               ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i
+  %.pre44 = load ptr, ptr %8, align 8, !tbaa !63, !alias.scope !1070
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.d
+  %11 = phi ptr [ %12, %bb.d ], [ %.pre44, %.lr.ph.i.preheader ] ; 2 uses
+  %.01.i.a = phi i64 [ %i.t, %bb.d ], [ %i.p, %.lr.ph.i.preheader ]
+  %.01.i = phi i64 [ %i.u, %bb.d ], [ 0, %.lr.ph.i.preheader ] ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %11, i64 %.01.i ; 2 uses
   %i.r = load i8, ptr %i.q, align 1, !tbaa !65
   %i.s = icmp eq i8 %i.r, 0
   br i1 %i.s, label %bb.c, label %bb.d
@@ -275,11 +279,13 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i: ; preds = 
 bb.c:                                             ; preds = %.lr.ph.i
   store i8 95, ptr %i.q, align 1, !tbaa !65
   %.pre.i = load i64, ptr %i.m, align 8, !tbaa !64, !alias.scope !1070
+  %.pre = load ptr, ptr %8, align 8, !tbaa !63, !alias.scope !1070
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %.lr.ph.i
-  %i.t = phi i64 [ %11, %.lr.ph.i ], [ %.pre.i, %bb.c ] ; 2 uses
-  %i.u = add nuw i64 %.01.i.a, 1                  ; 2 uses
+  %12 = phi ptr [ %11, %.lr.ph.i ], [ %.pre, %bb.c ]
+  %i.t = phi i64 [ %.01.i.a, %.lr.ph.i ], [ %.pre.i, %bb.c ] ; 2 uses
+  %i.u = add nuw i64 %.01.i, 1                    ; 2 uses
   %i.v = icmp ult i64 %i.u, %i.t
   br i1 %i.v, label %.lr.ph.i, label %_ZN6duckdbL12FormatStringB5cxx11ERKNS_16MangledEntryNameE.exit, !llvm.loop !1073
 
@@ -605,7 +611,7 @@ define void @_ZN6duckdb17DependencyManager15PrintDependentsENS_18CatalogTransact
   %5 = alloca %"struct.duckdb::MangledEntryName", align 8 ; 10 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
+  %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %9 = alloca %"class.duckdb::DependencyCatalogSet", align 8 ; 14 uses
   %10 = alloca %"class.std::function.513", align 8 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #34
@@ -676,13 +682,17 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i: ; preds = 
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #34, !noalias !1079
   %i.t = load i64, ptr %i.q, align 8, !tbaa !64, !alias.scope !1079 ; 2 uses
   %.not.i = icmp eq i64 %i.t, 0
-  br i1 %.not.i, label %_ZN6duckdbL12FormatStringB5cxx11ERKNS_16MangledEntryNameE.exit, label %.lr.ph.i
+  br i1 %.not.i, label %_ZN6duckdbL12FormatStringB5cxx11ERKNS_16MangledEntryNameE.exit, label %.lr.ph.i.preheader
 
-.lr.ph.i:                                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i, %bb.d
-  %11 = phi i64 [ %i.x, %bb.d ], [ %i.t, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i ]
-  %.01.i.a = phi i64 [ %i.y, %bb.d ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i ] ; 2 uses
-  %12 = load ptr, ptr %8, align 8, !tbaa !63, !alias.scope !1079
-  %i.u = getelementptr inbounds nuw i8, ptr %12, i64 %.01.i.a ; 2 uses
+.lr.ph.i.preheader:                               ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i
+  %.pre44 = load ptr, ptr %8, align 8, !tbaa !63, !alias.scope !1079
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.d
+  %11 = phi ptr [ %12, %bb.d ], [ %.pre44, %.lr.ph.i.preheader ] ; 2 uses
+  %.01.i.a = phi i64 [ %i.x, %bb.d ], [ %i.t, %.lr.ph.i.preheader ]
+  %.01.i = phi i64 [ %i.y, %bb.d ], [ 0, %.lr.ph.i.preheader ] ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %11, i64 %.01.i ; 2 uses
   %i.v = load i8, ptr %i.u, align 1, !tbaa !65
   %i.w = icmp eq i8 %i.v, 0
   br i1 %i.w, label %bb.c, label %bb.d
@@ -690,11 +700,13 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i: ; preds = 
 bb.c:                                             ; preds = %.lr.ph.i
   store i8 95, ptr %i.u, align 1, !tbaa !65
   %.pre.i = load i64, ptr %i.q, align 8, !tbaa !64, !alias.scope !1079
+  %.pre = load ptr, ptr %8, align 8, !tbaa !63, !alias.scope !1079
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %.lr.ph.i
-  %i.x = phi i64 [ %11, %.lr.ph.i ], [ %.pre.i, %bb.c ] ; 2 uses
-  %i.y = add nuw i64 %.01.i.a, 1                  ; 2 uses
+  %12 = phi ptr [ %11, %.lr.ph.i ], [ %.pre, %bb.c ]
+  %i.x = phi i64 [ %.01.i.a, %.lr.ph.i ], [ %.pre.i, %bb.c ] ; 2 uses
+  %i.y = add nuw i64 %.01.i, 1                    ; 2 uses
   %i.z = icmp ult i64 %i.y, %i.x
   br i1 %i.z, label %.lr.ph.i, label %_ZN6duckdbL12FormatStringB5cxx11ERKNS_16MangledEntryNameE.exit, !llvm.loop !1073
 

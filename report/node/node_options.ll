@@ -201,7 +201,7 @@ bb.a:
   %20 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
   %21 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %22 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
-  %23 = alloca %"class.std::__cxx11::basic_string", align 8 ; 24 uses
+  %23 = alloca %"class.std::__cxx11::basic_string", align 8 ; 25 uses
   %24 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
   %25 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %26 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
@@ -604,7 +604,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit: ; preds = %_ZNKS
 bb.as:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit87
   %i.fw = phi i64 [ %.pre439, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit ], [ %i.fb, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit87 ] ; 3 uses
   %i.fx = icmp ugt i64 %i.fw, 2
-  br i1 %i.fx, label %.lr.ph, label %._crit_edge
+  br i1 %i.fx, label %.lr.ph.preheader, label %._crit_edge
+
+.lr.ph.preheader:                                 ; preds = %bb.as
+  %.pre441 = load ptr, ptr %23, align 8
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.aw, %bb.as
   %.lcssa = phi i64 [ %i.fw, %bb.as ], [ %i.gt, %bb.aw ] ; 6 uses
@@ -653,10 +657,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit: ; preds =
   %.not334 = icmp eq ptr %i.gb, %i.fy
   br i1 %.not334, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit.thread301, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit.thread
 
-.lr.ph:                                           ; preds = %bb.as, %bb.aw
-  %i.gp = phi i64 [ %i.gt, %bb.aw ], [ %i.fw, %bb.as ]
-  %.052405 = phi i64 [ %i.gu, %bb.aw ], [ 2, %bb.as ] ; 2 uses
-  %36 = load ptr, ptr %23, align 8
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.aw
+  %i.gp = phi i64 [ %i.gt, %bb.aw ], [ %i.fw, %.lr.ph.preheader ]
+  %36 = phi ptr [ %37, %bb.aw ], [ %.pre441, %.lr.ph.preheader ] ; 2 uses
+  %.052405 = phi i64 [ %i.gu, %bb.aw ], [ 2, %.lr.ph.preheader ] ; 2 uses
   %i.gq = getelementptr inbounds nuw i8, ptr %36, i64 %.052405 ; 2 uses
   %i.gr = load i8, ptr %i.gq, align 1
   %i.gs = icmp eq i8 %i.gr, 95
@@ -664,11 +668,13 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit: ; preds =
 
 bb.av:                                            ; preds = %.lr.ph
   store i8 45, ptr %i.gq, align 1
+  %.pre440 = load ptr, ptr %23, align 8
   %.pre440.a = load i64, ptr %i.ah, align 8
   br label %bb.aw
 
 bb.aw:                                            ; preds = %.lr.ph, %bb.av
   %i.gt = phi i64 [ %i.gp, %.lr.ph ], [ %.pre440.a, %bb.av ] ; 3 uses
+  %37 = phi ptr [ %36, %.lr.ph ], [ %.pre440, %bb.av ]
   %i.gu = add nuw i64 %.052405, 1                 ; 2 uses
   %i.gv = icmp ult i64 %i.gu, %i.gt
   br i1 %i.gv, label %.lr.ph, label %._crit_edge, !llvm.loop !51
@@ -1071,7 +1077,7 @@ bb.a:
   %20 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
   %21 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %22 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
-  %23 = alloca %"class.std::__cxx11::basic_string", align 8 ; 24 uses
+  %23 = alloca %"class.std::__cxx11::basic_string", align 8 ; 25 uses
   %24 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
   %25 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %26 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
@@ -1474,7 +1480,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit: ; preds = %_ZNKS
 bb.as:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit87
   %i.fw = phi i64 [ %.pre439, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit ], [ %i.fb, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit87 ] ; 3 uses
   %i.fx = icmp ugt i64 %i.fw, 2
-  br i1 %i.fx, label %.lr.ph, label %._crit_edge
+  br i1 %i.fx, label %.lr.ph.preheader, label %._crit_edge
+
+.lr.ph.preheader:                                 ; preds = %bb.as
+  %.pre441 = load ptr, ptr %23, align 8
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.aw, %bb.as
   %.lcssa = phi i64 [ %i.fw, %bb.as ], [ %i.gt, %bb.aw ] ; 6 uses
@@ -1523,10 +1533,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit: ; preds =
   %.not334 = icmp eq ptr %i.gb, %i.fy
   br i1 %.not334, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit.thread301, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit.thread
 
-.lr.ph:                                           ; preds = %bb.as, %bb.aw
-  %i.gp = phi i64 [ %i.gt, %bb.aw ], [ %i.fw, %bb.as ]
-  %.052405 = phi i64 [ %i.gu, %bb.aw ], [ 2, %bb.as ] ; 2 uses
-  %36 = load ptr, ptr %23, align 8
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.aw
+  %i.gp = phi i64 [ %i.gt, %bb.aw ], [ %i.fw, %.lr.ph.preheader ]
+  %36 = phi ptr [ %37, %bb.aw ], [ %.pre441, %.lr.ph.preheader ] ; 2 uses
+  %.052405 = phi i64 [ %i.gu, %bb.aw ], [ 2, %.lr.ph.preheader ] ; 2 uses
   %i.gq = getelementptr inbounds nuw i8, ptr %36, i64 %.052405 ; 2 uses
   %i.gr = load i8, ptr %i.gq, align 1
   %i.gs = icmp eq i8 %i.gr, 95
@@ -1534,11 +1544,13 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit: ; preds =
 
 bb.av:                                            ; preds = %.lr.ph
   store i8 45, ptr %i.gq, align 1
+  %.pre440 = load ptr, ptr %23, align 8
   %.pre440.a = load i64, ptr %i.ah, align 8
   br label %bb.aw
 
 bb.aw:                                            ; preds = %.lr.ph, %bb.av
   %i.gt = phi i64 [ %i.gp, %.lr.ph ], [ %.pre440.a, %bb.av ] ; 3 uses
+  %37 = phi ptr [ %36, %.lr.ph ], [ %.pre440, %bb.av ]
   %i.gu = add nuw i64 %.052405, 1                 ; 2 uses
   %i.gv = icmp ult i64 %i.gu, %i.gt
   br i1 %i.gv, label %.lr.ph, label %._crit_edge, !llvm.loop !113
@@ -1941,7 +1953,7 @@ bb.a:
   %20 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
   %21 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %22 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
-  %23 = alloca %"class.std::__cxx11::basic_string", align 8 ; 24 uses
+  %23 = alloca %"class.std::__cxx11::basic_string", align 8 ; 25 uses
   %24 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
   %25 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %26 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
@@ -2344,7 +2356,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit: ; preds = %_ZNKS
 bb.as:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit87
   %i.fw = phi i64 [ %.pre439, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit ], [ %i.fb, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit87 ] ; 3 uses
   %i.fx = icmp ugt i64 %i.fw, 2
-  br i1 %i.fx, label %.lr.ph, label %._crit_edge
+  br i1 %i.fx, label %.lr.ph.preheader, label %._crit_edge
+
+.lr.ph.preheader:                                 ; preds = %bb.as
+  %.pre441 = load ptr, ptr %23, align 8
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.aw, %bb.as
   %.lcssa = phi i64 [ %i.fw, %bb.as ], [ %i.gt, %bb.aw ] ; 6 uses
@@ -2393,10 +2409,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit: ; preds =
   %.not334 = icmp eq ptr %i.gb, %i.fy
   br i1 %.not334, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit.thread301, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit.thread
 
-.lr.ph:                                           ; preds = %bb.as, %bb.aw
-  %i.gp = phi i64 [ %i.gt, %bb.aw ], [ %i.fw, %bb.as ]
-  %.052405 = phi i64 [ %i.gu, %bb.aw ], [ 2, %bb.as ] ; 2 uses
-  %36 = load ptr, ptr %23, align 8
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.aw
+  %i.gp = phi i64 [ %i.gt, %bb.aw ], [ %i.fw, %.lr.ph.preheader ]
+  %36 = phi ptr [ %37, %bb.aw ], [ %.pre441, %.lr.ph.preheader ] ; 2 uses
+  %.052405 = phi i64 [ %i.gu, %bb.aw ], [ 2, %.lr.ph.preheader ] ; 2 uses
   %i.gq = getelementptr inbounds nuw i8, ptr %36, i64 %.052405 ; 2 uses
   %i.gr = load i8, ptr %i.gq, align 1
   %i.gs = icmp eq i8 %i.gr, 95
@@ -2404,11 +2420,13 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit: ; preds =
 
 bb.av:                                            ; preds = %.lr.ph
   store i8 45, ptr %i.gq, align 1
+  %.pre440 = load ptr, ptr %23, align 8
   %.pre440.a = load i64, ptr %i.ah, align 8
   br label %bb.aw
 
 bb.aw:                                            ; preds = %.lr.ph, %bb.av
   %i.gt = phi i64 [ %i.gp, %.lr.ph ], [ %.pre440.a, %bb.av ] ; 3 uses
+  %37 = phi ptr [ %36, %.lr.ph ], [ %.pre440, %bb.av ]
   %i.gu = add nuw i64 %.052405, 1                 ; 2 uses
   %i.gv = icmp ult i64 %i.gu, %i.gt
   br i1 %i.gv, label %.lr.ph, label %._crit_edge, !llvm.loop !174

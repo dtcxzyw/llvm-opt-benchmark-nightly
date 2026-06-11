@@ -201,7 +201,7 @@ declare void @term_Delete(ptr noundef) #2
 ; Function Attrs: nounwind uwtable
 define dso_local void @def_ExtractDefsFromClauselist(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(address_is_null) %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 7 uses
+  %i.a = alloca i32, align 4                      ; 8 uses
   %i.b = alloca ptr, align 8                      ; 8 uses
   %i.c = alloca i32, align 4                      ; 4 uses
   %i.d = getelementptr i8, ptr %0, i64 112
@@ -352,21 +352,25 @@ bb.g:                                             ; preds = %.critedge
   %.val4.i162 = load i32, ptr %i.bc, align 8      ; 2 uses
   %i.be = sub i32 0, %.val4.i162
   %.not182 = icmp eq i32 %i.bd, %i.be
-  br i1 %.not182, label %._crit_edge167, label %.lr.ph166
+  br i1 %.not182, label %._crit_edge167, label %.lr.ph166.preheader
 
-.lr.ph166:                                        ; preds = %._crit_edge, %bb.i
-  %.val4.i188 = phi i32 [ %.val4.i, %bb.i ], [ %.val4.i162, %._crit_edge ]
-  %.val3.i186 = phi i32 [ %.val3.i, %bb.i ], [ %.val3.i161, %._crit_edge ]
-  %.val.i184 = phi i32 [ %.val.i, %bb.i ], [ %.val.i160, %._crit_edge ]
-  %.068164.a = phi i32 [ %i.bm, %bb.i ], [ 0, %._crit_edge ] ; 3 uses
-  %.070163 = phi ptr [ %.171, %bb.i ], [ null, %._crit_edge ] ; 2 uses
-  %2 = load i32, ptr %i.a, align 4
-  %.not93 = icmp eq i32 %.068164.a, %2
+.lr.ph166.preheader:                              ; preds = %._crit_edge
+  %.pre184 = load i32, ptr %i.a, align 4
+  br label %.lr.ph166
+
+.lr.ph166:                                        ; preds = %.lr.ph166.preheader, %bb.i
+  %.val4.i188 = phi i32 [ %.val4.i, %bb.i ], [ %.val4.i162, %.lr.ph166.preheader ]
+  %.val3.i186 = phi i32 [ %.val3.i, %bb.i ], [ %.val3.i161, %.lr.ph166.preheader ]
+  %.val.i184 = phi i32 [ %.val.i, %bb.i ], [ %.val.i160, %.lr.ph166.preheader ]
+  %.068164.a = phi i32 [ %2, %bb.i ], [ %.pre184, %.lr.ph166.preheader ] ; 2 uses
+  %.068164 = phi i32 [ %i.bm, %bb.i ], [ 0, %.lr.ph166.preheader ] ; 3 uses
+  %.070163 = phi ptr [ %.171, %bb.i ], [ null, %.lr.ph166.preheader ] ; 2 uses
+  %.not93 = icmp eq i32 %.068164, %.068164.a
   br i1 %.not93, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph166
   %.val110 = load ptr, ptr %i.au, align 8
-  %i.bf = sext i32 %.068164.a to i64
+  %i.bf = sext i32 %.068164 to i64
   %i.bg = getelementptr inbounds [8 x i8], ptr %.val110, i64 %i.bf
   %i.bh = load ptr, ptr %i.bg, align 8
   %i.bi = getelementptr i8, ptr %i.bh, i64 24
@@ -376,6 +380,7 @@ bb.h:                                             ; preds = %.lr.ph166
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 8
   store ptr %i.bj, ptr %i.bl, align 8
   store ptr %.070163, ptr %i.bk, align 8
+  %.pre = load i32, ptr %i.a, align 4
   %.val.i.pre = load i32, ptr %i.ba, align 8
   %.val3.i.pre = load i32, ptr %i.bb, align 4
   %.val4.i.pre = load i32, ptr %i.bc, align 8
@@ -385,8 +390,9 @@ bb.i:                                             ; preds = %.lr.ph166, %bb.h
   %.val4.i = phi i32 [ %.val4.i.pre, %bb.h ], [ %.val4.i188, %.lr.ph166 ] ; 2 uses
   %.val3.i = phi i32 [ %.val3.i.pre, %bb.h ], [ %.val3.i186, %.lr.ph166 ] ; 2 uses
   %.val.i = phi i32 [ %.val.i.pre, %bb.h ], [ %.val.i184, %.lr.ph166 ] ; 2 uses
+  %2 = phi i32 [ %.pre, %bb.h ], [ %.068164.a, %.lr.ph166 ]
   %.171 = phi ptr [ %i.bk, %bb.h ], [ %.070163, %.lr.ph166 ] ; 2 uses
-  %i.bm = add nuw i32 %.068164.a, 1               ; 2 uses
+  %i.bm = add nuw i32 %.068164, 1                 ; 2 uses
   %i.bn = add nsw i32 %.val3.i, %.val.i
   %i.bo = add nsw i32 %i.bn, %.val4.i
   %i.bp = icmp ult i32 %i.bm, %i.bo

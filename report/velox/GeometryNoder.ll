@@ -201,7 +201,7 @@ bb.k:                                             ; preds = %bb.j
   %i.aq = call ptr @__cxa_begin_catch(ptr %i.ap) #19 ; 0 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !63 ; 2 uses
-  %i.at = load ptr, ptr %3, align 8, !tbaa !13    ; 2 uses
+  %i.at = load ptr, ptr %3, align 8, !tbaa !13    ; 3 uses
   %.not51 = icmp eq ptr %i.as, %i.at
   br i1 %.not51, label %._crit_edge, label %.lr.ph.preheader
 
@@ -217,8 +217,8 @@ bb.k:                                             ; preds = %bb.j
           to label %bb.z unwind label %bb.n
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.m
+  %4 = phi ptr [ %5, %bb.m ], [ %i.at, %.lr.ph.preheader ] ; 2 uses
   %.02342 = phi i64 [ %i.be, %bb.m ], [ 0, %.lr.ph.preheader ] ; 2 uses
-  %4 = load ptr, ptr %3, align 8, !tbaa !13
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %.02342
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !64 ; 3 uses
   %i.ba = icmp eq ptr %i.az, null
@@ -229,9 +229,11 @@ bb.l:                                             ; preds = %.lr.ph
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 8
   %i.bd = load ptr, ptr %i.bc, align 8
   call void %i.bd(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %i.az) #19
+  %.pre52 = load ptr, ptr %3, align 8, !tbaa !13
   br label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph, %bb.l
+  %5 = phi ptr [ %4, %.lr.ph ], [ %.pre52, %bb.l ]
   %i.be = add nuw i64 %.02342, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.be, %i.ax
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !66

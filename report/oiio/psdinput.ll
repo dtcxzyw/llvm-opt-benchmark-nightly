@@ -201,6 +201,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %.not.us, label %.critedge55, label %.critedge.us
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %.critedge
+  %1 = phi i16 [ %2, %.critedge ], [ 1, %.lr.ph ] ; 3 uses
   %.04967 = phi i16 [ %i.al, %.critedge ], [ 0, %.lr.ph ] ; 2 uses
   %.sroa.060.066 = phi ptr [ %i.at, %.critedge ], [ %i.q, %.lr.ph ] ; 7 uses
   %i.ag = load i32, ptr %i.c, align 4, !tbaa !216
@@ -209,7 +210,6 @@ bb.d:                                             ; preds = %bb.b
   %i.ai = load i32, ptr %i.t, align 8, !tbaa !220 ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %.sroa.060.066, i64 32
   store i32 %i.ai, ptr %i.aj, align 8, !tbaa !232
-  %1 = load i16, ptr %i.b, align 2, !tbaa !26     ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.060.066, i64 24
   store i16 %1, ptr %i.ak, align 8, !tbaa !233
   %i.al = add i16 %.04967, 1
@@ -225,9 +225,11 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %.lr.ph.split
   %i.ar = getelementptr inbounds nuw i8, ptr %.sroa.060.066, i64 64
   %i.as = call noundef zeroext i1 @_ZN11OpenImageIO4v3_18PSDInput16read_rle_lengthsEjRSt6vectorIjSaIjEE(ptr noundef nonnull align 8 dereferenceable(840) %0, i32 noundef %i.ai, ptr noundef nonnull align 8 dereferenceable(24) %i.ar)
+  %.pre = load i16, ptr %i.b, align 2, !tbaa !26
   br i1 %i.as, label %.critedge, label %.loopexit
 
 .critedge:                                        ; preds = %bb.e, %.lr.ph.split
+  %2 = phi i16 [ %.pre, %bb.e ], [ %1, %.lr.ph.split ] ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %.sroa.060.066, i64 112 ; 2 uses
   %.not = icmp eq ptr %i.at, %i.s
   br i1 %.not, label %.critedge55.loopexit, label %.lr.ph.split, !llvm.loop !236
@@ -238,6 +240,7 @@ bb.e:                                             ; preds = %.lr.ph.split
   br label %.critedge55
 
 .critedge55:                                      ; preds = %.critedge.us, %.critedge55.loopexit
+  %3 = phi i16 [ %2, %.critedge55.loopexit ], [ 0, %.critedge.us ]
   %i.au = phi ptr [ %.pre86, %.critedge55.loopexit ], [ %i.s, %.critedge.us ] ; 2 uses
   %i.av = phi ptr [ %.pre.a, %.critedge55.loopexit ], [ %i.q, %.critedge.us ] ; 2 uses
   %.not6374 = icmp eq ptr %i.av, %i.au
@@ -255,6 +258,7 @@ bb.e:                                             ; preds = %.lr.ph.split
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph77, %bb.n
+  %4 = phi i16 [ %3, %.lr.ph77 ], [ %5, %bb.n ]   ; 3 uses
   %.05076 = phi i1 [ true, %.lr.ph77 ], [ %.151, %bb.n ] ; 2 uses
   %.sroa.056.075 = phi ptr [ %i.av, %.lr.ph77 ], [ %i.eo, %bb.n ] ; 7 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %.sroa.056.075, i64 88 ; 4 uses
@@ -273,6 +277,7 @@ bb.f:                                             ; preds = %.lr.ph77, %bb.n
 bb.g:                                             ; preds = %bb.f
   %i.bl = sub nuw nsw i64 %i.bc, %i.bj
   call void @_ZNSt6vectorIlSaIlEE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %i.ba, i64 noundef %i.bl)
+  %.pre89 = load i16, ptr %i.b, align 2, !tbaa !26
   br label %_ZNSt6vectorIlSaIlEE6resizeEm.exit
 
 bb.h:                                             ; preds = %bb.f
@@ -289,6 +294,7 @@ _ZSt8_DestroyIPllEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %bb.i
   br label %_ZNSt6vectorIlSaIlEE6resizeEm.exit
 
 _ZNSt6vectorIlSaIlEE6resizeEm.exit:               ; preds = %bb.g, %bb.h, %bb.i, %_ZSt8_DestroyIPllEvT_S1_RSaIT0_E.exit.i.i
+  %5 = phi i16 [ %.pre89, %bb.g ], [ %4, %bb.h ], [ %4, %bb.i ], [ %4, %_ZSt8_DestroyIPllEvT_S1_RSaIT0_E.exit.i.i ] ; 2 uses
   %i.bo = call noundef i64 @_ZNK11OpenImageIO4v3_110ImageInput6iotellEv(ptr noundef nonnull align 8 dereferenceable(184) %0) ; 8 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %.sroa.056.075, i64 16
   store i64 %i.bo, ptr %i.bp, align 8, !tbaa !238
@@ -299,8 +305,7 @@ _ZNSt6vectorIlSaIlEE6resizeEm.exit:               ; preds = %bb.g, %bb.h, %bb.i,
   %i.bu = add i32 %i.bt, 7
   %i.bv = lshr i32 %i.bu, 3
   store i32 %i.bv, ptr %.sroa.056.075, align 8, !tbaa !239
-  %2 = load i16, ptr %i.b, align 2, !tbaa !26
-  switch i16 %2, label %bb.n [
+  switch i16 %5, label %bb.n [
     i16 0, label %bb.j
     i16 1, label %bb.k
   ]

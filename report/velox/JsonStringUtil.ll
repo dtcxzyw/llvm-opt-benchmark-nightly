@@ -201,24 +201,24 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZN8facebook5velox12_GLOBAL__N_112compareCharsERKSt17basic_string_viewIcSt11char_traitsIcEES7_RmS8_.exit, %bb.a
-  %2 = load i64, ptr %i.c, align 8, !tbaa !17     ; 3 uses
-  %3 = icmp uge i64 %2, %.sroa.speculated
-  %4 = load i64, ptr %i.d, align 8                ; 5 uses
-  %i.h = icmp uge i64 %4, %.sroa.speculated
-  %.not16 = select i1 %3, i1 true, i1 %i.h        ; 2 uses
+  %2 = phi i64 [ %5, %_ZN8facebook5velox12_GLOBAL__N_112compareCharsERKSt17basic_string_viewIcSt11char_traitsIcEES7_RmS8_.exit ], [ 0, %bb.a ] ; 5 uses
+  %3 = phi i64 [ %6, %_ZN8facebook5velox12_GLOBAL__N_112compareCharsERKSt17basic_string_viewIcSt11char_traitsIcEES7_RmS8_.exit ], [ 0, %bb.a ] ; 3 uses
+  %4 = icmp uge i64 %3, %.sroa.speculated
+  %i.h = icmp uge i64 %2, %.sroa.speculated
+  %.not16 = select i1 %4, i1 true, i1 %i.h        ; 2 uses
   br i1 %.not16, label %.split.loop.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %.val = load i64, ptr %0, align 8               ; 2 uses
   %.val17 = load ptr, ptr %i.g, align 8, !tbaa !18 ; 3 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %.val17, i64 %2 ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %.val17, i64 %3 ; 2 uses
   %i.j = load i8, ptr %i.i, align 1, !tbaa !10    ; 2 uses
   %.not.i = icmp sgt i8 %i.j, -1
   br i1 %.not.i, label %bb.d, label %bb.f, !prof !19
 
 bb.d:                                             ; preds = %bb.c
   %i.k = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !18 ; 2 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 %4
+  %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 %2
   %i.m = load i8, ptr %i.l, align 1, !tbaa !10
   %.not34.i = icmp sgt i8 %i.m, -1
   br i1 %.not34.i, label %bb.e, label %.thread.i, !prof !19
@@ -229,6 +229,8 @@ bb.e:                                             ; preds = %bb.d
   %.sroa.2.0.copyload.i = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !7
   %i.o = call fastcc noundef i32 @_ZN8facebook5velox12_GLOBAL__N_114getEscapedCharESt17basic_string_viewIcSt11char_traitsIcEERm(i64 %.sroa.0.0.copyload.i, ptr %.sroa.2.0.copyload.i, ptr noundef nonnull align 8 dereferenceable(8) %i.d)
   %i.p = sub nsw i32 %i.n, %i.o
+  %.pre = load i64, ptr %i.c, align 8, !tbaa !17
+  %.pre30 = load i64, ptr %i.d, align 8
   br label %_ZN8facebook5velox12_GLOBAL__N_112compareCharsERKSt17basic_string_viewIcSt11char_traitsIcEES7_RmS8_.exit
 
 .thread.i:                                        ; preds = %bb.d
@@ -247,7 +249,7 @@ bb.f:                                             ; preds = %bb.c
   %i.r = getelementptr inbounds nuw i8, ptr %.val17, i64 %.val
   %i.s = call fastcc noundef i32 @_ZL18utf8proc_codepointPKcS0_Ri(ptr noundef nonnull %i.i, ptr noundef %i.r, ptr noundef nonnull align 4 dereferenceable(4) %i.a) ; 2 uses
   %.pre1.i = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !18 ; 2 uses
-  %.phi.trans.insert2.i = getelementptr inbounds nuw i8, ptr %.pre1.i, i64 %4
+  %.phi.trans.insert2.i = getelementptr inbounds nuw i8, ptr %.pre1.i, i64 %2
   %.pre3.i = load i8, ptr %.phi.trans.insert2.i, align 1, !tbaa !10 ; 2 uses
   %.not36.i = icmp sgt i8 %.pre3.i, -1
   br i1 %.not36.i, label %bb.h, label %bb.g
@@ -255,7 +257,7 @@ bb.f:                                             ; preds = %bb.c
 bb.g:                                             ; preds = %bb.f, %.thread.i
   %.03211.i = phi i32 [ %i.q, %.thread.i ], [ %i.s, %bb.f ]
   %i.t = phi ptr [ %i.k, %.thread.i ], [ %.pre1.i, %bb.f ] ; 2 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 %4
+  %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 %2
   %i.v = load i64, ptr %1, align 8, !tbaa !14
   %i.w = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.v
   %i.x = call fastcc noundef i32 @_ZL18utf8proc_codepointPKcS0_Ri(ptr noundef nonnull %i.u, ptr noundef %i.w, ptr noundef nonnull align 4 dereferenceable(4) %i.b)
@@ -271,17 +273,17 @@ bb.h:                                             ; preds = %bb.f
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %i.ab = phi i64 [ %.pre29, %bb.g ], [ %4, %bb.h ]
-  %i.ac = phi i64 [ %.pre.a, %bb.g ], [ %2, %bb.h ]
+  %i.ab = phi i64 [ %.pre29, %bb.g ], [ %2, %bb.h ]
+  %i.ac = phi i64 [ %.pre.a, %bb.g ], [ %3, %bb.h ]
   %.03210.i = phi i32 [ %.03211.i, %bb.g ], [ %i.s, %bb.h ]
   %i.ad = phi i64 [ %i.z, %bb.g ], [ 1, %bb.h ]
   %.0.i = phi i32 [ %i.x, %bb.g ], [ %i.aa, %bb.h ]
   %i.ae = load i32, ptr %i.a, align 4, !tbaa !3
   %i.af = tail call i32 @llvm.smax.i32(i32 %i.ae, i32 1)
   %i.ag = zext nneg i32 %i.af to i64
-  %i.ah = add i64 %i.ac, %i.ag
+  %i.ah = add i64 %i.ac, %i.ag                    ; 2 uses
   store i64 %i.ah, ptr %i.c, align 8, !tbaa !17
-  %i.ai = add i64 %i.ab, %i.ad
+  %i.ai = add i64 %i.ab, %i.ad                    ; 2 uses
   store i64 %i.ai, ptr %i.d, align 8, !tbaa !17
   %i.aj = sub nsw i32 %.03210.i, %.0.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
@@ -289,6 +291,8 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br label %_ZN8facebook5velox12_GLOBAL__N_112compareCharsERKSt17basic_string_viewIcSt11char_traitsIcEES7_RmS8_.exit
 
 _ZN8facebook5velox12_GLOBAL__N_112compareCharsERKSt17basic_string_viewIcSt11char_traitsIcEES7_RmS8_.exit: ; preds = %bb.e, %bb.i
+  %5 = phi i64 [ %.pre30, %bb.e ], [ %i.ai, %bb.i ]
+  %6 = phi i64 [ %.pre, %bb.e ], [ %i.ah, %bb.i ]
   %.033.i = phi i32 [ %i.p, %bb.e ], [ %i.aj, %bb.i ] ; 2 uses
   %.not = icmp eq i32 %.033.i, 0
   br i1 %.not, label %bb.b, label %.split.loop.exit24, !llvm.loop !20

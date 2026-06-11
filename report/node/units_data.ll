@@ -201,7 +201,7 @@ bb.a:
   %20 = alloca %"class.icu_78::UnicodeString", align 8 ; 5 uses
   %21 = alloca %"class.icu_78::UnicodeString", align 8 ; 5 uses
   %22 = alloca %"class.icu_78::UnicodeString", align 8 ; 5 uses
-  %23 = alloca %"class.icu_78::CharString", align 8 ; 12 uses
+  %23 = alloca %"class.icu_78::CharString", align 8 ; 13 uses
   %i.h = load i32, ptr %4, align 4
   %i.i = icmp slt i32 %i.h, 1
   br i1 %i.i, label %bb.b, label %bb.aq
@@ -530,7 +530,11 @@ bb.ac:                                            ; preds = %bb.ab
   store i8 0, ptr %i.y, align 1
   %i.dk = load i32, ptr %i.x, align 8             ; 2 uses
   %i.dl = icmp sgt i32 %i.dk, 0
-  br i1 %i.dl, label %.lr.ph.i, label %._crit_edge.i
+  br i1 %i.dl, label %.lr.ph.i.preheader, label %._crit_edge.i
+
+.lr.ph.i.preheader:                               ; preds = %bb.ac
+  %.pre80 = load ptr, ptr %23, align 8
+  br label %.lr.ph.i
 
 ._crit_edge.i:                                    ; preds = %bb.af, %bb.ac
   %i.dm = call noundef nonnull align 8 dereferenceable(60) ptr @_ZN6icu_7810CharStringaSEOS0_(ptr noundef nonnull align 8 dereferenceable(60) %23, ptr noundef nonnull align 8 dereferenceable(60) %5) #15 ; 0 uses
@@ -543,11 +547,11 @@ bb.ad:                                            ; preds = %._crit_edge.i
   call void @uprv_free_78(ptr noundef %i.do) #15
   br label %_ZN6icu_785units12_GLOBAL__N_110trimSpacesERNS_10CharStringER10UErrorCode.exit
 
-.lr.ph.i:                                         ; preds = %bb.ac, %bb.af
-  %24 = phi i32 [ %i.dt, %bb.af ], [ %i.dk, %bb.ac ]
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.af ], [ 0, %bb.ac ] ; 2 uses
-  %25 = load ptr, ptr %23, align 8
-  %i.dp = getelementptr inbounds nuw i8, ptr %25, i64 %indvars.iv.i
+.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.af
+  %24 = phi ptr [ %26, %bb.af ], [ %.pre80, %.lr.ph.i.preheader ] ; 2 uses
+  %25 = phi i32 [ %i.dt, %bb.af ], [ %i.dk, %.lr.ph.i.preheader ]
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.af ], [ 0, %.lr.ph.i.preheader ] ; 2 uses
+  %i.dp = getelementptr inbounds nuw i8, ptr %24, i64 %indvars.iv.i
   %i.dq = load i8, ptr %i.dp, align 1             ; 2 uses
   %i.dr = icmp eq i8 %i.dq, 32
   br i1 %i.dr, label %bb.af, label %bb.ae
@@ -555,10 +559,12 @@ bb.ad:                                            ; preds = %._crit_edge.i
 bb.ae:                                            ; preds = %.lr.ph.i
   %i.ds = call noundef nonnull align 8 dereferenceable(60) ptr @_ZN6icu_7810CharString6appendEcR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(60) %5, i8 noundef signext %i.dq, ptr noundef nonnull align 4 dereferenceable(4) %4) #15 ; 0 uses
   %.pre.i = load i32, ptr %i.x, align 8
+  %.pre79 = load ptr, ptr %23, align 8
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %.lr.ph.i
-  %i.dt = phi i32 [ %24, %.lr.ph.i ], [ %.pre.i, %bb.ae ] ; 2 uses
+  %26 = phi ptr [ %24, %.lr.ph.i ], [ %.pre79, %bb.ae ]
+  %i.dt = phi i32 [ %25, %.lr.ph.i ], [ %.pre.i, %bb.ae ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %i.du = sext i32 %i.dt to i64
   %i.dv = icmp slt i64 %indvars.iv.next.i, %i.du

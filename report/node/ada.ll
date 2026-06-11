@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %_ZN2tl8expectedIN3a
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZN3ada17url_search_params3setESt17basic_string_viewIcSt11char_traitsIcEES4_(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 %1, ptr %2, i64 %3, ptr %4) local_unnamed_addr #11 comdat align 2 {
 bb.a:
-  %5 = alloca %"class.std::basic_string_view.2", align 8 ; 6 uses
+  %5 = alloca %"class.std::basic_string_view.2", align 8 ; 7 uses
   %6 = alloca %"class.std::basic_string_view.2", align 8 ; 4 uses
   %.sroa.01.0.copyload.i.i.i.fr.i.i = freeze i64 %1 ; 4 uses
   store i64 %.sroa.01.0.copyload.i.i.i.fr.i.i, ptr %5, align 8
@@ -284,16 +284,20 @@ bb.g:                                             ; preds = %_ZNKSt6ranges12__fi
   %.sroa.07.016.i.i = getelementptr inbounds nuw i8, ptr %i.ae, i64 64 ; 2 uses
   %i.ag = icmp eq ptr %.sroa.07.016.i.i, %i.ad
   %or.cond = select i1 %i.af, i1 true, i1 %i.ag
-  br i1 %or.cond, label %_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEEZN3ada17url_search_params3setESt17basic_string_viewIcS6_ESI_EUlRKT_E_ESJ_SJ_SJ_T0_.exit, label %.lr.ph.i.i7
+  br i1 %or.cond, label %_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEEZN3ada17url_search_params3setESt17basic_string_viewIcS6_ESI_EUlRKT_E_ESJ_SJ_SJ_T0_.exit, label %.lr.ph.i.i7.preheader
 
-.lr.ph.i.i7:                                      ; preds = %bb.g, %_ZN9__gnu_cxx5__ops10_Iter_predIZN3ada17url_search_params3setESt17basic_string_viewIcSt11char_traitsIcEES7_EUlRKT_E_EclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcS6_SaIcEEESJ_ESt6vectorISK_SaISK_EEEEEEbS8_.exit.i.i
-  %.sroa.07.019.i.i = phi ptr [ %.sroa.07.0.i.i, %_ZN9__gnu_cxx5__ops10_Iter_predIZN3ada17url_search_params3setESt17basic_string_viewIcSt11char_traitsIcEES7_EUlRKT_E_EclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcS6_SaIcEEESJ_ESt6vectorISK_SaISK_EEEEEEbS8_.exit.i.i ], [ %.sroa.07.016.i.i, %bb.g ] ; 4 uses
-  %.sroa.013.018.i.i.a = phi ptr [ %.sroa.013.1.i.i, %_ZN9__gnu_cxx5__ops10_Iter_predIZN3ada17url_search_params3setESt17basic_string_viewIcSt11char_traitsIcEES7_EUlRKT_E_EclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcS6_SaIcEEESJ_ESt6vectorISK_SaISK_EEEEEEbS8_.exit.i.i ], [ %i.ae, %bb.g ] ; 4 uses
-  %.pn17.i.i.a = phi ptr [ %.sroa.07.019.i.i, %_ZN9__gnu_cxx5__ops10_Iter_predIZN3ada17url_search_params3setESt17basic_string_viewIcSt11char_traitsIcEES7_EUlRKT_E_EclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcS6_SaIcEEESJ_ESt6vectorISK_SaISK_EEEEEEbS8_.exit.i.i ], [ %i.ae, %bb.g ]
-  %.sroa.01.0.copyload.i.i.i.i = load i64, ptr %5, align 8 ; 3 uses
+.lr.ph.i.i7.preheader:                            ; preds = %bb.g
+  %.sroa.01.0.copyload.i.i.i.i.pre19 = load i64, ptr %5, align 8
+  br label %.lr.ph.i.i7
+
+.lr.ph.i.i7:                                      ; preds = %.lr.ph.i.i7.preheader, %_ZN9__gnu_cxx5__ops10_Iter_predIZN3ada17url_search_params3setESt17basic_string_viewIcSt11char_traitsIcEES7_EUlRKT_E_EclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcS6_SaIcEEESJ_ESt6vectorISK_SaISK_EEEEEEbS8_.exit.i.i
+  %.sroa.01.0.copyload.i.i.i.i = phi i64 [ %.sroa.01.0.copyload.i.i.i.i20, %_ZN9__gnu_cxx5__ops10_Iter_predIZN3ada17url_search_params3setESt17basic_string_viewIcSt11char_traitsIcEES7_EUlRKT_E_EclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcS6_SaIcEEESJ_ESt6vectorISK_SaISK_EEEEEEbS8_.exit.i.i ], [ %.sroa.01.0.copyload.i.i.i.i.pre19, %.lr.ph.i.i7.preheader ] ; 4 uses
+  %.sroa.013.018.i.i.a = phi ptr [ %.sroa.07.0.i.i, %_ZN9__gnu_cxx5__ops10_Iter_predIZN3ada17url_search_params3setESt17basic_string_viewIcSt11char_traitsIcEES7_EUlRKT_E_EclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcS6_SaIcEEESJ_ESt6vectorISK_SaISK_EEEEEEbS8_.exit.i.i ], [ %.sroa.07.016.i.i, %.lr.ph.i.i7.preheader ] ; 4 uses
+  %.pn17.i.i.a = phi ptr [ %.sroa.013.1.i.i, %_ZN9__gnu_cxx5__ops10_Iter_predIZN3ada17url_search_params3setESt17basic_string_viewIcSt11char_traitsIcEES7_EUlRKT_E_EclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcS6_SaIcEEESJ_ESt6vectorISK_SaISK_EEEEEEbS8_.exit.i.i ], [ %i.ae, %.lr.ph.i.i7.preheader ] ; 4 uses
+  %.pn17.i.i = phi ptr [ %.sroa.013.018.i.i.a, %_ZN9__gnu_cxx5__ops10_Iter_predIZN3ada17url_search_params3setESt17basic_string_viewIcSt11char_traitsIcEES7_EUlRKT_E_EclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcS6_SaIcEEESJ_ESt6vectorISK_SaISK_EEEEEEbS8_.exit.i.i ], [ %i.ae, %.lr.ph.i.i7.preheader ]
   %.sroa.22.0.copyload.i.i.i.i = load ptr, ptr %i.a, align 8
-  %i.ah = load ptr, ptr %.sroa.07.019.i.i, align 8
-  %i.ai = getelementptr inbounds nuw i8, ptr %.pn17.i.i.a, i64 72
+  %i.ah = load ptr, ptr %.sroa.013.018.i.i.a, align 8
+  %i.ai = getelementptr inbounds nuw i8, ptr %.pn17.i.i, i64 72
   %i.aj = load i64, ptr %i.ai, align 8
   %i.ak = icmp eq i64 %.sroa.01.0.copyload.i.i.i.i, %i.aj
   br i1 %i.ak, label %bb.h, label %bb.i
@@ -308,13 +312,15 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i: ; preds = %bb.h
   br i1 %i.am, label %_ZN9__gnu_cxx5__ops10_Iter_predIZN3ada17url_search_params3setESt17basic_string_viewIcSt11char_traitsIcEES7_EUlRKT_E_EclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcS6_SaIcEEESJ_ESt6vectorISK_SaISK_EEEEEEbS8_.exit.i.i, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i, %.lr.ph.i.i7
-  %i.an = call noundef nonnull align 8 dereferenceable(64) ptr @_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EaSEOS6_Qcl13_S_assignableIT_T0_EE(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.013.018.i.i.a, ptr noundef nonnull align 8 dereferenceable(64) %.sroa.07.019.i.i) #31 ; 0 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %.sroa.013.018.i.i.a, i64 64
+  %i.an = call noundef nonnull align 8 dereferenceable(64) ptr @_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EaSEOS6_Qcl13_S_assignableIT_T0_EE(ptr noundef nonnull align 8 dereferenceable(64) %.pn17.i.i.a, ptr noundef nonnull align 8 dereferenceable(64) %.sroa.013.018.i.i.a) #31 ; 0 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %.pn17.i.i.a, i64 64
+  %.sroa.01.0.copyload.i.i.i.i.pre = load i64, ptr %5, align 8
   br label %_ZN9__gnu_cxx5__ops10_Iter_predIZN3ada17url_search_params3setESt17basic_string_viewIcSt11char_traitsIcEES7_EUlRKT_E_EclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcS6_SaIcEEESJ_ESt6vectorISK_SaISK_EEEEEEbS8_.exit.i.i
 
 _ZN9__gnu_cxx5__ops10_Iter_predIZN3ada17url_search_params3setESt17basic_string_viewIcSt11char_traitsIcEES7_EUlRKT_E_EclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcS6_SaIcEEESJ_ESt6vectorISK_SaISK_EEEEEEbS8_.exit.i.i: ; preds = %bb.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i, %bb.h
-  %.sroa.013.1.i.i = phi ptr [ %i.ao, %bb.i ], [ %.sroa.013.018.i.i.a, %bb.h ], [ %.sroa.013.018.i.i.a, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i ] ; 2 uses
-  %.sroa.07.0.i.i = getelementptr inbounds nuw i8, ptr %.sroa.07.019.i.i, i64 64 ; 2 uses
+  %.sroa.01.0.copyload.i.i.i.i20 = phi i64 [ %.sroa.01.0.copyload.i.i.i.i.pre, %bb.i ], [ 0, %bb.h ], [ %.sroa.01.0.copyload.i.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i ]
+  %.sroa.013.1.i.i = phi ptr [ %i.ao, %bb.i ], [ %.pn17.i.i.a, %bb.h ], [ %.pn17.i.i.a, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i ] ; 2 uses
+  %.sroa.07.0.i.i = getelementptr inbounds nuw i8, ptr %.sroa.013.018.i.i.a, i64 64 ; 2 uses
   %i.ap = icmp eq ptr %.sroa.07.0.i.i, %i.ad
   br i1 %i.ap, label %_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEEZN3ada17url_search_params3setESt17basic_string_viewIcS6_ESI_EUlRKT_E_ESJ_SJ_SJ_T0_.exit, label %.lr.ph.i.i7, !llvm.loop !541
 
@@ -717,7 +723,7 @@ _ZN9__gnu_cxx5__ops10_Iter_predIZN3ada17url_search_params3setESt17basic_string_v
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr dso_local noundef i64 @_ZSt8erase_ifISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_ESaIS7_EZN3ada17url_search_params6removeESt17basic_string_viewIcS4_EEUlRKT_E_ENSt6vectorISD_T0_E9size_typeERSJ_T1_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1) local_unnamed_addr #11 comdat {
 bb.a:
-  %2 = alloca %class.anon.311, align 8            ; 3 uses
+  %2 = alloca %class.anon.311, align 8            ; 4 uses
   store ptr %1, ptr %2, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 6 uses
@@ -731,18 +737,22 @@ bb.a:
   %.sroa.07.016.i = getelementptr inbounds nuw i8, ptr %i.h, i64 64 ; 2 uses
   %i.j = icmp eq ptr %.sroa.07.016.i, %i.b
   %or.cond.i = select i1 %i.i, i1 true, i1 %i.j
-  br i1 %or.cond.i, label %_ZSt11__remove_ifIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEENS0_5__ops10_Iter_predISt17reference_wrapperIZN3ada17url_search_params6removeESt17basic_string_viewIcS6_EEUlRKT_E_EEEESM_SM_SM_T0_.exit, label %.lr.ph.i
+  br i1 %or.cond.i, label %_ZSt11__remove_ifIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEENS0_5__ops10_Iter_predISt17reference_wrapperIZN3ada17url_search_params6removeESt17basic_string_viewIcS6_EEUlRKT_E_EEEESM_SM_SM_T0_.exit, label %.lr.ph.i.preheader
 
-.lr.ph.i:                                         ; preds = %bb.a, %_ZN9__gnu_cxx5__ops10_Iter_predISt17reference_wrapperIZN3ada17url_search_params6removeESt17basic_string_viewIcSt11char_traitsIcEEEUlRKT_E_EEclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcS7_SaIcEEESL_ESt6vectorISM_SaISM_EEEEEEbS9_.exit.i
-  %.sroa.07.019.i.a = phi ptr [ %.sroa.07.0.i, %_ZN9__gnu_cxx5__ops10_Iter_predISt17reference_wrapperIZN3ada17url_search_params6removeESt17basic_string_viewIcSt11char_traitsIcEEEUlRKT_E_EEclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcS7_SaIcEEESL_ESt6vectorISM_SaISM_EEEEEEbS9_.exit.i ], [ %.sroa.07.016.i, %bb.a ] ; 4 uses
-  %.sroa.013.018.i.a = phi ptr [ %.sroa.013.1.i, %_ZN9__gnu_cxx5__ops10_Iter_predISt17reference_wrapperIZN3ada17url_search_params6removeESt17basic_string_viewIcSt11char_traitsIcEEEUlRKT_E_EEclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcS7_SaIcEEESL_ESt6vectorISM_SaISM_EEEEEEbS9_.exit.i ], [ %i.h, %bb.a ] ; 4 uses
-  %.pn17.i.a = phi ptr [ %.sroa.07.019.i.a, %_ZN9__gnu_cxx5__ops10_Iter_predISt17reference_wrapperIZN3ada17url_search_params6removeESt17basic_string_viewIcSt11char_traitsIcEEEUlRKT_E_EEclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcS7_SaIcEEESL_ESt6vectorISM_SaISM_EEEEEEbS9_.exit.i ], [ %i.h, %bb.a ]
-  %3 = load ptr, ptr %2, align 8, !nonnull !74, !align !554 ; 2 uses
-  %.sroa.01.0.copyload.i.i.i.i.i.i = load i64, ptr %3, align 8 ; 3 uses
-  %.sroa.22.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %3, i64 8
+.lr.ph.i.preheader:                               ; preds = %bb.a
+  %.pre20 = load ptr, ptr %2, align 8
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %_ZN9__gnu_cxx5__ops10_Iter_predISt17reference_wrapperIZN3ada17url_search_params6removeESt17basic_string_viewIcSt11char_traitsIcEEEUlRKT_E_EEclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcS7_SaIcEEESL_ESt6vectorISM_SaISM_EEEEEEbS9_.exit.i
+  %.sroa.07.019.i.a = phi ptr [ %3, %_ZN9__gnu_cxx5__ops10_Iter_predISt17reference_wrapperIZN3ada17url_search_params6removeESt17basic_string_viewIcSt11char_traitsIcEEEUlRKT_E_EEclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcS7_SaIcEEESL_ESt6vectorISM_SaISM_EEEEEEbS9_.exit.i ], [ %.pre20, %.lr.ph.i.preheader ] ; 4 uses
+  %.sroa.013.018.i.a = phi ptr [ %.sroa.07.0.i, %_ZN9__gnu_cxx5__ops10_Iter_predISt17reference_wrapperIZN3ada17url_search_params6removeESt17basic_string_viewIcSt11char_traitsIcEEEUlRKT_E_EEclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcS7_SaIcEEESL_ESt6vectorISM_SaISM_EEEEEEbS9_.exit.i ], [ %.sroa.07.016.i, %.lr.ph.i.preheader ] ; 4 uses
+  %.pn17.i.a = phi ptr [ %.sroa.013.1.i, %_ZN9__gnu_cxx5__ops10_Iter_predISt17reference_wrapperIZN3ada17url_search_params6removeESt17basic_string_viewIcSt11char_traitsIcEEEUlRKT_E_EEclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcS7_SaIcEEESL_ESt6vectorISM_SaISM_EEEEEEbS9_.exit.i ], [ %i.h, %.lr.ph.i.preheader ] ; 4 uses
+  %.pn17.i = phi ptr [ %.sroa.013.018.i.a, %_ZN9__gnu_cxx5__ops10_Iter_predISt17reference_wrapperIZN3ada17url_search_params6removeESt17basic_string_viewIcSt11char_traitsIcEEEUlRKT_E_EEclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcS7_SaIcEEESL_ESt6vectorISM_SaISM_EEEEEEbS9_.exit.i ], [ %i.h, %.lr.ph.i.preheader ]
+  %.sroa.01.0.copyload.i.i.i.i.i.i = load i64, ptr %.sroa.07.019.i.a, align 8 ; 3 uses
+  %.sroa.22.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.07.019.i.a, i64 8
   %.sroa.22.0.copyload.i.i.i.i.i.i = load ptr, ptr %.sroa.22.0..sroa_idx.i.i.i.i.i.i, align 8
-  %i.k = load ptr, ptr %.sroa.07.019.i.a, align 8
-  %i.l = getelementptr inbounds nuw i8, ptr %.pn17.i.a, i64 72
+  %i.k = load ptr, ptr %.sroa.013.018.i.a, align 8
+  %i.l = getelementptr inbounds nuw i8, ptr %.pn17.i, i64 72
   %i.m = load i64, ptr %i.l, align 8
   %i.n = icmp eq i64 %.sroa.01.0.copyload.i.i.i.i.i.i, %i.m
   br i1 %i.n, label %bb.b, label %bb.c
@@ -757,13 +767,15 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i: ; preds = %bb.b
   br i1 %i.p, label %_ZN9__gnu_cxx5__ops10_Iter_predISt17reference_wrapperIZN3ada17url_search_params6removeESt17basic_string_viewIcSt11char_traitsIcEEEUlRKT_E_EEclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcS7_SaIcEEESL_ESt6vectorISM_SaISM_EEEEEEbS9_.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i, %.lr.ph.i
-  %i.q = call noundef nonnull align 8 dereferenceable(64) ptr @_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EaSEOS6_Qcl13_S_assignableIT_T0_EE(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.013.018.i.a, ptr noundef nonnull align 8 dereferenceable(64) %.sroa.07.019.i.a) #31 ; 0 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %.sroa.013.018.i.a, i64 64
+  %i.q = call noundef nonnull align 8 dereferenceable(64) ptr @_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EaSEOS6_Qcl13_S_assignableIT_T0_EE(ptr noundef nonnull align 8 dereferenceable(64) %.pn17.i.a, ptr noundef nonnull align 8 dereferenceable(64) %.sroa.013.018.i.a) #31 ; 0 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %.pn17.i.a, i64 64
+  %.pre = load ptr, ptr %2, align 8
   br label %_ZN9__gnu_cxx5__ops10_Iter_predISt17reference_wrapperIZN3ada17url_search_params6removeESt17basic_string_viewIcSt11char_traitsIcEEEUlRKT_E_EEclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcS7_SaIcEEESL_ESt6vectorISM_SaISM_EEEEEEbS9_.exit.i
 
 _ZN9__gnu_cxx5__ops10_Iter_predISt17reference_wrapperIZN3ada17url_search_params6removeESt17basic_string_viewIcSt11char_traitsIcEEEUlRKT_E_EEclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcS7_SaIcEEESL_ESt6vectorISM_SaISM_EEEEEEbS9_.exit.i: ; preds = %bb.c, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i, %bb.b
-  %.sroa.013.1.i = phi ptr [ %i.r, %bb.c ], [ %.sroa.013.018.i.a, %bb.b ], [ %.sroa.013.018.i.a, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i ] ; 2 uses
-  %.sroa.07.0.i = getelementptr inbounds nuw i8, ptr %.sroa.07.019.i.a, i64 64 ; 2 uses
+  %3 = phi ptr [ %.pre, %bb.c ], [ %.sroa.07.019.i.a, %bb.b ], [ %.sroa.07.019.i.a, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i ]
+  %.sroa.013.1.i = phi ptr [ %i.r, %bb.c ], [ %.pn17.i.a, %bb.b ], [ %.pn17.i.a, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i ] ; 2 uses
+  %.sroa.07.0.i = getelementptr inbounds nuw i8, ptr %.sroa.013.018.i.a, i64 64 ; 2 uses
   %i.s = icmp eq ptr %.sroa.07.0.i, %i.b
   br i1 %i.s, label %_ZSt11__remove_ifIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEENS0_5__ops10_Iter_predISt17reference_wrapperIZN3ada17url_search_params6removeESt17basic_string_viewIcS6_EEUlRKT_E_EEEESM_SM_SM_T0_.exit, label %.lr.ph.i, !llvm.loop !647
 

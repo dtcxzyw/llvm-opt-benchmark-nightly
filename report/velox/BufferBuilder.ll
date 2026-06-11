@@ -201,7 +201,7 @@ bb.a:
   %12 = alloca %"class.geos::operation::buffer::OffsetCurveBuilder", align 8 ; 7 uses
   %13 = alloca %"class.std::vector.47", align 8   ; 10 uses
   %14 = alloca %"class.std::unique_ptr.39", align 8 ; 9 uses
-  %15 = alloca %"class.std::vector.5", align 8    ; 14 uses
+  %15 = alloca %"class.std::vector.5", align 8    ; 13 uses
   %16 = alloca %"class.std::unique_ptr.39", align 8 ; 8 uses
   %17 = alloca %"class.std::unique_ptr", align 8  ; 9 uses
   %18 = alloca %"class.geos::operation::linemerge::LineMerger", align 8 ; 8 uses
@@ -604,7 +604,7 @@ _ZNSt6vectorIPN4geos6noding13SegmentStringESaIS3_EED2Ev.exit: ; preds = %._crit_
   call void @_ZdlPv(ptr noundef nonnull %i.eg) #21
   %i.gv = getelementptr inbounds nuw i8, ptr %15, i64 8 ; 3 uses
   %i.gw = load ptr, ptr %i.gv, align 8, !tbaa !139 ; 2 uses
-  %i.gx = load ptr, ptr %15, align 8, !tbaa !142  ; 2 uses
+  %i.gx = load ptr, ptr %15, align 8, !tbaa !142  ; 3 uses
   %.not414 = icmp eq ptr %i.gw, %i.gx
   br i1 %.not414, label %_ZNSt6vectorIPN4geos6noding13SegmentStringESaIS3_EE5clearEv.exit, label %.lr.ph407.preheader
 
@@ -616,13 +616,12 @@ _ZNSt6vectorIPN4geos6noding13SegmentStringESaIS3_EED2Ev.exit: ; preds = %._crit_
   br label %.lr.ph407
 
 ._crit_edge408:                                   ; preds = %bb.az
-  %.pre450 = load ptr, ptr %15, align 8, !tbaa !142 ; 2 uses
   %.pre451 = load ptr, ptr %i.gv, align 8, !tbaa !139
-  %i.hc = icmp eq ptr %.pre451, %.pre450
+  %i.hc = icmp eq ptr %.pre451, %24
   br i1 %i.hc, label %_ZNSt6vectorIPN4geos6noding13SegmentStringESaIS3_EE5clearEv.exit, label %_ZSt8_DestroyIPPN4geos6noding13SegmentStringES3_EvT_S5_RSaIT0_E.exit.i.i
 
 _ZSt8_DestroyIPPN4geos6noding13SegmentStringES3_EvT_S5_RSaIT0_E.exit.i.i: ; preds = %._crit_edge408
-  store ptr %.pre450, ptr %i.gv, align 8, !tbaa !139
+  store ptr %24, ptr %i.gv, align 8, !tbaa !139
   br label %_ZNSt6vectorIPN4geos6noding13SegmentStringESaIS3_EE5clearEv.exit
 
 _ZNSt6vectorIPN4geos6noding13SegmentStringESaIS3_EE5clearEv.exit: ; preds = %_ZNSt6vectorIPN4geos6noding13SegmentStringESaIS3_EED2Ev.exit, %._crit_edge408, %_ZSt8_DestroyIPPN4geos6noding13SegmentStringES3_EvT_S5_RSaIT0_E.exit.i.i
@@ -631,8 +630,8 @@ _ZNSt6vectorIPN4geos6noding13SegmentStringESaIS3_EE5clearEv.exit: ; preds = %_ZN
           to label %bb.ba unwind label %bb.bu     ; 15 uses
 
 .lr.ph407:                                        ; preds = %.lr.ph407.preheader, %bb.az
+  %23 = phi ptr [ %24, %bb.az ], [ %i.gx, %.lr.ph407.preheader ] ; 2 uses
   %.0178406 = phi i64 [ %i.hl, %bb.az ], [ 0, %.lr.ph407.preheader ] ; 2 uses
-  %23 = load ptr, ptr %15, align 8, !tbaa !142
   %i.hf = getelementptr inbounds nuw [8 x i8], ptr %23, i64 %.0178406
   %i.hg = load ptr, ptr %i.hf, align 8, !tbaa !137 ; 3 uses
   %i.hh = icmp eq ptr %i.hg, null
@@ -643,9 +642,11 @@ bb.ay:                                            ; preds = %.lr.ph407
   %i.hj = getelementptr inbounds nuw i8, ptr %i.hi, i64 8
   %i.hk = load ptr, ptr %i.hj, align 8
   call void %i.hk(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %i.hg) #22
+  %.pre450 = load ptr, ptr %15, align 8, !tbaa !142
   br label %bb.az
 
 bb.az:                                            ; preds = %.lr.ph407, %bb.ay
+  %24 = phi ptr [ %23, %.lr.ph407 ], [ %.pre450, %bb.ay ] ; 3 uses
   %i.hl = add nuw i64 %.0178406, 1                ; 2 uses
   %exitcond432.not = icmp eq i64 %i.hl, %i.hb
   br i1 %exitcond432.not, label %._crit_edge408, label %.lr.ph407, !llvm.loop !151

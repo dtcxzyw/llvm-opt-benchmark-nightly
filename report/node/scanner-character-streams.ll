@@ -201,6 +201,7 @@ bb.j:                                             ; preds = %bb.h
   %i.bq = getelementptr inbounds nuw i8, ptr %.3, i64 2 ; 2 uses
   %i.br = icmp ult ptr %i.bq, %i.bn
   %i.bs = select i1 %i.bp, i1 %i.br, i1 false
+  %.pre90 = load i8, ptr %i.a, align 1            ; 2 uses
   br i1 %i.bs, label %.lr.ph79, label %._crit_edge
 
 .lr.ph79:                                         ; preds = %.thread
@@ -209,15 +210,15 @@ bb.j:                                             ; preds = %bb.h
   br label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph79, %.thread67
-  %1 = phi ptr [ %i.bq, %.lr.ph79 ], [ %i.fz, %.thread67 ] ; 2 uses
-  %i.bv = phi ptr [ %i.bo, %.lr.ph79 ], [ %i.fx, %.thread67 ] ; 3 uses
-  %.478.a = phi ptr [ %.3, %.lr.ph79 ], [ %.6, %.thread67 ] ; 5 uses
-  %2 = load i8, ptr %i.a, align 1                 ; 2 uses
-  %i.bw = load i8, ptr %i.bv, align 1             ; 4 uses
-  %i.bx = getelementptr inbounds nuw i8, ptr %i.bv, i64 1 ; 3 uses
+  %1 = phi i8 [ %.pre90, %.lr.ph79 ], [ %2, %.thread67 ] ; 2 uses
+  %i.bv = phi ptr [ %i.bq, %.lr.ph79 ], [ %i.fz, %.thread67 ] ; 2 uses
+  %.478.a = phi ptr [ %i.bo, %.lr.ph79 ], [ %i.fx, %.thread67 ] ; 3 uses
+  %.478 = phi ptr [ %.3, %.lr.ph79 ], [ %.6, %.thread67 ] ; 5 uses
+  %i.bw = load i8, ptr %.478.a, align 1           ; 4 uses
+  %i.bx = getelementptr inbounds nuw i8, ptr %.478.a, i64 1 ; 3 uses
   store ptr %i.bx, ptr %i.c, align 8
   %i.by = icmp sgt i8 %i.bw, -1
-  %i.bz = icmp eq i8 %2, 12                       ; 2 uses
+  %i.bz = icmp eq i8 %1, 12                       ; 2 uses
   %i.ca = select i1 %i.by, i1 %i.bz, i1 false, !prof !6
   br i1 %i.ca, label %bb.l, label %bb.m, !prof !6
 
@@ -229,12 +230,12 @@ bb.m:                                             ; preds = %bb.k
   %i.cc = zext i8 %i.bw to i64
   %i.cd = getelementptr inbounds nuw i8, ptr @_ZZN14Utf8DfaDecoder6DecodeEhPNS_5StateEPjE11transitions, i64 %i.cc
   %i.ce = load i8, ptr %i.cd, align 1
-  %i.cf = zext i8 %2 to i32
+  %i.cf = zext i8 %1 to i32
   %i.cg = zext i8 %i.ce to i32                    ; 2 uses
   %i.ch = add nuw nsw i32 %i.cg, %i.cf
   %i.ci = zext nneg i32 %i.ch to i64
   %i.cj = getelementptr inbounds nuw i8, ptr @_ZZN14Utf8DfaDecoder6DecodeEhPNS_5StateEPjE6states, i64 %i.ci
-  %i.ck = load i8, ptr %i.cj, align 1             ; 2 uses
+  %i.ck = load i8, ptr %i.cj, align 1             ; 3 uses
   store i8 %i.ck, ptr %i.a, align 1
   %i.cl = load i32, ptr %i.b, align 4
   %i.cm = shl i32 %i.cl, 6                        ; 3 uses
@@ -255,7 +256,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.bz, label %_ZN7unibrow4Utf818ValueOfIncrementalEPPKhPN14Utf8DfaDecoder5StateEPj.exit.thread, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  store ptr %i.bv, ptr %i.c, align 8
+  store ptr %.478.a, ptr %i.c, align 8
   br label %_ZN7unibrow4Utf818ValueOfIncrementalEPPKhPN14Utf8DfaDecoder5StateEPj.exit.thread
 
 _ZN7unibrow4Utf818ValueOfIncrementalEPPKhPN14Utf8DfaDecoder5StateEPj.exit: ; preds = %bb.m
@@ -266,7 +267,7 @@ _ZN7unibrow4Utf818ValueOfIncrementalEPPKhPN14Utf8DfaDecoder5StateEPj.exit: ; pre
 _ZN7unibrow4Utf818ValueOfIncrementalEPPKhPN14Utf8DfaDecoder5StateEPj.exit.thread: ; preds = %bb.o, %bb.n, %bb.l, %_ZN7unibrow4Utf818ValueOfIncrementalEPPKhPN14Utf8DfaDecoder5StateEPj.exit
   %.0.i63 = phi i32 [ %i.cr, %_ZN7unibrow4Utf818ValueOfIncrementalEPPKhPN14Utf8DfaDecoder5StateEPj.exit ], [ 65533, %bb.o ], [ 65533, %bb.n ], [ %i.cb, %bb.l ]
   %i.ct = trunc nuw i32 %.0.i63 to i16
-  store i16 %i.ct, ptr %.478.a, align 2
+  store i16 %i.ct, ptr %.478, align 2
   br label %bb.r
 
 bb.p:                                             ; preds = %_ZN7unibrow4Utf818ValueOfIncrementalEPPKhPN14Utf8DfaDecoder5StateEPj.exit
@@ -279,16 +280,16 @@ bb.q:                                             ; preds = %bb.p
   %i.cx = trunc i32 %i.cw to i16
   %i.cy = and i16 %i.cx, 1023
   %i.cz = or disjoint i16 %i.cy, -10240
-  store i16 %i.cz, ptr %.478.a, align 2
+  store i16 %i.cz, ptr %.478, align 2
   %i.da = trunc i32 %i.cr to i16
   %i.db = and i16 %i.da, 1023
   %i.dc = or disjoint i16 %i.db, -9216
-  %i.dd = getelementptr inbounds nuw i8, ptr %.478.a, i64 4
-  store i16 %i.dc, ptr %1, align 2
+  %i.dd = getelementptr inbounds nuw i8, ptr %.478, i64 4
+  store i16 %i.dc, ptr %i.bv, align 2
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %_ZN7unibrow4Utf818ValueOfIncrementalEPPKhPN14Utf8DfaDecoder5StateEPj.exit.thread
-  %.5 = phi ptr [ %1, %_ZN7unibrow4Utf818ValueOfIncrementalEPPKhPN14Utf8DfaDecoder5StateEPj.exit.thread ], [ %i.dd, %bb.q ] ; 3 uses
+  %.5 = phi ptr [ %i.bv, %_ZN7unibrow4Utf818ValueOfIncrementalEPPKhPN14Utf8DfaDecoder5StateEPj.exit.thread ], [ %i.dd, %bb.q ] ; 3 uses
   %i.de = load ptr, ptr %i.c, align 8             ; 14 uses
   %i.df = ptrtoint ptr %i.de to i64               ; 6 uses
   %i.dg = sub i64 %i.bt, %i.df
@@ -465,11 +466,13 @@ _ZN2v88internal13NonAsciiStartEPKhj.exit:         ; preds = %.lr.ph.i.lr.ph, %.l
   %i.fv = getelementptr inbounds i8, ptr %i.fu, i64 %i.ft ; 2 uses
   store ptr %i.fv, ptr %i.c, align 8
   %i.fw = getelementptr inbounds [2 x i8], ptr %.5, i64 %i.ft
+  %.pre = load i8, ptr %i.a, align 1
   br label %.thread67
 
 .thread67:                                        ; preds = %bb.m, %bb.p, %_ZN2v88internal13NonAsciiStartEPKhj.exit
+  %2 = phi i8 [ %.pre, %_ZN2v88internal13NonAsciiStartEPKhj.exit ], [ 12, %bb.p ], [ %i.ck, %bb.m ] ; 2 uses
   %i.fx = phi ptr [ %i.fv, %_ZN2v88internal13NonAsciiStartEPKhj.exit ], [ %i.bx, %bb.p ], [ %i.bx, %bb.m ] ; 3 uses
-  %.6 = phi ptr [ %i.fw, %_ZN2v88internal13NonAsciiStartEPKhj.exit ], [ %.478.a, %bb.p ], [ %.478.a, %bb.m ] ; 3 uses
+  %.6 = phi ptr [ %i.fw, %_ZN2v88internal13NonAsciiStartEPKhj.exit ], [ %.478, %bb.p ], [ %.478, %bb.m ] ; 3 uses
   %i.fy = icmp ult ptr %i.fx, %i.ao
   %i.fz = getelementptr inbounds nuw i8, ptr %.6, i64 2 ; 2 uses
   %i.ga = icmp ult ptr %i.fz, %i.bn
@@ -477,6 +480,7 @@ _ZN2v88internal13NonAsciiStartEPKhj.exit:         ; preds = %.lr.ph.i.lr.ph, %.l
   br i1 %i.gb, label %bb.k, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.thread67, %.thread
+  %3 = phi i8 [ %.pre90, %.thread ], [ %2, %.thread67 ]
   %.4.lcssa = phi ptr [ %.3, %.thread ], [ %.6, %.thread67 ] ; 2 uses
   %.lcssa74 = phi ptr [ %i.bo, %.thread ], [ %i.fx, %.thread67 ] ; 2 uses
   %i.gc = load i64, ptr %i.aj, align 8
@@ -496,7 +500,6 @@ _ZN2v88internal13NonAsciiStartEPKhj.exit:         ; preds = %.lr.ph.i.lr.ph, %.l
   store i64 %i.go, ptr %i.aq, align 8
   %i.gp = load i32, ptr %i.b, align 4
   store i32 %i.gp, ptr %i.v, align 8
-  %3 = load i8, ptr %i.a, align 1
   store i8 %3, ptr %i.t, align 4
   %i.gq = icmp eq ptr %.lcssa74, %i.ao
   %i.gr = zext i1 %i.gq to i64

@@ -201,11 +201,6 @@ bb.g:                                             ; preds = %_ZNK6icu_786Locale1
   %i.ap = getelementptr inbounds nuw i8, ptr %8, i64 8
   br label %.outer
 
-.outer:                                           ; preds = %.thread, %.lr.ph36
-  %.034.ph = phi i1 [ true, %.thread ], [ false, %.lr.ph36 ]
-  %.01933.ph = phi ptr [ %i.bk, %.thread ], [ %i.ah, %.lr.ph36 ]
-  br label %bb.j
-
 .lr.ph:                                           ; preds = %bb.g, %bb.i
   %.02032 = phi i32 [ %i.at, %bb.i ], [ 0, %bb.g ]
   %.02131 = phi ptr [ %i.au, %bb.i ], [ %i.af, %bb.g ] ; 3 uses
@@ -228,14 +223,14 @@ bb.i:                                             ; preds = %.lr.ph, %.lr.ph, %b
   %i.aw = icmp slt i32 %i.at, %i.av
   br i1 %i.aw, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !22
 
-bb.j:                                             ; preds = %.outer, %bb.m
-  %.01933 = phi ptr [ %i.bg, %bb.m ], [ %.01933.ph, %.outer ] ; 6 uses
-  %9 = load ptr, ptr %4, align 8
-  %i.ax = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %.01933, ptr noundef nonnull dereferenceable(1) %9) #11
+bb.j:                                             ; preds = %.thread
+  %i.ax = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.bk, ptr noundef nonnull dereferenceable(1) %.ph) #11
   %i.ay = icmp eq i32 %i.ax, 0
-  br i1 %i.ay, label %.thread, label %bb.k
+  br i1 %i.ay, label %.thread, label %bb.k, !llvm.loop !23
 
-bb.k:                                             ; preds = %bb.j
+bb.k:                                             ; preds = %bb.j, %.outer
+  %.034.lcssa = phi i1 [ %.034.ph, %.outer ], [ true, %bb.j ] ; 2 uses
+  %.01933.lcssa = phi ptr [ %.01933.ph, %.outer ], [ %i.bk, %bb.j ] ; 3 uses
   %i.az = load i32, ptr %i.an, align 8
   %.not30 = icmp eq i32 %i.az, 0
   br i1 %.not30, label %bb.m, label %bb.l
@@ -245,25 +240,34 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.k, %bb.l
-  call void @_ZN6icu_7811StringPieceC1EPKc(ptr noundef nonnull align 8 dereferenceable(12) %8, ptr noundef nonnull %.01933) #10
+  call void @_ZN6icu_7811StringPieceC1EPKc(ptr noundef nonnull align 8 dereferenceable(12) %8, ptr noundef nonnull %.01933.lcssa) #10
   %i.bb = load ptr, ptr %8, align 8
   %i.bc = load i32, ptr %i.ap, align 8
   %i.bd = call noundef nonnull align 8 dereferenceable(60) ptr @_ZN6icu_7810CharString6appendEPKciR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(60) %7, ptr noundef %i.bb, i32 noundef %i.bc, ptr noundef nonnull align 4 dereferenceable(4) %i.b) #10 ; 0 uses
-  %i.be = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.01933) #11
-  %i.bf = getelementptr i8, ptr %.01933, i64 %i.be
+  %i.be = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.01933.lcssa) #11
+  %i.bf = getelementptr i8, ptr %.01933.lcssa, i64 %i.be
   %i.bg = getelementptr i8, ptr %i.bf, i64 1      ; 2 uses
   %i.bh = icmp ult ptr %i.bg, %i.aj
-  br i1 %i.bh, label %bb.j, label %._crit_edge37, !llvm.loop !23
+  br i1 %i.bh, label %.outer, label %._crit_edge37, !llvm.loop !23
 
-.thread:                                          ; preds = %bb.j
-  %i.bi = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.01933) #11
-  %i.bj = getelementptr i8, ptr %.01933, i64 %i.bi
-  %i.bk = getelementptr i8, ptr %i.bj, i64 1      ; 2 uses
+.outer:                                           ; preds = %bb.m, %.lr.ph36
+  %.034.ph = phi i1 [ %.034.lcssa, %bb.m ], [ false, %.lr.ph36 ]
+  %.01933.ph = phi ptr [ %i.bg, %bb.m ], [ %i.ah, %.lr.ph36 ] ; 3 uses
+  %.ph = load ptr, ptr %4, align 8                ; 2 uses
+  %9 = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %.01933.ph, ptr noundef nonnull dereferenceable(1) %.ph) #11
+  %10 = icmp eq i32 %9, 0
+  br i1 %10, label %.thread, label %bb.k
+
+.thread:                                          ; preds = %.outer, %bb.j
+  %.0193364 = phi ptr [ %i.bk, %bb.j ], [ %.01933.ph, %.outer ] ; 2 uses
+  %i.bi = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.0193364) #11
+  %i.bj = getelementptr i8, ptr %.0193364, i64 %i.bi
+  %i.bk = getelementptr i8, ptr %i.bj, i64 1      ; 4 uses
   %i.bl = icmp ult ptr %i.bk, %i.aj
-  br i1 %i.bl, label %.outer, label %._crit_edge37.thread, !llvm.loop !23
+  br i1 %i.bl, label %bb.j, label %._crit_edge37.thread, !llvm.loop !23
 
 ._crit_edge37:                                    ; preds = %bb.m
-  br i1 %.034.ph, label %._crit_edge37.thread, label %.critedge
+  br i1 %.034.lcssa, label %._crit_edge37.thread, label %.critedge
 
 ._crit_edge37.thread:                             ; preds = %.thread, %._crit_edge37
   %i.bm = load ptr, ptr %i.u, align 8

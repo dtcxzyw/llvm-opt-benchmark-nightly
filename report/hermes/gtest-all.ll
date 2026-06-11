@@ -201,7 +201,7 @@ define void @_ZN7testing8internal13edit_distance21CalculateOptimalEditsERKSt6vec
 bb.a:
   %3 = alloca %"class.std::vector.49", align 8    ; 8 uses
   %4 = alloca %"class.std::vector.59", align 8    ; 12 uses
-  %5 = alloca %"class.std::vector.64", align 8    ; 9 uses
+  %5 = alloca %"class.std::vector.64", align 8    ; 8 uses
   %6 = alloca %"class.std::vector.44", align 8    ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #53
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
@@ -399,7 +399,7 @@ _ZNSt15__new_allocatorISt6vectorIN7testing8internal13edit_distance8EditTypeESaIS
           to label %_ZNSt12_Vector_baseISt6vectorIN7testing8internal13edit_distance8EditTypeESaIS4_EESaIS6_EEC2EmRKS7_.exit.i unwind label %bb.v
 
 _ZNSt12_Vector_baseISt6vectorIN7testing8internal13edit_distance8EditTypeESaIS4_EESaIS6_EEC2EmRKS7_.exit.i: ; preds = %_ZNSt15__new_allocatorISt6vectorIN7testing8internal13edit_distance8EditTypeESaIS4_EEE8allocateEmPKv.exit.i.i.i.i, %_ZNSt6vectorIS_IN7testing8internal13edit_distance8EditTypeESaIS3_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i
-  %i.bo = phi ptr [ null, %_ZNSt6vectorIS_IN7testing8internal13edit_distance8EditTypeESaIS3_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i ], [ %i.bn, %_ZNSt15__new_allocatorISt6vectorIN7testing8internal13edit_distance8EditTypeESaIS4_EEE8allocateEmPKv.exit.i.i.i.i ] ; 10 uses
+  %i.bo = phi ptr [ null, %_ZNSt6vectorIS_IN7testing8internal13edit_distance8EditTypeESaIS3_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i ], [ %i.bn, %_ZNSt15__new_allocatorISt6vectorIN7testing8internal13edit_distance8EditTypeESaIS4_EEE8allocateEmPKv.exit.i.i.i.i ] ; 12 uses
   store ptr %i.bo, ptr %5, align 8, !tbaa !311
   %i.bp = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %i.bq = getelementptr inbounds nuw [24 x i8], ptr %i.bo, i64 %i.bk
@@ -743,13 +743,13 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 bb.ag:                                            ; preds = %.lr.ph154, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit
   %i.gn = phi ptr [ null, %.lr.ph154 ], [ %i.hj, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit ] ; 3 uses
   %i.go = phi ptr [ null, %.lr.ph154 ], [ %i.hk, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit ] ; 3 uses
-  %.075153 = phi i64 [ %i.ge, %.lr.ph154 ], [ %i.hp, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit ] ; 2 uses
-  %.076152.a = phi i64 [ %i.eh, %.lr.ph154 ], [ %i.hn, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit ] ; 2 uses
-  %7 = phi ptr [ null, %.lr.ph154 ], [ %i.hl, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit ] ; 9 uses
-  %8 = load ptr, ptr %5, align 8, !tbaa !311
-  %i.gp = getelementptr inbounds nuw [24 x i8], ptr %8, i64 %.076152.a
+  %7 = phi ptr [ %i.bo, %.lr.ph154 ], [ %10, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit ] ; 3 uses
+  %.076152.a = phi i64 [ %i.ge, %.lr.ph154 ], [ %i.hp, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit ] ; 2 uses
+  %.076152 = phi i64 [ %i.eh, %.lr.ph154 ], [ %i.hn, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit ] ; 2 uses
+  %8 = phi ptr [ null, %.lr.ph154 ], [ %i.hl, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit ] ; 9 uses
+  %i.gp = getelementptr inbounds nuw [24 x i8], ptr %7, i64 %.076152
   %i.gq = load ptr, ptr %i.gp, align 8, !tbaa !305
-  %i.gr = getelementptr inbounds nuw [4 x i8], ptr %i.gq, i64 %.075153
+  %i.gr = getelementptr inbounds nuw [4 x i8], ptr %i.gq, i64 %.076152.a
   %i.gs = load i32, ptr %i.gr, align 4, !tbaa !308 ; 4 uses
   %.not.i = icmp eq ptr %i.go, %i.gn
   br i1 %.not.i, label %bb.ai, label %bb.ah
@@ -762,13 +762,13 @@ bb.ah:                                            ; preds = %bb.ag
 
 bb.ai:                                            ; preds = %bb.ag
   %i.gu = ptrtoint ptr %i.gn to i64
-  %i.gv = ptrtoint ptr %7 to i64
+  %i.gv = ptrtoint ptr %8 to i64
   %i.gw = sub i64 %i.gu, %i.gv                    ; 7 uses
   %i.gx = icmp eq i64 %i.gw, 9223372036854775804
   br i1 %i.gx, label %bb.aj, label %_ZNKSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE12_M_check_lenEmPKc.exit.i.i
 
 bb.aj:                                            ; preds = %bb.ai
-  store ptr %7, ptr %0, align 8
+  store ptr %8, ptr %0, align 8
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.397) #56
           to label %.noexc113 unwind label %.loopexit.split-lp
 
@@ -795,19 +795,21 @@ _ZNKSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE12_M_check_lenE
   br i1 %i.hg, label %bb.ak, label %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i
 
 bb.ak:                                            ; preds = %.noexc114
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.he, ptr align 4 %7, i64 %i.gw, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.he, ptr align 4 %8, i64 %i.gw, i1 false)
   br label %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i
 
 _ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i: ; preds = %bb.ak, %.noexc114
   %i.hh = getelementptr inbounds nuw i8, ptr %i.hf, i64 4 ; 2 uses
-  %.not.i17.i.i = icmp eq ptr %7, null
+  %.not.i17.i.i = icmp eq ptr %8, null
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i, label %bb.al
 
 bb.al:                                            ; preds = %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %7, i64 noundef %i.gw) #54
+  call void @_ZdlPvm(ptr noundef nonnull %8, i64 noundef %i.gw) #54
+  %.pre173 = load ptr, ptr %5, align 8, !tbaa !311
   br label %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i
 
 _ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i: ; preds = %bb.al, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i
+  %9 = phi ptr [ %.pre173, %bb.al ], [ %7, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i ]
   store ptr %i.hh, ptr %i.gf, align 8, !tbaa !310
   %i.hi = getelementptr inbounds nuw [4 x i8], ptr %i.he, i64 %i.hc ; 2 uses
   store ptr %i.hi, ptr %i.gg, align 8, !tbaa !307
@@ -816,13 +818,14 @@ _ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE17_M_realloc_ins
 _ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit: ; preds = %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i, %bb.ah
   %i.hj = phi ptr [ %i.hi, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i ], [ %i.gn, %bb.ah ]
   %i.hk = phi ptr [ %i.hh, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i ], [ %i.gt, %bb.ah ] ; 3 uses
-  %i.hl = phi ptr [ %i.he, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i ], [ %7, %bb.ah ] ; 5 uses
+  %10 = phi ptr [ %9, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i ], [ %7, %bb.ah ] ; 3 uses
+  %i.hl = phi ptr [ %i.he, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i ], [ %8, %bb.ah ] ; 5 uses
   %i.hm = icmp ne i32 %i.gs, 1
   %.neg = sext i1 %i.hm to i64
-  %i.hn = add i64 %.076152.a, %.neg               ; 2 uses
+  %i.hn = add i64 %.076152, %.neg                 ; 2 uses
   %i.ho = icmp ne i32 %i.gs, 2
   %.neg90 = sext i1 %i.ho to i64
-  %i.hp = add i64 %.075153, %.neg90               ; 2 uses
+  %i.hp = add i64 %.076152.a, %.neg90             ; 2 uses
   %i.hq = icmp ne i64 %i.hn, 0
   %i.hr = icmp ne i64 %i.hp, 0
   %i.hs = select i1 %i.hq, i1 true, i1 %i.hr
@@ -831,7 +834,7 @@ _ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_
 .loopexit:                                        ; preds = %_ZNKSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
-  store ptr %7, ptr %0, align 8
+  store ptr %8, ptr %0, align 8
   br label %bb.am
 
 .loopexit.split-lp:                               ; preds = %bb.aj
@@ -841,17 +844,17 @@ _ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_
 
 bb.am:                                            ; preds = %.loopexit.split-lp, %.loopexit
   %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
-  %.not.i.i.i125 = icmp eq ptr %7, null
+  %.not.i.i.i125 = icmp eq ptr %8, null
   br i1 %.not.i.i.i125, label %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EED2Ev.exit126, label %bb.ar
 
 _ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPN7testing8internal13edit_distance8EditTypeESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit: ; preds = %.lr.ph.i.i, %._crit_edge147, %._crit_edge
-  %9 = load ptr, ptr %5, align 8, !tbaa !311      ; 5 uses
+  %.pr.i207 = phi ptr [ %i.bo, %._crit_edge147 ], [ %10, %._crit_edge ], [ %10, %.lr.ph.i.i ] ; 5 uses
   %i.ht = load ptr, ptr %i.bp, align 8, !tbaa !315 ; 2 uses
-  %.not4.i.i.i = icmp eq ptr %9, %i.ht
+  %.not4.i.i.i = icmp eq ptr %.pr.i207, %i.ht
   br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS4_EES6_EvT_S8_RSaIT0_E.exit.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPN7testing8internal13edit_distance8EditTypeESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit, %_ZSt8_DestroyISt6vectorIN7testing8internal13edit_distance8EditTypeESaIS4_EEEvPT_.exit.i.i.i
-  %.05.i.i.i = phi ptr [ %i.ia, %_ZSt8_DestroyISt6vectorIN7testing8internal13edit_distance8EditTypeESaIS4_EEEvPT_.exit.i.i.i ], [ %9, %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPN7testing8internal13edit_distance8EditTypeESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit ] ; 3 uses
+  %.05.i.i.i = phi ptr [ %i.ia, %_ZSt8_DestroyISt6vectorIN7testing8internal13edit_distance8EditTypeESaIS4_EEEvPT_.exit.i.i.i ], [ %.pr.i207, %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPN7testing8internal13edit_distance8EditTypeESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit ] ; 3 uses
   %i.hu = load ptr, ptr %.05.i.i.i, align 8, !tbaa !305 ; 3 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.hu, null
   br i1 %.not.i.i.i.i.i.i.i, label %_ZSt8_DestroyISt6vectorIN7testing8internal13edit_distance8EditTypeESaIS4_EEEvPT_.exit.i.i.i, label %bb.an
@@ -871,15 +874,15 @@ _ZSt8_DestroyISt6vectorIN7testing8internal13edit_distance8EditTypeESaIS4_EEEvPT_
   br i1 %.not.i.i.i115, label %_ZSt8_DestroyIPSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS4_EES6_EvT_S8_RSaIT0_E.exit.i, label %.lr.ph.i.i.i, !llvm.loop !325
 
 _ZSt8_DestroyIPSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS4_EES6_EvT_S8_RSaIT0_E.exit.i: ; preds = %_ZSt8_DestroyISt6vectorIN7testing8internal13edit_distance8EditTypeESaIS4_EEEvPT_.exit.i.i.i, %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPN7testing8internal13edit_distance8EditTypeESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit
-  %.not.i.i1.i = icmp eq ptr %9, null
+  %.not.i.i1.i = icmp eq ptr %.pr.i207, null
   br i1 %.not.i.i1.i, label %_ZNSt6vectorIS_IN7testing8internal13edit_distance8EditTypeESaIS3_EESaIS5_EED2Ev.exit, label %bb.ao
 
 bb.ao:                                            ; preds = %_ZSt8_DestroyIPSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS4_EES6_EvT_S8_RSaIT0_E.exit.i
   %i.ib = load ptr, ptr %i.br, align 8, !tbaa !314
   %i.ic = ptrtoint ptr %i.ib to i64
-  %i.id = ptrtoint ptr %9 to i64
+  %i.id = ptrtoint ptr %.pr.i207 to i64
   %i.ie = sub i64 %i.ic, %i.id
-  call void @_ZdlPvm(ptr noundef nonnull %9, i64 noundef %i.ie) #54
+  call void @_ZdlPvm(ptr noundef nonnull %.pr.i207, i64 noundef %i.ie) #54
   br label %_ZNSt6vectorIS_IN7testing8internal13edit_distance8EditTypeESaIS3_EESaIS5_EED2Ev.exit
 
 _ZNSt6vectorIS_IN7testing8internal13edit_distance8EditTypeESaIS3_EESaIS5_EED2Ev.exit: ; preds = %_ZSt8_DestroyIPSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS4_EES6_EvT_S8_RSaIT0_E.exit.i, %bb.ao
@@ -926,7 +929,7 @@ _ZNSt6vectorIS_IdSaIdEESaIS1_EED2Ev.exit:         ; preds = %_ZSt8_DestroyIPSt6v
   ret void
 
 bb.ar:                                            ; preds = %bb.am
-  call void @_ZdlPvm(ptr noundef nonnull %7, i64 noundef %i.gw) #54
+  call void @_ZdlPvm(ptr noundef nonnull %8, i64 noundef %i.gw) #54
   br label %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EED2Ev.exit126
 
 _ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EED2Ev.exit126: ; preds = %bb.am, %bb.ar

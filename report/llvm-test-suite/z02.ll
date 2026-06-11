@@ -201,7 +201,7 @@ define dso_local ptr @LexScanVerbatim(ptr nofree noundef captures(address_is_nul
 bb.a:
   %i.a = alloca [512 x i8], align 16              ; 22 uses
   %i.b = alloca [512 x i8], align 16              ; 35 uses
-  %i.c = alloca i32, align 4                      ; 53 uses
+  %i.c = alloca i32, align 4                      ; 56 uses
   %i.d = alloca ptr, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
@@ -604,12 +604,16 @@ bb.bv:                                            ; preds = %bb.d
 
 .lr.ph:                                           ; preds = %.preheader265
   %wide.trip.count325 = zext nneg i32 %.0202312 to i64 ; 2 uses
-  br i1 %i.h, label %.lr.ph.split.us, label %.lr.ph.split
+  br i1 %i.h, label %.lr.ph.split.us.preheader, label %.lr.ph.split
 
-.lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.bz
-  %indvars.iv322 = phi i64 [ %indvars.iv.next323, %bb.bz ], [ 0, %.lr.ph ] ; 2 uses
-  %.25266.us = phi ptr [ %.26.us, %bb.bz ], [ %.0199313, %.lr.ph ] ; 3 uses
-  %4 = load i32, ptr %i.c, align 4, !tbaa !4      ; 3 uses
+.lr.ph.split.us.preheader:                        ; preds = %.lr.ph
+  %.pre375 = load i32, ptr %i.c, align 4, !tbaa !4
+  br label %.lr.ph.split.us
+
+.lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %bb.bz
+  %4 = phi i32 [ %.pre375, %.lr.ph.split.us.preheader ], [ %5, %bb.bz ] ; 4 uses
+  %indvars.iv322 = phi i64 [ 0, %.lr.ph.split.us.preheader ], [ %indvars.iv.next323, %bb.bz ] ; 2 uses
+  %.25266.us = phi ptr [ %.0199313, %.lr.ph.split.us.preheader ], [ %.26.us, %bb.bz ] ; 3 uses
   %i.gk = icmp slt i32 %4, 512
   br i1 %i.gk, label %bb.bw, label %bb.bz
 
@@ -623,7 +627,7 @@ bb.bw:                                            ; preds = %.lr.ph.split.us
   br i1 %i.gq, label %bb.by, label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw
-  %i.gr = add nsw i32 %4, 1
+  %i.gr = add nsw i32 %4, 1                       ; 2 uses
   store i32 %i.gr, ptr %i.c, align 4, !tbaa !4
   %i.gs = sext i32 %4 to i64
   %i.gt = getelementptr inbounds i8, ptr %i.b, i64 %i.gs
@@ -632,9 +636,11 @@ bb.bx:                                            ; preds = %bb.bw
 
 bb.by:                                            ; preds = %bb.bw
   %i.gu = call fastcc ptr @BuildLines(ptr noundef %.25266.us, ptr noundef %i.b, ptr noundef %i.c)
+  %.pre = load i32, ptr %i.c, align 4, !tbaa !4
   br label %bb.bz
 
 bb.bz:                                            ; preds = %bb.by, %bb.bx, %.lr.ph.split.us
+  %5 = phi i32 [ %.pre, %bb.by ], [ %i.gr, %bb.bx ], [ %4, %.lr.ph.split.us ]
   %.26.us = phi ptr [ %i.gu, %bb.by ], [ %.25266.us, %bb.bx ], [ %.25266.us, %.lr.ph.split.us ] ; 2 uses
   %indvars.iv.next323 = add nuw nsw i64 %indvars.iv322, 1 ; 2 uses
   %exitcond326.not = icmp eq i64 %indvars.iv.next323, %wide.trip.count325
@@ -664,13 +670,17 @@ bb.cd:                                            ; preds = %bb.cc
 
 .lr.ph283:                                        ; preds = %.preheader264
   %wide.trip.count345 = zext nneg i32 %.0202312 to i64 ; 2 uses
-  br i1 %i.h, label %.lr.ph283.split.us, label %.lr.ph283.split
+  br i1 %i.h, label %.lr.ph283.split.us.preheader, label %.lr.ph283.split
 
-.lr.ph283.split.us:                               ; preds = %.lr.ph283, %bb.ch
-  %indvars.iv342 = phi i64 [ %indvars.iv.next343, %bb.ch ], [ 0, %.lr.ph283 ] ; 2 uses
-  %.22281.us = phi ptr [ %.23.us, %bb.ch ], [ %.0199313, %.lr.ph283 ] ; 3 uses
-  %5 = load i32, ptr %i.c, align 4, !tbaa !4      ; 3 uses
-  %i.gz = icmp slt i32 %5, 512
+.lr.ph283.split.us.preheader:                     ; preds = %.lr.ph283
+  %.pre379 = load i32, ptr %i.c, align 4, !tbaa !4
+  br label %.lr.ph283.split.us
+
+.lr.ph283.split.us:                               ; preds = %.lr.ph283.split.us.preheader, %bb.ch
+  %6 = phi i32 [ %.pre379, %.lr.ph283.split.us.preheader ], [ %7, %bb.ch ] ; 4 uses
+  %indvars.iv342 = phi i64 [ 0, %.lr.ph283.split.us.preheader ], [ %indvars.iv.next343, %bb.ch ] ; 2 uses
+  %.22281.us = phi ptr [ %.0199313, %.lr.ph283.split.us.preheader ], [ %.23.us, %bb.ch ] ; 3 uses
+  %i.gz = icmp slt i32 %6, 512
   br i1 %i.gz, label %bb.ce, label %bb.ch
 
 bb.ce:                                            ; preds = %.lr.ph283.split.us
@@ -683,18 +693,20 @@ bb.ce:                                            ; preds = %.lr.ph283.split.us
   br i1 %i.hf, label %bb.cg, label %bb.cf
 
 bb.cf:                                            ; preds = %bb.ce
-  %i.hg = add nsw i32 %5, 1
+  %i.hg = add nsw i32 %6, 1                       ; 2 uses
   store i32 %i.hg, ptr %i.c, align 4, !tbaa !4
-  %i.hh = sext i32 %5 to i64
+  %i.hh = sext i32 %6 to i64
   %i.hi = getelementptr inbounds i8, ptr %i.b, i64 %i.hh
   store i8 %i.hb, ptr %i.hi, align 1, !tbaa !8
   br label %bb.ch
 
 bb.cg:                                            ; preds = %bb.ce
   %i.hj = call fastcc ptr @BuildLines(ptr noundef %.22281.us, ptr noundef %i.b, ptr noundef %i.c)
+  %.pre378 = load i32, ptr %i.c, align 4, !tbaa !4
   br label %bb.ch
 
 bb.ch:                                            ; preds = %bb.cg, %bb.cf, %.lr.ph283.split.us
+  %7 = phi i32 [ %.pre378, %bb.cg ], [ %i.hg, %bb.cf ], [ %6, %.lr.ph283.split.us ]
   %.23.us = phi ptr [ %i.hj, %bb.cg ], [ %.22281.us, %bb.cf ], [ %.22281.us, %.lr.ph283.split.us ] ; 2 uses
   %indvars.iv.next343 = add nuw nsw i64 %indvars.iv342, 1 ; 2 uses
   %exitcond346.not = icmp eq i64 %indvars.iv.next343, %wide.trip.count345
@@ -708,13 +720,17 @@ bb.ci:                                            ; preds = %bb.cd, %bb.cc
 
 .lr.ph271:                                        ; preds = %bb.ci
   %wide.trip.count335 = zext nneg i32 %.0202312 to i64 ; 2 uses
-  br i1 %i.h, label %.lr.ph271.split.us, label %.lr.ph271.split
+  br i1 %i.h, label %.lr.ph271.split.us.preheader, label %.lr.ph271.split
 
-.lr.ph271.split.us:                               ; preds = %.lr.ph271, %bb.cm
-  %indvars.iv332 = phi i64 [ %indvars.iv.next333, %bb.cm ], [ 0, %.lr.ph271 ] ; 2 uses
-  %.18268.us = phi ptr [ %.19.us, %bb.cm ], [ %.0199313, %.lr.ph271 ] ; 3 uses
-  %6 = load i32, ptr %i.c, align 4, !tbaa !4      ; 3 uses
-  %i.hm = icmp slt i32 %6, 512
+.lr.ph271.split.us.preheader:                     ; preds = %.lr.ph271
+  %.pre377 = load i32, ptr %i.c, align 4, !tbaa !4
+  br label %.lr.ph271.split.us
+
+.lr.ph271.split.us:                               ; preds = %.lr.ph271.split.us.preheader, %bb.cm
+  %8 = phi i32 [ %.pre377, %.lr.ph271.split.us.preheader ], [ %9, %bb.cm ] ; 4 uses
+  %indvars.iv332 = phi i64 [ 0, %.lr.ph271.split.us.preheader ], [ %indvars.iv.next333, %bb.cm ] ; 2 uses
+  %.18268.us = phi ptr [ %.0199313, %.lr.ph271.split.us.preheader ], [ %.19.us, %bb.cm ] ; 3 uses
+  %i.hm = icmp slt i32 %8, 512
   br i1 %i.hm, label %bb.cj, label %bb.cm
 
 bb.cj:                                            ; preds = %.lr.ph271.split.us
@@ -727,18 +743,20 @@ bb.cj:                                            ; preds = %.lr.ph271.split.us
   br i1 %i.hs, label %bb.cl, label %bb.ck
 
 bb.ck:                                            ; preds = %bb.cj
-  %i.ht = add nsw i32 %6, 1
+  %i.ht = add nsw i32 %8, 1                       ; 2 uses
   store i32 %i.ht, ptr %i.c, align 4, !tbaa !4
-  %i.hu = sext i32 %6 to i64
+  %i.hu = sext i32 %8 to i64
   %i.hv = getelementptr inbounds i8, ptr %i.b, i64 %i.hu
   store i8 %i.ho, ptr %i.hv, align 1, !tbaa !8
   br label %bb.cm
 
 bb.cl:                                            ; preds = %bb.cj
   %i.hw = call fastcc ptr @BuildLines(ptr noundef %.18268.us, ptr noundef %i.b, ptr noundef %i.c)
+  %.pre376 = load i32, ptr %i.c, align 4, !tbaa !4
   br label %bb.cm
 
 bb.cm:                                            ; preds = %bb.cl, %bb.ck, %.lr.ph271.split.us
+  %9 = phi i32 [ %.pre376, %bb.cl ], [ %i.ht, %bb.ck ], [ %8, %.lr.ph271.split.us ]
   %.19.us = phi ptr [ %i.hw, %bb.cl ], [ %.18268.us, %bb.ck ], [ %.18268.us, %.lr.ph271.split.us ] ; 2 uses
   %indvars.iv.next333 = add nuw nsw i64 %indvars.iv332, 1 ; 2 uses
   %exitcond336.not = icmp eq i64 %indvars.iv.next333, %wide.trip.count335

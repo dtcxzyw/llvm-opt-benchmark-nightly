@@ -201,10 +201,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit: ; preds = %.
   %i.o = load i64, ptr %i.l, align 8, !tbaa !30
   %i.p = trunc i64 %i.o to i32
   %i.q = icmp sgt i32 %i.p, 0
+  %.pre14 = load ptr, ptr %3, align 8, !tbaa !18  ; 2 uses
   br i1 %i.q, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.g, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
-  %4 = load ptr, ptr %3, align 8, !tbaa !18
+  %4 = phi ptr [ %.pre14, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit ], [ %6, %bb.g ]
   %i.r = call double @strtod(ptr noundef nonnull captures(none) %4, ptr noundef null) #17, !inline_history !31
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 37
   %i.t = load i8, ptr %i.s, align 1, !tbaa !20, !range !21, !noundef !22
@@ -227,8 +228,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %._cri
   ret float %.0
 
 .lr.ph:                                           ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit, %bb.g
+  %5 = phi ptr [ %6, %bb.g ], [ %.pre14, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit ] ; 2 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.g ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit ] ; 4 uses
-  %5 = load ptr, ptr %3, align 8, !tbaa !18       ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 %indvars.iv ; 2 uses
   %i.ac = load i8, ptr %i.ab, align 1, !tbaa !25  ; 2 uses
   %i.ad = icmp eq i8 %i.ac, 100
@@ -243,16 +244,18 @@ bb.d:                                             ; preds = %.lr.ph
 
 bb.e:                                             ; preds = %bb.d, %.lr.ph
   %i.ae = phi i8 [ %.pre12, %bb.d ], [ %i.ac, %.lr.ph ]
-  %i.af = phi ptr [ %.pre.a, %bb.d ], [ %5, %.lr.ph ]
+  %i.af = phi ptr [ %.pre.a, %bb.d ], [ %5, %.lr.ph ] ; 2 uses
   %i.ag = icmp eq i8 %i.ae, 68
   br i1 %i.ag, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %i.ah = getelementptr inbounds nuw i8, ptr %i.af, i64 %indvars.iv
   store i8 101, ptr %i.ah, align 1, !tbaa !25
+  %.pre = load ptr, ptr %3, align 8, !tbaa !18
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %bb.f
+  %6 = phi ptr [ %i.af, %bb.e ], [ %.pre, %bb.f ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ai = load i64, ptr %i.l, align 8, !tbaa !30
   %sext = shl i64 %i.ai, 32
@@ -320,10 +323,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit: ; preds = %.
   %i.o = load i64, ptr %i.l, align 8, !tbaa !30
   %i.p = trunc i64 %i.o to i32
   %i.q = icmp sgt i32 %i.p, 0
+  %.pre14 = load ptr, ptr %3, align 8, !tbaa !18  ; 2 uses
   br i1 %i.q, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.g, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
-  %4 = load ptr, ptr %3, align 8, !tbaa !18
+  %4 = phi ptr [ %.pre14, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit ], [ %6, %bb.g ]
   %i.r = call double @strtod(ptr noundef nonnull captures(none) %4, ptr noundef null) #17, !inline_history !31 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 37
   %i.t = load i8, ptr %i.s, align 1, !tbaa !20, !range !21, !noundef !22
@@ -345,8 +349,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %._cri
   ret double %.0
 
 .lr.ph:                                           ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit, %bb.g
+  %5 = phi ptr [ %6, %bb.g ], [ %.pre14, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit ] ; 2 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.g ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit ] ; 4 uses
-  %5 = load ptr, ptr %3, align 8, !tbaa !18       ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 %indvars.iv ; 2 uses
   %i.ab = load i8, ptr %i.aa, align 1, !tbaa !25  ; 2 uses
   %i.ac = icmp eq i8 %i.ab, 100
@@ -361,16 +365,18 @@ bb.d:                                             ; preds = %.lr.ph
 
 bb.e:                                             ; preds = %bb.d, %.lr.ph
   %i.ad = phi i8 [ %.pre12, %bb.d ], [ %i.ab, %.lr.ph ]
-  %i.ae = phi ptr [ %.pre.a, %bb.d ], [ %5, %.lr.ph ]
+  %i.ae = phi ptr [ %.pre.a, %bb.d ], [ %5, %.lr.ph ] ; 2 uses
   %i.af = icmp eq i8 %i.ad, 68
   br i1 %i.af, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 %indvars.iv
   store i8 101, ptr %i.ag, align 1, !tbaa !25
+  %.pre = load ptr, ptr %3, align 8, !tbaa !18
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %bb.f
+  %6 = phi ptr [ %i.ae, %bb.e ], [ %.pre, %bb.f ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ah = load i64, ptr %i.l, align 8, !tbaa !30
   %sext = shl i64 %i.ah, 32
@@ -773,11 +779,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit: ; preds = %.
   %i.ge = trunc i64 %i.gd to i32
   %i.gf = icmp sgt i32 %i.ge, 0
   %or.cond = select i1 %i.gc, i1 %i.gf, i1 false
+  %.pre57 = load ptr, ptr %3, align 8, !tbaa !18  ; 2 uses
   br i1 %or.cond, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit, %bb.ak
+  %4 = phi ptr [ %5, %bb.ak ], [ %.pre57, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit ] ; 2 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.ak ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit ] ; 4 uses
-  %4 = load ptr, ptr %3, align 8, !tbaa !18       ; 2 uses
   %i.gg = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv ; 2 uses
   %i.gh = load i8, ptr %i.gg, align 1, !tbaa !25  ; 2 uses
   %i.gi = icmp eq i8 %i.gh, 100
@@ -792,16 +799,18 @@ bb.ah:                                            ; preds = %.lr.ph
 
 bb.ai:                                            ; preds = %bb.ah, %.lr.ph
   %i.gj = phi i8 [ %.pre55, %bb.ah ], [ %i.gh, %.lr.ph ]
-  %i.gk = phi ptr [ %.pre.a, %bb.ah ], [ %4, %.lr.ph ]
+  %i.gk = phi ptr [ %.pre.a, %bb.ah ], [ %4, %.lr.ph ] ; 2 uses
   %i.gl = icmp eq i8 %i.gj, 68
   br i1 %i.gl, label %bb.aj, label %bb.ak
 
 bb.aj:                                            ; preds = %bb.ai
   %i.gm = getelementptr inbounds nuw i8, ptr %i.gk, i64 %indvars.iv
   store i8 101, ptr %i.gm, align 1, !tbaa !25
+  %.pre = load ptr, ptr %3, align 8, !tbaa !18
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.ai, %bb.aj
+  %5 = phi ptr [ %i.gk, %bb.ai ], [ %.pre, %bb.aj ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.gn = load i64, ptr %i.fy, align 8, !tbaa !30
   %sext = shl i64 %i.gn, 32
@@ -810,8 +819,8 @@ bb.ak:                                            ; preds = %bb.ai, %bb.aj
   br i1 %i.gp, label %.lr.ph, label %.loopexit, !llvm.loop !132
 
 .loopexit:                                        ; preds = %bb.ak, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
-  %5 = load ptr, ptr %3, align 8, !tbaa !18
-  %i.gq = call double @strtod(ptr noundef nonnull captures(none) %5, ptr noundef null) #17, !inline_history !31 ; 2 uses
+  %6 = phi ptr [ %.pre57, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit ], [ %5, %bb.ak ]
+  %i.gq = call double @strtod(ptr noundef nonnull captures(none) %6, ptr noundef null) #17, !inline_history !31 ; 2 uses
   %i.gr = getelementptr inbounds nuw i8, ptr %0, i64 37
   %i.gs = load i8, ptr %i.gr, align 1, !tbaa !20, !range !21, !noundef !22
   %i.gt = trunc nuw i8 %i.gs to i1

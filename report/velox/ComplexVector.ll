@@ -201,7 +201,7 @@ bb.a:
   %9 = alloca %"class.boost::intrusive_ptr", align 8 ; 7 uses
   %10 = alloca %"class.boost::intrusive_ptr", align 8 ; 8 uses
   %11 = alloca %"class.boost::intrusive_ptr", align 8 ; 8 uses
-  %12 = alloca %"class.std::vector.179", align 8  ; 20 uses
+  %12 = alloca %"class.std::vector.179", align 8  ; 19 uses
   %13 = alloca %"class.facebook::velox::(anonymous namespace)::UpdateMapRow", align 8 ; 19 uses
   %14 = alloca %"class.std::shared_ptr.4", align 16 ; 9 uses
   %15 = alloca %"class.std::shared_ptr.4", align 16 ; 9 uses
@@ -604,7 +604,7 @@ _ZNK8facebook5velox13DecodedVector5indexEi.exit:  ; preds = %bb.be, %bb.bg, %bb.
 
 .preheader:                                       ; preds = %_ZNK8facebook5velox13DecodedVector5indexEi.exit
   %i.lj = load ptr, ptr %i.hx, align 8, !tbaa !560 ; 2 uses
-  %i.lk = load ptr, ptr %12, align 8, !tbaa !558  ; 2 uses
+  %i.lk = load ptr, ptr %12, align 8, !tbaa !558  ; 3 uses
   %.not377 = icmp eq ptr %i.lj, %i.lk
   br i1 %.not377, label %._crit_edge366, label %.lr.ph365
 
@@ -876,6 +876,7 @@ _ZN5folly3f146detail22ValueContainerIteratorIPSt4pairIKbN8facebook5velox12_GLOBA
   br label %_ZN5folly3f146detail22ValueContainerIteratorIPSt4pairIKbN8facebook5velox12_GLOBAL__N_112UpdateSourceEEEppEv.exit.i
 
 .lr.ph365:                                        ; preds = %.preheader, %._crit_edge363
+  %.pre428 = phi ptr [ %.pre428434, %._crit_edge363 ], [ %i.lk, %.preheader ] ; 3 uses
   %i.ow = phi ptr [ %i.qd, %._crit_edge363 ], [ %i.lk, %.preheader ]
   %i.ox = phi ptr [ %i.qe, %._crit_edge363 ], [ %i.lj, %.preheader ]
   %indvars.iv404 = phi i64 [ %indvars.iv.next405, %._crit_edge363 ], [ 0, %.preheader ] ; 5 uses
@@ -933,11 +934,11 @@ _ZNK8facebook5velox13DecodedVector5indexEi.exit197: ; preds = %.lr.ph365, %bb.bz
 
 ._crit_edge363.loopexit:                          ; preds = %.loopexit
   %.pre428.a = load ptr, ptr %i.hx, align 8, !tbaa !560
-  %.pre429 = load ptr, ptr %12, align 8, !tbaa !558
   br label %._crit_edge363
 
 ._crit_edge363:                                   ; preds = %._crit_edge363.loopexit, %_ZNK8facebook5velox13DecodedVector5indexEi.exit197
-  %i.qd = phi ptr [ %.pre429, %._crit_edge363.loopexit ], [ %i.ow, %_ZNK8facebook5velox13DecodedVector5indexEi.exit197 ] ; 2 uses
+  %.pre428434 = phi ptr [ %.pre428436, %._crit_edge363.loopexit ], [ %.pre428, %_ZNK8facebook5velox13DecodedVector5indexEi.exit197 ]
+  %i.qd = phi ptr [ %20, %._crit_edge363.loopexit ], [ %i.ow, %_ZNK8facebook5velox13DecodedVector5indexEi.exit197 ] ; 2 uses
   %i.qe = phi ptr [ %.pre428.a, %._crit_edge363.loopexit ], [ %i.ox, %_ZNK8facebook5velox13DecodedVector5indexEi.exit197 ] ; 2 uses
   %indvars.iv.next405 = add nuw nsw i64 %indvars.iv404, 1 ; 2 uses
   %i.qf = ptrtoint ptr %i.qe to i64
@@ -948,10 +949,11 @@ _ZNK8facebook5velox13DecodedVector5indexEi.exit197: ; preds = %.lr.ph365, %bb.bz
   br i1 %i.qj, label %.lr.ph365, label %._crit_edge366, !llvm.loop !903
 
 bb.ca:                                            ; preds = %.lr.ph362, %.loopexit
+  %.pre428435 = phi ptr [ %.pre428, %.lr.ph362 ], [ %.pre428436, %.loopexit ]
+  %18 = phi ptr [ %.pre428, %.lr.ph362 ], [ %20, %.loopexit ] ; 2 uses
   %indvars.iv401 = phi i64 [ 0, %.lr.ph362 ], [ %indvars.iv.next402, %.loopexit ] ; 2 uses
-  %18 = add nsw i64 %indvars.iv401, %i.qc         ; 6 uses
-  %19 = load ptr, ptr %12, align 8, !tbaa !558
-  %i.qk = getelementptr inbounds nuw [120 x i8], ptr %19, i64 %indvars.iv404 ; 10 uses
+  %19 = add nsw i64 %indvars.iv401, %i.qc         ; 6 uses
+  %i.qk = getelementptr inbounds nuw [120 x i8], ptr %18, i64 %indvars.iv404 ; 10 uses
   %i.ql = getelementptr inbounds nuw i8, ptr %i.qk, i64 24
   %i.qm = load ptr, ptr %i.ql, align 8, !tbaa !254 ; 4 uses
   %.not.i198 = icmp eq ptr %i.qm, null
@@ -968,11 +970,11 @@ bb.cb:                                            ; preds = %bb.ca
   br i1 %or.cond.i, label %bb.cc, label %bb.cd
 
 bb.cc:                                            ; preds = %bb.cb
-  %i.qr = lshr i64 %18, 6
+  %i.qr = lshr i64 %19, 6
   %i.qs = and i64 %i.qr, 67108863
   %i.qt = getelementptr inbounds nuw [8 x i8], ptr %i.qm, i64 %i.qs
   %i.qu = load i64, ptr %i.qt, align 8, !tbaa !43
-  %i.qv = and i64 %18, 63
+  %i.qv = and i64 %19, 63
   %i.qw = shl nuw i64 1, %i.qv
   %i.qx = and i64 %i.qu, %i.qw
   %.not.i.i200 = icmp eq i64 %i.qx, 0
@@ -987,7 +989,7 @@ bb.cd:                                            ; preds = %bb.cb
 bb.ce:                                            ; preds = %bb.cd
   %i.rb = getelementptr inbounds nuw i8, ptr %i.qk, i64 8
   %i.rc = load ptr, ptr %i.rb, align 8, !tbaa !203
-  %i.rd = getelementptr inbounds [4 x i8], ptr %i.rc, i64 %18
+  %i.rd = getelementptr inbounds [4 x i8], ptr %i.rc, i64 %19
   %i.re = load i32, ptr %i.rd, align 4, !tbaa !3
   %i.rf = zext i32 %i.re to i64                   ; 2 uses
   %i.rg = lshr i64 %i.rf, 6
@@ -1025,14 +1027,14 @@ bb.ci:                                            ; preds = %bb.cf
 _ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.thread: ; preds = %bb.ce, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit
   %i.rq = getelementptr inbounds nuw i8, ptr %i.qk, i64 16
   %i.rr = load ptr, ptr %i.rq, align 8, !tbaa !905
-  %i.rs = trunc nsw i64 %18 to i32
+  %i.rs = trunc nsw i64 %19 to i32
   br label %bb.cj
 
 _ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread: ; preds = %bb.ca, %bb.cc
   %i.rt = getelementptr inbounds nuw i8, ptr %i.qk, i64 16
   %i.ru = load ptr, ptr %i.rt, align 8, !tbaa !905 ; 2 uses
   %i.rv = trunc nuw i8 %.pre427.a to i1
-  %i.rw = trunc nsw i64 %18 to i32                ; 3 uses
+  %i.rw = trunc nsw i64 %19 to i32                ; 3 uses
   br i1 %i.rv, label %_ZNK8facebook5velox13DecodedVector7valueAtIbEET_i.exit.i, label %bb.cj
 
 bb.cj:                                            ; preds = %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.thread, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread
@@ -1051,7 +1053,7 @@ bb.ck:                                            ; preds = %bb.cj
 bb.cl:                                            ; preds = %bb.cj
   %i.se = getelementptr inbounds nuw i8, ptr %i.qk, i64 8
   %i.sf = load ptr, ptr %i.se, align 8, !tbaa !203
-  %i.sg = getelementptr inbounds [4 x i8], ptr %i.sf, i64 %18
+  %i.sg = getelementptr inbounds [4 x i8], ptr %i.sf, i64 %19
   %i.sh = load i32, ptr %i.sg, align 4, !tbaa !3
   br label %_ZNK8facebook5velox13DecodedVector7valueAtIbEET_i.exit.i
 
@@ -1231,6 +1233,7 @@ _ZN5folly3f146detail8F14ChunkISt4pairIKbN8facebook5velox12_GLOBAL__N_112UpdateSo
   %i.vl = or i64 %i.vj, %i.vk                     ; 2 uses
   %.val2.i.i.i.i.i.i.i = load i64, ptr %i.jr, align 8, !tbaa !900, !noalias !907
   %i.vm = icmp ult i64 %.val2.i.i.i.i.i.i.i, %i.vl
+  %.pre427 = load ptr, ptr %12, align 8, !tbaa !558 ; 2 uses
   br i1 %i.vm, label %bb.cy, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIbN8facebook5velox12_GLOBAL__N_112UpdateSourceEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJObEESE_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairIKbS7_EEEEESK_ImmEDpOT_.exit.i.i.i.i.i
 
 bb.cy:                                            ; preds = %_ZN5folly3f146detail8F14ChunkISt4pairIKbN8facebook5velox12_GLOBAL__N_112UpdateSourceEEE6setTagEmm.exit.i.i.i.i.i
@@ -1247,6 +1250,8 @@ _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIbN8facebook5velox12_GLO
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.co, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIbN8facebook5velox12_GLOBAL__N_112UpdateSourceEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJObEESE_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairIKbS7_EEEEESK_ImmEDpOT_.exit.i.i.i.i.i
+  %.pre428436 = phi ptr [ %.pre427, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIbN8facebook5velox12_GLOBAL__N_112UpdateSourceEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJObEESE_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairIKbS7_EEEEESK_ImmEDpOT_.exit.i.i.i.i.i ], [ %.pre428435, %bb.co ] ; 2 uses
+  %20 = phi ptr [ %.pre427, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIbN8facebook5velox12_GLOBAL__N_112UpdateSourceEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJObEESE_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairIKbS7_EEEEESK_ImmEDpOT_.exit.i.i.i.i.i ], [ %18, %bb.co ] ; 2 uses
   %.lcssa59.sink.i.i.i.i.i = phi ptr [ %i.vg, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIbN8facebook5velox12_GLOBAL__N_112UpdateSourceEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJObEESE_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairIKbS7_EEEEESK_ImmEDpOT_.exit.i.i.i.i.i ], [ %i.tt, %bb.co ] ; 2 uses
   %i.vr = getelementptr inbounds nuw i8, ptr %.lcssa59.sink.i.i.i.i.i, i64 4
   store i32 %i.si, ptr %i.vr, align 4, !tbaa !3
@@ -1649,7 +1654,7 @@ bb.a:
   %9 = alloca %"class.boost::intrusive_ptr", align 8 ; 7 uses
   %10 = alloca %"class.boost::intrusive_ptr", align 8 ; 8 uses
   %11 = alloca %"class.boost::intrusive_ptr", align 8 ; 8 uses
-  %12 = alloca %"class.std::vector.179", align 8  ; 20 uses
+  %12 = alloca %"class.std::vector.179", align 8  ; 19 uses
   %13 = alloca %"class.facebook::velox::(anonymous namespace)::UpdateMapRow.363", align 8 ; 19 uses
   %14 = alloca %"class.std::shared_ptr.4", align 16 ; 9 uses
   %15 = alloca %"class.std::shared_ptr.4", align 16 ; 9 uses
@@ -2052,7 +2057,7 @@ _ZNK8facebook5velox13DecodedVector5indexEi.exit:  ; preds = %bb.be, %bb.bg, %bb.
 
 .preheader:                                       ; preds = %_ZNK8facebook5velox13DecodedVector5indexEi.exit
   %i.lj = load ptr, ptr %i.hx, align 8, !tbaa !560 ; 2 uses
-  %i.lk = load ptr, ptr %12, align 8, !tbaa !558  ; 2 uses
+  %i.lk = load ptr, ptr %12, align 8, !tbaa !558  ; 3 uses
   %.not377 = icmp eq ptr %i.lj, %i.lk
   br i1 %.not377, label %._crit_edge366, label %.lr.ph365
 
@@ -2324,6 +2329,7 @@ _ZN5folly3f146detail22ValueContainerIteratorIPSt4pairIKiN8facebook5velox12_GLOBA
   br label %_ZN5folly3f146detail22ValueContainerIteratorIPSt4pairIKiN8facebook5velox12_GLOBAL__N_112UpdateSourceEEEppEv.exit.i
 
 .lr.ph365:                                        ; preds = %.preheader, %._crit_edge363
+  %.pre428 = phi ptr [ %.pre428434, %._crit_edge363 ], [ %i.lk, %.preheader ] ; 3 uses
   %i.ow = phi ptr [ %i.qd, %._crit_edge363 ], [ %i.lk, %.preheader ]
   %i.ox = phi ptr [ %i.qe, %._crit_edge363 ], [ %i.lj, %.preheader ]
   %indvars.iv404 = phi i64 [ %indvars.iv.next405, %._crit_edge363 ], [ 0, %.preheader ] ; 5 uses
@@ -2381,11 +2387,11 @@ _ZNK8facebook5velox13DecodedVector5indexEi.exit197: ; preds = %.lr.ph365, %bb.bz
 
 ._crit_edge363.loopexit:                          ; preds = %.loopexit
   %.pre428.a = load ptr, ptr %i.hx, align 8, !tbaa !560
-  %.pre429 = load ptr, ptr %12, align 8, !tbaa !558
   br label %._crit_edge363
 
 ._crit_edge363:                                   ; preds = %._crit_edge363.loopexit, %_ZNK8facebook5velox13DecodedVector5indexEi.exit197
-  %i.qd = phi ptr [ %.pre429, %._crit_edge363.loopexit ], [ %i.ow, %_ZNK8facebook5velox13DecodedVector5indexEi.exit197 ] ; 2 uses
+  %.pre428434 = phi ptr [ %.pre428436, %._crit_edge363.loopexit ], [ %.pre428, %_ZNK8facebook5velox13DecodedVector5indexEi.exit197 ]
+  %i.qd = phi ptr [ %20, %._crit_edge363.loopexit ], [ %i.ow, %_ZNK8facebook5velox13DecodedVector5indexEi.exit197 ] ; 2 uses
   %i.qe = phi ptr [ %.pre428.a, %._crit_edge363.loopexit ], [ %i.ox, %_ZNK8facebook5velox13DecodedVector5indexEi.exit197 ] ; 2 uses
   %indvars.iv.next405 = add nuw nsw i64 %indvars.iv404, 1 ; 2 uses
   %i.qf = ptrtoint ptr %i.qe to i64
@@ -2396,10 +2402,11 @@ _ZNK8facebook5velox13DecodedVector5indexEi.exit197: ; preds = %.lr.ph365, %bb.bz
   br i1 %i.qj, label %.lr.ph365, label %._crit_edge366, !llvm.loop !981
 
 bb.ca:                                            ; preds = %.lr.ph362, %.loopexit
+  %.pre428435 = phi ptr [ %.pre428, %.lr.ph362 ], [ %.pre428436, %.loopexit ]
+  %18 = phi ptr [ %.pre428, %.lr.ph362 ], [ %20, %.loopexit ] ; 2 uses
   %indvars.iv401 = phi i64 [ 0, %.lr.ph362 ], [ %indvars.iv.next402, %.loopexit ] ; 2 uses
-  %18 = add nsw i64 %indvars.iv401, %i.qc         ; 6 uses
-  %19 = load ptr, ptr %12, align 8, !tbaa !558
-  %i.qk = getelementptr inbounds nuw [120 x i8], ptr %19, i64 %indvars.iv404 ; 10 uses
+  %19 = add nsw i64 %indvars.iv401, %i.qc         ; 6 uses
+  %i.qk = getelementptr inbounds nuw [120 x i8], ptr %18, i64 %indvars.iv404 ; 10 uses
   %i.ql = getelementptr inbounds nuw i8, ptr %i.qk, i64 24
   %i.qm = load ptr, ptr %i.ql, align 8, !tbaa !254 ; 4 uses
   %.not.i198 = icmp eq ptr %i.qm, null
@@ -2416,11 +2423,11 @@ bb.cb:                                            ; preds = %bb.ca
   br i1 %or.cond.i, label %bb.cc, label %bb.cd
 
 bb.cc:                                            ; preds = %bb.cb
-  %i.qr = lshr i64 %18, 6
+  %i.qr = lshr i64 %19, 6
   %i.qs = and i64 %i.qr, 67108863
   %i.qt = getelementptr inbounds nuw [8 x i8], ptr %i.qm, i64 %i.qs
   %i.qu = load i64, ptr %i.qt, align 8, !tbaa !43
-  %i.qv = and i64 %18, 63
+  %i.qv = and i64 %19, 63
   %i.qw = shl nuw i64 1, %i.qv
   %i.qx = and i64 %i.qu, %i.qw
   %.not.i.i200 = icmp eq i64 %i.qx, 0
@@ -2435,7 +2442,7 @@ bb.cd:                                            ; preds = %bb.cb
 bb.ce:                                            ; preds = %bb.cd
   %i.rb = getelementptr inbounds nuw i8, ptr %i.qk, i64 8
   %i.rc = load ptr, ptr %i.rb, align 8, !tbaa !203
-  %i.rd = getelementptr inbounds [4 x i8], ptr %i.rc, i64 %18
+  %i.rd = getelementptr inbounds [4 x i8], ptr %i.rc, i64 %19
   %i.re = load i32, ptr %i.rd, align 4, !tbaa !3
   %i.rf = zext i32 %i.re to i64                   ; 2 uses
   %i.rg = lshr i64 %i.rf, 6
@@ -2473,14 +2480,14 @@ bb.ci:                                            ; preds = %bb.cf
 _ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.thread: ; preds = %bb.ce, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit
   %i.rq = getelementptr inbounds nuw i8, ptr %i.qk, i64 16
   %i.rr = load ptr, ptr %i.rq, align 8, !tbaa !905
-  %i.rs = trunc nsw i64 %18 to i32
+  %i.rs = trunc nsw i64 %19 to i32
   br label %bb.cj
 
 _ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread: ; preds = %bb.ca, %bb.cc
   %i.rt = getelementptr inbounds nuw i8, ptr %i.qk, i64 16
   %i.ru = load ptr, ptr %i.rt, align 8, !tbaa !905 ; 2 uses
   %i.rv = trunc nuw i8 %.pre427.a to i1
-  %i.rw = trunc nsw i64 %18 to i32                ; 3 uses
+  %i.rw = trunc nsw i64 %19 to i32                ; 3 uses
   br i1 %i.rv, label %_ZNK8facebook5velox13DecodedVector7valueAtIiEET_i.exit.i, label %bb.cj
 
 bb.cj:                                            ; preds = %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.thread, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread
@@ -2499,7 +2506,7 @@ bb.ck:                                            ; preds = %bb.cj
 bb.cl:                                            ; preds = %bb.cj
   %i.se = getelementptr inbounds nuw i8, ptr %i.qk, i64 8
   %i.sf = load ptr, ptr %i.se, align 8, !tbaa !203
-  %i.sg = getelementptr inbounds [4 x i8], ptr %i.sf, i64 %18
+  %i.sg = getelementptr inbounds [4 x i8], ptr %i.sf, i64 %19
   %i.sh = load i32, ptr %i.sg, align 4, !tbaa !3
   br label %_ZNK8facebook5velox13DecodedVector7valueAtIiEET_i.exit.i
 
@@ -2674,6 +2681,7 @@ _ZN5folly3f146detail8F14ChunkISt4pairIKiN8facebook5velox12_GLOBAL__N_112UpdateSo
   %i.vg = or i64 %i.ve, %i.vf                     ; 2 uses
   %.val2.i.i.i.i.i.i.i = load i64, ptr %i.jr, align 8, !tbaa !978, !noalias !982
   %i.vh = icmp ult i64 %.val2.i.i.i.i.i.i.i, %i.vg
+  %.pre427 = load ptr, ptr %12, align 8, !tbaa !558 ; 2 uses
   br i1 %i.vh, label %bb.cy, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIiN8facebook5velox12_GLOBAL__N_112UpdateSourceEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJOiEESE_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairIKiS7_EEEEESK_ImmEDpOT_.exit.i.i.i.i.i
 
 bb.cy:                                            ; preds = %_ZN5folly3f146detail8F14ChunkISt4pairIKiN8facebook5velox12_GLOBAL__N_112UpdateSourceEEE6setTagEmm.exit.i.i.i.i.i
@@ -2690,6 +2698,8 @@ _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIiN8facebook5velox12_GLO
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.co, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIiN8facebook5velox12_GLOBAL__N_112UpdateSourceEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJOiEESE_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairIKiS7_EEEEESK_ImmEDpOT_.exit.i.i.i.i.i
+  %.pre428436 = phi ptr [ %.pre427, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIiN8facebook5velox12_GLOBAL__N_112UpdateSourceEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJOiEESE_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairIKiS7_EEEEESK_ImmEDpOT_.exit.i.i.i.i.i ], [ %.pre428435, %bb.co ] ; 2 uses
+  %20 = phi ptr [ %.pre427, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIiN8facebook5velox12_GLOBAL__N_112UpdateSourceEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJOiEESE_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairIKiS7_EEEEESK_ImmEDpOT_.exit.i.i.i.i.i ], [ %18, %bb.co ] ; 2 uses
   %.lcssa59.sink.i.i.i.i.i = phi ptr [ %i.vb, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIiN8facebook5velox12_GLOBAL__N_112UpdateSourceEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJOiEESE_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairIKiS7_EEEEESK_ImmEDpOT_.exit.i.i.i.i.i ], [ %i.to, %bb.co ] ; 2 uses
   %i.vm = getelementptr inbounds nuw i8, ptr %.lcssa59.sink.i.i.i.i.i, i64 4
   store i32 %i.si, ptr %i.vm, align 4, !tbaa !3
@@ -3092,7 +3102,7 @@ bb.a:
   %9 = alloca %"class.boost::intrusive_ptr", align 8 ; 7 uses
   %10 = alloca %"class.boost::intrusive_ptr", align 8 ; 8 uses
   %11 = alloca %"class.boost::intrusive_ptr", align 8 ; 8 uses
-  %12 = alloca %"class.std::vector.179", align 8  ; 20 uses
+  %12 = alloca %"class.std::vector.179", align 8  ; 19 uses
   %13 = alloca %"class.facebook::velox::(anonymous namespace)::UpdateMapRow.409", align 8 ; 19 uses
   %14 = alloca %"class.std::shared_ptr.4", align 16 ; 9 uses
   %15 = alloca %"class.std::shared_ptr.4", align 16 ; 9 uses
@@ -3495,7 +3505,7 @@ _ZNK8facebook5velox13DecodedVector5indexEi.exit:  ; preds = %bb.be, %bb.bg, %bb.
 
 .preheader:                                       ; preds = %_ZNK8facebook5velox13DecodedVector5indexEi.exit
   %i.lj = load ptr, ptr %i.hx, align 8, !tbaa !560 ; 2 uses
-  %i.lk = load ptr, ptr %12, align 8, !tbaa !558  ; 2 uses
+  %i.lk = load ptr, ptr %12, align 8, !tbaa !558  ; 3 uses
   %.not377 = icmp eq ptr %i.lj, %i.lk
   br i1 %.not377, label %._crit_edge366, label %.lr.ph365
 
@@ -3767,6 +3777,7 @@ _ZN5folly3f146detail22ValueContainerIteratorIPSt4pairIKaN8facebook5velox12_GLOBA
   br label %_ZN5folly3f146detail22ValueContainerIteratorIPSt4pairIKaN8facebook5velox12_GLOBAL__N_112UpdateSourceEEEppEv.exit.i
 
 .lr.ph365:                                        ; preds = %.preheader, %._crit_edge363
+  %.pre428 = phi ptr [ %.pre428434, %._crit_edge363 ], [ %i.lk, %.preheader ] ; 3 uses
   %i.ow = phi ptr [ %i.qd, %._crit_edge363 ], [ %i.lk, %.preheader ]
   %i.ox = phi ptr [ %i.qe, %._crit_edge363 ], [ %i.lj, %.preheader ]
   %indvars.iv404 = phi i64 [ %indvars.iv.next405, %._crit_edge363 ], [ 0, %.preheader ] ; 5 uses
@@ -3824,11 +3835,11 @@ _ZNK8facebook5velox13DecodedVector5indexEi.exit197: ; preds = %.lr.ph365, %bb.bz
 
 ._crit_edge363.loopexit:                          ; preds = %.loopexit
   %.pre428.a = load ptr, ptr %i.hx, align 8, !tbaa !560
-  %.pre429 = load ptr, ptr %12, align 8, !tbaa !558
   br label %._crit_edge363
 
 ._crit_edge363:                                   ; preds = %._crit_edge363.loopexit, %_ZNK8facebook5velox13DecodedVector5indexEi.exit197
-  %i.qd = phi ptr [ %.pre429, %._crit_edge363.loopexit ], [ %i.ow, %_ZNK8facebook5velox13DecodedVector5indexEi.exit197 ] ; 2 uses
+  %.pre428434 = phi ptr [ %.pre428436, %._crit_edge363.loopexit ], [ %.pre428, %_ZNK8facebook5velox13DecodedVector5indexEi.exit197 ]
+  %i.qd = phi ptr [ %20, %._crit_edge363.loopexit ], [ %i.ow, %_ZNK8facebook5velox13DecodedVector5indexEi.exit197 ] ; 2 uses
   %i.qe = phi ptr [ %.pre428.a, %._crit_edge363.loopexit ], [ %i.ox, %_ZNK8facebook5velox13DecodedVector5indexEi.exit197 ] ; 2 uses
   %indvars.iv.next405 = add nuw nsw i64 %indvars.iv404, 1 ; 2 uses
   %i.qf = ptrtoint ptr %i.qe to i64
@@ -3839,10 +3850,11 @@ _ZNK8facebook5velox13DecodedVector5indexEi.exit197: ; preds = %.lr.ph365, %bb.bz
   br i1 %i.qj, label %.lr.ph365, label %._crit_edge366, !llvm.loop !1048
 
 bb.ca:                                            ; preds = %.lr.ph362, %.loopexit
+  %.pre428435 = phi ptr [ %.pre428, %.lr.ph362 ], [ %.pre428436, %.loopexit ]
+  %18 = phi ptr [ %.pre428, %.lr.ph362 ], [ %20, %.loopexit ] ; 2 uses
   %indvars.iv401 = phi i64 [ 0, %.lr.ph362 ], [ %indvars.iv.next402, %.loopexit ] ; 2 uses
-  %18 = add nsw i64 %indvars.iv401, %i.qc         ; 6 uses
-  %19 = load ptr, ptr %12, align 8, !tbaa !558
-  %i.qk = getelementptr inbounds nuw [120 x i8], ptr %19, i64 %indvars.iv404 ; 10 uses
+  %19 = add nsw i64 %indvars.iv401, %i.qc         ; 6 uses
+  %i.qk = getelementptr inbounds nuw [120 x i8], ptr %18, i64 %indvars.iv404 ; 10 uses
   %i.ql = getelementptr inbounds nuw i8, ptr %i.qk, i64 24
   %i.qm = load ptr, ptr %i.ql, align 8, !tbaa !254 ; 4 uses
   %.not.i198 = icmp eq ptr %i.qm, null
@@ -3859,11 +3871,11 @@ bb.cb:                                            ; preds = %bb.ca
   br i1 %or.cond.i, label %bb.cc, label %bb.cd
 
 bb.cc:                                            ; preds = %bb.cb
-  %i.qr = lshr i64 %18, 6
+  %i.qr = lshr i64 %19, 6
   %i.qs = and i64 %i.qr, 67108863
   %i.qt = getelementptr inbounds nuw [8 x i8], ptr %i.qm, i64 %i.qs
   %i.qu = load i64, ptr %i.qt, align 8, !tbaa !43
-  %i.qv = and i64 %18, 63
+  %i.qv = and i64 %19, 63
   %i.qw = shl nuw i64 1, %i.qv
   %i.qx = and i64 %i.qu, %i.qw
   %.not.i.i200 = icmp eq i64 %i.qx, 0
@@ -3878,7 +3890,7 @@ bb.cd:                                            ; preds = %bb.cb
 bb.ce:                                            ; preds = %bb.cd
   %i.rb = getelementptr inbounds nuw i8, ptr %i.qk, i64 8
   %i.rc = load ptr, ptr %i.rb, align 8, !tbaa !203
-  %i.rd = getelementptr inbounds [4 x i8], ptr %i.rc, i64 %18
+  %i.rd = getelementptr inbounds [4 x i8], ptr %i.rc, i64 %19
   %i.re = load i32, ptr %i.rd, align 4, !tbaa !3
   %i.rf = zext i32 %i.re to i64                   ; 2 uses
   %i.rg = lshr i64 %i.rf, 6
@@ -3916,14 +3928,14 @@ bb.ci:                                            ; preds = %bb.cf
 _ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.thread: ; preds = %bb.ce, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit
   %i.rq = getelementptr inbounds nuw i8, ptr %i.qk, i64 16
   %i.rr = load ptr, ptr %i.rq, align 8, !tbaa !905
-  %i.rs = trunc nsw i64 %18 to i32
+  %i.rs = trunc nsw i64 %19 to i32
   br label %bb.cj
 
 _ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread: ; preds = %bb.ca, %bb.cc
   %i.rt = getelementptr inbounds nuw i8, ptr %i.qk, i64 16
   %i.ru = load ptr, ptr %i.rt, align 8, !tbaa !905 ; 2 uses
   %i.rv = trunc nuw i8 %.pre427.a to i1
-  %i.rw = trunc nsw i64 %18 to i32                ; 3 uses
+  %i.rw = trunc nsw i64 %19 to i32                ; 3 uses
   br i1 %i.rv, label %_ZNK8facebook5velox13DecodedVector7valueAtIaEET_i.exit.i, label %bb.cj
 
 bb.cj:                                            ; preds = %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.thread, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread
@@ -3942,7 +3954,7 @@ bb.ck:                                            ; preds = %bb.cj
 bb.cl:                                            ; preds = %bb.cj
   %i.se = getelementptr inbounds nuw i8, ptr %i.qk, i64 8
   %i.sf = load ptr, ptr %i.se, align 8, !tbaa !203
-  %i.sg = getelementptr inbounds [4 x i8], ptr %i.sf, i64 %18
+  %i.sg = getelementptr inbounds [4 x i8], ptr %i.sf, i64 %19
   %i.sh = load i32, ptr %i.sg, align 4, !tbaa !3
   br label %_ZNK8facebook5velox13DecodedVector7valueAtIaEET_i.exit.i
 
@@ -4117,6 +4129,7 @@ _ZN5folly3f146detail8F14ChunkISt4pairIKaN8facebook5velox12_GLOBAL__N_112UpdateSo
   %i.vg = or i64 %i.ve, %i.vf                     ; 2 uses
   %.val2.i.i.i.i.i.i.i = load i64, ptr %i.jr, align 8, !tbaa !1045, !noalias !1049
   %i.vh = icmp ult i64 %.val2.i.i.i.i.i.i.i, %i.vg
+  %.pre427 = load ptr, ptr %12, align 8, !tbaa !558 ; 2 uses
   br i1 %i.vh, label %bb.cy, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIaN8facebook5velox12_GLOBAL__N_112UpdateSourceEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJOaEESE_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairIKaS7_EEEEESK_ImmEDpOT_.exit.i.i.i.i.i
 
 bb.cy:                                            ; preds = %_ZN5folly3f146detail8F14ChunkISt4pairIKaN8facebook5velox12_GLOBAL__N_112UpdateSourceEEE6setTagEmm.exit.i.i.i.i.i
@@ -4133,6 +4146,8 @@ _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIaN8facebook5velox12_GLO
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.co, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIaN8facebook5velox12_GLOBAL__N_112UpdateSourceEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJOaEESE_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairIKaS7_EEEEESK_ImmEDpOT_.exit.i.i.i.i.i
+  %.pre428436 = phi ptr [ %.pre427, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIaN8facebook5velox12_GLOBAL__N_112UpdateSourceEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJOaEESE_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairIKaS7_EEEEESK_ImmEDpOT_.exit.i.i.i.i.i ], [ %.pre428435, %bb.co ] ; 2 uses
+  %20 = phi ptr [ %.pre427, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIaN8facebook5velox12_GLOBAL__N_112UpdateSourceEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJOaEESE_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairIKaS7_EEEEESK_ImmEDpOT_.exit.i.i.i.i.i ], [ %18, %bb.co ] ; 2 uses
   %.lcssa59.sink.i.i.i.i.i = phi ptr [ %i.vb, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIaN8facebook5velox12_GLOBAL__N_112UpdateSourceEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJOaEESE_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairIKaS7_EEEEESK_ImmEDpOT_.exit.i.i.i.i.i ], [ %i.to, %bb.co ] ; 2 uses
   %i.vm = getelementptr inbounds nuw i8, ptr %.lcssa59.sink.i.i.i.i.i, i64 4
   store i32 %i.si, ptr %i.vm, align 4, !tbaa !3
@@ -4535,7 +4550,7 @@ bb.a:
   %9 = alloca %"class.boost::intrusive_ptr", align 8 ; 7 uses
   %10 = alloca %"class.boost::intrusive_ptr", align 8 ; 8 uses
   %11 = alloca %"class.boost::intrusive_ptr", align 8 ; 8 uses
-  %12 = alloca %"class.std::vector.179", align 8  ; 20 uses
+  %12 = alloca %"class.std::vector.179", align 8  ; 19 uses
   %13 = alloca %"class.facebook::velox::(anonymous namespace)::UpdateMapRow.455", align 8 ; 19 uses
   %14 = alloca %"class.std::shared_ptr.4", align 16 ; 9 uses
   %15 = alloca %"class.std::shared_ptr.4", align 16 ; 9 uses
@@ -4938,7 +4953,7 @@ _ZNK8facebook5velox13DecodedVector5indexEi.exit:  ; preds = %bb.be, %bb.bg, %bb.
 
 .preheader:                                       ; preds = %_ZNK8facebook5velox13DecodedVector5indexEi.exit
   %i.lj = load ptr, ptr %i.hx, align 8, !tbaa !560 ; 2 uses
-  %i.lk = load ptr, ptr %12, align 8, !tbaa !558  ; 2 uses
+  %i.lk = load ptr, ptr %12, align 8, !tbaa !558  ; 3 uses
   %.not377 = icmp eq ptr %i.lj, %i.lk
   br i1 %.not377, label %._crit_edge366, label %.lr.ph365
 
@@ -5210,6 +5225,7 @@ _ZN5folly3f146detail22ValueContainerIteratorIPSt4pairIKsN8facebook5velox12_GLOBA
   br label %_ZN5folly3f146detail22ValueContainerIteratorIPSt4pairIKsN8facebook5velox12_GLOBAL__N_112UpdateSourceEEEppEv.exit.i
 
 .lr.ph365:                                        ; preds = %.preheader, %._crit_edge363
+  %.pre428 = phi ptr [ %.pre428434, %._crit_edge363 ], [ %i.lk, %.preheader ] ; 3 uses
   %i.ow = phi ptr [ %i.qd, %._crit_edge363 ], [ %i.lk, %.preheader ]
   %i.ox = phi ptr [ %i.qe, %._crit_edge363 ], [ %i.lj, %.preheader ]
   %indvars.iv404 = phi i64 [ %indvars.iv.next405, %._crit_edge363 ], [ 0, %.preheader ] ; 5 uses
@@ -5267,11 +5283,11 @@ _ZNK8facebook5velox13DecodedVector5indexEi.exit197: ; preds = %.lr.ph365, %bb.bz
 
 ._crit_edge363.loopexit:                          ; preds = %.loopexit
   %.pre428.a = load ptr, ptr %i.hx, align 8, !tbaa !560
-  %.pre429 = load ptr, ptr %12, align 8, !tbaa !558
   br label %._crit_edge363
 
 ._crit_edge363:                                   ; preds = %._crit_edge363.loopexit, %_ZNK8facebook5velox13DecodedVector5indexEi.exit197
-  %i.qd = phi ptr [ %.pre429, %._crit_edge363.loopexit ], [ %i.ow, %_ZNK8facebook5velox13DecodedVector5indexEi.exit197 ] ; 2 uses
+  %.pre428434 = phi ptr [ %.pre428436, %._crit_edge363.loopexit ], [ %.pre428, %_ZNK8facebook5velox13DecodedVector5indexEi.exit197 ]
+  %i.qd = phi ptr [ %20, %._crit_edge363.loopexit ], [ %i.ow, %_ZNK8facebook5velox13DecodedVector5indexEi.exit197 ] ; 2 uses
   %i.qe = phi ptr [ %.pre428.a, %._crit_edge363.loopexit ], [ %i.ox, %_ZNK8facebook5velox13DecodedVector5indexEi.exit197 ] ; 2 uses
   %indvars.iv.next405 = add nuw nsw i64 %indvars.iv404, 1 ; 2 uses
   %i.qf = ptrtoint ptr %i.qe to i64
@@ -5282,10 +5298,11 @@ _ZNK8facebook5velox13DecodedVector5indexEi.exit197: ; preds = %.lr.ph365, %bb.bz
   br i1 %i.qj, label %.lr.ph365, label %._crit_edge366, !llvm.loop !1115
 
 bb.ca:                                            ; preds = %.lr.ph362, %.loopexit
+  %.pre428435 = phi ptr [ %.pre428, %.lr.ph362 ], [ %.pre428436, %.loopexit ]
+  %18 = phi ptr [ %.pre428, %.lr.ph362 ], [ %20, %.loopexit ] ; 2 uses
   %indvars.iv401 = phi i64 [ 0, %.lr.ph362 ], [ %indvars.iv.next402, %.loopexit ] ; 2 uses
-  %18 = add nsw i64 %indvars.iv401, %i.qc         ; 6 uses
-  %19 = load ptr, ptr %12, align 8, !tbaa !558
-  %i.qk = getelementptr inbounds nuw [120 x i8], ptr %19, i64 %indvars.iv404 ; 10 uses
+  %19 = add nsw i64 %indvars.iv401, %i.qc         ; 6 uses
+  %i.qk = getelementptr inbounds nuw [120 x i8], ptr %18, i64 %indvars.iv404 ; 10 uses
   %i.ql = getelementptr inbounds nuw i8, ptr %i.qk, i64 24
   %i.qm = load ptr, ptr %i.ql, align 8, !tbaa !254 ; 4 uses
   %.not.i198 = icmp eq ptr %i.qm, null
@@ -5302,11 +5319,11 @@ bb.cb:                                            ; preds = %bb.ca
   br i1 %or.cond.i, label %bb.cc, label %bb.cd
 
 bb.cc:                                            ; preds = %bb.cb
-  %i.qr = lshr i64 %18, 6
+  %i.qr = lshr i64 %19, 6
   %i.qs = and i64 %i.qr, 67108863
   %i.qt = getelementptr inbounds nuw [8 x i8], ptr %i.qm, i64 %i.qs
   %i.qu = load i64, ptr %i.qt, align 8, !tbaa !43
-  %i.qv = and i64 %18, 63
+  %i.qv = and i64 %19, 63
   %i.qw = shl nuw i64 1, %i.qv
   %i.qx = and i64 %i.qu, %i.qw
   %.not.i.i200 = icmp eq i64 %i.qx, 0
@@ -5321,7 +5338,7 @@ bb.cd:                                            ; preds = %bb.cb
 bb.ce:                                            ; preds = %bb.cd
   %i.rb = getelementptr inbounds nuw i8, ptr %i.qk, i64 8
   %i.rc = load ptr, ptr %i.rb, align 8, !tbaa !203
-  %i.rd = getelementptr inbounds [4 x i8], ptr %i.rc, i64 %18
+  %i.rd = getelementptr inbounds [4 x i8], ptr %i.rc, i64 %19
   %i.re = load i32, ptr %i.rd, align 4, !tbaa !3
   %i.rf = zext i32 %i.re to i64                   ; 2 uses
   %i.rg = lshr i64 %i.rf, 6
@@ -5359,14 +5376,14 @@ bb.ci:                                            ; preds = %bb.cf
 _ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.thread: ; preds = %bb.ce, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit
   %i.rq = getelementptr inbounds nuw i8, ptr %i.qk, i64 16
   %i.rr = load ptr, ptr %i.rq, align 8, !tbaa !905
-  %i.rs = trunc nsw i64 %18 to i32
+  %i.rs = trunc nsw i64 %19 to i32
   br label %bb.cj
 
 _ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread: ; preds = %bb.ca, %bb.cc
   %i.rt = getelementptr inbounds nuw i8, ptr %i.qk, i64 16
   %i.ru = load ptr, ptr %i.rt, align 8, !tbaa !905 ; 2 uses
   %i.rv = trunc nuw i8 %.pre427.a to i1
-  %i.rw = trunc nsw i64 %18 to i32                ; 3 uses
+  %i.rw = trunc nsw i64 %19 to i32                ; 3 uses
   br i1 %i.rv, label %_ZNK8facebook5velox13DecodedVector7valueAtIsEET_i.exit.i, label %bb.cj
 
 bb.cj:                                            ; preds = %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.thread, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread
@@ -5385,7 +5402,7 @@ bb.ck:                                            ; preds = %bb.cj
 bb.cl:                                            ; preds = %bb.cj
   %i.se = getelementptr inbounds nuw i8, ptr %i.qk, i64 8
   %i.sf = load ptr, ptr %i.se, align 8, !tbaa !203
-  %i.sg = getelementptr inbounds [4 x i8], ptr %i.sf, i64 %18
+  %i.sg = getelementptr inbounds [4 x i8], ptr %i.sf, i64 %19
   %i.sh = load i32, ptr %i.sg, align 4, !tbaa !3
   br label %_ZNK8facebook5velox13DecodedVector7valueAtIsEET_i.exit.i
 
@@ -5560,6 +5577,7 @@ _ZN5folly3f146detail8F14ChunkISt4pairIKsN8facebook5velox12_GLOBAL__N_112UpdateSo
   %i.vg = or i64 %i.ve, %i.vf                     ; 2 uses
   %.val2.i.i.i.i.i.i.i = load i64, ptr %i.jr, align 8, !tbaa !1112, !noalias !1118
   %i.vh = icmp ult i64 %.val2.i.i.i.i.i.i.i, %i.vg
+  %.pre427 = load ptr, ptr %12, align 8, !tbaa !558 ; 2 uses
   br i1 %i.vh, label %bb.cy, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIsN8facebook5velox12_GLOBAL__N_112UpdateSourceEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJOsEESE_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairIKsS7_EEEEESK_ImmEDpOT_.exit.i.i.i.i.i
 
 bb.cy:                                            ; preds = %_ZN5folly3f146detail8F14ChunkISt4pairIKsN8facebook5velox12_GLOBAL__N_112UpdateSourceEEE6setTagEmm.exit.i.i.i.i.i
@@ -5576,6 +5594,8 @@ _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIsN8facebook5velox12_GLO
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.co, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIsN8facebook5velox12_GLOBAL__N_112UpdateSourceEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJOsEESE_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairIKsS7_EEEEESK_ImmEDpOT_.exit.i.i.i.i.i
+  %.pre428436 = phi ptr [ %.pre427, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIsN8facebook5velox12_GLOBAL__N_112UpdateSourceEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJOsEESE_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairIKsS7_EEEEESK_ImmEDpOT_.exit.i.i.i.i.i ], [ %.pre428435, %bb.co ] ; 2 uses
+  %20 = phi ptr [ %.pre427, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIsN8facebook5velox12_GLOBAL__N_112UpdateSourceEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJOsEESE_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairIKsS7_EEEEESK_ImmEDpOT_.exit.i.i.i.i.i ], [ %18, %bb.co ] ; 2 uses
   %.lcssa59.sink.i.i.i.i.i = phi ptr [ %i.vb, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIsN8facebook5velox12_GLOBAL__N_112UpdateSourceEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJOsEESE_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairIKsS7_EEEEESK_ImmEDpOT_.exit.i.i.i.i.i ], [ %i.to, %bb.co ] ; 2 uses
   %i.vm = getelementptr inbounds nuw i8, ptr %.lcssa59.sink.i.i.i.i.i, i64 4
   store i32 %i.si, ptr %i.vm, align 4, !tbaa !3
@@ -5978,7 +5998,7 @@ bb.a:
   %9 = alloca %"class.boost::intrusive_ptr", align 8 ; 7 uses
   %10 = alloca %"class.boost::intrusive_ptr", align 8 ; 8 uses
   %11 = alloca %"class.boost::intrusive_ptr", align 8 ; 8 uses
-  %12 = alloca %"class.std::vector.179", align 8  ; 20 uses
+  %12 = alloca %"class.std::vector.179", align 8  ; 19 uses
   %13 = alloca %"class.facebook::velox::(anonymous namespace)::UpdateMapRow.501", align 8 ; 19 uses
   %14 = alloca %"class.std::shared_ptr.4", align 16 ; 9 uses
   %15 = alloca %"class.std::shared_ptr.4", align 16 ; 9 uses
@@ -6381,7 +6401,7 @@ _ZNK8facebook5velox13DecodedVector5indexEi.exit:  ; preds = %bb.be, %bb.bg, %bb.
 
 .preheader:                                       ; preds = %_ZNK8facebook5velox13DecodedVector5indexEi.exit
   %i.lj = load ptr, ptr %i.hx, align 8, !tbaa !560 ; 2 uses
-  %i.lk = load ptr, ptr %12, align 8, !tbaa !558  ; 2 uses
+  %i.lk = load ptr, ptr %12, align 8, !tbaa !558  ; 3 uses
   %.not376 = icmp eq ptr %i.lj, %i.lk
   br i1 %.not376, label %._crit_edge365, label %.lr.ph364
 
@@ -6648,6 +6668,7 @@ _ZN5folly3f146detail22ValueContainerIteratorIPSt4pairIKlN8facebook5velox12_GLOBA
   br label %_ZN5folly3f146detail22ValueContainerIteratorIPSt4pairIKlN8facebook5velox12_GLOBAL__N_112UpdateSourceEEEppEv.exit.i
 
 .lr.ph364:                                        ; preds = %.preheader, %._crit_edge362
+  %.pre427 = phi ptr [ %.pre427433, %._crit_edge362 ], [ %i.lk, %.preheader ] ; 3 uses
   %i.or = phi ptr [ %i.py, %._crit_edge362 ], [ %i.lk, %.preheader ]
   %i.os = phi ptr [ %i.pz, %._crit_edge362 ], [ %i.lj, %.preheader ]
   %indvars.iv403 = phi i64 [ %indvars.iv.next404, %._crit_edge362 ], [ 0, %.preheader ] ; 5 uses
@@ -6705,11 +6726,11 @@ _ZNK8facebook5velox13DecodedVector5indexEi.exit197: ; preds = %.lr.ph364, %bb.bz
 
 ._crit_edge362.loopexit:                          ; preds = %.loopexit
   %.pre427.a = load ptr, ptr %i.hx, align 8, !tbaa !560
-  %.pre428 = load ptr, ptr %12, align 8, !tbaa !558
   br label %._crit_edge362
 
 ._crit_edge362:                                   ; preds = %._crit_edge362.loopexit, %_ZNK8facebook5velox13DecodedVector5indexEi.exit197
-  %i.py = phi ptr [ %.pre428, %._crit_edge362.loopexit ], [ %i.or, %_ZNK8facebook5velox13DecodedVector5indexEi.exit197 ] ; 2 uses
+  %.pre427433 = phi ptr [ %.pre427435, %._crit_edge362.loopexit ], [ %.pre427, %_ZNK8facebook5velox13DecodedVector5indexEi.exit197 ]
+  %i.py = phi ptr [ %20, %._crit_edge362.loopexit ], [ %i.or, %_ZNK8facebook5velox13DecodedVector5indexEi.exit197 ] ; 2 uses
   %i.pz = phi ptr [ %.pre427.a, %._crit_edge362.loopexit ], [ %i.os, %_ZNK8facebook5velox13DecodedVector5indexEi.exit197 ] ; 2 uses
   %indvars.iv.next404 = add nuw nsw i64 %indvars.iv403, 1 ; 2 uses
   %i.qa = ptrtoint ptr %i.pz to i64
@@ -6720,10 +6741,11 @@ _ZNK8facebook5velox13DecodedVector5indexEi.exit197: ; preds = %.lr.ph364, %bb.bz
   br i1 %i.qe, label %.lr.ph364, label %._crit_edge365, !llvm.loop !1184
 
 bb.ca:                                            ; preds = %.lr.ph361, %.loopexit
+  %.pre427434 = phi ptr [ %.pre427, %.lr.ph361 ], [ %.pre427435, %.loopexit ]
+  %18 = phi ptr [ %.pre427, %.lr.ph361 ], [ %20, %.loopexit ] ; 2 uses
   %indvars.iv400 = phi i64 [ 0, %.lr.ph361 ], [ %indvars.iv.next401, %.loopexit ] ; 2 uses
-  %18 = add nsw i64 %indvars.iv400, %i.px         ; 6 uses
-  %19 = load ptr, ptr %12, align 8, !tbaa !558
-  %i.qf = getelementptr inbounds nuw [120 x i8], ptr %19, i64 %indvars.iv403 ; 10 uses
+  %19 = add nsw i64 %indvars.iv400, %i.px         ; 6 uses
+  %i.qf = getelementptr inbounds nuw [120 x i8], ptr %18, i64 %indvars.iv403 ; 10 uses
   %i.qg = getelementptr inbounds nuw i8, ptr %i.qf, i64 24
   %i.qh = load ptr, ptr %i.qg, align 8, !tbaa !254 ; 4 uses
   %.not.i198 = icmp eq ptr %i.qh, null
@@ -6740,11 +6762,11 @@ bb.cb:                                            ; preds = %bb.ca
   br i1 %or.cond.i, label %bb.cc, label %bb.cd
 
 bb.cc:                                            ; preds = %bb.cb
-  %i.qm = lshr i64 %18, 6
+  %i.qm = lshr i64 %19, 6
   %i.qn = and i64 %i.qm, 67108863
   %i.qo = getelementptr inbounds nuw [8 x i8], ptr %i.qh, i64 %i.qn
   %i.qp = load i64, ptr %i.qo, align 8, !tbaa !43
-  %i.qq = and i64 %18, 63
+  %i.qq = and i64 %19, 63
   %i.qr = shl nuw i64 1, %i.qq
   %i.qs = and i64 %i.qp, %i.qr
   %.not.i.i200 = icmp eq i64 %i.qs, 0
@@ -6759,7 +6781,7 @@ bb.cd:                                            ; preds = %bb.cb
 bb.ce:                                            ; preds = %bb.cd
   %i.qw = getelementptr inbounds nuw i8, ptr %i.qf, i64 8
   %i.qx = load ptr, ptr %i.qw, align 8, !tbaa !203
-  %i.qy = getelementptr inbounds [4 x i8], ptr %i.qx, i64 %18
+  %i.qy = getelementptr inbounds [4 x i8], ptr %i.qx, i64 %19
   %i.qz = load i32, ptr %i.qy, align 4, !tbaa !3
   %i.ra = zext i32 %i.qz to i64                   ; 2 uses
   %i.rb = lshr i64 %i.ra, 6
@@ -6797,14 +6819,14 @@ bb.ci:                                            ; preds = %bb.cf
 _ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.thread: ; preds = %bb.ce, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit
   %i.rl = getelementptr inbounds nuw i8, ptr %i.qf, i64 16
   %i.rm = load ptr, ptr %i.rl, align 8, !tbaa !905
-  %i.rn = trunc nsw i64 %18 to i32
+  %i.rn = trunc nsw i64 %19 to i32
   br label %bb.cj
 
 _ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread: ; preds = %bb.ca, %bb.cc
   %i.ro = getelementptr inbounds nuw i8, ptr %i.qf, i64 16
   %i.rp = load ptr, ptr %i.ro, align 8, !tbaa !905 ; 2 uses
   %i.rq = trunc nuw i8 %.pre426.a to i1
-  %i.rr = trunc nsw i64 %18 to i32                ; 3 uses
+  %i.rr = trunc nsw i64 %19 to i32                ; 3 uses
   br i1 %i.rq, label %_ZNK8facebook5velox13DecodedVector7valueAtIlEET_i.exit.i, label %bb.cj
 
 bb.cj:                                            ; preds = %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.thread, %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread
@@ -6823,7 +6845,7 @@ bb.ck:                                            ; preds = %bb.cj
 bb.cl:                                            ; preds = %bb.cj
   %i.rz = getelementptr inbounds nuw i8, ptr %i.qf, i64 8
   %i.sa = load ptr, ptr %i.rz, align 8, !tbaa !203
-  %i.sb = getelementptr inbounds [4 x i8], ptr %i.sa, i64 %18
+  %i.sb = getelementptr inbounds [4 x i8], ptr %i.sa, i64 %19
   %i.sc = load i32, ptr %i.sb, align 4, !tbaa !3
   br label %_ZNK8facebook5velox13DecodedVector7valueAtIlEET_i.exit.i
 
@@ -6996,6 +7018,7 @@ _ZN5folly3f146detail8F14ChunkISt4pairIKlN8facebook5velox12_GLOBAL__N_112UpdateSo
   %i.uz = or i64 %i.uy, %i.up                     ; 2 uses
   %.val2.i.i.i.i.i.i.i = load i64, ptr %i.jr, align 8, !tbaa !1181, !noalias !1185
   %i.va = icmp ult i64 %.val2.i.i.i.i.i.i.i, %i.uz
+  %.pre426 = load ptr, ptr %12, align 8, !tbaa !558 ; 2 uses
   br i1 %i.va, label %bb.cy, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIlN8facebook5velox12_GLOBAL__N_112UpdateSourceEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJOlEESE_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairIKlS7_EEEEESK_ImmEDpOT_.exit.i.i.i.i.i
 
 bb.cy:                                            ; preds = %_ZN5folly3f146detail8F14ChunkISt4pairIKlN8facebook5velox12_GLOBAL__N_112UpdateSourceEEE6setTagEmm.exit.i.i.i.i.i
@@ -7012,6 +7035,8 @@ _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIlN8facebook5velox12_GLO
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.co, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIlN8facebook5velox12_GLOBAL__N_112UpdateSourceEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJOlEESE_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairIKlS7_EEEEESK_ImmEDpOT_.exit.i.i.i.i.i
+  %.pre427435 = phi ptr [ %.pre426, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIlN8facebook5velox12_GLOBAL__N_112UpdateSourceEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJOlEESE_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairIKlS7_EEEEESK_ImmEDpOT_.exit.i.i.i.i.i ], [ %.pre427434, %bb.co ] ; 2 uses
+  %20 = phi ptr [ %.pre426, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIlN8facebook5velox12_GLOBAL__N_112UpdateSourceEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJOlEESE_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairIKlS7_EEEEESK_ImmEDpOT_.exit.i.i.i.i.i ], [ %18, %bb.co ] ; 2 uses
   %.lcssa59.sink.i.i.i.i.i = phi ptr [ %i.uv, %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIlN8facebook5velox12_GLOBAL__N_112UpdateSourceEvvvEEE13insertAtBlankIJRKSt21piecewise_construct_tSt5tupleIJOlEESE_IJEEEEEvNS1_11F14ItemIterIPNS1_8F14ChunkISt4pairIKlS7_EEEEESK_ImmEDpOT_.exit.i.i.i.i.i ], [ %i.ti, %bb.co ] ; 2 uses
   %i.vf = getelementptr inbounds nuw i8, ptr %.lcssa59.sink.i.i.i.i.i, i64 8
   store i32 %i.sd, ptr %i.vf, align 4, !tbaa !3

@@ -201,13 +201,14 @@ bb.ft:                                            ; preds = %bb.fs
 bb.fu:                                            ; preds = %bb.ft, %bb.fs
   %i.yw = load i32, ptr %i.kt, align 8            ; 2 uses
   %i.yx = icmp sgt i32 %i.yw, 0
+  %.pre243 = load ptr, ptr %4, align 8            ; 2 uses
   br i1 %i.yx, label %.lr.ph.i195, label %._crit_edge.i194
 
 .lr.ph.i195:                                      ; preds = %bb.fu, %bb.fw
-  %5 = phi i32 [ %i.za, %bb.fw ], [ %i.yw, %bb.fu ]
+  %5 = phi ptr [ %7, %bb.fw ], [ %.pre243, %bb.fu ] ; 2 uses
+  %6 = phi i32 [ %i.za, %bb.fw ], [ %i.yw, %bb.fu ]
   %.023.i = phi i64 [ %i.zb, %bb.fw ], [ 0, %bb.fu ] ; 2 uses
-  %6 = load ptr, ptr %4, align 8
-  %i.yy = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %.023.i
+  %i.yy = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %.023.i
   %i.yz = load ptr, ptr %i.yy, align 8            ; 2 uses
   %.not22.i = icmp eq ptr %i.yz, null
   br i1 %.not22.i, label %bb.fw, label %bb.fv
@@ -215,22 +216,24 @@ bb.fu:                                            ; preds = %bb.ft, %bb.fs
 bb.fv:                                            ; preds = %.lr.ph.i195
   call void @free(ptr noundef nonnull %i.yz) #62
   %.pre.i196 = load i32, ptr %i.kt, align 8
+  %.pre = load ptr, ptr %4, align 8
   br label %bb.fw
 
 bb.fw:                                            ; preds = %bb.fv, %.lr.ph.i195
-  %i.za = phi i32 [ %5, %.lr.ph.i195 ], [ %.pre.i196, %bb.fv ] ; 2 uses
+  %7 = phi ptr [ %5, %.lr.ph.i195 ], [ %.pre, %bb.fv ] ; 2 uses
+  %i.za = phi i32 [ %6, %.lr.ph.i195 ], [ %.pre.i196, %bb.fv ] ; 2 uses
   %i.zb = add nuw nsw i64 %.023.i, 1              ; 2 uses
   %i.zc = sext i32 %i.za to i64
   %i.zd = icmp slt i64 %i.zb, %i.zc
   br i1 %i.zd, label %.lr.ph.i195, label %._crit_edge.i194, !llvm.loop !11
 
 ._crit_edge.i194:                                 ; preds = %bb.fw, %bb.fu
-  %7 = load ptr, ptr %4, align 8                  ; 2 uses
-  %.not19.i = icmp eq ptr %7, null
+  %8 = phi ptr [ %.pre243, %bb.fu ], [ %7, %bb.fw ] ; 2 uses
+  %.not19.i = icmp eq ptr %8, null
   br i1 %.not19.i, label %bb.fy, label %bb.fx
 
 bb.fx:                                            ; preds = %._crit_edge.i194
-  call void @free(ptr noundef nonnull %7) #62
+  call void @free(ptr noundef nonnull %8) #62
   br label %bb.fy
 
 bb.fy:                                            ; preds = %bb.fx, %._crit_edge.i194

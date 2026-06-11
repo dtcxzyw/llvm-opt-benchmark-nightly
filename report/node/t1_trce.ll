@@ -201,7 +201,7 @@ bb.g:                                             ; preds = %ssl_print_hexbuf.ex
   br i1 %.not38, label %bb.h, label %ssl_print_hexbuf.exit.thread
 
 bb.h:                                             ; preds = %bb.g
-  %i.as = getelementptr inbounds nuw i8, ptr %i.ae, i64 3
+  %i.as = getelementptr inbounds nuw i8, ptr %i.ae, i64 3 ; 2 uses
   store ptr %i.as, ptr %i.c, align 8, !tbaa !84
   %.not39 = icmp eq i32 %2, 0
   br i1 %.not39, label %.critedge, label %bb.i
@@ -260,10 +260,10 @@ bb.n:                                             ; preds = %bb.i, %.critedge
   br label %bb.o
 
 bb.o:                                             ; preds = %.lr.ph, %bb.aa
+  %5 = phi ptr [ %i.as, %.lr.ph ], [ %6, %bb.aa ] ; 5 uses
   %i.bn = phi i64 [ %i.aq, %.lr.ph ], [ %i.dl, %bb.aa ] ; 3 uses
   %.val = load ptr, ptr %i.bm, align 8, !tbaa !96 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
-  %5 = load ptr, ptr %i.c, align 8, !tbaa !84     ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #5
   %i.bo = icmp ult i64 %i.bn, 3
   br i1 %i.bo, label %ssl_print_certificate.exit.thread, label %bb.p
@@ -345,7 +345,7 @@ ssl_print_certificate.exit.thread:                ; preds = %bb.o, %bb.p
   br label %ssl_print_hexbuf.exit.thread
 
 bb.x:                                             ; preds = %bb.w, %bb.v
-  %i.da = getelementptr inbounds nuw i8, ptr %5, i64 %i.cc
+  %i.da = getelementptr inbounds nuw i8, ptr %5, i64 %i.cc ; 3 uses
   store ptr %i.da, ptr %i.c, align 8, !tbaa !84
   %i.db = sub i64 %i.bn, %i.cc                    ; 3 uses
   store i64 %i.db, ptr %i.d, align 8, !tbaa !85
@@ -373,11 +373,13 @@ bb.z:                                             ; preds = %bb.y
   br i1 %.not44, label %ssl_print_hexbuf.exit.thread, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.z
+  %.pre = load ptr, ptr %i.c, align 8, !tbaa !84
   %.pre.a = load i64, ptr %i.d, align 8, !tbaa !85
   br label %bb.aa
 
 bb.aa:                                            ; preds = %._crit_edge, %bb.y, %bb.x
   %i.dl = phi i64 [ %.pre.a, %._crit_edge ], [ %i.db, %bb.y ], [ %i.db, %bb.x ] ; 2 uses
+  %6 = phi ptr [ %.pre, %._crit_edge ], [ %i.da, %bb.y ], [ %i.da, %bb.x ]
   %.not40 = icmp eq i64 %i.dl, 0
   br i1 %.not40, label %ssl_print_hexbuf.exit.thread, label %bb.o, !llvm.loop !114
 

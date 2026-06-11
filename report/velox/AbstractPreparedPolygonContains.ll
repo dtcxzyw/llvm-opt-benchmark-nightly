@@ -167,7 +167,7 @@ bb.d:                                             ; preds = %bb.c
   store i8 %i.s, ptr %i.t, align 2, !tbaa !37
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !38   ; 2 uses
-  %i.w = load ptr, ptr %2, align 8, !tbaa !42     ; 2 uses
+  %i.w = load ptr, ptr %2, align 8, !tbaa !42     ; 4 uses
   %.not = icmp eq ptr %i.v, %i.w
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
@@ -179,6 +179,7 @@ bb.d:                                             ; preds = %bb.c
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.k, %bb.d
+  %5 = phi ptr [ %i.w, %bb.d ], [ %8, %bb.k ]
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN4geos6noding27SegmentIntersectionDetectorE, i64 16), ptr %4, align 8, !tbaa !7
   %i.ab = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !43 ; 3 uses
@@ -190,17 +191,18 @@ bb.e:                                             ; preds = %._crit_edge
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
   %i.ag = load ptr, ptr %i.af, align 8
   call void %i.ag(ptr noundef nonnull align 8 dereferenceable(40) %i.ac) #9, !inline_history !44
+  %.pre20 = load ptr, ptr %2, align 8, !tbaa !42
   br label %_ZN4geos6noding27SegmentIntersectionDetectorD2Ev.exit
 
 _ZN4geos6noding27SegmentIntersectionDetectorD2Ev.exit: ; preds = %._crit_edge, %bb.e
+  %6 = phi ptr [ %5, %._crit_edge ], [ %.pre20, %bb.e ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #9
-  %5 = load ptr, ptr %2, align 8, !tbaa !42       ; 2 uses
-  %.not.i.i.i = icmp eq ptr %5, null
+  %.not.i.i.i = icmp eq ptr %6, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIPKN4geos6noding13SegmentStringESaIS4_EED2Ev.exit, label %bb.f
 
 bb.f:                                             ; preds = %_ZN4geos6noding27SegmentIntersectionDetectorD2Ev.exit
-  call void @_ZdlPv(ptr noundef nonnull %5) #10
+  call void @_ZdlPv(ptr noundef nonnull %6) #10
   br label %_ZNSt6vectorIPKN4geos6noding13SegmentStringESaIS4_EED2Ev.exit
 
 _ZNSt6vectorIPKN4geos6noding13SegmentStringESaIS4_EED2Ev.exit: ; preds = %_ZN4geos6noding27SegmentIntersectionDetectorD2Ev.exit, %bb.f
@@ -229,9 +231,9 @@ bb.i:                                             ; preds = %bb.h
   br label %_ZN4geos6noding27SegmentIntersectionDetectorD2Ev.exit15
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.k
+  %7 = phi ptr [ %8, %bb.k ], [ %i.w, %.lr.ph.preheader ] ; 2 uses
   %.0718 = phi i64 [ %i.av, %bb.k ], [ 0, %.lr.ph.preheader ] ; 2 uses
-  %6 = load ptr, ptr %2, align 8, !tbaa !42
-  %i.ap = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %.0718
+  %i.ap = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %.0718
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !45 ; 3 uses
   %i.ar = icmp eq ptr %i.aq, null
   br i1 %i.ar, label %bb.k, label %bb.j
@@ -241,9 +243,11 @@ bb.j:                                             ; preds = %.lr.ph
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 8
   %i.au = load ptr, ptr %i.at, align 8
   call void %i.au(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %i.aq) #9
+  %.pre = load ptr, ptr %2, align 8, !tbaa !42
   br label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph, %bb.j
+  %8 = phi ptr [ %7, %.lr.ph ], [ %.pre, %bb.j ]  ; 2 uses
   %i.av = add nuw i64 %.0718, 1                   ; 2 uses
   %exitcond.not = icmp eq i64 %i.av, %i.aa
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !47

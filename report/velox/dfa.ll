@@ -201,12 +201,13 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.o = load ptr, ptr %i.j, align 8, !tbaa !98
+  %.pre34 = load ptr, ptr %2, align 8, !tbaa !347
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.c
   %i.p = phi i64 [ %i.bv, %bb.c ], [ %i.m, %.lr.ph.preheader ]
+  %4 = phi ptr [ %5, %bb.c ], [ %.pre34, %.lr.ph.preheader ] ; 2 uses
   %.02229 = phi i64 [ %i.bw, %bb.c ], [ 0, %.lr.ph.preheader ] ; 3 uses
-  %4 = load ptr, ptr %2, align 8, !tbaa !347
   %i.q = getelementptr inbounds nuw i8, ptr %4, i64 %.02229
   %i.r = load i8, ptr %i.q, align 1, !tbaa !99
   %i.s = icmp sgt i8 %i.r, -1
@@ -283,17 +284,18 @@ _ZN4absl12lts_2024011618container_internal19find_first_non_fullIvEENS1_8FindInfo
   %i.bt = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.bk
   %i.bu = load i64, ptr %i.t, align 8
   store i64 %i.bu, ptr %i.bt, align 1
+  %.pre = load ptr, ptr %2, align 8, !tbaa !347
   %.pre.a = load i64, ptr %i.b, align 8, !tbaa !349
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %_ZN4absl12lts_2024011618container_internal19find_first_non_fullIvEENS1_8FindInfoERKNS1_12CommonFieldsEm.exit
   %i.bv = phi i64 [ %.pre.a, %_ZN4absl12lts_2024011618container_internal19find_first_non_fullIvEENS1_8FindInfoERKNS1_12CommonFieldsEm.exit ], [ %i.p, %.lr.ph ] ; 4 uses
+  %5 = phi ptr [ %.pre, %_ZN4absl12lts_2024011618container_internal19find_first_non_fullIvEENS1_8FindInfoERKNS1_12CommonFieldsEm.exit ], [ %4, %.lr.ph ] ; 2 uses
   %i.bw = add i64 %.02229, 1                      ; 2 uses
   %.not = icmp eq i64 %i.bw, %i.bv
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !354
 
 ._crit_edge:                                      ; preds = %bb.c
-  %5 = load ptr, ptr %2, align 8, !tbaa !347
   %i.bx = load i8, ptr %i.e, align 8, !tbaa !350, !range !132, !noundef !97
   %i.by = trunc nuw i8 %i.bx to i1                ; 2 uses
   %.neg.i = select i1 %i.by, i64 -9, i64 -8
@@ -696,12 +698,13 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.o = load ptr, ptr %i.j, align 8, !tbaa !98
+  %.pre34 = load ptr, ptr %2, align 8, !tbaa !347
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.c
   %i.p = phi i64 [ %i.bn, %bb.c ], [ %i.m, %.lr.ph.preheader ]
+  %4 = phi ptr [ %5, %bb.c ], [ %.pre34, %.lr.ph.preheader ] ; 2 uses
   %.02229 = phi i64 [ %i.bo, %bb.c ], [ 0, %.lr.ph.preheader ] ; 3 uses
-  %4 = load ptr, ptr %2, align 8, !tbaa !347
   %i.q = getelementptr inbounds nuw i8, ptr %4, i64 %.02229
   %i.r = load i8, ptr %i.q, align 1, !tbaa !99
   %i.s = icmp sgt i8 %i.r, -1
@@ -769,17 +772,18 @@ _ZN4absl12lts_2024011618container_internal19find_first_non_fullIvEENS1_8FindInfo
   store i8 %i.bf, ptr %i.bl, align 1, !tbaa !99
   %i.bm = getelementptr inbounds nuw [16 x i8], ptr %i.o, i64 %i.bd
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.bm, ptr noundef nonnull align 1 dereferenceable(16) %i.t, i64 16, i1 false)
+  %.pre = load ptr, ptr %2, align 8, !tbaa !347
   %.pre.a = load i64, ptr %i.b, align 8, !tbaa !349
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %_ZN4absl12lts_2024011618container_internal19find_first_non_fullIvEENS1_8FindInfoERKNS1_12CommonFieldsEm.exit
   %i.bn = phi i64 [ %.pre.a, %_ZN4absl12lts_2024011618container_internal19find_first_non_fullIvEENS1_8FindInfoERKNS1_12CommonFieldsEm.exit ], [ %i.p, %.lr.ph ] ; 4 uses
+  %5 = phi ptr [ %.pre, %_ZN4absl12lts_2024011618container_internal19find_first_non_fullIvEENS1_8FindInfoERKNS1_12CommonFieldsEm.exit ], [ %4, %.lr.ph ] ; 2 uses
   %i.bo = add i64 %.02229, 1                      ; 2 uses
   %.not = icmp eq i64 %i.bo, %i.bn
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !366
 
 ._crit_edge:                                      ; preds = %bb.c
-  %5 = load ptr, ptr %2, align 8, !tbaa !347
   %i.bp = load i8, ptr %i.e, align 8, !tbaa !350, !range !132, !noundef !97
   %i.bq = trunc nuw i8 %i.bp to i1                ; 2 uses
   %.neg.i = select i1 %i.bq, i64 -9, i64 -8

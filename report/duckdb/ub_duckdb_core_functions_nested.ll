@@ -201,7 +201,7 @@ bb.a:
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %11 = alloca %"class.std::allocator", align 1   ; 5 uses
   %i.f = alloca i8, align 1                       ; 4 uses
-  %12 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 11 uses
+  %12 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 12 uses
   %13 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 11 uses
   %14 = alloca %"struct.duckdb::LogicalType", align 8 ; 7 uses
   %15 = alloca %"class.duckdb::Vector", align 8   ; 8 uses
@@ -347,7 +347,11 @@ _ZN6duckdb10FlatVector7GetDataIPNS_12_GLOBAL__N_112ListAggStateEEEPT_RNS_6Vector
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 32
   %.val.i.i36.i = load ptr, ptr %i.ae, align 8, !tbaa !135
   %.not.i = icmp eq i64 %3, 0
-  br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i
+  br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.preheader.i
+
+.lr.ph.preheader.i:                               ; preds = %_ZN6duckdb10FlatVector7GetDataIPNS_12_GLOBAL__N_112ListAggStateEEEPT_RNS_6VectorE.exit.i
+  %.pre2.i = load ptr, ptr %12, align 8, !tbaa !122
+  br label %.lr.ph.i
 
 ._crit_edge.i:                                    ; preds = %bb.ah, %_ZN6duckdb10FlatVector7GetDataIPNS_12_GLOBAL__N_112ListAggStateEEEPT_RNS_6VectorE.exit.i
   %i.af = getelementptr inbounds nuw i8, ptr %12, i64 64
@@ -454,9 +458,9 @@ bb.ac:                                            ; preds = %bb.b
           cleanup
   br label %.body.i
 
-.lr.ph.i:                                         ; preds = %_ZN6duckdb10FlatVector7GetDataIPNS_12_GLOBAL__N_112ListAggStateEEEPT_RNS_6VectorE.exit.i, %bb.ah
-  %.0241.i = phi i64 [ %i.cj, %bb.ah ], [ 0, %_ZN6duckdb10FlatVector7GetDataIPNS_12_GLOBAL__N_112ListAggStateEEEPT_RNS_6VectorE.exit.i ] ; 4 uses
-  %18 = load ptr, ptr %12, align 8, !tbaa !122
+.lr.ph.i:                                         ; preds = %bb.ah, %.lr.ph.preheader.i
+  %18 = phi ptr [ %19, %bb.ah ], [ %.pre2.i, %.lr.ph.preheader.i ] ; 3 uses
+  %.0241.i = phi i64 [ %i.cj, %bb.ah ], [ 0, %.lr.ph.preheader.i ] ; 4 uses
   %i.bo = load ptr, ptr %18, align 8, !tbaa !123  ; 2 uses
   %.not.i.i = icmp eq ptr %i.bo, null
   br i1 %.not.i.i, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i, label %bb.ad
@@ -484,6 +488,7 @@ bb.ae:                                            ; preds = %_ZNK6duckdb15Select
 
 bb.af:                                            ; preds = %bb.ae
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.by, ptr noundef nonnull align 8 dereferenceable(24) %i.bu, i64 24, i1 false), !tbaa.struct !148
+  %.pre.i = load ptr, ptr %12, align 8, !tbaa !122
   br label %bb.ah
 
 bb.ag:                                            ; preds = %bb.ae
@@ -501,6 +506,7 @@ bb.ag:                                            ; preds = %bb.ae
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i
+  %19 = phi ptr [ %18, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.i ], [ %18, %bb.ag ], [ %.pre.i, %bb.af ]
   %i.cj = add nuw i64 %.0241.i, 1                 ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.cj, %3
   br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !155
@@ -903,7 +909,7 @@ bb.a:
   %4 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 12 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %6 = alloca %"class.std::allocator", align 1    ; 5 uses
-  %7 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 13 uses
+  %7 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 14 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %9 = alloca %"class.std::allocator", align 1    ; 5 uses
   %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #26 ; 2 uses
@@ -1094,6 +1100,7 @@ _ZNSt6vectorItSaItEE7reserveEm.exit:              ; preds = %bb.p
 .lr.ph:                                           ; preds = %_ZNSt6vectorItSaItEE7reserveEm.exit.thread, %_ZNSt6vectorItSaItEE7reserveEm.exit
   %i.ax = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.ay = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %.pre17 = load ptr, ptr %7, align 8, !tbaa !122
   br label %bb.x
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorItSaItEE9push_backEOt.exit, %_ZNSt6vectorItSaItEE7reserveEm.exit
@@ -1161,8 +1168,8 @@ bb.w:                                             ; preds = %bb.al, %.noexc65, %
   br label %bb.bt
 
 bb.x:                                             ; preds = %.lr.ph, %_ZNSt6vectorItSaItEE9push_backEOt.exit
+  %10 = phi ptr [ %.pre17, %.lr.ph ], [ %12, %_ZNSt6vectorItSaItEE9push_backEOt.exit ]
   %.04912 = phi i64 [ 0, %.lr.ph ], [ %i.du, %_ZNSt6vectorItSaItEE9push_backEOt.exit ] ; 2 uses
-  %10 = load ptr, ptr %7, align 8, !tbaa !122
   %i.bw = add i64 %.04912, %.sroa.016.0.copyload  ; 4 uses
   %i.bx = load ptr, ptr %10, align 8, !tbaa !123  ; 2 uses
   %.not.i67 = icmp eq ptr %i.bx, null
@@ -1244,7 +1251,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit71.thread: ; preds = %_Z
 
 .noexc76:                                         ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit71.thread
   %i.cq = load ptr, ptr %i.ay, align 8, !tbaa !117
-  %i.cr = load ptr, ptr %7, align 8, !tbaa !122
+  %i.cr = load ptr, ptr %7, align 8, !tbaa !122   ; 3 uses
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !123 ; 2 uses
   %.not.i.i75 = icmp eq ptr %i.cs, null
   br i1 %.not.i.i75, label %bb.af, label %bb.ae
@@ -1317,9 +1324,11 @@ _ZNSt6vectorItSaItEE11_S_relocateEPtS2_S2_RS0_.exit16.i.i.i: ; preds = %bb.aj, %
 
 bb.ak:                                            ; preds = %_ZNSt6vectorItSaItEE11_S_relocateEPtS2_S2_RS0_.exit16.i.i.i
   call void @_ZdlPv(ptr noundef nonnull %i.de) #29
+  %.pre = load ptr, ptr %7, align 8, !tbaa !122
   br label %_ZNSt6vectorItSaItEE17_M_realloc_insertIJtEEEvN9__gnu_cxx17__normal_iteratorIPtS1_EEDpOT_.exit.i.i
 
 _ZNSt6vectorItSaItEE17_M_realloc_insertIJtEEEvN9__gnu_cxx17__normal_iteratorIPtS1_EEDpOT_.exit.i.i: ; preds = %bb.ak, %_ZNSt6vectorItSaItEE11_S_relocateEPtS2_S2_RS0_.exit16.i.i.i
+  %11 = phi ptr [ %.pre, %bb.ak ], [ %i.cr, %_ZNSt6vectorItSaItEE11_S_relocateEPtS2_S2_RS0_.exit16.i.i.i ]
   store ptr %i.dp, ptr %i.cp, align 8, !tbaa !665
   store ptr %i.ds, ptr %i.cz, align 8, !tbaa !663
   %i.dt = getelementptr inbounds nuw [2 x i8], ptr %i.dp, i64 %i.dn
@@ -1327,6 +1336,7 @@ _ZNSt6vectorItSaItEE17_M_realloc_insertIJtEEEvN9__gnu_cxx17__normal_iteratorIPtS
   br label %_ZNSt6vectorItSaItEE9push_backEOt.exit
 
 _ZNSt6vectorItSaItEE9push_backEOt.exit:           ; preds = %_ZNSt6vectorItSaItEE17_M_realloc_insertIJtEEEvN9__gnu_cxx17__normal_iteratorIPtS1_EEDpOT_.exit.i.i, %bb.ag
+  %12 = phi ptr [ %11, %_ZNSt6vectorItSaItEE17_M_realloc_insertIJtEEEvN9__gnu_cxx17__normal_iteratorIPtS1_EEDpOT_.exit.i.i ], [ %i.cr, %bb.ag ]
   %i.du = add nuw i64 %.04912, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.du, %.sroa.6.0.copyload
   br i1 %exitcond.not, label %._crit_edge, label %bb.x, !llvm.loop !681
@@ -1729,7 +1739,7 @@ bb.a:
   %4 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 12 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %6 = alloca %"class.std::allocator", align 1    ; 5 uses
-  %7 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 13 uses
+  %7 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 14 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %9 = alloca %"class.std::allocator", align 1    ; 5 uses
   %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #26 ; 2 uses
@@ -1920,6 +1930,7 @@ _ZNSt6vectorIjSaIjEE7reserveEm.exit:              ; preds = %bb.p
 .lr.ph:                                           ; preds = %_ZNSt6vectorIjSaIjEE7reserveEm.exit.thread, %_ZNSt6vectorIjSaIjEE7reserveEm.exit
   %i.ax = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.ay = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %.pre17 = load ptr, ptr %7, align 8, !tbaa !122
   br label %bb.x
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIjSaIjEE9push_backEOj.exit, %_ZNSt6vectorIjSaIjEE7reserveEm.exit
@@ -1987,8 +1998,8 @@ bb.w:                                             ; preds = %bb.al, %.noexc65, %
   br label %bb.bt
 
 bb.x:                                             ; preds = %.lr.ph, %_ZNSt6vectorIjSaIjEE9push_backEOj.exit
+  %10 = phi ptr [ %.pre17, %.lr.ph ], [ %12, %_ZNSt6vectorIjSaIjEE9push_backEOj.exit ]
   %.04912 = phi i64 [ 0, %.lr.ph ], [ %i.du, %_ZNSt6vectorIjSaIjEE9push_backEOj.exit ] ; 2 uses
-  %10 = load ptr, ptr %7, align 8, !tbaa !122
   %i.bw = add i64 %.04912, %.sroa.016.0.copyload  ; 4 uses
   %i.bx = load ptr, ptr %10, align 8, !tbaa !123  ; 2 uses
   %.not.i67 = icmp eq ptr %i.bx, null
@@ -2070,7 +2081,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit71.thread: ; preds = %_Z
 
 .noexc76:                                         ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit71.thread
   %i.cq = load ptr, ptr %i.ay, align 8, !tbaa !117
-  %i.cr = load ptr, ptr %7, align 8, !tbaa !122
+  %i.cr = load ptr, ptr %7, align 8, !tbaa !122   ; 3 uses
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !123 ; 2 uses
   %.not.i.i75 = icmp eq ptr %i.cs, null
   br i1 %.not.i.i75, label %bb.af, label %bb.ae
@@ -2143,9 +2154,11 @@ _ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i.i: ; preds = %bb.aj, %
 
 bb.ak:                                            ; preds = %_ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i.i
   call void @_ZdlPv(ptr noundef nonnull %i.de) #29
+  %.pre = load ptr, ptr %7, align 8, !tbaa !122
   br label %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIjSaIjEE17_M_realloc_insertIJjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i.i: ; preds = %bb.ak, %_ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i.i
+  %11 = phi ptr [ %.pre, %bb.ak ], [ %i.cr, %_ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i.i ]
   store ptr %i.dp, ptr %i.cp, align 8, !tbaa !705
   store ptr %i.ds, ptr %i.cz, align 8, !tbaa !703
   %i.dt = getelementptr inbounds nuw [4 x i8], ptr %i.dp, i64 %i.dn
@@ -2153,6 +2166,7 @@ _ZNSt6vectorIjSaIjEE17_M_realloc_insertIJjEEEvN9__gnu_cxx17__normal_iteratorIPjS
   br label %_ZNSt6vectorIjSaIjEE9push_backEOj.exit
 
 _ZNSt6vectorIjSaIjEE9push_backEOj.exit:           ; preds = %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i.i, %bb.ag
+  %12 = phi ptr [ %11, %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i.i ], [ %i.cr, %bb.ag ]
   %i.du = add nuw i64 %.04912, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.du, %.sroa.6.0.copyload
   br i1 %exitcond.not, label %._crit_edge, label %bb.x, !llvm.loop !721
@@ -2555,7 +2569,7 @@ bb.a:
   %4 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 12 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %6 = alloca %"class.std::allocator", align 1    ; 5 uses
-  %7 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 13 uses
+  %7 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 14 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %9 = alloca %"class.std::allocator", align 1    ; 5 uses
   %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #26 ; 2 uses
@@ -2746,6 +2760,7 @@ _ZNSt6vectorImSaImEE7reserveEm.exit:              ; preds = %bb.p
 .lr.ph:                                           ; preds = %_ZNSt6vectorImSaImEE7reserveEm.exit.thread, %_ZNSt6vectorImSaImEE7reserveEm.exit
   %i.ax = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.ay = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %.pre17 = load ptr, ptr %7, align 8, !tbaa !122
   br label %bb.x
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorImSaImEE9push_backEOm.exit, %_ZNSt6vectorImSaImEE7reserveEm.exit
@@ -2813,8 +2828,8 @@ bb.w:                                             ; preds = %bb.al, %.noexc65, %
   br label %bb.bt
 
 bb.x:                                             ; preds = %.lr.ph, %_ZNSt6vectorImSaImEE9push_backEOm.exit
+  %10 = phi ptr [ %.pre17, %.lr.ph ], [ %12, %_ZNSt6vectorImSaImEE9push_backEOm.exit ]
   %.04912 = phi i64 [ 0, %.lr.ph ], [ %i.du, %_ZNSt6vectorImSaImEE9push_backEOm.exit ] ; 2 uses
-  %10 = load ptr, ptr %7, align 8, !tbaa !122
   %i.bw = add i64 %.04912, %.sroa.016.0.copyload  ; 4 uses
   %i.bx = load ptr, ptr %10, align 8, !tbaa !123  ; 2 uses
   %.not.i67 = icmp eq ptr %i.bx, null
@@ -2896,7 +2911,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit71.thread: ; preds = %_Z
 
 .noexc76:                                         ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit71.thread
   %i.cq = load ptr, ptr %i.ay, align 8, !tbaa !117
-  %i.cr = load ptr, ptr %7, align 8, !tbaa !122
+  %i.cr = load ptr, ptr %7, align 8, !tbaa !122   ; 3 uses
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !123 ; 2 uses
   %.not.i.i75 = icmp eq ptr %i.cs, null
   br i1 %.not.i.i75, label %bb.af, label %bb.ae
@@ -2969,9 +2984,11 @@ _ZNSt6vectorImSaImEE11_S_relocateEPmS2_S2_RS0_.exit16.i.i.i: ; preds = %bb.aj, %
 
 bb.ak:                                            ; preds = %_ZNSt6vectorImSaImEE11_S_relocateEPmS2_S2_RS0_.exit16.i.i.i
   call void @_ZdlPv(ptr noundef nonnull %i.de) #29
+  %.pre = load ptr, ptr %7, align 8, !tbaa !122
   br label %_ZNSt6vectorImSaImEE17_M_realloc_insertIJmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i.i
 
 _ZNSt6vectorImSaImEE17_M_realloc_insertIJmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i.i: ; preds = %bb.ak, %_ZNSt6vectorImSaImEE11_S_relocateEPmS2_S2_RS0_.exit16.i.i.i
+  %11 = phi ptr [ %.pre, %bb.ak ], [ %i.cr, %_ZNSt6vectorImSaImEE11_S_relocateEPmS2_S2_RS0_.exit16.i.i.i ]
   store ptr %i.dp, ptr %i.cp, align 8, !tbaa !571
   store ptr %i.ds, ptr %i.cz, align 8, !tbaa !575
   %i.dt = getelementptr inbounds nuw [8 x i8], ptr %i.dp, i64 %i.dn
@@ -2979,6 +2996,7 @@ _ZNSt6vectorImSaImEE17_M_realloc_insertIJmEEEvN9__gnu_cxx17__normal_iteratorIPmS
   br label %_ZNSt6vectorImSaImEE9push_backEOm.exit
 
 _ZNSt6vectorImSaImEE9push_backEOm.exit:           ; preds = %_ZNSt6vectorImSaImEE17_M_realloc_insertIJmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i.i, %bb.ag
+  %12 = phi ptr [ %11, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i.i ], [ %i.cr, %bb.ag ]
   %i.du = add nuw i64 %.04912, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.du, %.sroa.6.0.copyload
   br i1 %exitcond.not, label %._crit_edge, label %bb.x, !llvm.loop !755
@@ -3381,7 +3399,7 @@ bb.a:
   %4 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 12 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %6 = alloca %"class.std::allocator", align 1    ; 5 uses
-  %7 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 13 uses
+  %7 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 14 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %9 = alloca %"class.std::allocator", align 1    ; 5 uses
   %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #26 ; 2 uses
@@ -3572,6 +3590,7 @@ _ZNSt6vectorIsSaIsEE7reserveEm.exit:              ; preds = %bb.p
 .lr.ph:                                           ; preds = %_ZNSt6vectorIsSaIsEE7reserveEm.exit.thread, %_ZNSt6vectorIsSaIsEE7reserveEm.exit
   %i.ax = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.ay = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %.pre17 = load ptr, ptr %7, align 8, !tbaa !122
   br label %bb.x
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIsSaIsEE9push_backEOs.exit, %_ZNSt6vectorIsSaIsEE7reserveEm.exit
@@ -3639,8 +3658,8 @@ bb.w:                                             ; preds = %bb.al, %.noexc65, %
   br label %bb.bt
 
 bb.x:                                             ; preds = %.lr.ph, %_ZNSt6vectorIsSaIsEE9push_backEOs.exit
+  %10 = phi ptr [ %.pre17, %.lr.ph ], [ %12, %_ZNSt6vectorIsSaIsEE9push_backEOs.exit ]
   %.04912 = phi i64 [ 0, %.lr.ph ], [ %i.du, %_ZNSt6vectorIsSaIsEE9push_backEOs.exit ] ; 2 uses
-  %10 = load ptr, ptr %7, align 8, !tbaa !122
   %i.bw = add i64 %.04912, %.sroa.016.0.copyload  ; 4 uses
   %i.bx = load ptr, ptr %10, align 8, !tbaa !123  ; 2 uses
   %.not.i67 = icmp eq ptr %i.bx, null
@@ -3722,7 +3741,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit71.thread: ; preds = %_Z
 
 .noexc76:                                         ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit71.thread
   %i.cq = load ptr, ptr %i.ay, align 8, !tbaa !117
-  %i.cr = load ptr, ptr %7, align 8, !tbaa !122
+  %i.cr = load ptr, ptr %7, align 8, !tbaa !122   ; 3 uses
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !123 ; 2 uses
   %.not.i.i75 = icmp eq ptr %i.cs, null
   br i1 %.not.i.i75, label %bb.af, label %bb.ae
@@ -3795,9 +3814,11 @@ _ZNSt6vectorIsSaIsEE11_S_relocateEPsS2_S2_RS0_.exit16.i.i.i: ; preds = %bb.aj, %
 
 bb.ak:                                            ; preds = %_ZNSt6vectorIsSaIsEE11_S_relocateEPsS2_S2_RS0_.exit16.i.i.i
   call void @_ZdlPv(ptr noundef nonnull %i.de) #29
+  %.pre = load ptr, ptr %7, align 8, !tbaa !122
   br label %_ZNSt6vectorIsSaIsEE17_M_realloc_insertIJsEEEvN9__gnu_cxx17__normal_iteratorIPsS1_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIsSaIsEE17_M_realloc_insertIJsEEEvN9__gnu_cxx17__normal_iteratorIPsS1_EEDpOT_.exit.i.i: ; preds = %bb.ak, %_ZNSt6vectorIsSaIsEE11_S_relocateEPsS2_S2_RS0_.exit16.i.i.i
+  %11 = phi ptr [ %.pre, %bb.ak ], [ %i.cr, %_ZNSt6vectorIsSaIsEE11_S_relocateEPsS2_S2_RS0_.exit16.i.i.i ]
   store ptr %i.dp, ptr %i.cp, align 8, !tbaa !816
   store ptr %i.ds, ptr %i.cz, align 8, !tbaa !814
   %i.dt = getelementptr inbounds nuw [2 x i8], ptr %i.dp, i64 %i.dn
@@ -3805,6 +3826,7 @@ _ZNSt6vectorIsSaIsEE17_M_realloc_insertIJsEEEvN9__gnu_cxx17__normal_iteratorIPsS
   br label %_ZNSt6vectorIsSaIsEE9push_backEOs.exit
 
 _ZNSt6vectorIsSaIsEE9push_backEOs.exit:           ; preds = %_ZNSt6vectorIsSaIsEE17_M_realloc_insertIJsEEEvN9__gnu_cxx17__normal_iteratorIPsS1_EEDpOT_.exit.i.i, %bb.ag
+  %12 = phi ptr [ %11, %_ZNSt6vectorIsSaIsEE17_M_realloc_insertIJsEEEvN9__gnu_cxx17__normal_iteratorIPsS1_EEDpOT_.exit.i.i ], [ %i.cr, %bb.ag ]
   %i.du = add nuw i64 %.04912, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.du, %.sroa.6.0.copyload
   br i1 %exitcond.not, label %._crit_edge, label %bb.x, !llvm.loop !832
@@ -4207,7 +4229,7 @@ bb.a:
   %4 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 12 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %6 = alloca %"class.std::allocator", align 1    ; 5 uses
-  %7 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 13 uses
+  %7 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 14 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %9 = alloca %"class.std::allocator", align 1    ; 5 uses
   %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #26 ; 2 uses
@@ -4398,6 +4420,7 @@ _ZNSt6vectorIiSaIiEE7reserveEm.exit:              ; preds = %bb.p
 .lr.ph:                                           ; preds = %_ZNSt6vectorIiSaIiEE7reserveEm.exit.thread, %_ZNSt6vectorIiSaIiEE7reserveEm.exit
   %i.ax = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.ay = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %.pre17 = load ptr, ptr %7, align 8, !tbaa !122
   br label %bb.x
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIiSaIiEE9push_backEOi.exit, %_ZNSt6vectorIiSaIiEE7reserveEm.exit
@@ -4465,8 +4488,8 @@ bb.w:                                             ; preds = %bb.al, %.noexc65, %
   br label %bb.bt
 
 bb.x:                                             ; preds = %.lr.ph, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit
+  %10 = phi ptr [ %.pre17, %.lr.ph ], [ %12, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ]
   %.04912 = phi i64 [ 0, %.lr.ph ], [ %i.du, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ] ; 2 uses
-  %10 = load ptr, ptr %7, align 8, !tbaa !122
   %i.bw = add i64 %.04912, %.sroa.016.0.copyload  ; 4 uses
   %i.bx = load ptr, ptr %10, align 8, !tbaa !123  ; 2 uses
   %.not.i67 = icmp eq ptr %i.bx, null
@@ -4548,7 +4571,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit71.thread: ; preds = %_Z
 
 .noexc76:                                         ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit71.thread
   %i.cq = load ptr, ptr %i.ay, align 8, !tbaa !117
-  %i.cr = load ptr, ptr %7, align 8, !tbaa !122
+  %i.cr = load ptr, ptr %7, align 8, !tbaa !122   ; 3 uses
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !123 ; 2 uses
   %.not.i.i75 = icmp eq ptr %i.cs, null
   br i1 %.not.i.i75, label %bb.af, label %bb.ae
@@ -4621,9 +4644,11 @@ _ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i.i: ; preds = %bb.aj, %
 
 bb.ak:                                            ; preds = %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i.i
   call void @_ZdlPv(ptr noundef nonnull %i.de) #29
+  %.pre = load ptr, ptr %7, align 8, !tbaa !122
   br label %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i: ; preds = %bb.ak, %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i.i
+  %11 = phi ptr [ %.pre, %bb.ak ], [ %i.cr, %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i.i ]
   store ptr %i.dp, ptr %i.cp, align 8, !tbaa !855
   store ptr %i.ds, ptr %i.cz, align 8, !tbaa !853
   %i.dt = getelementptr inbounds nuw [4 x i8], ptr %i.dp, i64 %i.dn
@@ -4631,6 +4656,7 @@ _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS
   br label %_ZNSt6vectorIiSaIiEE9push_backEOi.exit
 
 _ZNSt6vectorIiSaIiEE9push_backEOi.exit:           ; preds = %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i, %bb.ag
+  %12 = phi ptr [ %11, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i ], [ %i.cr, %bb.ag ]
   %i.du = add nuw i64 %.04912, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.du, %.sroa.6.0.copyload
   br i1 %exitcond.not, label %._crit_edge, label %bb.x, !llvm.loop !871
@@ -5033,7 +5059,7 @@ bb.a:
   %4 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 12 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %6 = alloca %"class.std::allocator", align 1    ; 5 uses
-  %7 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 13 uses
+  %7 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 14 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %9 = alloca %"class.std::allocator", align 1    ; 5 uses
   %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #26 ; 2 uses
@@ -5224,6 +5250,7 @@ _ZNSt6vectorIlSaIlEE7reserveEm.exit:              ; preds = %bb.p
 .lr.ph:                                           ; preds = %_ZNSt6vectorIlSaIlEE7reserveEm.exit.thread, %_ZNSt6vectorIlSaIlEE7reserveEm.exit
   %i.ax = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.ay = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %.pre17 = load ptr, ptr %7, align 8, !tbaa !122
   br label %bb.x
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIlSaIlEE9push_backEOl.exit, %_ZNSt6vectorIlSaIlEE7reserveEm.exit
@@ -5291,8 +5318,8 @@ bb.w:                                             ; preds = %bb.al, %.noexc65, %
   br label %bb.bt
 
 bb.x:                                             ; preds = %.lr.ph, %_ZNSt6vectorIlSaIlEE9push_backEOl.exit
+  %10 = phi ptr [ %.pre17, %.lr.ph ], [ %12, %_ZNSt6vectorIlSaIlEE9push_backEOl.exit ]
   %.04912 = phi i64 [ 0, %.lr.ph ], [ %i.du, %_ZNSt6vectorIlSaIlEE9push_backEOl.exit ] ; 2 uses
-  %10 = load ptr, ptr %7, align 8, !tbaa !122
   %i.bw = add i64 %.04912, %.sroa.016.0.copyload  ; 4 uses
   %i.bx = load ptr, ptr %10, align 8, !tbaa !123  ; 2 uses
   %.not.i67 = icmp eq ptr %i.bx, null
@@ -5374,7 +5401,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit71.thread: ; preds = %_Z
 
 .noexc76:                                         ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit71.thread
   %i.cq = load ptr, ptr %i.ay, align 8, !tbaa !117
-  %i.cr = load ptr, ptr %7, align 8, !tbaa !122
+  %i.cr = load ptr, ptr %7, align 8, !tbaa !122   ; 3 uses
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !123 ; 2 uses
   %.not.i.i75 = icmp eq ptr %i.cs, null
   br i1 %.not.i.i75, label %bb.af, label %bb.ae
@@ -5447,9 +5474,11 @@ _ZNSt6vectorIlSaIlEE11_S_relocateEPlS2_S2_RS0_.exit16.i.i.i: ; preds = %bb.aj, %
 
 bb.ak:                                            ; preds = %_ZNSt6vectorIlSaIlEE11_S_relocateEPlS2_S2_RS0_.exit16.i.i.i
   call void @_ZdlPv(ptr noundef nonnull %i.de) #29
+  %.pre = load ptr, ptr %7, align 8, !tbaa !122
   br label %_ZNSt6vectorIlSaIlEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPlS1_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIlSaIlEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPlS1_EEDpOT_.exit.i.i: ; preds = %bb.ak, %_ZNSt6vectorIlSaIlEE11_S_relocateEPlS2_S2_RS0_.exit16.i.i.i
+  %11 = phi ptr [ %.pre, %bb.ak ], [ %i.cr, %_ZNSt6vectorIlSaIlEE11_S_relocateEPlS2_S2_RS0_.exit16.i.i.i ]
   store ptr %i.dp, ptr %i.cp, align 8, !tbaa !894
   store ptr %i.ds, ptr %i.cz, align 8, !tbaa !892
   %i.dt = getelementptr inbounds nuw [8 x i8], ptr %i.dp, i64 %i.dn
@@ -5457,6 +5486,7 @@ _ZNSt6vectorIlSaIlEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPlS
   br label %_ZNSt6vectorIlSaIlEE9push_backEOl.exit
 
 _ZNSt6vectorIlSaIlEE9push_backEOl.exit:           ; preds = %_ZNSt6vectorIlSaIlEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPlS1_EEDpOT_.exit.i.i, %bb.ag
+  %12 = phi ptr [ %11, %_ZNSt6vectorIlSaIlEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPlS1_EEDpOT_.exit.i.i ], [ %i.cr, %bb.ag ]
   %i.du = add nuw i64 %.04912, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.du, %.sroa.6.0.copyload
   br i1 %exitcond.not, label %._crit_edge, label %bb.x, !llvm.loop !910
@@ -5859,7 +5889,7 @@ bb.a:
   %4 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 12 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %6 = alloca %"class.std::allocator", align 1    ; 5 uses
-  %7 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 13 uses
+  %7 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 14 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %9 = alloca %"class.std::allocator", align 1    ; 5 uses
   %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #26 ; 2 uses
@@ -6050,6 +6080,7 @@ _ZNSt6vectorIfSaIfEE7reserveEm.exit:              ; preds = %bb.p
 .lr.ph:                                           ; preds = %_ZNSt6vectorIfSaIfEE7reserveEm.exit.thread, %_ZNSt6vectorIfSaIfEE7reserveEm.exit
   %i.ax = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.ay = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %.pre17 = load ptr, ptr %7, align 8, !tbaa !122
   br label %bb.x
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIfSaIfEE9push_backEOf.exit, %_ZNSt6vectorIfSaIfEE7reserveEm.exit
@@ -6112,8 +6143,8 @@ bb.w:                                             ; preds = %bb.al, %.noexc65, %
   br label %bb.bv
 
 bb.x:                                             ; preds = %.lr.ph, %_ZNSt6vectorIfSaIfEE9push_backEOf.exit
+  %10 = phi ptr [ %.pre17, %.lr.ph ], [ %12, %_ZNSt6vectorIfSaIfEE9push_backEOf.exit ]
   %.04912 = phi i64 [ 0, %.lr.ph ], [ %i.ds, %_ZNSt6vectorIfSaIfEE9push_backEOf.exit ] ; 2 uses
-  %10 = load ptr, ptr %7, align 8, !tbaa !122
   %i.bu = add i64 %.04912, %.sroa.016.0.copyload  ; 4 uses
   %i.bv = load ptr, ptr %10, align 8, !tbaa !123  ; 2 uses
   %.not.i67 = icmp eq ptr %i.bv, null
@@ -6195,7 +6226,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit71.thread: ; preds = %_Z
 
 .noexc76:                                         ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit71.thread
   %i.co = load ptr, ptr %i.ay, align 8, !tbaa !117
-  %i.cp = load ptr, ptr %7, align 8, !tbaa !122
+  %i.cp = load ptr, ptr %7, align 8, !tbaa !122   ; 3 uses
   %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !123 ; 2 uses
   %.not.i.i75 = icmp eq ptr %i.cq, null
   br i1 %.not.i.i75, label %bb.af, label %bb.ae
@@ -6268,9 +6299,11 @@ _ZNSt6vectorIfSaIfEE11_S_relocateEPfS2_S2_RS0_.exit16.i.i.i: ; preds = %bb.aj, %
 
 bb.ak:                                            ; preds = %_ZNSt6vectorIfSaIfEE11_S_relocateEPfS2_S2_RS0_.exit16.i.i.i
   call void @_ZdlPv(ptr noundef nonnull %i.dc) #29
+  %.pre = load ptr, ptr %7, align 8, !tbaa !122
   br label %_ZNSt6vectorIfSaIfEE17_M_realloc_insertIJfEEEvN9__gnu_cxx17__normal_iteratorIPfS1_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIfSaIfEE17_M_realloc_insertIJfEEEvN9__gnu_cxx17__normal_iteratorIPfS1_EEDpOT_.exit.i.i: ; preds = %bb.ak, %_ZNSt6vectorIfSaIfEE11_S_relocateEPfS2_S2_RS0_.exit16.i.i.i
+  %11 = phi ptr [ %.pre, %bb.ak ], [ %i.cp, %_ZNSt6vectorIfSaIfEE11_S_relocateEPfS2_S2_RS0_.exit16.i.i.i ]
   store ptr %i.dn, ptr %i.cn, align 8, !tbaa !937
   store ptr %i.dq, ptr %i.cx, align 8, !tbaa !935
   %i.dr = getelementptr inbounds nuw [4 x i8], ptr %i.dn, i64 %i.dl
@@ -6278,6 +6311,7 @@ _ZNSt6vectorIfSaIfEE17_M_realloc_insertIJfEEEvN9__gnu_cxx17__normal_iteratorIPfS
   br label %_ZNSt6vectorIfSaIfEE9push_backEOf.exit
 
 _ZNSt6vectorIfSaIfEE9push_backEOf.exit:           ; preds = %_ZNSt6vectorIfSaIfEE17_M_realloc_insertIJfEEEvN9__gnu_cxx17__normal_iteratorIPfS1_EEDpOT_.exit.i.i, %bb.ag
+  %12 = phi ptr [ %11, %_ZNSt6vectorIfSaIfEE17_M_realloc_insertIJfEEEvN9__gnu_cxx17__normal_iteratorIPfS1_EEDpOT_.exit.i.i ], [ %i.cp, %bb.ag ]
   %i.ds = add nuw i64 %.04912, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.ds, %.sroa.6.0.copyload
   br i1 %exitcond.not, label %._crit_edge, label %bb.x, !llvm.loop !954
@@ -6680,7 +6714,7 @@ bb.a:
   %4 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 12 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %6 = alloca %"class.std::allocator", align 1    ; 5 uses
-  %7 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 13 uses
+  %7 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 14 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %9 = alloca %"class.std::allocator", align 1    ; 5 uses
   %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #26 ; 2 uses
@@ -6871,6 +6905,7 @@ _ZNSt6vectorIdSaIdEE7reserveEm.exit:              ; preds = %bb.p
 .lr.ph:                                           ; preds = %_ZNSt6vectorIdSaIdEE7reserveEm.exit.thread, %_ZNSt6vectorIdSaIdEE7reserveEm.exit
   %i.ax = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.ay = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %.pre17 = load ptr, ptr %7, align 8, !tbaa !122
   br label %bb.x
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIdSaIdEE9push_backEOd.exit, %_ZNSt6vectorIdSaIdEE7reserveEm.exit
@@ -6933,8 +6968,8 @@ bb.w:                                             ; preds = %bb.al, %.noexc65, %
   br label %bb.bv
 
 bb.x:                                             ; preds = %.lr.ph, %_ZNSt6vectorIdSaIdEE9push_backEOd.exit
+  %10 = phi ptr [ %.pre17, %.lr.ph ], [ %12, %_ZNSt6vectorIdSaIdEE9push_backEOd.exit ]
   %.04912 = phi i64 [ 0, %.lr.ph ], [ %i.ds, %_ZNSt6vectorIdSaIdEE9push_backEOd.exit ] ; 2 uses
-  %10 = load ptr, ptr %7, align 8, !tbaa !122
   %i.bu = add i64 %.04912, %.sroa.016.0.copyload  ; 4 uses
   %i.bv = load ptr, ptr %10, align 8, !tbaa !123  ; 2 uses
   %.not.i67 = icmp eq ptr %i.bv, null
@@ -7016,7 +7051,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit71.thread: ; preds = %_Z
 
 .noexc76:                                         ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit71.thread
   %i.co = load ptr, ptr %i.ay, align 8, !tbaa !117
-  %i.cp = load ptr, ptr %7, align 8, !tbaa !122
+  %i.cp = load ptr, ptr %7, align 8, !tbaa !122   ; 3 uses
   %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !123 ; 2 uses
   %.not.i.i75 = icmp eq ptr %i.cq, null
   br i1 %.not.i.i75, label %bb.af, label %bb.ae
@@ -7089,9 +7124,11 @@ _ZNSt6vectorIdSaIdEE11_S_relocateEPdS2_S2_RS0_.exit16.i.i.i: ; preds = %bb.aj, %
 
 bb.ak:                                            ; preds = %_ZNSt6vectorIdSaIdEE11_S_relocateEPdS2_S2_RS0_.exit16.i.i.i
   call void @_ZdlPv(ptr noundef nonnull %i.dc) #29
+  %.pre = load ptr, ptr %7, align 8, !tbaa !122
   br label %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIdSaIdEE17_M_realloc_insertIJdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i.i: ; preds = %bb.ak, %_ZNSt6vectorIdSaIdEE11_S_relocateEPdS2_S2_RS0_.exit16.i.i.i
+  %11 = phi ptr [ %.pre, %bb.ak ], [ %i.cp, %_ZNSt6vectorIdSaIdEE11_S_relocateEPdS2_S2_RS0_.exit16.i.i.i ]
   store ptr %i.dn, ptr %i.cn, align 8, !tbaa !981
   store ptr %i.dq, ptr %i.cx, align 8, !tbaa !979
   %i.dr = getelementptr inbounds nuw [8 x i8], ptr %i.dn, i64 %i.dl
@@ -7099,6 +7136,7 @@ _ZNSt6vectorIdSaIdEE17_M_realloc_insertIJdEEEvN9__gnu_cxx17__normal_iteratorIPdS
   br label %_ZNSt6vectorIdSaIdEE9push_backEOd.exit
 
 _ZNSt6vectorIdSaIdEE9push_backEOd.exit:           ; preds = %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i.i, %bb.ag
+  %12 = phi ptr [ %11, %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i.i ], [ %i.cp, %bb.ag ]
   %i.ds = add nuw i64 %.04912, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.ds, %.sroa.6.0.copyload
   br i1 %exitcond.not, label %._crit_edge, label %bb.x, !llvm.loop !998

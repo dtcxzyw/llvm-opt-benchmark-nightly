@@ -201,7 +201,7 @@ bb.a:
   %i.d = alloca i32, align 4                      ; 34 uses
   %11 = alloca %"struct.duckdb_yyjson::bigint", align 8 ; 29 uses
   %12 = alloca %"struct.duckdb_yyjson::bigint", align 8 ; 20 uses
-  %i.e = alloca ptr, align 8                      ; 138 uses
+  %i.e = alloca ptr, align 8                      ; 137 uses
   %i.f = alloca ptr, align 8                      ; 30 uses
   %i.g = alloca ptr, align 8                      ; 54 uses
   %i.h = alloca ptr, align 8                      ; 171 uses
@@ -390,13 +390,13 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %._crit_edge6674, %bb.n
   %i.al = phi i8 [ %.pre6675, %._crit_edge6674 ], [ %i.s, %bb.n ]
-  %i.am = phi ptr [ %i.ak, %._crit_edge6674 ], [ %.promoted, %bb.n ] ; 10 uses
+  %i.am = phi ptr [ %i.ak, %._crit_edge6674 ], [ %.promoted, %bb.n ] ; 11 uses
   %i.an = and i8 %i.al, -33
   %.not3506.not = icmp eq i8 %i.an, 91
   br i1 %.not3506.not, label %bb.x, label %bb.btt, !prof !24
 
 bb.x:                                             ; preds = %bb.w
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.am, i64 1 ; 7 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.am, i64 1 ; 9 uses
   %i.ap = load i8, ptr %i.ao, align 1, !tbaa !81
   %i.aq = zext i8 %i.ap to i64
   %i.ar = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL10char_tableE, i64 %i.aq
@@ -799,14 +799,14 @@ bb.aks:                                           ; preds = %.thread3356
   br label %.preheader4040
 
 .loopexit4042:                                    ; preds = %bb.brg, %.backedge4043
-  %.pn.i163 = phi ptr [ %15, %.backedge4043 ], [ %i.kma, %bb.brg ]
+  %.pn.i163 = phi ptr [ %.promoted5528, %.backedge4043 ], [ %i.kma, %bb.brg ]
   %.0527.i = phi ptr [ %.3530.i.ph, %.backedge4043 ], [ %.23550.i, %bb.brg ] ; 4 uses
   %.0491.i = phi ptr [ %.3494.i.ph, %.backedge4043 ], [ %.23514.i, %bb.brg ]
   %.0465.i = phi ptr [ %.3468.i.ph, %.backedge4043 ], [ %.23488.i, %bb.brg ] ; 2 uses
   %.0448.i = phi ptr [ %.3451.i.ph, %.backedge4043 ], [ %.23.i199, %bb.brg ] ; 4 uses
   %.0440.i164 = phi i64 [ %.1441.i.ph, %.backedge4043 ], [ %i.jah, %bb.brg ]
   %.0439.i = phi i64 [ %.2.i162.ph, %.backedge4043 ], [ %.14.i200, %bb.brg ] ; 4 uses
-  %storemerge.i165 = getelementptr inbounds nuw i8, ptr %.pn.i163, i64 1
+  %storemerge.i165 = getelementptr inbounds nuw i8, ptr %.pn.i163, i64 1 ; 2 uses
   store ptr %storemerge.i165, ptr %i.e, align 8, !tbaa !92
   %i.fzk = shl i64 %.0440.i164, 8
   %i.fzl = add i64 %i.fzk, 256
@@ -825,6 +825,7 @@ bb.akt:                                           ; preds = %.loopexit4042
   %i.fzt = shl i64 %i.fzr, 4
   %i.fzu = tail call noundef ptr %.sroa.8.0(ptr noundef %.sroa.15.0, ptr noundef %.0448.i, i64 noundef %i.fzs, i64 noundef %i.fzt), !inline_history !220 ; 5 uses
   %.not616.i167 = icmp eq ptr %i.fzu, null
+  %.pre6802 = load ptr, ptr %i.e, align 8, !tbaa !92 ; 2 uses
   br i1 %.not616.i167, label %bb.btp, label %.thread3357
 
 .thread3357:                                      ; preds = %bb.akt
@@ -840,6 +841,7 @@ bb.akt:                                           ; preds = %.loopexit4042
   br label %bb.aku
 
 bb.aku:                                           ; preds = %.thread3357, %.loopexit4042
+  %.pre6765.pre = phi ptr [ %.pre6802, %.thread3357 ], [ %storemerge.i165, %.loopexit4042 ]
   %.2529.i = phi ptr [ %i.gab, %.thread3357 ], [ %.0527.i, %.loopexit4042 ]
   %.2493.i = phi ptr [ %i.fzy, %.thread3357 ], [ %i.fzp, %.loopexit4042 ] ; 5 uses
   %.2467.i = phi ptr [ %i.gad, %.thread3357 ], [ %.0465.i, %.loopexit4042 ]
@@ -854,6 +856,7 @@ bb.aku:                                           ; preds = %.thread3357, %.loop
   br label %.preheader4040
 
 .preheader4040:                                   ; preds = %bb.aks, %bb.aku, %bb.bae
+  %.pre6765 = phi ptr [ %.pre6765.pre, %bb.aku ], [ %i.ao, %bb.aks ], [ %i.ixn, %bb.bae ]
   %.3530.i.ph = phi ptr [ %.2493.i, %bb.aku ], [ %i.fzd, %bb.aks ], [ %.16543.i.ph, %bb.bae ] ; 16 uses
   %.3494.i.ph = phi ptr [ %.2493.i, %bb.aku ], [ %i.fzd, %bb.aks ], [ %.16507.i.ph, %bb.bae ] ; 10 uses
   %.3468.i.ph = phi ptr [ %.2467.i, %bb.aku ], [ %i.fzc, %bb.aks ], [ %.16481.i.ph, %bb.bae ] ; 16 uses
@@ -867,8 +870,8 @@ bb.aku:                                           ; preds = %.thread3357, %.loop
   br label %.backedge4043
 
 .backedge4043:                                    ; preds = %.backedge4043.backedge, %.preheader4040
-  %15 = load ptr, ptr %i.e, align 8, !tbaa !92    ; 12 uses
-  %i.gak = load i8, ptr %15, align 1, !tbaa !81   ; 5 uses
+  %.promoted5528 = phi ptr [ %.pre6765, %.preheader4040 ], [ %.promoted5528.be, %.backedge4043.backedge ] ; 12 uses
+  %i.gak = load i8, ptr %.promoted5528, align 1, !tbaa !81 ; 5 uses
   switch i8 %i.gak, label %bb.akv [
     i8 123, label %.loopexit4041
     i8 91, label %.loopexit4042
@@ -894,6 +897,7 @@ bb.akx:                                           ; preds = %bb.akw
   %i.gat = shl i64 %i.gar, 4
   %i.gau = tail call noundef ptr %.sroa.8.0(ptr noundef %.sroa.15.0, ptr noundef %.3451.i.ph, i64 noundef %i.gas, i64 noundef %i.gat), !inline_history !220 ; 5 uses
   %.not613.i223 = icmp eq ptr %i.gau, null
+  %.pre6801 = load ptr, ptr %i.e, align 8, !tbaa !92 ; 2 uses
   br i1 %.not613.i223, label %bb.btp, label %.thread3363
 
 .thread3363:                                      ; preds = %bb.akx
@@ -906,11 +910,10 @@ bb.akx:                                           ; preds = %bb.akw
   %i.gbb = getelementptr inbounds nuw i8, ptr %i.gau, i64 %i.gba
   %i.gbc = getelementptr [16 x i8], ptr %i.gau, i64 %i.gar
   %i.gbd = getelementptr i8, ptr %i.gbc, i64 -32
-  %.pre6762 = load ptr, ptr %i.e, align 8, !tbaa !92
   br label %bb.aky
 
 bb.aky:                                           ; preds = %.thread3363, %bb.akw
-  %i.gbe = phi ptr [ %.pre6762, %.thread3363 ], [ %15, %bb.akw ] ; 15 uses
+  %i.gbe = phi ptr [ %.pre6801, %.thread3363 ], [ %.promoted5528, %bb.akw ] ; 15 uses
   %.5532.i = phi ptr [ %i.gbb, %.thread3363 ], [ %.3530.i.ph, %bb.akw ] ; 27 uses
   %.5496.i = phi ptr [ %i.gay, %.thread3363 ], [ %i.gap, %bb.akw ] ; 120 uses
   %.5470.i = phi ptr [ %i.gbd, %.thread3363 ], [ %.3468.i.ph, %bb.akw ] ; 27 uses
@@ -1313,6 +1316,7 @@ bb.ava:                                           ; preds = %bb.auz, %bb.aux, %b
   %.9.i184.ph = phi i64 [ %.3.i224, %bb.atf ], [ %.3.i224, %bb.ata ], [ %.3.i224, %bb.anw ], [ %.3.i224, %bb.arq ], [ %.3.i224, %bb.ant ], [ %.3.i224, %bb.arz ], [ %.3.i224, %bb.anq ], [ %.3.i224, %bb.ann ], [ %.3.i224, %.loopexit4025 ], [ %.3.i224, %bb.ank ], [ %.3.i224, %bb.ard ], [ %.3.i224, %bb.are ], [ %.3.i224, %bb.arf ], [ %.3.i224, %bb.ang ], [ %.3.i224, %bb.anh ], [ %.3.i224, %bb.ani ], [ %.3.i224, %bb.apj ], [ %.3.i224, %bb.apg ], [ %.3.i224, %bb.apd ], [ %.3.i224, %bb.apa ], [ %.3.i224, %bb.aox ], [ %.3.i224, %bb.aou ], [ %.3.i224, %bb.aor ], [ %.3.i224, %bb.aoo ], [ %.3.i224, %bb.akz ], [ %.10.i186, %bb.bal ], [ %.16.i183, %bb.btc ], [ %.7.i210, %_ZN13duckdb_yyjsonL9read_nullEPPhPNS_10yyjson_valE.exit ], [ %.6.i213, %_ZN13duckdb_yyjsonL10read_falseEPPhPNS_10yyjson_valE.exit ], [ %.5.i216, %_ZN13duckdb_yyjsonL9read_trueEPPhPNS_10yyjson_valE.exit ], [ %.4.i219, %_ZN13duckdb_yyjsonL11read_stringEPPhS0_bPNS_10yyjson_valEPPKc.exit ], [ %.7.i210, %bb.ayx ], [ %.3.i224, %_ZN13duckdb_yyjsonL11read_numberEPPhS1_jPNS_10yyjson_valEPPKc.exit ], [ %.3.i224, %bb.ava ], [ %.7.i210, %bb.ayw ], [ %.8.i221, %bb.azz ], [ %.8.i221, %bb.baa ], [ %.8.i221, %bb.azs ], [ %.8.i221, %bb.azr ] ; 2 uses
   %i.hzs = and i32 %2, 8
   %.not3738 = icmp eq i32 %i.hzs, 0
+  %.pre6763 = load ptr, ptr %i.e, align 8, !tbaa !92
   br label %.backedge4048
 
 _ZN13duckdb_yyjsonL11read_numberEPPhS1_jPNS_10yyjson_valEPPKc.exit.thread: ; preds = %_ZN13duckdb_yyjsonL15read_inf_or_nanEbPPhS1_PNS_10yyjson_valE.exit890, %bb.amc, %bb.asb, %bb.ask, %bb.asv, %bb.art, %bb.arw, %bb.amg, %bb.ami, %bb.arj
@@ -1346,6 +1350,7 @@ bb.avd:                                           ; preds = %bb.avc
   %i.hzx = shl i64 %i.hzv, 4
   %i.hzy = tail call noundef ptr %.sroa.8.0(ptr noundef %.sroa.15.0, ptr noundef %.3451.i.ph, i64 noundef %i.hzw, i64 noundef %i.hzx), !inline_history !220 ; 5 uses
   %.not610.i218 = icmp eq ptr %i.hzy, null
+  %.pre6800 = load ptr, ptr %i.e, align 8, !tbaa !92 ; 2 uses
   br i1 %.not610.i218, label %bb.btp, label %.thread3391
 
 .thread3391:                                      ; preds = %bb.avd
@@ -1358,11 +1363,10 @@ bb.avd:                                           ; preds = %bb.avc
   %i.iaf = getelementptr inbounds nuw i8, ptr %i.hzy, i64 %i.iae
   %i.iag = getelementptr [16 x i8], ptr %i.hzy, i64 %i.hzv
   %i.iah = getelementptr i8, ptr %i.iag, i64 -32
-  %.pre6766 = load ptr, ptr %i.e, align 8, !tbaa !92
   br label %bb.ave
 
 bb.ave:                                           ; preds = %.thread3391, %bb.avc
-  %i.iai = phi ptr [ %.pre6766, %.thread3391 ], [ %15, %bb.avc ]
+  %i.iai = phi ptr [ %.pre6800, %.thread3391 ], [ %.promoted5528, %bb.avc ]
   %.7534.i = phi ptr [ %i.iaf, %.thread3391 ], [ %.3530.i.ph, %bb.avc ]
   %.7498.i = phi ptr [ %i.iac, %.thread3391 ], [ %i.hzt, %bb.avc ] ; 3 uses
   %.7472.i = phi ptr [ %i.iah, %.thread3391 ], [ %.3468.i.ph, %bb.avc ]
@@ -1765,6 +1769,7 @@ bb.ayh:                                           ; preds = %bb.ayg
   %i.isn = shl i64 %i.isl, 4
   %i.iso = tail call noundef ptr %.sroa.8.0(ptr noundef %.sroa.15.0, ptr noundef %.3451.i.ph, i64 noundef %i.ism, i64 noundef %i.isn), !inline_history !220 ; 5 uses
   %.not607.i215 = icmp eq ptr %i.iso, null
+  %.pre6799 = load ptr, ptr %i.e, align 8, !tbaa !92 ; 2 uses
   br i1 %.not607.i215, label %bb.btp, label %.thread3398
 
 .thread3398:                                      ; preds = %bb.ayh
@@ -1777,11 +1782,10 @@ bb.ayh:                                           ; preds = %bb.ayg
   %i.isv = getelementptr inbounds nuw i8, ptr %i.iso, i64 %i.isu
   %i.isw = getelementptr [16 x i8], ptr %i.iso, i64 %i.isl
   %i.isx = getelementptr i8, ptr %i.isw, i64 -32
-  %.pre6765 = load ptr, ptr %i.e, align 8, !tbaa !92
   br label %bb.ayi
 
 bb.ayi:                                           ; preds = %.thread3398, %bb.ayg
-  %i.isy = phi ptr [ %.pre6765, %.thread3398 ], [ %15, %bb.ayg ] ; 3 uses
+  %i.isy = phi ptr [ %.pre6799, %.thread3398 ], [ %.promoted5528, %bb.ayg ] ; 3 uses
   %.9536.i = phi ptr [ %i.isv, %.thread3398 ], [ %.3530.i.ph, %bb.ayg ]
   %.9500.i = phi ptr [ %i.iss, %.thread3398 ], [ %i.isj, %bb.ayg ] ; 2 uses
   %.9474.i = phi ptr [ %i.isx, %.thread3398 ], [ %.3468.i.ph, %bb.ayg ]
@@ -1810,6 +1814,7 @@ bb.ayk:                                           ; preds = %bb.ayj
   %i.itg = shl i64 %i.ite, 4
   %i.ith = tail call noundef ptr %.sroa.8.0(ptr noundef %.sroa.15.0, ptr noundef %.3451.i.ph, i64 noundef %i.itf, i64 noundef %i.itg), !inline_history !220 ; 5 uses
   %.not605.i212 = icmp eq ptr %i.ith, null
+  %.pre6798 = load ptr, ptr %i.e, align 8, !tbaa !92 ; 2 uses
   br i1 %.not605.i212, label %bb.btp, label %.thread3404
 
 .thread3404:                                      ; preds = %bb.ayk
@@ -1822,11 +1827,10 @@ bb.ayk:                                           ; preds = %bb.ayj
   %i.ito = getelementptr inbounds nuw i8, ptr %i.ith, i64 %i.itn
   %i.itp = getelementptr [16 x i8], ptr %i.ith, i64 %i.ite
   %i.itq = getelementptr i8, ptr %i.itp, i64 -32
-  %.pre6764 = load ptr, ptr %i.e, align 8, !tbaa !92
   br label %bb.ayl
 
 bb.ayl:                                           ; preds = %.thread3404, %bb.ayj
-  %i.itr = phi ptr [ %.pre6764, %.thread3404 ], [ %15, %bb.ayj ] ; 3 uses
+  %i.itr = phi ptr [ %.pre6798, %.thread3404 ], [ %.promoted5528, %bb.ayj ] ; 3 uses
   %.11538.i = phi ptr [ %i.ito, %.thread3404 ], [ %.3530.i.ph, %bb.ayj ]
   %.11502.i = phi ptr [ %i.itl, %.thread3404 ], [ %i.itc, %bb.ayj ] ; 2 uses
   %.11476.i = phi ptr [ %i.itq, %.thread3404 ], [ %.3468.i.ph, %bb.ayj ]
@@ -1856,6 +1860,7 @@ bb.ayn:                                           ; preds = %bb.aym
   %i.iua = shl i64 %i.ity, 4
   %i.iub = tail call noundef ptr %.sroa.8.0(ptr noundef %.sroa.15.0, ptr noundef %.3451.i.ph, i64 noundef %i.itz, i64 noundef %i.iua), !inline_history !220 ; 5 uses
   %.not603.i209 = icmp eq ptr %i.iub, null
+  %.pre6797 = load ptr, ptr %i.e, align 8, !tbaa !92 ; 2 uses
   br i1 %.not603.i209, label %bb.btp, label %.thread3410
 
 .thread3410:                                      ; preds = %bb.ayn
@@ -1868,11 +1873,10 @@ bb.ayn:                                           ; preds = %bb.aym
   %i.iui = getelementptr inbounds nuw i8, ptr %i.iub, i64 %i.iuh
   %i.iuj = getelementptr [16 x i8], ptr %i.iub, i64 %i.ity
   %i.iuk = getelementptr i8, ptr %i.iuj, i64 -32
-  %.pre6763 = load ptr, ptr %i.e, align 8, !tbaa !92
   br label %bb.ayo
 
 bb.ayo:                                           ; preds = %.thread3410, %bb.aym
-  %i.iul = phi ptr [ %.pre6763, %.thread3410 ], [ %15, %bb.aym ] ; 8 uses
+  %i.iul = phi ptr [ %.pre6797, %.thread3410 ], [ %.promoted5528, %bb.aym ] ; 8 uses
   %.13540.i = phi ptr [ %i.iui, %.thread3410 ], [ %.3530.i.ph, %bb.aym ] ; 3 uses
   %.13504.i = phi ptr [ %i.iuf, %.thread3410 ], [ %i.itw, %bb.aym ] ; 8 uses
   %.13478.i = phi ptr [ %i.iuk, %.thread3410 ], [ %.3468.i.ph, %bb.aym ] ; 3 uses
@@ -1943,7 +1947,7 @@ bb.ayx:                                           ; preds = %bb.ayt
   br label %.preheader4046
 
 bb.ayy:                                           ; preds = %bb.avb
-  %i.iuy = getelementptr inbounds nuw i8, ptr %15, i64 1 ; 6 uses
+  %i.iuy = getelementptr inbounds nuw i8, ptr %.promoted5528, i64 1 ; 6 uses
   store ptr %i.iuy, ptr %i.e, align 8, !tbaa !92
   %i.iuz = icmp eq i64 %.1441.i.ph, 0
   br i1 %i.iuz, label %bb.bak, label %bb.ayz, !prof !24
@@ -1972,8 +1976,8 @@ bb.aza:                                           ; preds = %bb.avb
   br i1 %.not3679, label %bb.azb, label %.preheader4038
 
 .preheader4038:                                   ; preds = %bb.aza, %.preheader4038
-  %i.ivg = phi ptr [ %i.ivh, %.preheader4038 ], [ %15, %bb.aza ]
-  %i.ivh = getelementptr inbounds nuw i8, ptr %i.ivg, i64 1 ; 3 uses
+  %i.ivg = phi ptr [ %i.ivh, %.preheader4038 ], [ %.promoted5528, %bb.aza ]
+  %i.ivh = getelementptr inbounds nuw i8, ptr %i.ivg, i64 1 ; 4 uses
   store ptr %i.ivh, ptr %i.e, align 8, !tbaa !92
   %i.ivi = load i8, ptr %i.ivh, align 1, !tbaa !81
   %i.ivj = zext i8 %i.ivi to i64
@@ -2005,6 +2009,7 @@ bb.aze:                                           ; preds = %bb.azd
   %i.ivr = shl i64 %i.ivp, 4
   %i.ivs = tail call noundef ptr %.sroa.8.0(ptr noundef %.sroa.15.0, ptr noundef %.3451.i.ph, i64 noundef %i.ivq, i64 noundef %i.ivr), !inline_history !220 ; 5 uses
   %.not598.i220 = icmp eq ptr %i.ivs, null
+  %.pre6796 = load ptr, ptr %i.e, align 8, !tbaa !92 ; 3 uses
   br i1 %.not598.i220, label %bb.btp, label %.thread3417
 
 .thread3417:                                      ; preds = %bb.aze
@@ -2017,13 +2022,12 @@ bb.aze:                                           ; preds = %bb.azd
   %i.ivz = getelementptr inbounds nuw i8, ptr %i.ivs, i64 %i.ivy
   %i.iwa = getelementptr [16 x i8], ptr %i.ivs, i64 %i.ivp
   %i.iwb = getelementptr i8, ptr %i.iwa, i64 -32
-  %.pre6776 = load ptr, ptr %i.e, align 8, !tbaa !92 ; 2 uses
-  %.pre6777 = load i8, ptr %.pre6776, align 1, !tbaa !81
+  %.pre6777 = load i8, ptr %.pre6796, align 1, !tbaa !81
   br label %bb.azf
 
 bb.azf:                                           ; preds = %.thread3417, %bb.azd
   %i.iwc = phi i8 [ %.pre6777, %.thread3417 ], [ %i.gak, %bb.azd ] ; 2 uses
-  %i.iwd = phi ptr [ %.pre6776, %.thread3417 ], [ %15, %bb.azd ] ; 18 uses
+  %i.iwd = phi ptr [ %.pre6796, %.thread3417 ], [ %.promoted5528, %bb.azd ] ; 18 uses
   %.15542.i = phi ptr [ %i.ivz, %.thread3417 ], [ %.3530.i.ph, %bb.azd ] ; 4 uses
   %.15506.i = phi ptr [ %i.ivw, %.thread3417 ], [ %i.ivn, %bb.azd ] ; 12 uses
   %.15480.i = phi ptr [ %i.iwb, %.thread3417 ], [ %.3468.i.ph, %bb.azd ] ; 4 uses
@@ -2183,32 +2187,33 @@ bb.bab:                                           ; preds = %bb.azc, %bb.azb
 
 bb.bac:                                           ; preds = %bb.bab
   %i.ixk = call fastcc noundef zeroext i1 @_ZN13duckdb_yyjsonL24skip_spaces_and_commentsEPPh(ptr noundef %i.e)
+  %.pre6764 = load ptr, ptr %i.e, align 8, !tbaa !92 ; 4 uses
   br i1 %i.ixk, label %.backedge4043.backedge, label %bb.bad
 
 .backedge4043.backedge:                           ; preds = %.preheader4038, %bb.bac
+  %.promoted5528.be = phi ptr [ %.pre6764, %bb.bac ], [ %i.ivh, %.preheader4038 ]
   br label %.backedge4043
 
 bb.bad:                                           ; preds = %bb.bac
-  %16 = load ptr, ptr %i.e, align 8, !tbaa !92    ; 3 uses
-  %.sroa.01.0.copyload.i = load i16, ptr %16, align 1
+  %.sroa.01.0.copyload.i = load i16, ptr %.pre6764, align 1
   %i.ixl = icmp eq i16 %.sroa.01.0.copyload.i, 10799
   br i1 %i.ixl, label %bb.btr, label %_ZN13duckdb_yyjsonL15read_inf_or_nanEbPPhS1_PNS_10yyjson_valE.exit897.thread
 
 .backedge4048:                                    ; preds = %.backedge4048.backedge, %.preheader4046
-  %17 = load ptr, ptr %i.e, align 8, !tbaa !92    ; 5 uses
-  %i.ixm = load i8, ptr %17, align 1, !tbaa !81   ; 2 uses
+  %.promoted5527 = phi ptr [ %.pre6763, %.preheader4046 ], [ %.promoted5527.be, %.backedge4048.backedge ] ; 5 uses
+  %i.ixm = load i8, ptr %.promoted5527, align 1, !tbaa !81 ; 2 uses
   switch i8 %i.ixm, label %bb.bag [
     i8 44, label %bb.bae
     i8 93, label %bb.baf
   ]
 
 bb.bae:                                           ; preds = %.backedge4048
-  %i.ixn = getelementptr inbounds nuw i8, ptr %17, i64 1
+  %i.ixn = getelementptr inbounds nuw i8, ptr %.promoted5527, i64 1 ; 2 uses
   store ptr %i.ixn, ptr %i.e, align 8, !tbaa !92
   br label %.preheader4040
 
 bb.baf:                                           ; preds = %.backedge4048
-  %i.ixo = getelementptr inbounds nuw i8, ptr %17, i64 1 ; 2 uses
+  %i.ixo = getelementptr inbounds nuw i8, ptr %.promoted5527, i64 1 ; 2 uses
   store ptr %i.ixo, ptr %i.e, align 8, !tbaa !92
   br label %bb.bak
 
@@ -2221,8 +2226,8 @@ bb.bag:                                           ; preds = %.backedge4048
   br i1 %.not3737, label %bb.bah, label %.preheader4044
 
 .preheader4044:                                   ; preds = %bb.bag, %.preheader4044
-  %i.ixt = phi ptr [ %i.ixu, %.preheader4044 ], [ %17, %bb.bag ]
-  %i.ixu = getelementptr inbounds nuw i8, ptr %i.ixt, i64 1 ; 3 uses
+  %i.ixt = phi ptr [ %i.ixu, %.preheader4044 ], [ %.promoted5527, %bb.bag ]
+  %i.ixu = getelementptr inbounds nuw i8, ptr %i.ixt, i64 1 ; 4 uses
   store ptr %i.ixu, ptr %i.e, align 8, !tbaa !92
   %i.ixv = load i8, ptr %i.ixu, align 1, !tbaa !81
   %i.ixw = zext i8 %i.ixv to i64
@@ -2237,14 +2242,15 @@ bb.bah:                                           ; preds = %bb.bag
 
 bb.bai:                                           ; preds = %bb.bah
   %i.iya = call fastcc noundef zeroext i1 @_ZN13duckdb_yyjsonL24skip_spaces_and_commentsEPPh(ptr noundef %i.e)
+  %.pre6762 = load ptr, ptr %i.e, align 8, !tbaa !92 ; 4 uses
   br i1 %i.iya, label %.backedge4048.backedge, label %bb.baj
 
 .backedge4048.backedge:                           ; preds = %.preheader4044, %bb.bai
+  %.promoted5527.be = phi ptr [ %.pre6762, %bb.bai ], [ %i.ixu, %.preheader4044 ]
   br label %.backedge4048
 
 bb.baj:                                           ; preds = %bb.bai
-  %18 = load ptr, ptr %i.e, align 8, !tbaa !92    ; 3 uses
-  %.sroa.01.0.copyload.i568 = load i16, ptr %18, align 1
+  %.sroa.01.0.copyload.i568 = load i16, ptr %.pre6762, align 1
   %i.iyb = icmp eq i16 %.sroa.01.0.copyload.i568, 10799
   br i1 %i.iyb, label %bb.btr, label %_ZN13duckdb_yyjsonL15read_inf_or_nanEbPPhS1_PNS_10yyjson_valE.exit897.thread
 
@@ -2279,14 +2285,14 @@ bb.bal:                                           ; preds = %bb.bak
   br i1 %i.iyq, label %.preheader4051, label %.preheader4046
 
 .loopexit4041:                                    ; preds = %bb.brg, %.backedge4043
-  %.pn617.i = phi ptr [ %15, %.backedge4043 ], [ %i.kma, %bb.brg ]
+  %.pn617.i = phi ptr [ %.promoted5528, %.backedge4043 ], [ %i.kma, %bb.brg ]
   %.18545.i = phi ptr [ %.3530.i.ph, %.backedge4043 ], [ %.23550.i, %bb.brg ] ; 4 uses
   %.18509.i = phi ptr [ %.3494.i.ph, %.backedge4043 ], [ %.23514.i, %bb.brg ]
   %.18483.i = phi ptr [ %.3468.i.ph, %.backedge4043 ], [ %.23488.i, %bb.brg ] ; 2 uses
   %.18.i172 = phi ptr [ %.3451.i.ph, %.backedge4043 ], [ %.23.i199, %bb.brg ] ; 4 uses
   %.4444.i = phi i64 [ %.1441.i.ph, %.backedge4043 ], [ %i.jah, %bb.brg ]
   %.11.i173 = phi i64 [ %.2.i162.ph, %.backedge4043 ], [ %.14.i200, %bb.brg ] ; 4 uses
-  %storemerge596.i = getelementptr inbounds nuw i8, ptr %.pn617.i, i64 1
+  %storemerge596.i = getelementptr inbounds nuw i8, ptr %.pn617.i, i64 1 ; 2 uses
   store ptr %storemerge596.i, ptr %i.e, align 8, !tbaa !92
   %i.iyr = shl i64 %.4444.i, 8
   %i.iys = add i64 %i.iyr, 256
@@ -2305,6 +2311,7 @@ bb.bam:                                           ; preds = %.loopexit4041
   %i.iza = shl i64 %i.iyy, 4
   %i.izb = tail call noundef ptr %.sroa.8.0(ptr noundef %.sroa.15.0, ptr noundef %.18.i172, i64 noundef %i.iyz, i64 noundef %i.iza), !inline_history !220 ; 5 uses
   %.not619.i174 = icmp eq ptr %i.izb, null
+  %.pre6795 = load ptr, ptr %i.e, align 8, !tbaa !92 ; 2 uses
   br i1 %.not619.i174, label %bb.btp, label %.thread3425
 
 .thread3425:                                      ; preds = %bb.bam
@@ -2320,6 +2327,7 @@ bb.bam:                                           ; preds = %.loopexit4041
   br label %bb.ban
 
 bb.ban:                                           ; preds = %.thread3425, %.loopexit4041
+  %.pre6735.pre = phi ptr [ %.pre6795, %.thread3425 ], [ %storemerge596.i, %.loopexit4041 ]
   %.20547.i = phi ptr [ %i.izi, %.thread3425 ], [ %.18545.i, %.loopexit4041 ]
   %.20511.i = phi ptr [ %i.izf, %.thread3425 ], [ %i.iyw, %.loopexit4041 ] ; 5 uses
   %.20485.i = phi ptr [ %i.izk, %.thread3425 ], [ %.18483.i, %.loopexit4041 ]
@@ -2334,6 +2342,7 @@ bb.ban:                                           ; preds = %.thread3425, %.loop
   br label %.preheader4102
 
 .preheader4102:                                   ; preds = %bb.akr, %bb.ban, %bb.bsv
+  %.pre6735 = phi ptr [ %i.mnk, %bb.bsv ], [ %.pre6735.pre, %bb.ban ], [ %i.ao, %bb.akr ]
   %.21548.i.ph = phi ptr [ %.24551.i.ph, %bb.bsv ], [ %.20511.i, %bb.ban ], [ %i.fzd, %bb.akr ] ; 4 uses
   %.21512.i.ph = phi ptr [ %.24515.i.ph, %bb.bsv ], [ %.20511.i, %bb.ban ], [ %i.fzd, %bb.akr ] ; 3 uses
   %.21486.i.ph = phi ptr [ %.24489.i.ph, %bb.bsv ], [ %.20485.i, %bb.ban ], [ %i.fzc, %bb.akr ] ; 4 uses
@@ -2345,8 +2354,8 @@ bb.ban:                                           ; preds = %.thread3425, %.loop
   br label %.backedge4104
 
 .backedge4104:                                    ; preds = %.backedge4104.backedge, %.preheader4102
-  %19 = load ptr, ptr %i.e, align 8, !tbaa !92    ; 5 uses
-  %i.izq = load i8, ptr %19, align 1, !tbaa !81   ; 2 uses
+  %.promoted5172 = phi ptr [ %.pre6735, %.preheader4102 ], [ %.promoted5172.be, %.backedge4104.backedge ] ; 5 uses
+  %i.izq = load i8, ptr %.promoted5172, align 1, !tbaa !81 ; 2 uses
   switch i8 %i.izq, label %bb.bdu [
     i8 34, label %bb.bao
     i8 125, label %bb.bds
@@ -2364,6 +2373,7 @@ bb.bap:                                           ; preds = %bb.bao
   %i.izv = shl i64 %i.izt, 4
   %i.izw = tail call noundef ptr %.sroa.8.0(ptr noundef %.sroa.15.0, ptr noundef %.21.i178.ph, i64 noundef %i.izu, i64 noundef %i.izv), !inline_history !220 ; 5 uses
   %.not595.i197 = icmp eq ptr %i.izw, null
+  %.pre6794 = load ptr, ptr %i.e, align 8, !tbaa !92 ; 2 uses
   br i1 %.not595.i197, label %bb.btp, label %.thread3431
 
 .thread3431:                                      ; preds = %bb.bap
@@ -2376,11 +2386,10 @@ bb.bap:                                           ; preds = %bb.bao
   %i.jad = getelementptr inbounds nuw i8, ptr %i.izw, i64 %i.jac
   %i.jae = getelementptr [16 x i8], ptr %i.izw, i64 %i.izt
   %i.jaf = getelementptr i8, ptr %i.jae, i64 -32
-  %.pre6738 = load ptr, ptr %i.e, align 8, !tbaa !92
   br label %bb.baq
 
 bb.baq:                                           ; preds = %.thread3431, %bb.bao
-  %i.jag = phi ptr [ %.pre6738, %.thread3431 ], [ %19, %bb.bao ]
+  %i.jag = phi ptr [ %.pre6794, %.thread3431 ], [ %.promoted5172, %bb.bao ]
   %.23550.i = phi ptr [ %i.jad, %.thread3431 ], [ %.21548.i.ph, %bb.bao ] ; 39 uses
   %.23514.i = phi ptr [ %i.jaa, %.thread3431 ], [ %i.izr, %bb.bao ] ; 63 uses
   %.23488.i = phi ptr [ %i.jaf, %.thread3431 ], [ %.21486.i.ph, %bb.bao ] ; 39 uses
@@ -2783,7 +2792,7 @@ _ZN13duckdb_yyjsonL11read_stringEPPhS0_bPNS_10yyjson_valEPPKc.exit715: ; preds =
   br i1 %i.jsi, label %._crit_edge5293, label %.lr.ph5292
 
 bb.bds:                                           ; preds = %.backedge4104
-  %i.jsj = getelementptr inbounds nuw i8, ptr %19, i64 1 ; 6 uses
+  %i.jsj = getelementptr inbounds nuw i8, ptr %.promoted5172, i64 1 ; 6 uses
   store ptr %i.jsj, ptr %i.e, align 8, !tbaa !92
   %i.jsk = icmp eq i64 %.5445.i.ph, 0
   br i1 %i.jsk, label %bb.btb, label %bb.bdt, !prof !24
@@ -2815,8 +2824,8 @@ bb.bdu:                                           ; preds = %.backedge4104
   br i1 %.not3745, label %bb.bdv, label %.preheader4100
 
 .preheader4100:                                   ; preds = %bb.bdu, %.preheader4100
-  %i.jsu = phi ptr [ %i.jsv, %.preheader4100 ], [ %19, %bb.bdu ]
-  %i.jsv = getelementptr inbounds nuw i8, ptr %i.jsu, i64 1 ; 3 uses
+  %i.jsu = phi ptr [ %i.jsv, %.preheader4100 ], [ %.promoted5172, %bb.bdu ]
+  %i.jsv = getelementptr inbounds nuw i8, ptr %i.jsu, i64 1 ; 4 uses
   store ptr %i.jsv, ptr %i.e, align 8, !tbaa !92
   %i.jsw = load i8, ptr %i.jsv, align 1, !tbaa !81
   %i.jsx = zext i8 %i.jsw to i64
@@ -2831,14 +2840,15 @@ bb.bdv:                                           ; preds = %bb.bdu
 
 bb.bdw:                                           ; preds = %bb.bdv
   %i.jtb = call fastcc noundef zeroext i1 @_ZN13duckdb_yyjsonL24skip_spaces_and_commentsEPPh(ptr noundef %i.e)
+  %.pre6734 = load ptr, ptr %i.e, align 8, !tbaa !92 ; 4 uses
   br i1 %i.jtb, label %.backedge4104.backedge, label %bb.bdx
 
 .backedge4104.backedge:                           ; preds = %.preheader4100, %bb.bdw
+  %.promoted5172.be = phi ptr [ %.pre6734, %bb.bdw ], [ %i.jsv, %.preheader4100 ]
   br label %.backedge4104
 
 bb.bdx:                                           ; preds = %bb.bdw
-  %20 = load ptr, ptr %i.e, align 8, !tbaa !92    ; 3 uses
-  %.sroa.01.0.copyload.i565 = load i16, ptr %20, align 1
+  %.sroa.01.0.copyload.i565 = load i16, ptr %.pre6734, align 1
   %i.jtc = icmp eq i16 %.sroa.01.0.copyload.i565, 10799
   br i1 %i.jtc, label %bb.btr, label %_ZN13duckdb_yyjsonL15read_inf_or_nanEbPPhS1_PNS_10yyjson_valE.exit897.thread
 
@@ -3241,6 +3251,7 @@ bb.brf:                                           ; preds = %bb.bre, %bb.brc, %b
   %.15.i188.ph = phi i64 [ %.14.i200, %bb.bpk ], [ %.14.i200, %bb.bpf ], [ %.14.i200, %bb.bkb ], [ %.14.i200, %bb.bnv ], [ %.14.i200, %bb.bjy ], [ %.14.i200, %bb.boe ], [ %.14.i200, %bb.bjv ], [ %.14.i200, %bb.bjs ], [ %.14.i200, %.loopexit4065 ], [ %.14.i200, %bb.bjp ], [ %.14.i200, %bb.bni ], [ %.14.i200, %bb.bnj ], [ %.14.i200, %bb.bnk ], [ %.14.i200, %bb.bjl ], [ %.14.i200, %bb.bjm ], [ %.14.i200, %bb.bjn ], [ %.14.i200, %bb.blo ], [ %.14.i200, %bb.bll ], [ %.14.i200, %bb.bli ], [ %.14.i200, %bb.blf ], [ %.14.i200, %bb.blc ], [ %.14.i200, %bb.bkz ], [ %.14.i200, %bb.bkw ], [ %.14.i200, %bb.bkt ], [ %.14.i200, %bb.bhe ], [ %.14.i200, %_ZN13duckdb_yyjsonL11read_stringEPPhS0_bPNS_10yyjson_valEPPKc.exit673 ], [ %.14.i200, %_ZN13duckdb_yyjsonL9read_nullEPPhPNS_10yyjson_valE.exit848 ], [ %.14.i200, %_ZN13duckdb_yyjsonL10read_falseEPPhPNS_10yyjson_valE.exit845 ], [ %.14.i200, %_ZN13duckdb_yyjsonL9read_trueEPPhPNS_10yyjson_valE.exit842 ], [ %.14.i200, %bb.brs ], [ %.14.i200, %_ZN13duckdb_yyjsonL11read_numberEPPhS1_jPNS_10yyjson_valEPPKc.exit354 ], [ %.10.i186, %bb.bal ], [ %.16.i183, %bb.btc ], [ %.14.i200, %bb.brf ], [ %.14.i200, %bb.brr ], [ %.14.i200, %bb.bsq ], [ %.14.i200, %bb.bsr ], [ %.14.i200, %bb.bsj ], [ %.14.i200, %bb.bsi ] ; 2 uses
   %i.mks = and i32 %2, 8
   %.not3743 = icmp eq i32 %i.mks, 0
+  %.pre6761 = load ptr, ptr %i.e, align 8, !tbaa !92
   br label %.backedge4053
 
 _ZN13duckdb_yyjsonL11read_numberEPPhS1_jPNS_10yyjson_valEPPKc.exit354.thread: ; preds = %_ZN13duckdb_yyjsonL15read_inf_or_nanEbPPhS1_PNS_10yyjson_valE.exit882, %bb.bih, %bb.bog, %bb.bop, %bb.bpa, %bb.bny, %bb.bob, %bb.bil, %bb.bin, %bb.bno
@@ -3554,20 +3565,20 @@ bb.bsu:                                           ; preds = %bb.bst
   br i1 %i.mni, label %bb.btr, label %_ZN13duckdb_yyjsonL15read_inf_or_nanEbPPhS1_PNS_10yyjson_valE.exit897.thread
 
 .backedge4053:                                    ; preds = %.backedge4053.backedge, %.preheader4051
-  %21 = load ptr, ptr %i.e, align 8, !tbaa !92    ; 5 uses
-  %i.mnj = load i8, ptr %21, align 1, !tbaa !81   ; 2 uses
+  %.promoted5526 = phi ptr [ %.pre6761, %.preheader4051 ], [ %.promoted5526.be, %.backedge4053.backedge ] ; 5 uses
+  %i.mnj = load i8, ptr %.promoted5526, align 1, !tbaa !81 ; 2 uses
   switch i8 %i.mnj, label %bb.bsx [
     i8 44, label %bb.bsv
     i8 125, label %bb.bsw
   ], !prof !195
 
 bb.bsv:                                           ; preds = %.backedge4053
-  %i.mnk = getelementptr inbounds nuw i8, ptr %21, i64 1
+  %i.mnk = getelementptr inbounds nuw i8, ptr %.promoted5526, i64 1 ; 2 uses
   store ptr %i.mnk, ptr %i.e, align 8, !tbaa !92
   br label %.preheader4102
 
 bb.bsw:                                           ; preds = %.backedge4053
-  %i.mnl = getelementptr inbounds nuw i8, ptr %21, i64 1 ; 2 uses
+  %i.mnl = getelementptr inbounds nuw i8, ptr %.promoted5526, i64 1 ; 2 uses
   store ptr %i.mnl, ptr %i.e, align 8, !tbaa !92
   br label %bb.btb
 
@@ -3580,8 +3591,8 @@ bb.bsx:                                           ; preds = %.backedge4053
   br i1 %.not3742, label %bb.bsy, label %.preheader4049
 
 .preheader4049:                                   ; preds = %bb.bsx, %.preheader4049
-  %i.mnq = phi ptr [ %i.mnr, %.preheader4049 ], [ %21, %bb.bsx ]
-  %i.mnr = getelementptr inbounds nuw i8, ptr %i.mnq, i64 1 ; 3 uses
+  %i.mnq = phi ptr [ %i.mnr, %.preheader4049 ], [ %.promoted5526, %bb.bsx ]
+  %i.mnr = getelementptr inbounds nuw i8, ptr %i.mnq, i64 1 ; 4 uses
   store ptr %i.mnr, ptr %i.e, align 8, !tbaa !92
   %i.mns = load i8, ptr %i.mnr, align 1, !tbaa !81
   %i.mnt = zext i8 %i.mns to i64
@@ -3596,14 +3607,15 @@ bb.bsy:                                           ; preds = %bb.bsx
 
 bb.bsz:                                           ; preds = %bb.bsy
   %i.mnx = call fastcc noundef zeroext i1 @_ZN13duckdb_yyjsonL24skip_spaces_and_commentsEPPh(ptr noundef %i.e)
+  %.pre6760 = load ptr, ptr %i.e, align 8, !tbaa !92 ; 4 uses
   br i1 %i.mnx, label %.backedge4053.backedge, label %bb.bta
 
 .backedge4053.backedge:                           ; preds = %.preheader4049, %bb.bsz
+  %.promoted5526.be = phi ptr [ %.pre6760, %bb.bsz ], [ %i.mnr, %.preheader4049 ]
   br label %.backedge4053
 
 bb.bta:                                           ; preds = %bb.bsz
-  %22 = load ptr, ptr %i.e, align 8, !tbaa !92    ; 3 uses
-  %.sroa.01.0.copyload.i570 = load i16, ptr %22, align 1
+  %.sroa.01.0.copyload.i570 = load i16, ptr %.pre6760, align 1
   %i.mny = icmp eq i16 %.sroa.01.0.copyload.i570, 10799
   br i1 %i.mny, label %bb.btr, label %_ZN13duckdb_yyjsonL15read_inf_or_nanEbPPhS1_PNS_10yyjson_valE.exit897.thread
 
@@ -3785,10 +3797,10 @@ bb.bto:                                           ; preds = %bb.btm, %bb.btn
   br label %_ZN13duckdb_yyjsonL16read_root_minifyEPhS0_S0_NS_10yyjson_alcEjPNS_15yyjson_read_errE.exit
 
 bb.btp:                                           ; preds = %bb.bap, %bb.bam, %bb.aze, %bb.ayn, %bb.ayk, %bb.ayh, %bb.avd, %bb.akx, %bb.akt, %bb.akq
-  %.29.i168.a = phi ptr [ null, %bb.akq ], [ %.3451.i.ph, %bb.aze ], [ %.18.i172, %bb.bam ], [ %.0448.i, %bb.akt ], [ %.3451.i.ph, %bb.akx ], [ %.3451.i.ph, %bb.avd ], [ %.3451.i.ph, %bb.ayh ], [ %.3451.i.ph, %bb.ayk ], [ %.3451.i.ph, %bb.ayn ], [ %.21.i178.ph, %bb.bap ] ; 2 uses
-  %23 = load ptr, ptr %i.e, align 8, !tbaa !92    ; 2 uses
-  %i.mqj = tail call fastcc noundef zeroext i1 @_ZN13duckdb_yyjsonL16is_truncated_endEPhS0_S0_jj(ptr noundef nonnull %.promoted, ptr noundef %23, ptr noundef %.0, i32 noundef 2, i32 noundef %2) ; 3 uses
-  %i.mqk = ptrtoint ptr %23 to i64
+  %.29.i168.a = phi ptr [ %i.am, %bb.akq ], [ %.pre6796, %bb.aze ], [ %.pre6795, %bb.bam ], [ %.pre6802, %bb.akt ], [ %.pre6801, %bb.akx ], [ %.pre6800, %bb.avd ], [ %.pre6799, %bb.ayh ], [ %.pre6798, %bb.ayk ], [ %.pre6797, %bb.ayn ], [ %.pre6794, %bb.bap ] ; 2 uses
+  %.29.i168 = phi ptr [ null, %bb.akq ], [ %.3451.i.ph, %bb.aze ], [ %.18.i172, %bb.bam ], [ %.0448.i, %bb.akt ], [ %.3451.i.ph, %bb.akx ], [ %.3451.i.ph, %bb.avd ], [ %.3451.i.ph, %bb.ayh ], [ %.3451.i.ph, %bb.ayk ], [ %.3451.i.ph, %bb.ayn ], [ %.21.i178.ph, %bb.bap ] ; 2 uses
+  %i.mqj = tail call fastcc noundef zeroext i1 @_ZN13duckdb_yyjsonL16is_truncated_endEPhS0_S0_jj(ptr noundef nonnull %.promoted, ptr noundef %.29.i168.a, ptr noundef %.0, i32 noundef 2, i32 noundef %2) ; 3 uses
+  %i.mqk = ptrtoint ptr %.29.i168.a to i64
   %.sink8498 = select i1 %i.mqj, i64 %i.fys, i64 %i.mqk
   %.sink8496 = select i1 %i.mqj, i32 5, i32 2
   %.str.28.sink8495 = select i1 %i.mqj, ptr @.str.57, ptr @.str.28
@@ -3801,11 +3813,11 @@ bb.btp:                                           ; preds = %bb.bap, %bb.bam, %b
   %spec.store.select.sroa.sel1577.v.sroa.sel.v.sroa.sel.v = select i1 %.not, ptr %13, ptr %4
   %spec.store.select.sroa.sel1577.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %spec.store.select.sroa.sel1577.v.sroa.sel.v.sroa.sel.v, i64 8
   store ptr %.str.28.sink8495, ptr %spec.store.select.sroa.sel1577.v.sroa.sel.v.sroa.sel, align 8, !tbaa !155
-  %.not623.i169 = icmp eq ptr %.29.i168.a, null
+  %.not623.i169 = icmp eq ptr %.29.i168, null
   br i1 %.not623.i169, label %_ZN13duckdb_yyjsonL16read_root_minifyEPhS0_S0_NS_10yyjson_alcEjPNS_15yyjson_read_errE.exit, label %bb.btq
 
 bb.btq:                                           ; preds = %bb.btp
-  tail call void %.sroa.865.0(ptr noundef %.sroa.15.0, ptr noundef nonnull %.29.i168.a), !inline_history !220
+  tail call void %.sroa.865.0(ptr noundef %.sroa.15.0, ptr noundef nonnull %.29.i168), !inline_history !220
   br label %_ZN13duckdb_yyjsonL16read_root_minifyEPhS0_S0_NS_10yyjson_alcEjPNS_15yyjson_read_errE.exit
 
 .loopexit4023:                                    ; preds = %.lr.ph5175, %.lr.ph5642, %.preheader4098, %.preheader4022
@@ -3849,7 +3861,7 @@ _ZN13duckdb_yyjsonL9read_trueEPPhPNS_10yyjson_valE.exit.thread: ; preds = %bb.br
   br label %_ZN13duckdb_yyjsonL16read_root_minifyEPhS0_S0_NS_10yyjson_alcEjPNS_15yyjson_read_errE.exit
 
 bb.btr:                                           ; preds = %bb.btg, %bb.bta, %bb.bsu, %bb.bea, %bb.bdx, %bb.baj, %bb.bad
-  %i.mqx = phi ptr [ %i.mow, %bb.btg ], [ %16, %bb.bad ], [ %18, %bb.baj ], [ %22, %bb.bta ], [ %.pre6751, %bb.bsu ], [ %.pre6749.a, %bb.bea ], [ %20, %bb.bdx ] ; 2 uses
+  %i.mqx = phi ptr [ %i.mow, %bb.btg ], [ %.pre6764, %bb.bad ], [ %.pre6762, %bb.baj ], [ %.pre6760, %bb.bta ], [ %.pre6751, %bb.bsu ], [ %.pre6749.a, %bb.bea ], [ %.pre6734, %bb.bdx ] ; 2 uses
   %.32.i191 = phi ptr [ %.26.i193, %bb.btg ], [ %.3451.i.ph, %bb.bad ], [ %.16464.i.ph, %bb.baj ], [ %.24.i187.ph, %bb.bta ], [ %.23.i199, %bb.bsu ], [ %.23.i199, %bb.bea ], [ %.21.i178.ph, %bb.bdx ]
   %i.mqy = tail call fastcc noundef zeroext i1 @_ZN13duckdb_yyjsonL16is_truncated_endEPhS0_S0_jj(ptr noundef nonnull %.promoted, ptr noundef nonnull %i.mqx, ptr noundef %.0, i32 noundef 8, i32 noundef %2) ; 3 uses
   %i.mqz = ptrtoint ptr %i.mqx to i64
@@ -3869,7 +3881,7 @@ bb.btr:                                           ; preds = %bb.btg, %bb.bta, %b
   br label %_ZN13duckdb_yyjsonL16read_root_minifyEPhS0_S0_NS_10yyjson_alcEjPNS_15yyjson_read_errE.exit
 
 _ZN13duckdb_yyjsonL15read_inf_or_nanEbPPhS1_PNS_10yyjson_valE.exit897.thread: ; preds = %bb.bdv, %bb.bdy, %bb.bss, %bb.bsy, %bb.bah, %bb.bab, %bb.brw, %bb.azf, %bb.bsk, %bb.bsl, %bb.bsm, %bb.azt, %bb.azu, %bb.azv, %bb.bta, %bb.bsu, %bb.bea, %bb.bdx, %bb.baj, %bb.bad
-  %i.mrc = phi ptr [ %i.kma, %bb.brw ], [ %16, %bb.bad ], [ %i.kma, %bb.bsk ], [ %18, %bb.baj ], [ %17, %bb.bah ], [ %22, %bb.bta ], [ %21, %bb.bsy ], [ %i.iwd, %bb.azt ], [ %.pre6751, %bb.bsu ], [ %i.kma, %bb.bss ], [ %.pre6749.a, %bb.bea ], [ %.promoted5291, %bb.bdy ], [ %20, %bb.bdx ], [ %i.iwd, %bb.azv ], [ %i.iwd, %bb.azu ], [ %i.kma, %bb.bsm ], [ %i.kma, %bb.bsl ], [ %15, %bb.bab ], [ %i.iwd, %bb.azf ], [ %19, %bb.bdv ] ; 2 uses
+  %i.mrc = phi ptr [ %i.kma, %bb.brw ], [ %.pre6764, %bb.bad ], [ %i.kma, %bb.bsk ], [ %.pre6762, %bb.baj ], [ %.promoted5527, %bb.bah ], [ %.pre6760, %bb.bta ], [ %.promoted5526, %bb.bsy ], [ %i.iwd, %bb.azt ], [ %.pre6751, %bb.bsu ], [ %i.kma, %bb.bss ], [ %.pre6749.a, %bb.bea ], [ %.promoted5291, %bb.bdy ], [ %.pre6734, %bb.bdx ], [ %i.iwd, %bb.azv ], [ %i.iwd, %bb.azu ], [ %i.kma, %bb.bsm ], [ %i.kma, %bb.bsl ], [ %.promoted5528, %bb.bab ], [ %i.iwd, %bb.azf ], [ %.promoted5172, %bb.bdv ] ; 2 uses
   %.33.i189 = phi ptr [ %.23.i199, %bb.brw ], [ %.3451.i.ph, %bb.bad ], [ %.23.i199, %bb.bsk ], [ %.16464.i.ph, %bb.baj ], [ %.16464.i.ph, %bb.bah ], [ %.24.i187.ph, %bb.bta ], [ %.24.i187.ph, %bb.bsy ], [ %.15463.i, %bb.azt ], [ %.23.i199, %bb.bsu ], [ %.23.i199, %bb.bss ], [ %.23.i199, %bb.bea ], [ %.23.i199, %bb.bdy ], [ %.21.i178.ph, %bb.bdx ], [ %.15463.i, %bb.azv ], [ %.15463.i, %bb.azu ], [ %.23.i199, %bb.bsm ], [ %.23.i199, %bb.bsl ], [ %.3451.i.ph, %bb.bab ], [ %.15463.i, %bb.azf ], [ %.21.i178.ph, %bb.bdv ]
   %i.mrd = tail call fastcc noundef zeroext i1 @_ZN13duckdb_yyjsonL16is_truncated_endEPhS0_S0_jj(ptr noundef nonnull %.promoted, ptr noundef nonnull %i.mrc, ptr noundef %.0, i32 noundef 6, i32 noundef %2) ; 3 uses
   %i.mre = ptrtoint ptr %i.mrc to i64

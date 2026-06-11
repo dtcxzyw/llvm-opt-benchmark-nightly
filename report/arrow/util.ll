@@ -201,19 +201,22 @@ _ZNSt12_Vector_baseISt10shared_ptrIN5arrow5ArrayEESaIS3_EEC2EmRKS4_.exit.thread.
   %i.azs = getelementptr inbounds nuw i8, ptr %45, i64 8 ; 2 uses
   %i.azt = load ptr, ptr %i.azs, align 8, !tbaa !91, !noalias !2649 ; 2 uses
   %i.azu = icmp eq ptr %i.azt, null
+  %116 = load ptr, ptr %45, align 8, !tbaa !1327, !noalias !2649 ; 10 uses
   br i1 %i.azu, label %.lr.ph.i.i.i.i.i.split.us.i.i436, label %.lr.ph.i.i.i.i.i.split.i.i400
 
 .lr.ph.i.i.i.i.i.split.us.i.i436:                 ; preds = %.noexc46.i
-  %116 = load ptr, ptr %45, align 8, !tbaa !1327, !noalias !2649
-  %117 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %116, i64 0 ; 9 uses
   %xtraiter1142 = and i64 %i.azk, 7               ; 2 uses
   %lcmp.mod1143.not = icmp eq i64 %xtraiter1142, 0
-  br i1 %lcmp.mod1143.not, label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437.prol.loopexit, label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437.prol
+  br i1 %lcmp.mod1143.not, label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437.prol.loopexit, label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i436.prol.preheader
 
-_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437.prol: ; preds = %.lr.ph.i.i.i.i.i.split.us.i.i436, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437.prol
-  %.09.i.i.i.i.i.us.i.i438.prol = phi ptr [ %i.azw, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437.prol ], [ %i.azo, %.lr.ph.i.i.i.i.i.split.us.i.i436 ] ; 2 uses
-  %.068.i.i.i.i.i.us.i.i439.prol = phi i64 [ %i.azv, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437.prol ], [ %i.azk, %.lr.ph.i.i.i.i.i.split.us.i.i436 ]
-  %prol.iter1144 = phi i64 [ %prol.iter1144.next, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437.prol ], [ 0, %.lr.ph.i.i.i.i.i.split.us.i.i436 ]
+_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i436.prol.preheader: ; preds = %.lr.ph.i.i.i.i.i.split.us.i.i436
+  %117 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %116, i64 0
+  br label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437.prol
+
+_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437.prol: ; preds = %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437.prol, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i436.prol.preheader
+  %.09.i.i.i.i.i.us.i.i438.prol = phi ptr [ %i.azw, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437.prol ], [ %i.azo, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i436.prol.preheader ] ; 2 uses
+  %.068.i.i.i.i.i.us.i.i439.prol = phi i64 [ %i.azv, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437.prol ], [ %i.azk, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i436.prol.preheader ]
+  %prol.iter1144 = phi i64 [ %prol.iter1144.next, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437.prol ], [ 0, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i436.prol.preheader ]
   store <2 x ptr> %117, ptr %.09.i.i.i.i.i.us.i.i438.prol, align 8, !tbaa !93
   %i.azv = add i64 %.068.i.i.i.i.i.us.i.i439.prol, -1 ; 2 uses
   %i.azw = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i438.prol, i64 16 ; 3 uses
@@ -226,26 +229,37 @@ _ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i
   %.09.i.i.i.i.i.us.i.i438.unr = phi ptr [ %i.azo, %.lr.ph.i.i.i.i.i.split.us.i.i436 ], [ %i.azw, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437.prol ]
   %.068.i.i.i.i.i.us.i.i439.unr = phi i64 [ %i.azk, %.lr.ph.i.i.i.i.i.split.us.i.i436 ], [ %i.azv, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437.prol ]
   %i.azx = icmp ult i64 %i.azk, 8
-  br i1 %i.azx, label %.loopexit3.i, label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437
+  br i1 %i.azx, label %.loopexit3.i, label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i436.preheader.new
 
-_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437: ; preds = %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437.prol.loopexit, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437
-  %.09.i.i.i.i.i.us.i.i438 = phi ptr [ %i.bag, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437 ], [ %.09.i.i.i.i.i.us.i.i438.unr, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437.prol.loopexit ] ; 9 uses
-  %.068.i.i.i.i.i.us.i.i439 = phi i64 [ %i.baf, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437 ], [ %.068.i.i.i.i.i.us.i.i439.unr, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437.prol.loopexit ]
-  store <2 x ptr> %117, ptr %.09.i.i.i.i.i.us.i.i438, align 8, !tbaa !93
+_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i436.preheader.new: ; preds = %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437.prol.loopexit
+  %118 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %116, i64 0
+  %119 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %116, i64 0
+  %120 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %116, i64 0
+  %121 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %116, i64 0
+  %122 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %116, i64 0
+  %123 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %116, i64 0
+  %124 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %116, i64 0
+  %125 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %116, i64 0
+  br label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437
+
+_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437: ; preds = %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i436.preheader.new
+  %.09.i.i.i.i.i.us.i.i438 = phi ptr [ %.09.i.i.i.i.i.us.i.i438.unr, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i436.preheader.new ], [ %i.bag, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437 ] ; 9 uses
+  %.068.i.i.i.i.i.us.i.i439 = phi i64 [ %.068.i.i.i.i.i.us.i.i439.unr, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i436.preheader.new ], [ %i.baf, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i437 ]
+  store <2 x ptr> %118, ptr %.09.i.i.i.i.i.us.i.i438, align 8, !tbaa !93
   %i.azy = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i438, i64 16
-  store <2 x ptr> %117, ptr %i.azy, align 8, !tbaa !93
+  store <2 x ptr> %119, ptr %i.azy, align 8, !tbaa !93
   %i.azz = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i438, i64 32
-  store <2 x ptr> %117, ptr %i.azz, align 8, !tbaa !93
+  store <2 x ptr> %120, ptr %i.azz, align 8, !tbaa !93
   %i.baa = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i438, i64 48
-  store <2 x ptr> %117, ptr %i.baa, align 8, !tbaa !93
+  store <2 x ptr> %121, ptr %i.baa, align 8, !tbaa !93
   %i.bab = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i438, i64 64
-  store <2 x ptr> %117, ptr %i.bab, align 8, !tbaa !93
+  store <2 x ptr> %122, ptr %i.bab, align 8, !tbaa !93
   %i.bac = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i438, i64 80
-  store <2 x ptr> %117, ptr %i.bac, align 8, !tbaa !93
+  store <2 x ptr> %123, ptr %i.bac, align 8, !tbaa !93
   %i.bad = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i438, i64 96
-  store <2 x ptr> %117, ptr %i.bad, align 8, !tbaa !93
+  store <2 x ptr> %124, ptr %i.bad, align 8, !tbaa !93
   %i.bae = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i438, i64 112
-  store <2 x ptr> %117, ptr %i.bae, align 8, !tbaa !93
+  store <2 x ptr> %125, ptr %i.bae, align 8, !tbaa !93
   %i.baf = add i64 %.068.i.i.i.i.i.us.i.i439, -8  ; 2 uses
   %i.bag = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i438, i64 128 ; 2 uses
   %.not.i.i.i.i.i.us.i.i440.7 = icmp eq i64 %i.baf, 0
@@ -256,18 +270,18 @@ _ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i
   br label %.lr.ph.i.i.i.i.i.split.i.i400
 
 .lr.ph.i.i.i.i.i.split.i.i400:                    ; preds = %.noexc46.i, %.lr.ph.i.i.i.i.i.splitthread-pre-split.i.i406
-  %i.bah = phi ptr [ %.pr.i.i407, %.lr.ph.i.i.i.i.i.splitthread-pre-split.i.i406 ], [ %i.azt, %.noexc46.i ] ; 3 uses
-  %.09.i.i.i.i.i.i.i401.a = phi ptr [ %i.bap, %.lr.ph.i.i.i.i.i.splitthread-pre-split.i.i406 ], [ %i.azo, %.noexc46.i ] ; 3 uses
+  %i.bah = phi ptr [ %126, %.lr.ph.i.i.i.i.i.splitthread-pre-split.i.i406 ], [ %116, %.noexc46.i ] ; 3 uses
+  %.09.i.i.i.i.i.i.i401.a = phi ptr [ %.pr.i.i407, %.lr.ph.i.i.i.i.i.splitthread-pre-split.i.i406 ], [ %i.azt, %.noexc46.i ] ; 3 uses
+  %.09.i.i.i.i.i.i.i401 = phi ptr [ %i.bap, %.lr.ph.i.i.i.i.i.splitthread-pre-split.i.i406 ], [ %i.azo, %.noexc46.i ] ; 3 uses
   %.068.i.i.i.i.i.i.i402 = phi i64 [ %i.bao, %.lr.ph.i.i.i.i.i.splitthread-pre-split.i.i406 ], [ %i.azk, %.noexc46.i ]
-  %118 = load ptr, ptr %45, align 8, !tbaa !1327, !noalias !2649
-  store ptr %118, ptr %.09.i.i.i.i.i.i.i401.a, align 8, !tbaa !1327
-  %i.bai = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i401.a, i64 8
-  store ptr %i.bah, ptr %i.bai, align 8, !tbaa !91
-  %.not.i.i.i.i.i.i.i.i.i.i.i403 = icmp eq ptr %i.bah, null
+  store ptr %i.bah, ptr %.09.i.i.i.i.i.i.i401, align 8, !tbaa !1327
+  %i.bai = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i401, i64 8
+  store ptr %.09.i.i.i.i.i.i.i401.a, ptr %i.bai, align 8, !tbaa !91
+  %.not.i.i.i.i.i.i.i.i.i.i.i403 = icmp eq ptr %.09.i.i.i.i.i.i.i401.a, null
   br i1 %.not.i.i.i.i.i.i.i.i.i.i.i403, label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.i.i405, label %bb.py
 
 bb.py:                                            ; preds = %.lr.ph.i.i.i.i.i.split.i.i400
-  %i.baj = getelementptr inbounds nuw i8, ptr %i.bah, i64 8 ; 3 uses
+  %i.baj = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i401.a, i64 8 ; 3 uses
   %i.bak = load i8, ptr @__libc_single_threaded, align 1, !tbaa !95, !noalias !2649
   %.not.i.i.i.i.i.i.i.i.i.i.i.i404 = icmp eq i8 %i.bak, 0
   br i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i404, label %bb.qa, label %bb.pz
@@ -280,11 +294,13 @@ bb.pz:                                            ; preds = %bb.py
 
 bb.qa:                                            ; preds = %bb.py
   %i.ban = atomicrmw volatile add ptr %i.baj, i32 1 acq_rel, align 4 ; 0 uses
+  %.pre13.i = load ptr, ptr %45, align 8, !tbaa !1327, !noalias !2649
   br label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.i.i405
 
 _ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.i.i405: ; preds = %bb.qa, %bb.pz, %.lr.ph.i.i.i.i.i.split.i.i400
+  %126 = phi ptr [ %.pre13.i, %bb.qa ], [ %i.bah, %bb.pz ], [ %i.bah, %.lr.ph.i.i.i.i.i.split.i.i400 ]
   %i.bao = add nsw i64 %.068.i.i.i.i.i.i.i402, -1 ; 2 uses
-  %i.bap = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i401.a, i64 16 ; 2 uses
+  %i.bap = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i401, i64 16 ; 2 uses
   %.not.i.i.i.i.i.i45.i = icmp eq i64 %i.bao, 0
   br i1 %.not.i.i.i.i.i.i45.i, label %.loopexit3.i, label %.lr.ph.i.i.i.i.i.splitthread-pre-split.i.i406, !llvm.loop !2542
 
@@ -384,20 +400,23 @@ _ZNSt12_Vector_baseISt10shared_ptrIN5arrow5ArrayEESaIS3_EEC2EmRKS4_.exit.thread.
   %i.bbq = getelementptr inbounds nuw i8, ptr %47, i64 8 ; 2 uses
   %i.bbr = load ptr, ptr %i.bbq, align 8, !tbaa !91, !noalias !2649 ; 2 uses
   %i.bbs = icmp eq ptr %i.bbr, null
+  %127 = load ptr, ptr %47, align 8, !tbaa !1327, !noalias !2649 ; 10 uses
   br i1 %i.bbs, label %.lr.ph.i.i.i.i.i.split.us.i60.i, label %.lr.ph.i.i.i.i.i.split.i50.i
 
 .lr.ph.i.i.i.i.i.split.us.i60.i:                  ; preds = %.noexc67.i
-  %119 = load ptr, ptr %47, align 8, !tbaa !1327, !noalias !2649
-  %120 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %119, i64 0 ; 9 uses
   %xtraiter1145 = and i64 %i.bbi, 7               ; 2 uses
   %lcmp.mod1146.not = icmp eq i64 %xtraiter1145, 0
-  br i1 %lcmp.mod1146.not, label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol.loopexit, label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol
+  br i1 %lcmp.mod1146.not, label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol.loopexit, label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol.preheader
 
-_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol: ; preds = %.lr.ph.i.i.i.i.i.split.us.i60.i, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol
-  %.09.i.i.i.i.i.us.i62.i.prol = phi ptr [ %i.bbu, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol ], [ %i.bbm, %.lr.ph.i.i.i.i.i.split.us.i60.i ] ; 2 uses
-  %.068.i.i.i.i.i.us.i63.i.prol = phi i64 [ %i.bbt, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol ], [ %i.bbi, %.lr.ph.i.i.i.i.i.split.us.i60.i ]
-  %prol.iter1147 = phi i64 [ %prol.iter1147.next, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol ], [ 0, %.lr.ph.i.i.i.i.i.split.us.i60.i ]
-  store <2 x ptr> %120, ptr %.09.i.i.i.i.i.us.i62.i.prol, align 8, !tbaa !93
+_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol.preheader: ; preds = %.lr.ph.i.i.i.i.i.split.us.i60.i
+  %128 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %127, i64 0
+  br label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol
+
+_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol: ; preds = %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol.preheader
+  %.09.i.i.i.i.i.us.i62.i.prol = phi ptr [ %i.bbu, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol ], [ %i.bbm, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol.preheader ] ; 2 uses
+  %.068.i.i.i.i.i.us.i63.i.prol = phi i64 [ %i.bbt, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol ], [ %i.bbi, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol.preheader ]
+  %prol.iter1147 = phi i64 [ %prol.iter1147.next, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol ], [ 0, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol.preheader ]
+  store <2 x ptr> %128, ptr %.09.i.i.i.i.i.us.i62.i.prol, align 8, !tbaa !93
   %i.bbt = add i64 %.068.i.i.i.i.i.us.i63.i.prol, -1 ; 2 uses
   %i.bbu = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i62.i.prol, i64 16 ; 3 uses
   %prol.iter1147.next = add i64 %prol.iter1147, 1 ; 2 uses
@@ -409,26 +428,37 @@ _ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i
   %.09.i.i.i.i.i.us.i62.i.unr = phi ptr [ %i.bbm, %.lr.ph.i.i.i.i.i.split.us.i60.i ], [ %i.bbu, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol ]
   %.068.i.i.i.i.i.us.i63.i.unr = phi i64 [ %i.bbi, %.lr.ph.i.i.i.i.i.split.us.i60.i ], [ %i.bbt, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol ]
   %i.bbv = icmp ult i64 %i.bbi, 8
-  br i1 %i.bbv, label %.loopexit.i414, label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i
+  br i1 %i.bbv, label %.loopexit.i414, label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.preheader.new
 
-_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i: ; preds = %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol.loopexit, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i
-  %.09.i.i.i.i.i.us.i62.i = phi ptr [ %i.bce, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i ], [ %.09.i.i.i.i.i.us.i62.i.unr, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol.loopexit ] ; 9 uses
-  %.068.i.i.i.i.i.us.i63.i = phi i64 [ %i.bcd, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i ], [ %.068.i.i.i.i.i.us.i63.i.unr, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol.loopexit ]
-  store <2 x ptr> %120, ptr %.09.i.i.i.i.i.us.i62.i, align 8, !tbaa !93
+_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.preheader.new: ; preds = %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol.loopexit
+  %129 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %127, i64 0
+  %130 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %127, i64 0
+  %131 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %127, i64 0
+  %132 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %127, i64 0
+  %133 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %127, i64 0
+  %134 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %127, i64 0
+  %135 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %127, i64 0
+  %136 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %127, i64 0
+  br label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i
+
+_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i: ; preds = %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.preheader.new
+  %.09.i.i.i.i.i.us.i62.i = phi ptr [ %.09.i.i.i.i.i.us.i62.i.unr, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.preheader.new ], [ %i.bce, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i ] ; 9 uses
+  %.068.i.i.i.i.i.us.i63.i = phi i64 [ %.068.i.i.i.i.i.us.i63.i.unr, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.preheader.new ], [ %i.bcd, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i ]
+  store <2 x ptr> %129, ptr %.09.i.i.i.i.i.us.i62.i, align 8, !tbaa !93
   %i.bbw = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i62.i, i64 16
-  store <2 x ptr> %120, ptr %i.bbw, align 8, !tbaa !93
+  store <2 x ptr> %130, ptr %i.bbw, align 8, !tbaa !93
   %i.bbx = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i62.i, i64 32
-  store <2 x ptr> %120, ptr %i.bbx, align 8, !tbaa !93
+  store <2 x ptr> %131, ptr %i.bbx, align 8, !tbaa !93
   %i.bby = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i62.i, i64 48
-  store <2 x ptr> %120, ptr %i.bby, align 8, !tbaa !93
+  store <2 x ptr> %132, ptr %i.bby, align 8, !tbaa !93
   %i.bbz = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i62.i, i64 64
-  store <2 x ptr> %120, ptr %i.bbz, align 8, !tbaa !93
+  store <2 x ptr> %133, ptr %i.bbz, align 8, !tbaa !93
   %i.bca = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i62.i, i64 80
-  store <2 x ptr> %120, ptr %i.bca, align 8, !tbaa !93
+  store <2 x ptr> %134, ptr %i.bca, align 8, !tbaa !93
   %i.bcb = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i62.i, i64 96
-  store <2 x ptr> %120, ptr %i.bcb, align 8, !tbaa !93
+  store <2 x ptr> %135, ptr %i.bcb, align 8, !tbaa !93
   %i.bcc = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i62.i, i64 112
-  store <2 x ptr> %120, ptr %i.bcc, align 8, !tbaa !93
+  store <2 x ptr> %136, ptr %i.bcc, align 8, !tbaa !93
   %i.bcd = add i64 %.068.i.i.i.i.i.us.i63.i, -8   ; 2 uses
   %i.bce = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i62.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.us.i64.i.7 = icmp eq i64 %i.bcd, 0
@@ -439,18 +469,18 @@ _ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i
   br label %.lr.ph.i.i.i.i.i.split.i50.i
 
 .lr.ph.i.i.i.i.i.split.i50.i:                     ; preds = %.noexc67.i, %.lr.ph.i.i.i.i.i.splitthread-pre-split.i57.i
-  %i.bcf = phi ptr [ %.pr.i58.i, %.lr.ph.i.i.i.i.i.splitthread-pre-split.i57.i ], [ %i.bbr, %.noexc67.i ] ; 3 uses
-  %.09.i.i.i.i.i.i51.i.a = phi ptr [ %i.bcn, %.lr.ph.i.i.i.i.i.splitthread-pre-split.i57.i ], [ %i.bbm, %.noexc67.i ] ; 3 uses
+  %i.bcf = phi ptr [ %137, %.lr.ph.i.i.i.i.i.splitthread-pre-split.i57.i ], [ %127, %.noexc67.i ] ; 3 uses
+  %.09.i.i.i.i.i.i51.i.a = phi ptr [ %.pr.i58.i, %.lr.ph.i.i.i.i.i.splitthread-pre-split.i57.i ], [ %i.bbr, %.noexc67.i ] ; 3 uses
+  %.09.i.i.i.i.i.i51.i = phi ptr [ %i.bcn, %.lr.ph.i.i.i.i.i.splitthread-pre-split.i57.i ], [ %i.bbm, %.noexc67.i ] ; 3 uses
   %.068.i.i.i.i.i.i52.i = phi i64 [ %i.bcm, %.lr.ph.i.i.i.i.i.splitthread-pre-split.i57.i ], [ %i.bbi, %.noexc67.i ]
-  %121 = load ptr, ptr %47, align 8, !tbaa !1327, !noalias !2649
-  store ptr %121, ptr %.09.i.i.i.i.i.i51.i.a, align 8, !tbaa !1327
-  %i.bcg = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i51.i.a, i64 8
-  store ptr %i.bcf, ptr %i.bcg, align 8, !tbaa !91
-  %.not.i.i.i.i.i.i.i.i.i.i53.i = icmp eq ptr %i.bcf, null
+  store ptr %i.bcf, ptr %.09.i.i.i.i.i.i51.i, align 8, !tbaa !1327
+  %i.bcg = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i51.i, i64 8
+  store ptr %.09.i.i.i.i.i.i51.i.a, ptr %i.bcg, align 8, !tbaa !91
+  %.not.i.i.i.i.i.i.i.i.i.i53.i = icmp eq ptr %.09.i.i.i.i.i.i51.i.a, null
   br i1 %.not.i.i.i.i.i.i.i.i.i.i53.i, label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.i55.i, label %bb.qj
 
 bb.qj:                                            ; preds = %.lr.ph.i.i.i.i.i.split.i50.i
-  %i.bch = getelementptr inbounds nuw i8, ptr %i.bcf, i64 8 ; 3 uses
+  %i.bch = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i51.i.a, i64 8 ; 3 uses
   %i.bci = load i8, ptr @__libc_single_threaded, align 1, !tbaa !95, !noalias !2649
   %.not.i.i.i.i.i.i.i.i.i.i.i54.i = icmp eq i8 %i.bci, 0
   br i1 %.not.i.i.i.i.i.i.i.i.i.i.i54.i, label %bb.ql, label %bb.qk
@@ -463,11 +493,13 @@ bb.qk:                                            ; preds = %bb.qj
 
 bb.ql:                                            ; preds = %bb.qj
   %i.bcl = atomicrmw volatile add ptr %i.bch, i32 1 acq_rel, align 4 ; 0 uses
+  %.pre15.i = load ptr, ptr %47, align 8, !tbaa !1327, !noalias !2649
   br label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.i55.i
 
 _ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.i55.i: ; preds = %bb.ql, %bb.qk, %.lr.ph.i.i.i.i.i.split.i50.i
+  %137 = phi ptr [ %.pre15.i, %bb.ql ], [ %i.bcf, %bb.qk ], [ %i.bcf, %.lr.ph.i.i.i.i.i.split.i50.i ]
   %i.bcm = add nsw i64 %.068.i.i.i.i.i.i52.i, -1  ; 2 uses
-  %i.bcn = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i51.i.a, i64 16 ; 2 uses
+  %i.bcn = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i51.i, i64 16 ; 2 uses
   %.not.i.i.i.i.i.i56.i = icmp eq i64 %i.bcm, 0
   br i1 %.not.i.i.i.i.i.i56.i, label %.loopexit.i414, label %.lr.ph.i.i.i.i.i.splitthread-pre-split.i57.i, !llvm.loop !2542
 
@@ -870,20 +902,23 @@ _ZNSt12_Vector_baseISt10shared_ptrIN5arrow5ArrayEESaIS3_EEC2EmRKS4_.exit.thread.
   store ptr %i.bmj, ptr %i.bmk, align 8, !tbaa !1357, !noalias !2687
   %i.bml = load ptr, ptr %i.blt, align 8, !tbaa !91, !noalias !2687 ; 2 uses
   %i.bmm = icmp eq ptr %i.bml, null
+  %138 = load ptr, ptr %37, align 16, !tbaa !1327, !noalias !2687 ; 10 uses
   br i1 %i.bmm, label %.lr.ph.i.i.i.i.i.split.us.i.i486, label %.lr.ph.i.i.i.i.i.split.i.i449
 
 .lr.ph.i.i.i.i.i.split.us.i.i486:                 ; preds = %.noexc15.i
-  %122 = load ptr, ptr %37, align 16, !tbaa !1327, !noalias !2687
-  %123 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %122, i64 0 ; 9 uses
   %xtraiter = and i64 %i.bmd, 7                   ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487.prol.loopexit, label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487.prol
+  br i1 %lcmp.mod.not, label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487.prol.loopexit, label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i486.prol.preheader
 
-_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487.prol: ; preds = %.lr.ph.i.i.i.i.i.split.us.i.i486, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487.prol
-  %.09.i.i.i.i.i.us.i.i488.prol = phi ptr [ %i.bmo, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487.prol ], [ %i.bmh, %.lr.ph.i.i.i.i.i.split.us.i.i486 ] ; 2 uses
-  %.068.i.i.i.i.i.us.i.i489.prol = phi i64 [ %i.bmn, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487.prol ], [ %i.bmd, %.lr.ph.i.i.i.i.i.split.us.i.i486 ]
-  %prol.iter = phi i64 [ %prol.iter.next, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487.prol ], [ 0, %.lr.ph.i.i.i.i.i.split.us.i.i486 ]
-  store <2 x ptr> %123, ptr %.09.i.i.i.i.i.us.i.i488.prol, align 8, !tbaa !93
+_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i486.prol.preheader: ; preds = %.lr.ph.i.i.i.i.i.split.us.i.i486
+  %139 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %138, i64 0
+  br label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487.prol
+
+_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487.prol: ; preds = %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487.prol, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i486.prol.preheader
+  %.09.i.i.i.i.i.us.i.i488.prol = phi ptr [ %i.bmo, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487.prol ], [ %i.bmh, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i486.prol.preheader ] ; 2 uses
+  %.068.i.i.i.i.i.us.i.i489.prol = phi i64 [ %i.bmn, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487.prol ], [ %i.bmd, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i486.prol.preheader ]
+  %prol.iter = phi i64 [ %prol.iter.next, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487.prol ], [ 0, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i486.prol.preheader ]
+  store <2 x ptr> %139, ptr %.09.i.i.i.i.i.us.i.i488.prol, align 8, !tbaa !93
   %i.bmn = add i64 %.068.i.i.i.i.i.us.i.i489.prol, -1 ; 2 uses
   %i.bmo = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i488.prol, i64 16 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
@@ -895,26 +930,37 @@ _ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i
   %.09.i.i.i.i.i.us.i.i488.unr = phi ptr [ %i.bmh, %.lr.ph.i.i.i.i.i.split.us.i.i486 ], [ %i.bmo, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487.prol ]
   %.068.i.i.i.i.i.us.i.i489.unr = phi i64 [ %i.bmd, %.lr.ph.i.i.i.i.i.split.us.i.i486 ], [ %i.bmn, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487.prol ]
   %i.bmp = icmp ult i64 %i.bmd, 8
-  br i1 %i.bmp, label %.loopexit.i458, label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487
+  br i1 %i.bmp, label %.loopexit.i458, label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i486.preheader.new
 
-_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487: ; preds = %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487.prol.loopexit, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487
-  %.09.i.i.i.i.i.us.i.i488 = phi ptr [ %i.bmy, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487 ], [ %.09.i.i.i.i.i.us.i.i488.unr, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487.prol.loopexit ] ; 9 uses
-  %.068.i.i.i.i.i.us.i.i489 = phi i64 [ %i.bmx, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487 ], [ %.068.i.i.i.i.i.us.i.i489.unr, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487.prol.loopexit ]
-  store <2 x ptr> %123, ptr %.09.i.i.i.i.i.us.i.i488, align 8, !tbaa !93
+_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i486.preheader.new: ; preds = %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487.prol.loopexit
+  %140 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %138, i64 0
+  %141 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %138, i64 0
+  %142 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %138, i64 0
+  %143 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %138, i64 0
+  %144 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %138, i64 0
+  %145 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %138, i64 0
+  %146 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %138, i64 0
+  %147 = insertelement <2 x ptr> <ptr poison, ptr null>, ptr %138, i64 0
+  br label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487
+
+_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487: ; preds = %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i486.preheader.new
+  %.09.i.i.i.i.i.us.i.i488 = phi ptr [ %.09.i.i.i.i.i.us.i.i488.unr, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i486.preheader.new ], [ %i.bmy, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487 ] ; 9 uses
+  %.068.i.i.i.i.i.us.i.i489 = phi i64 [ %.068.i.i.i.i.i.us.i.i489.unr, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i486.preheader.new ], [ %i.bmx, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i487 ]
+  store <2 x ptr> %140, ptr %.09.i.i.i.i.i.us.i.i488, align 8, !tbaa !93
   %i.bmq = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i488, i64 16
-  store <2 x ptr> %123, ptr %i.bmq, align 8, !tbaa !93
+  store <2 x ptr> %141, ptr %i.bmq, align 8, !tbaa !93
   %i.bmr = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i488, i64 32
-  store <2 x ptr> %123, ptr %i.bmr, align 8, !tbaa !93
+  store <2 x ptr> %142, ptr %i.bmr, align 8, !tbaa !93
   %i.bms = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i488, i64 48
-  store <2 x ptr> %123, ptr %i.bms, align 8, !tbaa !93
+  store <2 x ptr> %143, ptr %i.bms, align 8, !tbaa !93
   %i.bmt = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i488, i64 64
-  store <2 x ptr> %123, ptr %i.bmt, align 8, !tbaa !93
+  store <2 x ptr> %144, ptr %i.bmt, align 8, !tbaa !93
   %i.bmu = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i488, i64 80
-  store <2 x ptr> %123, ptr %i.bmu, align 8, !tbaa !93
+  store <2 x ptr> %145, ptr %i.bmu, align 8, !tbaa !93
   %i.bmv = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i488, i64 96
-  store <2 x ptr> %123, ptr %i.bmv, align 8, !tbaa !93
+  store <2 x ptr> %146, ptr %i.bmv, align 8, !tbaa !93
   %i.bmw = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i488, i64 112
-  store <2 x ptr> %123, ptr %i.bmw, align 8, !tbaa !93
+  store <2 x ptr> %147, ptr %i.bmw, align 8, !tbaa !93
   %i.bmx = add i64 %.068.i.i.i.i.i.us.i.i489, -8  ; 2 uses
   %i.bmy = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i488, i64 128 ; 2 uses
   %.not.i.i.i.i.i.us.i.i490.7 = icmp eq i64 %i.bmx, 0
@@ -925,18 +971,18 @@ _ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i
   br label %.lr.ph.i.i.i.i.i.split.i.i449
 
 .lr.ph.i.i.i.i.i.split.i.i449:                    ; preds = %.noexc15.i, %.lr.ph.i.i.i.i.i.splitthread-pre-split.i.i456
-  %i.bmz = phi ptr [ %.pr.i.i457, %.lr.ph.i.i.i.i.i.splitthread-pre-split.i.i456 ], [ %i.bml, %.noexc15.i ] ; 3 uses
-  %.09.i.i.i.i.i.i.i450 = phi ptr [ %i.bnh, %.lr.ph.i.i.i.i.i.splitthread-pre-split.i.i456 ], [ %i.bmh, %.noexc15.i ] ; 3 uses
-  %.068.i.i.i.i.i.i.i451 = phi i64 [ %i.bng, %.lr.ph.i.i.i.i.i.splitthread-pre-split.i.i456 ], [ %i.bmd, %.noexc15.i ]
-  %124 = load ptr, ptr %37, align 16, !tbaa !1327, !noalias !2687
-  store ptr %124, ptr %.09.i.i.i.i.i.i.i450, align 8, !tbaa !1327
-  %i.bna = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i450, i64 8
-  store ptr %i.bmz, ptr %i.bna, align 8, !tbaa !91
-  %.not.i.i.i.i.i.i.i.i.i.i.i452 = icmp eq ptr %i.bmz, null
+  %i.bmz = phi ptr [ %148, %.lr.ph.i.i.i.i.i.splitthread-pre-split.i.i456 ], [ %138, %.noexc15.i ] ; 3 uses
+  %.09.i.i.i.i.i.i.i450 = phi ptr [ %.pr.i.i457, %.lr.ph.i.i.i.i.i.splitthread-pre-split.i.i456 ], [ %i.bml, %.noexc15.i ] ; 3 uses
+  %.09.i.i.i.i.i.i.i449 = phi ptr [ %i.bnh, %.lr.ph.i.i.i.i.i.splitthread-pre-split.i.i456 ], [ %i.bmh, %.noexc15.i ] ; 3 uses
+  %.068.i.i.i.i.i.i.i450 = phi i64 [ %i.bng, %.lr.ph.i.i.i.i.i.splitthread-pre-split.i.i456 ], [ %i.bmd, %.noexc15.i ]
+  store ptr %i.bmz, ptr %.09.i.i.i.i.i.i.i449, align 8, !tbaa !1327
+  %i.bna = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i449, i64 8
+  store ptr %.09.i.i.i.i.i.i.i450, ptr %i.bna, align 8, !tbaa !91
+  %.not.i.i.i.i.i.i.i.i.i.i.i452 = icmp eq ptr %.09.i.i.i.i.i.i.i450, null
   br i1 %.not.i.i.i.i.i.i.i.i.i.i.i452, label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.i.i454, label %bb.uf
 
 bb.uf:                                            ; preds = %.lr.ph.i.i.i.i.i.split.i.i449
-  %i.bnb = getelementptr inbounds nuw i8, ptr %i.bmz, i64 8 ; 3 uses
+  %i.bnb = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i450, i64 8 ; 3 uses
   %i.bnc = load i8, ptr @__libc_single_threaded, align 1, !tbaa !95, !noalias !2687
   %.not.i.i.i.i.i.i.i.i.i.i.i.i453 = icmp eq i8 %i.bnc, 0
   br i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i453, label %bb.uh, label %bb.ug
@@ -949,11 +995,13 @@ bb.ug:                                            ; preds = %bb.uf
 
 bb.uh:                                            ; preds = %bb.uf
   %i.bnf = atomicrmw volatile add ptr %i.bnb, i32 1 acq_rel, align 4 ; 0 uses
+  %.pre.i485 = load ptr, ptr %37, align 16, !tbaa !1327, !noalias !2687
   br label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.i.i454
 
 _ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.i.i454: ; preds = %bb.uh, %bb.ug, %.lr.ph.i.i.i.i.i.split.i.i449
-  %i.bng = add nsw i64 %.068.i.i.i.i.i.i.i451, -1 ; 2 uses
-  %i.bnh = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i450, i64 16 ; 2 uses
+  %148 = phi ptr [ %.pre.i485, %bb.uh ], [ %i.bmz, %bb.ug ], [ %i.bmz, %.lr.ph.i.i.i.i.i.split.i.i449 ]
+  %i.bng = add nsw i64 %.068.i.i.i.i.i.i.i450, -1 ; 2 uses
+  %i.bnh = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i449, i64 16 ; 2 uses
   %.not.i.i.i.i.i.i.i455 = icmp eq i64 %i.bng, 0
   br i1 %.not.i.i.i.i.i.i.i455, label %.loopexit.i458, label %.lr.ph.i.i.i.i.i.splitthread-pre-split.i.i456, !llvm.loop !2542
 

@@ -201,7 +201,7 @@ _ZNSt14_Bit_referenceaSEb.exit.i.i.i.i.i.i.i.5:
   %i.b = alloca i64, align 8                      ; 5 uses
   %2 = alloca %"class.arrow::Result", align 8     ; 13 uses
   %i.c = alloca i64, align 8                      ; 5 uses
-  %3 = alloca %"class.std::vector.154", align 8   ; 15 uses
+  %3 = alloca %"class.std::vector.154", align 8   ; 16 uses
   %4 = alloca %"class.std::shared_ptr.8", align 16 ; 12 uses
   %5 = alloca %"class.std::shared_ptr.5", align 8 ; 10 uses
   %6 = alloca %"class.std::shared_ptr.5", align 8 ; 7 uses
@@ -604,7 +604,11 @@ bb.al:                                            ; preds = %.noexc167
   %i.db = load ptr, ptr %i.da, align 8, !noalias !922
   %i.dc = select i1 %i.cz, ptr %i.db, ptr null, !prof !35
   %.not23.i = icmp eq i64 %i.cl, 0
-  br i1 %.not23.i, label %._crit_edge.i, label %.lr.ph.i
+  br i1 %.not23.i, label %._crit_edge.i, label %.lr.ph.i.preheader
+
+.lr.ph.i.preheader:                               ; preds = %bb.al
+  %.pre681 = load ptr, ptr %3, align 8, !tbaa !925, !noalias !922
+  br label %.lr.ph.i
 
 ._crit_edge.i:                                    ; preds = %bb.bd, %bb.al
   store ptr %i.cq, ptr %23, align 8, !tbaa !241, !noalias !922
@@ -736,9 +740,9 @@ bb.bb:                                            ; preds = %_ZN9__gnu_cxx27__ex
   call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.cs) #22, !noalias !922
   br label %_ZNSt12__shared_ptrIN5arrow6BufferELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i
 
-.lr.ph.i:                                         ; preds = %bb.al, %bb.bd
-  %.022.i = phi i64 [ %i.fe, %bb.bd ], [ 0, %bb.al ] ; 6 uses
-  %69 = load ptr, ptr %3, align 8, !tbaa !925, !noalias !922
+.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.bd
+  %69 = phi ptr [ %70, %bb.bd ], [ %.pre681, %.lr.ph.i.preheader ] ; 2 uses
+  %.022.i = phi i64 [ %i.fe, %bb.bd ], [ 0, %.lr.ph.i.preheader ] ; 6 uses
   %i.ep = sdiv i64 %.022.i, 64
   %i.eq = getelementptr inbounds [8 x i8], ptr %69, i64 %i.ep
   %i.er = and i64 %.022.i, -9223372036854775745
@@ -761,9 +765,11 @@ bb.bc:                                            ; preds = %.lr.ph.i
   %i.fc = load i8, ptr %i.fb, align 1, !tbaa !31, !noalias !922
   %i.fd = or i8 %i.fc, %i.ez
   store i8 %i.fd, ptr %i.fb, align 1, !tbaa !31, !noalias !922
+  %.pre = load ptr, ptr %3, align 8, !tbaa !925, !noalias !922
   br label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc, %.lr.ph.i
+  %70 = phi ptr [ %.pre, %bb.bc ], [ %69, %.lr.ph.i ]
   %i.fe = add nuw i64 %.022.i, 1                  ; 2 uses
   %i.ff = icmp ult i64 %i.fe, %i.cl
   br i1 %i.ff, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !937

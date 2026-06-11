@@ -97,7 +97,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.ch
 
 bb.c:                                             ; preds = %bb.a
-  %i.j = load ptr, ptr %1, align 8, !tbaa !9      ; 2 uses
+  %i.j = load ptr, ptr %1, align 8, !tbaa !9      ; 3 uses
   store ptr %i.j, ptr %i.b, align 8, !tbaa !9
   %i.k = getelementptr inbounds i8, ptr %i.j, i64 %2 ; 2 uses
   %i.l = icmp sgt i64 %2, 0
@@ -118,8 +118,8 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph350, %.loopexit316
+  %7 = phi ptr [ %i.j, %.lr.ph350 ], [ %8, %.loopexit316 ] ; 6 uses
   %.0189348 = phi i64 [ %2, %.lr.ph350 ], [ %i.jj, %.loopexit316 ] ; 2 uses
-  %7 = load ptr, ptr %i.b, align 8, !tbaa !9      ; 6 uses
   %i.u = call i32 @ASN1_get_object(ptr noundef nonnull %i.b, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, i64 noundef %.0189348) #5 ; 4 uses
   %i.v = and i32 %i.u, 128
   %.not = icmp eq i32 %i.v, 0
@@ -310,7 +310,7 @@ bb.af:                                            ; preds = %bb.ae
 bb.ag:                                            ; preds = %bb.ae
   %i.cf = icmp eq i64 %i.cc, 0
   %or.cond = and i1 %.not55.i, %i.cf
-  %.pre.a = load ptr, ptr %i.b, align 8, !tbaa !9 ; 3 uses
+  %.pre.a = load ptr, ptr %i.b, align 8, !tbaa !9 ; 4 uses
   br i1 %or.cond, label %.preheader313, label %.preheader315
 
 .preheader315:                                    ; preds = %bb.ag
@@ -342,7 +342,7 @@ bb.ah:                                            ; preds = %.preheader313
   br i1 %.not246, label %.preheader313, label %split
 
 split:                                            ; preds = %bb.ah, %.preheader313._crit_edge
-  %i.cq = phi ptr [ %.pre522, %.preheader313._crit_edge ], [ %i.cp, %bb.ah ]
+  %i.cq = phi ptr [ %.pre522, %.preheader313._crit_edge ], [ %i.cp, %bb.ah ] ; 2 uses
   %i.cr = ptrtoint ptr %i.cq to i64
   %i.cs = ptrtoint ptr %i.bx to i64
   %i.ct = sub i64 %i.cr, %i.cs
@@ -363,7 +363,7 @@ split:                                            ; preds = %bb.ah, %.preheader3
   br i1 %i.dc, label %.thread264, label %bb.ai
 
 bb.ai:                                            ; preds = %.lr.ph
-  %i.dd = load ptr, ptr %i.b, align 8, !tbaa !9   ; 3 uses
+  %i.dd = load ptr, ptr %i.b, align 8, !tbaa !9   ; 4 uses
   %i.de = ptrtoint ptr %i.dd to i64
   %.neg = add i64 %.0180334, %i.cw
   %i.df = sub i64 %.neg, %i.de
@@ -382,6 +382,7 @@ bb.ak:                                            ; preds = %bb.aj
   store ptr %i.dj, ptr %i.b, align 8, !tbaa !9
   %i.dk = call i32 @BIO_write(ptr noundef %0, ptr noundef nonnull @.str.34, i32 noundef 1) #5
   %i.dl = icmp slt i32 %i.dk, 1
+  %.pre = load ptr, ptr %i.b, align 8, !tbaa !9
   br i1 %i.dl, label %.thread264, label %.loopexit316
 
 bb.al:                                            ; preds = %bb.aj
@@ -782,7 +783,7 @@ bb.cg:                                            ; preds = %bb.bg
 .thread559:                                       ; preds = %bb.cd, %bb.cg, %.thread552
   %i.jb = load i64, ptr %i.d, align 8, !tbaa !14
   %i.jc = load ptr, ptr %i.b, align 8, !tbaa !9
-  %i.jd = getelementptr inbounds i8, ptr %i.jc, i64 %i.jb
+  %i.jd = getelementptr inbounds i8, ptr %i.jc, i64 %i.jb ; 2 uses
   store ptr %i.jd, ptr %i.b, align 8, !tbaa !9
   %i.je = load i32, ptr %i.e, align 4, !tbaa !5
   %i.jf = icmp eq i32 %i.je, 0
@@ -792,6 +793,7 @@ bb.cg:                                            ; preds = %bb.bg
   br i1 %or.cond19, label %.thread264, label %.loopexit316
 
 .loopexit316:                                     ; preds = %bb.ai, %.preheader315, %split, %bb.ak, %.thread559
+  %8 = phi ptr [ %i.jd, %.thread559 ], [ %.pre.a, %.preheader315 ], [ %i.cq, %split ], [ %.pre, %bb.ak ], [ %i.dd, %bb.ai ]
   %i.ji = load i64, ptr %i.d, align 8, !tbaa !14
   %i.jj = sub nsw i64 %i.ac, %i.ji                ; 2 uses
   %i.jk = icmp sgt i64 %i.jj, 0

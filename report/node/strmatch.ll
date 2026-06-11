@@ -201,7 +201,7 @@ define dso_local noundef i32 @_ZN6icu_7813StringMatcher7matchesERKNS_11Replaceab
 bb.a:
   %i.a = alloca i32, align 4                      ; 18 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
-  %i.b = load i32, ptr %2, align 4                ; 3 uses
+  %i.b = load i32, ptr %2, align 4                ; 5 uses
   store i32 %i.b, ptr %i.a, align 4
   %i.c = icmp slt i32 %3, %i.b
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 5 uses
@@ -277,7 +277,7 @@ bb.e:                                             ; preds = %.thread70.us, %bb.b
   %i.ar = select i1 %i.an, i32 %i.aq, i32 %i.ap
   %i.as = sext i32 %i.ar to i64
   %i.at = icmp slt i64 %indvars.iv.next88, %i.as
-  br i1 %i.at, label %_ZNK6icu_7813UnicodeString6charAtEi.exit63.us, label %._crit_edge, !llvm.loop !10
+  br i1 %i.at, label %_ZNK6icu_7813UnicodeString6charAtEi.exit63.us, label %._crit_edge.loopexit, !llvm.loop !10
 
 bb.f:                                             ; preds = %bb.a
   %i.au = load i16, ptr %i.d, align 8             ; 2 uses
@@ -377,14 +377,14 @@ bb.m:                                             ; preds = %._crit_edge81
   br label %.sink.split
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.q
+  %5 = phi i32 [ %7, %bb.q ], [ %i.b, %.lr.ph ]
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.q ], [ 0, %.lr.ph ] ; 2 uses
-  %5 = phi i16 [ %i.do, %bb.q ], [ %i.f, %.lr.ph ]
-  %6 = load i32, ptr %i.a, align 4
-  %i.cr = icmp eq i32 %6, %3
+  %6 = phi i16 [ %i.do, %bb.q ], [ %i.f, %.lr.ph ]
+  %i.cr = icmp eq i32 %5, %3
   br i1 %i.cr, label %.thread, label %_ZNK6icu_7813UnicodeString6charAtEi.exit63
 
 _ZNK6icu_7813UnicodeString6charAtEi.exit63:       ; preds = %.lr.ph.split
-  %i.cs = and i16 %5, 2
+  %i.cs = and i16 %6, 2
   %.not.i.i.i62 = icmp eq i16 %i.cs, 0
   %i.ct = load ptr, ptr %i.n, align 8
   %i.cu = select i1 %.not.i.i.i62, ptr %i.ct, ptr %i.m
@@ -411,7 +411,7 @@ bb.o:                                             ; preds = %bb.n
 
 .thread70:                                        ; preds = %bb.o
   %i.di = load i32, ptr %i.a, align 4
-  %i.dj = add nsw i32 %i.di, 1
+  %i.dj = add nsw i32 %i.di, 1                    ; 2 uses
   store i32 %i.dj, ptr %i.a, align 4
   br label %bb.q
 
@@ -421,9 +421,11 @@ bb.p:                                             ; preds = %_ZNK6icu_7813Unicod
   %i.dm = load ptr, ptr %i.dl, align 8
   %i.dn = call noundef i32 %i.dm(ptr noundef nonnull align 8 dereferenceable(8) %i.cz, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 4 dereferenceable(4) %i.a, i32 noundef %3, i8 noundef signext %4) #7 ; 2 uses
   %.not57 = icmp eq i32 %i.dn, 2
+  %.pre = load i32, ptr %i.a, align 4
   br i1 %.not57, label %bb.q, label %.thread
 
 bb.q:                                             ; preds = %.thread70, %bb.p
+  %7 = phi i32 [ %i.dj, %.thread70 ], [ %.pre, %bb.p ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.do = load i16, ptr %i.d, align 8             ; 3 uses
   %i.dp = icmp slt i16 %i.do, 0
@@ -435,16 +437,20 @@ bb.q:                                             ; preds = %.thread70, %bb.p
   %i.dv = icmp slt i64 %indvars.iv.next, %i.du
   br i1 %i.dv, label %.lr.ph.split, label %._crit_edge, !llvm.loop !10
 
-._crit_edge:                                      ; preds = %bb.q, %bb.e, %.preheader
+._crit_edge.loopexit:                             ; preds = %bb.e
+  %.pre93 = load i32, ptr %i.a, align 4
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %bb.q, %._crit_edge.loopexit, %.preheader
+  %8 = phi i32 [ %i.b, %.preheader ], [ %.pre93, %._crit_edge.loopexit ], [ %7, %bb.q ] ; 2 uses
   %i.dw = load i32, ptr %2, align 4
   %i.dx = getelementptr inbounds nuw i8, ptr %0, i64 100
   store i32 %i.dw, ptr %i.dx, align 4
-  %7 = load i32, ptr %i.a, align 4                ; 2 uses
   br label %.sink.split
 
 .sink.split:                                      ; preds = %._crit_edge, %bb.m
-  %.sink = phi i32 [ %i.cq, %bb.m ], [ %7, %._crit_edge ]
-  %.ph = phi i32 [ %.pre.a, %bb.m ], [ %7, %._crit_edge ]
+  %.sink = phi i32 [ %i.cq, %bb.m ], [ %8, %._crit_edge ]
+  %.ph = phi i32 [ %.pre.a, %bb.m ], [ %8, %._crit_edge ]
   %i.dy = getelementptr inbounds nuw i8, ptr %0, i64 104
   store i32 %.sink, ptr %i.dy, align 8
   br label %bb.r

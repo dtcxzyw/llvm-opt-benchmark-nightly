@@ -201,7 +201,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN2v88internal4wasm10WasmEngine16FreeNativeModuleEPNS1_12NativeModuleE(ptr noundef nonnull align 8 dereferenceable(8488) %0, ptr noundef %1) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 6 uses
+  %i.a = alloca ptr, align 8                      ; 7 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
   store ptr %1, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8120 ; 2 uses
@@ -466,20 +466,24 @@ bb.s:                                             ; preds = %._crit_edge
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ai, i64 72
   %i.cn = load ptr, ptr %i.cm, align 8            ; 2 uses
   %i.co = icmp eq ptr %i.cn, null
-  br i1 %i.co, label %._crit_edge51, label %.lr.ph50
+  br i1 %i.co, label %._crit_edge51, label %.lr.ph50.preheader
+
+.lr.ph50.preheader:                               ; preds = %bb.s
+  %.pre60 = load ptr, ptr %i.a, align 8
+  br label %.lr.ph50
 
 ._crit_edge51:                                    ; preds = %bb.ae, %bb.s
   %i.cp = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 926), align 2, !range !7, !noundef !8
   %i.cq = trunc nuw i8 %i.cp to i1
   br i1 %i.cq, label %bb.af, label %bb.ag
 
-.lr.ph50:                                         ; preds = %bb.s, %bb.ae
-  %.sroa.029.048.a = phi ptr [ %.sroa.029.1, %bb.ae ], [ %i.cn, %bb.s ] ; 6 uses
-  %2 = getelementptr inbounds nuw i8, ptr %.sroa.029.048.a, i64 8
-  %3 = load ptr, ptr %2, align 8                  ; 2 uses
-  %i.cr = load ptr, ptr %3, align 8
-  %i.cs = load ptr, ptr %i.a, align 8
-  %i.ct = icmp eq ptr %i.cr, %i.cs
+.lr.ph50:                                         ; preds = %.lr.ph50.preheader, %bb.ae
+  %.sroa.029.048.a = phi ptr [ %3, %bb.ae ], [ %.pre60, %.lr.ph50.preheader ] ; 2 uses
+  %.sroa.029.048 = phi ptr [ %.sroa.029.1, %bb.ae ], [ %i.cn, %.lr.ph50.preheader ] ; 6 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.sroa.029.048, i64 8
+  %i.cr = load ptr, ptr %2, align 8               ; 2 uses
+  %i.cs = load ptr, ptr %i.cr, align 8
+  %i.ct = icmp eq ptr %i.cs, %.sroa.029.048.a
   br i1 %i.ct, label %bb.t, label %bb.ad
 
 bb.t:                                             ; preds = %.lr.ph50
@@ -487,7 +491,7 @@ bb.t:                                             ; preds = %.lr.ph50
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 56 ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cu, i64 64
   %i.cx = load i64, ptr %i.cw, align 8            ; 3 uses
-  %i.cy = ptrtoint ptr %3 to i64
+  %i.cy = ptrtoint ptr %i.cr to i64
   %i.cz = urem i64 %i.cy, %i.cx                   ; 5 uses
   %i.da = load ptr, ptr %i.cv, align 8            ; 4 uses
   %i.db = getelementptr inbounds nuw [8 x i8], ptr %i.da, i64 %i.cz
@@ -497,12 +501,12 @@ bb.t:                                             ; preds = %.lr.ph50
 bb.u:                                             ; preds = %bb.u, %bb.t
   %.0.i.i.i.i = phi ptr [ %i.dc, %bb.t ], [ %i.dd, %bb.u ] ; 4 uses
   %i.dd = load ptr, ptr %.0.i.i.i.i, align 8      ; 2 uses
-  %.not.i.i.i.i14 = icmp eq ptr %i.dd, %.sroa.029.048.a
+  %.not.i.i.i.i14 = icmp eq ptr %i.dd, %.sroa.029.048
   br i1 %.not.i.i.i.i14, label %_ZNSt10_HashtableIPN2v88internal4wasm8WasmCodeES4_SaIS4_ENSt8__detail9_IdentityESt8equal_toIS4_ESt4hashIS4_ENS6_18_Mod_range_hashingENS6_20_Default_ranged_hashENS6_20_Prime_rehash_policyENS6_17_Hashtable_traitsILb0ELb1ELb1EEEE20_M_get_previous_nodeEmPNS6_10_Hash_nodeIS4_Lb0EEE.exit.i.i.i, label %bb.u, !llvm.loop !187
 
 _ZNSt10_HashtableIPN2v88internal4wasm8WasmCodeES4_SaIS4_ENSt8__detail9_IdentityESt8equal_toIS4_ESt4hashIS4_ENS6_18_Mod_range_hashingENS6_20_Default_ranged_hashENS6_20_Prime_rehash_policyENS6_17_Hashtable_traitsILb0ELb1ELb1EEEE20_M_get_previous_nodeEmPNS6_10_Hash_nodeIS4_Lb0EEE.exit.i.i.i: ; preds = %bb.u
   %i.de = icmp eq ptr %.0.i.i.i.i, %i.dc
-  %i.df = load ptr, ptr %.sroa.029.048.a, align 8 ; 4 uses
+  %i.df = load ptr, ptr %.sroa.029.048, align 8   ; 4 uses
   %.not18.i.i.i.i15 = icmp eq ptr %i.df, null     ; 2 uses
   br i1 %i.de, label %bb.v, label %bb.aa
 
@@ -558,20 +562,22 @@ bb.ac:                                            ; preds = %bb.ab
   br label %_ZNSt13unordered_setIPN2v88internal4wasm8WasmCodeESt4hashIS4_ESt8equal_toIS4_ESaIS4_EE5eraseENSt8__detail14_Node_iteratorIS4_Lb1ELb0EEE.exit
 
 _ZNSt13unordered_setIPN2v88internal4wasm8WasmCodeESt4hashIS4_ESt8equal_toIS4_ESaIS4_EE5eraseENSt8__detail14_Node_iteratorIS4_Lb1ELb0EEE.exit: ; preds = %bb.w, %bb.z, %bb.aa, %bb.ab, %bb.ac
-  %i.dv = load ptr, ptr %.sroa.029.048.a, align 8 ; 2 uses
+  %i.dv = load ptr, ptr %.sroa.029.048, align 8   ; 2 uses
   store ptr %i.dv, ptr %.0.i.i.i.i, align 8
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.029.048.a, i64 noundef 16) #24
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.029.048, i64 noundef 16) #24
   %i.dw = getelementptr inbounds nuw i8, ptr %i.cu, i64 80 ; 2 uses
   %i.dx = load i64, ptr %i.dw, align 8
   %i.dy = add i64 %i.dx, -1
   store i64 %i.dy, ptr %i.dw, align 8
+  %.pre = load ptr, ptr %i.a, align 8
   br label %bb.ae
 
 bb.ad:                                            ; preds = %.lr.ph50
-  %i.dz = load ptr, ptr %.sroa.029.048.a, align 8
+  %i.dz = load ptr, ptr %.sroa.029.048, align 8
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %_ZNSt13unordered_setIPN2v88internal4wasm8WasmCodeESt4hashIS4_ESt8equal_toIS4_ESaIS4_EE5eraseENSt8__detail14_Node_iteratorIS4_Lb1ELb0EEE.exit
+  %3 = phi ptr [ %.pre, %_ZNSt13unordered_setIPN2v88internal4wasm8WasmCodeESt4hashIS4_ESt8equal_toIS4_ESaIS4_EE5eraseENSt8__detail14_Node_iteratorIS4_Lb1ELb0EEE.exit ], [ %.sroa.029.048.a, %bb.ad ]
   %.sroa.029.1 = phi ptr [ %i.dv, %_ZNSt13unordered_setIPN2v88internal4wasm8WasmCodeESt4hashIS4_ESt8equal_toIS4_ESaIS4_EE5eraseENSt8__detail14_Node_iteratorIS4_Lb1ELb0EEE.exit ], [ %i.dz, %bb.ad ] ; 2 uses
   %i.ea = icmp eq ptr %.sroa.029.1, null
   br i1 %i.ea, label %._crit_edge51, label %.lr.ph50, !llvm.loop !188

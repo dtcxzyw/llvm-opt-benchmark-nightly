@@ -201,7 +201,7 @@ declare noundef nonnull ptr @_Znwm(i64 noundef) local_unnamed_addr #7
 ; Function Attrs: mustprogress uwtable
 define hidden noalias noundef nonnull ptr @_ZN6Assimp12X3DGeoHelper14make_line_meshERKSt6vectorIiSaIiEERKNSt7__cxx114listI10aiVector3tIfESaIS9_EEE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.std::vector.14", align 8    ; 12 uses
+  %2 = alloca %"class.std::vector.14", align 8    ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false)
   invoke void @_ZN6Assimp12X3DGeoHelper22coordIdx_str2lines_arrERKSt6vectorIiSaIiEERS1_I6aiFaceSaIS6_EE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %2)
@@ -210,7 +210,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
-  %i.c = load ptr, ptr %2, align 8                ; 3 uses
+  %i.c = load ptr, ptr %2, align 8                ; 5 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 3 uses
@@ -286,6 +286,7 @@ bb.j:                                             ; preds = %bb.j, %bb.i
   br i1 %i.ad, label %._crit_edge, label %.lr.ph.split
 
 ._crit_edge:                                      ; preds = %_ZN6aiFaceaSERKS_.exit, %.lr.ph
+  %3 = phi ptr [ %i.c, %.lr.ph ], [ %6, %_ZN6aiFaceaSERKS_.exit ] ; 3 uses
   %i.ae = load ptr, ptr %1, align 8               ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ag = load i64, ptr %i.af, align 8
@@ -308,11 +309,11 @@ bb.l:                                             ; preds = %bb.h
   br label %bb.x
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %_ZN6aiFaceaSERKS_.exit
+  %4 = phi ptr [ %6, %_ZN6aiFaceaSERKS_.exit ], [ %i.c, %.lr.ph ] ; 4 uses
   %.02536 = phi i64 [ %i.ba, %_ZN6aiFaceaSERKS_.exit ], [ 0, %.lr.ph ] ; 3 uses
-  %3 = load ptr, ptr %2, align 8                  ; 2 uses
-  %i.ao = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %.02536 ; 2 uses
+  %i.ao = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %.02536 ; 2 uses
   %i.ap = getelementptr inbounds nuw [16 x i8], ptr %i.v, i64 %.02536 ; 2 uses
-  %i.aq = icmp eq ptr %3, %i.v
+  %i.aq = icmp eq ptr %4, %i.v
   br i1 %i.aq, label %_ZN6aiFaceaSERKS_.exit, label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph.split
@@ -323,9 +324,11 @@ bb.m:                                             ; preds = %.lr.ph.split
 
 bb.n:                                             ; preds = %bb.m
   call void @_ZdaPv(ptr noundef nonnull %i.as) #24
+  %.pre = load ptr, ptr %2, align 8
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
+  %5 = phi ptr [ %.pre, %bb.n ], [ %4, %bb.m ]    ; 2 uses
   %i.au = load i32, ptr %i.ao, align 8            ; 3 uses
   store i32 %i.au, ptr %i.ap, align 8
   %.not.i = icmp eq i32 %i.au, 0
@@ -349,6 +352,7 @@ bb.q:                                             ; preds = %bb.o
   br label %_ZN6aiFaceaSERKS_.exit
 
 _ZN6aiFaceaSERKS_.exit:                           ; preds = %bb.q, %.noexc, %.lr.ph.split
+  %6 = phi ptr [ %5, %bb.q ], [ %5, %.noexc ], [ %4, %.lr.ph.split ] ; 2 uses
   %i.ba = add nuw i64 %.02536, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.ba, %i.g
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !77
@@ -400,13 +404,12 @@ bb.s:                                             ; preds = %._crit_edge
 
 ._crit_edge41:                                    ; preds = %.epil.preheader, %._crit_edge41.loopexit.unr-lcssa, %.loopexit.thread
   store i32 2, ptr %i.k, align 8
-  %4 = load ptr, ptr %2, align 8                  ; 3 uses
   %i.bl = load ptr, ptr %i.a, align 8             ; 2 uses
-  %.not4.i.i.i = icmp eq ptr %4, %i.bl
+  %.not4.i.i.i = icmp eq ptr %3, %i.bl
   br i1 %.not4.i.i.i, label %_ZSt8_DestroyIP6aiFaceS0_EvT_S2_RSaIT0_E.exit.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %._crit_edge41, %_ZSt8_DestroyI6aiFaceEvPT_.exit.i.i.i
-  %.05.i.i.i = phi ptr [ %i.bp, %_ZSt8_DestroyI6aiFaceEvPT_.exit.i.i.i ], [ %4, %._crit_edge41 ] ; 2 uses
+  %.05.i.i.i = phi ptr [ %i.bp, %_ZSt8_DestroyI6aiFaceEvPT_.exit.i.i.i ], [ %3, %._crit_edge41 ] ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 8
   %i.bn = load ptr, ptr %i.bm, align 8            ; 2 uses
   %i.bo = icmp eq ptr %i.bn, null
@@ -426,7 +429,7 @@ _ZSt8_DestroyIP6aiFaceS0_EvT_S2_RSaIT0_E.exitthread-pre-split.i: ; preds = %_ZSt
   br label %_ZSt8_DestroyIP6aiFaceS0_EvT_S2_RSaIT0_E.exit.i
 
 _ZSt8_DestroyIP6aiFaceS0_EvT_S2_RSaIT0_E.exit.i:  ; preds = %_ZSt8_DestroyIP6aiFaceS0_EvT_S2_RSaIT0_E.exitthread-pre-split.i, %._crit_edge41
-  %i.bq = phi ptr [ %.pr.i, %_ZSt8_DestroyIP6aiFaceS0_EvT_S2_RSaIT0_E.exitthread-pre-split.i ], [ %4, %._crit_edge41 ] ; 3 uses
+  %i.bq = phi ptr [ %.pr.i, %_ZSt8_DestroyIP6aiFaceS0_EvT_S2_RSaIT0_E.exitthread-pre-split.i ], [ %3, %._crit_edge41 ] ; 3 uses
   %.not.i.i1.i = icmp eq ptr %i.bq, null
   br i1 %.not.i.i1.i, label %_ZNSt6vectorI6aiFaceSaIS0_EED2Ev.exit, label %bb.u
 

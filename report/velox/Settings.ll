@@ -201,7 +201,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define void @_ZN5folly8settings8Snapshot7publishEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(72) %0) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca %"struct.folly::settings::FrozenSettingProjects", align 8 ; 9 uses
+  %1 = alloca %"struct.folly::settings::FrozenSettingProjects", align 8 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #15
   call void @_ZN5folly8settings21frozenSettingProjectsEv(ptr dead_on_unwind nonnull writable sret(%"struct.folly::settings::FrozenSettingProjects") align 8 %1)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -230,11 +230,15 @@ bb.b:                                             ; preds = %._crit_edge
   %i.o = lshr i64 %i.n, 12
   %i.p = add nuw nsw i64 %i.o, 1
   %.not.i.i.i = icmp eq i64 %i.j, 0
-  br i1 %.not.i.i.i, label %_ZN5folly3f146detail21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEvvvvSt17integral_constantIbLb1EEE11beforeResetEmm.exit.i, label %.lr.ph.i.i.i
+  br i1 %.not.i.i.i, label %_ZN5folly3f146detail21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEvvvvSt17integral_constantIbLb1EEE11beforeResetEmm.exit.i, label %.lr.ph.i.i.i.preheader
 
-.lr.ph.i.i.i:                                     ; preds = %bb.b, %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i
-  %.05.i.i.i = phi i64 [ %i.w, %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i ], [ 0, %bb.b ] ; 2 uses
-  %2 = load ptr, ptr %1, align 8, !tbaa !27
+.lr.ph.i.i.i.preheader:                           ; preds = %bb.b
+  %.pre10 = load ptr, ptr %1, align 8, !tbaa !27
+  br label %.lr.ph.i.i.i
+
+.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.preheader, %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i
+  %2 = phi ptr [ %3, %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i ], [ %.pre10, %.lr.ph.i.i.i.preheader ] ; 2 uses
+  %.05.i.i.i = phi i64 [ %i.w, %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i ], [ 0, %.lr.ph.i.i.i.preheader ] ; 2 uses
   %i.q = getelementptr inbounds nuw [32 x i8], ptr %2, i64 %.05.i.i.i ; 2 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !28   ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 16 ; 2 uses
@@ -245,9 +249,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   %i.u = load i64, ptr %i.s, align 8, !tbaa !32
   %i.v = add i64 %i.u, 1
   call void @_ZdlPvm(ptr noundef %i.r, i64 noundef %i.v) #28
+  %.pre = load ptr, ptr %1, align 8, !tbaa !27
   br label %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i
 
 _ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i: ; preds = %.lr.ph.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i
+  %3 = phi ptr [ %.pre, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i ], [ %2, %.lr.ph.i.i.i ]
   %i.w = add nuw nsw i64 %.05.i.i.i, 1            ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %i.w, %i.j
   br i1 %exitcond.not.i.i.i, label %_ZN5folly3f146detail21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEvvvvSt17integral_constantIbLb1EEE11beforeResetEmm.exit.loopexit.i, label %.lr.ph.i.i.i, !llvm.loop !33

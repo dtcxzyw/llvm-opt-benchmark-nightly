@@ -201,7 +201,7 @@ _ZN12v8_inspector8String16D2Ev.exit:              ; preds = %bb.a, %_ZNKSt7__cxx
 define internal fastcc void @_ZN12v8_inspector12_GLOBAL__N_116findMagicCommentERKNS_8String16ES3_b(ptr dead_on_unwind noalias writable align 8 %0, ptr noundef nonnull align 8 dereferenceable(40) %1, ptr nofree readonly captures(none) %.0.val, i64 %.8.val, i1 noundef zeroext %2) unnamed_addr #0 {
 bb.a:
   %3 = alloca %"class.v8_inspector::String16", align 8 ; 6 uses
-  %4 = alloca %"class.v8_inspector::String16", align 8 ; 24 uses
+  %4 = alloca %"class.v8_inspector::String16", align 8 ; 23 uses
   %5 = alloca %"class.v8_inspector::String16", align 8 ; 6 uses
   %6 = alloca %"class.v8_inspector::String16", align 8 ; 15 uses
   %7 = alloca %"class.v8_inspector::String16", align 8 ; 15 uses
@@ -604,12 +604,13 @@ _ZN12v8_inspector8String16D2Ev.exit128:           ; preds = %_ZN12v8_inspector8S
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #10
   %i.fs = load i64, ptr %i.ce, align 8            ; 2 uses
   %.not8417.not = icmp eq i64 %i.fs, 0
+  %.pre30 = load ptr, ptr %4, align 8             ; 2 uses
   br i1 %.not8417.not, label %.critedge, label %.lr.ph19
 
 .lr.ph19:                                         ; preds = %_ZN12v8_inspector8String16D2Ev.exit128, %bb.al
   %i.ft = phi i64 [ %i.fw, %bb.al ], [ %i.fs, %_ZN12v8_inspector8String16D2Ev.exit128 ]
+  %8 = phi ptr [ %9, %bb.al ], [ %.pre30, %_ZN12v8_inspector8String16D2Ev.exit128 ] ; 2 uses
   %.06618 = phi i64 [ %i.fx, %bb.al ], [ 0, %_ZN12v8_inspector8String16D2Ev.exit128 ] ; 2 uses
-  %8 = load ptr, ptr %4, align 8
   %i.fu = getelementptr inbounds nuw [2 x i8], ptr %8, i64 %.06618
   %i.fv = load i16, ptr %i.fu, align 2            ; 2 uses
   switch i16 %i.fv, label %bb.al [
@@ -621,6 +622,7 @@ _ZN12v8_inspector8String16D2Ev.exit128:           ; preds = %_ZN12v8_inspector8S
 
 bb.ak:                                            ; preds = %.lr.ph19, %.lr.ph19, %.lr.ph19, %.lr.ph19
   call void @_ZN12v8_inspector8String16C1EPKc(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull @.str.12) #10
+  %.pre = load ptr, ptr %4, align 8               ; 3 uses
   switch i16 %i.fv, label %._crit_edge [
     i16 39, label %.loopexit
     i16 34, label %.loopexit
@@ -633,17 +635,18 @@ bb.ak:                                            ; preds = %.lr.ph19, %.lr.ph19
   br label %bb.al
 
 bb.al:                                            ; preds = %._crit_edge, %.lr.ph19
-  %i.fw = phi i64 [ %.pre.a, %._crit_edge ], [ %i.ft, %.lr.ph19 ] ; 3 uses
+  %i.fw = phi i64 [ %i.ft, %.lr.ph19 ], [ %.pre.a, %._crit_edge ] ; 3 uses
+  %9 = phi ptr [ %8, %.lr.ph19 ], [ %.pre, %._crit_edge ] ; 2 uses
   %i.fx = add nuw i64 %.06618, 1                  ; 2 uses
   %.not84 = icmp ult i64 %i.fx, %i.fw
   br i1 %.not84, label %.lr.ph19, label %.critedge, !llvm.loop !47
 
 .critedge:                                        ; preds = %bb.al, %_ZN12v8_inspector8String16D2Ev.exit128
   %i.fy = phi i64 [ 0, %_ZN12v8_inspector8String16D2Ev.exit128 ], [ %i.fw, %bb.al ] ; 3 uses
+  %10 = phi ptr [ %.pre30, %_ZN12v8_inspector8String16D2Ev.exit128 ], [ %9, %bb.al ] ; 2 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.fz, ptr %0, align 8
-  %9 = load ptr, ptr %4, align 8                  ; 2 uses
-  %i.ga = icmp eq ptr %9, %i.ep
+  %i.ga = icmp eq ptr %10, %i.ep
   br i1 %i.ga, label %bb.am, label %_ZNKSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE11_M_is_localEv.exit.i.i129
 
 bb.am:                                            ; preds = %.critedge
@@ -655,7 +658,7 @@ bb.am:                                            ; preds = %.critedge
   br label %.loopexit.thread
 
 _ZNKSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE11_M_is_localEv.exit.i.i129: ; preds = %.critedge
-  store ptr %9, ptr %0, align 8
+  store ptr %10, ptr %0, align 8
   %i.ge = load i64, ptr %i.ep, align 8
   store i64 %i.ge, ptr %i.fz, align 8
   br label %.loopexit.thread
@@ -670,15 +673,14 @@ _ZNKSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE11_M_is_localEv.exit.i.
   br label %_ZN12v8_inspector8String16D2Ev.exit132
 
 .loopexit:                                        ; preds = %bb.ak, %bb.ak, %bb.ak, %bb.ak
-  %.pre28 = load ptr, ptr %4, align 8             ; 2 uses
-  %i.gi = icmp eq ptr %.pre28, %i.ep
+  %i.gi = icmp eq ptr %.pre, %i.ep
   br i1 %i.gi, label %_ZN12v8_inspector8String16D2Ev.exit132, label %_ZNKSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE11_M_is_localEv.exit.i.i.i130
 
 _ZNKSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE11_M_is_localEv.exit.i.i.i130: ; preds = %.loopexit
   %i.gj = load i64, ptr %i.ep, align 8
   %i.gk = shl i64 %i.gj, 1
   %i.gl = add i64 %i.gk, 2
-  call void @_ZdlPvm(ptr noundef %.pre28, i64 noundef %i.gl) #13
+  call void @_ZdlPvm(ptr noundef %.pre, i64 noundef %i.gl) #13
   br label %_ZN12v8_inspector8String16D2Ev.exit132
 
 _ZN12v8_inspector8String16D2Ev.exit132:           ; preds = %.loopexit, %.loopexit.thread, %_ZNKSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE11_M_is_localEv.exit.i.i.i130

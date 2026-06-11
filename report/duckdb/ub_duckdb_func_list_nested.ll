@@ -201,7 +201,7 @@ bb.a:
   %6 = alloca %"class.std::allocator", align 1    ; 5 uses
   %7 = alloca %"class.duckdb::Value", align 8     ; 7 uses
   %8 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 14 uses
-  %9 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 14 uses
+  %9 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 15 uses
   %10 = alloca %"class.duckdb::Vector", align 8   ; 5 uses
   %11 = alloca %"struct.duckdb::SelectionVector", align 8 ; 10 uses
   %12 = alloca %"struct.duckdb::ValidityMask", align 8 ; 17 uses
@@ -263,6 +263,7 @@ bb.i:                                             ; preds = %bb.h
   %i.o = getelementptr inbounds nuw i8, ptr %9, i64 16
   %i.p = getelementptr inbounds nuw i8, ptr %8, i64 16
   %i.q = getelementptr inbounds nuw i8, ptr %4, i64 24
+  %.pre233 = load ptr, ptr %9, align 8, !tbaa !101
   br label %bb.r
 
 ._crit_edge:                                      ; preds = %bb.ag, %bb.i
@@ -311,34 +312,34 @@ bb.q:                                             ; preds = %bb.h
   br label %bb.dp
 
 bb.r:                                             ; preds = %.lr.ph, %bb.ag
-  %.096216 = phi i64 [ 0, %.lr.ph ], [ %i.bv, %bb.ag ] ; 5 uses
-  %.0187215.a = phi i64 [ 0, %.lr.ph ], [ %.1188, %bb.ag ] ; 4 uses
-  %16 = load ptr, ptr %9, align 8, !tbaa !101
+  %16 = phi ptr [ %.pre233, %.lr.ph ], [ %17, %bb.ag ] ; 3 uses
+  %.0187215.a = phi i64 [ 0, %.lr.ph ], [ %i.bv, %bb.ag ] ; 5 uses
+  %.0187215 = phi i64 [ 0, %.lr.ph ], [ %.1188, %bb.ag ] ; 4 uses
   %i.z = load ptr, ptr %16, align 8, !tbaa !102   ; 2 uses
   %.not.i = icmp eq ptr %i.z, null
   br i1 %.not.i, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %.096216
+  %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %.0187215.a
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !3
   %i.ac = zext i32 %i.ab to i64
   br label %_ZNK6duckdb15SelectionVector9get_indexEm.exit
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit:    ; preds = %bb.s, %bb.r
-  %i.ad = phi i64 [ %i.ac, %bb.s ], [ %.096216, %bb.r ] ; 2 uses
+  %i.ad = phi i64 [ %i.ac, %bb.s ], [ %.0187215.a, %bb.r ] ; 2 uses
   %i.ae = load ptr, ptr %8, align 8, !tbaa !101
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !102 ; 2 uses
   %.not.i121 = icmp eq ptr %i.af, null
   br i1 %.not.i121, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit122, label %bb.t
 
 bb.t:                                             ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit
-  %i.ag = getelementptr inbounds nuw [4 x i8], ptr %i.af, i64 %.096216
+  %i.ag = getelementptr inbounds nuw [4 x i8], ptr %i.af, i64 %.0187215.a
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !3
   %i.ai = zext i32 %i.ah to i64
   br label %_ZNK6duckdb15SelectionVector9get_indexEm.exit122
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit122: ; preds = %bb.t, %_ZNK6duckdb15SelectionVector9get_indexEm.exit
-  %i.aj = phi i64 [ %i.ai, %bb.t ], [ %.096216, %_ZNK6duckdb15SelectionVector9get_indexEm.exit ] ; 3 uses
+  %i.aj = phi i64 [ %i.ai, %bb.t ], [ %.0187215.a, %_ZNK6duckdb15SelectionVector9get_indexEm.exit ] ; 3 uses
   %i.ak = load ptr, ptr %i.o, align 8, !tbaa !103 ; 2 uses
   %.not.i123 = icmp eq ptr %i.ak, null
   br i1 %.not.i123, label %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread, label %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit
@@ -380,7 +381,7 @@ bb.u:                                             ; preds = %_ZNK6duckdb21Templa
   br i1 %.not.i127, label %_ZN6duckdb12_GLOBAL__N_123SetSelectionVectorWhere15GetResultLengthERNS_9DataChunkERmPKNS_12list_entry_tENS_6VectorEm.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.u, %bb.ab
-  %.2189 = phi i64 [ %spec.select, %bb.ab ], [ %.0187215.a, %bb.u ]
+  %.2189 = phi i64 [ %spec.select, %bb.ab ], [ %.0187215, %bb.u ]
   %.0174.i = phi i64 [ %i.bp, %bb.ab ], [ 0, %bb.u ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
   %i.bb = load i64, ptr %i.ay, align 8, !tbaa !221
@@ -474,8 +475,9 @@ bb.ad:                                            ; preds = %bb.x
   unreachable
 
 _ZN6duckdb12_GLOBAL__N_123SetSelectionVectorWhere15GetResultLengthERNS_9DataChunkERmPKNS_12list_entry_tENS_6VectorEm.exit: ; preds = %bb.ab, %bb.u
-  %.4 = phi i64 [ %.0187215.a, %bb.u ], [ %spec.select, %bb.ab ]
+  %.4 = phi i64 [ %.0187215, %bb.u ], [ %spec.select, %bb.ab ]
   call void @_ZN6duckdb6VectorD2Ev(ptr noundef nonnull align 8 dead_on_return(104) dereferenceable(104) %10) #20
+  %.pre = load ptr, ptr %9, align 8, !tbaa !101
   br label %bb.ag
 
 bb.ae:                                            ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit126.thread
@@ -494,8 +496,9 @@ bb.af:                                            ; preds = %bb.aa, %.lr.ph.i
   br label %bb.dp
 
 bb.ag:                                            ; preds = %_ZN6duckdb12_GLOBAL__N_123SetSelectionVectorWhere15GetResultLengthERNS_9DataChunkERmPKNS_12list_entry_tENS_6VectorEm.exit, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit126, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit
-  %.1188 = phi i64 [ %.4, %_ZN6duckdb12_GLOBAL__N_123SetSelectionVectorWhere15GetResultLengthERNS_9DataChunkERmPKNS_12list_entry_tENS_6VectorEm.exit ], [ %.0187215.a, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit126 ], [ %.0187215.a, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit ] ; 2 uses
-  %i.bv = add nuw i64 %.096216, 1                 ; 2 uses
+  %17 = phi ptr [ %.pre, %_ZN6duckdb12_GLOBAL__N_123SetSelectionVectorWhere15GetResultLengthERNS_9DataChunkERmPKNS_12list_entry_tENS_6VectorEm.exit ], [ %16, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit126 ], [ %16, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit ]
+  %.1188 = phi i64 [ %.4, %_ZN6duckdb12_GLOBAL__N_123SetSelectionVectorWhere15GetResultLengthERNS_9DataChunkERmPKNS_12list_entry_tENS_6VectorEm.exit ], [ %.0187215, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit126 ], [ %.0187215, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit ] ; 2 uses
+  %i.bv = add nuw i64 %.0187215.a, 1              ; 2 uses
   %exitcond.not = icmp eq i64 %i.bv, %i.d
   br i1 %exitcond.not, label %._crit_edge, label %bb.r, !llvm.loop !361
 
@@ -898,7 +901,7 @@ define internal void @_ZN6duckdb12_GLOBAL__N_118ListSelectFunctionINS0_24SetSele
 bb.a:
   %3 = alloca %"class.duckdb::Value", align 8     ; 7 uses
   %4 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 14 uses
-  %5 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 14 uses
+  %5 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 15 uses
   %6 = alloca %"class.duckdb::Vector", align 8    ; 2 uses
   %7 = alloca %"struct.duckdb::SelectionVector", align 8 ; 10 uses
   %8 = alloca %"struct.duckdb::ValidityMask", align 8 ; 15 uses
@@ -959,6 +962,7 @@ bb.i:                                             ; preds = %bb.h
 .lr.ph:                                           ; preds = %bb.i
   %i.o = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.p = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %.pre216 = load ptr, ptr %5, align 8, !tbaa !101
   br label %bb.r
 
 ._crit_edge:                                      ; preds = %bb.w, %bb.i
@@ -1007,34 +1011,34 @@ bb.q:                                             ; preds = %bb.h
   br label %bb.de
 
 bb.r:                                             ; preds = %.lr.ph, %bb.w
-  %.095199 = phi i64 [ 0, %.lr.ph ], [ %i.bc, %bb.w ] ; 5 uses
-  %.0175198.a = phi i64 [ 0, %.lr.ph ], [ %.1176, %bb.w ] ; 3 uses
-  %12 = load ptr, ptr %5, align 8, !tbaa !101
+  %12 = phi ptr [ %.pre216, %.lr.ph ], [ %13, %bb.w ] ; 3 uses
+  %.0175198.a = phi i64 [ 0, %.lr.ph ], [ %i.bc, %bb.w ] ; 5 uses
+  %.0175198 = phi i64 [ 0, %.lr.ph ], [ %.1176, %bb.w ] ; 3 uses
   %i.y = load ptr, ptr %12, align 8, !tbaa !102   ; 2 uses
   %.not.i = icmp eq ptr %i.y, null
   br i1 %.not.i, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.z = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %.095199
+  %i.z = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %.0175198.a
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !3
   %i.ab = zext i32 %i.aa to i64
   br label %_ZNK6duckdb15SelectionVector9get_indexEm.exit
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit:    ; preds = %bb.s, %bb.r
-  %i.ac = phi i64 [ %i.ab, %bb.s ], [ %.095199, %bb.r ] ; 2 uses
+  %i.ac = phi i64 [ %i.ab, %bb.s ], [ %.0175198.a, %bb.r ] ; 2 uses
   %i.ad = load ptr, ptr %4, align 8, !tbaa !101
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !102 ; 2 uses
   %.not.i119 = icmp eq ptr %i.ae, null
   br i1 %.not.i119, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit120, label %bb.t
 
 bb.t:                                             ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit
-  %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %.095199
+  %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %.0175198.a
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !3
   %i.ah = zext i32 %i.ag to i64
   br label %_ZNK6duckdb15SelectionVector9get_indexEm.exit120
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit120: ; preds = %bb.t, %_ZNK6duckdb15SelectionVector9get_indexEm.exit
-  %i.ai = phi i64 [ %i.ah, %bb.t ], [ %.095199, %_ZNK6duckdb15SelectionVector9get_indexEm.exit ] ; 3 uses
+  %i.ai = phi i64 [ %i.ah, %bb.t ], [ %.0175198.a, %_ZNK6duckdb15SelectionVector9get_indexEm.exit ] ; 3 uses
   %i.aj = load ptr, ptr %i.o, align 8, !tbaa !103 ; 2 uses
   %.not.i121 = icmp eq ptr %i.aj, null
   br i1 %.not.i121, label %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread, label %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit
@@ -1072,8 +1076,9 @@ bb.u:                                             ; preds = %_ZNK6duckdb21Templa
   %i.ax = getelementptr inbounds nuw [16 x i8], ptr %i.i, i64 %i.ai
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
   %i.az = load i64, ptr %i.ay, align 8, !tbaa !218
-  %i.ba = add i64 %i.az, %.0175198.a
+  %i.ba = add i64 %i.az, %.0175198
   call void @_ZN6duckdb6VectorD2Ev(ptr noundef nonnull align 8 dead_on_return(104) dereferenceable(104) %6) #20
+  %.pre = load ptr, ptr %5, align 8, !tbaa !101
   br label %bb.w
 
 bb.v:                                             ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit124.thread
@@ -1082,8 +1087,9 @@ bb.v:                                             ; preds = %_ZNK6duckdb21Templa
   br label %bb.de
 
 bb.w:                                             ; preds = %bb.u, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit124, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit
-  %.1176 = phi i64 [ %i.ba, %bb.u ], [ %.0175198.a, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit124 ], [ %.0175198.a, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit ] ; 2 uses
-  %i.bc = add nuw i64 %.095199, 1                 ; 2 uses
+  %13 = phi ptr [ %.pre, %bb.u ], [ %12, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit124 ], [ %12, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit ]
+  %.1176 = phi i64 [ %i.ba, %bb.u ], [ %.0175198, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit124 ], [ %.0175198, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit ] ; 2 uses
+  %i.bc = add nuw i64 %.0175198.a, 1              ; 2 uses
   %exitcond.not = icmp eq i64 %i.bc, %i.d
   br i1 %exitcond.not, label %._crit_edge, label %bb.r, !llvm.loop !364
 

@@ -112,7 +112,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #4
 define dso_local i32 @EVP_BytesToKey(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, i32 noundef %4, i32 noundef %5, ptr nofree noundef writeonly captures(address) %6, ptr nofree noundef writeonly captures(address) %7) local_unnamed_addr #3 {
 bb.a:
   %i.a = alloca [64 x i8], align 16               ; 9 uses
-  %i.b = alloca i32, align 4                      ; 10 uses
+  %i.b = alloca i32, align 4                      ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
   store i32 0, ptr %i.b, align 4, !tbaa !5
@@ -216,13 +216,17 @@ bb.p:                                             ; preds = %bb.o
 
 ._crit_edge:                                      ; preds = %bb.n, %.preheader97
   %i.y = icmp eq i32 %.060, 0
-  br i1 %i.y, label %.loopexit96, label %.preheader95
+  br i1 %i.y, label %.loopexit96, label %.preheader95.preheader
 
-.preheader95:                                     ; preds = %._crit_edge, %bb.s
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.s ], [ 0, %._crit_edge ] ; 4 uses
-  %.172 = phi ptr [ %.273, %bb.s ], [ %.071, %._crit_edge ] ; 4 uses
-  %.161 = phi i32 [ %i.ae, %bb.s ], [ %.060, %._crit_edge ] ; 2 uses
-  %8 = load i32, ptr %i.b, align 4, !tbaa !5
+.preheader95.preheader:                           ; preds = %._crit_edge
+  %.pre104 = load i32, ptr %i.b, align 4, !tbaa !5
+  br label %.preheader95
+
+.preheader95:                                     ; preds = %.preheader95.preheader, %bb.s
+  %8 = phi i32 [ %.pre104, %.preheader95.preheader ], [ %9, %bb.s ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.preheader95.preheader ], [ %indvars.iv.next, %bb.s ] ; 4 uses
+  %.172 = phi ptr [ %.071, %.preheader95.preheader ], [ %.273, %bb.s ] ; 4 uses
+  %.161 = phi i32 [ %.060, %.preheader95.preheader ], [ %i.ae, %bb.s ] ; 2 uses
   %i.z = zext i32 %8 to i64
   %i.aa = icmp eq i64 %indvars.iv, %i.z
   br i1 %i.aa, label %.loopexit96.loopexit.split.loop.exit, label %bb.q
@@ -236,9 +240,11 @@ bb.r:                                             ; preds = %bb.q
   %i.ac = load i8, ptr %i.ab, align 1, !tbaa !9
   %i.ad = getelementptr inbounds nuw i8, ptr %.172, i64 1
   store i8 %i.ac, ptr %.172, align 1, !tbaa !9
+  %.pre = load i32, ptr %i.b, align 4, !tbaa !5
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q
+  %9 = phi i32 [ %.pre, %bb.r ], [ %8, %bb.q ]
   %.273 = phi ptr [ %i.ad, %bb.r ], [ null, %bb.q ] ; 2 uses
   %i.ae = add nsw i32 %.161, -1                   ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
@@ -257,16 +263,16 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   br i1 %.not90, label %.loopexit, label %bb.t
 
 bb.t:                                             ; preds = %.loopexit96
-  %i.ag = load i32, ptr %i.b, align 4, !tbaa !5
+  %i.ag = load i32, ptr %i.b, align 4, !tbaa !5   ; 2 uses
   %i.ah = icmp eq i32 %.2, %i.ag
   br i1 %i.ah, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %bb.t, %bb.w
+  %10 = phi i32 [ %11, %bb.w ], [ %i.ag, %bb.t ]  ; 2 uses
   %.168 = phi ptr [ %.269, %bb.w ], [ %.067, %bb.t ] ; 4 uses
-  %.164 = phi i32 [ %i.an, %bb.w ], [ %.063, %bb.t ] ; 2 uses
-  %.3.a = phi i32 [ %i.ao, %bb.w ], [ %.2, %bb.t ] ; 3 uses
-  %9 = load i32, ptr %i.b, align 4, !tbaa !5
-  %i.ai = icmp eq i32 %.3.a, %9
+  %.3.a = phi i32 [ %i.an, %bb.w ], [ %.063, %bb.t ] ; 2 uses
+  %.3 = phi i32 [ %i.ao, %bb.w ], [ %.2, %bb.t ]  ; 3 uses
+  %i.ai = icmp eq i32 %.3, %10
   br i1 %i.ai, label %.loopexit, label %bb.u
 
 bb.u:                                             ; preds = %.preheader
@@ -274,23 +280,25 @@ bb.u:                                             ; preds = %.preheader
   br i1 %.not91, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.aj = zext i32 %.3.a to i64
+  %i.aj = zext i32 %.3 to i64
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.aj
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !9
   %i.am = getelementptr inbounds nuw i8, ptr %.168, i64 1
   store i8 %i.al, ptr %.168, align 1, !tbaa !9
+  %.pre105 = load i32, ptr %i.b, align 4, !tbaa !5
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u
+  %11 = phi i32 [ %.pre105, %bb.v ], [ %10, %bb.u ]
   %.269 = phi ptr [ %i.am, %bb.v ], [ null, %bb.u ] ; 2 uses
-  %i.an = add nsw i32 %.164, -1                   ; 2 uses
-  %i.ao = add i32 %.3.a, 1
+  %i.an = add nsw i32 %.3.a, -1                   ; 2 uses
+  %i.ao = add i32 %.3, 1
   %.old7 = icmp eq i32 %i.an, 0
   br i1 %.old7, label %.loopexit, label %.preheader
 
 .loopexit:                                        ; preds = %bb.w, %.preheader, %bb.t, %.loopexit96
   %.370 = phi ptr [ %.067, %bb.t ], [ %.067, %.loopexit96 ], [ %.269, %bb.w ], [ %.168, %.preheader ]
-  %.265 = phi i32 [ %.063, %bb.t ], [ 0, %.loopexit96 ], [ 0, %bb.w ], [ %.164, %.preheader ] ; 2 uses
+  %.265 = phi i32 [ %.063, %bb.t ], [ 0, %.loopexit96 ], [ 0, %bb.w ], [ %.3.a, %.preheader ] ; 2 uses
   %i.ap = icmp eq i32 %.262, 0
   %i.aq = icmp eq i32 %.265, 0
   %or.cond3 = select i1 %i.ap, i1 %i.aq, i1 false

@@ -201,7 +201,7 @@ extension_is_relevant.exit.thread:                ; preds = %bb.c, %bb.d, %bb.e,
 define dso_local range(i32 0, 2) i32 @tls_construct_extensions(ptr noundef %0, ptr noundef %1, i32 noundef %2, ptr noundef %3, i64 noundef %4) local_unnamed_addr #2 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 3 uses
-  %i.b = alloca i32, align 4                      ; 6 uses
+  %i.b = alloca i32, align 4                      ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
   store i32 0, ptr %i.b, align 4, !tbaa !5
@@ -274,15 +274,16 @@ bb.j:                                             ; preds = %bb.g
   %i.t = and i32 %2, 24704
   %.not59 = icmp eq i32 %i.t, 0
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 2544
+  %.pre66 = load i32, ptr %i.b, align 4, !tbaa !5
   br label %bb.k
 
 bb.k:                                             ; preds = %.preheader, %should_add_extension.exit.thread
+  %5 = phi i32 [ %.pre66, %.preheader ], [ %6, %should_add_extension.exit.thread ] ; 10 uses
   %.04464 = phi i64 [ 0, %.preheader ], [ %i.bc, %should_add_extension.exit.thread ] ; 2 uses
   %.04663 = phi ptr [ @ext_defs, %.preheader ], [ %i.bd, %should_add_extension.exit.thread ] ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.04663, i64 4
-  %5 = load i32, ptr %i.v, align 4, !tbaa !101    ; 6 uses
-  %i.w = load i32, ptr %i.b, align 4, !tbaa !5
-  %i.x = and i32 %5, %2
+  %i.w = load i32, ptr %i.v, align 4, !tbaa !101  ; 6 uses
+  %i.x = and i32 %i.w, %2
   %i.y = icmp eq i32 %i.x, 0
   br i1 %i.y, label %should_add_extension.exit.thread, label %bb.l
 
@@ -307,7 +308,7 @@ bb.l:                                             ; preds = %bb.k
 
 ._crit_edge.i.i:                                  ; preds = %bb.l
   %.not21.mux.i.i = select i1 %.not.i.i, i1 %.not21.i.i, i1 false
-  %i.ai = and i32 %5, 4
+  %i.ai = and i32 %i.w, 4
   %.not23.i.i = icmp eq i32 %i.ai, 0
   %or.cond29.i.i = or i1 %.not23.i.i, %.not21.mux.i.i
   br i1 %or.cond29.i.i, label %bb.m, label %should_add_extension.exit.thread
@@ -316,19 +317,19 @@ bb.m:                                             ; preds = %._crit_edge.i.i, %.
   %.050.i.i = phi i1 [ %spec.select.i.i, %.thread.i.i ], [ %.not.i.i, %._crit_edge.i.i ] ; 3 uses
   %i.aj = load i32, ptr %i.p, align 8, !tbaa !92
   %i.ak = icmp eq i32 %i.aj, 768
-  %i.al = and i32 %5, 8
+  %i.al = and i32 %i.w, 8
   %i.am = icmp eq i32 %i.al, 0
   %or.cond31.i.i = and i1 %i.am, %i.ak
   br i1 %or.cond31.i.i, label %should_add_extension.exit.thread, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.an = and i32 %5, 16
+  %i.an = and i32 %i.w, 16
   %.not24.i.i = icmp ne i32 %i.an, 0
   %or.cond32.not.i.i = and i1 %.not24.i.i, %.050.i.i
   br i1 %or.cond32.not.i.i, label %should_add_extension.exit.thread, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.ao = and i32 %5, 32
+  %i.ao = and i32 %i.w, 32
   %.not25.i.i = icmp eq i32 %i.ao, 0              ; 3 uses
   %i.ap = or i1 %i.q, %.not25.i.i
   %or.cond35.not.i.i = or i1 %i.ap, %.050.i.i
@@ -344,7 +345,7 @@ bb.p:                                             ; preds = %bb.o
 extension_is_relevant.exit.i:                     ; preds = %bb.p
   %i.as = load i32, ptr %i.s, align 8, !tbaa !94
   %.not27.i.i = icmp ne i32 %i.as, 0
-  %i.at = and i32 %5, 64
+  %i.at = and i32 %i.w, 64
   %.not28.i.i = icmp ne i32 %i.at, 0
   %or.cond37.i.not.i = and i1 %.not28.i.i, %.not27.i.i
   br i1 %or.cond37.i.not.i, label %should_add_extension.exit.thread, label %bb.q
@@ -355,7 +356,7 @@ bb.q:                                             ; preds = %extension_is_releva
 
 bb.r:                                             ; preds = %bb.q
   %i.au = icmp ne i32 %i.ae, 0
-  %i.av = icmp slt i32 %i.w, 772
+  %i.av = icmp slt i32 %5, 772
   %or.cond.i = or i1 %i.av, %i.au
   br i1 %or.cond.i, label %should_add_extension.exit.thread, label %should_add_extension.exit
 
@@ -368,6 +369,7 @@ should_add_extension.exit:                        ; preds = %bb.r, %bb.q
 
 bb.s:                                             ; preds = %should_add_extension.exit
   %i.ay = call i32 %i.aw(ptr noundef nonnull %0, ptr noundef %1, i32 noundef %2, ptr noundef %3, i64 noundef %4) #8 ; 2 uses
+  %.pre65 = load i32, ptr %i.b, align 4, !tbaa !5 ; 3 uses
   switch i32 %i.ay, label %should_add_extension.exit.thread [
     i32 0, label %.loopexit
     i32 1, label %bb.t
@@ -384,6 +386,7 @@ bb.u:                                             ; preds = %bb.t
   br label %should_add_extension.exit.thread
 
 should_add_extension.exit.thread:                 ; preds = %bb.t, %bb.u, %bb.s, %bb.m, %bb.n, %bb.o, %bb.p, %._crit_edge.i.i, %extension_is_relevant.exit.i, %bb.r, %bb.k, %should_add_extension.exit
+  %6 = phi i32 [ %.pre65, %bb.t ], [ %.pre65, %bb.u ], [ %.pre65, %bb.s ], [ %5, %bb.m ], [ %5, %bb.n ], [ %5, %bb.o ], [ %5, %bb.p ], [ %5, %._crit_edge.i.i ], [ %5, %extension_is_relevant.exit.i ], [ %5, %bb.r ], [ %5, %bb.k ], [ %5, %should_add_extension.exit ]
   %i.bc = add nuw nsw i64 %.04464, 1              ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %.04663, i64 56
   %exitcond.not = icmp eq i64 %i.bc, 29

@@ -201,7 +201,7 @@ bb.a:
   %i.an = alloca [32 x i8], align 8               ; 7 uses
   %i.ao = alloca [32 x i8], align 8               ; 10 uses
   %i.ap = alloca [24 x i8], align 8               ; 15 uses
-  %i.aq = alloca [8 x i8], align 8                ; 11 uses
+  %i.aq = alloca [8 x i8], align 8                ; 12 uses
   %i.ar = alloca [48 x i8], align 8               ; 7 uses
   %i.as = alloca [24 x i8], align 8               ; 8 uses
   %i.at = alloca [40 x i8], align 8               ; 15 uses
@@ -604,6 +604,7 @@ bb.cl:                                            ; preds = %bb.ci
   %i.if = getelementptr inbounds nuw i8, ptr %i.an, i64 8
   %i.ig = getelementptr inbounds nuw i8, ptr %i.ap, i64 16 ; 2 uses
   %i.ih = getelementptr inbounds nuw i8, ptr %i.ap, i64 8
+  %.pre542 = load ptr, ptr %i.aq, align 8
   br label %bb.cn
 
 .loopexit:                                        ; preds = %bb.fg, %bb.fk
@@ -622,7 +623,8 @@ bb.cm:                                            ; preds = %.loopexit.split-lp,
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterReEECs14kWLkQVSKO_14deltalake_core.exit unwind label %bb.ab
 
 bb.cn:                                            ; preds = %.lr.ph, %.backedge
-  %i.ii = phi ptr [ %i.id, %.lr.ph ], [ %i.ra, %.backedge ]
+  %7 = phi ptr [ %i.id, %.lr.ph ], [ %8, %.backedge ]
+  %i.ii = phi ptr [ %.pre542, %.lr.ph ], [ %i.ra, %.backedge ] ; 3 uses
   %i.ij = phi ptr [ %i.hy, %.lr.ph ], [ %i.qz, %.backedge ] ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !14975)
   %i.ik = getelementptr inbounds nuw i8, ptr %i.ij, i64 16 ; 2 uses
@@ -630,8 +632,7 @@ bb.cn:                                            ; preds = %.lr.ph, %.backedge
   %i.il = load ptr, ptr %i.ij, align 8, !noalias !14975, !nonnull !27, !noundef !27 ; 2 uses
   %i.im = getelementptr inbounds nuw i8, ptr %i.ij, i64 8
   %i.in = load i64, ptr %i.im, align 8, !noalias !14975, !noundef !27 ; 3 uses
-  %7 = load ptr, ptr %i.aq, align 8, !nonnull !27, !noundef !27 ; 2 uses
-  %i.io = getelementptr inbounds nuw i8, ptr %7, i64 32
+  %i.io = getelementptr inbounds nuw i8, ptr %i.ii, i64 32
   %i.ip = load i64, ptr %i.io, align 8, !noundef !27
   %i.iq = icmp eq i64 %i.in, %i.ip
   br i1 %i.iq, label %bb.ff, label %bb.fg
@@ -1034,7 +1035,7 @@ bb.fe:                                            ; preds = %bb.fc
   unreachable
 
 bb.ff:                                            ; preds = %bb.cn
-  %i.qm = getelementptr inbounds nuw i8, ptr %7, i64 24
+  %i.qm = getelementptr inbounds nuw i8, ptr %i.ii, i64 24
   %i.qn = load ptr, ptr %i.qm, align 8, !nonnull !27, !noundef !27
   %bcmp = call i32 @bcmp(ptr nonnull %i.il, ptr nonnull %i.qn, i64 %i.in)
   %i.qo = icmp eq i32 %bcmp, 0
@@ -1083,14 +1084,16 @@ bb.fl:                                            ; preds = %bb.fj, %bb.fk
   store i64 %i.qs, ptr %i.qx, align 8
   %i.qy = add i64 %i.qt, 1
   store i64 %i.qy, ptr %i.ig, align 8, !alias.scope !15107
+  %.pre = load ptr, ptr %i.aq, align 8
   %.pre.a = load ptr, ptr %.sroa.752.0..sroa_idx, align 8, !alias.scope !15110
   %.pre542.a = load ptr, ptr %.sroa.550.0..sroa_idx, align 8, !alias.scope !15110
   br label %.backedge
 
 .backedge:                                        ; preds = %bb.fl, %bb.ff
   %i.qz = phi ptr [ %.pre542.a, %bb.fl ], [ %i.ik, %bb.ff ] ; 2 uses
-  %i.ra = phi ptr [ %.pre.a, %bb.fl ], [ %i.ii, %bb.ff ] ; 2 uses
-  %i.rb = icmp eq ptr %i.qz, %i.ra
+  %8 = phi ptr [ %.pre.a, %bb.fl ], [ %7, %bb.ff ] ; 2 uses
+  %i.ra = phi ptr [ %.pre, %bb.fl ], [ %i.ii, %bb.ff ]
+  %i.rb = icmp eq ptr %i.qz, %8
   br i1 %i.rb, label %._crit_edge, label %bb.cn
 
 bb.fm:                                            ; preds = %bb.fi

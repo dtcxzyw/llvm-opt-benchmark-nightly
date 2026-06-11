@@ -201,7 +201,7 @@ bb.a:
   %29 = alloca %"class.std::reference_wrapper.1896", align 8 ; 6 uses
   %30 = alloca %"class.std::map.1905", align 8    ; 13 uses
   %31 = alloca %"struct.duckdb::SelectionVector", align 8 ; 9 uses
-  %32 = alloca %"struct.duckdb::ValidityMask", align 8 ; 11 uses
+  %32 = alloca %"struct.duckdb::ValidityMask", align 8 ; 10 uses
   %33 = alloca %"class.std::set", align 8         ; 10 uses
   %34 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %35 = alloca %"class.std::allocator", align 1   ; 5 uses
@@ -604,6 +604,7 @@ bb.dk:                                            ; preds = %bb.di
   br i1 %i.ls, label %bb.du, label %bb.em
 
 .lr.ph253:                                        ; preds = %bb.dk, %bb.dt
+  %.pre282 = phi ptr [ %.pre282288, %bb.dt ], [ null, %bb.dk ] ; 6 uses
   %i.lt = phi ptr [ %i.nl, %bb.dt ], [ null, %bb.dk ] ; 4 uses
   %.0105252 = phi i64 [ %.1106, %bb.dt ], [ 0, %bb.dk ] ; 3 uses
   %storemerge251 = phi i64 [ %i.nw, %bb.dt ], [ 0, %bb.dk ] ; 6 uses
@@ -644,11 +645,12 @@ bb.dl:                                            ; preds = %_ZNSt3mapImN6duckdb
   br i1 %.not222249, label %_ZNSt3mapImN6duckdb6vectorImLb1ESaImEEESt4lessImESaISt4pairIKmS3_EEE4findERS7_.exit.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.dl, %_ZNSt3setImSt4lessImESaImEE6insertERKm.exit
+  %.pre282287 = phi ptr [ %.pre282285, %_ZNSt3setImSt4lessImESaImEE6insertERKm.exit ], [ %.pre282, %bb.dl ]
   %i.mf = phi ptr [ %i.nk, %_ZNSt3setImSt4lessImESaImEE6insertERKm.exit ], [ %i.me, %bb.dl ]
-  %.sroa.0204.0250.a = phi ptr [ %i.mq, %_ZNSt3setImSt4lessImESaImEE6insertERKm.exit ], [ %i.mc, %bb.dl ] ; 3 uses
-  %37 = load i64, ptr %.sroa.0204.0250.a, align 8, !tbaa !98 ; 2 uses
-  %38 = load ptr, ptr %32, align 8, !tbaa !1697   ; 2 uses
-  %.not.i169 = icmp eq ptr %38, null
+  %.sroa.0204.0250.a = phi ptr [ %38, %_ZNSt3setImSt4lessImESaImEE6insertERKm.exit ], [ %.pre282, %bb.dl ] ; 2 uses
+  %.sroa.0204.0250 = phi ptr [ %i.mq, %_ZNSt3setImSt4lessImESaImEE6insertERKm.exit ], [ %i.mc, %bb.dl ] ; 3 uses
+  %37 = load i64, ptr %.sroa.0204.0250, align 8, !tbaa !98 ; 2 uses
+  %.not.i169 = icmp eq ptr %.sroa.0204.0250.a, null
   br i1 %.not.i169, label %bb.dm, label %bb.dn
 
 bb.dm:                                            ; preds = %.lr.ph
@@ -657,13 +659,14 @@ bb.dm:                                            ; preds = %.lr.ph
           to label %.noexc unwind label %bb.ds
 
 .noexc:                                           ; preds = %bb.dm
-  %.pre.i = load ptr, ptr %32, align 8, !tbaa !1697
+  %.pre.i = load ptr, ptr %32, align 8, !tbaa !1697 ; 2 uses
   %.pre.a = load ptr, ptr %i.md, align 8, !tbaa !582
   br label %bb.dn
 
 bb.dn:                                            ; preds = %.noexc, %.lr.ph
+  %.pre282286 = phi ptr [ %.pre.i, %.noexc ], [ %.pre282287, %.lr.ph ] ; 2 uses
   %i.mh = phi ptr [ %.pre.a, %.noexc ], [ %i.mf, %.lr.ph ] ; 3 uses
-  %i.mi = phi ptr [ %.pre.i, %.noexc ], [ %38, %.lr.ph ]
+  %i.mi = phi ptr [ %.pre.i, %.noexc ], [ %.sroa.0204.0250.a, %.lr.ph ] ; 3 uses
   %i.mj = lshr i64 %37, 6
   %i.mk = and i64 %37, 63
   %i.ml = shl nuw i64 1, %i.mk
@@ -672,14 +675,14 @@ bb.dn:                                            ; preds = %.noexc, %.lr.ph
   %i.mo = load i64, ptr %i.mn, align 8, !tbaa !98
   %i.mp = and i64 %i.mo, %i.mm
   store i64 %i.mp, ptr %i.mn, align 8, !tbaa !98
-  %i.mq = getelementptr inbounds nuw i8, ptr %.sroa.0204.0250.a, i64 8 ; 3 uses
+  %i.mq = getelementptr inbounds nuw i8, ptr %.sroa.0204.0250, i64 8 ; 3 uses
   %i.mr = icmp eq ptr %i.mq, %i.mh
   br i1 %i.mr, label %bb.do, label %_ZNSt3setImSt4lessImESaImEE6insertERKm.exit
 
 bb.do:                                            ; preds = %bb.dn
   %.02022.i.i.i = load ptr, ptr %i.ln, align 8, !tbaa !580 ; 2 uses
   %.not23.i.i.i = icmp eq ptr %.02022.i.i.i, null
-  %.pre.i.pre.pre.i.i = load i64, ptr %.sroa.0204.0250.a, align 8, !tbaa !98 ; 4 uses
+  %.pre.i.pre.pre.i.i = load i64, ptr %.sroa.0204.0250, align 8, !tbaa !98 ; 4 uses
   br i1 %.not23.i.i.i, label %._crit_edge.thread.i.i.i, label %.lr.ph.i.i.i170
 
 .lr.ph.i.i.i170:                                  ; preds = %bb.do, %.lr.ph.i.i.i170
@@ -737,6 +740,7 @@ _ZNSt8_Rb_treeImmSt9_IdentityImESt4lessImESaImEE10_M_insert_IRKmNS5_11_Alloc_nod
   %i.nh = load i64, ptr %i.lq, align 8, !tbaa !366
   %i.ni = add i64 %i.nh, 1
   store i64 %i.ni, ptr %i.lq, align 8, !tbaa !366
+  %.pre = load ptr, ptr %32, align 8, !tbaa !1697 ; 2 uses
   %.pre282.a = load ptr, ptr %i.md, align 8, !tbaa !582
   br label %_ZNSt3setImSt4lessImESaImEE6insertERKm.exit
 
@@ -746,16 +750,15 @@ bb.ds:                                            ; preds = %_ZNSt8_Rb_treeImmSt
   br label %bb.fc
 
 _ZNSt3setImSt4lessImESaImEE6insertERKm.exit:      ; preds = %.noexc172, %bb.dq, %bb.dn
+  %.pre282285 = phi ptr [ %.pre, %.noexc172 ], [ %.pre282286, %bb.dq ], [ %.pre282286, %bb.dn ] ; 2 uses
   %i.nk = phi ptr [ %.pre282.a, %.noexc172 ], [ %i.mh, %bb.dq ], [ %i.mh, %bb.dn ] ; 2 uses
+  %38 = phi ptr [ %.pre, %.noexc172 ], [ %i.mi, %bb.dq ], [ %i.mi, %bb.dn ] ; 2 uses
   %.not222 = icmp eq ptr %i.mq, %i.nk
-  br i1 %.not222, label %_ZNSt3mapImN6duckdb6vectorImLb1ESaImEEESt4lessImESaISt4pairIKmS3_EEE4findERS7_.exit.thread.loopexit, label %.lr.ph, !llvm.loop !1699
+  br i1 %.not222, label %_ZNSt3mapImN6duckdb6vectorImLb1ESaImEEESt4lessImESaISt4pairIKmS3_EEE4findERS7_.exit.thread, label %.lr.ph, !llvm.loop !1699
 
-_ZNSt3mapImN6duckdb6vectorImLb1ESaImEEESt4lessImESaISt4pairIKmS3_EEE4findERS7_.exit.thread.loopexit: ; preds = %_ZNSt3setImSt4lessImESaImEE6insertERKm.exit
-  %.pre283 = load ptr, ptr %32, align 8, !tbaa !1697
-  br label %_ZNSt3mapImN6duckdb6vectorImLb1ESaImEEESt4lessImESaISt4pairIKmS3_EEE4findERS7_.exit.thread
-
-_ZNSt3mapImN6duckdb6vectorImLb1ESaImEEESt4lessImESaISt4pairIKmS3_EEE4findERS7_.exit.thread: ; preds = %_ZNSt3mapImN6duckdb6vectorImLb1ESaImEEESt4lessImESaISt4pairIKmS3_EEE4findERS7_.exit.thread.loopexit, %bb.dl, %_ZNSt8_Rb_treeImSt4pairIKmN6duckdb6vectorImLb1ESaImEEEESt10_Select1stIS6_ESt4lessImESaIS6_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS6_EPSt18_Rb_tree_node_baseRS1_.exit.i.i, %.lr.ph253, %_ZNSt3mapImN6duckdb6vectorImLb1ESaImEEESt4lessImESaISt4pairIKmS3_EEE4findERS7_.exit
-  %i.nl = phi ptr [ %.pre283, %_ZNSt3mapImN6duckdb6vectorImLb1ESaImEEESt4lessImESaISt4pairIKmS3_EEE4findERS7_.exit.thread.loopexit ], [ %i.lt, %bb.dl ], [ %i.lt, %_ZNSt8_Rb_treeImSt4pairIKmN6duckdb6vectorImLb1ESaImEEEESt10_Select1stIS6_ESt4lessImESaIS6_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS6_EPSt18_Rb_tree_node_baseRS1_.exit.i.i ], [ %i.lt, %.lr.ph253 ], [ %i.lt, %_ZNSt3mapImN6duckdb6vectorImLb1ESaImEEESt4lessImESaISt4pairIKmS3_EEE4findERS7_.exit ] ; 3 uses
+_ZNSt3mapImN6duckdb6vectorImLb1ESaImEEESt4lessImESaISt4pairIKmS3_EEE4findERS7_.exit.thread: ; preds = %_ZNSt3setImSt4lessImESaImEE6insertERKm.exit, %bb.dl, %_ZNSt8_Rb_treeImSt4pairIKmN6duckdb6vectorImLb1ESaImEEEESt10_Select1stIS6_ESt4lessImESaIS6_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS6_EPSt18_Rb_tree_node_baseRS1_.exit.i.i, %.lr.ph253, %_ZNSt3mapImN6duckdb6vectorImLb1ESaImEEESt4lessImESaISt4pairIKmS3_EEE4findERS7_.exit
+  %.pre282288 = phi ptr [ %.pre282, %_ZNSt3mapImN6duckdb6vectorImLb1ESaImEEESt4lessImESaISt4pairIKmS3_EEE4findERS7_.exit ], [ %.pre282, %bb.dl ], [ %.pre282, %_ZNSt8_Rb_treeImSt4pairIKmN6duckdb6vectorImLb1ESaImEEEESt10_Select1stIS6_ESt4lessImESaIS6_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS6_EPSt18_Rb_tree_node_baseRS1_.exit.i.i ], [ %.pre282, %.lr.ph253 ], [ %.pre282285, %_ZNSt3setImSt4lessImESaImEE6insertERKm.exit ]
+  %i.nl = phi ptr [ %i.lt, %_ZNSt3mapImN6duckdb6vectorImLb1ESaImEEESt4lessImESaISt4pairIKmS3_EEE4findERS7_.exit ], [ %i.lt, %bb.dl ], [ %i.lt, %_ZNSt8_Rb_treeImSt4pairIKmN6duckdb6vectorImLb1ESaImEEEESt10_Select1stIS6_ESt4lessImESaIS6_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS6_EPSt18_Rb_tree_node_baseRS1_.exit.i.i ], [ %i.lt, %.lr.ph253 ], [ %38, %_ZNSt3setImSt4lessImESaImEE6insertERKm.exit ] ; 3 uses
   %.not.i173 = icmp eq ptr %i.nl, null
   br i1 %.not.i173, label %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread, label %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit
 

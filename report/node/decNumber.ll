@@ -201,7 +201,7 @@ define dso_local noundef ptr @uprv_decNumberPower_78(ptr noundef returned %0, pt
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = alloca i32, align 4                      ; 6 uses
-  %i.c = alloca i32, align 4                      ; 20 uses
+  %i.c = alloca i32, align 4                      ; 21 uses
   %4 = alloca %struct.decContext, align 4         ; 16 uses
   %5 = alloca %struct.decNumber, align 4          ; 10 uses
   %6 = alloca [5 x %struct.decNumber], align 16   ; 6 uses
@@ -604,6 +604,7 @@ bb.bk:                                            ; preds = %bb.bj
   %.0 = phi ptr [ %7, %bb.bj ], [ %i.hs, %bb.bk ] ; 2 uses
   %i.hu = call ptr @uprv_decNumberCopy_78(ptr noundef nonnull %.0, ptr noundef nonnull %.0162) ; 0 uses
   %i.hv = call ptr @uprv_decNumberCopy_78(ptr noundef nonnull %.0162, ptr noundef nonnull %5) ; 0 uses
+  %.pre277.pre = load i32, ptr %i.c, align 4
   br label %bb.bm
 
 bb.bl:                                            ; preds = %bb.bk
@@ -613,21 +614,22 @@ bb.bl:                                            ; preds = %bb.bk
   br label %bb.bx
 
 bb.bm:                                            ; preds = %.thread232, %bb.bi
+  %.pre277 = phi i32 [ %.pre277.pre, %.thread232 ], [ 0, %bb.bi ]
   %.2 = phi ptr [ %.0156, %.thread232 ], [ null, %bb.bi ] ; 2 uses
   %.1 = phi ptr [ %.0, %.thread232 ], [ %1, %bb.bi ]
   br label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bv, %bb.bm
-  %.0169.a = phi i32 [ 1, %bb.bm ], [ %i.in, %bb.bv ] ; 3 uses
+  %.0169.a = phi i32 [ %.pre277, %bb.bm ], [ %8, %bb.bv ] ; 3 uses
+  %.0169 = phi i32 [ 1, %bb.bm ], [ %i.in, %bb.bv ] ; 3 uses
   %.0166 = phi i8 [ 0, %bb.bm ], [ %.1167238243, %bb.bv ]
   %.2160 = phi i32 [ %.1159, %bb.bm ], [ %i.ih, %bb.bv ]
-  %8 = load i32, ptr %i.c, align 4                ; 2 uses
-  %i.hy = and i32 %8, 8704                        ; 2 uses
+  %i.hy = and i32 %.0169.a, 8704                  ; 2 uses
   %.not195 = icmp eq i32 %i.hy, 0
   br i1 %.not195, label %bb.bs, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn
-  %i.hz = and i32 %8, 512
+  %i.hz = and i32 %.0169.a, 512
   %.not196 = icmp eq i32 %i.hz, 0
   br i1 %.not196, label %bb.bp, label %split.thread
 
@@ -653,12 +655,12 @@ bb.bs:                                            ; preds = %bb.bp, %bb.bq, %bb.
   br i1 %i.ii, label %.thread236, label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bs
-  %i.ij = icmp eq i32 %.0169.a, 31
+  %i.ij = icmp eq i32 %.0169, 31
   br i1 %i.ij, label %split, label %bb.bu
 
 .thread236:                                       ; preds = %bb.bs
   %i.ik = call fastcc noundef ptr @_ZL13decMultiplyOpP9decNumberPKS_S2_P10decContextPj(ptr noundef nonnull %.0162, ptr noundef nonnull %.0162, ptr noundef %.1, ptr noundef nonnull %4, ptr noundef %i.c) ; 0 uses
-  %i.il = icmp eq i32 %.0169.a, 31
+  %i.il = icmp eq i32 %.0169, 31
   br i1 %i.il, label %.thread236._crit_edge, label %.thread239
 
 .thread236._crit_edge:                            ; preds = %.thread236
@@ -672,11 +674,13 @@ bb.bu:                                            ; preds = %bb.bt
 
 .thread239:                                       ; preds = %.thread236, %bb.bu
   %i.im = call fastcc noundef ptr @_ZL13decMultiplyOpP9decNumberPKS_S2_P10decContextPj(ptr noundef nonnull %.0162, ptr noundef nonnull %.0162, ptr noundef nonnull %.0162, ptr noundef nonnull %4, ptr noundef %i.c) ; 0 uses
+  %.pre = load i32, ptr %i.c, align 4
   br label %bb.bv
 
 bb.bv:                                            ; preds = %bb.bu, %.thread239
+  %8 = phi i32 [ %.0169.a, %bb.bu ], [ %.pre, %.thread239 ]
   %.1167238243 = phi i8 [ 0, %bb.bu ], [ 1, %.thread239 ]
-  %i.in = add nuw nsw i32 %.0169.a, 1
+  %i.in = add nuw nsw i32 %.0169, 1
   br label %bb.bn, !llvm.loop !119
 
 split:                                            ; preds = %bb.bt, %.thread236._crit_edge

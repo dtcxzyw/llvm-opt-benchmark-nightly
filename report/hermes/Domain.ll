@@ -201,6 +201,7 @@ _ZN6hermes2vm14CopyableVectorIPNS0_13RuntimeModuleEE9push_backEOS3_RNS0_7HadesGC
   %.idx315 = shl nuw nsw i64 %.sroa.2.0.copyload.i183, 3
   %i.kr = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i181, i64 %.idx315
   %.not116308 = icmp eq i64 %.sroa.2.0.copyload.i183, 0
+  %.pre327 = load ptr, ptr %5, align 8, !tbaa !60 ; 2 uses
   br i1 %.not116308, label %._crit_edge312, label %.lr.ph311
 
 .lr.ph311:                                        ; preds = %._crit_edge307
@@ -383,11 +384,11 @@ bb.as:                                            ; preds = %"_ZZN6hermes2vm6Dom
   br i1 %.not115, label %._crit_edge307.loopexit, label %bb.ai
 
 ._crit_edge312:                                   ; preds = %bb.bb, %._crit_edge307
+  %10 = phi ptr [ %.pre327, %._crit_edge307 ], [ %.val.val322, %bb.bb ]
   %.sroa.0.0.copyload.i.i203 = load i64, ptr %0, align 8, !tbaa !44
   %i.ny = and i64 %.sroa.0.0.copyload.i.i203, 281474976710655
   %i.nz = inttoptr i64 %i.ny to ptr
   %i.oa = getelementptr inbounds nuw i8, ptr %i.nz, i64 4 ; 3 uses
-  %10 = load ptr, ptr %5, align 8, !tbaa !60
   %.sroa.0.0.copyload.i.i204 = load i64, ptr %10, align 8, !tbaa !44 ; 2 uses
   %i.ob = and i64 %.sroa.0.0.copyload.i.i204, 281474976710655 ; 2 uses
   %i.oc = getelementptr inbounds nuw i8, ptr %1, i64 1632
@@ -414,10 +415,10 @@ _ZN6hermes2vm9GCPointerINS0_16ArrayStorageBaseINS0_11HermesValueEEEE3setERNS0_11
   br label %.thread
 
 bb.au:                                            ; preds = %.lr.ph311, %bb.bb
-  %.0106309.a = phi ptr [ %.sroa.0.0.copyload.i181, %.lr.ph311 ], [ %i.qg, %bb.bb ] ; 3 uses
-  %11 = load i32, ptr %.0106309.a, align 4, !tbaa !3 ; 3 uses
-  %.val.val = load ptr, ptr %5, align 8, !tbaa !60 ; 2 uses
-  %.val.val.val = load i64, ptr %.val.val, align 8, !tbaa !44
+  %.0106309.a = phi ptr [ %.pre327, %.lr.ph311 ], [ %.val.val322, %bb.bb ] ; 3 uses
+  %.0106309 = phi ptr [ %.sroa.0.0.copyload.i181, %.lr.ph311 ], [ %i.qg, %bb.bb ] ; 3 uses
+  %11 = load i32, ptr %.0106309, align 4, !tbaa !3 ; 3 uses
+  %.val.val.val = load i64, ptr %.0106309.a, align 8, !tbaa !44
   %i.on = mul i32 %11, 3                          ; 3 uses
   %i.oo = and i64 %.val.val.val, 281474976710655
   %i.op = inttoptr i64 %i.oo to ptr
@@ -431,7 +432,7 @@ bb.au:                                            ; preds = %.lr.ph311, %bb.bb
   br i1 %.not284, label %bb.av, label %bb.bb
 
 bb.av:                                            ; preds = %bb.au
-  %i.ou = getelementptr inbounds nuw i8, ptr %.0106309.a, i64 4
+  %i.ou = getelementptr inbounds nuw i8, ptr %.0106309, i64 4
   %i.ov = load i32, ptr %i.ou, align 4, !tbaa !3
   %i.ow = load i8, ptr %i.ks, align 4, !tbaa !151, !range !147, !noundef !148
   %i.ox = trunc nuw i8 %i.ow to i1
@@ -459,10 +460,10 @@ bb.ay:                                            ; preds = %bb.ax
   br label %_ZN6hermes2vm16ArrayStorageBaseINS0_11HermesValueEE3setILNS3_6InlineE0EEEvjS2_RNS0_7HadesGCE.exit.i214
 
 _ZN6hermes2vm16ArrayStorageBaseINS0_11HermesValueEE3setILNS3_6InlineE0EEEvjS2_RNS0_7HadesGCE.exit.i214: ; preds = %bb.ay, %bb.ax
-  %i.pf = phi ptr [ %i.pa, %bb.ax ], [ %.pre15.i213, %bb.ay ] ; 2 uses
-  %i.pg = phi ptr [ %.val.val, %bb.ax ], [ %.pre13.i210, %bb.ay ] ; 2 uses
+  %i.pf = phi ptr [ %.0106309.a, %bb.ax ], [ %.pre13.i210, %bb.ay ] ; 2 uses
+  %i.pg = phi ptr [ %i.pa, %bb.ax ], [ %.pre15.i213, %bb.ay ] ; 2 uses
   store i64 -1970324836974592, ptr %i.oz, align 8, !tbaa !79
-  %.sroa.0.0.copyload.i.i7.i215 = load i64, ptr %i.pg, align 8, !tbaa !44
+  %.sroa.0.0.copyload.i.i7.i215 = load i64, ptr %i.pf, align 8, !tbaa !44
   %i.ph = and i64 %.sroa.0.0.copyload.i.i7.i215, 281474976710655
   %i.pi = inttoptr i64 %i.ph to ptr
   %i.pj = add i32 %i.on, 1
@@ -472,7 +473,7 @@ _ZN6hermes2vm16ArrayStorageBaseINS0_11HermesValueEE3setILNS3_6InlineE0EEEvjS2_RN
   %i.pn = ptrtoint ptr %i.pm to i64
   %i.po = and i64 %i.pn, 1125899902648320
   %i.pp = inttoptr i64 %i.po to ptr
-  %i.pq = icmp eq ptr %i.pf, %i.pp
+  %i.pq = icmp eq ptr %i.pg, %i.pp
   br i1 %i.pq, label %_ZN6hermes2vm16ArrayStorageBaseINS0_11HermesValueEE3setILNS3_6InlineE0EEEvjS2_RNS0_7HadesGCE.exit8.i221, label %bb.az, !prof !59
 
 bb.az:                                            ; preds = %_ZN6hermes2vm16ArrayStorageBaseINS0_11HermesValueEE3setILNS3_6InlineE0EEEvjS2_RNS0_7HadesGCE.exit.i214
@@ -482,10 +483,10 @@ bb.az:                                            ; preds = %_ZN6hermes2vm16Arra
   br label %_ZN6hermes2vm16ArrayStorageBaseINS0_11HermesValueEE3setILNS3_6InlineE0EEEvjS2_RNS0_7HadesGCE.exit8.i221
 
 _ZN6hermes2vm16ArrayStorageBaseINS0_11HermesValueEE3setILNS3_6InlineE0EEEvjS2_RNS0_7HadesGCE.exit8.i221: ; preds = %bb.az, %_ZN6hermes2vm16ArrayStorageBaseINS0_11HermesValueEE3setILNS3_6InlineE0EEEvjS2_RNS0_7HadesGCE.exit.i214
-  %i.pr = phi ptr [ %i.pf, %_ZN6hermes2vm16ArrayStorageBaseINS0_11HermesValueEE3setILNS3_6InlineE0EEEvjS2_RNS0_7HadesGCE.exit.i214 ], [ %.pre20.i220, %bb.az ]
-  %i.ps = phi ptr [ %i.pg, %_ZN6hermes2vm16ArrayStorageBaseINS0_11HermesValueEE3setILNS3_6InlineE0EEEvjS2_RNS0_7HadesGCE.exit.i214 ], [ %.pre17.i217, %bb.az ]
+  %i.pr = phi ptr [ %i.pf, %_ZN6hermes2vm16ArrayStorageBaseINS0_11HermesValueEE3setILNS3_6InlineE0EEEvjS2_RNS0_7HadesGCE.exit.i214 ], [ %.pre17.i217, %bb.az ] ; 2 uses
+  %i.ps = phi ptr [ %i.pg, %_ZN6hermes2vm16ArrayStorageBaseINS0_11HermesValueEE3setILNS3_6InlineE0EEEvjS2_RNS0_7HadesGCE.exit.i214 ], [ %.pre20.i220, %bb.az ]
   store i64 -1548112371908608, ptr %i.pm, align 8, !tbaa !79
-  %.sroa.0.0.copyload.i.i9.i222 = load i64, ptr %i.ps, align 8, !tbaa !44
+  %.sroa.0.0.copyload.i.i9.i222 = load i64, ptr %i.pr, align 8, !tbaa !44
   %i.pt = and i64 %.sroa.0.0.copyload.i.i9.i222, 281474976710655
   %i.pu = inttoptr i64 %i.pt to ptr
   %i.pv = zext i32 %i.ov to i64
@@ -495,14 +496,16 @@ _ZN6hermes2vm16ArrayStorageBaseINS0_11HermesValueEE3setILNS3_6InlineE0EEEvjS2_RN
   %i.pz = ptrtoint ptr %i.py to i64
   %i.qa = and i64 %i.pz, 1125899902648320
   %i.qb = inttoptr i64 %i.qa to ptr
-  %i.qc = icmp eq ptr %i.pr, %i.qb
+  %i.qc = icmp eq ptr %i.ps, %i.qb
   br i1 %i.qc, label %"_ZZN6hermes2vm6Domain20importCJSModuleTableENS0_6HandleIS1_EERNS0_7RuntimeEPNS0_13RuntimeModuleEENK3$_1clEjj.exit223", label %bb.ba, !prof !59
 
 bb.ba:                                            ; preds = %_ZN6hermes2vm16ArrayStorageBaseINS0_11HermesValueEE3setILNS3_6InlineE0EEEvjS2_RNS0_7HadesGCE.exit8.i221
   call void @_ZN6hermes2vm7HadesGC16writeBarrierSlowEPKNS0_17GCHermesValueBaseINS0_11HermesValueEEES3_(ptr noundef nonnull align 8 dereferenceable(8112) %i.ku, ptr noundef nonnull align 8 dereferenceable(8) %i.py, i64 %i.pw) #11
+  %.val.val.pre = load ptr, ptr %5, align 8, !tbaa !60
   br label %"_ZZN6hermes2vm6Domain20importCJSModuleTableENS0_6HandleIS1_EERNS0_7RuntimeEPNS0_13RuntimeModuleEENK3$_1clEjj.exit223"
 
 "_ZZN6hermes2vm6Domain20importCJSModuleTableENS0_6HandleIS1_EERNS0_7RuntimeEPNS0_13RuntimeModuleEENK3$_1clEjj.exit223": ; preds = %_ZN6hermes2vm16ArrayStorageBaseINS0_11HermesValueEE3setILNS3_6InlineE0EEEvjS2_RNS0_7HadesGCE.exit8.i221, %bb.ba
+  %.val.val323 = phi ptr [ %i.pr, %_ZN6hermes2vm16ArrayStorageBaseINS0_11HermesValueEE3setILNS3_6InlineE0EEEvjS2_RNS0_7HadesGCE.exit8.i221 ], [ %.val.val.pre, %bb.ba ]
   store i64 %i.pw, ptr %i.py, align 8, !tbaa !79
   %i.qd = zext i32 %11 to i64
   %i.qe = load ptr, ptr %i.kg, align 8, !tbaa !7
@@ -511,7 +514,8 @@ bb.ba:                                            ; preds = %_ZN6hermes2vm16Arra
   br label %bb.bb
 
 bb.bb:                                            ; preds = %"_ZZN6hermes2vm6Domain20importCJSModuleTableENS0_6HandleIS1_EERNS0_7RuntimeEPNS0_13RuntimeModuleEENK3$_1clEjj.exit223", %bb.au
-  %i.qg = getelementptr inbounds nuw i8, ptr %.0106309.a, i64 8 ; 2 uses
+  %.val.val322 = phi ptr [ %.val.val323, %"_ZZN6hermes2vm6Domain20importCJSModuleTableENS0_6HandleIS1_EERNS0_7RuntimeEPNS0_13RuntimeModuleEENK3$_1clEjj.exit223" ], [ %.0106309.a, %bb.au ] ; 2 uses
+  %i.qg = getelementptr inbounds nuw i8, ptr %.0106309, i64 8 ; 2 uses
   %.not116 = icmp eq ptr %i.qg, %i.kr
   br i1 %.not116, label %._crit_edge312, label %bb.au
 

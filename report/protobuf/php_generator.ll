@@ -201,13 +201,14 @@ bb.bz:                                            ; preds = %bb.by, %bb.bx, %._c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #26, !noalias !318
   %i.pq = load i64, ptr %i.cg, align 8, !tbaa !40, !alias.scope !318 ; 2 uses
   %.not.i128 = icmp eq i64 %i.pq, 0
+  %.pre1740 = load ptr, ptr %42, align 8, !tbaa !44 ; 2 uses
   br i1 %.not.i128, label %_ZN6google8protobuf8compiler3php12_GLOBAL__N_119FilenameToClassnameB5cxx11ESt17basic_string_viewIcSt11char_traitsIcEE.exit139, label %.lr.ph.i129
 
 .lr.ph.i129:                                      ; preds = %bb.bz, %bb.cb
-  %73 = phi i64 [ %i.pu, %bb.cb ], [ %i.pq, %bb.bz ]
-  %.012.i130.a = phi i64 [ %i.pv, %bb.cb ], [ 0, %bb.bz ] ; 2 uses
-  %74 = load ptr, ptr %42, align 8, !tbaa !44, !alias.scope !318
-  %i.pr = getelementptr inbounds nuw i8, ptr %74, i64 %.012.i130.a ; 2 uses
+  %73 = phi ptr [ %74, %bb.cb ], [ %.pre1740, %bb.bz ] ; 2 uses
+  %.012.i130.a = phi i64 [ %i.pu, %bb.cb ], [ %i.pq, %bb.bz ]
+  %.012.i130 = phi i64 [ %i.pv, %bb.cb ], [ 0, %bb.bz ] ; 2 uses
+  %i.pr = getelementptr inbounds nuw i8, ptr %73, i64 %.012.i130 ; 2 uses
   %i.ps = load i8, ptr %i.pr, align 1, !tbaa !52
   %i.pt = icmp eq i8 %i.ps, 47
   br i1 %i.pt, label %bb.ca, label %bb.cb
@@ -215,18 +216,20 @@ bb.bz:                                            ; preds = %bb.by, %bb.bx, %._c
 bb.ca:                                            ; preds = %.lr.ph.i129
   store i8 92, ptr %i.pr, align 1, !tbaa !52
   %.pre.i132 = load i64, ptr %i.cg, align 8, !tbaa !40, !alias.scope !318
+  %.pre1738 = load ptr, ptr %42, align 8, !tbaa !44, !alias.scope !318
   br label %bb.cb
 
 bb.cb:                                            ; preds = %bb.ca, %.lr.ph.i129
-  %i.pu = phi i64 [ %73, %.lr.ph.i129 ], [ %.pre.i132, %bb.ca ] ; 3 uses
-  %i.pv = add nuw i64 %.012.i130.a, 1             ; 2 uses
+  %74 = phi ptr [ %73, %.lr.ph.i129 ], [ %.pre1738, %bb.ca ] ; 2 uses
+  %i.pu = phi i64 [ %.012.i130.a, %.lr.ph.i129 ], [ %.pre.i132, %bb.ca ] ; 3 uses
+  %i.pv = add nuw i64 %.012.i130, 1               ; 2 uses
   %i.pw = icmp ult i64 %i.pv, %i.pu
   br i1 %i.pw, label %.lr.ph.i129, label %_ZN6google8protobuf8compiler3php12_GLOBAL__N_119FilenameToClassnameB5cxx11ESt17basic_string_viewIcSt11char_traitsIcEE.exit139, !llvm.loop !322
 
 _ZN6google8protobuf8compiler3php12_GLOBAL__N_119FilenameToClassnameB5cxx11ESt17basic_string_viewIcSt11char_traitsIcEE.exit139: ; preds = %bb.cb, %bb.bz
   %i.px = phi i64 [ 0, %bb.bz ], [ %i.pu, %bb.cb ]
+  %75 = phi ptr [ %.pre1740, %bb.bz ], [ %74, %bb.cb ]
   call void @llvm.lifetime.start.p0(ptr nonnull %43) #26
-  %75 = load ptr, ptr %42, align 8, !tbaa !44
   call void @llvm.lifetime.start.p0(ptr nonnull %44) #26
   store i64 1, ptr %44, align 8, !tbaa !288
   store ptr @.str.12, ptr %i.ch, align 8, !tbaa !289
@@ -629,13 +632,14 @@ bb.ge:                                            ; preds = %bb.gd, %bb.gc, %._c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #26, !noalias !388
   %i.aij = load i64, ptr %i.ev, align 8, !tbaa !40, !alias.scope !388 ; 2 uses
   %.not.i113 = icmp eq i64 %i.aij, 0
+  %.pre1743 = load ptr, ptr %59, align 8, !tbaa !44 ; 2 uses
   br i1 %.not.i113, label %_ZN6google8protobuf8compiler3php12_GLOBAL__N_119FilenameToClassnameB5cxx11ESt17basic_string_viewIcSt11char_traitsIcEE.exit, label %.lr.ph.i114
 
 .lr.ph.i114:                                      ; preds = %bb.ge, %bb.gg
-  %76 = phi i64 [ %i.ain, %bb.gg ], [ %i.aij, %bb.ge ]
-  %.012.i.a = phi i64 [ %i.aio, %bb.gg ], [ 0, %bb.ge ] ; 2 uses
-  %77 = load ptr, ptr %59, align 8, !tbaa !44, !alias.scope !388
-  %i.aik = getelementptr inbounds nuw i8, ptr %77, i64 %.012.i.a ; 2 uses
+  %76 = phi ptr [ %77, %bb.gg ], [ %.pre1743, %bb.ge ] ; 2 uses
+  %.012.i.a = phi i64 [ %i.ain, %bb.gg ], [ %i.aij, %bb.ge ]
+  %.012.i = phi i64 [ %i.aio, %bb.gg ], [ 0, %bb.ge ] ; 2 uses
+  %i.aik = getelementptr inbounds nuw i8, ptr %76, i64 %.012.i ; 2 uses
   %i.ail = load i8, ptr %i.aik, align 1, !tbaa !52
   %i.aim = icmp eq i8 %i.ail, 47
   br i1 %i.aim, label %bb.gf, label %bb.gg
@@ -643,18 +647,20 @@ bb.ge:                                            ; preds = %bb.gd, %bb.gc, %._c
 bb.gf:                                            ; preds = %.lr.ph.i114
   store i8 92, ptr %i.aik, align 1, !tbaa !52
   %.pre.i116 = load i64, ptr %i.ev, align 8, !tbaa !40, !alias.scope !388
+  %.pre1741 = load ptr, ptr %59, align 8, !tbaa !44, !alias.scope !388
   br label %bb.gg
 
 bb.gg:                                            ; preds = %bb.gf, %.lr.ph.i114
-  %i.ain = phi i64 [ %76, %.lr.ph.i114 ], [ %.pre.i116, %bb.gf ] ; 3 uses
-  %i.aio = add nuw i64 %.012.i.a, 1               ; 2 uses
+  %77 = phi ptr [ %76, %.lr.ph.i114 ], [ %.pre1741, %bb.gf ] ; 2 uses
+  %i.ain = phi i64 [ %.012.i.a, %.lr.ph.i114 ], [ %.pre.i116, %bb.gf ] ; 3 uses
+  %i.aio = add nuw i64 %.012.i, 1                 ; 2 uses
   %i.aip = icmp ult i64 %i.aio, %i.ain
   br i1 %i.aip, label %.lr.ph.i114, label %_ZN6google8protobuf8compiler3php12_GLOBAL__N_119FilenameToClassnameB5cxx11ESt17basic_string_viewIcSt11char_traitsIcEE.exit, !llvm.loop !322
 
 _ZN6google8protobuf8compiler3php12_GLOBAL__N_119FilenameToClassnameB5cxx11ESt17basic_string_viewIcSt11char_traitsIcEE.exit: ; preds = %bb.gg, %bb.ge
   %i.aiq = phi i64 [ 0, %bb.ge ], [ %i.ain, %bb.gg ]
+  %78 = phi ptr [ %.pre1743, %bb.ge ], [ %77, %bb.gg ]
   call void @llvm.lifetime.start.p0(ptr nonnull %60) #26
-  %78 = load ptr, ptr %59, align 8, !tbaa !44
   call void @llvm.lifetime.start.p0(ptr nonnull %61) #26
   store i64 1, ptr %61, align 8, !tbaa !288
   store ptr @.str.12, ptr %i.ew, align 8, !tbaa !289
@@ -1057,12 +1063,13 @@ bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %42, i64 8 ; 2 uses
   %i.i = load i64, ptr %i.h, align 8, !tbaa !40, !noalias !437 ; 2 uses
   %.not.i = icmp eq i64 %i.i, 0
+  %.pre17.i = load ptr, ptr %42, align 8, !tbaa !44, !noalias !437 ; 2 uses
   br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.b, %bb.d
   %i.j = phi i64 [ %i.n, %bb.d ], [ %i.i, %bb.b ]
+  %55 = phi ptr [ %56, %bb.d ], [ %.pre17.i, %bb.b ] ; 2 uses
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.d ], [ 0, %bb.b ] ; 2 uses
-  %55 = load ptr, ptr %42, align 8, !tbaa !44, !noalias !437
   %i.k = getelementptr inbounds nuw i8, ptr %55, i64 %indvars.iv.i ; 2 uses
   %i.l = load i8, ptr %i.k, align 1, !tbaa !52, !noalias !437
   %i.m = icmp eq i8 %i.l, 92
@@ -1070,22 +1077,24 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.lr.ph.i
   store i8 47, ptr %i.k, align 1, !tbaa !52, !noalias !437
+  %.pre.i = load ptr, ptr %42, align 8, !tbaa !44, !noalias !437
   %.pre.i.a = load i64, ptr %i.h, align 8, !tbaa !40, !noalias !437
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %.lr.ph.i
   %i.n = phi i64 [ %i.j, %.lr.ph.i ], [ %.pre.i.a, %bb.c ] ; 3 uses
+  %56 = phi ptr [ %55, %.lr.ph.i ], [ %.pre.i, %bb.c ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %i.o = icmp ugt i64 %i.n, %indvars.iv.next.i
   br i1 %i.o, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !440
 
 ._crit_edge.i:                                    ; preds = %bb.d, %bb.b
+  %57 = phi ptr [ %.pre17.i, %bb.b ], [ %56, %bb.d ]
   %.lcssa.i = phi i64 [ 0, %bb.b ], [ %i.n, %bb.d ]
   call void @llvm.lifetime.start.p0(ptr nonnull %43) #26, !noalias !437
-  %56 = load ptr, ptr %42, align 8, !tbaa !44, !noalias !437
   store i64 %.lcssa.i, ptr %43, align 8, !noalias !437
   %i.p = getelementptr inbounds nuw i8, ptr %43, i64 8
-  store ptr %56, ptr %i.p, align 8, !noalias !437
+  store ptr %57, ptr %i.p, align 8, !noalias !437
   call void @llvm.lifetime.start.p0(ptr nonnull %44) #26, !noalias !437
   store i64 4, ptr %44, align 8, !noalias !437
   %i.q = getelementptr inbounds nuw i8, ptr %44, i64 8
@@ -1488,12 +1497,13 @@ bb.j:                                             ; preds = %bb.b, %bb.a
   %i.ap = getelementptr inbounds nuw i8, ptr %33, i64 8 ; 2 uses
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !40, !noalias !469 ; 2 uses
   %.not.i81 = icmp eq i64 %i.aq, 0
+  %.pre17.i = load ptr, ptr %33, align 8, !tbaa !44, !noalias !469 ; 2 uses
   br i1 %.not.i81, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.j, %bb.l
   %i.ar = phi i64 [ %i.av, %bb.l ], [ %i.aq, %bb.j ]
+  %55 = phi ptr [ %56, %bb.l ], [ %.pre17.i, %bb.j ] ; 2 uses
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.l ], [ 0, %bb.j ] ; 2 uses
-  %55 = load ptr, ptr %33, align 8, !tbaa !44, !noalias !469
   %i.as = getelementptr inbounds nuw i8, ptr %55, i64 %indvars.iv.i ; 2 uses
   %i.at = load i8, ptr %i.as, align 1, !tbaa !52, !noalias !469
   %i.au = icmp eq i8 %i.at, 92
@@ -1501,22 +1511,24 @@ bb.j:                                             ; preds = %bb.b, %bb.a
 
 bb.k:                                             ; preds = %.lr.ph.i
   store i8 47, ptr %i.as, align 1, !tbaa !52, !noalias !469
+  %.pre.i82 = load ptr, ptr %33, align 8, !tbaa !44, !noalias !469
   %.pre.i82.a = load i64, ptr %i.ap, align 8, !tbaa !40, !noalias !469
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %.lr.ph.i
   %i.av = phi i64 [ %i.ar, %.lr.ph.i ], [ %.pre.i82.a, %bb.k ] ; 3 uses
+  %56 = phi ptr [ %55, %.lr.ph.i ], [ %.pre.i82, %bb.k ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %i.aw = icmp ugt i64 %i.av, %indvars.iv.next.i
   br i1 %i.aw, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !472
 
 ._crit_edge.i:                                    ; preds = %bb.l, %bb.j
+  %57 = phi ptr [ %.pre17.i, %bb.j ], [ %56, %bb.l ]
   %.lcssa.i = phi i64 [ 0, %bb.j ], [ %i.av, %bb.l ]
   call void @llvm.lifetime.start.p0(ptr nonnull %34) #26, !noalias !469
-  %56 = load ptr, ptr %33, align 8, !tbaa !44, !noalias !469
   store i64 %.lcssa.i, ptr %34, align 8, !noalias !469
   %i.ax = getelementptr inbounds nuw i8, ptr %34, i64 8
-  store ptr %56, ptr %i.ax, align 8, !noalias !469
+  store ptr %57, ptr %i.ax, align 8, !noalias !469
   call void @llvm.lifetime.start.p0(ptr nonnull %35) #26, !noalias !469
   store i64 4, ptr %35, align 8, !noalias !469
   %i.ay = getelementptr inbounds nuw i8, ptr %35, i64 8

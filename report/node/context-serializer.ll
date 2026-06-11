@@ -201,7 +201,7 @@ define linkonce_odr hidden void @_ZN2v88internal17ContextSerializer33SerializeOb
 bb.a:
   %7 = alloca %"class.v8::internal::DisallowJavascriptExecution", align 8 ; 4 uses
   %8 = alloca %"class.v8::internal::DisallowCompilation", align 8 ; 4 uses
-  %9 = alloca %"class.std::vector.660", align 8   ; 12 uses
+  %9 = alloca %"class.std::vector.660", align 8   ; 13 uses
   %10 = alloca %"class.v8::internal::Serializer::ObjectSerializer", align 8 ; 9 uses
   %i.a = inttoptr i64 %6 to ptr
   %i.b = icmp sgt i32 %2, 0
@@ -233,6 +233,10 @@ bb.c:                                             ; preds = %bb.a
   %i.k = add i64 %i.f, -1                         ; 3 uses
   %i.l = inttoptr i64 %i.k to ptr                 ; 2 uses
   br label %bb.d
+
+.lr.ph:                                           ; preds = %_ZNSt6vectorIbSaIbEE9push_backEb.exit
+  %.pre180 = load ptr, ptr %9, align 8
+  br label %.lr.ph.a
 
 bb.d:                                             ; preds = %bb.c, %_ZNSt6vectorIbSaIbEE9push_backEb.exit
   %.040167 = phi i32 [ 0, %bb.c ], [ %i.cw, %_ZNSt6vectorIbSaIbEE9push_backEb.exit ] ; 3 uses
@@ -526,7 +530,7 @@ _ZNSt6vectorIbSaIbEE9push_backEb.exit:            ; preds = %bb.ad, %bb.ac, %bb.
   %.sroa.099.1 = phi ptr [ %.sroa.099.2, %bb.s ], [ %.sroa.099.2, %_ZNSt13_Bit_iteratorppEi.exit.i ], [ %.sroa.099.3, %bb.ab ], [ %.sroa.099.3, %bb.ac ], [ %.sroa.099.3, %bb.ad ] ; 4 uses
   %i.cw = add nuw nsw i32 %.040167, 1             ; 2 uses
   %exitcond.not = icmp eq i32 %i.cw, %2
-  br i1 %exitcond.not, label %.lr.ph.a, label %bb.d, !llvm.loop !17
+  br i1 %exitcond.not, label %.lr.ph, label %bb.d, !llvm.loop !17
 
 .lr.ph171:                                        ; preds = %bb.ag
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #14
@@ -556,9 +560,9 @@ _ZNSt6vectorIbSaIbEE9push_backEb.exit:            ; preds = %bb.ad, %bb.ac, %bb.
   %wide.trip.count = zext nneg i32 %2 to i64
   br label %bb.aj
 
-.lr.ph.a:                                         ; preds = %_ZNSt6vectorIbSaIbEE9push_backEb.exit, %bb.ag
-  %.041168 = phi i32 [ %i.ej, %bb.ag ], [ 0, %_ZNSt6vectorIbSaIbEE9push_backEb.exit ] ; 4 uses
-  %11 = load ptr, ptr %9, align 8
+.lr.ph.a:                                         ; preds = %.lr.ph, %bb.ag
+  %11 = phi ptr [ %.pre180, %.lr.ph ], [ %12, %bb.ag ] ; 2 uses
+  %.041168 = phi i32 [ 0, %.lr.ph ], [ %i.ej, %bb.ag ] ; 4 uses
   %i.dm = lshr i32 %.041168, 6
   %.zext = zext nneg i32 %i.dm to i64
   %i.dn = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %.zext
@@ -594,9 +598,11 @@ _ZN2v88internal8JSObject22GetEmbedderFieldOffsetEi.exit57: ; preds = %bb.ae, %bb
   %i.eh = add i64 %i.k, %i.eg
   %i.ei = inttoptr i64 %i.eh to ptr
   store atomic volatile i64 0, ptr %i.ei monotonic, align 8
+  %.pre = load ptr, ptr %9, align 8
   br label %bb.ag
 
 bb.ag:                                            ; preds = %.lr.ph.a, %_ZN2v88internal8JSObject22GetEmbedderFieldOffsetEi.exit57
+  %12 = phi ptr [ %11, %.lr.ph.a ], [ %.pre, %_ZN2v88internal8JSObject22GetEmbedderFieldOffsetEi.exit57 ]
   %i.ej = add nuw nsw i32 %.041168, 1             ; 2 uses
   %exitcond177.not = icmp eq i32 %i.ej, %2
   br i1 %exitcond177.not, label %.lr.ph171, label %.lr.ph.a, !llvm.loop !18
@@ -999,7 +1005,7 @@ define linkonce_odr hidden void @_ZN2v88internal17ContextSerializer33SerializeOb
 bb.a:
   %7 = alloca %"class.v8::internal::DisallowJavascriptExecution", align 8 ; 4 uses
   %8 = alloca %"class.v8::internal::DisallowCompilation", align 8 ; 4 uses
-  %9 = alloca %"class.std::vector.660", align 8   ; 12 uses
+  %9 = alloca %"class.std::vector.660", align 8   ; 13 uses
   %10 = alloca %"class.v8::internal::Serializer::ObjectSerializer", align 8 ; 9 uses
   %i.a = inttoptr i64 %6 to ptr
   %i.b = icmp sgt i32 %2, 0
@@ -1033,6 +1039,7 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIbSaIbEE9push_backEb.exit
+  %.pre172 = load ptr, ptr %9, align 8
   %invariant.op187 = add i64 %i.f, 15
   br label %bb.ad
 
@@ -1340,8 +1347,8 @@ _ZNSt6vectorIbSaIbEE9push_backEb.exit:            ; preds = %bb.ac, %bb.ab, %bb.
   br label %bb.ai
 
 bb.ad:                                            ; preds = %.lr.ph, %bb.af
+  %11 = phi ptr [ %.pre172, %.lr.ph ], [ %12, %bb.af ] ; 2 uses
   %indvars.iv162 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next163, %bb.af ] ; 4 uses
-  %11 = load ptr, ptr %9, align 8
   %i.cu = lshr i64 %indvars.iv162, 6
   %.zext = and i64 %i.cu, 67108863
   %i.cv = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %.zext
@@ -1357,9 +1364,11 @@ bb.ae:                                            ; preds = %bb.ad
   %.reass188 = add i64 %i.da, %invariant.op187
   %i.db = inttoptr i64 %.reass188 to ptr
   store atomic volatile i64 0, ptr %i.db monotonic, align 8
+  %.pre = load ptr, ptr %9, align 8
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ad, %bb.ae
+  %12 = phi ptr [ %11, %bb.ad ], [ %.pre, %bb.ae ]
   %indvars.iv.next163 = add nuw nsw i64 %indvars.iv162, 1 ; 2 uses
   %exitcond166.not = icmp eq i64 %indvars.iv.next163, %wide.trip.count
   br i1 %exitcond166.not, label %.lr.ph155, label %bb.ad, !llvm.loop !22

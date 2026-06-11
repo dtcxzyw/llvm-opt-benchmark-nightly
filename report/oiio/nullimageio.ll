@@ -201,8 +201,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
-  %i.q = load ptr, ptr %i.p, align 8, !tbaa !106  ; 2 uses
-  %i.r = load ptr, ptr %5, align 8, !tbaa !109    ; 2 uses
+  %i.q = load ptr, ptr %i.p, align 8, !tbaa !106  ; 3 uses
+  %i.r = load ptr, ptr %5, align 8, !tbaa !109    ; 3 uses
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = ptrtoint ptr %i.r to i64
   %i.u = sub i64 %i.s, %i.t
@@ -294,18 +294,22 @@ _ZNSt6vectorIfSaIfEE17_M_realloc_insertIJRKfEEEvN9__gnu_cxx17__normal_iteratorIP
 _ZNSt6vectorIfSaIfEE9push_backERKf.exit.us:       ; preds = %_ZNSt6vectorIfSaIfEE17_M_realloc_insertIJRKfEEEvN9__gnu_cxx17__normal_iteratorIPfS1_EEDpOT_.exit.i.us, %bb.d
   %i.az = add nuw i64 %.02038.us, 1               ; 2 uses
   %exitcond42.not = icmp eq i64 %i.az, %i.v
-  br i1 %exitcond42.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !110
+  br i1 %exitcond42.not, label %._crit_edge.loopexit, label %.lr.ph.split.us, !llvm.loop !110
 
 .loopexit.split.us:                               ; preds = %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i.us, %.lr.ph.split.us
   %lpad.loopexit.us = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit
 
-._crit_edge:                                      ; preds = %_ZNSt6vectorIfSaIfEE9push_backERKf.exit, %_ZNSt6vectorIfSaIfEE9push_backERKf.exit.us, %bb.b
-  %8 = load ptr, ptr %i.p, align 8, !tbaa !106
-  %i.ba = load ptr, ptr %5, align 8, !tbaa !109
-  %i.bb = ptrtoint ptr %8 to i64
-  %i.bc = ptrtoint ptr %i.ba to i64
+._crit_edge.loopexit:                             ; preds = %_ZNSt6vectorIfSaIfEE9push_backERKf.exit.us
+  %.pre46 = load ptr, ptr %5, align 8, !tbaa !109
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %_ZNSt6vectorIfSaIfEE9push_backERKf.exit, %._crit_edge.loopexit, %bb.b
+  %8 = phi ptr [ %i.q, %bb.b ], [ %.pre46, %._crit_edge.loopexit ], [ %10, %_ZNSt6vectorIfSaIfEE9push_backERKf.exit ]
+  %i.ba = load ptr, ptr %i.p, align 8, !tbaa !106
+  %i.bb = ptrtoint ptr %i.ba to i64
+  %i.bc = ptrtoint ptr %8 to i64
   %i.bd = sub i64 %i.bb, %i.bc
   %i.be = icmp eq i64 %i.bd, 16
   %i.bf = icmp ne ptr %i.b, %i.c
@@ -318,8 +322,8 @@ bb.h:                                             ; preds = %bb.q, %bb.n, %bb.a
   br label %.loopexit
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %_ZNSt6vectorIfSaIfEE9push_backERKf.exit
+  %9 = phi ptr [ %10, %_ZNSt6vectorIfSaIfEE9push_backERKf.exit ], [ %i.r, %.lr.ph ]
   %.02038 = phi i64 [ %i.cb, %_ZNSt6vectorIfSaIfEE9push_backERKf.exit ], [ 0, %.lr.ph ] ; 5 uses
-  %9 = load ptr, ptr %5, align 8, !tbaa !109
   %i.bh = getelementptr inbounds nuw [16 x i8], ptr %9, i64 %.02038 ; 2 uses
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !66
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bh, i64 8
@@ -332,7 +336,7 @@ bb.h:                                             ; preds = %bb.q, %bb.n, %bb.a
 
 bb.i:                                             ; preds = %.lr.ph.split
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  %i.bm = load ptr, ptr %5, align 8, !tbaa !109
+  %i.bm = load ptr, ptr %5, align 8, !tbaa !109   ; 3 uses
   %i.bn = getelementptr inbounds nuw [16 x i8], ptr %i.bm, i64 %.02038 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 8
   %i.bp = load i64, ptr %i.bo, align 8, !tbaa !68 ; 2 uses
@@ -379,9 +383,11 @@ bb.l:                                             ; preds = %bb.k
   %i.bz = load ptr, ptr %0, align 8, !tbaa !95
   %i.ca = getelementptr inbounds nuw [4 x i8], ptr %i.bz, i64 %.02038
   store float %i.by, ptr %i.ca, align 4, !tbaa !96
+  %.pre44 = load ptr, ptr %5, align 8, !tbaa !109
   br label %_ZNSt6vectorIfSaIfEE9push_backERKf.exit
 
 _ZNSt6vectorIfSaIfEE9push_backERKf.exit:          ; preds = %bb.i, %bb.l, %bb.j
+  %10 = phi ptr [ %i.bm, %bb.i ], [ %.pre44, %bb.l ], [ %i.bm, %bb.j ] ; 2 uses
   %i.cb = add nuw i64 %.02038, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.cb, %i.v
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !110

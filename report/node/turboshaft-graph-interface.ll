@@ -201,7 +201,7 @@ bb.a:
   %7 = alloca %"class.v8::base::SmallVector.1453", align 8 ; 14 uses
   %8 = alloca %"class.v8::base::SmallVector.1453", align 8 ; 9 uses
   %9 = alloca %"class.v8::base::SmallVector.1453", align 8 ; 8 uses
-  %10 = alloca %"class.v8::base::SmallVector", align 8 ; 10 uses
+  %10 = alloca %"class.v8::base::SmallVector", align 8 ; 11 uses
   tail call void @_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface18MemCopyBoundsCheckEPKNS1_10WasmMemoryES5_NS0_8compiler10turboshaft1VINS7_12WordWithBitsILm64EEEEESB_SB_(ptr noundef nonnull align 8 dereferenceable(288) %0, ptr noundef %1, ptr noundef %2, i32 %3, i32 %4, i32 %5)
   %i.a = load i32, ptr %2, align 8                ; 2 uses
   %i.b = icmp eq i32 %i.a, 0
@@ -604,7 +604,11 @@ _ZNK2v88internal8compiler10turboshaft20MemoryRepresentation11SizeInBytesEv.exit1
   %i.gu = load ptr, ptr %i.gt, align 8
   %i.gv = icmp eq ptr %i.gu, null
   %i.gw = add i32 %.081254, %i.gq                 ; 3 uses
-  br i1 %i.gv, label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE5StoreENS2_7OpIndexENS2_15OptionalOpIndexESF_NS2_6LoadOp4KindENS2_20MemoryRepresentationENS1_16WriteBarrierKindEihbNS0_18IndirectPointerTagE.exit.us.preheader, label %.lr.ph245.split, !prof !9
+  br i1 %i.gv, label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE5StoreENS2_7OpIndexENS2_15OptionalOpIndexESF_NS2_6LoadOp4KindENS2_20MemoryRepresentationENS1_16WriteBarrierKindEihbNS0_18IndirectPointerTagE.exit.us.preheader, label %.lr.ph245.split.preheader, !prof !9
+
+.lr.ph245.split.preheader:                        ; preds = %.lr.ph245
+  %.pre282 = load ptr, ptr %10, align 8
+  br label %.lr.ph245.split
 
 _ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE5StoreENS2_7OpIndexENS2_15OptionalOpIndexESF_NS2_6LoadOp4KindENS2_20MemoryRepresentationENS1_16WriteBarrierKindEihbNS0_18IndirectPointerTagE.exit.us.preheader: ; preds = %.lr.ph245
   %i.gx = mul i32 %i.gq, %i.gr                    ; 2 uses
@@ -625,12 +629,12 @@ _ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9Assemb
   %.not84 = icmp eq ptr %i.hc, %.pre280
   br i1 %.not84, label %._crit_edge259, label %.lr.ph258
 
-.lr.ph245.split:                                  ; preds = %.lr.ph245, %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE5StoreENS2_7OpIndexENS2_15OptionalOpIndexESF_NS2_6LoadOp4KindENS2_20MemoryRepresentationENS1_16WriteBarrierKindEihbNS0_18IndirectPointerTagE.exit
-  %.180242 = phi i32 [ %i.lj, %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE5StoreENS2_7OpIndexENS2_15OptionalOpIndexESF_NS2_6LoadOp4KindENS2_20MemoryRepresentationENS1_16WriteBarrierKindEihbNS0_18IndirectPointerTagE.exit ], [ %.079255, %.lr.ph245 ] ; 2 uses
-  %.182241 = phi i32 [ %i.li, %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE5StoreENS2_7OpIndexENS2_15OptionalOpIndexESF_NS2_6LoadOp4KindENS2_20MemoryRepresentationENS1_16WriteBarrierKindEihbNS0_18IndirectPointerTagE.exit ], [ %.081254, %.lr.ph245 ] ; 2 uses
+.lr.ph245.split:                                  ; preds = %.lr.ph245.split.preheader, %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE5StoreENS2_7OpIndexENS2_15OptionalOpIndexESF_NS2_6LoadOp4KindENS2_20MemoryRepresentationENS1_16WriteBarrierKindEihbNS0_18IndirectPointerTagE.exit
+  %11 = phi ptr [ %12, %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE5StoreENS2_7OpIndexENS2_15OptionalOpIndexESF_NS2_6LoadOp4KindENS2_20MemoryRepresentationENS1_16WriteBarrierKindEihbNS0_18IndirectPointerTagE.exit ], [ %.pre282, %.lr.ph245.split.preheader ] ; 2 uses
+  %.180242 = phi i32 [ %i.lj, %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE5StoreENS2_7OpIndexENS2_15OptionalOpIndexESF_NS2_6LoadOp4KindENS2_20MemoryRepresentationENS1_16WriteBarrierKindEihbNS0_18IndirectPointerTagE.exit ], [ %.079255, %.lr.ph245.split.preheader ] ; 2 uses
+  %.182241 = phi i32 [ %i.li, %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE5StoreENS2_7OpIndexENS2_15OptionalOpIndexESF_NS2_6LoadOp4KindENS2_20MemoryRepresentationENS1_16WriteBarrierKindEihbNS0_18IndirectPointerTagE.exit ], [ %.081254, %.lr.ph245.split.preheader ] ; 2 uses
   %i.hd = load ptr, ptr %i.ao, align 8, !nonnull !11, !align !19 ; 3 uses
   %i.he = zext i32 %.182241 to i64
-  %11 = load ptr, ptr %10, align 8
   %i.hf = getelementptr inbounds nuw [4 x i8], ptr %11, i64 %i.he
   %.sroa.02.0.copyload = load i32, ptr %i.hf, align 4 ; 2 uses
   %i.hg = getelementptr inbounds nuw i8, ptr %i.hd, i64 672
@@ -833,9 +837,11 @@ _ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3t
   %i.lg = phi ptr [ %.pre.i.i.i131, %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft7OpIndexEE6resizeEm.exit151 ], [ %i.jt, %_ZN2v88internal8compiler10turboshaft14SaturatedUint84IncrEv.exit.i.i129.1 ]
   %i.lh = getelementptr inbounds nuw [4 x i8], ptr %i.lg, i64 %i.jp
   store i32 %.sroa.0.0.copyload.i.i130, ptr %i.lh, align 4
+  %.pre281 = load ptr, ptr %10, align 8
   br label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE5StoreENS2_7OpIndexENS2_15OptionalOpIndexESF_NS2_6LoadOp4KindENS2_20MemoryRepresentationENS1_16WriteBarrierKindEihbNS0_18IndirectPointerTagE.exit
 
 _ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE5StoreENS2_7OpIndexENS2_15OptionalOpIndexESF_NS2_6LoadOp4KindENS2_20MemoryRepresentationENS1_16WriteBarrierKindEihbNS0_18IndirectPointerTagE.exit: ; preds = %.lr.ph245.split, %_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_7StoreOpEJNS2_14ShadowyOpIndexENS2_15OptionalOpIndexESG_NS2_6LoadOp4KindENS2_20MemoryRepresentationENS1_16WriteBarrierKindEihbNS0_18IndirectPointerTagEEEENS2_7OpIndexEDpT0_.exit
+  %12 = phi ptr [ %11, %.lr.ph245.split ], [ %.pre281, %_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_7StoreOpEJNS2_14ShadowyOpIndexENS2_15OptionalOpIndexESG_NS2_6LoadOp4KindENS2_20MemoryRepresentationENS1_16WriteBarrierKindEihbNS0_18IndirectPointerTagEEEENS2_7OpIndexEDpT0_.exit ]
   %i.li = add i32 %.182241, 1                     ; 2 uses
   %i.lj = add nsw i32 %.180242, %i.gr             ; 2 uses
   %exitcond270.not = icmp eq i32 %i.li, %i.gw

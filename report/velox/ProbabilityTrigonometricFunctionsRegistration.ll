@@ -201,8 +201,8 @@ bb.a:
   %13 = alloca %"struct.boost::math::complemented2_type", align 8 ; 5 uses
   %i.d = alloca double, align 8                   ; 9 uses
   %14 = alloca %"struct.boost::math::detail::distribution_quantile_finder", align 8 ; 9 uses
-  %i.e = alloca double, align 8                   ; 33 uses
-  %i.f = alloca double, align 8                   ; 27 uses
+  %i.e = alloca double, align 8                   ; 34 uses
+  %i.f = alloca double, align 8                   ; 28 uses
   %i.g = alloca double, align 8                   ; 20 uses
   %i.h = alloca double, align 8                   ; 22 uses
   %i.i = alloca double, align 8                   ; 19 uses
@@ -454,35 +454,37 @@ bb.w:                                             ; preds = %_ZN5boost4math5tool
   %i.dh = getelementptr inbounds nuw i8, ptr %8, i64 24
   %i.di = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 2 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %.pre116 = load double, ptr %i.e, align 8, !tbaa !183
+  %.pre118 = load double, ptr %i.f, align 8, !tbaa !183
   br label %bb.x
 
 bb.x:                                             ; preds = %.lr.ph, %bb.bu
-  %i.dk = phi double [ %i.cy, %.lr.ph ], [ %i.ls, %bb.bu ] ; 4 uses
+  %i.dk = phi double [ %.pre118, %.lr.ph ], [ %18, %bb.bu ] ; 2 uses
+  %15 = phi double [ %.pre116, %.lr.ph ], [ %19, %bb.bu ] ; 2 uses
+  %16 = phi double [ %i.cy, %.lr.ph ], [ %i.ls, %bb.bu ] ; 4 uses
   %.1113 = phi i64 [ %.059, %.lr.ph ], [ %.2, %bb.bu ] ; 8 uses
-  %15 = load double, ptr %i.e, align 8, !tbaa !183 ; 2 uses
-  %16 = call double @llvm.floor.f64(double %15)
-  %17 = load double, ptr %i.f, align 8, !tbaa !183 ; 2 uses
-  %i.dl = call double @llvm.floor.f64(double %17)
-  %i.dm = fcmp oeq double %16, %i.dl
+  %17 = call double @llvm.floor.f64(double %15)
+  %i.dl = call double @llvm.floor.f64(double %i.dk)
+  %i.dm = fcmp oeq double %17, %i.dl
   br i1 %i.dm, label %.critedge, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
   %i.dn = load double, ptr %i.h, align 8, !tbaa !183 ; 3 uses
-  %i.do = fsub double %i.dk, %i.dn
+  %i.do = fsub double %16, %i.dn
   %i.dp = call double @llvm.fabs.f64(double %i.do)
   %i.dq = fcmp olt double %i.dp, f0x0060000000000000
   br i1 %i.dq, label %.critedge76, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
   %i.dr = load double, ptr %i.j, align 8, !tbaa !183 ; 3 uses
-  %i.ds = fsub double %i.dk, %i.dr
+  %i.ds = fsub double %16, %i.dr
   %i.dt = call double @llvm.fabs.f64(double %i.ds)
   %i.du = fcmp olt double %i.dt, f0x0060000000000000
   br i1 %i.du, label %.critedge76, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
   %i.dv = load double, ptr %i.l, align 8, !tbaa !183 ; 3 uses
-  %i.dw = fsub double %i.dk, %i.dv
+  %i.dw = fsub double %16, %i.dv
   %i.dx = call double @llvm.fabs.f64(double %i.dw)
   %i.dy = fcmp olt double %i.dx, f0x0060000000000000
   br i1 %i.dy, label %.critedge76, label %bb.ab
@@ -885,16 +887,16 @@ _ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS
   br i1 %or.cond13, label %.critedge, label %bb.br
 
 bb.br:                                            ; preds = %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit102
-  %i.lg = load double, ptr %i.e, align 8, !tbaa !183 ; 3 uses
+  %i.lg = load double, ptr %i.e, align 8, !tbaa !183 ; 4 uses
   %i.lh = call double @llvm.floor.f64(double %i.lg)
-  %i.li = load double, ptr %i.f, align 8, !tbaa !183 ; 2 uses
+  %i.li = load double, ptr %i.f, align 8, !tbaa !183 ; 3 uses
   %i.lj = call double @llvm.floor.f64(double %i.li)
   %i.lk = fcmp oeq double %i.lh, %i.lj
   br i1 %i.lk, label %.critedge, label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br
   %i.ll = fsub double %i.li, %i.lg                ; 2 uses
-  %i.lm = fsub double %17, %15
+  %i.lm = fsub double %i.dk, %15
   %i.ln = fmul double %i.lm, 5.000000e-01
   %i.lo = fcmp olt double %i.ll, %i.ln
   br i1 %i.lo, label %bb.bu, label %bb.bt, !llvm.loop !22040
@@ -906,11 +908,15 @@ bb.bt:                                            ; preds = %bb.bs
   %i.lq = fadd double %i.lg, %i.lp
   call void @_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_(ptr noundef nonnull byval(%"struct.boost::math::detail::distribution_quantile_finder") align 8 %0, ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef nonnull align 8 dereferenceable(8) %i.f, double noundef %i.lq, ptr noundef nonnull align 8 dereferenceable(8) %i.g, ptr noundef nonnull align 8 dereferenceable(8) %i.h, ptr noundef nonnull align 8 dereferenceable(8) %i.i, ptr noundef nonnull align 8 dereferenceable(8) %i.j)
   %i.lr = add i64 %.1113, -4
+  %.pre115 = load double, ptr %i.e, align 8, !tbaa !183
+  %.pre117 = load double, ptr %i.f, align 8, !tbaa !183
   %.pre115.a = load double, ptr %i.g, align 8
   br label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bs, %bb.bt
   %i.ls = phi double [ %.pre115.a, %bb.bt ], [ %i.lb, %bb.bs ] ; 3 uses
+  %18 = phi double [ %.pre117, %bb.bt ], [ %i.li, %bb.bs ]
+  %19 = phi double [ %.pre115, %bb.bt ], [ %i.lg, %bb.bs ]
   %.2 = phi i64 [ %i.lr, %bb.bt ], [ %i.ld, %bb.bs ] ; 3 uses
   %i.lt = icmp ne i64 %.2, 0
   %i.lu = fcmp une double %i.ls, 0.000000e+00
@@ -925,7 +931,7 @@ bb.bu:                                            ; preds = %bb.bs, %bb.bt
   br label %bb.bv
 
 .critedge:                                        ; preds = %bb.bu, %bb.x, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit90, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit96, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit102, %bb.ap, %bb.bh, %bb.br, %bb.w
-  %i.lx = phi double [ %i.cy, %bb.w ], [ %i.it, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit96 ], [ %i.lb, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit102 ], [ %i.fz, %bb.ap ], [ %i.it, %bb.bh ], [ %i.lb, %bb.br ], [ %i.dk, %bb.x ], [ %i.ls, %bb.bu ], [ %i.fz, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit90 ]
+  %i.lx = phi double [ %i.cy, %bb.w ], [ %i.it, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit96 ], [ %i.lb, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit102 ], [ %i.fz, %bb.ap ], [ %i.it, %bb.bh ], [ %i.lb, %bb.br ], [ %16, %bb.x ], [ %i.ls, %bb.bu ], [ %i.fz, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit90 ]
   %.3 = phi i64 [ %.059, %bb.w ], [ %i.iv, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit96 ], [ %i.ld, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit102 ], [ %i.gb, %bb.ap ], [ %i.iv, %bb.bh ], [ %i.ld, %bb.br ], [ %.1113, %bb.x ], [ %.2, %bb.bu ], [ %i.gb, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit90 ]
   %i.ly = load i64, ptr %5, align 8, !tbaa !258
   %i.lz = sub i64 %i.ly, %.3
@@ -1328,8 +1334,8 @@ bb.a:
   %13 = alloca %"struct.boost::math::complemented2_type", align 8 ; 5 uses
   %i.d = alloca double, align 8                   ; 9 uses
   %14 = alloca %"struct.boost::math::detail::distribution_quantile_finder", align 8 ; 9 uses
-  %i.e = alloca double, align 8                   ; 33 uses
-  %i.f = alloca double, align 8                   ; 27 uses
+  %i.e = alloca double, align 8                   ; 34 uses
+  %i.f = alloca double, align 8                   ; 28 uses
   %i.g = alloca double, align 8                   ; 20 uses
   %i.h = alloca double, align 8                   ; 22 uses
   %i.i = alloca double, align 8                   ; 19 uses
@@ -1581,35 +1587,37 @@ bb.w:                                             ; preds = %_ZN5boost4math5tool
   %i.dh = getelementptr inbounds nuw i8, ptr %8, i64 24
   %i.di = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 2 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %.pre116 = load double, ptr %i.e, align 8, !tbaa !183
+  %.pre118 = load double, ptr %i.f, align 8, !tbaa !183
   br label %bb.x
 
 bb.x:                                             ; preds = %.lr.ph, %bb.bu
-  %i.dk = phi double [ %i.cy, %.lr.ph ], [ %i.ls, %bb.bu ] ; 4 uses
+  %i.dk = phi double [ %.pre118, %.lr.ph ], [ %18, %bb.bu ] ; 2 uses
+  %15 = phi double [ %.pre116, %.lr.ph ], [ %19, %bb.bu ] ; 2 uses
+  %16 = phi double [ %i.cy, %.lr.ph ], [ %i.ls, %bb.bu ] ; 4 uses
   %.1113 = phi i64 [ %.059, %.lr.ph ], [ %.2, %bb.bu ] ; 8 uses
-  %15 = load double, ptr %i.e, align 8, !tbaa !183 ; 2 uses
-  %16 = call double @llvm.ceil.f64(double %15)
-  %17 = load double, ptr %i.f, align 8, !tbaa !183 ; 2 uses
-  %i.dl = call double @llvm.ceil.f64(double %17)
-  %i.dm = fcmp oeq double %16, %i.dl
+  %17 = call double @llvm.ceil.f64(double %15)
+  %i.dl = call double @llvm.ceil.f64(double %i.dk)
+  %i.dm = fcmp oeq double %17, %i.dl
   br i1 %i.dm, label %.critedge, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
   %i.dn = load double, ptr %i.h, align 8, !tbaa !183 ; 3 uses
-  %i.do = fsub double %i.dk, %i.dn
+  %i.do = fsub double %16, %i.dn
   %i.dp = call double @llvm.fabs.f64(double %i.do)
   %i.dq = fcmp olt double %i.dp, f0x0060000000000000
   br i1 %i.dq, label %.critedge76, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
   %i.dr = load double, ptr %i.j, align 8, !tbaa !183 ; 3 uses
-  %i.ds = fsub double %i.dk, %i.dr
+  %i.ds = fsub double %16, %i.dr
   %i.dt = call double @llvm.fabs.f64(double %i.ds)
   %i.du = fcmp olt double %i.dt, f0x0060000000000000
   br i1 %i.du, label %.critedge76, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
   %i.dv = load double, ptr %i.l, align 8, !tbaa !183 ; 3 uses
-  %i.dw = fsub double %i.dk, %i.dv
+  %i.dw = fsub double %16, %i.dv
   %i.dx = call double @llvm.fabs.f64(double %i.dw)
   %i.dy = fcmp olt double %i.dx, f0x0060000000000000
   br i1 %i.dy, label %.critedge76, label %bb.ab
@@ -2012,16 +2020,16 @@ _ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS
   br i1 %or.cond13, label %.critedge, label %bb.br
 
 bb.br:                                            ; preds = %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit102
-  %i.lg = load double, ptr %i.e, align 8, !tbaa !183 ; 3 uses
+  %i.lg = load double, ptr %i.e, align 8, !tbaa !183 ; 4 uses
   %i.lh = call double @llvm.ceil.f64(double %i.lg)
-  %i.li = load double, ptr %i.f, align 8, !tbaa !183 ; 2 uses
+  %i.li = load double, ptr %i.f, align 8, !tbaa !183 ; 3 uses
   %i.lj = call double @llvm.ceil.f64(double %i.li)
   %i.lk = fcmp oeq double %i.lh, %i.lj
   br i1 %i.lk, label %.critedge, label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br
   %i.ll = fsub double %i.li, %i.lg                ; 2 uses
-  %i.lm = fsub double %17, %15
+  %i.lm = fsub double %i.dk, %15
   %i.ln = fmul double %i.lm, 5.000000e-01
   %i.lo = fcmp olt double %i.ll, %i.ln
   br i1 %i.lo, label %bb.bu, label %bb.bt, !llvm.loop !22042
@@ -2033,11 +2041,15 @@ bb.bt:                                            ; preds = %bb.bs
   %i.lq = fadd double %i.lg, %i.lp
   call void @_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_(ptr noundef nonnull byval(%"struct.boost::math::detail::distribution_quantile_finder") align 8 %0, ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef nonnull align 8 dereferenceable(8) %i.f, double noundef %i.lq, ptr noundef nonnull align 8 dereferenceable(8) %i.g, ptr noundef nonnull align 8 dereferenceable(8) %i.h, ptr noundef nonnull align 8 dereferenceable(8) %i.i, ptr noundef nonnull align 8 dereferenceable(8) %i.j)
   %i.lr = add i64 %.1113, -4
+  %.pre115 = load double, ptr %i.e, align 8, !tbaa !183
+  %.pre117 = load double, ptr %i.f, align 8, !tbaa !183
   %.pre115.a = load double, ptr %i.g, align 8
   br label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bs, %bb.bt
   %i.ls = phi double [ %.pre115.a, %bb.bt ], [ %i.lb, %bb.bs ] ; 3 uses
+  %18 = phi double [ %.pre117, %bb.bt ], [ %i.li, %bb.bs ]
+  %19 = phi double [ %.pre115, %bb.bt ], [ %i.lg, %bb.bs ]
   %.2 = phi i64 [ %i.lr, %bb.bt ], [ %i.ld, %bb.bs ] ; 3 uses
   %i.lt = icmp ne i64 %.2, 0
   %i.lu = fcmp une double %i.ls, 0.000000e+00
@@ -2052,7 +2064,7 @@ bb.bu:                                            ; preds = %bb.bs, %bb.bt
   br label %bb.bv
 
 .critedge:                                        ; preds = %bb.bu, %bb.x, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit90, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit96, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit102, %bb.ap, %bb.bh, %bb.br, %bb.w
-  %i.lx = phi double [ %i.cy, %bb.w ], [ %i.it, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit96 ], [ %i.lb, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit102 ], [ %i.fz, %bb.ap ], [ %i.it, %bb.bh ], [ %i.lb, %bb.br ], [ %i.dk, %bb.x ], [ %i.ls, %bb.bu ], [ %i.fz, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit90 ]
+  %i.lx = phi double [ %i.cy, %bb.w ], [ %i.it, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit96 ], [ %i.lb, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit102 ], [ %i.fz, %bb.ap ], [ %i.it, %bb.bh ], [ %i.lb, %bb.br ], [ %16, %bb.x ], [ %i.ls, %bb.bu ], [ %i.fz, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit90 ]
   %.3 = phi i64 [ %.059, %bb.w ], [ %i.iv, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit96 ], [ %i.ld, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit102 ], [ %i.gb, %bb.ap ], [ %i.iv, %bb.bh ], [ %i.ld, %bb.br ], [ %.1113, %bb.x ], [ %.2, %bb.bu ], [ %i.gb, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_21binomial_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit90 ]
   %i.ly = load i64, ptr %5, align 8, !tbaa !258
   %i.lz = sub i64 %i.ly, %.3
@@ -2455,8 +2467,8 @@ bb.a:
   %13 = alloca %"struct.boost::math::complemented2_type.7591", align 8 ; 5 uses
   %i.d = alloca double, align 8                   ; 9 uses
   %14 = alloca %"struct.boost::math::detail::distribution_quantile_finder.7592", align 8 ; 9 uses
-  %i.e = alloca double, align 8                   ; 33 uses
-  %i.f = alloca double, align 8                   ; 27 uses
+  %i.e = alloca double, align 8                   ; 34 uses
+  %i.f = alloca double, align 8                   ; 28 uses
   %i.g = alloca double, align 8                   ; 20 uses
   %i.h = alloca double, align 8                   ; 22 uses
   %i.i = alloca double, align 8                   ; 19 uses
@@ -2708,35 +2720,37 @@ bb.w:                                             ; preds = %_ZN5boost4math5tool
   %i.dh = getelementptr inbounds nuw i8, ptr %8, i64 16
   %i.di = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %.pre116 = load double, ptr %i.e, align 8, !tbaa !183
+  %.pre118 = load double, ptr %i.f, align 8, !tbaa !183
   br label %bb.x
 
 bb.x:                                             ; preds = %.lr.ph, %bb.bu
-  %i.dk = phi double [ %i.cy, %.lr.ph ], [ %i.ls, %bb.bu ] ; 4 uses
+  %i.dk = phi double [ %.pre118, %.lr.ph ], [ %18, %bb.bu ] ; 2 uses
+  %15 = phi double [ %.pre116, %.lr.ph ], [ %19, %bb.bu ] ; 2 uses
+  %16 = phi double [ %i.cy, %.lr.ph ], [ %i.ls, %bb.bu ] ; 4 uses
   %.1113 = phi i64 [ %.059, %.lr.ph ], [ %.2, %bb.bu ] ; 8 uses
-  %15 = load double, ptr %i.e, align 8, !tbaa !183 ; 2 uses
-  %16 = call double @llvm.floor.f64(double %15)
-  %17 = load double, ptr %i.f, align 8, !tbaa !183 ; 2 uses
-  %i.dl = call double @llvm.floor.f64(double %17)
-  %i.dm = fcmp oeq double %16, %i.dl
+  %17 = call double @llvm.floor.f64(double %15)
+  %i.dl = call double @llvm.floor.f64(double %i.dk)
+  %i.dm = fcmp oeq double %17, %i.dl
   br i1 %i.dm, label %.critedge, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
   %i.dn = load double, ptr %i.h, align 8, !tbaa !183 ; 3 uses
-  %i.do = fsub double %i.dk, %i.dn
+  %i.do = fsub double %16, %i.dn
   %i.dp = call double @llvm.fabs.f64(double %i.do)
   %i.dq = fcmp olt double %i.dp, f0x0060000000000000
   br i1 %i.dq, label %.critedge76, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
   %i.dr = load double, ptr %i.j, align 8, !tbaa !183 ; 3 uses
-  %i.ds = fsub double %i.dk, %i.dr
+  %i.ds = fsub double %16, %i.dr
   %i.dt = call double @llvm.fabs.f64(double %i.ds)
   %i.du = fcmp olt double %i.dt, f0x0060000000000000
   br i1 %i.du, label %.critedge76, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
   %i.dv = load double, ptr %i.l, align 8, !tbaa !183 ; 3 uses
-  %i.dw = fsub double %i.dk, %i.dv
+  %i.dw = fsub double %16, %i.dv
   %i.dx = call double @llvm.fabs.f64(double %i.dw)
   %i.dy = fcmp olt double %i.dx, f0x0060000000000000
   br i1 %i.dy, label %.critedge76, label %bb.ab
@@ -3139,16 +3153,16 @@ _ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS
   br i1 %or.cond13, label %.critedge, label %bb.br
 
 bb.br:                                            ; preds = %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit102
-  %i.lg = load double, ptr %i.e, align 8, !tbaa !183 ; 3 uses
+  %i.lg = load double, ptr %i.e, align 8, !tbaa !183 ; 4 uses
   %i.lh = call double @llvm.floor.f64(double %i.lg)
-  %i.li = load double, ptr %i.f, align 8, !tbaa !183 ; 2 uses
+  %i.li = load double, ptr %i.f, align 8, !tbaa !183 ; 3 uses
   %i.lj = call double @llvm.floor.f64(double %i.li)
   %i.lk = fcmp oeq double %i.lh, %i.lj
   br i1 %i.lk, label %.critedge, label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br
   %i.ll = fsub double %i.li, %i.lg                ; 2 uses
-  %i.lm = fsub double %17, %15
+  %i.lm = fsub double %i.dk, %15
   %i.ln = fmul double %i.lm, 5.000000e-01
   %i.lo = fcmp olt double %i.ll, %i.ln
   br i1 %i.lo, label %bb.bu, label %bb.bt, !llvm.loop !22485
@@ -3160,11 +3174,15 @@ bb.bt:                                            ; preds = %bb.bs
   %i.lq = fadd double %i.lg, %i.lp
   call void @_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_(ptr noundef nonnull byval(%"struct.boost::math::detail::distribution_quantile_finder.7592") align 8 %0, ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef nonnull align 8 dereferenceable(8) %i.f, double noundef %i.lq, ptr noundef nonnull align 8 dereferenceable(8) %i.g, ptr noundef nonnull align 8 dereferenceable(8) %i.h, ptr noundef nonnull align 8 dereferenceable(8) %i.i, ptr noundef nonnull align 8 dereferenceable(8) %i.j)
   %i.lr = add i64 %.1113, -4
+  %.pre115 = load double, ptr %i.e, align 8, !tbaa !183
+  %.pre117 = load double, ptr %i.f, align 8, !tbaa !183
   %.pre115.a = load double, ptr %i.g, align 8
   br label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bs, %bb.bt
   %i.ls = phi double [ %.pre115.a, %bb.bt ], [ %i.lb, %bb.bs ] ; 3 uses
+  %18 = phi double [ %.pre117, %bb.bt ], [ %i.li, %bb.bs ]
+  %19 = phi double [ %.pre115, %bb.bt ], [ %i.lg, %bb.bs ]
   %.2 = phi i64 [ %i.lr, %bb.bt ], [ %i.ld, %bb.bs ] ; 3 uses
   %i.lt = icmp ne i64 %.2, 0
   %i.lu = fcmp une double %i.ls, 0.000000e+00
@@ -3179,7 +3197,7 @@ bb.bu:                                            ; preds = %bb.bs, %bb.bt
   br label %bb.bv
 
 .critedge:                                        ; preds = %bb.bu, %bb.x, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit90, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit96, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit102, %bb.ap, %bb.bh, %bb.br, %bb.w
-  %i.lx = phi double [ %i.cy, %bb.w ], [ %i.it, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit96 ], [ %i.lb, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit102 ], [ %i.fz, %bb.ap ], [ %i.it, %bb.bh ], [ %i.lb, %bb.br ], [ %i.dk, %bb.x ], [ %i.ls, %bb.bu ], [ %i.fz, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit90 ]
+  %i.lx = phi double [ %i.cy, %bb.w ], [ %i.it, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit96 ], [ %i.lb, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit102 ], [ %i.fz, %bb.ap ], [ %i.it, %bb.bh ], [ %i.lb, %bb.br ], [ %16, %bb.x ], [ %i.ls, %bb.bu ], [ %i.fz, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit90 ]
   %.3 = phi i64 [ %.059, %bb.w ], [ %i.iv, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit96 ], [ %i.ld, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit102 ], [ %i.gb, %bb.ap ], [ %i.iv, %bb.bh ], [ %i.ld, %bb.br ], [ %.1113, %bb.x ], [ %.2, %bb.bu ], [ %i.gb, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit90 ]
   %i.ly = load i64, ptr %5, align 8, !tbaa !258
   %i.lz = sub i64 %i.ly, %.3
@@ -3357,8 +3375,8 @@ bb.a:
   %13 = alloca %"struct.boost::math::complemented2_type.7591", align 8 ; 5 uses
   %i.d = alloca double, align 8                   ; 9 uses
   %14 = alloca %"struct.boost::math::detail::distribution_quantile_finder.7592", align 8 ; 9 uses
-  %i.e = alloca double, align 8                   ; 33 uses
-  %i.f = alloca double, align 8                   ; 27 uses
+  %i.e = alloca double, align 8                   ; 34 uses
+  %i.f = alloca double, align 8                   ; 28 uses
   %i.g = alloca double, align 8                   ; 20 uses
   %i.h = alloca double, align 8                   ; 22 uses
   %i.i = alloca double, align 8                   ; 19 uses
@@ -3610,35 +3628,37 @@ bb.w:                                             ; preds = %_ZN5boost4math5tool
   %i.dh = getelementptr inbounds nuw i8, ptr %8, i64 16
   %i.di = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %.pre116 = load double, ptr %i.e, align 8, !tbaa !183
+  %.pre118 = load double, ptr %i.f, align 8, !tbaa !183
   br label %bb.x
 
 bb.x:                                             ; preds = %.lr.ph, %bb.bu
-  %i.dk = phi double [ %i.cy, %.lr.ph ], [ %i.ls, %bb.bu ] ; 4 uses
+  %i.dk = phi double [ %.pre118, %.lr.ph ], [ %18, %bb.bu ] ; 2 uses
+  %15 = phi double [ %.pre116, %.lr.ph ], [ %19, %bb.bu ] ; 2 uses
+  %16 = phi double [ %i.cy, %.lr.ph ], [ %i.ls, %bb.bu ] ; 4 uses
   %.1113 = phi i64 [ %.059, %.lr.ph ], [ %.2, %bb.bu ] ; 8 uses
-  %15 = load double, ptr %i.e, align 8, !tbaa !183 ; 2 uses
-  %16 = call double @llvm.ceil.f64(double %15)
-  %17 = load double, ptr %i.f, align 8, !tbaa !183 ; 2 uses
-  %i.dl = call double @llvm.ceil.f64(double %17)
-  %i.dm = fcmp oeq double %16, %i.dl
+  %17 = call double @llvm.ceil.f64(double %15)
+  %i.dl = call double @llvm.ceil.f64(double %i.dk)
+  %i.dm = fcmp oeq double %17, %i.dl
   br i1 %i.dm, label %.critedge, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
   %i.dn = load double, ptr %i.h, align 8, !tbaa !183 ; 3 uses
-  %i.do = fsub double %i.dk, %i.dn
+  %i.do = fsub double %16, %i.dn
   %i.dp = call double @llvm.fabs.f64(double %i.do)
   %i.dq = fcmp olt double %i.dp, f0x0060000000000000
   br i1 %i.dq, label %.critedge76, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
   %i.dr = load double, ptr %i.j, align 8, !tbaa !183 ; 3 uses
-  %i.ds = fsub double %i.dk, %i.dr
+  %i.ds = fsub double %16, %i.dr
   %i.dt = call double @llvm.fabs.f64(double %i.ds)
   %i.du = fcmp olt double %i.dt, f0x0060000000000000
   br i1 %i.du, label %.critedge76, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
   %i.dv = load double, ptr %i.l, align 8, !tbaa !183 ; 3 uses
-  %i.dw = fsub double %i.dk, %i.dv
+  %i.dw = fsub double %16, %i.dv
   %i.dx = call double @llvm.fabs.f64(double %i.dw)
   %i.dy = fcmp olt double %i.dx, f0x0060000000000000
   br i1 %i.dy, label %.critedge76, label %bb.ab
@@ -4041,16 +4061,16 @@ _ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS
   br i1 %or.cond13, label %.critedge, label %bb.br
 
 bb.br:                                            ; preds = %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit102
-  %i.lg = load double, ptr %i.e, align 8, !tbaa !183 ; 3 uses
+  %i.lg = load double, ptr %i.e, align 8, !tbaa !183 ; 4 uses
   %i.lh = call double @llvm.ceil.f64(double %i.lg)
-  %i.li = load double, ptr %i.f, align 8, !tbaa !183 ; 2 uses
+  %i.li = load double, ptr %i.f, align 8, !tbaa !183 ; 3 uses
   %i.lj = call double @llvm.ceil.f64(double %i.li)
   %i.lk = fcmp oeq double %i.lh, %i.lj
   br i1 %i.lk, label %.critedge, label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br
   %i.ll = fsub double %i.li, %i.lg                ; 2 uses
-  %i.lm = fsub double %17, %15
+  %i.lm = fsub double %i.dk, %15
   %i.ln = fmul double %i.lm, 5.000000e-01
   %i.lo = fcmp olt double %i.ll, %i.ln
   br i1 %i.lo, label %bb.bu, label %bb.bt, !llvm.loop !22486
@@ -4062,11 +4082,15 @@ bb.bt:                                            ; preds = %bb.bs
   %i.lq = fadd double %i.lg, %i.lp
   call void @_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_(ptr noundef nonnull byval(%"struct.boost::math::detail::distribution_quantile_finder.7592") align 8 %0, ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef nonnull align 8 dereferenceable(8) %i.f, double noundef %i.lq, ptr noundef nonnull align 8 dereferenceable(8) %i.g, ptr noundef nonnull align 8 dereferenceable(8) %i.h, ptr noundef nonnull align 8 dereferenceable(8) %i.i, ptr noundef nonnull align 8 dereferenceable(8) %i.j)
   %i.lr = add i64 %.1113, -4
+  %.pre115 = load double, ptr %i.e, align 8, !tbaa !183
+  %.pre117 = load double, ptr %i.f, align 8, !tbaa !183
   %.pre115.a = load double, ptr %i.g, align 8
   br label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bs, %bb.bt
   %i.ls = phi double [ %.pre115.a, %bb.bt ], [ %i.lb, %bb.bs ] ; 3 uses
+  %18 = phi double [ %.pre117, %bb.bt ], [ %i.li, %bb.bs ]
+  %19 = phi double [ %.pre115, %bb.bt ], [ %i.lg, %bb.bs ]
   %.2 = phi i64 [ %i.lr, %bb.bt ], [ %i.ld, %bb.bs ] ; 3 uses
   %i.lt = icmp ne i64 %.2, 0
   %i.lu = fcmp une double %i.ls, 0.000000e+00
@@ -4081,7 +4105,7 @@ bb.bu:                                            ; preds = %bb.bs, %bb.bt
   br label %bb.bv
 
 .critedge:                                        ; preds = %bb.bu, %bb.x, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit90, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit96, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit102, %bb.ap, %bb.bh, %bb.br, %bb.w
-  %i.lx = phi double [ %i.cy, %bb.w ], [ %i.it, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit96 ], [ %i.lb, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit102 ], [ %i.fz, %bb.ap ], [ %i.it, %bb.bh ], [ %i.lb, %bb.br ], [ %i.dk, %bb.x ], [ %i.ls, %bb.bu ], [ %i.fz, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit90 ]
+  %i.lx = phi double [ %i.cy, %bb.w ], [ %i.it, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit96 ], [ %i.lb, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit102 ], [ %i.fz, %bb.ap ], [ %i.it, %bb.bh ], [ %i.lb, %bb.br ], [ %16, %bb.x ], [ %i.ls, %bb.bu ], [ %i.fz, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit90 ]
   %.3 = phi i64 [ %.059, %bb.w ], [ %i.iv, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit96 ], [ %i.ld, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit102 ], [ %i.gb, %bb.ap ], [ %i.iv, %bb.bh ], [ %i.ld, %bb.br ], [ %.1113, %bb.x ], [ %.2, %bb.bu ], [ %i.gb, %_ZN5boost4math5tools6detail7bracketINS0_6detail28distribution_quantile_finderINS0_20poisson_distributionIdNS0_8policies6policyINS7_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEEEEdEEvT_RT0_SF_SE_SF_SF_SF_SF_.exit90 ]
   %i.ly = load i64, ptr %5, align 8, !tbaa !258
   %i.lz = sub i64 %i.ly, %.3

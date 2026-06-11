@@ -201,7 +201,7 @@ bb.bb:                                            ; preds = %bb.ay, %bb.ba, %bb.
 ; Function Attrs: nounwind uwtable
 define internal range(i32 0, 2) i32 @JPEGDecode(ptr noundef %0, ptr nofree noundef writeonly captures(none) %1, i64 noundef %2, i16 zeroext %3) #0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 9 uses
+  %i.a = alloca ptr, align 8                      ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1072
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !29   ; 13 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 1128 ; 2 uses
@@ -260,12 +260,12 @@ bb.g:                                             ; preds = %bb.f
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !21
   %i.ac = sext i32 %i.ab to i64
   %i.ad = mul i64 %i.z, %i.ac
-  %i.ae = tail call ptr @_TIFFmallocExt(ptr noundef nonnull %0, i64 noundef %i.ad) #16 ; 2 uses
+  %i.ae = tail call ptr @_TIFFmallocExt(ptr noundef nonnull %0, i64 noundef %i.ad) #16 ; 4 uses
   store ptr %i.ae, ptr %i.a, align 8, !tbaa !151
-  %4 = icmp eq ptr %i.ae, null
   %i.af = getelementptr inbounds nuw i8, ptr %i.c, i64 136 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.c, i64 56 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 844 ; 3 uses
+  %4 = icmp eq ptr %i.ae, null
   br i1 %4, label %.split89.thread, label %.split
 
 .split89.thread:                                  ; preds = %bb.g, %.thread
@@ -281,20 +281,22 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.n
 
 .split:                                           ; preds = %bb.g, %.loopexit
-  %.170 = phi i64 [ %i.dd, %.loopexit ], [ %spec.select, %bb.g ] ; 2 uses
-  %.067.a = phi i64 [ %i.dc, %.loopexit ], [ %2, %bb.g ] ; 2 uses
+  %5 = phi ptr [ %7, %.loopexit ], [ %i.ae, %bb.g ]
+  %6 = phi ptr [ %8, %.loopexit ], [ %i.ae, %bb.g ]
+  %.067.a = phi i64 [ %i.dd, %.loopexit ], [ %spec.select, %bb.g ] ; 2 uses
+  %.067 = phi i64 [ %i.dc, %.loopexit ], [ %2, %bb.g ] ; 2 uses
   %.066 = phi ptr [ %i.db, %.loopexit ], [ %1, %bb.g ] ; 12 uses
-  %5 = load ptr, ptr %i.a, align 8, !tbaa !151
-  %.not79 = icmp eq ptr %5, null
+  %.not79 = icmp eq ptr %6, null
   br i1 %.not79, label %.loopexit, label %bb.h
 
 bb.h:                                             ; preds = %.split
   %i.ao = call fastcc i32 @TIFFjpeg_read_scanlines(ptr noundef nonnull %i.c, ptr noundef %i.a)
   %.not80 = icmp eq i32 %i.ao, 1
+  %.pre = load ptr, ptr %i.a, align 8, !tbaa !151 ; 26 uses
   br i1 %.not80, label %bb.i, label %.critedge
 
 .critedge:                                        ; preds = %bb.h
-  call void @llvm.memset.p0.i64(ptr align 1 %.066, i8 0, i64 %.067.a, i1 false)
+  call void @llvm.memset.p0.i64(ptr align 1 %.066, i8 0, i64 %.067, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
   br label %bb.q
 
@@ -314,7 +316,6 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not90, label %.loopexit, label %.lr.ph87
 
 .lr.ph87:                                         ; preds = %bb.j
-  %6 = load ptr, ptr %i.a, align 8, !tbaa !151
   %wide.trip.count98 = zext nneg i32 %i.at to i64
   br label %bb.k
 
@@ -323,7 +324,7 @@ bb.k:                                             ; preds = %.lr.ph87, %bb.k
   %i.au = mul nuw nsw i64 %indvars.iv95, 3
   %i.av = getelementptr inbounds nuw i8, ptr %.066, i64 %i.au ; 3 uses
   %.idx = shl nuw nsw i64 %indvars.iv95, 2
-  %i.aw = getelementptr inbounds nuw i8, ptr %6, i64 %.idx ; 3 uses
+  %i.aw = getelementptr inbounds nuw i8, ptr %.pre, i64 %.idx ; 3 uses
   %i.ax = load i16, ptr %i.aw, align 2, !tbaa !79
   %i.ay = lshr i16 %i.ax, 4
   %i.az = trunc i16 %i.ay to i8
@@ -354,7 +355,6 @@ bb.l:                                             ; preds = %bb.i
   br i1 %i.bp, label %iter.check, label %.loopexit
 
 iter.check:                                       ; preds = %bb.l
-  %7 = load ptr, ptr %i.a, align 8, !tbaa !151    ; 9 uses
   %wide.trip.count = zext nneg i32 %i.bo to i64   ; 10 uses
   %min.iters.check = icmp ult i32 %i.bo, 4
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
@@ -362,9 +362,9 @@ iter.check:                                       ; preds = %bb.l
 vector.memcheck:                                  ; preds = %iter.check
   %scevgep = getelementptr i8, ptr %.066, i64 %wide.trip.count
   %i.bq = shl nuw nsw i64 %wide.trip.count, 1
-  %scevgep111 = getelementptr i8, ptr %7, i64 %i.bq
+  %scevgep111 = getelementptr i8, ptr %.pre, i64 %i.bq
   %bound0 = icmp ult ptr %.066, %scevgep111
-  %bound1 = icmp ult ptr %7, %scevgep
+  %bound1 = icmp ult ptr %.pre, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -379,7 +379,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.br = getelementptr inbounds nuw [2 x i8], ptr %7, i64 %index ; 2 uses
+  %i.br = getelementptr inbounds nuw [2 x i8], ptr %.pre, i64 %index ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 16
   %wide.load = load <8 x i16>, ptr %i.br, align 2, !tbaa !79, !alias.scope !152
   %wide.load113 = load <8 x i16>, ptr %i.bs, align 2, !tbaa !79, !alias.scope !152
@@ -408,7 +408,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index116 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next118, %vec.epilog.vector.body ] ; 3 uses
-  %i.by = getelementptr inbounds nuw [2 x i8], ptr %7, i64 %index116
+  %i.by = getelementptr inbounds nuw [2 x i8], ptr %.pre, i64 %index116
   %wide.load117 = load <4 x i16>, ptr %i.by, align 2, !tbaa !79, !alias.scope !152
   %i.bz = trunc <4 x i16> %wide.load117 to <4 x i8>
   %i.ca = getelementptr inbounds nuw i8, ptr %.066, i64 %index116
@@ -430,7 +430,7 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck, %i
 vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph.prol
   %indvars.iv.prol = phi i64 [ %indvars.iv.next.prol, %vec.epilog.scalar.ph.prol ], [ %indvars.iv.ph, %vec.epilog.scalar.ph.preheader ] ; 3 uses
   %prol.iter = phi i64 [ %prol.iter.next, %vec.epilog.scalar.ph.prol ], [ 0, %vec.epilog.scalar.ph.preheader ]
-  %i.cc = getelementptr inbounds nuw [2 x i8], ptr %7, i64 %indvars.iv.prol
+  %i.cc = getelementptr inbounds nuw [2 x i8], ptr %.pre, i64 %indvars.iv.prol
   %i.cd = load i16, ptr %i.cc, align 2, !tbaa !79
   %i.ce = trunc i16 %i.cd to i8
   %i.cf = getelementptr inbounds nuw i8, ptr %.066, i64 %indvars.iv.prol
@@ -448,25 +448,25 @@ vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.p
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next.3, %vec.epilog.scalar.ph ], [ %indvars.iv.unr, %vec.epilog.scalar.ph.prol.loopexit ] ; 6 uses
-  %i.ci = getelementptr inbounds nuw [2 x i8], ptr %7, i64 %indvars.iv
+  %i.ci = getelementptr inbounds nuw [2 x i8], ptr %.pre, i64 %indvars.iv
   %i.cj = load i16, ptr %i.ci, align 2, !tbaa !79
   %i.ck = trunc i16 %i.cj to i8
   %i.cl = getelementptr inbounds nuw i8, ptr %.066, i64 %indvars.iv
   store i8 %i.ck, ptr %i.cl, align 1, !tbaa !21
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.cm = getelementptr inbounds nuw [2 x i8], ptr %7, i64 %indvars.iv.next
+  %i.cm = getelementptr inbounds nuw [2 x i8], ptr %.pre, i64 %indvars.iv.next
   %i.cn = load i16, ptr %i.cm, align 2, !tbaa !79
   %i.co = trunc i16 %i.cn to i8
   %i.cp = getelementptr inbounds nuw i8, ptr %.066, i64 %indvars.iv.next
   store i8 %i.co, ptr %i.cp, align 1, !tbaa !21
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %i.cq = getelementptr inbounds nuw [2 x i8], ptr %7, i64 %indvars.iv.next.1
+  %i.cq = getelementptr inbounds nuw [2 x i8], ptr %.pre, i64 %indvars.iv.next.1
   %i.cr = load i16, ptr %i.cq, align 2, !tbaa !79
   %i.cs = trunc i16 %i.cr to i8
   %i.ct = getelementptr inbounds nuw i8, ptr %.066, i64 %indvars.iv.next.1
   store i8 %i.cs, ptr %i.ct, align 1, !tbaa !21
   %indvars.iv.next.2 = add nuw nsw i64 %indvars.iv, 3 ; 2 uses
-  %i.cu = getelementptr inbounds nuw [2 x i8], ptr %7, i64 %indvars.iv.next.2
+  %i.cu = getelementptr inbounds nuw [2 x i8], ptr %.pre, i64 %indvars.iv.next.2
   %i.cv = load i16, ptr %i.cu, align 2, !tbaa !79
   %i.cw = trunc i16 %i.cv to i8
   %i.cx = getelementptr inbounds nuw i8, ptr %.066, i64 %indvars.iv.next.2
@@ -476,23 +476,24 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %exitcond.not.3, label %.loopexit, label %vec.epilog.scalar.ph, !llvm.loop !164
 
 .loopexit:                                        ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph, %bb.k, %middle.block, %vec.epilog.middle.block, %bb.l, %bb.j, %bb.i, %.split
+  %7 = phi ptr [ %.pre, %middle.block ], [ %5, %.split ], [ %.pre, %bb.l ], [ %.pre, %bb.j ], [ %.pre, %bb.i ], [ %.pre, %bb.k ], [ %.pre, %vec.epilog.middle.block ], [ %.pre, %vec.epilog.scalar.ph ], [ %.pre, %vec.epilog.scalar.ph.prol.loopexit ] ; 3 uses
+  %8 = phi ptr [ %.pre, %middle.block ], [ null, %.split ], [ %.pre, %bb.l ], [ %.pre, %bb.j ], [ %.pre, %bb.i ], [ %.pre, %bb.k ], [ %.pre, %vec.epilog.middle.block ], [ %.pre, %vec.epilog.scalar.ph ], [ %.pre, %vec.epilog.scalar.ph.prol.loopexit ]
   %i.cy = load i32, ptr %i.ah, align 4, !tbaa !141
   %i.cz = add i32 %i.cy, 1
   store i32 %i.cz, ptr %i.ah, align 4, !tbaa !141
   %i.da = load i64, ptr %i.j, align 8, !tbaa !142 ; 2 uses
   %i.db = getelementptr inbounds i8, ptr %.066, i64 %i.da
-  %i.dc = sub nsw i64 %.067.a, %i.da
-  %i.dd = add nsw i64 %.170, -1
-  %i.de = icmp sgt i64 %.170, 1
+  %i.dc = sub nsw i64 %.067, %i.da
+  %i.dd = add nsw i64 %.067.a, -1
+  %i.de = icmp sgt i64 %.067.a, 1
   br i1 %i.de, label %.split, label %.split89, !llvm.loop !165
 
 .split89:                                         ; preds = %.loopexit
-  %.pre = load ptr, ptr %i.a, align 8, !tbaa !151 ; 2 uses
-  %.not81 = icmp eq ptr %.pre, null
+  %.not81 = icmp eq ptr %7, null
   br i1 %.not81, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %.split89
-  call void @_TIFFfreeExt(ptr noundef nonnull %0, ptr noundef nonnull %.pre) #16
+  call void @_TIFFfreeExt(ptr noundef nonnull %0, ptr noundef nonnull %7) #16
   br label %bb.n
 
 bb.n:                                             ; preds = %.split89.thread, %.split89, %bb.m

@@ -201,7 +201,7 @@ bb.a:
   %8 = alloca %struct.aiString, align 4           ; 7 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
-  %11 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
+  %11 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.e = load i64, ptr %i.d, align 8              ; 3 uses
   %i.f = icmp eq i64 %i.e, 0
@@ -604,7 +604,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i44: ; preds = %_
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.preheader.i: ; preds = %._crit_edge.i.i.i
   %i.ej = load i64, ptr %i.z, align 8             ; 2 uses
   %.not32.i = icmp eq i64 %i.ej, 0
-  br i1 %.not32.i, label %.split.us.i, label %.lr.ph.i
+  br i1 %.not32.i, label %.split.us.i, label %.lr.ph.i.preheader
+
+.lr.ph.i.preheader:                               ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.preheader.i
+  %.pre170 = load ptr, ptr %11, align 8
+  br label %.lr.ph.i
 
 .split.us.i:                                      ; preds = %bb.z, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.preheader.i
   %i.ek = load ptr, ptr %5, align 8               ; 2 uses
@@ -639,10 +643,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.i: ; preds = 
   br i1 %.not33.1.i, label %.split.us.i, label %.lr.ph.1.i
 
 .lr.ph.1.i:                                       ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.i, %bb.z
-  %12 = phi i64 [ %i.ey, %bb.z ], [ %i.fg, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.i ]
-  %.030.1.i.a = phi i64 [ %i.ez, %bb.z ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.i ] ; 2 uses
-  %13 = load ptr, ptr %11, align 8
-  %i.et = getelementptr inbounds nuw i8, ptr %13, i64 %.030.1.i.a ; 2 uses
+  %12 = phi ptr [ %13, %bb.z ], [ %.pre172, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.i ] ; 2 uses
+  %.030.1.i.a = phi i64 [ %i.ey, %bb.z ], [ %i.fg, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.i ]
+  %.030.1.i = phi i64 [ %i.ez, %bb.z ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.i ] ; 2 uses
+  %i.et = getelementptr inbounds nuw i8, ptr %12, i64 %.030.1.i ; 2 uses
   %i.eu = load i8, ptr %i.et, align 1
   %i.ev = icmp eq i8 %i.eu, 92
   br i1 %i.ev, label %bb.y, label %bb.z
@@ -652,19 +656,21 @@ bb.y:                                             ; preds = %.lr.ph.1.i
   %i.ex = load i8, ptr %i.ew, align 1
   store i8 %i.ex, ptr %i.et, align 1
   %.pre35.i = load i64, ptr %i.z, align 8
+  %.pre171 = load ptr, ptr %11, align 8
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %.lr.ph.1.i
-  %i.ey = phi i64 [ %.pre35.i, %bb.y ], [ %12, %.lr.ph.1.i ] ; 2 uses
-  %i.ez = add nuw i64 %.030.1.i.a, 1              ; 2 uses
+  %13 = phi ptr [ %.pre171, %bb.y ], [ %12, %.lr.ph.1.i ]
+  %i.ey = phi i64 [ %.pre35.i, %bb.y ], [ %.030.1.i.a, %.lr.ph.1.i ] ; 2 uses
+  %i.ez = add nuw i64 %.030.1.i, 1                ; 2 uses
   %i.fa = icmp ult i64 %i.ez, %i.ey
   br i1 %i.fa, label %.lr.ph.1.i, label %.split.us.i, !llvm.loop !35
 
-.lr.ph.i:                                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.preheader.i, %bb.ab
-  %14 = phi i64 [ %i.fg, %bb.ab ], [ %i.ej, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.preheader.i ]
-  %.030.i.a = phi i64 [ %i.fh, %bb.ab ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.preheader.i ] ; 2 uses
-  %15 = load ptr, ptr %11, align 8
-  %i.fb = getelementptr inbounds nuw i8, ptr %15, i64 %.030.i.a ; 2 uses
+.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.ab
+  %14 = phi ptr [ %.pre172, %bb.ab ], [ %.pre170, %.lr.ph.i.preheader ] ; 2 uses
+  %.030.i.a = phi i64 [ %i.fg, %bb.ab ], [ %i.ej, %.lr.ph.i.preheader ]
+  %.030.i = phi i64 [ %i.fh, %bb.ab ], [ 0, %.lr.ph.i.preheader ] ; 2 uses
+  %i.fb = getelementptr inbounds nuw i8, ptr %14, i64 %.030.i ; 2 uses
   %i.fc = load i8, ptr %i.fb, align 1
   %i.fd = icmp eq i8 %i.fc, 47
   br i1 %i.fd, label %bb.aa, label %bb.ab
@@ -674,11 +680,13 @@ bb.aa:                                            ; preds = %.lr.ph.i
   %i.ff = load i8, ptr %i.fe, align 1
   store i8 %i.ff, ptr %i.fb, align 1
   %.pre.i = load i64, ptr %i.z, align 8
+  %.pre = load ptr, ptr %11, align 8
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa, %.lr.ph.i
-  %i.fg = phi i64 [ %14, %.lr.ph.i ], [ %.pre.i, %bb.aa ] ; 4 uses
-  %i.fh = add nuw i64 %.030.i.a, 1                ; 2 uses
+  %.pre172 = phi ptr [ %14, %.lr.ph.i ], [ %.pre, %bb.aa ] ; 2 uses
+  %i.fg = phi i64 [ %.030.i.a, %.lr.ph.i ], [ %.pre.i, %bb.aa ] ; 4 uses
+  %i.fh = add nuw i64 %.030.i, 1                  ; 2 uses
   %i.fi = icmp ult i64 %i.fh, %i.fg
   br i1 %i.fi, label %.lr.ph.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.i, !llvm.loop !35
 

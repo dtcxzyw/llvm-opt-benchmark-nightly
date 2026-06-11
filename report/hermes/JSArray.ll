@@ -201,7 +201,7 @@ declare { i32, i64 } @_ZN6hermes2vm12toNumber_RJSERNS0_7RuntimeENS0_6HandleINS0_
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden range(i32 0, 258) i32 @_ZN6hermes2vm7JSArray9setLengthENS0_6HandleIS1_EERNS0_7RuntimeEjNS0_11PropOpFlagsE(ptr %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, i32 noundef %2, i32 %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 9 uses
+  %i.a = alloca i32, align 4                      ; 10 uses
   %4 = alloca %"class.llvh::SmallVector.184", align 8 ; 9 uses
   %5 = alloca %"class.hermes::vm::GCScope", align 8 ; 15 uses
   %6 = alloca %class.anon, align 8                ; 7 uses
@@ -442,6 +442,7 @@ bb.o:                                             ; preds = %.loopexit
   %i.da = zext i32 %i.cz to i64
   %.idx = shl nuw nsw i64 %i.da, 3
   %i.db = getelementptr inbounds nuw i8, ptr %i.cy, i64 %.idx
+  %.pre93 = load i32, ptr %i.a, align 4, !tbaa !3
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.r, %bb.o
@@ -464,11 +465,11 @@ _ZN4llvh11SmallVectorISt4pairIjN6hermes2vm8SymbolIDEELj8EED2Ev.exit: ; preds = %
   br label %bb.s
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.r
-  %.sroa.052.090 = phi ptr [ %12, %bb.r ], [ %i.db, %.lr.ph.preheader ] ; 2 uses
-  %12 = getelementptr inbounds i8, ptr %.sroa.052.090, i64 -8 ; 3 uses
-  %13 = load i32, ptr %12, align 4, !tbaa !119
-  %i.de = load i32, ptr %i.a, align 4, !tbaa !3
-  %.not34 = icmp ult i32 %13, %i.de
+  %12 = phi i32 [ %14, %bb.r ], [ %.pre93, %.lr.ph.preheader ] ; 2 uses
+  %.sroa.052.090 = phi ptr [ %13, %bb.r ], [ %i.db, %.lr.ph.preheader ] ; 2 uses
+  %13 = getelementptr inbounds i8, ptr %.sroa.052.090, i64 -8 ; 3 uses
+  %i.de = load i32, ptr %13, align 4, !tbaa !119
+  %.not34 = icmp ult i32 %i.de, %12
   br i1 %.not34, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %.lr.ph
@@ -485,10 +486,12 @@ bb.q:                                             ; preds = %.lr.ph
   store i32 %i.dg, ptr %i.ct, align 8, !tbaa !108
   store ptr %i.dn, ptr %i.cs, align 8, !tbaa !56
   store ptr %i.df, ptr %i.cr, align 8, !tbaa !46
+  %.pre = load i32, ptr %i.a, align 4, !tbaa !3
   br label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph, %bb.q
-  %.not87 = icmp eq ptr %12, %i.cy
+  %14 = phi i32 [ %12, %.lr.ph ], [ %.pre, %bb.q ]
+  %.not87 = icmp eq ptr %13, %i.cy
   br i1 %.not87, label %._crit_edge, label %.lr.ph, !llvm.loop !122
 
 bb.s:                                             ; preds = %_ZN4llvh11SmallVectorISt4pairIjN6hermes2vm8SymbolIDEELj8EED2Ev.exit, %.loopexit

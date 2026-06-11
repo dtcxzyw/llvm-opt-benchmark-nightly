@@ -201,7 +201,7 @@ _ZN6duckdb11ArrowBuffer7reserveEm.exit:           ; preds = %bb.a, %_ZN6duckdb11
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN6duckdb19ArrowScalarBaseDataINS_13ArrowIntervalENS_10interval_tENS_22ArrowIntervalConverterEE6AppendERNS_15ArrowAppendDataERNS_6VectorEmmm(ptr noundef nonnull align 8 dereferenceable(328) %0, ptr noundef nonnull align 8 dereferenceable(104) %1, i64 noundef %2, i64 noundef %3, i64 noundef %4) #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %5 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 13 uses
+  %5 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 14 uses
   %i.a = sub i64 %3, %2                           ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #34
   call void @_ZN6duckdb19UnifiedVectorFormatC1Ev(ptr noundef nonnull align 8 dereferenceable(73) %5)
@@ -264,6 +264,7 @@ bb.h:                                             ; preds = %bb.g
 
 .lr.ph:                                           ; preds = %bb.h
   %i.r = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %.pre44 = load ptr, ptr %5, align 8, !tbaa !1502
   br label %bb.x
 
 ._crit_edge:                                      ; preds = %bb.aa, %bb.h
@@ -389,8 +390,8 @@ bb.w:                                             ; preds = %bb.g
   br label %bb.ab
 
 bb.x:                                             ; preds = %.lr.ph, %bb.aa
+  %6 = phi ptr [ %.pre44, %.lr.ph ], [ %7, %bb.aa ] ; 2 uses
   %.03543 = phi i64 [ %2, %.lr.ph ], [ %i.bx, %bb.aa ] ; 4 uses
-  %6 = load ptr, ptr %5, align 8, !tbaa !1502
   %i.bf = load ptr, ptr %6, align 8, !tbaa !1503  ; 2 uses
   %.not.i = icmp eq ptr %i.bf, null
   br i1 %.not.i, label %bb.z, label %bb.y
@@ -430,9 +431,11 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread: ; preds = %bb.z
   store i64 %.sroa.0.0.copyload, ptr %i.bw, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bw, i64 8
   store i64 %i.bu, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !19
+  %.pre = load ptr, ptr %5, align 8, !tbaa !1502
   br label %bb.aa
 
 bb.aa:                                            ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread
+  %7 = phi ptr [ %6, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit ], [ %.pre, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread ]
   %i.bx = add nuw i64 %.03543, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.bx, %3
   br i1 %exitcond.not, label %._crit_edge, label %bb.x, !llvm.loop !1654

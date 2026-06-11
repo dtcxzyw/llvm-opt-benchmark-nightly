@@ -155,7 +155,7 @@ bb.f:                                             ; preds = %bb.b, %bb.e
 ; Function Attrs: mustprogress uwtable
 define void @_ZN5boost10filesystem6detail11unique_pathERKNS0_4pathEPNS_6system10error_codeE(ptr dead_on_unwind noalias writable sret(%"class.boost::filesystem::path") align 8 %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1, ptr noundef %2) local_unnamed_addr #2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
+  %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
   %i.a = alloca [16 x i8], align 16               ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 10 uses
@@ -219,12 +219,13 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit: ; preds = %.
 .lr.ph:                                           ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
   %.not = icmp eq ptr %2, null
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %.pre40 = load ptr, ptr %3, align 8, !tbaa !15  ; 2 uses
   br i1 %.not, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.i
+  %4 = phi ptr [ %5, %bb.i ], [ %.pre40, %.lr.ph ] ; 2 uses
   %.035.us = phi i32 [ %.2.us, %bb.i ], [ 32, %.lr.ph ] ; 3 uses
   %.01834.us = phi i64 [ %i.al, %bb.i ], [ 0, %.lr.ph ] ; 3 uses
-  %4 = load ptr, ptr %3, align 8, !tbaa !15
   %i.q = getelementptr inbounds nuw i8, ptr %4, i64 %.01834.us
   %i.r = load i8, ptr %i.q, align 1, !tbaa !19
   %i.s = icmp eq i8 %i.r, 37
@@ -265,9 +266,11 @@ _ZNK5boost6system10error_codecvbEv.exit.thread30.us: ; preds = %.noexc.us, %bb.h
   %i.aj = load ptr, ptr %3, align 8, !tbaa !15
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 %.01834.us
   store i8 %i.ai, ptr %i.ak, align 1, !tbaa !19
+  %.pre39 = load ptr, ptr %3, align 8, !tbaa !15
   br label %bb.i
 
 bb.i:                                             ; preds = %_ZNK5boost6system10error_codecvbEv.exit.thread30.us, %.lr.ph.split.us
+  %5 = phi ptr [ %.pre39, %_ZNK5boost6system10error_codecvbEv.exit.thread30.us ], [ %4, %.lr.ph.split.us ]
   %.2.us = phi i32 [ %i.ab, %_ZNK5boost6system10error_codecvbEv.exit.thread30.us ], [ %.035.us, %.lr.ph.split.us ]
   %i.al = add nuw i64 %.01834.us, 1               ; 2 uses
   %exitcond37.not = icmp eq i64 %i.al, %i.o
@@ -279,10 +282,10 @@ bb.i:                                             ; preds = %_ZNK5boost6system10
   br label %bb.n
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.o
+  %6 = phi ptr [ %7, %bb.o ], [ %.pre40, %.lr.ph ] ; 2 uses
   %.035 = phi i32 [ %.2, %bb.o ], [ 32, %.lr.ph ] ; 3 uses
   %.01834 = phi i64 [ %i.br, %bb.o ], [ 0, %.lr.ph ] ; 3 uses
-  %5 = load ptr, ptr %3, align 8, !tbaa !15
-  %i.an = getelementptr inbounds nuw i8, ptr %5, i64 %.01834
+  %i.an = getelementptr inbounds nuw i8, ptr %6, i64 %.01834
   %i.ao = load i8, ptr %i.an, align 1, !tbaa !19
   %i.ap = icmp eq i8 %i.ao, 37
   br i1 %i.ap, label %bb.j, label %bb.o
@@ -359,9 +362,11 @@ _ZNK5boost6system10error_codecvbEv.exit.thread30: ; preds = %_ZN5boost10filesyst
   %i.bp = load ptr, ptr %3, align 8, !tbaa !15
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 %.01834
   store i8 %i.bo, ptr %i.bq, align 1, !tbaa !19
+  %.pre = load ptr, ptr %3, align 8, !tbaa !15
   br label %bb.o
 
 bb.o:                                             ; preds = %.lr.ph.split, %_ZNK5boost6system10error_codecvbEv.exit.thread30
+  %7 = phi ptr [ %.pre, %_ZNK5boost6system10error_codecvbEv.exit.thread30 ], [ %6, %.lr.ph.split ]
   %.2 = phi i32 [ %i.bh, %_ZNK5boost6system10error_codecvbEv.exit.thread30 ], [ %.035, %.lr.ph.split ]
   %i.br = add nuw i64 %.01834, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.br, %i.o

@@ -201,7 +201,7 @@ define dso_local void @_ZN4node6worker5locks11LockManager18CleanupEnvironmentEPN
 bb.a:
   %2 = alloca %"struct.std::_Deque_iterator.422", align 8 ; 7 uses
   %3 = alloca %"struct.std::_Deque_iterator.450", align 8 ; 7 uses
-  %i.a = alloca ptr, align 8                      ; 4 uses
+  %i.a = alloca ptr, align 8                      ; 5 uses
   %4 = alloca %"struct.std::_Deque_iterator.450", align 8 ; 6 uses
   %5 = alloca %"struct.std::_Deque_iterator.422", align 8 ; 6 uses
   store ptr %1, ptr %i.a, align 8
@@ -258,7 +258,8 @@ bb.b:                                             ; preds = %.lr.ph41, %bb.p
   %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.032.039, i64 80
   %i.ae = load ptr, ptr %i.ad, align 8, !noalias !218
   %i.af = getelementptr inbounds nuw i8, ptr %.sroa.032.039, i64 72
-  %i.ag = load ptr, ptr %i.af, align 8, !noalias !218
+  %6 = load ptr, ptr %i.af, align 8, !noalias !218
+  %i.ag = load ptr, ptr %i.a, align 8
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZNSt15_Deque_iteratorISt10shared_ptrIN4node6worker5locks4LockEERS5_PS5_EppEv.exit
@@ -268,51 +269,53 @@ bb.b:                                             ; preds = %.lr.ph41, %bb.p
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNSt15_Deque_iteratorISt10shared_ptrIN4node6worker5locks4LockEERS5_PS5_EppEv.exit
   %i.ai = phi ptr [ %i.as, %_ZNSt15_Deque_iteratorISt10shared_ptrIN4node6worker5locks4LockEERS5_PS5_EppEv.exit ], [ %i.ab, %.lr.ph.preheader ] ; 2 uses
-  %.sroa.1729.038.a = phi ptr [ %.sroa.1729.1, %_ZNSt15_Deque_iteratorISt10shared_ptrIN4node6worker5locks4LockEERS5_PS5_EppEv.exit ], [ %i.ae, %.lr.ph.preheader ] ; 4 uses
-  %.sroa.1327.037.a = phi ptr [ %.sroa.1327.1, %_ZNSt15_Deque_iteratorISt10shared_ptrIN4node6worker5locks4LockEERS5_PS5_EppEv.exit ], [ %i.ag, %.lr.ph.preheader ] ; 2 uses
-  %.sroa.022.036.a = phi ptr [ %.sroa.022.1, %_ZNSt15_Deque_iteratorISt10shared_ptrIN4node6worker5locks4LockEERS5_PS5_EppEv.exit ], [ %i.z, %.lr.ph.preheader ] ; 3 uses
-  %6 = load ptr, ptr %.sroa.022.036.a, align 8
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %8 = load ptr, ptr %7, align 8
-  %i.aj = load ptr, ptr %i.a, align 8
-  %i.ak = icmp eq ptr %8, %i.aj
+  %.sroa.1729.038.a = phi ptr [ %9, %_ZNSt15_Deque_iteratorISt10shared_ptrIN4node6worker5locks4LockEERS5_PS5_EppEv.exit ], [ %i.ag, %.lr.ph.preheader ] ; 3 uses
+  %.sroa.1327.037.a = phi ptr [ %.sroa.1729.1, %_ZNSt15_Deque_iteratorISt10shared_ptrIN4node6worker5locks4LockEERS5_PS5_EppEv.exit ], [ %i.ae, %.lr.ph.preheader ] ; 4 uses
+  %.sroa.022.036.a = phi ptr [ %.sroa.1327.1, %_ZNSt15_Deque_iteratorISt10shared_ptrIN4node6worker5locks4LockEERS5_PS5_EppEv.exit ], [ %6, %.lr.ph.preheader ] ; 2 uses
+  %.sroa.022.036 = phi ptr [ %.sroa.022.1, %_ZNSt15_Deque_iteratorISt10shared_ptrIN4node6worker5locks4LockEERS5_PS5_EppEv.exit ], [ %i.z, %.lr.ph.preheader ] ; 3 uses
+  %7 = load ptr, ptr %.sroa.022.036, align 8
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.aj = load ptr, ptr %8, align 8
+  %i.ak = icmp eq ptr %i.aj, %.sroa.1729.038.a
   br i1 %i.ak, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.experimental.noalias.scope.decl(metadata !224)
-  store ptr %.sroa.022.036.a, ptr %3, align 8, !alias.scope !224, !noalias !227
-  %i.al = load ptr, ptr %.sroa.1729.038.a, align 8, !noalias !230 ; 2 uses
+  store ptr %.sroa.022.036, ptr %3, align 8, !alias.scope !224, !noalias !227
+  %i.al = load ptr, ptr %.sroa.1327.037.a, align 8, !noalias !230 ; 2 uses
   store ptr %i.al, ptr %i.f, align 8, !alias.scope !224, !noalias !227
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 512
   store ptr %i.am, ptr %i.g, align 8, !alias.scope !224, !noalias !227
-  store ptr %.sroa.1729.038.a, ptr %i.h, align 8, !alias.scope !224, !noalias !227
+  store ptr %.sroa.1327.037.a, ptr %i.h, align 8, !alias.scope !224, !noalias !227
   call void @_ZNSt5dequeISt10shared_ptrIN4node6worker5locks4LockEESaIS5_EE8_M_eraseESt15_Deque_iteratorIS5_RS5_PS5_E(ptr dead_on_unwind nonnull writable sret(%"struct.std::_Deque_iterator.450") align 8 %4, ptr noundef nonnull align 8 dereferenceable(80) %i.x, ptr noundef nonnull dead_on_return %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   %.sroa.022.0.copyload = load ptr, ptr %4, align 8
   %.sroa.1327.0.copyload = load ptr, ptr %.sroa.1327.0..sroa_idx, align 8
   %.sroa.1729.0.copyload = load ptr, ptr %.sroa.1729.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
+  %.pre = load ptr, ptr %i.a, align 8
   %.pre.a = load ptr, ptr %i.aa, align 8, !noalias !221
   br label %_ZNSt15_Deque_iteratorISt10shared_ptrIN4node6worker5locks4LockEERS5_PS5_EppEv.exit
 
 bb.d:                                             ; preds = %.lr.ph
-  %i.an = getelementptr inbounds nuw i8, ptr %.sroa.022.036.a, i64 16 ; 2 uses
-  %i.ao = icmp eq ptr %i.an, %.sroa.1327.037.a
+  %i.an = getelementptr inbounds nuw i8, ptr %.sroa.022.036, i64 16 ; 2 uses
+  %i.ao = icmp eq ptr %i.an, %.sroa.022.036.a
   br i1 %i.ao, label %bb.e, label %_ZNSt15_Deque_iteratorISt10shared_ptrIN4node6worker5locks4LockEERS5_PS5_EppEv.exit
 
 bb.e:                                             ; preds = %bb.d
-  %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.1729.038.a, i64 8 ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.1327.037.a, i64 8 ; 2 uses
   %i.aq = load ptr, ptr %i.ap, align 8            ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 512
   br label %_ZNSt15_Deque_iteratorISt10shared_ptrIN4node6worker5locks4LockEERS5_PS5_EppEv.exit
 
 _ZNSt15_Deque_iteratorISt10shared_ptrIN4node6worker5locks4LockEERS5_PS5_EppEv.exit: ; preds = %bb.e, %bb.d, %bb.c
   %i.as = phi ptr [ %.pre.a, %bb.c ], [ %i.ai, %bb.e ], [ %i.ai, %bb.d ] ; 3 uses
+  %9 = phi ptr [ %.pre, %bb.c ], [ %.sroa.1729.038.a, %bb.e ], [ %.sroa.1729.038.a, %bb.d ]
   %.sroa.022.1 = phi ptr [ %.sroa.022.0.copyload, %bb.c ], [ %i.aq, %bb.e ], [ %i.an, %bb.d ] ; 2 uses
-  %.sroa.1327.1 = phi ptr [ %.sroa.1327.0.copyload, %bb.c ], [ %i.ar, %bb.e ], [ %.sroa.1327.037.a, %bb.d ]
-  %.sroa.1729.1 = phi ptr [ %.sroa.1729.0.copyload, %bb.c ], [ %i.ap, %bb.e ], [ %.sroa.1729.038.a, %bb.d ]
+  %.sroa.1327.1 = phi ptr [ %.sroa.1327.0.copyload, %bb.c ], [ %i.ar, %bb.e ], [ %.sroa.022.036.a, %bb.d ]
+  %.sroa.1729.1 = phi ptr [ %.sroa.1729.0.copyload, %bb.c ], [ %i.ap, %bb.e ], [ %.sroa.1327.037.a, %bb.d ]
   %i.at = icmp eq ptr %.sroa.022.1, %i.as
   br i1 %i.at, label %._crit_edge, label %.lr.ph, !llvm.loop !231
 

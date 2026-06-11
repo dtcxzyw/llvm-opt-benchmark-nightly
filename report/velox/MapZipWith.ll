@@ -201,7 +201,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eg = ashr exact i64 %i.ef, 2                 ; 3 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ei = load ptr, ptr %i.eh, align 8, !tbaa !952 ; 2 uses
-  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
+  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 3 uses
   %i.ek = ptrtoint ptr %i.ei to i64
   %i.el = ptrtoint ptr %i.ej to i64
   %i.em = sub i64 %i.ek, %i.el
@@ -222,6 +222,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   br label %.lr.ph75.i
 
 .lr.ph.i:                                         ; preds = %bb.q, %bb.u
+  %4 = phi ptr [ %5, %bb.u ], [ %i.ej, %bb.q ]
   %i.es = phi i64 [ %i.he, %bb.u ], [ 0, %bb.q ]  ; 3 uses
   %i.et = phi i64 [ %i.hc, %bb.u ], [ 0, %bb.q ]  ; 3 uses
   %.072.i = phi i32 [ %.1.i, %bb.u ], [ 0, %bb.q ] ; 3 uses
@@ -229,7 +230,6 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eu = load ptr, ptr %2, align 8, !tbaa !307
   %i.ev = getelementptr inbounds nuw [4 x i8], ptr %i.eu, i64 %i.et
   %i.ew = load i32, ptr %i.ev, align 4, !tbaa !3
-  %4 = load ptr, ptr %3, align 8, !tbaa !307
   %i.ex = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.es
   %i.ey = load i32, ptr %i.ex, align 4, !tbaa !3
   %.val.val.i = load ptr, ptr %.sroa.0.0.copyload, align 8, !tbaa !272 ; 2 uses
@@ -253,7 +253,7 @@ bb.r:                                             ; preds = %.noexc
   %i.fj = sext i32 %i.fi to i64
   %i.fk = getelementptr inbounds [4 x i8], ptr %i.dw, i64 %i.fj
   store i32 %i.fh, ptr %i.fk, align 4, !tbaa !3
-  %i.fl = load ptr, ptr %3, align 8, !tbaa !307
+  %i.fl = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.fl, i64 %i.es
   %i.fn = load i32, ptr %i.fm, align 4, !tbaa !3
   %i.fo = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -288,6 +288,7 @@ _ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__det
   %i.gi = and i8 %i.gh, %i.ge
   store i8 %i.gi, ptr %i.gg, align 1, !tbaa !30
   %i.gj = add nsw i32 %.072.i, 1
+  %.pre = load ptr, ptr %3, align 8, !tbaa !307
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.s
@@ -301,7 +302,7 @@ bb.t:                                             ; preds = %bb.s
   %i.gr = load i8, ptr %i.gq, align 1, !tbaa !30
   %i.gs = and i8 %i.gr, %i.go
   store i8 %i.gs, ptr %i.gq, align 1, !tbaa !30
-  %i.gt = load ptr, ptr %3, align 8, !tbaa !307
+  %i.gt = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.gu = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %i.es
   %i.gv = load i32, ptr %i.gu, align 4, !tbaa !3
   %i.gw = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -312,6 +313,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i, %bb.r
+  %5 = phi ptr [ %i.fl, %bb.r ], [ %.pre, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %i.gt, %bb.t ]
   %.156.i = phi i32 [ %i.fs, %bb.r ], [ %.05571.i, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %i.gz, %bb.t ] ; 2 uses
   %.1.i = phi i32 [ %i.fr, %bb.r ], [ %i.gj, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %.072.i, %bb.t ] ; 2 uses
   %i.ha = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -714,7 +716,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eg = ashr exact i64 %i.ef, 2                 ; 3 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ei = load ptr, ptr %i.eh, align 8, !tbaa !952 ; 2 uses
-  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
+  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 3 uses
   %i.ek = ptrtoint ptr %i.ei to i64
   %i.el = ptrtoint ptr %i.ej to i64
   %i.em = sub i64 %i.ek, %i.el
@@ -735,6 +737,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   br label %.lr.ph75.i
 
 .lr.ph.i:                                         ; preds = %bb.q, %bb.u
+  %4 = phi ptr [ %5, %bb.u ], [ %i.ej, %bb.q ]
   %i.es = phi i64 [ %i.he, %bb.u ], [ 0, %bb.q ]  ; 3 uses
   %i.et = phi i64 [ %i.hc, %bb.u ], [ 0, %bb.q ]  ; 3 uses
   %.072.i = phi i32 [ %.1.i, %bb.u ], [ 0, %bb.q ] ; 3 uses
@@ -742,7 +745,6 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eu = load ptr, ptr %2, align 8, !tbaa !307
   %i.ev = getelementptr inbounds nuw [4 x i8], ptr %i.eu, i64 %i.et
   %i.ew = load i32, ptr %i.ev, align 4, !tbaa !3
-  %4 = load ptr, ptr %3, align 8, !tbaa !307
   %i.ex = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.es
   %i.ey = load i32, ptr %i.ex, align 4, !tbaa !3
   %.val.val.i = load ptr, ptr %.sroa.0.0.copyload, align 8, !tbaa !272 ; 2 uses
@@ -766,7 +768,7 @@ bb.r:                                             ; preds = %.noexc
   %i.fj = sext i32 %i.fi to i64
   %i.fk = getelementptr inbounds [4 x i8], ptr %i.dw, i64 %i.fj
   store i32 %i.fh, ptr %i.fk, align 4, !tbaa !3
-  %i.fl = load ptr, ptr %3, align 8, !tbaa !307
+  %i.fl = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.fl, i64 %i.es
   %i.fn = load i32, ptr %i.fm, align 4, !tbaa !3
   %i.fo = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -801,6 +803,7 @@ _ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__det
   %i.gi = and i8 %i.gh, %i.ge
   store i8 %i.gi, ptr %i.gg, align 1, !tbaa !30
   %i.gj = add nsw i32 %.072.i, 1
+  %.pre = load ptr, ptr %3, align 8, !tbaa !307
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.s
@@ -814,7 +817,7 @@ bb.t:                                             ; preds = %bb.s
   %i.gr = load i8, ptr %i.gq, align 1, !tbaa !30
   %i.gs = and i8 %i.gr, %i.go
   store i8 %i.gs, ptr %i.gq, align 1, !tbaa !30
-  %i.gt = load ptr, ptr %3, align 8, !tbaa !307
+  %i.gt = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.gu = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %i.es
   %i.gv = load i32, ptr %i.gu, align 4, !tbaa !3
   %i.gw = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -825,6 +828,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i, %bb.r
+  %5 = phi ptr [ %i.fl, %bb.r ], [ %.pre, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %i.gt, %bb.t ]
   %.156.i = phi i32 [ %i.fs, %bb.r ], [ %.05571.i, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %i.gz, %bb.t ] ; 2 uses
   %.1.i = phi i32 [ %i.fr, %bb.r ], [ %i.gj, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %.072.i, %bb.t ] ; 2 uses
   %i.ha = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -1227,7 +1231,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eg = ashr exact i64 %i.ef, 2                 ; 3 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ei = load ptr, ptr %i.eh, align 8, !tbaa !952 ; 2 uses
-  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
+  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 3 uses
   %i.ek = ptrtoint ptr %i.ei to i64
   %i.el = ptrtoint ptr %i.ej to i64
   %i.em = sub i64 %i.ek, %i.el
@@ -1248,6 +1252,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   br label %.lr.ph75.i
 
 .lr.ph.i:                                         ; preds = %bb.q, %bb.u
+  %4 = phi ptr [ %5, %bb.u ], [ %i.ej, %bb.q ]
   %i.es = phi i64 [ %i.he, %bb.u ], [ 0, %bb.q ]  ; 3 uses
   %i.et = phi i64 [ %i.hc, %bb.u ], [ 0, %bb.q ]  ; 3 uses
   %.072.i = phi i32 [ %.1.i, %bb.u ], [ 0, %bb.q ] ; 3 uses
@@ -1255,7 +1260,6 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eu = load ptr, ptr %2, align 8, !tbaa !307
   %i.ev = getelementptr inbounds nuw [4 x i8], ptr %i.eu, i64 %i.et
   %i.ew = load i32, ptr %i.ev, align 4, !tbaa !3
-  %4 = load ptr, ptr %3, align 8, !tbaa !307
   %i.ex = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.es
   %i.ey = load i32, ptr %i.ex, align 4, !tbaa !3
   %.val.val.i = load ptr, ptr %.sroa.0.0.copyload, align 8, !tbaa !272 ; 2 uses
@@ -1279,7 +1283,7 @@ bb.r:                                             ; preds = %.noexc
   %i.fj = sext i32 %i.fi to i64
   %i.fk = getelementptr inbounds [4 x i8], ptr %i.dw, i64 %i.fj
   store i32 %i.fh, ptr %i.fk, align 4, !tbaa !3
-  %i.fl = load ptr, ptr %3, align 8, !tbaa !307
+  %i.fl = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.fl, i64 %i.es
   %i.fn = load i32, ptr %i.fm, align 4, !tbaa !3
   %i.fo = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -1314,6 +1318,7 @@ _ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__det
   %i.gi = and i8 %i.gh, %i.ge
   store i8 %i.gi, ptr %i.gg, align 1, !tbaa !30
   %i.gj = add nsw i32 %.072.i, 1
+  %.pre = load ptr, ptr %3, align 8, !tbaa !307
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.s
@@ -1327,7 +1332,7 @@ bb.t:                                             ; preds = %bb.s
   %i.gr = load i8, ptr %i.gq, align 1, !tbaa !30
   %i.gs = and i8 %i.gr, %i.go
   store i8 %i.gs, ptr %i.gq, align 1, !tbaa !30
-  %i.gt = load ptr, ptr %3, align 8, !tbaa !307
+  %i.gt = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.gu = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %i.es
   %i.gv = load i32, ptr %i.gu, align 4, !tbaa !3
   %i.gw = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -1338,6 +1343,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i, %bb.r
+  %5 = phi ptr [ %i.fl, %bb.r ], [ %.pre, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %i.gt, %bb.t ]
   %.156.i = phi i32 [ %i.fs, %bb.r ], [ %.05571.i, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %i.gz, %bb.t ] ; 2 uses
   %.1.i = phi i32 [ %i.fr, %bb.r ], [ %i.gj, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %.072.i, %bb.t ] ; 2 uses
   %i.ha = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -1740,7 +1746,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eg = ashr exact i64 %i.ef, 2                 ; 3 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ei = load ptr, ptr %i.eh, align 8, !tbaa !952 ; 2 uses
-  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
+  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 3 uses
   %i.ek = ptrtoint ptr %i.ei to i64
   %i.el = ptrtoint ptr %i.ej to i64
   %i.em = sub i64 %i.ek, %i.el
@@ -1761,6 +1767,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   br label %.lr.ph75.i
 
 .lr.ph.i:                                         ; preds = %bb.q, %bb.u
+  %4 = phi ptr [ %5, %bb.u ], [ %i.ej, %bb.q ]
   %i.es = phi i64 [ %i.he, %bb.u ], [ 0, %bb.q ]  ; 3 uses
   %i.et = phi i64 [ %i.hc, %bb.u ], [ 0, %bb.q ]  ; 3 uses
   %.072.i = phi i32 [ %.1.i, %bb.u ], [ 0, %bb.q ] ; 3 uses
@@ -1768,7 +1775,6 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eu = load ptr, ptr %2, align 8, !tbaa !307
   %i.ev = getelementptr inbounds nuw [4 x i8], ptr %i.eu, i64 %i.et
   %i.ew = load i32, ptr %i.ev, align 4, !tbaa !3
-  %4 = load ptr, ptr %3, align 8, !tbaa !307
   %i.ex = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.es
   %i.ey = load i32, ptr %i.ex, align 4, !tbaa !3
   %.val.val.i = load ptr, ptr %.sroa.0.0.copyload, align 8, !tbaa !272 ; 2 uses
@@ -1792,7 +1798,7 @@ bb.r:                                             ; preds = %.noexc
   %i.fj = sext i32 %i.fi to i64
   %i.fk = getelementptr inbounds [4 x i8], ptr %i.dw, i64 %i.fj
   store i32 %i.fh, ptr %i.fk, align 4, !tbaa !3
-  %i.fl = load ptr, ptr %3, align 8, !tbaa !307
+  %i.fl = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.fl, i64 %i.es
   %i.fn = load i32, ptr %i.fm, align 4, !tbaa !3
   %i.fo = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -1827,6 +1833,7 @@ _ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__det
   %i.gi = and i8 %i.gh, %i.ge
   store i8 %i.gi, ptr %i.gg, align 1, !tbaa !30
   %i.gj = add nsw i32 %.072.i, 1
+  %.pre = load ptr, ptr %3, align 8, !tbaa !307
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.s
@@ -1840,7 +1847,7 @@ bb.t:                                             ; preds = %bb.s
   %i.gr = load i8, ptr %i.gq, align 1, !tbaa !30
   %i.gs = and i8 %i.gr, %i.go
   store i8 %i.gs, ptr %i.gq, align 1, !tbaa !30
-  %i.gt = load ptr, ptr %3, align 8, !tbaa !307
+  %i.gt = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.gu = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %i.es
   %i.gv = load i32, ptr %i.gu, align 4, !tbaa !3
   %i.gw = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -1851,6 +1858,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i, %bb.r
+  %5 = phi ptr [ %i.fl, %bb.r ], [ %.pre, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %i.gt, %bb.t ]
   %.156.i = phi i32 [ %i.fs, %bb.r ], [ %.05571.i, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %i.gz, %bb.t ] ; 2 uses
   %.1.i = phi i32 [ %i.fr, %bb.r ], [ %i.gj, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %.072.i, %bb.t ] ; 2 uses
   %i.ha = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -2253,7 +2261,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eg = ashr exact i64 %i.ef, 2                 ; 3 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ei = load ptr, ptr %i.eh, align 8, !tbaa !952 ; 2 uses
-  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
+  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 3 uses
   %i.ek = ptrtoint ptr %i.ei to i64
   %i.el = ptrtoint ptr %i.ej to i64
   %i.em = sub i64 %i.ek, %i.el
@@ -2274,6 +2282,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   br label %.lr.ph75.i
 
 .lr.ph.i:                                         ; preds = %bb.q, %bb.u
+  %4 = phi ptr [ %5, %bb.u ], [ %i.ej, %bb.q ]
   %i.es = phi i64 [ %i.he, %bb.u ], [ 0, %bb.q ]  ; 3 uses
   %i.et = phi i64 [ %i.hc, %bb.u ], [ 0, %bb.q ]  ; 3 uses
   %.072.i = phi i32 [ %.1.i, %bb.u ], [ 0, %bb.q ] ; 3 uses
@@ -2281,7 +2290,6 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eu = load ptr, ptr %2, align 8, !tbaa !307
   %i.ev = getelementptr inbounds nuw [4 x i8], ptr %i.eu, i64 %i.et
   %i.ew = load i32, ptr %i.ev, align 4, !tbaa !3
-  %4 = load ptr, ptr %3, align 8, !tbaa !307
   %i.ex = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.es
   %i.ey = load i32, ptr %i.ex, align 4, !tbaa !3
   %.val.val.i = load ptr, ptr %.sroa.0.0.copyload, align 8, !tbaa !272 ; 2 uses
@@ -2305,7 +2313,7 @@ bb.r:                                             ; preds = %.noexc
   %i.fj = sext i32 %i.fi to i64
   %i.fk = getelementptr inbounds [4 x i8], ptr %i.dw, i64 %i.fj
   store i32 %i.fh, ptr %i.fk, align 4, !tbaa !3
-  %i.fl = load ptr, ptr %3, align 8, !tbaa !307
+  %i.fl = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.fl, i64 %i.es
   %i.fn = load i32, ptr %i.fm, align 4, !tbaa !3
   %i.fo = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -2340,6 +2348,7 @@ _ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__det
   %i.gi = and i8 %i.gh, %i.ge
   store i8 %i.gi, ptr %i.gg, align 1, !tbaa !30
   %i.gj = add nsw i32 %.072.i, 1
+  %.pre = load ptr, ptr %3, align 8, !tbaa !307
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.s
@@ -2353,7 +2362,7 @@ bb.t:                                             ; preds = %bb.s
   %i.gr = load i8, ptr %i.gq, align 1, !tbaa !30
   %i.gs = and i8 %i.gr, %i.go
   store i8 %i.gs, ptr %i.gq, align 1, !tbaa !30
-  %i.gt = load ptr, ptr %3, align 8, !tbaa !307
+  %i.gt = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.gu = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %i.es
   %i.gv = load i32, ptr %i.gu, align 4, !tbaa !3
   %i.gw = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -2364,6 +2373,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i, %bb.r
+  %5 = phi ptr [ %i.fl, %bb.r ], [ %.pre, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %i.gt, %bb.t ]
   %.156.i = phi i32 [ %i.fs, %bb.r ], [ %.05571.i, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %i.gz, %bb.t ] ; 2 uses
   %.1.i = phi i32 [ %i.fr, %bb.r ], [ %i.gj, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %.072.i, %bb.t ] ; 2 uses
   %i.ha = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -2766,7 +2776,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eg = ashr exact i64 %i.ef, 2                 ; 3 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ei = load ptr, ptr %i.eh, align 8, !tbaa !952 ; 2 uses
-  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
+  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 3 uses
   %i.ek = ptrtoint ptr %i.ei to i64
   %i.el = ptrtoint ptr %i.ej to i64
   %i.em = sub i64 %i.ek, %i.el
@@ -2787,6 +2797,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   br label %.lr.ph75.i
 
 .lr.ph.i:                                         ; preds = %bb.q, %bb.u
+  %4 = phi ptr [ %5, %bb.u ], [ %i.ej, %bb.q ]
   %i.es = phi i64 [ %i.he, %bb.u ], [ 0, %bb.q ]  ; 3 uses
   %i.et = phi i64 [ %i.hc, %bb.u ], [ 0, %bb.q ]  ; 3 uses
   %.072.i = phi i32 [ %.1.i, %bb.u ], [ 0, %bb.q ] ; 3 uses
@@ -2794,7 +2805,6 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eu = load ptr, ptr %2, align 8, !tbaa !307
   %i.ev = getelementptr inbounds nuw [4 x i8], ptr %i.eu, i64 %i.et
   %i.ew = load i32, ptr %i.ev, align 4, !tbaa !3
-  %4 = load ptr, ptr %3, align 8, !tbaa !307
   %i.ex = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.es
   %i.ey = load i32, ptr %i.ex, align 4, !tbaa !3
   %.val.val.i = load ptr, ptr %.sroa.0.0.copyload, align 8, !tbaa !272 ; 2 uses
@@ -2818,7 +2828,7 @@ bb.r:                                             ; preds = %.noexc
   %i.fj = sext i32 %i.fi to i64
   %i.fk = getelementptr inbounds [4 x i8], ptr %i.dw, i64 %i.fj
   store i32 %i.fh, ptr %i.fk, align 4, !tbaa !3
-  %i.fl = load ptr, ptr %3, align 8, !tbaa !307
+  %i.fl = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.fl, i64 %i.es
   %i.fn = load i32, ptr %i.fm, align 4, !tbaa !3
   %i.fo = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -2853,6 +2863,7 @@ _ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__det
   %i.gi = and i8 %i.gh, %i.ge
   store i8 %i.gi, ptr %i.gg, align 1, !tbaa !30
   %i.gj = add nsw i32 %.072.i, 1
+  %.pre = load ptr, ptr %3, align 8, !tbaa !307
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.s
@@ -2866,7 +2877,7 @@ bb.t:                                             ; preds = %bb.s
   %i.gr = load i8, ptr %i.gq, align 1, !tbaa !30
   %i.gs = and i8 %i.gr, %i.go
   store i8 %i.gs, ptr %i.gq, align 1, !tbaa !30
-  %i.gt = load ptr, ptr %3, align 8, !tbaa !307
+  %i.gt = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.gu = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %i.es
   %i.gv = load i32, ptr %i.gu, align 4, !tbaa !3
   %i.gw = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -2877,6 +2888,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i, %bb.r
+  %5 = phi ptr [ %i.fl, %bb.r ], [ %.pre, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %i.gt, %bb.t ]
   %.156.i = phi i32 [ %i.fs, %bb.r ], [ %.05571.i, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %i.gz, %bb.t ] ; 2 uses
   %.1.i = phi i32 [ %i.fr, %bb.r ], [ %i.gj, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %.072.i, %bb.t ] ; 2 uses
   %i.ha = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -3279,7 +3291,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eg = ashr exact i64 %i.ef, 2                 ; 3 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ei = load ptr, ptr %i.eh, align 8, !tbaa !952 ; 2 uses
-  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
+  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 3 uses
   %i.ek = ptrtoint ptr %i.ei to i64
   %i.el = ptrtoint ptr %i.ej to i64
   %i.em = sub i64 %i.ek, %i.el
@@ -3300,6 +3312,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   br label %.lr.ph75.i
 
 .lr.ph.i:                                         ; preds = %bb.q, %bb.u
+  %4 = phi ptr [ %5, %bb.u ], [ %i.ej, %bb.q ]
   %i.es = phi i64 [ %i.he, %bb.u ], [ 0, %bb.q ]  ; 3 uses
   %i.et = phi i64 [ %i.hc, %bb.u ], [ 0, %bb.q ]  ; 3 uses
   %.072.i = phi i32 [ %.1.i, %bb.u ], [ 0, %bb.q ] ; 3 uses
@@ -3307,7 +3320,6 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eu = load ptr, ptr %2, align 8, !tbaa !307
   %i.ev = getelementptr inbounds nuw [4 x i8], ptr %i.eu, i64 %i.et
   %i.ew = load i32, ptr %i.ev, align 4, !tbaa !3
-  %4 = load ptr, ptr %3, align 8, !tbaa !307
   %i.ex = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.es
   %i.ey = load i32, ptr %i.ex, align 4, !tbaa !3
   %.val.val.i = load ptr, ptr %.sroa.0.0.copyload, align 8, !tbaa !272 ; 2 uses
@@ -3331,7 +3343,7 @@ bb.r:                                             ; preds = %.noexc
   %i.fj = sext i32 %i.fi to i64
   %i.fk = getelementptr inbounds [4 x i8], ptr %i.dw, i64 %i.fj
   store i32 %i.fh, ptr %i.fk, align 4, !tbaa !3
-  %i.fl = load ptr, ptr %3, align 8, !tbaa !307
+  %i.fl = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.fl, i64 %i.es
   %i.fn = load i32, ptr %i.fm, align 4, !tbaa !3
   %i.fo = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -3366,6 +3378,7 @@ _ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__det
   %i.gi = and i8 %i.gh, %i.ge
   store i8 %i.gi, ptr %i.gg, align 1, !tbaa !30
   %i.gj = add nsw i32 %.072.i, 1
+  %.pre = load ptr, ptr %3, align 8, !tbaa !307
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.s
@@ -3379,7 +3392,7 @@ bb.t:                                             ; preds = %bb.s
   %i.gr = load i8, ptr %i.gq, align 1, !tbaa !30
   %i.gs = and i8 %i.gr, %i.go
   store i8 %i.gs, ptr %i.gq, align 1, !tbaa !30
-  %i.gt = load ptr, ptr %3, align 8, !tbaa !307
+  %i.gt = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.gu = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %i.es
   %i.gv = load i32, ptr %i.gu, align 4, !tbaa !3
   %i.gw = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -3390,6 +3403,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i, %bb.r
+  %5 = phi ptr [ %i.fl, %bb.r ], [ %.pre, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %i.gt, %bb.t ]
   %.156.i = phi i32 [ %i.fs, %bb.r ], [ %.05571.i, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %i.gz, %bb.t ] ; 2 uses
   %.1.i = phi i32 [ %i.fr, %bb.r ], [ %i.gj, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %.072.i, %bb.t ] ; 2 uses
   %i.ha = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -3792,7 +3806,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eg = ashr exact i64 %i.ef, 2                 ; 3 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ei = load ptr, ptr %i.eh, align 8, !tbaa !952 ; 2 uses
-  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
+  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 3 uses
   %i.ek = ptrtoint ptr %i.ei to i64
   %i.el = ptrtoint ptr %i.ej to i64
   %i.em = sub i64 %i.ek, %i.el
@@ -3813,6 +3827,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   br label %.lr.ph75.i
 
 .lr.ph.i:                                         ; preds = %bb.q, %bb.u
+  %4 = phi ptr [ %5, %bb.u ], [ %i.ej, %bb.q ]
   %i.es = phi i64 [ %i.he, %bb.u ], [ 0, %bb.q ]  ; 3 uses
   %i.et = phi i64 [ %i.hc, %bb.u ], [ 0, %bb.q ]  ; 3 uses
   %.072.i = phi i32 [ %.1.i, %bb.u ], [ 0, %bb.q ] ; 3 uses
@@ -3820,7 +3835,6 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eu = load ptr, ptr %2, align 8, !tbaa !307
   %i.ev = getelementptr inbounds nuw [4 x i8], ptr %i.eu, i64 %i.et
   %i.ew = load i32, ptr %i.ev, align 4, !tbaa !3
-  %4 = load ptr, ptr %3, align 8, !tbaa !307
   %i.ex = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.es
   %i.ey = load i32, ptr %i.ex, align 4, !tbaa !3
   %.val.val.i = load ptr, ptr %.sroa.0.0.copyload, align 8, !tbaa !272 ; 2 uses
@@ -3844,7 +3858,7 @@ bb.r:                                             ; preds = %.noexc
   %i.fj = sext i32 %i.fi to i64
   %i.fk = getelementptr inbounds [4 x i8], ptr %i.dw, i64 %i.fj
   store i32 %i.fh, ptr %i.fk, align 4, !tbaa !3
-  %i.fl = load ptr, ptr %3, align 8, !tbaa !307
+  %i.fl = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.fl, i64 %i.es
   %i.fn = load i32, ptr %i.fm, align 4, !tbaa !3
   %i.fo = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -3879,6 +3893,7 @@ _ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__det
   %i.gi = and i8 %i.gh, %i.ge
   store i8 %i.gi, ptr %i.gg, align 1, !tbaa !30
   %i.gj = add nsw i32 %.072.i, 1
+  %.pre = load ptr, ptr %3, align 8, !tbaa !307
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.s
@@ -3892,7 +3907,7 @@ bb.t:                                             ; preds = %bb.s
   %i.gr = load i8, ptr %i.gq, align 1, !tbaa !30
   %i.gs = and i8 %i.gr, %i.go
   store i8 %i.gs, ptr %i.gq, align 1, !tbaa !30
-  %i.gt = load ptr, ptr %3, align 8, !tbaa !307
+  %i.gt = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.gu = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %i.es
   %i.gv = load i32, ptr %i.gu, align 4, !tbaa !3
   %i.gw = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -3903,6 +3918,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i, %bb.r
+  %5 = phi ptr [ %i.fl, %bb.r ], [ %.pre, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %i.gt, %bb.t ]
   %.156.i = phi i32 [ %i.fs, %bb.r ], [ %.05571.i, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %i.gz, %bb.t ] ; 2 uses
   %.1.i = phi i32 [ %i.fr, %bb.r ], [ %i.gj, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %.072.i, %bb.t ] ; 2 uses
   %i.ha = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -4305,7 +4321,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eg = ashr exact i64 %i.ef, 2                 ; 3 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ei = load ptr, ptr %i.eh, align 8, !tbaa !952 ; 2 uses
-  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
+  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 3 uses
   %i.ek = ptrtoint ptr %i.ei to i64
   %i.el = ptrtoint ptr %i.ej to i64
   %i.em = sub i64 %i.ek, %i.el
@@ -4326,6 +4342,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   br label %.lr.ph75.i
 
 .lr.ph.i:                                         ; preds = %bb.q, %bb.u
+  %4 = phi ptr [ %5, %bb.u ], [ %i.ej, %bb.q ]
   %i.es = phi i64 [ %i.he, %bb.u ], [ 0, %bb.q ]  ; 3 uses
   %i.et = phi i64 [ %i.hc, %bb.u ], [ 0, %bb.q ]  ; 3 uses
   %.072.i = phi i32 [ %.1.i, %bb.u ], [ 0, %bb.q ] ; 3 uses
@@ -4333,7 +4350,6 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eu = load ptr, ptr %2, align 8, !tbaa !307
   %i.ev = getelementptr inbounds nuw [4 x i8], ptr %i.eu, i64 %i.et
   %i.ew = load i32, ptr %i.ev, align 4, !tbaa !3
-  %4 = load ptr, ptr %3, align 8, !tbaa !307
   %i.ex = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.es
   %i.ey = load i32, ptr %i.ex, align 4, !tbaa !3
   %.val.val.i = load ptr, ptr %.sroa.0.0.copyload, align 8, !tbaa !272 ; 2 uses
@@ -4357,7 +4373,7 @@ bb.r:                                             ; preds = %.noexc
   %i.fj = sext i32 %i.fi to i64
   %i.fk = getelementptr inbounds [4 x i8], ptr %i.dw, i64 %i.fj
   store i32 %i.fh, ptr %i.fk, align 4, !tbaa !3
-  %i.fl = load ptr, ptr %3, align 8, !tbaa !307
+  %i.fl = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.fl, i64 %i.es
   %i.fn = load i32, ptr %i.fm, align 4, !tbaa !3
   %i.fo = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -4392,6 +4408,7 @@ _ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__det
   %i.gi = and i8 %i.gh, %i.ge
   store i8 %i.gi, ptr %i.gg, align 1, !tbaa !30
   %i.gj = add nsw i32 %.072.i, 1
+  %.pre = load ptr, ptr %3, align 8, !tbaa !307
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.s
@@ -4405,7 +4422,7 @@ bb.t:                                             ; preds = %bb.s
   %i.gr = load i8, ptr %i.gq, align 1, !tbaa !30
   %i.gs = and i8 %i.gr, %i.go
   store i8 %i.gs, ptr %i.gq, align 1, !tbaa !30
-  %i.gt = load ptr, ptr %3, align 8, !tbaa !307
+  %i.gt = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.gu = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %i.es
   %i.gv = load i32, ptr %i.gu, align 4, !tbaa !3
   %i.gw = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -4416,6 +4433,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i, %bb.r
+  %5 = phi ptr [ %i.fl, %bb.r ], [ %.pre, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %i.gt, %bb.t ]
   %.156.i = phi i32 [ %i.fs, %bb.r ], [ %.05571.i, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %i.gz, %bb.t ] ; 2 uses
   %.1.i = phi i32 [ %i.fr, %bb.r ], [ %i.gj, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %.072.i, %bb.t ] ; 2 uses
   %i.ha = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -4818,7 +4836,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eg = ashr exact i64 %i.ef, 2                 ; 3 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ei = load ptr, ptr %i.eh, align 8, !tbaa !952 ; 2 uses
-  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
+  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 3 uses
   %i.ek = ptrtoint ptr %i.ei to i64
   %i.el = ptrtoint ptr %i.ej to i64
   %i.em = sub i64 %i.ek, %i.el
@@ -4839,6 +4857,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   br label %.lr.ph75.i
 
 .lr.ph.i:                                         ; preds = %bb.q, %bb.u
+  %4 = phi ptr [ %5, %bb.u ], [ %i.ej, %bb.q ]
   %i.es = phi i64 [ %i.he, %bb.u ], [ 0, %bb.q ]  ; 3 uses
   %i.et = phi i64 [ %i.hc, %bb.u ], [ 0, %bb.q ]  ; 3 uses
   %.072.i = phi i32 [ %.1.i, %bb.u ], [ 0, %bb.q ] ; 3 uses
@@ -4846,7 +4865,6 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eu = load ptr, ptr %2, align 8, !tbaa !307
   %i.ev = getelementptr inbounds nuw [4 x i8], ptr %i.eu, i64 %i.et
   %i.ew = load i32, ptr %i.ev, align 4, !tbaa !3
-  %4 = load ptr, ptr %3, align 8, !tbaa !307
   %i.ex = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.es
   %i.ey = load i32, ptr %i.ex, align 4, !tbaa !3
   %.val.val.i = load ptr, ptr %.sroa.0.0.copyload, align 8, !tbaa !272 ; 2 uses
@@ -4870,7 +4888,7 @@ bb.r:                                             ; preds = %.noexc
   %i.fj = sext i32 %i.fi to i64
   %i.fk = getelementptr inbounds [4 x i8], ptr %i.dw, i64 %i.fj
   store i32 %i.fh, ptr %i.fk, align 4, !tbaa !3
-  %i.fl = load ptr, ptr %3, align 8, !tbaa !307
+  %i.fl = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.fl, i64 %i.es
   %i.fn = load i32, ptr %i.fm, align 4, !tbaa !3
   %i.fo = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -4905,6 +4923,7 @@ _ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__det
   %i.gi = and i8 %i.gh, %i.ge
   store i8 %i.gi, ptr %i.gg, align 1, !tbaa !30
   %i.gj = add nsw i32 %.072.i, 1
+  %.pre = load ptr, ptr %3, align 8, !tbaa !307
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.s
@@ -4918,7 +4937,7 @@ bb.t:                                             ; preds = %bb.s
   %i.gr = load i8, ptr %i.gq, align 1, !tbaa !30
   %i.gs = and i8 %i.gr, %i.go
   store i8 %i.gs, ptr %i.gq, align 1, !tbaa !30
-  %i.gt = load ptr, ptr %3, align 8, !tbaa !307
+  %i.gt = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.gu = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %i.es
   %i.gv = load i32, ptr %i.gu, align 4, !tbaa !3
   %i.gw = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -4929,6 +4948,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i, %bb.r
+  %5 = phi ptr [ %i.fl, %bb.r ], [ %.pre, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %i.gt, %bb.t ]
   %.156.i = phi i32 [ %i.fs, %bb.r ], [ %.05571.i, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %i.gz, %bb.t ] ; 2 uses
   %.1.i = phi i32 [ %i.fr, %bb.r ], [ %i.gj, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %.072.i, %bb.t ] ; 2 uses
   %i.ha = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -5331,7 +5351,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eg = ashr exact i64 %i.ef, 2                 ; 3 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ei = load ptr, ptr %i.eh, align 8, !tbaa !952 ; 2 uses
-  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
+  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 3 uses
   %i.ek = ptrtoint ptr %i.ei to i64
   %i.el = ptrtoint ptr %i.ej to i64
   %i.em = sub i64 %i.ek, %i.el
@@ -5352,6 +5372,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   br label %.lr.ph75.i
 
 .lr.ph.i:                                         ; preds = %bb.q, %bb.u
+  %4 = phi ptr [ %5, %bb.u ], [ %i.ej, %bb.q ]
   %i.es = phi i64 [ %i.he, %bb.u ], [ 0, %bb.q ]  ; 3 uses
   %i.et = phi i64 [ %i.hc, %bb.u ], [ 0, %bb.q ]  ; 3 uses
   %.072.i = phi i32 [ %.1.i, %bb.u ], [ 0, %bb.q ] ; 3 uses
@@ -5359,7 +5380,6 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eu = load ptr, ptr %2, align 8, !tbaa !307
   %i.ev = getelementptr inbounds nuw [4 x i8], ptr %i.eu, i64 %i.et
   %i.ew = load i32, ptr %i.ev, align 4, !tbaa !3
-  %4 = load ptr, ptr %3, align 8, !tbaa !307
   %i.ex = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.es
   %i.ey = load i32, ptr %i.ex, align 4, !tbaa !3
   %.val.val.i = load ptr, ptr %.sroa.0.0.copyload, align 8, !tbaa !272 ; 2 uses
@@ -5383,7 +5403,7 @@ bb.r:                                             ; preds = %.noexc
   %i.fj = sext i32 %i.fi to i64
   %i.fk = getelementptr inbounds [4 x i8], ptr %i.dw, i64 %i.fj
   store i32 %i.fh, ptr %i.fk, align 4, !tbaa !3
-  %i.fl = load ptr, ptr %3, align 8, !tbaa !307
+  %i.fl = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.fl, i64 %i.es
   %i.fn = load i32, ptr %i.fm, align 4, !tbaa !3
   %i.fo = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -5418,6 +5438,7 @@ _ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__det
   %i.gi = and i8 %i.gh, %i.ge
   store i8 %i.gi, ptr %i.gg, align 1, !tbaa !30
   %i.gj = add nsw i32 %.072.i, 1
+  %.pre = load ptr, ptr %3, align 8, !tbaa !307
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.s
@@ -5431,7 +5452,7 @@ bb.t:                                             ; preds = %bb.s
   %i.gr = load i8, ptr %i.gq, align 1, !tbaa !30
   %i.gs = and i8 %i.gr, %i.go
   store i8 %i.gs, ptr %i.gq, align 1, !tbaa !30
-  %i.gt = load ptr, ptr %3, align 8, !tbaa !307
+  %i.gt = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.gu = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %i.es
   %i.gv = load i32, ptr %i.gu, align 4, !tbaa !3
   %i.gw = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -5442,6 +5463,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i, %bb.r
+  %5 = phi ptr [ %i.fl, %bb.r ], [ %.pre, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %i.gt, %bb.t ]
   %.156.i = phi i32 [ %i.fs, %bb.r ], [ %.05571.i, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %i.gz, %bb.t ] ; 2 uses
   %.1.i = phi i32 [ %i.fr, %bb.r ], [ %i.gj, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %.072.i, %bb.t ] ; 2 uses
   %i.ha = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -5844,7 +5866,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eg = ashr exact i64 %i.ef, 2                 ; 3 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ei = load ptr, ptr %i.eh, align 8, !tbaa !952 ; 2 uses
-  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
+  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 3 uses
   %i.ek = ptrtoint ptr %i.ei to i64
   %i.el = ptrtoint ptr %i.ej to i64
   %i.em = sub i64 %i.ek, %i.el
@@ -5865,6 +5887,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   br label %.lr.ph75.i
 
 .lr.ph.i:                                         ; preds = %bb.q, %bb.u
+  %4 = phi ptr [ %5, %bb.u ], [ %i.ej, %bb.q ]
   %i.es = phi i64 [ %i.he, %bb.u ], [ 0, %bb.q ]  ; 3 uses
   %i.et = phi i64 [ %i.hc, %bb.u ], [ 0, %bb.q ]  ; 3 uses
   %.072.i = phi i32 [ %.1.i, %bb.u ], [ 0, %bb.q ] ; 3 uses
@@ -5872,7 +5895,6 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eu = load ptr, ptr %2, align 8, !tbaa !307
   %i.ev = getelementptr inbounds nuw [4 x i8], ptr %i.eu, i64 %i.et
   %i.ew = load i32, ptr %i.ev, align 4, !tbaa !3
-  %4 = load ptr, ptr %3, align 8, !tbaa !307
   %i.ex = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.es
   %i.ey = load i32, ptr %i.ex, align 4, !tbaa !3
   %.val.val.i = load ptr, ptr %.sroa.0.0.copyload, align 8, !tbaa !272 ; 2 uses
@@ -5896,7 +5918,7 @@ bb.r:                                             ; preds = %.noexc
   %i.fj = sext i32 %i.fi to i64
   %i.fk = getelementptr inbounds [4 x i8], ptr %i.dw, i64 %i.fj
   store i32 %i.fh, ptr %i.fk, align 4, !tbaa !3
-  %i.fl = load ptr, ptr %3, align 8, !tbaa !307
+  %i.fl = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.fl, i64 %i.es
   %i.fn = load i32, ptr %i.fm, align 4, !tbaa !3
   %i.fo = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -5931,6 +5953,7 @@ _ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__det
   %i.gi = and i8 %i.gh, %i.ge
   store i8 %i.gi, ptr %i.gg, align 1, !tbaa !30
   %i.gj = add nsw i32 %.072.i, 1
+  %.pre = load ptr, ptr %3, align 8, !tbaa !307
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.s
@@ -5944,7 +5967,7 @@ bb.t:                                             ; preds = %bb.s
   %i.gr = load i8, ptr %i.gq, align 1, !tbaa !30
   %i.gs = and i8 %i.gr, %i.go
   store i8 %i.gs, ptr %i.gq, align 1, !tbaa !30
-  %i.gt = load ptr, ptr %3, align 8, !tbaa !307
+  %i.gt = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.gu = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %i.es
   %i.gv = load i32, ptr %i.gu, align 4, !tbaa !3
   %i.gw = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -5955,6 +5978,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i, %bb.r
+  %5 = phi ptr [ %i.fl, %bb.r ], [ %.pre, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %i.gt, %bb.t ]
   %.156.i = phi i32 [ %i.fs, %bb.r ], [ %.05571.i, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %i.gz, %bb.t ] ; 2 uses
   %.1.i = phi i32 [ %i.fr, %bb.r ], [ %i.gj, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %.072.i, %bb.t ] ; 2 uses
   %i.ha = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -6357,7 +6381,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eg = ashr exact i64 %i.ef, 2                 ; 3 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ei = load ptr, ptr %i.eh, align 8, !tbaa !952 ; 2 uses
-  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
+  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 3 uses
   %i.ek = ptrtoint ptr %i.ei to i64
   %i.el = ptrtoint ptr %i.ej to i64
   %i.em = sub i64 %i.ek, %i.el
@@ -6378,6 +6402,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   br label %.lr.ph75.i
 
 .lr.ph.i:                                         ; preds = %bb.q, %bb.u
+  %4 = phi ptr [ %5, %bb.u ], [ %i.ej, %bb.q ]
   %i.es = phi i64 [ %i.he, %bb.u ], [ 0, %bb.q ]  ; 3 uses
   %i.et = phi i64 [ %i.hc, %bb.u ], [ 0, %bb.q ]  ; 3 uses
   %.072.i = phi i32 [ %.1.i, %bb.u ], [ 0, %bb.q ] ; 3 uses
@@ -6385,7 +6410,6 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eu = load ptr, ptr %2, align 8, !tbaa !307
   %i.ev = getelementptr inbounds nuw [4 x i8], ptr %i.eu, i64 %i.et
   %i.ew = load i32, ptr %i.ev, align 4, !tbaa !3
-  %4 = load ptr, ptr %3, align 8, !tbaa !307
   %i.ex = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.es
   %i.ey = load i32, ptr %i.ex, align 4, !tbaa !3
   %.val.val.i = load ptr, ptr %.sroa.0.0.copyload, align 8, !tbaa !272 ; 2 uses
@@ -6409,7 +6433,7 @@ bb.r:                                             ; preds = %.noexc
   %i.fj = sext i32 %i.fi to i64
   %i.fk = getelementptr inbounds [4 x i8], ptr %i.dw, i64 %i.fj
   store i32 %i.fh, ptr %i.fk, align 4, !tbaa !3
-  %i.fl = load ptr, ptr %3, align 8, !tbaa !307
+  %i.fl = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.fl, i64 %i.es
   %i.fn = load i32, ptr %i.fm, align 4, !tbaa !3
   %i.fo = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -6444,6 +6468,7 @@ _ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__det
   %i.gi = and i8 %i.gh, %i.ge
   store i8 %i.gi, ptr %i.gg, align 1, !tbaa !30
   %i.gj = add nsw i32 %.072.i, 1
+  %.pre = load ptr, ptr %3, align 8, !tbaa !307
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.s
@@ -6457,7 +6482,7 @@ bb.t:                                             ; preds = %bb.s
   %i.gr = load i8, ptr %i.gq, align 1, !tbaa !30
   %i.gs = and i8 %i.gr, %i.go
   store i8 %i.gs, ptr %i.gq, align 1, !tbaa !30
-  %i.gt = load ptr, ptr %3, align 8, !tbaa !307
+  %i.gt = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.gu = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %i.es
   %i.gv = load i32, ptr %i.gu, align 4, !tbaa !3
   %i.gw = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -6468,6 +6493,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i, %bb.r
+  %5 = phi ptr [ %i.fl, %bb.r ], [ %.pre, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %i.gt, %bb.t ]
   %.156.i = phi i32 [ %i.fs, %bb.r ], [ %.05571.i, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %i.gz, %bb.t ] ; 2 uses
   %.1.i = phi i32 [ %i.fr, %bb.r ], [ %i.gj, %_ZStssIiiQaant15__is_optional_vIT0_E25three_way_comparable_withIS0_T_EENSt8__detail18__cmp3way_res_implIS1_S0_E4typeERKSt8optionalIS1_ERKS0_.exit.thread.i ], [ %.072.i, %bb.t ] ; 2 uses
   %i.ha = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -6870,7 +6896,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eg = ashr exact i64 %i.ef, 2                 ; 3 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ei = load ptr, ptr %i.eh, align 8, !tbaa !952 ; 2 uses
-  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
+  %i.ej = load ptr, ptr %3, align 8, !tbaa !307   ; 3 uses
   %i.ek = ptrtoint ptr %i.ei to i64
   %i.el = ptrtoint ptr %i.ej to i64
   %i.em = sub i64 %i.ek, %i.el
@@ -6891,6 +6917,7 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   br label %.lr.ph72.i
 
 .lr.ph.i:                                         ; preds = %bb.q, %bb.w
+  %4 = phi ptr [ %5, %bb.w ], [ %i.ej, %bb.q ]
   %i.es = phi i64 [ %i.he, %bb.w ], [ 0, %bb.q ]  ; 3 uses
   %i.et = phi i64 [ %i.hc, %bb.w ], [ 0, %bb.q ]  ; 3 uses
   %.069.i = phi i32 [ %.1.i, %bb.w ], [ 0, %bb.q ] ; 3 uses
@@ -6898,7 +6925,6 @@ bb.q:                                             ; preds = %_ZNK8facebook5velox
   %i.eu = load ptr, ptr %2, align 8, !tbaa !307
   %i.ev = getelementptr inbounds nuw [4 x i8], ptr %i.eu, i64 %i.et
   %i.ew = load i32, ptr %i.ev, align 4, !tbaa !3
-  %4 = load ptr, ptr %3, align 8, !tbaa !307
   %i.ex = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.es
   %i.ey = load i32, ptr %i.ex, align 4, !tbaa !3
   %.val.val.i = load ptr, ptr %.sroa.0.0.copyload, align 8, !tbaa !272 ; 2 uses
@@ -6934,7 +6960,7 @@ bb.s:                                             ; preds = %_ZZNK8facebook5velo
   %i.fj = sext i32 %i.fi to i64
   %i.fk = getelementptr inbounds [4 x i8], ptr %i.dw, i64 %i.fj
   store i32 %i.fh, ptr %i.fk, align 4, !tbaa !3
-  %i.fl = load ptr, ptr %3, align 8, !tbaa !307
+  %i.fl = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.fl, i64 %i.es
   %i.fn = load i32, ptr %i.fm, align 4, !tbaa !3
   %i.fo = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -6968,6 +6994,7 @@ bb.u:                                             ; preds = %bb.t
   %i.gi = and i8 %i.gh, %i.ge
   store i8 %i.gi, ptr %i.gg, align 1, !tbaa !30
   %i.gj = add nsw i32 %.069.i, 1
+  %.pre = load ptr, ptr %3, align 8, !tbaa !307
   br label %bb.w
 
 bb.v:                                             ; preds = %bb.t
@@ -6981,7 +7008,7 @@ bb.v:                                             ; preds = %bb.t
   %i.gr = load i8, ptr %i.gq, align 1, !tbaa !30
   %i.gs = and i8 %i.gr, %i.go
   store i8 %i.gs, ptr %i.gq, align 1, !tbaa !30
-  %i.gt = load ptr, ptr %3, align 8, !tbaa !307
+  %i.gt = load ptr, ptr %3, align 8, !tbaa !307   ; 2 uses
   %i.gu = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %i.es
   %i.gv = load i32, ptr %i.gu, align 4, !tbaa !3
   %i.gw = load i32, ptr %i.dz, align 4, !tbaa !3
@@ -6992,6 +7019,7 @@ bb.v:                                             ; preds = %bb.t
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u, %bb.s
+  %5 = phi ptr [ %i.fl, %bb.s ], [ %.pre, %bb.u ], [ %i.gt, %bb.v ]
   %.157.i = phi i32 [ %i.fs, %bb.s ], [ %.05668.i, %bb.u ], [ %i.gz, %bb.v ] ; 2 uses
   %.1.i = phi i32 [ %i.fr, %bb.s ], [ %i.gj, %bb.u ], [ %.069.i, %bb.v ] ; 2 uses
   %i.ha = load i32, ptr %i.dz, align 4, !tbaa !3

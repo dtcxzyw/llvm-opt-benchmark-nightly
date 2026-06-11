@@ -201,7 +201,7 @@ bb.a:
   %11 = alloca %"struct.fmt::v11::detail::format_arg_store.1247", align 16 ; 5 uses
   %12 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %13 = alloca %"class.std::vector.58", align 16  ; 13 uses
-  %14 = alloca %"class.folly::F14FastSet.704", align 8 ; 10 uses
+  %14 = alloca %"class.folly::F14FastSet.704", align 8 ; 11 uses
   %15 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %16 = alloca %"class.std::vector.18", align 8   ; 9 uses
   %17 = alloca %"class.std::vector.58", align 16  ; 9 uses
@@ -604,11 +604,15 @@ bb.aq:                                            ; preds = %_ZNSt6vectorINSt7__
   %i.hl = lshr i64 %i.hk, 12
   %i.hm = add nuw nsw i64 %i.hl, 1
   %.not.i.i.i69.i = icmp eq i64 %i.hg, 0
-  br i1 %.not.i.i.i69.i, label %_ZN5folly3f146detail21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEvvvvSt17integral_constantIbLb1EEE11beforeResetEmm.exit.i.i, label %.lr.ph.i.i.i70.i
+  br i1 %.not.i.i.i69.i, label %_ZN5folly3f146detail21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEvvvvSt17integral_constantIbLb1EEE11beforeResetEmm.exit.i.i, label %.lr.ph.i.i.i70.preheader.i
 
-.lr.ph.i.i.i70.i:                                 ; preds = %bb.aq, %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i
-  %.05.i.i.i71.i = phi i64 [ %i.ht, %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i ], [ 0, %bb.aq ] ; 2 uses
-  %26 = load ptr, ptr %14, align 8, !tbaa !402, !noalias !389
+.lr.ph.i.i.i70.preheader.i:                       ; preds = %bb.aq
+  %.pre117.i = load ptr, ptr %14, align 8, !tbaa !402, !noalias !389
+  br label %.lr.ph.i.i.i70.i
+
+.lr.ph.i.i.i70.i:                                 ; preds = %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i, %.lr.ph.i.i.i70.preheader.i
+  %26 = phi ptr [ %27, %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i ], [ %.pre117.i, %.lr.ph.i.i.i70.preheader.i ] ; 2 uses
+  %.05.i.i.i71.i = phi i64 [ %i.ht, %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i ], [ 0, %.lr.ph.i.i.i70.preheader.i ] ; 2 uses
   %i.hn = getelementptr inbounds nuw [32 x i8], ptr %26, i64 %.05.i.i.i71.i ; 2 uses
   %i.ho = load ptr, ptr %i.hn, align 8, !tbaa !11 ; 2 uses
   %i.hp = getelementptr inbounds nuw i8, ptr %i.hn, i64 16 ; 2 uses
@@ -619,9 +623,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   %i.hr = load i64, ptr %i.hp, align 8, !tbaa !14
   %i.hs = add i64 %i.hr, 1
   call void @_ZdlPvm(ptr noundef %i.ho, i64 noundef %i.hs) #43
+  %.pre116.i = load ptr, ptr %14, align 8, !tbaa !402, !noalias !389
   br label %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i
 
 _ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i: ; preds = %.lr.ph.i.i.i70.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i
+  %27 = phi ptr [ %.pre116.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i ], [ %26, %.lr.ph.i.i.i70.i ]
   %i.ht = add nuw nsw i64 %.05.i.i.i71.i, 1       ; 2 uses
   %exitcond.not.i.i.i.i = icmp eq i64 %i.ht, %i.hg
   br i1 %exitcond.not.i.i.i.i, label %_ZN5folly3f146detail21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEvvvvSt17integral_constantIbLb1EEE11beforeResetEmm.exit.loopexit.i.i, label %.lr.ph.i.i.i70.i, !llvm.loop !419
@@ -1024,7 +1030,7 @@ bb.a:
   %3 = alloca %"struct.fmt::v11::detail::format_arg_store.1244", align 16 ; 5 uses
   %4 = alloca %"struct.std::pair.863", align 8    ; 4 uses
   %5 = alloca %"struct.fmt::v11::detail::format_arg_store.1178", align 16 ; 7 uses
-  %6 = alloca %"class.folly::F14FastSet.704", align 8 ; 10 uses
+  %6 = alloca %"class.folly::F14FastSet.704", align 8 ; 12 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #40
@@ -1063,11 +1069,15 @@ bb.b:                                             ; preds = %._crit_edge
   %i.o = lshr i64 %i.n, 12
   %i.p = add nuw nsw i64 %i.o, 1
   %.not.i.i.i = icmp eq i64 %i.j, 0
-  br i1 %.not.i.i.i, label %_ZN5folly3f146detail21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEvvvvSt17integral_constantIbLb1EEE11beforeResetEmm.exit.i, label %.lr.ph.i.i.i
+  br i1 %.not.i.i.i, label %_ZN5folly3f146detail21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEvvvvSt17integral_constantIbLb1EEE11beforeResetEmm.exit.i, label %.lr.ph.i.i.i.preheader
 
-.lr.ph.i.i.i:                                     ; preds = %bb.b, %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i
-  %.05.i.i.i = phi i64 [ %i.w, %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i ], [ 0, %bb.b ] ; 2 uses
-  %9 = load ptr, ptr %6, align 8, !tbaa !402
+.lr.ph.i.i.i.preheader:                           ; preds = %bb.b
+  %.pre24 = load ptr, ptr %6, align 8, !tbaa !402
+  br label %.lr.ph.i.i.i
+
+.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.preheader, %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i
+  %9 = phi ptr [ %10, %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i ], [ %.pre24, %.lr.ph.i.i.i.preheader ] ; 2 uses
+  %.05.i.i.i = phi i64 [ %i.w, %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i ], [ 0, %.lr.ph.i.i.i.preheader ] ; 2 uses
   %i.q = getelementptr inbounds nuw [32 x i8], ptr %9, i64 %.05.i.i.i ; 2 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !11   ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 16 ; 2 uses
@@ -1078,9 +1088,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   %i.u = load i64, ptr %i.s, align 8, !tbaa !14
   %i.v = add i64 %i.u, 1
   call void @_ZdlPvm(ptr noundef %i.r, i64 noundef %i.v) #43
+  %.pre23 = load ptr, ptr %6, align 8, !tbaa !402
   br label %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i
 
 _ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i: ; preds = %.lr.ph.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i
+  %10 = phi ptr [ %.pre23, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i ], [ %9, %.lr.ph.i.i.i ]
   %i.w = add nuw nsw i64 %.05.i.i.i, 1            ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %i.w, %i.j
   br i1 %exitcond.not.i.i.i, label %_ZN5folly3f146detail21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEvvvvSt17integral_constantIbLb1EEE11beforeResetEmm.exit.loopexit.i, label %.lr.ph.i.i.i, !llvm.loop !419
@@ -1287,12 +1299,16 @@ bb.u:                                             ; preds = %bb.t
   %i.cn = lshr i64 %i.cm, 12
   %i.co = add nuw nsw i64 %i.cn, 1
   %.not.i.i.i23 = icmp eq i64 %i.ci, 0
-  br i1 %.not.i.i.i23, label %_ZN5folly3f146detail21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEvvvvSt17integral_constantIbLb1EEE11beforeResetEmm.exit.i31, label %.lr.ph.i.i.i24
+  br i1 %.not.i.i.i23, label %_ZN5folly3f146detail21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEvvvvSt17integral_constantIbLb1EEE11beforeResetEmm.exit.i31, label %.lr.ph.i.i.i24.preheader
 
-.lr.ph.i.i.i24:                                   ; preds = %bb.u, %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i27
-  %.05.i.i.i25 = phi i64 [ %i.cv, %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i27 ], [ 0, %bb.u ] ; 2 uses
-  %10 = load ptr, ptr %6, align 8, !tbaa !402
-  %i.cp = getelementptr inbounds nuw [32 x i8], ptr %10, i64 %.05.i.i.i25 ; 2 uses
+.lr.ph.i.i.i24.preheader:                         ; preds = %bb.u
+  %.pre21 = load ptr, ptr %6, align 8, !tbaa !402
+  br label %.lr.ph.i.i.i24
+
+.lr.ph.i.i.i24:                                   ; preds = %.lr.ph.i.i.i24.preheader, %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i27
+  %11 = phi ptr [ %12, %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i27 ], [ %.pre21, %.lr.ph.i.i.i24.preheader ] ; 2 uses
+  %.05.i.i.i25 = phi i64 [ %i.cv, %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i27 ], [ 0, %.lr.ph.i.i.i24.preheader ] ; 2 uses
+  %i.cp = getelementptr inbounds nuw [32 x i8], ptr %11, i64 %.05.i.i.i25 ; 2 uses
   %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !11 ; 2 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cp, i64 16 ; 2 uses
   %i.cs = icmp eq ptr %i.cq, %i.cr
@@ -1302,9 +1318,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   %i.ct = load i64, ptr %i.cr, align 8, !tbaa !14
   %i.cu = add i64 %i.ct, 1
   call void @_ZdlPvm(ptr noundef %i.cq, i64 noundef %i.cu) #43
+  %.pre = load ptr, ptr %6, align 8, !tbaa !402
   br label %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i27
 
 _ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i27: ; preds = %.lr.ph.i.i.i24, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i26
+  %12 = phi ptr [ %.pre, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i26 ], [ %11, %.lr.ph.i.i.i24 ]
   %i.cv = add nuw nsw i64 %.05.i.i.i25, 1         ; 2 uses
   %exitcond.not.i.i.i28 = icmp eq i64 %i.cv, %i.ci
   br i1 %exitcond.not.i.i.i28, label %_ZN5folly3f146detail21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEvvvvSt17integral_constantIbLb1EEE11beforeResetEmm.exit.loopexit.i29, label %.lr.ph.i.i.i24, !llvm.loop !419
@@ -1707,7 +1725,7 @@ bb.a:
   %12 = alloca [1 x %"class.std::shared_ptr.10"], align 16 ; 8 uses
   %13 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %14 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
-  %15 = alloca %"class.folly::F14FastSet.704", align 8 ; 11 uses
+  %15 = alloca %"class.folly::F14FastSet.704", align 8 ; 12 uses
   %16 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %i.a = zext i1 %5 to i8
   %i.b = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 8 uses
@@ -2110,11 +2128,15 @@ bb.ap:                                            ; preds = %._crit_edge
   %i.gg = lshr i64 %i.gf, 12
   %i.gh = add nuw nsw i64 %i.gg, 1
   %.not.i.i.i64 = icmp eq i64 %i.gb, 0
-  br i1 %.not.i.i.i64, label %_ZN5folly3f146detail21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEvvvvSt17integral_constantIbLb1EEE11beforeResetEmm.exit.i, label %.lr.ph.i.i.i
+  br i1 %.not.i.i.i64, label %_ZN5folly3f146detail21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEvvvvSt17integral_constantIbLb1EEE11beforeResetEmm.exit.i, label %.lr.ph.i.i.i.preheader
 
-.lr.ph.i.i.i:                                     ; preds = %bb.ap, %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i
-  %.05.i.i.i = phi i64 [ %i.go, %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i ], [ 0, %bb.ap ] ; 2 uses
-  %17 = load ptr, ptr %15, align 8, !tbaa !402
+.lr.ph.i.i.i.preheader:                           ; preds = %bb.ap
+  %.pre93 = load ptr, ptr %15, align 8, !tbaa !402
+  br label %.lr.ph.i.i.i
+
+.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.preheader, %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i
+  %17 = phi ptr [ %18, %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i ], [ %.pre93, %.lr.ph.i.i.i.preheader ] ; 2 uses
+  %.05.i.i.i = phi i64 [ %i.go, %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i ], [ 0, %.lr.ph.i.i.i.preheader ] ; 2 uses
   %i.gi = getelementptr inbounds nuw [32 x i8], ptr %17, i64 %.05.i.i.i ; 2 uses
   %i.gj = load ptr, ptr %i.gi, align 8, !tbaa !11 ; 2 uses
   %i.gk = getelementptr inbounds nuw i8, ptr %i.gi, i64 16 ; 2 uses
@@ -2125,9 +2147,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   %i.gm = load i64, ptr %i.gk, align 8, !tbaa !14
   %i.gn = add i64 %i.gm, 1
   call void @_ZdlPvm(ptr noundef %i.gj, i64 noundef %i.gn) #43
+  %.pre92 = load ptr, ptr %15, align 8, !tbaa !402
   br label %_ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i
 
 _ZSt10destroy_atINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i: ; preds = %.lr.ph.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i
+  %18 = phi ptr [ %.pre92, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i ], [ %17, %.lr.ph.i.i.i ]
   %i.go = add nuw nsw i64 %.05.i.i.i, 1           ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %i.go, %i.gb
   br i1 %exitcond.not.i.i.i, label %_ZN5folly3f146detail21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEvvvvSt17integral_constantIbLb1EEE11beforeResetEmm.exit.loopexit.i, label %.lr.ph.i.i.i, !llvm.loop !419

@@ -201,7 +201,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = alloca i64, align 8                      ; 4 uses
   %2 = alloca %"class.llvh::StringRef", align 8   ; 3 uses
-  %3 = alloca %"class.llvh::SmallVector", align 8 ; 15 uses
+  %3 = alloca %"class.llvh::SmallVector", align 8 ; 16 uses
   %4 = alloca %"class.llvh::StringRef", align 8   ; 6 uses
   %5 = alloca %"class.llvh::StringRef", align 8   ; 6 uses
   %6 = alloca %"class.llvh::StringRef", align 8   ; 6 uses
@@ -228,6 +228,7 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %i.j = zext i32 %i.g to i64
+  %.pre1205 = load ptr, ptr %3, align 8, !tbaa !29
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit204.thread
@@ -242,12 +243,12 @@ _ZNK4llvh9StringRef6equalsES0_.exit:              ; preds = %._crit_edge
   br i1 %i.o, label %_ZNK4llvh9StringRef6equalsES0_.exit.thread776, label %_ZNK4llvh9StringRef6equalsES0_.exit258
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNK4llvh9StringRef10startswithES0_.exit204.thread
+  %11 = phi ptr [ %.pre1205, %.lr.ph ], [ %12, %_ZNK4llvh9StringRef10startswithES0_.exit204.thread ] ; 3 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZNK4llvh9StringRef10startswithES0_.exit204.thread ] ; 4 uses
   %.sroa.0566.01159 = phi ptr [ null, %.lr.ph ], [ %.sroa.0566.11233, %_ZNK4llvh9StringRef10startswithES0_.exit204.thread ] ; 2 uses
   %.sroa.9567.01158 = phi i64 [ 0, %.lr.ph ], [ %.sroa.9567.11231, %_ZNK4llvh9StringRef10startswithES0_.exit204.thread ] ; 2 uses
   %.sroa.0561.01157 = phi ptr [ null, %.lr.ph ], [ %.sroa.0561.1, %_ZNK4llvh9StringRef10startswithES0_.exit204.thread ] ; 2 uses
   %.sroa.6.01156 = phi i64 [ 0, %.lr.ph ], [ %.sroa.6.1, %_ZNK4llvh9StringRef10startswithES0_.exit204.thread ] ; 2 uses
-  %11 = load ptr, ptr %3, align 8, !tbaa !29      ; 3 uses
   %i.p = getelementptr inbounds nuw [16 x i8], ptr %11, i64 %indvars.iv ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   %i.r = load i64, ptr %i.q, align 8, !tbaa !33   ; 4 uses
@@ -288,7 +289,7 @@ _ZNK4llvh9StringRef10startswithES0_.exit206.thread778: ; preds = %_ZNK4llvh9Stri
 
 _ZNK4llvh9StringRef10startswithES0_.exit206.thread: ; preds = %bb.b, %_ZNK4llvh9StringRef10startswithES0_.exit206.thread778
   %i.aj = phi i64 [ %.pre1206, %_ZNK4llvh9StringRef10startswithES0_.exit206.thread778 ], [ %i.r, %bb.b ] ; 2 uses
-  %i.ak = phi ptr [ %.pre.a, %_ZNK4llvh9StringRef10startswithES0_.exit206.thread778 ], [ %11, %bb.b ]
+  %i.ak = phi ptr [ %.pre.a, %_ZNK4llvh9StringRef10startswithES0_.exit206.thread778 ], [ %11, %bb.b ] ; 2 uses
   %.sroa.9567.1 = phi i64 [ %i.ai, %_ZNK4llvh9StringRef10startswithES0_.exit206.thread778 ], [ %.sroa.9567.01158, %bb.b ] ; 2 uses
   %.sroa.0566.1 = phi ptr [ %i.ah, %_ZNK4llvh9StringRef10startswithES0_.exit206.thread778 ], [ %.sroa.0566.01159, %bb.b ] ; 2 uses
   %.not.i203 = icmp ult i64 %i.aj, 8
@@ -297,7 +298,7 @@ _ZNK4llvh9StringRef10startswithES0_.exit206.thread: ; preds = %bb.b, %_ZNK4llvh9
 _ZNK4llvh9StringRef10startswithES0_.exit204:      ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit206, %_ZNK4llvh9StringRef10startswithES0_.exit206.thread
   %.sroa.0566.11232 = phi ptr [ %.sroa.0566.1, %_ZNK4llvh9StringRef10startswithES0_.exit206.thread ], [ %.sroa.0566.01159, %_ZNK4llvh9StringRef10startswithES0_.exit206 ] ; 2 uses
   %.sroa.9567.11230 = phi i64 [ %.sroa.9567.1, %_ZNK4llvh9StringRef10startswithES0_.exit206.thread ], [ %.sroa.9567.01158, %_ZNK4llvh9StringRef10startswithES0_.exit206 ] ; 2 uses
-  %i.al = phi ptr [ %i.ak, %_ZNK4llvh9StringRef10startswithES0_.exit206.thread ], [ %11, %_ZNK4llvh9StringRef10startswithES0_.exit206 ]
+  %i.al = phi ptr [ %i.ak, %_ZNK4llvh9StringRef10startswithES0_.exit206.thread ], [ %11, %_ZNK4llvh9StringRef10startswithES0_.exit206 ] ; 2 uses
   %i.am = phi i64 [ %i.aj, %_ZNK4llvh9StringRef10startswithES0_.exit206.thread ], [ %i.r, %_ZNK4llvh9StringRef10startswithES0_.exit206 ]
   %i.an = getelementptr inbounds nuw [16 x i8], ptr %i.al, i64 %indvars.iv
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !35 ; 2 uses
@@ -320,11 +321,13 @@ _ZNK4llvh9StringRef10startswithES0_.exit204.thread780: ; preds = %_ZNK4llvh9Stri
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 %.sroa.speculated.i361
   %i.az = sub i64 %i.aw, %.sroa.speculated.i361
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #20
+  %.pre = load ptr, ptr %3, align 8, !tbaa !29
   br label %_ZNK4llvh9StringRef10startswithES0_.exit204.thread
 
 _ZNK4llvh9StringRef10startswithES0_.exit204.thread: ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit206.thread, %_ZNK4llvh9StringRef10startswithES0_.exit204, %_ZNK4llvh9StringRef10startswithES0_.exit204.thread780
   %.sroa.0566.11233 = phi ptr [ %.sroa.0566.11232, %_ZNK4llvh9StringRef10startswithES0_.exit204.thread780 ], [ %.sroa.0566.11232, %_ZNK4llvh9StringRef10startswithES0_.exit204 ], [ %.sroa.0566.1, %_ZNK4llvh9StringRef10startswithES0_.exit206.thread ] ; 6 uses
   %.sroa.9567.11231 = phi i64 [ %.sroa.9567.11230, %_ZNK4llvh9StringRef10startswithES0_.exit204.thread780 ], [ %.sroa.9567.11230, %_ZNK4llvh9StringRef10startswithES0_.exit204 ], [ %.sroa.9567.1, %_ZNK4llvh9StringRef10startswithES0_.exit206.thread ] ; 2 uses
+  %12 = phi ptr [ %.pre, %_ZNK4llvh9StringRef10startswithES0_.exit204.thread780 ], [ %i.al, %_ZNK4llvh9StringRef10startswithES0_.exit204 ], [ %i.ak, %_ZNK4llvh9StringRef10startswithES0_.exit206.thread ]
   %.sroa.6.1 = phi i64 [ %i.az, %_ZNK4llvh9StringRef10startswithES0_.exit204.thread780 ], [ %.sroa.6.01156, %_ZNK4llvh9StringRef10startswithES0_.exit204 ], [ %.sroa.6.01156, %_ZNK4llvh9StringRef10startswithES0_.exit206.thread ] ; 4 uses
   %.sroa.0561.1 = phi ptr [ %i.ay, %_ZNK4llvh9StringRef10startswithES0_.exit204.thread780 ], [ %.sroa.0561.01157, %_ZNK4llvh9StringRef10startswithES0_.exit204 ], [ %.sroa.0561.01157, %_ZNK4llvh9StringRef10startswithES0_.exit206.thread ] ; 3 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -727,11 +730,12 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.j = zext i32 %i.i to i64
+  %.pre136 = load ptr, ptr %3, align 8, !tbaa !29
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.critedge
+  %6 = phi ptr [ %.pre136, %.lr.ph.preheader ], [ %7, %.critedge ] ; 3 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.critedge ] ; 3 uses
-  %6 = load ptr, ptr %3, align 8, !tbaa !29
   %i.k = getelementptr inbounds nuw [16 x i8], ptr %6, i64 %indvars.iv ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.m = load i64, ptr %i.l, align 8, !tbaa !33
@@ -749,12 +753,12 @@ _ZNK4llvh9StringRef10startswithES0_.exit48:       ; preds = %.lr.ph
 _ZNK4llvh9StringRef10startswithES0_.exit48.thread98: ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit48
   %i.s = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %i.k, ptr nonnull @.str.98, i64 1, i64 noundef 0) #20 ; 2 uses
   %.not39 = icmp eq i64 %i.s, -1
+  %.pre = load ptr, ptr %3, align 8, !tbaa !29    ; 2 uses
   br i1 %.not39, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit48.thread98
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
-  %7 = load ptr, ptr %3, align 8, !tbaa !29
-  %i.t = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %indvars.iv ; 2 uses
+  %i.t = getelementptr inbounds nuw [16 x i8], ptr %.pre, i64 %indvars.iv ; 2 uses
   %i.u = add nuw i64 %i.s, 1
   %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.w = load i64, ptr %i.v, align 8, !tbaa !19   ; 2 uses
@@ -770,6 +774,7 @@ bb.b:                                             ; preds = %_ZNK4llvh9StringRef
   br label %.loopexit
 
 .critedge:                                        ; preds = %.lr.ph, %_ZNK4llvh9StringRef10startswithES0_.exit48.thread98, %_ZNK4llvh9StringRef10startswithES0_.exit48
+  %7 = phi ptr [ %6, %.lr.ph ], [ %.pre, %_ZNK4llvh9StringRef10startswithES0_.exit48.thread98 ], [ %6, %_ZNK4llvh9StringRef10startswithES0_.exit48 ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %.not = icmp eq i64 %indvars.iv.next, %i.j
   br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !42

@@ -201,6 +201,7 @@ _ZN4llvh11raw_ostreamlsEPKc.exit136:              ; preds = %bb.bh, %bb.bi
   %.idx = shl nuw nsw i64 %i.mc, 3
   %i.md = getelementptr inbounds nuw i8, ptr %i.lz, i64 %.idx
   %.not72168 = icmp eq i32 %i.mb, 0
+  %.pre179 = load ptr, ptr %6, align 8, !tbaa !220 ; 2 uses
   br i1 %.not72168, label %._crit_edge171, label %.lr.ph170
 
 .lr.ph170:                                        ; preds = %_ZN4llvh11raw_ostreamlsEPKc.exit136
@@ -212,17 +213,17 @@ _ZN4llvh11raw_ostreamlsEPKc.exit136:              ; preds = %bb.bh, %bb.bi
   br label %bb.bj
 
 ._crit_edge171:                                   ; preds = %bb.bq, %_ZN4llvh11raw_ostreamlsEPKc.exit136
-  %7 = load ptr, ptr %6, align 8, !tbaa !220
+  %7 = phi ptr [ %.pre179, %_ZN4llvh11raw_ostreamlsEPKc.exit136 ], [ %9, %bb.bq ]
   call void @_ZdlPv(ptr noundef %7) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #15
   br label %bb.br
 
 bb.bj:                                            ; preds = %.lr.ph170, %bb.bq
+  %8 = phi ptr [ %.pre179, %.lr.ph170 ], [ %9, %bb.bq ] ; 6 uses
   %.055169 = phi ptr [ %i.lz, %.lr.ph170 ], [ %i.oo, %bb.bq ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #15
   %i.mj = load ptr, ptr %.055169, align 8, !tbaa !223 ; 4 uses
   store ptr %i.mj, ptr %i.b, align 8, !tbaa !223
-  %8 = load ptr, ptr %6, align 8, !tbaa !220      ; 5 uses
   %i.mk = load i32, ptr %i.me, align 8, !tbaa !225 ; 4 uses
   %i.ml = icmp eq i32 %i.mk, 0
   br i1 %i.ml, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes11InstructionENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS4_EENS5_12DenseSetPairIS4_EEEES4_S6_S8_SA_E15LookupBucketForIPKS3_EEbRKT_RPSA_.exit.i.i, label %bb.bk
@@ -356,9 +357,11 @@ _ZN6hermes16InstructionNamer9getNumberEPNS_5ValueE.exit: ; preds = %bb.bp, %_ZNS
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.om = zext i32 %.0.i141 to i64
   %i.on = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostreamlsEm(ptr noundef nonnull align 8 dereferenceable(36) %.0.i.i138, i64 noundef %i.om) #15 ; 0 uses
+  %.pre177 = load ptr, ptr %6, align 8, !tbaa !220
   br label %bb.bq
 
 bb.bq:                                            ; preds = %_ZN4llvh6detail12DenseSetImplIPN6hermes11InstructionENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_EENS0_12DenseSetPairIS4_EEEES8_E4findEPKS3_.exit, %_ZN6hermes16InstructionNamer9getNumberEPNS_5ValueE.exit
+  %9 = phi ptr [ %8, %_ZN4llvh6detail12DenseSetImplIPN6hermes11InstructionENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_EENS0_12DenseSetPairIS4_EEEES8_E4findEPKS3_.exit ], [ %.pre177, %_ZN6hermes16InstructionNamer9getNumberEPNS_5ValueE.exit ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #15
   %i.oo = getelementptr inbounds nuw i8, ptr %.055169, i64 8 ; 2 uses
   %.not72 = icmp eq ptr %i.oo, %i.md

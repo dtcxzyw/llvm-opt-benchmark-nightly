@@ -201,7 +201,7 @@ _ZN2v88internal16ZoneUnorderedSetINS0_8compiler10turboshaft7OpIndexENS_4base4has
 define hidden noundef zeroext i1 @_ZN2v88internal8compiler10turboshaft17WasmRevecAnalyzer15DecideVectorizeEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(464) %0) local_unnamed_addr #5 align 2 {
 bb.a:
   %1 = alloca %"struct.absl::container_internal::HashKey", align 8 ; 5 uses
-  %2 = alloca %"class.absl::flat_hash_set.181", align 8 ; 12 uses
+  %2 = alloca %"class.absl::flat_hash_set.181", align 8 ; 11 uses
   %i.a = alloca ptr, align 8                      ; 5 uses
   %3 = alloca %"struct.absl::container_internal::HashKey", align 8 ; 5 uses
   %4 = alloca %"class.absl::flat_hash_set.181", align 8 ; 12 uses
@@ -604,10 +604,9 @@ bb.ac:                                            ; preds = %_ZNSt13unordered_ma
 
 ._crit_edge21.i:                                  ; preds = %._crit_edge.i32
   store i32 %.lcssa7072, ptr %i.d, align 4
-  %.pre.i33 = load i64, ptr %2, align 8           ; 3 uses
-  %i.gt = icmp ne i64 %.pre.i33, 0
+  %i.gt = icmp ne i64 %6, 0
   call void @llvm.assume(i1 %i.gt)
-  %i.gu = icmp ult i64 %.pre.i33, 2
+  %i.gu = icmp ult i64 %6, 2
   br i1 %i.gu, label %"_ZN2v88internal8compiler10turboshaft7ForEachIZNS2_17WasmRevecAnalyzer15DecideVectorizeEvE3$_1EEvT_RKNS0_16ZoneUnorderedMapINS2_7OpIndexENS0_10ZoneVectorIPNS2_8PackNodeEEENS_4base4hashIS8_EESt8equal_toIS8_EEE.exit", label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIPKN2v88internal8compiler10turboshaft8PackNodeEEENS0_6HashEqIS9_vE4HashENSC_2EqESaIS9_EE7deallocEv.exit.i.i.i38
 
 _ZN4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIPKN2v88internal8compiler10turboshaft8PackNodeEEENS0_6HashEqIS9_vE4HashENSC_2EqESaIS9_EE7deallocEv.exit.i.i.i38: ; preds = %._crit_edge21.i
@@ -615,11 +614,13 @@ _ZN4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIPKN2v88intern
   %i.gw = and i64 %i.gv, 65536
   %.sroa.0.0.copyload.i.i.i1.pre.i.i.i.i36 = load ptr, ptr %i.gq, align 8
   %i.gx = icmp ne i64 %i.gw, 0
-  call void @_ZN4absl18container_internal22DeallocateBackingArrayILm8ESaIcEEEvPvmPNS0_6ctrl_tEmmb(ptr noundef nonnull align 8 dereferenceable(32) %2, i64 noundef %.pre.i33, ptr noundef %.sroa.0.0.copyload.i.i.i1.pre.i.i.i.i36, i64 noundef 8, i64 noundef 8, i1 noundef zeroext %i.gx)
+  call void @_ZN4absl18container_internal22DeallocateBackingArrayILm8ESaIcEEEvPvmPNS0_6ctrl_tEmmb(ptr noundef nonnull align 8 dereferenceable(32) %2, i64 noundef %6, ptr noundef %.sroa.0.0.copyload.i.i.i1.pre.i.i.i.i36, i64 noundef 8, i64 noundef 8, i1 noundef zeroext %i.gx)
   br label %"_ZN2v88internal8compiler10turboshaft7ForEachIZNS2_17WasmRevecAnalyzer15DecideVectorizeEvE3$_1EEvT_RKNS0_16ZoneUnorderedMapINS2_7OpIndexENS0_10ZoneVectorIPNS2_8PackNodeEEENS_4base4hashIS8_EESt8equal_toIS8_EEE.exit"
 
 bb.ad:                                            ; preds = %._crit_edge.i32, %.lr.ph20.i
   %.lcssa7073 = phi i32 [ %.0..0..promoted71, %.lr.ph20.i ], [ %.lcssa7072, %._crit_edge.i32 ] ; 2 uses
+  %.pre24.i = phi i64 [ 1, %.lr.ph20.i ], [ %.pre2427.i, %._crit_edge.i32 ] ; 3 uses
+  %5 = phi i64 [ 1, %.lr.ph20.i ], [ %6, %._crit_edge.i32 ]
   %.sroa.02.018.i = phi ptr [ %.val1, %.lr.ph20.i ], [ %i.hc, %._crit_edge.i32 ] ; 3 uses
   %i.gy = getelementptr inbounds nuw i8, ptr %.sroa.02.018.i, i64 24
   %i.gz = load ptr, ptr %i.gy, align 8            ; 2 uses
@@ -630,18 +631,21 @@ bb.ad:                                            ; preds = %._crit_edge.i32, %.
 
 ._crit_edge.i32:                                  ; preds = %bb.aq, %bb.ad
   %.lcssa7072 = phi i32 [ %.lcssa7073, %bb.ad ], [ %i.js, %bb.aq ] ; 2 uses
+  %.pre2427.i = phi i64 [ %.pre24.i, %bb.ad ], [ %.pre2428.i, %bb.aq ]
+  %6 = phi i64 [ %5, %bb.ad ], [ %9, %bb.aq ]     ; 4 uses
   %i.hc = load ptr, ptr %.sroa.02.018.i, align 8  ; 2 uses
   %i.hd = icmp eq ptr %i.hc, null
   br i1 %i.hd, label %._crit_edge21.i, label %bb.ad
 
 .lr.ph.i3:                                        ; preds = %bb.ad, %bb.aq
   %i.he = phi i32 [ %i.js, %bb.aq ], [ %.lcssa7073, %bb.ad ] ; 3 uses
+  %.pre2425.i = phi i64 [ %.pre2428.i, %bb.aq ], [ %.pre24.i, %bb.ad ] ; 4 uses
+  %7 = phi i64 [ %9, %bb.aq ], [ %.pre24.i, %bb.ad ] ; 10 uses
   %.017.i = phi ptr [ %i.jt, %bb.aq ], [ %i.gz, %bb.ad ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
   %i.hf = load ptr, ptr %.017.i, align 8          ; 5 uses
   store ptr %i.hf, ptr %i.a, align 8
-  %5 = load i64, ptr %2, align 8                  ; 6 uses
-  %i.hg = icmp ult i64 %5, 2
+  %i.hg = icmp ult i64 %7, 2
   br i1 %i.hg, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %.lr.ph.i3
@@ -676,7 +680,7 @@ bb.af:                                            ; preds = %.lr.ph.i3
 bb.ag:                                            ; preds = %bb.ai, %bb.af
   %.pn.i7.i.i.i.i7 = phi i64 [ %i.ht, %bb.af ], [ %i.ip, %bb.ai ]
   %.sroa.13.0.i.i.i.i.i8 = phi i64 [ 0, %bb.af ], [ %i.io, %bb.ai ]
-  %.sroa.6.0.i.i.i.i.i9 = and i64 %.pn.i7.i.i.i.i7, %5 ; 4 uses
+  %.sroa.6.0.i.i.i.i.i9 = and i64 %.pn.i7.i.i.i.i7, %7 ; 4 uses
   %i.hy = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.copyload.i.i.i14.i.i.i.i.i6, i64 %.sroa.6.0.i.i.i.i.i9
   call void @llvm.prefetch.p0(ptr %i.hy, i32 0, i32 3, i32 1)
   %i.hz = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i4, i64 %.sroa.6.0.i.i.i.i.i9
@@ -691,7 +695,7 @@ bb.ag:                                            ; preds = %bb.ai, %bb.af
   %i.id = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.sroa.017.048.i.i.i.i.i12, i1 true)
   %i.ie = zext nneg i16 %i.id to i64
   %i.if = add i64 %.sroa.6.0.i.i.i.i.i9, %i.ie
-  %i.ig = and i64 %i.if, %5
+  %i.ig = and i64 %i.if, %7
   %i.ih = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.copyload.i.i.i14.i.i.i.i.i6, i64 %i.ig
   %i.ii = load ptr, ptr %i.ih, align 8
   %i.ij = icmp eq ptr %i.ii, %i.hf
@@ -746,7 +750,7 @@ bb.am:                                            ; preds = %._crit_edge.i.i.i.i
 bb.an:                                            ; preds = %bb.ao, %bb.am
   %.pn.i.i16 = phi i64 [ %i.ht, %bb.am ], [ %i.jp, %bb.ao ]
   %.sroa.15.0.i.i17 = phi i64 [ 0, %bb.am ], [ %i.jo, %bb.ao ] ; 2 uses
-  %.sroa.7.0.i.i18 = and i64 %.pn.i.i16, %5       ; 5 uses
+  %.sroa.7.0.i.i18 = and i64 %.pn.i.i16, %7       ; 5 uses
   %i.is = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.copyload.i.i.i14.i.i.i.i.i6, i64 %.sroa.7.0.i.i18
   call void @llvm.prefetch.p0(ptr %i.is, i32 0, i32 3, i32 1), !noalias !145
   %i.it = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i4, i64 %.sroa.7.0.i.i18
@@ -761,7 +765,7 @@ bb.an:                                            ; preds = %bb.ao, %bb.am
   %i.ix = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.sroa.035.066.i.i21, i1 true)
   %i.iy = zext nneg i16 %i.ix to i64
   %i.iz = add i64 %.sroa.7.0.i.i18, %i.iy
-  %i.ja = and i64 %i.iz, %5
+  %i.ja = and i64 %i.iz, %7
   %i.jb = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.copyload.i.i.i14.i.i.i.i.i6, i64 %i.ja
   %i.jc = load ptr, ptr %i.jb, align 8, !noalias !145
   %i.jd = icmp eq ptr %i.jc, %i.hf
@@ -783,7 +787,7 @@ bb.an:                                            ; preds = %bb.ao, %bb.am
   %i.ji = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %i.jh, i1 true)
   %i.jj = zext nneg i16 %i.ji to i64
   %i.jk = add i64 %.sroa.7.0.i.i18, %i.jj
-  %i.jl = and i64 %i.jk, %5
+  %i.jl = and i64 %i.jk, %7
   %i.jm = call noundef i64 @_ZN4absl18container_internal18PrepareInsertLargeERNS0_12CommonFieldsERKNS0_15PolicyFunctionsEmNS0_8FindInfoE(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(72) @_ZZN4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIPKN2v88internal8compiler10turboshaft8PackNodeEEENS0_6HashEqIS9_vE4HashENSC_2EqESaIS9_EE18GetPolicyFunctionsEvE5value, i64 noundef %i.ht, i64 %i.jl, i64 %.sroa.15.0.i.i17) #21, !noalias !145
   %.sroa.0.0.copyload.i.i.i2.i26.i.i28 = load ptr, ptr %i.gr, align 8, !noalias !145
   %i.jn = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.copyload.i.i.i2.i26.i.i28, i64 %i.jm
@@ -798,14 +802,19 @@ bb.ap:                                            ; preds = %.thread.i.i26, %bb.
   %.sroa.4.0.ph.i29 = phi ptr [ %i.jn, %.thread.i.i26 ], [ %i.gq, %bb.aj ], [ %i.ir, %bb.al ]
   %i.jq = load ptr, ptr %i.a, align 8, !noalias !148
   store ptr %i.jq, ptr %.sroa.4.0.ph.i29, align 8
+  %.pre.i30 = load i64, ptr %2, align 8           ; 2 uses
   br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIPKN2v88internal8compiler10turboshaft8PackNodeEEENS0_6HashEqIS9_vE4HashENSC_2EqESaIS9_EE6insertIS9_Li0EEESt4pairINSG_8iteratorEbERKT_.exit.i30
 
 _ZN4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIPKN2v88internal8compiler10turboshaft8PackNodeEEENS0_6HashEqIS9_vE4HashENSC_2EqESaIS9_EE6insertIS9_Li0EEESt4pairINSG_8iteratorEbERKT_.exit.i30: ; preds = %.lr.ph.i.i20, %bb.ap, %bb.ak
+  %.pre2429.i = phi i64 [ %.pre.i30, %bb.ap ], [ %.pre2425.i, %bb.ak ], [ %.pre2425.i, %.lr.ph.i.i20 ]
+  %8 = phi i64 [ %.pre.i30, %bb.ap ], [ %7, %bb.ak ], [ %7, %.lr.ph.i.i20 ]
   %i.jr = add nsw i32 %i.he, 1
   br label %bb.aq
 
 bb.aq:                                            ; preds = %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIPKN2v88internal8compiler10turboshaft8PackNodeEEENS0_6HashEqIS9_vE4HashENSC_2EqESaIS9_EE6insertIS9_Li0EEESt4pairINSG_8iteratorEbERKT_.exit.i30, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIPKN2v88internal8compiler10turboshaft8PackNodeEEENS0_6HashEqIS9_vE4HashENSC_2EqESaIS9_EE8containsIS9_EEbRKT_.exit.thread7.i, %bb.ae
-  %i.js = phi i32 [ %i.jr, %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIPKN2v88internal8compiler10turboshaft8PackNodeEEENS0_6HashEqIS9_vE4HashENSC_2EqESaIS9_EE6insertIS9_Li0EEESt4pairINSG_8iteratorEbERKT_.exit.i30 ], [ %i.he, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIPKN2v88internal8compiler10turboshaft8PackNodeEEENS0_6HashEqIS9_vE4HashENSC_2EqESaIS9_EE8containsIS9_EEbRKT_.exit.thread7.i ], [ %i.he, %bb.ae ] ; 2 uses
+  %i.js = phi i32 [ %i.he, %bb.ae ], [ %i.he, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIPKN2v88internal8compiler10turboshaft8PackNodeEEENS0_6HashEqIS9_vE4HashENSC_2EqESaIS9_EE8containsIS9_EEbRKT_.exit.thread7.i ], [ %i.jr, %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIPKN2v88internal8compiler10turboshaft8PackNodeEEENS0_6HashEqIS9_vE4HashENSC_2EqESaIS9_EE6insertIS9_Li0EEESt4pairINSG_8iteratorEbERKT_.exit.i30 ] ; 2 uses
+  %.pre2428.i = phi i64 [ %.pre2425.i, %bb.ae ], [ %.pre2425.i, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIPKN2v88internal8compiler10turboshaft8PackNodeEEENS0_6HashEqIS9_vE4HashENSC_2EqESaIS9_EE8containsIS9_EEbRKT_.exit.thread7.i ], [ %.pre2429.i, %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIPKN2v88internal8compiler10turboshaft8PackNodeEEENS0_6HashEqIS9_vE4HashENSC_2EqESaIS9_EE6insertIS9_Li0EEESt4pairINSG_8iteratorEbERKT_.exit.i30 ] ; 2 uses
+  %9 = phi i64 [ %7, %bb.ae ], [ %7, %_ZNK4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIPKN2v88internal8compiler10turboshaft8PackNodeEEENS0_6HashEqIS9_vE4HashENSC_2EqESaIS9_EE8containsIS9_EEbRKT_.exit.thread7.i ], [ %8, %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIPKN2v88internal8compiler10turboshaft8PackNodeEEENS0_6HashEqIS9_vE4HashENSC_2EqESaIS9_EE6insertIS9_Li0EEESt4pairINSG_8iteratorEbERKT_.exit.i30 ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   %i.jt = getelementptr inbounds nuw i8, ptr %.017.i, i64 8 ; 2 uses
   %.not.i31 = icmp eq ptr %i.jt, %i.hb

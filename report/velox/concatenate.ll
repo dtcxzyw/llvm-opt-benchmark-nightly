@@ -201,7 +201,7 @@ bb.a:
   %18 = alloca %"class.std::unique_ptr.118", align 8 ; 7 uses
   %19 = alloca %"class.arrow::Status", align 8    ; 8 uses
   %20 = alloca %"class.arrow::Status", align 8    ; 5 uses
-  %21 = alloca %"class.arrow::internal::BitRunReader", align 8 ; 11 uses
+  %21 = alloca %"class.arrow::internal::BitRunReader", align 8 ; 12 uses
   %22 = alloca %"class.arrow::Status", align 8    ; 8 uses
   %23 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %24 = alloca %"class.std::shared_ptr.42", align 16 ; 5 uses
@@ -604,16 +604,20 @@ bb.aez:                                           ; preds = %_ZNK5arrow9ArrayDat
 
 bb.afa:                                           ; preds = %.lr.ph148.i.i
   %i.cxg = icmp slt i64 %i.cxd, %i.cwu
-  br i1 %i.cxg, label %.preheader.i.i, label %.loopexit.i.i405, !prof !28
+  br i1 %i.cxg, label %.preheader.preheader.i.i, label %.loopexit.i.i405, !prof !28
 
-.preheader.i.i:                                   ; preds = %bb.afa, %bb.aff
-  %i.cxh = phi i8 [ %i.cyj, %bb.aff ], [ %i.cwx, %bb.afa ]
-  %118 = phi i64 [ %i.cyp, %bb.aff ], [ %i.cxd, %bb.afa ]
-  %i.cxi = phi i64 [ %i.cys, %bb.aff ], [ %i.cwu, %bb.afa ]
-  %119 = load ptr, ptr %21, align 8, !tbaa !563, !noalias !544
-  %i.cxj = getelementptr inbounds nuw i8, ptr %119, i64 8 ; 3 uses
+.preheader.preheader.i.i:                         ; preds = %bb.afa
+  %.pre158.i.i = load ptr, ptr %21, align 8, !tbaa !563, !noalias !544
+  br label %.preheader.i.i
+
+.preheader.i.i:                                   ; preds = %bb.aff, %.preheader.preheader.i.i
+  %i.cxh = phi i8 [ %i.cyj, %bb.aff ], [ %i.cwx, %.preheader.preheader.i.i ]
+  %118 = phi ptr [ %120, %bb.aff ], [ %.pre158.i.i, %.preheader.preheader.i.i ]
+  %i.cxi = phi i64 [ %i.cyp, %bb.aff ], [ %i.cxd, %.preheader.preheader.i.i ]
+  %119 = phi i64 [ %i.cys, %bb.aff ], [ %i.cwu, %.preheader.preheader.i.i ]
+  %i.cxj = getelementptr inbounds nuw i8, ptr %118, i64 8 ; 4 uses
   store ptr %i.cxj, ptr %21, align 8, !tbaa !563, !noalias !544
-  %i.cxk = sub nsw i64 %i.cxi, %118               ; 6 uses
+  %i.cxk = sub nsw i64 %119, %i.cxi               ; 6 uses
   store i64 0, ptr %i.cvb, align 8, !tbaa !562, !noalias !544
   %i.cxl = icmp sgt i64 %i.cxk, 63
   br i1 %i.cxl, label %bb.afb, label %bb.afc, !prof !28
@@ -650,11 +654,13 @@ bb.afc:                                           ; preds = %.preheader.i.i
   %i.cyi = xor i8 %i.cyh, %i.cyc
   store i8 %i.cyi, ptr %i.cyb, align 1, !tbaa !19, !noalias !544
   %.pre4.pre.i.i.i = load i64, ptr %i.cvb, align 8, !tbaa !562, !noalias !544
+  %.pre.i63.i = load ptr, ptr %21, align 8, !tbaa !563, !noalias !544
   %.pre.i63.i.a = load i8, ptr %i.cva, align 8, !tbaa !561, !range !148, !noalias !544
   br label %bb.afd
 
 bb.afd:                                           ; preds = %bb.afc, %bb.afb
   %i.cyj = phi i8 [ %.pre.i63.i.a, %bb.afc ], [ %i.cxh, %bb.afb ] ; 4 uses
+  %120 = phi ptr [ %.pre.i63.i, %bb.afc ], [ %i.cxj, %bb.afb ]
   %.pre4.i.i.i = phi i64 [ %.pre4.pre.i.i.i, %bb.afc ], [ %i.cxm, %bb.afb ] ; 2 uses
   %i.cyk = trunc nuw i8 %i.cyj to i1
   br i1 %i.cyk, label %bb.afe, label %_ZN5arrow8internal12BitRunReader12LoadNextWordEv.exit.i.i.i

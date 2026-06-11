@@ -201,7 +201,7 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 5 uses
   %3 = alloca %"struct.folly::SharedMutexImpl<false>::WaitForever", align 1 ; 3 uses
-  %4 = alloca %"class.folly::F14FastMap", align 8 ; 9 uses
+  %4 = alloca %"class.folly::F14FastMap", align 8 ; 10 uses
   %5 = alloca %"class.folly::LockedPtr", align 8  ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #16
   call void @_ZNK5folly12SynchronizedINS_10F14FastMapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox13RuntimeMetricENS_23HeterogeneousAccessHashIS7_vEENS_26HeterogeneousAccessEqualToIS7_vEESaISt4pairIKS7_SA_EEEENS_15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEEEE4copyEv(ptr dead_on_unwind nonnull writable sret(%"class.folly::F14FastMap") align 8 %4, ptr noundef nonnull align 8 dereferenceable(32) %1)
@@ -304,11 +304,15 @@ bb.g:                                             ; preds = %_ZN5folly9LockedPtr
   %i.aj = lshr i64 %i.ai, 12
   %i.ak = add nuw nsw i64 %i.aj, 1
   %.not.i.i.i48 = icmp eq i64 %i.ae, 0
-  br i1 %.not.i.i.i48, label %_ZN5folly3f146detail21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox13RuntimeMetricEvvvSt17integral_constantIbLb1EEE11beforeResetEmm.exit.i, label %.lr.ph.i.i.i
+  br i1 %.not.i.i.i48, label %_ZN5folly3f146detail21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox13RuntimeMetricEvvvSt17integral_constantIbLb1EEE11beforeResetEmm.exit.i, label %.lr.ph.i.i.i.preheader
 
-.lr.ph.i.i.i:                                     ; preds = %bb.g, %_ZSt10destroy_atISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox13RuntimeMetricEEEvPT_.exit.i.i.i
-  %.05.i.i.i = phi i64 [ %i.ar, %_ZSt10destroy_atISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox13RuntimeMetricEEEvPT_.exit.i.i.i ], [ 0, %bb.g ] ; 2 uses
-  %6 = load ptr, ptr %4, align 8, !tbaa !30
+.lr.ph.i.i.i.preheader:                           ; preds = %bb.g
+  %.pre134 = load ptr, ptr %4, align 8, !tbaa !30
+  br label %.lr.ph.i.i.i
+
+.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.preheader, %_ZSt10destroy_atISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox13RuntimeMetricEEEvPT_.exit.i.i.i
+  %6 = phi ptr [ %7, %_ZSt10destroy_atISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox13RuntimeMetricEEEvPT_.exit.i.i.i ], [ %.pre134, %.lr.ph.i.i.i.preheader ] ; 2 uses
+  %.05.i.i.i = phi i64 [ %i.ar, %_ZSt10destroy_atISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox13RuntimeMetricEEEvPT_.exit.i.i.i ], [ 0, %.lr.ph.i.i.i.preheader ] ; 2 uses
   %i.al = getelementptr inbounds nuw [72 x i8], ptr %6, i64 %.05.i.i.i ; 2 uses
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !35 ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.al, i64 16 ; 2 uses
@@ -319,9 +323,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   %i.ap = load i64, ptr %i.an, align 8, !tbaa !62
   %i.aq = add i64 %i.ap, 1
   call void @_ZdlPvm(ptr noundef %i.am, i64 noundef %i.aq) #43
+  %.pre133 = load ptr, ptr %4, align 8, !tbaa !30
   br label %_ZSt10destroy_atISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox13RuntimeMetricEEEvPT_.exit.i.i.i
 
 _ZSt10destroy_atISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox13RuntimeMetricEEEvPT_.exit.i.i.i: ; preds = %.lr.ph.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i
+  %7 = phi ptr [ %.pre133, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i ], [ %6, %.lr.ph.i.i.i ]
   %i.ar = add nuw nsw i64 %.05.i.i.i, 1           ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %i.ar, %i.ae
   br i1 %exitcond.not.i.i.i, label %_ZN5folly3f146detail21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox13RuntimeMetricEvvvSt17integral_constantIbLb1EEE11beforeResetEmm.exit.loopexit.i, label %.lr.ph.i.i.i, !llvm.loop !69
@@ -724,7 +730,7 @@ define noundef i64 @_ZNK8facebook5velox13LocalReadFile6preadvEmRKSt6vectorIN5fol
 bb.a:
   %i.a = alloca i64, align 8                      ; 2 uses
   %i.b = alloca i64, align 8                      ; 6 uses
-  %4 = alloca %"class.std::vector.32", align 8    ; 19 uses
+  %4 = alloca %"class.std::vector.32", align 8    ; 20 uses
   %5 = alloca %class.anon, align 8                ; 10 uses
   store i64 %1, ptr %i.a, align 8, !tbaa !150
   %.b = load i1, ptr @_ZGVZNK8facebook5velox13LocalReadFile6preadvEmRKSt6vectorIN5folly5RangeIPcEESaIS6_EERKNS0_13FileIoContextEE12droppedBytes, align 1
@@ -819,9 +825,11 @@ bb.h:                                             ; preds = %bb.g
 
 .lr.ph.preheader:                                 ; preds = %bb.h
   %i.ad = ptrtoint ptr %i.ac to i64
+  %.pre123 = load ptr, ptr %4, align 8, !tbaa !159
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.r
+  %6 = phi ptr [ %7, %bb.r ], [ %.pre123, %.lr.ph.preheader ]
   %i.ae = phi ptr [ %i.bm, %bb.r ], [ %i.z, %.lr.ph.preheader ] ; 2 uses
   %.094116 = phi i64 [ %i.bn, %bb.r ], [ %i.ad, %.lr.ph.preheader ] ; 2 uses
   %i.af = load ptr, ptr %i.x, align 8, !tbaa !155
@@ -830,7 +838,6 @@ bb.h:                                             ; preds = %bb.g
   %i.ai = ptrtoint ptr %i.ag to i64
   %i.aj = sub i64 %i.ah, %i.ai
   %.sroa.speculated = call i64 @llvm.umin.i64(i64 %.094116, i64 %i.aj) ; 3 uses
-  %6 = load ptr, ptr %4, align 8, !tbaa !159
   %i.ak = ptrtoint ptr %i.ae to i64
   %i.al = ptrtoint ptr %6 to i64
   %i.am = sub i64 %i.ak, %i.al
@@ -869,6 +876,7 @@ bb.m:                                             ; preds = %bb.l
   %i.au = load ptr, ptr %i.v, align 8, !tbaa !162
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 16 ; 2 uses
   store ptr %i.av, ptr %i.v, align 8, !tbaa !162
+  %.pre122 = load ptr, ptr %4, align 8, !tbaa !159
   br label %bb.r
 
 bb.n:                                             ; preds = %bb.l
@@ -897,7 +905,7 @@ _ZNKSt6vectorI5iovecSaIS0_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.n
   call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.bg = shl nuw nsw i64 %i.bf, 4
   %i.bh = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bg) #45
-          to label %.noexc62 unwind label %.loopexit107 ; 4 uses
+          to label %.noexc62 unwind label %.loopexit107 ; 5 uses
 
 .noexc62:                                         ; preds = %_ZNKSt6vectorI5iovecSaIS0_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.bi = getelementptr inbounds i8, ptr %i.bh, i64 %i.az ; 3 uses
@@ -928,6 +936,7 @@ _ZNSt6vectorI5iovecSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_ite
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.m, %_ZNSt6vectorI5iovecSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i.i
+  %7 = phi ptr [ %.pre122, %bb.m ], [ %i.bh, %_ZNSt6vectorI5iovecSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i.i ]
   %i.bm = phi ptr [ %i.av, %bb.m ], [ %i.bk, %_ZNSt6vectorI5iovecSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i.i ] ; 2 uses
   %i.bn = sub i64 %.094116, %.sroa.speculated     ; 2 uses
   %.not52 = icmp eq i64 %i.bn, 0

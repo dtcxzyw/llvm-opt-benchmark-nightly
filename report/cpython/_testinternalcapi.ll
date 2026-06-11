@@ -201,8 +201,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not36, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b
-  %i.j = load ptr, ptr %i.a, align 8, !tbaa !15
-  %i.k = load i32, ptr %i.j, align 8, !tbaa !16
+  %i.j = load ptr, ptr %i.a, align 8, !tbaa !15   ; 2 uses
+  %i.k = load i32, ptr %i.j, align 8, !tbaa !16   ; 2 uses
   %i.l = icmp ugt i32 %i.k, -1073741825
   br i1 %i.l, label %._crit_edge, label %.lr.ph.split
 
@@ -212,25 +212,31 @@ bb.b:                                             ; preds = %bb.a
   %.not21 = icmp eq i32 %i.n, 0
   br i1 %.not21, label %bb.d, label %bb.e
 
-.lr.ph.split:                                     ; preds = %.lr.ph, %Py_INCREF.exit
-  %i.o = phi i32 [ %i.r, %Py_INCREF.exit ], [ %i.i, %.lr.ph ]
-  %.02025.a = phi i32 [ %i.s, %Py_INCREF.exit ], [ 0, %.lr.ph ]
-  %3 = load ptr, ptr %i.a, align 8, !tbaa !15     ; 2 uses
-  %4 = load i32, ptr %3, align 8, !tbaa !16       ; 2 uses
-  %i.p = icmp ugt i32 %4, -1073741825
+.lr.ph.splitthread-pre-split:                     ; preds = %Py_INCREF.exit
+  %.pr = load i32, ptr %4, align 8, !tbaa !16
+  br label %.lr.ph.split
+
+.lr.ph.split:                                     ; preds = %.lr.ph, %.lr.ph.splitthread-pre-split
+  %i.o = phi i32 [ %.pr, %.lr.ph.splitthread-pre-split ], [ %i.k, %.lr.ph ] ; 2 uses
+  %.02025.a = phi i32 [ %i.r, %.lr.ph.splitthread-pre-split ], [ %i.i, %.lr.ph ]
+  %3 = phi ptr [ %4, %.lr.ph.splitthread-pre-split ], [ %i.j, %.lr.ph ] ; 2 uses
+  %.02025 = phi i32 [ %i.s, %.lr.ph.splitthread-pre-split ], [ 0, %.lr.ph ]
+  %i.p = icmp ugt i32 %i.o, -1073741825
   br i1 %i.p, label %Py_INCREF.exit, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.split
-  %i.q = add nuw i32 %4, 1
+  %i.q = add nuw i32 %i.o, 1
   store i32 %i.q, ptr %3, align 8, !tbaa !16
+  %.pre = load ptr, ptr %i.a, align 8, !tbaa !15
   %.pre.a = load i32, ptr %i.b, align 4, !tbaa !6
   br label %Py_INCREF.exit
 
 Py_INCREF.exit:                                   ; preds = %.lr.ph.split, %bb.c
-  %i.r = phi i32 [ %i.o, %.lr.ph.split ], [ %.pre.a, %bb.c ] ; 3 uses
-  %i.s = add nuw i32 %.02025.a, 1                 ; 2 uses
+  %i.r = phi i32 [ %.02025.a, %.lr.ph.split ], [ %.pre.a, %bb.c ] ; 3 uses
+  %4 = phi ptr [ %3, %.lr.ph.split ], [ %.pre, %bb.c ] ; 2 uses
+  %i.s = add nuw i32 %.02025, 1                   ; 2 uses
   %i.t = icmp ult i32 %i.s, %i.r
-  br i1 %i.t, label %.lr.ph.split, label %._crit_edge, !llvm.loop !196
+  br i1 %i.t, label %.lr.ph.splitthread-pre-split, label %._crit_edge, !llvm.loop !196
 
 bb.d:                                             ; preds = %._crit_edge
   %i.u = call ptr @PyEval_SaveThread() #13

@@ -62,7 +62,7 @@ bb.a:
   %3 = alloca %"struct.std::pair.140", align 8    ; 3 uses
   %4 = alloca %"class.hermes::IRBuilder", align 8 ; 5 uses
   %5 = alloca %"class.llvh::SmallVector.87", align 8 ; 9 uses
-  %6 = alloca %"class.llvh::SmallVector.93", align 8 ; 11 uses
+  %6 = alloca %"class.llvh::SmallVector.93", align 8 ; 12 uses
   %7 = alloca %"class.llvh::SmallVector.102", align 8 ; 10 uses
   %8 = alloca %"class.llvh::DenseSet", align 8    ; 8 uses
   %i.a = alloca ptr, align 8                      ; 4 uses
@@ -358,7 +358,11 @@ _ZN4llvh11SmallVectorISt4pairIPN6hermes7LiteralEbELj8EEC2EmRKS5_.exit.i: ; preds
   %.idx133.i = shl nuw nsw i64 %i.cz, 3
   %i.da = getelementptr inbounds nuw i8, ptr %i.cx, i64 %.idx133.i
   %.not57116.i = icmp eq i32 %i.cy, 0
-  br i1 %.not57116.i, label %._crit_edge122.i, label %.lr.ph121.i
+  br i1 %.not57116.i, label %._crit_edge122.i, label %.lr.ph121.preheader.i
+
+.lr.ph121.preheader.i:                            ; preds = %._crit_edge115.i
+  %.pre143.i = load ptr, ptr %6, align 8, !tbaa !81
+  br label %.lr.ph121.i
 
 .lr.ph114.i:                                      ; preds = %_ZN4llvh11SmallVectorISt4pairIPN6hermes7LiteralEbELj8EEC2EmRKS5_.exit.i, %._crit_edge111.i
   %.046113.i = phi ptr [ %i.dv, %._crit_edge111.i ], [ %i.ct, %_ZN4llvh11SmallVectorISt4pairIPN6hermes7LiteralEbELj8EEC2EmRKS5_.exit.i ] ; 2 uses
@@ -482,11 +486,11 @@ bb.w:                                             ; preds = %_ZN4llvh23SmallVect
   %.not58123.i = icmp eq i32 %i.en, 0
   br i1 %.not58123.i, label %._crit_edge127.thread.i, label %.lr.ph126.i
 
-.lr.ph121.i:                                      ; preds = %._crit_edge115.i, %bb.y
-  %indvars.iv141.i = phi i64 [ %indvars.iv.next142.i, %bb.y ], [ 0, %._crit_edge115.i ] ; 2 uses
-  %.050119.i = phi i1 [ %.151.i, %bb.y ], [ false, %._crit_edge115.i ]
-  %.053117.i = phi ptr [ %i.et, %bb.y ], [ %i.cx, %._crit_edge115.i ] ; 2 uses
-  %9 = load ptr, ptr %6, align 8, !tbaa !81
+.lr.ph121.i:                                      ; preds = %bb.y, %.lr.ph121.preheader.i
+  %9 = phi ptr [ %.pre143.i, %.lr.ph121.preheader.i ], [ %10, %bb.y ] ; 2 uses
+  %indvars.iv141.i = phi i64 [ 0, %.lr.ph121.preheader.i ], [ %indvars.iv.next142.i, %bb.y ] ; 2 uses
+  %.050119.i = phi i1 [ false, %.lr.ph121.preheader.i ], [ %.151.i, %bb.y ]
+  %.053117.i = phi ptr [ %i.cx, %.lr.ph121.preheader.i ], [ %i.et, %bb.y ] ; 2 uses
   %i.eq = getelementptr inbounds nuw [16 x i8], ptr %9, i64 %indvars.iv141.i
   %i.er = load ptr, ptr %i.eq, align 8, !tbaa !92 ; 2 uses
   %.not59.i = icmp eq ptr %i.er, null
@@ -495,9 +499,11 @@ bb.w:                                             ; preds = %_ZN4llvh23SmallVect
 bb.x:                                             ; preds = %.lr.ph121.i
   %i.es = load ptr, ptr %.053117.i, align 8, !tbaa !94
   call void @_ZN6hermes5Value18replaceAllUsesWithEPS0_(ptr noundef nonnull align 8 dereferenceable(40) %i.es, ptr noundef nonnull %i.er) #13
+  %.pre.i = load ptr, ptr %6, align 8, !tbaa !81
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %.lr.ph121.i
+  %10 = phi ptr [ %.pre.i, %bb.x ], [ %9, %.lr.ph121.i ]
   %.151.i = phi i1 [ true, %bb.x ], [ %.050119.i, %.lr.ph121.i ] ; 2 uses
   %indvars.iv.next142.i = add nuw nsw i64 %indvars.iv141.i, 1
   %i.et = getelementptr inbounds nuw i8, ptr %.053117.i, i64 8 ; 2 uses

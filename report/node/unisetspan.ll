@@ -201,7 +201,7 @@ declare noundef nonnull align 8 dereferenceable(200) ptr @_ZN6icu_7810UnicodeSet
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local noundef i32 @_ZNK6icu_7820UnicodeSetStringSpan4spanEPKDsi17USetSpanCondition(ptr noundef nonnull align 8 dereferenceable(392) %0, ptr noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %4 = alloca %"class.icu_78::OffsetList", align 8 ; 13 uses
+  %4 = alloca %"class.icu_78::OffsetList", align 8 ; 14 uses
   %i.a = icmp eq i32 %3, 0
   br i1 %i.a, label %bb.b, label %bb.c
 
@@ -371,10 +371,12 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %_ZNK6
   %i.bo = sext i32 %i.aw to i64                   ; 2 uses
   %i.bp = call i32 @llvm.smin.i32(i32 %.0157, i32 %.0133)
   %smin272 = sext i32 %i.bp to i64
+  %.pre282 = load ptr, ptr %4, align 8
   %invariant.op315 = sub nsw i64 %i.z, %i.bo
   br label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph260, %bb.aa
+  %5 = phi ptr [ %.pre282, %.lr.ph260 ], [ %6, %bb.aa ] ; 5 uses
   %indvars.iv273 = phi i64 [ %smin272, %.lr.ph260 ], [ %indvars.iv.next274, %bb.aa ] ; 3 uses
   %.0151258 = phi i32 [ %i.bm, %.lr.ph260 ], [ %i.cz, %bb.aa ] ; 4 uses
   %i.bq = load i32, ptr %i.i, align 8
@@ -383,7 +385,6 @@ bb.r:                                             ; preds = %.lr.ph260, %bb.aa
   %.not.i182 = icmp slt i32 %i.br, %i.bs
   %i.bt = select i1 %.not.i182, i32 0, i32 %i.bs
   %spec.select.i = sub nsw i32 %i.br, %i.bt
-  %5 = load ptr, ptr %4, align 8
   %i.bu = sext i32 %spec.select.i to i64
   %i.bv = getelementptr inbounds i8, ptr %5, i64 %i.bu ; 2 uses
   %i.bw = load i8, ptr %i.bv, align 1
@@ -455,9 +456,11 @@ bb.z:                                             ; preds = %_ZN6icu_78L12matche
   %i.cw = load i32, ptr %i.h, align 4
   %i.cx = add nsw i32 %i.cw, 1
   store i32 %i.cx, ptr %i.h, align 4
+  %.pre281 = load ptr, ptr %4, align 8
   br label %_ZN6icu_78L12matches16CPBEPKDsiiS1_i.exit.thread
 
 _ZN6icu_78L12matches16CPBEPKDsiiS1_i.exit.thread: ; preds = %bb.t, %bb.w, %bb.z, %_ZN6icu_78L12matches16CPBEPKDsiiS1_i.exit, %bb.r
+  %6 = phi ptr [ %5, %bb.r ], [ %5, %bb.w ], [ %.pre281, %bb.z ], [ %5, %_ZN6icu_78L12matches16CPBEPKDsiiS1_i.exit ], [ %5, %bb.t ]
   %i.cy = icmp eq i64 %indvars.iv273, 0
   br i1 %i.cy, label %.loopexit, label %bb.aa
 
@@ -860,7 +863,7 @@ _ZN6icu_78L7spanOneERKNS_10UnicodeSetEPKDsi.exit: ; preds = %bb.w, %bb.v
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local noundef i32 @_ZNK6icu_7820UnicodeSetStringSpan8spanBackEPKDsi17USetSpanCondition(ptr noundef nonnull align 8 dereferenceable(392) %0, ptr noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %4 = alloca %"class.icu_78::OffsetList", align 8 ; 13 uses
+  %4 = alloca %"class.icu_78::OffsetList", align 8 ; 14 uses
   %i.a = icmp eq i32 %3, 0
   br i1 %i.a, label %bb.b, label %bb.c
 
@@ -1037,10 +1040,12 @@ bb.q:                                             ; preds = %bb.p, %_ZNK6icu_781
   %i.bo = add i32 %i.ag, %spec.select165
   %i.bp = call i32 @llvm.smin.i32(i32 %.0144, i32 %.0127)
   %i.bq = sub i32 %i.bo, %i.bp
+  %.pre267 = load ptr, ptr %4, align 8
   %invariant.op297 = sub nsw i64 %i.ad, %i.bm
   br label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph247, %bb.aa
+  %5 = phi ptr [ %.pre267, %.lr.ph247 ], [ %6, %bb.aa ] ; 6 uses
   %indvars.iv258 = phi i64 [ %i.bn, %.lr.ph247 ], [ %indvars.iv.next259, %bb.aa ] ; 3 uses
   %.2146244 = phi i32 [ %spec.select165, %.lr.ph247 ], [ %i.db, %bb.aa ] ; 2 uses
   %i.br = load i32, ptr %i.j, align 8
@@ -1050,7 +1055,6 @@ bb.r:                                             ; preds = %.lr.ph247, %bb.aa
   %.not.i172 = icmp slt i32 %i.bt, %i.bu
   %i.bv = select i1 %.not.i172, i32 0, i32 %i.bu
   %spec.select.i = sub nsw i32 %i.bt, %i.bv
-  %5 = load ptr, ptr %4, align 8                  ; 2 uses
   %i.bw = sext i32 %spec.select.i to i64
   %i.bx = getelementptr inbounds i8, ptr %5, i64 %i.bw ; 2 uses
   %i.by = load i8, ptr %i.bx, align 1
@@ -1122,9 +1126,11 @@ bb.z:                                             ; preds = %_ZN6icu_78L12matche
   %i.cy = load i32, ptr %i.i, align 4
   %i.cz = add nsw i32 %i.cy, 1
   store i32 %i.cz, ptr %i.i, align 4
+  %.pre266 = load ptr, ptr %4, align 8
   br label %_ZN6icu_78L12matches16CPBEPKDsiiS1_i.exit.thread
 
 _ZN6icu_78L12matches16CPBEPKDsiiS1_i.exit.thread: ; preds = %bb.t, %bb.w, %bb.z, %_ZN6icu_78L12matches16CPBEPKDsiiS1_i.exit, %bb.r
+  %6 = phi ptr [ %5, %bb.r ], [ %5, %bb.w ], [ %.pre266, %bb.z ], [ %5, %_ZN6icu_78L12matches16CPBEPKDsiiS1_i.exit ], [ %5, %bb.t ]
   %i.da = icmp eq i32 %.2146244, 0
   br i1 %i.da, label %.loopexit, label %bb.aa
 
