@@ -200,36 +200,32 @@ bb.a:
   %i.d = icmp eq i32 %i.c, 0
   %i.e = select i1 %i.d, i32 2, i32 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(288) %i.a, ptr noundef nonnull align 8 dereferenceable(288) %0, i64 288, i1 false)
-  %i.f = uitofp nneg i32 %i.e to double           ; 4 uses
+  %i.f = uitofp nneg i32 %i.e to double           ; 3 uses
+  %3 = insertelement <2 x double> poison, double %i.f, i64 0
+  %4 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
   br label %.preheader
 
 .preheader:                                       ; preds = %bb.a, %.preheader
   %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %.preheader ] ; 4 uses
   %.02428 = phi double [ 0.000000e+00, %bb.a ], [ %.2.2, %.preheader ] ; 2 uses
-  %i.g = getelementptr inbounds nuw [24 x i8], ptr %i.a, i64 %indvars.iv ; 3 uses
+  %i.g = getelementptr inbounds nuw [24 x i8], ptr %i.a, i64 %indvars.iv ; 2 uses
   %i.h = getelementptr inbounds nuw [12 x i8], ptr %2, i64 %indvars.iv ; 2 uses
   %i.i = icmp samesign ult i64 %indvars.iv, 6
   %. = select i1 %i.i, double 1.500000e+01, double 7.000000e+00
   %.0 = fdiv double %., %i.f                      ; 3 uses
-  %3 = load double, ptr %i.g, align 8, !tbaa !8   ; 2 uses
-  %4 = fneg double %3
-  %5 = tail call double @llvm.fmuladd.f64(double %4, double %i.f, double 7.500000e-01)
-  %6 = fadd double %5, 1.000000e-04
-  %7 = tail call double @llvm.floor.f64(double %6)
-  %i.j = fadd double %.0, %3                      ; 2 uses
+  %5 = load <2 x double>, ptr %i.g, align 8, !tbaa !8 ; 3 uses
+  %6 = extractelement <2 x double> %5, i64 0
+  %i.j = fadd double %.0, %6                      ; 2 uses
   %i.k = fcmp ogt double %i.j, %.02428
   %.2 = select i1 %i.k, double %i.j, double %.02428 ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  %9 = load double, ptr %8, align 8, !tbaa !8     ; 2 uses
-  %10 = fneg double %9
-  %11 = tail call double @llvm.fmuladd.f64(double %10, double %i.f, double 7.500000e-01)
-  %12 = fadd double %11, 1.000000e-04
-  %13 = tail call double @llvm.floor.f64(double %12)
-  %14 = insertelement <2 x double> poison, double %7, i64 0
-  %15 = insertelement <2 x double> %14, double %13, i64 1
-  %16 = fptosi <2 x double> %15 to <2 x i32>
-  store <2 x i32> %16, ptr %i.h, align 4, !tbaa !4
-  %i.l = fadd double %.0, %9                      ; 2 uses
+  %7 = fneg <2 x double> %5
+  %8 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %7, <2 x double> %4, <2 x double> splat (double 7.500000e-01))
+  %9 = fadd <2 x double> %8, splat (double 1.000000e-04)
+  %10 = tail call <2 x double> @llvm.floor.v2f64(<2 x double> %9)
+  %11 = fptosi <2 x double> %10 to <2 x i32>
+  store <2 x i32> %11, ptr %i.h, align 4, !tbaa !4
+  %12 = extractelement <2 x double> %5, i64 1
+  %i.l = fadd double %.0, %12                     ; 2 uses
   %i.m = fcmp ogt double %i.l, %.2
   %.2.1 = select i1 %i.m, double %i.l, double %.2 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.g, i64 16
@@ -434,7 +430,7 @@ bb.l:                                             ; preds = %bb.k
 ; Function Attrs: nounwind uwtable
 define dso_local void @VBR_iteration_loop_new(ptr noundef %0, ptr nofree noundef readnone captures(none) %1, ptr nofree noundef readnone captures(none) %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr nofree noundef writeonly captures(none) %7) local_unnamed_addr #4 {
 bb.a:
-  %i.a = alloca [12 x [3 x double]], align 16     ; 22 uses
+  %i.a = alloca [12 x [3 x double]], align 16     ; 16 uses
   %i.b = alloca [12 x [3 x double]], align 16     ; 4 uses
   %8 = alloca [2 x [2 x %struct.III_psy_xmin]], align 16 ; 3 uses
   %9 = alloca %struct.III_psy_xmin, align 16      ; 35 uses
@@ -465,50 +461,44 @@ cdce.end:                                         ; preds = %bb.a, %cdce.call
 .lr.ph160:                                        ; preds = %cdce.end
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 204 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %5, i64 48
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 176 ; 5 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 2 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %9, i64 32 ; 2 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %9, i64 48 ; 2 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %9, i64 64 ; 2 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %9, i64 80 ; 2 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %9, i64 96 ; 2 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %9, i64 112 ; 2 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %9, i64 128 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %9, i64 144 ; 2 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %9, i64 160 ; 2 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %9, i64 192 ; 2 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %9, i64 208 ; 2 uses
-  %i.ac = getelementptr inbounds nuw i8, ptr %9, i64 224 ; 2 uses
-  %i.ad = getelementptr inbounds nuw i8, ptr %9, i64 240 ; 2 uses
-  %i.ae = getelementptr inbounds nuw i8, ptr %9, i64 256 ; 2 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %9, i64 272 ; 2 uses
-  %i.ag = getelementptr inbounds nuw i8, ptr %9, i64 288 ; 2 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %9, i64 304 ; 2 uses
-  %i.ai = getelementptr inbounds nuw i8, ptr %9, i64 320 ; 2 uses
-  %i.aj = getelementptr inbounds nuw i8, ptr %9, i64 336 ; 2 uses
-  %i.ak = getelementptr inbounds nuw i8, ptr %9, i64 352 ; 2 uses
-  %i.al = getelementptr inbounds nuw i8, ptr %9, i64 368 ; 2 uses
-  %i.am = getelementptr inbounds nuw i8, ptr %9, i64 384 ; 2 uses
-  %i.an = getelementptr inbounds nuw i8, ptr %9, i64 400 ; 2 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %9, i64 416 ; 2 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %9, i64 432 ; 2 uses
-  %i.aq = getelementptr inbounds nuw i8, ptr %9, i64 448 ; 2 uses
-  %i.ar = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %i.q = getelementptr inbounds nuw i8, ptr %9, i64 176 ; 5 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %9, i64 32 ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %9, i64 48 ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %9, i64 64 ; 2 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %9, i64 80 ; 2 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %9, i64 96 ; 2 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %9, i64 112 ; 2 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %9, i64 128 ; 2 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %9, i64 144 ; 2 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %9, i64 160 ; 2 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %9, i64 192 ; 2 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %9, i64 208 ; 2 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %9, i64 224 ; 2 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %9, i64 240 ; 2 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %9, i64 256 ; 2 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %9, i64 272 ; 2 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %9, i64 288 ; 2 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %9, i64 304 ; 2 uses
+  %i.aj = getelementptr inbounds nuw i8, ptr %9, i64 320 ; 2 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %9, i64 336 ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %9, i64 352 ; 2 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %9, i64 368 ; 2 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %9, i64 384 ; 2 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %9, i64 400 ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %9, i64 416 ; 2 uses
+  %i.aq = getelementptr inbounds nuw i8, ptr %9, i64 432 ; 2 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %9, i64 448 ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.at = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.au = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.av = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   %i.aw = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   %i.ax = getelementptr inbounds nuw i8, ptr %i.a, i64 72
-  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 80
   %i.ay = getelementptr inbounds nuw i8, ptr %i.a, i64 88
   %i.az = getelementptr inbounds nuw i8, ptr %i.a, i64 96
-  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 104
   %i.ba = getelementptr inbounds nuw i8, ptr %i.a, i64 112
   %i.bb = getelementptr inbounds nuw i8, ptr %i.a, i64 120
-  %15 = getelementptr inbounds nuw i8, ptr %i.a, i64 128
   %i.bc = getelementptr inbounds nuw i8, ptr %i.a, i64 136
   br label %bb.b
 
@@ -585,7 +575,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ch = getelementptr inbounds nuw [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @scalefac_band, i64 92), i64 %indvars.iv172 ; 4 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 4 ; 3 uses
   %i.cj = getelementptr inbounds nuw [24 x i8], ptr %i.cg, i64 %indvars.iv172 ; 3 uses
-  %i.ck = getelementptr inbounds nuw [24 x i8], ptr %10, i64 %indvars.iv172 ; 3 uses
+  %i.ck = getelementptr inbounds nuw [24 x i8], ptr %i.q, i64 %indvars.iv172 ; 3 uses
   %i.cl = load i32, ptr %i.ch, align 4, !tbaa !4  ; 2 uses
   %i.cm = load i32, ptr %i.ci, align 4, !tbaa !4
   %i.cn = sub nsw i32 %i.cm, %i.cl
@@ -682,36 +672,36 @@ bb.g:                                             ; preds = %bb.f
   %i.fb = shufflevector <2 x double> %i.fa, <2 x double> poison, <2 x i32> zeroinitializer ; 10 uses
   %i.fc = fsub <2 x double> %i.ez, %i.fb
   store <2 x double> %i.fc, ptr %9, align 16, !tbaa !8
-  %i.fd = load <2 x double>, ptr %i.q, align 16, !tbaa !8
+  %i.fd = load <2 x double>, ptr %i.r, align 16, !tbaa !8
   %i.fe = fsub <2 x double> %i.fd, %i.fb
-  store <2 x double> %i.fe, ptr %i.q, align 16, !tbaa !8
-  %i.ff = load <2 x double>, ptr %i.r, align 16, !tbaa !8
+  store <2 x double> %i.fe, ptr %i.r, align 16, !tbaa !8
+  %i.ff = load <2 x double>, ptr %i.s, align 16, !tbaa !8
   %i.fg = fsub <2 x double> %i.ff, %i.fb
-  store <2 x double> %i.fg, ptr %i.r, align 16, !tbaa !8
-  %i.fh = load <2 x double>, ptr %i.s, align 16, !tbaa !8
+  store <2 x double> %i.fg, ptr %i.s, align 16, !tbaa !8
+  %i.fh = load <2 x double>, ptr %i.t, align 16, !tbaa !8
   %i.fi = fsub <2 x double> %i.fh, %i.fb
-  store <2 x double> %i.fi, ptr %i.s, align 16, !tbaa !8
-  %i.fj = load <2 x double>, ptr %i.t, align 16, !tbaa !8
+  store <2 x double> %i.fi, ptr %i.t, align 16, !tbaa !8
+  %i.fj = load <2 x double>, ptr %i.u, align 16, !tbaa !8
   %i.fk = fsub <2 x double> %i.fj, %i.fb
-  store <2 x double> %i.fk, ptr %i.t, align 16, !tbaa !8
-  %i.fl = load <2 x double>, ptr %i.u, align 16, !tbaa !8
+  store <2 x double> %i.fk, ptr %i.u, align 16, !tbaa !8
+  %i.fl = load <2 x double>, ptr %i.v, align 16, !tbaa !8
   %i.fm = fsub <2 x double> %i.fl, %i.fb
-  store <2 x double> %i.fm, ptr %i.u, align 16, !tbaa !8
-  %i.fn = load <2 x double>, ptr %i.v, align 16, !tbaa !8
+  store <2 x double> %i.fm, ptr %i.v, align 16, !tbaa !8
+  %i.fn = load <2 x double>, ptr %i.w, align 16, !tbaa !8
   %i.fo = fsub <2 x double> %i.fn, %i.fb
-  store <2 x double> %i.fo, ptr %i.v, align 16, !tbaa !8
-  %i.fp = load <2 x double>, ptr %i.w, align 16, !tbaa !8
+  store <2 x double> %i.fo, ptr %i.w, align 16, !tbaa !8
+  %i.fp = load <2 x double>, ptr %i.x, align 16, !tbaa !8
   %i.fq = fsub <2 x double> %i.fp, %i.fb
-  store <2 x double> %i.fq, ptr %i.w, align 16, !tbaa !8
-  %i.fr = load <2 x double>, ptr %i.x, align 16, !tbaa !8
+  store <2 x double> %i.fq, ptr %i.x, align 16, !tbaa !8
+  %i.fr = load <2 x double>, ptr %i.y, align 16, !tbaa !8
   %i.fs = fsub <2 x double> %i.fr, %i.fb
-  store <2 x double> %i.fs, ptr %i.x, align 16, !tbaa !8
-  %i.ft = load <2 x double>, ptr %i.y, align 16, !tbaa !8
+  store <2 x double> %i.fs, ptr %i.y, align 16, !tbaa !8
+  %i.ft = load <2 x double>, ptr %i.z, align 16, !tbaa !8
   %i.fu = fsub <2 x double> %i.ft, %i.fb
-  store <2 x double> %i.fu, ptr %i.y, align 16, !tbaa !8
-  %i.fv = load double, ptr %i.z, align 16, !tbaa !8
+  store <2 x double> %i.fu, ptr %i.z, align 16, !tbaa !8
+  %i.fv = load double, ptr %i.aa, align 16, !tbaa !8
   %i.fw = fsub double %i.fv, %.5
-  store double %i.fw, ptr %i.z, align 16, !tbaa !8
+  store double %i.fw, ptr %i.aa, align 16, !tbaa !8
   %i.fx = getelementptr inbounds nuw i8, ptr %i.bm, i64 68 ; 2 uses
   store i32 0, ptr %i.fx, align 4, !tbaa !14
   %i.fy = getelementptr inbounds nuw [244 x i8], ptr %i.bl, i64 %indvars.iv188 ; 2 uses
@@ -720,14 +710,11 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.ga, label %bb.i, label %bb.k
 
 .preheader.preheader:                             ; preds = %.loopexit
-  %i.gb = load <2 x double>, ptr %10, align 16, !tbaa !8
+  %i.gb = load <2 x double>, ptr %i.q, align 16, !tbaa !8
   %i.gc = insertelement <2 x double> poison, double %.5, i64 0
   %i.gd = shufflevector <2 x double> %i.gc, <2 x double> poison, <2 x i32> zeroinitializer ; 18 uses
-  %16 = fsub <2 x double> %i.gb, %i.gd
-  store <2 x double> %16, ptr %10, align 16, !tbaa !8
-  %17 = load <2 x double>, ptr %i.aa, align 16, !tbaa !8
-  %i.ge = fsub <2 x double> %17, %i.gd
-  store <2 x double> %i.ge, ptr %i.aa, align 16, !tbaa !8
+  %i.ge = fsub <2 x double> %i.gb, %i.gd
+  store <2 x double> %i.ge, ptr %i.q, align 16, !tbaa !8
   %i.gf = load <2 x double>, ptr %i.ab, align 16, !tbaa !8
   %i.gg = fsub <2 x double> %i.gf, %i.gd
   store <2 x double> %i.gg, ptr %i.ab, align 16, !tbaa !8
@@ -774,42 +761,39 @@ bb.g:                                             ; preds = %bb.f
   %i.hi = fsub <2 x double> %i.hh, %i.gd
   store <2 x double> %i.hi, ptr %i.ap, align 16, !tbaa !8
   %i.hj = load <2 x double>, ptr %i.aq, align 16, !tbaa !8
-  %i.hk = fsub <2 x double> %i.hj, %i.gd
-  store <2 x double> %i.hk, ptr %i.aq, align 16, !tbaa !8
+  %10 = fsub <2 x double> %i.hj, %i.gd
+  store <2 x double> %10, ptr %i.aq, align 16, !tbaa !8
+  %11 = load <2 x double>, ptr %i.ar, align 16, !tbaa !8
+  %i.hk = fsub <2 x double> %11, %i.gd
+  store <2 x double> %i.hk, ptr %i.ar, align 16, !tbaa !8
   %i.hl = getelementptr inbounds nuw i8, ptr %i.bm, i64 68 ; 2 uses
   store i32 0, ptr %i.hl, align 4, !tbaa !14
   %i.hm = getelementptr inbounds nuw [244 x i8], ptr %i.bl, i64 %indvars.iv188 ; 12 uses
   %i.hn = getelementptr inbounds nuw i8, ptr %i.hm, i64 88 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(288) %i.b, ptr noundef nonnull readonly align 16 dereferenceable(288) %10, i64 288, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(288) %i.b, ptr noundef nonnull readonly align 16 dereferenceable(288) %i.q, i64 288, i1 false)
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.preheader.i, %.preheader.preheader
   %indvars.iv.i = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next.i, %.preheader.i ] ; 4 uses
   %.02428.i = phi double [ 0.000000e+00, %.preheader.preheader ], [ %.2.2.i, %.preheader.i ] ; 2 uses
-  %i.ho = getelementptr inbounds nuw [24 x i8], ptr %i.b, i64 %indvars.iv.i ; 3 uses
+  %i.ho = getelementptr inbounds nuw [24 x i8], ptr %i.b, i64 %indvars.iv.i ; 2 uses
   %i.hp = getelementptr inbounds nuw [12 x i8], ptr %i.hn, i64 %indvars.iv.i ; 2 uses
   %i.hq = icmp samesign ult i64 %indvars.iv.i, 6
   %.0.i = select i1 %i.hq, double 7.500000e+00, double 3.500000e+00 ; 3 uses
-  %18 = load double, ptr %i.ho, align 8, !tbaa !8 ; 2 uses
-  %19 = fneg double %18
-  %20 = call double @llvm.fmuladd.f64(double %19, double 2.000000e+00, double 7.500000e-01)
-  %21 = fadd double %20, 1.000000e-04
-  %22 = call double @llvm.floor.f64(double %21)
-  %i.hr = fadd double %.0.i, %18                  ; 2 uses
+  %12 = load <2 x double>, ptr %i.ho, align 8, !tbaa !8 ; 3 uses
+  %13 = extractelement <2 x double> %12, i64 0
+  %i.hr = fadd double %.0.i, %13                  ; 2 uses
   %i.hs = fcmp ogt double %i.hr, %.02428.i
   %.2.i = select i1 %i.hs, double %i.hr, double %.02428.i ; 2 uses
-  %23 = getelementptr inbounds nuw i8, ptr %i.ho, i64 8
-  %24 = load double, ptr %23, align 8, !tbaa !8   ; 2 uses
-  %25 = fneg double %24
-  %26 = call double @llvm.fmuladd.f64(double %25, double 2.000000e+00, double 7.500000e-01)
-  %27 = fadd double %26, 1.000000e-04
-  %28 = call double @llvm.floor.f64(double %27)
-  %29 = insertelement <2 x double> poison, double %22, i64 0
-  %30 = insertelement <2 x double> %29, double %28, i64 1
-  %31 = fptosi <2 x double> %30 to <2 x i32>
-  store <2 x i32> %31, ptr %i.hp, align 4, !tbaa !4
-  %i.ht = fadd double %.0.i, %24                  ; 2 uses
+  %14 = fneg <2 x double> %12
+  %15 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %14, <2 x double> splat (double 2.000000e+00), <2 x double> splat (double 7.500000e-01))
+  %16 = fadd <2 x double> %15, splat (double 1.000000e-04)
+  %17 = call <2 x double> @llvm.floor.v2f64(<2 x double> %16)
+  %18 = fptosi <2 x double> %17 to <2 x i32>
+  store <2 x i32> %18, ptr %i.hp, align 4, !tbaa !4
+  %19 = extractelement <2 x double> %12, i64 1
+  %i.ht = fadd double %.0.i, %19                  ; 2 uses
   %i.hu = fcmp ogt double %i.ht, %.2.i
   %.2.1.i = select i1 %i.hu, double %i.ht, double %.2.i ; 2 uses
   %i.hv = getelementptr inbounds nuw i8, ptr %i.ho, i64 16
@@ -836,23 +820,19 @@ compute_scalefacs_short.exit:                     ; preds = %.preheader.i
 .preheader.i131.peel.begin:                       ; preds = %compute_scalefacs_short.exit
   store i32 1, ptr %i.hl, align 4, !tbaa !14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(288) %i.a, ptr noundef nonnull readonly align 16 dereferenceable(288) %10, i64 288, i1 false)
-  %32 = load double, ptr %i.a, align 16, !tbaa !8 ; 2 uses
-  %33 = fsub double 7.500000e-01, %32
-  %34 = fadd double %33, 1.000000e-04
-  %35 = call double @llvm.floor.f64(double %34)
-  %i.ig = fadd double %32, 1.500000e+01           ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(288) %i.a, ptr noundef nonnull readonly align 16 dereferenceable(288) %i.q, i64 288, i1 false)
+  %20 = load <2 x double>, ptr %i.a, align 16, !tbaa !8 ; 3 uses
+  %21 = extractelement <2 x double> %20, i64 0
+  %i.ig = fadd double %21, 1.500000e+01           ; 2 uses
   %i.ih = fcmp ogt double %i.ig, 0.000000e+00
   %.2.i136.peel = select i1 %i.ih, double %i.ig, double 0.000000e+00 ; 2 uses
-  %36 = load double, ptr %i.ar, align 8, !tbaa !8 ; 2 uses
-  %37 = fsub double 7.500000e-01, %36
-  %38 = fadd double %37, 1.000000e-04
-  %39 = call double @llvm.floor.f64(double %38)
-  %40 = insertelement <2 x double> poison, double %35, i64 0
-  %41 = insertelement <2 x double> %40, double %39, i64 1
-  %42 = fptosi <2 x double> %41 to <2 x i32>
-  store <2 x i32> %42, ptr %i.hn, align 4, !tbaa !4
-  %i.ii = fadd double %36, 1.500000e+01           ; 2 uses
+  %22 = fsub <2 x double> splat (double 7.500000e-01), %20
+  %23 = fadd <2 x double> %22, splat (double 1.000000e-04)
+  %24 = call <2 x double> @llvm.floor.v2f64(<2 x double> %23)
+  %25 = fptosi <2 x double> %24 to <2 x i32>
+  store <2 x i32> %25, ptr %i.hn, align 4, !tbaa !4
+  %26 = extractelement <2 x double> %20, i64 1
+  %i.ii = fadd double %26, 1.500000e+01           ; 2 uses
   %i.ij = fcmp ogt double %i.ii, %.2.i136.peel
   %.2.1.i137.peel = select i1 %i.ij, double %i.ii, double %.2.i136.peel ; 2 uses
   %i.ik = load double, ptr %i.as, align 16, !tbaa !8 ; 2 uses
@@ -866,22 +846,18 @@ compute_scalefacs_short.exit:                     ; preds = %.preheader.i
   %i.ir = fcmp ogt double %i.iq, %.2.1.i137.peel
   %.2.2.i138.peel = select i1 %i.ir, double %i.iq, double %.2.1.i137.peel ; 2 uses
   %i.is = getelementptr inbounds nuw i8, ptr %i.hm, i64 100
-  %43 = load double, ptr %i.at, align 8, !tbaa !8 ; 2 uses
-  %44 = fsub double 7.500000e-01, %43
-  %45 = fadd double %44, 1.000000e-04
-  %46 = call double @llvm.floor.f64(double %45)
-  %i.it = fadd double %43, 1.500000e+01           ; 2 uses
+  %27 = load <2 x double>, ptr %i.at, align 8, !tbaa !8 ; 3 uses
+  %28 = extractelement <2 x double> %27, i64 0
+  %i.it = fadd double %28, 1.500000e+01           ; 2 uses
   %i.iu = fcmp ogt double %i.it, %.2.2.i138.peel
   %.2.i136.peel200 = select i1 %i.iu, double %i.it, double %.2.2.i138.peel ; 2 uses
-  %47 = load double, ptr %11, align 16, !tbaa !8  ; 2 uses
-  %48 = fsub double 7.500000e-01, %47
-  %49 = fadd double %48, 1.000000e-04
-  %50 = call double @llvm.floor.f64(double %49)
-  %51 = insertelement <2 x double> poison, double %46, i64 0
-  %52 = insertelement <2 x double> %51, double %50, i64 1
-  %53 = fptosi <2 x double> %52 to <2 x i32>
-  store <2 x i32> %53, ptr %i.is, align 4, !tbaa !4
-  %i.iv = fadd double %47, 1.500000e+01           ; 2 uses
+  %29 = fsub <2 x double> splat (double 7.500000e-01), %27
+  %30 = fadd <2 x double> %29, splat (double 1.000000e-04)
+  %31 = call <2 x double> @llvm.floor.v2f64(<2 x double> %30)
+  %32 = fptosi <2 x double> %31 to <2 x i32>
+  store <2 x i32> %32, ptr %i.is, align 4, !tbaa !4
+  %33 = extractelement <2 x double> %27, i64 1
+  %i.iv = fadd double %33, 1.500000e+01           ; 2 uses
   %i.iw = fcmp ogt double %i.iv, %.2.i136.peel200
   %.2.1.i137.peel201 = select i1 %i.iw, double %i.iv, double %.2.i136.peel200 ; 2 uses
   %i.ix = load double, ptr %i.au, align 8, !tbaa !8 ; 2 uses
@@ -895,22 +871,18 @@ compute_scalefacs_short.exit:                     ; preds = %.preheader.i
   %i.je = fcmp ogt double %i.jd, %.2.1.i137.peel201
   %.2.2.i138.peel202 = select i1 %i.je, double %i.jd, double %.2.1.i137.peel201 ; 2 uses
   %i.jf = getelementptr inbounds nuw i8, ptr %i.hm, i64 112
-  %54 = load double, ptr %i.av, align 16, !tbaa !8 ; 2 uses
-  %55 = fsub double 7.500000e-01, %54
-  %56 = fadd double %55, 1.000000e-04
-  %57 = call double @llvm.floor.f64(double %56)
-  %i.jg = fadd double %54, 1.500000e+01           ; 2 uses
+  %34 = load <2 x double>, ptr %i.av, align 16, !tbaa !8 ; 3 uses
+  %35 = extractelement <2 x double> %34, i64 0
+  %i.jg = fadd double %35, 1.500000e+01           ; 2 uses
   %i.jh = fcmp ogt double %i.jg, %.2.2.i138.peel202
   %.2.i136.peel208 = select i1 %i.jh, double %i.jg, double %.2.2.i138.peel202 ; 2 uses
-  %58 = load double, ptr %12, align 8, !tbaa !8   ; 2 uses
-  %59 = fsub double 7.500000e-01, %58
-  %60 = fadd double %59, 1.000000e-04
-  %61 = call double @llvm.floor.f64(double %60)
-  %62 = insertelement <2 x double> poison, double %57, i64 0
-  %63 = insertelement <2 x double> %62, double %61, i64 1
-  %64 = fptosi <2 x double> %63 to <2 x i32>
-  store <2 x i32> %64, ptr %i.jf, align 4, !tbaa !4
-  %i.ji = fadd double %58, 1.500000e+01           ; 2 uses
+  %36 = fsub <2 x double> splat (double 7.500000e-01), %34
+  %37 = fadd <2 x double> %36, splat (double 1.000000e-04)
+  %38 = call <2 x double> @llvm.floor.v2f64(<2 x double> %37)
+  %39 = fptosi <2 x double> %38 to <2 x i32>
+  store <2 x i32> %39, ptr %i.jf, align 4, !tbaa !4
+  %40 = extractelement <2 x double> %34, i64 1
+  %i.ji = fadd double %40, 1.500000e+01           ; 2 uses
   %i.jj = fcmp ogt double %i.ji, %.2.i136.peel208
   %.2.1.i137.peel209 = select i1 %i.jj, double %i.ji, double %.2.i136.peel208 ; 2 uses
   %i.jk = load double, ptr %i.aw, align 16, !tbaa !8 ; 2 uses
@@ -924,22 +896,18 @@ compute_scalefacs_short.exit:                     ; preds = %.preheader.i
   %i.jr = fcmp ogt double %i.jq, %.2.1.i137.peel209
   %.2.2.i138.peel210 = select i1 %i.jr, double %i.jq, double %.2.1.i137.peel209 ; 2 uses
   %i.js = getelementptr inbounds nuw i8, ptr %i.hm, i64 124
-  %65 = load double, ptr %i.ax, align 8, !tbaa !8 ; 2 uses
-  %66 = fsub double 7.500000e-01, %65
-  %67 = fadd double %66, 1.000000e-04
-  %68 = call double @llvm.floor.f64(double %67)
-  %i.jt = fadd double %65, 1.500000e+01           ; 2 uses
+  %41 = load <2 x double>, ptr %i.ax, align 8, !tbaa !8 ; 3 uses
+  %42 = extractelement <2 x double> %41, i64 0
+  %i.jt = fadd double %42, 1.500000e+01           ; 2 uses
   %i.ju = fcmp ogt double %i.jt, %.2.2.i138.peel210
   %.2.i136.peel216 = select i1 %i.ju, double %i.jt, double %.2.2.i138.peel210 ; 2 uses
-  %69 = load double, ptr %13, align 16, !tbaa !8  ; 2 uses
-  %70 = fsub double 7.500000e-01, %69
-  %71 = fadd double %70, 1.000000e-04
-  %72 = call double @llvm.floor.f64(double %71)
-  %73 = insertelement <2 x double> poison, double %68, i64 0
-  %74 = insertelement <2 x double> %73, double %72, i64 1
-  %75 = fptosi <2 x double> %74 to <2 x i32>
-  store <2 x i32> %75, ptr %i.js, align 4, !tbaa !4
-  %i.jv = fadd double %69, 1.500000e+01           ; 2 uses
+  %43 = fsub <2 x double> splat (double 7.500000e-01), %41
+  %44 = fadd <2 x double> %43, splat (double 1.000000e-04)
+  %45 = call <2 x double> @llvm.floor.v2f64(<2 x double> %44)
+  %46 = fptosi <2 x double> %45 to <2 x i32>
+  store <2 x i32> %46, ptr %i.js, align 4, !tbaa !4
+  %47 = extractelement <2 x double> %41, i64 1
+  %i.jv = fadd double %47, 1.500000e+01           ; 2 uses
   %i.jw = fcmp ogt double %i.jv, %.2.i136.peel216
   %.2.1.i137.peel217 = select i1 %i.jw, double %i.jv, double %.2.i136.peel216 ; 2 uses
   %i.jx = load double, ptr %i.ay, align 8, !tbaa !8 ; 2 uses
@@ -953,22 +921,18 @@ compute_scalefacs_short.exit:                     ; preds = %.preheader.i
   %i.ke = fcmp ogt double %i.kd, %.2.1.i137.peel217
   %.2.2.i138.peel218 = select i1 %i.ke, double %i.kd, double %.2.1.i137.peel217 ; 2 uses
   %i.kf = getelementptr inbounds nuw i8, ptr %i.hm, i64 136
-  %76 = load double, ptr %i.az, align 16, !tbaa !8 ; 2 uses
-  %77 = fsub double 7.500000e-01, %76
-  %78 = fadd double %77, 1.000000e-04
-  %79 = call double @llvm.floor.f64(double %78)
-  %i.kg = fadd double %76, 1.500000e+01           ; 2 uses
+  %48 = load <2 x double>, ptr %i.az, align 16, !tbaa !8 ; 3 uses
+  %49 = extractelement <2 x double> %48, i64 0
+  %i.kg = fadd double %49, 1.500000e+01           ; 2 uses
   %i.kh = fcmp ogt double %i.kg, %.2.2.i138.peel218
   %.2.i136.peel224 = select i1 %i.kh, double %i.kg, double %.2.2.i138.peel218 ; 2 uses
-  %80 = load double, ptr %14, align 8, !tbaa !8   ; 2 uses
-  %81 = fsub double 7.500000e-01, %80
-  %82 = fadd double %81, 1.000000e-04
-  %83 = call double @llvm.floor.f64(double %82)
-  %84 = insertelement <2 x double> poison, double %79, i64 0
-  %85 = insertelement <2 x double> %84, double %83, i64 1
-  %86 = fptosi <2 x double> %85 to <2 x i32>
-  store <2 x i32> %86, ptr %i.kf, align 4, !tbaa !4
-  %i.ki = fadd double %80, 1.500000e+01           ; 2 uses
+  %50 = fsub <2 x double> splat (double 7.500000e-01), %48
+  %51 = fadd <2 x double> %50, splat (double 1.000000e-04)
+  %52 = call <2 x double> @llvm.floor.v2f64(<2 x double> %51)
+  %53 = fptosi <2 x double> %52 to <2 x i32>
+  store <2 x i32> %53, ptr %i.kf, align 4, !tbaa !4
+  %54 = extractelement <2 x double> %48, i64 1
+  %i.ki = fadd double %54, 1.500000e+01           ; 2 uses
   %i.kj = fcmp ogt double %i.ki, %.2.i136.peel224
   %.2.1.i137.peel225 = select i1 %i.kj, double %i.ki, double %.2.i136.peel224 ; 2 uses
   %i.kk = load double, ptr %i.ba, align 16, !tbaa !8 ; 2 uses
@@ -982,22 +946,18 @@ compute_scalefacs_short.exit:                     ; preds = %.preheader.i
   %i.kr = fcmp ogt double %i.kq, %.2.1.i137.peel225
   %.2.2.i138.peel226 = select i1 %i.kr, double %i.kq, double %.2.1.i137.peel225 ; 2 uses
   %i.ks = getelementptr inbounds nuw i8, ptr %i.hm, i64 148
-  %87 = load double, ptr %i.bb, align 8, !tbaa !8 ; 2 uses
-  %88 = fsub double 7.500000e-01, %87
-  %89 = fadd double %88, 1.000000e-04
-  %90 = call double @llvm.floor.f64(double %89)
-  %i.kt = fadd double %87, 1.500000e+01           ; 2 uses
+  %55 = load <2 x double>, ptr %i.bb, align 8, !tbaa !8 ; 3 uses
+  %56 = extractelement <2 x double> %55, i64 0
+  %i.kt = fadd double %56, 1.500000e+01           ; 2 uses
   %i.ku = fcmp ogt double %i.kt, %.2.2.i138.peel226
   %.2.i136.peel232 = select i1 %i.ku, double %i.kt, double %.2.2.i138.peel226 ; 2 uses
-  %91 = load double, ptr %15, align 8, !tbaa !8   ; 2 uses
-  %92 = fsub double 7.500000e-01, %91
-  %93 = fadd double %92, 1.000000e-04
-  %94 = call double @llvm.floor.f64(double %93)
-  %95 = insertelement <2 x double> poison, double %90, i64 0
-  %96 = insertelement <2 x double> %95, double %94, i64 1
-  %97 = fptosi <2 x double> %96 to <2 x i32>
-  store <2 x i32> %97, ptr %i.ks, align 4, !tbaa !4
-  %i.kv = fadd double %91, 1.500000e+01           ; 2 uses
+  %57 = fsub <2 x double> splat (double 7.500000e-01), %55
+  %58 = fadd <2 x double> %57, splat (double 1.000000e-04)
+  %59 = call <2 x double> @llvm.floor.v2f64(<2 x double> %58)
+  %60 = fptosi <2 x double> %59 to <2 x i32>
+  store <2 x i32> %60, ptr %i.ks, align 4, !tbaa !4
+  %61 = extractelement <2 x double> %55, i64 1
+  %i.kv = fadd double %61, 1.500000e+01           ; 2 uses
   %i.kw = fcmp ogt double %i.kv, %.2.i136.peel232
   %.2.1.i137.peel233 = select i1 %i.kw, double %i.kv, double %.2.i136.peel232 ; 2 uses
   %i.kx = load double, ptr %i.bc, align 8, !tbaa !8 ; 2 uses
@@ -1015,25 +975,20 @@ compute_scalefacs_short.exit:                     ; preds = %.preheader.i
 .preheader.i131:                                  ; preds = %.preheader.i131, %.preheader.i131.peel.begin
   %indvars.iv.i132 = phi i64 [ 6, %.preheader.i131.peel.begin ], [ %indvars.iv.next.i139, %.preheader.i131 ] ; 3 uses
   %.02428.i133 = phi double [ %.2.2.i138.peel234, %.preheader.i131.peel.begin ], [ %.2.2.i138, %.preheader.i131 ] ; 2 uses
-  %i.lf = getelementptr inbounds nuw [24 x i8], ptr %i.a, i64 %indvars.iv.i132 ; 3 uses
+  %i.lf = getelementptr inbounds nuw [24 x i8], ptr %i.a, i64 %indvars.iv.i132 ; 2 uses
   %i.lg = getelementptr inbounds nuw [12 x i8], ptr %i.hn, i64 %indvars.iv.i132 ; 2 uses
-  %98 = load double, ptr %i.lf, align 8, !tbaa !8 ; 2 uses
-  %99 = fsub double 7.500000e-01, %98
-  %100 = fadd double %99, 1.000000e-04
-  %101 = call double @llvm.floor.f64(double %100)
-  %i.lh = fadd double %98, 7.000000e+00           ; 2 uses
+  %62 = load <2 x double>, ptr %i.lf, align 8, !tbaa !8 ; 3 uses
+  %63 = extractelement <2 x double> %62, i64 0
+  %i.lh = fadd double %63, 7.000000e+00           ; 2 uses
   %i.li = fcmp ogt double %i.lh, %.02428.i133
   %.2.i136 = select i1 %i.li, double %i.lh, double %.02428.i133 ; 2 uses
-  %102 = getelementptr inbounds nuw i8, ptr %i.lf, i64 8
-  %103 = load double, ptr %102, align 8, !tbaa !8 ; 2 uses
-  %104 = fsub double 7.500000e-01, %103
-  %105 = fadd double %104, 1.000000e-04
-  %106 = call double @llvm.floor.f64(double %105)
-  %107 = insertelement <2 x double> poison, double %101, i64 0
-  %108 = insertelement <2 x double> %107, double %106, i64 1
-  %109 = fptosi <2 x double> %108 to <2 x i32>
-  store <2 x i32> %109, ptr %i.lg, align 4, !tbaa !4
-  %i.lj = fadd double %103, 7.000000e+00          ; 2 uses
+  %64 = fsub <2 x double> splat (double 7.500000e-01), %62
+  %65 = fadd <2 x double> %64, splat (double 1.000000e-04)
+  %66 = call <2 x double> @llvm.floor.v2f64(<2 x double> %65)
+  %67 = fptosi <2 x double> %66 to <2 x i32>
+  store <2 x i32> %67, ptr %i.lg, align 4, !tbaa !4
+  %68 = extractelement <2 x double> %62, i64 1
+  %i.lj = fadd double %68, 7.000000e+00           ; 2 uses
   %i.lk = fcmp ogt double %i.lj, %.2.i136
   %.2.1.i137 = select i1 %i.lk, double %i.lj, double %.2.i136 ; 2 uses
   %i.ll = getelementptr inbounds nuw i8, ptr %i.lf, i64 16
@@ -1107,6 +1062,12 @@ declare double @exp2(double) local_unnamed_addr
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.sqrt.f64(double) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.floor.v2f64(<2 x double>) #3
 
 attributes #0 = { nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, errnomem: readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

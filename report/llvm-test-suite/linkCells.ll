@@ -201,13 +201,9 @@ define dso_local void @putAtomInBox(ptr nofree noundef readonly captures(none) %
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %10 = load double, ptr %i.b, align 8, !tbaa !8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %11 = load double, ptr %i.c, align 8, !tbaa !8
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %13 = load double, ptr %12, align 8, !tbaa !8
-  %14 = getelementptr inbounds nuw i8, ptr %0, i64 112
-  %15 = load double, ptr %14, align 8, !tbaa !8
+  %10 = load <2 x double>, ptr %i.b, align 8, !tbaa !8
+  %11 = load <2 x double>, ptr %i.c, align 8, !tbaa !8
   %i.d = load double, ptr %i.a, align 8, !tbaa !8
   %i.e = fcmp olt double %4, %i.d
   br i1 %i.e, label %bb.b, label %bb.c
@@ -233,32 +229,33 @@ bb.c:                                             ; preds = %bb.a
 
 getBoxFromCoord.exit:                             ; preds = %bb.b, %bb.c
   %.034.i = phi i32 [ %i.q, %bb.c ], [ %spec.select.i, %bb.b ]
-  %16 = fsub double %6, %13
-  %17 = fmul double %16, %15
-  %18 = tail call double @llvm.floor.f64(double %17)
-  %19 = fptosi double %18 to i32                  ; 2 uses
-  %20 = fsub double %5, %10
-  %21 = fmul double %20, %11
-  %22 = tail call double @llvm.floor.f64(double %21)
-  %23 = fptosi double %22 to i32                  ; 2 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %12 = insertelement <2 x double> poison, double %5, i64 0
+  %13 = insertelement <2 x double> %12, double %6, i64 1
+  %14 = fsub <2 x double> %13, %10
+  %15 = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %16 = load double, ptr %15, align 8, !tbaa !8
+  %17 = fcmp olt double %5, %16
+  %18 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.s = load double, ptr %i.r, align 8, !tbaa !8
-  %i.t = fcmp olt double %5, %i.s
-  %24 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %25 = load i32, ptr %24, align 4, !tbaa !4      ; 3 uses
-  %26 = icmp eq i32 %25, %23
-  %i.u = add nsw i32 %25, -1
-  %spec.select41.i = select i1 %26, i32 %i.u, i32 %23
-  %.033.i = select i1 %i.t, i32 %spec.select41.i, i32 %25
-  %27 = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %28 = load double, ptr %27, align 8, !tbaa !8
-  %29 = fcmp olt double %6, %28
-  %30 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %31 = load i32, ptr %30, align 8, !tbaa !4      ; 3 uses
-  %32 = icmp eq i32 %31, %19
-  %33 = add nsw i32 %31, -1
-  %spec.select42.i = select i1 %32, i32 %33, i32 %19
-  %.0.i = select i1 %29, i32 %spec.select42.i, i32 %31
+  %i.t = fcmp olt double %6, %i.s
+  %19 = fmul <2 x double> %14, %11
+  %20 = tail call <2 x double> @llvm.floor.v2f64(<2 x double> %19)
+  %21 = fptosi <2 x double> %20 to <2 x i32>      ; 3 uses
+  %22 = load <2 x i32>, ptr %18, align 4, !tbaa !4 ; 3 uses
+  %23 = extractelement <2 x i32> %22, i64 0       ; 2 uses
+  %i.u = add nsw i32 %23, -1
+  %24 = icmp eq <2 x i32> %22, %21                ; 2 uses
+  %25 = extractelement <2 x i1> %24, i64 0
+  %26 = extractelement <2 x i32> %21, i64 0
+  %spec.select41.i = select i1 %25, i32 %i.u, i32 %26
+  %.033.i = select i1 %17, i32 %spec.select41.i, i32 %23
+  %27 = extractelement <2 x i32> %22, i64 1       ; 2 uses
+  %28 = add nsw i32 %27, -1
+  %29 = extractelement <2 x i1> %24, i64 1
+  %30 = extractelement <2 x i32> %21, i64 1
+  %spec.select42.i = select i1 %29, i32 %28, i32 %30
+  %.0.i = select i1 %i.t, i32 %spec.select42.i, i32 %27
   %i.v = tail call i32 @getBoxFromTuple(ptr noundef nonnull readonly %0, i32 noundef %.034.i, i32 noundef %.033.i, i32 noundef %.0.i) ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !16
@@ -460,14 +457,11 @@ emptyHaloCells.exit:                              ; preds = %emptyHaloCells.exit
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
@@ -502,23 +496,19 @@ bb.c:                                             ; preds = %.lr.ph24, %._crit_e
   %i.ar = load ptr, ptr %i.p, align 8, !tbaa !24  ; 2 uses
   %i.as = sext i32 %.01922 to i64
   %i.at = add nsw i64 %i.af, %i.as                ; 12 uses
-  %i.au = getelementptr inbounds [24 x i8], ptr %i.ar, i64 %i.at ; 4 uses
-  %5 = load double, ptr %i.au, align 8, !tbaa !8  ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.au, i64 8
-  %7 = load double, ptr %6, align 8, !tbaa !8     ; 2 uses
-  %8 = load double, ptr %i.r, align 8, !tbaa !8
-  %i.av = load double, ptr %i.s, align 8, !tbaa !8
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.au, i64 16
-  %9 = load double, ptr %i.aw, align 8, !tbaa !8  ; 2 uses
-  %10 = load double, ptr %2, align 8, !tbaa !8
-  %11 = load double, ptr %3, align 8, !tbaa !8
+  %i.au = getelementptr inbounds [24 x i8], ptr %i.ar, i64 %i.at ; 3 uses
+  %i.av = load double, ptr %i.au, align 8, !tbaa !8 ; 2 uses
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.au, i64 8
+  %2 = load <2 x double>, ptr %i.aw, align 8, !tbaa !8 ; 3 uses
+  %3 = load <2 x double>, ptr %i.r, align 8, !tbaa !8
+  %4 = load <2 x double>, ptr %i.s, align 8, !tbaa !8
   %i.ax = load double, ptr %i.q, align 8, !tbaa !8
-  %i.ay = fcmp olt double %5, %i.ax
+  %i.ay = fcmp olt double %i.av, %i.ax
   br i1 %i.ay, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph
   %i.az = load double, ptr %i.u, align 8, !tbaa !8
-  %i.ba = fsub double %5, %i.az
+  %i.ba = fsub double %i.av, %i.az
   %i.bb = load double, ptr %i.t, align 8, !tbaa !8
   %i.bc = fmul double %i.ba, %i.bb
   %i.bd = tail call double @llvm.floor.f64(double %i.bc)
@@ -536,35 +526,37 @@ bb.e:                                             ; preds = %.lr.ph
 getBoxFromCoord.exit:                             ; preds = %bb.d, %bb.e
   %i.bj = phi i32 [ %i.bi, %bb.e ], [ %i.bf, %bb.d ] ; 6 uses
   %.034.i = phi i32 [ %i.bi, %bb.e ], [ %spec.select.i, %bb.d ] ; 7 uses
-  %12 = fsub double %9, %10
-  %13 = fmul double %12, %11
-  %14 = tail call double @llvm.floor.f64(double %13)
-  %15 = fptosi double %14 to i32                  ; 2 uses
-  %16 = fsub double %7, %8
-  %17 = fmul double %16, %i.av
-  %18 = tail call double @llvm.floor.f64(double %17)
-  %19 = fptosi double %18 to i32                  ; 2 uses
-  %20 = load double, ptr %i.v, align 8, !tbaa !8
-  %21 = fcmp uge double %7, %20                   ; 2 uses
-  %22 = load i32, ptr %i.w, align 4, !tbaa !4     ; 10 uses
-  %23 = icmp eq i32 %22, %19
-  %i.bk = add nsw i32 %22, -1
-  %spec.select41.i = select i1 %23, i32 %i.bk, i32 %19 ; 4 uses
-  %.033.i.a = select i1 %21, i32 %22, i32 %spec.select41.i ; 2 uses
-  %24 = load double, ptr %i.x, align 8, !tbaa !8
-  %25 = fcmp uge double %9, %24
-  %26 = load i32, ptr %4, align 8, !tbaa !4       ; 8 uses
-  %27 = icmp eq i32 %26, %15
-  %28 = add nsw i32 %26, -1
-  %spec.select42.i = select i1 %27, i32 %28, i32 %15 ; 5 uses
-  br i1 %25, label %bb.f, label %bb.g
+  %5 = fsub <2 x double> %2, %3
+  %6 = load double, ptr %i.v, align 8, !tbaa !8
+  %7 = extractelement <2 x double> %2, i64 0
+  %8 = fcmp uge double %7, %6                     ; 2 uses
+  %9 = load double, ptr %i.x, align 8, !tbaa !8
+  %10 = extractelement <2 x double> %2, i64 1
+  %11 = fcmp uge double %10, %9
+  %12 = fmul <2 x double> %5, %4
+  %13 = tail call <2 x double> @llvm.floor.v2f64(<2 x double> %12)
+  %14 = fptosi <2 x double> %13 to <2 x i32>      ; 3 uses
+  %15 = load <2 x i32>, ptr %i.w, align 4, !tbaa !4 ; 3 uses
+  %16 = extractelement <2 x i32> %15, i64 0       ; 9 uses
+  %i.bk = add nsw i32 %16, -1
+  %17 = icmp eq <2 x i32> %15, %14                ; 2 uses
+  %18 = extractelement <2 x i1> %17, i64 0
+  %19 = extractelement <2 x i32> %14, i64 0
+  %.033.i.a = select i1 %18, i32 %i.bk, i32 %19   ; 4 uses
+  %.033.i = select i1 %8, i32 %16, i32 %.033.i.a  ; 2 uses
+  %20 = extractelement <2 x i32> %15, i64 1       ; 7 uses
+  %21 = add nsw i32 %20, -1
+  %22 = extractelement <2 x i1> %17, i64 1
+  %23 = extractelement <2 x i32> %14, i64 1
+  %spec.select42.i = select i1 %22, i32 %21, i32 %23 ; 5 uses
+  br i1 %11, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %getBoxFromCoord.exit
-  %i.bl = shl nsw i32 %26, 1                      ; 2 uses
-  %i.bm = mul nsw i32 %i.bl, %22
+  %i.bl = shl nsw i32 %20, 1                      ; 2 uses
+  %i.bm = mul nsw i32 %i.bl, %16
   %i.bn = add nsw i32 %i.bj, 2
-  %i.bo = add i32 %22, 3
-  %reass.add71.i = add i32 %i.bo, %.033.i.a
+  %i.bo = add i32 %16, 3
+  %reass.add71.i = add i32 %i.bo, %.033.i
   %reass.add72.i = add i32 %reass.add71.i, %i.bl
   %reass.mul73.i = mul i32 %i.bn, %reass.add72.i
   %i.bp = add i32 %.034.i, 1
@@ -578,10 +570,10 @@ bb.g:                                             ; preds = %getBoxFromCoord.exi
   br i1 %i.bt, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.bu = shl nsw i32 %26, 1                      ; 2 uses
-  %i.bv = mul nsw i32 %i.bu, %22
+  %i.bu = shl nsw i32 %20, 1                      ; 2 uses
+  %i.bv = mul nsw i32 %i.bu, %16
   %i.bw = add nsw i32 %i.bj, 2
-  %i.bx = add nsw i32 %.033.i.a, 1
+  %i.bx = add nsw i32 %.033.i, 1
   %reass.add69.i = add i32 %i.bx, %i.bu
   %reass.mul70.i = mul i32 %i.bw, %reass.add69.i
   %i.by = add i32 %.034.i, 1
@@ -591,13 +583,13 @@ bb.h:                                             ; preds = %bb.g
   br label %getBoxFromTuple.exit
 
 bb.i:                                             ; preds = %bb.g
-  br i1 %21, label %bb.j, label %bb.k
+  br i1 %8, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  %i.cc = shl nsw i32 %26, 1
-  %i.cd = mul nsw i32 %i.cc, %22
+  %i.cc = shl nsw i32 %20, 1
+  %i.cd = mul nsw i32 %i.cc, %16
   %i.ce = add nsw i32 %i.bj, 2
-  %reass.add67.i = add i32 %spec.select42.i, %26
+  %reass.add67.i = add i32 %spec.select42.i, %20
   %reass.mul68.i = mul i32 %i.ce, %reass.add67.i
   %i.cf = add i32 %.034.i, 1
   %i.cg = add i32 %i.cf, %i.cd
@@ -606,12 +598,12 @@ bb.j:                                             ; preds = %bb.i
   br label %getBoxFromTuple.exit
 
 bb.k:                                             ; preds = %bb.i
-  %i.cj = icmp eq i32 %spec.select41.i, -1
+  %i.cj = icmp eq i32 %.033.i.a, -1
   br i1 %i.cj, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  %i.ck = shl i32 %22, 1
-  %i.cl = mul i32 %i.ck, %26
+  %i.ck = shl i32 %16, 1
+  %i.cl = mul i32 %i.ck, %20
   %i.cm = add nsw i32 %i.bj, 2
   %i.cn = mul nsw i32 %i.cm, %spec.select42.i
   %i.co = add i32 %.034.i, 1
@@ -625,16 +617,16 @@ bb.m:                                             ; preds = %bb.k
   br i1 %i.cs, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
-  %reass.add65.i = add i32 %spec.select42.i, %26
-  %reass.mul66.i = mul i32 %reass.add65.i, %22
-  %i.ct = add i32 %reass.mul66.i, %spec.select41.i
+  %reass.add65.i = add i32 %spec.select42.i, %20
+  %reass.mul66.i = mul i32 %reass.add65.i, %16
+  %i.ct = add i32 %reass.mul66.i, %.033.i.a
   %i.cu = add i32 %i.ct, %i.ao
   br label %getBoxFromTuple.exit
 
 bb.o:                                             ; preds = %bb.m
   %i.cv = icmp eq i32 %.034.i, -1
-  %i.cw = mul i32 %spec.select42.i, %22
-  %i.cx = add i32 %i.cw, %spec.select41.i         ; 2 uses
+  %i.cw = mul i32 %spec.select42.i, %16
+  %i.cx = add i32 %i.cw, %.033.i.a                ; 2 uses
   br i1 %i.cv, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
@@ -912,6 +904,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.floor.v2f64(<2 x double>) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #11
