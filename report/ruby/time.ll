@@ -201,7 +201,7 @@ RSTRING_PTR.exit.us.11:                           ; preds = %RSTRING_PTR.exit.us
   br i1 %i.bk, label %obj2ubits.exit, label %.loopexit
 
 .loopexit:                                        ; preds = %RSTRING_PTR.exit.us.11, %RSTRING_PTR.exit.us.us.11, %.preheader, %bb.c, %bb.d
-  %.018.ph = phi i64 [ %0, %bb.d ], [ %0, %bb.c ], [ %i.e, %RSTRING_PTR.exit.us.us.11 ], [ %i.e, %.preheader ], [ %i.e, %RSTRING_PTR.exit.us.11 ] ; 6 uses
+  %.018.ph = phi i64 [ %0, %bb.d ], [ %0, %bb.c ], [ %i.e, %.preheader ], [ %i.e, %RSTRING_PTR.exit.us.us.11 ], [ %i.e, %RSTRING_PTR.exit.us.11 ] ; 6 uses
   %i.bl = icmp eq i64 %.018.ph, 0
   %i.bm = and i64 %.018.ph, 7
   %i.bn = icmp ne i64 %i.bm, 0

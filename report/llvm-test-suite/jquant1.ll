@@ -201,20 +201,9 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %exitcond91.not.i = icmp eq i64 %indvars.iv.next88.i, %wide.trip.count90.i
   br i1 %exitcond91.not.i, label %._crit_edge.loopexit.i, label %.lr.ph70.split.us.i, !llvm.loop !67
 
-.preheader.lr.ph.us.i:                            ; preds = %.lr.ph70.split.us.i
-  %1 = mul nuw nsw i64 %indvars.iv87.i, 255
-  %2 = add nuw nsw i64 %1, %i.ei
-  %3 = udiv i64 %2, %i.ej
-  %4 = trunc i64 %3 to i8                         ; 5 uses
-  br label %.preheader.us.us.i
-
-.preheader.us.us.i:                               ; preds = %._crit_edge.us.us.i, %.preheader.lr.ph.us.i
-  %indvars.iv84.i = phi i64 [ %indvars.iv.next85.i, %._crit_edge.us.us.i ], [ %indvars.iv82.i, %.preheader.lr.ph.us.i ] ; 6 uses
-  br i1 %i.eo, label %.epil.preheader75, label %.preheader.us.us.i.new
-
-.preheader.us.us.i.new:                           ; preds = %.preheader.us.us.i, %.preheader.us.us.i.new
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.3, %.preheader.us.us.i.new ], [ 0, %.preheader.us.us.i ] ; 5 uses
-  %niter81 = phi i64 [ %niter81.next.3, %.preheader.us.us.i.new ], [ 0, %.preheader.us.us.i ]
+.preheader.us.us.i.new:                           ; preds = %.preheader.us.i, %.preheader.us.us.i.new
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.3, %.preheader.us.us.i.new ], [ 0, %.preheader.us.i ] ; 5 uses
+  %niter81 = phi i64 [ %niter81.next.3, %.preheader.us.us.i.new ], [ 0, %.preheader.us.i ]
   %i.es = load ptr, ptr %i.el, align 8, !tbaa !68
   %i.et = getelementptr i8, ptr %i.es, i64 %indvars.iv.i
   %i.eu = getelementptr i8, ptr %i.et, i64 %indvars.iv84.i
@@ -239,17 +228,21 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %niter81.ncmp.3 = icmp eq i64 %niter81.next.3, %unroll_iter80
   br i1 %niter81.ncmp.3, label %._crit_edge.us.us.i.unr-lcssa, label %.preheader.us.us.i.new, !llvm.loop !69
 
+.preheader.us.i:                                  ; preds = %.preheader.lr.ph.us.i, %._crit_edge.us.us.i
+  %indvars.iv84.i = phi i64 [ %indvars.iv82.i, %.preheader.lr.ph.us.i ], [ %indvars.iv.next85.i, %._crit_edge.us.us.i ] ; 6 uses
+  br i1 %i.eo, label %.epil.preheader75, label %.preheader.us.us.i.new
+
 ._crit_edge.us.us.i.unr-lcssa:                    ; preds = %.preheader.us.us.i.new
   br i1 %lcmp.mod78.not, label %._crit_edge.us.us.i, label %.epil.preheader75
 
-.epil.preheader75:                                ; preds = %._crit_edge.us.us.i.unr-lcssa, %.preheader.us.us.i
-  %indvars.iv.i.epil.init = phi i64 [ 0, %.preheader.us.us.i ], [ %indvars.iv.next.i.3, %._crit_edge.us.us.i.unr-lcssa ]
+.epil.preheader75:                                ; preds = %._crit_edge.us.us.i.unr-lcssa, %.preheader.us.i
+  %indvars.iv.i.epil.init = phi i64 [ 0, %.preheader.us.i ], [ %indvars.iv.next.i.3, %._crit_edge.us.us.i.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod79)
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.p, %.epil.preheader75
-  %indvars.iv.i.epil = phi i64 [ %indvars.iv.next.i.epil, %bb.p ], [ %indvars.iv.i.epil.init, %.epil.preheader75 ] ; 2 uses
-  %epil.iter77 = phi i64 [ %epil.iter77.next, %bb.p ], [ 0, %.epil.preheader75 ]
+  %indvars.iv.i.epil = phi i64 [ %indvars.iv.i.epil.init, %.epil.preheader75 ], [ %indvars.iv.next.i.epil, %bb.p ] ; 2 uses
+  %epil.iter77 = phi i64 [ 0, %.epil.preheader75 ], [ %epil.iter77.next, %bb.p ]
   %i.fh = load ptr, ptr %i.el, align 8, !tbaa !68
   %i.fi = getelementptr i8, ptr %i.fh, i64 %indvars.iv.i.epil
   %i.fj = getelementptr i8, ptr %i.fi, i64 %indvars.iv84.i
@@ -262,7 +255,14 @@ bb.p:                                             ; preds = %bb.p, %.epil.prehea
 ._crit_edge.us.us.i:                              ; preds = %bb.p, %._crit_edge.us.us.i.unr-lcssa
   %indvars.iv.next85.i = add nsw i64 %indvars.iv84.i, %i.en ; 2 uses
   %i.fk = icmp slt i64 %indvars.iv.next85.i, %i.ea
-  br i1 %i.fk, label %.preheader.us.us.i, label %._crit_edge68.split.us.us.i, !llvm.loop !71
+  br i1 %i.fk, label %.preheader.us.i, label %._crit_edge68.split.us.us.i, !llvm.loop !71
+
+.preheader.lr.ph.us.i:                            ; preds = %.lr.ph70.split.us.i
+  %1 = mul nuw nsw i64 %indvars.iv87.i, 255
+  %2 = add nuw nsw i64 %1, %i.ei
+  %3 = udiv i64 %2, %i.ej
+  %4 = trunc i64 %3 to i8                         ; 5 uses
+  br label %.preheader.us.i
 
 ._crit_edge.loopexit.i:                           ; preds = %._crit_edge68.split.us.us.i
   %.pre95.i = load i32, ptr %i.j, align 8, !tbaa !44

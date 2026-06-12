@@ -201,7 +201,7 @@ bb.q:                                             ; preds = %.lr.ph205, %._crit_
   %.pre223 = load i16, ptr %i.gy, align 8, !tbaa !20
   br label %._crit_edge201
 
-._crit_edge201:                                   ; preds = %bb.q, %.lr.ph200, %._crit_edge201.loopexit208
+._crit_edge201:                                   ; preds = %bb.q, %._crit_edge201.loopexit208, %.lr.ph200
   %i.ht = phi i16 [ %i.hg, %.lr.ph200 ], [ %.pre223, %._crit_edge201.loopexit208 ], [ %i.hg, %bb.q ] ; 2 uses
   %i.hu = mul i32 %i.hr, %i.hl
   %i.hv = sext i32 %i.hu to i64

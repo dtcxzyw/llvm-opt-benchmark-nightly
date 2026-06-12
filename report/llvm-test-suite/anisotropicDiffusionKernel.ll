@@ -10,10 +10,10 @@ bb.a:
   br i1 %i.b, label %.preheader109.lr.ph, label %._crit_edge
 
 .preheader109.lr.ph:                              ; preds = %bb.a
-  %5 = icmp sgt i32 %0, 4
-  %6 = icmp sgt i32 %1, 4
-  %or.cond = and i1 %5, %6
-  br i1 %or.cond, label %.preheader109.us.us.preheader, label %._crit_edge
+  %5 = icmp slt i32 %0, 5
+  %6 = icmp slt i32 %1, 5
+  %brmerge = or i1 %5, %6
+  br i1 %brmerge, label %._crit_edge, label %.preheader109.us.us.preheader
 
 .preheader109.us.us.preheader:                    ; preds = %.preheader109.lr.ph
   %i.c = add nsw i32 %1, -2
@@ -26,8 +26,8 @@ bb.a:
   %.0108113.us.us = phi i32 [ %i.dc, %._crit_edge112.split.us.us.us ], [ 0, %.preheader109.us.us.preheader ]
   br label %.preheader.us.us.us
 
-.preheader.us.us.us:                              ; preds = %._crit_edge.us.us.us, %.preheader109.us.us
-  %indvars.iv121 = phi i64 [ %indvars.iv.next122, %._crit_edge.us.us.us ], [ 2, %.preheader109.us.us ] ; 3 uses
+.preheader.us.us.us:                              ; preds = %.preheader109.us.us, %._crit_edge.us.us.us
+  %indvars.iv121 = phi i64 [ 2, %.preheader109.us.us ], [ %indvars.iv.next122, %._crit_edge.us.us.us ] ; 3 uses
   %i.e = getelementptr inbounds nuw [2048 x i8], ptr %2, i64 %indvars.iv121 ; 7 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 2048 ; 3 uses
   %i.g = getelementptr i8, ptr %i.e, i64 -2048    ; 3 uses
@@ -37,8 +37,8 @@ bb.a:
   %i.k = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.j
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.b, %.preheader.us.us.us
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.b ], [ 2, %.preheader.us.us.us ] ; 8 uses
+bb.b:                                             ; preds = %.preheader.us.us.us, %bb.b
+  %indvars.iv = phi i64 [ 2, %.preheader.us.us.us ], [ %indvars.iv.next, %bb.b ] ; 8 uses
   %i.l = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %indvars.iv ; 7 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %i.n = load i32, ptr %i.m, align 4, !tbaa !4

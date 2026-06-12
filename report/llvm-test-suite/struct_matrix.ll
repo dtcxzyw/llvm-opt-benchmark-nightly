@@ -200,14 +200,14 @@ bb.c:                                             ; preds = %hypre_StructMatrixE
   %i.at = add nuw nsw i32 %i.as, 1
   %i.au = mul nsw i32 %i.an, %i.at
   %i.av = select i1 %.inv, i32 0, i32 %i.au
-  %2 = icmp slt i32 %i.ag, 1
-  %3 = icmp slt i32 %i.ae, 1
+  %2 = icmp sgt i32 %i.ag, 0
+  %3 = icmp sgt i32 %i.af, 0
   %i.aw = sub i32 %i.an, %i.ae
   %i.ax = add i32 %i.av, %factor.op.mul175.neg
-  %4 = icmp slt i32 %i.af, 1
-  %or.cond.not205 = or i1 %2, %4
-  %brmerge = or i1 %or.cond.not205, %3
-  br i1 %brmerge, label %hypre_StructMatrixExtractPointerByIndex.exit.thread, label %.preheader159.us.us.us.us.us.preheader
+  %brmerge.not194 = and i1 %2, %3
+  %4 = icmp sgt i32 %i.ae, 0
+  %or.cond = and i1 %brmerge.not194, %4
+  br i1 %or.cond, label %.preheader159.us.us.us.us.us.preheader, label %hypre_StructMatrixExtractPointerByIndex.exit.thread
 
 .preheader159.us.us.us.us.us.preheader:           ; preds = %.preheader160.lr.ph
   %i.ay = zext nneg i32 %i.ae to i64              ; 2 uses
@@ -610,16 +610,16 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.ej = add nuw nsw i32 %i.cs, 1
   %i.ek = mul nsw i32 %i.ee, %i.ej
   %i.el = select i1 %i.ct, i32 %i.ek, i32 0
-  %6 = icmp slt i32 %i.dw, 1
-  %7 = icmp slt i32 %i.du, 1
+  %6 = icmp sgt i32 %i.dw, 0
+  %7 = icmp sgt i32 %i.dv, 0
   %i.em = sub i32 %i.ee, %i.du
   %i.en = sub i32 %i.ed, %i.ef
   %i.eo = sub i32 %i.el, %factor.op.mul567.us
   %i.ep = sub i32 %i.ei, %factor.op.mul568.us
-  %8 = icmp slt i32 %i.dv, 1
-  %or.cond.not681 = or i1 %6, %8
-  %brmerge = or i1 %or.cond.not681, %7
-  br i1 %brmerge, label %.loopexit492.us, label %.preheader487.us.us.us.us.us.us.preheader
+  %brmerge.not645 = and i1 %6, %7
+  %8 = icmp sgt i32 %i.du, 0
+  %or.cond = and i1 %brmerge.not645, %8
+  br i1 %or.cond, label %.preheader487.us.us.us.us.us.us.preheader, label %.loopexit492.us
 
 .preheader487.us.us.us.us.us.us.preheader:        ; preds = %.preheader489.lr.ph.us
   %i.eq = add nsw i32 %i.dl, %i.dt
@@ -853,16 +853,16 @@ bb.l:                                             ; preds = %bb.j, %bb.k
   %i.ix = add nuw nsw i32 %i.hh, 1
   %i.iy = mul nsw i32 %i.is, %i.ix
   %i.iz = select i1 %i.hi, i32 %i.iy, i32 0
-  %9 = icmp slt i32 %i.il, 1
-  %10 = icmp slt i32 %i.ij, 1
+  %9 = icmp sgt i32 %i.il, 0
+  %10 = icmp sgt i32 %i.ik, 0
   %i.ja = sub i32 %i.is, %i.ij
   %i.jb = sub i32 %i.ir, %i.it
   %i.jc = sub i32 %i.iz, %factor.op.mul524
   %i.jd = sub i32 %i.iw, %factor.op.mul
-  %11 = icmp slt i32 %i.ik, 1
-  %or.cond673.not678 = or i1 %9, %11
-  %brmerge675 = or i1 %or.cond673.not678, %10
-  br i1 %brmerge675, label %.loopexit493, label %.preheader488.us.us.us.us.us.preheader
+  %brmerge569.not642 = and i1 %9, %10
+  %11 = icmp sgt i32 %i.ij, 0
+  %or.cond639 = and i1 %brmerge569.not642, %11
+  br i1 %or.cond639, label %.preheader488.us.us.us.us.us.preheader, label %.loopexit493
 
 .preheader488.us.us.us.us.us.preheader:           ; preds = %.preheader490.lr.ph
   %i.je = add nsw i32 %i.ia, %i.ii

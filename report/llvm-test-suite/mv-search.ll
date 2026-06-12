@@ -201,8 +201,8 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
   %i.ri = call i32 @FullPelBlockMotionSearch(ptr noundef nonnull @orig_pic, i16 noundef signext %0, i32 noundef %1, i32 noundef %i.r, i32 noundef %i.u, i32 noundef %4, i16 noundef signext %i.rf, i16 noundef signext %i.rg, ptr noundef nonnull %i.b, ptr noundef nonnull %i.px, i32 noundef %.pre552, i32 noundef 2147483647, i32 noundef %i.rh) #9
   br label %.loopexit
 
-.loopexit:                                        ; preds = %._crit_edge489.split.us492, %._crit_edge489.split.us.us.us, %.preheader474.lr.ph, %bb.v, %bb.ac, %bb.af, %bb.ab, %bb.s
-  %.0415 = phi i32 [ %i.hj, %bb.s ], [ %i.ri, %bb.af ], [ %i.pk, %bb.ab ], [ %i.pr, %bb.ac ], [ %i.ja, %.preheader474.lr.ph ], [ %i.ja, %bb.v ], [ %i.ja, %._crit_edge489.split.us.us.us ], [ %i.ja, %._crit_edge489.split.us492 ] ; 6 uses
+.loopexit:                                        ; preds = %._crit_edge489.split.us492, %._crit_edge489.split.us.us.us, %bb.v, %.preheader474.lr.ph, %bb.ac, %bb.af, %bb.ab, %bb.s
+  %.0415 = phi i32 [ %i.hj, %bb.s ], [ %i.ri, %bb.af ], [ %i.pk, %bb.ab ], [ %i.pr, %bb.ac ], [ %i.ja, %.preheader474.lr.ph ], [ %i.ja, %._crit_edge489.split.us.us.us ], [ %i.ja, %bb.v ], [ %i.ja, %._crit_edge489.split.us492 ] ; 6 uses
   %i.rj = load ptr, ptr @input, align 8, !tbaa !8 ; 6 uses
   %i.rk = getelementptr inbounds nuw i8, ptr %i.rj, i64 4120
   %i.rl = load i32, ptr %i.rk, align 8, !tbaa !134

@@ -200,18 +200,18 @@ bb.t:                                             ; preds = %bb.r, %bb.s
   %i.hn = add nuw nsw i32 %i.fu, 1
   %i.ho = mul nsw i32 %i.hi, %i.hn
   %i.hp = select i1 %i.fv, i32 %i.ho, i32 0
-  %4 = icmp slt i32 %i.hl, 1
-  %5 = icmp slt i32 %i.hj, 1
+  %4 = icmp sgt i32 %i.hl, 0
+  %5 = icmp sgt i32 %i.hk, 0
   %i.hq = sub i32 %i.gp, %factor.op.mul1203
   %i.hr = sub i32 %i.gy, %factor.op.mul1203
   %i.hs = sub i32 %i.hh, %factor.op.mul1203
   %i.ht = sub i32 %i.gt, %factor.op.mul1204
   %i.hu = sub i32 %i.hc, %factor.op.mul
   %i.hv = sub i32 %i.hp, %factor.op.mul1205
-  %6 = icmp slt i32 %i.hk, 1
-  %or.cond.not1556 = or i1 %4, %6
-  %brmerge = or i1 %or.cond.not1556, %5
-  br i1 %brmerge, label %._crit_edge, label %.preheader1165.us.us.us.us.us.preheader
+  %brmerge.not1487 = and i1 %4, %5
+  %6 = icmp sgt i32 %i.hj, 0
+  %or.cond = and i1 %brmerge.not1487, %6
+  br i1 %or.cond, label %.preheader1165.us.us.us.us.us.preheader, label %._crit_edge
 
 .preheader1165.us.us.us.us.us.preheader:          ; preds = %.preheader1166.lr.ph
   %i.hw = sext i32 %i.gk to i64                   ; 9 uses
@@ -614,16 +614,16 @@ bb.al:                                            ; preds = %bb.aj, %bb.ak
   %factor.op.mul1257 = mul i32 %i.ps, %i.qj       ; 2 uses
   %i.qn = mul nsw i32 %i.qh, %i.qi
   %i.qo = select i1 %i.pd, i32 %i.qn, i32 0
-  %7 = icmp slt i32 %i.ql, 1
-  %8 = icmp slt i32 %i.qj, 1
+  %7 = icmp sgt i32 %i.ql, 0
+  %8 = icmp sgt i32 %i.qk, 0
   %i.qp = sub i32 %i.px, %factor.op.mul1257
   %i.qq = sub i32 %i.qg, %factor.op.mul1257
   %i.qr = sub i32 %i.qb, %factor.op.mul1258
   %i.qs = sub i32 %i.qo, %factor.op.mul1259
-  %9 = icmp slt i32 %i.qk, 1
-  %or.cond1543.not1559 = or i1 %7, %9
-  %brmerge1545 = or i1 %or.cond1543.not1559, %8
-  br i1 %brmerge1545, label %.preheader1163, label %.preheader1157.us.us.us.us.us.preheader
+  %brmerge1334.not1490 = and i1 %7, %8
+  %9 = icmp sgt i32 %i.qj, 0
+  %or.cond1481 = and i1 %brmerge1334.not1490, %9
+  br i1 %or.cond1481, label %.preheader1157.us.us.us.us.us.preheader, label %.preheader1163
 
 .preheader1157.us.us.us.us.us.preheader:          ; preds = %.preheader1161.lr.ph
   %i.qt = sext i32 %i.ps to i64                   ; 10 uses
@@ -780,13 +780,13 @@ scalar.ph1658:                                    ; preds = %scalar.ph1658.prol.
   %i.sp = icmp slt i32 %i.qk, 1
   %i.sq = icmp slt i32 %i.qj, 1
   %i.sr = sext i32 %i.ps to i64                   ; 9 uses
+  %brmerge1337 = or i1 %i.so, %i.sp
   %i.ss = add i32 %i.qj, -1
   %i.st = zext i32 %i.ss to i64
   %i.su = shl nuw nsw i64 %i.st, 3                ; 3 uses
   %scevgep1613 = getelementptr i8, ptr %scevgep1612, i64 %i.su
   %i.sv = zext i32 %i.qj to i64                   ; 2 uses
-  %brmerge1548 = or i1 %i.so, %i.sp
-  %brmerge1550 = or i1 %brmerge1548, %i.sq
+  %brmerge1550 = or i1 %brmerge1337, %i.sq
   %min.iters.check1635 = icmp ugt i32 %i.qj, 5
   %ident.check1607.not = icmp eq i32 %i.ps, 1
   %or.cond1674 = select i1 %min.iters.check1635, i1 %ident.check1607.not, i1 false
@@ -1189,16 +1189,16 @@ bb.bj:                                            ; preds = %bb.bh, %bb.bi
   %factor.op.mul1368 = mul i32 %i.abe, %i.qk
   %factor.op.mul1367 = mul i32 %i.ps, %i.qj       ; 2 uses
   %i.abq = select i1 %i.pd, i32 %i.abp, i32 0
-  %10 = icmp slt i32 %i.ql, 1
-  %11 = icmp slt i32 %i.qj, 1
+  %10 = icmp sgt i32 %i.ql, 0
+  %11 = icmp sgt i32 %i.qk, 0
   %i.abr = sub i32 %i.abe, %factor.op.mul1367
   %i.abs = sub i32 %i.abo, %factor.op.mul1367
   %i.abt = sub i32 %i.abi, %factor.op.mul1368
   %i.abu = sub i32 %i.abq, %factor.op.mul1369
-  %12 = icmp slt i32 %i.qk, 1
-  %or.cond1551.not1562 = or i1 %10, %12
-  %brmerge1553 = or i1 %or.cond1551.not1562, %11
-  br i1 %brmerge1553, label %._crit_edge1370, label %.preheader1155.us.us.us.us.us.preheader
+  %brmerge1340.not1493 = and i1 %10, %11
+  %12 = icmp sgt i32 %i.qj, 0
+  %or.cond1484 = and i1 %brmerge1340.not1493, %12
+  br i1 %or.cond1484, label %.preheader1155.us.us.us.us.us.preheader, label %._crit_edge1370
 
 .preheader1155.us.us.us.us.us.preheader:          ; preds = %.preheader1158.lr.ph
   %i.abv = sext i32 %i.ps to i64                  ; 6 uses

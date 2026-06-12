@@ -199,7 +199,7 @@ bb.t:                                             ; preds = %._crit_edge.1.2, %b
   br label %.preheader204
 
 .preheader204:                                    ; preds = %.lr.ph245, %._crit_edge239
-  %i.gg = phi i32 [ %i.t, %.lr.ph245 ], [ %4, %._crit_edge239 ]
+  %i.gg = phi i32 [ %i.t, %.lr.ph245 ], [ %5, %._crit_edge239 ] ; 2 uses
   %indvars.iv405 = phi i64 [ 0, %.lr.ph245 ], [ %indvars.iv.next406, %._crit_edge239 ] ; 2 uses
   %i.gh = getelementptr inbounds nuw [24 x i8], ptr %i.gb, i64 %indvars.iv405 ; 6 uses
   %i.gi = getelementptr inbounds nuw i8, ptr %i.gh, i64 12
@@ -279,15 +279,17 @@ bb.ac:                                            ; preds = %bb.ac, %bb.ab
   %i.hh = load i32, ptr %i.hg, align 4, !tbaa !4
   %.not197.2 = icmp eq i32 %i.hf, %i.hh
   %indvars.iv.next384.2 = add nuw nsw i64 %indvars.iv383.2, 1
-  br i1 %.not197.2, label %bb.ad, label %bb.ac, !llvm.loop !31
+  br i1 %.not197.2, label %1, label %bb.ac, !llvm.loop !31
 
-bb.ad:                                            ; preds = %bb.ac
-  %1 = icmp samesign ult i64 %indvars.iv380.2, %indvars.iv383.2
-  %2 = icmp samesign ult i64 %indvars.iv380.1, %indvars.iv383.1
-  %or.cond = select i1 %1, i1 %2, i1 false
-  %3 = icmp samesign ult i64 %indvars.iv380, %indvars.iv383
-  %or.cond661 = select i1 %or.cond, i1 %3, i1 false
-  br i1 %or.cond661, label %.lr.ph234.us.us.preheader, label %._crit_edge239
+1:                                                ; preds = %bb.ac
+  %2 = icmp samesign ult i64 %indvars.iv380.2, %indvars.iv383.2
+  br i1 %2, label %bb.ad, label %._crit_edge239
+
+bb.ad:                                            ; preds = %1
+  %3 = icmp samesign uge i64 %indvars.iv380.1, %indvars.iv383.1
+  %4 = icmp samesign uge i64 %indvars.iv380, %indvars.iv383
+  %or.cond661 = select i1 %3, i1 true, i1 %4
+  br i1 %or.cond661, label %._crit_edge239, label %.lr.ph234.us.us.preheader
 
 .lr.ph234.us.us.preheader:                        ; preds = %bb.ad
   %sext = shl i64 %indvars.iv380, 32
@@ -314,8 +316,8 @@ bb.ad:                                            ; preds = %bb.ac
   %i.hn = mul nsw i64 %indvars.iv400, %i.gf
   br label %.lr.ph230.us.us.us
 
-.lr.ph230.us.us.us:                               ; preds = %._crit_edge231.us.us.us, %.lr.ph234.us.us
-  %indvars.iv395 = phi i64 [ %indvars.iv.next396, %._crit_edge231.us.us.us ], [ %i.hj, %.lr.ph234.us.us ] ; 2 uses
+.lr.ph230.us.us.us:                               ; preds = %.lr.ph234.us.us, %._crit_edge231.us.us.us
+  %indvars.iv395 = phi i64 [ %i.hj, %.lr.ph234.us.us ], [ %indvars.iv.next396, %._crit_edge231.us.us.us ] ; 2 uses
   %i.ho = add nsw i64 %indvars.iv395, %i.hn
   %i.hp = mul nsw i64 %i.ho, %i.ge
   %invariant.gep = getelementptr [4 x i8], ptr %i.s, i64 %i.hp ; 2 uses
@@ -364,10 +366,10 @@ scalar.ph783:                                     ; preds = %scalar.ph783.prehea
   %.pre = load i32, ptr %i.a, align 8, !tbaa !12
   br label %._crit_edge239
 
-._crit_edge239:                                   ; preds = %._crit_edge239.loopexit, %bb.ad
-  %4 = phi i32 [ %i.gg, %bb.ad ], [ %.pre, %._crit_edge239.loopexit ] ; 2 uses
+._crit_edge239:                                   ; preds = %._crit_edge239.loopexit, %bb.ad, %1
+  %5 = phi i32 [ %.pre, %._crit_edge239.loopexit ], [ %i.gg, %bb.ad ], [ %i.gg, %1 ] ; 2 uses
   %indvars.iv.next406 = add nuw nsw i64 %indvars.iv405, 1 ; 2 uses
-  %i.hu = sext i32 %4 to i64
+  %i.hu = sext i32 %5 to i64
   %i.hv = icmp slt i64 %indvars.iv.next406, %i.hu
   br i1 %i.hv, label %.preheader204, label %.preheader203, !llvm.loop !36
 

@@ -175,7 +175,7 @@ bb.k:                                             ; preds = %bb.d, %bb.d, %bb.i,
   br i1 %i.av, label %.lr.ph, label %._crit_edge, !llvm.loop !14
 
 ._crit_edge:                                      ; preds = %bb.k, %bb.a
-  %.0109.lcssa = phi i32 [ 196, %bb.a ], [ %.1110, %bb.k ] ; 8 uses
+  %.0109.lcssa = phi i32 [ 196, %bb.a ], [ %.1110, %bb.k ] ; 9 uses
   %.0105.lcssa = phi i32 [ 1, %bb.a ], [ %.1106, %bb.k ] ; 2 uses
   %.0103.lcssa = phi float [ 3.330000e-01, %bb.a ], [ %.1104, %bb.k ] ; 2 uses
   %.090.lcssa = phi i32 [ 1000, %bb.a ], [ %.1, %bb.k ] ; 2 uses
@@ -200,6 +200,21 @@ bb.k:                                             ; preds = %bb.d, %bb.d, %bb.i,
   %.1101151.us = phi i32 [ %i.bj, %._crit_edge150.us ], [ 0, %.preheader125.us.preheader ]
   br label %bb.l
 
+.preheader124:                                    ; preds = %._crit_edge150.us, %._crit_edge, %.preheader126
+  %2 = icmp sgt i32 %.090.lcssa, 0
+  br i1 %2, label %.lr.ph174, label %._crit_edge175
+
+.lr.ph174:                                        ; preds = %.preheader124
+  %3 = icmp slt i32 %.0109.lcssa, 1
+  %wide.trip.count190 = zext i32 %.0109.lcssa to i64 ; 2 uses
+  %wide.trip.count195 = zext nneg i32 %.0109.lcssa to i64
+  %xtraiter = and i64 %wide.trip.count190, 1
+  %4 = icmp eq i32 %.0109.lcssa, 1
+  %unroll_iter = and i64 %wide.trip.count190, 2147483646
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %lcmp.mod225 = trunc i32 %.0109.lcssa to i1
+  br label %bb.m
+
 bb.l:                                             ; preds = %.preheader125.us, %bb.l
   %indvars.iv = phi i64 [ 0, %.preheader125.us ], [ %indvars.iv.next, %bb.l ] ; 2 uses
   %i.bd = load i32, ptr @num_allocated, align 4, !tbaa !4
@@ -221,20 +236,6 @@ bb.l:                                             ; preds = %.preheader125.us, %
   %exitcond186.not = icmp eq i32 %i.bj, %.0105.lcssa
   br i1 %exitcond186.not, label %.preheader124, label %.preheader125.us, !llvm.loop !22
 
-.preheader124:                                    ; preds = %._crit_edge150.us, %._crit_edge, %.preheader126
-  %2 = icmp sgt i32 %.090.lcssa, 0
-  br i1 %2, label %.lr.ph174, label %._crit_edge175
-
-.lr.ph174:                                        ; preds = %.preheader124
-  %wide.trip.count190 = zext i32 %.0109.lcssa to i64 ; 2 uses
-  %wide.trip.count195 = zext nneg i32 %.0109.lcssa to i64
-  %xtraiter = and i64 %wide.trip.count190, 1
-  %3 = icmp eq i32 %.0109.lcssa, 1
-  %unroll_iter = and i64 %wide.trip.count190, 2147483646
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  %lcmp.mod226 = trunc i32 %.0109.lcssa to i1
-  br label %bb.m
-
 bb.m:                                             ; preds = %.lr.ph174, %._crit_edge170
   %.093173 = phi float [ 0.000000e+00, %.lr.ph174 ], [ %i.ct, %._crit_edge170 ] ; 2 uses
   %.094172 = phi i32 [ 0, %.lr.ph174 ], [ %.195.lcssa205, %._crit_edge170 ] ; 3 uses
@@ -251,7 +252,14 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   br i1 %i.az, label %.lr.ph163.preheader, label %._crit_edge164.thread
 
 .lr.ph163.preheader:                              ; preds = %bb.o
-  br i1 %3, label %.lr.ph163.epil.preheader, label %.lr.ph163
+  br i1 %4, label %.lr.ph163.epil.preheader, label %.lr.ph163
+
+._crit_edge164.thread:                            ; preds = %bb.o
+  %5 = fadd float %.0103.lcssa, %.093173          ; 2 uses
+  %6 = fptosi float %5 to i32
+  %7 = sitofp i32 %6 to float
+  %8 = fsub float %5, %7
+  br label %._crit_edge170
 
 .lr.ph163:                                        ; preds = %.lr.ph163.preheader, %._crit_edge158.1
   %indvars.iv187 = phi i64 [ %indvars.iv.next188.1, %._crit_edge158.1 ], [ 0, %.lr.ph163.preheader ] ; 3 uses
@@ -307,7 +315,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 .lr.ph163.epil.preheader:                         ; preds = %._crit_edge164.unr-lcssa, %.lr.ph163.preheader
   %indvars.iv187.epil.init = phi i64 [ 0, %.lr.ph163.preheader ], [ %indvars.iv.next188.1, %._crit_edge164.unr-lcssa ]
   %.195161.epil.init = phi i32 [ %.094172, %.lr.ph163.preheader ], [ %.2.lcssa.1, %._crit_edge164.unr-lcssa ] ; 2 uses
-  tail call void @llvm.assume(i1 %lcmp.mod226)
+  tail call void @llvm.assume(i1 %lcmp.mod225)
   %i.by = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %indvars.iv187.epil.init
   %.089152.epil = load ptr, ptr %i.by, align 8, !tbaa !16 ; 2 uses
   %.not114153.epil = icmp eq ptr %.089152.epil, null
@@ -332,14 +340,8 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.cf = sitofp i32 %i.ce to float
   %i.cg = fsub float %i.cd, %i.cf                 ; 2 uses
   %i.ch = icmp slt i32 %i.ce, 1
-  br i1 %i.ch, label %._crit_edge170, label %.preheader.us.preheader
-
-._crit_edge164.thread:                            ; preds = %bb.o
-  %4 = fadd float %.0103.lcssa, %.093173          ; 2 uses
-  %5 = fptosi float %4 to i32
-  %6 = sitofp i32 %5 to float
-  %7 = fsub float %4, %6
-  br label %._crit_edge170
+  %brmerge = or i1 %i.ch, %3
+  br i1 %brmerge, label %._crit_edge170, label %.preheader.us.preheader
 
 .preheader.us.preheader:                          ; preds = %._crit_edge164
   %i.ci = zext nneg i32 %i.ce to i64
@@ -381,8 +383,8 @@ bb.r:                                             ; preds = %bb.q
   %i.cs = icmp sgt i64 %indvars.iv197, 1
   br i1 %i.cs, label %.preheader.us, label %._crit_edge170, !llvm.loop !27
 
-._crit_edge170:                                   ; preds = %._crit_edge168.us, %._crit_edge164, %._crit_edge164.thread
-  %i.ct = phi float [ %7, %._crit_edge164.thread ], [ %i.cg, %._crit_edge164 ], [ %i.cg, %._crit_edge168.us ]
+._crit_edge170:                                   ; preds = %._crit_edge168.us, %._crit_edge164.thread, %._crit_edge164
+  %i.ct = phi float [ %8, %._crit_edge164.thread ], [ %i.cg, %._crit_edge164 ], [ %i.cg, %._crit_edge168.us ]
   %.195.lcssa205 = phi i32 [ %.094172, %._crit_edge164.thread ], [ %.2.lcssa.lcssa, %._crit_edge164 ], [ %.2.lcssa.lcssa, %._crit_edge168.us ] ; 2 uses
   %i.cu = add nuw nsw i32 %.2102171, 1            ; 2 uses
   %exitcond200.not = icmp eq i32 %i.cu, %.090.lcssa

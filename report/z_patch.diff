@@ -1,0 +1,942 @@
+diff --git a/llvm/lib/Transforms/Scalar/SimpleLoopUnswitch.cpp b/llvm/lib/Transforms/Scalar/SimpleLoopUnswitch.cpp
+index e410f0644dc6b..c0b0eedf5bf08 100644
+--- a/llvm/lib/Transforms/Scalar/SimpleLoopUnswitch.cpp
++++ b/llvm/lib/Transforms/Scalar/SimpleLoopUnswitch.cpp
+@@ -553,8 +553,9 @@ static Loop *getTopMostExitingLoop(const BasicBlock *ExitBB,
+ ///
+ /// This routine should only be called when loop code leading to the branch has
+ /// been validated as trivial (no side effects). This routine checks if the
+-/// condition is invariant and one of the successors is a loop exit. This
+-/// allows us to unswitch without duplicating the loop, making it trivial.
++/// condition is invariant and one of the successors is a loop exit or a loop
++/// latch with no side-effects. This allows us to unswitch without duplicating
++/// the loop, making it trivial.
+ ///
+ /// If this routine fails to unswitch the branch it returns false.
+ ///
+@@ -591,6 +592,48 @@ static bool unswitchTrivialBranch(Loop &L, CondBrInst &BI, DominatorTree &DT,
+     }
+   }
+ 
++  std::optional<int> LatchIdx = std::nullopt;
++  if (FullUnswitch && L.getUniqueLatchExitBlock() != nullptr)
++    if (BI.getSuccessor(0) == L.getLoopLatch() &&
++        L.contains(BI.getSuccessor(1)))
++      LatchIdx = 0;
++    else if (BI.getSuccessor(1) == L.getLoopLatch() &&
++             L.contains(BI.getSuccessor(0)))
++      LatchIdx = 1;
++
++  bool ModifiedBranch = false;
++  if (LatchIdx &&
++      areLoopExitPHIsLoopInvariant(L, *L.getLoopLatch(),
++                                   *L.getUniqueLatchExitBlock()) &&
++      !llvm::any_of(*L.getLoopLatch(),
++                    [](Instruction &I) { return I.mayHaveSideEffects(); })) {
++
++    // We need to prove the loop is finite, otherwise this change will convert
++    // it to a finite loop. This conservative check is good enough as we are
++    // mostly interested in perfect countable loop nests that perform
++    // calculations on arrays.
++    const SCEV *MaxBECount = SE->getConstantMaxBackedgeTakenCount(&L);
++    if (!isa<SCEVCouldNotCompute>(MaxBECount)) {
++      SmallVector<cfg::Update<BasicBlock *>, 2> Updates;
++      Updates.push_back({cfg::UpdateKind::Delete, BI.getParent(),
++                         BI.getSuccessor(*LatchIdx)});
++      Updates.push_back({cfg::UpdateKind::Insert, BI.getParent(),
++                         L.getUniqueLatchExitBlock()});
++      L.getLoopLatch()->removePredecessor(BI.getParent());
++      BI.setSuccessor(*LatchIdx, L.getUniqueLatchExitBlock());
++      for (PHINode &PN : L.getUniqueLatchExitBlock()->phis()) {
++        Value *V = PN.getIncomingValueForBlock(L.getLoopLatch());
++        PN.addIncoming(V, BI.getParent());
++      }
++      if (MSSAU)
++        MSSAU->applyUpdates(Updates, DT);
++      else
++        DT.applyUpdates(Updates);
++
++      ModifiedBranch = true;
++    }
++  }
++
+   // Check that one of the branch's successors exits, and which one.
+   bool ExitDirection = true;
+   int LoopExitSuccIdx = 0;
+@@ -606,7 +649,8 @@ static bool unswitchTrivialBranch(Loop &L, CondBrInst &BI, DominatorTree &DT,
+   }
+   auto *ContinueBB = BI.getSuccessor(1 - LoopExitSuccIdx);
+   auto *ParentBB = BI.getParent();
+-  if (!areLoopExitPHIsLoopInvariant(L, *ParentBB, *LoopExitBB)) {
++  if (!ModifiedBranch &&
++      !areLoopExitPHIsLoopInvariant(L, *ParentBB, *LoopExitBB)) {
+     LLVM_DEBUG(dbgs() << "   Loop exit PHI's aren't loop-invariant!\n");
+     return false;
+   }
+diff --git a/llvm/test/Transforms/PhaseOrdering/AArch64/loopflatten.ll b/llvm/test/Transforms/PhaseOrdering/AArch64/loopflatten.ll
+index 52d49ac9cd661..8f106d720f758 100644
+--- a/llvm/test/Transforms/PhaseOrdering/AArch64/loopflatten.ll
++++ b/llvm/test/Transforms/PhaseOrdering/AArch64/loopflatten.ll
+@@ -11,13 +11,13 @@ define dso_local void @_Z3fooPiii(ptr %A, i32 %N, i32 %M) #0 {
+ ; CHECK-NEXT:    [[CMP21:%.*]] = icmp sgt i32 [[M:%.*]], 0
+ ; CHECK-NEXT:    [[OR_COND:%.*]] = select i1 [[CMP3]], i1 [[CMP21]], i1 false
+ ; CHECK-NEXT:    br i1 [[OR_COND]], label [[FOR_COND1_PREHEADER_LR_PH_SPLIT_US:%.*]], label [[FOR_COND_CLEANUP:%.*]]
+-; CHECK:       for.cond1.preheader.lr.ph.split.us:
++; CHECK:       for.cond1.preheader.lr.ph.split:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = zext nneg i32 [[M]] to i64
+ ; CHECK-NEXT:    [[TMP1:%.*]] = zext nneg i32 [[N]] to i64
+ ; CHECK-NEXT:    [[FLATTEN_TRIPCOUNT:%.*]] = mul nuw nsw i64 [[TMP0]], [[TMP1]]
+ ; CHECK-NEXT:    br label [[FOR_COND1_PREHEADER_US:%.*]]
+-; CHECK:       for.cond1.preheader.us:
+-; CHECK-NEXT:    [[INDVAR6:%.*]] = phi i64 [ [[INDVAR_NEXT7:%.*]], [[FOR_COND1_PREHEADER_US]] ], [ 0, [[FOR_COND1_PREHEADER_LR_PH_SPLIT_US]] ]
++; CHECK:       for.cond1.preheader:
++; CHECK-NEXT:    [[INDVAR6:%.*]] = phi i64 [ 0, [[FOR_COND1_PREHEADER_LR_PH_SPLIT_US]] ], [ [[INDVAR_NEXT7:%.*]], [[FOR_COND1_PREHEADER_US]] ]
+ ; CHECK-NEXT:    [[ARRAYIDX_US:%.*]] = getelementptr inbounds nuw [4 x i8], ptr [[A:%.*]], i64 [[INDVAR6]]
+ ; CHECK-NEXT:    [[TMP2:%.*]] = load i32, ptr [[ARRAYIDX_US]], align 4
+ ; CHECK-NEXT:    tail call void @_Z1fi(i32 [[TMP2]])
+diff --git a/llvm/test/Transforms/PhaseOrdering/AArch64/matrix-extract-insert.ll b/llvm/test/Transforms/PhaseOrdering/AArch64/matrix-extract-insert.ll
+index d94bf5e221b93..b43d12ecf8b3b 100644
+--- a/llvm/test/Transforms/PhaseOrdering/AArch64/matrix-extract-insert.ll
++++ b/llvm/test/Transforms/PhaseOrdering/AArch64/matrix-extract-insert.ll
+@@ -86,7 +86,7 @@ define void @matrix_extract_insert_loop(i32 %i, ptr nonnull align 8 dereferencea
+ ; CHECK-NEXT:    [[CMP210_NOT:%.*]] = icmp eq i32 [[I:%.*]], 0
+ ; CHECK-NEXT:    [[CONV6:%.*]] = zext i32 [[I]] to i64
+ ; CHECK-NEXT:    br i1 [[CMP210_NOT]], label [[FOR_COND_CLEANUP:%.*]], label [[VECTOR_MEMCHECK:%.*]]
+-; CHECK:       for.cond1.preheader.us.preheader:
++; CHECK:       for.cond1.preheader.preheader:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = shl nuw nsw i64 [[CONV6]], 3
+ ; CHECK-NEXT:    [[TMP1:%.*]] = add nuw nsw i64 [[TMP0]], 360
+ ; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[B:%.*]], i64 [[TMP1]]
+@@ -129,25 +129,12 @@ define void @matrix_extract_insert_loop(i32 %i, ptr nonnull align 8 dereferencea
+ ; CHECK:       middle.block:
+ ; CHECK-NEXT:    [[CMP_N:%.*]] = icmp eq i64 [[N_VEC]], [[CONV6]]
+ ; CHECK-NEXT:    br i1 [[CMP_N]], label [[VECTOR_MEMCHECK_1:%.*]], label [[FOR_BODY4_US_PREHEADER]]
+-; CHECK:       for.body4.us.preheader:
++; CHECK:       for.body4.preheader:
+ ; CHECK-NEXT:    [[INDVARS_IV_PH:%.*]] = phi i64 [ 0, [[FOR_COND1_PREHEADER_US_PREHEADER]] ], [ 0, [[VECTOR_MEMCHECK]] ], [ [[N_VEC]], [[MIDDLE_BLOCK]] ]
+ ; CHECK-NEXT:    br label [[FOR_BODY4_US:%.*]]
+-; CHECK:       for.body4.us:
+-; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ [[INDVARS_IV_NEXT:%.*]], [[FOR_BODY4_US]] ], [ [[INDVARS_IV_PH]], [[FOR_BODY4_US_PREHEADER]] ]
+-; CHECK-NEXT:    [[TMP27:%.*]] = icmp samesign ult i64 [[INDVARS_IV]], 225
+-; CHECK-NEXT:    tail call void @llvm.assume(i1 [[TMP27]])
+-; CHECK-NEXT:    [[TMP28:%.*]] = getelementptr inbounds nuw [8 x i8], ptr [[A]], i64 [[INDVARS_IV]]
+-; CHECK-NEXT:    [[MATRIXEXT_US:%.*]] = load double, ptr [[TMP28]], align 8
+-; CHECK-NEXT:    [[MATRIXEXT8_US:%.*]] = load double, ptr [[TMP3]], align 8
+-; CHECK-NEXT:    [[MUL_US:%.*]] = fmul double [[MATRIXEXT_US]], [[MATRIXEXT8_US]]
+-; CHECK-NEXT:    [[TMP29:%.*]] = getelementptr inbounds nuw [8 x i8], ptr [[B]], i64 [[INDVARS_IV]]
+-; CHECK-NEXT:    [[MATRIXEXT11_US:%.*]] = load double, ptr [[TMP29]], align 8
+-; CHECK-NEXT:    [[SUB_US:%.*]] = fsub double [[MATRIXEXT11_US]], [[MUL_US]]
+-; CHECK-NEXT:    store double [[SUB_US]], ptr [[TMP29]], align 8
+-; CHECK-NEXT:    [[INDVARS_IV_NEXT]] = add nuw nsw i64 [[INDVARS_IV]], 1
+-; CHECK-NEXT:    [[EXITCOND_NOT:%.*]] = icmp eq i64 [[INDVARS_IV_NEXT]], [[CONV6]]
+-; CHECK-NEXT:    br i1 [[EXITCOND_NOT]], label [[VECTOR_MEMCHECK_1]], label [[FOR_BODY4_US]], !llvm.loop [[LOOP10:![0-9]+]]
+-; CHECK:       for.cond1.for.cond.cleanup3_crit_edge.us:
++; CHECK:       for.cond.cleanup.split:
++; CHECK-NEXT:    ret void
++; CHECK:       for.cond1.for.cond.cleanup3_crit_edge:
+ ; CHECK-NEXT:    [[TMP31:%.*]] = icmp samesign ult i32 [[I]], 210
+ ; CHECK-NEXT:    tail call void @llvm.assume(i1 [[TMP31]])
+ ; CHECK-NEXT:    [[TMP61:%.*]] = getelementptr inbounds nuw [8 x i8], ptr [[B]], i64 [[CONV6]]
+@@ -188,10 +175,10 @@ define void @matrix_extract_insert_loop(i32 %i, ptr nonnull align 8 dereferencea
+ ; CHECK:       middle.block.1:
+ ; CHECK-NEXT:    [[CMP_N_1:%.*]] = icmp eq i64 [[N_VEC_1]], [[CONV6]]
+ ; CHECK-NEXT:    br i1 [[CMP_N_1]], label [[VECTOR_MEMCHECK_2:%.*]], label [[FOR_BODY4_US_PREHEADER_1]]
+-; CHECK:       for.body4.us.preheader.1:
++; CHECK:       for.body4.preheader.1:
+ ; CHECK-NEXT:    [[INDVARS_IV_PH_1:%.*]] = phi i64 [ 0, [[FOR_COND1_FOR_COND_CLEANUP3_CRIT_EDGE_US]] ], [ 0, [[VECTOR_MEMCHECK_1]] ], [ [[N_VEC_1]], [[MIDDLE_BLOCK_1]] ]
+ ; CHECK-NEXT:    br label [[FOR_BODY4_US_1:%.*]]
+-; CHECK:       for.body4.us.1:
++; CHECK:       for.body4.1:
+ ; CHECK-NEXT:    [[INDVARS_IV_1:%.*]] = phi i64 [ [[INDVARS_IV_NEXT_1:%.*]], [[FOR_BODY4_US_1]] ], [ [[INDVARS_IV_PH_1]], [[FOR_BODY4_US_PREHEADER_1]] ]
+ ; CHECK-NEXT:    [[TMP57:%.*]] = add nuw nsw i64 [[INDVARS_IV_1]], 15
+ ; CHECK-NEXT:    [[TMP58:%.*]] = icmp samesign ult i64 [[INDVARS_IV_1]], 210
+@@ -206,8 +193,8 @@ define void @matrix_extract_insert_loop(i32 %i, ptr nonnull align 8 dereferencea
+ ; CHECK-NEXT:    store double [[SUB_US_1]], ptr [[TMP60]], align 8
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT_1]] = add nuw nsw i64 [[INDVARS_IV_1]], 1
+ ; CHECK-NEXT:    [[EXITCOND_NOT_1:%.*]] = icmp eq i64 [[INDVARS_IV_NEXT_1]], [[CONV6]]
+-; CHECK-NEXT:    br i1 [[EXITCOND_NOT_1]], label [[VECTOR_MEMCHECK_2]], label [[FOR_BODY4_US_1]], !llvm.loop [[LOOP10]]
+-; CHECK:       for.cond1.for.cond.cleanup3_crit_edge.us.1:
++; CHECK-NEXT:    br i1 [[EXITCOND_NOT_1]], label [[VECTOR_MEMCHECK_2]], label [[FOR_BODY4_US_1]], !llvm.loop [[LOOP10:![0-9]+]]
++; CHECK:       for.cond1.for.cond.cleanup3_crit_edge.1:
+ ; CHECK-NEXT:    [[TMP62:%.*]] = icmp samesign ult i32 [[I]], 195
+ ; CHECK-NEXT:    tail call void @llvm.assume(i1 [[TMP62]])
+ ; CHECK-NEXT:    [[TMP92:%.*]] = getelementptr inbounds nuw [8 x i8], ptr [[B]], i64 [[CONV6]]
+@@ -248,10 +235,10 @@ define void @matrix_extract_insert_loop(i32 %i, ptr nonnull align 8 dereferencea
+ ; CHECK:       middle.block.2:
+ ; CHECK-NEXT:    [[CMP_N_2:%.*]] = icmp eq i64 [[N_VEC_2]], [[CONV6]]
+ ; CHECK-NEXT:    br i1 [[CMP_N_2]], label [[VECTOR_MEMCHECK_3:%.*]], label [[FOR_BODY4_US_PREHEADER_2]]
+-; CHECK:       for.body4.us.preheader.2:
++; CHECK:       for.body4.preheader.2:
+ ; CHECK-NEXT:    [[INDVARS_IV_PH_2:%.*]] = phi i64 [ 0, [[FOR_COND1_FOR_COND_CLEANUP3_CRIT_EDGE_US_1]] ], [ 0, [[VECTOR_MEMCHECK_2]] ], [ [[N_VEC_2]], [[MIDDLE_BLOCK_2]] ]
+ ; CHECK-NEXT:    br label [[FOR_BODY4_US_2:%.*]]
+-; CHECK:       for.body4.us.2:
++; CHECK:       for.body4.2:
+ ; CHECK-NEXT:    [[INDVARS_IV_2:%.*]] = phi i64 [ [[INDVARS_IV_NEXT_2:%.*]], [[FOR_BODY4_US_2]] ], [ [[INDVARS_IV_PH_2]], [[FOR_BODY4_US_PREHEADER_2]] ]
+ ; CHECK-NEXT:    [[TMP88:%.*]] = add nuw nsw i64 [[INDVARS_IV_2]], 30
+ ; CHECK-NEXT:    [[TMP89:%.*]] = icmp samesign ult i64 [[INDVARS_IV_2]], 195
+@@ -267,7 +254,7 @@ define void @matrix_extract_insert_loop(i32 %i, ptr nonnull align 8 dereferencea
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT_2]] = add nuw nsw i64 [[INDVARS_IV_2]], 1
+ ; CHECK-NEXT:    [[EXITCOND_NOT_2:%.*]] = icmp eq i64 [[INDVARS_IV_NEXT_2]], [[CONV6]]
+ ; CHECK-NEXT:    br i1 [[EXITCOND_NOT_2]], label [[VECTOR_MEMCHECK_3]], label [[FOR_BODY4_US_2]], !llvm.loop [[LOOP10]]
+-; CHECK:       for.cond1.for.cond.cleanup3_crit_edge.us.2:
++; CHECK:       for.cond1.for.cond.cleanup3_crit_edge.2:
+ ; CHECK-NEXT:    [[TMP93:%.*]] = icmp samesign ult i32 [[I]], 180
+ ; CHECK-NEXT:    tail call void @llvm.assume(i1 [[TMP93]])
+ ; CHECK-NEXT:    [[TMP123:%.*]] = getelementptr inbounds nuw [8 x i8], ptr [[B]], i64 [[CONV6]]
+@@ -308,10 +295,10 @@ define void @matrix_extract_insert_loop(i32 %i, ptr nonnull align 8 dereferencea
+ ; CHECK:       middle.block.3:
+ ; CHECK-NEXT:    [[CMP_N_3:%.*]] = icmp eq i64 [[N_VEC_3]], [[CONV6]]
+ ; CHECK-NEXT:    br i1 [[CMP_N_3]], label [[FOR_COND_CLEANUP]], label [[FOR_BODY4_US_PREHEADER_3]]
+-; CHECK:       for.body4.us.preheader.3:
++; CHECK:       for.body4.preheader.3:
+ ; CHECK-NEXT:    [[INDVARS_IV_PH_3:%.*]] = phi i64 [ 0, [[FOR_COND1_FOR_COND_CLEANUP3_CRIT_EDGE_US_2]] ], [ 0, [[VECTOR_MEMCHECK_3]] ], [ [[N_VEC_3]], [[MIDDLE_BLOCK_3]] ]
+ ; CHECK-NEXT:    br label [[FOR_BODY4_US_3:%.*]]
+-; CHECK:       for.body4.us.3:
++; CHECK:       for.body4.3:
+ ; CHECK-NEXT:    [[INDVARS_IV_3:%.*]] = phi i64 [ [[INDVARS_IV_NEXT_3:%.*]], [[FOR_BODY4_US_3]] ], [ [[INDVARS_IV_PH_3]], [[FOR_BODY4_US_PREHEADER_3]] ]
+ ; CHECK-NEXT:    [[TMP119:%.*]] = add nuw nsw i64 [[INDVARS_IV_3]], 45
+ ; CHECK-NEXT:    [[TMP120:%.*]] = icmp samesign ult i64 [[INDVARS_IV_3]], 180
+@@ -327,8 +314,21 @@ define void @matrix_extract_insert_loop(i32 %i, ptr nonnull align 8 dereferencea
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT_3]] = add nuw nsw i64 [[INDVARS_IV_3]], 1
+ ; CHECK-NEXT:    [[EXITCOND_NOT_3:%.*]] = icmp eq i64 [[INDVARS_IV_NEXT_3]], [[CONV6]]
+ ; CHECK-NEXT:    br i1 [[EXITCOND_NOT_3]], label [[FOR_COND_CLEANUP]], label [[FOR_BODY4_US_3]], !llvm.loop [[LOOP10]]
+-; CHECK:       for.cond.cleanup:
+-; CHECK-NEXT:    ret void
++; CHECK:       for.body4:
++; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ [[INDVARS_IV_NEXT:%.*]], [[FOR_BODY4_US]] ], [ [[INDVARS_IV_PH]], [[FOR_BODY4_US_PREHEADER]] ]
++; CHECK-NEXT:    [[TMP68:%.*]] = icmp samesign ult i64 [[INDVARS_IV]], 225
++; CHECK-NEXT:    tail call void @llvm.assume(i1 [[TMP68]])
++; CHECK-NEXT:    [[TMP69:%.*]] = getelementptr inbounds nuw [8 x i8], ptr [[A]], i64 [[INDVARS_IV]]
++; CHECK-NEXT:    [[MATRIXEXT:%.*]] = load double, ptr [[TMP69]], align 8
++; CHECK-NEXT:    [[MATRIXEXT8:%.*]] = load double, ptr [[TMP3]], align 8
++; CHECK-NEXT:    [[MUL:%.*]] = fmul double [[MATRIXEXT]], [[MATRIXEXT8]]
++; CHECK-NEXT:    [[TMP70:%.*]] = getelementptr inbounds nuw [8 x i8], ptr [[B]], i64 [[INDVARS_IV]]
++; CHECK-NEXT:    [[MATRIXEXT11:%.*]] = load double, ptr [[TMP70]], align 8
++; CHECK-NEXT:    [[SUB:%.*]] = fsub double [[MATRIXEXT11]], [[MUL]]
++; CHECK-NEXT:    store double [[SUB]], ptr [[TMP70]], align 8
++; CHECK-NEXT:    [[INDVARS_IV_NEXT]] = add nuw nsw i64 [[INDVARS_IV]], 1
++; CHECK-NEXT:    [[EXITCOND_NOT:%.*]] = icmp eq i64 [[INDVARS_IV_NEXT]], [[CONV6]]
++; CHECK-NEXT:    br i1 [[EXITCOND_NOT]], label [[VECTOR_MEMCHECK_1]], label [[FOR_BODY4_US]], !llvm.loop [[LOOP10]]
+ ;
+ entry:
+   %i.addr = alloca i32, align 4
+diff --git a/llvm/test/Transforms/PhaseOrdering/X86/hoist-load-of-baseptr.ll b/llvm/test/Transforms/PhaseOrdering/X86/hoist-load-of-baseptr.ll
+index 94766a1a83f7b..549b0767e2c5a 100644
+--- a/llvm/test/Transforms/PhaseOrdering/X86/hoist-load-of-baseptr.ll
++++ b/llvm/test/Transforms/PhaseOrdering/X86/hoist-load-of-baseptr.ll
+@@ -19,42 +19,42 @@ define dso_local void @_Z7computeRSt6vectorIiSaIiEEy(ptr noundef nonnull align 8
+ ; O1-NEXT:  [[ENTRY:.*]]:
+ ; O1-NEXT:    [[CMP24_NOT:%.*]] = icmp eq i64 [[NUMELEMS]], 0
+ ; O1-NEXT:    [[TMP0:%.*]] = load ptr, ptr [[DATA]], align 8
+-; O1-NEXT:    br label %[[FOR_COND1_PREHEADER:.*]]
+-; O1:       [[FOR_COND1_PREHEADER]]:
+-; O1-NEXT:    [[I_06:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[INC7:%.*]], %[[FOR_COND_CLEANUP3:.*]] ]
+-; O1-NEXT:    br i1 [[CMP24_NOT]], label %[[FOR_COND_CLEANUP3]], label %[[FOR_BODY4:.*]]
+-; O1:       [[FOR_COND_CLEANUP:.*]]:
+-; O1-NEXT:    ret void
++; O1-NEXT:    br i1 [[CMP24_NOT]], label %[[FOR_COND_CLEANUP3:.*]], label %[[FOR_BODY4:.*]]
++; O1:       [[FOR_BODY4]]:
++; O1-NEXT:    [[I_06:%.*]] = phi i64 [ [[INC7:%.*]], %[[FOR_COND1_FOR_COND_CLEANUP3_CRIT_EDGE:.*]] ], [ 0, %[[ENTRY]] ]
++; O1-NEXT:    br label %[[FOR_BODY5:.*]]
+ ; O1:       [[FOR_COND_CLEANUP3]]:
++; O1-NEXT:    ret void
++; O1:       [[FOR_COND1_FOR_COND_CLEANUP3_CRIT_EDGE]]:
+ ; O1-NEXT:    [[INC7]] = add nuw nsw i64 [[I_06]], 1
+ ; O1-NEXT:    [[EXITCOND7_NOT:%.*]] = icmp eq i64 [[INC7]], 100
+-; O1-NEXT:    br i1 [[EXITCOND7_NOT]], label %[[FOR_COND_CLEANUP]], label %[[FOR_COND1_PREHEADER]], !llvm.loop [[LOOP0:![0-9]+]]
+-; O1:       [[FOR_BODY4]]:
+-; O1-NEXT:    [[J_05:%.*]] = phi i64 [ [[INC5:%.*]], %[[FOR_BODY4]] ], [ 0, %[[FOR_COND1_PREHEADER]] ]
++; O1-NEXT:    br i1 [[EXITCOND7_NOT]], label %[[FOR_COND_CLEANUP3]], label %[[FOR_BODY4]], !llvm.loop [[LOOP0:![0-9]+]]
++; O1:       [[FOR_BODY5]]:
++; O1-NEXT:    [[J_05:%.*]] = phi i64 [ 0, %[[FOR_BODY4]] ], [ [[INC5:%.*]], %[[FOR_BODY5]] ]
+ ; O1-NEXT:    [[ADD_PTR_I:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP0]], i64 [[J_05]]
+ ; O1-NEXT:    [[TMP1:%.*]] = load i32, ptr [[ADD_PTR_I]], align 4, !tbaa [[INT_TBAA2:![0-9]+]]
+ ; O1-NEXT:    [[INC:%.*]] = add nsw i32 [[TMP1]], 1
+ ; O1-NEXT:    store i32 [[INC]], ptr [[ADD_PTR_I]], align 4, !tbaa [[INT_TBAA2]]
+ ; O1-NEXT:    [[INC5]] = add nuw i64 [[J_05]], 1
+ ; O1-NEXT:    [[EXITCOND_NOT:%.*]] = icmp eq i64 [[INC5]], [[NUMELEMS]]
+-; O1-NEXT:    br i1 [[EXITCOND_NOT]], label %[[FOR_COND_CLEANUP3]], label %[[FOR_BODY4]], !llvm.loop [[LOOP6:![0-9]+]]
++; O1-NEXT:    br i1 [[EXITCOND_NOT]], label %[[FOR_COND1_FOR_COND_CLEANUP3_CRIT_EDGE]], label %[[FOR_BODY5]], !llvm.loop [[LOOP6:![0-9]+]]
+ ;
+ ; O2-LABEL: define dso_local void @_Z7computeRSt6vectorIiSaIiEEy(
+ ; O2-SAME: ptr noundef nonnull readonly align 8 captures(none) dereferenceable(24) [[DATA:%.*]], i64 noundef [[NUMELEMS:%.*]]) local_unnamed_addr #[[ATTR0:[0-9]+]] {
+-; O2-NEXT:  [[ENTRY:.*]]:
++; O2-NEXT:  [[ENTRY:.*:]]
+ ; O2-NEXT:    [[CMP24_NOT:%.*]] = icmp eq i64 [[NUMELEMS]], 0
+ ; O2-NEXT:    [[TMP0:%.*]] = load ptr, ptr [[DATA]], align 8
++; O2-NEXT:    br i1 [[CMP24_NOT]], label %[[FOR_COND_CLEANUP:.*]], label %[[FOR_COND1_PREHEADER_PREHEADER:.*]]
++; O2:       [[FOR_COND1_PREHEADER_PREHEADER]]:
+ ; O2-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i64 [[NUMELEMS]], 8
+ ; O2-NEXT:    [[N_VEC:%.*]] = and i64 [[NUMELEMS]], -8
+ ; O2-NEXT:    [[CMP_N:%.*]] = icmp eq i64 [[NUMELEMS]], [[N_VEC]]
+ ; O2-NEXT:    br label %[[FOR_COND1_PREHEADER:.*]]
+ ; O2:       [[FOR_COND1_PREHEADER]]:
+-; O2-NEXT:    [[I_06:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[INC7:%.*]], %[[FOR_COND_CLEANUP3:.*]] ]
+-; O2-NEXT:    br i1 [[CMP24_NOT]], label %[[FOR_COND_CLEANUP3]], label %[[FOR_BODY4_PREHEADER:.*]]
+-; O2:       [[FOR_BODY4_PREHEADER]]:
++; O2-NEXT:    [[I_06:%.*]] = phi i64 [ [[INC7:%.*]], %[[FOR_COND_CLEANUP3:.*]] ], [ 0, %[[FOR_COND1_PREHEADER_PREHEADER]] ]
+ ; O2-NEXT:    br i1 [[MIN_ITERS_CHECK]], label %[[FOR_BODY4_PREHEADER9:.*]], label %[[VECTOR_BODY:.*]]
+ ; O2:       [[VECTOR_BODY]]:
+-; O2-NEXT:    [[INDEX:%.*]] = phi i64 [ [[INDEX_NEXT:%.*]], %[[VECTOR_BODY]] ], [ 0, %[[FOR_BODY4_PREHEADER]] ]
++; O2-NEXT:    [[INDEX:%.*]] = phi i64 [ [[INDEX_NEXT:%.*]], %[[VECTOR_BODY]] ], [ 0, %[[FOR_COND1_PREHEADER]] ]
+ ; O2-NEXT:    [[TMP1:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP0]], i64 [[INDEX]]
+ ; O2-NEXT:    [[TMP2:%.*]] = getelementptr inbounds nuw i8, ptr [[TMP1]], i64 16
+ ; O2-NEXT:    [[WIDE_LOAD:%.*]] = load <4 x i32>, ptr [[TMP1]], align 4, !tbaa [[INT_TBAA0:![0-9]+]]
+@@ -69,9 +69,9 @@ define dso_local void @_Z7computeRSt6vectorIiSaIiEEy(ptr noundef nonnull align 8
+ ; O2:       [[MIDDLE_BLOCK]]:
+ ; O2-NEXT:    br i1 [[CMP_N]], label %[[FOR_COND_CLEANUP3]], label %[[FOR_BODY4_PREHEADER9]]
+ ; O2:       [[FOR_BODY4_PREHEADER9]]:
+-; O2-NEXT:    [[J_05_PH:%.*]] = phi i64 [ 0, %[[FOR_BODY4_PREHEADER]] ], [ [[N_VEC]], %[[MIDDLE_BLOCK]] ]
++; O2-NEXT:    [[J_05_PH:%.*]] = phi i64 [ 0, %[[FOR_COND1_PREHEADER]] ], [ [[N_VEC]], %[[MIDDLE_BLOCK]] ]
+ ; O2-NEXT:    br label %[[FOR_BODY4:.*]]
+-; O2:       [[FOR_COND_CLEANUP:.*]]:
++; O2:       [[FOR_COND_CLEANUP]]:
+ ; O2-NEXT:    ret void
+ ; O2:       [[FOR_COND_CLEANUP3]]:
+ ; O2-NEXT:    [[INC7]] = add nuw nsw i64 [[I_06]], 1
+@@ -117,23 +117,23 @@ define dso_local void @_Z7computeRSt6vectorIiSaIiEEy(ptr noundef nonnull align 8
+ ; O3:       [[MIDDLE_BLOCK]]:
+ ; O3-NEXT:    br i1 [[CMP_N]], label %[[FOR_COND1_FOR_COND_CLEANUP3_CRIT_EDGE_US]], label %[[FOR_BODY4_US_PREHEADER]]
+ ; O3:       [[FOR_BODY4_US_PREHEADER]]:
+-; O3-NEXT:    [[J_05_US_PH:%.*]] = phi i64 [ 0, %[[FOR_COND1_PREHEADER_US]] ], [ [[N_VEC]], %[[MIDDLE_BLOCK]] ]
++; O3-NEXT:    [[J_05_PH:%.*]] = phi i64 [ 0, %[[FOR_COND1_PREHEADER_US]] ], [ [[N_VEC]], %[[MIDDLE_BLOCK]] ]
+ ; O3-NEXT:    br label %[[FOR_BODY4_US:.*]]
+-; O3:       [[FOR_BODY4_US]]:
+-; O3-NEXT:    [[J_05_US:%.*]] = phi i64 [ [[INC5_US:%.*]], %[[FOR_BODY4_US]] ], [ [[J_05_US_PH]], %[[FOR_BODY4_US_PREHEADER]] ]
+-; O3-NEXT:    [[ADD_PTR_I_US:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP0]], i64 [[J_05_US]]
+-; O3-NEXT:    [[TMP6:%.*]] = load i32, ptr [[ADD_PTR_I_US]], align 4, !tbaa [[INT_TBAA0]]
+-; O3-NEXT:    [[INC_US:%.*]] = add nsw i32 [[TMP6]], 1
+-; O3-NEXT:    store i32 [[INC_US]], ptr [[ADD_PTR_I_US]], align 4, !tbaa [[INT_TBAA0]]
+-; O3-NEXT:    [[INC5_US]] = add nuw i64 [[J_05_US]], 1
+-; O3-NEXT:    [[EXITCOND_NOT:%.*]] = icmp eq i64 [[INC5_US]], [[NUMELEMS]]
+-; O3-NEXT:    br i1 [[EXITCOND_NOT]], label %[[FOR_COND1_FOR_COND_CLEANUP3_CRIT_EDGE_US]], label %[[FOR_BODY4_US]], !llvm.loop [[LOOP8:![0-9]+]]
++; O3:       [[FOR_COND_CLEANUP]]:
++; O3-NEXT:    ret void
+ ; O3:       [[FOR_COND1_FOR_COND_CLEANUP3_CRIT_EDGE_US]]:
+ ; O3-NEXT:    [[INC7_US]] = add nuw nsw i64 [[I_06_US]], 1
+ ; O3-NEXT:    [[EXITCOND8_NOT:%.*]] = icmp eq i64 [[INC7_US]], 100
+-; O3-NEXT:    br i1 [[EXITCOND8_NOT]], label %[[FOR_COND_CLEANUP]], label %[[FOR_COND1_PREHEADER_US]], !llvm.loop [[LOOP9:![0-9]+]]
+-; O3:       [[FOR_COND_CLEANUP]]:
+-; O3-NEXT:    ret void
++; O3-NEXT:    br i1 [[EXITCOND8_NOT]], label %[[FOR_COND_CLEANUP]], label %[[FOR_COND1_PREHEADER_US]], !llvm.loop [[LOOP8:![0-9]+]]
++; O3:       [[FOR_BODY4_US]]:
++; O3-NEXT:    [[J_05:%.*]] = phi i64 [ [[INC5:%.*]], %[[FOR_BODY4_US]] ], [ [[J_05_PH]], %[[FOR_BODY4_US_PREHEADER]] ]
++; O3-NEXT:    [[ADD_PTR_I:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP0]], i64 [[J_05]]
++; O3-NEXT:    [[TMP6:%.*]] = load i32, ptr [[ADD_PTR_I]], align 4, !tbaa [[INT_TBAA0]]
++; O3-NEXT:    [[INC:%.*]] = add nsw i32 [[TMP6]], 1
++; O3-NEXT:    store i32 [[INC]], ptr [[ADD_PTR_I]], align 4, !tbaa [[INT_TBAA0]]
++; O3-NEXT:    [[INC5]] = add nuw i64 [[J_05]], 1
++; O3-NEXT:    [[EXITCOND_NOT:%.*]] = icmp eq i64 [[INC5]], [[NUMELEMS]]
++; O3-NEXT:    br i1 [[EXITCOND_NOT]], label %[[FOR_COND1_FOR_COND_CLEANUP3_CRIT_EDGE_US]], label %[[FOR_BODY4_US]], !llvm.loop [[LOOP9:![0-9]+]]
+ ;
+ entry:
+   %data.addr = alloca ptr, align 8
+@@ -265,6 +265,6 @@ declare void @llvm.lifetime.end.p0(ptr nocapture)
+ ; O3: [[META5]] = !{!"llvm.loop.mustprogress"}
+ ; O3: [[META6]] = !{!"llvm.loop.isvectorized", i32 1}
+ ; O3: [[META7]] = !{!"llvm.loop.unroll.runtime.disable"}
+-; O3: [[LOOP8]] = distinct !{[[LOOP8]], [[META5]], [[META7]], [[META6]]}
+-; O3: [[LOOP9]] = distinct !{[[LOOP9]], [[META5]]}
++; O3: [[LOOP8]] = distinct !{[[LOOP8]], [[META5]]}
++; O3: [[LOOP9]] = distinct !{[[LOOP9]], [[META5]], [[META7]], [[META6]]}
+ ;.
+diff --git a/llvm/test/Transforms/PhaseOrdering/unswitch-cold-func.ll b/llvm/test/Transforms/PhaseOrdering/unswitch-cold-func.ll
+index a6ebdf052411d..531869c1c113b 100644
+--- a/llvm/test/Transforms/PhaseOrdering/unswitch-cold-func.ll
++++ b/llvm/test/Transforms/PhaseOrdering/unswitch-cold-func.ll
+@@ -3,8 +3,9 @@
+ ; RUN: opt < %s -passes='pgo-force-function-attrs,function(loop-mssa(simple-loop-unswitch<nontrivial>))' -pgo-kind=pgo-instr-use-pipeline -pgo-cold-func-opt=optsize -S | FileCheck %s
+ ; RUN: opt < %s -passes='pgo-force-function-attrs,function(loop-mssa(simple-loop-unswitch<nontrivial>))' -pgo-kind=pgo-instr-use-pipeline -pgo-cold-func-opt=minsize -S | FileCheck %s
+ 
+-;; Check that non-trivial loop unswitching is not applied to a cold loop in a
+-;; cold loop nest.
++;; Check that trivial loop unswitching is applied to a cold loop in a
++;; cold loop nest. Another testcase, unswitch-cold-func.ll, ensures that
++;; non-trivial unswitching is not applied to a cold loop.
+ 
+ ;; IR was generated from the following loop nest, profiled when called
+ ;; with M=0 and N=0.
+@@ -18,19 +19,23 @@
+ 
+ define void @_Z11functionbiiPiS_S_(i1 %cond, i32 %M, i32 %N, ptr %A, ptr %B, ptr %C) !prof !36 {
+ ; CHECK-LABEL: define void @_Z11functionbiiPiS_S_
+-; CHECK-SAME: (i1 [[COND:%.*]], i32 [[M:%.*]], i32 [[N:%.*]], ptr [[A:%.*]], ptr [[B:%.*]], ptr [[C:%.*]]) {{.*}}{
++; CHECK-SAME: (i1 [[COND:%.*]], i32 [[M:%.*]], i32 [[N:%.*]], ptr [[A:%.*]], ptr [[B:%.*]], ptr [[C:%.*]]) #[[ATTR0:[0-9]+]] {{.*}}{
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[CMP19_NOT:%.*]] = icmp eq i32 [[M]], 0
+ ; CHECK-NEXT:    br i1 [[CMP19_NOT]], label [[FOR_COND_CLEANUP:%.*]], label [[FOR_COND1_PREHEADER_LR_PH:%.*]], !prof [[PROF17:![0-9]+]]
+ ; CHECK:       for.cond1.preheader.lr.ph:
+ ; CHECK-NEXT:    [[CMP217_NOT:%.*]] = icmp eq i32 [[N]], 0
++; CHECK-NEXT:    br i1 [[CMP217_NOT]], label [[FOR_COND_CLEANUP_LOOPEXIT_SPLIT:%.*]], label [[FOR_COND1_PREHEADER_LR_PH_SPLIT:%.*]]
++; CHECK:       for.cond1.preheader.lr.ph.split:
+ ; CHECK-NEXT:    br label [[FOR_COND1_PREHEADER:%.*]]
+ ; CHECK:       for.cond1.preheader:
+-; CHECK-NEXT:    [[J_020:%.*]] = phi i32 [ 0, [[FOR_COND1_PREHEADER_LR_PH]] ], [ [[INC10:%.*]], [[FOR_COND_CLEANUP3:%.*]] ]
+-; CHECK-NEXT:    br i1 [[CMP217_NOT]], label [[FOR_COND_CLEANUP3]], label [[FOR_BODY4_PREHEADER:%.*]]
++; CHECK-NEXT:    [[J_020:%.*]] = phi i32 [ 0, [[FOR_COND1_PREHEADER_LR_PH_SPLIT]] ], [ [[INC10:%.*]], [[FOR_COND_CLEANUP3:%.*]] ]
++; CHECK-NEXT:    br label [[FOR_BODY4_PREHEADER:%.*]]
+ ; CHECK:       for.body4.preheader:
+ ; CHECK-NEXT:    br label [[FOR_BODY4:%.*]]
+ ; CHECK:       for.cond.cleanup.loopexit:
++; CHECK-NEXT:    br label [[FOR_COND_CLEANUP_LOOPEXIT_SPLIT]]
++; CHECK:       for.cond.cleanup.loopexit.split:
+ ; CHECK-NEXT:    br label [[FOR_COND_CLEANUP]]
+ ; CHECK:       for.cond.cleanup:
+ ; CHECK-NEXT:    ret void
+diff --git a/llvm/test/Transforms/PhaseOrdering/unswitch-nontrivial-cold-func.ll b/llvm/test/Transforms/PhaseOrdering/unswitch-nontrivial-cold-func.ll
+new file mode 100644
+index 0000000000000..6b84b45ef4772
+--- /dev/null
++++ b/llvm/test/Transforms/PhaseOrdering/unswitch-nontrivial-cold-func.ll
+@@ -0,0 +1,114 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --scrub-attributes --version 2
++
++; RUN: opt < %s -passes='pgo-force-function-attrs,function(loop-mssa(simple-loop-unswitch<nontrivial>))' -pgo-kind=pgo-instr-use-pipeline -pgo-cold-func-opt=optsize -S | FileCheck %s
++; RUN: opt < %s -passes='pgo-force-function-attrs,function(loop-mssa(simple-loop-unswitch<nontrivial>))' -pgo-kind=pgo-instr-use-pipeline -pgo-cold-func-opt=minsize -S | FileCheck %s
++
++;; Check that genuinely non-trivial loop unswitching - where the optimizer
++;; would have to duplicate the entire loop body - is suppressed for cold
++;; (optsize/minsize) functions.
++;;
++;; The branch on %cond in the loop header is loop-invariant, but both of its
++;; successors (if.then, if.else) stay inside the loop, so unswitching it
++;; requires producing two full copies of the loop.  That code-size increase
++;; must be blocked when the function is cold.
++;;
++;; Contrast with unswitch-cold-func.ll, where the invariant condition can be
++;; hoisted via a latch-bypass rewrite that introduces no code duplication and
++;; is therefore allowed even for cold functions.
++;;
++;; Source:
++;;   void function(bool cond, int N, int *A, int *B) {
++;;     for (int i = 0; i < N; i++) {
++;;       if (cond) A[i]++;
++;;       else      B[i]++;
++;;     }
++;;   }
++;; profiled when called with N=0 (cold).
++
++define void @function(i1 %cond, i32 %N, ptr %A, ptr %B) !prof !16 {
++; CHECK-LABEL: define void @function
++; CHECK-SAME: (i1 [[COND:%.*]], i32 [[N:%.*]], ptr [[A:%.*]], ptr [[B:%.*]]) #[[ATTR0:[0-9]+]] {{.*}}{
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[CMP_NOT:%.*]] = icmp sle i32 [[N]], 0
++; CHECK-NEXT:    br i1 [[CMP_NOT]], label [[EXIT:%.*]], label [[LOOP_PREHEADER:%.*]], !prof [[PROF17:![0-9]+]]
++; CHECK:       loop.preheader:
++; CHECK-NEXT:    br label [[LOOP_HEADER:%.*]]
++; CHECK:       loop.header:
++; CHECK-NEXT:    [[I:%.*]] = phi i32 [ 0, [[LOOP_PREHEADER]] ], [ [[I_NEXT:%.*]], [[LOOP_LATCH:%.*]] ]
++; CHECK-NEXT:    br i1 [[COND]], label [[IF_THEN:%.*]], label [[IF_ELSE:%.*]]
++; CHECK:       if.then:
++; CHECK-NEXT:    [[GEP_A:%.*]] = getelementptr inbounds i32, ptr [[A]], i32 [[I]]
++; CHECK-NEXT:    [[VAL_A:%.*]] = load i32, ptr [[GEP_A]], align 4
++; CHECK-NEXT:    [[INC_A:%.*]] = add i32 [[VAL_A]], 1
++; CHECK-NEXT:    store i32 [[INC_A]], ptr [[GEP_A]], align 4
++; CHECK-NEXT:    br label [[LOOP_LATCH]]
++; CHECK:       if.else:
++; CHECK-NEXT:    [[GEP_B:%.*]] = getelementptr inbounds i32, ptr [[B]], i32 [[I]]
++; CHECK-NEXT:    [[VAL_B:%.*]] = load i32, ptr [[GEP_B]], align 4
++; CHECK-NEXT:    [[INC_B:%.*]] = add i32 [[VAL_B]], 1
++; CHECK-NEXT:    store i32 [[INC_B]], ptr [[GEP_B]], align 4
++; CHECK-NEXT:    br label [[LOOP_LATCH]]
++; CHECK:       loop.latch:
++; CHECK-NEXT:    [[I_NEXT]] = add nuw i32 [[I]], 1
++; CHECK-NEXT:    [[EXITCOND_NOT:%.*]] = icmp eq i32 [[I_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EXITCOND_NOT]], label [[EXIT_LOOPEXIT:%.*]], label [[LOOP_HEADER]], !prof [[PROF17]]
++; CHECK:       exit.loopexit:
++; CHECK-NEXT:    br label [[EXIT]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %cmp.not = icmp sle i32 %N, 0
++  br i1 %cmp.not, label %exit, label %loop.preheader, !prof !17
++
++loop.preheader:
++  br label %loop.header
++
++loop.header:
++  %i = phi i32 [ 0, %loop.preheader ], [ %i.next, %loop.latch ]
++  br i1 %cond, label %if.then, label %if.else
++
++if.then:
++  %gep.a = getelementptr inbounds i32, ptr %A, i32 %i
++  %val.a = load i32, ptr %gep.a, align 4
++  %inc.a = add i32 %val.a, 1
++  store i32 %inc.a, ptr %gep.a, align 4
++  br label %loop.latch
++
++if.else:
++  %gep.b = getelementptr inbounds i32, ptr %B, i32 %i
++  %val.b = load i32, ptr %gep.b, align 4
++  %inc.b = add i32 %val.b, 1
++  store i32 %inc.b, ptr %gep.b, align 4
++  br label %loop.latch
++
++loop.latch:
++  %i.next = add nuw i32 %i, 1
++  %exitcond.not = icmp eq i32 %i.next, %N
++  br i1 %exitcond.not, label %exit, label %loop.header, !prof !17
++
++exit:
++  ret void
++}
++
++!llvm.module.flags = !{!0}
++
++!0  = !{i32 1, !"ProfileSummary", !1}
++!1  = !{!2, !3, !4, !5, !6, !7, !8, !9, !10, !11}
++!2  = !{!"ProfileFormat",       !"InstrProf"}
++!3  = !{!"TotalCount",          i64 1002}
++!4  = !{!"MaxCount",            i64 1000}
++!5  = !{!"MaxInternalCount",    i64 1000}
++!6  = !{!"MaxFunctionCount",    i64 1}
++!7  = !{!"NumCounts",           i64 6}
++!8  = !{!"NumFunctions",        i64 3}
++!9  = !{!"IsPartialProfile",    i64 0}
++!10 = !{!"PartialProfileRatio", double 0.000000e+00}
++!11 = !{!"DetailedSummary",     !12}
++!12 = !{!13, !14, !15}
++!13 = !{i32 10000,  i64 1000, i32 1}
++!14 = !{i32 999000, i64 1000, i32 1}
++!15 = !{i32 999999, i64 1,    i32 3}
++!16 = !{!"function_entry_count", i64 1}
++!17 = !{!"branch_weights", i32 1, i32 0}
++
+diff --git a/llvm/test/Transforms/SimpleLoopUnswitch/AMDGPU/uniform-unswitch.ll b/llvm/test/Transforms/SimpleLoopUnswitch/AMDGPU/uniform-unswitch.ll
+index 455eb062a7272..f5e330b90d940 100644
+--- a/llvm/test/Transforms/SimpleLoopUnswitch/AMDGPU/uniform-unswitch.ll
++++ b/llvm/test/Transforms/SimpleLoopUnswitch/AMDGPU/uniform-unswitch.ll
+@@ -20,7 +20,7 @@
+ 
+ define amdgpu_kernel void @uniform_unswitch(ptr nocapture %out, i32 %n, i32 %x) {
+ ; CHECK-LABEL: define amdgpu_kernel void @uniform_unswitch(
+-; CHECK-SAME: ptr writeonly captures(none) [[OUT:%.*]], i32 [[N:%.*]], i32 [[X:%.*]]) local_unnamed_addr #[[ATTR0:[0-9]+]] {
++; CHECK-SAME: ptr captures(none) [[OUT:%.*]], i32 [[N:%.*]], i32 [[X:%.*]]) local_unnamed_addr #[[ATTR0:[0-9]+]] {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[OUT_GLOBAL:%.*]] = addrspacecast ptr [[OUT]] to ptr addrspace(1)
+ ; CHECK-NEXT:    [[CMP6:%.*]] = icmp sgt i32 [[N]], 0
+@@ -32,12 +32,16 @@ define amdgpu_kernel void @uniform_unswitch(ptr nocapture %out, i32 %n, i32 %x)
+ ; CHECK-NEXT:    ret void
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[I_07:%.*]] = phi i32 [ 0, [[FOR_BODY_LR_PH]] ], [ [[INC:%.*]], [[FOR_INC:%.*]] ]
+-; CHECK-NEXT:    br i1 [[CMP1]], label [[IF_THEN:%.*]], label [[FOR_INC]]
+-; CHECK:       if.then:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = zext nneg i32 [[I_07]] to i64
+ ; CHECK-NEXT:    [[ARRAYIDX:%.*]] = getelementptr inbounds nuw [4 x i8], ptr addrspace(1) [[OUT_GLOBAL]], i64 [[TMP0]]
++; CHECK-NEXT:    br i1 [[CMP1]], label [[IF_THEN:%.*]], label [[IF_ELSE:%.*]]
++; CHECK:       if.then:
+ ; CHECK-NEXT:    store i32 [[I_07]], ptr addrspace(1) [[ARRAYIDX]], align 4
+ ; CHECK-NEXT:    br label [[FOR_INC]]
++; CHECK:       if.else:
++; CHECK-NEXT:    [[TMP2:%.*]] = addrspacecast ptr addrspace(1) [[ARRAYIDX]] to ptr
++; CHECK-NEXT:    store volatile i32 0, ptr [[TMP2]], align 4
++; CHECK-NEXT:    br label [[FOR_INC]]
+ ; CHECK:       for.inc:
+ ; CHECK-NEXT:    [[INC]] = add nuw nsw i32 [[I_07]], 1
+ ; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp eq i32 [[INC]], [[N]]
+@@ -59,14 +63,19 @@ for.cond.cleanup:                                 ; preds = %for.cond.cleanup.lo
+ 
+ for.body:                                         ; preds = %for.inc, %for.body.lr.ph
+   %i.07 = phi i32 [ 0, %for.body.lr.ph ], [ %inc, %for.inc ]
+-  br i1 %cmp1, label %if.then, label %for.inc
++  br i1 %cmp1, label %if.then, label %if.else
+ 
+ if.then:                                          ; preds = %for.body
+   %arrayidx = getelementptr inbounds i32, ptr %out, i32 %i.07
+   store i32 %i.07, ptr %arrayidx, align 4
+   br label %for.inc
+ 
+-for.inc:                                          ; preds = %for.body, %if.then
++if.else:                                          ; preds = %for.body
++  %arrayidx2 = getelementptr inbounds i32, ptr %out, i32 %i.07
++  store volatile i32 0, ptr %arrayidx2, align 4
++  br label %for.inc
++
++for.inc:                                          ; preds = %if.else, %if.then
+   %inc = add nuw nsw i32 %i.07, 1
+   %exitcond = icmp eq i32 %inc, %n
+   br i1 %exitcond, label %for.cond.cleanup.loopexit, label %for.body, !llvm.loop !0
+diff --git a/llvm/test/Transforms/SimpleLoopUnswitch/PGO-nontrivial-unswitch2.ll b/llvm/test/Transforms/SimpleLoopUnswitch/PGO-nontrivial-unswitch2.ll
+index ad674ed11d3d8..3b4478f2dc900 100644
+--- a/llvm/test/Transforms/SimpleLoopUnswitch/PGO-nontrivial-unswitch2.ll
++++ b/llvm/test/Transforms/SimpleLoopUnswitch/PGO-nontrivial-unswitch2.ll
+@@ -17,39 +17,28 @@
+ 
+ define void @_Z11hotFunctionbiiPiS_S_(i1 %cond, i32 %M, i32 %N, ptr %A, ptr %B, ptr %C) !prof !36 {
+ ; CHECK-LABEL: define void @_Z11hotFunctionbiiPiS_S_
+-; CHECK-SAME: (i1 [[COND:%.*]], i32 [[M:%.*]], i32 [[N:%.*]], ptr [[A:%.*]], ptr [[B:%.*]], ptr [[C:%.*]]) !prof [[PROF33:![0-9]+]] {
++; CHECK-SAME: (i1 [[COND:%.*]], i32 [[M:%.*]], i32 [[N:%.*]], ptr [[A:%.*]], ptr [[B:%.*]], ptr [[C:%.*]]) {{.*}}{
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[CMP19_NOT:%.*]] = icmp eq i32 [[M]], 0
+-; CHECK-NEXT:    br i1 [[CMP19_NOT]], label [[FOR_COND_CLEANUP:%.*]], label [[FOR_COND1_PREHEADER_LR_PH:%.*]], !prof [[PROF34:![0-9]+]]
++; CHECK-NEXT:    br i1 [[CMP19_NOT]], label [[FOR_COND_CLEANUP:%.*]], label [[FOR_COND1_PREHEADER_LR_PH:%.*]], !prof [[PROF17:![0-9]+]]
+ ; CHECK:       for.cond1.preheader.lr.ph:
+ ; CHECK-NEXT:    [[CMP217_NOT:%.*]] = icmp eq i32 [[N]], 0
+-; CHECK-NEXT:    br i1 [[CMP217_NOT]], label [[FOR_COND1_PREHEADER_LR_PH_SPLIT_US:%.*]], label [[FOR_COND1_PREHEADER_LR_PH_SPLIT:%.*]], !prof [[PROF35:![0-9]+]]
+-; CHECK:       for.cond1.preheader.lr.ph.split.us:
++; CHECK-NEXT:    br i1 [[CMP217_NOT]], label [[FOR_COND_CLEANUP_LOOPEXIT_SPLIT:%.*]], label [[FOR_COND1_PREHEADER_LR_PH_SPLIT:%.*]], !prof [[PROF18:![0-9]+]]
++; CHECK:       for.cond1.preheader.lr.ph.split:
++; CHECK-NEXT:    br i1 [[COND]], label [[FOR_COND1_PREHEADER_LR_PH_SPLIT_SPLIT_US:%.*]], label [[FOR_COND1_PREHEADER_LR_PH_SPLIT_SPLIT:%.*]]
++; CHECK:       for.cond1.preheader.lr.ph.split.split.us:
+ ; CHECK-NEXT:    br label [[FOR_COND1_PREHEADER_US:%.*]]
+ ; CHECK:       for.cond1.preheader.us:
+-; CHECK-NEXT:    [[J_020_US:%.*]] = phi i32 [ 0, [[FOR_COND1_PREHEADER_LR_PH_SPLIT_US]] ], [ [[INC10_US:%.*]], [[FOR_COND_CLEANUP3_US:%.*]] ]
+-; CHECK-NEXT:    br label [[FOR_COND_CLEANUP3_US]]
++; CHECK-NEXT:    [[J_020_US:%.*]] = phi i32 [ 0, [[FOR_COND1_PREHEADER_LR_PH_SPLIT_SPLIT_US]] ], [ [[INC10_US:%.*]], [[FOR_COND_CLEANUP3_US:%.*]] ]
++; CHECK-NEXT:    br label [[FOR_BODY4_PREHEADER_US:%.*]]
+ ; CHECK:       for.cond.cleanup3.us:
+ ; CHECK-NEXT:    [[INC10_US]] = add nuw i32 [[J_020_US]], 1
+ ; CHECK-NEXT:    [[EXITCOND22_NOT_US:%.*]] = icmp eq i32 [[INC10_US]], [[M]]
+-; CHECK-NEXT:    br i1 [[EXITCOND22_NOT_US]], label [[FOR_COND_CLEANUP_LOOPEXIT_SPLIT_US:%.*]], label [[FOR_COND1_PREHEADER_US]], !prof [[PROF34]]
+-; CHECK:       for.cond.cleanup.loopexit.split.us:
+-; CHECK-NEXT:    br label [[FOR_COND_CLEANUP_LOOPEXIT:%.*]]
+-; CHECK:       for.cond1.preheader.lr.ph.split:
+-; CHECK-NEXT:    br i1 [[COND]], label [[FOR_COND1_PREHEADER_LR_PH_SPLIT_SPLIT_US:%.*]], label [[FOR_COND1_PREHEADER_LR_PH_SPLIT_SPLIT:%.*]]
+-; CHECK:       for.cond1.preheader.lr.ph.split.split.us:
+-; CHECK-NEXT:    br label [[FOR_COND1_PREHEADER_US1:%.*]]
+-; CHECK:       for.cond1.preheader.us1:
+-; CHECK-NEXT:    [[J_020_US2:%.*]] = phi i32 [ 0, [[FOR_COND1_PREHEADER_LR_PH_SPLIT_SPLIT_US]] ], [ [[INC10_US4:%.*]], [[FOR_COND_CLEANUP3_US3:%.*]] ]
+-; CHECK-NEXT:    br label [[FOR_BODY4_PREHEADER_US:%.*]]
+-; CHECK:       for.cond.cleanup3.us3:
+-; CHECK-NEXT:    [[INC10_US4]] = add nuw i32 [[J_020_US2]], 1
+-; CHECK-NEXT:    [[EXITCOND22_NOT_US5:%.*]] = icmp eq i32 [[INC10_US4]], [[M]]
+-; CHECK-NEXT:    br i1 [[EXITCOND22_NOT_US5]], label [[FOR_COND_CLEANUP_LOOPEXIT_SPLIT_SPLIT_US:%.*]], label [[FOR_COND1_PREHEADER_US1]], !prof [[PROF34]]
++; CHECK-NEXT:    br i1 [[EXITCOND22_NOT_US]], label [[FOR_COND_CLEANUP_LOOPEXIT_SPLIT2_US:%.*]], label [[FOR_COND1_PREHEADER_US]], !prof [[PROF17]]
+ ; CHECK:       for.body4.preheader.us:
+ ; CHECK-NEXT:    br label [[FOR_BODY4_PREHEADER_SPLIT_US_US:%.*]]
+ ; CHECK:       for.cond.cleanup3.loopexit.us:
+-; CHECK-NEXT:    br label [[FOR_COND_CLEANUP3_US3]]
++; CHECK-NEXT:    br label [[FOR_COND_CLEANUP3_US]]
+ ; CHECK:       for.body4.preheader.split.us.us:
+ ; CHECK-NEXT:    br label [[FOR_BODY4_US_US:%.*]]
+ ; CHECK:       for.body4.us.us:
+@@ -69,11 +58,11 @@ define void @_Z11hotFunctionbiiPiS_S_(i1 %cond, i32 %M, i32 %N, ptr %A, ptr %B,
+ ; CHECK-NEXT:    [[WIDE_TRIP_COUNT_US_US:%.*]] = zext i32 [[N]] to i64
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT_US_US]] = add nuw nsw i64 [[INDVARS_IV_US_US]], 1
+ ; CHECK-NEXT:    [[EXITCOND_NOT_US_US:%.*]] = icmp eq i64 [[INDVARS_IV_NEXT_US_US]], [[WIDE_TRIP_COUNT_US_US]]
+-; CHECK-NEXT:    br i1 [[EXITCOND_NOT_US_US]], label [[FOR_COND_CLEANUP3_LOOPEXIT_SPLIT_US_US:%.*]], label [[FOR_BODY4_US_US]], !prof [[PROF35]]
++; CHECK-NEXT:    br i1 [[EXITCOND_NOT_US_US]], label [[FOR_COND_CLEANUP3_LOOPEXIT_SPLIT_US_US:%.*]], label [[FOR_BODY4_US_US]], !prof [[PROF18]]
+ ; CHECK:       for.cond.cleanup3.loopexit.split.us.us:
+ ; CHECK-NEXT:    br label [[FOR_COND_CLEANUP3_LOOPEXIT_US:%.*]]
+-; CHECK:       for.cond.cleanup.loopexit.split.split.us:
+-; CHECK-NEXT:    br label [[FOR_COND_CLEANUP_LOOPEXIT_SPLIT:%.*]]
++; CHECK:       for.cond.cleanup.loopexit.split2.us:
++; CHECK-NEXT:    br label [[FOR_COND_CLEANUP_LOOPEXIT:%.*]]
+ ; CHECK:       for.cond1.preheader.lr.ph.split.split:
+ ; CHECK-NEXT:    br label [[FOR_COND1_PREHEADER:%.*]]
+ ; CHECK:       for.cond1.preheader:
+@@ -83,11 +72,11 @@ define void @_Z11hotFunctionbiiPiS_S_(i1 %cond, i32 %M, i32 %N, ptr %A, ptr %B,
+ ; CHECK-NEXT:    br label [[FOR_BODY4_PREHEADER_SPLIT:%.*]]
+ ; CHECK:       for.body4.preheader.split:
+ ; CHECK-NEXT:    br label [[FOR_BODY4:%.*]]
+-; CHECK:       for.cond.cleanup.loopexit.split.split:
+-; CHECK-NEXT:    br label [[FOR_COND_CLEANUP_LOOPEXIT_SPLIT]]
+-; CHECK:       for.cond.cleanup.loopexit.split:
++; CHECK:       for.cond.cleanup.loopexit.split2:
+ ; CHECK-NEXT:    br label [[FOR_COND_CLEANUP_LOOPEXIT]]
+ ; CHECK:       for.cond.cleanup.loopexit:
++; CHECK-NEXT:    br label [[FOR_COND_CLEANUP_LOOPEXIT_SPLIT]]
++; CHECK:       for.cond.cleanup.loopexit.split:
+ ; CHECK-NEXT:    br label [[FOR_COND_CLEANUP]]
+ ; CHECK:       for.cond.cleanup:
+ ; CHECK-NEXT:    ret void
+@@ -98,7 +87,7 @@ define void @_Z11hotFunctionbiiPiS_S_(i1 %cond, i32 %M, i32 %N, ptr %A, ptr %B,
+ ; CHECK:       for.cond.cleanup3:
+ ; CHECK-NEXT:    [[INC10]] = add nuw i32 [[J_020]], 1
+ ; CHECK-NEXT:    [[EXITCOND22_NOT:%.*]] = icmp eq i32 [[INC10]], [[M]]
+-; CHECK-NEXT:    br i1 [[EXITCOND22_NOT]], label [[FOR_COND_CLEANUP_LOOPEXIT_SPLIT_SPLIT:%.*]], label [[FOR_COND1_PREHEADER]], !prof [[PROF34]]
++; CHECK-NEXT:    br i1 [[EXITCOND22_NOT]], label [[FOR_COND_CLEANUP_LOOPEXIT_SPLIT2:%.*]], label [[FOR_COND1_PREHEADER]], !prof [[PROF17]]
+ ; CHECK:       for.body4:
+ ; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ [[INDVARS_IV_NEXT:%.*]], [[FOR_INC:%.*]] ], [ 0, [[FOR_BODY4_PREHEADER_SPLIT]] ]
+ ; CHECK-NEXT:    [[ARRAYIDX:%.*]] = getelementptr inbounds i32, ptr [[B]], i64 [[INDVARS_IV]]
+@@ -113,7 +102,7 @@ define void @_Z11hotFunctionbiiPiS_S_(i1 %cond, i32 %M, i32 %N, ptr %A, ptr %B,
+ ; CHECK-NEXT:    [[WIDE_TRIP_COUNT:%.*]] = zext i32 [[N]] to i64
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT]] = add nuw nsw i64 [[INDVARS_IV]], 1
+ ; CHECK-NEXT:    [[EXITCOND_NOT:%.*]] = icmp eq i64 [[INDVARS_IV_NEXT]], [[WIDE_TRIP_COUNT]]
+-; CHECK-NEXT:    br i1 [[EXITCOND_NOT]], label [[FOR_COND_CLEANUP3_LOOPEXIT_SPLIT:%.*]], label [[FOR_BODY4]], !prof [[PROF35]]
++; CHECK-NEXT:    br i1 [[EXITCOND_NOT]], label [[FOR_COND_CLEANUP3_LOOPEXIT_SPLIT:%.*]], label [[FOR_BODY4]], !prof [[PROF18]]
+ ;
+ entry:
+   %cmp19.not = icmp eq i32 %M, 0
+diff --git a/llvm/test/Transforms/SimpleLoopUnswitch/PGO-nontrivial-unswitch3.ll b/llvm/test/Transforms/SimpleLoopUnswitch/PGO-nontrivial-unswitch3.ll
+index 59b8404b3e9ef..f07b1e71239cb 100644
+--- a/llvm/test/Transforms/SimpleLoopUnswitch/PGO-nontrivial-unswitch3.ll
++++ b/llvm/test/Transforms/SimpleLoopUnswitch/PGO-nontrivial-unswitch3.ll
+@@ -17,39 +17,28 @@
+ 
+ define void @_Z11hotFunctionbiiPiS_S_(i1 %cond, i32 %M, i32 %N, ptr %A, ptr %B, ptr %C) !prof !36 {
+ ; CHECK-LABEL: define void @_Z11hotFunctionbiiPiS_S_
+-; CHECK-SAME: (i1 [[COND:%.*]], i32 [[M:%.*]], i32 [[N:%.*]], ptr [[A:%.*]], ptr [[B:%.*]], ptr [[C:%.*]]) !prof [[PROF18:![0-9]+]] {
++; CHECK-SAME: (i1 [[COND:%.*]], i32 [[M:%.*]], i32 [[N:%.*]], ptr [[A:%.*]], ptr [[B:%.*]], ptr [[C:%.*]]) {{.*}}{
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[CMP19_NOT:%.*]] = icmp eq i32 [[M]], 0
+ ; CHECK-NEXT:    br i1 [[CMP19_NOT]], label [[FOR_COND_CLEANUP:%.*]], label [[FOR_COND1_PREHEADER_LR_PH:%.*]], !prof [[PROF19:![0-9]+]]
+ ; CHECK:       for.cond1.preheader.lr.ph:
+ ; CHECK-NEXT:    [[CMP217_NOT:%.*]] = icmp eq i32 [[N]], 0
+-; CHECK-NEXT:    br i1 [[CMP217_NOT]], label [[FOR_COND1_PREHEADER_LR_PH_SPLIT_US:%.*]], label [[FOR_COND1_PREHEADER_LR_PH_SPLIT:%.*]], !prof [[PROF20:![0-9]+]]
+-; CHECK:       for.cond1.preheader.lr.ph.split.us:
++; CHECK-NEXT:    br i1 [[CMP217_NOT]], label [[FOR_COND_CLEANUP_LOOPEXIT_SPLIT:%.*]], label [[FOR_COND1_PREHEADER_LR_PH_SPLIT:%.*]], !prof [[PROF20:![0-9]+]]
++; CHECK:       for.cond1.preheader.lr.ph.split:
++; CHECK-NEXT:    br i1 [[COND]], label [[FOR_COND1_PREHEADER_LR_PH_SPLIT_SPLIT_US:%.*]], label [[FOR_COND1_PREHEADER_LR_PH_SPLIT_SPLIT:%.*]]
++; CHECK:       for.cond1.preheader.lr.ph.split.split.us:
+ ; CHECK-NEXT:    br label [[FOR_COND1_PREHEADER_US:%.*]]
+ ; CHECK:       for.cond1.preheader.us:
+-; CHECK-NEXT:    [[J_020_US:%.*]] = phi i32 [ 0, [[FOR_COND1_PREHEADER_LR_PH_SPLIT_US]] ], [ [[INC10_US:%.*]], [[FOR_COND_CLEANUP3_US:%.*]] ]
+-; CHECK-NEXT:    br label [[FOR_COND_CLEANUP3_US]]
++; CHECK-NEXT:    [[J_020_US:%.*]] = phi i32 [ 0, [[FOR_COND1_PREHEADER_LR_PH_SPLIT_SPLIT_US]] ], [ [[INC10_US:%.*]], [[FOR_COND_CLEANUP3_US:%.*]] ]
++; CHECK-NEXT:    br label [[FOR_BODY4_PREHEADER_US:%.*]]
+ ; CHECK:       for.cond.cleanup3.us:
+ ; CHECK-NEXT:    [[INC10_US]] = add nuw i32 [[J_020_US]], 1
+ ; CHECK-NEXT:    [[EXITCOND22_NOT_US:%.*]] = icmp eq i32 [[INC10_US]], [[M]]
+-; CHECK-NEXT:    br i1 [[EXITCOND22_NOT_US]], label [[FOR_COND_CLEANUP_LOOPEXIT_SPLIT_US:%.*]], label [[FOR_COND1_PREHEADER_US]], !prof [[PROF19]]
+-; CHECK:       for.cond.cleanup.loopexit.split.us:
+-; CHECK-NEXT:    br label [[FOR_COND_CLEANUP_LOOPEXIT:%.*]]
+-; CHECK:       for.cond1.preheader.lr.ph.split:
+-; CHECK-NEXT:    br i1 [[COND]], label [[FOR_COND1_PREHEADER_LR_PH_SPLIT_SPLIT_US:%.*]], label [[FOR_COND1_PREHEADER_LR_PH_SPLIT_SPLIT:%.*]]
+-; CHECK:       for.cond1.preheader.lr.ph.split.split.us:
+-; CHECK-NEXT:    br label [[FOR_COND1_PREHEADER_US1:%.*]]
+-; CHECK:       for.cond1.preheader.us1:
+-; CHECK-NEXT:    [[J_020_US2:%.*]] = phi i32 [ 0, [[FOR_COND1_PREHEADER_LR_PH_SPLIT_SPLIT_US]] ], [ [[INC10_US4:%.*]], [[FOR_COND_CLEANUP3_US3:%.*]] ]
+-; CHECK-NEXT:    br label [[FOR_BODY4_PREHEADER_US:%.*]]
+-; CHECK:       for.cond.cleanup3.us3:
+-; CHECK-NEXT:    [[INC10_US4]] = add nuw i32 [[J_020_US2]], 1
+-; CHECK-NEXT:    [[EXITCOND22_NOT_US5:%.*]] = icmp eq i32 [[INC10_US4]], [[M]]
+-; CHECK-NEXT:    br i1 [[EXITCOND22_NOT_US5]], label [[FOR_COND_CLEANUP_LOOPEXIT_SPLIT_SPLIT_US:%.*]], label [[FOR_COND1_PREHEADER_US1]], !prof [[PROF19]]
++; CHECK-NEXT:    br i1 [[EXITCOND22_NOT_US]], label [[FOR_COND_CLEANUP_LOOPEXIT_SPLIT2_US:%.*]], label [[FOR_COND1_PREHEADER_US]], !prof [[PROF19]]
+ ; CHECK:       for.body4.preheader.us:
+ ; CHECK-NEXT:    br label [[FOR_BODY4_PREHEADER_SPLIT_US_US:%.*]]
+ ; CHECK:       for.cond.cleanup3.loopexit.us:
+-; CHECK-NEXT:    br label [[FOR_COND_CLEANUP3_US3]]
++; CHECK-NEXT:    br label [[FOR_COND_CLEANUP3_US]]
+ ; CHECK:       for.body4.preheader.split.us.us:
+ ; CHECK-NEXT:    br label [[FOR_BODY4_US_US:%.*]]
+ ; CHECK:       for.body4.us.us:
+@@ -72,8 +61,8 @@ define void @_Z11hotFunctionbiiPiS_S_(i1 %cond, i32 %M, i32 %N, ptr %A, ptr %B,
+ ; CHECK-NEXT:    br i1 [[EXITCOND_NOT_US_US]], label [[FOR_COND_CLEANUP3_LOOPEXIT_SPLIT_US_US:%.*]], label [[FOR_BODY4_US_US]], !prof [[PROF20]]
+ ; CHECK:       for.cond.cleanup3.loopexit.split.us.us:
+ ; CHECK-NEXT:    br label [[FOR_COND_CLEANUP3_LOOPEXIT_US:%.*]]
+-; CHECK:       for.cond.cleanup.loopexit.split.split.us:
+-; CHECK-NEXT:    br label [[FOR_COND_CLEANUP_LOOPEXIT_SPLIT:%.*]]
++; CHECK:       for.cond.cleanup.loopexit.split2.us:
++; CHECK-NEXT:    br label [[FOR_COND_CLEANUP_LOOPEXIT:%.*]]
+ ; CHECK:       for.cond1.preheader.lr.ph.split.split:
+ ; CHECK-NEXT:    br label [[FOR_COND1_PREHEADER:%.*]]
+ ; CHECK:       for.cond1.preheader:
+@@ -83,11 +72,11 @@ define void @_Z11hotFunctionbiiPiS_S_(i1 %cond, i32 %M, i32 %N, ptr %A, ptr %B,
+ ; CHECK-NEXT:    br label [[FOR_BODY4_PREHEADER_SPLIT:%.*]]
+ ; CHECK:       for.body4.preheader.split:
+ ; CHECK-NEXT:    br label [[FOR_BODY4:%.*]]
+-; CHECK:       for.cond.cleanup.loopexit.split.split:
+-; CHECK-NEXT:    br label [[FOR_COND_CLEANUP_LOOPEXIT_SPLIT]]
+-; CHECK:       for.cond.cleanup.loopexit.split:
++; CHECK:       for.cond.cleanup.loopexit.split2:
+ ; CHECK-NEXT:    br label [[FOR_COND_CLEANUP_LOOPEXIT]]
+ ; CHECK:       for.cond.cleanup.loopexit:
++; CHECK-NEXT:    br label [[FOR_COND_CLEANUP_LOOPEXIT_SPLIT]]
++; CHECK:       for.cond.cleanup.loopexit.split:
+ ; CHECK-NEXT:    br label [[FOR_COND_CLEANUP]]
+ ; CHECK:       for.cond.cleanup:
+ ; CHECK-NEXT:    ret void
+@@ -98,7 +87,7 @@ define void @_Z11hotFunctionbiiPiS_S_(i1 %cond, i32 %M, i32 %N, ptr %A, ptr %B,
+ ; CHECK:       for.cond.cleanup3:
+ ; CHECK-NEXT:    [[INC10]] = add nuw i32 [[J_020]], 1
+ ; CHECK-NEXT:    [[EXITCOND22_NOT:%.*]] = icmp eq i32 [[INC10]], [[M]]
+-; CHECK-NEXT:    br i1 [[EXITCOND22_NOT]], label [[FOR_COND_CLEANUP_LOOPEXIT_SPLIT_SPLIT:%.*]], label [[FOR_COND1_PREHEADER]], !prof [[PROF19]]
++; CHECK-NEXT:    br i1 [[EXITCOND22_NOT]], label [[FOR_COND_CLEANUP_LOOPEXIT_SPLIT2:%.*]], label [[FOR_COND1_PREHEADER]], !prof [[PROF19]]
+ ; CHECK:       for.body4:
+ ; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ [[INDVARS_IV_NEXT:%.*]], [[FOR_INC:%.*]] ], [ 0, [[FOR_BODY4_PREHEADER_SPLIT]] ]
+ ; CHECK-NEXT:    [[ARRAYIDX:%.*]] = getelementptr inbounds i32, ptr [[B]], i64 [[INDVARS_IV]]
+diff --git a/llvm/test/Transforms/SimpleLoopUnswitch/trivial-unswitch-loop-guard.ll b/llvm/test/Transforms/SimpleLoopUnswitch/trivial-unswitch-loop-guard.ll
+new file mode 100644
+index 0000000000000..609f58f229125
+--- /dev/null
++++ b/llvm/test/Transforms/SimpleLoopUnswitch/trivial-unswitch-loop-guard.ll
+@@ -0,0 +1,177 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; REQUIRES: asserts
++; RUN: opt -passes='loop-mssa(simple-loop-unswitch),verify<loops>' -S < %s | FileCheck %s
++; RUN: opt -passes='loop-mssa(simple-loop-unswitch)' -disable-output -stats -info-output-file - < %s | FileCheck --check-prefix=STATS %s
++
++;; Check that a loop-invariant guard branch in a perfect nest is trivially
++;; unswitched.  The outer loop's header branches to the latch (skipping the
++;; inner loop entirely) when N == 0, or falls through into the inner loop.
++;; Because N is loop-invariant, the new code in unswitchTrivialBranch rewires
++;; the latch arm to point at the outer-loop exit, making the branch look like
++;; an ordinary exit branch and allowing the standard trivial-unswitch logic to
++;; hoist it out of the outer loop.
++;;
++;; Source:
++;;   void f(int M, int N, int *A, int *B) {
++;;     for (int j = 0; j < M; j++) {
++;;       if (N == 0) continue;          // invariant guard branches to latch
++;;       for (int i = 0; i < N; i++)
++;;         A[i] = B[i] + 1;
++;;     }
++;;   }
++;; The key CFG edge is: outer.header --[N==0]--> outer.latch (the latch),
++;; outer.header --[N!=0]--> inner.preheader (inside the outer loop).
++
++define void @perfect_nest_guard(i32 %M, i32 %N, ptr %A, ptr %B) {
++; CHECK-LABEL: define void @perfect_nest_guard(
++; CHECK-SAME: i32 [[M:%.*]], i32 [[N:%.*]], ptr [[A:%.*]], ptr [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[CMP_M:%.*]] = icmp sle i32 [[M]], 0
++; CHECK-NEXT:    br i1 [[CMP_M]], label %[[EXIT:.*]], label %[[OUTER_PREHEADER:.*]]
++; CHECK:       [[OUTER_PREHEADER]]:
++; CHECK-NEXT:    [[GUARD:%.*]] = icmp sle i32 [[N]], 0
++; CHECK-NEXT:    br i1 [[GUARD]], label %[[EXIT_LOOPEXIT_SPLIT:.*]], label %[[OUTER_PREHEADER_SPLIT:.*]]
++; CHECK:       [[OUTER_PREHEADER_SPLIT]]:
++; CHECK-NEXT:    br label %[[OUTER_HEADER:.*]]
++; CHECK:       [[OUTER_HEADER]]:
++; CHECK-NEXT:    [[J:%.*]] = phi i32 [ 0, %[[OUTER_PREHEADER_SPLIT]] ], [ [[J_NEXT:%.*]], %[[OUTER_LATCH:.*]] ]
++; CHECK-NEXT:    br label %[[INNER_PREHEADER:.*]]
++; CHECK:       [[INNER_PREHEADER]]:
++; CHECK-NEXT:    br label %[[INNER_HEADER:.*]]
++; CHECK:       [[INNER_HEADER]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i32 [ 0, %[[INNER_PREHEADER]] ], [ [[I_NEXT:%.*]], %[[INNER_LATCH:.*]] ]
++; CHECK-NEXT:    [[GEP_B:%.*]] = getelementptr inbounds i32, ptr [[B]], i32 [[I]]
++; CHECK-NEXT:    [[VAL:%.*]] = load i32, ptr [[GEP_B]], align 4
++; CHECK-NEXT:    [[INC:%.*]] = add i32 [[VAL]], 1
++; CHECK-NEXT:    [[GEP_A:%.*]] = getelementptr inbounds i32, ptr [[A]], i32 [[I]]
++; CHECK-NEXT:    store i32 [[INC]], ptr [[GEP_A]], align 4
++; CHECK-NEXT:    br label %[[INNER_LATCH]]
++; CHECK:       [[INNER_LATCH]]:
++; CHECK-NEXT:    [[I_NEXT]] = add nuw i32 [[I]], 1
++; CHECK-NEXT:    [[EXITCOND_INNER:%.*]] = icmp eq i32 [[I_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EXITCOND_INNER]], label %[[OUTER_LATCH_LOOPEXIT:.*]], label %[[INNER_HEADER]]
++; CHECK:       [[OUTER_LATCH_LOOPEXIT]]:
++; CHECK-NEXT:    br label %[[OUTER_LATCH]]
++; CHECK:       [[OUTER_LATCH]]:
++; CHECK-NEXT:    [[J_NEXT]] = add nuw i32 [[J]], 1
++; CHECK-NEXT:    [[EXITCOND_OUTER:%.*]] = icmp eq i32 [[J_NEXT]], [[M]]
++; CHECK-NEXT:    br i1 [[EXITCOND_OUTER]], label %[[EXIT_LOOPEXIT:.*]], label %[[OUTER_HEADER]]
++; CHECK:       [[EXIT_LOOPEXIT]]:
++; CHECK-NEXT:    br label %[[EXIT_LOOPEXIT_SPLIT]]
++; CHECK:       [[EXIT_LOOPEXIT_SPLIT]]:
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %cmp.M = icmp sle i32 %M, 0
++  br i1 %cmp.M, label %exit, label %outer.preheader
++
++outer.preheader:
++  %guard = icmp sle i32 %N, 0
++  br label %outer.header
++
++outer.header:
++  %j = phi i32 [ 0, %outer.preheader ], [ %j.next, %outer.latch ]
++  br i1 %guard, label %outer.latch, label %inner.preheader
++
++inner.preheader:
++  br label %inner.header
++
++inner.header:
++  %i = phi i32 [ 0, %inner.preheader ], [ %i.next, %inner.latch ]
++  %gep.B = getelementptr inbounds i32, ptr %B, i32 %i
++  %val = load i32, ptr %gep.B, align 4
++  %inc = add i32 %val, 1
++  %gep.A = getelementptr inbounds i32, ptr %A, i32 %i
++  store i32 %inc, ptr %gep.A, align 4
++  br label %inner.latch
++
++inner.latch:
++  %i.next = add nuw i32 %i, 1
++  %exitcond.inner = icmp eq i32 %i.next, %N
++  br i1 %exitcond.inner, label %outer.latch, label %inner.header
++
++outer.latch:
++  %j.next = add nuw i32 %j, 1
++  %exitcond.outer = icmp eq i32 %j.next, %M
++  br i1 %exitcond.outer, label %exit, label %outer.header
++
++exit:
++  ret void
++}
++
++;; This loopnest is similar to @perfect_nest_guard, except that the outer loop
++;; is infinite. So the trivial unswitching of the inner loop guard is not 
++;; legal.
++;;
++;; Source:
++;;   void f(int N, int *A, int *B) {
++;;     while (true) {
++;;       if (N == 0) continue;          // invariant guard branches to latch
++;;       for (int i = 0; i < N; i++)
++;;         A[i] = B[i] + 1;
++;;     }
++;;   }
++define void @perfect_nest_guard2(i32 %M, i32 %N, ptr %A, ptr %B) {
++; CHECK-LABEL: define void @perfect_nest_guard2(
++; CHECK-SAME: i32 [[M:%.*]], i32 [[N:%.*]], ptr [[A:%.*]], ptr [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[GUARD:%.*]] = icmp sle i32 [[N]], 0
++; CHECK-NEXT:    br label %[[INNER_PREHEADER:.*]]
++; CHECK:       [[INNER_PREHEADER]]:
++; CHECK-NEXT:    br i1 [[GUARD]], label %[[OUTER_LATCH:.*]], label %[[INNER_PREHEADER1:.*]]
++; CHECK:       [[INNER_PREHEADER1]]:
++; CHECK-NEXT:    br label %[[INNER_HEADER:.*]]
++; CHECK:       [[INNER_HEADER]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i32 [ 0, %[[INNER_PREHEADER1]] ], [ [[I_NEXT:%.*]], %[[INNER_LATCH:.*]] ]
++; CHECK-NEXT:    [[GEP_B:%.*]] = getelementptr inbounds i32, ptr [[B]], i32 [[I]]
++; CHECK-NEXT:    [[VAL:%.*]] = load i32, ptr [[GEP_B]], align 4
++; CHECK-NEXT:    [[INC:%.*]] = add i32 [[VAL]], 1
++; CHECK-NEXT:    [[GEP_A:%.*]] = getelementptr inbounds i32, ptr [[A]], i32 [[I]]
++; CHECK-NEXT:    store i32 [[INC]], ptr [[GEP_A]], align 4
++; CHECK-NEXT:    br label %[[INNER_LATCH]]
++; CHECK:       [[INNER_LATCH]]:
++; CHECK-NEXT:    [[I_NEXT]] = add nuw i32 [[I]], 1
++; CHECK-NEXT:    [[EXITCOND_INNER:%.*]] = icmp eq i32 [[I_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EXITCOND_INNER]], label %[[OUTER_LATCH_LOOPEXIT:.*]], label %[[INNER_HEADER]]
++; CHECK:       [[OUTER_LATCH_LOOPEXIT]]:
++; CHECK-NEXT:    br label %[[OUTER_LATCH]]
++; CHECK:       [[OUTER_LATCH]]:
++; CHECK-NEXT:    br label %[[INNER_PREHEADER]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %guard = icmp sle i32 %N, 0
++  br label %outer.header
++
++outer.header:
++  br i1 %guard, label %outer.latch, label %inner.preheader
++
++inner.preheader:
++  br label %inner.header
++
++inner.header:
++  %i = phi i32 [ 0, %inner.preheader ], [ %i.next, %inner.latch ]
++  %gep.B = getelementptr inbounds i32, ptr %B, i32 %i
++  %val = load i32, ptr %gep.B, align 4
++  %inc = add i32 %val, 1
++  %gep.A = getelementptr inbounds i32, ptr %A, i32 %i
++  store i32 %inc, ptr %gep.A, align 4
++  br label %inner.latch
++
++inner.latch:
++  %i.next = add nuw i32 %i, 1
++  %exitcond.inner = icmp eq i32 %i.next, %N
++  br i1 %exitcond.inner, label %outer.latch, label %inner.header
++
++outer.latch:
++  br label %outer.header
++
++exit:
++  ret void
++}
++
++; STATS: 1 simple-loop-unswitch - Number of branches unswitched
++; STATS-NEXT: 1 simple-loop-unswitch - Number of unswitches that are trivial
+diff --git a/polly/test/Support/pipelineposition.ll b/polly/test/Support/pipelineposition.ll
+index 1ddfb5879ce16..8673657a7b0a8 100644
+--- a/polly/test/Support/pipelineposition.ll
++++ b/polly/test/Support/pipelineposition.ll
+@@ -79,4 +79,4 @@ return:
+ 
+ ; INLINED3-LABEL: Function: caller
+ ; INLINED3:       Schedule :=
+-; INLINED3-NEXT:    [n] -> { Stmt_body_i_us[i0, i1] -> [i0, i1] };
++; INLINED3-NEXT:    [n] -> { Stmt_body_i[i0, i1] -> [i0, i1] };

@@ -199,7 +199,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.do = load ptr, ptr %i.cw, align 8, !tbaa !32
   br label %.preheader.us
 
-.preheader.us:                                    ; preds = %._crit_edge130.us, %.preheader.lr.ph.split.us
+.preheader.us:                                    ; preds = %.preheader.lr.ph.split.us, %._crit_edge130.us
   %.0131.us = phi i32 [ %i.dd, %.preheader.lr.ph.split.us ], [ %i.dx, %._crit_edge130.us ] ; 3 uses
   %i.dp = add nsw i32 %.0131.us, %8
   %i.dq = mul nsw i32 %i.dk, %i.dp

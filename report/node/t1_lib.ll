@@ -201,7 +201,7 @@ tls1_lookup_sigalg.exit.thread:                   ; preds = %bb.g, %bb.f, %tls1_
   %exitcond.not = icmp eq i64 %i.am, %i.o
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph.preheader.i, !llvm.loop !351
 
-.loopexit:                                        ; preds = %bb.h, %tls1_lookup_sigalg.exit.thread, %.lr.ph, %.preheader, %bb.d, %bb.e, %bb.c
+.loopexit:                                        ; preds = %bb.h, %tls1_lookup_sigalg.exit.thread, %.preheader, %.lr.ph, %bb.d, %bb.e, %bb.c
   %.0 = phi i32 [ 0, %bb.c ], [ 0, %bb.e ], [ 1, %bb.d ], [ 0, %.preheader ], [ 0, %.lr.ph ], [ 1, %bb.h ], [ 0, %tls1_lookup_sigalg.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14

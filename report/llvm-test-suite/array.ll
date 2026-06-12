@@ -199,36 +199,36 @@ bb.d:                                             ; preds = %.preheader.us, %bb.
   %exitcond.not.1 = icmp eq i32 %i.a, 2
   br label %.lr.ph.us46
 
-.lr.ph.us46:                                      ; preds = %.lr.ph.us46.preheader, %..preheader_crit_edge.us47
-  %indvars.iv52 = phi i64 [ 0, %.lr.ph.us46.preheader ], [ %indvars.iv.next53, %..preheader_crit_edge.us47 ] ; 3 uses
+.lr.ph.us46:                                      ; preds = %.lr.ph.us46.preheader, %..preheader_crit_edge
+  %indvars.iv52 = phi i64 [ 0, %.lr.ph.us46.preheader ], [ %indvars.iv.next47, %..preheader_crit_edge ] ; 3 uses
   %i.bc = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv52
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !8  ; 3 uses
   %i.be = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv52
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !8  ; 3 uses
   %i.bg = load double, ptr %i.bf, align 8, !tbaa !14
   store double %i.bg, ptr %i.bd, align 8, !tbaa !14
-  br i1 %exitcond.not, label %..preheader_crit_edge.us47, label %bb.e
+  br i1 %exitcond.not, label %..preheader_crit_edge, label %bb.e
+
+..preheader_crit_edge:                            ; preds = %bb.f, %bb.e, %.lr.ph.us46
+  %indvars.iv.next47 = add nuw nsw i64 %indvars.iv52, 1 ; 2 uses
+  %exitcond50.not = icmp eq i64 %indvars.iv.next47, %wide.trip.count55
+  br i1 %exitcond50.not, label %._crit_edge42, label %.lr.ph.us46, !llvm.loop !17
 
 bb.e:                                             ; preds = %.lr.ph.us46
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bf, i64 8
   %i.bi = load double, ptr %i.bh, align 8, !tbaa !14
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bd, i64 8
   store double %i.bi, ptr %i.bj, align 8, !tbaa !14
-  br i1 %exitcond.not.1, label %..preheader_crit_edge.us47, label %bb.f
+  br i1 %exitcond.not.1, label %..preheader_crit_edge, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bf, i64 16
   %i.bl = load double, ptr %i.bk, align 8, !tbaa !14
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bd, i64 16
   store double %i.bl, ptr %i.bm, align 8, !tbaa !14
-  br label %..preheader_crit_edge.us47
+  br label %..preheader_crit_edge
 
-..preheader_crit_edge.us47:                       ; preds = %bb.f, %bb.e, %.lr.ph.us46
-  %indvars.iv.next53 = add nuw nsw i64 %indvars.iv52, 1 ; 2 uses
-  %exitcond56.not = icmp eq i64 %indvars.iv.next53, %wide.trip.count55
-  br i1 %exitcond56.not, label %._crit_edge42, label %.lr.ph.us46, !llvm.loop !17
-
-._crit_edge42:                                    ; preds = %..preheader_crit_edge.us47, %._crit_edge.us.us, %._crit_edge.us, %.lr.ph41.split, %bb.a
+._crit_edge42:                                    ; preds = %..preheader_crit_edge, %._crit_edge.us.us, %._crit_edge.us, %.lr.ph41.split, %bb.a
   ret void
 }
 
