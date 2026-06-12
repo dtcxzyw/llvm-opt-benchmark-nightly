@@ -201,48 +201,39 @@ bb.l:                                             ; preds = %bb.d, %bb.g, %bb.k,
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define { i64, i64 } @_ZNK6duckdb9hugeint_tanERKS0_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1) local_unnamed_addr #10 align 2 {
 bb.a:
-  %2 = load i64, ptr %0, align 8, !tbaa !290
-  %3 = load i64, ptr %1, align 8, !tbaa !290
-  %4 = and i64 %3, %2
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %6 = load i64, ptr %5, align 8, !tbaa !288
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %8 = load i64, ptr %7, align 8, !tbaa !288
-  %9 = and i64 %8, %6
-  %.fca.0.insert = insertvalue { i64, i64 } poison, i64 %4, 0
-  %.fca.1.insert = insertvalue { i64, i64 } %.fca.0.insert, i64 %9, 1
+  %2 = load <2 x i64>, ptr %0, align 8, !tbaa !108
+  %3 = load <2 x i64>, ptr %1, align 8, !tbaa !108
+  %4 = and <2 x i64> %3, %2                       ; 2 uses
+  %vec2struct.slot.sroa.0.0.vec.extract = extractelement <2 x i64> %4, i64 0
+  %5 = insertvalue { i64, i64 } poison, i64 %vec2struct.slot.sroa.0.0.vec.extract, 0
+  %vec2struct.slot.sroa.0.8.vec.extract = extractelement <2 x i64> %4, i64 1
+  %.fca.1.insert = insertvalue { i64, i64 } %5, i64 %vec2struct.slot.sroa.0.8.vec.extract, 1
   ret { i64, i64 } %.fca.1.insert
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define { i64, i64 } @_ZNK6duckdb9hugeint_torERKS0_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1) local_unnamed_addr #10 align 2 {
 bb.a:
-  %2 = load i64, ptr %0, align 8, !tbaa !290
-  %3 = load i64, ptr %1, align 8, !tbaa !290
-  %4 = or i64 %3, %2
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %6 = load i64, ptr %5, align 8, !tbaa !288
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %8 = load i64, ptr %7, align 8, !tbaa !288
-  %9 = or i64 %8, %6
-  %.fca.0.insert = insertvalue { i64, i64 } poison, i64 %4, 0
-  %.fca.1.insert = insertvalue { i64, i64 } %.fca.0.insert, i64 %9, 1
+  %2 = load <2 x i64>, ptr %0, align 8, !tbaa !108
+  %3 = load <2 x i64>, ptr %1, align 8, !tbaa !108
+  %4 = or <2 x i64> %3, %2                        ; 2 uses
+  %vec2struct.slot.sroa.0.0.vec.extract = extractelement <2 x i64> %4, i64 0
+  %5 = insertvalue { i64, i64 } poison, i64 %vec2struct.slot.sroa.0.0.vec.extract, 0
+  %vec2struct.slot.sroa.0.8.vec.extract = extractelement <2 x i64> %4, i64 1
+  %.fca.1.insert = insertvalue { i64, i64 } %5, i64 %vec2struct.slot.sroa.0.8.vec.extract, 1
   ret { i64, i64 } %.fca.1.insert
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define { i64, i64 } @_ZNK6duckdb9hugeint_teoERKS0_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1) local_unnamed_addr #10 align 2 {
 bb.a:
-  %2 = load i64, ptr %0, align 8, !tbaa !290
-  %3 = load i64, ptr %1, align 8, !tbaa !290
-  %4 = xor i64 %3, %2
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %6 = load i64, ptr %5, align 8, !tbaa !288
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %8 = load i64, ptr %7, align 8, !tbaa !288
-  %9 = xor i64 %8, %6
-  %.fca.0.insert = insertvalue { i64, i64 } poison, i64 %4, 0
-  %.fca.1.insert = insertvalue { i64, i64 } %.fca.0.insert, i64 %9, 1
+  %2 = load <2 x i64>, ptr %0, align 8, !tbaa !108
+  %3 = load <2 x i64>, ptr %1, align 8, !tbaa !108
+  %4 = xor <2 x i64> %3, %2                       ; 2 uses
+  %vec2struct.slot.sroa.0.0.vec.extract = extractelement <2 x i64> %4, i64 0
+  %5 = insertvalue { i64, i64 } poison, i64 %vec2struct.slot.sroa.0.0.vec.extract, 0
+  %vec2struct.slot.sroa.0.8.vec.extract = extractelement <2 x i64> %4, i64 1
+  %.fca.1.insert = insertvalue { i64, i64 } %5, i64 %vec2struct.slot.sroa.0.8.vec.extract, 1
   ret { i64, i64 } %.fca.1.insert
 }
 
@@ -645,16 +636,13 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.e,
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define { i64, i64 } @_ZNK6duckdb10uhugeint_tanERKS0_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1) local_unnamed_addr #10 align 2 {
 bb.a:
-  %2 = load i64, ptr %0, align 8, !tbaa !304
-  %3 = load i64, ptr %1, align 8, !tbaa !304
-  %4 = and i64 %3, %2
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %6 = load i64, ptr %5, align 8, !tbaa !833
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %8 = load i64, ptr %7, align 8, !tbaa !833
-  %9 = and i64 %8, %6
-  %.fca.0.insert = insertvalue { i64, i64 } poison, i64 %4, 0
-  %.fca.1.insert = insertvalue { i64, i64 } %.fca.0.insert, i64 %9, 1
+  %2 = load <2 x i64>, ptr %0, align 8, !tbaa !108
+  %3 = load <2 x i64>, ptr %1, align 8, !tbaa !108
+  %4 = and <2 x i64> %3, %2                       ; 2 uses
+  %vec2struct.slot.sroa.0.0.vec.extract = extractelement <2 x i64> %4, i64 0
+  %5 = insertvalue { i64, i64 } poison, i64 %vec2struct.slot.sroa.0.0.vec.extract, 0
+  %vec2struct.slot.sroa.0.8.vec.extract = extractelement <2 x i64> %4, i64 1
+  %.fca.1.insert = insertvalue { i64, i64 } %5, i64 %vec2struct.slot.sroa.0.8.vec.extract, 1
   ret { i64, i64 } %.fca.1.insert
 }
 
@@ -1057,32 +1045,26 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.e,
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define { i64, i64 } @_ZNK6duckdb10uhugeint_torERKS0_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1) local_unnamed_addr #10 align 2 {
 bb.a:
-  %2 = load i64, ptr %0, align 8, !tbaa !304
-  %3 = load i64, ptr %1, align 8, !tbaa !304
-  %4 = or i64 %3, %2
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %6 = load i64, ptr %5, align 8, !tbaa !833
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %8 = load i64, ptr %7, align 8, !tbaa !833
-  %9 = or i64 %8, %6
-  %.fca.0.insert = insertvalue { i64, i64 } poison, i64 %4, 0
-  %.fca.1.insert = insertvalue { i64, i64 } %.fca.0.insert, i64 %9, 1
+  %2 = load <2 x i64>, ptr %0, align 8, !tbaa !108
+  %3 = load <2 x i64>, ptr %1, align 8, !tbaa !108
+  %4 = or <2 x i64> %3, %2                        ; 2 uses
+  %vec2struct.slot.sroa.0.0.vec.extract = extractelement <2 x i64> %4, i64 0
+  %5 = insertvalue { i64, i64 } poison, i64 %vec2struct.slot.sroa.0.0.vec.extract, 0
+  %vec2struct.slot.sroa.0.8.vec.extract = extractelement <2 x i64> %4, i64 1
+  %.fca.1.insert = insertvalue { i64, i64 } %5, i64 %vec2struct.slot.sroa.0.8.vec.extract, 1
   ret { i64, i64 } %.fca.1.insert
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define { i64, i64 } @_ZNK6duckdb10uhugeint_teoERKS0_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1) local_unnamed_addr #10 align 2 {
 bb.a:
-  %2 = load i64, ptr %0, align 8, !tbaa !304
-  %3 = load i64, ptr %1, align 8, !tbaa !304
-  %4 = xor i64 %3, %2
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %6 = load i64, ptr %5, align 8, !tbaa !833
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %8 = load i64, ptr %7, align 8, !tbaa !833
-  %9 = xor i64 %8, %6
-  %.fca.0.insert = insertvalue { i64, i64 } poison, i64 %4, 0
-  %.fca.1.insert = insertvalue { i64, i64 } %.fca.0.insert, i64 %9, 1
+  %2 = load <2 x i64>, ptr %0, align 8, !tbaa !108
+  %3 = load <2 x i64>, ptr %1, align 8, !tbaa !108
+  %4 = xor <2 x i64> %3, %2                       ; 2 uses
+  %vec2struct.slot.sroa.0.0.vec.extract = extractelement <2 x i64> %4, i64 0
+  %5 = insertvalue { i64, i64 } poison, i64 %vec2struct.slot.sroa.0.0.vec.extract, 0
+  %vec2struct.slot.sroa.0.8.vec.extract = extractelement <2 x i64> %4, i64 1
+  %.fca.1.insert = insertvalue { i64, i64 } %5, i64 %vec2struct.slot.sroa.0.8.vec.extract, 1
   ret { i64, i64 } %.fca.1.insert
 }
 
