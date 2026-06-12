@@ -201,43 +201,46 @@ bb.k:                                             ; preds = %bb.j
 _ZN10ODDLParserL12writeLineEndERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit33: ; preds = %bb.j
   %i.ai = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull @.str.16, i64 noundef 1) ; 0 uses
   %i.aj = load ptr, ptr %0, align 8               ; 3 uses
-  %3 = icmp ne ptr %i.aj, null
-  %4 = load i64, ptr %i.d, align 8
-  %5 = icmp ne i64 %4, 0
-  %or.cond.not.i = select i1 %3, i1 %5, i1 false
-  br i1 %or.cond.not.i, label %bb.l, label %_ZN10ODDLParser13OpenDDLExport13writeToStreamERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
+  %.not34 = icmp eq ptr %i.aj, null
+  br i1 %.not34, label %_ZN10ODDLParser13OpenDDLExport13writeToStreamERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, label %3
 
-bb.l:                                             ; preds = %_ZN10ODDLParserL12writeLineEndERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit33
+3:                                                ; preds = %_ZN10ODDLParserL12writeLineEndERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit33
+  %4 = load i64, ptr %i.d, align 8
+  %5 = icmp eq i64 %4, 0
+  br i1 %5, label %_ZN10ODDLParser13OpenDDLExport13writeToStreamERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, label %bb.l
+
+bb.l:                                             ; preds = %3
   %i.ak = load ptr, ptr %i.aj, align 8
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 48
   %i.am = load ptr, ptr %i.al, align 8
   %i.an = tail call noundef i64 %i.am(ptr noundef nonnull align 8 dereferenceable(24) %i.aj, ptr noundef nonnull align 8 dereferenceable(32) %2), !inline_history !5 ; 0 uses
   br label %_ZN10ODDLParser13OpenDDLExport13writeToStreamERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
 
-_ZN10ODDLParser13OpenDDLExport13writeToStreamERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit: ; preds = %_ZN10ODDLParserL12writeLineEndERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit33, %bb.l
+_ZN10ODDLParser13OpenDDLExport13writeToStreamERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit: ; preds = %_ZN10ODDLParserL12writeLineEndERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit33, %3, %bb.l
   ret i1 %.0
 }
 
 ; Function Attrs: mustprogress uwtable
 define hidden noundef zeroext i1 @_ZN10ODDLParser13OpenDDLExport13writeToStreamERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(32) %1) local_unnamed_addr #0 align 2 {
-bb.a:
-  %2 = load ptr, ptr %0, align 8                  ; 3 uses
-  %3 = icmp ne ptr %2, null                       ; 2 uses
+  %3 = load ptr, ptr %0, align 8                  ; 3 uses
+  %4 = icmp ne ptr %3, null                       ; 2 uses
+  br i1 %4, label %bb.a, label %bb.c
+
+bb.a:                                             ; preds = %2
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load i64, ptr %i.a, align 8
-  %4 = icmp ne i64 %i.b, 0
-  %or.cond.not = select i1 %3, i1 %4, i1 false
-  br i1 %or.cond.not, label %bb.b, label %bb.c
+  %5 = icmp eq i64 %i.b, 0
+  br i1 %5, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load ptr, ptr %2, align 8
+  %i.c = load ptr, ptr %3, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 48
   %i.e = load ptr, ptr %i.d, align 8
-  %i.f = tail call noundef i64 %i.e(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(32) %1) ; 0 uses
+  %i.f = tail call noundef i64 %i.e(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(32) %1) ; 0 uses
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %bb.a
-  ret i1 %3
+bb.c:                                             ; preds = %bb.a, %bb.b, %2
+  ret i1 %4
 }
 
 ; Function Attrs: mustprogress uwtable

@@ -201,13 +201,14 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %i.d = load ptr, ptr %i.c, align 8
   %.not27 = icmp ne ptr %i.d, null
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 52 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 52
   %i.f = load i32, ptr %i.e, align 4              ; 2 uses
   %i.g = icmp sgt i32 %i.f, 0
   %or.cond = select i1 %.not27, i1 %i.g, i1 false
   br i1 %or.cond, label %bb.u, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 52
   %i.h = icmp eq i32 %i.f, 0
   br i1 %i.h, label %bb.d, label %bb.o
 
@@ -346,7 +347,7 @@ bb.n:                                             ; preds = %_ZNK6icu_7816BytesT
   br label %bb.u
 
 bb.o:                                             ; preds = %.thread38, %bb.c
-  store i32 0, ptr %i.e, align 4
+  store i32 0, ptr %5, align 4
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.bv = load ptr, ptr %i.bu, align 8
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 56
@@ -387,7 +388,7 @@ bb.t:                                             ; preds = %bb.s
   store i32 7, ptr %2, align 4
   br label %bb.u
 
-bb.u:                                             ; preds = %bb.n, %bb.q, %bb.t, %bb.s, %bb.b, %bb.f, %bb.a, %bb.e
+bb.u:                                             ; preds = %bb.b, %bb.n, %bb.q, %bb.t, %bb.s, %bb.f, %bb.a, %bb.e
   ret void
 }
 

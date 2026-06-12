@@ -201,17 +201,18 @@ bb.o:                                             ; preds = %bb.f
 
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN6duckdb17ZstdStreamWrapper5CloseEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(33) %0) unnamed_addr #6 align 2 {
-bb.a:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %2 = load ptr, ptr %1, align 8, !tbaa !76       ; 2 uses
-  %.not = icmp eq ptr %2, null
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8
-  %.not2 = icmp eq ptr %i.b, null
-  %or.cond = select i1 %.not, i1 %.not2, i1 false
-  br i1 %or.cond, label %bb.i, label %bb.b
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %3 = load ptr, ptr %2, align 8, !tbaa !76       ; 2 uses
+  %.not = icmp eq ptr %3, null
+  br i1 %.not, label %bb.a, label %bb.b
 
-bb.b:                                             ; preds = %bb.a
+bb.a:                                             ; preds = %1
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !79
+  %.not2 = icmp eq ptr %i.b, null
+  br i1 %.not2, label %bb.i, label %bb.b
+
+bb.b:                                             ; preds = %bb.a, %1
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.d = load i8, ptr %i.c, align 8, !tbaa !54, !range !81, !noundef !82
   %i.e = trunc nuw i8 %i.d to i1
@@ -219,11 +220,11 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_ZN6duckdb17ZstdStreamWrapper11FlushStreamEv(ptr noundef nonnull align 8 dereferenceable(33) %0)
-  %.pre = load ptr, ptr %1, align 8, !tbaa !76
+  %.pre = load ptr, ptr %2, align 8, !tbaa !76
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.f = phi ptr [ %.pre, %bb.c ], [ %2, %bb.b ]  ; 2 uses
+  %i.f = phi ptr [ %.pre, %bb.c ], [ %3, %bb.b ]  ; 2 uses
   %.not3 = icmp eq ptr %i.f, null
   br i1 %.not3, label %bb.f, label %bb.e
 
@@ -232,7 +233,8 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %i.h = load ptr, ptr %i.a, align 8, !tbaa !79   ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.h = load ptr, ptr %4, align 8, !tbaa !79     ; 2 uses
   %.not4 = icmp eq ptr %i.h, null
   br i1 %.not4, label %bb.h, label %bb.g
 
@@ -241,7 +243,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.a, %bb.h

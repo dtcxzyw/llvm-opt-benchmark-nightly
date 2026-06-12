@@ -201,19 +201,21 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZN12btStackAlloc7destroyEv.exit
 
 _ZN12btStackAlloc7destroyEv.exit:                 ; preds = %bb.c, %bb.d, %bb.e
-  %.pre = phi ptr [ %.pre.pre, %bb.e ], [ %i.e, %bb.d ], [ %i.e, %bb.c ] ; 5 uses
+  %.pre = phi ptr [ %.pre.pre, %bb.e ], [ %i.e, %bb.d ], [ %i.e, %bb.c ] ; 6 uses
   store ptr null, ptr %i.e, align 8, !tbaa !43
   store i32 0, ptr %i.f, align 4, !tbaa !69
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 12
   %.pre6 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !69
-  %1 = icmp ne i32 %.pre6, 0
-  %2 = getelementptr inbounds nuw i8, ptr %.pre, i64 24
-  %3 = load i8, ptr %2, align 8, !range !67
-  %4 = trunc nuw i8 %3 to i1
-  %or.cond.i = select i1 %1, i1 true, i1 %4
-  br i1 %or.cond.i, label %_ZN12btStackAllocD2Ev.exit, label %bb.f
+  %1 = icmp eq i32 %.pre6, 0
+  br i1 %1, label %2, label %_ZN12btStackAllocD2Ev.exit
 
-bb.f:                                             ; preds = %_ZN12btStackAlloc7destroyEv.exit
+2:                                                ; preds = %_ZN12btStackAlloc7destroyEv.exit
+  %3 = getelementptr inbounds nuw i8, ptr %.pre, i64 24
+  %4 = load i8, ptr %3, align 8, !tbaa !70, !range !67, !noundef !68
+  %5 = trunc nuw i8 %4 to i1
+  br i1 %5, label %_ZN12btStackAllocD2Ev.exit, label %bb.f
+
+bb.f:                                             ; preds = %2
   %i.m = load ptr, ptr %.pre, align 8, !tbaa !43  ; 2 uses
   %.not.i.i = icmp eq ptr %i.m, null
   br i1 %.not.i.i, label %_ZN12btStackAllocD2Ev.exit, label %bb.g
@@ -223,9 +225,9 @@ bb.g:                                             ; preds = %bb.f
   %.pre7 = load ptr, ptr %i.d, align 8, !tbaa !48
   br label %_ZN12btStackAllocD2Ev.exit
 
-_ZN12btStackAllocD2Ev.exit:                       ; preds = %bb.b, %bb.g, %bb.f, %_ZN12btStackAlloc7destroyEv.exit
-  %5 = phi ptr [ %.pre7, %bb.g ], [ %.pre, %bb.f ], [ %.pre, %_ZN12btStackAlloc7destroyEv.exit ], [ %i.e, %bb.b ]
-  tail call void @_Z21btAlignedFreeInternalPv(ptr noundef %5)
+_ZN12btStackAllocD2Ev.exit:                       ; preds = %bb.b, %bb.g, %bb.f, %2, %_ZN12btStackAlloc7destroyEv.exit
+  %6 = phi ptr [ %.pre7, %bb.g ], [ %.pre, %bb.f ], [ %.pre, %2 ], [ %.pre, %_ZN12btStackAlloc7destroyEv.exit ], [ %i.e, %bb.b ]
+  tail call void @_Z21btAlignedFreeInternalPv(ptr noundef %6)
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZN12btStackAllocD2Ev.exit, %bb.a

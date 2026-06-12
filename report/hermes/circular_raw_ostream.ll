@@ -166,7 +166,7 @@ _ZN4llvh11raw_ostream5flushEv.exit:               ; preds = %bb.a, %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.f = load i64, ptr %i.e, align 8, !tbaa !7
   %.not.i1 = icmp eq i64 %i.f, 0
-  br i1 %.not.i1, label %_ZN4llvh20circular_raw_ostream21flushBufferWithBannerEv.exit.a, label %bb.c
+  br i1 %.not.i1, label %_ZN4llvh20circular_raw_ostream21flushBufferWithBannerEv.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZN4llvh11raw_ostream5flushEv.exit
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
@@ -207,26 +207,28 @@ _ZN4llvh20circular_raw_ostream11flushBufferEv.exit.i: ; preds = %bb.d, %bb.c
   %i.aj = load ptr, ptr %i.ab, align 8, !tbaa !17
   store ptr %i.aj, ptr %i.ad, align 8, !tbaa !16
   store i8 0, ptr %i.m, align 8, !tbaa !19
-  br label %_ZN4llvh20circular_raw_ostream21flushBufferWithBannerEv.exit.a
+  br label %_ZN4llvh20circular_raw_ostream21flushBufferWithBannerEv.exit
 
-_ZN4llvh20circular_raw_ostream21flushBufferWithBannerEv.exit.a: ; preds = %_ZN4llvh11raw_ostream5flushEv.exit, %_ZN4llvh20circular_raw_ostream11flushBufferEv.exit.i
+_ZN4llvh20circular_raw_ostream21flushBufferWithBannerEv.exit: ; preds = %_ZN4llvh11raw_ostream5flushEv.exit, %_ZN4llvh20circular_raw_ostream11flushBufferEv.exit.i
   %1 = getelementptr inbounds nuw i8, ptr %0, i64 40
   %2 = load ptr, ptr %1, align 8, !tbaa !18       ; 3 uses
-  %.not.i2 = icmp ne ptr %2, null
+  %.not.i2 = icmp eq ptr %2, null
+  br i1 %.not.i2, label %_ZN4llvh20circular_raw_ostream13releaseStreamEv.exit, label %_ZN4llvh20circular_raw_ostream21flushBufferWithBannerEv.exit.a
+
+_ZN4llvh20circular_raw_ostream21flushBufferWithBannerEv.exit.a: ; preds = %_ZN4llvh20circular_raw_ostream21flushBufferWithBannerEv.exit
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.al = load i8, ptr %i.ak, align 8, !range !23
+  %i.al = load i8, ptr %i.ak, align 8, !tbaa !29, !range !23, !noundef !24
   %i.am = trunc nuw i8 %i.al to i1
-  %or.cond.i = select i1 %.not.i2, i1 %i.am, i1 false
-  br i1 %or.cond.i, label %bb.e, label %_ZN4llvh20circular_raw_ostream13releaseStreamEv.exit
+  br i1 %i.am, label %bb.e, label %_ZN4llvh20circular_raw_ostream13releaseStreamEv.exit
 
 bb.e:                                             ; preds = %_ZN4llvh20circular_raw_ostream21flushBufferWithBannerEv.exit.a
   %i.an = load ptr, ptr %2, align 8, !tbaa !25
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 8
   %i.ap = load ptr, ptr %i.ao, align 8
-  tail call void %i.ap(ptr noundef nonnull align 8 dead_on_return(36) dereferenceable(36) %2) #7, !inline_history !29
+  tail call void %i.ap(ptr noundef nonnull align 8 dead_on_return(36) dereferenceable(36) %2) #7, !inline_history !30
   br label %_ZN4llvh20circular_raw_ostream13releaseStreamEv.exit
 
-_ZN4llvh20circular_raw_ostream13releaseStreamEv.exit: ; preds = %_ZN4llvh20circular_raw_ostream21flushBufferWithBannerEv.exit.a, %bb.e
+_ZN4llvh20circular_raw_ostream13releaseStreamEv.exit: ; preds = %_ZN4llvh20circular_raw_ostream21flushBufferWithBannerEv.exit, %_ZN4llvh20circular_raw_ostream21flushBufferWithBannerEv.exit.a, %bb.e
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !17 ; 2 uses
   %i.as = icmp eq ptr %i.ar, null
@@ -291,7 +293,7 @@ bb.a:
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !25
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 64
   %i.e = load ptr, ptr %i.d, align 8
-  %i.f = tail call noundef i64 %i.e(ptr noundef nonnull align 8 dereferenceable(36) %i.b) #7, !inline_history !30
+  %i.f = tail call noundef i64 %i.e(ptr noundef nonnull align 8 dereferenceable(36) %i.b) #7, !inline_history !31
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !27
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -374,6 +376,7 @@ attributes #9 = { builtin nounwind }
 !26 = !{!"vtable pointer", !6, i64 0}
 !27 = !{!9, !10, i64 24}
 !28 = !{!9, !10, i64 8}
-!29 = distinct !{null}
+!29 = !{!8, !14, i64 48}
 !30 = distinct !{null}
+!31 = distinct !{null}
 end_hunk_0

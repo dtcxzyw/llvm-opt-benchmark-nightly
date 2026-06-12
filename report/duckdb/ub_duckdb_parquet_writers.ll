@@ -201,12 +201,14 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.j = load i8, ptr %i.i, align 8, !tbaa !110, !range !125, !noundef !126
   %i.k = trunc nuw i8 %i.j to i1
-  %7 = load ptr, ptr %i.c, align 8
-  %.not.i = icmp ne ptr %7, null
-  %or.cond.not = select i1 %i.k, i1 true, i1 %.not.i
-  br i1 %or.cond.not, label %bb.f, label %.preheader
+  br i1 %i.k, label %bb.f, label %7
 
-.preheader:                                       ; preds = %bb.b
+7:                                                ; preds = %bb.b
+  %8 = load ptr, ptr %i.c, align 8, !tbaa !90
+  %.not.i = icmp eq ptr %8, null
+  br i1 %.not.i, label %.preheader, label %bb.f
+
+.preheader:                                       ; preds = %7
   %i.l = icmp ult i64 %5, %6
   br i1 %i.l, label %.lr.ph, label %.loopexit
 
@@ -252,7 +254,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %exitcond.not = icmp eq i64 %i.ad, %6
   br i1 %exitcond.not, label %.loopexit, label %bb.c, !llvm.loop !133
 
-bb.f:                                             ; preds = %bb.b, %bb.a
+bb.f:                                             ; preds = %7, %bb.b, %bb.a
   %i.ae = icmp ult i64 %5, %6
   br i1 %i.ae, label %.lr.ph46, label %.loopexit
 

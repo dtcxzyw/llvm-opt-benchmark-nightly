@@ -201,15 +201,16 @@ bb.a:
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_ZN10ODDLParser7DDLNode11hasPropertyERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(136) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1) local_unnamed_addr #10 align 2 personality ptr @__gxx_personality_v0 {
-bb.a:
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %3 = load i64, ptr %2, align 8                  ; 2 uses
-  %4 = icmp eq i64 %3, 0
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %4 = load i64, ptr %3, align 8                  ; 2 uses
+  %5 = icmp eq i64 %4, 0
+  br i1 %5, label %_ZN10ODDLParser7DDLNode18findPropertyByNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, label %bb.a
+
+bb.a:                                             ; preds = %2
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
   %i.c = icmp eq ptr %i.b, null
-  %or.cond.i = select i1 %4, i1 true, i1 %i.c
-  br i1 %or.cond.i, label %_ZN10ODDLParser7DDLNode18findPropertyByNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, label %.preheader.i
+  br i1 %i.c, label %_ZN10ODDLParser7DDLNode18findPropertyByNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.a
   %i.d = load ptr, ptr %1, align 8
@@ -220,7 +221,7 @@ bb.b:                                             ; preds = %bb.c, %.preheader.i
   %i.e = load ptr, ptr %.01119.i, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.g = load ptr, ptr %i.f, align 8
-  %i.h = tail call i32 @strncmp(ptr noundef %i.g, ptr noundef %i.d, i64 noundef %3) #24
+  %i.h = tail call i32 @strncmp(ptr noundef %i.g, ptr noundef %i.d, i64 noundef %4) #24
   %.not14.i = icmp eq i32 %i.h, 0                 ; 3 uses
   br i1 %.not14.i, label %_ZN10ODDLParser7DDLNode18findPropertyByNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, label %bb.c
 
@@ -230,22 +231,23 @@ bb.c:                                             ; preds = %bb.b
   %.not.i = icmp eq ptr %i.j, null
   br i1 %.not.i, label %_ZN10ODDLParser7DDLNode18findPropertyByNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, label %bb.b, !llvm.loop !7
 
-_ZN10ODDLParser7DDLNode18findPropertyByNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit: ; preds = %bb.b, %bb.c, %bb.a
-  %.3.i = phi i1 [ false, %bb.a ], [ %.not14.i, %bb.c ], [ %.not14.i, %bb.b ]
+_ZN10ODDLParser7DDLNode18findPropertyByNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit: ; preds = %bb.b, %bb.c, %2, %bb.a
+  %.3.i = phi i1 [ false, %bb.a ], [ false, %2 ], [ %.not14.i, %bb.c ], [ %.not14.i, %bb.b ]
   ret i1 %.3.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define hidden noundef ptr @_ZN10ODDLParser7DDLNode18findPropertyByNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(136) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1) local_unnamed_addr #10 align 2 personality ptr @__gxx_personality_v0 {
-bb.a:
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %3 = load i64, ptr %2, align 8                  ; 2 uses
-  %4 = icmp eq i64 %3, 0
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %4 = load i64, ptr %3, align 8                  ; 2 uses
+  %5 = icmp eq i64 %4, 0
+  br i1 %5, label %.thread, label %bb.a
+
+bb.a:                                             ; preds = %2
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
   %i.c = icmp eq ptr %i.b, null
-  %or.cond = select i1 %4, i1 true, i1 %i.c
-  br i1 %or.cond, label %.thread, label %.preheader
+  br i1 %i.c, label %.thread, label %.preheader
 
 .preheader:                                       ; preds = %bb.a
   %i.d = load ptr, ptr %1, align 8
@@ -256,7 +258,7 @@ bb.b:                                             ; preds = %.preheader, %bb.c
   %i.e = load ptr, ptr %.01119, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.g = load ptr, ptr %i.f, align 8
-  %i.h = tail call i32 @strncmp(ptr noundef %i.g, ptr noundef %i.d, i64 noundef %3) #24
+  %i.h = tail call i32 @strncmp(ptr noundef %i.g, ptr noundef %i.d, i64 noundef %4) #24
   %.not14 = icmp eq i32 %i.h, 0
   br i1 %.not14, label %.thread, label %bb.c
 
@@ -266,8 +268,8 @@ bb.c:                                             ; preds = %bb.b
   %.not = icmp eq ptr %i.j, null
   br i1 %.not, label %.thread, label %bb.b, !llvm.loop !7
 
-.thread:                                          ; preds = %bb.b, %bb.c, %bb.a
-  %.3 = phi ptr [ null, %bb.a ], [ %.01119, %bb.b ], [ null, %bb.c ]
+.thread:                                          ; preds = %bb.b, %bb.c, %bb.a, %2
+  %.3 = phi ptr [ null, %bb.a ], [ null, %2 ], [ %.01119, %bb.b ], [ null, %bb.c ]
   ret ptr %.3
 }
 

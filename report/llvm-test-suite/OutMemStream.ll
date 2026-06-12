@@ -201,22 +201,23 @@ declare void @_ZN17CBaseRecordVectorD2Ev(ptr noundef nonnull align 8 dead_on_ret
 
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local noundef zeroext i1 @_ZN8NWindows16NSynchronization14CBaseEventWFMO19IsSignaledAndUpdateEv(ptr noundef nonnull align 8 dereferenceable(18) %0) unnamed_addr #3 comdat align 2 {
-bb.a:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 17 ; 2 uses
-  %2 = load i8, ptr %1, align 1, !tbaa !33, !range !39, !noundef !40
-  %3 = trunc nuw i8 %2 to i1                      ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 17 ; 2 uses
+  %3 = load i8, ptr %2, align 1, !tbaa !33, !range !39, !noundef !40
+  %4 = trunc nuw i8 %3 to i1                      ; 2 uses
+  br i1 %4, label %bb.a, label %bb.c
+
+bb.a:                                             ; preds = %1
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = load i8, ptr %i.a, align 8, !range !39
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !56, !range !39, !noundef !40
   %i.c = icmp eq i8 %i.b, 0
-  %or.cond = select i1 %3, i1 %i.c, i1 false
-  br i1 %or.cond, label %bb.b, label %bb.c
+  br i1 %i.c, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  store i8 0, ptr %1, align 1, !tbaa !33
+  store i8 0, ptr %2, align 1, !tbaa !33
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.a, %bb.b
-  ret i1 %3
+bb.c:                                             ; preds = %1, %bb.a, %bb.b
+  ret i1 %4
 }
 
 ; Function Attrs: nobuiltin nounwind
@@ -304,4 +305,5 @@ attributes #12 = { builtin nounwind }
 !53 = !{!26, !26, i64 0}
 !54 = !{!6, !6, i64 0}
 !55 = !{!13, !5, i64 0}
+!56 = !{!19, !17, i64 16}
 end_hunk_0

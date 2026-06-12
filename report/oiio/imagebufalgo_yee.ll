@@ -201,25 +201,25 @@ bb.s:                                             ; preds = %bb.r
   store ptr %i.cc, ptr %i.h, align 8, !tbaa !123
   %i.cd = load i32, ptr %i.o, align 8, !tbaa !130
   %i.ce = icmp slt i32 %i.bp, %i.cd               ; 3 uses
+  %4 = zext i1 %i.ce to i8
   %i.cf = load i32, ptr %i.p, align 4
   %i.cg = icmp sge i32 %i.bp, %i.cf
   %not..i.i.i.i = xor i1 %i.ce, true
   %or.cond.i.i.i.i = select i1 %not..i.i.i.i, i1 true, i1 %i.cg, !prof !133
   %i.ch = load ptr, ptr %i.q, align 8
   %i.ci = icmp eq ptr %i.ch, null
-  %i.cj = select i1 %or.cond.i.i.i.i, i1 true, i1 %i.ci, !prof !133
-  br i1 %i.cj, label %bb.t, label %_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv.exit.i.i.backedge, !prof !125
+  %i.cj = select i1 %or.cond.i.i.i.i, i1 true, i1 %i.ci, !prof !134
+  br i1 %i.cj, label %bb.t, label %_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv.exit.i.i.backedge, !prof !134
 
 bb.t:                                             ; preds = %bb.s
   %i.ck = load ptr, ptr %2, align 8, !tbaa !124
   %i.cl = load i32, ptr %i.d, align 8, !tbaa !118
   %i.cm = load i32, ptr %i.f, align 4, !tbaa !120
-  %i.cn = load i32, ptr %i.v, align 8, !tbaa !134
+  %i.cn = load i32, ptr %i.v, align 8, !tbaa !135
   %i.co = invoke noundef ptr @_ZNK11OpenImageIO4v3_18ImageBuf6retileEiiiRPNS0_14ImageCacheTileERiS5_S5_S5_RbbNS1_8WrapModeE(ptr noundef nonnull align 8 dereferenceable(16) %i.ck, i32 noundef %i.bp, i32 noundef %i.cl, i32 noundef %i.cm, ptr noundef nonnull align 8 dereferenceable(8) %i.q, ptr noundef nonnull align 4 dereferenceable(4) %i.r, ptr noundef nonnull align 4 dereferenceable(4) %i.s, ptr noundef nonnull align 4 dereferenceable(4) %i.t, ptr noundef nonnull align 4 dereferenceable(4) %i.p, ptr noundef nonnull align 1 dereferenceable(1) %i.u, i1 noundef zeroext %i.ce, i32 noundef %i.cn)
           to label %.noexc3.i.i unwind label %bb.g
 
 .noexc3.i.i:                                      ; preds = %bb.t
-  %4 = zext i1 %i.ce to i8
   store ptr %i.co, ptr %i.h, align 8, !tbaa !123
   store i8 %4, ptr %i.k, align 1, !tbaa !127
   br label %_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv.exit.i.i.backedge
@@ -230,7 +230,7 @@ bb.u:                                             ; preds = %bb.m
   %i.cq = load i32, ptr %i.d, align 8, !tbaa !118
   %i.cr = add nsw i32 %i.cq, 1                    ; 3 uses
   store i32 %i.cr, ptr %i.d, align 8, !tbaa !118
-  %i.cs = load i32, ptr %i.j, align 8, !tbaa !135
+  %i.cs = load i32, ptr %i.j, align 8, !tbaa !136
   %.not.i.i.i = icmp slt i32 %i.cr, %i.cs
   %.pre1.i.i = load i32, ptr %i.f, align 4, !tbaa !120 ; 2 uses
   br i1 %.not.i.i.i, label %bb.x, label %bb.v
@@ -356,7 +356,7 @@ define internal void @"_ZNSt17_Function_handlerIFvN11OpenImageIO4v3_13ROIEEZNS1_
 bb.a:
   %2 = alloca %"class.OpenImageIO::v3_1::ImageBuf::Iterator", align 8 ; 37 uses
   %3 = alloca %"struct.OpenImageIO::v3_1::ROI", align 8 ; 4 uses
-  %.val = load ptr, ptr %0, align 8, !tbaa !136
+  %.val = load ptr, ptr %0, align 8, !tbaa !137
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull readonly align 4 dereferenceable(32) %1, i64 32, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #15
@@ -609,25 +609,25 @@ bb.aa:                                            ; preds = %bb.z
   store ptr %i.dw, ptr %i.h, align 8, !tbaa !123
   %i.dx = load i32, ptr %i.o, align 8, !tbaa !130
   %i.dy = icmp slt i32 %i.dj, %i.dx               ; 3 uses
+  %4 = zext i1 %i.dy to i8
   %i.dz = load i32, ptr %i.p, align 4
   %i.ea = icmp sge i32 %i.dj, %i.dz
   %not..i.i.i.i = xor i1 %i.dy, true
   %or.cond.i.i.i.i = select i1 %not..i.i.i.i, i1 true, i1 %i.ea, !prof !133
   %i.eb = load ptr, ptr %i.q, align 8
   %i.ec = icmp eq ptr %i.eb, null
-  %i.ed = select i1 %or.cond.i.i.i.i, i1 true, i1 %i.ec, !prof !133
-  br i1 %i.ed, label %bb.ab, label %_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv.exit.i.i.backedge, !prof !125
+  %i.ed = select i1 %or.cond.i.i.i.i, i1 true, i1 %i.ec, !prof !134
+  br i1 %i.ed, label %bb.ab, label %_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv.exit.i.i.backedge, !prof !134
 
 bb.ab:                                            ; preds = %bb.aa
   %i.ee = load ptr, ptr %2, align 8, !tbaa !124
   %i.ef = load i32, ptr %i.d, align 8, !tbaa !118
   %i.eg = load i32, ptr %i.f, align 4, !tbaa !120
-  %i.eh = load i32, ptr %i.v, align 8, !tbaa !134
+  %i.eh = load i32, ptr %i.v, align 8, !tbaa !135
   %i.ei = invoke noundef ptr @_ZNK11OpenImageIO4v3_18ImageBuf6retileEiiiRPNS0_14ImageCacheTileERiS5_S5_S5_RbbNS1_8WrapModeE(ptr noundef nonnull align 8 dereferenceable(16) %i.ee, i32 noundef %i.dj, i32 noundef %i.ef, i32 noundef %i.eg, ptr noundef nonnull align 8 dereferenceable(8) %i.q, ptr noundef nonnull align 4 dereferenceable(4) %i.r, ptr noundef nonnull align 4 dereferenceable(4) %i.s, ptr noundef nonnull align 4 dereferenceable(4) %i.t, ptr noundef nonnull align 4 dereferenceable(4) %i.p, ptr noundef nonnull align 1 dereferenceable(1) %i.u, i1 noundef zeroext %i.dy, i32 noundef %i.eh)
           to label %.noexc3.i.i unwind label %bb.aj
 
 .noexc3.i.i:                                      ; preds = %bb.ab
-  %4 = zext i1 %i.dy to i8
   store ptr %i.ei, ptr %i.h, align 8, !tbaa !123
   store i8 %4, ptr %i.k, align 1, !tbaa !127
   br label %_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv.exit.i.i.backedge
@@ -638,7 +638,7 @@ bb.ac:                                            ; preds = %bb.u
   %i.ek = load i32, ptr %i.d, align 8, !tbaa !118
   %i.el = add nsw i32 %i.ek, 1                    ; 3 uses
   store i32 %i.el, ptr %i.d, align 8, !tbaa !118
-  %i.em = load i32, ptr %i.j, align 8, !tbaa !135
+  %i.em = load i32, ptr %i.j, align 8, !tbaa !136
   %.not.i.i.i = icmp slt i32 %i.el, %i.em
   %.pre1.i.i = load i32, ptr %i.f, align 4, !tbaa !120 ; 2 uses
   br i1 %.not.i.i.i, label %bb.af, label %bb.ad
@@ -916,8 +916,9 @@ attributes #18 = { noreturn }
 !131 = !{!"branch_weights", !"expected", i32 2000, i32 1}
 !132 = !{!112, !28, i64 10}
 !133 = !{!"branch_weights", i32 4001, i32 4000000}
-!134 = !{!112, !114, i64 120}
-!135 = !{!112, !4, i64 48}
-!136 = !{!137, !35, i64 0}
-!137 = !{!"_ZTSZN11OpenImageIO4v3_112_GLOBAL__N_18XYZToLABERNS0_8ImageBufENS0_3ROIEiE3$_0", !35, i64 0}
+!134 = !{!"branch_weights", i32 6003000, i32 -294967296}
+!135 = !{!112, !114, i64 120}
+!136 = !{!112, !4, i64 48}
+!137 = !{!138, !35, i64 0}
+!138 = !{!"_ZTSZN11OpenImageIO4v3_112_GLOBAL__N_18XYZToLABERNS0_8ImageBufENS0_3ROIEiE3$_0", !35, i64 0}
 end_hunk_0

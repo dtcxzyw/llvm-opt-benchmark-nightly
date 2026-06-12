@@ -201,12 +201,14 @@ bb.ac:                                            ; preds = %bb.ab
   %i.en = or i1 %.050, %i.em
   %i.eo = zext i1 %i.en to i8
   store i8 %i.eo, ptr %3, align 1, !tbaa !35
-  %4 = load ptr, ptr %0, align 8
-  %5 = icmp ne ptr %4, @_ZN4llvhL20semX87DoubleExtendedE
-  %or.cond63.not = select i1 %.050, i1 true, i1 %5
-  br i1 %or.cond63.not, label %bb.af, label %bb.ad
+  br i1 %.050, label %bb.af, label %4
 
-bb.ad:                                            ; preds = %bb.ac
+4:                                                ; preds = %bb.ac
+  %5 = load ptr, ptr %0, align 8, !tbaa !13
+  %6 = icmp eq ptr %5, @_ZN4llvhL20semX87DoubleExtendedE
+  br i1 %6, label %bb.ad, label %bb.af
+
+bb.ad:                                            ; preds = %4
   %i.ep = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.eq = load ptr, ptr %i.ep, align 8
   tail call void @_ZN4llvh5APInt8tcSetBitEPmj(ptr noundef %i.eq, i32 noundef 63) #25
@@ -216,8 +218,8 @@ bb.ae:                                            ; preds = %bb.ab
   store i8 0, ptr %3, align 1, !tbaa !35
   br label %bb.af
 
-bb.af:                                            ; preds = %bb.ac, %bb.ad, %bb.ae, %bb.aa
-  %.051 = phi i32 [ %i.ei, %bb.aa ], [ 0, %bb.ae ], [ 0, %bb.ad ], [ 0, %bb.ac ]
+bb.af:                                            ; preds = %bb.ac, %4, %bb.ad, %bb.ae, %bb.aa
+  %.051 = phi i32 [ %i.ei, %bb.aa ], [ 0, %bb.ae ], [ 0, %bb.ad ], [ 0, %4 ], [ 0, %bb.ac ]
   ret i32 %.051
 }
 

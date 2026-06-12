@@ -201,7 +201,7 @@ bb.au:                                            ; preds = %bb.at, %bb.as
   %i.df = sub i64 %.062125, %.059                 ; 2 uses
   %i.dg = icmp ne i64 %.062125, %.059
   %or.cond = select i1 %i.cb, i1 %i.dg, i1 false
-  br i1 %or.cond, label %bb.av, label %.critedge.a
+  br i1 %or.cond, label %bb.av, label %.critedge
 
 bb.av:                                            ; preds = %bb.au
   %i.dh = invoke noundef nonnull align 8 dereferenceable(104) ptr @_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.bc, i64 noundef %.061126)
@@ -314,19 +314,21 @@ _ZN6duckdb15SelectionVector10InitializeERKS0_.exit: ; preds = %bb.bb, %_ZN6duckd
   %i.eq = sub i64 %i.eo, %i.ep
   %i.er = sdiv exact i64 %i.eq, 24
   %i.es = icmp ult i64 %i.bs, %i.er
-  br i1 %i.es, label %bb.r, label %.critedge.a, !llvm.loop !381
+  br i1 %i.es, label %bb.r, label %.critedge, !llvm.loop !381
 
 bb.bm:                                            ; preds = %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av
   %i.et = landingpad { ptr, i32 }
           cleanup
   br label %bb.bv
 
-.critedge.a:                                      ; preds = %_ZN6duckdb15SelectionVector10InitializeERKS0_.exit, %bb.au
-  %.pre = load i64, ptr %i.at, align 8
-  %6 = icmp ne i64 %.165, 0                       ; 3 uses
+.critedge:                                        ; preds = %_ZN6duckdb15SelectionVector10InitializeERKS0_.exit, %bb.au
+  %.not158 = icmp eq i64 %.165, 0
+  br i1 %.not158, label %.critedge.thread, label %.critedge.a
+
+.critedge.a:                                      ; preds = %.critedge
+  %.pre = load i64, ptr %i.at, align 8, !tbaa !368
   %i.eu = icmp ult i64 %.165, %.pre
-  %or.cond120 = select i1 %6, i1 %i.eu, i1 false
-  br i1 %or.cond120, label %bb.bn, label %.critedge.thread
+  br i1 %i.eu, label %bb.bn, label %.critedge.thread
 
 bb.bn:                                            ; preds = %.critedge.a
   %i.ev = getelementptr inbounds nuw i8, ptr %0, i64 816 ; 2 uses
@@ -337,8 +339,8 @@ bb.bo:                                            ; preds = %bb.bn
   invoke void @_ZN6duckdb9DataChunk5SliceERKNS_15SelectionVectorEm(ptr noundef nonnull align 8 dereferenceable(72) %2, ptr noundef nonnull align 8 dereferenceable(24) %i.ev, i64 noundef %.165)
           to label %.critedge.thread unwind label %bb.q
 
-.critedge.thread:                                 ; preds = %.loopexit, %bb.bo, %.critedge.a
-  %7 = phi i1 [ %6, %.critedge.a ], [ %6, %bb.bo ], [ false, %.loopexit ]
+.critedge.thread:                                 ; preds = %.loopexit, %.critedge.a, %bb.bo, %.critedge
+  %6 = phi i1 [ false, %.critedge ], [ true, %.critedge.a ], [ true, %bb.bo ], [ false, %.loopexit ]
   %i.ew = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ex = load ptr, ptr %i.ew, align 8, !tbaa !205 ; 8 uses
   %.not.i.i.i.i = icmp eq ptr %i.ex, null
@@ -399,7 +401,7 @@ bb.bv:                                            ; preds = %bb.v, %bb.bm, %bb.a
   br label %bb.bx
 
 bb.bw:                                            ; preds = %bb.a, %_ZN6duckdb15SelectionVectorD2Ev.exit
-  %.1 = phi i1 [ %7, %_ZN6duckdb15SelectionVectorD2Ev.exit ], [ true, %bb.a ]
+  %.1 = phi i1 [ %6, %_ZN6duckdb15SelectionVectorD2Ev.exit ], [ true, %bb.a ]
   %i.fn = load ptr, ptr %4, align 8, !tbaa !88    ; 2 uses
   %i.fo = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.fp = icmp eq ptr %i.fn, %i.fo
@@ -802,11 +804,7 @@ _ZNSt6vectorIjSaIjEE6resizeEm.exit:               ; preds = %bb.e, %bb.f, %bb.g,
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %_ZNSt6vectorIjSaIjEE6resizeEm.exit
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 168
-  %4 = load i64, ptr %3, align 8
-  %5 = select i1 %2, i64 %4, i64 0
-  store i64 %5, ptr %1, align 8, !tbaa !403
-  ret void
+  br i1 %2, label %3, label %6
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIjSaIjEE6resizeEm.exit, %.lr.ph
   %.016 = phi i64 [ %i.aw, %.lr.ph ], [ 0, %_ZNSt6vectorIjSaIjEE6resizeEm.exit ] ; 3 uses
@@ -818,7 +816,17 @@ _ZNSt6vectorIjSaIjEE6resizeEm.exit:               ; preds = %bb.e, %bb.f, %bb.g,
   store i32 %i.au, ptr %i.av, align 4, !tbaa !3
   %i.aw = add nuw i64 %.016, 1                    ; 2 uses
   %exitcond.not = icmp eq i64 %i.aw, %i.af
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !409
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !403
+
+3:                                                ; preds = %._crit_edge
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 168
+  %5 = load i64, ptr %4, align 8, !tbaa !297
+  br label %6
+
+6:                                                ; preds = %._crit_edge, %3
+  %7 = phi i64 [ %5, %3 ], [ 0, %._crit_edge ]
+  store i64 %7, ptr %1, align 8, !tbaa !404
+  ret void
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -1221,13 +1229,13 @@ begin_hunk_2_@bcmp
 !400 = !{!401, !292, i64 8}
 !401 = !{!"_ZTSNSt12_Vector_baseIjSaIjEE17_Vector_impl_dataE", !292, i64 0, !292, i64 8, !292, i64 16}
 !402 = !{!401, !292, i64 0}
-!403 = !{!404, !32, i64 0}
-!404 = !{!"_ZTSN6duckdb13TopNScanStateE", !32, i64 0, !405, i64 8, !291, i64 32}
-!405 = !{!"_ZTSN6duckdb6vectorIjLb1ESaIjEEE", !406, i64 0}
-!406 = !{!"_ZTSSt6vectorIjSaIjEE", !407, i64 0}
-!407 = !{!"_ZTSSt12_Vector_baseIjSaIjEE", !408, i64 0}
-!408 = !{!"_ZTSNSt12_Vector_baseIjSaIjEE12_Vector_implE", !401, i64 0}
-!409 = distinct !{!409, !15}
+!403 = distinct !{!403, !15}
+!404 = !{!405, !32, i64 0}
+!405 = !{!"_ZTSN6duckdb13TopNScanStateE", !32, i64 0, !406, i64 8, !291, i64 32}
+!406 = !{!"_ZTSN6duckdb6vectorIjLb1ESaIjEEE", !407, i64 0}
+!407 = !{!"_ZTSSt6vectorIjSaIjEE", !408, i64 0}
+!408 = !{!"_ZTSSt12_Vector_baseIjSaIjEE", !409, i64 0}
+!409 = !{!"_ZTSNSt12_Vector_baseIjSaIjEE12_Vector_implE", !401, i64 0}
 !410 = !{!411}
 !411 = distinct !{!411, !412, !"_ZN6duckdb9make_uniqINS_18TopNLocalSinkStateEJRNS_16ExecutionContextERKNS_6vectorINS_11LogicalTypeELb1ESaIS5_EEERKNS4_INS_16BoundOrderByNodeELb1ESaISA_EEERKmSG_EEENS_17TemplatedUniqueIfIT_Lb1EE25templated_unique_single_tEDpOT0_: argument 0"}
 !412 = distinct !{!412, !"_ZN6duckdb9make_uniqINS_18TopNLocalSinkStateEJRNS_16ExecutionContextERKNS_6vectorINS_11LogicalTypeELb1ESaIS5_EEERKNS4_INS_16BoundOrderByNodeELb1ESaISA_EEERKmSG_EEENS_17TemplatedUniqueIfIT_Lb1EE25templated_unique_single_tEDpOT0_"}
@@ -1248,7 +1256,7 @@ begin_hunk_2_@bcmp
 !427 = distinct !{!427, !428, !"_ZN6duckdb23StateWithBlockableTasks4LockEv: argument 0"}
 !428 = distinct !{!428, !"_ZN6duckdb23StateWithBlockableTasks4LockEv"}
 !429 = !{!430, !32, i64 88}
-!430 = !{!"_ZTSN6duckdb21TopNGlobalSourceStateE", !104, i64 0, !431, i64 80, !404, i64 88, !32, i64 144}
+!430 = !{!"_ZTSN6duckdb21TopNGlobalSourceStateE", !104, i64 0, !431, i64 80, !405, i64 88, !32, i64 144}
 !431 = !{!"p1 _ZTSN6duckdb19TopNGlobalSinkStateE", !9, i64 0}
 !432 = !{!430, !32, i64 144}
 !433 = !{!423, !32, i64 24}

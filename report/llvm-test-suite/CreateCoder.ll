@@ -169,7 +169,7 @@ define dso_local noundef i32 @_Z11CreateCoderyR9CMyComPtrI15ICompressFilterERS_I
 bb.a:
   %i.a = load i32, ptr @g_NumCodecs, align 4, !tbaa !4 ; 2 uses
   %.not64 = icmp eq i32 %i.a, 0
-  br i1 %.not64, label %.thread.a, label %.lr.ph
+  br i1 %.not64, label %.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
   %wide.trip.count75 = zext i32 %i.a to i64       ; 2 uses
@@ -193,7 +193,7 @@ bb.b:                                             ; preds = %.lr.ph.split.us
 bb.c:                                             ; preds = %bb.b, %.lr.ph.split.us
   %indvars.iv.next73 = add nuw nsw i64 %indvars.iv72, 1 ; 2 uses
   %exitcond76.not = icmp eq i64 %indvars.iv.next73, %wide.trip.count75
-  br i1 %exitcond76.not, label %.thread.a, label %.lr.ph.split.us, !llvm.loop !30
+  br i1 %exitcond76.not, label %.thread, label %.lr.ph.split.us, !llvm.loop !30
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.af
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.af ], [ 0, %.lr.ph ] ; 2 uses
@@ -241,7 +241,7 @@ bb.h:                                             ; preds = %bb.g
 
 _ZN9CMyComPtrI15ICompressFilterEaSEPS0_.exit:     ; preds = %bb.g, %bb.h
   store ptr %i.o, ptr %1, align 8, !tbaa !38
-  br label %.thread.a
+  br label %.thread
 
 bb.i:                                             ; preds = %.split.us
   %i.ab = getelementptr inbounds nuw i8, ptr %i.c, i64 32
@@ -274,7 +274,7 @@ bb.m:                                             ; preds = %bb.l
 
 _ZN9CMyComPtrI14ICompressCoderEaSEPS0_.exit:      ; preds = %bb.l, %bb.m
   store ptr %i.o, ptr %2, align 8, !tbaa !42
-  br label %.thread.a
+  br label %.thread
 
 bb.n:                                             ; preds = %bb.i
   br i1 %.not.i41, label %bb.p, label %bb.o
@@ -300,7 +300,7 @@ bb.q:                                             ; preds = %bb.p
 
 _ZN9CMyComPtrI15ICompressCoder2EaSEPS0_.exit:     ; preds = %bb.p, %bb.q
   store ptr %i.o, ptr %3, align 8, !tbaa !46
-  br label %.thread.a
+  br label %.thread
 
 bb.r:                                             ; preds = %bb.d
   %i.aw = tail call noundef ptr %i.n()            ; 11 uses
@@ -334,7 +334,7 @@ bb.v:                                             ; preds = %bb.u
 
 _ZN9CMyComPtrI15ICompressFilterEaSEPS0_.exit47:   ; preds = %bb.u, %bb.v
   store ptr %i.aw, ptr %1, align 8, !tbaa !38
-  br label %.thread.a
+  br label %.thread
 
 bb.w:                                             ; preds = %bb.r
   %i.bj = getelementptr inbounds nuw i8, ptr %i.j, i64 32
@@ -367,7 +367,7 @@ bb.aa:                                            ; preds = %bb.z
 
 _ZN9CMyComPtrI14ICompressCoderEaSEPS0_.exit50:    ; preds = %bb.z, %bb.aa
   store ptr %i.aw, ptr %2, align 8, !tbaa !42
-  br label %.thread.a
+  br label %.thread
 
 bb.ab:                                            ; preds = %bb.w
   br i1 %.not.i48, label %bb.ad, label %bb.ac
@@ -393,18 +393,20 @@ bb.ae:                                            ; preds = %bb.ad
 
 _ZN9CMyComPtrI15ICompressCoder2EaSEPS0_.exit53:   ; preds = %bb.ad, %bb.ae
   store ptr %i.aw, ptr %3, align 8, !tbaa !46
-  br label %.thread.a
+  br label %.thread
 
 bb.af:                                            ; preds = %bb.d, %.lr.ph.split
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count75
-  br i1 %exitcond.not, label %.thread.a, label %.lr.ph.split, !llvm.loop !30
+  br i1 %exitcond.not, label %.thread, label %.lr.ph.split, !llvm.loop !30
 
-.thread.a:                                        ; preds = %bb.af, %bb.c, %bb.a, %_ZN9CMyComPtrI15ICompressCoder2EaSEPS0_.exit53, %_ZN9CMyComPtrI14ICompressCoderEaSEPS0_.exit50, %_ZN9CMyComPtrI15ICompressCoder2EaSEPS0_.exit, %_ZN9CMyComPtrI14ICompressCoderEaSEPS0_.exit, %_ZN9CMyComPtrI15ICompressFilterEaSEPS0_.exit47, %_ZN9CMyComPtrI15ICompressFilterEaSEPS0_.exit
-  %i.ce = load ptr, ptr %1, align 8
-  %.not40 = icmp ne ptr %i.ce, null
-  %or.cond.not = select i1 %5, i1 %.not40, i1 false
-  br i1 %or.cond.not, label %bb.ag, label %bb.an
+.thread:                                          ; preds = %bb.af, %bb.c, %bb.a, %_ZN9CMyComPtrI15ICompressCoder2EaSEPS0_.exit53, %_ZN9CMyComPtrI14ICompressCoderEaSEPS0_.exit50, %_ZN9CMyComPtrI15ICompressCoder2EaSEPS0_.exit, %_ZN9CMyComPtrI14ICompressCoderEaSEPS0_.exit, %_ZN9CMyComPtrI15ICompressFilterEaSEPS0_.exit47, %_ZN9CMyComPtrI15ICompressFilterEaSEPS0_.exit
+  br i1 %5, label %.thread.a, label %bb.an
+
+.thread.a:                                        ; preds = %.thread
+  %i.ce = load ptr, ptr %1, align 8, !tbaa !38
+  %.not40 = icmp eq ptr %i.ce, null
+  br i1 %.not40, label %bb.an, label %bb.ag
 
 bb.ag:                                            ; preds = %.thread.a
   %i.cf = tail call noalias noundef nonnull dereferenceable(200) ptr @_Znwm(i64 noundef 200) #9 ; 6 uses
@@ -463,7 +465,7 @@ bb.am:                                            ; preds = %bb.ag
   tail call void @_ZdlPvm(ptr noundef nonnull %i.cf, i64 noundef 200) #10
   resume { ptr, i32 } %i.da
 
-bb.an:                                            ; preds = %_ZN9CMyComPtrI15ICompressFilterEaSERKS1_.exit, %.thread.a
+bb.an:                                            ; preds = %_ZN9CMyComPtrI15ICompressFilterEaSERKS1_.exit, %.thread.a, %.thread
   ret i32 0
 }
 

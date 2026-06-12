@@ -201,28 +201,33 @@ _ZN6duckdb12_GLOBAL__N_120SortedAggregateState21InitializeLinkedListsERKNS0_23So
   br i1 %i.n, label %_ZN6duckdb12_GLOBAL__N_120SortedAggregateState21InitializeLinkedListsERKNS0_23SortedAggregateBindDataE.exit.thread, label %.thread
 
 _ZN6duckdb12_GLOBAL__N_120SortedAggregateState21InitializeLinkedListsERKNS0_23SortedAggregateBindDataE.exit.thread: ; preds = %bb.a, %_ZN6duckdb12_GLOBAL__N_120SortedAggregateState21InitializeLinkedListsERKNS0_23SortedAggregateBindDataE.exit
-  %.pr611 = phi i64 [ %2, %bb.a ], [ %.pr.pre, %_ZN6duckdb12_GLOBAL__N_120SortedAggregateState21InitializeLinkedListsERKNS0_23SortedAggregateBindDataE.exit ]
+  %.pr611 = phi i64 [ %2, %bb.a ], [ %.pr.pre, %_ZN6duckdb12_GLOBAL__N_120SortedAggregateState21InitializeLinkedListsERKNS0_23SortedAggregateBindDataE.exit ] ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  %5 = load ptr, ptr %i.o, align 8, !tbaa !301
-  %6 = icmp ne ptr %5, null
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
-  %i.p = load ptr, ptr %7, align 8
-  %8 = icmp ne ptr %i.p, null
-  %or.cond = select i1 %6, i1 true, i1 %8
-  br i1 %or.cond, label %bb.d, label %bb.c
+  %i.p = load ptr, ptr %i.o, align 8, !tbaa !301
+  %.not = icmp eq ptr %i.p, null
+  br i1 %.not, label %5, label %8
 
-bb.c:                                             ; preds = %_ZN6duckdb12_GLOBAL__N_120SortedAggregateState21InitializeLinkedListsERKNS0_23SortedAggregateBindDataE.exit.thread
+5:                                                ; preds = %_ZN6duckdb12_GLOBAL__N_120SortedAggregateState21InitializeLinkedListsERKNS0_23SortedAggregateBindDataE.exit.thread
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %7 = load ptr, ptr %6, align 8, !tbaa !300
+  %.not7 = icmp eq ptr %7, null
+  br i1 %.not7, label %bb.c, label %8
+
+bb.c:                                             ; preds = %5
   call fastcc void @_ZN6duckdb12_GLOBAL__N_120SortedAggregateState16FlushLinkedListsERKNS0_23SortedAggregateBindDataE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull align 8 dereferenceable(584) %1)
   %.pr6.pre = load i64, ptr %0, align 8, !tbaa !299
-  br label %bb.d
+  br label %8
 
-bb.d:                                             ; preds = %bb.c, %_ZN6duckdb12_GLOBAL__N_120SortedAggregateState21InitializeLinkedListsERKNS0_23SortedAggregateBindDataE.exit.thread
-  %.pr6 = phi i64 [ %.pr6.pre, %bb.c ], [ %.pr611, %_ZN6duckdb12_GLOBAL__N_120SortedAggregateState21InitializeLinkedListsERKNS0_23SortedAggregateBindDataE.exit.thread ]
+8:                                                ; preds = %bb.c, %5, %_ZN6duckdb12_GLOBAL__N_120SortedAggregateState21InitializeLinkedListsERKNS0_23SortedAggregateBindDataE.exit.thread
+  %.pr6 = phi i64 [ %.pr6.pre, %bb.c ], [ %.pr611, %5 ], [ %.pr611, %_ZN6duckdb12_GLOBAL__N_120SortedAggregateState21InitializeLinkedListsERKNS0_23SortedAggregateBindDataE.exit.thread ]
   %9 = icmp ugt i64 %.pr6, 2048
-  %i.q = load ptr, ptr %7, align 8
+  br i1 %9, label %bb.d, label %.thread
+
+bb.d:                                             ; preds = %8
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
+  %i.q = load ptr, ptr %10, align 8, !tbaa !300
   %.not.a = icmp eq ptr %i.q, null
-  %or.cond21 = select i1 %9, i1 %.not.a, i1 false
-  br i1 %or.cond21, label %bb.e, label %.thread
+  br i1 %.not.a, label %bb.e, label %.thread
 
 bb.e:                                             ; preds = %bb.d
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -282,8 +287,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 
 _ZN6duckdb9make_uniqINS_20ColumnDataCollectionEJRNS_13ClientContextERKNS_6vectorINS_11LogicalTypeELb1ESaIS5_EEEEEENS_17TemplatedUniqueIfIT_Lb1EE25templated_unique_single_tEDpOT0_.exit.i: ; preds = %bb.g, %_ZSt8_DestroyIPN6duckdb11LogicalTypeES1_EvT_S3_RSaIT0_E.exit.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
-  %i.ac = load ptr, ptr %7, align 8, !tbaa !300   ; 3 uses
-  store ptr %i.u, ptr %7, align 8, !tbaa !300
+  %i.ac = load ptr, ptr %10, align 8, !tbaa !300  ; 3 uses
+  store ptr %i.u, ptr %10, align 8, !tbaa !300
   %.not.i.i.i.i.i.i = icmp eq ptr %i.ac, null
   br i1 %.not.i.i.i.i.i.i, label %_ZNSt10unique_ptrIN6duckdb20ColumnDataCollectionESt14default_deleteIS1_EED2Ev.exit.i, label %_ZNKSt14default_deleteIN6duckdb20ColumnDataCollectionEEclEPS1_.exit.i.i.i.i.i.i
 
@@ -318,10 +323,10 @@ _ZN6duckdb10unique_ptrINS_21ColumnDataAppendStateESt14default_deleteIS1_ELb1EEaS
   br label %_ZN6duckdb12_GLOBAL__N_120SortedAggregateState21InitializeCollectionsERKNS0_23SortedAggregateBindDataE.exit
 
 _ZN6duckdb12_GLOBAL__N_120SortedAggregateState21InitializeCollectionsERKNS0_23SortedAggregateBindDataE.exit: ; preds = %_ZNSt10unique_ptrIN6duckdb20ColumnDataCollectionESt14default_deleteIS1_EED2Ev.exit.i, %_ZN6duckdb10unique_ptrINS_21ColumnDataAppendStateESt14default_deleteIS1_ELb1EEaSEOS4_.exit.i
-  %i.am = call noundef ptr @_ZNK6duckdb10unique_ptrINS_20ColumnDataCollectionESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %7)
+  %i.am = call noundef ptr @_ZNK6duckdb10unique_ptrINS_20ColumnDataCollectionESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %10)
   %i.an = call noundef nonnull align 8 dereferenceable(88) ptr @_ZNK6duckdb10unique_ptrINS_21ColumnDataAppendStateESt14default_deleteIS1_ELb1EEdeEv(ptr noundef nonnull align 8 dereferenceable(8) %i.ak)
   call void @_ZN6duckdb20ColumnDataCollection16InitializeAppendERNS_21ColumnDataAppendStateE(ptr noundef nonnull align 8 dereferenceable(112) %i.am, ptr noundef nonnull align 8 dereferenceable(88) %i.an)
-  %i.ao = call noundef ptr @_ZNK6duckdb10unique_ptrINS_20ColumnDataCollectionESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %7)
+  %i.ao = call noundef ptr @_ZNK6duckdb10unique_ptrINS_20ColumnDataCollectionESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %10)
   %i.ap = call noundef nonnull align 8 dereferenceable(88) ptr @_ZNK6duckdb10unique_ptrINS_21ColumnDataAppendStateESt14default_deleteIS1_ELb1EEdeEv(ptr noundef nonnull align 8 dereferenceable(8) %i.ak)
   %i.aq = call noundef nonnull align 8 dereferenceable(72) ptr @_ZNK6duckdb10unique_ptrINS_9DataChunkESt14default_deleteIS1_ELb1EEdeEv(ptr noundef nonnull align 8 dereferenceable(8) %i.o)
   call void @_ZN6duckdb20ColumnDataCollection6AppendERNS_21ColumnDataAppendStateERNS_9DataChunkE(ptr noundef nonnull align 8 dereferenceable(112) %i.ao, ptr noundef nonnull align 8 dereferenceable(88) %i.ap, ptr noundef nonnull align 8 dereferenceable(72) %i.aq)
@@ -329,7 +334,7 @@ _ZN6duckdb12_GLOBAL__N_120SortedAggregateState21InitializeCollectionsERKNS0_23So
   call void @_ZN6duckdb9DataChunk5ResetEv(ptr noundef nonnull align 8 dereferenceable(72) %i.ar)
   br label %.thread
 
-.thread:                                          ; preds = %bb.b, %_ZN6duckdb12_GLOBAL__N_120SortedAggregateState21InitializeLinkedListsERKNS0_23SortedAggregateBindDataE.exit, %_ZN6duckdb12_GLOBAL__N_120SortedAggregateState21InitializeCollectionsERKNS0_23SortedAggregateBindDataE.exit, %bb.d
+.thread:                                          ; preds = %bb.b, %_ZN6duckdb12_GLOBAL__N_120SortedAggregateState21InitializeLinkedListsERKNS0_23SortedAggregateBindDataE.exit, %_ZN6duckdb12_GLOBAL__N_120SortedAggregateState21InitializeCollectionsERKNS0_23SortedAggregateBindDataE.exit, %bb.d, %8
   ret void
 }
 

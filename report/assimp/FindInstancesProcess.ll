@@ -201,7 +201,7 @@ _ZN6Assimp13CompareArraysEPK10aiVector3tIfES3_jf.exit.thread: ; preds = %bb.r, %
   %i.de = load ptr, ptr %i.dd, align 8            ; 3 uses
   %.not.i184 = icmp ne ptr %i.de, null
   %i.df = and i1 %i.cf, %.not.i184
-  br i1 %i.df, label %bb.s, label %_ZN6Assimp13CompareArraysEPK10aiVector3tIfES3_jf.exit192.thread.a
+  br i1 %i.df, label %bb.s, label %_ZN6Assimp13CompareArraysEPK10aiVector3tIfES3_jf.exit192.thread
 
 bb.s:                                             ; preds = %_ZN6Assimp13CompareArraysEPK10aiVector3tIfES3_jf.exit.thread
   %i.dg = load ptr, ptr %i.at, align 8
@@ -236,17 +236,19 @@ bb.t:                                             ; preds = %.lr.ph.i187
   %i.ea = getelementptr inbounds nuw i8, ptr %.01015.i188, i64 12 ; 2 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %.01214.i189, i64 12
   %.not.i191 = icmp eq ptr %i.ea, %i.di
-  br i1 %.not.i191, label %_ZN6Assimp13CompareArraysEPK10aiVector3tIfES3_jf.exit192.thread.a, label %.lr.ph.i187, !llvm.loop !8
+  br i1 %.not.i191, label %_ZN6Assimp13CompareArraysEPK10aiVector3tIfES3_jf.exit192.thread, label %.lr.ph.i187, !llvm.loop !8
 
-_ZN6Assimp13CompareArraysEPK10aiVector3tIfES3_jf.exit192.thread.a: ; preds = %bb.t, %_ZN6Assimp13CompareArraysEPK10aiVector3tIfES3_jf.exit.thread
+_ZN6Assimp13CompareArraysEPK10aiVector3tIfES3_jf.exit192.thread: ; preds = %bb.t, %_ZN6Assimp13CompareArraysEPK10aiVector3tIfES3_jf.exit.thread
   %2 = getelementptr inbounds nuw i8, ptr %i.bo, i64 32
   %3 = load ptr, ptr %2, align 8                  ; 3 uses
-  %.not.i193 = icmp ne ptr %3, null
+  %.not.i193 = icmp eq ptr %3, null
+  br i1 %.not.i193, label %_ZNK6aiMesh24HasTangentsAndBitangentsEv.exit.thread, label %_ZN6Assimp13CompareArraysEPK10aiVector3tIfES3_jf.exit192.thread.a
+
+_ZN6Assimp13CompareArraysEPK10aiVector3tIfES3_jf.exit192.thread.a: ; preds = %_ZN6Assimp13CompareArraysEPK10aiVector3tIfES3_jf.exit192.thread
   %i.ec = getelementptr inbounds nuw i8, ptr %i.bo, i64 40
   %i.ed = load ptr, ptr %i.ec, align 8            ; 3 uses
   %.not1.i = icmp ne ptr %i.ed, null
-  %or.cond.i.not280 = select i1 %.not.i193, i1 %.not1.i, i1 false
-  %brmerge.not = and i1 %i.cf, %or.cond.i.not280
+  %brmerge.not = and i1 %i.cf, %.not1.i
   br i1 %brmerge.not, label %bb.u, label %_ZNK6aiMesh24HasTangentsAndBitangentsEv.exit.thread
 
 bb.u:                                             ; preds = %_ZN6Assimp13CompareArraysEPK10aiVector3tIfES3_jf.exit192.thread.a
@@ -317,7 +319,7 @@ bb.x:                                             ; preds = %.lr.ph.i204
   %.not.i208 = icmp eq ptr %i.ft, %i.fb
   br i1 %.not.i208, label %_ZNK6aiMesh24HasTangentsAndBitangentsEv.exit.thread, label %.lr.ph.i204, !llvm.loop !8
 
-_ZNK6aiMesh24HasTangentsAndBitangentsEv.exit.thread: ; preds = %bb.x, %_ZN6Assimp13CompareArraysEPK10aiVector3tIfES3_jf.exit192.thread.a
+_ZNK6aiMesh24HasTangentsAndBitangentsEv.exit.thread: ; preds = %bb.x, %_ZN6Assimp13CompareArraysEPK10aiVector3tIfES3_jf.exit192.thread.a, %_ZN6Assimp13CompareArraysEPK10aiVector3tIfES3_jf.exit192.thread
   %i.fv = getelementptr inbounds nuw i8, ptr %i.bo, i64 112 ; 2 uses
   %i.fw = load <8 x ptr>, ptr %i.fv, align 8
   %i.fx = icmp ne <8 x ptr> %i.fw, splat (ptr null)

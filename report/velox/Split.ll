@@ -201,7 +201,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load i64, ptr %i.a, align 8, !tbaa !465  ; 2 uses
   %.not = icmp ugt i64 %2, %i.b
-  br i1 %.not, label %bb.b, label %bb.e, !prof !50
+  br i1 %.not, label %bb.b, label %6, !prof !50
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #17
@@ -235,13 +235,15 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.d,
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #17
   resume { ptr, i32 } %i.d
 
-bb.e:                                             ; preds = %bb.a
+6:                                                ; preds = %bb.a
   %.not8 = icmp ugt i64 %2, %1
+  br i1 %.not8, label %bb.e, label %_ZSt4fillIPN8facebook5velox10StringViewES2_EvT_S4_RKT0_.exit
+
+bb.e:                                             ; preds = %6
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.k = load i8, ptr %i.j, align 8, !range !73
+  %i.k = load i8, ptr %i.j, align 8, !tbaa !243, !range !73, !noundef !74
   %i.l = trunc nuw i8 %i.k to i1
-  %or.cond = select i1 %.not8, i1 %i.l, i1 false
-  br i1 %or.cond, label %bb.f, label %_ZSt4fillIPN8facebook5velox10StringViewES2_EvT_S4_RKT0_.exit
+  br i1 %i.l, label %bb.f, label %_ZSt4fillIPN8facebook5velox10StringViewES2_EvT_S4_RKT0_.exit
 
 bb.f:                                             ; preds = %bb.e
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 44
@@ -274,7 +276,7 @@ _ZNK8facebook5velox6Buffer9asMutableINS0_10StringViewEEEPT_v.exit: ; preds = %bb
   %.not.i.i.i = icmp eq ptr %i.v, %i.t
   br i1 %.not.i.i.i, label %_ZSt4fillIPN8facebook5velox10StringViewES2_EvT_S4_RKT0_.exit, label %.lr.ph.i.i.i, !llvm.loop !509
 
-_ZSt4fillIPN8facebook5velox10StringViewES2_EvT_S4_RKT0_.exit: ; preds = %.lr.ph.i.i.i, %_ZNK8facebook5velox6Buffer9asMutableINS0_10StringViewEEEPT_v.exit, %bb.e
+_ZSt4fillIPN8facebook5velox10StringViewES2_EvT_S4_RKT0_.exit: ; preds = %.lr.ph.i.i.i, %_ZNK8facebook5velox6Buffer9asMutableINS0_10StringViewEEEPT_v.exit, %bb.e, %6
   ret void
 }
 
@@ -677,7 +679,6 @@ bb.b:                                             ; preds = %bb.a
   %i.h = shufflevector <16 x i8> %i.g, <16 x i8> poison, <16 x i32> zeroinitializer
   %i.i = and i64 %i.b, 255                        ; 4 uses
   %i.j = shl nuw i64 1, %i.i
-  %6 = load ptr, ptr %4, align 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.f
@@ -709,6 +710,7 @@ bb.d:                                             ; preds = %.critedge.i
   %i.y = zext nneg i32 %i.v to i64                ; 3 uses
   tail call void @llvm.assume(i1 %i.t)
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.y
+  %6 = load ptr, ptr %4, align 8, !tbaa !762
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !762
   %i.ab = icmp eq ptr %6, %i.aa
   br i1 %i.ab, label %bb.g, label %.critedge.i, !prof !141, !llvm.loop !800

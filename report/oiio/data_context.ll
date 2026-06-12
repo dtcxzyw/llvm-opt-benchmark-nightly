@@ -201,12 +201,14 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  %5 = load ptr, ptr %i.c, align 8, !tbaa !48     ; 2 uses
-  %6 = icmp eq ptr %5, %i.c
-  %i.d = load ptr, ptr %3, align 8
-  %i.e = icmp eq ptr %i.d, %3
-  %or.cond = select i1 %6, i1 %i.e, i1 false
-  br i1 %or.cond, label %_ZN22photos_editing_formats8image_io12_GLOBAL__N_18AddNamesERKNSt7__cxx114listINS2_12basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EEEPNS2_18basic_stringstreamIcS6_S7_EE.exit24, label %_ZN22photos_editing_formats8image_io12_GLOBAL__N_18AddNamesERKNSt7__cxx114listINS2_12basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EEEPNS2_18basic_stringstreamIcS6_S7_EE.exit
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !48   ; 3 uses
+  %i.e = icmp eq ptr %i.d, %i.c
+  br i1 %i.e, label %5, label %_ZN22photos_editing_formats8image_io12_GLOBAL__N_18AddNamesERKNSt7__cxx114listINS2_12basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EEEPNS2_18basic_stringstreamIcS6_S7_EE.exit
+
+5:                                                ; preds = %bb.b
+  %6 = load ptr, ptr %3, align 8, !tbaa !48
+  %7 = icmp eq ptr %6, %3
+  br i1 %7, label %_ZN22photos_editing_formats8image_io12_GLOBAL__N_18AddNamesERKNSt7__cxx114listINS2_12basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EEEPNS2_18basic_stringstreamIcS6_S7_EE.exit24, label %_ZN22photos_editing_formats8image_io12_GLOBAL__N_18AddNamesERKNSt7__cxx114listINS2_12basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EEEPNS2_18basic_stringstreamIcS6_S7_EE.exit
 
 .lr.ph.i:                                         ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
@@ -235,8 +237,8 @@ _ZN22photos_editing_formats8image_io12_GLOBAL__N_18AddNamesERKNSt7__cxx114listIN
   %.sroa.05.08.i7.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !48
   br label %_ZN22photos_editing_formats8image_io12_GLOBAL__N_18AddNamesERKNSt7__cxx114listINS2_12basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EEEPNS2_18basic_stringstreamIcS6_S7_EE.exit
 
-_ZN22photos_editing_formats8image_io12_GLOBAL__N_18AddNamesERKNSt7__cxx114listINS2_12basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EEEPNS2_18basic_stringstreamIcS6_S7_EE.exit: ; preds = %_ZN22photos_editing_formats8image_io12_GLOBAL__N_18AddNamesERKNSt7__cxx114listINS2_12basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EEEPNS2_18basic_stringstreamIcS6_S7_EE.exit.loopexit, %bb.b
-  %.sroa.05.08.i7 = phi ptr [ %.sroa.05.08.i7.pre, %_ZN22photos_editing_formats8image_io12_GLOBAL__N_18AddNamesERKNSt7__cxx114listINS2_12basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EEEPNS2_18basic_stringstreamIcS6_S7_EE.exit.loopexit ], [ %5, %bb.b ] ; 2 uses
+_ZN22photos_editing_formats8image_io12_GLOBAL__N_18AddNamesERKNSt7__cxx114listINS2_12basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EEEPNS2_18basic_stringstreamIcS6_S7_EE.exit: ; preds = %_ZN22photos_editing_formats8image_io12_GLOBAL__N_18AddNamesERKNSt7__cxx114listINS2_12basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EEEPNS2_18basic_stringstreamIcS6_S7_EE.exit.loopexit, %bb.b, %5
+  %.sroa.05.08.i7 = phi ptr [ %.sroa.05.08.i7.pre, %_ZN22photos_editing_formats8image_io12_GLOBAL__N_18AddNamesERKNSt7__cxx114listINS2_12basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EEEPNS2_18basic_stringstreamIcS6_S7_EE.exit.loopexit ], [ %i.d, %bb.b ], [ %i.d, %5 ] ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %.not9.i8 = icmp eq ptr %.sroa.05.08.i7, %i.m
   br i1 %.not9.i8, label %_ZN22photos_editing_formats8image_io12_GLOBAL__N_18AddNamesERKNSt7__cxx114listINS2_12basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EEEPNS2_18basic_stringstreamIcS6_S7_EE.exit15, label %.lr.ph.i9
@@ -311,7 +313,7 @@ bb.e:                                             ; preds = %.noexc23, %.lr.ph.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
   resume { ptr, i32 } %eh.lpad-body
 
-_ZN22photos_editing_formats8image_io12_GLOBAL__N_18AddNamesERKNSt7__cxx114listINS2_12basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EEEPNS2_18basic_stringstreamIcS6_S7_EE.exit24: ; preds = %.noexc23, %bb.b, %_ZN22photos_editing_formats8image_io12_GLOBAL__N_18AddNamesERKNSt7__cxx114listINS2_12basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EEEPNS2_18basic_stringstreamIcS6_S7_EE.exit15
+_ZN22photos_editing_formats8image_io12_GLOBAL__N_18AddNamesERKNSt7__cxx114listINS2_12basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EEEPNS2_18basic_stringstreamIcS6_S7_EE.exit24: ; preds = %.noexc23, %_ZN22photos_editing_formats8image_io12_GLOBAL__N_18AddNamesERKNSt7__cxx114listINS2_12basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EEEPNS2_18basic_stringstreamIcS6_S7_EE.exit15, %5
   call void @llvm.experimental.noalias.scope.decl(metadata !88)
   call void @llvm.experimental.noalias.scope.decl(metadata !91)
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses

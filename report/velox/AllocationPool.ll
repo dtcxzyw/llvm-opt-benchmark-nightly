@@ -201,7 +201,7 @@ _ZNSt6vectorIN8facebook5velox6memory10Allocation7PageRunESaIS4_EEaSEOS6_.exit:
   %i.k = icmp eq ptr %i.i, %i.j                   ; 2 uses
   %i.l = icmp eq i32 %i.h, 0                      ; 3 uses
   %i.m = xor i1 %i.l, %i.k
-  br i1 %i.m, label %.noexc, label %bb.c, !prof !48
+  br i1 %i.m, label %.noexc, label %4, !prof !48
 
 .noexc:                                           ; preds = %_ZNSt6vectorIN8facebook5velox6memory10Allocation7PageRunESaIS4_EEaSEOS6_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #16
@@ -240,11 +240,13 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.b,
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #16
   br label %.body
 
-bb.c:                                             ; preds = %_ZNSt6vectorIN8facebook5velox6memory10Allocation7PageRunESaIS4_EEaSEOS6_.exit
-  %i.w = load ptr, ptr %0, align 8
-  %4 = icmp ne ptr %i.w, null
-  %5 = select i1 %i.l, i1 %4, i1 false
-  br i1 %5, label %bb.d, label %_ZNK8facebook5velox6memory10Allocation11sanityCheckEv.exit, !prof !48
+4:                                                ; preds = %_ZNSt6vectorIN8facebook5velox6memory10Allocation7PageRunESaIS4_EEaSEOS6_.exit
+  br i1 %i.l, label %bb.c, label %_ZNK8facebook5velox6memory10Allocation11sanityCheckEv.exit
+
+bb.c:                                             ; preds = %4
+  %i.w = load ptr, ptr %0, align 8, !tbaa !106
+  %.not = icmp eq ptr %i.w, null
+  br i1 %.not, label %_ZNK8facebook5velox6memory10Allocation11sanityCheckEv.exit, label %bb.d, !prof !53
 
 bb.d:                                             ; preds = %bb.c
   invoke void @_ZN8facebook5velox6detail14veloxCheckFailINS0_17VeloxRuntimeErrorENS0_22CompileTimeEmptyStringEEEvRKNS1_18VeloxCheckFailArgsET0_(ptr noundef nonnull align 8 dereferenceable(56) @_ZZNK8facebook5velox6memory10Allocation11sanityCheckEvE18veloxCheckFailArgs_1) #17
@@ -253,7 +255,7 @@ bb.d:                                             ; preds = %bb.c
 .noexc6:                                          ; preds = %bb.d
   unreachable
 
-_ZNK8facebook5velox6memory10Allocation11sanityCheckEv.exit: ; preds = %bb.c
+_ZNK8facebook5velox6memory10Allocation11sanityCheckEv.exit: ; preds = %bb.c, %4
   ret void
 
 bb.e:                                             ; preds = %.noexc, %bb.d

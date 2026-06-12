@@ -201,7 +201,7 @@ bb.a:
   %i.d = alloca [17 x i32], align 16              ; 6 uses
   %i.e = alloca [656 x i8], align 16              ; 16 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #15
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 7412 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 7412 ; 3 uses
   %i.g = load i8, ptr %i.f, align 4, !tbaa !37, !range !56, !noundef !57
   %i.h = trunc nuw i8 %i.g to i1
   br i1 %i.h, label %bb.b, label %_ZN9NCompress4NLzx10NBitStream8CDecoder14DirectReadByteEv.exit
@@ -512,17 +512,16 @@ bb.ab:                                            ; preds = %_ZN9NCompress4NLzx8
   %.sink = phi i32 [ %i.dz, %bb.aa ], [ %i.dy, %_ZN9NCompress4NLzx8CDecoder8ReadBitsEj.exit47 ], [ 32768, %_ZN9NCompress4NLzx8CDecoder8ReadBitsEj.exit37 ] ; 2 uses
   %i.ea = getelementptr inbounds nuw i8, ptr %0, i64 7400
   store i32 %.sink, ptr %i.ea, align 8, !tbaa !58
-  %i.eb = icmp eq i32 %i.bt, 3                    ; 3 uses
+  %i.eb = icmp eq i32 %i.bt, 3                    ; 2 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.ed = zext i1 %i.eb to i8
   store i8 %i.ed, ptr %i.ec, align 8, !tbaa !59
-  %1 = trunc i32 %.sink to i8
-  %2 = and i8 %1, 1
-  %3 = select i1 %i.eb, i8 %2, i8 0
-  store i8 %3, ptr %i.f, align 4, !tbaa !37
   br i1 %i.eb, label %bb.ac, label %bb.ay
 
 bb.ac:                                            ; preds = %bb.ab
+  %1 = trunc i32 %.sink to i8
+  %2 = and i8 %1, 1
+  store i8 %2, ptr %i.f, align 4, !tbaa !37
   %i.ee = load i32, ptr %i.p, align 4, !tbaa !46
   %reass.sub = and i32 %i.ee, -16
   %i.ef = add i32 %reass.sub, 16                  ; 2 uses
@@ -776,6 +775,7 @@ _ZN9NCompress4NLzx10NBitStream8CDecoder14DirectReadByteEv.exit61.3.1: ; preds = 
   br label %_ZN9NCompress4NLzx10NBitStream8CDecoder10ReadUInt32ERj.exit.thread98
 
 bb.ay:                                            ; preds = %bb.ab
+  store i8 0, ptr %i.f, align 4, !tbaa !37
   %i.ht = icmp eq i32 %i.bt, 2                    ; 2 uses
   %i.hu = getelementptr inbounds nuw i8, ptr %0, i64 145
   %i.hv = zext i1 %i.ht to i8
@@ -1178,15 +1178,17 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 68 ; 12 uses
   store i32 32, ptr %i.e, align 4, !tbaa !46
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 7404 ; 2 uses
-  %2 = load i8, ptr %i.f, align 4, !tbaa !23, !range !56, !noundef !57
-  %3 = trunc nuw i8 %2 to i1
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 144
-  %i.g = load i8, ptr %4, align 8, !range !56
+  %i.g = load i8, ptr %i.f, align 4, !tbaa !23, !range !56, !noundef !57
   %i.h = trunc nuw i8 %i.g to i1
-  %or.cond111 = select i1 %3, i1 %i.h, i1 false
-  br i1 %or.cond111, label %.loopexit184, label %.lr.ph.i
+  br i1 %i.h, label %2, label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %bb.b
+2:                                                ; preds = %bb.b
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 144
+  %4 = load i8, ptr %3, align 8, !tbaa !59, !range !56, !noundef !57
+  %5 = trunc nuw i8 %4 to i1
+  br i1 %5, label %.loopexit184, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.b, %2
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   br label %bb.c
@@ -1473,7 +1475,7 @@ _ZN9NCompress4NLzx8CDecoder8ReadBitsEj.exit132:   ; preds = %_ZN9CInBuffer8ReadB
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.dv, i8 0, i64 12, i1 false), !tbaa !4
   br label %.loopexit184
 
-.loopexit184:                                     ; preds = %bb.b, %.loopexit184.loopexit, %_ZN9NCompress4NLzx10NBitStream8CDecoder9NormalizeEv.exit, %bb.a
+.loopexit184:                                     ; preds = %2, %.loopexit184.loopexit, %_ZN9NCompress4NLzx10NBitStream8CDecoder9NormalizeEv.exit, %bb.a
   %i.dw = load i32, ptr %i.a, align 8, !tbaa !68
   %i.dx = icmp sgt i32 %i.dw, 0
   %i.dy = icmp ne i32 %1, 0

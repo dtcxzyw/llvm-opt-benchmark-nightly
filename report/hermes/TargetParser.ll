@@ -201,17 +201,19 @@ bb.c:                                             ; preds = %_ZN4llvh3ARM12parse
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 52
   %i.j = load i32, ptr %i.i, align 4, !tbaa !339
   %i.k = icmp eq i32 %i.j, 3
-  br i1 %i.k, label %bb.d, label %bb.g
+  br i1 %i.k, label %3, label %bb.g
 
-bb.d:                                             ; preds = %bb.c
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %4 = load i32, ptr %3, align 8, !tbaa !349
-  %5 = icmp eq i32 %4, 8
+3:                                                ; preds = %bb.c
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %5 = load i32, ptr %4, align 8, !tbaa !349
+  %6 = icmp eq i32 %5, 8
+  br i1 %6, label %bb.l, label %bb.d
+
+bb.d:                                             ; preds = %3
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 44
-  %i.m = load i32, ptr %i.l, align 4
+  %i.m = load i32, ptr %i.l, align 4, !tbaa !350
   %i.n = icmp eq i32 %i.m, 0
-  %or.cond = select i1 %5, i1 true, i1 %i.n
-  br i1 %or.cond, label %bb.l, label %bb.e
+  br i1 %i.n, label %bb.l, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.o = tail call noundef i32 @_ZN4llvh3ARM16parseArchProfileENS_9StringRefE(ptr %.sroa.03.0, i64 %.sroa.5.0)
@@ -220,7 +222,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 36
-  %i.r = load i32, ptr %i.q, align 4, !tbaa !350
+  %i.r = load i32, ptr %i.q, align 4, !tbaa !351
   %i.s = icmp eq i32 %i.r, 14                     ; 2 uses
   %.str.146..str.147 = select i1 %i.s, ptr @.str.146, ptr @.str.147
   %. = select i1 %i.s, i64 7, i64 8
@@ -228,7 +230,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.c
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 44
-  %i.u = load i32, ptr %i.t, align 4, !tbaa !351  ; 2 uses
+  %i.u = load i32, ptr %i.t, align 4, !tbaa !350  ; 2 uses
   %i.v = icmp eq i32 %i.u, 15
   br i1 %i.v, label %bb.l, label %bb.h
 
@@ -265,9 +267,9 @@ switch.lookup:                                    ; preds = %bb.h
   %switch.ext = zext i8 %switch.load23 to i64
   br label %bb.l
 
-bb.l:                                             ; preds = %switch.lookup, %bb.i, %bb.g, %bb.f, %bb.d, %bb.e, %bb.k, %bb.j
-  %.sroa.014.0 = phi ptr [ @.str.147, %bb.i ], [ %.str.146..str.147, %bb.f ], [ @.str.145, %bb.d ], [ @.str.145, %bb.e ], [ %switch.load, %switch.lookup ], [ @.str.148, %bb.j ], [ @.str.145, %bb.k ], [ @.str.145, %bb.g ]
-  %.sroa.10.0 = phi i64 [ 8, %bb.i ], [ %., %bb.f ], [ 5, %bb.d ], [ 5, %bb.e ], [ %switch.ext, %switch.lookup ], [ 11, %bb.j ], [ 5, %bb.k ], [ 5, %bb.g ]
+bb.l:                                             ; preds = %switch.lookup, %bb.i, %bb.g, %bb.f, %3, %bb.d, %bb.e, %bb.k, %bb.j
+  %.sroa.014.0 = phi ptr [ @.str.147, %bb.i ], [ %.str.146..str.147, %bb.f ], [ @.str.145, %3 ], [ @.str.145, %bb.d ], [ %switch.load, %switch.lookup ], [ @.str.148, %bb.j ], [ @.str.145, %bb.k ], [ @.str.145, %bb.g ], [ @.str.145, %bb.e ]
+  %.sroa.10.0 = phi i64 [ 8, %bb.i ], [ %., %bb.f ], [ 5, %3 ], [ 5, %bb.d ], [ %switch.ext, %switch.lookup ], [ 11, %bb.j ], [ 5, %bb.k ], [ 5, %bb.g ], [ 5, %bb.e ]
   %.fca.0.insert = insertvalue { ptr, i64 } poison, ptr %.sroa.014.0, 0
   %.fca.1.insert = insertvalue { ptr, i64 } %.fca.0.insert, i64 %.sroa.10.0, 1
   ret { ptr, i64 } %.fca.1.insert
@@ -670,7 +672,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 44
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !351  ; 3 uses
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !350  ; 3 uses
   %i.f = and i32 %i.e, -9
   %spec.select.i.i = icmp eq i32 %i.f, 3
   br i1 %spec.select.i.i, label %_ZNK4llvh6Triple10isOSDarwinEv.exit.thread, label %bb.c
@@ -1073,8 +1075,8 @@ begin_hunk_2_@llvm.assume
 !347 = !{!"_ZTSN4llvh6Triple15EnvironmentTypeE", !5, i64 0}
 !348 = !{!"_ZTSN4llvh6Triple16ObjectFormatTypeE", !5, i64 0}
 !349 = !{!340, !347, i64 48}
-!350 = !{!340, !344, i64 36}
-!351 = !{!340, !346, i64 44}
+!350 = !{!340, !346, i64 44}
+!351 = !{!340, !344, i64 36}
 !352 = !{!353, !355, i64 32}
 !353 = !{!"_ZTSN12_GLOBAL__N_17GPUInfoE", !354, i64 0, !354, i64 16, !355, i64 32, !4, i64 36}
 !354 = !{!"_ZTSN4llvh13StringLiteralE", !324, i64 0}

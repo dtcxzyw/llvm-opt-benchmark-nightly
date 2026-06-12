@@ -201,7 +201,7 @@ define hidden void @_ZN6Assimp12MS3DImporter14InternReadFileERKNSt7__cxx1112basi
   %i.f = alloca i64, align 8                      ; 6 uses
   %i.g = alloca i64, align 8                      ; 6 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %5 = alloca %"class.Assimp::StreamReader", align 8 ; 20 uses
+  %5 = alloca %"class.Assimp::StreamReader", align 8 ; 21 uses
   %i.h = alloca [10 x i8], align 1                ; 6 uses
   %6 = alloca %"class.std::vector.31", align 8    ; 20 uses
   %7 = alloca %"class.std::vector.41", align 8    ; 23 uses
@@ -296,13 +296,15 @@ bb.e:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.ag = getelementptr inbounds nuw i8, ptr %5, i64 40 ; 28 uses
   %i.ah = load ptr, ptr %i.ag, align 8            ; 5 uses
   %i.ai = icmp ugt ptr %i.af, %i.ah
-  %22 = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 9 uses
-  %23 = load ptr, ptr %22, align 8
-  %24 = icmp ult ptr %i.af, %23
-  %or.cond.i.i = select i1 %i.ai, i1 true, i1 %24
-  br i1 %or.cond.i.i, label %bb.f, label %bb.h
+  br i1 %i.ai, label %bb.f, label %22
 
-bb.f:                                             ; preds = %bb.e
+22:                                               ; preds = %bb.e
+  %23 = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 8 uses
+  %24 = load ptr, ptr %23, align 8
+  %25 = icmp ult ptr %i.af, %24
+  br i1 %25, label %bb.f, label %bb.h
+
+bb.f:                                             ; preds = %22, %bb.e
   %i.aj = call ptr @__cxa_allocate_exception(i64 16) #24 ; 3 uses
   invoke void @_ZN17DeadlyImportErrorC2EPKc(ptr noundef nonnull align 8 dereferenceable(16) %i.aj, ptr noundef nonnull @.str.35)
           to label %.invoke unwind label %bb.g
@@ -313,7 +315,7 @@ bb.g:                                             ; preds = %bb.f
   call void @__cxa_free_exception(ptr nonnull %i.aj) #24
   br label %.body
 
-bb.h:                                             ; preds = %bb.e
+bb.h:                                             ; preds = %22
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.h, ptr noundef nonnull align 1 dereferenceable(10) %i.ae, i64 10, i1 false)
   %i.al = getelementptr inbounds nuw i8, ptr %i.ae, i64 14 ; 3 uses
   %i.am = icmp ugt ptr %i.al, %i.ah
@@ -716,7 +718,7 @@ _ZN6Assimp12StreamReaderILb0ELb0EE6IncPtrEl.exit543: ; preds = %.lr.ph1220.a
   %i.jz = getelementptr inbounds nuw i8, ptr %i.jt, i64 33 ; 3 uses
   store ptr %i.jz, ptr %i.ad, align 8
   %i.ka = icmp ugt ptr %i.jz, %i.jv
-  %i.kb = load ptr, ptr %22, align 8
+  %i.kb = load ptr, ptr %23, align 8
   %i.kc = icmp ult ptr %i.jz, %i.kb
   %or.cond.i.i544 = select i1 %i.ka, i1 true, i1 %i.kc
   br i1 %or.cond.i.i544, label %bb.ce, label %bb.cg
@@ -1042,7 +1044,7 @@ bb.da:                                            ; preds = %_ZNSt12_Vector_base
   store ptr %i.nw, ptr %i.ad, align 8
   %i.nx = load ptr, ptr %i.ag, align 8
   %i.ny = icmp ugt ptr %i.nw, %i.nx
-  %i.nz = load ptr, ptr %22, align 8
+  %i.nz = load ptr, ptr %23, align 8
   %i.oa = icmp ult ptr %i.nw, %i.nz
   %or.cond.i.i573 = select i1 %i.ny, i1 true, i1 %i.oa
   br i1 %or.cond.i.i573, label %bb.db, label %bb.dd
@@ -1156,7 +1158,7 @@ _ZN6Assimp12StreamReaderILb0ELb0EE6IncPtrEl.exit589: ; preds = %bb.dn
   %i.pf = getelementptr inbounds nuw i8, ptr %i.oz, i64 129 ; 3 uses
   store ptr %i.pf, ptr %i.ad, align 8
   %i.pg = icmp ugt ptr %i.pf, %i.pb
-  %i.ph = load ptr, ptr %22, align 8
+  %i.ph = load ptr, ptr %23, align 8
   %i.pi = icmp ult ptr %i.pf, %i.ph
   %or.cond.i.i590 = select i1 %i.pg, i1 true, i1 %i.pi
   br i1 %or.cond.i.i590, label %bb.dq, label %bb.ds
@@ -1182,7 +1184,7 @@ bb.ds:                                            ; preds = %_ZN6Assimp12StreamR
   store ptr %i.po, ptr %i.ad, align 8
   %i.pp = load ptr, ptr %i.ag, align 8
   %i.pq = icmp ugt ptr %i.po, %i.pp
-  %i.pr = load ptr, ptr %22, align 8
+  %i.pr = load ptr, ptr %23, align 8
   %i.ps = icmp ult ptr %i.po, %i.pr
   %or.cond.i.i595 = select i1 %i.pq, i1 true, i1 %i.ps
   br i1 %or.cond.i.i595, label %bb.dt, label %bb.dv
@@ -1451,7 +1453,7 @@ _ZN6Assimp12StreamReaderILb0ELb0EE6IncPtrEl.exit621: ; preds = %.lr.ph1234
   %i.ss = getelementptr inbounds nuw i8, ptr %i.sl, i64 33 ; 3 uses
   store ptr %i.ss, ptr %i.ad, align 8
   %i.st = icmp ugt ptr %i.ss, %i.sn
-  %i.su = load ptr, ptr %22, align 8
+  %i.su = load ptr, ptr %23, align 8
   %i.sv = icmp ult ptr %i.ss, %i.su
   %or.cond.i.i622 = select i1 %i.st, i1 true, i1 %i.sv
   br i1 %or.cond.i.i622, label %bb.em, label %bb.eo
@@ -1476,7 +1478,7 @@ bb.eo:                                            ; preds = %_ZN6Assimp12StreamR
   store ptr %i.ta, ptr %i.ad, align 8
   %i.tb = load ptr, ptr %i.ag, align 8
   %i.tc = icmp ugt ptr %i.ta, %i.tb
-  %i.td = load ptr, ptr %22, align 8
+  %i.td = load ptr, ptr %23, align 8
   %i.te = icmp ult ptr %i.ta, %i.td
   %or.cond.i.i627 = select i1 %i.tc, i1 true, i1 %i.te
   br i1 %or.cond.i.i627, label %bb.ep, label %bb.er
@@ -1879,7 +1881,7 @@ bb.ox:                                            ; preds = %_ZNSt6vectorIN6Assi
 
 _ZNSt6vectorIN6Assimp12MS3DImporter10TempVertexESaIS2_EED2Ev.exit: ; preds = %_ZNSt6vectorIN6Assimp12MS3DImporter12TempTriangleESaIS2_EED2Ev.exit, %bb.ox
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #24
-  %i.byf = load ptr, ptr %22, align 8             ; 2 uses
+  %i.byf = load ptr, ptr %23, align 8             ; 2 uses
   %i.byg = icmp eq ptr %i.byf, null
   br i1 %i.byg, label %bb.oz, label %bb.oy
 
@@ -2167,7 +2169,8 @@ _ZNSt6vectorIN6Assimp12MS3DImporter9TempGroupESaIS2_EED2Ev.exit903: ; preds = %b
 .body:                                            ; preds = %bb.u, %bb.z, %.body486.thread, %.body486, %bb.aa, %bb.g, %bb.j, %bb.m, %bb.q, %bb.n
   %.pn466 = phi { ptr, i32 } [ %i.ap, %bb.j ], [ %i.bc, %bb.n ], [ %i.be, %bb.q ], [ %i.ak, %bb.g ], [ %i.bb, %bb.m ], [ %i.bi, %bb.u ], [ %i.bw, %bb.z ], [ %i.bx, %bb.aa ], [ %.pn462, %.body486 ], [ %.pn4621075, %.body486.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #24
-  %i.cbt = load ptr, ptr %22, align 8             ; 2 uses
+  %26 = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %i.cbt = load ptr, ptr %26, align 8             ; 2 uses
   %i.cbu = icmp eq ptr %i.cbt, null
   br i1 %i.cbu, label %bb.pn, label %bb.pm
 

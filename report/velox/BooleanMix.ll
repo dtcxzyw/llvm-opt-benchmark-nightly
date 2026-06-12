@@ -201,7 +201,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load i64, ptr %i.a, align 8, !tbaa !149  ; 2 uses
   %.not = icmp ugt i64 %2, %i.b
-  br i1 %.not, label %bb.b, label %bb.e, !prof !283
+  br i1 %.not, label %bb.b, label %6, !prof !283
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #17
@@ -235,13 +235,15 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.d,
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #17
   resume { ptr, i32 } %i.d
 
-bb.e:                                             ; preds = %bb.a
+6:                                                ; preds = %bb.a
   %.not8 = icmp ugt i64 %2, %1
+  br i1 %.not8, label %bb.e, label %_ZSt4fillIPccEvT_S1_RKT0_.exit
+
+bb.e:                                             ; preds = %6
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 1
-  %i.k = load i8, ptr %i.j, align 1, !range !122
+  %i.k = load i8, ptr %i.j, align 1, !tbaa !156, !range !122, !noundef !123
   %i.l = trunc nuw i8 %i.k to i1
-  %or.cond = select i1 %.not8, i1 %i.l, i1 false
-  br i1 %or.cond, label %bb.f, label %_ZSt4fillIPccEvT_S1_RKT0_.exit
+  br i1 %i.l, label %bb.f, label %_ZSt4fillIPccEvT_S1_RKT0_.exit
 
 bb.f:                                             ; preds = %bb.e
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 44
@@ -263,7 +265,7 @@ _ZNK8facebook5velox6Buffer9asMutableIcEEPT_v.exit: ; preds = %bb.f
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.r, i8 %i.s, i64 %gepdiff, i1 false)
   br label %_ZSt4fillIPccEvT_S1_RKT0_.exit
 
-_ZSt4fillIPccEvT_S1_RKT0_.exit:                   ; preds = %_ZNK8facebook5velox6Buffer9asMutableIcEEPT_v.exit, %bb.e
+_ZSt4fillIPccEvT_S1_RKT0_.exit:                   ; preds = %_ZNK8facebook5velox6Buffer9asMutableIcEEPT_v.exit, %bb.e, %6
   ret void
 }
 

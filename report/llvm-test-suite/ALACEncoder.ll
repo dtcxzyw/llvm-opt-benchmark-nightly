@@ -200,15 +200,17 @@ bb.b:                                             ; preds = %bb.a, %switch.looku
   %i.ax = insertelement <4 x ptr> %i.aw, ptr %i.ae, i64 2
   %i.ay = insertelement <4 x ptr> %i.ax, ptr %i.aj, i64 3
   %i.az = icmp eq <4 x ptr> %i.ay, splat (ptr null)
+  %i.ba = bitcast <4 x i1> %i.az to i4
+  %.not = icmp eq i4 %i.ba, 0
+  br i1 %.not, label %2, label %.loopexit
+
+2:                                                ; preds = %bb.b
   %.not18 = icmp eq ptr %i.ap, null
   %.not19 = icmp eq ptr %i.at, null
-  %i.ba = bitcast <4 x i1> %i.az to i4
-  %2 = icmp ne i4 %i.ba, 0
-  %op.rdx = or i1 %2, %.not18
-  %op.rdx32 = or i1 %op.rdx, %.not19
-  br i1 %op.rdx32, label %.loopexit, label %.preheader24
+  %or.cond = or i1 %.not18, %.not19
+  br i1 %or.cond, label %.loopexit, label %.preheader24
 
-.preheader24:                                     ; preds = %bb.b
+.preheader24:                                     ; preds = %2
   %i.bb = load i32, ptr %i.f, align 4, !tbaa !73
   %i.bc = icmp sgt i32 %i.bb, 0
   br i1 %i.bc, label %.preheader.lr.ph, label %.loopexit
@@ -290,8 +292,8 @@ bb.b:                                             ; preds = %bb.a, %switch.looku
   %i.cn = icmp slt i64 %indvars.iv.next, %i.cm
   br i1 %i.cn, label %.preheader, label %.loopexit, !llvm.loop !83
 
-.loopexit:                                        ; preds = %.preheader, %.preheader24, %bb.b
-  %.014 = phi i32 [ -108, %bb.b ], [ 0, %.preheader24 ], [ 0, %.preheader ]
+.loopexit:                                        ; preds = %.preheader, %.preheader24, %bb.b, %2
+  %.014 = phi i32 [ -108, %bb.b ], [ -108, %2 ], [ 0, %.preheader24 ], [ 0, %.preheader ]
   ret i32 %.014
 }
 

@@ -201,8 +201,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = tail call noundef ptr @_ZN6Assimp6Intern22AllocateFromAssimpHeapnwEm(i64 noundef 8) ; 2 uses
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN6Assimp22DefaultProgressHandlerE, i64 16), ptr %i.b, align 8
-  %2 = load ptr, ptr %0, align 8
-  br label %.sink.split
+  br label %.sink.split.sink.split
 
 bb.c:                                             ; preds = %bb.a
   %i.c = load ptr, ptr %0, align 8                ; 2 uses
@@ -220,13 +219,18 @@ bb.e:                                             ; preds = %bb.d
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.j = load ptr, ptr %i.i, align 8
   tail call void %i.j(ptr noundef nonnull align 8 dereferenceable(8) %i.e) #30
+  br label %.sink.split.sink.split
+
+.sink.split.sink.split:                           ; preds = %bb.b, %bb.e
+  %.sink8.ph = phi ptr [ %1, %bb.e ], [ %i.b, %bb.b ]
+  %.sink.ph = phi i8 [ 0, %bb.e ], [ 1, %bb.b ]
   %.pre = load ptr, ptr %0, align 8
   br label %.sink.split
 
-.sink.split:                                      ; preds = %bb.d, %bb.e, %bb.b
-  %.sink10 = phi ptr [ %2, %bb.b ], [ %.pre, %bb.e ], [ %i.c, %bb.d ]
-  %.sink8 = phi ptr [ %i.b, %bb.b ], [ %1, %bb.e ], [ %1, %bb.d ]
-  %.sink = phi i8 [ 1, %bb.b ], [ 0, %bb.e ], [ 0, %bb.d ]
+.sink.split:                                      ; preds = %.sink.split.sink.split, %bb.d
+  %.sink10 = phi ptr [ %i.c, %bb.d ], [ %.pre, %.sink.split.sink.split ]
+  %.sink8 = phi ptr [ %1, %bb.d ], [ %.sink8.ph, %.sink.split.sink.split ]
+  %.sink = phi i8 [ 0, %bb.d ], [ %.sink.ph, %.sink.split.sink.split ]
   %i.k = getelementptr inbounds nuw i8, ptr %.sink10, i64 32
   store ptr %.sink8, ptr %i.k, align 8
   %i.l = load ptr, ptr %0, align 8

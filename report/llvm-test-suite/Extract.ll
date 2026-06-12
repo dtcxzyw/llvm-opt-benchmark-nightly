@@ -201,20 +201,26 @@ bb.fa:                                            ; preds = %bb.ez
 
 bb.fb:                                            ; preds = %bb.fa
   %.not116.i = icmp eq i32 %i.si, 0
-  br i1 %.not116.i, label %bb.fd, label %bb.fq
+  br i1 %.not116.i, label %26, label %bb.fq
 
 bb.fc:                                            ; preds = %bb.fa
   %i.sj = landingpad { ptr, i32 }
           cleanup
   br label %_ZN11CStringBaseIwED2Ev.exit149.i
 
-bb.fd:                                            ; preds = %bb.fb
-  %26 = load i8, ptr %i.df, align 1, !tbaa !89, !range !23, !noundef !24
-  %27 = trunc nuw i8 %26 to i1
-  %28 = load i8, ptr %i.dg, align 4, !range !23
-  %29 = xor i8 %28, 1
-  %30 = zext nneg i8 %29 to i32
-  %31 = select i1 %27, i32 %30, i32 0             ; 2 uses
+26:                                               ; preds = %bb.fb
+  %27 = load i8, ptr %i.df, align 1, !tbaa !89, !range !23, !noundef !24
+  %28 = trunc nuw i8 %27 to i1
+  br i1 %28, label %29, label %bb.fd
+
+29:                                               ; preds = %26
+  %30 = load i8, ptr %i.dg, align 4, !tbaa !90, !range !23, !noundef !24
+  %31 = xor i8 %30, 1
+  %32 = zext nneg i8 %31 to i32
+  br label %bb.fd
+
+bb.fd:                                            ; preds = %29, %26
+  %33 = phi i32 [ 0, %26 ], [ %32, %29 ]          ; 2 uses
   %i.sk = load i8, ptr %5, align 8, !tbaa !14, !range !23, !noundef !24
   %i.sl = trunc nuw i8 %i.sk to i1
   br i1 %i.sl, label %bb.fe, label %bb.fo
@@ -223,7 +229,7 @@ bb.fe:                                            ; preds = %bb.fd
   %i.sm = load ptr, ptr %i.mr, align 8, !tbaa !12
   %i.sn = getelementptr inbounds nuw i8, ptr %i.sm, i64 72
   %i.so = load ptr, ptr %i.sn, align 8
-  %i.sp = invoke noundef i32 %i.so(ptr noundef nonnull align 8 dereferenceable(8) %i.mr, ptr noundef null, i32 noundef -1, i32 noundef %31, ptr noundef nonnull %i.aq)
+  %i.sp = invoke noundef i32 %i.so(ptr noundef nonnull align 8 dereferenceable(8) %i.mr, ptr noundef null, i32 noundef -1, i32 noundef %33, ptr noundef nonnull %i.aq)
           to label %bb.ff unwind label %bb.fj
 
 bb.ff:                                            ; preds = %bb.fe
@@ -295,7 +301,7 @@ bb.fo:                                            ; preds = %bb.fd
   %i.th = load ptr, ptr %i.mr, align 8, !tbaa !12
   %i.ti = getelementptr inbounds nuw i8, ptr %i.th, i64 72
   %i.tj = load ptr, ptr %i.ti, align 8
-  %i.tk = invoke noundef i32 %i.tj(ptr noundef nonnull align 8 dereferenceable(8) %i.mr, ptr noundef nonnull %i.tf, i32 noundef %i.tg, i32 noundef %31, ptr noundef nonnull %i.aq)
+  %i.tk = invoke noundef i32 %i.tj(ptr noundef nonnull align 8 dereferenceable(8) %i.mr, ptr noundef nonnull %i.tf, i32 noundef %i.tg, i32 noundef %33, ptr noundef nonnull %i.aq)
           to label %bb.fp unwind label %bb.fj
 
 bb.fp:                                            ; preds = %bb.fo, %_ZN8NWindows4NCOM12CPropVariantD2Ev.exit150.i
@@ -698,8 +704,6 @@ bb.c:                                             ; preds = %bb.b
 
 .preheader.lr.ph.i:                               ; preds = %.lr.ph
   %i.r = icmp sgt i32 %i.p, 0
-  %3 = load ptr, ptr %0, align 8
-  %4 = load ptr, ptr %1, align 8
   br i1 %i.r, label %.preheader.us.preheader.i, label %_ZNK11CStringBaseIwE4FindERKS0_i.exit.thread
 
 .preheader.us.preheader.i:                        ; preds = %.preheader.lr.ph.i
@@ -719,8 +723,10 @@ bb.d:                                             ; preds = %bb.f, %.preheader.u
   br i1 %i.v, label %bb.e, label %.critedge.us.i
 
 bb.e:                                             ; preds = %bb.d
+  %3 = load ptr, ptr %0, align 8, !tbaa !25
   %i.w = getelementptr inbounds [4 x i8], ptr %3, i64 %i.u
   %i.x = load i32, ptr %i.w, align 4, !tbaa !26
+  %4 = load ptr, ptr %1, align 8, !tbaa !25
   %i.y = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv.i
   %i.z = load i32, ptr %i.y, align 4, !tbaa !26
   %.not.us.i = icmp eq i32 %i.x, %i.z

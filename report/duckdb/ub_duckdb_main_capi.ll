@@ -201,14 +201,23 @@ bb.e:                                             ; preds = %bb.a
 define internal noundef zeroext i1 @_ZNK6duckdb12_GLOBAL__N_115CCopyToBindInfo6EqualsERKNS_12FunctionDataE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %1) unnamed_addr #17 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %3 = load <2 x ptr>, ptr %i.a, align 8
-  %4 = load <2 x ptr>, ptr %2, align 8
-  %5 = icmp eq <2 x ptr> %3, %4                   ; 2 uses
-  %6 = extractelement <2 x i1> %5, i64 0
-  %7 = extractelement <2 x i1> %5, i64 1
-  %8 = select i1 %6, i1 %7, i1 false
-  ret i1 %8
+  %2 = load ptr, ptr %i.a, align 8, !tbaa !1435
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %4 = load ptr, ptr %3, align 8, !tbaa !1435
+  %5 = icmp eq ptr %2, %4
+  br i1 %5, label %6, label %12
+
+6:                                                ; preds = %bb.a
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %8 = load ptr, ptr %7, align 8, !tbaa !1485
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %10 = load ptr, ptr %9, align 8, !tbaa !1485
+  %11 = icmp eq ptr %8, %10
+  br label %12
+
+12:                                               ; preds = %6, %bb.a
+  %13 = phi i1 [ false, %bb.a ], [ %11, %6 ]
+  ret i1 %13
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -611,7 +620,7 @@ define internal noundef zeroext i1 @_ZN6duckdbL16CAPICastFunctionERNS_6VectorES1
 bb.a:
   %4 = alloca %"struct.duckdb::CCastExecuteInfo", align 8 ; 8 uses
   %i.a = load i8, ptr %0, align 8, !tbaa !515
-  %i.b = icmp eq i8 %i.a, 2
+  %i.b = icmp eq i8 %i.a, 2                       ; 2 uses
   tail call void @_ZN6duckdb6Vector7FlattenEm(ptr noundef nonnull align 8 dereferenceable(104) %0, i64 noundef %2)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #36
   store ptr %3, ptr %4, align 8, !tbaa !1790
@@ -629,10 +638,10 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !1774
   %i.i = invoke noundef zeroext i1 %i.h(ptr noundef nonnull %4, i64 noundef %2, ptr noundef nonnull %0, ptr noundef nonnull %1)
-          to label %bb.c unwind label %bb.f       ; 3 uses
+          to label %bb.c unwind label %bb.f       ; 2 uses
 
 bb.c:                                             ; preds = %bb.b
-  br i1 %i.i, label %bb.g, label %bb.d
+  br i1 %i.i, label %5, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   invoke void @_ZN6duckdb15HandleCastError11AssignErrorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS_14CastParametersE(ptr noundef nonnull align 8 dereferenceable(32) %i.c, ptr noundef nonnull align 8 dereferenceable(57) %3)
@@ -648,24 +657,27 @@ bb.f:                                             ; preds = %bb.i, %bb.d, %bb.b
           cleanup
   br label %bb.k
 
-bb.g:                                             ; preds = %bb.d, %bb.c
+5:                                                ; preds = %bb.c
+  %6 = icmp eq i64 %2, 1
+  %or.cond = and i1 %6, %i.b
+  br i1 %or.cond, label %bb.i, label %bb.j
+
+bb.g:                                             ; preds = %bb.d
   %i.l = icmp eq i64 %2, 1
   %or.cond.a = and i1 %i.l, %i.b
   br i1 %or.cond.a, label %bb.h, label %bb.j
 
 bb.h:                                             ; preds = %bb.g
-  %.not = xor i1 %i.i, true
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.n = load i8, ptr %i.m, align 8, !range !40
+  %i.n = load i8, ptr %i.m, align 8, !tbaa !629, !range !40, !noundef !41
   %i.o = trunc nuw i8 %i.n to i1
-  %or.cond26 = select i1 %.not, i1 %i.o, i1 false
-  br i1 %or.cond26, label %bb.j, label %bb.i
+  br i1 %i.o, label %bb.j, label %bb.i
 
-bb.i:                                             ; preds = %bb.h
+bb.i:                                             ; preds = %5, %bb.h
   invoke void @_ZN6duckdb6Vector13SetVectorTypeENS_10VectorTypeE(ptr noundef nonnull align 8 dereferenceable(104) %1, i8 noundef zeroext 2)
           to label %bb.j unwind label %bb.f
 
-bb.j:                                             ; preds = %bb.h, %bb.i, %bb.g
+bb.j:                                             ; preds = %bb.g, %bb.i, %bb.h, %5
   %i.p = load ptr, ptr %i.c, align 8, !tbaa !25   ; 2 uses
   %i.q = icmp eq ptr %i.p, %i.d
   br i1 %i.q, label %_ZN6duckdb16CCastExecuteInfoD2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i

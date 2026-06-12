@@ -201,20 +201,22 @@ _ZNKSt14default_deleteIVN6hermes17PageAccessTrackerEEclEPS2_.exit.i: ; preds = %
   br label %_ZNSt10unique_ptrIVN6hermes17PageAccessTrackerESt14default_deleteIS2_EED2Ev.exit
 
 _ZNSt10unique_ptrIVN6hermes17PageAccessTrackerESt14default_deleteIS2_EED2Ev.exit: ; preds = %bb.g, %_ZNKSt14default_deleteIVN6hermes17PageAccessTrackerEEclEPS2_.exit.i
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 336
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 344
   %i.ae = load i8, ptr %i.ad, align 8, !tbaa !216, !range !217, !noundef !218
   %i.af = trunc nuw i8 %i.ae to i1
-  %.sroa.0.0.copyload.i.i.i.i.i = load i64, ptr %1, align 8
-  %.not.i.i.i.i1 = icmp ne i64 %.sroa.0.0.copyload.i.i.i.i.i, 0
-  %or.cond.not.i.i = select i1 %i.af, i1 %.not.i.i.i.i1, i1 false
-  br i1 %or.cond.not.i.i, label %bb.h, label %_ZN4llvh8OptionalISt6threadED2Ev.exit
+  br i1 %i.af, label %1, label %_ZN4llvh8OptionalISt6threadED2Ev.exit
 
-bb.h:                                             ; preds = %_ZNSt10unique_ptrIVN6hermes17PageAccessTrackerESt14default_deleteIS2_EED2Ev.exit
+1:                                                ; preds = %_ZNSt10unique_ptrIVN6hermes17PageAccessTrackerESt14default_deleteIS2_EED2Ev.exit
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 336
+  %.sroa.0.0.copyload.i.i.i.i.i = load i64, ptr %2, align 8, !tbaa !17
+  %.not.i.i.i.i1 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i, 0
+  br i1 %.not.i.i.i.i1, label %_ZN4llvh8OptionalISt6threadED2Ev.exit, label %bb.h
+
+bb.h:                                             ; preds = %1
   tail call void @_ZSt9terminatev() #25
   unreachable
 
-_ZN4llvh8OptionalISt6threadED2Ev.exit:            ; preds = %_ZNSt10unique_ptrIVN6hermes17PageAccessTrackerESt14default_deleteIS2_EED2Ev.exit
+_ZN4llvh8OptionalISt6threadED2Ev.exit:            ; preds = %_ZNSt10unique_ptrIVN6hermes17PageAccessTrackerESt14default_deleteIS2_EED2Ev.exit, %1
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 280
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !78 ; 3 uses
   %.not.i2 = icmp eq ptr %i.ah, null

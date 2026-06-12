@@ -201,16 +201,18 @@ bb.b:                                             ; preds = %.lr.ph, %tailrecurs
   %.tr7594 = phi i32 [ %2, %.lr.ph ], [ %.tr75.be, %tailrecurse.backedge ] ; 2 uses
   %.tr7493 = phi ptr [ %1, %.lr.ph ], [ %.tr74.be, %tailrecurse.backedge ] ; 2 uses
   %.not31 = icmp eq i32 %.tr7594, 0               ; 2 uses
-  %3 = load i8, ptr %i.a, align 8, !range !35
-  %4 = trunc nuw i8 %3 to i1
-  %or.cond = select i1 %.not31, i1 %4, i1 false
-  br i1 %or.cond, label %bb.c, label %.outer.preheader
+  br i1 %.not31, label %3, label %.outer.preheader
 
-bb.c:                                             ; preds = %bb.b
+3:                                                ; preds = %bb.b
+  %4 = load i8, ptr %i.a, align 8, !range !35, !noundef !36
+  %5 = trunc nuw i8 %4 to i1
+  br i1 %5, label %bb.c, label %.outer.preheader
+
+bb.c:                                             ; preds = %3
   tail call void @_ZN6mapbox6detail6EarcutIjE10indexCurveEPNS2_4NodeE(ptr noundef nonnull align 8 dereferenceable(136) %0, ptr noundef nonnull %.tr7493)
   br label %.outer.preheader
 
-.outer.preheader:                                 ; preds = %bb.c, %bb.b
+.outer.preheader:                                 ; preds = %bb.c, %3, %bb.b
   br label %.outer
 
 .outer:                                           ; preds = %.outer.preheader, %_ZN6mapbox6detail6EarcutIjE10removeNodeEPNS2_4NodeE.exit
@@ -613,13 +615,15 @@ bb.b:                                             ; preds = %bb.d, %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %.0, i64 8
-  %2 = load <2 x double>, ptr %i.a, align 8
-  %3 = load <2 x double>, ptr %i.b, align 8
+  %2 = load double, ptr %i.a, align 8
+  %3 = load double, ptr %i.b, align 8
   %i.g = load double, ptr %i.c, align 8
   %i.h = load <2 x double>, ptr %i.f, align 8
-  %i.i = insertelement <2 x double> %2, double %i.g, i64 1
+  %4 = insertelement <2 x double> poison, double %2, i64 0
+  %i.i = insertelement <2 x double> %4, double %i.g, i64 1
   %i.j = fsub <2 x double> %i.h, %i.i
-  %i.k = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
+  %5 = insertelement <2 x double> poison, double %3, i64 0
+  %i.k = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
   %i.l = shufflevector <2 x double> %i.j, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.m = fmul <2 x double> %i.k, %i.l
   %i.n = fptosi <2 x double> %i.m to <2 x i32>    ; 2 uses

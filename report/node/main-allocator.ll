@@ -201,10 +201,12 @@ bb.e:                                             ; preds = %bb.d
   %i.x = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.y = load i8, ptr %i.x, align 16, !range !6
   %i.z = trunc nuw i8 %i.y to i1                  ; 2 uses
-  %or.cond.i.i.i.i = select i1 %i.w, i1 %i.z, i1 false
-  br i1 %or.cond.i.i.i.i, label %bb.f, label %bb.g
+  br i1 %i.w, label %6, label %bb.g
 
-bb.f:                                             ; preds = %bb.e
+6:                                                ; preds = %bb.e
+  br i1 %i.z, label %bb.f, label %_ZNSt8optionalISt4pairImmEEaSEOS2_.exit
+
+bb.f:                                             ; preds = %6
   %i.aa = load <2 x i64>, ptr %5, align 16
   store <2 x i64> %i.aa, ptr %4, align 16
   br label %_ZNSt8optionalISt4pairImmEEaSEOS2_.exit.thread
@@ -221,7 +223,7 @@ _ZNSt8optionalISt4pairImmEEaSEOS2_.exit.thread:   ; preds = %bb.f, %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
   br label %bb.i
 
-_ZNSt8optionalISt4pairImmEEaSEOS2_.exit:          ; preds = %bb.g
+_ZNSt8optionalISt4pairImmEEaSEOS2_.exit:          ; preds = %6, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
   br label %bb.u
 

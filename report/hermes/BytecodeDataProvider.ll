@@ -201,16 +201,18 @@ _ZNKSt14default_deleteIVN6hermes17PageAccessTrackerEEclEPS2_.exit.i: ; preds = %
 _ZNSt10unique_ptrIVN6hermes17PageAccessTrackerESt14default_deleteIS2_EED2Ev.exit: ; preds = %bb.j, %_ZNKSt14default_deleteIVN6hermes17PageAccessTrackerEEclEPS2_.exit.i
   %i.ak = load i8, ptr %i.b, align 8, !tbaa !138, !range !116, !noundef !55
   %i.al = trunc nuw i8 %i.ak to i1
-  %.sroa.0.0.copyload.i.i.i.i.i2 = load i64, ptr %i.a, align 8
-  %.not.i.i.i.i3 = icmp ne i64 %.sroa.0.0.copyload.i.i.i.i.i2, 0
-  %or.cond.not.i.i = select i1 %i.al, i1 %.not.i.i.i.i3, i1 false
-  br i1 %or.cond.not.i.i, label %bb.k, label %_ZN4llvh8OptionalISt6threadED2Ev.exit
+  br i1 %i.al, label %1, label %_ZN4llvh8OptionalISt6threadED2Ev.exit
 
-bb.k:                                             ; preds = %_ZNSt10unique_ptrIVN6hermes17PageAccessTrackerESt14default_deleteIS2_EED2Ev.exit
+1:                                                ; preds = %_ZNSt10unique_ptrIVN6hermes17PageAccessTrackerESt14default_deleteIS2_EED2Ev.exit
+  %.sroa.0.0.copyload.i.i.i.i.i2 = load i64, ptr %i.a, align 8, !tbaa !58
+  %.not.i.i.i.i3 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i2, 0
+  br i1 %.not.i.i.i.i3, label %_ZN4llvh8OptionalISt6threadED2Ev.exit, label %bb.k
+
+bb.k:                                             ; preds = %1
   tail call void @_ZSt9terminatev() #21
   unreachable
 
-_ZN4llvh8OptionalISt6threadED2Ev.exit:            ; preds = %_ZNSt10unique_ptrIVN6hermes17PageAccessTrackerESt14default_deleteIS2_EED2Ev.exit
+_ZN4llvh8OptionalISt6threadED2Ev.exit:            ; preds = %_ZNSt10unique_ptrIVN6hermes17PageAccessTrackerESt14default_deleteIS2_EED2Ev.exit, %1
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 280
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !139 ; 3 uses
   %.not.i4 = icmp eq ptr %i.an, null

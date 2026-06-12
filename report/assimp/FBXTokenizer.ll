@@ -201,14 +201,16 @@ bb.a:
   %12 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %13 = alloca %"class.std::allocator.5", align 1 ; 3 uses
   %i.a = load ptr, ptr %2, align 8                ; 3 uses
-  %.not = icmp eq ptr %i.a, null
-  %14 = load ptr, ptr %3, align 8                 ; 3 uses
-  %.not37.a = icmp eq ptr %14, null
-  %or.cond = select i1 %.not, i1 true, i1 %.not37.a
-  br i1 %or.cond, label %bb.y, label %.preheader
+  %.not37.a = icmp eq ptr %i.a, null
+  br i1 %.not37.a, label %bb.y, label %14
 
-.preheader:                                       ; preds = %bb.a
-  %i.b = getelementptr inbounds nuw i8, ptr %14, i64 1
+14:                                               ; preds = %bb.a
+  %15 = load ptr, ptr %3, align 8                 ; 3 uses
+  %.not37 = icmp eq ptr %15, null
+  br i1 %.not37, label %bb.y, label %.preheader
+
+.preheader:                                       ; preds = %14
+  %i.b = getelementptr inbounds nuw i8, ptr %15, i64 1
   %.not3959 = icmp eq ptr %i.a, %i.b
   br i1 %.not3959, label %._crit_edge.thread, label %.lr.ph
 
@@ -276,7 +278,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.g,
 
 _ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit:         ; preds = %bb.b, %.lr.ph
   %i.m = getelementptr inbounds nuw i8, ptr %.03361, i64 1
-  %.not39 = icmp eq ptr %.03361, %14
+  %.not39 = icmp eq ptr %.03361, %15
   br i1 %.not39, label %._crit_edge, label %.lr.ph, !llvm.loop !5
 
 bb.h:                                             ; preds = %._crit_edge
@@ -481,7 +483,7 @@ _ZNSt6vectorIPKN6Assimp3FBX5TokenESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cx
   store ptr %i.ch, ptr %i.bo, align 8
   br label %_ZNSt6vectorIPKN6Assimp3FBX5TokenESaIS4_EE9push_backEOS4_.exit
 
-bb.y:                                             ; preds = %bb.a
+bb.y:                                             ; preds = %14, %bb.a
   br i1 %7, label %bb.z, label %_ZNSt6vectorIPKN6Assimp3FBX5TokenESaIS4_EE9push_backEOS4_.exit
 
 bb.z:                                             ; preds = %bb.y

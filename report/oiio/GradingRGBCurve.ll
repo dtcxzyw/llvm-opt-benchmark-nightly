@@ -201,20 +201,25 @@ bb.a:
   %.ptr13 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.ptr13, i8 0, i64 64, i1 false)
   %i.a = load ptr, ptr %1, align 8, !tbaa !32     ; 3 uses
-  %9 = load ptr, ptr %2, align 8
-  %10 = load ptr, ptr %3, align 8
-  %11 = load ptr, ptr %4, align 8
-  %12 = insertelement <4 x ptr> poison, ptr %i.a, i64 0
-  %13 = insertelement <4 x ptr> %12, ptr %9, i64 1
-  %14 = insertelement <4 x ptr> %13, ptr %10, i64 2
-  %15 = insertelement <4 x ptr> %14, ptr %11, i64 3
-  %.fr = freeze <4 x ptr> %15
-  %16 = icmp eq <4 x ptr> %.fr, splat (ptr null)
-  %17 = bitcast <4 x i1> %16 to i4
-  %i.b = icmp eq i4 %17, 0
-  br i1 %i.b, label %bb.f, label %bb.b
+  %i.b = icmp eq ptr %i.a, null
+  br i1 %i.b, label %bb.b, label %9
 
-bb.b:                                             ; preds = %bb.a
+9:                                                ; preds = %bb.a
+  %10 = load ptr, ptr %2, align 8, !tbaa !32
+  %.not50 = icmp eq ptr %10, null
+  br i1 %.not50, label %bb.b, label %11
+
+11:                                               ; preds = %9
+  %12 = load ptr, ptr %3, align 8, !tbaa !32
+  %.not51 = icmp eq ptr %12, null
+  br i1 %.not51, label %bb.b, label %13
+
+13:                                               ; preds = %11
+  %14 = load ptr, ptr %4, align 8, !tbaa !32
+  %.not52 = icmp eq ptr %14, null
+  br i1 %.not52, label %bb.b, label %bb.f
+
+bb.b:                                             ; preds = %13, %11, %9, %bb.a
   %i.c = tail call ptr @__cxa_allocate_exception(i64 16) #20 ; 3 uses
   invoke void @_ZN16OpenColorIO_v2_59ExceptionC1EPKc(ptr noundef nonnull align 8 dereferenceable(16) %i.c, ptr noundef nonnull @.str)
           to label %bb.c unwind label %bb.d
@@ -234,7 +239,7 @@ bb.e:                                             ; preds = %bb.c
           cleanup
   br label %bb.bk
 
-bb.f:                                             ; preds = %bb.a
+bb.f:                                             ; preds = %13
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
   %i.f = load ptr, ptr %i.a, align 8, !tbaa !12
   %i.g = load ptr, ptr %i.f, align 8

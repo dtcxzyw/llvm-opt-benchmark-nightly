@@ -201,17 +201,19 @@ bb.a:
   %i.b = alloca i32, align 4                      ; 6 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %i.c = icmp eq ptr %1, null
-  br i1 %i.c, label %bb.o, label %bb.b
+  br i1 %i.c, label %bb.o, label %4
 
-bb.b:                                             ; preds = %bb.a
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %5 = load ptr, ptr %4, align 8
-  %6 = icmp eq ptr %5, null
+4:                                                ; preds = %bb.a
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %6 = load ptr, ptr %5, align 8
+  %7 = icmp eq ptr %6, null
+  br i1 %7, label %bb.o, label %bb.b
+
+bb.b:                                             ; preds = %4
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.e = load ptr, ptr %i.d, align 8
   %i.f = icmp eq ptr %i.e, null
-  %or.cond = select i1 %6, i1 true, i1 %i.f
-  br i1 %or.cond, label %bb.o, label %bb.c
+  br i1 %i.f, label %bb.o, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #19
@@ -366,7 +368,7 @@ bb.n:                                             ; preds = %_ZNSt7__cxx1112basi
   %exitcond.not = icmp eq i32 %i.bc, %i.w
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !10
 
-bb.o:                                             ; preds = %bb.a, %bb.b, %._crit_edge43
+bb.o:                                             ; preds = %bb.a, %4, %bb.b, %._crit_edge43
   ret void
 }
 
