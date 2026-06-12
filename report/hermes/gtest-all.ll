@@ -201,7 +201,7 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %.lr.ph143, %middle.block
   %.078142.ph = phi i64 [ 1, %.lr.ph143 ], [ %i.ct, %middle.block ]
-  br label %scalar.ph
+  br label %.preheader.us
 
 bb.r:                                             ; preds = %bb.c, %bb.b
   %i.cz = landingpad { ptr, i32 }
@@ -286,7 +286,7 @@ bb.x:                                             ; preds = %bb.x, %.lr.ph.new
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.preheader133.loopexit.unr-lcssa, label %bb.x, !llvm.loop !319
 
-.preheader132:                                    ; preds = %scalar.ph, %middle.block, %.preheader133
+.preheader132:                                    ; preds = %.preheader.us, %middle.block, %.preheader133
   %i.eb = load ptr, ptr %i.a, align 8, !tbaa !289 ; 3 uses
   %i.ec = load ptr, ptr %1, align 8, !tbaa !292   ; 4 uses
   %i.ed = ptrtoint ptr %i.eb to i64
@@ -298,117 +298,117 @@ bb.x:                                             ; preds = %bb.x, %.lr.ph.new
   %.pre172 = load ptr, ptr %2, align 8, !tbaa !292 ; 5 uses
   %.not157 = icmp eq ptr %.pre, %.pre172
   %or.cond.a = select i1 %.not156, i1 true, i1 %.not157
-  br i1 %or.cond.a, label %._crit_edge147, label %.preheader.us.preheader
+  br i1 %or.cond.a, label %bb.z, label %.preheader.us.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader132
   %i.eh = ptrtoint ptr %.pre to i64
   %i.ei = ptrtoint ptr %.pre172 to i64
   %i.ej = sub i64 %i.eh, %i.ei
   %i.ek = ashr exact i64 %i.ej, 3
-  br label %.preheader.us
-
-.preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge.us
-  %.079146.us = phi i64 [ %9, %._crit_edge.us ], [ 0, %.preheader.us.preheader ] ; 3 uses
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.ec, i64 %.079146.us
-  %8 = load i64, ptr %7, align 8, !tbaa !15
-  %9 = add nuw i64 %.079146.us, 1                 ; 4 uses
-  %10 = getelementptr inbounds nuw [24 x i8], ptr %i.ac, i64 %9 ; 2 uses
-  %11 = getelementptr inbounds nuw [24 x i8], ptr %i.ac, i64 %.079146.us ; 2 uses
-  %12 = getelementptr inbounds nuw [24 x i8], ptr %.pre174.a, i64 %9
-  %13 = load ptr, ptr %12, align 8, !tbaa !305
   br label %bb.y
 
-bb.y:                                             ; preds = %.preheader.us, %bb.af
-  %.080144.us = phi i64 [ 0, %.preheader.us ], [ %15, %bb.af ] ; 5 uses
-  %i.el = getelementptr inbounds nuw [8 x i8], ptr %.pre172, i64 %.080144.us
-  %i.em = load i64, ptr %i.el, align 8, !tbaa !15
-  %14 = icmp eq i64 %8, %i.em
-  %15 = add nuw i64 %.080144.us, 1                ; 7 uses
-  br i1 %14, label %bb.ae, label %bb.z
+.preheader.us:                                    ; preds = %scalar.ph.preheader, %.preheader.us
+  %.079146.us = phi i64 [ %10, %.preheader.us ], [ %.078142.ph, %scalar.ph.preheader ] ; 4 uses
+  %7 = uitofp i64 %.079146.us to double
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.cl, i64 %.079146.us
+  store double %7, ptr %8, align 8, !tbaa !297
+  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.cr, i64 %.079146.us
+  store i32 1, ptr %9, align 4, !tbaa !308
+  %10 = add nuw i64 %.079146.us, 1                ; 2 uses
+  %exitcond168.not = icmp eq i64 %10, %i.cp
+  br i1 %exitcond168.not, label %.preheader132, label %.preheader.us, !llvm.loop !320
 
-bb.z:                                             ; preds = %bb.y
-  %16 = load ptr, ptr %10, align 8, !tbaa !293    ; 3 uses
-  %17 = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %.080144.us
-  %18 = load double, ptr %17, align 8, !tbaa !297 ; 4 uses
-  %19 = load ptr, ptr %11, align 8, !tbaa !293    ; 2 uses
-  %20 = getelementptr inbounds nuw [8 x i8], ptr %19, i64 %15
-  %21 = load double, ptr %20, align 8, !tbaa !297 ; 4 uses
-  %22 = getelementptr inbounds nuw [8 x i8], ptr %19, i64 %.080144.us
-  %23 = load double, ptr %22, align 8, !tbaa !297 ; 3 uses
-  %24 = fcmp olt double %18, %21
-  %25 = fcmp olt double %18, %23
-  %or.cond.us = select i1 %24, i1 %25, i1 false
-  br i1 %or.cond.us, label %bb.ad, label %bb.aa
+bb.y:                                             ; preds = %.preheader.us.preheader, %bb.ab
+  %.080144.us = phi i64 [ %11, %bb.ab ], [ 0, %.preheader.us.preheader ] ; 3 uses
+  %i.el = getelementptr inbounds nuw [8 x i8], ptr %i.ec, i64 %.080144.us
+  %i.em = load i64, ptr %i.el, align 8, !tbaa !15
+  %11 = add nuw i64 %.080144.us, 1                ; 4 uses
+  %12 = getelementptr inbounds nuw [24 x i8], ptr %i.ac, i64 %11 ; 2 uses
+  %13 = getelementptr inbounds nuw [24 x i8], ptr %i.ac, i64 %.080144.us ; 2 uses
+  %14 = getelementptr inbounds nuw [24 x i8], ptr %.pre174.a, i64 %11
+  %15 = load ptr, ptr %14, align 8, !tbaa !305
+  br label %bb.ac
+
+bb.z:                                             ; preds = %bb.ab, %.preheader132
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
+  %16 = icmp ne ptr %i.eb, %i.ec
+  %17 = icmp ne ptr %.pre, %.pre172
+  %or.cond.us = select i1 %16, i1 true, i1 %17
+  br i1 %or.cond.us, label %bb.aa, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPN7testing8internal13edit_distance8EditTypeESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit
 
 bb.aa:                                            ; preds = %bb.z
-  %26 = fcmp olt double %21, %18
-  %27 = fcmp olt double %21, %23
-  %or.cond91.us = select i1 %26, i1 %27, i1 false
-  %28 = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %15 ; 2 uses
-  br i1 %or.cond91.us, label %bb.ac, label %bb.ab
-
-bb.ab:                                            ; preds = %bb.aa
-  %29 = fadd double %23, 1.000010e+00
-  store double %29, ptr %28, align 8, !tbaa !297
-  br label %bb.af
-
-bb.ac:                                            ; preds = %bb.aa
-  %30 = fadd double %21, 1.000000e+00
-  store double %30, ptr %28, align 8, !tbaa !297
-  br label %bb.af
-
-bb.ad:                                            ; preds = %bb.z
-  %31 = fadd double %18, 1.000000e+00
-  %i.en = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %15
-  store double %31, ptr %i.en, align 8, !tbaa !297
-  br label %bb.af
-
-bb.ae:                                            ; preds = %bb.y
-  %i.eo = load ptr, ptr %11, align 8, !tbaa !293
-  %i.ep = getelementptr inbounds nuw [8 x i8], ptr %i.eo, i64 %.080144.us
-  %i.eq = load double, ptr %i.ep, align 8, !tbaa !297
-  %i.er = load ptr, ptr %10, align 8, !tbaa !293
-  %i.es = getelementptr inbounds nuw [8 x i8], ptr %i.er, i64 %15
-  store double %i.eq, ptr %i.es, align 8, !tbaa !297
-  br label %bb.af
-
-bb.af:                                            ; preds = %bb.ae, %bb.ad, %bb.ac, %bb.ab
-  %.sink = phi i32 [ 0, %bb.ae ], [ 1, %bb.ad ], [ 2, %bb.ac ], [ 3, %bb.ab ]
-  %32 = getelementptr inbounds nuw [4 x i8], ptr %13, i64 %15
-  store i32 %.sink, ptr %32, align 4, !tbaa !308
-  %exitcond169.not = icmp eq i64 %15, %i.ek
-  br i1 %exitcond169.not, label %._crit_edge.us, label %bb.y, !llvm.loop !320
-
-._crit_edge.us:                                   ; preds = %bb.af
-  %exitcond171.not = icmp eq i64 %9, %i.eg
-  br i1 %exitcond171.not, label %._crit_edge147, label %.preheader.us, !llvm.loop !321
-
-scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %.078142 = phi i64 [ %36, %scalar.ph ], [ %.078142.ph, %scalar.ph.preheader ] ; 4 uses
-  %33 = uitofp i64 %.078142 to double
-  %34 = getelementptr inbounds nuw [8 x i8], ptr %i.cl, i64 %.078142
-  store double %33, ptr %34, align 8, !tbaa !297
-  %35 = getelementptr inbounds nuw [4 x i8], ptr %i.cr, i64 %.078142
-  store i32 1, ptr %35, align 4, !tbaa !308
-  %36 = add nuw i64 %.078142, 1                   ; 2 uses
-  %exitcond167.not = icmp eq i64 %36, %i.cp
-  br i1 %exitcond167.not, label %.preheader132, label %scalar.ph, !llvm.loop !322
-
-._crit_edge147:                                   ; preds = %._crit_edge.us, %.preheader132
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
-  %37 = icmp ne ptr %i.eb, %i.ec
-  %38 = icmp ne ptr %.pre, %.pre172
-  %39 = select i1 %37, i1 true, i1 %38
-  br i1 %39, label %.lr.ph154, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPN7testing8internal13edit_distance8EditTypeESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit
-
-.lr.ph154:                                        ; preds = %._crit_edge147
-  %40 = ptrtoint ptr %.pre172 to i64
-  %41 = ptrtoint ptr %.pre to i64
-  %42 = sub i64 %41, %40
-  %43 = ashr exact i64 %42, 3
-  %44 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %45 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %18 = ptrtoint ptr %.pre172 to i64
+  %19 = ptrtoint ptr %.pre to i64
+  %20 = sub i64 %19, %18
+  %21 = ashr exact i64 %20, 3
+  %22 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %23 = getelementptr inbounds nuw i8, ptr %0, i64 16
   br label %bb.ag
+
+bb.ab:                                            ; preds = %.lr.ph154
+  %exitcond172.not = icmp eq i64 %11, %i.eg
+  br i1 %exitcond172.not, label %bb.z, label %bb.y, !llvm.loop !321
+
+bb.ac:                                            ; preds = %bb.y, %.lr.ph154
+  %.080144 = phi i64 [ 0, %bb.y ], [ %27, %.lr.ph154 ] ; 5 uses
+  %24 = getelementptr inbounds nuw [8 x i8], ptr %.pre172, i64 %.080144
+  %25 = load i64, ptr %24, align 8, !tbaa !15
+  %26 = icmp eq i64 %i.em, %25
+  %27 = add nuw i64 %.080144, 1                   ; 7 uses
+  br i1 %26, label %bb.ad, label %bb.ae
+
+bb.ad:                                            ; preds = %bb.ac
+  %28 = load ptr, ptr %13, align 8, !tbaa !293
+  %29 = getelementptr inbounds nuw [8 x i8], ptr %28, i64 %.080144
+  %30 = load double, ptr %29, align 8, !tbaa !297
+  %31 = load ptr, ptr %12, align 8, !tbaa !293
+  %i.en = getelementptr inbounds nuw [8 x i8], ptr %31, i64 %27
+  store double %30, ptr %i.en, align 8, !tbaa !297
+  br label %.lr.ph154
+
+bb.ae:                                            ; preds = %bb.ac
+  %i.eo = load ptr, ptr %12, align 8, !tbaa !293  ; 3 uses
+  %i.ep = getelementptr inbounds nuw [8 x i8], ptr %i.eo, i64 %.080144
+  %i.eq = load double, ptr %i.ep, align 8, !tbaa !297 ; 4 uses
+  %i.er = load ptr, ptr %13, align 8, !tbaa !293  ; 2 uses
+  %32 = getelementptr inbounds nuw [8 x i8], ptr %i.er, i64 %27
+  %33 = load double, ptr %32, align 8, !tbaa !297 ; 4 uses
+  %i.es = getelementptr inbounds nuw [8 x i8], ptr %i.er, i64 %.080144
+  %34 = load double, ptr %i.es, align 8, !tbaa !297 ; 3 uses
+  %35 = fcmp olt double %i.eq, %33
+  %36 = fcmp olt double %i.eq, %34
+  %or.cond = select i1 %35, i1 %36, i1 false
+  br i1 %or.cond, label %bb.af, label %._crit_edge.us
+
+bb.af:                                            ; preds = %bb.ae
+  %37 = fadd double %i.eq, 1.000000e+00
+  %38 = getelementptr inbounds nuw [8 x i8], ptr %i.eo, i64 %27
+  store double %37, ptr %38, align 8, !tbaa !297
+  br label %.lr.ph154
+
+._crit_edge.us:                                   ; preds = %bb.ae
+  %39 = fcmp olt double %33, %i.eq
+  %40 = fcmp olt double %33, %34
+  %or.cond91 = select i1 %39, i1 %40, i1 false
+  %41 = getelementptr inbounds nuw [8 x i8], ptr %i.eo, i64 %27 ; 2 uses
+  br i1 %or.cond91, label %scalar.ph, label %._crit_edge147
+
+scalar.ph:                                        ; preds = %._crit_edge.us
+  %42 = fadd double %33, 1.000000e+00
+  store double %42, ptr %41, align 8, !tbaa !297
+  br label %.lr.ph154
+
+._crit_edge147:                                   ; preds = %._crit_edge.us
+  %43 = fadd double %34, 1.000010e+00
+  store double %43, ptr %41, align 8, !tbaa !297
+  br label %.lr.ph154
+
+.lr.ph154:                                        ; preds = %bb.af, %._crit_edge147, %scalar.ph, %bb.ad
+  %.sink = phi i32 [ 1, %bb.af ], [ 3, %._crit_edge147 ], [ 2, %scalar.ph ], [ 0, %bb.ad ]
+  %44 = getelementptr inbounds nuw [4 x i8], ptr %15, i64 %27
+  store i32 %.sink, ptr %44, align 4, !tbaa !308
+  %exitcond170.not = icmp eq i64 %27, %i.ek
+  br i1 %exitcond170.not, label %bb.ab, label %bb.ac, !llvm.loop !322
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit
   store ptr %i.gb, ptr %0, align 8
@@ -430,13 +430,13 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.ey = icmp ult ptr %i.ex, %.sroa.0.0.i.i
   br i1 %i.ey, label %.lr.ph.i.i, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPN7testing8internal13edit_distance8EditTypeESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit, !llvm.loop !323
 
-bb.ag:                                            ; preds = %.lr.ph154, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit
-  %i.ez = phi ptr [ null, %.lr.ph154 ], [ %i.fy, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit ] ; 3 uses
-  %i.fa = phi ptr [ null, %.lr.ph154 ], [ %i.fz, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit ] ; 3 uses
-  %i.fb = phi ptr [ %.pre174.a, %.lr.ph154 ], [ %i.ga, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit ] ; 3 uses
-  %.075153 = phi i64 [ %43, %.lr.ph154 ], [ %i.gf, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit ] ; 2 uses
-  %.076152 = phi i64 [ %i.eg, %.lr.ph154 ], [ %i.gd, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit ] ; 2 uses
-  %i.fc = phi ptr [ null, %.lr.ph154 ], [ %i.gb, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit ] ; 9 uses
+bb.ag:                                            ; preds = %bb.aa, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit
+  %i.ez = phi ptr [ null, %bb.aa ], [ %i.fy, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit ] ; 3 uses
+  %i.fa = phi ptr [ null, %bb.aa ], [ %i.fz, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit ] ; 3 uses
+  %i.fb = phi ptr [ %.pre174.a, %bb.aa ], [ %i.ga, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit ] ; 3 uses
+  %.075153 = phi i64 [ %21, %bb.aa ], [ %i.gf, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit ] ; 2 uses
+  %.076152 = phi i64 [ %i.eg, %bb.aa ], [ %i.gd, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit ] ; 2 uses
+  %i.fc = phi ptr [ null, %bb.aa ], [ %i.gb, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit ] ; 9 uses
   %i.fd = getelementptr inbounds nuw [24 x i8], ptr %i.fb, i64 %.076152
   %i.fe = load ptr, ptr %i.fd, align 8, !tbaa !305
   %i.ff = getelementptr inbounds nuw [4 x i8], ptr %i.fe, i64 %.075153
@@ -447,7 +447,7 @@ bb.ag:                                            ; preds = %.lr.ph154, %_ZNSt6v
 bb.ah:                                            ; preds = %bb.ag
   store i32 %i.fg, ptr %i.fa, align 4, !tbaa !308
   %i.fh = getelementptr inbounds nuw i8, ptr %i.fa, i64 4 ; 2 uses
-  store ptr %i.fh, ptr %44, align 8, !tbaa !310
+  store ptr %i.fh, ptr %22, align 8, !tbaa !310
   br label %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit
 
 bb.ai:                                            ; preds = %bb.ag
@@ -500,9 +500,9 @@ bb.al:                                            ; preds = %_ZNSt6vectorIN7test
 
 _ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i: ; preds = %bb.al, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i
   %i.fw = phi ptr [ %.pre173, %bb.al ], [ %i.fb, %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i ]
-  store ptr %i.fv, ptr %44, align 8, !tbaa !310
+  store ptr %i.fv, ptr %22, align 8, !tbaa !310
   %i.fx = getelementptr inbounds nuw [4 x i8], ptr %i.fs, i64 %i.fq ; 2 uses
-  store ptr %i.fx, ptr %45, align 8, !tbaa !307
+  store ptr %i.fx, ptr %23, align 8, !tbaa !307
   br label %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit
 
 _ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE9push_backERKS3_.exit: ; preds = %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i, %bb.ah
@@ -537,8 +537,8 @@ bb.am:                                            ; preds = %.loopexit.split-lp,
   %.not.i.i.i125 = icmp eq ptr %i.fc, null
   br i1 %.not.i.i.i125, label %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EED2Ev.exit126, label %bb.ar
 
-_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPN7testing8internal13edit_distance8EditTypeESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit: ; preds = %.lr.ph.i.i, %._crit_edge147, %._crit_edge
-  %.pr.i207 = phi ptr [ %.pre174.a, %._crit_edge147 ], [ %i.ga, %._crit_edge ], [ %i.ga, %.lr.ph.i.i ] ; 5 uses
+_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPN7testing8internal13edit_distance8EditTypeESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit: ; preds = %.lr.ph.i.i, %bb.z, %._crit_edge
+  %.pr.i207 = phi ptr [ %.pre174.a, %bb.z ], [ %i.ga, %._crit_edge ], [ %i.ga, %.lr.ph.i.i ] ; 5 uses
   %i.gj = load ptr, ptr %i.bo, align 8, !tbaa !315 ; 2 uses
   %.not4.i.i.i = icmp eq ptr %.pr.i207, %i.gj
   br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS4_EES6_EvT_S8_RSaIT0_E.exit.i, label %.lr.ph.i.i.i
@@ -941,9 +941,9 @@ begin_hunk_1_@llvm.vector.reduce.add.v4i32
 !317 = !{!"llvm.loop.isvectorized", i32 1}
 !318 = !{!"llvm.loop.unroll.runtime.disable"}
 !319 = distinct !{!319, !67}
-!320 = distinct !{!320, !67}
+!320 = distinct !{!320, !67, !318, !317}
 !321 = distinct !{!321, !67}
-!322 = distinct !{!322, !67, !318, !317}
+!322 = distinct !{!322, !67}
 !323 = distinct !{!323, !67}
 !324 = distinct !{!324, !67}
 !325 = distinct !{!325, !67}

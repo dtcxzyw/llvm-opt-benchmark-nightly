@@ -61,7 +61,7 @@ _ZN9benchmark5State13StateIteratorC2EPS0_.exit:
   tail call void @_ZN9benchmark5State16StartKeepRunningEv(ptr noundef nonnull align 64 dereferenceable(184) %0)
   %.not.i.not3942 = icmp eq i64 %i.t, 0
   %.not.i.not39 = select i1 %.not, i1 true, i1 %.not.i.not3942
-  br i1 %.not.i.not39, label %._crit_edge, label %.lr.ph41, !prof !37
+  br i1 %.not.i.not39, label %._crit_edge.split, label %.lr.ph41, !prof !37
 
 .lr.ph41:                                         ; preds = %_ZN9benchmark5State13StateIteratorC2EPS0_.exit
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -69,7 +69,7 @@ _ZN9benchmark5State13StateIteratorC2EPS0_.exit:
   %i.w = load i64, ptr %i.v, align 8, !tbaa !39   ; 4 uses
   %i.x = trunc i64 %i.w to i32
   %i.y = icmp sgt i32 %i.x, 0
-  br i1 %i.y, label %.lr.ph.us.preheader, label %._crit_edge
+  br i1 %i.y, label %.lr.ph.us.preheader, label %._crit_edge.split
 
 .lr.ph.us.preheader:                              ; preds = %.lr.ph41
   %wide.trip.count = and i64 %i.w, 2147483647     ; 4 uses
@@ -105,6 +105,10 @@ _ZN9benchmark5State13StateIteratorC2EPS0_.exit:
   %xtraiter = and i64 %i.w, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br label %.lr.ph.us
+
+._crit_edge.split:                                ; preds = %"._Z6forallIZL15BM_INIT3_LAMBDARN9benchmark5StateEE3$_0Ev9simd_execiiT_.exit_crit_edge.us", %.lr.ph41, %_ZN9benchmark5State13StateIteratorC2EPS0_.exit
+  tail call void @_ZN9benchmark5State17FinishKeepRunningEv(ptr noundef nonnull align 64 dereferenceable(184) %0)
+  ret void
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %"._Z6forallIZL15BM_INIT3_LAMBDARN9benchmark5StateEE3$_0Ev9simd_execiiT_.exit_crit_edge.us"
   %.sroa.016.040.us = phi i64 [ %i.bz, %"._Z6forallIZL15BM_INIT3_LAMBDARN9benchmark5StateEE3$_0Ev9simd_execiiT_.exit_crit_edge.us" ], [ %i.t, %.lr.ph.us.preheader ]
@@ -204,11 +208,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 "._Z6forallIZL15BM_INIT3_LAMBDARN9benchmark5StateEE3$_0Ev9simd_execiiT_.exit_crit_edge.us": ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
   %i.bz = add nsw i64 %.sroa.016.040.us, -1       ; 2 uses
   %.not.i.not.us = icmp eq i64 %i.bz, 0
-  br i1 %.not.i.not.us, label %._crit_edge, label %.lr.ph.us, !prof !47
-
-._crit_edge:                                      ; preds = %"._Z6forallIZL15BM_INIT3_LAMBDARN9benchmark5StateEE3$_0Ev9simd_execiiT_.exit_crit_edge.us", %.lr.ph41, %_ZN9benchmark5State13StateIteratorC2EPS0_.exit
-  tail call void @_ZN9benchmark5State17FinishKeepRunningEv(ptr noundef nonnull align 64 dereferenceable(184) %0)
-  ret void
+  br i1 %.not.i.not.us, label %._crit_edge.split, label %.lr.ph.us, !prof !47
 }
 
 declare noundef ptr @_ZN9benchmark8internal9Benchmark3ArgEl(ptr noundef nonnull align 8 dereferenceable(224), i64 noundef) local_unnamed_addr #0
@@ -245,7 +245,7 @@ _ZN9benchmark5State13StateIteratorC2EPS0_.exit:
   tail call void @_ZN9benchmark5State16StartKeepRunningEv(ptr noundef nonnull align 64 dereferenceable(184) %0)
   %.not.i.not3942 = icmp eq i64 %i.p, 0
   %.not.i.not39 = select i1 %.not, i1 true, i1 %.not.i.not3942
-  br i1 %.not.i.not39, label %._crit_edge, label %.lr.ph41, !prof !37
+  br i1 %.not.i.not39, label %._crit_edge.split, label %.lr.ph41, !prof !37
 
 .lr.ph41:                                         ; preds = %_ZN9benchmark5State13StateIteratorC2EPS0_.exit
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -253,7 +253,7 @@ _ZN9benchmark5State13StateIteratorC2EPS0_.exit:
   %i.s = load i64, ptr %i.r, align 8, !tbaa !39   ; 3 uses
   %i.t = trunc i64 %i.s to i32
   %i.u = icmp sgt i32 %i.t, 0
-  br i1 %i.u, label %.lr.ph.us.preheader, label %._crit_edge
+  br i1 %i.u, label %.lr.ph.us.preheader, label %._crit_edge.split
 
 .lr.ph.us.preheader:                              ; preds = %.lr.ph41
   %wide.trip.count = and i64 %i.s, 2147483647     ; 4 uses
@@ -293,6 +293,10 @@ _ZN9benchmark5State13StateIteratorC2EPS0_.exit:
   %n.vec = and i64 %i.s, 2147483646               ; 3 uses
   %cmp.n = icmp eq i64 %wide.trip.count, %n.vec
   br label %.lr.ph.us
+
+._crit_edge.split:                                ; preds = %"._Z6forallIZL19BM_MULADDSUB_LAMBDARN9benchmark5StateEE3$_0Ev9simd_execiiT_.exit_crit_edge.us", %.lr.ph41, %_ZN9benchmark5State13StateIteratorC2EPS0_.exit
+  tail call void @_ZN9benchmark5State17FinishKeepRunningEv(ptr noundef nonnull align 64 dereferenceable(184) %0)
+  ret void
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %"._Z6forallIZL19BM_MULADDSUB_LAMBDARN9benchmark5StateEE3$_0Ev9simd_execiiT_.exit_crit_edge.us"
   %.sroa.016.040.us = phi i64 [ %i.bp, %"._Z6forallIZL19BM_MULADDSUB_LAMBDARN9benchmark5StateEE3$_0Ev9simd_execiiT_.exit_crit_edge.us" ], [ %i.p, %.lr.ph.us.preheader ]
@@ -353,11 +357,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 "._Z6forallIZL19BM_MULADDSUB_LAMBDARN9benchmark5StateEE3$_0Ev9simd_execiiT_.exit_crit_edge.us": ; preds = %scalar.ph, %middle.block
   %i.bp = add nsw i64 %.sroa.016.040.us, -1       ; 2 uses
   %.not.i.not.us = icmp eq i64 %i.bp, 0
-  br i1 %.not.i.not.us, label %._crit_edge, label %.lr.ph.us, !prof !47
-
-._crit_edge:                                      ; preds = %"._Z6forallIZL19BM_MULADDSUB_LAMBDARN9benchmark5StateEE3$_0Ev9simd_execiiT_.exit_crit_edge.us", %.lr.ph41, %_ZN9benchmark5State13StateIteratorC2EPS0_.exit
-  tail call void @_ZN9benchmark5State17FinishKeepRunningEv(ptr noundef nonnull align 64 dereferenceable(184) %0)
-  ret void
+  br i1 %.not.i.not.us, label %._crit_edge.split, label %.lr.ph.us, !prof !47
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -383,7 +383,7 @@ _ZN9benchmark5State13StateIteratorC2EPS0_.exit:
   tail call void @_ZN9benchmark5State16StartKeepRunningEv(ptr noundef nonnull align 64 dereferenceable(184) %0)
   %.not.i.not4144 = icmp eq i64 %i.o, 0
   %.not.i.not41 = select i1 %.not, i1 true, i1 %.not.i.not4144
-  br i1 %.not.i.not41, label %._crit_edge, label %.lr.ph43, !prof !37
+  br i1 %.not.i.not41, label %._crit_edge.split, label %.lr.ph43, !prof !37
 
 .lr.ph43:                                         ; preds = %_ZN9benchmark5State13StateIteratorC2EPS0_.exit
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -391,11 +391,15 @@ _ZN9benchmark5State13StateIteratorC2EPS0_.exit:
   %i.r = load i64, ptr %i.q, align 8, !tbaa !39   ; 2 uses
   %i.s = trunc i64 %i.r to i32
   %i.t = icmp sgt i32 %i.s, 0
-  br i1 %i.t, label %.lr.ph.us.preheader, label %._crit_edge
+  br i1 %i.t, label %.lr.ph.us.preheader, label %._crit_edge.split
 
 .lr.ph.us.preheader:                              ; preds = %.lr.ph43
   %wide.trip.count = and i64 %i.r, 2147483647
   br label %.lr.ph.us
+
+._crit_edge.split:                                ; preds = %"._Z6forallIZL17BM_IF_QUAD_LAMBDARN9benchmark5StateEE3$_0Ev9simd_execiiT_.exit_crit_edge.us", %.lr.ph43, %_ZN9benchmark5State13StateIteratorC2EPS0_.exit
+  tail call void @_ZN9benchmark5State17FinishKeepRunningEv(ptr noundef nonnull align 64 dereferenceable(184) %0)
+  ret void
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %"._Z6forallIZL17BM_IF_QUAD_LAMBDARN9benchmark5StateEE3$_0Ev9simd_execiiT_.exit_crit_edge.us"
   %.sroa.016.042.us = phi i64 [ %i.as, %"._Z6forallIZL17BM_IF_QUAD_LAMBDARN9benchmark5StateEE3$_0Ev9simd_execiiT_.exit_crit_edge.us" ], [ %i.o, %.lr.ph.us.preheader ]
@@ -436,7 +440,7 @@ bb.c:                                             ; preds = %bb.a
   store double 0.000000e+00, ptr %i.aq, align 8, !tbaa !40
   br label %"_ZZL17BM_IF_QUAD_LAMBDARN9benchmark5StateEENK3$_0clEi.exit.us"
 
-"_ZZL17BM_IF_QUAD_LAMBDARN9benchmark5StateEENK3$_0clEi.exit.us": ; preds = %bb.c, %bb.b
+"_ZZL17BM_IF_QUAD_LAMBDARN9benchmark5StateEENK3$_0clEi.exit.us": ; preds = %bb.b, %bb.c
   %.sink.i.us = phi double [ 0.000000e+00, %bb.c ], [ %i.ap, %bb.b ]
   %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv
   store double %.sink.i.us, ptr %i.ar, align 8, !tbaa !40
@@ -447,11 +451,7 @@ bb.c:                                             ; preds = %bb.a
 "._Z6forallIZL17BM_IF_QUAD_LAMBDARN9benchmark5StateEE3$_0Ev9simd_execiiT_.exit_crit_edge.us": ; preds = %"_ZZL17BM_IF_QUAD_LAMBDARN9benchmark5StateEENK3$_0clEi.exit.us"
   %i.as = add nsw i64 %.sroa.016.042.us, -1       ; 2 uses
   %.not.i.not.us = icmp eq i64 %i.as, 0
-  br i1 %.not.i.not.us, label %._crit_edge, label %.lr.ph.us, !prof !47
-
-._crit_edge:                                      ; preds = %"._Z6forallIZL17BM_IF_QUAD_LAMBDARN9benchmark5StateEE3$_0Ev9simd_execiiT_.exit_crit_edge.us", %.lr.ph43, %_ZN9benchmark5State13StateIteratorC2EPS0_.exit
-  tail call void @_ZN9benchmark5State17FinishKeepRunningEv(ptr noundef nonnull align 64 dereferenceable(184) %0)
-  ret void
+  br i1 %.not.i.not.us, label %._crit_edge.split, label %.lr.ph.us, !prof !47
 }
 
 ; Function Attrs: mustprogress uwtable

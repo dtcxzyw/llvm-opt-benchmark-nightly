@@ -201,7 +201,7 @@ bb.a:
   %i.w = icmp sgt i32 %i.j, -4
   %i.x = icmp sgt i32 %i.e, -4
   %or.cond = and i1 %i.w, %i.x
-  br i1 %or.cond, label %.preheader213.us.preheader, label %.preheader211.sink.split
+  br i1 %or.cond, label %.preheader213.us.preheader, label %._crit_edge216.split
 
 .preheader213.us.preheader:                       ; preds = %bb.a
   %i.y = zext nneg i32 %i.f to i64
@@ -254,6 +254,11 @@ bb.a:
   %niter.next.7 = add i64 %niter, 8               ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.preheader212.us.preheader.unr-lcssa, label %.preheader213.us, !llvm.loop !249
+
+._crit_edge216.split:                             ; preds = %bb.a
+  %4 = tail call ptr @genmatrix_p(i32 noundef %i.k, i32 noundef %i.f, i64 noundef 4, ptr noundef nonnull @.str.66, i32 noundef 9820) ; 2 uses
+  store ptr %4, ptr %3, align 8, !tbaa !246
+  br label %.preheader211
 
 .preheader212.us.preheader.unr-lcssa:             ; preds = %.preheader213.us
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -328,11 +333,6 @@ bb.a:
   %niter260.ncmp.7 = icmp eq i64 %niter260.next.7, %unroll_iter259
   br i1 %niter260.ncmp.7, label %.preheader211.loopexit.unr-lcssa, label %.preheader212.us, !llvm.loop !251
 
-.preheader211.sink.split:                         ; preds = %bb.a
-  %4 = tail call ptr @genmatrix_p(i32 noundef %i.k, i32 noundef %i.f, i64 noundef 4, ptr noundef nonnull @.str.66, i32 noundef 9820) ; 2 uses
-  store ptr %4, ptr %3, align 8, !tbaa !246
-  br label %.preheader211
-
 .preheader211.loopexit.unr-lcssa:                 ; preds = %.preheader212.us
   %lcmp.mod257.not = icmp eq i64 %xtraiter255, 0
   br i1 %lcmp.mod257.not, label %.preheader211, label %.preheader212.us.epil.preheader
@@ -354,8 +354,8 @@ bb.a:
   %epil.iter256.cmp.not = icmp eq i64 %epil.iter256.next, %xtraiter255
   br i1 %epil.iter256.cmp.not, label %.preheader211, label %.preheader212.us.epil, !llvm.loop !252
 
-.preheader211:                                    ; preds = %.preheader211.loopexit.unr-lcssa, %.preheader212.us.epil, %.preheader211.sink.split
-  %i.ce = phi ptr [ %4, %.preheader211.sink.split ], [ %i.bb, %.preheader212.us.epil ], [ %i.bb, %.preheader211.loopexit.unr-lcssa ] ; 10 uses
+.preheader211:                                    ; preds = %.preheader211.loopexit.unr-lcssa, %.preheader212.us.epil, %._crit_edge216.split
+  %i.ce = phi ptr [ %4, %._crit_edge216.split ], [ %i.bb, %.preheader212.us.epil ], [ %i.bb, %.preheader211.loopexit.unr-lcssa ] ; 10 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 1560 ; 2 uses
   %i.cg = load i32, ptr %i.cf, align 8, !tbaa !205
   %i.ch = icmp sgt i32 %i.cg, 0

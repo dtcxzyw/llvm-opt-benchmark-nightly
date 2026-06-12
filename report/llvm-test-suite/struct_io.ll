@@ -199,12 +199,12 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   %i.bn = mul nsw i32 %i.bl, %i.bm
   %i.bo = select i1 %i.ar, i32 %i.bn, i32 0
   %i.bp = icmp slt i32 %i.bj, 1
-  %i.bq = icmp slt i32 %i.bh, 1
+  %i.bq = icmp slt i32 %i.bi, 1
   %i.br = sub i32 %i.bl, %i.bh
   %i.bs = sub i32 %i.bo, %factor.op.mul207
-  %5 = icmp slt i32 %i.bi, 1
-  %or.cond.not259 = or i1 %i.bp, %5
-  %brmerge = or i1 %or.cond.not259, %i.bq
+  %brmerge.not248.not253 = or i1 %i.bp, %i.bq
+  %5 = icmp slt i32 %i.bh, 1
+  %brmerge = or i1 %brmerge.not248.not253, %5
   %brmerge256 = or i1 %brmerge, %i.h
   br i1 %brmerge256, label %._crit_edge, label %.preheader177.us.us.us.us.us.us.us.preheader
 

@@ -201,10 +201,10 @@ expand_right_edge.exit.loopexit.unr-lcssa:        ; preds = %.lr.ph.us.i
 expand_right_edge.exit:                           ; preds = %expand_right_edge.exit.loopexit.unr-lcssa, %.lr.ph.us.i.epil, %bb.a
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !47
-  %4 = icmp slt i32 %i.ar, 1
-  %.not = icmp eq i32 %i.c, 0
-  %or.cond = or i1 %4, %.not
-  br i1 %or.cond, label %._crit_edge30, label %.lr.ph.us
+  %4 = icmp sgt i32 %i.ar, 0
+  %5 = icmp ne i32 %i.c, 0
+  %or.cond = and i1 %4, %5
+  br i1 %or.cond, label %.lr.ph.us, label %._crit_edge30
 
 .lr.ph.us:                                        ; preds = %expand_right_edge.exit, %._crit_edge.us
   %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge.us ], [ 0, %expand_right_edge.exit ] ; 3 uses
@@ -607,10 +607,10 @@ expand_right_edge.exit.loopexit.unr-lcssa:        ; preds = %.lr.ph.us.i
 expand_right_edge.exit:                           ; preds = %expand_right_edge.exit.loopexit.unr-lcssa, %.lr.ph.us.i.epil, %bb.a
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !47
-  %4 = icmp slt i32 %i.ar, 1
-  %.not = icmp eq i32 %i.c, 0
-  %or.cond = or i1 %4, %.not
-  br i1 %or.cond, label %._crit_edge40, label %.lr.ph.us
+  %4 = icmp sgt i32 %i.ar, 0
+  %5 = icmp ne i32 %i.c, 0
+  %or.cond = and i1 %4, %5
+  br i1 %or.cond, label %.lr.ph.us, label %._crit_edge40
 
 .lr.ph.us:                                        ; preds = %expand_right_edge.exit, %._crit_edge.us
   %indvars.iv42 = phi i64 [ %indvars.iv.next43, %._crit_edge.us ], [ 0, %expand_right_edge.exit ] ; 2 uses
@@ -946,8 +946,8 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
   %i.dq = zext i32 %i.c to i64
   br label %.preheader.lr.ph.us
 
-.preheader.lr.ph.us:                              ; preds = %.preheader.lr.ph.us, %.lr.ph.split.us.split
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.preheader.lr.ph.us ], [ 0, %.lr.ph.split.us.split ] ; 2 uses
+.preheader.lr.ph.us:                              ; preds = %.lr.ph.split.us.split, %.preheader.lr.ph.us
+  %indvars.iv = phi i64 [ 0, %.lr.ph.split.us.split ], [ %indvars.iv.next, %.preheader.lr.ph.us ] ; 2 uses
   %i.dr = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv
   %i.ds = load ptr, ptr %i.dr, align 8, !tbaa !58
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.ds, i8 %i.dp, i64 %i.dq, i1 false), !tbaa !60

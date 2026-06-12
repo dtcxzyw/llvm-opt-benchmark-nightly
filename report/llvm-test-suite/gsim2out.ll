@@ -200,7 +200,7 @@ bb.d:                                             ; preds = %bb.c
   store i8 1, ptr %.12532.us, align 1, !tbaa !16
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %bb.c
+bb.e:                                             ; preds = %bb.c, %bb.d
   %i.t = lshr i32 %.123.us, 1                     ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %.12532.us, i64 1
   %i.v = icmp eq i32 %i.t, 0

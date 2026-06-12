@@ -201,10 +201,20 @@ bb.p:                                             ; preds = %.preheader206.us, %
   %i.cd = getelementptr inbounds nuw [8 x i8], ptr %i.bw, i64 %indvars.iv277
   %.0230.us = load ptr, ptr %i.cd, align 8, !tbaa !31 ; 2 uses
   %.not180231.us = icmp eq ptr %.0230.us, null
-  br i1 %.not180231.us, label %._crit_edge.us238, label %.lr.ph.us
+  br i1 %.not180231.us, label %._crit_edge.us238, label %.lr.ph
 
-bb.q:                                             ; preds = %.lr.ph.us, %.critedge.us
-  %.0232.us = phi ptr [ %.0230.us, %.lr.ph.us ], [ %.0.us, %.critedge.us ] ; 6 uses
+.lr.ph:                                           ; preds = %bb.p
+  %11 = load ptr, ptr %i.bx, align 8, !tbaa !16   ; 3 uses
+  %12 = ptrtoint ptr %11 to i64
+  %13 = xor i64 %12, -1                           ; 2 uses
+  %14 = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %indvars.iv277
+  %15 = load ptr, ptr %14, align 8, !tbaa !16     ; 3 uses
+  %16 = ptrtoint ptr %15 to i64
+  %17 = xor i64 %16, -1                           ; 2 uses
+  br label %bb.q
+
+bb.q:                                             ; preds = %.lr.ph, %.critedge.us
+  %.0232.us = phi ptr [ %.0230.us, %.lr.ph ], [ %.0.us, %.critedge.us ] ; 6 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %.0232.us, i64 24
   %.pre.pre = load i32, ptr %i.ce, align 8, !tbaa !33 ; 3 uses
   br label %bb.r
@@ -257,7 +267,7 @@ bb.v:                                             ; preds = %bb.u, %.preheader20
   %i.cv = trunc i64 %i.cu to i32
   br label %bb.w
 
-bb.w:                                             ; preds = %bb.v, %bb.t
+bb.w:                                             ; preds = %bb.t, %bb.v
   %.0153.us = phi i32 [ %i.cv, %bb.v ], [ %i.cl, %bb.t ]
   %i.cw = getelementptr inbounds nuw i8, ptr %.0232.us, i64 32
   %.pre288.pre = load i32, ptr %i.cw, align 8, !tbaa !38 ; 3 uses
@@ -311,7 +321,7 @@ bb.ab:                                            ; preds = %bb.aa, %.preheader.
   %i.dn = trunc i64 %i.dm to i32
   br label %bb.ac
 
-bb.ac:                                            ; preds = %bb.ab, %bb.z
+bb.ac:                                            ; preds = %bb.z, %bb.ab
   %.0152.us = phi i32 [ %i.dn, %bb.ab ], [ %i.dd, %bb.z ]
   %sext.us = shl i64 %i.ck, 32
   %i.do = ashr exact i64 %sext.us, 32
@@ -379,7 +389,7 @@ bb.al:                                            ; preds = %bb.ak
   %i.em = getelementptr inbounds nuw i8, ptr %.0139.us, i64 1
   br label %bb.am
 
-bb.am:                                            ; preds = %bb.ak, %bb.al, %bb.aj, %bb.ai, %bb.ag
+bb.am:                                            ; preds = %bb.ak, %bb.ai, %bb.aj, %bb.al, %bb.ag
   %.1157.us = phi i32 [ %i.ee, %bb.ag ], [ %i.eh, %bb.aj ], [ %.0156.us, %bb.ai ], [ %i.el, %bb.al ], [ %.0156.us, %bb.ak ] ; 2 uses
   %.1155.us = phi i32 [ %i.ed, %bb.ag ], [ %.0154.us, %bb.aj ], [ %.0154.us, %bb.ai ], [ %i.ej, %bb.al ], [ %i.ej, %bb.ak ] ; 2 uses
   %.1141.us = phi ptr [ %i.ef, %bb.ag ], [ %.0140.us, %bb.aj ], [ %.0140.us, %bb.ai ], [ %i.ek, %bb.al ], [ %i.ek, %bb.ak ]
@@ -389,7 +399,7 @@ bb.am:                                            ; preds = %bb.ak, %bb.al, %bb.
   %or.cond203.us = select i1 %i.en, i1 true, i1 %i.eo
   br i1 %or.cond203.us, label %.critedge.us, label %bb.ad, !llvm.loop !43
 
-.critedge.us:                                     ; preds = %bb.am, %bb.ae, %bb.ad
+.critedge.us:                                     ; preds = %bb.ad, %bb.am, %bb.ae
   %i.ep = getelementptr inbounds nuw i8, ptr %.0232.us, i64 8
   %.0.us = load ptr, ptr %i.ep, align 8, !tbaa !31 ; 2 uses
   %.not180.us = icmp eq ptr %.0.us, null
@@ -399,16 +409,6 @@ bb.am:                                            ; preds = %bb.ak, %bb.al, %bb.
   %indvars.iv.next278 = add nuw nsw i64 %indvars.iv277, 1 ; 2 uses
   %exitcond281.not = icmp eq i64 %indvars.iv.next278, %wide.trip.count280
   br i1 %exitcond281.not, label %._crit_edge235.us, label %bb.p, !llvm.loop !45
-
-.lr.ph.us:                                        ; preds = %bb.p
-  %11 = load ptr, ptr %i.bx, align 8, !tbaa !16   ; 3 uses
-  %12 = ptrtoint ptr %11 to i64
-  %13 = xor i64 %12, -1                           ; 2 uses
-  %14 = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %indvars.iv277
-  %15 = load ptr, ptr %14, align 8, !tbaa !16     ; 3 uses
-  %16 = ptrtoint ptr %15 to i64
-  %17 = xor i64 %16, -1                           ; 2 uses
-  br label %bb.q
 
 ._crit_edge235.us:                                ; preds = %._crit_edge.us238
   %indvars.iv.next283 = add nuw nsw i64 %indvars.iv282, 1 ; 2 uses

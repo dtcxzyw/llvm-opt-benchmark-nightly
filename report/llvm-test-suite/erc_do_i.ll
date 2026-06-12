@@ -201,27 +201,27 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   %i.kw = add i32 %i.kl, 1                        ; 2 uses
   %i.kx = add nsw i32 %.2.us81.i, %i.kw           ; 2 uses
   %i.ky = icmp sgt i32 %i.kx, 0
-  br i1 %i.ky, label %bb.ap, label %bb.ao
+  br i1 %i.ky, label %bb.ao, label %bb.ap
 
 bb.ao:                                            ; preds = %bb.an
-  %6 = load ptr, ptr @img, align 8
-  %.in.us84.i = getelementptr inbounds nuw i8, ptr %6, i64 %.in.v.i
-  %7 = load i32, ptr %.in.us84.i, align 4, !tbaa !4
-  %i.kz = trunc i32 %7 to i16
+  %6 = load i16, ptr %i.kb, align 2, !tbaa !30
+  %7 = zext i16 %6 to i32
+  %8 = mul nuw nsw i32 %i.kw, %7
+  %9 = add nsw i32 %8, %.260.us80.i
+  %10 = sdiv i32 %9, %i.kx
+  %i.kz = trunc i32 %10 to i16
+  %11 = and i16 %i.kz, 255
   br label %bb.aq
 
 bb.ap:                                            ; preds = %bb.an
-  %8 = load i16, ptr %i.kb, align 2, !tbaa !30
-  %9 = zext i16 %8 to i32
-  %10 = mul nuw nsw i32 %i.kw, %9
-  %11 = add nsw i32 %10, %.260.us80.i
-  %12 = sdiv i32 %11, %i.kx
-  %i.la = trunc i32 %12 to i16
-  %13 = and i16 %i.la, 255
+  %12 = load ptr, ptr @img, align 8
+  %.in.i = getelementptr inbounds nuw i8, ptr %12, i64 %.in.v.i
+  %13 = load i32, ptr %.in.i, align 4, !tbaa !4
+  %i.la = trunc i32 %13 to i16
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap, %bb.ao
-  %.sink183.i = phi i16 [ %13, %bb.ap ], [ %i.kz, %bb.ao ]
+  %.sink183.i = phi i16 [ %11, %bb.ao ], [ %i.la, %bb.ap ]
   %gep169.i = getelementptr [2 x i8], ptr %invariant.gep168.sink.i, i64 %indvars.iv.i
   store i16 %.sink183.i, ptr %gep169.i, align 2, !tbaa !30
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses

@@ -201,8 +201,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br label %.preheader146.us
 
-.preheader146.us:                                 ; preds = %._crit_edge.us, %.preheader146.lr.ph
-  %indvars.iv185 = phi i64 [ %indvars.iv.next186, %._crit_edge.us ], [ 0, %.preheader146.lr.ph ] ; 3 uses
+.preheader146.us:                                 ; preds = %.preheader146.lr.ph, %._crit_edge.us
+  %indvars.iv185 = phi i64 [ 0, %.preheader146.lr.ph ], [ %indvars.iv.next186, %._crit_edge.us ] ; 3 uses
   %i.h = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv185
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !52   ; 7 uses
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv185
@@ -605,8 +605,8 @@ bb.i:                                             ; preds = %bb.h, %bb.a
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br label %.preheader162.us
 
-.preheader162.us:                                 ; preds = %._crit_edge.us, %.preheader162.lr.ph
-  %indvars.iv230 = phi i64 [ %indvars.iv.next231, %._crit_edge.us ], [ 0, %.preheader162.lr.ph ] ; 3 uses
+.preheader162.us:                                 ; preds = %.preheader162.lr.ph, %._crit_edge.us
+  %indvars.iv230 = phi i64 [ 0, %.preheader162.lr.ph ], [ %indvars.iv.next231, %._crit_edge.us ] ; 3 uses
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv230
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !52   ; 7 uses
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %indvars.iv230
@@ -1009,8 +1009,8 @@ bb.m:                                             ; preds = %bb.l, %bb.a
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br label %.preheader154.us
 
-.preheader154.us:                                 ; preds = %._crit_edge.us, %.preheader154.lr.ph
-  %indvars.iv178 = phi i64 [ %indvars.iv.next179, %._crit_edge.us ], [ 0, %.preheader154.lr.ph ] ; 3 uses
+.preheader154.us:                                 ; preds = %.preheader154.lr.ph, %._crit_edge.us
+  %indvars.iv178 = phi i64 [ 0, %.preheader154.lr.ph ], [ %indvars.iv.next179, %._crit_edge.us ] ; 3 uses
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv178
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !52   ; 7 uses
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %indvars.iv178

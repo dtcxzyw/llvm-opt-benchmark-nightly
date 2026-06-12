@@ -201,7 +201,6 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not1640, label %.loopexit, label %.split
 
 .split:                                           ; preds = %bb.b
-  %.sroa.speculated32 = tail call i32 @llvm.smin.i32(i32 %2, i32 %1)
   %i.v = getelementptr inbounds nuw i8, ptr %i.d, i64 104
   %i.w = getelementptr inbounds nuw i8, ptr %i.d, i64 88
   %i.x = getelementptr inbounds nuw i8, ptr %i.d, i64 72
@@ -218,6 +217,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ai = getelementptr inbounds nuw i8, ptr %i.d, i64 76
   %i.aj = getelementptr inbounds nuw i8, ptr %i.d, i64 60
   %i.ak = getelementptr inbounds nuw i8, ptr %i.d, i64 44
+  %.sroa.speculated32 = tail call i32 @llvm.smin.i32(i32 %2, i32 %1)
   %i.al = load float, ptr %i.ak, align 4, !tbaa !8, !noalias !58
   %i.am = load float, ptr %i.aj, align 4, !tbaa !8, !noalias !58
   %i.an = load float, ptr %i.ai, align 4, !tbaa !8, !noalias !58

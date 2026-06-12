@@ -201,11 +201,16 @@ bb.a:
   %wide.trip.count.i = zext i32 %i.c to i64
   br label %.preheader.us.i
 
-.preheader.us.i:                                  ; preds = %._crit_edge.us.i, %.preheader.us.preheader.i
-  %indvars.iv20.i = phi i64 [ 0, %.preheader.us.preheader.i ], [ %indvars.iv.next21.i, %._crit_edge.us.i ] ; 3 uses
+.preheader.us.i:                                  ; preds = %._crit_edge.i, %.preheader.us.preheader.i
+  %indvars.iv20.i = phi i64 [ 0, %.preheader.us.preheader.i ], [ %indvars.iv.next19.i, %._crit_edge.i ] ; 3 uses
   %i.d = getelementptr inbounds nuw [8000 x i8], ptr @cells, i64 %indvars.iv20.i
   %i.e = trunc nuw i64 %indvars.iv20.i to i32
   br label %bb.b
+
+._crit_edge.i:                                    ; preds = %bb.c
+  %indvars.iv.next19.i = add nuw nsw i64 %indvars.iv20.i, 1 ; 2 uses
+  %exitcond22.not.i = icmp eq i64 %indvars.iv.next19.i, %wide.trip.count23.i
+  br i1 %exitcond22.not.i, label %_ZN5Ocean13addEmptyCellsEv.exit, label %.preheader.us.i, !llvm.loop !46
 
 bb.b:                                             ; preds = %bb.c, %.preheader.us.i
   %indvars.iv.i = phi i64 [ 0, %.preheader.us.i ], [ %indvars.iv.next.i, %bb.c ] ; 3 uses
@@ -227,12 +232,7 @@ bb.c:                                             ; preds = %bb.b
   store ptr %i.f, ptr %i.l, align 8, !tbaa !11
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %._crit_edge.us.i, label %bb.b, !llvm.loop !46
-
-._crit_edge.us.i:                                 ; preds = %bb.c
-  %indvars.iv.next21.i = add nuw nsw i64 %indvars.iv20.i, 1 ; 2 uses
-  %exitcond24.not.i = icmp eq i64 %indvars.iv.next21.i, %wide.trip.count23.i
-  br i1 %exitcond24.not.i, label %_ZN5Ocean13addEmptyCellsEv.exit, label %.preheader.us.i, !llvm.loop !48
+  br i1 %exitcond.not.i, label %._crit_edge.i, label %bb.b, !llvm.loop !48
 
 .split.us.i:                                      ; preds = %bb.b
   %i.m = landingpad { ptr, i32 }
@@ -240,7 +240,7 @@ bb.c:                                             ; preds = %bb.b
   tail call void @_ZdlPvm(ptr noundef nonnull %i.f, i64 noundef 24) #13
   resume { ptr, i32 } %i.m
 
-_ZN5Ocean13addEmptyCellsEv.exit:                  ; preds = %._crit_edge.us.i, %bb.a, %.preheader.lr.ph.i
+_ZN5Ocean13addEmptyCellsEv.exit:                  ; preds = %._crit_edge.i, %bb.a, %.preheader.lr.ph.i
   tail call void @_ZN5Ocean12addObstaclesEv(ptr noundef nonnull align 8 dereferenceable(32) %0)
   tail call void @_ZN5Ocean12addPredatorsEv(ptr noundef nonnull align 8 dereferenceable(32) %0)
   tail call void @_ZN5Ocean7addPreyEv(ptr noundef nonnull align 8 dereferenceable(32) %0)
@@ -253,24 +253,32 @@ define dso_local void @_ZN5Ocean13addEmptyCellsEv(ptr nofree noundef nonnull rea
 bb.a:
   %i.a = load i32, ptr %0, align 8, !tbaa !19     ; 2 uses
   %.not = icmp eq i32 %i.a, 0
-  br i1 %.not, label %._crit_edge14, label %.preheader.lr.ph
+  br i1 %.not, label %._crit_edge14.split, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.c = load i32, ptr %i.b, align 4, !tbaa !23   ; 2 uses
   %.not16 = icmp eq i32 %i.c, 0
-  br i1 %.not16, label %._crit_edge14, label %.preheader.us.preheader
+  br i1 %.not16, label %._crit_edge14.split, label %.preheader.us.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
   %wide.trip.count23 = zext i32 %i.a to i64
   %wide.trip.count = zext i32 %i.c to i64
   br label %.preheader.us
 
-.preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge.us
-  %indvars.iv20 = phi i64 [ 0, %.preheader.us.preheader ], [ %indvars.iv.next21, %._crit_edge.us ] ; 3 uses
+.preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge
+  %indvars.iv20 = phi i64 [ 0, %.preheader.us.preheader ], [ %indvars.iv.next19, %._crit_edge ] ; 3 uses
   %i.d = getelementptr inbounds nuw [8000 x i8], ptr @cells, i64 %indvars.iv20
   %i.e = trunc nuw i64 %indvars.iv20 to i32
   br label %bb.b
+
+._crit_edge14.split:                              ; preds = %._crit_edge, %.preheader.lr.ph, %bb.a
+  ret void
+
+._crit_edge:                                      ; preds = %bb.c
+  %indvars.iv.next19 = add nuw nsw i64 %indvars.iv20, 1 ; 2 uses
+  %exitcond22.not = icmp eq i64 %indvars.iv.next19, %wide.trip.count23
+  br i1 %exitcond22.not, label %._crit_edge14.split, label %.preheader.us, !llvm.loop !46
 
 bb.b:                                             ; preds = %.preheader.us, %bb.c
   %indvars.iv = phi i64 [ 0, %.preheader.us ], [ %indvars.iv.next, %bb.c ] ; 3 uses
@@ -292,21 +300,13 @@ bb.c:                                             ; preds = %bb.b
   store ptr %i.f, ptr %i.l, align 8, !tbaa !11
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge.us, label %bb.b, !llvm.loop !46
-
-._crit_edge.us:                                   ; preds = %bb.c
-  %indvars.iv.next21 = add nuw nsw i64 %indvars.iv20, 1 ; 2 uses
-  %exitcond24.not = icmp eq i64 %indvars.iv.next21, %wide.trip.count23
-  br i1 %exitcond24.not, label %._crit_edge14, label %.preheader.us, !llvm.loop !48
+  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !48
 
 .split.us:                                        ; preds = %bb.b
   %i.m = landingpad { ptr, i32 }
           cleanup
   tail call void @_ZdlPvm(ptr noundef nonnull %i.f, i64 noundef 24) #13
   resume { ptr, i32 } %i.m
-
-._crit_edge14:                                    ; preds = %._crit_edge.us, %.preheader.lr.ph, %bb.a
-  ret void
 }
 
 ; Function Attrs: mustprogress uwtable

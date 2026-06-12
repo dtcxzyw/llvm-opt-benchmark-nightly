@@ -201,9 +201,9 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %.epil.preheader
-  %indvars.iv.epil = phi i64 [ %indvars.iv.next.epil, %bb.b ], [ %indvars.iv.epil.init, %.epil.preheader ] ; 3 uses
-  %.026.us.us.epil = phi i32 [ %i.au, %bb.b ], [ %.026.us.us.epil.init, %.epil.preheader ]
-  %epil.iter = phi i64 [ %epil.iter.next, %bb.b ], [ 0, %.epil.preheader ]
+  %indvars.iv.epil = phi i64 [ %indvars.iv.epil.init, %.epil.preheader ], [ %indvars.iv.next.epil, %bb.b ] ; 3 uses
+  %.026.us.us.epil = phi i32 [ %.026.us.us.epil.init, %.epil.preheader ], [ %i.au, %bb.b ]
+  %epil.iter = phi i64 [ 0, %.epil.preheader ], [ %epil.iter.next, %bb.b ]
   %i.an = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv.epil
   %i.ao = load i32, ptr %i.an, align 4, !tbaa !4
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv.epil
