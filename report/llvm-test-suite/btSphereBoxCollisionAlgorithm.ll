@@ -1,0 +1,471 @@
+inline.NumInlined: 146
+inline.NumDeleted: 47
+begin_hunk_0_@_ZN29btSphereBoxCollisionAlgorithm20getSpherePenetrationEP17btCollisionObjectR9btVector3S3_RKS2_fS5_S5_:bb.a
+  %i.bh = fcmp ule float %i.bg, 0.000000e+00
+  br i1 %i.bh, label %bb.e, label %.critedge
+
+bb.e:                                             ; preds = %bb.d
+  %i.bi = fcmp ogt float %i.bg, %.1
+  br i1 %i.bi, label %bb.f, label %bb.g
+
+bb.f:                                             ; preds = %bb.e
+  br label %bb.g
+
+bb.g:                                             ; preds = %bb.f, %bb.e
+  %.1.1 = phi float [ %i.bg, %bb.f ], [ %.1, %bb.e ] ; 2 uses
+  %.sroa.0124.1.1 = phi <2 x float> [ <float 0.000000e+00, float -1.000000e+00>, %bb.f ], [ %.sroa.0124.1, %bb.e ]
+  %.sroa.7.1.1 = phi float [ %.sroa.6174.0.copyload, %bb.f ], [ %.sroa.7.1, %bb.e ]
+  %i.bj = phi <2 x float> [ %i.aa, %bb.f ], [ %i.bb, %bb.e ]
+  %i.bk = tail call float @llvm.fmuladd.f32(float %i.av, float 0.000000e+00, float %i.au)
+  %i.bl = fsub float %i.bk, %i.ar
+  %i.bm = fsub float %i.bl, %5                    ; 3 uses
+  %i.bn = fcmp ule float %i.bm, 0.000000e+00
+  br i1 %i.bn, label %bb.h, label %.critedge
+
+bb.h:                                             ; preds = %bb.g
+  %i.bo = fcmp ogt float %i.bm, %.1.1
+  br i1 %i.bo, label %bb.i, label %bb.j
+
+bb.i:                                             ; preds = %bb.h
+  br label %bb.j
+
+bb.j:                                             ; preds = %bb.i, %bb.h
+  %.1.2 = phi float [ %i.bm, %bb.i ], [ %.1.1, %bb.h ] ; 2 uses
+  %.sroa.0124.1.2 = phi <2 x float> [ zeroinitializer, %bb.i ], [ %.sroa.0124.1.1, %bb.h ]
+  %.sroa.12.1.2 = phi <2 x float> [ <float -1.000000e+00, float 0.000000e+00>, %bb.i ], [ zeroinitializer, %bb.h ]
+  %.sroa.7.1.2 = phi float [ %.sroa.6174.0.copyload, %bb.i ], [ %.sroa.7.1.1, %bb.h ]
+  %i.bp = phi <2 x float> [ %i.aa, %bb.i ], [ %i.bj, %bb.h ]
+  %i.bq = fsub <2 x float> %i.an, %i.ab           ; 3 uses
+  %i.br = fsub float %i.aq, %.sroa.13.16.copyload ; 4 uses
+  %i.bs = extractelement <2 x float> %i.bq, i64 1 ; 2 uses
+  %i.bt = fmul float %i.bs, 0.000000e+00          ; 2 uses
+  %i.bu = extractelement <2 x float> %i.bq, i64 0 ; 3 uses
+  %i.bv = fadd float %i.bu, %i.bt
+  %i.bw = tail call noundef float @llvm.fmuladd.f32(float %i.br, float 0.000000e+00, float %i.bv)
+  %i.bx = fsub float %i.bw, %5                    ; 3 uses
+  %i.by = fcmp ule float %i.bx, 0.000000e+00
+  br i1 %i.by, label %bb.k, label %.critedge
+
+bb.k:                                             ; preds = %bb.j
+  %i.bz = fcmp ogt float %i.bx, %.1.2
+  br i1 %i.bz, label %bb.l, label %bb.m
+
+bb.l:                                             ; preds = %bb.k
+  br label %bb.m
+
+bb.m:                                             ; preds = %bb.l, %bb.k
+  %.1.3 = phi float [ %i.bx, %bb.l ], [ %.1.2, %bb.k ] ; 2 uses
+  %.sroa.0124.1.3 = phi <2 x float> [ <float 1.000000e+00, float 0.000000e+00>, %bb.l ], [ %.sroa.0124.1.2, %bb.k ]
+  %.sroa.12.1.3 = phi <2 x float> [ zeroinitializer, %bb.l ], [ %.sroa.12.1.2, %bb.k ]
+  %.sroa.7.1.3 = phi float [ %.sroa.13.16.copyload, %bb.l ], [ %.sroa.7.1.2, %bb.k ]
+  %i.ca = phi <2 x float> [ %i.ab, %bb.l ], [ %i.bp, %bb.k ]
+  %i.cb = tail call float @llvm.fmuladd.f32(float %i.bu, float 0.000000e+00, float %i.bs)
+  %i.cc = tail call noundef float @llvm.fmuladd.f32(float %i.br, float 0.000000e+00, float %i.cb)
+  %i.cd = fsub float %i.cc, %5                    ; 3 uses
+  %i.ce = fcmp ule float %i.cd, 0.000000e+00
+  br i1 %i.ce, label %bb.n, label %.critedge
+
+bb.n:                                             ; preds = %bb.m
+  %i.cf = fcmp ogt float %i.cd, %.1.3
+  br i1 %i.cf, label %bb.o, label %bb.p
+
+bb.o:                                             ; preds = %bb.n
+  br label %bb.p
+
+bb.p:                                             ; preds = %bb.o, %bb.n
+  %.1.4 = phi float [ %i.cd, %bb.o ], [ %.1.3, %bb.n ] ; 2 uses
+  %.sroa.0124.1.4 = phi <2 x float> [ <float 0.000000e+00, float 1.000000e+00>, %bb.o ], [ %.sroa.0124.1.3, %bb.n ]
+  %.sroa.12.1.4 = phi <2 x float> [ zeroinitializer, %bb.o ], [ %.sroa.12.1.3, %bb.n ]
+  %.sroa.7.1.4 = phi float [ %.sroa.13.16.copyload, %bb.o ], [ %.sroa.7.1.3, %bb.n ]
+  %i.cg = phi <2 x float> [ %i.ab, %bb.o ], [ %i.ca, %bb.n ]
+  %i.ch = tail call float @llvm.fmuladd.f32(float %i.bu, float 0.000000e+00, float %i.bt)
+  %i.ci = fadd float %i.br, %i.ch
+  %i.cj = fsub float %i.ci, %5                    ; 3 uses
+  %i.ck = fcmp ule float %i.cj, 0.000000e+00
+  br i1 %i.ck, label %bb.q, label %.critedge
+
+bb.q:                                             ; preds = %bb.p
+  %i.cl = fcmp ogt float %i.cj, %.1.4
+  br i1 %i.cl, label %.critedge46, label %..critedge46_crit_edge
+
+..critedge46_crit_edge:                           ; preds = %bb.q
+  %i.cm = fsub <2 x float> %i.an, %i.cg
+  %.pre230 = fsub float %i.aq, %.sroa.7.1.4
+  br label %.critedge46
+
+.critedge46:                                      ; preds = %bb.q, %..critedge46_crit_edge
+  %.pre-phi231 = phi float [ %.pre230, %..critedge46_crit_edge ], [ %i.br, %bb.q ]
+  %.1.5 = phi float [ %.1.4, %..critedge46_crit_edge ], [ %i.cj, %bb.q ] ; 3 uses
+  %.sroa.0124.1.5 = phi <2 x float> [ %.sroa.0124.1.4, %..critedge46_crit_edge ], [ zeroinitializer, %bb.q ] ; 4 uses
+  %.sroa.12.1.5 = phi <2 x float> [ %.sroa.12.1.4, %..critedge46_crit_edge ], [ <float 1.000000e+00, float 0.000000e+00>, %bb.q ]
+  %i.cn = phi <2 x float> [ %i.cm, %..critedge46_crit_edge ], [ %i.bq, %bb.q ] ; 2 uses
+  %.sroa.0124.0.vec.extract = extractelement <2 x float> %.sroa.0124.1.5, i64 0
+  %foldExtExtBinop = fmul <2 x float> %.sroa.0124.1.5, %i.cn
+  %i.co = extractelement <2 x float> %foldExtExtBinop, i64 1
+  %i.cp = extractelement <2 x float> %i.cn, i64 0
+  %i.cq = tail call float @llvm.fmuladd.f32(float %.sroa.0124.0.vec.extract, float %i.cp, float %i.co)
+  %.sroa.12.8.vec.extract = extractelement <2 x float> %.sroa.12.1.5, i64 0 ; 3 uses
+  %i.cr = tail call noundef float @llvm.fmuladd.f32(float %.sroa.12.8.vec.extract, float %.pre-phi231, float %i.cq) ; 2 uses
+  %i.cs = fmul float %.sroa.12.8.vec.extract, %i.cr
+  %i.ct = insertelement <2 x float> poison, float %i.cr, i64 0
+  %i.cu = shufflevector <2 x float> %i.ct, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.cv = fmul <2 x float> %.sroa.0124.1.5, %i.cu
+  %i.cw = fsub <2 x float> %i.an, %i.cv           ; 2 uses
+  %i.cx = fsub float %i.aq, %i.cs                 ; 2 uses
+  %.sroa.3.12.vec.insert.i59 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.cx, i64 0
+  store <2 x float> %i.cw, ptr %2, align 4
+  %.sroa.47.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
+  store <2 x float> %.sroa.3.12.vec.insert.i59, ptr %.sroa.47.0..sroa_idx, align 4, !tbaa !33
+  %i.cy = fmul float %.1.5, %.sroa.12.8.vec.extract
+  %i.cz = getelementptr inbounds nuw i8, ptr %2, i64 4
+  %i.da = insertelement <2 x float> poison, float %.1.5, i64 0
+  %i.db = shufflevector <2 x float> %i.da, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.dc = fmul <2 x float> %i.db, %.sroa.0124.1.5
+  %i.dd = fadd <2 x float> %i.dc, %i.cw
+  %i.de = fadd float %i.cy, %i.cx
+  %.sroa.3.12.vec.insert.i69 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.de, i64 0
+  store <2 x float> %i.dd, ptr %3, align 4
+  %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
+  store <2 x float> %.sroa.3.12.vec.insert.i69, ptr %.sroa.45.0..sroa_idx, align 4, !tbaa !33
+  %i.df = load float, ptr %i.a, align 4, !tbaa !34
+  %i.dg = load float, ptr %2, align 4, !tbaa !34  ; 3 uses
+  %i.dh = load float, ptr %i.r, align 4, !tbaa !34
+  %i.di = load float, ptr %i.cz, align 4, !tbaa !34 ; 3 uses
+  %i.dj = fmul float %i.dh, %i.di
+  %i.dk = tail call float @llvm.fmuladd.f32(float %i.df, float %i.dg, float %i.dj)
+  %i.dl = load float, ptr %i.u, align 4, !tbaa !34
+  %i.dm = load float, ptr %.sroa.47.0..sroa_idx, align 4, !tbaa !34 ; 3 uses
+  %i.dn = tail call noundef float @llvm.fmuladd.f32(float %i.dl, float %i.dm, float %i.dk)
+  %i.do = load float, ptr %i.b, align 4, !tbaa !34
+  %i.dp = fadd float %i.dn, %i.do
+  %i.dq = load float, ptr %i.p, align 4, !tbaa !34
+  %i.dr = load float, ptr %i.s, align 4, !tbaa !34
+  %i.ds = fmul float %i.di, %i.dr
+  %i.dt = tail call float @llvm.fmuladd.f32(float %i.dq, float %i.dg, float %i.ds)
+  %i.du = load float, ptr %i.v, align 4, !tbaa !34
+  %i.dv = tail call noundef float @llvm.fmuladd.f32(float %i.du, float %i.dm, float %i.dt)
+  %i.dw = load float, ptr %i.h, align 4, !tbaa !34
+  %i.dx = fadd float %i.dw, %i.dv
+  %i.dy = load float, ptr %i.q, align 4, !tbaa !34
+  %i.dz = load float, ptr %i.t, align 4, !tbaa !34
+  %i.ea = fmul float %i.di, %i.dz
+  %i.eb = tail call float @llvm.fmuladd.f32(float %i.dy, float %i.dg, float %i.ea)
+  %i.ec = load float, ptr %i.w, align 4, !tbaa !34
+  %i.ed = tail call noundef float @llvm.fmuladd.f32(float %i.ec, float %i.dm, float %i.eb)
+  %i.ee = load float, ptr %i.m, align 4, !tbaa !34
+  %i.ef = fadd float %i.ee, %i.ed
+  %.sroa.0.0.vec.insert.i72 = insertelement <2 x float> poison, float %i.dp, i64 0
+  %.sroa.0.4.vec.insert.i73 = insertelement <2 x float> %.sroa.0.0.vec.insert.i72, float %i.dx, i64 1
+  %.sroa.3.12.vec.insert.i74 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.ef, i64 0
+  store <2 x float> %.sroa.0.4.vec.insert.i73, ptr %2, align 4
+  store <2 x float> %.sroa.3.12.vec.insert.i74, ptr %.sroa.47.0..sroa_idx, align 4, !tbaa !33
+  %i.eg = load float, ptr %i.a, align 4, !tbaa !34
+  %i.eh = load float, ptr %3, align 4, !tbaa !34  ; 3 uses
+  %i.ei = load float, ptr %i.r, align 4, !tbaa !34
+  %i.ej = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %i.ek = load float, ptr %i.ej, align 4, !tbaa !34 ; 3 uses
+  %i.el = fmul float %i.ei, %i.ek
+  %i.em = tail call float @llvm.fmuladd.f32(float %i.eg, float %i.eh, float %i.el)
+  %i.en = load float, ptr %i.u, align 4, !tbaa !34
+  %i.eo = load float, ptr %.sroa.45.0..sroa_idx, align 4, !tbaa !34 ; 3 uses
+  %i.ep = tail call noundef float @llvm.fmuladd.f32(float %i.en, float %i.eo, float %i.em)
+  %i.eq = load float, ptr %i.b, align 4, !tbaa !34
+  %i.er = fadd float %i.ep, %i.eq
+  %i.es = load float, ptr %i.p, align 4, !tbaa !34
+  %i.et = load float, ptr %i.s, align 4, !tbaa !34
+  %i.eu = fmul float %i.ek, %i.et
+  %i.ev = tail call float @llvm.fmuladd.f32(float %i.es, float %i.eh, float %i.eu)
+  %i.ew = load float, ptr %i.v, align 4, !tbaa !34
+  %i.ex = tail call noundef float @llvm.fmuladd.f32(float %i.ew, float %i.eo, float %i.ev)
+  %i.ey = load float, ptr %i.h, align 4, !tbaa !34
+  %i.ez = fadd float %i.ey, %i.ex
+  %i.fa = load float, ptr %i.q, align 4, !tbaa !34
+  %i.fb = load float, ptr %i.t, align 4, !tbaa !34
+  %i.fc = fmul float %i.ek, %i.fb
+  %i.fd = tail call float @llvm.fmuladd.f32(float %i.fa, float %i.eh, float %i.fc)
+  %i.fe = load float, ptr %i.w, align 4, !tbaa !34
+  %i.ff = tail call noundef float @llvm.fmuladd.f32(float %i.fe, float %i.eo, float %i.fd)
+  %i.fg = load float, ptr %i.m, align 4, !tbaa !34
+  %i.fh = fadd float %i.fg, %i.ff
+  %.sroa.0.0.vec.insert.i77 = insertelement <2 x float> poison, float %i.er, i64 0
+  %.sroa.0.4.vec.insert.i78 = insertelement <2 x float> %.sroa.0.0.vec.insert.i77, float %i.ez, i64 1
+  %.sroa.3.12.vec.insert.i79 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.fh, i64 0
+  store <2 x float> %.sroa.0.4.vec.insert.i78, ptr %3, align 4
+  store <2 x float> %.sroa.3.12.vec.insert.i79, ptr %.sroa.45.0..sroa_idx, align 4, !tbaa !33
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.a, %bb.d, %bb.g, %bb.j, %bb.m, %bb.p, %.critedge46
+  %.3 = phi float [ %.1.5, %.critedge46 ], [ 1.000000e+00, %bb.p ], [ 1.000000e+00, %bb.m ], [ 1.000000e+00, %bb.j ], [ 1.000000e+00, %bb.g ], [ 1.000000e+00, %bb.d ], [ 1.000000e+00, %bb.a ]
+  ret float %.3
+}
+
+; Function Attrs: uwtable
+define linkonce_odr dso_local void @_ZN29btSphereBoxCollisionAlgorithm22getAllContactManifoldsER20btAlignedObjectArrayIP20btPersistentManifoldE(ptr noundef nonnull align 8 dereferenceable(33) %0, ptr noundef nonnull align 8 dereferenceable(25) %1) unnamed_addr #0 comdat align 2 {
+bb.a:
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %3 = load ptr, ptr %2, align 8, !tbaa !18       ; 3 uses
+  %.not = icmp ne ptr %3, null
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.b = load i8, ptr %i.a, align 8, !range !21
+  %i.c = trunc nuw i8 %i.b to i1
+  %or.cond = select i1 %.not, i1 %i.c, i1 false
+  br i1 %or.cond, label %bb.b, label %bb.g
+
+bb.b:                                             ; preds = %bb.a
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 4 uses
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !50   ; 7 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.g = load i32, ptr %i.f, align 8, !tbaa !55
+  %i.h = icmp eq i32 %i.e, %i.g
+  br i1 %i.h, label %bb.c, label %_ZN20btAlignedObjectArrayIP20btPersistentManifoldE9push_backERKS1_.exit
+
+bb.c:                                             ; preds = %bb.b
+  %.not.i.i = icmp eq i32 %i.e, 0
+  %i.i = shl nsw i32 %i.e, 1
+  %i.j = select i1 %.not.i.i, i32 1, i32 %i.i     ; 4 uses
+  %i.k = icmp slt i32 %i.e, %i.j
+  br i1 %i.k, label %bb.d, label %_ZN20btAlignedObjectArrayIP20btPersistentManifoldE9push_backERKS1_.exit
+
+bb.d:                                             ; preds = %bb.c
+  %.not.i.i.i = icmp eq i32 %i.j, 0
+  br i1 %.not.i.i.i, label %_ZN20btAlignedObjectArrayIP20btPersistentManifoldE8allocateEi.exit.i.i, label %bb.e
+
+bb.e:                                             ; preds = %bb.d
+  %i.l = sext i32 %i.j to i64
+  %i.m = shl nsw i64 %i.l, 3
+  %i.n = tail call noundef ptr @_Z22btAlignedAllocInternalmi(i64 noundef %i.m, i32 noundef 16)
+  %.pre.i = load i32, ptr %i.d, align 4, !tbaa !50
+  br label %_ZN20btAlignedObjectArrayIP20btPersistentManifoldE8allocateEi.exit.i.i
+
+_ZN20btAlignedObjectArrayIP20btPersistentManifoldE8allocateEi.exit.i.i: ; preds = %bb.e, %bb.d
+  %i.o = phi i32 [ %.pre.i, %bb.e ], [ %i.e, %bb.d ] ; 5 uses
+  %.0.i.i.i = phi ptr [ %i.n, %bb.e ], [ null, %bb.d ] ; 8 uses
+  %i.p = icmp sgt i32 %i.o, 0
+  %i.q = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %i.r = load ptr, ptr %i.q, align 8, !tbaa !56   ; 9 uses
+  br i1 %i.p, label %.lr.ph.i.i.i, label %_ZNK20btAlignedObjectArrayIP20btPersistentManifoldE4copyEiiPS1_.exit.i.i
+
+.lr.ph.i.i.i:                                     ; preds = %_ZN20btAlignedObjectArrayIP20btPersistentManifoldE8allocateEi.exit.i.i
+  %i.s = ptrtoaddr ptr %i.r to i64
+  %.0.i.i.i8 = ptrtoaddr ptr %.0.i.i.i to i64
+  %wide.trip.count.i.i.i = zext nneg i32 %i.o to i64 ; 5 uses
+  %min.iters.check = icmp ult i32 %i.o, 6
+  %i.t = sub i64 %.0.i.i.i8, %i.s
+  %diff.check = icmp ult i64 %i.t, 32
+  %or.cond10 = select i1 %min.iters.check, i1 true, i1 %diff.check
+  br i1 %or.cond10, label %scalar.ph.preheader, label %vector.ph
+
+vector.ph:                                        ; preds = %.lr.ph.i.i.i
+  %n.vec = and i64 %wide.trip.count.i.i.i, 2147483644 ; 3 uses
+  br label %vector.body
+
+vector.body:                                      ; preds = %vector.body, %vector.ph
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
+  %i.u = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i.i, i64 %index ; 2 uses
+  %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %index ; 2 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 16
+  %wide.load = load <2 x ptr>, ptr %i.v, align 8, !tbaa !57
+  %wide.load9 = load <2 x ptr>, ptr %i.w, align 8, !tbaa !57
+  %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 16
+  store <2 x ptr> %wide.load, ptr %i.u, align 8, !tbaa !57
+  store <2 x ptr> %wide.load9, ptr %i.x, align 8, !tbaa !57
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %i.y = icmp eq i64 %index.next, %n.vec
+  br i1 %i.y, label %middle.block, label %vector.body, !llvm.loop !58
+
+middle.block:                                     ; preds = %vector.body
+  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count.i.i.i
+  br i1 %cmp.n, label %_ZNK20btAlignedObjectArrayIP20btPersistentManifoldE4copyEiiPS1_.exit.thread.i.i, label %scalar.ph.preheader
+
+scalar.ph.preheader:                              ; preds = %.lr.ph.i.i.i, %middle.block
+  %indvars.iv.i.i.i.ph = phi i64 [ 0, %.lr.ph.i.i.i ], [ %n.vec, %middle.block ] ; 3 uses
+  %xtraiter = and i64 %wide.trip.count.i.i.i, 3   ; 2 uses
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
+
+scalar.ph.prol:                                   ; preds = %scalar.ph.preheader, %scalar.ph.prol
+  %indvars.iv.i.i.i.prol = phi i64 [ %indvars.iv.next.i.i.i.prol, %scalar.ph.prol ], [ %indvars.iv.i.i.i.ph, %scalar.ph.preheader ] ; 3 uses
+  %prol.iter = phi i64 [ %prol.iter.next, %scalar.ph.prol ], [ 0, %scalar.ph.preheader ]
+  %i.z = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i.i, i64 %indvars.iv.i.i.i.prol
+  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %indvars.iv.i.i.i.prol
+  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !57
+  store ptr %i.ab, ptr %i.z, align 8, !tbaa !57
+  %indvars.iv.next.i.i.i.prol = add nuw nsw i64 %indvars.iv.i.i.i.prol, 1 ; 2 uses
+  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
+  br i1 %prol.iter.cmp.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol, !llvm.loop !61
+
+scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %scalar.ph.preheader
+  %indvars.iv.i.i.i.unr = phi i64 [ %indvars.iv.i.i.i.ph, %scalar.ph.preheader ], [ %indvars.iv.next.i.i.i.prol, %scalar.ph.prol ]
+  %i.ac = sub nsw i64 %indvars.iv.i.i.i.ph, %wide.trip.count.i.i.i
+  %i.ad = icmp ugt i64 %i.ac, -4
+  br i1 %i.ad, label %_ZNK20btAlignedObjectArrayIP20btPersistentManifoldE4copyEiiPS1_.exit.thread.i.i, label %scalar.ph
+
+scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
+  %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i.3, %scalar.ph ], [ %indvars.iv.i.i.i.unr, %scalar.ph.prol.loopexit ] ; 6 uses
+  %i.ae = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i.i, i64 %indvars.iv.i.i.i
+  %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %indvars.iv.i.i.i
+  %i.ag = load ptr, ptr %i.af, align 8, !tbaa !57
+  store ptr %i.ag, ptr %i.ae, align 8, !tbaa !57
+  %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i.i, i64 %indvars.iv.next.i.i.i
+  %i.ai = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %indvars.iv.next.i.i.i
+  %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !57
+  store ptr %i.aj, ptr %i.ah, align 8, !tbaa !57
+  %indvars.iv.next.i.i.i.1 = add nuw nsw i64 %indvars.iv.i.i.i, 2 ; 2 uses
+  %i.ak = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i.i, i64 %indvars.iv.next.i.i.i.1
+  %i.al = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %indvars.iv.next.i.i.i.1
+  %i.am = load ptr, ptr %i.al, align 8, !tbaa !57
+  store ptr %i.am, ptr %i.ak, align 8, !tbaa !57
+  %indvars.iv.next.i.i.i.2 = add nuw nsw i64 %indvars.iv.i.i.i, 3 ; 2 uses
+  %i.an = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i.i, i64 %indvars.iv.next.i.i.i.2
+  %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %indvars.iv.next.i.i.i.2
+  %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !57
+  store ptr %i.ap, ptr %i.an, align 8, !tbaa !57
+  %indvars.iv.next.i.i.i.3 = add nuw nsw i64 %indvars.iv.i.i.i, 4 ; 2 uses
+  %exitcond.not.i.i.i.3 = icmp eq i64 %indvars.iv.next.i.i.i.3, %wide.trip.count.i.i.i
+  br i1 %exitcond.not.i.i.i.3, label %_ZNK20btAlignedObjectArrayIP20btPersistentManifoldE4copyEiiPS1_.exit.thread.i.i, label %scalar.ph, !llvm.loop !63
+
+_ZNK20btAlignedObjectArrayIP20btPersistentManifoldE4copyEiiPS1_.exit.i.i: ; preds = %_ZN20btAlignedObjectArrayIP20btPersistentManifoldE8allocateEi.exit.i.i
+  %.not.i5.i.i = icmp ne ptr %i.r, null
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %5 = load i8, ptr %4, align 8, !range !21
+  %6 = trunc nuw i8 %5 to i1
+  %or.cond.i = select i1 %.not.i5.i.i, i1 %6, i1 false
+  br i1 %or.cond.i, label %bb.f, label %_ZN20btAlignedObjectArrayIP20btPersistentManifoldE10deallocateEv.exit.i.i
+
+_ZNK20btAlignedObjectArrayIP20btPersistentManifoldE4copyEiiPS1_.exit.thread.i.i: ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
+  %.old.i = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %.old8.i = load i8, ptr %.old.i, align 8, !tbaa !64, !range !21, !noundef !22
+  %.old9.i = trunc nuw i8 %.old8.i to i1
+  br i1 %.old9.i, label %bb.f, label %_ZN20btAlignedObjectArrayIP20btPersistentManifoldE10deallocateEv.exit.i.i
+
+bb.f:                                             ; preds = %_ZNK20btAlignedObjectArrayIP20btPersistentManifoldE4copyEiiPS1_.exit.thread.i.i, %_ZNK20btAlignedObjectArrayIP20btPersistentManifoldE4copyEiiPS1_.exit.i.i
+  tail call void @_Z21btAlignedFreeInternalPv(ptr noundef nonnull %i.r)
+  %.pre2.pre.pre.i = load i32, ptr %i.d, align 4, !tbaa !50
+  br label %_ZN20btAlignedObjectArrayIP20btPersistentManifoldE10deallocateEv.exit.i.i
+
+_ZN20btAlignedObjectArrayIP20btPersistentManifoldE10deallocateEv.exit.i.i: ; preds = %bb.f, %_ZNK20btAlignedObjectArrayIP20btPersistentManifoldE4copyEiiPS1_.exit.thread.i.i, %_ZNK20btAlignedObjectArrayIP20btPersistentManifoldE4copyEiiPS1_.exit.i.i
+  %.pre2.i = phi i32 [ %i.o, %_ZNK20btAlignedObjectArrayIP20btPersistentManifoldE4copyEiiPS1_.exit.i.i ], [ %.pre2.pre.pre.i, %bb.f ], [ %i.o, %_ZNK20btAlignedObjectArrayIP20btPersistentManifoldE4copyEiiPS1_.exit.thread.i.i ]
+  %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 24
+  store i8 1, ptr %i.aq, align 8, !tbaa !64
+  store ptr %.0.i.i.i, ptr %i.q, align 8, !tbaa !56
+  store i32 %i.j, ptr %i.f, align 8, !tbaa !55
+  %.pre = load ptr, ptr %2, align 8, !tbaa !57
+  br label %_ZN20btAlignedObjectArrayIP20btPersistentManifoldE9push_backERKS1_.exit
+
+_ZN20btAlignedObjectArrayIP20btPersistentManifoldE9push_backERKS1_.exit: ; preds = %bb.b, %bb.c, %_ZN20btAlignedObjectArrayIP20btPersistentManifoldE10deallocateEv.exit.i.i
+  %i.ar = phi ptr [ %.pre, %_ZN20btAlignedObjectArrayIP20btPersistentManifoldE10deallocateEv.exit.i.i ], [ %3, %bb.c ], [ %3, %bb.b ]
+  %i.as = phi i32 [ %.pre2.i, %_ZN20btAlignedObjectArrayIP20btPersistentManifoldE10deallocateEv.exit.i.i ], [ %i.e, %bb.c ], [ %i.e, %bb.b ] ; 2 uses
+  %i.at = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %i.au = load ptr, ptr %i.at, align 8, !tbaa !56
+  %i.av = sext i32 %i.as to i64
+  %i.aw = getelementptr inbounds [8 x i8], ptr %i.au, i64 %i.av
+  store ptr %i.ar, ptr %i.aw, align 8, !tbaa !57
+  %i.ax = add nsw i32 %i.as, 1
+  store i32 %i.ax, ptr %i.d, align 4, !tbaa !50
+  br label %bb.g
+
+bb.g:                                             ; preds = %_ZN20btAlignedObjectArrayIP20btPersistentManifoldE9push_backERKS1_.exit, %bb.a
+  ret void
+}
+
+declare void @_ZN20btPersistentManifold20refreshContactPointsERK11btTransformS2_(ptr noundef nonnull align 8 dereferenceable(744), ptr noundef nonnull align 4 dereferenceable(64), ptr noundef nonnull align 4 dereferenceable(64)) local_unnamed_addr #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.fmuladd.f32(float, float, float) #9
+
+declare noundef ptr @_Z22btAlignedAllocInternalmi(i64 noundef, i32 noundef) local_unnamed_addr #1
+
+declare void @_Z21btAlignedFreeInternalPv(ptr noundef) local_unnamed_addr #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.sqrt.f32(float) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #9
+
+attributes #0 = { uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
+attributes #3 = { noinline noreturn nounwind uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { cold nofree noreturn }
+attributes #5 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #6 = { uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #8 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #10 = { noreturn nounwind }
+attributes #11 = { nounwind }
+attributes #12 = { builtin nounwind }
+
+!llvm.module.flags = !{!0, !1, !2}
+!llvm.ident = !{!3}
+!llvm.errno.tbaa = !{!4}
+
+!0 = !{i32 8, !"PIC Level", i32 2}
+!1 = !{i32 7, !"PIE Level", i32 2}
+!2 = !{i32 7, !"uwtable", i32 2}
+!3 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
+!4 = !{!5, !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!9, !9, i64 0}
+!9 = !{!"vtable pointer", !7, i64 0}
+!10 = !{!11, !16, i64 16}
+!11 = !{!"_ZTS29btSphereBoxCollisionAlgorithm", !12, i64 0, !16, i64 16, !17, i64 24, !16, i64 32}
+!12 = !{!"_ZTS30btActivatingCollisionAlgorithm", !13, i64 0}
+!13 = !{!"_ZTS20btCollisionAlgorithm", !14, i64 8}
+!14 = !{!"p1 _ZTS12btDispatcher", !15, i64 0}
+!15 = !{!"any pointer", !6, i64 0}
+!16 = !{!"bool", !6, i64 0}
+!17 = !{!"p1 _ZTS20btPersistentManifold", !15, i64 0}
+!18 = !{!11, !17, i64 24}
+!19 = !{!11, !16, i64 32}
+!20 = !{!13, !14, i64 8}
+!21 = !{i8 0, i8 2}
+!22 = !{}
+!23 = !{ptr @_ZN29btSphereBoxCollisionAlgorithmD2Ev}
+!24 = !{!25, !31, i64 200}
+!25 = !{!"_ZTS17btCollisionObject", !26, i64 8, !26, i64 72, !28, i64 136, !28, i64 152, !28, i64 168, !16, i64 184, !29, i64 188, !30, i64 192, !31, i64 200, !31, i64 208, !5, i64 216, !5, i64 220, !5, i64 224, !5, i64 228, !29, i64 232, !29, i64 236, !29, i64 240, !15, i64 248, !5, i64 256, !29, i64 260, !29, i64 264, !29, i64 268, !16, i64 272, !6, i64 273}
+!26 = !{!"_ZTS11btTransform", !27, i64 0, !28, i64 48}
+!27 = !{!"_ZTS11btMatrix3x3", !6, i64 0}
+!28 = !{!"_ZTS9btVector3", !6, i64 0}
+!29 = !{!"float", !6, i64 0}
+!30 = !{!"p1 _ZTS17btBroadphaseProxy", !15, i64 0}
+!31 = !{!"p1 _ZTS16btCollisionShape", !15, i64 0}
+!32 = !{i64 0, i64 16, !33}
+!33 = !{!6, !6, i64 0}
+!34 = !{!29, !29, i64 0}
+!35 = !{!36, !17, i64 8}
+!36 = !{!"_ZTS16btManifoldResult", !37, i64 0, !17, i64 8, !26, i64 16, !26, i64 80, !38, i64 144, !38, i64 152, !5, i64 160, !5, i64 164, !5, i64 168, !5, i64 172}
+!37 = !{!"_ZTSN36btDiscreteCollisionDetectorInterface6ResultE"}
+!38 = !{!"p1 _ZTS17btCollisionObject", !15, i64 0}
+!39 = !{!40, !5, i64 728}
+!40 = !{!"_ZTS20btPersistentManifold", !41, i64 0, !6, i64 8, !15, i64 712, !15, i64 720, !5, i64 728, !29, i64 732, !29, i64 736, !5, i64 740}
+!41 = !{!"_ZTS13btTypedObject", !5, i64 0}
+!42 = !{!40, !15, i64 712}
+!43 = !{!36, !38, i64 144}
+!44 = !{!45}
+!45 = distinct !{!45, !46, !"_ZNK11btMatrix3x39transposeEv: argument 0"}
+!46 = distinct !{!46, !"_ZNK11btMatrix3x39transposeEv"}
+!47 = !{!48}
+!48 = distinct !{!48, !49, !"_ZNK11btMatrix3x39transposeEv: argument 0"}
+!49 = distinct !{!49, !"_ZNK11btMatrix3x39transposeEv"}
+!50 = !{!51, !5, i64 4}
+!51 = !{!"_ZTS20btAlignedObjectArrayIP20btPersistentManifoldE", !52, i64 0, !5, i64 4, !5, i64 8, !53, i64 16, !16, i64 24}
+!52 = !{!"_ZTS18btAlignedAllocatorIP20btPersistentManifoldLj16EE"}
+!53 = !{!"p2 _ZTS20btPersistentManifold", !54, i64 0}
+!54 = !{!"any p2 pointer", !15, i64 0}
+!55 = !{!51, !5, i64 8}
+!56 = !{!51, !53, i64 16}
+!57 = !{!17, !17, i64 0}
+!58 = distinct !{!58, !59, !60}
+!59 = !{!"llvm.loop.isvectorized", i32 1}
+!60 = !{!"llvm.loop.unroll.runtime.disable"}
+!61 = distinct !{!61, !62}
+!62 = !{!"llvm.loop.unroll.disable"}
+!63 = distinct !{!63, !59}
+!64 = !{!51, !16, i64 24}
+end_hunk_0
