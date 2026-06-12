@@ -201,16 +201,15 @@ _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE23_M_add_ref_lock_nothrowE
 
 _ZNKSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EE16_M_get_use_countEv.exit.i.i.i: ; preds = %bb.fo
   %i.ov = load atomic i32, ptr %i.op monotonic, align 8, !noalias !198
-  %.fr.i.i.i = freeze i32 %i.ov
-  %.not.i.i.i78 = icmp eq i32 %.fr.i.i.i, 0
-  %26 = load ptr, ptr %.sroa.0104.0139, align 8, !noalias !198 ; 3 uses
+  %.not.i.i.i78 = icmp eq i32 %i.ov, 0
   br i1 %.not.i.i.i78, label %_ZNKSt8weak_ptrIN5folly15observer_detail4CoreEE4lockEv.exit.thread, label %_ZNKSt8weak_ptrIN5folly15observer_detail4CoreEE4lockEv.exit
 
-_ZNKSt8weak_ptrIN5folly15observer_detail4CoreEE4lockEv.exit.thread: ; preds = %bb.fl, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE23_M_add_ref_lock_nothrowEv.exit.i.i.i.i, %_ZNKSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EE16_M_get_use_countEv.exit.i.i.i
+_ZNKSt8weak_ptrIN5folly15observer_detail4CoreEE4lockEv.exit.thread: ; preds = %_ZNKSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EE16_M_get_use_countEv.exit.i.i.i, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE23_M_add_ref_lock_nothrowEv.exit.i.i.i.i, %bb.fl
   store ptr null, ptr %24, align 8, !tbaa !29, !alias.scope !198
   br label %_ZNSt12__shared_ptrIN5folly15observer_detail4CoreELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
 
 _ZNKSt8weak_ptrIN5folly15observer_detail4CoreEE4lockEv.exit: ; preds = %_ZNKSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EE16_M_get_use_countEv.exit.i.i.i
+  %26 = load ptr, ptr %.sroa.0104.0139, align 8, !tbaa !26, !noalias !198 ; 3 uses
   store ptr %26, ptr %24, align 8, !tbaa !29, !alias.scope !198
   %.not133 = icmp eq ptr %26, null
   br i1 %.not133, label %_ZNSt12__shared_ptrIN5folly15observer_detail4CoreELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, label %bb.fp
@@ -613,9 +612,7 @@ _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE23_M_add_ref_lock_nothrowE
 
 _ZNKSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EE16_M_get_use_countEv.exit.i.i.i.i: ; preds = %bb.d
   %i.j = load atomic i32, ptr %i.d monotonic, align 8, !noalias !259
-  %.fr.i.i.i.i = freeze i32 %i.j
-  %.not.i.i.i.i = icmp eq i32 %.fr.i.i.i.i, 0
-  %2 = load ptr, ptr %0, align 16, !noalias !259  ; 3 uses
+  %.not.i.i.i.i = icmp eq i32 %i.j, 0
   br i1 %.not.i.i.i.i, label %_ZNKSt8weak_ptrIN5folly15observer_detail4CoreEE4lockEv.exit.thread.i, label %_ZNKSt8weak_ptrIN5folly15observer_detail4CoreEE4lockEv.exit.i
 
 _ZNKSt8weak_ptrIN5folly15observer_detail4CoreEE4lockEv.exit.thread.i: ; preds = %_ZNKSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EE16_M_get_use_countEv.exit.i.i.i.i, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE23_M_add_ref_lock_nothrowEv.exit.i.i.i.i.i, %bb.a
@@ -623,6 +620,7 @@ _ZNKSt8weak_ptrIN5folly15observer_detail4CoreEE4lockEv.exit.thread.i: ; preds = 
   br label %bb.g
 
 _ZNKSt8weak_ptrIN5folly15observer_detail4CoreEE4lockEv.exit.i: ; preds = %_ZNKSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EE16_M_get_use_countEv.exit.i.i.i.i
+  %2 = load ptr, ptr %0, align 16, !tbaa !26, !noalias !259 ; 3 uses
   store ptr %2, ptr %1, align 8, !tbaa !29, !alias.scope !259
   %.not.i = icmp eq ptr %2, null
   br i1 %.not.i, label %bb.g, label %bb.e

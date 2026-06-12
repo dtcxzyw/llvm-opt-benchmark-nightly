@@ -201,7 +201,7 @@ _ZN6BigIntD2Ev.exit21:                            ; preds = %bb.l, %bb.m
 
 bb.n:                                             ; preds = %bb.h
   %i.ci = load ptr, ptr %1, align 8, !tbaa !31    ; 2 uses
-  %i.cj = load ptr, ptr %i.af, align 8, !tbaa !31 ; 7 uses
+  %i.cj = load ptr, ptr %i.af, align 8, !tbaa !31 ; 6 uses
   %i.ck = icmp eq ptr %i.ci, %i.cj
   br i1 %i.ck, label %bb.o, label %bb.t
 
@@ -246,7 +246,6 @@ bb.q:                                             ; preds = %_ZNSt6vectorI6BigIn
 
 _ZN6BigIntD2Ev.exit26:                            ; preds = %_ZNSt6vectorI6BigIntSaIS0_EE9push_backEOS0_.exit24.thread, %_ZNSt6vectorI6BigIntSaIS0_EE9push_backEOS0_.exit24, %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
-  %.pre58 = load ptr, ptr %i.af, align 8, !tbaa !13
   br label %bb.t
 
 bb.r:                                             ; preds = %bb.p
@@ -269,7 +268,6 @@ _ZN6BigIntD2Ev.exit28:                            ; preds = %bb.r, %bb.s
   br label %bb.am
 
 bb.t:                                             ; preds = %_ZN6BigIntD2Ev.exit26, %bb.n
-  %9 = phi ptr [ %.pre58, %_ZN6BigIntD2Ev.exit26 ], [ %i.cj, %bb.n ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
   %i.db = call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #15 ; 4 uses
   store i64 1, ptr %i.db, align 8, !tbaa !29
@@ -277,6 +275,7 @@ bb.t:                                             ; preds = %_ZN6BigIntD2Ev.exit
   store ptr %i.db, ptr %5, align 8, !tbaa !26
   store ptr %i.dc, ptr %i.an, align 8, !tbaa !25
   store ptr %i.dc, ptr %i.am, align 8, !tbaa !21
+  %9 = load ptr, ptr %i.af, align 8, !tbaa !13    ; 6 uses
   %i.dd = load ptr, ptr %i.c, align 8, !tbaa !8
   %.not.i.i29 = icmp eq ptr %9, %i.dd
   br i1 %.not.i.i29, label %bb.u, label %_ZNSt6vectorI6BigIntSaIS0_EE9push_backEOS0_.exit31.thread

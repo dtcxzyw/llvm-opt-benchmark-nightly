@@ -201,7 +201,6 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #25
   %.promoted72 = load ptr, ptr %i.e, align 8
-  %4 = load ptr, ptr %i.g, align 8
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.o, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
@@ -224,13 +223,14 @@ bb.n:                                             ; preds = %bb.o, %_ZNSt7__cxx1
 bb.o:                                             ; preds = %bb.n, %bb.n
   %i.be = getelementptr inbounds nuw i8, ptr %i.ax, i64 1 ; 3 uses
   store ptr %i.be, ptr %i.e, align 8
+  %4 = load ptr, ptr %i.g, align 8
   %i.bf = icmp eq ptr %i.be, %4
   br i1 %i.bf, label %.critedge28, label %bb.n, !llvm.loop !12
 
 bb.p:                                             ; preds = %.preheader56, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit50
   %i.bg = phi i8 [ %i.ay, %.preheader56 ], [ %.pre94, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit50 ]
   %.promoted73 = phi ptr [ %i.ax, %.preheader56 ], [ %.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit50 ] ; 6 uses
-  switch i8 %i.bg, label %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit31.preheader [
+  switch i8 %i.bg, label %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit31 [
     i8 123, label %bb.q
     i8 32, label %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit31.thread.loopexit
     i8 9, label %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit31.thread.loopexit
@@ -239,10 +239,6 @@ bb.p:                                             ; preds = %.preheader56, %_ZNS
     i8 0, label %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit31.thread.loopexit
     i8 12, label %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit31.thread.loopexit
   ]
-
-_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit31.preheader: ; preds = %bb.p
-  %5 = load ptr, ptr %i.g, align 8
-  br label %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit31
 
 bb.q:                                             ; preds = %bb.p
   %i.bh = getelementptr inbounds nuw i8, ptr %.promoted73, i64 1 ; 3 uses
@@ -336,8 +332,8 @@ bb.w:                                             ; preds = %bb.v, %bb.v, %bb.v
 .loopexit:                                        ; preds = %bb.w, %_ZN6Assimp9IsLineEndIcEEbT_.exit
   br label %.critedge28, !llvm.loop !15
 
-_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit31:       ; preds = %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit31.preheader, %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit32
-  %i.ck = phi ptr [ %.promoted73, %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit31.preheader ], [ %i.cl, %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit32 ] ; 2 uses
+_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit31:       ; preds = %bb.p, %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit32
+  %i.ck = phi ptr [ %i.cl, %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit32 ], [ %.promoted73, %bb.p ] ; 2 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 1 ; 4 uses
   store ptr %i.cl, ptr %i.e, align 8
   %i.cm = load i8, ptr %i.ck, align 1
@@ -351,6 +347,7 @@ _ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit31:       ; preds = %_ZN6Assimp16IsSpace
   ]
 
 _ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit32:       ; preds = %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit31
+  %5 = load ptr, ptr %i.g, align 8
   %i.cn = icmp eq ptr %i.cl, %5
   br i1 %i.cn, label %.critedge28, label %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit31, !llvm.loop !16
 

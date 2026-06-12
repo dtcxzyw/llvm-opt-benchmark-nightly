@@ -201,7 +201,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !126  ; 3 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !126  ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !126
   %i.g = ptrtoint ptr %i.d to i64                 ; 2 uses
@@ -248,23 +248,22 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZNSt5dequeIPSt8functionIFviEESaIS3_EE17_M_reallocate_mapEmb(ptr noundef nonnull align 8 dereferenceable(80) %0, i64 noundef 1, i1 noundef zeroext false)
-  %.pre = load ptr, ptr %i.c, align 8, !tbaa !354
   br label %_ZNSt5dequeIPSt8functionIFviEESaIS3_EE22_M_reserve_map_at_backEm.exit
 
 _ZNSt5dequeIPSt8functionIFviEESaIS3_EE22_M_reserve_map_at_backEm.exit: ; preds = %bb.c, %bb.d
-  %2 = phi ptr [ %i.d, %bb.c ], [ %.pre, %bb.d ]
-  %3 = tail call noalias noundef nonnull dereferenceable(512) ptr @_Znwm(i64 noundef 512) #28 ; 4 uses
-  %i.am = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  store ptr %3, ptr %i.am, align 8, !tbaa !135
+  %2 = tail call noalias noundef nonnull dereferenceable(512) ptr @_Znwm(i64 noundef 512) #28 ; 4 uses
+  %3 = load ptr, ptr %i.c, align 8, !tbaa !354
+  %i.am = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  store ptr %2, ptr %i.am, align 8, !tbaa !135
   %i.an = load ptr, ptr %i.a, align 8, !tbaa !150
   %i.ao = load ptr, ptr %1, align 8, !tbaa !130
   store ptr %i.ao, ptr %i.an, align 8, !tbaa !130
   store ptr %i.am, ptr %i.c, align 8, !tbaa !126
-  store ptr %3, ptr %i.o, align 8, !tbaa !128
-  %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 512
+  store ptr %2, ptr %i.o, align 8, !tbaa !128
+  %i.ap = getelementptr inbounds nuw i8, ptr %2, i64 512
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 64
   store ptr %i.ap, ptr %i.aq, align 8, !tbaa !129
-  store ptr %3, ptr %i.a, align 8, !tbaa !150
+  store ptr %2, ptr %i.a, align 8, !tbaa !150
   ret void
 }
 

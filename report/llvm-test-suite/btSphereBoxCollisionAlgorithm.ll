@@ -201,15 +201,16 @@ bb.q:                                             ; preds = %bb.p
 
 ; Function Attrs: uwtable
 define linkonce_odr dso_local void @_ZN29btSphereBoxCollisionAlgorithm22getAllContactManifoldsER20btAlignedObjectArrayIP20btPersistentManifoldE(ptr noundef nonnull align 8 dereferenceable(33) %0, ptr noundef nonnull align 8 dereferenceable(25) %1) unnamed_addr #0 comdat align 2 {
-bb.a:
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %3 = load ptr, ptr %2, align 8, !tbaa !18       ; 3 uses
-  %.not = icmp ne ptr %3, null
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %4 = load ptr, ptr %3, align 8, !tbaa !18       ; 3 uses
+  %.not = icmp eq ptr %4, null
+  br i1 %.not, label %bb.g, label %bb.a
+
+bb.a:                                             ; preds = %2
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = load i8, ptr %i.a, align 8, !range !21
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !10, !range !21, !noundef !22
   %i.c = trunc nuw i8 %i.b to i1
-  %or.cond = select i1 %.not, i1 %i.c, i1 false
-  br i1 %or.cond, label %bb.b, label %bb.g
+  br i1 %i.c, label %bb.b, label %bb.g
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 4 uses
@@ -327,20 +328,16 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   br i1 %exitcond.not.i.i.i.3, label %_ZNK20btAlignedObjectArrayIP20btPersistentManifoldE4copyEiiPS1_.exit.thread.i.i, label %scalar.ph, !llvm.loop !63
 
 _ZNK20btAlignedObjectArrayIP20btPersistentManifoldE4copyEiiPS1_.exit.i.i: ; preds = %_ZN20btAlignedObjectArrayIP20btPersistentManifoldE8allocateEi.exit.i.i
-  %.not.i5.i.i = icmp ne ptr %i.r, null
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %5 = load i8, ptr %4, align 8, !range !21
-  %6 = trunc nuw i8 %5 to i1
-  %or.cond.i = select i1 %.not.i5.i.i, i1 %6, i1 false
-  br i1 %or.cond.i, label %bb.f, label %_ZN20btAlignedObjectArrayIP20btPersistentManifoldE10deallocateEv.exit.i.i
+  %.not.i5.i.i = icmp eq ptr %i.r, null
+  br i1 %.not.i5.i.i, label %_ZN20btAlignedObjectArrayIP20btPersistentManifoldE10deallocateEv.exit.i.i, label %_ZNK20btAlignedObjectArrayIP20btPersistentManifoldE4copyEiiPS1_.exit.thread.i.i
 
-_ZNK20btAlignedObjectArrayIP20btPersistentManifoldE4copyEiiPS1_.exit.thread.i.i: ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
+_ZNK20btAlignedObjectArrayIP20btPersistentManifoldE4copyEiiPS1_.exit.thread.i.i: ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %_ZNK20btAlignedObjectArrayIP20btPersistentManifoldE4copyEiiPS1_.exit.i.i
   %.old.i = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.old8.i = load i8, ptr %.old.i, align 8, !tbaa !64, !range !21, !noundef !22
   %.old9.i = trunc nuw i8 %.old8.i to i1
   br i1 %.old9.i, label %bb.f, label %_ZN20btAlignedObjectArrayIP20btPersistentManifoldE10deallocateEv.exit.i.i
 
-bb.f:                                             ; preds = %_ZNK20btAlignedObjectArrayIP20btPersistentManifoldE4copyEiiPS1_.exit.thread.i.i, %_ZNK20btAlignedObjectArrayIP20btPersistentManifoldE4copyEiiPS1_.exit.i.i
+bb.f:                                             ; preds = %_ZNK20btAlignedObjectArrayIP20btPersistentManifoldE4copyEiiPS1_.exit.thread.i.i
   tail call void @_Z21btAlignedFreeInternalPv(ptr noundef nonnull %i.r)
   %.pre2.pre.pre.i = load i32, ptr %i.d, align 4, !tbaa !50
   br label %_ZN20btAlignedObjectArrayIP20btPersistentManifoldE10deallocateEv.exit.i.i
@@ -351,11 +348,11 @@ _ZN20btAlignedObjectArrayIP20btPersistentManifoldE10deallocateEv.exit.i.i: ; pre
   store i8 1, ptr %i.aq, align 8, !tbaa !64
   store ptr %.0.i.i.i, ptr %i.q, align 8, !tbaa !56
   store i32 %i.j, ptr %i.f, align 8, !tbaa !55
-  %.pre = load ptr, ptr %2, align 8, !tbaa !57
+  %.pre = load ptr, ptr %3, align 8, !tbaa !57
   br label %_ZN20btAlignedObjectArrayIP20btPersistentManifoldE9push_backERKS1_.exit
 
 _ZN20btAlignedObjectArrayIP20btPersistentManifoldE9push_backERKS1_.exit: ; preds = %bb.b, %bb.c, %_ZN20btAlignedObjectArrayIP20btPersistentManifoldE10deallocateEv.exit.i.i
-  %i.ar = phi ptr [ %.pre, %_ZN20btAlignedObjectArrayIP20btPersistentManifoldE10deallocateEv.exit.i.i ], [ %3, %bb.c ], [ %3, %bb.b ]
+  %i.ar = phi ptr [ %.pre, %_ZN20btAlignedObjectArrayIP20btPersistentManifoldE10deallocateEv.exit.i.i ], [ %4, %bb.c ], [ %4, %bb.b ]
   %i.as = phi i32 [ %.pre2.i, %_ZN20btAlignedObjectArrayIP20btPersistentManifoldE10deallocateEv.exit.i.i ], [ %i.e, %bb.c ], [ %i.e, %bb.b ] ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !56
@@ -366,7 +363,7 @@ _ZN20btAlignedObjectArrayIP20btPersistentManifoldE9push_backERKS1_.exit: ; preds
   store i32 %i.ax, ptr %i.d, align 4, !tbaa !50
   br label %bb.g
 
-bb.g:                                             ; preds = %_ZN20btAlignedObjectArrayIP20btPersistentManifoldE9push_backERKS1_.exit, %bb.a
+bb.g:                                             ; preds = %_ZN20btAlignedObjectArrayIP20btPersistentManifoldE9push_backERKS1_.exit, %bb.a, %2
   ret void
 }
 
