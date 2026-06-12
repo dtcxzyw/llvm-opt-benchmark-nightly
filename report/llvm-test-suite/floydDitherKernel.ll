@@ -7,13 +7,11 @@ define dso_local void @floydDitherKernel(i32 noundef %0, i32 noundef %1, ptr nof
 bb.a:
   %i.a = zext i32 %1 to i64                       ; 10 uses
   %i.b = icmp sgt i32 %0, 0
-  br i1 %i.b, label %.preheader112.lr.ph, label %._crit_edge117
-
-.preheader112.lr.ph:                              ; preds = %bb.a
   %4 = icmp sgt i32 %1, 0
-  br i1 %4, label %.preheader112.us.preheader, label %.preheader111
+  %or.cond = and i1 %i.b, %4
+  br i1 %or.cond, label %.preheader112.us.preheader, label %.preheader111
 
-.preheader112.us.preheader:                       ; preds = %.preheader112.lr.ph
+.preheader112.us.preheader:                       ; preds = %bb.a
   %wide.trip.count126 = zext nneg i32 %0 to i64   ; 3 uses
   %i.c = mul nuw nsw i64 %i.a, %wide.trip.count126
   %i.d = shl nuw i64 %i.c, 2
@@ -33,8 +31,8 @@ bb.a:
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br label %.preheader112.us
 
-.preheader112.us:                                 ; preds = %.preheader112.us.preheader, %._crit_edge.us
-  %indvars.iv123 = phi i64 [ 0, %.preheader112.us.preheader ], [ %indvars.iv.next124, %._crit_edge.us ] ; 3 uses
+.preheader112.us:                                 ; preds = %.preheader112.us.preheader, %._crit_edge
+  %indvars.iv123 = phi i64 [ 0, %.preheader112.us.preheader ], [ %indvars.iv.next122, %._crit_edge ] ; 3 uses
   %i.i = getelementptr inbounds nuw [2048 x i8], ptr %2, i64 %indvars.iv123 ; 6 uses
   %i.j = mul nuw nsw i64 %indvars.iv123, %i.a
   %i.k = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.j ; 6 uses
@@ -56,7 +54,7 @@ vector.body:                                      ; preds = %.preheader112.us, %
   br i1 %i.p, label %middle.block, label %vector.body, !llvm.loop !13
 
 middle.block:                                     ; preds = %vector.body
-  br i1 %cmp.n, label %._crit_edge.us, label %scalar.ph.preheader
+  br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.preheader112.us, %middle.block
   %indvars.iv.ph = phi i64 [ %n.vec, %middle.block ], [ 0, %.preheader112.us ] ; 3 uses
@@ -78,7 +76,25 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %scalar.ph.preheader ], [ %indvars.iv.next.prol, %scalar.ph.prol ]
   %i.t = sub nsw i64 %indvars.iv.ph, %i.a
   %i.u = icmp ugt i64 %i.t, -4
-  br i1 %i.u, label %._crit_edge.us, label %scalar.ph
+  br i1 %i.u, label %._crit_edge, label %scalar.ph
+
+.preheader111:                                    ; preds = %._crit_edge, %bb.a
+  %5 = icmp sgt i32 %0, 2
+  %6 = icmp sgt i32 %1, 2
+  %or.cond148 = and i1 %5, %6
+  br i1 %or.cond148, label %.preheader.preheader, label %._crit_edge118.split
+
+.preheader.preheader:                             ; preds = %.preheader111
+  %7 = add nsw i32 %0, -1
+  %8 = add nsw i32 %1, -1
+  %wide.trip.count134 = zext nneg i32 %7 to i64
+  %wide.trip.count129 = zext i32 %8 to i64
+  br label %.preheader.us
+
+._crit_edge:                                      ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
+  %indvars.iv.next122 = add nuw nsw i64 %indvars.iv123, 1 ; 2 uses
+  %exitcond125.not = icmp eq i64 %indvars.iv.next122, %wide.trip.count126
+  br i1 %exitcond125.not, label %.preheader111, label %.preheader112.us, !llvm.loop !19
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next.3, %scalar.ph ], [ %indvars.iv.unr, %scalar.ph.prol.loopexit ] ; 6 uses
@@ -103,34 +119,23 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   store i32 %i.af, ptr %i.ag, align 4, !tbaa !4
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %i.a
-  br i1 %exitcond.not.3, label %._crit_edge.us, label %scalar.ph, !llvm.loop !19
+  br i1 %exitcond.not.3, label %._crit_edge, label %scalar.ph, !llvm.loop !20
 
-._crit_edge.us:                                   ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
-  %indvars.iv.next124 = add nuw nsw i64 %indvars.iv123, 1 ; 2 uses
-  %exitcond127.not = icmp eq i64 %indvars.iv.next124, %wide.trip.count126
-  br i1 %exitcond127.not, label %.preheader111, label %.preheader112.us, !llvm.loop !20
-
-.preheader111:                                    ; preds = %._crit_edge.us, %.preheader112.lr.ph
-  %5 = icmp sgt i32 %0, 2
-  %6 = icmp sgt i32 %1, 2
-  %or.cond = and i1 %5, %6
-  br i1 %or.cond, label %.preheader.us.preheader, label %._crit_edge117
-
-.preheader.us.preheader:                          ; preds = %.preheader111
-  %7 = add nsw i32 %0, -1
-  %8 = add nsw i32 %1, -1
-  %wide.trip.count136 = zext nneg i32 %7 to i64
-  %wide.trip.count131 = zext i32 %8 to i64
-  br label %.preheader.us
-
-.preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge.us118
-  %indvars.iv133 = phi i64 [ 1, %.preheader.us.preheader ], [ %indvars.iv.next134, %._crit_edge.us118 ] ; 2 uses
+.preheader.us:                                    ; preds = %.preheader.preheader, %._crit_edge116
+  %indvars.iv133 = phi i64 [ 1, %.preheader.preheader ], [ %indvars.iv.next134, %._crit_edge116 ] ; 2 uses
   %i.ah = mul nuw nsw i64 %indvars.iv133, %i.a
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.ah ; 2 uses
   %indvars.iv.next134 = add nuw nsw i64 %indvars.iv133, 1 ; 3 uses
   %i.aj = mul nuw nsw i64 %indvars.iv.next134, %i.a
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.aj ; 2 uses
   br label %bb.b
+
+._crit_edge118.split:                             ; preds = %._crit_edge116, %.preheader111
+  ret void
+
+._crit_edge116:                                   ; preds = %bb.b
+  %exitcond135.not = icmp eq i64 %indvars.iv.next134, %wide.trip.count134
+  br i1 %exitcond135.not, label %._crit_edge118.split, label %.preheader.us, !llvm.loop !21
 
 bb.b:                                             ; preds = %.preheader.us, %bb.b
   %indvars.iv128 = phi i64 [ 1, %.preheader.us ], [ %indvars.iv.next129, %bb.b ] ; 3 uses
@@ -169,15 +174,8 @@ bb.b:                                             ; preds = %.preheader.us, %bb.
   %i.bh = tail call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.bg, <2 x i32> zeroinitializer)
   %i.bi = tail call <2 x i32> @llvm.smin.v2i32(<2 x i32> %i.bh, <2 x i32> splat (i32 255))
   store <2 x i32> %i.bi, ptr %i.az, align 4, !tbaa !4
-  %exitcond132.not = icmp eq i64 %indvars.iv.next129, %wide.trip.count131
-  br i1 %exitcond132.not, label %._crit_edge.us118, label %bb.b, !llvm.loop !21
-
-._crit_edge.us118:                                ; preds = %bb.b
-  %exitcond137.not = icmp eq i64 %indvars.iv.next134, %wide.trip.count136
-  br i1 %exitcond137.not, label %._crit_edge117, label %.preheader.us, !llvm.loop !22
-
-._crit_edge117:                                   ; preds = %._crit_edge.us118, %bb.a, %.preheader111
-  ret void
+  %exitcond132.not = icmp eq i64 %indvars.iv.next129, %wide.trip.count129
+  br i1 %exitcond132.not, label %._crit_edge116, label %bb.b, !llvm.loop !22
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -218,8 +216,8 @@ attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 !16 = !{!"llvm.loop.unroll.runtime.disable"}
 !17 = distinct !{!17, !18}
 !18 = !{!"llvm.loop.unroll.disable"}
-!19 = distinct !{!19, !14, !15}
-!20 = distinct !{!20, !14}
+!19 = distinct !{!19, !14}
+!20 = distinct !{!20, !14, !15}
 !21 = distinct !{!21, !14}
 !22 = distinct !{!22, !14}
 end_hunk_0
