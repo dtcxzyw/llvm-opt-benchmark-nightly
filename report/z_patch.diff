@@ -1,0 +1,214 @@
+diff --git a/llvm/include/llvm/IR/Value.h b/llvm/include/llvm/IR/Value.h
+index c96cc9fe370dc..a74d3bede1c9d 100644
+--- a/llvm/include/llvm/IR/Value.h
++++ b/llvm/include/llvm/IR/Value.h
+@@ -764,12 +764,13 @@ class Value {
+   /// If CanBeNull is set by this function the pointer can either be null or be
+   /// dereferenceable up to the returned number of bytes.
+   ///
+-  /// IF CanBeFreed is true, the pointer is known to be dereferenceable at
+-  /// point of definition only.  Caller must prove that allocation is not
+-  /// deallocated between point of definition and use.
++  /// If CanBeFreed is non-null, it will be populated with information on
++  /// whether the pointer might be freed, i.e. is only known dereferenceable
++  /// at the point of definition. By passing null the caller indicates that it
++  /// does not care.
+   LLVM_ABI uint64_t getPointerDereferenceableBytes(const DataLayout &DL,
+                                                    bool &CanBeNull,
+-                                                   bool &CanBeFreed) const;
++                                                   bool *CanBeFreed) const;
+ 
+   /// Returns an alignment of the pointer value.
+   ///
+diff --git a/llvm/lib/Analysis/BasicAliasAnalysis.cpp b/llvm/lib/Analysis/BasicAliasAnalysis.cpp
+index 832749f949aee..43b1c412e81b9 100644
+--- a/llvm/lib/Analysis/BasicAliasAnalysis.cpp
++++ b/llvm/lib/Analysis/BasicAliasAnalysis.cpp
+@@ -166,9 +166,9 @@ static TypeSize getMinimalExtentFrom(const Value &V,
+   // extent as accesses for a lower offset would be valid. We need to exclude
+   // the "or null" part if null is a valid pointer. We can ignore frees, as an
+   // access after free would be undefined behavior.
+-  bool CanBeNull, CanBeFreed;
++  bool CanBeNull;
+   uint64_t DerefBytes =
+-    V.getPointerDereferenceableBytes(DL, CanBeNull, CanBeFreed);
++      V.getPointerDereferenceableBytes(DL, CanBeNull, /*CanBeFreed=*/nullptr);
+   DerefBytes = (CanBeNull && NullIsValidLoc) ? 0 : DerefBytes;
+   // If queried with a precise location size, we assume that location size to be
+   // accessed, thus valid.
+diff --git a/llvm/lib/Analysis/ConstantFolding.cpp b/llvm/lib/Analysis/ConstantFolding.cpp
+index 8964dcb9fd553..3fe78d6c4322d 100644
+--- a/llvm/lib/Analysis/ConstantFolding.cpp
++++ b/llvm/lib/Analysis/ConstantFolding.cpp
+@@ -1105,9 +1105,9 @@ Constant *SymbolicallyEvaluateGEP(const GEPOperator *GEP,
+ 
+   // Try to infer inbounds for GEPs of globals.
+   if (!NW.isInBounds() && Offset.isNonNegative()) {
+-    bool CanBeNull, CanBeFreed;
+-    uint64_t DerefBytes =
+-        Ptr->getPointerDereferenceableBytes(DL, CanBeNull, CanBeFreed);
++    bool CanBeNull;
++    uint64_t DerefBytes = Ptr->getPointerDereferenceableBytes(
++        DL, CanBeNull, /*CanBeFreed=*/nullptr);
+     if (DerefBytes != 0 && !CanBeNull && Offset.sle(DerefBytes))
+       NW |= GEPNoWrapFlags::inBounds();
+   }
+diff --git a/llvm/lib/Analysis/Loads.cpp b/llvm/lib/Analysis/Loads.cpp
+index d6c7ed029631b..28e07eb69cc65 100644
+--- a/llvm/lib/Analysis/Loads.cpp
++++ b/llvm/lib/Analysis/Loads.cpp
+@@ -127,7 +127,7 @@ static bool isDereferenceableAndAlignedPointer(
+   auto IsKnownDeref = [&]() {
+     bool CheckForNonNull, CheckForFreed;
+     if (!Size.ule(V->getPointerDereferenceableBytes(SQ.DL, CheckForNonNull,
+-                                                    CheckForFreed)))
++                                                    &CheckForFreed)))
+       return false;
+     if (CheckForNonNull && !isKnownNonZero(V, SQ))
+       return false;
+diff --git a/llvm/lib/Analysis/LoopAccessAnalysis.cpp b/llvm/lib/Analysis/LoopAccessAnalysis.cpp
+index 74f0fa8a954da..a2c2b0ef88da4 100644
+--- a/llvm/lib/Analysis/LoopAccessAnalysis.cpp
++++ b/llvm/lib/Analysis/LoopAccessAnalysis.cpp
+@@ -220,12 +220,12 @@ static bool evaluatePtrAddRecAtMaxBTCWillNotWrap(
+   if (!StartPtr)
+     return false;
+   const Loop *L = AR->getLoop();
+-  bool CheckForNonNull, CheckForFreed;
++  bool CheckForNonNull;
+   Value *StartPtrV = StartPtr->getValue();
+   // We can ignore frees, as the fact that an object of a certain size existed
+   // at the location *at some point* is sufficient to derive the nowrap fact.
+   uint64_t DerefBytes = StartPtrV->getPointerDereferenceableBytes(
+-      DL, CheckForNonNull, CheckForFreed);
++      DL, CheckForNonNull, /*CanBeFreed=*/nullptr);
+ 
+   if (DerefBytes && CheckForNonNull)
+     return false;
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index ed1758f481bb4..c0cdce982e623 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -7158,9 +7158,9 @@ const ConstantRange &ScalarEvolution::getRangeRef(
+     if (U->getType()->isPointerTy() && SignHint == HINT_RANGE_UNSIGNED) {
+       // Strengthen the range if the underlying IR value is a
+       // global/alloca/heap allocation using the size of the object.
+-      bool CanBeNull, CanBeFreed;
+-      uint64_t DerefBytes =
+-          V->getPointerDereferenceableBytes(DL, CanBeNull, CanBeFreed);
++      bool CanBeNull;
++      uint64_t DerefBytes = V->getPointerDereferenceableBytes(
++          DL, CanBeNull, /*CanBeFreed=*/nullptr);
+       if (DerefBytes > 1 && isUIntN(BitWidth, DerefBytes)) {
+         // The highest address the object can start is DerefBytes bytes before
+         // the end (unsigned max value). If this value is not a multiple of the
+diff --git a/llvm/lib/IR/Value.cpp b/llvm/lib/IR/Value.cpp
+index 6f71a5093e4a3..00475816bf04b 100644
+--- a/llvm/lib/IR/Value.cpp
++++ b/llvm/lib/IR/Value.cpp
+@@ -903,7 +903,7 @@ bool Value::canBeFreed() const {
+ 
+ uint64_t Value::getPointerDereferenceableBytes(const DataLayout &DL,
+                                                bool &CanBeNull,
+-                                               bool &CanBeFreed) const {
++                                               bool *CanBeFreed) const {
+   assert(getType()->isPointerTy() && "must be pointer");
+ 
+   uint64_t DerefBytes = 0;
+@@ -973,12 +973,14 @@ uint64_t Value::getPointerDereferenceableBytes(const DataLayout &DL,
+     }
+   }
+ 
+-  // Call canBeFreed() only if there are dereferenceable bytes and it's not
+-  // one of the cases that can never be freed.
+-  if (!CanNotBeFreed && DerefBytes != 0)
+-    CanBeFreed = UseDerefAtPointSemantics && canBeFreed();
+-  else
+-    CanBeFreed = false;
++  if (CanBeFreed) {
++    // Call canBeFreed() only if there are dereferenceable bytes and it's not
++    // one of the cases that can never be freed.
++    if (!CanNotBeFreed && DerefBytes != 0)
++      *CanBeFreed = UseDerefAtPointSemantics && canBeFreed();
++    else
++      *CanBeFreed = false;
++  }
+ 
+   return DerefBytes;
+ }
+diff --git a/llvm/lib/Transforms/AggressiveInstCombine/AggressiveInstCombine.cpp b/llvm/lib/Transforms/AggressiveInstCombine/AggressiveInstCombine.cpp
+index 5d9027c709534..18af4448087d7 100644
+--- a/llvm/lib/Transforms/AggressiveInstCombine/AggressiveInstCombine.cpp
++++ b/llvm/lib/Transforms/AggressiveInstCombine/AggressiveInstCombine.cpp
+@@ -1866,8 +1866,9 @@ bool StrNCmpInliner::optimizeStrNCmp() {
+ 
+   // Cases where StrP has two or more dereferenceable bytes might be better
+   // optimized elsewhere.
+-  bool CanBeNull = false, CanBeFreed = false;
+-  if (StrP->getPointerDereferenceableBytes(DL, CanBeNull, CanBeFreed) > 1)
++  bool CanBeNull = false;
++  if (StrP->getPointerDereferenceableBytes(DL, CanBeNull,
++                                           /*CanBeFreed=*/nullptr) > 1)
+     return false;
+   inlineCompare(StrP, Str, N, HasStr1);
+   return true;
+diff --git a/llvm/lib/Transforms/IPO/AttributorAttributes.cpp b/llvm/lib/Transforms/IPO/AttributorAttributes.cpp
+index fff97ff3efe5b..c048b4672f5fb 100644
+--- a/llvm/lib/Transforms/IPO/AttributorAttributes.cpp
++++ b/llvm/lib/Transforms/IPO/AttributorAttributes.cpp
+@@ -4937,9 +4937,9 @@ struct AADereferenceableImpl : AADereferenceable {
+     AA::hasAssumedIRAttr<Attribute::NonNull>(
+         A, this, getIRPosition(), DepClassTy::OPTIONAL, IsKnownNonNull);
+ 
+-    bool CanBeNull, CanBeFreed;
++    bool CanBeNull;
+     takeKnownDerefBytesMaximum(V.getPointerDereferenceableBytes(
+-        A.getDataLayout(), CanBeNull, CanBeFreed));
++        A.getDataLayout(), CanBeNull, /*CanBeFreed=*/nullptr));
+ 
+     if (Instruction *CtxI = getCtxI())
+       followUsesInMBEC(*this, A, getState(), *CtxI);
+@@ -5066,9 +5066,9 @@ struct AADereferenceableFloating : AADereferenceableImpl {
+       if (!AA || (!Stripped && this == AA)) {
+         // Use IR information if we did not strip anything.
+         // TODO: track globally.
+-        bool CanBeNull, CanBeFreed;
+-        DerefBytes =
+-            Base->getPointerDereferenceableBytes(DL, CanBeNull, CanBeFreed);
++        bool CanBeNull;
++        DerefBytes = Base->getPointerDereferenceableBytes(
++            DL, CanBeNull, /*=CanBeFreed=*/nullptr);
+         T.GlobalState.indicatePessimisticFixpoint();
+       } else {
+         const DerefState &DS = AA->getState();
+diff --git a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+index 608966a5e9289..6ed643e138e5f 100644
+--- a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+@@ -3612,9 +3612,9 @@ Instruction *InstCombinerImpl::visitGetElementPtrInst(GetElementPtrInst &GEP) {
+     APInt BasePtrOffset(IdxWidth, 0);
+     Value *UnderlyingPtrOp =
+         PtrOp->stripAndAccumulateInBoundsConstantOffsets(DL, BasePtrOffset);
+-    bool CanBeNull, CanBeFreed;
++    bool CanBeNull;
+     uint64_t DerefBytes = UnderlyingPtrOp->getPointerDereferenceableBytes(
+-        DL, CanBeNull, CanBeFreed);
++        DL, CanBeNull, /*CanBeFreed=*/nullptr);
+     // We can ignore CanBeFreed here, because inbounds is explicitly allowed to
+     // refer to a deallocated object.
+     if (!CanBeNull && DerefBytes != 0) {
+diff --git a/llvm/lib/Transforms/Utils/MemoryOpRemark.cpp b/llvm/lib/Transforms/Utils/MemoryOpRemark.cpp
+index 27439319da147..0cd4f456a32d7 100644
+--- a/llvm/lib/Transforms/Utils/MemoryOpRemark.cpp
++++ b/llvm/lib/Transforms/Utils/MemoryOpRemark.cpp
+@@ -361,8 +361,8 @@ void MemoryOpRemark::visitPtr(Value *Ptr, bool IsRead, DiagnosticInfoIROptimizat
+ 
+   if (VIs.empty()) {
+     bool CanBeNull;
+-    bool CanBeFreed;
+-    uint64_t Size = Ptr->getPointerDereferenceableBytes(DL, CanBeNull, CanBeFreed);
++    uint64_t Size = Ptr->getPointerDereferenceableBytes(DL, CanBeNull,
++                                                        /*CanBeFreed=*/nullptr);
+     if (!Size)
+       return;
+     VIs.push_back({std::nullopt, Size});
