@@ -163,23 +163,23 @@ bb.e:                                             ; preds = %bb.d
   %.not18.i = icmp eq i64 %i.bi, 0
   br i1 %.not18.i, label %_ZN4geos9geomgraph5index24SimpleEdgeSetIntersector17computeIntersectsEPNS0_4EdgeES4_PNS1_18SegmentIntersectorE.exit, label %.preheader.us.i
 
-.preheader.us.i:                                  ; preds = %.preheader.lr.ph.i, %._crit_edge.us.i
-  %.01416.us.i = phi i64 [ %i.bk, %._crit_edge.us.i ], [ 0, %.preheader.lr.ph.i ] ; 2 uses
-  br label %bb.f
+.preheader.us.i:                                  ; preds = %.preheader.lr.ph.i, %bb.f
+  %.01416.us.i = phi i64 [ %i.bj, %bb.f ], [ 0, %.preheader.lr.ph.i ] ; 2 uses
+  br label %._crit_edge.us.i
 
-bb.f:                                             ; preds = %bb.f, %.preheader.us.i
-  %.015.us.i = phi i64 [ 0, %.preheader.us.i ], [ %i.bj, %bb.f ] ; 2 uses
-  tail call void @_ZN4geos9geomgraph5index18SegmentIntersector16addIntersectionsEPNS0_4EdgeEmS4_m(ptr noundef nonnull align 8 dereferenceable(76) %2, ptr noundef nonnull %i.am, i64 noundef %.01416.us.i, ptr noundef nonnull %i.aq, i64 noundef %.015.us.i)
-  %i.bj = add nuw i64 %.015.us.i, 1               ; 2 uses
-  %exitcond.not.i.a = icmp eq i64 %i.bj, %i.bi
-  br i1 %exitcond.not.i.a, label %._crit_edge.us.i, label %bb.f, !llvm.loop !22
+bb.f:                                             ; preds = %._crit_edge.us.i
+  %i.bj = add nuw i64 %.01416.us.i, 1             ; 2 uses
+  %exitcond.not.i.a = icmp eq i64 %i.bj, %i.bh
+  br i1 %exitcond.not.i.a, label %_ZN4geos9geomgraph5index24SimpleEdgeSetIntersector17computeIntersectsEPNS0_4EdgeES4_PNS1_18SegmentIntersectorE.exit, label %.preheader.us.i, !llvm.loop !24
 
-._crit_edge.us.i:                                 ; preds = %bb.f
-  %i.bk = add nuw i64 %.01416.us.i, 1             ; 2 uses
-  %exitcond20.not.i = icmp eq i64 %i.bk, %i.bh
-  br i1 %exitcond20.not.i, label %_ZN4geos9geomgraph5index24SimpleEdgeSetIntersector17computeIntersectsEPNS0_4EdgeES4_PNS1_18SegmentIntersectorE.exit, label %.preheader.us.i, !llvm.loop !24
+._crit_edge.us.i:                                 ; preds = %._crit_edge.us.i, %.preheader.us.i
+  %.015.i = phi i64 [ 0, %.preheader.us.i ], [ %i.bk, %._crit_edge.us.i ] ; 2 uses
+  tail call void @_ZN4geos9geomgraph5index18SegmentIntersector16addIntersectionsEPNS0_4EdgeEmS4_m(ptr noundef nonnull align 8 dereferenceable(76) %2, ptr noundef nonnull %i.am, i64 noundef %.01416.us.i, ptr noundef nonnull %i.aq, i64 noundef %.015.i)
+  %i.bk = add nuw i64 %.015.i, 1                  ; 2 uses
+  %exitcond20.not.i = icmp eq i64 %i.bk, %i.bi
+  br i1 %exitcond20.not.i, label %bb.f, label %._crit_edge.us.i, !llvm.loop !22
 
-_ZN4geos9geomgraph5index24SimpleEdgeSetIntersector17computeIntersectsEPNS0_4EdgeES4_PNS1_18SegmentIntersectorE.exit: ; preds = %._crit_edge.us.i, %.preheader.lr.ph.i, %bb.e, %bb.d
+_ZN4geos9geomgraph5index24SimpleEdgeSetIntersector17computeIntersectsEPNS0_4EdgeES4_PNS1_18SegmentIntersectorE.exit: ; preds = %bb.f, %.preheader.lr.ph.i, %bb.e, %bb.d
   %i.bl = add nuw i64 %.01720, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.bl, %i.h
   br i1 %exitcond.not, label %.split22, label %bb.d, !llvm.loop !25
@@ -206,31 +206,31 @@ bb.a:
   %i.p = tail call noundef i64 %i.o(ptr noundef nonnull align 8 dereferenceable(8) %i.h), !inline_history !27
   %i.q = add i64 %i.l, -1                         ; 2 uses
   %.not = icmp eq i64 %i.q, 0
-  br i1 %.not, label %._crit_edge17, label %.preheader.lr.ph
+  br i1 %.not, label %._crit_edge17.split, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %bb.a
   %i.r = add i64 %i.p, -1                         ; 2 uses
   %.not18 = icmp eq i64 %i.r, 0
-  br i1 %.not18, label %._crit_edge17, label %.preheader.us
+  br i1 %.not18, label %._crit_edge17.split, label %.preheader.us
 
-.preheader.us:                                    ; preds = %.preheader.lr.ph, %._crit_edge.us
-  %.01416.us = phi i64 [ %i.t, %._crit_edge.us ], [ 0, %.preheader.lr.ph ] ; 2 uses
-  br label %bb.b
+.preheader.us:                                    ; preds = %.preheader.lr.ph, %bb.b
+  %.01416.us = phi i64 [ %i.s, %bb.b ], [ 0, %.preheader.lr.ph ] ; 2 uses
+  br label %._crit_edge.us
 
-bb.b:                                             ; preds = %.preheader.us, %bb.b
-  %.015.us = phi i64 [ 0, %.preheader.us ], [ %i.s, %bb.b ] ; 2 uses
-  tail call void @_ZN4geos9geomgraph5index18SegmentIntersector16addIntersectionsEPNS0_4EdgeEmS4_m(ptr noundef nonnull align 8 dereferenceable(76) %3, ptr noundef nonnull %1, i64 noundef %.01416.us, ptr noundef nonnull %2, i64 noundef %.015.us)
-  %i.s = add nuw i64 %.015.us, 1                  ; 2 uses
-  %exitcond.not.a = icmp eq i64 %i.s, %i.r
-  br i1 %exitcond.not.a, label %._crit_edge.us, label %bb.b, !llvm.loop !22
-
-._crit_edge.us:                                   ; preds = %bb.b
-  %i.t = add nuw i64 %.01416.us, 1                ; 2 uses
-  %exitcond20.not = icmp eq i64 %i.t, %i.q
-  br i1 %exitcond20.not, label %._crit_edge17, label %.preheader.us, !llvm.loop !24
-
-._crit_edge17:                                    ; preds = %._crit_edge.us, %.preheader.lr.ph, %bb.a
+._crit_edge17.split:                              ; preds = %bb.b, %.preheader.lr.ph, %bb.a
   ret void
+
+bb.b:                                             ; preds = %._crit_edge.us
+  %i.s = add nuw i64 %.01416.us, 1                ; 2 uses
+  %exitcond.not.a = icmp eq i64 %i.s, %i.q
+  br i1 %exitcond.not.a, label %._crit_edge17.split, label %.preheader.us, !llvm.loop !24
+
+._crit_edge.us:                                   ; preds = %.preheader.us, %._crit_edge.us
+  %.015 = phi i64 [ 0, %.preheader.us ], [ %i.t, %._crit_edge.us ] ; 2 uses
+  tail call void @_ZN4geos9geomgraph5index18SegmentIntersector16addIntersectionsEPNS0_4EdgeEmS4_m(ptr noundef nonnull align 8 dereferenceable(76) %3, ptr noundef nonnull %1, i64 noundef %.01416.us, ptr noundef nonnull %2, i64 noundef %.015)
+  %i.t = add nuw i64 %.015, 1                     ; 2 uses
+  %exitcond20.not = icmp eq i64 %i.t, %i.r
+  br i1 %exitcond20.not, label %bb.b, label %._crit_edge.us, !llvm.loop !22
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -241,31 +241,42 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !12   ; 2 uses
   %i.d = load ptr, ptr %1, align 8, !tbaa !17     ; 2 uses
-  %4 = ptrtoint ptr %i.c to i64
-  %5 = ptrtoint ptr %i.d to i64
-  %6 = sub i64 %4, %5
-  %7 = ashr exact i64 %6, 3
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !12   ; 2 uses
   %i.g = load ptr, ptr %2, align 8, !tbaa !17     ; 2 uses
-  %8 = ptrtoint ptr %i.f to i64
-  %9 = ptrtoint ptr %i.g to i64
-  %10 = sub i64 %8, %9
-  %11 = ashr exact i64 %10, 3
-  %.not = icmp eq ptr %i.c, %i.d
-  %.not21 = icmp eq ptr %i.f, %i.g
-  %or.cond = select i1 %.not, i1 true, i1 %.not21
-  br i1 %or.cond, label %._crit_edge20, label %.lr.ph.us
+  %4 = icmp ne ptr %i.c, %i.d
+  %5 = icmp ne ptr %i.f, %i.g
+  %or.cond = select i1 %4, i1 %5, i1 false
+  br i1 %or.cond, label %.lr.ph.preheader, label %._crit_edge20.split
 
-.lr.ph.us:                                        ; preds = %bb.a, %._crit_edge.us
-  %.017.us = phi i64 [ %i.ah, %._crit_edge.us ], [ 0, %bb.a ] ; 2 uses
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %6 = ptrtoint ptr %i.f to i64
+  %7 = ptrtoint ptr %i.g to i64
+  %8 = sub i64 %6, %7
+  %9 = ashr exact i64 %8, 3
+  %10 = ptrtoint ptr %i.c to i64
+  %11 = ptrtoint ptr %i.d to i64
+  %12 = sub i64 %10, %11
+  %13 = ashr exact i64 %12, 3
+  br label %.lr.ph.us
+
+._crit_edge20.split:                              ; preds = %._crit_edge, %bb.a
+  ret void
+
+.lr.ph.us:                                        ; preds = %.lr.ph.preheader, %._crit_edge
+  %.017.us = phi i64 [ %14, %._crit_edge ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %i.h = load ptr, ptr %1, align 8, !tbaa !17
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %.017.us
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !18   ; 3 uses
   br label %bb.b
 
-bb.b:                                             ; preds = %.lr.ph.us, %_ZN4geos9geomgraph5index24SimpleEdgeSetIntersector17computeIntersectsEPNS0_4EdgeES4_PNS1_18SegmentIntersectorE.exit.us
-  %.01516.us = phi i64 [ 0, %.lr.ph.us ], [ %i.ag, %_ZN4geos9geomgraph5index24SimpleEdgeSetIntersector17computeIntersectsEPNS0_4EdgeES4_PNS1_18SegmentIntersectorE.exit.us ] ; 2 uses
+._crit_edge:                                      ; preds = %._crit_edge.us
+  %14 = add nuw i64 %.017.us, 1                   ; 2 uses
+  %exitcond22.not = icmp eq i64 %14, %13
+  br i1 %exitcond22.not, label %._crit_edge20.split, label %.lr.ph.us, !llvm.loop !28
+
+bb.b:                                             ; preds = %.lr.ph.us, %._crit_edge.us
+  %.01516.us = phi i64 [ 0, %.lr.ph.us ], [ %i.ah, %._crit_edge.us ] ; 2 uses
   %i.k = load ptr, ptr %2, align 8, !tbaa !17
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %.01516.us
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !18   ; 3 uses
@@ -287,41 +298,33 @@ bb.b:                                             ; preds = %.lr.ph.us, %_ZN4geo
   %i.ac = tail call noundef i64 %i.ab(ptr noundef nonnull align 8 dereferenceable(8) %i.u), !inline_history !21
   %i.ad = add i64 %i.y, -1                        ; 2 uses
   %.not.i.us = icmp eq i64 %i.ad, 0
-  br i1 %.not.i.us, label %_ZN4geos9geomgraph5index24SimpleEdgeSetIntersector17computeIntersectsEPNS0_4EdgeES4_PNS1_18SegmentIntersectorE.exit.us, label %.preheader.lr.ph.i.us
+  br i1 %.not.i.us, label %._crit_edge.us, label %.preheader.lr.ph.i.us
 
 .preheader.lr.ph.i.us:                            ; preds = %bb.b
   %i.ae = add i64 %i.ac, -1                       ; 2 uses
   %.not18.i.us = icmp eq i64 %i.ae, 0
-  br i1 %.not18.i.us, label %_ZN4geos9geomgraph5index24SimpleEdgeSetIntersector17computeIntersectsEPNS0_4EdgeES4_PNS1_18SegmentIntersectorE.exit.us, label %.preheader.us.i.us
+  br i1 %.not18.i.us, label %._crit_edge.us, label %.preheader.us.i.us
 
 .preheader.us.i.us:                               ; preds = %.preheader.lr.ph.i.us, %._crit_edge.us.i.us
   %.01416.us.i.us = phi i64 [ %i.af, %._crit_edge.us.i.us ], [ 0, %.preheader.lr.ph.i.us ] ; 2 uses
-  br label %12
+  br label %_ZN4geos9geomgraph5index24SimpleEdgeSetIntersector17computeIntersectsEPNS0_4EdgeES4_PNS1_18SegmentIntersectorE.exit.us
 
-12:                                               ; preds = %12, %.preheader.us.i.us
-  %.015.us.i.us = phi i64 [ 0, %.preheader.us.i.us ], [ %13, %12 ] ; 2 uses
-  tail call void @_ZN4geos9geomgraph5index18SegmentIntersector16addIntersectionsEPNS0_4EdgeEmS4_m(ptr noundef nonnull align 8 dereferenceable(76) %3, ptr noundef nonnull %i.j, i64 noundef %.01416.us.i.us, ptr noundef nonnull %i.m, i64 noundef %.015.us.i.us)
-  %13 = add nuw i64 %.015.us.i.us, 1              ; 2 uses
-  %exitcond.not.i.us = icmp eq i64 %13, %i.ae
-  br i1 %exitcond.not.i.us, label %._crit_edge.us.i.us, label %12, !llvm.loop !22
-
-._crit_edge.us.i.us:                              ; preds = %12
+._crit_edge.us.i.us:                              ; preds = %_ZN4geos9geomgraph5index24SimpleEdgeSetIntersector17computeIntersectsEPNS0_4EdgeES4_PNS1_18SegmentIntersectorE.exit.us
   %i.af = add nuw i64 %.01416.us.i.us, 1          ; 2 uses
   %exitcond20.not.i.us = icmp eq i64 %i.af, %i.ad
-  br i1 %exitcond20.not.i.us, label %_ZN4geos9geomgraph5index24SimpleEdgeSetIntersector17computeIntersectsEPNS0_4EdgeES4_PNS1_18SegmentIntersectorE.exit.us, label %.preheader.us.i.us, !llvm.loop !24
+  br i1 %exitcond20.not.i.us, label %._crit_edge.us, label %.preheader.us.i.us, !llvm.loop !24
 
-_ZN4geos9geomgraph5index24SimpleEdgeSetIntersector17computeIntersectsEPNS0_4EdgeES4_PNS1_18SegmentIntersectorE.exit.us: ; preds = %._crit_edge.us.i.us, %.preheader.lr.ph.i.us, %bb.b
-  %i.ag = add nuw i64 %.01516.us, 1               ; 2 uses
-  %exitcond.not.a = icmp eq i64 %i.ag, %11
-  br i1 %exitcond.not.a, label %._crit_edge.us, label %bb.b, !llvm.loop !28
+_ZN4geos9geomgraph5index24SimpleEdgeSetIntersector17computeIntersectsEPNS0_4EdgeES4_PNS1_18SegmentIntersectorE.exit.us: ; preds = %_ZN4geos9geomgraph5index24SimpleEdgeSetIntersector17computeIntersectsEPNS0_4EdgeES4_PNS1_18SegmentIntersectorE.exit.us, %.preheader.us.i.us
+  %.015.i = phi i64 [ 0, %.preheader.us.i.us ], [ %i.ag, %_ZN4geos9geomgraph5index24SimpleEdgeSetIntersector17computeIntersectsEPNS0_4EdgeES4_PNS1_18SegmentIntersectorE.exit.us ] ; 2 uses
+  tail call void @_ZN4geos9geomgraph5index18SegmentIntersector16addIntersectionsEPNS0_4EdgeEmS4_m(ptr noundef nonnull align 8 dereferenceable(76) %3, ptr noundef nonnull %i.j, i64 noundef %.01416.us.i.us, ptr noundef nonnull %i.m, i64 noundef %.015.i)
+  %i.ag = add nuw i64 %.015.i, 1                  ; 2 uses
+  %exitcond.not.a = icmp eq i64 %i.ag, %i.ae
+  br i1 %exitcond.not.a, label %._crit_edge.us.i.us, label %_ZN4geos9geomgraph5index24SimpleEdgeSetIntersector17computeIntersectsEPNS0_4EdgeES4_PNS1_18SegmentIntersectorE.exit.us, !llvm.loop !22
 
-._crit_edge.us:                                   ; preds = %_ZN4geos9geomgraph5index24SimpleEdgeSetIntersector17computeIntersectsEPNS0_4EdgeES4_PNS1_18SegmentIntersectorE.exit.us
-  %i.ah = add nuw i64 %.017.us, 1                 ; 2 uses
-  %exitcond24.not = icmp eq i64 %i.ah, %7
-  br i1 %exitcond24.not, label %._crit_edge20, label %.lr.ph.us, !llvm.loop !29
-
-._crit_edge20:                                    ; preds = %._crit_edge.us, %bb.a
-  ret void
+._crit_edge.us:                                   ; preds = %._crit_edge.us.i.us, %bb.b, %.preheader.lr.ph.i.us
+  %i.ah = add nuw i64 %.01516.us, 1               ; 2 uses
+  %exitcond24.not = icmp eq i64 %i.ah, %9
+  br i1 %exitcond24.not, label %._crit_edge, label %bb.b, !llvm.loop !29
 }
 
 declare void @_ZN4geos9geomgraph5index18SegmentIntersector16addIntersectionsEPNS0_4EdgeEmS4_m(ptr noundef nonnull align 8 dereferenceable(76), ptr noundef, i64 noundef, ptr noundef, i64 noundef) local_unnamed_addr #2

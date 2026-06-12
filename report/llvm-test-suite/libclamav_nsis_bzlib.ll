@@ -201,7 +201,7 @@ bb.dk:                                            ; preds = %bb.ed, %._crit_edge
   br i1 %i.ayv, label %.preheader1391.lr.ph.i, label %._crit_edge1539.i
 
 .preheader1391.lr.ph.i:                           ; preds = %.preheader1392.i
-  %1 = icmp slt i32 %.5988.i, 1                   ; 2 uses
+  %1 = icmp sgt i32 %.5988.i, 0
   %wide.trip.count.i.i = zext i32 %.5988.i to i64 ; 7 uses
   %wide.trip.count1751.i = zext nneg i32 %.41014.i to i64
   %min.iters.check525 = icmp ult i32 %.5988.i, 8
@@ -557,7 +557,7 @@ bb.ed:                                            ; preds = %bb.dq
 
 .preheader1391.i:                                 ; preds = %CreateDecodeTables.exit.i, %.preheader1391.lr.ph.i
   %indvars.iv1747.i = phi i64 [ 0, %.preheader1391.lr.ph.i ], [ %indvars.iv.next1748.i, %CreateDecodeTables.exit.i ] ; 8 uses
-  br i1 %1, label %.preheader68.i.thread.i, label %.lr.ph1534.i
+  br i1 %1, label %.lr.ph1534.i, label %.preheader68.i.thread.i
 
 .preheader68.i.thread.i:                          ; preds = %.preheader1391.i
   %i.bft = getelementptr inbounds nuw [1032 x i8], ptr %i.ae, i64 %indvars.iv1747.i
@@ -624,6 +624,11 @@ scalar.ph524:                                     ; preds = %scalar.ph524.prehea
   %.05774.us.i.i = phi i32 [ %i.bhi, %._crit_edge.us.i.i ], [ %.1.i.lcssa, %.preheader69.us.i.preheader.i ] ; 5 uses
   %.05873.us.i.i = phi i32 [ %.260.us.i.i.lcssa, %._crit_edge.us.i.i ], [ 0, %.preheader69.us.i.preheader.i ] ; 2 uses
   br i1 %i.ayw, label %.epil.preheader, label %.preheader69.us.i.i.new
+
+.preheader68.i.i:                                 ; preds = %._crit_edge.us.i.i
+  %2 = getelementptr inbounds nuw [1032 x i8], ptr %i.ae, i64 %indvars.iv1747.i ; 28 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(92) %2, i8 0, i64 92, i1 false), !tbaa !4
+  br i1 %i.ayx, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i
 
 .preheader69.us.i.i.new:                          ; preds = %.preheader69.us.i.i, %bb.eh
   %indvars.iv.i1359.i = phi i64 [ %indvars.iv.next.i1360.i.1, %bb.eh ], [ 0, %.preheader69.us.i.i ] ; 4 uses
@@ -693,11 +698,6 @@ bb.ei:                                            ; preds = %.epil.preheader
   %i.bhi = add nuw nsw i32 %.05774.us.i.i, 1
   %exitcond88.not.i.i = icmp eq i32 %.05774.us.i.i, %spec.select.i.lcssa
   br i1 %exitcond88.not.i.i, label %.preheader68.i.i, label %.preheader69.us.i.i, !llvm.loop !97
-
-.preheader68.i.i:                                 ; preds = %._crit_edge.us.i.i
-  %2 = getelementptr inbounds nuw [1032 x i8], ptr %i.ae, i64 %indvars.iv1747.i ; 28 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(92) %2, i8 0, i64 92, i1 false), !tbaa !4
-  br i1 %i.ayx, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i
 
 .preheader66.loopexit.i.i.unr-lcssa:              ; preds = %.lr.ph.i.i
   br i1 %lcmp.mod756.not, label %.preheader66.loopexit.i.i, label %.lr.ph.i.i.epil.preheader
@@ -771,8 +771,8 @@ bb.ei:                                            ; preds = %.epil.preheader
   br label %.preheader66.i.i
 
 .preheader66.i.i:                                 ; preds = %.preheader66.loopexit.i.i, %.preheader68.i.thread.i
-  %.0925.lcssa20082018.i = phi i32 [ %spec.select.i.lcssa, %.preheader66.loopexit.i.i ], [ 0, %.preheader68.i.thread.i ] ; 4 uses
-  %.0922.lcssa20102017.i = phi i32 [ %.1.i.lcssa, %.preheader66.loopexit.i.i ], [ 32, %.preheader68.i.thread.i ] ; 5 uses
+  %.0925.lcssa20082018.i = phi i32 [ %spec.select.i.lcssa, %.preheader66.loopexit.i.i ], [ 0, %.preheader68.i.thread.i ] ; 5 uses
+  %.0922.lcssa20102017.i = phi i32 [ %.1.i.lcssa, %.preheader66.loopexit.i.i ], [ 32, %.preheader68.i.thread.i ] ; 7 uses
   %i.bhq = phi i32 [ %.pre1916.i, %.preheader66.loopexit.i.i ], [ 0, %.preheader68.i.thread.i ]
   %i.bhr = phi i32 [ %.pre1914.i, %.preheader66.loopexit.i.i ], [ 0, %.preheader68.i.thread.i ]
   %i.bhs = phi i32 [ %.pre151.i.i, %.preheader66.loopexit.i.i ], [ 0, %.preheader68.i.thread.i ]
@@ -863,7 +863,8 @@ bb.ei:                                            ; preds = %.epil.preheader
   %i.bke = add nsw i32 %i.bkc, %i.bhq
   store i32 %i.bke, ptr %i.bkd, align 4, !tbaa !4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(92) %i.bin, i8 0, i64 92, i1 false), !tbaa !4
-  br i1 %1, label %.preheader.i.i, label %.lr.ph82.preheader.i.i
+  %.not6279.i.i = icmp samesign ugt i32 %.0922.lcssa20102017.i, %.0925.lcssa20082018.i
+  br i1 %.not6279.i.i, label %.preheader.i.i, label %.lr.ph82.preheader.i.i
 
 .lr.ph.i.i:                                       ; preds = %.preheader68.i.i, %.lr.ph.i.i
   %indvars.iv92.i.i = phi i64 [ %indvars.iv.next93.i.i.3, %.lr.ph.i.i ], [ 0, %.preheader68.i.i ] ; 5 uses
@@ -909,18 +910,18 @@ bb.ei:                                            ; preds = %.epil.preheader
   br i1 %niter759.ncmp.3, label %.preheader66.loopexit.i.i.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !100
 
 .lr.ph82.preheader.i.i:                           ; preds = %.preheader66.i.i
-  %i.blk = zext nneg i32 %.0922.lcssa20102017.i to i64 ; 4 uses
+  %i.blk = zext nneg i32 %.0922.lcssa20102017.i to i64 ; 3 uses
   %i.bll = add nuw nsw i32 %.0925.lcssa20082018.i, 1
-  %wide.trip.count107.i.i = zext nneg i32 %i.bll to i64
   %.phi.trans.insert1917.i = getelementptr inbounds nuw [4 x i8], ptr %i.bim, i64 %i.blk
   %.pre1918.i = load i32, ptr %.phi.trans.insert1917.i, align 4, !tbaa !4 ; 2 uses
-  %3 = sub nsw i64 %wide.trip.count107.i.i, %i.blk ; 3 uses
+  %narrow = sub nuw i32 %i.bll, %.0922.lcssa20102017.i ; 2 uses
+  %3 = zext i32 %narrow to i64                    ; 2 uses
   %xtraiter760 = and i64 %3, 1
   %i.blm = icmp eq i32 %.0925.lcssa20082018.i, %.0922.lcssa20102017.i
   br i1 %i.blm, label %.lr.ph82.i.i.epil.preheader, label %.lr.ph82.preheader.i.i.new
 
 .lr.ph82.preheader.i.i.new:                       ; preds = %.lr.ph82.preheader.i.i
-  %unroll_iter764 = and i64 %3, -2
+  %unroll_iter764 = and i64 %3, 4294967294
   br label %.lr.ph82.i.i
 
 .preheader.i.i.loopexit.unr-lcssa:                ; preds = %.lr.ph82.i.i
@@ -931,7 +932,7 @@ bb.ei:                                            ; preds = %.epil.preheader
   %.epil.init = phi i32 [ %.pre1918.i, %.lr.ph82.preheader.i.i ], [ %i.bmo, %.preheader.i.i.loopexit.unr-lcssa ]
   %indvars.iv104.i.i.epil.init = phi i64 [ %i.blk, %.lr.ph82.preheader.i.i ], [ %indvars.iv.next105.i.i.1, %.preheader.i.i.loopexit.unr-lcssa ] ; 2 uses
   %.081.i.i.epil.init = phi i32 [ 0, %.lr.ph82.preheader.i.i ], [ %i.bmt, %.preheader.i.i.loopexit.unr-lcssa ]
-  %lcmp.mod763 = trunc i64 %3 to i1
+  %lcmp.mod763 = trunc i32 %narrow to i1
   tail call void @llvm.assume(i1 %lcmp.mod763)
   %i.bln = getelementptr inbounds nuw [4 x i8], ptr %i.bim, i64 %indvars.iv104.i.i.epil.init
   %i.blo = getelementptr inbounds nuw i8, ptr %i.bln, i64 4
