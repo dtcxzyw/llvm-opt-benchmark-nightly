@@ -201,12 +201,14 @@ _ZN6icu_786number4impl13NullableValueINS_12CurrencyUnitEEaSERKS4_.exit: ; preds 
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
   %.not.i = icmp eq ptr %0, %1
-  %2 = load ptr, ptr %i.n, align 8
-  %.not7.i = icmp eq ptr %2, null
-  %or.cond.i = select i1 %.not.i, i1 true, i1 %.not7.i
-  br i1 %or.cond.i, label %_ZN6icu_786number4impl25CurrencyPluralInfoWrapperaSERKS2_.exit, label %bb.d
+  br i1 %.not.i, label %_ZN6icu_786number4impl25CurrencyPluralInfoWrapperaSERKS2_.exit, label %2
 
-bb.d:                                             ; preds = %_ZN6icu_786number4impl13NullableValueINS_12CurrencyUnitEEaSERKS4_.exit
+2:                                                ; preds = %_ZN6icu_786number4impl13NullableValueINS_12CurrencyUnitEEaSERKS4_.exit
+  %3 = load ptr, ptr %i.n, align 8
+  %.not7.i = icmp eq ptr %3, null
+  br i1 %.not7.i, label %_ZN6icu_786number4impl25CurrencyPluralInfoWrapperaSERKS2_.exit, label %bb.d
+
+bb.d:                                             ; preds = %2
   %i.o = tail call noundef ptr @_ZN6icu_787UMemorynwEm(i64 noundef 40) #13 ; 3 uses
   %i.p = icmp eq ptr %i.o, null
   br i1 %i.p, label %bb.f, label %bb.e
@@ -232,7 +234,7 @@ _ZN6icu_7812LocalPointerINS_18CurrencyPluralInfoEE12adoptInsteadEPS1_.exit.i: ; 
   store ptr %i.o, ptr %i.m, align 8
   br label %_ZN6icu_786number4impl25CurrencyPluralInfoWrapperaSERKS2_.exit
 
-_ZN6icu_786number4impl25CurrencyPluralInfoWrapperaSERKS2_.exit: ; preds = %_ZN6icu_786number4impl13NullableValueINS_12CurrencyUnitEEaSERKS4_.exit, %_ZN6icu_7812LocalPointerINS_18CurrencyPluralInfoEE12adoptInsteadEPS1_.exit.i
+_ZN6icu_786number4impl25CurrencyPluralInfoWrapperaSERKS2_.exit: ; preds = %_ZN6icu_786number4impl13NullableValueINS_12CurrencyUnitEEaSERKS4_.exit, %2, %_ZN6icu_7812LocalPointerINS_18CurrencyPluralInfoEE12adoptInsteadEPS1_.exit.i
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.y = load i8, ptr %i.x, align 8, !range !11, !noundef !15 ; 2 uses

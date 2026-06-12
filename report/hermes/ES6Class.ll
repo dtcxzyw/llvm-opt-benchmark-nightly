@@ -201,35 +201,41 @@ bb.g:                                             ; preds = %bb.f
   %i.aj = getelementptr inbounds [8 x i8], ptr %i.aa, i64 %i.ai
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.aj, ptr align 8 %.015, i64 %i.af, i1 false)
   %.pre19 = load i32, ptr %i.b, align 8, !tbaa !1036
-  br label %_ZSt13move_backwardIPPN6hermes6ESTree4NodeES4_ET0_T_S6_S5_.exit.a
+  br label %_ZSt13move_backwardIPPN6hermes6ESTree4NodeES4_ET0_T_S6_S5_.exit
 
 bb.h:                                             ; preds = %bb.f
   %i.ak = icmp eq i64 %i.af, 8
-  br i1 %i.ak, label %bb.i, label %_ZSt13move_backwardIPPN6hermes6ESTree4NodeES4_ET0_T_S6_S5_.exit.a
+  br i1 %i.ak, label %bb.i, label %_ZSt13move_backwardIPPN6hermes6ESTree4NodeES4_ET0_T_S6_S5_.exit
 
 bb.i:                                             ; preds = %bb.h
   %i.al = load ptr, ptr %.015, align 8, !tbaa !408
   store ptr %i.al, ptr %i.ab, align 8, !tbaa !408
-  br label %_ZSt13move_backwardIPPN6hermes6ESTree4NodeES4_ET0_T_S6_S5_.exit.a
+  br label %_ZSt13move_backwardIPPN6hermes6ESTree4NodeES4_ET0_T_S6_S5_.exit
 
-_ZSt13move_backwardIPPN6hermes6ESTree4NodeES4_ET0_T_S6_S5_.exit.a: ; preds = %bb.g, %bb.h, %bb.i
+_ZSt13move_backwardIPPN6hermes6ESTree4NodeES4_ET0_T_S6_S5_.exit: ; preds = %bb.g, %bb.h, %bb.i
   %3 = phi i32 [ %.pre19, %bb.g ], [ %i.y, %bb.h ], [ %i.y, %bb.i ]
   %4 = add i32 %3, 1                              ; 2 uses
   store i32 %4, ptr %i.b, align 8, !tbaa !1036
   %.not18 = icmp ugt ptr %.015, %2
-  %i.am = load ptr, ptr %0, align 8
+  br i1 %.not18, label %6, label %_ZSt13move_backwardIPPN6hermes6ESTree4NodeES4_ET0_T_S6_S5_.exit.a
+
+_ZSt13move_backwardIPPN6hermes6ESTree4NodeES4_ET0_T_S6_S5_.exit.a: ; preds = %_ZSt13move_backwardIPPN6hermes6ESTree4NodeES4_ET0_T_S6_S5_.exit
+  %i.am = load ptr, ptr %0, align 8, !tbaa !1035
   %i.an = zext i32 %4 to i64
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %i.an
-  %5 = icmp uge ptr %2, %i.ao
-  %6 = select i1 %.not18, i1 true, i1 %5
-  %.0.idx = select i1 %6, i64 0, i64 8
+  %5 = icmp ult ptr %2, %i.ao
+  %.0.idx = select i1 %5, i64 8, i64 0
   %.0.a = getelementptr inbounds nuw i8, ptr %2, i64 %.0.idx
-  %7 = load ptr, ptr %.0.a, align 8, !tbaa !408
+  br label %6
+
+6:                                                ; preds = %_ZSt13move_backwardIPPN6hermes6ESTree4NodeES4_ET0_T_S6_S5_.exit.a, %_ZSt13move_backwardIPPN6hermes6ESTree4NodeES4_ET0_T_S6_S5_.exit
+  %.0 = phi ptr [ %2, %_ZSt13move_backwardIPPN6hermes6ESTree4NodeES4_ET0_T_S6_S5_.exit ], [ %.0.a, %_ZSt13move_backwardIPPN6hermes6ESTree4NodeES4_ET0_T_S6_S5_.exit.a ]
+  %7 = load ptr, ptr %.0, align 8, !tbaa !408
   store ptr %7, ptr %.015, align 8, !tbaa !408
   br label %bb.j
 
-bb.j:                                             ; preds = %_ZSt13move_backwardIPPN6hermes6ESTree4NodeES4_ET0_T_S6_S5_.exit.a, %_ZN4llvh23SmallVectorTemplateBaseIPN6hermes6ESTree4NodeELb1EE9push_backERKS4_.exit
-  %.014 = phi ptr [ %i.r, %_ZN4llvh23SmallVectorTemplateBaseIPN6hermes6ESTree4NodeELb1EE9push_backERKS4_.exit ], [ %.015, %_ZSt13move_backwardIPPN6hermes6ESTree4NodeES4_ET0_T_S6_S5_.exit.a ]
+bb.j:                                             ; preds = %6, %_ZN4llvh23SmallVectorTemplateBaseIPN6hermes6ESTree4NodeELb1EE9push_backERKS4_.exit
+  %.014 = phi ptr [ %i.r, %_ZN4llvh23SmallVectorTemplateBaseIPN6hermes6ESTree4NodeELb1EE9push_backERKS4_.exit ], [ %.015, %6 ]
   ret ptr %.014
 }
 

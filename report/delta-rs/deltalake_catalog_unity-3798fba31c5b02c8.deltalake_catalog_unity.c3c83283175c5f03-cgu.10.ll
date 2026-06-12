@@ -201,16 +201,18 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 8 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i64, ptr %i.b, align 8, !noundef !3 ; 2 uses
-  %1 = icmp eq i64 %i.c, -1
-  %2 = load ptr, ptr %0, align 8                  ; 2 uses
-  %.not.a = icmp eq ptr %2, null
-  %or.cond = select i1 %1, i1 true, i1 %.not.a
-  br i1 %or.cond, label %bb.b, label %bb.c
+  %.not.a = icmp eq i64 %i.c, -1
+  br i1 %.not.a, label %bb.b, label %1
 
-bb.b:                                             ; preds = %bb.a, %.noexc9
+1:                                                ; preds = %bb.a
+  %2 = load ptr, ptr %0, align 8, !noundef !3     ; 2 uses
+  %.not = icmp eq ptr %2, null
+  br i1 %.not, label %bb.b, label %bb.c
+
+bb.b:                                             ; preds = %bb.a, %.noexc9, %1
   ret void
 
-bb.c:                                             ; preds = %bb.a
+bb.c:                                             ; preds = %1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !nonnull !3, !noundef !3
@@ -331,16 +333,18 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 8 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i64, ptr %i.b, align 8, !noundef !3 ; 2 uses
-  %1 = icmp eq i64 %i.c, -1
-  %2 = load ptr, ptr %0, align 8                  ; 2 uses
-  %.not.a = icmp eq ptr %2, null
-  %or.cond = select i1 %1, i1 true, i1 %.not.a
-  br i1 %or.cond, label %bb.b, label %bb.c
+  %.not.a = icmp eq i64 %i.c, -1
+  br i1 %.not.a, label %bb.b, label %1
 
-bb.b:                                             ; preds = %bb.a, %.noexc9
+1:                                                ; preds = %bb.a
+  %2 = load ptr, ptr %0, align 8, !noundef !3     ; 2 uses
+  %.not = icmp eq ptr %2, null
+  br i1 %.not, label %bb.b, label %bb.c
+
+bb.b:                                             ; preds = %bb.a, %.noexc9, %1
   ret void
 
-bb.c:                                             ; preds = %bb.a
+bb.c:                                             ; preds = %1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !nonnull !3, !noundef !3

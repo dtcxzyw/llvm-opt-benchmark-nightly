@@ -123,13 +123,15 @@ bb.a:
   %4 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 13 uses
   %5 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 13 uses
   %i.a = load i8, ptr %0, align 8, !tbaa !7
-  %6 = icmp eq i8 %i.a, 2
-  %7 = load i8, ptr %1, align 8
-  %i.b = icmp eq i8 %7, 2
-  %or.cond.i = select i1 %6, i1 %i.b, i1 false
-  br i1 %or.cond.i, label %bb.b, label %bb.d
+  %i.b = icmp eq i8 %i.a, 2
+  br i1 %i.b, label %6, label %bb.d
 
-bb.b:                                             ; preds = %bb.a
+6:                                                ; preds = %bb.a
+  %7 = load i8, ptr %1, align 8, !tbaa !7
+  %8 = icmp eq i8 %7, 2
+  br i1 %8, label %bb.b, label %bb.d
+
+bb.b:                                             ; preds = %6
   tail call void @_ZN6duckdb6Vector13SetVectorTypeENS_10VectorTypeE(ptr noundef nonnull align 8 dereferenceable(104) %2, i8 noundef zeroext 2)
   tail call void @_ZN6duckdb14ConstantVector16VerifyVectorTypeIhEEvRKNS_6VectorE(ptr noundef nonnull align 8 dereferenceable(104) %0)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -186,7 +188,7 @@ _ZN6duckdb12_GLOBAL__N_110TernaryAnd9OperationEbbbbRb.exit.i: ; preds = %.sink.s
   tail call void @_ZN6duckdb14ConstantVector7SetNullERNS_6VectorEb(ptr noundef nonnull align 8 dereferenceable(104) %2, i1 noundef zeroext %.0.i.i)
   br label %_ZN6duckdb12_GLOBAL__N_124TemplatedBooleanNullmaskINS0_10TernaryAndEEEvRNS_6VectorES4_S4_m.exit
 
-bb.d:                                             ; preds = %bb.a
+bb.d:                                             ; preds = %6, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #17
   call void @_ZN6duckdb19UnifiedVectorFormatC1Ev(ptr noundef nonnull align 8 dereferenceable(73) %4)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #17
@@ -589,13 +591,15 @@ bb.a:
   %4 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 13 uses
   %5 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 13 uses
   %i.a = load i8, ptr %0, align 8, !tbaa !7
-  %6 = icmp eq i8 %i.a, 2
-  %7 = load i8, ptr %1, align 8
-  %i.b = icmp eq i8 %7, 2
-  %or.cond.i = select i1 %6, i1 %i.b, i1 false
-  br i1 %or.cond.i, label %bb.b, label %bb.g
+  %i.b = icmp eq i8 %i.a, 2
+  br i1 %i.b, label %6, label %bb.g
 
-bb.b:                                             ; preds = %bb.a
+6:                                                ; preds = %bb.a
+  %7 = load i8, ptr %1, align 8, !tbaa !7
+  %8 = icmp eq i8 %7, 2
+  br i1 %8, label %bb.b, label %bb.g
+
+bb.b:                                             ; preds = %6
   tail call void @_ZN6duckdb6Vector13SetVectorTypeENS_10VectorTypeE(ptr noundef nonnull align 8 dereferenceable(104) %2, i8 noundef zeroext 2)
   tail call void @_ZN6duckdb14ConstantVector16VerifyVectorTypeIhEEvRKNS_6VectorE(ptr noundef nonnull align 8 dereferenceable(104) %0)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -675,7 +679,7 @@ _ZN6duckdb12_GLOBAL__N_19TernaryOr9OperationEbbbbRb.exit.i: ; preds = %.thread10
   tail call void @_ZN6duckdb14ConstantVector7SetNullERNS_6VectorEb(ptr noundef nonnull align 8 dereferenceable(104) %2, i1 noundef zeroext %.0.i.i)
   br label %_ZN6duckdb12_GLOBAL__N_124TemplatedBooleanNullmaskINS0_9TernaryOrEEEvRNS_6VectorES4_S4_m.exit
 
-bb.g:                                             ; preds = %bb.a
+bb.g:                                             ; preds = %6, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #17
   call void @_ZN6duckdb19UnifiedVectorFormatC1Ev(ptr noundef nonnull align 8 dereferenceable(73) %4)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #17

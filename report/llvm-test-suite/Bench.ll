@@ -201,26 +201,30 @@ bb.a:
   %i.h = zext i32 %i.d to i64                     ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 4 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !28   ; 2 uses
-  %.not.i = icmp ne ptr %i.j, null
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 3 uses
-  %8 = load i64, ptr %7, align 8
-  %i.k = icmp eq i64 %8, %i.h
-  %or.cond.i = select i1 %.not.i, i1 %i.k, i1 false
-  br i1 %or.cond.i, label %_ZN12CBenchBuffer5AllocEm.exit43, label %_ZN12CBenchBuffer5AllocEm.exit
+  %i.k = icmp eq ptr %i.j, null
+  br i1 %i.k, label %_ZN12CBenchBuffer5AllocEm.exit, label %7
 
-_ZN12CBenchBuffer5AllocEm.exit:                   ; preds = %bb.a
+7:                                                ; preds = %bb.a
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 184
+  %9 = load i64, ptr %8, align 8, !tbaa !23
+  %10 = icmp eq i64 %9, %i.h
+  br i1 %10, label %_ZN12CBenchBuffer5AllocEm.exit43, label %_ZN12CBenchBuffer5AllocEm.exit
+
+_ZN12CBenchBuffer5AllocEm.exit:                   ; preds = %bb.a, %7
   tail call void @MidFree(ptr noundef %i.j)
   store ptr null, ptr %i.i, align 8, !tbaa !28
   %i.l = tail call ptr @MidAlloc(i64 noundef %i.h) ; 2 uses
   store ptr %i.l, ptr %i.i, align 8, !tbaa !28
-  store i64 %i.h, ptr %7, align 8, !tbaa !23
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 184
+  store i64 %i.h, ptr %11, align 8, !tbaa !23
   %.not73.a = icmp eq ptr %i.l, null
   br i1 %.not73.a, label %bb.z, label %_ZN12CBenchBuffer5AllocEm.exit43
 
-_ZN12CBenchBuffer5AllocEm.exit43:                 ; preds = %_ZN12CBenchBuffer5AllocEm.exit, %bb.a
+_ZN12CBenchBuffer5AllocEm.exit43:                 ; preds = %_ZN12CBenchBuffer5AllocEm.exit, %7
   tail call void @_ZN21CBenchRandomGenerator8GenerateEv(ptr noundef nonnull align 8 dereferenceable(32) %i.b)
   %i.m = load ptr, ptr %i.i, align 8, !tbaa !28
-  %i.n = load i64, ptr %7, align 8, !tbaa !23
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 184
+  %i.n = load i64, ptr %12, align 8, !tbaa !23
   %i.o = tail call i32 @CrcCalc(ptr noundef %i.m, i64 noundef %i.n)
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 160
   store i32 %i.o, ptr %i.p, align 8, !tbaa !98
@@ -234,13 +238,13 @@ _ZN12CBenchBuffer5AllocEm.exit43:                 ; preds = %_ZN12CBenchBuffer5A
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTV19CBenchmarkOutStream, i64 80), ptr %i.r, align 8, !tbaa !58
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   store ptr %i.q, ptr %i.u, align 8, !tbaa !100
-  %9 = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   %i.v = zext i32 %i.g to i64                     ; 2 uses
   tail call void @MidFree(ptr noundef null)
   store ptr null, ptr %i.s, align 8, !tbaa !28
   %i.w = tail call ptr @MidAlloc(i64 noundef %i.v) ; 2 uses
   store ptr %i.w, ptr %i.s, align 8, !tbaa !28
-  store i64 %i.v, ptr %9, align 8, !tbaa !23
+  %13 = getelementptr inbounds nuw i8, ptr %i.q, i64 16
+  store i64 %i.v, ptr %13, align 8, !tbaa !23
   %.not74 = icmp eq ptr %i.w, null
   br i1 %.not74, label %bb.z, label %_ZN12CBenchBuffer5AllocEm.exit43.thread
 
@@ -284,12 +288,12 @@ _ZN12CBenchBuffer5AllocEm.exit51:                 ; preds = %bb.c, %bb.d
   store ptr %i.aj, ptr %i.ah, align 8, !tbaa !103
   store i32 1, ptr %i.am, align 8, !tbaa !99
   store ptr %i.aj, ptr %i.ai, align 8, !tbaa !102
-  %10 = getelementptr inbounds nuw i8, ptr %i.aj, i64 16
   tail call void @MidFree(ptr noundef null)
   store ptr null, ptr %i.al, align 8, !tbaa !28
   %i.an = tail call ptr @MidAlloc(i64 noundef 5)  ; 2 uses
   store ptr %i.an, ptr %i.al, align 8, !tbaa !28
-  store i64 5, ptr %10, align 8, !tbaa !23
+  %14 = getelementptr inbounds nuw i8, ptr %i.aj, i64 16
+  store i64 5, ptr %14, align 8, !tbaa !23
   %.not75 = icmp eq ptr %i.an, null
   br i1 %.not75, label %bb.z, label %_ZN12CBenchBuffer5AllocEm.exit51.thread
 

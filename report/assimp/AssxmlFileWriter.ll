@@ -201,7 +201,7 @@ bb.fj:                                            ; preds = %.loopexit599._crit_
   %.not.i563.i = icmp ne ptr %i.wv, null
   %i.ww = icmp ne i32 %i.wt, 0
   %i.wx = select i1 %.not.i563.i, i1 %i.ww, i1 false
-  br i1 %i.wx, label %bb.fk, label %bb.fo
+  br i1 %i.wx, label %bb.fk, label %16
 
 bb.fk:                                            ; preds = %bb.fj
   invoke void (ptr, ptr, ...) @_ZN6Assimp16AssxmlFileWriterL8ioprintfEPNS_8IOStreamEPKcz(ptr noundef nonnull %i.h, ptr noundef nonnull @.str.72, i32 noundef %i.wt)
@@ -244,17 +244,19 @@ bb.fn:                                            ; preds = %.lr.ph696.i
 
 .loopexit597.i:                                   ; preds = %bb.fm, %.preheader596.i, %bb.fl
   invoke void (ptr, ptr, ...) @_ZN6Assimp16AssxmlFileWriterL8ioprintfEPNS_8IOStreamEPKcz(ptr noundef nonnull %i.h, ptr noundef nonnull @.str.73)
-          to label %bb.fo unwind label %bb.dx
+          to label %16 unwind label %bb.dx
 
-bb.fo:                                            ; preds = %.loopexit597.i, %bb.fj
-  %16 = getelementptr inbounds nuw i8, ptr %i.qb, i64 32 ; 2 uses
-  %17 = load ptr, ptr %16, align 8
-  %.not.i564.i = icmp eq ptr %17, null
+16:                                               ; preds = %.loopexit597.i, %bb.fj
+  %17 = getelementptr inbounds nuw i8, ptr %i.qb, i64 32 ; 2 uses
+  %18 = load ptr, ptr %17, align 8
+  %.not.i564.i = icmp eq ptr %18, null
+  br i1 %.not.i564.i, label %_ZNK6aiMesh24HasTangentsAndBitangentsEv.exit.thread.i, label %bb.fo
+
+bb.fo:                                            ; preds = %16
   %i.xn = getelementptr inbounds nuw i8, ptr %i.qb, i64 40 ; 2 uses
   %i.xo = load ptr, ptr %i.xn, align 8
   %.not1.i.i = icmp eq ptr %i.xo, null
-  %or.cond.i.i = select i1 %.not.i564.i, i1 true, i1 %.not1.i.i
-  br i1 %or.cond.i.i, label %_ZNK6aiMesh24HasTangentsAndBitangentsEv.exit.thread.i, label %_ZNK6aiMesh24HasTangentsAndBitangentsEv.exit.i
+  br i1 %.not1.i.i, label %_ZNK6aiMesh24HasTangentsAndBitangentsEv.exit.thread.i, label %_ZNK6aiMesh24HasTangentsAndBitangentsEv.exit.i
 
 _ZNK6aiMesh24HasTangentsAndBitangentsEv.exit.i:   ; preds = %bb.fo
   %i.xp = load i32, ptr %i.wa, align 4            ; 2 uses
@@ -275,7 +277,7 @@ bb.fq:                                            ; preds = %bb.fp
 
 .lr.ph698.i:                                      ; preds = %.preheader594.i, %bb.fr
   %indvars.iv810.i = phi i64 [ %indvars.iv.next811.i, %bb.fr ], [ 0, %.preheader594.i ] ; 2 uses
-  %i.xr = load ptr, ptr %16, align 8
+  %i.xr = load ptr, ptr %17, align 8
   %i.xs = getelementptr inbounds nuw [12 x i8], ptr %i.xr, i64 %indvars.iv810.i ; 3 uses
   %i.xt = load float, ptr %i.xs, align 4
   %i.xu = fpext float %i.xt to double
@@ -348,7 +350,7 @@ bb.fw:                                            ; preds = %.lr.ph700.i
   invoke void (ptr, ptr, ...) @_ZN6Assimp16AssxmlFileWriterL8ioprintfEPNS_8IOStreamEPKcz(ptr noundef nonnull %i.h, ptr noundef nonnull @.str.77)
           to label %_ZNK6aiMesh24HasTangentsAndBitangentsEv.exit.thread.i unwind label %bb.dx
 
-_ZNK6aiMesh24HasTangentsAndBitangentsEv.exit.thread.i: ; preds = %.loopexit593.i, %_ZNK6aiMesh24HasTangentsAndBitangentsEv.exit.i, %bb.fo
+_ZNK6aiMesh24HasTangentsAndBitangentsEv.exit.thread.i: ; preds = %.loopexit593.i, %_ZNK6aiMesh24HasTangentsAndBitangentsEv.exit.i, %bb.fo, %16
   %i.yv = getelementptr inbounds nuw i8, ptr %i.qb, i64 112
   %i.yw = getelementptr inbounds nuw i8, ptr %i.qb, i64 1312
   %i.yx = getelementptr inbounds nuw i8, ptr %i.qb, i64 176

@@ -201,8 +201,8 @@ bb.k:                                             ; preds = %bb.i
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.aa = load double, ptr %i.z, align 8, !tbaa !27 ; 9 uses
   %i.ab = fcmp ogt double %i.aa, 0.000000e+00
-  %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %i.ad = load double, ptr %i.ac, align 8         ; 6 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %i.ad = load double, ptr %i.ac, align 8, !tbaa !27 ; 6 uses
   %i.ae = fcmp ogt double %i.ad, 0.000000e+00
   %or.cond = select i1 %i.ab, i1 true, i1 %i.ae
   br i1 %or.cond, label %bb.o, label %bb.l
@@ -491,7 +491,8 @@ _ZN8facebook5velox4bits6orBitsEPmPKmii.exit.loopexit: ; preds = %_ZN8facebook5ve
 
 _ZN8facebook5velox4bits6orBitsEPmPKmii.exit:      ; preds = %_ZN8facebook5velox4bits6orBitsEPmPKmii.exit.loopexit, %bb.s, %bb.n, %._crit_edge.i.i.i, %bb.l
   %i.fe = phi double [ %.pre, %_ZN8facebook5velox4bits6orBitsEPmPKmii.exit.loopexit ], [ %i.aa, %bb.s ], [ %i.aa, %bb.n ], [ %i.aa, %._crit_edge.i.i.i ], [ %i.aa, %bb.l ] ; 3 uses
-  %i.ff = load double, ptr %i.ac, align 8, !tbaa !27 ; 3 uses
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %i.ff = load double, ptr %7, align 8, !tbaa !27 ; 3 uses
   %i.fg = fadd double %i.fe, %i.ff
   %i.fh = fmul double %i.fe, 3.000000e+00
   %i.fi = fmul double %i.fh, %i.ff

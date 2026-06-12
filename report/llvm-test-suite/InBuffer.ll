@@ -36,25 +36,28 @@ bb.a:
   %spec.store.select = tail call i32 @llvm.umax.i32(i32 %1, i32 1) ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !16   ; 2 uses
-  %.not = icmp ne ptr %i.b, null
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  %3 = load i32, ptr %2, align 8
-  %i.c = icmp eq i32 %3, %spec.store.select
-  %or.cond = select i1 %.not, i1 %i.c, i1 false
-  br i1 %or.cond, label %bb.c, label %bb.b
+  %i.c = icmp eq ptr %i.b, null
+  br i1 %i.c, label %bb.b, label %2
 
-bb.b:                                             ; preds = %bb.a
+2:                                                ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %4 = load i32, ptr %3, align 8, !tbaa !8
+  %5 = icmp eq i32 %4, %spec.store.select
+  br i1 %5, label %bb.c, label %bb.b
+
+bb.b:                                             ; preds = %2, %bb.a
   tail call void @MidFree(ptr noundef %i.b)
   store ptr null, ptr %i.a, align 8, !tbaa !16
-  store i32 %spec.store.select, ptr %2, align 8, !tbaa !8
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  store i32 %spec.store.select, ptr %6, align 8, !tbaa !8
   %i.d = zext i32 %spec.store.select to i64
   %i.e = tail call ptr @MidAlloc(i64 noundef %i.d) ; 2 uses
   store ptr %i.e, ptr %i.a, align 8, !tbaa !16
   %i.f = icmp ne ptr %i.e, null
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.a, %bb.b
-  %.0 = phi i1 [ %i.f, %bb.b ], [ true, %bb.a ]
+bb.c:                                             ; preds = %2, %bb.b
+  %.0 = phi i1 [ %i.f, %bb.b ], [ true, %2 ]
   ret i1 %.0
 }
 

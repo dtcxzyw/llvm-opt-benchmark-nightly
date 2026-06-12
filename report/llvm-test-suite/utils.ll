@@ -201,9 +201,8 @@ bb.l:                                             ; preds = %bb.k
   %i.ao = load i32, ptr %i.an, align 8, !tbaa !43
   %i.ap = and i32 %i.ao, 5
   %.not41 = icmp eq i32 %i.ap, 0
-  %.val = load i32, ptr %i.b, align 4
-  %.val42 = load i32, ptr %2, align 4
-  %.033 = select i1 %.not41, i32 %.val, i32 %.val42
+  %. = select i1 %.not41, ptr %i.b, ptr %2
+  %.val42 = load i32, ptr %., align 4, !tbaa !4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
   %i.aq = load ptr, ptr @_ZTTNSt7__cxx1119basic_istringstreamIcSt11char_traitsIcESaIcEEE, align 8 ; 2 uses
   store ptr %i.aq, ptr %4, align 8, !tbaa !41
@@ -286,7 +285,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit40: ; preds = %bb.
   resume { ptr, i32 } %.pn
 
 bb.p:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.d, %bb.b
-  %.134 = phi i32 [ %i.h, %bb.b ], [ %i.n, %bb.d ], [ %.033, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
+  %.134 = phi i32 [ %i.h, %bb.b ], [ %i.n, %bb.d ], [ %.val42, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
   ret i32 %.134
 }
 
@@ -428,9 +427,8 @@ bb.l:                                             ; preds = %bb.k
   %i.ao = load i32, ptr %i.an, align 8, !tbaa !43
   %i.ap = and i32 %i.ao, 5
   %.not41 = icmp eq i32 %i.ap, 0
-  %.val = load float, ptr %i.b, align 4
-  %.val42 = load float, ptr %2, align 4
-  %.033 = select i1 %.not41, float %.val, float %.val42
+  %. = select i1 %.not41, ptr %i.b, ptr %2
+  %.val42 = load float, ptr %., align 4, !tbaa !22
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
   %i.aq = load ptr, ptr @_ZTTNSt7__cxx1119basic_istringstreamIcSt11char_traitsIcESaIcEEE, align 8 ; 2 uses
   store ptr %i.aq, ptr %4, align 8, !tbaa !41
@@ -513,7 +511,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit40: ; preds = %bb.
   resume { ptr, i32 } %.pn
 
 bb.p:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.d, %bb.b
-  %.134 = phi float [ %i.h, %bb.b ], [ %i.n, %bb.d ], [ %.033, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
+  %.134 = phi float [ %i.h, %bb.b ], [ %i.n, %bb.d ], [ %.val42, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
   ret float %.134
 }
 

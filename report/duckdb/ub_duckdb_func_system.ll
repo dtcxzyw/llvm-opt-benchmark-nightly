@@ -201,7 +201,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 248
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !73
   %i.e = icmp eq ptr %i.b, %i.d
-  br i1 %i.e, label %bb.b, label %_ZNK6duckdb17AggregateFunctioneqERKS0_.exit
+  br i1 %i.e, label %bb.b, label %_ZNK6duckdb17AggregateFunctioneqERKS0_.exit.thread
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 256
@@ -209,7 +209,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 256
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !74
   %i.j = icmp eq ptr %i.g, %i.i
-  br i1 %i.j, label %bb.c, label %_ZNK6duckdb17AggregateFunctioneqERKS0_.exit
+  br i1 %i.j, label %bb.c, label %_ZNK6duckdb17AggregateFunctioneqERKS0_.exit.thread
 
 bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 264
@@ -217,7 +217,7 @@ bb.c:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 264
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !75
   %i.o = icmp eq ptr %i.l, %i.n
-  br i1 %i.o, label %bb.d, label %_ZNK6duckdb17AggregateFunctioneqERKS0_.exit
+  br i1 %i.o, label %bb.d, label %_ZNK6duckdb17AggregateFunctioneqERKS0_.exit.thread
 
 bb.d:                                             ; preds = %bb.c
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 272
@@ -225,7 +225,7 @@ bb.d:                                             ; preds = %bb.c
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 272
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !7
   %i.t = icmp eq ptr %i.q, %i.s
-  br i1 %i.t, label %bb.e, label %_ZNK6duckdb17AggregateFunctioneqERKS0_.exit
+  br i1 %i.t, label %bb.e, label %_ZNK6duckdb17AggregateFunctioneqERKS0_.exit.thread
 
 bb.e:                                             ; preds = %bb.d
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 280
@@ -233,7 +233,7 @@ bb.e:                                             ; preds = %bb.d
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 280
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !117
   %i.y = icmp eq ptr %i.v, %i.x
-  br i1 %i.y, label %bb.f, label %_ZNK6duckdb17AggregateFunctioneqERKS0_.exit
+  br i1 %i.y, label %bb.f, label %_ZNK6duckdb17AggregateFunctioneqERKS0_.exit.thread
 
 bb.f:                                             ; preds = %bb.e
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 296
@@ -241,17 +241,19 @@ bb.f:                                             ; preds = %bb.e
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 296
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !118
   %i.ad = icmp eq ptr %i.aa, %i.ac
-  br label %_ZNK6duckdb17AggregateFunctioneqERKS0_.exit
+  br i1 %i.ad, label %_ZNK6duckdb17AggregateFunctioneqERKS0_.exit, label %_ZNK6duckdb17AggregateFunctioneqERKS0_.exit.thread
 
-_ZNK6duckdb17AggregateFunctioneqERKS0_.exit:      ; preds = %bb.a, %bb.b, %bb.c, %bb.d, %bb.e, %bb.f
-  %2 = phi i1 [ false, %bb.e ], [ false, %bb.d ], [ false, %bb.c ], [ false, %bb.b ], [ false, %bb.a ], [ %i.ad, %bb.f ]
+_ZNK6duckdb17AggregateFunctioneqERKS0_.exit:      ; preds = %bb.f
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 376
-  %i.af = load i64, ptr %i.ae, align 8
+  %i.af = load i64, ptr %i.ae, align 8, !tbaa !186
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 376
-  %i.ah = load i64, ptr %i.ag, align 8
+  %i.ah = load i64, ptr %i.ag, align 8, !tbaa !186
   %i.ai = icmp eq i64 %i.af, %i.ah
-  %3 = select i1 %2, i1 %i.ai, i1 false
-  ret i1 %3
+  br label %_ZNK6duckdb17AggregateFunctioneqERKS0_.exit.thread
+
+_ZNK6duckdb17AggregateFunctioneqERKS0_.exit.thread: ; preds = %bb.a, %bb.b, %bb.c, %bb.d, %bb.e, %_ZNK6duckdb17AggregateFunctioneqERKS0_.exit, %bb.f
+  %2 = phi i1 [ false, %bb.f ], [ %i.ai, %_ZNK6duckdb17AggregateFunctioneqERKS0_.exit ], [ false, %bb.e ], [ false, %bb.d ], [ false, %bb.c ], [ false, %bb.b ], [ false, %bb.a ]
+  ret i1 %2
 }
 
 declare void @_ZN6duckdb6VectorC1ENS_11LogicalTypeEm(ptr noundef nonnull align 8 dereferenceable(104), ptr noundef, i64 noundef) unnamed_addr #3

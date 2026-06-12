@@ -201,17 +201,20 @@ bb.k:                                             ; preds = %bb.m
   %i.bi = load i64, ptr %i.q, align 8, !tbaa !62  ; 4 uses
   %i.bj = add i64 %i.bi, 1                        ; 3 uses
   %i.bk = load ptr, ptr %0, align 8, !tbaa !55    ; 2 uses
-  %i.bl = icmp eq ptr %i.bk, %i.f                 ; 2 uses
-  br i1 %i.bl, label %bb.l, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i
+  %i.bl = icmp eq ptr %i.bk, %i.f
+  br i1 %i.bl, label %bb.l, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 bb.l:                                             ; preds = %.peel.next
   %i.bm = icmp ult i64 %i.bi, 16
   call void @llvm.assume(i1 %i.bm)
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i: ; preds = %bb.l, %.peel.next
-  %5 = load i64, ptr %i.f, align 8
-  %6 = select i1 %i.bl, i64 15, i64 %5
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i: ; preds = %.peel.next
+  %5 = load i64, ptr %i.f, align 8, !tbaa !89
+  br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i, %bb.l
+  %6 = phi i64 [ %5, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i ], [ 15, %bb.l ]
   %i.bn = icmp ugt i64 %i.bj, %6
   br i1 %i.bn, label %bb.m, label %bb.n
 
@@ -614,17 +617,20 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i35.invoke
   %i.bl = load i64, ptr %i.b, align 8, !tbaa !62  ; 4 uses
   %i.bm = add i64 %i.bl, 1                        ; 3 uses
   %i.bn = load ptr, ptr %0, align 8, !tbaa !55    ; 2 uses
-  %i.bo = icmp eq ptr %i.bn, %i.a                 ; 2 uses
-  br i1 %i.bo, label %bb.f, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i
+  %i.bo = icmp eq ptr %i.bn, %i.a
+  br i1 %i.bo, label %bb.f, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 bb.f:                                             ; preds = %.peel.next
   %i.bp = icmp ult i64 %i.bl, 16
   call void @llvm.assume(i1 %i.bp)
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i: ; preds = %bb.f, %.peel.next
-  %5 = load i64, ptr %i.a, align 8
-  %6 = select i1 %i.bo, i64 15, i64 %5
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i: ; preds = %.peel.next
+  %5 = load i64, ptr %i.a, align 8, !tbaa !89
+  br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i, %bb.f
+  %6 = phi i64 [ %5, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i ], [ 15, %bb.f ]
   %i.bq = icmp ugt i64 %i.bm, %6
   br i1 %i.bq, label %bb.g, label %bb.h
 

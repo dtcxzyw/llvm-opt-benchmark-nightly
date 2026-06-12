@@ -201,24 +201,26 @@ define internal void @"_ZNSt17_Function_handlerIFvPN6hermes6ESTree4NodeENS0_5irg
 bb.a:
   %.val = load ptr, ptr %0, align 8, !tbaa !319   ; 3 uses
   %.val4 = load i32, ptr %2, align 4, !tbaa !321
-  %.val5 = load ptr, ptr %3, align 8, !tbaa !233
-  %4 = icmp ne i32 %.val4, 0
-  %5 = getelementptr inbounds nuw i8, ptr %.val, i64 16
-  %i.a = load ptr, ptr %5, align 8
-  %.not.i.i.i.a = icmp eq ptr %.val5, %i.a
-  %or.cond.i.i.i = select i1 %4, i1 %.not.i.i.i.a, i1 false
-  br i1 %or.cond.i.i.i, label %"_ZSt10__invoke_rIvRZZN6hermes5irgen11ESTreeIRGen17genForOfStatementEPNS0_6ESTree18ForOfStatementNodeEENK3$_0clEvEUlPNS3_4NodeENS1_17ControlFlowChangeEPNS0_10BasicBlockEE_JS8_S9_SB_EENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESF_E4typeEOSG_DpOSH_.exit", label %bb.b
+  %i.a = load ptr, ptr %.val, align 8, !tbaa !323
+  %.not.i.i.i.a = icmp eq i32 %.val4, 0
+  br i1 %.not.i.i.i.a, label %bb.b, label %4
 
-bb.b:                                             ; preds = %bb.a
-  %6 = load ptr, ptr %.val, align 8, !tbaa !323
+4:                                                ; preds = %bb.a
+  %.val5 = load ptr, ptr %3, align 8, !tbaa !233
+  %5 = getelementptr inbounds nuw i8, ptr %.val, i64 16
+  %6 = load ptr, ptr %5, align 8, !tbaa !325
+  %.not.i.i.i = icmp eq ptr %.val5, %6
+  br i1 %.not.i.i.i, label %"_ZSt10__invoke_rIvRZZN6hermes5irgen11ESTreeIRGen17genForOfStatementEPNS0_6ESTree18ForOfStatementNodeEENK3$_0clEvEUlPNS3_4NodeENS1_17ControlFlowChangeEPNS0_10BasicBlockEE_JS8_S9_SB_EENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESF_E4typeEOSG_DpOSH_.exit", label %bb.b
+
+bb.b:                                             ; preds = %4, %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %.val, i64 8
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !325, !nonnull !192, !align !193
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !326, !nonnull !192, !align !193
   %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.c, align 8, !tbaa !245
-  %i.d = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.e = tail call noundef ptr @_ZN6hermes9IRBuilder23createIteratorCloseInstEPNS_14AllocStackInstEb(ptr noundef nonnull align 8 dereferenceable(40) %i.d, ptr noundef %.sroa.0.0.copyload.i.i.i, i1 noundef zeroext false) #7 ; 0 uses
   br label %"_ZSt10__invoke_rIvRZZN6hermes5irgen11ESTreeIRGen17genForOfStatementEPNS0_6ESTree18ForOfStatementNodeEENK3$_0clEvEUlPNS3_4NodeENS1_17ControlFlowChangeEPNS0_10BasicBlockEE_JS8_S9_SB_EENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESF_E4typeEOSG_DpOSH_.exit"
 
-"_ZSt10__invoke_rIvRZZN6hermes5irgen11ESTreeIRGen17genForOfStatementEPNS0_6ESTree18ForOfStatementNodeEENK3$_0clEvEUlPNS3_4NodeENS1_17ControlFlowChangeEPNS0_10BasicBlockEE_JS8_S9_SB_EENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESF_E4typeEOSG_DpOSH_.exit": ; preds = %bb.a, %bb.b
+"_ZSt10__invoke_rIvRZZN6hermes5irgen11ESTreeIRGen17genForOfStatementEPNS0_6ESTree18ForOfStatementNodeEENK3$_0clEvEUlPNS3_4NodeENS1_17ControlFlowChangeEPNS0_10BasicBlockEE_JS8_S9_SB_EENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESF_E4typeEOSG_DpOSH_.exit": ; preds = %4, %bb.b
   ret void
 }
 
@@ -238,13 +240,13 @@ bb.b:                                             ; preds = %bb.a
   br label %"_ZNSt14_Function_base13_Base_managerIZZN6hermes5irgen11ESTreeIRGen17genForOfStatementEPNS1_6ESTree18ForOfStatementNodeEENK3$_0clEvEUlPNS4_4NodeENS2_17ControlFlowChangeEPNS1_10BasicBlockEE_E10_M_managerERSt9_Any_dataRKSF_St18_Manager_operation.exit"
 
 bb.c:                                             ; preds = %bb.a
-  store ptr null, ptr %0, align 8, !tbaa !326
+  store ptr null, ptr %0, align 8, !tbaa !327
   br label %"_ZNSt14_Function_base13_Base_managerIZZN6hermes5irgen11ESTreeIRGen17genForOfStatementEPNS1_6ESTree18ForOfStatementNodeEENK3$_0clEvEUlPNS4_4NodeENS2_17ControlFlowChangeEPNS1_10BasicBlockEE_E10_M_managerERSt9_Any_dataRKSF_St18_Manager_operation.exit"
 
 bb.d:                                             ; preds = %bb.a
   %.val5 = load ptr, ptr %1, align 8
   %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #8 ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.a, ptr noundef nonnull readonly align 8 dereferenceable(24) %.val5, i64 24, i1 false), !tbaa.struct !328
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.a, ptr noundef nonnull readonly align 8 dereferenceable(24) %.val5, i64 24, i1 false), !tbaa.struct !329
   store ptr %i.a, ptr %0, align 8, !tbaa !319
   br label %"_ZNSt14_Function_base13_Base_managerIZZN6hermes5irgen11ESTreeIRGen17genForOfStatementEPNS1_6ESTree18ForOfStatementNodeEENK3$_0clEvEUlPNS4_4NodeENS2_17ControlFlowChangeEPNS1_10BasicBlockEE_E10_M_managerERSt9_Any_dataRKSF_St18_Manager_operation.exit"
 
@@ -615,8 +617,9 @@ attributes #9 = { builtin nounwind }
 !322 = !{!"_ZTSN6hermes5irgen17ControlFlowChangeE", !5, i64 0}
 !323 = !{!324, !75, i64 0}
 !324 = !{!"_ZTSZZN6hermes5irgen11ESTreeIRGen17genForOfStatementEPNS_6ESTree18ForOfStatementNodeEENK3$_0clEvEUlPNS2_4NodeENS0_17ControlFlowChangeEPNS_10BasicBlockEE_", !75, i64 0, !232, i64 8, !18, i64 16}
-!325 = !{!324, !232, i64 8}
-!326 = !{!327, !327, i64 0}
-!327 = !{!"p1 _ZTSSt9type_info", !10, i64 0}
-!328 = !{i64 0, i64 8, !230, i64 8, i64 8, !231, i64 16, i64 8, !233}
+!325 = !{!324, !18, i64 16}
+!326 = !{!324, !232, i64 8}
+!327 = !{!328, !328, i64 0}
+!328 = !{!"p1 _ZTSSt9type_info", !10, i64 0}
+!329 = !{i64 0, i64 8, !230, i64 8, i64 8, !231, i64 16, i64 8, !233}
 end_hunk_0

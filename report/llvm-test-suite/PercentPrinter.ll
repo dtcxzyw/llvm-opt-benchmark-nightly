@@ -201,21 +201,23 @@ bb.a:
   %i.d = load i64, ptr %i.c, align 8, !tbaa !26   ; 2 uses
   %i.e = load i64, ptr %0, align 8, !tbaa !27     ; 2 uses
   %i.f = add i64 %i.e, %i.d
-  %1 = icmp uge i64 %i.b, %i.f
+  %1 = icmp ult i64 %i.b, %i.f
   %i.g = add i64 %i.e, %i.b
-  %2 = icmp ule i64 %i.g, %i.d
-  %or.cond.not6 = or i1 %1, %2
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %4 = load i32, ptr %3, align 8
-  %.not = icmp eq i32 %4, 0
-  %or.cond3 = select i1 %or.cond.not6, i1 true, i1 %.not
-  br i1 %or.cond3, label %bb.b, label %bb.c
+  %2 = icmp ugt i64 %i.g, %i.d
+  %or.cond = and i1 %1, %2
+  br i1 %or.cond, label %3, label %bb.b
 
-bb.b:                                             ; preds = %bb.a
+3:                                                ; preds = %bb.a
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %5 = load i32, ptr %4, align 8, !tbaa !8
+  %.not = icmp eq i32 %5, 0
+  br i1 %.not, label %bb.b, label %bb.c
+
+bb.b:                                             ; preds = %3, %bb.a
   tail call void @_ZN15CPercentPrinter12RePrintRatioEv(ptr noundef nonnull align 8 dereferenceable(48) %0)
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.a, %bb.b
+bb.c:                                             ; preds = %3, %bb.b
   ret void
 }
 

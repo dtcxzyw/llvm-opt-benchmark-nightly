@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %_ZN11CStringBaseIwE
 
 bb.c:                                             ; preds = %.lr.ph, %bb.b
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 3 uses
-  %.02350 = phi i32 [ undef, %.lr.ph ], [ %.124, %bb.b ] ; 5 uses
+  %.02350 = phi i32 [ undef, %.lr.ph ], [ %.124, %bb.b ] ; 4 uses
   %i.g = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %indvars.iv ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !70   ; 2 uses
   %wcslen.i.i = call i64 @wcslen(ptr %i.h)        ; 2 uses
@@ -243,16 +243,13 @@ _ZN11CStringBaseIwEC2EPKw.exit:                   ; preds = %bb.e
 bb.f:                                             ; preds = %_ZN11CStringBaseIwEC2EPKw.exit
   %i.x = icmp eq i32 %i.i, 0
   %.pre = load i32, ptr %i.c, align 8, !tbaa !27  ; 3 uses
-  br i1 %i.x, label %_ZNK11CStringBaseIwE4FindERKS0_.exit.thread41, label %.preheader23.i.i
+  br i1 %i.x, label %_ZNK11CStringBaseIwE4FindERKS0_.exit.thread41, label %.preheader.lr.ph.i.i
 
-.preheader23.i.i:                                 ; preds = %bb.f
+.preheader.lr.ph.i.i:                             ; preds = %bb.f
   %5 = icmp sgt i32 %.pre, 0
-  br i1 %5, label %.preheader.lr.ph.i.i, label %_ZNK11CStringBaseIwE4FindERKS0_.exit.thread
-
-.preheader.lr.ph.i.i:                             ; preds = %.preheader23.i.i
   %i.y = icmp sgt i32 %i.i, 0
-  %6 = load ptr, ptr %2, align 8
-  br i1 %i.y, label %.preheader.us.preheader.i.i, label %_ZNK11CStringBaseIwE4FindERKS0_.exit.thread
+  %or.cond.i.i = and i1 %i.y, %5
+  br i1 %or.cond.i.i, label %.preheader.us.preheader.i.i, label %_ZNK11CStringBaseIwE4FindERKS0_.exit.thread
 
 .preheader.us.preheader.i.i:                      ; preds = %.preheader.lr.ph.i.i
   %i.z = zext nneg i32 %.pre to i64               ; 2 uses
@@ -270,6 +267,7 @@ bb.g:                                             ; preds = %bb.i, %.preheader.u
   br i1 %i.ab, label %bb.h, label %.critedge.us.i.i
 
 bb.h:                                             ; preds = %bb.g
+  %6 = load ptr, ptr %2, align 8, !tbaa !30
   %i.ac = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %i.aa
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !31
   %i.ae = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0, i64 %indvars.iv.i.i
@@ -414,9 +412,9 @@ bb.u:                                             ; preds = %bb.t
   store i32 0, ptr %i.bn, align 4, !tbaa !31
   br label %_ZNK11CStringBaseIwE4FindERKS0_.exit.thread
 
-_ZNK11CStringBaseIwE4FindERKS0_.exit.thread:      ; preds = %.critedge.us.i.i, %.preheader.lr.ph.i.i, %.preheader23.i.i, %_ZNK11CStringBaseIwE4FindERKS0_.exit, %bb.t, %bb.u, %_ZN11CStringBaseIwED2Ev.exit
-  %.124 = phi i32 [ %i.w, %_ZN11CStringBaseIwED2Ev.exit ], [ %i.w, %bb.u ], [ %.02350, %bb.t ], [ %.02350, %_ZNK11CStringBaseIwE4FindERKS0_.exit ], [ %.02350, %.preheader23.i.i ], [ %.02350, %.preheader.lr.ph.i.i ], [ %.02350, %.critedge.us.i.i ] ; 2 uses
-  %cond = phi i1 [ false, %_ZN11CStringBaseIwED2Ev.exit ], [ false, %bb.u ], [ true, %bb.t ], [ true, %_ZNK11CStringBaseIwE4FindERKS0_.exit ], [ true, %.preheader23.i.i ], [ true, %.preheader.lr.ph.i.i ], [ true, %.critedge.us.i.i ]
+_ZNK11CStringBaseIwE4FindERKS0_.exit.thread:      ; preds = %.critedge.us.i.i, %.preheader.lr.ph.i.i, %_ZNK11CStringBaseIwE4FindERKS0_.exit, %bb.t, %bb.u, %_ZN11CStringBaseIwED2Ev.exit
+  %.124 = phi i32 [ %i.w, %_ZN11CStringBaseIwED2Ev.exit ], [ %i.w, %bb.u ], [ %.02350, %bb.t ], [ %.02350, %_ZNK11CStringBaseIwE4FindERKS0_.exit ], [ %.02350, %.preheader.lr.ph.i.i ], [ %.02350, %.critedge.us.i.i ] ; 2 uses
+  %cond = phi i1 [ false, %_ZN11CStringBaseIwED2Ev.exit ], [ false, %bb.u ], [ true, %bb.t ], [ true, %_ZNK11CStringBaseIwE4FindERKS0_.exit ], [ true, %.preheader.lr.ph.i.i ], [ true, %.critedge.us.i.i ]
   %i.bo = icmp eq ptr %.sroa.0.0, null
   br i1 %i.bo, label %_ZN11CStringBaseIwED2Ev.exit33, label %bb.v
 

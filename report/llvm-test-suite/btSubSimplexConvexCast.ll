@@ -146,8 +146,7 @@ bb.a:
   %i.bo = extractvalue { <2 x float>, <2 x float> } %i.bm, 1 ; 2 uses
   %.sroa.0160.0.vec.extract = extractelement <2 x float> %i.bn, i64 0
   %.sroa.0160.4.vec.extract = extractelement <2 x float> %i.bn, i64 1
-  %16 = load <4 x float>, ptr %.sroa.7201.0..sroa_idx, align 4
-  %17 = shufflevector <4 x float> %16, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %16 = load float, ptr %.sroa.7201.0..sroa_idx, align 4, !tbaa !18
   %.sroa.5161.8.vec.extract = extractelement <2 x float> %i.bo, i64 0
   %i.bp = load float, ptr %.sroa.14208.16..sroa_idx, align 4, !tbaa !18
   %i.bq = load <2 x float>, ptr %1, align 4, !tbaa !18 ; 2 uses
@@ -158,6 +157,7 @@ bb.a:
   %i.bv = shufflevector <2 x float> %i.bq, <2 x float> %i.br, <2 x i32> <i32 0, i32 2>
   %i.bw = shufflevector <2 x float> %i.bn, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bx = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bv, <2 x float> %i.bw, <2 x float> %i.bu)
+  %17 = insertelement <2 x float> poison, float %16, i64 0
   %i.by = insertelement <2 x float> %17, float %i.bp, i64 1
   %i.bz = shufflevector <2 x float> %i.bo, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ca = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.by, <2 x float> %i.bz, <2 x float> %i.bx)
@@ -210,8 +210,7 @@ bb.a:
   %i.dm = extractvalue { <2 x float>, <2 x float> } %i.dk, 1 ; 2 uses
   %.sroa.0156.0.vec.extract = extractelement <2 x float> %i.dl, i64 0
   %.sroa.0156.4.vec.extract = extractelement <2 x float> %i.dl, i64 1
-  %18 = load <4 x float>, ptr %.sroa.7.0..sroa_idx, align 4
-  %19 = shufflevector <4 x float> %18, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %18 = load float, ptr %.sroa.7.0..sroa_idx, align 4, !tbaa !18
   %.sroa.5157.8.vec.extract = extractelement <2 x float> %i.dm, i64 0
   %i.dn = load float, ptr %.sroa.14.16..sroa_idx, align 4, !tbaa !18
   %i.do = load <2 x float>, ptr %3, align 4, !tbaa !18 ; 2 uses
@@ -222,6 +221,7 @@ bb.a:
   %i.dt = shufflevector <2 x float> %i.do, <2 x float> %i.dp, <2 x i32> <i32 0, i32 2>
   %i.du = shufflevector <2 x float> %i.dl, <2 x float> poison, <2 x i32> zeroinitializer
   %i.dv = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.dt, <2 x float> %i.du, <2 x float> %i.ds)
+  %19 = insertelement <2 x float> poison, float %18, i64 0
   %i.dw = insertelement <2 x float> %19, float %i.dn, i64 1
   %i.dx = shufflevector <2 x float> %i.dm, <2 x float> poison, <2 x i32> zeroinitializer
   %i.dy = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.dw, <2 x float> %i.dx, <2 x float> %i.dv)
@@ -422,19 +422,21 @@ bb.e:                                             ; preds = %bb.d
   %i.jc = call float @llvm.fmuladd.f32(float %i.is, float %i.iz, float %i.jb)
   %i.jd = load float, ptr %i.ae, align 4, !tbaa !18
   %i.je = load float, ptr %i.ac, align 4, !tbaa !18
-  %20 = load <4 x float>, ptr %i.r, align 4
+  %20 = load <2 x float>, ptr %i.r, align 4, !tbaa !18
   %i.jf = insertelement <4 x float> poison, float %i.ir, i64 0
   %i.jg = shufflevector <4 x float> %i.jf, <4 x float> poison, <4 x i32> zeroinitializer
   %i.jh = insertelement <4 x float> poison, float %i.je, i64 2
   %i.ji = insertelement <4 x float> %i.jh, float %i.iu, i64 3
-  %i.jj = shufflevector <4 x float> %20, <4 x float> %i.ji, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %21 = shufflevector <2 x float> %20, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %i.jj = shufflevector <4 x float> %21, <4 x float> %i.ji, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.jk = fmul <4 x float> %i.jg, %i.jj
-  %21 = load <4 x float>, ptr %i.s, align 4
+  %22 = load <2 x float>, ptr %i.s, align 4, !tbaa !18
   %i.jl = insertelement <4 x float> poison, float %i.is, i64 0
   %i.jm = shufflevector <4 x float> %i.jl, <4 x float> poison, <4 x i32> zeroinitializer
   %i.jn = insertelement <4 x float> poison, float %i.jd, i64 2
   %i.jo = insertelement <4 x float> %i.jn, float %i.it, i64 3
-  %i.jp = shufflevector <4 x float> %21, <4 x float> %i.jo, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %23 = shufflevector <2 x float> %22, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %i.jp = shufflevector <4 x float> %23, <4 x float> %i.jo, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.jq = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.jm, <4 x float> %i.jp, <4 x float> %i.jk)
   br label %bb.f
 

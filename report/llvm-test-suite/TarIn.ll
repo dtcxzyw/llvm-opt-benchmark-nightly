@@ -201,14 +201,16 @@ bb.bq:                                            ; preds = %.noexc92
 bb.br:                                            ; preds = %.noexc93
   %i.oi = load i32, ptr %i.be, align 8, !tbaa !19
   %i.oj = icmp eq i32 %i.oi, 0
-  br i1 %i.oj, label %thread-pre-split.i, label %bb.bs
+  br i1 %i.oj, label %bb.cj, label %8
 
-bb.bs:                                            ; preds = %bb.br
-  %8 = call noundef zeroext i1 @_ZNK8NArchive4NTar5CItem7IsMagicEv(ptr noundef nonnull align 8 dereferenceable(124) %2)
-  %i.ok = load i8, ptr %i.ap, align 8             ; 2 uses
-  %.not106.i = icmp ne i8 %i.ok, 76
-  %or.cond.not.i = select i1 %8, i1 %.not106.i, i1 false
-  br i1 %or.cond.not.i, label %bb.bt, label %bb.cj
+8:                                                ; preds = %bb.br
+  %9 = call noundef zeroext i1 @_ZNK8NArchive4NTar5CItem7IsMagicEv(ptr noundef nonnull align 8 dereferenceable(124) %2)
+  br i1 %9, label %bb.bs, label %bb.cj
+
+bb.bs:                                            ; preds = %8
+  %i.ok = load i8, ptr %i.ap, align 8, !tbaa !46
+  %.not106.i = icmp eq i8 %i.ok, 76
+  br i1 %.not106.i, label %vector.body462.preheader, label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bs
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
@@ -266,7 +268,7 @@ _ZN11CStringBaseIcED2Ev.exit222.i.a:              ; preds = %bb.ca, %_ZN11CStrin
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
-  br label %thread-pre-split.i
+  br label %bb.cj
 
 bb.cb:                                            ; preds = %.noexc93
   %i.ou = landingpad { ptr, i32 }
@@ -326,20 +328,16 @@ _ZN11CStringBaseIcED2Ev.exit225.i.a:              ; preds = %bb.ci, %_ZN11CStrin
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
   br label %bb.co
 
-thread-pre-split.i:                               ; preds = %_ZN11CStringBaseIcED2Ev.exit222.i.a, %bb.br
+bb.cj:                                            ; preds = %_ZN11CStringBaseIcED2Ev.exit222.i.a, %8, %bb.br
   %.pr.i = load i8, ptr %i.ap, align 8, !tbaa !46
-  br label %bb.cj
-
-bb.cj:                                            ; preds = %thread-pre-split.i, %bb.bs
-  %9 = phi i8 [ %.pr.i, %thread-pre-split.i ], [ %i.ok, %bb.bs ]
-  %i.pf = icmp eq i8 %9, 49
+  %i.pf = icmp eq i8 %.pr.i, 49
   br i1 %i.pf, label %bb.ck, label %vector.body462.preheader
 
 bb.ck:                                            ; preds = %bb.cj
   store i64 0, ptr %i.af, align 8, !tbaa !43
   br label %vector.body462.preheader
 
-vector.body462.preheader:                         ; preds = %bb.cj, %bb.ck
+vector.body462.preheader:                         ; preds = %bb.bs, %bb.cj, %bb.ck
   br label %vector.body462
 
 vector.body462:                                   ; preds = %vector.body462, %vector.body462.preheader

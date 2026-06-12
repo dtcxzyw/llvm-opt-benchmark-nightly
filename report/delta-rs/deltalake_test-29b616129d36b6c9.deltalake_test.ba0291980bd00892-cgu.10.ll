@@ -201,7 +201,7 @@ _RINvNtCseqDwI8vvjGQ_10serde_json4read11peek_or_eofINtB2_6IoReadNtNtCs2pqxYH9ZEk
 
 bb.j:                                             ; preds = %_RINvNtCseqDwI8vvjGQ_10serde_json4read11peek_or_eofINtB2_6IoReadNtNtCs2pqxYH9ZEk8_3std2fs4FileEECsfY7SmN0bPrO_14deltalake_test.exit
   store i8 0, ptr %i.v, align 8, !alias.scope !322
-  %i.al = load i64, ptr %0, align 8, !range !197, !alias.scope !322 ; 2 uses
+  %i.al = load i64, ptr %0, align 8, !range !197, !alias.scope !322, !noundef !3 ; 2 uses
   %.not.i.not = icmp eq i64 %i.al, -9223372036854775808
   br i1 %.not.i.not, label %_RNvXs2_NtCseqDwI8vvjGQ_10serde_json4readINtB5_6IoReadNtNtCs2pqxYH9ZEk8_3std2fs4FileENtB5_4Read7discardCsfY7SmN0bPrO_14deltalake_test.exit.thread, label %bb.k
 
@@ -287,7 +287,7 @@ _RINvNtCseqDwI8vvjGQ_10serde_json4read11peek_or_eofINtB2_6IoReadNtNtCs2pqxYH9ZEk
 
 bb.p:                                             ; preds = %_RINvNtCseqDwI8vvjGQ_10serde_json4read11peek_or_eofINtB2_6IoReadNtNtCs2pqxYH9ZEk8_3std2fs4FileEECsfY7SmN0bPrO_14deltalake_test.exit28
   store i8 0, ptr %i.v, align 8, !alias.scope !344
-  %i.bj = load i64, ptr %0, align 8, !range !197, !alias.scope !344 ; 2 uses
+  %i.bj = load i64, ptr %0, align 8, !range !197, !alias.scope !344, !noundef !3 ; 2 uses
   %.not.i29.not = icmp eq i64 %i.bj, -9223372036854775808
   br i1 %.not.i29.not, label %_RNvXs2_NtCseqDwI8vvjGQ_10serde_json4readINtB5_6IoReadNtNtCs2pqxYH9ZEk8_3std2fs4FileENtB5_4Read7discardCsfY7SmN0bPrO_14deltalake_test.exit32, label %bb.q
 
@@ -690,18 +690,20 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 57
   %i.e = load i8, ptr %i.d, align 1
   store i8 0, ptr %i.a, align 8
-  %1 = load i64, ptr %0, align 8, !range !197     ; 2 uses
-  %.not = icmp ne i64 %1, -9223372036854775808
-  %or.cond.not = select i1 %i.c, i1 %.not, i1 false
-  br i1 %or.cond.not, label %bb.c, label %bb.b
+  br i1 %i.c, label %1, label %bb.b
 
-bb.b:                                             ; preds = %_RNvMsF_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechE8push_mutCsfY7SmN0bPrO_14deltalake_test.exit, %bb.a
+1:                                                ; preds = %bb.a
+  %2 = load i64, ptr %0, align 8, !range !197, !noundef !3 ; 2 uses
+  %.not = icmp eq i64 %2, -9223372036854775808
+  br i1 %.not, label %bb.b, label %bb.c
+
+bb.b:                                             ; preds = %_RNvMsF_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechE8push_mutCsfY7SmN0bPrO_14deltalake_test.exit, %1, %bb.a
   ret void
 
-bb.c:                                             ; preds = %bb.a
+bb.c:                                             ; preds = %1
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.g = load i64, ptr %i.f, align 8, !alias.scope !616, !noundef !3 ; 3 uses
-  %i.h = icmp eq i64 %i.g, %1
+  %i.h = icmp eq i64 %i.g, %2
   br i1 %i.h, label %bb.d, label %_RNvMsF_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechE8push_mutCsfY7SmN0bPrO_14deltalake_test.exit
 
 bb.d:                                             ; preds = %bb.c

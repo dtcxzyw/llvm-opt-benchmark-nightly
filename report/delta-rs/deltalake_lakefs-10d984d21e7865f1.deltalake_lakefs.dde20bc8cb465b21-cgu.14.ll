@@ -201,7 +201,7 @@ bb.q:                                             ; preds = %_RINvNtCsbvkFyIu7lg
   br label %.lr.ph.split.i.i
 
 .lr.ph.split.i.i:                                 ; preds = %bb.u, %.lr.ph.split.preheader.i.i
-  %i.al = phi i64 [ %i.ba, %bb.u ], [ 0, %.lr.ph.split.preheader.i.i ] ; 5 uses
+  %i.al = phi i64 [ 0, %.lr.ph.split.preheader.i.i ], [ %i.ba, %bb.u ] ; 5 uses
   %i.am = sub nuw nsw i64 %i.ah, %i.al            ; 5 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.al ; 2 uses
   %i.ao = icmp samesign ult i64 %i.am, 16
@@ -386,26 +386,28 @@ bb.ab:                                            ; preds = %bb.aa
   %i.ck = getelementptr inbounds nuw i8, ptr %i.l, i64 32 ; 3 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %i.l, i64 40
   %i.cm = load i64, ptr %i.cl, align 8, !alias.scope !396, !noalias !397, !noundef !6 ; 5 uses
-  %.not.i.i.i.i = icmp ugt i64 %i.cm, %.val1.i.i.i
   %.promoted.i.i.i.i = load i64, ptr %i.ck, align 8, !alias.scope !396, !noalias !397 ; 2 uses
   %i.cn = icmp ult i64 %i.cm, %.promoted.i.i.i.i
-  %or.cond21.i.i.i.i = or i1 %.not.i.i.i.i, %i.cn
-  br i1 %or.cond21.i.i.i.i, label %_RNvMsf_NtNtCsbvkFyIu7lgC_4core3str4iterINtB5_13SplitInternalcE7get_endCsj34PGqTgg0L_16deltalake_lakefs.exit.i.i.i, label %.lr.ph.split.preheader.i.i.i.i
+  br i1 %i.cn, label %_RNvMsf_NtNtCsbvkFyIu7lgC_4core3str4iterINtB5_13SplitInternalcE7get_endCsj34PGqTgg0L_16deltalake_lakefs.exit.i.i.i, label %.lr.ph.split.preheader.i.i.i.i
 
 .lr.ph.split.preheader.i.i.i.i:                   ; preds = %bb.ab
+  %.not.i.i.i.i = icmp ugt i64 %i.cm, %.val1.i.i.i
   %i.co = getelementptr inbounds nuw i8, ptr %i.l, i64 48 ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %i.l, i64 56
-  %i.cq = load i8, ptr %i.cp, align 8, !alias.scope !396, !noalias !397, !noundef !6 ; 2 uses
+  %i.cq = load i8, ptr %i.cp, align 8, !alias.scope !396, !noalias !397 ; 2 uses
   %i.cr = zext nneg i8 %i.cq to i64               ; 4 uses
   %i.cs = icmp ult i8 %i.cq, 5
-  tail call void @llvm.assume(i1 %i.cs)
+  br i1 %.not.i.i.i.i, label %_RNvMsf_NtNtCsbvkFyIu7lgC_4core3str4iterINtB5_13SplitInternalcE7get_endCsj34PGqTgg0L_16deltalake_lakefs.exit.i.i.i, label %.lr.ph.split.i.i.i.i
+
+.lr.ph.split.i.i.i.i:                             ; preds = %.lr.ph.split.preheader.i.i.i.i
   %2 = getelementptr i8, ptr %i.co, i64 %i.cr
   %3 = getelementptr i8, ptr %2, i64 -1
+  tail call void @llvm.assume(i1 %i.cs)
   %.pre.i.i.i.i = load i8, ptr %3, align 1, !alias.scope !396, !noalias !397 ; 2 uses
   br label %.lr.ph.split.i.i.i.i.a
 
-.lr.ph.split.i.i.i.i.a:                           ; preds = %bb.af, %.lr.ph.split.preheader.i.i.i.i
-  %i.ct = phi i64 [ %i.di, %bb.af ], [ %.promoted.i.i.i.i, %.lr.ph.split.preheader.i.i.i.i ] ; 3 uses
+.lr.ph.split.i.i.i.i.a:                           ; preds = %bb.af, %.lr.ph.split.i.i.i.i
+  %i.ct = phi i64 [ %.promoted.i.i.i.i, %.lr.ph.split.i.i.i.i ], [ %i.di, %bb.af ] ; 3 uses
   %i.cu = sub nuw i64 %i.cm, %i.ct                ; 5 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 %i.ct ; 2 uses
   %i.cw = icmp samesign ult i64 %i.cu, 16
@@ -476,7 +478,7 @@ _RNvMsf_NtNtCsbvkFyIu7lgC_4core3str4iterINtB5_13SplitInternalcE7get_endCsj34PGqT
   store i64 %.sink, ptr %i.ck, align 8
   br label %_RNvMsf_NtNtCsbvkFyIu7lgC_4core3str4iterINtB5_13SplitInternalcE7get_endCsj34PGqTgg0L_16deltalake_lakefs.exit.i.i.i
 
-_RNvMsf_NtNtCsbvkFyIu7lgC_4core3str4iterINtB5_13SplitInternalcE7get_endCsj34PGqTgg0L_16deltalake_lakefs.exit.i.i.i: ; preds = %_RNvMsf_NtNtCsbvkFyIu7lgC_4core3str4iterINtB5_13SplitInternalcE7get_endCsj34PGqTgg0L_16deltalake_lakefs.exit.i.i.i.sink.split, %bb.ab
+_RNvMsf_NtNtCsbvkFyIu7lgC_4core3str4iterINtB5_13SplitInternalcE7get_endCsj34PGqTgg0L_16deltalake_lakefs.exit.i.i.i: ; preds = %_RNvMsf_NtNtCsbvkFyIu7lgC_4core3str4iterINtB5_13SplitInternalcE7get_endCsj34PGqTgg0L_16deltalake_lakefs.exit.i.i.i.sink.split, %.lr.ph.split.preheader.i.i.i.i, %bb.ab
   store i8 1, ptr %i.cf, align 1, !alias.scope !403, !noalias !379
   %i.dp = getelementptr inbounds nuw i8, ptr %i.l, i64 64
   %i.dq = load i8, ptr %i.dp, align 8, !range !391, !alias.scope !403, !noalias !379, !noundef !6
@@ -583,7 +585,7 @@ _RNvMs4_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsj34P
   store i64 2, ptr %.sroa.64.0..sroa_idx.i, align 8, !alias.scope !432, !noalias !431
   br label %.loopexit285
 
-.lr.ph.split.i.i.i:                               ; preds = %.noexc11.i, %.lr.ph.split.preheader.i.i.i
+.lr.ph.split.i.i.i:                               ; preds = %.lr.ph.split.preheader.i.i.i, %.noexc11.i
   %i.ew = phi i64 [ %i.ft, %.noexc11.i ], [ %.promoted17.i.i.i, %.lr.ph.split.preheader.i.i.i ] ; 3 uses
   %.lcssa111516.i.i.i = phi i64 [ %.lcssa1114.i.i.i, %.noexc11.i ], [ %.promoted13.i.i.i, %.lr.ph.split.preheader.i.i.i ] ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !428)
@@ -598,7 +600,7 @@ _RNvMs4_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsj34P
   br label %.lr.ph.split.i.i.i.i.i.i
 
 .lr.ph.split.i.i.i.i.i.i:                         ; preds = %bb.al, %.lr.ph.split.preheader.i.i.i.i.i.i
-  %i.ey = phi i64 [ %i.fn, %bb.al ], [ %i.ew, %.lr.ph.split.preheader.i.i.i.i.i.i ] ; 3 uses
+  %i.ey = phi i64 [ %i.ew, %.lr.ph.split.preheader.i.i.i.i.i.i ], [ %i.fn, %bb.al ] ; 3 uses
   %i.ez = sub nuw i64 %i.eh, %i.ey                ; 5 uses
   %i.fa = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i, i64 %i.ey ; 2 uses
   %i.fb = icmp samesign ult i64 %i.ez, 16

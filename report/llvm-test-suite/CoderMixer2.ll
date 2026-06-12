@@ -201,13 +201,9 @@ bb.i:                                             ; preds = %bb.h
   %i.bu = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !15
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 152
-  %2 = load ptr, ptr %i.bw, align 8
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 256
-  %3 = load ptr, ptr %i.bx, align 8
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 184
-  %4 = load ptr, ptr %i.by, align 8
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 216
-  %5 = load ptr, ptr %i.bz, align 8
   %i.ca = zext nneg i32 %.pr to i64
   br label %bb.j
 
@@ -233,7 +229,12 @@ bb.j:                                             ; preds = %.lr.ph75, %.loopexi
   %i.cg = load i32, ptr %i.cf, align 4, !tbaa !18 ; 2 uses
   %i.ch = sub i32 %.04272, %i.cg                  ; 2 uses
   %.not78 = icmp eq i32 %i.cd, 0
-  br i1 %.not78, label %.preheader, label %.lr.ph62.a
+  br i1 %.not78, label %.preheader, label %.lr.ph62
+
+.lr.ph62:                                         ; preds = %bb.j
+  %2 = load ptr, ptr %i.bw, align 8, !tbaa !15
+  %3 = load ptr, ptr %i.bx, align 8, !tbaa !15
+  br label %.lr.ph62.a
 
 .preheader.loopexit:                              ; preds = %.lr.ph62.a
   %.pre84 = load i32, ptr %i.cf, align 4, !tbaa !18
@@ -243,11 +244,16 @@ bb.j:                                             ; preds = %.lr.ph75, %.loopexi
   %i.ci = phi i32 [ %i.cg, %bb.j ], [ %.pre84, %.preheader.loopexit ]
   %.145.lcssa = phi i32 [ %.04470, %bb.j ], [ %i.cp, %.preheader.loopexit ]
   %.not79 = icmp eq i32 %i.ci, 0
-  br i1 %.not79, label %.loopexit, label %.lr.ph66.a
+  br i1 %.not79, label %.loopexit, label %.lr.ph66
 
-.lr.ph62.a:                                       ; preds = %bb.j, %.lr.ph62.a
-  %.03860 = phi i32 [ %i.co, %.lr.ph62.a ], [ 0, %bb.j ] ; 2 uses
-  %.14559 = phi i32 [ %i.cp, %.lr.ph62.a ], [ %.04470, %bb.j ] ; 3 uses
+.lr.ph66:                                         ; preds = %.preheader
+  %4 = load ptr, ptr %i.by, align 8, !tbaa !15
+  %5 = load ptr, ptr %i.bz, align 8, !tbaa !15
+  br label %.lr.ph66.a
+
+.lr.ph62.a:                                       ; preds = %.lr.ph62, %.lr.ph62.a
+  %.03860 = phi i32 [ 0, %.lr.ph62 ], [ %i.co, %.lr.ph62.a ] ; 2 uses
+  %.14559 = phi i32 [ %.04470, %.lr.ph62 ], [ %i.cp, %.lr.ph62.a ] ; 3 uses
   %i.cj = add i32 %.03860, %i.ce                  ; 2 uses
   %i.ck = sext i32 %i.cj to i64
   %i.cl = getelementptr inbounds [4 x i8], ptr %2, i64 %i.ck
@@ -261,9 +267,9 @@ bb.j:                                             ; preds = %.lr.ph75, %.loopexi
   %i.cr = icmp ult i32 %i.co, %i.cq
   br i1 %i.cr, label %.lr.ph62.a, label %.preheader.loopexit, !llvm.loop !31
 
-.lr.ph66.a:                                       ; preds = %.preheader, %.lr.ph66.a
-  %.165 = phi i32 [ %i.cx, %.lr.ph66.a ], [ 0, %.preheader ] ; 2 uses
-  %.14764 = phi i32 [ %i.cy, %.lr.ph66.a ], [ %.04669, %.preheader ] ; 3 uses
+.lr.ph66.a:                                       ; preds = %.lr.ph66, %.lr.ph66.a
+  %.165 = phi i32 [ 0, %.lr.ph66 ], [ %i.cx, %.lr.ph66.a ] ; 2 uses
+  %.14764 = phi i32 [ %.04669, %.lr.ph66 ], [ %i.cy, %.lr.ph66.a ] ; 3 uses
   %i.cs = add i32 %.165, %i.ch                    ; 2 uses
   %i.ct = sext i32 %i.cs to i64
   %i.cu = getelementptr inbounds [4 x i8], ptr %4, i64 %i.ct

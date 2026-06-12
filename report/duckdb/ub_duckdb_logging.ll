@@ -201,24 +201,20 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = icmp eq ptr %2, %i.a
   %or.cond = select i1 %.not, i1 true, i1 %i.b
-  br i1 %or.cond, label %._crit_edge, label %bb.b
-
-._crit_edge:                                      ; preds = %bb.a
-  %.pre = load i8, ptr %3, align 8, !tbaa !823
-  br label %bb.c
+  br i1 %or.cond, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %i.d = load i8, ptr %3, align 8, !tbaa !1017    ; 2 uses
+  %i.d = load i8, ptr %3, align 8, !tbaa !1017
   %i.e = load i8, ptr %i.c, align 1, !tbaa !1017
   %i.f = icmp ult i8 %i.d, %i.e
   br label %bb.c
 
-bb.c:                                             ; preds = %._crit_edge, %bb.b
-  %5 = phi i8 [ %i.d, %bb.b ], [ %.pre, %._crit_edge ]
-  %i.g = phi i1 [ %i.f, %bb.b ], [ true, %._crit_edge ]
+bb.c:                                             ; preds = %bb.b, %bb.a
+  %i.g = phi i1 [ %i.f, %bb.b ], [ true, %bb.a ]
   %i.h = tail call noalias noundef nonnull dereferenceable(168) ptr @_Znwm(i64 noundef 168) #31 ; 6 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 32
+  %5 = load i8, ptr %3, align 8, !tbaa !823
   store i8 %5, ptr %i.i, align 8, !tbaa !823
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 40
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 8
@@ -283,24 +279,20 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = icmp eq ptr %2, %i.a
   %or.cond = select i1 %.not, i1 true, i1 %i.b
-  br i1 %or.cond, label %._crit_edge, label %bb.b
-
-._crit_edge:                                      ; preds = %bb.a
-  %.pre = load i8, ptr %3, align 8, !tbaa !887
-  br label %bb.c
+  br i1 %or.cond, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %i.d = load i8, ptr %3, align 8, !tbaa !1017    ; 2 uses
+  %i.d = load i8, ptr %3, align 8, !tbaa !1017
   %i.e = load i8, ptr %i.c, align 1, !tbaa !1017
   %i.f = icmp ult i8 %i.d, %i.e
   br label %bb.c
 
-bb.c:                                             ; preds = %._crit_edge, %bb.b
-  %5 = phi i8 [ %i.d, %bb.b ], [ %.pre, %._crit_edge ]
-  %i.g = phi i1 [ %i.f, %bb.b ], [ true, %._crit_edge ]
+bb.c:                                             ; preds = %bb.b, %bb.a
+  %i.g = phi i1 [ %i.f, %bb.b ], [ true, %bb.a ]
   %i.h = tail call noalias noundef nonnull dereferenceable(104) ptr @_Znwm(i64 noundef 104) #31 ; 5 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 32
+  %5 = load i8, ptr %3, align 8, !tbaa !887
   store i8 %5, ptr %i.i, align 8, !tbaa !887
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 40
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 8

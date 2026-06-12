@@ -201,7 +201,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 4 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !210  ; 3 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !210  ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !210
   %i.h = ptrtoint ptr %i.e to i64                 ; 2 uses
@@ -248,14 +248,13 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZNSt5dequeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_reallocate_mapEmb(ptr noundef nonnull align 8 dereferenceable(80) %0, i64 noundef 1, i1 noundef zeroext false)
-  %.pre = load ptr, ptr %i.d, align 8, !tbaa !753
   br label %_ZNSt5dequeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE22_M_reserve_map_at_backEm.exit
 
 _ZNSt5dequeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE22_M_reserve_map_at_backEm.exit: ; preds = %bb.c, %bb.d
-  %3 = phi ptr [ %i.e, %bb.c ], [ %.pre, %bb.d ]
-  %4 = tail call noalias noundef nonnull dereferenceable(512) ptr @_Znwm(i64 noundef 512) #19
-  %i.an = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store ptr %4, ptr %i.an, align 8, !tbaa !209
+  %3 = tail call noalias noundef nonnull dereferenceable(512) ptr @_Znwm(i64 noundef 512) #19
+  %4 = load ptr, ptr %i.d, align 8, !tbaa !753
+  %i.an = getelementptr inbounds nuw i8, ptr %4, i64 8
+  store ptr %3, ptr %i.an, align 8, !tbaa !209
   %i.ao = load ptr, ptr %i.b, align 8, !tbaa !214 ; 6 uses
   %i.ap = load ptr, ptr %1, align 8, !tbaa !110   ; 3 uses
   %i.aq = load ptr, ptr %2, align 8, !tbaa !110

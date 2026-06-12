@@ -201,7 +201,7 @@ define linkonce_odr hidden void @_ZNK16OpenColorIO_v2_515PackedImageDesc4Impl8va
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !12
   %i.b = icmp eq ptr %i.a, null
-  br i1 %i.b, label %bb.b, label %bb.e
+  br i1 %i.b, label %bb.b, label %1
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call ptr @__cxa_allocate_exception(i64 16) #21 ; 3 uses
@@ -217,17 +217,19 @@ bb.d:                                             ; preds = %bb.b
           cleanup
   br label %bb.am
 
-bb.e:                                             ; preds = %bb.a
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %2 = load i64, ptr %1, align 8, !tbaa !50
-  %3 = icmp slt i64 %2, 1
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.f = load i64, ptr %i.e, align 8
-  %i.g = icmp slt i64 %i.f, 1
-  %or.cond = select i1 %3, i1 true, i1 %i.g
-  br i1 %or.cond, label %bb.f, label %bb.i
+1:                                                ; preds = %bb.a
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  %3 = load i64, ptr %2, align 8, !tbaa !50
+  %4 = icmp slt i64 %3, 1
+  br i1 %4, label %bb.f, label %bb.e
 
-bb.f:                                             ; preds = %bb.e
+bb.e:                                             ; preds = %1
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %i.f = load i64, ptr %i.e, align 8, !tbaa !51
+  %i.g = icmp slt i64 %i.f, 1
+  br i1 %i.g, label %bb.f, label %bb.i
+
+bb.f:                                             ; preds = %bb.e, %1
   %i.h = tail call ptr @__cxa_allocate_exception(i64 16) #21 ; 3 uses
   invoke void @_ZN16OpenColorIO_v2_59ExceptionC1EPKc(ptr noundef nonnull align 8 dereferenceable(16) %i.h, ptr noundef nonnull @.str.28)
           to label %bb.g unwind label %bb.h
@@ -354,7 +356,7 @@ bb.ac:                                            ; preds = %bb.aa
   br label %bb.am
 
 bb.ad:                                            ; preds = %bb.z
-  %i.aq = load i64, ptr %1, align 8, !tbaa !50
+  %i.aq = load i64, ptr %2, align 8, !tbaa !50
   %i.ar = mul nsw i64 %i.aq, %i.ae
   %i.as = tail call noundef i64 @llvm.abs.i64(i64 %i.am, i1 true)
   %i.at = icmp sgt i64 %i.ar, %i.as

@@ -201,8 +201,7 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph.split
 
 _ZSteqIcSt11char_traitsIcESaIcEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit: ; preds = %.lr.ph.split
   %bcmp.i.i = tail call i32 @bcmp(ptr %i.q, ptr nonnull %i.aj, i64 %.fr75)
-  %bcmp.i.i.fr = freeze i32 %bcmp.i.i
-  %i.am = icmp eq i32 %bcmp.i.i.fr, 0
+  %i.am = icmp eq i32 %bcmp.i.i, 0
   %spec.select74 = select i1 %i.am, i64 %i.ai, i64 %.03163
   br label %_ZSteqIcSt11char_traitsIcESaIcEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit.thread37
 
@@ -605,13 +604,12 @@ _ZSt9__advanceIPKN4absl12lts_2025051213time_internal4cctz10TransitionElEvRT_T0_S
 
 _ZSt11upper_boundIPKN4absl12lts_2025051213time_internal4cctz10TransitionES4_NS4_10ByUnixTimeEET_S8_S8_RKT0_T1_.exit: ; preds = %_ZSt9__advanceIPKN4absl12lts_2025051213time_internal4cctz10TransitionElEvRT_T0_St26random_access_iterator_tag.exit.i.i, %bb.b
   %.0.lcssa.i.i = phi ptr [ %spec.select, %bb.b ], [ %.1.i.i, %_ZSt9__advanceIPKN4absl12lts_2025051213time_internal4cctz10TransitionElEvRT_T0_St26random_access_iterator_tag.exit.i.i ] ; 3 uses
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 32
   %.not33 = icmp eq ptr %.0.lcssa.i.i, %i.d
   br i1 %.not33, label %_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZSt11upper_boundIPKN4absl12lts_2025051213time_internal4cctz10TransitionES4_NS4_10ByUnixTimeEET_S8_S8_RKT0_T1_.exit
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %4 = load ptr, ptr %3, align 8                  ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit.thread30
@@ -627,6 +625,7 @@ bb.c:                                             ; preds = %.lr.ph, %_ZNK4absl1
 
 bb.d:                                             ; preds = %bb.c
   %i.ab = zext i8 %i.x to i64
+  %4 = load ptr, ptr %3, align 8, !tbaa !16       ; 2 uses
   %i.ac = getelementptr inbounds nuw [48 x i8], ptr %4, i64 %i.ab ; 3 uses
   %i.ad = zext i8 %i.z to i64
   %i.ae = getelementptr inbounds nuw [48 x i8], ptr %4, i64 %i.ad ; 3 uses
@@ -736,13 +735,12 @@ _ZSt9__advanceIPKN4absl12lts_2025051213time_internal4cctz10TransitionElEvRT_T0_S
   br i1 %i.t, label %_ZSt9__advanceIPKN4absl12lts_2025051213time_internal4cctz10TransitionElEvRT_T0_St26random_access_iterator_tag.exit.i.i, label %_ZSt11lower_boundIPKN4absl12lts_2025051213time_internal4cctz10TransitionES4_NS4_10ByUnixTimeEET_S8_S8_RKT0_T1_.exit, !llvm.loop !224
 
 _ZSt11lower_boundIPKN4absl12lts_2025051213time_internal4cctz10TransitionES4_NS4_10ByUnixTimeEET_S8_S8_RKT0_T1_.exit: ; preds = %_ZSt9__advanceIPKN4absl12lts_2025051213time_internal4cctz10TransitionElEvRT_T0_St26random_access_iterator_tag.exit.i.i
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 32
   %.not53 = icmp eq ptr %.1.i.i, %spec.select
   br i1 %.not53, label %_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit.thread.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZSt11lower_boundIPKN4absl12lts_2025051213time_internal4cctz10TransitionES4_NS4_10ByUnixTimeEET_S8_S8_RKT0_T1_.exit
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %4 = load ptr, ptr %3, align 8                  ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit.backedge
@@ -759,6 +757,7 @@ bb.c:                                             ; preds = %.lr.ph, %_ZNK4absl1
 
 bb.d:                                             ; preds = %bb.c
   %i.ac = zext i8 %i.y to i64
+  %4 = load ptr, ptr %3, align 8, !tbaa !16       ; 2 uses
   %i.ad = getelementptr inbounds nuw [48 x i8], ptr %4, i64 %i.ac ; 3 uses
   %i.ae = zext i8 %i.aa to i64
   %i.af = getelementptr inbounds nuw [48 x i8], ptr %4, i64 %i.ae ; 3 uses
@@ -1161,17 +1160,20 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit.i.i.i.i: ; pred
   %i.x = load i64, ptr %i.n, align 8, !tbaa !7, !noalias !264 ; 4 uses
   %i.y = add i64 %i.x, 1                          ; 3 uses
   %i.z = load ptr, ptr %10, align 8, !tbaa !17, !noalias !264 ; 2 uses
-  %i.aa = icmp eq ptr %i.z, %i.m                  ; 2 uses
-  br i1 %i.aa, label %bb.g, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i.i.i.i
+  %i.aa = icmp eq ptr %i.z, %i.m
+  br i1 %i.aa, label %bb.g, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i
 
 bb.g:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit.i.i.i.i
   %i.ab = icmp ult i64 %i.x, 16
   call void @llvm.assume(i1 %i.ab)
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i.i.i.i
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i.i.i.i: ; preds = %bb.g, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit.i.i.i.i
-  %11 = load i64, ptr %i.m, align 8, !noalias !264
-  %12 = select i1 %i.aa, i64 15, i64 %11
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit.i.i.i.i
+  %11 = load i64, ptr %i.m, align 8, !tbaa !33, !noalias !264
+  br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i.i.i.i
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i.i.i.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i, %bb.g
+  %12 = phi i64 [ %11, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i ], [ 15, %bb.g ]
   %i.ac = icmp ugt i64 %i.y, %12
   br i1 %i.ac, label %bb.h, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit.i.i.i.i
 

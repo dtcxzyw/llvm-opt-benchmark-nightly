@@ -201,18 +201,20 @@ bb.s:                                             ; preds = %bb.r
   %i.dc = getelementptr inbounds nuw i8, ptr %.sroa.0148.0194, i64 56
   %i.dd = load ptr, ptr %i.dc, align 8            ; 2 uses
   %i.de = icmp eq ptr %i.db, %i.dd
-  %10 = load i8, ptr %i.cs, align 8, !range !4
-  %11 = trunc nuw i8 %10 to i1
-  %or.cond.i = select i1 %i.de, i1 true, i1 %11
-  br i1 %or.cond.i, label %.loopexit.i, label %.preheader.i
+  br i1 %i.de, label %.loopexit.i, label %10
+
+10:                                               ; preds = %bb.s
+  %11 = load i8, ptr %i.cs, align 8, !range !4, !noundef !5
+  %12 = trunc nuw i8 %11 to i1
+  br i1 %12, label %.loopexit.i, label %.preheader.i
 
 bb.t:                                             ; preds = %bb.v
   %i.df = getelementptr inbounds nuw i8, ptr %.sroa.010.016.i, i64 12 ; 2 uses
   %.not.i68 = icmp eq ptr %i.df, %i.dd
   br i1 %.not.i68, label %.loopexit.i, label %.preheader.i, !llvm.loop !8
 
-.preheader.i:                                     ; preds = %bb.s, %bb.t
-  %.sroa.010.016.i = phi ptr [ %i.df, %bb.t ], [ %i.db, %bb.s ] ; 4 uses
+.preheader.i:                                     ; preds = %10, %bb.t
+  %.sroa.010.016.i = phi ptr [ %i.df, %bb.t ], [ %i.db, %10 ] ; 4 uses
   %i.dg = load float, ptr %.sroa.010.016.i, align 4
   %i.dh = fcmp une float %i.dg, 0.000000e+00
   br i1 %i.dh, label %_ZN6Assimp11ASEImporter15GenerateNormalsERNS_3ASE4MeshE.exit, label %bb.u
@@ -229,7 +231,7 @@ bb.v:                                             ; preds = %bb.u
   %i.dn = fcmp une float %i.dm, 0.000000e+00
   br i1 %i.dn, label %_ZN6Assimp11ASEImporter15GenerateNormalsERNS_3ASE4MeshE.exit, label %bb.t
 
-.loopexit.i:                                      ; preds = %bb.t, %bb.s
+.loopexit.i:                                      ; preds = %bb.t, %10, %bb.s
   invoke void @_Z34ComputeNormalsWithSmoothingsGroupsIN6Assimp3ASE4FaceEEvR23MeshWithSmoothingGroupsIT_E(ptr noundef nonnull align 8 dereferenceable(717) %.sroa.0148.0194)
           to label %_ZN6Assimp11ASEImporter15GenerateNormalsERNS_3ASE4MeshE.exit unwind label %bb.w
 
@@ -632,19 +634,21 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.d = load ptr, ptr %i.c, align 8              ; 2 uses
   %i.e = icmp eq ptr %i.b, %i.d
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %3 = load i8, ptr %2, align 8, !range !4
-  %4 = trunc nuw i8 %3 to i1
-  %or.cond = select i1 %i.e, i1 true, i1 %4
-  br i1 %or.cond, label %.loopexit, label %.preheader
+  br i1 %i.e, label %.loopexit, label %2
+
+2:                                                ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 96
+  %4 = load i8, ptr %3, align 8, !range !4, !noundef !5
+  %5 = trunc nuw i8 %4 to i1
+  br i1 %5, label %.loopexit, label %.preheader
 
 bb.b:                                             ; preds = %bb.d
   %i.f = getelementptr inbounds nuw i8, ptr %.sroa.010.016, i64 12 ; 2 uses
   %.not = icmp eq ptr %i.f, %i.d
   br i1 %.not, label %.loopexit, label %.preheader, !llvm.loop !8
 
-.preheader:                                       ; preds = %bb.a, %bb.b
-  %.sroa.010.016 = phi ptr [ %i.f, %bb.b ], [ %i.b, %bb.a ] ; 4 uses
+.preheader:                                       ; preds = %2, %bb.b
+  %.sroa.010.016 = phi ptr [ %i.f, %bb.b ], [ %i.b, %2 ] ; 4 uses
   %i.g = load float, ptr %.sroa.010.016, align 4
   %i.h = fcmp une float %i.g, 0.000000e+00
   br i1 %i.h, label %.thread, label %bb.c
@@ -661,7 +665,7 @@ bb.d:                                             ; preds = %bb.c
   %i.n = fcmp une float %i.m, 0.000000e+00
   br i1 %i.n, label %.thread, label %bb.b
 
-.loopexit:                                        ; preds = %bb.b, %bb.a
+.loopexit:                                        ; preds = %bb.b, %2, %bb.a
   tail call void @_Z34ComputeNormalsWithSmoothingsGroupsIN6Assimp3ASE4FaceEEvR23MeshWithSmoothingGroupsIT_E(ptr noundef nonnull align 8 dereferenceable(72) %1)
   br label %.thread
 

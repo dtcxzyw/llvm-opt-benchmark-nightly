@@ -201,19 +201,22 @@ bb.b:                                             ; preds = %bb.a
   tail call void @_ZN6google8protobuf9BoolValue5ClearEv(ptr noundef nonnull align 8 dereferenceable(32) %0)
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.c = load i32, ptr %i.b, align 8, !tbaa !3    ; 2 uses
-  %.not.i.i = trunc i32 %i.c to i1
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %3 = load i8, ptr %2, align 8, !range !45
-  %4 = trunc nuw i8 %3 to i1
-  %or.cond.i = select i1 %.not.i.i, i1 %4, i1 false
-  br i1 %or.cond.i, label %bb.c, label %bb.d
+  %2 = and i32 %i.c, 1
+  %.not.i.i = icmp eq i32 %2, 0
+  br i1 %.not.i.i, label %bb.d, label %3
 
-bb.c:                                             ; preds = %bb.b
+3:                                                ; preds = %bb.b
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %5 = load i8, ptr %4, align 8, !tbaa !13, !range !45, !noundef !46
+  %6 = trunc nuw i8 %5 to i1
+  br i1 %6, label %bb.c, label %bb.d
+
+bb.c:                                             ; preds = %3
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i8 1, ptr %i.d, align 8, !tbaa !13
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %bb.b
+bb.d:                                             ; preds = %bb.c, %3, %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !3
   %i.g = or i32 %i.f, %i.c

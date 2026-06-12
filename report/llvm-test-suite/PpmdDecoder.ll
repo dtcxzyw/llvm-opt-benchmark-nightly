@@ -201,12 +201,14 @@ select.unfold.us:                                 ; preds = %bb.d
   %i.aa = load i8, ptr %i.v, align 1, !tbaa !44, !range !45, !noundef !46
   %i.ab = trunc nuw i8 %i.aa to i1
   %.pre57 = load i64, ptr %i.k, align 8, !tbaa !48 ; 2 uses
-  %6 = load i64, ptr %i.w, align 8
-  %7 = icmp uge i64 %.pre57, %6
-  %or.cond.not = select i1 %i.ab, i1 %7, i1 false
-  br i1 %or.cond.not, label %.thread, label %.critedge.backedge.us
+  br i1 %i.ab, label %6, label %.critedge.backedge.us
 
-.critedge.backedge.us:                            ; preds = %select.unfold.us
+6:                                                ; preds = %select.unfold.us
+  %7 = load i64, ptr %i.w, align 8, !tbaa !47
+  %8 = icmp ult i64 %.pre57, %7
+  br i1 %8, label %.critedge.backedge.us, label %.thread
+
+.critedge.backedge.us:                            ; preds = %6, %select.unfold.us
   %i.ac = load ptr, ptr %i.b, align 8, !tbaa !10
   %i.ad = tail call noundef i32 @_ZN9NCompress5NPpmd8CDecoder8CodeSpecEPhj(ptr noundef nonnull align 8 dereferenceable(19376) %0, ptr noundef %i.ac, i32 noundef 1048576)
   %i.ae = load i64, ptr %i.k, align 8, !tbaa !48
@@ -248,12 +250,14 @@ select.unfold:                                    ; preds = %bb.f
   %i.aw = load i8, ptr %i.v, align 1, !tbaa !44, !range !45, !noundef !46
   %i.ax = trunc nuw i8 %i.aw to i1
   %.pre = load i64, ptr %i.k, align 8, !tbaa !48  ; 2 uses
-  %8 = load i64, ptr %i.w, align 8
-  %9 = icmp uge i64 %.pre, %8
-  %or.cond70.not = select i1 %i.ax, i1 %9, i1 false
-  br i1 %or.cond70.not, label %.thread, label %.critedge.backedge
+  br i1 %i.ax, label %9, label %.critedge.backedge
 
-.critedge.backedge:                               ; preds = %select.unfold
+9:                                                ; preds = %select.unfold
+  %10 = load i64, ptr %i.w, align 8, !tbaa !47
+  %11 = icmp ult i64 %.pre, %10
+  br i1 %11, label %.critedge.backedge, label %.thread
+
+.critedge.backedge:                               ; preds = %9, %select.unfold
   %i.ay = load ptr, ptr %i.b, align 8, !tbaa !10
   %i.az = call noundef i32 @_ZN9NCompress5NPpmd8CDecoder8CodeSpecEPhj(ptr noundef nonnull align 8 dereferenceable(19376) %0, ptr noundef %i.ay, i32 noundef 1048576)
   %i.ba = load i64, ptr %i.k, align 8, !tbaa !48
@@ -263,8 +267,8 @@ select.unfold:                                    ; preds = %bb.f
   %.not32 = icmp eq i32 %i.bd, 0
   br i1 %.not32, label %.lr.ph.split, label %.thread, !llvm.loop !54
 
-.thread:                                          ; preds = %bb.e, %.critedge.backedge, %bb.f, %.lr.ph.split, %select.unfold, %bb.d, %.critedge.backedge.us, %.lr.ph.split.us, %select.unfold.us, %bb.c, %bb.b
-  %.6 = phi i32 [ -2147024882, %bb.b ], [ 0, %bb.d ], [ %i.r, %bb.c ], [ 0, %select.unfold.us ], [ %i.ah, %.critedge.backedge.us ], [ %i.x, %.lr.ph.split.us ], [ %i.ai, %.lr.ph.split ], [ 0, %select.unfold ], [ %i.bd, %.critedge.backedge ], [ %i.av, %bb.f ], [ 0, %bb.e ]
+.thread:                                          ; preds = %bb.e, %9, %.critedge.backedge, %bb.f, %.lr.ph.split, %bb.d, %6, %.critedge.backedge.us, %.lr.ph.split.us, %bb.c, %bb.b
+  %.6 = phi i32 [ -2147024882, %bb.b ], [ 0, %bb.d ], [ %i.r, %bb.c ], [ 0, %6 ], [ %i.ah, %.critedge.backedge.us ], [ %i.x, %.lr.ph.split.us ], [ %i.ai, %.lr.ph.split ], [ 0, %9 ], [ %i.bd, %.critedge.backedge ], [ %i.av, %bb.f ], [ 0, %bb.e ]
   ret i32 %.6
 }
 

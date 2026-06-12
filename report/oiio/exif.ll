@@ -201,12 +201,17 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.s, %bb.q
   %.035 = phi ptr [ %i.aw, %bb.q ], [ %i.ay, %bb.s ] ; 7 uses
   %i.az = getelementptr inbounds nuw i8, ptr %.035, i64 8
-  %.sroa.0.0.copyload.i = load i64, ptr %i.az, align 8 ; 3 uses
-  %i.ba = and i64 %.sroa.0.0.copyload.i, -4294901761
+  %.sroa.0.0.copyload.i = load i64, ptr %i.az, align 8 ; 4 uses
+  %.sroa.588.0.extract.shift = lshr i64 %.sroa.0.0.copyload.i, 32 ; 3 uses
+  %i.ba = and i64 %.sroa.0.0.copyload.i, 65535
   %or.cond = icmp eq i64 %i.ba, 262
-  br i1 %or.cond, label %bb.u, label %_ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit.thread
+  br i1 %or.cond, label %_ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit, label %_ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit.thread
 
-bb.u:                                             ; preds = %bb.t
+_ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit: ; preds = %bb.t
+  %.not.i50 = icmp eq i64 %.sroa.588.0.extract.shift, 0
+  br i1 %.not.i50, label %bb.u, label %.thread
+
+bb.u:                                             ; preds = %_ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit
   %i.bb = getelementptr inbounds nuw i8, ptr %.035, i64 38
   %i.bc = load i8, ptr %i.bb, align 2, !tbaa !133, !range !137, !noundef !138
   %i.bd = trunc nuw i8 %i.bc to i1
@@ -222,9 +227,11 @@ bb.v:                                             ; preds = %bb.r, %.loopexit119
   br label %.body
 
 _ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit.thread: ; preds = %bb.t
-  %i.bj = and i64 %.sroa.0.0.copyload.i, -4294901761
-  %or.cond117 = icmp eq i64 %i.bj, 263
-  br i1 %or.cond117, label %bb.w, label %_ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit54.thread
+  %i.bj = and i64 %.sroa.0.0.copyload.i, 65535
+  %or.cond122 = icmp eq i64 %i.bj, 263
+  %or.cond117 = icmp eq i64 %.sroa.588.0.extract.shift, 0
+  %or.cond123 = and i1 %or.cond117, %or.cond122
+  br i1 %or.cond123, label %bb.w, label %_ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit54.thread
 
 bb.w:                                             ; preds = %_ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit.thread
   %i.bk = getelementptr inbounds nuw i8, ptr %.035, i64 38
@@ -237,9 +244,11 @@ bb.w:                                             ; preds = %_ZN11OpenImageIO4v3
   br label %bb.y
 
 _ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit54.thread: ; preds = %_ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit.thread
-  %i.br = and i64 %.sroa.0.0.copyload.i, -4294901761
-  %or.cond118 = icmp eq i64 %i.br, 260
-  br i1 %or.cond118, label %bb.x, label %.thread
+  %i.br = and i64 %.sroa.0.0.copyload.i, 65535
+  %or.cond124 = icmp eq i64 %i.br, 260
+  %or.cond118 = icmp eq i64 %.sroa.588.0.extract.shift, 0
+  %or.cond126 = and i1 %or.cond118, %or.cond124
+  br i1 %or.cond126, label %bb.x, label %.thread
 
 bb.x:                                             ; preds = %_ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit54.thread
   %i.bs = getelementptr inbounds nuw i8, ptr %.035, i64 38
@@ -257,7 +266,7 @@ bb.y:                                             ; preds = %bb.w, %bb.x, %bb.u
   %.not42 = icmp eq i32 %.034, 65535
   br i1 %.not42, label %bb.aa, label %.thread
 
-.thread:                                          ; preds = %_ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit54.thread, %bb.y
+.thread:                                          ; preds = %_ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit, %_ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit54.thread, %bb.y
   store ptr @.str.163, ptr %7, align 8, !tbaa !7
   %i.ca = getelementptr inbounds nuw i8, ptr %7, i64 8
   store i64 17, ptr %i.ca, align 8, !tbaa !12
@@ -660,7 +669,6 @@ _ZNK3tsl17detail_robin_hash10robin_hashISt4pairINSt7__cxx1112basic_stringIcSt11c
 
 .lr.ph:                                           ; preds = %_ZNK3tsl17detail_robin_hash10robin_hashISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKN11OpenImageIO4v3_17TagInfoEENS_9robin_mapIS8_SD_St4hashIS8_ESt8equal_toIS8_ESaISE_ELb0ENS_2rh26power_of_two_growth_policyILm2EEEE9KeySelectENSO_11ValueSelectESH_SJ_SK_Lb0ESN_E8hash_keyIS8_EEmRKT_.exit
   %i.o = load i64, ptr %i.d, align 8, !tbaa !54   ; 3 uses
-  %6 = load ptr, ptr %1, align 8
   %i.p = icmp eq i64 %i.o, 0
   br label %bb.c
 
@@ -684,6 +692,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.p, label %_ZNK3tsl17detail_robin_hash10robin_hashISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKN11OpenImageIO4v3_17TagInfoEENS_9robin_mapIS8_SD_St4hashIS8_ESt8equal_toIS8_ESaISE_ELb0ENS_2rh26power_of_two_growth_policyILm2EEEE9KeySelectENSO_11ValueSelectESH_SJ_SK_Lb0ESN_E12compare_keysIS8_S8_EEbRKT_RKT0_.exit.thread, label %_ZNK3tsl17detail_robin_hash10robin_hashISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKN11OpenImageIO4v3_17TagInfoEENS_9robin_mapIS8_SD_St4hashIS8_ESt8equal_toIS8_ESaISE_ELb0ENS_2rh26power_of_two_growth_policyILm2EEEE9KeySelectENSO_11ValueSelectESH_SJ_SK_Lb0ESN_E12compare_keysIS8_S8_EEbRKT_RKT0_.exit
 
 _ZNK3tsl17detail_robin_hash10robin_hashISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKN11OpenImageIO4v3_17TagInfoEENS_9robin_mapIS8_SD_St4hashIS8_ESt8equal_toIS8_ESaISE_ELb0ENS_2rh26power_of_two_growth_policyILm2EEEE9KeySelectENSO_11ValueSelectESH_SJ_SK_Lb0ESN_E12compare_keysIS8_S8_EEbRKT_RKT0_.exit: ; preds = %bb.d
+  %6 = load ptr, ptr %1, align 8, !tbaa !51
   %i.w = load ptr, ptr %i.s, align 8, !tbaa !51
   %bcmp.i.i.i = tail call i32 @bcmp(ptr %i.w, ptr %6, i64 %i.o)
   %i.x = icmp eq i32 %bcmp.i.i.i, 0

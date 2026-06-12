@@ -201,8 +201,8 @@ _ZNK6google8protobuf11MessageLite15GetTcParseTableEv.exit: ; preds = %bb.a, %bb.
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.f, %_ZNK6google8protobuf11MessageLite15GetTcParseTableEv.exit
-  %.0 = phi ptr [ %1, %_ZNK6google8protobuf11MessageLite15GetTcParseTableEv.exit ], [ %i.av, %bb.f ] ; 4 uses
-  %.0.i = phi ptr [ %i.m, %_ZNK6google8protobuf11MessageLite15GetTcParseTableEv.exit ], [ %i.ag, %bb.f ] ; 3 uses
+  %.0 = phi ptr [ %1, %_ZNK6google8protobuf11MessageLite15GetTcParseTableEv.exit ], [ %i.av, %bb.f ] ; 5 uses
+  %.0.i = phi ptr [ %i.m, %_ZNK6google8protobuf11MessageLite15GetTcParseTableEv.exit ], [ %i.ag, %bb.f ] ; 4 uses
   %i.r = load i32, ptr %i.n, align 4, !tbaa !17
   %i.s = load ptr, ptr %2, align 8, !tbaa !21
   %i.t = icmp ult ptr %.0, %i.s
@@ -216,15 +216,17 @@ bb.d:                                             ; preds = %bb.c
   %i.y = trunc i64 %i.x to i32                    ; 3 uses
   %i.z = load i32, ptr %i.p, align 4, !tbaa !19
   %i.aa = icmp eq i32 %i.z, %i.y
-  br i1 %i.aa, label %bb.e, label %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit
+  br i1 %i.aa, label %3, label %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit
 
-bb.e:                                             ; preds = %bb.d
-  %3 = icmp sgt i32 %i.y, 0
+3:                                                ; preds = %bb.d
+  %4 = icmp sgt i32 %i.y, 0
+  br i1 %4, label %bb.e, label %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit.thread
+
+bb.e:                                             ; preds = %3
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.ac = load ptr, ptr %i.ab, align 8
+  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !22
   %i.ad = icmp eq ptr %i.ac, null
-  %or.cond.i.i = select i1 %3, i1 %i.ad, i1 false
-  %spec.select = select i1 %or.cond.i.i, ptr null, ptr %.0
+  %spec.select = select i1 %i.ad, ptr null, ptr %.0
   br label %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit.thread
 
 _ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit: ; preds = %bb.d
@@ -263,9 +265,9 @@ bb.f:                                             ; preds = %_ZN6google8protobuf
   %.not.i = icmp eq i32 %i.ax, 0
   br i1 %.not.i, label %bb.c, label %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit.thread, !llvm.loop !36
 
-_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit.thread: ; preds = %bb.f, %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit.thread9, %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit, %bb.e
-  %.1 = phi ptr [ %spec.select, %bb.e ], [ %i.av, %bb.f ], [ null, %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit.thread9 ], [ %.fca.0.extract.i.i, %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit ] ; 2 uses
-  %.1.i = phi ptr [ %.0.i, %bb.e ], [ %i.ag, %bb.f ], [ %i.ag, %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit.thread9 ], [ %.0.i, %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit ] ; 2 uses
+_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit.thread: ; preds = %bb.f, %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit.thread9, %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit, %bb.e, %3
+  %.1 = phi ptr [ %spec.select, %bb.e ], [ %.0, %3 ], [ %i.av, %bb.f ], [ null, %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit.thread9 ], [ %.fca.0.extract.i.i, %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit ] ; 2 uses
+  %.1.i = phi ptr [ %.0.i, %bb.e ], [ %.0.i, %3 ], [ %i.ag, %bb.f ], [ %i.ag, %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit.thread9 ], [ %.0.i, %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit ] ; 2 uses
   %i.ay = getelementptr inbounds i8, ptr %.1.i, i64 -47
   %i.az = load i8, ptr %i.ay, align 1
   %i.ba = and i8 %i.az, 1

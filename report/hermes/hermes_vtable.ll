@@ -201,17 +201,20 @@ bb.i:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.bd = load i64, ptr %i.v, align 8, !tbaa !68  ; 4 uses
   %i.be = add i64 %i.bd, 1                        ; 3 uses
   %i.bf = load ptr, ptr %5, align 8, !tbaa !67    ; 2 uses
-  %i.bg = icmp eq ptr %i.bf, %i.u                 ; 2 uses
-  br i1 %i.bg, label %bb.j, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i
+  %i.bg = icmp eq ptr %i.bf, %i.u
+  br i1 %i.bg, label %bb.j, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i8
 
 bb.j:                                             ; preds = %bb.i
   %i.bh = icmp ult i64 %i.bd, 16
   call void @llvm.assume(i1 %i.bh)
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i: ; preds = %bb.j, %bb.i
-  %7 = load i64, ptr %i.u, align 8
-  %8 = select i1 %i.bg, i64 15, i64 %7
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i8: ; preds = %bb.i
+  %7 = load i64, ptr %i.u, align 8, !tbaa !70
+  br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i8, %bb.j
+  %8 = phi i64 [ %7, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i8 ], [ 15, %bb.j ]
   %i.bi = icmp ugt i64 %i.be, %8
   br i1 %i.bi, label %bb.k, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit
 
@@ -614,20 +617,22 @@ _ZNKSt14default_deleteIVN6hermes17PageAccessTrackerEEclEPS2_.exit.i: ; preds = %
   br label %_ZNSt10unique_ptrIVN6hermes17PageAccessTrackerESt14default_deleteIS2_EED2Ev.exit
 
 _ZNSt10unique_ptrIVN6hermes17PageAccessTrackerESt14default_deleteIS2_EED2Ev.exit: ; preds = %bb.g, %_ZNKSt14default_deleteIVN6hermes17PageAccessTrackerEEclEPS2_.exit.i
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 336
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 344
   %i.ae = load i8, ptr %i.ad, align 8, !tbaa !625, !range !108, !noundef !109
   %i.af = trunc nuw i8 %i.ae to i1
-  %.sroa.0.0.copyload.i.i.i.i.i = load i64, ptr %1, align 8
-  %.not.i.i.i.i1 = icmp ne i64 %.sroa.0.0.copyload.i.i.i.i.i, 0
-  %or.cond.not.i.i = select i1 %i.af, i1 %.not.i.i.i.i1, i1 false
-  br i1 %or.cond.not.i.i, label %bb.h, label %_ZN4llvh8OptionalISt6threadED2Ev.exit
+  br i1 %i.af, label %1, label %_ZN4llvh8OptionalISt6threadED2Ev.exit
 
-bb.h:                                             ; preds = %_ZNSt10unique_ptrIVN6hermes17PageAccessTrackerESt14default_deleteIS2_EED2Ev.exit
+1:                                                ; preds = %_ZNSt10unique_ptrIVN6hermes17PageAccessTrackerESt14default_deleteIS2_EED2Ev.exit
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 336
+  %.sroa.0.0.copyload.i.i.i.i.i = load i64, ptr %2, align 8, !tbaa !69
+  %.not.i.i.i.i1 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i, 0
+  br i1 %.not.i.i.i.i1, label %_ZN4llvh8OptionalISt6threadED2Ev.exit, label %bb.h
+
+bb.h:                                             ; preds = %1
   tail call void @_ZSt9terminatev() #24
   unreachable
 
-_ZN4llvh8OptionalISt6threadED2Ev.exit:            ; preds = %_ZNSt10unique_ptrIVN6hermes17PageAccessTrackerESt14default_deleteIS2_EED2Ev.exit
+_ZN4llvh8OptionalISt6threadED2Ev.exit:            ; preds = %_ZNSt10unique_ptrIVN6hermes17PageAccessTrackerESt14default_deleteIS2_EED2Ev.exit, %1
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 280
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !181 ; 3 uses
   %.not.i2 = icmp eq ptr %i.ah, null

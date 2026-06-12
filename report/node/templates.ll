@@ -201,9 +201,7 @@ bb.e:                                             ; preds = %_ZN2v88internal12Is
   %i.av = add i64 %i.au, 15
   %i.aw = inttoptr i64 %i.av to ptr
   %i.ax = load atomic volatile i64, ptr %i.aw acquire, align 8
-  %2 = load i64, ptr %0, align 8
-  %3 = icmp eq i64 %2, %i.ax
-  br label %_ZN2v88internal13IsJSApiObjectENS0_6TaggedINS0_6ObjectEEE.exit.thread
+  br label %bb.f
 
 _ZN2v88internal22IsFunctionTemplateInfoENS0_6TaggedINS0_6ObjectEEE.exit: ; preds = %_ZN2v88internal12IsJSFunctionENS0_6TaggedINS0_6ObjectEEE.exit
   %i.ay = load atomic volatile i64, ptr %i.al monotonic, align 8
@@ -213,13 +211,14 @@ _ZN2v88internal22IsFunctionTemplateInfoENS0_6TaggedINS0_6ObjectEEE.exit: ; preds
   %i.bc = icmp eq i16 %i.bb, 248
   br i1 %i.bc, label %bb.f, label %_ZN2v88internal13IsJSApiObjectENS0_6TaggedINS0_6ObjectEEE.exit.thread
 
-bb.f:                                             ; preds = %_ZN2v88internal22IsFunctionTemplateInfoENS0_6TaggedINS0_6ObjectEEE.exit
+bb.f:                                             ; preds = %_ZN2v88internal22IsFunctionTemplateInfoENS0_6TaggedINS0_6ObjectEEE.exit, %bb.e
+  %.sink65 = phi i64 [ %i.ax, %bb.e ], [ %.sroa.04.0.i.i, %_ZN2v88internal22IsFunctionTemplateInfoENS0_6TaggedINS0_6ObjectEEE.exit ]
   %i.bd = load i64, ptr %0, align 8
-  %i.be = icmp eq i64 %i.bd, %.sroa.04.0.i.i
+  %i.be = icmp eq i64 %i.bd, %.sink65
   br label %_ZN2v88internal13IsJSApiObjectENS0_6TaggedINS0_6ObjectEEE.exit.thread
 
-_ZN2v88internal13IsJSApiObjectENS0_6TaggedINS0_6ObjectEEE.exit.thread: ; preds = %_ZNK2v88internal3Map14GetConstructorEv.exit, %bb.a, %bb.e, %bb.f, %_ZN2v88internal22IsFunctionTemplateInfoENS0_6TaggedINS0_6ObjectEEE.exit, %_ZN2v88internal13IsJSApiObjectENS0_6TaggedINS0_6ObjectEEE.exit
-  %.0 = phi i1 [ false, %bb.a ], [ false, %_ZN2v88internal13IsJSApiObjectENS0_6TaggedINS0_6ObjectEEE.exit ], [ %3, %bb.e ], [ %i.be, %bb.f ], [ false, %_ZN2v88internal22IsFunctionTemplateInfoENS0_6TaggedINS0_6ObjectEEE.exit ], [ false, %_ZNK2v88internal3Map14GetConstructorEv.exit ]
+_ZN2v88internal13IsJSApiObjectENS0_6TaggedINS0_6ObjectEEE.exit.thread: ; preds = %bb.f, %_ZNK2v88internal3Map14GetConstructorEv.exit, %bb.a, %_ZN2v88internal22IsFunctionTemplateInfoENS0_6TaggedINS0_6ObjectEEE.exit, %_ZN2v88internal13IsJSApiObjectENS0_6TaggedINS0_6ObjectEEE.exit
+  %.0 = phi i1 [ false, %bb.a ], [ false, %_ZN2v88internal13IsJSApiObjectENS0_6TaggedINS0_6ObjectEEE.exit ], [ false, %_ZN2v88internal22IsFunctionTemplateInfoENS0_6TaggedINS0_6ObjectEEE.exit ], [ false, %_ZNK2v88internal3Map14GetConstructorEv.exit ], [ %i.be, %bb.f ]
   ret i1 %.0
 }
 

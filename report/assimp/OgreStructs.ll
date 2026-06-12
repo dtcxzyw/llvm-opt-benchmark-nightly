@@ -201,13 +201,15 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.c = load i64, ptr %i.b, align 8              ; 7 uses
-  %6 = icmp ne i64 %i.c, 0
-  %7 = load i32, ptr %0, align 8
-  %.not.a = icmp eq i32 %7, 3
-  %or.cond = select i1 %6, i1 %.not.a, i1 false
-  br i1 %or.cond, label %bb.e, label %bb.b
+  %.not.a = icmp eq i64 %i.c, 0
+  br i1 %.not.a, label %bb.b, label %6
 
-bb.b:                                             ; preds = %bb.a
+6:                                                ; preds = %bb.a
+  %7 = load i32, ptr %0, align 8
+  %.not = icmp eq i32 %7, 3
+  br i1 %.not, label %bb.e, label %bb.b
+
+bb.b:                                             ; preds = %6, %bb.a
   %i.d = tail call ptr @__cxa_allocate_exception(i64 16) #28 ; 3 uses
   invoke void @_ZN17DeadlyImportErrorC2EPKc(ptr noundef nonnull align 8 dereferenceable(16) %i.d, ptr noundef nonnull @.str.50)
           to label %bb.c unwind label %bb.d
@@ -221,7 +223,7 @@ bb.d:                                             ; preds = %bb.b
           cleanup
   br label %bb.o
 
-bb.e:                                             ; preds = %bb.a
+bb.e:                                             ; preds = %6
   %i.f = tail call noalias noundef nonnull dereferenceable(1080) ptr @_Znwm(i64 noundef 1080) #30 ; 12 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 1048 ; 4 uses
   store ptr null, ptr %i.g, align 8

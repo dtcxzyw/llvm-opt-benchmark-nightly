@@ -201,26 +201,28 @@ bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 141
   %i.m = load i8, ptr %i.l, align 1, !range !33, !noundef !34
   %i.n = trunc nuw i8 %i.m to i1
-  br i1 %i.n, label %bb.d, label %bb.f
+  br i1 %i.n, label %11, label %bb.f
 
-bb.d:                                             ; preds = %bb.c
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 144
-  %12 = load i32, ptr %11, align 8                ; 4 uses
-  %13 = icmp sgt i32 %12, -1
-  %i.o = zext i32 %12 to i64                      ; 3 uses
+11:                                               ; preds = %bb.c
+  %12 = getelementptr inbounds nuw i8, ptr %1, i64 144
+  %13 = load i32, ptr %12, align 8                ; 4 uses
+  %14 = icmp slt i32 %13, 0
+  br i1 %14, label %._crit_edge139, label %bb.d
+
+bb.d:                                             ; preds = %11
+  %i.o = zext nneg i32 %13 to i64                 ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.q = load i64, ptr %i.p, align 8
   %.not = icmp ugt i64 %i.q, %i.o
-  %or.cond = select i1 %13, i1 %.not, i1 false
-  br i1 %or.cond, label %.preheader, label %._crit_edge139
+  br i1 %.not, label %.preheader, label %._crit_edge139
 
 .preheader:                                       ; preds = %bb.d
-  %.not148.a = icmp eq i32 %12, 0
+  %.not148.a = icmp eq i32 %13, 0
   br i1 %.not148.a, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.preheader
   %xtraiter = and i64 %i.o, 7                     ; 3 uses
-  %i.r = icmp ult i32 %12, 8
+  %i.r = icmp ult i32 %13, 8
   br i1 %i.r, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
@@ -276,7 +278,7 @@ bb.f:                                             ; preds = %bb.c, %._crit_edge,
   %.not127135 = icmp eq ptr %.sroa.0109.1, %.sroa.0107.0
   br i1 %.not127135, label %._crit_edge139, label %.lr.ph138
 
-._crit_edge139:                                   ; preds = %bb.z, %bb.d, %bb.f
+._crit_edge139:                                   ; preds = %bb.z, %11, %bb.d, %bb.f
   %i.ad = load ptr, ptr %6, align 8               ; 2 uses
   %i.ae = icmp eq ptr %i.ad, %6
   br i1 %i.ae, label %.loopexit128, label %bb.aa
@@ -679,12 +681,12 @@ bb.ah:                                            ; preds = %bb.af
   br label %_ZN10aiMetadata3SetIbEEbjRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_.exit
 
 .thread28.i63:                                    ; preds = %_ZN8aiStringaSERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i60
-  %.pre.i64 = load float, ptr %i.eb, align 4
   %i.fc = invoke noalias noundef nonnull dereferenceable(4) ptr @_Znwm(i64 noundef 4) #19
           to label %.noexc65 unwind label %bb.ai  ; 2 uses
 
 .noexc65:                                         ; preds = %.thread28.i63
-  store float %.pre.i64, ptr %i.fc, align 4
+  %6 = load float, ptr %i.eb, align 4
+  store float %6, ptr %i.fc, align 4
   store ptr %i.fc, ptr %i.ex, align 8
   br label %_ZN10aiMetadata3SetIbEEbjRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_.exit
 
@@ -760,12 +762,12 @@ bb.aq:                                            ; preds = %bb.ao
   br label %_ZN10aiMetadata3SetIbEEbjRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_.exit
 
 .thread28.i72:                                    ; preds = %_ZN8aiStringaSERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i69
-  %.pre.i73 = load i32, ptr %i.fh, align 4
   %i.gh = invoke noalias noundef nonnull dereferenceable(4) ptr @_Znwm(i64 noundef 4) #19
           to label %.noexc74 unwind label %bb.ar  ; 2 uses
 
 .noexc74:                                         ; preds = %.thread28.i72
-  store i32 %.pre.i73, ptr %i.gh, align 4
+  %7 = load i32, ptr %i.fh, align 4
+  store i32 %7, ptr %i.gh, align 4
   store ptr %i.gh, ptr %i.gd, align 8
   br label %_ZN10aiMetadata3SetIbEEbjRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_.exit
 

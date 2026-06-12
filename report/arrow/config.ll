@@ -201,16 +201,18 @@ declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #11
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZNSt22_Optional_payload_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE14_M_move_assignEOS6_(ptr noundef nonnull align 8 dereferenceable(33) %0, ptr noundef nonnull align 8 dereferenceable(33) %1) local_unnamed_addr #6 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !14, !range !17, !noundef !18
-  %i.c = trunc nuw i8 %i.b to i1                  ; 2 uses
+  %i.c = trunc nuw i8 %i.b to i1
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.e = load i8, ptr %i.d, align 8, !range !17
+  %i.e = load i8, ptr %i.d, align 8, !tbaa !14, !range !17, !noundef !18
   %i.f = trunc nuw i8 %i.e to i1                  ; 2 uses
-  %or.cond = select i1 %i.c, i1 %i.f, i1 false
-  br i1 %or.cond, label %bb.b, label %bb.i
+  br i1 %i.c, label %2, label %bb.i
 
-bb.b:                                             ; preds = %bb.a
+2:                                                ; preds = %bb.a
+  br i1 %i.f, label %bb.b, label %bb.l
+
+bb.b:                                             ; preds = %2
   %i.g = load ptr, ptr %0, align 8, !tbaa !7      ; 6 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %i.i = icmp eq ptr %i.g, %i.h
@@ -297,7 +299,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %bb
   br label %_ZNSt22_Optional_payload_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8_M_resetEv.exit
 
 bb.i:                                             ; preds = %bb.a
-  br i1 %i.f, label %bb.j, label %2
+  br i1 %i.f, label %bb.j, label %.thread5
+
+.thread5:                                         ; preds = %bb.i
+  store i8 0, ptr %i.a, align 8, !tbaa !14
+  br label %_ZNSt22_Optional_payload_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8_M_resetEv.exit
 
 bb.j:                                             ; preds = %bb.i
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
@@ -333,11 +339,8 @@ _ZNSt22_Optional_payload_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcE
   store i8 1, ptr %i.a, align 8, !tbaa !14
   br label %_ZNSt22_Optional_payload_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8_M_resetEv.exit
 
-2:                                                ; preds = %bb.i
-  store i8 0, ptr %i.a, align 8, !tbaa !14
-  br i1 %i.c, label %bb.l, label %_ZNSt22_Optional_payload_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8_M_resetEv.exit
-
 bb.l:                                             ; preds = %2
+  store i8 0, ptr %i.a, align 8, !tbaa !14
   %i.ar = load ptr, ptr %0, align 8, !tbaa !7     ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.at = icmp eq ptr %i.ar, %i.as
@@ -349,7 +352,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   tail call void @_ZdlPvm(ptr noundef %i.ar, i64 noundef %i.av) #15
   br label %_ZNSt22_Optional_payload_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8_M_resetEv.exit
 
-_ZNSt22_Optional_payload_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8_M_resetEv.exit: ; preds = %bb.l, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i, %2, %_ZNSt22_Optional_payload_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE12_M_constructIJS5_EEEvDpOT_.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit
+_ZNSt22_Optional_payload_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8_M_resetEv.exit: ; preds = %bb.l, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i, %.thread5, %_ZNSt22_Optional_payload_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE12_M_constructIJS5_EEEvDpOT_.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit
   ret void
 }
 

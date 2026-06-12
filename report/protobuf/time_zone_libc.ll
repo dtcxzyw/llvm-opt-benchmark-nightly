@@ -201,19 +201,21 @@ bb.bl:                                            ; preds = %bb.bk
 bb.bm:                                            ; preds = %bb.bl
   %i.hr = load i8, ptr %i.dh, align 1, !tbaa !42  ; 2 uses
   %i.hs = icmp slt i8 %i.hr, 0
-  br i1 %i.hs, label %_ZN4absl12lts_2025051213time_internal4cctz6detailltINS3_10second_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit54.thread, label %bb.bn
+  br i1 %i.hs, label %_ZN4absl12lts_2025051213time_internal4cctz6detailltINS3_10second_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit54.thread, label %8
 
-bb.bn:                                            ; preds = %bb.bm
-  %8 = icmp eq i8 %i.hr, 0
-  %i.ht = load i8, ptr %i.dj, align 4
+8:                                                ; preds = %bb.bm
+  %9 = icmp eq i8 %i.hr, 0
+  br i1 %9, label %bb.bn, label %_ZN4absl12lts_2025051213time_internal4cctz6detailltINS3_10second_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit54.thread87
+
+bb.bn:                                            ; preds = %8
+  %i.ht = load i8, ptr %i.dj, align 4, !tbaa !43
   %i.hu = icmp slt i8 %i.ht, 0
-  %or.cond = select i1 %8, i1 %i.hu, i1 false
-  br i1 %or.cond, label %_ZN4absl12lts_2025051213time_internal4cctz6detailltINS3_10second_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit54.thread, label %_ZN4absl12lts_2025051213time_internal4cctz6detailltINS3_10second_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit54.thread87
+  br i1 %i.hu, label %_ZN4absl12lts_2025051213time_internal4cctz6detailltINS3_10second_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit54.thread, label %_ZN4absl12lts_2025051213time_internal4cctz6detailltINS3_10second_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit54.thread87
 
-_ZN4absl12lts_2025051213time_internal4cctz6detailltINS3_10second_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit54.thread87: ; preds = %bb.bj, %bb.bh, %bb.bl, %bb.bf, %bb.bn
+_ZN4absl12lts_2025051213time_internal4cctz6detailltINS3_10second_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit54.thread87: ; preds = %bb.bj, %bb.bh, %bb.bl, %bb.bf, %8, %bb.bn
   br label %_ZN4absl12lts_2025051213time_internal4cctz6detailltINS3_10second_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit54.thread
 
-_ZN4absl12lts_2025051213time_internal4cctz6detailltINS3_10second_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit54.thread: ; preds = %bb.bn, %bb.bm, %bb.bk, %bb.bi, %bb.bg, %bb.be, %_ZN4absl12lts_2025051213time_internal4cctz6detailltINS3_10second_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit54.thread87
+_ZN4absl12lts_2025051213time_internal4cctz6detailltINS3_10second_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit54.thread: ; preds = %bb.bm, %bb.bk, %bb.bi, %bb.bg, %bb.be, %bb.bn, %_ZN4absl12lts_2025051213time_internal4cctz6detailltINS3_10second_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit54.thread87
   %.sroa.0.0 = phi i64 [ 9223372036854775807, %_ZN4absl12lts_2025051213time_internal4cctz6detailltINS3_10second_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit54.thread87 ], [ -9223372036854775808, %bb.bn ], [ -9223372036854775808, %bb.be ], [ -9223372036854775808, %bb.bg ], [ -9223372036854775808, %bb.bi ], [ -9223372036854775808, %bb.bk ], [ -9223372036854775808, %bb.bm ] ; 3 uses
   store i32 0, ptr %0, align 8, !tbaa !44
   %i.hv = getelementptr inbounds nuw i8, ptr %0, i64 8

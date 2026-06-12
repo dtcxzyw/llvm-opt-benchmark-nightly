@@ -201,12 +201,13 @@ _ZN6icu_7817double_conversion6Bignum5ClampEv.exit: ; preds = %bb.d, %.critedge.i
 
 ; Function Attrs: mustprogress nofree nounwind uwtable
 define dso_local void @_ZN6icu_7817double_conversion6Bignum20MultiplyByPowerOfTenEi(ptr nofree noundef nonnull align 4 captures(none) dereferenceable(516) %0, i32 noundef %1) local_unnamed_addr #5 align 2 {
-bb.a:
-  %2 = icmp eq i32 %1, 0
+  %3 = icmp eq i32 %1, 0
+  br i1 %3, label %_ZN6icu_7817double_conversion6Bignum9ShiftLeftEi.exit, label %bb.a
+
+bb.a:                                             ; preds = %2
   %i.a = load i16, ptr %0, align 4                ; 5 uses
   %i.b = icmp eq i16 %i.a, 0
-  %or.cond = select i1 %2, i1 true, i1 %i.b
-  br i1 %or.cond, label %_ZN6icu_7817double_conversion6Bignum9ShiftLeftEi.exit, label %.preheader34
+  br i1 %i.b, label %_ZN6icu_7817double_conversion6Bignum9ShiftLeftEi.exit, label %.preheader34
 
 .preheader34:                                     ; preds = %bb.a
   %i.c = icmp sgt i32 %1, 26
@@ -609,7 +610,7 @@ bb.k:                                             ; preds = %._crit_edge.i.i
   store i16 %i.gj, ptr %0, align 4
   br label %_ZN6icu_7817double_conversion6Bignum9ShiftLeftEi.exit
 
-_ZN6icu_7817double_conversion6Bignum9ShiftLeftEi.exit: ; preds = %bb.k, %._crit_edge.i.i, %_ZN6icu_7817double_conversion6Bignum14EnsureCapacityEi.exit.i32, %_ZN6icu_7817double_conversion6Bignum16MultiplyByUInt32Ej.exit31, %_ZN6icu_7817double_conversion6Bignum16MultiplyByUInt32Ej.exit31.thread, %bb.a
+_ZN6icu_7817double_conversion6Bignum9ShiftLeftEi.exit: ; preds = %bb.k, %._crit_edge.i.i, %_ZN6icu_7817double_conversion6Bignum14EnsureCapacityEi.exit.i32, %_ZN6icu_7817double_conversion6Bignum16MultiplyByUInt32Ej.exit31, %_ZN6icu_7817double_conversion6Bignum16MultiplyByUInt32Ej.exit31.thread, %bb.a, %2
   ret void
 }
 
