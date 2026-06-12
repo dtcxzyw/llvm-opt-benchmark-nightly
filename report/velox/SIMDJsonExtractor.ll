@@ -201,7 +201,7 @@ _ZNR5folly8ExpectedIiNS_14ConversionCodeEE5valueEv.exit: ; preds = %_ZN5folly5tr
   %i.ba = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 3 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %i.bc = add nsw i32 %.sroa.4239.0.copyload, 1   ; 5 uses
-  %i.bd = icmp sgt i32 %.sroa.4239.0.copyload, 0
+  %i.bd = icmp sgt i32 %.sroa.4239.0.copyload, 0  ; 2 uses
   %or.cond.i4.i50 = icmp ult i32 %.sroa.4239.0.copyload, 2147483646
   %i.be = add nsw i32 %.sroa.4239.0.copyload, -1  ; 3 uses
   %or.cond.i.i51 = icmp ult i32 %i.be, 2147483646
@@ -344,6 +344,7 @@ _ZN8simdjson8fallback8ondemand13json_iterator10skip_childEi.exit.i: ; preds = %b
   %i.da = icmp ugt ptr %i.cy, %.sroa.6241.0.copyload
   call void @llvm.assume(i1 %i.da)
   call void @llvm.assume(i1 %i.cz)
+  call void @llvm.assume(i1 %i.bd)
   %i.db = getelementptr inbounds nuw i8, ptr %i.cy, i64 4
   store ptr %i.db, ptr %i.c, align 8, !tbaa !79
   %i.dc = load i32, ptr %i.cy, align 4, !tbaa !3
@@ -415,7 +416,7 @@ bb.y:                                             ; preds = %_ZNR5folly8Expected
   %i.dy = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 3 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %i.ea = add nsw i32 %.sroa.4239.0.copyload, 1   ; 6 uses
-  %i.eb = icmp sgt i32 %.sroa.4239.0.copyload, 0
+  %i.eb = icmp sgt i32 %.sroa.4239.0.copyload, 0  ; 2 uses
   %or.cond.i4.i48 = icmp ult i32 %.sroa.4239.0.copyload, 2147483646
   %i.ec = add nsw i32 %.sroa.4239.0.copyload, -1  ; 3 uses
   %or.cond.i.i49 = icmp ult i32 %i.ec, 2147483646
@@ -555,6 +556,7 @@ _ZN8simdjson8fallback8ondemand13json_iterator10skip_childEi.exit.i41: ; preds = 
   %i.fz = icmp ugt ptr %i.fx, %.sroa.6241.0.copyload
   call void @llvm.assume(i1 %i.fz)
   call void @llvm.assume(i1 %i.fy)
+  call void @llvm.assume(i1 %i.eb)
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fx, i64 4
   store ptr %i.ga, ptr %i.c, align 8, !tbaa !79
   %i.gb = load i32, ptr %i.fx, align 4, !tbaa !3
