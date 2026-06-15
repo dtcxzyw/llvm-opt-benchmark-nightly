@@ -201,7 +201,7 @@ bb.a:
   %5 = alloca %"class.OpenColorIO_v2_5::OpRcPtrVec", align 8 ; 11 uses
   %6 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 20 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
+  %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 3 uses
   %i.b = tail call noundef i32 @pthread_mutex_lock(ptr noundef nonnull align 8 dereferenceable(40) %i.a) #20 ; 2 uses
   %.not.i.i = icmp eq i32 %i.b, 0
@@ -563,11 +563,11 @@ bb.ah:                                            ; preds = %_ZNSt7__cxx1112basi
           to label %_ZNKSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv.exit unwind label %bb.ag
 
 _ZNKSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv.exit: ; preds = %bb.ah, %bb.af
-  %i.dw = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 5 uses
+  %i.dw = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 4 uses
   %i.dx = load ptr, ptr %i.dw, align 8, !tbaa !284 ; 6 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.dz = icmp eq ptr %i.dx, %i.dy
-  %i.ea = load ptr, ptr %8, align 8, !tbaa !284   ; 6 uses
+  %i.ea = load ptr, ptr %8, align 8, !tbaa !284   ; 5 uses
   %i.eb = icmp eq ptr %i.ea, %i.dd                ; 2 uses
   br i1 %i.dz, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i
 
@@ -581,25 +581,21 @@ bb.ai:                                            ; preds = %_ZNKSt7__cxx1112bas
   %i.ec = load i64, ptr %i.de, align 8, !tbaa !285 ; 3 uses
   %i.ed = icmp ult i64 %i.ec, 16
   call void @llvm.assume(i1 %i.ed)
-  %.not21.i = icmp eq ptr %8, %i.dw
-  br i1 %.not21.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, label %9, !prof !231
-
-9:                                                ; preds = %bb.ai
   switch i64 %i.ec, label %bb.ak [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
     i64 1, label %bb.aj
   ]
 
-bb.aj:                                            ; preds = %9
+bb.aj:                                            ; preds = %bb.ai
   %i.ee = load i8, ptr %i.ea, align 1, !tbaa !208
   store i8 %i.ee, ptr %i.dx, align 1, !tbaa !208
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-bb.ak:                                            ; preds = %9
+bb.ak:                                            ; preds = %bb.ai
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.dx, ptr align 1 %i.ea, i64 %i.ec, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.ak, %bb.aj, %9
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.ak, %bb.aj, %bb.ai
   %i.ef = load i64, ptr %i.de, align 8, !tbaa !285 ; 2 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %0, i64 80
   store i64 %i.ef, ptr %i.eg, align 8, !tbaa !285
@@ -634,10 +630,10 @@ bb.am:                                            ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.dd, ptr %8, align 8, !tbaa !284
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %bb.ai, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, %bb.al, %bb.am
-  %10 = phi ptr [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ], [ %i.dx, %bb.al ], [ %i.dd, %bb.am ], [ %i.ea, %bb.ai ]
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, %bb.al, %bb.am
+  %9 = phi ptr [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ], [ %i.dx, %bb.al ], [ %i.dd, %bb.am ]
   store i64 0, ptr %i.de, align 8, !tbaa !285
-  store i8 0, ptr %10, align 1, !tbaa !208
+  store i8 0, ptr %9, align 1, !tbaa !208
   %i.eo = load ptr, ptr %8, align 8, !tbaa !284   ; 2 uses
   %i.ep = icmp eq ptr %i.eo, %i.dd
   br i1 %i.ep, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit56, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i54

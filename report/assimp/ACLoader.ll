@@ -201,7 +201,7 @@ declare void @_ZN6Assimp6Logger4warnEPKc(ptr noundef nonnull align 8 dereference
 define linkonce_odr hidden noundef ptr @_ZN6Assimp11AcGetStringEPKcS1_RNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2) local_unnamed_addr #6 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
-  %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
+  %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %i.b = load i8, ptr %0, align 1
   %i.c = icmp eq i8 %i.b, 0
   br i1 %i.c, label %bb.b, label %bb.e
@@ -314,7 +314,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %._cri
   %i.aj = load ptr, ptr %2, align 8               ; 6 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.al = icmp eq ptr %i.aj, %i.ak
-  %i.am = load ptr, ptr %3, align 8               ; 6 uses
+  %i.am = load ptr, ptr %3, align 8               ; 5 uses
   %i.an = icmp eq ptr %i.am, %i.z                 ; 2 uses
   br i1 %i.al, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i
 
@@ -328,25 +328,21 @@ bb.j:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.ao = load i64, ptr %i.ag, align 8            ; 3 uses
   %i.ap = icmp ult i64 %i.ao, 16
   call void @llvm.assume(i1 %i.ap)
-  %.not21.i = icmp eq ptr %3, %2
-  br i1 %.not21.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, label %4, !prof !7
-
-4:                                                ; preds = %bb.j
   switch i64 %i.ao, label %bb.l [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
     i64 1, label %bb.k
   ]
 
-bb.k:                                             ; preds = %4
+bb.k:                                             ; preds = %bb.j
   %i.aq = load i8, ptr %i.am, align 1
   store i8 %i.aq, ptr %i.aj, align 1
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-bb.l:                                             ; preds = %4
+bb.l:                                             ; preds = %bb.j
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.aj, ptr align 1 %i.am, i64 %i.ao, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.l, %bb.k, %4
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.l, %bb.k, %bb.j
   %i.ar = load i64, ptr %i.ag, align 8            ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i64 %i.ar, ptr %i.as, align 8
@@ -381,10 +377,10 @@ bb.n:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.z, ptr %3, align 8
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %bb.j, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, %bb.m, %bb.n
-  %5 = phi ptr [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ], [ %i.aj, %bb.m ], [ %i.z, %bb.n ], [ %i.am, %bb.j ]
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, %bb.m, %bb.n
+  %4 = phi ptr [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ], [ %i.aj, %bb.m ], [ %i.z, %bb.n ]
   store i64 0, ptr %i.ag, align 8
-  store i8 0, ptr %5, align 1
+  store i8 0, ptr %4, align 1
   %i.ba = load ptr, ptr %3, align 8               ; 2 uses
   %i.bb = icmp eq ptr %i.ba, %i.z
   br i1 %i.bb, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i

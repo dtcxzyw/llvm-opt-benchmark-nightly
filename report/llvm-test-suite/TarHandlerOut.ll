@@ -201,10 +201,10 @@ _ZN11CStringBaseIcE10GrowLengthEi.exit:           ; preds = %bb.a, %bb.b, %bb.d
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal fastcc noundef i32 @_ZN8NArchive4NTarL13GetPropStringEP22IArchiveUpdateCallbackjjR11CStringBaseIcE(ptr noundef nonnull %0, i32 noundef %1, i32 noundef range(i32 25, 27) %2, ptr nofree noundef nonnull align 8 captures(address) dereferenceable(16) %3) unnamed_addr #1 personality ptr @__gxx_personality_v0 {
+define internal fastcc noundef i32 @_ZN8NArchive4NTarL13GetPropStringEP22IArchiveUpdateCallbackjjR11CStringBaseIcE(ptr noundef nonnull %0, i32 noundef %1, i32 noundef range(i32 25, 27) %2, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(16) %3) unnamed_addr #1 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %"class.NWindows::NCOM::CPropVariant", align 8 ; 10 uses
-  %5 = alloca %class.CStringBase, align 8         ; 9 uses
+  %5 = alloca %class.CStringBase, align 8         ; 8 uses
   %6 = alloca %class.CStringBase.3, align 8       ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
   store i16 0, ptr %4, align 8, !tbaa !31
@@ -271,13 +271,9 @@ bb.f:                                             ; preds = %_ZN11CStringBaseIwE
   %i.v = getelementptr inbounds nuw i8, ptr %6, i64 8
   store i32 %i.j, ptr %i.v, align 8, !tbaa !53
   invoke void @_Z24UnicodeStringToMultiByteRK11CStringBaseIwEj(ptr dead_on_unwind nonnull writable sret(%class.CStringBase) align 8 %5, ptr noundef nonnull align 8 dereferenceable(16) %6, i32 noundef 1)
-          to label %7 unwind label %bb.n
+          to label %bb.g unwind label %bb.n
 
-7:                                                ; preds = %bb.f
-  %8 = icmp eq ptr %5, %3
-  br i1 %8, label %_ZN11CStringBaseIcEaSERKS0_.exit, label %bb.g
-
-bb.g:                                             ; preds = %7
+bb.g:                                             ; preds = %bb.f
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   store i32 0, ptr %i.w, align 8, !tbaa !54
   %i.x = load ptr, ptr %3, align 8, !tbaa !17
@@ -449,14 +445,11 @@ bb.j:                                             ; preds = %bb.j, %_ZN11CString
   %i.br = getelementptr inbounds nuw i8, ptr %.0.i.i21, i64 1
   store i8 %i.bq, ptr %.0.i.i21, align 1, !tbaa !20
   %.not.i.i22 = icmp eq i8 %i.bq, 0
-  br i1 %.not.i.i22, label %_Z12MyStringCopyIcEPT_S1_PKS0_.exit.i, label %bb.j, !llvm.loop !63
+  br i1 %.not.i.i22, label %_ZN11CStringBaseIcEaSERKS0_.exit, label %bb.j, !llvm.loop !63
 
-_Z12MyStringCopyIcEPT_S1_PKS0_.exit.i:            ; preds = %bb.j
-  %9 = load i32, ptr %i.y, align 8, !tbaa !54
-  store i32 %9, ptr %i.w, align 8, !tbaa !54
-  br label %_ZN11CStringBaseIcEaSERKS0_.exit
-
-_ZN11CStringBaseIcEaSERKS0_.exit:                 ; preds = %_Z12MyStringCopyIcEPT_S1_PKS0_.exit.i, %7
+_ZN11CStringBaseIcEaSERKS0_.exit:                 ; preds = %bb.j
+  %7 = load i32, ptr %i.y, align 8, !tbaa !54
+  store i32 %7, ptr %i.w, align 8, !tbaa !54
   %i.bs = load ptr, ptr %5, align 8, !tbaa !17    ; 2 uses
   %i.bt = icmp eq ptr %i.bs, null
   br i1 %i.bt, label %_ZN11CStringBaseIcED2Ev.exit, label %bb.k

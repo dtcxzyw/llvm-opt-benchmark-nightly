@@ -201,10 +201,10 @@ bb.k:                                             ; preds = %_ZN6hermes2vmL17thi
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden { i32, i64 } @_ZN6hermes2vm24regExpDollarNumberGetterEPvRNS0_7RuntimeENS0_10NativeArgsE(ptr noundef %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr nofree readnone captures(none) dead_on_return %2) #0 {
 bb.a:
-  %3 = alloca %"class.llvh::SmallVector", align 8 ; 11 uses
+  %3 = alloca %"class.llvh::SmallVector", align 8 ; 10 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
-  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 760 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 760
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 4 uses
   store ptr %i.c, ptr %3, align 8, !tbaa !45
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
@@ -213,10 +213,8 @@ bb.a:
   store i32 4, ptr %i.e, align 4, !tbaa !46
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 768 ; 2 uses
   %i.g = load i32, ptr %i.f, align 8, !tbaa !47   ; 6 uses
-  %.not.i.i = icmp eq i32 %i.g, 0
-  %i.h = icmp eq ptr %3, %i.b
-  %or.cond.i = or i1 %i.h, %.not.i.i
-  br i1 %or.cond.i, label %_ZN4llvh11SmallVectorIN6hermes8OptValueINS1_2vm16RegExpMatchRangeEEELj4EEC2ERKS6_.exit, label %bb.b
+  %i.h = icmp eq i32 %i.g, 0
+  br i1 %i.h, label %_ZN4llvh11SmallVectorIN6hermes8OptValueINS1_2vm16RegExpMatchRangeEEELj4EEC2ERKS6_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.i = icmp ugt i32 %i.g, 4
@@ -317,9 +315,9 @@ _ZN4llvh11SmallVectorIN6hermes8OptValueINS1_2vm16RegExpMatchRangeEEELj4EED2Ev.ex
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden { i32, i64 } @_ZN6hermes2vm23regExpLeftContextGetterEPvRNS0_7RuntimeENS0_10NativeArgsE(ptr nofree readnone captures(none) %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr nofree readnone captures(none) dead_on_return %2) #0 {
 bb.a:
-  %3 = alloca %"class.llvh::SmallVector", align 8 ; 11 uses
+  %3 = alloca %"class.llvh::SmallVector", align 8 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 760 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 760
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 4 uses
   store ptr %i.b, ptr %3, align 8, !tbaa !45
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
@@ -328,10 +326,8 @@ bb.a:
   store i32 4, ptr %i.d, align 4, !tbaa !46
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 768 ; 2 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !47   ; 5 uses
-  %.not.i.i = icmp eq i32 %i.f, 0
-  %i.g = icmp eq ptr %3, %i.a
-  %or.cond.i = or i1 %i.g, %.not.i.i
-  br i1 %or.cond.i, label %_ZN6hermes2vm5vmisaINS0_15StringPrimitiveEEEbNS0_11HermesValueE.exit.thread, label %bb.b
+  %i.g = icmp eq i32 %i.f, 0
+  br i1 %i.g, label %_ZN6hermes2vm5vmisaINS0_15StringPrimitiveEEEbNS0_11HermesValueE.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.h = icmp ugt i32 %i.f, 4
@@ -412,9 +408,9 @@ _ZN4llvh11SmallVectorIN6hermes8OptValueINS1_2vm16RegExpMatchRangeEEELj4EED2Ev.ex
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden { i32, i64 } @_ZN6hermes2vm24regExpRightContextGetterEPvRNS0_7RuntimeENS0_10NativeArgsE(ptr nofree readnone captures(none) %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr nofree readnone captures(none) dead_on_return %2) #0 {
 bb.a:
-  %3 = alloca %"class.llvh::SmallVector", align 8 ; 11 uses
+  %3 = alloca %"class.llvh::SmallVector", align 8 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 760 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 760
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 4 uses
   store ptr %i.b, ptr %3, align 8, !tbaa !45
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
@@ -423,10 +419,8 @@ bb.a:
   store i32 4, ptr %i.d, align 4, !tbaa !46
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 768 ; 2 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !47   ; 5 uses
-  %.not.i.i = icmp eq i32 %i.f, 0
-  %i.g = icmp eq ptr %3, %i.a
-  %or.cond.i = or i1 %i.g, %.not.i.i
-  br i1 %or.cond.i, label %.critedge, label %bb.b
+  %i.g = icmp eq i32 %i.f, 0
+  br i1 %i.g, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.h = icmp ugt i32 %i.f, 4
@@ -548,9 +542,9 @@ bb.b:                                             ; preds = %_ZN6hermes2vm5vmisa
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden { i32, i64 } @_ZN6hermes2vm21regExpLastMatchGetterEPvRNS0_7RuntimeENS0_10NativeArgsE(ptr nofree readnone captures(none) %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr nofree readnone captures(none) dead_on_return %2) #0 {
 bb.a:
-  %3 = alloca %"class.llvh::SmallVector", align 8 ; 11 uses
+  %3 = alloca %"class.llvh::SmallVector", align 8 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 760 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 760
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 4 uses
   store ptr %i.b, ptr %3, align 8, !tbaa !45
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
@@ -559,10 +553,8 @@ bb.a:
   store i32 4, ptr %i.d, align 4, !tbaa !46
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 768 ; 2 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !47   ; 5 uses
-  %.not.i.i = icmp eq i32 %i.f, 0
-  %i.g = icmp eq ptr %3, %i.a
-  %or.cond.i = or i1 %i.g, %.not.i.i
-  br i1 %or.cond.i, label %_ZN6hermes2vm5vmisaINS0_15StringPrimitiveEEEbNS0_11HermesValueE.exit.thread, label %bb.b
+  %i.g = icmp eq i32 %i.f, 0
+  br i1 %i.g, label %_ZN6hermes2vm5vmisaINS0_15StringPrimitiveEEEbNS0_11HermesValueE.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.h = icmp ugt i32 %i.f, 4
@@ -646,9 +638,9 @@ _ZN4llvh11SmallVectorIN6hermes8OptValueINS1_2vm16RegExpMatchRangeEEELj4EED2Ev.ex
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden { i32, i64 } @_ZN6hermes2vm21regExpLastParenGetterEPvRNS0_7RuntimeENS0_10NativeArgsE(ptr nofree readnone captures(none) %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr nofree readnone captures(none) dead_on_return %2) #0 {
 bb.a:
-  %3 = alloca %"class.llvh::SmallVector", align 8 ; 11 uses
+  %3 = alloca %"class.llvh::SmallVector", align 8 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 760 ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 760 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 4 uses
   store ptr %i.b, ptr %3, align 8, !tbaa !45
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
@@ -657,10 +649,8 @@ bb.a:
   store i32 4, ptr %i.d, align 4, !tbaa !46
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 768 ; 2 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !47   ; 7 uses
-  %.not.i.i = icmp eq i32 %i.f, 0
-  %i.g = icmp eq ptr %3, %i.a
-  %or.cond.i = or i1 %i.g, %.not.i.i
-  br i1 %or.cond.i, label %.critedge, label %bb.b
+  %i.g = icmp eq i32 %i.f, 0
+  br i1 %i.g, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.h = icmp ugt i32 %i.f, 4
@@ -686,8 +676,8 @@ _ZN4llvh11SmallVectorIN6hermes8OptValueINS1_2vm16RegExpMatchRangeEEELj4EEC2ERKS6
   %gepdiff.i.i = mul nuw nsw i64 %i.i, 12
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.b, ptr align 4 %i.l, i64 %gepdiff.i.i, i1 false)
   store i32 %i.f, ptr %i.c, align 8, !tbaa !47
-  %4 = icmp samesign ugt i32 %i.f, 1
-  br i1 %4, label %bb.c, label %.critedge
+  %.not = icmp eq i32 %i.f, 1
+  br i1 %.not, label %.critedge, label %bb.c
 
 .sink.split:                                      ; preds = %_ZSt4copyIPKN6hermes8OptValueINS0_2vm16RegExpMatchRangeEEEPS4_ET0_T_S9_S8_.exit30.i.i, %_ZN4llvh11SmallVectorIN6hermes8OptValueINS1_2vm16RegExpMatchRangeEEELj4EEC2ERKS6_.exit.thread20
   store i32 %i.f, ptr %i.c, align 8, !tbaa !47

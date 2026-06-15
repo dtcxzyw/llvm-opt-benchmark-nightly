@@ -201,11 +201,9 @@ bb.e:                                             ; preds = %_ZNK4node17BaseObje
 
 bb.f:                                             ; preds = %_ZNK4node17BaseObjectPtrImplINS_6crypto15X509CertificateELb0EE12pointer_dataEv.exit.i.i
   tail call void @_ZN4node10BaseObject17increase_refcountEv(ptr noundef nonnull align 8 dereferenceable(48) %.0.i.i.i.i) #25
-  %5 = ptrtoint ptr %.0.i.i.i.i to i64
   br label %_ZN4node17BaseObjectPtrImplINS_6crypto15X509CertificateELb0EEC2EPS2_.exit.i
 
 _ZN4node17BaseObjectPtrImplINS_6crypto15X509CertificateELb0EEC2EPS2_.exit.i: ; preds = %bb.f, %_ZN4node10BaseObject6UnwrapINS_6crypto15X509CertificateEEEPT_N2v85LocalINS6_5ValueEEE.exit
-  %.sroa.0.0.i = phi i64 [ 0, %_ZN4node10BaseObject6UnwrapINS_6crypto15X509CertificateEEEPT_N2v85LocalINS6_5ValueEEE.exit ], [ %5, %bb.f ]
   %i.ab = load ptr, ptr %i.h, align 8             ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.ab, null
   br i1 %.not.i.i.i, label %_ZN4node17BaseObjectPtrImplINS_6crypto15X509CertificateELb0EE5resetEPS2_.exit, label %bb.g
@@ -215,7 +213,8 @@ bb.g:                                             ; preds = %_ZN4node17BaseObjec
   br label %_ZN4node17BaseObjectPtrImplINS_6crypto15X509CertificateELb0EE5resetEPS2_.exit
 
 _ZN4node17BaseObjectPtrImplINS_6crypto15X509CertificateELb0EE5resetEPS2_.exit: ; preds = %_ZN4node17BaseObjectPtrImplINS_6crypto15X509CertificateELb0EEC2EPS2_.exit.i, %bb.g
-  store i64 %.sroa.0.0.i, ptr %i.h, align 8
+  %5 = ptrtoint ptr %.0.i.i.i.i to i64
+  store i64 %5, ptr %i.h, align 8
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZN4node17BaseObjectPtrImplINS_6crypto15X509CertificateELb0EE5resetEPS2_.exit, %bb.a

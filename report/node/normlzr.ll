@@ -201,8 +201,8 @@ bb.d:                                             ; preds = %bb.a
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN6icu_7813UnicodeStringE, i64 16), ptr %5, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i16 2, ptr %i.h, align 8
-  %.not26 = icmp eq ptr %0, %3
-  %. = select i1 %.not26, ptr %5, ptr %3          ; 4 uses
+  %.not26 = icmp ne ptr %0, %3                    ; 2 uses
+  %. = select i1 %.not26, ptr %3, ptr %5          ; 2 uses
   %i.i = tail call noundef ptr @_ZN6icu_7818Normalizer2Factory11getInstanceE18UNormalizationModeR10UErrorCode(i32 noundef %1, ptr noundef nonnull align 4 dereferenceable(4) %4) #9 ; 3 uses
   %i.j = load i32, ptr %4, align 4
   %i.k = icmp sgt i32 %i.j, 0
@@ -234,14 +234,13 @@ bb.g:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.f, %bb.g, %bb.d
-  %7 = icmp ne ptr %., %5
   %i.u = load i32, ptr %4, align 4
   %i.v = icmp sgt i32 %i.u, 0
-  %or.cond33 = select i1 %7, i1 true, i1 %i.v
+  %or.cond33 = select i1 %.not26, i1 true, i1 %i.v
   br i1 %or.cond33, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.w = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeStringaSERKS0_(ptr noundef nonnull align 8 dereferenceable(64) %3, ptr noundef nonnull align 8 dereferenceable(64) %.) #9 ; 0 uses
+  %i.w = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeStringaSERKS0_(ptr noundef nonnull align 8 dereferenceable(64) %3, ptr noundef nonnull align 8 dereferenceable(64) %5) #9 ; 0 uses
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
@@ -398,8 +397,8 @@ bb.e:                                             ; preds = %bb.b
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN6icu_7813UnicodeStringE, i64 16), ptr %6, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %6, i64 8
   store i16 2, ptr %i.k, align 8
-  %.not31 = icmp eq ptr %1, %2
-  %. = select i1 %.not31, ptr %6, ptr %2          ; 5 uses
+  %.not31 = icmp ne ptr %1, %2                    ; 2 uses
+  %. = select i1 %.not31, ptr %2, ptr %6          ; 3 uses
   %i.l = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeStringaSERKS0_(ptr noundef nonnull align 8 dereferenceable(64) %., ptr noundef nonnull align 8 dereferenceable(64) %0) #9 ; 0 uses
   %i.m = call noundef ptr @_ZN6icu_7818Normalizer2Factory11getInstanceE18UNormalizationModeR10UErrorCode(i32 noundef %3, ptr noundef nonnull align 4 dereferenceable(4) %5) #9 ; 3 uses
   %i.n = load i32, ptr %5, align 4
@@ -432,14 +431,13 @@ bb.h:                                             ; preds = %bb.f
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.g, %bb.h, %bb.e
-  %8 = icmp ne ptr %., %6
   %i.y = load i32, ptr %5, align 4
   %i.z = icmp sgt i32 %i.y, 0
-  %or.cond38 = select i1 %8, i1 true, i1 %i.z
+  %or.cond38 = select i1 %.not31, i1 true, i1 %i.z
   br i1 %or.cond38, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.aa = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeStringaSERKS0_(ptr noundef nonnull align 8 dereferenceable(64) %2, ptr noundef nonnull align 8 dereferenceable(64) %.) #9 ; 0 uses
+  %i.aa = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeStringaSERKS0_(ptr noundef nonnull align 8 dereferenceable(64) %2, ptr noundef nonnull align 8 dereferenceable(64) %6) #9 ; 0 uses
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i

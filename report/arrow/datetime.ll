@@ -201,7 +201,7 @@ bb.ar:                                            ; preds = %.body31, %.body73, 
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr void @_ZSt4swapIN14arrow_vendored4date8sys_infoEENSt9enable_ifIXsr6__and_ISt6__not_ISt15__is_tuple_likeIT_EESt21is_move_constructibleIS6_ESt18is_move_assignableIS6_EEE5valueEvE4typeERS6_SF_(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(64) %1) local_unnamed_addr #12 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"struct.arrow_vendored::date::sys_info", align 8 ; 9 uses
+  %2 = alloca %"struct.arrow_vendored::date::sys_info", align 8 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %2, ptr noundef nonnull align 8 dereferenceable(64) %0, i64 32, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 7 uses
@@ -305,7 +305,7 @@ _ZN14arrow_vendored4date8sys_infoaSEOS1_.exit:    ; preds = %bb.c, %_ZNSt7__cxx1
   store <2 x i64> %i.ak, ptr %i.p, align 8, !tbaa !75
   %i.al = load ptr, ptr %i.u, align 8, !tbaa !30  ; 6 uses
   %i.am = icmp eq ptr %i.al, %i.w
-  %i.an = load ptr, ptr %i.a, align 8, !tbaa !30  ; 6 uses
+  %i.an = load ptr, ptr %i.a, align 8, !tbaa !30  ; 5 uses
   %i.ao = icmp eq ptr %i.an, %i.c                 ; 2 uses
   br i1 %i.am, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i11, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i5
 
@@ -319,25 +319,21 @@ bb.h:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.ap = load i64, ptr %i.n, align 8, !tbaa !39  ; 3 uses
   %i.aq = icmp ult i64 %i.ap, 16
   call void @llvm.assume(i1 %i.aq)
-  %.not21.i.i8 = icmp eq ptr %2, %1
-  br i1 %.not21.i.i8, label %_ZN14arrow_vendored4date8sys_infoaSEOS1_.exit13, label %3, !prof !40
-
-3:                                                ; preds = %bb.h
   switch i64 %i.ap, label %bb.j [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9
     i64 1, label %bb.i
   ]
 
-bb.i:                                             ; preds = %3
+bb.i:                                             ; preds = %bb.h
   %i.ar = load i8, ptr %i.an, align 1, !tbaa !31
   store i8 %i.ar, ptr %i.al, align 1, !tbaa !31
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9
 
-bb.j:                                             ; preds = %3
+bb.j:                                             ; preds = %bb.h
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.al, ptr align 1 %i.an, i64 %i.ap, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9: ; preds = %bb.j, %bb.i, %3
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9: ; preds = %bb.j, %bb.i, %bb.h
   %i.as = load i64, ptr %i.n, align 8, !tbaa !39  ; 2 uses
   store i64 %i.as, ptr %i.ai, align 8, !tbaa !39
   %i.at = load ptr, ptr %i.u, align 8, !tbaa !30
@@ -369,10 +365,10 @@ bb.l:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.c, ptr %i.a, align 8, !tbaa !30
   br label %_ZN14arrow_vendored4date8sys_infoaSEOS1_.exit13
 
-_ZN14arrow_vendored4date8sys_infoaSEOS1_.exit13:  ; preds = %bb.h, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9, %bb.k, %bb.l
-  %4 = phi ptr [ %i.al, %bb.k ], [ %i.c, %bb.l ], [ %i.an, %bb.h ], [ %.pre.i.i10, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9 ]
+_ZN14arrow_vendored4date8sys_infoaSEOS1_.exit13:  ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9, %bb.k, %bb.l
+  %3 = phi ptr [ %i.al, %bb.k ], [ %i.c, %bb.l ], [ %.pre.i.i10, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9 ]
   store i64 0, ptr %i.n, align 8, !tbaa !39
-  store i8 0, ptr %4, align 1, !tbaa !31
+  store i8 0, ptr %3, align 1, !tbaa !31
   %i.ay = load ptr, ptr %i.a, align 8, !tbaa !30  ; 2 uses
   %i.az = icmp eq ptr %i.ay, %i.c
   br i1 %i.az, label %_ZN14arrow_vendored4date8sys_infoD2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i

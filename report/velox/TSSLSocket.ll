@@ -201,7 +201,7 @@ bb.a:
   %i.b = alloca i32, align 4                      ; 4 uses
   %i.c = alloca [256 x i8], align 16              ; 5 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
+  %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
@@ -383,7 +383,7 @@ bb.o:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.bh = load ptr, ptr %0, align 8, !tbaa !33    ; 6 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.bj = icmp eq ptr %i.bh, %i.bi
-  %i.bk = load ptr, ptr %4, align 8, !tbaa !33    ; 6 uses
+  %i.bk = load ptr, ptr %4, align 8, !tbaa !33    ; 5 uses
   %i.bl = icmp eq ptr %i.bk, %i.av                ; 2 uses
   br i1 %i.bj, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i
 
@@ -397,25 +397,21 @@ bb.p:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.bm = load i64, ptr %i.bg, align 8, !tbaa !42 ; 3 uses
   %i.bn = icmp ult i64 %i.bm, 16
   call void @llvm.assume(i1 %i.bn)
-  %.not21.i = icmp eq ptr %4, %0
-  br i1 %.not21.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, label %9, !prof !30
-
-9:                                                ; preds = %bb.p
   switch i64 %i.bm, label %bb.r [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
     i64 1, label %bb.q
   ]
 
-bb.q:                                             ; preds = %9
+bb.q:                                             ; preds = %bb.p
   %i.bo = load i8, ptr %i.bk, align 1, !tbaa !29
   store i8 %i.bo, ptr %i.bh, align 1, !tbaa !29
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-bb.r:                                             ; preds = %9
+bb.r:                                             ; preds = %bb.p
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bh, ptr align 1 %i.bk, i64 %i.bm, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.r, %bb.q, %9
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.r, %bb.q, %bb.p
   %i.bp = load i64, ptr %i.bg, align 8, !tbaa !42 ; 2 uses
   store i64 %i.bp, ptr %i.w, align 8, !tbaa !42
   %i.bq = load ptr, ptr %0, align 8, !tbaa !33
@@ -447,10 +443,10 @@ bb.t:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.av, ptr %4, align 8, !tbaa !33
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %bb.p, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, %bb.s, %bb.t
-  %10 = phi ptr [ %i.bh, %bb.s ], [ %i.av, %bb.t ], [ %i.bk, %bb.p ], [ %.pre.i37, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ]
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, %bb.s, %bb.t
+  %9 = phi ptr [ %i.bh, %bb.s ], [ %i.av, %bb.t ], [ %.pre.i37, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ]
   store i64 0, ptr %i.bg, align 8, !tbaa !42
-  store i8 0, ptr %10, align 1, !tbaa !29
+  store i8 0, ptr %9, align 1, !tbaa !29
   %i.bv = load ptr, ptr %4, align 8, !tbaa !33    ; 2 uses
   %i.bw = icmp eq ptr %i.bv, %i.av
   br i1 %i.bw, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit40, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i38

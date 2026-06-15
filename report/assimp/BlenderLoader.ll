@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.a
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN6Assimp7Blender13FileBlockHeadESt6vectorIS4_SaIS4_EEEElNS0_5__ops15_Iter_less_iterEEvT_SC_T0_T1_(ptr %0, ptr %1, i64 noundef %2) local_unnamed_addr #1 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"struct.Assimp::Blender::FileBlockHead", align 8 ; 9 uses
+  %3 = alloca %"struct.Assimp::Blender::FileBlockHead", align 8 ; 8 uses
   %4 = alloca %"struct.__gnu_cxx::__ops::_Iter_less_iter", align 1 ; 3 uses
   %5 = alloca %"struct.__gnu_cxx::__ops::_Iter_less_iter", align 1 ; 3 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
@@ -301,7 +301,7 @@ bb.h:                                             ; preds = %bb.h, %bb.g
 
 .preheader.i.i:                                   ; preds = %bb.h, %.preheader.i.i
   %.sroa.0.0.pn.i.i = phi ptr [ %.sroa.0.1.i.i, %.preheader.i.i ], [ %.sroa.0.0.i.i, %bb.h ] ; 8 uses
-  %.sroa.0.1.i.i = getelementptr inbounds i8, ptr %.sroa.0.0.pn.i.i, i64 -72 ; 6 uses
+  %.sroa.0.1.i.i = getelementptr inbounds i8, ptr %.sroa.0.0.pn.i.i, i64 -72 ; 5 uses
   %i.al = getelementptr inbounds i8, ptr %.sroa.0.0.pn.i.i, i64 -24
   %i.am = load i64, ptr %i.al, align 8
   %i.an = icmp ult i64 %i.ag, %i.am
@@ -404,7 +404,7 @@ _ZN6Assimp7Blender13FileBlockHeadaSEOS1_.exit.i:  ; preds = %bb.o, %_ZNSt7__cxx1
   store i64 %i.bt, ptr %.sroa.0.1.i.i, align 8
   %i.bu = load ptr, ptr %i.bd, align 8            ; 6 uses
   %i.bv = icmp eq ptr %i.bu, %i.bf
-  %i.bw = load ptr, ptr %i.h, align 8             ; 6 uses
+  %i.bw = load ptr, ptr %i.h, align 8             ; 5 uses
   %i.bx = icmp eq ptr %i.bw, %i.i                 ; 2 uses
   br i1 %i.bv, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i11.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i5.i
 
@@ -418,25 +418,21 @@ bb.p:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.by = load i64, ptr %i.j, align 8             ; 3 uses
   %i.bz = icmp ult i64 %i.by, 16
   call void @llvm.assume(i1 %i.bz)
-  %.not21.i.i8.i = icmp eq ptr %3, %.sroa.0.1.i.i
-  br i1 %.not21.i.i8.i, label %_ZN6Assimp7Blender13FileBlockHeadaSEOS1_.exit13.i, label %6, !prof !5
-
-6:                                                ; preds = %bb.p
   switch i64 %i.by, label %bb.r [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9.i
     i64 1, label %bb.q
   ]
 
-bb.q:                                             ; preds = %6
+bb.q:                                             ; preds = %bb.p
   %i.ca = load i8, ptr %i.bw, align 1
   store i8 %i.ca, ptr %i.bu, align 1
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9.i
 
-bb.r:                                             ; preds = %6
+bb.r:                                             ; preds = %bb.p
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bu, ptr align 1 %i.bw, i64 %i.by, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9.i: ; preds = %bb.r, %bb.q, %6
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9.i: ; preds = %bb.r, %bb.q, %bb.p
   %i.cb = load i64, ptr %i.j, align 8             ; 2 uses
   store i64 %i.cb, ptr %i.br, align 8
   %i.cc = load ptr, ptr %i.bd, align 8
@@ -472,10 +468,10 @@ bb.t:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.i, ptr %i.h, align 8
   br label %_ZN6Assimp7Blender13FileBlockHeadaSEOS1_.exit13.i
 
-_ZN6Assimp7Blender13FileBlockHeadaSEOS1_.exit13.i: ; preds = %bb.t, %bb.s, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9.i, %bb.p
-  %7 = phi ptr [ %.pre.i.i10.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9.i ], [ %i.bu, %bb.s ], [ %i.i, %bb.t ], [ %i.bw, %bb.p ]
+_ZN6Assimp7Blender13FileBlockHeadaSEOS1_.exit13.i: ; preds = %bb.t, %bb.s, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9.i
+  %6 = phi ptr [ %.pre.i.i10.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9.i ], [ %i.bu, %bb.s ], [ %i.i, %bb.t ]
   store i64 0, ptr %i.j, align 8
-  store i8 0, ptr %7, align 1
+  store i8 0, ptr %6, align 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bs, ptr noundef nonnull align 8 dereferenceable(32) %i.k, i64 32, i1 false)
   %i.cj = load ptr, ptr %i.h, align 8             ; 2 uses
   %i.ck = icmp eq ptr %i.cj, %i.i
@@ -878,7 +874,7 @@ _ZN6Assimp7Blender13FileBlockHeadaSEOS1_.exit18:  ; preds = %bb.j, %_ZNSt7__cxx1
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZSt4swapIN6Assimp7Blender13FileBlockHeadEENSt9enable_ifIXsr6__and_ISt6__not_ISt15__is_tuple_likeIT_EESt21is_move_constructibleIS6_ESt18is_move_assignableIS6_EEE5valueEvE4typeERS6_SF_(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr noundef nonnull align 8 dereferenceable(72) %1) local_unnamed_addr #8 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"struct.Assimp::Blender::FileBlockHead", align 8 ; 9 uses
+  %2 = alloca %"struct.Assimp::Blender::FileBlockHead", align 8 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
   %i.a = load i64, ptr %0, align 8
   store i64 %i.a, ptr %2, align 8
@@ -979,7 +975,7 @@ _ZN6Assimp7Blender13FileBlockHeadaSEOS1_.exit:    ; preds = %bb.c, %_ZNSt7__cxx1
   store i64 %i.ai, ptr %1, align 8
   %i.aj = load ptr, ptr %i.s, align 8             ; 6 uses
   %i.ak = icmp eq ptr %i.aj, %i.u
-  %i.al = load ptr, ptr %i.b, align 8             ; 6 uses
+  %i.al = load ptr, ptr %i.b, align 8             ; 5 uses
   %i.am = icmp eq ptr %i.al, %i.d                 ; 2 uses
   br i1 %i.ak, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i11, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i5
 
@@ -993,25 +989,21 @@ bb.h:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.an = load i64, ptr %i.o, align 8             ; 3 uses
   %i.ao = icmp ult i64 %i.an, 16
   call void @llvm.assume(i1 %i.ao)
-  %.not21.i.i8 = icmp eq ptr %2, %1
-  br i1 %.not21.i.i8, label %_ZN6Assimp7Blender13FileBlockHeadaSEOS1_.exit13, label %3, !prof !5
-
-3:                                                ; preds = %bb.h
   switch i64 %i.an, label %bb.j [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9
     i64 1, label %bb.i
   ]
 
-bb.i:                                             ; preds = %3
+bb.i:                                             ; preds = %bb.h
   %i.ap = load i8, ptr %i.al, align 1
   store i8 %i.ap, ptr %i.aj, align 1
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9
 
-bb.j:                                             ; preds = %3
+bb.j:                                             ; preds = %bb.h
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.aj, ptr align 1 %i.al, i64 %i.an, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9: ; preds = %bb.j, %bb.i, %3
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9: ; preds = %bb.j, %bb.i, %bb.h
   %i.aq = load i64, ptr %i.o, align 8             ; 2 uses
   store i64 %i.aq, ptr %i.ag, align 8
   %i.ar = load ptr, ptr %i.s, align 8
@@ -1043,10 +1035,10 @@ bb.l:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.d, ptr %i.b, align 8
   br label %_ZN6Assimp7Blender13FileBlockHeadaSEOS1_.exit13
 
-_ZN6Assimp7Blender13FileBlockHeadaSEOS1_.exit13:  ; preds = %bb.h, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9, %bb.k, %bb.l
-  %4 = phi ptr [ %.pre.i.i10, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9 ], [ %i.aj, %bb.k ], [ %i.d, %bb.l ], [ %i.al, %bb.h ]
+_ZN6Assimp7Blender13FileBlockHeadaSEOS1_.exit13:  ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9, %bb.k, %bb.l
+  %3 = phi ptr [ %.pre.i.i10, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9 ], [ %i.aj, %bb.k ], [ %i.d, %bb.l ]
   store i64 0, ptr %i.o, align 8
-  store i8 0, ptr %4, align 1
+  store i8 0, ptr %3, align 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ah, ptr noundef nonnull align 8 dereferenceable(32) %i.p, i64 32, i1 false)
   %i.aw = load ptr, ptr %i.b, align 8             ; 2 uses
   %i.ax = icmp eq ptr %i.aw, %i.d

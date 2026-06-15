@@ -201,7 +201,7 @@ bb.a:
   %4 = alloca %"class.std::allocator", align 1    ; 5 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 4 uses
   %6 = alloca %"class.std::allocator", align 1    ; 3 uses
-  %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
+  %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
   %i.a = getelementptr inbounds nuw i8, ptr %.0.val, i64 144 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !305, !nonnull !30, !align !31
   %i.c = tail call { i32, i64 } @_ZN6hermes2vm8JSObject24getNamedWithReceiver_RJSENS0_6HandleIS1_EERNS0_7RuntimeENS0_8SymbolIDENS2_INS0_11HermesValueEEENS0_11PropOpFlagsEPNS0_18PropertyCacheEntryE(ptr %.8.val, ptr noundef nonnull align 8 dereferenceable(9816) %i.b, i32 %0, ptr %.8.val, i32 0, ptr noundef null) ; 2 uses
@@ -348,7 +348,7 @@ _ZN6hermes2vm15HandleRootOwner10makeHandleINS0_15StringPrimitiveEEENS0_6HandleIT
   %i.am = load ptr, ptr %1, align 8, !tbaa !22    ; 6 uses
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.ao = icmp eq ptr %i.am, %i.an
-  %i.ap = load ptr, ptr %7, align 8, !tbaa !22    ; 6 uses
+  %i.ap = load ptr, ptr %7, align 8, !tbaa !22    ; 5 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 4 uses
   %i.ar = icmp eq ptr %i.ap, %i.aq                ; 2 uses
   br i1 %i.ao, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i
@@ -364,25 +364,21 @@ bb.q:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.at = load i64, ptr %i.as, align 8, !tbaa !26 ; 3 uses
   %i.au = icmp ult i64 %i.at, 16
   call void @llvm.assume(i1 %i.au)
-  %.not21.i = icmp eq ptr %7, %1
-  br i1 %.not21.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, label %8, !prof !241
-
-8:                                                ; preds = %bb.q
   switch i64 %i.at, label %bb.s [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
     i64 1, label %bb.r
   ]
 
-bb.r:                                             ; preds = %8
+bb.r:                                             ; preds = %bb.q
   %i.av = load i8, ptr %i.ap, align 1, !tbaa !50
   store i8 %i.av, ptr %i.am, align 1, !tbaa !50
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-bb.s:                                             ; preds = %8
+bb.s:                                             ; preds = %bb.q
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.am, ptr align 1 %i.ap, i64 %i.at, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.s, %bb.r, %8
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.s, %bb.r, %bb.q
   %i.aw = load i64, ptr %i.as, align 8, !tbaa !26 ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i64 %i.aw, ptr %i.ax, align 8, !tbaa !26
@@ -419,11 +415,11 @@ bb.u:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.aq, ptr %7, align 8, !tbaa !22
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %bb.q, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, %bb.t, %bb.u
-  %9 = phi ptr [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ], [ %i.am, %bb.t ], [ %i.aq, %bb.u ], [ %i.ap, %bb.q ]
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, %bb.t, %bb.u
+  %8 = phi ptr [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ], [ %i.am, %bb.t ], [ %i.aq, %bb.u ]
   %i.bh = getelementptr inbounds nuw i8, ptr %7, i64 8
   store i64 0, ptr %i.bh, align 8, !tbaa !26
-  store i8 0, ptr %9, align 1, !tbaa !50
+  store i8 0, ptr %8, align 1, !tbaa !50
   %i.bi = load ptr, ptr %7, align 8, !tbaa !22    ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
   %i.bk = icmp eq ptr %i.bi, %i.bj

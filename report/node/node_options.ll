@@ -201,7 +201,7 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 17 uses
+  %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 16 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 5 uses
   store ptr %i.b, ptr %4, align 8
@@ -550,11 +550,11 @@ bb.z:                                             ; preds = %._crit_edge.i.i30
 _ZNSt7__cxx119to_stringEm.exit:                   ; preds = %bb.y, %bb.z
   %storemerge.i.i = phi i8 [ %i.dw, %bb.z ], [ %i.du, %bb.y ]
   store i8 %storemerge.i.i, ptr %i.cv, align 1
-  %i.dx = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 5 uses
+  %i.dx = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 4 uses
   %i.dy = load ptr, ptr %i.dx, align 8            ; 6 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.ea = icmp eq ptr %i.dy, %i.dz
-  %i.eb = load ptr, ptr %7, align 8               ; 6 uses
+  %i.eb = load ptr, ptr %7, align 8               ; 5 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 4 uses
   %i.ed = icmp eq ptr %i.eb, %i.ec                ; 2 uses
   br i1 %i.ea, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i
@@ -569,25 +569,21 @@ bb.aa:                                            ; preds = %_ZNKSt7__cxx1112bas
   %i.ee = load i64, ptr %i.ct, align 8            ; 3 uses
   %i.ef = icmp ult i64 %i.ee, 16
   call void @llvm.assume(i1 %i.ef)
-  %.not21.i = icmp eq ptr %7, %i.dx
-  br i1 %.not21.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, label %8, !prof !5
-
-8:                                                ; preds = %bb.aa
   switch i64 %i.ee, label %bb.ac [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
     i64 1, label %bb.ab
   ]
 
-bb.ab:                                            ; preds = %8
+bb.ab:                                            ; preds = %bb.aa
   %i.eg = load i8, ptr %i.eb, align 1
   store i8 %i.eg, ptr %i.dy, align 1
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-bb.ac:                                            ; preds = %8
+bb.ac:                                            ; preds = %bb.aa
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.dy, ptr align 1 %i.eb, i64 %i.ee, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.ac, %bb.ab, %8
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.ac, %bb.ab, %bb.aa
   %i.eh = load i64, ptr %i.ct, align 8            ; 2 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %0, i64 72
   store i64 %i.eh, ptr %i.ei, align 8
@@ -622,10 +618,10 @@ bb.ae:                                            ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.ec, ptr %7, align 8
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %bb.aa, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, %bb.ad, %bb.ae
-  %9 = phi ptr [ %i.dy, %bb.ad ], [ %i.ec, %bb.ae ], [ %i.eb, %bb.aa ], [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ]
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, %bb.ad, %bb.ae
+  %8 = phi ptr [ %i.dy, %bb.ad ], [ %i.ec, %bb.ae ], [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ]
   store i64 0, ptr %i.ct, align 8
-  store i8 0, ptr %9, align 1
+  store i8 0, ptr %8, align 1
   %i.eq = load ptr, ptr %7, align 8               ; 2 uses
   %i.er = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
   %i.es = icmp eq ptr %i.eq, %i.er
