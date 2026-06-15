@@ -201,7 +201,7 @@ _ZN6hermes6lookupIA6_NS_12UnicodeRangeEEEbRKT_j.exit: ; preds = %bb.b, %_ZSt13__
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN6hermes25makeCanonicallyEquivalentERKNS_12CodePointSetEb(ptr dead_on_unwind noalias writable sret(%"class.hermes::CodePointSet") align 8 %0, ptr nofree noundef nonnull readonly align 8 captures(address) dereferenceable(48) %1, i1 noundef zeroext %2) local_unnamed_addr #1 {
+define hidden void @_ZN6hermes25makeCanonicallyEquivalentERKNS_12CodePointSetEb(ptr dead_on_unwind noalias writable sret(%"class.hermes::CodePointSet") align 8 %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %1, i1 noundef zeroext %2) local_unnamed_addr #1 {
 bb.a:
   %3 = alloca %"struct.hermes::CodePointRange", align 8 ; 6 uses
   %4 = alloca %"struct.hermes::CodePointRange", align 8 ; 6 uses
@@ -209,55 +209,58 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
   %i.a = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 6 uses
   store ptr %i.a, ptr %5, align 8, !tbaa !9
-  %i.b = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 15 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 16 uses
   store i32 0, ptr %i.b, align 8, !tbaa !12
   %i.c = getelementptr inbounds nuw i8, ptr %5, i64 12 ; 2 uses
   store i32 4, ptr %i.c, align 4, !tbaa !13
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !12   ; 7 uses
-  %.not.i.i.i = icmp eq i32 %i.e, 0
-  %i.f = icmp eq ptr %5, %1
-  %or.cond.i.i = or i1 %i.f, %.not.i.i.i
-  br i1 %or.cond.i.i, label %_ZN6hermes12CodePointSetC2ERKS0_.exit, label %bb.b
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !12   ; 8 uses
+  %i.f = icmp eq i32 %i.e, 0
+  br i1 %i.f, label %_ZN6hermes12CodePointSetC2ERKS0_.exit30.thread, label %bb.b
+
+_ZN6hermes12CodePointSetC2ERKS0_.exit30.thread:   ; preds = %bb.a
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store ptr %6, ptr %0, align 8, !tbaa !9
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i32 0, ptr %7, align 8, !tbaa !12
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 12
+  store i32 4, ptr %8, align 4, !tbaa !13
+  %9 = load ptr, ptr %5, align 8, !tbaa !9
+  br label %._crit_edge123
 
 bb.b:                                             ; preds = %bb.a
   %i.g = icmp ugt i32 %i.e, 4
-  br i1 %i.g, label %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.i.i, label %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i.i
+  br i1 %i.g, label %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.i.i, label %_ZN6hermes12CodePointSetC2ERKS0_.exit
 
 _ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.i.i: ; preds = %bb.b
   %i.h = zext i32 %i.e to i64
   call void @_ZN4llvh15SmallVectorBase8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(48) %5, ptr noundef nonnull %i.a, i64 noundef %i.h, i64 noundef 8) #10
   %.pre.i.i = load i32, ptr %i.d, align 8, !tbaa !12 ; 2 uses
   %.not.i.i.i.i = icmp eq i32 %.pre.i.i, 0
-  br i1 %.not.i.i.i.i, label %.sink.split.i.i.i, label %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.i._ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i_crit_edge.i.a
+  br i1 %.not.i.i.i.i, label %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.i._ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i_crit_edge.i.a, label %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i.i
 
 _ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.i._ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i_crit_edge.i.a: ; preds = %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.i.i
-  %.pre.i = load ptr, ptr %5, align 8, !tbaa !9
-  br label %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i.i
-
-_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i.i: ; preds = %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.i._ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i_crit_edge.i.a, %bb.b
-  %6 = phi ptr [ %.pre.i, %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.i._ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i_crit_edge.i.a ], [ %i.a, %bb.b ]
-  %7 = phi i32 [ %.pre.i.i, %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.i._ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i_crit_edge.i.a ], [ %i.e, %bb.b ]
-  %8 = zext i32 %7 to i64
-  %i.i = load ptr, ptr %1, align 8, !tbaa !9
-  %gepdiff.i.i.i = shl nuw nsw i64 %8, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %6, ptr align 4 %i.i, i64 %gepdiff.i.i.i, i1 false)
-  %.pre.pre = load i32, ptr %i.d, align 8, !tbaa !12
-  br label %.sink.split.i.i.i
-
-.sink.split.i.i.i:                                ; preds = %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i.i, %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.i.i
-  %.pre = phi i32 [ %.pre.pre, %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i.i ], [ 0, %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.i.i ]
   store i32 %i.e, ptr %i.b, align 8, !tbaa !12
+  br label %._crit_edge
+
+_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i.i: ; preds = %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.i.i
+  %i.i = load ptr, ptr %5, align 8, !tbaa !9
   br label %_ZN6hermes12CodePointSetC2ERKS0_.exit
 
-_ZN6hermes12CodePointSetC2ERKS0_.exit:            ; preds = %bb.a, %.sink.split.i.i.i
-  %i.j = phi i32 [ 0, %bb.a ], [ %i.e, %.sink.split.i.i.i ]
-  %9 = phi i32 [ %i.e, %bb.a ], [ %.pre, %.sink.split.i.i.i ] ; 2 uses
+_ZN6hermes12CodePointSetC2ERKS0_.exit:            ; preds = %bb.b, %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i.i
+  %10 = phi ptr [ %i.i, %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i.i ], [ %i.a, %bb.b ]
+  %i.j = phi i32 [ %.pre.i.i, %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i.i ], [ %i.e, %bb.b ]
+  %11 = zext i32 %i.j to i64
+  %12 = load ptr, ptr %1, align 8, !tbaa !9
+  %gepdiff.i.i.i = shl nuw nsw i64 %11, 3
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %10, ptr align 4 %12, i64 %gepdiff.i.i.i, i1 false)
+  %.pre.pre = load i32, ptr %i.d, align 8, !tbaa !12 ; 2 uses
+  store i32 %i.e, ptr %i.b, align 8, !tbaa !12
   %i.k = load ptr, ptr %1, align 8, !tbaa !9      ; 2 uses
-  %i.l = zext i32 %9 to i64
+  %i.l = zext i32 %.pre.pre to i64
   %.idx = shl nuw nsw i64 %i.l, 3
   %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 %.idx
-  %.not118 = icmp eq i32 %9, 0
+  %.not118 = icmp eq i32 %.pre.pre, 0
   br i1 %.not118, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN6hermes12CodePointSetC2ERKS0_.exit
@@ -274,25 +277,25 @@ _ZN6hermes12CodePointSetC2ERKS0_.exit:            ; preds = %bb.a, %.sink.split.
   %.pre141.a = load i32, ptr %i.b, align 8, !tbaa !12
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZN6hermes12CodePointSetC2ERKS0_.exit
-  %10 = phi i32 [ %.pre141.a, %._crit_edge.loopexit ], [ %i.j, %_ZN6hermes12CodePointSetC2ERKS0_.exit ] ; 6 uses
+._crit_edge:                                      ; preds = %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.i._ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i_crit_edge.i.a, %._crit_edge.loopexit, %_ZN6hermes12CodePointSetC2ERKS0_.exit
+  %13 = phi i32 [ %.pre141.a, %._crit_edge.loopexit ], [ %i.e, %_ZN6hermes12CodePointSetC2ERKS0_.exit ], [ %i.e, %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.i._ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i_crit_edge.i.a ] ; 6 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   store ptr %i.u, ptr %0, align 8, !tbaa !9
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 12 uses
   store i32 0, ptr %i.v, align 8, !tbaa !12
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   store i32 4, ptr %i.w, align 4, !tbaa !13
-  %.not.i.i.i21 = icmp eq i32 %10, 0
+  %.not.i.i.i21 = icmp eq i32 %13, 0
   %i.x = icmp eq ptr %0, %5
   %or.cond.i.i22 = or i1 %i.x, %.not.i.i.i21
   br i1 %or.cond.i.i22, label %_ZN6hermes12CodePointSetC2ERKS0_.exit31, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge
-  %i.y = icmp ugt i32 %10, 4
+  %i.y = icmp ugt i32 %13, 4
   br i1 %i.y, label %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.i.i26, label %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i.i23
 
 _ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.i.i26: ; preds = %bb.c
-  %i.z = zext i32 %10 to i64
+  %i.z = zext i32 %13 to i64
   call void @_ZN4llvh15SmallVectorBase8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull %i.u, i64 noundef %i.z, i64 noundef 8) #10
   %.pre.i.i27 = load i32, ptr %i.b, align 8, !tbaa !12 ; 2 uses
   %.not.i.i.i.i28 = icmp eq i32 %.pre.i.i27, 0
@@ -304,7 +307,7 @@ _ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.i._ZSt4copyIPKN6h
 
 _ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i.i23: ; preds = %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.i._ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i_crit_edge.i29, %bb.c
   %i.aa = phi ptr [ %.pre.i30, %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.i._ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i_crit_edge.i29 ], [ %i.u, %bb.c ]
-  %i.ab = phi i32 [ %.pre.i.i27, %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.i._ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i_crit_edge.i29 ], [ %10, %bb.c ]
+  %i.ab = phi i32 [ %.pre.i.i27, %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.i._ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i_crit_edge.i29 ], [ %13, %bb.c ]
   %i.ac = zext i32 %i.ab to i64
   %i.ad = load ptr, ptr %5, align 8, !tbaa !9
   %gepdiff.i.i.i24 = shl nuw nsw i64 %i.ac, 3
@@ -314,11 +317,11 @@ _ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i.i23: ; p
 
 .sink.split.i.i.i25:                              ; preds = %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i.i23, %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.i.i26
   %.pre142.a = phi i32 [ %.pre142.pre, %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.thread.i.i23 ], [ 0, %_ZSt4copyIPKN6hermes14CodePointRangeEPS1_ET0_T_S6_S5_.exit30.i.i.i26 ]
-  store i32 %10, ptr %i.v, align 8, !tbaa !12
+  store i32 %13, ptr %i.v, align 8, !tbaa !12
   br label %_ZN6hermes12CodePointSetC2ERKS0_.exit31
 
 _ZN6hermes12CodePointSetC2ERKS0_.exit31:          ; preds = %._crit_edge, %.sink.split.i.i.i25
-  %i.ae = phi i32 [ %10, %._crit_edge ], [ %.pre142.a, %.sink.split.i.i.i25 ] ; 2 uses
+  %i.ae = phi i32 [ %13, %._crit_edge ], [ %.pre142.a, %.sink.split.i.i.i25 ] ; 2 uses
   %i.af = load ptr, ptr %5, align 8, !tbaa !9     ; 3 uses
   %i.ag = zext i32 %i.ae to i64
   %.idx124 = shl nuw nsw i64 %i.ag, 3
@@ -721,13 +724,13 @@ _ZN6hermesL17canonicalizeRangeENS_14CodePointRangeEPNS_12CodePointSetEb.exit: ; 
   %.pre143 = load ptr, ptr %5, align 8, !tbaa !9
   br label %._crit_edge123
 
-._crit_edge123:                                   ; preds = %._crit_edge123.loopexit, %_ZN6hermes12CodePointSetC2ERKS0_.exit31
-  %11 = phi ptr [ %.pre143, %._crit_edge123.loopexit ], [ %i.af, %_ZN6hermes12CodePointSetC2ERKS0_.exit31 ] ; 2 uses
-  %i.gm = icmp eq ptr %11, %i.a
+._crit_edge123:                                   ; preds = %_ZN6hermes12CodePointSetC2ERKS0_.exit30.thread, %._crit_edge123.loopexit, %_ZN6hermes12CodePointSetC2ERKS0_.exit31
+  %14 = phi ptr [ %.pre143, %._crit_edge123.loopexit ], [ %i.af, %_ZN6hermes12CodePointSetC2ERKS0_.exit31 ], [ %9, %_ZN6hermes12CodePointSetC2ERKS0_.exit30.thread ] ; 2 uses
+  %i.gm = icmp eq ptr %14, %i.a
   br i1 %i.gm, label %_ZN6hermes12CodePointSetD2Ev.exit, label %bb.v
 
 bb.v:                                             ; preds = %._crit_edge123
-  call void @free(ptr noundef %11) #10
+  call void @free(ptr noundef %14) #10
   br label %_ZN6hermes12CodePointSetD2Ev.exit
 
 _ZN6hermes12CodePointSetD2Ev.exit:                ; preds = %._crit_edge123, %bb.v
