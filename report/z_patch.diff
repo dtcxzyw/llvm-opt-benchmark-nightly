@@ -1,0 +1,260 @@
+diff --git a/llvm/lib/Analysis/InstructionSimplify.cpp b/llvm/lib/Analysis/InstructionSimplify.cpp
+index b66cdc4c54e78..c22d378a1b2e9 100644
+--- a/llvm/lib/Analysis/InstructionSimplify.cpp
++++ b/llvm/lib/Analysis/InstructionSimplify.cpp
+@@ -2634,6 +2634,16 @@ static Value *extractEquivalentCondition(Value *V, CmpPredicate Pred,
+   return nullptr;
+ }
+ 
++static bool isByValArg(const Value *V) {
++  const Argument *A = dyn_cast<Argument>(V);
++  return A && A->hasByValAttr();
++}
++
++static bool isDereferenceableArg(const Value *V) {
++  const Argument *A = dyn_cast<Argument>(V);
++  return A && A->getType()->isPointerTy() && A->getDereferenceableBytes() > 0;
++}
++
+ /// Return true if the underlying object (storage) must be disjoint from
+ /// storage returned by any noalias return call.
+ static bool isAllocDisjoint(const Value *V) {
+@@ -2648,9 +2658,10 @@ static bool isAllocDisjoint(const Value *V) {
+     return (GV->hasLocalLinkage() || GV->hasHiddenVisibility() ||
+             GV->hasProtectedVisibility() || GV->hasGlobalUnnamedAddr()) &&
+            !GV->isThreadLocal();
+-  if (const Argument *A = dyn_cast<Argument>(V))
+-    return A->hasByValAttr();
+-  return false;
++  // Byval and dereferenceable arguments point to storage accessible to the
++  // caller, which is disjoint from the allocated storage returned by a noalias
++  // pointer.
++  return isByValArg(V) || isDereferenceableArg(V);
+ }
+ 
+ /// Return true if V1 and V2 are each the base of some distict storage region
+@@ -2682,17 +2693,25 @@ static bool haveNonOverlappingStorage(const Value *V1, const Value *V2) {
+   //
+   // So, we'll assume that two non-empty allocas have different addresses
+   // for now.
+-  auto isByValArg = [](const Value *V) {
+-    const Argument *A = dyn_cast<Argument>(V);
+-    return A && A->hasByValAttr();
+-  };
+-
+-  // Byval args are backed by store which does not overlap with each other,
+-  // allocas, or globals.
++  //
++  // Furthermore, an argument marked with the `dereferenceable(N)` attribute is
++  // guaranteed to point to N loadable bytes. Such a pointer cannot be a
++  // one-past-the-end pointer whose address happens to coincide with the start
++  // of another object (e.g., an alloca), as loading from a one-past-the-end
++  // address would be UB (thus, in contrast with the premise).
++
++  // Byval args are backed by storage that does not overlap with allocas,
++  // globals, other byval args, or any dereferenceable argument.
+   if (isByValArg(V1))
+-    return isa<AllocaInst>(V2) || isa<GlobalVariable>(V2) || isByValArg(V2);
++    return isa<AllocaInst>(V2) || isa<GlobalVariable>(V2) || isByValArg(V2) ||
++           isDereferenceableArg(V2);
+   if (isByValArg(V2))
+-    return isa<AllocaInst>(V1) || isa<GlobalVariable>(V1) || isByValArg(V1);
++    return isa<AllocaInst>(V1) || isa<GlobalVariable>(V1) || isByValArg(V1) ||
++           isDereferenceableArg(V1);
++
++  if ((isDereferenceableArg(V1) && isa<AllocaInst>(V2)) ||
++      (isDereferenceableArg(V2) && isa<AllocaInst>(V1)))
++    return true;
+ 
+   return isa<AllocaInst>(V1) &&
+          (isa<AllocaInst>(V2) || isa<GlobalVariable>(V2));
+@@ -2766,23 +2785,29 @@ static Constant *computePointerICmp(CmpPredicate Pred, Value *LHS, Value *RHS,
+   if (ICmpInst::isEquality(Pred)) {
+     // Different non-empty allocations that exist at the same time have
+     // different addresses (if the program can tell). If the offsets are
+-    // within the bounds of their allocations (and not one-past-the-end!
+-    // so we can't use inbounds!), and their allocations aren't the same,
++    // within the bounds of their allocations (and not one-past-the-end,
++    // so inbounds is not sufficient), and their allocations aren't the same,
+     // the pointers are not equal.
+     if (haveNonOverlappingStorage(LHS, RHS)) {
+       uint64_t LHSSize, RHSSize;
+       ObjectSizeOpts Opts;
+       Opts.EvalMode = ObjectSizeOpts::Mode::Min;
+-      auto *F = [](Value *V) -> Function * {
+-        if (auto *I = dyn_cast<Instruction>(V))
+-          return I->getFunction();
+-        if (auto *A = dyn_cast<Argument>(V))
+-          return A->getParent();
+-        return nullptr;
+-      }(LHS);
++      const Function *F = Q.CxtI ? Q.CxtI->getFunction() : nullptr;
+       Opts.NullIsUnknownSize = F ? NullPointerIsDefined(F) : true;
+-      if (getObjectSize(LHS, LHSSize, DL, TLI, Opts) && LHSSize != 0 &&
+-          getObjectSize(RHS, RHSSize, DL, TLI, Opts) && RHSSize != 0) {
++
++      // Size of object V, falling back to `dereferenceable(N)` attribute on an
++      // argument when getObjectSize cannot determine a concrete size.
++      auto GetKnownSize = [&](Value *V, uint64_t &Size) {
++        if (getObjectSize(V, Size, DL, TLI, Opts) && Size != 0)
++          return true;
++        if (auto *A = dyn_cast<Argument>(V)) {
++          Size = A->getDereferenceableBytes();
++          return true;
++        }
++        return false;
++      };
++
++      if (GetKnownSize(LHS, LHSSize) && GetKnownSize(RHS, RHSSize)) {
+         APInt Dist = LHSOffset - RHSOffset;
+         if (Dist.isNonNegative() ? Dist.ult(LHSSize) : (-Dist).ult(RHSSize))
+           return ConstantInt::get(getCompareTy(LHS),
+@@ -2800,7 +2825,7 @@ static Constant *computePointerICmp(CmpPredicate Pred, Value *LHS, Value *RHS,
+     getUnderlyingObjects(RHS, RHSUObjs);
+ 
+     // Is the set of underlying objects all noalias calls?
+-    auto IsNAC = [](ArrayRef<const Value *> Objects) {
++    auto IsNoAliasCall = [](ArrayRef<const Value *> Objects) {
+       return all_of(Objects, isNoAliasCall);
+     };
+ 
+@@ -2811,8 +2836,8 @@ static Constant *computePointerICmp(CmpPredicate Pred, Value *LHS, Value *RHS,
+       return all_of(Objects, ::isAllocDisjoint);
+     };
+ 
+-    if ((IsNAC(LHSUObjs) && IsAllocDisjoint(RHSUObjs)) ||
+-        (IsNAC(RHSUObjs) && IsAllocDisjoint(LHSUObjs)))
++    if ((IsNoAliasCall(LHSUObjs) && IsAllocDisjoint(RHSUObjs)) ||
++        (IsNoAliasCall(RHSUObjs) && IsAllocDisjoint(LHSUObjs)))
+       return ConstantInt::get(getCompareTy(LHS),
+                               !CmpInst::isTrueWhenEqual(Pred));
+ 
+diff --git a/llvm/test/Transforms/InstSimplify/compare.ll b/llvm/test/Transforms/InstSimplify/compare.ll
+index ba10ea532a34a..79e7e105e1bd7 100644
+--- a/llvm/test/Transforms/InstSimplify/compare.ll
++++ b/llvm/test/Transforms/InstSimplify/compare.ll
+@@ -3579,5 +3579,124 @@ declare i64 @llvm.vscale.i64()
+ 
+ ; TODO: Add coverage for global aliases, link once, etc..
+ 
++; Test dereferenceable(N) arguments when folding pointer equalities.
++
++define i1 @icmp_eq_arg_derefable_and_alloca(ptr dereferenceable(24) %p) {
++; CHECK-LABEL: @icmp_eq_arg_derefable_and_alloca(
++; CHECK-NEXT:    ret i1 false
++;
++  %q = alloca [3 x double], align 8
++  %c = icmp eq ptr %p, %q
++  ret i1 %c
++}
++
++define i1 @icmp_ne_arg_derefable_and_alloca(ptr dereferenceable(24) %p) {
++; CHECK-LABEL: @icmp_ne_arg_derefable_and_alloca(
++; CHECK-NEXT:    ret i1 true
++;
++  %q = alloca [3 x double], align 8
++  %c = icmp ne ptr %p, %q
++  ret i1 %c
++}
++
++define i1 @icmp_eq_arg_derefable_null_valid_and_alloca(ptr dereferenceable(24) %p) null_pointer_is_valid {
++; CHECK-LABEL: @icmp_eq_arg_derefable_null_valid_and_alloca(
++; CHECK-NEXT:    ret i1 false
++;
++  %q = alloca [3 x double], align 8
++  %c = icmp eq ptr %p, %q
++  ret i1 %c
++}
++
++define i1 @icmp_eq_arg_derefable_and_noalias_call(ptr dereferenceable(24) %p) {
++; CHECK-LABEL: @icmp_eq_arg_derefable_and_noalias_call(
++; CHECK-NEXT:    [[Q:%.*]] = call noalias ptr @opaque()
++; CHECK-NEXT:    ret i1 false
++;
++  %q = call noalias ptr @opaque()
++  %c = icmp eq ptr %p, %q
++  ret i1 %c
++}
++
++define i1 @icmp_eq_gep_of_arg_derefable_and_alloca(ptr dereferenceable(24) %p) {
++; CHECK-LABEL: @icmp_eq_gep_of_arg_derefable_and_alloca(
++; CHECK-NEXT:    ret i1 false
++;
++  %q  = alloca [3 x double], align 8
++  %p2 = getelementptr i8, ptr %p, i64 8
++  %c  = icmp eq ptr %p2, %q
++  ret i1 %c
++}
++
++%struct.S = type { [3 x double] }
++
++define i1 @icmp_eq_arg_derefable_and_byval_arg(ptr byval(%struct.S) %p, ptr dereferenceable(24) %q) {
++; CHECK-LABEL: @icmp_eq_arg_derefable_and_byval_arg(
++; CHECK-NEXT:    ret i1 false
++;
++  %c = icmp eq ptr %p, %q
++  ret i1 %c
++}
++
++; Negative tests.
++
++define i1 @icmp_eq_no_arg_derefable(ptr %p) {
++; CHECK-LABEL: @icmp_eq_no_arg_derefable(
++; CHECK-NEXT:    [[Q:%.*]] = alloca [3 x double], align 8
++; CHECK-NEXT:    [[C:%.*]] = icmp eq ptr [[P:%.*]], [[Q]]
++; CHECK-NEXT:    ret i1 [[C]]
++;
++  %q = alloca [3 x double], align 8
++  %c = icmp eq ptr %p, %q
++  ret i1 %c
++}
++
++define i1 @icmp_eq_gep_of_arg_derefable_past_one(ptr dereferenceable(24) %p) {
++; CHECK-LABEL: @icmp_eq_gep_of_arg_derefable_past_one(
++; CHECK-NEXT:    [[Q:%.*]] = alloca [3 x double], align 8
++; CHECK-NEXT:    [[P2:%.*]] = getelementptr i8, ptr [[P:%.*]], i64 24
++; CHECK-NEXT:    [[C:%.*]] = icmp eq ptr [[P2]], [[Q]]
++; CHECK-NEXT:    ret i1 [[C]]
++;
++  %q  = alloca [3 x double], align 8
++  %p2 = getelementptr i8, ptr %p, i64 24
++  %c  = icmp eq ptr %p2, %q
++  ret i1 %c
++}
++
++define i1 @icmp_eq_gep_of_alloca_past_one(ptr dereferenceable(24) %p) {
++; CHECK-LABEL: @icmp_eq_gep_of_alloca_past_one(
++; CHECK-NEXT:    [[Q:%.*]] = alloca [10 x double], align 8
++; CHECK-NEXT:    [[Q2:%.*]] = getelementptr i8, ptr [[Q]], i64 80
++; CHECK-NEXT:    [[C:%.*]] = icmp eq ptr [[P:%.*]], [[Q2]]
++; CHECK-NEXT:    ret i1 [[C]]
++;
++  %q  = alloca [10 x double], align 8
++  %q2 = getelementptr i8, ptr %q, i64 80
++  %c  = icmp eq ptr %p, %q2
++  ret i1 %c
++}
++
++define i1 @icmp_eq_arg_derefable_or_null_and_alloca(ptr dereferenceable_or_null(24) %p) {
++; CHECK-LABEL: @icmp_eq_arg_derefable_or_null_and_alloca(
++; CHECK-NEXT:    [[Q:%.*]] = alloca [3 x double], align 8
++; CHECK-NEXT:    [[C:%.*]] = icmp eq ptr [[P:%.*]], [[Q]]
++; CHECK-NEXT:    ret i1 [[C]]
++;
++  %q = alloca [3 x double], align 8
++  %c = icmp eq ptr %p, %q
++  ret i1 %c
++}
++
++define i1 @icmp_eq_two_args_derefable(ptr dereferenceable(24) %p, ptr dereferenceable(24) %q) {
++; CHECK-LABEL: @icmp_eq_two_args_derefable(
++; CHECK-NEXT:    [[C:%.*]] = icmp eq ptr [[P:%.*]], [[Q:%.*]]
++; CHECK-NEXT:    ret i1 [[C]]
++;
++  %c = icmp eq ptr %p, %q
++  ret i1 %c
++}
++
++declare noalias ptr @opaque()
+ 
+ attributes #0 = { null_pointer_is_valid }

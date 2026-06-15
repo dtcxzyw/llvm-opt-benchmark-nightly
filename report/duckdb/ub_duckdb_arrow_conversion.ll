@@ -201,30 +201,27 @@ _ZN6duckdb10unique_ptrINS_9ArrowTypeESt14default_deleteIS1_ELb1EE13AssertNotNull
 
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6duckdb9ArrowType16SetRunEndEncodedEv(ptr noundef nonnull align 8 dereferenceable(97) %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
-  %2 = alloca %"struct.duckdb::LogicalType", align 8 ; 9 uses
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %4 = tail call noundef ptr @_ZNK6duckdb10unique_ptrINS_13ArrowTypeInfoESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %3)
-  %5 = tail call noundef nonnull align 8 dereferenceable(40) ptr @_ZN6duckdb13ArrowTypeInfo4CastINS_15ArrowStructInfoEEERT_v(ptr noundef nonnull align 8 dereferenceable(9) %4)
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #26
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %7 = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZNK6duckdb6vectorINS_10shared_ptrINS_9ArrowTypeELb1EEELb1ESaIS3_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %6, i64 noundef 1)
-  %8 = tail call noundef nonnull align 8 dereferenceable(97) ptr @_ZNK6duckdb10shared_ptrINS_9ArrowTypeELb1EEdeEv(ptr noundef nonnull align 8 dereferenceable(16) %7)
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 16
-  call void @_ZN6duckdb11LogicalTypeC1ERKS0_(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %9), !inline_history !57
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %11 = icmp eq ptr %10, %2
-  br i1 %11, label %_ZN6duckdb11LogicalTypeaSERKS0_.exit, label %bb.a
-
-bb.a:                                             ; preds = %1
-  %i.a = load i8, ptr %2, align 8, !tbaa !24
-  store i8 %i.a, ptr %10, align 8, !tbaa !24
-  %i.b = getelementptr inbounds nuw i8, ptr %2, i64 1
+bb.a:
+  %1 = alloca %"struct.duckdb::LogicalType", align 8 ; 8 uses
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %3 = tail call noundef ptr @_ZNK6duckdb10unique_ptrINS_13ArrowTypeInfoESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %2)
+  %4 = tail call noundef nonnull align 8 dereferenceable(40) ptr @_ZN6duckdb13ArrowTypeInfo4CastINS_15ArrowStructInfoEEERT_v(ptr noundef nonnull align 8 dereferenceable(9) %3)
+  call void @llvm.lifetime.start.p0(ptr nonnull %1) #26
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %6 = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZNK6duckdb6vectorINS_10shared_ptrINS_9ArrowTypeELb1EEELb1ESaIS3_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %5, i64 noundef 1)
+  %7 = tail call noundef nonnull align 8 dereferenceable(97) ptr @_ZNK6duckdb10shared_ptrINS_9ArrowTypeELb1EEdeEv(ptr noundef nonnull align 8 dereferenceable(16) %6)
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 16
+  call void @_ZN6duckdb11LogicalTypeC1ERKS0_(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %8), !inline_history !57
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.a = load i8, ptr %1, align 8, !tbaa !24
+  store i8 %i.a, ptr %9, align 8, !tbaa !24
+  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 1
   %i.c = load i8, ptr %i.b, align 1, !tbaa !34
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 17
   store i8 %i.c, ptr %i.d, align 1, !tbaa !34
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.f = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.g = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !36   ; 2 uses
   %i.i = load <2 x ptr>, ptr %i.f, align 8, !tbaa !35
   %.not.i.i.i.i.i.i = icmp eq ptr %i.h, null
@@ -297,11 +294,11 @@ bb.j:                                             ; preds = %_ZN9__gnu_cxx27__ex
   call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.p) #26
   br label %_ZN6duckdb11LogicalTypeaSERKS0_.exit
 
-_ZN6duckdb11LogicalTypeaSERKS0_.exit:             ; preds = %1, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i, %bb.f, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i, %bb.j
+_ZN6duckdb11LogicalTypeaSERKS0_.exit:             ; preds = %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i, %bb.f, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i, %bb.j
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 48
   store i8 1, ptr %i.af, align 8, !tbaa !83
-  call void @_ZN6duckdb11LogicalTypeD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %2) #26
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #26
+  call void @_ZN6duckdb11LogicalTypeD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %1) #26
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #26
   ret void
 }
 

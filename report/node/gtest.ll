@@ -201,9 +201,9 @@ _ZN7testing8internal15GetUnitTestImplEv.exit:     ; preds = %_ZNSt7__cxx1112basi
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZN7testing8internal12UnitTestImpl11AddTestInfoEPFvvES3_PNS_8TestInfoE(ptr noundef nonnull align 8 dereferenceable(713) %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #2 comdat align 2 {
 bb.a:
-  %4 = alloca %"class.testing::internal::FilePath", align 8 ; 15 uses
+  %4 = alloca %"class.testing::internal::FilePath", align 8 ; 14 uses
   %5 = alloca %"class.testing::internal::GTestLog", align 4 ; 4 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
   %i.c = load i64, ptr %i.b, align 8
   %i.d = icmp eq i64 %i.c, 0
@@ -215,7 +215,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = load ptr, ptr %i.a, align 8              ; 6 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.g = icmp eq ptr %i.e, %i.f
-  %i.h = load ptr, ptr %4, align 8                ; 6 uses
+  %i.h = load ptr, ptr %4, align 8                ; 5 uses
   %i.i = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses
   %i.j = icmp eq ptr %i.h, %i.i                   ; 2 uses
   br i1 %i.g, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i
@@ -231,25 +231,21 @@ bb.c:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.l = load i64, ptr %i.k, align 8              ; 3 uses
   %i.m = icmp ult i64 %i.l, 16
   call void @llvm.assume(i1 %i.m)
-  %.not21.i.i = icmp eq ptr %4, %i.a
-  br i1 %.not21.i.i, label %_ZN7testing8internal8FilePathaSEOS1_.exit, label %6, !prof !5
-
-6:                                                ; preds = %bb.c
   switch i64 %i.l, label %bb.e [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i
     i64 1, label %bb.d
   ]
 
-bb.d:                                             ; preds = %6
+bb.d:                                             ; preds = %bb.c
   %i.n = load i8, ptr %i.h, align 1
   store i8 %i.n, ptr %i.e, align 1
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i
 
-bb.e:                                             ; preds = %6
+bb.e:                                             ; preds = %bb.c
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.e, ptr align 1 %i.h, i64 %i.l, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i: ; preds = %bb.e, %bb.d, %6
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i: ; preds = %bb.e, %bb.d, %bb.c
   %i.o = load i64, ptr %i.k, align 8              ; 2 uses
   store i64 %i.o, ptr %i.b, align 8
   %i.p = load ptr, ptr %i.a, align 8
@@ -283,11 +279,11 @@ bb.g:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.i, ptr %4, align 8
   br label %_ZN7testing8internal8FilePathaSEOS1_.exit
 
-_ZN7testing8internal8FilePathaSEOS1_.exit:        ; preds = %bb.c, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i, %bb.f, %bb.g
-  %7 = phi ptr [ %i.e, %bb.f ], [ %i.i, %bb.g ], [ %i.h, %bb.c ], [ %.pre.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i ]
+_ZN7testing8internal8FilePathaSEOS1_.exit:        ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i, %bb.f, %bb.g
+  %6 = phi ptr [ %i.e, %bb.f ], [ %i.i, %bb.g ], [ %.pre.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i ]
   %i.w = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i64 0, ptr %i.w, align 8
-  store i8 0, ptr %7, align 1
+  store i8 0, ptr %6, align 1
   %i.x = load ptr, ptr %4, align 8                ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   %i.z = icmp eq ptr %i.x, %i.y

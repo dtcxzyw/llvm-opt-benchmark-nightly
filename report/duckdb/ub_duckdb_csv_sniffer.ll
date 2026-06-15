@@ -201,12 +201,12 @@ define linkonce_odr void @_ZN6duckdb11HeaderValueC2ENS_8string_tE(ptr noundef no
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %3 = alloca %"struct.duckdb::string_t", align 8 ; 3 uses
-  %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
+  %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
   store i64 %1, ptr %3, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 8
   store ptr %2, ptr %i.b, align 8
   store i8 0, ptr %0, align 8, !tbaa !560
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
   store ptr %i.d, ptr %i.c, align 8, !tbaa !98
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
@@ -274,7 +274,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %._cri
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #31, !noalias !596
   %i.w = load ptr, ptr %i.c, align 8, !tbaa !103  ; 6 uses
   %i.x = icmp eq ptr %i.w, %i.d
-  %i.y = load ptr, ptr %4, align 8, !tbaa !103    ; 6 uses
+  %i.y = load ptr, ptr %4, align 8, !tbaa !103    ; 5 uses
   %i.z = icmp eq ptr %i.y, %i.k                   ; 2 uses
   br i1 %i.x, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i
 
@@ -288,25 +288,21 @@ bb.f:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.aa = load i64, ptr %i.t, align 8, !tbaa !99  ; 3 uses
   %i.ab = icmp ult i64 %i.aa, 16
   call void @llvm.assume(i1 %i.ab)
-  %.not21.i = icmp eq ptr %4, %i.c
-  br i1 %.not21.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, label %5, !prof !157
-
-5:                                                ; preds = %bb.f
   switch i64 %i.aa, label %bb.h [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
     i64 1, label %bb.g
   ]
 
-bb.g:                                             ; preds = %5
+bb.g:                                             ; preds = %bb.f
   %i.ac = load i8, ptr %i.y, align 1, !tbaa !100
   store i8 %i.ac, ptr %i.w, align 1, !tbaa !100
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-bb.h:                                             ; preds = %5
+bb.h:                                             ; preds = %bb.f
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.w, ptr align 1 %i.y, i64 %i.aa, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.h, %bb.g, %5
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.h, %bb.g, %bb.f
   %i.ad = load i64, ptr %i.t, align 8, !tbaa !99  ; 2 uses
   store i64 %i.ad, ptr %i.e, align 8, !tbaa !99
   %i.ae = load ptr, ptr %i.c, align 8, !tbaa !103
@@ -338,10 +334,10 @@ bb.j:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.k, ptr %4, align 8, !tbaa !103
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %bb.f, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, %bb.i, %bb.j
-  %6 = phi ptr [ %i.w, %bb.i ], [ %i.k, %bb.j ], [ %i.y, %bb.f ], [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ]
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, %bb.i, %bb.j
+  %5 = phi ptr [ %i.w, %bb.i ], [ %i.k, %bb.j ], [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ]
   store i64 0, ptr %i.t, align 8, !tbaa !99
-  store i8 0, ptr %6, align 1, !tbaa !100
+  store i8 0, ptr %5, align 1, !tbaa !100
   %i.aj = load ptr, ptr %4, align 8, !tbaa !103   ; 2 uses
   %i.ak = icmp eq ptr %i.aj, %i.k
   br i1 %i.ak, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
@@ -744,7 +740,7 @@ bb.a:
   %10 = alloca %"struct.std::_Hashtable<unsigned long, std::pair<const unsigned long, duckdb::vector<duckdb::LogicalType>>, std::allocator<std::pair<const unsigned long, duckdb::vector<duckdb::LogicalType>>>, std::__detail::_Select1st, std::equal_to<unsigned long>, std::hash<unsigned long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true>>::_Scoped_node", align 8 ; 6 uses
   %11 = alloca %"struct.std::_Hashtable<unsigned long, std::pair<const unsigned long, duckdb::vector<duckdb::LogicalType>>, std::allocator<std::pair<const unsigned long, duckdb::vector<duckdb::LogicalType>>>, std::__detail::_Select1st, std::equal_to<unsigned long>, std::hash<unsigned long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true>>::_Scoped_node", align 8 ; 6 uses
   %12 = alloca %"class.duckdb::vector.33", align 8 ; 11 uses
-  %13 = alloca %"class.std::unordered_map", align 8 ; 22 uses
+  %13 = alloca %"class.std::unordered_map", align 8 ; 21 uses
   %14 = alloca %"struct.duckdb::LogicalType", align 8 ; 7 uses
   %15 = alloca %"class.duckdb::unique_ptr", align 8 ; 15 uses
   %16 = alloca %"struct.duckdb::LogicalType", align 8 ; 7 uses
@@ -781,8 +777,7 @@ bb.a:
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 448 ; 4 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 456 ; 4 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 464 ; 9 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 344 ; 2 uses
-  %23 = icmp eq ptr %13, %i.ab
+  %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 344
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 504
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 488 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 400 ; 2 uses
@@ -1185,13 +1180,10 @@ bb.bq:                                            ; preds = %_ZN6duckdb10unique_
   %i.hd = load i8, ptr %i.hc, align 4, !tbaa !737, !range !154, !noundef !141
   %i.he = xor i8 %i.hd, 1
   store i8 %i.he, ptr %i.x, align 8, !tbaa !736
-  br i1 %23, label %_ZNSt13unordered_mapImN6duckdb6vectorINS0_11LogicalTypeELb1ESaIS2_EEESt4hashImESt8equal_toImESaISt4pairIKmS4_EEEaSERKSD_.exit, label %24
-
-24:                                               ; preds = %bb.bq
   invoke void @_ZNSt10_HashtableImSt4pairIKmN6duckdb6vectorINS2_11LogicalTypeELb1ESaIS4_EEEESaIS7_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb0ELb0ELb1EEEE18_M_assign_elementsIRKSK_EEvOT_(ptr noundef nonnull align 8 dereferenceable(56) %i.ab, ptr noundef nonnull align 8 dereferenceable(56) %13)
           to label %_ZNSt13unordered_mapImN6duckdb6vectorINS0_11LogicalTypeELb1ESaIS2_EEESt4hashImESt8equal_toImESaISt4pairIKmS4_EEEaSERKSD_.exit unwind label %bb.bt
 
-_ZNSt13unordered_mapImN6duckdb6vectorINS0_11LogicalTypeELb1ESaIS2_EEESt4hashImESt8equal_toImESaISt4pairIKmS4_EEEaSERKSD_.exit: ; preds = %bb.bq, %24
+_ZNSt13unordered_mapImN6duckdb6vectorINS0_11LogicalTypeELb1ESaIS2_EEESt4hashImESt8equal_toImESaISt4pairIKmS4_EEEaSERKSD_.exit: ; preds = %bb.bq
   %i.hf = load ptr, ptr %i.ac, align 8, !tbaa !129 ; 2 uses
   %.not282351 = icmp eq ptr %i.hf, %i.ad
   br i1 %.not282351, label %._crit_edge354, label %.lr.ph353
@@ -1210,7 +1202,7 @@ bb.bs:                                            ; preds = %bb.bk
           cleanup
   br label %.body121
 
-bb.bt:                                            ; preds = %24, %_ZN6duckdb10unique_ptrINS_18StringValueScannerESt14default_deleteIS1_ELb1EEaSEOS4_.exit
+bb.bt:                                            ; preds = %bb.bq, %_ZN6duckdb10unique_ptrINS_18StringValueScannerESt14default_deleteIS1_ELb1EEaSEOS4_.exit
   %i.hi = landingpad { ptr, i32 }
           cleanup
   br label %.body121

@@ -201,7 +201,7 @@ declare void @_ZN6duckdb20PartitionedTupleData11RepartitionERNS_13ClientContextE
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6duckdb25GroupedAggregateHashTable7AbandonEv(ptr noundef nonnull align 8 dereferenceable(2912) %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
+  %1 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 176
   %i.b = load i64, ptr %i.a, align 8, !tbaa !86
   %i.c = icmp ugt i64 %i.b, 2
@@ -248,35 +248,27 @@ _ZN6duckdb25GroupedAggregateHashTable17ClearPointerTableEv.exit: ; preds = %bb.e
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 224
   store i64 0, ptr %i.s, align 8, !tbaa !345
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #40
-  %i.t = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   store ptr %i.t, ptr %1, align 8, !tbaa !364
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i8 0, ptr %i.t, align 8, !tbaa !272
-  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 2536 ; 2 uses
-  %.not21.i = icmp eq ptr %1, %i.v
-  br i1 %.not21.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, !prof !58
-
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %_ZN6duckdb25GroupedAggregateHashTable17ClearPointerTableEv.exit
+  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 2536
   %2 = load ptr, ptr %i.v, align 8, !tbaa !54
   %3 = getelementptr inbounds nuw i8, ptr %0, i64 2544
   store i64 0, ptr %3, align 8, !tbaa !365
   store i8 0, ptr %2, align 1, !tbaa !272
   %.pre.i = load ptr, ptr %1, align 8, !tbaa !54
-  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit
-
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %_ZN6duckdb25GroupedAggregateHashTable17ClearPointerTableEv.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
-  %4 = phi ptr [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ], [ %i.t, %_ZN6duckdb25GroupedAggregateHashTable17ClearPointerTableEv.exit ]
   store i64 0, ptr %i.u, align 8, !tbaa !365
-  store i8 0, ptr %4, align 1, !tbaa !272
-  %5 = load ptr, ptr %1, align 8, !tbaa !54       ; 2 uses
-  %6 = icmp eq ptr %5, %i.t
-  br i1 %6, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
+  store i8 0, ptr %.pre.i, align 1, !tbaa !272
+  %4 = load ptr, ptr %1, align 8, !tbaa !54       ; 2 uses
+  %.not21.i = icmp eq ptr %4, %i.t
+  br i1 %.not21.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit
-  call void @_ZdlPv(ptr noundef %5) #39
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %_ZN6duckdb25GroupedAggregateHashTable17ClearPointerTableEv.exit
+  call void @_ZdlPv(ptr noundef %4) #39
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZN6duckdb25GroupedAggregateHashTable17ClearPointerTableEv.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #40
   ret void
 }

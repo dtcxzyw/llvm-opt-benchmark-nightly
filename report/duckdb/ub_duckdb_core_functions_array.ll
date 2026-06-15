@@ -201,7 +201,7 @@ bb.a:
   %4 = alloca %"struct.duckdb::LogicalType", align 8 ; 5 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %6 = alloca %"class.std::allocator", align 1    ; 5 uses
-  %7 = alloca %"struct.duckdb::LogicalType", align 8 ; 16 uses
+  %7 = alloca %"struct.duckdb::LogicalType", align 8 ; 15 uses
   %8 = alloca %"struct.duckdb::LogicalType", align 8 ; 8 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %10 = alloca %"class.std::allocator", align 1   ; 5 uses
@@ -272,7 +272,7 @@ bb.g:                                             ; preds = %bb.a
   %i.q = ptrtoint ptr %i.o to i64
   %i.r = sub i64 %i.p, %i.q
   %i.s = icmp ugt i64 %i.r, 8
-  br i1 %i.s, label %.lr.ph, label %._crit_edge.thread
+  br i1 %i.s, label %.lr.ph, label %bb.q
 
 .lr.ph:                                           ; preds = %bb.g
   %i.t = getelementptr inbounds nuw i8, ptr %8, i64 1
@@ -283,7 +283,7 @@ bb.g:                                             ; preds = %bb.a
 
 ._crit_edge:                                      ; preds = %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEaSEOS2_.exit.i.i
   %i.x = icmp ugt i64 %i.al, 100000
-  br i1 %i.x, label %bb.l, label %._crit_edge.thread
+  br i1 %i.x, label %bb.l, label %bb.q
 
 bb.h:                                             ; preds = %.lr.ph, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEaSEOS2_.exit.i.i
   %.01655 = phi i64 [ 1, %.lr.ph ], [ %i.af, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEaSEOS2_.exit.i.i ] ; 2 uses
@@ -374,12 +374,8 @@ bb.p:                                             ; preds = %_ZNKSt7__cxx1112bas
   call void @__cxa_free_exception(ptr %i.ao) #20
   br label %.body
 
-._crit_edge.thread:                               ; preds = %bb.g, %._crit_edge
-  %13 = getelementptr inbounds nuw i8, ptr %2, i64 184 ; 2 uses
-  %14 = icmp eq ptr %13, %7
-  br i1 %14, label %_ZN6duckdb11LogicalTypeaSERKS0_.exit, label %bb.q
-
-bb.q:                                             ; preds = %._crit_edge.thread
+bb.q:                                             ; preds = %bb.g, %._crit_edge
+  %13 = getelementptr inbounds nuw i8, ptr %2, i64 184
   %i.au = load i8, ptr %7, align 8, !tbaa !23
   store i8 %i.au, ptr %13, align 8, !tbaa !23
   %i.av = getelementptr inbounds nuw i8, ptr %7, i64 1
@@ -461,7 +457,7 @@ bb.z:                                             ; preds = %_ZN9__gnu_cxx27__ex
   call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.bj) #20
   br label %_ZN6duckdb11LogicalTypeaSERKS0_.exit
 
-_ZN6duckdb11LogicalTypeaSERKS0_.exit:             ; preds = %._crit_edge.thread, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i, %bb.v, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i, %bb.z
+_ZN6duckdb11LogicalTypeaSERKS0_.exit:             ; preds = %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i, %bb.v, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i, %bb.z
   %i.bz = load ptr, ptr %i.b, align 8, !tbaa !157
   %i.ca = load ptr, ptr %3, align 8, !tbaa !159
   %i.cb = ptrtoint ptr %i.bz to i64

@@ -201,9 +201,9 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN6duckdb16PipelineExecutor20SetTaskForInterruptsENS_8weak_ptrINS_4TaskELb1EEE(ptr nofree noundef nonnull align 8 captures(address) dereferenceable(513) %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN6duckdb16PipelineExecutor20SetTaskForInterruptsENS_8weak_ptrINS_4TaskELb1EEE(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(513) %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.duckdb::InterruptState", align 8 ; 12 uses
+  %2 = alloca %"class.duckdb::InterruptState", align 8 ; 9 uses
   %3 = alloca %"class.duckdb::weak_ptr", align 16 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #34
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
@@ -211,22 +211,18 @@ bb.a:
   store <2 x ptr> %i.b, ptr %3, align 16, !tbaa !58
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, i8 0, i64 16, i1 false)
   invoke void @_ZN6duckdb14InterruptStateC1ENS_8weak_ptrINS_4TaskELb1EEE(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr noundef nonnull %3)
-          to label %4 unwind label %bb.ad
+          to label %bb.b unwind label %bb.ad
 
-4:                                                ; preds = %bb.a
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 2 uses
-  %6 = load i8, ptr %2, align 8, !tbaa !135
-  store i8 %6, ptr %5, align 8, !tbaa !135
-  %7 = icmp eq ptr %5, %2
-  br i1 %7, label %_ZN6duckdb14InterruptStateaSEOS0_.exit, label %bb.b
-
-bb.b:                                             ; preds = %4
+bb.b:                                             ; preds = %bb.a
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 264
+  %5 = load i8, ptr %2, align 8, !tbaa !135
+  store i8 %5, ptr %4, align 8, !tbaa !135
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 272
   %i.e = load ptr, ptr %i.c, align 8, !tbaa !388
   store ptr %i.e, ptr %i.d, align 8, !tbaa !388
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %i.g = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !146  ; 3 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.h, null
   br i1 %.not.i.i.i.i.i, label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_weak_add_refEv.exit.i.i.i.i.i, label %bb.c
@@ -287,7 +283,7 @@ bb.j:                                             ; preds = %bb.i, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.x, align 8, !tbaa !880
   store ptr %i.z, ptr %i.y, align 8, !tbaa !880
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 2 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 32
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !146 ; 3 uses
   %.not.i.i.i.i4.i = icmp eq ptr %i.ac, null
   br i1 %.not.i.i.i.i4.i, label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_weak_add_refEv.exit.i.i.i.i6.i, label %bb.k
@@ -311,7 +307,7 @@ bb.m:                                             ; preds = %bb.k
 _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_weak_add_refEv.exit.i.i.i.i6.i: ; preds = %bb.m, %bb.l, %bb.j
   %i.ai = load ptr, ptr %i.aa, align 8, !tbaa !146 ; 4 uses
   %.not6.i.i.i.i7.i = icmp eq ptr %i.ai, null
-  br i1 %.not6.i.i.i.i7.i, label %_ZNSt8weak_ptrIN6duckdb24InterruptDoneSignalStateEEaSERKS2_.exit.i.i, label %bb.n
+  br i1 %.not6.i.i.i.i7.i, label %_ZN6duckdb14InterruptStateaSEOS0_.exit, label %bb.n
 
 bb.n:                                             ; preds = %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_weak_add_refEv.exit.i.i.i.i6.i
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 12 ; 3 uses
@@ -332,22 +328,18 @@ bb.p:                                             ; preds = %bb.n
 _ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i9.i: ; preds = %bb.p, %bb.o
   %.0.i.i.i.i.i.i10.i = phi i32 [ %i.al, %bb.o ], [ %i.an, %bb.p ]
   %i.ao = icmp eq i32 %.0.i.i.i.i.i.i10.i, 1
-  br i1 %i.ao, label %bb.q, label %_ZNSt8weak_ptrIN6duckdb24InterruptDoneSignalStateEEaSERKS2_.exit.i.i
+  br i1 %i.ao, label %bb.q, label %_ZN6duckdb14InterruptStateaSEOS0_.exit
 
 bb.q:                                             ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i9.i
   %i.ap = load ptr, ptr %i.ai, align 8, !tbaa !28
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 24
   %i.ar = load ptr, ptr %i.aq, align 8
   call void %i.ar(ptr noundef nonnull align 8 dereferenceable(16) %i.ai) #34, !inline_history !881
-  br label %_ZNSt8weak_ptrIN6duckdb24InterruptDoneSignalStateEEaSERKS2_.exit.i.i
-
-_ZNSt8weak_ptrIN6duckdb24InterruptDoneSignalStateEEaSERKS2_.exit.i.i: ; preds = %bb.q, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i9.i, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_weak_add_refEv.exit.i.i.i.i6.i
-  store ptr %i.ac, ptr %i.aa, align 8, !tbaa !146
   br label %_ZN6duckdb14InterruptStateaSEOS0_.exit
 
-_ZN6duckdb14InterruptStateaSEOS0_.exit:           ; preds = %_ZNSt8weak_ptrIN6duckdb24InterruptDoneSignalStateEEaSERKS2_.exit.i.i, %4
-  %8 = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %i.as = load ptr, ptr %8, align 8, !tbaa !146   ; 4 uses
+_ZN6duckdb14InterruptStateaSEOS0_.exit:           ; preds = %bb.q, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i9.i, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_weak_add_refEv.exit.i.i.i.i6.i
+  store ptr %i.ac, ptr %i.aa, align 8, !tbaa !146
+  %i.as = load ptr, ptr %i.ab, align 8, !tbaa !146 ; 4 uses
   %.not.i.i.i.i = icmp eq ptr %i.as, null
   br i1 %.not.i.i.i.i, label %_ZN6duckdb8weak_ptrINS_24InterruptDoneSignalStateELb1EED2Ev.exit.i, label %bb.r
 
@@ -380,8 +372,7 @@ bb.u:                                             ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZN6duckdb8weak_ptrINS_24InterruptDoneSignalStateELb1EED2Ev.exit.i
 
 _ZN6duckdb8weak_ptrINS_24InterruptDoneSignalStateELb1EED2Ev.exit.i: ; preds = %bb.u, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i, %_ZN6duckdb14InterruptStateaSEOS0_.exit
-  %9 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.bc = load ptr, ptr %9, align 8, !tbaa !146   ; 4 uses
+  %i.bc = load ptr, ptr %i.g, align 8, !tbaa !146 ; 4 uses
   %.not.i.i.i1.i = icmp eq ptr %i.bc, null
   br i1 %.not.i.i.i1.i, label %_ZN6duckdb14InterruptStateD2Ev.exit, label %bb.v
 

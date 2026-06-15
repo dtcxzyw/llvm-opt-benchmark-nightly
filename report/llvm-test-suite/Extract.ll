@@ -201,7 +201,7 @@ bb.eg:                                            ; preds = %bb.ef
 .noexc136.i:                                      ; preds = %bb.eg
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(132) %i.pg, ptr noundef nonnull align 4 dereferenceable(132) @.str.5, i64 132, i1 false), !tbaa !26
   %i.ph = invoke noalias noundef nonnull dereferenceable(132) ptr @_Znam(i64 noundef 132) #15
-          to label %.noexc140.i unwind label %bb.ex ; 13 uses
+          to label %.noexc140.i unwind label %bb.ex ; 6 uses
 
 bb.eh:                                            ; preds = %bb.dx
   %i.pi = landingpad { ptr, i32 }
@@ -275,46 +275,17 @@ bb.ep:                                            ; preds = %_ZN11CStringBaseIwE
   %i.px = zext nneg i32 %i.pw to i64
   %i.py = shl nuw nsw i64 %i.px, 2
   %i.pz = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.py) #15
-          to label %bb.eq unwind label %bb.es     ; 10 uses
+          to label %bb.eq unwind label %bb.es     ; 3 uses
 
 bb.eq:                                            ; preds = %bb.ep
-  %26 = load <4 x i32>, ptr %i.ph, align 4, !tbaa !26
-  store <4 x i32> %26, ptr %i.pz, align 4, !tbaa !26
-  %27 = getelementptr inbounds nuw i8, ptr %i.ph, i64 16
-  %28 = getelementptr inbounds nuw i8, ptr %i.pz, i64 16
-  %29 = load <4 x i32>, ptr %27, align 4, !tbaa !26
-  store <4 x i32> %29, ptr %28, align 4, !tbaa !26
-  %30 = getelementptr inbounds nuw i8, ptr %i.ph, i64 32
-  %31 = getelementptr inbounds nuw i8, ptr %i.pz, i64 32
-  %32 = load <4 x i32>, ptr %30, align 4, !tbaa !26
-  store <4 x i32> %32, ptr %31, align 4, !tbaa !26
-  %33 = getelementptr inbounds nuw i8, ptr %i.ph, i64 48
-  %34 = getelementptr inbounds nuw i8, ptr %i.pz, i64 48
-  %35 = load <4 x i32>, ptr %33, align 4, !tbaa !26
-  store <4 x i32> %35, ptr %34, align 4, !tbaa !26
-  %36 = getelementptr inbounds nuw i8, ptr %i.ph, i64 64
-  %37 = getelementptr inbounds nuw i8, ptr %i.pz, i64 64
-  %38 = load <4 x i32>, ptr %36, align 4, !tbaa !26
-  store <4 x i32> %38, ptr %37, align 4, !tbaa !26
-  %39 = getelementptr inbounds nuw i8, ptr %i.ph, i64 80
-  %40 = getelementptr inbounds nuw i8, ptr %i.pz, i64 80
-  %41 = load <4 x i32>, ptr %39, align 4, !tbaa !26
-  store <4 x i32> %41, ptr %40, align 4, !tbaa !26
-  %42 = getelementptr inbounds nuw i8, ptr %i.ph, i64 96
-  %43 = getelementptr inbounds nuw i8, ptr %i.pz, i64 96
-  %44 = load <4 x i32>, ptr %42, align 4, !tbaa !26
-  store <4 x i32> %44, ptr %43, align 4, !tbaa !26
-  %45 = getelementptr inbounds nuw i8, ptr %i.ph, i64 112
-  %46 = getelementptr inbounds nuw i8, ptr %i.pz, i64 112
-  %47 = load <4 x i32>, ptr %45, align 4, !tbaa !26
-  store <4 x i32> %47, ptr %46, align 4, !tbaa !26
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(128) %i.pz, ptr noundef nonnull align 4 dereferenceable(128) %i.ph, i64 128, i1 false), !tbaa !26
   call void @_ZdaPv(ptr noundef nonnull %i.ph) #17
   %i.qa = getelementptr inbounds nuw i8, ptr %i.pz, i64 128
   store i32 0, ptr %i.qa, align 4, !tbaa !26
   br label %_ZN11CStringBaseIwE10GrowLengthEi.exit.i.i
 
 _ZN11CStringBaseIwE10GrowLengthEi.exit.i.i:       ; preds = %bb.eq, %_ZN11CStringBaseIwEC2ERKS0_.exit.i.i
-  %i.qb = phi ptr [ %i.pz, %bb.eq ], [ %i.ph, %_ZN11CStringBaseIwEC2ERKS0_.exit.i.i ] ; 4 uses
+  %i.qb = phi ptr [ %i.ph, %_ZN11CStringBaseIwEC2ERKS0_.exit.i.i ], [ %i.pz, %bb.eq ] ; 4 uses
   %i.qc = getelementptr inbounds nuw i8, ptr %i.qb, i64 128
   %i.qd = load ptr, ptr %13, align 8, !tbaa !25
   br label %bb.er

@@ -201,7 +201,7 @@ bb.k:                                             ; preds = %bb.e
 ; Function Attrs: mustprogress uwtable
 define noundef zeroext i1 @_ZN6duckdb12DuckDBReader17TryInitializeScanERNS_13ClientContextERNS_24GlobalTableFunctionStateERNS_23LocalTableFunctionStateE(ptr noundef nonnull align 8 dereferenceable(944) %0, ptr noundef nonnull align 8 dereferenceable(512) %1, ptr nofree nonnull readnone align 8 captures(none) %2, ptr nofree noundef nonnull align 8 captures(address) dereferenceable(8) %3) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = alloca %"class.duckdb::TableFunction", align 8 ; 14 uses
+  %4 = alloca %"class.duckdb::TableFunction", align 8 ; 13 uses
   %5 = alloca %"struct.duckdb::ColumnIndex", align 8 ; 12 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %7 = alloca %"class.std::allocator.0", align 1  ; 5 uses
@@ -340,21 +340,17 @@ _ZN6duckdb10shared_ptrINS_23AttachedDatabaseWrapperELb1EE5resetEv.exit41: ; pred
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 152
   %i.at = load ptr, ptr %i.as, align 8
   call void %i.at(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::TableFunction") align 8 %4, ptr noundef nonnull align 8 dereferenceable(448) %i.ap, ptr noundef nonnull align 8 dereferenceable(512) %1, ptr noundef nonnull align 8 dereferenceable(8) %i.aq)
-  %i.au = getelementptr inbounds nuw i8, ptr %0, i64 304 ; 2 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %0, i64 304
   %i.av = invoke noundef nonnull align 8 dereferenceable(208) ptr @_ZN6duckdb14SimpleFunctionaSERKS0_(ptr noundef nonnull align 8 dereferenceable(544) %i.au, ptr noundef nonnull align 8 dereferenceable(544) %4)
-          to label %.noexc unwind label %bb.ai    ; 0 uses
+          to label %bb.q unwind label %bb.ai      ; 0 uses
 
-.noexc:                                           ; preds = %_ZN6duckdb10shared_ptrINS_23AttachedDatabaseWrapperELb1EE5resetEv.exit41
-  %18 = icmp eq ptr %4, %i.au
-  br i1 %18, label %_ZN6duckdb28SimpleNamedParameterFunctionaSERKS0_.exit.i, label %bb.q
-
-bb.q:                                             ; preds = %.noexc
+bb.q:                                             ; preds = %_ZN6duckdb10shared_ptrINS_23AttachedDatabaseWrapperELb1EE5resetEv.exit41
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 512
   %i.ax = getelementptr inbounds nuw i8, ptr %4, i64 208
   invoke void @_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N6duckdb11LogicalTypeEESaISA_ENSt8__detail10_Select1stENS8_29CaseInsensitiveStringEqualityENS8_33CaseInsensitiveStringHashFunctionENSC_18_Mod_range_hashingENSC_20_Default_ranged_hashENSC_20_Prime_rehash_policyENSC_17_Hashtable_traitsILb1ELb0ELb1EEEE18_M_assign_elementsIRKSL_EEvOT_(ptr noundef nonnull align 8 dereferenceable(56) %i.aw, ptr noundef nonnull align 8 dereferenceable(56) %i.ax)
           to label %_ZN6duckdb28SimpleNamedParameterFunctionaSERKS0_.exit.i unwind label %bb.ai
 
-_ZN6duckdb28SimpleNamedParameterFunctionaSERKS0_.exit.i: ; preds = %bb.q, %.noexc
+_ZN6duckdb28SimpleNamedParameterFunctionaSERKS0_.exit.i: ; preds = %bb.q
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 568
   %i.az = getelementptr inbounds nuw i8, ptr %4, i64 264
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(254) %i.ay, ptr noundef nonnull align 8 dereferenceable(254) %i.az, i64 254, i1 false)

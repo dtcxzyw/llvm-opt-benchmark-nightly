@@ -201,7 +201,7 @@ declare i32 @strcmp(ptr noundef captures(none), ptr noundef captures(none)) loca
 define void @_ZN5folly16ThreadedExecutor4workERNS_8FunctionIFvvEEE(ptr noundef nonnull align 64 dereferenceable(224) %0, ptr noundef nonnull align 16 dereferenceable(64) %1) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"class.folly::Function", align 16  ; 6 uses
-  %3 = alloca %"class.folly::Function", align 16  ; 8 uses
+  %3 = alloca %"class.folly::Function", align 16  ; 7 uses
   %4 = alloca %"struct.folly::ThreadedExecutor::Message", align 16 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #28
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 3 uses
@@ -222,23 +222,19 @@ bb.a:
   store ptr @_ZN5folly6detail8function14FunctionTraitsIFvvEE10uninitCallERNS1_4DataE, ptr %i.d, align 16, !tbaa !25, !noalias !2494
   store ptr null, ptr %i.f, align 8, !tbaa !23, !noalias !2494
   %.not.i.i.i.i = icmp eq ptr %i.g, null
-  br i1 %.not.i.i.i.i, label %_ZNK5folly8FunctionIFvvEE4execENS_6detail8function2OpEPNS4_4DataES7_.exit.i.i.i, label %_ZN5folly8FunctionIFvvEEC2EOS2_.exit.i.i
+  br i1 %.not.i.i.i.i, label %bb.c, label %_ZN5folly8FunctionIFvvEEC2EOS2_.exit.i.i
 
 _ZN5folly8FunctionIFvvEEC2EOS2_.exit.i.i:         ; preds = %bb.a
   %i.i = call noundef i64 %i.g(i32 noundef 0, ptr noundef nonnull align 16 dereferenceable(64) %1, ptr noundef nonnull align 16 dereferenceable(64) %2) #28, !inline_history !2495 ; 0 uses
   %.pr.i.i = load ptr, ptr %i.f, align 8, !tbaa !23, !noalias !2494 ; 2 uses
   %.not.i.i4.i.i = icmp eq ptr %.pr.i.i, null
-  br i1 %.not.i.i4.i.i, label %_ZNK5folly8FunctionIFvvEE4execENS_6detail8function2OpEPNS4_4DataES7_.exit.i.i.i, label %bb.b
+  br i1 %.not.i.i4.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %_ZN5folly8FunctionIFvvEEC2EOS2_.exit.i.i
   %i.j = call noundef i64 %.pr.i.i(i32 noundef 1, ptr noundef nonnull align 16 dereferenceable(64) %1, ptr noundef null) #28, !inline_history !2496 ; 0 uses
-  br label %_ZNK5folly8FunctionIFvvEE4execENS_6detail8function2OpEPNS4_4DataES7_.exit.i.i.i
+  br label %bb.c
 
-_ZNK5folly8FunctionIFvvEE4execENS_6detail8function2OpEPNS4_4DataES7_.exit.i.i.i: ; preds = %bb.b, %_ZN5folly8FunctionIFvvEEC2EOS2_.exit.i.i, %bb.a
-  %.not.i.i.i = icmp eq ptr %1, %3
-  br i1 %.not.i.i.i, label %_ZSt8exchangeIN5folly8FunctionIFvvEEES3_ET_RS4_OT0_.exit, label %bb.c, !prof !14
-
-bb.c:                                             ; preds = %_ZNK5folly8FunctionIFvvEE4execENS_6detail8function2OpEPNS4_4DataES7_.exit.i.i.i
+bb.c:                                             ; preds = %bb.b, %_ZN5folly8FunctionIFvvEEC2EOS2_.exit.i.i, %bb.a
   %i.k = load ptr, ptr %i.b, align 8, !tbaa !23, !noalias !2494 ; 2 uses
   %.not.i9.i.i.i = icmp eq ptr %i.k, null
   br i1 %.not.i9.i.i.i, label %_ZNK5folly8FunctionIFvvEE4execENS_6detail8function2OpEPNS4_4DataES7_.exit11.i.i.i, label %bb.d
@@ -248,21 +244,18 @@ bb.d:                                             ; preds = %bb.c
   %.pre.i.i.i = load ptr, ptr %i.b, align 8, !tbaa !23, !noalias !2494
   br label %_ZNK5folly8FunctionIFvvEE4execENS_6detail8function2OpEPNS4_4DataES7_.exit11.i.i.i
 
-_ZNK5folly8FunctionIFvvEE4execENS_6detail8function2OpEPNS4_4DataES7_.exit11.i.i.i: ; preds = %bb.d, %bb.c
+_ZNK5folly8FunctionIFvvEE4execENS_6detail8function2OpEPNS4_4DataES7_.exit11.i.i.i: ; preds = %bb.c, %bb.d
   %i.m = phi ptr [ null, %bb.c ], [ %.pre.i.i.i, %bb.d ]
   store ptr %i.m, ptr %i.f, align 8, !tbaa !23, !noalias !2494
   %i.n = load ptr, ptr %i.a, align 16, !tbaa !25, !noalias !2494
   store ptr %i.n, ptr %i.d, align 16, !tbaa !25, !noalias !2494
-  br label %_ZSt8exchangeIN5folly8FunctionIFvvEEES3_ET_RS4_OT0_.exit
-
-_ZSt8exchangeIN5folly8FunctionIFvvEEES3_ET_RS4_OT0_.exit: ; preds = %_ZNK5folly8FunctionIFvvEE4execENS_6detail8function2OpEPNS4_4DataES7_.exit.i.i.i, %_ZNK5folly8FunctionIFvvEE4execENS_6detail8function2OpEPNS4_4DataES7_.exit11.i.i.i
   store ptr null, ptr %i.b, align 8, !tbaa !23, !noalias !2494
   store ptr @_ZN5folly6detail8function14FunctionTraitsIFvvEE10uninitCallERNS1_4DataE, ptr %i.a, align 16, !tbaa !25, !noalias !2494
   %5 = load ptr, ptr %i.c, align 16, !tbaa !25
   invoke void %5(ptr noundef nonnull align 16 dereferenceable(64) %2)
           to label %_ZN5folly15catch_exceptionIRNS_8FunctionIFvvEEERDoFvPKcEJRS6_EvEET2_OT_OT0_DpOT1_.exit unwind label %bb.e, !inline_history !2497
 
-bb.e:                                             ; preds = %_ZSt8exchangeIN5folly8FunctionIFvvEEES3_ET_RS4_OT0_.exit
+bb.e:                                             ; preds = %_ZNK5folly8FunctionIFvvEE4execENS_6detail8function2OpEPNS4_4DataES7_.exit11.i.i.i
   %i.o = landingpad { ptr, i32 }
           catch ptr null
   %i.p = extractvalue { ptr, i32 } %i.o, 0
@@ -278,7 +271,7 @@ bb.f:                                             ; preds = %bb.e
   call void @__clang_call_terminate(ptr %i.s) #36
   unreachable
 
-_ZN5folly15catch_exceptionIRNS_8FunctionIFvvEEERDoFvPKcEJRS6_EvEET2_OT_OT0_DpOT1_.exit: ; preds = %_ZSt8exchangeIN5folly8FunctionIFvvEEES3_ET_RS4_OT0_.exit, %bb.e
+_ZN5folly15catch_exceptionIRNS_8FunctionIFvvEEERDoFvPKcEJRS6_EvEET2_OT_OT0_DpOT1_.exit: ; preds = %_ZNK5folly8FunctionIFvvEE4execENS_6detail8function2OpEPNS4_4DataES7_.exit11.i.i.i, %bb.e
   %i.t = load ptr, ptr %i.e, align 8, !tbaa !23   ; 2 uses
   %.not.i.i28 = icmp eq ptr %i.t, null
   br i1 %.not.i.i28, label %_ZN5folly8FunctionIFvvEED2Ev.exit, label %bb.g

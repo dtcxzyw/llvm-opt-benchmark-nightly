@@ -201,7 +201,7 @@ declare noundef i64 @_ZN5boost10filesystem6detail10remove_allERKNS0_4pathEPNS_6s
 define void @_ZN5folly4test15ChangeToTempDirC2Ev(ptr noundef nonnull align 8 dereferenceable(48) %0) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"class.boost::filesystem::path", align 8 ; 6 uses
-  %2 = alloca %"class.boost::filesystem::path", align 8 ; 16 uses
+  %2 = alloca %"class.boost::filesystem::path", align 8 ; 15 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 6 uses
   store ptr %i.a, ptr %1, align 8, !tbaa !11
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -222,7 +222,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br label %_ZN5boost10filesystem4pathD2Ev.exit
 
 _ZN5boost10filesystem4pathD2Ev.exit:              ; preds = %bb.b, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 7 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 6 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 6 uses
   store ptr %i.h, ptr %i.g, align 8, !tbaa !11
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
@@ -235,7 +235,7 @@ _ZN5boost10filesystem4pathD2Ev.exit:              ; preds = %bb.b, %_ZNKSt7__cxx
 _ZN5boost10filesystem12current_pathEv.exit:       ; preds = %_ZN5boost10filesystem4pathD2Ev.exit
   %i.j = load ptr, ptr %i.g, align 8, !tbaa !16   ; 6 uses
   %i.k = icmp eq ptr %i.j, %i.h
-  %i.l = load ptr, ptr %2, align 8, !tbaa !16     ; 6 uses
+  %i.l = load ptr, ptr %2, align 8, !tbaa !16     ; 5 uses
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 4 uses
   %i.n = icmp eq ptr %i.l, %i.m                   ; 2 uses
   br i1 %i.k, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i
@@ -251,25 +251,21 @@ bb.c:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.p = load i64, ptr %i.o, align 8, !tbaa !20   ; 3 uses
   %i.q = icmp ult i64 %i.p, 16
   call void @llvm.assume(i1 %i.q)
-  %.not21.i.i = icmp eq ptr %2, %i.g
-  br i1 %.not21.i.i, label %_ZN5boost10filesystem4pathaSEOS1_.exit, label %3, !prof !15
-
-3:                                                ; preds = %bb.c
   switch i64 %i.p, label %bb.e [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i
     i64 1, label %bb.d
   ]
 
-bb.d:                                             ; preds = %3
+bb.d:                                             ; preds = %bb.c
   %i.r = load i8, ptr %i.l, align 1, !tbaa !19
   store i8 %i.r, ptr %i.j, align 1, !tbaa !19
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i
 
-bb.e:                                             ; preds = %3
+bb.e:                                             ; preds = %bb.c
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.j, ptr align 1 %i.l, i64 %i.p, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i: ; preds = %bb.e, %bb.d, %3
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i: ; preds = %bb.e, %bb.d, %bb.c
   %i.s = load i64, ptr %i.o, align 8, !tbaa !20   ; 2 uses
   store i64 %i.s, ptr %i.i, align 8, !tbaa !20
   %i.t = load ptr, ptr %i.g, align 8, !tbaa !16
@@ -303,11 +299,11 @@ bb.g:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.m, ptr %2, align 8, !tbaa !16
   br label %_ZN5boost10filesystem4pathaSEOS1_.exit
 
-_ZN5boost10filesystem4pathaSEOS1_.exit:           ; preds = %bb.c, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i, %bb.f, %bb.g
-  %4 = phi ptr [ %.pre.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i ], [ %i.j, %bb.f ], [ %i.m, %bb.g ], [ %i.l, %bb.c ]
+_ZN5boost10filesystem4pathaSEOS1_.exit:           ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i, %bb.f, %bb.g
+  %3 = phi ptr [ %.pre.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i ], [ %i.j, %bb.f ], [ %i.m, %bb.g ]
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i64 0, ptr %i.aa, align 8, !tbaa !20
-  store i8 0, ptr %4, align 1, !tbaa !19
+  store i8 0, ptr %3, align 1, !tbaa !19
   %i.ab = load ptr, ptr %2, align 8, !tbaa !16    ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.ad = icmp eq ptr %i.ab, %i.ac

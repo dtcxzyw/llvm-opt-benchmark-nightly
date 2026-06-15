@@ -201,7 +201,7 @@ declare noundef i64 @_Z26ConvertPropVariantToUInt64RK14tagPROPVARIANT(ptr nounde
 ; Function Attrs: mustprogress uwtable
 define dso_local noundef i32 @_ZN23CArchiveExtractCallback9GetStreamEjPP20ISequentialOutStreami(ptr noundef nonnull align 8 dereferenceable(332) %0, i32 noundef %1, ptr nofree noundef captures(none) %2, i32 noundef %3) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = alloca %class.CStringBase, align 8         ; 15 uses
+  %4 = alloca %class.CStringBase, align 8         ; 14 uses
   %5 = alloca %"class.NWindows::NCOM::CPropVariant", align 8 ; 10 uses
   %6 = alloca %"class.NWindows::NCOM::CPropVariant", align 8 ; 10 uses
   %i.a = alloca i8, align 1                       ; 10 uses
@@ -318,7 +318,7 @@ bb.j:                                             ; preds = %bb.e
 
 bb.k:                                             ; preds = %bb.j
   %.not232 = icmp eq i32 %i.ag, 0
-  br i1 %.not232, label %21, label %bb.hk
+  br i1 %.not232, label %bb.m, label %bb.hk
 
 bb.l:                                             ; preds = %bb.j
   %i.ah = landingpad { ptr, i32 }
@@ -326,15 +326,11 @@ bb.l:                                             ; preds = %bb.j
           catch ptr null
   br label %_ZN9CMyComPtrI20ISequentialOutStreamED2Ev.exit371
 
-21:                                               ; preds = %bb.k
-  %22 = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 3 uses
-  %23 = icmp eq ptr %4, %22
-  br i1 %23, label %_ZN11CStringBaseIwEaSERKS0_.exit, label %bb.m
-
-bb.m:                                             ; preds = %21
+bb.m:                                             ; preds = %bb.k
+  %21 = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 3 uses
   store i32 0, ptr %i.ai, align 8, !tbaa !60
-  %i.aj = load ptr, ptr %22, align 8, !tbaa !61   ; 3 uses
+  %i.aj = load ptr, ptr %21, align 8, !tbaa !61   ; 3 uses
   store i32 0, ptr %i.aj, align 4, !tbaa !62
   %i.ak = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.al = load i32, ptr %i.ak, align 8, !tbaa !60 ; 2 uses
@@ -364,7 +360,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %._crit_edge.thread.i.i, %.noexc312
   %i.ax = phi i64 [ %i.aw, %._crit_edge.thread.i.i ], [ 0, %.noexc312 ]
-  store ptr %i.au, ptr %22, align 8, !tbaa !61
+  store ptr %i.au, ptr %21, align 8, !tbaa !61
   %i.ay = getelementptr inbounds [4 x i8], ptr %i.au, i64 %i.ax
   store i32 0, ptr %i.ay, align 4, !tbaa !62
   store i32 %i.am, ptr %i.an, align 4, !tbaa !64
@@ -383,14 +379,11 @@ bb.p:                                             ; preds = %bb.p, %_ZN11CString
   %i.bd = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 4
   store i32 %i.bc, ptr %.0.i.i, align 4, !tbaa !62
   %.not.i.i = icmp eq i32 %i.bc, 0
-  br i1 %.not.i.i, label %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i, label %bb.p, !llvm.loop !65
+  br i1 %.not.i.i, label %_ZN11CStringBaseIwEaSERKS0_.exit, label %bb.p, !llvm.loop !65
 
-_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i:            ; preds = %bb.p
-  %24 = load i32, ptr %i.ak, align 8, !tbaa !60
-  store i32 %24, ptr %i.ai, align 8, !tbaa !60
-  br label %_ZN11CStringBaseIwEaSERKS0_.exit
-
-_ZN11CStringBaseIwEaSERKS0_.exit:                 ; preds = %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i, %21
+_ZN11CStringBaseIwEaSERKS0_.exit:                 ; preds = %bb.p
+  %22 = load i32, ptr %i.ak, align 8, !tbaa !60
+  store i32 %22, ptr %i.ai, align 8, !tbaa !60
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #21
   store i16 0, ptr %5, align 8, !tbaa !90
   %i.be = getelementptr inbounds nuw i8, ptr %5, i64 2

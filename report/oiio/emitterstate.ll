@@ -201,7 +201,7 @@ _ZN4YAML14SettingChanges5clearEv.exit:            ; preds = %bb.a, %_ZN4YAML14Se
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN4YAML12EmitterState12StartedGroupENS_9GroupType5valueE(ptr nofree noundef nonnull align 8 captures(address) dereferenceable(224) initializes((208, 212)) %0, i32 noundef %1) local_unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN4YAML12EmitterState12StartedGroupENS_9GroupType5valueE(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(224) initializes((208, 212)) %0, i32 noundef %1) local_unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"class.std::unique_ptr", align 8   ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
@@ -255,29 +255,21 @@ bb.e:                                             ; preds = %_ZN4YAML12EmitterSt
   %i.z = tail call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #20 ; 7 uses
   store i32 %1, ptr %i.z, align 8, !tbaa !101
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 4 ; 2 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 32 ; 3 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ab, i8 0, i64 24, i1 false)
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(21) %i.aa, i8 0, i64 21, i1 false)
   store ptr %i.z, ptr %2, align 8, !tbaa !71
-  %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
-  %3 = icmp eq ptr %i.ab, %i.ac
-  %i.ad = ptrtoint ptr %i.z to i64                ; 2 uses
-  br i1 %3, label %_ZN4YAML14SettingChangesaSEOS0_.exit, label %_ZN4YAML14SettingChanges5clearEv.exit.i
-
-_ZN4YAML14SettingChanges5clearEv.exit.i:          ; preds = %bb.e
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
   %4 = getelementptr inbounds nuw i8, ptr %i.z, i64 48
-  %5 = load <2 x ptr>, ptr %i.ac, align 8, !tbaa !75
+  %5 = load <2 x ptr>, ptr %3, align 8, !tbaa !75
   store <2 x ptr> %5, ptr %i.ab, align 8, !tbaa !75
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 144
-  %7 = load ptr, ptr %6, align 8, !tbaa !102
-  store ptr %7, ptr %4, align 8, !tbaa !102
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ac, i8 0, i64 24, i1 false)
-  br label %_ZN4YAML14SettingChangesaSEOS0_.exit
-
-_ZN4YAML14SettingChangesaSEOS0_.exit:             ; preds = %bb.e, %_ZN4YAML14SettingChanges5clearEv.exit.i
+  %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 144
+  %6 = load ptr, ptr %i.ac, align 8, !tbaa !102
+  store ptr %6, ptr %4, align 8, !tbaa !102
+  %i.ad = ptrtoint ptr %i.z to i64                ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, i8 0, i64 24, i1 false)
   br i1 %i.e, label %_ZNK4YAML12EmitterState16CurGroupFlowTypeEv.exit.thread.i, label %_ZNK4YAML12EmitterState16CurGroupFlowTypeEv.exit.i
 
-_ZNK4YAML12EmitterState16CurGroupFlowTypeEv.exit.i: ; preds = %_ZN4YAML14SettingChangesaSEOS0_.exit
+_ZNK4YAML12EmitterState16CurGroupFlowTypeEv.exit.i: ; preds = %bb.e
   %i.ae = getelementptr inbounds i8, ptr %i.d, i64 -8
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !71
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 4
@@ -285,7 +277,7 @@ _ZNK4YAML12EmitterState16CurGroupFlowTypeEv.exit.i: ; preds = %_ZN4YAML14Setting
   %i.ai = icmp eq i32 %i.ah, 1
   br i1 %i.ai, label %_ZNK4YAML12EmitterState11GetFlowTypeENS_9GroupType5valueE.exit.thread, label %_ZNK4YAML12EmitterState16CurGroupFlowTypeEv.exit.thread.i
 
-_ZNK4YAML12EmitterState16CurGroupFlowTypeEv.exit.thread.i: ; preds = %_ZNK4YAML12EmitterState16CurGroupFlowTypeEv.exit.i, %_ZN4YAML14SettingChangesaSEOS0_.exit
+_ZNK4YAML12EmitterState16CurGroupFlowTypeEv.exit.thread.i: ; preds = %_ZNK4YAML12EmitterState16CurGroupFlowTypeEv.exit.i, %bb.e
   %i.aj = icmp eq i32 %1, 1
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 100
   %i.al = load i32, ptr %i.ak, align 4

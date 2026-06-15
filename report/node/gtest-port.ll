@@ -201,13 +201,13 @@ declare void @abort() local_unnamed_addr #17
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZN7testing8internal14CapturedStreamC2Ei(ptr noundef nonnull align 8 dereferenceable(40) %0, i32 noundef %1) unnamed_addr #0 comdat align 2 {
 bb.a:
-  %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 17 uses
+  %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 16 uses
   %3 = alloca %"class.testing::internal::GTestLog", align 4 ; 4 uses
   store i32 %1, ptr %0, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.b = tail call i32 @dup(i32 noundef %1) #25
   store i32 %i.b, ptr %i.a, align 4
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   store ptr %i.d, ptr %i.c, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
@@ -279,7 +279,7 @@ bb.f:                                             ; preds = %_ZNSt7__cxx1112basi
 bb.g:                                             ; preds = %bb.f, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit
   %i.ab = load ptr, ptr %i.c, align 8             ; 6 uses
   %i.ac = icmp eq ptr %i.ab, %i.d
-  %i.ad = load ptr, ptr %2, align 8               ; 6 uses
+  %i.ad = load ptr, ptr %2, align 8               ; 5 uses
   %i.ae = icmp eq ptr %i.ad, %i.f                 ; 2 uses
   br i1 %i.ac, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i
 
@@ -293,25 +293,21 @@ bb.h:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.af = load i64, ptr %i.g, align 8             ; 3 uses
   %i.ag = icmp ult i64 %i.af, 16
   call void @llvm.assume(i1 %i.ag)
-  %.not21.i = icmp eq ptr %2, %i.c
-  br i1 %.not21.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, label %4, !prof !13
-
-4:                                                ; preds = %bb.h
   switch i64 %i.af, label %bb.j [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
     i64 1, label %bb.i
   ]
 
-bb.i:                                             ; preds = %4
+bb.i:                                             ; preds = %bb.h
   %i.ah = load i8, ptr %i.ad, align 1
   store i8 %i.ah, ptr %i.ab, align 1
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-bb.j:                                             ; preds = %4
+bb.j:                                             ; preds = %bb.h
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ab, ptr align 1 %i.ad, i64 %i.af, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.j, %bb.i, %4
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.j, %bb.i, %bb.h
   %i.ai = load i64, ptr %i.g, align 8             ; 2 uses
   store i64 %i.ai, ptr %i.e, align 8
   %i.aj = load ptr, ptr %i.c, align 8
@@ -343,10 +339,10 @@ bb.l:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.f, ptr %2, align 8
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %bb.h, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, %bb.k, %bb.l
-  %5 = phi ptr [ %i.ab, %bb.k ], [ %i.f, %bb.l ], [ %i.ad, %bb.h ], [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ]
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, %bb.k, %bb.l
+  %4 = phi ptr [ %i.ab, %bb.k ], [ %i.f, %bb.l ], [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ]
   store i64 0, ptr %i.g, align 8
-  store i8 0, ptr %5, align 1
+  store i8 0, ptr %4, align 1
   %i.ao = call i32 @fflush(ptr noundef null)      ; 0 uses
   %i.ap = load i32, ptr %0, align 8
   %i.aq = call i32 @dup2(i32 noundef %i.u, i32 noundef %i.ap) #25 ; 0 uses

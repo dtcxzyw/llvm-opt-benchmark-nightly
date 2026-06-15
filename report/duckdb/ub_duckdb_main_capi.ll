@@ -201,18 +201,14 @@ bb.a:
   %5 = alloca %"struct.duckdb::(anonymous namespace)::CCopyFunctionToInternalBindInfo", align 8 ; 15 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.b = tail call noundef ptr @_ZNK6duckdb10shared_ptrINS_16CopyFunctionInfoELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(16) %i.a) ; 2 uses
-  %i.c = tail call noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #35, !noalias !1479 ; 12 uses
+  %i.c = tail call noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #35, !noalias !1479 ; 11 uses
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN6duckdb12_GLOBAL__N_115CCopyToBindInfoE, i64 16), ptr %i.c, align 8, !tbaa !11, !noalias !1479
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.d, i8 0, i64 32, i1 false), !noalias !1479
   %i.e = invoke fastcc noundef ptr @_ZNK6duckdb10unique_ptrINS_12_GLOBAL__N_115CCopyToBindInfoESt14default_deleteIS2_ELb1EEptEv(ptr nonnull %i.c)
-          to label %6 unwind label %bb.r          ; 0 uses
+          to label %bb.b unwind label %bb.r       ; 0 uses
 
-6:                                                ; preds = %bb.a
-  %7 = icmp eq ptr %i.c, %2
-  br i1 %7, label %_ZN6duckdb10shared_ptrINS_16CopyFunctionInfoELb1EEaSERKS2_.exit, label %bb.b
-
-bb.b:                                             ; preds = %6
+bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !108  ; 2 uses
   %i.h = load <2 x ptr>, ptr %i.a, align 8, !tbaa !147
@@ -286,7 +282,7 @@ bb.k:                                             ; preds = %_ZN9__gnu_cxx27__ex
   tail call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.o) #36
   br label %_ZN6duckdb10shared_ptrINS_16CopyFunctionInfoELb1EEaSERKS2_.exit
 
-_ZN6duckdb10shared_ptrINS_16CopyFunctionInfoELb1EEaSERKS2_.exit: ; preds = %6, %_ZN6duckdb10shared_ptrINS_16CopyFunctionInfoELb1EEC2ERKS2_.exit.i, %bb.g, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i, %bb.k
+_ZN6duckdb10shared_ptrINS_16CopyFunctionInfoELb1EEaSERKS2_.exit: ; preds = %_ZN6duckdb10shared_ptrINS_16CopyFunctionInfoELb1EEC2ERKS2_.exit.i, %bb.g, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i, %bb.k
   %i.ae = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !1402 ; 2 uses
   %.not = icmp eq ptr %i.af, null

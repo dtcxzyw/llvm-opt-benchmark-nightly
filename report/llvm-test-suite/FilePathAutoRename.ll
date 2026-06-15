@@ -16,7 +16,7 @@ $_ZNK11CStringBaseIwE3MidEii = comdat any
 define dso_local noundef zeroext i1 @_Z14AutoRenamePathR11CStringBaseIwE(ptr noundef nonnull align 8 dereferenceable(16) %0) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %class.CStringBase, align 8         ; 9 uses
-  %2 = alloca %class.CStringBase, align 8         ; 15 uses
+  %2 = alloca %class.CStringBase, align 8         ; 14 uses
   %3 = alloca %class.CStringBase, align 8         ; 12 uses
   %4 = alloca %class.CStringBase, align 8         ; 7 uses
   %5 = alloca %class.CStringBase, align 8         ; 7 uses
@@ -89,7 +89,7 @@ _ZNK11CStringBaseIwE11ReverseFindEw.exit47:       ; preds = %bb.h, %bb.a, %bb.g
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i64 0, ptr %i.aa, align 8
   %i.ab = invoke noalias noundef nonnull dereferenceable(16) ptr @_Znam(i64 noundef 16) #8
-          to label %bb.i unwind label %bb.v       ; 12 uses
+          to label %bb.i unwind label %bb.v       ; 11 uses
 
 bb.i:                                             ; preds = %_ZNK11CStringBaseIwE11ReverseFindEw.exit47
   store ptr %i.ab, ptr %2, align 8, !tbaa !8
@@ -109,7 +109,7 @@ bb.j:                                             ; preds = %bb.i
   %i.af = icmp sgt i32 %.1.i79, %.1.i46
   %i.ag = icmp sgt i32 %.1.i79, 0
   %or.cond = and i1 %i.ag, %i.af
-  br i1 %or.cond, label %bb.k, label %6
+  br i1 %or.cond, label %bb.k, label %bb.ad
 
 bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
@@ -280,11 +280,7 @@ _ZN11CStringBaseIwED2Ev.exit60:                   ; preds = %bb.ac, %bb.ab, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #7
   br label %bb.at
 
-6:                                                ; preds = %bb.j
-  %7 = icmp eq ptr %0, %2
-  br i1 %7, label %_ZN11CStringBaseIwEaSERKS0_.exit68, label %bb.ad
-
-bb.ad:                                            ; preds = %6
+bb.ad:                                            ; preds = %bb.j
   %i.cb = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   store i32 0, ptr %i.cb, align 8, !tbaa !15
   store i32 0, ptr %i.ab, align 4, !tbaa !12
@@ -301,7 +297,7 @@ bb.ae:                                            ; preds = %bb.ad
           to label %bb.af unwind label %bb.ah     ; 3 uses
 
 bb.af:                                            ; preds = %bb.ae
-  call void @_ZdaPv(ptr noundef nonnull %i.ab) #9
+  tail call void @_ZdaPv(ptr noundef nonnull %i.ab) #9
   store ptr %i.ci, ptr %2, align 8, !tbaa !8
   store i32 0, ptr %i.ci, align 4, !tbaa !12
   store i32 %i.cc, ptr %i.z, align 4, !tbaa !14
@@ -333,30 +329,30 @@ bb.ah:                                            ; preds = %bb.aj, %bb.ae
           cleanup
   br label %bb.at
 
-_ZN11CStringBaseIwEaSERKS0_.exit68:               ; preds = %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i, %6, %_ZN11CStringBaseIwED2Ev.exit58
-  %.pr = phi ptr [ %i.cj, %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i ], [ %i.ab, %6 ], [ %i.ar, %_ZN11CStringBaseIwED2Ev.exit58 ] ; 10 uses
-  %8 = phi i32 [ %i.co, %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i ], [ 0, %6 ], [ %i.aw, %_ZN11CStringBaseIwED2Ev.exit58 ] ; 7 uses
-  %9 = phi i32 [ %i.cc, %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i ], [ 4, %6 ], [ %i.ak, %_ZN11CStringBaseIwED2Ev.exit58 ] ; 7 uses
+_ZN11CStringBaseIwEaSERKS0_.exit68:               ; preds = %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i, %_ZN11CStringBaseIwED2Ev.exit58
+  %.pr = phi ptr [ %i.cj, %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i ], [ %i.ar, %_ZN11CStringBaseIwED2Ev.exit58 ] ; 10 uses
+  %6 = phi i32 [ %i.co, %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i ], [ %i.aw, %_ZN11CStringBaseIwED2Ev.exit58 ] ; 7 uses
+  %7 = phi i32 [ %i.cc, %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i ], [ %i.ak, %_ZN11CStringBaseIwED2Ev.exit58 ] ; 7 uses
   %.pr110 = ptrtoaddr ptr %.pr to i64
   %i.cr = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.cs = xor i32 %8, -1
-  %i.ct = add i32 %9, %i.cs                       ; 3 uses
+  %i.cs = xor i32 %6, -1
+  %i.ct = add i32 %7, %i.cs                       ; 3 uses
   %.not.i.i69 = icmp slt i32 %i.ct, 1
   br i1 %.not.i.i69, label %bb.ai, label %_ZN11CStringBaseIwEpLEw.exitthread-pre-split
 
 bb.ai:                                            ; preds = %_ZN11CStringBaseIwEaSERKS0_.exit68
-  %i.cu = icmp sgt i32 %9, 64
-  %i.cv = lshr i32 %9, 1
-  %i.cw = icmp sgt i32 %9, 8
+  %i.cu = icmp sgt i32 %7, 64
+  %i.cv = lshr i32 %7, 1
+  %i.cw = icmp sgt i32 %7, 8
   %..i.i = select i1 %i.cw, i32 16, i32 4
   %.0.i.i70 = select i1 %i.cu, i32 %i.cv, i32 %..i.i ; 2 uses
   %i.cx = add nsw i32 %.0.i.i70, %i.ct
   %i.cy = icmp slt i32 %i.cx, 1
   %i.cz = sub nsw i32 1, %i.ct
   %.1.i.i = select i1 %i.cy, i32 %i.cz, i32 %.0.i.i70
-  %i.da = add nsw i32 %.1.i.i, %9                 ; 2 uses
+  %i.da = add nsw i32 %.1.i.i, %7                 ; 2 uses
   %i.db = add nsw i32 %i.da, 1                    ; 3 uses
-  %i.dc = icmp eq i32 %i.db, %9
+  %i.dc = icmp eq i32 %i.db, %7
   br i1 %i.dc, label %_ZN11CStringBaseIwEpLEw.exitthread-pre-split, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
@@ -369,16 +365,16 @@ bb.aj:                                            ; preds = %bb.ai
 
 .noexc71:                                         ; preds = %bb.aj
   %i.di = ptrtoaddr ptr %i.dh to i64
-  %i.dj = icmp sgt i32 %9, 0
+  %i.dj = icmp sgt i32 %7, 0
   br i1 %i.dj, label %.preheader.i.i.i, label %bb.ak
 
 .preheader.i.i.i:                                 ; preds = %.noexc71
-  %i.dk = icmp sgt i32 %8, 0
+  %i.dk = icmp sgt i32 %6, 0
   br i1 %i.dk, label %.lr.ph.i.i.i, label %._crit_edge.thread.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.preheader.i.i.i
-  %wide.trip.count.i.i.i = zext nneg i32 %8 to i64 ; 5 uses
-  %min.iters.check = icmp ult i32 %8, 8
+  %wide.trip.count.i.i.i = zext nneg i32 %6 to i64 ; 5 uses
+  %min.iters.check = icmp ult i32 %6, 8
   %i.dl = sub i64 %i.di, %.pr110
   %diff.check = icmp ult i64 %i.dl, 32
   %or.cond112 = or i1 %min.iters.check, %diff.check
@@ -461,14 +457,14 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 
 bb.ak:                                            ; preds = %._crit_edge.thread.i.i.i, %.noexc71
   store ptr %i.dh, ptr %2, align 8, !tbaa !8
-  %i.ei = sext i32 %8 to i64                      ; 2 uses
+  %i.ei = sext i32 %6 to i64                      ; 2 uses
   %i.ej = getelementptr inbounds [4 x i8], ptr %i.dh, i64 %i.ei
   store i32 0, ptr %i.ej, align 4, !tbaa !12
   store i32 %i.db, ptr %i.z, align 4, !tbaa !14
   br label %_ZN11CStringBaseIwEpLEw.exit
 
 _ZN11CStringBaseIwEpLEw.exitthread-pre-split:     ; preds = %bb.ai, %_ZN11CStringBaseIwEaSERKS0_.exit68
-  %.pre = sext i32 %8 to i64
+  %.pre = sext i32 %6 to i64
   br label %_ZN11CStringBaseIwEpLEw.exit
 
 _ZN11CStringBaseIwEpLEw.exit:                     ; preds = %_ZN11CStringBaseIwEpLEw.exitthread-pre-split, %bb.ak
@@ -476,7 +472,7 @@ _ZN11CStringBaseIwEpLEw.exit:                     ; preds = %_ZN11CStringBaseIwE
   %i.ek = phi ptr [ %.pr, %_ZN11CStringBaseIwEpLEw.exitthread-pre-split ], [ %i.dh, %bb.ak ] ; 5 uses
   %i.el = getelementptr inbounds [4 x i8], ptr %i.ek, i64 %.pre-phi
   store i32 95, ptr %i.el, align 4, !tbaa !12
-  %i.em = add nsw i32 %8, 1                       ; 2 uses
+  %i.em = add nsw i32 %6, 1                       ; 2 uses
   store i32 %i.em, ptr %i.cr, align 8, !tbaa !15
   %i.en = sext i32 %i.em to i64
   %i.eo = getelementptr inbounds [4 x i8], ptr %i.ek, i64 %i.en

@@ -201,7 +201,7 @@ _ZNSt12_Destroy_auxILb0EE9__destroyIPN4geos2io14GeoJSONFeatureEEEvT_S6_.exit: ; 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN13geos_nlohmann6detail13int_to_stringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvRT_m(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %1) local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 17 uses
+  %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 16 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #26
   tail call void @llvm.experimental.noalias.scope.decl(metadata !697)
   %i.a = icmp ult i64 %1, 10
@@ -303,7 +303,7 @@ _ZNSt7__cxx119to_stringEm.exit:                   ; preds = %bb.h, %bb.i
   %i.ap = load ptr, ptr %0, align 8, !tbaa !24    ; 6 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.ar = icmp eq ptr %i.ap, %i.aq
-  %i.as = load ptr, ptr %2, align 8, !tbaa !24    ; 6 uses
+  %i.as = load ptr, ptr %2, align 8, !tbaa !24    ; 5 uses
   %i.at = icmp eq ptr %i.as, %i.l                 ; 2 uses
   br i1 %i.ar, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i
 
@@ -318,25 +318,21 @@ bb.j:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.av = load i64, ptr %i.au, align 8, !tbaa !15 ; 3 uses
   %i.aw = icmp ult i64 %i.av, 16
   call void @llvm.assume(i1 %i.aw)
-  %.not21.i = icmp eq ptr %2, %0
-  br i1 %.not21.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, label %3, !prof !554
-
-3:                                                ; preds = %bb.j
   switch i64 %i.av, label %bb.l [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
     i64 1, label %bb.k
   ]
 
-bb.k:                                             ; preds = %3
+bb.k:                                             ; preds = %bb.j
   %i.ax = load i8, ptr %i.as, align 1, !tbaa !18
   store i8 %i.ax, ptr %i.ap, align 1, !tbaa !18
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-bb.l:                                             ; preds = %3
+bb.l:                                             ; preds = %bb.j
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ap, ptr align 1 %i.as, i64 %i.av, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.l, %bb.k, %3
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.l, %bb.k, %bb.j
   %i.ay = load i64, ptr %i.au, align 8, !tbaa !15 ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.ay, ptr %i.az, align 8, !tbaa !15
@@ -373,11 +369,11 @@ bb.n:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.l, ptr %2, align 8, !tbaa !24
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %bb.j, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, %bb.m, %bb.n
-  %4 = phi ptr [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ], [ %i.ap, %bb.m ], [ %i.l, %bb.n ], [ %i.as, %bb.j ]
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, %bb.m, %bb.n
+  %3 = phi ptr [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ], [ %i.ap, %bb.m ], [ %i.l, %bb.n ]
   %i.bj = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i64 0, ptr %i.bj, align 8, !tbaa !15
-  store i8 0, ptr %4, align 1, !tbaa !18
+  store i8 0, ptr %3, align 1, !tbaa !18
   %i.bk = load ptr, ptr %2, align 8, !tbaa !24    ; 2 uses
   %i.bl = icmp eq ptr %i.bk, %i.l
   br i1 %i.bl, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
