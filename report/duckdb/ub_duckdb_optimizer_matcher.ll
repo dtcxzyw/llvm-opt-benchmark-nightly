@@ -201,7 +201,7 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call noundef nonnull align 8 dereferenceable(512) ptr @_ZN6duckdb14BaseExpression4CastINS_24BoundAggregateExpressionEEERT_v(ptr noundef nonnull align 8 dereferenceable(56) %1) ; 5 uses
+  %i.b = tail call noundef nonnull align 8 dereferenceable(512) ptr @_ZN6duckdb14BaseExpression4CastINS_24BoundAggregateExpressionEEERT_v(ptr noundef nonnull align 8 dereferenceable(56) %1) ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !124
   %.not.i = icmp eq ptr %i.d, null
@@ -214,15 +214,19 @@ _ZN6duckdb15FunctionMatcher5MatchERNS_10unique_ptrIS0_St14default_deleteIS0_ELb1
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   %i.i = load ptr, ptr %i.h, align 8
   %i.j = tail call noundef zeroext i1 %i.i(ptr noundef nonnull align 8 dereferenceable(8) %i.f, ptr noundef nonnull align 8 dereferenceable(32) %i.e), !inline_history !126
-  br i1 %i.j, label %_ZN6duckdb15FunctionMatcher5MatchERNS_10unique_ptrIS0_St14default_deleteIS0_ELb1EEERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread, label %bb.f
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 496
+  %4 = load ptr, ptr %3, align 8
+  %5 = icmp eq ptr %4, null
+  %or.cond.not = select i1 %i.j, i1 %5, i1 false
+  br i1 %or.cond.not, label %bb.c, label %bb.f
 
-_ZN6duckdb15FunctionMatcher5MatchERNS_10unique_ptrIS0_St14default_deleteIS0_ELb1EEERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread: ; preds = %bb.b, %_ZN6duckdb15FunctionMatcher5MatchERNS_10unique_ptrIS0_St14default_deleteIS0_ELb1EEERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
+_ZN6duckdb15FunctionMatcher5MatchERNS_10unique_ptrIS0_St14default_deleteIS0_ELb1EEERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread: ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 496
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !83
   %.not12 = icmp eq ptr %i.l, null
   br i1 %.not12, label %bb.c, label %bb.f
 
-bb.c:                                             ; preds = %_ZN6duckdb15FunctionMatcher5MatchERNS_10unique_ptrIS0_St14default_deleteIS0_ELb1EEERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread
+bb.c:                                             ; preds = %_ZN6duckdb15FunctionMatcher5MatchERNS_10unique_ptrIS0_St14default_deleteIS0_ELb1EEERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, %_ZN6duckdb15FunctionMatcher5MatchERNS_10unique_ptrIS0_St14default_deleteIS0_ELb1EEERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 504
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !136
   %.not13 = icmp eq ptr %i.n, null
