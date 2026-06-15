@@ -1,0 +1,62 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+index 89bf4bf713421..76c97514d0149 100644
+--- a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+@@ -5392,6 +5392,13 @@ bool InstCombinerImpl::freezeOtherUses(FreezeInst &FI) {
+   });
+ 
+   for (auto *U : Users) {
++    // Re-queue U and its users: freezing U's operand can expose a fold on a
++    // user of U (e.g. a freeze of U can now be pushed through it) that would
++    // otherwise only fire on a later iteration, tripping the fixpoint verifier.
++    auto *UI = cast<Instruction>(U);
++    Worklist.pushUsersToWorkList(*UI);
++    Worklist.push(UI);
++
+     for (auto &AssumeVH : AC.assumptionsFor(U)) {
+       if (!AssumeVH)
+         continue;
+diff --git a/llvm/test/Transforms/InstCombine/freeze.ll b/llvm/test/Transforms/InstCombine/freeze.ll
+index 3a401acb6d3ee..7a542dc5cb67a 100644
+--- a/llvm/test/Transforms/InstCombine/freeze.ll
++++ b/llvm/test/Transforms/InstCombine/freeze.ll
+@@ -1733,6 +1733,26 @@ define float @freeze_fabs_nofpclass(float %a) {
+   ret float %x.fr
+ }
+ 
++; freezeOtherUses rewrites %m's operand to the existing freeze %fb; the freeze
++; of the user %p must then be pushed through within the same iteration.
++define i1 @freeze_other_uses_requeues_user(i32 %a, i32 %b) {
++; CHECK-LABEL: define i1 @freeze_other_uses_requeues_user(
++; CHECK-SAME: i32 [[A:%.*]], i32 [[B:%.*]]) {
++; CHECK-NEXT:    [[FB:%.*]] = freeze i32 [[B]]
++; CHECK-NEXT:    [[A_FR:%.*]] = freeze i32 [[A]]
++; CHECK-NEXT:    [[M:%.*]] = mul i32 [[A_FR]], [[FB]]
++; CHECK-NEXT:    [[P:%.*]] = mul i32 [[M]], [[FB]]
++; CHECK-NEXT:    [[R:%.*]] = icmp eq i32 [[P]], 0
++; CHECK-NEXT:    ret i1 [[R]]
++;
++  %m  = mul i32 %a, %b
++  %fm = freeze i32 %m
++  %fb = freeze i32 %b
++  %p  = mul i32 %fm, %fb
++  %r  = icmp eq i32 %p, 0
++  ret i1 %r
++}
++
+ !0 = !{}
+ !1 = !{i64 4}
+ !2 = !{i32 0, i32 100}
+diff --git a/llvm/test/Transforms/InstCombine/shift.ll b/llvm/test/Transforms/InstCombine/shift.ll
+index 3a9e756bafc36..61e3e000758f8 100644
+--- a/llvm/test/Transforms/InstCombine/shift.ll
++++ b/llvm/test/Transforms/InstCombine/shift.ll
+@@ -1747,7 +1747,7 @@ define void @ashr_out_of_range(ptr %A) "instcombine-no-verify-fixpoint" {
+ ; CHECK-NEXT:    [[L7:%.*]] = load i177, ptr [[G11]], align 4
+ ; CHECK-NEXT:    [[L7_FROZEN:%.*]] = freeze i177 [[L7]]
+ ; CHECK-NEXT:    [[C171:%.*]] = icmp slt i177 [[L7_FROZEN]], 0
+-; CHECK-NEXT:    [[C17:%.*]] = select i1 [[TMP1]], i1 [[C171]], i1 false
++; CHECK-NEXT:    [[C17:%.*]] = and i1 [[TMP1]], [[C171]]
+ ; CHECK-NEXT:    [[TMP3:%.*]] = sext i1 [[C17]] to i64
+ ; CHECK-NEXT:    [[G62:%.*]] = getelementptr [24 x i8], ptr [[G11]], i64 [[TMP3]]
+ ; CHECK-NEXT:    [[TMP4:%.*]] = icmp eq i177 [[L7_FROZEN]], -1
