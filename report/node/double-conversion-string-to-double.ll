@@ -201,8 +201,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.bf, label %_ZN6icu_7817double_conversionL7AdvanceIPKtEEbPT_tiRS4_.exit190.thread289, label %_ZN6icu_7817double_conversionL7AdvanceIPKtEEbPT_tiRS4_.exit190.thread
 
 bb.n:                                             ; preds = %bb.l
-  %9 = add i16 %.fr398, -48
-  %or.cond19.i.i179 = icmp ult i16 %9, 10
+  %or.cond19.i.i179 = icmp slt i16 %.fr398, 58
   br i1 %or.cond19.i.i179, label %_ZN6icu_7817double_conversionL7isDigitEii.exit.thread.i184, label %switch.early.test348
 
 switch.early.test348:                             ; preds = %bb.n
