@@ -201,27 +201,25 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.d = load ptr, ptr %i.c, align 8              ; 2 uses
   %.not21 = icmp eq ptr %i.b, %i.d
-  br i1 %.not21, label %._crit_edge, label %.lr.ph.a
+  br i1 %.not21, label %._crit_edge, label %bb.b
 
-.lr.ph.a:                                         ; preds = %bb.a, %bb.b
-  %.sroa.012.022 = phi ptr [ %i.g, %bb.b ], [ %i.b, %bb.a ] ; 4 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %.sroa.012.022, i64 12
-  %3 = load i32, ptr %i.e, align 4
-  %i.f = icmp eq i32 %3, %1
-  br i1 %i.f, label %4, label %bb.b
+.lr.ph.a:                                         ; preds = %bb.b
+  %i.e = getelementptr inbounds nuw i8, ptr %.sroa.015.023, i64 16 ; 2 uses
+  %i.f = icmp eq ptr %i.e, %i.d
+  br i1 %i.f, label %._crit_edge, label %bb.b
 
-4:                                                ; preds = %.lr.ph.a
-  %5 = load i16, ptr %.sroa.012.022, align 4
-  %6 = icmp eq i16 %5, %2
-  br i1 %6, label %._crit_edge, label %bb.b
+bb.b:                                             ; preds = %bb.a, %.lr.ph.a
+  %.sroa.015.023 = phi ptr [ %i.e, %.lr.ph.a ], [ %i.b, %bb.a ] ; 4 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %.sroa.015.023, i64 12
+  %3 = load i32, ptr %i.g, align 4
+  %4 = icmp ne i32 %3, %1
+  %5 = load i16, ptr %.sroa.015.023, align 4
+  %6 = icmp ne i16 %5, %2
+  %or.cond.not = select i1 %4, i1 true, i1 %6
+  br i1 %or.cond.not, label %.lr.ph.a, label %._crit_edge
 
-bb.b:                                             ; preds = %.lr.ph.a, %4
-  %i.g = getelementptr inbounds nuw i8, ptr %.sroa.012.022, i64 16 ; 2 uses
-  %.not = icmp eq ptr %i.g, %i.d
-  br i1 %.not, label %._crit_edge, label %.lr.ph.a
-
-._crit_edge:                                      ; preds = %4, %bb.b, %bb.a
-  %i.h = phi ptr [ null, %bb.a ], [ null, %bb.b ], [ %.sroa.012.022, %4 ]
+._crit_edge:                                      ; preds = %bb.b, %.lr.ph.a, %bb.a
+  %i.h = phi ptr [ null, %bb.a ], [ null, %.lr.ph.a ], [ %.sroa.015.023, %bb.b ]
   ret ptr %i.h
 }
 
@@ -624,89 +622,81 @@ bb.h:                                             ; preds = %bb.g, %_ZN8aiString
   %.not21.i = icmp eq ptr %i.aj, %i.al
   br i1 %.not21.i, label %_ZN6Assimp4Ogre10VertexData16GetVertexElementENS0_13VertexElement8SemanticEt.exit247.thread, label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %bb.h, %bb.j
-  %.sroa.012.022.i = phi ptr [ %i.ao, %bb.j ], [ %i.aj, %bb.h ] ; 4 uses
+16:                                               ; preds = %.lr.ph.i
+  %17 = getelementptr inbounds nuw i8, ptr %.sroa.012.022.i, i64 16 ; 2 uses
+  %.not.i = icmp eq ptr %17, %i.al
+  br i1 %.not.i, label %bb.i, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.h, %16
+  %.sroa.012.022.i = phi ptr [ %17, %16 ], [ %i.aj, %bb.h ] ; 4 uses
   %i.am = getelementptr inbounds nuw i8, ptr %.sroa.012.022.i, i64 12
   %i.an = load i32, ptr %i.am, align 4
-  %16 = icmp eq i32 %i.an, 1
-  br i1 %16, label %bb.i, label %bb.j
+  %18 = icmp ne i32 %i.an, 1
+  %19 = load i16, ptr %.sroa.012.022.i, align 4
+  %20 = icmp ne i16 %19, 0
+  %or.cond.not.i = select i1 %18, i1 true, i1 %20
+  br i1 %or.cond.not.i, label %16, label %bb.i
 
-bb.i:                                             ; preds = %.lr.ph.i
-  %17 = load i16, ptr %.sroa.012.022.i, align 4
-  %18 = icmp eq i16 %17, 0
-  br i1 %18, label %_ZN6Assimp4Ogre10VertexData16GetVertexElementENS0_13VertexElement8SemanticEt.exit, label %bb.j
-
-bb.j:                                             ; preds = %bb.i, %.lr.ph.i
-  %i.ao = getelementptr inbounds nuw i8, ptr %.sroa.012.022.i, i64 16 ; 2 uses
-  %.not.i.a = icmp eq ptr %i.ao, %i.al
-  br i1 %.not.i.a, label %_ZN6Assimp4Ogre10VertexData16GetVertexElementENS0_13VertexElement8SemanticEt.exit, label %.lr.ph.i
-
-_ZN6Assimp4Ogre10VertexData16GetVertexElementENS0_13VertexElement8SemanticEt.exit: ; preds = %bb.i, %bb.j
-  %19 = phi ptr [ %.sroa.012.022.i, %bb.i ], [ null, %bb.j ] ; 4 uses
+bb.i:                                             ; preds = %16, %.lr.ph.i
+  %21 = phi ptr [ %.sroa.012.022.i, %.lr.ph.i ], [ null, %16 ] ; 4 uses
   br label %.lr.ph.i234
 
-.lr.ph.i234:                                      ; preds = %_ZN6Assimp4Ogre10VertexData16GetVertexElementENS0_13VertexElement8SemanticEt.exit, %bb.l
-  %.sroa.012.022.i235 = phi ptr [ %i.ar, %bb.l ], [ %i.aj, %_ZN6Assimp4Ogre10VertexData16GetVertexElementENS0_13VertexElement8SemanticEt.exit ] ; 4 uses
+bb.j:                                             ; preds = %.lr.ph.i234
+  %i.ao = getelementptr inbounds nuw i8, ptr %.sroa.012.022.i235, i64 16 ; 2 uses
+  %.not.i.a = icmp eq ptr %i.ao, %i.al
+  br i1 %.not.i.a, label %bb.k, label %.lr.ph.i234
+
+.lr.ph.i234:                                      ; preds = %bb.i, %bb.j
+  %.sroa.012.022.i235 = phi ptr [ %i.ao, %bb.j ], [ %i.aj, %bb.i ] ; 4 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.012.022.i235, i64 12
   %i.aq = load i32, ptr %i.ap, align 4
-  %20 = icmp eq i32 %i.aq, 4
-  br i1 %20, label %bb.k, label %bb.l
+  %22 = icmp ne i32 %i.aq, 4
+  %23 = load i16, ptr %.sroa.012.022.i235, align 4
+  %24 = icmp ne i16 %23, 0
+  %or.cond.not.i236 = select i1 %22, i1 true, i1 %24
+  br i1 %or.cond.not.i236, label %bb.j, label %bb.k
 
-bb.k:                                             ; preds = %.lr.ph.i234
-  %21 = load i16, ptr %.sroa.012.022.i235, align 4
-  %22 = icmp eq i16 %21, 0
-  br i1 %22, label %_ZN6Assimp4Ogre10VertexData16GetVertexElementENS0_13VertexElement8SemanticEt.exit237, label %bb.l
-
-bb.l:                                             ; preds = %bb.k, %.lr.ph.i234
-  %i.ar = getelementptr inbounds nuw i8, ptr %.sroa.012.022.i235, i64 16 ; 2 uses
-  %.not.i236 = icmp eq ptr %i.ar, %i.al
-  br i1 %.not.i236, label %_ZN6Assimp4Ogre10VertexData16GetVertexElementENS0_13VertexElement8SemanticEt.exit237, label %.lr.ph.i234
-
-_ZN6Assimp4Ogre10VertexData16GetVertexElementENS0_13VertexElement8SemanticEt.exit237: ; preds = %bb.k, %bb.l
-  %23 = phi ptr [ %.sroa.012.022.i235, %bb.k ], [ null, %bb.l ] ; 6 uses
+bb.k:                                             ; preds = %bb.j, %.lr.ph.i234
+  %25 = phi ptr [ %.sroa.012.022.i235, %.lr.ph.i234 ], [ null, %bb.j ] ; 6 uses
   br label %.lr.ph.i239
 
-.lr.ph.i239:                                      ; preds = %_ZN6Assimp4Ogre10VertexData16GetVertexElementENS0_13VertexElement8SemanticEt.exit237, %bb.n
-  %.sroa.012.022.i240 = phi ptr [ %i.au, %bb.n ], [ %i.aj, %_ZN6Assimp4Ogre10VertexData16GetVertexElementENS0_13VertexElement8SemanticEt.exit237 ] ; 4 uses
+bb.l:                                             ; preds = %.lr.ph.i239
+  %i.ar = getelementptr inbounds nuw i8, ptr %.sroa.012.022.i240, i64 16 ; 2 uses
+  %.not.i236 = icmp eq ptr %i.ar, %i.al
+  br i1 %.not.i236, label %bb.m, label %.lr.ph.i239
+
+.lr.ph.i239:                                      ; preds = %bb.k, %bb.l
+  %.sroa.012.022.i240 = phi ptr [ %i.ar, %bb.l ], [ %i.aj, %bb.k ] ; 4 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.sroa.012.022.i240, i64 12
   %i.at = load i32, ptr %i.as, align 4
-  %24 = icmp eq i32 %i.at, 7
-  br i1 %24, label %bb.m, label %bb.n
+  %26 = icmp ne i32 %i.at, 7
+  %27 = load i16, ptr %.sroa.012.022.i240, align 4
+  %28 = icmp ne i16 %27, 0
+  %or.cond.not.i242 = select i1 %26, i1 true, i1 %28
+  br i1 %or.cond.not.i242, label %bb.l, label %bb.m
 
-bb.m:                                             ; preds = %.lr.ph.i239
-  %25 = load i16, ptr %.sroa.012.022.i240, align 4
-  %26 = icmp eq i16 %25, 0
-  br i1 %26, label %_ZN6Assimp4Ogre10VertexData16GetVertexElementENS0_13VertexElement8SemanticEt.exit242, label %bb.n
-
-bb.n:                                             ; preds = %bb.m, %.lr.ph.i239
-  %i.au = getelementptr inbounds nuw i8, ptr %.sroa.012.022.i240, i64 16 ; 2 uses
-  %.not.i241 = icmp eq ptr %i.au, %i.al
-  br i1 %.not.i241, label %_ZN6Assimp4Ogre10VertexData16GetVertexElementENS0_13VertexElement8SemanticEt.exit242, label %.lr.ph.i239
-
-_ZN6Assimp4Ogre10VertexData16GetVertexElementENS0_13VertexElement8SemanticEt.exit242: ; preds = %bb.m, %bb.n
-  %27 = phi ptr [ %.sroa.012.022.i240, %bb.m ], [ null, %bb.n ] ; 6 uses
+bb.m:                                             ; preds = %bb.l, %.lr.ph.i239
+  %29 = phi ptr [ %.sroa.012.022.i240, %.lr.ph.i239 ], [ null, %bb.l ] ; 6 uses
   br label %.lr.ph.i244
 
-.lr.ph.i244:                                      ; preds = %_ZN6Assimp4Ogre10VertexData16GetVertexElementENS0_13VertexElement8SemanticEt.exit242, %32
-  %.sroa.012.022.i245 = phi ptr [ %33, %32 ], [ %i.aj, %_ZN6Assimp4Ogre10VertexData16GetVertexElementENS0_13VertexElement8SemanticEt.exit242 ] ; 4 uses
+bb.n:                                             ; preds = %.lr.ph.i244
+  %i.au = getelementptr inbounds nuw i8, ptr %.sroa.012.022.i245, i64 16 ; 2 uses
+  %.not.i241 = icmp eq ptr %i.au, %i.al
+  br i1 %.not.i241, label %_ZN6Assimp4Ogre10VertexData16GetVertexElementENS0_13VertexElement8SemanticEt.exit247, label %.lr.ph.i244
+
+.lr.ph.i244:                                      ; preds = %bb.m, %bb.n
+  %.sroa.012.022.i245 = phi ptr [ %i.au, %bb.n ], [ %i.aj, %bb.m ] ; 4 uses
   %i.av = getelementptr inbounds nuw i8, ptr %.sroa.012.022.i245, i64 12
   %i.aw = load i32, ptr %i.av, align 4
-  %28 = icmp eq i32 %i.aw, 7
-  br i1 %28, label %29, label %32
+  %30 = icmp ne i32 %i.aw, 7
+  %31 = load i16, ptr %.sroa.012.022.i245, align 4
+  %32 = icmp ne i16 %31, 1
+  %or.cond.not.i248 = select i1 %30, i1 true, i1 %32
+  br i1 %or.cond.not.i248, label %bb.n, label %_ZN6Assimp4Ogre10VertexData16GetVertexElementENS0_13VertexElement8SemanticEt.exit247
 
-29:                                               ; preds = %.lr.ph.i244
-  %30 = load i16, ptr %.sroa.012.022.i245, align 4
-  %31 = icmp eq i16 %30, 1
-  br i1 %31, label %_ZN6Assimp4Ogre10VertexData16GetVertexElementENS0_13VertexElement8SemanticEt.exit247, label %32
-
-32:                                               ; preds = %29, %.lr.ph.i244
-  %33 = getelementptr inbounds nuw i8, ptr %.sroa.012.022.i245, i64 16 ; 2 uses
-  %.not.i246 = icmp eq ptr %33, %i.al
-  br i1 %.not.i246, label %_ZN6Assimp4Ogre10VertexData16GetVertexElementENS0_13VertexElement8SemanticEt.exit247, label %.lr.ph.i244
-
-_ZN6Assimp4Ogre10VertexData16GetVertexElementENS0_13VertexElement8SemanticEt.exit247: ; preds = %29, %32
-  %i.ax = phi ptr [ %.sroa.012.022.i245, %29 ], [ null, %32 ] ; 6 uses
-  %.not211 = icmp eq ptr %19, null
+_ZN6Assimp4Ogre10VertexData16GetVertexElementENS0_13VertexElement8SemanticEt.exit247: ; preds = %bb.n, %.lr.ph.i244
+  %i.ax = phi ptr [ %.sroa.012.022.i245, %.lr.ph.i244 ], [ null, %bb.n ] ; 6 uses
+  %.not211 = icmp eq ptr %21, null
   br i1 %.not211, label %_ZN6Assimp4Ogre10VertexData16GetVertexElementENS0_13VertexElement8SemanticEt.exit247.thread, label %bb.q
 
 _ZN6Assimp4Ogre10VertexData16GetVertexElementENS0_13VertexElement8SemanticEt.exit247.thread: ; preds = %bb.h, %_ZN6Assimp4Ogre10VertexData16GetVertexElementENS0_13VertexElement8SemanticEt.exit247
@@ -725,7 +715,7 @@ bb.p:                                             ; preds = %_ZN6Assimp4Ogre10Ve
   br label %_ZN6aiFaceD2Ev.exit373
 
 bb.q:                                             ; preds = %_ZN6Assimp4Ogre10VertexData16GetVertexElementENS0_13VertexElement8SemanticEt.exit247
-  %i.ba = getelementptr inbounds nuw i8, ptr %19, i64 8 ; 2 uses
+  %i.ba = getelementptr inbounds nuw i8, ptr %21, i64 8 ; 2 uses
   %i.bb = load i32, ptr %i.ba, align 4
   %.not212 = icmp eq i32 %i.bb, 2
   br i1 %.not212, label %bb.u, label %bb.r
@@ -746,11 +736,11 @@ bb.t:                                             ; preds = %bb.r
   br label %_ZN6aiFaceD2Ev.exit373
 
 bb.u:                                             ; preds = %bb.q
-  %.not213 = icmp ne ptr %23, null                ; 5 uses
+  %.not213 = icmp ne ptr %25, null                ; 5 uses
   br i1 %.not213, label %bb.v, label %bb.z
 
 bb.v:                                             ; preds = %bb.u
-  %i.be = getelementptr inbounds nuw i8, ptr %23, i64 8
+  %i.be = getelementptr inbounds nuw i8, ptr %25, i64 8
   %i.bf = load i32, ptr %i.be, align 4
   %.not214 = icmp eq i32 %i.bf, 2
   br i1 %.not214, label %bb.z, label %bb.w
@@ -866,7 +856,7 @@ bb.aa:                                            ; preds = %bb.z
 
 .loopexit421:                                     ; preds = %.loopexit421.loopexit, %.loopexit422.a
   store ptr %i.cv, ptr %i.m, align 8
-  %i.da = getelementptr inbounds nuw i8, ptr %19, i64 2 ; 2 uses
+  %i.da = getelementptr inbounds nuw i8, ptr %21, i64 2 ; 2 uses
   %i.db = load i16, ptr %i.da, align 2            ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   store i16 %i.db, ptr %i.d, align 2
@@ -944,7 +934,7 @@ _ZN6Assimp4Ogre10VertexData12VertexBufferEt.exit: ; preds = %.loopexit421, %_ZNS
   br i1 %.not213, label %bb.ac, label %bb.ae
 
 bb.ac:                                            ; preds = %_ZN6Assimp4Ogre10VertexData12VertexBufferEt.exit
-  %i.dx = getelementptr inbounds nuw i8, ptr %23, i64 2
+  %i.dx = getelementptr inbounds nuw i8, ptr %25, i64 2
   %i.dy = load i16, ptr %i.dx, align 2            ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i16 %i.dy, ptr %i.c, align 2
@@ -1020,11 +1010,11 @@ _ZN6Assimp4Ogre10VertexData12VertexBufferEt.exit272: ; preds = %bb.ac, %_ZNSt8_R
 
 bb.ae:                                            ; preds = %_ZN6Assimp4Ogre10VertexData12VertexBufferEt.exit, %_ZN6Assimp4Ogre10VertexData12VertexBufferEt.exit272
   %i.er = phi ptr [ %.0.i270, %_ZN6Assimp4Ogre10VertexData12VertexBufferEt.exit272 ], [ null, %_ZN6Assimp4Ogre10VertexData12VertexBufferEt.exit ] ; 13 uses
-  %.not215 = icmp ne ptr %27, null                ; 4 uses
+  %.not215 = icmp ne ptr %29, null                ; 4 uses
   br i1 %.not215, label %bb.af, label %bb.ah
 
 bb.af:                                            ; preds = %bb.ae
-  %i.es = getelementptr inbounds nuw i8, ptr %27, i64 2
+  %i.es = getelementptr inbounds nuw i8, ptr %29, i64 2
   %i.et = load i16, ptr %i.es, align 2            ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i16 %i.et, ptr %i.b, align 2
@@ -1196,7 +1186,7 @@ _ZNK6Assimp4Ogre13VertexElement4SizeEv.exit:      ; preds = %bb.ak, %switch.look
   br i1 %.not213, label %bb.al, label %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit324
 
 bb.al:                                            ; preds = %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit
-  %i.gl = getelementptr inbounds nuw i8, ptr %23, i64 8
+  %i.gl = getelementptr inbounds nuw i8, ptr %25, i64 8
   %i.gm = load i32, ptr %i.gl, align 4            ; 2 uses
   %i.gn = icmp ult i32 %i.gm, 28
   br i1 %i.gn, label %switch.lookup521, label %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit324
@@ -1213,7 +1203,7 @@ _ZNK6Assimp4Ogre13VertexElement4SizeEv.exit324:   ; preds = %bb.al, %switch.look
   br i1 %.not215, label %bb.am, label %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit326
 
 bb.am:                                            ; preds = %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit324
-  %i.gq = getelementptr inbounds nuw i8, ptr %27, i64 8
+  %i.gq = getelementptr inbounds nuw i8, ptr %29, i64 8
   %i.gr = load i32, ptr %i.gq, align 4            ; 2 uses
   %i.gs = icmp ult i32 %i.gr, 28
   br i1 %i.gs, label %switch.lookup525, label %_ZNK6Assimp4Ogre13VertexElement4SizeEv.exit326
@@ -1290,7 +1280,7 @@ _ZNK6Assimp4Ogre10VertexData10VertexSizeEt.exit.thread: ; preds = %_ZNK6Assimp4O
   br i1 %brmerge, label %_ZNK6Assimp4Ogre10VertexData10VertexSizeEt.exit350, label %_ZNK6Assimp4Ogre10VertexData10VertexSizeEt.exit360
 
 bb.aq:                                            ; preds = %_ZNK6Assimp4Ogre10VertexData10VertexSizeEt.exit
-  %i.hm = getelementptr inbounds nuw i8, ptr %23, i64 2
+  %i.hm = getelementptr inbounds nuw i8, ptr %25, i64 2
   %i.hn = load i16, ptr %i.hm, align 2
   br label %.lr.ph.i332
 
@@ -1335,7 +1325,7 @@ _ZNK6Assimp4Ogre10VertexData10VertexSizeEt.exit340: ; preds = %_ZNK6Assimp4Ogre1
   br i1 %.not215, label %bb.at, label %_ZNK6Assimp4Ogre10VertexData10VertexSizeEt.exit350
 
 bb.at:                                            ; preds = %_ZNK6Assimp4Ogre10VertexData10VertexSizeEt.exit340
-  %i.hz = getelementptr inbounds nuw i8, ptr %27, i64 2
+  %i.hz = getelementptr inbounds nuw i8, ptr %29, i64 2
   %i.ia = load i16, ptr %i.hz, align 2
   br label %.lr.ph.i342
 
@@ -1459,7 +1449,7 @@ bb.ba:                                            ; preds = %.loopexit420, %_ZNK
   br i1 %.not218, label %bb.bf, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
-  %i.jp = getelementptr inbounds nuw i8, ptr %27, i64 8 ; 2 uses
+  %i.jp = getelementptr inbounds nuw i8, ptr %29, i64 8 ; 2 uses
   %i.jq = load i32, ptr %i.jp, align 4            ; 2 uses
   %.off = add i32 %i.jq, -1
   %switch = icmp ult i32 %.off, 2
@@ -1638,12 +1628,12 @@ bb.bo:                                            ; preds = %bb.bm, %bb.bn
   br i1 %i.br, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.bo
-  %i.md = getelementptr inbounds nuw i8, ptr %19, i64 4 ; 3 uses
-  %i.me = getelementptr inbounds nuw i8, ptr %23, i64 4 ; 3 uses
+  %i.md = getelementptr inbounds nuw i8, ptr %21, i64 4 ; 3 uses
+  %i.me = getelementptr inbounds nuw i8, ptr %25, i64 4 ; 3 uses
   %i.mf = getelementptr inbounds nuw i8, ptr %i.j, i64 24 ; 3 uses
   %i.mg = icmp ne ptr %i.lq, null
   %or.cond = select i1 %i.ln, i1 %i.mg, i1 false  ; 3 uses
-  %i.mh = getelementptr inbounds nuw i8, ptr %27, i64 4 ; 3 uses
+  %i.mh = getelementptr inbounds nuw i8, ptr %29, i64 4 ; 3 uses
   %i.mi = icmp ne ptr %i.lu, null
   %or.cond3 = select i1 %i.lr, i1 %i.mi, i1 false ; 3 uses
   %i.mj = getelementptr inbounds nuw i8, ptr %i.ax, i64 4 ; 3 uses

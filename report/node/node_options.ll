@@ -201,19 +201,17 @@ bb.b:                                             ; preds = %.lr.ph, %bb.k
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.07.011, i64 16
   %i.l = load i64, ptr %i.k, align 8
   %i.m = icmp eq i64 %i.l, 0
-  br i1 %i.m, label %bb.k, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11starts_withEc.exit
+  br i1 %i.m, label %bb.k, label %bb.c
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11starts_withEc.exit: ; preds = %bb.b
+bb.c:                                             ; preds = %bb.b
   %2 = load ptr, ptr %i.j, align 8
   %3 = load i8, ptr %2, align 1
-  %4 = icmp eq i8 %3, 91
-  br i1 %4, label %bb.k, label %bb.c
-
-bb.c:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11starts_withEc.exit
+  %4 = icmp ne i8 %3, 91
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.07.011, i64 64
   %i.o = load i32, ptr %i.n, align 8
   %i.p = icmp eq i32 %i.o, 0
-  br i1 %i.p, label %bb.d, label %bb.k
+  %or.cond = select i1 %4, i1 %i.p, i1 false
+  br i1 %or.cond, label %bb.d, label %bb.k
 
 bb.d:                                             ; preds = %bb.c
   %i.q = getelementptr inbounds nuw i8, ptr %.sroa.07.011, i64 40
@@ -290,7 +288,7 @@ _ZN4node14options_parser20OptionMappingDetailsD2Ev.exit: ; preds = %_ZNSt7__cxx1
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #26
   br label %bb.k
 
-bb.k:                                             ; preds = %_ZN4node14options_parser20OptionMappingDetailsD2Ev.exit, %bb.c, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11starts_withEc.exit, %bb.b
+bb.k:                                             ; preds = %_ZN4node14options_parser20OptionMappingDetailsD2Ev.exit, %bb.c, %bb.b
   %.sroa.07.0 = load ptr, ptr %.sroa.07.011, align 8 ; 2 uses
   %i.al = icmp eq ptr %.sroa.07.0, null
   br i1 %i.al, label %._crit_edge, label %bb.b
@@ -693,19 +691,17 @@ bb.c:                                             ; preds = %.lr.ph, %.critedge
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.027.036, i64 16
   %i.ab = load i64, ptr %i.aa, align 8
   %i.ac = icmp eq i64 %i.ab, 0
-  br i1 %i.ac, label %.critedge, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11starts_withEc.exit
+  br i1 %i.ac, label %.critedge, label %bb.d
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11starts_withEc.exit: ; preds = %bb.c
+bb.d:                                             ; preds = %bb.c
   %2 = load ptr, ptr %i.z, align 8
   %3 = load i8, ptr %2, align 1
-  %4 = icmp eq i8 %3, 91
-  br i1 %4, label %.critedge, label %bb.d
-
-bb.d:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11starts_withEc.exit
+  %4 = icmp ne i8 %3, 91
   %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.027.036, i64 64
   %i.ae = load i32, ptr %i.ad, align 8
   %i.af = icmp eq i32 %i.ae, 0
-  br i1 %i.af, label %bb.e, label %.critedge
+  %or.cond = select i1 %4, i1 %i.af, i1 false
+  br i1 %or.cond, label %bb.e, label %.critedge
 
 bb.e:                                             ; preds = %bb.d
   %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.027.036, i64 40
@@ -778,7 +774,7 @@ _ZN4node14options_parser20OptionMappingDetailsD2Ev.exit: ; preds = %_ZNSt7__cxx1
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #26
   br i1 %i.au, label %.critedge, label %_ZN2v811ReturnValueINS_5ValueEE3SetINS_6ObjectEEEvNS_5LocalIT_EE.exit
 
-.critedge:                                        ; preds = %_ZN4node14options_parser20OptionMappingDetailsD2Ev.exit, %bb.d, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11starts_withEc.exit, %bb.c
+.critedge:                                        ; preds = %_ZN4node14options_parser20OptionMappingDetailsD2Ev.exit, %bb.d, %bb.c
   %.sroa.027.0 = load ptr, ptr %.sroa.027.036, align 8 ; 2 uses
   %i.az = icmp eq ptr %.sroa.027.0, null
   br i1 %i.az, label %.critedge23, label %bb.c

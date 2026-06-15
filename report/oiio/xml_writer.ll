@@ -201,19 +201,17 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !41   ; 3 uses
   %i.e = icmp eq ptr %i.b, %i.d
-  br i1 %i.e, label %.thread, label %2
+  br i1 %i.e, label %.thread, label %bb.b
 
-2:                                                ; preds = %bb.a
-  %3 = getelementptr inbounds i8, ptr %i.d, i64 -7
-  %4 = load i8, ptr %3, align 1, !tbaa !36, !range !42, !noundef !38
-  %5 = trunc nuw i8 %4 to i1
-  br i1 %5, label %.thread, label %bb.b
-
-bb.b:                                             ; preds = %2
+bb.b:                                             ; preds = %bb.a
+  %2 = getelementptr inbounds i8, ptr %i.d, i64 -7
+  %3 = load i8, ptr %2, align 1, !tbaa !36, !range !42, !noundef !38
+  %4 = trunc nuw i8 %3 to i1
   %i.f = getelementptr inbounds i8, ptr %i.d, i64 -6
-  %i.g = load i8, ptr %i.f, align 2, !tbaa !30, !range !42, !noundef !38
+  %i.g = load i8, ptr %i.f, align 2, !range !42
   %i.h = trunc nuw i8 %i.g to i1
-  br i1 %i.h, label %.thread, label %bb.c
+  %or.cond = select i1 %4, i1 true, i1 %i.h
+  br i1 %or.cond, label %.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.i = load ptr, ptr %0, align 8, !tbaa !37, !nonnull !38, !align !39
@@ -260,8 +258,8 @@ _ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit: ; preds = %bb.f
   %i.aa = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5flushEv(ptr noundef nonnull align 8 dereferenceable(8) %i.z) ; 0 uses
   br label %.thread
 
-.thread:                                          ; preds = %2, %bb.b, %bb.a, %_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit, %bb.c
-  %.1 = phi i1 [ true, %_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit ], [ true, %bb.c ], [ false, %bb.a ], [ false, %bb.b ], [ false, %2 ]
+.thread:                                          ; preds = %_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit, %bb.c, %bb.a, %bb.b
+  %.1 = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ true, %bb.c ], [ true, %_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit ]
   ret i1 %.1
 }
 
@@ -290,19 +288,17 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %i.k = phi ptr [ %.pre, %bb.c ], [ %i.d, %bb.b ] ; 5 uses
-  %i.l = getelementptr inbounds i8, ptr %i.k, i64 -40
-  %i.m = getelementptr inbounds i8, ptr %i.k, i64 -7
-  %i.n = load i8, ptr %i.m, align 1, !tbaa !36, !range !42, !noundef !38
+  %1 = getelementptr inbounds i8, ptr %i.k, i64 -40
+  %i.l = getelementptr inbounds i8, ptr %i.k, i64 -7
+  %2 = load i8, ptr %i.l, align 1, !tbaa !36, !range !42, !noundef !38
+  %3 = trunc nuw i8 %2 to i1                      ; 2 uses
+  %i.m = getelementptr inbounds i8, ptr %i.k, i64 -6
+  %i.n = load i8, ptr %i.m, align 2, !range !42
   %i.o = trunc nuw i8 %i.n to i1
-  br i1 %i.o, label %.thread, label %1
+  %or.cond = select i1 %3, i1 true, i1 %i.o
+  br i1 %or.cond, label %4, label %bb.e
 
-1:                                                ; preds = %bb.d
-  %2 = getelementptr inbounds i8, ptr %i.k, i64 -6
-  %3 = load i8, ptr %2, align 2, !tbaa !30, !range !42, !noundef !38
-  %4 = trunc nuw i8 %3 to i1
-  br i1 %4, label %bb.k, label %bb.e
-
-bb.e:                                             ; preds = %1
+bb.e:                                             ; preds = %bb.d
   %i.p = getelementptr inbounds i8, ptr %i.k, i64 -8
   %i.q = load i8, ptr %i.p, align 8, !tbaa !35, !range !42, !noundef !38
   %i.r = trunc nuw i8 %i.q to i1
@@ -355,17 +351,20 @@ _ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit: ; preds = %bb.i
   %i.am = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo3putEc(ptr noundef nonnull align 8 dereferenceable(8) %i.w, i8 noundef signext %.0.i.i.i)
   br label %bb.o
 
-bb.k:                                             ; preds = %1
+4:                                                ; preds = %bb.d
+  br i1 %3, label %.thread, label %bb.k
+
+bb.k:                                             ; preds = %4
   %i.an = load ptr, ptr %0, align 8, !tbaa !37, !nonnull !38, !align !39
   %i.ao = load ptr, ptr %i.f, align 8, !tbaa !27
   %i.ap = load i64, ptr %i.g, align 8, !tbaa !13
   %i.aq = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.an, ptr noundef %i.ao, i64 noundef %i.ap) ; 0 uses
   br label %.thread
 
-.thread:                                          ; preds = %bb.d, %bb.k
+.thread:                                          ; preds = %bb.k, %4
   %i.ar = load ptr, ptr %0, align 8, !tbaa !37, !nonnull !38, !align !39 ; 2 uses
   %i.as = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.ar, ptr noundef nonnull @.str.3, i64 noundef 2) ; 0 uses
-  %i.at = load ptr, ptr %i.l, align 8, !tbaa !27
+  %i.at = load ptr, ptr %1, align 8, !tbaa !27
   %i.au = getelementptr inbounds i8, ptr %i.k, i64 -32
   %i.av = load i64, ptr %i.au, align 8, !tbaa !13
   %i.aw = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.ar, ptr noundef %i.at, i64 noundef %i.av) ; 4 uses
@@ -492,21 +491,19 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !41
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !41   ; 5 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !41   ; 4 uses
   %i.f = icmp eq ptr %i.c, %i.e
-  br i1 %i.f, label %_ZN22photos_editing_formats8image_io9XmlWriter12WriteContentERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, label %3
+  br i1 %i.f, label %_ZN22photos_editing_formats8image_io9XmlWriter12WriteContentERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, label %bb.b
 
-3:                                                ; preds = %bb.a
-  %4 = getelementptr inbounds i8, ptr %i.e, i64 -7
-  %5 = load i8, ptr %4, align 1, !tbaa !36, !range !42, !noundef !38
-  %6 = trunc nuw i8 %5 to i1
-  br i1 %6, label %_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit.thread.i, label %bb.b
-
-bb.b:                                             ; preds = %3
+bb.b:                                             ; preds = %bb.a
+  %3 = getelementptr inbounds i8, ptr %i.e, i64 -7
+  %4 = load i8, ptr %3, align 1, !tbaa !36, !range !42, !noundef !38
+  %5 = trunc nuw i8 %4 to i1
   %i.g = getelementptr inbounds i8, ptr %i.e, i64 -6
-  %i.h = load i8, ptr %i.g, align 2, !tbaa !30, !range !42, !noundef !38
+  %i.h = load i8, ptr %i.g, align 2, !range !42
   %i.i = trunc nuw i8 %i.h to i1
-  br i1 %i.i, label %_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit.thread.i, label %_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit.i
+  %or.cond.i.i = select i1 %5, i1 true, i1 %i.i
+  br i1 %or.cond.i.i, label %_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit.thread.i, label %_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit.i
 
 _ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit.i: ; preds = %bb.b
   %i.j = load ptr, ptr %0, align 8, !tbaa !37, !nonnull !38, !align !39
@@ -516,9 +513,9 @@ _ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit.i:
   %i.l = icmp eq ptr %.pre.i, %.pre3.i
   br i1 %i.l, label %_ZN22photos_editing_formats8image_io9XmlWriter12WriteContentERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, label %_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit.thread.i
 
-_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit.thread.i: ; preds = %_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit.i, %bb.b, %3
-  %7 = phi ptr [ %.pre3.i, %_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit.i ], [ %i.e, %3 ], [ %i.e, %bb.b ]
-  %i.m = getelementptr inbounds i8, ptr %7, i64 -7
+_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit.thread.i: ; preds = %_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit.i, %bb.b
+  %6 = phi ptr [ %.pre3.i, %_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit.i ], [ %i.e, %bb.b ]
+  %i.m = getelementptr inbounds i8, ptr %6, i64 -7
   store i8 1, ptr %i.m, align 1, !tbaa !36
   %i.n = load ptr, ptr %0, align 8, !tbaa !37, !nonnull !38, !align !39
   %i.o = load ptr, ptr %2, align 8, !tbaa !27
@@ -538,21 +535,19 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !41
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !41   ; 5 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !41   ; 4 uses
   %i.e = icmp eq ptr %i.b, %i.d
-  br i1 %i.e, label %_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit.thread7, label %2
+  br i1 %i.e, label %_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit.thread7, label %bb.b
 
-2:                                                ; preds = %bb.a
-  %3 = getelementptr inbounds i8, ptr %i.d, i64 -7
-  %4 = load i8, ptr %3, align 1, !tbaa !36, !range !42, !noundef !38
-  %5 = trunc nuw i8 %4 to i1
-  br i1 %5, label %_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit.thread.a, label %bb.b
-
-bb.b:                                             ; preds = %2
+bb.b:                                             ; preds = %bb.a
+  %2 = getelementptr inbounds i8, ptr %i.d, i64 -7
+  %3 = load i8, ptr %2, align 1, !tbaa !36, !range !42, !noundef !38
+  %4 = trunc nuw i8 %3 to i1
   %i.f = getelementptr inbounds i8, ptr %i.d, i64 -6
-  %i.g = load i8, ptr %i.f, align 2, !tbaa !30, !range !42, !noundef !38
+  %i.g = load i8, ptr %i.f, align 2, !range !42
   %i.h = trunc nuw i8 %i.g to i1
-  br i1 %i.h, label %_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit.thread.a, label %_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit
+  %or.cond.i = select i1 %4, i1 true, i1 %i.h
+  br i1 %or.cond.i, label %_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit.thread.a, label %_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit
 
 _ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit: ; preds = %bb.b
   %i.i = load ptr, ptr %0, align 8, !tbaa !37, !nonnull !38, !align !39
@@ -562,9 +557,9 @@ _ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit: ;
   %i.k = icmp eq ptr %.pre, %.pre3
   br i1 %i.k, label %_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit.thread7, label %_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit.thread.a
 
-_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit.thread.a: ; preds = %bb.b, %2, %_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit
-  %6 = phi ptr [ %.pre3, %_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit ], [ %i.d, %2 ], [ %i.d, %bb.b ]
-  %i.l = getelementptr inbounds i8, ptr %6, i64 -7
+_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit.thread.a: ; preds = %bb.b, %_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit
+  %5 = phi ptr [ %.pre3, %_ZN22photos_editing_formats8image_io9XmlWriter22MaybeWriteCloseBracketEb.exit ], [ %i.d, %bb.b ]
+  %i.l = getelementptr inbounds i8, ptr %5, i64 -7
   store i8 1, ptr %i.l, align 1, !tbaa !36
   %i.m = load ptr, ptr %0, align 8, !tbaa !37, !nonnull !38, !align !39
   %i.n = load ptr, ptr %1, align 8, !tbaa !27

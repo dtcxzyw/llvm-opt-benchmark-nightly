@@ -201,8 +201,8 @@ _ZNK2v88internal6maglev18MaglevGraphBuilder8bytecodeEv.exit30: ; preds = %_ZN2v8
 
 bb.e:                                             ; preds = %.lr.ph73, %_ZN2v88internal11interpreter21BytecodeArrayIterator7AdvanceEv.exit
   %i.bd = phi ptr [ %i.ar, %.lr.ph73 ], [ %i.iv, %_ZN2v88internal11interpreter21BytecodeArrayIterator7AdvanceEv.exit ] ; 2 uses
-  %.072 = phi i8 [ 0, %.lr.ph73 ], [ %.4, %_ZN2v88internal11interpreter21BytecodeArrayIterator7AdvanceEv.exit ] ; 6 uses
-  %.sroa.042.071 = phi i32 [ undef, %.lr.ph73 ], [ %.sroa.042.3, %_ZN2v88internal11interpreter21BytecodeArrayIterator7AdvanceEv.exit ] ; 6 uses
+  %.072 = phi i8 [ 0, %.lr.ph73 ], [ %.4, %_ZN2v88internal11interpreter21BytecodeArrayIterator7AdvanceEv.exit ] ; 5 uses
+  %.sroa.042.071 = phi i32 [ undef, %.lr.ph73 ], [ %.sroa.042.3, %_ZN2v88internal11interpreter21BytecodeArrayIterator7AdvanceEv.exit ] ; 5 uses
   %i.be = load i8, ptr %i.bd, align 1             ; 6 uses
   %i.bf = load i8, ptr %i.at, align 1, !range !10, !noundef !11
   %i.bg = trunc nuw i8 %i.bf to i1
@@ -236,18 +236,17 @@ bb.g:                                             ; preds = %bb.f
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bz, i64 4
   %i.cd = load i32, ptr %i.cc, align 4
   %i.ce = sub nsw i32 %i.cb, %i.cd                ; 2 uses
-  %i.cf = getelementptr inbounds nuw i8, ptr %i.bz, i64 13
-  %i.cg = load i8, ptr %i.cf, align 1, !range !10, !noundef !11
+  %7 = getelementptr inbounds nuw i8, ptr %i.bz, i64 13
+  %8 = load i8, ptr %7, align 1, !range !10, !noundef !11
+  %9 = trunc nuw i8 %8 to i1
+  %.not48 = xor i1 %9, true
+  %i.cf = getelementptr inbounds nuw i8, ptr %i.bz, i64 12
+  %i.cg = load i8, ptr %i.cf, align 4, !range !10
   %i.ch = trunc nuw i8 %i.cg to i1
-  br i1 %i.ch, label %7, label %bb.k
+  %or.cond51 = select i1 %.not48, i1 true, i1 %i.ch
+  br i1 %or.cond51, label %bb.k, label %bb.h
 
-7:                                                ; preds = %bb.g
-  %8 = getelementptr inbounds nuw i8, ptr %i.bz, i64 12
-  %9 = load i8, ptr %8, align 4, !range !10, !noundef !11
-  %10 = trunc nuw i8 %9 to i1
-  br i1 %10, label %bb.k, label %bb.h
-
-bb.h:                                             ; preds = %7
+bb.h:                                             ; preds = %bb.g
   %i.ci = load ptr, ptr %i.ap, align 8            ; 2 uses
   %i.cj = load ptr, ptr %i.av, align 8
   %i.ck = ptrtoint ptr %i.ci to i64
@@ -308,9 +307,9 @@ bb.j:                                             ; preds = %bb.i
   %i.ed = call noundef i32 @_ZNK2v88internal8compiler16BytecodeAnalysis28GetLoopEndOffsetForInnermostEi(ptr noundef nonnull align 8 dereferenceable(140) %i.au, i32 noundef %i.ec) #33
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.g, %7, %bb.h, %bb.i, %bb.j, %bb.f, %bb.e
-  %.sroa.042.1 = phi i32 [ %.sroa.042.071, %7 ], [ %i.ed, %bb.j ], [ %.sroa.042.071, %bb.i ], [ %.sroa.042.071, %bb.e ], [ %.sroa.042.071, %bb.h ], [ %.sroa.042.071, %bb.g ], [ %.sroa.042.071, %bb.f ] ; 8 uses
-  %.2 = phi i8 [ %.072, %7 ], [ 1, %bb.j ], [ %.072, %bb.i ], [ %.072, %bb.e ], [ %.072, %bb.h ], [ %.072, %bb.g ], [ %.072, %bb.f ] ; 7 uses
+bb.k:                                             ; preds = %bb.g, %bb.h, %bb.i, %bb.j, %bb.f, %bb.e
+  %.sroa.042.1 = phi i32 [ %.sroa.042.071, %bb.e ], [ %i.ed, %bb.j ], [ %.sroa.042.071, %bb.i ], [ %.sroa.042.071, %bb.f ], [ %.sroa.042.071, %bb.h ], [ %.sroa.042.071, %bb.g ] ; 8 uses
+  %.2 = phi i8 [ %.072, %bb.e ], [ 1, %bb.j ], [ %.072, %bb.i ], [ %.072, %bb.f ], [ %.072, %bb.h ], [ %.072, %bb.g ] ; 7 uses
   %i.ee = add i8 %i.be, 107
   %i.ef = icmp ult i8 %i.ee, 25
   br i1 %i.ef, label %bb.l, label %bb.y

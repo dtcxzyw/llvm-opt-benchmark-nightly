@@ -201,12 +201,12 @@ bb.h:                                             ; preds = %bb.f, %bb.g
 .outer.outer:                                     ; preds = %.outer.outer.preheader, %_ZN2v88internal8compiler14NodeProperties14GetEffectInputEPNS1_4NodeEi.exit200
   %.sroa.0214.0.ph.ph = phi ptr [ %i.sn, %_ZN2v88internal8compiler14NodeProperties14GetEffectInputEPNS1_4NodeEi.exit200 ], [ %2, %.outer.outer.preheader ]
   %.067.ph.ph = phi i32 [ %.572, %_ZN2v88internal8compiler14NodeProperties14GetEffectInputEPNS1_4NodeEi.exit200 ], [ 1, %.outer.outer.preheader ]
-  %.058.ph.ph = phi ptr [ %.159, %_ZN2v88internal8compiler14NodeProperties14GetEffectInputEPNS1_4NodeEi.exit200 ], [ %1, %.outer.outer.preheader ] ; 23 uses
+  %.058.ph.ph = phi ptr [ %.159, %_ZN2v88internal8compiler14NodeProperties14GetEffectInputEPNS1_4NodeEi.exit200 ], [ %1, %.outer.outer.preheader ] ; 22 uses
   br label %.outer
 
 .outer:                                           ; preds = %.outer.outer, %bb.cm
   %.sroa.0214.0.ph = phi ptr [ %i.qa, %bb.cm ], [ %.sroa.0214.0.ph.ph, %.outer.outer ]
-  %.067.ph = phi i32 [ 2, %bb.cm ], [ %.067.ph.ph, %.outer.outer ] ; 18 uses
+  %.067.ph = phi i32 [ 2, %bb.cm ], [ %.067.ph.ph, %.outer.outer ] ; 17 uses
   br label %bb.i
 
 bb.i:                                             ; preds = %.outer, %_ZN2v88internal8compiler14NodeProperties14GetEffectInputEPNS1_4NodeEi.exit
@@ -609,17 +609,15 @@ _ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit136: ; 
   %i.js = load ptr, ptr %.sink.i.i.i135, align 8
   %i.jt = call noundef nonnull align 8 dereferenceable(72) ptr @_ZN2v88internal8compiler13FieldAccessOfEPKNS1_8OperatorE(ptr noundef nonnull %i.ak) #13 ; 2 uses
   %i.ju = load i8, ptr %i.jt, align 8
-  %i.jv = icmp eq i8 %i.ju, 1
-  br i1 %i.jv, label %14, label %.thread249
-
-14:                                               ; preds = %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit136
+  %14 = icmp eq i8 %i.ju, 1
   %15 = getelementptr inbounds nuw i8, ptr %i.jt, i64 4
   %16 = load i32, ptr %15, align 4
-  %17 = icmp eq i32 %16, 0
-  br i1 %17, label %.outer.i137, label %.thread249
+  %i.jv = icmp eq i32 %16, 0
+  %or.cond = select i1 %14, i1 %i.jv, i1 false
+  br i1 %or.cond, label %.outer.i137, label %.thread249
 
-.outer.i137:                                      ; preds = %14, %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit.i141
-  %.08.ph.i138 = phi ptr [ %i.kp, %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit.i141 ], [ %.058.ph.ph, %14 ] ; 4 uses
+.outer.i137:                                      ; preds = %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit136, %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit.i141
+  %.08.ph.i138 = phi ptr [ %i.kp, %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit.i141 ], [ %.058.ph.ph, %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit136 ] ; 4 uses
   %i.jw = load ptr, ptr %.08.ph.i138, align 8     ; 2 uses
   %i.jx = getelementptr inbounds nuw i8, ptr %i.jw, i64 16
   %i.jy = load i16, ptr %i.jx, align 8
@@ -989,9 +987,9 @@ bb.co:                                            ; preds = %bb.cn
   %spec.select = select i1 %.not258, i32 2, i32 %.067.ph
   br label %.thread249
 
-.thread249:                                       ; preds = %bb.i, %bb.i, %bb.i, %bb.i, %14, %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit136, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit148, %_ZN2v88internal8compiler19SkipValueIdentitiesEPNS1_4NodeE.exit.i.i153, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit107, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit92, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit, %bb.co, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit120, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit177, %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit180, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit133
-  %.572 = phi i32 [ %spec.select, %bb.co ], [ 2, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit120 ], [ %.067.ph, %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit180 ], [ %.067.ph, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit ], [ %.067.ph, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit92 ], [ %.067.ph, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit177 ], [ %.067.ph, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit133 ], [ 2, %_ZN2v88internal8compiler19SkipValueIdentitiesEPNS1_4NodeE.exit.i.i153 ], [ 2, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit107 ], [ 2, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit148 ], [ %.067.ph, %14 ], [ %.067.ph, %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit136 ], [ %.067.ph, %bb.i ], [ %.067.ph, %bb.i ], [ %.067.ph, %bb.i ], [ %.067.ph, %bb.i ]
-  %.159 = phi ptr [ %.058.ph.ph, %bb.co ], [ %.058.ph.ph, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit120 ], [ %i.ob, %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit180 ], [ %.058.ph.ph, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit ], [ %.058.ph.ph, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit92 ], [ %.058.ph.ph, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit177 ], [ %.058.ph.ph, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit133 ], [ %.058.ph.ph, %_ZN2v88internal8compiler19SkipValueIdentitiesEPNS1_4NodeE.exit.i.i153 ], [ %.058.ph.ph, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit107 ], [ %.058.ph.ph, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit148 ], [ %.058.ph.ph, %14 ], [ %.058.ph.ph, %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit136 ], [ %.058.ph.ph, %bb.i ], [ %.058.ph.ph, %bb.i ], [ %.058.ph.ph, %bb.i ], [ %.058.ph.ph, %bb.i ] ; 2 uses
+.thread249:                                       ; preds = %bb.i, %bb.i, %bb.i, %bb.i, %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit136, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit148, %_ZN2v88internal8compiler19SkipValueIdentitiesEPNS1_4NodeE.exit.i.i153, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit107, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit92, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit, %bb.co, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit120, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit177, %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit180, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit133
+  %.572 = phi i32 [ %spec.select, %bb.co ], [ 2, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit120 ], [ %.067.ph, %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit180 ], [ %.067.ph, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit ], [ %.067.ph, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit92 ], [ %.067.ph, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit177 ], [ %.067.ph, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit133 ], [ 2, %_ZN2v88internal8compiler19SkipValueIdentitiesEPNS1_4NodeE.exit.i.i153 ], [ %.067.ph, %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit136 ], [ 2, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit107 ], [ 2, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit148 ], [ %.067.ph, %bb.i ], [ %.067.ph, %bb.i ], [ %.067.ph, %bb.i ], [ %.067.ph, %bb.i ]
+  %.159 = phi ptr [ %.058.ph.ph, %bb.co ], [ %.058.ph.ph, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit120 ], [ %i.ob, %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit180 ], [ %.058.ph.ph, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit ], [ %.058.ph.ph, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit92 ], [ %.058.ph.ph, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit177 ], [ %.058.ph.ph, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit133 ], [ %.058.ph.ph, %_ZN2v88internal8compiler19SkipValueIdentitiesEPNS1_4NodeE.exit.i.i153 ], [ %.058.ph.ph, %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit136 ], [ %.058.ph.ph, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit107 ], [ %.058.ph.ph, %_ZN2v88internal8compiler14NodeProperties6IsSameEPNS1_4NodeES4_.exit148 ], [ %.058.ph.ph, %bb.i ], [ %.058.ph.ph, %bb.i ], [ %.058.ph.ph, %bb.i ], [ %.058.ph.ph, %bb.i ] ; 2 uses
   br label %.outer.i186
 
 .outer.i186:                                      ; preds = %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit.i190, %.thread249

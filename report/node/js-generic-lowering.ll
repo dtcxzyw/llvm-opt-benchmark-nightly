@@ -201,7 +201,7 @@ bb.a:
   %3 = alloca %"class.v8::internal::CallInterfaceDescriptor", align 8 ; 4 uses
   %i.a = load ptr, ptr %1, align 8
   %i.b = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZN2v88internal8compiler25CreateLiteralParametersOfEPKNS1_8OperatorE(ptr noundef %i.a) #11 ; 4 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 13 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 12 uses
   %i.d = load ptr, ptr %i.c, align 8              ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8
   %i.f = load ptr, ptr %i.e, align 8
@@ -226,25 +226,22 @@ bb.a:
   %i.v = sitofp i32 %i.u to double
   %i.w = tail call noundef ptr @_ZN2v88internal8compiler7JSGraph17ConstantMaybeHoleEd(ptr noundef nonnull align 8 dereferenceable(1144) %i.q, double noundef %i.v) #11
   tail call void @_ZN2v88internal8compiler4Node11InsertInputEPNS0_4ZoneEiPS2_(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef %i.s, i32 noundef 3, ptr noundef %i.w) #11
-  %i.x = load i32, ptr %i.t, align 4
-  %4 = and i32 %i.x, 1
-  %.not = icmp eq i32 %4, 0
-  br i1 %.not, label %bb.c, label %5
-
-5:                                                ; preds = %bb.a
-  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  %7 = load i32, ptr %6, align 8
-  %8 = icmp slt i32 %7, 16376
-  br i1 %8, label %bb.b, label %bb.c
-
-bb.b:                                             ; preds = %5
+  %4 = load i32, ptr %i.t, align 4
+  %.not = trunc i32 %4 to i1
+  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 24
+  %i.x = load i32, ptr %5, align 8
+  %6 = icmp slt i32 %i.x, 16376
+  %or.cond = select i1 %.not, i1 %6, i1 false
   %.val.i = load ptr, ptr %1, align 8
-  %9 = tail call noundef zeroext i1 @_ZN2v88internal8compiler18OperatorProperties18HasFrameStateInputEPKNS1_8OperatorE(ptr noundef %.val.i) #11
-  %10 = zext i1 %9 to i32
-  %11 = load ptr, ptr %i.c, align 8
-  %12 = getelementptr inbounds nuw i8, ptr %11, i64 800
-  %13 = load ptr, ptr %12, align 8
-  %i.y = tail call { ptr, ptr } @_ZN2v88internal8Builtins11CallableForEPNS0_7IsolateENS0_7BuiltinE(ptr noundef %13, i32 noundef 939) #11 ; 2 uses
+  %7 = tail call noundef zeroext i1 @_ZN2v88internal8compiler18OperatorProperties18HasFrameStateInputEPKNS1_8OperatorE(ptr noundef %.val.i) #11
+  %8 = zext i1 %7 to i32                          ; 2 uses
+  %9 = load ptr, ptr %i.c, align 8
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 800
+  %11 = load ptr, ptr %10, align 8                ; 2 uses
+  br i1 %or.cond, label %bb.b, label %bb.c
+
+bb.b:                                             ; preds = %bb.a
+  %i.y = tail call { ptr, ptr } @_ZN2v88internal8Builtins11CallableForEPNS0_7IsolateENS0_7BuiltinE(ptr noundef %11, i32 noundef 939) #11 ; 2 uses
   %i.z = extractvalue { ptr, ptr } %i.y, 0
   %i.aa = extractvalue { ptr, ptr } %i.y, 1       ; 3 uses
   %i.ab = load ptr, ptr %1, align 8
@@ -259,7 +256,7 @@ bb.b:                                             ; preds = %5
   %i.ah = load i32, ptr %i.ag, align 8
   %i.ai = load i32, ptr %i.aa, align 8
   %i.aj = sub nsw i32 %i.ah, %i.ai
-  %i.ak = call noundef ptr @_ZN2v88internal8compiler7Linkage21GetStubCallDescriptorEPNS0_4ZoneERKNS0_23CallInterfaceDescriptorEiNS_4base5FlagsINS1_14CallDescriptor4FlagEiiEENS9_INS1_8Operator8PropertyEhhEENS0_12StubCallModeE(ptr noundef %i.af, ptr noundef nonnull align 8 dereferenceable(8) %3, i32 noundef %i.aj, i32 %10, i8 %.sroa.0.0.copyload.i.i.i, i32 noundef 0) #11
+  %i.ak = call noundef ptr @_ZN2v88internal8compiler7Linkage21GetStubCallDescriptorEPNS0_4ZoneERKNS0_23CallInterfaceDescriptorEiNS_4base5FlagsINS1_14CallDescriptor4FlagEiiEENS9_INS1_8Operator8PropertyEhhEENS0_12StubCallModeE(ptr noundef %i.af, ptr noundef nonnull align 8 dereferenceable(8) %3, i32 noundef %i.aj, i32 %8, i8 %.sroa.0.0.copyload.i.i.i, i32 noundef 0) #11
   %i.al = load ptr, ptr %i.c, align 8
   %i.am = call noundef ptr @_ZN2v88internal8compiler7JSGraph18HeapConstantNoHoleENS0_6HandleINS0_10HeapObjectEEE(ptr noundef nonnull align 8 dereferenceable(1144) %i.al, ptr %i.z) #11
   %i.an = load ptr, ptr %i.c, align 8
@@ -274,14 +271,8 @@ bb.b:                                             ; preds = %5
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #11
   br label %bb.d
 
-bb.c:                                             ; preds = %5, %bb.a
-  %.val.i13 = load ptr, ptr %1, align 8
-  %14 = tail call noundef zeroext i1 @_ZN2v88internal8compiler18OperatorProperties18HasFrameStateInputEPKNS1_8OperatorE(ptr noundef %.val.i13) #11
-  %15 = zext i1 %14 to i32
-  %16 = load ptr, ptr %i.c, align 8
-  %17 = getelementptr inbounds nuw i8, ptr %16, i64 800
-  %18 = load ptr, ptr %17, align 8
-  %i.au = tail call { ptr, ptr } @_ZN2v88internal8Builtins11CallableForEPNS0_7IsolateENS0_7BuiltinE(ptr noundef %18, i32 noundef 242) #11 ; 2 uses
+bb.c:                                             ; preds = %bb.a
+  %i.au = tail call { ptr, ptr } @_ZN2v88internal8Builtins11CallableForEPNS0_7IsolateENS0_7BuiltinE(ptr noundef %11, i32 noundef 242) #11 ; 2 uses
   %i.av = extractvalue { ptr, ptr } %i.au, 0
   %i.aw = extractvalue { ptr, ptr } %i.au, 1      ; 3 uses
   %i.ax = load ptr, ptr %1, align 8
@@ -296,7 +287,7 @@ bb.c:                                             ; preds = %5, %bb.a
   %i.bd = load i32, ptr %i.bc, align 8
   %i.be = load i32, ptr %i.aw, align 8
   %i.bf = sub nsw i32 %i.bd, %i.be
-  %i.bg = call noundef ptr @_ZN2v88internal8compiler7Linkage21GetStubCallDescriptorEPNS0_4ZoneERKNS0_23CallInterfaceDescriptorEiNS_4base5FlagsINS1_14CallDescriptor4FlagEiiEENS9_INS1_8Operator8PropertyEhhEENS0_12StubCallModeE(ptr noundef %i.bb, ptr noundef nonnull align 8 dereferenceable(8) %2, i32 noundef %i.bf, i32 %15, i8 %.sroa.0.0.copyload.i.i.i14, i32 noundef 0) #11
+  %i.bg = call noundef ptr @_ZN2v88internal8compiler7Linkage21GetStubCallDescriptorEPNS0_4ZoneERKNS0_23CallInterfaceDescriptorEiNS_4base5FlagsINS1_14CallDescriptor4FlagEiiEENS9_INS1_8Operator8PropertyEhhEENS0_12StubCallModeE(ptr noundef %i.bb, ptr noundef nonnull align 8 dereferenceable(8) %2, i32 noundef %i.bf, i32 %8, i8 %.sroa.0.0.copyload.i.i.i14, i32 noundef 0) #11
   %i.bh = load ptr, ptr %i.c, align 8
   %i.bi = call noundef ptr @_ZN2v88internal8compiler7JSGraph18HeapConstantNoHoleENS0_6HandleINS0_10HeapObjectEEE(ptr noundef nonnull align 8 dereferenceable(1144) %i.bh, ptr %i.av) #11
   %i.bj = load ptr, ptr %i.c, align 8
@@ -322,7 +313,7 @@ bb.a:
   %3 = alloca %"class.v8::internal::CallInterfaceDescriptor", align 8 ; 4 uses
   %i.a = load ptr, ptr %1, align 8
   %i.b = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZN2v88internal8compiler25CreateLiteralParametersOfEPKNS1_8OperatorE(ptr noundef %i.a) #11 ; 4 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 13 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 12 uses
   %i.d = load ptr, ptr %i.c, align 8              ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8
   %i.f = load ptr, ptr %i.e, align 8
@@ -347,25 +338,22 @@ bb.a:
   %i.v = sitofp i32 %i.u to double
   %i.w = tail call noundef ptr @_ZN2v88internal8compiler7JSGraph17ConstantMaybeHoleEd(ptr noundef nonnull align 8 dereferenceable(1144) %i.q, double noundef %i.v) #11
   tail call void @_ZN2v88internal8compiler4Node11InsertInputEPNS0_4ZoneEiPS2_(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef %i.s, i32 noundef 3, ptr noundef %i.w) #11
-  %i.x = load i32, ptr %i.t, align 4
-  %4 = and i32 %i.x, 1
-  %.not = icmp eq i32 %4, 0
-  br i1 %.not, label %bb.c, label %5
-
-5:                                                ; preds = %bb.a
-  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  %7 = load i32, ptr %6, align 8
-  %8 = icmp slt i32 %7, 2731
-  br i1 %8, label %bb.b, label %bb.c
-
-bb.b:                                             ; preds = %5
+  %4 = load i32, ptr %i.t, align 4
+  %.not = trunc i32 %4 to i1
+  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 24
+  %i.x = load i32, ptr %5, align 8
+  %6 = icmp slt i32 %i.x, 2731
+  %or.cond = select i1 %.not, i1 %6, i1 false
   %.val.i = load ptr, ptr %1, align 8
-  %9 = tail call noundef zeroext i1 @_ZN2v88internal8compiler18OperatorProperties18HasFrameStateInputEPKNS1_8OperatorE(ptr noundef %.val.i) #11
-  %10 = zext i1 %9 to i32
-  %11 = load ptr, ptr %i.c, align 8
-  %12 = getelementptr inbounds nuw i8, ptr %11, i64 800
-  %13 = load ptr, ptr %12, align 8
-  %i.y = tail call { ptr, ptr } @_ZN2v88internal8Builtins11CallableForEPNS0_7IsolateENS0_7BuiltinE(ptr noundef %13, i32 noundef 941) #11 ; 2 uses
+  %7 = tail call noundef zeroext i1 @_ZN2v88internal8compiler18OperatorProperties18HasFrameStateInputEPKNS1_8OperatorE(ptr noundef %.val.i) #11
+  %8 = zext i1 %7 to i32                          ; 2 uses
+  %9 = load ptr, ptr %i.c, align 8
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 800
+  %11 = load ptr, ptr %10, align 8                ; 2 uses
+  br i1 %or.cond, label %bb.b, label %bb.c
+
+bb.b:                                             ; preds = %bb.a
+  %i.y = tail call { ptr, ptr } @_ZN2v88internal8Builtins11CallableForEPNS0_7IsolateENS0_7BuiltinE(ptr noundef %11, i32 noundef 941) #11 ; 2 uses
   %i.z = extractvalue { ptr, ptr } %i.y, 0
   %i.aa = extractvalue { ptr, ptr } %i.y, 1       ; 3 uses
   %i.ab = load ptr, ptr %1, align 8
@@ -380,7 +368,7 @@ bb.b:                                             ; preds = %5
   %i.ah = load i32, ptr %i.ag, align 8
   %i.ai = load i32, ptr %i.aa, align 8
   %i.aj = sub nsw i32 %i.ah, %i.ai
-  %i.ak = call noundef ptr @_ZN2v88internal8compiler7Linkage21GetStubCallDescriptorEPNS0_4ZoneERKNS0_23CallInterfaceDescriptorEiNS_4base5FlagsINS1_14CallDescriptor4FlagEiiEENS9_INS1_8Operator8PropertyEhhEENS0_12StubCallModeE(ptr noundef %i.af, ptr noundef nonnull align 8 dereferenceable(8) %3, i32 noundef %i.aj, i32 %10, i8 %.sroa.0.0.copyload.i.i.i, i32 noundef 0) #11
+  %i.ak = call noundef ptr @_ZN2v88internal8compiler7Linkage21GetStubCallDescriptorEPNS0_4ZoneERKNS0_23CallInterfaceDescriptorEiNS_4base5FlagsINS1_14CallDescriptor4FlagEiiEENS9_INS1_8Operator8PropertyEhhEENS0_12StubCallModeE(ptr noundef %i.af, ptr noundef nonnull align 8 dereferenceable(8) %3, i32 noundef %i.aj, i32 %8, i8 %.sroa.0.0.copyload.i.i.i, i32 noundef 0) #11
   %i.al = load ptr, ptr %i.c, align 8
   %i.am = call noundef ptr @_ZN2v88internal8compiler7JSGraph18HeapConstantNoHoleENS0_6HandleINS0_10HeapObjectEEE(ptr noundef nonnull align 8 dereferenceable(1144) %i.al, ptr %i.z) #11
   %i.an = load ptr, ptr %i.c, align 8
@@ -395,14 +383,8 @@ bb.b:                                             ; preds = %5
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #11
   br label %bb.d
 
-bb.c:                                             ; preds = %5, %bb.a
-  %.val.i13 = load ptr, ptr %1, align 8
-  %14 = tail call noundef zeroext i1 @_ZN2v88internal8compiler18OperatorProperties18HasFrameStateInputEPKNS1_8OperatorE(ptr noundef %.val.i13) #11
-  %15 = zext i1 %14 to i32
-  %16 = load ptr, ptr %i.c, align 8
-  %17 = getelementptr inbounds nuw i8, ptr %16, i64 800
-  %18 = load ptr, ptr %17, align 8
-  %i.au = tail call { ptr, ptr } @_ZN2v88internal8Builtins11CallableForEPNS0_7IsolateENS0_7BuiltinE(ptr noundef %18, i32 noundef 243) #11 ; 2 uses
+bb.c:                                             ; preds = %bb.a
+  %i.au = tail call { ptr, ptr } @_ZN2v88internal8Builtins11CallableForEPNS0_7IsolateENS0_7BuiltinE(ptr noundef %11, i32 noundef 243) #11 ; 2 uses
   %i.av = extractvalue { ptr, ptr } %i.au, 0
   %i.aw = extractvalue { ptr, ptr } %i.au, 1      ; 3 uses
   %i.ax = load ptr, ptr %1, align 8
@@ -417,7 +399,7 @@ bb.c:                                             ; preds = %5, %bb.a
   %i.bd = load i32, ptr %i.bc, align 8
   %i.be = load i32, ptr %i.aw, align 8
   %i.bf = sub nsw i32 %i.bd, %i.be
-  %i.bg = call noundef ptr @_ZN2v88internal8compiler7Linkage21GetStubCallDescriptorEPNS0_4ZoneERKNS0_23CallInterfaceDescriptorEiNS_4base5FlagsINS1_14CallDescriptor4FlagEiiEENS9_INS1_8Operator8PropertyEhhEENS0_12StubCallModeE(ptr noundef %i.bb, ptr noundef nonnull align 8 dereferenceable(8) %2, i32 noundef %i.bf, i32 %15, i8 %.sroa.0.0.copyload.i.i.i14, i32 noundef 0) #11
+  %i.bg = call noundef ptr @_ZN2v88internal8compiler7Linkage21GetStubCallDescriptorEPNS0_4ZoneERKNS0_23CallInterfaceDescriptorEiNS_4base5FlagsINS1_14CallDescriptor4FlagEiiEENS9_INS1_8Operator8PropertyEhhEENS0_12StubCallModeE(ptr noundef %i.bb, ptr noundef nonnull align 8 dereferenceable(8) %2, i32 noundef %i.bf, i32 %8, i8 %.sroa.0.0.copyload.i.i.i14, i32 noundef 0) #11
   %i.bh = load ptr, ptr %i.c, align 8
   %i.bi = call noundef ptr @_ZN2v88internal8compiler7JSGraph18HeapConstantNoHoleENS0_6HandleINS0_10HeapObjectEEE(ptr noundef nonnull align 8 dereferenceable(1144) %i.bh, ptr %i.av) #11
   %i.bj = load ptr, ptr %i.c, align 8

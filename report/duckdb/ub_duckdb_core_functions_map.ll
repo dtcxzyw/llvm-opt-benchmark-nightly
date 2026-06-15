@@ -201,18 +201,16 @@ _ZN6duckdbL9MapIsNullERNS_9DataChunkE.exit.thread245.thread: ; preds = %bb.a
 bb.b:                                             ; preds = %bb.a
   %i.g = tail call noundef nonnull align 8 dereferenceable(104) ptr @_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(72) %0, i64 noundef 0)
   %i.h = tail call noundef nonnull align 8 dereferenceable(104) ptr @_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(72) %0, i64 noundef 1)
-  %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  %i.j = load i8, ptr %i.i, align 8, !tbaa !114
-  %i.k = icmp eq i8 %i.j, 1
-  br i1 %i.k, label %_ZN6duckdbL9MapIsNullERNS_9DataChunkE.exit.thread, label %_ZN6duckdbL9MapIsNullERNS_9DataChunkE.exit
-
-_ZN6duckdbL9MapIsNullERNS_9DataChunkE.exit:       ; preds = %bb.b
-  %15 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
+  %15 = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %16 = load i8, ptr %15, align 8, !tbaa !114
   %17 = icmp eq i8 %16, 1
-  br i1 %17, label %_ZN6duckdbL9MapIsNullERNS_9DataChunkE.exit.thread, label %_ZN6duckdbL9MapIsNullERNS_9DataChunkE.exit.thread245
+  %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8
+  %i.j = load i8, ptr %i.i, align 8
+  %i.k = icmp eq i8 %i.j, 1
+  %or.cond = select i1 %17, i1 true, i1 %i.k
+  br i1 %or.cond, label %_ZN6duckdbL9MapIsNullERNS_9DataChunkE.exit.thread, label %_ZN6duckdbL9MapIsNullERNS_9DataChunkE.exit.thread245
 
-_ZN6duckdbL9MapIsNullERNS_9DataChunkE.exit.thread: ; preds = %bb.b, %_ZN6duckdbL9MapIsNullERNS_9DataChunkE.exit
+_ZN6duckdbL9MapIsNullERNS_9DataChunkE.exit.thread: ; preds = %bb.b
   tail call void @_ZN6duckdb10FlatVector16VerifyFlatVectorERKNS_6VectorE(ptr noundef nonnull align 8 dereferenceable(104) %2)
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 3 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !99   ; 2 uses
@@ -234,7 +232,7 @@ _ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit: ; preds = %_ZN6duckdbL9
   tail call void @_ZN6duckdb6Vector13SetVectorTypeENS_10VectorTypeE(ptr noundef nonnull align 8 dereferenceable(104) %2, i8 noundef zeroext 2)
   br label %bb.fh
 
-_ZN6duckdbL9MapIsNullERNS_9DataChunkE.exit.thread245: ; preds = %_ZN6duckdbL9MapIsNullERNS_9DataChunkE.exit
+_ZN6duckdbL9MapIsNullERNS_9DataChunkE.exit.thread245: ; preds = %bb.b
   %.pre = load ptr, ptr %0, align 8, !tbaa !125
   %.pre313 = load ptr, ptr %i.b, align 8, !tbaa !125
   %i.s = icmp eq ptr %.pre, %.pre313

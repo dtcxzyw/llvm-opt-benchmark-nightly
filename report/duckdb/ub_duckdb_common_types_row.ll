@@ -201,15 +201,13 @@ _ZN6duckdb15ContinuousIdSet6InsertERKj.exit:      ; preds = %bb.b, %bb.c
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 152
   %i.u = load i8, ptr %i.t, align 8, !tbaa !145, !range !175, !noundef !60
   %i.v = trunc nuw i8 %i.u to i1
-  br i1 %i.v, label %_ZN6duckdb15ContinuousIdSet6InsertERKj.exit10, label %3
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 24
+  %4 = load i64, ptr %3, align 8
+  %.not = icmp eq i64 %4, 0
+  %or.cond = select i1 %i.v, i1 true, i1 %.not
+  br i1 %or.cond, label %_ZN6duckdb15ContinuousIdSet6InsertERKj.exit10, label %bb.d
 
-3:                                                ; preds = %_ZN6duckdb15ContinuousIdSet6InsertERKj.exit
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %5 = load i64, ptr %4, align 8, !tbaa !568
-  %.not = icmp eq i64 %5, 0
-  br i1 %.not, label %_ZN6duckdb15ContinuousIdSet6InsertERKj.exit10, label %bb.d
-
-bb.d:                                             ; preds = %3
+bb.d:                                             ; preds = %_ZN6duckdb15ContinuousIdSet6InsertERKj.exit
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   %i.y = load i32, ptr %i.w, align 8, !tbaa !617  ; 2 uses
@@ -233,7 +231,7 @@ bb.f:                                             ; preds = %bb.d
   store i32 %i.ag, ptr %i.ad, align 4, !tbaa !531
   br label %_ZN6duckdb15ContinuousIdSet6InsertERKj.exit10
 
-_ZN6duckdb15ContinuousIdSet6InsertERKj.exit10:    ; preds = %bb.f, %bb.e, %3, %_ZN6duckdb15ContinuousIdSet6InsertERKj.exit
+_ZN6duckdb15ContinuousIdSet6InsertERKj.exit10:    ; preds = %bb.f, %bb.e, %_ZN6duckdb15ContinuousIdSet6InsertERKj.exit
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.ai = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.aj = load i64, ptr %i.ah, align 8

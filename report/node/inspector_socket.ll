@@ -201,23 +201,21 @@ _ZN4node17StringEqualNoCaseEPKcS1_.exit.i:        ; preds = %bb.ah, %_ZN4node7To
   %i.do = phi i1 [ true, %_ZN4node9inspector12_GLOBAL__N_111IsIPAddressERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i ], [ true, %_ZN4node9inspector12_GLOBAL__N_18TrimPortERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i ], [ true, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm.exit.thread.thread.i.i ], [ %i.dj, %_ZN4node7ToLowerEc.exit7.i.i ], [ %i.dj, %bb.ah ]
   %i.dp = load ptr, ptr %2, align 8               ; 2 uses
   %i.dq = icmp eq ptr %i.dp, %i.y
-  br i1 %i.dq, label %_ZNK4node9inspector12_GLOBAL__N_111HttpHandler13IsAllowedHostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
+  br i1 %i.dq, label %bb.ai, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i: ; preds = %_ZN4node17StringEqualNoCaseEPKcS1_.exit.i
   %i.dr = load i64, ptr %i.y, align 8
   %i.ds = add i64 %i.dr, 1
   call void @_ZdlPvm(ptr noundef %i.dp, i64 noundef %i.ds) #25
-  br label %_ZNK4node9inspector12_GLOBAL__N_111HttpHandler13IsAllowedHostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
+  br label %bb.ai
 
-_ZNK4node9inspector12_GLOBAL__N_111HttpHandler13IsAllowedHostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit: ; preds = %_ZN4node17StringEqualNoCaseEPKcS1_.exit.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
+bb.ai:                                            ; preds = %_ZN4node17StringEqualNoCaseEPKcS1_.exit.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #22
-  br i1 %i.do, label %bb.ai, label %.critedge.sink.split
-
-bb.ai:                                            ; preds = %_ZNK4node9inspector12_GLOBAL__N_111HttpHandler13IsAllowedHostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
   %i.dt = getelementptr inbounds nuw i8, ptr %.sroa.029.036, i64 33
-  %i.du = load i8, ptr %i.dt, align 1, !range !14, !noundef !15
+  %i.du = load i8, ptr %i.dt, align 1, !range !14
   %i.dv = trunc nuw i8 %i.du to i1
-  br i1 %i.dv, label %bb.aj, label %.critedge.sink.split
+  %or.cond = select i1 %i.do, i1 %i.dv, i1 false
+  br i1 %or.cond, label %bb.aj, label %.critedge.sink.split
 
 bb.aj:                                            ; preds = %bb.ai
   %i.dw = getelementptr inbounds nuw i8, ptr %.sroa.029.036, i64 32
@@ -256,7 +254,7 @@ bb.an:                                            ; preds = %bb.ak, %bb.am
   %i.ep = icmp eq ptr %i.eo, %i.u
   br i1 %i.ep, label %.lr.ph.i.i.i.preheader, label %bb.g
 
-.critedge.sink.split:                             ; preds = %bb.al, %_ZNK4node9inspector12_GLOBAL__N_111HttpHandler13IsAllowedHostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, %bb.ai
+.critedge.sink.split:                             ; preds = %bb.al, %bb.ai
   %i.eq = load ptr, ptr %0, align 8
   %i.er = getelementptr inbounds nuw i8, ptr %i.eq, i64 32
   %i.es = load ptr, ptr %i.er, align 8

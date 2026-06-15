@@ -201,9 +201,9 @@ bb.a:
   %21 = alloca %"class.std::allocator", align 1   ; 5 uses
   br label %tailrecurse
 
-tailrecurse:                                      ; preds = %26, %bb.a
-  %.tr = phi ptr [ %0, %bb.a ], [ %i.fd, %26 ]    ; 25 uses
-  %.tr183 = phi ptr [ %1, %bb.a ], [ %i.fe, %26 ] ; 23 uses
+tailrecurse:                                      ; preds = %._crit_edge, %bb.a
+  %.tr = phi ptr [ %0, %bb.a ], [ %i.fd, %._crit_edge ] ; 25 uses
+  %.tr183 = phi ptr [ %1, %bb.a ], [ %i.fe, %._crit_edge ] ; 23 uses
   %i.e = tail call noundef zeroext i1 @_ZNK6duckdb11LogicalTypeeqERKS0_(ptr noundef nonnull align 8 dereferenceable(24) %.tr, ptr noundef nonnull align 8 dereferenceable(24) %.tr183)
   br i1 %i.e, label %bb.o, label %bb.b
 
@@ -606,25 +606,23 @@ bb.bv:                                            ; preds = %bb.bu
   %i.el = tail call noundef nonnull align 8 dereferenceable(64) ptr @_ZNK6duckdb6vectorINS_5ValueELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.dv, i64 noundef %.0122234) ; 2 uses
   %i.em = tail call noundef nonnull align 8 dereferenceable(64) ptr @_ZNK6duckdb6vectorINS_5ValueELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.dw, i64 noundef %.0122234) ; 2 uses
   %i.en = getelementptr inbounds nuw i8, ptr %i.el, i64 24
-  %i.eo = load i8, ptr %i.en, align 8, !tbaa !7, !range !24, !noundef !25
+  %i.eo = load i8, ptr %i.en, align 8, !tbaa !7, !range !24, !noundef !25 ; 2 uses
   %i.ep = trunc nuw i8 %i.eo to i1
   %i.eq = getelementptr inbounds nuw i8, ptr %i.em, i64 24
-  %i.er = load i8, ptr %i.eq, align 8, !tbaa !7, !range !24 ; 2 uses
-  br i1 %i.ep, label %22, label %bb.bw
-
-22:                                               ; preds = %.lr.ph
-  %23 = trunc nuw i8 %i.er to i1
-  br i1 %23, label %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit140.thread, label %.critedge
+  %i.er = load i8, ptr %i.eq, align 8, !range !24 ; 2 uses
+  %22 = trunc nuw i8 %i.er to i1
+  %or.cond = select i1 %i.ep, i1 %22, i1 false
+  br i1 %or.cond, label %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit140.thread, label %bb.bw
 
 bb.bw:                                            ; preds = %.lr.ph
-  %i.es = icmp eq i8 %i.er, 0
+  %i.es = icmp eq i8 %i.eo, %i.er
   br i1 %i.es, label %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit140, label %.critedge
 
 _ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit140: ; preds = %bb.bw
   %i.et = tail call fastcc noundef zeroext i1 @_ZN6duckdb12_GLOBAL__N_125TemplatedBooleanOperationINS_6EqualsEEEbRKNS_5ValueES5_(ptr noundef nonnull align 8 dereferenceable(64) %i.el, ptr noundef nonnull align 8 dereferenceable(64) %i.em), !inline_history !41
   br i1 %i.et, label %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit140.thread, label %.critedge
 
-_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit140.thread: ; preds = %22, %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit140
+_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit140.thread: ; preds = %.lr.ph, %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit140
   %i.eu = add nuw i64 %.0122234, 1                ; 3 uses
   %i.ev = load ptr, ptr %i.dy, align 8, !tbaa !42
   %i.ew = load ptr, ptr %i.dv, align 8, !tbaa !44
@@ -641,19 +639,15 @@ _ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit140.thread: ; p
   %i.fd = tail call noundef nonnull align 8 dereferenceable(64) ptr @_ZNK6duckdb6vectorINS_5ValueELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.dv, i64 noundef %.0122.lcssa) ; 2 uses
   %i.fe = tail call noundef nonnull align 8 dereferenceable(64) ptr @_ZNK6duckdb6vectorINS_5ValueELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.dw, i64 noundef %.0122.lcssa) ; 2 uses
   %i.ff = getelementptr inbounds nuw i8, ptr %i.fd, i64 24
-  %i.fg = load i8, ptr %i.ff, align 8, !tbaa !7, !range !24, !noundef !25
+  %i.fg = load i8, ptr %i.ff, align 8, !tbaa !7, !range !24, !noundef !25 ; 2 uses
   %i.fh = trunc nuw i8 %i.fg to i1
   %i.fi = getelementptr inbounds nuw i8, ptr %i.fe, i64 24
-  %i.fj = load i8, ptr %i.fi, align 8, !tbaa !7, !range !24 ; 2 uses
-  br i1 %i.fh, label %24, label %26
-
-24:                                               ; preds = %._crit_edge
-  %25 = trunc nuw i8 %i.fj to i1
-  br label %.critedge
-
-26:                                               ; preds = %._crit_edge
-  %27 = icmp eq i8 %i.fj, 0
-  br i1 %27, label %tailrecurse, label %.critedge
+  %i.fj = load i8, ptr %i.fi, align 8, !range !24 ; 2 uses
+  %23 = trunc nuw i8 %i.fj to i1
+  %or.cond182 = select i1 %i.fh, i1 %23, i1 false ; 2 uses
+  %.not190 = icmp ne i8 %i.fg, %i.fj
+  %or.cond588.not = select i1 %or.cond182, i1 true, i1 %.not190
+  br i1 %or.cond588.not, label %.critedge, label %tailrecurse
 
 bb.bx:                                            ; preds = %bb.o
   %i.fk = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZN6duckdb9ListValue11GetChildrenERKNS_5ValueE(ptr noundef nonnull align 8 dereferenceable(64) %.tr) ; 5 uses
@@ -706,25 +700,23 @@ _ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit144.thread.._cr
   %i.gm = tail call noundef nonnull align 8 dereferenceable(64) ptr @_ZNK6duckdb6vectorINS_5ValueELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.fk, i64 noundef %.0106243430) ; 2 uses
   %i.gn = tail call noundef nonnull align 8 dereferenceable(64) ptr @_ZNK6duckdb6vectorINS_5ValueELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.fl, i64 noundef %.0106243430) ; 2 uses
   %i.go = getelementptr inbounds nuw i8, ptr %i.gm, i64 24
-  %i.gp = load i8, ptr %i.go, align 8, !tbaa !7, !range !24, !noundef !25
+  %i.gp = load i8, ptr %i.go, align 8, !tbaa !7, !range !24, !noundef !25 ; 2 uses
   %i.gq = trunc nuw i8 %i.gp to i1
   %i.gr = getelementptr inbounds nuw i8, ptr %i.gn, i64 24
-  %i.gs = load i8, ptr %i.gr, align 8, !tbaa !7, !range !24 ; 2 uses
-  br i1 %i.gq, label %28, label %bb.bz
-
-28:                                               ; preds = %.lr.ph431
-  %29 = trunc nuw i8 %i.gs to i1
-  br i1 %29, label %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit144.thread, label %.critedge
+  %i.gs = load i8, ptr %i.gr, align 8, !range !24 ; 2 uses
+  %24 = trunc nuw i8 %i.gs to i1
+  %or.cond185 = select i1 %i.gq, i1 %24, i1 false
+  br i1 %or.cond185, label %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit144.thread, label %bb.bz
 
 bb.bz:                                            ; preds = %.lr.ph431
-  %i.gt = icmp eq i8 %i.gs, 0
+  %i.gt = icmp eq i8 %i.gp, %i.gs
   br i1 %i.gt, label %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit144, label %.critedge
 
 _ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit144: ; preds = %bb.bz
   %i.gu = tail call fastcc noundef zeroext i1 @_ZN6duckdb12_GLOBAL__N_125TemplatedBooleanOperationINS_6EqualsEEEbRKNS_5ValueES5_(ptr noundef nonnull align 8 dereferenceable(64) %i.gm, ptr noundef nonnull align 8 dereferenceable(64) %i.gn), !inline_history !41
   br i1 %i.gu, label %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit144.thread, label %.critedge
 
-_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit144.thread: ; preds = %28, %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit144
+_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit144.thread: ; preds = %.lr.ph431, %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit144
   %i.gv = add i64 %.0106243430, 1                 ; 3 uses
   %i.gw = load ptr, ptr %i.fm, align 8, !tbaa !42
   %i.gx = load ptr, ptr %i.fk, align 8, !tbaa !44
@@ -751,25 +743,23 @@ bb.ca:                                            ; preds = %bb.o
   %i.hk = tail call noundef nonnull align 8 dereferenceable(64) ptr @_ZNK6duckdb6vectorINS_5ValueELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.hd, i64 noundef %.096236) ; 2 uses
   %i.hl = tail call noundef nonnull align 8 dereferenceable(64) ptr @_ZNK6duckdb6vectorINS_5ValueELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.he, i64 noundef %.096236) ; 2 uses
   %i.hm = getelementptr inbounds nuw i8, ptr %i.hk, i64 24
-  %i.hn = load i8, ptr %i.hm, align 8, !tbaa !7, !range !24, !noundef !25
+  %i.hn = load i8, ptr %i.hm, align 8, !tbaa !7, !range !24, !noundef !25 ; 2 uses
   %i.ho = trunc nuw i8 %i.hn to i1
   %i.hp = getelementptr inbounds nuw i8, ptr %i.hl, i64 24
-  %i.hq = load i8, ptr %i.hp, align 8, !tbaa !7, !range !24 ; 2 uses
-  br i1 %i.ho, label %30, label %bb.cb
-
-30:                                               ; preds = %.lr.ph238
-  %31 = trunc nuw i8 %i.hq to i1
-  br i1 %31, label %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit146.thread, label %.critedge
+  %i.hq = load i8, ptr %i.hp, align 8, !range !24 ; 2 uses
+  %25 = trunc nuw i8 %i.hq to i1
+  %or.cond188 = select i1 %i.ho, i1 %25, i1 false
+  br i1 %or.cond188, label %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit146.thread, label %bb.cb
 
 bb.cb:                                            ; preds = %.lr.ph238
-  %i.hr = icmp eq i8 %i.hq, 0
+  %i.hr = icmp eq i8 %i.hn, %i.hq
   br i1 %i.hr, label %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit146, label %.critedge
 
 _ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit146: ; preds = %bb.cb
   %i.hs = tail call fastcc noundef zeroext i1 @_ZN6duckdb12_GLOBAL__N_125TemplatedBooleanOperationINS_6EqualsEEEbRKNS_5ValueES5_(ptr noundef nonnull align 8 dereferenceable(64) %i.hk, ptr noundef nonnull align 8 dereferenceable(64) %i.hl), !inline_history !41
   br i1 %i.hs, label %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit146.thread, label %.critedge
 
-_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit146.thread: ; preds = %30, %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit146
+_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit146.thread: ; preds = %.lr.ph238, %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit146
   %i.ht = add nuw i64 %.096236, 1                 ; 2 uses
   %i.hu = load ptr, ptr %i.hf, align 8, !tbaa !42
   %i.hv = load ptr, ptr %i.hd, align 8, !tbaa !44
@@ -827,8 +817,8 @@ bb.cg:                                            ; preds = %_ZNKSt7__cxx1112bas
   call void @__cxa_free_exception(ptr %i.ia) #17
   br label %bb.ch
 
-.critedge:                                        ; preds = %26, %22, %bb.bw, %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit140, %30, %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit146, %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit146.thread, %bb.cb, %28, %bb.bz, %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit144, %24, %bb.ca, %bb.ah, %bb.ag, %bb.af, %bb.ae, %._crit_edge.i.i.i, %bb.ad, %._crit_edge246, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator5FinalINS_6EqualsEEEbRKNS_5ValueES6_.exit, %bb.ax, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.l
-  %.6 = phi i1 [ %.097, %bb.l ], [ %i.q, %bb.p ], [ %i.t, %bb.q ], [ %i.w, %bb.r ], [ %i.z, %bb.s ], [ %i.ac, %bb.t ], [ %i.af, %bb.u ], [ %i.ai, %bb.v ], [ %i.al, %bb.w ], [ %i.ao, %bb.x ], [ %i.ax, %bb.y ], [ %i.bg, %bb.z ], [ %i.bj, %bb.aa ], [ %i.bm, %bb.ab ], [ true, %bb.ca ], [ false, %._crit_edge.i.i.i ], [ %i.di, %bb.ax ], [ %i.cz, %bb.ah ], [ true, %bb.ag ], [ %.0.i, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator5FinalINS_6EqualsEEEbRKNS_5ValueES6_.exit ], [ %25, %24 ], [ %i.gj, %._crit_edge246 ], [ false, %28 ], [ true, %bb.ad ], [ %i.co, %bb.ae ], [ false, %bb.af ], [ false, %30 ], [ false, %22 ], [ false, %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit144 ], [ false, %bb.bz ], [ true, %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit146.thread ], [ false, %bb.cb ], [ false, %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit146 ], [ false, %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit140 ], [ false, %bb.bw ], [ false, %26 ]
+.critedge:                                        ; preds = %._crit_edge, %bb.bw, %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit140, %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit146, %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit146.thread, %bb.cb, %bb.bz, %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit144, %bb.ca, %bb.ah, %bb.ag, %bb.af, %bb.ae, %._crit_edge.i.i.i, %bb.ad, %._crit_edge246, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator5FinalINS_6EqualsEEEbRKNS_5ValueES6_.exit, %bb.ax, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.l
+  %.6 = phi i1 [ %.097, %bb.l ], [ %i.q, %bb.p ], [ %i.t, %bb.q ], [ %i.w, %bb.r ], [ %i.z, %bb.s ], [ %i.ac, %bb.t ], [ %i.af, %bb.u ], [ %i.ai, %bb.v ], [ %i.al, %bb.w ], [ %i.ao, %bb.x ], [ %i.ax, %bb.y ], [ %i.bg, %bb.z ], [ %i.bj, %bb.aa ], [ %i.bm, %bb.ab ], [ true, %bb.ca ], [ false, %._crit_edge.i.i.i ], [ %i.di, %bb.ax ], [ %i.cz, %bb.ah ], [ true, %bb.ag ], [ %.0.i, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator5FinalINS_6EqualsEEEbRKNS_5ValueES6_.exit ], [ false, %bb.cb ], [ %i.gj, %._crit_edge246 ], [ false, %bb.bw ], [ true, %bb.ad ], [ %i.co, %bb.ae ], [ false, %bb.af ], [ false, %bb.bz ], [ false, %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit144 ], [ false, %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit146 ], [ true, %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit146.thread ], [ false, %_ZN6duckdb15ValueOperations15NotDistinctFromERKNS_5ValueES3_.exit140 ], [ %or.cond182, %._crit_edge ]
   ret i1 %.6
 
 bb.ch:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.cg, %bb.bv, %bb.br, %bb.n
@@ -1231,8 +1221,8 @@ bb.cj:                                            ; preds = %_ZNKSt7__cxx1112bas
   call void @__cxa_free_exception(ptr %i.iv) #17
   br label %bb.ck
 
-_ZN6duckdb11GreaterThan9OperationINS_10interval_tEEEbRKT_S5_.exit: ; preds = %.thread182, %bb.bw, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator8PossibleINS_11GreaterThanEEEbRKNS_5ValueES6_.exit, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator5FinalINS_11GreaterThanEEEbRKNS_5ValueES6_.exit149, %bb.bv, %bb.ce, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator8PossibleINS_11GreaterThanEEEbRKNS_5ValueES6_.exit147, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator5FinalINS_11GreaterThanEEEbRKNS_5ValueES6_.exit155, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator8PossibleINS_11GreaterThanEEEbRKNS_5ValueES6_.exit147.thread, %bb.cd, %bb.cb, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator5FinalINS_11GreaterThanEEEbRKNS_5ValueES6_.exit153, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator8PossibleINS_11GreaterThanEEEbRKNS_5ValueES6_.exit143, %bb.ca, %bb.bx, %bb.cc, %bb.af, %bb.ae, %bb.ad, %bb.ac, %._crit_edge277, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator5FinalINS_11GreaterThanEEEbRKNS_5ValueES6_.exit, %bb.aw, %_ZN6duckdb11GreaterThan9OperationINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEbRKT_SA_.exit, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.l
-  %.6 = phi i1 [ %.097, %bb.l ], [ %i.p, %bb.p ], [ %i.s, %bb.q ], [ %i.v, %bb.r ], [ %i.y, %bb.s ], [ %i.ab, %bb.t ], [ %i.ae, %bb.u ], [ %i.ah, %bb.v ], [ %i.ak, %bb.w ], [ %i.an, %bb.x ], [ %i.aw, %bb.y ], [ %i.bf, %bb.z ], [ %i.bi, %bb.aa ], [ %i.bl, %bb.ab ], [ true, %bb.cd ], [ %i.cy, %_ZN6duckdb11GreaterThan9OperationINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEbRKT_SA_.exit ], [ %i.dh, %bb.aw ], [ true, %bb.cc ], [ true, %bb.ae ], [ %.0.i, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator5FinalINS_11GreaterThanEEEbRKNS_5ValueES6_.exit ], [ true, %bb.bv ], [ %not., %bb.bx ], [ %i.gq, %._crit_edge277 ], [ true, %bb.ca ], [ %spec.select.i.i.i, %bb.af ], [ true, %bb.ac ], [ false, %bb.ad ], [ true, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator5FinalINS_11GreaterThanEEEbRKNS_5ValueES6_.exit153 ], [ false, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator8PossibleINS_11GreaterThanEEEbRKNS_5ValueES6_.exit143 ], [ false, %bb.cb ], [ true, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator8PossibleINS_11GreaterThanEEEbRKNS_5ValueES6_.exit147.thread ], [ false, %bb.ce ], [ true, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator5FinalINS_11GreaterThanEEEbRKNS_5ValueES6_.exit155 ], [ false, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator8PossibleINS_11GreaterThanEEEbRKNS_5ValueES6_.exit147 ], [ true, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator5FinalINS_11GreaterThanEEEbRKNS_5ValueES6_.exit149 ], [ false, %bb.bw ], [ false, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator8PossibleINS_11GreaterThanEEEbRKNS_5ValueES6_.exit ], [ false, %.thread182 ]
+_ZN6duckdb11GreaterThan9OperationINS_10interval_tEEEbRKT_S5_.exit: ; preds = %.thread182, %bb.bv, %bb.bw, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator8PossibleINS_11GreaterThanEEEbRKNS_5ValueES6_.exit, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator5FinalINS_11GreaterThanEEEbRKNS_5ValueES6_.exit149, %bb.cd, %bb.ce, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator8PossibleINS_11GreaterThanEEEbRKNS_5ValueES6_.exit147, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator5FinalINS_11GreaterThanEEEbRKNS_5ValueES6_.exit155, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator8PossibleINS_11GreaterThanEEEbRKNS_5ValueES6_.exit147.thread, %bb.ca, %bb.cb, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator5FinalINS_11GreaterThanEEEbRKNS_5ValueES6_.exit153, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator8PossibleINS_11GreaterThanEEEbRKNS_5ValueES6_.exit143, %bb.cc, %bb.bx, %bb.af, %bb.ae, %bb.ad, %bb.ac, %._crit_edge277, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator5FinalINS_11GreaterThanEEEbRKNS_5ValueES6_.exit, %bb.aw, %_ZN6duckdb11GreaterThan9OperationINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEbRKT_SA_.exit, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.l
+  %.6 = phi i1 [ %.097, %bb.l ], [ %i.p, %bb.p ], [ %i.s, %bb.q ], [ %i.v, %bb.r ], [ %i.y, %bb.s ], [ %i.ab, %bb.t ], [ %i.ae, %bb.u ], [ %i.ah, %bb.v ], [ %i.ak, %bb.w ], [ %i.an, %bb.x ], [ %i.aw, %bb.y ], [ %i.bf, %bb.z ], [ %i.bi, %bb.aa ], [ %i.bl, %bb.ab ], [ true, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator5FinalINS_11GreaterThanEEEbRKNS_5ValueES6_.exit149 ], [ %i.cy, %_ZN6duckdb11GreaterThan9OperationINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEbRKT_SA_.exit ], [ %i.dh, %bb.aw ], [ false, %bb.ad ], [ true, %bb.ae ], [ %.0.i, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator5FinalINS_11GreaterThanEEEbRKNS_5ValueES6_.exit ], [ true, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator8PossibleINS_11GreaterThanEEEbRKNS_5ValueES6_.exit147.thread ], [ false, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator8PossibleINS_11GreaterThanEEEbRKNS_5ValueES6_.exit143 ], [ %i.gq, %._crit_edge277 ], [ %not., %bb.bx ], [ %spec.select.i.i.i, %bb.af ], [ true, %bb.ac ], [ true, %bb.cc ], [ true, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator5FinalINS_11GreaterThanEEEbRKNS_5ValueES6_.exit153 ], [ true, %bb.ca ], [ false, %bb.cb ], [ false, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator8PossibleINS_11GreaterThanEEEbRKNS_5ValueES6_.exit147 ], [ false, %bb.ce ], [ true, %bb.cd ], [ true, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator5FinalINS_11GreaterThanEEEbRKNS_5ValueES6_.exit155 ], [ false, %_ZN6duckdb12_GLOBAL__N_123ValuePositionComparator8PossibleINS_11GreaterThanEEEbRKNS_5ValueES6_.exit ], [ true, %bb.bv ], [ false, %bb.bw ], [ false, %.thread182 ]
   ret i1 %.6
 
 bb.ck:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.cj, %bb.bu, %bb.bq, %bb.n

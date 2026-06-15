@@ -201,39 +201,33 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 864
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !113
   %wide.trip.count.i = zext nneg i32 %i.h to i64
-  br label %bb.b
+  br label %bb.c
 
-bb.b:                                             ; preds = %.critedge.i, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %.critedge.i ] ; 2 uses
-  %3 = getelementptr inbounds nuw [72 x i8], ptr %i.j, i64 %indvars.iv.i ; 3 uses
+bb.b:                                             ; preds = %bb.d
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %i.k = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
+  br i1 %i.k, label %_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit, label %bb.c
+
+bb.c:                                             ; preds = %bb.b, %.lr.ph.i
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.b ] ; 2 uses
+  %3 = getelementptr inbounds nuw [72 x i8], ptr %i.j, i64 %indvars.iv.i ; 2 uses
   %4 = getelementptr inbounds nuw i8, ptr %3, i64 16
   %5 = load ptr, ptr %4, align 8, !tbaa !249      ; 2 uses
-  %i.k = icmp eq ptr %5, %i.d
-  br i1 %i.k, label %bb.c, label %6
-
-bb.c:                                             ; preds = %bb.b
+  %6 = icmp eq ptr %5, %i.d
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !249
+  %i.m = load ptr, ptr %i.l, align 8              ; 2 uses
   %i.n = icmp eq ptr %i.m, %i.f
-  br i1 %i.n, label %_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit, label %6
+  %or.cond.i = select i1 %6, i1 %i.n, i1 false
+  br i1 %or.cond.i, label %_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit, label %bb.d
 
-6:                                                ; preds = %bb.c, %bb.b
+bb.d:                                             ; preds = %bb.c
   %7 = icmp eq ptr %5, %i.f
-  br i1 %7, label %bb.d, label %.critedge.i
+  %8 = icmp eq ptr %i.m, %i.d
+  %or.cond23.i = select i1 %7, i1 %8, i1 false
+  br i1 %or.cond23.i, label %_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit, label %bb.b
 
-bb.d:                                             ; preds = %6
-  %8 = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %9 = load ptr, ptr %8, align 8, !tbaa !249
-  %10 = icmp eq ptr %9, %i.d
-  br i1 %10, label %_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit, label %.critedge.i
-
-.critedge.i:                                      ; preds = %bb.d, %6
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit, label %bb.b
-
-_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit:   ; preds = %bb.c, %bb.d, %.critedge.i, %bb.a
-  %.not.lcssa.i = phi i1 [ false, %bb.a ], [ true, %bb.d ], [ true, %bb.c ], [ false, %.critedge.i ]
+_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit:   ; preds = %bb.b, %bb.c, %bb.d, %bb.a
+  %.not.lcssa.i = phi i1 [ false, %bb.a ], [ true, %bb.d ], [ true, %bb.c ], [ false, %bb.b ]
   ret i1 %.not.lcssa.i
 }
 
@@ -249,39 +243,33 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 864
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !113
   %wide.trip.count = zext nneg i32 %i.b to i64
-  br label %bb.b
+  br label %bb.c
 
-bb.b:                                             ; preds = %.lr.ph, %.critedge
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %.critedge ] ; 2 uses
-  %3 = getelementptr inbounds nuw [72 x i8], ptr %i.d, i64 %indvars.iv ; 3 uses
+bb.b:                                             ; preds = %bb.d
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %i.e = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %i.e, label %.critedge20, label %bb.c
+
+bb.c:                                             ; preds = %.lr.ph, %bb.b
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 2 uses
+  %3 = getelementptr inbounds nuw [72 x i8], ptr %i.d, i64 %indvars.iv ; 2 uses
   %4 = getelementptr inbounds nuw i8, ptr %3, i64 16
   %5 = load ptr, ptr %4, align 8, !tbaa !249      ; 2 uses
-  %i.e = icmp eq ptr %5, %1
-  br i1 %i.e, label %bb.c, label %6
-
-bb.c:                                             ; preds = %bb.b
+  %6 = icmp eq ptr %5, %1
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !249
+  %i.g = load ptr, ptr %i.f, align 8              ; 2 uses
   %i.h = icmp eq ptr %i.g, %2
-  br i1 %i.h, label %.critedge20, label %6
+  %or.cond = select i1 %6, i1 %i.h, i1 false
+  br i1 %or.cond, label %.critedge20, label %bb.d
 
-6:                                                ; preds = %bb.c, %bb.b
+bb.d:                                             ; preds = %bb.c
   %7 = icmp eq ptr %5, %2
-  br i1 %7, label %bb.d, label %.critedge
+  %8 = icmp eq ptr %i.g, %1
+  %or.cond23 = select i1 %7, i1 %8, i1 false
+  br i1 %or.cond23, label %.critedge20, label %bb.b
 
-bb.d:                                             ; preds = %6
-  %8 = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %9 = load ptr, ptr %8, align 8, !tbaa !249
-  %10 = icmp eq ptr %9, %1
-  br i1 %10, label %.critedge20, label %.critedge
-
-.critedge:                                        ; preds = %bb.d, %6
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.critedge20, label %bb.b
-
-.critedge20:                                      ; preds = %bb.d, %bb.c, %.critedge, %bb.a
-  %.not.lcssa = phi i1 [ false, %bb.a ], [ false, %.critedge ], [ true, %bb.c ], [ true, %bb.d ]
+.critedge20:                                      ; preds = %bb.d, %bb.c, %bb.b, %bb.a
+  %.not.lcssa = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ true, %bb.c ], [ true, %bb.d ]
   ret i1 %.not.lcssa
 }
 
@@ -684,38 +672,32 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 864
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !113
   %wide.trip.count.i.i = zext nneg i32 %i.h to i64
-  br label %bb.c
+  br label %bb.d
 
-bb.c:                                             ; preds = %.critedge.i.i, %.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %.critedge.i.i ] ; 2 uses
-  %5 = getelementptr inbounds nuw [72 x i8], ptr %i.j, i64 %indvars.iv.i.i ; 3 uses
+bb.c:                                             ; preds = %bb.e
+  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
+  %i.k = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
+  br i1 %i.k, label %_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit.i, label %bb.d
+
+bb.d:                                             ; preds = %bb.c, %.lr.ph.i.i
+  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.c ] ; 2 uses
+  %5 = getelementptr inbounds nuw [72 x i8], ptr %i.j, i64 %indvars.iv.i.i ; 2 uses
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 16
   %7 = load ptr, ptr %6, align 8, !tbaa !249      ; 2 uses
-  %i.k = icmp eq ptr %7, %i.d
-  br i1 %i.k, label %bb.d, label %8
-
-bb.d:                                             ; preds = %bb.c
+  %8 = icmp eq ptr %7, %i.d
   %i.l = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !249
+  %i.m = load ptr, ptr %i.l, align 8              ; 2 uses
   %i.n = icmp eq ptr %i.m, %i.f
-  br i1 %i.n, label %_ZN10btSoftBody10appendLinkEPNS_4NodeES1_PNS_8MaterialEb.exit, label %8
+  %or.cond.i.i = select i1 %8, i1 %i.n, i1 false
+  br i1 %or.cond.i.i, label %_ZN10btSoftBody10appendLinkEPNS_4NodeES1_PNS_8MaterialEb.exit, label %bb.e
 
-8:                                                ; preds = %bb.d, %bb.c
+bb.e:                                             ; preds = %bb.d
   %9 = icmp eq ptr %7, %i.f
-  br i1 %9, label %bb.e, label %.critedge.i.i
+  %10 = icmp eq ptr %i.m, %i.d
+  %or.cond23.i.i = select i1 %9, i1 %10, i1 false
+  br i1 %or.cond23.i.i, label %_ZN10btSoftBody10appendLinkEPNS_4NodeES1_PNS_8MaterialEb.exit, label %bb.c
 
-bb.e:                                             ; preds = %8
-  %10 = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %11 = load ptr, ptr %10, align 8, !tbaa !249
-  %12 = icmp eq ptr %11, %i.d
-  br i1 %12, label %_ZN10btSoftBody10appendLinkEPNS_4NodeES1_PNS_8MaterialEb.exit, label %.critedge.i.i
-
-.critedge.i.i:                                    ; preds = %bb.e, %8
-  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
-  %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
-  br i1 %exitcond.not.i.i, label %_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit.i, label %bb.c
-
-_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit.i: ; preds = %.critedge.i.i, %bb.b, %bb.a
+_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit.i: ; preds = %bb.c, %bb.b, %bb.a
   tail call void @_ZN10btSoftBody10appendLinkEiPNS_8MaterialE(ptr noundef nonnull align 8 dereferenceable(1496) %0, i32 noundef -1, ptr noundef %3)
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 852
   %i.p = load i32, ptr %i.o, align 4, !tbaa !114
@@ -771,38 +753,32 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 864
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !113
   %wide.trip.count.i = zext nneg i32 %i.b to i64
-  br label %bb.c
+  br label %bb.d
 
-bb.c:                                             ; preds = %.critedge.i, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %.critedge.i ] ; 2 uses
-  %5 = getelementptr inbounds nuw [72 x i8], ptr %i.d, i64 %indvars.iv.i ; 3 uses
+bb.c:                                             ; preds = %bb.e
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %i.e = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
+  br i1 %i.e, label %_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit, label %bb.d
+
+bb.d:                                             ; preds = %bb.c, %.lr.ph.i
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.c ] ; 2 uses
+  %5 = getelementptr inbounds nuw [72 x i8], ptr %i.d, i64 %indvars.iv.i ; 2 uses
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 16
   %7 = load ptr, ptr %6, align 8, !tbaa !249      ; 2 uses
-  %i.e = icmp eq ptr %7, %1
-  br i1 %i.e, label %bb.d, label %8
-
-bb.d:                                             ; preds = %bb.c
+  %8 = icmp eq ptr %7, %1
   %i.f = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !249
+  %i.g = load ptr, ptr %i.f, align 8              ; 2 uses
   %i.h = icmp eq ptr %i.g, %2
-  br i1 %i.h, label %_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit.thread, label %8
+  %or.cond.i = select i1 %8, i1 %i.h, i1 false
+  br i1 %or.cond.i, label %_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit.thread, label %bb.e
 
-8:                                                ; preds = %bb.d, %bb.c
+bb.e:                                             ; preds = %bb.d
   %9 = icmp eq ptr %7, %2
-  br i1 %9, label %bb.e, label %.critedge.i
+  %10 = icmp eq ptr %i.g, %1
+  %or.cond23.i = select i1 %9, i1 %10, i1 false
+  br i1 %or.cond23.i, label %_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit.thread, label %bb.c
 
-bb.e:                                             ; preds = %8
-  %10 = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %11 = load ptr, ptr %10, align 8, !tbaa !249
-  %12 = icmp eq ptr %11, %1
-  br i1 %12, label %_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit.thread, label %.critedge.i
-
-.critedge.i:                                      ; preds = %bb.e, %8
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit, label %bb.c
-
-_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit:   ; preds = %.critedge.i, %bb.b, %bb.a
+_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit:   ; preds = %bb.c, %bb.b, %bb.a
   tail call void @_ZN10btSoftBody10appendLinkEiPNS_8MaterialE(ptr noundef nonnull align 8 dereferenceable(1496) %0, i32 noundef -1, ptr noundef %3)
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 852
   %i.j = load i32, ptr %i.i, align 4, !tbaa !114
@@ -1205,8 +1181,8 @@ bb.a:
 ; Function Attrs: uwtable
 define dso_local noundef zeroext i1 @_ZN10btSoftBody7cutLinkEiif(ptr noundef nonnull align 8 dereferenceable(1496) %0, i32 noundef %1, i32 noundef %2, float noundef %3) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.7.i95 = alloca <{ [2 x ptr], float, i8, [3 x i8], float, float, float, %class.btVector3, [4 x i8] }>, align 8 ; 4 uses
-  %.sroa.7.i80 = alloca <{ [2 x ptr], float, i8, [3 x i8], float, float, float, %class.btVector3, [4 x i8] }>, align 8 ; 4 uses
+  %.sroa.7.i97 = alloca <{ [2 x ptr], float, i8, [3 x i8], float, float, float, %class.btVector3, [4 x i8] }>, align 8 ; 4 uses
+  %.sroa.7.i82 = alloca <{ [2 x ptr], float, i8, [3 x i8], float, float, float, %class.btVector3, [4 x i8] }>, align 8 ; 4 uses
   %.sroa.7.i = alloca { [3 x ptr], %class.btVector3, float, ptr }, align 8 ; 4 uses
   %4 = alloca %class.btVector3, align 8           ; 6 uses
   %i.a = alloca [2 x ptr], align 16               ; 8 uses
@@ -1531,39 +1507,33 @@ _ZN10btSoftBody10appendFaceEiPNS_8MaterialE.exit: ; preds = %bb.g, %bb.h, %_ZN20
 .lr.ph.i.i:                                       ; preds = %_ZN10btSoftBody10appendFaceEiPNS_8MaterialE.exit
   %i.fh = load ptr, ptr %i.ci, align 8, !tbaa !113 ; 3 uses
   %wide.trip.count.i.i = zext nneg i32 %i.fg to i64
-  br label %bb.m
+  br label %bb.n
 
-bb.m:                                             ; preds = %.critedge.i.i, %.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %.critedge.i.i ] ; 2 uses
-  %5 = getelementptr inbounds nuw [72 x i8], ptr %i.fh, i64 %indvars.iv.i.i ; 3 uses
+bb.m:                                             ; preds = %bb.o
+  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
+  %i.fi = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
+  br i1 %i.fi, label %_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit.i, label %bb.n
+
+bb.n:                                             ; preds = %bb.m, %.lr.ph.i.i
+  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.m ] ; 2 uses
+  %5 = getelementptr inbounds nuw [72 x i8], ptr %i.fh, i64 %indvars.iv.i.i ; 2 uses
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 16
   %7 = load ptr, ptr %6, align 8, !tbaa !249      ; 2 uses
-  %i.fi = icmp eq ptr %7, %i.at
-  br i1 %i.fi, label %bb.n, label %8
-
-bb.n:                                             ; preds = %bb.m
+  %8 = icmp eq ptr %7, %i.at
   %i.fj = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !249
+  %i.fk = load ptr, ptr %i.fj, align 8            ; 2 uses
   %i.fl = icmp eq ptr %i.fk, %i.fd
-  br i1 %i.fl, label %_ZN10btSoftBody10appendLinkEPNS_4NodeES1_PNS_8MaterialEb.exit, label %8
+  %or.cond.i.i = select i1 %8, i1 %i.fl, i1 false
+  br i1 %or.cond.i.i, label %_ZN10btSoftBody10appendLinkEPNS_4NodeES1_PNS_8MaterialEb.exit, label %bb.o
 
-8:                                                ; preds = %bb.n, %bb.m
+bb.o:                                             ; preds = %bb.n
   %9 = icmp eq ptr %7, %i.fd
-  br i1 %9, label %bb.o, label %.critedge.i.i
+  %10 = icmp eq ptr %i.fk, %i.at
+  %or.cond23.i.i = select i1 %9, i1 %10, i1 false
+  br i1 %or.cond23.i.i, label %_ZN10btSoftBody10appendLinkEPNS_4NodeES1_PNS_8MaterialEb.exit, label %bb.m
 
-bb.o:                                             ; preds = %8
-  %10 = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %11 = load ptr, ptr %10, align 8, !tbaa !249
-  %12 = icmp eq ptr %11, %i.at
-  br i1 %12, label %_ZN10btSoftBody10appendLinkEPNS_4NodeES1_PNS_8MaterialEb.exit, label %.critedge.i.i
-
-.critedge.i.i:                                    ; preds = %bb.o, %8
-  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
-  %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
-  br i1 %exitcond.not.i.i, label %_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit.i, label %bb.m
-
-_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit.i: ; preds = %.critedge.i.i, %_ZN10btSoftBody10appendFaceEiPNS_8MaterialE.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7.i80)
+_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit.i: ; preds = %bb.m, %_ZN10btSoftBody10appendFaceEiPNS_8MaterialE.exit
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7.i82)
   %i.fm = load atomic i8, ptr @_ZGVZL14ZeroInitializeIN10btSoftBody4LinkEEvRT_E9zerodummy acquire, align 8
   %i.fn = icmp eq i8 %i.fm, 0
   br i1 %i.fn, label %bb.p, label %_ZL14ZeroInitializeIN10btSoftBody4LinkEEvRT_.exit.i, !prof !195
@@ -1581,7 +1551,7 @@ bb.q:                                             ; preds = %bb.p
 
 _ZL14ZeroInitializeIN10btSoftBody4LinkEEvRT_.exit.i: ; preds = %bb.q, %bb.p, %_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit.i
   %.sroa.0.0.copyload6.i = load ptr, ptr @_ZZL14ZeroInitializeIN10btSoftBody4LinkEEvRT_E9zerodummy, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %.sroa.7.i80, ptr noundef nonnull align 8 dereferenceable(52) getelementptr inbounds nuw (i8, ptr @_ZZL14ZeroInitializeIN10btSoftBody4LinkEEvRT_E9zerodummy, i64 16), i64 52, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %.sroa.7.i82, ptr noundef nonnull align 8 dereferenceable(52) getelementptr inbounds nuw (i8, ptr @_ZZL14ZeroInitializeIN10btSoftBody4LinkEEvRT_E9zerodummy, i64 16), i64 52, i1 false)
   %.not.i = icmp eq ptr %i.ff, null
   br i1 %.not.i, label %bb.r, label %bb.s
 
@@ -1690,11 +1660,11 @@ _ZN10btSoftBody10appendLinkEiPNS_8MaterialE.exit: ; preds = %bb.s, %bb.t, %_ZN20
   %.sroa.6.0..sroa_idx.i81 = getelementptr inbounds nuw i8, ptr %i.gt, i64 8
   store ptr %.sroa.6.0.i, ptr %.sroa.6.0..sroa_idx.i81, align 8
   %.sroa.7.0..sroa_idx.i82 = getelementptr inbounds nuw i8, ptr %i.gt, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.7.0..sroa_idx.i82, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.7.i80, i64 56, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.7.0..sroa_idx.i82, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.7.i82, i64 56, i1 false)
   %i.gu = load i32, ptr %i.ay, align 4, !tbaa !114
   %i.gv = add nsw i32 %i.gu, 1                    ; 3 uses
   store i32 %i.gv, ptr %i.ay, align 4, !tbaa !114
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i80)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i82)
   %i.gw = load ptr, ptr %i.ci, align 8, !tbaa !113 ; 2 uses
   %i.gx = sext i32 %i.gv to i64
   %i.gy = getelementptr [72 x i8], ptr %i.gw, i64 %i.gx ; 3 uses
@@ -1735,39 +1705,33 @@ _ZN10btSoftBody10appendLinkEPNS_4NodeES1_PNS_8MaterialEb.exit: ; preds = %bb.n, 
 
 .lr.ph.i.i73:                                     ; preds = %_ZN10btSoftBody10appendLinkEPNS_4NodeES1_PNS_8MaterialEb.exit
   %wide.trip.count.i.i74 = zext nneg i32 %i.hs to i64
-  br label %bb.y
+  br label %bb.z
 
-bb.y:                                             ; preds = %.critedge.i.i76, %.lr.ph.i.i73
-  %indvars.iv.i.i75 = phi i64 [ 0, %.lr.ph.i.i73 ], [ %indvars.iv.next.i.i77, %.critedge.i.i76 ] ; 2 uses
-  %13 = getelementptr inbounds nuw [72 x i8], ptr %i.hr, i64 %indvars.iv.i.i75 ; 3 uses
-  %14 = getelementptr inbounds nuw i8, ptr %13, i64 16
-  %15 = load ptr, ptr %14, align 8, !tbaa !249    ; 2 uses
-  %i.hv = icmp eq ptr %15, %i.av
-  br i1 %i.hv, label %bb.z, label %16
+bb.y:                                             ; preds = %bb.aa
+  %indvars.iv.next.i.i79 = add nuw nsw i64 %indvars.iv.i.i75, 1 ; 2 uses
+  %i.hv = icmp eq i64 %indvars.iv.next.i.i79, %wide.trip.count.i.i74
+  br i1 %i.hv, label %_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit.i71, label %bb.z
 
-bb.z:                                             ; preds = %bb.y
-  %i.hw = getelementptr inbounds nuw i8, ptr %13, i64 24
-  %i.hx = load ptr, ptr %i.hw, align 8, !tbaa !249
+bb.z:                                             ; preds = %bb.y, %.lr.ph.i.i73
+  %indvars.iv.i.i75 = phi i64 [ 0, %.lr.ph.i.i73 ], [ %indvars.iv.next.i.i79, %bb.y ] ; 2 uses
+  %11 = getelementptr inbounds nuw [72 x i8], ptr %i.hr, i64 %indvars.iv.i.i75 ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 16
+  %13 = load ptr, ptr %12, align 8, !tbaa !249    ; 2 uses
+  %14 = icmp eq ptr %13, %i.av
+  %i.hw = getelementptr inbounds nuw i8, ptr %11, i64 24
+  %i.hx = load ptr, ptr %i.hw, align 8            ; 2 uses
   %i.hy = icmp eq ptr %i.hx, %i.hu
-  br i1 %i.hy, label %_ZN10btSoftBody10appendLinkEPNS_4NodeES1_PNS_8MaterialEb.exit79, label %16
+  %or.cond.i.i76 = select i1 %14, i1 %i.hy, i1 false
+  br i1 %or.cond.i.i76, label %_ZN10btSoftBody10appendLinkEPNS_4NodeES1_PNS_8MaterialEb.exit79, label %bb.aa
 
-16:                                               ; preds = %bb.z, %bb.y
-  %17 = icmp eq ptr %15, %i.hu
-  br i1 %17, label %bb.aa, label %.critedge.i.i76
+bb.aa:                                            ; preds = %bb.z
+  %15 = icmp eq ptr %13, %i.hu
+  %16 = icmp eq ptr %i.hx, %i.av
+  %or.cond23.i.i78 = select i1 %15, i1 %16, i1 false
+  br i1 %or.cond23.i.i78, label %_ZN10btSoftBody10appendLinkEPNS_4NodeES1_PNS_8MaterialEb.exit79, label %bb.y
 
-bb.aa:                                            ; preds = %16
-  %18 = getelementptr inbounds nuw i8, ptr %13, i64 24
-  %19 = load ptr, ptr %18, align 8, !tbaa !249
-  %20 = icmp eq ptr %19, %i.av
-  br i1 %20, label %_ZN10btSoftBody10appendLinkEPNS_4NodeES1_PNS_8MaterialEb.exit79, label %.critedge.i.i76
-
-.critedge.i.i76:                                  ; preds = %bb.aa, %16
-  %indvars.iv.next.i.i77 = add nuw nsw i64 %indvars.iv.i.i75, 1 ; 2 uses
-  %exitcond.not.i.i78 = icmp eq i64 %indvars.iv.next.i.i77, %wide.trip.count.i.i74
-  br i1 %exitcond.not.i.i78, label %_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit.i71, label %bb.y
-
-_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit.i71: ; preds = %.critedge.i.i76, %_ZN10btSoftBody10appendLinkEPNS_4NodeES1_PNS_8MaterialEb.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7.i95)
+_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit.i71: ; preds = %bb.y, %_ZN10btSoftBody10appendLinkEPNS_4NodeES1_PNS_8MaterialEb.exit
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7.i97)
   %i.hz = load atomic i8, ptr @_ZGVZL14ZeroInitializeIN10btSoftBody4LinkEEvRT_E9zerodummy acquire, align 8
   %i.ia = icmp eq i8 %i.hz, 0
   br i1 %i.ia, label %bb.ab, label %_ZL14ZeroInitializeIN10btSoftBody4LinkEEvRT_.exit.i96, !prof !195
@@ -1785,7 +1749,7 @@ bb.ac:                                            ; preds = %bb.ab
 
 _ZL14ZeroInitializeIN10btSoftBody4LinkEEvRT_.exit.i96: ; preds = %bb.ac, %bb.ab, %_ZNK10btSoftBody9checkLinkEPKNS_4NodeES2_.exit.i71
   %.sroa.0.0.copyload6.i97 = load ptr, ptr @_ZZL14ZeroInitializeIN10btSoftBody4LinkEEvRT_E9zerodummy, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %.sroa.7.i95, ptr noundef nonnull align 8 dereferenceable(52) getelementptr inbounds nuw (i8, ptr @_ZZL14ZeroInitializeIN10btSoftBody4LinkEEvRT_E9zerodummy, i64 16), i64 52, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %.sroa.7.i97, ptr noundef nonnull align 8 dereferenceable(52) getelementptr inbounds nuw (i8, ptr @_ZZL14ZeroInitializeIN10btSoftBody4LinkEEvRT_E9zerodummy, i64 16), i64 52, i1 false)
   %.not.i98 = icmp eq ptr %i.ht, null
   br i1 %.not.i98, label %bb.ad, label %bb.ae
 
@@ -1894,11 +1858,11 @@ _ZN10btSoftBody10appendLinkEiPNS_8MaterialE.exit118: ; preds = %bb.ae, %bb.af, %
   %.sroa.6.0..sroa_idx.i100 = getelementptr inbounds nuw i8, ptr %i.jg, i64 8
   store ptr %.sroa.6.0.i99, ptr %.sroa.6.0..sroa_idx.i100, align 8
   %.sroa.7.0..sroa_idx.i101 = getelementptr inbounds nuw i8, ptr %i.jg, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.7.0..sroa_idx.i101, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.7.i95, i64 56, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.7.0..sroa_idx.i101, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.7.i97, i64 56, i1 false)
   %i.jh = load i32, ptr %i.ay, align 4, !tbaa !114
   %i.ji = add nsw i32 %i.jh, 1                    ; 2 uses
   store i32 %i.ji, ptr %i.ay, align 4, !tbaa !114
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i95)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i97)
   %i.jj = load ptr, ptr %i.ci, align 8, !tbaa !113
   %i.jk = sext i32 %i.ji to i64
   %i.jl = getelementptr [72 x i8], ptr %i.jj, i64 %i.jk ; 3 uses

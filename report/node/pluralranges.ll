@@ -201,33 +201,31 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.d = load ptr, ptr %0, align 8
   %wide.trip.count = zext nneg i32 %i.b to i64
-  br label %bb.b
+  br label %bb.c
 
-bb.b:                                             ; preds = %.lr.ph, %5
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %5 ] ; 2 uses
+bb.b:                                             ; preds = %bb.c
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %i.e = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %i.e, label %.loopexit, label %bb.c, !llvm.loop !5
+
+bb.c:                                             ; preds = %.lr.ph, %bb.b
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 2 uses
   %3 = getelementptr inbounds nuw [12 x i8], ptr %i.d, i64 %indvars.iv ; 3 uses
   %4 = load i32, ptr %3, align 4
-  %i.e = icmp eq i32 %4, %1
-  br i1 %i.e, label %bb.c, label %5
-
-bb.c:                                             ; preds = %bb.b
+  %5 = icmp eq i32 %4, %1
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.g = load i32, ptr %i.f, align 4
   %i.h = icmp eq i32 %i.g, %2
-  br i1 %i.h, label %bb.d, label %5
-
-5:                                                ; preds = %bb.c, %bb.b
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit, label %bb.b, !llvm.loop !5
+  %or.cond = select i1 %5, i1 %i.h, i1 false
+  br i1 %or.cond, label %bb.d, label %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.j = load i32, ptr %i.i, align 4
   br label %.loopexit
 
-.loopexit:                                        ; preds = %5, %bb.a, %bb.d
-  %i.k = phi i32 [ %i.j, %bb.d ], [ 5, %bb.a ], [ 5, %5 ]
+.loopexit:                                        ; preds = %bb.b, %bb.a, %bb.d
+  %i.k = phi i32 [ %i.j, %bb.d ], [ 5, %bb.a ], [ 5, %bb.b ]
   ret i32 %i.k
 }
 

@@ -201,26 +201,24 @@ bb.aa:                                            ; preds = %bb.z
   %.pre-phi = phi i64 [ %.pre30, %..lr.ph.preheader.i_crit_edge ], [ %i.ez, %.thread.i15 ]
   %i.fk = phi i32 [ %i.fj, %..lr.ph.preheader.i_crit_edge ], [ %i.fe, %.thread.i15 ] ; 3 uses
   %i.fl = sext i32 %i.fk to i64
-  br label %.lr.ph.i.a
+  br label %bb.ab
 
-.lr.ph.i.a:                                       ; preds = %3, %.lr.ph.preheader.i
-  %indvars.iv.i = phi i64 [ %.pre-phi, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %3 ] ; 2 uses
-  %2 = getelementptr inbounds nuw [8 x i8], ptr %i.fa, i64 %indvars.iv.i ; 2 uses
-  %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 4
+.lr.ph.i.a:                                       ; preds = %bb.ab
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %2 = icmp slt i64 %indvars.iv.next.i, %i.fl
+  br i1 %2, label %bb.ab, label %._crit_edge.i, !llvm.loop !73
+
+bb.ab:                                            ; preds = %.lr.ph.i.a, %.lr.ph.preheader.i
+  %indvars.iv.i = phi i64 [ %.pre-phi, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %.lr.ph.i.a ] ; 2 uses
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.fa, i64 %indvars.iv.i ; 2 uses
+  %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 4
   %.sroa.3.0.copyload.i = load i16, ptr %.sroa.3.0..sroa_idx.i, align 4
   %.not.i = icmp ugt i16 %.sroa.3.0.copyload.i, %i.bk
-  br i1 %.not.i, label %3, label %bb.ab
-
-bb.ab:                                            ; preds = %.lr.ph.i.a
-  %.sroa.42.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 6
+  %.sroa.42.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 6
   %.sroa.42.0.copyload.i = load i16, ptr %.sroa.42.0..sroa_idx.i, align 2
   %.not21.i = icmp ult i16 %.sroa.42.0.copyload.i, %i.bk
-  br i1 %.not21.i, label %3, label %.thread50.i
-
-3:                                                ; preds = %bb.ab, %.lr.ph.i.a
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %4 = icmp slt i64 %indvars.iv.next.i, %i.fl
-  br i1 %4, label %.lr.ph.i.a, label %._crit_edge.i, !llvm.loop !73
+  %or.cond.i = select i1 %.not.i, i1 true, i1 %.not21.i
+  br i1 %or.cond.i, label %.lr.ph.i.a, label %.thread50.i
 
 .thread50.i:                                      ; preds = %bb.ab
   %i.fm = load ptr, ptr %i.q, align 8             ; 3 uses
@@ -303,7 +301,7 @@ _ZN2v88internal8ZoneListINS0_12_GLOBAL__N_114NfaInterpreterIhE17InterpreterThrea
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i)
   br label %_ZN2v88internal8ZoneListINS0_12_GLOBAL__N_114NfaInterpreterIhE17InterpreterThreadEE3AddERKS5_PNS0_4ZoneE.exit.i
 
-._crit_edge.i:                                    ; preds = %3, %bb.aa
+._crit_edge.i:                                    ; preds = %.lr.ph.i.a, %bb.aa
   %.sroa.4.sroa.4.0..sroa.12.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ey, i64 8
   %.sroa.4.sroa.4.0.copyload = load ptr, ptr %.sroa.4.sroa.4.0..sroa.12.0..sroa_idx.i.sroa_idx, align 8 ; 3 uses
   %.sroa.4.sroa.5.0..sroa.12.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ey, i64 16
@@ -706,26 +704,24 @@ bb.aa:                                            ; preds = %bb.z
   %.pre-phi = phi i64 [ %.pre30, %..lr.ph.preheader.i_crit_edge ], [ %i.ez, %.thread.i15 ]
   %i.fk = phi i32 [ %i.fj, %..lr.ph.preheader.i_crit_edge ], [ %i.fe, %.thread.i15 ] ; 3 uses
   %i.fl = sext i32 %i.fk to i64
-  br label %.lr.ph.i.a
+  br label %bb.ab
 
-.lr.ph.i.a:                                       ; preds = %3, %.lr.ph.preheader.i
-  %indvars.iv.i = phi i64 [ %.pre-phi, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %3 ] ; 2 uses
-  %2 = getelementptr inbounds nuw [8 x i8], ptr %i.fa, i64 %indvars.iv.i ; 2 uses
-  %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 4
+.lr.ph.i.a:                                       ; preds = %bb.ab
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %2 = icmp slt i64 %indvars.iv.next.i, %i.fl
+  br i1 %2, label %bb.ab, label %._crit_edge.i, !llvm.loop !126
+
+bb.ab:                                            ; preds = %.lr.ph.i.a, %.lr.ph.preheader.i
+  %indvars.iv.i = phi i64 [ %.pre-phi, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %.lr.ph.i.a ] ; 2 uses
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.fa, i64 %indvars.iv.i ; 2 uses
+  %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 4
   %.sroa.3.0.copyload.i = load i16, ptr %.sroa.3.0..sroa_idx.i, align 4
   %.not.i = icmp ult i16 %i.bk, %.sroa.3.0.copyload.i
-  br i1 %.not.i, label %3, label %bb.ab
-
-bb.ab:                                            ; preds = %.lr.ph.i.a
-  %.sroa.42.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 6
+  %.sroa.42.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 6
   %.sroa.42.0.copyload.i = load i16, ptr %.sroa.42.0..sroa_idx.i, align 2
   %.not21.i = icmp ugt i16 %i.bk, %.sroa.42.0.copyload.i
-  br i1 %.not21.i, label %3, label %.thread50.i
-
-3:                                                ; preds = %bb.ab, %.lr.ph.i.a
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %4 = icmp slt i64 %indvars.iv.next.i, %i.fl
-  br i1 %4, label %.lr.ph.i.a, label %._crit_edge.i, !llvm.loop !126
+  %or.cond.i = select i1 %.not.i, i1 true, i1 %.not21.i
+  br i1 %or.cond.i, label %.lr.ph.i.a, label %.thread50.i
 
 .thread50.i:                                      ; preds = %bb.ab
   %i.fm = load ptr, ptr %i.q, align 8             ; 3 uses
@@ -808,7 +804,7 @@ _ZN2v88internal8ZoneListINS0_12_GLOBAL__N_114NfaInterpreterItE17InterpreterThrea
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i)
   br label %_ZN2v88internal8ZoneListINS0_12_GLOBAL__N_114NfaInterpreterItE17InterpreterThreadEE3AddERKS5_PNS0_4ZoneE.exit.i
 
-._crit_edge.i:                                    ; preds = %3, %bb.aa
+._crit_edge.i:                                    ; preds = %.lr.ph.i.a, %bb.aa
   %.sroa.4.sroa.4.0..sroa.12.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ey, i64 8
   %.sroa.4.sroa.4.0.copyload = load ptr, ptr %.sroa.4.sroa.4.0..sroa.12.0..sroa_idx.i.sroa_idx, align 8 ; 3 uses
   %.sroa.4.sroa.5.0..sroa.12.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ey, i64 16

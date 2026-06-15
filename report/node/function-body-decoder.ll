@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 241
   %i.m = load i8, ptr %i.l, align 1, !range !8, !noundef !9
   %i.n = trunc nuw i8 %i.m to i1
-  br i1 %i.n, label %bb.e, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_14EmptyInterfaceELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS1_11ControlBaseINS1_9ValueBaseIS4_EES4_EE.exit
+  br i1 %i.n, label %bb.e, label %bb.g
 
 bb.e:                                             ; preds = %bb.d
   %i.o = getelementptr inbounds i8, ptr %i.b, i64 -84
@@ -216,7 +216,7 @@ bb.e:                                             ; preds = %bb.d
   %i.x = lshr exact i64 %i.w, 2
   %i.y = trunc i64 %i.x to i32
   %i.z = icmp ult i32 %i.p, %i.y
-  br i1 %i.z, label %.lr.ph.i, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_14EmptyInterfaceELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS1_11ControlBaseINS1_9ValueBaseIS4_EES4_EE.exit
+  br i1 %i.z, label %.lr.ph.i, label %bb.g
 
 .lr.ph.i:                                         ; preds = %bb.e
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 184
@@ -239,34 +239,28 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.i
   %i.am = lshr exact i64 %i.al, 2
   %i.an = trunc i64 %i.am to i32
   %i.ao = icmp ult i32 %i.p, %i.an
-  br i1 %i.ao, label %bb.f, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_14EmptyInterfaceELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS1_11ControlBaseINS1_9ValueBaseIS4_EES4_EE.exit, !llvm.loop !65
+  br i1 %i.ao, label %bb.f, label %bb.g, !llvm.loop !65
 
-_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_14EmptyInterfaceELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS1_11ControlBaseINS1_9ValueBaseIS4_EES4_EE.exit: ; preds = %bb.f, %bb.d, %bb.e
+bb.g:                                             ; preds = %bb.f, %bb.d, %bb.e
   %1 = getelementptr inbounds i8, ptr %i.b, i64 -111
   %2 = load i8, ptr %1, align 1
   %3 = icmp eq i8 %2, 0
-  br i1 %3, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_14EmptyInterfaceELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS1_11ControlBaseINS1_9ValueBaseIS4_EES4_EE.exit..critedge_crit_edge, label %bb.g
-
-_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_14EmptyInterfaceELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS1_11ControlBaseINS1_9ValueBaseIS4_EES4_EE.exit..critedge_crit_edge: ; preds = %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_14EmptyInterfaceELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS1_11ControlBaseINS1_9ValueBaseIS4_EES4_EE.exit
-  %.pre = load ptr, ptr %i.a, align 8
-  br label %.critedge
-
-bb.g:                                             ; preds = %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_14EmptyInterfaceELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS1_11ControlBaseINS1_9ValueBaseIS4_EES4_EE.exit
   %i.ap = getelementptr inbounds i8, ptr %i.b, i64 -16
-  %i.aq = load i8, ptr %i.ap, align 8, !range !8, !noundef !9
+  %i.aq = load i8, ptr %i.ap, align 8, !range !8
   %i.ar = trunc nuw i8 %i.aq to i1
-  %.pre12 = load ptr, ptr %i.a, align 8           ; 3 uses
-  br i1 %i.ar, label %.critedge, label %bb.h
+  %or.cond = select i1 %3, i1 true, i1 %i.ar
+  br i1 %or.cond, label %.critedge, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.as = load i8, ptr %i.e, align 8
   %i.at = icmp eq i8 %i.as, 0
-  %scevgep.i = getelementptr i8, ptr %.pre12, i64 -120
+  %4 = load ptr, ptr %i.a, align 8                ; 2 uses
+  %scevgep.i = getelementptr i8, ptr %4, i64 -120
   store ptr %scevgep.i, ptr %i.a, align 8
   br i1 %i.at, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_14EmptyInterfaceELNS1_12DecodingModeE0EE39SetSucceedingCodeDynamicallyUnreachableEv.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.au = getelementptr i8, ptr %.pre12, i64 -231 ; 2 uses
+  %i.au = getelementptr i8, ptr %4, i64 -231      ; 2 uses
   %i.av = load i8, ptr %i.au, align 1
   %i.aw = icmp eq i8 %i.av, 0
   br i1 %i.aw, label %bb.j, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_14EmptyInterfaceELNS1_12DecodingModeE0EE39SetSucceedingCodeDynamicallyUnreachableEv.exit
@@ -277,9 +271,9 @@ bb.j:                                             ; preds = %bb.i
   store i8 0, ptr %i.ax, align 8
   br label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_14EmptyInterfaceELNS1_12DecodingModeE0EE39SetSucceedingCodeDynamicallyUnreachableEv.exit
 
-.critedge:                                        ; preds = %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_14EmptyInterfaceELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS1_11ControlBaseINS1_9ValueBaseIS4_EES4_EE.exit..critedge_crit_edge, %bb.g
-  %4 = phi ptr [ %.pre, %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_14EmptyInterfaceELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS1_11ControlBaseINS1_9ValueBaseIS4_EES4_EE.exit..critedge_crit_edge ], [ %.pre12, %bb.g ]
-  %scevgep.i10 = getelementptr i8, ptr %4, i64 -120
+.critedge:                                        ; preds = %bb.g
+  %5 = load ptr, ptr %i.a, align 8
+  %scevgep.i10 = getelementptr i8, ptr %5, i64 -120
   store ptr %scevgep.i10, ptr %i.a, align 8
   br label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder17FullValidationTagENS1_14EmptyInterfaceELNS1_12DecodingModeE0EE39SetSucceedingCodeDynamicallyUnreachableEv.exit
 

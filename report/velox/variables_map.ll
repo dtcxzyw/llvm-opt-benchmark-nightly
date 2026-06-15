@@ -201,32 +201,28 @@ bb.c:                                             ; preds = %bb.b, %tailrecurse
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.i = load i8, ptr %i.h, align 8, !tbaa !51, !range !42, !noundef !43
   %i.j = trunc nuw i8 %i.i to i1
-  br i1 %i.j, label %bb.d, label %5
+  br i1 %i.j, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %.tr, i64 8
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !104  ; 2 uses
   %.not14 = icmp eq ptr %i.l, null
-  br i1 %.not14, label %5, label %bb.e
+  br i1 %.not14, label %bb.e, label %bb.f
 
-bb.e:                                             ; preds = %bb.d
+bb.e:                                             ; preds = %bb.c, %bb.d, %bb.f
+  %common.ret20.op = phi ptr [ %spec.select, %bb.f ], [ %i.d, %bb.d ], [ %i.d, %bb.c ]
+  ret ptr %common.ret20.op
+
+bb.f:                                             ; preds = %bb.d
   %2 = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNK5boost15program_options22abstract_variables_mapixERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(16) %i.l, ptr noundef nonnull align 8 dereferenceable(32) %1) ; 3 uses
   %3 = load ptr, ptr %2, align 8, !tbaa !59
   %.not.i.i15 = icmp eq ptr %3, null
-  br i1 %.not.i.i15, label %4, label %bb.f
-
-bb.f:                                             ; preds = %bb.e
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.n = load i8, ptr %i.m, align 8, !tbaa !51, !range !42, !noundef !43
+  %i.n = load i8, ptr %i.m, align 8, !range !42
   %i.o = trunc nuw i8 %i.n to i1
-  br i1 %i.o, label %4, label %5
-
-4:                                                ; preds = %bb.f, %bb.e
-  br label %5
-
-5:                                                ; preds = %bb.c, %bb.d, %4, %bb.f
-  %.1 = phi ptr [ %i.d, %bb.c ], [ %2, %bb.f ], [ %i.d, %4 ], [ %i.d, %bb.d ]
-  ret ptr %.1
+  %or.cond = select i1 %.not.i.i15, i1 true, i1 %i.o
+  %spec.select = select i1 %or.cond, ptr %i.d, ptr %2
+  br label %bb.e
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable

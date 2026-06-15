@@ -121,15 +121,13 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 480
   %i.f = load i8, ptr %i.e, align 8, !range !5, !noundef !6
   %i.g = trunc nuw i8 %i.f to i1
-  br i1 %i.g, label %_ZN5cppgc8internal12_GLOBAL__N_14GrowERNS0_16HeapObjectHeaderERNS0_8BasePageEmm.exit, label %2
+  %2 = getelementptr inbounds nuw i8, ptr %i.d, i64 112
+  %3 = load ptr, ptr %2, align 8
+  %.not.i = icmp ne ptr %3, null
+  %or.cond.not = select i1 %i.g, i1 true, i1 %.not.i
+  br i1 %or.cond.not, label %_ZN5cppgc8internal12_GLOBAL__N_14GrowERNS0_16HeapObjectHeaderERNS0_8BasePageEmm.exit, label %_ZN5cppgc8internal12_GLOBAL__N_14InGCERNS_10HeapHandleE.exit
 
-2:                                                ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 112
-  %4 = load ptr, ptr %3, align 8
-  %.not.i = icmp eq ptr %4, null
-  br i1 %.not.i, label %_ZN5cppgc8internal12_GLOBAL__N_14InGCERNS_10HeapHandleE.exit, label %_ZN5cppgc8internal12_GLOBAL__N_14GrowERNS0_16HeapObjectHeaderERNS0_8BasePageEmm.exit
-
-_ZN5cppgc8internal12_GLOBAL__N_14InGCERNS_10HeapHandleE.exit: ; preds = %2
+_ZN5cppgc8internal12_GLOBAL__N_14InGCERNS_10HeapHandleE.exit: ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 216
   %i.i = tail call noundef zeroext i1 @_ZNK5cppgc8internal7Sweeper20IsSweepingInProgressEv(ptr noundef nonnull align 8 dereferenceable(16) %i.h) #3
   br i1 %i.i, label %_ZN5cppgc8internal12_GLOBAL__N_14GrowERNS0_16HeapObjectHeaderERNS0_8BasePageEmm.exit, label %bb.b
@@ -237,8 +235,8 @@ _ZN5cppgc8internal12_GLOBAL__N_14GrowERNS0_16HeapObjectHeaderERNS0_8BasePageEmm.
   store i16 %i.bm, ptr %i.p, align 2
   br label %_ZN5cppgc8internal12_GLOBAL__N_14GrowERNS0_16HeapObjectHeaderERNS0_8BasePageEmm.exit
 
-_ZN5cppgc8internal12_GLOBAL__N_14GrowERNS0_16HeapObjectHeaderERNS0_8BasePageEmm.exit: ; preds = %_ZN5cppgc8internal12_GLOBAL__N_14GrowERNS0_16HeapObjectHeaderERNS0_8BasePageEmm.exit.sink.split, %bb.a, %2, %bb.j, %bb.e, %bb.d, %bb.g, %bb.b, %_ZN5cppgc8internal12_GLOBAL__N_14InGCERNS_10HeapHandleE.exit
-  %.1 = phi i1 [ false, %bb.b ], [ false, %_ZN5cppgc8internal12_GLOBAL__N_14InGCERNS_10HeapHandleE.exit ], [ false, %2 ], [ false, %bb.d ], [ true, %bb.g ], [ false, %bb.a ], [ false, %bb.e ], [ true, %bb.j ], [ true, %_ZN5cppgc8internal12_GLOBAL__N_14GrowERNS0_16HeapObjectHeaderERNS0_8BasePageEmm.exit.sink.split ]
+_ZN5cppgc8internal12_GLOBAL__N_14GrowERNS0_16HeapObjectHeaderERNS0_8BasePageEmm.exit: ; preds = %_ZN5cppgc8internal12_GLOBAL__N_14GrowERNS0_16HeapObjectHeaderERNS0_8BasePageEmm.exit.sink.split, %bb.a, %bb.j, %bb.e, %bb.d, %bb.g, %bb.b, %_ZN5cppgc8internal12_GLOBAL__N_14InGCERNS_10HeapHandleE.exit
+  %.1 = phi i1 [ false, %bb.b ], [ false, %_ZN5cppgc8internal12_GLOBAL__N_14InGCERNS_10HeapHandleE.exit ], [ true, %bb.j ], [ false, %bb.d ], [ true, %bb.g ], [ false, %bb.a ], [ false, %bb.e ], [ true, %_ZN5cppgc8internal12_GLOBAL__N_14GrowERNS0_16HeapObjectHeaderERNS0_8BasePageEmm.exit.sink.split ]
   ret i1 %.1
 }
 

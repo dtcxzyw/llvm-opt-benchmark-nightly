@@ -201,22 +201,29 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !117  ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 9 ; 3 uses
-  %i.g = load i8, ptr %i.f, align 1, !tbaa !113, !range !125, !noundef !126
-  %i.h = trunc nuw i8 %i.g to i1
-  br i1 %i.h, label %bb.b, label %11
-
-bb.b:                                             ; preds = %bb.a
-  %i.i = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %7 = load i8, ptr %i.i, align 8, !tbaa !110, !range !125, !noundef !126
+  %7 = load i8, ptr %i.f, align 1, !tbaa !113, !range !125, !noundef !126
   %8 = trunc nuw i8 %7 to i1
-  %9 = load ptr, ptr %i.c, align 8
-  %.not.i = icmp ne ptr %9, null
-  %or.cond.not = select i1 %8, i1 true, i1 %.not.i
-  br i1 %or.cond.not, label %11, label %.preheader
+  %9 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
+  %i.g = load i8, ptr %9, align 8, !range !125
+  %i.h = trunc nuw i8 %i.g to i1
+  %.not46 = xor i1 %i.h, true
+  %or.cond.not = select i1 %8, i1 %.not46, i1 false
+  %10 = load ptr, ptr %i.c, align 8
+  %.not.i = icmp eq ptr %10, null
+  %or.cond45 = select i1 %or.cond.not, i1 %.not.i, i1 false
+  %11 = icmp ult i64 %5, %6                       ; 2 uses
+  br i1 %or.cond45, label %.preheader, label %.preheader47
 
-.preheader:                                       ; preds = %bb.b
-  %10 = icmp ult i64 %5, %6
-  br i1 %10, label %.lr.ph, label %.loopexit
+.preheader47:                                     ; preds = %bb.a
+  br i1 %11, label %bb.b, label %.loopexit
+
+bb.b:                                             ; preds = %.preheader47
+  %i.i = getelementptr inbounds nuw i8, ptr %3, i64 9 ; 3 uses
+  %12 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
+  br label %bb.f
+
+.preheader:                                       ; preds = %bb.a
+  br i1 %11, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %.preheader
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 9 ; 3 uses
@@ -260,18 +267,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %exitcond.not.a = icmp eq i64 %i.aa, %6
   br i1 %exitcond.not.a, label %.loopexit, label %bb.c, !llvm.loop !133
 
-11:                                               ; preds = %bb.b, %bb.a
-  %12 = icmp ult i64 %5, %6
-  br i1 %12, label %.lr.ph46, label %.loopexit
-
-.lr.ph46:                                         ; preds = %11
-  %13 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %14 = getelementptr inbounds nuw i8, ptr %3, i64 9 ; 3 uses
-  %15 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
-  br label %bb.f
-
-bb.f:                                             ; preds = %.lr.ph46, %bb.h
-  %.04045 = phi i64 [ %5, %.lr.ph46 ], [ %i.bb, %bb.h ] ; 4 uses
+bb.f:                                             ; preds = %bb.b, %bb.h
+  %.04045 = phi i64 [ %5, %bb.b ], [ %i.bb, %bb.h ] ; 4 uses
   %i.ab = load ptr, ptr %i.c, align 8, !tbaa !90  ; 2 uses
   %.not.i41 = icmp eq ptr %i.ab, null
   br i1 %.not.i41, label %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread, label %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit
@@ -293,20 +290,20 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread: ; preds = %bb.f
   %i.al = or i8 %i.ak, %i.aj
   store i8 %i.al, ptr %i.f, align 1, !tbaa !113
   %i.am = load i8, ptr %i.ai, align 1, !tbaa !131, !range !125, !noundef !126
-  %i.an = load i8, ptr %13, align 8, !tbaa !110, !range !125, !noundef !126
+  %i.an = load i8, ptr %9, align 8, !tbaa !110, !range !125, !noundef !126
   %i.ao = and i8 %i.an, %i.am
-  store i8 %i.ao, ptr %13, align 8, !tbaa !110
+  store i8 %i.ao, ptr %9, align 8, !tbaa !110
   %i.ap = load i8, ptr %i.ai, align 1, !tbaa !131, !range !125, !noundef !126
   %i.aq = zext nneg i8 %i.ap to i32
-  %i.ar = load i8, ptr %14, align 1, !tbaa !127   ; 2 uses
+  %i.ar = load i8, ptr %i.i, align 1, !tbaa !127  ; 2 uses
   %i.as = zext nneg i8 %i.ar to i32
   %i.at = shl nuw i32 %i.aq, %i.as
-  %i.au = load i8, ptr %15, align 8, !tbaa !130
+  %i.au = load i8, ptr %12, align 8, !tbaa !130
   %i.av = trunc i32 %i.at to i8
   %i.aw = or i8 %i.au, %i.av                      ; 2 uses
-  store i8 %i.aw, ptr %15, align 8, !tbaa !130
+  store i8 %i.aw, ptr %12, align 8, !tbaa !130
   %i.ax = add i8 %i.ar, 1                         ; 2 uses
-  store i8 %i.ax, ptr %14, align 1, !tbaa !127
+  store i8 %i.ax, ptr %i.i, align 1, !tbaa !127
   %i.ay = icmp eq i8 %i.ax, 8
   br i1 %i.ay, label %bb.g, label %bb.h
 
@@ -317,8 +314,8 @@ bb.g:                                             ; preds = %_ZNK6duckdb21Templa
   %i.ba = load ptr, ptr %i.az, align 8
   call void %i.ba(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %i.a, i64 noundef 1), !inline_history !132
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  store i8 0, ptr %15, align 8, !tbaa !130
-  store i8 0, ptr %14, align 1, !tbaa !127
+  store i8 0, ptr %12, align 8, !tbaa !130
+  store i8 0, ptr %i.i, align 1, !tbaa !127
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread, %bb.g, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit
@@ -326,7 +323,7 @@ bb.h:                                             ; preds = %_ZNK6duckdb21Templa
   %exitcond48.not = icmp eq i64 %i.bb, %6
   br i1 %exitcond48.not, label %.loopexit, label %bb.f, !llvm.loop !134
 
-.loopexit:                                        ; preds = %bb.e, %bb.h, %.preheader, %11
+.loopexit:                                        ; preds = %bb.h, %bb.e, %.preheader47, %.preheader
   ret void
 }
 

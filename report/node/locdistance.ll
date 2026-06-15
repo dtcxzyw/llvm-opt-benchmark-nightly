@@ -19,36 +19,29 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZN6icu_7814LocaleDistance18initLocaleDistanceER10UErrorCode(ptr noundef nonnull align 4 dereferenceable(4) %0) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = tail call noundef ptr @_ZN6icu_7813LikelySubtags12getSingletonER10UErrorCode(ptr noundef nonnull align 4 dereferenceable(4) %0) #6 ; 5 uses
+  %i.a = tail call noundef ptr @_ZN6icu_7813LikelySubtags12getSingletonER10UErrorCode(ptr noundef nonnull align 4 dereferenceable(4) %0) #6 ; 4 uses
   %i.b = load i32, ptr %0, align 4
   %i.c = icmp slt i32 %i.b, 1
-  br i1 %i.c, label %1, label %bb.g
+  br i1 %i.c, label %bb.b, label %bb.g
 
-1:                                                ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 304 ; 2 uses
+bb.b:                                             ; preds = %bb.a
+  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 304 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 320
   %3 = load ptr, ptr %2, align 8
-  %4 = icmp eq ptr %3, null
-  br i1 %4, label %bb.c, label %5
-
-5:                                                ; preds = %1
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 312
-  %7 = load ptr, ptr %6, align 8
-  %8 = icmp eq ptr %7, null
-  br i1 %8, label %bb.c, label %9
-
-9:                                                ; preds = %5
-  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 320
-  %11 = load ptr, ptr %10, align 8
-  %12 = icmp eq ptr %11, null
-  br i1 %12, label %bb.c, label %bb.b
-
-bb.b:                                             ; preds = %9
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 344
   %i.e = load ptr, ptr %i.d, align 8
-  %i.f = icmp eq ptr %i.e, null
-  br i1 %i.f, label %bb.c, label %bb.d
+  %4 = load <2 x ptr>, ptr %1, align 8
+  %5 = insertelement <4 x ptr> poison, ptr %3, i64 2
+  %6 = insertelement <4 x ptr> %5, ptr %i.e, i64 3
+  %7 = shufflevector <2 x ptr> %4, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %8 = shufflevector <4 x ptr> %7, <4 x ptr> %6, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %.fr = freeze <4 x ptr> %8
+  %9 = icmp eq <4 x ptr> %.fr, splat (ptr null)
+  %10 = bitcast <4 x i1> %9 to i4
+  %i.f = icmp eq i4 %10, 0
+  br i1 %i.f, label %bb.d, label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %9, %5, %1
+bb.c:                                             ; preds = %bb.b
   store i32 2, ptr %0, align 4
   br label %bb.g
 
@@ -63,7 +56,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
-  tail call void @_ZN6icu_7814LocaleDistanceC2ERKNS_18LocaleDistanceDataERKNS_13LikelySubtagsE(ptr noundef nonnull align 8 dereferenceable(88) %i.g, ptr noundef nonnull align 8 dereferenceable(48) %2, ptr noundef nonnull align 8 dereferenceable(352) %i.a)
+  tail call void @_ZN6icu_7814LocaleDistanceC2ERKNS_18LocaleDistanceDataERKNS_13LikelySubtagsE(ptr noundef nonnull align 8 dereferenceable(88) %i.g, ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 dereferenceable(352) %i.a)
   store ptr %i.g, ptr @_ZN6icu_7812_GLOBAL__N_115gLocaleDistanceE, align 8
   tail call void @ucln_common_registerCleanup_78(i32 noundef 11, ptr noundef nonnull @_ZN6icu_7812_GLOBAL__N_17cleanupEv) #6
   br label %bb.g
@@ -122,36 +115,29 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not12.i, label %bb.j, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.e = tail call noundef ptr @_ZN6icu_7813LikelySubtags12getSingletonER10UErrorCode(ptr noundef nonnull align 4 dereferenceable(4) %0) #6 ; 5 uses
+  %i.e = tail call noundef ptr @_ZN6icu_7813LikelySubtags12getSingletonER10UErrorCode(ptr noundef nonnull align 4 dereferenceable(4) %0) #6 ; 4 uses
   %i.f = load i32, ptr %0, align 4                ; 2 uses
   %i.g = icmp slt i32 %i.f, 1
-  br i1 %i.g, label %1, label %_ZN6icu_7814LocaleDistance18initLocaleDistanceER10UErrorCode.exit
+  br i1 %i.g, label %bb.e, label %_ZN6icu_7814LocaleDistance18initLocaleDistanceER10UErrorCode.exit
 
-1:                                                ; preds = %bb.d
-  %2 = getelementptr inbounds nuw i8, ptr %i.e, i64 304 ; 2 uses
+bb.e:                                             ; preds = %bb.d
+  %1 = getelementptr inbounds nuw i8, ptr %i.e, i64 304 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.e, i64 320
   %3 = load ptr, ptr %2, align 8
-  %4 = icmp eq ptr %3, null
-  br i1 %4, label %bb.f, label %5
-
-5:                                                ; preds = %1
-  %6 = getelementptr inbounds nuw i8, ptr %i.e, i64 312
-  %7 = load ptr, ptr %6, align 8
-  %8 = icmp eq ptr %7, null
-  br i1 %8, label %bb.f, label %9
-
-9:                                                ; preds = %5
-  %10 = getelementptr inbounds nuw i8, ptr %i.e, i64 320
-  %11 = load ptr, ptr %10, align 8
-  %12 = icmp eq ptr %11, null
-  br i1 %12, label %bb.f, label %bb.e
-
-bb.e:                                             ; preds = %9
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 344
   %i.i = load ptr, ptr %i.h, align 8
-  %i.j = icmp eq ptr %i.i, null
-  br i1 %i.j, label %bb.f, label %bb.g
+  %4 = load <2 x ptr>, ptr %1, align 8
+  %5 = insertelement <4 x ptr> poison, ptr %3, i64 2
+  %6 = insertelement <4 x ptr> %5, ptr %i.i, i64 3
+  %7 = shufflevector <2 x ptr> %4, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %8 = shufflevector <4 x ptr> %7, <4 x ptr> %6, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %.fr = freeze <4 x ptr> %8
+  %9 = icmp eq <4 x ptr> %.fr, splat (ptr null)
+  %10 = bitcast <4 x i1> %9 to i4
+  %i.j = icmp eq i4 %10, 0
+  br i1 %i.j, label %bb.g, label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %9, %5, %1
+bb.f:                                             ; preds = %bb.e
   store i32 2, ptr %0, align 4
   br label %_ZN6icu_7814LocaleDistance18initLocaleDistanceER10UErrorCode.exit
 
@@ -166,7 +152,7 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZN6icu_7814LocaleDistance18initLocaleDistanceER10UErrorCode.exit
 
 bb.i:                                             ; preds = %bb.g
-  tail call void @_ZN6icu_7814LocaleDistanceC2ERKNS_18LocaleDistanceDataERKNS_13LikelySubtagsE(ptr noundef nonnull align 8 dereferenceable(88) %i.k, ptr noundef nonnull align 8 dereferenceable(48) %2, ptr noundef nonnull align 8 dereferenceable(352) %i.e)
+  tail call void @_ZN6icu_7814LocaleDistanceC2ERKNS_18LocaleDistanceDataERKNS_13LikelySubtagsE(ptr noundef nonnull align 8 dereferenceable(88) %i.k, ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 dereferenceable(352) %i.e)
   store ptr %i.k, ptr @_ZN6icu_7812_GLOBAL__N_115gLocaleDistanceE, align 8
   tail call void @ucln_common_registerCleanup_78(i32 noundef 11, ptr noundef nonnull @_ZN6icu_7812_GLOBAL__N_17cleanupEv) #6
   %.pre = load i32, ptr %0, align 4

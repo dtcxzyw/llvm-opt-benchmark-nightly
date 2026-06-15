@@ -201,21 +201,19 @@ bb.z:                                             ; preds = %.noexc32
   %i.ba = getelementptr inbounds nuw i8, ptr %i.av, i64 288 ; 2 uses
   %i.bb = load i8, ptr %i.ba, align 8, !tbaa !28, !range !47, !noundef !78
   %i.bc = trunc nuw i8 %i.bb to i1
-  br i1 %i.bc, label %11, label %.noexc18
+  br i1 %i.bc, label %bb.aa, label %.noexc18
 
-11:                                               ; preds = %bb.z
-  %12 = getelementptr inbounds nuw i8, ptr %i.av, i64 280
-  %13 = load i32, ptr %12, align 8, !tbaa !70
-  %.not15.i.i = icmp eq i32 %13, %i.ak
-  br i1 %.not15.i.i, label %bb.aa, label %bb.ab
-
-bb.aa:                                            ; preds = %11
+bb.aa:                                            ; preds = %bb.z
+  %11 = getelementptr inbounds nuw i8, ptr %i.av, i64 280
+  %12 = load i32, ptr %11, align 8, !tbaa !70
+  %.not15.i.i = icmp eq i32 %12, %i.ak
   %i.bd = getelementptr inbounds nuw i8, ptr %i.av, i64 284
-  %i.be = load i32, ptr %i.bd, align 4, !tbaa !71
+  %i.be = load i32, ptr %i.bd, align 4
   %.not16.i.i = icmp eq i32 %i.be, %i.an
-  br i1 %.not16.i.i, label %.noexc18, label %bb.ab
+  %or.cond.i.i = select i1 %.not15.i.i, i1 %.not16.i.i, i1 false
+  br i1 %or.cond.i.i, label %.noexc18, label %bb.ab
 
-bb.ab:                                            ; preds = %bb.aa, %11
+bb.ab:                                            ; preds = %bb.aa
   store i8 0, ptr %i.ba, align 8, !tbaa !28
   br label %.noexc18
 
@@ -244,21 +242,19 @@ bb.af:                                            ; preds = %.noexc33
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bg, i64 288 ; 2 uses
   %i.bm = load i8, ptr %i.bl, align 8, !tbaa !28, !range !47, !noundef !78
   %i.bn = trunc nuw i8 %i.bm to i1
-  br i1 %i.bn, label %14, label %.noexc18
+  br i1 %i.bn, label %bb.ag, label %.noexc18
 
-14:                                               ; preds = %bb.af
-  %15 = getelementptr inbounds nuw i8, ptr %i.bg, i64 280
-  %16 = load i32, ptr %15, align 8, !tbaa !70
-  %.not15.i35.i = icmp eq i32 %16, %i.ak
-  br i1 %.not15.i35.i, label %bb.ag, label %bb.ah
-
-bb.ag:                                            ; preds = %14
+bb.ag:                                            ; preds = %bb.af
+  %13 = getelementptr inbounds nuw i8, ptr %i.bg, i64 280
+  %14 = load i32, ptr %13, align 8, !tbaa !70
+  %.not15.i35.i = icmp eq i32 %14, %i.ak
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bg, i64 284
-  %i.bp = load i32, ptr %i.bo, align 4, !tbaa !71
+  %i.bp = load i32, ptr %i.bo, align 4
   %.not16.i36.i = icmp eq i32 %i.bp, %i.an
-  br i1 %.not16.i36.i, label %.noexc18, label %bb.ah
+  %or.cond.i37.i = select i1 %.not15.i35.i, i1 %.not16.i36.i, i1 false
+  br i1 %or.cond.i37.i, label %.noexc18, label %bb.ah
 
-bb.ah:                                            ; preds = %bb.ag, %14
+bb.ah:                                            ; preds = %bb.ag
   store i8 0, ptr %i.bl, align 8, !tbaa !28
   br label %.noexc18
 
@@ -287,21 +283,19 @@ bb.al:                                            ; preds = %bb.aj
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bq, i64 288 ; 2 uses
   %i.bx = load i8, ptr %i.bw, align 8, !tbaa !28, !range !47, !noundef !78
   %i.by = trunc nuw i8 %i.bx to i1
-  br i1 %i.by, label %17, label %.noexc18
+  br i1 %i.by, label %bb.am, label %.noexc18
 
-17:                                               ; preds = %bb.al
-  %18 = getelementptr inbounds nuw i8, ptr %i.bq, i64 280
-  %19 = load i32, ptr %18, align 8, !tbaa !70
-  %.not15.i39.i = icmp eq i32 %19, %i.ak
-  br i1 %.not15.i39.i, label %bb.am, label %bb.an
-
-bb.am:                                            ; preds = %17
+bb.am:                                            ; preds = %bb.al
+  %15 = getelementptr inbounds nuw i8, ptr %i.bq, i64 280
+  %16 = load i32, ptr %15, align 8, !tbaa !70
+  %.not15.i40.i = icmp eq i32 %16, %i.ak
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bq, i64 284
-  %i.ca = load i32, ptr %i.bz, align 4, !tbaa !71
+  %i.ca = load i32, ptr %i.bz, align 4
   %.not16.i40.i = icmp eq i32 %i.ca, %i.an
-  br i1 %.not16.i40.i, label %.noexc18, label %bb.an
+  %or.cond.i42.i = select i1 %.not15.i40.i, i1 %.not16.i40.i, i1 false
+  br i1 %or.cond.i42.i, label %.noexc18, label %bb.an
 
-bb.an:                                            ; preds = %bb.am, %17
+bb.an:                                            ; preds = %bb.am
   store i8 0, ptr %i.bw, align 8, !tbaa !28
   br label %.noexc18
 
@@ -319,21 +313,19 @@ bb.aq:                                            ; preds = %bb.ao
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bq, i64 288 ; 2 uses
   %i.ce = load i8, ptr %i.cd, align 8, !tbaa !28, !range !47, !noundef !78
   %i.cf = trunc nuw i8 %i.ce to i1
-  br i1 %i.cf, label %20, label %.noexc18
+  br i1 %i.cf, label %bb.ar, label %.noexc18
 
-20:                                               ; preds = %bb.aq
-  %21 = getelementptr inbounds nuw i8, ptr %i.bq, i64 280
-  %22 = load i32, ptr %21, align 8, !tbaa !70
-  %.not15.i43.i = icmp eq i32 %22, %i.ak
-  br i1 %.not15.i43.i, label %bb.ar, label %bb.as
-
-bb.ar:                                            ; preds = %20
+bb.ar:                                            ; preds = %bb.aq
+  %17 = getelementptr inbounds nuw i8, ptr %i.bq, i64 280
+  %18 = load i32, ptr %17, align 8, !tbaa !70
+  %.not15.i45.i = icmp eq i32 %18, %i.ak
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bq, i64 284
-  %i.ch = load i32, ptr %i.cg, align 4, !tbaa !71
+  %i.ch = load i32, ptr %i.cg, align 4
   %.not16.i44.i = icmp eq i32 %i.ch, %i.an
-  br i1 %.not16.i44.i, label %.noexc18, label %bb.as
+  %or.cond.i47.i = select i1 %.not15.i45.i, i1 %.not16.i44.i, i1 false
+  br i1 %or.cond.i47.i, label %.noexc18, label %bb.as
 
-bb.as:                                            ; preds = %bb.ar, %20
+bb.as:                                            ; preds = %bb.ar
   store i8 0, ptr %i.cd, align 8, !tbaa !28
   br label %.noexc18
 
@@ -736,21 +728,19 @@ bb.k:                                             ; preds = %bb.i
   %i.w = getelementptr inbounds nuw i8, ptr %i.q, i64 288 ; 2 uses
   %i.x = load i8, ptr %i.w, align 8, !tbaa !28, !range !47, !noundef !78
   %i.y = trunc nuw i8 %i.x to i1
-  br i1 %i.y, label %8, label %_ZN6duckdb12_GLOBAL__N_119VariantStatsVisitor12VisitDecimalINS_9hugeint_tEEEvT_jjRNS_21VariantShreddingStatsEm.exit
+  br i1 %i.y, label %bb.l, label %_ZN6duckdb12_GLOBAL__N_119VariantStatsVisitor12VisitDecimalINS_9hugeint_tEEEvT_jjRNS_21VariantShreddingStatsEm.exit
 
-8:                                                ; preds = %bb.k
-  %9 = getelementptr inbounds nuw i8, ptr %i.q, i64 280
-  %10 = load i32, ptr %9, align 8, !tbaa !70
-  %.not15.i = icmp eq i32 %10, %i.e
-  br i1 %.not15.i, label %bb.l, label %bb.m
-
-bb.l:                                             ; preds = %8
+bb.l:                                             ; preds = %bb.k
+  %8 = getelementptr inbounds nuw i8, ptr %i.q, i64 280
+  %9 = load i32, ptr %8, align 8, !tbaa !70
+  %.not15.i = icmp eq i32 %9, %i.e
   %i.z = getelementptr inbounds nuw i8, ptr %i.q, i64 284
-  %i.aa = load i32, ptr %i.z, align 4, !tbaa !71
+  %i.aa = load i32, ptr %i.z, align 4
   %.not16.i = icmp eq i32 %i.aa, %i.h
-  br i1 %.not16.i, label %_ZN6duckdb12_GLOBAL__N_119VariantStatsVisitor12VisitDecimalINS_9hugeint_tEEEvT_jjRNS_21VariantShreddingStatsEm.exit, label %bb.m
+  %or.cond.i = select i1 %.not15.i, i1 %.not16.i, i1 false
+  br i1 %or.cond.i, label %_ZN6duckdb12_GLOBAL__N_119VariantStatsVisitor12VisitDecimalINS_9hugeint_tEEEvT_jjRNS_21VariantShreddingStatsEm.exit, label %bb.m
 
-bb.m:                                             ; preds = %bb.l, %8
+bb.m:                                             ; preds = %bb.l
   store i8 0, ptr %i.w, align 8, !tbaa !28
   br label %_ZN6duckdb12_GLOBAL__N_119VariantStatsVisitor12VisitDecimalINS_9hugeint_tEEEvT_jjRNS_21VariantShreddingStatsEm.exit
 
@@ -779,21 +769,19 @@ bb.q:                                             ; preds = %bb.o
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ad, i64 288 ; 2 uses
   %i.ak = load i8, ptr %i.aj, align 8, !tbaa !28, !range !47, !noundef !78
   %i.al = trunc nuw i8 %i.ak to i1
-  br i1 %i.al, label %11, label %_ZN6duckdb12_GLOBAL__N_119VariantStatsVisitor12VisitDecimalINS_9hugeint_tEEEvT_jjRNS_21VariantShreddingStatsEm.exit
+  br i1 %i.al, label %bb.r, label %_ZN6duckdb12_GLOBAL__N_119VariantStatsVisitor12VisitDecimalINS_9hugeint_tEEEvT_jjRNS_21VariantShreddingStatsEm.exit
 
-11:                                               ; preds = %bb.q
-  %12 = getelementptr inbounds nuw i8, ptr %i.ad, i64 280
-  %13 = load i32, ptr %12, align 8, !tbaa !70
-  %.not15.i35 = icmp eq i32 %13, %i.e
-  br i1 %.not15.i35, label %bb.r, label %bb.s
-
-bb.r:                                             ; preds = %11
+bb.r:                                             ; preds = %bb.q
+  %10 = getelementptr inbounds nuw i8, ptr %i.ad, i64 280
+  %11 = load i32, ptr %10, align 8, !tbaa !70
+  %.not15.i35 = icmp eq i32 %11, %i.e
   %i.am = getelementptr inbounds nuw i8, ptr %i.ad, i64 284
-  %i.an = load i32, ptr %i.am, align 4, !tbaa !71
+  %i.an = load i32, ptr %i.am, align 4
   %.not16.i36 = icmp eq i32 %i.an, %i.h
-  br i1 %.not16.i36, label %_ZN6duckdb12_GLOBAL__N_119VariantStatsVisitor12VisitDecimalINS_9hugeint_tEEEvT_jjRNS_21VariantShreddingStatsEm.exit, label %bb.s
+  %or.cond.i37 = select i1 %.not15.i35, i1 %.not16.i36, i1 false
+  br i1 %or.cond.i37, label %_ZN6duckdb12_GLOBAL__N_119VariantStatsVisitor12VisitDecimalINS_9hugeint_tEEEvT_jjRNS_21VariantShreddingStatsEm.exit, label %bb.s
 
-bb.s:                                             ; preds = %bb.r, %11
+bb.s:                                             ; preds = %bb.r
   store i8 0, ptr %i.aj, align 8, !tbaa !28
   br label %_ZN6duckdb12_GLOBAL__N_119VariantStatsVisitor12VisitDecimalINS_9hugeint_tEEEvT_jjRNS_21VariantShreddingStatsEm.exit
 
@@ -822,21 +810,19 @@ bb.w:                                             ; preds = %bb.u
   %i.aw = getelementptr inbounds nuw i8, ptr %i.aq, i64 288 ; 2 uses
   %i.ax = load i8, ptr %i.aw, align 8, !tbaa !28, !range !47, !noundef !78
   %i.ay = trunc nuw i8 %i.ax to i1
-  br i1 %i.ay, label %14, label %_ZN6duckdb12_GLOBAL__N_119VariantStatsVisitor12VisitDecimalINS_9hugeint_tEEEvT_jjRNS_21VariantShreddingStatsEm.exit
+  br i1 %i.ay, label %bb.x, label %_ZN6duckdb12_GLOBAL__N_119VariantStatsVisitor12VisitDecimalINS_9hugeint_tEEEvT_jjRNS_21VariantShreddingStatsEm.exit
 
-14:                                               ; preds = %bb.w
-  %15 = getelementptr inbounds nuw i8, ptr %i.aq, i64 280
-  %16 = load i32, ptr %15, align 8, !tbaa !70
-  %.not15.i39 = icmp eq i32 %16, %i.e
-  br i1 %.not15.i39, label %bb.x, label %bb.y
-
-bb.x:                                             ; preds = %14
+bb.x:                                             ; preds = %bb.w
+  %12 = getelementptr inbounds nuw i8, ptr %i.aq, i64 280
+  %13 = load i32, ptr %12, align 8, !tbaa !70
+  %.not15.i40 = icmp eq i32 %13, %i.e
   %i.az = getelementptr inbounds nuw i8, ptr %i.aq, i64 284
-  %i.ba = load i32, ptr %i.az, align 4, !tbaa !71
+  %i.ba = load i32, ptr %i.az, align 4
   %.not16.i40 = icmp eq i32 %i.ba, %i.h
-  br i1 %.not16.i40, label %_ZN6duckdb12_GLOBAL__N_119VariantStatsVisitor12VisitDecimalINS_9hugeint_tEEEvT_jjRNS_21VariantShreddingStatsEm.exit, label %bb.y
+  %or.cond.i42 = select i1 %.not15.i40, i1 %.not16.i40, i1 false
+  br i1 %or.cond.i42, label %_ZN6duckdb12_GLOBAL__N_119VariantStatsVisitor12VisitDecimalINS_9hugeint_tEEEvT_jjRNS_21VariantShreddingStatsEm.exit, label %bb.y
 
-bb.y:                                             ; preds = %bb.x, %14
+bb.y:                                             ; preds = %bb.x
   store i8 0, ptr %i.aw, align 8, !tbaa !28
   br label %_ZN6duckdb12_GLOBAL__N_119VariantStatsVisitor12VisitDecimalINS_9hugeint_tEEEvT_jjRNS_21VariantShreddingStatsEm.exit
 
@@ -856,21 +842,19 @@ bb.ab:                                            ; preds = %bb.z
   %i.be = getelementptr inbounds nuw i8, ptr %i.aq, i64 288 ; 2 uses
   %i.bf = load i8, ptr %i.be, align 8, !tbaa !28, !range !47, !noundef !78
   %i.bg = trunc nuw i8 %i.bf to i1
-  br i1 %i.bg, label %17, label %_ZN6duckdb12_GLOBAL__N_119VariantStatsVisitor12VisitDecimalINS_9hugeint_tEEEvT_jjRNS_21VariantShreddingStatsEm.exit
+  br i1 %i.bg, label %bb.ac, label %_ZN6duckdb12_GLOBAL__N_119VariantStatsVisitor12VisitDecimalINS_9hugeint_tEEEvT_jjRNS_21VariantShreddingStatsEm.exit
 
-17:                                               ; preds = %bb.ab
-  %18 = getelementptr inbounds nuw i8, ptr %i.aq, i64 280
-  %19 = load i32, ptr %18, align 8, !tbaa !70
-  %.not15.i43 = icmp eq i32 %19, %i.e
-  br i1 %.not15.i43, label %bb.ac, label %bb.ad
-
-bb.ac:                                            ; preds = %17
+bb.ac:                                            ; preds = %bb.ab
+  %14 = getelementptr inbounds nuw i8, ptr %i.aq, i64 280
+  %15 = load i32, ptr %14, align 8, !tbaa !70
+  %.not15.i45 = icmp eq i32 %15, %i.e
   %i.bh = getelementptr inbounds nuw i8, ptr %i.aq, i64 284
-  %i.bi = load i32, ptr %i.bh, align 4, !tbaa !71
+  %i.bi = load i32, ptr %i.bh, align 4
   %.not16.i44 = icmp eq i32 %i.bi, %i.h
-  br i1 %.not16.i44, label %_ZN6duckdb12_GLOBAL__N_119VariantStatsVisitor12VisitDecimalINS_9hugeint_tEEEvT_jjRNS_21VariantShreddingStatsEm.exit, label %bb.ad
+  %or.cond.i47 = select i1 %.not15.i45, i1 %.not16.i44, i1 false
+  br i1 %or.cond.i47, label %_ZN6duckdb12_GLOBAL__N_119VariantStatsVisitor12VisitDecimalINS_9hugeint_tEEEvT_jjRNS_21VariantShreddingStatsEm.exit, label %bb.ad
 
-bb.ad:                                            ; preds = %bb.ac, %17
+bb.ad:                                            ; preds = %bb.ac
   store i8 0, ptr %i.be, align 8, !tbaa !28
   br label %_ZN6duckdb12_GLOBAL__N_119VariantStatsVisitor12VisitDecimalINS_9hugeint_tEEEvT_jjRNS_21VariantShreddingStatsEm.exit
 
