@@ -201,7 +201,7 @@ bb.a:
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca i64, align 8                      ; 6 uses
-  %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 23 uses
+  %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 22 uses
   %9 = alloca %"class.std::shared_ptr.373", align 8 ; 7 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
   %11 = alloca %"class.std::vector.376", align 8  ; 9 uses
@@ -216,7 +216,7 @@ bb.a:
   %i.e = alloca ptr, align 8                      ; 5 uses
   %18 = alloca %"struct.glTF2::CustomExtension", align 8 ; 23 uses
   %19 = alloca %"struct.glTF2::CustomExtension", align 8 ; 12 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 3496 ; 6 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 3496 ; 5 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 3504 ; 4 uses
   store i64 0, ptr %i.g, align 8
   %i.h = load ptr, ptr %i.f, align 8
@@ -304,7 +304,7 @@ _ZN10glTFCommon18getCurrentAssetDirERKNSt7__cxx1112basic_stringIcSt11char_traits
   %i.ah = load ptr, ptr %i.f, align 8             ; 6 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 3512 ; 2 uses
   %i.aj = icmp eq ptr %i.ah, %i.ai
-  %i.ak = load ptr, ptr %8, align 8               ; 6 uses
+  %i.ak = load ptr, ptr %8, align 8               ; 5 uses
   %i.al = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 4 uses
   %i.am = icmp eq ptr %i.ak, %i.al                ; 2 uses
   br i1 %i.aj, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i
@@ -320,25 +320,21 @@ bb.g:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.ao = load i64, ptr %i.an, align 8            ; 3 uses
   %i.ap = icmp ult i64 %i.ao, 16
   call void @llvm.assume(i1 %i.ap)
-  %.not21.i = icmp eq ptr %8, %i.f
-  br i1 %.not21.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, label %20, !prof !6
-
-20:                                               ; preds = %bb.g
   switch i64 %i.ao, label %bb.i [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
     i64 1, label %bb.h
   ]
 
-bb.h:                                             ; preds = %20
+bb.h:                                             ; preds = %bb.g
   %i.aq = load i8, ptr %i.ak, align 1
   store i8 %i.aq, ptr %i.ah, align 1
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-bb.i:                                             ; preds = %20
+bb.i:                                             ; preds = %bb.g
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ah, ptr align 1 %i.ak, i64 %i.ao, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.i, %bb.h, %20
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.i, %bb.h, %bb.g
   %i.ar = load i64, ptr %i.an, align 8            ; 2 uses
   store i64 %i.ar, ptr %i.g, align 8
   %i.as = load ptr, ptr %i.f, align 8
@@ -372,11 +368,11 @@ bb.k:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.al, ptr %8, align 8
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %bb.g, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, %bb.j, %bb.k
-  %21 = phi ptr [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ], [ %i.ah, %bb.j ], [ %i.al, %bb.k ], [ %i.ak, %bb.g ]
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, %bb.j, %bb.k
+  %20 = phi ptr [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ], [ %i.ah, %bb.j ], [ %i.al, %bb.k ]
   %i.az = getelementptr inbounds nuw i8, ptr %8, i64 8
   store i64 0, ptr %i.az, align 8
-  store i8 0, ptr %21, align 1
+  store i8 0, ptr %20, align 1
   %i.ba = load ptr, ptr %8, align 8               ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 2 uses
   %i.bc = icmp eq ptr %i.ba, %i.bb
@@ -779,7 +775,7 @@ bb.b:                                             ; preds = %_ZNK10glTFCommon3Re
 define linkonce_odr hidden void @_ZN5glTF25Asset16ReadBinaryHeaderERN6Assimp8IOStreamERSt6vectorIcSaIcEE(ptr noundef nonnull align 8 dereferenceable(3624) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(24) %2) local_unnamed_addr #8 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"struct.glTF2::GLB_Header", align 1 ; 7 uses
-  %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
+  %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
   %5 = alloca %"struct.glTF2::GLB_Chunk", align 4 ; 10 uses
   %i.a = tail call noundef ptr @_ZN6Assimp13DefaultLogger3getEv()
   tail call void @_ZN6Assimp6Logger5debugEPKc(ptr noundef nonnull align 8 dereferenceable(12) %i.a, ptr noundef nonnull @.str.228)
@@ -833,11 +829,11 @@ bb.i:                                             ; preds = %bb.e
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
   %i.n = load i32, ptr %i.m, align 1
   call void @_Z12ai_to_stringIjENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEET_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %4, i32 noundef %i.n)
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 5 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 4 uses
   %i.p = load ptr, ptr %i.o, align 8              ; 6 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 2 uses
   %i.r = icmp eq ptr %i.p, %i.q
-  %i.s = load ptr, ptr %4, align 8                ; 6 uses
+  %i.s = load ptr, ptr %4, align 8                ; 5 uses
   %i.t = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses
   %i.u = icmp eq ptr %i.s, %i.t                   ; 2 uses
   br i1 %i.r, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i
@@ -853,25 +849,21 @@ bb.j:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.w = load i64, ptr %i.v, align 8              ; 3 uses
   %i.x = icmp ult i64 %i.w, 16
   call void @llvm.assume(i1 %i.x)
-  %.not21.i = icmp eq ptr %4, %i.o
-  br i1 %.not21.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, label %6, !prof !6
-
-6:                                                ; preds = %bb.j
   switch i64 %i.w, label %bb.l [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
     i64 1, label %bb.k
   ]
 
-bb.k:                                             ; preds = %6
+bb.k:                                             ; preds = %bb.j
   %i.y = load i8, ptr %i.s, align 1
   store i8 %i.y, ptr %i.p, align 1
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-bb.l:                                             ; preds = %6
+bb.l:                                             ; preds = %bb.j
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.p, ptr align 1 %i.s, i64 %i.w, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.l, %bb.k, %6
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.l, %bb.k, %bb.j
   %i.z = load i64, ptr %i.v, align 8              ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 184
   store i64 %i.z, ptr %i.aa, align 8
@@ -908,11 +900,11 @@ bb.n:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.t, ptr %4, align 8
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %bb.j, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, %bb.m, %bb.n
-  %7 = phi ptr [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ], [ %i.p, %bb.m ], [ %i.t, %bb.n ], [ %i.s, %bb.j ]
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, %bb.m, %bb.n
+  %6 = phi ptr [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ], [ %i.p, %bb.m ], [ %i.t, %bb.n ]
   %i.ak = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i64 0, ptr %i.ak, align 8
-  store i8 0, ptr %7, align 1
+  store i8 0, ptr %6, align 1
   %i.al = load ptr, ptr %4, align 8               ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   %i.an = icmp eq ptr %i.al, %i.am
@@ -1315,7 +1307,7 @@ bb.c:                                             ; preds = %bb.a
 define linkonce_odr hidden noundef zeroext i1 @_ZN10glTFCommon10ReadHelperINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE4ReadERN9rapidjson12GenericValueINS8_4UTF8IcEENS8_19MemoryPoolAllocatorINS8_12CrtAllocatorEEEEERS6_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(32) %1) local_unnamed_addr #6 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
-  %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
+  %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 14
   %i.c = load i16, ptr %i.b, align 2              ; 2 uses
   %i.d = and i16 %i.c, 1024
@@ -1390,7 +1382,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %._cri
   %i.af = load ptr, ptr %1, align 8               ; 6 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.ah = icmp eq ptr %i.af, %i.ag
-  %i.ai = load ptr, ptr %2, align 8               ; 6 uses
+  %i.ai = load ptr, ptr %2, align 8               ; 5 uses
   %i.aj = icmp eq ptr %i.ai, %i.t                 ; 2 uses
   br i1 %i.ah, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i
 
@@ -1404,25 +1396,21 @@ bb.g:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.ak = load i64, ptr %i.ac, align 8            ; 3 uses
   %i.al = icmp ult i64 %i.ak, 16
   call void @llvm.assume(i1 %i.al)
-  %.not21.i = icmp eq ptr %2, %1
-  br i1 %.not21.i, label %.critedge, label %3, !prof !6
-
-3:                                                ; preds = %bb.g
   switch i64 %i.ak, label %bb.i [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
     i64 1, label %bb.h
   ]
 
-bb.h:                                             ; preds = %3
+bb.h:                                             ; preds = %bb.g
   %i.am = load i8, ptr %i.ai, align 1
   store i8 %i.am, ptr %i.af, align 1
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-bb.i:                                             ; preds = %3
+bb.i:                                             ; preds = %bb.g
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.af, ptr align 1 %i.ai, i64 %i.ak, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.i, %bb.h, %3
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.i, %bb.h, %bb.g
   %i.an = load i64, ptr %i.ac, align 8            ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i64 %i.an, ptr %i.ao, align 8
@@ -1457,10 +1445,10 @@ bb.k:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.t, ptr %2, align 8
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.k, %bb.j, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, %bb.g
-  %4 = phi ptr [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ], [ %i.af, %bb.j ], [ %i.t, %bb.k ], [ %i.ai, %bb.g ]
+.critedge:                                        ; preds = %bb.k, %bb.j, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
+  %3 = phi ptr [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ], [ %i.af, %bb.j ], [ %i.t, %bb.k ]
   store i64 0, ptr %i.ac, align 8
-  store i8 0, ptr %4, align 1
+  store i8 0, ptr %3, align 1
   %i.aw = load ptr, ptr %2, align 8               ; 2 uses
   %i.ax = icmp eq ptr %i.aw, %i.t
   br i1 %i.ax, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
@@ -1863,8 +1851,8 @@ define linkonce_odr hidden noundef zeroext i1 @_ZN9rapidjson22GenericSchemaValid
 bb.a:
   %1 = alloca %"class.rapidjson::GenericValue.406", align 8 ; 6 uses
   %2 = alloca %"class.rapidjson::GenericValue.406", align 8 ; 8 uses
-  %3 = alloca %"class.rapidjson::GenericValue.406", align 8 ; 15 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 5 uses
+  %3 = alloca %"class.rapidjson::GenericValue.406", align 8 ; 14 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 4 uses
   %i.b = load i32, ptr %i.a, align 8
   %i.c = icmp ne i32 %i.b, 0                      ; 2 uses
   br i1 %i.c, label %bb.b, label %bb.j
@@ -1973,31 +1961,24 @@ bb.g:                                             ; preds = %_ZN9rapidjson7Reall
   store i32 %i.ba, ptr %3, align 8
   call void @_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %2) #34
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #34
-  %.not.i4 = icmp eq ptr %i.a, %3
-  br i1 %.not.i4, label %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEaSERS4_.exit, label %4, !prof !6
-
-4:                                                ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #34
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false)
   store i16 0, ptr %i.d, align 2
   call void @_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %i.a) #34
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false)
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 14
-  store i16 0, ptr %5, align 2
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 14
+  store i16 0, ptr %4, align 2
   call void @_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %1) #34
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #34
-  br label %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEaSERS4_.exit
-
-_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEaSERS4_.exit: ; preds = %bb.g, %4
   invoke void @_ZN9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EENS_17BaseReaderHandlerIS4_vEES6_E15AddCurrentErrorENS_17ValidateErrorCodeEb(ptr noundef nonnull align 8 dereferenceable(220) %0, i32 noundef 15, i1 noundef zeroext false)
           to label %bb.h unwind label %bb.i
 
-bb.h:                                             ; preds = %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEaSERS4_.exit
+bb.h:                                             ; preds = %bb.g
   call void @_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %3) #34
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #34
   br label %bb.j
 
-bb.i:                                             ; preds = %bb.e, %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEaSERS4_.exit
+bb.i:                                             ; preds = %bb.e, %bb.g
   %i.bb = landingpad { ptr, i32 }
           cleanup
   call void @_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %3) #34
@@ -2400,8 +2381,8 @@ define linkonce_odr hidden noundef zeroext i1 @_ZN9rapidjson22GenericSchemaValid
 bb.a:
   %1 = alloca %"class.rapidjson::GenericValue.406", align 8 ; 6 uses
   %2 = alloca %"class.rapidjson::GenericValue.406", align 8 ; 8 uses
-  %3 = alloca %"class.rapidjson::GenericValue.406", align 8 ; 15 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 5 uses
+  %3 = alloca %"class.rapidjson::GenericValue.406", align 8 ; 14 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 4 uses
   %i.b = load i32, ptr %i.a, align 8
   %i.c = icmp ne i32 %i.b, 0                      ; 2 uses
   br i1 %i.c, label %bb.b, label %bb.j
@@ -2510,31 +2491,24 @@ bb.g:                                             ; preds = %_ZN9rapidjson7Reall
   store i32 %i.ba, ptr %3, align 8
   call void @_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %2) #34
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #34
-  %.not.i4 = icmp eq ptr %i.a, %3
-  br i1 %.not.i4, label %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEaSERS4_.exit, label %4, !prof !6
-
-4:                                                ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #34
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false)
   store i16 0, ptr %i.d, align 2
   call void @_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %i.a) #34
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false)
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 14
-  store i16 0, ptr %5, align 2
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 14
+  store i16 0, ptr %4, align 2
   call void @_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %1) #34
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #34
-  br label %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEaSERS4_.exit
-
-_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEaSERS4_.exit: ; preds = %bb.g, %4
   invoke void @_ZN9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EENS_17BaseReaderHandlerIS4_vEES6_E15AddCurrentErrorENS_17ValidateErrorCodeEb(ptr noundef nonnull align 8 dereferenceable(220) %0, i32 noundef 18, i1 noundef zeroext false)
           to label %bb.h unwind label %bb.i
 
-bb.h:                                             ; preds = %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEaSERS4_.exit
+bb.h:                                             ; preds = %bb.g
   call void @_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %3) #34
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #34
   br label %bb.j
 
-bb.i:                                             ; preds = %bb.e, %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEaSERS4_.exit
+bb.i:                                             ; preds = %bb.e, %bb.g
   %i.bb = landingpad { ptr, i32 }
           cleanup
   call void @_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %3) #34
@@ -2671,7 +2645,7 @@ bb.a:
   %2 = alloca %"class.rapidjson::GenericValue.406", align 8 ; 6 uses
   %3 = alloca %"class.rapidjson::GenericValue.406", align 8 ; 8 uses
   %4 = alloca %"class.rapidjson::GenericValue.406", align 8 ; 8 uses
-  %5 = alloca %"class.rapidjson::GenericValue.406", align 8 ; 19 uses
+  %5 = alloca %"class.rapidjson::GenericValue.406", align 8 ; 18 uses
   %6 = alloca %"class.rapidjson::GenericValue.406", align 8 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #34
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, i8 0, i64 16, i1 false)
@@ -2696,7 +2670,7 @@ bb.c:                                             ; preds = %bb.b
 _ZN9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EENS_17BaseReaderHandlerIS4_vEES6_E17GetExpectedStringEv.exit: ; preds = %bb.c, %bb.b, %bb.a
   %i.f = load ptr, ptr @_ZZN9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EENS_17BaseReaderHandlerIS4_vEES6_E17GetExpectedStringEvE1v, align 8
   %i.g = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EENS_17BaseReaderHandlerIS4_vEES6_E17GetExpectedStringEvE1v, i64 8), align 8
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 4 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 6 uses
   %i.j = load ptr, ptr %i.i, align 8
   %.not.i8 = icmp eq ptr %i.j, null
@@ -2903,31 +2877,24 @@ bb.m:                                             ; preds = %_ZN9rapidjson22Gene
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #34
   call void @_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %6) #34
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
-  %.not.i21 = icmp eq ptr %i.h, %5
-  br i1 %.not.i21, label %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEaSERS4_.exit, label %7, !prof !6
-
-7:                                                ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #34
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false)
   store i16 0, ptr %i.a, align 2
   call void @_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %i.h) #34
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.h, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false)
-  %8 = getelementptr inbounds nuw i8, ptr %2, i64 14
-  store i16 0, ptr %8, align 2
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 14
+  store i16 0, ptr %7, align 2
   call void @_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %2) #34
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #34
-  br label %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEaSERS4_.exit
-
-_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEaSERS4_.exit: ; preds = %bb.m, %7
   invoke void @_ZN9rapidjson22GenericSchemaValidatorINS_21GenericSchemaDocumentINS_12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEEES6_EENS_17BaseReaderHandlerIS4_vEES6_E15AddCurrentErrorENS_17ValidateErrorCodeEb(ptr noundef nonnull align 8 dereferenceable(220) %0, i32 noundef 20, i1 noundef zeroext false)
           to label %bb.n unwind label %bb.o
 
-bb.n:                                             ; preds = %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEaSERS4_.exit
+bb.n:                                             ; preds = %bb.m
   call void @_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %5) #34
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #34
   ret void
 
-bb.o:                                             ; preds = %bb.d, %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_12CrtAllocatorEEaSERS4_.exit
+bb.o:                                             ; preds = %bb.d, %bb.m
   %i.cy = landingpad { ptr, i32 }
           cleanup
   br label %bb.s

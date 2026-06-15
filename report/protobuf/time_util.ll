@@ -201,7 +201,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define noundef nonnull align 8 dereferenceable(40) ptr @_ZN6google8protobufpLERNS0_8DurationERKS1_(ptr noundef nonnull returned align 8 dereferenceable(40) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.google::protobuf::Duration", align 8 ; 11 uses
+  %2 = alloca %"class.google::protobuf::Duration", align 8 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load i64, ptr %i.a, align 8, !tbaa !7
@@ -260,23 +260,19 @@ _ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit: ; pred
   store i32 %.123.i, ptr %i.aa, align 8, !tbaa !7, !alias.scope !114
   %i.ab = or i32 %i.z, 3
   store i32 %i.ab, ptr %i.y, align 8, !tbaa !3, !alias.scope !114
-  %3 = icmp eq ptr %0, %2
-  br i1 %3, label %_ZN6google8protobuf8DurationaSEOS1_.exit, label %4
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %4 = load i64, ptr %3, align 8, !tbaa !37       ; 3 uses
+  %5 = trunc i64 %4 to i1
+  br i1 %5, label %bb.g, label %bb.h, !prof !39
 
-4:                                                ; preds = %_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %6 = load i64, ptr %5, align 8, !tbaa !37       ; 3 uses
-  %7 = trunc i64 %6 to i1
-  br i1 %7, label %bb.g, label %bb.h, !prof !39
-
-bb.g:                                             ; preds = %4
-  %i.ac = add nsw i64 %6, -1
+bb.g:                                             ; preds = %_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit
+  %i.ac = add nsw i64 %4, -1
   %i.ad = inttoptr i64 %i.ac to ptr
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !40
   br label %_ZNK6google8protobuf11MessageLite8GetArenaEv.exit.i
 
-bb.h:                                             ; preds = %4
-  %i.af = inttoptr i64 %6 to ptr
+bb.h:                                             ; preds = %_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit
+  %i.af = inttoptr i64 %4 to ptr
   br label %_ZNK6google8protobuf11MessageLite8GetArenaEv.exit.i
 
 _ZNK6google8protobuf11MessageLite8GetArenaEv.exit.i: ; preds = %bb.h, %bb.g
@@ -316,7 +312,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   call void @__clang_call_terminate(ptr %i.ap) #20
   unreachable
 
-_ZN6google8protobuf8DurationaSEOS1_.exit:         ; preds = %_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit, %bb.k, %bb.l
+_ZN6google8protobuf8DurationaSEOS1_.exit:         ; preds = %bb.k, %bb.l
   call void @_ZN6google8protobuf8DurationD1Ev(ptr noundef nonnull align 8 dereferenceable(40) %2) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #18
   ret ptr %0
@@ -328,7 +324,7 @@ declare void @_ZN6google8protobuf8DurationD1Ev(ptr noundef nonnull align 8 deref
 ; Function Attrs: mustprogress uwtable
 define noundef nonnull align 8 dereferenceable(40) ptr @_ZN6google8protobufmIERNS0_8DurationERKS1_(ptr noundef nonnull returned align 8 dereferenceable(40) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.google::protobuf::Duration", align 8 ; 11 uses
+  %2 = alloca %"class.google::protobuf::Duration", align 8 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load i64, ptr %i.a, align 8, !tbaa !7
@@ -387,23 +383,19 @@ _ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit: ; pred
   store i32 %.123.i, ptr %i.aa, align 8, !tbaa !7, !alias.scope !117
   %i.ab = or i32 %i.z, 3
   store i32 %i.ab, ptr %i.y, align 8, !tbaa !3, !alias.scope !117
-  %3 = icmp eq ptr %0, %2
-  br i1 %3, label %_ZN6google8protobuf8DurationaSEOS1_.exit, label %4
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %4 = load i64, ptr %3, align 8, !tbaa !37       ; 3 uses
+  %5 = trunc i64 %4 to i1
+  br i1 %5, label %bb.g, label %bb.h, !prof !39
 
-4:                                                ; preds = %_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %6 = load i64, ptr %5, align 8, !tbaa !37       ; 3 uses
-  %7 = trunc i64 %6 to i1
-  br i1 %7, label %bb.g, label %bb.h, !prof !39
-
-bb.g:                                             ; preds = %4
-  %i.ac = add nsw i64 %6, -1
+bb.g:                                             ; preds = %_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit
+  %i.ac = add nsw i64 %4, -1
   %i.ad = inttoptr i64 %i.ac to ptr
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !40
   br label %_ZNK6google8protobuf11MessageLite8GetArenaEv.exit.i
 
-bb.h:                                             ; preds = %4
-  %i.af = inttoptr i64 %6 to ptr
+bb.h:                                             ; preds = %_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit
+  %i.af = inttoptr i64 %4 to ptr
   br label %_ZNK6google8protobuf11MessageLite8GetArenaEv.exit.i
 
 _ZNK6google8protobuf11MessageLite8GetArenaEv.exit.i: ; preds = %bb.h, %bb.g
@@ -443,7 +435,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   call void @__clang_call_terminate(ptr %i.ap) #20
   unreachable
 
-_ZN6google8protobuf8DurationaSEOS1_.exit:         ; preds = %_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit, %bb.k, %bb.l
+_ZN6google8protobuf8DurationaSEOS1_.exit:         ; preds = %bb.k, %bb.l
   call void @_ZN6google8protobuf8DurationD1Ev(ptr noundef nonnull align 8 dereferenceable(40) %2) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #18
   ret ptr %0
@@ -495,7 +487,7 @@ _ZN6google8protobuf12_GLOBAL__N_19ToUint128ERKNS0_8DurationEPN4absl12lts_2025051
 ; Function Attrs: mustprogress uwtable
 define noundef nonnull align 8 dereferenceable(40) ptr @_ZN6google8protobufmLERNS0_8DurationEd(ptr noundef nonnull returned align 8 dereferenceable(40) %0, double noundef %1) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.google::protobuf::Duration", align 8 ; 11 uses
+  %2 = alloca %"class.google::protobuf::Duration", align 8 ; 10 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load i64, ptr %i.a, align 8, !tbaa !7
   %i.c = sitofp i64 %i.b to double
@@ -557,23 +549,19 @@ _ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit: ; pred
   store i32 %.123.i, ptr %i.ad, align 8, !tbaa !7, !alias.scope !120
   %i.ae = or i32 %i.ac, 3
   store i32 %i.ae, ptr %i.ab, align 8, !tbaa !3, !alias.scope !120
-  %3 = icmp eq ptr %0, %2
-  br i1 %3, label %_ZN6google8protobuf8DurationaSEOS1_.exit, label %4
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %4 = load i64, ptr %3, align 8, !tbaa !37       ; 3 uses
+  %5 = trunc i64 %4 to i1
+  br i1 %5, label %bb.g, label %bb.h, !prof !39
 
-4:                                                ; preds = %_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %6 = load i64, ptr %5, align 8, !tbaa !37       ; 3 uses
-  %7 = trunc i64 %6 to i1
-  br i1 %7, label %bb.g, label %bb.h, !prof !39
-
-bb.g:                                             ; preds = %4
-  %i.af = add nsw i64 %6, -1
+bb.g:                                             ; preds = %_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit
+  %i.af = add nsw i64 %4, -1
   %i.ag = inttoptr i64 %i.af to ptr
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !40
   br label %_ZNK6google8protobuf11MessageLite8GetArenaEv.exit.i
 
-bb.h:                                             ; preds = %4
-  %i.ai = inttoptr i64 %6 to ptr
+bb.h:                                             ; preds = %_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit
+  %i.ai = inttoptr i64 %4 to ptr
   br label %_ZNK6google8protobuf11MessageLite8GetArenaEv.exit.i
 
 _ZNK6google8protobuf11MessageLite8GetArenaEv.exit.i: ; preds = %bb.h, %bb.g
@@ -613,7 +601,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   call void @__clang_call_terminate(ptr %i.as) #20
   unreachable
 
-_ZN6google8protobuf8DurationaSEOS1_.exit:         ; preds = %_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit, %bb.k, %bb.l
+_ZN6google8protobuf8DurationaSEOS1_.exit:         ; preds = %bb.k, %bb.l
   call void @_ZN6google8protobuf8DurationD1Ev(ptr noundef nonnull align 8 dereferenceable(40) %2) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #18
   ret ptr %0
@@ -771,7 +759,7 @@ _ZN6google8protobuf12_GLOBAL__N_19ToUint128ERKNS0_8DurationEPN4absl12lts_2025051
 ; Function Attrs: mustprogress uwtable
 define noundef nonnull align 8 dereferenceable(40) ptr @_ZN6google8protobufpLERNS0_9TimestampERKNS0_8DurationE(ptr noundef nonnull returned align 8 dereferenceable(40) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.google::protobuf::Timestamp", align 8 ; 11 uses
+  %2 = alloca %"class.google::protobuf::Timestamp", align 8 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load i64, ptr %i.a, align 8, !tbaa !7
@@ -812,23 +800,19 @@ _ZN6google8protobuf4util12_GLOBAL__N_125CreateNormalizedTimestampEli.exit: ; pre
   store i32 %.114.i, ptr %i.v, align 8, !tbaa !7, !alias.scope !123
   %i.w = or i32 %i.u, 3
   store i32 %i.w, ptr %i.t, align 8, !tbaa !3, !alias.scope !123
-  %3 = icmp eq ptr %0, %2
-  br i1 %3, label %_ZN6google8protobuf9TimestampaSEOS1_.exit, label %4
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %4 = load i64, ptr %3, align 8, !tbaa !37       ; 3 uses
+  %5 = trunc i64 %4 to i1
+  br i1 %5, label %bb.c, label %bb.d, !prof !39
 
-4:                                                ; preds = %_ZN6google8protobuf4util12_GLOBAL__N_125CreateNormalizedTimestampEli.exit
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %6 = load i64, ptr %5, align 8, !tbaa !37       ; 3 uses
-  %7 = trunc i64 %6 to i1
-  br i1 %7, label %bb.c, label %bb.d, !prof !39
-
-bb.c:                                             ; preds = %4
-  %i.x = add nsw i64 %6, -1
+bb.c:                                             ; preds = %_ZN6google8protobuf4util12_GLOBAL__N_125CreateNormalizedTimestampEli.exit
+  %i.x = add nsw i64 %4, -1
   %i.y = inttoptr i64 %i.x to ptr
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !40
   br label %_ZNK6google8protobuf11MessageLite8GetArenaEv.exit.i
 
-bb.d:                                             ; preds = %4
-  %i.aa = inttoptr i64 %6 to ptr
+bb.d:                                             ; preds = %_ZN6google8protobuf4util12_GLOBAL__N_125CreateNormalizedTimestampEli.exit
+  %i.aa = inttoptr i64 %4 to ptr
   br label %_ZNK6google8protobuf11MessageLite8GetArenaEv.exit.i
 
 _ZNK6google8protobuf11MessageLite8GetArenaEv.exit.i: ; preds = %bb.d, %bb.c
@@ -868,7 +852,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   call void @__clang_call_terminate(ptr %i.ak) #20
   unreachable
 
-_ZN6google8protobuf9TimestampaSEOS1_.exit:        ; preds = %_ZN6google8protobuf4util12_GLOBAL__N_125CreateNormalizedTimestampEli.exit, %bb.g, %bb.h
+_ZN6google8protobuf9TimestampaSEOS1_.exit:        ; preds = %bb.g, %bb.h
   call void @_ZN6google8protobuf9TimestampD1Ev(ptr noundef nonnull align 8 dereferenceable(40) %2) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #18
   ret ptr %0
@@ -877,7 +861,7 @@ _ZN6google8protobuf9TimestampaSEOS1_.exit:        ; preds = %_ZN6google8protobuf
 ; Function Attrs: mustprogress uwtable
 define noundef nonnull align 8 dereferenceable(40) ptr @_ZN6google8protobufmIERNS0_9TimestampERKNS0_8DurationE(ptr noundef nonnull returned align 8 dereferenceable(40) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.google::protobuf::Timestamp", align 8 ; 11 uses
+  %2 = alloca %"class.google::protobuf::Timestamp", align 8 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load i64, ptr %i.a, align 8, !tbaa !7
@@ -918,23 +902,19 @@ _ZN6google8protobuf4util12_GLOBAL__N_125CreateNormalizedTimestampEli.exit: ; pre
   store i32 %.114.i, ptr %i.v, align 8, !tbaa !7, !alias.scope !126
   %i.w = or i32 %i.u, 3
   store i32 %i.w, ptr %i.t, align 8, !tbaa !3, !alias.scope !126
-  %3 = icmp eq ptr %0, %2
-  br i1 %3, label %_ZN6google8protobuf9TimestampaSEOS1_.exit, label %4
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %4 = load i64, ptr %3, align 8, !tbaa !37       ; 3 uses
+  %5 = trunc i64 %4 to i1
+  br i1 %5, label %bb.c, label %bb.d, !prof !39
 
-4:                                                ; preds = %_ZN6google8protobuf4util12_GLOBAL__N_125CreateNormalizedTimestampEli.exit
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %6 = load i64, ptr %5, align 8, !tbaa !37       ; 3 uses
-  %7 = trunc i64 %6 to i1
-  br i1 %7, label %bb.c, label %bb.d, !prof !39
-
-bb.c:                                             ; preds = %4
-  %i.x = add nsw i64 %6, -1
+bb.c:                                             ; preds = %_ZN6google8protobuf4util12_GLOBAL__N_125CreateNormalizedTimestampEli.exit
+  %i.x = add nsw i64 %4, -1
   %i.y = inttoptr i64 %i.x to ptr
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !40
   br label %_ZNK6google8protobuf11MessageLite8GetArenaEv.exit.i
 
-bb.d:                                             ; preds = %4
-  %i.aa = inttoptr i64 %6 to ptr
+bb.d:                                             ; preds = %_ZN6google8protobuf4util12_GLOBAL__N_125CreateNormalizedTimestampEli.exit
+  %i.aa = inttoptr i64 %4 to ptr
   br label %_ZNK6google8protobuf11MessageLite8GetArenaEv.exit.i
 
 _ZNK6google8protobuf11MessageLite8GetArenaEv.exit.i: ; preds = %bb.d, %bb.c
@@ -974,7 +954,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   call void @__clang_call_terminate(ptr %i.ak) #20
   unreachable
 
-_ZN6google8protobuf9TimestampaSEOS1_.exit:        ; preds = %_ZN6google8protobuf4util12_GLOBAL__N_125CreateNormalizedTimestampEli.exit, %bb.g, %bb.h
+_ZN6google8protobuf9TimestampaSEOS1_.exit:        ; preds = %bb.g, %bb.h
   call void @_ZN6google8protobuf9TimestampD1Ev(ptr noundef nonnull align 8 dereferenceable(40) %2) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #18
   ret ptr %0

@@ -201,7 +201,7 @@ _ZNSt10unique_ptrIA_N4llvh7APFloatESt14default_deleteIS2_EED2Ev.exit: ; preds = 
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef i32 @_ZN4llvh6detail13DoubleAPFloat7addImplERKNS_7APFloatES4_S4_S4_NS_11APFloatBase12roundingModeE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull align 8 dereferenceable(32) %4, i32 noundef %5) local_unnamed_addr #2 align 2 {
 bb.a:
-  %6 = alloca %"class.llvh::APFloat", align 8     ; 12 uses
+  %6 = alloca %"class.llvh::APFloat", align 8     ; 10 uses
   %7 = alloca %"class.llvh::APFloat", align 8     ; 7 uses
   %8 = alloca %"class.llvh::APFloat", align 8     ; 9 uses
   %9 = alloca %"class.llvh::APFloat", align 8     ; 9 uses
@@ -345,28 +345,24 @@ _ZNK4llvh7APFloat20compareAbsoluteValueERKS0_.exit: ; preds = %_ZNK4llvh6detail9
   br i1 %.not11.i.i, label %bb.q, label %bb.o
 
 bb.o:                                             ; preds = %_ZNK4llvh7APFloat20compareAbsoluteValueERKS0_.exit
-  br i1 %i.bq, label %.thread8.i.i.a, label %bb.p
+  br i1 %i.bq, label %bb.s, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.br = call noundef nonnull align 8 dereferenceable(24) ptr @_ZN4llvh6detail9IEEEFloataSERKS1_(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %i.bn), !inline_history !178 ; 0 uses
   br label %_ZN4llvh7APFloataSERKS0_.exit
 
 bb.q:                                             ; preds = %_ZNK4llvh7APFloat20compareAbsoluteValueERKS0_.exit
-  br i1 %i.bq, label %bb.r, label %10
+  br i1 %i.bq, label %bb.r, label %.thread8.i.i.a
 
 bb.r:                                             ; preds = %bb.q
   %i.bs = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4llvh6detail13DoubleAPFloataSERKS1_(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %i.bn), !inline_history !178 ; 0 uses
   br label %_ZN4llvh7APFloataSERKS0_.exit
 
-10:                                               ; preds = %bb.q
-  %.not.i.i = icmp eq ptr %6, %4
-  br i1 %.not.i.i, label %_ZN4llvh7APFloataSERKS0_.exit, label %bb.u
+.thread8.i.i.a:                                   ; preds = %bb.q
+  call void @_ZN4llvh6detail13DoubleAPFloatD2Ev(ptr noundef nonnull align 8 dereferenceable(24) %i.a) #25, !inline_history !179
+  br label %_ZN4llvh7APFloat7StorageD2Ev.exit.i.i
 
-.thread8.i.i.a:                                   ; preds = %bb.o
-  %.not9.i.i = icmp eq ptr %6, %4
-  br i1 %.not9.i.i, label %_ZN4llvh7APFloataSERKS0_.exit, label %bb.s
-
-bb.s:                                             ; preds = %.thread8.i.i.a
+bb.s:                                             ; preds = %bb.o
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bo, i64 4
   %i.bu = load i32, ptr %i.bt, align 4, !tbaa !7
   %i.bv = add i32 %i.bu, -64
@@ -376,21 +372,17 @@ bb.s:                                             ; preds = %.thread8.i.i.a
 bb.t:                                             ; preds = %bb.s
   %i.bx = load ptr, ptr %i.x, align 8, !tbaa !18  ; 2 uses
   %i.by = icmp eq ptr %i.bx, null
-  br i1 %i.by, label %_ZN4llvh7APFloat7StorageD2Ev.exit.i.i, label %11
+  br i1 %i.by, label %_ZN4llvh7APFloat7StorageD2Ev.exit.i.i, label %bb.u
 
-11:                                               ; preds = %bb.t
+bb.u:                                             ; preds = %bb.t
   call void @_ZdaPv(ptr noundef nonnull %i.bx) #24, !inline_history !179
   br label %_ZN4llvh7APFloat7StorageD2Ev.exit.i.i
 
-bb.u:                                             ; preds = %10
-  call void @_ZN4llvh6detail13DoubleAPFloatD2Ev(ptr noundef nonnull align 8 dereferenceable(24) %i.a) #25, !inline_history !179
-  br label %_ZN4llvh7APFloat7StorageD2Ev.exit.i.i
-
-_ZN4llvh7APFloat7StorageD2Ev.exit.i.i:            ; preds = %bb.u, %11, %bb.t, %bb.s
+_ZN4llvh7APFloat7StorageD2Ev.exit.i.i:            ; preds = %.thread8.i.i.a, %bb.u, %bb.t, %bb.s
   call void @_ZN4llvh7APFloat7StorageC2ERKS1_(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %i.bn), !inline_history !178
   br label %_ZN4llvh7APFloataSERKS0_.exit
 
-_ZN4llvh7APFloataSERKS0_.exit:                    ; preds = %bb.p, %bb.r, %10, %.thread8.i.i.a, %_ZN4llvh7APFloat7StorageD2Ev.exit.i.i
+_ZN4llvh7APFloataSERKS0_.exit:                    ; preds = %bb.p, %bb.r, %_ZN4llvh7APFloat7StorageD2Ev.exit.i.i
   %i.bz = load ptr, ptr %i.a, align 8, !tbaa !18
   %.not271.a = icmp eq ptr %i.bz, @_ZN4llvhL18semPPCDoubleDoubleE
   %i.ca = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
@@ -793,7 +785,7 @@ bb.a:
   %4 = alloca %"class.llvh::APInt", align 8       ; 6 uses
   %5 = alloca %"class.llvh::APFloat", align 8     ; 5 uses
   %6 = alloca %"class.llvh::APInt", align 8       ; 6 uses
-  %7 = alloca %"class.llvh::detail::DoubleAPFloat", align 8 ; 8 uses
+  %7 = alloca %"class.llvh::detail::DoubleAPFloat", align 8 ; 7 uses
   %8 = alloca %"class.llvh::APInt", align 8       ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
@@ -907,18 +899,14 @@ _ZN4llvh5APIntD2Ev.exit3:                         ; preds = %_ZN4llvh7APFloatD2E
 
 bb.m:                                             ; preds = %_ZN4llvh5APIntD2Ev.exit3
   call void @_ZNK4llvh6detail9IEEEFloat14bitcastToAPIntEv(ptr dead_on_unwind nonnull writable sret(%"class.llvh::APInt") align 8 %8, ptr noundef nonnull align 8 dereferenceable(24) %i.a), !inline_history !194
-  br label %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
+  br label %bb.o
 
 bb.n:                                             ; preds = %_ZN4llvh5APIntD2Ev.exit3
   call void @_ZNK4llvh6detail13DoubleAPFloat14bitcastToAPIntEv(ptr dead_on_unwind nonnull writable sret(%"class.llvh::APInt") align 8 %8, ptr noundef nonnull align 8 dereferenceable(16) %i.a), !inline_history !194
-  br label %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
+  br label %bb.o
 
-_ZNK4llvh7APFloat14bitcastToAPIntEv.exit:         ; preds = %bb.m, %bb.n
+bb.o:                                             ; preds = %bb.m, %bb.n
   call void @_ZN4llvh6detail13DoubleAPFloatC2ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 4 dereferenceable(12) @_ZN4llvhL18semPPCDoubleDoubleE, ptr noundef nonnull align 8 dereferenceable(12) %8)
-  %.not.i5 = icmp eq ptr %0, %7
-  br i1 %.not.i5, label %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit, label %bb.o
-
-bb.o:                                             ; preds = %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
   call void @_ZN4llvh6detail13DoubleAPFloatD2Ev(ptr noundef nonnull align 8 dereferenceable(16) %0) #25
   %i.am = load ptr, ptr %7, align 8, !tbaa !148
   store ptr %i.am, ptr %0, align 8, !tbaa !148
@@ -928,16 +916,13 @@ bb.o:                                             ; preds = %_ZNK4llvh7APFloat14
   store i64 %i.ap, ptr %i.an, align 8, !tbaa !159
   store ptr null, ptr %i.ao, align 8, !tbaa !159
   store ptr @_ZN4llvhL8semBogusE, ptr %7, align 8, !tbaa !148
-  br label %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit
-
-_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit:       ; preds = %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit, %bb.o
   call void @_ZN4llvh6detail13DoubleAPFloatD2Ev(ptr noundef nonnull align 8 dereferenceable(16) %7) #25
   %9 = getelementptr inbounds nuw i8, ptr %8, i64 8
   %10 = load i32, ptr %9, align 8, !tbaa !20
   %11 = icmp ugt i32 %10, 64
   br i1 %11, label %bb.p, label %_ZN4llvh5APIntD2Ev.exit6
 
-bb.p:                                             ; preds = %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit
+bb.p:                                             ; preds = %bb.o
   %i.aq = load ptr, ptr %8, align 8, !tbaa !18    ; 2 uses
   %i.ar = icmp eq ptr %i.aq, null
   br i1 %i.ar, label %_ZN4llvh5APIntD2Ev.exit6, label %bb.q
@@ -946,7 +931,7 @@ bb.q:                                             ; preds = %bb.p
   call void @_ZdaPv(ptr noundef nonnull %i.aq) #24
   br label %_ZN4llvh5APIntD2Ev.exit6
 
-_ZN4llvh5APIntD2Ev.exit6:                         ; preds = %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit, %bb.p, %bb.q
+_ZN4llvh5APIntD2Ev.exit6:                         ; preds = %bb.o, %bb.p, %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
   %i.as = load ptr, ptr %i.a, align 8, !tbaa !18  ; 2 uses
@@ -1071,7 +1056,7 @@ bb.a:
   %3 = alloca %"class.llvh::APInt", align 8       ; 6 uses
   %4 = alloca %"class.llvh::APFloat", align 8     ; 4 uses
   %5 = alloca %"class.llvh::APInt", align 8       ; 6 uses
-  %6 = alloca %"class.llvh::detail::DoubleAPFloat", align 8 ; 8 uses
+  %6 = alloca %"class.llvh::detail::DoubleAPFloat", align 8 ; 7 uses
   %7 = alloca %"class.llvh::APInt", align 8       ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
@@ -1164,18 +1149,14 @@ _ZN4llvh5APIntD2Ev.exit2:                         ; preds = %_ZN4llvh7APFloatD2E
 
 bb.l:                                             ; preds = %_ZN4llvh5APIntD2Ev.exit2
   call void @_ZNK4llvh6detail9IEEEFloat14bitcastToAPIntEv(ptr dead_on_unwind nonnull writable sret(%"class.llvh::APInt") align 8 %7, ptr noundef nonnull align 8 dereferenceable(24) %i.a), !inline_history !194
-  br label %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
+  br label %bb.n
 
 bb.m:                                             ; preds = %_ZN4llvh5APIntD2Ev.exit2
   call void @_ZNK4llvh6detail13DoubleAPFloat14bitcastToAPIntEv(ptr dead_on_unwind nonnull writable sret(%"class.llvh::APInt") align 8 %7, ptr noundef nonnull align 8 dereferenceable(16) %i.a), !inline_history !194
-  br label %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
+  br label %bb.n
 
-_ZNK4llvh7APFloat14bitcastToAPIntEv.exit:         ; preds = %bb.l, %bb.m
+bb.n:                                             ; preds = %bb.l, %bb.m
   call void @_ZN4llvh6detail13DoubleAPFloatC2ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 4 dereferenceable(12) @_ZN4llvhL18semPPCDoubleDoubleE, ptr noundef nonnull align 8 dereferenceable(12) %7)
-  %.not.i4 = icmp eq ptr %0, %6
-  br i1 %.not.i4, label %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit, label %bb.n
-
-bb.n:                                             ; preds = %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
   call void @_ZN4llvh6detail13DoubleAPFloatD2Ev(ptr noundef nonnull align 8 dereferenceable(16) %0) #25
   %i.y = load ptr, ptr %6, align 8, !tbaa !148
   store ptr %i.y, ptr %0, align 8, !tbaa !148
@@ -1185,16 +1166,13 @@ bb.n:                                             ; preds = %_ZNK4llvh7APFloat14
   store i64 %i.ab, ptr %i.z, align 8, !tbaa !159
   store ptr null, ptr %i.aa, align 8, !tbaa !159
   store ptr @_ZN4llvhL8semBogusE, ptr %6, align 8, !tbaa !148
-  br label %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit
-
-_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit:       ; preds = %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit, %bb.n
   call void @_ZN4llvh6detail13DoubleAPFloatD2Ev(ptr noundef nonnull align 8 dereferenceable(16) %6) #25
   %8 = getelementptr inbounds nuw i8, ptr %7, i64 8
   %9 = load i32, ptr %8, align 8, !tbaa !20
   %10 = icmp ugt i32 %9, 64
   br i1 %10, label %bb.o, label %_ZN4llvh5APIntD2Ev.exit5
 
-bb.o:                                             ; preds = %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit
+bb.o:                                             ; preds = %bb.n
   %i.ac = load ptr, ptr %7, align 8, !tbaa !18    ; 2 uses
   %i.ad = icmp eq ptr %i.ac, null
   br i1 %i.ad, label %_ZN4llvh5APIntD2Ev.exit5, label %bb.p
@@ -1203,7 +1181,7 @@ bb.p:                                             ; preds = %bb.o
   call void @_ZdaPv(ptr noundef nonnull %i.ac) #24
   br label %_ZN4llvh5APIntD2Ev.exit5
 
-_ZN4llvh5APIntD2Ev.exit5:                         ; preds = %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit, %bb.o, %bb.p
+_ZN4llvh5APIntD2Ev.exit5:                         ; preds = %bb.n, %bb.o, %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #25
   %i.ae = load ptr, ptr %i.a, align 8, !tbaa !18  ; 2 uses
@@ -1243,7 +1221,7 @@ bb.a:
   %3 = alloca %"class.llvh::APInt", align 8       ; 6 uses
   %4 = alloca %"class.llvh::APFloat", align 8     ; 4 uses
   %5 = alloca %"class.llvh::APInt", align 8       ; 6 uses
-  %6 = alloca %"class.llvh::detail::DoubleAPFloat", align 8 ; 8 uses
+  %6 = alloca %"class.llvh::detail::DoubleAPFloat", align 8 ; 7 uses
   %7 = alloca %"class.llvh::APInt", align 8       ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
@@ -1336,18 +1314,14 @@ _ZN4llvh5APIntD2Ev.exit2:                         ; preds = %_ZN4llvh7APFloatD2E
 
 bb.l:                                             ; preds = %_ZN4llvh5APIntD2Ev.exit2
   call void @_ZNK4llvh6detail9IEEEFloat14bitcastToAPIntEv(ptr dead_on_unwind nonnull writable sret(%"class.llvh::APInt") align 8 %7, ptr noundef nonnull align 8 dereferenceable(24) %i.a), !inline_history !194
-  br label %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
+  br label %bb.n
 
 bb.m:                                             ; preds = %_ZN4llvh5APIntD2Ev.exit2
   call void @_ZNK4llvh6detail13DoubleAPFloat14bitcastToAPIntEv(ptr dead_on_unwind nonnull writable sret(%"class.llvh::APInt") align 8 %7, ptr noundef nonnull align 8 dereferenceable(16) %i.a), !inline_history !194
-  br label %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
+  br label %bb.n
 
-_ZNK4llvh7APFloat14bitcastToAPIntEv.exit:         ; preds = %bb.l, %bb.m
+bb.n:                                             ; preds = %bb.l, %bb.m
   call void @_ZN4llvh6detail13DoubleAPFloatC2ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 4 dereferenceable(12) @_ZN4llvhL18semPPCDoubleDoubleE, ptr noundef nonnull align 8 dereferenceable(12) %7)
-  %.not.i4 = icmp eq ptr %0, %6
-  br i1 %.not.i4, label %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit, label %bb.n
-
-bb.n:                                             ; preds = %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
   call void @_ZN4llvh6detail13DoubleAPFloatD2Ev(ptr noundef nonnull align 8 dereferenceable(16) %0) #25
   %i.y = load ptr, ptr %6, align 8, !tbaa !148
   store ptr %i.y, ptr %0, align 8, !tbaa !148
@@ -1357,16 +1331,13 @@ bb.n:                                             ; preds = %_ZNK4llvh7APFloat14
   store i64 %i.ab, ptr %i.z, align 8, !tbaa !159
   store ptr null, ptr %i.aa, align 8, !tbaa !159
   store ptr @_ZN4llvhL8semBogusE, ptr %6, align 8, !tbaa !148
-  br label %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit
-
-_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit:       ; preds = %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit, %bb.n
   call void @_ZN4llvh6detail13DoubleAPFloatD2Ev(ptr noundef nonnull align 8 dereferenceable(16) %6) #25
   %8 = getelementptr inbounds nuw i8, ptr %7, i64 8
   %9 = load i32, ptr %8, align 8, !tbaa !20
   %10 = icmp ugt i32 %9, 64
   br i1 %10, label %bb.o, label %_ZN4llvh5APIntD2Ev.exit5
 
-bb.o:                                             ; preds = %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit
+bb.o:                                             ; preds = %bb.n
   %i.ac = load ptr, ptr %7, align 8, !tbaa !18    ; 2 uses
   %i.ad = icmp eq ptr %i.ac, null
   br i1 %i.ad, label %_ZN4llvh5APIntD2Ev.exit5, label %bb.p
@@ -1375,7 +1346,7 @@ bb.p:                                             ; preds = %bb.o
   call void @_ZdaPv(ptr noundef nonnull %i.ac) #24
   br label %_ZN4llvh5APIntD2Ev.exit5
 
-_ZN4llvh5APIntD2Ev.exit5:                         ; preds = %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit, %bb.o, %bb.p
+_ZN4llvh5APIntD2Ev.exit5:                         ; preds = %bb.n, %bb.o, %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #25
   %i.ae = load ptr, ptr %i.a, align 8, !tbaa !18  ; 2 uses
@@ -1417,7 +1388,7 @@ bb.a:
   %7 = alloca %"class.llvh::APInt", align 8       ; 6 uses
   %8 = alloca %"class.llvh::APFloat", align 8     ; 4 uses
   %9 = alloca %"class.llvh::APInt", align 8       ; 6 uses
-  %10 = alloca %"class.llvh::detail::DoubleAPFloat", align 8 ; 8 uses
+  %10 = alloca %"class.llvh::detail::DoubleAPFloat", align 8 ; 7 uses
   %11 = alloca %"class.llvh::APInt", align 8      ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
@@ -1558,18 +1529,14 @@ _ZN4llvh5APIntD2Ev.exit7:                         ; preds = %_ZN4llvh7APFloatD2E
 
 bb.r:                                             ; preds = %_ZN4llvh5APIntD2Ev.exit7
   call void @_ZNK4llvh6detail9IEEEFloat14bitcastToAPIntEv(ptr dead_on_unwind nonnull writable sret(%"class.llvh::APInt") align 8 %11, ptr noundef nonnull align 8 dereferenceable(24) %i.a), !inline_history !194
-  br label %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
+  br label %bb.t
 
 bb.s:                                             ; preds = %_ZN4llvh5APIntD2Ev.exit7
   call void @_ZNK4llvh6detail13DoubleAPFloat14bitcastToAPIntEv(ptr dead_on_unwind nonnull writable sret(%"class.llvh::APInt") align 8 %11, ptr noundef nonnull align 8 dereferenceable(16) %i.a), !inline_history !194
-  br label %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
+  br label %bb.t
 
-_ZNK4llvh7APFloat14bitcastToAPIntEv.exit:         ; preds = %bb.r, %bb.s
+bb.t:                                             ; preds = %bb.r, %bb.s
   call void @_ZN4llvh6detail13DoubleAPFloatC2ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(16) %10, ptr noundef nonnull align 4 dereferenceable(12) @_ZN4llvhL18semPPCDoubleDoubleE, ptr noundef nonnull align 8 dereferenceable(12) %11)
-  %.not.i9 = icmp eq ptr %0, %10
-  br i1 %.not.i9, label %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit, label %bb.t
-
-bb.t:                                             ; preds = %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
   call void @_ZN4llvh6detail13DoubleAPFloatD2Ev(ptr noundef nonnull align 8 dereferenceable(16) %0) #25
   %i.am = load ptr, ptr %10, align 8, !tbaa !148
   store ptr %i.am, ptr %0, align 8, !tbaa !148
@@ -1579,16 +1546,13 @@ bb.t:                                             ; preds = %_ZNK4llvh7APFloat14
   store i64 %i.ap, ptr %i.an, align 8, !tbaa !159
   store ptr null, ptr %i.ao, align 8, !tbaa !159
   store ptr @_ZN4llvhL8semBogusE, ptr %10, align 8, !tbaa !148
-  br label %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit
-
-_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit:       ; preds = %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit, %bb.t
   call void @_ZN4llvh6detail13DoubleAPFloatD2Ev(ptr noundef nonnull align 8 dereferenceable(16) %10) #25
   %12 = getelementptr inbounds nuw i8, ptr %11, i64 8
   %13 = load i32, ptr %12, align 8, !tbaa !20
   %14 = icmp ugt i32 %13, 64
   br i1 %14, label %bb.u, label %_ZN4llvh5APIntD2Ev.exit10
 
-bb.u:                                             ; preds = %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit
+bb.u:                                             ; preds = %bb.t
   %i.aq = load ptr, ptr %11, align 8, !tbaa !18   ; 2 uses
   %i.ar = icmp eq ptr %i.aq, null
   br i1 %i.ar, label %_ZN4llvh5APIntD2Ev.exit10, label %bb.v
@@ -1597,7 +1561,7 @@ bb.v:                                             ; preds = %bb.u
   call void @_ZdaPv(ptr noundef nonnull %i.aq) #24
   br label %_ZN4llvh5APIntD2Ev.exit10
 
-_ZN4llvh5APIntD2Ev.exit10:                        ; preds = %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit, %bb.u, %bb.v
+_ZN4llvh5APIntD2Ev.exit10:                        ; preds = %bb.t, %bb.u, %bb.v
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #25
   %i.as = load ptr, ptr %i.a, align 8, !tbaa !18  ; 2 uses
@@ -1635,7 +1599,7 @@ define hidden noundef range(i32 0, 25) i32 @_ZN4llvh6detail13DoubleAPFloat15roun
 bb.a:
   %2 = alloca %"class.llvh::APFloat", align 8     ; 4 uses
   %3 = alloca %"class.llvh::APInt", align 8       ; 6 uses
-  %4 = alloca %"class.llvh::detail::DoubleAPFloat", align 8 ; 8 uses
+  %4 = alloca %"class.llvh::detail::DoubleAPFloat", align 8 ; 7 uses
   %5 = alloca %"class.llvh::APInt", align 8       ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
@@ -1680,18 +1644,14 @@ _ZN4llvh7APFloat15roundToIntegralENS_11APFloatBase12roundingModeE.exit: ; preds 
 
 bb.f:                                             ; preds = %_ZN4llvh7APFloat15roundToIntegralENS_11APFloatBase12roundingModeE.exit
   call void @_ZNK4llvh6detail9IEEEFloat14bitcastToAPIntEv(ptr dead_on_unwind nonnull writable sret(%"class.llvh::APInt") align 8 %5, ptr noundef nonnull align 8 dereferenceable(24) %i.a), !inline_history !194
-  br label %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
+  br label %bb.h
 
 bb.g:                                             ; preds = %_ZN4llvh7APFloat15roundToIntegralENS_11APFloatBase12roundingModeE.exit
   call void @_ZNK4llvh6detail13DoubleAPFloat14bitcastToAPIntEv(ptr dead_on_unwind nonnull writable sret(%"class.llvh::APInt") align 8 %5, ptr noundef nonnull align 8 dereferenceable(16) %i.a), !inline_history !194
-  br label %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
+  br label %bb.h
 
-_ZNK4llvh7APFloat14bitcastToAPIntEv.exit:         ; preds = %bb.f, %bb.g
+bb.h:                                             ; preds = %bb.f, %bb.g
   call void @_ZN4llvh6detail13DoubleAPFloatC2ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 4 dereferenceable(12) @_ZN4llvhL18semPPCDoubleDoubleE, ptr noundef nonnull align 8 dereferenceable(12) %5)
-  %.not.i2 = icmp eq ptr %0, %4
-  br i1 %.not.i2, label %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit, label %bb.h
-
-bb.h:                                             ; preds = %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
   call void @_ZN4llvh6detail13DoubleAPFloatD2Ev(ptr noundef nonnull align 8 dereferenceable(16) %0) #25
   %i.k = load ptr, ptr %4, align 8, !tbaa !148
   store ptr %i.k, ptr %0, align 8, !tbaa !148
@@ -1701,16 +1661,13 @@ bb.h:                                             ; preds = %_ZNK4llvh7APFloat14
   store i64 %i.n, ptr %i.l, align 8, !tbaa !159
   store ptr null, ptr %i.m, align 8, !tbaa !159
   store ptr @_ZN4llvhL8semBogusE, ptr %4, align 8, !tbaa !148
-  br label %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit
-
-_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit:       ; preds = %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit, %bb.h
   call void @_ZN4llvh6detail13DoubleAPFloatD2Ev(ptr noundef nonnull align 8 dereferenceable(16) %4) #25
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 8
   %7 = load i32, ptr %6, align 8, !tbaa !20
   %8 = icmp ugt i32 %7, 64
   br i1 %8, label %bb.i, label %_ZN4llvh5APIntD2Ev.exit3
 
-bb.i:                                             ; preds = %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit
+bb.i:                                             ; preds = %bb.h
   %i.o = load ptr, ptr %5, align 8, !tbaa !18     ; 2 uses
   %i.p = icmp eq ptr %i.o, null
   br i1 %i.p, label %_ZN4llvh5APIntD2Ev.exit3, label %bb.j
@@ -1719,7 +1676,7 @@ bb.j:                                             ; preds = %bb.i
   call void @_ZdaPv(ptr noundef nonnull %i.o) #24
   br label %_ZN4llvh5APIntD2Ev.exit3
 
-_ZN4llvh5APIntD2Ev.exit3:                         ; preds = %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit, %bb.i, %bb.j
+_ZN4llvh5APIntD2Ev.exit3:                         ; preds = %bb.h, %bb.i, %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
   %i.q = load ptr, ptr %i.a, align 8, !tbaa !18   ; 2 uses
@@ -2122,7 +2079,7 @@ declare void @_ZN4llvh5APIntC1EjjPKm(ptr noundef nonnull align 8 dereferenceable
 define hidden noundef i32 @_ZN4llvh6detail13DoubleAPFloat17convertFromStringENS_9StringRefENS_11APFloatBase12roundingModeE(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr %1, i64 %2, i32 noundef %3) local_unnamed_addr #2 align 2 {
 bb.a:
   %4 = alloca %"class.llvh::APFloat", align 8     ; 5 uses
-  %5 = alloca %"class.llvh::detail::DoubleAPFloat", align 8 ; 8 uses
+  %5 = alloca %"class.llvh::detail::DoubleAPFloat", align 8 ; 7 uses
   %6 = alloca %"class.llvh::APInt", align 8       ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 9 uses
@@ -2192,18 +2149,14 @@ _ZN4llvh7APFloat17convertFromStringENS_9StringRefENS_11APFloatBase12roundingMode
 
 bb.i:                                             ; preds = %_ZN4llvh7APFloat17convertFromStringENS_9StringRefENS_11APFloatBase12roundingModeE.exit
   call void @_ZNK4llvh6detail9IEEEFloat14bitcastToAPIntEv(ptr dead_on_unwind nonnull writable sret(%"class.llvh::APInt") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %i.a), !inline_history !194
-  br label %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
+  br label %bb.k
 
 bb.j:                                             ; preds = %_ZN4llvh7APFloat17convertFromStringENS_9StringRefENS_11APFloatBase12roundingModeE.exit
   call void @_ZNK4llvh6detail13DoubleAPFloat14bitcastToAPIntEv(ptr dead_on_unwind nonnull writable sret(%"class.llvh::APInt") align 8 %6, ptr noundef nonnull align 8 dereferenceable(16) %i.a), !inline_history !194
-  br label %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
+  br label %bb.k
 
-_ZNK4llvh7APFloat14bitcastToAPIntEv.exit:         ; preds = %bb.i, %bb.j
+bb.k:                                             ; preds = %bb.i, %bb.j
   call void @_ZN4llvh6detail13DoubleAPFloatC2ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 4 dereferenceable(12) @_ZN4llvhL18semPPCDoubleDoubleE, ptr noundef nonnull align 8 dereferenceable(12) %6)
-  %.not.i4 = icmp eq ptr %0, %5
-  br i1 %.not.i4, label %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit, label %bb.k
-
-bb.k:                                             ; preds = %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
   call void @_ZN4llvh6detail13DoubleAPFloatD2Ev(ptr noundef nonnull align 8 dereferenceable(16) %0) #25
   %i.x = load ptr, ptr %5, align 8, !tbaa !148
   store ptr %i.x, ptr %0, align 8, !tbaa !148
@@ -2213,16 +2166,13 @@ bb.k:                                             ; preds = %_ZNK4llvh7APFloat14
   store i64 %i.aa, ptr %i.y, align 8, !tbaa !159
   store ptr null, ptr %i.z, align 8, !tbaa !159
   store ptr @_ZN4llvhL8semBogusE, ptr %5, align 8, !tbaa !148
-  br label %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit
-
-_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit:       ; preds = %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit, %bb.k
   call void @_ZN4llvh6detail13DoubleAPFloatD2Ev(ptr noundef nonnull align 8 dereferenceable(16) %5) #25
   %7 = getelementptr inbounds nuw i8, ptr %6, i64 8
   %8 = load i32, ptr %7, align 8, !tbaa !20
   %9 = icmp ugt i32 %8, 64
   br i1 %9, label %bb.l, label %_ZN4llvh5APIntD2Ev.exit
 
-bb.l:                                             ; preds = %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit
+bb.l:                                             ; preds = %bb.k
   %i.ab = load ptr, ptr %6, align 8, !tbaa !18    ; 2 uses
   %i.ac = icmp eq ptr %i.ab, null
   br i1 %i.ac, label %_ZN4llvh5APIntD2Ev.exit, label %bb.m
@@ -2231,7 +2181,7 @@ bb.m:                                             ; preds = %bb.l
   call void @_ZdaPv(ptr noundef nonnull %i.ab) #24
   br label %_ZN4llvh5APIntD2Ev.exit
 
-_ZN4llvh5APIntD2Ev.exit:                          ; preds = %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit, %bb.l, %bb.m
+_ZN4llvh5APIntD2Ev.exit:                          ; preds = %bb.k, %bb.l, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
   %i.ad = load ptr, ptr %i.a, align 8, !tbaa !18  ; 2 uses
@@ -2338,7 +2288,7 @@ define hidden noundef range(i32 0, 2) i32 @_ZN4llvh6detail13DoubleAPFloat4nextEb
 bb.a:
   %2 = alloca %"class.llvh::APFloat", align 8     ; 4 uses
   %3 = alloca %"class.llvh::APInt", align 8       ; 6 uses
-  %4 = alloca %"class.llvh::detail::DoubleAPFloat", align 8 ; 8 uses
+  %4 = alloca %"class.llvh::detail::DoubleAPFloat", align 8 ; 7 uses
   %5 = alloca %"class.llvh::APInt", align 8       ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
@@ -2383,18 +2333,14 @@ _ZN4llvh7APFloat4nextEb.exit:                     ; preds = %bb.d, %bb.e
 
 bb.f:                                             ; preds = %_ZN4llvh7APFloat4nextEb.exit
   call void @_ZNK4llvh6detail9IEEEFloat14bitcastToAPIntEv(ptr dead_on_unwind nonnull writable sret(%"class.llvh::APInt") align 8 %5, ptr noundef nonnull align 8 dereferenceable(24) %i.a), !inline_history !194
-  br label %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
+  br label %bb.h
 
 bb.g:                                             ; preds = %_ZN4llvh7APFloat4nextEb.exit
   call void @_ZNK4llvh6detail13DoubleAPFloat14bitcastToAPIntEv(ptr dead_on_unwind nonnull writable sret(%"class.llvh::APInt") align 8 %5, ptr noundef nonnull align 8 dereferenceable(16) %i.a), !inline_history !194
-  br label %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
+  br label %bb.h
 
-_ZNK4llvh7APFloat14bitcastToAPIntEv.exit:         ; preds = %bb.f, %bb.g
+bb.h:                                             ; preds = %bb.f, %bb.g
   call void @_ZN4llvh6detail13DoubleAPFloatC2ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 4 dereferenceable(12) @_ZN4llvhL18semPPCDoubleDoubleE, ptr noundef nonnull align 8 dereferenceable(12) %5)
-  %.not.i2 = icmp eq ptr %0, %4
-  br i1 %.not.i2, label %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit, label %bb.h
-
-bb.h:                                             ; preds = %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
   call void @_ZN4llvh6detail13DoubleAPFloatD2Ev(ptr noundef nonnull align 8 dereferenceable(16) %0) #25
   %i.k = load ptr, ptr %4, align 8, !tbaa !148
   store ptr %i.k, ptr %0, align 8, !tbaa !148
@@ -2404,16 +2350,13 @@ bb.h:                                             ; preds = %_ZNK4llvh7APFloat14
   store i64 %i.n, ptr %i.l, align 8, !tbaa !159
   store ptr null, ptr %i.m, align 8, !tbaa !159
   store ptr @_ZN4llvhL8semBogusE, ptr %4, align 8, !tbaa !148
-  br label %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit
-
-_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit:       ; preds = %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit, %bb.h
   call void @_ZN4llvh6detail13DoubleAPFloatD2Ev(ptr noundef nonnull align 8 dereferenceable(16) %4) #25
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 8
   %7 = load i32, ptr %6, align 8, !tbaa !20
   %8 = icmp ugt i32 %7, 64
   br i1 %8, label %bb.i, label %_ZN4llvh5APIntD2Ev.exit3
 
-bb.i:                                             ; preds = %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit
+bb.i:                                             ; preds = %bb.h
   %i.o = load ptr, ptr %5, align 8, !tbaa !18     ; 2 uses
   %i.p = icmp eq ptr %i.o, null
   br i1 %i.p, label %_ZN4llvh5APIntD2Ev.exit3, label %bb.j
@@ -2422,7 +2365,7 @@ bb.j:                                             ; preds = %bb.i
   call void @_ZdaPv(ptr noundef nonnull %i.o) #24
   br label %_ZN4llvh5APIntD2Ev.exit3
 
-_ZN4llvh5APIntD2Ev.exit3:                         ; preds = %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit, %bb.i, %bb.j
+_ZN4llvh5APIntD2Ev.exit3:                         ; preds = %bb.h, %bb.i, %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
   %i.q = load ptr, ptr %i.a, align 8, !tbaa !18   ; 2 uses
@@ -2626,7 +2569,7 @@ _ZNK4llvh6detail9IEEEFloat16convertToIntegerENS_15MutableArrayRefImEEjbNS_11APFl
 define hidden noundef range(i32 0, 25) i32 @_ZN4llvh6detail13DoubleAPFloat16convertFromAPIntERKNS_5APIntEbNS_11APFloatBase12roundingModeE(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(12) %1, i1 noundef zeroext %2, i32 noundef %3) local_unnamed_addr #2 align 2 {
 _ZN4llvh7APFloat16convertFromAPIntERKNS_5APIntEbNS_11APFloatBase12roundingModeE.exit:
   %4 = alloca %"class.llvh::APFloat", align 8     ; 5 uses
-  %5 = alloca %"class.llvh::detail::DoubleAPFloat", align 8 ; 8 uses
+  %5 = alloca %"class.llvh::detail::DoubleAPFloat", align 8 ; 7 uses
   %6 = alloca %"class.llvh::APInt", align 8       ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 7 uses
@@ -2645,18 +2588,14 @@ _ZN4llvh7APFloat16convertFromAPIntERKNS_5APIntEbNS_11APFloatBase12roundingModeE.
 
 bb.a:                                             ; preds = %_ZN4llvh7APFloat16convertFromAPIntERKNS_5APIntEbNS_11APFloatBase12roundingModeE.exit
   call void @_ZNK4llvh6detail9IEEEFloat14bitcastToAPIntEv(ptr dead_on_unwind nonnull writable sret(%"class.llvh::APInt") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %i.a), !inline_history !194
-  br label %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
+  br label %bb.c
 
 bb.b:                                             ; preds = %_ZN4llvh7APFloat16convertFromAPIntERKNS_5APIntEbNS_11APFloatBase12roundingModeE.exit
   call void @_ZNK4llvh6detail13DoubleAPFloat14bitcastToAPIntEv(ptr dead_on_unwind nonnull writable sret(%"class.llvh::APInt") align 8 %6, ptr noundef nonnull align 8 dereferenceable(16) %i.a), !inline_history !194
-  br label %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
+  br label %bb.c
 
-_ZNK4llvh7APFloat14bitcastToAPIntEv.exit:         ; preds = %bb.a, %bb.b
+bb.c:                                             ; preds = %bb.a, %bb.b
   call void @_ZN4llvh6detail13DoubleAPFloatC2ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 4 dereferenceable(12) @_ZN4llvhL18semPPCDoubleDoubleE, ptr noundef nonnull align 8 dereferenceable(12) %6)
-  %.not.i4 = icmp eq ptr %0, %5
-  br i1 %.not.i4, label %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit, label %bb.c
-
-bb.c:                                             ; preds = %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
   call void @_ZN4llvh6detail13DoubleAPFloatD2Ev(ptr noundef nonnull align 8 dereferenceable(16) %0) #25
   %i.g = load ptr, ptr %5, align 8, !tbaa !148
   store ptr %i.g, ptr %0, align 8, !tbaa !148
@@ -2666,16 +2605,13 @@ bb.c:                                             ; preds = %_ZNK4llvh7APFloat14
   store i64 %i.j, ptr %i.h, align 8, !tbaa !159
   store ptr null, ptr %i.i, align 8, !tbaa !159
   store ptr @_ZN4llvhL8semBogusE, ptr %5, align 8, !tbaa !148
-  br label %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit
-
-_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit:       ; preds = %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit, %bb.c
   call void @_ZN4llvh6detail13DoubleAPFloatD2Ev(ptr noundef nonnull align 8 dereferenceable(16) %5) #25
   %7 = getelementptr inbounds nuw i8, ptr %6, i64 8
   %8 = load i32, ptr %7, align 8, !tbaa !20
   %9 = icmp ugt i32 %8, 64
   br i1 %9, label %bb.d, label %_ZN4llvh5APIntD2Ev.exit
 
-bb.d:                                             ; preds = %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit
+bb.d:                                             ; preds = %bb.c
   %i.k = load ptr, ptr %6, align 8, !tbaa !18     ; 2 uses
   %i.l = icmp eq ptr %i.k, null
   br i1 %i.l, label %_ZN4llvh5APIntD2Ev.exit, label %bb.e
@@ -2684,7 +2620,7 @@ bb.e:                                             ; preds = %bb.d
   call void @_ZdaPv(ptr noundef nonnull %i.k) #24
   br label %_ZN4llvh5APIntD2Ev.exit
 
-_ZN4llvh5APIntD2Ev.exit:                          ; preds = %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit, %bb.d, %bb.e
+_ZN4llvh5APIntD2Ev.exit:                          ; preds = %bb.c, %bb.d, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
   %i.m = load ptr, ptr %i.a, align 8, !tbaa !18   ; 2 uses
@@ -2720,7 +2656,7 @@ _ZN4llvh7APFloatD2Ev.exit:                        ; preds = %bb.f, %bb.g, %bb.h,
 define hidden noundef range(i32 0, 25) i32 @_ZN4llvh6detail13DoubleAPFloat30convertFromSignExtendedIntegerEPKmjbNS_11APFloatBase12roundingModeE(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef %1, i32 noundef %2, i1 noundef zeroext %3, i32 noundef %4) local_unnamed_addr #2 align 2 {
 _ZN4llvh7APFloat30convertFromSignExtendedIntegerEPKmjbNS_11APFloatBase12roundingModeE.exit:
   %5 = alloca %"class.llvh::APFloat", align 8     ; 5 uses
-  %6 = alloca %"class.llvh::detail::DoubleAPFloat", align 8 ; 8 uses
+  %6 = alloca %"class.llvh::detail::DoubleAPFloat", align 8 ; 7 uses
   %7 = alloca %"class.llvh::APInt", align 8       ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
   %i.a = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 7 uses
@@ -2739,18 +2675,14 @@ _ZN4llvh7APFloat30convertFromSignExtendedIntegerEPKmjbNS_11APFloatBase12rounding
 
 bb.a:                                             ; preds = %_ZN4llvh7APFloat30convertFromSignExtendedIntegerEPKmjbNS_11APFloatBase12roundingModeE.exit
   call void @_ZNK4llvh6detail9IEEEFloat14bitcastToAPIntEv(ptr dead_on_unwind nonnull writable sret(%"class.llvh::APInt") align 8 %7, ptr noundef nonnull align 8 dereferenceable(24) %i.a), !inline_history !194
-  br label %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
+  br label %bb.c
 
 bb.b:                                             ; preds = %_ZN4llvh7APFloat30convertFromSignExtendedIntegerEPKmjbNS_11APFloatBase12roundingModeE.exit
   call void @_ZNK4llvh6detail13DoubleAPFloat14bitcastToAPIntEv(ptr dead_on_unwind nonnull writable sret(%"class.llvh::APInt") align 8 %7, ptr noundef nonnull align 8 dereferenceable(16) %i.a), !inline_history !194
-  br label %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
+  br label %bb.c
 
-_ZNK4llvh7APFloat14bitcastToAPIntEv.exit:         ; preds = %bb.a, %bb.b
+bb.c:                                             ; preds = %bb.a, %bb.b
   call void @_ZN4llvh6detail13DoubleAPFloatC2ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 4 dereferenceable(12) @_ZN4llvhL18semPPCDoubleDoubleE, ptr noundef nonnull align 8 dereferenceable(12) %7)
-  %.not.i5 = icmp eq ptr %0, %6
-  br i1 %.not.i5, label %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit, label %bb.c
-
-bb.c:                                             ; preds = %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
   call void @_ZN4llvh6detail13DoubleAPFloatD2Ev(ptr noundef nonnull align 8 dereferenceable(16) %0) #25
   %i.g = load ptr, ptr %6, align 8, !tbaa !148
   store ptr %i.g, ptr %0, align 8, !tbaa !148
@@ -2760,16 +2692,13 @@ bb.c:                                             ; preds = %_ZNK4llvh7APFloat14
   store i64 %i.j, ptr %i.h, align 8, !tbaa !159
   store ptr null, ptr %i.i, align 8, !tbaa !159
   store ptr @_ZN4llvhL8semBogusE, ptr %6, align 8, !tbaa !148
-  br label %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit
-
-_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit:       ; preds = %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit, %bb.c
   call void @_ZN4llvh6detail13DoubleAPFloatD2Ev(ptr noundef nonnull align 8 dereferenceable(16) %6) #25
   %8 = getelementptr inbounds nuw i8, ptr %7, i64 8
   %9 = load i32, ptr %8, align 8, !tbaa !20
   %10 = icmp ugt i32 %9, 64
   br i1 %10, label %bb.d, label %_ZN4llvh5APIntD2Ev.exit
 
-bb.d:                                             ; preds = %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit
+bb.d:                                             ; preds = %bb.c
   %i.k = load ptr, ptr %7, align 8, !tbaa !18     ; 2 uses
   %i.l = icmp eq ptr %i.k, null
   br i1 %i.l, label %_ZN4llvh5APIntD2Ev.exit, label %bb.e
@@ -2778,7 +2707,7 @@ bb.e:                                             ; preds = %bb.d
   call void @_ZdaPv(ptr noundef nonnull %i.k) #24
   br label %_ZN4llvh5APIntD2Ev.exit
 
-_ZN4llvh5APIntD2Ev.exit:                          ; preds = %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit, %bb.d, %bb.e
+_ZN4llvh5APIntD2Ev.exit:                          ; preds = %bb.c, %bb.d, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #25
   %i.m = load ptr, ptr %i.a, align 8, !tbaa !18   ; 2 uses
@@ -2814,7 +2743,7 @@ _ZN4llvh7APFloatD2Ev.exit:                        ; preds = %bb.f, %bb.g, %bb.h,
 define hidden noundef range(i32 0, 25) i32 @_ZN4llvh6detail13DoubleAPFloat30convertFromZeroExtendedIntegerEPKmjbNS_11APFloatBase12roundingModeE(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef %1, i32 noundef %2, i1 noundef zeroext %3, i32 noundef %4) local_unnamed_addr #2 align 2 {
 _ZN4llvh7APFloat30convertFromZeroExtendedIntegerEPKmjbNS_11APFloatBase12roundingModeE.exit:
   %5 = alloca %"class.llvh::APFloat", align 8     ; 5 uses
-  %6 = alloca %"class.llvh::detail::DoubleAPFloat", align 8 ; 8 uses
+  %6 = alloca %"class.llvh::detail::DoubleAPFloat", align 8 ; 7 uses
   %7 = alloca %"class.llvh::APInt", align 8       ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
   %i.a = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 7 uses
@@ -2833,18 +2762,14 @@ _ZN4llvh7APFloat30convertFromZeroExtendedIntegerEPKmjbNS_11APFloatBase12rounding
 
 bb.a:                                             ; preds = %_ZN4llvh7APFloat30convertFromZeroExtendedIntegerEPKmjbNS_11APFloatBase12roundingModeE.exit
   call void @_ZNK4llvh6detail9IEEEFloat14bitcastToAPIntEv(ptr dead_on_unwind nonnull writable sret(%"class.llvh::APInt") align 8 %7, ptr noundef nonnull align 8 dereferenceable(24) %i.a), !inline_history !194
-  br label %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
+  br label %bb.c
 
 bb.b:                                             ; preds = %_ZN4llvh7APFloat30convertFromZeroExtendedIntegerEPKmjbNS_11APFloatBase12roundingModeE.exit
   call void @_ZNK4llvh6detail13DoubleAPFloat14bitcastToAPIntEv(ptr dead_on_unwind nonnull writable sret(%"class.llvh::APInt") align 8 %7, ptr noundef nonnull align 8 dereferenceable(16) %i.a), !inline_history !194
-  br label %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
+  br label %bb.c
 
-_ZNK4llvh7APFloat14bitcastToAPIntEv.exit:         ; preds = %bb.a, %bb.b
+bb.c:                                             ; preds = %bb.a, %bb.b
   call void @_ZN4llvh6detail13DoubleAPFloatC2ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 4 dereferenceable(12) @_ZN4llvhL18semPPCDoubleDoubleE, ptr noundef nonnull align 8 dereferenceable(12) %7)
-  %.not.i5 = icmp eq ptr %0, %6
-  br i1 %.not.i5, label %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit, label %bb.c
-
-bb.c:                                             ; preds = %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit
   call void @_ZN4llvh6detail13DoubleAPFloatD2Ev(ptr noundef nonnull align 8 dereferenceable(16) %0) #25
   %i.g = load ptr, ptr %6, align 8, !tbaa !148
   store ptr %i.g, ptr %0, align 8, !tbaa !148
@@ -2854,16 +2779,13 @@ bb.c:                                             ; preds = %_ZNK4llvh7APFloat14
   store i64 %i.j, ptr %i.h, align 8, !tbaa !159
   store ptr null, ptr %i.i, align 8, !tbaa !159
   store ptr @_ZN4llvhL8semBogusE, ptr %6, align 8, !tbaa !148
-  br label %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit
-
-_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit:       ; preds = %_ZNK4llvh7APFloat14bitcastToAPIntEv.exit, %bb.c
   call void @_ZN4llvh6detail13DoubleAPFloatD2Ev(ptr noundef nonnull align 8 dereferenceable(16) %6) #25
   %8 = getelementptr inbounds nuw i8, ptr %7, i64 8
   %9 = load i32, ptr %8, align 8, !tbaa !20
   %10 = icmp ugt i32 %9, 64
   br i1 %10, label %bb.d, label %_ZN4llvh5APIntD2Ev.exit
 
-bb.d:                                             ; preds = %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit
+bb.d:                                             ; preds = %bb.c
   %i.k = load ptr, ptr %7, align 8, !tbaa !18     ; 2 uses
   %i.l = icmp eq ptr %i.k, null
   br i1 %i.l, label %_ZN4llvh5APIntD2Ev.exit, label %bb.e
@@ -2872,7 +2794,7 @@ bb.e:                                             ; preds = %bb.d
   call void @_ZdaPv(ptr noundef nonnull %i.k) #24
   br label %_ZN4llvh5APIntD2Ev.exit
 
-_ZN4llvh5APIntD2Ev.exit:                          ; preds = %_ZN4llvh6detail13DoubleAPFloataSEOS1_.exit, %bb.d, %bb.e
+_ZN4llvh5APIntD2Ev.exit:                          ; preds = %bb.c, %bb.d, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #25
   %i.m = load ptr, ptr %i.a, align 8, !tbaa !18   ; 2 uses

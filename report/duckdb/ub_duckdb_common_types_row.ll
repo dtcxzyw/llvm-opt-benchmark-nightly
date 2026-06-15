@@ -201,7 +201,7 @@ declare void @_ZN6duckdb7Printer5PrintERKNSt7__cxx1112basic_stringIcSt11char_tra
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6duckdb14TupleDataBlockC2ERNS_13BufferManagerENS_9MemoryTagEm(ptr noundef nonnull align 8 dereferenceable(32) initializes((0, 32)) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, i8 noundef zeroext %2, i64 noundef %3) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = alloca %"class.duckdb::BufferHandle", align 16 ; 8 uses
+  %4 = alloca %"class.duckdb::BufferHandle", align 16 ; 7 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %3, ptr %i.a, align 8, !tbaa !497
@@ -212,13 +212,9 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   %i.e = load ptr, ptr %i.d, align 8
   invoke void %i.e(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::BufferHandle") align 8 %4, ptr noundef nonnull align 8 dereferenceable(8) %1, i8 noundef zeroext %2, i64 noundef %3, i1 noundef zeroext false)
-          to label %5 unwind label %bb.l
+          to label %bb.b unwind label %bb.l
 
-5:                                                ; preds = %bb.a
-  %6 = icmp eq ptr %0, %4
-  br i1 %6, label %_ZN6duckdb10shared_ptrINS_11BlockHandleELb1EEaSERKS2_.exit, label %bb.b
-
-bb.b:                                             ; preds = %5
+bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !45   ; 2 uses
   %i.h = load <2 x ptr>, ptr %4, align 16, !tbaa !49
@@ -292,7 +288,7 @@ bb.k:                                             ; preds = %_ZN9__gnu_cxx27__ex
   call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.o) #31
   br label %_ZN6duckdb10shared_ptrINS_11BlockHandleELb1EEaSERKS2_.exit
 
-_ZN6duckdb10shared_ptrINS_11BlockHandleELb1EEaSERKS2_.exit: ; preds = %5, %_ZN6duckdb10shared_ptrINS_11BlockHandleELb1EEC2ERKS2_.exit.i, %bb.g, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i, %bb.k
+_ZN6duckdb10shared_ptrINS_11BlockHandleELb1EEaSERKS2_.exit: ; preds = %_ZN6duckdb10shared_ptrINS_11BlockHandleELb1EEC2ERKS2_.exit.i, %bb.g, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i, %bb.k
   call void @_ZN6duckdb12BufferHandleD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %4) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #31
   ret void

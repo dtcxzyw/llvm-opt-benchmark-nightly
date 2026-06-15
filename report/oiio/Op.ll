@@ -201,7 +201,7 @@ bb.au:                                            ; preds = %_ZSt8_DestroyIN9__g
 ; Function Attrs: mustprogress uwtable
 define hidden noundef nonnull align 8 dereferenceable(144) ptr @_ZN16OpenColorIO_v2_510OpRcPtrVecpLERKS0_(ptr noundef nonnull align 8 dereferenceable(144) %0, ptr noundef nonnull align 8 dereferenceable(144) %1) local_unnamed_addr #5 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.OpenColorIO_v2_5::OpRcPtrVec", align 8 ; 12 uses
+  %2 = alloca %"class.OpenColorIO_v2_5::OpRcPtrVec", align 8 ; 11 uses
   %.not = icmp eq ptr %0, %1
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -227,7 +227,7 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(144) %2, i8 0, i64 24, i1 false)
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   invoke void @_ZN16OpenColorIO_v2_518FormatMetadataImplC1Ev(ptr noundef nonnull align 8 dereferenceable(120) %i.m)
-          to label %_ZN16OpenColorIO_v2_510OpRcPtrVecC2Ev.exit.i unwind label %bb.d
+          to label %bb.e unwind label %bb.d
 
 common.resume:                                    ; preds = %bb.d, %bb.f, %bb.h
   %common.resume.op = phi { ptr, i32 } [ %i.t, %bb.h ], [ %i.n, %bb.d ], [ %i.r, %bb.f ]
@@ -239,11 +239,7 @@ bb.d:                                             ; preds = %bb.c
   call void @_ZNSt6vectorISt10shared_ptrIN16OpenColorIO_v2_52OpEESaIS3_EED2Ev(ptr noundef nonnull align 8 dereferenceable(144) %2) #23
   br label %common.resume
 
-_ZN16OpenColorIO_v2_510OpRcPtrVecC2Ev.exit.i:     ; preds = %bb.c
-  %.not.i.i = icmp eq ptr %2, %0
-  br i1 %.not.i.i, label %_ZN16OpenColorIO_v2_510OpRcPtrVecC2ERKS0_.exit, label %bb.e
-
-bb.e:                                             ; preds = %_ZN16OpenColorIO_v2_510OpRcPtrVecC2Ev.exit.i
+bb.e:                                             ; preds = %bb.c
   %i.o = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNSt6vectorISt10shared_ptrIN16OpenColorIO_v2_52OpEESaIS3_EEaSERKS5_(ptr noundef nonnull align 8 dereferenceable(144) %2, ptr noundef nonnull align 8 dereferenceable(144) %1)
           to label %.noexc.i unwind label %bb.f   ; 0 uses
 
@@ -258,7 +254,7 @@ bb.f:                                             ; preds = %.noexc.i, %bb.e
   call void @_ZN16OpenColorIO_v2_510OpRcPtrVecD2Ev(ptr noundef nonnull align 8 dead_on_return(144) dereferenceable(144) %2) #23
   br label %common.resume
 
-_ZN16OpenColorIO_v2_510OpRcPtrVecC2ERKS0_.exit:   ; preds = %_ZN16OpenColorIO_v2_510OpRcPtrVecC2Ev.exit.i, %.noexc.i
+_ZN16OpenColorIO_v2_510OpRcPtrVecC2ERKS0_.exit:   ; preds = %.noexc.i
   %i.s = invoke noundef nonnull align 8 dereferenceable(144) ptr @_ZN16OpenColorIO_v2_510OpRcPtrVecpLERKS0_(ptr noundef nonnull align 8 dereferenceable(144) %0, ptr noundef nonnull align 8 dereferenceable(144) %2)
           to label %bb.g unwind label %bb.h
 

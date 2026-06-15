@@ -201,7 +201,7 @@ bb.a:
 define linkonce_odr hidden noundef zeroext i1 @_ZN10glTFCommon10ReadHelperINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE4ReadERN9rapidjson12GenericValueINS8_4UTF8IcEENS8_19MemoryPoolAllocatorINS8_12CrtAllocatorEEEEERS6_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(32) %1) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
-  %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
+  %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 14
   %i.c = load i16, ptr %i.b, align 2              ; 2 uses
   %i.d = and i16 %i.c, 1024
@@ -276,7 +276,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %._cri
   %i.af = load ptr, ptr %1, align 8               ; 6 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.ah = icmp eq ptr %i.af, %i.ag
-  %i.ai = load ptr, ptr %2, align 8               ; 6 uses
+  %i.ai = load ptr, ptr %2, align 8               ; 5 uses
   %i.aj = icmp eq ptr %i.ai, %i.t                 ; 2 uses
   br i1 %i.ah, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i
 
@@ -290,25 +290,21 @@ bb.g:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.ak = load i64, ptr %i.ac, align 8            ; 3 uses
   %i.al = icmp ult i64 %i.ak, 16
   call void @llvm.assume(i1 %i.al)
-  %.not21.i = icmp eq ptr %2, %1
-  br i1 %.not21.i, label %.critedge, label %3, !prof !6
-
-3:                                                ; preds = %bb.g
   switch i64 %i.ak, label %bb.i [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
     i64 1, label %bb.h
   ]
 
-bb.h:                                             ; preds = %3
+bb.h:                                             ; preds = %bb.g
   %i.am = load i8, ptr %i.ai, align 1
   store i8 %i.am, ptr %i.af, align 1
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-bb.i:                                             ; preds = %3
+bb.i:                                             ; preds = %bb.g
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.af, ptr align 1 %i.ai, i64 %i.ak, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.i, %bb.h, %3
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.i, %bb.h, %bb.g
   %i.an = load i64, ptr %i.ac, align 8            ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i64 %i.an, ptr %i.ao, align 8
@@ -343,10 +339,10 @@ bb.k:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.t, ptr %2, align 8
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.k, %bb.j, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, %bb.g
-  %4 = phi ptr [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ], [ %i.af, %bb.j ], [ %i.t, %bb.k ], [ %i.ai, %bb.g ]
+.critedge:                                        ; preds = %bb.k, %bb.j, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
+  %3 = phi ptr [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ], [ %i.af, %bb.j ], [ %i.t, %bb.k ]
   store i64 0, ptr %i.ac, align 8
-  store i8 0, ptr %4, align 1
+  store i8 0, ptr %3, align 1
   %i.aw = load ptr, ptr %2, align 8               ; 2 uses
   %i.ax = icmp eq ptr %i.aw, %i.t
   br i1 %i.ax, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i

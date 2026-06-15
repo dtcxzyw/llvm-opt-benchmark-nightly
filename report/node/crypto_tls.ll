@@ -201,11 +201,9 @@ bb.m:                                             ; preds = %_ZNK4node17BaseObje
 
 bb.n:                                             ; preds = %_ZNK4node17BaseObjectPtrImplINS_9AsyncWrapELb0EE12pointer_dataEv.exit.i.i
   tail call void @_ZN4node10BaseObject17increase_refcountEv(ptr noundef nonnull align 8 dereferenceable(48) %i.ci) #32
-  %9 = ptrtoint ptr %i.ci to i64
   br label %_ZN4node17BaseObjectPtrImplINS_9AsyncWrapELb0EEC2EPS1_.exit.i
 
 _ZN4node17BaseObjectPtrImplINS_9AsyncWrapELb0EEC2EPS1_.exit.i: ; preds = %bb.n, %bb.l
-  %.sroa.0.0.i = phi i64 [ 0, %bb.l ], [ %9, %bb.n ]
   %i.cl = load ptr, ptr %i.cd, align 8            ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.cl, null
   br i1 %.not.i.i.i, label %_ZN4node17BaseObjectPtrImplINS_9AsyncWrapELb0EE5resetEPS1_.exit, label %bb.o
@@ -215,7 +213,8 @@ bb.o:                                             ; preds = %_ZN4node17BaseObjec
   br label %_ZN4node17BaseObjectPtrImplINS_9AsyncWrapELb0EE5resetEPS1_.exit
 
 _ZN4node17BaseObjectPtrImplINS_9AsyncWrapELb0EE5resetEPS1_.exit: ; preds = %_ZN4node17BaseObjectPtrImplINS_9AsyncWrapELb0EEC2EPS1_.exit.i, %bb.o
-  store i64 %.sroa.0.0.i, ptr %i.cd, align 8
+  %9 = ptrtoint ptr %i.ci to i64
+  store i64 %9, ptr %i.cd, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #32
   %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.cn = load ptr, ptr %i.cm, align 8
@@ -364,11 +363,9 @@ bb.aa:                                            ; preds = %_ZNK4node17BaseObje
 
 bb.ab:                                            ; preds = %_ZNK4node17BaseObjectPtrImplINS_9AsyncWrapELb0EE12pointer_dataEv.exit.i.i65
   tail call void @_ZN4node10BaseObject17increase_refcountEv(ptr noundef nonnull align 8 dereferenceable(48) %i.ee) #32
-  %10 = ptrtoint ptr %i.ee to i64
   br label %_ZN4node17BaseObjectPtrImplINS_9AsyncWrapELb0EEC2EPS1_.exit.i67
 
 _ZN4node17BaseObjectPtrImplINS_9AsyncWrapELb0EEC2EPS1_.exit.i67: ; preds = %bb.ab, %bb.z
-  %.sroa.0.0.i68 = phi i64 [ 0, %bb.z ], [ %10, %bb.ab ]
   %i.eh = load ptr, ptr %i.dz, align 8            ; 2 uses
   %.not.i.i.i69 = icmp eq ptr %i.eh, null
   br i1 %.not.i.i.i69, label %_ZN4node17BaseObjectPtrImplINS_9AsyncWrapELb0EE5resetEPS1_.exit70, label %bb.ac
@@ -378,7 +375,8 @@ bb.ac:                                            ; preds = %_ZN4node17BaseObjec
   br label %_ZN4node17BaseObjectPtrImplINS_9AsyncWrapELb0EE5resetEPS1_.exit70
 
 _ZN4node17BaseObjectPtrImplINS_9AsyncWrapELb0EE5resetEPS1_.exit70: ; preds = %_ZN4node17BaseObjectPtrImplINS_9AsyncWrapELb0EEC2EPS1_.exit.i67, %bb.ac
-  store i64 %.sroa.0.0.i68, ptr %i.dz, align 8
+  %10 = ptrtoint ptr %i.ee to i64
+  store i64 %10, ptr %i.dz, align 8
   br i1 %i.dx, label %bb.ad, label %bb.ae
 
 bb.ad:                                            ; preds = %_ZN4node17BaseObjectPtrImplINS_9AsyncWrapELb0EE5resetEPS1_.exit70

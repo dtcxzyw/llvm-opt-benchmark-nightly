@@ -201,7 +201,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define noundef zeroext i1 @_ZNK6duckdb13MultiFileList4ScanERNS_21MultiFileListScanDataERNS_12OpenFileInfoE(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(12) %1, ptr noundef nonnull align 8 dereferenceable(48) %2) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"struct.duckdb::OpenFileInfo", align 8 ; 13 uses
+  %3 = alloca %"struct.duckdb::OpenFileInfo", align 8 ; 12 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load i32, ptr %i.a, align 8, !tbaa !256
   %i.c = icmp eq i32 %i.b, 1
@@ -229,14 +229,10 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %bb.c
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(48) %2, ptr noundef nonnull align 8 dereferenceable(48) %3)
-          to label %.noexc unwind label %bb.o
+          to label %bb.e unwind label %bb.o
 
-.noexc:                                           ; preds = %bb.d
+bb.e:                                             ; preds = %bb.d
   %4 = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %5 = icmp eq ptr %2, %3
-  br i1 %5, label %_ZN6duckdb12OpenFileInfoaSERKS0_.exit, label %bb.e
-
-bb.e:                                             ; preds = %.noexc
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 40
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !266  ; 2 uses
@@ -311,7 +307,7 @@ bb.n:                                             ; preds = %_ZN9__gnu_cxx27__ex
   call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.z) #32
   br label %_ZN6duckdb12OpenFileInfoaSERKS0_.exit
 
-_ZN6duckdb12OpenFileInfoaSERKS0_.exit:            ; preds = %bb.n, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i, %bb.j, %_ZN6duckdb10shared_ptrINS_20ExtendedOpenFileInfoELb1EEC2ERKS2_.exit.i.i, %.noexc
+_ZN6duckdb12OpenFileInfoaSERKS0_.exit:            ; preds = %bb.n, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i, %bb.j, %_ZN6duckdb10shared_ptrINS_20ExtendedOpenFileInfoELb1EEC2ERKS2_.exit.i.i
   %i.ap = load i64, ptr %1, align 8, !tbaa !253
   %i.aq = add i64 %i.ap, 1
   store i64 %i.aq, ptr %1, align 8, !tbaa !253
@@ -714,7 +710,7 @@ bb.a:
   %31 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %32 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %33 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %34 = alloca %"class.std::__cxx11::basic_string", align 8 ; 16 uses
+  %34 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
   %35 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %36 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %37 = alloca %"struct.duckdb::LogicalType", align 8 ; 4 uses
@@ -1117,7 +1113,7 @@ bb.df:                                            ; preds = %bb.de, %_ZSt8_Destr
   %i.qd = load ptr, ptr %5, align 8, !tbaa !16    ; 6 uses
   %i.qe = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %i.qf = icmp eq ptr %i.qd, %i.qe
-  %i.qg = load ptr, ptr %34, align 8, !tbaa !16   ; 6 uses
+  %i.qg = load ptr, ptr %34, align 8, !tbaa !16   ; 5 uses
   %i.qh = getelementptr inbounds nuw i8, ptr %34, i64 16 ; 4 uses
   %i.qi = icmp eq ptr %i.qg, %i.qh                ; 2 uses
   br i1 %i.qf, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i305, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i299
@@ -1133,25 +1129,21 @@ bb.dg:                                            ; preds = %_ZNKSt7__cxx1112bas
   %i.qk = load i64, ptr %i.qj, align 8, !tbaa !19 ; 3 uses
   %i.ql = icmp ult i64 %i.qk, 16
   call void @llvm.assume(i1 %i.ql)
-  %.not21.i302 = icmp eq ptr %34, %5
-  br i1 %.not21.i302, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit307, label %39, !prof !159
-
-39:                                               ; preds = %bb.dg
   switch i64 %i.qk, label %bb.di [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i303
     i64 1, label %bb.dh
   ]
 
-bb.dh:                                            ; preds = %39
+bb.dh:                                            ; preds = %bb.dg
   %i.qm = load i8, ptr %i.qg, align 1, !tbaa !18
   store i8 %i.qm, ptr %i.qd, align 1, !tbaa !18
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i303
 
-bb.di:                                            ; preds = %39
+bb.di:                                            ; preds = %bb.dg
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.qd, ptr align 1 %i.qg, i64 %i.qk, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i303
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i303: ; preds = %bb.di, %bb.dh, %39
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i303: ; preds = %bb.di, %bb.dh, %bb.dg
   %i.qn = load i64, ptr %i.qj, align 8, !tbaa !19 ; 2 uses
   %i.qo = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i64 %i.qn, ptr %i.qo, align 8, !tbaa !19
@@ -1188,11 +1180,11 @@ bb.dk:                                            ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.qh, ptr %34, align 8, !tbaa !16
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit307
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit307: ; preds = %bb.dg, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i303, %bb.dj, %bb.dk
-  %40 = phi ptr [ %i.qd, %bb.dj ], [ %i.qh, %bb.dk ], [ %i.qg, %bb.dg ], [ %.pre.i304, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i303 ]
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit307: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i303, %bb.dj, %bb.dk
+  %39 = phi ptr [ %i.qd, %bb.dj ], [ %i.qh, %bb.dk ], [ %.pre.i304, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i303 ]
   %i.qy = getelementptr inbounds nuw i8, ptr %34, i64 8
   store i64 0, ptr %i.qy, align 8, !tbaa !19
-  store i8 0, ptr %40, align 1, !tbaa !18
+  store i8 0, ptr %39, align 1, !tbaa !18
   %i.qz = load ptr, ptr %34, align 8, !tbaa !16   ; 2 uses
   %i.ra = getelementptr inbounds nuw i8, ptr %34, i64 16
   %i.rb = icmp eq ptr %i.qz, %i.ra

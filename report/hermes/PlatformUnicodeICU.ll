@@ -201,7 +201,7 @@ declare void @udat_close_74(ptr noundef) local_unnamed_addr #2
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN6hermes16platform_unicode13convertToCaseERN4llvh15SmallVectorImplIDsEENS0_14CaseConversionEb(ptr noundef nonnull align 8 dereferenceable(16) %0, i32 noundef %1, i1 noundef zeroext %2) local_unnamed_addr #0 {
 bb.a:
-  %3 = alloca %"class.llvh::SmallVector.0", align 8 ; 16 uses
+  %3 = alloca %"class.llvh::SmallVector.0", align 8 ; 15 uses
   %i.a = alloca i32, align 4                      ; 6 uses
   %i.b = load ptr, ptr %0, align 8, !tbaa !13     ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
@@ -260,9 +260,9 @@ _ZN4llvh15SmallVectorImplIDsE6resizeEm.exit:      ; preds = %bb.c, %.sink.split.
   %i.q = phi ptr [ %i.i, %bb.c ], [ %.pre29, %.sink.split.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   store i32 0, ptr %i.a, align 4, !tbaa !11
-  %i.r = call noundef i32 %u_strToUpper_74.u_strToLower_74(ptr noundef %i.q, i32 noundef %i.d, ptr noundef %i.b, i32 noundef %i.d, ptr noundef %i.h, ptr noundef nonnull %i.a) #9, !callees !36 ; 3 uses
+  %i.r = call noundef i32 %u_strToUpper_74.u_strToLower_74(ptr noundef %i.q, i32 noundef %i.d, ptr noundef %i.b, i32 noundef %i.d, ptr noundef %i.h, ptr noundef nonnull %i.a) #9, !callees !36 ; 4 uses
   %i.s = sext i32 %i.r to i64                     ; 7 uses
-  %i.t = load i32, ptr %i.j, align 8, !tbaa !15
+  %i.t = load i32, ptr %i.j, align 8, !tbaa !15   ; 2 uses
   %i.u = zext i32 %i.t to i64                     ; 3 uses
   %i.v = icmp ult i64 %i.s, %i.u
   br i1 %i.v, label %.sink.split.i21, label %bb.f
@@ -301,51 +301,49 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br label %_ZN4llvh15SmallVectorImplIDsE6resizeEm.exit24
 
 _ZN4llvh15SmallVectorImplIDsE6resizeEm.exit24:    ; preds = %bb.f, %.sink.split.i21
+  %4 = phi i32 [ %i.t, %bb.f ], [ %i.r, %.sink.split.i21 ]
   %i.ae = icmp ult i64 %i.e, %i.s
-  br i1 %i.ae, label %bb.j, label %4, !prof !37
+  br i1 %i.ae, label %bb.j, label %bb.k, !prof !37
 
 bb.j:                                             ; preds = %_ZN4llvh15SmallVectorImplIDsE6resizeEm.exit24
   store i32 0, ptr %i.a, align 4, !tbaa !11
   %i.af = load ptr, ptr %3, align 8, !tbaa !13
   %i.ag = call noundef i32 %u_strToUpper_74.u_strToLower_74(ptr noundef %i.af, i32 noundef %i.r, ptr noundef %i.b, i32 noundef %i.d, ptr noundef %i.h, ptr noundef nonnull %i.a) #9, !callees !36 ; 0 uses
-  br label %4
+  %.pre30 = load i32, ptr %i.j, align 8, !tbaa !15
+  br label %bb.k
 
-4:                                                ; preds = %bb.j, %_ZN4llvh15SmallVectorImplIDsE6resizeEm.exit24
-  %5 = icmp eq ptr %0, %3
-  br i1 %5, label %_ZN4llvh15SmallVectorImplIDsEaSERKS1_.exit, label %bb.k
-
-bb.k:                                             ; preds = %4
-  %6 = load i32, ptr %i.j, align 8, !tbaa !15     ; 6 uses
-  %i.ah = zext i32 %6 to i64                      ; 2 uses
+bb.k:                                             ; preds = %bb.j, %_ZN4llvh15SmallVectorImplIDsE6resizeEm.exit24
+  %5 = phi i32 [ %.pre30, %bb.j ], [ %4, %_ZN4llvh15SmallVectorImplIDsE6resizeEm.exit24 ] ; 6 uses
+  %i.ah = zext i32 %5 to i64                      ; 2 uses
   %i.ai = load i32, ptr %i.c, align 8, !tbaa !15  ; 4 uses
   %i.aj = zext i32 %i.ai to i64                   ; 2 uses
-  %.not.i = icmp ult i32 %i.ai, %6
+  %.not.i = icmp ult i32 %i.ai, %5
   br i1 %.not.i, label %bb.p, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %.not29.i = icmp eq i32 %6, 0
-  br i1 %.not29.i, label %.sink.split.i25, label %bb.m
+  %.not29.i = icmp eq i32 %5, 0
+  br i1 %.not29.i, label %_ZN4llvh15SmallVectorImplIDsEaSERKS1_.exit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.ak = load ptr, ptr %3, align 8, !tbaa !13    ; 2 uses
   %i.al = load ptr, ptr %0, align 8, !tbaa !13    ; 2 uses
-  %.not31.i = icmp eq i32 %6, 1
+  %.not31.i = icmp eq i32 %5, 1
   br i1 %.not31.i, label %bb.o, label %bb.n, !prof !37
 
 bb.n:                                             ; preds = %bb.m
   %.idx.i = shl nuw nsw i64 %i.ah, 1
   call void @llvm.memmove.p0.p0.i64(ptr align 2 %i.al, ptr align 2 %i.ak, i64 %.idx.i, i1 false)
-  br label %.sink.split.i25
+  br label %_ZN4llvh15SmallVectorImplIDsEaSERKS1_.exit
 
 bb.o:                                             ; preds = %bb.m
   %i.am = load i16, ptr %i.ak, align 2, !tbaa !23
   store i16 %i.am, ptr %i.al, align 2, !tbaa !23
-  br label %.sink.split.i25
+  br label %_ZN4llvh15SmallVectorImplIDsEaSERKS1_.exit
 
 bb.p:                                             ; preds = %bb.k
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.ao = load i32, ptr %i.an, align 4, !tbaa !16
-  %i.ap = icmp ult i32 %i.ao, %6
+  %i.ap = icmp ult i32 %i.ao, %5
   br i1 %i.ap, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
@@ -379,7 +377,7 @@ _ZSt4copyIPKDsPDsET0_T_S4_S3_.exit30.i:           ; preds = %bb.u, %bb.t, %bb.r,
   %i.au = load i32, ptr %i.j, align 8, !tbaa !15
   %i.av = zext i32 %i.au to i64                   ; 2 uses
   %.not.i.i = icmp samesign eq i64 %.022.i, %i.av
-  br i1 %.not.i.i, label %.sink.split.i25, label %bb.v
+  br i1 %.not.i.i, label %_ZN4llvh15SmallVectorImplIDsEaSERKS1_.exit, label %bb.v
 
 bb.v:                                             ; preds = %_ZSt4copyIPKDsPDsET0_T_S4_S3_.exit30.i
   %i.aw = load ptr, ptr %3, align 8, !tbaa !13
@@ -390,13 +388,10 @@ bb.v:                                             ; preds = %_ZSt4copyIPKDsPDsET
   %i.ba = sub nsw i64 %i.av, %.022.i
   %gepdiff.i = shl nsw i64 %i.ba, 1
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.az, ptr align 2 %i.ax, i64 %gepdiff.i, i1 false)
-  br label %.sink.split.i25
-
-.sink.split.i25:                                  ; preds = %bb.v, %_ZSt4copyIPKDsPDsET0_T_S4_S3_.exit30.i, %bb.o, %bb.n, %bb.l
-  store i32 %6, ptr %i.c, align 8, !tbaa !15
   br label %_ZN4llvh15SmallVectorImplIDsEaSERKS1_.exit
 
-_ZN4llvh15SmallVectorImplIDsEaSERKS1_.exit:       ; preds = %4, %.sink.split.i25
+_ZN4llvh15SmallVectorImplIDsEaSERKS1_.exit:       ; preds = %bb.l, %bb.n, %bb.o, %_ZSt4copyIPKDsPDsET0_T_S4_S3_.exit30.i, %bb.v
+  store i32 %5, ptr %i.c, align 8, !tbaa !15
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   %i.bb = load ptr, ptr %3, align 8, !tbaa !13    ; 2 uses
   %i.bc = icmp eq ptr %i.bb, %i.i
@@ -419,7 +414,7 @@ declare i32 @u_strToLower_74(ptr noundef, i32 noundef, ptr noundef, i32 noundef,
 define hidden void @_ZN6hermes16platform_unicode9normalizeERN4llvh15SmallVectorImplIDsEENS0_17NormalizationFormE(ptr noundef nonnull align 8 dereferenceable(16) %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 11 uses
-  %2 = alloca %"class.llvh::SmallVector.0", align 8 ; 16 uses
+  %2 = alloca %"class.llvh::SmallVector.0", align 8 ; 15 uses
   %i.b = load ptr, ptr %0, align 8, !tbaa !13     ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.d = load i32, ptr %i.c, align 8, !tbaa !15   ; 8 uses
@@ -493,9 +488,9 @@ bb.h:                                             ; preds = %bb.g
 _ZN4llvh15SmallVectorImplIDsE6resizeEm.exit:      ; preds = %bb.f, %.sink.split.i
   %i.r = phi ptr [ %i.j, %bb.f ], [ %.pre26, %.sink.split.i ]
   store i32 0, ptr %i.a, align 4, !tbaa !11
-  %i.s = call i32 @unorm2_normalize_74(ptr noundef %.0, ptr noundef %i.b, i32 noundef %i.d, ptr noundef %i.r, i32 noundef %i.d, ptr noundef nonnull %i.a) #9 ; 3 uses
+  %i.s = call i32 @unorm2_normalize_74(ptr noundef %.0, ptr noundef %i.b, i32 noundef %i.d, ptr noundef %i.r, i32 noundef %i.d, ptr noundef nonnull %i.a) #9 ; 4 uses
   %i.t = sext i32 %i.s to i64                     ; 7 uses
-  %i.u = load i32, ptr %i.k, align 8, !tbaa !15
+  %i.u = load i32, ptr %i.k, align 8, !tbaa !15   ; 2 uses
   %i.v = zext i32 %i.u to i64                     ; 3 uses
   %i.w = icmp ult i64 %i.t, %i.v
   br i1 %i.w, label %.sink.split.i18, label %bb.i
@@ -534,51 +529,49 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br label %_ZN4llvh15SmallVectorImplIDsE6resizeEm.exit21
 
 _ZN4llvh15SmallVectorImplIDsE6resizeEm.exit21:    ; preds = %bb.i, %.sink.split.i18
+  %3 = phi i32 [ %i.u, %bb.i ], [ %i.s, %.sink.split.i18 ]
   %i.af = icmp ult i64 %i.e, %i.t
-  br i1 %i.af, label %bb.m, label %3, !prof !37
+  br i1 %i.af, label %bb.m, label %bb.n, !prof !37
 
 bb.m:                                             ; preds = %_ZN4llvh15SmallVectorImplIDsE6resizeEm.exit21
   store i32 0, ptr %i.a, align 4, !tbaa !11
   %i.ag = load ptr, ptr %2, align 8, !tbaa !13
   %i.ah = call i32 @unorm2_normalize_74(ptr noundef %.0, ptr noundef %i.b, i32 noundef %i.d, ptr noundef %i.ag, i32 noundef %i.s, ptr noundef nonnull %i.a) #9 ; 0 uses
-  br label %3
+  %.pre27 = load i32, ptr %i.k, align 8, !tbaa !15
+  br label %bb.n
 
-3:                                                ; preds = %bb.m, %_ZN4llvh15SmallVectorImplIDsE6resizeEm.exit21
-  %4 = icmp eq ptr %0, %2
-  br i1 %4, label %_ZN4llvh15SmallVectorImplIDsEaSERKS1_.exit, label %bb.n
-
-bb.n:                                             ; preds = %3
-  %5 = load i32, ptr %i.k, align 8, !tbaa !15     ; 6 uses
-  %i.ai = zext i32 %5 to i64                      ; 2 uses
+bb.n:                                             ; preds = %bb.m, %_ZN4llvh15SmallVectorImplIDsE6resizeEm.exit21
+  %4 = phi i32 [ %.pre27, %bb.m ], [ %3, %_ZN4llvh15SmallVectorImplIDsE6resizeEm.exit21 ] ; 6 uses
+  %i.ai = zext i32 %4 to i64                      ; 2 uses
   %i.aj = load i32, ptr %i.c, align 8, !tbaa !15  ; 4 uses
   %i.ak = zext i32 %i.aj to i64                   ; 2 uses
-  %.not.i = icmp ult i32 %i.aj, %5
+  %.not.i = icmp ult i32 %i.aj, %4
   br i1 %.not.i, label %bb.s, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %.not29.i = icmp eq i32 %5, 0
-  br i1 %.not29.i, label %.sink.split.i22, label %bb.p
+  %.not29.i = icmp eq i32 %4, 0
+  br i1 %.not29.i, label %_ZN4llvh15SmallVectorImplIDsEaSERKS1_.exit, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.al = load ptr, ptr %2, align 8, !tbaa !13    ; 2 uses
   %i.am = load ptr, ptr %0, align 8, !tbaa !13    ; 2 uses
-  %.not31.i = icmp eq i32 %5, 1
+  %.not31.i = icmp eq i32 %4, 1
   br i1 %.not31.i, label %bb.r, label %bb.q, !prof !37
 
 bb.q:                                             ; preds = %bb.p
   %.idx.i = shl nuw nsw i64 %i.ai, 1
   call void @llvm.memmove.p0.p0.i64(ptr align 2 %i.am, ptr align 2 %i.al, i64 %.idx.i, i1 false)
-  br label %.sink.split.i22
+  br label %_ZN4llvh15SmallVectorImplIDsEaSERKS1_.exit
 
 bb.r:                                             ; preds = %bb.p
   %i.an = load i16, ptr %i.al, align 2, !tbaa !23
   store i16 %i.an, ptr %i.am, align 2, !tbaa !23
-  br label %.sink.split.i22
+  br label %_ZN4llvh15SmallVectorImplIDsEaSERKS1_.exit
 
 bb.s:                                             ; preds = %bb.n
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !16
-  %i.aq = icmp ult i32 %i.ap, %5
+  %i.aq = icmp ult i32 %i.ap, %4
   br i1 %i.aq, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
@@ -612,7 +605,7 @@ _ZSt4copyIPKDsPDsET0_T_S4_S3_.exit30.i:           ; preds = %bb.x, %bb.w, %bb.u,
   %i.av = load i32, ptr %i.k, align 8, !tbaa !15
   %i.aw = zext i32 %i.av to i64                   ; 2 uses
   %.not.i.i = icmp samesign eq i64 %.022.i, %i.aw
-  br i1 %.not.i.i, label %.sink.split.i22, label %bb.y
+  br i1 %.not.i.i, label %_ZN4llvh15SmallVectorImplIDsEaSERKS1_.exit, label %bb.y
 
 bb.y:                                             ; preds = %_ZSt4copyIPKDsPDsET0_T_S4_S3_.exit30.i
   %i.ax = load ptr, ptr %2, align 8, !tbaa !13
@@ -623,13 +616,10 @@ bb.y:                                             ; preds = %_ZSt4copyIPKDsPDsET
   %i.bb = sub nsw i64 %i.aw, %.022.i
   %gepdiff.i = shl nsw i64 %i.bb, 1
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ba, ptr align 2 %i.ay, i64 %gepdiff.i, i1 false)
-  br label %.sink.split.i22
-
-.sink.split.i22:                                  ; preds = %bb.y, %_ZSt4copyIPKDsPDsET0_T_S4_S3_.exit30.i, %bb.r, %bb.q, %bb.o
-  store i32 %5, ptr %i.c, align 8, !tbaa !15
   br label %_ZN4llvh15SmallVectorImplIDsEaSERKS1_.exit
 
-_ZN4llvh15SmallVectorImplIDsEaSERKS1_.exit:       ; preds = %3, %.sink.split.i22
+_ZN4llvh15SmallVectorImplIDsEaSERKS1_.exit:       ; preds = %bb.o, %bb.q, %bb.r, %_ZSt4copyIPKDsPDsET0_T_S4_S3_.exit30.i, %bb.y
+  store i32 %4, ptr %i.c, align 8, !tbaa !15
   %i.bc = load ptr, ptr %2, align 8, !tbaa !13    ; 2 uses
   %i.bd = icmp eq ptr %i.bc, %i.j
   br i1 %i.bd, label %_ZN4llvh11SmallVectorIDsLj64EED2Ev.exit, label %bb.z

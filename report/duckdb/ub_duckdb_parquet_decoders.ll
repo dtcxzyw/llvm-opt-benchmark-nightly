@@ -201,9 +201,9 @@ declare void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64
 declare void @_ZN6duckdb11LogicalTypeD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24)) unnamed_addr #4
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN6duckdb17DictionaryDecoder6FilterEPhmRNS_6VectorERNS_15SelectionVectorERm(ptr noundef nonnull align 8 dereferenceable(113) %0, ptr nofree noundef readonly captures(address_is_null) %1, i64 noundef %2, ptr noundef nonnull align 8 dereferenceable(104) %3, ptr nofree noundef nonnull align 8 captures(address) dereferenceable(24) %4, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(8) %5) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN6duckdb17DictionaryDecoder6FilterEPhmRNS_6VectorERNS_15SelectionVectorERm(ptr noundef nonnull align 8 dereferenceable(113) %0, ptr nofree noundef readonly captures(address_is_null) %1, i64 noundef %2, ptr noundef nonnull align 8 dereferenceable(104) %3, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(24) %4, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(8) %5) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %6 = alloca %"struct.duckdb::SelectionVector", align 8 ; 9 uses
+  %6 = alloca %"struct.duckdb::SelectionVector", align 8 ; 8 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !371
   %.not = icmp eq ptr %i.b, null
@@ -467,7 +467,7 @@ bb.q:                                             ; preds = %_ZNK6duckdb15Select
 .split.us:                                        ; preds = %.split.us.loopexit61.unr-lcssa, %bb.q, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.epil.preheader, %.split.us.loopexit59.unr-lcssa.a, %bb.p, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us36.epil.preheader, %.split.us.loopexit.unr-lcssa, %bb.o, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.epil.preheader
   %i.cq = phi i64 [ %.epil.init67, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us36.epil.preheader ], [ %.epil.init75, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.epil.preheader ], [ %i.an, %.split.us.loopexit.unr-lcssa ], [ %i.bu, %bb.o ], [ %i.bm, %.split.us.loopexit59.unr-lcssa.a ], [ %i.cd, %bb.p ], [ %i.dp, %.split.us.loopexit61.unr-lcssa ], [ %i.co, %bb.q ], [ %.epil.init, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.epil.preheader ]
   %i.cr = icmp ult i64 %i.cq, %2
-  br i1 %i.cr, label %7, label %bb.ae
+  br i1 %i.cr, label %bb.u, label %bb.ae
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit:    ; preds = %bb.t, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.preheader.new
   %.02834 = phi i64 [ 0, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.preheader.new ], [ %i.dq, %bb.t ] ; 4 uses
@@ -517,12 +517,8 @@ bb.t:                                             ; preds = %bb.s, %_ZNK6duckdb1
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.split.us.loopexit61.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !415
 
-7:                                                ; preds = %.split.us
-  %8 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %9 = icmp eq ptr %4, %6
-  br i1 %9, label %_ZN6duckdb15SelectionVector10InitializeERKS0_.exit, label %bb.u
-
-bb.u:                                             ; preds = %7
+bb.u:                                             ; preds = %.split.us
+  %7 = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.dr = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.ds = load ptr, ptr %i.dr, align 8, !tbaa !299 ; 2 uses
   %i.dt = load <2 x ptr>, ptr %i.k, align 8, !tbaa !349
@@ -548,7 +544,7 @@ bb.x:                                             ; preds = %bb.v
 _ZN6duckdb10shared_ptrINS_13SelectionDataELb1EEC2ERKS2_.exit.i.i: ; preds = %bb.x, %bb.w, %bb.u
   %i.dz = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.ea = load ptr, ptr %i.dz, align 8, !tbaa !299 ; 8 uses
-  store <2 x ptr> %i.dt, ptr %8, align 8, !tbaa !349
+  store <2 x ptr> %i.dt, ptr %7, align 8, !tbaa !349
   %.not.i.i.i.i.i = icmp eq ptr %i.ea, null
   br i1 %.not.i.i.i.i.i, label %_ZN6duckdb15SelectionVector10InitializeERKS0_.exit, label %bb.y
 
@@ -596,7 +592,7 @@ bb.ad:                                            ; preds = %_ZN9__gnu_cxx27__ex
   call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.ea) #23
   br label %_ZN6duckdb15SelectionVector10InitializeERKS0_.exit
 
-_ZN6duckdb15SelectionVector10InitializeERKS0_.exit: ; preds = %7, %_ZN6duckdb10shared_ptrINS_13SelectionDataELb1EEC2ERKS2_.exit.i.i, %bb.z, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i, %bb.ad
+_ZN6duckdb15SelectionVector10InitializeERKS0_.exit: ; preds = %_ZN6duckdb10shared_ptrINS_13SelectionDataELb1EEC2ERKS2_.exit.i.i, %bb.z, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i, %bb.ad
   %i.eq = load ptr, ptr %6, align 8, !tbaa !363
   store ptr %i.eq, ptr %4, align 8, !tbaa !363
   br label %bb.ae

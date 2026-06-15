@@ -21,11 +21,11 @@ $_ZN11CStringBaseIcEpLEPKc = comdat any
 @.str.9 = private unnamed_addr constant [17 x i8] c"                \00", align 1
 
 ; Function Attrs: mustprogress uwtable
-define dso_local noundef zeroext i1 @_ZN8NWindows6NError15MyFormatMessageEjR11CStringBaseIwE(i32 noundef %0, ptr nofree noundef nonnull align 8 captures(address) dereferenceable(16) %1) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define dso_local noundef zeroext i1 @_ZN8NWindows6NError15MyFormatMessageEjR11CStringBaseIwE(i32 noundef %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(16) %1) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %class.CStringBase, align 8         ; 14 uses
   %i.a = alloca [256 x i8], align 16              ; 7 uses
-  %3 = alloca %class.CStringBase.0, align 8       ; 9 uses
+  %3 = alloca %class.CStringBase.0, align 8       ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -175,23 +175,15 @@ bb.r:                                             ; preds = %_ZN11CStringBaseIcE
 bb.s:                                             ; preds = %bb.r
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
   invoke void @_Z24MultiByteToUnicodeStringRK11CStringBaseIcEj(ptr dead_on_unwind nonnull writable sret(%class.CStringBase.0) align 8 %3, ptr noundef nonnull align 8 dereferenceable(16) %2, i32 noundef 0)
-          to label %4 unwind label %bb.z
+          to label %bb.t unwind label %bb.z
 
-4:                                                ; preds = %bb.s
-  %5 = icmp eq ptr %3, %1
-  br i1 %5, label %._ZN11CStringBaseIwEaSERKS0_.exit_crit_edge, label %bb.t
-
-._ZN11CStringBaseIwEaSERKS0_.exit_crit_edge:      ; preds = %4
-  %.pre = load ptr, ptr %3, align 8, !tbaa !17
-  br label %_ZN11CStringBaseIwEaSERKS0_.exit
-
-bb.t:                                             ; preds = %4
+bb.t:                                             ; preds = %bb.s
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
-  store i32 0, ptr %i.ac, align 8, !tbaa !20
-  %i.ad = load ptr, ptr %1, align 8, !tbaa !17    ; 3 uses
+  store i32 0, ptr %i.ac, align 8, !tbaa !17
+  %i.ad = load ptr, ptr %1, align 8, !tbaa !20    ; 3 uses
   store i32 0, ptr %i.ad, align 4, !tbaa !21
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  %i.af = load i32, ptr %i.ae, align 8, !tbaa !20 ; 2 uses
+  %i.af = load i32, ptr %i.ae, align 8, !tbaa !17 ; 2 uses
   %i.ag = add nsw i32 %i.af, 1                    ; 3 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !23 ; 2 uses
@@ -212,13 +204,13 @@ bb.u:                                             ; preds = %bb.t
 
 ._crit_edge.thread.i.i35:                         ; preds = %.noexc37
   call void @_ZdaPv(ptr noundef nonnull %i.ad) #10
-  %.pre.i36 = load i32, ptr %i.ac, align 8, !tbaa !20
+  %.pre.i36 = load i32, ptr %i.ac, align 8, !tbaa !17
   %i.aq = sext i32 %.pre.i36 to i64
   br label %bb.v
 
 bb.v:                                             ; preds = %._crit_edge.thread.i.i35, %.noexc37
   %i.ar = phi i64 [ %i.aq, %._crit_edge.thread.i.i35 ], [ 0, %.noexc37 ]
-  store ptr %i.ao, ptr %1, align 8, !tbaa !17
+  store ptr %i.ao, ptr %1, align 8, !tbaa !20
   %i.as = getelementptr inbounds [4 x i8], ptr %i.ao, i64 %i.ar
   store i32 0, ptr %i.as, align 4, !tbaa !21
   store i32 %i.ag, ptr %i.ah, align 4, !tbaa !23
@@ -226,7 +218,7 @@ bb.v:                                             ; preds = %._crit_edge.thread.
 
 _ZN11CStringBaseIwE11SetCapacityEi.exit.i:        ; preds = %bb.v, %bb.t
   %i.at = phi ptr [ %i.ad, %bb.t ], [ %i.ao, %bb.v ]
-  %i.au = load ptr, ptr %3, align 8, !tbaa !17    ; 2 uses
+  %i.au = load ptr, ptr %3, align 8, !tbaa !20    ; 3 uses
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.w, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i
@@ -237,20 +229,16 @@ bb.w:                                             ; preds = %bb.w, %_ZN11CString
   %i.ax = getelementptr inbounds nuw i8, ptr %.0.i.i33, i64 4
   store i32 %i.aw, ptr %.0.i.i33, align 4, !tbaa !21
   %.not.i.i34 = icmp eq i32 %i.aw, 0
-  br i1 %.not.i.i34, label %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i, label %bb.w, !llvm.loop !24
+  br i1 %.not.i.i34, label %_ZN11CStringBaseIwEaSERKS0_.exit, label %bb.w, !llvm.loop !24
 
-_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i:            ; preds = %bb.w
-  %6 = load i32, ptr %i.ae, align 8, !tbaa !20
-  store i32 %6, ptr %i.ac, align 8, !tbaa !20
-  br label %_ZN11CStringBaseIwEaSERKS0_.exit
-
-_ZN11CStringBaseIwEaSERKS0_.exit:                 ; preds = %._ZN11CStringBaseIwEaSERKS0_.exit_crit_edge, %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i
-  %7 = phi ptr [ %.pre, %._ZN11CStringBaseIwEaSERKS0_.exit_crit_edge ], [ %i.au, %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i ] ; 2 uses
-  %i.ay = icmp eq ptr %7, null
+_ZN11CStringBaseIwEaSERKS0_.exit:                 ; preds = %bb.w
+  %4 = load i32, ptr %i.ae, align 8, !tbaa !17
+  store i32 %4, ptr %i.ac, align 8, !tbaa !17
+  %i.ay = icmp eq ptr %i.au, null
   br i1 %i.ay, label %_ZN11CStringBaseIwED2Ev.exit, label %bb.x
 
 bb.x:                                             ; preds = %_ZN11CStringBaseIwEaSERKS0_.exit
-  call void @_ZdaPv(ptr noundef nonnull %7) #10
+  call void @_ZdaPv(ptr noundef nonnull %i.au) #10
   br label %_ZN11CStringBaseIwED2Ev.exit
 
 _ZN11CStringBaseIwED2Ev.exit:                     ; preds = %_ZN11CStringBaseIwEaSERKS0_.exit, %bb.x
@@ -275,7 +263,7 @@ bb.z:                                             ; preds = %bb.s
 bb.aa:                                            ; preds = %bb.u
   %i.bc = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.bd = load ptr, ptr %3, align 8, !tbaa !17    ; 2 uses
+  %i.bd = load ptr, ptr %3, align 8, !tbaa !20    ; 2 uses
   %i.be = icmp eq ptr %i.bd, null
   br i1 %i.be, label %_ZN11CStringBaseIwED2Ev.exit38, label %bb.ab
 
@@ -552,10 +540,10 @@ attributes #10 = { builtin nounwind }
 !14 = !{!9, !5, i64 8}
 !15 = distinct !{!15, !16}
 !16 = !{!"llvm.loop.mustprogress"}
-!17 = !{!18, !19, i64 0}
+!17 = !{!18, !5, i64 8}
 !18 = !{!"_ZTS11CStringBaseIwE", !19, i64 0, !5, i64 8, !5, i64 12}
 !19 = !{!"p1 wchar_t", !11, i64 0}
-!20 = !{!18, !5, i64 8}
+!20 = !{!18, !19, i64 0}
 !21 = !{!22, !22, i64 0}
 !22 = !{!"wchar_t", !6, i64 0}
 !23 = !{!18, !5, i64 12}

@@ -201,16 +201,16 @@ declare i32 @__gxx_personality_v0(...)
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #4
 
 ; Function Attrs: mustprogress uwtable
-define dso_local void @_Z16SplitPathToPartsRK11CStringBaseIwERS0_S3_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr nofree noundef nonnull align 8 captures(address) dereferenceable(16) %1, ptr nofree noundef nonnull align 8 captures(address) dereferenceable(16) %2) local_unnamed_addr #2 personality ptr @__gxx_personality_v0 {
+define dso_local void @_Z16SplitPathToPartsRK11CStringBaseIwERS0_S3_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(16) %1, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(16) %2) local_unnamed_addr #2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %class.CStringBase, align 8         ; 9 uses
-  %4 = alloca %class.CStringBase, align 8         ; 9 uses
+  %3 = alloca %class.CStringBase, align 8         ; 7 uses
+  %4 = alloca %class.CStringBase, align 8         ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !18   ; 4 uses
   %i.c = load ptr, ptr %0, align 8
   %smin = tail call i32 @llvm.smin.i32(i32 %i.b, i32 0) ; 2 uses
   %i.d = icmp sgt i32 %i.b, 0
-  br i1 %i.d, label %.lr.ph, label %._crit_edge44
+  br i1 %i.d, label %.lr.ph, label %bb.d
 
 .lr.ph:                                           ; preds = %bb.a
   %i.e = zext nneg i32 %i.b to i64
@@ -219,7 +219,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.c
   %i.f = trunc nuw i64 %i.i to i32                ; 2 uses
   %i.g = icmp sgt i32 %i.f, 0
-  br i1 %i.g, label %bb.c, label %._crit_edge44, !llvm.loop !34
+  br i1 %i.g, label %bb.c, label %bb.d, !llvm.loop !34
 
 bb.c:                                             ; preds = %.lr.ph, %bb.b
   %i.h = phi i32 [ %i.b, %.lr.ph ], [ %i.f, %bb.b ]
@@ -228,23 +228,15 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
   %i.j = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.i
   %i.k = load i32, ptr %i.j, align 4, !tbaa !16
   %i.l = icmp eq i32 %i.k, 47
-  br i1 %i.l, label %._crit_edge, label %bb.b, !llvm.loop !34
+  br i1 %i.l, label %._ZN11CStringBaseIwEaSERKS0_.exit_crit_edge, label %bb.b, !llvm.loop !34
 
-._crit_edge:                                      ; preds = %bb.c
-  br label %._crit_edge44, !llvm.loop !34
+._ZN11CStringBaseIwEaSERKS0_.exit_crit_edge:      ; preds = %bb.c
+  br label %bb.d, !llvm.loop !34
 
-._crit_edge44:                                    ; preds = %bb.b, %._crit_edge, %bb.a
-  %.013.in.lcssa = phi i32 [ %i.h, %._crit_edge ], [ %smin, %bb.a ], [ %smin, %bb.b ] ; 3 uses
+bb.d:                                             ; preds = %bb.b, %._ZN11CStringBaseIwEaSERKS0_.exit_crit_edge, %bb.a
+  %.013.in.lcssa = phi i32 [ %i.h, %._ZN11CStringBaseIwEaSERKS0_.exit_crit_edge ], [ %smin, %bb.a ], [ %smin, %bb.b ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
   call void @_ZNK11CStringBaseIwE3MidEii(ptr dead_on_unwind nonnull writable sret(%class.CStringBase) align 8 %3, ptr noundef nonnull align 8 dereferenceable(16) %0, i32 noundef 0, i32 noundef %.013.in.lcssa)
-  %5 = icmp eq ptr %3, %1
-  br i1 %5, label %._ZN11CStringBaseIwEaSERKS0_.exit_crit_edge, label %bb.d
-
-._ZN11CStringBaseIwEaSERKS0_.exit_crit_edge:      ; preds = %._crit_edge44
-  %.pre = load ptr, ptr %3, align 8, !tbaa !8
-  br label %_ZN11CStringBaseIwEaSERKS0_.exit
-
-bb.d:                                             ; preds = %._crit_edge44
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   store i32 0, ptr %i.m, align 8, !tbaa !18
   %i.n = load ptr, ptr %1, align 8, !tbaa !8      ; 3 uses
@@ -285,7 +277,7 @@ bb.f:                                             ; preds = %._crit_edge.thread.
 
 _ZN11CStringBaseIwE11SetCapacityEi.exit.i:        ; preds = %bb.f, %bb.d
   %i.ad = phi ptr [ %i.n, %bb.d ], [ %i.y, %bb.f ]
-  %i.ae = load ptr, ptr %3, align 8, !tbaa !8     ; 2 uses
+  %i.ae = load ptr, ptr %3, align 8, !tbaa !8     ; 3 uses
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.g, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i
@@ -296,36 +288,24 @@ bb.g:                                             ; preds = %bb.g, %_ZN11CString
   %i.ah = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 4
   store i32 %i.ag, ptr %.0.i.i, align 4, !tbaa !16
   %.not.i.i = icmp eq i32 %i.ag, 0
-  br i1 %.not.i.i, label %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i, label %bb.g, !llvm.loop !20
+  br i1 %.not.i.i, label %_ZN11CStringBaseIwED2Ev.exit.a, label %bb.g, !llvm.loop !20
 
-_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i:            ; preds = %bb.g
-  %6 = load i32, ptr %i.o, align 8, !tbaa !18
-  store i32 %6, ptr %i.m, align 8, !tbaa !18
-  br label %_ZN11CStringBaseIwEaSERKS0_.exit
-
-_ZN11CStringBaseIwEaSERKS0_.exit:                 ; preds = %._ZN11CStringBaseIwEaSERKS0_.exit_crit_edge, %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i
-  %7 = phi ptr [ %.pre, %._ZN11CStringBaseIwEaSERKS0_.exit_crit_edge ], [ %i.ae, %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i ] ; 2 uses
-  %8 = icmp eq ptr %7, null
-  br i1 %8, label %_ZN11CStringBaseIwED2Ev.exit.a, label %9
-
-9:                                                ; preds = %_ZN11CStringBaseIwEaSERKS0_.exit
-  call void @_ZdaPv(ptr noundef nonnull %7) #19
-  br label %_ZN11CStringBaseIwED2Ev.exit.a
-
-_ZN11CStringBaseIwED2Ev.exit.a:                   ; preds = %_ZN11CStringBaseIwEaSERKS0_.exit, %9
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #21
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
-  %i.ai = load i32, ptr %i.a, align 8, !tbaa !18, !noalias !35
-  %10 = sub nsw i32 %i.ai, %.013.in.lcssa
-  call void @_ZNK11CStringBaseIwE3MidEii(ptr dead_on_unwind nonnull writable sret(%class.CStringBase) align 8 %4, ptr noundef nonnull align 8 dereferenceable(16) %0, i32 noundef %.013.in.lcssa, i32 noundef %10)
-  %i.aj = icmp eq ptr %4, %2
-  br i1 %i.aj, label %_ZN11CStringBaseIwED2Ev.exit._ZN11CStringBaseIwEaSERKS0_.exit23_crit_edge, label %bb.h
+_ZN11CStringBaseIwED2Ev.exit.a:                   ; preds = %bb.g
+  %i.ai = load i32, ptr %i.o, align 8, !tbaa !18
+  store i32 %i.ai, ptr %i.m, align 8, !tbaa !18
+  %i.aj = icmp eq ptr %i.ae, null
+  br i1 %i.aj, label %bb.h, label %_ZN11CStringBaseIwED2Ev.exit._ZN11CStringBaseIwEaSERKS0_.exit23_crit_edge
 
 _ZN11CStringBaseIwED2Ev.exit._ZN11CStringBaseIwEaSERKS0_.exit23_crit_edge: ; preds = %_ZN11CStringBaseIwED2Ev.exit.a
-  %.pre29 = load ptr, ptr %4, align 8, !tbaa !8
-  br label %_ZN11CStringBaseIwEaSERKS0_.exit23
+  call void @_ZdaPv(ptr noundef nonnull %i.ae) #19
+  br label %bb.h
 
-bb.h:                                             ; preds = %_ZN11CStringBaseIwED2Ev.exit.a
+bb.h:                                             ; preds = %_ZN11CStringBaseIwED2Ev.exit.a, %_ZN11CStringBaseIwED2Ev.exit._ZN11CStringBaseIwEaSERKS0_.exit23_crit_edge
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #21
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
+  %5 = load i32, ptr %i.a, align 8, !tbaa !18, !noalias !35
+  %6 = sub nsw i32 %5, %.013.in.lcssa
+  call void @_ZNK11CStringBaseIwE3MidEii(ptr dead_on_unwind nonnull writable sret(%class.CStringBase) align 8 %4, ptr noundef nonnull align 8 dereferenceable(16) %0, i32 noundef %.013.in.lcssa, i32 noundef %6)
   %i.ak = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   store i32 0, ptr %i.ak, align 8, !tbaa !18
   %i.al = load ptr, ptr %2, align 8, !tbaa !8     ; 3 uses
@@ -366,7 +346,7 @@ bb.j:                                             ; preds = %._crit_edge.thread.
 
 _ZN11CStringBaseIwE11SetCapacityEi.exit.i15:      ; preds = %bb.j, %bb.h
   %i.bb = phi ptr [ %i.al, %bb.h ], [ %i.aw, %bb.j ]
-  %i.bc = load ptr, ptr %4, align 8, !tbaa !8     ; 2 uses
+  %i.bc = load ptr, ptr %4, align 8, !tbaa !8     ; 3 uses
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.k, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i15
@@ -377,20 +357,16 @@ bb.k:                                             ; preds = %bb.k, %_ZN11CString
   %i.bf = getelementptr inbounds nuw i8, ptr %.0.i.i17, i64 4
   store i32 %i.be, ptr %.0.i.i17, align 4, !tbaa !16
   %.not.i.i18 = icmp eq i32 %i.be, 0
-  br i1 %.not.i.i18, label %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i19, label %bb.k, !llvm.loop !20
+  br i1 %.not.i.i18, label %_ZN11CStringBaseIwEaSERKS0_.exit23, label %bb.k, !llvm.loop !20
 
-_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i19:          ; preds = %bb.k
-  %11 = load i32, ptr %i.am, align 8, !tbaa !18
-  store i32 %11, ptr %i.ak, align 8, !tbaa !18
-  br label %_ZN11CStringBaseIwEaSERKS0_.exit23
-
-_ZN11CStringBaseIwEaSERKS0_.exit23:               ; preds = %_ZN11CStringBaseIwED2Ev.exit._ZN11CStringBaseIwEaSERKS0_.exit23_crit_edge, %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i19
-  %12 = phi ptr [ %.pre29, %_ZN11CStringBaseIwED2Ev.exit._ZN11CStringBaseIwEaSERKS0_.exit23_crit_edge ], [ %i.bc, %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i19 ] ; 2 uses
-  %i.bg = icmp eq ptr %12, null
+_ZN11CStringBaseIwEaSERKS0_.exit23:               ; preds = %bb.k
+  %7 = load i32, ptr %i.am, align 8, !tbaa !18
+  store i32 %7, ptr %i.ak, align 8, !tbaa !18
+  %i.bg = icmp eq ptr %i.bc, null
   br i1 %i.bg, label %_ZN11CStringBaseIwED2Ev.exit24.a, label %bb.l
 
 bb.l:                                             ; preds = %_ZN11CStringBaseIwEaSERKS0_.exit23
-  call void @_ZdaPv(ptr noundef nonnull %12) #19
+  call void @_ZdaPv(ptr noundef nonnull %i.bc) #19
   br label %_ZN11CStringBaseIwED2Ev.exit24.a
 
 _ZN11CStringBaseIwED2Ev.exit24.a:                 ; preds = %_ZN11CStringBaseIwEaSERKS0_.exit23, %bb.l
