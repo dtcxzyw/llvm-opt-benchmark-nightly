@@ -201,7 +201,7 @@ _RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
 .preheader.i.preheader:                           ; preds = %._crit_edge.i
   %i.x = mul i32 %.sroa.0.040.lcssa.i, %.sroa.0.040.lcssa.i
   %i.y = shl i32 %.sroa.0.040.lcssa.i, 1
-  %i.z = or i32 %i.y, 1
+  %i.z = or disjoint i32 %i.y, 1
   br label %.preheader.i
 
 .loopexit.i:                                      ; preds = %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit25.i, %._crit_edge.i
@@ -604,7 +604,7 @@ _RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
 .preheader.i.preheader:                           ; preds = %._crit_edge.i
   %i.x = mul i32 %.sroa.0.040.lcssa.i, %.sroa.0.040.lcssa.i
   %i.y = shl i32 %.sroa.0.040.lcssa.i, 1
-  %i.z = or i32 %i.y, 1
+  %i.z = or disjoint i32 %i.y, 1
   br label %.preheader.i
 
 .loopexit.i:                                      ; preds = %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit25.i, %._crit_edge.i
@@ -1007,7 +1007,7 @@ _RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
 .preheader.i.preheader:                           ; preds = %._crit_edge.i
   %i.x = mul i32 %.sroa.0.040.lcssa.i, %.sroa.0.040.lcssa.i
   %i.y = shl i32 %.sroa.0.040.lcssa.i, 1
-  %i.z = or i32 %i.y, 1
+  %i.z = or disjoint i32 %i.y, 1
   br label %.preheader.i
 
 .loopexit.i:                                      ; preds = %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit25.i, %._crit_edge.i
@@ -1410,7 +1410,7 @@ _RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
 .preheader.i.preheader:                           ; preds = %._crit_edge.i
   %i.x = mul i32 %.sroa.0.040.lcssa.i, %.sroa.0.040.lcssa.i
   %i.y = shl i32 %.sroa.0.040.lcssa.i, 1
-  %i.z = or i32 %i.y, 1
+  %i.z = or disjoint i32 %i.y, 1
   br label %.preheader.i
 
 .loopexit.i:                                      ; preds = %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit25.i, %._crit_edge.i
@@ -1813,7 +1813,7 @@ _RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
 .preheader.i.preheader:                           ; preds = %._crit_edge.i
   %i.x = mul i32 %.sroa.0.040.lcssa.i, %.sroa.0.040.lcssa.i
   %i.y = shl i32 %.sroa.0.040.lcssa.i, 1
-  %i.z = or i32 %i.y, 1
+  %i.z = or disjoint i32 %i.y, 1
   br label %.preheader.i
 
 .loopexit.i:                                      ; preds = %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit25.i, %._crit_edge.i
@@ -2216,7 +2216,7 @@ _RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
 .preheader.i.preheader:                           ; preds = %._crit_edge.i
   %i.x = mul i32 %.sroa.0.040.lcssa.i, %.sroa.0.040.lcssa.i
   %i.y = shl i32 %.sroa.0.040.lcssa.i, 1
-  %i.z = or i32 %i.y, 1
+  %i.z = or disjoint i32 %i.y, 1
   br label %.preheader.i
 
 .loopexit.i:                                      ; preds = %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit25.i, %._crit_edge.i
@@ -2619,7 +2619,7 @@ _RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
 .preheader.i.preheader:                           ; preds = %._crit_edge.i
   %i.x = mul i32 %.sroa.0.040.lcssa.i, %.sroa.0.040.lcssa.i
   %i.y = shl i32 %.sroa.0.040.lcssa.i, 1
-  %i.z = or i32 %i.y, 1
+  %i.z = or disjoint i32 %i.y, 1
   br label %.preheader.i
 
 .loopexit.i:                                      ; preds = %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit25.i, %._crit_edge.i
@@ -3022,7 +3022,7 @@ _RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
 .preheader.i.preheader:                           ; preds = %._crit_edge.i
   %i.x = mul i32 %.sroa.0.040.lcssa.i, %.sroa.0.040.lcssa.i
   %i.y = shl i32 %.sroa.0.040.lcssa.i, 1
-  %i.z = or i32 %i.y, 1
+  %i.z = or disjoint i32 %i.y, 1
   br label %.preheader.i
 
 .loopexit.i:                                      ; preds = %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit25.i, %._crit_edge.i
@@ -3425,7 +3425,7 @@ _RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
 .preheader.i.preheader:                           ; preds = %._crit_edge.i
   %i.x = mul i32 %.sroa.0.040.lcssa.i, %.sroa.0.040.lcssa.i
   %i.y = shl i32 %.sroa.0.040.lcssa.i, 1
-  %i.z = or i32 %i.y, 1
+  %i.z = or disjoint i32 %i.y, 1
   br label %.preheader.i
 
 .loopexit.i:                                      ; preds = %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit25.i, %._crit_edge.i

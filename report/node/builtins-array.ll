@@ -201,13 +201,13 @@ bb.ab:                                            ; preds = %_ZN2v88internal6Obj
   %i.gp = add i64 %i.go, -1
   %i.gq = inttoptr i64 %i.gp to ptr
   %i.gr = getelementptr inbounds nuw i8, ptr %i.gq, i64 16 ; 5 uses
-  %wide.trip.count133.i.i.i = zext i32 %.fr236 to i64 ; 2 uses
+  %wide.trip.count133.i.i.i = zext nneg i32 %.fr236 to i64 ; 2 uses
   %xtraiter230 = and i64 %wide.trip.count133.i.i.i, 3 ; 3 uses
   %i.gs = icmp ult i32 %.fr236, 4
   br i1 %i.gs, label %.epil.preheader229, label %.lr.ph125.i.i.i.new
 
 .lr.ph125.i.i.i.new:                              ; preds = %.lr.ph125.i.i.i
-  %unroll_iter234 = and i64 %wide.trip.count133.i.i.i, 4294967292
+  %unroll_iter234 = and i64 %wide.trip.count133.i.i.i, 2147483644
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ac, %.lr.ph125.i.i.i.new
@@ -256,7 +256,7 @@ bb.ad:                                            ; preds = %_ZN2v88internal6Obj
   %i.hw = add i16 %i.hv, -218
   %i.hx = icmp ult i16 %i.hw, -13
   %i.hy = icmp sgt i32 %.fr236, 0
-  %or.cond.i.i.i = select i1 %i.hx, i1 %i.hy, i1 false
+  %or.cond.i.i.i = and i1 %i.hx, %i.hy
   br i1 %or.cond.i.i.i, label %.lr.ph121.i.i.i, label %.loopexit.i.i.i
 
 .lr.ph121.i.i.i:                                  ; preds = %bb.ad

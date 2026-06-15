@@ -201,7 +201,7 @@ bb.gv:                                            ; preds = %bb.gu, %bb.gt, %._c
   br i1 %i.anm, label %.lr.ph1788.preheader, label %.preheader1450
 
 .lr.ph1788.preheader:                             ; preds = %.lr.ph1807
-  %i.ann = add i32 %.1856.fr, -4                  ; 2 uses
+  %i.ann = add nsw i32 %.1856.fr, -4              ; 2 uses
   %i.ano = lshr i32 %i.ann, 2
   %i.anp = add nuw nsw i32 %i.ano, 1
   %xtraiter2558 = and i32 %i.anp, 7               ; 2 uses
