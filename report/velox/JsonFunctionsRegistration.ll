@@ -201,8 +201,8 @@ bb.c:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %i.i, i64 32
   %i.o = load i32, ptr %i.n, align 8, !tbaa !1930
   switch i32 %i.o, label %bb.r [
-    i32 1, label %bb.d
     i32 3, label %bb.d
+    i32 1, label %bb.d
   ]
 
 bb.d:                                             ; preds = %bb.c, %bb.c
@@ -349,7 +349,7 @@ _ZN8simdjson8fallback8ondemand8document9get_valueEv.exit: ; preds = %bb.l, %bb.p
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.c, %_ZN8simdjson8fallback8ondemand8document9get_valueEv.exit, %bb.n, %bb.h, %bb.k, %bb.q, %bb.e, %bb.b, %bb.d
-  %.2 = phi i32 [ 0, %bb.c ], [ %i.m, %bb.b ], [ 28, %bb.n ], [ 0, %bb.d ], [ %i.cd, %_ZN8simdjson8fallback8ondemand8document9get_valueEv.exit ], [ 29, %bb.e ], [ 28, %bb.q ], [ 28, %bb.k ], [ 28, %bb.h ]
+  %.2 = phi i32 [ 0, %bb.d ], [ %i.m, %bb.b ], [ 28, %bb.n ], [ 0, %bb.c ], [ %i.cd, %_ZN8simdjson8fallback8ondemand8document9get_valueEv.exit ], [ 29, %bb.e ], [ 28, %bb.q ], [ 28, %bb.k ], [ 28, %bb.h ]
   ret i32 %.2
 }
 
@@ -752,8 +752,8 @@ bb.c:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %i.i, i64 32
   %i.o = load i32, ptr %i.n, align 8, !tbaa !1930
   switch i32 %i.o, label %bb.r [
-    i32 1, label %bb.d
     i32 3, label %bb.d
+    i32 1, label %bb.d
   ]
 
 bb.d:                                             ; preds = %bb.c, %bb.c
@@ -900,7 +900,7 @@ _ZN8simdjson8fallback8ondemand8document9get_valueEv.exit: ; preds = %bb.l, %bb.p
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.c, %_ZN8simdjson8fallback8ondemand8document9get_valueEv.exit, %bb.n, %bb.h, %bb.k, %bb.q, %bb.e, %bb.b, %bb.d
-  %.2 = phi i32 [ 0, %bb.c ], [ %i.m, %bb.b ], [ 28, %bb.n ], [ 0, %bb.d ], [ %i.cd, %_ZN8simdjson8fallback8ondemand8document9get_valueEv.exit ], [ 29, %bb.e ], [ 28, %bb.q ], [ 28, %bb.k ], [ 28, %bb.h ]
+  %.2 = phi i32 [ 0, %bb.d ], [ %i.m, %bb.b ], [ 28, %bb.n ], [ 0, %bb.c ], [ %i.cd, %_ZN8simdjson8fallback8ondemand8document9get_valueEv.exit ], [ 29, %bb.e ], [ 28, %bb.q ], [ 28, %bb.k ], [ 28, %bb.h ]
   ret i32 %.2
 }
 

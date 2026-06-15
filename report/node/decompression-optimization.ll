@@ -201,7 +201,7 @@ bb.m:                                             ; preds = %.lr.ph
     i8 75, label %bb.n
     i8 91, label %bb.p
     i8 77, label %bb.r
-    i8 72, label %3
+    i8 72, label %bb.t
   ]
 
 bb.n:                                             ; preds = %bb.m
@@ -236,30 +236,28 @@ bb.s:                                             ; preds = %bb.r
   store i8 5, ptr %i.em, align 2
   br label %.critedge
 
-3:                                                ; preds = %bb.m
-  %4 = getelementptr inbounds nuw i8, ptr %i.dw, i64 5 ; 2 uses
-  %.sroa.09.0.copyload = load i8, ptr %4, align 1
-  %5 = icmp eq i8 %.sroa.09.0.copyload, 4
-  br i1 %5, label %bb.t, label %.critedge
-
-bb.t:                                             ; preds = %3
-  %i.en = getelementptr inbounds nuw i8, ptr %i.dw, i64 6 ; 2 uses
-  %.sroa.06.0.copyload.a = load i8, ptr %i.en, align 2
-  %i.eo = icmp eq i8 %.sroa.06.0.copyload.a, 1
-  br i1 %i.eo, label %.critedge2, label %bb.u
+bb.t:                                             ; preds = %bb.m
+  %i.en = getelementptr inbounds nuw i8, ptr %i.dw, i64 5 ; 2 uses
+  %.sroa.06.0.copyload.a = load i8, ptr %i.en, align 1
+  %i.eo = icmp eq i8 %.sroa.06.0.copyload.a, 4
+  br i1 %i.eo, label %bb.u, label %.critedge
 
 bb.u:                                             ; preds = %bb.t
+  %3 = getelementptr inbounds nuw i8, ptr %i.dw, i64 6 ; 2 uses
+  %.sroa.06.0.copyload = load i8, ptr %3, align 2
+  %4 = icmp eq i8 %.sroa.06.0.copyload, 1
   %i.ep = getelementptr inbounds nuw i8, ptr %i.dw, i64 4
   %i.eq = load i8, ptr %i.ep, align 4
   %i.er = icmp eq i8 %i.eq, 0
-  br i1 %i.er, label %.critedge2, label %.critedge
+  %or.cond = select i1 %4, i1 true, i1 %i.er
+  br i1 %or.cond, label %.critedge2, label %.critedge
 
-.critedge2:                                       ; preds = %bb.t, %bb.u
-  store i8 5, ptr %4, align 1
-  store i8 0, ptr %i.en, align 2
+.critedge2:                                       ; preds = %bb.u
+  store i8 5, ptr %i.en, align 1
+  store i8 0, ptr %3, align 2
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.m, %bb.o, %bb.n, %bb.q, %bb.p, %bb.s, %bb.r, %3, %.critedge2, %bb.u, %.lr.ph
+.critedge:                                        ; preds = %bb.u, %bb.m, %bb.o, %bb.n, %bb.q, %bb.p, %bb.s, %bb.r, %bb.t, %.critedge2, %.lr.ph
   %i.es = getelementptr inbounds nuw i8, ptr %.052, i64 4 ; 2 uses
   %.not = icmp eq ptr %i.es, %i.dr
   br i1 %.not, label %._crit_edge, label %.lr.ph

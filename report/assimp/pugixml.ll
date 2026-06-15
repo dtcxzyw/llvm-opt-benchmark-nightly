@@ -201,20 +201,18 @@ bb.b:                                             ; preds = %bb.a
   %i.b = load i64, ptr %i.a, align 8              ; 4 uses
   %i.c = lshr i64 %i.b, 8
   %i.d = sub nsw i64 0, %i.c
-  %i.e = getelementptr inbounds i8, ptr %i.a, i64 %i.d
-  %i.f = load ptr, ptr %i.e, align 8, !nonnull !22, !noundef !22 ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %i.h = load ptr, ptr %i.g, align 8              ; 3 uses
+  %1 = getelementptr inbounds i8, ptr %i.a, i64 %i.d
+  %2 = load ptr, ptr %1, align 8, !nonnull !22, !noundef !22 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %i.f = load ptr, ptr %i.e, align 8              ; 3 uses
+  %.not8 = icmp ne ptr %i.f, null
+  %i.g = getelementptr inbounds nuw i8, ptr %2, i64 24
+  %i.h = load ptr, ptr %i.g, align 8
   %.not8.a = icmp eq ptr %i.h, null
-  br i1 %.not8.a, label %bb.h, label %1
+  %or.cond = select i1 %.not8, i1 %.not8.a, i1 false
+  br i1 %or.cond, label %_ZNK4pugi8xml_node4typeEv.exit, label %bb.h
 
-1:                                                ; preds = %bb.b
-  %2 = getelementptr inbounds nuw i8, ptr %i.f, i64 24
-  %3 = load ptr, ptr %2, align 8
-  %.not9 = icmp eq ptr %3, null
-  br i1 %.not9, label %_ZNK4pugi8xml_node4typeEv.exit, label %bb.h
-
-_ZNK4pugi8xml_node4typeEv.exit:                   ; preds = %1
+_ZNK4pugi8xml_node4typeEv.exit:                   ; preds = %bb.b
   %i.i = trunc i64 %i.b to i32
   %i.j = and i32 %i.i, 15
   switch i32 %i.j, label %bb.g [
@@ -239,7 +237,7 @@ bb.c:                                             ; preds = %_ZNK4pugi8xml_node4
 
 bb.d:                                             ; preds = %bb.c
   %i.o = ptrtoint ptr %i.l to i64
-  %i.p = ptrtoint ptr %i.h to i64
+  %i.p = ptrtoint ptr %i.f to i64
   %i.q = sub i64 %i.o, %i.p
   br label %bb.h
 
@@ -254,15 +252,15 @@ bb.e:                                             ; preds = %_ZNK4pugi8xml_node4
 
 bb.f:                                             ; preds = %bb.e
   %i.v = ptrtoint ptr %i.s to i64
-  %i.w = ptrtoint ptr %i.h to i64
+  %i.w = ptrtoint ptr %i.f to i64
   %i.x = sub i64 %i.v, %i.w
   br label %bb.h
 
 bb.g:                                             ; preds = %_ZNK4pugi8xml_node4typeEv.exit
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.g, %1, %bb.b, %_ZNK4pugi8xml_node4typeEv.exit, %bb.c, %bb.d, %bb.e, %bb.f, %bb.a
-  %.1 = phi i64 [ -1, %bb.a ], [ -1, %bb.c ], [ -1, %bb.g ], [ -1, %bb.b ], [ 0, %_ZNK4pugi8xml_node4typeEv.exit ], [ -1, %1 ], [ %i.q, %bb.d ], [ -1, %bb.e ], [ %i.x, %bb.f ]
+bb.h:                                             ; preds = %bb.g, %bb.b, %_ZNK4pugi8xml_node4typeEv.exit, %bb.c, %bb.d, %bb.e, %bb.f, %bb.a
+  %.1 = phi i64 [ -1, %bb.a ], [ -1, %bb.c ], [ -1, %bb.g ], [ -1, %bb.b ], [ 0, %_ZNK4pugi8xml_node4typeEv.exit ], [ %i.q, %bb.d ], [ -1, %bb.e ], [ %i.x, %bb.f ]
   ret i64 %.1
 }
 

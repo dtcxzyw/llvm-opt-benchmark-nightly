@@ -201,7 +201,7 @@ bb.a:
   br label %_ZN2tl6detail21expected_storage_baseISt6vectorIN3ada16url_pattern_partESaIS4_EENS3_6errorsELb0ELb1EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = load ptr, ptr %5, align 8                ; 9 uses
+  %i.f = load ptr, ptr %5, align 8                ; 8 uses
   %i.g = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8              ; 3 uses
   %.not.i.i = icmp eq ptr %i.f, %i.h
@@ -236,34 +236,30 @@ _ZNKSt6ranges11__any_of_fnclITkNS_11input_rangeERSt6vectorIN3ada16url_pattern_pa
   %i.q = ptrtoint ptr %i.f to i64
   %i.r = sub i64 %i.p, %i.q
   %i.s = icmp eq i64 %i.r, 144
-  br i1 %i.s, label %14, label %.thread.a
+  br i1 %i.s, label %bb.c, label %.thread.a
 
-14:                                               ; preds = %_ZNKSt6ranges11__any_of_fnclITkNS_11input_rangeERSt6vectorIN3ada16url_pattern_partESaIS4_EESt8identityTkSt24indirect_unary_predicateINSt8__detail11__projectedIDTclsr6ranges13__cust_accessE7__beginclsr3stdE7declvalIRT_EEEET0_E6__typeEEZNS3_21url_pattern_componentIN4node11url_pattern23URLPatternRegexProviderEE7compileITkNS3_29url_pattern_encoding_callbackEFN2tl8expectedINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS3_6errorsEEESt17basic_string_viewIcST_EEEENSP_ISM_SW_EESZ_SD_RNS3_37url_pattern_compile_component_optionsEEUlRKSC_E_EEbOSC_T1_SF_.exit
-  %15 = load i8, ptr %i.f, align 8
-  switch i8 %15, label %.thread.a [
-    i8 0, label %bb.c
-    i8 3, label %bb.e
-  ]
-
-bb.c:                                             ; preds = %14
+bb.c:                                             ; preds = %_ZNKSt6ranges11__any_of_fnclITkNS_11input_rangeERSt6vectorIN3ada16url_pattern_partESaIS4_EESt8identityTkSt24indirect_unary_predicateINSt8__detail11__projectedIDTclsr6ranges13__cust_accessE7__beginclsr3stdE7declvalIRT_EEEET0_E6__typeEEZNS3_21url_pattern_componentIN4node11url_pattern23URLPatternRegexProviderEE7compileITkNS3_29url_pattern_encoding_callbackEFN2tl8expectedINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS3_6errorsEEESt17basic_string_viewIcST_EEEENSP_ISM_SW_EESZ_SD_RNS3_37url_pattern_compile_component_optionsEEUlRKSC_E_EEbOSC_T1_SF_.exit
+  %14 = load i8, ptr %i.f, align 8                ; 2 uses
+  %15 = icmp eq i8 %14, 0
   %i.t = getelementptr inbounds nuw i8, ptr %i.f, i64 40
   %i.u = load i8, ptr %i.t, align 8
-  %16 = icmp ne i8 %i.u, 0
+  %16 = icmp eq i8 %i.u, 0                        ; 2 uses
+  %or.cond = select i1 %15, i1 %16, i1 false
+  %or.cond.not = xor i1 %or.cond, true
   %i.v = load i8, ptr %4, align 1, !range !26
   %i.w = trunc nuw i8 %i.v to i1
-  %or.cond.a = select i1 %16, i1 true, i1 %i.w
-  br i1 %or.cond.a, label %.thread.a, label %bb.d
+  %or.cond.a = select i1 %or.cond.not, i1 true, i1 %i.w
+  br i1 %or.cond.a, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.x = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(32) %i.x)
   br label %select.unfold.thread
 
-bb.e:                                             ; preds = %14
-  %17 = getelementptr inbounds nuw i8, ptr %i.f, i64 40
-  %18 = load i8, ptr %17, align 8
-  %19 = icmp eq i8 %18, 0
-  br i1 %19, label %bb.f, label %.thread.a
+bb.e:                                             ; preds = %bb.c
+  %17 = icmp eq i8 %14, 3
+  %or.cond34 = select i1 %17, i1 %16, i1 false
+  br i1 %or.cond34, label %bb.f, label %.thread.a
 
 bb.f:                                             ; preds = %bb.e
   %i.y = getelementptr inbounds nuw i8, ptr %i.f, i64 88
@@ -459,7 +455,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i6.i.
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #24
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i63
 
-.thread.a:                                        ; preds = %14, %bb.c, %_ZNKSt6ranges11__any_of_fnclITkNS_11input_rangeERSt6vectorIN3ada16url_pattern_partESaIS4_EESt8identityTkSt24indirect_unary_predicateINSt8__detail11__projectedIDTclsr6ranges13__cust_accessE7__beginclsr3stdE7declvalIRT_EEEET0_E6__typeEEZNS3_21url_pattern_componentIN4node11url_pattern23URLPatternRegexProviderEE7compileITkNS3_29url_pattern_encoding_callbackEFN2tl8expectedINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS3_6errorsEEESt17basic_string_viewIcST_EEEENSP_ISM_SW_EESZ_SD_RNS3_37url_pattern_compile_component_optionsEEUlRKSC_E_EEbOSC_T1_SF_.exit, %bb.g, %bb.f, %bb.e
+.thread.a:                                        ; preds = %_ZNKSt6ranges11__any_of_fnclITkNS_11input_rangeERSt6vectorIN3ada16url_pattern_partESaIS4_EESt8identityTkSt24indirect_unary_predicateINSt8__detail11__projectedIDTclsr6ranges13__cust_accessE7__beginclsr3stdE7declvalIRT_EEEET0_E6__typeEEZNS3_21url_pattern_componentIN4node11url_pattern23URLPatternRegexProviderEE7compileITkNS3_29url_pattern_encoding_callbackEFN2tl8expectedINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS3_6errorsEEESt17basic_string_viewIcST_EEEENSP_ISM_SW_EESZ_SD_RNS3_37url_pattern_compile_component_optionsEEUlRKSC_E_EEbOSC_T1_SF_.exit, %bb.e, %bb.g, %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #24
   %.sroa.02.0.copyload = load i40, ptr %4, align 1
   call void @_ZN3ada19url_pattern_helpers41generate_regular_expression_and_name_listB5cxx11ERKSt6vectorINS_16url_pattern_partESaIS2_EENS_37url_pattern_compile_component_optionsE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple.846") align 8 %10, ptr noundef nonnull align 8 dereferenceable(24) %5, i40 %.sroa.02.0.copyload) #24

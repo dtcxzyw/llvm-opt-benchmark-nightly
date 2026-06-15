@@ -201,24 +201,20 @@ bb.b:                                             ; preds = %bb.a
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 24
   %i.aa = load ptr, ptr %i.z, align 8
   %i.ab = tail call noundef nonnull align 8 dereferenceable(272) ptr %i.aa(ptr noundef nonnull align 8 dereferenceable(392) %i.x) ; 15 uses
-  %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 224
-  %i.ad = load double, ptr %i.ac, align 8, !tbaa !39
-  %i.ae = fcmp oeq double %i.ad, 1.000000e+00
-  br i1 %i.ae, label %2, label %bb.p
+  %2 = getelementptr inbounds nuw i8, ptr %i.ab, i64 224
+  %3 = load double, ptr %2, align 8, !tbaa !39
+  %4 = fcmp oeq double %3, 1.000000e+00
+  %5 = getelementptr inbounds nuw i8, ptr %i.ab, i64 256
+  %6 = load double, ptr %5, align 8
+  %7 = fcmp oeq double %i.u, %6
+  %or.cond = select i1 %4, i1 %7, i1 false
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 264
+  %i.ad = load double, ptr %i.ac, align 8
+  %i.ae = fcmp oeq double %i.w, %i.ad
+  %or.cond21 = select i1 %or.cond, i1 %i.ae, i1 false
+  br i1 %or.cond21, label %bb.c, label %bb.p
 
-2:                                                ; preds = %bb.b
-  %3 = getelementptr inbounds nuw i8, ptr %i.ab, i64 256
-  %4 = load double, ptr %3, align 8, !tbaa !43
-  %5 = fcmp oeq double %i.u, %4
-  br i1 %5, label %6, label %bb.p
-
-6:                                                ; preds = %2
-  %7 = getelementptr inbounds nuw i8, ptr %i.ab, i64 264
-  %8 = load double, ptr %7, align 8, !tbaa !44
-  %9 = fcmp oeq double %i.w, %8
-  br i1 %9, label %bb.c, label %bb.p
-
-bb.c:                                             ; preds = %6
+bb.c:                                             ; preds = %bb.b
   %i.af = load i32, ptr %i.f, align 8, !tbaa !9
   switch i32 %i.af, label %bb.p [
     i32 0, label %bb.d
@@ -289,7 +285,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bg = call noundef zeroext i1 @_ZN16OpenColorIO_v2_5eqERKNS_11GradingRGBMES2_(ptr noundef nonnull align 8 dereferenceable(32) %i.m, ptr noundef nonnull align 8 dereferenceable(32) %i.bf)
   br i1 %i.bg, label %bb.q, label %bb.p
 
-bb.p:                                             ; preds = %bb.c, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.k, %bb.j, %bb.i, %bb.o, %bb.n, %bb.m, %bb.l, %6, %2, %bb.b
+bb.p:                                             ; preds = %bb.c, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.k, %bb.j, %bb.i, %bb.o, %bb.n, %bb.m, %bb.l, %bb.b
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.o, %bb.k, %bb.h, %bb.p

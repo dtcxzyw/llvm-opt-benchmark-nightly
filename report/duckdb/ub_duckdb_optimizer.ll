@@ -201,15 +201,13 @@ bb.b:                                             ; preds = %.lr.ph
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 80
   %i.s = load ptr, ptr %i.r, align 8
   %i.t = tail call noundef zeroext i1 %i.s(ptr noundef nonnull align 8 dereferenceable(88) %2, ptr noundef nonnull align 8 dereferenceable(56) %i.p)
-  br i1 %i.t, label %3, label %bb.e
+  %3 = getelementptr inbounds nuw i8, ptr %i.n, i64 8
+  %4 = load i8, ptr %3, align 8
+  %.not16 = icmp ne i8 %4, 26
+  %or.cond.not = select i1 %i.t, i1 %.not16, i1 false
+  br i1 %or.cond.not, label %bb.c, label %bb.e
 
-3:                                                ; preds = %bb.b
-  %4 = getelementptr inbounds nuw i8, ptr %i.n, i64 8
-  %5 = load i8, ptr %4, align 8, !tbaa !1345
-  %.not16 = icmp eq i8 %5, 26
-  br i1 %.not16, label %bb.e, label %bb.c
-
-bb.c:                                             ; preds = %3
+bb.c:                                             ; preds = %bb.b
   %i.u = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZN6duckdb6vectorINS_10unique_ptrINS_10ExpressionESt14default_deleteIS2_ELb1EEELb1ESaIS5_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 noundef %.020) ; 2 uses
   %i.v = load i64, ptr %i.u, align 8, !tbaa !199  ; 3 uses
   store i64 %i.v, ptr %0, align 8, !tbaa !199
@@ -234,7 +232,7 @@ _ZNKSt14default_deleteIN6duckdb10ExpressionEEclEPS1_.exit.i: ; preds = %bb.d
 _ZNSt10unique_ptrIN6duckdb10ExpressionESt14default_deleteIS1_EED2Ev.exit: ; preds = %bb.d, %_ZNKSt14default_deleteIN6duckdb10ExpressionEEclEPS1_.exit.i
   resume { ptr, i32 } %i.x
 
-bb.e:                                             ; preds = %3, %bb.b, %.lr.ph
+bb.e:                                             ; preds = %bb.b, %.lr.ph
   %i.ab = add nuw i64 %.020, 1                    ; 2 uses
   %i.ac = load ptr, ptr %i.d, align 8, !tbaa !326
   %i.ad = load ptr, ptr %i.c, align 8, !tbaa !325
@@ -637,16 +635,14 @@ _ZNSt13unordered_mapIN6duckdb13ColumnBindingENS0_16ReferencedColumnENS0_25Column
   %i.em = load ptr, ptr %i.el, align 8, !tbaa !38
   %i.en = getelementptr inbounds nuw i8, ptr %.sroa.06.1.i.i57, i64 80
   %i.eo = load ptr, ptr %i.en, align 8, !tbaa !38
-  %i.ep = icmp eq ptr %i.em, %i.eo
-  br i1 %i.ep, label %_ZNSt13unordered_mapIN6duckdb13ColumnBindingENS0_16ReferencedColumnENS0_25ColumnBindingHashFunctionENS0_21ColumnBindingEqualityESaISt4pairIKS1_S2_EEE4findERS6_.exit62.thread, label %6
-
-6:                                                ; preds = %_ZNSt13unordered_mapIN6duckdb13ColumnBindingENS0_16ReferencedColumnENS0_25ColumnBindingHashFunctionENS0_21ColumnBindingEqualityESaISt4pairIKS1_S2_EEE4findERS6_.exit62
+  %6 = icmp ne ptr %i.em, %i.eo
   %7 = getelementptr inbounds nuw i8, ptr %i.cr, i64 8
-  %8 = load i8, ptr %7, align 8, !tbaa !1345
-  %.not = icmp eq i8 %8, -28
-  br i1 %.not, label %bb.u, label %_ZNSt13unordered_mapIN6duckdb13ColumnBindingENS0_16ReferencedColumnENS0_25ColumnBindingHashFunctionENS0_21ColumnBindingEqualityESaISt4pairIKS1_S2_EEE4findERS6_.exit62.thread
+  %8 = load i8, ptr %7, align 8
+  %i.ep = icmp eq i8 %8, -28
+  %or.cond = select i1 %6, i1 %i.ep, i1 false
+  br i1 %or.cond, label %bb.u, label %_ZNSt13unordered_mapIN6duckdb13ColumnBindingENS0_16ReferencedColumnENS0_25ColumnBindingHashFunctionENS0_21ColumnBindingEqualityESaISt4pairIKS1_S2_EEE4findERS6_.exit62.thread
 
-bb.u:                                             ; preds = %6
+bb.u:                                             ; preds = %_ZNSt13unordered_mapIN6duckdb13ColumnBindingENS0_16ReferencedColumnENS0_25ColumnBindingHashFunctionENS0_21ColumnBindingEqualityESaISt4pairIKS1_S2_EEE4findERS6_.exit62
   %i.eq = getelementptr inbounds nuw i8, ptr %i.cr, i64 56
   %i.er = load i8, ptr %i.eq, align 8, !tbaa !104
   %.not44 = icmp eq i8 %i.er, 100
@@ -662,7 +658,7 @@ bb.w:                                             ; preds = %bb.v
   store i8 2, ptr %i.es, align 8, !tbaa !3177
   br label %_ZNSt13unordered_mapIN6duckdb13ColumnBindingENS0_16ReferencedColumnENS0_25ColumnBindingHashFunctionENS0_21ColumnBindingEqualityESaISt4pairIKS1_S2_EEE4findERS6_.exit62.thread
 
-_ZNSt13unordered_mapIN6duckdb13ColumnBindingENS0_16ReferencedColumnENS0_25ColumnBindingHashFunctionENS0_21ColumnBindingEqualityESaISt4pairIKS1_S2_EEE4findERS6_.exit62.thread: ; preds = %bb.t, %_ZNKSt8__detail15_Hashtable_baseIN6duckdb13ColumnBindingESt4pairIKS2_NS1_16ReferencedColumnEENS_10_Select1stENS1_21ColumnBindingEqualityENS1_25ColumnBindingHashFunctionENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE9_M_equalsERS4_mRKNS_16_Hash_node_valueIS6_Lb1EEE.exit.thread.i.i.i.i54, %.preheader114, %bb.q, %bb.w, %_ZNSt13unordered_mapIN6duckdb13ColumnBindingENS0_16ReferencedColumnENS0_25ColumnBindingHashFunctionENS0_21ColumnBindingEqualityESaISt4pairIKS1_S2_EEE4findERS6_.exit62, %6, %bb.u, %bb.v
+_ZNSt13unordered_mapIN6duckdb13ColumnBindingENS0_16ReferencedColumnENS0_25ColumnBindingHashFunctionENS0_21ColumnBindingEqualityESaISt4pairIKS1_S2_EEE4findERS6_.exit62.thread: ; preds = %bb.t, %_ZNKSt8__detail15_Hashtable_baseIN6duckdb13ColumnBindingESt4pairIKS2_NS1_16ReferencedColumnEENS_10_Select1stENS1_21ColumnBindingEqualityENS1_25ColumnBindingHashFunctionENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE9_M_equalsERS4_mRKNS_16_Hash_node_valueIS6_Lb1EEE.exit.thread.i.i.i.i54, %.preheader114, %bb.q, %bb.w, %_ZNSt13unordered_mapIN6duckdb13ColumnBindingENS0_16ReferencedColumnENS0_25ColumnBindingHashFunctionENS0_21ColumnBindingEqualityESaISt4pairIKS1_S2_EEE4findERS6_.exit62, %bb.u, %bb.v
   %i.ev = add nuw i64 %.042105, 1                 ; 2 uses
   %i.ew = load ptr, ptr %i.ci, align 8, !tbaa !326
   %i.ex = load ptr, ptr %i.ch, align 8, !tbaa !325
@@ -1065,9 +1061,14 @@ bb.e:                                             ; preds = %bb.d
           to label %bb.f unwind label %bb.g
 
 bb.f:                                             ; preds = %bb.e
+  %3 = xor i1 %i.y, true
   call void @_ZN6duckdb11LogicalTypeD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %2) #33
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #33
-  br i1 %i.y, label %3, label %.loopexit
+  %4 = getelementptr inbounds nuw i8, ptr %i.w, i64 112
+  %5 = load i8, ptr %4, align 8, !range !60
+  %6 = trunc nuw i8 %5 to i1
+  %or.cond = select i1 %3, i1 true, i1 %6
+  br i1 %or.cond, label %.loopexit, label %bb.h
 
 bb.g:                                             ; preds = %bb.e
   %i.z = landingpad { ptr, i32 }
@@ -1076,13 +1077,7 @@ bb.g:                                             ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #33
   resume { ptr, i32 } %i.z
 
-3:                                                ; preds = %bb.f
-  %4 = getelementptr inbounds nuw i8, ptr %i.w, i64 112
-  %5 = load i8, ptr %4, align 8, !tbaa !1542, !range !60, !noundef !61
-  %6 = trunc nuw i8 %5 to i1
-  br i1 %6, label %.loopexit, label %bb.h
-
-bb.h:                                             ; preds = %3
+bb.h:                                             ; preds = %bb.f
   %i.aa = call noundef i64 @_ZNK6duckdb5Value8GetValueIlEET_v(ptr noundef nonnull align 8 dereferenceable(64) %i.x) ; 3 uses
   switch i8 %i.n, label %.loopexit [
     i8 29, label %bb.i
@@ -1333,8 +1328,8 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   %.not68 = icmp eq i8 %i.dz, 3
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.t, %.lr.ph, %.lr.ph103, %bb.v, %bb.x, %bb.ab, %bb.ad, %bb.ae, %.critedge71, %bb.w, %bb.b, %bb.d, %bb.i, %bb.j, %bb.k, %bb.h, %bb.l, %3, %bb.f, %bb.c, %bb.a
-  %.16 = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ false, %bb.c ], [ false, %bb.d ], [ false, %3 ], [ false, %bb.f ], [ false, %bb.k ], [ false, %bb.j ], [ false, %bb.h ], [ false, %bb.l ], [ false, %bb.i ], [ false, %.lr.ph103 ], [ false, %bb.v ], [ false, %bb.w ], [ false, %bb.x ], [ %.not68, %bb.ae ], [ false, %.critedge71 ], [ false, %.lr.ph ], [ false, %bb.ad ], [ false, %bb.ab ], [ false, %bb.t ]
+.loopexit:                                        ; preds = %bb.t, %.lr.ph, %.lr.ph103, %bb.v, %bb.x, %bb.ab, %bb.ad, %bb.ae, %.critedge71, %bb.w, %bb.b, %bb.d, %bb.i, %bb.j, %bb.k, %bb.h, %bb.l, %bb.f, %bb.c, %bb.a
+  %.16 = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ false, %bb.c ], [ false, %bb.d ], [ false, %bb.ab ], [ false, %bb.f ], [ false, %bb.k ], [ false, %bb.j ], [ false, %bb.h ], [ false, %bb.l ], [ false, %bb.i ], [ false, %.lr.ph103 ], [ false, %bb.v ], [ false, %bb.w ], [ false, %bb.x ], [ %.not68, %bb.ae ], [ false, %.critedge71 ], [ false, %.lr.ph ], [ false, %bb.ad ], [ false, %bb.t ]
   ret i1 %.16
 }
 

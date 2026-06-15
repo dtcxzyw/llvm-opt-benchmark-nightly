@@ -201,28 +201,26 @@ bb.a:
   ret i64 %.0.lcssa
 
 .lr.ph:                                           ; preds = %bb.a, %bb.c
-  %.012 = phi i64 [ %.1, %bb.c ], [ 0, %bb.a ]    ; 3 uses
+  %.012 = phi i64 [ %.1, %bb.c ], [ 0, %bb.a ]    ; 2 uses
   %.sroa.08.011 = phi ptr [ %i.j, %bb.c ], [ %i.a, %bb.a ] ; 4 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %.sroa.08.011, i64 8
-  %i.f = load i8, ptr %i.e, align 8, !range !18, !noundef !5
+  %1 = getelementptr inbounds nuw i8, ptr %.sroa.08.011, i64 8
+  %2 = load i8, ptr %1, align 8, !range !18, !noundef !5
+  %3 = trunc nuw i8 %2 to i1
+  %i.e = getelementptr inbounds nuw i8, ptr %.sroa.08.011, i64 9
+  %i.f = load i8, ptr %i.e, align 1, !range !18
   %i.g = trunc nuw i8 %i.f to i1
-  br i1 %i.g, label %bb.c, label %1
+  %or.cond = select i1 %3, i1 true, i1 %i.g
+  br i1 %or.cond, label %bb.c, label %bb.b
 
-1:                                                ; preds = %.lr.ph
-  %2 = getelementptr inbounds nuw i8, ptr %.sroa.08.011, i64 9
-  %3 = load i8, ptr %2, align 1, !range !18, !noundef !5
-  %4 = trunc nuw i8 %3 to i1
-  br i1 %4, label %bb.c, label %bb.b
-
-bb.b:                                             ; preds = %1
+bb.b:                                             ; preds = %.lr.ph
   %i.h = load ptr, ptr %.sroa.08.011, align 8
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %.sroa.2.0.copyload.i = load i64, ptr %.sroa.2.0..sroa_idx.i, align 8
   %i.i = add i64 %.sroa.2.0.copyload.i, %.012
   br label %bb.c
 
-bb.c:                                             ; preds = %.lr.ph, %1, %bb.b
-  %.1 = phi i64 [ %i.i, %bb.b ], [ %.012, %1 ], [ %.012, %.lr.ph ] ; 2 uses
+bb.c:                                             ; preds = %.lr.ph, %bb.b
+  %.1 = phi i64 [ %i.i, %bb.b ], [ %.012, %.lr.ph ] ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.08.011, i64 16 ; 2 uses
   %i.k = icmp eq ptr %i.j, %i.c
   br i1 %i.k, label %._crit_edge, label %.lr.ph

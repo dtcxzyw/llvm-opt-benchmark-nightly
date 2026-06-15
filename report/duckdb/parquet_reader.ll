@@ -201,16 +201,14 @@ bb.br:                                            ; preds = %bb.bp
   %i.oi = tail call noundef ptr @_ZNK6duckdb10unique_ptrINS_12ColumnReaderESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %i.nu)
   %i.oj = tail call noundef nonnull align 8 dereferenceable(536) ptr @_ZN6duckdb12ColumnReader4CastINS_18StructColumnReaderEEERT_v(ptr noundef nonnull align 8 dereferenceable(512) %i.oi) ; 5 uses
   %i.ok = getelementptr inbounds nuw i8, ptr %1, i64 152 ; 2 uses
-  %i.ol = load ptr, ptr %i.ok, align 8, !tbaa !633
-  %.not341 = icmp eq ptr %i.ol, null
-  br i1 %.not341, label %17, label %bb.bs
+  %17 = load ptr, ptr %i.ok, align 8, !tbaa !633
+  %18 = icmp ne ptr %17, null
+  %i.ol = load ptr, ptr %i.nx, align 8
+  %19 = icmp ne ptr %i.ol, null
+  %or.cond342 = select i1 %18, i1 true, i1 %19
+  br i1 %or.cond342, label %bb.bs, label %.preheader351.a
 
-17:                                               ; preds = %bb.br
-  %18 = load ptr, ptr %i.nx, align 8, !tbaa !626
-  %.not342 = icmp eq ptr %18, null
-  br i1 %.not342, label %.preheader351.a, label %bb.bs
-
-.preheader351.a:                                  ; preds = %17
+.preheader351.a:                                  ; preds = %bb.br
   %i.om = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 3 uses
   %i.on = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
   %i.oo = load ptr, ptr %i.on, align 8, !tbaa !921
@@ -218,7 +216,7 @@ bb.br:                                            ; preds = %bb.bp
   %.not391.a = icmp eq ptr %i.oo, %i.op
   br i1 %.not391.a, label %.loopexit352, label %.lr.ph373
 
-bb.bs:                                            ; preds = %17, %bb.br
+bb.bs:                                            ; preds = %bb.br
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #24
   %i.oq = load i64, ptr %i.ns, align 8, !tbaa !934
   store i64 %i.oq, ptr %i.b, align 8, !tbaa !159
@@ -621,16 +619,14 @@ bb.b:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %i.i, i64 584
   %i.n = load i16, ptr %i.m, align 8
   %i.o = and i16 %i.n, 8
-  %.not11 = icmp eq i16 %i.o, 0
-  br i1 %.not11, label %bb.d, label %3
+  %.not11 = icmp ne i16 %i.o, 0
+  %3 = getelementptr inbounds nuw i8, ptr %i.i, i64 346
+  %4 = load i8, ptr %3, align 2
+  %or.cond.not = icmp ugt i8 %4, -65
+  %or.cond = select i1 %.not11, i1 %or.cond.not, i1 false
+  br i1 %or.cond, label %bb.c, label %bb.d
 
-3:                                                ; preds = %bb.b
-  %4 = getelementptr inbounds nuw i8, ptr %i.i, i64 346
-  %5 = load i8, ptr %4, align 2
-  %or.cond.not = icmp ugt i8 %5, -65
-  br i1 %or.cond.not, label %bb.c, label %bb.d
-
-bb.c:                                             ; preds = %3
+bb.c:                                             ; preds = %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %i.i, i64 345
   %i.q = load i8, ptr %i.p, align 1, !tbaa !1276, !range !72, !noundef !73
   %i.r = trunc nuw i8 %i.q to i1
@@ -640,8 +636,8 @@ bb.c:                                             ; preds = %3
   %i.v = select i1 %i.r, i1 %i.u, i1 false
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.a, %bb.b, %3, %bb.c
-  %.0 = phi i1 [ %i.v, %bb.c ], [ false, %3 ], [ false, %bb.b ], [ false, %bb.a ]
+bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
+  %.0 = phi i1 [ %i.v, %bb.c ], [ false, %bb.a ], [ false, %bb.b ]
   ret i1 %.0
 }
 

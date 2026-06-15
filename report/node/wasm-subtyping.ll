@@ -41,20 +41,18 @@ bb.a:
   %i.m = icmp ugt i64 %i.h, %i.l
   tail call void @llvm.assume(i1 %i.m)
   %i.n = getelementptr inbounds nuw [24 x i8], ptr %i.d, i64 %i.l ; 6 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %i.k, i64 20
-  %i.p = load i8, ptr %i.o, align 4               ; 2 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 20
-  %i.r = load i8, ptr %i.q, align 4
-  %.not = icmp eq i8 %i.p, %i.r
-  br i1 %.not, label %3, label %_ZN2v88internal4wasm12_GLOBAL__N_130ValidFunctionSubtypeDefinitionENS1_15ModuleTypeIndexES3_PKNS1_10WasmModuleE.exit
+  %3 = getelementptr inbounds nuw i8, ptr %i.k, i64 20
+  %4 = load i8, ptr %3, align 4                   ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 20
+  %i.p = load i8, ptr %i.o, align 4
+  %.not = icmp ne i8 %4, %i.p
+  %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 21
+  %i.r = load i8, ptr %i.q, align 1, !range !5
+  %5 = trunc nuw i8 %i.r to i1
+  %or.cond = select i1 %.not, i1 true, i1 %5
+  br i1 %or.cond, label %_ZN2v88internal4wasm12_GLOBAL__N_130ValidFunctionSubtypeDefinitionENS1_15ModuleTypeIndexES3_PKNS1_10WasmModuleE.exit, label %bb.b
 
-3:                                                ; preds = %bb.a
-  %4 = getelementptr inbounds nuw i8, ptr %i.n, i64 21
-  %5 = load i8, ptr %4, align 1, !range !5, !noundef !6
-  %6 = trunc nuw i8 %5 to i1
-  br i1 %6, label %_ZN2v88internal4wasm12_GLOBAL__N_130ValidFunctionSubtypeDefinitionENS1_15ModuleTypeIndexES3_PKNS1_10WasmModuleE.exit, label %bb.b
-
-bb.b:                                             ; preds = %3
+bb.b:                                             ; preds = %bb.a
   %i.s = getelementptr inbounds nuw i8, ptr %i.k, i64 22
   %i.t = load i8, ptr %i.s, align 2, !range !5, !noundef !6
   %i.u = getelementptr inbounds nuw i8, ptr %i.n, i64 22
@@ -65,7 +63,7 @@ bb.b:                                             ; preds = %3
 bb.c:                                             ; preds = %bb.b
   %i.w = load ptr, ptr %i.k, align 8              ; 14 uses
   %i.x = load ptr, ptr %i.n, align 8              ; 13 uses
-  switch i8 %i.p, label %bb.z [
+  switch i8 %4, label %bb.z [
     i8 1, label %bb.d
     i8 2, label %bb.h
     i8 3, label %bb.q
@@ -411,8 +409,8 @@ bb.y:                                             ; preds = %_ZNK2v88internal4wa
 bb.z:                                             ; preds = %bb.c
   unreachable
 
-_ZN2v88internal4wasm12_GLOBAL__N_130ValidFunctionSubtypeDefinitionENS1_15ModuleTypeIndexES3_PKNS1_10WasmModuleE.exit: ; preds = %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit.i36, %bb.k, %bb.i, %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit42.i, %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit.thread.i, %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit.i, %bb.y, %_ZNK2v88internal4wasm10WasmModule9heap_typeENS1_15ModuleTypeIndexE.exit15.i, %bb.u, %bb.t, %bb.s, %bb.r, %_ZN2v88internal4wasm15IsHeapSubtypeOfENS1_8HeapTypeES2_PKNS1_10WasmModuleE.exit.thread.i, %bb.p, %_ZN2v88internal4wasm15IsHeapSubtypeOfENS1_8HeapTypeES2_PKNS1_10WasmModuleE.exit.i, %bb.h, %.critedge.preheader.i, %bb.e, %bb.d, %bb.b, %3, %bb.a
-  %.0 = phi i1 [ %i.ep, %bb.u ], [ false, %bb.a ], [ false, %3 ], [ false, %bb.b ], [ false, %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit42.i ], [ true, %bb.t ], [ false, %bb.e ], [ false, %bb.d ], [ true, %.critedge.preheader.i ], [ %i.fx, %bb.y ], [ true, %_ZNK2v88internal4wasm10WasmModule9heap_typeENS1_15ModuleTypeIndexE.exit15.i ], [ false, %_ZN2v88internal4wasm15IsHeapSubtypeOfENS1_8HeapTypeES2_PKNS1_10WasmModuleE.exit.i ], [ %not..i, %_ZN2v88internal4wasm15IsHeapSubtypeOfENS1_8HeapTypeES2_PKNS1_10WasmModuleE.exit.thread.i ], [ false, %bb.p ], [ false, %bb.h ], [ false, %bb.s ], [ true, %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit.thread.i ], [ %i.ek, %bb.r ], [ false, %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit.i ], [ false, %bb.i ], [ false, %bb.k ], [ false, %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit.i36 ]
+_ZN2v88internal4wasm12_GLOBAL__N_130ValidFunctionSubtypeDefinitionENS1_15ModuleTypeIndexES3_PKNS1_10WasmModuleE.exit: ; preds = %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit.i36, %bb.k, %bb.i, %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit42.i, %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit.thread.i, %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit.i, %bb.y, %_ZNK2v88internal4wasm10WasmModule9heap_typeENS1_15ModuleTypeIndexE.exit15.i, %bb.u, %bb.t, %bb.s, %bb.r, %_ZN2v88internal4wasm15IsHeapSubtypeOfENS1_8HeapTypeES2_PKNS1_10WasmModuleE.exit.thread.i, %bb.p, %_ZN2v88internal4wasm15IsHeapSubtypeOfENS1_8HeapTypeES2_PKNS1_10WasmModuleE.exit.i, %bb.h, %.critedge.preheader.i, %bb.e, %bb.d, %bb.b, %bb.a
+  %.0 = phi i1 [ %i.ep, %bb.u ], [ false, %bb.a ], [ false, %bb.b ], [ true, %bb.t ], [ false, %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit42.i ], [ false, %bb.e ], [ false, %bb.d ], [ true, %.critedge.preheader.i ], [ %i.fx, %bb.y ], [ true, %_ZNK2v88internal4wasm10WasmModule9heap_typeENS1_15ModuleTypeIndexE.exit15.i ], [ false, %_ZN2v88internal4wasm15IsHeapSubtypeOfENS1_8HeapTypeES2_PKNS1_10WasmModuleE.exit.i ], [ %not..i, %_ZN2v88internal4wasm15IsHeapSubtypeOfENS1_8HeapTypeES2_PKNS1_10WasmModuleE.exit.thread.i ], [ false, %bb.p ], [ false, %bb.h ], [ false, %bb.s ], [ true, %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit.thread.i ], [ %i.ek, %bb.r ], [ false, %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit.i ], [ false, %bb.i ], [ false, %bb.k ], [ false, %_ZN2v88internal4wasm11IsSubtypeOfENS1_9ValueTypeES2_PKNS1_10WasmModuleE.exit.i36 ]
   ret i1 %.0
 }
 

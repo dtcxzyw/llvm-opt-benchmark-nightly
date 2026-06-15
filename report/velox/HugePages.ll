@@ -201,17 +201,17 @@ bb.f:                                             ; preds = %.lr.ph.split.us
   br i1 %i.q, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph.split
-  %i.r = load i64, ptr %.sroa.014.022, align 8, !tbaa !81
+  %i.r = load i64, ptr %.sroa.014.022, align 8
   %i.s = icmp eq i64 %0, %i.r
   br i1 %i.s, label %select.unfold, label %bb.h
 
-bb.h:                                             ; preds = %.lr.ph.split, %bb.g
+bb.h:                                             ; preds = %bb.g, %.lr.ph.split
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.014.022, i64 48 ; 2 uses
   %i.u = icmp eq ptr %i.t, %i.g
   br i1 %i.u, label %select.unfold, label %.lr.ph.split
 
-select.unfold:                                    ; preds = %bb.h, %bb.g, %.lr.ph.split.us, %bb.f, %_ZN5folly16getHugePageSizesEv.exit
-  %i.v = phi ptr [ null, %_ZN5folly16getHugePageSizesEv.exit ], [ null, %bb.f ], [ %.sroa.014.022.us, %.lr.ph.split.us ], [ null, %bb.h ], [ %.sroa.014.022, %bb.g ]
+select.unfold:                                    ; preds = %bb.g, %bb.h, %.lr.ph.split.us, %bb.f, %_ZN5folly16getHugePageSizesEv.exit
+  %i.v = phi ptr [ null, %bb.f ], [ null, %_ZN5folly16getHugePageSizesEv.exit ], [ %.sroa.014.022.us, %.lr.ph.split.us ], [ null, %bb.h ], [ %.sroa.014.022, %bb.g ]
   ret ptr %i.v
 }
 

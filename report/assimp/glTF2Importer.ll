@@ -201,7 +201,7 @@ _ZN8aiStringaSERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit: ; pr
   call void @_Z14GatherSamplersRN5glTF29AnimationE(ptr dead_on_unwind nonnull writable sret(%"class.std::unordered_map.293") align 8 %2, ptr noundef nonnull align 8 dereferenceable(312) %i.bh)
   %i.bq = load ptr, ptr %i.ao, align 8            ; 3 uses
   %.not176183 = icmp eq ptr %i.bq, null
-  br i1 %.not176183, label %._crit_edge208.thread, label %.lr.ph
+  br i1 %.not176183, label %._crit_edge208.thread, label %bb.f
 
 ._crit_edge208.thread:                            ; preds = %_ZN8aiStringaSERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
   store i32 0, ptr %i.av, align 8
@@ -210,48 +210,38 @@ _ZN8aiStringaSERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit: ; pr
   br label %_ZNSt10_HashtableIjSt4pairIKj17AnimationSamplersESaIS3_ENSt8__detail10_Select1stESt8equal_toIjESt4hashIjENS5_18_Mod_range_hashingENS5_20_Default_ranged_hashENS5_20_Prime_rehash_policyENS5_17_Hashtable_traitsILb0ELb0ELb1EEEE5clearEv.exit.i.i
 
 ._crit_edge:                                      ; preds = %bb.f
-  store i32 %.1.a, ptr %i.av, align 8
-  %.not = icmp eq i32 %.1.a, 0
+  store i32 %.1, ptr %i.av, align 8
+  %.not = icmp eq i32 %.1, 0
   br i1 %.not, label %.loopexit181, label %bb.g
 
-.lr.ph:                                           ; preds = %_ZN8aiStringaSERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, %bb.f
-  %.0103186 = phi i32 [ %.1.a, %bb.f ], [ 0, %_ZN8aiStringaSERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ] ; 2 uses
-  %.0104185 = phi i32 [ %spec.select, %bb.f ], [ 0, %_ZN8aiStringaSERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ]
-  %.sroa.0167.0184 = phi ptr [ %i.bu, %bb.f ], [ %i.bq, %_ZN8aiStringaSERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ] ; 5 uses
-  %3 = getelementptr inbounds nuw i8, ptr %.sroa.0167.0184, i64 16
-  %4 = getelementptr inbounds nuw i8, ptr %.sroa.0167.0184, i64 24
+bb.f:                                             ; preds = %_ZN8aiStringaSERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, %bb.f
+  %.0103192 = phi i32 [ %.1, %bb.f ], [ 0, %_ZN8aiStringaSERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ]
+  %.1.a = phi i32 [ %spec.select, %bb.f ], [ 0, %_ZN8aiStringaSERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ]
+  %.sroa.0172.0190 = phi ptr [ %i.bu, %bb.f ], [ %i.bq, %_ZN8aiStringaSERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ] ; 5 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.0172.0190, i64 16
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.0172.0190, i64 24
   %5 = load ptr, ptr %4, align 8
-  %.not127 = icmp eq ptr %5, null
-  br i1 %.not127, label %6, label %11
-
-6:                                                ; preds = %.lr.ph
-  %7 = getelementptr inbounds nuw i8, ptr %.sroa.0167.0184, i64 32
-  %8 = load ptr, ptr %7, align 8
-  %.not128 = icmp eq ptr %8, null
-  br i1 %.not128, label %9, label %11
-
-9:                                                ; preds = %6
-  %10 = load ptr, ptr %3, align 8
-  %.not129 = icmp eq ptr %10, null
-  br i1 %.not129, label %bb.f, label %11
-
-11:                                               ; preds = %9, %6, %.lr.ph
-  %12 = add i32 %.0103186, 1
-  br label %bb.f
-
-bb.f:                                             ; preds = %11, %9
-  %.1.a = phi i32 [ %12, %11 ], [ %.0103186, %9 ] ; 4 uses
-  %i.br = getelementptr inbounds nuw i8, ptr %.sroa.0167.0184, i64 40
+  %.not127 = icmp ne ptr %5, null
+  %6 = getelementptr inbounds nuw i8, ptr %.sroa.0172.0190, i64 32
+  %7 = load ptr, ptr %6, align 8
+  %.not128 = icmp ne ptr %7, null
+  %or.cond.not186 = select i1 %.not127, i1 true, i1 %.not128
+  %8 = load ptr, ptr %3, align 8
+  %.not129 = icmp ne ptr %8, null
+  %or.cond132.not = select i1 %or.cond.not186, i1 true, i1 %.not129
+  %9 = zext i1 %or.cond132.not to i32
+  %.1 = add i32 %.0103192, %9                     ; 4 uses
+  %i.br = getelementptr inbounds nuw i8, ptr %.sroa.0172.0190, i64 40
   %i.bs = load ptr, ptr %i.br, align 8
   %.not130 = icmp ne ptr %i.bs, null
   %i.bt = zext i1 %.not130 to i32
-  %spec.select = add i32 %.0104185, %i.bt         ; 4 uses
-  %i.bu = load ptr, ptr %.sroa.0167.0184, align 8 ; 2 uses
+  %spec.select = add i32 %.1.a, %i.bt             ; 4 uses
+  %i.bu = load ptr, ptr %.sroa.0172.0190, align 8 ; 2 uses
   %.not176 = icmp eq ptr %i.bu, null
-  br i1 %.not176, label %._crit_edge, label %.lr.ph
+  br i1 %.not176, label %._crit_edge, label %bb.f
 
 bb.g:                                             ; preds = %._crit_edge
-  %i.bv = zext i32 %.1.a to i64
+  %i.bv = zext i32 %.1 to i64
   %i.bw = shl nuw nsw i64 %i.bv, 3                ; 2 uses
   %i.bx = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.bw) #37
           to label %.lr.ph.preheader.i.i.i132 unwind label %bb.h ; 2 uses
@@ -269,31 +259,27 @@ bb.h:                                             ; preds = %bb.m, %bb.g
 .lr.ph192:                                        ; preds = %.lr.ph.preheader.i.i.i132, %bb.l
   %.0111191 = phi i32 [ %.1112, %bb.l ], [ 0, %.lr.ph.preheader.i.i.i132 ] ; 3 uses
   %.sroa.0163.0189 = phi ptr [ %i.co, %bb.l ], [ %i.bq, %.lr.ph.preheader.i.i.i132 ] ; 5 uses
-  %i.bz = getelementptr inbounds nuw i8, ptr %.sroa.0163.0189, i64 8
-  %i.ca = getelementptr inbounds nuw i8, ptr %.sroa.0163.0189, i64 16 ; 2 uses
-  %i.cb = getelementptr inbounds nuw i8, ptr %.sroa.0163.0189, i64 24
-  %i.cc = load ptr, ptr %i.cb, align 8
+  %i.bz = getelementptr inbounds nuw i8, ptr %.sroa.0163.0189, i64 16 ; 2 uses
+  %i.ca = getelementptr inbounds nuw i8, ptr %.sroa.0163.0189, i64 24
+  %10 = load ptr, ptr %i.ca, align 8
+  %.not123 = icmp eq ptr %10, null
+  %i.cb = getelementptr inbounds nuw i8, ptr %.sroa.0163.0189, i64 32
+  %11 = load ptr, ptr %i.cb, align 8
+  %.not124 = icmp eq ptr %11, null
+  %or.cond134 = select i1 %.not123, i1 %.not124, i1 false
+  %i.cc = load ptr, ptr %i.bz, align 8
   %.not123.a = icmp eq ptr %i.cc, null
-  br i1 %.not123.a, label %13, label %bb.i
+  %or.cond135 = select i1 %or.cond134, i1 %.not123.a, i1 false
+  br i1 %or.cond135, label %bb.l, label %bb.i
 
-13:                                               ; preds = %.lr.ph192
-  %14 = getelementptr inbounds nuw i8, ptr %.sroa.0163.0189, i64 32
-  %15 = load ptr, ptr %14, align 8
-  %.not124 = icmp eq ptr %15, null
-  br i1 %.not124, label %16, label %bb.i
-
-16:                                               ; preds = %13
-  %17 = load ptr, ptr %i.ca, align 8
-  %.not125 = icmp eq ptr %17, null
-  br i1 %.not125, label %bb.l, label %bb.i
-
-bb.i:                                             ; preds = %16, %13, %.lr.ph192
-  %i.cd = load i32, ptr %i.bz, align 8
+bb.i:                                             ; preds = %.lr.ph192
+  %12 = getelementptr inbounds nuw i8, ptr %.sroa.0163.0189, i64 8
+  %i.cd = load i32, ptr %12, align 8
   %i.ce = zext i32 %i.cd to i64
   %i.cf = load ptr, ptr %i.ap, align 8
   %i.cg = getelementptr inbounds nuw [8 x i8], ptr %i.cf, i64 %i.ce
   %i.ch = load ptr, ptr %i.cg, align 8
-  %i.ci = invoke noundef ptr @_Z14CreateNodeAnimRN5glTF25AssetERNS_4NodeER17AnimationSamplers(ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(552) %i.ch, ptr noundef nonnull align 8 dereferenceable(32) %i.ca)
+  %i.ci = invoke noundef ptr @_Z14CreateNodeAnimRN5glTF25AssetERNS_4NodeER17AnimationSamplers(ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(552) %i.ch, ptr noundef nonnull align 8 dereferenceable(32) %i.bz)
           to label %bb.j unwind label %bb.k
 
 bb.j:                                             ; preds = %bb.i
@@ -309,8 +295,8 @@ bb.k:                                             ; preds = %bb.i
           cleanup
   br label %bb.ac
 
-bb.l:                                             ; preds = %bb.j, %16
-  %.1112 = phi i32 [ %i.cm, %bb.j ], [ %.0111191, %16 ]
+bb.l:                                             ; preds = %.lr.ph192, %bb.j
+  %.1112 = phi i32 [ %i.cm, %bb.j ], [ %.0111191, %.lr.ph192 ]
   %i.co = load ptr, ptr %.sroa.0163.0189, align 8 ; 2 uses
   %.not178 = icmp eq ptr %i.co, null
   br i1 %.not178, label %.loopexit181, label %.lr.ph192
@@ -713,8 +699,8 @@ bb.bp:                                            ; preds = %._crit_edge202, %_Z
   %i.qy = load ptr, ptr %i.a, align 8             ; 4 uses
   %i.qz = getelementptr inbounds i8, ptr %i.qy, i64 -88
   %i.ra = load ptr, ptr %i.qz, align 8            ; 2 uses
-  %.not = icmp eq ptr %i.ra, null                 ; 2 uses
-  br i1 %.not, label %bb.bs, label %bb.bq
+  %.not = icmp ne ptr %i.ra, null                 ; 2 uses
+  br i1 %.not, label %bb.bq, label %bb.bs
 
 bb.bq:                                            ; preds = %bb.bp
   %i.rb = getelementptr inbounds i8, ptr %i.qy, i64 -6
@@ -749,14 +735,14 @@ bb.bu:                                            ; preds = %bb.bt, %bb.bs
   %i.rn = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.ro = load ptr, ptr %i.rn, align 8
   %i.rp = icmp eq ptr %i.rm, %i.ro
-  %brmerge = or i1 %i.rp, %.not
-  br i1 %brmerge, label %.critedge65, label %bb.bv
+  br i1 %i.rp, label %.critedge65, label %bb.bv
 
 bb.bv:                                            ; preds = %bb.bu
   %i.rq = getelementptr inbounds i8, ptr %i.rm, i64 -7
-  %i.rr = load i8, ptr %i.rq, align 1, !range !19, !noundef !20
+  %i.rr = load i8, ptr %i.rq, align 1, !range !19
   %i.rs = trunc nuw i8 %i.rr to i1
-  br i1 %i.rs, label %bb.bw, label %.critedge65
+  %or.cond = select i1 %.not, i1 %i.rs, i1 false
+  br i1 %or.cond, label %bb.bw, label %.critedge65
 
 bb.bw:                                            ; preds = %bb.bv
   %i.rt = getelementptr inbounds i8, ptr %i.rm, i64 -80 ; 2 uses
@@ -1084,7 +1070,7 @@ bb.ct:                                            ; preds = %_ZN9rapidjson22Gene
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #34
   br label %.critedge65
 
-.critedge65:                                      ; preds = %bb.bu, %bb.ct, %bb.bv
+.critedge65:                                      ; preds = %bb.ct, %bb.bv, %bb.bu
   %i.wq = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.wr = load ptr, ptr %i.wq, align 8            ; 2 uses
   %.promoted180 = load ptr, ptr %i.qn, align 8    ; 2 uses
@@ -1487,44 +1473,41 @@ bb.e:                                             ; preds = %.lr.ph.us.us
 
 bb.f:                                             ; preds = %bb.e
   %i.ay = getelementptr inbounds nuw i8, ptr %i.as, i64 8
-  %i.az = load i32, ptr %i.ay, align 4            ; 3 uses
+  %i.az = load i32, ptr %i.ay, align 4            ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.an, i64 80
   %i.bb = load ptr, ptr %i.ba, align 8            ; 2 uses
   %i.bc = zext i32 %i.az to i64
   %i.bd = getelementptr inbounds nuw [12 x i8], ptr %i.bb, i64 %i.bc
   %i.be = load i32, ptr %i.bd, align 4
   %i.bf = icmp slt i32 %i.be, 0                   ; 2 uses
-  %.not21.i.us.us.us78 = icmp eq i32 %i.az, -1
-  br i1 %.not21.i.us.us.us78, label %._crit_edge.i.us.us.us85, label %.lr.ph.i.us.us.us79
+  br label %.lr.ph.i.us.us.us79
 
-.lr.ph.i.us.us.us79:                              ; preds = %bb.f, %bb.h
-  %.01322.i.us.us.us80 = phi i32 [ %10, %bb.h ], [ %i.az, %bb.f ]
+.lr.ph.i.us.us.us79:                              ; preds = %bb.g, %bb.f
+  %.01322.i.us.us.us80 = phi i32 [ %i.az, %bb.f ], [ %10, %bb.g ] ; 2 uses
+  %.not.i36.us.us.us79 = icmp eq i32 %.01322.i.us.us.us80, -1
+  br i1 %.not.i36.us.us.us79, label %._crit_edge.i.us.us.us85, label %bb.g
+
+bb.g:                                             ; preds = %.lr.ph.i.us.us.us79
   %5 = zext i32 %.01322.i.us.us.us80 to i64
   %6 = getelementptr inbounds nuw [12 x i8], ptr %i.bb, i64 %5 ; 3 uses
   %7 = load i32, ptr %6, align 4
   %8 = and i32 %7, 2147483647
-  %.not16.i.us.us.us81 = icmp ult i32 %i.z, %8
-  br i1 %.not16.i.us.us.us81, label %bb.h, label %bb.g
-
-bb.g:                                             ; preds = %.lr.ph.i.us.us.us79
+  %.not16.i.us.us.us80 = icmp ult i32 %i.z, %8
   %i.bg = getelementptr inbounds nuw i8, ptr %6, i64 4
   %i.bh = load i32, ptr %i.bg, align 4
   %.not17.i.us.us.us82 = icmp ugt i32 %i.z, %i.bh
-  br i1 %.not17.i.us.us.us82, label %bb.h, label %_ZNK9rapidjson8internal18GenericRegexSearchINS0_12GenericRegexINS_4UTF8IcEENS_12CrtAllocatorEEES5_E10MatchRangeEjj.exit.us.us.us83
+  %or.cond.i.us.us.us82 = select i1 %.not16.i.us.us.us80, i1 true, i1 %.not17.i.us.us.us82
+  %9 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %10 = load i32, ptr %9, align 4
+  br i1 %or.cond.i.us.us.us82, label %.lr.ph.i.us.us.us79, label %bb.h, !llvm.loop !720
 
-_ZNK9rapidjson8internal18GenericRegexSearchINS0_12GenericRegexINS_4UTF8IcEENS_12CrtAllocatorEEES5_E10MatchRangeEjj.exit.us.us.us83: ; preds = %bb.g
+bb.h:                                             ; preds = %bb.g
   br i1 %i.bf, label %bb.j, label %bb.i
 
-bb.h:                                             ; preds = %bb.g, %.lr.ph.i.us.us.us79
-  %9 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %10 = load i32, ptr %9, align 4                 ; 2 uses
-  %.not.i36.us.us.us84 = icmp eq i32 %10, -1
-  br i1 %.not.i36.us.us.us84, label %._crit_edge.i.us.us.us85, label %.lr.ph.i.us.us.us79, !llvm.loop !720
-
-._crit_edge.i.us.us.us85:                         ; preds = %bb.h, %bb.f
+._crit_edge.i.us.us.us85:                         ; preds = %.lr.ph.i.us.us.us79
   br i1 %i.bf, label %bb.i, label %bb.j
 
-bb.i:                                             ; preds = %._crit_edge.i.us.us.us85, %_ZNK9rapidjson8internal18GenericRegexSearchINS0_12GenericRegexINS_4UTF8IcEENS_12CrtAllocatorEEES5_E10MatchRangeEjj.exit.us.us.us83, %.lr.ph.us.us
+bb.i:                                             ; preds = %._crit_edge.i.us.us.us85, %bb.h, %.lr.ph.us.us
   %i.bi = load i32, ptr %i.as, align 4
   %i.bj = call noundef zeroext i1 @_ZN9rapidjson8internal18GenericRegexSearchINS0_12GenericRegexINS_4UTF8IcEENS_12CrtAllocatorEEES5_E8AddStateERNS0_5StackIS5_EEj(ptr noundef nonnull align 8 dereferenceable(128) %0, ptr noundef nonnull align 8 dereferenceable(48) %.058.us71.us, i32 noundef %i.bi)
   br i1 %i.bj, label %.loopexit, label %._crit_edge102
@@ -1533,8 +1516,8 @@ bb.i:                                             ; preds = %._crit_edge.i.us.us
   %.pre103.a = load ptr, ptr %i.aa, align 8
   br label %bb.j
 
-bb.j:                                             ; preds = %._crit_edge102, %._crit_edge.i.us.us.us85, %_ZNK9rapidjson8internal18GenericRegexSearchINS0_12GenericRegexINS_4UTF8IcEENS_12CrtAllocatorEEES5_E10MatchRangeEjj.exit.us.us.us83, %bb.e
-  %i.bk = phi ptr [ %.pre103.a, %._crit_edge102 ], [ %i.am, %_ZNK9rapidjson8internal18GenericRegexSearchINS0_12GenericRegexINS_4UTF8IcEENS_12CrtAllocatorEEES5_E10MatchRangeEjj.exit.us.us.us83 ], [ %i.am, %bb.e ], [ %i.am, %._crit_edge.i.us.us.us85 ] ; 2 uses
+bb.j:                                             ; preds = %._crit_edge102, %._crit_edge.i.us.us.us85, %bb.h, %bb.e
+  %i.bk = phi ptr [ %.pre103.a, %._crit_edge102 ], [ %i.am, %bb.h ], [ %i.am, %bb.e ], [ %i.am, %._crit_edge.i.us.us.us85 ] ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %.02556.us.us.us75, i64 4 ; 2 uses
   %.not34.us.us.us87 = icmp eq ptr %i.bl, %i.bk
   br i1 %.not34.us.us.us87, label %.thread49.loopexit.us.us, label %.lr.ph.us.us, !llvm.loop !721
@@ -1597,53 +1580,50 @@ bb.m:                                             ; preds = %.lr.ph.us
 
 bb.n:                                             ; preds = %bb.m
   %i.cl = getelementptr inbounds nuw i8, ptr %i.cf, i64 8
-  %i.cm = load i32, ptr %i.cl, align 4            ; 3 uses
+  %i.cm = load i32, ptr %i.cl, align 4            ; 2 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %i.ca, i64 80
   %i.co = load ptr, ptr %i.cn, align 8            ; 2 uses
   %i.cp = zext i32 %i.cm to i64
   %i.cq = getelementptr inbounds nuw [12 x i8], ptr %i.co, i64 %i.cp
   %i.cr = load i32, ptr %i.cq, align 4
   %i.cs = icmp slt i32 %i.cr, 0                   ; 2 uses
-  %.not21.i.us.us.us = icmp eq i32 %i.cm, -1
-  br i1 %.not21.i.us.us.us, label %._crit_edge.i.us.us.us, label %.lr.ph.i.us.us.us
+  br label %.lr.ph.i.us.us.us
 
-.lr.ph.i.us.us.us:                                ; preds = %bb.n, %bb.p
-  %.01322.i.us.us.us = phi i32 [ %16, %bb.p ], [ %i.cm, %bb.n ]
+.lr.ph.i.us.us.us:                                ; preds = %bb.o, %bb.n
+  %.01322.i.us.us.us = phi i32 [ %i.cm, %bb.n ], [ %16, %bb.o ] ; 2 uses
+  %.not.i36.us.us.us = icmp eq i32 %.01322.i.us.us.us, -1
+  br i1 %.not.i36.us.us.us, label %._crit_edge.i.us.us.us, label %bb.o
+
+bb.o:                                             ; preds = %.lr.ph.i.us.us.us
   %11 = zext i32 %.01322.i.us.us.us to i64
   %12 = getelementptr inbounds nuw [12 x i8], ptr %i.co, i64 %11 ; 3 uses
   %13 = load i32, ptr %12, align 4
   %14 = and i32 %13, 2147483647
   %.not16.i.us.us.us = icmp ult i32 %i.bm, %14
-  br i1 %.not16.i.us.us.us, label %bb.p, label %bb.o
-
-bb.o:                                             ; preds = %.lr.ph.i.us.us.us
   %i.ct = getelementptr inbounds nuw i8, ptr %12, i64 4
   %i.cu = load i32, ptr %i.ct, align 4
   %.not17.i.us.us.us = icmp ugt i32 %i.bm, %i.cu
-  br i1 %.not17.i.us.us.us, label %bb.p, label %_ZNK9rapidjson8internal18GenericRegexSearchINS0_12GenericRegexINS_4UTF8IcEENS_12CrtAllocatorEEES5_E10MatchRangeEjj.exit.us.us.us
+  %or.cond.i.us.us.us = select i1 %.not16.i.us.us.us, i1 true, i1 %.not17.i.us.us.us
+  %15 = getelementptr inbounds nuw i8, ptr %12, i64 8
+  %16 = load i32, ptr %15, align 4
+  br i1 %or.cond.i.us.us.us, label %.lr.ph.i.us.us.us, label %bb.p, !llvm.loop !720
 
-_ZNK9rapidjson8internal18GenericRegexSearchINS0_12GenericRegexINS_4UTF8IcEENS_12CrtAllocatorEEES5_E10MatchRangeEjj.exit.us.us.us: ; preds = %bb.o
+bb.p:                                             ; preds = %bb.o
   br i1 %i.cs, label %bb.r, label %bb.q
 
-bb.p:                                             ; preds = %bb.o, %.lr.ph.i.us.us.us
-  %15 = getelementptr inbounds nuw i8, ptr %12, i64 8
-  %16 = load i32, ptr %15, align 4                ; 2 uses
-  %.not.i36.us.us.us = icmp eq i32 %16, -1
-  br i1 %.not.i36.us.us.us, label %._crit_edge.i.us.us.us, label %.lr.ph.i.us.us.us, !llvm.loop !720
-
-._crit_edge.i.us.us.us:                           ; preds = %bb.p, %bb.n
+._crit_edge.i.us.us.us:                           ; preds = %.lr.ph.i.us.us.us
   br i1 %i.cs, label %bb.q, label %bb.r
 
-bb.q:                                             ; preds = %._crit_edge.i.us.us.us, %_ZNK9rapidjson8internal18GenericRegexSearchINS0_12GenericRegexINS_4UTF8IcEENS_12CrtAllocatorEEES5_E10MatchRangeEjj.exit.us.us.us, %.lr.ph.us
+bb.q:                                             ; preds = %._crit_edge.i.us.us.us, %bb.p, %.lr.ph.us
   %i.cv = load i32, ptr %i.cf, align 4
   %i.cw = call noundef zeroext i1 @_ZN9rapidjson8internal18GenericRegexSearchINS0_12GenericRegexINS_4UTF8IcEENS_12CrtAllocatorEEES5_E8AddStateERNS0_5StackIS5_EEj(ptr noundef nonnull align 8 dereferenceable(128) %0, ptr noundef nonnull align 8 dereferenceable(48) %.058.us71, i32 noundef %i.cv)
   %i.cx = select i1 %i.cw, i8 1, i8 %.12755.us.us.us
   %.pre106 = load ptr, ptr %i.bn, align 8
   br label %bb.r
 
-bb.r:                                             ; preds = %bb.q, %._crit_edge.i.us.us.us, %_ZNK9rapidjson8internal18GenericRegexSearchINS0_12GenericRegexINS_4UTF8IcEENS_12CrtAllocatorEEES5_E10MatchRangeEjj.exit.us.us.us, %bb.m
-  %i.cy = phi ptr [ %.pre106, %bb.q ], [ %i.bz, %_ZNK9rapidjson8internal18GenericRegexSearchINS0_12GenericRegexINS_4UTF8IcEENS_12CrtAllocatorEEES5_E10MatchRangeEjj.exit.us.us.us ], [ %i.bz, %bb.m ], [ %i.bz, %._crit_edge.i.us.us.us ] ; 2 uses
-  %.228.us.us.us = phi i8 [ %i.cx, %bb.q ], [ %.12755.us.us.us, %_ZNK9rapidjson8internal18GenericRegexSearchINS0_12GenericRegexINS_4UTF8IcEENS_12CrtAllocatorEEES5_E10MatchRangeEjj.exit.us.us.us ], [ %.12755.us.us.us, %bb.m ], [ %.12755.us.us.us, %._crit_edge.i.us.us.us ] ; 2 uses
+bb.r:                                             ; preds = %bb.q, %._crit_edge.i.us.us.us, %bb.p, %bb.m
+  %i.cy = phi ptr [ %.pre106, %bb.q ], [ %i.bz, %bb.p ], [ %i.bz, %bb.m ], [ %i.bz, %._crit_edge.i.us.us.us ] ; 2 uses
+  %.228.us.us.us = phi i8 [ %i.cx, %bb.q ], [ %.12755.us.us.us, %bb.p ], [ %.12755.us.us.us, %bb.m ], [ %.12755.us.us.us, %._crit_edge.i.us.us.us ] ; 2 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %.02556.us.us.us, i64 4 ; 2 uses
   %.not34.us.us.us = icmp eq ptr %i.cz, %i.cy
   br i1 %.not34.us.us.us, label %.thread49.loopexit.us, label %.lr.ph.us, !llvm.loop !721
@@ -1708,38 +1688,35 @@ bb.u:                                             ; preds = %.lr.ph
 
 bb.v:                                             ; preds = %bb.u
   %i.dy = getelementptr inbounds nuw i8, ptr %i.ds, i64 8
-  %i.dz = load i32, ptr %i.dy, align 4            ; 3 uses
+  %i.dz = load i32, ptr %i.dy, align 4            ; 2 uses
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dn, i64 80
   %i.eb = load ptr, ptr %i.ea, align 8            ; 2 uses
   %i.ec = zext i32 %i.dz to i64
   %i.ed = getelementptr inbounds nuw [12 x i8], ptr %i.eb, i64 %i.ec
   %i.ee = load i32, ptr %i.ed, align 4
   %i.ef = icmp slt i32 %i.ee, 0                   ; 2 uses
-  %.not21.i = icmp eq i32 %i.dz, -1
-  br i1 %.not21.i, label %._crit_edge.i, label %.lr.ph.i
+  br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %bb.v, %21
-  %.01322.i = phi i32 [ %23, %21 ], [ %i.dz, %bb.v ]
+.lr.ph.i:                                         ; preds = %bb.w, %bb.v
+  %.01322.i = phi i32 [ %i.dz, %bb.v ], [ %22, %bb.w ] ; 2 uses
+  %.not.i36 = icmp eq i32 %.01322.i, -1
+  br i1 %.not.i36, label %._crit_edge.i, label %bb.w
+
+bb.w:                                             ; preds = %.lr.ph.i
   %17 = zext i32 %.01322.i to i64
   %18 = getelementptr inbounds nuw [12 x i8], ptr %i.eb, i64 %17 ; 3 uses
   %19 = load i32, ptr %18, align 4
   %20 = and i32 %19, 2147483647
   %.not16.i = icmp ult i32 %i.dc, %20
-  br i1 %.not16.i, label %21, label %bb.w
-
-bb.w:                                             ; preds = %.lr.ph.i
   %i.eg = getelementptr inbounds nuw i8, ptr %18, i64 4
   %i.eh = load i32, ptr %i.eg, align 4
   %.not17.i = icmp ugt i32 %i.dc, %i.eh
-  br i1 %.not17.i, label %21, label %_ZNK9rapidjson8internal18GenericRegexSearchINS0_12GenericRegexINS_4UTF8IcEENS_12CrtAllocatorEEES5_E10MatchRangeEjj.exit
+  %or.cond.i = select i1 %.not16.i, i1 true, i1 %.not17.i
+  %21 = getelementptr inbounds nuw i8, ptr %18, i64 8
+  %22 = load i32, ptr %21, align 4
+  br i1 %or.cond.i, label %.lr.ph.i, label %_ZNK9rapidjson8internal18GenericRegexSearchINS0_12GenericRegexINS_4UTF8IcEENS_12CrtAllocatorEEES5_E10MatchRangeEjj.exit, !llvm.loop !720
 
-21:                                               ; preds = %bb.w, %.lr.ph.i
-  %22 = getelementptr inbounds nuw i8, ptr %18, i64 8
-  %23 = load i32, ptr %22, align 4                ; 2 uses
-  %.not.i36 = icmp eq i32 %23, -1
-  br i1 %.not.i36, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !720
-
-._crit_edge.i:                                    ; preds = %21, %bb.v
+._crit_edge.i:                                    ; preds = %.lr.ph.i
   br i1 %i.ef, label %bb.x, label %bb.y
 
 _ZNK9rapidjson8internal18GenericRegexSearchINS0_12GenericRegexINS_4UTF8IcEENS_12CrtAllocatorEEES5_E10MatchRangeEjj.exit: ; preds = %bb.w

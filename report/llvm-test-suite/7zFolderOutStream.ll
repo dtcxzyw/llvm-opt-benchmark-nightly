@@ -201,38 +201,37 @@ bb.e:                                             ; preds = %bb.d
   %i.ae = sext i32 %i.ab to i64
   %i.af = getelementptr inbounds [8 x i8], ptr %i.ad, i64 %i.ae
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !43 ; 3 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 33
-  %i.ai = load i8, ptr %i.ah, align 1, !tbaa !48, !range !49, !noundef !50
+  %1 = getelementptr inbounds nuw i8, ptr %i.ag, i64 33
+  %2 = load i8, ptr %1, align 1, !tbaa !48, !range !49, !noundef !50
+  %3 = trunc nuw i8 %2 to i1
+  %.not.i = xor i1 %3, true
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 34
+  %4 = load i8, ptr %i.ah, align 2, !range !49
+  %5 = trunc nuw i8 %4 to i1
+  %or.cond.i = select i1 %.not.i, i1 %5, i1 false
+  %i.ai = load i8, ptr %i.e, align 1, !range !49
   %i.aj = trunc nuw i8 %i.ai to i1
-  br i1 %i.aj, label %._crit_edge, label %1
+  %or.cond8.i = select i1 %or.cond.i, i1 %i.aj, i1 false
+  br i1 %or.cond8.i, label %bb.f, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.e
   %.pre = load ptr, ptr %i.f, align 8, !tbaa !19
   br label %bb.g
 
-1:                                                ; preds = %bb.e
-  %2 = getelementptr inbounds nuw i8, ptr %i.ag, i64 34
-  %3 = load i8, ptr %2, align 2, !tbaa !51, !range !49, !noundef !50
-  %4 = trunc nuw i8 %3 to i1
-  %5 = load i8, ptr %i.e, align 1, !range !49
-  %6 = trunc nuw i8 %5 to i1
-  %or.cond.i = select i1 %4, i1 %6, i1 false
-  %.pre13 = load ptr, ptr %i.f, align 8, !tbaa !19 ; 3 uses
-  br i1 %or.cond.i, label %bb.f, label %bb.g
-
-bb.f:                                             ; preds = %1
+bb.f:                                             ; preds = %bb.e
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ag, i64 12
-  %i.al = load i32, ptr %i.ak, align 4, !tbaa !52
-  %i.am = getelementptr inbounds nuw i8, ptr %.pre13, i64 32
-  %i.an = load i32, ptr %i.am, align 8, !tbaa !53
+  %i.al = load i32, ptr %i.ak, align 4, !tbaa !51
+  %6 = load ptr, ptr %i.f, align 8, !tbaa !19     ; 2 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %6, i64 32
+  %i.an = load i32, ptr %i.am, align 8, !tbaa !52
   %i.ao = xor i32 %i.an, %i.al
   %i.ap = icmp eq i32 %i.ao, -1
   %i.aq = select i1 %i.ap, i32 0, i32 3
   br label %bb.g
 
-bb.g:                                             ; preds = %._crit_edge, %bb.f, %1
-  %7 = phi ptr [ %.pre13, %bb.f ], [ %.pre13, %1 ], [ %.pre, %._crit_edge ]
-  %8 = phi i32 [ %i.aq, %bb.f ], [ 0, %1 ], [ 0, %._crit_edge ]
+bb.g:                                             ; preds = %bb.f, %._crit_edge
+  %7 = phi ptr [ %.pre, %._crit_edge ], [ %6, %bb.f ]
+  %8 = phi i32 [ 0, %._crit_edge ], [ %i.aq, %bb.f ]
   %i.ar = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !12 ; 3 uses
   %.not.i.i.i.i = icmp eq ptr %i.as, null
@@ -242,7 +241,7 @@ bb.h:                                             ; preds = %bb.g
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !10
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 16
   %i.av = load ptr, ptr %i.au, align 8
-  %i.aw = tail call noundef i32 %i.av(ptr noundef nonnull align 8 dereferenceable(8) %i.as), !inline_history !55 ; 0 uses
+  %i.aw = tail call noundef i32 %i.av(ptr noundef nonnull align 8 dereferenceable(8) %i.as), !inline_history !54 ; 0 uses
   store ptr null, ptr %i.ar, align 8, !tbaa !12
   %.pre.i = load i32, ptr %i.b, align 8, !tbaa !37
   br label %_ZN8NArchive3N7z16CFolderOutStream21CloseFileAndSetResultEv.exit
@@ -256,7 +255,7 @@ _ZN8NArchive3N7z16CFolderOutStream21CloseFileAndSetResultEv.exit: ; preds = %bb.
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !10
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 72
   %i.bc = load ptr, ptr %i.bb, align 8
-  %i.bd = tail call noundef i32 %i.bc(ptr noundef nonnull align 8 dereferenceable(8) %i.az, i32 noundef %8), !inline_history !56 ; 2 uses
+  %i.bd = tail call noundef i32 %i.bc(ptr noundef nonnull align 8 dereferenceable(8) %i.az, i32 noundef %8), !inline_history !55 ; 2 uses
   %.not11.not = icmp eq i32 %i.bd, 0
   br i1 %.not11.not, label %bb.b, label %.critedge
 
@@ -277,7 +276,7 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !42
   %i.g = sext i32 %i.d to i64
   %i.h = getelementptr inbounds i8, ptr %i.f, i64 %i.g
-  %i.i = load i8, ptr %i.h, align 1, !tbaa !57, !range !49, !noundef !50
+  %i.i = load i8, ptr %i.h, align 1, !tbaa !56, !range !49, !noundef !50
   %i.j = trunc nuw i8 %i.i to i1
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 76
   %i.l = load i8, ptr %i.k, align 4, !range !49
@@ -321,7 +320,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   %i.ah = load ptr, ptr %i.ag, align 8
   %i.ai = invoke noundef i32 %i.ah(ptr noundef nonnull align 8 dereferenceable(8) %i.ad)
-          to label %.noexc unwind label %bb.j, !inline_history !58 ; 0 uses
+          to label %.noexc unwind label %bb.j, !inline_history !57 ; 0 uses
 
 .noexc:                                           ; preds = %bb.e, %bb.d
   %i.aj = load ptr, ptr %i.ae, align 8, !tbaa !12 ; 3 uses
@@ -333,7 +332,7 @@ bb.f:                                             ; preds = %.noexc
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 16
   %i.am = load ptr, ptr %i.al, align 8
   %i.an = invoke noundef i32 %i.am(ptr noundef nonnull align 8 dereferenceable(8) %i.aj)
-          to label %bb.g unwind label %bb.j, !inline_history !58 ; 0 uses
+          to label %bb.g unwind label %bb.j, !inline_history !57 ; 0 uses
 
 bb.g:                                             ; preds = %bb.f, %.noexc
   store ptr %i.ad, ptr %i.ae, align 8, !tbaa !12
@@ -341,11 +340,11 @@ bb.g:                                             ; preds = %bb.f, %.noexc
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 77
   %i.aq = load i8, ptr %i.ap, align 1, !tbaa !36, !range !49, !noundef !50
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ao, i64 24
-  store i64 0, ptr %i.ar, align 8, !tbaa !59
+  store i64 0, ptr %i.ar, align 8, !tbaa !58
   %i.as = getelementptr inbounds nuw i8, ptr %i.ao, i64 36
-  store i8 %i.aq, ptr %i.as, align 4, !tbaa !60
+  store i8 %i.aq, ptr %i.as, align 4, !tbaa !59
   %i.at = getelementptr inbounds nuw i8, ptr %i.ao, i64 32
-  store i32 -1, ptr %i.at, align 8, !tbaa !53
+  store i32 -1, ptr %i.at, align 8, !tbaa !52
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 78
   store i8 1, ptr %i.au, align 2, !tbaa !38
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -357,7 +356,7 @@ bb.g:                                             ; preds = %bb.f, %.noexc
   %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !43 ; 2 uses
   %i.bc = load i64, ptr %i.bb, align 8, !tbaa !44
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 80
-  store i64 %i.bc, ptr %i.bd, align 8, !tbaa !61
+  store i64 %i.bc, ptr %i.bd, align 8, !tbaa !60
   %i.be = icmp eq i32 %i.n, 0
   br i1 %i.be, label %bb.h, label %bb.l
 
@@ -376,7 +375,7 @@ _ZNK8NArchive3N7z16CArchiveDatabase10IsItemAntiEi.exit: ; preds = %bb.i
   %i.bk = getelementptr inbounds nuw i8, ptr %i.aw, i64 464
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !42
   %i.bm = getelementptr inbounds i8, ptr %i.bl, i64 %i.az
-  %i.bn = load i8, ptr %i.bm, align 1, !tbaa !57, !range !49, !noundef !50
+  %i.bn = load i8, ptr %i.bm, align 1, !tbaa !56, !range !49, !noundef !50
   %i.bo = trunc nuw i8 %i.bn to i1
   br i1 %i.bo, label %bb.l, label %_ZNK8NArchive3N7z16CArchiveDatabase10IsItemAntiEi.exit.thread
 
@@ -475,7 +474,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !10
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.g = load ptr, ptr %i.f, align 8
-  %i.h = tail call noundef i32 %i.g(ptr noundef nonnull align 8 dereferenceable(8) %i.d), !inline_history !62 ; 0 uses
+  %i.h = tail call noundef i32 %i.g(ptr noundef nonnull align 8 dereferenceable(8) %i.d), !inline_history !61 ; 0 uses
   store ptr null, ptr %i.c, align 8, !tbaa !12
   br label %_ZN17COutStreamWithCRC13ReleaseStreamEv.exit
 
@@ -510,38 +509,41 @@ bb.a:
   %i.j = sext i32 %i.g to i64
   %i.k = getelementptr inbounds [8 x i8], ptr %i.i, i64 %i.j
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !43   ; 3 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 33
-  %i.n = load i8, ptr %i.m, align 1, !tbaa !48, !range !49, !noundef !50
+  %1 = getelementptr inbounds nuw i8, ptr %i.l, i64 33
+  %2 = load i8, ptr %1, align 1, !tbaa !48, !range !49, !noundef !50
+  %3 = trunc nuw i8 %2 to i1
+  %.not = xor i1 %3, true
+  %4 = getelementptr inbounds nuw i8, ptr %i.l, i64 34
+  %5 = load i8, ptr %4, align 2, !range !49
+  %6 = trunc nuw i8 %5 to i1
+  %or.cond = select i1 %.not, i1 %6, i1 false
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 77
+  %i.n = load i8, ptr %i.m, align 1, !range !49
   %i.o = trunc nuw i8 %i.n to i1
-  br i1 %i.o, label %bb.d, label %bb.b
+  %or.cond8 = select i1 %or.cond, i1 %i.o, i1 false
+  br i1 %or.cond8, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %1 = getelementptr inbounds nuw i8, ptr %i.l, i64 34
-  %2 = load i8, ptr %1, align 2, !tbaa !51, !range !49, !noundef !50
-  %3 = trunc nuw i8 %2 to i1
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 77
-  %4 = load i8, ptr %i.p, align 1, !range !49
-  %5 = trunc nuw i8 %4 to i1
-  %or.cond = select i1 %3, i1 %5, i1 false
-  br i1 %or.cond, label %bb.c, label %bb.d
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %.pre = load ptr, ptr %i.p, align 8, !tbaa !19
+  br label %bb.d
 
-bb.c:                                             ; preds = %bb.b
+bb.c:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 12
-  %i.r = load i32, ptr %i.q, align 4, !tbaa !52
+  %i.r = load i32, ptr %i.q, align 4, !tbaa !51
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.t = load ptr, ptr %i.s, align 8, !tbaa !19
+  %i.t = load ptr, ptr %i.s, align 8, !tbaa !19   ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 32
-  %i.v = load i32, ptr %i.u, align 8, !tbaa !53
+  %i.v = load i32, ptr %i.u, align 8, !tbaa !52
   %i.w = xor i32 %i.v, %i.r
   %i.x = icmp eq i32 %i.w, -1
   %i.y = select i1 %i.x, i32 0, i32 3
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
-  %6 = phi i32 [ %i.y, %bb.c ], [ 0, %bb.b ], [ 0, %bb.a ]
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %8 = load ptr, ptr %7, align 8, !tbaa !19
-  %i.z = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 2 uses
+bb.d:                                             ; preds = %bb.b, %bb.c
+  %7 = phi ptr [ %.pre, %bb.b ], [ %i.t, %bb.c ]
+  %8 = phi i32 [ 0, %bb.b ], [ %i.y, %bb.c ]
+  %i.z = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !12  ; 3 uses
   %.not.i.i.i = icmp eq ptr %i.aa, null
   br i1 %.not.i.i.i, label %_ZN8NArchive3N7z16CFolderOutStream21CloseFileAndSetResultEi.exit, label %bb.e
@@ -550,7 +552,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !10
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
   %i.ad = load ptr, ptr %i.ac, align 8
-  %i.ae = tail call noundef i32 %i.ad(ptr noundef nonnull align 8 dereferenceable(8) %i.aa), !inline_history !63 ; 0 uses
+  %i.ae = tail call noundef i32 %i.ad(ptr noundef nonnull align 8 dereferenceable(8) %i.aa), !inline_history !62 ; 0 uses
   store ptr null, ptr %i.z, align 8, !tbaa !12
   %.pre.a = load i32, ptr %i.e, align 8, !tbaa !37
   br label %_ZN8NArchive3N7z16CFolderOutStream21CloseFileAndSetResultEi.exit
@@ -566,7 +568,7 @@ _ZN8NArchive3N7z16CFolderOutStream21CloseFileAndSetResultEi.exit: ; preds = %bb.
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !10
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 72
   %i.am = load ptr, ptr %i.al, align 8
-  %i.an = tail call noundef i32 %i.am(ptr noundef nonnull align 8 dereferenceable(8) %i.aj, i32 noundef %6), !inline_history !64
+  %i.an = tail call noundef i32 %i.am(ptr noundef nonnull align 8 dereferenceable(8) %i.aj, i32 noundef %8), !inline_history !63
   ret i32 %i.an
 }
 
@@ -608,7 +610,7 @@ bb.d:                                             ; preds = %.lr.ph, %.backedge
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   %i.n = zext i32 %.03579 to i64
-  %i.o = load i64, ptr %i.e, align 8, !tbaa !61
+  %i.o = load i64, ptr %i.e, align 8, !tbaa !60
   %i.p = call i64 @llvm.umin.i64(i64 %i.o, i64 %i.n)
   %i.q = trunc nuw i64 %i.p to i32                ; 2 uses
   store i32 %i.q, ptr %i.a, align 4, !tbaa !4
@@ -633,9 +635,9 @@ bb.g:                                             ; preds = %bb.f
   %i.y = zext i32 %i.w to i64                     ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %.03280, i64 %i.y
   %i.aa = sub i32 %.03579, %i.w
-  %i.ab = load i64, ptr %i.e, align 8, !tbaa !61  ; 2 uses
+  %i.ab = load i64, ptr %i.e, align 8, !tbaa !60  ; 2 uses
   %i.ac = sub i64 %i.ab, %i.y
-  store i64 %i.ac, ptr %i.e, align 8, !tbaa !61
+  store i64 %i.ac, ptr %i.e, align 8, !tbaa !60
   br i1 %.not, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
@@ -658,38 +660,37 @@ bb.j:                                             ; preds = %bb.i
   %i.am = sext i32 %i.aj to i64
   %i.an = getelementptr inbounds [8 x i8], ptr %i.al, i64 %i.am
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !43 ; 3 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 33
-  %i.aq = load i8, ptr %i.ap, align 1, !tbaa !48, !range !49, !noundef !50
+  %4 = getelementptr inbounds nuw i8, ptr %i.ao, i64 33
+  %5 = load i8, ptr %4, align 1, !tbaa !48, !range !49, !noundef !50
+  %6 = trunc nuw i8 %5 to i1
+  %.not.i = xor i1 %6, true
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 34
+  %7 = load i8, ptr %i.ap, align 2, !range !49
+  %8 = trunc nuw i8 %7 to i1
+  %or.cond.i = select i1 %.not.i, i1 %8, i1 false
+  %i.aq = load i8, ptr %i.i, align 1, !range !49
   %i.ar = trunc nuw i8 %i.aq to i1
-  br i1 %i.ar, label %._crit_edge, label %4
+  %or.cond8.i = select i1 %or.cond.i, i1 %i.ar, i1 false
+  br i1 %or.cond8.i, label %bb.k, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.j
   %.pre = load ptr, ptr %i.j, align 8, !tbaa !19
   br label %bb.l
 
-4:                                                ; preds = %bb.j
-  %5 = getelementptr inbounds nuw i8, ptr %i.ao, i64 34
-  %6 = load i8, ptr %5, align 2, !tbaa !51, !range !49, !noundef !50
-  %7 = trunc nuw i8 %6 to i1
-  %8 = load i8, ptr %i.i, align 1, !range !49
-  %9 = trunc nuw i8 %8 to i1
-  %or.cond.i = select i1 %7, i1 %9, i1 false
-  %.pre88 = load ptr, ptr %i.j, align 8, !tbaa !19 ; 3 uses
-  br i1 %or.cond.i, label %bb.k, label %bb.l
-
-bb.k:                                             ; preds = %4
+bb.k:                                             ; preds = %bb.j
   %i.as = getelementptr inbounds nuw i8, ptr %i.ao, i64 12
-  %i.at = load i32, ptr %i.as, align 4, !tbaa !52
-  %i.au = getelementptr inbounds nuw i8, ptr %.pre88, i64 32
-  %i.av = load i32, ptr %i.au, align 8, !tbaa !53
+  %i.at = load i32, ptr %i.as, align 4, !tbaa !51
+  %9 = load ptr, ptr %i.j, align 8, !tbaa !19     ; 2 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %9, i64 32
+  %i.av = load i32, ptr %i.au, align 8, !tbaa !52
   %i.aw = xor i32 %i.av, %i.at
   %i.ax = icmp eq i32 %i.aw, -1
   %i.ay = select i1 %i.ax, i32 0, i32 3
   br label %bb.l
 
-bb.l:                                             ; preds = %._crit_edge, %bb.k, %4
-  %10 = phi ptr [ %.pre88, %bb.k ], [ %.pre88, %4 ], [ %.pre, %._crit_edge ]
-  %11 = phi i32 [ %i.ay, %bb.k ], [ 0, %4 ], [ 0, %._crit_edge ]
+bb.l:                                             ; preds = %bb.k, %._crit_edge
+  %10 = phi ptr [ %.pre, %._crit_edge ], [ %9, %bb.k ]
+  %11 = phi i32 [ 0, %._crit_edge ], [ %i.ay, %bb.k ]
   %i.az = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 2 uses
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !12 ; 3 uses
   %.not.i.i.i.i = icmp eq ptr %i.ba, null
@@ -699,7 +700,7 @@ bb.m:                                             ; preds = %bb.l
   %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !10
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
   %i.bd = load ptr, ptr %i.bc, align 8
-  %i.be = call noundef i32 %i.bd(ptr noundef nonnull align 8 dereferenceable(8) %i.ba), !inline_history !55 ; 0 uses
+  %i.be = call noundef i32 %i.bd(ptr noundef nonnull align 8 dereferenceable(8) %i.ba), !inline_history !54 ; 0 uses
   store ptr null, ptr %i.az, align 8, !tbaa !12
   %.pre.i = load i32, ptr %i.c, align 8, !tbaa !37
   br label %_ZN8NArchive3N7z16CFolderOutStream21CloseFileAndSetResultEv.exit
@@ -713,7 +714,7 @@ _ZN8NArchive3N7z16CFolderOutStream21CloseFileAndSetResultEv.exit: ; preds = %bb.
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !10
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 72
   %i.bk = load ptr, ptr %i.bj, align 8
-  %i.bl = call noundef i32 %i.bk(ptr noundef nonnull align 8 dereferenceable(8) %i.bh, i32 noundef %11), !inline_history !56 ; 2 uses
+  %i.bl = call noundef i32 %i.bk(ptr noundef nonnull align 8 dereferenceable(8) %i.bh, i32 noundef %11), !inline_history !55 ; 2 uses
   %.not58 = icmp eq i32 %i.bl, 0
   br i1 %.not58, label %bb.n, label %.thread
 
@@ -762,7 +763,7 @@ bb.s:                                             ; preds = %bb.p
   %.035.be = phi i32 [ %.03579, %bb.s ], [ %i.aa, %.backedge.sink.split ] ; 2 uses
   %.032.be = phi ptr [ %.03280, %bb.s ], [ %i.z, %.backedge.sink.split ]
   %.not54 = icmp eq i32 %.035.be, 0
-  br i1 %.not54, label %.loopexit, label %bb.d, !llvm.loop !65
+  br i1 %.not54, label %.loopexit, label %bb.d, !llvm.loop !64
 
 .loopexit:                                        ; preds = %bb.o, %bb.s, %.backedge, %bb.c, %bb.r, %bb.q, %.thread70, %.thread
   %.8 = phi i32 [ %.4.ph, %.thread ], [ 0, %bb.q ], [ 0, %bb.r ], [ 0, %.thread70 ], [ 0, %bb.c ], [ %i.bv, %bb.s ], [ %i.bn, %bb.o ], [ 0, %.backedge ]
@@ -772,7 +773,7 @@ bb.s:                                             ; preds = %bb.p
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local noundef range(i32 0, 2) i32 @_ZN8NArchive3N7z16CFolderOutStream16GetSubStreamSizeEyPy(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(88) %0, i64 noundef %1, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %2) unnamed_addr #4 align 2 {
 bb.a:
-  store i64 0, ptr %2, align 8, !tbaa !67
+  store i64 0, ptr %2, align 8, !tbaa !66
   %i.a = trunc i64 %1 to i32                      ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !33
@@ -793,7 +794,7 @@ bb.b:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.m
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !43
   %i.p = load i64, ptr %i.o, align 8, !tbaa !44
-  store i64 %i.p, ptr %2, align 8, !tbaa !67
+  store i64 %i.p, ptr %2, align 8, !tbaa !66
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -804,7 +805,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local noundef range(i32 0, 2) i32 @_ZThn8_N8NArchive3N7z16CFolderOutStream16GetSubStreamSizeEyPy(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %2) unnamed_addr #4 align 2 {
 bb.a:
-  store i64 0, ptr %2, align 8, !tbaa !67
+  store i64 0, ptr %2, align 8, !tbaa !66
   %i.a = trunc i64 %1 to i32                      ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !33
@@ -825,7 +826,7 @@ bb.b:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.m
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !43
   %i.p = load i64, ptr %i.o, align 8, !tbaa !44
-  store i64 %i.p, ptr %2, align 8, !tbaa !67
+  store i64 %i.p, ptr %2, align 8, !tbaa !66
   br label %_ZN8NArchive3N7z16CFolderOutStream16GetSubStreamSizeEyPy.exit
 
 _ZN8NArchive3N7z16CFolderOutStream16GetSubStreamSizeEyPy.exit: ; preds = %bb.a, %bb.b
@@ -868,7 +869,7 @@ bb.d:                                             ; preds = %bb.c
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !10
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   %i.s = load ptr, ptr %i.r, align 8
-  %i.t = tail call noundef i32 %i.s(ptr noundef nonnull align 8 dereferenceable(8) %i.p), !inline_history !63 ; 0 uses
+  %i.t = tail call noundef i32 %i.s(ptr noundef nonnull align 8 dereferenceable(8) %i.p), !inline_history !62 ; 0 uses
   store ptr null, ptr %i.o, align 8, !tbaa !12
   %.pre = load i32, ptr %i.a, align 8, !tbaa !37
   br label %_ZN8NArchive3N7z16CFolderOutStream21CloseFileAndSetResultEi.exit
@@ -882,7 +883,7 @@ _ZN8NArchive3N7z16CFolderOutStream21CloseFileAndSetResultEi.exit: ; preds = %bb.
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !10
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 72
   %i.z = load ptr, ptr %i.y, align 8
-  %i.aa = tail call noundef i32 %i.z(ptr noundef nonnull align 8 dereferenceable(8) %i.w, i32 noundef %1), !inline_history !64 ; 2 uses
+  %i.aa = tail call noundef i32 %i.z(ptr noundef nonnull align 8 dereferenceable(8) %i.w, i32 noundef %1), !inline_history !63 ; 2 uses
   %.not12.not = icmp eq i32 %i.aa, 0
   br i1 %.not12.not, label %bb.f, label %._crit_edge
 
@@ -897,7 +898,7 @@ bb.f:                                             ; preds = %bb.e, %_ZN8NArchive
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 12
   %i.af = load i32, ptr %i.ae, align 4, !tbaa !39
   %i.ag = icmp slt i32 %i.ac, %i.af
-  br i1 %i.ag, label %bb.b, label %._crit_edge, !llvm.loop !68
+  br i1 %i.ag, label %bb.b, label %._crit_edge, !llvm.loop !67
 
 ._crit_edge:                                      ; preds = %bb.f, %_ZN8NArchive3N7z16CFolderOutStream21CloseFileAndSetResultEi.exit, %bb.e, %bb.a
   %.4 = phi i32 [ 0, %bb.a ], [ %i.ab, %bb.e ], [ %i.aa, %_ZN8NArchive3N7z16CFolderOutStream21CloseFileAndSetResultEi.exit ], [ 0, %bb.f ]
@@ -907,223 +908,223 @@ bb.f:                                             ; preds = %bb.e, %_ZN8NArchive
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local noundef i32 @_ZN8NArchive3N7z16CFolderOutStream14QueryInterfaceERK4GUIDPPv(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull align 4 dereferenceable(16) %1, ptr noundef %2) unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = load i8, ptr %1, align 4, !tbaa !69      ; 2 uses
-  %i.b = load i8, ptr @IID_IUnknown, align 4, !tbaa !69
+  %i.a = load i8, ptr %1, align 4, !tbaa !68      ; 2 uses
+  %i.b = load i8, ptr @IID_IUnknown, align 4, !tbaa !68
   %.not.i = icmp eq i8 %i.a, %i.b
   br i1 %.not.i, label %bb.b, label %_ZeqRK4GUIDS1_.exit.thread
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 1
-  %i.d = load i8, ptr %i.c, align 1, !tbaa !69
-  %i.e = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 1), align 1, !tbaa !69
+  %i.d = load i8, ptr %i.c, align 1, !tbaa !68
+  %i.e = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 1), align 1, !tbaa !68
   %.not.1.i = icmp eq i8 %i.d, %i.e
   br i1 %.not.1.i, label %bb.c, label %_ZeqRK4GUIDS1_.exit.thread
 
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 2
-  %i.g = load i8, ptr %i.f, align 2, !tbaa !69
-  %i.h = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 2), align 2, !tbaa !69
+  %i.g = load i8, ptr %i.f, align 2, !tbaa !68
+  %i.h = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 2), align 2, !tbaa !68
   %.not.2.i = icmp eq i8 %i.g, %i.h
   br i1 %.not.2.i, label %bb.d, label %_ZeqRK4GUIDS1_.exit.thread
 
 bb.d:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 3
-  %i.j = load i8, ptr %i.i, align 1, !tbaa !69
-  %i.k = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 3), align 1, !tbaa !69
+  %i.j = load i8, ptr %i.i, align 1, !tbaa !68
+  %i.k = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 3), align 1, !tbaa !68
   %.not.3.i = icmp eq i8 %i.j, %i.k
   br i1 %.not.3.i, label %bb.e, label %_ZeqRK4GUIDS1_.exit.thread
 
 bb.e:                                             ; preds = %bb.d
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.m = load i8, ptr %i.l, align 4, !tbaa !69
-  %i.n = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 4), align 4, !tbaa !69
+  %i.m = load i8, ptr %i.l, align 4, !tbaa !68
+  %i.n = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 4), align 4, !tbaa !68
   %.not.4.i = icmp eq i8 %i.m, %i.n
   br i1 %.not.4.i, label %bb.f, label %_ZeqRK4GUIDS1_.exit.thread
 
 bb.f:                                             ; preds = %bb.e
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 5
-  %i.p = load i8, ptr %i.o, align 1, !tbaa !69
-  %i.q = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 5), align 1, !tbaa !69
+  %i.p = load i8, ptr %i.o, align 1, !tbaa !68
+  %i.q = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 5), align 1, !tbaa !68
   %.not.5.i = icmp eq i8 %i.p, %i.q
   br i1 %.not.5.i, label %bb.g, label %_ZeqRK4GUIDS1_.exit.thread
 
 bb.g:                                             ; preds = %bb.f
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 6
-  %i.s = load i8, ptr %i.r, align 2, !tbaa !69
-  %i.t = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 6), align 2, !tbaa !69
+  %i.s = load i8, ptr %i.r, align 2, !tbaa !68
+  %i.t = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 6), align 2, !tbaa !68
   %.not.6.i = icmp eq i8 %i.s, %i.t
   br i1 %.not.6.i, label %bb.h, label %_ZeqRK4GUIDS1_.exit.thread
 
 bb.h:                                             ; preds = %bb.g
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 7
-  %i.v = load i8, ptr %i.u, align 1, !tbaa !69
-  %i.w = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 7), align 1, !tbaa !69
+  %i.v = load i8, ptr %i.u, align 1, !tbaa !68
+  %i.w = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 7), align 1, !tbaa !68
   %.not.7.i = icmp eq i8 %i.v, %i.w
   br i1 %.not.7.i, label %bb.i, label %_ZeqRK4GUIDS1_.exit.thread
 
 bb.i:                                             ; preds = %bb.h
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.y = load i8, ptr %i.x, align 4, !tbaa !69
-  %i.z = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 8), align 4, !tbaa !69
+  %i.y = load i8, ptr %i.x, align 4, !tbaa !68
+  %i.z = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 8), align 4, !tbaa !68
   %.not.8.i = icmp eq i8 %i.y, %i.z
   br i1 %.not.8.i, label %bb.j, label %_ZeqRK4GUIDS1_.exit.thread
 
 bb.j:                                             ; preds = %bb.i
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 9
-  %i.ab = load i8, ptr %i.aa, align 1, !tbaa !69
-  %i.ac = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 9), align 1, !tbaa !69
+  %i.ab = load i8, ptr %i.aa, align 1, !tbaa !68
+  %i.ac = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 9), align 1, !tbaa !68
   %.not.9.i = icmp eq i8 %i.ab, %i.ac
   br i1 %.not.9.i, label %bb.k, label %_ZeqRK4GUIDS1_.exit.thread
 
 bb.k:                                             ; preds = %bb.j
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 10
-  %i.ae = load i8, ptr %i.ad, align 2, !tbaa !69
-  %i.af = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 10), align 2, !tbaa !69
+  %i.ae = load i8, ptr %i.ad, align 2, !tbaa !68
+  %i.af = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 10), align 2, !tbaa !68
   %.not.10.i = icmp eq i8 %i.ae, %i.af
   br i1 %.not.10.i, label %bb.l, label %_ZeqRK4GUIDS1_.exit.thread
 
 bb.l:                                             ; preds = %bb.k
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 11
-  %i.ah = load i8, ptr %i.ag, align 1, !tbaa !69
-  %i.ai = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 11), align 1, !tbaa !69
+  %i.ah = load i8, ptr %i.ag, align 1, !tbaa !68
+  %i.ai = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 11), align 1, !tbaa !68
   %.not.11.i = icmp eq i8 %i.ah, %i.ai
   br i1 %.not.11.i, label %bb.m, label %_ZeqRK4GUIDS1_.exit.thread
 
 bb.m:                                             ; preds = %bb.l
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %i.ak = load i8, ptr %i.aj, align 4, !tbaa !69
-  %i.al = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 12), align 4, !tbaa !69
+  %i.ak = load i8, ptr %i.aj, align 4, !tbaa !68
+  %i.al = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 12), align 4, !tbaa !68
   %.not.12.i = icmp eq i8 %i.ak, %i.al
   br i1 %.not.12.i, label %bb.n, label %_ZeqRK4GUIDS1_.exit.thread
 
 bb.n:                                             ; preds = %bb.m
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 13
-  %i.an = load i8, ptr %i.am, align 1, !tbaa !69
-  %i.ao = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 13), align 1, !tbaa !69
+  %i.an = load i8, ptr %i.am, align 1, !tbaa !68
+  %i.ao = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 13), align 1, !tbaa !68
   %.not.13.i = icmp eq i8 %i.an, %i.ao
   br i1 %.not.13.i, label %bb.o, label %_ZeqRK4GUIDS1_.exit.thread
 
 bb.o:                                             ; preds = %bb.n
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 14
-  %i.aq = load i8, ptr %i.ap, align 2, !tbaa !69
-  %i.ar = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 14), align 2, !tbaa !69
+  %i.aq = load i8, ptr %i.ap, align 2, !tbaa !68
+  %i.ar = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 14), align 2, !tbaa !68
   %.not.14.i = icmp eq i8 %i.aq, %i.ar
   br i1 %.not.14.i, label %_ZeqRK4GUIDS1_.exit, label %_ZeqRK4GUIDS1_.exit.thread
 
 _ZeqRK4GUIDS1_.exit:                              ; preds = %bb.o
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 15
-  %i.at = load i8, ptr %i.as, align 1, !tbaa !69
-  %i.au = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 15), align 1, !tbaa !69
+  %i.at = load i8, ptr %i.as, align 1, !tbaa !68
+  %i.au = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_IUnknown, i64 15), align 1, !tbaa !68
   %.not.15.i.not = icmp eq i8 %i.at, %i.au
   br i1 %.not.15.i.not, label %_ZeqRK4GUIDS1_.exit23.thread.sink.split, label %_ZeqRK4GUIDS1_.exit.thread
 
 _ZeqRK4GUIDS1_.exit.thread:                       ; preds = %bb.m, %bb.h, %bb.l, %bb.g, %bb.n, %bb.f, %bb.j, %bb.e, %bb.o, %bb.d, %bb.k, %bb.c, %bb.b, %bb.i, %bb.a, %_ZeqRK4GUIDS1_.exit
-  %i.av = load i8, ptr @IID_ICompressGetSubStreamSize, align 4, !tbaa !69
+  %i.av = load i8, ptr @IID_ICompressGetSubStreamSize, align 4, !tbaa !68
   %.not.i6 = icmp eq i8 %i.a, %i.av
   br i1 %.not.i6, label %bb.p, label %_ZeqRK4GUIDS1_.exit23.thread
 
 bb.p:                                             ; preds = %_ZeqRK4GUIDS1_.exit.thread
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 1
-  %i.ax = load i8, ptr %i.aw, align 1, !tbaa !69
-  %i.ay = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 1), align 1, !tbaa !69
+  %i.ax = load i8, ptr %i.aw, align 1, !tbaa !68
+  %i.ay = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 1), align 1, !tbaa !68
   %.not.1.i7 = icmp eq i8 %i.ax, %i.ay
   br i1 %.not.1.i7, label %bb.q, label %_ZeqRK4GUIDS1_.exit23.thread
 
 bb.q:                                             ; preds = %bb.p
   %i.az = getelementptr inbounds nuw i8, ptr %1, i64 2
-  %i.ba = load i8, ptr %i.az, align 2, !tbaa !69
-  %i.bb = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 2), align 2, !tbaa !69
+  %i.ba = load i8, ptr %i.az, align 2, !tbaa !68
+  %i.bb = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 2), align 2, !tbaa !68
   %.not.2.i8 = icmp eq i8 %i.ba, %i.bb
   br i1 %.not.2.i8, label %bb.r, label %_ZeqRK4GUIDS1_.exit23.thread
 
 bb.r:                                             ; preds = %bb.q
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 3
-  %i.bd = load i8, ptr %i.bc, align 1, !tbaa !69
-  %i.be = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 3), align 1, !tbaa !69
+  %i.bd = load i8, ptr %i.bc, align 1, !tbaa !68
+  %i.be = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 3), align 1, !tbaa !68
   %.not.3.i9 = icmp eq i8 %i.bd, %i.be
   br i1 %.not.3.i9, label %bb.s, label %_ZeqRK4GUIDS1_.exit23.thread
 
 bb.s:                                             ; preds = %bb.r
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.bg = load i8, ptr %i.bf, align 4, !tbaa !69
-  %i.bh = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 4), align 4, !tbaa !69
+  %i.bg = load i8, ptr %i.bf, align 4, !tbaa !68
+  %i.bh = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 4), align 4, !tbaa !68
   %.not.4.i10 = icmp eq i8 %i.bg, %i.bh
   br i1 %.not.4.i10, label %bb.t, label %_ZeqRK4GUIDS1_.exit23.thread
 
 bb.t:                                             ; preds = %bb.s
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 5
-  %i.bj = load i8, ptr %i.bi, align 1, !tbaa !69
-  %i.bk = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 5), align 1, !tbaa !69
+  %i.bj = load i8, ptr %i.bi, align 1, !tbaa !68
+  %i.bk = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 5), align 1, !tbaa !68
   %.not.5.i11 = icmp eq i8 %i.bj, %i.bk
   br i1 %.not.5.i11, label %bb.u, label %_ZeqRK4GUIDS1_.exit23.thread
 
 bb.u:                                             ; preds = %bb.t
   %i.bl = getelementptr inbounds nuw i8, ptr %1, i64 6
-  %i.bm = load i8, ptr %i.bl, align 2, !tbaa !69
-  %i.bn = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 6), align 2, !tbaa !69
+  %i.bm = load i8, ptr %i.bl, align 2, !tbaa !68
+  %i.bn = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 6), align 2, !tbaa !68
   %.not.6.i12 = icmp eq i8 %i.bm, %i.bn
   br i1 %.not.6.i12, label %bb.v, label %_ZeqRK4GUIDS1_.exit23.thread
 
 bb.v:                                             ; preds = %bb.u
   %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 7
-  %i.bp = load i8, ptr %i.bo, align 1, !tbaa !69
-  %i.bq = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 7), align 1, !tbaa !69
+  %i.bp = load i8, ptr %i.bo, align 1, !tbaa !68
+  %i.bq = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 7), align 1, !tbaa !68
   %.not.7.i13 = icmp eq i8 %i.bp, %i.bq
   br i1 %.not.7.i13, label %bb.w, label %_ZeqRK4GUIDS1_.exit23.thread
 
 bb.w:                                             ; preds = %bb.v
   %i.br = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.bs = load i8, ptr %i.br, align 4, !tbaa !69
-  %i.bt = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 8), align 4, !tbaa !69
+  %i.bs = load i8, ptr %i.br, align 4, !tbaa !68
+  %i.bt = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 8), align 4, !tbaa !68
   %.not.8.i14 = icmp eq i8 %i.bs, %i.bt
   br i1 %.not.8.i14, label %bb.x, label %_ZeqRK4GUIDS1_.exit23.thread
 
 bb.x:                                             ; preds = %bb.w
   %i.bu = getelementptr inbounds nuw i8, ptr %1, i64 9
-  %i.bv = load i8, ptr %i.bu, align 1, !tbaa !69
-  %i.bw = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 9), align 1, !tbaa !69
+  %i.bv = load i8, ptr %i.bu, align 1, !tbaa !68
+  %i.bw = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 9), align 1, !tbaa !68
   %.not.9.i15 = icmp eq i8 %i.bv, %i.bw
   br i1 %.not.9.i15, label %bb.y, label %_ZeqRK4GUIDS1_.exit23.thread
 
 bb.y:                                             ; preds = %bb.x
   %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 10
-  %i.by = load i8, ptr %i.bx, align 2, !tbaa !69
-  %i.bz = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 10), align 2, !tbaa !69
+  %i.by = load i8, ptr %i.bx, align 2, !tbaa !68
+  %i.bz = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 10), align 2, !tbaa !68
   %.not.10.i16 = icmp eq i8 %i.by, %i.bz
   br i1 %.not.10.i16, label %bb.z, label %_ZeqRK4GUIDS1_.exit23.thread
 
 bb.z:                                             ; preds = %bb.y
   %i.ca = getelementptr inbounds nuw i8, ptr %1, i64 11
-  %i.cb = load i8, ptr %i.ca, align 1, !tbaa !69
-  %i.cc = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 11), align 1, !tbaa !69
+  %i.cb = load i8, ptr %i.ca, align 1, !tbaa !68
+  %i.cc = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 11), align 1, !tbaa !68
   %.not.11.i17 = icmp eq i8 %i.cb, %i.cc
   br i1 %.not.11.i17, label %bb.aa, label %_ZeqRK4GUIDS1_.exit23.thread
 
 bb.aa:                                            ; preds = %bb.z
   %i.cd = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %i.ce = load i8, ptr %i.cd, align 4, !tbaa !69
-  %i.cf = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 12), align 4, !tbaa !69
+  %i.ce = load i8, ptr %i.cd, align 4, !tbaa !68
+  %i.cf = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 12), align 4, !tbaa !68
   %.not.12.i18 = icmp eq i8 %i.ce, %i.cf
   br i1 %.not.12.i18, label %bb.ab, label %_ZeqRK4GUIDS1_.exit23.thread
 
 bb.ab:                                            ; preds = %bb.aa
   %i.cg = getelementptr inbounds nuw i8, ptr %1, i64 13
-  %i.ch = load i8, ptr %i.cg, align 1, !tbaa !69
-  %i.ci = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 13), align 1, !tbaa !69
+  %i.ch = load i8, ptr %i.cg, align 1, !tbaa !68
+  %i.ci = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 13), align 1, !tbaa !68
   %.not.13.i19 = icmp eq i8 %i.ch, %i.ci
   br i1 %.not.13.i19, label %bb.ac, label %_ZeqRK4GUIDS1_.exit23.thread
 
 bb.ac:                                            ; preds = %bb.ab
   %i.cj = getelementptr inbounds nuw i8, ptr %1, i64 14
-  %i.ck = load i8, ptr %i.cj, align 2, !tbaa !69
-  %i.cl = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 14), align 2, !tbaa !69
+  %i.ck = load i8, ptr %i.cj, align 2, !tbaa !68
+  %i.cl = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 14), align 2, !tbaa !68
   %.not.14.i20 = icmp eq i8 %i.ck, %i.cl
   br i1 %.not.14.i20, label %_ZeqRK4GUIDS1_.exit23, label %_ZeqRK4GUIDS1_.exit23.thread
 
 _ZeqRK4GUIDS1_.exit23:                            ; preds = %bb.ac
   %i.cm = getelementptr inbounds nuw i8, ptr %1, i64 15
-  %i.cn = load i8, ptr %i.cm, align 1, !tbaa !69
-  %i.co = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 15), align 1, !tbaa !69
+  %i.cn = load i8, ptr %i.cm, align 1, !tbaa !68
+  %i.co = load i8, ptr getelementptr inbounds nuw (i8, ptr @IID_ICompressGetSubStreamSize, i64 15), align 1, !tbaa !68
   %.not.15.i21.not = icmp eq i8 %i.cn, %i.co
   br i1 %.not.15.i21.not, label %_ZeqRK4GUIDS1_.exit23.thread.sink.split, label %_ZeqRK4GUIDS1_.exit23.thread
 
@@ -1237,13 +1238,13 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.f = load ptr, ptr %i.e, align 8
   %i.g = invoke noundef i32 %i.f(ptr noundef nonnull align 8 dereferenceable(8) %i.c)
-          to label %_ZN9CMyComPtrI23IArchiveExtractCallbackED2Ev.exit.i unwind label %bb.c, !inline_history !70 ; 0 uses
+          to label %_ZN9CMyComPtrI23IArchiveExtractCallbackED2Ev.exit.i unwind label %bb.c, !inline_history !69 ; 0 uses
 
 bb.c:                                             ; preds = %bb.b
   %i.h = landingpad { ptr, i32 }
           catch ptr null
   %i.i = extractvalue { ptr, i32 } %i.h, 0
-  tail call void @__clang_call_terminate(ptr %i.i) #13, !inline_history !70
+  tail call void @__clang_call_terminate(ptr %i.i) #13, !inline_history !69
   unreachable
 
 _ZN9CMyComPtrI23IArchiveExtractCallbackED2Ev.exit.i: ; preds = %bb.b, %bb.a
@@ -1257,13 +1258,13 @@ bb.d:                                             ; preds = %_ZN9CMyComPtrI23IAr
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   %i.n = load ptr, ptr %i.m, align 8
   %i.o = invoke noundef i32 %i.n(ptr noundef nonnull align 8 dereferenceable(8) %i.k)
-          to label %_ZN8NArchive3N7z16CFolderOutStreamD2Ev.exit unwind label %bb.e, !inline_history !70 ; 0 uses
+          to label %_ZN8NArchive3N7z16CFolderOutStreamD2Ev.exit unwind label %bb.e, !inline_history !69 ; 0 uses
 
 bb.e:                                             ; preds = %bb.d
   %i.p = landingpad { ptr, i32 }
           catch ptr null
   %i.q = extractvalue { ptr, i32 } %i.p, 0
-  tail call void @__clang_call_terminate(ptr %i.q) #13, !inline_history !70
+  tail call void @__clang_call_terminate(ptr %i.q) #13, !inline_history !69
   unreachable
 
 _ZN8NArchive3N7z16CFolderOutStreamD2Ev.exit:      ; preds = %_ZN9CMyComPtrI23IArchiveExtractCallbackED2Ev.exit.i, %bb.d
@@ -1304,7 +1305,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !10
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 32
   %i.g = load ptr, ptr %i.f, align 8
-  tail call void %i.g(ptr noundef nonnull align 8 dereferenceable(88) %i.d) #14, !inline_history !71
+  tail call void %i.g(ptr noundef nonnull align 8 dereferenceable(88) %i.d) #14, !inline_history !70
   br label %_ZN8NArchive3N7z16CFolderOutStream7ReleaseEv.exit
 
 _ZN8NArchive3N7z16CFolderOutStream7ReleaseEv.exit: ; preds = %bb.a, %bb.b
@@ -1327,13 +1328,13 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.f = load ptr, ptr %i.e, align 8
   %i.g = invoke noundef i32 %i.f(ptr noundef nonnull align 8 dereferenceable(8) %i.c)
-          to label %_ZN9CMyComPtrI23IArchiveExtractCallbackED2Ev.exit.i unwind label %bb.c, !inline_history !70 ; 0 uses
+          to label %_ZN9CMyComPtrI23IArchiveExtractCallbackED2Ev.exit.i unwind label %bb.c, !inline_history !69 ; 0 uses
 
 bb.c:                                             ; preds = %bb.b
   %i.h = landingpad { ptr, i32 }
           catch ptr null
   %i.i = extractvalue { ptr, i32 } %i.h, 0
-  tail call void @__clang_call_terminate(ptr %i.i) #13, !inline_history !70
+  tail call void @__clang_call_terminate(ptr %i.i) #13, !inline_history !69
   unreachable
 
 _ZN9CMyComPtrI23IArchiveExtractCallbackED2Ev.exit.i: ; preds = %bb.b, %bb.a
@@ -1347,13 +1348,13 @@ bb.d:                                             ; preds = %_ZN9CMyComPtrI23IAr
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   %i.n = load ptr, ptr %i.m, align 8
   %i.o = invoke noundef i32 %i.n(ptr noundef nonnull align 8 dereferenceable(8) %i.k)
-          to label %_ZN8NArchive3N7z16CFolderOutStreamD2Ev.exit unwind label %bb.e, !inline_history !70 ; 0 uses
+          to label %_ZN8NArchive3N7z16CFolderOutStreamD2Ev.exit unwind label %bb.e, !inline_history !69 ; 0 uses
 
 bb.e:                                             ; preds = %bb.d
   %i.p = landingpad { ptr, i32 }
           catch ptr null
   %i.q = extractvalue { ptr, i32 } %i.p, 0
-  tail call void @__clang_call_terminate(ptr %i.q) #13, !inline_history !70
+  tail call void @__clang_call_terminate(ptr %i.q) #13, !inline_history !69
   unreachable
 
 _ZN8NArchive3N7z16CFolderOutStreamD2Ev.exit:      ; preds = %_ZN9CMyComPtrI23IArchiveExtractCallbackED2Ev.exit.i, %bb.d
@@ -1376,13 +1377,13 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.f = load ptr, ptr %i.e, align 8
   %i.g = invoke noundef i32 %i.f(ptr noundef nonnull align 8 dereferenceable(8) %i.c)
-          to label %_ZN9CMyComPtrI23IArchiveExtractCallbackED2Ev.exit.i.i unwind label %bb.c, !inline_history !72 ; 0 uses
+          to label %_ZN9CMyComPtrI23IArchiveExtractCallbackED2Ev.exit.i.i unwind label %bb.c, !inline_history !71 ; 0 uses
 
 bb.c:                                             ; preds = %bb.b
   %i.h = landingpad { ptr, i32 }
           catch ptr null
   %i.i = extractvalue { ptr, i32 } %i.h, 0
-  tail call void @__clang_call_terminate(ptr %i.i) #13, !inline_history !72
+  tail call void @__clang_call_terminate(ptr %i.i) #13, !inline_history !71
   unreachable
 
 _ZN9CMyComPtrI23IArchiveExtractCallbackED2Ev.exit.i.i: ; preds = %bb.b, %bb.a
@@ -1396,17 +1397,17 @@ bb.d:                                             ; preds = %_ZN9CMyComPtrI23IAr
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   %i.n = load ptr, ptr %i.m, align 8
   %i.o = invoke noundef i32 %i.n(ptr noundef nonnull align 8 dereferenceable(8) %i.k)
-          to label %_ZN8NArchive3N7z16CFolderOutStreamD0Ev.exit unwind label %bb.e, !inline_history !72 ; 0 uses
+          to label %_ZN8NArchive3N7z16CFolderOutStreamD0Ev.exit unwind label %bb.e, !inline_history !71 ; 0 uses
 
 bb.e:                                             ; preds = %bb.d
   %i.p = landingpad { ptr, i32 }
           catch ptr null
   %i.q = extractvalue { ptr, i32 } %i.p, 0
-  tail call void @__clang_call_terminate(ptr %i.q) #13, !inline_history !72
+  tail call void @__clang_call_terminate(ptr %i.q) #13, !inline_history !71
   unreachable
 
 _ZN8NArchive3N7z16CFolderOutStreamD0Ev.exit:      ; preds = %_ZN9CMyComPtrI23IArchiveExtractCallbackED2Ev.exit.i.i, %bb.d
-  tail call void @_ZdlPvm(ptr noundef nonnull align 8 dereferenceable(88) %i.a, i64 noundef 88) #15, !inline_history !73
+  tail call void @_ZdlPvm(ptr noundef nonnull align 8 dereferenceable(88) %i.a, i64 noundef 88) #15, !inline_history !72
   ret void
 }
 
@@ -1498,27 +1499,26 @@ attributes #15 = { builtin nounwind }
 !48 = !{!45, !27, i64 33}
 !49 = !{i8 0, i8 2}
 !50 = !{}
-!51 = !{!45, !27, i64 34}
-!52 = !{!45, !5, i64 12}
-!53 = !{!54, !5, i64 32}
-!54 = !{!"_ZTS17COutStreamWithCRC", !21, i64 0, !9, i64 8, !13, i64 16, !28, i64 24, !5, i64 32, !27, i64 36}
-!55 = distinct !{ptr @_ZN8NArchive3N7z16CFolderOutStream21CloseFileAndSetResultEv, ptr @_ZN8NArchive3N7z16CFolderOutStream21CloseFileAndSetResultEi, null, null}
-!56 = !{ptr @_ZN8NArchive3N7z16CFolderOutStream21CloseFileAndSetResultEv, ptr @_ZN8NArchive3N7z16CFolderOutStream21CloseFileAndSetResultEi}
-!57 = !{!27, !27, i64 0}
-!58 = distinct !{null}
-!59 = !{!54, !28, i64 24}
-!60 = !{!54, !27, i64 36}
-!61 = !{!20, !28, i64 80}
-!62 = distinct !{null, null}
-!63 = distinct !{ptr @_ZN8NArchive3N7z16CFolderOutStream21CloseFileAndSetResultEi, null, null}
-!64 = !{ptr @_ZN8NArchive3N7z16CFolderOutStream21CloseFileAndSetResultEi}
-!65 = distinct !{!65, !66}
-!66 = !{!"llvm.loop.mustprogress"}
-!67 = !{!28, !28, i64 0}
-!68 = distinct !{!68, !66}
-!69 = !{!6, !6, i64 0}
-!70 = !{ptr @_ZN8NArchive3N7z16CFolderOutStreamD2Ev}
-!71 = !{ptr @_ZN8NArchive3N7z16CFolderOutStream7ReleaseEv}
-!72 = !{ptr @_ZN8NArchive3N7z16CFolderOutStreamD0Ev, ptr @_ZN8NArchive3N7z16CFolderOutStreamD2Ev}
-!73 = !{ptr @_ZN8NArchive3N7z16CFolderOutStreamD0Ev}
+!51 = !{!45, !5, i64 12}
+!52 = !{!53, !5, i64 32}
+!53 = !{!"_ZTS17COutStreamWithCRC", !21, i64 0, !9, i64 8, !13, i64 16, !28, i64 24, !5, i64 32, !27, i64 36}
+!54 = distinct !{ptr @_ZN8NArchive3N7z16CFolderOutStream21CloseFileAndSetResultEv, ptr @_ZN8NArchive3N7z16CFolderOutStream21CloseFileAndSetResultEi, null, null}
+!55 = !{ptr @_ZN8NArchive3N7z16CFolderOutStream21CloseFileAndSetResultEv, ptr @_ZN8NArchive3N7z16CFolderOutStream21CloseFileAndSetResultEi}
+!56 = !{!27, !27, i64 0}
+!57 = distinct !{null}
+!58 = !{!53, !28, i64 24}
+!59 = !{!53, !27, i64 36}
+!60 = !{!20, !28, i64 80}
+!61 = distinct !{null, null}
+!62 = distinct !{ptr @_ZN8NArchive3N7z16CFolderOutStream21CloseFileAndSetResultEi, null, null}
+!63 = !{ptr @_ZN8NArchive3N7z16CFolderOutStream21CloseFileAndSetResultEi}
+!64 = distinct !{!64, !65}
+!65 = !{!"llvm.loop.mustprogress"}
+!66 = !{!28, !28, i64 0}
+!67 = distinct !{!67, !65}
+!68 = !{!6, !6, i64 0}
+!69 = !{ptr @_ZN8NArchive3N7z16CFolderOutStreamD2Ev}
+!70 = !{ptr @_ZN8NArchive3N7z16CFolderOutStream7ReleaseEv}
+!71 = !{ptr @_ZN8NArchive3N7z16CFolderOutStreamD0Ev, ptr @_ZN8NArchive3N7z16CFolderOutStreamD2Ev}
+!72 = !{ptr @_ZN8NArchive3N7z16CFolderOutStreamD0Ev}
 end_hunk_0

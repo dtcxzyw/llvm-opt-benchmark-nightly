@@ -201,33 +201,29 @@ bb.w:                                             ; preds = %bb.v, %bb.v, %bb.v
 bb.x:                                             ; preds = %bb.w
   %i.as = call noundef nonnull align 8 dereferenceable(128) ptr @_ZN6duckdb11StructStats13GetChildStatsERKNS_14BaseStatisticsEm(ptr noundef nonnull align 8 dereferenceable(128) %i.ah, i64 noundef 0)
   %i.at = call noundef nonnull align 8 dereferenceable(128) ptr @_ZN6duckdb11StructStats13GetChildStatsERKNS_14BaseStatisticsEm(ptr noundef nonnull align 8 dereferenceable(128) %i.ah, i64 noundef 1) ; 6 uses
-  %i.au = getelementptr inbounds nuw i8, ptr %i.as, i64 24
-  %i.av = load i8, ptr %i.au, align 8, !tbaa !58, !range !59, !noundef !60
+  %5 = getelementptr inbounds nuw i8, ptr %i.as, i64 24
+  %6 = load i8, ptr %5, align 8, !tbaa !58, !range !59, !noundef !60
+  %7 = trunc nuw i8 %6 to i1
+  %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 25
+  %i.av = load i8, ptr %i.au, align 1, !range !59
   %i.aw = trunc nuw i8 %i.av to i1
-  br i1 %i.aw, label %5, label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread
+  %or.cond.i = select i1 %7, i1 %i.aw, i1 false
+  br i1 %or.cond.i, label %bb.y, label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread
 
-5:                                                ; preds = %bb.x
-  %6 = getelementptr inbounds nuw i8, ptr %i.at, i64 25
-  %7 = load i8, ptr %6, align 1, !tbaa !61, !range !59, !noundef !60
-  %8 = trunc nuw i8 %7 to i1
-  br i1 %8, label %bb.y, label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread
-
-bb.y:                                             ; preds = %5
+bb.y:                                             ; preds = %bb.x
   %i.ax = load i8, ptr %i.at, align 8, !tbaa !30
   %i.ay = icmp ne i8 %i.ax, 1
   %i.az = getelementptr inbounds nuw i8, ptr %i.at, i64 40
-  %i.ba = load i8, ptr %i.az, align 8, !range !59
-  %i.bb = trunc nuw i8 %i.ba to i1
-  %.0.i16.i.a = select i1 %i.ay, i1 %i.bb, i1 false
-  br i1 %.0.i16.i.a, label %9, label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread35
-
-9:                                                ; preds = %bb.y
+  %8 = load i8, ptr %i.az, align 8, !range !59
+  %9 = trunc nuw i8 %8 to i1
+  %.0.i16.i = select i1 %i.ay, i1 %9, i1 false
   %10 = getelementptr inbounds nuw i8, ptr %i.at, i64 41
-  %11 = load i8, ptr %10, align 1, !range !59
-  %12 = trunc nuw i8 %11 to i1
-  br i1 %12, label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit, label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread35
+  %i.ba = load i8, ptr %10, align 1, !range !59
+  %i.bb = trunc nuw i8 %i.ba to i1
+  %.0.i16.i.a = select i1 %.0.i16.i, i1 %i.bb, i1 false
+  br i1 %.0.i16.i.a, label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit, label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread35
 
-_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit: ; preds = %9
+_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit: ; preds = %bb.y
   %i.bc = getelementptr inbounds nuw i8, ptr %i.at, i64 48
   %i.bd = load i32, ptr %i.bc, align 8, !tbaa !43
   %i.be = getelementptr inbounds nuw i8, ptr %i.at, i64 64
@@ -236,11 +232,11 @@ _ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit: ;
   %.0.i30 = icmp eq i32 %i.bg, 0
   br i1 %.0.i30, label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread, label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread35
 
-_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread35: ; preds = %9, %bb.y, %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit
+_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread35: ; preds = %bb.y, %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit
   store ptr null, ptr %0, align 8, !tbaa !7
   br label %.loopexit
 
-_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread: ; preds = %bb.v, %bb.x, %5, %bb.w, %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit
+_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread: ; preds = %bb.x, %bb.v, %bb.w, %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit
   %i.bh = call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6duckdb12StorageIndex7GetTypeEv(ptr noundef nonnull align 8 dereferenceable(104) %2) ; 2 uses
   %i.bi = call noundef zeroext i1 @_ZNK6duckdb11LogicalTypeeqERKS0_(ptr noundef nonnull align 8 dereferenceable(24) %.0.i, ptr noundef nonnull align 8 dereferenceable(24) %i.bh)
   br i1 %i.bi, label %bb.aa, label %bb.z
@@ -643,33 +639,29 @@ bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.e = tail call noundef nonnull align 8 dereferenceable(128) ptr @_ZN6duckdb11StructStats13GetChildStatsERKNS_14BaseStatisticsEm(ptr noundef nonnull align 8 dereferenceable(128) %0, i64 noundef 0)
   %i.f = tail call noundef nonnull align 8 dereferenceable(128) ptr @_ZN6duckdb11StructStats13GetChildStatsERKNS_14BaseStatisticsEm(ptr noundef nonnull align 8 dereferenceable(128) %0, i64 noundef 1) ; 6 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 24
-  %i.h = load i8, ptr %i.g, align 8, !tbaa !58, !range !59, !noundef !60
+  %1 = getelementptr inbounds nuw i8, ptr %i.e, i64 24
+  %2 = load i8, ptr %1, align 8, !tbaa !58, !range !59, !noundef !60
+  %3 = trunc nuw i8 %2 to i1
+  %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 25
+  %i.h = load i8, ptr %i.g, align 1, !range !59
   %i.i = trunc nuw i8 %i.h to i1
-  br i1 %i.i, label %1, label %_ZNK6duckdb11LogicalType8IsNestedEv.exit
+  %or.cond = select i1 %3, i1 %i.i, i1 false
+  br i1 %or.cond, label %bb.d, label %_ZNK6duckdb11LogicalType8IsNestedEv.exit
 
-1:                                                ; preds = %bb.c
-  %2 = getelementptr inbounds nuw i8, ptr %i.f, i64 25
-  %3 = load i8, ptr %2, align 1, !tbaa !61, !range !59, !noundef !60
-  %4 = trunc nuw i8 %3 to i1
-  br i1 %4, label %bb.d, label %_ZNK6duckdb11LogicalType8IsNestedEv.exit
-
-bb.d:                                             ; preds = %1
+bb.d:                                             ; preds = %bb.c
   %i.j = load i8, ptr %i.f, align 8, !tbaa !30
   %i.k = icmp ne i8 %i.j, 1
   %i.l = getelementptr inbounds nuw i8, ptr %i.f, i64 40
-  %i.m = load i8, ptr %i.l, align 8, !range !59
-  %i.n = trunc nuw i8 %i.m to i1
-  %.0.i16.a = select i1 %i.k, i1 %i.n, i1 false
-  br i1 %.0.i16.a, label %5, label %_ZNK6duckdb11LogicalType8IsNestedEv.exit
-
-5:                                                ; preds = %bb.d
+  %4 = load i8, ptr %i.l, align 8, !range !59
+  %5 = trunc nuw i8 %4 to i1
+  %.0.i16 = select i1 %i.k, i1 %5, i1 false
   %6 = getelementptr inbounds nuw i8, ptr %i.f, i64 41
-  %7 = load i8, ptr %6, align 1, !range !59
-  %8 = trunc nuw i8 %7 to i1
-  br i1 %8, label %bb.e, label %_ZNK6duckdb11LogicalType8IsNestedEv.exit
+  %i.m = load i8, ptr %6, align 1, !range !59
+  %i.n = trunc nuw i8 %i.m to i1
+  %.0.i16.a = select i1 %.0.i16, i1 %i.n, i1 false
+  br i1 %.0.i16.a, label %bb.e, label %_ZNK6duckdb11LogicalType8IsNestedEv.exit
 
-bb.e:                                             ; preds = %5
+bb.e:                                             ; preds = %bb.d
   %i.o = getelementptr inbounds nuw i8, ptr %i.f, i64 48
   %i.p = load i32, ptr %i.o, align 8, !tbaa !43
   %i.q = getelementptr inbounds nuw i8, ptr %i.f, i64 64
@@ -678,8 +670,8 @@ bb.e:                                             ; preds = %5
   %.0 = icmp eq i32 %i.s, 0
   br label %_ZNK6duckdb11LogicalType8IsNestedEv.exit
 
-_ZNK6duckdb11LogicalType8IsNestedEv.exit:         ; preds = %bb.a, %bb.e, %bb.c, %1, %5, %bb.d, %bb.b
-  %.2 = phi i1 [ false, %bb.d ], [ true, %bb.b ], [ %.0, %bb.e ], [ true, %1 ], [ true, %bb.c ], [ false, %5 ], [ true, %bb.a ]
+_ZNK6duckdb11LogicalType8IsNestedEv.exit:         ; preds = %bb.a, %bb.e, %bb.c, %bb.d, %bb.b
+  %.2 = phi i1 [ false, %bb.d ], [ true, %bb.b ], [ %.0, %bb.e ], [ true, %bb.a ], [ true, %bb.c ]
   ret i1 %.2
 }
 
@@ -1082,36 +1074,32 @@ bb.b:                                             ; preds = %.noexc66
 
 .noexc67:                                         ; preds = %bb.b
   %i.w = invoke noundef nonnull align 8 dereferenceable(128) ptr @_ZN6duckdb11StructStats13GetChildStatsERKNS_14BaseStatisticsEm(ptr noundef nonnull align 8 dereferenceable(128) %1, i64 noundef 1)
-          to label %.noexc68 unwind label %bb.u   ; 6 uses
+          to label %bb.c unwind label %bb.u       ; 6 uses
 
-.noexc68:                                         ; preds = %.noexc67
+bb.c:                                             ; preds = %.noexc67
   %14 = getelementptr inbounds nuw i8, ptr %i.v, i64 24
   %15 = load i8, ptr %14, align 8, !tbaa !58, !range !59, !noundef !60
   %16 = trunc nuw i8 %15 to i1
-  br i1 %16, label %bb.c, label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread
-
-bb.c:                                             ; preds = %.noexc68
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 25
-  %i.y = load i8, ptr %i.x, align 1, !tbaa !61, !range !59, !noundef !60
+  %i.y = load i8, ptr %i.x, align 1, !range !59
   %i.z = trunc nuw i8 %i.y to i1
-  br i1 %i.z, label %bb.d, label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread
+  %or.cond.i = select i1 %16, i1 %i.z, i1 false
+  br i1 %or.cond.i, label %bb.d, label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread
 
 bb.d:                                             ; preds = %bb.c
   %i.aa = load i8, ptr %i.w, align 8, !tbaa !30
   %i.ab = icmp ne i8 %i.aa, 1
   %i.ac = getelementptr inbounds nuw i8, ptr %i.w, i64 40
-  %i.ad = load i8, ptr %i.ac, align 8, !range !59
+  %17 = load i8, ptr %i.ac, align 8, !range !59
+  %18 = trunc nuw i8 %17 to i1
+  %.0.i16.i = select i1 %i.ab, i1 %18, i1 false
+  %19 = getelementptr inbounds nuw i8, ptr %i.w, i64 41
+  %i.ad = load i8, ptr %19, align 1, !range !59
   %i.ae = trunc nuw i8 %i.ad to i1
-  %.0.i16.i.a = select i1 %i.ab, i1 %i.ae, i1 false
-  br i1 %.0.i16.i.a, label %17, label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread164
+  %.0.i16.i.a = select i1 %.0.i16.i, i1 %i.ae, i1 false
+  br i1 %.0.i16.i.a, label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit, label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread164
 
-17:                                               ; preds = %bb.d
-  %18 = getelementptr inbounds nuw i8, ptr %i.w, i64 41
-  %19 = load i8, ptr %18, align 1, !range !59
-  %20 = trunc nuw i8 %19 to i1
-  br i1 %20, label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit, label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread164
-
-_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit: ; preds = %17
+_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit: ; preds = %bb.d
   %i.af = getelementptr inbounds nuw i8, ptr %i.w, i64 48
   %i.ag = load i32, ptr %i.af, align 8, !tbaa !43
   %i.ah = getelementptr inbounds nuw i8, ptr %i.w, i64 64
@@ -1121,13 +1109,13 @@ _ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit: ;
   %.0.i = icmp eq i32 %.fr, 0
   br i1 %.0.i, label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread, label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread164
 
-_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread: ; preds = %.noexc, %.noexc68, %bb.c, %.noexc66, %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit
+_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread: ; preds = %bb.c, %.noexc, %.noexc66, %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit
   br label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread164
 
-_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread164: ; preds = %17, %bb.d, %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit, %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread
-  %21 = phi ptr [ @.str.6, %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread ], [ @.str.7, %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit ], [ @.str.7, %bb.d ], [ @.str.7, %17 ]
+_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread164: ; preds = %bb.d, %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit, %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread
+  %20 = phi ptr [ @.str.6, %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit.thread ], [ @.str.7, %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit ], [ @.str.7, %bb.d ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
-  store ptr %21, ptr %i.h, align 8, !tbaa !163, !noalias !787
+  store ptr %20, ptr %i.h, align 8, !tbaa !163, !noalias !787
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #28, !noalias !790
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false), !noalias !790
   invoke void @_ZN6duckdb9Exception25ConstructMessageRecursiveIPKcJEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKS9_RSt6vectorINS_20ExceptionFormatValueESaISD_EERKT_DpOT0_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %6, ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(8) %i.h)
@@ -1530,33 +1518,29 @@ bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.f = call noundef nonnull align 8 dereferenceable(128) ptr @_ZN6duckdb11StructStats13GetChildStatsERKNS_14BaseStatisticsEm(ptr noundef nonnull align 8 dereferenceable(128) %i.a, i64 noundef 0)
   %i.g = call noundef nonnull align 8 dereferenceable(128) ptr @_ZN6duckdb11StructStats13GetChildStatsERKNS_14BaseStatisticsEm(ptr noundef nonnull align 8 dereferenceable(128) %i.a, i64 noundef 1) ; 6 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 24
-  %i.i = load i8, ptr %i.h, align 8, !tbaa !58, !range !59, !noundef !60
+  %2 = getelementptr inbounds nuw i8, ptr %i.f, i64 24
+  %3 = load i8, ptr %2, align 8, !tbaa !58, !range !59, !noundef !60
+  %4 = trunc nuw i8 %3 to i1
+  %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 25
+  %i.i = load i8, ptr %i.h, align 1, !range !59
   %i.j = trunc nuw i8 %i.i to i1
-  br i1 %i.j, label %2, label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit
+  %or.cond.i = select i1 %4, i1 %i.j, i1 false
+  br i1 %or.cond.i, label %bb.e, label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit
 
-2:                                                ; preds = %bb.d
-  %3 = getelementptr inbounds nuw i8, ptr %i.g, i64 25
-  %4 = load i8, ptr %3, align 1, !tbaa !61, !range !59, !noundef !60
-  %5 = trunc nuw i8 %4 to i1
-  br i1 %5, label %bb.e, label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit
-
-bb.e:                                             ; preds = %2
+bb.e:                                             ; preds = %bb.d
   %i.k = load i8, ptr %i.g, align 8, !tbaa !30
   %i.l = icmp ne i8 %i.k, 1
   %i.m = getelementptr inbounds nuw i8, ptr %i.g, i64 40
-  %i.n = load i8, ptr %i.m, align 8, !range !59
-  %i.o = trunc nuw i8 %i.n to i1
-  %.0.i16.i.a = select i1 %i.l, i1 %i.o, i1 false
-  br i1 %.0.i16.i.a, label %6, label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit
-
-6:                                                ; preds = %bb.e
+  %5 = load i8, ptr %i.m, align 8, !range !59
+  %6 = trunc nuw i8 %5 to i1
+  %.0.i16.i = select i1 %i.l, i1 %6, i1 false
   %7 = getelementptr inbounds nuw i8, ptr %i.g, i64 41
-  %8 = load i8, ptr %7, align 1, !range !59
-  %9 = trunc nuw i8 %8 to i1
-  br i1 %9, label %bb.f, label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit
+  %i.n = load i8, ptr %7, align 1, !range !59
+  %i.o = trunc nuw i8 %i.n to i1
+  %.0.i16.i.a = select i1 %.0.i16.i, i1 %i.o, i1 false
+  br i1 %.0.i16.i.a, label %bb.f, label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit
 
-bb.f:                                             ; preds = %6
+bb.f:                                             ; preds = %bb.e
   %i.p = getelementptr inbounds nuw i8, ptr %i.g, i64 48
   %i.q = load i32, ptr %i.p, align 8, !tbaa !43
   %i.r = getelementptr inbounds nuw i8, ptr %i.g, i64 64
@@ -1565,9 +1549,9 @@ bb.f:                                             ; preds = %6
   %.0.i = icmp eq i32 %i.t, 0
   br label %_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit
 
-_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit: ; preds = %bb.f, %6, %bb.e, %2, %bb.d, %bb.c, %bb.b, %bb.a
-  %10 = phi i1 [ false, %bb.a ], [ false, %bb.e ], [ true, %bb.c ], [ %.0.i, %bb.f ], [ true, %2 ], [ true, %bb.d ], [ false, %6 ], [ true, %bb.b ]
-  ret i1 %10
+_ZN6duckdb20VariantShreddedStats15IsFullyShreddedERKNS_14BaseStatisticsE.exit: ; preds = %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
+  %8 = phi i1 [ false, %bb.a ], [ false, %bb.e ], [ true, %bb.c ], [ %.0.i, %bb.f ], [ true, %bb.b ], [ true, %bb.d ]
+  ret i1 %8
 }
 
 declare noundef nonnull align 8 dereferenceable(32) ptr @_ZNK6duckdb12StorageIndex12GetFieldNameB5cxx11Ev(ptr noundef nonnull align 8 dereferenceable(104)) local_unnamed_addr #1

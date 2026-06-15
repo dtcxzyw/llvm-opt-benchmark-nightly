@@ -201,24 +201,22 @@ bb.ck:                                            ; preds = %bb.cj
   %.val.val.i26.i.i = load ptr, ptr %i.aar, align 8
   %i.aas = sext i32 %.val5.i.i.i.a to i64
   %i.aat = getelementptr inbounds nuw [12 x i8], ptr %.val.val.i26.i.i, i64 %i.aas ; 3 uses
-  %i.aau = load i32, ptr %i.aat, align 4
+  %33 = load i32, ptr %i.aat, align 4
+  %34 = icmp eq i32 %33, -2
+  %35 = getelementptr inbounds nuw i8, ptr %i.aat, i64 4
+  %i.aau = load i32, ptr %35, align 4
   %i.aav = icmp eq i32 %i.aau, -2
-  br i1 %i.aav, label %33, label %.preheader527
+  %or.cond.i.i.i = select i1 %34, i1 %i.aav, i1 false
+  br i1 %or.cond.i.i.i, label %bb.cl, label %.preheader527
 
-33:                                               ; preds = %bb.ck
-  %34 = getelementptr inbounds nuw i8, ptr %i.aat, i64 4
-  %35 = load i32, ptr %34, align 4
-  %36 = icmp eq i32 %35, -2
-  br i1 %36, label %bb.cl, label %.preheader527
-
-bb.cl:                                            ; preds = %33
+bb.cl:                                            ; preds = %bb.ck
   %i.aaw = getelementptr inbounds nuw i8, ptr %i.aat, i64 8
   %i.aax = load i32, ptr %i.aaw, align 4
   store i32 %i.aax, ptr %i.nc, align 8
   store i8 1, ptr %i.nq, align 1
   br label %.preheader527
 
-.preheader527:                                    ; preds = %bb.cl, %33, %bb.ck, %bb.cj
+.preheader527:                                    ; preds = %bb.cl, %bb.ck, %bb.cj
   br label %bb.cm
 
 bb.cm:                                            ; preds = %.preheader527, %bb.cm
@@ -621,23 +619,21 @@ _ZN2v88internal12_GLOBAL__N_122MergeConsecutiveRangesEPNS0_16CoverageFunctionE.e
   %.val.val.i63.i.i = load ptr, ptr %i.any, align 8
   %i.anz = sext i32 %.val3.i62.i.i to i64
   %i.aoa = getelementptr inbounds nuw [12 x i8], ptr %.val.val.i63.i.i, i64 %i.anz
-  %i.aob = getelementptr inbounds nuw i8, ptr %i.aoa, i64 8
+  %.val6.i65.i.i = load ptr, ptr %i.pd, align 8
+  %36 = getelementptr inbounds nuw i8, ptr %i.aoa, i64 8
+  %37 = load i32, ptr %36, align 4
+  %38 = icmp eq i32 %37, 0
+  %i.aob = getelementptr inbounds i8, ptr %.val6.i65.i.i, i64 -4
   %i.aoc = load i32, ptr %i.aob, align 4
   %i.aod = icmp eq i32 %i.aoc, 0
-  br i1 %i.aod, label %37, label %bb.fd
+  %or.cond.i66.i.i = select i1 %38, i1 %i.aod, i1 false
+  br i1 %or.cond.i66.i.i, label %bb.fc, label %bb.fd
 
-37:                                               ; preds = %.lr.ph.i60.i.i
-  %.val4.i64.i.i = load ptr, ptr %i.pd, align 8
-  %38 = getelementptr inbounds i8, ptr %.val4.i64.i.i, i64 -4
-  %39 = load i32, ptr %38, align 4
-  %40 = icmp eq i32 %39, 0
-  br i1 %40, label %bb.fc, label %bb.fd
-
-bb.fc:                                            ; preds = %37
+bb.fc:                                            ; preds = %.lr.ph.i60.i.i
   store i8 1, ptr %i.pe, align 1
   br label %bb.fd
 
-bb.fd:                                            ; preds = %bb.fc, %37, %.lr.ph.i60.i.i
+bb.fd:                                            ; preds = %bb.fc, %.lr.ph.i60.i.i
   %i.aoe = call fastcc noundef zeroext i1 @_ZN2v88internal12_GLOBAL__N_121CoverageBlockIterator4NextEv(ptr noundef nonnull align 8 dereferenceable(48) %9)
   br i1 %i.aoe, label %.lr.ph.i60.i.i, label %.preheader.i56.i.i.preheader, !llvm.loop !56
 

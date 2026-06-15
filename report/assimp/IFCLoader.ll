@@ -201,20 +201,18 @@ _ZN12_GLOBAL__N_18SetUnitsERN6Assimp3IFC14ConversionDataE.exit: ; preds = %.noex
           to label %.noexc251 unwind label %.loopexit ; 5 uses
 
 .noexc251:                                        ; preds = %.lr.ph.i248
-  %i.pj = getelementptr inbounds nuw i8, ptr %i.pi, i64 56
-  %i.pk = getelementptr inbounds nuw i8, ptr %i.pi, i64 88
-  %27 = load i8, ptr %i.pk, align 8, !range !32, !noundef !19
+  %i.pj = getelementptr inbounds nuw i8, ptr %i.pi, i64 88
+  %27 = load i8, ptr %i.pj, align 8, !range !32, !noundef !19
   %28 = trunc nuw i8 %27 to i1
-  br i1 %28, label %29, label %.critedge.i
+  %i.pk = getelementptr inbounds nuw i8, ptr %i.pi, i64 64
+  %29 = load i64, ptr %i.pk, align 8
+  %30 = icmp eq i64 %29, 5
+  %or.cond.i = select i1 %28, i1 %30, i1 false
+  br i1 %or.cond.i, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i, label %.critedge.i
 
-29:                                               ; preds = %.noexc251
-  %30 = getelementptr inbounds nuw i8, ptr %i.pi, i64 64
-  %31 = load i64, ptr %30, align 8
-  %32 = icmp eq i64 %31, 5
-  br i1 %32, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i, label %.critedge.i
-
-_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i: ; preds = %29
-  %i.pl = load ptr, ptr %i.pj, align 8            ; 2 uses
+_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i: ; preds = %.noexc251
+  %31 = getelementptr inbounds nuw i8, ptr %i.pi, i64 56
+  %i.pl = load ptr, ptr %31, align 8              ; 2 uses
   %i.pm = load i32, ptr %i.pl, align 1
   %i.pn = xor i32 %i.pm, 1701080909
   %i.po = getelementptr i8, ptr %i.pl, i64 4
@@ -234,7 +232,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %.sroa.015.025.i.be = phi ptr [ %i.pw, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i ], [ %.old.i, %.critedge.i ]
   br label %.lr.ph.i248
 
-.critedge.i:                                      ; preds = %29, %.noexc251
+.critedge.i:                                      ; preds = %.noexc251
   %.old.i = getelementptr inbounds nuw i8, ptr %.sroa.015.025.i, i64 8 ; 2 uses
   %.not22.old.i = icmp eq ptr %.old.i, %i.ph
   br i1 %.not22.old.i, label %.thread.i249, label %.lr.ph.i248.backedge

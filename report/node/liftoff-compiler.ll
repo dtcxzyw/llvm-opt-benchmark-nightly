@@ -201,19 +201,17 @@ _ZN2v88internal4wasm12_GLOBAL__N_115LiftoffCompiler18CheckSupportedTypeEPNS1_15W
 _ZN2v88internal4wasm12_GLOBAL__N_115LiftoffCompiler18CheckSupportedTypeEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES3_LNS1_12DecodingModeE0EEENS1_9ValueKindEPKc.exit.thread.i: ; preds = %_ZN2v88internal4wasm12_GLOBAL__N_115LiftoffCompiler18CheckSupportedTypeEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES3_LNS1_12DecodingModeE0EEENS1_9ValueKindEPKc.exit.i, %_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit.i
   %i.be = add nsw i8 %.0.i49.i, -9
   %i.bf = icmp ult i8 %i.be, 2
-  br i1 %i.bf, label %8, label %bb.ab
+  br i1 %i.bf, label %bb.j, label %bb.ab
 
-8:                                                ; preds = %_ZN2v88internal4wasm12_GLOBAL__N_115LiftoffCompiler18CheckSupportedTypeEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES3_LNS1_12DecodingModeE0EEENS1_9ValueKindEPKc.exit.thread.i
-  %9 = getelementptr inbounds nuw i8, ptr %i.am, i64 4
-  %10 = load i8, ptr %9, align 4, !range !5, !noundef !6
-  %11 = trunc nuw i8 %10 to i1
-  br i1 %11, label %bb.j, label %bb.s
-
-bb.j:                                             ; preds = %8
+bb.j:                                             ; preds = %_ZN2v88internal4wasm12_GLOBAL__N_115LiftoffCompiler18CheckSupportedTypeEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES3_LNS1_12DecodingModeE0EEENS1_9ValueKindEPKc.exit.thread.i
+  %8 = getelementptr inbounds nuw i8, ptr %i.am, i64 4
+  %9 = load i8, ptr %8, align 4, !range !5, !noundef !6
+  %10 = trunc nuw i8 %9 to i1
   %i.bg = getelementptr inbounds nuw i8, ptr %i.am, i64 21
-  %i.bh = load i8, ptr %i.bg, align 1, !range !5, !noundef !6
+  %i.bh = load i8, ptr %i.bg, align 1, !range !5
   %i.bi = trunc nuw i8 %i.bh to i1
-  br i1 %i.bi, label %bb.k, label %bb.s
+  %or.cond.i = select i1 %10, i1 %i.bi, i1 false
+  br i1 %or.cond.i, label %bb.k, label %bb.s
 
 bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
@@ -373,7 +371,7 @@ _ZN2v88internal4wasm16LiftoffAssembler12PushRegisterENS1_9ValueKindENS1_15Liftof
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
   br label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE19DecodeGlobalGetImplEPNS8_9TraceLineENS1_10WasmOpcodeE.exit
 
-bb.s:                                             ; preds = %bb.j, %8
+bb.s:                                             ; preds = %bb.j
   %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 840 ; 4 uses
   %.sroa.0.0.copyload.i.i.i.i = load i32, ptr %i.dr, align 8
   %i.ds = and i32 %.sroa.0.0.copyload.i.i.i.i, 37839 ; 2 uses
@@ -776,19 +774,17 @@ _ZN2v88internal4wasm12_GLOBAL__N_115LiftoffCompiler18CheckSupportedTypeEPNS1_15W
 _ZN2v88internal4wasm12_GLOBAL__N_115LiftoffCompiler18CheckSupportedTypeEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES3_LNS1_12DecodingModeE0EEENS1_9ValueKindEPKc.exit.thread.i: ; preds = %_ZN2v88internal4wasm12_GLOBAL__N_115LiftoffCompiler18CheckSupportedTypeEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES3_LNS1_12DecodingModeE0EEENS1_9ValueKindEPKc.exit.i, %_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit.i
   %i.bp = add nsw i8 %.0.i71.i, -9
   %i.bq = icmp ult i8 %i.bp, 2
-  br i1 %i.bq, label %10, label %bb.ad
+  br i1 %i.bq, label %bb.k, label %bb.ad
 
-10:                                               ; preds = %_ZN2v88internal4wasm12_GLOBAL__N_115LiftoffCompiler18CheckSupportedTypeEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES3_LNS1_12DecodingModeE0EEENS1_9ValueKindEPKc.exit.thread.i
-  %11 = getelementptr inbounds nuw i8, ptr %i.ax, i64 4
-  %12 = load i8, ptr %11, align 4, !range !5, !noundef !6
-  %13 = trunc nuw i8 %12 to i1
-  br i1 %13, label %bb.k, label %bb.v
-
-bb.k:                                             ; preds = %10
+bb.k:                                             ; preds = %_ZN2v88internal4wasm12_GLOBAL__N_115LiftoffCompiler18CheckSupportedTypeEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES3_LNS1_12DecodingModeE0EEENS1_9ValueKindEPKc.exit.thread.i
+  %10 = getelementptr inbounds nuw i8, ptr %i.ax, i64 4
+  %11 = load i8, ptr %10, align 4, !range !5, !noundef !6
+  %12 = trunc nuw i8 %11 to i1
   %i.br = getelementptr inbounds nuw i8, ptr %i.ax, i64 21
-  %i.bs = load i8, ptr %i.br, align 1, !range !5, !noundef !6
+  %i.bs = load i8, ptr %i.br, align 1, !range !5
   %i.bt = trunc nuw i8 %i.bs to i1
-  br i1 %i.bt, label %bb.l, label %bb.v
+  %or.cond.i = select i1 %12, i1 %i.bt, i1 false
+  br i1 %or.cond.i, label %bb.l, label %bb.v
 
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #24
@@ -959,7 +955,7 @@ _ZN2v88internal4wasm7liftoff8GetMemOpEPNS1_16LiftoffAssemblerENS0_8RegisterES5_m
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #24
   br label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE19DecodeGlobalSetImplEPNS8_9TraceLineENS1_10WasmOpcodeE.exit
 
-bb.v:                                             ; preds = %bb.k, %10
+bb.v:                                             ; preds = %bb.k
   %i.dw = getelementptr inbounds nuw i8, ptr %0, i64 840 ; 3 uses
   %.sroa.0.0.copyload.i.i.i.i = load i32, ptr %i.dw, align 8
   %i.dx = and i32 %.sroa.0.0.copyload.i.i.i.i, 37839 ; 2 uses
@@ -1362,7 +1358,7 @@ _ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBA
   %i.fe = getelementptr inbounds nuw i8, ptr %0, i64 1529
   %i.ff = load i8, ptr %i.fe, align 1, !range !5, !noundef !6
   %i.fg = trunc nuw i8 %i.ff to i1
-  br i1 %i.fg, label %.preheader.i, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS6_7ControlE.exit
+  br i1 %i.fg, label %.preheader.i, label %bb.al
 
 .preheader.i:                                     ; preds = %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE15PushMergeValuesEPNS6_7ControlEPNS1_5MergeINS1_9ValueBaseIS4_EEEE.exit
   %i.fh = getelementptr inbounds nuw i8, ptr %0, i64 1480 ; 2 uses
@@ -1375,7 +1371,7 @@ _ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBA
   %i.fo = lshr exact i64 %i.fn, 2
   %i.fp = trunc i64 %i.fo to i32
   %i.fq = icmp ult i32 %.val14, %i.fp
-  br i1 %i.fq, label %.lr.ph.i16, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS6_7ControlE.exit
+  br i1 %i.fq, label %.lr.ph.i16, label %bb.al
 
 .lr.ph.i16:                                       ; preds = %.preheader.i
   %i.fr = getelementptr inbounds nuw i8, ptr %0, i64 1472
@@ -1398,32 +1394,26 @@ bb.ak:                                            ; preds = %bb.ak, %.lr.ph.i16
   %i.gd = lshr exact i64 %i.gc, 2
   %i.ge = trunc i64 %i.gd to i32
   %i.gf = icmp ult i32 %.val14, %i.ge
-  br i1 %i.gf, label %bb.ak, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS6_7ControlE.exit, !llvm.loop !219
+  br i1 %i.gf, label %bb.ak, label %bb.al, !llvm.loop !219
 
-_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS6_7ControlE.exit: ; preds = %bb.ak, %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE15PushMergeValuesEPNS6_7ControlEPNS1_5MergeINS1_9ValueBaseIS4_EEEE.exit, %.preheader.i
+bb.al:                                            ; preds = %bb.ak, %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE15PushMergeValuesEPNS6_7ControlEPNS1_5MergeINS1_9ValueBaseIS4_EEEE.exit, %.preheader.i
   %2 = getelementptr inbounds i8, ptr %.val12, i64 -471
   %3 = load i8, ptr %2, align 1
   %4 = icmp eq i8 %3, 0
-  br i1 %4, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS6_7ControlE.exit..critedge_crit_edge, label %bb.al
-
-_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS6_7ControlE.exit..critedge_crit_edge: ; preds = %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS6_7ControlE.exit
-  %.pre = load ptr, ptr %i.b, align 8
-  br label %.critedge
-
-bb.al:                                            ; preds = %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS6_7ControlE.exit
   %i.gg = getelementptr inbounds i8, ptr %.val12, i64 -392
-  %i.gh = load i8, ptr %i.gg, align 8, !range !5, !noundef !6
+  %i.gh = load i8, ptr %i.gg, align 8, !range !5
   %i.gi = trunc nuw i8 %i.gh to i1
-  %.pre22 = load ptr, ptr %i.b, align 8           ; 3 uses
-  br i1 %i.gi, label %.critedge, label %bb.am
+  %or.cond = select i1 %4, i1 true, i1 %i.gi
+  br i1 %or.cond, label %.critedge, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
   %i.gj = load i8, ptr %i.c, align 8
-  %i.gk = getelementptr inbounds i8, ptr %.pre22, i64 -472
+  %5 = load ptr, ptr %i.b, align 8                ; 2 uses
+  %i.gk = getelementptr inbounds i8, ptr %5, i64 -472
   br label %.lr.ph.i17
 
 .lr.ph.i17:                                       ; preds = %.lr.ph.i17, %bb.am
-  %i.gl = phi ptr [ %i.go, %.lr.ph.i17 ], [ %.pre22, %bb.am ] ; 2 uses
+  %i.gl = phi ptr [ %i.go, %.lr.ph.i17 ], [ %5, %bb.am ] ; 2 uses
   %i.gm = getelementptr inbounds i8, ptr %i.gl, i64 -472
   store ptr %i.gm, ptr %i.b, align 8
   %i.gn = getelementptr inbounds i8, ptr %i.gl, i64 -368
@@ -1449,13 +1439,13 @@ bb.ao:                                            ; preds = %bb.an
   %.val11.pre = load ptr, ptr %i.b, align 8
   br label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE39SetSucceedingCodeDynamicallyUnreachableEv.exit
 
-.critedge:                                        ; preds = %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS6_7ControlE.exit..critedge_crit_edge, %bb.al
-  %5 = phi ptr [ %.pre, %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS6_7ControlE.exit..critedge_crit_edge ], [ %.pre22, %bb.al ] ; 2 uses
-  %i.gu = getelementptr inbounds i8, ptr %5, i64 -472
+.critedge:                                        ; preds = %bb.al
+  %6 = load ptr, ptr %i.b, align 8                ; 2 uses
+  %i.gu = getelementptr inbounds i8, ptr %6, i64 -472
   br label %.lr.ph.i19
 
 .lr.ph.i19:                                       ; preds = %.lr.ph.i19, %.critedge
-  %i.gv = phi ptr [ %i.gy, %.lr.ph.i19 ], [ %5, %.critedge ] ; 2 uses
+  %i.gv = phi ptr [ %i.gy, %.lr.ph.i19 ], [ %6, %.critedge ] ; 2 uses
   %i.gw = getelementptr inbounds i8, ptr %i.gv, i64 -472
   store ptr %i.gw, ptr %i.b, align 8
   %i.gx = getelementptr inbounds i8, ptr %i.gv, i64 -368
@@ -1858,24 +1848,22 @@ bb.e:                                             ; preds = %_ZN2v88internal4was
   %i.y = load ptr, ptr %i.w, align 8
   %i.z = getelementptr inbounds nuw [24 x i8], ptr %i.y, i64 %i.x ; 3 uses
   %.sroa.0.0.copyload = load i32, ptr %i.z, align 8
-  %1 = icmp eq i32 %.sroa.0.0.copyload, 3845
-  br i1 %1, label %2, label %bb.g
+  %1 = icmp ne i32 %.sroa.0.0.copyload, 3845
+  %2 = getelementptr inbounds nuw i8, ptr %i.z, i64 4
+  %3 = load i8, ptr %2, align 4, !range !5
+  %4 = trunc nuw i8 %3 to i1
+  %or.cond = select i1 %1, i1 true, i1 %4
+  br i1 %or.cond, label %bb.g, label %bb.f
 
-2:                                                ; preds = %bb.e
-  %3 = getelementptr inbounds nuw i8, ptr %i.z, i64 4
-  %4 = load i8, ptr %3, align 4, !range !5, !noundef !6
-  %5 = trunc nuw i8 %4 to i1
-  br i1 %5, label %bb.g, label %bb.f
-
-bb.f:                                             ; preds = %2
+bb.f:                                             ; preds = %bb.e
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 16
   %i.ab = load i32, ptr %i.aa, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 92
   store i32 %i.ab, ptr %i.ac, align 4
   br label %bb.g
 
-bb.g:                                             ; preds = %_ZN2v88internal4wasm7Decoder10consume_u8EPKc.exit.thread, %_ZN2v88internal4wasm7Decoder12consume_u32vEPKc.exit, %2, %bb.e, %bb.f, %_ZN2v88internal4wasm7Decoder10consume_u8EPKc.exit
-  %.2 = phi i1 [ false, %_ZN2v88internal4wasm7Decoder10consume_u8EPKc.exit ], [ false, %_ZN2v88internal4wasm7Decoder12consume_u32vEPKc.exit ], [ true, %bb.f ], [ false, %bb.e ], [ false, %2 ], [ false, %_ZN2v88internal4wasm7Decoder10consume_u8EPKc.exit.thread ]
+bb.g:                                             ; preds = %_ZN2v88internal4wasm7Decoder10consume_u8EPKc.exit.thread, %_ZN2v88internal4wasm7Decoder12consume_u32vEPKc.exit, %bb.e, %bb.f, %_ZN2v88internal4wasm7Decoder10consume_u8EPKc.exit
+  %.2 = phi i1 [ false, %_ZN2v88internal4wasm7Decoder10consume_u8EPKc.exit ], [ false, %_ZN2v88internal4wasm7Decoder12consume_u32vEPKc.exit ], [ true, %bb.f ], [ false, %bb.e ], [ false, %_ZN2v88internal4wasm7Decoder10consume_u8EPKc.exit.thread ]
   ret i1 %.2
 }
 

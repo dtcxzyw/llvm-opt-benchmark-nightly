@@ -201,7 +201,7 @@ bb.bd:                                            ; preds = %bb.au
     i8 39, label %bb.ey
     i8 42, label %bb.fh
     i8 41, label %bb.fn
-    i8 47, label %25
+    i8 47, label %bb.fr
     i8 44, label %bb.gf
   ]
 
@@ -604,17 +604,15 @@ bb.fq:                                            ; preds = %bb.fn
   %i.tq = tail call noundef ptr @_ZN2v88internal8compiler10turboshaft7SLPTree11NewPackNodeERKNS2_9NodeGroupE(ptr noundef nonnull align 8 dereferenceable(224) %0, ptr noundef nonnull align 4 dereferenceable(8) %1)
   br label %.thread
 
-25:                                               ; preds = %bb.bd
-  %26 = getelementptr inbounds nuw i8, ptr %i.i, i64 20
-  %27 = load i8, ptr %26, align 4
-  %.not536 = icmp eq i8 %27, 3
-  br i1 %.not536, label %bb.fr, label %.thread
-
-bb.fr:                                            ; preds = %25
+bb.fr:                                            ; preds = %bb.bd
+  %25 = getelementptr inbounds nuw i8, ptr %i.i, i64 20
+  %26 = load i8, ptr %25, align 4
+  %.not536 = icmp eq i8 %26, 3
   %i.tr = getelementptr inbounds nuw i8, ptr %i.l, i64 20
   %i.ts = load i8, ptr %i.tr, align 4
   %.not537 = icmp eq i8 %i.ts, 3
-  br i1 %.not537, label %bb.fs, label %.thread
+  %or.cond = select i1 %.not536, i1 %.not537, i1 false
+  br i1 %or.cond, label %bb.fs, label %.thread
 
 bb.fs:                                            ; preds = %bb.fr
   %i.tt = getelementptr inbounds nuw i8, ptr %i.i, i64 4 ; 5 uses
@@ -841,8 +839,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit716: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %24) #21
   br label %.thread
 
-.thread:                                          ; preds = %bb.gb, %.preheader, %.thread910, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit606, %bb.al, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit601, %bb.ag, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit596, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit593, %bb.aa, %bb.x, %bb.fy, %.critedge50, %.critedge48, %.critedge46, %.critedge44, %.critedge42, %.critedge40, %.critedge38, %.critedge36, %.critedge34, %.critedge32, %.critedge30, %.critedge28, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit612, %bb.ar, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit590, %bb.p, %bb.u, %bb.t, %bb.be, %bb.by, %bb.cp, %bb.cz, %bb.dc, %bb.df, %bb.di, %bb.dl, %bb.do, %bb.dr, %bb.fk, %bb.fq, %bb.gk, %bb.cd, %bb.ce, %bb.cm, %.critedge, %bb.cu, %bb.cv, %.critedge28.thread, %.critedge30.thread, %.critedge32.thread, %.critedge34.thread, %.critedge36.thread, %.critedge38.thread, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit652, %bb.ds, %bb.ew, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit691, %.critedge50.thread, %.critedge48.thread, %.critedge46.thread, %.critedge44.thread, %.critedge42.thread, %.critedge40.thread, %bb.ev, %bb.es, %bb.eo, %bb.ek, %bb.eg, %bb.ec, %bb.dy, %bb.ff, %bb.fg, %bb.fd, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit696, %bb.fc, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit699, %bb.fl, %bb.fp, %bb.fo, %bb.ge, %bb.gd, %bb.gc, %25, %bb.fr, %bb.gl, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit716, %bb.ay, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit618, %bb.bc, %bb.j, %bb.k, %bb.e, %bb.f, %bb.b, %bb.c
-  %.48 = phi ptr [ null, %bb.j ], [ null, %bb.b ], [ null, %bb.e ], [ null, %bb.c ], [ null, %bb.f ], [ null, %bb.k ], [ null, %bb.t ], [ null, %bb.p ], [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit590 ], [ null, %bb.u ], [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit612 ], [ %i.hb, %bb.bc ], [ null, %bb.ay ], [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit716 ], [ %i.dw, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit601 ], [ %i.cp, %bb.x ], [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit618 ], [ null, %bb.gc ], [ %i.hg, %bb.be ], [ %.15, %bb.by ], [ %.44, %bb.gk ], [ %i.kh, %bb.cp ], [ null, %bb.cd ], [ null, %.critedge38.thread ], [ %i.lf, %bb.cz ], [ null, %.critedge ], [ %i.la, %.critedge28 ], [ %i.ls, %bb.dc ], [ null, %.critedge28.thread ], [ %i.ln, %.critedge30 ], [ %i.mf, %bb.df ], [ null, %.critedge30.thread ], [ %i.ma, %.critedge32 ], [ %i.ms, %bb.di ], [ null, %.critedge32.thread ], [ %i.mn, %.critedge34 ], [ %i.nf, %bb.dl ], [ null, %.critedge34.thread ], [ %i.na, %.critedge36 ], [ %i.ns, %bb.do ], [ null, %.critedge36.thread ], [ %i.nn, %.critedge38 ], [ %i.nv, %bb.dr ], [ null, %bb.ds ], [ null, %bb.ew ], [ null, %bb.ff ], [ %i.ta, %bb.fk ], [ %i.tq, %bb.fq ], [ null, %bb.fl ], [ null, %bb.fo ], [ %.19, %bb.cm ], [ null, %bb.ce ], [ %i.kq, %bb.cv ], [ null, %bb.cu ], [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit652 ], [ null, %.critedge50.thread ], [ %i.ov, %bb.dy ], [ %i.rx, %bb.ev ], [ %i.oq, %.critedge40 ], [ %i.pl, %bb.ec ], [ null, %.critedge40.thread ], [ %i.pg, %.critedge42 ], [ %i.qb, %bb.eg ], [ null, %.critedge42.thread ], [ %i.pw, %.critedge44 ], [ %i.qq, %bb.ek ], [ null, %.critedge44.thread ], [ %i.ql, %.critedge46 ], [ %i.rf, %bb.eo ], [ null, %.critedge46.thread ], [ %i.ra, %.critedge48 ], [ %i.ru, %bb.es ], [ null, %.critedge48.thread ], [ %i.rp, %.critedge50 ], [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit691 ], [ null, %bb.fd ], [ %i.sn, %bb.fc ], [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit696 ], [ null, %bb.fg ], [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit699 ], [ null, %bb.fp ], [ null, %25 ], [ null, %bb.fr ], [ %i.wu, %bb.ge ], [ %i.et, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit606 ], [ %i.vn, %bb.fy ], [ null, %bb.gd ], [ null, %bb.gl ], [ null, %bb.ar ], [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit596 ], [ %i.cp, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit593 ], [ null, %bb.aa ], [ %i.dw, %bb.ag ], [ %i.et, %bb.al ], [ null, %.thread910 ], [ %i.vr, %.preheader ], [ %i.vr, %bb.gb ]
+.thread:                                          ; preds = %bb.gb, %.preheader, %.thread910, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit606, %bb.al, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit601, %bb.ag, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit596, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit593, %bb.aa, %bb.x, %bb.fy, %.critedge50, %.critedge48, %.critedge46, %.critedge44, %.critedge42, %.critedge40, %.critedge38, %.critedge36, %.critedge34, %.critedge32, %.critedge30, %.critedge28, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit612, %bb.ar, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit590, %bb.p, %bb.u, %bb.t, %bb.be, %bb.by, %bb.cp, %bb.cz, %bb.dc, %bb.df, %bb.di, %bb.dl, %bb.do, %bb.dr, %bb.fk, %bb.fq, %bb.gk, %bb.cd, %bb.ce, %bb.cm, %.critedge, %bb.cu, %bb.cv, %.critedge28.thread, %.critedge30.thread, %.critedge32.thread, %.critedge34.thread, %.critedge36.thread, %.critedge38.thread, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit652, %bb.ds, %bb.ew, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit691, %.critedge50.thread, %.critedge48.thread, %.critedge46.thread, %.critedge44.thread, %.critedge42.thread, %.critedge40.thread, %bb.ev, %bb.es, %bb.eo, %bb.ek, %bb.eg, %bb.ec, %bb.dy, %bb.ff, %bb.fg, %bb.fd, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit696, %bb.fc, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit699, %bb.fl, %bb.fp, %bb.fo, %bb.ge, %bb.gd, %bb.gc, %bb.fr, %bb.gl, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit716, %bb.ay, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit618, %bb.bc, %bb.j, %bb.k, %bb.e, %bb.f, %bb.b, %bb.c
+  %.48 = phi ptr [ null, %bb.j ], [ null, %bb.b ], [ null, %bb.e ], [ null, %bb.c ], [ null, %bb.f ], [ null, %bb.k ], [ null, %bb.t ], [ null, %bb.p ], [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit590 ], [ null, %bb.u ], [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit612 ], [ %i.hb, %bb.bc ], [ null, %bb.ay ], [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit716 ], [ %i.dw, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit601 ], [ %i.cp, %bb.x ], [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit618 ], [ null, %bb.gc ], [ %i.hg, %bb.be ], [ %.15, %bb.by ], [ %.44, %bb.gk ], [ %i.kh, %bb.cp ], [ null, %bb.cd ], [ null, %.critedge38.thread ], [ %i.lf, %bb.cz ], [ null, %.critedge ], [ %i.la, %.critedge28 ], [ %i.ls, %bb.dc ], [ null, %.critedge28.thread ], [ %i.ln, %.critedge30 ], [ %i.mf, %bb.df ], [ null, %.critedge30.thread ], [ %i.ma, %.critedge32 ], [ %i.ms, %bb.di ], [ null, %.critedge32.thread ], [ %i.mn, %.critedge34 ], [ %i.nf, %bb.dl ], [ null, %.critedge34.thread ], [ %i.na, %.critedge36 ], [ %i.ns, %bb.do ], [ null, %.critedge36.thread ], [ %i.nn, %.critedge38 ], [ %i.nv, %bb.dr ], [ null, %bb.ds ], [ null, %bb.ew ], [ null, %bb.ff ], [ %i.ta, %bb.fk ], [ %i.tq, %bb.fq ], [ null, %bb.fl ], [ null, %bb.fo ], [ %.19, %bb.cm ], [ null, %bb.ce ], [ %i.kq, %bb.cv ], [ null, %bb.cu ], [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit652 ], [ null, %.critedge50.thread ], [ %i.ov, %bb.dy ], [ %i.rx, %bb.ev ], [ %i.oq, %.critedge40 ], [ %i.pl, %bb.ec ], [ null, %.critedge40.thread ], [ %i.pg, %.critedge42 ], [ %i.qb, %bb.eg ], [ null, %.critedge42.thread ], [ %i.pw, %.critedge44 ], [ %i.qq, %bb.ek ], [ null, %.critedge44.thread ], [ %i.ql, %.critedge46 ], [ %i.rf, %bb.eo ], [ null, %.critedge46.thread ], [ %i.ra, %.critedge48 ], [ %i.ru, %bb.es ], [ null, %.critedge48.thread ], [ %i.rp, %.critedge50 ], [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit691 ], [ null, %bb.fd ], [ %i.sn, %bb.fc ], [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit696 ], [ null, %bb.fg ], [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit699 ], [ null, %bb.fp ], [ null, %bb.fr ], [ %i.wu, %bb.ge ], [ %i.et, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit606 ], [ %i.vn, %bb.fy ], [ null, %bb.gd ], [ null, %bb.gl ], [ null, %bb.ar ], [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit596 ], [ %i.cp, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit593 ], [ null, %bb.aa ], [ %i.dw, %bb.ag ], [ %i.et, %bb.al ], [ null, %.thread910 ], [ %i.vr, %.preheader ], [ %i.vr, %bb.gb ]
   ret ptr %.48
 }
 
@@ -1154,18 +1152,16 @@ bb.a:
   %i.m = zext i32 %.sroa.0.0.copyload.i65 to i64
   %i.n = add i64 %i.i, %i.m
   %i.o = inttoptr i64 %i.n to ptr                 ; 3 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %i.l, i64 20
+  %4 = getelementptr inbounds nuw i8, ptr %i.l, i64 20
+  %5 = load i8, ptr %4, align 4
+  %.not = icmp eq i8 %5, 3
+  %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 20
   %i.q = load i8, ptr %i.p, align 4
   %.not.a = icmp eq i8 %i.q, 3
-  br i1 %.not.a, label %4, label %.critedge
+  %or.cond64 = select i1 %.not, i1 %.not.a, i1 false
+  br i1 %or.cond64, label %bb.b, label %.critedge
 
-4:                                                ; preds = %bb.a
-  %5 = getelementptr inbounds nuw i8, ptr %i.o, i64 20
-  %6 = load i8, ptr %5, align 4
-  %.not59 = icmp eq i8 %6, 3
-  br i1 %.not59, label %bb.b, label %.critedge
-
-bb.b:                                             ; preds = %4
+bb.b:                                             ; preds = %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %i.l, i64 24 ; 3 uses
   %.sroa.0.0.copyload.i.i = load i32, ptr %i.r, align 4
   %i.s = getelementptr inbounds nuw i8, ptr %i.l, i64 28 ; 3 uses
@@ -1395,8 +1391,8 @@ bb.n:                                             ; preds = %bb.m, %.critedge64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #21
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.b, %bb.c, %bb.a, %4, %.loopexit
-  %.6 = phi ptr [ %.5, %.loopexit ], [ null, %bb.a ], [ null, %4 ], [ null, %bb.c ], [ null, %bb.b ]
+.critedge:                                        ; preds = %bb.b, %bb.c, %bb.a, %.loopexit
+  %.6 = phi ptr [ %.5, %.loopexit ], [ null, %bb.a ], [ null, %bb.c ], [ null, %bb.b ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   ret ptr %.6
@@ -1476,18 +1472,16 @@ bb.a:
   %i.o = zext i32 %.sroa.0.0.copyload.i85 to i64
   %i.p = add i64 %i.k, %i.o
   %i.q = inttoptr i64 %i.p to ptr                 ; 3 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %i.n, i64 20
+  %4 = getelementptr inbounds nuw i8, ptr %i.n, i64 20
+  %5 = load i8, ptr %4, align 4
+  %.not = icmp eq i8 %5, 3
+  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 20
   %i.s = load i8, ptr %i.r, align 4
   %.not.a = icmp eq i8 %i.s, 3
-  br i1 %.not.a, label %4, label %bb.k
+  %or.cond = select i1 %.not, i1 %.not.a, i1 false
+  br i1 %or.cond, label %bb.b, label %bb.k
 
-4:                                                ; preds = %bb.a
-  %5 = getelementptr inbounds nuw i8, ptr %i.q, i64 20
-  %6 = load i8, ptr %5, align 4
-  %.not83 = icmp eq i8 %6, 3
-  br i1 %.not83, label %bb.b, label %bb.k
-
-bb.b:                                             ; preds = %4
+bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
   %i.t = getelementptr inbounds nuw i8, ptr %i.n, i64 24
   %.sroa.0.0.copyload.i.i = load i32, ptr %i.t, align 4
@@ -1618,8 +1612,8 @@ bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.a, %4, %.critedge6
-  %.8 = phi ptr [ %.7, %.critedge6 ], [ null, %4 ], [ null, %bb.a ]
+bb.k:                                             ; preds = %bb.a, %.critedge6
+  %.8 = phi ptr [ %.7, %.critedge6 ], [ null, %bb.a ]
   ret ptr %.8
 }
 

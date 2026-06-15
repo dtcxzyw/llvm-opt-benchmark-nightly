@@ -201,15 +201,13 @@ _ZNK2v88internal8compiler22StringBuilderOptimizer9GetStatusEPNS1_4NodeE.exit: ; 
   %.sroa.0.0.copyload.i = load i64, ptr %i.av, align 4
   %i.aw = and i64 %.sroa.0.0.copyload.i, 1095216660480
   %.not = icmp eq i64 %i.aw, 4294967296
-  br i1 %.not, label %3, label %_ZNK2v88internal8compiler22StringBuilderOptimizer9GetStatusEPNS1_4NodeE.exit.thread
+  %3 = getelementptr inbounds nuw i8, ptr %i.ai, i64 12
+  %4 = load i8, ptr %3, align 4, !range !5
+  %5 = trunc nuw i8 %4 to i1
+  %or.cond49 = select i1 %.not, i1 %5, i1 false
+  br i1 %or.cond49, label %bb.e, label %_ZNK2v88internal8compiler22StringBuilderOptimizer9GetStatusEPNS1_4NodeE.exit.thread
 
-3:                                                ; preds = %_ZNK2v88internal8compiler22StringBuilderOptimizer9GetStatusEPNS1_4NodeE.exit
-  %4 = getelementptr inbounds nuw i8, ptr %i.ai, i64 12
-  %5 = load i8, ptr %4, align 4, !range !5, !noundef !6
-  %6 = trunc nuw i8 %5 to i1
-  br i1 %6, label %bb.e, label %_ZNK2v88internal8compiler22StringBuilderOptimizer9GetStatusEPNS1_4NodeE.exit.thread
-
-_ZNK2v88internal8compiler22StringBuilderOptimizer9GetStatusEPNS1_4NodeE.exit.thread: ; preds = %bb.d, %3, %_ZNK2v88internal8compiler22StringBuilderOptimizer9GetStatusEPNS1_4NodeE.exit
+_ZNK2v88internal8compiler22StringBuilderOptimizer9GetStatusEPNS1_4NodeE.exit.thread: ; preds = %bb.d, %_ZNK2v88internal8compiler22StringBuilderOptimizer9GetStatusEPNS1_4NodeE.exit
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ai, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false)
   %.pre.i = load i32, ptr %i.ak, align 4
   %.pre8.i = load ptr, ptr %i.aa, align 8
@@ -221,7 +219,7 @@ _ZNK2v88internal8compiler22StringBuilderOptimizer9GetStatusEPNS1_4NodeE.exit.thr
   store i8 7, ptr %.sroa.4.0..sroa_idx.i, align 4
   br label %bb.z
 
-bb.e:                                             ; preds = %3
+bb.e:                                             ; preds = %_ZNK2v88internal8compiler22StringBuilderOptimizer9GetStatusEPNS1_4NodeE.exit
   %i.ay = load ptr, ptr %i.u, align 8             ; 4 uses
   store ptr %i.ay, ptr %i.ab, align 8
   %i.az = load ptr, ptr %i.v, align 8

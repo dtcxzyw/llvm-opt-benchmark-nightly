@@ -201,18 +201,16 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph24, %._crit_edge20
   %.sroa.02.022 = phi ptr [ %.0.val, %.lr.ph24 ], [ %i.ai, %._crit_edge20 ] ; 8 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %.sroa.02.022, i64 32
-  %i.j = load i32, ptr %i.i, align 8, !tbaa !99
+  %2 = getelementptr inbounds nuw i8, ptr %.sroa.02.022, i64 32
+  %3 = load i32, ptr %2, align 8, !tbaa !99
+  %.not = icmp eq i32 %3, 1
+  %i.i = getelementptr inbounds nuw i8, ptr %.sroa.02.022, i64 36
+  %i.j = load i32, ptr %i.i, align 4
   %.not.a = icmp eq i32 %i.j, 1
-  br i1 %.not.a, label %2, label %bb.c
+  %or.cond73 = select i1 %.not, i1 %.not.a, i1 false
+  br i1 %or.cond73, label %bb.f, label %bb.c
 
-2:                                                ; preds = %bb.b
-  %3 = getelementptr inbounds nuw i8, ptr %.sroa.02.022, i64 36
-  %4 = load i32, ptr %3, align 4, !tbaa !101
-  %.not69 = icmp eq i32 %4, 1
-  br i1 %.not69, label %bb.f, label %bb.c
-
-bb.c:                                             ; preds = %2, %bb.b
+bb.c:                                             ; preds = %bb.b
   %i.k = tail call ptr @__cxa_allocate_exception(i64 72) #25 ; 3 uses
   invoke void @_ZN7Iex_3_38InputExcC1EPKc(ptr noundef nonnull align 8 dereferenceable(72) %i.k, ptr noundef nonnull @.str.28)
           to label %bb.d unwind label %bb.e
@@ -226,7 +224,7 @@ bb.e:                                             ; preds = %bb.c
           cleanup
   br label %bb.x
 
-bb.f:                                             ; preds = %2
+bb.f:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.02.022, i64 16
   %i.n = load i64, ptr %i.m, align 8, !tbaa !183  ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.sroa.02.022, i64 24

@@ -201,8 +201,8 @@ bb.am:                                            ; preds = %bb.i
   %i.gi = getelementptr inbounds nuw i8, ptr %i.aw, i64 32
   %i.gj = load i32, ptr %i.gi, align 8, !tbaa !2354
   switch i32 %i.gj, label %_ZN8facebook5velox9functions17SIMDJsonExtractor7extractIZNS1_12_GLOBAL__N_115JsonExtractImpl7processERKNS0_10StringViewES8_RNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEUlRT_E_EEN8simdjson10error_codeERNSJ_8fallback8ondemand8documentESH_Rb.exit.thread73 [
-    i32 1, label %bb.an
     i32 3, label %bb.an
+    i32 1, label %bb.an
   ]
 
 bb.an:                                            ; preds = %bb.am, %bb.am
@@ -344,7 +344,7 @@ bb.bb:                                            ; preds = %.invoke, %_ZN8simdj
           cleanup
   br label %bb.bw
 
-_ZN8facebook5velox9functions17SIMDJsonExtractor7extractIZNS1_12_GLOBAL__N_115JsonExtractImpl7processERKNS0_10StringViewES8_RNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEUlRT_E_EEN8simdjson10error_codeERNSJ_8fallback8ondemand8documentESH_Rb.exit.thread73: ; preds = %.noexc48, %.thread246.i.i, %.noexc, %bb.an, %bb.aj, %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i, %bb.am, %_ZN8facebook5velox9functions17SIMDJsonExtractor7extractIZNS1_12_GLOBAL__N_115JsonExtractImpl7processERKNS0_10StringViewES8_RNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEUlRT_E_EEN8simdjson10error_codeERNSJ_8fallback8ondemand8documentESH_Rb.exit
+_ZN8facebook5velox9functions17SIMDJsonExtractor7extractIZNS1_12_GLOBAL__N_115JsonExtractImpl7processERKNS0_10StringViewES8_RNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEUlRT_E_EEN8simdjson10error_codeERNSJ_8fallback8ondemand8documentESH_Rb.exit.thread73: ; preds = %.noexc48, %.thread246.i.i, %.noexc, %bb.am, %bb.aj, %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i, %bb.an, %_ZN8facebook5velox9functions17SIMDJsonExtractor7extractIZNS1_12_GLOBAL__N_115JsonExtractImpl7processERKNS0_10StringViewES8_RNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEUlRT_E_EEN8simdjson10error_codeERNSJ_8fallback8ondemand8documentESH_Rb.exit
   %i.ir = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 4 uses
   %i.is = load ptr, ptr %i.ir, align 8, !tbaa !2344
   %i.it = load ptr, ptr %11, align 8, !tbaa !2211

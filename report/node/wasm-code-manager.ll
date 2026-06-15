@@ -201,20 +201,18 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 216
   %i.l = load ptr, ptr %i.k, align 8              ; 3 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.l, i64 768
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 59728
   %i.n = load ptr, ptr %i.m, align 8              ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.j, i64 232
   %i.p = load ptr, ptr %i.o, align 8
-  %.not29.a = icmp eq ptr %i.p, null
-  br i1 %.not29.a, label %8, label %bb.p
+  %.not29 = icmp eq ptr %i.p, null
+  %9 = load i32, ptr %8, align 4
+  %.not29.a = icmp eq i32 %9, 0
+  %or.cond = select i1 %.not29, i1 %.not29.a, i1 false
+  br i1 %or.cond, label %bb.e, label %bb.p
 
-8:                                                ; preds = %bb.d
-  %9 = getelementptr inbounds nuw i8, ptr %i.l, i64 768
-  %10 = load i32, ptr %9, align 4
-  %11 = icmp eq i32 %10, 0
-  br i1 %11, label %bb.e, label %bb.p
-
-bb.e:                                             ; preds = %8
+bb.e:                                             ; preds = %bb.d
   %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 776
   %i.r = load i32, ptr %i.q, align 4
   %i.s = icmp eq i32 %i.r, 0
@@ -348,7 +346,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZN2v
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #31
   br label %bb.p
 
-bb.p:                                             ; preds = %bb.d, %8, %bb.e, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.c
+bb.p:                                             ; preds = %bb.d, %bb.e, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.c
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 52
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 36

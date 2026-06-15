@@ -201,16 +201,14 @@ bb.a:
   %i.a = tail call noundef nonnull align 8 dereferenceable(104) ptr @_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef 0) ; 8 uses
   %i.b = tail call noundef nonnull align 8 dereferenceable(104) ptr @_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef 1) ; 4 uses
   %i.c = tail call noundef nonnull align 8 dereferenceable(104) ptr @_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef 2) ; 8 uses
-  %i.d = load i8, ptr %i.a, align 8, !tbaa !82
+  %4 = load i8, ptr %i.a, align 8, !tbaa !82
+  %5 = icmp eq i8 %4, 2
+  %i.d = load i8, ptr %i.c, align 8
   %i.e = icmp eq i8 %i.d, 2
-  br i1 %i.e, label %4, label %bb.j
+  %or.cond = select i1 %5, i1 %i.e, i1 false
+  br i1 %or.cond, label %bb.b, label %bb.j
 
-4:                                                ; preds = %bb.a
-  %5 = load i8, ptr %i.c, align 8, !tbaa !82
-  %6 = icmp eq i8 %5, 2
-  br i1 %6, label %bb.b, label %bb.j
-
-bb.b:                                             ; preds = %4
+bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !97   ; 2 uses
   %.not.i.i = icmp eq ptr %i.g, null
@@ -303,7 +301,7 @@ bb.i:                                             ; preds = %bb.f
   call void @_ZN6duckdb15TernaryExecutor14ExecuteGenericINS_10interval_tENS_6date_tES3_S3_NS_29TernaryLambdaWrapperWithNullsEPFS3_S2_S3_S3_RNS_12ValidityMaskEmEEEvRNS_6VectorESA_SA_SA_mT4_(ptr noundef nonnull align 8 dereferenceable(104) %i.a, ptr noundef nonnull align 8 dereferenceable(104) %i.b, ptr noundef nonnull align 8 dereferenceable(104) %i.c, ptr noundef nonnull align 8 dereferenceable(104) %2, i64 noundef %i.ag, ptr noundef nonnull @_ZN6duckdb12_GLOBAL__N_110TimeBucket21OriginTernaryOperator9OperationINS_10interval_tENS_6date_tES5_S5_EET2_T_T0_T1_RNS_12ValidityMaskEm)
   br label %bb.k
 
-bb.j:                                             ; preds = %4, %bb.a
+bb.j:                                             ; preds = %bb.a
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ak = load i64, ptr %i.aj, align 8, !tbaa !68
   tail call void @_ZN6duckdb15TernaryExecutor14ExecuteGenericINS_10interval_tENS_6date_tES3_S3_NS_29TernaryLambdaWrapperWithNullsEPFS3_S2_S3_S3_RNS_12ValidityMaskEmEEEvRNS_6VectorESA_SA_SA_mT4_(ptr noundef nonnull align 8 dereferenceable(104) %i.a, ptr noundef nonnull align 8 dereferenceable(104) %i.b, ptr noundef nonnull align 8 dereferenceable(104) %i.c, ptr noundef nonnull align 8 dereferenceable(104) %2, i64 noundef %i.ak, ptr noundef nonnull @_ZN6duckdb12_GLOBAL__N_110TimeBucket21OriginTernaryOperator9OperationINS_10interval_tENS_6date_tES5_S5_EET2_T_T0_T1_RNS_12ValidityMaskEm)
@@ -320,16 +318,14 @@ bb.a:
   %i.a = tail call noundef nonnull align 8 dereferenceable(104) ptr @_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef 0) ; 8 uses
   %i.b = tail call noundef nonnull align 8 dereferenceable(104) ptr @_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef 1) ; 4 uses
   %i.c = tail call noundef nonnull align 8 dereferenceable(104) ptr @_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef 2) ; 8 uses
-  %i.d = load i8, ptr %i.a, align 8, !tbaa !82
+  %4 = load i8, ptr %i.a, align 8, !tbaa !82
+  %5 = icmp eq i8 %4, 2
+  %i.d = load i8, ptr %i.c, align 8
   %i.e = icmp eq i8 %i.d, 2
-  br i1 %i.e, label %4, label %bb.j
+  %or.cond = select i1 %5, i1 %i.e, i1 false
+  br i1 %or.cond, label %bb.b, label %bb.j
 
-4:                                                ; preds = %bb.a
-  %5 = load i8, ptr %i.c, align 8, !tbaa !82
-  %6 = icmp eq i8 %5, 2
-  br i1 %6, label %bb.b, label %bb.j
-
-bb.b:                                             ; preds = %4
+bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !97   ; 2 uses
   %.not.i.i = icmp eq ptr %i.g, null
@@ -422,7 +418,7 @@ bb.i:                                             ; preds = %bb.f
   call void @_ZN6duckdb15TernaryExecutor14ExecuteGenericINS_10interval_tENS_11timestamp_tES3_S3_NS_29TernaryLambdaWrapperWithNullsEPFS3_S2_S3_S3_RNS_12ValidityMaskEmEEEvRNS_6VectorESA_SA_SA_mT4_(ptr noundef nonnull align 8 dereferenceable(104) %i.a, ptr noundef nonnull align 8 dereferenceable(104) %i.b, ptr noundef nonnull align 8 dereferenceable(104) %i.c, ptr noundef nonnull align 8 dereferenceable(104) %2, i64 noundef %i.ag, ptr noundef nonnull @_ZN6duckdb12_GLOBAL__N_110TimeBucket21OriginTernaryOperator9OperationINS_10interval_tENS_11timestamp_tES5_S5_EET2_T_T0_T1_RNS_12ValidityMaskEm)
   br label %bb.k
 
-bb.j:                                             ; preds = %4, %bb.a
+bb.j:                                             ; preds = %bb.a
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ak = load i64, ptr %i.aj, align 8, !tbaa !68
   tail call void @_ZN6duckdb15TernaryExecutor14ExecuteGenericINS_10interval_tENS_11timestamp_tES3_S3_NS_29TernaryLambdaWrapperWithNullsEPFS3_S2_S3_S3_RNS_12ValidityMaskEmEEEvRNS_6VectorESA_SA_SA_mT4_(ptr noundef nonnull align 8 dereferenceable(104) %i.a, ptr noundef nonnull align 8 dereferenceable(104) %i.b, ptr noundef nonnull align 8 dereferenceable(104) %i.c, ptr noundef nonnull align 8 dereferenceable(104) %2, i64 noundef %i.ak, ptr noundef nonnull @_ZN6duckdb12_GLOBAL__N_110TimeBucket21OriginTernaryOperator9OperationINS_10interval_tENS_11timestamp_tES5_S5_EET2_T_T0_T1_RNS_12ValidityMaskEm)
