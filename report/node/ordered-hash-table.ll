@@ -201,14 +201,14 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.r, label %.lr.ph.i.i, label %.loopexit
 
 .lr.ph.i.i:                                       ; preds = %bb.b
-  %wide.trip.count.i.i = zext i32 %i.k to i64     ; 2 uses
+  %wide.trip.count.i.i = zext nneg i32 %i.k to i64 ; 2 uses
   %xtraiter = and i64 %wide.trip.count.i.i, 7     ; 3 uses
   %i.u = add nsw i32 %i.k, -1
   %i.v = icmp ult i32 %i.u, 7
   br i1 %i.v, label %.epil.preheader, label %.lr.ph.i.i.new
 
 .lr.ph.i.i.new:                                   ; preds = %.lr.ph.i.i
-  %unroll_iter = and i64 %wide.trip.count.i.i, 4294967288
+  %unroll_iter = and i64 %wide.trip.count.i.i, 1073741816
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.new
@@ -611,14 +611,14 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.r, label %.lr.ph.i.i, label %.loopexit
 
 .lr.ph.i.i:                                       ; preds = %bb.b
-  %wide.trip.count.i.i = zext i32 %i.k to i64     ; 2 uses
+  %wide.trip.count.i.i = zext nneg i32 %i.k to i64 ; 2 uses
   %xtraiter = and i64 %wide.trip.count.i.i, 7     ; 3 uses
   %i.u = add nsw i32 %i.k, -1
   %i.v = icmp ult i32 %i.u, 7
   br i1 %i.v, label %.epil.preheader, label %.lr.ph.i.i.new
 
 .lr.ph.i.i.new:                                   ; preds = %.lr.ph.i.i
-  %unroll_iter = and i64 %wide.trip.count.i.i, 4294967288
+  %unroll_iter = and i64 %wide.trip.count.i.i, 1073741816
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.new
@@ -1021,14 +1021,14 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.r, label %.lr.ph.i.i, label %.loopexit
 
 .lr.ph.i.i:                                       ; preds = %bb.b
-  %wide.trip.count.i.i = zext i32 %i.k to i64     ; 2 uses
+  %wide.trip.count.i.i = zext nneg i32 %i.k to i64 ; 2 uses
   %xtraiter = and i64 %wide.trip.count.i.i, 7     ; 3 uses
   %i.u = add nsw i32 %i.k, -1
   %i.v = icmp ult i32 %i.u, 7
   br i1 %i.v, label %.epil.preheader, label %.lr.ph.i.i.new
 
 .lr.ph.i.i.new:                                   ; preds = %.lr.ph.i.i
-  %unroll_iter = and i64 %wide.trip.count.i.i, 4294967288
+  %unroll_iter = and i64 %wide.trip.count.i.i, 1073741816
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.new
@@ -1431,14 +1431,14 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.r, label %.lr.ph.i.i, label %.loopexit
 
 .lr.ph.i.i:                                       ; preds = %bb.b
-  %wide.trip.count.i.i = zext i32 %i.k to i64     ; 2 uses
+  %wide.trip.count.i.i = zext nneg i32 %i.k to i64 ; 2 uses
   %xtraiter = and i64 %wide.trip.count.i.i, 7     ; 3 uses
   %i.u = add nsw i32 %i.k, -1
   %i.v = icmp ult i32 %i.u, 7
   br i1 %i.v, label %.epil.preheader, label %.lr.ph.i.i.new
 
 .lr.ph.i.i.new:                                   ; preds = %.lr.ph.i.i
-  %unroll_iter = and i64 %wide.trip.count.i.i, 4294967288
+  %unroll_iter = and i64 %wide.trip.count.i.i, 1073741816
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.new
@@ -1841,14 +1841,14 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.q, label %.lr.ph.i, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %bb.c
-  %wide.trip.count.i = zext i32 %i.j to i64       ; 2 uses
+  %wide.trip.count.i = zext nneg i32 %i.j to i64  ; 2 uses
   %xtraiter = and i64 %wide.trip.count.i, 7       ; 3 uses
   %i.t = add nsw i32 %i.j, -1
   %i.u = icmp ult i32 %i.t, 7
   br i1 %i.u, label %.epil.preheader, label %.lr.ph.i.new
 
 .lr.ph.i.new:                                     ; preds = %.lr.ph.i
-  %unroll_iter = and i64 %wide.trip.count.i, 4294967288
+  %unroll_iter = and i64 %wide.trip.count.i, 1073741816
   br label %bb.e
 
 ._crit_edge.i.loopexit.unr-lcssa:                 ; preds = %bb.e
@@ -1957,14 +1957,14 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   br i1 %i.q, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.b
-  %wide.trip.count = zext i32 %i.j to i64         ; 2 uses
+  %wide.trip.count = zext nneg i32 %i.j to i64    ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 7         ; 3 uses
   %i.t = add nsw i32 %i.j, -1
   %i.u = icmp ult i32 %i.t, 7
   br i1 %i.u, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %wide.trip.count, 4294967288
+  %unroll_iter = and i64 %wide.trip.count, 1073741816
   br label %bb.d
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.d
@@ -2073,14 +2073,14 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.q, label %.lr.ph.i, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %bb.c
-  %wide.trip.count.i = zext i32 %i.j to i64       ; 2 uses
+  %wide.trip.count.i = zext nneg i32 %i.j to i64  ; 2 uses
   %xtraiter = and i64 %wide.trip.count.i, 7       ; 3 uses
   %i.t = add nsw i32 %i.j, -1
   %i.u = icmp ult i32 %i.t, 7
   br i1 %i.u, label %.epil.preheader, label %.lr.ph.i.new
 
 .lr.ph.i.new:                                     ; preds = %.lr.ph.i
-  %unroll_iter = and i64 %wide.trip.count.i, 4294967288
+  %unroll_iter = and i64 %wide.trip.count.i, 1073741816
   br label %bb.e
 
 ._crit_edge.i.loopexit.unr-lcssa:                 ; preds = %bb.e
@@ -2189,14 +2189,14 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   br i1 %i.q, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.b
-  %wide.trip.count = zext i32 %i.j to i64         ; 2 uses
+  %wide.trip.count = zext nneg i32 %i.j to i64    ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 7         ; 3 uses
   %i.t = add nsw i32 %i.j, -1
   %i.u = icmp ult i32 %i.t, 7
   br i1 %i.u, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %wide.trip.count, 4294967288
+  %unroll_iter = and i64 %wide.trip.count, 1073741816
   br label %bb.d
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.d
@@ -2599,14 +2599,14 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.r, label %.lr.ph.i.i, label %._crit_edge.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.e
-  %wide.trip.count.i.i = zext i32 %i.k to i64     ; 2 uses
+  %wide.trip.count.i.i = zext nneg i32 %i.k to i64 ; 2 uses
   %xtraiter = and i64 %wide.trip.count.i.i, 7     ; 3 uses
   %i.u = add nsw i32 %i.k, -1
   %i.v = icmp ult i32 %i.u, 7
   br i1 %i.v, label %.epil.preheader, label %.lr.ph.i.i.new
 
 .lr.ph.i.i.new:                                   ; preds = %.lr.ph.i.i
-  %unroll_iter = and i64 %wide.trip.count.i.i, 4294967288
+  %unroll_iter = and i64 %wide.trip.count.i.i, 1073741816
   br label %bb.g
 
 ._crit_edge.i.i.loopexit.unr-lcssa:               ; preds = %bb.g
@@ -2722,14 +2722,14 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.r, label %.lr.ph.i.i, label %._crit_edge.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.e
-  %wide.trip.count.i.i = zext i32 %i.k to i64     ; 2 uses
+  %wide.trip.count.i.i = zext nneg i32 %i.k to i64 ; 2 uses
   %xtraiter = and i64 %wide.trip.count.i.i, 7     ; 3 uses
   %i.u = add nsw i32 %i.k, -1
   %i.v = icmp ult i32 %i.u, 7
   br i1 %i.v, label %.epil.preheader, label %.lr.ph.i.i.new
 
 .lr.ph.i.i.new:                                   ; preds = %.lr.ph.i.i
-  %unroll_iter = and i64 %wide.trip.count.i.i, 4294967288
+  %unroll_iter = and i64 %wide.trip.count.i.i, 1073741816
   br label %bb.g
 
 ._crit_edge.i.i.loopexit.unr-lcssa:               ; preds = %bb.g
@@ -2854,14 +2854,14 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %.lr.ph.i, label %.loopexit
 
 .lr.ph.i:                                         ; preds = %bb.b
-  %wide.trip.count.i = zext i32 %i.f to i64       ; 2 uses
+  %wide.trip.count.i = zext nneg i32 %i.f to i64  ; 2 uses
   %xtraiter = and i64 %wide.trip.count.i, 7       ; 3 uses
   %i.p = add nsw i32 %i.f, -1
   %i.q = icmp ult i32 %i.p, 7
   br i1 %i.q, label %.epil.preheader, label %.lr.ph.i.new
 
 .lr.ph.i.new:                                     ; preds = %.lr.ph.i
-  %unroll_iter = and i64 %wide.trip.count.i, 4294967288
+  %unroll_iter = and i64 %wide.trip.count.i, 1073741816
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %.lr.ph.i.new
@@ -3264,14 +3264,14 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   br i1 %i.q, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.b
-  %wide.trip.count = zext i32 %i.j to i64         ; 2 uses
+  %wide.trip.count = zext nneg i32 %i.j to i64    ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 7         ; 3 uses
   %i.t = add nsw i32 %i.j, -1
   %i.u = icmp ult i32 %i.t, 7
   br i1 %i.u, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %wide.trip.count, 4294967288
+  %unroll_iter = and i64 %wide.trip.count, 1073741816
   br label %bb.d
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.d

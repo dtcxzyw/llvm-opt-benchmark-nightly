@@ -201,13 +201,13 @@ _ZSt8_DestroyIPddEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %bb.y
   %i.bi = shl nuw nsw i64 %i.bb, 3                ; 5 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.bh, ptr nonnull align 1 %i.aj, i64 %i.bi, i1 false)
   %i.bj = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.bi
-  %wide.trip.count = zext i32 %.0.copyload.i.i51.fr to i64 ; 4 uses
+  %wide.trip.count = zext nneg i32 %.0.copyload.i.i51.fr to i64 ; 4 uses
   %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
   %i.bk = icmp ult i32 %.0.copyload.i.i51.fr, 4
   br i1 %i.bk, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %wide.trip.count, 4294967292
+  %unroll_iter = and i64 %wide.trip.count, 2147483644
   br label %.lr.ph
 
 .lr.ph.1:                                         ; preds = %.lr.ph
@@ -301,7 +301,7 @@ _ZSt8_DestroyIPddEvT_S1_RSaIT0_E.exit.i.i56:      ; preds = %bb.ad
   br i1 %i.co, label %.lr.ph136.epil.preheader, label %.lr.ph136.preheader.new
 
 .lr.ph136.preheader.new:                          ; preds = %.lr.ph136.preheader
-  %unroll_iter188 = and i64 %wide.trip.count, 4294967292
+  %unroll_iter188 = and i64 %wide.trip.count, 2147483644
   br label %.lr.ph136
 
 .lr.ph:                                           ; preds = %bb.z, %.lr.ph.preheader.new

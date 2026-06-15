@@ -201,7 +201,7 @@ bb.ae:                                            ; preds = %bb.ad
   %or.cond74.i.i = select i1 %or.cond73.i.i, i1 true, i1 %or.cond64.i.i
   %i.ca = add nsw i32 %i.bw, -48
   %or.cond65.i.i = icmp ult i32 %i.ca, 10
-  %or.cond75.i.i = or i1 %or.cond65.i.i, %or.cond74.i.i
+  %or.cond75.i.i = select i1 %or.cond74.i.i, i1 true, i1 %or.cond65.i.i
   %.pre.i.i = trunc nuw i32 %i.bw to i8           ; 7 uses
   br i1 %or.cond75.i.i, label %ares_parse_dns_name_escape.exit.i, label %switch.early.test.i.i
 
