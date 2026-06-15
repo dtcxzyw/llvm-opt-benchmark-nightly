@@ -201,7 +201,7 @@ bb.a:
   %5 = alloca %"class.double_conversion::DoubleToStringConverter", align 8 ; 13 uses
   %6 = alloca %"class.double_conversion::DoubleToStringConverter", align 8 ; 13 uses
   %7 = alloca %"class.double_conversion::DoubleToStringConverter", align 8 ; 13 uses
-  %8 = alloca %"class.folly::basic_fbstring", align 8 ; 8 uses
+  %8 = alloca %"class.folly::basic_fbstring", align 8 ; 5 uses
   %9 = alloca %"class.std::allocator", align 1    ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 80
   %i.c = load i32, ptr %i.b, align 8, !tbaa !11
@@ -522,37 +522,20 @@ bb.ak:                                            ; preds = %bb.ah, %bb.ah, %thr
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #30
   invoke void @_ZN5folly14basic_fbstringIcSt11char_traitsIcESaIcENS_13fbstring_coreIcEEEC2EPKcmRKS3_(ptr noundef nonnull align 8 dereferenceable(24) %8, ptr noundef nonnull %.0, i64 noundef %.pre-phi, ptr noundef nonnull align 1 dereferenceable(1) %9)
-          to label %10 unwind label %bb.ao
+          to label %bb.al unwind label %bb.ao
 
-10:                                               ; preds = %bb.ak
-  %11 = icmp eq ptr %8, %1
-  br i1 %11, label %_ZN5folly14basic_fbstringIcSt11char_traitsIcESaIcENS_13fbstring_coreIcEEEaSEOS6_.exit, label %bb.al, !prof !24
-
-bb.al:                                            ; preds = %10
+bb.al:                                            ; preds = %bb.ak
   %i.cg = getelementptr inbounds nuw i8, ptr %1, i64 23
   %i.ch = load i8, ptr %i.cg, align 1, !tbaa !48
   %i.ci = icmp ult i8 %i.ch, 64
-  br i1 %i.ci, label %_ZN5folly14basic_fbstringIcSt11char_traitsIcESaIcENS_13fbstring_coreIcEEEaSEOS6_.exit.thread, label %bb.am
+  br i1 %i.ci, label %_ZN5folly14basic_fbstringIcSt11char_traitsIcESaIcENS_13fbstring_coreIcEEED2Ev.exit, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
   call void @_ZN5folly13fbstring_coreIcE18destroyMediumLargeEv(ptr noundef nonnull align 8 dereferenceable(24) %1) #30
-  br label %_ZN5folly14basic_fbstringIcSt11char_traitsIcESaIcENS_13fbstring_coreIcEEEaSEOS6_.exit.thread
+  br label %_ZN5folly14basic_fbstringIcSt11char_traitsIcESaIcENS_13fbstring_coreIcEEED2Ev.exit
 
-_ZN5folly14basic_fbstringIcSt11char_traitsIcESaIcENS_13fbstring_coreIcEEEaSEOS6_.exit.thread: ; preds = %bb.al, %bb.am
+_ZN5folly14basic_fbstringIcSt11char_traitsIcESaIcENS_13fbstring_coreIcEEED2Ev.exit: ; preds = %bb.am, %bb.al
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %8, i64 24, i1 false), !tbaa.struct !49
-  br label %_ZN5folly14basic_fbstringIcSt11char_traitsIcESaIcENS_13fbstring_coreIcEEED2Ev.exit
-
-_ZN5folly14basic_fbstringIcSt11char_traitsIcESaIcENS_13fbstring_coreIcEEEaSEOS6_.exit: ; preds = %10
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %8, i64 23
-  %.pre = load i8, ptr %.phi.trans.insert, align 1, !tbaa !48
-  %12 = icmp ult i8 %.pre, 64
-  br i1 %12, label %_ZN5folly14basic_fbstringIcSt11char_traitsIcESaIcENS_13fbstring_coreIcEEED2Ev.exit, label %13
-
-13:                                               ; preds = %_ZN5folly14basic_fbstringIcSt11char_traitsIcESaIcENS_13fbstring_coreIcEEEaSEOS6_.exit
-  call void @_ZN5folly13fbstring_coreIcE18destroyMediumLargeEv(ptr noundef nonnull align 8 dereferenceable(24) %8) #30
-  br label %_ZN5folly14basic_fbstringIcSt11char_traitsIcESaIcENS_13fbstring_coreIcEEED2Ev.exit
-
-_ZN5folly14basic_fbstringIcSt11char_traitsIcESaIcENS_13fbstring_coreIcEEED2Ev.exit: ; preds = %_ZN5folly14basic_fbstringIcSt11char_traitsIcESaIcENS_13fbstring_coreIcEEEaSEOS6_.exit.thread, %_ZN5folly14basic_fbstringIcSt11char_traitsIcESaIcENS_13fbstring_coreIcEEEaSEOS6_.exit, %13
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #30
   %i.cj = load i32, ptr %i.ae, align 8, !tbaa !31 ; 2 uses

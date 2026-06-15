@@ -201,7 +201,7 @@ bb.j:                                             ; preds = %_ZN6hermes5regex19R
 define linkonce_odr hidden void @_ZNK6hermes5regex11BracketNodeINS0_16UTF16RegexTraitsEE19populateInstructionINS0_19RegexBytecodeStream18InstructionWrapperINS0_14U16BracketInsnEEEEEvRS5_T_(ptr noundef nonnull align 8 dereferenceable(91) %0, ptr noundef nonnull align 8 dereferenceable(25) %1, ptr %2, i32 %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %4 = alloca %"struct.hermes::regex::BracketRange32", align 8 ; 5 uses
-  %5 = alloca %"class.hermes::CodePointSet", align 8 ; 19 uses
+  %5 = alloca %"class.hermes::CodePointSet", align 8 ; 18 uses
   %i.a = zext i32 %3 to i64                       ; 10 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !201
@@ -237,7 +237,7 @@ _ZN6hermes5regex19RegexBytecodeStream18InstructionWrapperINS0_14U16BracketInsnEE
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 89
   %i.t = load i8, ptr %i.s, align 1, !tbaa !534, !range !278, !noundef !242
   %i.u = trunc nuw i8 %i.t to i1
-  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   br i1 %i.u, label %_ZN6hermes12CodePointSetC2ERKS0_.exit, label %bb.g
 
 .lr.ph:                                           ; preds = %_ZN6hermes5regex19RegexBytecodeStream18InstructionWrapperINS0_14U16BracketInsnEEptEv.exit, %_ZN6hermes5regex19RegexBytecodeStream18InstructionWrapperINS0_14U16BracketInsnEEptEv.exit16
@@ -291,10 +291,8 @@ bb.g:                                             ; preds = %._crit_edge
   store i32 4, ptr %i.al, align 4, !tbaa !30
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.an = load i32, ptr %i.am, align 8, !tbaa !29 ; 6 uses
-  %.not.i.i.i19 = icmp eq i32 %i.an, 0
-  %i.ao = icmp eq ptr %5, %i.v
-  %or.cond.i.i = or i1 %i.ao, %.not.i.i.i19
-  br i1 %or.cond.i.i, label %_ZN6hermes12CodePointSetC2ERKS0_.exit.thread, label %bb.h
+  %i.ao = icmp eq i32 %i.an, 0
+  br i1 %i.ao, label %_ZN6hermes12CodePointSetC2ERKS0_.exit.thread, label %bb.h
 
 _ZN6hermes12CodePointSetC2ERKS0_.exit.thread:     ; preds = %bb.g
   %i.ap = load ptr, ptr %5, align 8, !tbaa !27
@@ -423,7 +421,7 @@ bb.k:                                             ; preds = %.lr.ph44, %bb.k
 define linkonce_odr hidden void @_ZNK6hermes5regex11BracketNodeINS0_16UTF16RegexTraitsEE19populateInstructionINS0_19RegexBytecodeStream18InstructionWrapperINS0_11BracketInsnEEEEEvRS5_T_(ptr noundef nonnull align 8 dereferenceable(91) %0, ptr noundef nonnull align 8 dereferenceable(25) %1, ptr %2, i32 %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %4 = alloca %"struct.hermes::regex::BracketRange32", align 8 ; 5 uses
-  %5 = alloca %"class.hermes::CodePointSet", align 8 ; 19 uses
+  %5 = alloca %"class.hermes::CodePointSet", align 8 ; 18 uses
   %i.a = zext i32 %3 to i64                       ; 10 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !201
@@ -459,7 +457,7 @@ _ZN6hermes5regex19RegexBytecodeStream18InstructionWrapperINS0_11BracketInsnEEptE
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 89
   %i.t = load i8, ptr %i.s, align 1, !tbaa !534, !range !278, !noundef !242
   %i.u = trunc nuw i8 %i.t to i1
-  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   br i1 %i.u, label %_ZN6hermes12CodePointSetC2ERKS0_.exit, label %bb.g
 
 .lr.ph:                                           ; preds = %_ZN6hermes5regex19RegexBytecodeStream18InstructionWrapperINS0_11BracketInsnEEptEv.exit, %_ZN6hermes5regex19RegexBytecodeStream18InstructionWrapperINS0_11BracketInsnEEptEv.exit16
@@ -513,10 +511,8 @@ bb.g:                                             ; preds = %._crit_edge
   store i32 4, ptr %i.al, align 4, !tbaa !30
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.an = load i32, ptr %i.am, align 8, !tbaa !29 ; 6 uses
-  %.not.i.i.i19 = icmp eq i32 %i.an, 0
-  %i.ao = icmp eq ptr %5, %i.v
-  %or.cond.i.i = or i1 %i.ao, %.not.i.i.i19
-  br i1 %or.cond.i.i, label %_ZN6hermes12CodePointSetC2ERKS0_.exit.thread, label %bb.h
+  %i.ao = icmp eq i32 %i.an, 0
+  br i1 %i.ao, label %_ZN6hermes12CodePointSetC2ERKS0_.exit.thread, label %bb.h
 
 _ZN6hermes12CodePointSetC2ERKS0_.exit.thread:     ; preds = %bb.g
   %i.ap = load ptr, ptr %5, align 8, !tbaa !27

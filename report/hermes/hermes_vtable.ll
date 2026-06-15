@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 6 uses
   store ptr %i.b, ptr %2, align 8, !tbaa !28, !alias.scope !662
   %i.c = load ptr, ptr %i.a, align 8, !tbaa !67, !noalias !662 ; 3 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 5 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 4 uses
   %i.e = icmp eq ptr %i.c, %i.d
   br i1 %i.e, label %bb.c, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
@@ -222,15 +222,14 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   %.pre.i.i = load i64, ptr %.phi.trans.insert.i.i, align 8, !tbaa !68, !noalias !662
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.c, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i, %bb.c
   %i.k = phi ptr [ %i.c, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i ], [ %i.b, %bb.c ]
   %i.l = phi i64 [ %.pre.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i ], [ %i.g, %bb.c ] ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i64 %i.l, ptr %i.n, align 8, !tbaa !68, !alias.scope !662
   store ptr %i.d, ptr %i.a, align 8, !tbaa !67, !noalias !662
-  store i64 0, ptr %i.m, align 8, !tbaa !68, !noalias !662
-  store i8 0, ptr %i.d, align 8, !tbaa !70, !noalias !662
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %i.m, i8 0, i64 9, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   store ptr %i.o, ptr %3, align 8, !tbaa !217

@@ -201,9 +201,9 @@ define linkonce_odr hidden void @_ZN2v88internal4wasm7Decoder7verrorfEjPKcz(ptr 
 bb.a:
   %3 = alloca %"class.v8::base::EmbeddedVector", align 8 ; 7 uses
   %4 = alloca [1 x %struct.__va_list_tag], align 16 ; 5 uses
-  %5 = alloca %"class.v8::internal::wasm::WasmError", align 8 ; 7 uses
+  %5 = alloca %"class.v8::internal::wasm::WasmError", align 8 ; 6 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.b = load i32, ptr %i.a, align 8
   %.not.i = icmp eq i32 %i.b, -1
   br i1 %.not.i, label %bb.b, label %bb.o
@@ -295,7 +295,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
   br label %_ZN2v88internal4wasm9WasmErrorC2EjNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
 
 _ZN2v88internal4wasm9WasmErrorC2EjNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit: ; preds = %bb.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
-  %i.aa = phi ptr [ %i.t, %bb.i ], [ %i.u, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ] ; 6 uses
+  %i.aa = phi ptr [ %i.t, %bb.i ], [ %i.u, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ] ; 5 uses
   %i.ab = phi i64 [ %i.w, %bb.i ], [ %.pr, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ] ; 6 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 3 uses
   store i64 %i.ab, ptr %i.ac, align 8
@@ -319,25 +319,21 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
 bb.j:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i5
   %i.ai = icmp ult i64 %i.ab, 16
   call void @llvm.assume(i1 %i.ai)
-  %.not21.i.i = icmp eq ptr %5, %i.a
-  br i1 %.not21.i.i, label %_ZN2v88internal4wasm9WasmErroraSEOS2_.exit, label %7, !prof !7
-
-7:                                                ; preds = %bb.j
   switch i64 %i.ab, label %bb.l [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i
     i64 1, label %bb.k
   ]
 
-bb.k:                                             ; preds = %7
+bb.k:                                             ; preds = %bb.j
   %i.aj = load i8, ptr %i.aa, align 1
   store i8 %i.aj, ptr %i.ae, align 1
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i
 
-bb.l:                                             ; preds = %7
+bb.l:                                             ; preds = %bb.j
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ae, ptr align 1 %i.aa, i64 %i.ab, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i: ; preds = %bb.l, %bb.k, %7
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i: ; preds = %bb.l, %bb.k, %bb.j
   %i.ak = load i64, ptr %i.ac, align 8            ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i64 %i.ak, ptr %i.al, align 8
@@ -374,10 +370,10 @@ bb.n:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.t, ptr %i.s, align 8
   br label %_ZN2v88internal4wasm9WasmErroraSEOS2_.exit
 
-_ZN2v88internal4wasm9WasmErroraSEOS2_.exit:       ; preds = %bb.j, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i, %bb.m, %bb.n
-  %8 = phi ptr [ %i.ae, %bb.m ], [ %i.t, %bb.n ], [ %i.aa, %bb.j ], [ %.pre.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i ]
+_ZN2v88internal4wasm9WasmErroraSEOS2_.exit:       ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i, %bb.m, %bb.n
+  %7 = phi ptr [ %i.ae, %bb.m ], [ %i.t, %bb.n ], [ %.pre.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i ]
   store i64 0, ptr %i.ac, align 8
-  store i8 0, ptr %8, align 1
+  store i8 0, ptr %7, align 1
   %i.at = load ptr, ptr %i.s, align 8             ; 2 uses
   %i.au = icmp eq ptr %i.at, %i.t
   br i1 %i.au, label %_ZN2v88internal4wasm9WasmErrorD2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i

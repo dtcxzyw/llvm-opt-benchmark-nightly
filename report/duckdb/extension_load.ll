@@ -201,7 +201,7 @@ bb.a:
   %20 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %21 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %22 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
-  %23 = alloca %"class.std::__cxx11::basic_string", align 8 ; 16 uses
+  %23 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
   %24 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %25 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %26 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -604,7 +604,7 @@ bb.cs:                                            ; preds = %bb.cr, %_ZSt8_Destr
   %i.lp = load ptr, ptr %4, align 8, !tbaa !20    ; 6 uses
   %i.lq = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   %i.lr = icmp eq ptr %i.lp, %i.lq
-  %i.ls = load ptr, ptr %23, align 8, !tbaa !20   ; 6 uses
+  %i.ls = load ptr, ptr %23, align 8, !tbaa !20   ; 5 uses
   %i.lt = getelementptr inbounds nuw i8, ptr %23, i64 16 ; 4 uses
   %i.lu = icmp eq ptr %i.ls, %i.lt                ; 2 uses
   br i1 %i.lr, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i276, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i271
@@ -620,25 +620,21 @@ bb.ct:                                            ; preds = %_ZNKSt7__cxx1112bas
   %i.lw = load i64, ptr %i.lv, align 8, !tbaa !11 ; 3 uses
   %i.lx = icmp ult i64 %i.lw, 16
   call void @llvm.assume(i1 %i.lx)
-  %.not21.i = icmp eq ptr %23, %4
-  br i1 %.not21.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit278, label %45, !prof !29
-
-45:                                               ; preds = %bb.ct
   switch i64 %i.lw, label %bb.cv [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i274
     i64 1, label %bb.cu
   ]
 
-bb.cu:                                            ; preds = %45
+bb.cu:                                            ; preds = %bb.ct
   %i.ly = load i8, ptr %i.ls, align 1, !tbaa !14
   store i8 %i.ly, ptr %i.lp, align 1, !tbaa !14
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i274
 
-bb.cv:                                            ; preds = %45
+bb.cv:                                            ; preds = %bb.ct
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.lp, ptr align 1 %i.ls, i64 %i.lw, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i274
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i274: ; preds = %bb.cv, %bb.cu, %45
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i274: ; preds = %bb.cv, %bb.cu, %bb.ct
   %i.lz = load i64, ptr %i.lv, align 8, !tbaa !11 ; 2 uses
   %i.ma = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i64 %i.lz, ptr %i.ma, align 8, !tbaa !11
@@ -675,11 +671,11 @@ bb.cx:                                            ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.lt, ptr %23, align 8, !tbaa !20
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit278
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit278: ; preds = %bb.ct, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i274, %bb.cw, %bb.cx
-  %46 = phi ptr [ %i.lp, %bb.cw ], [ %i.lt, %bb.cx ], [ %i.ls, %bb.ct ], [ %.pre.i275, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i274 ]
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit278: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i274, %bb.cw, %bb.cx
+  %45 = phi ptr [ %i.lp, %bb.cw ], [ %i.lt, %bb.cx ], [ %.pre.i275, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i274 ]
   %i.mk = getelementptr inbounds nuw i8, ptr %23, i64 8
   store i64 0, ptr %i.mk, align 8, !tbaa !11
-  store i8 0, ptr %46, align 1, !tbaa !14
+  store i8 0, ptr %45, align 1, !tbaa !14
   %i.ml = load ptr, ptr %23, align 8, !tbaa !20   ; 2 uses
   %i.mm = getelementptr inbounds nuw i8, ptr %23, i64 16
   %i.mn = icmp eq ptr %i.ml, %i.mm

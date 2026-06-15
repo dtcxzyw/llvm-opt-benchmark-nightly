@@ -201,7 +201,7 @@ _ZN6duckdb12_GLOBAL__N_116WriteLogBindDataD2Ev.exit: ; preds = %_ZNSt7__cxx1112b
 ; Function Attrs: mustprogress uwtable
 define internal void @_ZNK6duckdb12_GLOBAL__N_116WriteLogBindData4CopyEv(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.duckdb::unique_ptr.24") align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(128) %1) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noalias noundef nonnull dereferenceable(128) ptr @_Znwm(i64 noundef 128) #27, !noalias !522, !inline_history !525 ; 19 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(128) ptr @_Znwm(i64 noundef 128) #27, !noalias !522, !inline_history !525 ; 18 uses
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN6duckdb12_GLOBAL__N_116WriteLogBindDataE, i64 16), ptr %i.a, align 8, !tbaa !45, !noalias !522
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   store i8 0, ptr %i.b, align 8, !tbaa !349, !noalias !522
@@ -241,16 +241,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.i.i: ; preds 
   store i8 %i.q, ptr %i.f, align 8, !tbaa !356, !noalias !522
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 56
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.g, ptr noundef nonnull align 8 dereferenceable(32) %i.r)
-          to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit11.i.i unwind label %bb.n, !noalias !522, !inline_history !526
+          to label %bb.c unwind label %bb.n, !noalias !522, !inline_history !526
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit11.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.i.i
+bb.c:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.i.i
   %2 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %3 = load <2 x i64>, ptr %2, align 8, !tbaa !60, !noalias !522
   store <2 x i64> %3, ptr %i.j, align 8, !tbaa !60, !noalias !522
-  %4 = icmp eq ptr %i.a, %1
-  br i1 %4, label %_ZNSt10unique_ptrIN6duckdb12_GLOBAL__N_116WriteLogBindDataESt14default_deleteIS2_EED2Ev.exit, label %bb.c
-
-bb.c:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit11.i.i
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 104
   %i.t = load i8, ptr %i.s, align 8, !tbaa !211, !noalias !522
   store i8 %i.t, ptr %i.l, align 8, !tbaa !211, !noalias !522
@@ -368,7 +364,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit14.i.i: ; preds = 
   tail call void @_ZdlPv(ptr noundef nonnull %i.a) #26, !noalias !522, !inline_history !525
   resume { ptr, i32 } %.pn.i.i
 
-_ZNSt10unique_ptrIN6duckdb12_GLOBAL__N_116WriteLogBindDataESt14default_deleteIS2_EED2Ev.exit: ; preds = %bb.l, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i.i, %bb.h, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit11.i.i
+_ZNSt10unique_ptrIN6duckdb12_GLOBAL__N_116WriteLogBindDataESt14default_deleteIS2_EED2Ev.exit: ; preds = %bb.l, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i.i, %bb.h, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i.i.i
   store ptr %i.a, ptr %0, align 8, !tbaa !128
   ret void
 }

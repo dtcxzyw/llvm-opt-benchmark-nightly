@@ -201,7 +201,7 @@ bb.a:
   %4 = alloca %"class.std::allocator", align 1    ; 4 uses
   %5 = alloca %"struct.fmt::v11::detail::format_arg_store.92", align 16 ; 9 uses
   %6 = alloca %"struct.fmt::v11::detail::format_arg_store.120", align 16 ; 7 uses
-  %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 19 uses
+  %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 18 uses
   %8 = alloca %"class.std::vector.35", align 8    ; 13 uses
   %9 = alloca %"class.std::vector.35", align 8    ; 14 uses
   %10 = alloca %"struct.folly::NestedCommandLineParseResult", align 8 ; 21 uses
@@ -410,7 +410,7 @@ _ZN5folly12_GLOBAL__N_116guessProgramNameB5cxx11Ev.exit: ; preds = %_ZN5boost10f
   %i.at = load ptr, ptr %0, align 8, !tbaa !16    ; 6 uses
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.av = icmp eq ptr %i.at, %i.au
-  %i.aw = load ptr, ptr %7, align 8, !tbaa !16    ; 6 uses
+  %i.aw = load ptr, ptr %7, align 8, !tbaa !16    ; 5 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 4 uses
   %i.ay = icmp eq ptr %i.aw, %i.ax                ; 2 uses
   br i1 %i.av, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i
@@ -426,25 +426,21 @@ bb.p:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.ba = load i64, ptr %i.az, align 8, !tbaa !20 ; 3 uses
   %i.bb = icmp ult i64 %i.ba, 16
   call void @llvm.assume(i1 %i.bb)
-  %.not21.i = icmp eq ptr %7, %0
-  br i1 %.not21.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, label %22, !prof !15
-
-22:                                               ; preds = %bb.p
   switch i64 %i.ba, label %bb.r [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
     i64 1, label %bb.q
   ]
 
-bb.q:                                             ; preds = %22
+bb.q:                                             ; preds = %bb.p
   %i.bc = load i8, ptr %i.aw, align 1, !tbaa !19
   store i8 %i.bc, ptr %i.at, align 1, !tbaa !19
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-bb.r:                                             ; preds = %22
+bb.r:                                             ; preds = %bb.p
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.at, ptr align 1 %i.aw, i64 %i.ba, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.r, %bb.q, %22
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.r, %bb.q, %bb.p
   %i.bd = load i64, ptr %i.az, align 8, !tbaa !20 ; 2 uses
   store i64 %i.bd, ptr %i.a, align 8, !tbaa !20
   %i.be = load ptr, ptr %0, align 8, !tbaa !16
@@ -478,11 +474,11 @@ bb.t:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.ax, ptr %7, align 8, !tbaa !16
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %bb.p, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, %bb.s, %bb.t
-  %23 = phi ptr [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ], [ %i.at, %bb.s ], [ %i.ax, %bb.t ], [ %i.aw, %bb.p ]
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, %bb.s, %bb.t
+  %22 = phi ptr [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ], [ %i.at, %bb.s ], [ %i.ax, %bb.t ]
   %i.bl = getelementptr inbounds nuw i8, ptr %7, i64 8
   store i64 0, ptr %i.bl, align 8, !tbaa !20
-  store i8 0, ptr %23, align 1, !tbaa !19
+  store i8 0, ptr %22, align 1, !tbaa !19
   %i.bm = load ptr, ptr %7, align 8, !tbaa !16    ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
   %i.bo = icmp eq ptr %i.bm, %i.bn

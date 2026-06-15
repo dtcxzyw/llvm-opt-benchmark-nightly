@@ -201,7 +201,7 @@ bb.a:
 define internal void @_ZN4node12_GLOBAL__N_117CompressionStreamINS0_20BrotliDecoderContextEE16DoThreadPoolWorkEv(ptr noundef nonnull align 8 dereferenceable(400) %0) unnamed_addr #0 align 2 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
-  %1 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
+  %1 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 272
   %i.c = load i32, ptr %i.b, align 8
@@ -337,14 +337,14 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br label %_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_PKS5_.exit.i
 
 _ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_PKS5_.exit.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i, %bb.m
-  %i.aw = phi ptr [ %i.ap, %bb.m ], [ %i.aq, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i ] ; 6 uses
+  %i.aw = phi ptr [ %i.ap, %bb.m ], [ %i.aq, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i ] ; 5 uses
   %i.ax = phi i64 [ %i.as, %bb.m ], [ %.pre.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i ] ; 6 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   store i64 %i.ax, ptr %i.ay, align 8, !alias.scope !264
   store ptr %i.x, ptr %2, align 8, !noalias !264
   store i64 0, ptr %i.y, align 8, !noalias !264
   store i8 0, ptr %i.x, align 8, !noalias !264
-  %i.az = getelementptr inbounds nuw i8, ptr %0, i64 336 ; 5 uses
+  %i.az = getelementptr inbounds nuw i8, ptr %0, i64 336 ; 4 uses
   %i.ba = load ptr, ptr %i.az, align 8            ; 6 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 4 uses
   %i.bc = icmp eq ptr %i.ba, %i.bb
@@ -360,25 +360,21 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
 bb.n:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   %i.be = icmp ult i64 %i.ax, 16
   call void @llvm.assume(i1 %i.be)
-  %.not21.i.i = icmp eq ptr %1, %i.az
-  br i1 %.not21.i.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i, label %3, !prof !5
-
-3:                                                ; preds = %bb.n
   switch i64 %i.ax, label %bb.p [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i
     i64 1, label %bb.o
   ]
 
-bb.o:                                             ; preds = %3
+bb.o:                                             ; preds = %bb.n
   %i.bf = load i8, ptr %i.aw, align 1
   store i8 %i.bf, ptr %i.ba, align 1
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i
 
-bb.p:                                             ; preds = %3
+bb.p:                                             ; preds = %bb.n
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ba, ptr align 1 %i.aw, i64 %i.ax, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i: ; preds = %bb.p, %bb.o, %3
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i: ; preds = %bb.p, %bb.o, %bb.n
   %i.bg = load i64, ptr %i.ay, align 8            ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 344
   store i64 %i.bg, ptr %i.bh, align 8
@@ -415,10 +411,10 @@ bb.r:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.ap, ptr %1, align 8
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i: ; preds = %bb.r, %bb.q, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i, %bb.n
-  %4 = phi ptr [ %i.ba, %bb.q ], [ %i.ap, %bb.r ], [ %i.aw, %bb.n ], [ %.pre.i1.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i ]
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i: ; preds = %bb.r, %bb.q, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i
+  %3 = phi ptr [ %i.ba, %bb.q ], [ %i.ap, %bb.r ], [ %.pre.i1.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i ]
   store i64 0, ptr %i.ay, align 8
-  store i8 0, ptr %4, align 1
+  store i8 0, ptr %3, align 1
   %i.bp = load ptr, ptr %1, align 8               ; 2 uses
   %i.bq = icmp eq ptr %i.bp, %i.ap
   br i1 %i.bq, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i2.i

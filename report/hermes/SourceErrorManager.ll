@@ -201,7 +201,7 @@ _ZNSt12_Vector_baseIN6hermes18SourceErrorManager11MessageDataESaIS2_EE13_M_deall
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @"_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN6hermes18SourceErrorManager15BufferedMessageESt6vectorIS4_SaIS4_EEEElNS0_5__ops15_Iter_comp_iterIZNS3_16disableBufferingEvE3$_0EEEvT_SE_T0_T1_"(ptr %0, ptr %1, i64 noundef %2) unnamed_addr #3 {
 bb.a:
-  %3 = alloca %"class.hermes::SourceErrorManager::BufferedMessage", align 8 ; 9 uses
+  %3 = alloca %"class.hermes::SourceErrorManager::BufferedMessage", align 8 ; 8 uses
   %4 = alloca %"class.hermes::SourceErrorManager::BufferedMessage", align 8 ; 8 uses
   %5 = alloca %"class.hermes::SourceErrorManager::BufferedMessage", align 8 ; 8 uses
   %6 = alloca %"class.hermes::SourceErrorManager::BufferedMessage", align 8 ; 7 uses
@@ -604,7 +604,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread1.i.i10.i.i, !llvm.loop !325
 
 "_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6hermes18SourceErrorManager16disableBufferingEvE3$_0EclINS_17__normal_iteratorIPNS3_15BufferedMessageESt6vectorIS8_SaIS8_EEEESD_EEbT_T0_.exit19.thread29.i.i": ; preds = %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6hermes18SourceErrorManager16disableBufferingEvE3$_0EclINS_17__normal_iteratorIPNS3_15BufferedMessageESt6vectorIS8_SaIS8_EEEESD_EEbT_T0_.exit19.i.i", %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit10.i.i15.i.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit10.i.i15.us.i.i, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6hermes18SourceErrorManager16disableBufferingEvE3$_0EclINS_17__normal_iteratorIPNS3_15BufferedMessageESt6vectorIS8_SaIS8_EEEESD_EEbT_T0_.exit19.us.i.i", %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6hermes18SourceErrorManager16disableBufferingEvE3$_0EclINS_17__normal_iteratorIPNS3_15BufferedMessageESt6vectorIS8_SaIS8_EEEESD_EEbT_T0_.exit.thread26.split.us.i.i"
-  %.us-phi.i.i = phi ptr [ %.sroa.0.1.us33.i.i, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6hermes18SourceErrorManager16disableBufferingEvE3$_0EclINS_17__normal_iteratorIPNS3_15BufferedMessageESt6vectorIS8_SaIS8_EEEESD_EEbT_T0_.exit.thread26.split.us.i.i" ], [ %.sroa.0.1.us35.i.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit10.i.i15.us.i.i ], [ %.sroa.0.1.us35.i.i, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6hermes18SourceErrorManager16disableBufferingEvE3$_0EclINS_17__normal_iteratorIPNS3_15BufferedMessageESt6vectorIS8_SaIS8_EEEESD_EEbT_T0_.exit19.us.i.i" ], [ %.sroa.0.1.i.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit10.i.i15.i.i ], [ %.sroa.0.1.i.i, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6hermes18SourceErrorManager16disableBufferingEvE3$_0EclINS_17__normal_iteratorIPNS3_15BufferedMessageESt6vectorIS8_SaIS8_EEEESD_EEbT_T0_.exit19.i.i" ] ; 11 uses
+  %.us-phi.i.i = phi ptr [ %.sroa.0.1.us33.i.i, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6hermes18SourceErrorManager16disableBufferingEvE3$_0EclINS_17__normal_iteratorIPNS3_15BufferedMessageESt6vectorIS8_SaIS8_EEEESD_EEbT_T0_.exit.thread26.split.us.i.i" ], [ %.sroa.0.1.us35.i.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit10.i.i15.us.i.i ], [ %.sroa.0.1.us35.i.i, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6hermes18SourceErrorManager16disableBufferingEvE3$_0EclINS_17__normal_iteratorIPNS3_15BufferedMessageESt6vectorIS8_SaIS8_EEEESD_EEbT_T0_.exit19.us.i.i" ], [ %.sroa.0.1.i.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit10.i.i15.i.i ], [ %.sroa.0.1.i.i, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6hermes18SourceErrorManager16disableBufferingEvE3$_0EclINS_17__normal_iteratorIPNS3_15BufferedMessageESt6vectorIS8_SaIS8_EEEESD_EEbT_T0_.exit19.i.i" ] ; 10 uses
   %i.mt = icmp ult ptr %.sroa.022.1.i.i, %.us-phi.i.i
   br i1 %i.mt, label %bb.p, label %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN6hermes18SourceErrorManager15BufferedMessageESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_16disableBufferingEvE3$_0EEET_SE_SE_T0_.exit"
 
@@ -696,7 +696,7 @@ _ZN6hermes18SourceErrorManager15BufferedMessageaSEOS1_.exit.i19: ; preds = %bb.u
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.us-phi.i.i, ptr noundef nonnull align 8 dereferenceable(72) %3, i64 32, i1 false)
   %i.nv = load ptr, ptr %i.ne, align 8, !tbaa !90 ; 6 uses
   %i.nw = icmp eq ptr %i.nv, %i.ng
-  %i.nx = load ptr, ptr %i.l, align 8, !tbaa !90  ; 6 uses
+  %i.nx = load ptr, ptr %i.l, align 8, !tbaa !90  ; 5 uses
   %i.ny = icmp eq ptr %i.nx, %i.m                 ; 2 uses
   br i1 %i.nw, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i11.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i5.i
 
@@ -710,25 +710,21 @@ bb.v:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.nz = load i64, ptr %i.n, align 8, !tbaa !93  ; 3 uses
   %i.oa = icmp ult i64 %i.nz, 16
   call void @llvm.assume(i1 %i.oa)
-  %.not21.i.i.i8.i = icmp eq ptr %3, %.us-phi.i.i
-  br i1 %.not21.i.i.i8.i, label %_ZN6hermes18SourceErrorManager15BufferedMessageaSEOS1_.exit13.i, label %8, !prof !207
-
-8:                                                ; preds = %bb.v
   switch i64 %i.nz, label %bb.x [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9.i
     i64 1, label %bb.w
   ]
 
-bb.w:                                             ; preds = %8
+bb.w:                                             ; preds = %bb.v
   %i.ob = load i8, ptr %i.nx, align 1, !tbaa !118
   store i8 %i.ob, ptr %i.nv, align 1, !tbaa !118
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9.i
 
-bb.x:                                             ; preds = %8
+bb.x:                                             ; preds = %bb.v
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.nv, ptr align 1 %i.nx, i64 %i.nz, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9.i: ; preds = %bb.x, %bb.w, %8
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9.i: ; preds = %bb.x, %bb.w, %bb.v
   %i.oc = load i64, ptr %i.n, align 8, !tbaa !93  ; 2 uses
   store i64 %i.oc, ptr %i.ns, align 8, !tbaa !93
   %i.od = load ptr, ptr %i.ne, align 8, !tbaa !90
@@ -764,10 +760,10 @@ bb.z:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.m, ptr %i.l, align 8, !tbaa !90
   br label %_ZN6hermes18SourceErrorManager15BufferedMessageaSEOS1_.exit13.i
 
-_ZN6hermes18SourceErrorManager15BufferedMessageaSEOS1_.exit13.i: ; preds = %bb.z, %bb.y, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9.i, %bb.v
-  %9 = phi ptr [ %i.nv, %bb.y ], [ %i.m, %bb.z ], [ %i.nx, %bb.v ], [ %.pre.i.i.i10.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9.i ]
+_ZN6hermes18SourceErrorManager15BufferedMessageaSEOS1_.exit13.i: ; preds = %bb.z, %bb.y, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9.i
+  %8 = phi ptr [ %i.nv, %bb.y ], [ %i.m, %bb.z ], [ %.pre.i.i.i10.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9.i ]
   store i64 0, ptr %i.n, align 8, !tbaa !93
-  store i8 0, ptr %9, align 1, !tbaa !118
+  store i8 0, ptr %8, align 1, !tbaa !118
   %i.ok = load i64, ptr %i.o, align 8
   store i64 %i.ok, ptr %i.nt, align 8
   %i.ol = load ptr, ptr %i.l, align 8, !tbaa !90  ; 2 uses
@@ -1170,7 +1166,7 @@ _ZN6hermes18SourceErrorManager11MessageDataD2Ev.exit: ; preds = %"_ZSt11__push_h
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZSt4swapIN6hermes18SourceErrorManager15BufferedMessageEENSt9enable_ifIXsr6__and_ISt6__not_ISt15__is_tuple_likeIT_EESt21is_move_constructibleIS6_ESt18is_move_assignableIS6_EEE5valueEvE4typeERS6_SF_(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr noundef nonnull align 8 dereferenceable(72) %1) local_unnamed_addr #8 comdat {
 bb.a:
-  %2 = alloca %"class.hermes::SourceErrorManager::BufferedMessage", align 8 ; 9 uses
+  %2 = alloca %"class.hermes::SourceErrorManager::BufferedMessage", align 8 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %2, ptr noundef nonnull align 8 dereferenceable(72) %0, i64 32, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 7 uses
@@ -1270,7 +1266,7 @@ _ZN6hermes18SourceErrorManager15BufferedMessageaSEOS1_.exit: ; preds = %bb.c, %_
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %1, ptr noundef nonnull align 8 dereferenceable(72) %2, i64 32, i1 false)
   %i.ai = load ptr, ptr %i.r, align 8, !tbaa !90  ; 6 uses
   %i.aj = icmp eq ptr %i.ai, %i.t
-  %i.ak = load ptr, ptr %i.a, align 8, !tbaa !90  ; 6 uses
+  %i.ak = load ptr, ptr %i.a, align 8, !tbaa !90  ; 5 uses
   %i.al = icmp eq ptr %i.ak, %i.c                 ; 2 uses
   br i1 %i.aj, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i11, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i5
 
@@ -1284,25 +1280,21 @@ bb.h:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.am = load i64, ptr %i.n, align 8, !tbaa !93  ; 3 uses
   %i.an = icmp ult i64 %i.am, 16
   call void @llvm.assume(i1 %i.an)
-  %.not21.i.i.i8 = icmp eq ptr %2, %1
-  br i1 %.not21.i.i.i8, label %_ZN6hermes18SourceErrorManager15BufferedMessageaSEOS1_.exit13, label %3, !prof !207
-
-3:                                                ; preds = %bb.h
   switch i64 %i.am, label %bb.j [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9
     i64 1, label %bb.i
   ]
 
-bb.i:                                             ; preds = %3
+bb.i:                                             ; preds = %bb.h
   %i.ao = load i8, ptr %i.ak, align 1, !tbaa !118
   store i8 %i.ao, ptr %i.ai, align 1, !tbaa !118
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9
 
-bb.j:                                             ; preds = %3
+bb.j:                                             ; preds = %bb.h
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ai, ptr align 1 %i.ak, i64 %i.am, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9: ; preds = %bb.j, %bb.i, %3
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9: ; preds = %bb.j, %bb.i, %bb.h
   %i.ap = load i64, ptr %i.n, align 8, !tbaa !93  ; 2 uses
   store i64 %i.ap, ptr %i.af, align 8, !tbaa !93
   %i.aq = load ptr, ptr %i.r, align 8, !tbaa !90
@@ -1334,10 +1326,10 @@ bb.l:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.c, ptr %i.a, align 8, !tbaa !90
   br label %_ZN6hermes18SourceErrorManager15BufferedMessageaSEOS1_.exit13
 
-_ZN6hermes18SourceErrorManager15BufferedMessageaSEOS1_.exit13: ; preds = %bb.h, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9, %bb.k, %bb.l
-  %4 = phi ptr [ %i.ai, %bb.k ], [ %i.c, %bb.l ], [ %i.ak, %bb.h ], [ %.pre.i.i.i10, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9 ]
+_ZN6hermes18SourceErrorManager15BufferedMessageaSEOS1_.exit13: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9, %bb.k, %bb.l
+  %3 = phi ptr [ %i.ai, %bb.k ], [ %i.c, %bb.l ], [ %.pre.i.i.i10, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9 ]
   store i64 0, ptr %i.n, align 8, !tbaa !93
-  store i8 0, ptr %4, align 1, !tbaa !118
+  store i8 0, ptr %3, align 1, !tbaa !118
   %i.av = load i64, ptr %i.o, align 8
   store i64 %i.av, ptr %i.ag, align 8
   %i.aw = load ptr, ptr %i.a, align 8, !tbaa !90  ; 2 uses

@@ -201,7 +201,7 @@ _ZN6Assimp11AMFImporter12SComplexFaceC2ERKS1_.exit: ; preds = %bb.c, %bb.d
   br i1 %i.ag, label %bb.r, label %bb.p
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.o
-  %.sroa.022.038 = phi ptr [ %.sroa.022.1, %bb.o ], [ %i.p, %.lr.ph.preheader ] ; 10 uses
+  %.sroa.022.038 = phi ptr [ %.sroa.022.1, %bb.o ], [ %i.p, %.lr.ph.preheader ] ; 9 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.022.038, i64 16
   %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.022.038, i64 40
   %i.aj = load ptr, ptr %i.ai, align 8            ; 9 uses
@@ -293,24 +293,19 @@ _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit2
 "_ZZN6Assimp11AMFImporter39PostprocessHelper_SplitFacesByTextureIDERNSt7__cxx114listINS0_12SComplexFaceESaIS3_EEERNS2_IS5_SaIS5_EEEENK3$_0clEPK9AMFTexMapSD_.exit.thread29": ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit22.i, %bb.i, %"_ZZN6Assimp11AMFImporter39PostprocessHelper_SplitFacesByTextureIDERNSt7__cxx114listINS0_12SComplexFaceESaIS3_EEERNS2_IS5_SaIS5_EEEENK3$_0clEPK9AMFTexMapSD_.exit"
   %i.br = load ptr, ptr %.sroa.022.038, align 8
   %i.bs = invoke noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #24
-          to label %.noexc unwind label %bb.n     ; 6 uses
+          to label %.noexc unwind label %bb.n     ; 5 uses
 
 .noexc:                                           ; preds = %"_ZZN6Assimp11AMFImporter39PostprocessHelper_SplitFacesByTextureIDERNSt7__cxx114listINS0_12SComplexFaceESaIS3_EEERNS2_IS5_SaIS5_EEEENK3$_0clEPK9AMFTexMapSD_.exit.thread29"
-  %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 16 ; 2 uses
-  store i32 0, ptr %i.bt, align 8
+  %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 16
   %4 = getelementptr inbounds nuw i8, ptr %i.bs, i64 24 ; 3 uses
   store ptr null, ptr %4, align 8
-  %i.bu = icmp eq ptr %.sroa.022.038, %i.bs
-  br i1 %i.bu, label %bb.l, label %5
+  %5 = load i32, ptr %i.ah, align 8               ; 3 uses
+  store i32 %5, ptr %i.bt, align 8
+  %i.bu = icmp eq i32 %5, 0
+  br i1 %i.bu, label %bb.k, label %bb.j
 
-5:                                                ; preds = %.noexc
-  %6 = load i32, ptr %i.ah, align 8               ; 3 uses
-  store i32 %6, ptr %i.bt, align 8
-  %.not.i.i.i.i.i.i = icmp eq i32 %6, 0
-  br i1 %.not.i.i.i.i.i.i, label %bb.k, label %bb.j
-
-bb.j:                                             ; preds = %5
-  %i.bv = zext i32 %6 to i64
+bb.j:                                             ; preds = %.noexc
+  %i.bv = zext i32 %5 to i64
   %i.bw = shl nuw nsw i64 %i.bv, 2                ; 2 uses
   %i.bx = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.bw) #24
           to label %.noexc.i.i.i unwind label %_ZNSt15__allocated_ptrISaISt10_List_nodeIN6Assimp11AMFImporter12SComplexFaceEEEED2Ev.exit9.i.i.i ; 2 uses
@@ -322,7 +317,7 @@ bb.j:                                             ; preds = %5
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.bx, ptr align 4 %i.bz, i64 %i.bw, i1 false)
   br label %bb.l
 
-bb.k:                                             ; preds = %5
+bb.k:                                             ; preds = %.noexc
   store ptr null, ptr %4, align 8
   br label %bb.l
 
@@ -332,7 +327,7 @@ _ZNSt15__allocated_ptrISaISt10_List_nodeIN6Assimp11AMFImporter12SComplexFaceEEEE
   call void @_ZdlPvm(ptr noundef nonnull %i.bs, i64 noundef 48) #23
   br label %.body
 
-bb.l:                                             ; preds = %bb.k, %.noexc.i.i.i, %.noexc
+bb.l:                                             ; preds = %bb.k, %.noexc.i.i.i
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bs, i64 32
   %i.cc = getelementptr inbounds nuw i8, ptr %.sroa.022.038, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cb, ptr noundef nonnull align 8 dereferenceable(16) %i.cc, i64 16, i1 false)
@@ -735,40 +730,35 @@ bb.a:
   br i1 %.not4.i, label %_ZNSt7__cxx114listIN6Assimp11AMFImporter12SComplexFaceESaIS3_EE22_M_initialize_dispatchISt20_List_const_iteratorIS3_EEEvT_S9_St12__false_type.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a, %_ZNSt7__cxx114listIN6Assimp11AMFImporter12SComplexFaceESaIS3_EE12emplace_backIJRKS3_EEERS3_DpOT_.exit.i
-  %.sroa.01.05.i = phi ptr [ %i.q, %_ZNSt7__cxx114listIN6Assimp11AMFImporter12SComplexFaceESaIS3_EE12emplace_backIJRKS3_EEERS3_DpOT_.exit.i ], [ %i.c, %bb.a ] ; 5 uses
+  %.sroa.01.05.i = phi ptr [ %i.q, %_ZNSt7__cxx114listIN6Assimp11AMFImporter12SComplexFaceESaIS3_EE12emplace_backIJRKS3_EEERS3_DpOT_.exit.i ], [ %i.c, %bb.a ] ; 4 uses
   %i.d = invoke noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #24
-          to label %.noexc unwind label %bb.d     ; 6 uses
+          to label %.noexc unwind label %bb.d     ; 5 uses
 
 .noexc:                                           ; preds = %.lr.ph.i
-  %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
-  store i32 0, ptr %i.e, align 8
-  %2 = getelementptr inbounds nuw i8, ptr %i.d, i64 24 ; 3 uses
-  store ptr null, ptr %2, align 8
-  %i.f = icmp eq ptr %.sroa.01.05.i, %i.d
-  br i1 %i.f, label %_ZNSt7__cxx114listIN6Assimp11AMFImporter12SComplexFaceESaIS3_EE12emplace_backIJRKS3_EEERS3_DpOT_.exit.i, label %3
+  %2 = getelementptr inbounds nuw i8, ptr %.sroa.01.05.i, i64 16
+  %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 24 ; 3 uses
+  store ptr null, ptr %3, align 8
+  %4 = load i32, ptr %2, align 8                  ; 3 uses
+  store i32 %4, ptr %i.e, align 8
+  %i.f = icmp eq i32 %4, 0
+  br i1 %i.f, label %bb.c, label %bb.b
 
-3:                                                ; preds = %.noexc
-  %4 = getelementptr inbounds nuw i8, ptr %.sroa.01.05.i, i64 16
-  %5 = load i32, ptr %4, align 8                  ; 3 uses
-  store i32 %5, ptr %i.e, align 8
-  %.not.i.i.i.i.i.i.i = icmp eq i32 %5, 0
-  br i1 %.not.i.i.i.i.i.i.i, label %bb.c, label %bb.b
-
-bb.b:                                             ; preds = %3
-  %i.g = zext i32 %5 to i64
+bb.b:                                             ; preds = %.noexc
+  %i.g = zext i32 %4 to i64
   %i.h = shl nuw nsw i64 %i.g, 2                  ; 2 uses
   %i.i = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.h) #24
           to label %.noexc.i.i.i.i unwind label %_ZNSt15__allocated_ptrISaISt10_List_nodeIN6Assimp11AMFImporter12SComplexFaceEEEED2Ev.exit9.i.i.i.i ; 2 uses
 
 .noexc.i.i.i.i:                                   ; preds = %bb.b
-  store ptr %i.i, ptr %2, align 8
+  store ptr %i.i, ptr %3, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.01.05.i, i64 24
   %i.k = load ptr, ptr %i.j, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.i, ptr align 4 %i.k, i64 %i.h, i1 false)
   br label %_ZNSt7__cxx114listIN6Assimp11AMFImporter12SComplexFaceESaIS3_EE12emplace_backIJRKS3_EEERS3_DpOT_.exit.i
 
-bb.c:                                             ; preds = %3
-  store ptr null, ptr %2, align 8
+bb.c:                                             ; preds = %.noexc
+  store ptr null, ptr %3, align 8
   br label %_ZNSt7__cxx114listIN6Assimp11AMFImporter12SComplexFaceESaIS3_EE12emplace_backIJRKS3_EEERS3_DpOT_.exit.i
 
 _ZNSt15__allocated_ptrISaISt10_List_nodeIN6Assimp11AMFImporter12SComplexFaceEEEED2Ev.exit9.i.i.i.i: ; preds = %bb.b
@@ -777,7 +767,7 @@ _ZNSt15__allocated_ptrISaISt10_List_nodeIN6Assimp11AMFImporter12SComplexFaceEEEE
   tail call void @_ZdlPvm(ptr noundef nonnull %i.d, i64 noundef 48) #23
   br label %.body
 
-_ZNSt7__cxx114listIN6Assimp11AMFImporter12SComplexFaceESaIS3_EE12emplace_backIJRKS3_EEERS3_DpOT_.exit.i: ; preds = %bb.c, %.noexc.i.i.i.i, %.noexc
+_ZNSt7__cxx114listIN6Assimp11AMFImporter12SComplexFaceESaIS3_EE12emplace_backIJRKS3_EEERS3_DpOT_.exit.i: ; preds = %bb.c, %.noexc.i.i.i.i
   %i.m = getelementptr inbounds nuw i8, ptr %i.d, i64 32
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.01.05.i, i64 32
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.m, ptr noundef nonnull align 8 dereferenceable(16) %i.n, i64 16, i1 false)

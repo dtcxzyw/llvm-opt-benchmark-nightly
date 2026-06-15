@@ -201,7 +201,7 @@ declare void @_ZN5boost10filesystem6detail28directory_iterator_incrementERNS0_18
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN5folly12HugePageSizeESt6vectorIS3_SaIS3_EEEElNS0_5__ops15_Iter_less_iterEEvT_SB_T0_T1_(ptr %0, ptr %1, i64 noundef %2) local_unnamed_addr #1 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"struct.folly::HugePageSize", align 8 ; 9 uses
+  %3 = alloca %"struct.folly::HugePageSize", align 8 ; 8 uses
   %4 = alloca %"struct.__gnu_cxx::__ops::_Iter_less_iter", align 1 ; 3 uses
   %5 = alloca %"struct.__gnu_cxx::__ops::_Iter_less_iter", align 1 ; 3 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
@@ -296,7 +296,7 @@ bb.h:                                             ; preds = %bb.h, %bb.g
 
 .preheader.i.i:                                   ; preds = %bb.h, %.preheader.i.i
   %.sroa.0.0.pn.i.i = phi ptr [ %.sroa.0.1.i.i, %.preheader.i.i ], [ %.sroa.0.0.i.i, %bb.h ] ; 7 uses
-  %.sroa.0.1.i.i = getelementptr inbounds i8, ptr %.sroa.0.0.pn.i.i, i64 -48 ; 7 uses
+  %.sroa.0.1.i.i = getelementptr inbounds i8, ptr %.sroa.0.0.pn.i.i, i64 -48 ; 6 uses
   %i.ag = load i64, ptr %.sroa.0.1.i.i, align 8, !tbaa !81
   %i.ah = icmp ult i64 %i.ac, %i.ag
   br i1 %i.ah, label %.preheader.i.i, label %bb.i, !llvm.loop !2564
@@ -399,7 +399,7 @@ _ZN5folly12HugePageSizeaSEOS0_.exit.i:            ; preds = %bb.o, %_ZNSt7__cxx1
   store i64 %i.bn, ptr %.sroa.0.1.i.i, align 8, !tbaa !81
   %i.bo = load ptr, ptr %i.aw, align 8, !tbaa !16 ; 6 uses
   %i.bp = icmp eq ptr %i.bo, %i.ay
-  %i.bq = load ptr, ptr %i.f, align 8, !tbaa !16  ; 6 uses
+  %i.bq = load ptr, ptr %i.f, align 8, !tbaa !16  ; 5 uses
   %i.br = icmp eq ptr %i.bq, %i.g                 ; 2 uses
   br i1 %i.bp, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i11.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i5.i
 
@@ -413,25 +413,21 @@ bb.p:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.bs = load i64, ptr %i.h, align 8, !tbaa !20  ; 3 uses
   %i.bt = icmp ult i64 %i.bs, 16
   call void @llvm.assume(i1 %i.bt)
-  %.not21.i.i.i8.i = icmp eq ptr %3, %.sroa.0.1.i.i
-  br i1 %.not21.i.i.i8.i, label %_ZN5folly12HugePageSizeaSEOS0_.exit13.i, label %6, !prof !15
-
-6:                                                ; preds = %bb.p
   switch i64 %i.bs, label %bb.r [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9.i
     i64 1, label %bb.q
   ]
 
-bb.q:                                             ; preds = %6
+bb.q:                                             ; preds = %bb.p
   %i.bu = load i8, ptr %i.bq, align 1, !tbaa !19
   store i8 %i.bu, ptr %i.bo, align 1, !tbaa !19
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9.i
 
-bb.r:                                             ; preds = %6
+bb.r:                                             ; preds = %bb.p
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bo, ptr align 1 %i.bq, i64 %i.bs, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9.i: ; preds = %bb.r, %bb.q, %6
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9.i: ; preds = %bb.r, %bb.q, %bb.p
   %i.bv = load i64, ptr %i.h, align 8, !tbaa !20  ; 2 uses
   store i64 %i.bv, ptr %i.bk, align 8, !tbaa !20
   %i.bw = load ptr, ptr %i.aw, align 8, !tbaa !16
@@ -467,10 +463,10 @@ bb.t:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.g, ptr %i.f, align 8, !tbaa !16
   br label %_ZN5folly12HugePageSizeaSEOS0_.exit13.i
 
-_ZN5folly12HugePageSizeaSEOS0_.exit13.i:          ; preds = %bb.t, %bb.s, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9.i, %bb.p
-  %7 = phi ptr [ %.pre.i.i.i10.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9.i ], [ %i.bo, %bb.s ], [ %i.g, %bb.t ], [ %i.bq, %bb.p ]
+_ZN5folly12HugePageSizeaSEOS0_.exit13.i:          ; preds = %bb.t, %bb.s, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9.i
+  %6 = phi ptr [ %.pre.i.i.i10.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9.i ], [ %i.bo, %bb.s ], [ %i.g, %bb.t ]
   store i64 0, ptr %i.h, align 8, !tbaa !20
-  store i8 0, ptr %7, align 1, !tbaa !19
+  store i8 0, ptr %6, align 1, !tbaa !19
   %i.cd = load i64, ptr %i.i, align 8, !tbaa !83
   store i64 %i.cd, ptr %i.bl, align 8, !tbaa !83
   %i.ce = load ptr, ptr %i.f, align 8, !tbaa !16  ; 2 uses
@@ -873,7 +869,7 @@ _ZN5folly12HugePageSizeaSEOS0_.exit18:            ; preds = %bb.i, %_ZNSt7__cxx1
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr void @_ZSt4swapIN5folly12HugePageSizeEENSt9enable_ifIXsr6__and_ISt6__not_ISt15__is_tuple_likeIT_EESt21is_move_constructibleIS5_ESt18is_move_assignableIS5_EEE5valueEvE4typeERS5_SE_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(48) %1) local_unnamed_addr #10 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"struct.folly::HugePageSize", align 8 ; 9 uses
+  %2 = alloca %"struct.folly::HugePageSize", align 8 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #36
   %i.a = load i64, ptr %0, align 8, !tbaa !81
   store i64 %i.a, ptr %2, align 8, !tbaa !81
@@ -976,7 +972,7 @@ _ZN5folly12HugePageSizeaSEOS0_.exit:              ; preds = %bb.c, %_ZNSt7__cxx1
   store i64 %i.ak, ptr %1, align 8, !tbaa !81
   %i.al = load ptr, ptr %i.t, align 8, !tbaa !16  ; 6 uses
   %i.am = icmp eq ptr %i.al, %i.v
-  %i.an = load ptr, ptr %i.b, align 8, !tbaa !16  ; 6 uses
+  %i.an = load ptr, ptr %i.b, align 8, !tbaa !16  ; 5 uses
   %i.ao = icmp eq ptr %i.an, %i.d                 ; 2 uses
   br i1 %i.am, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i11, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i5
 
@@ -990,25 +986,21 @@ bb.h:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.ap = load i64, ptr %i.o, align 8, !tbaa !20  ; 3 uses
   %i.aq = icmp ult i64 %i.ap, 16
   call void @llvm.assume(i1 %i.aq)
-  %.not21.i.i.i8 = icmp eq ptr %2, %1
-  br i1 %.not21.i.i.i8, label %_ZN5folly12HugePageSizeaSEOS0_.exit13, label %3, !prof !15
-
-3:                                                ; preds = %bb.h
   switch i64 %i.ap, label %bb.j [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9
     i64 1, label %bb.i
   ]
 
-bb.i:                                             ; preds = %3
+bb.i:                                             ; preds = %bb.h
   %i.ar = load i8, ptr %i.an, align 1, !tbaa !19
   store i8 %i.ar, ptr %i.al, align 1, !tbaa !19
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9
 
-bb.j:                                             ; preds = %3
+bb.j:                                             ; preds = %bb.h
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.al, ptr align 1 %i.an, i64 %i.ap, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9: ; preds = %bb.j, %bb.i, %3
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9: ; preds = %bb.j, %bb.i, %bb.h
   %i.as = load i64, ptr %i.o, align 8, !tbaa !20  ; 2 uses
   store i64 %i.as, ptr %i.ah, align 8, !tbaa !20
   %i.at = load ptr, ptr %i.t, align 8, !tbaa !16
@@ -1040,10 +1032,10 @@ bb.l:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.d, ptr %i.b, align 8, !tbaa !16
   br label %_ZN5folly12HugePageSizeaSEOS0_.exit13
 
-_ZN5folly12HugePageSizeaSEOS0_.exit13:            ; preds = %bb.h, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9, %bb.k, %bb.l
-  %4 = phi ptr [ %.pre.i.i.i10, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9 ], [ %i.al, %bb.k ], [ %i.d, %bb.l ], [ %i.an, %bb.h ]
+_ZN5folly12HugePageSizeaSEOS0_.exit13:            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9, %bb.k, %bb.l
+  %3 = phi ptr [ %.pre.i.i.i10, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i9 ], [ %i.al, %bb.k ], [ %i.d, %bb.l ]
   store i64 0, ptr %i.o, align 8, !tbaa !20
-  store i8 0, ptr %4, align 1, !tbaa !19
+  store i8 0, ptr %3, align 1, !tbaa !19
   %i.ay = load i64, ptr %i.p, align 8, !tbaa !83
   store i64 %i.ay, ptr %i.ai, align 8, !tbaa !83
   %i.az = load ptr, ptr %i.b, align 8, !tbaa !16  ; 2 uses

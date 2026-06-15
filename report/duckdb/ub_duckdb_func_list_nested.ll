@@ -201,22 +201,18 @@ _ZNKSt6vectorIN6duckdb15SelectionVectorESaIS1_EE12_M_check_lenEmPKc.exit: ; pred
   tail call void @llvm.assume(i1 %.not.i)
   %i.o = mul nuw nsw i64 %i.l, 24
   %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #21 ; 5 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n ; 5 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n ; 4 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 8 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.r, i8 0, i64 16, i1 false)
-  %i.s = icmp eq ptr %i.q, %2
-  br i1 %i.s, label %bb.k, label %3
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %4 = load ptr, ptr %3, align 8, !tbaa !408      ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %6 = load ptr, ptr %5, align 8, !tbaa !66       ; 4 uses
+  %i.s = icmp eq ptr %6, null
+  br i1 %i.s, label %_ZN6duckdb10shared_ptrINS_13SelectionDataELb1EEC2ERKS2_.exit.i.i.thread.i, label %bb.c
 
-3:                                                ; preds = %_ZNKSt6vectorIN6duckdb15SelectionVectorESaIS1_EE12_M_check_lenEmPKc.exit
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %5 = load ptr, ptr %4, align 8, !tbaa !408      ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %7 = load ptr, ptr %6, align 8, !tbaa !66       ; 4 uses
-  %.not.i.i.i.i.i.i.i = icmp eq ptr %7, null
-  br i1 %.not.i.i.i.i.i.i.i, label %_ZN6duckdb10shared_ptrINS_13SelectionDataELb1EEC2ERKS2_.exit.i.i.thread.i, label %bb.c
-
-bb.c:                                             ; preds = %3
-  %i.t = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
+bb.c:                                             ; preds = %_ZNKSt6vectorIN6duckdb15SelectionVectorESaIS1_EE12_M_check_lenEmPKc.exit
+  %i.t = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
   %i.u = load i8, ptr @__libc_single_threaded, align 1, !tbaa !11
   %.not.i.i.i.i.i.i.i.i = icmp eq i8 %i.u, 0
   br i1 %.not.i.i.i.i.i.i.i.i, label %_ZN6duckdb10shared_ptrINS_13SelectionDataELb1EEC2ERKS2_.exit.i.i.i, label %bb.d
@@ -227,18 +223,18 @@ bb.d:                                             ; preds = %bb.c
   store i32 %i.w, ptr %i.t, align 4, !tbaa !3
   br label %_ZN6duckdb10shared_ptrINS_13SelectionDataELb1EEC2ERKS2_.exit.i.i.thread.i
 
-_ZN6duckdb10shared_ptrINS_13SelectionDataELb1EEC2ERKS2_.exit.i.i.thread.i: ; preds = %bb.d, %3
-  store ptr %5, ptr %i.r, align 8, !tbaa !401
+_ZN6duckdb10shared_ptrINS_13SelectionDataELb1EEC2ERKS2_.exit.i.i.thread.i: ; preds = %bb.d, %_ZNKSt6vectorIN6duckdb15SelectionVectorESaIS1_EE12_M_check_lenEmPKc.exit
+  store ptr %4, ptr %i.r, align 8, !tbaa !401
   %i.x = getelementptr inbounds nuw i8, ptr %i.q, i64 16
-  store ptr %7, ptr %i.x, align 8, !tbaa !66
+  store ptr %6, ptr %i.x, align 8, !tbaa !66
   br label %bb.k
 
 _ZN6duckdb10shared_ptrINS_13SelectionDataELb1EEC2ERKS2_.exit.i.i.i: ; preds = %bb.c
   %i.y = atomicrmw volatile add ptr %i.t, i32 1 acq_rel, align 4 ; 0 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.q, i64 16 ; 2 uses
   %.pre.i = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !66 ; 8 uses
-  store ptr %5, ptr %i.r, align 8, !tbaa !401
-  store ptr %7, ptr %.phi.trans.insert.i, align 8, !tbaa !66
+  store ptr %4, ptr %i.r, align 8, !tbaa !401
+  store ptr %6, ptr %.phi.trans.insert.i, align 8, !tbaa !66
   %.not.i.i.i.i.i.i = icmp eq ptr %.pre.i, null
   br i1 %.not.i.i.i.i.i.i, label %bb.k, label %bb.e
 
@@ -286,7 +282,7 @@ bb.j:                                             ; preds = %_ZN9__gnu_cxx27__ex
   tail call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %.pre.i) #20
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.j, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i, %bb.f, %_ZN6duckdb10shared_ptrINS_13SelectionDataELb1EEC2ERKS2_.exit.i.i.i, %_ZN6duckdb10shared_ptrINS_13SelectionDataELb1EEC2ERKS2_.exit.i.i.thread.i, %_ZNKSt6vectorIN6duckdb15SelectionVectorESaIS1_EE12_M_check_lenEmPKc.exit
+bb.k:                                             ; preds = %bb.j, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i, %bb.f, %_ZN6duckdb10shared_ptrINS_13SelectionDataELb1EEC2ERKS2_.exit.i.i.i, %_ZN6duckdb10shared_ptrINS_13SelectionDataELb1EEC2ERKS2_.exit.i.i.thread.i
   %i.ao = load ptr, ptr %2, align 8, !tbaa !102
   store ptr %i.ao, ptr %i.q, align 8, !tbaa !102
   %.not13.i.i.i.i.i = icmp eq ptr %i.c, %1

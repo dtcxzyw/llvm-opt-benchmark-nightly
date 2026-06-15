@@ -201,7 +201,7 @@ bb.a:
   %i.b = load ptr, ptr %3, align 8, !tbaa !27
   store i8 0, ptr %i.b, align 1, !tbaa !11
   %i.c = load ptr, ptr %3, align 8, !tbaa !27     ; 5 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 38 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 37 uses
   %i.e = icmp eq ptr %i.c, %i.d                   ; 2 uses
   %i.f = load i64, ptr %i.d, align 8              ; 4 uses
   br i1 %i.e, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i
@@ -252,7 +252,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_disposeEv.exit.i: ; pr
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7reserveEm.exit: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_disposeEv.exit.i
   %i.p = phi i64 [ %i.f, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i ], [ %.0.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_disposeEv.exit.i ]
-  %i.q = phi ptr [ %i.c, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i ], [ %i.j, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_disposeEv.exit.i ] ; 2 uses
+  %i.q = phi ptr [ %i.c, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i ], [ %i.j, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_disposeEv.exit.i ]
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 %1 ; 2 uses
   %i.s = sub i64 %2, %1                           ; 4 uses
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %i.s, i64 16) ; 4 uses
@@ -262,9 +262,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7reserveEm.exit: ; preds = 
   %i.w = load i8, ptr %i.v, align 1, !tbaa !11
   %i.x = load i64, ptr %i.a, align 8, !tbaa !24   ; 3 uses
   %i.y = add i64 %i.x, 1                          ; 3 uses
-  %4 = icmp eq ptr %i.q, %i.d
-  %spec.select = select i1 %4, i64 15, i64 %i.p
-  %i.z = icmp ugt i64 %i.y, %spec.select
+  %i.z = icmp ugt i64 %i.y, %i.p
   br i1 %i.z, label %bb.d, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit
 
 bb.d:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7reserveEm.exit

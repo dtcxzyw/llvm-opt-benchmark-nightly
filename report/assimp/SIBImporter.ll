@@ -201,21 +201,16 @@ _ZNKSt6vectorI6aiFaceSaIS0_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
   tail call void @llvm.assume(i1 %.not.i)
   %i.o = shl nuw nsw i64 %i.l, 4                  ; 2 uses
   %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #26 ; 7 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n ; 4 uses
-  store i32 0, ptr %i.q, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.q, i64 8 ; 4 uses
-  store ptr null, ptr %3, align 8
-  %i.r = icmp eq ptr %2, %i.q
-  br i1 %i.r, label %_ZNSt16allocator_traitsISaI6aiFaceEE9constructIS0_JRKS0_EEEvRS1_PT_DpOT0_.exit, label %4
+  %3 = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
+  store ptr null, ptr %i.q, align 8
+  %4 = load i32, ptr %2, align 8                  ; 3 uses
+  store i32 %4, ptr %3, align 8
+  %i.r = icmp eq i32 %4, 0
+  br i1 %i.r, label %bb.d, label %bb.c
 
-4:                                                ; preds = %_ZNKSt6vectorI6aiFaceSaIS0_EE12_M_check_lenEmPKc.exit
-  %5 = load i32, ptr %2, align 8                  ; 3 uses
-  store i32 %5, ptr %i.q, align 8
-  %.not.i.i = icmp eq i32 %5, 0
-  br i1 %.not.i.i, label %bb.d, label %bb.c
-
-bb.c:                                             ; preds = %4
-  %i.s = zext i32 %5 to i64
+bb.c:                                             ; preds = %_ZNKSt6vectorI6aiFaceSaIS0_EE12_M_check_lenEmPKc.exit
+  %i.s = zext i32 %4 to i64
   %i.t = shl nuw nsw i64 %i.s, 2                  ; 2 uses
   %i.u = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.t) #26
           to label %.noexc unwind label %.thread  ; 2 uses
@@ -228,17 +223,17 @@ bb.c:                                             ; preds = %4
   br label %_ZN6aiFaceD2Ev.exit.thread
 
 .noexc:                                           ; preds = %bb.c
-  store ptr %i.u, ptr %3, align 8
+  store ptr %i.u, ptr %i.q, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.y = load ptr, ptr %i.x, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.u, ptr align 4 %i.y, i64 %i.t, i1 false)
   br label %_ZNSt16allocator_traitsISaI6aiFaceEE9constructIS0_JRKS0_EEEvRS1_PT_DpOT0_.exit
 
-bb.d:                                             ; preds = %4
-  store ptr null, ptr %3, align 8
+bb.d:                                             ; preds = %_ZNKSt6vectorI6aiFaceSaIS0_EE12_M_check_lenEmPKc.exit
+  store ptr null, ptr %i.q, align 8
   br label %_ZNSt16allocator_traitsISaI6aiFaceEE9constructIS0_JRKS0_EEEvRS1_PT_DpOT0_.exit
 
-_ZNSt16allocator_traitsISaI6aiFaceEE9constructIS0_JRKS0_EEEvRS1_PT_DpOT0_.exit: ; preds = %bb.d, %.noexc, %_ZNKSt6vectorI6aiFaceSaIS0_EE12_M_check_lenEmPKc.exit
+_ZNSt16allocator_traitsISaI6aiFaceEE9constructIS0_JRKS0_EEEvRS1_PT_DpOT0_.exit: ; preds = %bb.d, %.noexc
   %i.z = invoke noundef ptr @_ZSt16__do_uninit_copyIPK6aiFacePS0_ET0_T_S5_S4_(ptr noundef %i.c, ptr noundef %1, ptr noundef nonnull %i.p)
           to label %_ZSt34__uninitialized_move_if_noexcept_aIP6aiFaceS1_SaIS0_EET0_T_S4_S3_RT1_.exit unwind label %bb.g ; 2 uses
 
@@ -291,7 +286,7 @@ bb.g:                                             ; preds = %_ZNSt16allocator_tr
           catch ptr null
   %i.al = extractvalue { ptr, i32 } %lpad.thr_comm.split-lp, 0
   %i.am = tail call ptr @__cxa_begin_catch(ptr %i.al) #23 ; 0 uses
-  %i.an = load ptr, ptr %3, align 8               ; 2 uses
+  %i.an = load ptr, ptr %i.q, align 8             ; 2 uses
   %i.ao = icmp eq ptr %i.an, null
   br i1 %i.ao, label %_ZN6aiFaceD2Ev.exit.thread, label %bb.h
 
