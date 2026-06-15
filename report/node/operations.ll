@@ -201,19 +201,19 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %i.q, i64 4
-  %i.w = load i8, ptr %i.v, align 4
-  switch i8 %i.w, label %.thread [
-    i8 1, label %bb.d
-    i8 2, label %bb.e
-  ]
+  %i.w = load i8, ptr %i.v, align 4               ; 2 uses
+  %3 = icmp eq i8 %i.w, 1
+  %4 = getelementptr inbounds nuw i8, ptr %i.q, i64 16
+  %5 = load ptr, ptr %4, align 8
+  %6 = icmp eq ptr %1, %5
+  %or.cond = select i1 %3, i1 %6, i1 false
+  br i1 %or.cond, label %.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %3 = getelementptr inbounds nuw i8, ptr %i.q, i64 16
-  %4 = load ptr, ptr %3, align 8
-  %i.x = icmp eq ptr %1, %4
-  br label %.thread
+  %i.x = icmp eq i8 %i.w, 2
+  br i1 %i.x, label %bb.e, label %.thread
 
-bb.e:                                             ; preds = %bb.c
+bb.e:                                             ; preds = %bb.d
   %i.y = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %i.z = load ptr, ptr %i.y, align 8
   %i.aa = icmp eq ptr %1, %i.z
@@ -350,8 +350,8 @@ bb.t:                                             ; preds = %bb.a, %bb.a, %bb.a,
 bb.u:                                             ; preds = %bb.a
   unreachable
 
-.thread:                                          ; preds = %bb.d, %bb.c, %bb.e, %bb.a, %"_ZSt7find_ifIPN2v88internal8compiler10turboshaft8SwitchOp4CaseEZNS3_19IsUnlikelySuccessorEPKNS3_5BlockES9_RKNS3_5GraphEE3$_0ET_SE_SE_T0_.exit", %bb.b
-  %.1 = phi i1 [ %i.u, %bb.b ], [ %.0, %"_ZSt7find_ifIPN2v88internal8compiler10turboshaft8SwitchOp4CaseEZNS3_19IsUnlikelySuccessorEPKNS3_5BlockES9_RKNS3_5GraphEE3$_0ET_SE_SE_T0_.exit" ], [ false, %bb.a ], [ %i.x, %bb.d ], [ false, %bb.c ], [ %i.aa, %bb.e ]
+.thread:                                          ; preds = %bb.e, %bb.d, %bb.c, %bb.a, %"_ZSt7find_ifIPN2v88internal8compiler10turboshaft8SwitchOp4CaseEZNS3_19IsUnlikelySuccessorEPKNS3_5BlockES9_RKNS3_5GraphEE3$_0ET_SE_SE_T0_.exit", %bb.b
+  %.1 = phi i1 [ %i.u, %bb.b ], [ %.0, %"_ZSt7find_ifIPN2v88internal8compiler10turboshaft8SwitchOp4CaseEZNS3_19IsUnlikelySuccessorEPKNS3_5BlockES9_RKNS3_5GraphEE3$_0ET_SE_SE_T0_.exit" ], [ false, %bb.a ], [ true, %bb.c ], [ false, %bb.d ], [ %i.aa, %bb.e ]
   ret i1 %.1
 }
 
