@@ -201,13 +201,13 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %.not15.i, label %range_reverse_each_fixnum_section.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.m, %.lr.ph.i
-  %.016.i = phi i64 [ %i.ae, %.lr.ph.i ], [ %i.aa, %bb.m ] ; 3 uses
+  %.016.i = phi i64 [ %i.ae, %.lr.ph.i ], [ %i.aa, %bb.m ] ; 2 uses
   %i.ab = shl i64 %.016.i, 1
   %i.ac = or disjoint i64 %i.ab, 1
   %i.ad = tail call i64 @rb_yield(i64 noundef %i.ac) #11 ; 0 uses
-  %i.ae = add nsw i64 %.016.i, -1
-  %.not.not.i = icmp sgt i64 %.016.i, %i.z
-  br i1 %.not.not.i, label %.lr.ph.i, label %range_reverse_each_fixnum_section.exit, !llvm.loop !36
+  %i.ae = add nsw i64 %.016.i, -1                 ; 2 uses
+  %.not.i = icmp slt i64 %i.ae, %i.z
+  br i1 %.not.i, label %range_reverse_each_fixnum_section.exit, label %.lr.ph.i, !llvm.loop !36
 
 .thread:                                          ; preds = %bb.f
   %i.af = icmp eq i64 %i.g, 4
@@ -322,13 +322,13 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   br i1 %.not15.i40, label %range_reverse_each_fixnum_section.exit44, label %.lr.ph.i41
 
 .lr.ph.i41:                                       ; preds = %bb.aa, %.lr.ph.i41
-  %.016.i42 = phi i64 [ %i.bq, %.lr.ph.i41 ], [ %i.bm, %bb.aa ] ; 3 uses
+  %.016.i42 = phi i64 [ %i.bq, %.lr.ph.i41 ], [ %i.bm, %bb.aa ] ; 2 uses
   %i.bn = shl i64 %.016.i42, 1
   %i.bo = or disjoint i64 %i.bn, 1
   %i.bp = tail call i64 @rb_yield(i64 noundef %i.bo) #11 ; 0 uses
-  %i.bq = add nsw i64 %.016.i42, -1
-  %.not.not.i43 = icmp sgt i64 %.016.i42, %i.bl
-  br i1 %.not.not.i43, label %.lr.ph.i41, label %range_reverse_each_fixnum_section.exit44, !llvm.loop !36
+  %i.bq = add nsw i64 %.016.i42, -1               ; 2 uses
+  %.not.i43 = icmp slt i64 %i.bq, %i.bl
+  br i1 %.not.i43, label %range_reverse_each_fixnum_section.exit44, label %.lr.ph.i41, !llvm.loop !36
 
 range_reverse_each_fixnum_section.exit44:         ; preds = %.lr.ph.i41, %bb.x, %bb.aa
   br i1 %i.az, label %bb.ab, label %range_reverse_each_fixnum_section.exit44.thread
@@ -731,14 +731,14 @@ bb.bn:                                            ; preds = %bb.bm
   br label %.thread469
 
 bb.bo:                                            ; preds = %bb.bm
-  %i.hx = ashr i64 %i.he, 1                       ; 2 uses
+  %i.hx = ashr i64 %i.he, 1
   %i.hy = ashr i64 %.0246, 1                      ; 2 uses
-  %.not713 = icmp sgt i64 %i.hy, %i.hx
-  br i1 %.not713, label %.thread469, label %.lr.ph685.preheader
+  %1 = add nsw i64 %i.hx, 1                       ; 2 uses
+  %2 = icmp slt i64 %i.hy, %1
+  br i1 %2, label %.lr.ph685.preheader, label %.thread469
 
 .lr.ph685.preheader:                              ; preds = %bb.bo
   %i.hz = add nsw i64 %i.hy, -1
-  %1 = add nsw i64 %i.hx, 1
   br label %.lr.ph685
 
 .lr.ph685:                                        ; preds = %.lr.ph685.preheader, %.thread526
@@ -943,19 +943,19 @@ bb.cl:                                            ; preds = %bb.ck
   br label %.thread469
 
 bb.cm:                                            ; preds = %bb.ck
-  %i.kg = ashr i64 %.0248, 1                      ; 2 uses
+  %i.kg = ashr i64 %.0248, 1
   %i.kh = ashr i64 %i.jn, 1                       ; 2 uses
-  %.not = icmp sgt i64 %i.kh, %i.kg
-  br i1 %.not, label %.thread469, label %.lr.ph.preheader
+  %3 = add nsw i64 %i.kg, 1                       ; 2 uses
+  %4 = icmp slt i64 %i.kh, %3
+  br i1 %4, label %.lr.ph.preheader, label %.thread469
 
 .lr.ph.preheader:                                 ; preds = %bb.cm
   %i.ki = add nsw i64 %i.kh, -1
-  %2 = add nsw i64 %i.kg, 1
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.thread567
   %.18268674 = phi i64 [ %.20270573, %.thread567 ], [ %.15265, %.lr.ph.preheader ] ; 3 uses
-  %.0274673 = phi i64 [ %.0274., %.thread567 ], [ %2, %.lr.ph.preheader ] ; 4 uses
+  %.0274673 = phi i64 [ %.0274., %.thread567 ], [ %3, %.lr.ph.preheader ] ; 4 uses
   %.0276672 = phi i64 [ %..0276, %.thread567 ], [ %i.ki, %.lr.ph.preheader ] ; 5 uses
   %.unshifted = xor i64 %.0274673, %.0276672
   %i.kj = icmp sgt i64 %.unshifted, -1

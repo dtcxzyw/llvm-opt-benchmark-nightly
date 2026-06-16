@@ -201,7 +201,7 @@ bb.a:
   br label %.critedge
 
 .critedge:                                        ; preds = %_ZN5arrow6StatusD2Ev.exit111, %bb.a
-  %.055 = phi i64 [ %2, %bb.a ], [ %i.dc, %_ZN5arrow6StatusD2Ev.exit111 ] ; 8 uses
+  %.055 = phi i64 [ %2, %bb.a ], [ %i.dc, %_ZN5arrow6StatusD2Ev.exit111 ] ; 7 uses
   %.053 = phi i64 [ 0, %bb.a ], [ %i.cz, %_ZN5arrow6StatusD2Ev.exit111 ] ; 3 uses
   %.0 = phi i64 [ 0, %bb.a ], [ %i.dm, %_ZN5arrow6StatusD2Ev.exit111 ] ; 3 uses
   %i.l = load ptr, ptr %1, align 8, !tbaa !11
@@ -221,7 +221,7 @@ bb.a:
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.h
   %.154173 = phi i64 [ %i.ce, %bb.h ], [ %.053, %.lr.ph.preheader ] ; 4 uses
   %.156172 = phi i64 [ %i.cf, %bb.h ], [ %.055, %.lr.ph.preheader ] ; 2 uses
-  %.060171 = phi i64 [ %i.cg, %bb.h ], [ 0, %.lr.ph.preheader ] ; 6 uses
+  %.060171 = phi i64 [ %i.cg, %bb.h ], [ 0, %.lr.ph.preheader ] ; 5 uses
   %i.t = icmp eq i64 %.156172, 0
   br i1 %i.t, label %bb.b, label %bb.d
 
@@ -229,10 +229,10 @@ bb.b:                                             ; preds = %.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #15, !noalias !100
   %i.u = load <2 x i16>, ptr %i.m, align 2, !tbaa !28, !noalias !100
   store <2 x i16> %i.u, ptr %15, align 4, !tbaa !28, !noalias !100
-  %i.v = add nuw nsw i64 %.055, 1                 ; 3 uses
+  %i.v = add nuw nsw i64 %.055, 1                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i)
-  %.not128 = icmp samesign ult i64 %.055, %i.p
-  br i1 %.not128, label %_ZN5arrow6StatusD2Ev.exit.i, label %bb.c
+  %18 = icmp samesign ugt i64 %i.v, %i.p
+  br i1 %18, label %bb.c, label %_ZN5arrow6StatusD2Ev.exit.i
 
 bb.c:                                             ; preds = %bb.b
   call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.23, ptr noundef nonnull @.str.22, i64 noundef %i.v, i64 noundef %i.p) #18, !noalias !100
@@ -305,10 +305,10 @@ bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #15, !noalias !106
   %i.aq = load <2 x i16>, ptr %i.m, align 2, !tbaa !28, !noalias !106
   store <2 x i16> %i.aq, ptr %13, align 4, !tbaa !28, !noalias !106
-  %i.ar = add nuw nsw i64 %.060171, 1             ; 3 uses
+  %i.ar = add nuw nsw i64 %.060171, 1             ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i85)
-  %.not126 = icmp samesign ult i64 %.060171, %i.p
-  br i1 %.not126, label %_ZN5arrow6StatusD2Ev.exit.i86, label %bb.f
+  %19 = icmp samesign ugt i64 %i.ar, %i.p
+  br i1 %19, label %bb.f, label %_ZN5arrow6StatusD2Ev.exit.i86
 
 bb.f:                                             ; preds = %bb.e
   call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.23, ptr noundef nonnull @.str.22, i64 noundef %i.ar, i64 noundef %i.p) #18, !noalias !106

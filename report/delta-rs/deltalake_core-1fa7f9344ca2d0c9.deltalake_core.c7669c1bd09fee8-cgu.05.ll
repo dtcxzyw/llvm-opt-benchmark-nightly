@@ -201,8 +201,8 @@ bb.m:                                             ; preds = %bb.f
   %i.ck = getelementptr inbounds nuw i8, ptr %i.r, i64 24
   store ptr %i.ch, ptr %i.ck, align 8, !alias.scope !20763, !noalias !20770
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !20762
-  %i.cl = shl nuw nsw i64 %.sroa.55.0.copyload.i.i, 2 ; 2 uses
-  %i.cm = add nuw nsw i64 %i.cl, 4                ; 3 uses
+  %i.cl = shl nuw nsw i64 %.sroa.55.0.copyload.i.i, 2
+  %i.cm = add nuw nsw i64 %i.cl, 4                ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !20771)
   %i.cn = and i64 %i.cm, 60
   %i.co = icmp eq i64 %i.cn, 0
@@ -217,8 +217,8 @@ bb.m:                                             ; preds = %bb.f
 bb.n:                                             ; preds = %bb.m
   %reass.sub.i38.i = and i64 %i.cm, 4611686018427387840
   %i.cq = add nuw nsw i64 %reass.sub.i38.i, 64    ; 2 uses
-  %.not94.i = icmp samesign ugt i64 %i.cq, %i.cl
-  br i1 %.not94.i, label %.split.i.i, label %bb.o, !prof !70
+  %5 = icmp samesign ult i64 %i.cq, %i.cm
+  br i1 %5, label %bb.o, label %.split.i.i, !prof !10
 
 bb.o:                                             ; preds = %bb.n
   invoke void @_RNvNtCsbvkFyIu7lgC_4core6option13expect_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @164, i64 noundef 35, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @166) #40

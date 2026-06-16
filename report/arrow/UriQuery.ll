@@ -58,7 +58,7 @@ bb.a:
   br i1 %i.a, label %.split.us.preheader, label %.split.preheader
 
 .split.preheader:                                 ; preds = %bb.a
-  %i.f = add nsw i32 %2, -1
+  %i.f = add nsw i32 %2, -1                       ; 2 uses
   %i.g = sext i32 %i.f to i64                     ; 3 uses
   %i.h = load ptr, ptr %1, align 8, !tbaa !7      ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -91,8 +91,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 bb.f:                                             ; preds = %bb.e
   %i.s = mul nsw i32 %i.n, %i.c
   %i.t = mul nsw i32 %i.r, %i.c
-  %.not136 = icmp slt i32 %i.s, %2
-  br i1 %.not136, label %bb.g, label %.critedge
+  %7 = icmp sgt i32 %i.s, %i.f
+  br i1 %7, label %.critedge, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.u = sext i32 %i.n to i64
@@ -495,7 +495,7 @@ bb.a:
   br i1 %i.a, label %.split.us.preheader, label %.split.preheader
 
 .split.preheader:                                 ; preds = %bb.a
-  %i.f = add nsw i32 %2, -1
+  %i.f = add nsw i32 %2, -1                       ; 2 uses
   %i.g = sext i32 %i.f to i64                     ; 3 uses
   %i.h = load ptr, ptr %1, align 8, !tbaa !30     ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -528,8 +528,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 bb.f:                                             ; preds = %bb.e
   %i.s = mul nsw i32 %i.n, %i.c
   %i.t = mul nsw i32 %i.r, %i.c
-  %.not134 = icmp slt i32 %i.s, %2
-  br i1 %.not134, label %bb.g, label %.critedge
+  %7 = icmp sgt i32 %i.s, %i.f
+  br i1 %7, label %.critedge, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.u = sext i32 %i.n to i64

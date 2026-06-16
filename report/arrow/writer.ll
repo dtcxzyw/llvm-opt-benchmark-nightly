@@ -201,16 +201,16 @@ bb.wo:                                            ; preds = %_ZN9__gnu_cxx27__ex
   br label %bb.wp
 
 .lr.ph.i.i589:                                    ; preds = %bb.wi, %.lr.ph.i.i589
-  %indvars.iv.i.i590 = phi i64 [ %indvars.iv.next.i.i591, %.lr.ph.i.i589 ], [ 0, %bb.wi ] ; 4 uses
+  %indvars.iv.i.i590 = phi i64 [ %indvars.iv.next.i.i591, %.lr.ph.i.i589 ], [ 0, %bb.wi ] ; 3 uses
   %i.ceu = getelementptr inbounds nuw [8 x i8], ptr %i.cdu, i64 %indvars.iv.i.i590
   %i.cev = load i64, ptr %i.ceu, align 8, !tbaa !288, !noalias !1011
   %i.cew = sub nsw i64 %i.cev, %i.cdx
   %i.cex = getelementptr inbounds nuw [8 x i8], ptr %i.cdw, i64 %indvars.iv.i.i590
   store i64 %i.cew, ptr %i.cex, align 8, !tbaa !288, !noalias !1011
-  %indvars.iv.next.i.i591 = add nuw nsw i64 %indvars.iv.i.i590, 1
+  %indvars.iv.next.i.i591 = add nuw nsw i64 %indvars.iv.i.i590, 1 ; 2 uses
   %i.cey = load i64, ptr %i.cdz, align 8, !tbaa !138, !noalias !1011
-  %.not.not.i.i = icmp sgt i64 %i.cey, %indvars.iv.i.i590
-  br i1 %.not.not.i.i, label %.lr.ph.i.i589, label %._crit_edge.i.i592, !llvm.loop !1027
+  %.not.i.i632 = icmp slt i64 %i.cey, %indvars.iv.next.i.i591
+  br i1 %.not.i.i632, label %._crit_edge.i.i592, label %.lr.ph.i.i589, !llvm.loop !1027
 
 bb.wp:                                            ; preds = %bb.wo, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i64.i.i599, %bb.wk, %.noexc.i.i596
   call void @llvm.lifetime.end.p0(ptr nonnull %130) #28, !noalias !1011
@@ -613,16 +613,16 @@ bb.abb:                                           ; preds = %_ZN9__gnu_cxx27__ex
   br label %bb.abc
 
 .lr.ph.i.i717:                                    ; preds = %bb.aav, %.lr.ph.i.i717
-  %indvars.iv.i.i718 = phi i64 [ %indvars.iv.next.i.i719, %.lr.ph.i.i717 ], [ 0, %bb.aav ] ; 4 uses
+  %indvars.iv.i.i718 = phi i64 [ %indvars.iv.next.i.i719, %.lr.ph.i.i717 ], [ 0, %bb.aav ] ; 3 uses
   %i.ctk = getelementptr inbounds nuw [8 x i8], ptr %i.csk, i64 %indvars.iv.i.i718
   %i.ctl = load i64, ptr %i.ctk, align 8, !tbaa !288, !noalias !1068
   %i.ctm = sub nsw i64 %i.ctl, %i.csn
   %i.ctn = getelementptr inbounds nuw [8 x i8], ptr %i.csm, i64 %indvars.iv.i.i718
   store i64 %i.ctm, ptr %i.ctn, align 8, !tbaa !288, !noalias !1068
-  %indvars.iv.next.i.i719 = add nuw nsw i64 %indvars.iv.i.i718, 1
+  %indvars.iv.next.i.i719 = add nuw nsw i64 %indvars.iv.i.i718, 1 ; 2 uses
   %i.cto = load i64, ptr %i.csp, align 8, !tbaa !138, !noalias !1068
-  %.not.not.i.i720 = icmp sgt i64 %i.cto, %indvars.iv.i.i718
-  br i1 %.not.not.i.i720, label %.lr.ph.i.i717, label %._crit_edge.i.i721, !llvm.loop !1082
+  %.not.i.i761 = icmp slt i64 %i.cto, %indvars.iv.next.i.i719
+  br i1 %.not.i.i761, label %._crit_edge.i.i721, label %.lr.ph.i.i717, !llvm.loop !1082
 
 bb.abc:                                           ; preds = %bb.abb, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i64.i.i728, %bb.aax, %.noexc.i.i725
   call void @llvm.lifetime.end.p0(ptr nonnull %119) #28, !noalias !1068
@@ -1025,16 +1025,16 @@ bb.azi:                                           ; preds = %_ZN9__gnu_cxx27__ex
   br label %bb.azj
 
 .lr.ph.i1340:                                     ; preds = %bb.azc, %.lr.ph.i1340
-  %indvars.iv.i1341 = phi i64 [ %indvars.iv.next.i1342, %.lr.ph.i1340 ], [ 0, %bb.azc ] ; 4 uses
+  %indvars.iv.i1341 = phi i64 [ %indvars.iv.next.i1342, %.lr.ph.i1340 ], [ 0, %bb.azc ] ; 3 uses
   %i.fxd = getelementptr inbounds nuw [8 x i8], ptr %i.fwd, i64 %indvars.iv.i1341
   %i.fxe = load i64, ptr %i.fxd, align 8, !tbaa !288, !noalias !1358
   %i.fxf = sub nsw i64 %i.fxe, %i.fwg
   %i.fxg = getelementptr inbounds nuw [8 x i8], ptr %i.fwf, i64 %indvars.iv.i1341
   store i64 %i.fxf, ptr %i.fxg, align 8, !tbaa !288, !noalias !1358
-  %indvars.iv.next.i1342 = add nuw nsw i64 %indvars.iv.i1341, 1
+  %indvars.iv.next.i1342 = add nuw nsw i64 %indvars.iv.i1341, 1 ; 2 uses
   %i.fxh = load i64, ptr %i.fwi, align 8, !tbaa !138, !noalias !1358
-  %.not.not.i = icmp sgt i64 %i.fxh, %indvars.iv.i1341
-  br i1 %.not.not.i, label %.lr.ph.i1340, label %._crit_edge.i1343, !llvm.loop !1372
+  %.not.i1378 = icmp slt i64 %i.fxh, %indvars.iv.next.i1342
+  br i1 %.not.i1378, label %._crit_edge.i1343, label %.lr.ph.i1340, !llvm.loop !1372
 
 bb.azj:                                           ; preds = %bb.azi, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i1350, %bb.aze, %.noexc.i1347
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #28, !noalias !1358

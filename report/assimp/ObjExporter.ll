@@ -201,17 +201,17 @@ bb.a:
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
   call void @_ZN6Assimp11ObjExporter22GetMaterialLibFileNameB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %2, ptr noundef nonnull align 8 dereferenceable(1120) %1)
-  %i.c = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEPKcmm(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull @.str.8, i64 noundef -1, i64 noundef 2) #22 ; 3 uses
+  %i.c = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEPKcmm(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull @.str.8, i64 noundef -1, i64 noundef 2) #22 ; 2 uses
   %.not = icmp eq i64 %i.c, -1
   br i1 %.not, label %bb.g, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = add nuw i64 %i.c, 1                      ; 3 uses
+  %i.d = add nuw i64 %i.c, 1                      ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !44)
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.f = load i64, ptr %i.e, align 8, !noalias !44 ; 3 uses
-  %.not12 = icmp ult i64 %i.c, %i.f
-  br i1 %.not12, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i, label %bb.c
+  %3 = icmp ugt i64 %i.d, %i.f
+  br i1 %3, label %bb.c, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
 
 bb.c:                                             ; preds = %bb.b
   invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.57, ptr noundef nonnull @.str.58, i64 noundef %i.d, i64 noundef %i.f) #23

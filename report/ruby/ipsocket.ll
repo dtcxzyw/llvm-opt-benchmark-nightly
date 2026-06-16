@@ -201,7 +201,7 @@ bb.cv:                                            ; preds = %._crit_edge1303, %a
 
 bb.cw:                                            ; preds = %bb.cv
   call void @rb_fd_set(i32 noundef %.0483, ptr noundef nonnull %i.gi) #16
-  %spec.select620 = call i32 @llvm.smax.i32(i32 %.0484, i32 %i.gj)
+  %spec.select620 = call i32 @llvm.smax.i32(i32 %i.gj, i32 %.0484)
   br label %bb.cx
 
 bb.cx:                                            ; preds = %bb.cw, %bb.cv

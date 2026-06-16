@@ -201,8 +201,8 @@ bb.c:                                             ; preds = %_ZNKSt17basic_strin
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i.i.i: ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEPKcm.exit.thread19
   %i.p = add nuw nsw i64 %1, 1                    ; 2 uses
-  %.not.i.i.i.i.not = icmp samesign ult i64 %1, 15
-  br i1 %.not.i.i.i.i.not, label %bb.d, label %bb.g
+  %.not.i.i.i.i = icmp samesign ugt i64 %1, 14
+  br i1 %.not.i.i.i.i, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i.i.i
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 17 ; 2 uses
@@ -605,7 +605,7 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.a
   %.not.i.i = icmp eq ptr %i.h, null
   %i.i = ptrtoint ptr %i.h to i64
   %i.j = ptrtoint ptr %.val to i64
-  %i.k = sub i64 %i.i, %i.j                       ; 3 uses
+  %i.k = sub i64 %i.i, %i.j                       ; 2 uses
   %i.l = icmp eq i64 %i.k, -1
   %or.cond = or i1 %.not.i.i, %i.l
   br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEcm.exit.thread, label %bb.b
@@ -619,9 +619,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEcm.exit.thread: ; 
   br label %bb.d
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
-  %i.o = add nuw i64 %i.k, 1                      ; 3 uses
-  %.not14 = icmp ult i64 %i.k, %i.g
-  br i1 %.not14, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit, label %bb.c
+  %i.o = add nuw i64 %i.k, 1                      ; 4 uses
+  %2 = icmp ugt i64 %i.o, %i.g
+  br i1 %2, label %bb.c, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit
 
 bb.c:                                             ; preds = %bb.b
   tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.24, ptr noundef nonnull @.str.23, i64 noundef %i.o, i64 noundef %i.g) #22

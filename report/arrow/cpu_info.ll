@@ -201,7 +201,7 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %_ZSt7getlineIcSt11c
   %.not.i21.i = icmp eq ptr %i.fr, null
   %i.fs = ptrtoint ptr %i.fr to i64
   %i.ft = ptrtoint ptr %.pre223.i to i64
-  %i.fu = sub i64 %i.fs, %i.ft                    ; 4 uses
+  %i.fu = sub i64 %i.fs, %i.ft                    ; 3 uses
   %.not.i = icmp eq i64 %i.fu, -1
   %or.cond.i = or i1 %.not.i21.i, %.not.i
   br i1 %or.cond.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm.exit.thread.i, label %bb.z
@@ -282,11 +282,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.af, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25
-  %i.gi = add nuw i64 %i.fu, 1                    ; 3 uses
+  %i.gi = add nuw i64 %i.fu, 1                    ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !56)
   %i.gj = load i64, ptr %i.ch, align 8, !tbaa !24, !noalias !56 ; 3 uses
-  %.not122.i = icmp ult i64 %i.fu, %i.gj
-  br i1 %.not122.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i, label %bb.ag
+  %12 = icmp ugt i64 %i.gi, %i.gj
+  br i1 %12, label %bb.ag, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i
 
 bb.ag:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i
   invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.17, ptr noundef nonnull @.str.16, i64 noundef %i.gi, i64 noundef %i.gj) #26

@@ -201,7 +201,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit188: ; preds = %bb.ad,
   br i1 %exitcond343.peel.not, label %._crit_edge304, label %.lr.ph303.peel.next
 
 .lr.ph298:                                        ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit188, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit191
-  %.0144297 = phi i32 [ %i.ev, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit191 ], [ 0, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit188 ] ; 2 uses
+  %.0144297 = phi i32 [ %i.ev, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit191 ], [ 0, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit188 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w)
   store i8 9, ptr %i.w, align 1
   %i.en = load ptr, ptr %1, align 8
@@ -223,9 +223,9 @@ bb.ag:                                            ; preds = %.lr.ph298
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit191: ; preds = %bb.af, %bb.ag
   call void @llvm.lifetime.end.p0(ptr nonnull %i.w)
-  %i.ev = add nuw i32 %.0144297, 1
-  %exitcond342.not = icmp eq i32 %.0144297, %2
-  br i1 %exitcond342.not, label %._crit_edge299, label %.lr.ph298, !llvm.loop !33
+  %i.ev = add nuw nsw i32 %.0144297, 1            ; 2 uses
+  %.not164 = icmp sgt i32 %i.ev, %2
+  br i1 %.not164, label %._crit_edge299, label %.lr.ph298, !llvm.loop !33
 
 ._crit_edge304:                                   ; preds = %bb.ap, %._crit_edge354, %._crit_edge299
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v)
@@ -385,7 +385,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit206: ; preds = %bb.at,
   br i1 %exitcond339.peel.not, label %._crit_edge292, label %.lr.ph291.peel.next
 
 .lr.ph286:                                        ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit206, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit209
-  %.0141285 = phi i32 [ %i.hg, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit209 ], [ 0, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit206 ] ; 2 uses
+  %.0141285 = phi i32 [ %i.hg, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit209 ], [ 0, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit206 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)
   store i8 9, ptr %i.q, align 1
   %i.gy = load ptr, ptr %1, align 8
@@ -407,9 +407,9 @@ bb.aw:                                            ; preds = %.lr.ph286
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit209: ; preds = %bb.av, %bb.aw
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q)
-  %i.hg = add nuw i32 %.0141285, 1
-  %exitcond338.not = icmp eq i32 %.0141285, %2
-  br i1 %exitcond338.not, label %._crit_edge287, label %.lr.ph286, !llvm.loop !37
+  %i.hg = add nuw nsw i32 %.0141285, 1            ; 2 uses
+  %.not162 = icmp sgt i32 %i.hg, %2
+  br i1 %.not162, label %._crit_edge287, label %.lr.ph286, !llvm.loop !37
 
 ._crit_edge292:                                   ; preds = %bb.bf, %._crit_edge352, %._crit_edge287
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
@@ -570,7 +570,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit224: ; preds = %bb.bj,
   br i1 %exitcond335.peel.not, label %._crit_edge280, label %.lr.ph279.peel.next
 
 .lr.ph274:                                        ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit224, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit227
-  %.0138273 = phi i32 [ %i.js, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit227 ], [ 0, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit224 ] ; 2 uses
+  %.0138273 = phi i32 [ %i.js, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit227 ], [ 0, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit224 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   store i8 9, ptr %i.k, align 1
   %i.jk = load ptr, ptr %1, align 8
@@ -592,9 +592,9 @@ bb.bm:                                            ; preds = %.lr.ph274
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit227: ; preds = %bb.bl, %bb.bm
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
-  %i.js = add nuw i32 %.0138273, 1
-  %exitcond334.not = icmp eq i32 %.0138273, %2
-  br i1 %exitcond334.not, label %._crit_edge275, label %.lr.ph274, !llvm.loop !40
+  %i.js = add nuw nsw i32 %.0138273, 1            ; 2 uses
+  %.not160 = icmp sgt i32 %i.js, %2
+  br i1 %.not160, label %._crit_edge275, label %.lr.ph274, !llvm.loop !40
 
 ._crit_edge280:                                   ; preds = %bb.bv, %._crit_edge350, %._crit_edge275
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
@@ -761,7 +761,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit242: ; preds = %bb.bz,
   br i1 %exitcond331.peel.not, label %._crit_edge268, label %.lr.ph267.peel.next
 
 .lr.ph:                                           ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit242, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit245
-  %.0135263 = phi i32 [ %i.mj, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit245 ], [ 0, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit242 ] ; 2 uses
+  %.0135263 = phi i32 [ %i.mj, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit245 ], [ 0, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit242 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   store i8 9, ptr %i.e, align 1
   %i.mb = load ptr, ptr %1, align 8
@@ -783,9 +783,9 @@ bb.cc:                                            ; preds = %.lr.ph
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit245: ; preds = %bb.cb, %bb.cc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
-  %i.mj = add nuw i32 %.0135263, 1
-  %exitcond.not = icmp eq i32 %.0135263, %2
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !43
+  %i.mj = add nuw nsw i32 %.0135263, 1            ; 2 uses
+  %.not = icmp sgt i32 %i.mj, %2
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !43
 
 ._crit_edge268:                                   ; preds = %bb.cl, %._crit_edge349, %._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)

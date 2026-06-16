@@ -201,8 +201,8 @@ _ZN6hermes12PredIteratorINS_10BasicBlockEPPNS_11InstructionEEppEv.exit.i.i.i.i: 
   br i1 %.not.i.i.i166.i, label %_ZSt10__distanceIN6hermes12PredIteratorINS0_10BasicBlockEPPNS0_11InstructionEEEENSt15iterator_traitsIT_E15difference_typeES8_S8_St18input_iterator_tag.exit.i.i.i, label %.lr.ph.i.i.i165.i, !llvm.loop !258
 
 _ZSt10__distanceIN6hermes12PredIteratorINS0_10BasicBlockEPPNS0_11InstructionEEEENSt15iterator_traitsIT_E15difference_typeES8_S8_St18input_iterator_tag.exit.i.i.i: ; preds = %_ZN6hermes12PredIteratorINS_10BasicBlockEPPNS_11InstructionEEppEv.exit.i.i.i.i
-  %.not.i.i167.i = icmp samesign ult i64 %.06.i.i.i.i, 4
-  br i1 %.not.i.i167.i, label %bb.jf, label %bb.je
+  %30 = icmp samesign ugt i64 %.06.i.i.i.i, 3
+  br i1 %30, label %bb.je, label %bb.jf
 
 bb.je:                                            ; preds = %_ZSt10__distanceIN6hermes12PredIteratorINS0_10BasicBlockEPPNS0_11InstructionEEEENSt15iterator_traitsIT_E15difference_typeES8_S8_St18input_iterator_tag.exit.i.i.i
   call void @_ZN4llvh15SmallVectorBase8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(48) %11, ptr noundef nonnull %i.api, i64 noundef %i.bvd, i64 noundef 8) #10

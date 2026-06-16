@@ -201,7 +201,7 @@ _ZNSt6vectorISt4pairIN6hermes4inst6OpCodeEmESaIS4_EEC2INSt8__detail14_Node_itera
   %i.fv = shl nuw nsw i64 %i.fu, 1
   %i.fw = xor i64 %i.fv, 126
   call fastcc void @"_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt4pairIN6hermes4inst6OpCodeEmESt6vectorIS6_SaIS6_EEEElNS0_5__ops15_Iter_comp_iterIZNS3_15ProfileAnalyzer20dumpInstructionStatsEvE3$_1EEEvT_SH_T0_T1_"(ptr nonnull %i.fl, ptr nonnull %.ptr.le, i64 noundef %i.fw)
-  %i.fx = icmp samesign ugt i64 %.09.i.i.i.i.i.i.idx, 255
+  %i.fx = icmp samesign ugt i64 %.09.i.i.i.i.i.i.idx, 240
   br i1 %i.fx, label %.lr.ph.i.i.i.i, label %.preheader.i22.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %_ZNSt6vectorISt4pairIN6hermes4inst6OpCodeEmESaIS4_EEC2INSt8__detail14_Node_iteratorIS0_IKS3_mELb0ELb1EEEvEET_SD_RKS5_.exit

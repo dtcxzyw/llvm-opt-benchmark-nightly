@@ -201,8 +201,8 @@ bb.a:
   call void @llvm.experimental.noalias.scope.decl(metadata !245)
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.m = load i64, ptr %i.l, align 8, !tbaa !16, !noalias !245 ; 3 uses
-  %.not = icmp ult i64 %i.ay, %i.m
-  br i1 %.not, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i, label %bb.b
+  %6 = icmp ugt i64 %i.ch, %i.m
+  br i1 %6, label %bb.b, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
 
 bb.b:                                             ; preds = %._crit_edge
   invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.416, ptr noundef nonnull @.str.418, i64 noundef %i.ch, i64 noundef %i.m) #56
@@ -336,7 +336,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31: ; preds = %bb.
   br label %bb.u
 
 bb.k:                                             ; preds = %.lr.ph, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i44
-  %i.ay = phi i64 [ %i.c, %.lr.ph ], [ %i.ci, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i44 ] ; 3 uses
+  %i.ay = phi i64 [ %i.c, %.lr.ph ], [ %i.ci, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i44 ] ; 2 uses
   %.01459 = phi i64 [ 0, %.lr.ph ], [ %i.ch, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i44 ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #53
   call void @llvm.experimental.noalias.scope.decl(metadata !247)
@@ -478,7 +478,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit48: ; preds = %bb.
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i44: ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_backEOS5_.exit42, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_backEOS5_.exit42.thread, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i43
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #53
-  %i.ch = add nuw i64 %i.ay, 1                    ; 4 uses
+  %i.ch = add nuw i64 %i.ay, 1                    ; 5 uses
   %i.ci = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm(ptr noundef nonnull align 8 dereferenceable(32) %0, i8 noundef signext %1, i64 noundef %i.ch) #53 ; 2 uses
   %i.cj = icmp eq i64 %i.ci, -1
   br i1 %i.cj, label %._crit_edge, label %bb.k
@@ -881,7 +881,7 @@ bb.a:
   br i1 %i.d, label %bb.u, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = tail call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm(ptr noundef nonnull align 8 dereferenceable(32) @_ZN7testing28FLAGS_gtest_stream_result_toB5cxx11E, i8 noundef signext 58, i64 noundef 0) #53 ; 4 uses
+  %i.e = tail call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm(ptr noundef nonnull align 8 dereferenceable(32) @_ZN7testing28FLAGS_gtest_stream_result_toB5cxx11E, i8 noundef signext 58, i64 noundef 0) #53 ; 3 uses
   %.not = icmp eq i64 %i.e, -1
   br i1 %.not, label %bb.t, label %bb.c
 
@@ -935,11 +935,11 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %._cri
   store i8 0, ptr %i.s, align 1, !tbaa !13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #53, !noalias !974
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #53
-  %i.t = add nuw i64 %i.e, 1                      ; 3 uses
+  %i.t = add nuw i64 %i.e, 1                      ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !977)
   %i.u = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN7testing28FLAGS_gtest_stream_result_toB5cxx11E, i64 8), align 8, !tbaa !16, !noalias !977 ; 3 uses
-  %.not45 = icmp ult i64 %i.e, %i.u
-  br i1 %.not45, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i, label %bb.g
+  %3 = icmp ugt i64 %i.t, %i.u
+  br i1 %3, label %bb.g, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
 
 bb.g:                                             ; preds = %bb.f
   invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.416, ptr noundef nonnull @.str.418, i64 noundef %i.t, i64 noundef %i.u) #56
@@ -1342,8 +1342,8 @@ _ZN7testing8internal15GetUnitTestImplEv.exit:     ; preds = %bb.a, %bb.b, %bb.d
   %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 272
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !210
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 248 ; 2 uses
-  %i.l = load i32, ptr %i.k, align 8, !tbaa !592  ; 2 uses
-  %i.m = add nsw i32 %i.l, 1                      ; 3 uses
+  %i.l = load i32, ptr %i.k, align 8, !tbaa !592
+  %i.m = add nsw i32 %i.l, 1                      ; 4 uses
   store i32 %i.m, ptr %i.k, align 8, !tbaa !592
   %.not = icmp eq ptr %i.h, null
   br i1 %.not, label %bb.ap, label %bb.f
@@ -1351,8 +1351,8 @@ _ZN7testing8internal15GetUnitTestImplEv.exit:     ; preds = %bb.a, %bb.b, %bb.d
 bb.f:                                             ; preds = %_ZN7testing8internal15GetUnitTestImplEv.exit
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 36 ; 2 uses
   %i.o = load i32, ptr %i.n, align 4, !tbaa !1550 ; 2 uses
-  %.not132 = icmp slt i32 %i.l, %i.o
-  br i1 %.not132, label %bb.an, label %bb.g
+  %18 = icmp sgt i32 %i.m, %i.o
+  br i1 %18, label %bb.g, label %bb.an
 
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #53

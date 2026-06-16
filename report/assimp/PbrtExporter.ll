@@ -201,7 +201,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit40: ; preds = %_ZN
   br i1 %3, label %bb.v, label %bb.aw
 
 bb.v:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit40
-  %i.ch = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm(ptr noundef nonnull align 8 dereferenceable(32) %0, i8 noundef signext 46, i64 noundef -1) #24 ; 3 uses
+  %i.ch = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm(ptr noundef nonnull align 8 dereferenceable(32) %0, i8 noundef signext 46, i64 noundef -1) #24 ; 2 uses
   %.not24 = icmp eq i64 %i.ch, -1
   br i1 %.not24, label %bb.aw, label %bb.w
 
@@ -250,7 +250,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x, %._cri
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 %i.cq
   store i8 0, ptr %i.ct, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
-  %i.cu = add nuw i64 %i.ch, 1                    ; 5 uses
+  %i.cu = add nuw i64 %i.ch, 1                    ; 6 uses
   %cond = icmp eq i64 %i.cu, -1
   br i1 %cond, label %bb.aa, label %bb.ab
 
@@ -356,8 +356,8 @@ bb.ad:                                            ; preds = %bb.ac
 
 bb.ae:                                            ; preds = %bb.ad
   %i.es = load i64, ptr %i.m, align 8             ; 2 uses
-  %.not85 = icmp ult i64 %i.ch, %i.es
-  br i1 %.not85, label %bb.ag, label %bb.af
+  %9 = icmp ugt i64 %i.cu, %i.es
+  br i1 %9, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae
   invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.161, ptr noundef nonnull @.str.167, i64 noundef %i.cu, i64 noundef %i.es) #25
@@ -760,7 +760,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.preheader: ; preds 
   br i1 %.not107, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.preheader, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit49
-  %.0108 = phi i64 [ %i.gn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit49 ], [ %i.en, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.preheader ] ; 3 uses
+  %.0108 = phi i64 [ %i.gn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit49 ], [ %i.en, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.preheader ] ; 2 uses
   %i.ep = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.d, ptr noundef nonnull @.str.17, i64 noundef 6)
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit36 unwind label %.loopexit ; 0 uses
 
@@ -832,11 +832,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit40, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
-  %i.fi = add nuw i64 %.0108, 1                   ; 3 uses
+  %i.fi = add nuw i64 %.0108, 1                   ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !57)
   %i.fj = load i64, ptr %i.o, align 8, !noalias !57 ; 3 uses
-  %.not80 = icmp ult i64 %.0108, %i.fj
-  br i1 %.not80, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i, label %bb.ac
+  %4 = icmp ugt i64 %i.fi, %i.fj
+  br i1 %4, label %bb.ac, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
 
 bb.ac:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.161, ptr noundef nonnull @.str.165, i64 noundef %i.fi, i64 noundef %i.fj) #25

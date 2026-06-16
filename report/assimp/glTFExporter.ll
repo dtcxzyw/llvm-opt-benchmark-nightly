@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph69.new
   %i.as = load i64, ptr %i.aq, align 8
   %i.at = add nsw i64 %i.as, %i.ar
   store i64 %i.at, ptr %i.aq, align 8
-  %i.au = add nuw i64 %.04868, 2                  ; 2 uses
+  %i.au = add nuw nsw i64 %.04868, 2              ; 2 uses
   %niter100.next.1 = add i64 %niter100, 2         ; 2 uses
   %niter100.ncmp.1 = icmp eq i64 %niter100.next.1, %unroll_iter99
   br i1 %niter100.ncmp.1, label %.loopexit63.loopexit.unr-lcssa, label %bb.c, !llvm.loop !945
