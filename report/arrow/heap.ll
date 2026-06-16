@@ -201,9 +201,9 @@ _mi_heap_page_destroy.exit:                       ; preds = %.lr.ph, %bb.d
 
 mi_heap_visit_pages.exit:                         ; preds = %.critedge.i, %bb.a, %bb.b
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 232
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1032) %i.t, i8 0, i64 1032, i1 false)
-  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 1264 ; 2 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.u, i64 8) ]
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.t, i8 0, i64 1032, i1 false)
+  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 1264
+  call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 8) ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(2400) %i.u, ptr noundef nonnull readonly align 8 dereferenceable(2400) getelementptr inbounds nuw (i8, ptr @_mi_heap_empty, i64 1264), i64 range(i64 2400, 3689) 2400, i1 false)
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 168
   store i64 0, ptr %i.v, align 8, !tbaa !7
@@ -286,7 +286,7 @@ bb.l:                                             ; preds = %bb.b
 
 _mi_heap_destroy_pages.exit.thread:               ; preds = %bb.l
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 232
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1032) %i.z, i8 0, i64 1032, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.z, i8 0, i64 1032, i1 false)
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 1264
   br label %bb.o
 
@@ -337,12 +337,12 @@ _mi_heap_page_destroy.exit.i:                     ; preds = %bb.n, %.lr.ph.i
 
 _mi_heap_destroy_pages.exit:                      ; preds = %.critedge.i.i
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 232
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1032) %i.aq, i8 0, i64 1032, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.aq, i8 0, i64 1032, i1 false)
   br label %bb.o
 
 bb.o:                                             ; preds = %_mi_heap_destroy_pages.exit, %_mi_heap_destroy_pages.exit.thread
-  %.sink14 = phi ptr [ %i.ab, %_mi_heap_destroy_pages.exit ], [ %i.aa, %_mi_heap_destroy_pages.exit.thread ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %.sink14, i64 8) ]
+  %.sink14 = phi ptr [ %i.ab, %_mi_heap_destroy_pages.exit ], [ %i.aa, %_mi_heap_destroy_pages.exit.thread ]
+  call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 8) ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(2400) %.sink14, ptr noundef nonnull readonly align 8 dereferenceable(2400) getelementptr inbounds nuw (i8, ptr @_mi_heap_empty, i64 1264), i64 range(i64 2400, 3689) 2400, i1 false)
   store i64 0, ptr %i.w, align 8, !tbaa !7
   %i.ar = load ptr, ptr %0, align 8, !tbaa !29    ; 2 uses
@@ -491,7 +491,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not9, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b, %bb.g
-  %.010 = phi ptr [ %i.f, %bb.g ], [ %i.d, %bb.b ] ; 9 uses
+  %.010 = phi ptr [ %i.f, %bb.g ], [ %i.d, %bb.b ] ; 10 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.010, i64 208
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !54   ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.010, i64 224
@@ -556,9 +556,9 @@ _mi_heap_page_destroy.exit.i:                     ; preds = %bb.f, %.lr.ph.i
 
 _mi_heap_destroy_pages.exit:                      ; preds = %.critedge.i.i, %bb.d
   %i.ab = getelementptr inbounds nuw i8, ptr %.010, i64 232
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1032) %i.ab, i8 0, i64 1032, i1 false)
-  %i.ac = getelementptr inbounds nuw i8, ptr %.010, i64 1264 ; 2 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.ac, i64 8) ]
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.ab, i8 0, i64 1032, i1 false)
+  %i.ac = getelementptr inbounds nuw i8, ptr %.010, i64 1264
+  call void @llvm.assume(i1 true) [ "align"(ptr %.010, i64 8) ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(2400) %i.ac, ptr noundef nonnull readonly align 8 dereferenceable(2400) getelementptr inbounds nuw (i8, ptr @_mi_heap_empty, i64 1264), i64 range(i64 2400, 3689) 2400, i1 false)
   store i64 0, ptr %i.j, align 8, !tbaa !7
   br label %bb.g

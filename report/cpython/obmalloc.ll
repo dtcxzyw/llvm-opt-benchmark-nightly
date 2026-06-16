@@ -201,8 +201,8 @@ _mi_heap_page_destroy.exit:                       ; preds = %bb.i, %bb.j, %bb.k
 mi_heap_visit_pages.exit:                         ; preds = %.critedge.i, %bb.a, %bb.b
   %i.be = getelementptr i8, ptr %0, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.be, i8 0, i64 1032, i1 false)
-  %i.bf = getelementptr i8, ptr %0, i64 1040      ; 2 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.bf, i64 8) ]
+  %i.bf = getelementptr i8, ptr %0, i64 1040
+  call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 8) ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1800) %i.bf, ptr noundef nonnull readonly align 16 dereferenceable(1800) getelementptr inbounds nuw (i8, ptr @_mi_heap_empty, i64 1040), i64 1800, i1 false)
   %i.bg = getelementptr i8, ptr %0, i64 2840
   store atomic ptr null, ptr %i.bg seq_cst, align 8, !tbaa !209
@@ -303,7 +303,7 @@ bb.f:                                             ; preds = %bb.f, %bb.e
 
 _mi_heap_delayed_free_partial.exit.i:             ; preds = %.loopexit.i.i, %.critedge.i.i, %bb.d
   %i.x = getelementptr i8, ptr %i.e, i64 1040
-  %i.y = getelementptr i8, ptr %0, i64 1040       ; 3 uses
+  %i.y = getelementptr i8, ptr %0, i64 1040       ; 2 uses
   %i.z = getelementptr i8, ptr %i.e, i64 3024     ; 2 uses
   br label %bb.h
 
@@ -311,7 +311,7 @@ bb.g:                                             ; preds = %bb.h
   tail call void @_mi_heap_delayed_free_all(ptr noundef nonnull %0)
   %i.aa = getelementptr i8, ptr %0, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.aa, i8 0, i64 1032, i1 false)
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.y, i64 8) ]
+  call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 8) ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1800) %i.y, ptr noundef nonnull readonly align 16 dereferenceable(1800) getelementptr inbounds nuw (i8, ptr @_mi_heap_empty, i64 1040), i64 1800, i1 false)
   store atomic ptr null, ptr %i.j seq_cst, align 8, !tbaa !209
   store i64 0, ptr %i.g, align 8, !tbaa !196
@@ -714,7 +714,7 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   br label %.loopexit.i
 
 .loopexit.i:                                      ; preds = %bb.an, %bb.ai, %bb.ag, %bb.ae, %bb.ac, %bb.aa, %bb.y, %bb.w, %bb.u, %bb.s, %bb.q, %bb.o, %bb.m, %bb.k, %bb.i, %bb.g, %bb.e
-  %.4.i = phi ptr [ %.334.i, %bb.an ], [ %i.l, %bb.e ], [ %i.n, %bb.g ], [ %i.p, %bb.i ], [ %i.r, %bb.k ], [ %i.t, %bb.m ], [ %i.v, %bb.o ], [ %i.x, %bb.q ], [ %i.z, %bb.s ], [ %i.ab, %bb.u ], [ %i.ad, %bb.w ], [ %i.af, %bb.y ], [ %i.ah, %bb.aa ], [ %i.aj, %bb.ac ], [ %i.al, %bb.ae ], [ %i.an, %bb.ag ], [ %i.ap, %bb.ai ] ; 15 uses
+  %.4.i = phi ptr [ %.334.i, %bb.an ], [ %i.l, %bb.e ], [ %i.n, %bb.g ], [ %i.p, %bb.i ], [ %i.r, %bb.k ], [ %i.t, %bb.m ], [ %i.v, %bb.o ], [ %i.x, %bb.q ], [ %i.z, %bb.s ], [ %i.ab, %bb.u ], [ %i.ad, %bb.w ], [ %i.af, %bb.y ], [ %i.ah, %bb.aa ], [ %i.aj, %bb.ac ], [ %i.al, %bb.ae ], [ %i.an, %bb.ag ], [ %i.ap, %bb.ai ] ; 16 uses
   %.1.i = phi i1 [ %.0.i, %bb.an ], [ false, %bb.e ], [ false, %bb.g ], [ false, %bb.i ], [ false, %bb.k ], [ false, %bb.m ], [ false, %bb.o ], [ false, %bb.q ], [ false, %bb.s ], [ false, %bb.u ], [ false, %bb.w ], [ false, %bb.y ], [ false, %bb.aa ], [ false, %bb.ac ], [ false, %bb.ae ], [ false, %bb.ag ], [ false, %bb.ai ]
   %i.ay = icmp eq ptr %.4.i, null                 ; 2 uses
   %or.cond.i = select i1 %i.ay, i1 true, i1 %.1.i
@@ -729,8 +729,8 @@ mi_thread_data_zalloc.exit:                       ; preds = %.loopexit.i
   br i1 %i.ay, label %_mi_heap_set_default_direct.exit, label %bb.ao
 
 bb.ao:                                            ; preds = %mi_thread_data_zalloc.exit.thread, %mi_thread_data_zalloc.exit
-  %i.az = getelementptr i8, ptr %.4.i, i64 3064   ; 3 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.az, i64 8) ]
+  %i.az = getelementptr i8, ptr %.4.i, i64 3064   ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %.4.i, i64 8) ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1608) %i.az, ptr noundef nonnull readonly align 64 dereferenceable(1608) @tld_empty, i64 1608, i1 false)
   %i.ba = getelementptr i8, ptr %.4.i, i64 4032   ; 2 uses
   %i.bb = getelementptr i8, ptr %.4.i, i64 3992
