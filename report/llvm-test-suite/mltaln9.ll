@@ -201,10 +201,10 @@ bb.t:                                             ; preds = %bb.r
   %i.ff = load i32, ptr %i.fc, align 4, !tbaa !4  ; 3 uses
   %i.fg = load i32, ptr %i.fe, align 4, !tbaa !4  ; 3 uses
   %i.fh = icmp sgt i32 %i.ff, %i.fg               ; 2 uses
-  %5 = call i32 @llvm.smin.i32(i32 %i.ff, i32 %i.fg) ; 2 uses
-  %i.fi = call i32 @llvm.smax.i32(i32 %i.ff, i32 %i.fg)
   %.212 = select i1 %i.fh, ptr %i.fc, ptr %i.fe   ; 2 uses
-  %.not202227 = icmp eq i32 %5, -1
+  %i.fi = call i32 @llvm.smin.i32(i32 %i.ff, i32 %i.fg) ; 2 uses
+  %.not202227 = icmp eq i32 %i.fi, -1
+  %5 = call i32 @llvm.smax.i32(i32 %i.ff, i32 %i.fg)
   br i1 %.not202227, label %.preheader215, label %.lr.ph231.preheader
 
 .lr.ph231.preheader:                              ; preds = %bb.t
@@ -216,13 +216,13 @@ bb.t:                                             ; preds = %bb.r
   br label %.preheader215
 
 .preheader215:                                    ; preds = %.preheader215.loopexit, %bb.t
-  %i.fj = phi i32 [ %i.fi, %bb.t ], [ %.pre, %.preheader215.loopexit ] ; 2 uses
+  %i.fj = phi i32 [ %5, %bb.t ], [ %.pre, %.preheader215.loopexit ] ; 2 uses
   %.0183.lcssa = phi ptr [ %i.ev, %bb.t ], [ %i.fm, %.preheader215.loopexit ] ; 2 uses
   %.not203232 = icmp eq i32 %i.fj, -1
   br i1 %.not203232, label %._crit_edge236, label %.lr.ph235
 
 .lr.ph231:                                        ; preds = %.lr.ph231.preheader, %.lr.ph231
-  %i.fk = phi i32 [ %i.fn, %.lr.ph231 ], [ %5, %.lr.ph231.preheader ]
+  %i.fk = phi i32 [ %i.fn, %.lr.ph231 ], [ %i.fi, %.lr.ph231.preheader ]
   %.0180229 = phi ptr [ %i.fl, %.lr.ph231 ], [ %., %.lr.ph231.preheader ]
   %.0183228 = phi ptr [ %i.fm, %.lr.ph231 ], [ %i.ev, %.lr.ph231.preheader ] ; 2 uses
   %i.fl = getelementptr inbounds nuw i8, ptr %.0180229, i64 4 ; 2 uses
@@ -292,10 +292,10 @@ bb.y:                                             ; preds = %bb.w
   %i.gp = load i32, ptr %i.gm, align 4, !tbaa !4  ; 3 uses
   %i.gq = load i32, ptr %i.go, align 4, !tbaa !4  ; 3 uses
   %i.gr = icmp sgt i32 %i.gp, %i.gq               ; 2 uses
-  %6 = call i32 @llvm.smin.i32(i32 %i.gp, i32 %i.gq) ; 2 uses
-  %i.gs = call i32 @llvm.smax.i32(i32 %i.gp, i32 %i.gq)
   %.214 = select i1 %i.gr, ptr %i.gm, ptr %i.go   ; 2 uses
-  %.not205238 = icmp eq i32 %6, -1
+  %i.gs = call i32 @llvm.smin.i32(i32 %i.gp, i32 %i.gq) ; 2 uses
+  %.not205238 = icmp eq i32 %i.gs, -1
+  %6 = call i32 @llvm.smax.i32(i32 %i.gp, i32 %i.gq)
   br i1 %.not205238, label %.preheader, label %.lr.ph242.preheader
 
 .lr.ph242.preheader:                              ; preds = %bb.y
@@ -307,13 +307,13 @@ bb.y:                                             ; preds = %bb.w
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.loopexit, %bb.y
-  %i.gt = phi i32 [ %i.gs, %bb.y ], [ %.pre279, %.preheader.loopexit ] ; 2 uses
+  %i.gt = phi i32 [ %6, %bb.y ], [ %.pre279, %.preheader.loopexit ] ; 2 uses
   %.2185.lcssa = phi ptr [ %i.gc, %bb.y ], [ %i.gw, %.preheader.loopexit ] ; 2 uses
   %.not206244 = icmp eq i32 %i.gt, -1
   br i1 %.not206244, label %._crit_edge248, label %.lr.ph247
 
 .lr.ph242:                                        ; preds = %.lr.ph242.preheader, %.lr.ph242
-  %i.gu = phi i32 [ %i.gx, %.lr.ph242 ], [ %6, %.lr.ph242.preheader ]
+  %i.gu = phi i32 [ %i.gx, %.lr.ph242 ], [ %i.gs, %.lr.ph242.preheader ]
   %.2182240 = phi ptr [ %i.gv, %.lr.ph242 ], [ %.213, %.lr.ph242.preheader ]
   %.2185239 = phi ptr [ %i.gw, %.lr.ph242 ], [ %i.gc, %.lr.ph242.preheader ] ; 2 uses
   %i.gv = getelementptr inbounds nuw i8, ptr %.2182240, i64 4 ; 2 uses
@@ -716,10 +716,10 @@ bb.q:                                             ; preds = %bb.o
   %i.em = load i32, ptr %i.ej, align 4, !tbaa !4  ; 3 uses
   %i.en = load i32, ptr %i.el, align 4, !tbaa !4  ; 3 uses
   %i.eo = icmp sgt i32 %i.em, %i.en               ; 2 uses
-  %4 = call i32 @llvm.smin.i32(i32 %i.em, i32 %i.en) ; 2 uses
-  %i.ep = call i32 @llvm.smax.i32(i32 %i.em, i32 %i.en)
   %.222 = select i1 %i.eo, ptr %i.ej, ptr %i.el   ; 2 uses
-  %.not212240 = icmp eq i32 %4, -1
+  %i.ep = call i32 @llvm.smin.i32(i32 %i.em, i32 %i.en) ; 2 uses
+  %.not212240 = icmp eq i32 %i.ep, -1
+  %4 = call i32 @llvm.smax.i32(i32 %i.em, i32 %i.en)
   br i1 %.not212240, label %.preheader228, label %.lr.ph244.preheader
 
 .lr.ph244.preheader:                              ; preds = %bb.q
@@ -731,13 +731,13 @@ bb.q:                                             ; preds = %bb.o
   br label %.preheader228
 
 .preheader228:                                    ; preds = %.preheader228.loopexit, %bb.q
-  %i.eq = phi i32 [ %i.ep, %bb.q ], [ %.pre, %.preheader228.loopexit ] ; 2 uses
+  %i.eq = phi i32 [ %4, %bb.q ], [ %.pre, %.preheader228.loopexit ] ; 2 uses
   %.0193.lcssa = phi ptr [ %i.ec, %bb.q ], [ %i.et, %.preheader228.loopexit ] ; 2 uses
   %.not213245 = icmp eq i32 %i.eq, -1
   br i1 %.not213245, label %._crit_edge249, label %.lr.ph248
 
 .lr.ph244:                                        ; preds = %.lr.ph244.preheader, %.lr.ph244
-  %i.er = phi i32 [ %i.eu, %.lr.ph244 ], [ %4, %.lr.ph244.preheader ]
+  %i.er = phi i32 [ %i.eu, %.lr.ph244 ], [ %i.ep, %.lr.ph244.preheader ]
   %.0189242 = phi ptr [ %i.es, %.lr.ph244 ], [ %., %.lr.ph244.preheader ]
   %.0193241 = phi ptr [ %i.et, %.lr.ph244 ], [ %i.ec, %.lr.ph244.preheader ] ; 2 uses
   %i.es = getelementptr inbounds nuw i8, ptr %.0189242, i64 4 ; 2 uses
@@ -807,10 +807,10 @@ bb.v:                                             ; preds = %bb.t
   %i.fw = load i32, ptr %i.ft, align 4, !tbaa !4  ; 3 uses
   %i.fx = load i32, ptr %i.fv, align 4, !tbaa !4  ; 3 uses
   %i.fy = icmp sgt i32 %i.fw, %i.fx               ; 2 uses
-  %5 = call i32 @llvm.smin.i32(i32 %i.fw, i32 %i.fx) ; 2 uses
-  %i.fz = call i32 @llvm.smax.i32(i32 %i.fw, i32 %i.fx)
   %.224 = select i1 %i.fy, ptr %i.ft, ptr %i.fv   ; 2 uses
-  %.not215251 = icmp eq i32 %5, -1
+  %i.fz = call i32 @llvm.smin.i32(i32 %i.fw, i32 %i.fx) ; 2 uses
+  %.not215251 = icmp eq i32 %i.fz, -1
+  %5 = call i32 @llvm.smax.i32(i32 %i.fw, i32 %i.fx)
   br i1 %.not215251, label %.preheader, label %.lr.ph255.preheader
 
 .lr.ph255.preheader:                              ; preds = %bb.v
@@ -822,13 +822,13 @@ bb.v:                                             ; preds = %bb.t
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.loopexit, %bb.v
-  %i.ga = phi i32 [ %i.fz, %bb.v ], [ %.pre296, %.preheader.loopexit ] ; 2 uses
+  %i.ga = phi i32 [ %5, %bb.v ], [ %.pre296, %.preheader.loopexit ] ; 2 uses
   %.2195.lcssa = phi ptr [ %i.fj, %bb.v ], [ %i.gd, %.preheader.loopexit ] ; 2 uses
   %.not216257 = icmp eq i32 %i.ga, -1
   br i1 %.not216257, label %._crit_edge261, label %.lr.ph260
 
 .lr.ph255:                                        ; preds = %.lr.ph255.preheader, %.lr.ph255
-  %i.gb = phi i32 [ %i.ge, %.lr.ph255 ], [ %5, %.lr.ph255.preheader ]
+  %i.gb = phi i32 [ %i.ge, %.lr.ph255 ], [ %i.fz, %.lr.ph255.preheader ]
   %.2191253 = phi ptr [ %i.gc, %.lr.ph255 ], [ %.223, %.lr.ph255.preheader ]
   %.2195252 = phi ptr [ %i.gd, %.lr.ph255 ], [ %i.fj, %.lr.ph255.preheader ] ; 2 uses
   %i.gc = getelementptr inbounds nuw i8, ptr %.2191253, i64 4 ; 2 uses
@@ -1231,10 +1231,10 @@ bb.t:                                             ; preds = %._crit_edge347
   %i.gf = load i32, ptr %i.gc, align 4, !tbaa !4  ; 3 uses
   %i.gg = load i32, ptr %i.ge, align 4, !tbaa !4  ; 3 uses
   %i.gh = icmp sgt i32 %i.gf, %i.gg               ; 2 uses
-  %6 = tail call i32 @llvm.smin.i32(i32 %i.gf, i32 %i.gg) ; 2 uses
-  %i.gi = tail call i32 @llvm.smax.i32(i32 %i.gf, i32 %i.gg)
   %.303 = select i1 %i.gh, ptr %i.gc, ptr %i.ge   ; 2 uses
-  %.not291349 = icmp eq i32 %6, -1
+  %i.gi = tail call i32 @llvm.smin.i32(i32 %i.gf, i32 %i.gg) ; 2 uses
+  %.not291349 = icmp eq i32 %i.gi, -1
+  %6 = tail call i32 @llvm.smax.i32(i32 %i.gf, i32 %i.gg)
   br i1 %.not291349, label %.preheader320, label %.lr.ph353.preheader
 
 .lr.ph353.preheader:                              ; preds = %bb.t
@@ -1246,13 +1246,13 @@ bb.t:                                             ; preds = %._crit_edge347
   br label %.preheader320
 
 .preheader320:                                    ; preds = %.preheader320.loopexit, %bb.t
-  %i.gj = phi i32 [ %i.gi, %bb.t ], [ %.pre, %.preheader320.loopexit ] ; 2 uses
+  %i.gj = phi i32 [ %6, %bb.t ], [ %.pre, %.preheader320.loopexit ] ; 2 uses
   %.0266.lcssa = phi ptr [ %i.fv, %bb.t ], [ %i.gm, %.preheader320.loopexit ] ; 2 uses
   %.not292355 = icmp eq i32 %i.gj, -1
   br i1 %.not292355, label %._crit_edge359, label %.lr.ph358
 
 .lr.ph353:                                        ; preds = %.lr.ph353.preheader, %.lr.ph353
-  %i.gk = phi i32 [ %i.gn, %.lr.ph353 ], [ %6, %.lr.ph353.preheader ]
+  %i.gk = phi i32 [ %i.gn, %.lr.ph353 ], [ %i.gi, %.lr.ph353.preheader ]
   %.0266351 = phi ptr [ %i.gm, %.lr.ph353 ], [ %i.fv, %.lr.ph353.preheader ] ; 2 uses
   %.0270350 = phi ptr [ %i.gl, %.lr.ph353 ], [ %., %.lr.ph353.preheader ]
   %i.gl = getelementptr inbounds nuw i8, ptr %.0270350, i64 4 ; 2 uses
@@ -1322,10 +1322,10 @@ bb.y:                                             ; preds = %bb.w
   %i.hp = load i32, ptr %i.hm, align 4, !tbaa !4  ; 3 uses
   %i.hq = load i32, ptr %i.ho, align 4, !tbaa !4  ; 3 uses
   %i.hr = icmp sgt i32 %i.hp, %i.hq               ; 2 uses
-  %7 = tail call i32 @llvm.smin.i32(i32 %i.hp, i32 %i.hq) ; 2 uses
-  %i.hs = tail call i32 @llvm.smax.i32(i32 %i.hp, i32 %i.hq)
   %.305 = select i1 %i.hr, ptr %i.hm, ptr %i.ho   ; 2 uses
-  %.not294361 = icmp eq i32 %7, -1
+  %i.hs = tail call i32 @llvm.smin.i32(i32 %i.hp, i32 %i.hq) ; 2 uses
+  %.not294361 = icmp eq i32 %i.hs, -1
+  %7 = tail call i32 @llvm.smax.i32(i32 %i.hp, i32 %i.hq)
   br i1 %.not294361, label %.preheader, label %.lr.ph365.preheader
 
 .lr.ph365.preheader:                              ; preds = %bb.y
@@ -1337,13 +1337,13 @@ bb.y:                                             ; preds = %bb.w
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.loopexit, %bb.y
-  %i.ht = phi i32 [ %i.hs, %bb.y ], [ %.pre426, %.preheader.loopexit ] ; 2 uses
+  %i.ht = phi i32 [ %7, %bb.y ], [ %.pre426, %.preheader.loopexit ] ; 2 uses
   %.2268.lcssa = phi ptr [ %i.hc, %bb.y ], [ %i.hw, %.preheader.loopexit ] ; 2 uses
   %.not295367 = icmp eq i32 %i.ht, -1
   br i1 %.not295367, label %._crit_edge371, label %.lr.ph370
 
 .lr.ph365:                                        ; preds = %.lr.ph365.preheader, %.lr.ph365
-  %i.hu = phi i32 [ %i.hx, %.lr.ph365 ], [ %7, %.lr.ph365.preheader ]
+  %i.hu = phi i32 [ %i.hx, %.lr.ph365 ], [ %i.hs, %.lr.ph365.preheader ]
   %.2268363 = phi ptr [ %i.hw, %.lr.ph365 ], [ %i.hc, %.lr.ph365.preheader ] ; 2 uses
   %.2272362 = phi ptr [ %i.hv, %.lr.ph365 ], [ %.304, %.lr.ph365.preheader ]
   %i.hv = getelementptr inbounds nuw i8, ptr %.2272362, i64 4 ; 2 uses
@@ -1746,10 +1746,10 @@ bb.r:                                             ; preds = %._crit_edge311
   %i.ew = load i32, ptr %i.et, align 4, !tbaa !4  ; 3 uses
   %i.ex = load i32, ptr %i.ev, align 4, !tbaa !4  ; 3 uses
   %i.ey = icmp sgt i32 %i.ew, %i.ex               ; 2 uses
-  %4 = tail call i32 @llvm.smin.i32(i32 %i.ew, i32 %i.ex) ; 2 uses
-  %i.ez = tail call i32 @llvm.smax.i32(i32 %i.ew, i32 %i.ex)
   %.273 = select i1 %i.ey, ptr %i.et, ptr %i.ev   ; 2 uses
-  %.not262313 = icmp eq i32 %4, -1
+  %i.ez = tail call i32 @llvm.smin.i32(i32 %i.ew, i32 %i.ex) ; 2 uses
+  %.not262313 = icmp eq i32 %i.ez, -1
+  %4 = tail call i32 @llvm.smax.i32(i32 %i.ew, i32 %i.ex)
   br i1 %.not262313, label %.preheader290, label %.lr.ph317.preheader
 
 .lr.ph317.preheader:                              ; preds = %bb.r
@@ -1761,13 +1761,13 @@ bb.r:                                             ; preds = %._crit_edge311
   br label %.preheader290
 
 .preheader290:                                    ; preds = %.preheader290.loopexit, %bb.r
-  %i.fa = phi i32 [ %i.ez, %bb.r ], [ %.pre, %.preheader290.loopexit ] ; 2 uses
+  %i.fa = phi i32 [ %4, %bb.r ], [ %.pre, %.preheader290.loopexit ] ; 2 uses
   %.0237.lcssa = phi ptr [ %i.em, %bb.r ], [ %i.fd, %.preheader290.loopexit ] ; 2 uses
   %.not263319 = icmp eq i32 %i.fa, -1
   br i1 %.not263319, label %._crit_edge323, label %.lr.ph322
 
 .lr.ph317:                                        ; preds = %.lr.ph317.preheader, %.lr.ph317
-  %i.fb = phi i32 [ %i.fe, %.lr.ph317 ], [ %4, %.lr.ph317.preheader ]
+  %i.fb = phi i32 [ %i.fe, %.lr.ph317 ], [ %i.ez, %.lr.ph317.preheader ]
   %.0237315 = phi ptr [ %i.fd, %.lr.ph317 ], [ %i.em, %.lr.ph317.preheader ] ; 2 uses
   %.0241314 = phi ptr [ %i.fc, %.lr.ph317 ], [ %., %.lr.ph317.preheader ]
   %i.fc = getelementptr inbounds nuw i8, ptr %.0241314, i64 4 ; 2 uses
@@ -1837,10 +1837,10 @@ bb.w:                                             ; preds = %bb.u
   %i.gg = load i32, ptr %i.gd, align 4, !tbaa !4  ; 3 uses
   %i.gh = load i32, ptr %i.gf, align 4, !tbaa !4  ; 3 uses
   %i.gi = icmp sgt i32 %i.gg, %i.gh               ; 2 uses
-  %5 = tail call i32 @llvm.smin.i32(i32 %i.gg, i32 %i.gh) ; 2 uses
-  %i.gj = tail call i32 @llvm.smax.i32(i32 %i.gg, i32 %i.gh)
   %.275 = select i1 %i.gi, ptr %i.gd, ptr %i.gf   ; 2 uses
-  %.not265325 = icmp eq i32 %5, -1
+  %i.gj = tail call i32 @llvm.smin.i32(i32 %i.gg, i32 %i.gh) ; 2 uses
+  %.not265325 = icmp eq i32 %i.gj, -1
+  %5 = tail call i32 @llvm.smax.i32(i32 %i.gg, i32 %i.gh)
   br i1 %.not265325, label %.preheader, label %.lr.ph329.preheader
 
 .lr.ph329.preheader:                              ; preds = %bb.w
@@ -1852,13 +1852,13 @@ bb.w:                                             ; preds = %bb.u
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.loopexit, %bb.w
-  %i.gk = phi i32 [ %i.gj, %bb.w ], [ %.pre380, %.preheader.loopexit ] ; 2 uses
+  %i.gk = phi i32 [ %5, %bb.w ], [ %.pre380, %.preheader.loopexit ] ; 2 uses
   %.2239.lcssa = phi ptr [ %i.ft, %bb.w ], [ %i.gn, %.preheader.loopexit ] ; 2 uses
   %.not266331 = icmp eq i32 %i.gk, -1
   br i1 %.not266331, label %._crit_edge335, label %.lr.ph334
 
 .lr.ph329:                                        ; preds = %.lr.ph329.preheader, %.lr.ph329
-  %i.gl = phi i32 [ %i.go, %.lr.ph329 ], [ %5, %.lr.ph329.preheader ]
+  %i.gl = phi i32 [ %i.go, %.lr.ph329 ], [ %i.gj, %.lr.ph329.preheader ]
   %.2239327 = phi ptr [ %i.gn, %.lr.ph329 ], [ %i.ft, %.lr.ph329.preheader ] ; 2 uses
   %.2243326 = phi ptr [ %i.gm, %.lr.ph329 ], [ %.274, %.lr.ph329.preheader ]
   %i.gm = getelementptr inbounds nuw i8, ptr %.2243326, i64 4 ; 2 uses
@@ -2261,10 +2261,10 @@ bb.m:                                             ; preds = %bb.k
   %i.cs = load i32, ptr %i.cp, align 4, !tbaa !4  ; 3 uses
   %i.ct = load i32, ptr %i.cr, align 4, !tbaa !4  ; 3 uses
   %i.cu = icmp sgt i32 %i.cs, %i.ct               ; 2 uses
-  %4 = call i32 @llvm.smin.i32(i32 %i.cs, i32 %i.ct) ; 2 uses
-  %i.cv = call i32 @llvm.smax.i32(i32 %i.cs, i32 %i.ct)
   %.197 = select i1 %i.cu, ptr %i.cp, ptr %i.cr   ; 2 uses
-  %.not188213 = icmp eq i32 %4, -1
+  %i.cv = call i32 @llvm.smin.i32(i32 %i.cs, i32 %i.ct) ; 2 uses
+  %.not188213 = icmp eq i32 %i.cv, -1
+  %4 = call i32 @llvm.smax.i32(i32 %i.cs, i32 %i.ct)
   br i1 %.not188213, label %.preheader201, label %.lr.ph217.preheader
 
 .lr.ph217.preheader:                              ; preds = %bb.m
@@ -2276,13 +2276,13 @@ bb.m:                                             ; preds = %bb.k
   br label %.preheader201
 
 .preheader201:                                    ; preds = %.preheader201.loopexit, %bb.m
-  %i.cw = phi i32 [ %i.cv, %bb.m ], [ %.pre262, %.preheader201.loopexit ] ; 2 uses
+  %i.cw = phi i32 [ %4, %bb.m ], [ %.pre262, %.preheader201.loopexit ] ; 2 uses
   %.0169.lcssa = phi ptr [ %i.cg, %bb.m ], [ %i.cz, %.preheader201.loopexit ] ; 2 uses
   %.not189218 = icmp eq i32 %i.cw, -1
   br i1 %.not189218, label %._crit_edge222, label %.lr.ph221
 
 .lr.ph217:                                        ; preds = %.lr.ph217.preheader, %.lr.ph217
-  %i.cx = phi i32 [ %i.da, %.lr.ph217 ], [ %4, %.lr.ph217.preheader ]
+  %i.cx = phi i32 [ %i.da, %.lr.ph217 ], [ %i.cv, %.lr.ph217.preheader ]
   %.0165215 = phi ptr [ %i.cy, %.lr.ph217 ], [ %., %.lr.ph217.preheader ]
   %.0169214 = phi ptr [ %i.cz, %.lr.ph217 ], [ %i.cg, %.lr.ph217.preheader ] ; 2 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %.0165215, i64 4 ; 2 uses
@@ -2332,10 +2332,10 @@ bb.p:                                             ; preds = %bb.n
   %i.dr = load i32, ptr %i.do, align 4, !tbaa !4  ; 3 uses
   %i.ds = load i32, ptr %i.dq, align 4, !tbaa !4  ; 3 uses
   %i.dt = icmp sgt i32 %i.dr, %i.ds               ; 2 uses
-  %5 = call i32 @llvm.smin.i32(i32 %i.dr, i32 %i.ds) ; 2 uses
-  %i.du = call i32 @llvm.smax.i32(i32 %i.dr, i32 %i.ds)
   %.199 = select i1 %i.dt, ptr %i.do, ptr %i.dq   ; 2 uses
-  %.not190224 = icmp eq i32 %5, -1
+  %i.du = call i32 @llvm.smin.i32(i32 %i.dr, i32 %i.ds) ; 2 uses
+  %.not190224 = icmp eq i32 %i.du, -1
+  %5 = call i32 @llvm.smax.i32(i32 %i.dr, i32 %i.ds)
   br i1 %.not190224, label %.preheader, label %.lr.ph228.preheader
 
 .lr.ph228.preheader:                              ; preds = %bb.p
@@ -2347,13 +2347,13 @@ bb.p:                                             ; preds = %bb.n
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.loopexit, %bb.p
-  %i.dv = phi i32 [ %i.du, %bb.p ], [ %.pre263, %.preheader.loopexit ] ; 2 uses
+  %i.dv = phi i32 [ %5, %bb.p ], [ %.pre263, %.preheader.loopexit ] ; 2 uses
   %.2171.lcssa = phi ptr [ %i.dg, %bb.p ], [ %i.dy, %.preheader.loopexit ] ; 2 uses
   %.not191230 = icmp eq i32 %i.dv, -1
   br i1 %.not191230, label %._crit_edge234, label %.lr.ph233
 
 .lr.ph228:                                        ; preds = %.lr.ph228.preheader, %.lr.ph228
-  %i.dw = phi i32 [ %i.dz, %.lr.ph228 ], [ %5, %.lr.ph228.preheader ]
+  %i.dw = phi i32 [ %i.dz, %.lr.ph228 ], [ %i.du, %.lr.ph228.preheader ]
   %.2167226 = phi ptr [ %i.dx, %.lr.ph228 ], [ %.198, %.lr.ph228.preheader ]
   %.2171225 = phi ptr [ %i.dy, %.lr.ph228 ], [ %i.dg, %.lr.ph228.preheader ] ; 2 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %.2167226, i64 4 ; 2 uses
@@ -2756,10 +2756,10 @@ bb.q:                                             ; preds = %bb.o
   %i.cv = load i32, ptr %i.cs, align 4, !tbaa !4  ; 3 uses
   %i.cw = load i32, ptr %i.cu, align 4, !tbaa !4  ; 3 uses
   %i.cx = icmp sgt i32 %i.cv, %i.cw               ; 2 uses
-  %4 = call i32 @llvm.smin.i32(i32 %i.cv, i32 %i.cw) ; 2 uses
-  %i.cy = call i32 @llvm.smax.i32(i32 %i.cv, i32 %i.cw)
   %.186 = select i1 %i.cx, ptr %i.cs, ptr %i.cu   ; 2 uses
-  %.not177202 = icmp eq i32 %4, -1
+  %i.cy = call i32 @llvm.smin.i32(i32 %i.cv, i32 %i.cw) ; 2 uses
+  %.not177202 = icmp eq i32 %i.cy, -1
+  %4 = call i32 @llvm.smax.i32(i32 %i.cv, i32 %i.cw)
   br i1 %.not177202, label %.preheader190, label %.lr.ph206.preheader
 
 .lr.ph206.preheader:                              ; preds = %bb.q
@@ -2771,13 +2771,13 @@ bb.q:                                             ; preds = %bb.o
   br label %.preheader190
 
 .preheader190:                                    ; preds = %.preheader190.loopexit, %bb.q
-  %i.cz = phi i32 [ %i.cy, %bb.q ], [ %.pre251, %.preheader190.loopexit ] ; 2 uses
+  %i.cz = phi i32 [ %4, %bb.q ], [ %.pre251, %.preheader190.loopexit ] ; 2 uses
   %.0157.lcssa = phi ptr [ %i.cj, %bb.q ], [ %i.dc, %.preheader190.loopexit ] ; 2 uses
   %.not178207 = icmp eq i32 %i.cz, -1
   br i1 %.not178207, label %._crit_edge211, label %.lr.ph210
 
 .lr.ph206:                                        ; preds = %.lr.ph206.preheader, %.lr.ph206
-  %i.da = phi i32 [ %i.dd, %.lr.ph206 ], [ %4, %.lr.ph206.preheader ]
+  %i.da = phi i32 [ %i.dd, %.lr.ph206 ], [ %i.cy, %.lr.ph206.preheader ]
   %.0153204 = phi ptr [ %i.db, %.lr.ph206 ], [ %., %.lr.ph206.preheader ]
   %.0157203 = phi ptr [ %i.dc, %.lr.ph206 ], [ %i.cj, %.lr.ph206.preheader ] ; 2 uses
   %i.db = getelementptr inbounds nuw i8, ptr %.0153204, i64 4 ; 2 uses
@@ -2827,10 +2827,10 @@ bb.t:                                             ; preds = %bb.r
   %i.du = load i32, ptr %i.dr, align 4, !tbaa !4  ; 3 uses
   %i.dv = load i32, ptr %i.dt, align 4, !tbaa !4  ; 3 uses
   %i.dw = icmp sgt i32 %i.du, %i.dv               ; 2 uses
-  %5 = call i32 @llvm.smin.i32(i32 %i.du, i32 %i.dv) ; 2 uses
-  %i.dx = call i32 @llvm.smax.i32(i32 %i.du, i32 %i.dv)
   %.188 = select i1 %i.dw, ptr %i.dr, ptr %i.dt   ; 2 uses
-  %.not179213 = icmp eq i32 %5, -1
+  %i.dx = call i32 @llvm.smin.i32(i32 %i.du, i32 %i.dv) ; 2 uses
+  %.not179213 = icmp eq i32 %i.dx, -1
+  %5 = call i32 @llvm.smax.i32(i32 %i.du, i32 %i.dv)
   br i1 %.not179213, label %.preheader, label %.lr.ph217.preheader
 
 .lr.ph217.preheader:                              ; preds = %bb.t
@@ -2842,13 +2842,13 @@ bb.t:                                             ; preds = %bb.r
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.loopexit, %bb.t
-  %i.dy = phi i32 [ %i.dx, %bb.t ], [ %.pre252, %.preheader.loopexit ] ; 2 uses
+  %i.dy = phi i32 [ %5, %bb.t ], [ %.pre252, %.preheader.loopexit ] ; 2 uses
   %.2159.lcssa = phi ptr [ %i.dj, %bb.t ], [ %i.eb, %.preheader.loopexit ] ; 2 uses
   %.not180219 = icmp eq i32 %i.dy, -1
   br i1 %.not180219, label %._crit_edge223, label %.lr.ph222
 
 .lr.ph217:                                        ; preds = %.lr.ph217.preheader, %.lr.ph217
-  %i.dz = phi i32 [ %i.ec, %.lr.ph217 ], [ %5, %.lr.ph217.preheader ]
+  %i.dz = phi i32 [ %i.ec, %.lr.ph217 ], [ %i.dx, %.lr.ph217.preheader ]
   %.2155215 = phi ptr [ %i.ea, %.lr.ph217 ], [ %.187, %.lr.ph217.preheader ]
   %.2159214 = phi ptr [ %i.eb, %.lr.ph217 ], [ %i.dj, %.lr.ph217.preheader ] ; 2 uses
   %i.ea = getelementptr inbounds nuw i8, ptr %.2155215, i64 4 ; 2 uses
@@ -3251,10 +3251,10 @@ bb.l:                                             ; preds = %._crit_edge248
   %i.lv = load i32, ptr %i.ls, align 4, !tbaa !4  ; 3 uses
   %i.lw = load i32, ptr %i.lu, align 4, !tbaa !4  ; 3 uses
   %i.lx = icmp sgt i32 %i.lv, %i.lw               ; 2 uses
-  %5 = tail call i32 @llvm.smin.i32(i32 %i.lv, i32 %i.lw) ; 2 uses
-  %i.ly = tail call i32 @llvm.smax.i32(i32 %i.lv, i32 %i.lw)
   %.220 = select i1 %i.lx, ptr %i.ls, ptr %i.lu   ; 2 uses
-  %.not210251 = icmp eq i32 %5, -1
+  %i.ly = tail call i32 @llvm.smin.i32(i32 %i.lv, i32 %i.lw) ; 2 uses
+  %.not210251 = icmp eq i32 %i.ly, -1
+  %5 = tail call i32 @llvm.smax.i32(i32 %i.lv, i32 %i.lw)
   br i1 %.not210251, label %.preheader224, label %.lr.ph255.preheader
 
 .lr.ph255.preheader:                              ; preds = %bb.l
@@ -3266,13 +3266,13 @@ bb.l:                                             ; preds = %._crit_edge248
   br label %.preheader224
 
 .preheader224:                                    ; preds = %.preheader224.loopexit, %bb.l
-  %i.lz = phi i32 [ %i.ly, %bb.l ], [ %.pre308, %.preheader224.loopexit ] ; 2 uses
+  %i.lz = phi i32 [ %5, %bb.l ], [ %.pre308, %.preheader224.loopexit ] ; 2 uses
   %.0192.lcssa = phi ptr [ %i.li, %bb.l ], [ %i.mc, %.preheader224.loopexit ] ; 2 uses
   %.not211257 = icmp eq i32 %i.lz, -1
   br i1 %.not211257, label %._crit_edge261, label %.lr.ph260
 
 .lr.ph255:                                        ; preds = %.lr.ph255.preheader, %.lr.ph255
-  %i.ma = phi i32 [ %i.md, %.lr.ph255 ], [ %5, %.lr.ph255.preheader ]
+  %i.ma = phi i32 [ %i.md, %.lr.ph255 ], [ %i.ly, %.lr.ph255.preheader ]
   %.0188253 = phi ptr [ %i.mb, %.lr.ph255 ], [ %., %.lr.ph255.preheader ]
   %.0192252 = phi ptr [ %i.mc, %.lr.ph255 ], [ %i.li, %.lr.ph255.preheader ] ; 2 uses
   %i.mb = getelementptr inbounds nuw i8, ptr %.0188253, i64 4 ; 2 uses
@@ -3323,10 +3323,10 @@ bb.o:                                             ; preds = %bb.m
   %i.mv = load i32, ptr %i.ms, align 4, !tbaa !4  ; 3 uses
   %i.mw = load i32, ptr %i.mu, align 4, !tbaa !4  ; 3 uses
   %i.mx = icmp sgt i32 %i.mv, %i.mw               ; 2 uses
-  %6 = tail call i32 @llvm.smin.i32(i32 %i.mv, i32 %i.mw) ; 2 uses
-  %i.my = tail call i32 @llvm.smax.i32(i32 %i.mv, i32 %i.mw)
   %.222 = select i1 %i.mx, ptr %i.ms, ptr %i.mu   ; 2 uses
-  %.not212263 = icmp eq i32 %6, -1
+  %i.my = tail call i32 @llvm.smin.i32(i32 %i.mv, i32 %i.mw) ; 2 uses
+  %.not212263 = icmp eq i32 %i.my, -1
+  %6 = tail call i32 @llvm.smax.i32(i32 %i.mv, i32 %i.mw)
   br i1 %.not212263, label %.preheader223, label %.lr.ph267.preheader
 
 .lr.ph267.preheader:                              ; preds = %bb.o
@@ -3338,13 +3338,13 @@ bb.o:                                             ; preds = %bb.m
   br label %.preheader223
 
 .preheader223:                                    ; preds = %.preheader223.loopexit, %bb.o
-  %i.mz = phi i32 [ %i.my, %bb.o ], [ %.pre309, %.preheader223.loopexit ] ; 2 uses
+  %i.mz = phi i32 [ %6, %bb.o ], [ %.pre309, %.preheader223.loopexit ] ; 2 uses
   %.2194.lcssa = phi ptr [ %i.mj, %bb.o ], [ %i.nc, %.preheader223.loopexit ] ; 2 uses
   %.not213269 = icmp eq i32 %i.mz, -1
   br i1 %.not213269, label %._crit_edge273, label %.lr.ph272
 
 .lr.ph267:                                        ; preds = %.lr.ph267.preheader, %.lr.ph267
-  %i.na = phi i32 [ %i.nd, %.lr.ph267 ], [ %6, %.lr.ph267.preheader ]
+  %i.na = phi i32 [ %i.nd, %.lr.ph267 ], [ %i.my, %.lr.ph267.preheader ]
   %.2190265 = phi ptr [ %i.nb, %.lr.ph267 ], [ %.221, %.lr.ph267.preheader ]
   %.2194264 = phi ptr [ %i.nc, %.lr.ph267 ], [ %i.mj, %.lr.ph267.preheader ] ; 2 uses
   %i.nb = getelementptr inbounds nuw i8, ptr %.2190265, i64 4 ; 2 uses
@@ -3747,10 +3747,10 @@ bb.h:                                             ; preds = %._crit_edge227
   %i.cv = load i32, ptr %i.cs, align 4, !tbaa !4  ; 3 uses
   %i.cw = load i32, ptr %i.cu, align 4, !tbaa !4  ; 3 uses
   %i.cx = icmp sgt i32 %i.cv, %i.cw               ; 2 uses
-  %4 = tail call i32 @llvm.smin.i32(i32 %i.cv, i32 %i.cw) ; 2 uses
-  %i.cy = tail call i32 @llvm.smax.i32(i32 %i.cv, i32 %i.cw)
   %.201 = select i1 %i.cx, ptr %i.cs, ptr %i.cu   ; 2 uses
-  %.not192231 = icmp eq i32 %4, -1
+  %i.cy = tail call i32 @llvm.smin.i32(i32 %i.cv, i32 %i.cw) ; 2 uses
+  %.not192231 = icmp eq i32 %i.cy, -1
+  %4 = tail call i32 @llvm.smax.i32(i32 %i.cv, i32 %i.cw)
   br i1 %.not192231, label %.preheader205, label %.lr.ph235.preheader
 
 .lr.ph235.preheader:                              ; preds = %bb.h
@@ -3762,13 +3762,13 @@ bb.h:                                             ; preds = %._crit_edge227
   br label %.preheader205
 
 .preheader205:                                    ; preds = %.preheader205.loopexit, %bb.h
-  %i.cz = phi i32 [ %i.cy, %bb.h ], [ %.pre288, %.preheader205.loopexit ] ; 2 uses
+  %i.cz = phi i32 [ %4, %bb.h ], [ %.pre288, %.preheader205.loopexit ] ; 2 uses
   %.0175.lcssa = phi ptr [ %i.ci, %bb.h ], [ %i.dc, %.preheader205.loopexit ] ; 2 uses
   %.not193237 = icmp eq i32 %i.cz, -1
   br i1 %.not193237, label %._crit_edge241, label %.lr.ph240
 
 .lr.ph235:                                        ; preds = %.lr.ph235.preheader, %.lr.ph235
-  %i.da = phi i32 [ %i.dd, %.lr.ph235 ], [ %4, %.lr.ph235.preheader ]
+  %i.da = phi i32 [ %i.dd, %.lr.ph235 ], [ %i.cy, %.lr.ph235.preheader ]
   %.0171233 = phi ptr [ %i.db, %.lr.ph235 ], [ %., %.lr.ph235.preheader ]
   %.0175232 = phi ptr [ %i.dc, %.lr.ph235 ], [ %i.ci, %.lr.ph235.preheader ] ; 2 uses
   %i.db = getelementptr inbounds nuw i8, ptr %.0171233, i64 4 ; 2 uses
@@ -3819,10 +3819,10 @@ bb.k:                                             ; preds = %bb.i
   %i.dv = load i32, ptr %i.ds, align 4, !tbaa !4  ; 3 uses
   %i.dw = load i32, ptr %i.du, align 4, !tbaa !4  ; 3 uses
   %i.dx = icmp sgt i32 %i.dv, %i.dw               ; 2 uses
-  %5 = tail call i32 @llvm.smin.i32(i32 %i.dv, i32 %i.dw) ; 2 uses
-  %i.dy = tail call i32 @llvm.smax.i32(i32 %i.dv, i32 %i.dw)
   %.203 = select i1 %i.dx, ptr %i.ds, ptr %i.du   ; 2 uses
-  %.not194243 = icmp eq i32 %5, -1
+  %i.dy = tail call i32 @llvm.smin.i32(i32 %i.dv, i32 %i.dw) ; 2 uses
+  %.not194243 = icmp eq i32 %i.dy, -1
+  %5 = tail call i32 @llvm.smax.i32(i32 %i.dv, i32 %i.dw)
   br i1 %.not194243, label %.preheader204, label %.lr.ph247.preheader
 
 .lr.ph247.preheader:                              ; preds = %bb.k
@@ -3834,13 +3834,13 @@ bb.k:                                             ; preds = %bb.i
   br label %.preheader204
 
 .preheader204:                                    ; preds = %.preheader204.loopexit, %bb.k
-  %i.dz = phi i32 [ %i.dy, %bb.k ], [ %.pre289, %.preheader204.loopexit ] ; 2 uses
+  %i.dz = phi i32 [ %5, %bb.k ], [ %.pre289, %.preheader204.loopexit ] ; 2 uses
   %.2177.lcssa = phi ptr [ %i.dj, %bb.k ], [ %i.ec, %.preheader204.loopexit ] ; 2 uses
   %.not195249 = icmp eq i32 %i.dz, -1
   br i1 %.not195249, label %._crit_edge253, label %.lr.ph252
 
 .lr.ph247:                                        ; preds = %.lr.ph247.preheader, %.lr.ph247
-  %i.ea = phi i32 [ %i.ed, %.lr.ph247 ], [ %5, %.lr.ph247.preheader ]
+  %i.ea = phi i32 [ %i.ed, %.lr.ph247 ], [ %i.dy, %.lr.ph247.preheader ]
   %.2173245 = phi ptr [ %i.eb, %.lr.ph247 ], [ %.202, %.lr.ph247.preheader ]
   %.2177244 = phi ptr [ %i.ec, %.lr.ph247 ], [ %i.dj, %.lr.ph247.preheader ] ; 2 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %.2173245, i64 4 ; 2 uses
@@ -4243,10 +4243,10 @@ bb.h:                                             ; preds = %._crit_edge227
   %i.de = load i32, ptr %i.db, align 4, !tbaa !4  ; 3 uses
   %i.df = load i32, ptr %i.dd, align 4, !tbaa !4  ; 3 uses
   %i.dg = icmp sgt i32 %i.de, %i.df               ; 2 uses
-  %4 = tail call i32 @llvm.smin.i32(i32 %i.de, i32 %i.df) ; 2 uses
-  %i.dh = tail call i32 @llvm.smax.i32(i32 %i.de, i32 %i.df)
   %.201 = select i1 %i.dg, ptr %i.db, ptr %i.dd   ; 2 uses
-  %.not192231 = icmp eq i32 %4, -1
+  %i.dh = tail call i32 @llvm.smin.i32(i32 %i.de, i32 %i.df) ; 2 uses
+  %.not192231 = icmp eq i32 %i.dh, -1
+  %4 = tail call i32 @llvm.smax.i32(i32 %i.de, i32 %i.df)
   br i1 %.not192231, label %.preheader205, label %.lr.ph235.preheader
 
 .lr.ph235.preheader:                              ; preds = %bb.h
@@ -4258,13 +4258,13 @@ bb.h:                                             ; preds = %._crit_edge227
   br label %.preheader205
 
 .preheader205:                                    ; preds = %.preheader205.loopexit, %bb.h
-  %i.di = phi i32 [ %i.dh, %bb.h ], [ %.pre288, %.preheader205.loopexit ] ; 2 uses
+  %i.di = phi i32 [ %4, %bb.h ], [ %.pre288, %.preheader205.loopexit ] ; 2 uses
   %.0174.lcssa = phi ptr [ %i.cr, %bb.h ], [ %i.dl, %.preheader205.loopexit ] ; 2 uses
   %.not193237 = icmp eq i32 %i.di, -1
   br i1 %.not193237, label %._crit_edge241, label %.lr.ph240
 
 .lr.ph235:                                        ; preds = %.lr.ph235.preheader, %.lr.ph235
-  %i.dj = phi i32 [ %i.dm, %.lr.ph235 ], [ %4, %.lr.ph235.preheader ]
+  %i.dj = phi i32 [ %i.dm, %.lr.ph235 ], [ %i.dh, %.lr.ph235.preheader ]
   %.0170233 = phi ptr [ %i.dk, %.lr.ph235 ], [ %., %.lr.ph235.preheader ]
   %.0174232 = phi ptr [ %i.dl, %.lr.ph235 ], [ %i.cr, %.lr.ph235.preheader ] ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %.0170233, i64 4 ; 2 uses
@@ -4315,10 +4315,10 @@ bb.k:                                             ; preds = %bb.i
   %i.ee = load i32, ptr %i.eb, align 4, !tbaa !4  ; 3 uses
   %i.ef = load i32, ptr %i.ed, align 4, !tbaa !4  ; 3 uses
   %i.eg = icmp sgt i32 %i.ee, %i.ef               ; 2 uses
-  %5 = tail call i32 @llvm.smin.i32(i32 %i.ee, i32 %i.ef) ; 2 uses
-  %i.eh = tail call i32 @llvm.smax.i32(i32 %i.ee, i32 %i.ef)
   %.203 = select i1 %i.eg, ptr %i.eb, ptr %i.ed   ; 2 uses
-  %.not194243 = icmp eq i32 %5, -1
+  %i.eh = tail call i32 @llvm.smin.i32(i32 %i.ee, i32 %i.ef) ; 2 uses
+  %.not194243 = icmp eq i32 %i.eh, -1
+  %5 = tail call i32 @llvm.smax.i32(i32 %i.ee, i32 %i.ef)
   br i1 %.not194243, label %.preheader204, label %.lr.ph247.preheader
 
 .lr.ph247.preheader:                              ; preds = %bb.k
@@ -4330,13 +4330,13 @@ bb.k:                                             ; preds = %bb.i
   br label %.preheader204
 
 .preheader204:                                    ; preds = %.preheader204.loopexit, %bb.k
-  %i.ei = phi i32 [ %i.eh, %bb.k ], [ %.pre289, %.preheader204.loopexit ] ; 2 uses
+  %i.ei = phi i32 [ %5, %bb.k ], [ %.pre289, %.preheader204.loopexit ] ; 2 uses
   %.2176.lcssa = phi ptr [ %i.ds, %bb.k ], [ %i.el, %.preheader204.loopexit ] ; 2 uses
   %.not195249 = icmp eq i32 %i.ei, -1
   br i1 %.not195249, label %._crit_edge253, label %.lr.ph252
 
 .lr.ph247:                                        ; preds = %.lr.ph247.preheader, %.lr.ph247
-  %i.ej = phi i32 [ %i.em, %.lr.ph247 ], [ %5, %.lr.ph247.preheader ]
+  %i.ej = phi i32 [ %i.em, %.lr.ph247 ], [ %i.eh, %.lr.ph247.preheader ]
   %.2172245 = phi ptr [ %i.ek, %.lr.ph247 ], [ %.202, %.lr.ph247.preheader ]
   %.2176244 = phi ptr [ %i.el, %.lr.ph247 ], [ %i.ds, %.lr.ph247.preheader ] ; 2 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %.2172245, i64 4 ; 2 uses

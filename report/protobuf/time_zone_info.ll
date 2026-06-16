@@ -201,9 +201,9 @@ _ZN4absl12lts_2025051213time_internal4cctz12_GLOBAL__N_111TransOffsetEbiRKNS2_15
   store i64 %i.gu, ptr %5, align 8, !tbaa !62
   %i.gv = icmp slt i64 %i.gq, %i.gu               ; 2 uses
   %i.gw = select i1 %i.gv, ptr %4, ptr %5         ; 2 uses
-  %6 = call i64 @llvm.smax.i64(i64 %i.gq, i64 %i.gu)
-  %7 = select i1 %i.gv, ptr %5, ptr %4            ; 2 uses
-  %i.gx = icmp slt i64 %i.cb, %6
+  %6 = select i1 %i.gv, ptr %5, ptr %4            ; 2 uses
+  %7 = call i64 @llvm.smax.i64(i64 %i.gq, i64 %i.gu)
+  %i.gx = icmp slt i64 %i.cb, %7
   br i1 %i.gx, label %bb.af, label %_ZNSt6vectorIN4absl12lts_2025051213time_internal4cctz10TransitionESaIS4_EE9push_backERKS4_.exit80
 
 bb.af:                                            ; preds = %_ZN4absl12lts_2025051213time_internal4cctz12_GLOBAL__N_111TransOffsetEbiRKNS2_15PosixTransitionE.exit62
@@ -309,7 +309,7 @@ _ZNSt6vectorIN4absl12lts_2025051213time_internal4cctz10TransitionESaIS4_EE9push_
   br i1 %.not.i65, label %bb.am, label %bb.al
 
 bb.al:                                            ; preds = %_ZNSt6vectorIN4absl12lts_2025051213time_internal4cctz10TransitionESaIS4_EE9push_backERKS4_.exit
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.hu, ptr noundef nonnull align 8 dereferenceable(48) %7, i64 48, i1 false), !tbaa.struct !71
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.hu, ptr noundef nonnull align 8 dereferenceable(48) %6, i64 48, i1 false), !tbaa.struct !71
   %i.hv = load ptr, ptr %i.br, align 8, !tbaa !60
   %i.hw = getelementptr inbounds nuw i8, ptr %i.hv, i64 48
   store ptr %i.hw, ptr %i.br, align 8, !tbaa !60
@@ -338,7 +338,7 @@ _ZNKSt6vectorIN4absl12lts_2025051213time_internal4cctz10TransitionESaIS4_EE12_M_
 
 .noexc79:                                         ; preds = %_ZNKSt6vectorIN4absl12lts_2025051213time_internal4cctz10TransitionESaIS4_EE12_M_check_lenEmPKc.exit.i.i66
   %i.ij = getelementptr inbounds nuw i8, ptr %i.ii, i64 %i.ia
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.ij, ptr noundef nonnull align 8 dereferenceable(48) %7, i64 48, i1 false), !tbaa.struct !71
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.ij, ptr noundef nonnull align 8 dereferenceable(48) %6, i64 48, i1 false), !tbaa.struct !71
   %.not10.i.i.i.i.i69 = icmp eq ptr %i.hx, %i.ht
   br i1 %.not10.i.i.i.i.i69, label %_ZNSt6vectorIN4absl12lts_2025051213time_internal4cctz10TransitionESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit22.i.i74, label %.lr.ph.i.i.i.i.i70
 
@@ -741,7 +741,7 @@ define internal void @"_ZNSt17_Function_handlerIFSt10unique_ptrIN4absl12lts_2025
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca i64, align 8                      ; 6 uses
-  %i.c = alloca [4 x ptr], align 8                ; 8 uses
+  %i.c = alloca [4 x ptr], align 8                ; 7 uses
   %i.d = alloca [1 x ptr], align 8                ; 6 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 16 uses
@@ -1144,25 +1144,21 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmPKc.exit.i33.i.
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #24, !noalias !295
   store ptr @.str.21, ptr %i.d, align 8, !tbaa !285, !noalias !295
   %.not.i35.i.i.i = icmp eq i64 %.0.i.i34.i.i.i, %i.gl
-  br i1 %.not.i35.i.i.i, label %.thread.i48.i.i.i, label %bb.ak
-
-.thread.i48.i.i.i:                                ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmPKc.exit.i33.i.i.i
-  %11 = getelementptr inbounds nuw i8, ptr %i.c, i64 32
-  br label %.lr.ph.i36.i.i.i
+  br i1 %.not.i35.i.i.i, label %.lr.ph.i36.i.i.i, label %bb.ak
 
 bb.ak:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmPKc.exit.i33.i.i.i
   %i.gp = load ptr, ptr %2, align 8, !tbaa !17, !noalias !295
   %i.gq = getelementptr inbounds nuw i8, ptr %i.gp, i64 %.0.i.i34.i.i.i
   %i.gr = load i8, ptr %i.gq, align 1, !tbaa !33, !noalias !295
   %i.gs = icmp eq i8 %i.gr, 47                    ; 2 uses
-  %i.gt = select i1 %i.gs, ptr %i.d, ptr %i.c     ; 2 uses
+  %i.gt = select i1 %i.gs, ptr %i.d, ptr %i.c
   %.sroa.6.0.copyload.pre.i.sroa.speculated.i.i.i = select i1 %i.gs, i64 8, i64 32
-  %12 = getelementptr inbounds nuw i8, ptr %i.gt, i64 %.sroa.6.0.copyload.pre.i.sroa.speculated.i.i.i
   br label %.lr.ph.i36.i.i.i
 
-.lr.ph.i36.i.i.i:                                 ; preds = %bb.ak, %.thread.i48.i.i.i
-  %13 = phi ptr [ %11, %.thread.i48.i.i.i ], [ %12, %bb.ak ]
-  %.sroa.0101.0.copyload176.i.i.i.i = phi ptr [ %i.c, %.thread.i48.i.i.i ], [ %i.gt, %bb.ak ]
+.lr.ph.i36.i.i.i:                                 ; preds = %bb.ak, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmPKc.exit.i33.i.i.i
+  %.sroa.6.0.copyload.i.i.i.i = phi i64 [ 32, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmPKc.exit.i33.i.i.i ], [ %.sroa.6.0.copyload.pre.i.sroa.speculated.i.i.i, %bb.ak ]
+  %.sroa.0101.0.copyload176.i.i.i.i = phi ptr [ %i.c, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmPKc.exit.i33.i.i.i ], [ %i.gt, %bb.ak ] ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %.sroa.0101.0.copyload176.i.i.i.i, i64 %.sroa.6.0.copyload.i.i.i.i
   %i.gu = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 9 uses
   %i.gv = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.gw = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 9 uses
@@ -1565,7 +1561,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i91
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i92.i.i.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit90.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i91.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #24, !noalias !295
   %i.ml = getelementptr inbounds nuw i8, ptr %.0131.i.i.i.i, i64 8 ; 2 uses
-  %.not29.i.i.i.i = icmp eq ptr %i.ml, %13
+  %.not29.i.i.i.i = icmp eq ptr %i.ml, %11
   br i1 %.not29.i.i.i.i, label %bb.bo, label %bb.al
 
 _ZN4absl12lts_2025051213time_internal4cctz12_GLOBAL__N_121FuchsiaZoneInfoSource4OpenERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit71.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i72.i.i.i.i
@@ -1968,10 +1964,10 @@ declare i64 @llvm.umax.i64(i64, i64) #23
 declare i64 @llvm.umin.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smin.i64(i64, i64) #23
+declare i64 @llvm.smax.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #23
+declare i64 @llvm.smin.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.sadd.sat.i64(i64, i64) #23

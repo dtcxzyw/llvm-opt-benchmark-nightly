@@ -150,24 +150,29 @@ build_intersection_matrix.exit:                   ; preds = %.loopexit.i, %bb.a
   br i1 %i.bc, label %.lr.ph70.split.us, label %.lr.ph70.split
 
 .lr.ph70.split.us:                                ; preds = %.lr.ph70, %._crit_edge69.us
-  %i.bf = load ptr, ptr %i.bb, align 8, !tbaa !31 ; 3 uses
+  %i.bf = load ptr, ptr %i.bb, align 8, !tbaa !31 ; 4 uses
   %.039.in51.us = getelementptr inbounds nuw i8, ptr %i.bf, i64 32
   %.03952.us = load ptr, ptr %.039.in51.us, align 8, !tbaa !32 ; 2 uses
   %.not53.us = icmp eq ptr %.03952.us, null
-  br i1 %.not53.us, label %._crit_edge.us, label %.lr.ph.us
+  br i1 %.not53.us, label %._crit_edge.us, label %.lr.ph.us.preheader
 
-.lr.ph.us:                                        ; preds = %.lr.ph70.split.us, %.lr.ph.us
-  %.03955.us = phi ptr [ %.039.us, %.lr.ph.us ], [ %.03952.us, %.lr.ph70.split.us ] ; 3 uses
-  %.054.us.a = phi ptr [ %spec.select.us, %.lr.ph.us ], [ %i.bf, %.lr.ph70.split.us ] ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %.03955.us, i64 4
-  %3 = load i32, ptr %2, align 4, !tbaa !33
+.lr.ph.us.preheader:                              ; preds = %.lr.ph70.split.us
+  %.phi.trans.insert73 = getelementptr inbounds nuw i8, ptr %i.bf, i64 4
+  %.pre74 = load i32, ptr %.phi.trans.insert73, align 4, !tbaa !33
+  br label %.lr.ph.us
+
+.lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %.lr.ph.us
+  %2 = phi i32 [ %3, %.lr.ph.us ], [ %.pre74, %.lr.ph.us.preheader ] ; 2 uses
+  %.054.us.a = phi ptr [ %.039.us, %.lr.ph.us ], [ %.03952.us, %.lr.ph.us.preheader ] ; 3 uses
+  %.054.us = phi ptr [ %spec.select.us, %.lr.ph.us ], [ %i.bf, %.lr.ph.us.preheader ]
   %i.bg = getelementptr inbounds nuw i8, ptr %.054.us.a, i64 4
-  %i.bh = load i32, ptr %i.bg, align 4, !tbaa !33
-  %i.bi = icmp slt i32 %3, %i.bh
-  %spec.select.us = select i1 %i.bi, ptr %.03955.us, ptr %.054.us.a ; 2 uses
-  %.039.in.us = getelementptr inbounds nuw i8, ptr %.03955.us, i64 32
+  %i.bh = load i32, ptr %i.bg, align 4, !tbaa !33 ; 2 uses
+  %i.bi = icmp slt i32 %i.bh, %2
+  %spec.select.us = select i1 %i.bi, ptr %.054.us.a, ptr %.054.us ; 2 uses
+  %.039.in.us = getelementptr inbounds nuw i8, ptr %.054.us.a, i64 32
   %.039.us = load ptr, ptr %.039.in.us, align 8, !tbaa !32 ; 2 uses
   %.not.us = icmp eq ptr %.039.us, null
+  %3 = tail call i32 @llvm.smin.i32(i32 %i.bh, i32 %2)
   br i1 %.not.us, label %._crit_edge.us, label %.lr.ph.us
 
 ._crit_edge.us:                                   ; preds = %.lr.ph.us, %.lr.ph70.split.us
@@ -203,24 +208,29 @@ build_intersection_matrix.exit:                   ; preds = %.loopexit.i, %bb.a
   br i1 %i.bv, label %.lr.ph70.split.us, label %._crit_edge71
 
 .lr.ph70.split:                                   ; preds = %.lr.ph70, %._crit_edge69
-  %i.bw = load ptr, ptr %i.bb, align 8, !tbaa !31 ; 3 uses
+  %i.bw = load ptr, ptr %i.bb, align 8, !tbaa !31 ; 4 uses
   %.039.in51 = getelementptr inbounds nuw i8, ptr %i.bw, i64 32
   %.03952 = load ptr, ptr %.039.in51, align 8, !tbaa !32 ; 2 uses
   %.not53 = icmp eq ptr %.03952, null
-  br i1 %.not53, label %._crit_edge, label %.lr.ph
+  br i1 %.not53, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %.lr.ph70.split, %.lr.ph
-  %.03955 = phi ptr [ %.039, %.lr.ph ], [ %.03952, %.lr.ph70.split ] ; 3 uses
-  %.054.a = phi ptr [ %spec.select, %.lr.ph ], [ %i.bw, %.lr.ph70.split ] ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.03955, i64 4
-  %5 = load i32, ptr %4, align 4, !tbaa !33
+.lr.ph.preheader:                                 ; preds = %.lr.ph70.split
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.bw, i64 4
+  %.pre = load i32, ptr %.phi.trans.insert, align 4, !tbaa !33
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
+  %4 = phi i32 [ %5, %.lr.ph ], [ %.pre, %.lr.ph.preheader ] ; 2 uses
+  %.054.a = phi ptr [ %.039, %.lr.ph ], [ %.03952, %.lr.ph.preheader ] ; 3 uses
+  %.054 = phi ptr [ %spec.select, %.lr.ph ], [ %i.bw, %.lr.ph.preheader ]
   %i.bx = getelementptr inbounds nuw i8, ptr %.054.a, i64 4
-  %i.by = load i32, ptr %i.bx, align 4, !tbaa !33
-  %i.bz = icmp slt i32 %5, %i.by
-  %spec.select = select i1 %i.bz, ptr %.03955, ptr %.054.a ; 2 uses
-  %.039.in = getelementptr inbounds nuw i8, ptr %.03955, i64 32
+  %i.by = load i32, ptr %i.bx, align 4, !tbaa !33 ; 2 uses
+  %i.bz = icmp slt i32 %i.by, %4
+  %spec.select = select i1 %i.bz, ptr %.054.a, ptr %.054 ; 2 uses
+  %.039.in = getelementptr inbounds nuw i8, ptr %.054.a, i64 32
   %.039 = load ptr, ptr %.039.in, align 8, !tbaa !32 ; 2 uses
   %.not = icmp eq ptr %.039, null
+  %5 = tail call i32 @llvm.smin.i32(i32 %i.by, i32 %4)
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.lr.ph70.split

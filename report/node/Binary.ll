@@ -201,26 +201,26 @@ _ZSt4findIN9__gnu_cxx17__normal_iteratorIPPN4LIEF5MachO7SectionESt6vectorIS5_SaI
 
 .lr.ph.preheader.i.i:                             ; preds = %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPPN4LIEF5MachO7SectionESt6vectorIS5_SaIS5_EEEES5_ET_SB_SB_RKT0_.exit
   %.pre.i.i = load ptr, ptr %.sroa.064.0.lcssa137, align 8
+  %.phi.trans.insert.i.i = getelementptr i8, ptr %.pre.i.i, i64 104
+  %.val.i.pre.i.i = load i32, ptr %.phi.trans.insert.i.i, align 8
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.preheader.i.i
-  %3 = phi ptr [ %i.cf, %.lr.ph.i.i ], [ %.pre.i.i, %.lr.ph.preheader.i.i ] ; 2 uses
-  %i.cb = phi ptr [ %5, %.lr.ph.i.i ], [ %i.ca, %.lr.ph.preheader.i.i ] ; 3 uses
-  %.sroa.02.010.i.i = phi ptr [ %spec.select.i.i, %.lr.ph.i.i ], [ %.sroa.064.0.lcssa137, %.lr.ph.preheader.i.i ]
-  %i.cc = load ptr, ptr %i.cb, align 8            ; 2 uses
-  %4 = getelementptr i8, ptr %3, i64 104
-  %.val.i.i.i = load i32, ptr %4, align 8
+  %.val.i.i.i = phi i32 [ %4, %.lr.ph.i.i ], [ %.val.i.pre.i.i, %.lr.ph.preheader.i.i ] ; 2 uses
+  %i.cb = phi ptr [ %3, %.lr.ph.i.i ], [ %i.ca, %.lr.ph.preheader.i.i ] ; 3 uses
+  %.sroa.02.010.i.i = phi ptr [ %i.cf, %.lr.ph.i.i ], [ %.sroa.064.0.lcssa137, %.lr.ph.preheader.i.i ]
+  %i.cc = load ptr, ptr %i.cb, align 8
   %i.cd = getelementptr i8, ptr %i.cc, i64 104
-  %.val1.i.i.i = load i32, ptr %i.cd, align 8
-  %i.ce = icmp ult i32 %.val.i.i.i, %.val1.i.i.i  ; 2 uses
-  %i.cf = select i1 %i.ce, ptr %i.cc, ptr %3
-  %spec.select.i.i = select i1 %i.ce, ptr %i.cb, ptr %.sroa.02.010.i.i ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.cb, i64 8 ; 2 uses
-  %.not.i.i36 = icmp eq ptr %5, %.sroa.11.2
+  %.val1.i.i.i = load i32, ptr %i.cd, align 8     ; 2 uses
+  %i.ce = icmp ult i32 %.val.i.i.i, %.val1.i.i.i
+  %i.cf = select i1 %i.ce, ptr %i.cb, ptr %.sroa.02.010.i.i ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.cb, i64 8 ; 2 uses
+  %.not.i.i36 = icmp eq ptr %3, %.sroa.11.2
+  %4 = tail call i32 @llvm.umax.i32(i32 %.val.i.i.i, i32 %.val1.i.i.i)
   br i1 %.not.i.i36, label %"_ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPPN4LIEF5MachO7SectionESt6vectorIS5_SaIS5_EEEEZNS3_6Binary14extend_sectionERS4_mE3$_0ET_SE_SE_T0_.exit", label %.lr.ph.i.i, !llvm.loop !199
 
 "_ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPPN4LIEF5MachO7SectionESt6vectorIS5_SaIS5_EEEEZNS3_6Binary14extend_sectionERS4_mE3$_0ET_SE_SE_T0_.exit": ; preds = %.lr.ph.i.i, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPPN4LIEF5MachO7SectionESt6vectorIS5_SaIS5_EEEES5_ET_SB_SB_RKT0_.exit
-  %.sroa.02.2.i.i = phi ptr [ %.sroa.064.0.lcssa137, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPPN4LIEF5MachO7SectionESt6vectorIS5_SaIS5_EEEES5_ET_SB_SB_RKT0_.exit ], [ %spec.select.i.i, %.lr.ph.i.i ]
+  %.sroa.02.2.i.i = phi ptr [ %.sroa.064.0.lcssa137, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPPN4LIEF5MachO7SectionESt6vectorIS5_SaIS5_EEEES5_ET_SB_SB_RKT0_.exit ], [ %i.cf, %.lr.ph.i.i ]
   %i.cg = load ptr, ptr %.sroa.02.2.i.i, align 8
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 104
   %i.ci = load i32, ptr %i.ch, align 8
@@ -622,6 +622,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #18
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

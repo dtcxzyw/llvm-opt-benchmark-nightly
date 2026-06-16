@@ -201,31 +201,34 @@ scalar.ph54:                                      ; preds = %scalar.ph54.prehead
   store i8 %i.cg, ptr %i.ch, align 1, !tbaa !64
   %indvars.iv.next187.i = add nuw nsw i64 %indvars.iv186.i, 1 ; 2 uses
   %exitcond189.not.i = icmp eq i64 %indvars.iv.next187.i, 2049
-  br i1 %exitcond189.not.i, label %.preheader163.i, label %scalar.ph54, !llvm.loop !67
+  br i1 %exitcond189.not.i, label %.preheader163.preheader.i, label %scalar.ph54, !llvm.loop !67
 
-.preheader163.i:                                  ; preds = %scalar.ph54, %.preheader163.i
-  %indvars.iv190.i = phi i64 [ %indvars.iv.next191.i, %.preheader163.i ], [ 0, %scalar.ph54 ] ; 3 uses
-  %.2141171.i = phi i32 [ %.3142.i, %.preheader163.i ], [ 0, %scalar.ph54 ] ; 3 uses
+.preheader163.preheader.i:                        ; preds = %scalar.ph54
+  %.pre.i = load float, ptr %i.af, align 4, !tbaa !52
+  br label %.preheader163.i
+
+.preheader163.i:                                  ; preds = %.preheader163.i, %.preheader163.preheader.i
+  %2 = phi float [ %.pre.i, %.preheader163.preheader.i ], [ %3, %.preheader163.i ] ; 2 uses
+  %indvars.iv190.i = phi i64 [ 0, %.preheader163.preheader.i ], [ %indvars.iv.next191.i, %.preheader163.i ] ; 3 uses
+  %.2141171.i = phi i32 [ 0, %.preheader163.preheader.i ], [ %.3142.i, %.preheader163.i ] ; 2 uses
   %i.ci = trunc nuw nsw i64 %indvars.iv190.i to i32
   %i.cj = uitofp nneg i32 %i.ci to double
   %i.ck = fmul nnan double %i.cj, f0x3F1334911EDA5B17 ; 2 uses
   %i.cl = fmul nnan double %i.ck, %i.ck
-  %2 = sext i32 %.2141171.i to i64
-  %3 = getelementptr inbounds [4 x i8], ptr %i.af, i64 %2
-  %4 = load float, ptr %3, align 4, !tbaa !52
   %i.cm = add nsw i32 %.2141171.i, 1              ; 2 uses
   %i.cn = sext i32 %i.cm to i64
   %i.co = getelementptr inbounds [4 x i8], ptr %i.af, i64 %i.cn
-  %i.cp = load float, ptr %i.co, align 4, !tbaa !52
-  %i.cq = fmul float %4, %i.cp
+  %i.cp = load float, ptr %i.co, align 4, !tbaa !52 ; 2 uses
+  %i.cq = fmul float %2, %i.cp
   %i.cr = fpext float %i.cq to double
-  %i.cs = fcmp ogt double %i.cl, %i.cr
+  %i.cs = fcmp ogt double %i.cl, %i.cr            ; 2 uses
   %.3142.i = select i1 %i.cs, i32 %i.cm, i32 %.2141171.i ; 2 uses
   %i.ct = trunc i32 %.3142.i to i16
   %i.cu = getelementptr inbounds nuw [2 x i8], ptr %i.ac, i64 %indvars.iv190.i
   store i16 %i.ct, ptr %i.cu, align 2, !tbaa !59
   %indvars.iv.next191.i = add nuw nsw i64 %indvars.iv190.i, 1 ; 2 uses
   %exitcond193.not.i = icmp eq i64 %indvars.iv.next191.i, 27300
+  %3 = select i1 %i.cs, float %i.cp, float %2
   br i1 %exitcond193.not.i, label %.preheader161.i, label %.preheader163.i
 
 .preheader161.i:                                  ; preds = %.preheader163.i, %bb.s

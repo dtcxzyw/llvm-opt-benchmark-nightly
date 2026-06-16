@@ -201,6 +201,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ag = load <2 x double>, ptr %i.z, align 8
   %i.ah = fsub <2 x double> %i.ag, %i.af
   %i.ai = load <2 x double>, ptr %i.aa, align 8
+  %3 = load double, ptr %i.ae, align 8
   %i.aj = fsub <2 x double> %i.ai, %i.af
   %i.ak = shufflevector <2 x double> %i.aj, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.al = fmul <2 x double> %i.ah, %i.ak          ; 2 uses
@@ -224,6 +225,7 @@ bb.f:                                             ; preds = %bb.e
   %i.av = load <2 x double>, ptr %i.ao, align 8
   %i.aw = fsub <2 x double> %i.av, %i.au
   %i.ax = load <2 x double>, ptr %i.ap, align 8
+  %4 = load double, ptr %i.at, align 8
   %i.ay = fsub <2 x double> %i.ax, %i.au
   %i.az = shufflevector <2 x double> %i.ay, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.ba = fmul <2 x double> %i.aw, %i.az          ; 2 uses
@@ -233,22 +235,20 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.bd, label %._crit_edge, label %.thread36
 
 bb.g:                                             ; preds = %bb.e
-  %i.be = load ptr, ptr %i.s, align 8             ; 2 uses
+  %i.be = load ptr, ptr %i.s, align 8
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 8
-  %i.bg = load double, ptr %i.bf, align 8
-  %i.bh = load ptr, ptr %i.w, align 8             ; 2 uses
+  %i.bg = load double, ptr %i.bf, align 8         ; 2 uses
+  %i.bh = load ptr, ptr %i.w, align 8
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 8
-  %i.bj = load double, ptr %i.bi, align 8
+  %i.bj = load double, ptr %i.bi, align 8         ; 2 uses
   %i.bk = fcmp olt double %i.bg, %i.bj            ; 2 uses
-  %3 = select i1 %i.bk, ptr %i.be, ptr %i.bh
   %. = select i1 %i.bk, ptr %i.s, ptr %i.w
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %5 = select i1 %i.bk, double %i.bg, double %i.bj
   br label %.thread36
 
 .thread36:                                        ; preds = %bb.f, %bb.d, %bb.g
-  %.in = phi ptr [ %.phi.trans.insert, %bb.g ], [ %i.ae, %bb.d ], [ %i.at, %bb.f ]
+  %6 = phi double [ %5, %bb.g ], [ %3, %bb.d ], [ %4, %bb.f ]
   %.2 = phi ptr [ %., %bb.g ], [ %i.w, %bb.d ], [ %i.s, %bb.f ]
-  %4 = load double, ptr %.in, align 8
   %i.bl = load i8, ptr %i.a, align 8, !range !6, !noundef !7
   %i.bm = trunc nuw i8 %i.bl to i1
   %..i = select i1 %i.bm, i64 24, i64 40
@@ -257,7 +257,7 @@ bb.g:                                             ; preds = %bb.e
   %i.bp = load ptr, ptr %i.bo, align 8
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
   %i.br = load double, ptr %i.bq, align 8
-  %i.bs = fsub double %i.br, %4
+  %i.bs = fsub double %i.br, %6
   %i.bt = load double, ptr %i.b, align 8
   %i.bu = fcmp ogt double %i.bt, %i.bs
   br i1 %i.bu, label %._crit_edge, label %bb.b

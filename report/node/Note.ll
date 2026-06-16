@@ -201,11 +201,12 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %.not.i.i.i.i.i.i.i.i.i.i = icmp samesign ugt i32 %0, 43
-  br i1 %.not.i.i.i.i.i.i.i.i.i.i, label %.critedge, label %_ZNK6frozen3mapIN4LIEF3ELF4Note4TYPEEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit
+  br i1 %.not.i.i.i.i.i.i.i.i.i.i, label %.critedge, label %_ZNK6frozen3mapIN4LIEF3ELF4Note4TYPEEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit.thread
 
 bb.e:                                             ; preds = %bb.b
-  %.not.i6.i.i.i.i.i.i.i = icmp samesign ugt i32 %0, 38
+  %.not.i6.i.i.i.i.i.i.i = icmp samesign ugt i32 %0, 38 ; 2 uses
   %.add15.i.i = select i1 %.not.i6.i.i.i.i.i.i.i, i64 152, i64 136
+  %1 = select i1 %.not.i6.i.i.i.i.i.i.i, i32 41, i32 38
   br label %_ZNK6frozen3mapIN4LIEF3ELF4Note4TYPEEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit
 
 bb.f:                                             ; preds = %bb.a
@@ -221,18 +222,19 @@ bb.f:                                             ; preds = %bb.a
   %i.c = load i32, ptr %.ptr22.i.i, align 8
   %.not.i.i.i.i.i.i.i.i.i = icmp slt i32 %i.c, %0
   %.idx.i.i.i.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i.i.i.i, i64 16, i64 0
-  %.add17.i.i = or disjoint i64 %.add16.i.i, %.idx.i.i.i.i.i.i.i.i.i
+  %.add17.i.i = or disjoint i64 %.add16.i.i, %.idx.i.i.i.i.i.i.i.i.i ; 2 uses
+  %.0.i.i.i.i.ptr.i.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr @__const._ZN4LIEF3ELF4Note15type_to_sectionENS1_4TYPEE.TYPE2SECTION, i64 %.add17.i.i
+  %.pre.i.pre.i = load i32, ptr %.0.i.i.i.i.ptr.i.phi.trans.insert.i, align 8
   br label %_ZNK6frozen3mapIN4LIEF3ELF4Note4TYPEEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit
 
-_ZNK6frozen3mapIN4LIEF3ELF4Note4TYPEEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit: ; preds = %bb.d, %bb.e, %bb.f
-  %.0.i.i.i.i.idx.ph.i.i = phi i64 [ 184, %bb.d ], [ %.add15.i.i, %bb.e ], [ %.add17.i.i, %bb.f ] ; 2 uses
-  %.0.i.i.i.i.ptr.i.i.ptr = getelementptr inbounds nuw i8, ptr @__const._ZN4LIEF3ELF4Note15type_to_sectionENS1_4TYPEE.TYPE2SECTION, i64 %.0.i.i.i.i.idx.ph.i.i
-  %.pre.i.i = load i32, ptr %.0.i.i.i.i.ptr.i.i.ptr, align 4
+_ZNK6frozen3mapIN4LIEF3ELF4Note4TYPEEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit: ; preds = %bb.e, %bb.f
+  %.pre.i.i = phi i32 [ %.pre.i.pre.i, %bb.f ], [ %1, %bb.e ]
+  %.0.i.i.i.i.idx.ph.i.i = phi i64 [ %.add17.i.i, %bb.f ], [ %.add15.i.i, %bb.e ]
   %i.d = icmp slt i32 %0, %.pre.i.i
   br i1 %i.d, label %.critedge, label %_ZNK6frozen3mapIN4LIEF3ELF4Note4TYPEEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit.thread
 
-_ZNK6frozen3mapIN4LIEF3ELF4Note4TYPEEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit.thread: ; preds = %bb.c, %_ZNK6frozen3mapIN4LIEF3ELF4Note4TYPEEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit
-  %.0.i.i.i.i14.i.i.idx10 = phi i64 [ %.0.i.i.i.i.idx.ph.i.i, %_ZNK6frozen3mapIN4LIEF3ELF4Note4TYPEEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit ], [ 168, %bb.c ]
+_ZNK6frozen3mapIN4LIEF3ELF4Note4TYPEEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit.thread: ; preds = %bb.d, %bb.c, %_ZNK6frozen3mapIN4LIEF3ELF4Note4TYPEEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit
+  %.0.i.i.i.i14.i.i.idx10 = phi i64 [ 168, %bb.c ], [ %.0.i.i.i.i.idx.ph.i.i, %_ZNK6frozen3mapIN4LIEF3ELF4Note4TYPEEPKcLm12ESt4lessIS4_EE4findIS4_EEPKSt4pairIS4_S6_ERKT_.exit ], [ 184, %bb.d ]
   %.0.i.i.i.i14.i.i.ptr = getelementptr inbounds nuw i8, ptr @__const._ZN4LIEF3ELF4Note15type_to_sectionENS1_4TYPEE.TYPE2SECTION, i64 %.0.i.i.i.i14.i.i.idx10
   %i.e = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i14.i.i.ptr, i64 8
   %i.f = load ptr, ptr %i.e, align 8
@@ -524,9 +526,8 @@ bb.q:                                             ; preds = %bb.p
 _ZNK6frozen3mapIiN4LIEF3ELF4Note4TYPEELm4ESt4lessIiEE11lower_boundIjEEPKSt4pairIiS4_ERKT_.exit.thread.i.i: ; preds = %.critedge60
   %.not.i6.i.i.i.i.i.i85 = icmp eq i32 %1, 513
   %.add15.i.i86 = select i1 %.not.i6.i.i.i.i.i.i85, i64 12, i64 4
-  %.0.i.i.i.i.ptr.i.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr @_ZN4LIEF3ELFL14CORE_X86_TYPESE, i64 %.add15.i.i86 ; 2 uses
-  %.pre.i.pre.i = load i32, ptr %.0.i.i.i.i.ptr.i.phi.trans.insert.i, align 4
-  %.not21.i.i = icmp slt i32 %1, %.pre.i.pre.i
+  %.0.i.i.i.i.ptr.i.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr @_ZN4LIEF3ELFL14CORE_X86_TYPESE, i64 %.add15.i.i86
+  %.not21.i.i = icmp slt i32 %1, 512
   br i1 %.not21.i.i, label %.critedge, label %_ZNK6frozen3mapIiN4LIEF3ELF4Note4TYPEELm4ESt4lessIiEE4findIjEEPKSt4pairIiS4_ERKT_.exit.thread175
 
 _ZNK6frozen3mapIiN4LIEF3ELF4Note4TYPEELm4ESt4lessIiEE4findIjEEPKSt4pairIiS4_ERKT_.exit.thread175: ; preds = %_ZNK6frozen3mapIiN4LIEF3ELF4Note4TYPEELm4ESt4lessIiEE11lower_boundIjEEPKSt4pairIiS4_ERKT_.exit.thread.i.i, %bb.q, %bb.p

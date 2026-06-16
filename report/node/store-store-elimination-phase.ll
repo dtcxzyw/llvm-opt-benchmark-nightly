@@ -201,23 +201,23 @@ bb.t:                                             ; preds = %.lr.ph69, %_ZN2v88i
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.prol
 
 .lr.ph.i.i.i.prol:                                ; preds = %.lr.ph.preheader.i.i.i, %.lr.ph.i.i.i.prol
-  %i.ef = phi i32 [ %5, %.lr.ph.i.i.i.prol ], [ %.pre.i.i.i37, %.lr.ph.preheader.i.i.i ] ; 2 uses
-  %i.eg = phi ptr [ %6, %.lr.ph.i.i.i.prol ], [ %i.ee, %.lr.ph.preheader.i.i.i ] ; 3 uses
+  %i.ef = phi i32 [ %6, %.lr.ph.i.i.i.prol ], [ %.pre.i.i.i37, %.lr.ph.preheader.i.i.i ] ; 2 uses
+  %i.eg = phi ptr [ %5, %.lr.ph.i.i.i.prol ], [ %i.ee, %.lr.ph.preheader.i.i.i ] ; 3 uses
   %.018.i.i.i.prol = phi ptr [ %spec.select.i.i.i.prol, %.lr.ph.i.i.i.prol ], [ %i.ec, %.lr.ph.preheader.i.i.i ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.prol ], [ 0, %.lr.ph.preheader.i.i.i ]
   %i.eh = load i32, ptr %i.eg, align 4            ; 2 uses
   %i.ei = icmp slt i32 %i.ef, %i.eh
-  %5 = tail call i32 @llvm.smax.i32(i32 %i.ef, i32 %i.eh) ; 2 uses
   %spec.select.i.i.i.prol = select i1 %i.ei, ptr %i.eg, ptr %.018.i.i.i.prol ; 3 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.eg, i64 4 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.eg, i64 4 ; 2 uses
+  %6 = tail call i32 @llvm.smax.i32(i32 %i.ef, i32 %i.eh) ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.prol, !llvm.loop !75
 
 .lr.ph.i.i.i.prol.loopexit:                       ; preds = %.lr.ph.i.i.i.prol, %.lr.ph.preheader.i.i.i
   %spec.select.i.i.i.lcssa.unr = phi ptr [ poison, %.lr.ph.preheader.i.i.i ], [ %spec.select.i.i.i.prol, %.lr.ph.i.i.i.prol ]
-  %.unr = phi i32 [ %.pre.i.i.i37, %.lr.ph.preheader.i.i.i ], [ %5, %.lr.ph.i.i.i.prol ]
-  %.unr90 = phi ptr [ %i.ee, %.lr.ph.preheader.i.i.i ], [ %6, %.lr.ph.i.i.i.prol ]
+  %.unr = phi i32 [ %.pre.i.i.i37, %.lr.ph.preheader.i.i.i ], [ %6, %.lr.ph.i.i.i.prol ]
+  %.unr90 = phi ptr [ %i.ee, %.lr.ph.preheader.i.i.i ], [ %5, %.lr.ph.i.i.i.prol ]
   %.018.i.i.i.unr = phi ptr [ %i.ec, %.lr.ph.preheader.i.i.i ], [ %spec.select.i.i.i.prol, %.lr.ph.i.i.i.prol ]
   br i1 %i.w, label %_ZZN2v88internal8compiler10turboshaft25MaybeRedundantStoresTable10BeginBlockEPKNS2_5BlockEENKUlNS2_16SnapshotTableKeyINS2_18StoreObservabilityENS2_27MaybeRedundantStoresKeyDataEEENS_4base6VectorIKS8_EEE_clESA_SE_.exit, label %.lr.ph.i.i.i
 
@@ -227,25 +227,25 @@ bb.t:                                             ; preds = %.lr.ph69, %_ZN2v88i
   %.018.i.i.i = phi ptr [ %spec.select.i.i.i.3, %.lr.ph.i.i.i ], [ %.018.i.i.i.unr, %.lr.ph.i.i.i.prol.loopexit ]
   %i.el = load i32, ptr %i.ek, align 4            ; 2 uses
   %i.em = icmp slt i32 %i.ej, %i.el
-  %7 = tail call i32 @llvm.smax.i32(i32 %i.ej, i32 %i.el) ; 2 uses
   %spec.select.i.i.i = select i1 %i.em, ptr %i.ek, ptr %.018.i.i.i
   %i.en = getelementptr inbounds nuw i8, ptr %i.ek, i64 4 ; 2 uses
+  %7 = tail call i32 @llvm.smax.i32(i32 %i.ej, i32 %i.el) ; 2 uses
   %8 = load i32, ptr %i.en, align 4               ; 2 uses
   %9 = icmp slt i32 %7, %8
-  %10 = tail call i32 @llvm.smax.i32(i32 %7, i32 %8) ; 2 uses
   %spec.select.i.i.i.1 = select i1 %9, ptr %i.en, ptr %spec.select.i.i.i
   %i.eo = getelementptr inbounds nuw i8, ptr %i.ek, i64 8 ; 2 uses
+  %10 = tail call i32 @llvm.smax.i32(i32 %7, i32 %8) ; 2 uses
   %11 = load i32, ptr %i.eo, align 4              ; 2 uses
   %12 = icmp slt i32 %10, %11
-  %13 = tail call i32 @llvm.smax.i32(i32 %10, i32 %11) ; 2 uses
   %spec.select.i.i.i.2 = select i1 %12, ptr %i.eo, ptr %spec.select.i.i.i.1
   %i.ep = getelementptr inbounds nuw i8, ptr %i.ek, i64 12 ; 2 uses
+  %13 = tail call i32 @llvm.smax.i32(i32 %10, i32 %11) ; 2 uses
   %14 = load i32, ptr %i.ep, align 4              ; 2 uses
   %15 = icmp slt i32 %13, %14
-  %16 = tail call i32 @llvm.smax.i32(i32 %13, i32 %14)
   %spec.select.i.i.i.3 = select i1 %15, ptr %i.ep, ptr %spec.select.i.i.i.2 ; 2 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %i.ek, i64 16 ; 2 uses
   %.not.i.i.i.3 = icmp eq ptr %i.eq, %i.ed
+  %16 = tail call i32 @llvm.smax.i32(i32 %13, i32 %14)
   br i1 %.not.i.i.i.3, label %_ZZN2v88internal8compiler10turboshaft25MaybeRedundantStoresTable10BeginBlockEPKNS2_5BlockEENKUlNS2_16SnapshotTableKeyINS2_18StoreObservabilityENS2_27MaybeRedundantStoresKeyDataEEENS_4base6VectorIKS8_EEE_clESA_SE_.exit, label %.lr.ph.i.i.i, !llvm.loop !76
 
 _ZZN2v88internal8compiler10turboshaft25MaybeRedundantStoresTable10BeginBlockEPKNS2_5BlockEENKUlNS2_16SnapshotTableKeyINS2_18StoreObservabilityENS2_27MaybeRedundantStoresKeyDataEEENS_4base6VectorIKS8_EEE_clESA_SE_.exit: ; preds = %.lr.ph.i.i.i.prol.loopexit, %.lr.ph.i.i.i, %bb.t
@@ -648,23 +648,23 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.prol
 
 .lr.ph.i.i.i.prol:                                ; preds = %.lr.ph.preheader.i.i.i, %.lr.ph.i.i.i.prol
-  %i.ej = phi i32 [ %5, %.lr.ph.i.i.i.prol ], [ %.pre.i.i.i37, %.lr.ph.preheader.i.i.i ] ; 2 uses
-  %i.ek = phi ptr [ %6, %.lr.ph.i.i.i.prol ], [ %i.ee, %.lr.ph.preheader.i.i.i ] ; 3 uses
+  %i.ej = phi i32 [ %6, %.lr.ph.i.i.i.prol ], [ %.pre.i.i.i37, %.lr.ph.preheader.i.i.i ] ; 2 uses
+  %i.ek = phi ptr [ %5, %.lr.ph.i.i.i.prol ], [ %i.ee, %.lr.ph.preheader.i.i.i ] ; 3 uses
   %.018.i.i.i.prol = phi ptr [ %spec.select.i.i.i.prol, %.lr.ph.i.i.i.prol ], [ %i.ec, %.lr.ph.preheader.i.i.i ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.prol ], [ 0, %.lr.ph.preheader.i.i.i ]
   %i.el = load i32, ptr %i.ek, align 4            ; 2 uses
   %i.em = icmp slt i32 %i.ej, %i.el
-  %5 = tail call i32 @llvm.smax.i32(i32 %i.ej, i32 %i.el) ; 2 uses
   %spec.select.i.i.i.prol = select i1 %i.em, ptr %i.ek, ptr %.018.i.i.i.prol ; 3 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.ek, i64 4 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.ek, i64 4 ; 2 uses
+  %6 = tail call i32 @llvm.smax.i32(i32 %i.ej, i32 %i.el) ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.prol, !llvm.loop !134
 
 .lr.ph.i.i.i.prol.loopexit:                       ; preds = %.lr.ph.i.i.i.prol, %.lr.ph.preheader.i.i.i
   %spec.select.i.i.i.lcssa.unr = phi ptr [ poison, %.lr.ph.preheader.i.i.i ], [ %spec.select.i.i.i.prol, %.lr.ph.i.i.i.prol ]
-  %.unr = phi i32 [ %.pre.i.i.i37, %.lr.ph.preheader.i.i.i ], [ %5, %.lr.ph.i.i.i.prol ]
-  %.unr91 = phi ptr [ %i.ee, %.lr.ph.preheader.i.i.i ], [ %6, %.lr.ph.i.i.i.prol ]
+  %.unr = phi i32 [ %.pre.i.i.i37, %.lr.ph.preheader.i.i.i ], [ %6, %.lr.ph.i.i.i.prol ]
+  %.unr91 = phi ptr [ %i.ee, %.lr.ph.preheader.i.i.i ], [ %5, %.lr.ph.i.i.i.prol ]
   %.018.i.i.i.unr = phi ptr [ %i.ec, %.lr.ph.preheader.i.i.i ], [ %spec.select.i.i.i.prol, %.lr.ph.i.i.i.prol ]
   br i1 %i.w, label %_ZZN2v88internal8compiler10turboshaft25MaybeRedundantStoresTable4SealEPbENKUlNS2_16SnapshotTableKeyINS2_18StoreObservabilityENS2_27MaybeRedundantStoresKeyDataEEENS_4base6VectorIKS6_EEE_clES8_SC_.exit, label %.lr.ph.i.i.i
 
@@ -674,25 +674,25 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   %.018.i.i.i = phi ptr [ %spec.select.i.i.i.3, %.lr.ph.i.i.i ], [ %.018.i.i.i.unr, %.lr.ph.i.i.i.prol.loopexit ]
   %i.ep = load i32, ptr %i.eo, align 4            ; 2 uses
   %i.eq = icmp slt i32 %i.en, %i.ep
-  %7 = tail call i32 @llvm.smax.i32(i32 %i.en, i32 %i.ep) ; 2 uses
   %spec.select.i.i.i = select i1 %i.eq, ptr %i.eo, ptr %.018.i.i.i
   %i.er = getelementptr inbounds nuw i8, ptr %i.eo, i64 4 ; 2 uses
+  %7 = tail call i32 @llvm.smax.i32(i32 %i.en, i32 %i.ep) ; 2 uses
   %8 = load i32, ptr %i.er, align 4               ; 2 uses
   %9 = icmp slt i32 %7, %8
-  %10 = tail call i32 @llvm.smax.i32(i32 %7, i32 %8) ; 2 uses
   %spec.select.i.i.i.1 = select i1 %9, ptr %i.er, ptr %spec.select.i.i.i
   %i.es = getelementptr inbounds nuw i8, ptr %i.eo, i64 8 ; 2 uses
+  %10 = tail call i32 @llvm.smax.i32(i32 %7, i32 %8) ; 2 uses
   %11 = load i32, ptr %i.es, align 4              ; 2 uses
   %12 = icmp slt i32 %10, %11
-  %13 = tail call i32 @llvm.smax.i32(i32 %10, i32 %11) ; 2 uses
   %spec.select.i.i.i.2 = select i1 %12, ptr %i.es, ptr %spec.select.i.i.i.1
   %i.et = getelementptr inbounds nuw i8, ptr %i.eo, i64 12 ; 2 uses
+  %13 = tail call i32 @llvm.smax.i32(i32 %10, i32 %11) ; 2 uses
   %14 = load i32, ptr %i.et, align 4              ; 2 uses
   %15 = icmp slt i32 %13, %14
-  %16 = tail call i32 @llvm.smax.i32(i32 %13, i32 %14)
   %spec.select.i.i.i.3 = select i1 %15, ptr %i.et, ptr %spec.select.i.i.i.2 ; 2 uses
   %i.eu = getelementptr inbounds nuw i8, ptr %i.eo, i64 16 ; 2 uses
   %.not.i.i.i.3 = icmp eq ptr %i.eu, %i.ei
+  %16 = tail call i32 @llvm.smax.i32(i32 %13, i32 %14)
   br i1 %.not.i.i.i.3, label %_ZZN2v88internal8compiler10turboshaft25MaybeRedundantStoresTable4SealEPbENKUlNS2_16SnapshotTableKeyINS2_18StoreObservabilityENS2_27MaybeRedundantStoresKeyDataEEENS_4base6VectorIKS6_EEE_clES8_SC_.exit, label %.lr.ph.i.i.i, !llvm.loop !76
 
 _ZZN2v88internal8compiler10turboshaft25MaybeRedundantStoresTable4SealEPbENKUlNS2_16SnapshotTableKeyINS2_18StoreObservabilityENS2_27MaybeRedundantStoresKeyDataEEENS_4base6VectorIKS6_EEE_clES8_SC_.exit: ; preds = %.lr.ph.i.i.i.prol.loopexit, %.lr.ph.i.i.i, %bb.v

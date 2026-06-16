@@ -201,23 +201,23 @@ bb.b:                                             ; preds = %bb.a
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.prol.loopexit, label %.lr.ph.i.i.prol
 
 .lr.ph.i.i.prol:                                  ; preds = %.lr.ph.preheader.i.i, %.lr.ph.i.i.prol
-  %i.n = phi i8 [ %1, %.lr.ph.i.i.prol ], [ %.pre.i.i, %.lr.ph.preheader.i.i ] ; 2 uses
-  %i.o = phi ptr [ %2, %.lr.ph.i.i.prol ], [ %i.h, %.lr.ph.preheader.i.i ] ; 3 uses
+  %i.n = phi i8 [ %2, %.lr.ph.i.i.prol ], [ %.pre.i.i, %.lr.ph.preheader.i.i ] ; 2 uses
+  %i.o = phi ptr [ %1, %.lr.ph.i.i.prol ], [ %i.h, %.lr.ph.preheader.i.i ] ; 3 uses
   %.sroa.02.09.i.i.prol = phi ptr [ %spec.select.i.i.prol, %.lr.ph.i.i.prol ], [ %i.e, %.lr.ph.preheader.i.i ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.prol ], [ 0, %.lr.ph.preheader.i.i ]
   %i.p = load i8, ptr %i.o, align 1, !tbaa !43    ; 2 uses
   %i.q = icmp slt i8 %i.n, %i.p
-  %1 = tail call i8 @llvm.smax.i8(i8 %i.n, i8 %i.p) ; 2 uses
   %spec.select.i.i.prol = select i1 %i.q, ptr %i.o, ptr %.sroa.02.09.i.i.prol ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.o, i64 1 ; 2 uses
+  %1 = getelementptr inbounds nuw i8, ptr %i.o, i64 1 ; 2 uses
+  %2 = tail call i8 @llvm.smax.i8(i8 %i.n, i8 %i.p) ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.prol.loopexit, label %.lr.ph.i.i.prol, !llvm.loop !1113
 
 .lr.ph.i.i.prol.loopexit:                         ; preds = %.lr.ph.i.i.prol, %.lr.ph.preheader.i.i
   %spec.select.i.i.lcssa.unr = phi ptr [ poison, %.lr.ph.preheader.i.i ], [ %spec.select.i.i.prol, %.lr.ph.i.i.prol ]
-  %.unr = phi i8 [ %.pre.i.i, %.lr.ph.preheader.i.i ], [ %1, %.lr.ph.i.i.prol ]
-  %.unr4 = phi ptr [ %i.h, %.lr.ph.preheader.i.i ], [ %2, %.lr.ph.i.i.prol ]
+  %.unr = phi i8 [ %.pre.i.i, %.lr.ph.preheader.i.i ], [ %2, %.lr.ph.i.i.prol ]
+  %.unr4 = phi ptr [ %i.h, %.lr.ph.preheader.i.i ], [ %1, %.lr.ph.i.i.prol ]
   %.sroa.02.09.i.i.unr = phi ptr [ %i.e, %.lr.ph.preheader.i.i ], [ %spec.select.i.i.prol, %.lr.ph.i.i.prol ]
   %i.r = icmp ult i64 %i.m, 3
   br i1 %i.r, label %_ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPKaSt6vectorIaSaIaEEEEET_S8_S8_.exit, label %.lr.ph.i.i
@@ -228,25 +228,25 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.02.09.i.i = phi ptr [ %spec.select.i.i.3, %.lr.ph.i.i ], [ %.sroa.02.09.i.i.unr, %.lr.ph.i.i.prol.loopexit ]
   %i.u = load i8, ptr %i.t, align 1, !tbaa !43    ; 2 uses
   %i.v = icmp slt i8 %i.s, %i.u
-  %3 = tail call i8 @llvm.smax.i8(i8 %i.s, i8 %i.u) ; 2 uses
   %spec.select.i.i = select i1 %i.v, ptr %i.t, ptr %.sroa.02.09.i.i
   %i.w = getelementptr inbounds nuw i8, ptr %i.t, i64 1 ; 2 uses
+  %3 = tail call i8 @llvm.smax.i8(i8 %i.s, i8 %i.u) ; 2 uses
   %4 = load i8, ptr %i.w, align 1, !tbaa !43      ; 2 uses
   %5 = icmp slt i8 %3, %4
-  %6 = tail call i8 @llvm.smax.i8(i8 %3, i8 %4)   ; 2 uses
   %spec.select.i.i.1 = select i1 %5, ptr %i.w, ptr %spec.select.i.i
   %i.x = getelementptr inbounds nuw i8, ptr %i.t, i64 2 ; 2 uses
+  %6 = tail call i8 @llvm.smax.i8(i8 %3, i8 %4)   ; 2 uses
   %7 = load i8, ptr %i.x, align 1, !tbaa !43      ; 2 uses
   %8 = icmp slt i8 %6, %7
-  %9 = tail call i8 @llvm.smax.i8(i8 %6, i8 %7)   ; 2 uses
   %spec.select.i.i.2 = select i1 %8, ptr %i.x, ptr %spec.select.i.i.1
   %i.y = getelementptr inbounds nuw i8, ptr %i.t, i64 3 ; 2 uses
+  %9 = tail call i8 @llvm.smax.i8(i8 %6, i8 %7)   ; 2 uses
   %10 = load i8, ptr %i.y, align 1, !tbaa !43     ; 2 uses
   %11 = icmp slt i8 %9, %10
-  %12 = tail call i8 @llvm.smax.i8(i8 %9, i8 %10)
   %spec.select.i.i.3 = select i1 %11, ptr %i.y, ptr %spec.select.i.i.2 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.t, i64 4 ; 2 uses
   %i.aa = icmp eq ptr %i.z, %i.c
+  %12 = tail call i8 @llvm.smax.i8(i8 %9, i8 %10)
   br i1 %i.aa, label %_ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPKaSt6vectorIaSaIaEEEEET_S8_S8_.exit, label %.lr.ph.i.i, !llvm.loop !1114
 
 _ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPKaSt6vectorIaSaIaEEEEET_S8_S8_.exit: ; preds = %.lr.ph.i.i.prol.loopexit, %.lr.ph.i.i, %bb.b
