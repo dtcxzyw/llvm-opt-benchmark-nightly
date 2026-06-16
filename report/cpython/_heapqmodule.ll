@@ -201,7 +201,7 @@ bb.a:
   br i1 %i.b, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = lshr i64 %.val, 1                        ; 3 uses
+  %i.c = lshr i64 %.val, 1                        ; 2 uses
   %i.d = add nuw nsw i64 %i.c, 1
   br label %.lr.ph.i.i
 
@@ -220,21 +220,18 @@ bb.b:                                             ; preds = %bb.a
   %i.k = lshr i64 %.val, 2                        ; 2 uses
   %i.l = add i64 %i.i, -2                         ; 2 uses
   %.not39.i = icmp slt i64 %i.l, %i.k
-  br i1 %.not39.i, label %.preheader32.i, label %.preheader34.i
+  br i1 %.not39.i, label %.preheader.preheader.i, label %.preheader34.i
 
 .preheader34.i:                                   ; preds = %._crit_edge.loopexit.i.i, %bb.d
-  %.02340.i = phi i64 [ %i.q, %bb.d ], [ %i.l, %._crit_edge.loopexit.i.i ] ; 4 uses
+  %.02340.i = phi i64 [ %i.q, %bb.d ], [ %i.l, %._crit_edge.loopexit.i.i ] ; 3 uses
   %i.m = tail call i32 %1(ptr noundef %0, i64 noundef %.02340.i) #2, !callees !32, !inline_history !38
   %.not2937.i = icmp eq i32 %i.m, 0
   br i1 %.not2937.i, label %.lr.ph.i, label %cache_friendly_heapify.exit
 
-.preheader32.i:                                   ; preds = %bb.d, %._crit_edge.loopexit.i.i
-  %.not2645.not.i = icmp sgt i64 %i.c, %i.j
-  br i1 %.not2645.not.i, label %.preheader.preheader.i, label %cache_friendly_heapify.exit
-
-.preheader.preheader.i:                           ; preds = %.preheader32.i
-  %.144.i = add nsw i64 %i.c, -1
-  br label %.preheader.i
+.preheader.preheader.i:                           ; preds = %bb.d, %._crit_edge.loopexit.i.i
+  %.144.i = add nsw i64 %i.c, -1                  ; 2 uses
+  %.not2645.i = icmp slt i64 %.144.i, %i.j
+  br i1 %.not2645.i, label %cache_friendly_heapify.exit, label %.preheader.i
 
 bb.c:                                             ; preds = %.lr.ph.i
   %i.n = ashr i64 %.02438.i, 1                    ; 2 uses
@@ -249,16 +246,16 @@ bb.c:                                             ; preds = %.lr.ph.i
   br i1 %.not30.i, label %bb.d, label %bb.c
 
 bb.d:                                             ; preds = %.lr.ph.i
-  %i.q = add nsw i64 %.02340.i, -1
-  %.not.not.i = icmp sgt i64 %.02340.i, %i.k
-  br i1 %.not.not.i, label %.preheader34.i, label %.preheader32.i, !llvm.loop !39
+  %i.q = add nsw i64 %.02340.i, -1                ; 2 uses
+  %.not.i = icmp slt i64 %i.q, %i.k
+  br i1 %.not.i, label %.preheader.preheader.i, label %.preheader34.i, !llvm.loop !39
 
 .loopexit31.i:                                    ; preds = %.lr.ph43.i
   %.1.i = add i64 %.146.i, -1                     ; 2 uses
   %.not26.i = icmp slt i64 %.1.i, %i.j
   br i1 %.not26.i, label %cache_friendly_heapify.exit, label %.preheader.i, !llvm.loop !40
 
-.preheader.i:                                     ; preds = %.loopexit31.i, %.preheader.preheader.i
+.preheader.i:                                     ; preds = %.preheader.preheader.i, %.loopexit31.i
   %.146.i = phi i64 [ %.1.i, %.loopexit31.i ], [ %.144.i, %.preheader.preheader.i ] ; 3 uses
   %i.r = tail call i32 %1(ptr noundef %0, i64 noundef %.146.i) #2, !callees !32, !inline_history !38
   %.not2741.i = icmp eq i32 %i.r, 0
@@ -295,8 +292,8 @@ bb.g:                                             ; preds = %.lr.ph
 .cache_friendly_heapify.exit.loopexit37_crit_edge: ; preds = %.lr.ph
   br label %cache_friendly_heapify.exit, !llvm.loop !41
 
-cache_friendly_heapify.exit:                      ; preds = %bb.g, %.preheader34.i, %bb.c, %.preheader.i, %.loopexit31.i, %bb.e, %bb.f, %.cache_friendly_heapify.exit.loopexit37_crit_edge, %.preheader32.i
-  %.0 = phi ptr [ null, %.preheader.i ], [ @_Py_NoneStruct, %bb.f ], [ @_Py_NoneStruct, %.preheader32.i ], [ null, %bb.c ], [ null, %bb.e ], [ null, %.preheader34.i ], [ null, %.cache_friendly_heapify.exit.loopexit37_crit_edge ], [ @_Py_NoneStruct, %.loopexit31.i ], [ @_Py_NoneStruct, %bb.g ]
+cache_friendly_heapify.exit:                      ; preds = %bb.g, %.preheader34.i, %bb.c, %.preheader.i, %.loopexit31.i, %bb.e, %bb.f, %.cache_friendly_heapify.exit.loopexit37_crit_edge, %.preheader.preheader.i
+  %.0 = phi ptr [ null, %.preheader.i ], [ @_Py_NoneStruct, %bb.f ], [ @_Py_NoneStruct, %.preheader.preheader.i ], [ null, %bb.c ], [ null, %bb.e ], [ null, %.preheader34.i ], [ null, %.cache_friendly_heapify.exit.loopexit37_crit_edge ], [ @_Py_NoneStruct, %.loopexit31.i ], [ @_Py_NoneStruct, %bb.g ]
   ret ptr %.0
 }
 

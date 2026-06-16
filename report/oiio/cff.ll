@@ -201,7 +201,7 @@ define internal fastcc void @remove_style(ptr nofree noundef captures(none) %0, 
 bb.a:
   %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #19 ; 2 uses
   %i.b = trunc i64 %i.a to i32                    ; 2 uses
-  %i.c = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #19 ; 3 uses
+  %i.c = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #19 ; 2 uses
   %i.d = trunc i64 %i.c to i32                    ; 3 uses
   %i.e = icmp sgt i32 %i.b, %i.d
   br i1 %i.e, label %.preheader, label %.critedge35
@@ -213,15 +213,13 @@ bb.a:
 .lr.ph.preheader:                                 ; preds = %.preheader
   %sext = shl i64 %i.a, 32
   %i.f = ashr exact i64 %sext, 32
-  %i.g = and i64 %i.c, 2147483647
-  %2 = add nuw nsw i64 %i.c, 1
-  %wide.trip.count = and i64 %2, 4294967295
+  %i.g = and i64 %i.c, 2147483647                 ; 2 uses
   br label %.lr.ph
 
 bb.b:                                             ; preds = %.lr.ph
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !589
+  %.not = icmp samesign ugt i64 %indvars.iv.next, %i.g
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !589
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
   %indvars.iv = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 3 uses
@@ -624,7 +622,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %i.da = phi i32 [ %i.dx, %bb.s ], [ %i.cg, %.thread124 ] ; 2 uses
   %.076107 = phi i64 [ %.1, %bb.s ], [ 0, %.thread124 ] ; 5 uses
   %.077106 = phi i64 [ %.0135, %bb.s ], [ 0, %.thread124 ] ; 5 uses
-  %.078105 = phi i64 [ %i.dy, %bb.s ], [ 1, %.thread124 ] ; 5 uses
+  %.078105 = phi i64 [ %i.dy, %bb.s ], [ 1, %.thread124 ] ; 4 uses
   %i.db = load ptr, ptr %i.f, align 8, !tbaa !191
   %i.dc = getelementptr inbounds nuw [8 x i8], ptr %i.db, i64 %.078105
   %i.dd = load i64, ptr %i.dc, align 8, !tbaa !134
@@ -670,10 +668,10 @@ bb.s:                                             ; preds = %.thread132, %bb.q, 
   %.0135 = phi i64 [ %spec.select, %bb.r ], [ %spec.select, %bb.q ], [ %.077106, %.thread132 ]
   %i.dx = phi i32 [ %.pre, %bb.r ], [ %i.da, %bb.q ], [ %i.da, %.thread132 ] ; 2 uses
   %.1 = phi i64 [ %i.dw, %bb.r ], [ %.076107, %bb.q ], [ %.076107, %.thread132 ]
-  %i.dy = add nuw nsw i64 %.078105, 1
+  %i.dy = add nuw nsw i64 %.078105, 1             ; 2 uses
   %i.dz = zext i32 %i.dx to i64
-  %.not91.not = icmp samesign ult i64 %.078105, %i.dz
-  br i1 %.not91.not, label %.lr.ph.split, label %._crit_edge, !llvm.loop !597
+  %.not91 = icmp samesign ugt i64 %i.dy, %i.dz
+  br i1 %.not91, label %._crit_edge, label %.lr.ph.split, !llvm.loop !597
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.p
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -1076,15 +1074,15 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %vec.epilog.scalar.ph ], [ %indvars.iv.ph, %vec.epilog.scalar.ph.preheader ] ; 2 uses
-  %.078116 = phi i32 [ %i.bh, %vec.epilog.scalar.ph ], [ %.078116.ph, %vec.epilog.scalar.ph.preheader ] ; 2 uses
+  %.078116 = phi i32 [ %i.bh, %vec.epilog.scalar.ph ], [ %.078116.ph, %vec.epilog.scalar.ph.preheader ]
   %.083114 = phi i16 [ %i.bi, %vec.epilog.scalar.ph ], [ %.083114.ph, %vec.epilog.scalar.ph.preheader ] ; 2 uses
   %i.bg = getelementptr inbounds nuw [2 x i8], ptr %i.ap, i64 %indvars.iv
   store i16 %.083114, ptr %i.bg, align 2, !tbaa !60
-  %i.bh = add nuw nsw i32 %.078116, 1
+  %i.bh = add nuw nsw i32 %.078116, 1             ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.bi = add i16 %.083114, 1
   %i.bj = icmp samesign ult i64 %indvars.iv.next, %i.l
-  %6 = icmp samesign ult i32 %.078116, %.180.fr
+  %6 = icmp samesign ule i32 %i.bh, %.180.fr
   %i.bk = select i1 %i.bj, i1 %6, i1 false
   br i1 %i.bk, label %vec.epilog.scalar.ph, label %.loopexit.loopexit, !llvm.loop !620
 
@@ -1487,11 +1485,11 @@ bb.n:                                             ; preds = %.lr.ph165
   br i1 %.not134, label %bb.o, label %.loopexit154
 
 bb.o:                                             ; preds = %bb.n
-  %i.bl = zext i8 %i.bj to i32                    ; 2 uses
-  %i.bm = add nuw nsw i32 %i.bl, 1                ; 3 uses
+  %i.bl = zext i8 %i.bj to i32
+  %i.bm = add nuw nsw i32 %i.bl, 1                ; 4 uses
   %i.bn = load i32, ptr %i.be, align 8, !tbaa !182 ; 2 uses
-  %.not135 = icmp ugt i32 %i.bn, %i.bl
-  br i1 %.not135, label %bb.q, label %bb.p
+  %.not135 = icmp ugt i32 %i.bm, %i.bn
+  br i1 %.not135, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
   store i32 %i.bm, ptr %i.be, align 8, !tbaa !182

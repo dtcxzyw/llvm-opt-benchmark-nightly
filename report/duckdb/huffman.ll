@@ -199,13 +199,13 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
-  %indvars.iv200 = phi i32 [ %indvars.iv.next201, %bb.b ], [ 15, %bb.a ] ; 2 uses
+  %indvars.iv200 = phi i32 [ %indvars.iv.next201, %bb.b ], [ 16, %bb.a ] ; 2 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.b ], [ -1, %bb.a ] ; 3 uses
   %i.a = getelementptr inbounds [2 x i8], ptr %2, i64 %indvars.iv
   %i.b = load i16, ptr %i.a, align 2, !tbaa !7
   %i.c = icmp eq i16 %i.b, -1
   %indvars.iv.next = add nsw i64 %indvars.iv, -1
-  %indvars.iv.next201 = add i32 %indvars.iv200, -1
+  %indvars.iv.next201 = add nsw i32 %indvars.iv200, -1
   br i1 %i.c, label %bb.b, label %bb.c, !llvm.loop !12
 
 bb.c:                                             ; preds = %bb.b
@@ -220,7 +220,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %._crit_edge, %bb.c
-  %indvars.iv188 = phi i64 [ %indvars.iv.next189, %._crit_edge ], [ 1, %bb.c ] ; 5 uses
+  %indvars.iv188 = phi i64 [ %indvars.iv.next189, %._crit_edge ], [ 1, %bb.c ] ; 4 uses
   %.0110 = phi i64 [ %i.ae, %._crit_edge ], [ 128, %bb.c ] ; 2 uses
   %.0104 = phi i32 [ %i.ad, %._crit_edge ], [ 2, %bb.c ] ; 2 uses
   %.089 = phi i64 [ %.190.lcssa, %._crit_edge ], [ 0, %bb.c ] ; 2 uses
@@ -271,9 +271,9 @@ _ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit129: ; preds = %bb.f
   %.190.lcssa = phi i64 [ %.089, %bb.d ], [ %i.ab, %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit129 ] ; 2 uses
   %i.ad = shl i32 %.0104, 1
   %i.ae = lshr i64 %.0110, 1
-  %indvars.iv.next189 = add nuw nsw i64 %indvars.iv188, 1
-  %.not115.not = icmp slt i64 %indvars.iv188, %i.i
-  br i1 %.not115.not, label %bb.d, label %.preheader, !llvm.loop !15
+  %indvars.iv.next189 = add nuw nsw i64 %indvars.iv188, 1 ; 2 uses
+  %.not115 = icmp sgt i64 %indvars.iv.next189, %i.i
+  br i1 %.not115, label %.preheader, label %bb.d, !llvm.loop !15
 
 .preheader:                                       ; preds = %._crit_edge
   %.not116135 = icmp eq i32 %i.f, %spec.select119
@@ -293,52 +293,46 @@ _ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit129: ; preds = %bb.f
   %i.aj = add nsw i32 %1, -1
   %i.ak = zext nneg i32 %i.aj to i64
   %i.al = lshr i64 128, %i.ak                     ; 2 uses
-  %.not117.not167 = icmp slt i32 %1, %i.e
-  br i1 %.not117.not167, label %.lr.ph180, label %._crit_edge181
+  %.086166 = add i32 %1, 1                        ; 2 uses
+  %.not117167 = icmp sgt i32 %.086166, %i.e
+  br i1 %.not117167, label %._crit_edge181, label %.lr.ph180
 
 .lr.ph180:                                        ; preds = %._crit_edge138
   %i.am = ptrtoint ptr %0 to i64                  ; 2 uses
-  %4 = sext i32 %1 to i64                         ; 2 uses
-  %wide.trip.count = sext i32 %indvars.iv200 to i64
+  %wide.trip.count = sext i32 %.086166 to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph180, %._crit_edge156
-  %indvars.iv197 = phi i64 [ %4, %.lr.ph180 ], [ %indvars.iv.next198, %._crit_edge156 ] ; 3 uses
-  %indvars.iv192.in = phi i64 [ %4, %.lr.ph180 ], [ %indvars.iv192, %._crit_edge156 ]
+  %indvars.iv197 = phi i64 [ %wide.trip.count, %.lr.ph180 ], [ %indvars.iv.next193, %._crit_edge156 ] ; 7 uses
   %.0177 = phi ptr [ %0, %.lr.ph180 ], [ %.1.lcssa, %._crit_edge156 ] ; 3 uses
+  %.086.in176 = phi i32 [ %1, %.lr.ph180 ], [ %5, %._crit_edge156 ]
   %.291175 = phi i64 [ %.190.lcssa, %.lr.ph180 ], [ %.3.lcssa, %._crit_edge156 ] ; 3 uses
   %.095174 = phi i32 [ %i.f, %.lr.ph180 ], [ %.196.lcssa, %._crit_edge156 ] ; 3 uses
   %.2100173 = phi i32 [ %i.f, %.lr.ph180 ], [ %.3101.lcssa, %._crit_edge156 ] ; 3 uses
   %.1105171 = phi i32 [ 2, %.lr.ph180 ], [ %i.dk, %._crit_edge156 ] ; 3 uses
   %.0106169 = phi i64 [ 128, %.lr.ph180 ], [ %i.dl, %._crit_edge156 ] ; 3 uses
   %.0107168 = phi i64 [ 256, %.lr.ph180 ], [ %.1108.lcssa, %._crit_edge156 ] ; 3 uses
-  %indvars.iv192 = add nsw i64 %indvars.iv192.in, 1 ; 2 uses
-  %indvars.iv.next198 = add nsw i64 %indvars.iv197, 1 ; 5 uses
-  %5 = add nsw i64 %indvars.iv197, -15            ; 2 uses
-  %i.an = getelementptr inbounds [2 x i8], ptr %3, i64 %indvars.iv.next198 ; 5 uses
+  %4 = add nsw i32 %.086.in176, -15               ; 2 uses
+  %i.an = getelementptr inbounds [2 x i8], ptr %3, i64 %indvars.iv197 ; 5 uses
   %i.ao = load i16, ptr %i.an, align 2, !tbaa !7
   %.not118147 = icmp eq i16 %i.ao, 0
   br i1 %.not118147, label %._crit_edge156, label %.lr.ph155
 
 .lr.ph155:                                        ; preds = %bb.g
-  %i.ap = trunc i64 %indvars.iv.next198 to i32
+  %i.ap = trunc i64 %indvars.iv197 to i32
   %i.aq = sub i32 %i.ap, %1                       ; 2 uses
   %i.ar = shl nuw i32 1, %i.aq                    ; 3 uses
-  %i.as = icmp slt i64 %indvars.iv197, 14
+  %i.as = icmp slt i64 %indvars.iv197, 15
   %.sroa.0.0.insert.ext.i = and i32 %i.aq, 255    ; 2 uses
-  br i1 %i.as, label %.lr.ph155.split.us.preheader, label %.lr.ph155.split
+  br i1 %i.as, label %.lr.ph155.split.us, label %.lr.ph155.split
 
-.lr.ph155.split.us.preheader:                     ; preds = %.lr.ph155
-  %6 = trunc nsw i64 %5 to i32
-  br label %.lr.ph155.split.us
-
-.lr.ph155.split.us:                               ; preds = %.lr.ph155.split.us.preheader, %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.us
-  %.1153.us = phi ptr [ %.2.us, %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.us ], [ %.0177, %.lr.ph155.split.us.preheader ] ; 2 uses
-  %.188152.us = phi i32 [ %i.bu, %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.us ], [ %6, %.lr.ph155.split.us.preheader ]
-  %.3151.us = phi i64 [ %.4.us, %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.us ], [ %.291175, %.lr.ph155.split.us.preheader ] ; 3 uses
-  %.196150.us = phi i32 [ %.297.us, %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.us ], [ %.095174, %.lr.ph155.split.us.preheader ] ; 2 uses
-  %.3101149.us = phi i32 [ %.4102.us, %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.us ], [ %.2100173, %.lr.ph155.split.us.preheader ] ; 2 uses
-  %.1108148.us = phi i64 [ %i.cd, %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.us ], [ %.0107168, %.lr.ph155.split.us.preheader ] ; 2 uses
+.lr.ph155.split.us:                               ; preds = %.lr.ph155, %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.us
+  %.1153.us = phi ptr [ %.2.us, %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.us ], [ %.0177, %.lr.ph155 ] ; 2 uses
+  %.188152.us = phi i32 [ %i.bu, %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.us ], [ %4, %.lr.ph155 ]
+  %.3151.us = phi i64 [ %.4.us, %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.us ], [ %.291175, %.lr.ph155 ] ; 3 uses
+  %.196150.us = phi i32 [ %.297.us, %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.us ], [ %.095174, %.lr.ph155 ] ; 2 uses
+  %.3101149.us = phi i32 [ %.4102.us, %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.us ], [ %.2100173, %.lr.ph155 ] ; 2 uses
+  %.1108148.us = phi i64 [ %i.cd, %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.us ], [ %.0107168, %.lr.ph155 ] ; 2 uses
   %i.at = icmp eq i64 %.1108148.us, 256
   br i1 %i.at, label %.lr.ph143.us, label %bb.j
 
@@ -348,7 +342,7 @@ bb.g:                                             ; preds = %.lr.ph180, %._crit_
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph143.us, %bb.i
-  %indvars.iv194 = phi i64 [ %indvars.iv192, %.lr.ph143.us ], [ %indvars.iv.next195, %bb.i ] ; 3 uses
+  %indvars.iv194 = phi i64 [ %indvars.iv197, %.lr.ph143.us ], [ %indvars.iv.next195, %bb.i ] ; 3 uses
   %.0.i130141.us = phi i32 [ %i.ar, %.lr.ph143.us ], [ %i.bb, %bb.i ]
   %i.aw = getelementptr inbounds [2 x i8], ptr %3, i64 %indvars.iv194
   %i.ax = load i16, ptr %i.aw, align 2, !tbaa !7
@@ -425,14 +419,13 @@ _ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.us: ; preds = %bb.k
   br i1 %.not118.us, label %._crit_edge156, label %.lr.ph155.split.us, !llvm.loop !18
 
 .lr.ph155.split:                                  ; preds = %.lr.ph155
-  %i.cg = trunc nuw nsw i64 %indvars.iv.next198 to i32
+  %i.cg = trunc nsw i64 %indvars.iv197 to i32
   %.sroa.0.0.insert.ext.i122 = and i32 %i.cg, 255
-  %7 = trunc nsw i64 %5 to i32
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph155.split, %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit
   %.1153 = phi ptr [ %.0177, %.lr.ph155.split ], [ %.2, %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit ] ; 2 uses
-  %.188152 = phi i32 [ %7, %.lr.ph155.split ], [ %i.cy, %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit ]
+  %.188152 = phi i32 [ %4, %.lr.ph155.split ], [ %i.cy, %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit ]
   %.3151 = phi i64 [ %.291175, %.lr.ph155.split ], [ %.4, %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit ] ; 3 uses
   %.196150 = phi i32 [ %.095174, %.lr.ph155.split ], [ %.297, %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit ] ; 2 uses
   %.3101149 = phi i32 [ %.2100173, %.lr.ph155.split ], [ %.4102, %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit ] ; 2 uses
@@ -502,7 +495,10 @@ _ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit: ; preds = %bb.n
   %.1.lcssa = phi ptr [ %.0177, %bb.g ], [ %.2.us, %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit.us ], [ %.2, %_ZL14ReplicateValuePN13duckdb_brotli11HuffmanCodeEiiS0_.exit ]
   %i.dk = shl i32 %.1105171, 1
   %i.dl = lshr i64 %.0106169, 1
-  %exitcond202.not = icmp eq i64 %indvars.iv.next198, %wide.trip.count
+  %indvars.iv.next193 = add nsw i64 %indvars.iv197, 1 ; 2 uses
+  %5 = trunc nsw i64 %indvars.iv197 to i32
+  %lftr.wideiv200 = trunc i64 %indvars.iv.next193 to i32
+  %exitcond202.not = icmp eq i32 %indvars.iv200, %lftr.wideiv200
   br i1 %exitcond202.not, label %._crit_edge181, label %bb.g, !llvm.loop !19
 
 ._crit_edge181:                                   ; preds = %._crit_edge156, %._crit_edge138

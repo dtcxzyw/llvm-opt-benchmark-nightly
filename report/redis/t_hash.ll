@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %.preheader
   %i.j = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 7944), align 8
   %i.k = sext i32 %3 to i64
-  %5 = add i32 %4, 1
+  %5 = sext i32 %4 to i64
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.b
@@ -316,9 +316,8 @@ hashTypeConvert.exit38:                           ; preds = %bb.g, %sdslen.exit
 bb.r:                                             ; preds = %hashTypeConvert.exit38, %bb.f
   %.2 = phi i64 [ %i.am, %hashTypeConvert.exit38 ], [ %.02850, %bb.f ] ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond.not = icmp eq i32 %5, %lftr.wideiv
-  br i1 %exitcond.not, label %._crit_edge, label %bb.f, !llvm.loop !99
+  %.not35 = icmp sgt i64 %indvars.iv.next, %5
+  br i1 %.not35, label %._crit_edge, label %bb.f, !llvm.loop !99
 
 ._crit_edge:                                      ; preds = %bb.r, %.preheader
   %.028.lcssa = phi i64 [ 0, %.preheader ], [ %.2, %bb.r ]

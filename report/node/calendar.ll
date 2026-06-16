@@ -201,16 +201,15 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
-  %i.b = sext i32 %1 to i64                       ; 3 uses
-  %4 = add i32 %2, 1
-  %5 = sub i32 %2, %1                             ; 2 uses
-  %6 = zext i32 %5 to i64
-  %i.c = add nuw nsw i64 %6, 1                    ; 2 uses
-  %min.iters.check = icmp ult i32 %5, 7
+  %i.b = sext i32 %1 to i64                       ; 4 uses
+  %4 = sext i32 %2 to i64                         ; 2 uses
+  %5 = sub nsw i64 %4, %i.b
+  %i.c = add nsw i64 %5, 1                        ; 3 uses
+  %min.iters.check = icmp ult i64 %i.c, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph
-  %n.vec = and i64 %i.c, 8589934584               ; 3 uses
+  %n.vec = and i64 %i.c, -8                       ; 3 uses
   %i.d = add nsw i64 %n.vec, %i.b
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %3, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -256,9 +255,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.n = sext i8 %i.m to i32
   %spec.select = tail call i32 @llvm.smax.i32(i32 %.0912, i32 %i.n) ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond.not = icmp eq i32 %4, %lftr.wideiv
-  br i1 %exitcond.not, label %._crit_edge, label %scalar.ph, !llvm.loop !26
+  %.not = icmp sgt i64 %indvars.iv.next, %4
+  br i1 %.not, label %._crit_edge, label %scalar.ph, !llvm.loop !26
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -661,7 +659,7 @@ bb.g:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.n
-  %.031 = phi i32 [ %i.g, %bb.g ], [ %i.bh, %bb.n ] ; 6 uses
+  %.031 = phi i32 [ %i.g, %bb.g ], [ %i.bh, %bb.n ] ; 5 uses
   %.0 = phi i32 [ %i.g, %bb.g ], [ %.031, %bb.n ]
   %i.aa = load i8, ptr %i.r, align 8
   %i.ab = and i8 %i.aa, 8
@@ -754,9 +752,9 @@ _ZNK6icu_788Calendar3getE19UCalendarDateFieldsR10UErrorCode.exit: ; preds = %_ZN
   br i1 %.not38, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %_ZNK6icu_788Calendar3getE19UCalendarDateFieldsR10UErrorCode.exit
-  %i.bh = add nsw i32 %.031, -1
-  %.not39.not = icmp sgt i32 %.031, %i.k
-  br i1 %.not39.not, label %bb.h, label %bb.o, !llvm.loop !29
+  %i.bh = add nsw i32 %.031, -1                   ; 2 uses
+  %.not39 = icmp slt i32 %i.bh, %i.k
+  br i1 %.not39, label %bb.o, label %bb.h, !llvm.loop !29
 
 bb.o:                                             ; preds = %bb.n, %_ZNK6icu_788Calendar3getE19UCalendarDateFieldsR10UErrorCode.exit
   %.1 = phi i32 [ %.0, %_ZNK6icu_788Calendar3getE19UCalendarDateFieldsR10UErrorCode.exit ], [ %.031, %bb.n ]

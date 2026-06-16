@@ -201,7 +201,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i64, ptr %i.b, align 8, !tbaa !68   ; 2 uses
   %i.d = lshr i64 %i.a, 6
-  %i.e = trunc i64 %i.d to i32                    ; 3 uses
+  %i.e = trunc i64 %i.d to i32                    ; 2 uses
   %i.f = lshr i64 %i.c, 6
   %i.g = trunc i64 %i.f to i32
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 208
@@ -233,26 +233,25 @@ bb.e:                                             ; preds = %bb.c
   %i.t = zext nneg i32 %i.j to i64
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.t ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 200
-  %i.w = load i32, ptr %i.v, align 8, !tbaa !43   ; 2 uses
-  %.not42.i = icmp sgt i32 %i.w, %i.e
+  %i.w = load i32, ptr %i.v, align 8, !tbaa !43
   %i.x = add nsw i32 %i.w, -1
-  %2 = select i1 %.not42.i, i32 %i.x, i32 %i.e    ; 4 uses
+  %..i = tail call i32 @llvm.smax.i32(i32 %i.e, i32 %i.x) ; 4 uses
   %i.y = load ptr, ptr %i.u, align 8, !tbaa !105  ; 2 uses
   %i.z = load i32, ptr %i.y, align 8, !tbaa !99   ; 2 uses
-  %i.aa = icmp sgt i32 %i.z, %2
+  %i.aa = icmp sgt i32 %i.z, %..i
   br i1 %i.aa, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.e, %bb.f
   %i.ab = phi i32 [ %i.ag, %bb.f ], [ %i.z, %bb.e ]
   %i.ac = phi ptr [ %i.af, %bb.f ], [ %i.y, %bb.e ] ; 3 uses
-  %i.ad = icmp eq i32 %i.ab, %2
+  %i.ad = icmp eq i32 %i.ab, %..i
   br i1 %i.ad, label %gray_set_cell.exit, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph.i
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i64 16
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !105 ; 2 uses
   %i.ag = load i32, ptr %i.af, align 8, !tbaa !99 ; 2 uses
-  %i.ah = icmp sgt i32 %i.ag, %2
+  %i.ah = icmp sgt i32 %i.ag, %..i
   br i1 %i.ah, label %._crit_edge.i.loopexit, label %.lr.ph.i
 
 ._crit_edge.i.loopexit:                           ; preds = %bb.f
@@ -275,7 +274,7 @@ bb.g:                                             ; preds = %._crit_edge.i
   unreachable
 
 bb.h:                                             ; preds = %._crit_edge.i
-  store i32 %2, ptr %i.ak, align 8, !tbaa !99
+  store i32 %..i, ptr %i.ak, align 8, !tbaa !99
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
   store i32 0, ptr %i.ao, align 8, !tbaa !101
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ak, i64 4
@@ -678,9 +677,9 @@ bb.c:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 256
   %i.n = load i64, ptr %i.m, align 8, !tbaa !127  ; 5 uses
   %i.o = lshr i64 %i.n, 8
-  %i.p = trunc i64 %i.o to i32                    ; 8 uses
+  %i.p = trunc i64 %i.o to i32                    ; 6 uses
   %i.q = lshr i64 %1, 8
-  %i.r = trunc i64 %i.q to i32                    ; 5 uses
+  %i.r = trunc i64 %i.q to i32                    ; 4 uses
   %i.s = trunc i64 %i.n to i32
   %i.t = and i32 %i.s, 255                        ; 6 uses
   %i.u = trunc i64 %i.b to i32
@@ -729,26 +728,25 @@ bb.i:                                             ; preds = %bb.g
   %i.al = zext nneg i32 %i.ab to i64
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %i.al ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 200
-  %i.ao = load i32, ptr %i.an, align 8, !tbaa !43 ; 2 uses
-  %.not42.i = icmp sgt i32 %i.ao, %i.r
+  %i.ao = load i32, ptr %i.an, align 8, !tbaa !43
   %i.ap = add nsw i32 %i.ao, -1
-  %3 = select i1 %.not42.i, i32 %i.ap, i32 %i.r   ; 4 uses
+  %..i = tail call i32 @llvm.smax.i32(i32 %i.r, i32 %i.ap) ; 4 uses
   %i.aq = load ptr, ptr %i.am, align 8, !tbaa !105 ; 2 uses
   %i.ar = load i32, ptr %i.aq, align 8, !tbaa !99 ; 2 uses
-  %i.as = icmp sgt i32 %i.ar, %3
+  %i.as = icmp sgt i32 %i.ar, %..i
   br i1 %i.as, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.i, %bb.j
   %i.at = phi i32 [ %i.ay, %bb.j ], [ %i.ar, %bb.i ]
   %i.au = phi ptr [ %i.ax, %bb.j ], [ %i.aq, %bb.i ] ; 3 uses
-  %i.av = icmp eq i32 %i.at, %3
+  %i.av = icmp eq i32 %i.at, %..i
   br i1 %i.av, label %gray_set_cell.exit, label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph.i
   %i.aw = getelementptr inbounds nuw i8, ptr %i.au, i64 16
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !105 ; 2 uses
   %i.ay = load i32, ptr %i.ax, align 8, !tbaa !99 ; 2 uses
-  %i.az = icmp sgt i32 %i.ay, %3
+  %i.az = icmp sgt i32 %i.ay, %..i
   br i1 %i.az, label %._crit_edge.i.loopexit, label %.lr.ph.i
 
 ._crit_edge.i.loopexit:                           ; preds = %bb.j
@@ -771,7 +769,7 @@ bb.k:                                             ; preds = %._crit_edge.i
   unreachable
 
 bb.l:                                             ; preds = %._crit_edge.i
-  store i32 %3, ptr %i.bc, align 8, !tbaa !99
+  store i32 %..i, ptr %i.bc, align 8, !tbaa !99
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bc, i64 8
   store i32 0, ptr %i.bg, align 8, !tbaa !101
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bc, i64 4
@@ -850,26 +848,25 @@ bb.s:                                             ; preds = %bb.q
   %i.ck = load ptr, ptr %i.bq, align 8, !tbaa !104
   %i.cl = zext nneg i32 %i.cf to i64
   %i.cm = getelementptr inbounds nuw [8 x i8], ptr %i.ck, i64 %i.cl ; 2 uses
-  %i.cn = load i32, ptr %i.br, align 8, !tbaa !43 ; 2 uses
-  %.not42.i199 = icmp sgt i32 %i.cn, %i.p
+  %i.cn = load i32, ptr %i.br, align 8, !tbaa !43
   %i.co = add nsw i32 %i.cn, -1
-  %4 = select i1 %.not42.i199, i32 %i.co, i32 %i.p ; 4 uses
+  %..i199 = tail call i32 @llvm.smax.i32(i32 %i.p, i32 %i.co) ; 4 uses
   %i.cp = load ptr, ptr %i.cm, align 8, !tbaa !105 ; 2 uses
   %i.cq = load i32, ptr %i.cp, align 8, !tbaa !99 ; 2 uses
-  %i.cr = icmp sgt i32 %i.cq, %4
+  %i.cr = icmp sgt i32 %i.cq, %..i199
   br i1 %i.cr, label %._crit_edge.i202, label %.lr.ph.i200
 
 .lr.ph.i200:                                      ; preds = %bb.s, %bb.t
   %i.cs = phi i32 [ %i.cx, %bb.t ], [ %i.cq, %bb.s ]
   %i.ct = phi ptr [ %i.cw, %bb.t ], [ %i.cp, %bb.s ] ; 3 uses
-  %i.cu = icmp eq i32 %i.cs, %4
+  %i.cu = icmp eq i32 %i.cs, %..i199
   br i1 %i.cu, label %gray_set_cell.exit205, label %bb.t
 
 bb.t:                                             ; preds = %.lr.ph.i200
   %i.cv = getelementptr inbounds nuw i8, ptr %i.ct, i64 16
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !105 ; 2 uses
   %i.cx = load i32, ptr %i.cw, align 8, !tbaa !99 ; 2 uses
-  %i.cy = icmp sgt i32 %i.cx, %4
+  %i.cy = icmp sgt i32 %i.cx, %..i199
   br i1 %i.cy, label %._crit_edge.i202.loopexit, label %.lr.ph.i200
 
 ._crit_edge.i202.loopexit:                        ; preds = %bb.t
@@ -890,7 +887,7 @@ bb.u:                                             ; preds = %._crit_edge.i202
   unreachable
 
 bb.v:                                             ; preds = %._crit_edge.i202
-  store i32 %4, ptr %i.da, align 8, !tbaa !99
+  store i32 %..i199, ptr %i.da, align 8, !tbaa !99
   %i.dd = getelementptr inbounds nuw i8, ptr %i.da, i64 8
   store i32 0, ptr %i.dd, align 8, !tbaa !101
   %i.de = getelementptr inbounds nuw i8, ptr %i.da, i64 4
@@ -943,26 +940,25 @@ bb.aa:                                            ; preds = %bb.y
   %i.du = load ptr, ptr %i.bq, align 8, !tbaa !104
   %i.dv = zext nneg i32 %i.dp to i64
   %i.dw = getelementptr inbounds nuw [8 x i8], ptr %i.du, i64 %i.dv ; 2 uses
-  %i.dx = load i32, ptr %i.br, align 8, !tbaa !43 ; 2 uses
-  %.not42.i209 = icmp sgt i32 %i.dx, %i.p
+  %i.dx = load i32, ptr %i.br, align 8, !tbaa !43
   %i.dy = add nsw i32 %i.dx, -1
-  %5 = select i1 %.not42.i209, i32 %i.dy, i32 %i.p ; 4 uses
+  %..i209 = tail call i32 @llvm.smax.i32(i32 %i.p, i32 %i.dy) ; 4 uses
   %i.dz = load ptr, ptr %i.dw, align 8, !tbaa !105 ; 2 uses
   %i.ea = load i32, ptr %i.dz, align 8, !tbaa !99 ; 2 uses
-  %i.eb = icmp sgt i32 %i.ea, %5
+  %i.eb = icmp sgt i32 %i.ea, %..i209
   br i1 %i.eb, label %._crit_edge.i212, label %.lr.ph.i210
 
 .lr.ph.i210:                                      ; preds = %bb.aa, %bb.ab
   %i.ec = phi i32 [ %i.eh, %bb.ab ], [ %i.ea, %bb.aa ]
   %i.ed = phi ptr [ %i.eg, %bb.ab ], [ %i.dz, %bb.aa ] ; 3 uses
-  %i.ee = icmp eq i32 %i.ec, %5
+  %i.ee = icmp eq i32 %i.ec, %..i209
   br i1 %i.ee, label %gray_set_cell.exit215, label %bb.ab
 
 bb.ab:                                            ; preds = %.lr.ph.i210
   %i.ef = getelementptr inbounds nuw i8, ptr %i.ed, i64 16
   %i.eg = load ptr, ptr %i.ef, align 8, !tbaa !105 ; 2 uses
   %i.eh = load i32, ptr %i.eg, align 8, !tbaa !99 ; 2 uses
-  %i.ei = icmp sgt i32 %i.eh, %5
+  %i.ei = icmp sgt i32 %i.eh, %..i209
   br i1 %i.ei, label %._crit_edge.i212.loopexit, label %.lr.ph.i210
 
 ._crit_edge.i212.loopexit:                        ; preds = %bb.ab
@@ -983,7 +979,7 @@ bb.ac:                                            ; preds = %._crit_edge.i212
   unreachable
 
 bb.ad:                                            ; preds = %._crit_edge.i212
-  store i32 %5, ptr %i.ek, align 8, !tbaa !99
+  store i32 %..i209, ptr %i.ek, align 8, !tbaa !99
   %i.en = getelementptr inbounds nuw i8, ptr %i.ek, i64 8
   store i32 0, ptr %i.en, align 8, !tbaa !101
   %i.eo = getelementptr inbounds nuw i8, ptr %i.ek, i64 4
@@ -1138,7 +1134,7 @@ bb.ap:                                            ; preds = %bb.an
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.am, %bb.ap, %bb.ao, %bb.ak
-  %.1178 = phi i32 [ %i.fz, %bb.ak ], [ %.0177, %bb.am ], [ %i.hi, %bb.ao ], [ %.0177, %bb.ap ] ; 5 uses
+  %.1178 = phi i32 [ %i.fz, %bb.ak ], [ %.0177, %bb.am ], [ %i.hi, %bb.ao ], [ %.0177, %bb.ap ] ; 4 uses
   %.3176 = phi i32 [ %.2175, %bb.ak ], [ %i.gr, %bb.am ], [ %.2175, %bb.ao ], [ %i.hx, %bb.ap ] ; 3 uses
   %.1172 = phi i64 [ %i.fp, %bb.ak ], [ %i.fj, %bb.am ], [ %i.gs, %bb.ao ], [ %i.hn, %bb.ap ]
   %.3 = phi i32 [ %i.fo, %bb.ak ], [ 0, %bb.am ], [ %i.gx, %bb.ao ], [ 256, %bb.ap ] ; 2 uses
@@ -1165,26 +1161,25 @@ bb.au:                                            ; preds = %bb.as
   %i.id = load ptr, ptr %i.ff, align 8, !tbaa !104
   %i.ie = zext nneg i32 %i.hy to i64
   %i.if = getelementptr inbounds nuw [8 x i8], ptr %i.id, i64 %i.ie ; 2 uses
-  %i.ig = load i32, ptr %i.fg, align 8, !tbaa !43 ; 2 uses
-  %.not42.i219 = icmp slt i32 %.1178, %i.ig
+  %i.ig = load i32, ptr %i.fg, align 8, !tbaa !43
   %i.ih = add nsw i32 %i.ig, -1
-  %6 = select i1 %.not42.i219, i32 %i.ih, i32 %.1178 ; 4 uses
+  %..i219 = tail call i32 @llvm.smax.i32(i32 %.1178, i32 %i.ih) ; 4 uses
   %i.ii = load ptr, ptr %i.if, align 8, !tbaa !105 ; 2 uses
   %i.ij = load i32, ptr %i.ii, align 8, !tbaa !99 ; 2 uses
-  %i.ik = icmp sgt i32 %i.ij, %6
+  %i.ik = icmp sgt i32 %i.ij, %..i219
   br i1 %i.ik, label %._crit_edge.i222, label %.lr.ph.i220
 
 .lr.ph.i220:                                      ; preds = %bb.au, %bb.av
   %i.il = phi i32 [ %i.iq, %bb.av ], [ %i.ij, %bb.au ]
   %i.im = phi ptr [ %i.ip, %bb.av ], [ %i.ii, %bb.au ] ; 3 uses
-  %i.in = icmp eq i32 %i.il, %6
+  %i.in = icmp eq i32 %i.il, %..i219
   br i1 %i.in, label %gray_set_cell.exit225, label %bb.av
 
 bb.av:                                            ; preds = %.lr.ph.i220
   %i.io = getelementptr inbounds nuw i8, ptr %i.im, i64 16
   %i.ip = load ptr, ptr %i.io, align 8, !tbaa !105 ; 2 uses
   %i.iq = load i32, ptr %i.ip, align 8, !tbaa !99 ; 2 uses
-  %i.ir = icmp sgt i32 %i.iq, %6
+  %i.ir = icmp sgt i32 %i.iq, %..i219
   br i1 %i.ir, label %._crit_edge.i222.loopexit, label %.lr.ph.i220
 
 ._crit_edge.i222.loopexit:                        ; preds = %bb.av
@@ -1205,7 +1200,7 @@ bb.aw:                                            ; preds = %._crit_edge.i222
   unreachable
 
 bb.ax:                                            ; preds = %._crit_edge.i222
-  store i32 %6, ptr %i.it, align 8, !tbaa !99
+  store i32 %..i219, ptr %i.it, align 8, !tbaa !99
   %i.iw = getelementptr inbounds nuw i8, ptr %i.it, i64 8
   store i32 0, ptr %i.iw, align 8, !tbaa !101
   %i.ix = getelementptr inbounds nuw i8, ptr %i.it, i64 4
@@ -1606,6 +1601,9 @@ declare i32 @llvm.smin.i32(i32, i32) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.abs.i64(i64, i1 immarg) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #11

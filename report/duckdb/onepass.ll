@@ -201,9 +201,9 @@ bb.ah:                                            ; preds = %bb.af, %bb.z
 
 bb.ai:                                            ; preds = %.lr.ph457, %bb.am
   %i.fx = phi i8 [ %i.fq, %.lr.ph457 ], [ %i.gj, %bb.am ]
-  %.0179455 = phi i32 [ %i.fr, %.lr.ph457 ], [ %6, %bb.am ] ; 2 uses
-  %5 = sext i32 %.0179455 to i64                  ; 2 uses
-  %i.fy = getelementptr inbounds i8, ptr %i.cf, i64 %5
+  %.0179455 = phi i32 [ %i.fr, %.lr.ph457 ], [ %.1180.lcssa, %bb.am ] ; 2 uses
+  %5 = zext nneg i32 %.0179455 to i64             ; 2 uses
+  %i.fy = getelementptr inbounds nuw i8, ptr %i.cf, i64 %5
   %i.fz = load i8, ptr %i.fy, align 1, !tbaa !73  ; 2 uses
   %exitcond.not617 = icmp eq i32 %.0179455, 255
   br i1 %exitcond.not617, label %.critedge, label %.lr.ph620
@@ -214,18 +214,19 @@ bb.aj:                                            ; preds = %.lr.ph620
 
 .lr.ph620:                                        ; preds = %bb.ai, %bb.aj
   %indvars.iv478618 = phi i64 [ %indvars.iv.next479, %bb.aj ], [ %5, %bb.ai ] ; 2 uses
-  %indvars.iv.next479 = add nsw i64 %indvars.iv478618, 1 ; 3 uses
-  %i.ga = getelementptr inbounds i8, ptr %i.cf, i64 %indvars.iv.next479
+  %indvars.iv.next479 = add nuw nsw i64 %indvars.iv478618, 1 ; 3 uses
+  %i.ga = getelementptr inbounds nuw i8, ptr %i.cf, i64 %indvars.iv.next479
   %i.gb = load i8, ptr %i.ga, align 1, !tbaa !73
   %i.gc = icmp eq i8 %i.gb, %i.fz
   br i1 %i.gc, label %bb.aj, label %.critedge.split.loop.exit577, !llvm.loop !106
 
 .critedge.split.loop.exit577:                     ; preds = %.lr.ph620
-  %i.gd = trunc nsw i64 %indvars.iv478618 to i32
+  %i.gd = trunc nuw nsw i64 %indvars.iv478618 to i32
+  %6 = add nuw nsw i32 %i.gd, 1
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.aj, %bb.ai, %.critedge.split.loop.exit577
-  %.1180.lcssa = phi i32 [ %i.gd, %.critedge.split.loop.exit577 ], [ 255, %bb.ai ], [ 255, %bb.aj ] ; 2 uses
+  %.1180.lcssa = phi i32 [ %6, %.critedge.split.loop.exit577 ], [ 256, %bb.ai ], [ 256, %bb.aj ] ; 2 uses
   %i.ge = zext i8 %i.fz to i64
   %i.gf = getelementptr inbounds nuw [4 x i8], ptr %i.fs, i64 %i.ge ; 2 uses
   %i.gg = load i32, ptr %i.gf, align 4, !tbaa !3  ; 2 uses
@@ -244,10 +245,9 @@ bb.al:                                            ; preds = %.critedge
 
 bb.am:                                            ; preds = %bb.ak, %bb.al
   %i.gj = phi i8 [ %.pre490, %bb.ak ], [ %i.fx, %bb.al ] ; 3 uses
-  %6 = add nsw i32 %.1180.lcssa, 1
   %i.gk = zext i8 %i.gj to i32
-  %.not210.not = icmp slt i32 %.1180.lcssa, %i.gk
-  br i1 %.not210.not, label %bb.ai, label %._crit_edge458, !llvm.loop !107
+  %.not210 = icmp sgt i32 %.1180.lcssa, %i.gk
+  br i1 %.not210, label %._crit_edge458, label %bb.ai, !llvm.loop !107
 
 ._crit_edge458:                                   ; preds = %bb.am, %bb.ah
   %i.gl = phi i8 [ %i.fq, %bb.ah ], [ %i.gj, %bb.am ]
@@ -278,17 +278,15 @@ bb.an:                                            ; preds = %._crit_edge458
   br label %bb.ao
 
 bb.ao:                                            ; preds = %.lr.ph462, %bb.as
-  %.0146460 = phi i32 [ %i.gt, %.lr.ph462 ], [ %7, %bb.as ] ; 3 uses
-  %i.gz = sext i32 %.0146460 to i64               ; 3 uses
+  %.0146460 = phi i32 [ %i.gt, %.lr.ph462 ], [ %.1147.lcssa, %bb.as ] ; 2 uses
+  %i.gz = sext i32 %.0146460 to i64               ; 2 uses
   %i.ha = getelementptr inbounds i8, ptr %i.cf, i64 %i.gz
   %i.hb = load i8, ptr %i.ha, align 1, !tbaa !73  ; 2 uses
-  %smax484 = call i32 @llvm.smax.i32(i32 %.0146460, i32 255) ; 2 uses
-  %smax486 = call i64 @llvm.smax.i64(i64 %i.gz, i64 255)
-  %exitcond487.not621 = icmp sgt i32 %.0146460, 254
-  br i1 %exitcond487.not621, label %.critedge10, label %.lr.ph624
+  %exitcond487.not623 = icmp eq i32 %.0146460, 255
+  br i1 %exitcond487.not623, label %.critedge10, label %.lr.ph624
 
 bb.ap:                                            ; preds = %.lr.ph624
-  %exitcond487.not = icmp eq i64 %indvars.iv.next483, %smax486
+  %exitcond487.not = icmp eq i64 %indvars.iv.next483, 255
   br i1 %exitcond487.not, label %.critedge10, label %.lr.ph624, !llvm.loop !108
 
 .lr.ph624:                                        ; preds = %bb.ao, %bb.ap
@@ -301,10 +299,11 @@ bb.ap:                                            ; preds = %.lr.ph624
 
 .critedge10.split.loop.exit579:                   ; preds = %.lr.ph624
   %i.hf = trunc nsw i64 %indvars.iv482622 to i32
+  %7 = add nsw i32 %i.hf, 1
   br label %.critedge10
 
 .critedge10:                                      ; preds = %bb.ap, %bb.ao, %.critedge10.split.loop.exit579
-  %.1147.lcssa = phi i32 [ %i.hf, %.critedge10.split.loop.exit579 ], [ %smax484, %bb.ao ], [ %smax484, %bb.ap ] ; 2 uses
+  %.1147.lcssa = phi i32 [ %7, %.critedge10.split.loop.exit579 ], [ 256, %bb.ao ], [ 256, %bb.ap ] ; 2 uses
   %i.hg = zext i8 %i.hb to i64
   %i.hh = getelementptr inbounds nuw [4 x i8], ptr %i.gu, i64 %i.hg ; 2 uses
   %i.hi = load i32, ptr %i.hh, align 4, !tbaa !3  ; 2 uses
@@ -321,9 +320,8 @@ bb.ar:                                            ; preds = %.critedge10
   br i1 %.not214, label %bb.as, label %_ZN10duckdb_re210SparseSetTIvED2Ev.exit313
 
 bb.as:                                            ; preds = %bb.aq, %bb.ar
-  %7 = add nsw i32 %.1147.lcssa, 1
-  %.not213.not = icmp slt i32 %.1147.lcssa, %i.gs
-  br i1 %.not213.not, label %bb.ao, label %.thread369, !llvm.loop !109
+  %.not213 = icmp sgt i32 %.1147.lcssa, %i.gs
+  br i1 %.not213, label %.thread369, label %bb.ao, !llvm.loop !109
 
 .thread369:                                       ; preds = %bb.as, %bb.an, %._crit_edge458
   %i.hl = load i32, ptr %i.di, align 4, !tbaa !104
@@ -725,9 +723,6 @@ declare i8 @llvm.umax.i8(i8, i8) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umin.i8(i8, i8) #11
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #11
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

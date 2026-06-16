@@ -201,7 +201,6 @@ mz_stream_tell.exit:                              ; preds = %bb.b, %bb.c, %bb.d,
 
 .lr.ph:                                           ; preds = %mz_stream_tell.exit
   %i.p = zext nneg i32 %2 to i64                  ; 2 uses
-  %invariant.op = sub i32 1, %2
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %bb.t
@@ -252,14 +251,14 @@ bb.i:                                             ; preds = %mz_stream_read.exit
   br i1 %i.aj, label %mz_stream_read.exit.thread, label %.preheader
 
 .preheader:                                       ; preds = %bb.i
-  %.reass.reass = add i32 %i.ai, %invariant.op
-  %wide.trip.count = zext i32 %.reass.reass to i64
+  %5 = sub nsw i32 %i.ai, %2
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.k
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %bb.t, label %bb.k, !llvm.loop !46
+  %6 = trunc nuw i64 %indvars.iv.next to i32
+  %.not = icmp slt i32 %5, %6
+  br i1 %.not, label %bb.t, label %bb.k, !llvm.loop !46
 
 bb.k:                                             ; preds = %.preheader, %bb.j
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %bb.j ] ; 5 uses
@@ -430,7 +429,7 @@ bb.f:                                             ; preds = %.lr.ph144, %bb.x
   %.not83142 = phi i1 [ false, %.lr.ph144 ], [ true, %bb.x ] ; 2 uses
   %.068141 = phi i64 [ 0, %.lr.ph144 ], [ %i.cn, %bb.x ] ; 2 uses
   %.069140 = phi i32 [ 1024, %.lr.ph144 ], [ %.2, %bb.x ] ; 2 uses
-  %.071139 = phi i32 [ 0, %.lr.ph144 ], [ %.172, %bb.x ] ; 5 uses
+  %.071139 = phi i32 [ 0, %.lr.ph144 ], [ %.172, %bb.x ] ; 4 uses
   %i.s = sub nsw i64 %3, %.068141                 ; 2 uses
   %i.t = trunc i64 %i.s to i32
   %i.u = icmp slt i64 %i.s, 1024
@@ -496,12 +495,12 @@ mz_stream_read.exit:                              ; preds = %mz_stream_is_open.e
   %i.ap = load ptr, ptr %0, align 8, !tbaa !7
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 16
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !15
-  %i.as = call i32 %i.ar(ptr noundef nonnull %0, ptr noundef nonnull %i.a, i32 noundef %.170) #12, !inline_history !45 ; 6 uses
+  %i.as = call i32 %i.ar(ptr noundef nonnull %0, ptr noundef nonnull %i.a, i32 noundef %.170) #12, !inline_history !45 ; 5 uses
   %i.at = icmp slt i32 %i.as, 1
   br i1 %i.at, label %mz_stream_seek.exit.thread, label %bb.l
 
 bb.l:                                             ; preds = %mz_stream_read.exit
-  %i.au = add nuw nsw i32 %i.as, %.071139         ; 3 uses
+  %i.au = add nuw nsw i32 %i.as, %.071139         ; 4 uses
   %i.av = icmp slt i32 %i.au, %2
   br i1 %i.av, label %mz_stream_seek.exit.thread, label %bb.m
 
@@ -518,8 +517,7 @@ bb.n:                                             ; preds = %bb.m
   br label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.m, %bb.n
-  %5 = add nuw i32 %i.as, 1
-  %6 = add nuw i32 %5, %.071139
+  %5 = zext nneg i32 %i.au to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.w
@@ -618,9 +616,8 @@ bb.v:                                             ; preds = %mz_stream_seek.exit
 
 bb.w:                                             ; preds = %.lr.ph
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond.not = icmp eq i32 %6, %lftr.wideiv
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !50
+  %.not82 = icmp samesign ugt i64 %indvars.iv.next, %5
+  br i1 %.not82, label %._crit_edge, label %.lr.ph, !llvm.loop !50
 
 ._crit_edge:                                      ; preds = %bb.w
   %i.ci = select i1 %.not83142, i32 0, i32 %2     ; 3 uses

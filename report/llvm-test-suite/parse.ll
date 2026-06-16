@@ -200,15 +200,10 @@ bb.ae:                                            ; preds = %.tail344
 
 .preheader:                                       ; preds = %bb.ae
   %.not301411 = icmp slt i32 %.pre, 0
-  br i1 %.not301411, label %.loopexit, label %.lr.ph413.preheader
+  br i1 %.not301411, label %.loopexit, label %.lr.ph413
 
-.lr.ph413.preheader:                              ; preds = %.preheader
-  %3 = add nuw i32 %.pre, 1                       ; 2 uses
-  %wide.trip.count = zext i32 %3 to i64
-  br label %.lr.ph413
-
-.lr.ph413:                                        ; preds = %.lr.ph413.preheader, %bb.af
-  %indvars.iv = phi i64 [ 0, %.lr.ph413.preheader ], [ %indvars.iv.next, %bb.af ] ; 3 uses
+.lr.ph413:                                        ; preds = %.preheader, %bb.af
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.af ], [ 0, %.preheader ] ; 3 uses
   %i.ea = getelementptr inbounds nuw [8 x i8], ptr @genre_list, i64 %indvars.iv
   %i.eb = load ptr, ptr %i.ea, align 8, !tbaa !16
   %i.ec = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.eb, ptr noundef nonnull dereferenceable(1) %.0267) #17
@@ -217,15 +212,16 @@ bb.ae:                                            ; preds = %.tail344
 
 bb.af:                                            ; preds = %.lr.ph413
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph413, !llvm.loop !34
+  %indvars = trunc i64 %indvars.iv.next to i32    ; 2 uses
+  %.not301 = icmp slt i32 %.pre, %indvars
+  br i1 %.not301, label %.loopexit, label %.lr.ph413, !llvm.loop !34
 
 .loopexit.loopexit.split.loop.exit515:            ; preds = %.lr.ph413
   %i.ed = trunc nuw nsw i64 %indvars.iv to i32
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.af, %.loopexit.loopexit.split.loop.exit515, %.preheader, %bb.ae
-  %.1 = phi i32 [ %i.dx, %bb.ae ], [ 0, %.preheader ], [ %i.ed, %.loopexit.loopexit.split.loop.exit515 ], [ %3, %bb.af ] ; 2 uses
+  %.1 = phi i32 [ %i.dx, %bb.ae ], [ 0, %.preheader ], [ %i.ed, %.loopexit.loopexit.split.loop.exit515 ], [ %indvars, %bb.af ] ; 2 uses
   %i.ee = icmp sgt i32 %.1, %.pre
   br i1 %i.ee, label %bb.ag, label %bb.ah
 

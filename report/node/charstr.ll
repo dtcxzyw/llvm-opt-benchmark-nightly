@@ -201,15 +201,13 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.c = load i32, ptr %i.b, align 8              ; 2 uses
-  %.not9.not12 = icmp slt i32 %i.c, %2
+  %i.c = load i32, ptr %i.b, align 8
+  %3 = sub nsw i32 %i.c, %2                       ; 2 uses
+  %.not9.not12 = icmp slt i32 %3, 0
   br i1 %.not9.not12, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b
   %i.d = sext i32 %2 to i64
-  %3 = add i32 %i.c, 1
-  %4 = sub i32 %3, %2
-  %wide.trip.count = zext i32 %4 to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %.lr.ph
@@ -218,8 +216,9 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph
   %bcmp = tail call i32 @bcmp(ptr %i.e, ptr %1, i64 %i.d)
   %i.f = icmp eq i32 %bcmp, 0                     ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  %or.cond = select i1 %i.f, i1 true, i1 %exitcond.not
+  %4 = trunc nuw i64 %indvars.iv.next to i32
+  %.not9.not = icmp slt i32 %3, %4
+  %or.cond = select i1 %i.f, i1 true, i1 %.not9.not
   br i1 %or.cond, label %.critedge, label %bb.c, !llvm.loop !7
 
 .critedge:                                        ; preds = %bb.c, %bb.b, %bb.a

@@ -201,11 +201,11 @@ bb.h:                                             ; preds = %bb.g
   %i.x = tail call ptr @getMyClusterNode() #10
   %i.y = tail call ptr @clusterNodeGetMaster(ptr noundef %i.x) #10
   %i.z = sext i32 %i.p to i64                     ; 2 uses
-  %2 = add nuw i32 %i.u, 1                        ; 2 uses
+  %2 = sext i32 %i.u to i64                       ; 2 uses
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.j, %.lr.ph.preheader.i
-  %indvars.iv.i = phi i64 [ %i.z, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.j ] ; 3 uses
+  %indvars.iv.i = phi i64 [ %i.z, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.j ] ; 4 uses
   %.0912.i = phi i32 [ 0, %.lr.ph.preheader.i ], [ %.1.i, %bb.j ] ; 2 uses
   %i.aa = trunc nsw i64 %indvars.iv.i to i32
   %i.ab = tail call i32 @clusterNodeCoversSlot(ptr noundef %i.y, i32 noundef %i.aa) #10
@@ -222,9 +222,8 @@ bb.i:                                             ; preds = %.lr.ph.i
 
 bb.j:                                             ; preds = %bb.i, %.lr.ph.i
   %.1.i = phi i32 [ %i.af, %bb.i ], [ %.0912.i, %.lr.ph.i ] ; 2 uses
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %lftr.wideiv.i = trunc i64 %indvars.iv.next.i to i32
-  %exitcond.not.i = icmp eq i32 %2, %lftr.wideiv.i
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, 1
+  %exitcond.not.i = icmp eq i64 %indvars.iv.i, %2
   br i1 %exitcond.not.i, label %.lr.ph.preheader.i90, label %.lr.ph.i, !llvm.loop !101
 
 .lr.ph.preheader.i90:                             ; preds = %bb.j
@@ -233,7 +232,7 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph.i
   br label %.lr.ph.i91
 
 .lr.ph.i91:                                       ; preds = %bb.l, %.lr.ph.preheader.i90
-  %indvars.iv.i92 = phi i64 [ %i.z, %.lr.ph.preheader.i90 ], [ %indvars.iv.next.i93, %bb.l ] ; 3 uses
+  %indvars.iv.i92 = phi i64 [ %i.z, %.lr.ph.preheader.i90 ], [ %indvars.iv.next.i93, %bb.l ] ; 4 uses
   %i.ah = getelementptr inbounds i8, ptr %i.a, i64 %indvars.iv.i92
   %i.ai = load i8, ptr %i.ah, align 1, !tbaa !100
   %.not9.i = icmp eq i8 %i.ai, 0
@@ -245,9 +244,8 @@ bb.k:                                             ; preds = %.lr.ph.i91
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %.lr.ph.i91
-  %indvars.iv.next.i93 = add nsw i64 %indvars.iv.i92, 1 ; 2 uses
-  %lftr.wideiv.i94 = trunc i64 %indvars.iv.next.i93 to i32
-  %exitcond.not.i95 = icmp eq i32 %2, %lftr.wideiv.i94
+  %indvars.iv.next.i93 = add nsw i64 %indvars.iv.i92, 1
+  %exitcond.not.i95 = icmp eq i64 %indvars.iv.i92, %2
   br i1 %exitcond.not.i95, label %addReplySlotsRange.exit, label %.lr.ph.i91, !llvm.loop !102
 
 addReplySlotsRange.exit:                          ; preds = %bb.l

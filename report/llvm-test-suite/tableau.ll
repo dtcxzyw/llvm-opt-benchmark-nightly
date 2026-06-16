@@ -201,15 +201,10 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %.not21.i = icmp slt i32 %.val10.i, 0
-  br i1 %.not21.i, label %tab_PathContainsClause.exit, label %.lr.ph.i
+  br i1 %.not21.i, label %tab_PathContainsClause.exit, label %bb.f
 
-.lr.ph.i:                                         ; preds = %bb.e
-  %2 = add nuw i32 %.val10.i, 1
-  %wide.trip.count.i = zext i32 %2 to i64
-  br label %bb.f
-
-bb.f:                                             ; preds = %bb.i, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.i ] ; 2 uses
+bb.f:                                             ; preds = %bb.e, %bb.i
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.i ], [ 0, %bb.e ] ; 2 uses
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %.val11.i, i64 %indvars.iv.i
   %i.j = load ptr, ptr %i.i, align 8
   br label %bb.g
@@ -228,8 +223,9 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %tab_PathContainsClause.exit, label %bb.f, !llvm.loop !7
+  %2 = trunc nuw i64 %indvars.iv.next.i to i32
+  %.not.i6 = icmp slt i32 %.val10.i, %2
+  br i1 %.not.i6, label %tab_PathContainsClause.exit, label %bb.f, !llvm.loop !7
 
 tab_PathContainsClauseSoft.exit:                  ; preds = %bb.h
   %i.m = load ptr, ptr @stderr, align 8
@@ -582,8 +578,8 @@ bb.a:
   %i.d = add nsw i32 %.tr2632, -64
   %i.e = lshr i32 %i.d, 6
   %i.f = add nuw nsw i32 %i.e, 1
-  %storemerge.i.i = select i1 %i.c, i32 %i.f, i32 0 ; 5 uses
-  %i.g = add nuw nsw i32 %storemerge.i.i, 1       ; 2 uses
+  %storemerge.i.i = select i1 %i.c, i32 %i.f, i32 0 ; 4 uses
+  %i.g = add nuw nsw i32 %storemerge.i.i, 1       ; 3 uses
   %i.h = shl nuw nsw i32 %i.g, 3
   %i.i = and i32 %.tr2632, 63
   %i.j = zext nneg i32 %storemerge.i.i to i64
@@ -686,8 +682,8 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.u
   br i1 %i.as, label %bb.c, label %.preheader.i.i.us, !llvm.loop !14
 
 .preheader.i.i.us:                                ; preds = %bb.c
-  %.not8.i.us = icmp ugt i32 %i.aq, %storemerge.i.i
-  br i1 %.not8.i.us, label %._crit_edge.i.i.us, label %.lr.ph27.preheader.i.i.us
+  %2 = icmp ult i32 %i.aq, %i.g
+  br i1 %2, label %.lr.ph27.preheader.i.i.us, label %._crit_edge.i.i.us
 
 .lr.ph27.preheader.i.i.us:                        ; preds = %bb.b, %.preheader.i.i.us
   %.lcssa.i7.i.us = phi i32 [ %i.aq, %.preheader.i.i.us ], [ 0, %bb.b ] ; 2 uses

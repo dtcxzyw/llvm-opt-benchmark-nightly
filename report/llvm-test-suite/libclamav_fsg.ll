@@ -60,13 +60,11 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #3
   store ptr %1, ptr %i.b, align 8, !tbaa !13
   %.not114 = icmp slt i32 %5, 0
-  br i1 %.not114, label %.preheader.._crit_edge_crit_edge, label %.lr.ph
+  br i1 %.not114, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
   %i.c = ptrtoint ptr %0 to i64
   %i.d = ptrtoint ptr %1 to i64
-  %9 = add nuw i32 %5, 1
-  %wide.trip.count = zext i32 %9 to i64
   br label %bb.e
 
 .preheader113:                                    ; preds = %bb.f
@@ -142,17 +140,12 @@ bb.f:                                             ; preds = %bb.e
   store i32 %i.ab, ptr %i.ac, align 4, !tbaa !10
   %i.ad = add i32 %.095115, %i.ab
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.preheader113, label %bb.e, !llvm.loop !19
-
-.preheader.._crit_edge_crit_edge:                 ; preds = %bb.a
-  %.pre139 = add nsw i32 %5, 1
-  br label %._crit_edge
+  %9 = trunc nuw i64 %indvars.iv.next to i32
+  %.not = icmp slt i32 %5, %9
+  br i1 %.not, label %.preheader113, label %bb.e, !llvm.loop !19
 
 .lr.ph123.preheader:                              ; preds = %..loopexit_crit_edge.us, %.preheader113
   %i.ae = zext nneg i32 %5 to i64                 ; 2 uses
-  %10 = add nuw i32 %5, 1                         ; 2 uses
-  %wide.trip.count133 = zext i32 %10 to i64
   %i.af = getelementptr inbounds nuw [36 x i8], ptr %4, i64 %i.ae ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 4
   br label %.lr.ph123
@@ -192,12 +185,13 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.av = trunc nuw nsw i64 %indvars.iv130 to i32
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.1, i32 noundef %i.av, i32 noundef %i.ap, i32 noundef %i.ao, i32 noundef %i.as, i32 noundef %i.au) #3
   %indvars.iv.next131 = add nuw nsw i64 %indvars.iv130, 1 ; 2 uses
-  %exitcond134.not = icmp eq i64 %indvars.iv.next131, %wide.trip.count133
-  br i1 %exitcond134.not, label %._crit_edge, label %.lr.ph123, !llvm.loop !20
+  %10 = trunc nuw i64 %indvars.iv.next131 to i32
+  %.not104 = icmp slt i32 %5, %10
+  br i1 %.not104, label %._crit_edge, label %.lr.ph123, !llvm.loop !20
 
-._crit_edge:                                      ; preds = %bb.i, %.preheader.._crit_edge_crit_edge
-  %.pre-phi = phi i32 [ %.pre139, %.preheader.._crit_edge_crit_edge ], [ %10, %bb.i ]
-  %i.aw = call i32 @cli_rebuildpe(ptr noundef %1, ptr noundef %4, i32 noundef %.pre-phi, i32 noundef %6, i32 noundef %7, i32 noundef 0, i32 noundef 0, i32 noundef %8) #3
+._crit_edge:                                      ; preds = %bb.i, %bb.a
+  %11 = add nsw i32 %5, 1
+  %i.aw = call i32 @cli_rebuildpe(ptr noundef %1, ptr noundef %4, i32 noundef %11, i32 noundef %6, i32 noundef %7, i32 noundef 0, i32 noundef 0, i32 noundef %8) #3
   %.not105 = icmp eq i32 %i.aw, 0
   br i1 %.not105, label %bb.j, label %.critedge
 

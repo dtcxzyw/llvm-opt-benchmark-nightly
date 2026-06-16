@@ -201,7 +201,7 @@ bb.f:                                             ; preds = %_ZN2v86bigint12_GLO
 
 .lr.ph160.i.i:                                    ; preds = %.lr.ph160.i.i.preheader, %.loopexit.i.i
   %i.eh = phi ptr [ %i.ev, %.loopexit.i.i ], [ %.pre, %.lr.ph160.i.i.preheader ]
-  %indvars.iv183.i.i = phi i64 [ %indvars.iv.next184.i.i, %.loopexit.i.i ], [ 0, %.lr.ph160.i.i.preheader ] ; 4 uses
+  %indvars.iv183.i.i = phi i64 [ %indvars.iv.next184.i.i, %.loopexit.i.i ], [ 0, %.lr.ph160.i.i.preheader ] ; 3 uses
   %i.ei = phi i32 [ %i.kt, %.loopexit.i.i ], [ %i.eg, %.lr.ph160.i.i.preheader ]
   %.064158.i.i = phi i32 [ %i.ks, %.loopexit.i.i ], [ 0, %.lr.ph160.i.i.preheader ] ; 11 uses
   %i.ej = trunc nuw i64 %indvars.iv183.i.i to i32
@@ -221,11 +221,11 @@ bb.f:                                             ; preds = %_ZN2v86bigint12_GLO
   %.fr76 = freeze i32 %i.eu                       ; 9 uses
   %i.ev = load ptr, ptr %i.ar, align 8            ; 9 uses
   %i.ew = load i32, ptr %i.ah, align 8            ; 7 uses
-  %indvars.iv.next184.i.i = add nuw nsw i64 %indvars.iv183.i.i, 1 ; 2 uses
+  %indvars.iv.next184.i.i = add nuw nsw i64 %indvars.iv183.i.i, 1 ; 3 uses
   %i.ex = getelementptr inbounds nuw [8 x i8], ptr %i.ev, i64 %i.be
   %i.ey = load i64, ptr %i.ex, align 8
-  %.not.i.not.i.i = icmp ugt i64 %i.ey, %indvars.iv183.i.i
-  br i1 %.not.i.not.i.i, label %.loopexit131.i.i, label %bb.g
+  %.not.i.i.i = icmp ult i64 %i.ey, %indvars.iv.next184.i.i
+  br i1 %.not.i.i.i, label %bb.g, label %.loopexit131.i.i
 
 bb.g:                                             ; preds = %.lr.ph160.i.i
   %i.ez = icmp ult i32 %i.bf, %i.ew
@@ -512,7 +512,7 @@ _ZN2v86bigint12_GLOBAL__N_116ShouldBeNegativeEPKmjmi.exit.i.i: ; preds = %bb.h, 
   %i.kr = select i1 %add.narrowed.overflow.i.i.i, i1 %i.kq, i1 false
   br i1 %i.kr, label %.lr.ph156.i.i, label %.loopexit.i.i, !llvm.loop !24
 
-.loopexit.i.i:                                    ; preds = %.lr.ph156.i.i, %.lr.ph147.i.i, %.preheader127.i.i, %_ZN2v86bigint12_GLOBAL__N_116ShouldBeNegativeEPKmjmi.exit.i.i, %.preheader128.i.i
+.loopexit.i.i:                                    ; preds = %.lr.ph147.i.i, %.lr.ph156.i.i, %.preheader127.i.i, %_ZN2v86bigint12_GLOBAL__N_116ShouldBeNegativeEPKmjmi.exit.i.i, %.preheader128.i.i
   %i.ks = add i32 %.064158.i.i, %.sroa.12.0
   %i.kt = load i32, ptr %2, align 8               ; 2 uses
   %i.ku = zext i32 %i.kt to i64
@@ -872,7 +872,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.b, %bb.a
   %indvar = phi i32 [ %indvar.next, %bb.b ], [ 0, %bb.a ] ; 2 uses
-  %.0112 = phi i32 [ %i.f, %bb.b ], [ %i.c, %bb.a ] ; 30 uses
+  %.0112 = phi i32 [ %i.f, %bb.b ], [ %i.c, %bb.a ] ; 29 uses
   %.not = icmp ult i32 %.0112, %i.e
   %i.f = sub nuw i32 %.0112, %i.e
   %indvar.next = add i32 %indvar, 1
@@ -1275,22 +1275,19 @@ bb.u:                                             ; preds = %._crit_edge231, %._
   %.5.in = phi i64 [ %i.rd, %._crit_edge231 ], [ %i.lm, %._crit_edge250 ] ; 2 uses
   %i.rf = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.pre-phi ; 3 uses
   store i64 0, ptr %i.rf, align 8
-  %5 = icmp ult i32 %.0112, %3
+  %.0111252 = add nuw i32 %.0112, 1               ; 2 uses
+  %5 = icmp ule i32 %.0111252, %3
   %i.rg = trunc i64 %.5.in to i1                  ; 2 uses
   %i.rh = select i1 %5, i1 %i.rg, i1 false
-  br i1 %i.rh, label %.lr.ph256.preheader, label %._crit_edge257
-
-.lr.ph256.preheader:                              ; preds = %bb.u
-  %.0111252 = add nuw i32 %.0112, 1
-  br label %.lr.ph256
+  br i1 %i.rh, label %.lr.ph256, label %._crit_edge257
 
 ._crit_edge257:                                   ; preds = %.lr.ph256, %bb.u
   %.lcssa = phi i1 [ %i.rg, %bb.u ], [ %i.rs, %.lr.ph256 ]
   br i1 %.lcssa, label %.preheader, label %_ZN2v86bigint12_GLOBAL__N_116ShiftModFn_LargeEPmPKmjij.exit
 
-.lr.ph256:                                        ; preds = %.lr.ph256.preheader, %.lr.ph256
-  %.0111254 = phi i32 [ %.0111, %.lr.ph256 ], [ %.0111252, %.lr.ph256.preheader ] ; 2 uses
-  %.6.in253 = phi i64 [ %i.rp, %.lr.ph256 ], [ %.5.in, %.lr.ph256.preheader ]
+.lr.ph256:                                        ; preds = %bb.u, %.lr.ph256
+  %.0111254 = phi i32 [ %.0111, %.lr.ph256 ], [ %.0111252, %bb.u ] ; 2 uses
+  %.6.in253 = phi i64 [ %i.rp, %.lr.ph256 ], [ %.5.in, %bb.u ]
   %.6 = and i64 %.6.in253, 1
   %i.ri = zext i32 %.0111254 to i64
   %i.rj = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ri ; 2 uses

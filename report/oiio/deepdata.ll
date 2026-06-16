@@ -201,7 +201,7 @@ _ZNK11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEE12find_last_ofEcm.
   %i.qn = ptrtoint ptr %.sink.i.i.i.i.i to i64
   %i.qo = xor i64 %i.qm, -1
   %i.qp = add i64 %i.no, %i.qo
-  %i.qq = add i64 %i.qp, %i.qn                    ; 3 uses
+  %i.qq = add i64 %i.qp, %i.qn                    ; 2 uses
   %i.qr = icmp eq i64 %i.qq, -1
   br i1 %i.qr, label %._crit_edge.i.i.i.i.thread, label %_ZNK11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit
 
@@ -209,9 +209,8 @@ _ZNK11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit: ;
   %i.qs = add nuw i64 %i.qq, 1                    ; 5 uses
   %.not.i92.not = icmp eq i64 %i.no, 0            ; 2 uses
   %i.qt = icmp eq i64 %i.qs, -1
-  %60 = icmp uge i64 %i.qq, %i.no
-  %or.cond.i93 = or i1 %60, %i.qt
-  %.0.i = select i1 %or.cond.i93, i64 %i.no, i64 %i.qs
+  %60 = call i64 @llvm.umin.i64(i64 %i.qs, i64 %i.no)
+  %.0.i = select i1 %i.qt, i64 %i.no, i64 %60
   %.sroa.0136.0 = select i1 %.not.i92.not, ptr null, ptr %i.nm ; 2 uses
   %.sroa.5137.0 = select i1 %.not.i92.not, i64 0, i64 %.0.i ; 5 uses
   %.not.i94 = icmp ult i64 %i.qs, %i.no
@@ -614,16 +613,16 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZNK11OpenImageIO4v3_18DeepData7samplesEl.exit.i
 
 _ZNK11OpenImageIO4v3_18DeepData7samplesEl.exit.i: ; preds = %bb.e, %bb.d
-  %.0.i.i = phi i32 [ %i.ac, %bb.e ], [ 0, %bb.d ] ; 4 uses
+  %.0.i.i = phi i32 [ %i.ac, %bb.e ], [ 0, %bb.d ] ; 3 uses
+  %3 = add nsw i32 %.0.i.i, 1                     ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.pre.i, i64 96
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !54
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %1
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !3
-  %.not168 = icmp slt i32 %.0.i.i, %i.ag
-  br i1 %.not168, label %bb.g, label %bb.f
+  %4 = icmp sgt i32 %3, %i.ag
+  br i1 %4, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %_ZNK11OpenImageIO4v3_18DeepData7samplesEl.exit.i
-  %3 = add nsw i32 %.0.i.i, 1
   tail call void @_ZN11OpenImageIO4v3_18DeepData12set_capacityEli(ptr noundef nonnull readonly align 8 dereferenceable(20) %0, i64 noundef %1, i32 noundef %3)
   %.pre27.i = load ptr, ptr %0, align 8, !tbaa !36
   br label %bb.g
@@ -1026,7 +1025,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.ec, %bb.b
-  %.0105 = phi i32 [ 1, %bb.b ], [ %i.vw, %bb.ec ] ; 20 uses
+  %.0105 = phi i32 [ 1, %bb.b ], [ %i.vw, %bb.ec ] ; 17 uses
   %i.n = load i64, ptr %i.k, align 8
   %.not.i = icmp slt i64 %1, %i.n
   %or.cond.i = select i1 %i.j, i1 %.not.i, i1 false
@@ -1048,7 +1047,7 @@ _ZNK11OpenImageIO4v3_18DeepData7samplesEl.exit:   ; preds = %bb.c, %bb.d
 bb.e:                                             ; preds = %_ZNK11OpenImageIO4v3_18DeepData7samplesEl.exit
   %i.u = tail call noundef float @_ZNK11OpenImageIO4v3_18DeepData10deep_valueElii(ptr noundef nonnull align 8 dereferenceable(20) %0, i64 noundef %1, i32 noundef %i.c, i32 noundef %.0105)
   %i.v = tail call noundef float @_ZNK11OpenImageIO4v3_18DeepData10deep_valueElii(ptr noundef nonnull align 8 dereferenceable(20) %0, i64 noundef %1, i32 noundef %spec.select, i32 noundef %.0105)
-  %i.w = add nsw i32 %.0105, -1                   ; 8 uses
+  %i.w = add nsw i32 %.0105, -1                   ; 11 uses
   %i.x = tail call noundef float @_ZNK11OpenImageIO4v3_18DeepData10deep_valueElii(ptr noundef nonnull align 8 dereferenceable(20) %0, i64 noundef %1, i32 noundef %i.c, i32 noundef %i.w)
   %i.y = fcmp oeq float %i.u, %i.x
   br i1 %i.y, label %bb.f, label %bb.ec
@@ -1109,8 +1108,8 @@ bb.k:                                             ; preds = %bb.j
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !54
   %i.ax = getelementptr inbounds nuw [4 x i8], ptr %i.aw, i64 %1
   %i.ay = load i32, ptr %i.ax, align 4, !tbaa !3
-  %.not19.i.i.not = icmp sgt i32 %.0105, %i.ay
-  br i1 %.not19.i.i.not, label %bb.aa, label %_ZNK11OpenImageIO4v3_18DeepData8data_ptrElii.exit.i
+  %.not19.i.i = icmp slt i32 %i.w, %i.ay
+  br i1 %.not19.i.i, label %_ZNK11OpenImageIO4v3_18DeepData8data_ptrElii.exit.i, label %bb.aa
 
 _ZNK11OpenImageIO4v3_18DeepData8data_ptrElii.exit.i: ; preds = %bb.k
   %i.az = getelementptr inbounds nuw i8, ptr %i.af, i64 120
@@ -1460,8 +1459,8 @@ bb.aw:                                            ; preds = %bb.av
   %i.gz = load ptr, ptr %i.gy, align 8, !tbaa !54
   %i.ha = getelementptr inbounds nuw [4 x i8], ptr %i.gz, i64 %1
   %i.hb = load i32, ptr %i.ha, align 4, !tbaa !3
-  %.not19.i.i152.not = icmp sgt i32 %.0105, %i.hb
-  br i1 %.not19.i.i152.not, label %bb.bm, label %_ZNK11OpenImageIO4v3_18DeepData8data_ptrElii.exit.i153
+  %.not19.i.i152 = icmp slt i32 %i.w, %i.hb
+  br i1 %.not19.i.i152, label %_ZNK11OpenImageIO4v3_18DeepData8data_ptrElii.exit.i153, label %bb.bm
 
 _ZNK11OpenImageIO4v3_18DeepData8data_ptrElii.exit.i153: ; preds = %bb.aw
   %i.hc = getelementptr inbounds nuw i8, ptr %i.gs, i64 120
@@ -1864,8 +1863,8 @@ bb.cs:                                            ; preds = %bb.cr
   %i.py = load ptr, ptr %i.px, align 8, !tbaa !54
   %i.pz = getelementptr inbounds nuw [4 x i8], ptr %i.py, i64 %1
   %i.qa = load i32, ptr %i.pz, align 4, !tbaa !3
-  %.not19.i.i187.not = icmp sgt i32 %.0105, %i.qa
-  br i1 %.not19.i.i187.not, label %bb.di, label %_ZNK11OpenImageIO4v3_18DeepData8data_ptrElii.exit.i188
+  %.not19.i.i187 = icmp slt i32 %i.w, %i.qa
+  br i1 %.not19.i.i187, label %_ZNK11OpenImageIO4v3_18DeepData8data_ptrElii.exit.i188, label %bb.di
 
 _ZNK11OpenImageIO4v3_18DeepData8data_ptrElii.exit.i188: ; preds = %bb.cs
   %i.qb = getelementptr inbounds nuw i8, ptr %i.pi, i64 120

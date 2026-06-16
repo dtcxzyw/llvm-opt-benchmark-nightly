@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
   %i.af = getelementptr inbounds nuw i8, ptr %i.b, i64 64 ; 5 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.b, i64 48 ; 2 uses
   %i.ah = sext i32 %i.w to i64
-  %2 = add i32 %i.d, 1                            ; 2 uses
+  %2 = sext i32 %i.d to i64                       ; 2 uses
   br label %.backedge
 
 .backedge:                                        ; preds = %.backedge.backedge, %.lr.ph90
@@ -512,9 +512,8 @@ bb.w:                                             ; preds = %.preheader
 bb.x:                                             ; preds = %bb.e, %.backedge
   %i.gf = add nsw i32 %.06188, 1
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond.not = icmp eq i32 %2, %lftr.wideiv
-  br i1 %exitcond.not, label %._crit_edge, label %.backedge.backedge
+  %.not66 = icmp sgt i64 %indvars.iv.next, %2
+  br i1 %.not66, label %._crit_edge, label %.backedge.backedge
 
 .backedge.backedge:                               ; preds = %bb.x, %.thread108
   %indvars.iv.be = phi i64 [ %indvars.iv.next, %bb.x ], [ %indvars.iv.next110, %.thread108 ]
@@ -524,9 +523,8 @@ bb.x:                                             ; preds = %bb.e, %.backedge
 .thread108:                                       ; preds = %bb.w, %bb.v
   tail call fastcc void @emit_bits(ptr noundef nonnull %i.b, i32 noundef %.058, i32 noundef %i.cm)
   %indvars.iv.next110 = add nsw i64 %indvars.iv, 1 ; 2 uses
-  %lftr.wideiv111 = trunc i64 %indvars.iv.next110 to i32
-  %exitcond.not112 = icmp eq i32 %2, %lftr.wideiv111
-  br i1 %exitcond.not112, label %._crit_edge.thread, label %.backedge.backedge
+  %.not66111 = icmp sgt i64 %indvars.iv.next110, %2
+  br i1 %.not66111, label %._crit_edge.thread, label %.backedge.backedge
 
 ._crit_edge:                                      ; preds = %bb.x
   %i.gg = icmp sgt i32 %.06188, -1
@@ -882,7 +880,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
   %i.v = load ptr, ptr %1, align 8, !tbaa !74     ; 4 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 404
-  %i.x = load i32, ptr %i.w, align 4, !tbaa !38   ; 5 uses
+  %i.x = load i32, ptr %i.w, align 4, !tbaa !38   ; 4 uses
   %.not96197 = icmp sgt i32 %i.x, %i.e
   br i1 %.not96197, label %._crit_edge.thread, label %.lr.ph.preheader
 
@@ -892,21 +890,22 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
   br label %._crit_edge215
 
 .lr.ph.preheader:                                 ; preds = %bb.d
-  %i.aa = sext i32 %i.x to i64                    ; 2 uses
-  %2 = add i32 %i.e, 1
-  %3 = sub i32 %2, %i.x                           ; 3 uses
-  %xtraiter = and i32 %3, 1
+  %i.aa = sext i32 %i.x to i64                    ; 3 uses
+  %2 = sext i32 %i.e to i64
+  %3 = add nsw i64 %2, 1
+  %4 = sub nsw i64 %3, %i.aa                      ; 3 uses
+  %xtraiter = and i64 %4, 1
   %i.ab = icmp eq i32 %i.e, %i.x
   br i1 %i.ab, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i32 %3, -2
+  %unroll_iter = and i64 %4, -2
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
   %indvars.iv = phi i64 [ %i.aa, %.lr.ph.preheader.new ], [ %indvars.iv.next.1, %.lr.ph ] ; 5 uses
   %.089198 = phi i32 [ 0, %.lr.ph.preheader.new ], [ %.190.1, %.lr.ph ]
-  %niter = phi i32 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
+  %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
   %i.ac = getelementptr inbounds [4 x i8], ptr @jpeg_natural_order, i64 %indvars.iv
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !4
   %i.ae = sext i32 %i.ad to i64
@@ -935,18 +934,18 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
   %i.av = trunc nsw i64 %indvars.iv.next to i32
   %.190.1 = select i1 %i.au, i32 %i.av, i32 %.190 ; 3 uses
   %indvars.iv.next.1 = add nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i32 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
+  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.lr.ph214.unr-lcssa, label %.lr.ph, !llvm.loop !90
 
 .lr.ph214.unr-lcssa:                              ; preds = %.lr.ph
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph214, label %.lr.ph.epil.preheader
 
 .lr.ph.epil.preheader:                            ; preds = %.lr.ph214.unr-lcssa, %.lr.ph.preheader
   %indvars.iv.epil.init = phi i64 [ %i.aa, %.lr.ph.preheader ], [ %indvars.iv.next.1, %.lr.ph214.unr-lcssa ] ; 3 uses
   %.089198.epil.init = phi i32 [ 0, %.lr.ph.preheader ], [ %.190.1, %.lr.ph214.unr-lcssa ]
-  %lcmp.mod317 = trunc i32 %3 to i1
+  %lcmp.mod317 = trunc i64 %4 to i1
   tail call void @llvm.assume(i1 %lcmp.mod317)
   %i.aw = getelementptr inbounds [4 x i8], ptr @jpeg_natural_order, i64 %indvars.iv.epil.init
   %i.ax = load i32, ptr %i.aw, align 4, !tbaa !4
@@ -981,7 +980,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
   %i.bt = getelementptr inbounds nuw i8, ptr %i.c, i64 64 ; 26 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %i.c, i64 48 ; 12 uses
   %i.bv = sext i32 %i.x to i64
-  %4 = add i32 %i.e, 1
+  %5 = sext i32 %i.e to i64
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph214, %bb.bp
@@ -1384,9 +1383,8 @@ bb.bp:                                            ; preds = %emit_bits.exit, %bb
   %.285 = phi i32 [ %.083210, %bb.f ], [ %i.pf, %bb.ba ], [ 0, %emit_bits.exit ] ; 2 uses
   %.2 = phi i32 [ %i.cc, %bb.f ], [ %.1.lcssa, %bb.ba ], [ 0, %emit_bits.exit ] ; 2 uses
   %indvars.iv.next233 = add nsw i64 %indvars.iv232, 1 ; 2 uses
-  %lftr.wideiv235 = trunc i64 %indvars.iv.next233 to i32
-  %exitcond236.not = icmp eq i32 %4, %lftr.wideiv235
-  br i1 %exitcond236.not, label %._crit_edge215.loopexit, label %bb.e, !llvm.loop !94
+  %.not97 = icmp sgt i64 %indvars.iv.next233, %5
+  br i1 %.not97, label %._crit_edge215.loopexit, label %bb.e, !llvm.loop !94
 
 ._crit_edge215.loopexit:                          ; preds = %bb.bp
   %i.th = icmp sgt i32 %.2, 0

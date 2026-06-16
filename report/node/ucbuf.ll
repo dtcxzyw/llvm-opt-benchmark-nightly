@@ -201,12 +201,12 @@ bb.g:                                             ; preds = %bb.e, %bb.d
   %i.p = getelementptr inbounds i8, ptr %0, i64 %i.o ; 2 uses
   %i.q = load i8, ptr %i.p, align 1
   %.not55 = icmp eq i8 %i.q, 47
-  %i.r = add nsw i32 %i.m, %i.k                   ; 3 uses
+  %i.r = add nsw i32 %i.m, %i.k                   ; 2 uses
+  %5 = load i32, ptr %3, align 4                  ; 2 uses
   br i1 %.not55, label %bb.n, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.s = add nsw i32 %i.r, 2                      ; 2 uses
-  %5 = load i32, ptr %3, align 4
   %i.t = icmp slt i32 %5, %i.s
   %or.cond5 = or i1 %i.g, %i.t
   br i1 %or.cond5, label %bb.i, label %bb.j
@@ -242,14 +242,13 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j
   br label %bb.q
 
 bb.n:                                             ; preds = %bb.g
-  %6 = load i32, ptr %3, align 4
-  %7 = icmp sle i32 %6, %i.r
+  %6 = add nsw i32 %i.r, 1                        ; 2 uses
+  %7 = icmp slt i32 %5, %6
   %or.cond7 = or i1 %i.g, %7
   br i1 %or.cond7, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  %8 = add nsw i32 %i.r, 1
-  store i32 %8, ptr %3, align 4
+  store i32 %6, ptr %3, align 4
   store i32 15, ptr %4, align 4
   br label %bb.r
 

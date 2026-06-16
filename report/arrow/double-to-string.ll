@@ -201,7 +201,7 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca i8, align 1                       ; 4 uses
   %i.c = alloca [18 x i8], align 16               ; 5 uses
-  %i.d = alloca i32, align 4                      ; 5 uses
+  %i.d = alloca i32, align 4                      ; 4 uses
   %i.e = tail call double @llvm.fabs.f64(double %1) ; 2 uses
   %i.f = fcmp ueq double %i.e, +inf
   br i1 %i.f, label %bb.b, label %bb.g
@@ -285,27 +285,26 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.h, %bb.i, %bb.g
-  %i.aq = load i32, ptr %i.a, align 4, !tbaa !3   ; 5 uses
+  %i.aq = load i32, ptr %i.a, align 4, !tbaa !3   ; 3 uses
+  %4 = add nsw i32 %i.aq, -1                      ; 3 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !34
-  %.not.not = icmp sge i32 %i.as, %i.aq
+  %.not = icmp sle i32 %i.as, %4
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.au = load i32, ptr %i.at, align 8
-  %.not = icmp sgt i32 %i.aq, %i.au
-  %or.cond17 = select i1 %.not.not, i1 true, i1 %.not
-  br i1 %or.cond17, label %bb.l, label %bb.k
+  %5 = icmp slt i32 %4, %i.au
+  %or.cond17 = select i1 %.not, i1 %5, i1 false
+  %6 = load i32, ptr %i.d, align 4, !tbaa !3      ; 3 uses
+  br i1 %or.cond17, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %4 = load i32, ptr %i.d, align 4, !tbaa !3      ; 2 uses
-  %i.av = sub nsw i32 %4, %i.aq
+  %i.av = sub nsw i32 %6, %i.aq
   %.sroa.speculated = call i32 @llvm.smax.i32(i32 %i.av, i32 0)
-  call void @_ZNK14arrow_vendored17double_conversion23DoubleToStringConverter27CreateDecimalRepresentationEPKciiiPNS0_13StringBuilderE(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull %i.c, i32 noundef %4, i32 noundef %i.aq, i32 noundef %.sroa.speculated, ptr noundef %2)
+  call void @_ZNK14arrow_vendored17double_conversion23DoubleToStringConverter27CreateDecimalRepresentationEPKciiiPNS0_13StringBuilderE(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull %i.c, i32 noundef %6, i32 noundef %i.aq, i32 noundef %.sroa.speculated, ptr noundef %2)
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.j
-  %5 = add nsw i32 %i.aq, -1
-  %6 = load i32, ptr %i.d, align 4, !tbaa !3
-  call void @_ZNK14arrow_vendored17double_conversion23DoubleToStringConverter31CreateExponentialRepresentationEPKciiPNS0_13StringBuilderE(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull %i.c, i32 noundef %6, i32 noundef %5, ptr noundef %2)
+  call void @_ZNK14arrow_vendored17double_conversion23DoubleToStringConverter31CreateExponentialRepresentationEPKciiPNS0_13StringBuilderE(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull %i.c, i32 noundef %6, i32 noundef %4, ptr noundef %2)
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
@@ -624,7 +623,7 @@ _ZN14arrow_vendored17double_conversionL20DtoaToBignumDtoaModeENS0_23DoubleToStri
   br label %_ZN14arrow_vendored17double_conversion23DoubleToStringConverter13DoubleToAsciiEdNS1_8DtoaModeEiPciPbPiS5_.exit
 
 bb.l:                                             ; preds = %bb.h
-  %i.ao = add nuw nsw i32 %2, 1                   ; 3 uses
+  %i.ao = add nuw nsw i32 %2, 1                   ; 4 uses
   %.0.i28 = tail call double @llvm.fabs.f64(double %1) ; 2 uses
   %i.ap = fcmp oeq double %1, 0.000000e+00
   br i1 %i.ap, label %bb.m, label %bb.n
@@ -654,8 +653,8 @@ _ZN14arrow_vendored17double_conversionL20DtoaToBignumDtoaModeENS0_23DoubleToStri
 
 _ZN14arrow_vendored17double_conversion23DoubleToStringConverter13DoubleToAsciiEdNS1_8DtoaModeEiPciPbPiS5_.exit31: ; preds = %._ZN14arrow_vendored17double_conversion23DoubleToStringConverter13DoubleToAsciiEdNS1_8DtoaModeEiPciPbPiS5_.exit31_crit_edge, %bb.m, %_ZN14arrow_vendored17double_conversionL20DtoaToBignumDtoaModeENS0_23DoubleToStringConverter8DtoaModeE.exit.i30
   %i.av = phi i32 [ %.pre, %._ZN14arrow_vendored17double_conversion23DoubleToStringConverter13DoubleToAsciiEdNS1_8DtoaModeEiPciPbPiS5_.exit31_crit_edge ], [ 1, %bb.m ], [ %i.as, %_ZN14arrow_vendored17double_conversionL20DtoaToBignumDtoaModeENS0_23DoubleToStringConverter8DtoaModeE.exit.i30 ] ; 3 uses
-  %.not33 = icmp sgt i32 %i.av, %2
-  br i1 %.not33, label %._crit_edge, label %.lr.ph.preheader
+  %4 = icmp slt i32 %i.av, %i.ao
+  br i1 %4, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %_ZN14arrow_vendored17double_conversion23DoubleToStringConverter13DoubleToAsciiEdNS1_8DtoaModeEiPciPbPiS5_.exit31
   %i.aw = sext i32 %i.av to i64

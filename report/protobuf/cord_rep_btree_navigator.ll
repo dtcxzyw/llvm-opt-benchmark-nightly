@@ -22,7 +22,8 @@ bb.a:
   br i1 %.not63, label %._crit_edge89, label %.lr.ph69
 
 .lr.ph69:                                         ; preds = %bb.a
-  %i.i = load i32, ptr %0, align 8                ; 2 uses
+  %i.i = load i32, ptr %0, align 8
+  %2 = sext i32 %i.i to i64                       ; 2 uses
   br label %bb.b
 
 .preheader:                                       ; preds = %._crit_edge
@@ -37,7 +38,7 @@ bb.b:                                             ; preds = %.lr.ph69, %._crit_e
   %i.l = phi i64 [ %i.h, %.lr.ph69 ], [ %i.af, %._crit_edge ]
   %.03367 = phi ptr [ %i.e, %.lr.ph69 ], [ %.134.lcssa, %._crit_edge ] ; 2 uses
   %.03566 = phi i64 [ %i.c, %.lr.ph69 ], [ %.lcssa, %._crit_edge ]
-  %.03865 = phi i32 [ 0, %.lr.ph69 ], [ %.139.lcssa, %._crit_edge ] ; 4 uses
+  %.03865 = phi i32 [ 0, %.lr.ph69 ], [ %.139.lcssa, %._crit_edge ] ; 2 uses
   %.04164 = phi i64 [ %1, %.lr.ph69 ], [ %i.m, %._crit_edge ]
   %i.m = sub nuw i64 %.04164, %i.l                ; 6 uses
   %i.n = add i64 %.03566, 1                       ; 2 uses
@@ -48,25 +49,21 @@ bb.b:                                             ; preds = %.lr.ph69, %._crit_e
   br i1 %i.r, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.b
-  %smax = tail call i32 @llvm.smax.i32(i32 %.03865, i32 %i.i)
-  %wide.trip.count = sext i32 %smax to i64
-  %exitcond.not133.not = icmp slt i32 %.03865, %i.i
-  br i1 %exitcond.not133.not, label %.lr.ph135, label %.loopexit50
-
-.lr.ph135:                                        ; preds = %.lr.ph.preheader
-  %2 = sext i32 %.03865 to i64
-  br label %bb.c
+  %3 = sext i32 %.03865 to i64
+  %indvars.iv.next135 = add nsw i64 %3, 1         ; 2 uses
+  %4 = icmp sgt i64 %indvars.iv.next135, %2
+  br i1 %4, label %.loopexit50, label %bb.c
 
 .lr.ph:                                           ; preds = %bb.c
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit50, label %bb.c, !llvm.loop !19
+  %indvars.iv.next = add nsw i64 %indvars.iv134, 1 ; 2 uses
+  %5 = icmp sgt i64 %indvars.iv.next, %2
+  br i1 %5, label %.loopexit50, label %bb.c, !llvm.loop !19
 
-bb.c:                                             ; preds = %.lr.ph135, %.lr.ph
-  %indvars.iv134 = phi i64 [ %2, %.lr.ph135 ], [ %indvars.iv.next, %.lr.ph ]
-  %indvars.iv.next = add nsw i64 %indvars.iv134, 1 ; 5 uses
-  %i.s = getelementptr inbounds [8 x i8], ptr %i.d, i64 %indvars.iv.next
+bb.c:                                             ; preds = %.lr.ph.preheader, %.lr.ph
+  %indvars.iv134 = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.next135, %.lr.ph.preheader ] ; 4 uses
+  %i.s = getelementptr inbounds [8 x i8], ptr %i.d, i64 %indvars.iv134
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !8    ; 2 uses
-  %i.u = getelementptr inbounds i8, ptr %i.a, i64 %indvars.iv.next
+  %i.u = getelementptr inbounds i8, ptr %i.a, i64 %indvars.iv134
   %i.v = load i8, ptr %i.u, align 1, !tbaa !7
   %i.w = zext i8 %i.v to i64
   %i.x = add nuw nsw i64 %i.w, 1                  ; 2 uses
@@ -77,7 +74,7 @@ bb.c:                                             ; preds = %.lr.ph135, %.lr.ph
   br i1 %i.ab, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !19
 
 ._crit_edge.loopexit:                             ; preds = %bb.c
-  %i.ac = trunc nsw i64 %indvars.iv.next to i32
+  %i.ac = trunc nsw i64 %indvars.iv134 to i32
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.b
@@ -193,7 +190,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f, %bb.e
   %.019.i = phi i64 [ %i.u, %bb.f ], [ %1, %bb.e ]
   %.018.i = phi ptr [ %i.w, %bb.f ], [ %i.i, %bb.e ] ; 3 uses
-  %i.x = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #8 ; 7 uses
+  %i.x = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #7 ; 7 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.x, i8 0, i64 16, i1 false)
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   store i32 2, ptr %i.y, align 4, !tbaa !28
@@ -240,7 +237,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l, %bb.k
   %.019.i.i = phi i64 [ %i.ao, %bb.l ], [ %1, %bb.k ]
   %.018.i.i = phi ptr [ %i.aq, %bb.l ], [ %i.i, %bb.k ] ; 3 uses
-  %i.ar = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #8 ; 7 uses
+  %i.ar = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #7 ; 7 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.ar, i8 0, i64 16, i1 false)
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
   store i32 2, ptr %i.as, align 4, !tbaa !28
@@ -258,7 +255,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 
 _ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_19SubstringEPNS1_7CordRepEm.exit: ; preds = %bb.h, %bb.j, %bb.m
   %.0.i.i = phi ptr [ %i.ar, %bb.m ], [ %i.i, %bb.j ], [ null, %bb.h ] ; 4 uses
-  %i.ay = tail call noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #8 ; 8 uses
+  %i.ay = tail call noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #7 ; 8 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 8
   store i32 2, ptr %i.az, align 4, !tbaa !28
   %i.ba = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 12
@@ -291,7 +288,7 @@ _ZN4absl12lts_2025051213cord_internal12CordRepBtree3NewEPNS1_7CordRepE.exit: ; p
 
 bb.o:                                             ; preds = %bb.w, %_ZN4absl12lts_2025051213cord_internal12CordRepBtree3NewEPNS1_7CordRepE.exit
   %i.bn = phi i64 [ %.pre, %_ZN4absl12lts_2025051213cord_internal12CordRepBtree3NewEPNS1_7CordRepE.exit ], [ %i.fk, %bb.w ]
-  %.0103 = phi i32 [ 0, %_ZN4absl12lts_2025051213cord_internal12CordRepBtree3NewEPNS1_7CordRepE.exit ], [ %.1104.lcssa, %bb.w ] ; 3 uses
+  %.0103 = phi i32 [ 0, %_ZN4absl12lts_2025051213cord_internal12CordRepBtree3NewEPNS1_7CordRepE.exit ], [ %.1104.lcssa, %bb.w ] ; 2 uses
   %.099 = phi i64 [ %i.a, %_ZN4absl12lts_2025051213cord_internal12CordRepBtree3NewEPNS1_7CordRepE.exit ], [ %i.bo, %bb.w ]
   %.094 = phi i64 [ %i.d, %_ZN4absl12lts_2025051213cord_internal12CordRepBtree3NewEPNS1_7CordRepE.exit ], [ %.lcssa, %bb.w ]
   %.092 = phi ptr [ %i.f, %_ZN4absl12lts_2025051213cord_internal12CordRepBtree3NewEPNS1_7CordRepE.exit ], [ %.193.lcssa, %bb.w ] ; 2 uses
@@ -315,16 +312,17 @@ bb.o:                                             ; preds = %bb.w, %_ZN4absl12lt
   %i.bv = trunc nuw i64 %i.bp to i8
   %i.bw = getelementptr inbounds i8, ptr %i.b, i64 %i.bu
   store i8 %i.bv, ptr %i.bw, align 1, !tbaa !7
-  %indvars.iv.next.peel = add nsw i64 %i.bu, 1    ; 4 uses
+  %indvars.iv.next.peel = add nsw i64 %i.bu, 1    ; 5 uses
   %i.bx = load i32, ptr %0, align 8, !tbaa !29
-  %.not119.peel = icmp slt i32 %.0103, %i.bx
+  %3 = sext i32 %i.bx to i64
+  %4 = icmp sgt i64 %indvars.iv.next.peel, %3
   %i.by = trunc i64 %.0 to i8
   %i.bz = getelementptr inbounds nuw i8, ptr %.083, i64 15
   store i8 %i.by, ptr %i.bz, align 1, !tbaa !7
-  br i1 %.not119.peel, label %bb.p, label %.split.us.thread231
+  br i1 %4, label %.split.us.thread231, label %bb.p
 
 bb.p:                                             ; preds = %.lr.ph.split.preheader
-  %i.ca = tail call noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #8 ; 9 uses
+  %i.ca = tail call noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #7 ; 9 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 8
   store i32 2, ptr %i.cb, align 4, !tbaa !28
   %i.cc = getelementptr inbounds nuw i8, ptr %.083, i64 12
@@ -365,15 +363,16 @@ _ZN4absl12lts_2025051213cord_internal12CordRepBtree3NewEPNS1_7CordRepE.exit121.p
   br i1 %i.cy, label %.lr.ph.split, label %._crit_edge.loopexit171
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.r
-  %indvars.iv200 = phi i64 [ %indvars.iv.next201, %bb.r ], [ %i.bu, %.lr.ph ] ; 3 uses
+  %indvars.iv200 = phi i64 [ %indvars.iv.next201, %bb.r ], [ %i.bu, %.lr.ph ] ; 2 uses
   %i.cz = phi i64 [ %i.dl, %bb.r ], [ %i.bp, %.lr.ph ]
   %i.da = trunc nuw i64 %i.cz to i8
   %i.db = getelementptr inbounds i8, ptr %i.b, i64 %indvars.iv200
   store i8 %i.da, ptr %i.db, align 1, !tbaa !7
+  %indvars.iv.next201 = add nsw i64 %indvars.iv200, 1 ; 5 uses
   %i.dc = load i32, ptr %0, align 8, !tbaa !29
   %i.dd = sext i32 %i.dc to i64
-  %.not119.us = icmp slt i64 %indvars.iv200, %i.dd
-  br i1 %.not119.us, label %bb.r, label %.split.us.thread
+  %5 = icmp sgt i64 %indvars.iv.next201, %i.dd
+  br i1 %5, label %.split.us.thread, label %bb.r
 
 .split.us.thread:                                 ; preds = %.lr.ph.split.us
   %i.de = trunc i64 %.0 to i8
@@ -382,7 +381,6 @@ _ZN4absl12lts_2025051213cord_internal12CordRepBtree3NewEPNS1_7CordRepE.exit121.p
   br label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_19SubstringEPNS1_7CordRepEmm.exit
 
 bb.r:                                             ; preds = %.lr.ph.split.us
-  %indvars.iv.next201 = add nsw i64 %indvars.iv200, 1 ; 4 uses
   %i.dg = getelementptr inbounds [8 x i8], ptr %i.e, i64 %indvars.iv.next201
   %i.dh = load ptr, ptr %i.dg, align 8, !tbaa !8  ; 2 uses
   %i.di = getelementptr inbounds i8, ptr %i.b, i64 %indvars.iv.next201
@@ -396,19 +394,19 @@ bb.r:                                             ; preds = %.lr.ph.split.us
   br i1 %i.dp, label %.lr.ph.split.us, label %._crit_edge.loopexit, !llvm.loop !31
 
 .lr.ph.split:                                     ; preds = %_ZN4absl12lts_2025051213cord_internal12CordRepBtree3NewEPNS1_7CordRepE.exit121.peel, %_ZN4absl12lts_2025051213cord_internal12CordRepBtree3NewEPNS1_7CordRepE.exit121
-  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN4absl12lts_2025051213cord_internal12CordRepBtree3NewEPNS1_7CordRepE.exit121 ], [ %indvars.iv.next.peel, %_ZN4absl12lts_2025051213cord_internal12CordRepBtree3NewEPNS1_7CordRepE.exit121.peel ] ; 3 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN4absl12lts_2025051213cord_internal12CordRepBtree3NewEPNS1_7CordRepE.exit121 ], [ %indvars.iv.next.peel, %_ZN4absl12lts_2025051213cord_internal12CordRepBtree3NewEPNS1_7CordRepE.exit121.peel ] ; 2 uses
   %i.dq = phi i64 [ %i.es, %_ZN4absl12lts_2025051213cord_internal12CordRepBtree3NewEPNS1_7CordRepE.exit121 ], [ %i.cu, %_ZN4absl12lts_2025051213cord_internal12CordRepBtree3NewEPNS1_7CordRepE.exit121.peel ]
   %.184131 = phi ptr [ %i.dy, %_ZN4absl12lts_2025051213cord_internal12CordRepBtree3NewEPNS1_7CordRepE.exit121 ], [ %i.ca, %_ZN4absl12lts_2025051213cord_internal12CordRepBtree3NewEPNS1_7CordRepE.exit121.peel ] ; 6 uses
   %i.dr = trunc nuw i64 %i.dq to i8
   %i.ds = getelementptr inbounds i8, ptr %i.b, i64 %indvars.iv
   store i8 %i.dr, ptr %i.ds, align 1, !tbaa !7
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 4 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 5 uses
   %i.dt = load i32, ptr %0, align 8, !tbaa !29
   %i.du = sext i32 %i.dt to i64
-  %.not119 = icmp slt i64 %indvars.iv, %i.du
+  %6 = icmp sgt i64 %indvars.iv.next, %i.du
   %i.dv = getelementptr inbounds nuw i8, ptr %.184131, i64 15
   store i8 1, ptr %i.dv, align 1, !tbaa !7
-  br i1 %.not119, label %bb.t, label %.split.us.thread231
+  br i1 %6, label %.split.us.thread231, label %bb.t
 
 .split.us.thread231:                              ; preds = %.lr.ph.split.preheader, %.lr.ph.split
   %.us-phi137234 = phi ptr [ %.184131, %.lr.ph.split ], [ %.083, %.lr.ph.split.preheader ] ; 2 uses
@@ -422,7 +420,7 @@ bb.s:                                             ; preds = %.split.us.thread231
   br label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_19SubstringEPNS1_7CordRepEmm.exit
 
 bb.t:                                             ; preds = %.lr.ph.split
-  %i.dy = tail call noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #8 ; 9 uses
+  %i.dy = tail call noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #7 ; 9 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dy, i64 8
   store i32 2, ptr %i.dz, align 4, !tbaa !28
   %i.ea = getelementptr inbounds nuw i8, ptr %.184131, i64 12
@@ -540,7 +538,7 @@ bb.x:                                             ; preds = %bb.w
   br i1 %.not117, label %.loopexit, label %bb.y
 
 bb.y:                                             ; preds = %.lr.ph162
-  %i.fy = tail call noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #8 ; 10 uses
+  %i.fy = tail call noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #7 ; 10 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fy, i64 8
   store i32 2, ptr %i.fz, align 4, !tbaa !28
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fy, i64 12
@@ -663,7 +661,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d, %bb.e
   %.019 = phi i64 [ %i.k, %bb.e ], [ %1, %bb.d ]
   %.018 = phi ptr [ %i.m, %bb.e ], [ %0, %bb.d ]  ; 3 uses
-  %i.n = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #8 ; 7 uses
+  %i.n = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #7 ; 7 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.n, i8 0, i64 16, i1 false)
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   store i32 2, ptr %i.o, align 4, !tbaa !28
@@ -697,9 +695,6 @@ declare void @_ZN4absl12lts_2025051213cord_internal7CordRep7DestroyEPS2_(ptr nou
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #6
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #7
-
 attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { inlinehint mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -707,8 +702,7 @@ attributes #3 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protec
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #5 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #7 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #8 = { builtin allocsize(0) }
+attributes #7 = { builtin allocsize(0) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

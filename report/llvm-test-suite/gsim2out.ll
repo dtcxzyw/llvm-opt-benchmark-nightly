@@ -200,9 +200,7 @@ fill_cells.exit:                                  ; preds = %._crit_edge.us.i, %
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.bf = zext nneg i32 %i.k to i64
-  %15 = add nuw i32 %3, 1
   %wide.trip.count139 = zext nneg i32 %2 to i64
-  %wide.trip.count = zext i32 %15 to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
@@ -212,8 +210,9 @@ fill_cells.exit:                                  ; preds = %._crit_edge.us.i, %
 
 bb.q:                                             ; preds = %bb.r
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.r, !llvm.loop !20
+  %15 = trunc nuw i64 %indvars.iv.next to i32
+  %.not = icmp slt i32 %3, %15
+  br i1 %.not, label %._crit_edge, label %bb.r, !llvm.loop !20
 
 bb.r:                                             ; preds = %.preheader, %bb.q
   %indvars.iv = phi i64 [ 1, %.preheader ], [ %indvars.iv.next, %bb.q ] ; 2 uses

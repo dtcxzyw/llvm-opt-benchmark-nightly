@@ -201,7 +201,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.c
 
 .lr.ph.i:                                         ; preds = %bb.h, %bb.aa
   %i.cs = phi ptr [ %i.ey, %bb.aa ], [ %i.cp, %bb.h ]
-  %i.ct = phi i32 [ %i.ex, %bb.aa ], [ %i.co, %bb.h ] ; 4 uses
+  %i.ct = phi i32 [ %i.ex, %bb.aa ], [ %i.co, %bb.h ] ; 3 uses
   %i.cu = call ptr @u_skipWhitespace(ptr noundef %i.cs) #17 ; 3 uses
   %i.cv = load i8, ptr %i.cu, align 1             ; 2 uses
   %i.cw = icmp eq i8 %i.cv, 45
@@ -230,7 +230,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k, %.lr.ph.i
   %i.dg = phi i8 [ %i.cv, %.lr.ph.i ], [ %.pr.i, %bb.k ]
   %.283.i = phi ptr [ %i.cu, %.lr.ph.i ], [ %i.df, %bb.k ] ; 3 uses
-  %.079.i = phi i32 [ %i.ct, %.lr.ph.i ], [ %i.da, %bb.k ] ; 2 uses
+  %.079.i = phi i32 [ %i.ct, %.lr.ph.i ], [ %i.da, %bb.k ]
   switch i8 %i.dg, label %.thread.i [
     i8 58, label %bb.m
     i8 46, label %bb.p
@@ -332,17 +332,16 @@ bb.y:                                             ; preds = %.thread.i
 bb.z:                                             ; preds = %bb.y, %bb.x, %.thread.i, %bb.w
   %.4104.i = phi ptr [ %.4105.i, %.thread.i ], [ %.4105.i, %bb.y ], [ %.4105.i, %bb.x ], [ %.4.i, %bb.w ] ; 3 uses
   %.3.i = phi i32 [ %.2106.i, %.thread.i ], [ %i.en, %bb.y ], [ %i.el, %bb.x ], [ %.2.i, %bb.w ] ; 2 uses
-  %i.eo = zext nneg i32 %i.ct to i64              ; 3 uses
-  %2 = add nuw nsw i32 %.079.i, 1
-  %3 = sub i32 %.079.i, %i.ct                     ; 2 uses
-  %4 = zext i32 %3 to i64
-  %5 = add nuw nsw i64 %4, 1                      ; 2 uses
-  %min.iters.check = icmp ult i32 %3, 7
+  %i.eo = zext i32 %i.ct to i64                   ; 4 uses
+  %2 = zext nneg i32 %.079.i to i64               ; 2 uses
+  %3 = add nuw nsw i64 %2, 1
+  %4 = sub nsw i64 %3, %i.eo                      ; 3 uses
+  %min.iters.check = icmp ult i64 %4, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph37
 
 vector.ph37:                                      ; preds = %bb.z
-  %n.vec = and i64 %5, 8589934584                 ; 3 uses
-  %i.ep = add nuw nsw i64 %n.vec, %i.eo
+  %n.vec = and i64 %4, -8                         ; 3 uses
+  %i.ep = add nsw i64 %n.vec, %i.eo
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %.3.i, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %invariant.gep = getelementptr [4 x i8], ptr %i.h, i64 %i.eo
@@ -359,7 +358,7 @@ vector.body38:                                    ; preds = %vector.body38, %vec
   br i1 %i.er, label %middle.block41, label %vector.body38, !llvm.loop !5
 
 middle.block41:                                   ; preds = %vector.body38
-  %cmp.n = icmp eq i64 %5, %n.vec
+  %cmp.n = icmp eq i64 %4, %n.vec
   br i1 %cmp.n, label %.loopexit, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %bb.z, %middle.block41
@@ -371,9 +370,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.es = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %indvars.iv117.i
   store i32 %.3.i, ptr %i.es, align 4
   %indvars.iv.next118.i = add nuw nsw i64 %indvars.iv117.i, 1 ; 2 uses
-  %lftr.wideiv.i = trunc i64 %indvars.iv.next118.i to i32
-  %exitcond120.not.i = icmp eq i32 %2, %lftr.wideiv.i
-  br i1 %exitcond120.not.i, label %.loopexit, label %scalar.ph, !llvm.loop !9
+  %.not101.i = icmp samesign ugt i64 %indvars.iv.next118.i, %2
+  br i1 %.not101.i, label %.loopexit, label %scalar.ph, !llvm.loop !9
 
 .loopexit:                                        ; preds = %scalar.ph, %middle.block41
   %i.et = load i8, ptr %.4104.i, align 1

@@ -201,27 +201,12 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.lr.ph75, %.loopexit
   %.05074 = phi i32 [ %i.j, %.lr.ph75 ], [ %.265, %.loopexit ]
   %.05173 = phi i32 [ %i.h, %.lr.ph75 ], [ %i.aq, %.loopexit ]
-  %.05272 = phi ptr [ %i.i, %.lr.ph75 ], [ %i.o, %.loopexit ] ; 10 uses
+  %.05272 = phi ptr [ %i.i, %.lr.ph75 ], [ %i.o, %.loopexit ] ; 7 uses
   %i.l = load i32, ptr %.05272, align 1
   %i.m = tail call i32 @llvm.bswap.i32(i32 %i.l)  ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %.05272, i64 4
-  %3 = load i8, ptr %2, align 1, !tbaa !16
-  %4 = zext i8 %3 to i32
-  %5 = shl nuw i32 %4, 24                         ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %.05272, i64 5
-  %7 = load i8, ptr %6, align 1, !tbaa !16
-  %8 = zext i8 %7 to i32
-  %9 = shl nuw nsw i32 %8, 16                     ; 2 uses
-  %10 = or disjoint i32 %9, %5
-  %11 = getelementptr inbounds nuw i8, ptr %.05272, i64 6
-  %12 = load i8, ptr %11, align 1, !tbaa !16
-  %13 = zext i8 %12 to i32
-  %14 = shl nuw nsw i32 %13, 8                    ; 2 uses
-  %15 = or disjoint i32 %10, %14
-  %i.n = getelementptr inbounds nuw i8, ptr %.05272, i64 7
-  %16 = load i8, ptr %i.n, align 1, !tbaa !16
-  %17 = zext i8 %16 to i32                        ; 2 uses
-  %18 = or disjoint i32 %15, %17                  ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %.05272, i64 4
+  %2 = load i32, ptr %i.n, align 1
+  %3 = tail call i32 @llvm.bswap.i32(i32 %2)      ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.05272, i64 12
   %i.p = getelementptr inbounds nuw i8, ptr %.05272, i64 8
   %i.q = load i8, ptr %i.p, align 1, !tbaa !16
@@ -242,18 +227,11 @@ bb.c:                                             ; preds = %.lr.ph75, %.loopexi
   %i.af = zext i8 %i.ae to i32
   %i.ag = or disjoint i32 %i.ac, %i.af            ; 2 uses
   %spec.select = tail call i32 @llvm.umax.i32(i32 %.05074, i32 %i.m) ; 3 uses
-  %.not5967 = icmp ugt i32 %spec.select, %18
-  br i1 %.not5967, label %.loopexit, label %.lr.ph.preheader
+  %.not5967 = icmp ugt i32 %spec.select, %3
+  br i1 %.not5967, label %.loopexit, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.c
-  %19 = or disjoint i32 %5, %9
-  %20 = or disjoint i32 %19, %14
-  %21 = or disjoint i32 %20, 1
-  %22 = add i32 %21, %17
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.f
-  %.268 = phi i32 [ %i.an, %bb.f ], [ %spec.select, %.lr.ph.preheader ] ; 7 uses
+.lr.ph:                                           ; preds = %bb.c, %bb.f
+  %.268 = phi i32 [ %i.an, %bb.f ], [ %spec.select, %bb.c ] ; 6 uses
   %i.ah = sub i32 %.268, %i.m                     ; 2 uses
   %i.ai = xor i32 %i.ah, -1
   %i.aj = icmp ugt i32 %i.ag, %i.ai
@@ -269,9 +247,9 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.am, label %.loopexit61, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.an = add nuw i32 %.268, 1
-  %.not59.not = icmp ult i32 %.268, %18
-  br i1 %.not59.not, label %.lr.ph, label %.loopexit
+  %i.an = add nuw i32 %.268, 1                    ; 3 uses
+  %.not59 = icmp ugt i32 %i.an, %3
+  br i1 %.not59, label %.loopexit, label %.lr.ph
 
 bb.g:                                             ; preds = %bb.d
   %i.ao = load i64, ptr %i.k, align 8, !tbaa !46
@@ -280,7 +258,7 @@ bb.g:                                             ; preds = %bb.d
   br i1 %.not60, label %.loopexit61, label %.loopexit
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.f, %bb.c, %bb.g
-  %.265 = phi i32 [ %.268, %bb.g ], [ %spec.select, %bb.c ], [ %.268, %.lr.ph ], [ %22, %bb.f ]
+  %.265 = phi i32 [ %.268, %bb.g ], [ %spec.select, %bb.c ], [ %.268, %.lr.ph ], [ %i.an, %bb.f ]
   %i.aq = add i32 %.05173, -1                     ; 2 uses
   %.not = icmp eq i32 %i.aq, 0
   br i1 %.not, label %.loopexit61, label %bb.c, !llvm.loop !62
@@ -683,7 +661,7 @@ bb.b:                                             ; preds = %.lr.ph65, %.loopexi
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e
-  %.259 = phi i64 [ %i.bm, %bb.e ], [ %spec.select, %.lr.ph.preheader ] ; 7 uses
+  %.259 = phi i64 [ %i.bm, %bb.e ], [ %spec.select, %.lr.ph.preheader ] ; 6 uses
   %i.bg = sub nsw i64 %.259, %i.r                 ; 2 uses
   %i.bh = sub nsw i64 4294967295, %i.bg
   %i.bi = icmp ugt i64 %i.bb, %i.bh
@@ -700,9 +678,9 @@ bb.d:                                             ; preds = %bb.c
   br i1 %exitcond, label %.loopexit50, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.bm = add nuw nsw i64 %.259, 1
-  %.not.not = icmp ult i64 %.259, %i.ak
-  br i1 %.not.not, label %.lr.ph, label %.loopexit
+  %i.bm = add nuw nsw i64 %.259, 1                ; 2 uses
+  %.not = icmp ugt i64 %i.bm, %i.ak
+  br i1 %.not, label %.loopexit, label %.lr.ph
 
 bb.f:                                             ; preds = %bb.c
   %i.bn = load i64, ptr %i.l, align 8, !tbaa !46

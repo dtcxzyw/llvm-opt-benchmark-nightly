@@ -201,16 +201,15 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %.lo
   %.lcssa = phi i8 [ %i.k, %.lr.ph.i ], [ %i.l, %.outer ], [ %i.ei, %.loopexit44.i.1 ]
   %.not.i.not.lcssa = phi i1 [ true, %.lr.ph.i ], [ %.not.i.1, %.loopexit44.i.1 ], [ %.not.i.1, %.outer ]
   %i.eq = phi i8 [ %.promoted, %.lr.ph.i ], [ %i.el, %.loopexit44.i.1 ], [ %i.el, %.outer ]
-  %.02152.i.lcssa51.wide.ph = phi i32 [ 0, %.lr.ph.i ], [ 0, %.outer ], [ 1, %.loopexit44.i.1 ] ; 2 uses
-  %.lcssa46.wide.ph.a = phi i64 [ 1, %.lr.ph.i ], [ 1, %.outer ], [ 2, %.loopexit44.i.1 ]
+  %.lcssa46.wide.ph.a = phi i64 [ 2, %.lr.ph.i ], [ 2, %.outer ], [ 1, %.loopexit44.i.1 ]
+  %.lcssa46.wide.ph = phi i32 [ 1, %.lr.ph.i ], [ 1, %.outer ], [ 2, %.loopexit44.i.1 ] ; 2 uses
   store i8 %.lcssa, ptr %i.a, align 1, !tbaa !13, !noalias !14
   store i8 %i.eq, ptr %i.f, align 1
   store i8 %.lcssa170, ptr %i.h, align 1
   store i8 %.ph.lcssa, ptr %i.j, align 1, !noalias !14
-  %scevgep.i = getelementptr i8, ptr %i.a, i64 %.lcssa46.wide.ph.a
-  %narrow.i = sub nuw nsw i32 2, %.02152.i.lcssa51.wide.ph
-  %3 = zext nneg i32 %narrow.i to i64
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i, i8 0, i64 %3, i1 false), !tbaa !13, !noalias !14
+  %3 = zext nneg i32 %.lcssa46.wide.ph to i64
+  %scevgep.i = getelementptr i8, ptr %i.a, i64 %3
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i, i8 0, i64 %.lcssa46.wide.ph.a, i1 false), !tbaa !13, !noalias !14
   %i.er = load i8, ptr %i.a, align 1, !tbaa !13, !noalias !14 ; 2 uses
   %i.es = lshr i8 %i.er, 2
   store i8 %i.es, ptr %i.b, align 1, !tbaa !13, !noalias !14
@@ -226,7 +225,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %.lo
   %i.fb = lshr i8 %i.fa, 6
   %i.fc = or disjoint i8 %i.fb, %i.ez
   store i8 %i.fc, ptr %i.i, align 1, !tbaa !13, !noalias !14
-  %4 = or disjoint i32 %.02152.i.lcssa51.wide.ph, 2
+  %4 = add nuw nsw i32 %.lcssa46.wide.ph, 1
   %wide.trip.count.i = zext nneg i32 %4 to i64
   br label %.lr.ph60.i
 

@@ -201,18 +201,18 @@ bb.a:
   br i1 %i.c, label %.preheader, label %.preheader24
 
 .preheader:                                       ; preds = %bb.a, %.preheader
-  %.01027 = phi i32 [ %i.d, %.preheader ], [ %.sroa.speculated16, %bb.a ] ; 3 uses
+  %.01027 = phi i32 [ %i.d, %.preheader ], [ %.sroa.speculated16, %bb.a ] ; 2 uses
   tail call void @_ZN27OpenImageIO_v3_1_Imf__3_3_513RgbaInputFile7FromYca10readPixelsEi(ptr noundef nonnull align 8 dereferenceable(392) %0, i32 noundef %.01027)
-  %i.d = add i32 %.01027, 1
-  %exitcond.not = icmp eq i32 %.01027, %.sroa.speculated
-  br i1 %exitcond.not, label %.loopexit, label %.preheader, !llvm.loop !159
+  %i.d = add nsw i32 %.01027, 1                   ; 2 uses
+  %.not11 = icmp sgt i32 %i.d, %.sroa.speculated
+  br i1 %.not11, label %.loopexit, label %.preheader, !llvm.loop !159
 
 .preheader24:                                     ; preds = %bb.a, %.preheader24
-  %.026 = phi i32 [ %i.e, %.preheader24 ], [ %.sroa.speculated, %bb.a ] ; 3 uses
+  %.026 = phi i32 [ %i.e, %.preheader24 ], [ %.sroa.speculated, %bb.a ] ; 2 uses
   tail call void @_ZN27OpenImageIO_v3_1_Imf__3_3_513RgbaInputFile7FromYca10readPixelsEi(ptr noundef nonnull align 8 dereferenceable(392) %0, i32 noundef %.026)
-  %i.e = add nsw i32 %.026, -1
-  %.not.not = icmp sgt i32 %.026, %.sroa.speculated16
-  br i1 %.not.not, label %.preheader24, label %.loopexit, !llvm.loop !160
+  %i.e = add nsw i32 %.026, -1                    ; 2 uses
+  %.not = icmp slt i32 %i.e, %.sroa.speculated16
+  br i1 %.not, label %.loopexit, label %.preheader24, !llvm.loop !160
 
 .loopexit:                                        ; preds = %.preheader24, %.preheader
   ret void
@@ -615,24 +615,24 @@ _ZNSt10lock_guardISt5mutexEC2ERS0_.exit:          ; preds = %bb.b
   br i1 %i.g, label %.preheader.i, label %.preheader24.i
 
 .preheader.i:                                     ; preds = %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit, %.noexc
-  %.01027.i = phi i32 [ %i.h, %.noexc ], [ %.sroa.speculated16.i, %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit ] ; 3 uses
+  %.01027.i = phi i32 [ %i.h, %.noexc ], [ %.sroa.speculated16.i, %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit ] ; 2 uses
   invoke void @_ZN27OpenImageIO_v3_1_Imf__3_3_513RgbaInputFile7FromYca10readPixelsEi(ptr noundef nonnull align 8 dereferenceable(392) %i.d, i32 noundef %.01027.i)
           to label %.noexc unwind label %.loopexit36
 
 .noexc:                                           ; preds = %.preheader.i
-  %i.h = add i32 %.01027.i, 1
-  %exitcond.not.i = icmp eq i32 %.01027.i, %.sroa.speculated.i
-  br i1 %exitcond.not.i, label %_ZN27OpenImageIO_v3_1_Imf__3_3_513RgbaInputFile7FromYca10readPixelsEii.exit, label %.preheader.i, !llvm.loop !159
+  %i.h = add nsw i32 %.01027.i, 1                 ; 2 uses
+  %.not11.i = icmp sgt i32 %i.h, %.sroa.speculated.i
+  br i1 %.not11.i, label %_ZN27OpenImageIO_v3_1_Imf__3_3_513RgbaInputFile7FromYca10readPixelsEii.exit, label %.preheader.i, !llvm.loop !159
 
 .preheader24.i:                                   ; preds = %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit, %.noexc30
-  %.026.i = phi i32 [ %i.i, %.noexc30 ], [ %.sroa.speculated.i, %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit ] ; 3 uses
+  %.026.i = phi i32 [ %i.i, %.noexc30 ], [ %.sroa.speculated.i, %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit ] ; 2 uses
   invoke void @_ZN27OpenImageIO_v3_1_Imf__3_3_513RgbaInputFile7FromYca10readPixelsEi(ptr noundef nonnull align 8 dereferenceable(392) %i.d, i32 noundef %.026.i)
           to label %.noexc30 unwind label %.loopexit.split-lp
 
 .noexc30:                                         ; preds = %.preheader24.i
-  %i.i = add nsw i32 %.026.i, -1
-  %.not.not.i = icmp sgt i32 %.026.i, %.sroa.speculated16.i
-  br i1 %.not.not.i, label %.preheader24.i, label %_ZN27OpenImageIO_v3_1_Imf__3_3_513RgbaInputFile7FromYca10readPixelsEii.exit, !llvm.loop !160
+  %i.i = add nsw i32 %.026.i, -1                  ; 2 uses
+  %.not.i = icmp slt i32 %i.i, %.sroa.speculated16.i
+  br i1 %.not.i, label %_ZN27OpenImageIO_v3_1_Imf__3_3_513RgbaInputFile7FromYca10readPixelsEii.exit, label %.preheader24.i, !llvm.loop !160
 
 _ZN27OpenImageIO_v3_1_Imf__3_3_513RgbaInputFile7FromYca10readPixelsEii.exit: ; preds = %.noexc30, %.noexc
   %i.j = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.b) #23 ; 0 uses
@@ -746,9 +746,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.i,
   %i.as = load ptr, ptr %i.l, align 8, !tbaa !177
   %i.at = call noundef nonnull align 8 dereferenceable(49) ptr @_ZNK27OpenImageIO_v3_1_Imf__3_3_59InputPart6headerEv(ptr noundef nonnull align 8 dereferenceable(8) %i.as)
   %i.au = call noundef nonnull align 4 dereferenceable(16) ptr @_ZNK27OpenImageIO_v3_1_Imf__3_3_56Header10dataWindowEv(ptr noundef nonnull align 8 dereferenceable(49) %i.at) ; 2 uses
-  %i.av = load i32, ptr %i.au, align 4, !tbaa !235 ; 4 uses
+  %i.av = load i32, ptr %i.au, align 4, !tbaa !235 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.au, i64 8
-  %i.ax = load i32, ptr %i.aw, align 4, !tbaa !235 ; 3 uses
+  %i.ax = load i32, ptr %i.aw, align 4, !tbaa !235 ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.an, i64 8
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !236
   %i.ba = ptrtoint ptr %i.az to i64
@@ -764,15 +764,16 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.i,
 .lr.ph42.split:                                   ; preds = %.lr.ph42
   %i.bd = getelementptr inbounds nuw i8, ptr %i.an, i64 16
   %i.be = load i64, ptr %i.bd, align 8, !tbaa !241 ; 5 uses
-  %i.bf = sext i32 %i.av to i64                   ; 2 uses
-  %4 = add i32 %i.ax, 1                           ; 2 uses
+  %i.bf = sext i32 %i.av to i64                   ; 4 uses
+  %4 = sext i32 %i.ax to i64                      ; 3 uses
   %i.bg = sext i32 %1 to i64
-  %5 = add i32 %2, 1
-  %6 = sub i32 %4, %i.av
-  %7 = sub i32 %i.ax, %i.av
-  %xtraiter = and i32 %6, 3                       ; 2 uses
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  %i.bh = icmp ult i32 %7, 3
+  %5 = sext i32 %2 to i64
+  %6 = add nsw i64 %4, 1
+  %7 = sub nsw i64 %6, %i.bf
+  %8 = sub nsw i64 %4, %i.bf
+  %xtraiter = and i64 %7, 3                       ; 2 uses
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %i.bh = icmp ult i64 %8, 3
   br label %.lr.ph
 
 bb.j:                                             ; preds = %_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_.exit
@@ -800,7 +801,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit33: ; preds = %bb.
 
 .prol.preheader:                                  ; preds = %.lr.ph, %.prol.preheader
   %indvars.iv.prol = phi i64 [ %indvars.iv.next.prol, %.prol.preheader ], [ %i.bf, %.lr.ph ] ; 2 uses
-  %prol.iter = phi i32 [ %prol.iter.next, %.prol.preheader ], [ 0, %.lr.ph ]
+  %prol.iter = phi i64 [ %prol.iter.next, %.prol.preheader ], [ 0, %.lr.ph ]
   %i.bp = mul i64 %i.be, %indvars.iv.prol
   %i.bq = add i64 %i.bo, %i.bp
   %i.br = inttoptr i64 %i.bq to ptr               ; 3 uses
@@ -810,8 +811,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit33: ; preds = %bb.
   %i.bu = getelementptr inbounds nuw i8, ptr %i.br, i64 4
   store i16 %i.bt, ptr %i.bu, align 2, !tbaa !161
   %indvars.iv.next.prol = add nsw i64 %indvars.iv.prol, 1 ; 2 uses
-  %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
-  %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter
+  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %.prol.loopexit, label %.prol.preheader, !llvm.loop !242
 
 .prol.loopexit:                                   ; preds = %.prol.preheader, %.lr.ph
@@ -820,9 +821,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit33: ; preds = %bb.
 
 ._crit_edge:                                      ; preds = %.lr.ph.new, %.prol.loopexit
   %indvars.iv.next47 = add nsw i64 %indvars.iv46, 1 ; 2 uses
-  %lftr.wideiv49 = trunc i64 %indvars.iv.next47 to i32
-  %exitcond50.not = icmp eq i32 %5, %lftr.wideiv49
-  br i1 %exitcond50.not, label %.loopexit, label %.lr.ph, !llvm.loop !243
+  %.not27 = icmp sgt i64 %indvars.iv.next47, %5
+  br i1 %.not27, label %.loopexit, label %.lr.ph, !llvm.loop !243
 
 .lr.ph.new:                                       ; preds = %.prol.loopexit, %.lr.ph.new
   %indvars.iv = phi i64 [ %indvars.iv.next.3, %.lr.ph.new ], [ %indvars.iv.unr, %.prol.loopexit ] ; 5 uses
@@ -862,9 +862,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit33: ; preds = %bb.
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cp, i64 4
   store i16 %i.cr, ptr %i.cs, align 2, !tbaa !161
   %indvars.iv.next.3 = add nsw i64 %indvars.iv, 4 ; 2 uses
-  %lftr.wideiv.3 = trunc i64 %indvars.iv.next.3 to i32
-  %exitcond.not.3 = icmp eq i32 %4, %lftr.wideiv.3
-  br i1 %exitcond.not.3, label %._crit_edge, label %.lr.ph.new, !llvm.loop !244
+  %.not28.3 = icmp sgt i64 %indvars.iv.next.3, %4
+  br i1 %.not28.3, label %._crit_edge, label %.lr.ph.new, !llvm.loop !244
 
 .loopexit:                                        ; preds = %._crit_edge, %.lr.ph42, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.e, %_ZN27OpenImageIO_v3_1_Imf__3_3_513RgbaInputFile7FromYca10readPixelsEii.exit
   ret void

@@ -201,7 +201,7 @@ bb.at:                                            ; preds = %_ZNSt6vectorIcSaIcE
 
 bb.au:                                            ; preds = %.lr.ph521, %._crit_edge513
   %.086519 = phi i32 [ 0, %.lr.ph521 ], [ %i.ha, %._crit_edge513 ]
-  %.087518 = phi i32 [ 0, %.lr.ph521 ], [ %.289, %._crit_edge513 ]
+  %.087518 = phi i32 [ 0, %.lr.ph521 ], [ %.pre-phi, %._crit_edge513 ]
   %i.fy = phi ptr [ %i.fm, %.lr.ph521 ], [ %i.fz, %._crit_edge513 ] ; 8 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fy, i64 8 ; 4 uses
   %i.ga = icmp ult ptr %2, %i.fz
@@ -295,32 +295,28 @@ bb.bb:                                            ; preds = %bb.ba
   br i1 %exitcond.not, label %._crit_edge522, label %bb.au, !llvm.loop !34
 
 .lr.ph512:                                        ; preds = %.lr.ph512.preheader, %bb.bd
-  %indvars.iv = phi i64 [ %i.gw, %.lr.ph512.preheader ], [ %indvars.iv.next, %bb.bd ] ; 4 uses
-  %.188510 = phi i32 [ %.087518, %.lr.ph512.preheader ], [ %.289, %bb.bd ] ; 3 uses
+  %indvars.iv = phi i64 [ %i.gw, %.lr.ph512.preheader ], [ %indvars.iv.next, %bb.bd ] ; 3 uses
+  %.188510 = phi i32 [ %.087518, %.lr.ph512.preheader ], [ %.pre-phi, %bb.bd ] ; 3 uses
   %i.hb = getelementptr inbounds nuw i8, ptr %.sroa.0347.0, i64 %indvars.iv ; 2 uses
   %i.hc = load i8, ptr %i.hb, align 1, !tbaa !19
   %i.hd = icmp eq i8 %i.hc, 0
-  br i1 %i.hd, label %bb.bc, label %.lr.ph512._crit_edge
-
-.lr.ph512._crit_edge:                             ; preds = %.lr.ph512
-  %.pre634 = trunc nuw i64 %indvars.iv to i32
-  br label %bb.bd
+  br i1 %i.hd, label %bb.bc, label %bb.bd
 
 bb.bc:                                            ; preds = %.lr.ph512
   %i.he = sext i32 %.188510 to i64
   %i.hf = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0353.0381, i64 %i.he
-  %i.hg = trunc nuw i64 %indvars.iv to i32        ; 2 uses
+  %i.hg = trunc nuw i64 %indvars.iv to i32
   store i32 %i.hg, ptr %i.hf, align 4, !tbaa !3
   store i8 1, ptr %i.hb, align 1, !tbaa !19
   %i.hh = add nsw i32 %.188510, 1
   br label %bb.bd
 
-bb.bd:                                            ; preds = %.lr.ph512._crit_edge, %bb.bc
-  %.pre-phi = phi i32 [ %.pre634, %.lr.ph512._crit_edge ], [ %i.hg, %bb.bc ]
-  %.289 = phi i32 [ %.188510, %.lr.ph512._crit_edge ], [ %i.hh, %bb.bc ] ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  %.not109.not = icmp slt i32 %.pre-phi, %.sroa.0.0.insert.insert.i187
-  br i1 %.not109.not, label %.lr.ph512, label %._crit_edge513, !llvm.loop !35
+bb.bd:                                            ; preds = %.lr.ph512, %bb.bc
+  %.pre-phi = phi i32 [ %i.hh, %bb.bc ], [ %.188510, %.lr.ph512 ] ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %11 = trunc nuw i64 %indvars.iv.next to i32
+  %.not109.not = icmp slt i32 %.sroa.0.0.insert.insert.i187, %11
+  br i1 %.not109.not, label %._crit_edge513, label %.lr.ph512, !llvm.loop !35
 
 bb.be:                                            ; preds = %._crit_edge522
   %i.hi = call ptr @__cxa_allocate_exception(i64 72) #32 ; 3 uses

@@ -145,19 +145,14 @@ bb.b:                                             ; preds = %.lr.ph
 define internal range(i32 0, 2) i32 @foreachi(ptr noundef %0) #0 {
 bb.a:
   tail call void @luaL_checktype(ptr noundef %0, i32 noundef 1, i32 noundef 5) #3
-  %i.a = tail call i64 @lua_objlen(ptr noundef %0, i32 noundef 1) #3 ; 2 uses
-  %i.b = trunc i64 %i.a to i32
+  %i.a = tail call i64 @lua_objlen(ptr noundef %0, i32 noundef 1) #3
+  %i.b = trunc i64 %i.a to i32                    ; 2 uses
   tail call void @luaL_checktype(ptr noundef %0, i32 noundef 2, i32 noundef 6) #3
   %.not15 = icmp slt i32 %i.b, 1
-  br i1 %.not15, label %._crit_edge, label %.lr.ph.preheader
+  br i1 %.not15, label %._crit_edge, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.a
-  %1 = add nuw nsw i64 %i.a, 1
-  %wide.trip.count = and i64 %1, 4294967295
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
-  %indvars.iv = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 3 uses
+.lr.ph:                                           ; preds = %bb.a, %bb.b
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.b ], [ 1, %bb.a ] ; 3 uses
   tail call void @lua_pushvalue(ptr noundef %0, i32 noundef 2) #3
   tail call void @lua_pushinteger(ptr noundef %0, i64 noundef %indvars.iv) #3
   %i.c = trunc nuw nsw i64 %indvars.iv to i32
@@ -170,8 +165,9 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph
   tail call void @lua_settop(ptr noundef %0, i32 noundef -2) #3
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !13
+  %1 = trunc nuw i64 %indvars.iv.next to i32
+  %.not = icmp sgt i32 %1, %i.b
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !13
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.b, %bb.a
   %.0 = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ 1, %.lr.ph ]
@@ -228,8 +224,8 @@ define internal i32 @tinsert(ptr noundef %0) #0 {
 bb.a:
   tail call void @luaL_checktype(ptr noundef %0, i32 noundef 1, i32 noundef 5) #3
   %i.a = tail call i64 @lua_objlen(ptr noundef %0, i32 noundef 1) #3
-  %i.b = trunc i64 %i.a to i32                    ; 2 uses
-  %i.c = add nsw i32 %i.b, 1                      ; 2 uses
+  %i.b = trunc i64 %i.a to i32
+  %i.c = add nsw i32 %i.b, 1                      ; 3 uses
   %i.d = tail call i32 @lua_gettop(ptr noundef %0) #3
   switch i32 %i.d, label %bb.c [
     i32 2, label %.loopexit
@@ -239,8 +235,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.e = tail call i64 @luaL_checkinteger(ptr noundef %0, i32 noundef 2) #3
   %i.f = trunc i64 %i.e to i32                    ; 4 uses
-  %.not = icmp slt i32 %i.b, %i.f
-  br i1 %.not, label %.loopexit, label %.lr.ph
+  %1 = icmp sgt i32 %i.c, %i.f
+  br i1 %1, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %bb.b, %.lr.ph
   %.024 = phi i32 [ %i.g, %.lr.ph ], [ %i.c, %bb.b ] ; 2 uses
@@ -467,8 +463,8 @@ bb.l:                                             ; preds = %bb.x, %bb.k
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.r, %bb.l
-  %.185 = phi i32 [ %.084, %bb.l ], [ %i.k, %bb.r ] ; 5 uses
-  %i.k = add nsw i32 %.185, 1                     ; 9 uses
+  %.185 = phi i32 [ %.084, %bb.l ], [ %i.k, %bb.r ] ; 4 uses
+  %i.k = add nsw i32 %.185, 1                     ; 10 uses
   tail call void @lua_rawgeti(ptr noundef %0, i32 noundef 1, i32 noundef %i.k) #3
   %i.l = tail call i32 @lua_type(ptr noundef %0, i32 noundef 2) #3
   %i.m = icmp eq i32 %i.l, 0
@@ -493,8 +489,8 @@ sort_comp.exit:                                   ; preds = %bb.n, %bb.o
   br i1 %.not99, label %.preheader, label %bb.p
 
 bb.p:                                             ; preds = %sort_comp.exit
-  %.not103 = icmp slt i32 %.185, %.087111
-  br i1 %.not103, label %bb.r, label %bb.q
+  %3 = icmp sgt i32 %i.k, %.087111
+  br i1 %3, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
   %i.p = tail call i32 (ptr, ptr, ...) @luaL_error(ptr noundef %0, ptr noundef nonnull @.str.14) #3 ; 0 uses
@@ -505,8 +501,8 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   br label %bb.m, !llvm.loop !17
 
 .preheader:                                       ; preds = %sort_comp.exit, %bb.w
-  %.1 = phi i32 [ %i.q, %bb.w ], [ %.lcssa119.sink, %sort_comp.exit ] ; 3 uses
-  %i.q = add nsw i32 %.1, -1                      ; 3 uses
+  %.1 = phi i32 [ %i.q, %bb.w ], [ %.lcssa119.sink, %sort_comp.exit ]
+  %i.q = add nsw i32 %.1, -1                      ; 5 uses
   tail call void @lua_rawgeti(ptr noundef %0, i32 noundef 1, i32 noundef %i.q) #3
   %i.r = tail call i32 @lua_type(ptr noundef %0, i32 noundef 2) #3
   %i.s = icmp eq i32 %i.r, 0
@@ -531,8 +527,8 @@ sort_comp.exit105:                                ; preds = %bb.s, %bb.t
   br i1 %.not100, label %bb.x, label %bb.u
 
 bb.u:                                             ; preds = %sort_comp.exit105
-  %.not102 = icmp sgt i32 %.1, %.090110
-  br i1 %.not102, label %bb.w, label %bb.v
+  %4 = icmp slt i32 %i.q, %.090110
+  br i1 %4, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
   %i.v = tail call i32 (ptr, ptr, ...) @luaL_error(ptr noundef %0, ptr noundef nonnull @.str.14) #3 ; 0 uses
@@ -543,8 +539,8 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   br label %.preheader, !llvm.loop !18
 
 bb.x:                                             ; preds = %sort_comp.exit105
-  %.not101 = icmp sgt i32 %.1, %i.k
-  br i1 %.not101, label %bb.l, label %bb.y
+  %5 = icmp slt i32 %i.q, %i.k
+  br i1 %5, label %bb.y, label %bb.l
 
 bb.y:                                             ; preds = %bb.x
   tail call void @lua_settop(ptr noundef %0, i32 noundef -4) #3

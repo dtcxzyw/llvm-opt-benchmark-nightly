@@ -201,16 +201,11 @@ marker_is_icc.exit.thread:                        ; preds = %.lr.ph, %bb.f, %bb.
 
 ._crit_edge:                                      ; preds = %marker_is_icc.exit.thread
   %i.ch = icmp eq i32 %.2, 0
-  br i1 %i.ch, label %._crit_edge.thread, label %.lr.ph116.preheader
+  br i1 %i.ch, label %._crit_edge.thread, label %.lr.ph116
 
-.lr.ph116.preheader:                              ; preds = %._crit_edge
-  %3 = add nuw nsw i32 %.2, 1
-  %wide.trip.count = zext nneg i32 %3 to i64
-  br label %.lr.ph116
-
-.lr.ph116:                                        ; preds = %.lr.ph116.preheader, %bb.aa
-  %indvars.iv = phi i64 [ 1, %.lr.ph116.preheader ], [ %indvars.iv.next, %bb.aa ] ; 4 uses
-  %.082115 = phi i32 [ 0, %.lr.ph116.preheader ], [ %i.cs, %bb.aa ] ; 2 uses
+.lr.ph116:                                        ; preds = %._crit_edge, %bb.aa
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.aa ], [ 1, %._crit_edge ] ; 4 uses
+  %.082115 = phi i32 [ %i.cs, %bb.aa ], [ 0, %._crit_edge ] ; 2 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
   %i.cj = load i8, ptr %i.ci, align 1, !tbaa !37
   %i.ck = icmp eq i8 %i.cj, 0
@@ -232,8 +227,9 @@ bb.aa:                                            ; preds = %.lr.ph116
   %i.cr = load i32, ptr %i.cq, align 4, !tbaa !3
   %i.cs = add i32 %i.cr, %.082115                 ; 4 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge117, label %.lr.ph116, !llvm.loop !47
+  %3 = trunc nuw i64 %indvars.iv.next to i32
+  %.not90 = icmp slt i32 %.2, %3
+  br i1 %.not90, label %._crit_edge117, label %.lr.ph116, !llvm.loop !47
 
 ._crit_edge117:                                   ; preds = %bb.aa
   %i.ct = icmp eq i32 %i.cs, 0

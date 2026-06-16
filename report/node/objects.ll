@@ -201,14 +201,15 @@ bb.a:
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph
-  %i.g = lshr i16 %i.d, 1                         ; 2 uses
-  %.zext = zext nneg i16 %i.g to i32              ; 2 uses
+  %i.g = lshr i16 %i.d, 1
+  %.zext = zext nneg i16 %i.g to i32
+  %1 = add nsw i32 %.zext, -1                     ; 3 uses
   %.not192 = icmp eq i16 %i.d, 1
   br i1 %.not192, label %._crit_edge180, label %.lr.ph172
 
 .lr.ph172:                                        ; preds = %._crit_edge
   %i.h = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN2v88internal18g_current_isolate_E) ; 2 uses
-  %i.i = zext nneg i16 %i.g to i64
+  %i.i = zext i32 %1 to i64
   br label %bb.b
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -241,12 +242,9 @@ bb.a:
   br label %bb.m
 
 bb.b:                                             ; preds = %.lr.ph172, %.thread
-  %indvars.iv182 = phi i64 [ %i.i, %.lr.ph172 ], [ %indvars.iv.next183, %.thread ] ; 2 uses
-  %indvars.iv.next183 = add nsw i64 %indvars.iv182, -1 ; 3 uses
-  %indvars = trunc i64 %indvars.iv.next183 to i32
-  %1 = and i64 %indvars.iv.next183, 4294967295
+  %indvars.iv182 = phi i64 [ %i.i, %.lr.ph172 ], [ %indvars.iv.next182, %.thread ] ; 3 uses
   %.sroa.01.0.copyload.i.i.i.i = load i64, ptr %0, align 8 ; 2 uses
-  %i.x = mul i64 %1, 103079215104
+  %i.x = mul i64 %indvars.iv182, 103079215104
   %sext.i.i.i.i = add i64 %i.x, 137438953472
   %i.y = ashr exact i64 %sext.i.i.i.i, 32
   %i.z = or disjoint i64 %i.y, 7
@@ -277,12 +275,12 @@ bb.c:                                             ; preds = %bb.b
 _ZNK2v88internal4Name4hashEv.exit:                ; preds = %bb.b, %bb.c
   %.0.in.i = phi i32 [ %i.aq, %bb.c ], [ %i.an, %bb.b ]
   %.0.i = lshr i32 %.0.in.i, 2
-  %i.ar = trunc nuw i64 %indvars.iv182 to i32     ; 2 uses
-  %.not73.not165.not = icmp slt i32 %.zext, %i.ar
+  %i.ar = trunc nuw i64 %indvars.iv182 to i32     ; 3 uses
+  %.not73.not165.not = icmp slt i32 %1, %i.ar
   br i1 %.not73.not165.not, label %.thread, label %.lr.ph167
 
 .lr.ph167:                                        ; preds = %_ZNK2v88internal4Name4hashEv.exit, %bb.l
-  %.064166 = phi i32 [ %.161, %bb.l ], [ %indvars, %_ZNK2v88internal4Name4hashEv.exit ] ; 2 uses
+  %.064166 = phi i32 [ %.161, %bb.l ], [ %i.ar, %_ZNK2v88internal4Name4hashEv.exit ] ; 2 uses
   %i.as = shl nuw nsw i32 %.064166, 1             ; 2 uses
   %i.at = or disjoint i32 %i.as, 1                ; 3 uses
   %i.au = zext nneg i32 %i.at to i64
@@ -472,11 +470,12 @@ bb.l:                                             ; preds = %bb.k
   %i.er = sext i32 %i.eq to i64
   %i.es = shl nsw i64 %i.er, 32
   store atomic volatile i64 %i.es, ptr %i.el monotonic, align 8
-  %.not73.not = icmp slt i32 %.161, %.zext
-  br i1 %.not73.not, label %.lr.ph167, label %.thread
+  %.not73 = icmp sgt i32 %.161, %1
+  br i1 %.not73, label %.thread, label %.lr.ph167
 
 .thread:                                          ; preds = %bb.l, %bb.k, %_ZNK2v88internal4Name4hashEv.exit
-  %i.et = icmp sgt i32 %i.ar, 1
+  %indvars.iv.next182 = add nsw i64 %indvars.iv182, -1
+  %i.et = icmp sgt i32 %i.ar, 0
   br i1 %i.et, label %bb.b, label %.lr.ph179, !llvm.loop !81
 
 ._crit_edge180:                                   ; preds = %.thread161, %bb.a, %._crit_edge

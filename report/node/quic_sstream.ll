@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %.val.i, i64 16
   %i.e = load i64, ptr %i.d, align 8, !tbaa !32
   %i.f = getelementptr inbounds nuw i8, ptr %.val.i, i64 24
-  %i.g = load i64, ptr %i.f, align 8, !tbaa !28   ; 6 uses
+  %i.g = load i64, ptr %i.f, align 8, !tbaa !28   ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.i = load i64, ptr %i.h, align 8, !tbaa !15   ; 4 uses
   %i.j = icmp ugt i64 %i.e, %i.i
@@ -228,10 +228,9 @@ bb.f:                                             ; preds = %bb.e
   %i.r = urem i64 %i.i, %i.p                      ; 4 uses
   %i.s = add nuw nsw i64 %i.g, 1
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.u = load i64, ptr %i.t, align 8, !tbaa !14   ; 2 uses
-  %.not46.i.i = icmp ult i64 %i.g, %i.u
-  %spec.select.i.i = select i1 %.not46.i.i, i64 %i.s, i64 %i.u
-  %i.v = sub i64 %spec.select.i.i, %i.i           ; 3 uses
+  %i.u = load i64, ptr %i.t, align 8, !tbaa !14
+  %spec.select.i.i = call i64 @llvm.umin.i64(i64 %i.s, i64 %i.u)
+  %i.v = sub nsw i64 %spec.select.i.i, %i.i       ; 3 uses
   %i.w = sub i64 %i.p, %i.r                       ; 2 uses
   %i.x = icmp ugt i64 %i.v, %i.w
   br i1 %i.x, label %bb.g, label %bb.h
@@ -241,7 +240,7 @@ bb.g:                                             ; preds = %bb.f
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.r
   call void @OPENSSL_cleanse(ptr noundef %i.z, i64 noundef %i.w) #11
   %i.aa = load i64, ptr %i.o, align 8, !tbaa !13
-  %.neg.i.i = add i64 %i.v, %i.r
+  %.neg.i.i = add nsw i64 %i.v, %i.r
   %i.ab = sub i64 %.neg.i.i, %i.aa
   br label %bb.h
 
@@ -258,12 +257,12 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.e, %bb.d
-  %i.ae = add nuw nsw i64 %i.g, 1                 ; 2 uses
+  %i.ae = add nuw nsw i64 %i.g, 1                 ; 3 uses
   store i64 %i.ae, ptr %i.h, align 8, !tbaa !15
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.ag = load i64, ptr %i.af, align 8, !tbaa !14
-  %.not48.i.i = icmp ugt i64 %i.ag, %i.g
-  br i1 %.not48.i.i, label %qss_cull.exit, label %bb.k
+  %4 = icmp ult i64 %i.ag, %i.ae
+  br i1 %4, label %bb.k, label %qss_cull.exit
 
 bb.k:                                             ; preds = %bb.j
   store i64 %i.ae, ptr %i.af, align 8, !tbaa !14

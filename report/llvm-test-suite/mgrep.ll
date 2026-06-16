@@ -200,8 +200,8 @@ vector.body179:                                   ; preds = %.loopexit91, %bb.u
   store <16 x i8> %i.be, ptr getelementptr inbounds nuw (i8, ptr @tr1, i64 224), align 16, !tbaa !8
   store <16 x i8> %i.bf, ptr getelementptr inbounds nuw (i8, ptr @tr1, i64 240), align 16, !tbaa !8
   store i32 256, ptr @p_size, align 4, !tbaa !4
-  %.not77.not106 = icmp samesign ugt i32 %.070.lcssa164, 1 ; 2 uses
-  br i1 %.not77.not106, label %.lr.ph109.preheader, label %._crit_edge110.thread
+  %.not77106 = icmp slt i32 %.070.lcssa164, 2     ; 2 uses
+  br i1 %.not77106, label %._crit_edge110.thread, label %.lr.ph109.preheader
 
 .lr.ph109.preheader:                              ; preds = %vector.body179
   %wide.trip.count = zext nneg i32 %.070.lcssa164 to i64
@@ -263,21 +263,18 @@ bb.x:                                             ; preds = %._crit_edge110
   %i.bv = add i8 %i.bu, -2
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(4096) @SHIFT1, i8 %i.bv, i64 4096, i1 false), !tbaa !8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(65536) @HASH, i8 0, i64 65536, i1 false), !tbaa !11
-  br i1 %.not77.not106, label %.lr.ph115.preheader, label %._crit_edge116
+  br i1 %.not77106, label %._crit_edge116, label %.lr.ph115
 
-.lr.ph115.preheader:                              ; preds = %.preheader88.preheader
-  %wide.trip.count155 = zext nneg i32 %.070.lcssa164 to i64
-  br label %.lr.ph115
-
-.lr.ph115:                                        ; preds = %.lr.ph115.preheader, %.lr.ph115
-  %indvars.iv152 = phi i64 [ 1, %.lr.ph115.preheader ], [ %indvars.iv.next153, %.lr.ph115 ] ; 3 uses
+.lr.ph115:                                        ; preds = %.preheader88.preheader, %.lr.ph115
+  %indvars.iv152 = phi i64 [ %indvars.iv.next153, %.lr.ph115 ], [ 1, %.preheader88.preheader ] ; 3 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr @patt, i64 %indvars.iv152
   %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !17
   %i.by = trunc nuw nsw i64 %indvars.iv152 to i32
   tail call void @f_prep(i32 noundef %i.by, ptr noundef %i.bx)
   %indvars.iv.next153 = add nuw nsw i64 %indvars.iv152, 1 ; 2 uses
-  %exitcond156.not = icmp eq i64 %indvars.iv.next153, %wide.trip.count155
-  br i1 %exitcond156.not, label %._crit_edge116, label %.lr.ph115, !llvm.loop !45
+  %1 = trunc nuw i64 %indvars.iv.next153 to i32
+  %.not78.not = icmp sgt i32 %.070.lcssa164, %1
+  br i1 %.not78.not, label %.lr.ph115, label %._crit_edge116, !llvm.loop !45
 
 ._crit_edge116:                                   ; preds = %.lr.ph115, %.preheader88.preheader.thread, %.preheader88.preheader
   ret void
@@ -301,10 +298,10 @@ declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #9
 ; Function Attrs: nofree nounwind uwtable
 define dso_local void @monkey1(ptr nofree noundef readonly captures(address) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #2 {
 bb.a:
-  %i.a = load i32, ptr @p_size, align 4, !tbaa !4 ; 4 uses
+  %i.a = load i32, ptr @p_size, align 4, !tbaa !4 ; 3 uses
   %i.b = sext i32 %2 to i64                       ; 2 uses
   %i.c = getelementptr inbounds i8, ptr %0, i64 %i.b ; 4 uses
-  %i.d = add nsw i32 %i.a, -1                     ; 2 uses
+  %i.d = add nsw i32 %i.a, -1                     ; 3 uses
   %i.e = sext i32 %1 to i64                       ; 2 uses
   %i.f = getelementptr inbounds i8, ptr %0, i64 %i.e ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 1 ; 2 uses
@@ -497,8 +494,8 @@ bb.e:                                             ; preds = %.preheader135, %bb.
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.e
   %.091.lcssa = phi i32 [ 0, %bb.e ], [ %i.dl, %._crit_edge.loopexit ] ; 2 uses
-  %.not103 = icmp slt i32 %.091.lcssa, %i.a
-  br i1 %.not103, label %bb.u, label %bb.f
+  %3 = icmp sgt i32 %.091.lcssa, %i.d
+  br i1 %3, label %bb.f, label %bb.u
 
 bb.f:                                             ; preds = %._crit_edge
   %i.dm = getelementptr inbounds i8, ptr @pat_len, i64 %i.cs

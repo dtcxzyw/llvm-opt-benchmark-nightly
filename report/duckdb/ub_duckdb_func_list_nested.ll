@@ -201,11 +201,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit136.thread: ; preds = %_
   %i.di = getelementptr inbounds nuw [16 x i8], ptr %i.f, i64 %.094206 ; 3 uses
   store i64 %.0173205, ptr %i.di, align 8, !tbaa !221
   %.not213 = icmp eq i64 %i.ce, 0
-  br i1 %.not213, label %._crit_edge203, label %.lr.ph202
-
-.lr.ph202:                                        ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit136.thread
-  %12 = add i64 %i.dh, -1
-  br label %bb.am
+  br i1 %.not213, label %._crit_edge203, label %bb.am
 
 bb.aj:                                            ; preds = %bb.al
   %i.dj = landingpad { ptr, i32 }
@@ -250,9 +246,9 @@ _ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit140: ; preds = %bb.ak, %.
   store i64 %i.dv, ptr %i.dw, align 8, !tbaa !218
   br label %bb.bc
 
-bb.am:                                            ; preds = %.lr.ph202, %bb.ba
-  %.071201 = phi i64 [ 0, %.lr.ph202 ], [ %i.fh, %bb.ba ] ; 2 uses
-  %.1174200 = phi i64 [ %.0173205, %.lr.ph202 ], [ %i.fg, %bb.ba ] ; 5 uses
+bb.am:                                            ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit136.thread, %bb.ba
+  %.071201 = phi i64 [ %i.fh, %bb.ba ], [ 0, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit136.thread ] ; 2 uses
+  %.1174200 = phi i64 [ %i.fg, %bb.ba ], [ %.0173205, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit136.thread ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #20
   %i.dx = add i64 %.071201, %i.cf                 ; 2 uses
   invoke void @_ZNK6duckdb6Vector8GetValueEm(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %9, ptr noundef nonnull align 8 dereferenceable(104) %i.j, i64 noundef %i.dx)
@@ -325,18 +321,19 @@ bb.au:                                            ; preds = %bb.an
 
 .noexc142:                                        ; preds = %bb.au
   %i.eh = invoke noundef i64 @_ZNK6duckdb5Value8GetValueIlEET_v(ptr noundef nonnull align 8 dereferenceable(64) %3)
-          to label %bb.av unwind label %bb.ay     ; 3 uses
+          to label %bb.av unwind label %bb.ay     ; 2 uses
 
 bb.av:                                            ; preds = %.noexc142
+  %12 = add nsw i64 %i.eh, -1                     ; 2 uses
   call void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %3) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20
-  %13 = icmp slt i64 %i.eh, 1
-  %.not.i141 = icmp sgt i64 %i.eh, %i.dg
-  %or.cond.i = or i1 %13, %.not.i141
-  br i1 %or.cond.i, label %bb.az, label %bb.aw
+  %13 = icmp sgt i64 %i.eh, 0
+  %14 = icmp slt i64 %12, %i.dg
+  %or.cond.i = select i1 %13, i1 %14, i1 false
+  br i1 %or.cond.i, label %bb.aw, label %bb.az
 
 bb.aw:                                            ; preds = %bb.av
-  %i.ei = add i64 %12, %i.eh                      ; 3 uses
+  %i.ei = add i64 %12, %i.dh                      ; 3 uses
   %i.ej = trunc i64 %i.ei to i32
   %i.ek = load ptr, ptr %7, align 8, !tbaa !102
   %i.el = getelementptr inbounds nuw [4 x i8], ptr %i.ek, i64 %.1174200

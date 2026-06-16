@@ -201,7 +201,7 @@ bb.h:                                             ; preds = %._crit_edge63, %bb.
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.aa = zext nneg i32 %.031 to i64
-  %3 = add nuw i32 %.030, 1
+  %3 = zext nneg i32 %.030 to i64
   br label %.preheader
 
 .preheader.lr.ph.split.us:                        ; preds = %.preheader.lr.ph
@@ -245,9 +245,8 @@ bb.i:                                             ; preds = %.lr.ph
   %.0.lcssa = phi i32 [ 0, %.preheader ], [ %.0.lcssa.ph, %._crit_edge.loopexit ]
   %.not37 = icmp eq i32 %.0.lcssa, %i.ap          ; 2 uses
   %indvars.iv.next60 = add nuw nsw i64 %indvars.iv59, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next60 to i32
-  %exitcond.not = icmp eq i32 %3, %lftr.wideiv
-  %or.cond72 = select i1 %.not37, i1 true, i1 %exitcond.not
+  %.not.not = icmp samesign ugt i64 %indvars.iv.next60, %3
+  %or.cond72 = select i1 %.not37, i1 true, i1 %.not.not
   br i1 %or.cond72, label %.loopexit, label %.preheader, !llvm.loop !48
 
 .loopexit:                                        ; preds = %._crit_edge, %.preheader.lr.ph.split.us, %bb.h, %bb.b, %bb.f, %bb.e, %bb.a

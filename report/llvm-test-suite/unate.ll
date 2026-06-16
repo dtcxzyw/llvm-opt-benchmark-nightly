@@ -201,17 +201,17 @@ bb.i:                                             ; preds = %bb.h
   %i.bt = getelementptr inbounds [4 x i8], ptr %i.dl, i64 %i.bs
   %i.bu = load i32, ptr %i.bt, align 4, !tbaa !4  ; 3 uses
   %i.bv = getelementptr inbounds [4 x i8], ptr %i.dm, i64 %i.bs
-  %i.bw = load i32, ptr %i.bv, align 4, !tbaa !4  ; 6 uses
+  %i.bw = load i32, ptr %i.bv, align 4, !tbaa !4  ; 5 uses
   %.not5663.us = icmp sgt i32 %i.bw, %i.bu
   br i1 %.not5663.us, label %.loopexit.us, label %.lr.ph66.us.preheader
 
 .lr.ph66.us.preheader:                            ; preds = %bb.i
-  %i.bx = sext i32 %i.bw to i64                   ; 3 uses
-  %1 = add i32 %i.bu, 1                           ; 2 uses
-  %2 = sub i32 %1, %i.bw
-  %xtraiter105 = and i32 %2, 1
-  %lcmp.mod106.not = icmp eq i32 %xtraiter105, 0
-  br i1 %lcmp.mod106.not, label %.lr.ph66.us.prol.loopexit, label %.lr.ph66.us.prol
+  %i.bx = sext i32 %i.bw to i64                   ; 4 uses
+  %1 = sext i32 %i.bu to i64                      ; 2 uses
+  %2 = add nsw i64 %1, %i.bx
+  %3 = and i64 %2, 1
+  %lcmp.mod106.not = icmp eq i64 %3, 0
+  br i1 %lcmp.mod106.not, label %.lr.ph66.us.prol, label %.lr.ph66.us.prol.loopexit
 
 .lr.ph66.us.prol:                                 ; preds = %.lr.ph66.us.preheader
   %i.by = getelementptr inbounds [4 x i8], ptr %i.dn, i64 %i.bx
@@ -285,9 +285,8 @@ bb.l:                                             ; preds = %.lr.ph66.us.1
 
 bb.m:                                             ; preds = %bb.l, %.lr.ph66.us.1
   %indvars.iv.next85.1 = add nsw i64 %indvars.iv84, 2 ; 2 uses
-  %lftr.wideiv.1 = trunc i64 %indvars.iv.next85.1 to i32
-  %exitcond87.not.1 = icmp eq i32 %1, %lftr.wideiv.1
-  br i1 %exitcond87.not.1, label %.loopexit.us, label %.lr.ph66.us
+  %.not56.us.1 = icmp sgt i64 %indvars.iv.next85.1, %1
+  br i1 %.not56.us.1, label %.loopexit.us, label %.lr.ph66.us
 
 .loopexit.us:                                     ; preds = %.lr.ph66.us.prol.loopexit, %bb.m, %bb.i, %bb.h
   %indvars.iv.next89 = add nuw nsw i64 %indvars.iv88, 1 ; 2 uses

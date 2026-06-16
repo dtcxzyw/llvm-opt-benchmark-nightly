@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %.backedge, %._crit_edge
-  %.147 = phi i64 [ %i.ac, %._crit_edge ], [ %.147.be, %.backedge ] ; 2 uses
+  %.147 = phi i64 [ %i.ac, %._crit_edge ], [ %.147.be.in, %.backedge ] ; 2 uses
   %.1 = phi ptr [ %i.ad, %._crit_edge ], [ %.1.be, %.backedge ] ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %.1, i64 240
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %.147
@@ -229,7 +229,7 @@ bb.d:                                             ; preds = %.backedge, %._crit_
 
 bb.e:                                             ; preds = %._crit_edge86, %bb.d
   %.251 = phi ptr [ %i.ak, %._crit_edge86 ], [ %i.ag, %bb.d ] ; 4 uses
-  %.248 = phi i64 [ %i.ap, %._crit_edge86 ], [ %.147, %bb.d ] ; 2 uses
+  %.248 = phi i64 [ %i.ap, %._crit_edge86 ], [ %.147, %bb.d ]
   %.2 = phi ptr [ %i.aq, %._crit_edge86 ], [ %.1, %bb.d ] ; 3 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %.251, i64 10
   %i.as = load i8, ptr %i.ar, align 1, !tbaa !17  ; 2 uses
@@ -267,23 +267,23 @@ _ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cx
   %i.bi = shl nuw nsw i64 %i.bh, 5
   %i.bj = or disjoint i64 %i.bi, 16
   tail call void @_ZdlPvm(ptr noundef nonnull %.251, i64 noundef %i.bj) #27
+  %2 = add nuw nsw i64 %.248, 1                   ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %.2, i64 10
   %i.bl = load i8, ptr %i.bk, align 1, !tbaa !17  ; 2 uses
   %i.bm = zext i8 %i.bl to i64
-  %.not.not = icmp ult i64 %.248, %i.bm
-  br i1 %.not.not, label %.backedge, label %.preheader77
+  %.not = icmp ugt i64 %2, %i.bm
+  br i1 %.not, label %.preheader77, label %.backedge
 
-.backedge:                                        ; preds = %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE15value_destroy_nEhhPSC_.exit66, %2
-  %.147.be.in = phi i64 [ %.248, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE15value_destroy_nEhhPSC_.exit66 ], [ %3, %2 ]
-  %.1.be = phi ptr [ %.2, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE15value_destroy_nEhhPSC_.exit66 ], [ %i.bq, %2 ]
-  %.147.be = add nuw nsw i64 %.147.be.in, 1
+.backedge:                                        ; preds = %bb.f, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE15value_destroy_nEhhPSC_.exit66
+  %.147.be.in = phi i64 [ %2, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE15value_destroy_nEhhPSC_.exit66 ], [ %4, %bb.f ]
+  %.1.be = phi ptr [ %.2, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE15value_destroy_nEhhPSC_.exit66 ], [ %i.bq, %bb.f ]
   br label %bb.d, !llvm.loop !424
 
 .preheader77:                                     ; preds = %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE15value_destroy_nEhhPSC_.exit66, %bb.f
   %i.bn = phi i8 [ %i.cd, %bb.f ], [ %i.bl, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE15value_destroy_nEhhPSC_.exit66 ] ; 2 uses
   %.3 = phi ptr [ %i.bq, %bb.f ], [ %.2, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE15value_destroy_nEhhPSC_.exit66 ] ; 4 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %.3, i64 8
-  %i.bp = load i8, ptr %i.bo, align 1, !tbaa !17  ; 2 uses
+  %i.bp = load i8, ptr %i.bo, align 1, !tbaa !17
   %i.bq = load ptr, ptr %.3, align 8, !tbaa !407  ; 4 uses
   %i.br = getelementptr inbounds nuw i8, ptr %.3, i64 16 ; 2 uses
   %i.bs = zext i8 %i.bn to i64
@@ -316,14 +316,13 @@ _ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cx
   br i1 %i.cb, label %.loopexit, label %bb.f
 
 bb.f:                                             ; preds = %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE15value_destroy_nEhhPSC_.exit75
+  %3 = zext i8 %i.bp to i64
+  %4 = add nuw nsw i64 %3, 1                      ; 2 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bq, i64 10
   %i.cd = load i8, ptr %i.cc, align 1, !tbaa !17  ; 2 uses
-  %.not = icmp ult i8 %i.bp, %i.cd
-  br i1 %.not, label %2, label %.preheader77, !llvm.loop !425
-
-2:                                                ; preds = %bb.f
-  %3 = zext i8 %i.bp to i64
-  br label %.backedge
+  %5 = zext i8 %i.cd to i64
+  %6 = icmp samesign ugt i64 %4, %5
+  br i1 %6, label %.preheader77, label %.backedge, !llvm.loop !425
 
 .loopexit.sink.split:                             ; preds = %bb.c, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE15value_destroy_nEhhPSC_.exit
   %.sink = phi i64 [ %i.t, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS9_ESaIS9_ELi256ELb0EEEE15value_destroy_nEhhPSC_.exit ], [ 304, %bb.c ]
