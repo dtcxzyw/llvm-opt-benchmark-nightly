@@ -201,9 +201,9 @@ bb.a:
   br label %.preheader
 
 .preheader:                                       ; preds = %bb.a, %._crit_edge.3
-  %indvars.iv = phi i64 [ 8, %bb.a ], [ %indvars.iv.next, %._crit_edge.3 ] ; 5 uses
-  %i.a = mul nuw nsw i64 %indvars.iv, %indvars.iv ; 2 uses
-  %i.b = icmp samesign ugt i64 %i.a, 65535
+  %indvars.iv = phi i64 [ 8, %bb.a ], [ %indvars.iv.next, %._crit_edge.3 ] ; 6 uses
+  %i.a = mul nuw nsw i64 %indvars.iv, %indvars.iv
+  %i.b = icmp samesign ugt i64 %indvars.iv, 255
   %i.c = trunc nuw nsw i64 %i.a to i32            ; 2 uses
   br i1 %i.b, label %.lr.ph, label %._crit_edge
 
@@ -220,10 +220,10 @@ bb.a:
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader
-  %.115.lcssa = phi i32 [ %i.c, %.preheader ], [ %i.d, %._crit_edge.loopexit ] ; 2 uses
+  %.115.lcssa = phi i32 [ %i.c, %.preheader ], [ %i.d, %._crit_edge.loopexit ] ; 3 uses
   %.1.lcssa = phi i32 [ 0, %.preheader ], [ %i.g, %._crit_edge.loopexit ] ; 2 uses
-  %i.h = mul nuw i32 %.115.lcssa, %.115.lcssa     ; 3 uses
-  %i.i = icmp ugt i32 %i.h, 65535
+  %i.h = mul nuw i32 %.115.lcssa, %.115.lcssa     ; 2 uses
+  %i.i = icmp samesign ugt i32 %.115.lcssa, 255
   br i1 %i.i, label %.lr.ph.1, label %._crit_edge.1
 
 .lr.ph.1:                                         ; preds = %._crit_edge, %.lr.ph.1
@@ -235,11 +235,11 @@ bb.a:
   br i1 %i.l, label %.lr.ph.1, label %._crit_edge.1, !llvm.loop !62
 
 ._crit_edge.1:                                    ; preds = %.lr.ph.1, %._crit_edge
-  %.115.lcssa.1 = phi i32 [ %i.h, %._crit_edge ], [ %i.j, %.lr.ph.1 ] ; 2 uses
+  %.115.lcssa.1 = phi i32 [ %i.h, %._crit_edge ], [ %i.j, %.lr.ph.1 ] ; 3 uses
   %.1.lcssa.1 = phi i32 [ %.1.lcssa, %._crit_edge ], [ %i.k, %.lr.ph.1 ]
-  %i.m = mul nuw i32 %.115.lcssa.1, %.115.lcssa.1 ; 3 uses
+  %i.m = mul nuw i32 %.115.lcssa.1, %.115.lcssa.1 ; 2 uses
   %i.n = shl i32 %.1.lcssa.1, 1                   ; 2 uses
-  %i.o = icmp ugt i32 %i.m, 65535
+  %i.o = icmp ugt i32 %.115.lcssa.1, 255
   br i1 %i.o, label %.lr.ph.2, label %._crit_edge.2
 
 .lr.ph.2:                                         ; preds = %._crit_edge.1, %.lr.ph.2
@@ -251,16 +251,19 @@ bb.a:
   br i1 %i.r, label %.lr.ph.2, label %._crit_edge.2, !llvm.loop !62
 
 ._crit_edge.2:                                    ; preds = %.lr.ph.2, %._crit_edge.1
-  %.115.lcssa.2 = phi i32 [ %i.m, %._crit_edge.1 ], [ %i.p, %.lr.ph.2 ] ; 2 uses
+  %.115.lcssa.2 = phi i32 [ %i.m, %._crit_edge.1 ], [ %i.p, %.lr.ph.2 ] ; 3 uses
   %.1.lcssa.2 = phi i32 [ %i.n, %._crit_edge.1 ], [ %i.q, %.lr.ph.2 ]
-  %1 = mul nuw i32 %.115.lcssa.2, %.115.lcssa.2   ; 2 uses
   %i.s = shl i32 %.1.lcssa.2, 1                   ; 2 uses
-  %i.t = icmp ugt i32 %1, 65535
-  br i1 %i.t, label %.lr.ph.3, label %._crit_edge.3
+  %i.t = icmp ugt i32 %.115.lcssa.2, 255
+  br i1 %i.t, label %.lr.ph.preheader.3, label %._crit_edge.3
 
-.lr.ph.3:                                         ; preds = %._crit_edge.2, %.lr.ph.3
-  %.118.3 = phi i32 [ %i.v, %.lr.ph.3 ], [ %i.s, %._crit_edge.2 ]
-  %.11517.3 = phi i32 [ %i.u, %.lr.ph.3 ], [ %1, %._crit_edge.2 ] ; 2 uses
+.lr.ph.preheader.3:                               ; preds = %._crit_edge.2
+  %1 = mul nuw i32 %.115.lcssa.2, %.115.lcssa.2
+  br label %.lr.ph.3
+
+.lr.ph.3:                                         ; preds = %.lr.ph.3, %.lr.ph.preheader.3
+  %.118.3 = phi i32 [ %i.v, %.lr.ph.3 ], [ %i.s, %.lr.ph.preheader.3 ]
+  %.11517.3 = phi i32 [ %i.u, %.lr.ph.3 ], [ %1, %.lr.ph.preheader.3 ] ; 2 uses
   %i.u = lshr i32 %.11517.3, 1
   %i.v = add nuw nsw i32 %.118.3, 1               ; 2 uses
   %i.w = icmp ugt i32 %.11517.3, 131071
@@ -312,9 +315,9 @@ bb.a:
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %._crit_edge.3.i, %bb.a
-  %indvars.iv.i = phi i64 [ 8, %bb.a ], [ %indvars.iv.next.i, %._crit_edge.3.i ] ; 5 uses
-  %i.m = mul nuw nsw i64 %indvars.iv.i, %indvars.iv.i ; 2 uses
-  %i.n = icmp samesign ugt i64 %i.m, 65535
+  %indvars.iv.i = phi i64 [ 8, %bb.a ], [ %indvars.iv.next.i, %._crit_edge.3.i ] ; 6 uses
+  %i.m = mul nuw nsw i64 %indvars.iv.i, %indvars.iv.i
+  %i.n = icmp samesign ugt i64 %indvars.iv.i, 255
   %i.o = trunc nuw nsw i64 %i.m to i32            ; 2 uses
   br i1 %i.n, label %.lr.ph.i, label %._crit_edge.i
 
@@ -331,10 +334,10 @@ bb.a:
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %.preheader.i
-  %.115.lcssa.i = phi i32 [ %i.o, %.preheader.i ], [ %i.p, %._crit_edge.loopexit.i ] ; 2 uses
+  %.115.lcssa.i = phi i32 [ %i.o, %.preheader.i ], [ %i.p, %._crit_edge.loopexit.i ] ; 3 uses
   %.1.lcssa.i = phi i32 [ 0, %.preheader.i ], [ %i.s, %._crit_edge.loopexit.i ] ; 2 uses
-  %i.t = mul nuw i32 %.115.lcssa.i, %.115.lcssa.i ; 3 uses
-  %i.u = icmp ugt i32 %i.t, 65535
+  %i.t = mul nuw i32 %.115.lcssa.i, %.115.lcssa.i ; 2 uses
+  %i.u = icmp samesign ugt i32 %.115.lcssa.i, 255
   br i1 %i.u, label %.lr.ph.1.i, label %._crit_edge.1.i
 
 .lr.ph.1.i:                                       ; preds = %._crit_edge.i, %.lr.ph.1.i
@@ -346,11 +349,11 @@ bb.a:
   br i1 %i.x, label %.lr.ph.1.i, label %._crit_edge.1.i, !llvm.loop !62
 
 ._crit_edge.1.i:                                  ; preds = %.lr.ph.1.i, %._crit_edge.i
-  %.115.lcssa.1.i = phi i32 [ %i.t, %._crit_edge.i ], [ %i.v, %.lr.ph.1.i ] ; 2 uses
+  %.115.lcssa.1.i = phi i32 [ %i.t, %._crit_edge.i ], [ %i.v, %.lr.ph.1.i ] ; 3 uses
   %.1.lcssa.1.i = phi i32 [ %.1.lcssa.i, %._crit_edge.i ], [ %i.w, %.lr.ph.1.i ]
-  %i.y = mul nuw i32 %.115.lcssa.1.i, %.115.lcssa.1.i ; 3 uses
+  %i.y = mul nuw i32 %.115.lcssa.1.i, %.115.lcssa.1.i ; 2 uses
   %i.z = shl i32 %.1.lcssa.1.i, 1                 ; 2 uses
-  %i.aa = icmp ugt i32 %i.y, 65535
+  %i.aa = icmp ugt i32 %.115.lcssa.1.i, 255
   br i1 %i.aa, label %.lr.ph.2.i, label %._crit_edge.2.i
 
 .lr.ph.2.i:                                       ; preds = %._crit_edge.1.i, %.lr.ph.2.i
@@ -362,16 +365,19 @@ bb.a:
   br i1 %i.ad, label %.lr.ph.2.i, label %._crit_edge.2.i, !llvm.loop !62
 
 ._crit_edge.2.i:                                  ; preds = %.lr.ph.2.i, %._crit_edge.1.i
-  %.115.lcssa.2.i = phi i32 [ %i.y, %._crit_edge.1.i ], [ %i.ab, %.lr.ph.2.i ] ; 2 uses
+  %.115.lcssa.2.i = phi i32 [ %i.y, %._crit_edge.1.i ], [ %i.ab, %.lr.ph.2.i ] ; 3 uses
   %.1.lcssa.2.i = phi i32 [ %i.z, %._crit_edge.1.i ], [ %i.ac, %.lr.ph.2.i ]
-  %2 = mul nuw i32 %.115.lcssa.2.i, %.115.lcssa.2.i ; 2 uses
   %i.ae = shl i32 %.1.lcssa.2.i, 1                ; 2 uses
-  %i.af = icmp ugt i32 %2, 65535
-  br i1 %i.af, label %.lr.ph.3.i, label %._crit_edge.3.i
+  %i.af = icmp ugt i32 %.115.lcssa.2.i, 255
+  br i1 %i.af, label %.lr.ph.preheader.3.i, label %._crit_edge.3.i
 
-.lr.ph.3.i:                                       ; preds = %._crit_edge.2.i, %.lr.ph.3.i
-  %.118.3.i = phi i32 [ %i.ah, %.lr.ph.3.i ], [ %i.ae, %._crit_edge.2.i ]
-  %.11517.3.i = phi i32 [ %i.ag, %.lr.ph.3.i ], [ %2, %._crit_edge.2.i ] ; 2 uses
+.lr.ph.preheader.3.i:                             ; preds = %._crit_edge.2.i
+  %2 = mul nuw i32 %.115.lcssa.2.i, %.115.lcssa.2.i
+  br label %.lr.ph.3.i
+
+.lr.ph.3.i:                                       ; preds = %.lr.ph.3.i, %.lr.ph.preheader.3.i
+  %.118.3.i = phi i32 [ %i.ah, %.lr.ph.3.i ], [ %i.ae, %.lr.ph.preheader.3.i ]
+  %.11517.3.i = phi i32 [ %i.ag, %.lr.ph.3.i ], [ %2, %.lr.ph.preheader.3.i ] ; 2 uses
   %i.ag = lshr i32 %.11517.3.i, 1
   %i.ah = add nuw nsw i32 %.118.3.i, 1            ; 2 uses
   %i.ai = icmp ugt i32 %.11517.3.i, 131071
