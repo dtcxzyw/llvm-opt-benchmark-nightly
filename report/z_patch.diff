@@ -1,0 +1,1036 @@
+diff --git a/llvm/include/llvm/Analysis/MemoryDependenceAnalysis.h b/llvm/include/llvm/Analysis/MemoryDependenceAnalysis.h
+index 983051cf8468b..459c8aeb5ab5b 100644
+--- a/llvm/include/llvm/Analysis/MemoryDependenceAnalysis.h
++++ b/llvm/include/llvm/Analysis/MemoryDependenceAnalysis.h
+@@ -20,6 +20,7 @@
+ #include "llvm/ADT/SmallPtrSet.h"
+ #include "llvm/Analysis/AliasAnalysis.h"
+ #include "llvm/Analysis/MemoryLocation.h"
++#include "llvm/Analysis/PHITransAddr.h"
+ #include "llvm/IR/PassManager.h"
+ #include "llvm/IR/PredIteratorCache.h"
+ #include "llvm/IR/ValueHandle.h"
+@@ -102,6 +103,10 @@ class MemDepResult {
+     /// This marker indicates that the query has no dependency in the specified
+     /// function.
+     NonFuncLocal,
++    /// This marker indicates that the query depends on a select instruction,
++    /// i.e. the address loaded is a select whose two sides each reach a
++    /// non-clobbered value (see the \p Def documentation, item 4).
++    Select,
+     /// This marker indicates that the query dependency is unknown.
+     Unknown
+   };
+@@ -134,6 +139,9 @@ class MemDepResult {
+   static MemDepResult getNonFuncLocal() {
+     return MemDepResult(ValueTy::create<Other>(NonFuncLocal));
+   }
++  static MemDepResult getSelect() {
++    return MemDepResult(ValueTy::create<Other>(Select));
++  }
+   static MemDepResult getUnknown() {
+     return MemDepResult(ValueTy::create<Other>(Unknown));
+   }
+@@ -161,6 +169,12 @@ class MemDepResult {
+     return Value.is<Other>() && Value.cast<Other>() == NonFuncLocal;
+   }
+ 
++  /// Tests if this MemDepResult represents a query that depends on a select
++  /// instruction whose two sides each reach a non-clobbered value.
++  bool isSelect() const {
++    return Value.is<Other>() && Value.cast<Other>() == Select;
++  }
++
+   /// Tests if this MemDepResult represents a query which cannot and/or will
+   /// not be computed.
+   bool isUnknown() const {
+@@ -229,16 +243,17 @@ class NonLocalDepEntry {
+ /// (potentially phi translated) address that was live in the block.
+ class NonLocalDepResult {
+   NonLocalDepEntry Entry;
+-  Value *Address;
++  SelectAddr Address;
+ 
+ public:
+-  NonLocalDepResult(BasicBlock *BB, MemDepResult Result, Value *Address)
++  NonLocalDepResult(BasicBlock *BB, MemDepResult Result,
++                    const SelectAddr &Address)
+       : Entry(BB, Result), Address(Address) {}
+ 
+   // BB is the sort key, it can't be changed.
+   BasicBlock *getBB() const { return Entry.getBB(); }
+ 
+-  void setResult(const MemDepResult &R, Value *Addr) {
++  void setResult(const MemDepResult &R, const SelectAddr &Addr) {
+     Entry.setResult(R);
+     Address = Addr;
+   }
+@@ -253,7 +268,11 @@ class NonLocalDepResult {
+   /// a cached result and that address was deleted.
+   ///
+   /// The address is always null for a non-local 'call' dependence.
+-  Value *getAddress() const { return Address; }
++  ///
++  /// If the result is a select dependency (\see MemDepResult::isSelect), the
++  /// returned SelectAddr instead carries the select condition and the two
++  /// translated addresses (true/false side).
++  SelectAddr getAddress() const { return Address; }
+ };
+ 
+ /// Provides a lazy, caching interface for making common memory aliasing
+diff --git a/llvm/include/llvm/Analysis/PHITransAddr.h b/llvm/include/llvm/Analysis/PHITransAddr.h
+index a70bec23f94ba..8dfb79c88d3ce 100644
+--- a/llvm/include/llvm/Analysis/PHITransAddr.h
++++ b/llvm/include/llvm/Analysis/PHITransAddr.h
+@@ -15,6 +15,7 @@
+ 
+ #include "llvm/ADT/SmallVector.h"
+ #include "llvm/IR/Instruction.h"
++#include "llvm/IR/Instructions.h"
+ #include "llvm/Support/Compiler.h"
+ 
+ namespace llvm {
+@@ -23,6 +24,38 @@ class DominatorTree;
+ class DataLayout;
+ class TargetLibraryInfo;
+ 
++/// SelectAddr - storage of either a normal Value address, or a select
++/// condition together with a pair of addresses for the "true" and "false"
++/// variant of a select-dependent address.  If the addresses are not present
++/// (both null), V is a normal address; otherwise V is a select condition and
++/// the pair holds the "true" and "false" addresses.
++class SelectAddr {
++public:
++  using SelectAddrs = std::pair<Value *, Value *>;
++
++  SelectAddr(Value *Addr) : V(Addr), Addrs(nullptr, nullptr) {}
++  SelectAddr(Value *Cond, SelectAddrs Addrs) : V(Cond), Addrs(Addrs) {
++    assert(Cond && "Condition must be present");
++    assert(hasSelectAddrs() && "Addrs must be present");
++  }
++
++  bool hasSelectAddrs() const { return Addrs.first && Addrs.second; }
++
++  Value *getAddr() const {
++    assert(!hasSelectAddrs() && "this is a select address");
++    return V;
++  }
++
++  std::pair<Value *, SelectAddrs> getSelectCondAndAddrs() const {
++    assert(hasSelectAddrs() && "this is not a select address");
++    return {V, Addrs};
++  }
++
++private:
++  Value *V;
++  SelectAddrs Addrs;
++};
++
+ /// PHITransAddr - An address value which tracks and handles phi translation.
+ /// As we walk "up" the CFG through predecessors, we need to ensure that the
+ /// address we're tracking is kept up to date.  For example, if we're analyzing
+@@ -58,6 +91,13 @@ class PHITransAddr {
+ 
+   Value *getAddr() const { return Addr; }
+ 
++  /// getSelectCondition - If the address expression depends on a select
++  /// instruction (possibly through casts or GEPs), return that select's
++  /// condition.  Otherwise return nullptr.  This is used to drive translation
++  /// of both sides of a select-dependent address (see the \p Cond overload of
++  /// translateValue).
++  LLVM_ABI Value *getSelectCondition() const;
++
+   /// needsPHITranslationFromBlock - Return true if moving from the specified
+   /// BasicBlock to its predecessors requires PHI translation.
+   bool needsPHITranslationFromBlock(BasicBlock *BB) const {
+@@ -79,6 +119,15 @@ class PHITransAddr {
+   LLVM_ABI Value *translateValue(BasicBlock *CurBB, BasicBlock *PredBB,
+                                  const DominatorTree *DT, bool MustDominate);
+ 
++  /// translateValue - PHI translate the current address from \p CurBB to
++  /// \p PredBB, and if the resulting address depends on a select instruction
++  /// with condition \p Cond, translate both the "true" and the "false" side.
++  /// Returns a pair of addresses (true, false); either may be null on failure.
++  LLVM_ABI SelectAddr::SelectAddrs translateValue(BasicBlock *CurBB,
++                                                  BasicBlock *PredBB,
++                                                  const DominatorTree *DT,
++                                                  Value *Cond);
++
+   /// translateWithInsertion - PHI translate this value into the specified
+   /// predecessor block, inserting a computation of the value if it is
+   /// unavailable.
+@@ -100,7 +149,8 @@ class PHITransAddr {
+ 
+ private:
+   Value *translateSubExpr(Value *V, BasicBlock *CurBB, BasicBlock *PredBB,
+-                          const DominatorTree *DT);
++                          const DominatorTree *DT, Value *Cond = nullptr,
++                          bool CondVal = false);
+ 
+   /// insertTranslatedSubExpr - Insert a computation of the PHI translated
+   /// version of 'V' for the edge PredBB->CurBB into the end of the PredBB
+diff --git a/llvm/include/llvm/Transforms/Scalar/GVN.h b/llvm/include/llvm/Transforms/Scalar/GVN.h
+index 816ea43ae1508..0275c01b28020 100644
+--- a/llvm/include/llvm/Transforms/Scalar/GVN.h
++++ b/llvm/include/llvm/Transforms/Scalar/GVN.h
+@@ -368,6 +368,7 @@ class GVNPass : public OptionalPassInfoMixin<GVNPass> {
+     Other = 0, // Unknown value.
+     Def,       // Exactly overlapping locations.
+     Clobber,   // Reaching value superset of needed bits.
++    Select,    // Reaching value is a select of two reaching addresses.
+   };
+ 
+   // Describe a memory location value, such that there exists a path to a point
+@@ -378,6 +379,11 @@ class GVNPass : public OptionalPassInfoMixin<GVNPass> {
+     const Value *Addr;
+     Instruction *Inst;
+     int32_t Offset;
++    // For DepKind::Select only: the condition and the two addresses referenced
++    // by the "true" and "false" side of the select-dependent load.
++    const Value *SelCond = nullptr;
++    const Value *SelTrueAddr = nullptr;
++    const Value *SelFalseAddr = nullptr;
+ 
+     static ReachingMemVal getUnknown(BasicBlock *BB, const Value *Addr,
+                                      Instruction *Inst = nullptr) {
+@@ -392,6 +398,13 @@ class GVNPass : public OptionalPassInfoMixin<GVNPass> {
+                                      int32_t Offset = -1) {
+       return {DepKind::Clobber, Inst->getParent(), Addr, Inst, Offset};
+     }
++
++    static ReachingMemVal getSelect(BasicBlock *BB, const Value *Cond,
++                                    const Value *TrueAddr,
++                                    const Value *FalseAddr) {
++      return {DepKind::Select, BB,       nullptr, nullptr, -1, Cond,
++              TrueAddr,        FalseAddr};
++    }
+   };
+ 
+   struct DependencyBlockInfo {
+@@ -444,6 +457,14 @@ class GVNPass : public OptionalPassInfoMixin<GVNPass> {
+   AnalyzeLoadAvailability(LoadInst *Load, const ReachingMemVal &Dep,
+                           Value *Address);
+ 
++  /// Given a select-dependency for the load (the load address is a select of
++  /// \p TrueAddr and \p FalseAddr guarded by \p Cond), determine whether a
++  /// value is available by finding dominating values for both addresses.  If
++  /// so, the load can be rematerialized as a select of those two values.
++  std::optional<gvn::AvailableValue>
++  AnalyzeSelectAvailability(LoadInst *Load, Value *Cond, Value *TrueAddr,
++                            Value *FalseAddr, Instruction *From);
++
+   /// Given a list of non-local dependencies, determine if a value is
+   /// available for the load in each specified block.  If it is, add it to
+   /// ValuesPerBlock.  If not, add it to UnavailableBlocks.
+diff --git a/llvm/lib/Analysis/MemoryDependenceAnalysis.cpp b/llvm/lib/Analysis/MemoryDependenceAnalysis.cpp
+index 1ef762bcf7007..d081ebc7871f3 100644
+--- a/llvm/lib/Analysis/MemoryDependenceAnalysis.cpp
++++ b/llvm/lib/Analysis/MemoryDependenceAnalysis.cpp
+@@ -1354,8 +1354,26 @@ bool MemoryDependenceResults::getNonLocalPointerDepFromBB(
+       // predecessor, then we have to assume that the pointer is clobbered in
+       // that predecessor.  We can still do PRE of the load, which would insert
+       // a computation of the pointer in this predecessor.
+-      if (!PredPtrVal)
++      if (!PredPtrVal) {
++        // If translation failed but the (partially) translated address
++        // expression depends on a select instruction, try to translate both
++        // sides of that select.  The select condition is recovered from the
++        // failed `PredPointer` (the phi has already been resolved to the
++        // select there), but the two sides must be translated from the
++        // original, untranslated `Pointer`.
++        if (Value *Cond = PredPointer.getSelectCondition()) {
++          SelectAddr::SelectAddrs SelAddrs =
++              PHITransAddr(Pointer).translateValue(BB, Pred, &DT, Cond);
++          if (SelAddrs.first && SelAddrs.second) {
++            Result.push_back(NonLocalDepResult(Pred, MemDepResult::getSelect(),
++                                               SelectAddr(Cond, SelAddrs)));
++            NonLocalPointerInfo &NLPI = NonLocalPointerDeps[CacheKey];
++            NLPI.Pair = BBSkipFirstBlockPair();
++            continue;
++          }
++        }
+         CanTranslate = false;
++      }
+ 
+       // FIXME: it is entirely possible that PHI translating will end up with
+       // the same value.  Consider PHI translating something like:
+diff --git a/llvm/lib/Analysis/PHITransAddr.cpp b/llvm/lib/Analysis/PHITransAddr.cpp
+index 276708c2ebf77..97d53755de130 100644
+--- a/llvm/lib/Analysis/PHITransAddr.cpp
++++ b/llvm/lib/Analysis/PHITransAddr.cpp
+@@ -129,7 +129,8 @@ static void RemoveInstInputs(Value *V,
+ 
+ Value *PHITransAddr::translateSubExpr(Value *V, BasicBlock *CurBB,
+                                       BasicBlock *PredBB,
+-                                      const DominatorTree *DT) {
++                                      const DominatorTree *DT, Value *Cond,
++                                      bool CondVal) {
+   // If this is a non-instruction value, it can't require PHI translation.
+   Instruction *Inst = dyn_cast<Instruction>(V);
+   if (!Inst) return V;
+@@ -152,8 +153,19 @@ Value *PHITransAddr::translateSubExpr(Value *V, BasicBlock *CurBB,
+     InstInputs.erase(find(InstInputs, Inst));
+ 
+     // If this is a PHI, go ahead and translate it.
+-    if (PHINode *PN = dyn_cast<PHINode>(Inst))
+-      return addAsInput(PN->getIncomingValueForBlock(PredBB));
++    if (PHINode *PN = dyn_cast<PHINode>(Inst)) {
++      Value *Incoming = PN->getIncomingValueForBlock(PredBB);
++      // If the incoming value on this edge is a select on the condition we are
++      // resolving, fold it to the requested side. This is what lets us obtain
++      // the two distinct addresses referenced by a select-dependent load along
++      // a backedge (e.g. min/max idioms).
++      if (Cond)
++        if (auto *SI = dyn_cast<SelectInst>(Incoming))
++          if (SI->getCondition() == Cond)
++            return addAsInput(CondVal ? SI->getTrueValue()
++                                      : SI->getFalseValue());
++      return addAsInput(Incoming);
++    }
+ 
+     // If this is a non-phi value, and it is analyzable, we can incorporate it
+     // into the expression by making all instruction operands be inputs.
+@@ -171,7 +183,8 @@ Value *PHITransAddr::translateSubExpr(Value *V, BasicBlock *CurBB,
+   // operands need to be phi translated, and if so, reconstruct it.
+ 
+   if (CastInst *Cast = dyn_cast<CastInst>(Inst)) {
+-    Value *PHIIn = translateSubExpr(Cast->getOperand(0), CurBB, PredBB, DT);
++    Value *PHIIn =
++        translateSubExpr(Cast->getOperand(0), CurBB, PredBB, DT, Cond, CondVal);
+     if (!PHIIn) return nullptr;
+     if (PHIIn == Cast->getOperand(0))
+       return Cast;
+@@ -202,7 +215,7 @@ Value *PHITransAddr::translateSubExpr(Value *V, BasicBlock *CurBB,
+     SmallVector<Value*, 8> GEPOps;
+     bool AnyChanged = false;
+     for (Value *Op : GEP->operands()) {
+-      Value *GEPOp = translateSubExpr(Op, CurBB, PredBB, DT);
++      Value *GEPOp = translateSubExpr(Op, CurBB, PredBB, DT, Cond, CondVal);
+       if (!GEPOp) return nullptr;
+ 
+       AnyChanged |= GEPOp != Op;
+@@ -249,7 +262,8 @@ Value *PHITransAddr::translateSubExpr(Value *V, BasicBlock *CurBB,
+     bool isNSW = cast<BinaryOperator>(Inst)->hasNoSignedWrap();
+     bool isNUW = cast<BinaryOperator>(Inst)->hasNoUnsignedWrap();
+ 
+-    Value *LHS = translateSubExpr(Inst->getOperand(0), CurBB, PredBB, DT);
++    Value *LHS =
++        translateSubExpr(Inst->getOperand(0), CurBB, PredBB, DT, Cond, CondVal);
+     if (!LHS) return nullptr;
+ 
+     // If the PHI translated LHS is an add of a constant, fold the immediates.
+@@ -319,6 +333,32 @@ Value *PHITransAddr::translateValue(BasicBlock *CurBB, BasicBlock *PredBB,
+   return Addr;
+ }
+ 
++SelectAddr::SelectAddrs PHITransAddr::translateValue(BasicBlock *CurBB,
++                                                     BasicBlock *PredBB,
++                                                     const DominatorTree *DT,
++                                                     Value *Cond) {
++  assert(Cond && "expected a non-null select condition");
++  assert(verify() && "Invalid PHITransAddr!");
++
++  auto TranslateSide = [&](bool CondVal) -> Value * {
++    // Work on a copy so that the original address state is preserved and the
++    // other side can be translated independently.
++    PHITransAddr Tmp(*this);
++    if (DT && DT->isReachableFromEntry(PredBB))
++      return Tmp.translateSubExpr(Tmp.Addr, CurBB, PredBB, DT, Cond, CondVal);
++    return nullptr;
++  };
++
++  return {TranslateSide(/*CondVal=*/true), TranslateSide(/*CondVal=*/false)};
++}
++
++Value *PHITransAddr::getSelectCondition() const {
++  for (Instruction *I : InstInputs)
++    if (auto *SI = dyn_cast<SelectInst>(I))
++      return SI->getCondition();
++  return nullptr;
++}
++
+ /// PHITranslateWithInsertion - PHI translate this value into the specified
+ /// predecessor block, inserting a computation of the value if it is
+ /// unavailable.
+diff --git a/llvm/lib/Transforms/Scalar/GVN.cpp b/llvm/lib/Transforms/Scalar/GVN.cpp
+index a0cf879c4eee5..a619dcc588350 100644
+--- a/llvm/lib/Transforms/Scalar/GVN.cpp
++++ b/llvm/lib/Transforms/Scalar/GVN.cpp
+@@ -246,9 +246,9 @@ struct llvm::gvn::AvailableValue {
+     return Res;
+   }
+ 
+-  static AvailableValue getSelect(SelectInst *Sel, Value *V1, Value *V2) {
++  static AvailableValue getSelect(Value *Cond, Value *V1, Value *V2) {
+     AvailableValue Res;
+-    Res.Val = Sel;
++    Res.Val = Cond;
+     Res.Kind = ValType::SelectVal;
+     Res.Offset = 0;
+     Res.V1 = V1;
+@@ -277,9 +277,9 @@ struct llvm::gvn::AvailableValue {
+     return cast<MemIntrinsic>(Val);
+   }
+ 
+-  SelectInst *getSelectValue() const {
++  Value *getSelectCondition() const {
+     assert(isSelectValue() && "Wrong accessor");
+-    return cast<SelectInst>(Val);
++    return Val;
+   }
+ 
+   /// Emit code at the specified insertion point to adjust the value defined
+@@ -312,11 +312,6 @@ struct llvm::gvn::AvailableValueInBlock {
+     return get(BB, AvailableValue::getUndef());
+   }
+ 
+-  static AvailableValueInBlock getSelect(BasicBlock *BB, SelectInst *Sel,
+-                                         Value *V1, Value *V2) {
+-    return get(BB, AvailableValue::getSelect(Sel, V1, V2));
+-  }
+-
+   /// Emit code at the end of this block to adjust the value defined here to
+   /// the specified type. This handles various coercion cases.
+   Value *MaterializeAdjustedValue(LoadInst *Load) const {
+@@ -1189,10 +1184,9 @@ Value *AvailableValue::MaterializeAdjustedValue(LoadInst *Load,
+                       << "\n\n\n");
+   } else if (isSelectValue()) {
+     // Introduce a new value select for a load from an eligible pointer select.
+-    SelectInst *Sel = getSelectValue();
++    Value *Cond = getSelectCondition();
+     assert(V1 && V2 && "both value operands of the select must be present");
+-    Res =
+-        SelectInst::Create(Sel->getCondition(), V1, V2, "", Sel->getIterator());
++    Res = SelectInst::Create(Cond, V1, V2, "", InsertPt->getIterator());
+     // We use the DebugLoc from the original load here, as this instruction
+     // materializes the value that would previously have been loaded.
+     cast<SelectInst>(Res)->setDebugLoc(Load->getDebugLoc());
+@@ -1323,6 +1317,28 @@ static Value *findDominatingValue(const MemoryLocation &Loc, Type *LoadTy,
+   return nullptr;
+ }
+ 
++std::optional<AvailableValue>
++GVNPass::AnalyzeSelectAvailability(LoadInst *Load, Value *Cond, Value *TrueAddr,
++                                   Value *FalseAddr, Instruction *From) {
++  assert(TrueAddr->getType() == Load->getPointerOperandType() &&
++         "Invalid address type of true side of select dependency");
++  assert(FalseAddr->getType() == Load->getPointerOperandType() &&
++         "Invalid address type of false side of select dependency");
++  // We can convert a load through a select address into a select of the two
++  // loaded values only if both sides have a dominating, non-clobbered value of
++  // the right type in the extended basic block ending at From.
++  auto Loc = MemoryLocation::get(Load);
++  Value *V1 = findDominatingValue(Loc.getWithNewPtr(TrueAddr), Load->getType(),
++                                  From, getAliasAnalysis());
++  if (!V1)
++    return std::nullopt;
++  Value *V2 = findDominatingValue(Loc.getWithNewPtr(FalseAddr), Load->getType(),
++                                  From, getAliasAnalysis());
++  if (!V2)
++    return std::nullopt;
++  return AvailableValue::getSelect(Cond, V1, V2);
++}
++
+ std::optional<AvailableValue>
+ GVNPass::AnalyzeLoadAvailability(LoadInst *Load, const ReachingMemVal &Dep,
+                                  Value *Address) {
+@@ -1451,18 +1467,11 @@ GVNPass::AnalyzeLoadAvailability(LoadInst *Load, const ReachingMemVal &Dep,
+   // loads and DepInst that may clobber the loads.
+   if (auto *Sel = dyn_cast<SelectInst>(DepInst)) {
+     assert(Sel->getType() == Load->getPointerOperandType());
+-    auto Loc = MemoryLocation::get(Load);
+-    Value *V1 =
+-        findDominatingValue(Loc.getWithNewPtr(Sel->getTrueValue()),
+-                            Load->getType(), DepInst, getAliasAnalysis());
+-    if (!V1)
+-      return std::nullopt;
+-    Value *V2 =
+-        findDominatingValue(Loc.getWithNewPtr(Sel->getFalseValue()),
+-                            Load->getType(), DepInst, getAliasAnalysis());
+-    if (!V2)
+-      return std::nullopt;
+-    return AvailableValue::getSelect(Sel, V1, V2);
++    if (auto AV = AnalyzeSelectAvailability(Load, Sel->getCondition(),
++                                            Sel->getTrueValue(),
++                                            Sel->getFalseValue(), DepInst))
++      return AV;
++    return std::nullopt;
+   }
+ 
+   // Unknown def - must be conservative.
+@@ -1496,6 +1505,22 @@ void GVNPass::AnalyzeLoadAvailability(LoadInst *Load,
+       continue;
+     }
+ 
++    // The load address is a select in this block: try to rematerialize the
++    // load as a select of the two reaching values (one per side).  The values
++    // are searched for at the end of DepBB.
++    if (Dep.Kind == DepKind::Select) {
++      if (auto AV = AnalyzeSelectAvailability(
++              Load, const_cast<Value *>(Dep.SelCond),
++              const_cast<Value *>(Dep.SelTrueAddr),
++              const_cast<Value *>(Dep.SelFalseAddr), DepBB->getTerminator())) {
++        ValuesPerBlock.push_back(
++            AvailableValueInBlock::get(DepBB, std::move(*AV)));
++      } else {
++        UnavailableBlocks.push_back(DepBB);
++      }
++      continue;
++    }
++
+     // The address being loaded in this non-local block may not be the same as
+     // the pointer operand of the load if PHI translation occurs.  Make sure
+     // to consider the right address.
+@@ -2039,9 +2064,16 @@ bool GVNPass::processNonLocalLoad(LoadInst *Load) {
+ 
+   for (const NonLocalDepResult &Dep : Deps) {
+     const auto &R = Dep.getResult();
+-    Value *Address = Dep.getAddress();
++    SelectAddr SelAddr = Dep.getAddress();
+     BasicBlock *BB = Dep.getBB();
+     Instruction *Inst = R.getInst();
++    if (R.isSelect()) {
++      auto [Cond, Addrs] = SelAddr.getSelectCondAndAddrs();
++      MemVals.emplace_back(
++          ReachingMemVal::getSelect(BB, Cond, Addrs.first, Addrs.second));
++      continue;
++    }
++    Value *Address = SelAddr.getAddr();
+     if (R.isClobber())
+       MemVals.emplace_back(ReachingMemVal::getClobber(Address, Inst));
+     else if (R.isDef())
+diff --git a/llvm/test/Transforms/GVN/PRE/pre-load-through-select.ll b/llvm/test/Transforms/GVN/PRE/pre-load-through-select.ll
+index 8bdddbacdbcca..5d2ad2d97e681 100644
+--- a/llvm/test/Transforms/GVN/PRE/pre-load-through-select.ll
++++ b/llvm/test/Transforms/GVN/PRE/pre-load-through-select.ll
+@@ -9,8 +9,8 @@ define i32 @test_pointer_phi_select_simp_1(ptr %a, ptr %b, i1 %cond)  {
+ ; CHECK-NEXT:    [[L_1:%.*]] = load i32, ptr [[A:%.*]], align 4
+ ; CHECK-NEXT:    [[L_2:%.*]] = load i32, ptr [[B:%.*]], align 4
+ ; CHECK-NEXT:    [[CMP_I_I_I:%.*]] = icmp ult i32 [[L_1]], [[L_2]]
+-; CHECK-NEXT:    [[TMP0:%.*]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    [[MIN_SELECT:%.*]] = select i1 [[CMP_I_I_I]], ptr [[A]], ptr [[B]]
++; CHECK-NEXT:    [[TMP0:%.*]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    br label [[EXIT:%.*]]
+ ; CHECK:       else:
+ ; CHECK-NEXT:    [[RES_2_PRE:%.*]] = load i32, ptr [[A]], align 4
+@@ -48,8 +48,8 @@ define i32 @test_pointer_phi_select_simp_non_local(ptr %a, ptr %b, ptr %c)  {
+ ; CHECK:       then:
+ ; CHECK-NEXT:    [[L_2:%.*]] = load i32, ptr [[B:%.*]], align 4
+ ; CHECK-NEXT:    [[CMP_I_I_I:%.*]] = icmp ult i32 [[L_1]], [[L_2]]
+-; CHECK-NEXT:    [[TMP0:%.*]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    [[MIN_SELECT:%.*]] = select i1 [[CMP_I_I_I]], ptr [[A]], ptr [[B]]
++; CHECK-NEXT:    [[TMP0:%.*]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    br label [[EXIT:%.*]]
+ ; CHECK:       else:
+ ; CHECK-NEXT:    [[RES_2_PRE:%.*]] = load i32, ptr [[C:%.*]], align 4
+@@ -200,8 +200,8 @@ define i32 @test_pointer_phi_select_simp_store_noclobber(ptr %a, ptr %b, ptr noa
+ ; CHECK-NEXT:    [[L_2:%.*]] = load i32, ptr [[B:%.*]], align 4
+ ; CHECK-NEXT:    store i32 99, ptr [[C:%.*]], align 4
+ ; CHECK-NEXT:    [[CMP_I_I_I:%.*]] = icmp ult i32 [[L_1]], [[L_2]]
+-; CHECK-NEXT:    [[TMP0:%.*]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    [[MIN_SELECT:%.*]] = select i1 [[CMP_I_I_I]], ptr [[A]], ptr [[B]]
++; CHECK-NEXT:    [[TMP0:%.*]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    br label [[EXIT:%.*]]
+ ; CHECK:       else:
+ ; CHECK-NEXT:    [[RES_2_PRE:%.*]] = load i32, ptr [[A]], align 4
+@@ -316,8 +316,8 @@ define i32 @test_pointer_phi_select_simp_store_clobber_3(ptr %a, ptr %b, ptr %c,
+ ; CHECK-NEXT:    [[L_1:%.*]] = load i32, ptr [[A:%.*]], align 4
+ ; CHECK-NEXT:    [[L_2:%.*]] = load i32, ptr [[B:%.*]], align 4
+ ; CHECK-NEXT:    [[CMP_I_I_I:%.*]] = icmp ult i32 [[L_1]], [[L_2]]
+-; CHECK-NEXT:    [[TMP0:%.*]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    [[MIN_SELECT:%.*]] = select i1 [[CMP_I_I_I]], ptr [[A]], ptr [[B]]
++; CHECK-NEXT:    [[TMP0:%.*]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    br label [[EXIT:%.*]]
+ ; CHECK:       else:
+ ; CHECK-NEXT:    [[RES_2_PRE:%.*]] = load i32, ptr [[A]], align 4
+@@ -609,8 +609,8 @@ define i32 @test_pointer_phi_select_simp_store_clobber_10(ptr %a, ptr %b, i1 %co
+ ; CHECK-NEXT:    store i32 99, ptr [[A]], align 4
+ ; CHECK-NEXT:    [[L_2:%.*]] = load i32, ptr [[B:%.*]], align 4
+ ; CHECK-NEXT:    [[CMP_I_I_I:%.*]] = icmp ult i32 [[L_1]], [[L_2]]
+-; CHECK-NEXT:    [[TMP0:%.*]] = select i1 [[CMP_I_I_I]], i32 99, i32 [[L_2]]
+ ; CHECK-NEXT:    [[MIN_SELECT:%.*]] = select i1 [[CMP_I_I_I]], ptr [[A]], ptr [[B]]
++; CHECK-NEXT:    [[TMP0:%.*]] = select i1 [[CMP_I_I_I]], i32 99, i32 [[L_2]]
+ ; CHECK-NEXT:    br label [[EXIT:%.*]]
+ ; CHECK:       else:
+ ; CHECK-NEXT:    [[RES_2_PRE:%.*]] = load i32, ptr [[A]], align 4
+@@ -736,8 +736,8 @@ define i32 @test_pointer_phi_select_single_block_store(ptr %a, ptr %b)  {
+ ; CHECK-NEXT:    [[L_1:%.*]] = load i32, ptr [[A:%.*]], align 4
+ ; CHECK-NEXT:    [[L_2:%.*]] = load i32, ptr [[B:%.*]], align 4
+ ; CHECK-NEXT:    [[CMP_I_I_I:%.*]] = icmp ult i32 [[L_1]], [[L_2]]
+-; CHECK-NEXT:    [[TMP0:%.*]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    [[MIN_SELECT:%.*]] = select i1 [[CMP_I_I_I]], ptr [[A]], ptr [[B]]
++; CHECK-NEXT:    [[TMP0:%.*]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    ret i32 [[TMP0]]
+ ;
+ entry:
+@@ -818,8 +818,8 @@ define i32 @test_pointer_phi_select_single_block_store_after(ptr %a, ptr %b, ptr
+ ; CHECK-NEXT:    [[L_1:%.*]] = load i32, ptr [[A:%.*]], align 4
+ ; CHECK-NEXT:    [[L_2:%.*]] = load i32, ptr [[B:%.*]], align 4
+ ; CHECK-NEXT:    [[CMP_I_I_I:%.*]] = icmp ult i32 [[L_1]], [[L_2]]
+-; CHECK-NEXT:    [[TMP0:%.*]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    [[MIN_SELECT:%.*]] = select i1 [[CMP_I_I_I]], ptr [[A]], ptr [[B]]
++; CHECK-NEXT:    [[TMP0:%.*]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    store i32 99, ptr [[C:%.*]], align 4
+ ; CHECK-NEXT:    ret i32 [[TMP0]]
+ ;
+@@ -838,9 +838,14 @@ define i32 @test_phi_select_index_non_local(ptr %A, i32 %N, i32 %i)  {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i32 [[I:%.*]], [[N:%.*]]
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[LAND_LHS_TRUE:%.*]], label [[IF_END:%.*]]
++; CHECK:       entry.if.end_crit_edge:
++; CHECK-NEXT:    [[IDXPROM5_PHI_TRANS_INSERT:%.*]] = sext i32 [[I]] to i64
++; CHECK-NEXT:    [[ARRAYIDX6_PHI_TRANS_INSERT:%.*]] = getelementptr inbounds i32, ptr [[A:%.*]], i64 [[IDXPROM5_PHI_TRANS_INSERT]]
++; CHECK-NEXT:    [[DOTPRE:%.*]] = load i32, ptr [[ARRAYIDX6_PHI_TRANS_INSERT]], align 4
++; CHECK-NEXT:    br label [[IF_END1:%.*]]
+ ; CHECK:       land.lhs.true:
+ ; CHECK-NEXT:    [[IDXPROM:%.*]] = sext i32 [[I]] to i64
+-; CHECK-NEXT:    [[ARRAYIDX:%.*]] = getelementptr inbounds i32, ptr [[A:%.*]], i64 [[IDXPROM]]
++; CHECK-NEXT:    [[ARRAYIDX:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 [[IDXPROM]]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = load i32, ptr [[ARRAYIDX]], align 4
+ ; CHECK-NEXT:    [[ADD:%.*]] = add nsw i32 [[I]], 1
+ ; CHECK-NEXT:    [[IDXPROM1:%.*]] = sext i32 [[ADD]] to i64
+@@ -848,12 +853,14 @@ define i32 @test_phi_select_index_non_local(ptr %A, i32 %N, i32 %i)  {
+ ; CHECK-NEXT:    [[TMP1:%.*]] = load i32, ptr [[ARRAYIDX2]], align 4
+ ; CHECK-NEXT:    [[CMP3:%.*]] = icmp slt i32 [[TMP0]], [[TMP1]]
+ ; CHECK-NEXT:    [[SPEC_SELECT:%.*]] = select i1 [[CMP3]], i32 [[ADD]], i32 [[I]]
+-; CHECK-NEXT:    br label [[IF_END]]
++; CHECK-NEXT:    [[TMP3:%.*]] = select i1 [[CMP3]], i32 [[TMP1]], i32 [[TMP0]]
++; CHECK-NEXT:    [[DOTPRE1:%.*]] = sext i32 [[SPEC_SELECT]] to i64
++; CHECK-NEXT:    br label [[IF_END1]]
+ ; CHECK:       if.end:
+-; CHECK-NEXT:    [[I_ADDR_0:%.*]] = phi i32 [ [[I]], [[ENTRY:%.*]] ], [ [[SPEC_SELECT]], [[LAND_LHS_TRUE]] ]
+-; CHECK-NEXT:    [[IDXPROM5:%.*]] = sext i32 [[I_ADDR_0]] to i64
++; CHECK-NEXT:    [[IDXPROM5:%.*]] = phi i64 [ [[IDXPROM5_PHI_TRANS_INSERT]], [[IF_END]] ], [ [[DOTPRE1]], [[LAND_LHS_TRUE]] ]
++; CHECK-NEXT:    [[TMP2:%.*]] = phi i32 [ [[DOTPRE]], [[IF_END]] ], [ [[TMP3]], [[LAND_LHS_TRUE]] ]
++; CHECK-NEXT:    [[I_ADDR_0:%.*]] = phi i32 [ [[I]], [[IF_END]] ], [ [[SPEC_SELECT]], [[LAND_LHS_TRUE]] ]
+ ; CHECK-NEXT:    [[ARRAYIDX6:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 [[IDXPROM5]]
+-; CHECK-NEXT:    [[TMP2:%.*]] = load i32, ptr [[ARRAYIDX6]], align 4
+ ; CHECK-NEXT:    ret i32 [[TMP2]]
+ ;
+ entry:
+@@ -886,6 +893,61 @@ define i32 @test_phi_select_index_loop(ptr %A, i32 %N)  {
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp sgt i32 [[N:%.*]], 1
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[FOR_BODY_PREHEADER:%.*]], label [[FOR_COND_CLEANUP:%.*]]
+ ; CHECK:       for.body.preheader:
++; CHECK-NEXT:    [[DOTPRE:%.*]] = load i32, ptr [[A:%.*]], align 4
++; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
++; CHECK:       for.body:
++; CHECK-NEXT:    [[TMP1:%.*]] = phi i32 [ [[TMP2:%.*]], [[FOR_BODY]] ], [ [[DOTPRE]], [[FOR_BODY_PREHEADER]] ]
++; CHECK-NEXT:    [[IDX:%.*]] = phi i32 [ [[IDX_NEXT:%.*]], [[FOR_BODY]] ], [ 1, [[FOR_BODY_PREHEADER]] ]
++; CHECK-NEXT:    [[RES:%.*]] = phi i32 [ [[SPEC_SELECT:%.*]], [[FOR_BODY]] ], [ 0, [[FOR_BODY_PREHEADER]] ]
++; CHECK-NEXT:    [[IDXPROM:%.*]] = sext i32 [[IDX]] to i64
++; CHECK-NEXT:    [[ARRAYIDX:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 [[IDXPROM]]
++; CHECK-NEXT:    [[TMP0:%.*]] = load i32, ptr [[ARRAYIDX]], align 4
++; CHECK-NEXT:    [[IDXPROM1:%.*]] = sext i32 [[RES]] to i64
++; CHECK-NEXT:    [[ARRAYIDX1:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 [[IDXPROM1]]
++; CHECK-NEXT:    [[CMP1:%.*]] = icmp slt i32 [[TMP0]], [[TMP1]]
++; CHECK-NEXT:    [[SPEC_SELECT]] = select i1 [[CMP1]], i32 [[IDX]], i32 [[RES]]
++; CHECK-NEXT:    [[IDX_NEXT]] = add nsw i32 [[IDX]], 1
++; CHECK-NEXT:    [[EXITCOND_NOT:%.*]] = icmp eq i32 [[IDX_NEXT]], [[N]]
++; CHECK-NEXT:    [[TMP2]] = select i1 [[CMP1]], i32 [[TMP0]], i32 [[TMP1]]
++; CHECK-NEXT:    br i1 [[EXITCOND_NOT]], label [[FOR_COND_CLEANUP_LOOPEXIT:%.*]], label [[FOR_BODY]]
++; CHECK:       for.cond.cleanup.loopexit:
++; CHECK-NEXT:    br label [[FOR_COND_CLEANUP]]
++; CHECK:       for.cond.cleanup:
++; CHECK-NEXT:    [[RES_0_LCSSA:%.*]] = phi i32 [ 0, [[ENTRY:%.*]] ], [ [[SPEC_SELECT]], [[FOR_COND_CLEANUP_LOOPEXIT]] ]
++; CHECK-NEXT:    ret i32 [[RES_0_LCSSA]]
++;
++entry:
++  %cmp = icmp sgt i32 %N, 1
++  br i1 %cmp, label %for.body, label %for.cond.cleanup
++
++for.body:
++  %idx = phi i32 [ 1, %entry ], [ %idx.next, %for.body ]
++  %res = phi i32 [ 0, %entry ], [ %spec.select, %for.body ]
++  %idxprom = sext i32 %idx to i64
++  %arrayidx = getelementptr inbounds i32, ptr %A, i64 %idxprom
++  %0 = load i32, ptr %arrayidx, align 4
++  %idxprom1 = sext i32 %res to i64
++  %arrayidx1 = getelementptr inbounds i32, ptr %A, i64 %idxprom1
++  %1 = load i32, ptr %arrayidx1, align 4
++  %cmp1 = icmp slt i32 %0, %1
++  %spec.select = select i1 %cmp1, i32 %idx, i32 %res
++  %idx.next = add nsw i32 %idx, 1
++  %exitcond.not = icmp eq i32 %idx.next, %N
++  br i1 %exitcond.not, label %for.cond.cleanup, label %for.body
++
++  for.cond.cleanup:
++  %res.0.lcssa = phi i32 [ 0, %entry ], [ %spec.select, %for.body ]
++  ret i32 %res.0.lcssa
++}
++
++; Negative test: a store that may clobber the loaded location sits between the
++; two loads, so the load through the select index must NOT be eliminated.
++define i32 @test_phi_select_index_loop_clobber(ptr %A, i32 %N)  {
++; CHECK-LABEL: @test_phi_select_index_loop_clobber(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[CMP:%.*]] = icmp sgt i32 [[N:%.*]], 1
++; CHECK-NEXT:    br i1 [[CMP]], label [[FOR_BODY_PREHEADER:%.*]], label [[FOR_COND_CLEANUP:%.*]]
++; CHECK:       for.body.preheader:
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[IDX:%.*]] = phi i32 [ [[IDX_NEXT:%.*]], [[FOR_BODY]] ], [ 1, [[FOR_BODY_PREHEADER]] ]
+@@ -893,6 +955,7 @@ define i32 @test_phi_select_index_loop(ptr %A, i32 %N)  {
+ ; CHECK-NEXT:    [[IDXPROM:%.*]] = sext i32 [[IDX]] to i64
+ ; CHECK-NEXT:    [[ARRAYIDX:%.*]] = getelementptr inbounds i32, ptr [[A:%.*]], i64 [[IDXPROM]]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = load i32, ptr [[ARRAYIDX]], align 4
++; CHECK-NEXT:    store i32 7, ptr [[A]], align 4
+ ; CHECK-NEXT:    [[IDXPROM1:%.*]] = sext i32 [[RES]] to i64
+ ; CHECK-NEXT:    [[ARRAYIDX1:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 [[IDXPROM1]]
+ ; CHECK-NEXT:    [[TMP1:%.*]] = load i32, ptr [[ARRAYIDX1]], align 4
+@@ -917,6 +980,7 @@ for.body:
+   %idxprom = sext i32 %idx to i64
+   %arrayidx = getelementptr inbounds i32, ptr %A, i64 %idxprom
+   %0 = load i32, ptr %arrayidx, align 4
++  store i32 7, ptr %A, align 4
+   %idxprom1 = sext i32 %res to i64
+   %arrayidx1 = getelementptr inbounds i32, ptr %A, i64 %idxprom1
+   %1 = load i32, ptr %arrayidx1, align 4
+diff --git a/llvm/test/Transforms/GVN/PRE/pre-loop-load-through-select.ll b/llvm/test/Transforms/GVN/PRE/pre-loop-load-through-select.ll
+index eb87d2d910deb..4a5f9e21a4610 100644
+--- a/llvm/test/Transforms/GVN/PRE/pre-loop-load-through-select.ll
++++ b/llvm/test/Transforms/GVN/PRE/pre-loop-load-through-select.ll
+@@ -13,10 +13,10 @@ define i32 @test_pointer_phi_select_same_object(ptr %ptr, ptr %end)  {
+ ; CHECK-NEXT:    [[MIN_PTR:%.*]] = phi ptr [ [[PTR]], [[ENTRY]] ], [ [[MIN_SELECT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[L_1:%.*]] = load i32, ptr [[PTR_IV]], align 4
+ ; CHECK-NEXT:    [[CMP_I_I_I:%.*]] = icmp ult i32 [[L_1]], [[L_2]]
+-; CHECK-NEXT:    [[TMP0]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    [[MIN_SELECT]] = select i1 [[CMP_I_I_I]], ptr [[PTR_IV]], ptr [[MIN_PTR]]
+ ; CHECK-NEXT:    [[PTR_IV_NEXT]] = getelementptr inbounds i32, ptr [[PTR_IV]], i64 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq ptr [[PTR_IV_NEXT]], [[END:%.*]]
++; CHECK-NEXT:    [[TMP0]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    br i1 [[EC]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    [[RES:%.*]] = load i32, ptr [[MIN_SELECT]], align 4
+@@ -54,10 +54,10 @@ define i32 @test_pointer_phi_select_same_object_lcssa(ptr %ptr, ptr %end)  {
+ ; CHECK-NEXT:    [[MIN_PTR:%.*]] = phi ptr [ [[PTR]], [[ENTRY]] ], [ [[MIN_SELECT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[L_1:%.*]] = load i32, ptr [[PTR_IV]], align 4
+ ; CHECK-NEXT:    [[CMP_I_I_I:%.*]] = icmp ult i32 [[L_1]], [[L_2]]
+-; CHECK-NEXT:    [[TMP0]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    [[MIN_SELECT]] = select i1 [[CMP_I_I_I]], ptr [[PTR_IV]], ptr [[MIN_PTR]]
+ ; CHECK-NEXT:    [[PTR_IV_NEXT]] = getelementptr inbounds i32, ptr [[PTR_IV]], i64 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq ptr [[PTR_IV_NEXT]], [[END:%.*]]
++; CHECK-NEXT:    [[TMP0]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    br i1 [[EC]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    [[RES:%.*]] = load i32, ptr [[MIN_SELECT]], align 4
+@@ -95,10 +95,10 @@ define i32 @test_pointer_phi_select_different_objects(ptr %A, ptr %B, ptr %end)
+ ; CHECK-NEXT:    [[MIN_PTR:%.*]] = phi ptr [ [[B]], [[ENTRY]] ], [ [[MIN_SELECT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[L_1:%.*]] = load i32, ptr [[PTR_IV]], align 4
+ ; CHECK-NEXT:    [[CMP_I_I_I:%.*]] = icmp ult i32 [[L_1]], [[L_2]]
+-; CHECK-NEXT:    [[TMP0]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    [[MIN_SELECT]] = select i1 [[CMP_I_I_I]], ptr [[PTR_IV]], ptr [[MIN_PTR]]
+ ; CHECK-NEXT:    [[PTR_IV_NEXT]] = getelementptr inbounds i32, ptr [[PTR_IV]], i64 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq ptr [[PTR_IV_NEXT]], [[END:%.*]]
++; CHECK-NEXT:    [[TMP0]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    br i1 [[EC]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    [[RES:%.*]] = load i32, ptr [[MIN_SELECT]], align 4
+@@ -135,10 +135,10 @@ define i32 @test_pointer_phi_select_same_object_multiple_loads_1(ptr %ptr, ptr %
+ ; CHECK-NEXT:    [[MIN_PTR:%.*]] = phi ptr [ [[PTR]], [[ENTRY]] ], [ [[MIN_SELECT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[L_1:%.*]] = load i32, ptr [[PTR_IV]], align 4
+ ; CHECK-NEXT:    [[CMP_I_I_I:%.*]] = icmp ult i32 [[L_1]], [[L_2]]
+-; CHECK-NEXT:    [[TMP0]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    [[MIN_SELECT]] = select i1 [[CMP_I_I_I]], ptr [[PTR_IV]], ptr [[MIN_PTR]]
+ ; CHECK-NEXT:    [[PTR_IV_NEXT]] = getelementptr inbounds i32, ptr [[PTR_IV]], i64 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq ptr [[PTR_IV_NEXT]], [[END:%.*]]
++; CHECK-NEXT:    [[TMP0]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    br i1 [[EC]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    [[RES:%.*]] = load i32, ptr [[MIN_SELECT]], align 4
+@@ -177,10 +177,10 @@ define i32 @test_pointer_phi_select_same_object_multiple_loads_2(ptr %ptr, ptr %
+ ; CHECK-NEXT:    [[MIN_PTR:%.*]] = phi ptr [ [[PTR]], [[ENTRY]] ], [ [[MIN_SELECT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[L_1:%.*]] = load i32, ptr [[PTR_IV]], align 4
+ ; CHECK-NEXT:    [[CMP_I_I_I:%.*]] = icmp ult i32 [[L_1]], [[L_2]]
+-; CHECK-NEXT:    [[TMP0]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    [[MIN_SELECT]] = select i1 [[CMP_I_I_I]], ptr [[PTR_IV]], ptr [[MIN_PTR]]
+ ; CHECK-NEXT:    [[PTR_IV_NEXT]] = getelementptr inbounds i32, ptr [[PTR_IV]], i64 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq ptr [[PTR_IV_NEXT]], [[END:%.*]]
++; CHECK-NEXT:    [[TMP0]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    br i1 [[EC]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    [[RES:%.*]] = load i32, ptr [[MIN_SELECT]], align 4
+@@ -260,10 +260,10 @@ define i32 @test_pointer_phi_select_same_object_split_edge(ptr %ptr, ptr %end, i
+ ; CHECK-NEXT:    [[MIN_PTR:%.*]] = phi ptr [ [[MIN_SELECT:%.*]], [[LOOP]] ], [ [[PTR]], [[LOOP_PREHEADER]] ]
+ ; CHECK-NEXT:    [[L_1:%.*]] = load i32, ptr [[PTR_IV]], align 4
+ ; CHECK-NEXT:    [[CMP_I_I_I:%.*]] = icmp ult i32 [[L_1]], [[L_2]]
+-; CHECK-NEXT:    [[TMP0]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    [[MIN_SELECT]] = select i1 [[CMP_I_I_I]], ptr [[PTR_IV]], ptr [[MIN_PTR]]
+ ; CHECK-NEXT:    [[PTR_IV_NEXT]] = getelementptr inbounds i32, ptr [[PTR_IV]], i64 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq ptr [[PTR_IV_NEXT]], [[END:%.*]]
++; CHECK-NEXT:    [[TMP0]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    br i1 [[EC]], label [[LOOP_EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       loop.exit:
+ ; CHECK-NEXT:    br label [[EXIT]]
+@@ -311,10 +311,10 @@ define i32 @test_pointer_phi_select_load_may_not_execute_1(ptr %A, ptr %B, ptr %
+ ; CHECK-NEXT:    [[L_1:%.*]] = load i32, ptr [[PTR_IV]], align 4
+ ; CHECK-NEXT:    [[L_2:%.*]] = load i32, ptr [[MIN_PTR]], align 4
+ ; CHECK-NEXT:    [[CMP_I_I_I:%.*]] = icmp ult i32 [[L_1]], [[L_2]]
+-; CHECK-NEXT:    [[TMP0:%.*]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    [[MIN_SELECT]] = select i1 [[CMP_I_I_I]], ptr [[PTR_IV]], ptr [[MIN_PTR]]
+ ; CHECK-NEXT:    [[PTR_IV_NEXT]] = getelementptr inbounds i32, ptr [[PTR_IV]], i64 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq ptr [[PTR_IV_NEXT]], [[END:%.*]]
++; CHECK-NEXT:    [[TMP0:%.*]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    br i1 [[EC]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret i32 [[TMP0]]
+@@ -350,10 +350,10 @@ define i32 @test_pointer_phi_select_load_may_not_execute_2(ptr %A, ptr %B, ptr %
+ ; CHECK-NEXT:    call void @may_throw()
+ ; CHECK-NEXT:    [[L_2:%.*]] = load i32, ptr [[MIN_PTR]], align 4
+ ; CHECK-NEXT:    [[CMP_I_I_I:%.*]] = icmp ult i32 [[L_1]], [[L_2]]
+-; CHECK-NEXT:    [[TMP0:%.*]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    [[MIN_SELECT]] = select i1 [[CMP_I_I_I]], ptr [[PTR_IV]], ptr [[MIN_PTR]]
+ ; CHECK-NEXT:    [[PTR_IV_NEXT]] = getelementptr inbounds i32, ptr [[PTR_IV]], i64 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq ptr [[PTR_IV_NEXT]], [[END:%.*]]
++; CHECK-NEXT:    [[TMP0:%.*]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    br i1 [[EC]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret i32 [[TMP0]]
+@@ -389,10 +389,10 @@ define i32 @test_pointer_phi_select_same_object_store_1(ptr %ptr, ptr %end)  {
+ ; CHECK-NEXT:    store i32 3, ptr [[MIN_PTR]], align 4
+ ; CHECK-NEXT:    [[L_1:%.*]] = load i32, ptr [[PTR_IV]], align 4
+ ; CHECK-NEXT:    [[CMP_I_I_I:%.*]] = icmp ult i32 [[L_1]], 3
+-; CHECK-NEXT:    [[RES:%.*]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 3
+ ; CHECK-NEXT:    [[MIN_SELECT]] = select i1 [[CMP_I_I_I]], ptr [[PTR_IV]], ptr [[MIN_PTR]]
+ ; CHECK-NEXT:    [[PTR_IV_NEXT]] = getelementptr inbounds i32, ptr [[PTR_IV]], i64 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq ptr [[PTR_IV_NEXT]], [[END:%.*]]
++; CHECK-NEXT:    [[RES:%.*]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 3
+ ; CHECK-NEXT:    br i1 [[EC]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret i32 [[RES]]
+@@ -514,10 +514,10 @@ define i32 @test_pointer_phi_select_same_object_may_write_call_1(ptr %ptr, ptr %
+ ; CHECK-NEXT:    [[L_1:%.*]] = load i32, ptr [[PTR_IV]], align 4
+ ; CHECK-NEXT:    [[L_2:%.*]] = load i32, ptr [[MIN_PTR]], align 4
+ ; CHECK-NEXT:    [[CMP_I_I_I:%.*]] = icmp ult i32 [[L_1]], [[L_2]]
+-; CHECK-NEXT:    [[TMP0:%.*]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    [[MIN_SELECT]] = select i1 [[CMP_I_I_I]], ptr [[PTR_IV]], ptr [[MIN_PTR]]
+ ; CHECK-NEXT:    [[PTR_IV_NEXT]] = getelementptr inbounds i32, ptr [[PTR_IV]], i64 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq ptr [[PTR_IV_NEXT]], [[END:%.*]]
++; CHECK-NEXT:    [[TMP0:%.*]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    br i1 [[EC]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret i32 [[TMP0]]
+@@ -681,10 +681,10 @@ define i32 @test_pointer_phi_select_same_object_ptr_use_cycle(ptr %ptr, ptr %end
+ ; CHECK-NEXT:    [[MIN_PTR:%.*]] = phi ptr [ [[PTR]], [[ENTRY]] ], [ [[MIN_SELECT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[L_1:%.*]] = load i32, ptr [[PTR_IV]], align 4
+ ; CHECK-NEXT:    [[CMP_I_I_I:%.*]] = icmp ult i32 [[L_1]], [[L_2]]
+-; CHECK-NEXT:    [[TMP0]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    [[MIN_SELECT]] = select i1 [[CMP_I_I_I]], ptr [[PTR_IV]], ptr [[MIN_PTR]]
+ ; CHECK-NEXT:    [[PTR_IV_NEXT]] = getelementptr inbounds i32, ptr [[PTR_IV]], i64 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq ptr [[PTR_IV_NEXT]], [[END:%.*]]
++; CHECK-NEXT:    [[TMP0]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    br i1 [[EC]], label [[EXIT_PREHEADER:%.*]], label [[LOOP]]
+ ; CHECK:       exit.preheader:
+ ; CHECK-NEXT:    br label [[EXIT:%.*]]
+@@ -728,10 +728,10 @@ define i32 @test_pointer_phi_select_same_object_maybe_clobbered_in_exit(ptr %ptr
+ ; CHECK-NEXT:    [[MIN_PTR:%.*]] = phi ptr [ [[PTR]], [[ENTRY]] ], [ [[MIN_SELECT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[L_1:%.*]] = load i32, ptr [[PTR_IV]], align 4
+ ; CHECK-NEXT:    [[CMP_I_I_I:%.*]] = icmp ult i32 [[L_1]], [[L_2]]
+-; CHECK-NEXT:    [[TMP0]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    [[MIN_SELECT]] = select i1 [[CMP_I_I_I]], ptr [[PTR_IV]], ptr [[MIN_PTR]]
+ ; CHECK-NEXT:    [[PTR_IV_NEXT]] = getelementptr inbounds i32, ptr [[PTR_IV]], i64 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq ptr [[PTR_IV_NEXT]], [[END:%.*]]
++; CHECK-NEXT:    [[TMP0]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    br i1 [[EC]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    store i32 0, ptr [[START_PTR]], align 4
+@@ -771,10 +771,10 @@ define i32 @test_pointer_phi_select_same_object_maybe_clobbered_in_exit_2(ptr %p
+ ; CHECK-NEXT:    [[MIN_PTR:%.*]] = phi ptr [ [[PTR]], [[ENTRY]] ], [ [[MIN_SELECT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[L_1:%.*]] = load i32, ptr [[PTR_IV]], align 4
+ ; CHECK-NEXT:    [[CMP_I_I_I:%.*]] = icmp ult i32 [[L_1]], [[L_2]]
+-; CHECK-NEXT:    [[TMP0]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    [[MIN_SELECT]] = select i1 [[CMP_I_I_I]], ptr [[PTR_IV]], ptr [[MIN_PTR]]
+ ; CHECK-NEXT:    [[PTR_IV_NEXT]] = getelementptr inbounds i32, ptr [[PTR_IV]], i64 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq ptr [[PTR_IV_NEXT]], [[END:%.*]]
++; CHECK-NEXT:    [[TMP0]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    br i1 [[EC]], label [[EXIT_1:%.*]], label [[LOOP]]
+ ; CHECK:       exit.1:
+ ; CHECK-NEXT:    store i32 0, ptr [[START_PTR]], align 4
+@@ -820,21 +820,21 @@ define i32 @test_pointer_phi_select_same_object_invoke_in_chain(ptr %ptr, ptr %e
+ ; CHECK-NEXT:    [[MIN_PTR:%.*]] = phi ptr [ [[PTR]], [[ENTRY]] ], [ [[MIN_SELECT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[L_1:%.*]] = load i32, ptr [[PTR_IV]], align 4
+ ; CHECK-NEXT:    [[CMP_I_I_I:%.*]] = icmp ult i32 [[L_1]], [[L_2]]
+-; CHECK-NEXT:    [[TMP0]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    [[MIN_SELECT]] = select i1 [[CMP_I_I_I]], ptr [[PTR_IV]], ptr [[MIN_PTR]]
+ ; CHECK-NEXT:    [[PTR_IV_NEXT]] = getelementptr inbounds i32, ptr [[PTR_IV]], i64 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq ptr [[PTR_IV_NEXT]], [[END:%.*]]
++; CHECK-NEXT:    [[TMP0]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    br i1 [[EC]], label [[EXIT_1:%.*]], label [[LOOP]]
+ ; CHECK:       exit.1:
+ ; CHECK-NEXT:    store i32 0, ptr [[START_PTR]], align 4
+ ; CHECK-NEXT:    invoke void @may_throw()
+-; CHECK-NEXT:    to label [[EXIT_2:%.*]] unwind label [[CATCH_OBJECT:%.*]]
++; CHECK-NEXT:            to label [[EXIT_2:%.*]] unwind label [[CATCH_OBJECT:%.*]]
+ ; CHECK:       exit.2:
+ ; CHECK-NEXT:    [[RES:%.*]] = load i32, ptr [[MIN_SELECT]], align 4
+ ; CHECK-NEXT:    ret i32 [[RES]]
+ ; CHECK:       catch.object:
+ ; CHECK-NEXT:    [[LP:%.*]] = landingpad { ptr, i32 }
+-; CHECK-NEXT:    catch ptr null
++; CHECK-NEXT:            catch ptr null
+ ; CHECK-NEXT:    unreachable
+ ;
+ entry:
+@@ -922,10 +922,10 @@ define i32 @test_pointer_phi_used_by_others_in_loop_1(ptr %ptr, ptr %end)  {
+ ; CHECK-NEXT:    [[MIN_PTR:%.*]] = phi ptr [ [[PTR]], [[ENTRY]] ], [ [[MIN_SELECT:%.*]], [[LOOP_LOOP_CRIT_EDGE]] ]
+ ; CHECK-NEXT:    [[L_1:%.*]] = load i32, ptr [[PTR_IV]], align 4
+ ; CHECK-NEXT:    [[CMP_I_I_I:%.*]] = icmp ult i32 [[L_1]], [[L_2]]
+-; CHECK-NEXT:    [[TMP0]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    [[MIN_SELECT]] = select i1 [[CMP_I_I_I]], ptr [[PTR_IV]], ptr [[MIN_PTR]]
+ ; CHECK-NEXT:    [[PTR_IV_NEXT]] = getelementptr inbounds i32, ptr [[PTR_IV]], i32 [[L_3]]
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq ptr [[PTR_IV_NEXT]], [[END:%.*]]
++; CHECK-NEXT:    [[TMP0]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    br i1 [[EC]], label [[EXIT:%.*]], label [[LOOP_LOOP_CRIT_EDGE]]
+ ; CHECK:       loop.loop_crit_edge:
+ ; CHECK-NEXT:    [[L_3_PRE]] = load i32, ptr [[MIN_SELECT]], align 4
+@@ -967,12 +967,12 @@ define i32 @test_pointer_phi_used_by_others_in_loop_2(ptr %ptr, ptr %end)  {
+ ; CHECK-NEXT:    [[MIN_PTR:%.*]] = phi ptr [ [[PTR]], [[ENTRY]] ], [ [[MIN_SELECT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[L_1:%.*]] = load i32, ptr [[PTR_IV]], align 4
+ ; CHECK-NEXT:    [[CMP_I_I_I:%.*]] = icmp ult i32 [[L_1]], [[L_2]]
+-; CHECK-NEXT:    [[TMP0]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    [[MIN_SELECT]] = select i1 [[CMP_I_I_I]], ptr [[PTR_IV]], ptr [[MIN_PTR]]
+ ; CHECK-NEXT:    [[GEP_MIN_PTR:%.*]] = getelementptr inbounds i32, ptr [[MIN_PTR]], i32 1
+ ; CHECK-NEXT:    [[L_3:%.*]] = load i32, ptr [[GEP_MIN_PTR]], align 4
+ ; CHECK-NEXT:    [[PTR_IV_NEXT]] = getelementptr inbounds i32, ptr [[PTR_IV]], i32 [[L_3]]
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq ptr [[PTR_IV_NEXT]], [[END:%.*]]
++; CHECK-NEXT:    [[TMP0]] = select i1 [[CMP_I_I_I]], i32 [[L_1]], i32 [[L_2]]
+ ; CHECK-NEXT:    br i1 [[EC]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    [[RES:%.*]] = load i32, ptr [[MIN_SELECT]], align 4
+diff --git a/llvm/test/Transforms/GVN/debugloc-load-select.ll b/llvm/test/Transforms/GVN/debugloc-load-select.ll
+index da0def0622ae3..7c566d21d9aeb 100644
+--- a/llvm/test/Transforms/GVN/debugloc-load-select.ll
++++ b/llvm/test/Transforms/GVN/debugloc-load-select.ll
+@@ -14,8 +14,8 @@ define void @loadtree(ptr %topol, i1 %cmp168) {
+ ; CHECK-NEXT:    [[TMP0:%.*]] = load i32, ptr null, align 4
+ ; CHECK-NEXT:    [[TMP1:%.*]] = load i32, ptr [[TOPOL]], align 4
+ ; CHECK-NEXT:    [[CMP1681:%.*]] = icmp sgt i32 [[TMP0]], [[TMP1]]
+-; CHECK-NEXT:    [[TMP2:%.*]] = select i1 [[CMP168]], i32 [[TMP1]], i32 [[TMP0]], !dbg [[DBG3:![0-9]+]]
+-; CHECK-NEXT:    [[DOT:%.*]] = select i1 [[CMP168]], ptr [[TOPOL]], ptr null, !dbg [[DBG9:![0-9]+]]
++; CHECK-NEXT:    [[DOT:%.*]] = select i1 [[CMP168]], ptr [[TOPOL]], ptr null, !dbg [[DBG3:![0-9]+]]
++; CHECK-NEXT:    [[TMP2:%.*]] = select i1 [[CMP168]], i32 [[TMP1]], i32 [[TMP0]], !dbg [[DBG9:![0-9]+]]
+ ; CHECK-NEXT:    [[CMP174_NOT473:%.*]] = icmp eq i32 [[TMP2]], 0
+ ; CHECK-NEXT:    ret void
+ ;
+@@ -44,12 +44,12 @@ entry:
+ !9 = !DILocation(line: 9, column: 22, scope: !5)
+ ;.
+ ; CHECK: [[META0:![0-9]+]] = distinct !DICompileUnit(language: DW_LANG_C11, file: [[META1:![0-9]+]], producer: "{{.*}}clang version {{.*}}", isOptimized: false, runtimeVersion: 0, emissionKind: NoDebug)
+-; CHECK: [[META1]] = !DIFile(filename: "/tmp/mltaln9.c", directory: {{.*}})
+-; CHECK: [[DBG3]] = !DILocation(line: 4, column: 22, scope: [[META4:![0-9]+]])
++; CHECK: [[META1]] = !DIFile(filename: "{{.*}}mltaln9.c", directory: {{.*}})
++; CHECK: [[DBG3]] = !DILocation(line: 9, column: 22, scope: [[META4:![0-9]+]])
+ ; CHECK: [[META4]] = distinct !DISubprogram(name: "loadtree", scope: [[META5:![0-9]+]], file: [[META5]], line: 869, type: [[META6:![0-9]+]], scopeLine: 870, spFlags: DISPFlagDefinition, unit: [[META0]], retainedNodes: [[META8:![0-9]+]])
+-; CHECK: [[META5]] = !DIFile(filename: "mltaln9.c", directory: {{.*}})
++; CHECK: [[META5]] = !DIFile(filename: "{{.*}}mltaln9.c", directory: {{.*}})
+ ; CHECK: [[META6]] = distinct !DISubroutineType(types: [[META7:![0-9]+]])
+ ; CHECK: [[META7]] = !{null}
+ ; CHECK: [[META8]] = !{}
+-; CHECK: [[DBG9]] = !DILocation(line: 9, column: 22, scope: [[META4]])
++; CHECK: [[DBG9]] = !DILocation(line: 4, column: 22, scope: [[META4]])
+ ;.
+diff --git a/llvm/test/Transforms/GVN/load-select-addr-store-fwd.ll b/llvm/test/Transforms/GVN/load-select-addr-store-fwd.ll
+index 318ad48278126..ca0d64e610728 100644
+--- a/llvm/test/Transforms/GVN/load-select-addr-store-fwd.ll
++++ b/llvm/test/Transforms/GVN/load-select-addr-store-fwd.ll
+@@ -5,8 +5,8 @@ define i32 @store_both_arms(i1 %cond, ptr noalias %p1, ptr noalias %p2) {
+ ; CHECK-LABEL: @store_both_arms(
+ ; CHECK-NEXT:    store i32 10, ptr [[P1:%.*]], align 4
+ ; CHECK-NEXT:    store i32 20, ptr [[P2:%.*]], align 4
+-; CHECK-NEXT:    [[TMP1:%.*]] = select i1 [[COND:%.*]], i32 10, i32 20
+-; CHECK-NEXT:    [[ADDR:%.*]] = select i1 [[COND]], ptr [[P1]], ptr [[P2]]
++; CHECK-NEXT:    [[ADDR:%.*]] = select i1 [[COND:%.*]], ptr [[P1]], ptr [[P2]]
++; CHECK-NEXT:    [[TMP1:%.*]] = select i1 [[COND]], i32 10, i32 20
+ ; CHECK-NEXT:    ret i32 [[TMP1]]
+ ;
+   store i32 10, ptr %p1
+@@ -20,8 +20,8 @@ define i32 @store_and_load(i1 %cond, ptr noalias %p1, ptr noalias %p2) {
+ ; CHECK-LABEL: @store_and_load(
+ ; CHECK-NEXT:    store i32 10, ptr [[P1:%.*]], align 4
+ ; CHECK-NEXT:    [[V1:%.*]] = load i32, ptr [[P2:%.*]], align 4
+-; CHECK-NEXT:    [[TMP1:%.*]] = select i1 [[COND:%.*]], i32 10, i32 [[V1]]
+-; CHECK-NEXT:    [[ADDR:%.*]] = select i1 [[COND]], ptr [[P1]], ptr [[P2]]
++; CHECK-NEXT:    [[ADDR:%.*]] = select i1 [[COND:%.*]], ptr [[P1]], ptr [[P2]]
++; CHECK-NEXT:    [[TMP1:%.*]] = select i1 [[COND]], i32 10, i32 [[V1]]
+ ; CHECK-NEXT:    [[SUM:%.*]] = add i32 [[TMP1]], [[V1]]
+ ; CHECK-NEXT:    ret i32 [[SUM]]
+ ;
+@@ -37,8 +37,8 @@ define i32 @store_then_load(i1 %cond, ptr noalias %p1, ptr noalias %p2) {
+ ; CHECK-LABEL: @store_then_load(
+ ; CHECK-NEXT:    store i32 10, ptr [[P1:%.*]], align 4
+ ; CHECK-NEXT:    store i32 20, ptr [[P2:%.*]], align 4
+-; CHECK-NEXT:    [[TMP1:%.*]] = select i1 [[COND:%.*]], i32 10, i32 20
+-; CHECK-NEXT:    [[ADDR:%.*]] = select i1 [[COND]], ptr [[P1]], ptr [[P2]]
++; CHECK-NEXT:    [[ADDR:%.*]] = select i1 [[COND:%.*]], ptr [[P1]], ptr [[P2]]
++; CHECK-NEXT:    [[TMP1:%.*]] = select i1 [[COND]], i32 10, i32 20
+ ; CHECK-NEXT:    ret i32 [[TMP1]]
+ ;
+   store i32 10, ptr %p1
+@@ -55,8 +55,8 @@ define i32 @store_in_pred(i1 %cond, ptr noalias %p1, ptr noalias %p2) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    store i32 10, ptr [[P1:%.*]], align 4
+ ; CHECK-NEXT:    store i32 20, ptr [[P2:%.*]], align 4
+-; CHECK-NEXT:    [[TMP0:%.*]] = select i1 [[COND:%.*]], i32 10, i32 20
+-; CHECK-NEXT:    [[ADDR:%.*]] = select i1 [[COND]], ptr [[P1]], ptr [[P2]]
++; CHECK-NEXT:    [[ADDR:%.*]] = select i1 [[COND:%.*]], ptr [[P1]], ptr [[P2]]
++; CHECK-NEXT:    [[TMP0:%.*]] = select i1 [[COND]], i32 10, i32 20
+ ; CHECK-NEXT:    ret i32 [[TMP0]]
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/GVN/load-through-select-dbg.ll b/llvm/test/Transforms/GVN/load-through-select-dbg.ll
+index 0308a671bf9af..047613cec3e97 100644
+--- a/llvm/test/Transforms/GVN/load-through-select-dbg.ll
++++ b/llvm/test/Transforms/GVN/load-through-select-dbg.ll
+@@ -11,8 +11,8 @@ define i32 @foo(ptr %a, ptr %b) {
+ ; CHECK-NEXT:      #dbg_declare(ptr undef, [[META4:![0-9]+]], !DIExpression(), [[META10:![0-9]+]])
+ ; CHECK-NEXT:    [[TMP1:%.*]] = load i32, ptr [[B]], align 4
+ ; CHECK-NEXT:    [[COND:%.*]] = icmp slt i32 [[TMP0]], [[TMP1]]
+-; CHECK-NEXT:    [[TMP2:%.*]] = select i1 [[COND]], i32 [[TMP0]], i32 [[TMP1]]
+ ; CHECK-NEXT:    [[PTR:%.*]] = select i1 [[COND]], ptr [[A]], ptr [[B]]
++; CHECK-NEXT:    [[TMP2:%.*]] = select i1 [[COND]], i32 [[TMP0]], i32 [[TMP1]]
+ ; CHECK-NEXT:    ret i32 [[TMP2]]
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/GVN/opaque-ptr.ll b/llvm/test/Transforms/GVN/opaque-ptr.ll
+index 8a7e420584859..4363dbf6bd147 100644
+--- a/llvm/test/Transforms/GVN/opaque-ptr.ll
++++ b/llvm/test/Transforms/GVN/opaque-ptr.ll
+@@ -59,10 +59,10 @@ define void @gep_cse_offset_canonicalization(ptr %p, i64 %idx, i64 %idx2) {
+ ; CHECK-NEXT:    call void @use(ptr [[GEP6]])
+ ; CHECK-NEXT:    call void @use(ptr [[GEP6_SAME]])
+ ; CHECK-NEXT:    call void @use(ptr [[GEP6_DIFFERENT]])
+-; CHECK-NEXT:    %gep7 = getelementptr <16 x i32>, ptr %p, i64 1
+-; CHECK-NEXT:    %gep7.different = getelementptr <16 x i32>, ptr %p, <16 x i64> splat (i64 1)
+-; CHECK-NEXT:    call void @use(ptr %gep7)
+-; CHECK-NEXT:    call void @use(<16 x ptr> %gep7.different)
++; CHECK-NEXT:    [[GEP7:%.*]] = getelementptr <16 x i32>, ptr [[P]], i64 1
++; CHECK-NEXT:    [[GEP7_DIFFERENT:%.*]] = getelementptr <16 x i32>, ptr [[P]], <16 x i64> splat (i64 1)
++; CHECK-NEXT:    call void @use(ptr [[GEP7]])
++; CHECK-NEXT:    call void @use(<16 x ptr> [[GEP7_DIFFERENT]])
+ ; CHECK-NEXT:    ret void
+ ;
+   %gep1 = getelementptr i64, ptr %p, i64 1
+@@ -200,8 +200,8 @@ define i32 @select_pre(ptr %px, ptr %py) {
+ ; CHECK-NEXT:    [[T2:%.*]] = load i32, ptr [[PY:%.*]], align 4
+ ; CHECK-NEXT:    [[T3:%.*]] = load i32, ptr [[PX:%.*]], align 4
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i32 [[T2]], [[T3]]
+-; CHECK-NEXT:    [[TMP1:%.*]] = select i1 [[CMP]], i32 [[T3]], i32 [[T2]]
+ ; CHECK-NEXT:    [[SELECT:%.*]] = select i1 [[CMP]], ptr [[PX]], ptr [[PY]]
++; CHECK-NEXT:    [[TMP1:%.*]] = select i1 [[CMP]], i32 [[T3]], i32 [[T2]]
+ ; CHECK-NEXT:    ret i32 [[TMP1]]
+ ;
+   %t2 = load i32, ptr %py, align 4
+diff --git a/llvm/test/Transforms/GVN/pr69301.ll b/llvm/test/Transforms/GVN/pr69301.ll
+index dc54ef559dcff..ab601d83b7bbf 100644
+--- a/llvm/test/Transforms/GVN/pr69301.ll
++++ b/llvm/test/Transforms/GVN/pr69301.ll
+@@ -24,8 +24,8 @@ define i64 @test(i1 %c, ptr %p) {
+ ; CHECK:       loop.latch:
+ ; CHECK-NEXT:    [[LOAD6:%.*]] = load i64, ptr [[P]], align 8
+ ; CHECK-NEXT:    [[ICMP7:%.*]] = icmp ugt i64 [[RES_PRE1]], [[LOAD6]]
+-; CHECK-NEXT:    [[TMP0:%.*]] = select i1 [[ICMP7]], i64 [[RES_PRE1]], i64 [[LOAD6]]
+ ; CHECK-NEXT:    [[SELECT]] = select i1 [[ICMP7]], ptr [[PTR_IV]], ptr [[P]]
++; CHECK-NEXT:    [[TMP0:%.*]] = select i1 [[ICMP7]], i64 [[RES_PRE1]], i64 [[LOAD6]]
+ ; CHECK-NEXT:    br label [[LOOP]]
+ ; CHECK:       exitsplit:
+ ; CHECK-NEXT:    br label [[EXIT]]
