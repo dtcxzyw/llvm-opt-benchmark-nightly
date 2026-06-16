@@ -201,11 +201,11 @@ bb.al:                                            ; preds = %bb.aq, %.lr.ph.i123
   %i.iq = getelementptr inbounds nuw [4 x i8], ptr %i.hl, i64 %i.ip
   %i.ir = getelementptr inbounds nuw i8, ptr %i.iq, i64 2
   %i.is = load i16, ptr %i.ir, align 2, !tbaa !27
-  %i.it = zext i16 %i.is to i32                   ; 2 uses
-  %i.iu = add nuw nsw i32 %i.it, 1
-  %.not101.i = icmp sle i32 %i.hu, %i.it          ; 2 uses
-  %spec.select.i = select i1 %.not101.i, i32 %i.hu, i32 %i.iu ; 3 uses
-  %i.iv = zext i1 %.not101.i to i32
+  %i.it = zext i16 %i.is to i32
+  %i.iu = add nuw nsw i32 %i.it, 1                ; 2 uses
+  %2 = icmp sgt i32 %i.iu, %i.hu
+  %spec.select.i = tail call i32 @llvm.smin.i32(i32 %i.iu, i32 %i.hu) ; 3 uses
+  %i.iv = zext i1 %2 to i32
   %spec.select104.i = add nuw nsw i32 %.0113.i, %i.iv ; 3 uses
   %i.iw = trunc i32 %spec.select.i to i16
   store i16 %i.iw, ptr %i.in, align 2, !tbaa !27
@@ -606,6 +606,9 @@ bb.ah:                                            ; preds = %bb.ag, %.loopexit, 
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umax.i8(i8, i8) #7

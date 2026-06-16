@@ -201,7 +201,7 @@ bb.x:                                             ; preds = %bb.w
 
 .lr.ph223.i:                                      ; preds = %.lr.ph223.i.prol.loopexit, %.lr.ph223.i
   %.0146222.i = phi double [ %i.dc, %.lr.ph223.i ], [ %.0146222.i.unr, %.lr.ph223.i.prol.loopexit ]
-  %.0147221.i = phi i64 [ %i.dd, %.lr.ph223.i ], [ %.0147221.i.unr, %.lr.ph223.i.prol.loopexit ] ; 6 uses
+  %.0147221.i = phi i64 [ %i.dd, %.lr.ph223.i ], [ %.0147221.i.unr, %.lr.ph223.i.prol.loopexit ] ; 5 uses
   %i.cm = icmp slt i64 %.0147221.i, %i.ak
   %i.cn = sub nsw i64 0, %.0147221.i
   %.v205.i.a = select i1 %i.cm, ptr %i.bn, ptr %i.bp
@@ -212,9 +212,10 @@ bb.x:                                             ; preds = %bb.w
   %i.cs = load i32, ptr %i.cr, align 4, !tbaa !7
   %i.ct = sitofp i32 %i.cs to double
   %i.cu = call double @llvm.fmuladd.f64(double %.0146222.i, double 1.600000e+01, double %i.ct)
-  %.not = icmp sgt i64 %.0147221.i, %i.ak
+  %2 = add nsw i64 %.0147221.i, -1                ; 2 uses
+  %3 = icmp slt i64 %2, %i.ak
   %i.cv = sub nsw i64 1, %.0147221.i
-  %.v205.i.1 = select i1 %.not, ptr %i.bp, ptr %i.bn
+  %.v205.i.1 = select i1 %3, ptr %i.bn, ptr %i.bp
   %i.cw = getelementptr i8, ptr %.v205.i.1, i64 %i.cv
   %i.cx = load i8, ptr %i.cw, align 1, !tbaa !23
   %i.cy = zext i8 %i.cx to i64
@@ -223,7 +224,7 @@ bb.x:                                             ; preds = %bb.w
   %i.db = sitofp i32 %i.da to double
   %i.dc = call double @llvm.fmuladd.f64(double %i.cu, double 1.600000e+01, double %i.db) ; 2 uses
   %i.dd = add nsw i64 %.0147221.i, -2
-  %.not258.i.1 = icmp eq i64 %.0147221.i, 1
+  %.not258.i.1 = icmp eq i64 %2, 0
   br i1 %.not258.i.1, label %.critedge2.thread.sink.split.i, label %.lr.ph223.i, !llvm.loop !248
 
 bb.y:                                             ; preds = %bb.x
@@ -343,15 +344,15 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab, %bb.
   br i1 %i.fs, label %.lr.ph, label %.critedge202.i
 
 bb.ae:                                            ; preds = %.lr.ph
-  %.2149.i = add nsw i64 %.2149.in.i38, -1
   %i.ft = icmp sgt i64 %.2149.in.i38, 1
   br i1 %i.ft, label %.lr.ph, label %.critedge202.i, !llvm.loop !250
 
 .lr.ph:                                           ; preds = %bb.ad, %bb.ae
-  %.2149.in.i38 = phi i64 [ %.2149.i, %bb.ae ], [ %i.dj, %bb.ad ] ; 4 uses
-  %.not193.i = icmp sgt i64 %.2149.in.i38, %i.ak
+  %.2149.in.i38 = phi i64 [ %.2149.i, %bb.ae ], [ %i.dj, %bb.ad ] ; 3 uses
+  %.2149.i = add nsw i64 %.2149.in.i38, -1        ; 2 uses
+  %4 = icmp slt i64 %.2149.i, %i.ak
   %i.fu = sub nsw i64 1, %.2149.in.i38
-  %.v208.i = select i1 %.not193.i, ptr %i.bp, ptr %i.bn
+  %.v208.i = select i1 %4, ptr %i.bn, ptr %i.bp
   %i.fv = getelementptr i8, ptr %.v208.i, i64 %i.fu
   %i.fw = load i8, ptr %i.fv, align 1, !tbaa !23
   %.not194.i = icmp eq i8 %i.fw, 48

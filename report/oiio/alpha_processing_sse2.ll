@@ -199,7 +199,8 @@ bb.a:
   br i1 %i.a, label %.preheader.lr.ph, label %._crit_edge109
 
 .preheader.lr.ph:                                 ; preds = %bb.a
-  %.not89.not91 = icmp sgt i32 %2, 16
+  %6 = add nsw i32 %2, -1                         ; 2 uses
+  %.not8991 = icmp slt i32 %2, 17
   %i.b = sext i32 %1 to i64
   %i.c = sext i32 %5 to i64
   %wide.trip.count = zext i32 %2 to i64           ; 3 uses
@@ -212,7 +213,7 @@ bb.a:
   %.080105 = phi i32 [ 0, %.preheader.lr.ph ], [ %i.by, %._crit_edge101 ]
   %.081104 = phi <2 x i64> [ splat (i64 -1), %.preheader.lr.ph ], [ %.182.lcssa, %._crit_edge101 ] ; 2 uses
   %.083103 = phi <2 x i64> [ splat (i64 -1), %.preheader.lr.ph ], [ %.184, %._crit_edge101 ] ; 2 uses
-  br i1 %.not89.not91, label %.lr.ph, label %._crit_edge
+  br i1 %.not8991, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader, %.lr.ph
   %indvars.iv116 = phi i64 [ %indvars.iv.next117, %.lr.ph ], [ 0, %.preheader ] ; 2 uses
@@ -245,9 +246,9 @@ bb.a:
   %i.w = getelementptr inbounds nuw i8, ptr %.08592, i64 64 ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 16 ; 2 uses
   %i.x = trunc nuw i64 %indvars.iv.next to i32
-  %.not89.not = icmp sgt i32 %2, %i.x
+  %.not89 = icmp slt i32 %6, %i.x
   %indvars.iv.next117 = add nuw nsw i64 %indvars.iv116, 16
-  br i1 %.not89.not, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !17
+  br i1 %.not89, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !17
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
   %i.y = trunc nuw nsw i64 %indvars.iv to i32
@@ -258,8 +259,8 @@ bb.a:
   %.182.lcssa = phi <2 x i64> [ %.081104, %.preheader ], [ %i.v, %._crit_edge.loopexit ] ; 2 uses
   %.078.lcssa = phi i32 [ 0, %.preheader ], [ %i.y, %._crit_edge.loopexit ] ; 3 uses
   %i.z = or disjoint i32 %.078.lcssa, 8           ; 2 uses
-  %.not90.not = icmp slt i32 %i.z, %2
-  br i1 %.not90.not, label %bb.b, label %bb.c
+  %.not90 = icmp sgt i32 %i.z, %6
+  br i1 %.not90, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge
   %i.aa = zext nneg i32 %.078.lcssa to i64

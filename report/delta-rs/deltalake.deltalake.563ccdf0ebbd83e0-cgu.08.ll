@@ -201,7 +201,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.458)
   %i.o = load ptr, ptr %1, align 8, !alias.scope !161, !noalias !164, !nonnull !17, !noundef !17 ; 13 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 626 ; 4 uses
-  %i.q = load i16, ptr %i.p, align 2, !noalias !168, !noundef !17 ; 3 uses
+  %i.q = load i16, ptr %i.p, align 2, !noalias !168, !noundef !17 ; 2 uses
   %i.r = icmp ugt i16 %i.q, 10
   br i1 %i.r, label %bb.b, label %bb.c
 
@@ -214,13 +214,14 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !169)
   %i.v = zext nneg i16 %i.q to i64                ; 2 uses
+  %6 = add nuw nsw i64 %i.v, 1                    ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.o, i64 360 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.y = load i64, ptr %i.x, align 8, !alias.scope !172, !noalias !173, !noundef !17 ; 6 uses
   %i.z = add i64 %i.y, 1                          ; 3 uses
-  %.not.i.i = icmp ugt i64 %i.z, %i.v
+  %.not.i.i = icmp ugt i64 %6, %i.z
   %i.aa = getelementptr inbounds nuw [24 x i8], ptr %i.w, i64 %i.y ; 3 uses
-  br i1 %.not.i.i, label %bb.d, label %bb.e
+  br i1 %.not.i.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aa, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false)
@@ -342,6 +343,7 @@ bb.p:                                             ; preds = %.noexc.i
   %i.bg = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 626 ; 2 uses
   %i.bh = load i16, ptr %i.bg, align 2, !noalias !207, !noundef !17 ; 2 uses
   %i.bi = zext i16 %i.bh to i64                   ; 2 uses
+  %7 = add i16 %i.bh, 1
   %i.bj = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 360 ; 2 uses
   %.not.i14.not.i = icmp ult i64 %.sroa.58.0.i, %i.bi
   %i.bk = getelementptr inbounds nuw [24 x i8], ptr %i.bj, i64 %.sroa.58.0.i ; 3 uses
@@ -376,11 +378,11 @@ bb.s:                                             ; preds = %bb.u, %bb.t
   unreachable
 
 .thread:                                          ; preds = %bb.d, %bb.e
-  %6 = add nuw nsw i16 %i.q, 1
   %i.bt = getelementptr inbounds nuw [32 x i8], ptr %i.o, i64 %i.y
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bt, ptr noundef nonnull readonly align 8 dereferenceable(32) %i.i, i64 32, i1 false), !alias.scope !225, !noalias !226
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
-  store i16 %6, ptr %i.p, align 2, !noalias !226
+  %8 = trunc nuw nsw i64 %6 to i16
+  store i16 %8, ptr %i.p, align 2, !noalias !226
   %i.bu = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.bv = load i64, ptr %i.bu, align 8, !alias.scope !172, !noalias !173, !noundef !17
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.458)
@@ -398,7 +400,6 @@ bb.u:                                             ; preds = %bb.t
           to label %.critedge20 unwind label %bb.s, !noalias !224
 
 bb.v:                                             ; preds = %bb.q, %bb.r
-  %7 = add i16 %i.bh, 1
   %i.bw = getelementptr inbounds nuw [32 x i8], ptr %spec.select.i, i64 %.sroa.58.0.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bw, ptr noundef nonnull readonly align 8 dereferenceable(32) %i.f, i64 32, i1 false), !alias.scope !228, !noalias !207
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
@@ -624,9 +625,9 @@ bb.as:                                            ; preds = %bb.ap
   %i.dp = add nuw nsw i16 %i.dl, 1
   %i.dq = getelementptr inbounds nuw i8, ptr %i.db, i64 360 ; 2 uses
   %i.dr = add nuw nsw i64 %i.dj, 1                ; 7 uses
-  %.not.i.i32.not = icmp ult i16 %i.di, %i.dl
+  %9 = icmp ugt i16 %i.dl, %i.di
   %i.ds = getelementptr inbounds nuw [24 x i8], ptr %i.dq, i64 %i.dj ; 3 uses
-  br i1 %.not.i.i32.not, label %bb.au, label %bb.at
+  br i1 %9, label %bb.au, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ds, ptr noundef nonnull align 8 dereferenceable(24) %i.l, i64 24, i1 false), !noalias !258
@@ -1029,7 +1030,7 @@ bb.a:
   store ptr %3, ptr %i.f, align 8, !noalias !334
   %i.h = load ptr, ptr %1, align 8, !alias.scope !331, !noalias !336, !nonnull !17, !noundef !17 ; 11 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 186 ; 4 uses
-  %i.j = load i16, ptr %i.i, align 2, !noalias !334, !noundef !17 ; 3 uses
+  %i.j = load i16, ptr %i.i, align 2, !noalias !334, !noundef !17 ; 2 uses
   %i.k = icmp ugt i16 %i.j, 10
   br i1 %i.k, label %bb.b, label %bb.c
 
@@ -1042,12 +1043,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !337)
   %i.o = zext nneg i16 %i.j to i64                ; 2 uses
+  %6 = add nuw nsw i64 %i.o, 1                    ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.r = load i64, ptr %i.q, align 8, !alias.scope !340, !noalias !341, !noundef !17 ; 7 uses
   %i.s = add i64 %i.r, 1                          ; 3 uses
-  %.not.i.i = icmp ugt i64 %i.s, %i.o
-  br i1 %.not.i.i, label %bb.u, label %bb.d
+  %.not.i.i = icmp ugt i64 %6, %i.s
+  br i1 %.not.i.i, label %bb.d, label %bb.u
 
 bb.d:                                             ; preds = %bb.c
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %i.r
@@ -1157,6 +1159,7 @@ bb.o:                                             ; preds = %.noexc.i
   %i.bd = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 186 ; 2 uses
   %i.be = load i16, ptr %i.bd, align 2, !noalias !376, !noundef !17 ; 2 uses
   %i.bf = zext i16 %i.be to i64                   ; 2 uses
+  %7 = add i16 %i.be, 1
   %i.bg = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 8 ; 3 uses
   %.not.i14.not.i = icmp ult i64 %.sroa.58.0.i, %i.bf
   br i1 %.not.i14.not.i, label %bb.p, label %bb.t
@@ -1198,10 +1201,9 @@ bb.t:                                             ; preds = %bb.p, %bb.o
   %i.bt = getelementptr inbounds nuw [8 x i8], ptr %i.bg, i64 %.sroa.58.0.i
   store i64 %2, ptr %i.bt, align 8, !alias.scope !380, !noalias !376
   %i.bu = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 96
-  %6 = add i16 %i.be, 1
   %i.bv = getelementptr inbounds nuw [8 x i8], ptr %i.bu, i64 %.sroa.58.0.i
   store ptr %3, ptr %i.bv, align 8, !alias.scope !383, !noalias !376
-  store i16 %6, ptr %i.bd, align 2, !noalias !376
+  store i16 %7, ptr %i.bd, align 2, !noalias !376
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   %i.bw = load ptr, ptr %i.h, align 8, !noalias !389, !noundef !17 ; 2 uses
   %.not.i189 = icmp eq ptr %i.bw, null
@@ -1216,10 +1218,10 @@ bb.u:                                             ; preds = %bb.c, %bb.d
   %i.bz = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %i.r
   store i64 %2, ptr %i.bz, align 8, !alias.scope !343, !noalias !346
   %i.ca = getelementptr inbounds nuw i8, ptr %i.h, i64 96
-  %7 = add nuw nsw i16 %i.j, 1
   %8 = getelementptr inbounds nuw [8 x i8], ptr %i.ca, i64 %i.r
   store ptr %3, ptr %8, align 8, !alias.scope !347, !noalias !346
-  store i16 %7, ptr %i.i, align 2, !noalias !346
+  %9 = trunc nuw nsw i64 %6 to i16
+  store i16 %9, ptr %i.i, align 2, !noalias !346
   %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.cc = load i64, ptr %i.cb, align 8, !alias.scope !340, !noalias !341, !noundef !17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
@@ -1405,9 +1407,9 @@ bb.ap:                                            ; preds = %bb.am
   %i.dq = add nuw nsw i16 %i.dm, 1
   %i.dr = getelementptr inbounds nuw i8, ptr %i.db, i64 8 ; 3 uses
   %i.ds = add nuw nsw i64 %i.dk, 1                ; 7 uses
-  %.not.i.i31.not = icmp ult i16 %i.dj, %i.dm
+  %10 = icmp ugt i16 %i.dm, %i.dj
   %i.dt = getelementptr inbounds nuw [8 x i8], ptr %i.dr, i64 %i.dk ; 2 uses
-  br i1 %.not.i.i31.not, label %bb.ar, label %bb.aq
+  br i1 %10, label %bb.ar, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
   store i64 %i.de, ptr %i.dt, align 8, !alias.scope !419, !noalias !422

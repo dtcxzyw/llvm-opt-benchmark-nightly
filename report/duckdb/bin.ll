@@ -44,7 +44,7 @@ bb.c:                                             ; preds = %bb.b
   br label %sz_size2index_compute.exit
 
 sz_size2index_compute.exit:                       ; preds = %bb.b, %bb.c
-  %.0.i = phi i32 [ %i.u, %bb.c ], [ 0, %bb.b ]   ; 5 uses
+  %.0.i = phi i32 [ %i.u, %bb.c ], [ 0, %bb.b ]   ; 6 uses
   %i.v = icmp ult i64 %2, 9
   br i1 %i.v, label %sz_size2index_compute.exit19, label %bb.d
 
@@ -76,13 +76,18 @@ sz_size2index_compute.exit19:                     ; preds = %sz_size2index_compu
 
 .lr.ph:                                           ; preds = %sz_size2index_compute.exit19
   %i.ao = trunc nuw nsw i64 %3 to i32             ; 2 uses
-  %4 = sub nuw i32 %.0.i18, %.0.i
-  %i.ap = add i32 %4, 1                           ; 3 uses
-  %min.iters.check = icmp ult i32 %i.ap, 8
+  %4 = zext i32 %.0.i18 to i64
+  %5 = add nuw nsw i64 %4, 1
+  %i.ap = add nsw i32 %.0.i, 1
+  %6 = zext i32 %i.ap to i64
+  %umax = tail call i64 @llvm.umax.i64(i64 %5, i64 %6)
+  %7 = trunc i64 %umax to i32
+  %8 = sub i32 %7, %.0.i                          ; 3 uses
+  %min.iters.check = icmp ult i32 %8, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph
-  %n.vec = and i32 %i.ap, -8                      ; 3 uses
+  %n.vec = and i32 %8, -8                         ; 3 uses
   %i.aq = add i32 %.0.i, %n.vec
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.ao, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -101,7 +106,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.av, label %middle.block, label %vector.body, !llvm.loop !7
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i32 %i.ap, %n.vec
+  %cmp.n = icmp eq i32 %8, %n.vec
   br i1 %cmp.n, label %.loopexit, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.block
@@ -109,13 +114,13 @@ scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.blo
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %.021 = phi i32 [ %i.ay, %scalar.ph ], [ %.021.ph, %scalar.ph.preheader ] ; 3 uses
+  %.021 = phi i32 [ %i.ay, %scalar.ph ], [ %.021.ph, %scalar.ph.preheader ] ; 2 uses
   %i.aw = zext nneg i32 %.021 to i64
   %i.ax = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.aw
   store i32 %i.ao, ptr %i.ax, align 4, !tbaa !3
-  %i.ay = add nuw nsw i32 %.021, 1
-  %.not.not = icmp ult i32 %.021, %.0.i18
-  br i1 %.not.not, label %scalar.ph, label %.loopexit, !llvm.loop !10
+  %i.ay = add nuw nsw i32 %.021, 1                ; 2 uses
+  %.not = icmp samesign ugt i32 %i.ay, %.0.i18
+  br i1 %.not, label %.loopexit, label %scalar.ph, !llvm.loop !10
 
 .loopexit:                                        ; preds = %scalar.ph, %middle.block, %sz_size2index_compute.exit19, %bb.a
   ret i1 %or.cond
@@ -250,6 +255,9 @@ declare i32 @llvm.usub.sat.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #6
 
 attributes #0 = { nofree norecurse nosync nounwind memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

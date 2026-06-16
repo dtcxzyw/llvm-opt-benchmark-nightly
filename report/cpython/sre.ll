@@ -201,19 +201,20 @@ _Py_NewRef.exit:                                  ; preds = %Py_INCREF.exit, %bb
 bb.f:                                             ; preds = %.lr.ph, %bb.n
   %.06373 = phi i64 [ 0, %.lr.ph ], [ %i.bn, %bb.n ]
   %.06472 = phi i64 [ 0, %.lr.ph ], [ %i.bo, %bb.n ] ; 5 uses
-  %.not69.not = icmp slt i64 %.06472, %i.ar
-  br i1 %.not69.not, label %bb.g, label %bb.m
+  %4 = or disjoint i64 %.06472, 1                 ; 2 uses
+  %.not69 = icmp sgt i64 %4, %i.ar
+  br i1 %.not69, label %bb.m, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.at = load ptr, ptr %i.as, align 8, !tbaa !94
-  %i.au = getelementptr [8 x i8], ptr %i.at, i64 %.06472 ; 2 uses
+  %i.at = load ptr, ptr %i.as, align 8, !tbaa !94 ; 2 uses
+  %i.au = getelementptr [8 x i8], ptr %i.at, i64 %.06472
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !95 ; 2 uses
   %.not70 = icmp eq ptr %i.av, null
   br i1 %.not70, label %bb.m, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %4 = getelementptr i8, ptr %i.au, i64 8
-  %i.aw = load ptr, ptr %4, align 8, !tbaa !95    ; 2 uses
+  %5 = getelementptr [8 x i8], ptr %i.at, i64 %4
+  %i.aw = load ptr, ptr %5, align 8, !tbaa !95    ; 2 uses
   %.not71 = icmp eq ptr %i.aw, null
   br i1 %.not71, label %bb.m, label %bb.i
 
@@ -616,7 +617,7 @@ bb.hf:                                            ; preds = %bb.hs, %bb.he
 
 bb.hg:                                            ; preds = %.lr.ph2179, %.critedge2
   %.315232177 = phi ptr [ %.21522, %.lr.ph2179 ], [ %i.yj, %.critedge2 ] ; 5 uses
-  %i.yf = phi i64 [ %.71512.promoted, %.lr.ph2179 ], [ %i.yk, %.critedge2 ] ; 2 uses
+  %i.yf = phi i64 [ %.71512.promoted, %.lr.ph2179 ], [ %i.yk, %.critedge2 ]
   %.not1707 = icmp ult ptr %.315232177, %i.b
   br i1 %.not1707, label %bb.hh, label %.critedge2
 
@@ -629,10 +630,10 @@ bb.hh:                                            ; preds = %bb.hg
 
 .critedge2:                                       ; preds = %bb.hg, %bb.hh
   %i.yj = getelementptr i8, ptr %.315232177, i64 -1
-  %i.yk = add nsw i64 %i.yf, -1                   ; 2 uses
+  %i.yk = add nsw i64 %i.yf, -1                   ; 3 uses
   store i64 %i.yk, ptr %.71512, align 8, !tbaa !137
-  %.not1706.not = icmp sgt i64 %i.yf, %i.yd
-  br i1 %.not1706.not, label %bb.hg, label %._crit_edge2180, !llvm.loop !138
+  %.not1706 = icmp slt i64 %i.yk, %i.yd
+  br i1 %.not1706, label %._crit_edge2180, label %bb.hg, !llvm.loop !138
 
 .critedge:                                        ; preds = %bb.hh
   store ptr %.315232177, ptr %0, align 8, !tbaa !81
@@ -1035,7 +1036,7 @@ bb.hi:                                            ; preds = %bb.hv, %bb.hh
 
 bb.hj:                                            ; preds = %.lr.ph2161, %.critedge2
   %.315232159 = phi ptr [ %.21522, %.lr.ph2161 ], [ %i.yz, %.critedge2 ] ; 5 uses
-  %i.yv = phi i64 [ %.71512.promoted, %.lr.ph2161 ], [ %i.za, %.critedge2 ] ; 2 uses
+  %i.yv = phi i64 [ %.71512.promoted, %.lr.ph2161 ], [ %i.za, %.critedge2 ]
   %.not1707 = icmp ult ptr %.315232159, %i.b
   br i1 %.not1707, label %bb.hk, label %.critedge2
 
@@ -1048,10 +1049,10 @@ bb.hk:                                            ; preds = %bb.hj
 
 .critedge2:                                       ; preds = %bb.hj, %bb.hk
   %i.yz = getelementptr i8, ptr %.315232159, i64 -2
-  %i.za = add nsw i64 %i.yv, -1                   ; 2 uses
+  %i.za = add nsw i64 %i.yv, -1                   ; 3 uses
   store i64 %i.za, ptr %.71512, align 8, !tbaa !163
-  %.not1706.not = icmp sgt i64 %i.yv, %i.yt
-  br i1 %.not1706.not, label %bb.hj, label %._crit_edge2162, !llvm.loop !164
+  %.not1706 = icmp slt i64 %i.za, %i.yt
+  br i1 %.not1706, label %._crit_edge2162, label %bb.hj, !llvm.loop !164
 
 .critedge:                                        ; preds = %bb.hk
   store ptr %.315232159, ptr %0, align 8, !tbaa !81
@@ -1454,7 +1455,7 @@ bb.hi:                                            ; preds = %bb.hv, %bb.hh
 
 bb.hj:                                            ; preds = %.lr.ph2161, %.critedge2
   %.315232159 = phi ptr [ %.21522, %.lr.ph2161 ], [ %i.yf, %.critedge2 ] ; 5 uses
-  %i.yc = phi i64 [ %.71512.promoted, %.lr.ph2161 ], [ %i.yg, %.critedge2 ] ; 2 uses
+  %i.yc = phi i64 [ %.71512.promoted, %.lr.ph2161 ], [ %i.yg, %.critedge2 ]
   %.not1707 = icmp ult ptr %.315232159, %i.b
   br i1 %.not1707, label %bb.hk, label %.critedge2
 
@@ -1466,10 +1467,10 @@ bb.hk:                                            ; preds = %bb.hj
 
 .critedge2:                                       ; preds = %bb.hj, %bb.hk
   %i.yf = getelementptr i8, ptr %.315232159, i64 -4
-  %i.yg = add nsw i64 %i.yc, -1                   ; 2 uses
+  %i.yg = add nsw i64 %i.yc, -1                   ; 3 uses
   store i64 %i.yg, ptr %.71512, align 8, !tbaa !184
-  %.not1706.not = icmp sgt i64 %i.yc, %i.ya
-  br i1 %.not1706.not, label %bb.hj, label %._crit_edge2162, !llvm.loop !185
+  %.not1706 = icmp slt i64 %i.yg, %i.ya
+  br i1 %.not1706, label %._crit_edge2162, label %bb.hj, !llvm.loop !185
 
 .critedge:                                        ; preds = %bb.hk
   store ptr %.315232159, ptr %0, align 8, !tbaa !81

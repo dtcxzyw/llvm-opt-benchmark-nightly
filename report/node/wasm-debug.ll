@@ -201,7 +201,8 @@ _ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16H
   br label %._crit_edge
 
 .lr.ph181.preheader:                              ; preds = %.loopexit
-  %i.eu = ashr i64 %i.er, 32
+  %i.eu = ashr i64 %i.er, 32                      ; 2 uses
+  %3 = add nsw i64 %i.eu, -1
   %i.ev = sext i32 %i.cb to i64                   ; 2 uses
   br label %.lr.ph181
 
@@ -251,13 +252,13 @@ bb.ae:                                            ; preds = %bb.ad
   br label %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit82
 
 .lr.ph181:                                        ; preds = %.lr.ph181.preheader, %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit87
-  %indvars.iv183.a = phi i64 [ %i.eu, %.lr.ph181.preheader ], [ %indvars.iv.next184, %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit87 ] ; 2 uses
-  %indvars.iv.next184 = add nsw i64 %indvars.iv183.a, -1 ; 3 uses
+  %indvars.iv183.a = phi i64 [ %i.eu, %.lr.ph181.preheader ], [ %indvars.iv.next186, %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit87 ] ; 2 uses
+  %indvars.iv183 = phi i64 [ %3, %.lr.ph181.preheader ], [ %indvars.iv.next184, %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit87 ] ; 2 uses
   %i.fo = load i64, ptr %.sroa.0133.0, align 8
   %i.fp = add i64 %i.fo, -1
   %i.fq = inttoptr i64 %i.fp to ptr
   %i.fr = getelementptr inbounds nuw i8, ptr %i.fq, i64 16
-  %i.fs = getelementptr inbounds [8 x i8], ptr %i.fr, i64 %indvars.iv.next184
+  %i.fs = getelementptr inbounds [8 x i8], ptr %i.fr, i64 %indvars.iv183
   %i.ft = load atomic volatile i64, ptr %i.fs monotonic, align 8 ; 6 uses
   %i.fu = load i64, ptr %i.br, align 8
   %i.fv = icmp eq i64 %i.ft, %i.fu
@@ -305,8 +306,10 @@ bb.ak:                                            ; preds = %bb.aj
   br label %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit87
 
 _ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit87: ; preds = %bb.ak, %bb.aj, %bb.af, %.lr.ph181
-  %.not.not = icmp sgt i64 %indvars.iv.next184, %i.ev
-  br i1 %.not.not, label %.lr.ph181, label %._crit_edge, !llvm.loop !38
+  %indvars.iv.next184 = add nsw i64 %indvars.iv183, -1 ; 2 uses
+  %.not = icmp slt i64 %indvars.iv.next184, %i.ev
+  %indvars.iv.next186 = add nsw i64 %indvars.iv183.a, -1
+  br i1 %.not, label %._crit_edge, label %.lr.ph181, !llvm.loop !38
 
 _ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit82: ; preds = %bb.ae, %bb.ad, %._crit_edge, %_ZN2v88internal6HandleINS0_14BreakPointInfoEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit
   ret void
@@ -709,7 +712,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br label %bb.x
 
 bb.n:                                             ; preds = %.lr.ph58, %bb.w
-  %indvars.iv = phi i64 [ %i.bi, %.lr.ph58 ], [ %indvars.iv.next, %bb.w ] ; 3 uses
+  %indvars.iv = phi i64 [ %i.bi, %.lr.ph58 ], [ %indvars.iv.next, %bb.w ] ; 2 uses
   %i.bj = load ptr, ptr %i.f, align 8
   %i.bk = getelementptr inbounds nuw [32 x i8], ptr %i.bj, i64 %indvars.iv ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 16 ; 2 uses
@@ -842,10 +845,10 @@ _ZN2v88internal4wasm7DecoderD2Ev.exit:            ; preds = %.loopexit, %_ZNKSt7
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.n, %_ZN2v88internal4wasm7DecoderD2Ev.exit
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  %i.df = trunc nuw i64 %indvars.iv to i32
-  %.not49.not = icmp sgt i32 %.045, %i.df
-  br i1 %.not49.not, label %bb.n, label %._crit_edge, !llvm.loop !42
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %i.df = trunc nuw i64 %indvars.iv.next to i32
+  %.not49 = icmp slt i32 %.045, %i.df
+  br i1 %.not49, label %._crit_edge, label %bb.n, !llvm.loop !42
 
 bb.x:                                             ; preds = %bb.g, %bb.l, %._crit_edge, %bb.a, %bb.b, %bb.d, %bb.e, %bb.f
   %.2 = phi i1 [ false, %bb.a ], [ false, %bb.f ], [ false, %bb.e ], [ false, %bb.d ], [ false, %bb.b ], [ false, %bb.g ], [ true, %._crit_edge ], [ false, %bb.l ]

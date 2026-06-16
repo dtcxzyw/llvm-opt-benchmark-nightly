@@ -201,7 +201,8 @@ bb.a:
   %i.u = add nuw i32 %i.i, 1
   %i.v = zext nneg i32 %i.a to i64
   %i.w = add nsw i64 %i.v, -3
-  %i.x = zext nneg i32 %i.e to i64
+  %8 = add nuw nsw i32 %i.e, 1
+  %i.x = zext nneg i32 %8 to i64
   %wide.trip.count = zext i32 %i.u to i64         ; 3 uses
   %i.y = add nuw nsw i64 %wide.trip.count, 2
   %i.z = sub nsw i64 %i.y, %i.s                   ; 2 uses
@@ -223,7 +224,7 @@ bb.a:
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
-  %indvars.iv112 = phi i64 [ %i.w, %.preheader.preheader ], [ %indvars.iv.next113, %._crit_edge ] ; 3 uses
+  %indvars.iv112 = phi i64 [ %i.w, %.preheader.preheader ], [ %indvars.iv.next113, %._crit_edge ] ; 2 uses
   %.090 = phi ptr [ %i.o, %.preheader.preheader ], [ %i.cq, %._crit_edge ] ; 3 uses
   %.05189 = phi ptr [ %i.r, %.preheader.preheader ], [ %i.cr, %._crit_edge ] ; 3 uses
   %.sroa.18.087 = phi i32 [ 0, %.preheader.preheader ], [ %.lcssa, %._crit_edge ] ; 3 uses
@@ -350,11 +351,11 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %.lcssa126 = phi i32 [ %i.bq, %middle.block ], [ %i.cl, %scalar.ph ] ; 2 uses
   %.lcssa125 = phi i32 [ %i.bp, %middle.block ], [ %i.cn, %scalar.ph ] ; 2 uses
   %.lcssa = phi i32 [ %i.bo, %middle.block ], [ %i.cp, %scalar.ph ] ; 2 uses
-  %indvars.iv.next113 = add nuw nsw i64 %indvars.iv112, 1
+  %indvars.iv.next113 = add nuw nsw i64 %indvars.iv112, 1 ; 2 uses
   %i.cq = getelementptr inbounds i8, ptr %.090, i64 %i.k
   %i.cr = getelementptr inbounds i8, ptr %.05189, i64 %i.l
-  %.not.not = icmp slt i64 %indvars.iv112, %i.x
-  br i1 %.not.not, label %.preheader, label %._crit_edge91.loopexit105, !llvm.loop !23
+  %exitcond116 = icmp eq i64 %indvars.iv.next113, %i.x
+  br i1 %exitcond116, label %._crit_edge91.loopexit105, label %.preheader, !llvm.loop !23
 
 ._crit_edge91.loopexit105:                        ; preds = %._crit_edge
   %i.cs = zext i32 %.lcssa128.a to i64

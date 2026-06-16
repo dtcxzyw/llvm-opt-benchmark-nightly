@@ -97,23 +97,27 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !18   ; 3 uses
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !18   ; 4 uses
   %.not = icmp slt i32 %1, %i.d
   br i1 %.not, label %.lr.ph.a, label %.loopexit
 
 .lr.ph.a:                                         ; preds = %bb.b
-  %i.e = add nuw nsw i32 %1, 1                    ; 2 uses
+  %i.e = add nuw nsw i32 %1, 1                    ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.g = load i64, ptr %i.f, align 8, !tbaa !20
   %i.h = add i64 %i.g, %2
   store i64 %i.h, ptr %i.f, align 8, !tbaa !20
+  %.not2224 = icmp samesign ugt i32 %i.e, %i.d
+  br i1 %.not2224, label %.loopexit, label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.a
   %3 = icmp slt i64 %2, 0
   %4 = sub nsw i64 0, %2
   %5 = load ptr, ptr %0, align 8, !tbaa !19       ; 2 uses
   br i1 %3, label %.lr.ph.split.us, label %.lr.ph.split
 
-.lr.ph.split.us:                                  ; preds = %.lr.ph.a, %bb.c
-  %.025.us = phi i32 [ %i.o, %bb.c ], [ %i.e, %.lr.ph.a ] ; 4 uses
+.lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.c
+  %.025.us = phi i32 [ %i.o, %bb.c ], [ %i.e, %.lr.ph ] ; 4 uses
   %i.i = zext nneg i32 %.025.us to i64
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.i ; 2 uses
   %i.k = load i64, ptr %i.j, align 8, !tbaa !21   ; 2 uses
@@ -129,8 +133,8 @@ bb.c:                                             ; preds = %.lr.ph.split.us
   %.not22.us = icmp sgt i32 %i.o, %i.d
   br i1 %.not22.us, label %.loopexit, label %.lr.ph.split.us, !llvm.loop !26
 
-.lr.ph.split:                                     ; preds = %.lr.ph.a, %.lr.ph.split
-  %.025 = phi i32 [ %i.v, %.lr.ph.split ], [ %i.e, %.lr.ph.a ] ; 4 uses
+.lr.ph.split:                                     ; preds = %.lr.ph, %.lr.ph.split
+  %.025 = phi i32 [ %i.v, %.lr.ph.split ], [ %i.e, %.lr.ph ] ; 4 uses
   %i.p = zext nneg i32 %.025 to i64
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.p ; 2 uses
   %i.r = load i64, ptr %i.q, align 8, !tbaa !21
@@ -147,7 +151,7 @@ bb.c:                                             ; preds = %.lr.ph.split.us
   tail call void @abort() #10
   unreachable
 
-.loopexit:                                        ; preds = %.lr.ph.split, %bb.c, %bb.a, %bb.b
+.loopexit:                                        ; preds = %.lr.ph.split, %bb.c, %.lr.ph.a, %bb.a, %bb.b
   ret void
 }
 

@@ -201,8 +201,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #12
   store i32 2, ptr %i.h, align 4, !tbaa !67
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.not.not143 = icmp sgt i32 %3, %2
-  br i1 %.not.not143, label %.lr.ph, label %._crit_edge.thread
+  %.077143 = add nsw i32 %3, -1                   ; 2 uses
+  %.not144 = icmp slt i32 %.077143, %2
+  br i1 %.not144, label %._crit_edge.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 184
@@ -211,16 +212,16 @@ bb.a:
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 44
-  %i.p = sext i32 %3 to i64
+  %i.p = sext i32 %.077143 to i64
   %i.q = sext i32 %2 to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %.loopexit
   %indvars.iv = phi i64 [ %i.p, %.lr.ph ], [ %indvars.iv.next, %.loopexit ] ; 3 uses
   %.076145 = phi i32 [ -1, %.lr.ph ], [ %.2, %.loopexit ] ; 5 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 3 uses
+  %.077.in145 = phi i32 [ %3, %.lr.ph ], [ %8, %.loopexit ] ; 2 uses
   %i.r = load ptr, ptr %i.j, align 8, !tbaa !33   ; 3 uses
-  %i.s = getelementptr inbounds [16 x i8], ptr %i.r, i64 %indvars.iv.next ; 10 uses
+  %i.s = getelementptr inbounds [16 x i8], ptr %i.r, i64 %indvars.iv ; 10 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 12
   %i.u = load i32, ptr %i.t, align 4, !tbaa !61   ; 3 uses
   %i.v = icmp sgt i32 %i.u, -1
@@ -468,13 +469,14 @@ _Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit147:       ; preds = %bb.w, %bb.v
   br label %_Z8btSetMinIfEvRT_RKS0_.exit.i
 
 .loopexit.loopexit:                               ; preds = %bb.b
-  %i.fx = getelementptr [16 x i8], ptr %i.r, i64 %indvars.iv ; 8 uses
+  %5 = sext i32 %.077.in145 to i64
+  %i.fx = getelementptr [16 x i8], ptr %i.r, i64 %5 ; 8 uses
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fx, i64 12
   %i.fz = load i32, ptr %i.fy, align 4, !tbaa !61 ; 2 uses
   %i.ga = getelementptr i8, ptr %i.fx, i64 16
-  %5 = sext i32 %i.fz to i64
-  %6 = sub nsw i64 %indvars.iv, %5
-  %i.gb = getelementptr inbounds [16 x i8], ptr %i.r, i64 %6
+  %6 = sub nsw i32 %.077.in145, %i.fz
+  %7 = sext i32 %6 to i64
+  %i.gb = getelementptr inbounds [16 x i8], ptr %i.r, i64 %7
   %i.gc = icmp slt i32 %i.fz, 0
   %i.gd = select i1 %i.gc, ptr %i.gb, ptr %i.ga   ; 6 uses
   %i.ge = getelementptr inbounds nuw i8, ptr %i.fx, i64 6
@@ -526,8 +528,10 @@ _Z8btSetMinIfEvRT_RKS0_.exit.i.loopexit147:       ; preds = %bb.w, %bb.v
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %_Z8btSetMinIfEvRT_RKS0_.exit.i
   %.2 = phi i32 [ %.1, %_Z8btSetMinIfEvRT_RKS0_.exit.i ], [ %.076145, %.loopexit.loopexit ] ; 3 uses
-  %.not.not = icmp sgt i64 %indvars.iv.next, %i.q
-  br i1 %.not.not, label %bb.b, label %._crit_edge
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %.not = icmp slt i64 %indvars.iv.next, %i.q
+  %8 = trunc nsw i64 %indvars.iv to i32
+  br i1 %.not, label %._crit_edge, label %bb.b
 
 ._crit_edge:                                      ; preds = %.loopexit
   %i.hf = icmp sgt i32 %.2, -1

@@ -201,10 +201,9 @@ bb.j:                                             ; preds = %bb.f
   %.not306 = icmp eq i32 %6, 0                    ; 3 uses
   %spec.store.select = select i1 %.not306, ptr null, ptr %10 ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.br = load i32, ptr %i.bq, align 8, !tbaa !47 ; 2 uses
-  %i.bs = add nsw i32 %i.br, 1
-  %.not151 = icmp slt i32 %i.br, %6
-  %spec.select = select i1 %.not151, i32 %i.bs, i32 %6 ; 12 uses
+  %i.br = load i32, ptr %i.bq, align 8, !tbaa !47 ; 3 uses
+  %i.bs = add i32 %i.br, 1                        ; 3 uses
+  %spec.select = tail call i32 @llvm.smin.i32(i32 %i.bs, i32 %6) ; 10 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 9 uses
   %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !70 ; 10 uses
   %i.bv = load i8, ptr %i.bu, align 8, !tbaa !178, !range !48, !noundef !49
@@ -291,7 +290,7 @@ _ZN10duckdb_re2L16ascii_strcasecmpEPKcS1_m.exit.thread: ; preds = %bb.r, %bb.s
   %i.cu = and i32 %i.c, 1073741824
   %i.cv = icmp ne i32 %i.cu, 0
   %i.cw = icmp slt i32 %spec.select, 6
-  %21 = select i1 %i.cv, i1 %i.cw, i1 false
+  %21 = and i1 %i.cv, %i.cw
   %i.cx = getelementptr inbounds nuw i8, ptr %i.bu, i64 96
   %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !181
   %i.cz = icmp ne ptr %i.cy, null                 ; 2 uses
@@ -307,7 +306,7 @@ _ZN10duckdb_re2L16ascii_strcasecmpEPKcS1_m.exit.thread: ; preds = %bb.r, %bb.s
   %i.dd = and i32 %i.c, 1073741824
   %i.de = icmp ne i32 %i.dd, 0
   %i.df = icmp slt i32 %spec.select, 6
-  %22 = select i1 %i.de, i1 %i.df, i1 false
+  %22 = and i1 %i.de, %i.df
   %i.dg = getelementptr inbounds nuw i8, ptr %i.bu, i64 96
   %i.dh = load ptr, ptr %i.dg, align 8, !tbaa !181
   %i.di = icmp ne ptr %i.dh, null                 ; 2 uses
@@ -325,7 +324,7 @@ bb.t:                                             ; preds = %bb.n
   %i.dn = and i32 %i.c, 1073741824
   %i.do = icmp ne i32 %i.dn, 0
   %i.dp = icmp slt i32 %spec.select, 6
-  %23 = select i1 %i.do, i1 %i.dp, i1 false       ; 4 uses
+  %23 = and i1 %i.do, %i.dp                       ; 4 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %i.bu, i64 96
   %i.dr = load ptr, ptr %i.dq, align 8, !tbaa !181
   %i.ds = icmp ne ptr %i.dr, null                 ; 14 uses
@@ -703,7 +702,7 @@ bb.bh:                                            ; preds = %bb.bg, %.thread228,
 bb.bi:                                            ; preds = %bb.bh
   %i.ib = icmp ule i64 %i.af, %i.ia
   %i.ic = icmp sgt i32 %spec.select, 1
-  %or.cond8 = select i1 %i.ib, i1 %i.ic, i1 false
+  %or.cond8 = and i1 %i.ic, %i.ib
   br i1 %or.cond8, label %.thread271, label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi, %bb.bh
@@ -813,15 +812,15 @@ bb.bs:                                            ; preds = %bb.br
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 8 dereferenceable(16) %10, i64 16, i1 false), !tbaa.struct !176
   br label %bb.ci
 
-.thread271:                                       ; preds = %.thread248, %bb.af, %bb.y, %bb.ab, %bb.bl, %bb.bp, %bb.ao, %bb.bg, %bb.ak, %bb.bi, %bb.au, %bb.ar, %bb.ay
-  %.sink = phi ptr [ %9, %bb.af ], [ %9, %bb.ay ], [ %9, %bb.ar ], [ %9, %bb.au ], [ %9, %bb.bi ], [ %9, %bb.ak ], [ %9, %bb.bg ], [ %9, %bb.ao ], [ %9, %bb.bp ], [ %9, %bb.bl ], [ %9, %bb.ab ], [ %9, %bb.y ], [ %10, %.thread248 ]
-  %i.jo = phi i64 [ %i.du, %bb.af ], [ %i.du, %bb.ay ], [ %i.du, %bb.ar ], [ %i.du, %bb.au ], [ %i.ia, %bb.bi ], [ %i.du, %bb.ak ], [ %i.hu, %bb.bg ], [ %i.du, %bb.ao ], [ %i.ia, %bb.bp ], [ %i.ia, %bb.bl ], [ %i.du, %bb.ab ], [ %i.du, %bb.y ], [ %i.jj, %.thread248 ]
-  %i.jp = phi i1 [ %i.ds, %bb.af ], [ %i.ds, %bb.ay ], [ %i.ds, %bb.ar ], [ %i.ds, %bb.au ], [ true, %bb.bi ], [ %i.ds, %bb.ak ], [ %i.ht, %bb.bg ], [ %i.ds, %bb.ao ], [ %i.hz, %bb.bp ], [ %i.hz, %bb.bl ], [ %i.ds, %bb.ab ], [ %i.ds, %bb.y ], [ %i.jk, %.thread248 ]
-  %or.cond12 = phi i1 [ false, %bb.af ], [ false, %bb.ay ], [ false, %bb.ar ], [ false, %bb.au ], [ %i.hy, %bb.bi ], [ false, %bb.ak ], [ true, %bb.bg ], [ false, %bb.ao ], [ %i.hy, %bb.bp ], [ %i.hy, %bb.bl ], [ false, %bb.ab ], [ false, %bb.y ], [ %i.jl, %.thread248 ]
-  %.0139232266283 = phi i64 [ 0, %bb.af ], [ 0, %bb.ay ], [ 0, %bb.ar ], [ 0, %bb.au ], [ %i.ce, %bb.bi ], [ 0, %bb.ak ], [ %i.ce, %bb.bg ], [ 0, %bb.ao ], [ %i.ce, %bb.bp ], [ %i.ce, %bb.bl ], [ 0, %bb.ab ], [ 0, %bb.y ], [ %.0139232, %.thread248 ]
-  %.2125269279 = phi i1 [ true, %bb.af ], [ true, %bb.ay ], [ true, %bb.ar ], [ true, %bb.au ], [ true, %bb.bi ], [ true, %bb.ak ], [ true, %bb.bg ], [ true, %bb.ao ], [ true, %bb.bp ], [ true, %bb.bl ], [ true, %bb.ab ], [ true, %bb.y ], [ false, %.thread248 ] ; 3 uses
-  %.1138 = phi i32 [ 0, %bb.af ], [ 0, %bb.ay ], [ 0, %bb.ar ], [ 0, %bb.au ], [ 1, %bb.bi ], [ 0, %bb.ak ], [ 1, %bb.bg ], [ 0, %bb.ao ], [ 1, %bb.bp ], [ 1, %bb.bl ], [ 0, %bb.ab ], [ 0, %bb.y ], [ 1, %.thread248 ] ; 2 uses
-  %.2136 = phi i32 [ %.lobit, %bb.af ], [ %.lobit, %bb.ay ], [ %.lobit, %bb.ar ], [ %.lobit, %bb.au ], [ %.0134253, %bb.bi ], [ %.lobit, %bb.ak ], [ %.0134254, %bb.bg ], [ %.lobit, %bb.ao ], [ %.0134253, %bb.bp ], [ %.0134253, %bb.bl ], [ %.lobit, %bb.ab ], [ %.lobit, %bb.y ], [ 2, %.thread248 ] ; 3 uses
+.thread271:                                       ; preds = %.thread248, %bb.af, %bb.y, %bb.ab, %bb.bl, %bb.bp, %bb.ao, %bb.ak, %bb.bg, %bb.bi, %bb.au, %bb.ar, %bb.ay
+  %.sink = phi ptr [ %9, %bb.af ], [ %9, %bb.ay ], [ %9, %bb.ar ], [ %9, %bb.au ], [ %9, %bb.bi ], [ %9, %bb.bg ], [ %9, %bb.ak ], [ %9, %bb.ao ], [ %9, %bb.bp ], [ %9, %bb.bl ], [ %9, %bb.ab ], [ %9, %bb.y ], [ %10, %.thread248 ]
+  %i.jo = phi i64 [ %i.du, %bb.af ], [ %i.du, %bb.ay ], [ %i.du, %bb.ar ], [ %i.du, %bb.au ], [ %i.ia, %bb.bi ], [ %i.hu, %bb.bg ], [ %i.du, %bb.ak ], [ %i.du, %bb.ao ], [ %i.ia, %bb.bp ], [ %i.ia, %bb.bl ], [ %i.du, %bb.ab ], [ %i.du, %bb.y ], [ %i.jj, %.thread248 ]
+  %i.jp = phi i1 [ %i.ds, %bb.af ], [ %i.ds, %bb.ay ], [ %i.ds, %bb.ar ], [ %i.ds, %bb.au ], [ true, %bb.bi ], [ %i.ht, %bb.bg ], [ %i.ds, %bb.ak ], [ %i.ds, %bb.ao ], [ %i.hz, %bb.bp ], [ %i.hz, %bb.bl ], [ %i.ds, %bb.ab ], [ %i.ds, %bb.y ], [ %i.jk, %.thread248 ]
+  %or.cond12 = phi i1 [ false, %bb.af ], [ false, %bb.ay ], [ false, %bb.ar ], [ false, %bb.au ], [ %i.hy, %bb.bi ], [ true, %bb.bg ], [ false, %bb.ak ], [ false, %bb.ao ], [ %i.hy, %bb.bp ], [ %i.hy, %bb.bl ], [ false, %bb.ab ], [ false, %bb.y ], [ %i.jl, %.thread248 ]
+  %.0139232266283 = phi i64 [ 0, %bb.af ], [ 0, %bb.ay ], [ 0, %bb.ar ], [ 0, %bb.au ], [ %i.ce, %bb.bi ], [ %i.ce, %bb.bg ], [ 0, %bb.ak ], [ 0, %bb.ao ], [ %i.ce, %bb.bp ], [ %i.ce, %bb.bl ], [ 0, %bb.ab ], [ 0, %bb.y ], [ %.0139232, %.thread248 ]
+  %.2125269279 = phi i1 [ true, %bb.af ], [ true, %bb.ay ], [ true, %bb.ar ], [ true, %bb.au ], [ true, %bb.bi ], [ true, %bb.bg ], [ true, %bb.ak ], [ true, %bb.ao ], [ true, %bb.bp ], [ true, %bb.bl ], [ true, %bb.ab ], [ true, %bb.y ], [ false, %.thread248 ] ; 3 uses
+  %.1138 = phi i32 [ 0, %bb.af ], [ 0, %bb.ay ], [ 0, %bb.ar ], [ 0, %bb.au ], [ 1, %bb.bi ], [ 1, %bb.bg ], [ 0, %bb.ak ], [ 0, %bb.ao ], [ 1, %bb.bp ], [ 1, %bb.bl ], [ 0, %bb.ab ], [ 0, %bb.y ], [ 1, %.thread248 ] ; 2 uses
+  %.2136 = phi i32 [ %.lobit, %bb.af ], [ %.lobit, %bb.ay ], [ %.lobit, %bb.ar ], [ %.lobit, %bb.au ], [ %.0134253, %bb.bi ], [ %.0134254, %bb.bg ], [ %.lobit, %bb.ak ], [ %.lobit, %bb.ao ], [ %.0134253, %bb.bp ], [ %.0134253, %bb.bl ], [ %.lobit, %bb.ab ], [ %.lobit, %bb.y ], [ 2, %.thread248 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #29
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %17, ptr noundef nonnull align 8 dereferenceable(16) %.sink, i64 16, i1 false)
   br i1 %or.cond12, label %bb.bt, label %bb.bx
@@ -961,32 +960,33 @@ bb.cj:                                            ; preds = %bb.ci
   br label %bb.ck
 
 bb.ck:                                            ; preds = %bb.cj, %bb.ci
-  %i.kx = icmp slt i32 %spec.select, %6
+  %i.kx = icmp slt i32 %i.bs, %6
   br i1 %i.kx, label %.lr.ph.preheader, label %.thread243
 
 .lr.ph.preheader:                                 ; preds = %bb.ck
-  %i.ky = sext i32 %spec.select to i64            ; 4 uses
-  %wide.trip.count = sext i32 %6 to i64           ; 3 uses
-  %24 = sub nsw i64 %wide.trip.count, %i.ky
-  %xtraiter = and i64 %24, 7                      ; 2 uses
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %i.ky = sext i32 %i.bs to i64                   ; 2 uses
+  %24 = xor i32 %i.br, -1
+  %25 = add i32 %6, %24
+  %26 = add i32 %6, -2
+  %27 = sub i32 %26, %i.br
+  %xtraiter = and i32 %25, 7                      ; 2 uses
+  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader, %.lr.ph.prol
   %indvars.iv.prol = phi i64 [ %indvars.iv.next.prol, %.lr.ph.prol ], [ %i.ky, %.lr.ph.preheader ] ; 2 uses
-  %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.prol ], [ 0, %.lr.ph.preheader ]
+  %prol.iter = phi i32 [ %prol.iter.next, %.lr.ph.prol ], [ 0, %.lr.ph.preheader ]
   %i.kz = getelementptr inbounds [16 x i8], ptr %5, i64 %indvars.iv.prol
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.kz, i8 0, i64 16, i1 false)
   %indvars.iv.next.prol = add nsw i64 %indvars.iv.prol, 1 ; 2 uses
-  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
-  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
+  %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol, !llvm.loop !185
 
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
   %indvars.iv.unr = phi i64 [ %i.ky, %.lr.ph.preheader ], [ %indvars.iv.next.prol, %.lr.ph.prol ]
-  %25 = sub nsw i64 %i.ky, %wide.trip.count
-  %26 = icmp ugt i64 %25, -8
-  br i1 %26, label %.thread243, label %.lr.ph
+  %28 = icmp ult i32 %27, 7
+  br i1 %28, label %.thread243, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
   %indvars.iv = phi i64 [ %indvars.iv.next.7, %.lr.ph ], [ %indvars.iv.unr, %.lr.ph.prol.loopexit ] ; 9 uses
@@ -1014,7 +1014,8 @@ bb.ck:                                            ; preds = %bb.cj, %bb.ci
   %i.lo = getelementptr i8, ptr %i.ln, i64 112
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.lo, i8 0, i64 16, i1 false)
   %indvars.iv.next.7 = add nsw i64 %indvars.iv, 8 ; 2 uses
-  %exitcond.not.7 = icmp eq i64 %indvars.iv.next.7, %wide.trip.count
+  %lftr.wideiv.7 = trunc i64 %indvars.iv.next.7 to i32
+  %exitcond.not.7 = icmp eq i32 %6, %lftr.wideiv.7
   br i1 %exitcond.not.7, label %.thread243, label %.lr.ph, !llvm.loop !187
 
 .thread243:                                       ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.ck, %bb.aa, %.thread286, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit212.a, %bb.ba, %bb.bk, %bb.aq, %bb.aj, %bb.ah, %bb.cg, %bb.v
@@ -1417,13 +1418,13 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #27
 declare i32 @llvm.smax.i32(i32, i32) #28
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #28
+declare i32 @llvm.smin.i32(i32, i32) #28
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #28
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #28
+declare i64 @llvm.umin.i64(i64, i64) #28
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

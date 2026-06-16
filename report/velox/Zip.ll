@@ -201,12 +201,13 @@ bb.s:                                             ; preds = %bb.r
   br i1 %.not37.i.i.not.i.i927.not, label %.critedge.i.i.i.i, label %.lr.ph930
 
 bb.t:                                             ; preds = %.lr.ph930
-  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i928, 64 ; 2 uses
-  %.not37.i.i.not.i.i = icmp samesign ult i64 %indvars.iv.next.i.i, %i.cv
-  br i1 %.not37.i.i.not.i.i, label %.lr.ph930, label %.critedge.i.i.i.i, !llvm.loop !308
+  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.next.i.i929, 64 ; 2 uses
+  %.not37.i.i.i.i = icmp samesign ugt i64 %indvars.iv.next.i.i, %i.cv
+  br i1 %.not37.i.i.i.i, label %.critedge.i.i.i.i, label %.lr.ph930, !llvm.loop !308
 
 .lr.ph930:                                        ; preds = %bb.s, %bb.t
-  %indvars.iv.i.i928 = phi i64 [ %indvars.iv.next.i.i, %bb.t ], [ 0, %bb.s ] ; 2 uses
+  %indvars.iv.next.i.i929 = phi i64 [ %indvars.iv.next.i.i, %bb.t ], [ 64, %bb.s ] ; 2 uses
+  %indvars.iv.i.i928 = phi i64 [ %indvars.iv.next.i.i929, %bb.t ], [ 0, %bb.s ]
   %i.cw = lshr exact i64 %indvars.iv.i.i928, 3
   %i.cx = getelementptr inbounds nuw i8, ptr %i.ct, i64 %i.cw
   %i.cy = load i64, ptr %i.cx, align 8, !tbaa !160
@@ -609,12 +610,13 @@ bb.en:                                            ; preds = %bb.em
   br i1 %.not37.i.i.not.i.i286931.not, label %.critedge.i.i.i.i287, label %.lr.ph934
 
 bb.eo:                                            ; preds = %.lr.ph934
-  %indvars.iv.next.i.i291 = add nuw nsw i64 %indvars.iv.i.i285932, 64 ; 2 uses
-  %.not37.i.i.not.i.i286 = icmp samesign ult i64 %indvars.iv.next.i.i291, %i.aqt
-  br i1 %.not37.i.i.not.i.i286, label %.lr.ph934, label %.critedge.i.i.i.i287, !llvm.loop !308
+  %indvars.iv.next.i.i291 = add nuw nsw i64 %indvars.iv.next.i.i286934, 64 ; 2 uses
+  %.not37.i.i.i.i287 = icmp samesign ugt i64 %indvars.iv.next.i.i291, %i.aqt
+  br i1 %.not37.i.i.i.i287, label %.critedge.i.i.i.i287, label %.lr.ph934, !llvm.loop !308
 
 .lr.ph934:                                        ; preds = %bb.en, %bb.eo
-  %indvars.iv.i.i285932 = phi i64 [ %indvars.iv.next.i.i291, %bb.eo ], [ 0, %bb.en ] ; 2 uses
+  %indvars.iv.next.i.i286934 = phi i64 [ %indvars.iv.next.i.i291, %bb.eo ], [ 64, %bb.en ] ; 2 uses
+  %indvars.iv.i.i285932 = phi i64 [ %indvars.iv.next.i.i286934, %bb.eo ], [ 0, %bb.en ]
   %i.aqu = lshr exact i64 %indvars.iv.i.i285932, 3
   %i.aqv = getelementptr inbounds nuw i8, ptr %i.aqr, i64 %i.aqu
   %i.aqw = load i64, ptr %i.aqv, align 8, !tbaa !160

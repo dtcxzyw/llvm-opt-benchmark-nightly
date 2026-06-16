@@ -199,15 +199,15 @@ bb.b:                                             ; preds = %bb.c
   br i1 %i.i, label %bb.c, label %._crit_edge, !llvm.loop !15
 
 bb.c:                                             ; preds = %.lr.ph57, %bb.b
-  %indvars.iv56 = phi i64 [ %i.h, %.lr.ph57 ], [ %indvars.iv.next, %bb.b ] ; 3 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv56, -1 ; 2 uses
+  %indvars.iv56 = phi i64 [ %i.h, %.lr.ph57 ], [ %indvars.iv.next, %bb.b ] ; 2 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv56, -1 ; 3 uses
   %gep = getelementptr i8, ptr %invariant.gep, i64 %indvars.iv.next
   %i.j = load i8, ptr %gep, align 1, !tbaa !14
   %i.k = icmp eq i8 %i.j, 32
   br i1 %i.k, label %bb.b, label %.critedge, !llvm.loop !15
 
 .critedge:                                        ; preds = %bb.c
-  %i.l = trunc nsw i64 %indvars.iv56 to i32
+  %i.l = trunc nsw i64 %indvars.iv.next to i32
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.critedge, %.lr.ph
@@ -223,8 +223,8 @@ bb.c:                                             ; preds = %.lr.ph57, %bb.b
   %i.u = load ptr, ptr @out_fp, align 8, !tbaa !8
   %i.v = tail call i32 @putc(i32 noundef %i.t, ptr noundef %i.u) ; 0 uses
   %i.w = add nuw nsw i32 %.02331, 1               ; 2 uses
-  %exitcond.not = icmp eq i32 %i.w, %i.l
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !17
+  %.not29 = icmp sgt i32 %i.w, %i.l
+  br i1 %.not29, label %._crit_edge, label %.lr.ph, !llvm.loop !17
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph, %.lr.ph35
   %i.x = load ptr, ptr @out_fp, align 8, !tbaa !8
@@ -321,15 +321,15 @@ bb.b:                                             ; preds = %bb.c
   br i1 %i.i, label %bb.c, label %._crit_edge, !llvm.loop !19
 
 bb.c:                                             ; preds = %.lr.ph27, %bb.b
-  %indvars.iv26 = phi i64 [ %i.h, %.lr.ph27 ], [ %indvars.iv.next, %bb.b ] ; 3 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv26, -1 ; 2 uses
+  %indvars.iv26 = phi i64 [ %i.h, %.lr.ph27 ], [ %indvars.iv.next, %bb.b ] ; 2 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv26, -1 ; 3 uses
   %gep = getelementptr i8, ptr %invariant.gep, i64 %indvars.iv.next
   %i.j = load i8, ptr %gep, align 1, !tbaa !14
   %i.k = icmp eq i8 %i.j, 32
   br i1 %i.k, label %bb.b, label %.critedge, !llvm.loop !19
 
 .critedge:                                        ; preds = %bb.c
-  %i.l = trunc nsw i64 %indvars.iv26 to i32
+  %i.l = trunc nsw i64 %indvars.iv.next to i32
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.critedge, %.lr.ph
@@ -345,8 +345,8 @@ bb.c:                                             ; preds = %.lr.ph27, %bb.b
   %i.u = load ptr, ptr @out_fp, align 8, !tbaa !8
   %i.v = tail call i32 @putc(i32 noundef %i.t, ptr noundef %i.u) ; 0 uses
   %i.w = add nuw nsw i32 %.01114, 1               ; 2 uses
-  %exitcond.not = icmp eq i32 %i.w, %i.l
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !20
+  %.not = icmp sgt i32 %i.w, %i.l
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !20
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph, %.lr.ph18
   %i.x = load ptr, ptr @out_fp, align 8, !tbaa !8
@@ -530,6 +530,7 @@ bb.f:                                             ; preds = %bb.e
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
   %i.aw = zext nneg i32 %i.o to i64               ; 5 uses
   %i.ax = zext nneg i32 %i.ao to i64
+  %4 = add nsw i64 %i.ax, -1
   %i.ay = sext i32 %i.al to i64
   %i.az = sext i32 %i.ap to i64
   %wide.trip.count = zext nneg i32 %i.ac to i64   ; 3 uses
@@ -542,10 +543,9 @@ bb.f:                                             ; preds = %bb.e
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %..loopexit_crit_edge.us
-  %indvars.iv57.in = phi i64 [ %i.ax, %.preheader.us.preheader ], [ %indvars.iv57, %..loopexit_crit_edge.us ]
+  %indvars.iv57.in = phi i64 [ %4, %.preheader.us.preheader ], [ %indvars.iv.next58, %..loopexit_crit_edge.us ] ; 2 uses
   %.03753.us = phi i32 [ 0, %.preheader.us.preheader ], [ %.lcssa, %..loopexit_crit_edge.us ] ; 3 uses
-  %indvars.iv57 = add nsw i64 %indvars.iv57.in, -1 ; 3 uses
-  %i.bd = mul nsw i64 %indvars.iv57, %i.az
+  %i.bd = mul nsw i64 %indvars.iv57.in, %i.az
   %invariant.gep = getelementptr i8, ptr %i.av, i64 %i.bd ; 3 uses
   br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
@@ -592,8 +592,9 @@ bb.f:                                             ; preds = %bb.e
 
 ..loopexit_crit_edge.us:                          ; preds = %.preheader.us.new, %.prol.loopexit
   %.lcssa = phi i32 [ %.lcssa.unr, %.prol.loopexit ], [ %i.bp, %.preheader.us.new ]
-  %.not44.not.us = icmp sgt i64 %indvars.iv57, %i.ay
-  br i1 %.not44.not.us, label %.preheader.us, label %.loopexit48, !llvm.loop !24
+  %indvars.iv.next58 = add nsw i64 %indvars.iv57.in, -1 ; 2 uses
+  %.not44.us = icmp slt i64 %indvars.iv.next58, %i.ay
+  br i1 %.not44.us, label %.loopexit48, label %.preheader.us, !llvm.loop !24
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.bu = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 51, i32 noundef 4, ptr noundef nonnull @.str.21, i32 noundef 2, ptr noundef nonnull %i.a, ptr noundef nonnull %i.d, i32 noundef undef, i32 noundef undef) #11 ; 0 uses

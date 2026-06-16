@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.b
   %i.j = call ptr @ures_getByKeyWithFallback_78(ptr noundef %4, ptr noundef %5, ptr noundef null, ptr noundef nonnull %i.a) #13 ; 4 uses
   %i.k = load i32, ptr %i.a, align 4
   %i.l = icmp sgt i32 %i.k, 0
-  %i.m = add i32 %6, 1                            ; 6 uses
+  %i.m = add i32 %6, 1                            ; 5 uses
   %i.n = sext i32 %i.m to i64                     ; 5 uses
   %i.o = icmp slt i32 %6, -1
   %i.p = shl nsw i64 %i.n, 6
@@ -299,7 +299,6 @@ bb.f:                                             ; preds = %bb.c
   %.not3948 = icmp eq ptr %i.j, null
   %.not39 = select i1 %i.l, i1 true, i1 %.not3948
   %.not39.fr = freeze i1 %.not39
-  %wide.trip.count57 = zext i32 %i.m to i64       ; 2 uses
   br i1 %.not39.fr, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit.us
@@ -334,8 +333,9 @@ _ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
   %indvars.iv.next55 = add nuw nsw i64 %indvars.iv54, 1 ; 2 uses
-  %exitcond58.not = icmp eq i64 %indvars.iv.next55, %wide.trip.count57
-  br i1 %exitcond58.not, label %.loopexit, label %.lr.ph.split.us, !llvm.loop !119
+  %11 = trunc nuw i64 %indvars.iv.next55 to i32
+  %.not37.us = icmp slt i32 %6, %11
+  br i1 %.not37.us, label %.loopexit, label %.lr.ph.split.us, !llvm.loop !119
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit
   %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit ], [ 0, %.lr.ph ] ; 5 uses
@@ -405,8 +405,9 @@ _ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count57
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph.split, !llvm.loop !119
+  %12 = trunc nuw i64 %indvars.iv.next to i32
+  %.not37 = icmp slt i32 %6, %12
+  br i1 %.not37, label %.loopexit, label %.lr.ph.split, !llvm.loop !119
 
 .loopexit:                                        ; preds = %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit, %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit.us, %.loopexit49.thread, %.loopexit49, %bb.f
   %.not.i43 = icmp eq ptr %i.j, null

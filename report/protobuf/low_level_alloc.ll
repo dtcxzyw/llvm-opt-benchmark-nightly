@@ -201,26 +201,27 @@ bb.f:                                             ; preds = %_ZN4absl12lts_20250
 bb.g:                                             ; preds = %_ZN4absl12lts_2025051213base_internalL7IntLog2Emm.exit.i
   %spec.select12.i = call i64 @llvm.umin.i64(i64 %i.ab, i64 %.06.lcssa.i.i)
   %spec.select.i = trunc nuw nsw i64 %spec.select12.i to i32
-  %i.ao = call noundef range(i32 1, 30) i32 @llvm.umin.i32(i32 %spec.select.i, i32 29) ; 3 uses
+  %i.ao = call noundef range(i32 1, 30) i32 @llvm.umin.i32(i32 %spec.select.i, i32 29)
+  %4 = add nsw i32 %i.ao, -1                      ; 3 uses
   %i.ap = load i32, ptr %i.ad, align 8, !tbaa !26 ; 3 uses
-  %.not78 = icmp sgt i32 %i.ao, %i.ap
-  br i1 %.not78, label %.critedge.thread, label %.preheader
+  %5 = icmp slt i32 %4, %i.ap
+  br i1 %5, label %.preheader, label %.critedge.thread
 
 .preheader:                                       ; preds = %bb.g
-  %i.aq = zext nneg i32 %i.ao to i64
+  %i.aq = zext nneg i32 %4 to i64
   br label %bb.h
 
 bb.h:                                             ; preds = %.preheader, %bb.o
   %.073 = phi ptr [ %i.at, %bb.o ], [ %i.ac, %.preheader ] ; 6 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %.073, i64 32
   %i.as = load i32, ptr %i.ar, align 8, !tbaa !46
-  %.not.i93.not = icmp sgt i32 %i.ao, %i.as
-  br i1 %.not.i93.not, label %.invoke207, label %bb.i, !prof !27
+  %.not.i92 = icmp slt i32 %4, %i.as
+  br i1 %.not.i92, label %bb.i, label %.invoke207, !prof !7
 
 bb.i:                                             ; preds = %bb.h
-  %4 = getelementptr [8 x i8], ptr %.073, i64 %i.aq
-  %5 = getelementptr i8, ptr %4, i64 32
-  %i.at = load ptr, ptr %5, align 8, !tbaa !36    ; 17 uses
+  %6 = getelementptr inbounds nuw i8, ptr %.073, i64 40
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.aq
+  %i.at = load ptr, ptr %7, align 8, !tbaa !36    ; 17 uses
   %.not17.i = icmp eq ptr %i.at, null
   br i1 %.not17.i, label %.critedge.thread, label %bb.j
 

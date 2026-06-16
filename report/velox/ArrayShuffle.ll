@@ -201,12 +201,13 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not37.i.i.not.i.i.i.i415.not, label %.critedge.i.i.i.i.i.i, label %.lr.ph
 
 bb.m:                                             ; preds = %.lr.ph
-  %indvars.iv.next.i.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i.i416, 64 ; 2 uses
-  %.not37.i.i.not.i.i.i.i = icmp samesign ult i64 %indvars.iv.next.i.i.i.i, %i.aw
-  br i1 %.not37.i.i.not.i.i.i.i, label %.lr.ph, label %.critedge.i.i.i.i.i.i, !llvm.loop !420
+  %indvars.iv.next.i.i.i.i = add nuw nsw i64 %indvars.iv.next.i.i.i.i417, 64 ; 2 uses
+  %.not37.i.i.i.i.i.i = icmp samesign ugt i64 %indvars.iv.next.i.i.i.i, %i.aw
+  br i1 %.not37.i.i.i.i.i.i, label %.critedge.i.i.i.i.i.i, label %.lr.ph, !llvm.loop !420
 
 .lr.ph:                                           ; preds = %bb.l, %bb.m
-  %indvars.iv.i.i.i.i416 = phi i64 [ %indvars.iv.next.i.i.i.i, %bb.m ], [ 0, %bb.l ] ; 2 uses
+  %indvars.iv.next.i.i.i.i417 = phi i64 [ %indvars.iv.next.i.i.i.i, %bb.m ], [ 64, %bb.l ] ; 2 uses
+  %indvars.iv.i.i.i.i416 = phi i64 [ %indvars.iv.next.i.i.i.i417, %bb.m ], [ 0, %bb.l ]
   %i.ax = lshr exact i64 %indvars.iv.i.i.i.i416, 3
   %i.ay = getelementptr inbounds nuw i8, ptr %i.au, i64 %i.ax
   %i.az = load i64, ptr %i.ay, align 8, !tbaa !9
@@ -609,12 +610,13 @@ bb.as:                                            ; preds = %bb.ar
   br i1 %.not37.i.i.not.i.i.i.i81417.not, label %.critedge.i.i.i.i.i.i82, label %.lr.ph419
 
 bb.at:                                            ; preds = %.lr.ph419
-  %indvars.iv.next.i.i.i.i86 = add nuw nsw i64 %indvars.iv.i.i.i.i80418, 64 ; 2 uses
-  %.not37.i.i.not.i.i.i.i81 = icmp samesign ult i64 %indvars.iv.next.i.i.i.i86, %i.afl
-  br i1 %.not37.i.i.not.i.i.i.i81, label %.lr.ph419, label %.critedge.i.i.i.i.i.i82, !llvm.loop !420
+  %indvars.iv.next.i.i.i.i86 = add nuw nsw i64 %indvars.iv.next.i.i.i.i81420, 64 ; 2 uses
+  %.not37.i.i.i.i.i.i82 = icmp samesign ugt i64 %indvars.iv.next.i.i.i.i86, %i.afl
+  br i1 %.not37.i.i.i.i.i.i82, label %.critedge.i.i.i.i.i.i82, label %.lr.ph419, !llvm.loop !420
 
 .lr.ph419:                                        ; preds = %bb.as, %bb.at
-  %indvars.iv.i.i.i.i80418 = phi i64 [ %indvars.iv.next.i.i.i.i86, %bb.at ], [ 0, %bb.as ] ; 2 uses
+  %indvars.iv.next.i.i.i.i81420 = phi i64 [ %indvars.iv.next.i.i.i.i86, %bb.at ], [ 64, %bb.as ] ; 2 uses
+  %indvars.iv.i.i.i.i80418 = phi i64 [ %indvars.iv.next.i.i.i.i81420, %bb.at ], [ 0, %bb.as ]
   %i.afm = lshr exact i64 %indvars.iv.i.i.i.i80418, 3
   %i.afn = getelementptr inbounds nuw i8, ptr %i.afj, i64 %i.afm
   %i.afo = load i64, ptr %i.afn, align 8, !tbaa !9
@@ -1017,14 +1019,14 @@ bb.a:
   br i1 %i.e, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = trunc nuw i64 %i.d to i32                ; 3 uses
-  %i.g = add nuw i32 %i.f, 1                      ; 2 uses
+  %i.f = trunc nuw i64 %i.d to i32                ; 2 uses
+  %i.g = add nuw i32 %i.f, 1                      ; 3 uses
   %i.h = tail call noundef i64 @_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEclEv(ptr noundef nonnull align 8 dereferenceable(5000) %1)
   %i.i = zext i32 %i.g to i64                     ; 2 uses
   %i.j = mul i64 %i.h, %i.i                       ; 3 uses
   %i.k = trunc i64 %i.j to i32                    ; 2 uses
-  %.not21 = icmp ult i32 %i.f, %i.k
-  br i1 %.not21, label %_ZNSt24uniform_int_distributionImE5_S_ndImSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEjEET1_RT0_S4_.exit, label %bb.c
+  %4 = icmp ugt i32 %i.g, %i.k
+  br i1 %4, label %bb.c, label %_ZNSt24uniform_int_distributionImE5_S_ndImSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEjEET1_RT0_S4_.exit
 
 bb.c:                                             ; preds = %bb.b
   %i.l = xor i32 %i.f, -1

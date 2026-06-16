@@ -201,16 +201,17 @@ bb.k:                                             ; preds = %bb.j, %._crit_edge5
   %i.ak = phi i32 [ %.pre.i, %bb.j ], [ %i.o, %._crit_edge59.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 2 uses
-  %i.am = zext i32 %i.ai to i64                   ; 3 uses
+  %i.am = zext i32 %i.ai to i64                   ; 2 uses
+  %.idx.i = shl nuw nsw i64 %i.am, 4
+  %1 = add nsw i64 %.idx.i, -16                   ; 2 uses
   %i.an = sext i32 %i.ah to i64
-  %.not4752.not.i = icmp sgt i64 %i.am, %i.an
-  br i1 %.not4752.not.i, label %.lr.ph.preheader.i, label %._crit_edge.i
+  %.idx70.i = shl nsw i64 %i.an, 4
+  %.not4752.i = icmp slt i64 %1, %.idx70.i
+  br i1 %.not4752.i, label %._crit_edge.i, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.k
-  %.idx.i = shl nuw nsw i64 %i.am, 4
   %i.ao = load ptr, ptr %i.al, align 8, !tbaa !34
-  %1 = getelementptr i8, ptr %i.ao, i64 %.idx.i
-  %.04251.i = getelementptr i8, ptr %1, i64 -16
+  %.04251.i = getelementptr inbounds i8, ptr %i.ao, i64 %1
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 176
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !35
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 %i.am

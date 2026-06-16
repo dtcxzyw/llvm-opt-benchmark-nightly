@@ -201,15 +201,15 @@ bb.ae:                                            ; preds = %.lr.ph555, %._crit_
   %i.fm = load i32, ptr %i.et, align 4, !tbaa !107
   %i.fn = add nsw i32 %i.fm, 1
   store i32 %i.fn, ptr %i.et, align 4, !tbaa !107
-  %indvars.iv.next665.2 = add nsw i64 %indvars.iv664, 3 ; 2 uses
-  %i.fo = getelementptr inbounds i8, ptr %i.ev, i64 %indvars.iv.next665.2
+  %5 = getelementptr i8, ptr %i.ev, i64 %indvars.iv664
+  %i.fo = getelementptr i8, ptr %5, i64 3
   store i8 1, ptr %i.fo, align 1, !tbaa !73
   %i.fp = load i32, ptr %i.et, align 4, !tbaa !107
   %i.fq = add nsw i32 %i.fp, 1
   store i32 %i.fq, ptr %i.et, align 4, !tbaa !107
-  %indvars.iv.next665.3 = add nsw i64 %indvars.iv664, 4
-  %.not354.not.3 = icmp sgt i64 %.1303, %indvars.iv.next665.2
-  br i1 %.not354.not.3, label %.lr.ph549.new, label %._crit_edge550, !llvm.loop !110
+  %indvars.iv.next665.3 = add nsw i64 %indvars.iv664, 4 ; 2 uses
+  %.not354.3 = icmp slt i64 %.1303, %indvars.iv.next665.3
+  br i1 %.not354.3, label %._crit_edge550, label %.lr.ph549.new, !llvm.loop !110
 
 ._crit_edge550:                                   ; preds = %.prol.loopexit, %.lr.ph549.new, %bb.ae
   %i.fr = getelementptr inbounds nuw i8, ptr %i.ek, i64 80
@@ -612,11 +612,11 @@ bb.z:                                             ; preds = %.lr.ph272
 bb.aa:                                            ; preds = %bb.z
   store i8 0, ptr %i.cx, align 1, !tbaa !73
   %i.cy = call i64 @__isoc23_strtol(ptr noundef nonnull %.2169271, ptr noundef null, i32 noundef 10) #32, !inline_history !55 ; 2 uses
-  %i.cz = trunc i64 %i.cy to i32                  ; 2 uses
+  %i.cz = trunc i64 %i.cy to i32                  ; 4 uses
   %i.da = getelementptr inbounds nuw i8, ptr %i.cx, i64 1
   %i.db = call i64 @__isoc23_strtol(ptr noundef nonnull %i.da, ptr noundef null, i32 noundef 10) #32, !inline_history !55
-  %i.dc = trunc i64 %i.db to i32                  ; 2 uses
-  %reass.sub = sub i32 %i.dc, %i.cz               ; 2 uses
+  %i.dc = trunc i64 %i.db to i32                  ; 3 uses
+  %reass.sub = sub i32 %i.dc, %i.cz
   %i.dd = add i32 %reass.sub, 1
   %i.de = load i32, ptr %i.s, align 4, !tbaa !107
   %i.df = add nsw i32 %i.dd, %i.de
@@ -628,7 +628,12 @@ bb.aa:                                            ; preds = %bb.z
   %sext312 = shl i64 %i.cy, 32
   %i.dg = ashr exact i64 %sext312, 32
   %scevgep286 = getelementptr i8, ptr %i.r, i64 %i.dg
-  %i.dh = zext i32 %reass.sub to i64
+  %4 = add i32 %i.cz, 1
+  %5 = add i32 %i.dc, 1
+  %smax = call i32 @llvm.smax.i32(i32 %4, i32 %5)
+  %6 = xor i32 %i.cz, -1
+  %7 = add i32 %smax, %6
+  %i.dh = zext i32 %7 to i64
   %i.di = add nuw nsw i64 %i.dh, 1
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep286, i8 1, i64 %i.di, i1 false), !tbaa !73
   br label %.loopexit
@@ -1031,23 +1036,26 @@ bb.a:
   %i.a = load ptr, ptr @cluster_manager.0, align 8, !tbaa !77
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.c = load i64, ptr %i.b, align 8, !tbaa !90
+  %i.d = tail call fastcc i32 @clusterManagerIsConfigConsistent()
+  %.not47 = icmp eq i32 %i.d, 0
+  br i1 %.not47, label %.lr.ph49, label %._crit_edge51
+
+.lr.ph49:                                         ; preds = %bb.a
   %4 = uitofp i64 %i.c to float
   %5 = fmul nnan float %4, 1.500000e-01
   %6 = fptosi float %5 to i32
-  %7 = add nsw i32 %6, 20
-  %i.d = tail call fastcc i32 @clusterManagerIsConfigConsistent()
-  %.not47 = icmp eq i32 %i.d, 0
-  br i1 %.not47, label %.lr.ph50, label %._crit_edge51
+  %7 = add nsw i32 %6, 19
+  br label %.lr.ph50
 
-.lr.ph50:                                         ; preds = %bb.a, %.critedge
-  %.048 = phi i32 [ %.1, %.critedge ], [ 0, %bb.a ] ; 2 uses
+.lr.ph50:                                         ; preds = %.lr.ph49, %.critedge
+  %.048 = phi i32 [ 0, %.lr.ph49 ], [ %.1, %.critedge ] ; 2 uses
   %putchar25 = call i32 @putchar(i32 46)          ; 0 uses
   %i.e = load ptr, ptr @stdout, align 8, !tbaa !13
   %i.f = call i32 @fflush(ptr noundef %i.e)       ; 0 uses
   %i.g = call i32 @sleep(i32 noundef 1) #32       ; 0 uses
   %i.h = add nsw i32 %.048, 1
-  %.not26 = icmp slt i32 %.048, %7
-  br i1 %.not26, label %.critedge, label %bb.b
+  %8 = icmp sgt i32 %.048, %7
+  br i1 %8, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %.lr.ph50
   %i.i = load ptr, ptr @cluster_manager.0, align 8, !tbaa !77

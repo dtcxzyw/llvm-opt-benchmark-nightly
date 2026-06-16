@@ -201,9 +201,10 @@ bb.a:
   %i.k = lshr i64 %i.j, 32                        ; 2 uses
   %i.l = trunc nuw i64 %i.k to i32                ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
-  %i.n = load i32, ptr %i.m, align 8              ; 3 uses
-  %.not = icmp slt i32 %i.n, %i.l
-  br i1 %.not, label %_ZN2v88internal24ReplacementStringBuilder14EnsureCapacityEi.exit, label %bb.b
+  %i.n = load i32, ptr %i.m, align 8              ; 2 uses
+  %2 = add nsw i32 %i.n, 1                        ; 2 uses
+  %3 = icmp sgt i32 %2, %i.l
+  br i1 %3, label %bb.b, label %_ZN2v88internal24ReplacementStringBuilder14EnsureCapacityEi.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.o = icmp eq i64 %i.k, 0
@@ -216,8 +217,8 @@ bb.c:                                             ; preds = %bb.b
 .preheader.i.i:                                   ; preds = %bb.b, %.preheader.i.i
   %.0.i.i = phi i32 [ %i.q, %.preheader.i.i ], [ %i.l, %bb.b ]
   %i.q = shl nsw i32 %.0.i.i, 1                   ; 3 uses
-  %.not3 = icmp sgt i32 %i.q, %i.n
-  br i1 %.not3, label %bb.d, label %.preheader.i.i, !llvm.loop !11
+  %4 = icmp slt i32 %i.q, %2
+  br i1 %4, label %.preheader.i.i, label %bb.d, !llvm.loop !11
 
 bb.d:                                             ; preds = %.preheader.i.i
   %i.r = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE22NewFixedArrayWithHolesEiNS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %i.e, i32 noundef %i.q, i8 noundef zeroext 0) #13 ; 3 uses

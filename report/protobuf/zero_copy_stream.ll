@@ -201,8 +201,8 @@ _ZNK4absl12lts_202505124Cord10ChunkRange5beginEv.exit.._crit_edge_crit_edge: ; p
 
 .lr.ph:                                           ; preds = %_ZNK4absl12lts_202505124Cord10ChunkRange5beginEv.exit
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.cv = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 4 uses
-  %i.cw = getelementptr inbounds nuw i8, ptr %2, i64 44 ; 5 uses
+  %i.cv = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 6 uses
+  %i.cw = getelementptr inbounds nuw i8, ptr %2, i64 44 ; 7 uses
   br label %bb.t
 
 bb.t:                                             ; preds = %.lr.ph, %_ZN4absl12lts_202505124Cord13ChunkIteratorppEv.exit
@@ -275,39 +275,74 @@ bb.z:                                             ; preds = %bb.y
   br i1 %i.ed, label %.preheader, label %bb.ac
 
 .preheader:                                       ; preds = %bb.z, %.preheader
-  %indvars.iv37.i.i.i.i.i = phi i32 [ %indvars.iv.next38.i.i.i.i.i, %.preheader ], [ 1, %bb.z ] ; 2 uses
+  %indvars.iv38.i.i.i.i.i = phi i64 [ %indvars.iv.next39.i.i.i.i.i, %.preheader ], [ 1, %bb.z ] ; 5 uses
   %indvars.iv.i.i.i.i.i = phi i64 [ %indvars.iv.next.i.i.i.i.i, %.preheader ], [ 0, %bb.z ] ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp ne i64 %indvars.iv.i.i.i.i.i, %i.ds
   call void @llvm.assume(i1 %exitcond.not.i.i.i.i.i)
   %indvars.iv.next.i.i.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i.i.i, 1 ; 4 uses
   %i.ee = getelementptr inbounds nuw [8 x i8], ptr %i.cv, i64 %indvars.iv.next.i.i.i.i.i
-  %i.ef = load ptr, ptr %i.ee, align 8, !tbaa !77 ; 2 uses
+  %i.ef = load ptr, ptr %i.ee, align 8, !tbaa !77 ; 3 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %i.cw, i64 %indvars.iv.next.i.i.i.i.i
   %i.eh = load i8, ptr %i.eg, align 1, !tbaa !13
   %i.ei = zext i8 %i.eh to i64
-  %i.ej = add nuw nsw i64 %i.ei, 1                ; 3 uses
+  %i.ej = add nuw nsw i64 %i.ei, 1                ; 4 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ef, i64 15
   %i.el = load i8, ptr %i.ek, align 1, !tbaa !13
   %i.em = zext i8 %i.el to i64
   %i.en = icmp eq i64 %i.ej, %i.em
-  %indvars.iv.next38.i.i.i.i.i = add nuw i32 %indvars.iv37.i.i.i.i.i, 1
-  br i1 %i.en, label %.preheader, label %bb.aa, !llvm.loop !91
+  %indvars.iv.next39.i.i.i.i.i = add nuw i64 %indvars.iv38.i.i.i.i.i, 1
+  br i1 %i.en, label %.preheader, label %3, !llvm.loop !91
 
-bb.aa:                                            ; preds = %.preheader
-  %i.eo = getelementptr inbounds nuw i8, ptr %i.cw, i64 %indvars.iv.next.i.i.i.i.i
-  %3 = trunc i64 %i.ej to i8
-  store i8 %3, ptr %i.eo, align 1, !tbaa !13
-  %4 = sext i32 %indvars.iv37.i.i.i.i.i to i64
-  br label %bb.ab
+3:                                                ; preds = %.preheader
+  %4 = getelementptr inbounds nuw i8, ptr %i.cw, i64 %indvars.iv.next.i.i.i.i.i
+  %5 = trunc i64 %i.ej to i8
+  store i8 %5, ptr %4, align 1, !tbaa !13
+  %xtraiter82 = and i64 %indvars.iv38.i.i.i.i.i, 1
+  %lcmp.mod83.not = icmp eq i64 %xtraiter82, 0
+  br i1 %lcmp.mod83.not, label %.prol.loopexit, label %bb.aa
 
-bb.ab:                                            ; preds = %bb.ab, %bb.aa
-  %indvars.iv40.i.i.i.i.i = phi i64 [ %indvars.iv.next41.i.i.i.i.i, %bb.ab ], [ %4, %bb.aa ] ; 2 uses
-  %.017.i.i.i.i.i = phi ptr [ %i.er, %bb.ab ], [ %i.ef, %bb.aa ]
-  %.016.i.i.i.i.i = phi i64 [ %i.ev, %bb.ab ], [ %i.ej, %bb.aa ]
-  %i.ep = getelementptr inbounds nuw i8, ptr %.017.i.i.i.i.i, i64 16
-  %i.eq = getelementptr inbounds nuw [8 x i8], ptr %i.ep, i64 %.016.i.i.i.i.i
+bb.aa:                                            ; preds = %3
+  %i.eo = getelementptr inbounds nuw i8, ptr %i.ef, i64 16
+  %6 = getelementptr inbounds nuw [8 x i8], ptr %i.eo, i64 %i.ej
+  %7 = load ptr, ptr %6, align 8, !tbaa !79       ; 4 uses
+  %indvars.iv.next42.i.i.i.i.i.prol = add nsw i64 %indvars.iv38.i.i.i.i.i, -1 ; 3 uses
+  %8 = getelementptr inbounds [8 x i8], ptr %i.cv, i64 %indvars.iv.next42.i.i.i.i.i.prol
+  store ptr %7, ptr %8, align 8, !tbaa !77
+  %9 = getelementptr inbounds nuw i8, ptr %7, i64 14
+  %10 = load i8, ptr %9, align 1, !tbaa !13       ; 2 uses
+  %11 = zext i8 %10 to i64                        ; 2 uses
+  %12 = getelementptr inbounds i8, ptr %i.cw, i64 %indvars.iv.next42.i.i.i.i.i.prol
+  store i8 %10, ptr %12, align 1, !tbaa !13
+  br label %.prol.loopexit
+
+.prol.loopexit:                                   ; preds = %bb.aa, %3
+  %indvars.iv41.i.i.i.i.i.unr = phi i64 [ %indvars.iv38.i.i.i.i.i, %3 ], [ %indvars.iv.next42.i.i.i.i.i.prol, %bb.aa ]
+  %.017.i.i.i.i.i.unr = phi ptr [ %i.ef, %3 ], [ %7, %bb.aa ]
+  %.016.i.i.i.i.i.unr = phi i64 [ %i.ej, %3 ], [ %11, %bb.aa ]
+  %.lcssa80.unr = phi ptr [ poison, %3 ], [ %7, %bb.aa ]
+  %.lcssa79.unr = phi i64 [ poison, %3 ], [ %11, %bb.aa ]
+  %13 = icmp eq i64 %indvars.iv38.i.i.i.i.i, 1
+  br i1 %13, label %_ZN4absl12lts_2025051213cord_internal21CordRepBtreeNavigator6NextUpEv.exit.sink.split.i.loopexit.i.i.i, label %bb.ab
+
+bb.ab:                                            ; preds = %.prol.loopexit, %bb.ab
+  %indvars.iv40.i.i.i.i.i = phi i64 [ %indvars.iv.next41.i.i.i.i.i, %bb.ab ], [ %indvars.iv41.i.i.i.i.i.unr, %.prol.loopexit ] ; 3 uses
+  %.017.i.i.i.i.i = phi ptr [ %i.er, %bb.ab ], [ %.017.i.i.i.i.i.unr, %.prol.loopexit ]
+  %.016.i.i.i.i.i = phi i64 [ %i.ev, %bb.ab ], [ %.016.i.i.i.i.i.unr, %.prol.loopexit ]
+  %14 = getelementptr inbounds nuw i8, ptr %.017.i.i.i.i.i, i64 16
+  %15 = getelementptr inbounds nuw [8 x i8], ptr %14, i64 %.016.i.i.i.i.i
+  %16 = load ptr, ptr %15, align 8, !tbaa !79     ; 3 uses
+  %indvars.iv.next42.i.i.i.i.i = add nsw i64 %indvars.iv40.i.i.i.i.i, -1 ; 2 uses
+  %17 = getelementptr inbounds [8 x i8], ptr %i.cv, i64 %indvars.iv.next42.i.i.i.i.i
+  store ptr %16, ptr %17, align 8, !tbaa !77
+  %18 = getelementptr inbounds nuw i8, ptr %16, i64 14
+  %19 = load i8, ptr %18, align 1, !tbaa !13      ; 2 uses
+  %20 = zext i8 %19 to i64
+  %21 = getelementptr inbounds i8, ptr %i.cw, i64 %indvars.iv.next42.i.i.i.i.i
+  store i8 %19, ptr %21, align 1, !tbaa !13
+  %i.ep = getelementptr inbounds nuw i8, ptr %16, i64 16
+  %i.eq = getelementptr inbounds nuw [8 x i8], ptr %i.ep, i64 %20
   %i.er = load ptr, ptr %i.eq, align 8, !tbaa !79 ; 4 uses
-  %indvars.iv.next41.i.i.i.i.i = add nsw i64 %indvars.iv40.i.i.i.i.i, -1 ; 3 uses
+  %indvars.iv.next41.i.i.i.i.i = add nsw i64 %indvars.iv40.i.i.i.i.i, -2 ; 3 uses
   %i.es = getelementptr inbounds [8 x i8], ptr %i.cv, i64 %indvars.iv.next41.i.i.i.i.i
   store ptr %i.er, ptr %i.es, align 8, !tbaa !77
   %i.et = getelementptr inbounds nuw i8, ptr %i.er, i64 14
@@ -315,7 +350,7 @@ bb.ab:                                            ; preds = %bb.ab, %bb.aa
   %i.ev = zext i8 %i.eu to i64                    ; 2 uses
   %i.ew = getelementptr inbounds i8, ptr %i.cw, i64 %indvars.iv.next41.i.i.i.i.i
   store i8 %i.eu, ptr %i.ew, align 1, !tbaa !13
-  %i.ex = icmp sgt i64 %indvars.iv40.i.i.i.i.i, 1
+  %i.ex = icmp sgt i64 %indvars.iv40.i.i.i.i.i, 2
   br i1 %i.ex, label %bb.ab, label %_ZN4absl12lts_2025051213cord_internal21CordRepBtreeNavigator6NextUpEv.exit.sink.split.i.loopexit.i.i.i, !llvm.loop !92
 
 bb.ac:                                            ; preds = %bb.z
@@ -324,14 +359,16 @@ bb.ac:                                            ; preds = %bb.z
   %i.ez = zext i8 %i.ey to i64
   br label %_ZN4absl12lts_2025051213cord_internal21CordRepBtreeNavigator6NextUpEv.exit.sink.split.i.i.i.i
 
-_ZN4absl12lts_2025051213cord_internal21CordRepBtreeNavigator6NextUpEv.exit.sink.split.i.loopexit.i.i.i: ; preds = %bb.ab
+_ZN4absl12lts_2025051213cord_internal21CordRepBtreeNavigator6NextUpEv.exit.sink.split.i.loopexit.i.i.i: ; preds = %bb.ab, %.prol.loopexit
+  %.lcssa80 = phi ptr [ %.lcssa80.unr, %.prol.loopexit ], [ %i.er, %bb.ab ]
+  %.lcssa79 = phi i64 [ %.lcssa79.unr, %.prol.loopexit ], [ %i.ev, %bb.ab ]
   %.pre.i.i.i = load i64, ptr %i.r, align 8, !tbaa !81
   br label %_ZN4absl12lts_2025051213cord_internal21CordRepBtreeNavigator6NextUpEv.exit.sink.split.i.i.i.i
 
 _ZN4absl12lts_2025051213cord_internal21CordRepBtreeNavigator6NextUpEv.exit.sink.split.i.i.i.i: ; preds = %_ZN4absl12lts_2025051213cord_internal21CordRepBtreeNavigator6NextUpEv.exit.sink.split.i.loopexit.i.i.i, %bb.ac
   %i.fa = phi i64 [ %i.cx, %bb.ac ], [ %.pre.i.i.i, %_ZN4absl12lts_2025051213cord_internal21CordRepBtreeNavigator6NextUpEv.exit.sink.split.i.loopexit.i.i.i ]
-  %.lcssa12.sink.i.i.i.i = phi ptr [ %i.dw, %bb.ac ], [ %i.er, %_ZN4absl12lts_2025051213cord_internal21CordRepBtreeNavigator6NextUpEv.exit.sink.split.i.loopexit.i.i.i ]
-  %.lcssa.sink.i.i.i.i = phi i64 [ %i.ez, %bb.ac ], [ %i.ev, %_ZN4absl12lts_2025051213cord_internal21CordRepBtreeNavigator6NextUpEv.exit.sink.split.i.loopexit.i.i.i ]
+  %.lcssa12.sink.i.i.i.i = phi ptr [ %i.dw, %bb.ac ], [ %.lcssa80, %_ZN4absl12lts_2025051213cord_internal21CordRepBtreeNavigator6NextUpEv.exit.sink.split.i.loopexit.i.i.i ]
+  %.lcssa.sink.i.i.i.i = phi i64 [ %i.ez, %bb.ac ], [ %.lcssa79, %_ZN4absl12lts_2025051213cord_internal21CordRepBtreeNavigator6NextUpEv.exit.sink.split.i.loopexit.i.i.i ]
   %i.fb = getelementptr inbounds nuw i8, ptr %.lcssa12.sink.i.i.i.i, i64 16
   %i.fc = getelementptr inbounds nuw [8 x i8], ptr %i.fb, i64 %.lcssa.sink.i.i.i.i
   %i.fd = load ptr, ptr %i.fc, align 8, !tbaa !79 ; 5 uses

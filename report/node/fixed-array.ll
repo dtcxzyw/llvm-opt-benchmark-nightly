@@ -201,17 +201,17 @@ bb.a:
   %i.c = inttoptr i64 %i.b to ptr                 ; 2 uses
   %i.d = load i64, ptr %i.c, align 8
   %i.e = lshr i64 %i.d, 32
-  %i.f = trunc nuw i64 %i.e to i32                ; 2 uses
+  %i.f = trunc nuw i64 %i.e to i32
+  %4 = add nsw i32 %i.f, 1                        ; 3 uses
   %i.g = add i64 %i.a, 7
   %i.h = inttoptr i64 %i.g to ptr
   %i.i = load i64, ptr %i.h, align 8
   %i.j = lshr i64 %i.i, 32
   %i.k = trunc nuw i64 %i.j to i32                ; 2 uses
-  %.not = icmp slt i32 %i.f, %i.k
-  br i1 %.not, label %_ZN2v88internal13WeakArrayList11EnsureSpaceEPNS0_7IsolateENS0_6HandleIS1_EEiNS0_14AllocationTypeE.exit, label %bb.b
+  %5 = icmp sgt i32 %4, %i.k
+  br i1 %5, label %bb.b, label %_ZN2v88internal13WeakArrayList11EnsureSpaceEPNS0_7IsolateENS0_6HandleIS1_EEiNS0_14AllocationTypeE.exit
 
 bb.b:                                             ; preds = %bb.a
-  %4 = add nsw i32 %i.f, 1                        ; 2 uses
   %i.l = sdiv i32 %4, 2
   %.sroa.speculated.i.i = tail call i32 @llvm.smax.i32(i32 %i.l, i32 2)
   %i.m = sub i32 %4, %i.k
@@ -583,7 +583,7 @@ bb.l:                                             ; preds = %bb.a
 .loopexit.loopexit.unr-lcssa:                     ; preds = %.lr.ph.i
   %i.aw = and i64 %.fr, 4294967296
   %lcmp.mod.not = icmp eq i64 %i.aw, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.lr.ph.i.epil.preheader
+  br i1 %lcmp.mod.not, label %.loopexit.loopexit, label %.lr.ph.i.epil.preheader
 
 .lr.ph.i.epil.preheader:                          ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.preheader.i
   %indvars.iv.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i.1, %.loopexit.loopexit.unr-lcssa ]
@@ -598,22 +598,26 @@ bb.l:                                             ; preds = %bb.a
   %i.bb = icmp ne i64 %i.ba, 3
   %i.bc = zext i1 %i.bb to i32
   %spec.select.i.epil = add nuw nsw i32 %.056.i.epil.init, %i.bc
+  br label %.loopexit.loopexit
+
+.loopexit.loopexit:                               ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.i.epil.preheader
+  %spec.select.i.lcssa = phi i32 [ %spec.select.i.1, %.loopexit.loopexit.unr-lcssa ], [ %spec.select.i.epil, %.lr.ph.i.epil.preheader ]
+  %6 = add nuw nsw i32 %spec.select.i.lcssa, 1
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.lr.ph.i.epil.preheader, %.loopexit.loopexit.unr-lcssa, %bb.l
-  %.05.lcssa.i = phi i32 [ 0, %bb.l ], [ %spec.select.i.1, %.loopexit.loopexit.unr-lcssa ], [ %spec.select.i.epil, %.lr.ph.i.epil.preheader ] ; 2 uses
-  %6 = add nsw i32 %.05.lcssa.i, 1                ; 3 uses
+.loopexit:                                        ; preds = %.loopexit.loopexit, %bb.l
+  %.05.lcssa.i = phi i32 [ 1, %bb.l ], [ %6, %.loopexit.loopexit ] ; 4 uses
   %i.bd = sdiv i32 %i.f, 4                        ; 2 uses
-  %i.be = icmp slt i32 %6, %i.bd
+  %i.be = icmp slt i32 %.05.lcssa.i, %i.bd
   %i.bf = mul nsw i32 %i.bd, 3
-  %7 = icmp sle i32 %i.bf, %.05.lcssa.i
+  %7 = icmp slt i32 %i.bf, %.05.lcssa.i
   %or.cond = select i1 %i.be, i1 true, i1 %7
   br i1 %or.cond, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %.loopexit
-  %i.bg = sdiv i32 %6, 2
+  %i.bg = sdiv i32 %.05.lcssa.i, 2
   %.sroa.speculated.i = tail call i32 @llvm.smax.i32(i32 %i.bg, i32 2)
-  %i.bh = add nsw i32 %.sroa.speculated.i, %6
+  %i.bh = add nsw i32 %.sroa.speculated.i, %.05.lcssa.i
   %i.bi = tail call ptr @_ZN2v88internal7Factory20CompactWeakArrayListENS0_12DirectHandleINS0_13WeakArrayListEEEiNS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr nonnull %1, i32 noundef %i.bh, i8 noundef zeroext %4) #11
   br label %bb.o
 

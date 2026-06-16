@@ -201,12 +201,12 @@ bb.am:                                            ; preds = %.preheader166
 
 .lr.ph227:                                        ; preds = %.lr.ph227.preheader, %._crit_edge
   %indvar = phi i64 [ 0, %.lr.ph227.preheader ], [ %indvar.next, %._crit_edge ] ; 3 uses
-  %indvars.iv272 = phi i64 [ %i.en, %.lr.ph227.preheader ], [ %indvars.iv.next273, %._crit_edge ] ; 4 uses
+  %indvars.iv272 = phi i64 [ %i.en, %.lr.ph227.preheader ], [ %indvars.iv.next273, %._crit_edge ] ; 3 uses
   %indvars.iv265.in = phi i64 [ %i.en, %.lr.ph227.preheader ], [ %indvars.iv265, %._crit_edge ]
   %indvars.iv265 = add nuw nsw i64 %indvars.iv265.in, 1 ; 3 uses
-  %indvars.iv.next273 = add nuw nsw i64 %indvars.iv272, 1 ; 2 uses
-  %.not110220.not = icmp samesign ult i64 %indvars.iv272, %i.ep
-  br i1 %.not110220.not, label %.lr.ph223.preheader, label %._crit_edge
+  %indvars.iv.next273 = add nuw nsw i64 %indvars.iv272, 1 ; 3 uses
+  %.not110220 = icmp samesign ugt i64 %indvars.iv.next273, %i.ep
+  br i1 %.not110220, label %._crit_edge, label %.lr.ph223.preheader
 
 .lr.ph223.preheader:                              ; preds = %.lr.ph227
   %i.fa = sub i64 %i.eb, %indvar
@@ -288,49 +288,55 @@ bb.am:                                            ; preds = %.preheader166
 
 ._crit_edge228:                                   ; preds = %._crit_edge, %bb.al
   tail call void @_ZdaPv(ptr noundef nonnull %i.ag) #18
-  %i.gs = load i8, ptr %i.g, align 1, !tbaa !14   ; 4 uses
-  %i.gt = zext i8 %i.gs to i64                    ; 5 uses
+  %i.gs = load i8, ptr %i.g, align 1, !tbaa !14   ; 3 uses
+  %i.gt = zext i8 %i.gs to i64
   %i.gu = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.gt
   store i64 0, ptr %i.gu, align 8, !tbaa !16
-  %i.gv = load i8, ptr %i.f, align 8, !tbaa !13   ; 5 uses
-  %.not105.not229 = icmp ugt i8 %i.gs, %i.gv
-  br i1 %.not105.not229, label %.lr.ph232.preheader, label %._crit_edge233
+  %6 = zext i8 %i.gs to i32                       ; 6 uses
+  %i.gv = load i8, ptr %i.f, align 8, !tbaa !13   ; 3 uses
+  %7 = zext i8 %i.gv to i32                       ; 4 uses
+  %.081229 = add nsw i32 %6, -1                   ; 3 uses
+  %.not105230 = icmp slt i32 %.081229, %7
+  br i1 %.not105230, label %._crit_edge233, label %.lr.ph232.preheader
 
 .lr.ph232.preheader:                              ; preds = %._crit_edge228
-  %6 = zext i8 %i.gv to i64                       ; 2 uses
-  %7 = sub nsw i64 %i.gt, %6                      ; 2 uses
-  %xtraiter428 = and i64 %7, 3                    ; 3 uses
-  %8 = sub nsw i64 %6, %i.gt
-  %i.gw = icmp ugt i64 %8, -4
+  %8 = sub nsw i32 %6, %7                         ; 2 uses
+  %xtraiter431 = and i32 %8, 3                    ; 3 uses
+  %9 = sub nsw i32 %7, %6
+  %i.gw = icmp ugt i32 %9, -4
   br i1 %i.gw, label %.lr.ph232.epil.preheader, label %.lr.ph232.preheader.new
 
 .lr.ph232.preheader.new:                          ; preds = %.lr.ph232.preheader
-  %unroll_iter = and i64 %7, -4
+  %unroll_iter = and i32 %8, -4
   br label %.lr.ph232
 
 ._crit_edge233.loopexit.unr-lcssa:                ; preds = %.lr.ph232
-  %lcmp.mod429.not = icmp eq i64 %xtraiter428, 0
+  %lcmp.mod429.not = icmp eq i32 %xtraiter431, 0
   br i1 %lcmp.mod429.not, label %._crit_edge233, label %.lr.ph232.epil.preheader
 
 .lr.ph232.epil.preheader:                         ; preds = %._crit_edge233.loopexit.unr-lcssa, %.lr.ph232.preheader
   %.epil.init = phi i64 [ 0, %.lr.ph232.preheader ], [ %i.hx, %._crit_edge233.loopexit.unr-lcssa ]
-  %indvars.iv277.epil.init = phi i64 [ %i.gt, %.lr.ph232.preheader ], [ %indvars.iv.next278.3, %._crit_edge233.loopexit.unr-lcssa ]
-  %lcmp.mod430 = icmp ne i64 %xtraiter428, 0
+  %.081232.epil.init = phi i32 [ %.081229, %.lr.ph232.preheader ], [ %.081.3, %._crit_edge233.loopexit.unr-lcssa ]
+  %.081.in231.epil.init = phi i32 [ %6, %.lr.ph232.preheader ], [ %.081.2, %._crit_edge233.loopexit.unr-lcssa ]
+  %lcmp.mod430 = icmp ne i32 %xtraiter431, 0
   tail call void @llvm.assume(i1 %lcmp.mod430)
   br label %.lr.ph232.epil
 
 .lr.ph232.epil:                                   ; preds = %.lr.ph232.epil, %.lr.ph232.epil.preheader
-  %i.gx = phi i64 [ %.epil.init, %.lr.ph232.epil.preheader ], [ %i.ha, %.lr.ph232.epil ]
-  %indvars.iv277.epil = phi i64 [ %indvars.iv277.epil.init, %.lr.ph232.epil.preheader ], [ %indvars.iv.next278.epil, %.lr.ph232.epil ] ; 2 uses
-  %epil.iter = phi i64 [ 0, %.lr.ph232.epil.preheader ], [ %epil.iter.next, %.lr.ph232.epil ]
-  %indvars.iv.next278.epil = add nsw i64 %indvars.iv277.epil, -1 ; 2 uses
-  %i.gy = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv277.epil
+  %i.gx = phi i64 [ %i.ha, %.lr.ph232.epil ], [ %.epil.init, %.lr.ph232.epil.preheader ]
+  %.081232.epil = phi i32 [ %.081.epil, %.lr.ph232.epil ], [ %.081232.epil.init, %.lr.ph232.epil.preheader ] ; 3 uses
+  %.081.in231.epil = phi i32 [ %.081232.epil, %.lr.ph232.epil ], [ %.081.in231.epil.init, %.lr.ph232.epil.preheader ]
+  %epil.iter = phi i32 [ %epil.iter.next, %.lr.ph232.epil ], [ 0, %.lr.ph232.epil.preheader ]
+  %10 = zext nneg i32 %.081.in231.epil to i64
+  %i.gy = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %10
   %i.gz = load i64, ptr %i.gy, align 8, !tbaa !16
   %i.ha = add i64 %i.gz, %i.gx                    ; 2 uses
-  %i.hb = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv.next278.epil
+  %11 = zext nneg i32 %.081232.epil to i64
+  %i.hb = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %11
   store i64 %i.ha, ptr %i.hb, align 8, !tbaa !16
-  %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
-  %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter428
+  %.081.epil = add nsw i32 %.081232.epil, -1
+  %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
+  %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter431
   br i1 %epil.iter.cmp.not, label %._crit_edge233, label %.lr.ph232.epil, !llvm.loop !33
 
 ._crit_edge233:                                   ; preds = %._crit_edge233.loopexit.unr-lcssa, %.lr.ph232.epil, %._crit_edge228
@@ -344,34 +350,43 @@ bb.am:                                            ; preds = %.preheader166
 
 .lr.ph232:                                        ; preds = %.lr.ph232, %.lr.ph232.preheader.new
   %i.hi = phi i64 [ 0, %.lr.ph232.preheader.new ], [ %i.hx, %.lr.ph232 ]
-  %indvars.iv277 = phi i64 [ %i.gt, %.lr.ph232.preheader.new ], [ %indvars.iv.next278.3, %.lr.ph232 ] ; 5 uses
-  %niter = phi i64 [ 0, %.lr.ph232.preheader.new ], [ %niter.next.3, %.lr.ph232 ]
-  %indvars.iv.next278 = add nsw i64 %indvars.iv277, -1 ; 2 uses
-  %i.hj = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv277
+  %.081232 = phi i32 [ %.081229, %.lr.ph232.preheader.new ], [ %.081.3, %.lr.ph232 ] ; 6 uses
+  %.081.in231 = phi i32 [ %6, %.lr.ph232.preheader.new ], [ %.081.2, %.lr.ph232 ]
+  %niter = phi i32 [ 0, %.lr.ph232.preheader.new ], [ %niter.next.3, %.lr.ph232 ]
+  %12 = zext nneg i32 %.081.in231 to i64
+  %i.hj = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %12
   %i.hk = load i64, ptr %i.hj, align 8, !tbaa !16
   %i.hl = add i64 %i.hk, %i.hi                    ; 2 uses
-  %i.hm = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv.next278
+  %13 = zext nneg i32 %.081232 to i64
+  %i.hm = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %13
   store i64 %i.hl, ptr %i.hm, align 8, !tbaa !16
-  %indvars.iv.next278.1 = add nsw i64 %indvars.iv277, -2 ; 2 uses
-  %i.hn = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv.next278
+  %.081 = add nsw i32 %.081232, -1                ; 2 uses
+  %14 = zext nneg i32 %.081232 to i64
+  %i.hn = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %14
   %i.ho = load i64, ptr %i.hn, align 8, !tbaa !16
   %i.hp = add i64 %i.ho, %i.hl                    ; 2 uses
-  %i.hq = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv.next278.1
+  %15 = zext nneg i32 %.081 to i64
+  %i.hq = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %15
   store i64 %i.hp, ptr %i.hq, align 8, !tbaa !16
-  %indvars.iv.next278.2 = add nsw i64 %indvars.iv277, -3 ; 2 uses
-  %i.hr = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv.next278.1
+  %.081.1 = add nsw i32 %.081232, -2              ; 2 uses
+  %16 = zext nneg i32 %.081 to i64
+  %i.hr = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %16
   %i.hs = load i64, ptr %i.hr, align 8, !tbaa !16
   %i.ht = add i64 %i.hs, %i.hp                    ; 2 uses
-  %i.hu = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv.next278.2
+  %17 = zext nneg i32 %.081.1 to i64
+  %i.hu = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %17
   store i64 %i.ht, ptr %i.hu, align 8, !tbaa !16
-  %indvars.iv.next278.3 = add nsw i64 %indvars.iv277, -4 ; 3 uses
-  %i.hv = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv.next278.2
+  %.081.2 = add nsw i32 %.081232, -3              ; 3 uses
+  %18 = zext nneg i32 %.081.1 to i64
+  %i.hv = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %18
   %i.hw = load i64, ptr %i.hv, align 8, !tbaa !16
   %i.hx = add i64 %i.hw, %i.ht                    ; 3 uses
-  %i.hy = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv.next278.3
+  %19 = zext nneg i32 %.081.2 to i64
+  %i.hy = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %19
   store i64 %i.hx, ptr %i.hy, align 8, !tbaa !16
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
-  %niter.ncmp.3.not = icmp eq i64 %niter.next.3, %unroll_iter
+  %.081.3 = add nsw i32 %.081232, -4              ; 2 uses
+  %niter.next.3 = add i32 %niter, 4               ; 2 uses
+  %niter.ncmp.3.not = icmp eq i32 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3.not, label %._crit_edge233.loopexit.unr-lcssa, label %.lr.ph232, !llvm.loop !34
 
 .preheader164:                                    ; preds = %._crit_edge233
@@ -386,8 +401,8 @@ bb.am:                                            ; preds = %.preheader166
   %i.ia = shl nuw nsw i64 %i.hz, 3                ; 2 uses
   %scevgep = getelementptr i8, ptr %i.d, i64 %i.ia
   %scevgep283 = getelementptr i8, ptr %i.b, i64 %i.ia
-  %narrow = sub nuw i8 %i.gs, %i.gv
-  %i.ib = zext i8 %narrow to i64
+  %20 = sub nsw i32 %6, %7
+  %i.ib = zext i32 %20 to i64
   %i.ic = shl nuw nsw i64 %i.ib, 3
   %i.id = add nuw nsw i64 %i.ic, 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, ptr noundef nonnull align 8 dereferenceable(1) %scevgep283, i64 %i.id, i1 false), !tbaa !16

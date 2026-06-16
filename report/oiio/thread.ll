@@ -201,7 +201,7 @@ bb.a:
   %5 = alloca %"class.OpenImageIO::v3_1::basic_string_view", align 8 ; 4 uses
   %6 = alloca %"class.OpenImageIO::v3_1::basic_string_view", align 8 ; 5 uses
   %7 = alloca %"class.OpenImageIO::v3_1::basic_string_view", align 8 ; 4 uses
-  %8 = alloca %"class.std::vector", align 8       ; 10 uses
+  %8 = alloca %"class.std::vector", align 8       ; 12 uses
   %i.a = icmp slt i32 %1, 0
   br i1 %i.a, label %bb.b, label %bb.d
 
@@ -248,7 +248,7 @@ _ZN11OpenImageIO4v3_1L15threads_defaultEv.exit:   ; preds = %bb.b, %bb.c
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZN11OpenImageIO4v3_1L15threads_defaultEv.exit, %bb.a
-  %.0 = phi i32 [ %.sroa.speculated, %_ZN11OpenImageIO4v3_1L15threads_defaultEv.exit ], [ %1, %bb.a ] ; 6 uses
+  %.0 = phi i32 [ %.sroa.speculated, %_ZN11OpenImageIO4v3_1L15threads_defaultEv.exit ], [ %1, %bb.a ] ; 7 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 137
   %i.m = load atomic i8, ptr %i.l seq_cst, align 1, !range !71, !noundef !72
   %i.n = trunc nuw i8 %i.m to i1
@@ -488,12 +488,13 @@ _ZNSt12__shared_ptrISt6atomicIbELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds
 bb.ab:                                            ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #30
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %8, i8 0, i64 24, i1 false)
-  %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  %i.cm = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 3 uses
-  %i.cn = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 2 uses
-  %i.co = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
+  %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.cm = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
+  %i.cn = getelementptr inbounds nuw i8, ptr %8, i64 16
+  %i.co = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.cp = zext nneg i32 %i.s to i64
-  %i.cq = zext nneg i32 %.0 to i64                ; 9 uses
+  %9 = add nsw i64 %i.cp, -1
+  %i.cq = zext nneg i32 %.0 to i64
   br label %bb.ae
 
 bb.ac:                                            ; preds = %_ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EE.exit
@@ -513,14 +514,13 @@ bb.ae:                                            ; preds = %bb.ab, %_ZNSt6vecto
   %i.ct = phi ptr [ null, %bb.ab ], [ %i.ek, %_ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EE.exit ] ; 11 uses
   %i.cu = phi ptr [ null, %bb.ab ], [ %i.el, %_ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EE.exit ] ; 5 uses
   %i.cv = phi ptr [ null, %bb.ab ], [ %i.em, %_ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EE.exit ] ; 3 uses
-  %indvars.iv108 = phi i64 [ %i.cp, %bb.ab ], [ %indvars.iv.next109, %_ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EE.exit ]
-  %indvars.iv.next109 = add nsw i64 %indvars.iv108, -1 ; 5 uses
+  %indvars.iv108 = phi i64 [ %9, %bb.ab ], [ %indvars.iv.next112, %_ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EE.exit ] ; 4 uses
   %i.cw = load ptr, ptr %i.cl, align 8, !tbaa !81
-  %i.cx = getelementptr inbounds nuw [16 x i8], ptr %i.cw, i64 %indvars.iv.next109
+  %i.cx = getelementptr inbounds nuw [16 x i8], ptr %i.cw, i64 %indvars.iv108
   %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !102
   store atomic i8 1, ptr %i.cy seq_cst, align 1
   %i.cz = load ptr, ptr %0, align 8, !tbaa !74
-  %i.da = getelementptr inbounds nuw [8 x i8], ptr %i.cz, i64 %indvars.iv.next109 ; 4 uses
+  %i.da = getelementptr inbounds nuw [8 x i8], ptr %i.cz, i64 %indvars.iv108 ; 4 uses
   %.not.i.i46 = icmp eq ptr %i.cv, %i.cu
   br i1 %.not.i.i46, label %bb.ag, label %bb.af
 
@@ -659,7 +659,7 @@ _ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE9push_backE
   %i.el = phi ptr [ %i.ej, %.noexc47 ], [ %i.cu, %bb.af ]
   %i.em = phi ptr [ %i.ei, %.noexc47 ], [ %i.dc, %bb.af ] ; 6 uses
   %i.en = load ptr, ptr %0, align 8, !tbaa !119
-  %i.eo = getelementptr inbounds nuw [8 x i8], ptr %i.en, i64 %indvars.iv.next109 ; 2 uses
+  %i.eo = getelementptr inbounds nuw [8 x i8], ptr %i.en, i64 %indvars.iv108 ; 2 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %i.eo, i64 8 ; 3 uses
   %i.eq = load ptr, ptr %i.co, align 8, !tbaa !119 ; 4 uses
   %.not.i.i48 = icmp eq ptr %i.ep, %i.eq
@@ -730,8 +730,9 @@ _ZNKSt14default_deleteISt6threadEclEPS0_.exit.i.i.i: ; preds = %bb.am
   br label %_ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EE.exit
 
 _ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EE.exit: ; preds = %_ZNKSt14default_deleteISt6threadEclEPS0_.exit.i.i.i, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrISt6threadSt14default_deleteIS3_EESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit.i.i
-  %.not35.not = icmp sgt i64 %indvars.iv.next109, %i.cq
-  br i1 %.not35.not, label %bb.ae, label %bb.ac, !llvm.loop !121
+  %indvars.iv.next112 = add nsw i64 %indvars.iv108, -1 ; 2 uses
+  %.not35 = icmp slt i64 %indvars.iv.next112, %i.cq
+  br i1 %.not35, label %bb.ac, label %bb.ae, !llvm.loop !121
 
 .loopexit:                                        ; preds = %_ZNKSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE12_M_check_lenEmPKc.exit.i
   %lpad.loopexit = landingpad { ptr, i32 }
@@ -748,30 +749,33 @@ _ZNSt11unique_lockISt5mutexED2Ev.exit:            ; preds = %bb.ac
   call void @_ZNSt18condition_variable10notify_allEv(ptr noundef nonnull align 8 dereferenceable(48) %i.ff) #30
   %i.fg = call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.cr) #30 ; 0 uses
   %i.fh = load ptr, ptr %8, align 8, !tbaa !119   ; 5 uses
+  %10 = getelementptr inbounds nuw i8, ptr %8, i64 8
   %.not98104 = icmp eq ptr %i.fh, %i.em
   br i1 %.not98104, label %._crit_edge, label %.lr.ph106
 
 ._crit_edge:                                      ; preds = %bb.aw, %_ZNSt11unique_lockISt5mutexED2Ev.exit
-  %i.fi = load ptr, ptr %i.co, align 8, !tbaa !73 ; 3 uses
+  %11 = zext nneg i32 %.0 to i64                  ; 8 uses
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.fi = load ptr, ptr %12, align 8, !tbaa !73   ; 3 uses
   %i.fj = load ptr, ptr %0, align 8, !tbaa !74    ; 2 uses
   %i.fk = ptrtoint ptr %i.fi to i64
   %i.fl = ptrtoint ptr %i.fj to i64
   %i.fm = sub i64 %i.fk, %i.fl
   %i.fn = ashr exact i64 %i.fm, 3                 ; 3 uses
-  %i.fo = icmp ult i64 %i.fn, %i.cq
+  %i.fo = icmp ult i64 %i.fn, %11
   br i1 %i.fo, label %bb.ao, label %bb.ap
 
 bb.ao:                                            ; preds = %._crit_edge
-  %i.fp = sub nuw nsw i64 %i.cq, %i.fn
+  %i.fp = sub nuw nsw i64 %11, %i.fn
   invoke void @_ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.fp)
           to label %_ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE6resizeEm.exit63 unwind label %bb.bj
 
 bb.ap:                                            ; preds = %._crit_edge
-  %i.fq = icmp ugt i64 %i.fn, %i.cq
+  %i.fq = icmp ugt i64 %i.fn, %11
   br i1 %i.fq, label %bb.aq, label %_ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE6resizeEm.exit63
 
 bb.aq:                                            ; preds = %bb.ap
-  %i.fr = getelementptr inbounds nuw [8 x i8], ptr %i.fj, i64 %i.cq ; 3 uses
+  %i.fr = getelementptr inbounds nuw [8 x i8], ptr %i.fj, i64 %11 ; 3 uses
   %.not.i.i52 = icmp eq ptr %i.fi, %i.fr
   br i1 %.not.i.i52, label %_ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE6resizeEm.exit63, label %.lr.ph.i.i.i.i53
 
@@ -800,7 +804,7 @@ _ZSt8_DestroyISt10unique_ptrISt6threadSt14default_deleteIS1_EEEvPT_.exit.i.i.i.i
   br i1 %.not.i.i.i.i60, label %_ZSt8_DestroyIPSt10unique_ptrISt6threadSt14default_deleteIS1_EES4_EvT_S6_RSaIT0_E.exit.i.i61, label %.lr.ph.i.i.i.i53, !llvm.loop !78
 
 _ZSt8_DestroyIPSt10unique_ptrISt6threadSt14default_deleteIS1_EES4_EvT_S6_RSaIT0_E.exit.i.i61: ; preds = %_ZSt8_DestroyISt10unique_ptrISt6threadSt14default_deleteIS1_EEEvPT_.exit.i.i.i.i59
-  store ptr %i.fr, ptr %i.co, align 8, !tbaa !73
+  store ptr %i.fr, ptr %12, align 8, !tbaa !73
   br label %_ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE6resizeEm.exit63
 
 bb.at:                                            ; preds = %bb.ad
@@ -830,27 +834,28 @@ bb.aw:                                            ; preds = %bb.au, %.lr.ph106
   br i1 %.not98, label %._crit_edge, label %.lr.ph106
 
 _ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE6resizeEm.exit63: ; preds = %_ZSt8_DestroyIPSt10unique_ptrISt6threadSt14default_deleteIS1_EES4_EvT_S6_RSaIT0_E.exit.i.i61, %bb.aq, %bb.ap, %bb.ao
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.fy = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.fz = load ptr, ptr %i.fy, align 8, !tbaa !80 ; 3 uses
-  %i.ga = load ptr, ptr %i.cl, align 8, !tbaa !81 ; 2 uses
+  %i.ga = load ptr, ptr %13, align 8, !tbaa !81   ; 2 uses
   %i.gb = ptrtoint ptr %i.fz to i64
   %i.gc = ptrtoint ptr %i.ga to i64
   %i.gd = sub i64 %i.gb, %i.gc
   %i.ge = ashr exact i64 %i.gd, 4                 ; 3 uses
-  %i.gf = icmp ult i64 %i.ge, %i.cq
+  %i.gf = icmp ult i64 %i.ge, %11
   br i1 %i.gf, label %bb.ax, label %bb.ay
 
 bb.ax:                                            ; preds = %_ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE6resizeEm.exit63
-  %i.gg = sub nuw nsw i64 %i.cq, %i.ge
-  invoke void @_ZNSt6vectorISt10shared_ptrISt6atomicIbEESaIS3_EE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %i.cl, i64 noundef %i.gg)
+  %i.gg = sub nuw nsw i64 %11, %i.ge
+  invoke void @_ZNSt6vectorISt10shared_ptrISt6atomicIbEESaIS3_EE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %13, i64 noundef %i.gg)
           to label %_ZNSt6vectorISt10shared_ptrISt6atomicIbEESaIS3_EE6resizeEm.exit75 unwind label %bb.bj
 
 bb.ay:                                            ; preds = %_ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EE6resizeEm.exit63
-  %i.gh = icmp ugt i64 %i.ge, %i.cq
+  %i.gh = icmp ugt i64 %i.ge, %11
   br i1 %i.gh, label %bb.az, label %_ZNSt6vectorISt10shared_ptrISt6atomicIbEESaIS3_EE6resizeEm.exit75
 
 bb.az:                                            ; preds = %bb.ay
-  %i.gi = getelementptr inbounds nuw [16 x i8], ptr %i.ga, i64 %i.cq ; 3 uses
+  %i.gi = getelementptr inbounds nuw [16 x i8], ptr %i.ga, i64 %11 ; 3 uses
   %.not.i.i64 = icmp eq ptr %i.fz, %i.gi
   br i1 %.not.i.i64, label %_ZNSt6vectorISt10shared_ptrISt6atomicIbEESaIS3_EE6resizeEm.exit75, label %.lr.ph.i.i.i.i65
 
@@ -913,7 +918,7 @@ _ZSt8_DestroyISt10shared_ptrISt6atomicIbEEEvPT_.exit.i.i.i.i71: ; preds = %bb.bf
 _ZSt8_DestroyIPSt10shared_ptrISt6atomicIbEES3_EvT_S5_RSaIT0_E.exit.i.i73: ; preds = %_ZSt8_DestroyISt10shared_ptrISt6atomicIbEEEvPT_.exit.i.i.i.i71
   store ptr %i.gi, ptr %i.fy, align 8, !tbaa !80
   %.pre = load ptr, ptr %8, align 8, !tbaa !74
-  %.pre111 = load ptr, ptr %i.cm, align 8, !tbaa !73
+  %.pre111 = load ptr, ptr %10, align 8, !tbaa !73
   br label %_ZNSt6vectorISt10shared_ptrISt6atomicIbEESaIS3_EE6resizeEm.exit75
 
 _ZNSt6vectorISt10shared_ptrISt6atomicIbEESaIS3_EE6resizeEm.exit75: ; preds = %_ZSt8_DestroyIPSt10shared_ptrISt6atomicIbEES3_EvT_S5_RSaIT0_E.exit.i.i73, %bb.az, %bb.ay, %bb.ax
@@ -951,7 +956,8 @@ _ZSt8_DestroyIPSt10unique_ptrISt6threadSt14default_deleteIS1_EES4_EvT_S6_RSaIT0_
   br i1 %.not.i.i1.i, label %_ZNSt6vectorISt10unique_ptrISt6threadSt14default_deleteIS1_EESaIS4_EED2Ev.exit, label %bb.bi
 
 bb.bi:                                            ; preds = %_ZSt8_DestroyIPSt10unique_ptrISt6threadSt14default_deleteIS1_EES4_EvT_S6_RSaIT0_E.exit.i
-  %i.he = load ptr, ptr %i.cn, align 8, !tbaa !118
+  %14 = getelementptr inbounds nuw i8, ptr %8, i64 16
+  %i.he = load ptr, ptr %14, align 8, !tbaa !118
   %i.hf = ptrtoint ptr %i.he to i64
   %i.hg = ptrtoint ptr %.pr.i to i64
   %i.hh = sub i64 %i.hf, %i.hg

@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %.backedge, %._crit_edge
-  %.147 = phi i64 [ %i.p, %._crit_edge ], [ %.147.be, %.backedge ] ; 2 uses
+  %.147 = phi i64 [ %i.p, %._crit_edge ], [ %.147.be.in, %.backedge ] ; 2 uses
   %.1 = phi ptr [ %i.q, %._crit_edge ], [ %.1.be, %.backedge ] ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.1, i64 240
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %.147
@@ -230,42 +230,41 @@ bb.d:                                             ; preds = %.backedge, %._crit_
 bb.e:                                             ; preds = %._crit_edge67, %bb.d
   %i.ae = phi i8 [ %i.z, %._crit_edge67 ], [ %i.v, %bb.d ]
   %.251 = phi ptr [ %i.x, %._crit_edge67 ], [ %i.t, %bb.d ]
-  %.248 = phi i64 [ %i.ac, %._crit_edge67 ], [ %.147, %bb.d ] ; 2 uses
+  %.248 = phi i64 [ %i.ac, %._crit_edge67 ], [ %.147, %bb.d ]
   %.2 = phi ptr [ %i.ad, %._crit_edge67 ], [ %.1, %bb.d ] ; 3 uses
   %i.af = zext i8 %i.ae to i64
   %i.ag = shl nuw nsw i64 %i.af, 5
   %i.ah = or disjoint i64 %i.ag, 16
   tail call void @_ZdlPvm(ptr noundef nonnull %.251, i64 noundef %i.ah) #39
+  %2 = add nuw nsw i64 %.248, 1                   ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %.2, i64 10
   %i.aj = load i8, ptr %i.ai, align 1, !tbaa !13
   %i.ak = zext i8 %i.aj to i64
-  %.not.not = icmp samesign ult i64 %.248, %i.ak
-  br i1 %.not.not, label %.backedge, label %.preheader58
+  %.not = icmp samesign ugt i64 %2, %i.ak
+  br i1 %.not, label %.preheader58, label %.backedge
 
-.backedge:                                        ; preds = %bb.e, %2
-  %.147.be.in = phi i64 [ %.248, %bb.e ], [ %3, %2 ]
-  %.1.be = phi ptr [ %.2, %bb.e ], [ %i.an, %2 ]
-  %.147.be = add nuw nsw i64 %.147.be.in, 1
+.backedge:                                        ; preds = %bb.f, %bb.e
+  %.147.be.in = phi i64 [ %2, %bb.e ], [ %4, %bb.f ]
+  %.1.be = phi ptr [ %.2, %bb.e ], [ %i.an, %bb.f ]
   br label %bb.d, !llvm.loop !452
 
 .preheader58:                                     ; preds = %bb.e, %bb.f
   %.3 = phi ptr [ %i.an, %bb.f ], [ %.2, %bb.e ]  ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.3, i64 8
-  %i.am = load i8, ptr %i.al, align 1, !tbaa !13  ; 2 uses
+  %i.am = load i8, ptr %i.al, align 1, !tbaa !13
   %i.an = load ptr, ptr %.3, align 8, !tbaa !95   ; 4 uses
   tail call void @_ZdlPvm(ptr noundef nonnull %.3, i64 noundef 304) #39
   %i.ao = icmp eq ptr %i.an, %i.i
   br i1 %i.ao, label %.loopexit, label %bb.f
 
 bb.f:                                             ; preds = %.preheader58
+  %3 = zext i8 %i.am to i64
+  %4 = add nuw nsw i64 %3, 1                      ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.an, i64 10
   %i.aq = load i8, ptr %i.ap, align 1, !tbaa !13
-  %.not = icmp ult i8 %i.am, %i.aq
-  br i1 %.not, label %2, label %.preheader58, !llvm.loop !453
-
-2:                                                ; preds = %bb.f
-  %3 = zext i8 %i.am to i64
-  br label %.backedge
+  %5 = zext i8 %i.aq to i64
+  %6 = icmp samesign ugt i64 %4, %5
+  br i1 %6, label %.preheader58, label %.backedge, !llvm.loop !453
 
 .loopexit.sink.split:                             ; preds = %bb.c, %bb.b
   %.sink = phi i64 [ %i.e, %bb.b ], [ 304, %bb.c ]
@@ -668,8 +667,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i7.i.a, label %.thread.i.i13.i, label %bb.d
 
 bb.d:                                             ; preds = %.preheader.preheader
-  %.not.not.i.i.i = icmp sgt i32 %3, 0
-  br i1 %.not.not.i.i.i, label %_ZN4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsIiN6google8protobuf8internal12ExtensionSet9ExtensionESt4lessIiESaISt4pairIKiS9_EELi256ELb0EEEEERSE_PSE_EmmEv.exit.i, label %.lr.ph.i.i.i10.i
+  %.not.i.i7.i = icmp slt i32 %3, 1
+  br i1 %.not.i.i7.i, label %.lr.ph.i.i.i10.i, label %_ZN4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsIiN6google8protobuf8internal12ExtensionSet9ExtensionESt4lessIiESaISt4pairIKiS9_EELi256ELb0EEEEERSE_PSE_EmmEv.exit.i
 
 .lr.ph.i.i.i10.i:                                 ; preds = %bb.d, %bb.e
   %.01621.i.i.i.i = phi ptr [ %i.y, %bb.e ], [ %2, %bb.d ] ; 2 uses
@@ -1072,8 +1071,8 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %.backedge, %._crit_edge.i
-  %.246.i = phi i64 [ %.044108.i, %._crit_edge.i ], [ %i.ax, %.backedge ] ; 2 uses
-  %.142.i = phi i64 [ %i.aa, %._crit_edge.i ], [ %.142.i.be, %.backedge ] ; 2 uses
+  %.246.i = phi i64 [ %.044108.i, %._crit_edge.i ], [ %3, %.backedge ] ; 2 uses
+  %.142.i = phi i64 [ %i.aa, %._crit_edge.i ], [ %.142.i.be.in, %.backedge ] ; 2 uses
   %.1.i = phi ptr [ %i.ab, %._crit_edge.i ], [ %.1.i.be, %.backedge ] ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.1.i, i64 240
   %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %.142.i
@@ -1101,7 +1100,7 @@ bb.g:                                             ; preds = %.backedge, %._crit_
 
 bb.h:                                             ; preds = %._crit_edge88.i, %bb.g
   %.350.i = phi ptr [ %i.aj, %._crit_edge88.i ], [ %i.af, %bb.g ] ; 2 uses
-  %.243.i = phi i64 [ %i.ao, %._crit_edge88.i ], [ %.142.i, %bb.g ] ; 3 uses
+  %.243.i = phi i64 [ %i.ao, %._crit_edge88.i ], [ %.142.i, %bb.g ] ; 2 uses
   %.2.i = phi ptr [ %i.ap, %._crit_edge88.i ], [ %.1.i, %bb.g ] ; 4 uses
   %i.aq = icmp eq ptr %.350.i, %i.a
   br i1 %i.aq, label %_ZNK4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsIiN6google8protobuf8internal12ExtensionSet9ExtensionESt4lessIiESaISt4pairIKiS9_EELi256ELb0EEEEERSE_PSE_E13distance_slowENS2_IKSH_RKSE_PSM_EE.exit, label %bb.i
@@ -1117,23 +1116,23 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.aw = add i64 %.246.i, 1
-  %i.ax = add i64 %i.aw, %i.av
+  %3 = add i64 %i.aw, %i.av
+  %i.ax = add nuw nsw i64 %.243.i, 1              ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %.2.i, i64 10
   %i.az = load i8, ptr %i.ay, align 1, !tbaa !13
   %i.ba = zext i8 %i.az to i64
-  %.not.not.i = icmp samesign ult i64 %.243.i, %i.ba
-  br i1 %.not.not.i, label %.backedge, label %.preheader69.i
+  %.not.i = icmp samesign ugt i64 %i.ax, %i.ba
+  br i1 %.not.i, label %.preheader69.i, label %.backedge
 
 .backedge:                                        ; preds = %bb.k, %bb.j
-  %.142.i.be.in = phi i64 [ %.243.i, %bb.j ], [ %i.bd, %bb.k ]
+  %.142.i.be.in = phi i64 [ %i.ax, %bb.j ], [ %4, %bb.k ]
   %.1.i.be = phi ptr [ %.2.i, %bb.j ], [ %i.be, %bb.k ]
-  %.142.i.be = add nuw nsw i64 %.142.i.be.in, 1
   br label %bb.g, !llvm.loop !551
 
 .preheader69.i:                                   ; preds = %bb.j, %bb.k
   %.3.i = phi ptr [ %i.be, %bb.k ], [ %.2.i, %bb.j ] ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.3.i, i64 8
-  %i.bc = load i8, ptr %i.bb, align 1, !tbaa !13  ; 2 uses
+  %i.bc = load i8, ptr %i.bb, align 1, !tbaa !13
   %i.bd = zext i8 %i.bc to i64                    ; 2 uses
   %i.be = load ptr, ptr %.3.i, align 8, !tbaa !95 ; 4 uses
   %i.bf = icmp eq ptr %i.be, %i.a
@@ -1142,10 +1141,12 @@ bb.j:                                             ; preds = %bb.i
   br i1 %or.cond61.i, label %_ZNK4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsIiN6google8protobuf8internal12ExtensionSet9ExtensionESt4lessIiESaISt4pairIKiS9_EELi256ELb0EEEEERSE_PSE_E13distance_slowENS2_IKSH_RKSE_PSM_EE.exit, label %bb.k
 
 bb.k:                                             ; preds = %.preheader69.i
+  %4 = add nuw nsw i64 %i.bd, 1                   ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.be, i64 10
   %i.bi = load i8, ptr %i.bh, align 1, !tbaa !13
-  %.not.i = icmp ult i8 %i.bc, %i.bi
-  br i1 %.not.i, label %.backedge, label %.preheader69.i, !llvm.loop !552
+  %5 = zext i8 %i.bi to i64
+  %6 = icmp samesign ugt i64 %4, %5
+  br i1 %6, label %.preheader69.i, label %.backedge, !llvm.loop !552
 
 _ZNK4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsIiN6google8protobuf8internal12ExtensionSet9ExtensionESt4lessIiESaISt4pairIKiS9_EELi256ELb0EEEEERSE_PSE_E13distance_slowENS2_IKSH_RKSE_PSM_EE.exit: ; preds = %bb.h, %bb.i, %.preheader69.i
   %.pn.i = phi i64 [ %i.av, %.preheader69.i ], [ %i.ac, %bb.h ], [ %i.av, %bb.i ]
