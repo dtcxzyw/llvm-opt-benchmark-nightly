@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %_RINvMNtNtNtCs2pqxY
   br label %.backedge.i
 
 .backedge.i:                                      ; preds = %.backedge.i.backedge, %bb.b
-  %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 13 uses
+  %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 16 uses
   %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !28849 ; 5 uses
   %i.q = load atomic ptr, ptr %i.l acquire, align 8, !noalias !28849 ; 8 uses
   %i.r = lshr i64 %i.p, 1                         ; 2 uses
@@ -222,9 +222,9 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not.i.i, label %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.e
-  %i.v = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 3 uses
+  %i.v = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 2 uses
   %xtraiter92 = and i32 %i.v, 7                   ; 3 uses
-  %i.w = icmp ult i32 %i.v, 8
+  %i.w = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.w, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new
 
 .lr.ph.i.i.preheader.new:                         ; preds = %.lr.ph.i.i.preheader
@@ -308,9 +308,9 @@ bb.m:                                             ; preds = %bb.k
   br i1 %.not.i18.i, label %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit22.i, label %.lr.ph.i19.i.preheader
 
 .lr.ph.i19.i.preheader:                           ; preds = %bb.m
-  %i.aj = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 3 uses
+  %i.aj = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 2 uses
   %xtraiter86 = and i32 %i.aj, 7                  ; 3 uses
-  %i.ak = icmp ult i32 %i.aj, 8
+  %i.ak = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.ak, label %.lr.ph.i19.i.epil.preheader, label %.lr.ph.i19.i.preheader.new
 
 .lr.ph.i19.i.preheader.new:                       ; preds = %.lr.ph.i19.i.preheader
@@ -358,13 +358,13 @@ bb.n:                                             ; preds = %bb.j
 
 bb.o:                                             ; preds = %bb.n
   %.sroa.0.0.i.i.i = call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.034.i, i32 6) ; 2 uses
-  %i.an = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 3 uses
+  %i.an = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 2 uses
   %.not.i23.i = icmp eq i32 %.sroa.0.034.i, 0
   br i1 %.not.i23.i, label %.backedge.i.backedge, label %.lr.ph.i24.i.preheader
 
 .lr.ph.i24.i.preheader:                           ; preds = %bb.o
   %xtraiter = and i32 %i.an, 5                    ; 3 uses
-  %i.ao = icmp samesign ult i32 %i.an, 8
+  %i.ao = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.ao, label %.lr.ph.i24.i.epil.preheader, label %.lr.ph.i24.i.preheader.new
 
 .lr.ph.i24.i.preheader.new:                       ; preds = %.lr.ph.i24.i.preheader
@@ -767,7 +767,7 @@ bb.d:                                             ; preds = %.lr.ph
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph.i
   %.sroa.03.079.i.lcssa = phi i64 [ %.sroa.03.0.ph84.i, %.lr.ph.i ], [ %i.x, %bb.b ] ; 2 uses
   %.sroa.07.078.i.lcssa = phi ptr [ %.sroa.07.0.ph83.i, %.lr.ph.i ], [ %i.y, %bb.b ] ; 2 uses
-  %.sroa.0.077.i.lcssa = phi i32 [ %.sroa.0.0.ph82.i, %.lr.ph.i ], [ %i.n, %bb.b ] ; 5 uses
+  %.sroa.0.077.i.lcssa = phi i32 [ %.sroa.0.0.ph82.i, %.lr.ph.i ], [ %i.n, %bb.b ] ; 6 uses
   %.lcssa = phi i64 [ %i.i, %.lr.ph.i ], [ %i.p, %bb.b ] ; 2 uses
   %i.w = icmp eq i64 %.lcssa, 30                  ; 2 uses
   %.not.i = icmp eq ptr %.sroa.038.0.ph81.i, null
@@ -854,13 +854,13 @@ bb.l:                                             ; preds = %bb.i, %_RINvNtCsbvk
 
 bb.m:                                             ; preds = %bb.l
   %.sroa.0.0.i.i.i = tail call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.077.i.lcssa, i32 6) ; 2 uses
-  %i.al = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 3 uses
+  %i.al = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 2 uses
   %.not.i27.i = icmp eq i32 %.sroa.0.077.i.lcssa, 0
   br i1 %.not.i27.i, label %.outer.backedge.i, label %.lr.ph.i28.i.preheader
 
 .lr.ph.i28.i.preheader:                           ; preds = %bb.m
   %xtraiter156 = and i32 %i.al, 5                 ; 3 uses
-  %i.am = icmp samesign ult i32 %i.al, 8
+  %i.am = icmp ult i32 %.sroa.0.077.i.lcssa, 3
   br i1 %i.am, label %.lr.ph.i28.i.epil.preheader, label %.lr.ph.i28.i.preheader.new
 
 .lr.ph.i28.i.preheader.new:                       ; preds = %.lr.ph.i28.i.preheader
@@ -1263,7 +1263,7 @@ bb.b:                                             ; preds = %_RINvMNtNtNtCs2pqxY
   br label %.backedge.i
 
 .backedge.i:                                      ; preds = %.backedge.i.backedge, %bb.b
-  %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 13 uses
+  %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 16 uses
   %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !28926 ; 5 uses
   %i.q = load atomic ptr, ptr %i.l acquire, align 8, !noalias !28926 ; 8 uses
   %i.r = lshr i64 %i.p, 1                         ; 2 uses
@@ -1284,9 +1284,9 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not.i.i, label %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.e
-  %i.v = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 3 uses
+  %i.v = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 2 uses
   %xtraiter92 = and i32 %i.v, 7                   ; 3 uses
-  %i.w = icmp ult i32 %i.v, 8
+  %i.w = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.w, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new
 
 .lr.ph.i.i.preheader.new:                         ; preds = %.lr.ph.i.i.preheader
@@ -1370,9 +1370,9 @@ bb.m:                                             ; preds = %bb.k
   br i1 %.not.i18.i, label %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit22.i, label %.lr.ph.i19.i.preheader
 
 .lr.ph.i19.i.preheader:                           ; preds = %bb.m
-  %i.aj = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 3 uses
+  %i.aj = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 2 uses
   %xtraiter86 = and i32 %i.aj, 7                  ; 3 uses
-  %i.ak = icmp ult i32 %i.aj, 8
+  %i.ak = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.ak, label %.lr.ph.i19.i.epil.preheader, label %.lr.ph.i19.i.preheader.new
 
 .lr.ph.i19.i.preheader.new:                       ; preds = %.lr.ph.i19.i.preheader
@@ -1420,13 +1420,13 @@ bb.n:                                             ; preds = %bb.j
 
 bb.o:                                             ; preds = %bb.n
   %.sroa.0.0.i.i.i = call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.034.i, i32 6) ; 2 uses
-  %i.an = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 3 uses
+  %i.an = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 2 uses
   %.not.i23.i = icmp eq i32 %.sroa.0.034.i, 0
   br i1 %.not.i23.i, label %.backedge.i.backedge, label %.lr.ph.i24.i.preheader
 
 .lr.ph.i24.i.preheader:                           ; preds = %bb.o
   %xtraiter = and i32 %i.an, 5                    ; 3 uses
-  %i.ao = icmp samesign ult i32 %i.an, 8
+  %i.ao = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.ao, label %.lr.ph.i24.i.epil.preheader, label %.lr.ph.i24.i.preheader.new
 
 .lr.ph.i24.i.preheader.new:                       ; preds = %.lr.ph.i24.i.preheader
@@ -1829,7 +1829,7 @@ bb.d:                                             ; preds = %.lr.ph
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph.i
   %.sroa.03.079.i.lcssa = phi i64 [ %.sroa.03.0.ph84.i, %.lr.ph.i ], [ %i.x, %bb.b ] ; 2 uses
   %.sroa.07.078.i.lcssa = phi ptr [ %.sroa.07.0.ph83.i, %.lr.ph.i ], [ %i.y, %bb.b ] ; 2 uses
-  %.sroa.0.077.i.lcssa = phi i32 [ %.sroa.0.0.ph82.i, %.lr.ph.i ], [ %i.n, %bb.b ] ; 5 uses
+  %.sroa.0.077.i.lcssa = phi i32 [ %.sroa.0.0.ph82.i, %.lr.ph.i ], [ %i.n, %bb.b ] ; 6 uses
   %.lcssa = phi i64 [ %i.i, %.lr.ph.i ], [ %i.p, %bb.b ] ; 2 uses
   %i.w = icmp eq i64 %.lcssa, 30                  ; 2 uses
   %.not.i = icmp eq ptr %.sroa.038.0.ph81.i, null
@@ -1916,13 +1916,13 @@ bb.l:                                             ; preds = %bb.i, %_RINvNtCsbvk
 
 bb.m:                                             ; preds = %bb.l
   %.sroa.0.0.i.i.i = tail call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.077.i.lcssa, i32 6) ; 2 uses
-  %i.al = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 3 uses
+  %i.al = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 2 uses
   %.not.i27.i = icmp eq i32 %.sroa.0.077.i.lcssa, 0
   br i1 %.not.i27.i, label %.outer.backedge.i, label %.lr.ph.i28.i.preheader
 
 .lr.ph.i28.i.preheader:                           ; preds = %bb.m
   %xtraiter156 = and i32 %i.al, 5                 ; 3 uses
-  %i.am = icmp samesign ult i32 %i.al, 8
+  %i.am = icmp ult i32 %.sroa.0.077.i.lcssa, 3
   br i1 %i.am, label %.lr.ph.i28.i.epil.preheader, label %.lr.ph.i28.i.preheader.new
 
 .lr.ph.i28.i.preheader.new:                       ; preds = %.lr.ph.i28.i.preheader
@@ -2325,7 +2325,7 @@ bb.b:                                             ; preds = %_RINvMNtNtNtCs2pqxY
   br label %.backedge.i
 
 .backedge.i:                                      ; preds = %.backedge.i.backedge, %bb.b
-  %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 13 uses
+  %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 16 uses
   %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !29003 ; 5 uses
   %i.q = load atomic ptr, ptr %i.l acquire, align 8, !noalias !29003 ; 8 uses
   %i.r = lshr i64 %i.p, 1                         ; 2 uses
@@ -2346,9 +2346,9 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not.i.i, label %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.e
-  %i.v = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 3 uses
+  %i.v = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 2 uses
   %xtraiter92 = and i32 %i.v, 7                   ; 3 uses
-  %i.w = icmp ult i32 %i.v, 8
+  %i.w = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.w, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new
 
 .lr.ph.i.i.preheader.new:                         ; preds = %.lr.ph.i.i.preheader
@@ -2432,9 +2432,9 @@ bb.m:                                             ; preds = %bb.k
   br i1 %.not.i18.i, label %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit22.i, label %.lr.ph.i19.i.preheader
 
 .lr.ph.i19.i.preheader:                           ; preds = %bb.m
-  %i.aj = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 3 uses
+  %i.aj = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 2 uses
   %xtraiter86 = and i32 %i.aj, 7                  ; 3 uses
-  %i.ak = icmp ult i32 %i.aj, 8
+  %i.ak = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.ak, label %.lr.ph.i19.i.epil.preheader, label %.lr.ph.i19.i.preheader.new
 
 .lr.ph.i19.i.preheader.new:                       ; preds = %.lr.ph.i19.i.preheader
@@ -2482,13 +2482,13 @@ bb.n:                                             ; preds = %bb.j
 
 bb.o:                                             ; preds = %bb.n
   %.sroa.0.0.i.i.i = call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.034.i, i32 6) ; 2 uses
-  %i.an = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 3 uses
+  %i.an = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 2 uses
   %.not.i23.i = icmp eq i32 %.sroa.0.034.i, 0
   br i1 %.not.i23.i, label %.backedge.i.backedge, label %.lr.ph.i24.i.preheader
 
 .lr.ph.i24.i.preheader:                           ; preds = %bb.o
   %xtraiter = and i32 %i.an, 5                    ; 3 uses
-  %i.ao = icmp samesign ult i32 %i.an, 8
+  %i.ao = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.ao, label %.lr.ph.i24.i.epil.preheader, label %.lr.ph.i24.i.preheader.new
 
 .lr.ph.i24.i.preheader.new:                       ; preds = %.lr.ph.i24.i.preheader
@@ -2891,7 +2891,7 @@ bb.d:                                             ; preds = %.lr.ph
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph.i
   %.sroa.03.079.i.lcssa = phi i64 [ %.sroa.03.0.ph84.i, %.lr.ph.i ], [ %i.x, %bb.b ] ; 2 uses
   %.sroa.07.078.i.lcssa = phi ptr [ %.sroa.07.0.ph83.i, %.lr.ph.i ], [ %i.y, %bb.b ] ; 2 uses
-  %.sroa.0.077.i.lcssa = phi i32 [ %.sroa.0.0.ph82.i, %.lr.ph.i ], [ %i.n, %bb.b ] ; 5 uses
+  %.sroa.0.077.i.lcssa = phi i32 [ %.sroa.0.0.ph82.i, %.lr.ph.i ], [ %i.n, %bb.b ] ; 6 uses
   %.lcssa = phi i64 [ %i.i, %.lr.ph.i ], [ %i.p, %bb.b ] ; 2 uses
   %i.w = icmp eq i64 %.lcssa, 30                  ; 2 uses
   %.not.i = icmp eq ptr %.sroa.038.0.ph81.i, null
@@ -2978,13 +2978,13 @@ bb.l:                                             ; preds = %bb.i, %_RINvNtCsbvk
 
 bb.m:                                             ; preds = %bb.l
   %.sroa.0.0.i.i.i = tail call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.077.i.lcssa, i32 6) ; 2 uses
-  %i.al = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 3 uses
+  %i.al = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 2 uses
   %.not.i27.i = icmp eq i32 %.sroa.0.077.i.lcssa, 0
   br i1 %.not.i27.i, label %.outer.backedge.i, label %.lr.ph.i28.i.preheader
 
 .lr.ph.i28.i.preheader:                           ; preds = %bb.m
   %xtraiter156 = and i32 %i.al, 5                 ; 3 uses
-  %i.am = icmp samesign ult i32 %i.al, 8
+  %i.am = icmp ult i32 %.sroa.0.077.i.lcssa, 3
   br i1 %i.am, label %.lr.ph.i28.i.epil.preheader, label %.lr.ph.i28.i.preheader.new
 
 .lr.ph.i28.i.preheader.new:                       ; preds = %.lr.ph.i28.i.preheader
@@ -3387,7 +3387,7 @@ bb.b:                                             ; preds = %_RINvMNtNtNtCs2pqxY
   br label %.backedge.i
 
 .backedge.i:                                      ; preds = %.backedge.i.backedge, %bb.b
-  %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 13 uses
+  %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 16 uses
   %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !29090 ; 5 uses
   %i.q = load atomic ptr, ptr %i.l acquire, align 8, !noalias !29090 ; 8 uses
   %i.r = lshr i64 %i.p, 1                         ; 2 uses
@@ -3408,9 +3408,9 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not.i.i, label %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.e
-  %i.v = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 3 uses
+  %i.v = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 2 uses
   %xtraiter92 = and i32 %i.v, 7                   ; 3 uses
-  %i.w = icmp ult i32 %i.v, 8
+  %i.w = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.w, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new
 
 .lr.ph.i.i.preheader.new:                         ; preds = %.lr.ph.i.i.preheader
@@ -3494,9 +3494,9 @@ bb.m:                                             ; preds = %bb.k
   br i1 %.not.i18.i, label %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit22.i, label %.lr.ph.i19.i.preheader
 
 .lr.ph.i19.i.preheader:                           ; preds = %bb.m
-  %i.aj = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 3 uses
+  %i.aj = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 2 uses
   %xtraiter86 = and i32 %i.aj, 7                  ; 3 uses
-  %i.ak = icmp ult i32 %i.aj, 8
+  %i.ak = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.ak, label %.lr.ph.i19.i.epil.preheader, label %.lr.ph.i19.i.preheader.new
 
 .lr.ph.i19.i.preheader.new:                       ; preds = %.lr.ph.i19.i.preheader
@@ -3544,13 +3544,13 @@ bb.n:                                             ; preds = %bb.j
 
 bb.o:                                             ; preds = %bb.n
   %.sroa.0.0.i.i.i = call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.034.i, i32 6) ; 2 uses
-  %i.an = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 3 uses
+  %i.an = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 2 uses
   %.not.i23.i = icmp eq i32 %.sroa.0.034.i, 0
   br i1 %.not.i23.i, label %.backedge.i.backedge, label %.lr.ph.i24.i.preheader
 
 .lr.ph.i24.i.preheader:                           ; preds = %bb.o
   %xtraiter = and i32 %i.an, 5                    ; 3 uses
-  %i.ao = icmp samesign ult i32 %i.an, 8
+  %i.ao = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.ao, label %.lr.ph.i24.i.epil.preheader, label %.lr.ph.i24.i.preheader.new
 
 .lr.ph.i24.i.preheader.new:                       ; preds = %.lr.ph.i24.i.preheader
@@ -3953,7 +3953,7 @@ bb.d:                                             ; preds = %.lr.ph
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph.i
   %.sroa.03.079.i.lcssa = phi i64 [ %.sroa.03.0.ph84.i, %.lr.ph.i ], [ %i.x, %bb.b ] ; 2 uses
   %.sroa.07.078.i.lcssa = phi ptr [ %.sroa.07.0.ph83.i, %.lr.ph.i ], [ %i.y, %bb.b ] ; 2 uses
-  %.sroa.0.077.i.lcssa = phi i32 [ %.sroa.0.0.ph82.i, %.lr.ph.i ], [ %i.n, %bb.b ] ; 5 uses
+  %.sroa.0.077.i.lcssa = phi i32 [ %.sroa.0.0.ph82.i, %.lr.ph.i ], [ %i.n, %bb.b ] ; 6 uses
   %.lcssa = phi i64 [ %i.i, %.lr.ph.i ], [ %i.p, %bb.b ] ; 2 uses
   %i.w = icmp eq i64 %.lcssa, 30                  ; 2 uses
   %.not.i = icmp eq ptr %.sroa.038.0.ph81.i, null
@@ -4040,13 +4040,13 @@ bb.l:                                             ; preds = %bb.i, %_RINvNtCsbvk
 
 bb.m:                                             ; preds = %bb.l
   %.sroa.0.0.i.i.i = tail call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.077.i.lcssa, i32 6) ; 2 uses
-  %i.al = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 3 uses
+  %i.al = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 2 uses
   %.not.i27.i = icmp eq i32 %.sroa.0.077.i.lcssa, 0
   br i1 %.not.i27.i, label %.outer.backedge.i, label %.lr.ph.i28.i.preheader
 
 .lr.ph.i28.i.preheader:                           ; preds = %bb.m
   %xtraiter156 = and i32 %i.al, 5                 ; 3 uses
-  %i.am = icmp samesign ult i32 %i.al, 8
+  %i.am = icmp ult i32 %.sroa.0.077.i.lcssa, 3
   br i1 %i.am, label %.lr.ph.i28.i.epil.preheader, label %.lr.ph.i28.i.preheader.new
 
 .lr.ph.i28.i.preheader.new:                       ; preds = %.lr.ph.i28.i.preheader
@@ -4449,7 +4449,7 @@ bb.b:                                             ; preds = %_RINvMNtNtNtCs2pqxY
   br label %.backedge.i
 
 .backedge.i:                                      ; preds = %.backedge.i.backedge, %bb.b
-  %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 13 uses
+  %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 16 uses
   %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !29167 ; 5 uses
   %i.q = load atomic ptr, ptr %i.l acquire, align 8, !noalias !29167 ; 8 uses
   %i.r = lshr i64 %i.p, 1                         ; 2 uses
@@ -4470,9 +4470,9 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not.i.i, label %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.e
-  %i.v = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 3 uses
+  %i.v = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 2 uses
   %xtraiter92 = and i32 %i.v, 7                   ; 3 uses
-  %i.w = icmp ult i32 %i.v, 8
+  %i.w = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.w, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new
 
 .lr.ph.i.i.preheader.new:                         ; preds = %.lr.ph.i.i.preheader
@@ -4556,9 +4556,9 @@ bb.m:                                             ; preds = %bb.k
   br i1 %.not.i18.i, label %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit22.i, label %.lr.ph.i19.i.preheader
 
 .lr.ph.i19.i.preheader:                           ; preds = %bb.m
-  %i.aj = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 3 uses
+  %i.aj = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 2 uses
   %xtraiter86 = and i32 %i.aj, 7                  ; 3 uses
-  %i.ak = icmp ult i32 %i.aj, 8
+  %i.ak = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.ak, label %.lr.ph.i19.i.epil.preheader, label %.lr.ph.i19.i.preheader.new
 
 .lr.ph.i19.i.preheader.new:                       ; preds = %.lr.ph.i19.i.preheader
@@ -4606,13 +4606,13 @@ bb.n:                                             ; preds = %bb.j
 
 bb.o:                                             ; preds = %bb.n
   %.sroa.0.0.i.i.i = call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.034.i, i32 6) ; 2 uses
-  %i.an = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 3 uses
+  %i.an = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 2 uses
   %.not.i23.i = icmp eq i32 %.sroa.0.034.i, 0
   br i1 %.not.i23.i, label %.backedge.i.backedge, label %.lr.ph.i24.i.preheader
 
 .lr.ph.i24.i.preheader:                           ; preds = %bb.o
   %xtraiter = and i32 %i.an, 5                    ; 3 uses
-  %i.ao = icmp samesign ult i32 %i.an, 8
+  %i.ao = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.ao, label %.lr.ph.i24.i.epil.preheader, label %.lr.ph.i24.i.preheader.new
 
 .lr.ph.i24.i.preheader.new:                       ; preds = %.lr.ph.i24.i.preheader
@@ -5015,7 +5015,7 @@ bb.d:                                             ; preds = %.lr.ph
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph.i
   %.sroa.03.079.i.lcssa = phi i64 [ %.sroa.03.0.ph84.i, %.lr.ph.i ], [ %i.x, %bb.b ] ; 2 uses
   %.sroa.07.078.i.lcssa = phi ptr [ %.sroa.07.0.ph83.i, %.lr.ph.i ], [ %i.y, %bb.b ] ; 2 uses
-  %.sroa.0.077.i.lcssa = phi i32 [ %.sroa.0.0.ph82.i, %.lr.ph.i ], [ %i.n, %bb.b ] ; 5 uses
+  %.sroa.0.077.i.lcssa = phi i32 [ %.sroa.0.0.ph82.i, %.lr.ph.i ], [ %i.n, %bb.b ] ; 6 uses
   %.lcssa = phi i64 [ %i.i, %.lr.ph.i ], [ %i.p, %bb.b ] ; 2 uses
   %i.w = icmp eq i64 %.lcssa, 30                  ; 2 uses
   %.not.i = icmp eq ptr %.sroa.038.0.ph81.i, null
@@ -5102,13 +5102,13 @@ bb.l:                                             ; preds = %bb.i, %_RINvNtCsbvk
 
 bb.m:                                             ; preds = %bb.l
   %.sroa.0.0.i.i.i = tail call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.077.i.lcssa, i32 6) ; 2 uses
-  %i.al = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 3 uses
+  %i.al = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 2 uses
   %.not.i27.i = icmp eq i32 %.sroa.0.077.i.lcssa, 0
   br i1 %.not.i27.i, label %.outer.backedge.i, label %.lr.ph.i28.i.preheader
 
 .lr.ph.i28.i.preheader:                           ; preds = %bb.m
   %xtraiter156 = and i32 %i.al, 5                 ; 3 uses
-  %i.am = icmp samesign ult i32 %i.al, 8
+  %i.am = icmp ult i32 %.sroa.0.077.i.lcssa, 3
   br i1 %i.am, label %.lr.ph.i28.i.epil.preheader, label %.lr.ph.i28.i.preheader.new
 
 .lr.ph.i28.i.preheader.new:                       ; preds = %.lr.ph.i28.i.preheader
@@ -5511,7 +5511,7 @@ bb.b:                                             ; preds = %_RINvMNtNtNtCs2pqxY
   br label %.backedge.i
 
 .backedge.i:                                      ; preds = %.backedge.i.backedge, %bb.b
-  %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 13 uses
+  %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 16 uses
   %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !29244 ; 5 uses
   %i.q = load atomic ptr, ptr %i.l acquire, align 8, !noalias !29244 ; 8 uses
   %i.r = lshr i64 %i.p, 1                         ; 2 uses
@@ -5532,9 +5532,9 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not.i.i, label %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.e
-  %i.v = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 3 uses
+  %i.v = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 2 uses
   %xtraiter92 = and i32 %i.v, 7                   ; 3 uses
-  %i.w = icmp ult i32 %i.v, 8
+  %i.w = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.w, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new
 
 .lr.ph.i.i.preheader.new:                         ; preds = %.lr.ph.i.i.preheader
@@ -5618,9 +5618,9 @@ bb.m:                                             ; preds = %bb.k
   br i1 %.not.i18.i, label %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit22.i, label %.lr.ph.i19.i.preheader
 
 .lr.ph.i19.i.preheader:                           ; preds = %bb.m
-  %i.aj = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 3 uses
+  %i.aj = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 2 uses
   %xtraiter86 = and i32 %i.aj, 7                  ; 3 uses
-  %i.ak = icmp ult i32 %i.aj, 8
+  %i.ak = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.ak, label %.lr.ph.i19.i.epil.preheader, label %.lr.ph.i19.i.preheader.new
 
 .lr.ph.i19.i.preheader.new:                       ; preds = %.lr.ph.i19.i.preheader
@@ -5668,13 +5668,13 @@ bb.n:                                             ; preds = %bb.j
 
 bb.o:                                             ; preds = %bb.n
   %.sroa.0.0.i.i.i = call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.034.i, i32 6) ; 2 uses
-  %i.an = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 3 uses
+  %i.an = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 2 uses
   %.not.i23.i = icmp eq i32 %.sroa.0.034.i, 0
   br i1 %.not.i23.i, label %.backedge.i.backedge, label %.lr.ph.i24.i.preheader
 
 .lr.ph.i24.i.preheader:                           ; preds = %bb.o
   %xtraiter = and i32 %i.an, 5                    ; 3 uses
-  %i.ao = icmp samesign ult i32 %i.an, 8
+  %i.ao = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.ao, label %.lr.ph.i24.i.epil.preheader, label %.lr.ph.i24.i.preheader.new
 
 .lr.ph.i24.i.preheader.new:                       ; preds = %.lr.ph.i24.i.preheader
@@ -6077,7 +6077,7 @@ bb.d:                                             ; preds = %.lr.ph
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph.i
   %.sroa.03.079.i.lcssa = phi i64 [ %.sroa.03.0.ph84.i, %.lr.ph.i ], [ %i.x, %bb.b ] ; 2 uses
   %.sroa.07.078.i.lcssa = phi ptr [ %.sroa.07.0.ph83.i, %.lr.ph.i ], [ %i.y, %bb.b ] ; 2 uses
-  %.sroa.0.077.i.lcssa = phi i32 [ %.sroa.0.0.ph82.i, %.lr.ph.i ], [ %i.n, %bb.b ] ; 5 uses
+  %.sroa.0.077.i.lcssa = phi i32 [ %.sroa.0.0.ph82.i, %.lr.ph.i ], [ %i.n, %bb.b ] ; 6 uses
   %.lcssa = phi i64 [ %i.i, %.lr.ph.i ], [ %i.p, %bb.b ] ; 2 uses
   %i.w = icmp eq i64 %.lcssa, 30                  ; 2 uses
   %.not.i = icmp eq ptr %.sroa.038.0.ph81.i, null
@@ -6164,13 +6164,13 @@ bb.l:                                             ; preds = %bb.i, %_RINvNtCsbvk
 
 bb.m:                                             ; preds = %bb.l
   %.sroa.0.0.i.i.i = tail call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.077.i.lcssa, i32 6) ; 2 uses
-  %i.al = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 3 uses
+  %i.al = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 2 uses
   %.not.i27.i = icmp eq i32 %.sroa.0.077.i.lcssa, 0
   br i1 %.not.i27.i, label %.outer.backedge.i, label %.lr.ph.i28.i.preheader
 
 .lr.ph.i28.i.preheader:                           ; preds = %bb.m
   %xtraiter157 = and i32 %i.al, 5                 ; 3 uses
-  %i.am = icmp samesign ult i32 %i.al, 8
+  %i.am = icmp ult i32 %.sroa.0.077.i.lcssa, 3
   br i1 %i.am, label %.lr.ph.i28.i.epil.preheader, label %.lr.ph.i28.i.preheader.new
 
 .lr.ph.i28.i.preheader.new:                       ; preds = %.lr.ph.i28.i.preheader
@@ -6573,7 +6573,7 @@ bb.b:                                             ; preds = %_RINvMNtNtNtCs2pqxY
   br label %.backedge.i
 
 .backedge.i:                                      ; preds = %.backedge.i.backedge, %bb.b
-  %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 13 uses
+  %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 16 uses
   %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !29321 ; 5 uses
   %i.q = load atomic ptr, ptr %i.l acquire, align 8, !noalias !29321 ; 8 uses
   %i.r = lshr i64 %i.p, 1                         ; 2 uses
@@ -6594,9 +6594,9 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not.i.i, label %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.e
-  %i.v = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 3 uses
+  %i.v = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 2 uses
   %xtraiter92 = and i32 %i.v, 7                   ; 3 uses
-  %i.w = icmp ult i32 %i.v, 8
+  %i.w = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.w, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new
 
 .lr.ph.i.i.preheader.new:                         ; preds = %.lr.ph.i.i.preheader
@@ -6680,9 +6680,9 @@ bb.m:                                             ; preds = %bb.k
   br i1 %.not.i18.i, label %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit22.i, label %.lr.ph.i19.i.preheader
 
 .lr.ph.i19.i.preheader:                           ; preds = %bb.m
-  %i.aj = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 3 uses
+  %i.aj = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 2 uses
   %xtraiter86 = and i32 %i.aj, 7                  ; 3 uses
-  %i.ak = icmp ult i32 %i.aj, 8
+  %i.ak = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.ak, label %.lr.ph.i19.i.epil.preheader, label %.lr.ph.i19.i.preheader.new
 
 .lr.ph.i19.i.preheader.new:                       ; preds = %.lr.ph.i19.i.preheader
@@ -6730,13 +6730,13 @@ bb.n:                                             ; preds = %bb.j
 
 bb.o:                                             ; preds = %bb.n
   %.sroa.0.0.i.i.i = call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.034.i, i32 6) ; 2 uses
-  %i.an = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 3 uses
+  %i.an = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 2 uses
   %.not.i23.i = icmp eq i32 %.sroa.0.034.i, 0
   br i1 %.not.i23.i, label %.backedge.i.backedge, label %.lr.ph.i24.i.preheader
 
 .lr.ph.i24.i.preheader:                           ; preds = %bb.o
   %xtraiter = and i32 %i.an, 5                    ; 3 uses
-  %i.ao = icmp samesign ult i32 %i.an, 8
+  %i.ao = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.ao, label %.lr.ph.i24.i.epil.preheader, label %.lr.ph.i24.i.preheader.new
 
 .lr.ph.i24.i.preheader.new:                       ; preds = %.lr.ph.i24.i.preheader
@@ -7139,7 +7139,7 @@ bb.d:                                             ; preds = %.lr.ph
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph.i
   %.sroa.03.079.i.lcssa = phi i64 [ %.sroa.03.0.ph84.i, %.lr.ph.i ], [ %i.x, %bb.b ] ; 2 uses
   %.sroa.07.078.i.lcssa = phi ptr [ %.sroa.07.0.ph83.i, %.lr.ph.i ], [ %i.y, %bb.b ] ; 2 uses
-  %.sroa.0.077.i.lcssa = phi i32 [ %.sroa.0.0.ph82.i, %.lr.ph.i ], [ %i.n, %bb.b ] ; 5 uses
+  %.sroa.0.077.i.lcssa = phi i32 [ %.sroa.0.0.ph82.i, %.lr.ph.i ], [ %i.n, %bb.b ] ; 6 uses
   %.lcssa = phi i64 [ %i.i, %.lr.ph.i ], [ %i.p, %bb.b ] ; 2 uses
   %i.w = icmp eq i64 %.lcssa, 30                  ; 2 uses
   %.not.i = icmp eq ptr %.sroa.038.0.ph81.i, null
@@ -7226,13 +7226,13 @@ bb.l:                                             ; preds = %bb.i, %_RINvNtCsbvk
 
 bb.m:                                             ; preds = %bb.l
   %.sroa.0.0.i.i.i = tail call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.077.i.lcssa, i32 6) ; 2 uses
-  %i.al = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 3 uses
+  %i.al = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 2 uses
   %.not.i27.i = icmp eq i32 %.sroa.0.077.i.lcssa, 0
   br i1 %.not.i27.i, label %.outer.backedge.i, label %.lr.ph.i28.i.preheader
 
 .lr.ph.i28.i.preheader:                           ; preds = %bb.m
   %xtraiter156 = and i32 %i.al, 5                 ; 3 uses
-  %i.am = icmp samesign ult i32 %i.al, 8
+  %i.am = icmp ult i32 %.sroa.0.077.i.lcssa, 3
   br i1 %i.am, label %.lr.ph.i28.i.epil.preheader, label %.lr.ph.i28.i.preheader.new
 
 .lr.ph.i28.i.preheader.new:                       ; preds = %.lr.ph.i28.i.preheader
@@ -7635,7 +7635,7 @@ bb.b:                                             ; preds = %_RINvMNtNtNtCs2pqxY
   br label %.backedge.i
 
 .backedge.i:                                      ; preds = %.backedge.i.backedge, %bb.b
-  %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 13 uses
+  %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 16 uses
   %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !29395 ; 5 uses
   %i.q = load atomic ptr, ptr %i.l acquire, align 8, !noalias !29395 ; 8 uses
   %i.r = lshr i64 %i.p, 1                         ; 2 uses
@@ -7656,9 +7656,9 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not.i.i, label %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.e
-  %i.v = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 3 uses
+  %i.v = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 2 uses
   %xtraiter92 = and i32 %i.v, 7                   ; 3 uses
-  %i.w = icmp ult i32 %i.v, 8
+  %i.w = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.w, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new
 
 .lr.ph.i.i.preheader.new:                         ; preds = %.lr.ph.i.i.preheader
@@ -7742,9 +7742,9 @@ bb.m:                                             ; preds = %bb.k
   br i1 %.not.i18.i, label %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit22.i, label %.lr.ph.i19.i.preheader
 
 .lr.ph.i19.i.preheader:                           ; preds = %bb.m
-  %i.aj = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 3 uses
+  %i.aj = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 2 uses
   %xtraiter86 = and i32 %i.aj, 7                  ; 3 uses
-  %i.ak = icmp ult i32 %i.aj, 8
+  %i.ak = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.ak, label %.lr.ph.i19.i.epil.preheader, label %.lr.ph.i19.i.preheader.new
 
 .lr.ph.i19.i.preheader.new:                       ; preds = %.lr.ph.i19.i.preheader
@@ -7792,13 +7792,13 @@ bb.n:                                             ; preds = %bb.j
 
 bb.o:                                             ; preds = %bb.n
   %.sroa.0.0.i.i.i = call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.034.i, i32 6) ; 2 uses
-  %i.an = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 3 uses
+  %i.an = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 2 uses
   %.not.i23.i = icmp eq i32 %.sroa.0.034.i, 0
   br i1 %.not.i23.i, label %.backedge.i.backedge, label %.lr.ph.i24.i.preheader
 
 .lr.ph.i24.i.preheader:                           ; preds = %bb.o
   %xtraiter = and i32 %i.an, 5                    ; 3 uses
-  %i.ao = icmp samesign ult i32 %i.an, 8
+  %i.ao = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.ao, label %.lr.ph.i24.i.epil.preheader, label %.lr.ph.i24.i.preheader.new
 
 .lr.ph.i24.i.preheader.new:                       ; preds = %.lr.ph.i24.i.preheader
@@ -8201,7 +8201,7 @@ bb.d:                                             ; preds = %.lr.ph
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph.i
   %.sroa.03.079.i.lcssa = phi i64 [ %.sroa.03.0.ph84.i, %.lr.ph.i ], [ %i.x, %bb.b ] ; 2 uses
   %.sroa.07.078.i.lcssa = phi ptr [ %.sroa.07.0.ph83.i, %.lr.ph.i ], [ %i.y, %bb.b ] ; 2 uses
-  %.sroa.0.077.i.lcssa = phi i32 [ %.sroa.0.0.ph82.i, %.lr.ph.i ], [ %i.n, %bb.b ] ; 5 uses
+  %.sroa.0.077.i.lcssa = phi i32 [ %.sroa.0.0.ph82.i, %.lr.ph.i ], [ %i.n, %bb.b ] ; 6 uses
   %.lcssa = phi i64 [ %i.i, %.lr.ph.i ], [ %i.p, %bb.b ] ; 2 uses
   %i.w = icmp eq i64 %.lcssa, 30                  ; 2 uses
   %.not.i = icmp eq ptr %.sroa.038.0.ph81.i, null
@@ -8288,13 +8288,13 @@ bb.l:                                             ; preds = %bb.i, %_RINvNtCsbvk
 
 bb.m:                                             ; preds = %bb.l
   %.sroa.0.0.i.i.i = tail call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.077.i.lcssa, i32 6) ; 2 uses
-  %i.al = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 3 uses
+  %i.al = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 2 uses
   %.not.i27.i = icmp eq i32 %.sroa.0.077.i.lcssa, 0
   br i1 %.not.i27.i, label %.outer.backedge.i, label %.lr.ph.i28.i.preheader
 
 .lr.ph.i28.i.preheader:                           ; preds = %bb.m
   %xtraiter156 = and i32 %i.al, 5                 ; 3 uses
-  %i.am = icmp samesign ult i32 %i.al, 8
+  %i.am = icmp ult i32 %.sroa.0.077.i.lcssa, 3
   br i1 %i.am, label %.lr.ph.i28.i.epil.preheader, label %.lr.ph.i28.i.preheader.new
 
 .lr.ph.i28.i.preheader.new:                       ; preds = %.lr.ph.i28.i.preheader
@@ -8697,7 +8697,7 @@ bb.b:                                             ; preds = %_RINvMNtNtNtCs2pqxY
   br label %.backedge.i
 
 .backedge.i:                                      ; preds = %.backedge.i.backedge, %bb.b
-  %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 13 uses
+  %.sroa.0.034.i = phi i32 [ 0, %bb.b ], [ %.sroa.0.034.i.be, %.backedge.i.backedge ] ; 16 uses
   %i.p = load atomic i64, ptr %1 acquire, align 128, !noalias !29469 ; 5 uses
   %i.q = load atomic ptr, ptr %i.l acquire, align 8, !noalias !29469 ; 8 uses
   %i.r = lshr i64 %i.p, 1                         ; 2 uses
@@ -8718,9 +8718,9 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not.i.i, label %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.e
-  %i.v = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 3 uses
+  %i.v = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 2 uses
   %xtraiter92 = and i32 %i.v, 7                   ; 3 uses
-  %i.w = icmp ult i32 %i.v, 8
+  %i.w = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.w, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new
 
 .lr.ph.i.i.preheader.new:                         ; preds = %.lr.ph.i.i.preheader
@@ -8804,9 +8804,9 @@ bb.m:                                             ; preds = %bb.k
   br i1 %.not.i18.i, label %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit22.i, label %.lr.ph.i19.i.preheader
 
 .lr.ph.i19.i.preheader:                           ; preds = %bb.m
-  %i.aj = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 3 uses
+  %i.aj = mul nuw i32 %.sroa.0.034.i, %.sroa.0.034.i ; 2 uses
   %xtraiter86 = and i32 %i.aj, 7                  ; 3 uses
-  %i.ak = icmp ult i32 %i.aj, 8
+  %i.ak = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.ak, label %.lr.ph.i19.i.epil.preheader, label %.lr.ph.i19.i.preheader.new
 
 .lr.ph.i19.i.preheader.new:                       ; preds = %.lr.ph.i19.i.preheader
@@ -8854,13 +8854,13 @@ bb.n:                                             ; preds = %bb.j
 
 bb.o:                                             ; preds = %bb.n
   %.sroa.0.0.i.i.i = call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.034.i, i32 6) ; 2 uses
-  %i.an = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 3 uses
+  %i.an = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 2 uses
   %.not.i23.i = icmp eq i32 %.sroa.0.034.i, 0
   br i1 %.not.i23.i, label %.backedge.i.backedge, label %.lr.ph.i24.i.preheader
 
 .lr.ph.i24.i.preheader:                           ; preds = %bb.o
   %xtraiter = and i32 %i.an, 5                    ; 3 uses
-  %i.ao = icmp samesign ult i32 %i.an, 8
+  %i.ao = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.ao, label %.lr.ph.i24.i.epil.preheader, label %.lr.ph.i24.i.preheader.new
 
 .lr.ph.i24.i.preheader.new:                       ; preds = %.lr.ph.i24.i.preheader
@@ -9263,7 +9263,7 @@ bb.d:                                             ; preds = %.lr.ph
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph.i
   %.sroa.03.079.i.lcssa = phi i64 [ %.sroa.03.0.ph84.i, %.lr.ph.i ], [ %i.x, %bb.b ] ; 2 uses
   %.sroa.07.078.i.lcssa = phi ptr [ %.sroa.07.0.ph83.i, %.lr.ph.i ], [ %i.y, %bb.b ] ; 2 uses
-  %.sroa.0.077.i.lcssa = phi i32 [ %.sroa.0.0.ph82.i, %.lr.ph.i ], [ %i.n, %bb.b ] ; 5 uses
+  %.sroa.0.077.i.lcssa = phi i32 [ %.sroa.0.0.ph82.i, %.lr.ph.i ], [ %i.n, %bb.b ] ; 6 uses
   %.lcssa = phi i64 [ %i.i, %.lr.ph.i ], [ %i.p, %bb.b ] ; 2 uses
   %i.w = icmp eq i64 %.lcssa, 30                  ; 2 uses
   %.not.i = icmp eq ptr %.sroa.038.0.ph81.i, null
@@ -9350,13 +9350,13 @@ bb.l:                                             ; preds = %bb.i, %_RINvNtCsbvk
 
 bb.m:                                             ; preds = %bb.l
   %.sroa.0.0.i.i.i = tail call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.077.i.lcssa, i32 6) ; 2 uses
-  %i.al = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 3 uses
+  %i.al = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 2 uses
   %.not.i27.i = icmp eq i32 %.sroa.0.077.i.lcssa, 0
   br i1 %.not.i27.i, label %.outer.backedge.i, label %.lr.ph.i28.i.preheader
 
 .lr.ph.i28.i.preheader:                           ; preds = %bb.m
   %xtraiter156 = and i32 %i.al, 5                 ; 3 uses
-  %i.am = icmp samesign ult i32 %i.al, 8
+  %i.am = icmp ult i32 %.sroa.0.077.i.lcssa, 3
   br i1 %i.am, label %.lr.ph.i28.i.epil.preheader, label %.lr.ph.i28.i.preheader.new
 
 .lr.ph.i28.i.preheader.new:                       ; preds = %.lr.ph.i28.i.preheader
