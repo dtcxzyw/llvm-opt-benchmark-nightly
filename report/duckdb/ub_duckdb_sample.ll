@@ -201,7 +201,7 @@ bb.a:
   %4 = alloca %"class.duckdb::unique_ptr.2", align 8 ; 8 uses
   %5 = alloca %"class.duckdb::vector.46", align 8 ; 9 uses
   %6 = alloca %"class.duckdb::unique_ptr.28", align 8 ; 8 uses
-  %7 = alloca %"struct.duckdb::SelectionVector", align 8 ; 11 uses
+  %7 = alloca %"struct.duckdb::SelectionVector", align 8 ; 10 uses
   %8 = alloca %"struct.duckdb::SelectionVector", align 16 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #29
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
@@ -394,17 +394,13 @@ _ZNK6duckdb15ReservoirSample20GetActiveSampleCountEv.exit: ; preds = %.noexc31, 
   %i.ba = mul nuw nsw i64 %i.az, 10
   %i.bb = add i64 %i.ba, %i.ax
   invoke void @_ZNK6duckdb15ReservoirSample20CreateNewSampleChunkERNS_6vectorINS_11LogicalTypeELb1ESaIS2_EEEm(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::unique_ptr.28") align 8 %6, ptr noundef nonnull align 8 dereferenceable(88) %1, ptr noundef nonnull align 8 dereferenceable(24) %5, i64 noundef %i.bb)
-          to label %9 unwind label %bb.bb
+          to label %bb.v unwind label %bb.bb
 
-9:                                                ; preds = %_ZNK6duckdb15ReservoirSample20GetActiveSampleCountEv.exit
+bb.v:                                             ; preds = %_ZNK6duckdb15ReservoirSample20GetActiveSampleCountEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #29
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %11, i8 0, i64 16, i1 false)
-  %12 = icmp eq ptr %7, %10
-  br i1 %12, label %bb.ae, label %bb.v
-
-bb.v:                                             ; preds = %9
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 56
+  %10 = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %10, i8 0, i64 16, i1 false)
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !198 ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 72
@@ -425,7 +421,7 @@ bb.x:                                             ; preds = %bb.w
   br label %_ZN6duckdb10shared_ptrINS_13SelectionDataELb1EEC2ERKS2_.exit.i.i.thread.i
 
 _ZN6duckdb10shared_ptrINS_13SelectionDataELb1EEC2ERKS2_.exit.i.i.thread.i: ; preds = %bb.x, %bb.v
-  store ptr %i.bd, ptr %11, align 8, !tbaa !199
+  store ptr %i.bd, ptr %10, align 8, !tbaa !199
   %i.bk = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.bf, ptr %i.bk, align 8, !tbaa !135
   br label %bb.ae
@@ -434,7 +430,7 @@ _ZN6duckdb10shared_ptrINS_13SelectionDataELb1EEC2ERKS2_.exit.i.i.i: ; preds = %b
   %i.bl = atomicrmw volatile add ptr %i.bg, i32 1 acq_rel, align 4 ; 0 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
   %.pre.i = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !135 ; 8 uses
-  store ptr %i.bd, ptr %11, align 8, !tbaa !199
+  store ptr %i.bd, ptr %10, align 8, !tbaa !199
   store ptr %i.bf, ptr %.phi.trans.insert.i, align 8, !tbaa !135
   %.not.i.i.i.i.i.i = icmp eq ptr %.pre.i, null
   br i1 %.not.i.i.i.i.i.i, label %bb.ae, label %bb.y
@@ -483,8 +479,8 @@ bb.ad:                                            ; preds = %_ZN9__gnu_cxx27__ex
   call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %.pre.i) #29
   br label %bb.ae
 
-bb.ae:                                            ; preds = %bb.ad, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i, %bb.z, %_ZN6duckdb10shared_ptrINS_13SelectionDataELb1EEC2ERKS2_.exit.i.i.i, %_ZN6duckdb10shared_ptrINS_13SelectionDataELb1EEC2ERKS2_.exit.i.i.thread.i, %9
-  %i.cb = load ptr, ptr %10, align 8, !tbaa !137
+bb.ae:                                            ; preds = %bb.ad, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i, %bb.z, %_ZN6duckdb10shared_ptrINS_13SelectionDataELb1EEC2ERKS2_.exit.i.i.i, %_ZN6duckdb10shared_ptrINS_13SelectionDataELb1EEC2ERKS2_.exit.i.i.thread.i
+  %i.cb = load ptr, ptr %9, align 8, !tbaa !137
   store ptr %i.cb, ptr %7, align 8, !tbaa !137
   %i.cc = invoke noundef ptr @_ZNK6duckdb10unique_ptrINS_15ReservoirSampleESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %3)
           to label %bb.af unwind label %bb.bc
@@ -887,7 +883,7 @@ _ZN6duckdb10shared_ptrINS_13SelectionDataELb1EEC2ERKS2_.exit.i.i.i: ; preds = %b
   %i.bb = atomicrmw volatile add ptr %i.ax, i32 1 acq_rel, align 4 ; 0 uses
   br label %_ZN6duckdb15SelectionVectorC2ERKS0_.exit
 
-_ZN6duckdb15SelectionVectorC2ERKS0_.exit:         ; preds = %bb.i, %bb.k, %_ZN6duckdb10shared_ptrINS_13SelectionDataELb1EEC2ERKS2_.exit.i.i.i
+_ZN6duckdb15SelectionVectorC2ERKS0_.exit:         ; preds = %_ZN6duckdb10shared_ptrINS_13SelectionDataELb1EEC2ERKS2_.exit.i.i.i, %bb.i, %bb.k
   %i.bc = load ptr, ptr %i.as, align 8, !tbaa !137
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 56
   store ptr %i.bc, ptr %i.bd, align 8, !tbaa !137
@@ -942,7 +938,7 @@ bb.q:                                             ; preds = %_ZN9__gnu_cxx27__ex
   tail call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.bg) #29
   br label %_ZN6duckdb15SelectionVectorD2Ev.exit
 
-_ZN6duckdb15SelectionVectorD2Ev.exit:             ; preds = %_ZN6duckdb15SelectionVectorC2ERKS0_.exit, %bb.m, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i, %bb.q
+_ZN6duckdb15SelectionVectorD2Ev.exit:             ; preds = %bb.q, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i, %bb.m, %_ZN6duckdb15SelectionVectorC2ERKS0_.exit
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 80
   %.pre96 = load i64, ptr %.phi.trans.insert, align 8, !tbaa !117
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 80

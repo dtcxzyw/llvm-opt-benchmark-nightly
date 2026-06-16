@@ -201,10 +201,10 @@ _ZN11CStringBaseIwE10GrowLengthEi.exit:           ; preds = %bb.a, %bb.b, %bb.d
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local void @_ZN8NWindows5NFile5NName31SplitNameToPureNameAndExtensionERK11CStringBaseIwERS3_S6_S6_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr nofree noundef nonnull align 8 captures(address) dereferenceable(16) %1, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(16) %2, ptr nofree noundef nonnull align 8 captures(address) dereferenceable(16) %3) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define dso_local void @_ZN8NWindows5NFile5NName31SplitNameToPureNameAndExtensionERK11CStringBaseIwERS3_S6_S6_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr nofree noundef nonnull align 8 captures(address) dereferenceable(16) %1, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(16) %2, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(16) %3) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = alloca %class.CStringBase, align 8         ; 9 uses
-  %5 = alloca %class.CStringBase, align 8         ; 9 uses
+  %4 = alloca %class.CStringBase, align 8         ; 7 uses
+  %5 = alloca %class.CStringBase, align 8         ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !8    ; 2 uses
   %i.c = icmp eq i32 %i.b, 0
@@ -234,7 +234,7 @@ _ZNK11CStringBaseIwE11ReverseFindEw.exit:         ; preds = %bb.c
   %i.m = lshr exact i64 %i.l, 2
   %i.n = trunc i64 %i.m to i32                    ; 3 uses
   %i.o = icmp slt i32 %i.n, 0
-  br i1 %i.o, label %_ZNK11CStringBaseIwE11ReverseFindEw.exit.thread, label %6
+  br i1 %i.o, label %_ZNK11CStringBaseIwE11ReverseFindEw.exit.thread, label %bb.i
 
 _ZNK11CStringBaseIwE11ReverseFindEw.exit.thread:  ; preds = %bb.d, %bb.a, %_ZNK11CStringBaseIwE11ReverseFindEw.exit
   %i.p = icmp eq ptr %0, %1
@@ -306,17 +306,9 @@ _ZN11CStringBaseIwEaSERKS0_.exit:                 ; preds = %_ZNK11CStringBaseIw
   store i32 0, ptr %i.ap, align 4, !tbaa !13
   br label %bb.y
 
-6:                                                ; preds = %_ZNK11CStringBaseIwE11ReverseFindEw.exit
+bb.i:                                             ; preds = %_ZNK11CStringBaseIwE11ReverseFindEw.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
   call void @_ZNK11CStringBaseIwE3MidEii(ptr dead_on_unwind nonnull writable sret(%class.CStringBase) align 8 %4, ptr noundef nonnull align 8 dereferenceable(16) %0, i32 noundef 0, i32 noundef %i.n)
-  %7 = icmp eq ptr %4, %1
-  br i1 %7, label %._ZN11CStringBaseIwEaSERKS0_.exit24_crit_edge, label %bb.i
-
-._ZN11CStringBaseIwEaSERKS0_.exit24_crit_edge:    ; preds = %6
-  %.pre = load ptr, ptr %4, align 8, !tbaa !12
-  br label %_ZN11CStringBaseIwEaSERKS0_.exit24
-
-bb.i:                                             ; preds = %6
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   store i32 0, ptr %i.aq, align 8, !tbaa !8
   %i.ar = load ptr, ptr %1, align 8, !tbaa !12    ; 3 uses
@@ -357,7 +349,7 @@ bb.k:                                             ; preds = %._crit_edge.thread.
 
 _ZN11CStringBaseIwE11SetCapacityEi.exit.i17:      ; preds = %bb.k, %bb.i
   %i.bh = phi ptr [ %i.ar, %bb.i ], [ %i.bc, %bb.k ]
-  %i.bi = load ptr, ptr %4, align 8, !tbaa !12    ; 2 uses
+  %i.bi = load ptr, ptr %4, align 8, !tbaa !12    ; 3 uses
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.l, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i17
@@ -368,20 +360,16 @@ bb.l:                                             ; preds = %bb.l, %_ZN11CString
   %i.bl = getelementptr inbounds nuw i8, ptr %.0.i.i19, i64 4
   store i32 %i.bk, ptr %.0.i.i19, align 4, !tbaa !13
   %.not.i.i20 = icmp eq i32 %i.bk, 0
-  br i1 %.not.i.i20, label %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i21, label %bb.l, !llvm.loop !24
+  br i1 %.not.i.i20, label %_ZN11CStringBaseIwEaSERKS0_.exit24, label %bb.l, !llvm.loop !24
 
-_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i21:          ; preds = %bb.l
-  %8 = load i32, ptr %i.as, align 8, !tbaa !8
-  store i32 %8, ptr %i.aq, align 8, !tbaa !8
-  br label %_ZN11CStringBaseIwEaSERKS0_.exit24
-
-_ZN11CStringBaseIwEaSERKS0_.exit24:               ; preds = %._ZN11CStringBaseIwEaSERKS0_.exit24_crit_edge, %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i21
-  %9 = phi ptr [ %.pre, %._ZN11CStringBaseIwEaSERKS0_.exit24_crit_edge ], [ %i.bi, %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i21 ] ; 2 uses
-  %i.bm = icmp eq ptr %9, null
+_ZN11CStringBaseIwEaSERKS0_.exit24:               ; preds = %bb.l
+  %6 = load i32, ptr %i.as, align 8, !tbaa !8
+  store i32 %6, ptr %i.aq, align 8, !tbaa !8
+  %i.bm = icmp eq ptr %i.bi, null
   br i1 %i.bm, label %_ZN11CStringBaseIwED2Ev.exit, label %bb.m
 
 bb.m:                                             ; preds = %_ZN11CStringBaseIwEaSERKS0_.exit24
-  call void @_ZdaPv(ptr noundef nonnull %9) #6
+  call void @_ZdaPv(ptr noundef nonnull %i.bi) #6
   br label %_ZN11CStringBaseIwED2Ev.exit
 
 _ZN11CStringBaseIwED2Ev.exit:                     ; preds = %_ZN11CStringBaseIwEaSERKS0_.exit24, %bb.m
@@ -393,7 +381,7 @@ _ZN11CStringBaseIwED2Ev.exit:                     ; preds = %_ZN11CStringBaseIwE
   %i.bp = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 2 uses
   %i.bq = load i32, ptr %i.bp, align 4, !tbaa !17 ; 2 uses
   %i.br = icmp eq i32 %i.bq, 2
-  br i1 %i.br, label %_ZN11CStringBaseIwEaSEw.exit, label %bb.n
+  br i1 %i.br, label %bb.p, label %bb.n
 
 bb.n:                                             ; preds = %_ZN11CStringBaseIwED2Ev.exit
   %i.bs = call noalias noundef nonnull dereferenceable(8) ptr @_Znam(i64 noundef 8) #5 ; 3 uses
@@ -412,27 +400,19 @@ bb.o:                                             ; preds = %._crit_edge.thread.
   %i.bw = getelementptr inbounds [4 x i8], ptr %i.bs, i64 %i.bv
   store i32 0, ptr %i.bw, align 4, !tbaa !13
   store i32 2, ptr %i.bp, align 4, !tbaa !17
-  br label %_ZN11CStringBaseIwEaSEw.exit
+  br label %bb.p
 
-_ZN11CStringBaseIwEaSEw.exit:                     ; preds = %_ZN11CStringBaseIwED2Ev.exit, %bb.o
-  %10 = phi ptr [ %i.bo, %_ZN11CStringBaseIwED2Ev.exit ], [ %i.bs, %bb.o ] ; 2 uses
-  store i32 46, ptr %10, align 4, !tbaa !13
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 4
-  store i32 0, ptr %11, align 4, !tbaa !13
+bb.p:                                             ; preds = %_ZN11CStringBaseIwED2Ev.exit, %bb.o
+  %7 = phi ptr [ %i.bo, %_ZN11CStringBaseIwED2Ev.exit ], [ %i.bs, %bb.o ] ; 2 uses
+  store i32 46, ptr %7, align 4, !tbaa !13
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 4
+  store i32 0, ptr %8, align 4, !tbaa !13
   store i32 1, ptr %i.bn, align 8, !tbaa !8
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #7
-  %12 = add nuw nsw i32 %i.n, 1                   ; 2 uses
-  %13 = load i32, ptr %i.a, align 8, !tbaa !8, !noalias !25
-  %14 = sub nsw i32 %13, %12
-  call void @_ZNK11CStringBaseIwE3MidEii(ptr dead_on_unwind nonnull writable sret(%class.CStringBase) align 8 %5, ptr noundef nonnull align 8 dereferenceable(16) %0, i32 noundef %12, i32 noundef %14)
-  %15 = icmp eq ptr %5, %3
-  br i1 %15, label %_ZN11CStringBaseIwEaSEw.exit._ZN11CStringBaseIwEaSERKS0_.exit36_crit_edge, label %bb.p
-
-_ZN11CStringBaseIwEaSEw.exit._ZN11CStringBaseIwEaSERKS0_.exit36_crit_edge: ; preds = %_ZN11CStringBaseIwEaSEw.exit
-  %.pre43 = load ptr, ptr %5, align 8, !tbaa !12
-  br label %_ZN11CStringBaseIwEaSERKS0_.exit36
-
-bb.p:                                             ; preds = %_ZN11CStringBaseIwEaSEw.exit
+  %9 = add nuw nsw i32 %i.n, 1                    ; 2 uses
+  %10 = load i32, ptr %i.a, align 8, !tbaa !8, !noalias !25
+  %11 = sub nsw i32 %10, %9
+  call void @_ZNK11CStringBaseIwE3MidEii(ptr dead_on_unwind nonnull writable sret(%class.CStringBase) align 8 %5, ptr noundef nonnull align 8 dereferenceable(16) %0, i32 noundef %9, i32 noundef %11)
   %i.bx = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   store i32 0, ptr %i.bx, align 8, !tbaa !8
   %i.by = load ptr, ptr %3, align 8, !tbaa !12    ; 3 uses
@@ -473,7 +453,7 @@ bb.r:                                             ; preds = %._crit_edge.thread.
 
 _ZN11CStringBaseIwE11SetCapacityEi.exit.i28:      ; preds = %bb.r, %bb.p
   %i.co = phi ptr [ %i.by, %bb.p ], [ %i.cj, %bb.r ]
-  %i.cp = load ptr, ptr %5, align 8, !tbaa !12    ; 2 uses
+  %i.cp = load ptr, ptr %5, align 8, !tbaa !12    ; 3 uses
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.s, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i28
@@ -484,20 +464,16 @@ bb.s:                                             ; preds = %bb.s, %_ZN11CString
   %i.cs = getelementptr inbounds nuw i8, ptr %.0.i.i30, i64 4
   store i32 %i.cr, ptr %.0.i.i30, align 4, !tbaa !13
   %.not.i.i31 = icmp eq i32 %i.cr, 0
-  br i1 %.not.i.i31, label %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i32, label %bb.s, !llvm.loop !24
+  br i1 %.not.i.i31, label %_ZN11CStringBaseIwEaSERKS0_.exit36, label %bb.s, !llvm.loop !24
 
-_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i32:          ; preds = %bb.s
-  %16 = load i32, ptr %i.bz, align 8, !tbaa !8
-  store i32 %16, ptr %i.bx, align 8, !tbaa !8
-  br label %_ZN11CStringBaseIwEaSERKS0_.exit36
-
-_ZN11CStringBaseIwEaSERKS0_.exit36:               ; preds = %_ZN11CStringBaseIwEaSEw.exit._ZN11CStringBaseIwEaSERKS0_.exit36_crit_edge, %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i32
-  %17 = phi ptr [ %.pre43, %_ZN11CStringBaseIwEaSEw.exit._ZN11CStringBaseIwEaSERKS0_.exit36_crit_edge ], [ %i.cp, %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i32 ] ; 2 uses
-  %i.ct = icmp eq ptr %17, null
+_ZN11CStringBaseIwEaSERKS0_.exit36:               ; preds = %bb.s
+  %12 = load i32, ptr %i.bz, align 8, !tbaa !8
+  store i32 %12, ptr %i.bx, align 8, !tbaa !8
+  %i.ct = icmp eq ptr %i.cp, null
   br i1 %i.ct, label %_ZN11CStringBaseIwED2Ev.exit37, label %bb.t
 
 bb.t:                                             ; preds = %_ZN11CStringBaseIwEaSERKS0_.exit36
-  call void @_ZdaPv(ptr noundef nonnull %17) #6
+  call void @_ZdaPv(ptr noundef nonnull %i.cp) #6
   br label %_ZN11CStringBaseIwED2Ev.exit37
 
 _ZN11CStringBaseIwED2Ev.exit37:                   ; preds = %_ZN11CStringBaseIwEaSERKS0_.exit36, %bb.t

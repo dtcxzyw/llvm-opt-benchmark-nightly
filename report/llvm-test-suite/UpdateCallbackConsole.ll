@@ -201,9 +201,9 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local noundef range(i32 -2147024882, 1) i32 @_ZN22CUpdateCallbackConsole22CryptoGetTextPassword2EPiPPw(ptr nofree noundef nonnull align 8 captures(address) dereferenceable(232) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %2) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local noundef range(i32 -2147024882, 1) i32 @_ZN22CUpdateCallbackConsole22CryptoGetTextPassword2EPiPPw(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(232) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %2) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %class.CStringBase, align 8         ; 9 uses
+  %3 = alloca %class.CStringBase, align 8         ; 7 uses
   store ptr null, ptr %2, align 8, !tbaa !61
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 74 ; 2 uses
   %i.b = load i8, ptr %i.a, align 2, !tbaa !62, !range !37, !noundef !38 ; 2 uses
@@ -213,25 +213,17 @@ bb.a:
   %i.e = load i8, ptr %i.d, align 8, !range !37
   %i.f = trunc nuw i8 %i.e to i1
   %or.cond = select i1 %.not, i1 %i.f, i1 false
-  br i1 %or.cond, label %4, label %bb.i
+  br i1 %or.cond, label %bb.b, label %bb.i
 
-4:                                                ; preds = %bb.a
+bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #15
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %6 = load ptr, ptr %5, align 8, !tbaa !8
-  call void @_Z11GetPasswordP13CStdOutStreamb(ptr dead_on_unwind nonnull writable sret(%class.CStringBase) align 8 %3, ptr noundef %6, i1 noundef zeroext true)
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 3 uses
-  %8 = icmp eq ptr %3, %7
-  br i1 %8, label %._ZN11CStringBaseIwEaSERKS0_.exit_crit_edge, label %bb.b
-
-._ZN11CStringBaseIwEaSERKS0_.exit_crit_edge:      ; preds = %4
-  %.pre = load ptr, ptr %3, align 8, !tbaa !30
-  br label %_ZN11CStringBaseIwEaSERKS0_.exit
-
-bb.b:                                             ; preds = %4
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %5 = load ptr, ptr %4, align 8, !tbaa !8
+  call void @_Z11GetPasswordP13CStdOutStreamb(ptr dead_on_unwind nonnull writable sret(%class.CStringBase) align 8 %3, ptr noundef %5, i1 noundef zeroext true)
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 3 uses
   store i32 0, ptr %i.g, align 8, !tbaa !32
-  %i.h = load ptr, ptr %7, align 8, !tbaa !30     ; 3 uses
+  %i.h = load ptr, ptr %6, align 8, !tbaa !30     ; 3 uses
   store i32 0, ptr %i.h, align 4, !tbaa !26
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.j = load i32, ptr %i.i, align 8, !tbaa !32   ; 2 uses
@@ -261,7 +253,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %._crit_edge.thread.i.i, %.noexc
   %i.v = phi i64 [ %i.u, %._crit_edge.thread.i.i ], [ 0, %.noexc ]
-  store ptr %i.s, ptr %7, align 8, !tbaa !30
+  store ptr %i.s, ptr %6, align 8, !tbaa !30
   %i.w = getelementptr inbounds [4 x i8], ptr %i.s, i64 %i.v
   store i32 0, ptr %i.w, align 4, !tbaa !26
   store i32 %i.k, ptr %i.l, align 4, !tbaa !31
@@ -269,7 +261,7 @@ bb.d:                                             ; preds = %._crit_edge.thread.
 
 _ZN11CStringBaseIwE11SetCapacityEi.exit.i:        ; preds = %bb.d, %bb.b
   %i.x = phi ptr [ %i.h, %bb.b ], [ %i.s, %bb.d ]
-  %i.y = load ptr, ptr %3, align 8, !tbaa !30     ; 2 uses
+  %i.y = load ptr, ptr %3, align 8, !tbaa !30     ; 3 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i
@@ -280,20 +272,16 @@ bb.e:                                             ; preds = %bb.e, %_ZN11CString
   %i.ab = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 4
   store i32 %i.aa, ptr %.0.i.i, align 4, !tbaa !26
   %.not.i.i = icmp eq i32 %i.aa, 0
-  br i1 %.not.i.i, label %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i, label %bb.e, !llvm.loop !28
+  br i1 %.not.i.i, label %_ZN11CStringBaseIwEaSERKS0_.exit, label %bb.e, !llvm.loop !28
 
-_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i:            ; preds = %bb.e
-  %9 = load i32, ptr %i.i, align 8, !tbaa !32
-  store i32 %9, ptr %i.g, align 8, !tbaa !32
-  br label %_ZN11CStringBaseIwEaSERKS0_.exit
-
-_ZN11CStringBaseIwEaSERKS0_.exit:                 ; preds = %._ZN11CStringBaseIwEaSERKS0_.exit_crit_edge, %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i
-  %10 = phi ptr [ %.pre, %._ZN11CStringBaseIwEaSERKS0_.exit_crit_edge ], [ %i.y, %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i ] ; 2 uses
-  %i.ac = icmp eq ptr %10, null
+_ZN11CStringBaseIwEaSERKS0_.exit:                 ; preds = %bb.e
+  %7 = load i32, ptr %i.i, align 8, !tbaa !32
+  store i32 %7, ptr %i.g, align 8, !tbaa !32
+  %i.ac = icmp eq ptr %i.y, null
   br i1 %i.ac, label %_ZN11CStringBaseIwED2Ev.exit, label %bb.f
 
 bb.f:                                             ; preds = %_ZN11CStringBaseIwEaSERKS0_.exit
-  call void @_ZdaPv(ptr noundef nonnull %10) #17
+  call void @_ZdaPv(ptr noundef nonnull %i.y) #17
   br label %_ZN11CStringBaseIwED2Ev.exit
 
 _ZN11CStringBaseIwED2Ev.exit:                     ; preds = %_ZN11CStringBaseIwEaSERKS0_.exit, %bb.f
@@ -332,32 +320,24 @@ bb.i:                                             ; preds = %_ZN11CStringBaseIwE
 declare void @_Z11GetPasswordP13CStdOutStreamb(ptr dead_on_unwind writable sret(%class.CStringBase) align 8, ptr noundef, i1 noundef zeroext) local_unnamed_addr #3
 
 ; Function Attrs: mustprogress uwtable
-define dso_local noundef range(i32 -2147024882, 1) i32 @_ZN22CUpdateCallbackConsole21CryptoGetTextPasswordEPPw(ptr nofree noundef nonnull align 8 captures(address) dereferenceable(232) %0, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %1) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local noundef range(i32 -2147024882, 1) i32 @_ZN22CUpdateCallbackConsole21CryptoGetTextPasswordEPPw(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(232) %0, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %1) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %class.CStringBase, align 8         ; 9 uses
+  %2 = alloca %class.CStringBase, align 8         ; 7 uses
   store ptr null, ptr %1, align 8, !tbaa !61
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 74 ; 2 uses
   %i.b = load i8, ptr %i.a, align 2, !tbaa !62, !range !37, !noundef !38
   %i.c = trunc nuw i8 %i.b to i1
-  br i1 %i.c, label %bb.i, label %3
+  br i1 %i.c, label %bb.i, label %bb.b
 
-3:                                                ; preds = %bb.a
+bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #15
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %5 = load ptr, ptr %4, align 8, !tbaa !8
-  call void @_Z11GetPasswordP13CStdOutStreamb(ptr dead_on_unwind nonnull writable sret(%class.CStringBase) align 8 %2, ptr noundef %5, i1 noundef zeroext false)
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 3 uses
-  %7 = icmp eq ptr %2, %6
-  br i1 %7, label %._ZN11CStringBaseIwEaSERKS0_.exit_crit_edge, label %bb.b
-
-._ZN11CStringBaseIwEaSERKS0_.exit_crit_edge:      ; preds = %3
-  %.pre = load ptr, ptr %2, align 8, !tbaa !30
-  br label %_ZN11CStringBaseIwEaSERKS0_.exit
-
-bb.b:                                             ; preds = %3
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %4 = load ptr, ptr %3, align 8, !tbaa !8
+  call void @_Z11GetPasswordP13CStdOutStreamb(ptr dead_on_unwind nonnull writable sret(%class.CStringBase) align 8 %2, ptr noundef %4, i1 noundef zeroext false)
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 3 uses
   store i32 0, ptr %i.d, align 8, !tbaa !32
-  %i.e = load ptr, ptr %6, align 8, !tbaa !30     ; 3 uses
+  %i.e = load ptr, ptr %5, align 8, !tbaa !30     ; 3 uses
   store i32 0, ptr %i.e, align 4, !tbaa !26
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.g = load i32, ptr %i.f, align 8, !tbaa !32   ; 2 uses
@@ -387,7 +367,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %._crit_edge.thread.i.i, %.noexc
   %i.s = phi i64 [ %i.r, %._crit_edge.thread.i.i ], [ 0, %.noexc ]
-  store ptr %i.p, ptr %6, align 8, !tbaa !30
+  store ptr %i.p, ptr %5, align 8, !tbaa !30
   %i.t = getelementptr inbounds [4 x i8], ptr %i.p, i64 %i.s
   store i32 0, ptr %i.t, align 4, !tbaa !26
   store i32 %i.h, ptr %i.i, align 4, !tbaa !31
@@ -395,7 +375,7 @@ bb.d:                                             ; preds = %._crit_edge.thread.
 
 _ZN11CStringBaseIwE11SetCapacityEi.exit.i:        ; preds = %bb.d, %bb.b
   %i.u = phi ptr [ %i.e, %bb.b ], [ %i.p, %bb.d ]
-  %i.v = load ptr, ptr %2, align 8, !tbaa !30     ; 2 uses
+  %i.v = load ptr, ptr %2, align 8, !tbaa !30     ; 3 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %_ZN11CStringBaseIwE11SetCapacityEi.exit.i
@@ -406,20 +386,16 @@ bb.e:                                             ; preds = %bb.e, %_ZN11CString
   %i.y = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 4
   store i32 %i.x, ptr %.0.i.i, align 4, !tbaa !26
   %.not.i.i = icmp eq i32 %i.x, 0
-  br i1 %.not.i.i, label %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i, label %bb.e, !llvm.loop !28
+  br i1 %.not.i.i, label %_ZN11CStringBaseIwEaSERKS0_.exit, label %bb.e, !llvm.loop !28
 
-_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i:            ; preds = %bb.e
-  %8 = load i32, ptr %i.f, align 8, !tbaa !32
-  store i32 %8, ptr %i.d, align 8, !tbaa !32
-  br label %_ZN11CStringBaseIwEaSERKS0_.exit
-
-_ZN11CStringBaseIwEaSERKS0_.exit:                 ; preds = %._ZN11CStringBaseIwEaSERKS0_.exit_crit_edge, %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i
-  %9 = phi ptr [ %.pre, %._ZN11CStringBaseIwEaSERKS0_.exit_crit_edge ], [ %i.v, %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i ] ; 2 uses
-  %i.z = icmp eq ptr %9, null
+_ZN11CStringBaseIwEaSERKS0_.exit:                 ; preds = %bb.e
+  %6 = load i32, ptr %i.f, align 8, !tbaa !32
+  store i32 %6, ptr %i.d, align 8, !tbaa !32
+  %i.z = icmp eq ptr %i.v, null
   br i1 %i.z, label %_ZN11CStringBaseIwED2Ev.exit, label %bb.f
 
 bb.f:                                             ; preds = %_ZN11CStringBaseIwEaSERKS0_.exit
-  call void @_ZdaPv(ptr noundef nonnull %9) #17
+  call void @_ZdaPv(ptr noundef nonnull %i.v) #17
   br label %_ZN11CStringBaseIwED2Ev.exit
 
 _ZN11CStringBaseIwED2Ev.exit:                     ; preds = %_ZN11CStringBaseIwEaSERKS0_.exit, %bb.f

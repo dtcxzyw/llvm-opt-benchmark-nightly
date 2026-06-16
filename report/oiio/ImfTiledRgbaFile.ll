@@ -201,7 +201,7 @@ bb.af:                                            ; preds = %bb.ad, %bb.e
 ; Function Attrs: mustprogress uwtable
 define void @_ZN27OpenImageIO_v3_1_Imf__3_3_518TiledRgbaInputFile12setLayerNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr nofree noundef nonnull align 8 captures(address) dereferenceable(56) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
+  %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
   %3 = alloca %"class.OpenImageIO_v3_1_Imf__3_3_5::FrameBuffer", align 8 ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !139  ; 3 uses
@@ -229,11 +229,11 @@ bb.d:                                             ; preds = %_ZN27OpenImageIO_v3
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !136
   %i.i = tail call noundef nonnull align 8 dereferenceable(49) ptr @_ZNK27OpenImageIO_v3_1_Imf__3_3_514TiledInputFile6headerEv(ptr noundef nonnull align 8 dereferenceable(32) %i.h)
   call fastcc void @_ZN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_119prefixFromLayerNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS_6HeaderE(ptr dead_on_unwind noalias writable align 8 %2, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(49) %i.i)
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 6 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !75   ; 6 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.m = icmp eq ptr %i.k, %i.l
-  %i.n = load ptr, ptr %2, align 8, !tbaa !75     ; 6 uses
+  %i.n = load ptr, ptr %2, align 8, !tbaa !75     ; 5 uses
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 4 uses
   %i.p = icmp eq ptr %i.n, %i.o                   ; 2 uses
   br i1 %i.m, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i
@@ -249,25 +249,21 @@ bb.e:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.r = load i64, ptr %i.q, align 8, !tbaa !72   ; 3 uses
   %i.s = icmp ult i64 %i.r, 16
   call void @llvm.assume(i1 %i.s)
-  %.not21.i = icmp eq ptr %2, %i.j
-  br i1 %.not21.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, label %4, !prof !165
-
-4:                                                ; preds = %bb.e
   switch i64 %i.r, label %bb.g [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
     i64 1, label %bb.f
   ]
 
-bb.f:                                             ; preds = %4
+bb.f:                                             ; preds = %bb.e
   %i.t = load i8, ptr %i.n, align 1, !tbaa !74
   store i8 %i.t, ptr %i.k, align 1, !tbaa !74
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-bb.g:                                             ; preds = %4
+bb.g:                                             ; preds = %bb.e
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.k, ptr align 1 %i.n, i64 %i.r, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.g, %bb.f, %4
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.g, %bb.f, %bb.e
   %i.u = load i64, ptr %i.q, align 8, !tbaa !72   ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i64 %i.u, ptr %i.v, align 8, !tbaa !72
@@ -304,11 +300,11 @@ bb.i:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.o, ptr %2, align 8, !tbaa !75
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %bb.e, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, %bb.h, %bb.i
-  %5 = phi ptr [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ], [ %i.k, %bb.h ], [ %i.o, %bb.i ], [ %i.n, %bb.e ]
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i, %bb.h, %bb.i
+  %4 = phi ptr [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ], [ %i.k, %bb.h ], [ %i.o, %bb.i ]
   %i.af = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i64 0, ptr %i.af, align 8, !tbaa !72
-  store i8 0, ptr %5, align 1, !tbaa !74
+  store i8 0, ptr %4, align 1, !tbaa !74
   %i.ag = load ptr, ptr %2, align 8, !tbaa !75    ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.ai = icmp eq ptr %i.ag, %i.ah

@@ -201,7 +201,7 @@ bb.a:
   %9 = alloca %"class.std::function", align 8     ; 7 uses
   %10 = alloca %"class.std::function", align 8    ; 7 uses
   %11 = alloca %"class.std::function", align 8    ; 7 uses
-  %12 = alloca %"struct.duckdb::LogicalType", align 8 ; 27 uses
+  %12 = alloca %"struct.duckdb::LogicalType", align 8 ; 26 uses
   %13 = alloca %"struct.duckdb::LogicalType", align 8 ; 8 uses
   %14 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %15 = alloca %"class.std::allocator", align 1   ; 7 uses
@@ -604,7 +604,7 @@ _ZNSt14_Function_baseD2Ev.exit:                   ; preds = %_ZN6duckdb14ScalarF
 
 bb.bk:                                            ; preds = %_ZNSt14_Function_baseD2Ev.exit
   %i.ff = icmp eq ptr %i.fe, %12
-  br i1 %i.ff, label %_ZN6duckdb11LogicalTypeaSERKS0_.exit, label %bb.bl
+  br i1 %i.ff, label %bb.bv, label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk
   %i.fg = load i8, ptr %12, align 8, !tbaa !149
@@ -641,7 +641,7 @@ _ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i: ; preds = %bb.
   %i.fu = load ptr, ptr %i.ft, align 8, !tbaa !85 ; 8 uses
   store <2 x ptr> %i.fn, ptr %i.fj, align 8, !tbaa !13
   %.not.i.i.i.i.i = icmp eq ptr %i.fu, null
-  br i1 %.not.i.i.i.i.i, label %_ZN6duckdb11LogicalTypeaSERKS0_.exit, label %bb.bp
+  br i1 %.not.i.i.i.i.i, label %bb.bv, label %bb.bp
 
 bb.bp:                                            ; preds = %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i
   %i.fv = getelementptr inbounds nuw i8, ptr %i.fu, i64 8 ; 4 uses
@@ -662,7 +662,7 @@ bb.bq:                                            ; preds = %bb.bp
   %i.ge = getelementptr inbounds nuw i8, ptr %i.gd, i64 24
   %i.gf = load ptr, ptr %i.ge, align 8
   call void %i.gf(ptr noundef nonnull align 8 dereferenceable(16) %i.fu) #23, !inline_history !151
-  br label %_ZN6duckdb11LogicalTypeaSERKS0_.exit
+  br label %bb.bv
 
 bb.br:                                            ; preds = %bb.bp
   %i.gg = load i8, ptr @__libc_single_threaded, align 1, !tbaa !84
@@ -681,18 +681,14 @@ bb.bt:                                            ; preds = %bb.br
 _ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i: ; preds = %bb.bt, %bb.bs
   %.0.i.i.i.i.i.i.i = phi i32 [ %i.fy, %bb.bs ], [ %i.gi, %bb.bt ]
   %i.gj = icmp eq i32 %.0.i.i.i.i.i.i.i, 1
-  br i1 %i.gj, label %bb.bu, label %_ZN6duckdb11LogicalTypeaSERKS0_.exit, !prof !90
+  br i1 %i.gj, label %bb.bu, label %bb.bv, !prof !90
 
 bb.bu:                                            ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i
   call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.fu) #23
-  br label %_ZN6duckdb11LogicalTypeaSERKS0_.exit
+  br label %bb.bv
 
-_ZN6duckdb11LogicalTypeaSERKS0_.exit:             ; preds = %bb.bk, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i, %bb.bq, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i, %bb.bu
-  %29 = getelementptr inbounds nuw i8, ptr %2, i64 184 ; 2 uses
-  %30 = icmp eq ptr %29, %12
-  br i1 %30, label %_ZN6duckdb11LogicalTypeaSERKS0_.exit117, label %bb.bv
-
-bb.bv:                                            ; preds = %_ZN6duckdb11LogicalTypeaSERKS0_.exit
+bb.bv:                                            ; preds = %bb.bk, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i, %bb.bq, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i, %bb.bu
+  %29 = getelementptr inbounds nuw i8, ptr %2, i64 184
   %i.gk = load i8, ptr %12, align 8, !tbaa !149
   store i8 %i.gk, ptr %29, align 8, !tbaa !149
   %i.gl = load i8, ptr %i.bn, align 1, !tbaa !150
@@ -773,7 +769,7 @@ bb.ce:                                            ; preds = %_ZN9__gnu_cxx27__ex
   call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.gy) #23
   br label %_ZN6duckdb11LogicalTypeaSERKS0_.exit117
 
-_ZN6duckdb11LogicalTypeaSERKS0_.exit117:          ; preds = %_ZN6duckdb11LogicalTypeaSERKS0_.exit, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i112, %bb.ca, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i115, %bb.ce
+_ZN6duckdb11LogicalTypeaSERKS0_.exit117:          ; preds = %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i112, %bb.ca, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i115, %bb.ce
   invoke void @_ZN6duckdb11LogicalTypeC1ERKS0_(ptr noundef nonnull align 8 dereferenceable(24) %28, ptr noundef nonnull align 8 dereferenceable(24) %12)
           to label %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEaSEOS2_.exit.i.i122 unwind label %bb.y
 
@@ -1176,7 +1172,7 @@ bb.a:
   %9 = alloca %"class.std::function", align 8     ; 7 uses
   %10 = alloca %"class.std::function", align 8    ; 7 uses
   %11 = alloca %"class.std::function", align 8    ; 7 uses
-  %12 = alloca %"struct.duckdb::LogicalType", align 8 ; 27 uses
+  %12 = alloca %"struct.duckdb::LogicalType", align 8 ; 26 uses
   %13 = alloca %"struct.duckdb::LogicalType", align 8 ; 8 uses
   %14 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %15 = alloca %"class.std::allocator", align 1   ; 7 uses
@@ -1579,7 +1575,7 @@ _ZNSt14_Function_baseD2Ev.exit:                   ; preds = %_ZN6duckdb14ScalarF
 
 bb.bk:                                            ; preds = %_ZNSt14_Function_baseD2Ev.exit
   %i.ff = icmp eq ptr %i.fe, %12
-  br i1 %i.ff, label %_ZN6duckdb11LogicalTypeaSERKS0_.exit, label %bb.bl
+  br i1 %i.ff, label %bb.bv, label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk
   %i.fg = load i8, ptr %12, align 8, !tbaa !149
@@ -1616,7 +1612,7 @@ _ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i: ; preds = %bb.
   %i.fu = load ptr, ptr %i.ft, align 8, !tbaa !85 ; 8 uses
   store <2 x ptr> %i.fn, ptr %i.fj, align 8, !tbaa !13
   %.not.i.i.i.i.i = icmp eq ptr %i.fu, null
-  br i1 %.not.i.i.i.i.i, label %_ZN6duckdb11LogicalTypeaSERKS0_.exit, label %bb.bp
+  br i1 %.not.i.i.i.i.i, label %bb.bv, label %bb.bp
 
 bb.bp:                                            ; preds = %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i
   %i.fv = getelementptr inbounds nuw i8, ptr %i.fu, i64 8 ; 4 uses
@@ -1637,7 +1633,7 @@ bb.bq:                                            ; preds = %bb.bp
   %i.ge = getelementptr inbounds nuw i8, ptr %i.gd, i64 24
   %i.gf = load ptr, ptr %i.ge, align 8
   call void %i.gf(ptr noundef nonnull align 8 dereferenceable(16) %i.fu) #23, !inline_history !151
-  br label %_ZN6duckdb11LogicalTypeaSERKS0_.exit
+  br label %bb.bv
 
 bb.br:                                            ; preds = %bb.bp
   %i.gg = load i8, ptr @__libc_single_threaded, align 1, !tbaa !84
@@ -1656,18 +1652,14 @@ bb.bt:                                            ; preds = %bb.br
 _ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i: ; preds = %bb.bt, %bb.bs
   %.0.i.i.i.i.i.i.i = phi i32 [ %i.fy, %bb.bs ], [ %i.gi, %bb.bt ]
   %i.gj = icmp eq i32 %.0.i.i.i.i.i.i.i, 1
-  br i1 %i.gj, label %bb.bu, label %_ZN6duckdb11LogicalTypeaSERKS0_.exit, !prof !90
+  br i1 %i.gj, label %bb.bu, label %bb.bv, !prof !90
 
 bb.bu:                                            ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i
   call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.fu) #23
-  br label %_ZN6duckdb11LogicalTypeaSERKS0_.exit
+  br label %bb.bv
 
-_ZN6duckdb11LogicalTypeaSERKS0_.exit:             ; preds = %bb.bk, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i, %bb.bq, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i, %bb.bu
-  %29 = getelementptr inbounds nuw i8, ptr %2, i64 184 ; 2 uses
-  %30 = icmp eq ptr %29, %12
-  br i1 %30, label %_ZN6duckdb11LogicalTypeaSERKS0_.exit117, label %bb.bv
-
-bb.bv:                                            ; preds = %_ZN6duckdb11LogicalTypeaSERKS0_.exit
+bb.bv:                                            ; preds = %bb.bk, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i, %bb.bq, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i, %bb.bu
+  %29 = getelementptr inbounds nuw i8, ptr %2, i64 184
   %i.gk = load i8, ptr %12, align 8, !tbaa !149
   store i8 %i.gk, ptr %29, align 8, !tbaa !149
   %i.gl = load i8, ptr %i.bn, align 1, !tbaa !150
@@ -1748,7 +1740,7 @@ bb.ce:                                            ; preds = %_ZN9__gnu_cxx27__ex
   call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.gy) #23
   br label %_ZN6duckdb11LogicalTypeaSERKS0_.exit117
 
-_ZN6duckdb11LogicalTypeaSERKS0_.exit117:          ; preds = %_ZN6duckdb11LogicalTypeaSERKS0_.exit, %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i112, %bb.ca, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i115, %bb.ce
+_ZN6duckdb11LogicalTypeaSERKS0_.exit117:          ; preds = %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEC2ERKS2_.exit.i.i112, %bb.ca, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i115, %bb.ce
   invoke void @_ZN6duckdb11LogicalTypeC1ERKS0_(ptr noundef nonnull align 8 dereferenceable(24) %28, ptr noundef nonnull align 8 dereferenceable(24) %12)
           to label %_ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEaSEOS2_.exit.i.i122 unwind label %bb.y
 

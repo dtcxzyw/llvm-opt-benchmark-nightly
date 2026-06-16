@@ -201,14 +201,14 @@ declare void @__cxa_throw(ptr, ptr, ptr) local_unnamed_addr #3
 declare noundef i64 @_Z26ConvertPropVariantToUInt64RK14tagPROPVARIANT(ptr noundef nonnull align 8 dereferenceable(16)) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress uwtable
-define dso_local noundef i32 @_Z12ListArchivesP7CCodecsRK13CRecordVectorIiEbR13CObjectVectorI11CStringBaseIwEES9_RKN9NWildcard11CCensorNodeEbbRbRS7_Ry(ptr noundef %0, ptr noundef nonnull align 1 %1, i1 noundef zeroext %2, ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull align 8 dereferenceable(32) %4, ptr noundef nonnull align 8 dereferenceable(120) %5, i1 noundef zeroext %6, i1 noundef zeroext %7, ptr nofree noundef nonnull readonly align 1 captures(none) dereferenceable(1) %8, ptr nofree noundef nonnull readonly align 8 captures(address) dereferenceable(16) %9, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(8) initializes((0, 8)) %10) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define dso_local noundef i32 @_Z12ListArchivesP7CCodecsRK13CRecordVectorIiEbR13CObjectVectorI11CStringBaseIwEES9_RKN9NWildcard11CCensorNodeEbbRbRS7_Ry(ptr noundef %0, ptr noundef nonnull align 1 %1, i1 noundef zeroext %2, ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull align 8 dereferenceable(32) %4, ptr noundef nonnull align 8 dereferenceable(120) %5, i1 noundef zeroext %6, i1 noundef zeroext %7, ptr nofree noundef nonnull readonly align 1 captures(none) dereferenceable(1) %8, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %9, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(8) initializes((0, 8)) %10) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %11 = alloca %class.CFieldPrinter, align 8      ; 20 uses
   %i.a = alloca i64, align 8                      ; 7 uses
   %i.b = alloca i64, align 8                      ; 7 uses
   %12 = alloca %"class.NWindows::NFile::NFind::CFileInfoW", align 8 ; 9 uses
   %13 = alloca %struct.CArchiveLink, align 8      ; 18 uses
-  %14 = alloca %class.COpenCallbackConsole, align 8 ; 15 uses
+  %14 = alloca %class.COpenCallbackConsole, align 8 ; 14 uses
   %15 = alloca %class.CStringBase, align 8        ; 10 uses
   %i.c = alloca i32, align 4                      ; 9 uses
   %16 = alloca %class.CMyComBSTR, align 8         ; 8 uses
@@ -273,10 +273,9 @@ bb.d:                                             ; preds = %bb.b, %bb.a
   %i.ae = getelementptr inbounds nuw i8, ptr %13, i64 72
   %i.af = getelementptr inbounds nuw i8, ptr %14, i64 16
   %i.ag = getelementptr inbounds nuw i8, ptr %14, i64 17
-  %i.ah = getelementptr inbounds nuw i8, ptr %14, i64 24 ; 5 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %14, i64 24 ; 4 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %14, i64 36 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %14, i64 8
-  %25 = icmp eq ptr %9, %i.ah
   %i.ak = getelementptr inbounds nuw i8, ptr %14, i64 32 ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %13, i64 44 ; 3 uses
@@ -294,10 +293,9 @@ bb.d:                                             ; preds = %bb.b, %bb.a
   %i.ay = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 2 uses
   %.not510 = xor i1 %6, true
   %or.cond511 = or i1 %7, %.not510
-  %26 = getelementptr inbounds nuw i8, ptr %24, i64 12
-  %i.az = getelementptr inbounds nuw i8, ptr %15, i64 8
-  %i.ba = getelementptr inbounds nuw i8, ptr %12, i64 48
-  %i.bb = getelementptr inbounds nuw i8, ptr %14, i64 32
+  %i.az = getelementptr inbounds nuw i8, ptr %24, i64 12
+  %i.ba = getelementptr inbounds nuw i8, ptr %15, i64 8
+  %i.bb = getelementptr inbounds nuw i8, ptr %12, i64 48
   %i.bc = getelementptr inbounds nuw i8, ptr %24, i64 8
   br label %bb.e
 
@@ -331,7 +329,7 @@ bb.e:                                             ; preds = %.lr.ph728, %bb.fv
 
 bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #17
-  store i64 0, ptr %i.ba, align 8
+  store i64 0, ptr %i.bb, align 8
   %i.bg = invoke noalias noundef nonnull dereferenceable(16) ptr @_Znam(i64 noundef 16) #15
           to label %bb.g unwind label %bb.p       ; 2 uses
 
@@ -434,30 +432,25 @@ bb.v:                                             ; preds = %bb.e, %_ZN8NWindows
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #17
   store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTV20COpenCallbackConsole, i64 16), ptr %14, align 8, !tbaa !31
   store i8 0, ptr %i.ag, align 1, !tbaa !83
-  store i64 0, ptr %i.bb, align 8
   %i.ca = invoke noalias noundef nonnull dereferenceable(16) ptr @_Znam(i64 noundef 16) #15
-          to label %bb.w unwind label %bb.ab      ; 5 uses
+          to label %bb.w unwind label %bb.ab      ; 4 uses
 
 bb.w:                                             ; preds = %bb.v
   store ptr %i.ca, ptr %i.ah, align 8, !tbaa !22
-  store i32 0, ptr %i.ca, align 4, !tbaa !14
   store i32 4, ptr %i.ai, align 4, !tbaa !23
   store ptr @g_StdOut, ptr %i.aj, align 8, !tbaa !87
   %i.cb = load i8, ptr %8, align 1, !tbaa !53, !range !55, !noundef !56
   store i8 %i.cb, ptr %i.af, align 8, !tbaa !88
-  br i1 %25, label %_ZN11CStringBaseIwEaSERKS0_.exit, label %27
-
-27:                                               ; preds = %bb.w
   store i32 0, ptr %i.ak, align 8, !tbaa !24
   store i32 0, ptr %i.ca, align 4, !tbaa !14
-  %28 = load i32, ptr %i.al, align 8, !tbaa !24   ; 2 uses
-  %29 = add nsw i32 %28, 1                        ; 3 uses
-  %30 = icmp eq i32 %29, 4
-  br i1 %30, label %_ZN11CStringBaseIwE11SetCapacityEi.exit.i, label %bb.x
+  %25 = load i32, ptr %i.al, align 8, !tbaa !24   ; 2 uses
+  %26 = add nsw i32 %25, 1                        ; 3 uses
+  %27 = icmp eq i32 %26, 4
+  br i1 %27, label %_ZN11CStringBaseIwE11SetCapacityEi.exit.i, label %bb.x
 
-bb.x:                                             ; preds = %27
-  %i.cc = zext nneg i32 %29 to i64
-  %i.cd = icmp slt i32 %28, -1
+bb.x:                                             ; preds = %bb.w
+  %i.cc = zext nneg i32 %26 to i64
+  %i.cd = icmp slt i32 %25, -1
   %i.ce = shl nuw nsw i64 %i.cc, 2
   %i.cf = select i1 %i.cd, i64 -1, i64 %i.ce
   %i.cg = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.cf) #15
@@ -470,11 +463,11 @@ bb.y:                                             ; preds = %bb.x
   store ptr %i.cg, ptr %i.ah, align 8, !tbaa !22
   %i.ci = getelementptr inbounds [4 x i8], ptr %i.cg, i64 %i.ch
   store i32 0, ptr %i.ci, align 4, !tbaa !14
-  store i32 %29, ptr %i.ai, align 4, !tbaa !23
+  store i32 %26, ptr %i.ai, align 4, !tbaa !23
   br label %_ZN11CStringBaseIwE11SetCapacityEi.exit.i
 
-_ZN11CStringBaseIwE11SetCapacityEi.exit.i:        ; preds = %bb.y, %27
-  %i.cj = phi ptr [ %i.ca, %27 ], [ %i.cg, %bb.y ]
+_ZN11CStringBaseIwE11SetCapacityEi.exit.i:        ; preds = %bb.y, %bb.w
+  %i.cj = phi ptr [ %i.ca, %bb.w ], [ %i.cg, %bb.y ]
   %i.ck = load ptr, ptr %9, align 8, !tbaa !22
   br label %bb.z
 
@@ -491,14 +484,11 @@ bb.z:                                             ; preds = %bb.z, %_ZN11CString
 _Z12MyStringCopyIwEPT_S1_PKS0_.exit.i:            ; preds = %bb.z
   %i.co = load i32, ptr %i.al, align 8, !tbaa !24
   store i32 %i.co, ptr %i.ak, align 8, !tbaa !24
-  br label %_ZN11CStringBaseIwEaSERKS0_.exit
-
-_ZN11CStringBaseIwEaSERKS0_.exit:                 ; preds = %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i, %bb.w
-  %31 = invoke noundef i32 @_ZN12CArchiveLink5Open2EP7CCodecsRK13CRecordVectorIiEbP9IInStreamRK11CStringBaseIwEP15IOpenCallbackUI(ptr noundef nonnull align 8 dereferenceable(73) %13, ptr noundef %0, ptr noundef nonnull align 1 %1, i1 noundef zeroext %2, ptr noundef null, ptr noundef nonnull align 8 dereferenceable(16) %i.bf, ptr noundef nonnull %14)
+  %28 = invoke noundef i32 @_ZN12CArchiveLink5Open2EP7CCodecsRK13CRecordVectorIiEbP9IInStreamRK11CStringBaseIwEP15IOpenCallbackUI(ptr noundef nonnull align 8 dereferenceable(73) %13, ptr noundef %0, ptr noundef nonnull align 1 %1, i1 noundef zeroext %2, ptr noundef null, ptr noundef nonnull align 8 dereferenceable(16) %i.bf, ptr noundef nonnull %14)
           to label %bb.aa unwind label %.loopexit.split-lp565.loopexit.split-lp ; 4 uses
 
-bb.aa:                                            ; preds = %_ZN11CStringBaseIwEaSERKS0_.exit
-  switch i32 %31, label %bb.ad [
+bb.aa:                                            ; preds = %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i
+  switch i32 %28, label %bb.ad [
     i32 0, label %bb.au
     i32 -2147467260, label %.thread503
   ]
@@ -523,7 +513,7 @@ bb.ac:                                            ; preds = %bb.x
           cleanup
   br label %.loopexit.split-lp565
 
-.loopexit.split-lp565.loopexit.split-lp:          ; preds = %.invoke, %_ZN13CFieldPrinter15PrintTitleLinesEv.exit, %bb.du, %bb.dt, %bb.ds, %._crit_edge, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.as, %bb.ai, %bb.ag, %bb.af, %bb.ae, %bb.ad, %_ZN11CStringBaseIwEaSERKS0_.exit
+.loopexit.split-lp565.loopexit.split-lp:          ; preds = %.invoke, %_ZN13CFieldPrinter15PrintTitleLinesEv.exit, %bb.du, %bb.dt, %bb.ds, %._crit_edge, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.as, %bb.ai, %bb.ag, %bb.af, %bb.ae, %bb.ad, %_Z12MyStringCopyIwEPT_S1_PKS0_.exit.i
   %lpad.loopexit.split-lp569 = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp565
@@ -546,7 +536,7 @@ bb.ag:                                            ; preds = %bb.af
           to label %bb.ah unwind label %.loopexit.split-lp565.loopexit.split-lp ; 0 uses
 
 bb.ah:                                            ; preds = %bb.ag
-  switch i32 %31, label %bb.ak [
+  switch i32 %28, label %bb.ak [
     i32 1, label %bb.ai
     i32 -2147024882, label %.invoke
   ]
@@ -567,14 +557,14 @@ bb.aj:                                            ; preds = %bb.ai
 bb.ak:                                            ; preds = %bb.ah
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #17
   call void @llvm.experimental.noalias.scope.decl(metadata !89)
-  store i64 17179869184, ptr %i.az, align 8, !alias.scope !89
+  store i64 17179869184, ptr %i.ba, align 8, !alias.scope !89
   %i.cz = invoke noalias noundef nonnull dereferenceable(16) ptr @_Znam(i64 noundef 16) #15
           to label %.noexc396 unwind label %bb.ap ; 2 uses
 
 .noexc396:                                        ; preds = %bb.ak
   store ptr %i.cz, ptr %15, align 8, !tbaa !22, !alias.scope !89
   store i32 0, ptr %i.cz, align 4, !tbaa !14, !noalias !89
-  %i.da = invoke noundef zeroext i1 @_ZN8NWindows6NError15MyFormatMessageEjR11CStringBaseIwE(i32 noundef %31, ptr noundef nonnull align 8 dereferenceable(16) %15)
+  %i.da = invoke noundef zeroext i1 @_ZN8NWindows6NError15MyFormatMessageEjR11CStringBaseIwE(i32 noundef %28, ptr noundef nonnull align 8 dereferenceable(16) %15)
           to label %_ZN8NWindows6NError15MyFormatMessageEj.exit unwind label %bb.al ; 0 uses
 
 bb.al:                                            ; preds = %.noexc396
@@ -977,7 +967,7 @@ bb.ee:                                            ; preds = %bb.ec
 bb.ef:                                            ; preds = %bb.ee
   store ptr %i.na, ptr %24, align 8, !tbaa !22
   store i32 0, ptr %i.na, align 4, !tbaa !14
-  store i32 4, ptr %26, align 4, !tbaa !23
+  store i32 4, ptr %i.az, align 4, !tbaa !23
   %i.nb = invoke noundef i32 @_ZNK4CArc11GetItemPathEjR11CStringBaseIwE(ptr noundef nonnull align 8 dereferenceable(80) %i.mp, i32 noundef %.0243700, ptr noundef nonnull align 8 dereferenceable(16) %24)
           to label %bb.eg unwind label %bb.ei     ; 3 uses
 
@@ -1312,7 +1302,7 @@ bb.fs:                                            ; preds = %bb.fr, %bb.fq
   %.4282 = phi ptr [ %.0278723, %bb.dx ], [ %.0278723, %bb.at ], [ %.0278723, %bb.aa ], [ %.2280, %.thread531 ], [ %.0278723, %.thread497 ], [ %.0278723, %.thread483 ]
   %.3275 = phi i64 [ %.0272724, %bb.dx ], [ %.0272724, %bb.at ], [ %.0272724, %bb.aa ], [ %.1273, %.thread531 ], [ %.0272724, %.thread497 ], [ %.0272724, %.thread483 ]
   %.3247 = phi i64 [ %.0244725, %bb.dx ], [ %.0244725, %bb.at ], [ %.0244725, %bb.aa ], [ %.1245, %.thread531 ], [ %.0244725, %.thread497 ], [ %.0244725, %.thread483 ]
-  %.29 = phi i32 [ %i.mm, %bb.dx ], [ %.0726, %bb.at ], [ %31, %bb.aa ], [ %.27, %.thread531 ], [ %.11, %.thread497 ], [ %.5, %.thread483 ]
+  %.29 = phi i32 [ %i.mm, %bb.dx ], [ %.0726, %bb.at ], [ %28, %bb.aa ], [ %.27, %.thread531 ], [ %.11, %.thread497 ], [ %.5, %.thread483 ]
   store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTV20COpenCallbackConsole, i64 16), ptr %14, align 8, !tbaa !31
   %i.py = load ptr, ptr %i.ah, align 8, !tbaa !22 ; 2 uses
   %i.pz = icmp eq ptr %i.py, null

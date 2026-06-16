@@ -201,7 +201,7 @@ _ZN5boost10filesystem11path_detail13path_iteratorD2Ev.exit5: ; preds = %bb.c, %_
 define internal fastcc noundef zeroext i1 @_ZN5folly2fs12_GLOBAL__N_110skipPrefixERKN5boost10filesystem4pathES6_RNS3_11path_detail13path_iteratorE(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(48) %2) unnamed_addr #11 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.boost::filesystem::path", align 8 ; 10 uses
-  %4 = alloca %"class.boost::filesystem::path_detail::path_iterator", align 8 ; 16 uses
+  %4 = alloca %"class.boost::filesystem::path_detail::path_iterator", align 8 ; 15 uses
   %5 = alloca %"class.boost::filesystem::path_detail::path_iterator", align 8 ; 13 uses
   %6 = alloca %"class.boost::filesystem::path_detail::path_iterator", align 8 ; 10 uses
   %7 = alloca %"class.boost::filesystem::path_detail::path_iterator", align 8 ; 8 uses
@@ -211,7 +211,7 @@ bb.a:
   %i.a = load ptr, ptr %2, align 8, !tbaa !1371   ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.c = icmp eq ptr %i.a, %i.b
-  %i.d = load ptr, ptr %4, align 8, !tbaa !1371   ; 6 uses
+  %i.d = load ptr, ptr %4, align 8, !tbaa !1371   ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses
   %i.f = icmp eq ptr %i.d, %i.e                   ; 2 uses
   br i1 %i.c, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i
@@ -227,25 +227,21 @@ bb.b:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.h = load i64, ptr %i.g, align 8, !tbaa !1373 ; 3 uses
   %i.i = icmp ult i64 %i.h, 16
   call void @llvm.assume(i1 %i.i)
-  %.not21.i.i.i = icmp eq ptr %4, %2
-  br i1 %.not21.i.i.i, label %_ZN5boost10filesystem11path_detail13path_iteratoraSEOS2_.exit, label %9, !prof !1370
-
-9:                                                ; preds = %bb.b
   switch i64 %i.h, label %bb.d [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i
     i64 1, label %bb.c
   ]
 
-bb.c:                                             ; preds = %9
+bb.c:                                             ; preds = %bb.b
   %i.j = load i8, ptr %i.d, align 1, !tbaa !1360
   store i8 %i.j, ptr %i.a, align 1, !tbaa !1360
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i
 
-bb.d:                                             ; preds = %9
+bb.d:                                             ; preds = %bb.b
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.a, ptr align 1 %i.d, i64 %i.h, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i: ; preds = %bb.d, %bb.c, %9
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i: ; preds = %bb.d, %bb.c, %bb.b
   %i.k = load i64, ptr %i.g, align 8, !tbaa !1373 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i64 %i.k, ptr %i.l, align 8, !tbaa !1373
@@ -282,11 +278,11 @@ bb.f:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.e, ptr %4, align 8, !tbaa !1371
   br label %_ZN5boost10filesystem11path_detail13path_iteratoraSEOS2_.exit
 
-_ZN5boost10filesystem11path_detail13path_iteratoraSEOS2_.exit: ; preds = %bb.b, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i, %bb.e, %bb.f
-  %10 = phi ptr [ %.pre.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i ], [ %i.a, %bb.e ], [ %i.e, %bb.f ], [ %i.d, %bb.b ]
+_ZN5boost10filesystem11path_detail13path_iteratoraSEOS2_.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i, %bb.e, %bb.f
+  %9 = phi ptr [ %.pre.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i ], [ %i.a, %bb.e ], [ %i.e, %bb.f ]
   %i.v = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i64 0, ptr %i.v, align 8, !tbaa !1373
-  store i8 0, ptr %10, align 1, !tbaa !1360
+  store i8 0, ptr %9, align 1, !tbaa !1360
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %4, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.w, ptr noundef nonnull align 8 dereferenceable(16) %i.x, i64 16, i1 false)

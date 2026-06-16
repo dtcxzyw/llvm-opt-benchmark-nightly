@@ -201,7 +201,7 @@ declare void @_ZdlPv(ptr noundef) local_unnamed_addr #11
 define internal fastcc void @_ZN6duckdbL19MapKeyValueFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEPFS5_S5_E(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr noundef nonnull align 8 dereferenceable(104) %1, ptr nofree noundef readonly captures(none) %2) unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.duckdb::Vector", align 8    ; 7 uses
-  %4 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 14 uses
+  %4 = alloca %"struct.duckdb::UnifiedVectorFormat", align 8 ; 13 uses
   %i.a = tail call noundef nonnull align 8 dereferenceable(104) ptr @_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef 0) ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.c = load i8, ptr %i.b, align 8, !tbaa !114
@@ -244,24 +244,20 @@ bb.g:                                             ; preds = %bb.f
           to label %.noexc unwind label %bb.w
 
 .noexc:                                           ; preds = %bb.g
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.n = load ptr, ptr %i.l, align 8, !tbaa !99
   store ptr %i.n, ptr %i.m, align 8, !tbaa !99
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %i.p = icmp eq ptr %i.m, %i.l
-  br i1 %i.p, label %bb.q, label %5
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 24
+  %6 = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
+  %7 = load ptr, ptr %6, align 8, !tbaa !52       ; 2 uses
+  %8 = load <2 x ptr>, ptr %5, align 8, !tbaa !21
+  %i.p = icmp eq ptr %7, null
+  br i1 %i.p, label %_ZN6duckdb10shared_ptrINS_21TemplatedValidityDataImEELb1EEC2ERKS3_.exit.i.i.i, label %bb.h
 
-5:                                                ; preds = %.noexc
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 24
-  %7 = getelementptr inbounds nuw i8, ptr %4, i64 32
-  %8 = load ptr, ptr %7, align 8, !tbaa !52       ; 2 uses
-  %9 = load <2 x ptr>, ptr %6, align 8, !tbaa !21
-  %.not.i.i.i.i.i.i.i = icmp eq ptr %8, null
-  br i1 %.not.i.i.i.i.i.i.i, label %_ZN6duckdb10shared_ptrINS_21TemplatedValidityDataImEELb1EEC2ERKS3_.exit.i.i.i, label %bb.h
-
-bb.h:                                             ; preds = %5
-  %i.q = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 3 uses
+bb.h:                                             ; preds = %.noexc
+  %i.q = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
   %i.r = load i8, ptr @__libc_single_threaded, align 1, !tbaa !11
   %.not.i.i.i.i.i.i.i.i = icmp eq i8 %i.r, 0
   br i1 %.not.i.i.i.i.i.i.i.i, label %bb.j, label %bb.i
@@ -276,10 +272,10 @@ bb.j:                                             ; preds = %bb.h
   %i.u = atomicrmw volatile add ptr %i.q, i32 1 acq_rel, align 4 ; 0 uses
   br label %_ZN6duckdb10shared_ptrINS_21TemplatedValidityDataImEELb1EEC2ERKS3_.exit.i.i.i
 
-_ZN6duckdb10shared_ptrINS_21TemplatedValidityDataImEELb1EEC2ERKS3_.exit.i.i.i: ; preds = %bb.j, %bb.i, %5
+_ZN6duckdb10shared_ptrINS_21TemplatedValidityDataImEELb1EEC2ERKS3_.exit.i.i.i: ; preds = %bb.j, %bb.i, %.noexc
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !52   ; 8 uses
-  store <2 x ptr> %9, ptr %i.o, align 8, !tbaa !21
+  store <2 x ptr> %8, ptr %i.o, align 8, !tbaa !21
   %.not.i.i.i.i.i.i = icmp eq ptr %i.w, null
   br i1 %.not.i.i.i.i.i.i, label %bb.q, label %bb.k
 
@@ -327,7 +323,7 @@ bb.p:                                             ; preds = %_ZN9__gnu_cxx27__ex
   call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.w) #20
   br label %bb.q
 
-bb.q:                                             ; preds = %bb.p, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i, %bb.l, %_ZN6duckdb10shared_ptrINS_21TemplatedValidityDataImEELb1EEC2ERKS3_.exit.i.i.i, %.noexc
+bb.q:                                             ; preds = %bb.p, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i, %bb.l, %_ZN6duckdb10shared_ptrINS_21TemplatedValidityDataImEELb1EEC2ERKS3_.exit.i.i.i
   %i.am = getelementptr inbounds nuw i8, ptr %4, i64 40
   %i.an = load i64, ptr %i.am, align 8, !tbaa !126
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 64
@@ -435,8 +431,7 @@ bb.ai:                                            ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZN6duckdb15SelectionVectorD2Ev.exit.i
 
 _ZN6duckdb15SelectionVectorD2Ev.exit.i:           ; preds = %bb.ai, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i, %bb.ae, %bb.ac
-  %10 = getelementptr inbounds nuw i8, ptr %4, i64 32
-  %i.bp = load ptr, ptr %10, align 8, !tbaa !52   ; 8 uses
+  %i.bp = load ptr, ptr %6, align 8, !tbaa !52    ; 8 uses
   %.not.i.i.i.i1.i = icmp eq ptr %i.bp, null
   br i1 %.not.i.i.i.i1.i, label %_ZN6duckdb19UnifiedVectorFormatD2Ev.exit, label %bb.aj
 
