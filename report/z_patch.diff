@@ -1,0 +1,308 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+index bff3f8126aab0..5efc8ed123ea9 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+@@ -5385,9 +5385,12 @@ Instruction *InstCombinerImpl::foldICmpBinOp(ICmpInst &I,
+     // icmp sgt (A + 1), Op1 -> icmp sge A, Op1
+     // icmp ule (A + 1), Op0 -> icmp ult A, Op1
+     // icmp ugt (A + 1), Op0 -> icmp uge A, Op1
++    // Do not strictness-fold icmp (add X, C), Y to icmp on X when the add has
++    // other users (e.g. a phi backedge on the latch increment).
+     if (A && NoOp0WrapProblem &&
+         ShareCommonDivisor(A, Op1, B,
+-                           ICmpInst::isLT(Pred) || ICmpInst::isGE(Pred)))
++                           ICmpInst::isLT(Pred) || ICmpInst::isGE(Pred)) &&
++        (!BO0 || BO0->hasOneUse()))
+       return new ICmpInst(ICmpInst::getFlippedStrictnessPredicate(Pred), A,
+                           Op1);
+ 
+@@ -5399,7 +5402,8 @@ Instruction *InstCombinerImpl::foldICmpBinOp(ICmpInst &I,
+     // icmp ult Op0, (C + 1) -> icmp ule Op0, C
+     if (C && NoOp1WrapProblem &&
+         ShareCommonDivisor(Op0, C, D,
+-                           ICmpInst::isGT(Pred) || ICmpInst::isLE(Pred)))
++                           ICmpInst::isGT(Pred) || ICmpInst::isLE(Pred)) &&
++        (!BO1 || BO1->hasOneUse()))
+       return new ICmpInst(ICmpInst::getFlippedStrictnessPredicate(Pred), Op0,
+                           C);
+   }
+diff --git a/llvm/test/Transforms/InstCombine/icmp-add.ll b/llvm/test/Transforms/InstCombine/icmp-add.ll
+index 1b66a50c26e59..c5caf35241546 100644
+--- a/llvm/test/Transforms/InstCombine/icmp-add.ll
++++ b/llvm/test/Transforms/InstCombine/icmp-add.ll
+@@ -1979,6 +1979,51 @@ define <2 x i1> @slt_zero_add_nsw_splat_vec(<2 x i8> %a) {
+   ret <2 x i1> %cmp
+ }
+ 
++define void @latch_inc_phi_user(i32 %sub) {
++; CHECK-LABEL: @latch_inc_phi_user(
++; CHECK: [[INC:%.*]] = add nuw nsw i32 [[J:%.*]], 1
++; CHECK: icmp sgt i32 [[INC]], [[SUB:%.*]]
++  entry:
++  br label %loop
++
++loop:
++  %j = phi i32 [ 0, %entry ], [ %inc, %loop ]
++  %inc = add nuw nsw i32 %j, 1
++  %cmp = icmp sgt i32 %inc, %sub
++  br i1 %cmp, label %exit, label %loop
++
++exit:
++  ret void
++}
++
++define void @latch_inc_phi_user_sle(i32 %sub) {
++; CHECK-LABEL: @latch_inc_phi_user_sle(
++; CHECK: icmp sgt i32 [[INC:%.*]], [[SUB:%.*]]
++  entry:
++  br label %loop
++loop:
++  %j = phi i32 [ 0, %entry ], [ %inc, %loop ]
++  %inc = add nsw i32 %j, 1
++  %cmp = icmp sle i32 %inc, %sub
++  br i1 %cmp, label %exit, label %loop
++exit:
++  ret void
++}
++
++define void @latch_inc_phi_user_ugt(i32 %sub) {
++; CHECK-LABEL: @latch_inc_phi_user_ugt(
++; CHECK: icmp ugt i32 [[INC:%.*]], [[SUB:%.*]]
++  entry:
++  br label %loop
++loop:
++  %j = phi i32 [ 0, %entry ], [ %inc, %loop ]
++  %inc = add nuw i32 %j, 1
++  %cmp = icmp ugt i32 %inc, %sub
++  br i1 %cmp, label %exit, label %loop
++exit:
++  ret void
++}
++
+ ; Test the edges - instcombine should not interfere with simplification to constants.
+ ; Constant subtraction does not overflow, but this is false.
+ 
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/latch-inc-lsr.ll b/llvm/test/Transforms/LoopStrengthReduce/latch-inc-lsr.ll
+new file mode 100644
+index 0000000000000..b402bd9630279
+--- /dev/null
++++ b/llvm/test/Transforms/LoopStrengthReduce/latch-inc-lsr.ll
+@@ -0,0 +1,122 @@
++; RUN: opt < %s -passes='instcombine,indvars' -indvars-widen-indvars=false -S \
++; RUN:   | opt -passes=loop-reduce -S | FileCheck %s
++
++target datalayout = "e-m:w-p:64:64-i32:32-i64:64-i128:128-n32:64-S128"
++
++declare void @usef(float)
++
++define void @gpu_addr_hoist(i32 %tmp20, i64 %sub47, i64 %stride, i32 %sub, ptr %tau1) {
++; CHECK-LABEL: @gpu_addr_hoist(
++; CHECK: mul i64 [[STRIDE:%.*]], {{%.*}}
++; CHECK: shl i64 {{%.*}}, 2
++; CHECK: body:
++; CHECK: [[LSR_IV:%.*]] = phi ptr [ {{%.*}} ], [ {{%.*}} ]
++; CHECK-NEXT: [[J:%.*]] = phi i32 [ 0, {{%.*}} ], [ [[INC:%.*]], {{.*}} ]
++; CHECK-NEXT: load float, ptr [[LSR_IV]]
++; CHECK: [[INC]] = add nuw i32 [[J]], 1
++; CHECK: icmp sgt i32 [[INC]], [[SUB:%.*]]
++entry:
++  br label %pre
++pre:
++  br label %body
++body:
++  %j = phi i32 [ 0, %pre ], [ %inc, %cond ]
++  %add43 = add nsw i32 %j, %tmp20
++  %conv50 = sext i32 %add43 to i64
++  %mul51 = mul nsw i64 %stride, %conv50
++  %add52 = add nsw i64 %sub47, %mul51
++  %idx = shl nsw i64 %add52, 2
++  %gep = getelementptr inbounds i8, ptr %tau1, i64 %idx
++  %val = load float, ptr %gep, align 4
++  call void @usef(float %val)
++  br label %cond
++cond:
++  %inc = add nuw nsw i32 %j, 1
++  %cmp = icmp sgt i32 %inc, %sub
++  br i1 %cmp, label %exit, label %body
++exit:
++  ret void
++}
++
++define void @gpu_twostream_hoist(i32 %tmp20, i64 %sub47, i64 %stride, i32 %sub, ptr %tau1, ptr %tau2) {
++; CHECK-LABEL: @gpu_twostream_hoist(
++; CHECK: mul i64 [[STRIDE:%.*]], {{%.*}}
++; CHECK: body:
++; CHECK: [[LSR_IV:%.*]] = phi i64 [ {{%.*}} ], [ {{%.*}} ]
++; CHECK-NEXT: [[J:%.*]] = phi i32 [ 0, {{%.*}} ], [ [[INC:%.*]], {{.*}} ]
++; CHECK-NEXT: getelementptr i8, ptr [[TAU1:%.*]], i64 [[LSR_IV]]
++; CHECK-NEXT: getelementptr i8, ptr [[TAU2:%.*]], i64 [[LSR_IV]]
++; CHECK-NEXT: load float, ptr {{%.*}}
++; CHECK-NEXT: load float, ptr {{%.*}}
++; CHECK: icmp sgt i32 [[INC:%.*]], [[SUB:%.*]]
++entry:
++  br label %pre
++pre:
++  br label %body
++body:
++  %j = phi i32 [ 0, %pre ], [ %inc, %cond ]
++  %add43 = add nsw i32 %j, %tmp20
++  %conv50 = sext i32 %add43 to i64
++  %mul51 = mul nsw i64 %stride, %conv50
++  %add52 = add nsw i64 %sub47, %mul51
++  %idx = shl nsw i64 %add52, 2
++  %gep1 = getelementptr inbounds i8, ptr %tau1, i64 %idx
++  %gep2 = getelementptr inbounds i8, ptr %tau2, i64 %idx
++  %val1 = load float, ptr %gep1, align 4
++  %val2 = load float, ptr %gep2, align 4
++  call void @usef(float %val1)
++  call void @usef(float %val2)
++  br label %cond
++cond:
++  %inc = add nuw nsw i32 %j, 1
++  %cmp = icmp sgt i32 %inc, %sub
++  br i1 %cmp, label %exit, label %body
++exit:
++  ret void
++}
++
++define void @gpu_four_load(i32 %tmp20, i64 %sub47, i64 %stride, i32 %sub, ptr %tau1) {
++; CHECK-LABEL: @gpu_four_load(
++; CHECK: mul i64 [[STRIDE:%.*]], {{%.*}}
++; CHECK: body:
++; CHECK: [[LSR_IV:%.*]] = phi ptr [ {{%.*}} ], [ {{%.*}} ]
++; CHECK-NEXT: [[J:%.*]] = phi i32 [ 0, {{%.*}} ], [ [[INC:%.*]], {{.*}} ]
++; CHECK-NEXT: getelementptr i8, ptr [[LSR_IV]], i64 4
++; CHECK-NEXT: getelementptr i8, ptr [[LSR_IV]], i64 8
++; CHECK-NEXT: getelementptr i8, ptr [[LSR_IV]], i64 12
++; CHECK-NEXT: load float, ptr [[LSR_IV]]
++; CHECK-NEXT: load float, ptr {{%.*}}
++; CHECK-NEXT: load float, ptr {{%.*}}
++; CHECK-NEXT: load float, ptr {{%.*}}
++; CHECK: icmp sgt i32 [[INC:%.*]], [[SUB:%.*]]
++entry:
++  br label %pre
++pre:
++  br label %body
++body:
++  %j = phi i32 [ 0, %pre ], [ %inc, %cond ]
++  %add43 = add nsw i32 %j, %tmp20
++  %conv50 = sext i32 %add43 to i64
++  %mul51 = mul nsw i64 %stride, %conv50
++  %add52 = add nsw i64 %sub47, %mul51
++  %idx = shl nsw i64 %add52, 2
++  %gep = getelementptr inbounds i8, ptr %tau1, i64 %idx
++  %gep1 = getelementptr inbounds i8, ptr %gep, i64 4
++  %gep2 = getelementptr inbounds i8, ptr %gep, i64 8
++  %gep3 = getelementptr inbounds i8, ptr %gep, i64 12
++  %v0 = load float, ptr %gep, align 4
++  %v1 = load float, ptr %gep1, align 4
++  %v2 = load float, ptr %gep2, align 4
++  %v3 = load float, ptr %gep3, align 4
++  call void @usef(float %v0)
++  call void @usef(float %v1)
++  call void @usef(float %v2)
++  call void @usef(float %v3)
++  br label %cond
++cond:
++  %inc = add nuw nsw i32 %j, 1
++  %cmp = icmp sgt i32 %inc, %sub
++  br i1 %cmp, label %exit, label %body
++exit:
++  ret void
++}
+diff --git a/llvm/test/Transforms/PhaseOrdering/instcombine-latch-inc-benefits.ll b/llvm/test/Transforms/PhaseOrdering/instcombine-latch-inc-benefits.ll
+new file mode 100644
+index 0000000000000..80dc589140117
+--- /dev/null
++++ b/llvm/test/Transforms/PhaseOrdering/instcombine-latch-inc-benefits.ll
+@@ -0,0 +1,90 @@
++; SCEV gains from preserving post-inc latch exit compares
++
++; RUN: opt < %s -passes='instcombine,print<scalar-evolution>' -disable-output 2>&1 \
++; RUN:   | FileCheck %s
++; RUN: opt < %s -passes='instcombine,indvars,print<scalar-evolution>' \
++; RUN:   -indvars-widen-indvars=false -disable-output 2>&1 \
++; RUN:   | FileCheck %s --check-prefix=INDVARS
++
++target datalayout = "e-p:64:64:64-i1:8:8-i8:8:8-i16:16:16-i32:32:32-i64:64:64"
++
++@a = external global [1024 x i32]
++declare void @use(i32)
++declare void @usef(float)
++
++define void @scev_postinc_nsw(i32 %sub) {
++; CHECK-LABEL: 'scev_postinc_nsw'
++; CHECK: %inc = add nuw nsw i32 %j, 1
++; CHECK-NEXT: --> {1,+,1}<nuw><nsw>
++entry:
++  br label %loop
++loop:
++  %j = phi i32 [ 0, %entry ], [ %inc, %loop ]
++  %inc = add nuw nsw i32 %j, 1
++  %cmp = icmp sgt i32 %inc, %sub
++  br i1 %cmp, label %exit, label %loop
++exit:
++  ret void
++}
++
++define void @scev_gep_nsw(i32 %sub) {
++; CHECK-LABEL: 'scev_gep_nsw'
++; CHECK: %inc = add nuw nsw i32 %j, 1
++; CHECK-NEXT: --> {1,+,1}<nuw><nsw>
++entry:
++  br label %loop
++loop:
++  %j = phi i32 [ 0, %entry ], [ %inc, %loop ]
++  %idx = zext i32 %j to i64
++  %off = mul nuw nsw i64 %idx, 4
++  %p = getelementptr i8, ptr @a, i64 %off
++  %v = load i32, ptr %p
++  %inc = add nuw nsw i32 %j, 1
++  %cmp = icmp sgt i32 %inc, %sub
++  br i1 %cmp, label %exit, label %loop
++exit:
++  ret void
++}
++
++define void @scev_gpu_nssw(i32 %tmp20, i64 %sub47, i64 %stride, i32 %sub, ptr %tau1) {
++; CHECK-LABEL: 'scev_gpu_nssw'
++; CHECK: %conv50 = sext i32 %add43 to i64
++; CHECK-NEXT: --> {(sext i32 %tmp20 to i64),+,1}<nsw>
++; CHECK: {1,+,1}<nuw><{{.*}}> Added Flags: <nssw>
++entry:
++  br label %pre
++pre:
++  br label %body
++body:
++  %j = phi i32 [ 0, %pre ], [ %inc, %cond ]
++  %add43 = add nsw i32 %j, %tmp20
++  %conv50 = sext i32 %add43 to i64
++  %mul51 = mul nsw i64 %stride, %conv50
++  %add52 = add nsw i64 %sub47, %mul51
++  %gep.idx = shl nsw i64 %add52, 2
++  %gep = getelementptr inbounds i8, ptr %tau1, i64 %gep.idx
++  %val = load float, ptr %gep, align 4
++  call void @usef(float %val)
++  br label %cond
++cond:
++  %inc = add nuw nsw i32 %j, 1
++  %cmp = icmp sgt i32 %inc, %sub
++  br i1 %cmp, label %exit, label %body
++exit:
++  ret void
++}
++
++define void @scev_nssw_indvars(i32 %sub) {
++; INDVARS-LABEL: 'scev_nssw_indvars'
++; INDVARS: {1,+,1}<nuw><{{.*}}> Added Flags: <nssw>
++entry:
++  br label %loop
++loop:
++  %j = phi i32 [ 0, %entry ], [ %inc, %loop ]
++  call void @use(i32 %j)
++  %inc = add nuw nsw i32 %j, 1
++  %cmp = icmp sgt i32 %inc, %sub
++  br i1 %cmp, label %exit, label %loop
++exit:
++  ret void
++}
