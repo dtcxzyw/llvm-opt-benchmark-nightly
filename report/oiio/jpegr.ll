@@ -201,13 +201,12 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 7 uses
   %i.h = load i32, ptr %i.g, align 4, !tbaa !203
   %i.i = zext i32 %i.h to i64
+  %11 = mul nuw i64 %i.i, %i.f
   %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 3 uses
   %i.k = load i8, ptr %i.j, align 8, !tbaa !67, !range !25, !noundef !26
   %i.l = trunc nuw i8 %i.k to i1
-  %i.m = select i1 %i.l, i64 3, i64 1
-  %11 = shl nuw nsw i64 %i.f, 2
-  %12 = mul i64 %11, %i.i
-  %i.n = mul i64 %12, %i.m
+  %i.m = select i1 %i.l, i64 12, i64 4
+  %i.n = mul i64 %11, %i.m
   call void @_ZN8ultrahdr17uhdr_memory_blockC1Em(ptr noundef nonnull align 8 dereferenceable(16) %3, i64 noundef %i.n)
   %i.o = load ptr, ptr %3, align 8, !tbaa !104    ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #28

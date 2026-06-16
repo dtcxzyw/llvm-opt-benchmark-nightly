@@ -201,18 +201,17 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.x
   %i.di = getelementptr inbounds nuw i8, ptr %6, i64 216 ; 2 uses
-  %10 = mul i32 %.pre, 20
   %i.dj = getelementptr inbounds nuw i8, ptr %6, i64 52
   %i.dk = load i32, ptr %i.dj, align 4, !tbaa !93
   %.inv.i.i = icmp slt i32 %i.dk, 1
-  %11 = zext i1 %.inv.i.i to i32
-  %12 = shl i32 %10, %11                          ; 3 uses
+  %10 = select i1 %.inv.i.i, i32 40, i32 20
+  %11 = mul i32 %10, %.pre                        ; 3 uses
   %i.dl = udiv i32 200, %i.dg                     ; 2 uses
   %i.dm = icmp samesign ugt i32 %i.dg, 200
   br i1 %i.dm, label %comp_opt_exact_or_map_info.exit.thread.i, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %i.dn = icmp slt i32 %12, 1
+  %i.dn = icmp slt i32 %11, 1
   br i1 %i.dn, label %comp_opt_exact_or_map_info.exit.i, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
@@ -231,11 +230,11 @@ bb.ac:                                            ; preds = %bb.ab
   %i.du = getelementptr [2 x i8], ptr @distance_value.dist_vals, i64 %i.ds
   %i.dv = load i16, ptr %i.du, align 2, !tbaa !96
   %i.dw = sext i16 %i.dv to i32
-  %i.dx = mul i32 %12, %i.dw
+  %i.dx = mul i32 %11, %i.dw
   br label %distance_value.exit.i.i.i
 
 distance_value.exit.i.i.i:                        ; preds = %bb.ac, %bb.ab, %bb.aa
-  %.0.i.i.i.i = phi i32 [ 0, %bb.aa ], [ %i.dx, %bb.ac ], [ %12, %bb.ab ] ; 2 uses
+  %.0.i.i.i.i = phi i32 [ 0, %bb.aa ], [ %i.dx, %bb.ac ], [ %11, %bb.ab ] ; 2 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %6, i64 224
   %i.dz = load i64, ptr %i.dy, align 16, !tbaa !94 ; 2 uses
   %i.ea = icmp eq i64 %i.dz, -1
