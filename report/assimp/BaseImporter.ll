@@ -201,7 +201,7 @@ bb.a:
   %i.b = alloca i64, align 8                      ; 6 uses
   %i.c = alloca i64, align 8                      ; 6 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %i.d = tail call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm(ptr noundef nonnull align 8 dereferenceable(32) %1, i8 noundef signext 35, i64 noundef -1) #26 ; 5 uses
+  %i.d = tail call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm(ptr noundef nonnull align 8 dereferenceable(32) %1, i8 noundef signext 35, i64 noundef -1) #26 ; 4 uses
   %.not = icmp eq i64 %i.d, -1
   br i1 %.not, label %.critedge.thread, label %bb.b
 
@@ -212,12 +212,12 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #26
-  %i.g = add nuw i64 %i.d, 1                      ; 3 uses
+  %i.g = add nuw i64 %i.d, 1                      ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !23)
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.i = load i64, ptr %i.h, align 8, !noalias !23 ; 3 uses
-  %.not25 = icmp ult i64 %i.d, %i.i
-  br i1 %.not25, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i, label %bb.d
+  %3 = icmp ugt i64 %i.g, %i.i
+  br i1 %3, label %bb.d, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
 
 bb.d:                                             ; preds = %bb.c
   tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.31, i64 noundef %i.g, i64 noundef %i.i) #30, !noalias !23
@@ -501,7 +501,7 @@ bb.a:
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 16 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #26
   call fastcc void @_ZN12_GLOBAL__N_116StripVersionHashERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind noalias writable align 8 %2, ptr noundef nonnull align 8 dereferenceable(32) %1)
-  %i.b = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm(ptr noundef nonnull align 8 dereferenceable(32) %2, i8 noundef signext 46, i64 noundef -1) #26 ; 3 uses
+  %i.b = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm(ptr noundef nonnull align 8 dereferenceable(32) %2, i8 noundef signext 46, i64 noundef -1) #26 ; 2 uses
   %i.c = icmp eq i64 %i.b, -1
   br i1 %i.c, label %bb.b, label %bb.c
 
@@ -514,12 +514,12 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.q
 
 bb.c:                                             ; preds = %bb.a
-  %i.f = add nuw i64 %i.b, 1                      ; 3 uses
+  %i.f = add nuw i64 %i.b, 1                      ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !30)
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.h = load i64, ptr %i.g, align 8, !noalias !30 ; 3 uses
-  %.not = icmp ult i64 %i.b, %i.h
-  br i1 %.not, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i, label %bb.d
+  %4 = icmp ugt i64 %i.f, %i.h
+  br i1 %4, label %bb.d, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
 
 bb.d:                                             ; preds = %bb.c
   invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.31, i64 noundef %i.f, i64 noundef %i.h) #30

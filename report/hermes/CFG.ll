@@ -201,8 +201,8 @@ _ZN4llvh12DenseMapBaseINS_13SmallDenseMapISt4pairIPN6hermes10BasicBlockES5_EiLj4
   %i.r = or i64 %i.q, %i.p                        ; 2 uses
   %i.s = lshr i64 %i.r, 16
   %i.t = or i64 %i.s, %i.r                        ; 2 uses
-  %.not.i = icmp samesign ult i64 %i.t, 4
-  br i1 %.not.i, label %.lr.ph, label %bb.a
+  %8 = icmp samesign ugt i64 %i.t, 3
+  br i1 %8, label %bb.a, label %.lr.ph
 
 bb.a:                                             ; preds = %_ZN4llvh12DenseMapBaseINS_13SmallDenseMapISt4pairIPN6hermes10BasicBlockES5_EiLj4ENS_12DenseMapInfoIS6_EENS_6detail12DenseMapPairIS6_iEEEES6_iS8_SB_E31getMinBucketToReserveForEntriesEj.exit.i
   %i.u = trunc nuw nsw i64 %i.t to i32
@@ -605,8 +605,8 @@ _ZN6hermes12PredIteratorINS_10BasicBlockEPPNS_11InstructionEEppEv.exit.i.i.i: ; 
   br i1 %.not.i.i.i, label %_ZSt10__distanceIN6hermes12PredIteratorINS0_10BasicBlockEPPNS0_11InstructionEEEENSt15iterator_traitsIT_E15difference_typeES8_S8_St18input_iterator_tag.exit.i.i, label %.lr.ph.i.i.i, !llvm.loop !376
 
 _ZSt10__distanceIN6hermes12PredIteratorINS0_10BasicBlockEPPNS0_11InstructionEEEENSt15iterator_traitsIT_E15difference_typeES8_S8_St18input_iterator_tag.exit.i.i: ; preds = %_ZN6hermes12PredIteratorINS_10BasicBlockEPPNS_11InstructionEEppEv.exit.i.i.i
-  %.not.i.i = icmp samesign ult i64 %.06.i.i.i, 8
-  br i1 %.not.i.i, label %bb.e, label %bb.d
+  %2 = icmp samesign ugt i64 %.06.i.i.i, 7
+  br i1 %2, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %_ZSt10__distanceIN6hermes12PredIteratorINS0_10BasicBlockEPPNS0_11InstructionEEEENSt15iterator_traitsIT_E15difference_typeES8_S8_St18input_iterator_tag.exit.i.i
   tail call void @_ZN4llvh15SmallVectorBase8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(80) %0, ptr noundef nonnull %i.n, i64 noundef %i.x, i64 noundef 8) #13

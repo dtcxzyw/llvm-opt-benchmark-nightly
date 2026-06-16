@@ -200,7 +200,7 @@ bb.e:                                             ; preds = %.lr.ph
   br i1 %i.jo, label %.lr.ph166.preheader, label %.backedge
 
 .lr.ph166.preheader:                              ; preds = %bb.e, %.critedge2
-  %i.jp = phi i64 [ %i.jn, %.critedge2 ], [ 0, %bb.e ] ; 12 uses
+  %i.jp = phi i64 [ %i.jn, %.critedge2 ], [ 0, %bb.e ] ; 10 uses
   %.1129.lcssa.ph189 = phi i32 [ %i.jm, %.critedge2 ], [ 0, %bb.e ]
   %.in = add nsw i32 %.0127.lcssa.ph, -1
   %i.jq = zext i32 %.in to i64                    ; 4 uses
@@ -244,24 +244,25 @@ bb.e:                                             ; preds = %.lr.ph
 .lr.ph166:                                        ; preds = %.lr.ph166.preheader, %bb.l
   %indvar = phi i32 [ 0, %.lr.ph166.preheader ], [ %indvar.next, %bb.l ] ; 3 uses
   %indvars.iv181 = phi i64 [ %i.jp, %.lr.ph166.preheader ], [ %indvars.iv.next182, %bb.l ] ; 9 uses
-  %indvars.iv174 = phi i64 [ %i.ku, %.lr.ph166.preheader ], [ %indvars.iv.next175, %bb.l ] ; 6 uses
+  %indvars.iv174 = phi i64 [ %i.ku, %.lr.ph166.preheader ], [ %indvars.iv.next175, %bb.l ] ; 4 uses
   %.0165 = phi double [ %i.kt, %.lr.ph166.preheader ], [ %.1, %bb.l ] ; 4 uses
   %.0125164 = phi double [ %i.jw, %.lr.ph166.preheader ], [ %.1126, %bb.l ] ; 5 uses
   %i.kz = add i32 %i.ky, %indvar
   %i.la = sext i32 %i.kz to i64
   %smin199 = tail call i64 @llvm.smin.i64(i64 %i.la, i64 %i.je)
-  %smax200 = tail call i64 @llvm.smax.i64(i64 %i.jp, i64 %smin199)
-  %smax201 = tail call i64 @llvm.smax.i64(i64 %smax200, i64 %indvars.iv174)
+  %2 = add nsw i64 %smin199, 1
+  %smax201 = tail call i64 @llvm.smax.i64(i64 %i.jp, i64 %indvars.iv174) ; 2 uses
   %i.lb = add i64 %smax201, 1
-  %smax202 = tail call i64 @llvm.smax.i64(i64 %i.jp, i64 %indvars.iv174)
-  %i.lc = sub i64 %i.lb, %smax202                 ; 3 uses
-  %smax = tail call i64 @llvm.smax.i64(i64 %i.jp, i64 %indvars.iv174)
+  %smax202 = tail call i64 @llvm.smax.i64(i64 %2, i64 %i.lb)
+  %i.lc = sub i64 %smax202, %smax201              ; 3 uses
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.jp, i64 %indvars.iv174) ; 2 uses
   %i.ld = shl i64 %smax, 3                        ; 2 uses
   %i.le = add i32 %i.kw, %indvar
   %i.lf = sext i32 %i.le to i64
   %smin = tail call i64 @llvm.smin.i64(i64 %i.lf, i64 %i.je)
-  %smax193 = tail call i64 @llvm.smax.i64(i64 %i.jp, i64 %smin)
-  %smax194 = tail call i64 @llvm.smax.i64(i64 %smax193, i64 %indvars.iv174)
+  %3 = add nsw i64 %smin, 1
+  %4 = add i64 %smax, 1
+  %smax194 = tail call i64 @llvm.smax.i64(i64 %3, i64 %4)
   %i.lg = shl i64 %smax194, 3                     ; 2 uses
   %smax178 = tail call i64 @llvm.smax.i64(i64 %indvars.iv174, i64 %i.jp) ; 5 uses
   %i.lh = fcmp oeq double %.0125164, 0.000000e+00
@@ -314,11 +315,9 @@ Givens.exit:                                      ; preds = %.lr.ph166, %bb.g, %
 
 vector.memcheck:                                  ; preds = %.lr.ph159
   %scevgep = getelementptr i8, ptr %i.mc, i64 %i.ld
-  %scevgep192 = getelementptr i8, ptr %i.mc, i64 8
-  %scevgep195.a = getelementptr i8, ptr %scevgep192, i64 %i.lg
+  %scevgep195.a = getelementptr i8, ptr %i.mc, i64 %i.lg
   %scevgep196 = getelementptr i8, ptr %i.me, i64 %i.ld
-  %scevgep197 = getelementptr i8, ptr %i.me, i64 8
-  %scevgep198 = getelementptr i8, ptr %scevgep197, i64 %i.lg
+  %scevgep198 = getelementptr i8, ptr %i.me, i64 %i.lg
   %bound0 = icmp ult ptr %scevgep, %scevgep198
   %bound1 = icmp ult ptr %scevgep196, %scevgep195.a
   %found.conflict = and i1 %bound0, %bound1
@@ -364,7 +363,7 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %.
   br label %bb.i
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %indvars.iv176 = phi i64 [ %indvars.iv.next177, %scalar.ph ], [ %indvars.iv176.ph, %scalar.ph.preheader ] ; 4 uses
+  %indvars.iv176 = phi i64 [ %indvars.iv.next177, %scalar.ph ], [ %indvars.iv176.ph, %scalar.ph.preheader ] ; 3 uses
   %i.mr = getelementptr inbounds [8 x i8], ptr %i.mc, i64 %indvars.iv176 ; 2 uses
   %i.ms = load double, ptr %i.mr, align 8, !tbaa !8 ; 2 uses
   %i.mt = getelementptr inbounds [8 x i8], ptr %i.me, i64 %indvars.iv176 ; 2 uses
@@ -376,12 +375,12 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.my = fmul double %.0149, %i.mu
   %i.mz = tail call double @llvm.fmuladd.f64(double %.0148, double %i.ms, double %i.my)
   store double %i.mz, ptr %i.mt, align 8, !tbaa !8
-  %indvars.iv.next177 = add nsw i64 %indvars.iv176, 1
-  %.not.not = icmp slt i64 %indvars.iv176, %i.mf
-  br i1 %.not.not, label %scalar.ph, label %.lr.ph162, !llvm.loop !25
+  %indvars.iv.next177 = add nsw i64 %indvars.iv176, 1 ; 2 uses
+  %.not = icmp sgt i64 %indvars.iv.next177, %i.mf
+  br i1 %.not, label %.lr.ph162, label %scalar.ph, !llvm.loop !25
 
 bb.i:                                             ; preds = %.lr.ph162, %bb.i
-  %indvars.iv179 = phi i64 [ %smax178, %.lr.ph162 ], [ %indvars.iv.next180, %bb.i ] ; 3 uses
+  %indvars.iv179 = phi i64 [ %smax178, %.lr.ph162 ], [ %indvars.iv.next180, %bb.i ] ; 2 uses
   %i.na = getelementptr inbounds [8 x i8], ptr %0, i64 %indvars.iv179
   %i.nb = load ptr, ptr %i.na, align 8, !tbaa !10
   %i.nc = getelementptr [8 x i8], ptr %i.nb, i64 %indvars.iv181 ; 3 uses
@@ -395,9 +394,9 @@ bb.i:                                             ; preds = %.lr.ph162, %bb.i
   %i.nj = fmul double %.0149, %i.nf
   %i.nk = tail call double @llvm.fmuladd.f64(double %.0148, double %i.nd, double %i.nj)
   store double %i.nk, ptr %i.ne, align 8, !tbaa !8
-  %indvars.iv.next180 = add nsw i64 %indvars.iv179, 1
-  %.not137.not = icmp slt i64 %indvars.iv179, %i.mq
-  br i1 %.not137.not, label %bb.i, label %._crit_edge, !llvm.loop !26
+  %indvars.iv.next180 = add nsw i64 %indvars.iv179, 1 ; 2 uses
+  %.not137 = icmp sgt i64 %indvars.iv.next180, %i.mq
+  br i1 %.not137, label %._crit_edge, label %bb.i, !llvm.loop !26
 
 ._crit_edge:                                      ; preds = %bb.i, %Givens.exit
   %indvars.iv.next182 = add nsw i64 %indvars.iv181, 1 ; 4 uses

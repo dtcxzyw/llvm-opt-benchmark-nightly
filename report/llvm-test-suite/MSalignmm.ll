@@ -201,8 +201,8 @@ bb.a:
   store i32 %i.r, ptr @reccycle, align 4, !tbaa !4
   %i.s = sub i32 %7, %6                           ; 22 uses
   %i.t = add i32 %i.s, 1                          ; 8 uses
-  %i.u = sub nsw i32 %9, %8                       ; 23 uses
-  %i.v = add nsw i32 %i.u, 1                      ; 11 uses
+  %i.u = sub nsw i32 %9, %8                       ; 22 uses
+  %i.v = add nsw i32 %i.u, 1                      ; 12 uses
   %i.w = icmp slt i32 %i.u, 0
   br i1 %i.w, label %.preheader1, label %bb.d
 
@@ -220,7 +220,7 @@ bb.a:
   br i1 %i.z, label %.lr.ph117, label %common.ret
 
 .lr.ph117:                                        ; preds = %.preheader
-  %.not718111 = icmp slt i32 %i.s, 0
+  %14 = icmp sgt i32 %i.s, -1
   %wide.trip.count266 = zext nneg i32 %1 to i64
   br label %bb.c
 
@@ -244,7 +244,7 @@ bb.c:                                             ; preds = %.lr.ph117, %._crit_
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %indvars.iv262 ; 2 uses
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !8
   store i8 0, ptr %i.aj, align 1, !tbaa !40
-  br i1 %.not718111, label %._crit_edge115, label %.lr.ph114
+  br i1 %14, label %.lr.ph114, label %._crit_edge115
 
 .lr.ph114:                                        ; preds = %bb.c, %.lr.ph114
   %.0630112 = phi i32 [ %i.al, %.lr.ph114 ], [ 0, %bb.c ] ; 2 uses
@@ -647,8 +647,7 @@ scalar.ph102:                                     ; preds = %scalar.ph102.prol.l
   %.067636 = getelementptr inbounds nuw i8, ptr %i.ri, i64 4 ; 2 uses
   %smax158 = tail call i32 @llvm.smax.i32(i32 %i.sx, i32 2) ; 2 uses
   %i.xg = zext nneg i32 %i.xe to i64
-  %14 = add nuw i32 %i.xe, 1
-  %wide.trip.count170 = zext i32 %14 to i64
+  %wide.trip.count170 = zext nneg i32 %i.xe to i64
   %wide.trip.count159 = zext nneg i32 %smax158 to i64
   %wide.trip.count165 = zext nneg i32 %smax158 to i64
   br label %bb.u
@@ -806,8 +805,8 @@ bb.y:                                             ; preds = %bb.x, %.lr.ph45.spl
   %i.zx = getelementptr inbounds nuw [4 x i8], ptr %i.rh, i64 %indvars.iv167
   store float %i.zw, ptr %i.zx, align 4, !tbaa !16
   %indvars.iv.next168 = add nuw nsw i64 %indvars.iv167, 1 ; 2 uses
-  %exitcond171.not = icmp eq i64 %indvars.iv.next168, %wide.trip.count170
-  br i1 %exitcond171.not, label %.lr.ph58, label %bb.u, !llvm.loop !131
+  %.not = icmp samesign ugt i64 %indvars.iv.next168, %wide.trip.count170
+  br i1 %.not, label %.lr.ph58, label %bb.u, !llvm.loop !131
 
 .lr.ph58:                                         ; preds = %._crit_edge46, %._crit_edge33
   %.0668.lcssa = phi ptr [ %i.qv, %._crit_edge33 ], [ %.066649, %._crit_edge46 ]
@@ -1210,8 +1209,8 @@ bb.at:                                            ; preds = %bb.as
   br label %.loopexit
 
 bb.au:                                            ; preds = %bb.as
-  %.not714.not = icmp sgt i32 %.5655, %i.u
-  br i1 %.not714.not, label %.loopexit, label %bb.av
+  %.not714 = icmp slt i32 %.5655, %i.v
+  br i1 %.not714, label %bb.av, label %.loopexit
 
 bb.av:                                            ; preds = %bb.au
   %i.ajk = sext i32 %.2643 to i64                 ; 2 uses

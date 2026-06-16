@@ -201,7 +201,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 
 .lr.ph299.split.split.split.us.us.us.us.split.us.us.us.us.us.i.us: ; preds = %.lr.ph299.split.us378.us.us.us.us.us.us.i.us, %bb.v
   %.3298.us345.us.us.us.us.us.us.us.us.i.us = phi i32 [ %.4.us.us.us.us.us.us.us.us.us.i.us, %bb.v ], [ %.2360.us.us.us.us.us.us.us.i.us, %.lr.ph299.split.us378.us.us.us.us.us.us.i.us ] ; 3 uses
-  %.3162297.us346.us.us.us.us.us.us.us.us.i.us = phi i32 [ %.4163.us.us.us.us.us.us.us.us.us.i.us, %bb.v ], [ %.2161359.us.us.us.us.us.us.us.i.us, %.lr.ph299.split.us378.us.us.us.us.us.us.i.us ] ; 4 uses
+  %.3162297.us346.us.us.us.us.us.us.us.us.i.us = phi i32 [ %.4163.us.us.us.us.us.us.us.us.us.i.us, %bb.v ], [ %.2161359.us.us.us.us.us.us.us.i.us, %.lr.ph299.split.us378.us.us.us.us.us.us.i.us ] ; 3 uses
   %.0167296.us347.us.us.us.us.us.us.us.us.i.us = phi i32 [ %i.hv, %bb.v ], [ %i.au, %.lr.ph299.split.us378.us.us.us.us.us.us.i.us ] ; 5 uses
   %.3206295.us348.us.us.us.us.us.us.us.us.i.us = phi ptr [ %.4207.us.us.us.us.us.us.us.us.us.i.us, %bb.v ], [ %.2205357.us.us.us.us.us.us.us.i.us, %.lr.ph299.split.us378.us.us.us.us.us.us.i.us ] ; 4 uses
   %.3212294.us349.us.us.us.us.us.us.us.us.i.us = phi i32 [ %.4213.us.us.us.us.us.us.us.us.us.i.us, %bb.v ], [ %.2211356.us.us.us.us.us.us.us.i.us, %.lr.ph299.split.us378.us.us.us.us.us.us.i.us ] ; 3 uses
@@ -264,16 +264,19 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %or.cond197.us.us.us.us.us.us.us.us.us.i.us = select i1 %or.cond196.not255.not.us.us.us.us.us.us.us.us.us.i.us, i1 %.not184.us.us.us.us.us.us.us.us.us.i.us, i1 false
   %i.hg = icmp slt i32 %i.gd, %i.cd
   %or.cond199.us.us.us.us.us.us.us.us.us.i.us = select i1 %or.cond197.us.us.us.us.us.us.us.us.us.i.us, i1 %i.hg, i1 false
-  br i1 %or.cond199.us.us.us.us.us.us.us.us.us.i.us, label %.preheader.us, label %bb.v
+  br i1 %or.cond199.us.us.us.us.us.us.us.us.us.i.us, label %9, label %bb.v
 
-.preheader.us:                                    ; preds = %bb.q, %.preheader.us
-  %.0.i200.us.us.us.us.us.us.us.us.us.i.us = phi i32 [ %i.hh, %.preheader.us ], [ 32, %bb.q ] ; 7 uses
-  %.not.us.us.us.us.us.us.us.us.us.i.us = icmp sgt i32 %.0.i200.us.us.us.us.us.us.us.us.us.i.us, %.3162297.us346.us.us.us.us.us.us.us.us.i.us
+9:                                                ; preds = %bb.q
+  %10 = add nsw i32 %.3162297.us346.us.us.us.us.us.us.us.us.i.us, 1 ; 2 uses
+  br label %.preheader.us
+
+.preheader.us:                                    ; preds = %.preheader.us, %9
+  %.0.i200.us.us.us.us.us.us.us.us.us.i.us = phi i32 [ 32, %9 ], [ %i.hh, %.preheader.us ] ; 7 uses
+  %11 = icmp slt i32 %.0.i200.us.us.us.us.us.us.us.us.us.i.us, %10
   %i.hh = shl i32 %.0.i200.us.us.us.us.us.us.us.us.us.i.us, 1
-  br i1 %.not.us.us.us.us.us.us.us.us.us.i.us, label %bb.r, label %.preheader.us, !llvm.loop !20
+  br i1 %11, label %.preheader.us, label %bb.r, !llvm.loop !20
 
 bb.r:                                             ; preds = %.preheader.us
-  %9 = add nsw i32 %.3162297.us346.us.us.us.us.us.us.us.us.i.us, 1
   %i.hi = icmp eq ptr %.3206295.us348.us.us.us.us.us.us.us.us.i.us, null
   br i1 %i.hi, label %bb.u, label %bb.s
 
@@ -307,7 +310,7 @@ _ZL10resize_intPPiS_i.exit.us.us.us.us.us.us.us.us.us.i.us: ; preds = %bb.u, %bb
 bb.v:                                             ; preds = %_ZL10resize_intPPiS_i.exit.us.us.us.us.us.us.us.us.us.i.us, %bb.q
   %.4213.us.us.us.us.us.us.us.us.us.i.us = phi i32 [ %.7.us.us.us.us.us.us.us.us.us.i.us, %_ZL10resize_intPPiS_i.exit.us.us.us.us.us.us.us.us.us.i.us ], [ %.3212294.us349.us.us.us.us.us.us.us.us.i.us, %bb.q ] ; 2 uses
   %.4207.us.us.us.us.us.us.us.us.us.i.us = phi ptr [ %.6.us.us.us.us.us.us.us.us.us.i.us, %_ZL10resize_intPPiS_i.exit.us.us.us.us.us.us.us.us.us.i.us ], [ %.3206295.us348.us.us.us.us.us.us.us.us.i.us, %bb.q ] ; 2 uses
-  %.4163.us.us.us.us.us.us.us.us.us.i.us = phi i32 [ %9, %_ZL10resize_intPPiS_i.exit.us.us.us.us.us.us.us.us.us.i.us ], [ %.3162297.us346.us.us.us.us.us.us.us.us.i.us, %bb.q ] ; 2 uses
+  %.4163.us.us.us.us.us.us.us.us.us.i.us = phi i32 [ %10, %_ZL10resize_intPPiS_i.exit.us.us.us.us.us.us.us.us.us.i.us ], [ %.3162297.us346.us.us.us.us.us.us.us.us.i.us, %bb.q ] ; 2 uses
   %i.hv = add i32 %.0167296.us347.us.us.us.us.us.us.us.us.i.us, 1 ; 2 uses
   %exitcond765.not.i.us = icmp eq i32 %i.hv, %i.ay
   br i1 %exitcond765.not.i.us, label %._crit_edge.split.us.us.us.us.us.us.us.us.i.us, label %.lr.ph299.split.split.split.us.us.us.us.split.us.us.us.us.us.i.us, !llvm.loop !16

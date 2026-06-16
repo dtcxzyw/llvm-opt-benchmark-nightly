@@ -201,12 +201,13 @@ bb.z:                                             ; preds = %bb.y
   br i1 %.not37.i.i.not.i.i.i.i.i317.not, label %.critedge.i.i.i.i.i.i.i, label %.lr.ph319
 
 bb.aa:                                            ; preds = %.lr.ph319
-  %indvars.iv.next.i.i.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i.i.i318, 64 ; 2 uses
-  %.not37.i.i.not.i.i.i.i.i = icmp samesign ult i64 %indvars.iv.next.i.i.i.i.i, %i.co
-  br i1 %.not37.i.i.not.i.i.i.i.i, label %.lr.ph319, label %.critedge.i.i.i.i.i.i.i, !llvm.loop !308
+  %indvars.iv.next.i.i.i.i.i = add nuw nsw i64 %indvars.iv.next.i.i.i.i.i321, 64 ; 2 uses
+  %.not37.i.i.i.i.i.i.i = icmp samesign ugt i64 %indvars.iv.next.i.i.i.i.i, %i.co
+  br i1 %.not37.i.i.i.i.i.i.i, label %.critedge.i.i.i.i.i.i.i, label %.lr.ph319, !llvm.loop !308
 
 .lr.ph319:                                        ; preds = %bb.z, %bb.aa
-  %indvars.iv.i.i.i.i.i318 = phi i64 [ %indvars.iv.next.i.i.i.i.i, %bb.aa ], [ 0, %bb.z ] ; 2 uses
+  %indvars.iv.next.i.i.i.i.i321 = phi i64 [ %indvars.iv.next.i.i.i.i.i, %bb.aa ], [ 64, %bb.z ] ; 2 uses
+  %indvars.iv.i.i.i.i.i318 = phi i64 [ %indvars.iv.next.i.i.i.i.i321, %bb.aa ], [ 0, %bb.z ]
   %i.cp = lshr exact i64 %indvars.iv.i.i.i.i.i318, 3
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cm, i64 %i.cp
   %i.cr = load i64, ptr %i.cq, align 8, !tbaa !148, !noalias !220
@@ -609,12 +610,13 @@ bb.cr:                                            ; preds = %bb.cq
   br i1 %.not37.i.i.not.i.i.i.i.i78312.not, label %.critedge.i.i.i.i.i.i.i79, label %.lr.ph
 
 bb.cs:                                            ; preds = %.lr.ph
-  %indvars.iv.next.i.i.i.i.i83 = add nuw nsw i64 %indvars.iv.i.i.i.i.i77313, 64 ; 2 uses
-  %.not37.i.i.not.i.i.i.i.i78 = icmp samesign ult i64 %indvars.iv.next.i.i.i.i.i83, %i.vg
-  br i1 %.not37.i.i.not.i.i.i.i.i78, label %.lr.ph, label %.critedge.i.i.i.i.i.i.i79, !llvm.loop !308
+  %indvars.iv.next.i.i.i.i.i83 = add nuw nsw i64 %indvars.iv.next.i.i.i.i.i78314, 64 ; 2 uses
+  %.not37.i.i.i.i.i.i.i79 = icmp samesign ugt i64 %indvars.iv.next.i.i.i.i.i83, %i.vg
+  br i1 %.not37.i.i.i.i.i.i.i79, label %.critedge.i.i.i.i.i.i.i79, label %.lr.ph, !llvm.loop !308
 
 .lr.ph:                                           ; preds = %bb.cr, %bb.cs
-  %indvars.iv.i.i.i.i.i77313 = phi i64 [ %indvars.iv.next.i.i.i.i.i83, %bb.cs ], [ 0, %bb.cr ] ; 2 uses
+  %indvars.iv.next.i.i.i.i.i78314 = phi i64 [ %indvars.iv.next.i.i.i.i.i83, %bb.cs ], [ 64, %bb.cr ] ; 2 uses
+  %indvars.iv.i.i.i.i.i77313 = phi i64 [ %indvars.iv.next.i.i.i.i.i78314, %bb.cs ], [ 0, %bb.cr ]
   %i.vh = lshr exact i64 %indvars.iv.i.i.i.i.i77313, 3
   %i.vi = getelementptr inbounds nuw i8, ptr %i.ve, i64 %i.vh
   %i.vj = load i64, ptr %i.vi, align 8, !tbaa !148, !noalias !353
@@ -1017,12 +1019,13 @@ bb.hw:                                            ; preds = %bb.hv
   br i1 %.not37.i.i.not.i.i.i.i117.i314.not, label %.critedge.i.i.i.i.i.i118.i, label %.lr.ph316
 
 bb.hx:                                            ; preds = %.lr.ph316
-  %indvars.iv.next.i.i.i.i122.i = add nuw nsw i64 %indvars.iv.i.i.i.i116.i315, 64 ; 2 uses
-  %.not37.i.i.not.i.i.i.i117.i = icmp samesign ult i64 %indvars.iv.next.i.i.i.i122.i, %i.aos
-  br i1 %.not37.i.i.not.i.i.i.i117.i, label %.lr.ph316, label %.critedge.i.i.i.i.i.i118.i, !llvm.loop !308
+  %indvars.iv.next.i.i.i.i122.i = add nuw nsw i64 %indvars.iv.next.i.i.i.i117.i317, 64 ; 2 uses
+  %.not37.i.i.i.i.i.i118.i = icmp samesign ugt i64 %indvars.iv.next.i.i.i.i122.i, %i.aos
+  br i1 %.not37.i.i.i.i.i.i118.i, label %.critedge.i.i.i.i.i.i118.i, label %.lr.ph316, !llvm.loop !308
 
 .lr.ph316:                                        ; preds = %bb.hw, %bb.hx
-  %indvars.iv.i.i.i.i116.i315 = phi i64 [ %indvars.iv.next.i.i.i.i122.i, %bb.hx ], [ 0, %bb.hw ] ; 2 uses
+  %indvars.iv.next.i.i.i.i117.i317 = phi i64 [ %indvars.iv.next.i.i.i.i122.i, %bb.hx ], [ 64, %bb.hw ] ; 2 uses
+  %indvars.iv.i.i.i.i116.i315 = phi i64 [ %indvars.iv.next.i.i.i.i117.i317, %bb.hx ], [ 0, %bb.hw ]
   %i.aot = lshr exact i64 %indvars.iv.i.i.i.i116.i315, 3
   %i.aou = getelementptr inbounds nuw i8, ptr %i.aoq, i64 %i.aot
   %i.aov = load i64, ptr %i.aou, align 8, !tbaa !148, !noalias !353

@@ -201,28 +201,25 @@ bb.ac:                                            ; preds = %.loopexit.i
   br i1 %i.ea, label %.thread91.sink.split.i.i, label %.lr.ph121.i.i
 
 .lr.ph121.i.i:                                    ; preds = %bb.ac, %.loopexit.i.i
-  %i.eb = phi i64 [ %i.dz, %.loopexit.i.i ], [ %i.dw, %bb.ac ] ; 2 uses
+  %i.eb = phi i64 [ %i.dz, %.loopexit.i.i ], [ %i.dw, %bb.ac ]
   %.pn.i7.i = phi { i64, i64 } [ %i.dy, %.loopexit.i.i ], [ %i.dv, %bb.ac ]
   %.662120.i.i = phi i64 [ %.763.lcssa.i.i, %.loopexit.i.i ], [ 0, %bb.ac ] ; 2 uses
-  %i.ec = extractvalue { i64, i64 } %.pn.i7.i, 0  ; 2 uses
-  %.not.not.not117.i.i = icmp sgt i64 %i.eb, 0
-  br i1 %.not.not.not117.i.i, label %.lr.ph.preheader.i.i, label %.loopexit.i.i
+  %i.ec = extractvalue { i64, i64 } %.pn.i7.i, 0  ; 3 uses
+  %7 = add i64 %i.eb, -1
+  %.070116.i.i = add i64 %7, %i.ec                ; 2 uses
+  %.not117.i.i = icmp slt i64 %.070116.i.i, %i.ec
+  br i1 %.not117.i.i, label %.loopexit.i.i, label %.lr.ph.i8.i
 
-.lr.ph.preheader.i.i:                             ; preds = %.lr.ph121.i.i
-  %7 = add nsw i64 %i.ec, %i.eb
-  br label %.lr.ph.i8.i
-
-.lr.ph.i8.i:                                      ; preds = %bb.af, %.lr.ph.preheader.i.i
-  %.070119.in.i.i = phi i64 [ %.070119.i.i, %bb.af ], [ %7, %.lr.ph.preheader.i.i ]
-  %.763118.i.i = phi i64 [ %.1167.i.i, %bb.af ], [ %.662120.i.i, %.lr.ph.preheader.i.i ] ; 3 uses
-  %.070119.i.i = add nsw i64 %.070119.in.i.i, -1  ; 4 uses
-  %i.ed = getelementptr inbounds [4 x i8], ptr %i.df, i64 %.070119.i.i
+.lr.ph.i8.i:                                      ; preds = %.lr.ph121.i.i, %bb.af
+  %.070119.in.i.i = phi i64 [ %.070.i.i, %bb.af ], [ %.070116.i.i, %.lr.ph121.i.i ] ; 3 uses
+  %.763118.i.i = phi i64 [ %.1167.i.i, %bb.af ], [ %.662120.i.i, %.lr.ph121.i.i ] ; 3 uses
+  %i.ed = getelementptr inbounds [4 x i8], ptr %i.df, i64 %.070119.in.i.i
   %i.ee = load i32, ptr %i.ed, align 4, !tbaa !3  ; 2 uses
   %i.ef = icmp sgt i32 %i.ee, 0
   br i1 %i.ef, label %bb.ad, label %bb.af
 
 bb.ad:                                            ; preds = %.lr.ph.i8.i
-  %i.eg = getelementptr inbounds [4 x i8], ptr %i.dd, i64 %.070119.i.i
+  %i.eg = getelementptr inbounds [4 x i8], ptr %i.dd, i64 %.070119.in.i.i
   %i.eh = load i32, ptr %i.eg, align 4, !tbaa !3
   %i.ei = sext i32 %i.eh to i64
   %i.ej = zext nneg i32 %i.ee to i64
@@ -236,8 +233,9 @@ bb.ae:                                            ; preds = %bb.ad
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad, %.lr.ph.i8.i
   %.1167.i.i = phi i64 [ %.763118.i.i, %.lr.ph.i8.i ], [ %.763118.i.i, %bb.ad ], [ %i.ek, %bb.ae ] ; 2 uses
-  %.not.not.not.i.i = icmp sgt i64 %.070119.i.i, %i.ec
-  br i1 %.not.not.not.i.i, label %.lr.ph.i8.i, label %.loopexit.i.i, !llvm.loop !74
+  %.070.i.i = add nsw i64 %.070119.in.i.i, -1     ; 2 uses
+  %.not.i9.i = icmp slt i64 %.070.i.i, %i.ec
+  br i1 %.not.i9.i, label %.loopexit.i.i, label %.lr.ph.i8.i, !llvm.loop !74
 
 .thread91.sink.split.i.i:                         ; preds = %.loopexit.i.i, %bb.ae, %bb.ac
   %.12.ph.i.i = phi i64 [ %i.cz, %bb.ae ], [ 0, %bb.ac ], [ %.763.lcssa.i.i, %.loopexit.i.i ]
@@ -477,28 +475,25 @@ bb.az:                                            ; preds = %_ZN5arrow9list_util
   br i1 %i.hu, label %.thread91.sink.split.i.i31, label %.lr.ph121.i.i25
 
 .lr.ph121.i.i25:                                  ; preds = %bb.az, %.loopexit.i.i29
-  %i.hv = phi i64 [ %i.ht, %.loopexit.i.i29 ], [ %i.hq, %bb.az ] ; 2 uses
+  %i.hv = phi i64 [ %i.ht, %.loopexit.i.i29 ], [ %i.hq, %bb.az ]
   %.pn.i7.i26 = phi { i64, i64 } [ %i.hs, %.loopexit.i.i29 ], [ %i.hp, %bb.az ]
   %.662120.i.i27 = phi i64 [ %.763.lcssa.i.i30, %.loopexit.i.i29 ], [ 0, %bb.az ] ; 2 uses
-  %i.hw = extractvalue { i64, i64 } %.pn.i7.i26, 0 ; 2 uses
-  %.not.not.not117.i.i28 = icmp sgt i64 %i.hv, 0
-  br i1 %.not.not.not117.i.i28, label %.lr.ph.preheader.i.i34, label %.loopexit.i.i29
+  %i.hw = extractvalue { i64, i64 } %.pn.i7.i26, 0 ; 3 uses
+  %8 = add i64 %i.hv, -1
+  %.070116.i.i28 = add i64 %8, %i.hw              ; 2 uses
+  %.not117.i.i29 = icmp slt i64 %.070116.i.i28, %i.hw
+  br i1 %.not117.i.i29, label %.loopexit.i.i29, label %.lr.ph.i8.i35
 
-.lr.ph.preheader.i.i34:                           ; preds = %.lr.ph121.i.i25
-  %8 = add nsw i64 %i.hw, %i.hv
-  br label %.lr.ph.i8.i35
-
-.lr.ph.i8.i35:                                    ; preds = %bb.bc, %.lr.ph.preheader.i.i34
-  %.070119.in.i.i36 = phi i64 [ %.070119.i.i38, %bb.bc ], [ %8, %.lr.ph.preheader.i.i34 ]
-  %.763118.i.i37 = phi i64 [ %.1167.i.i39, %bb.bc ], [ %.662120.i.i27, %.lr.ph.preheader.i.i34 ] ; 3 uses
-  %.070119.i.i38 = add nsw i64 %.070119.in.i.i36, -1 ; 4 uses
-  %i.hx = getelementptr inbounds [8 x i8], ptr %i.gz, i64 %.070119.i.i38
+.lr.ph.i8.i35:                                    ; preds = %.lr.ph121.i.i25, %bb.bc
+  %.070119.in.i.i36 = phi i64 [ %.070.i.i34, %bb.bc ], [ %.070116.i.i28, %.lr.ph121.i.i25 ] ; 3 uses
+  %.763118.i.i37 = phi i64 [ %.1167.i.i39, %bb.bc ], [ %.662120.i.i27, %.lr.ph121.i.i25 ] ; 3 uses
+  %i.hx = getelementptr inbounds [8 x i8], ptr %i.gz, i64 %.070119.in.i.i36
   %i.hy = load i64, ptr %i.hx, align 8, !tbaa !68 ; 2 uses
   %i.hz = icmp sgt i64 %i.hy, 0
   br i1 %i.hz, label %bb.ba, label %bb.bc
 
 bb.ba:                                            ; preds = %.lr.ph.i8.i35
-  %i.ia = getelementptr inbounds [8 x i8], ptr %i.gy, i64 %.070119.i.i38
+  %i.ia = getelementptr inbounds [8 x i8], ptr %i.gy, i64 %.070119.in.i.i36
   %i.ib = load i64, ptr %i.ia, align 8, !tbaa !68
   %i.ic = add nsw i64 %i.ib, %i.hy                ; 3 uses
   %i.id = icmp sgt i64 %i.ic, %.763118.i.i37
@@ -510,8 +505,9 @@ bb.bb:                                            ; preds = %bb.ba
 
 bb.bc:                                            ; preds = %bb.bb, %bb.ba, %.lr.ph.i8.i35
   %.1167.i.i39 = phi i64 [ %.763118.i.i37, %.lr.ph.i8.i35 ], [ %.763118.i.i37, %bb.ba ], [ %i.ic, %bb.bb ] ; 2 uses
-  %.not.not.not.i.i40 = icmp sgt i64 %.070119.i.i38, %i.hw
-  br i1 %.not.not.not.i.i40, label %.lr.ph.i8.i35, label %.loopexit.i.i29, !llvm.loop !78
+  %.070.i.i34 = add nsw i64 %.070119.in.i.i36, -1 ; 2 uses
+  %.not.i9.i35 = icmp slt i64 %.070.i.i34, %i.hw
+  br i1 %.not.i9.i35, label %.loopexit.i.i29, label %.lr.ph.i8.i35, !llvm.loop !78
 
 .thread91.sink.split.i.i31:                       ; preds = %.loopexit.i.i29, %bb.bb, %bb.az
   %.12.ph.i.i32 = phi i64 [ %i.gx, %bb.bb ], [ 0, %bb.az ], [ %.763.lcssa.i.i30, %.loopexit.i.i29 ]

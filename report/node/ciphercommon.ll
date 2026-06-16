@@ -201,20 +201,20 @@ bb.l:                                             ; preds = %bb.k
   %i.q = getelementptr i8, ptr %1, i64 %5
   %i.r = getelementptr i8, ptr %i.q, i64 -1
   %i.s = load i8, ptr %i.r, align 1, !tbaa !34
-  %i.t = zext i8 %i.s to i64                      ; 2 uses
-  %.not45.not = icmp ugt i64 %5, %i.t
-  br i1 %.not45.not, label %bb.m, label %bb.r, !prof !47
+  %i.t = zext i8 %i.s to i64
+  %6 = add nuw nsw i64 %i.t, 1                    ; 2 uses
+  %.not45 = icmp ult i64 %5, %6
+  br i1 %.not45, label %bb.r, label %bb.m, !prof !45
 
 bb.m:                                             ; preds = %bb.l
-  %.neg = xor i64 %i.t, -1
-  %6 = add i64 %5, %.neg                          ; 2 uses
-  store i64 %6, ptr %2, align 8, !tbaa !18
+  %7 = sub nuw i64 %5, %6                         ; 2 uses
+  store i64 %7, ptr %2, align 8, !tbaa !18
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.k
-  %i.u = phi i64 [ %6, %bb.m ], [ %5, %bb.k ]     ; 2 uses
+  %i.u = phi i64 [ %7, %bb.m ], [ %5, %bb.k ]     ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 152
-  %i.w = load i64, ptr %i.v, align 8, !tbaa !48   ; 2 uses
+  %i.w = load i64, ptr %i.v, align 8, !tbaa !47   ; 2 uses
   %.not46 = icmp ult i64 %i.u, %i.w
   br i1 %.not46, label %bb.r, label %bb.o, !prof !45
 
@@ -590,6 +590,5 @@ attributes #5 = { nounwind }
 !44 = !{!15, !13, i64 136}
 !45 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !46 = !{!15, !6, i64 144}
-!47 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!48 = !{!15, !13, i64 152}
+!47 = !{!15, !13, i64 152}
 end_hunk_0

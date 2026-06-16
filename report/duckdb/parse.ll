@@ -201,8 +201,6 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.c = zext nneg i32 %1 to i64
-  %4 = add nuw i32 %1, 1
-  %wide.trip.count = zext i32 %4 to i64
   br label %bb.b
 
 ._crit_edge92:                                    ; preds = %bb.n, %bb.a
@@ -431,8 +429,9 @@ bb.n:                                             ; preds = %_ZNSt6vectorIN10duc
   %.4 = phi i32 [ %.041.lcssa, %.critedge ], [ %.069, %bb.m ], [ %.04686, %_ZNSt6vectorIN10duckdb_re26SpliceESaIS1_EE12emplace_backIJRPNS0_6RegexpEPS6_iEEEvDpOT_.exit ]
   %.2 = phi i32 [ %.04588, %.critedge ], [ %.070, %bb.m ], [ %.04588, %_ZNSt6vectorIN10duckdb_re26SpliceESaIS1_EE12emplace_backIJRPNS0_6RegexpEPS6_iEEEvDpOT_.exit ]
   %indvars.iv.next102 = add nuw nsw i64 %indvars.iv101, 1 ; 2 uses
-  %exitcond104.not = icmp eq i64 %indvars.iv.next102, %wide.trip.count
-  br i1 %exitcond104.not, label %._crit_edge92, label %bb.b, !llvm.loop !166
+  %4 = trunc nuw i64 %indvars.iv.next102 to i32
+  %.not = icmp slt i32 %1, %4
+  br i1 %.not, label %._crit_edge92, label %bb.b, !llvm.loop !166
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -445,8 +444,6 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.c = zext nneg i32 %1 to i64
-  %4 = add nuw i32 %1, 1
-  %wide.trip.count = zext i32 %4 to i64
   br label %bb.b
 
 ._crit_edge74:                                    ; preds = %bb.w, %bb.a
@@ -714,8 +711,9 @@ bb.w:                                             ; preds = %bb.i, %_ZNSt6vector
   %.252 = phi i32 [ %spec.select, %_ZNSt6vectorIN10duckdb_re26SpliceESaIS1_EE12emplace_backIJRPNS0_6RegexpEPS6_iEEEvDpOT_.exit ], [ %.05068, %bb.i ]
   %.2 = phi ptr [ %spec.select56, %_ZNSt6vectorIN10duckdb_re26SpliceESaIS1_EE12emplace_backIJRPNS0_6RegexpEPS6_iEEEvDpOT_.exit ], [ %.04970, %bb.i ]
   %indvars.iv.next78 = add nuw nsw i64 %indvars.iv77, 1 ; 2 uses
-  %exitcond80.not = icmp eq i64 %indvars.iv.next78, %wide.trip.count
-  br i1 %exitcond80.not, label %._crit_edge74, label %bb.b, !llvm.loop !172
+  %4 = trunc nuw i64 %indvars.iv.next78 to i32
+  %.not = icmp slt i32 %1, %4
+  br i1 %.not, label %._crit_edge74, label %bb.b, !llvm.loop !172
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -754,8 +752,6 @@ bb.a:
   %i.x = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.y = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.z = zext nneg i32 %1 to i64
-  %7 = add nuw i32 %1, 1
-  %wide.trip.count = zext i32 %7 to i64
   br label %bb.b
 
 ._crit_edge117:                                   ; preds = %bb.al, %bb.a
@@ -1158,8 +1154,9 @@ bb.al:                                            ; preds = %bb.e, %bb.e, %bb.ak
   %.260 = phi ptr [ %spec.select, %bb.ak ], [ %.058112, %bb.e ], [ %.058112, %bb.e ]
   %.2 = phi i32 [ %spec.select76, %bb.ak ], [ %.048113, %bb.e ], [ %.048113, %bb.e ]
   %indvars.iv.next120 = add nuw nsw i64 %indvars.iv119, 1 ; 2 uses
-  %exitcond122.not = icmp eq i64 %indvars.iv.next120, %wide.trip.count
-  br i1 %exitcond122.not, label %._crit_edge117, label %bb.b, !llvm.loop !185
+  %7 = trunc nuw i64 %indvars.iv.next120 to i32
+  %.not = icmp slt i32 %1, %7
+  br i1 %.not, label %._crit_edge117, label %bb.b, !llvm.loop !185
 }
 
 ; Function Attrs: mustprogress nounwind uwtable

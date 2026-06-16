@@ -200,14 +200,13 @@ bb.j:                                             ; preds = %.lr.ph109, %.loopex
 
 .lr.ph105.preheader:                              ; preds = %bb.j
   %i.ct = sext i32 %i.cs to i64
-  %4 = add i32 %i.cq, 1
+  %4 = sext i32 %i.cq to i64
   br label %.lr.ph105
 
 bb.k:                                             ; preds = %.lr.ph105
   %indvars.iv.next121 = add nsw i64 %indvars.iv120, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next121 to i32
-  %exitcond123.not = icmp eq i32 %4, %lftr.wideiv
-  br i1 %exitcond123.not, label %._crit_edge, label %.lr.ph105
+  %.not88 = icmp sgt i64 %indvars.iv.next121, %4
+  br i1 %.not88, label %._crit_edge, label %.lr.ph105
 
 .lr.ph105:                                        ; preds = %.lr.ph105.preheader, %bb.k
   %indvars.iv120 = phi i64 [ %i.ct, %.lr.ph105.preheader ], [ %indvars.iv.next121, %bb.k ] ; 4 uses
@@ -526,14 +525,13 @@ bb.e:                                             ; preds = %.lr.ph
 
 .lr.ph93.preheader:                               ; preds = %.lr.ph96
   %i.ay = sext i32 %i.ax to i64
-  %4 = add i32 %i.av, 1
+  %4 = sext i32 %i.av to i64
   br label %.lr.ph93
 
 bb.f:                                             ; preds = %.lr.ph93
   %indvars.iv.next110 = add nsw i64 %indvars.iv109, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next110 to i32
-  %exitcond112.not = icmp eq i32 %4, %lftr.wideiv
-  br i1 %exitcond112.not, label %.loopexit87, label %.lr.ph93
+  %.not81 = icmp sgt i64 %indvars.iv.next110, %4
+  br i1 %.not81, label %.loopexit87, label %.lr.ph93
 
 .lr.ph93:                                         ; preds = %.lr.ph93.preheader, %bb.f
   %indvars.iv109 = phi i64 [ %i.ay, %.lr.ph93.preheader ], [ %indvars.iv.next110, %bb.f ] ; 4 uses
@@ -936,14 +934,13 @@ bb.i:                                             ; preds = %.lr.ph100, %.loopex
 
 .lr.ph96.preheader:                               ; preds = %bb.i
   %i.cu = sext i32 %i.ct to i64
-  %4 = add i32 %i.cr, 1
+  %4 = sext i32 %i.cr to i64
   br label %.lr.ph96
 
 bb.j:                                             ; preds = %.lr.ph96
   %indvars.iv.next115 = add nsw i64 %indvars.iv114, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next115 to i32
-  %exitcond117.not = icmp eq i32 %4, %lftr.wideiv
-  br i1 %exitcond117.not, label %._crit_edge, label %.lr.ph96
+  %.not77 = icmp sgt i64 %indvars.iv.next115, %4
+  br i1 %.not77, label %._crit_edge, label %.lr.ph96
 
 .lr.ph96:                                         ; preds = %.lr.ph96.preheader, %bb.j
   %indvars.iv114 = phi i64 [ %i.cu, %.lr.ph96.preheader ], [ %indvars.iv.next115, %bb.j ] ; 4 uses

@@ -201,39 +201,11 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 .lr.ph41.preheader:                               ; preds = %bb.i
-  %i.j = zext nneg i32 %0 to i64                  ; 4 uses
-  %2 = add i32 %1, %0
-  %3 = and i32 %2, 1
-  %lcmp.mod.not.not = icmp eq i32 %3, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph41.prol, label %.lr.ph41.prol.loopexit
-
-.lr.ph41.prol:                                    ; preds = %.lr.ph41.preheader
-  %4 = getelementptr inbounds nuw [4 x i8], ptr @PausedIOThreads, i64 %i.j
-  %5 = load i32, ptr %4, align 4, !tbaa !9
-  %6 = icmp sgt i32 %5, 1
-  br i1 %6, label %.loopexit.prol, label %.preheader.prol
-
-.preheader.prol:                                  ; preds = %.lr.ph41.prol
-  %7 = getelementptr inbounds nuw [128 x i8], ptr @IOThreads, i64 %i.j
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 16
-  br label %9
-
-9:                                                ; preds = %9, %.preheader.prol
-  %10 = load atomic i32, ptr %8 seq_cst, align 16
-  %.not31.prol = icmp eq i32 %10, 2
-  br i1 %.not31.prol, label %.loopexit.prol, label %9, !llvm.loop !127
-
-.loopexit.prol:                                   ; preds = %9, %.lr.ph41.prol
-  %indvars.iv.next44.prol = add nuw nsw i64 %i.j, 1
-  br label %.lr.ph41.prol.loopexit
-
-.lr.ph41.prol.loopexit:                           ; preds = %.loopexit.prol, %.lr.ph41.preheader
-  %indvars.iv43.unr = phi i64 [ %i.j, %.lr.ph41.preheader ], [ %indvars.iv.next44.prol, %.loopexit.prol ]
-  %11 = icmp eq i32 %1, %0
-  br i1 %11, label %.loopexit35, label %.lr.ph41
+  %i.j = zext nneg i32 %0 to i64
+  br label %.lr.ph41
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.i
-  %indvars.iv = phi i64 [ %i.i, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.i ] ; 4 uses
+  %indvars.iv = phi i64 [ %i.i, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.i ] ; 3 uses
   %i.k = getelementptr inbounds nuw [4 x i8], ptr @PausedIOThreads, i64 %indvars.iv ; 2 uses
   %i.l = load i32, ptr %i.k, align 4, !tbaa !9    ; 2 uses
   %i.m = add nsw i32 %i.l, 1
@@ -256,57 +228,40 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.f
   store atomic i32 1, ptr %i.p seq_cst, align 16
   %i.s = getelementptr inbounds nuw i8, ptr %i.o, i64 48
-  %i.t = load ptr, ptr %i.s, align 16, !tbaa !128
+  %i.t = load ptr, ptr %i.s, align 16, !tbaa !127
   %i.u = tail call i32 @triggerEventNotifier(ptr noundef %i.t) #15 ; 0 uses
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph, %bb.h
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  %i.v = trunc nuw i64 %indvars.iv to i32
-  %.not29.not = icmp sgt i32 %1, %i.v
-  br i1 %.not29.not, label %.lr.ph, label %.lr.ph41.preheader, !llvm.loop !129
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %i.v = trunc nuw i64 %indvars.iv.next to i32
+  %.not29 = icmp slt i32 %1, %i.v
+  br i1 %.not29, label %.lr.ph41.preheader, label %.lr.ph, !llvm.loop !128
 
-.lr.ph41:                                         ; preds = %.lr.ph41.prol.loopexit, %.loopexit.1
-  %indvars.iv43 = phi i64 [ %indvars.iv.next44.1, %.loopexit.1 ], [ %indvars.iv43.unr, %.lr.ph41.prol.loopexit ] ; 4 uses
+.lr.ph41:                                         ; preds = %.lr.ph41.preheader, %.loopexit.1
+  %indvars.iv43 = phi i64 [ %i.j, %.lr.ph41.preheader ], [ %indvars.iv.next44.1, %.loopexit.1 ] ; 3 uses
   %i.w = getelementptr inbounds nuw [4 x i8], ptr @PausedIOThreads, i64 %indvars.iv43
   %i.x = load i32, ptr %i.w, align 4, !tbaa !9
   %i.y = icmp sgt i32 %i.x, 1
-  br i1 %i.y, label %.loopexit, label %.preheader
+  br i1 %i.y, label %.loopexit.1, label %.preheader.1
 
-.preheader:                                       ; preds = %.lr.ph41
-  %12 = getelementptr inbounds nuw [128 x i8], ptr @IOThreads, i64 %indvars.iv43
-  %13 = getelementptr inbounds nuw i8, ptr %12, i64 16
-  br label %14
-
-14:                                               ; preds = %.preheader, %14
-  %15 = load atomic i32, ptr %13 seq_cst, align 16
-  %.not31 = icmp eq i32 %15, 2
-  br i1 %.not31, label %.loopexit, label %14, !llvm.loop !127
-
-.loopexit:                                        ; preds = %14, %.lr.ph41
-  %indvars.iv.next44 = add nuw nsw i64 %indvars.iv43, 1 ; 3 uses
-  %16 = getelementptr inbounds nuw [4 x i8], ptr @PausedIOThreads, i64 %indvars.iv.next44
-  %17 = load i32, ptr %16, align 4, !tbaa !9
-  %18 = icmp sgt i32 %17, 1
-  br i1 %18, label %.loopexit.1, label %.preheader.1
-
-.preheader.1:                                     ; preds = %.loopexit
-  %i.z = getelementptr inbounds nuw [128 x i8], ptr @IOThreads, i64 %indvars.iv.next44
+.preheader.1:                                     ; preds = %.lr.ph41
+  %i.z = getelementptr inbounds nuw [128 x i8], ptr @IOThreads, i64 %indvars.iv43
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 16
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.j, %.preheader.1
+bb.j:                                             ; preds = %.preheader.1, %bb.j
   %i.ab = load atomic i32, ptr %i.aa seq_cst, align 16
   %.not31.1 = icmp eq i32 %i.ab, 2
-  br i1 %.not31.1, label %.loopexit.1, label %bb.j, !llvm.loop !127
+  br i1 %.not31.1, label %.loopexit.1, label %bb.j, !llvm.loop !129
 
-.loopexit.1:                                      ; preds = %bb.j, %.loopexit
-  %indvars.iv.next44.1 = add nuw nsw i64 %indvars.iv43, 2
-  %i.ac = trunc nuw i64 %indvars.iv.next44 to i32
-  %.not30.not.1 = icmp sgt i32 %1, %i.ac
-  br i1 %.not30.not.1, label %.lr.ph41, label %.loopexit35, !llvm.loop !130
+.loopexit.1:                                      ; preds = %bb.j, %.lr.ph41
+  %indvars.iv.next44.1 = add nuw nsw i64 %indvars.iv43, 1 ; 2 uses
+  %i.ac = trunc nuw i64 %indvars.iv.next44.1 to i32
+  %.not30 = icmp slt i32 %1, %i.ac
+  br i1 %.not30, label %.loopexit35, label %.lr.ph41, !llvm.loop !130
 
-.loopexit35:                                      ; preds = %.lr.ph41.prol.loopexit, %.loopexit.1, %bb.a
+.loopexit35:                                      ; preds = %.loopexit.1, %bb.a
   ret void
 }
 
@@ -352,7 +307,7 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.loopexit
-  %indvars.iv = phi i64 [ %i.i, %.lr.ph.preheader ], [ %indvars.iv.next, %.loopexit ] ; 4 uses
+  %indvars.iv = phi i64 [ %i.i, %.lr.ph.preheader ], [ %indvars.iv.next, %.loopexit ] ; 3 uses
   %i.j = getelementptr inbounds nuw [4 x i8], ptr @PausedIOThreads, i64 %indvars.iv ; 2 uses
   %i.k = load i32, ptr %i.j, align 4, !tbaa !9    ; 3 uses
   %i.l = icmp sgt i32 %i.k, 0
@@ -391,10 +346,10 @@ bb.k:                                             ; preds = %bb.j, %bb.k
   br i1 %.not27, label %.loopexit, label %bb.k, !llvm.loop !131
 
 .loopexit:                                        ; preds = %bb.k, %bb.g
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  %i.s = trunc nuw i64 %indvars.iv to i32
-  %.not25.not = icmp sgt i32 %1, %i.s
-  br i1 %.not25.not, label %.lr.ph, label %.loopexit30, !llvm.loop !132
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %i.s = trunc nuw i64 %indvars.iv.next to i32
+  %.not25 = icmp slt i32 %1, %i.s
+  br i1 %.not25, label %.loopexit30, label %.lr.ph, !llvm.loop !132
 
 .loopexit30:                                      ; preds = %.loopexit, %bb.a
   ret void
@@ -458,7 +413,7 @@ bb.b:                                             ; preds = %.lr.ph
   tail call void @listJoin(ptr noundef %i.n, ptr noundef %i.o) #15
   %i.p = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.k) #15 ; 0 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.j, i64 48
-  %i.r = load ptr, ptr %i.q, align 16, !tbaa !128
+  %i.r = load ptr, ptr %i.q, align 16, !tbaa !127
   %i.s = tail call i32 @triggerEventNotifier(ptr noundef %i.r) #15 ; 0 uses
   %.pre = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 1900), align 4, !tbaa !116
   br label %bb.c
@@ -861,7 +816,7 @@ bb.al:                                            ; preds = %bb.ak
   br i1 %.not21.i, label %bb.am, label %sendPendingClientsToIOThreadIfNeeded.exit
 
 bb.am:                                            ; preds = %bb.al
-  %i.dt = load ptr, ptr %i.ae, align 16, !tbaa !128
+  %i.dt = load ptr, ptr %i.ae, align 16, !tbaa !127
   %i.du = tail call i32 @triggerEventNotifier(ptr noundef %i.dt) #15 ; 0 uses
   br label %sendPendingClientsToIOThreadIfNeeded.exit
 
@@ -928,7 +883,7 @@ bb.aq:                                            ; preds = %bb.ap
 
 bb.ar:                                            ; preds = %bb.aq
   %i.fa = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.fb = load ptr, ptr %i.fa, align 16, !tbaa !128
+  %i.fb = load ptr, ptr %i.fa, align 16, !tbaa !127
   %i.fc = tail call i32 @triggerEventNotifier(ptr noundef %i.fb) #15 ; 0 uses
   br label %sendPendingClientsToIOThreadIfNeeded.exit76
 
@@ -1017,7 +972,7 @@ bb.a:
 define dso_local void @handleClientsFromMainThread(ptr nofree readnone captures(none) %0, i32 noundef %1, ptr noundef %2, i32 %3) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 16, !tbaa !128
+  %i.b = load ptr, ptr %i.a, align 16, !tbaa !127
   %i.c = tail call i32 @getReadEventFd(ptr noundef %i.b) #15
   %i.d = icmp eq i32 %1, %i.c
   br i1 %i.d, label %bb.c, label %bb.b, !prof !42
@@ -1028,7 +983,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.e = load ptr, ptr %i.a, align 16, !tbaa !128
+  %i.e = load ptr, ptr %i.a, align 16, !tbaa !127
   %i.f = tail call i32 @handleEventNotifier(ptr noundef %i.e) #15 ; 0 uses
   %i.g = tail call i32 @processClientsFromMainThread(ptr noundef nonnull %2) ; 0 uses
   ret void
@@ -1431,7 +1386,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.aa = tail call i32 @pthread_mutex_init(ptr noundef nonnull %i.z, ptr noundef %i.w) #15 ; 0 uses
   %i.ab = tail call ptr @createEventNotifier() #15 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.f, i64 48
-  store ptr %i.ab, ptr %i.ac, align 16, !tbaa !128
+  store ptr %i.ab, ptr %i.ac, align 16, !tbaa !127
   %i.ad = load ptr, ptr %i.k, align 8, !tbaa !122
   %i.ae = tail call i32 @getReadEventFd(ptr noundef %i.ab) #15
   %i.af = tail call i32 @aeCreateFileEvent(ptr noundef %i.ad, i32 noundef %i.ae, i32 noundef 1, ptr noundef nonnull @handleClientsFromMainThread, ptr noundef nonnull %i.f) #15
@@ -1799,8 +1754,8 @@ attributes #19 = { cold noreturn nounwind }
 !124 = !{!56, !10, i64 2420}
 !125 = !{!"branch_weights", i32 4000000, i32 4001}
 !126 = !{!56, !15, i64 8}
-!127 = distinct !{!127, !121}
-!128 = !{!95, !96, i64 48}
+!127 = !{!95, !96, i64 48}
+!128 = distinct !{!128, !121}
 !129 = distinct !{!129, !121}
 !130 = distinct !{!130, !121}
 !131 = distinct !{!131, !121}

@@ -200,7 +200,7 @@ bb.q:                                             ; preds = %bb.o
 
 .lr.ph.preheader.i:                               ; preds = %.preheader.i
   %i.as = sext i32 %3 to i64
-  %7 = add i32 %4, 1
+  %7 = sext i32 %4 to i64
   br label %.lr.ph.i
 
 ._crit_edge.i:                                    ; preds = %bb.x, %.preheader.i
@@ -211,7 +211,7 @@ bb.q:                                             ; preds = %bb.o
   br label %bb.y
 
 .lr.ph.i:                                         ; preds = %bb.x, %.lr.ph.preheader.i
-  %indvars.iv.i = phi i64 [ %i.as, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.x ] ; 2 uses
+  %indvars.iv.i = phi i64 [ %i.as, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.x ] ; 3 uses
   %.040.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %.1.i, %bb.x ] ; 2 uses
   %i.av = getelementptr inbounds [8 x i8], ptr %2, i64 %indvars.iv.i
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !57 ; 2 uses
@@ -273,9 +273,8 @@ sdslen.exit.i:                                    ; preds = %bb.w, %bb.v, %bb.u,
 
 bb.x:                                             ; preds = %sdslen.exit.i, %.lr.ph.i
   %.1.i = phi i64 [ %i.bs, %sdslen.exit.i ], [ %.040.i, %.lr.ph.i ] ; 2 uses
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %lftr.wideiv.i = trunc i64 %indvars.iv.next.i to i32
-  %exitcond.not.i = icmp eq i32 %7, %lftr.wideiv.i
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, 1
+  %exitcond.not.i = icmp eq i64 %indvars.iv.i, %7
   br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !62
 
 bb.y:                                             ; preds = %._crit_edge.i, %bb.q

@@ -201,7 +201,7 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %.not28 = icmp eq i32 %2, 0
   %i.d = sext i32 %.025 to i64                    ; 2 uses
-  %4 = add i32 %.024, 1                           ; 2 uses
+  %4 = sext i32 %.024 to i64                      ; 2 uses
   br i1 %.not28, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %.lr.ph.split.us
@@ -221,10 +221,9 @@ bb.a:
   tail call void @kvstoreEmpty(ptr noundef %i.m, ptr noundef %3) #20
   %i.n = getelementptr inbounds nuw i8, ptr %i.e, i64 80
   %indvars.iv.next36 = add nsw i64 %indvars.iv35, 1 ; 2 uses
-  %lftr.wideiv38 = trunc i64 %indvars.iv.next36 to i32
-  %exitcond39.not = icmp eq i32 %4, %lftr.wideiv38
+  %.not.us = icmp sgt i64 %indvars.iv.next36, %4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.n, i8 0, i64 16, i1 false)
-  br i1 %exitcond39.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !123
+  br i1 %.not.us, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !123
 
 ._crit_edge:                                      ; preds = %.lr.ph.split, %.lr.ph.split.us, %bb.a
   %.026.lcssa = phi i64 [ 0, %bb.a ], [ %i.h, %.lr.ph.split.us ], [ %i.r, %.lr.ph.split ]
@@ -240,10 +239,9 @@ bb.a:
   tail call void @emptyDbAsync(ptr noundef nonnull %i.o) #20
   %i.s = getelementptr inbounds nuw i8, ptr %i.o, i64 80
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond.not = icmp eq i32 %4, %lftr.wideiv
+  %.not = icmp sgt i64 %indvars.iv.next, %4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.s, i8 0, i64 16, i1 false)
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !123
+  br i1 %.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !123
 }
 
 declare void @emptyDbAsync(ptr noundef) local_unnamed_addr #2
@@ -297,7 +295,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d
 
 .lr.ph.preheader.i:                               ; preds = %bb.e
   %i.l = zext nneg i32 %.011.i to i64
-  %4 = add nuw nsw i32 %.010.i, 1
+  %4 = zext nneg i32 %.010.i to i64
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
@@ -309,9 +307,8 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.p = getelementptr inbounds nuw [96 x i8], ptr %i.o, i64 %indvars.iv.i
   call void @touchAllWatchedKeysInDb(ptr noundef %i.p, ptr noundef null, ptr noundef null) #20
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %lftr.wideiv.i = trunc i64 %indvars.iv.next.i to i32
-  %exitcond.not.i = icmp eq i32 %4, %lftr.wideiv.i
-  br i1 %exitcond.not.i, label %signalFlushedDb.exit, label %.lr.ph.i, !llvm.loop !129
+  %.not.i = icmp samesign ugt i64 %indvars.iv.next.i, %4
+  br i1 %.not.i, label %signalFlushedDb.exit, label %.lr.ph.i, !llvm.loop !129
 
 signalFlushedDb.exit:                             ; preds = %.lr.ph.i, %bb.e
   call void @trackingInvalidateKeysOnFlush(i32 noundef %i.a) #20
@@ -365,7 +362,7 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.d = sext i32 %.011 to i64
-  %3 = add i32 %.010, 1
+  %3 = sext i32 %.010 to i64
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
@@ -381,9 +378,8 @@ bb.a:
   %i.h = getelementptr inbounds [96 x i8], ptr %i.g, i64 %indvars.iv
   tail call void @touchAllWatchedKeysInDb(ptr noundef %i.h, ptr noundef null, ptr noundef %2) #20
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond.not = icmp eq i32 %3, %lftr.wideiv
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !129
+  %.not = icmp sgt i64 %indvars.iv.next, %3
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !129
 }
 
 declare void @flushSlaveKeysWithExpireList() local_unnamed_addr #2
@@ -447,7 +443,7 @@ bb.a:
   %zext = zext nneg i32 %i.a to i64
   br label %.lr.ph.split.i
 
-.lr.ph.split.i:                                   ; preds = %.lr.ph.split.i.preheader, %.lr.ph.split.i
+.lr.ph.split.i:                                   ; preds = %.lr.ph.split.i, %.lr.ph.split.i.preheader
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.split.i ], [ 0, %.lr.ph.split.i.preheader ] ; 2 uses
   %i.b = getelementptr inbounds nuw [96 x i8], ptr %0, i64 %indvars.iv.i ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !49
@@ -455,9 +451,9 @@ bb.a:
   tail call void @emptyDbAsync(ptr noundef nonnull %i.b) #20
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 80
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %1 = icmp eq i64 %indvars.iv.next.i, %zext
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.e, i8 0, i64 16, i1 false)
-  br i1 %1, label %emptyDbStructure.exit, label %.lr.ph.split.i, !llvm.loop !123
+  %exitcond = icmp eq i64 %indvars.iv.next.i, %zext
+  br i1 %exitcond, label %emptyDbStructure.exit, label %.lr.ph.split.i, !llvm.loop !123
 
 emptyDbStructure.exit:                            ; preds = %.lr.ph.split.i
   %.pre = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 6516), align 4, !tbaa !130
@@ -860,8 +856,8 @@ bb.b:                                             ; preds = %bb.a
   %i.l = icmp slt i32 %spec.select, 0
   %i.m = select i1 %i.l, i32 %2, i32 0
   %.138 = add nsw i32 %i.m, %spec.select          ; 3 uses
-  %i.n = sub nsw i32 %.138, %i.e                  ; 2 uses
-  %i.o = add nsw i32 %i.n, 1                      ; 2 uses
+  %i.n = sub nsw i32 %.138, %i.e
+  %i.o = add nsw i32 %i.n, 1                      ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 56 ; 4 uses
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !118  ; 2 uses
   %.not.i = icmp eq ptr %i.q, null
@@ -886,8 +882,8 @@ bb.f:                                             ; preds = %bb.e, %bb.b
   %i.t = phi ptr [ %i.s, %bb.e ], [ %i.q, %bb.b ] ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
   %i.v = load i32, ptr %i.u, align 4, !tbaa !214
-  %.not44 = icmp slt i32 %i.n, %i.v
-  br i1 %.not44, label %getKeysPrepareResult.exit, label %bb.g
+  %4 = icmp sgt i32 %i.o, %i.v
+  br i1 %4, label %bb.g, label %getKeysPrepareResult.exit
 
 bb.g:                                             ; preds = %bb.f
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses

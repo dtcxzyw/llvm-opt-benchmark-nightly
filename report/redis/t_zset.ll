@@ -201,7 +201,7 @@ zslGetNodeSpanAtLevel.exit39:                     ; preds = %zslGetNodeSpanAtLev
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph77, %zslUnlinkNode.exit
-  %.23675 = phi i64 [ %.034.lcssa, %.lr.ph77 ], [ %.236, %zslUnlinkNode.exit ] ; 2 uses
+  %.23675 = phi i64 [ %.034.lcssa, %.lr.ph77 ], [ %.236, %zslUnlinkNode.exit ]
   %.274 = phi ptr [ %i.an, %.lr.ph77 ], [ %i.av, %zslUnlinkNode.exit ] ; 9 uses
   %.03373 = phi i64 [ 0, %.lr.ph77 ], [ %i.cx, %zslUnlinkNode.exit ]
   %i.au = getelementptr inbounds nuw i8, ptr %.274, i64 16 ; 4 uses
@@ -322,9 +322,9 @@ zslUnlinkNode.exit:                               ; preds = %bb.d, %bb.e, %._cri
   store i64 %i.cw, ptr %i.at, align 8, !tbaa !25
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
   %i.cx = add nuw nsw i64 %.03373, 1              ; 2 uses
-  %.236 = add nuw nsw i64 %.23675, 1
+  %.236 = add nuw nsw i64 %.23675, 1              ; 2 uses
   %i.cy = icmp ne ptr %i.av, null
-  %4 = icmp ult i64 %.23675, %i.ao
+  %4 = icmp ule i64 %.236, %i.ao
   %i.cz = select i1 %i.cy, i1 %4, i1 false
   br i1 %i.cz, label %bb.b, label %._crit_edge78, !llvm.loop !179
 

@@ -201,10 +201,10 @@ bb.i:                                             ; preds = %.lr.ph.i.i.i.i.i.i
   %i.bo = getelementptr inbounds nuw [272 x i8], ptr %i.z, i64 %i.bn
   %i.bp = getelementptr inbounds nuw [272 x i8], ptr %i.z, i64 %.sroa.12.09.i.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(272) %i.bp, ptr noundef nonnull align 16 dereferenceable(272) %i.bo, i64 272, i1 false), !noalias !15895
-  %i.bq = shl nuw nsw i64 %i.bn, 1                ; 2 uses
-  %i.br = or disjoint i64 %i.bq, 1                ; 2 uses
-  %.not.not.not.i.i.i.i.i = icmp samesign ult i64 %i.bq, %i.ar
-  br i1 %.not.not.not.i.i.i.i.i, label %.lr.ph.i.i.i.i.i, label %._crit_edge.i.i.i.i.i
+  %i.bq = shl nuw nsw i64 %i.bn, 1
+  %i.br = or disjoint i64 %i.bq, 1                ; 3 uses
+  %.not.not.i.i.i.i.i = icmp samesign ugt i64 %i.br, %i.ar
+  br i1 %.not.not.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %.lr.ph.i.i.i.i.i
 
 _RNvMs9_NtNtCs6Po7BT7Nknu_5alloc11collections11binary_heapINtB5_10BinaryHeapINtNtNtCs8CRAYtH5WmW_12futures_util6stream15futures_ordered12OrderWrapperINtNtCsbvkFyIu7lgC_4core6result6ResultINtNtB2r_6option6OptionNtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models7actions10CommitInfoENtNtB3t_6errors15DeltaTableErrorEEE19sift_down_to_bottomCs7p2uQeJxui2_9deltalake.exit.i.i.i.i: ; preds = %bb.i, %.lr.ph.i.i.i.i.i.i, %bb.h
   %.sroa.13.0.lcssa.i.i.i.i.i.i = phi i64 [ 0, %bb.h ], [ %.sroa.13.027.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ], [ 0, %bb.i ]
@@ -253,7 +253,7 @@ _RNvXs6_NtNtCs8CRAYtH5WmW_12futures_util6stream15futures_orderedINtB5_14FuturesO
   br label %bb.u
 
 bb.l:                                             ; preds = %bb.k
-  %i.by = load i64, ptr %i.k, align 8, !alias.scope !15899, !noalias !15902, !noundef !19 ; 8 uses
+  %i.by = load i64, ptr %i.k, align 8, !alias.scope !15899, !noalias !15902, !noundef !19 ; 7 uses
   %i.bz = icmp ult i64 %i.by, 33909456017848441
   call void @llvm.assume(i1 %i.bz)
   %i.ca = load i64, ptr %1, align 8, !range !45, !alias.scope !15904, !noalias !15907, !noundef !19
@@ -283,7 +283,7 @@ _RNvMsF_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecINtNtNtCs8CRAYtH5WmW_12futures_util6
   %i.ce = load ptr, ptr %i.aj, align 8, !alias.scope !15904, !noalias !15907, !nonnull !19, !noundef !19
   %i.cf = getelementptr inbounds nuw [272 x i8], ptr %i.ce, i64 %i.by
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(272) %i.cf, ptr noundef nonnull align 16 dereferenceable(272) %i.b, i64 272, i1 false), !noalias !15873
-  %i.cg = add nuw nsw i64 %i.by, 1
+  %i.cg = add nuw nsw i64 %i.by, 1                ; 2 uses
   store i64 %i.cg, ptr %i.k, align 8, !alias.scope !15904, !noalias !15907
   %.val.i.i = load ptr, ptr %i.aj, align 8, !alias.scope !15899, !noalias !15902, !nonnull !19, !noundef !19 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i)
@@ -299,7 +299,7 @@ _RNvMsF_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecINtNtNtCs8CRAYtH5WmW_12futures_util6
   %.sroa.13.027.i.i.i = phi i64 [ %i.ck, %bb.q ], [ %i.by, %_RNvMsF_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecINtNtNtCs8CRAYtH5WmW_12futures_util6stream15futures_ordered12OrderWrapperINtNtCsbvkFyIu7lgC_4core6result6ResultINtNtB1V_6option6OptionNtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models7actions10CommitInfoENtNtB2X_6errors15DeltaTableErrorEEE8push_mutCs7p2uQeJxui2_9deltalake.exit.i.i ] ; 3 uses
   %i.cj = add nsw i64 %.sroa.13.027.i.i.i, -1
   %i.ck = lshr i64 %i.cj, 1                       ; 4 uses
-  %3 = icmp samesign ule i64 %i.ck, %i.by
+  %3 = icmp samesign ult i64 %i.ck, %i.cg
   call void @llvm.assume(i1 %3)
   %i.cl = getelementptr inbounds nuw [272 x i8], ptr %.val.i.i, i64 %i.ck ; 2 uses
   %i.cm = getelementptr i8, ptr %i.cl, i64 256
@@ -702,10 +702,10 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i.i.i
   %i.ay = getelementptr inbounds nuw [80 x i8], ptr %i.i, i64 %i.ax
   %i.az = getelementptr inbounds nuw [80 x i8], ptr %i.i, i64 %.sroa.12.09.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.az, ptr noundef nonnull align 8 dereferenceable(80) %i.ay, i64 80, i1 false), !noalias !16822
-  %i.ba = shl nuw nsw i64 %i.ax, 1                ; 2 uses
-  %i.bb = or disjoint i64 %i.ba, 1                ; 2 uses
-  %.not.not.not.i.i.i.i = icmp samesign ult i64 %i.ba, %i.ab
-  br i1 %.not.not.not.i.i.i.i, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
+  %i.ba = shl nuw nsw i64 %i.ax, 1
+  %i.bb = or disjoint i64 %i.ba, 1                ; 3 uses
+  %.not.not.i.i.i.i = icmp samesign ugt i64 %i.bb, %i.ab
+  br i1 %.not.not.i.i.i.i, label %._crit_edge.i.i.i.i, label %.lr.ph.i.i.i.i
 
 _RNvMs9_NtNtCs6Po7BT7Nknu_5alloc11collections11binary_heapINtB5_10BinaryHeapINtNtNtCs8CRAYtH5WmW_12futures_util6stream15futures_ordered12OrderWrapperINtNtCsbvkFyIu7lgC_4core6result6ResultIB2n_NtCsjyY8HP3IvQ6_12object_store10ListResultNtB35_5ErrorENtNtNtNtCskQDtHcQtBkN_5tokio7runtime4task5error9JoinErrorEEE19sift_down_to_bottomCs7p2uQeJxui2_9deltalake.exit.i.i.i: ; preds = %bb.g, %.lr.ph.i.i.i.i.i, %bb.f
   %.sroa.416.0.copyload.i.i11.i.i.i = phi i64 [ %.sroa.416.0.copyload.i.i.i.i.i, %bb.f ], [ %.sroa.416.0.copyload.i.i10.i.i.i, %.lr.ph.i.i.i.i.i ], [ %.sroa.416.0.copyload.i.i10.i.i.i, %bb.g ]
@@ -751,7 +751,7 @@ bb.j:                                             ; preds = %bb.h
   br label %bb.r
 
 bb.k:                                             ; preds = %bb.i
-  %i.bi = load i64, ptr %i.d, align 8, !alias.scope !16825, !noalias !16828, !noundef !19 ; 8 uses
+  %i.bi = load i64, ptr %i.d, align 8, !alias.scope !16825, !noalias !16828, !noundef !19 ; 7 uses
   %i.bj = icmp ult i64 %i.bi, 115292150460684698
   tail call void @llvm.assume(i1 %i.bj)
   %i.bk = load i64, ptr %1, align 8, !range !45, !alias.scope !16830, !noalias !16833, !noundef !19
@@ -781,7 +781,7 @@ _RNvMsF_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecINtNtNtCs8CRAYtH5WmW_12futures_util6
   %i.bo = load ptr, ptr %i.t, align 8, !alias.scope !16830, !noalias !16833, !nonnull !19, !noundef !19
   %i.bp = getelementptr inbounds nuw [80 x i8], ptr %i.bo, i64 %i.bi
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.bp, ptr noundef nonnull align 8 dereferenceable(80) %i.b, i64 80, i1 false)
-  %i.bq = add nuw nsw i64 %i.bi, 1
+  %i.bq = add nuw nsw i64 %i.bi, 1                ; 2 uses
   store i64 %i.bq, ptr %i.d, align 8, !alias.scope !16830, !noalias !16833
   %.val.i = load ptr, ptr %i.t, align 8, !alias.scope !16825, !noalias !16828, !nonnull !19, !noundef !19 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i)
@@ -796,7 +796,7 @@ _RNvMsF_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecINtNtNtCs8CRAYtH5WmW_12futures_util6
   %.sroa.13.019.i.i = phi i64 [ %i.bt, %bb.p ], [ %i.bi, %_RNvMsF_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecINtNtNtCs8CRAYtH5WmW_12futures_util6stream15futures_ordered12OrderWrapperINtNtCsbvkFyIu7lgC_4core6result6ResultIB1R_NtCsjyY8HP3IvQ6_12object_store10ListResultNtB2z_5ErrorENtNtNtNtCskQDtHcQtBkN_5tokio7runtime4task5error9JoinErrorEEE8push_mutCs7p2uQeJxui2_9deltalake.exit.i ] ; 3 uses
   %i.bs = add nsw i64 %.sroa.13.019.i.i, -1
   %i.bt = lshr i64 %i.bs, 1                       ; 4 uses
-  %3 = icmp samesign ule i64 %i.bt, %i.bi
+  %3 = icmp samesign ult i64 %i.bt, %i.bq
   tail call void @llvm.assume(i1 %3)
   %i.bu = getelementptr inbounds nuw [80 x i8], ptr %.val.i, i64 %i.bt ; 2 uses
   %i.bv = getelementptr i8, ptr %i.bu, i64 72

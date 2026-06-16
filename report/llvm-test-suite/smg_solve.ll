@@ -14,7 +14,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.h = load i32, ptr %i.g, align 8, !tbaa !19   ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.j = load i32, ptr %i.i, align 8, !tbaa !20   ; 5 uses
+  %i.j = load i32, ptr %i.i, align 8, !tbaa !20   ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 36
   %i.l = load i32, ptr %i.k, align 4, !tbaa !21   ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -110,17 +110,14 @@ bb.h:                                             ; preds = %bb.e, %bb.d
   %i.br = fcmp ogt double %.0218, 0.000000e+00
   %.not = icmp eq i32 %i.f, 0                     ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  %i.bt = add i32 %i.j, -2
+  %i.bt = add i32 %i.j, -2                        ; 2 uses
   %.not223237 = icmp slt i32 %i.j, 3
   %i.bu = icmp sgt i32 %i.j, 2
   %i.bv = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   %or.cond3.not236 = select i1 %i.bh, i1 true, i1 %.not ; 5 uses
   %brmerge = or i1 %or.cond3.not236, %i.bp
-  %4 = add i32 %i.j, -1                           ; 2 uses
   %i.bw = zext i32 %i.bt to i64
   %wide.trip.count259 = zext nneg i32 %i.d to i64
-  %wide.trip.count = zext nneg i32 %4 to i64
-  %5 = zext nneg i32 %4 to i64
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph249, %bb.u
@@ -238,15 +235,20 @@ bb.r:                                             ; preds = %bb.q
   %i.ei = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %indvars.iv
   %i.ej = load ptr, ptr %i.ei, align 8, !tbaa !38
   %i.ek = load ptr, ptr %i.ed, align 8, !tbaa !40
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 4 uses
   %i.el = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %indvars.iv.next
   %i.em = load ptr, ptr %i.el, align 8, !tbaa !40
   %i.en = tail call i32 @hypre_SemiRestrict(ptr noundef %i.eh, ptr noundef %i.ej, ptr noundef %i.ek, ptr noundef %i.em) #3 ; 0 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !45
+  %4 = trunc nuw i64 %indvars.iv.next to i32
+  %.not223 = icmp slt i32 %i.bt, %4
+  br i1 %.not223, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !45
 
-._crit_edge:                                      ; preds = %.lr.ph, %bb.r
-  %.0210.lcssa = phi i64 [ 1, %bb.r ], [ %5, %.lr.ph ] ; 4 uses
+._crit_edge.loopexit:                             ; preds = %.lr.ph
+  %5 = and i64 %indvars.iv.next, 4294967295
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.r
+  %.0210.lcssa = phi i64 [ 1, %bb.r ], [ %5, %._crit_edge.loopexit ] ; 4 uses
   %i.eo = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %.0210.lcssa ; 2 uses
   %i.ep = load ptr, ptr %i.eo, align 8, !tbaa !44
   %i.eq = tail call i32 @hypre_SMGRelaxSetZeroGuess(ptr noundef %i.ep, i32 noundef 1) #3 ; 0 uses

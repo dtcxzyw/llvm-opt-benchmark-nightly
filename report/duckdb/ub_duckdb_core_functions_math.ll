@@ -201,20 +201,16 @@ _ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.i.i.i: ; preds = 
   call void @llvm.lifetime.start.p0(ptr nonnull %8), !noalias !3244
   call void @_ZN6duckdb9hugeint_tC1El(ptr noundef nonnull align 8 dereferenceable(16) %7, i64 noundef 1), !noalias !3244
   %.not14.i.i.i.i.i = icmp slt i32 %i.br, 2
-  br i1 %.not14.i.i.i.i.i, label %_ZN6duckdb20UnaryOperatorWrapper9OperationINS_12_GLOBAL__N_117FactorialOperatorEiNS_9hugeint_tEEET1_T0_RNS_12ValidityMaskEmPv.exit.i.i.i, label %.lr.ph.i.i.i.i.i
-
-.lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i
-  %12 = add nuw i32 %i.br, 1
-  %wide.trip.count.i.i.i.i.i = zext i32 %12 to i64
-  br label %bb.r
+  br i1 %.not14.i.i.i.i.i, label %_ZN6duckdb20UnaryOperatorWrapper9OperationINS_12_GLOBAL__N_117FactorialOperatorEiNS_9hugeint_tEEET1_T0_RNS_12ValidityMaskEmPv.exit.i.i.i, label %bb.r
 
 bb.q:                                             ; preds = %bb.r
   %indvars.iv.next.i.i.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i.i.i, 1 ; 2 uses
-  %exitcond.not.i.i.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i.i.i, %wide.trip.count.i.i.i.i.i
-  br i1 %exitcond.not.i.i.i.i.i, label %_ZN6duckdb20UnaryOperatorWrapper9OperationINS_12_GLOBAL__N_117FactorialOperatorEiNS_9hugeint_tEEET1_T0_RNS_12ValidityMaskEmPv.exit.i.i.i, label %bb.r, !llvm.loop !3246
+  %12 = trunc nuw i64 %indvars.iv.next.i.i.i.i.i to i32
+  %.not.i.i.i.i.i = icmp slt i32 %i.br, %12
+  br i1 %.not.i.i.i.i.i, label %_ZN6duckdb20UnaryOperatorWrapper9OperationINS_12_GLOBAL__N_117FactorialOperatorEiNS_9hugeint_tEEET1_T0_RNS_12ValidityMaskEmPv.exit.i.i.i, label %bb.r, !llvm.loop !3246
 
-bb.r:                                             ; preds = %bb.q, %.lr.ph.i.i.i.i.i
-  %indvars.iv.i.i.i.i.i = phi i64 [ 2, %.lr.ph.i.i.i.i.i ], [ %indvars.iv.next.i.i.i.i.i, %bb.q ] ; 2 uses
+bb.r:                                             ; preds = %.lr.ph.i.i.i, %bb.q
+  %indvars.iv.i.i.i.i.i = phi i64 [ %indvars.iv.next.i.i.i.i.i, %bb.q ], [ 2, %.lr.ph.i.i.i ] ; 2 uses
   %.sroa.0.0.copyload.i.i.i.i.i = load i64, ptr %7, align 16, !tbaa !79, !noalias !3244
   %.sroa.2.0.copyload.i.i.i.i.i = load i64, ptr %.sroa.2.0..sroa_idx.i.i.i.i.i, align 8, !tbaa !79, !noalias !3244
   call void @_ZN6duckdb9hugeint_tC1El(ptr noundef nonnull align 8 dereferenceable(16) %8, i64 noundef %indvars.iv.i.i.i.i.i), !noalias !3244
@@ -303,20 +299,16 @@ bb.x:                                             ; preds = %.lr.ph13.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %4), !noalias !3244
   call void @_ZN6duckdb9hugeint_tC1El(ptr noundef nonnull align 8 dereferenceable(16) %3, i64 noundef 1), !noalias !3244
   %.not14.i.i61.i.i.i = icmp slt i32 %i.ci, 2
-  br i1 %.not14.i.i61.i.i.i, label %_ZN6duckdb20UnaryOperatorWrapper9OperationINS_12_GLOBAL__N_117FactorialOperatorEiNS_9hugeint_tEEET1_T0_RNS_12ValidityMaskEmPv.exit81.i.i.i, label %.lr.ph.i.i62.i.i.i
-
-.lr.ph.i.i62.i.i.i:                               ; preds = %bb.x
-  %13 = add nuw i32 %i.ci, 1
-  %wide.trip.count.i.i64.i.i.i = zext i32 %13 to i64
-  br label %bb.z
+  br i1 %.not14.i.i61.i.i.i, label %_ZN6duckdb20UnaryOperatorWrapper9OperationINS_12_GLOBAL__N_117FactorialOperatorEiNS_9hugeint_tEEET1_T0_RNS_12ValidityMaskEmPv.exit81.i.i.i, label %bb.z
 
 bb.y:                                             ; preds = %bb.z
   %indvars.iv.next.i.i74.i.i.i = add nuw nsw i64 %indvars.iv.i.i65.i.i.i, 1 ; 2 uses
-  %exitcond.not.i.i75.i.i.i = icmp eq i64 %indvars.iv.next.i.i74.i.i.i, %wide.trip.count.i.i64.i.i.i
-  br i1 %exitcond.not.i.i75.i.i.i, label %_ZN6duckdb20UnaryOperatorWrapper9OperationINS_12_GLOBAL__N_117FactorialOperatorEiNS_9hugeint_tEEET1_T0_RNS_12ValidityMaskEmPv.exit81.i.i.i, label %bb.z, !llvm.loop !3246
+  %13 = trunc nuw i64 %indvars.iv.next.i.i74.i.i.i to i32
+  %.not.i.i74.i.i.i = icmp slt i32 %i.ci, %13
+  br i1 %.not.i.i74.i.i.i, label %_ZN6duckdb20UnaryOperatorWrapper9OperationINS_12_GLOBAL__N_117FactorialOperatorEiNS_9hugeint_tEEET1_T0_RNS_12ValidityMaskEmPv.exit81.i.i.i, label %bb.z, !llvm.loop !3246
 
-bb.z:                                             ; preds = %bb.y, %.lr.ph.i.i62.i.i.i
-  %indvars.iv.i.i65.i.i.i = phi i64 [ 2, %.lr.ph.i.i62.i.i.i ], [ %indvars.iv.next.i.i74.i.i.i, %bb.y ] ; 2 uses
+bb.z:                                             ; preds = %bb.x, %bb.y
+  %indvars.iv.i.i65.i.i.i = phi i64 [ %indvars.iv.next.i.i74.i.i.i, %bb.y ], [ 2, %bb.x ] ; 2 uses
   %.sroa.0.0.copyload.i.i66.i.i.i = load i64, ptr %3, align 16, !tbaa !79, !noalias !3244
   %.sroa.2.0.copyload.i.i67.i.i.i = load i64, ptr %.sroa.2.0..sroa_idx.i.i63.i.i.i, align 8, !tbaa !79, !noalias !3244
   call void @_ZN6duckdb9hugeint_tC1El(ptr noundef nonnull align 8 dereferenceable(16) %4, i64 noundef %indvars.iv.i.i65.i.i.i), !noalias !3244
@@ -719,14 +711,13 @@ bb.a:
 .lr.ph.i:                                         ; preds = %bb.a
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %5 = add nuw i32 %0, 1
-  %wide.trip.count.i = zext i32 %5 to i64
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.c
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %_ZN6duckdb12_GLOBAL__N_117FactorialOperator9OperationIiNS_9hugeint_tEEET0_T_.exit, label %bb.c, !llvm.loop !3246
+  %5 = trunc nuw i64 %indvars.iv.next.i to i32
+  %.not.i = icmp slt i32 %0, %5
+  br i1 %.not.i, label %_ZN6duckdb12_GLOBAL__N_117FactorialOperator9OperationIiNS_9hugeint_tEEET0_T_.exit, label %bb.c, !llvm.loop !3246
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph.i
   %indvars.iv.i = phi i64 [ 2, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.b ] ; 2 uses

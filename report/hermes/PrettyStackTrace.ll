@@ -114,26 +114,26 @@ bb.a:
   store i32 32, ptr %i.d, align 4, !tbaa !22
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #16
   call void @llvm.va_start.p0(ptr nonnull %2)
-  %i.e = call i32 @vsnprintf(ptr noundef null, i64 noundef 0, ptr noundef %1, ptr noundef nonnull %2) #16 ; 4 uses
+  %i.e = call i32 @vsnprintf(ptr noundef null, i64 noundef 0, ptr noundef %1, ptr noundef nonnull %2) #16 ; 2 uses
   call void @llvm.va_end.p0(ptr nonnull %2)
   %i.f = icmp slt i32 %i.e, 0
   br i1 %i.f, label %bb.g, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.g = add nuw nsw i32 %i.e, 1                  ; 4 uses
+  %i.g = add nuw nsw i32 %i.e, 1                  ; 6 uses
   %i.h = zext nneg i32 %i.g to i64                ; 3 uses
   %i.i = load i32, ptr %i.c, align 8, !tbaa !21   ; 3 uses
   %i.j = icmp ult i32 %i.g, %i.i
   br i1 %i.j, label %.sink.split.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.not = icmp samesign ult i32 %i.e, %i.i
-  br i1 %.not, label %_ZN4llvh15SmallVectorImplIcE6resizeEm.exit, label %bb.d
+  %3 = icmp samesign ugt i32 %i.g, %i.i
+  br i1 %3, label %bb.d, label %_ZN4llvh15SmallVectorImplIcE6resizeEm.exit
 
 bb.d:                                             ; preds = %bb.c
   %i.k = load i32, ptr %i.d, align 4, !tbaa !22
-  %.not6 = icmp ult i32 %i.e, %i.k
-  br i1 %.not6, label %bb.f, label %bb.e
+  %4 = icmp ugt i32 %i.g, %i.k
+  br i1 %4, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   call void @_ZN4llvh15SmallVectorBase8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull %i.b, i64 noundef %i.h, i64 noundef 1) #16

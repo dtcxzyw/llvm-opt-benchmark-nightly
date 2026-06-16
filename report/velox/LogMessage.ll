@@ -201,26 +201,26 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNK5folly5RangeIPKcE5rfindERS1_.exit:            ; preds = %bb.b
   %i.h = ptrtoint ptr %i.f to i64
-  %i.i = sub i64 %i.h, %i.d                       ; 3 uses
+  %i.i = sub i64 %i.h, %i.d                       ; 2 uses
   %i.j = icmp eq i64 %i.i, -1
   %.sroa.0.0.copyload.pre4 = load ptr, ptr %i.a, align 8, !tbaa !25 ; 4 uses
   %.sroa.3.0.copyload.pre6 = load ptr, ptr %.sroa.2.0..0..sroa_idx.i.i, align 8, !tbaa !25 ; 2 uses
   br i1 %i.j, label %_ZNK5folly5RangeIPKcE5rfindERS1_.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %_ZNK5folly5RangeIPKcE5rfindERS1_.exit
+  %1 = add nuw i64 %i.i, 1                        ; 2 uses
   %i.k = ptrtoint ptr %.sroa.3.0.copyload.pre6 to i64
   %i.l = ptrtoint ptr %.sroa.0.0.copyload.pre4 to i64
   %i.m = sub i64 %i.k, %i.l                       ; 2 uses
-  %.not = icmp ult i64 %i.i, %i.m
-  br i1 %.not, label %_ZNK5folly5RangeIPKcE8subpieceEmm.exit, label %bb.d, !prof !53
+  %2 = icmp ugt i64 %1, %i.m
+  br i1 %2, label %bb.d, label %_ZNK5folly5RangeIPKcE8subpieceEmm.exit, !prof !53
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZN5folly6detail16throw_exception_ISt12out_of_rangeJPKcEEEvDpT0_(ptr noundef nonnull @.str) #7
   unreachable
 
 _ZNK5folly5RangeIPKcE8subpieceEmm.exit:           ; preds = %bb.c
-  %1 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.pre4, i64 %i.i
-  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 1
+  %i.n = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.pre4, i64 %1
   %i.o = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.pre4, i64 %i.m
   br label %_ZNK5folly5RangeIPKcE5rfindERS1_.exit.thread
 
@@ -311,7 +311,7 @@ bb.c:                                             ; preds = %bb.a
   %.0 = select i1 %i.h, i64 %spec.store.select.i, i64 %1 ; 2 uses
   %i.i = add nuw i64 %.0, 1                       ; 2 uses
   %i.j = icmp slt i64 %i.i, 0
-  br i1 %i.j, label %bb.d, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit, !prof !56
+  br i1 %i.j, label %bb.d, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit, !prof !53
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZSt17__throw_bad_allocv() #14
@@ -413,7 +413,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   %.0 = phi i64 [ %spec.store.select.i, %bb.f ], [ %i.f, %bb.e ], [ %i.f, %bb.d ] ; 2 uses
   %i.q = add nuw i64 %.0, 1                       ; 2 uses
   %i.r = icmp slt i64 %i.q, 0
-  br i1 %i.r, label %bb.h, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit, !prof !56
+  br i1 %i.r, label %bb.h, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit, !prof !53
 
 bb.h:                                             ; preds = %bb.g
   tail call void @_ZSt17__throw_bad_allocv() #14
@@ -581,8 +581,7 @@ attributes #15 = { builtin allocsize(0) }
 !50 = !{!21, !16, i64 8}
 !51 = !{!9, !9, i64 0}
 !52 = !{!16, !16, i64 0}
-!53 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!53 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !54 = !{!55, !55, i64 0}
 !55 = !{!"vtable pointer", !10, i64 0}
-!56 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 end_hunk_0

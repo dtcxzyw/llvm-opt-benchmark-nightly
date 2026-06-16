@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph35
 define hidden i32 @mbedtls_asn1_write_bitstring(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3) local_unnamed_addr #6 {
 bb.a:
   %i.a = add i64 %3, 7                            ; 4 uses
-  %i.b = lshr i64 %i.a, 3                         ; 5 uses
+  %i.b = lshr i64 %i.a, 3                         ; 4 uses
   %i.c = and i64 %i.a, -8
   %i.d = sub i64 %i.c, %3                         ; 3 uses
   %i.e = load ptr, ptr %0, align 8, !tbaa !9      ; 4 uses
@@ -212,9 +212,9 @@ bb.b:                                             ; preds = %bb.a
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = ptrtoint ptr %1 to i64                   ; 3 uses
   %i.i = sub i64 %i.g, %i.h
-  %i.j = add nuw nsw i64 %i.b, 1                  ; 3 uses
-  %.not = icmp ugt i64 %i.i, %i.b
-  br i1 %.not, label %bb.c, label %_ZL30mbedtls_asn1_write_len_and_tagPPhPKhmh.exit
+  %i.j = add nuw nsw i64 %i.b, 1                  ; 4 uses
+  %4 = icmp ult i64 %i.i, %i.j
+  br i1 %4, label %_ZL30mbedtls_asn1_write_len_and_tagPPhPKhmh.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %.not29 = icmp eq i64 %i.b, 0

@@ -201,15 +201,15 @@ bb.bv:                                            ; preds = %bb.bt, %bb.bu
   br label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bw, %bb.bv
-  %indvars.iv507 = phi i64 [ %indvars.iv.next508, %bb.bw ], [ %i.nz, %bb.bv ] ; 3 uses
-  %indvars.iv.next508 = add nsw i64 %indvars.iv507, -1
+  %indvars.iv507 = phi i64 [ %indvars.iv.next508, %bb.bw ], [ %i.nz, %bb.bv ] ; 2 uses
+  %indvars.iv.next508 = add nsw i64 %indvars.iv507, -1 ; 2 uses
   %i.oa = sub nsw i64 %indvars.iv507, %i.mf
   %i.ob = getelementptr inbounds i8, ptr %i.mb, i64 %i.oa
   store i8 %i.ny, ptr %i.ob, align 1
   %i.oc = load i32, ptr %i.a, align 4             ; 2 uses
   %i.od = sext i32 %i.oc to i64
-  %.not449.not = icmp sgt i64 %indvars.iv507, %i.od
-  br i1 %.not449.not, label %bb.bw, label %.loopexit, !llvm.loop !17
+  %.not449 = icmp slt i64 %indvars.iv.next508, %i.od
+  br i1 %.not449, label %.loopexit, label %bb.bw, !llvm.loop !17
 
 .loopexit:                                        ; preds = %bb.bw, %bb.bs
   %i.oe = phi i32 [ %.pre517, %bb.bs ], [ %i.oc, %bb.bw ] ; 2 uses
@@ -612,12 +612,12 @@ _ZL8pinIndexRll.exit:
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 64
   %i.e = load ptr, ptr %i.d, align 8
   %i.f = tail call noundef i32 %i.e(ptr noundef nonnull align 8 dereferenceable(8) %i.b) #13, !inline_history !21 ; 4 uses
-  %i.g = sext i32 %i.f to i64                     ; 5 uses
+  %i.g = sext i32 %i.f to i64                     ; 4 uses
   %i.h = icmp slt i64 %1, 0                       ; 2 uses
   %spec.select102 = tail call i64 @llvm.smin.i64(i64 %1, i64 %i.g) ; 2 uses
   %.0101 = select i1 %i.h, i64 0, i64 %spec.select102 ; 2 uses
   %i.i = trunc nsw i64 %spec.select102 to i32
-  %i.j = select i1 %i.h, i32 0, i32 %i.i          ; 8 uses
+  %i.j = select i1 %i.h, i32 0, i32 %i.i          ; 7 uses
   %.not = icmp eq i8 %2, 0
   %i.k = sext i32 %i.j to i64                     ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
@@ -702,11 +702,10 @@ bb.m:                                             ; preds = %bb.k
   %narrow = add nsw i32 %i.am, -9
   %spec.select97 = zext nneg i32 %narrow to i64
   store i64 %spec.select97, ptr %i.l, align 8
-  %4 = sext i32 %i.al to i64
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.not92 = icmp slt i32 %i.j, %i.f
-  %spec.store.select98 = select i1 %.not92, i64 %4, i64 %i.g
-  store i64 %spec.store.select98, ptr %i.an, align 8
+  %spec.store.select96103 = tail call i32 @llvm.smin.i32(i32 %i.al, i32 %i.f)
+  %spec.store.select96 = sext i32 %spec.store.select96103 to i64
+  store i64 %spec.store.select96, ptr %i.an, align 8
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.g
@@ -729,7 +728,7 @@ bb.n:                                             ; preds = %bb.m, %bb.g
   %i.ba = load i64, ptr %i.at, align 8            ; 3 uses
   %i.bb = load i64, ptr %i.aq, align 8            ; 4 uses
   %i.bc = sub nsw i64 %i.ba, %i.bb                ; 2 uses
-  %i.bd = trunc i64 %i.bc to i32                  ; 5 uses
+  %i.bd = trunc i64 %i.bc to i32                  ; 4 uses
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 3 uses
   store i32 %i.bd, ptr %i.be, align 4
   %i.bf = trunc i64 %i.bb to i32
@@ -750,12 +749,12 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.bo, label %bb.p, label %bb.r
 
 bb.p:                                             ; preds = %bb.o
-  %i.bp = add nsw i32 %i.bd, -1                   ; 5 uses
+  %i.bp = add nsw i32 %i.bd, -1                   ; 6 uses
   store i32 %i.bp, ptr %i.be, align 4
   %i.bq = add nsw i64 %i.ba, -1
   store i64 %i.bq, ptr %i.at, align 8
-  %.not96 = icmp slt i32 %i.bg, %i.bd
-  br i1 %.not96, label %bb.r, label %bb.q
+  %4 = icmp sgt i32 %i.bg, %i.bp
+  br i1 %4, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
   store i32 %i.bp, ptr %i.bh, align 8

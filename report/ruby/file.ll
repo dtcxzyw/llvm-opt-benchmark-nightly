@@ -201,8 +201,8 @@ define internal fastcc void @test_check(i32 noundef range(i32 1, 3) %0, i32 noun
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
-  %i.c = add nuw nsw i32 %0, 1                    ; 4 uses
-  %3 = icmp sle i32 %1, %0
+  %i.c = add nuw nsw i32 %0, 1                    ; 5 uses
+  %3 = icmp slt i32 %1, %i.c
   %i.d = icmp samesign ugt i32 %1, %i.c
   %or.cond = select i1 %3, i1 true, i1 %i.d
   br i1 %or.cond, label %bb.b, label %rb_check_arity.exit.preheader.preheader

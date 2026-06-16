@@ -201,8 +201,8 @@ bb.as:                                            ; preds = %bb.ar
   %spec.select.i113.i = getelementptr inbounds nuw i8, ptr %i.dn, i64 %spec.select.idx.i.i
   %i.do = getelementptr inbounds nuw i8, ptr %.088197.i, i64 16 ; 3 uses
   %i.dp = load i8, ptr %i.do, align 8, !tbaa !33  ; 5 uses
-  %.not2832.not.i.i = icmp sgt i8 %i.dp, 0
-  br i1 %.not2832.not.i.i, label %.lr.ph.i.i, label %.loopexit.i
+  %.not2832.i.i = icmp slt i8 %i.dp, 1
+  br i1 %.not2832.i.i, label %.loopexit.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.as
   %i.dq = zext nneg i8 %i.dp to i32
@@ -605,7 +605,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
 bb.o:                                             ; preds = %bb.ar, %bb.n
   %i.x = phi i8 [ %i.dv, %bb.ar ], [ %.pr, %bb.n ] ; 4 uses
   %.096 = phi i32 [ %.298, %bb.ar ], [ 0, %bb.n ] ; 2 uses
-  %.094 = phi i8 [ %.195, %bb.ar ], [ 0, %bb.n ]  ; 3 uses
+  %.094 = phi i8 [ %.195, %bb.ar ], [ 0, %bb.n ]  ; 2 uses
   %.188 = phi ptr [ %.4, %bb.ar ], [ %.087, %bb.n ] ; 8 uses
   %i.y = icmp eq i8 %i.x, 45
   %i.z = icmp ne i32 %.096, 0
@@ -643,50 +643,50 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.ao, label %bb.u, label %.thread117.sink.split
 
 bb.u:                                             ; preds = %bb.p, %bb.q, %bb.t
-  %.090 = phi i8 [ 91, %bb.q ], [ 45, %bb.t ], [ %i.ab, %bb.p ] ; 2 uses
-  %i.ap = zext i8 %.090 to i32                    ; 3 uses
-  %.not105.not128 = icmp ult i8 %.094, %.090
-  br i1 %.not105.not128, label %.lr.ph.preheader, label %thread-pre-split
+  %.090 = phi i8 [ 91, %bb.q ], [ 45, %bb.t ], [ %i.ab, %bb.p ]
+  %2 = zext i8 %.094 to i32                       ; 4 uses
+  %i.ap = zext i8 %.090 to i32                    ; 4 uses
+  %.089128 = add nuw nsw i32 %2, 1                ; 4 uses
+  %.not105129 = icmp samesign ugt i32 %.089128, %i.ap
+  br i1 %.not105129, label %thread-pre-split, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.u
-  %2 = zext i8 %.094 to i32                       ; 4 uses
-  %i.aq = sub nsw i32 %i.ap, %2
+  %i.aq = sub nuw nsw i32 %i.ap, %2
   %xtraiter = and i32 %i.aq, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader
-  %.089.prol = add nuw nsw i32 %2, 1              ; 3 uses
-  %i.ar = and i32 %.089.prol, 7
+  %i.ar = and i32 %.089128, 7
   %i.as = shl nuw nsw i32 1, %i.ar
-  %i.at = lshr i32 %.089.prol, 3
+  %i.at = lshr i32 %.089128, 3
   %i.au = zext nneg i32 %i.at to i64
   %i.av = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.au ; 2 uses
   %i.aw = load i8, ptr %i.av, align 1, !tbaa !17
   %i.ax = trunc nuw i32 %i.as to i8
   %i.ay = xor i8 %i.aw, %i.ax
   store i8 %i.ay, ptr %i.av, align 1, !tbaa !17
+  %.089.prol = add nuw nsw i32 %2, 2
   br label %.lr.ph.prol.loopexit
 
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
-  %.089.in129.unr = phi i32 [ %2, %.lr.ph.preheader ], [ %.089.prol, %.lr.ph.prol ]
+  %.089.in129.unr = phi i32 [ %.089128, %.lr.ph.preheader ], [ %.089.prol, %.lr.ph.prol ]
   %i.az = add nsw i32 %i.ap, -1
   %i.ba = icmp eq i32 %i.az, %2
   br i1 %i.ba, label %thread-pre-split, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
-  %.089.in129 = phi i32 [ %.089.1.a, %.lr.ph ], [ %.089.in129.unr, %.lr.ph.prol.loopexit ] ; 2 uses
-  %.089 = add nuw nsw i32 %.089.in129, 1          ; 2 uses
-  %i.bb = and i32 %.089, 7
+  %.089.in129 = phi i32 [ %.089.1, %.lr.ph ], [ %.089.in129.unr, %.lr.ph.prol.loopexit ] ; 4 uses
+  %i.bb = and i32 %.089.in129, 7
   %i.bc = shl nuw nsw i32 1, %i.bb
-  %i.bd = lshr i32 %.089, 3
+  %i.bd = lshr i32 %.089.in129, 3
   %i.be = zext nneg i32 %i.bd to i64
   %i.bf = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.be ; 2 uses
   %i.bg = load i8, ptr %i.bf, align 1, !tbaa !17
   %i.bh = trunc nuw i32 %i.bc to i8
   %i.bi = xor i8 %i.bg, %i.bh
   store i8 %i.bi, ptr %i.bf, align 1, !tbaa !17
-  %.089.1.a = add nuw nsw i32 %.089.in129, 2      ; 4 uses
+  %.089.1.a = add nuw nsw i32 %.089.in129, 1      ; 3 uses
   %i.bj = and i32 %.089.1.a, 7
   %i.bk = shl nuw nsw i32 1, %i.bj
   %i.bl = lshr i32 %.089.1.a, 3
@@ -696,6 +696,7 @@ bb.u:                                             ; preds = %bb.p, %bb.q, %bb.t
   %i.bp = trunc nuw i32 %i.bk to i8
   %i.bq = xor i8 %i.bo, %i.bp
   store i8 %i.bq, ptr %i.bn, align 1, !tbaa !17
+  %.089.1 = add nuw nsw i32 %.089.in129, 2
   %exitcond132.not.1 = icmp eq i32 %.089.1.a, %i.ap
   br i1 %exitcond132.not.1, label %thread-pre-split, label %.lr.ph, !llvm.loop !106
 

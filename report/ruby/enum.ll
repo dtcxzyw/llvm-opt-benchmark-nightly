@@ -201,12 +201,12 @@ bb.a:
   %.sroa.0.0.copyload.fr = freeze i64 %.sroa.0.0.copyload ; 5 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !11
-  %i.b = shl nuw i64 %1, 1                        ; 4 uses
-  %.not.not28 = icmp ult i64 %i.b, %2
-  br i1 %.not.not28, label %.lr.ph, label %.critedge.i25._crit_edge
+  %i.b = shl nuw i64 %1, 1                        ; 3 uses
+  %3 = or disjoint i64 %i.b, 1                    ; 3 uses
+  %.not28 = icmp ugt i64 %3, %2
+  br i1 %.not28, label %.critedge.i25._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %3 = or disjoint i64 %i.b, 1                    ; 2 uses
   %i.c = trunc i64 %.sroa.0.0.copyload.fr to i1
   br i1 %i.c, label %.lr.ph.split.us, label %.lr.ph.split
 
@@ -268,10 +268,10 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g, %rb_uniform_is_less.exit27.us
   %i.y = getelementptr [16 x i8], ptr %0, i64 %.029.us
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.y, ptr noundef nonnull align 8 dereferenceable(16) %i.s, i64 16, i1 false), !tbaa.struct !99
-  %i.z = shl i64 %.022.us, 1                      ; 3 uses
-  %i.aa = or disjoint i64 %i.z, 1
-  %.not.not.us = icmp ult i64 %i.z, %2
-  br i1 %.not.not.us, label %.lr.ph.split.us, label %.critedge.i25._crit_edge, !llvm.loop !108
+  %i.z = shl i64 %.022.us, 1                      ; 2 uses
+  %i.aa = or disjoint i64 %i.z, 1                 ; 2 uses
+  %.not.us = icmp ugt i64 %i.aa, %2
+  br i1 %.not.us, label %.critedge.i25._crit_edge, label %.lr.ph.split.us, !llvm.loop !108
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.m
   %i.ab = phi i64 [ %i.aw, %bb.m ], [ %3, %.lr.ph ] ; 4 uses
@@ -323,10 +323,10 @@ rb_uniform_is_less.exit:                          ; preds = %bb.k, %bb.l, %.crit
 bb.m:                                             ; preds = %.critedge.i25
   %i.au = getelementptr [16 x i8], ptr %0, i64 %.029
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.au, ptr noundef nonnull align 8 dereferenceable(16) %i.aq, i64 16, i1 false), !tbaa.struct !99
-  %i.av = shl i64 %.022, 1                        ; 3 uses
-  %i.aw = or disjoint i64 %i.av, 1
-  %.not.not = icmp ult i64 %i.av, %2
-  br i1 %.not.not, label %.lr.ph.split, label %.critedge.i25._crit_edge, !llvm.loop !108
+  %i.av = shl i64 %.022, 1                        ; 2 uses
+  %i.aw = or disjoint i64 %i.av, 1                ; 2 uses
+  %.not = icmp ugt i64 %i.aw, %2
+  br i1 %.not, label %.critedge.i25._crit_edge, label %.lr.ph.split, !llvm.loop !108
 
 .critedge.i25._crit_edge:                         ; preds = %bb.m, %.critedge.i25, %bb.h, %rb_uniform_is_less.exit27.us, %bb.g, %bb.a
   %.0.lcssa = phi i64 [ %1, %bb.a ], [ %.029.us, %bb.g ], [ %.029.us, %rb_uniform_is_less.exit27.us ], [ %.022.us, %bb.h ], [ %.022, %bb.m ], [ %.029, %.critedge.i25 ]

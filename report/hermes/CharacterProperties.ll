@@ -201,7 +201,7 @@ bb.x:                                             ; preds = %.loopexit.i, %.lr.p
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.aq, %.lr.ph.i37
-  %indvars.iv.i = phi i64 [ %i.hk, %.lr.ph.i37 ], [ %indvars.iv.next.i, %bb.aq ] ; 19 uses
+  %indvars.iv.i = phi i64 [ %i.hk, %.lr.ph.i37 ], [ %indvars.iv.next.i, %bb.aq ] ; 16 uses
   %indvars62.i = trunc i64 %indvars.iv.i to i32   ; 3 uses
   %i.hm = sub nuw nsw i64 %indvars.iv.i, %i.hk
   %i.hn = trunc nuw nsw i64 %i.hm to i32
@@ -229,7 +229,7 @@ bb.z:                                             ; preds = %bb.y
 
 _ZSt9__advanceIPN6hermes14CodePointRangeElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph.i.i41: ; preds = %bb.z
   %i.hw = zext i32 %i.ht to i64                   ; 3 uses
-  %i.hx = add nuw nsw i64 %indvars.iv.i, 1        ; 2 uses
+  %i.hx = add nuw nsw i64 %indvars.iv.i, 1        ; 5 uses
   br label %_ZSt9__advanceIPN6hermes14CodePointRangeElEvRT_T0_St26random_access_iterator_tag.exit.i.i42
 
 _ZSt9__advanceIPN6hermes14CodePointRangeElEvRT_T0_St26random_access_iterator_tag.exit.i.i42: ; preds = %bb.ad, %_ZSt9__advanceIPN6hermes14CodePointRangeElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph.i.i41
@@ -241,7 +241,7 @@ _ZSt9__advanceIPN6hermes14CodePointRangeElEvRT_T0_St26random_access_iterator_tag
   %.sroa.01.0.copyload.i.i.i47 = load i64, ptr %i.hz, align 4 ; 3 uses
   %.sroa.47.0.extract.shift.i.i.i.i48 = lshr i64 %.sroa.01.0.copyload.i.i.i47, 32
   %i.ia = and i64 %.sroa.01.0.copyload.i.i.i47, 4294967295 ; 4 uses
-  %6 = icmp samesign uge i64 %indvars.iv.i, %i.ia ; 2 uses
+  %6 = icmp samesign ugt i64 %i.hx, %i.ia         ; 2 uses
   %i.ib = add i64 %.sroa.47.0.extract.shift.i.i.i.i48, %.sroa.01.0.copyload.i.i.i47
   %i.ic = and i64 %i.ib, 4294967295               ; 3 uses
   %i.id = icmp samesign ugt i64 %i.ic, %indvars.iv.i ; 2 uses
@@ -284,7 +284,7 @@ _ZSt9__advanceIPN6hermes14CodePointRangeElEvRT_T0_St26random_access_iterator_tag
   %.sroa.01.0.copyload.i.i.i.i85 = load i64, ptr %i.ip, align 4 ; 3 uses
   %.sroa.47.0.extract.shift.i.i.i.i.i86 = lshr i64 %.sroa.01.0.copyload.i.i.i.i85, 32
   %i.iq = and i64 %.sroa.01.0.copyload.i.i.i.i85, 4294967295 ; 2 uses
-  %7 = icmp samesign uge i64 %indvars.iv.i, %i.iq
+  %7 = icmp samesign ugt i64 %i.hx, %i.iq
   %i.ir = add i64 %.sroa.47.0.extract.shift.i.i.i.i.i86, %.sroa.01.0.copyload.i.i.i.i85
   %i.is = and i64 %i.ir, 4294967295               ; 2 uses
   %i.it = icmp samesign ugt i64 %i.is, %indvars.iv.i
@@ -330,7 +330,7 @@ _ZSt9__advanceIPN6hermes14CodePointRangeElEvRT_T0_St26random_access_iterator_tag
   %i.jk = and i64 %i.jj, 4294967295               ; 2 uses
   %i.jl = icmp samesign ugt i64 %i.jk, %indvars.iv.i
   %i.jm = and i64 %.sroa.0.0.copyload.i.i37.i.i73, 4294967295 ; 3 uses
-  %8 = icmp samesign uge i64 %indvars.iv.i, %i.jm
+  %8 = icmp samesign ugt i64 %i.hx, %i.jm
   %i.jn = and i1 %8, %i.jl
   br i1 %i.jn, label %.thread.i44.i.i79, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN6hermes12CodePointSet3addENS2_14CodePointRangeEEUlS4_S4_E_EclIKS4_PS4_EEbRT_T0_.exit.i.i.i75
 

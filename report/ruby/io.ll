@@ -201,14 +201,14 @@ bb.l:                                             ; preds = %bb.k
   br label %ioctl_narg_len.exit.i
 
 ioctl_narg_len.exit.i:                            ; preds = %bb.l, %bb.k
-  %.0.i.i.i = phi i64 [ %spec.store.select.i.i.i, %bb.l ], [ 256, %bb.k ] ; 3 uses
+  %.0.i.i.i = phi i64 [ %spec.store.select.i.i.i, %bb.l ], [ 256, %bb.k ] ; 2 uses
   tail call void @rb_str_modify(i64 noundef %i.n) #28
   %i.u = inttoptr i64 %i.n to ptr                 ; 5 uses
   %i.v = getelementptr i8, ptr %i.u, i64 16
   %i.w = load i64, ptr %i.v, align 8, !tbaa !81   ; 4 uses
-  %i.x = add nuw nsw i64 %.0.i.i.i, 1             ; 2 uses
-  %.not.i2 = icmp sgt i64 %i.w, %.0.i.i.i
-  br i1 %.not.i2, label %bb.o, label %bb.m
+  %i.x = add nuw nsw i64 %.0.i.i.i, 1             ; 3 uses
+  %4 = icmp slt i64 %i.w, %i.x
+  br i1 %4, label %bb.m, label %bb.o
 
 bb.m:                                             ; preds = %ioctl_narg_len.exit.i
   %i.y = tail call i64 @rb_str_resize(i64 noundef %i.n, i64 noundef %i.x) #28 ; 0 uses

@@ -201,14 +201,14 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.r = load ptr, ptr %i.e, align 8, !tbaa !64
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 5 uses
-  %i.t = load i64, ptr %i.s, align 8, !tbaa !67   ; 4 uses
-  %i.u = add nsw i64 %i.t, 1
+  %i.t = load i64, ptr %i.s, align 8, !tbaa !67   ; 3 uses
+  %i.u = add nsw i64 %i.t, 1                      ; 2 uses
   store i64 %i.u, ptr %i.s, align 8, !tbaa !67
   %i.v = getelementptr inbounds nuw i8, ptr %i.r, i64 48
   %i.w = load i64, ptr %i.v, align 8, !tbaa !18   ; 2 uses
-  %.not.i = icmp sge i64 %i.t, %i.w
+  %3 = icmp sgt i64 %i.u, %i.w
   %i.x = icmp ne i64 %i.w, 0
-  %spec.select.i = and i1 %.not.i, %i.x
+  %spec.select.i = and i1 %3, %i.x
   br i1 %spec.select.i, label %bb.g, label %increase_depth.exit, !prof !71
 
 bb.g:                                             ; preds = %bb.f
@@ -611,14 +611,14 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !64
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 7 uses
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !67   ; 4 uses
-  %i.e = add nsw i64 %i.d, 1
+  %i.d = load i64, ptr %i.c, align 8, !tbaa !67   ; 3 uses
+  %i.e = add nsw i64 %i.d, 1                      ; 2 uses
   store i64 %i.e, ptr %i.c, align 8, !tbaa !67
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   %i.g = load i64, ptr %i.f, align 8, !tbaa !18   ; 2 uses
-  %.not.i = icmp sge i64 %i.d, %i.g
+  %4 = icmp sgt i64 %i.e, %i.g
   %i.h = icmp ne i64 %i.g, 0
-  %spec.select.i = and i1 %.not.i, %i.h
+  %spec.select.i = and i1 %4, %i.h
   br i1 %spec.select.i, label %bb.b, label %increase_depth.exit, !prof !71
 
 bb.b:                                             ; preds = %bb.a
@@ -744,14 +744,14 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 7 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !64
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 6 uses
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !67   ; 6 uses
-  %i.e = add nsw i64 %i.d, 1                      ; 3 uses
+  %i.d = load i64, ptr %i.c, align 8, !tbaa !67   ; 5 uses
+  %i.e = add nsw i64 %i.d, 1                      ; 4 uses
   store i64 %i.e, ptr %i.c, align 8, !tbaa !67
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   %i.g = load i64, ptr %i.f, align 8, !tbaa !18   ; 2 uses
-  %.not.i = icmp sge i64 %i.d, %i.g
+  %3 = icmp sgt i64 %i.e, %i.g
   %i.h = icmp ne i64 %i.g, 0
-  %spec.select.i = and i1 %.not.i, %i.h
+  %spec.select.i = and i1 %3, %i.h
   br i1 %spec.select.i, label %bb.b, label %increase_depth.exit, !prof !71
 
 bb.b:                                             ; preds = %bb.a

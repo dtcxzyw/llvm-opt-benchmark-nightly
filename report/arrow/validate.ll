@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %_ZNK5arrow9ArrayDat
   br i1 %.not3, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.d, %bb.l
-  %storemerge4 = phi i64 [ %i.bi, %bb.l ], [ 1, %bb.d ] ; 5 uses
+  %storemerge4 = phi i64 [ %i.bi, %bb.l ], [ 1, %bb.d ] ; 4 uses
   %i.ag = phi i32 [ %i.ai, %bb.l ], [ %i.r, %bb.d ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #18
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %storemerge4
@@ -300,9 +300,9 @@ _ZN5arrow6Status7InvalidIJRA43_KcRlRA17_S2_RKiRA4_S2_S5_EEES0_DpOT_.exit: ; pred
 bb.l:                                             ; preds = %bb.h
   store i32 %i.ai, ptr %i.b, align 4, !tbaa !3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #18
-  %i.bi = add nuw i64 %storemerge4, 1
-  %exitcond.not = icmp eq i64 %storemerge4, %i.af
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !1611
+  %i.bi = add nuw nsw i64 %storemerge4, 1         ; 2 uses
+  %.not = icmp sgt i64 %i.bi, %i.af
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !1611
 
 .critedge:                                        ; preds = %_ZN5arrow6Status7InvalidIJRA43_KcRlRA17_S2_RKiRA4_S2_S5_EEES0_DpOT_.exit, %_ZN5arrow6Status7InvalidIJRA56_KcRlRA3_S2_RKiRA4_S2_RiEEES0_DpOT_.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #18
@@ -705,7 +705,7 @@ bb.d:                                             ; preds = %_ZNK5arrow9ArrayDat
   br i1 %.not1, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.d, %bb.l
-  %storemerge2 = phi i64 [ %i.bh, %bb.l ], [ 1, %bb.d ] ; 3 uses
+  %storemerge2 = phi i64 [ %i.bh, %bb.l ], [ 1, %bb.d ] ; 2 uses
   %i.ag = phi i64 [ %i.ai, %bb.l ], [ %i.r, %bb.d ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #18
   %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %storemerge2
@@ -801,10 +801,10 @@ _ZN5arrow6Status7InvalidIJRA43_KcRlRA17_S2_RKlRA4_S2_S5_EEES0_DpOT_.exit: ; pred
 bb.l:                                             ; preds = %bb.h
   store i64 %i.ai, ptr %i.b, align 8, !tbaa !82
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #18
-  %i.bh = add nuw i64 %storemerge2, 1             ; 2 uses
+  %i.bh = add nuw nsw i64 %storemerge2, 1         ; 3 uses
   store i64 %i.bh, ptr %i.c, align 8, !tbaa !82
-  %exitcond.not = icmp eq i64 %storemerge2, %i.af
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !1696
+  %.not = icmp sgt i64 %i.bh, %i.af
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !1696
 
 .critedge:                                        ; preds = %_ZN5arrow6Status7InvalidIJRA43_KcRlRA17_S2_RKlRA4_S2_S5_EEES0_DpOT_.exit, %_ZN5arrow6Status7InvalidIJRA56_KcRlRA3_S2_RKlRA4_S2_S5_EEES0_DpOT_.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #18

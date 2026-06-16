@@ -201,15 +201,15 @@ bb.a:
   br i1 %i.e, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = trunc nuw i64 %i.d to i32                ; 3 uses
-  %i.g = add nuw i32 %i.f, 1                      ; 2 uses
+  %i.f = trunc nuw i64 %i.d to i32                ; 2 uses
+  %i.g = add nuw i32 %i.f, 1                      ; 3 uses
   %i.h = tail call noundef i32 @_ZN6duckdb12RandomEngine17NextRandomIntegerEv(ptr noundef nonnull align 8 dereferenceable(48) %1)
   %i.i = zext i32 %i.h to i64
   %i.j = zext i32 %i.g to i64                     ; 2 uses
   %i.k = mul nuw i64 %i.i, %i.j                   ; 3 uses
   %i.l = trunc i64 %i.k to i32                    ; 2 uses
-  %.not21 = icmp ult i32 %i.f, %i.l
-  br i1 %.not21, label %_ZNSt24uniform_int_distributionImE5_S_ndImN6duckdb12ReservoirRNGEjEET1_RT0_S4_.exit, label %bb.c
+  %4 = icmp ugt i32 %i.g, %i.l
+  br i1 %4, label %bb.c, label %_ZNSt24uniform_int_distributionImE5_S_ndImN6duckdb12ReservoirRNGEjEET1_RT0_S4_.exit
 
 bb.c:                                             ; preds = %bb.b
   %i.m = xor i32 %i.f, -1

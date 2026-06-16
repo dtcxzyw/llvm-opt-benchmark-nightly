@@ -201,8 +201,8 @@ bb.m:                                             ; preds = %_RNvXs3_NtNtCs4j34X
   %i.bg = add nsw i64 %i.az, -1
   %i.bh = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.bg, i1 true)
   %i.bi = lshr i64 -1, %i.bh
-  %.sroa.022.0.i.i = select i1 %i.bf, i64 0, i64 %i.bi ; 3 uses
-  %i.bj = add nuw nsw i64 %.sroa.022.0.i.i, 1     ; 6 uses
+  %.sroa.022.0.i.i = select i1 %i.bf, i64 0, i64 %i.bi ; 2 uses
+  %i.bj = add nuw nsw i64 %.sroa.022.0.i.i, 1     ; 7 uses
   %or.cond.i.i = icmp samesign ugt i64 %.sroa.022.0.i.i, 32767
   br i1 %or.cond.i.i, label %_RNvMs0_NtNtCs4j34XAPZOn0_4http6header3mapNtB5_9HeaderMap11try_reserveCsgO8S5jLFugx_23deltalake_catalog_unity.exit.thread.i, label %bb.n, !prof !955
 
@@ -234,7 +234,7 @@ bb.p:                                             ; preds = %.noexc.i
 
 _RNvMs4_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i: ; preds = %.noexc.i
   %i.bt = load ptr, ptr %i.br, align 8, !noalias !957, !nonnull !10, !noundef !10
-  %2 = icmp ult i64 %.sroa.022.0.i.i, %i.bq
+  %2 = icmp ule i64 %i.bj, %i.bq
   tail call void @llvm.assume(i1 %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !957
   store i64 %i.bq, ptr %i.f, align 8, !noalias !957
@@ -637,7 +637,7 @@ bb.bi:                                            ; preds = %bb.bh
 bb.bj:                                            ; preds = %bb.bi
   %i.he = getelementptr inbounds nuw i8, ptr %i.hb, i64 16 ; 2 uses
   %i.hf = load i64, ptr %i.he, align 8, !alias.scope !1055, !noalias !1060, !noundef !10 ; 4 uses
-  %i.hg = load i64, ptr %i.gf, align 8, !alias.scope !1058, !noalias !1062, !noundef !10 ; 7 uses
+  %i.hg = load i64, ptr %i.gf, align 8, !alias.scope !1058, !noalias !1062, !noundef !10 ; 6 uses
   %i.hh = icmp ult i64 %i.hg, 128102389400760776
   call void @llvm.assume(i1 %i.hh)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !1063
@@ -684,11 +684,11 @@ _RNvMsF_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecINtNtNtCs4j34XAPZOn0_4http6header3ma
   %i.hu = load ptr, ptr %i.gg, align 8, !alias.scope !1069, !noalias !1070, !nonnull !10, !noundef !10
   %i.hv = getelementptr inbounds nuw [72 x i8], ptr %i.hu, i64 %i.hg
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.hv, ptr noundef nonnull align 8 dereferenceable(72) %i.c, i64 72, i1 false), !noalias !1062
-  %i.hw = add nuw nsw i64 %i.hg, 1                ; 2 uses
+  %i.hw = add nuw nsw i64 %i.hg, 1                ; 3 uses
   store i64 %i.hw, ptr %i.gf, align 8, !alias.scope !1069, !noalias !1070
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !1063
-  %.not.i.i.i = icmp ugt i64 %i.hf, %i.hg
-  br i1 %.not.i.i.i, label %.noexc.i.i, label %bb.br
+  %3 = icmp ult i64 %i.hf, %i.hw
+  br i1 %3, label %bb.br, label %.noexc.i.i
 
 bb.bn:                                            ; preds = %bb.bi
   %i.hx = load i64, ptr %i.gf, align 8, !alias.scope !1058, !noalias !1062, !noundef !10 ; 6 uses

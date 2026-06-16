@@ -201,14 +201,14 @@ define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051212_GLOBAL__N_11
 bb.a:
   %i.a = alloca [2 x i32], align 8                ; 4 uses
   %3 = alloca %"class.absl::lts_20250512::strings_internal::BigUnsigned", align 4 ; 27 uses
-  %4 = alloca %"class.absl::lts_20250512::strings_internal::BigUnsigned", align 4 ; 10 uses
+  %4 = alloca %"class.absl::lts_20250512::strings_internal::BigUnsigned", align 4 ; 9 uses
   %5 = alloca %"class.absl::lts_20250512::strings_internal::BigUnsigned", align 4 ; 18 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(340) %3, i8 0, i64 340, i1 false)
   %i.b = call noundef i32 @_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE17ReadFloatMantissaERKNS1_11ParsedFloatEi(ptr noundef nonnull align 4 dereferenceable(340) %3, ptr noundef nonnull align 8 dereferenceable(48) %2, i32 noundef 768) ; 9 uses
   %i.c = shl i64 %0, 1                            ; 4 uses
   %i.d = or disjoint i64 %i.c, 1                  ; 6 uses
-  %i.e = add nsw i32 %1, -1                       ; 4 uses
+  %i.e = add nsw i32 %1, -1                       ; 6 uses
   %i.f = icmp sgt i32 %i.b, -1
   br i1 %i.f, label %bb.b, label %bb.ac
 
@@ -218,13 +218,13 @@ bb.b:                                             ; preds = %bb.a
   %.not.i = icmp ult i64 %i.c, 4294967296
   %i.g = select i1 %.not.i, i32 1, i32 2          ; 3 uses
   store i32 %i.g, ptr %4, align 4, !tbaa !25
-  %i.h = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 10 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 11 uses
   %i.i = getelementptr inbounds nuw i8, ptr %4, i64 12
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(328) %i.i, i8 0, i64 328, i1 false)
   store i64 %i.d, ptr %i.h, align 4
-  %.not32 = icmp slt i32 %i.b, %1
+  %6 = icmp sgt i32 %i.b, %i.e
   %i.j = trunc i64 %i.d to i32                    ; 2 uses
-  br i1 %.not32, label %bb.n, label %bb.c
+  br i1 %6, label %bb.c, label %bb.n
 
 bb.c:                                             ; preds = %bb.b
   %i.k = sub nsw i32 %i.b, %i.e                   ; 4 uses
@@ -463,7 +463,8 @@ _ZSt6fill_nIPjijET_S1_T0_RKT1_.exit.loopexit.i42: ; preds = %_ZSt13copy_backward
 _ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE9ShiftLeftEi.exit: ; preds = %_ZSt6fill_nIPjijET_S1_T0_RKT1_.exit.loopexit.i42, %_ZSt13copy_backwardIPjS0_ET0_T_S2_S1_.exit.i41, %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE9SetToZeroEv.exit.i51, %bb.n, %_ZSt6fill_nIPjijET_S1_T0_RKT1_.exit.loopexit.i, %_ZSt13copy_backwardIPjS0_ET0_T_S2_S1_.exit.i, %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE9SetToZeroEv.exit.i
   %i.cv = load i32, ptr %3, align 4, !tbaa !25    ; 2 uses
   %i.cw = load i32, ptr %4, align 4, !tbaa !25    ; 2 uses
-  %.sroa.speculated.i53 = call i32 @llvm.smax.i32(i32 %i.cv, i32 %i.cw) ; 3 uses
+  %.sroa.speculated.i53 = call i32 @llvm.smax.i32(i32 %i.cv, i32 %i.cw) ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.cx = icmp slt i32 %.sroa.speculated.i53, 1
   br i1 %i.cx, label %_ZN4absl12lts_2025051216strings_internal7CompareILi84ELi84EEEiRKNS1_11BigUnsignedIXT_EEERKNS3_IXT0_EEE.exit, label %.lr.ph150
 
@@ -472,30 +473,32 @@ _ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE9ShiftLeftEi.exit: ;
   br label %bb.z
 
 bb.y:                                             ; preds = %_ZNK4absl12lts_2025051216strings_internal11BigUnsignedILi84EE7GetWordEi.exit24.i
-  %i.cz = trunc nuw i64 %7 to i32                 ; 2 uses
+  %i.cz = trunc nuw i64 %indvars.iv.next.i53158 to i32
   %i.da = icmp slt i32 %i.cz, 1
   br i1 %i.da, label %_ZN4absl12lts_2025051216strings_internal7CompareILi84ELi84EEEiRKNS1_11BigUnsignedIXT_EEERKNS3_IXT0_EEE.exit, label %bb.z, !llvm.loop !30
 
 bb.z:                                             ; preds = %.lr.ph150, %bb.y
-  %6 = phi i32 [ %.sroa.speculated.i53, %.lr.ph150 ], [ %i.cz, %bb.y ] ; 2 uses
+  %indvars.iv.next.i53158.in = phi i64 [ %i.cy, %.lr.ph150 ], [ %indvars.iv.next.i53158, %bb.y ]
   %.0.i149 = phi i32 [ undef, %.lr.ph150 ], [ %.1.i, %bb.y ]
-  %indvars.iv.i54148 = phi i64 [ %i.cy, %.lr.ph150 ], [ %7, %bb.y ] ; 3 uses
-  %7 = add nsw i64 %indvars.iv.i54148, -1         ; 2 uses
-  %.not.i.not.i = icmp slt i32 %i.cv, %6
-  br i1 %.not.i.not.i, label %_ZNK4absl12lts_2025051216strings_internal11BigUnsignedILi84EE7GetWordEi.exit.i, label %bb.aa
+  %indvars.iv.next.i53158 = add nsw i64 %indvars.iv.next.i53158.in, -1 ; 5 uses
+  %indvars.i159 = trunc i64 %indvars.iv.next.i53158 to i32 ; 2 uses
+  %.not.i.i = icmp sgt i32 %i.cv, %indvars.i159
+  br i1 %.not.i.i, label %bb.aa, label %_ZNK4absl12lts_2025051216strings_internal11BigUnsignedILi84EE7GetWordEi.exit.i
 
 bb.aa:                                            ; preds = %bb.z
-  %i.db = getelementptr [4 x i8], ptr %3, i64 %indvars.iv.i54148
+  %8 = and i64 %indvars.iv.next.i53158, 4294967295
+  %i.db = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %8
   %i.dc = load i32, ptr %i.db, align 4, !tbaa !3
   br label %_ZNK4absl12lts_2025051216strings_internal11BigUnsignedILi84EE7GetWordEi.exit.i
 
 _ZNK4absl12lts_2025051216strings_internal11BigUnsignedILi84EE7GetWordEi.exit.i: ; preds = %bb.aa, %bb.z
   %.0.i.i = phi i32 [ %i.dc, %bb.aa ], [ 0, %bb.z ] ; 3 uses
-  %.not.i21.not.i = icmp slt i32 %i.cw, %6
-  br i1 %.not.i21.not.i, label %_ZNK4absl12lts_2025051216strings_internal11BigUnsignedILi84EE7GetWordEi.exit24.i, label %bb.ab
+  %.not.i21.i = icmp sgt i32 %i.cw, %indvars.i159
+  br i1 %.not.i21.i, label %bb.ab, label %_ZNK4absl12lts_2025051216strings_internal11BigUnsignedILi84EE7GetWordEi.exit24.i
 
 bb.ab:                                            ; preds = %_ZNK4absl12lts_2025051216strings_internal11BigUnsignedILi84EE7GetWordEi.exit.i
-  %i.dd = getelementptr [4 x i8], ptr %4, i64 %indvars.iv.i54148
+  %9 = and i64 %indvars.iv.next.i53158, 4294967295
+  %i.dd = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %9
   %i.de = load i32, ptr %i.dd, align 4, !tbaa !3
   br label %_ZNK4absl12lts_2025051216strings_internal11BigUnsignedILi84EE7GetWordEi.exit24.i
 
@@ -620,8 +623,8 @@ select.unfold.i.i:                                ; preds = %select.unfold.i.i, 
 
 _ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE10MultiplyByEm.exit: ; preds = %select.unfold.i.i, %bb.ad, %._crit_edge.i.i, %bb.af, %bb.ag
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
-  %.not = icmp slt i32 %i.b, %1
-  br i1 %.not, label %bb.as, label %bb.ah
+  %10 = icmp sgt i32 %i.b, %i.e
+  br i1 %10, label %bb.ah, label %bb.as
 
 bb.ah:                                            ; preds = %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE10MultiplyByEm.exit
   %i.ep = sub nsw i32 %i.b, %i.e                  ; 4 uses
@@ -870,7 +873,9 @@ _ZSt6fill_nIPjijET_S1_T0_RKT1_.exit.loopexit.i81: ; preds = %_ZSt13copy_backward
 _ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE9ShiftLeftEi.exit73: ; preds = %_ZSt6fill_nIPjijET_S1_T0_RKT1_.exit.loopexit.i81, %_ZSt13copy_backwardIPjS0_ET0_T_S2_S1_.exit.i80, %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE9SetToZeroEv.exit.i90, %bb.as, %_ZSt6fill_nIPjijET_S1_T0_RKT1_.exit.loopexit.i63, %_ZSt13copy_backwardIPjS0_ET0_T_S2_S1_.exit.i62, %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE9SetToZeroEv.exit.i72
   %i.ig = load i32, ptr %3, align 4, !tbaa !25    ; 2 uses
   %i.ih = load i32, ptr %5, align 4, !tbaa !25    ; 2 uses
-  %.sroa.speculated.i92 = call i32 @llvm.smax.i32(i32 %i.ig, i32 %i.ih) ; 3 uses
+  %.sroa.speculated.i92 = call i32 @llvm.smax.i32(i32 %i.ig, i32 %i.ih) ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %12 = getelementptr inbounds nuw i8, ptr %5, i64 4
   %i.ii = icmp slt i32 %.sroa.speculated.i92, 1
   br i1 %i.ii, label %_ZN4absl12lts_2025051216strings_internal7CompareILi84ELi84EEEiRKNS1_11BigUnsignedIXT_EEERKNS3_IXT0_EEE.exit107, label %.lr.ph
 
@@ -879,30 +884,32 @@ _ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE9ShiftLeftEi.exit73:
   br label %bb.bf
 
 bb.be:                                            ; preds = %_ZNK4absl12lts_2025051216strings_internal11BigUnsignedILi84EE7GetWordEi.exit24.i99
-  %i.ik = trunc nuw i64 %9 to i32                 ; 2 uses
+  %i.ik = trunc nuw i64 %indvars.iv.next.i95152 to i32
   %i.il = icmp slt i32 %i.ik, 1
   br i1 %i.il, label %_ZN4absl12lts_2025051216strings_internal7CompareILi84ELi84EEEiRKNS1_11BigUnsignedIXT_EEERKNS3_IXT0_EEE.exit107, label %bb.bf, !llvm.loop !30
 
 bb.bf:                                            ; preds = %.lr.ph, %bb.be
-  %8 = phi i32 [ %.sroa.speculated.i92, %.lr.ph ], [ %i.ik, %bb.be ] ; 2 uses
+  %indvars.iv.next.i95152.in = phi i64 [ %i.ij, %.lr.ph ], [ %indvars.iv.next.i95152, %bb.be ]
   %.0.i94146 = phi i32 [ undef, %.lr.ph ], [ %.1.i105, %bb.be ]
-  %indvars.iv.i93145 = phi i64 [ %i.ij, %.lr.ph ], [ %9, %bb.be ] ; 3 uses
-  %9 = add nsw i64 %indvars.iv.i93145, -1         ; 2 uses
-  %.not.i.not.i95 = icmp slt i32 %i.ig, %8
-  br i1 %.not.i.not.i95, label %_ZNK4absl12lts_2025051216strings_internal11BigUnsignedILi84EE7GetWordEi.exit.i96, label %bb.bg
+  %indvars.iv.next.i95152 = add nsw i64 %indvars.iv.next.i95152.in, -1 ; 5 uses
+  %indvars.i96153 = trunc i64 %indvars.iv.next.i95152 to i32 ; 2 uses
+  %.not.i.i97 = icmp sgt i32 %i.ig, %indvars.i96153
+  br i1 %.not.i.i97, label %bb.bg, label %_ZNK4absl12lts_2025051216strings_internal11BigUnsignedILi84EE7GetWordEi.exit.i96
 
 bb.bg:                                            ; preds = %bb.bf
-  %i.im = getelementptr [4 x i8], ptr %3, i64 %indvars.iv.i93145
+  %13 = and i64 %indvars.iv.next.i95152, 4294967295
+  %i.im = getelementptr inbounds nuw [4 x i8], ptr %11, i64 %13
   %i.in = load i32, ptr %i.im, align 4, !tbaa !3
   br label %_ZNK4absl12lts_2025051216strings_internal11BigUnsignedILi84EE7GetWordEi.exit.i96
 
 _ZNK4absl12lts_2025051216strings_internal11BigUnsignedILi84EE7GetWordEi.exit.i96: ; preds = %bb.bg, %bb.bf
   %.0.i.i97 = phi i32 [ %i.in, %bb.bg ], [ 0, %bb.bf ] ; 3 uses
-  %.not.i21.not.i98 = icmp slt i32 %i.ih, %8
-  br i1 %.not.i21.not.i98, label %_ZNK4absl12lts_2025051216strings_internal11BigUnsignedILi84EE7GetWordEi.exit24.i99, label %bb.bh
+  %.not.i21.i100 = icmp sgt i32 %i.ih, %indvars.i96153
+  br i1 %.not.i21.i100, label %bb.bh, label %_ZNK4absl12lts_2025051216strings_internal11BigUnsignedILi84EE7GetWordEi.exit24.i99
 
 bb.bh:                                            ; preds = %_ZNK4absl12lts_2025051216strings_internal11BigUnsignedILi84EE7GetWordEi.exit.i96
-  %i.io = getelementptr [4 x i8], ptr %5, i64 %indvars.iv.i93145
+  %14 = and i64 %indvars.iv.next.i95152, 4294967295
+  %i.io = getelementptr inbounds nuw [4 x i8], ptr %12, i64 %14
   %i.ip = load i32, ptr %i.io, align 4, !tbaa !3
   br label %_ZNK4absl12lts_2025051216strings_internal11BigUnsignedILi84EE7GetWordEi.exit24.i99
 

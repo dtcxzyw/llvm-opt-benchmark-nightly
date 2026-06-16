@@ -201,10 +201,10 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i.i
   %i.ar = getelementptr inbounds nuw [80 x i8], ptr %i.h, i64 %i.aq
   %i.as = getelementptr inbounds nuw [80 x i8], ptr %i.h, i64 %.sroa.12.09.i.i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.as, ptr noundef nonnull align 8 dereferenceable(80) %i.ar, i64 80, i1 false), !noalias !316
-  %i.at = shl nuw nsw i64 %i.aq, 1                ; 2 uses
-  %i.au = or disjoint i64 %i.at, 1                ; 2 uses
-  %.not.not.not.i.i.i = icmp samesign ult i64 %i.at, %i.u
-  br i1 %.not.not.not.i.i.i, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
+  %i.at = shl nuw nsw i64 %i.aq, 1
+  %i.au = or disjoint i64 %i.at, 1                ; 3 uses
+  %.not.not.i.i.i = icmp samesign ugt i64 %i.au, %i.u
+  br i1 %.not.not.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
 
 _RNvMs9_NtNtCs6Po7BT7Nknu_5alloc11collections11binary_heapINtB5_10BinaryHeapINtNtNtCs8CRAYtH5WmW_12futures_util6stream15futures_ordered12OrderWrapperINtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtCsjyY8HP3IvQ6_12object_store5ErrorEEE19sift_down_to_bottomCsj34PGqTgg0L_16deltalake_lakefs.exit.i.i: ; preds = %bb.e, %.lr.ph.i.i.i.i, %bb.d
   %.sroa.416.0.copyload.i.i11.i.i = phi i64 [ %.sroa.416.0.copyload.i.i.i.i, %bb.d ], [ %.sroa.416.0.copyload.i.i10.i.i, %.lr.ph.i.i.i.i ], [ %.sroa.416.0.copyload.i.i10.i.i, %bb.e ]
@@ -405,10 +405,10 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i.i
   %i.ar = getelementptr inbounds nuw [80 x i8], ptr %i.h, i64 %i.aq
   %i.as = getelementptr inbounds nuw [80 x i8], ptr %i.h, i64 %.sroa.12.09.i.i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.as, ptr noundef nonnull align 8 dereferenceable(80) %i.ar, i64 80, i1 false), !noalias !367
-  %i.at = shl nuw nsw i64 %i.aq, 1                ; 2 uses
-  %i.au = or disjoint i64 %i.at, 1                ; 2 uses
-  %.not.not.not.i.i.i = icmp samesign ult i64 %i.at, %i.u
-  br i1 %.not.not.not.i.i.i, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
+  %i.at = shl nuw nsw i64 %i.aq, 1
+  %i.au = or disjoint i64 %i.at, 1                ; 3 uses
+  %.not.not.i.i.i = icmp samesign ugt i64 %i.au, %i.u
+  br i1 %.not.not.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
 
 _RNvMs9_NtNtCs6Po7BT7Nknu_5alloc11collections11binary_heapINtB5_10BinaryHeapINtNtNtCs8CRAYtH5WmW_12futures_util6stream15futures_ordered12OrderWrapperINtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCsjyY8HP3IvQ6_12object_store4path4PathNtB32_5ErrorEEE19sift_down_to_bottomCsj34PGqTgg0L_16deltalake_lakefs.exit.i.i: ; preds = %bb.e, %.lr.ph.i.i.i.i, %bb.d
   %.sroa.416.0.copyload.i.i11.i.i = phi i64 [ %.sroa.416.0.copyload.i.i.i.i, %bb.d ], [ %.sroa.416.0.copyload.i.i10.i.i, %.lr.ph.i.i.i.i ], [ %.sroa.416.0.copyload.i.i10.i.i, %bb.e ]
@@ -606,7 +606,7 @@ define hidden void @_RNvMs9_NtNtCs6Po7BT7Nknu_5alloc11collections11binary_heapIN
 bb.a:
   %.sroa.0.i = alloca [72 x i8], align 8          ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.b = load i64, ptr %i.a, align 8, !noundef !8 ; 8 uses
+  %i.b = load i64, ptr %i.a, align 8, !noundef !8 ; 7 uses
   %i.c = icmp ult i64 %i.b, 115292150460684698
   tail call void @llvm.assume(i1 %i.c)
   %i.d = load i64, ptr %0, align 8, !range !120, !alias.scope !387, !noalias !390, !noundef !8
@@ -637,7 +637,7 @@ _RNvMsF_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecINtNtNtCs8CRAYtH5WmW_12futures_util6
   %i.i = load ptr, ptr %i.h, align 8, !alias.scope !387, !noalias !390, !nonnull !8, !noundef !8
   %i.j = getelementptr inbounds nuw [80 x i8], ptr %i.i, i64 %i.b
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.j, ptr noundef nonnull align 8 dereferenceable(80) %1, i64 80, i1 false)
-  %i.k = add nuw nsw i64 %i.b, 1
+  %i.k = add nuw nsw i64 %i.b, 1                  ; 2 uses
   store i64 %i.k, ptr %i.a, align 8, !alias.scope !387, !noalias !390
   %.val = load ptr, ptr %i.h, align 8, !nonnull !8, !noundef !8 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
@@ -652,7 +652,7 @@ _RNvMsF_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecINtNtNtCs8CRAYtH5WmW_12futures_util6
   %.sroa.13.019.i = phi i64 [ %i.n, %bb.f ], [ %i.b, %_RNvMsF_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecINtNtNtCs8CRAYtH5WmW_12futures_util6stream15futures_ordered12OrderWrapperINtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtCsjyY8HP3IvQ6_12object_store5ErrorEEE8push_mutCsj34PGqTgg0L_16deltalake_lakefs.exit ] ; 3 uses
   %i.m = add nsw i64 %.sroa.13.019.i, -1
   %i.n = lshr i64 %i.m, 1                         ; 4 uses
-  %2 = icmp samesign ule i64 %i.n, %i.b
+  %2 = icmp samesign ult i64 %i.n, %i.k
   tail call void @llvm.assume(i1 %2)
   %i.o = getelementptr inbounds nuw [80 x i8], ptr %.val, i64 %i.n ; 2 uses
   %i.p = getelementptr i8, ptr %i.o, i64 72
@@ -681,7 +681,7 @@ define hidden void @_RNvMs9_NtNtCs6Po7BT7Nknu_5alloc11collections11binary_heapIN
 bb.a:
   %.sroa.0.i = alloca [72 x i8], align 8          ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.b = load i64, ptr %i.a, align 8, !noundef !8 ; 8 uses
+  %i.b = load i64, ptr %i.a, align 8, !noundef !8 ; 7 uses
   %i.c = icmp ult i64 %i.b, 115292150460684698
   tail call void @llvm.assume(i1 %i.c)
   %i.d = load i64, ptr %0, align 8, !range !120, !alias.scope !392, !noalias !395, !noundef !8
@@ -712,7 +712,7 @@ _RNvMsF_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecINtNtNtCs8CRAYtH5WmW_12futures_util6
   %i.i = load ptr, ptr %i.h, align 8, !alias.scope !392, !noalias !395, !nonnull !8, !noundef !8
   %i.j = getelementptr inbounds nuw [80 x i8], ptr %i.i, i64 %i.b
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.j, ptr noundef nonnull align 8 dereferenceable(80) %1, i64 80, i1 false)
-  %i.k = add nuw nsw i64 %i.b, 1
+  %i.k = add nuw nsw i64 %i.b, 1                  ; 2 uses
   store i64 %i.k, ptr %i.a, align 8, !alias.scope !392, !noalias !395
   %.val = load ptr, ptr %i.h, align 8, !nonnull !8, !noundef !8 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
@@ -727,7 +727,7 @@ _RNvMsF_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecINtNtNtCs8CRAYtH5WmW_12futures_util6
   %.sroa.13.019.i = phi i64 [ %i.n, %bb.f ], [ %i.b, %_RNvMsF_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecINtNtNtCs8CRAYtH5WmW_12futures_util6stream15futures_ordered12OrderWrapperINtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCsjyY8HP3IvQ6_12object_store4path4PathNtB2w_5ErrorEEE8push_mutCsj34PGqTgg0L_16deltalake_lakefs.exit ] ; 3 uses
   %i.m = add nsw i64 %.sroa.13.019.i, -1
   %i.n = lshr i64 %i.m, 1                         ; 4 uses
-  %2 = icmp samesign ule i64 %i.n, %i.b
+  %2 = icmp samesign ult i64 %i.n, %i.k
   tail call void @llvm.assume(i1 %2)
   %i.o = getelementptr inbounds nuw [80 x i8], ptr %.val, i64 %i.n ; 2 uses
   %i.p = getelementptr i8, ptr %i.o, i64 72
@@ -1130,10 +1130,10 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %.lr.ph.i
   %i.aa = getelementptr inbounds nuw [80 x i8], ptr %.val, i64 %.sroa.22.032.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.aa, ptr noundef nonnull align 8 dereferenceable(80) %i.y, i64 80, i1 false)
-  %i.ab = shl nuw nsw i64 %i.w, 1                 ; 2 uses
-  %i.ac = or disjoint i64 %i.ab, 1                ; 2 uses
-  %.not.not.i = icmp samesign ult i64 %i.ab, %i.g
-  br i1 %.not.not.i, label %.lr.ph.i, label %._crit_edge.i
+  %i.ab = shl nuw nsw i64 %i.w, 1
+  %i.ac = or disjoint i64 %i.ab, 1                ; 3 uses
+  %.not.i = icmp samesign ugt i64 %i.ac, %i.g
+  br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i
 
 _RNvMs9_NtNtCs6Po7BT7Nknu_5alloc11collections11binary_heapINtB5_10BinaryHeapINtNtNtCs8CRAYtH5WmW_12futures_util6stream15futures_ordered12OrderWrapperINtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtCsjyY8HP3IvQ6_12object_store5ErrorEEE15sift_down_rangeCsj34PGqTgg0L_16deltalake_lakefs.exit: ; preds = %.lr.ph.i, %._crit_edge.i, %bb.c, %bb.d
   %.sroa.22.032.lcssa.sink.i = phi i64 [ %.sroa.22.0.lcssa.i, %._crit_edge.i ], [ %.sroa.01.0.lcssa.i, %bb.d ], [ %.sroa.22.0.lcssa.i, %bb.c ], [ %.sroa.22.032.i, %.lr.ph.i ]
@@ -1220,10 +1220,10 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %.lr.ph.i
   %i.aa = getelementptr inbounds nuw [80 x i8], ptr %.val, i64 %.sroa.22.032.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.aa, ptr noundef nonnull align 8 dereferenceable(80) %i.y, i64 80, i1 false)
-  %i.ab = shl nuw nsw i64 %i.w, 1                 ; 2 uses
-  %i.ac = or disjoint i64 %i.ab, 1                ; 2 uses
-  %.not.not.i = icmp samesign ult i64 %i.ab, %i.g
-  br i1 %.not.not.i, label %.lr.ph.i, label %._crit_edge.i
+  %i.ab = shl nuw nsw i64 %i.w, 1
+  %i.ac = or disjoint i64 %i.ab, 1                ; 3 uses
+  %.not.i = icmp samesign ugt i64 %i.ac, %i.g
+  br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i
 
 _RNvMs9_NtNtCs6Po7BT7Nknu_5alloc11collections11binary_heapINtB5_10BinaryHeapINtNtNtCs8CRAYtH5WmW_12futures_util6stream15futures_ordered12OrderWrapperINtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCsjyY8HP3IvQ6_12object_store4path4PathNtB32_5ErrorEEE15sift_down_rangeCsj34PGqTgg0L_16deltalake_lakefs.exit: ; preds = %.lr.ph.i, %._crit_edge.i, %bb.c, %bb.d
   %.sroa.22.032.lcssa.sink.i = phi i64 [ %.sroa.22.0.lcssa.i, %._crit_edge.i ], [ %.sroa.01.0.lcssa.i, %bb.d ], [ %.sroa.22.0.lcssa.i, %bb.c ], [ %.sroa.22.032.i, %.lr.ph.i ]

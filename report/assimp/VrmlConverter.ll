@@ -26,18 +26,18 @@ define hidden noundef zeroext i1 @_ZN6Assimp18isFileWrlVrml97ExtERKNSt7__cxx1112
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %1 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %i.b = tail call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm(ptr noundef nonnull align 8 dereferenceable(32) %0, i8 noundef signext 46, i64 noundef -1) #9 ; 3 uses
+  %i.b = tail call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm(ptr noundef nonnull align 8 dereferenceable(32) %0, i8 noundef signext 46, i64 noundef -1) #9 ; 2 uses
   %i.c = icmp eq i64 %i.b, -1
   br i1 %i.c, label %bb.j, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #9
-  %i.d = add nuw i64 %i.b, 1                      ; 3 uses
+  %i.d = add nuw i64 %i.b, 1                      ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3)
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.f = load i64, ptr %i.e, align 8, !noalias !3 ; 3 uses
-  %.not5 = icmp ult i64 %i.b, %i.f
-  br i1 %.not5, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i, label %bb.c
+  %2 = icmp ugt i64 %i.d, %i.f
+  br i1 %2, label %bb.c, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
 
 bb.c:                                             ; preds = %bb.b
   tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str, i64 noundef %i.d, i64 noundef %i.f) #10, !noalias !3
@@ -150,18 +150,18 @@ define hidden noundef zeroext i1 @_ZN6Assimp24isFileX3dvClassicVrmlExtERKNSt7__c
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %1 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %i.b = tail call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm(ptr noundef nonnull align 8 dereferenceable(32) %0, i8 noundef signext 46, i64 noundef -1) #9 ; 3 uses
+  %i.b = tail call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm(ptr noundef nonnull align 8 dereferenceable(32) %0, i8 noundef signext 46, i64 noundef -1) #9 ; 2 uses
   %i.c = icmp eq i64 %i.b, -1
   br i1 %i.c, label %bb.k, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #9
-  %i.d = add nuw i64 %i.b, 1                      ; 3 uses
+  %i.d = add nuw i64 %i.b, 1                      ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6)
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.f = load i64, ptr %i.e, align 8, !noalias !6 ; 3 uses
-  %.not5 = icmp ult i64 %i.b, %i.f
-  br i1 %.not5, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i, label %bb.c
+  %2 = icmp ugt i64 %i.d, %i.f
+  br i1 %2, label %bb.c, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
 
 bb.c:                                             ; preds = %bb.b
   tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str, i64 noundef %i.d, i64 noundef %i.f) #10, !noalias !6

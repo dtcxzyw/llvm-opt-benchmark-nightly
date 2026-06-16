@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.d
   br i1 %i.g, label %.lr.ph66, label %.critedge2, !llvm.loop !44
 
 .lr.ph66:                                         ; preds = %.critedge, %bb.c
-  %indvars.iv4464 = phi i64 [ %indvars.iv.next4565, %bb.c ], [ %.pre-phi, %.critedge ] ; 4 uses
+  %indvars.iv4464 = phi i64 [ %indvars.iv.next4565, %bb.c ], [ %.pre-phi, %.critedge ] ; 2 uses
   %indvars.iv.next4565 = add nsw i64 %indvars.iv4464, -1 ; 5 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv.next4565
   %i.i = load i8, ptr %i.h, align 1, !tbaa !19
@@ -216,23 +216,20 @@ bb.d:                                             ; preds = %.lr.ph66
 
 .critedge2.split.loop.exit:                       ; preds = %.lr.ph66
   %i.n = trunc nsw i64 %indvars.iv.next4565 to i32
-  %3 = trunc nuw nsw i64 %indvars.iv4464 to i32
   br label %.critedge2
 
 .critedge2.split.loop.exit53:                     ; preds = %bb.d
   %i.o = trunc nsw i64 %indvars.iv.next4565 to i32
-  %4 = trunc nuw nsw i64 %indvars.iv4464 to i32
   br label %.critedge2
 
 .critedge2:                                       ; preds = %bb.c, %.critedge, %.critedge2.split.loop.exit53, %.critedge2.split.loop.exit
-  %.0.in.lcssa = phi i32 [ %4, %.critedge2.split.loop.exit53 ], [ %3, %.critedge2.split.loop.exit ], [ 0, %.critedge ], [ 0, %bb.c ]
-  %.0.lcssa = phi i32 [ %i.o, %.critedge2.split.loop.exit53 ], [ %i.n, %.critedge2.split.loop.exit ], [ -1, %.critedge ], [ -1, %bb.c ]
+  %.0.lcssa = phi i32 [ %i.o, %.critedge2.split.loop.exit53 ], [ %i.n, %.critedge2.split.loop.exit ], [ -1, %.critedge ], [ -1, %bb.c ] ; 2 uses
   %i.p = icmp slt i32 %.035.lcssa, %.0.lcssa
   br i1 %i.p, label %bb.i, label %bb.e
 
 bb.e:                                             ; preds = %.critedge2
-  %.not = icmp slt i32 %.035.lcssa, %.0.in.lcssa
-  br i1 %.not, label %bb.g, label %bb.f
+  %3 = icmp sgt i32 %.035.lcssa, %.0.lcssa
+  br i1 %3, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %i.q = shl nsw i32 %.035.lcssa, 3

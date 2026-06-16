@@ -19,7 +19,7 @@ bb.a:
 define dso_local range(i32 0, 2) i32 @ossl_rsa_padding_add_PKCS1_OAEP_mgf1_ex(ptr noundef %0, ptr noundef %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3, i32 noundef %4, ptr noundef %5, i32 noundef %6, ptr noundef %7, ptr noundef %8) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca [64 x i8], align 16               ; 7 uses
-  %i.b = add nsw i32 %2, -1                       ; 4 uses
+  %i.b = add nsw i32 %2, -1                       ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   %i.c = icmp eq ptr %7, null
   br i1 %i.c, label %bb.b, label %bb.c
@@ -56,8 +56,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.m
 
 bb.g:                                             ; preds = %bb.e
-  %9 = or disjoint i32 %i.h, 1
-  %.not = icmp sgt i32 %2, %9
+  %.not = icmp sgt i32 %i.b, %i.h
   br i1 %.not, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g

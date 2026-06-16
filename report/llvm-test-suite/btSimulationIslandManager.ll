@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %.loopexit131
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph143, %.loopexit
-  %.083141 = phi i32 [ 0, %.lr.ph143 ], [ %.081.lcssa, %.loopexit ] ; 5 uses
+  %.083141 = phi i32 [ 0, %.lr.ph143 ], [ %.081.lcssa, %.loopexit ] ; 7 uses
   %i.w = load ptr, ptr %i.t, align 8, !tbaa !58   ; 5 uses
   %i.x = zext nneg i32 %.083141 to i64            ; 7 uses
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %i.x
@@ -242,19 +242,20 @@ bb.h:                                             ; preds = %bb.c
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.f, %bb.e, %.critedge.split.loop.exit178
-  %.081.in.lcssa = phi i32 [ %i.aj, %.critedge.split.loop.exit178 ], [ %i.ab, %bb.e ], [ %i.ab, %bb.f ] ; 5 uses
-  %.081.lcssa = phi i32 [ %i.ak, %.critedge.split.loop.exit178 ], [ %smax, %bb.e ], [ %smax, %bb.f ] ; 2 uses
-  %.not100132 = icmp sgt i32 %.083141, %.081.in.lcssa
-  br i1 %.not100132, label %.loopexit, label %.lr.ph
+  %.081.in.lcssa = phi i32 [ %i.aj, %.critedge.split.loop.exit178 ], [ %i.ab, %bb.e ], [ %i.ab, %bb.f ] ; 3 uses
+  %.081.lcssa = phi i32 [ %i.ak, %.critedge.split.loop.exit178 ], [ %smax, %bb.e ], [ %smax, %bb.f ] ; 3 uses
+  %3 = icmp slt i32 %.083141, %.081.lcssa
+  br i1 %3, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %.critedge
   %i.al = load ptr, ptr %i.u, align 8, !tbaa !24  ; 3 uses
-  %i.am = add nuw nsw i32 %.081.in.lcssa, 1
-  %i.an = add i32 %.081.in.lcssa, 1
+  %smax149 = tail call i32 @llvm.smax.i32(i32 %.081.in.lcssa, i32 %.083141) ; 2 uses
+  %i.am = add nuw nsw i32 %smax149, 1
+  %i.an = add i32 %smax149, 1
   %i.ao = sub i32 %i.an, %.083141                 ; 3 uses
   %xtraiter = and i32 %i.ao, 1
-  %3 = icmp eq i32 %.081.in.lcssa, %.083141
-  br i1 %3, label %.epil.preheader, label %.lr.ph.new
+  %.not194 = icmp slt i32 %.083141, %.081.in.lcssa
+  br i1 %.not194, label %.lr.ph.new, label %.epil.preheader
 
 .lr.ph.new:                                       ; preds = %.lr.ph
   %unroll_iter = and i32 %i.ao, -2
@@ -347,7 +348,8 @@ bb.n:                                             ; preds = %.epil.preheader
   br i1 %.286.lcssa, label %.lr.ph140.preheader, label %.lr.ph137
 
 .lr.ph140.preheader:                              ; preds = %._crit_edge
-  %i.bz = add nuw nsw i32 %.081.in.lcssa, 1
+  %smax158 = tail call i32 @llvm.smax.i32(i32 %.081.in.lcssa, i32 %.083141)
+  %i.bz = add nuw nsw i32 %smax158, 1
   br label %.lr.ph140.a
 
 .lr.ph140.a:                                      ; preds = %.lr.ph140.preheader, %bb.q

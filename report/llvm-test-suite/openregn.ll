@@ -7,18 +7,14 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local range(i32 0, 2) i32 @openregion(i32 noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %. = tail call i32 @llvm.smin.i32(i32 %0, i32 %2)
-  %.027 = tail call i32 @llvm.smin.i32(i32 %1, i32 %3)
+  %. = tail call i32 @llvm.smax.i32(i32 %0, i32 %2)
+  %.027 = tail call i32 @llvm.smax.i32(i32 %1, i32 %3)
   %i.a = tail call i32 @llvm.smin.i32(i32 %3, i32 %1)
   %smin = sext i32 %i.a to i64
-  %4 = add i32 %1, %3
-  %5 = add i32 %4, 1
-  %6 = sub i32 %5, %.027
+  %4 = sext i32 %.027 to i64
   %i.b = tail call i32 @llvm.smin.i32(i32 %2, i32 %0)
   %smin43 = sext i32 %i.b to i64
-  %7 = add i32 %0, %2
-  %8 = add i32 %7, 1
-  %9 = sub i32 %8, %.
+  %5 = sext i32 %. to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %bb.a, %bb.d
@@ -28,9 +24,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.c
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond.not = icmp eq i32 %6, %lftr.wideiv
-  br i1 %exitcond.not, label %bb.d, label %bb.c, !llvm.loop !8
+  %.not36 = icmp sgt i64 %indvars.iv.next, %4
+  br i1 %.not36, label %bb.d, label %bb.c, !llvm.loop !8
 
 bb.c:                                             ; preds = %.preheader, %bb.b
   %indvars.iv = phi i64 [ %smin, %.preheader ], [ %indvars.iv.next, %bb.b ] ; 2 uses
@@ -41,9 +36,8 @@ bb.c:                                             ; preds = %.preheader, %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %indvars.iv.next45 = add nsw i64 %indvars.iv44, 1 ; 2 uses
-  %lftr.wideiv46 = trunc i64 %indvars.iv.next45 to i32
-  %exitcond47.not = icmp eq i32 %9, %lftr.wideiv46
-  br i1 %exitcond47.not, label %.loopexit, label %.preheader, !llvm.loop !11
+  %.not = icmp sgt i64 %indvars.iv.next45, %5
+  br i1 %.not, label %.loopexit, label %.preheader, !llvm.loop !11
 
 .loopexit:                                        ; preds = %bb.d, %bb.c
   %.028 = phi i32 [ 0, %bb.c ], [ 1, %bb.d ]
@@ -52,6 +46,9 @@ bb.d:                                             ; preds = %bb.b
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #1
 
 attributes #0 = { nofree norecurse nosync nounwind memory(read, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }

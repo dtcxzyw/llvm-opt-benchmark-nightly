@@ -201,12 +201,13 @@ bb.r:                                             ; preds = %bb.q
   br i1 %.not37.i.i.not.i.i165.not, label %.critedge.i.i.i.i, label %.lr.ph
 
 bb.s:                                             ; preds = %.lr.ph
-  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i166, 64 ; 2 uses
-  %.not37.i.i.not.i.i = icmp samesign ult i64 %indvars.iv.next.i.i, %i.cw
-  br i1 %.not37.i.i.not.i.i, label %.lr.ph, label %.critedge.i.i.i.i, !llvm.loop !80
+  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.next.i.i167, 64 ; 2 uses
+  %.not37.i.i.i.i = icmp samesign ugt i64 %indvars.iv.next.i.i, %i.cw
+  br i1 %.not37.i.i.i.i, label %.critedge.i.i.i.i, label %.lr.ph, !llvm.loop !80
 
 .lr.ph:                                           ; preds = %bb.r, %bb.s
-  %indvars.iv.i.i166 = phi i64 [ %indvars.iv.next.i.i, %bb.s ], [ 0, %bb.r ] ; 2 uses
+  %indvars.iv.next.i.i167 = phi i64 [ %indvars.iv.next.i.i, %bb.s ], [ 64, %bb.r ] ; 2 uses
+  %indvars.iv.i.i166 = phi i64 [ %indvars.iv.next.i.i167, %bb.s ], [ 0, %bb.r ]
   %i.cx = lshr exact i64 %indvars.iv.i.i166, 3
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cu, i64 %i.cx
   %i.cz = load i64, ptr %i.cy, align 8, !tbaa !30
@@ -609,12 +610,13 @@ bb.s:                                             ; preds = %_ZN8facebook5velox1
   br i1 %.not37.i.i.not.i56.not, label %.critedge.i.i.i, label %.lr.ph
 
 _ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i: ; preds = %.lr.ph
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i57, 64 ; 2 uses
-  %.not37.i.i.not.i = icmp samesign ult i64 %indvars.iv.next.i, %i.bz
-  br i1 %.not37.i.i.not.i, label %.lr.ph, label %.critedge.i.i.i, !llvm.loop !117
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.next.i58, 64 ; 2 uses
+  %.not37.i.i.i = icmp samesign ugt i64 %indvars.iv.next.i, %i.bz
+  br i1 %.not37.i.i.i, label %.critedge.i.i.i, label %.lr.ph, !llvm.loop !117
 
 .lr.ph:                                           ; preds = %bb.s, %_ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i
-  %indvars.iv.i57 = phi i64 [ %indvars.iv.next.i, %_ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i ], [ 0, %bb.s ] ; 3 uses
+  %indvars.iv.next.i58 = phi i64 [ %indvars.iv.next.i, %_ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i ], [ 64, %bb.s ] ; 2 uses
+  %indvars.iv.i57 = phi i64 [ %indvars.iv.next.i58, %_ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i ], [ 0, %bb.s ] ; 2 uses
   %i.ca = lshr exact i64 %indvars.iv.i57, 3
   %i.cb = getelementptr inbounds nuw i8, ptr %.pre, i64 %i.ca
   %i.cc = load i64, ptr %i.cb, align 8, !tbaa !30 ; 2 uses
@@ -1017,8 +1019,10 @@ bb.f:                                             ; preds = %bb.e
 
 iter.check:                                       ; preds = %bb.f
   %i.s = zext nneg i32 %i.r to i64                ; 2 uses
-  %i.t = add nsw i64 %i.s, -64                    ; 3 uses
-  %i.u = lshr exact i64 %i.t, 6
+  %2 = or disjoint i64 %i.s, 1
+  %umax = tail call i64 @llvm.umax.i64(i64 %2, i64 128)
+  %i.t = add nsw i64 %umax, -65                   ; 3 uses
+  %i.u = lshr i64 %i.t, 6
   %i.v = add nuw nsw i64 %i.u, 1                  ; 5 uses
   %min.iters.check = icmp ult i64 %i.t, 192
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
@@ -1119,7 +1123,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i.i
   %indvars.iv1.i = phi i64 [ %indvars.iv.next2.i, %.lr.ph.i.i.i.i.i.i ], [ %indvars.iv1.i.ph, %.lr.ph.i.i.i.i.i.i.preheader ] ; 2 uses
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i.i.i.i.i.i ], [ %indvars.iv.i.ph, %.lr.ph.i.i.i.i.i.i.preheader ] ; 2 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i.i.i.i.i.i ], [ %indvars.iv.i.ph, %.lr.ph.i.i.i.i.i.i.preheader ]
   %i.bd = phi i32 [ %i.bj, %.lr.ph.i.i.i.i.i.i ], [ %.ph, %.lr.ph.i.i.i.i.i.i.preheader ]
   %i.be = lshr exact i64 %indvars.iv1.i, 3
   %i.bf = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.be
@@ -1127,10 +1131,10 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.bh = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.bg)
   %i.bi = trunc nuw nsw i64 %i.bh to i32
   %i.bj = add nuw nsw i32 %i.bd, %i.bi            ; 2 uses
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 64
-  %.not33.i.i.i.i.i.not.i = icmp samesign ult i64 %indvars.iv.i, %i.s
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 64 ; 2 uses
+  %.not33.i.i.i.i.i.i = icmp samesign ugt i64 %indvars.iv.next.i, %i.s
   %indvars.iv.next2.i = add nuw nsw i64 %indvars.iv1.i, 64
-  br i1 %.not33.i.i.i.i.i.not.i, label %.lr.ph.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i, !llvm.loop !506
+  br i1 %.not33.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !506
 
 .sink.split.i.i.i.i.i.i:                          ; preds = %._crit_edge.i.i.i.i.i.i
   %i.bk = lshr i32 %i.n, 6

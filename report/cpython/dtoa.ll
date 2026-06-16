@@ -201,10 +201,10 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   br i1 %i.cc, label %.lr.ph1392, label %._crit_edge867.thread, !llvm.loop !22
 
 .lr.ph1392:                                       ; preds = %bb.t, %.preheader736
-  %.04541391 = phi i32 [ %i.cd, %.preheader736 ], [ %i.aw, %bb.t ] ; 13 uses
-  %i.cd = add nsw i32 %.04541391, -1              ; 2 uses
-  %.not533 = icmp sgt i32 %.04541391, %spec.select
-  %i.ce = select i1 %.not533, i32 %.04541391, i32 %i.cd
+  %.04541391 = phi i32 [ %i.cd, %.preheader736 ], [ %i.aw, %bb.t ] ; 12 uses
+  %i.cd = add nsw i32 %.04541391, -1              ; 3 uses
+  %4 = icmp slt i32 %i.cd, %spec.select
+  %i.ce = select i1 %4, i32 %i.cd, i32 %.04541391
   %i.cf = zext nneg i32 %i.ce to i64
   %i.cg = getelementptr i8, ptr %.1430, i64 %i.cf
   %i.ch = load i8, ptr %i.cg, align 1, !tbaa !11
@@ -581,136 +581,136 @@ bb.bj:                                            ; preds = %bb.as, %bb.bi, %bb.
   br i1 %i.hx, label %.preheader735.preheader, label %.loopexit733
 
 .preheader735.preheader:                          ; preds = %bb.bj
-  %.not544 = icmp slt i32 %spec.select, 18
-  %i.hy = select i1 %.not544, i64 18, i64 17
+  %5 = icmp sgt i32 %spec.select, 17
+  %i.hy = select i1 %5, i64 17, i64 18
   %i.hz = getelementptr i8, ptr %.1430, i64 %i.hy
   %i.ia = load i8, ptr %i.hz, align 1, !tbaa !11
   %.not545.a = icmp eq i8 %i.ia, 48
   br i1 %.not545.a, label %.preheader735.1, label %.thread1122
 
 .preheader735.1:                                  ; preds = %.preheader735.preheader
-  %.not544.1 = icmp slt i32 %spec.select56811111116, 17
-  %i.ib = select i1 %.not544.1, i64 17, i64 16
+  %6 = icmp sgt i32 %spec.select56811111116, 16
+  %i.ib = select i1 %6, i64 16, i64 17
   %i.ic = getelementptr i8, ptr %.1430, i64 %i.ib
   %i.id = load i8, ptr %i.ic, align 1, !tbaa !11
   %.not545.1 = icmp eq i8 %i.id, 48
   br i1 %.not545.1, label %.preheader735.2, label %.thread1122
 
 .preheader735.2:                                  ; preds = %.preheader735.1
-  %.not544.2 = icmp slt i32 %spec.select56811111116, 16
-  %i.ie = select i1 %.not544.2, i64 16, i64 15
+  %7 = icmp sgt i32 %spec.select56811111116, 15
+  %i.ie = select i1 %7, i64 15, i64 16
   %i.if = getelementptr i8, ptr %.1430, i64 %i.ie
   %i.ig = load i8, ptr %i.if, align 1, !tbaa !11
   %.not545.2 = icmp eq i8 %i.ig, 48
   br i1 %.not545.2, label %.preheader735.3, label %.thread1122
 
 .preheader735.3:                                  ; preds = %.preheader735.2
-  %.not544.3 = icmp slt i32 %spec.select56811111116, 15
-  %i.ih = select i1 %.not544.3, i64 15, i64 14
+  %8 = icmp sgt i32 %spec.select56811111116, 14
+  %i.ih = select i1 %8, i64 14, i64 15
   %i.ii = getelementptr i8, ptr %.1430, i64 %i.ih
   %i.ij = load i8, ptr %i.ii, align 1, !tbaa !11
   %.not545.3 = icmp eq i8 %i.ij, 48
   br i1 %.not545.3, label %.preheader735.4, label %.thread1122
 
 .preheader735.4:                                  ; preds = %.preheader735.3
-  %.not544.4 = icmp slt i32 %spec.select56811111116, 14
-  %i.ik = select i1 %.not544.4, i64 14, i64 13
+  %9 = icmp sgt i32 %spec.select56811111116, 13
+  %i.ik = select i1 %9, i64 13, i64 14
   %i.il = getelementptr i8, ptr %.1430, i64 %i.ik
   %i.im = load i8, ptr %i.il, align 1, !tbaa !11
   %.not545.4 = icmp eq i8 %i.im, 48
   br i1 %.not545.4, label %.preheader735.5, label %.thread1122
 
 .preheader735.5:                                  ; preds = %.preheader735.4
-  %.not544.5 = icmp slt i32 %spec.select56811111116, 13
-  %i.in = select i1 %.not544.5, i64 13, i64 12
+  %10 = icmp sgt i32 %spec.select56811111116, 12
+  %i.in = select i1 %10, i64 12, i64 13
   %i.io = getelementptr i8, ptr %.1430, i64 %i.in
   %i.ip = load i8, ptr %i.io, align 1, !tbaa !11
   %.not545.5 = icmp eq i8 %i.ip, 48
   br i1 %.not545.5, label %.preheader735.6, label %.thread1122
 
 .preheader735.6:                                  ; preds = %.preheader735.5
-  %.not544.6 = icmp slt i32 %spec.select56811111116, 12
-  %i.iq = select i1 %.not544.6, i64 12, i64 11
+  %11 = icmp sgt i32 %spec.select56811111116, 11
+  %i.iq = select i1 %11, i64 11, i64 12
   %i.ir = getelementptr i8, ptr %.1430, i64 %i.iq
   %i.is = load i8, ptr %i.ir, align 1, !tbaa !11
   %.not545.6 = icmp eq i8 %i.is, 48
   br i1 %.not545.6, label %.preheader735.7, label %.thread1122
 
 .preheader735.7:                                  ; preds = %.preheader735.6
-  %.not544.7 = icmp slt i32 %spec.select56811111116, 11
-  %i.it = select i1 %.not544.7, i64 11, i64 10
+  %12 = icmp sgt i32 %spec.select56811111116, 10
+  %i.it = select i1 %12, i64 10, i64 11
   %i.iu = getelementptr i8, ptr %.1430, i64 %i.it
   %i.iv = load i8, ptr %i.iu, align 1, !tbaa !11
   %.not545.7 = icmp eq i8 %i.iv, 48
   br i1 %.not545.7, label %.preheader735.8, label %.thread1122
 
 .preheader735.8:                                  ; preds = %.preheader735.7
-  %.not544.8 = icmp slt i32 %spec.select56811111116, 10
-  %i.iw = select i1 %.not544.8, i64 10, i64 9
+  %13 = icmp sgt i32 %spec.select56811111116, 9
+  %i.iw = select i1 %13, i64 9, i64 10
   %i.ix = getelementptr i8, ptr %.1430, i64 %i.iw
   %i.iy = load i8, ptr %i.ix, align 1, !tbaa !11
   %.not545.8 = icmp eq i8 %i.iy, 48
   br i1 %.not545.8, label %.preheader735.9, label %.thread1122
 
 .preheader735.9:                                  ; preds = %.preheader735.8
-  %.not544.9 = icmp slt i32 %spec.select56811111116, 9
-  %i.iz = select i1 %.not544.9, i64 9, i64 8
+  %14 = icmp sgt i32 %spec.select56811111116, 8
+  %i.iz = select i1 %14, i64 8, i64 9
   %i.ja = getelementptr i8, ptr %.1430, i64 %i.iz
   %i.jb = load i8, ptr %i.ja, align 1, !tbaa !11
   %.not545.9 = icmp eq i8 %i.jb, 48
   br i1 %.not545.9, label %.preheader735.10, label %.thread1122
 
 .preheader735.10:                                 ; preds = %.preheader735.9
-  %.not544.10 = icmp slt i32 %spec.select56811111116, 8
-  %i.jc = select i1 %.not544.10, i64 8, i64 7
+  %15 = icmp sgt i32 %spec.select56811111116, 7
+  %i.jc = select i1 %15, i64 7, i64 8
   %i.jd = getelementptr i8, ptr %.1430, i64 %i.jc
   %i.je = load i8, ptr %i.jd, align 1, !tbaa !11
   %.not545.10 = icmp eq i8 %i.je, 48
   br i1 %.not545.10, label %.preheader735.11, label %.preheader734
 
 .preheader735.11:                                 ; preds = %.preheader735.10
-  %.not544.11 = icmp slt i32 %spec.select56811111116, 7
-  %i.jf = select i1 %.not544.11, i64 7, i64 6
+  %16 = icmp sgt i32 %spec.select56811111116, 6
+  %i.jf = select i1 %16, i64 6, i64 7
   %i.jg = getelementptr i8, ptr %.1430, i64 %i.jf
   %i.jh = load i8, ptr %i.jg, align 1, !tbaa !11
   %.not545.11 = icmp eq i8 %i.jh, 48
   br i1 %.not545.11, label %.preheader735.12, label %.preheader734
 
 .preheader735.12:                                 ; preds = %.preheader735.11
-  %.not544.12 = icmp slt i32 %spec.select56811111116, 6
-  %i.ji = select i1 %.not544.12, i64 6, i64 5
+  %17 = icmp sgt i32 %spec.select56811111116, 5
+  %i.ji = select i1 %17, i64 5, i64 6
   %i.jj = getelementptr i8, ptr %.1430, i64 %i.ji
   %i.jk = load i8, ptr %i.jj, align 1, !tbaa !11
   %.not545.12 = icmp eq i8 %i.jk, 48
   br i1 %.not545.12, label %.preheader735.13, label %.preheader734
 
 .preheader735.13:                                 ; preds = %.preheader735.12
-  %.not544.13 = icmp slt i32 %spec.select56811111116, 5
-  %i.jl = select i1 %.not544.13, i64 5, i64 4
+  %18 = icmp sgt i32 %spec.select56811111116, 4
+  %i.jl = select i1 %18, i64 4, i64 5
   %i.jm = getelementptr i8, ptr %.1430, i64 %i.jl
   %i.jn = load i8, ptr %i.jm, align 1, !tbaa !11
   %.not545.13 = icmp eq i8 %i.jn, 48
   br i1 %.not545.13, label %.preheader735.14, label %.preheader734
 
 .preheader735.14:                                 ; preds = %.preheader735.13
-  %.not544.14 = icmp slt i32 %spec.select56811111116, 4
-  %i.jo = select i1 %.not544.14, i64 4, i64 3
+  %19 = icmp sgt i32 %spec.select56811111116, 3
+  %i.jo = select i1 %19, i64 3, i64 4
   %i.jp = getelementptr i8, ptr %.1430, i64 %i.jo
   %i.jq = load i8, ptr %i.jp, align 1, !tbaa !11
   %.not545.14 = icmp eq i8 %i.jq, 48
   br i1 %.not545.14, label %.preheader735.15, label %.preheader734
 
 .preheader735.15:                                 ; preds = %.preheader735.14
-  %.not544.15 = icmp slt i32 %spec.select56811111116, 3
-  %i.jr = select i1 %.not544.15, i64 3, i64 2
+  %20 = icmp sgt i32 %spec.select56811111116, 2
+  %i.jr = select i1 %20, i64 2, i64 3
   %i.js = getelementptr i8, ptr %.1430, i64 %i.jr
   %i.jt = load i8, ptr %i.js, align 1, !tbaa !11
   %.not545.15 = icmp eq i8 %i.jt, 48
   br i1 %.not545.15, label %.preheader735.16, label %.preheader734
 
 .preheader735.16:                                 ; preds = %.preheader735.15
-  %.not544.16 = icmp slt i32 %spec.select56811111116, 2
-  %i.ju = select i1 %.not544.16, i64 2, i64 1
+  %21 = icmp sgt i32 %spec.select56811111116, 1
+  %i.ju = select i1 %21, i64 1, i64 2
   %i.jv = getelementptr i8, ptr %.1430, i64 %i.ju
   %i.jw = load i8, ptr %i.jv, align 1, !tbaa !11
   %.not545.16 = icmp eq i8 %i.jw, 48

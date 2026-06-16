@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %.backedge, %._crit_edge
-  %.147 = phi i64 [ %i.q, %._crit_edge ], [ %.147.be, %.backedge ] ; 2 uses
+  %.147 = phi i64 [ %i.q, %._crit_edge ], [ %.147.be.in, %.backedge ] ; 2 uses
   %.1 = phi ptr [ %i.r, %._crit_edge ], [ %.1.be, %.backedge ] ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.1, i64 256
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %.147
@@ -230,43 +230,42 @@ bb.d:                                             ; preds = %.backedge, %._crit_
 bb.e:                                             ; preds = %._crit_edge67, %bb.d
   %i.af = phi i8 [ %i.aa, %._crit_edge67 ], [ %i.w, %bb.d ]
   %.251 = phi ptr [ %i.y, %._crit_edge67 ], [ %i.u, %bb.d ]
-  %.248 = phi i64 [ %i.ad, %._crit_edge67 ], [ %.147, %bb.d ] ; 2 uses
+  %.248 = phi i64 [ %i.ad, %._crit_edge67 ], [ %.147, %bb.d ]
   %.2 = phi ptr [ %i.ae, %._crit_edge67 ], [ %.1, %bb.d ] ; 3 uses
   %i.ag = zext i8 %i.af to i64
   %i.ah = shl nuw nsw i64 %i.ag, 2
   %i.ai = add nuw nsw i64 %i.ah, 16
   %i.aj = and i64 %i.ai, 2040
   tail call void @_ZdlPvm(ptr noundef nonnull %.251, i64 noundef %i.aj) #24
+  %2 = add nuw nsw i64 %.248, 1                   ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %.2, i64 10
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !39
   %i.am = zext i8 %i.al to i64
-  %.not.not = icmp samesign ult i64 %.248, %i.am
-  br i1 %.not.not, label %.backedge, label %.preheader58
+  %.not = icmp samesign ugt i64 %2, %i.am
+  br i1 %.not, label %.preheader58, label %.backedge
 
-.backedge:                                        ; preds = %bb.e, %2
-  %.147.be.in = phi i64 [ %.248, %bb.e ], [ %3, %2 ]
-  %.1.be = phi ptr [ %.2, %bb.e ], [ %i.ap, %2 ]
-  %.147.be = add nuw nsw i64 %.147.be.in, 1
+.backedge:                                        ; preds = %bb.f, %bb.e
+  %.147.be.in = phi i64 [ %2, %bb.e ], [ %4, %bb.f ]
+  %.1.be = phi ptr [ %.2, %bb.e ], [ %i.ap, %bb.f ]
   br label %bb.d, !llvm.loop !213
 
 .preheader58:                                     ; preds = %bb.e, %bb.f
   %.3 = phi ptr [ %i.ap, %bb.f ], [ %.2, %bb.e ]  ; 3 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.3, i64 8
-  %i.ao = load i8, ptr %i.an, align 1, !tbaa !39  ; 2 uses
+  %i.ao = load i8, ptr %i.an, align 1, !tbaa !39
   %i.ap = load ptr, ptr %.3, align 8, !tbaa !60   ; 4 uses
   tail call void @_ZdlPvm(ptr noundef nonnull %.3, i64 noundef 752) #24
   %i.aq = icmp eq ptr %i.ap, %i.j
   br i1 %i.aq, label %.loopexit, label %bb.f
 
 bb.f:                                             ; preds = %.preheader58
+  %3 = zext i8 %i.ao to i64
+  %4 = add nuw nsw i64 %3, 1                      ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ap, i64 10
   %i.as = load i8, ptr %i.ar, align 1, !tbaa !39
-  %.not = icmp ult i8 %i.ao, %i.as
-  br i1 %.not, label %2, label %.preheader58, !llvm.loop !214
-
-2:                                                ; preds = %bb.f
-  %3 = zext i8 %i.ao to i64
-  br label %.backedge
+  %5 = zext i8 %i.as to i64
+  %6 = icmp samesign ugt i64 %4, %5
+  br i1 %6, label %.preheader58, label %.backedge, !llvm.loop !214
 
 .loopexit.sink.split:                             ; preds = %bb.c, %bb.b
   %.sink = phi i64 [ %i.f, %bb.b ], [ 752, %bb.c ]

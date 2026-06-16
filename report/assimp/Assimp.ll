@@ -201,7 +201,7 @@ bb.cz:                                            ; preds = %bb.cy
   %i.qs = ptrtoint ptr %.066.i.i to i64
   %i.qt = ptrtoint ptr %i.qr to i64               ; 2 uses
   %i.qu = sub i64 %i.qs, %i.qt                    ; 2 uses
-  %i.qv = trunc i64 %i.qu to i32                  ; 3 uses
+  %i.qv = trunc i64 %i.qu to i32                  ; 2 uses
   %i.qw = icmp eq i32 %i.qv, -1
   br i1 %i.qw, label %_ZL25stbi__parse_huffman_blockP10stbi__zbuf.exit.thread.i, label %.preheader.i.i63.i
 
@@ -209,8 +209,9 @@ bb.cz:                                            ; preds = %bb.cy
   %i.qx = ptrtoint ptr %i.qp to i64
   %i.qy = sub i64 %i.qx, %i.qt
   %i.qz = trunc i64 %i.qy to i32                  ; 3 uses
-  %.not261.i.i = icmp ult i32 %i.qv, %i.qz
-  br i1 %.not261.i.i, label %._crit_edge.i.i66.i, label %.lr.ph.i.i64.i
+  %6 = add nuw i32 %i.qv, 1                       ; 2 uses
+  %7 = icmp ugt i32 %6, %i.qz
+  br i1 %7, label %.lr.ph.i.i64.i, label %._crit_edge.i.i66.i
 
 .lr.ph.i.i64.i:                                   ; preds = %.preheader.i.i63.i, %bb.da
   %.02528.i.i65.i = phi i32 [ %i.rb, %bb.da ], [ %i.qz, %.preheader.i.i63.i ] ; 2 uses
@@ -219,8 +220,8 @@ bb.cz:                                            ; preds = %bb.cy
 
 bb.da:                                            ; preds = %.lr.ph.i.i64.i
   %i.rb = shl nuw i32 %.02528.i.i65.i, 1          ; 3 uses
-  %.not262.i.i = icmp ugt i32 %i.rb, %i.qv
-  br i1 %.not262.i.i, label %._crit_edge.i.i66.i, label %.lr.ph.i.i64.i, !llvm.loop !49
+  %.not262.i.i = icmp ugt i32 %6, %i.rb
+  br i1 %.not262.i.i, label %.lr.ph.i.i64.i, label %._crit_edge.i.i66.i, !llvm.loop !49
 
 ._crit_edge.i.i66.i:                              ; preds = %bb.da, %.preheader.i.i63.i
   %.025.lcssa.i.i67.i = phi i32 [ %i.qz, %.preheader.i.i63.i ], [ %i.rb, %bb.da ]

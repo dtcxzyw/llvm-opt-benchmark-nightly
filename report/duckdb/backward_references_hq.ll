@@ -201,7 +201,7 @@ _ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit:    ; preds = %bb.ao, %bb.aq, %bb.
   br i1 %i.mk, label %bb.at, label %bb.au
 
 bb.at:                                            ; preds = %_ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit
-  %i.ml = add i64 %.2218357, 9
+  %i.ml = add nuw nsw i64 %.2218357, 9
   %i.mm = sub i64 %i.ml, %i.kr
   %i.mn = shl i64 %i.mm, 25
   %i.mo = or i64 %i.mn, %.2218357
@@ -217,7 +217,7 @@ bb.at:                                            ; preds = %_ZN13duckdb_brotliL
 
 bb.au:                                            ; preds = %bb.at, %_ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit
   %.8 = phi i64 [ %i.ms, %bb.at ], [ %.7358, %_ZN13duckdb_brotliL17GetCopyLengthCodeEm.exit ] ; 2 uses
-  %i.mt = add i64 %.2218357, 1
+  %i.mt = add nuw nsw i64 %.2218357, 1
   %exitcond.not = icmp eq i64 %.2218357, %i.kl
   br i1 %exitcond.not, label %._crit_edge, label %_ZN13duckdb_brotliL23BackwardMatchLengthCodeEPKNS_13BackwardMatchE.exit, !llvm.loop !183
 

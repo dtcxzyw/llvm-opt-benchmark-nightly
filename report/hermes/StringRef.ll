@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %.lr.ph99.split.us.s
   %i.bb = add i32 %i.ba, 1
   %.sroa.speculated.us.us.us.1 = tail call i32 @llvm.umin.i32(i32 %i.bb, i32 %i.az) ; 3 uses
   store i32 %.sroa.speculated.us.us.us.1, ptr %i.at, align 4, !tbaa !3
-  %i.bc = add nuw i64 %.05594.us.us.us, 2         ; 2 uses
+  %i.bc = add nuw nsw i64 %.05594.us.us.us, 2     ; 2 uses
   %niter187.next.1 = add i64 %niter187, 2         ; 2 uses
   %niter187.ncmp.1 = icmp eq i64 %niter187.next.1, %unroll_iter186
   br i1 %niter187.ncmp.1, label %._crit_edge.split.us.us.us.unr-lcssa, label %.lr.ph95.us.us.new, !llvm.loop !24
@@ -266,7 +266,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph95.us
   %.sroa.speculated.us.us = tail call i32 @llvm.umin.i32(i32 %i.ce, i32 %i.cc) ; 3 uses
   store i32 %.sroa.speculated.us.us, ptr %i.bv, align 4, !tbaa !3
   %.sroa.speculated76.us.us = tail call i32 @llvm.umin.i32(i32 %.sroa.speculated.us.us, i32 %.08692.us.us) ; 2 uses
-  %i.cf = add nuw i64 %.05594.us.us, 1
+  %i.cf = add nuw nsw i64 %.05594.us.us, 1
   %exitcond132.not = icmp eq i64 %.05594.us.us, %3
   br i1 %exitcond132.not, label %._crit_edge.split.us.us, label %bb.e, !llvm.loop !24
 
@@ -340,7 +340,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h, %bb.g
   %storemerge116.1 = phi i32 [ %i.dh, %bb.h ], [ %i.cp, %bb.g ] ; 3 uses
   store i32 %storemerge116.1, ptr %i.cz, align 4, !tbaa !3
-  %i.di = add nuw i64 %.05594.us, 2               ; 2 uses
+  %i.di = add nuw nsw i64 %.05594.us, 2           ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.split.us.unr-lcssa, label %.lr.ph95.us108.new, !llvm.loop !24
@@ -433,7 +433,7 @@ bb.n:                                             ; preds = %bb.l, %bb.m
   %storemerge = phi i32 [ %i.eo, %bb.m ], [ %.05693, %bb.l ] ; 3 uses
   store i32 %storemerge, ptr %i.ef, align 4, !tbaa !3
   %.sroa.speculated76 = tail call i32 @llvm.umin.i32(i32 %storemerge, i32 %.08692) ; 2 uses
-  %i.ep = add nuw i64 %.05594, 1
+  %i.ep = add nuw nsw i64 %.05594, 1
   %exitcond.not = icmp eq i64 %.05594, %3
   br i1 %exitcond.not, label %._crit_edge.split, label %bb.l, !llvm.loop !24
 

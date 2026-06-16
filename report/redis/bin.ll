@@ -41,7 +41,7 @@ bb.c:                                             ; preds = %bb.b
   br label %sz_size2index_compute.exit
 
 sz_size2index_compute.exit:                       ; preds = %bb.b, %bb.c
-  %.0.i = phi i32 [ %i.t, %bb.c ], [ 0, %bb.b ]   ; 5 uses
+  %.0.i = phi i32 [ %i.t, %bb.c ], [ 0, %bb.b ]   ; 6 uses
   %i.u = icmp eq i64 %2, 0
   br i1 %i.u, label %sz_size2index_compute.exit19, label %bb.d
 
@@ -72,13 +72,15 @@ sz_size2index_compute.exit19:                     ; preds = %sz_size2index_compu
 
 .lr.ph:                                           ; preds = %sz_size2index_compute.exit19
   %i.am = trunc nuw nsw i64 %3 to i32             ; 2 uses
-  %4 = sub nuw i32 %.0.i18, %.0.i
-  %i.an = add i32 %4, 1                           ; 3 uses
-  %min.iters.check = icmp ult i32 %i.an, 8
+  %4 = add nsw i32 %.0.i, 1
+  %i.an = add nsw i32 %.0.i18, 1
+  %umax = tail call i32 @llvm.umax.i32(i32 %4, i32 %i.an)
+  %5 = sub i32 %umax, %.0.i                       ; 3 uses
+  %min.iters.check = icmp ult i32 %5, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph
-  %n.vec = and i32 %i.an, -8                      ; 3 uses
+  %n.vec = and i32 %5, -8                         ; 3 uses
   %i.ao = add i32 %.0.i, %n.vec
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.am, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -97,7 +99,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.at, label %middle.block, label %vector.body, !llvm.loop !11
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i32 %i.an, %n.vec
+  %cmp.n = icmp eq i32 %5, %n.vec
   br i1 %cmp.n, label %.loopexit, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.block
@@ -105,13 +107,13 @@ scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.blo
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %.021 = phi i32 [ %i.aw, %scalar.ph ], [ %.021.ph, %scalar.ph.preheader ] ; 3 uses
+  %.021 = phi i32 [ %i.aw, %scalar.ph ], [ %.021.ph, %scalar.ph.preheader ] ; 2 uses
   %i.au = zext nneg i32 %.021 to i64
   %i.av = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.au
   store i32 %i.am, ptr %i.av, align 4, !tbaa !7
-  %i.aw = add nuw nsw i32 %.021, 1
-  %.not.not = icmp ult i32 %.021, %.0.i18
-  br i1 %.not.not, label %scalar.ph, label %.loopexit, !llvm.loop !15
+  %i.aw = add nuw nsw i32 %.021, 1                ; 2 uses
+  %.not = icmp samesign ugt i32 %i.aw, %.0.i18
+  br i1 %.not, label %.loopexit, label %scalar.ph, !llvm.loop !15
 
 .loopexit:                                        ; preds = %scalar.ph, %middle.block, %sz_size2index_compute.exit19, %bb.a
   ret i1 %or.cond

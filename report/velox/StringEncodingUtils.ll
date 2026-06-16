@@ -201,12 +201,13 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not37.i.i.not.i15.not, label %.critedge.i.i.i, label %.lr.ph17
 
 bb.f:                                             ; preds = %.lr.ph17
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i16, 64 ; 2 uses
-  %.not37.i.i.not.i = icmp samesign ult i64 %indvars.iv.next.i, %i.o
-  br i1 %.not37.i.i.not.i, label %.lr.ph17, label %.critedge.i.i.i, !llvm.loop !133
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.next.i17, 64 ; 2 uses
+  %.not37.i.i.i = icmp samesign ugt i64 %indvars.iv.next.i, %i.o
+  br i1 %.not37.i.i.i, label %.critedge.i.i.i, label %.lr.ph17, !llvm.loop !133
 
 .lr.ph17:                                         ; preds = %bb.e, %bb.f
-  %indvars.iv.i16 = phi i64 [ %indvars.iv.next.i, %bb.f ], [ 0, %bb.e ] ; 2 uses
+  %indvars.iv.next.i17 = phi i64 [ %indvars.iv.next.i, %bb.f ], [ 64, %bb.e ] ; 2 uses
+  %indvars.iv.i16 = phi i64 [ %indvars.iv.next.i17, %bb.f ], [ 0, %bb.e ]
   %i.p = lshr exact i64 %indvars.iv.i16, 3
   %i.q = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.p
   %i.r = load i64, ptr %i.q, align 8, !tbaa !134

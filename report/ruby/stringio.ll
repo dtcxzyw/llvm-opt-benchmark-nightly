@@ -201,9 +201,9 @@ declare ptr @memchr(ptr noundef, i32 noundef, i64 noundef) local_unnamed_addr #1
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: read) uwtable
 define internal fastcc range(i64 -9223372036854775807, -9223372036854775808) i64 @bm_search(ptr nofree noundef readonly captures(none) %0, i64 noundef range(i64 2, 0) %1, ptr nofree noundef readonly captures(none) %2, i64 noundef range(i64 1024, -9223372036854775808) %3, ptr nofree noundef nonnull readonly captures(none) %4) unnamed_addr #11 {
 bb.a:
-  %i.a = add nsw i64 %1, -1                       ; 2 uses
-  %.not = icmp sgt i64 %1, %3
-  br i1 %.not, label %.loopexit, label %.preheader.lr.ph
+  %i.a = add nsw i64 %1, -1                       ; 3 uses
+  %5 = icmp slt i64 %i.a, %3
+  br i1 %5, label %.preheader.lr.ph, label %.loopexit
 
 .preheader.lr.ph:                                 ; preds = %bb.a
   %i.b = icmp sgt i64 %1, 0

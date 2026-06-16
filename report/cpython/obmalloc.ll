@@ -201,12 +201,12 @@ bb.f:                                             ; preds = %bb.e
 
 .lr.ph.i.i:                                       ; preds = %bb.f, %.lr.ph.i.i
   %i.af = phi i64 [ %i.ai, %.lr.ph.i.i ], [ %i.ab, %bb.f ]
-  %.02934.i.i = phi i32 [ %i.ah, %.lr.ph.i.i ], [ 1, %bb.f ] ; 2 uses
+  %.02934.i.i = phi i32 [ %i.ah, %.lr.ph.i.i ], [ 1, %bb.f ]
   %i.ag = inttoptr i64 %i.af to ptr               ; 2 uses
-  %i.ah = add nuw nsw i32 %.02934.i.i, 1          ; 2 uses
+  %i.ah = add nuw nsw i32 %.02934.i.i, 1          ; 3 uses
   %i.ai = load atomic i64, ptr %i.ag monotonic, align 8 ; 2 uses
   %i.aj = icmp ne i64 %i.ai, 0
-  %1 = icmp samesign ult i32 %.02934.i.i, %i.aa
+  %1 = icmp samesign ule i32 %i.ah, %i.aa
   %i.ak = select i1 %i.aj, i1 %1, i1 false
   br i1 %i.ak, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !75
 
@@ -457,12 +457,12 @@ bb.f:                                             ; preds = %bb.e
 
 .lr.ph.i:                                         ; preds = %bb.f, %.lr.ph.i
   %i.s = phi i64 [ %i.v, %.lr.ph.i ], [ %i.o, %bb.f ]
-  %.02934.i = phi i32 [ %i.u, %.lr.ph.i ], [ 1, %bb.f ] ; 2 uses
+  %.02934.i = phi i32 [ %i.u, %.lr.ph.i ], [ 1, %bb.f ]
   %i.t = inttoptr i64 %i.s to ptr                 ; 2 uses
-  %i.u = add nuw nsw i32 %.02934.i, 1             ; 2 uses
+  %i.u = add nuw nsw i32 %.02934.i, 1             ; 3 uses
   %i.v = load atomic i64, ptr %i.t monotonic, align 8 ; 2 uses
   %i.w = icmp ne i64 %i.v, 0
-  %2 = icmp samesign ult i32 %.02934.i, %i.n
+  %2 = icmp samesign ule i32 %i.u, %i.n
   %i.x = select i1 %i.w, i1 %2, i1 false
   br i1 %i.x, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !75
 
@@ -865,12 +865,12 @@ bb.o:                                             ; preds = %bb.n
 
 .lr.ph.i.i.i:                                     ; preds = %bb.o, %.lr.ph.i.i.i
   %i.bz = phi i64 [ %i.cc, %.lr.ph.i.i.i ], [ %i.bv, %bb.o ]
-  %.02934.i.i.i = phi i32 [ %i.cb, %.lr.ph.i.i.i ], [ 1, %bb.o ] ; 2 uses
+  %.02934.i.i.i = phi i32 [ %i.cb, %.lr.ph.i.i.i ], [ 1, %bb.o ]
   %i.ca = inttoptr i64 %i.bz to ptr               ; 2 uses
-  %i.cb = add nuw nsw i32 %.02934.i.i.i, 1        ; 2 uses
+  %i.cb = add nuw nsw i32 %.02934.i.i.i, 1        ; 3 uses
   %i.cc = load atomic i64, ptr %i.ca monotonic, align 8 ; 2 uses
   %i.cd = icmp ne i64 %i.cc, 0
-  %2 = icmp samesign ult i32 %.02934.i.i.i, %i.bu
+  %2 = icmp samesign ule i32 %i.cb, %i.bu
   %i.ce = select i1 %i.cd, i1 %2, i1 false
   br i1 %i.ce, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i, !llvm.loop !75
 
@@ -1273,12 +1273,12 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph.i.i:                                       ; preds = %bb.d, %.lr.ph.i.i
   %i.q = phi i64 [ %i.t, %.lr.ph.i.i ], [ %i.m, %bb.d ]
-  %.02934.i.i = phi i32 [ %i.s, %.lr.ph.i.i ], [ 1, %bb.d ] ; 2 uses
+  %.02934.i.i = phi i32 [ %i.s, %.lr.ph.i.i ], [ 1, %bb.d ]
   %i.r = inttoptr i64 %i.q to ptr                 ; 2 uses
-  %i.s = add nuw nsw i32 %.02934.i.i, 1           ; 2 uses
+  %i.s = add nuw nsw i32 %.02934.i.i, 1           ; 3 uses
   %i.t = load atomic i64, ptr %i.r monotonic, align 8 ; 2 uses
   %i.u = icmp ne i64 %i.t, 0
-  %2 = icmp samesign ult i32 %.02934.i.i, %i.l
+  %2 = icmp samesign ule i32 %i.s, %i.l
   %i.v = select i1 %i.u, i1 %2, i1 false
   br i1 %i.v, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !75
 
@@ -1681,7 +1681,7 @@ bb.h:                                             ; preds = %.critedge.i
   br i1 %i.an, label %_mi_page_use_delayed_free.exit, label %.critedge.i, !llvm.loop !76
 
 _mi_page_use_delayed_free.exit:                   ; preds = %.critedge.i, %.critedge.i, %bb.h, %.critedge.1.i, %.critedge.1.i, %bb.d, %.critedge.2.i, %.critedge.2.i, %bb.e, %.critedge.3.i, %.critedge.3.i, %bb.f, %.critedge.4.i, %.critedge.4.i, %bb.g, %bb.c
-  %i.ao = add i64 %.02439, 1                      ; 7 uses
+  %i.ao = add i64 %.02439, 1                      ; 6 uses
   %i.ap = getelementptr i8, ptr %.02340, i64 56
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !197 ; 2 uses
   %.not = icmp eq ptr %i.aq, null
@@ -1701,7 +1701,7 @@ bb.j:                                             ; preds = %bb.i
   %i.aw = icmp eq ptr %i.g, null
   %spec.store.select.i = select i1 %i.aw, ptr @_mi_page_empty, ptr %i.g ; 3 uses
   %i.ax = add nuw nsw i64 %i.au, 7
-  %i.ay = lshr i64 %i.ax, 3                       ; 8 uses
+  %i.ay = lshr i64 %i.ax, 3                       ; 6 uses
   %i.az = getelementptr i8, ptr %0, i64 8         ; 3 uses
   %i.ba = getelementptr [8 x i8], ptr %i.az, i64 %i.ay
   %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !53
@@ -1747,7 +1747,7 @@ bb.o:                                             ; preds = %mi_bin.exit35.i, %m
   %i.bt = getelementptr i8, ptr %.pn.i, i64 -8
   %i.bu = load i64, ptr %i.bt, align 8, !tbaa !61
   %i.bv = add i64 %i.bu, 7                        ; 4 uses
-  %i.bw = lshr i64 %i.bv, 3                       ; 4 uses
+  %i.bw = lshr i64 %i.bv, 3                       ; 3 uses
   %i.bx = icmp ult i64 %i.bv, 16
   br i1 %i.bx, label %mi_bin.exit35.i, label %bb.p
 
@@ -1788,21 +1788,19 @@ mi_bin.exit35.i:                                  ; preds = %bb.s, %bb.r, %bb.q,
 
 bb.t:                                             ; preds = %mi_bin.exit35.i
   %i.cq = add nuw nsw i64 %i.bw, 1
-  %.not.i = icmp samesign ult i64 %i.bw, %i.ay
-  %spec.select.i = select i1 %.not.i, i64 %i.cq, i64 %i.ay ; 2 uses
-  %.not3237.i = icmp samesign ugt i64 %spec.select.i, %i.ay
-  br i1 %.not3237.i, label %mi_heap_queue_first_update.exit, label %.lr.ph.preheader.i
+  %spec.select.i = tail call i64 @llvm.umin.i64(i64 %i.cq, i64 %i.ay)
+  br label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.t, %bb.k
   %.145.i = phi i64 [ %spec.select.i, %bb.t ], [ 0, %bb.k ] ; 4 uses
-  %3 = sub nsw i64 %i.ay, %.145.i
-  %4 = add i64 %3, 1                              ; 3 uses
+  %3 = add nuw nsw i64 %i.ay, 1
+  %4 = sub nsw i64 %3, %.145.i                    ; 3 uses
   %min.iters.check = icmp ult i64 %4, 4
   br i1 %min.iters.check, label %.lr.ph.i27.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i
   %n.vec = and i64 %4, -4                         ; 3 uses
-  %i.cr = add i64 %.145.i, %n.vec
+  %i.cr = add nsw i64 %.145.i, %n.vec
   %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %spec.store.select.i, i64 0
   %broadcast.splat = shufflevector <2 x ptr> %broadcast.splatinsert, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.cs = getelementptr [8 x i8], ptr %i.az, i64 %.145.i
@@ -1827,12 +1825,12 @@ middle.block:                                     ; preds = %vector.body
   br label %.lr.ph.i27
 
 .lr.ph.i27:                                       ; preds = %.lr.ph.i27.preheader, %.lr.ph.i27
-  %.038.i = phi i64 [ %i.cx, %.lr.ph.i27 ], [ %.038.i.ph, %.lr.ph.i27.preheader ] ; 3 uses
+  %.038.i = phi i64 [ %i.cx, %.lr.ph.i27 ], [ %.038.i.ph, %.lr.ph.i27.preheader ] ; 2 uses
   %i.cw = getelementptr [8 x i8], ptr %i.az, i64 %.038.i
   store ptr %spec.store.select.i, ptr %i.cw, align 8, !tbaa !53
-  %i.cx = add nuw nsw i64 %.038.i, 1
-  %exitcond.not.i = icmp eq i64 %.038.i, %i.ay
-  br i1 %exitcond.not.i, label %mi_heap_queue_first_update.exit, label %.lr.ph.i27, !llvm.loop !263
+  %i.cx = add nuw nsw i64 %.038.i, 1              ; 2 uses
+  %.not.i = icmp samesign ugt i64 %i.cx, %i.ay
+  br i1 %.not.i, label %mi_heap_queue_first_update.exit, label %.lr.ph.i27, !llvm.loop !263
 
 bb.u:                                             ; preds = %bb.b
   %i.cy = getelementptr i8, ptr %i.e, i64 56
@@ -1844,8 +1842,8 @@ bb.u:                                             ; preds = %bb.b
   store ptr %i.db, ptr %i.d, align 8, !tbaa !63
   br label %mi_heap_queue_first_update.exit
 
-mi_heap_queue_first_update.exit:                  ; preds = %.lr.ph.i27, %middle.block, %bb.t, %bb.j, %bb.i, %bb.u, %bb.a
-  %.0 = phi i64 [ 0, %bb.a ], [ %i.ao, %bb.u ], [ %i.ao, %bb.i ], [ %i.ao, %bb.j ], [ %i.ao, %bb.t ], [ %i.ao, %middle.block ], [ %i.ao, %.lr.ph.i27 ]
+mi_heap_queue_first_update.exit:                  ; preds = %.lr.ph.i27, %middle.block, %bb.j, %bb.i, %bb.u, %bb.a
+  %.0 = phi i64 [ 0, %bb.a ], [ %i.ao, %bb.u ], [ %i.ao, %bb.i ], [ %i.ao, %bb.j ], [ %i.ao, %middle.block ], [ %i.ao, %.lr.ph.i27 ]
   ret i64 %.0
 }
 
@@ -1961,7 +1959,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.o = add nuw nsw i64 %i.m, 7
-  %i.p = lshr i64 %i.o, 3                         ; 8 uses
+  %i.p = lshr i64 %i.o, 3                         ; 6 uses
   %i.q = getelementptr i8, ptr %0, i64 8          ; 3 uses
   %i.r = getelementptr [8 x i8], ptr %i.q, i64 %i.p
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !53
@@ -2007,7 +2005,7 @@ bb.j:                                             ; preds = %mi_bin.exit35.i, %m
   %i.ak = getelementptr i8, ptr %.pn.i, i64 -8
   %i.al = load i64, ptr %i.ak, align 8, !tbaa !61
   %i.am = add i64 %i.al, 7                        ; 4 uses
-  %i.an = lshr i64 %i.am, 3                       ; 4 uses
+  %i.an = lshr i64 %i.am, 3                       ; 3 uses
   %i.ao = icmp ult i64 %i.am, 16
   br i1 %i.ao, label %mi_bin.exit35.i, label %bb.k
 
@@ -2048,21 +2046,19 @@ mi_bin.exit35.i:                                  ; preds = %bb.n, %bb.m, %bb.l,
 
 bb.o:                                             ; preds = %mi_bin.exit35.i
   %i.bh = add nuw nsw i64 %i.an, 1
-  %.not.i = icmp samesign ult i64 %i.an, %i.p
-  %spec.select.i = select i1 %.not.i, i64 %i.bh, i64 %i.p ; 2 uses
-  %.not3237.i = icmp samesign ugt i64 %spec.select.i, %i.p
-  br i1 %.not3237.i, label %mi_heap_queue_first_update.exit, label %.lr.ph.preheader.i
+  %spec.select.i = tail call i64 @llvm.umin.i64(i64 %i.bh, i64 %i.p)
+  br label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.o, %bb.f
   %.145.i = phi i64 [ %spec.select.i, %bb.o ], [ 0, %bb.f ] ; 4 uses
-  %3 = sub nsw i64 %i.p, %.145.i
-  %4 = add i64 %3, 1                              ; 3 uses
+  %3 = add nuw nsw i64 %i.p, 1
+  %4 = sub nsw i64 %3, %.145.i                    ; 3 uses
   %min.iters.check = icmp ult i64 %4, 4
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i
   %n.vec = and i64 %4, -4                         ; 3 uses
-  %i.bi = add i64 %.145.i, %n.vec
+  %i.bi = add nsw i64 %.145.i, %n.vec
   %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %2, i64 0
   %broadcast.splat = shufflevector <2 x ptr> %broadcast.splatinsert, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.bj = getelementptr [8 x i8], ptr %i.q, i64 %.145.i
@@ -2087,14 +2083,14 @@ middle.block:                                     ; preds = %vector.body
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
-  %.038.i = phi i64 [ %i.bo, %.lr.ph.i ], [ %.038.i.ph, %.lr.ph.i.preheader ] ; 3 uses
+  %.038.i = phi i64 [ %i.bo, %.lr.ph.i ], [ %.038.i.ph, %.lr.ph.i.preheader ] ; 2 uses
   %i.bn = getelementptr [8 x i8], ptr %i.q, i64 %.038.i
   store ptr %2, ptr %i.bn, align 8, !tbaa !53
-  %i.bo = add nuw nsw i64 %.038.i, 1
-  %exitcond.not.i = icmp eq i64 %.038.i, %i.p
-  br i1 %exitcond.not.i, label %mi_heap_queue_first_update.exit, label %.lr.ph.i, !llvm.loop !266
+  %i.bo = add nuw nsw i64 %.038.i, 1              ; 2 uses
+  %.not.i = icmp samesign ugt i64 %i.bo, %i.p
+  br i1 %.not.i, label %mi_heap_queue_first_update.exit, label %.lr.ph.i, !llvm.loop !266
 
-mi_heap_queue_first_update.exit:                  ; preds = %.lr.ph.i, %middle.block, %bb.d, %bb.e, %bb.o
+mi_heap_queue_first_update.exit:                  ; preds = %.lr.ph.i, %middle.block, %bb.d, %bb.e
   %i.bp = getelementptr i8, ptr %0, i64 3024      ; 2 uses
   %i.bq = load i64, ptr %i.bp, align 8, !tbaa !196
   %i.br = add i64 %i.bq, 1
@@ -2302,12 +2298,12 @@ bb.j:                                             ; preds = %bb.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.j, %.lr.ph.i.i.i
   %i.bq = phi i64 [ %i.bt, %.lr.ph.i.i.i ], [ %i.bm, %bb.j ]
-  %.02934.i.i.i = phi i32 [ %i.bs, %.lr.ph.i.i.i ], [ 1, %bb.j ] ; 2 uses
+  %.02934.i.i.i = phi i32 [ %i.bs, %.lr.ph.i.i.i ], [ 1, %bb.j ]
   %i.br = inttoptr i64 %i.bq to ptr               ; 2 uses
-  %i.bs = add nuw nsw i32 %.02934.i.i.i, 1        ; 2 uses
+  %i.bs = add nuw nsw i32 %.02934.i.i.i, 1        ; 3 uses
   %i.bt = load atomic i64, ptr %i.br monotonic, align 8 ; 2 uses
   %i.bu = icmp ne i64 %i.bt, 0
-  %1 = icmp samesign ult i32 %.02934.i.i.i, %i.bl
+  %1 = icmp samesign ule i32 %i.bs, %i.bl
   %i.bv = select i1 %i.bu, i1 %1, i1 false
   br i1 %i.bv, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i, !llvm.loop !75
 
@@ -2569,7 +2565,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %spec.store.select.i = select i1 %.not35, ptr @_mi_page_empty, ptr %.pre ; 3 uses
   %i.r = add nuw nsw i64 %i.p, 7
-  %i.s = lshr i64 %i.r, 3                         ; 8 uses
+  %i.s = lshr i64 %i.r, 3                         ; 6 uses
   %i.t = getelementptr i8, ptr %i.c, i64 8        ; 3 uses
   %i.u = getelementptr [8 x i8], ptr %i.t, i64 %i.s
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !53
@@ -2615,7 +2611,7 @@ bb.m:                                             ; preds = %mi_bin.exit35.i, %m
   %i.an = getelementptr i8, ptr %.pn.i, i64 -8
   %i.ao = load i64, ptr %i.an, align 8, !tbaa !61
   %i.ap = add i64 %i.ao, 7                        ; 4 uses
-  %i.aq = lshr i64 %i.ap, 3                       ; 4 uses
+  %i.aq = lshr i64 %i.ap, 3                       ; 3 uses
   %i.ar = icmp ult i64 %i.ap, 16
   br i1 %i.ar, label %mi_bin.exit35.i, label %bb.n
 
@@ -2656,21 +2652,19 @@ mi_bin.exit35.i:                                  ; preds = %bb.q, %bb.p, %bb.o,
 
 bb.r:                                             ; preds = %mi_bin.exit35.i
   %i.bk = add nuw nsw i64 %i.aq, 1
-  %.not.i = icmp samesign ult i64 %i.aq, %i.s
-  %spec.select.i = select i1 %.not.i, i64 %i.bk, i64 %i.s ; 2 uses
-  %.not3237.i = icmp samesign ugt i64 %spec.select.i, %i.s
-  br i1 %.not3237.i, label %mi_heap_queue_first_update.exit, label %.lr.ph.preheader.i
+  %spec.select.i = tail call i64 @llvm.umin.i64(i64 %i.bk, i64 %i.s)
+  br label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.r, %bb.i
   %.145.i = phi i64 [ %spec.select.i, %bb.r ], [ 0, %bb.i ] ; 4 uses
-  %3 = sub nsw i64 %i.s, %.145.i
-  %4 = add i64 %3, 1                              ; 3 uses
+  %3 = add nuw nsw i64 %i.s, 1
+  %4 = sub nsw i64 %3, %.145.i                    ; 3 uses
   %min.iters.check = icmp ult i64 %4, 4
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i
   %n.vec = and i64 %4, -4                         ; 3 uses
-  %i.bl = add i64 %.145.i, %n.vec
+  %i.bl = add nsw i64 %.145.i, %n.vec
   %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %spec.store.select.i, i64 0
   %broadcast.splat = shufflevector <2 x ptr> %broadcast.splatinsert, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.bm = getelementptr [8 x i8], ptr %i.t, i64 %.145.i
@@ -2695,14 +2689,14 @@ middle.block:                                     ; preds = %vector.body
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
-  %.038.i = phi i64 [ %i.br, %.lr.ph.i ], [ %.038.i.ph, %.lr.ph.i.preheader ] ; 3 uses
+  %.038.i = phi i64 [ %i.br, %.lr.ph.i ], [ %.038.i.ph, %.lr.ph.i.preheader ] ; 2 uses
   %i.bq = getelementptr [8 x i8], ptr %i.t, i64 %.038.i
   store ptr %spec.store.select.i, ptr %i.bq, align 8, !tbaa !53
-  %i.br = add nuw nsw i64 %.038.i, 1
-  %exitcond.not.i = icmp eq i64 %.038.i, %i.s
-  br i1 %exitcond.not.i, label %mi_heap_queue_first_update.exit, label %.lr.ph.i, !llvm.loop !269
+  %i.br = add nuw nsw i64 %.038.i, 1              ; 2 uses
+  %.not.i = icmp samesign ugt i64 %i.br, %i.s
+  br i1 %.not.i, label %mi_heap_queue_first_update.exit, label %.lr.ph.i, !llvm.loop !269
 
-mi_heap_queue_first_update.exit:                  ; preds = %.lr.ph.i, %middle.block, %bb.r, %bb.h, %bb.g, %bb.f
+mi_heap_queue_first_update.exit:                  ; preds = %.lr.ph.i, %middle.block, %bb.h, %bb.g, %bb.f
   %i.bs = getelementptr i8, ptr %0, i64 8         ; 3 uses
   %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !63 ; 3 uses
   store ptr %i.bt, ptr %i.d, align 8, !tbaa !264
@@ -2722,13 +2716,13 @@ bb.t:                                             ; preds = %mi_heap_queue_first
   store ptr %2, ptr %0, align 8, !tbaa !64
   store ptr %2, ptr %i.bs, align 8, !tbaa !63
   %i.bv = getelementptr i8, ptr %0, i64 16
-  %i.bw = load i64, ptr %i.bv, align 8, !tbaa !61 ; 9 uses
+  %i.bw = load i64, ptr %i.bv, align 8, !tbaa !61 ; 8 uses
   %i.bx = icmp ugt i64 %i.bw, 1024
   br i1 %i.bx, label %mi_heap_queue_first_update.exit54, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   %i.by = add nuw nsw i64 %i.bw, 7
-  %i.bz = lshr i64 %i.by, 3                       ; 8 uses
+  %i.bz = lshr i64 %i.by, 3                       ; 6 uses
   %i.ca = getelementptr i8, ptr %i.c, i64 8       ; 3 uses
   %i.cb = getelementptr [8 x i8], ptr %i.ca, i64 %i.bz
   %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !53
@@ -2774,7 +2768,7 @@ bb.z:                                             ; preds = %mi_bin.exit35.i44, 
   %i.cu = getelementptr i8, ptr %.pn.i41, i64 -8
   %i.cv = load i64, ptr %i.cu, align 8, !tbaa !61
   %i.cw = add i64 %i.cv, 7                        ; 4 uses
-  %i.cx = lshr i64 %i.cw, 3                       ; 4 uses
+  %i.cx = lshr i64 %i.cw, 3                       ; 3 uses
   %i.cy = icmp ult i64 %i.cw, 16
   br i1 %i.cy, label %mi_bin.exit35.i44, label %bb.aa
 
@@ -2815,21 +2809,19 @@ mi_bin.exit35.i44:                                ; preds = %bb.ad, %bb.ac, %bb.
 
 bb.ae:                                            ; preds = %mi_bin.exit35.i44
   %i.dr = add nuw nsw i64 %i.cx, 1
-  %.not.i46 = icmp samesign ult i64 %i.cx, %i.bz
-  %spec.select.i47 = select i1 %.not.i46, i64 %i.dr, i64 %i.bz ; 2 uses
-  %.not3237.i48 = icmp samesign ugt i64 %spec.select.i47, %i.bz
-  br i1 %.not3237.i48, label %mi_heap_queue_first_update.exit54, label %.lr.ph.preheader.i49
+  %spec.select.i46 = tail call i64 @llvm.umin.i64(i64 %i.dr, i64 %i.bz)
+  br label %.lr.ph.preheader.i49
 
 .lr.ph.preheader.i49:                             ; preds = %bb.ae, %bb.v
-  %.145.i50 = phi i64 [ %spec.select.i47, %bb.ae ], [ 0, %bb.v ] ; 4 uses
-  %5 = sub nsw i64 %i.bz, %.145.i50
-  %6 = add i64 %5, 1                              ; 3 uses
+  %.145.i50 = phi i64 [ %spec.select.i46, %bb.ae ], [ 0, %bb.v ] ; 4 uses
+  %5 = add nuw nsw i64 %i.bz, 1
+  %6 = sub nsw i64 %5, %.145.i50                  ; 3 uses
   %min.iters.check76 = icmp ult i64 %6, 4
   br i1 %min.iters.check76, label %.lr.ph.i51.preheader, label %vector.ph77
 
 vector.ph77:                                      ; preds = %.lr.ph.preheader.i49
   %n.vec79 = and i64 %6, -4                       ; 3 uses
-  %i.ds = add i64 %.145.i50, %n.vec79
+  %i.ds = add nsw i64 %.145.i50, %n.vec79
   %broadcast.splatinsert80 = insertelement <2 x ptr> poison, ptr %2, i64 0
   %broadcast.splat81 = shufflevector <2 x ptr> %broadcast.splatinsert80, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.dt = getelementptr [8 x i8], ptr %i.ca, i64 %.145.i50
@@ -2854,15 +2846,15 @@ middle.block85:                                   ; preds = %vector.body82
   br label %.lr.ph.i51
 
 .lr.ph.i51:                                       ; preds = %.lr.ph.i51.preheader, %.lr.ph.i51
-  %.038.i52 = phi i64 [ %i.dy, %.lr.ph.i51 ], [ %.038.i52.ph, %.lr.ph.i51.preheader ] ; 3 uses
+  %.038.i52 = phi i64 [ %i.dy, %.lr.ph.i51 ], [ %.038.i52.ph, %.lr.ph.i51.preheader ] ; 2 uses
   %i.dx = getelementptr [8 x i8], ptr %i.ca, i64 %.038.i52
   store ptr %2, ptr %i.dx, align 8, !tbaa !53
-  %i.dy = add nuw nsw i64 %.038.i52, 1
-  %exitcond.not.i53 = icmp eq i64 %.038.i52, %i.bz
-  br i1 %exitcond.not.i53, label %mi_heap_queue_first_update.exit54, label %.lr.ph.i51, !llvm.loop !271
+  %i.dy = add nuw nsw i64 %.038.i52, 1            ; 2 uses
+  %.not.i49 = icmp samesign ugt i64 %i.dy, %i.bz
+  br i1 %.not.i49, label %mi_heap_queue_first_update.exit54, label %.lr.ph.i51, !llvm.loop !271
 
-mi_heap_queue_first_update.exit54:                ; preds = %.lr.ph.i51, %middle.block85, %bb.ae, %bb.u, %bb.t, %bb.s
-  %.val = phi i64 [ %.val.pre, %bb.s ], [ %i.bw, %bb.ae ], [ %i.bw, %bb.u ], [ %i.bw, %bb.t ], [ %i.bw, %middle.block85 ], [ %i.bw, %.lr.ph.i51 ]
+mi_heap_queue_first_update.exit54:                ; preds = %.lr.ph.i51, %middle.block85, %bb.u, %bb.t, %bb.s
+  %.val = phi i64 [ %.val.pre, %bb.s ], [ %i.bw, %bb.u ], [ %i.bw, %bb.t ], [ %i.bw, %middle.block85 ], [ %i.bw, %.lr.ph.i51 ]
   %i.dz = icmp eq i64 %.val, 131088
   %i.ea = zext i1 %i.dz to i8
   %i.eb = getelementptr i8, ptr %2, i64 14        ; 2 uses
@@ -3010,7 +3002,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %spec.store.select.i = select i1 %.not22, ptr @_mi_page_empty, ptr %.pre ; 3 uses
   %i.q = add nuw nsw i64 %i.o, 7
-  %i.r = lshr i64 %i.q, 3                         ; 8 uses
+  %i.r = lshr i64 %i.q, 3                         ; 6 uses
   %i.s = getelementptr i8, ptr %i.c, i64 8        ; 3 uses
   %i.t = getelementptr [8 x i8], ptr %i.s, i64 %i.r
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !53
@@ -3056,7 +3048,7 @@ bb.m:                                             ; preds = %mi_bin.exit35.i, %m
   %i.am = getelementptr i8, ptr %.pn.i, i64 -8
   %i.an = load i64, ptr %i.am, align 8, !tbaa !61
   %i.ao = add i64 %i.an, 7                        ; 4 uses
-  %i.ap = lshr i64 %i.ao, 3                       ; 4 uses
+  %i.ap = lshr i64 %i.ao, 3                       ; 3 uses
   %i.aq = icmp ult i64 %i.ao, 16
   br i1 %i.aq, label %mi_bin.exit35.i, label %bb.n
 
@@ -3097,21 +3089,19 @@ mi_bin.exit35.i:                                  ; preds = %bb.q, %bb.p, %bb.o,
 
 bb.r:                                             ; preds = %mi_bin.exit35.i
   %i.bj = add nuw nsw i64 %i.ap, 1
-  %.not.i = icmp samesign ult i64 %i.ap, %i.r
-  %spec.select.i = select i1 %.not.i, i64 %i.bj, i64 %i.r ; 2 uses
-  %.not3237.i = icmp samesign ugt i64 %spec.select.i, %i.r
-  br i1 %.not3237.i, label %mi_heap_queue_first_update.exit, label %.lr.ph.preheader.i
+  %spec.select.i = tail call i64 @llvm.umin.i64(i64 %i.bj, i64 %i.r)
+  br label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.r, %bb.i
   %.145.i = phi i64 [ %spec.select.i, %bb.r ], [ 0, %bb.i ] ; 4 uses
-  %2 = sub nsw i64 %i.r, %.145.i
-  %3 = add i64 %2, 1                              ; 3 uses
+  %2 = add nuw nsw i64 %i.r, 1
+  %3 = sub nsw i64 %2, %.145.i                    ; 3 uses
   %min.iters.check = icmp ult i64 %3, 4
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i
   %n.vec = and i64 %3, -4                         ; 3 uses
-  %i.bk = add i64 %.145.i, %n.vec
+  %i.bk = add nsw i64 %.145.i, %n.vec
   %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %spec.store.select.i, i64 0
   %broadcast.splat = shufflevector <2 x ptr> %broadcast.splatinsert, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.bl = getelementptr [8 x i8], ptr %i.s, i64 %.145.i
@@ -3136,14 +3126,14 @@ middle.block:                                     ; preds = %vector.body
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
-  %.038.i = phi i64 [ %i.bq, %.lr.ph.i ], [ %.038.i.ph, %.lr.ph.i.preheader ] ; 3 uses
+  %.038.i = phi i64 [ %i.bq, %.lr.ph.i ], [ %.038.i.ph, %.lr.ph.i.preheader ] ; 2 uses
   %i.bp = getelementptr [8 x i8], ptr %i.s, i64 %.038.i
   store ptr %spec.store.select.i, ptr %i.bp, align 8, !tbaa !53
-  %i.bq = add nuw nsw i64 %.038.i, 1
-  %exitcond.not.i = icmp eq i64 %.038.i, %i.r
-  br i1 %exitcond.not.i, label %mi_heap_queue_first_update.exit, label %.lr.ph.i, !llvm.loop !273
+  %i.bq = add nuw nsw i64 %.038.i, 1              ; 2 uses
+  %.not.i = icmp samesign ugt i64 %i.bq, %i.r
+  br i1 %.not.i, label %mi_heap_queue_first_update.exit, label %.lr.ph.i, !llvm.loop !273
 
-mi_heap_queue_first_update.exit:                  ; preds = %.lr.ph.i, %middle.block, %bb.r, %bb.h, %bb.g, %bb.f
+mi_heap_queue_first_update.exit:                  ; preds = %.lr.ph.i, %middle.block, %bb.h, %bb.g, %bb.f
   %i.br = getelementptr i8, ptr %1, i64 56
   %i.bs = getelementptr i8, ptr %i.c, i64 3024    ; 2 uses
   %i.bt = load i64, ptr %i.bs, align 8, !tbaa !196
@@ -3542,12 +3532,12 @@ bb.m:                                             ; preds = %bb.l
 
 .lr.ph.i.i.i:                                     ; preds = %bb.m, %.lr.ph.i.i.i
   %i.ao = phi i64 [ %i.ar, %.lr.ph.i.i.i ], [ %i.ak, %bb.m ]
-  %.02934.i.i.i = phi i32 [ %i.aq, %.lr.ph.i.i.i ], [ 1, %bb.m ] ; 2 uses
+  %.02934.i.i.i = phi i32 [ %i.aq, %.lr.ph.i.i.i ], [ 1, %bb.m ]
   %i.ap = inttoptr i64 %i.ao to ptr               ; 2 uses
-  %i.aq = add nuw nsw i32 %.02934.i.i.i, 1        ; 2 uses
+  %i.aq = add nuw nsw i32 %.02934.i.i.i, 1        ; 3 uses
   %i.ar = load atomic i64, ptr %i.ap monotonic, align 8 ; 2 uses
   %i.as = icmp ne i64 %i.ar, 0
-  %3 = icmp samesign ult i32 %.02934.i.i.i, %i.aj
+  %3 = icmp samesign ule i32 %i.aq, %i.aj
   %i.at = select i1 %i.as, i1 %3, i1 false
   br i1 %i.at, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i, !llvm.loop !75
 
@@ -3646,12 +3636,12 @@ bb.u:                                             ; preds = %bb.t
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.u, %.lr.ph.i.i.i.i
   %i.cc = phi i64 [ %i.cf, %.lr.ph.i.i.i.i ], [ %i.by, %bb.u ]
-  %.02934.i.i.i.i = phi i32 [ %i.ce, %.lr.ph.i.i.i.i ], [ 1, %bb.u ] ; 2 uses
+  %.02934.i.i.i.i = phi i32 [ %i.ce, %.lr.ph.i.i.i.i ], [ 1, %bb.u ]
   %i.cd = inttoptr i64 %i.cc to ptr               ; 2 uses
-  %i.ce = add nuw nsw i32 %.02934.i.i.i.i, 1      ; 2 uses
+  %i.ce = add nuw nsw i32 %.02934.i.i.i.i, 1      ; 3 uses
   %i.cf = load atomic i64, ptr %i.cd monotonic, align 8 ; 2 uses
   %i.cg = icmp ne i64 %i.cf, 0
-  %4 = icmp samesign ult i32 %.02934.i.i.i.i, %i.bx
+  %4 = icmp samesign ule i32 %i.ce, %i.bx
   %i.ch = select i1 %i.cg, i1 %4, i1 false
   br i1 %i.ch, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i, !llvm.loop !75
 
@@ -3805,12 +3795,12 @@ bb.aj:                                            ; preds = %bb.ai
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.aj, %.lr.ph.i.i.i.i.i
   %i.es = phi i64 [ %i.ev, %.lr.ph.i.i.i.i.i ], [ %i.eo, %bb.aj ]
-  %.02934.i.i.i.i.i = phi i32 [ %i.eu, %.lr.ph.i.i.i.i.i ], [ 1, %bb.aj ] ; 2 uses
+  %.02934.i.i.i.i.i = phi i32 [ %i.eu, %.lr.ph.i.i.i.i.i ], [ 1, %bb.aj ]
   %i.et = inttoptr i64 %i.es to ptr               ; 2 uses
-  %i.eu = add nuw nsw i32 %.02934.i.i.i.i.i, 1    ; 2 uses
+  %i.eu = add nuw nsw i32 %.02934.i.i.i.i.i, 1    ; 3 uses
   %i.ev = load atomic i64, ptr %i.et monotonic, align 8 ; 2 uses
   %i.ew = icmp ne i64 %i.ev, 0
-  %5 = icmp samesign ult i32 %.02934.i.i.i.i.i, %i.en
+  %5 = icmp samesign ule i32 %i.eu, %i.en
   %i.ex = select i1 %i.ew, i1 %5, i1 false
   br i1 %i.ex, label %.lr.ph.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, !llvm.loop !75
 
@@ -4213,12 +4203,12 @@ bb.ag:                                            ; preds = %bb.af
 
 .lr.ph.i.i:                                       ; preds = %bb.ag, %.lr.ph.i.i
   %i.ff = phi i64 [ %i.fi, %.lr.ph.i.i ], [ %i.fb, %bb.ag ]
-  %.02934.i.i = phi i32 [ %i.fh, %.lr.ph.i.i ], [ 1, %bb.ag ] ; 2 uses
+  %.02934.i.i = phi i32 [ %i.fh, %.lr.ph.i.i ], [ 1, %bb.ag ]
   %i.fg = inttoptr i64 %i.ff to ptr               ; 2 uses
-  %i.fh = add nuw nsw i32 %.02934.i.i, 1          ; 2 uses
+  %i.fh = add nuw nsw i32 %.02934.i.i, 1          ; 3 uses
   %i.fi = load atomic i64, ptr %i.fg monotonic, align 8 ; 2 uses
   %i.fj = icmp ne i64 %i.fi, 0
-  %5 = icmp samesign ult i32 %.02934.i.i, %i.fa
+  %5 = icmp samesign ule i32 %i.fh, %i.fa
   %i.fk = select i1 %i.fj, i1 %5, i1 false
   br i1 %i.fk, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !75
 
@@ -4621,12 +4611,12 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.i.i:                                       ; preds = %bb.g, %.lr.ph.i.i
   %i.ac = phi i64 [ %i.af, %.lr.ph.i.i ], [ %i.y, %bb.g ]
-  %.02934.i.i = phi i32 [ %i.ae, %.lr.ph.i.i ], [ 1, %bb.g ] ; 2 uses
+  %.02934.i.i = phi i32 [ %i.ae, %.lr.ph.i.i ], [ 1, %bb.g ]
   %i.ad = inttoptr i64 %i.ac to ptr               ; 2 uses
-  %i.ae = add nuw nsw i32 %.02934.i.i, 1          ; 2 uses
+  %i.ae = add nuw nsw i32 %.02934.i.i, 1          ; 3 uses
   %i.af = load atomic i64, ptr %i.ad monotonic, align 8 ; 2 uses
   %i.ag = icmp ne i64 %i.af, 0
-  %4 = icmp samesign ult i32 %.02934.i.i, %i.x
+  %4 = icmp samesign ule i32 %i.ae, %i.x
   %i.ah = select i1 %i.ag, i1 %4, i1 false
   br i1 %i.ah, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !75
 
@@ -5029,12 +5019,12 @@ bb.j:                                             ; preds = %bb.i
 
 .lr.ph.i.i.i30:                                   ; preds = %bb.j, %.lr.ph.i.i.i30
   %i.ba = phi i64 [ %i.bd, %.lr.ph.i.i.i30 ], [ %i.aw, %bb.j ]
-  %.02934.i.i.i = phi i32 [ %i.bc, %.lr.ph.i.i.i30 ], [ 1, %bb.j ] ; 2 uses
+  %.02934.i.i.i = phi i32 [ %i.bc, %.lr.ph.i.i.i30 ], [ 1, %bb.j ]
   %i.bb = inttoptr i64 %i.ba to ptr               ; 2 uses
-  %i.bc = add nuw nsw i32 %.02934.i.i.i, 1        ; 2 uses
+  %i.bc = add nuw nsw i32 %.02934.i.i.i, 1        ; 3 uses
   %i.bd = load atomic i64, ptr %i.bb monotonic, align 8 ; 2 uses
   %i.be = icmp ne i64 %i.bd, 0
-  %1 = icmp samesign ult i32 %.02934.i.i.i, %i.av
+  %1 = icmp samesign ule i32 %i.bc, %i.av
   %i.bf = select i1 %i.be, i1 %1, i1 false
   br i1 %i.bf, label %.lr.ph.i.i.i30, label %._crit_edge.i.i.i, !llvm.loop !75
 
@@ -5437,12 +5427,12 @@ bb.j:                                             ; preds = %bb.i
 
 .lr.ph.i.i.i11:                                   ; preds = %bb.j, %.lr.ph.i.i.i11
   %i.bh = phi i64 [ %i.bk, %.lr.ph.i.i.i11 ], [ %i.bd, %bb.j ]
-  %.02934.i.i.i = phi i32 [ %i.bj, %.lr.ph.i.i.i11 ], [ 1, %bb.j ] ; 2 uses
+  %.02934.i.i.i = phi i32 [ %i.bj, %.lr.ph.i.i.i11 ], [ 1, %bb.j ]
   %i.bi = inttoptr i64 %i.bh to ptr               ; 2 uses
-  %i.bj = add nuw nsw i32 %.02934.i.i.i, 1        ; 2 uses
+  %i.bj = add nuw nsw i32 %.02934.i.i.i, 1        ; 3 uses
   %i.bk = load atomic i64, ptr %i.bi monotonic, align 8 ; 2 uses
   %i.bl = icmp ne i64 %i.bk, 0
-  %1 = icmp samesign ult i32 %.02934.i.i.i, %i.bc
+  %1 = icmp samesign ule i32 %i.bj, %i.bc
   %i.bm = select i1 %i.bl, i1 %1, i1 false
   br i1 %i.bm, label %.lr.ph.i.i.i11, label %._crit_edge.i.i.i, !llvm.loop !75
 

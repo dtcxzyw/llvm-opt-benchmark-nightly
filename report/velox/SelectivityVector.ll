@@ -201,12 +201,13 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not37.i.i.not.i.i125.not, label %.critedge.i.i.i.i, label %.lr.ph
 
 bb.o:                                             ; preds = %.lr.ph
-  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i126, 64 ; 2 uses
-  %.not37.i.i.not.i.i = icmp samesign ult i64 %indvars.iv.next.i.i, %i.al
-  br i1 %.not37.i.i.not.i.i, label %.lr.ph, label %.critedge.i.i.i.i, !llvm.loop !40
+  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.next.i.i127, 64 ; 2 uses
+  %.not37.i.i.i.i = icmp samesign ugt i64 %indvars.iv.next.i.i, %i.al
+  br i1 %.not37.i.i.i.i, label %.critedge.i.i.i.i, label %.lr.ph, !llvm.loop !40
 
 .lr.ph:                                           ; preds = %bb.n, %bb.o
-  %indvars.iv.i.i126 = phi i64 [ %indvars.iv.next.i.i, %bb.o ], [ 0, %bb.n ] ; 2 uses
+  %indvars.iv.next.i.i127 = phi i64 [ %indvars.iv.next.i.i, %bb.o ], [ 64, %bb.n ] ; 2 uses
+  %indvars.iv.i.i126 = phi i64 [ %indvars.iv.next.i.i127, %bb.o ], [ 0, %bb.n ]
   %i.am = lshr exact i64 %indvars.iv.i.i126, 3
   %i.an = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.am
   %i.ao = load i64, ptr %i.an, align 8, !tbaa !16
@@ -609,12 +610,13 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not37.i.i.not.i26.not, label %.critedge.i.i.i, label %.lr.ph
 
 bb.f:                                             ; preds = %.lr.ph
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i27, 64 ; 2 uses
-  %.not37.i.i.not.i = icmp samesign ult i64 %indvars.iv.next.i, %i.o
-  br i1 %.not37.i.i.not.i, label %.lr.ph, label %.critedge.i.i.i, !llvm.loop !40
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.next.i28, 64 ; 2 uses
+  %.not37.i.i.i = icmp samesign ugt i64 %indvars.iv.next.i, %i.o
+  br i1 %.not37.i.i.i, label %.critedge.i.i.i, label %.lr.ph, !llvm.loop !40
 
 .lr.ph:                                           ; preds = %bb.e, %bb.f
-  %indvars.iv.i27 = phi i64 [ %indvars.iv.next.i, %bb.f ], [ 0, %bb.e ] ; 2 uses
+  %indvars.iv.next.i28 = phi i64 [ %indvars.iv.next.i, %bb.f ], [ 64, %bb.e ] ; 2 uses
+  %indvars.iv.i27 = phi i64 [ %indvars.iv.next.i28, %bb.f ], [ 0, %bb.e ]
   %i.p = lshr exact i64 %indvars.iv.i27, 3
   %i.q = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.p
   %i.r = load i64, ptr %i.q, align 8, !tbaa !16
@@ -1017,12 +1019,13 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not37.i.i.not.i.i63.not, label %.critedge.i.i.i.i, label %.lr.ph
 
 bb.f:                                             ; preds = %.lr.ph
-  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i64, 64 ; 2 uses
-  %.not37.i.i.not.i.i = icmp samesign ult i64 %indvars.iv.next.i.i, %i.p
-  br i1 %.not37.i.i.not.i.i, label %.lr.ph, label %.critedge.i.i.i.i, !llvm.loop !40
+  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.next.i.i65, 64 ; 2 uses
+  %.not37.i.i.i.i = icmp samesign ugt i64 %indvars.iv.next.i.i, %i.p
+  br i1 %.not37.i.i.i.i, label %.critedge.i.i.i.i, label %.lr.ph, !llvm.loop !40
 
 .lr.ph:                                           ; preds = %bb.e, %bb.f
-  %indvars.iv.i.i64 = phi i64 [ %indvars.iv.next.i.i, %bb.f ], [ 0, %bb.e ] ; 2 uses
+  %indvars.iv.next.i.i65 = phi i64 [ %indvars.iv.next.i.i, %bb.f ], [ 64, %bb.e ] ; 2 uses
+  %indvars.iv.i.i64 = phi i64 [ %indvars.iv.next.i.i65, %bb.f ], [ 0, %bb.e ]
   %i.q = lshr exact i64 %indvars.iv.i.i64, 3
   %i.r = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.q
   %i.s = load i64, ptr %i.r, align 8, !tbaa !16
@@ -1425,12 +1428,13 @@ bb.ae:                                            ; preds = %"_ZNK8facebook5velo
   br i1 %.not37.i.i.not.i65.not, label %.critedge.i.i.i, label %.lr.ph67
 
 _ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i: ; preds = %.lr.ph67
-  %indvars.iv.next.i5 = add nuw nsw i64 %indvars.iv.i466, 64 ; 2 uses
-  %.not37.i.i.not.i = icmp samesign ult i64 %indvars.iv.next.i5, %i.kc
-  br i1 %.not37.i.i.not.i, label %.lr.ph67, label %.critedge.i.i.i, !llvm.loop !83
+  %indvars.iv.next.i5 = add nuw nsw i64 %indvars.iv.next.i568, 64 ; 2 uses
+  %.not37.i.i.i = icmp samesign ugt i64 %indvars.iv.next.i5, %i.kc
+  br i1 %.not37.i.i.i, label %.critedge.i.i.i, label %.lr.ph67, !llvm.loop !83
 
 .lr.ph67:                                         ; preds = %bb.ae, %_ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i
-  %indvars.iv.i466 = phi i64 [ %indvars.iv.next.i5, %_ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i ], [ 0, %bb.ae ] ; 3 uses
+  %indvars.iv.next.i568 = phi i64 [ %indvars.iv.next.i5, %_ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i ], [ 64, %bb.ae ] ; 2 uses
+  %indvars.iv.i466 = phi i64 [ %indvars.iv.next.i568, %_ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i ], [ 0, %bb.ae ] ; 2 uses
   %i.kd = lshr exact i64 %indvars.iv.i466, 3
   %i.ke = getelementptr inbounds nuw i8, ptr %i.jy, i64 %i.kd
   %i.kf = load i64, ptr %i.ke, align 8, !tbaa !16 ; 2 uses

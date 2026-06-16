@@ -53,8 +53,7 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %.not140, label %._crit_edge144, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %.preheader116
-  %4 = add nuw i32 %2, 1
-  %wide.trip.count = zext i32 %4 to i64
+  %wide.trip.count = zext nneg i32 %2 to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %bb.k
@@ -185,8 +184,8 @@ bb.j:                                             ; preds = %._crit_edge
 
 bb.k:                                             ; preds = %._crit_edge, %bb.j
   %indvars.iv.next149 = add nuw nsw i64 %indvars.iv148, 1 ; 2 uses
-  %exitcond151.not = icmp eq i64 %indvars.iv.next149, %wide.trip.count
-  br i1 %exitcond151.not, label %._crit_edge144, label %.preheader, !llvm.loop !20
+  %.not = icmp samesign ugt i64 %indvars.iv.next149, %wide.trip.count
+  br i1 %.not, label %._crit_edge144, label %.preheader, !llvm.loop !20
 
 ._crit_edge144:                                   ; preds = %bb.k, %.preheader116
   tail call void (i32, ...) @Z_exceed(i32 noundef %2) #4

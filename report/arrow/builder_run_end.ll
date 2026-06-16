@@ -201,16 +201,16 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN5arrow6
   %i.bm = load ptr, ptr %i.bf, align 8, !tbaa !54, !noalias !262
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 16
   %i.bo = load ptr, ptr %i.bn, align 8, !noalias !262
-  %i.bp = call noundef i64 %i.bo(ptr noundef nonnull align 8 dereferenceable(216) %i.bf), !noalias !262, !inline_history !268 ; 2 uses
-  %.not.i.not.i.i = icmp slt i64 %i.bp, %i.be
-  br i1 %.not.i.not.i.i, label %_ZN5arrow6StatusD2Ev.exit10.thread.i.i, label %_ZN5arrow6StatusD2Ev.exit.i.i
+  %i.bp = call noundef i64 %i.bo(ptr noundef nonnull align 8 dereferenceable(216) %i.bf), !noalias !262, !inline_history !268
+  %8 = add nsw i64 %i.bp, 1                       ; 2 uses
+  %.not.i.i.i = icmp sgt i64 %8, %i.be
+  br i1 %.not.i.i.i, label %_ZN5arrow6StatusD2Ev.exit.i.i, label %_ZN5arrow6StatusD2Ev.exit10.thread.i.i
 
 _ZN5arrow6StatusD2Ev.exit10.thread.i.i:           ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #18, !noalias !267
   br label %_ZN5arrow6StatusD2Ev.exit57
 
 _ZN5arrow6StatusD2Ev.exit.i.i:                    ; preds = %bb.b
-  %8 = add nsw i64 %i.bp, 1
   %i.bq = shl nsw i64 %i.be, 1
   %.sroa.speculated.i.i.i.i = call noundef i64 @llvm.smax.i64(i64 %8, i64 %i.bq)
   %i.br = load ptr, ptr %i.bf, align 8, !tbaa !54, !noalias !262
@@ -613,16 +613,16 @@ bb.b:                                             ; preds = %bb.a
   %i.s = load ptr, ptr %i.p, align 8, !tbaa !54, !noalias !326
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 16
   %i.u = load ptr, ptr %i.t, align 8, !noalias !326
-  %i.v = tail call noundef i64 %i.u(ptr noundef nonnull align 8 dereferenceable(216) %i.p), !noalias !326, !inline_history !268 ; 2 uses
-  %.not.i.not.i.i = icmp slt i64 %i.v, %i.r
-  br i1 %.not.i.not.i.i, label %_ZN5arrow6StatusD2Ev.exit10.thread.i.i, label %_ZN5arrow6StatusD2Ev.exit.i.i
+  %i.v = tail call noundef i64 %i.u(ptr noundef nonnull align 8 dereferenceable(216) %i.p), !noalias !326, !inline_history !268
+  %7 = add nsw i64 %i.v, 1                        ; 2 uses
+  %.not.i.i.i = icmp sgt i64 %7, %i.r
+  br i1 %.not.i.i.i, label %_ZN5arrow6StatusD2Ev.exit.i.i, label %_ZN5arrow6StatusD2Ev.exit10.thread.i.i
 
 _ZN5arrow6StatusD2Ev.exit10.thread.i.i:           ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18, !noalias !323
   br label %.thread
 
 _ZN5arrow6StatusD2Ev.exit.i.i:                    ; preds = %bb.b
-  %7 = add nsw i64 %i.v, 1
   %i.w = shl nsw i64 %i.r, 1
   %.sroa.speculated.i.i.i.i = tail call noundef i64 @llvm.smax.i64(i64 %7, i64 %i.w)
   %i.x = load ptr, ptr %i.p, align 8, !tbaa !54, !noalias !326
@@ -745,16 +745,16 @@ bb.c:                                             ; preds = %bb.a
   %i.j = load ptr, ptr %i.f, align 8, !tbaa !54, !noalias !340
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   %i.l = load ptr, ptr %i.k, align 8, !noalias !340
-  %i.m = tail call noundef i64 %i.l(ptr noundef nonnull align 8 dereferenceable(216) %i.f), !noalias !340, !inline_history !343 ; 2 uses
-  %.not.i.not.i = icmp slt i64 %i.m, %i.i
-  br i1 %.not.i.not.i, label %_ZN5arrow6StatusD2Ev.exit10.thread.i, label %_ZN5arrow6StatusD2Ev.exit.i
+  %i.m = tail call noundef i64 %i.l(ptr noundef nonnull align 8 dereferenceable(216) %i.f), !noalias !340, !inline_history !343
+  %4 = add nsw i64 %i.m, 1                        ; 2 uses
+  %.not.i.i = icmp sgt i64 %4, %i.i
+  br i1 %.not.i.i, label %_ZN5arrow6StatusD2Ev.exit.i, label %_ZN5arrow6StatusD2Ev.exit10.thread.i
 
 _ZN5arrow6StatusD2Ev.exit10.thread.i:             ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #18, !noalias !337
   br label %bb.d
 
 _ZN5arrow6StatusD2Ev.exit.i:                      ; preds = %bb.c
-  %4 = add nsw i64 %i.m, 1
   %i.n = shl nsw i64 %i.i, 1
   %.sroa.speculated.i.i.i = tail call noundef i64 @llvm.smax.i64(i64 %4, i64 %i.n)
   %i.o = load ptr, ptr %i.f, align 8, !tbaa !54, !noalias !340
@@ -832,16 +832,16 @@ bb.c:                                             ; preds = %bb.a
   %i.j = load ptr, ptr %i.f, align 8, !tbaa !54, !noalias !350
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   %i.l = load ptr, ptr %i.k, align 8, !noalias !350
-  %i.m = tail call noundef i64 %i.l(ptr noundef nonnull align 8 dereferenceable(216) %i.f), !noalias !350, !inline_history !353 ; 2 uses
-  %.not.i.not.i = icmp slt i64 %i.m, %i.i
-  br i1 %.not.i.not.i, label %_ZN5arrow6StatusD2Ev.exit10.thread.i, label %_ZN5arrow6StatusD2Ev.exit.i
+  %i.m = tail call noundef i64 %i.l(ptr noundef nonnull align 8 dereferenceable(216) %i.f), !noalias !350, !inline_history !353
+  %4 = add nsw i64 %i.m, 1                        ; 2 uses
+  %.not.i.i = icmp sgt i64 %4, %i.i
+  br i1 %.not.i.i, label %_ZN5arrow6StatusD2Ev.exit.i, label %_ZN5arrow6StatusD2Ev.exit10.thread.i
 
 _ZN5arrow6StatusD2Ev.exit10.thread.i:             ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #18, !noalias !347
   br label %bb.d
 
 _ZN5arrow6StatusD2Ev.exit.i:                      ; preds = %bb.c
-  %4 = add nsw i64 %i.m, 1
   %i.n = shl nsw i64 %i.i, 1
   %.sroa.speculated.i.i.i = tail call noundef i64 @llvm.smax.i64(i64 %4, i64 %i.n)
   %i.o = load ptr, ptr %i.f, align 8, !tbaa !54, !noalias !350

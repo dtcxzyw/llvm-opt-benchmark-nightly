@@ -201,14 +201,15 @@ bb.ap:                                            ; preds = %bb.ao
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #29
   %i.ib = load i64, ptr %.sroa.0.0.copyload.i53, align 8
   store i64 %i.ib, ptr %12, align 8
-  %i.ic = call noundef i32 @_ZNK2v88internal18SharedFunctionInfo11EndPositionEv(ptr noundef nonnull align 8 dereferenceable(8) %12) #29 ; 2 uses
+  %i.ic = call noundef i32 @_ZNK2v88internal18SharedFunctionInfo11EndPositionEv(ptr noundef nonnull align 8 dereferenceable(8) %12) #29
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #29
   %i.id = load i64, ptr %.sroa.0.0.copyload.i53, align 8
   store i64 %i.id, ptr %13, align 8
-  %i.ie = call noundef i32 @_ZNK2v88internal18SharedFunctionInfo13StartPositionEv(ptr noundef nonnull align 8 dereferenceable(8) %13) #29 ; 2 uses
+  %i.ie = call noundef i32 @_ZNK2v88internal18SharedFunctionInfo13StartPositionEv(ptr noundef nonnull align 8 dereferenceable(8) %13) #29
+  %17 = sub nsw i32 %i.ic, %i.ie                  ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #29
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #29
-  %.not140 = icmp slt i32 %i.ic, %i.ie
+  %.not140 = icmp slt i32 %17, 0
   br i1 %.not140, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.ap
@@ -217,8 +218,6 @@ bb.ap:                                            ; preds = %bb.ao
   %i.ih = getelementptr inbounds nuw i8, ptr %10, i64 264 ; 2 uses
   %i.ii = getelementptr inbounds nuw i8, ptr %10, i64 304 ; 2 uses
   %i.ij = getelementptr inbounds nuw i8, ptr %10, i64 280
-  %17 = add i32 %i.ic, 1
-  %18 = sub i32 %17, %i.ie
   br label %bb.as
 
 ._crit_edge:                                      ; preds = %bb.az, %bb.ap
@@ -327,9 +326,9 @@ _ZN2v88internal21StringCharacterStream7GetNextEv.exit: ; preds = %bb.ax, %bb.ay
   br label %bb.az
 
 bb.az:                                            ; preds = %_ZN2v88internal21StringCharacterStream7HasMoreEv.exit.thread137, %_ZN2v88internal21StringCharacterStream7GetNextEv.exit
-  %i.jn = add nuw i32 %.0141, 1                   ; 2 uses
-  %exitcond.not = icmp eq i32 %i.jn, %18
-  br i1 %exitcond.not, label %._crit_edge, label %bb.as, !llvm.loop !23
+  %i.jn = add nuw nsw i32 %.0141, 1               ; 2 uses
+  %.not = icmp sgt i32 %i.jn, %17
+  br i1 %.not, label %._crit_edge, label %bb.as, !llvm.loop !23
 
 .critedge:                                        ; preds = %bb.ao, %_ZN2v88internal21StringCharacterStreamD2Ev.exit, %bb.an, %_ZN2v88internal10CodeTracer11StreamScope6streamEv.exit
   %i.jo = load i8, ptr %i.gr, align 8

@@ -201,8 +201,8 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %bb.c
-  %i.i = sub nuw i32 %i.g, %1                     ; 3 uses
-  %i.j = add nuw i32 %i.i, 1                      ; 4 uses
+  %i.i = sub nuw i32 %i.g, %1                     ; 2 uses
+  %i.j = add nuw i32 %i.i, 1                      ; 5 uses
   %i.k = add i64 %i.d, 3257665815644502181        ; 5 uses
   %i.l = zext i64 %i.k to i128
   %i.m = xor i64 %i.k, -8378864009470890807
@@ -213,8 +213,8 @@ bb.d:                                             ; preds = %bb.c
   %i.r = trunc i128 %i.q to i32
   %i.s = trunc i128 %i.q to i64                   ; 2 uses
   %i.t = mul i32 %i.j, %i.r                       ; 2 uses
-  %.not.i.i.i.i = icmp ugt i32 %i.t, %i.i
-  br i1 %.not.i.i.i.i, label %bb.h, label %bb.e
+  %3 = icmp ult i32 %i.t, %i.j
+  br i1 %3, label %bb.e, label %bb.h
 
 bb.e:                                             ; preds = %bb.d
   %i.u = xor i32 %i.i, -1
@@ -251,8 +251,8 @@ bb.g:                                             ; preds = %bb.a
   unreachable
 
 bb.h:                                             ; preds = %..loopexit_crit_edge.i.i.i.i.i, %bb.e, %bb.d
-  %.sroa.5.0.i.i = phi i64 [ %i.k, %bb.d ], [ %i.z, %..loopexit_crit_edge.i.i.i.i.i ], [ %i.k, %bb.e ]
-  %.pn.in.i.i.i.i.i = phi i64 [ %i.s, %bb.d ], [ %i.x, %..loopexit_crit_edge.i.i.i.i.i ], [ %i.s, %bb.e ]
+  %.sroa.5.0.i.i = phi i64 [ %i.z, %..loopexit_crit_edge.i.i.i.i.i ], [ %i.k, %bb.e ], [ %i.k, %bb.d ]
+  %.pn.in.i.i.i.i.i = phi i64 [ %i.x, %..loopexit_crit_edge.i.i.i.i.i ], [ %i.s, %bb.e ], [ %i.s, %bb.d ]
   %i.ak = zext i32 %i.j to i64
   %.pn.i.i.i.i.i = and i64 %.pn.in.i.i.i.i.i, 4294967295
   %.sroa.0.0.in.in.i.i.i.i.i = mul nuw i64 %.pn.i.i.i.i.i, %i.ak

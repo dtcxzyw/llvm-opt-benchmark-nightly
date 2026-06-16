@@ -201,17 +201,19 @@ bb.a:
   %i.e = load ptr, ptr %i.c, align 8, !tbaa !193  ; 5 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !253  ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 24
-  %i.h = load i32, ptr %i.g, align 8, !tbaa !282  ; 6 uses
+  %i.h = load i32, ptr %i.g, align 8, !tbaa !282  ; 5 uses
   %.not.i.i.i = icmp sgt i32 %i.h, 0
   br i1 %.not.i.i.i, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
-  %i.i = and i32 %i.h, 2147483584                 ; 2 uses
+  %i.i = and i32 %i.h, 2147483584                 ; 3 uses
   %.not3347.i.i.i = icmp eq i32 %i.i, 0
   br i1 %.not3347.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.preheader.i
 
 .lr.ph.i.i.preheader.i:                           ; preds = %bb.b
-  %i.j = add nsw i32 %i.h, -64
+  %5 = or disjoint i32 %i.i, 1
+  %umax.i = tail call i32 @llvm.umax.i32(i32 %5, i32 128)
+  %i.j = add nsw i32 %umax.i, -65
   %i.k = lshr i32 %i.j, 3
   %i.l = and i32 %i.k, 536870904
   %narrow.i = add nuw nsw i32 %i.l, 8
@@ -269,12 +271,13 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not37.i.i.not.i14.not, label %.critedge.i.i.i, label %.lr.ph
 
 _ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i: ; preds = %.lr.ph
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i15, 64 ; 2 uses
-  %.not37.i.i.not.i = icmp samesign ult i64 %indvars.iv.next.i, %i.an
-  br i1 %.not37.i.i.not.i, label %.lr.ph, label %.critedge.i.i.i, !llvm.loop !285
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.next.i17, 64 ; 2 uses
+  %.not37.i.i.i = icmp samesign ugt i64 %indvars.iv.next.i, %i.an
+  br i1 %.not37.i.i.i, label %.critedge.i.i.i, label %.lr.ph, !llvm.loop !285
 
 .lr.ph:                                           ; preds = %bb.e, %_ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i
-  %indvars.iv.i15 = phi i64 [ %indvars.iv.next.i, %_ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i ], [ 0, %bb.e ] ; 3 uses
+  %indvars.iv.next.i17 = phi i64 [ %indvars.iv.next.i, %_ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i ], [ 64, %bb.e ] ; 2 uses
+  %indvars.iv.i15 = phi i64 [ %indvars.iv.next.i17, %_ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i ], [ 0, %bb.e ] ; 2 uses
   %i.ao = lshr exact i64 %indvars.iv.i15, 3
   %i.ap = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.ao
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !144 ; 2 uses
@@ -677,12 +680,13 @@ bb.j:                                             ; preds = %_ZNSt6vectorImSaImE
   br i1 %.not37.i.i.not.i28.not, label %.critedge.i.i.i, label %.lr.ph
 
 _ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i: ; preds = %.lr.ph
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i29, 64 ; 2 uses
-  %.not37.i.i.not.i = icmp samesign ult i64 %indvars.iv.next.i, %i.ao
-  br i1 %.not37.i.i.not.i, label %.lr.ph, label %.critedge.i.i.i, !llvm.loop !285
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.next.i30, 64 ; 2 uses
+  %.not37.i.i.i = icmp samesign ugt i64 %indvars.iv.next.i, %i.ao
+  br i1 %.not37.i.i.i, label %.critedge.i.i.i, label %.lr.ph, !llvm.loop !285
 
 .lr.ph:                                           ; preds = %bb.j, %_ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i
-  %indvars.iv.i29 = phi i64 [ %indvars.iv.next.i, %_ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i ], [ 0, %bb.j ] ; 3 uses
+  %indvars.iv.next.i30 = phi i64 [ %indvars.iv.next.i, %_ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i ], [ 64, %bb.j ] ; 2 uses
+  %indvars.iv.i29 = phi i64 [ %indvars.iv.next.i30, %_ZZN8facebook5velox4bits12findFirstBitEPKmiiENKUliE_clEi.exit.i.i.i ], [ 0, %bb.j ] ; 2 uses
   %i.ap = lshr exact i64 %indvars.iv.i29, 3
   %i.aq = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.ap
   %i.ar = load i64, ptr %i.aq, align 8, !tbaa !144 ; 2 uses
@@ -1084,6 +1088,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #20
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }

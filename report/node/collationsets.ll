@@ -93,11 +93,10 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.not.i23 = icmp eq i32 %i.f, 192
   %i.g = and i32 %.015, 15
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %smax = tail call i32 @llvm.smax.i32(i32 %2, i32 %1)
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.p, %bb.c
-  %.016 = phi i32 [ %1, %bb.c ], [ %i.bo, %bb.p ] ; 16 uses
+  %.016 = phi i32 [ %1, %bb.c ], [ %i.bo, %bb.p ] ; 15 uses
   %i.i = load ptr, ptr %i.e, align 8              ; 2 uses
   %i.j = load ptr, ptr %i.i, align 8              ; 6 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
@@ -213,9 +212,9 @@ bb.o:                                             ; preds = %bb.m, %bb.l
   br label %bb.p
 
 bb.p:                                             ; preds = %_ZN6icu_789Collation19isSelfContainedCE32Ej.exit27.thread, %bb.n, %bb.o
-  %i.bo = add i32 %.016, 1
-  %exitcond.not = icmp eq i32 %.016, %smax
-  br i1 %exitcond.not, label %.loopexit, label %bb.d, !llvm.loop !5
+  %i.bo = add nsw i32 %.016, 1                    ; 2 uses
+  %.not22 = icmp sgt i32 %i.bo, %2
+  br i1 %.not22, label %.loopexit, label %bb.d, !llvm.loop !5
 
 .loopexit:                                        ; preds = %bb.p, %bb.b
   %.0.in.in.in = getelementptr inbounds nuw i8, ptr %0, i64 96
@@ -618,7 +617,7 @@ bb.an:                                            ; preds = %bb.am
   br label %bb.aq
 
 bb.ao:                                            ; preds = %.lr.ph91, %bb.ap
-  %.04589 = phi i32 [ %1, %.lr.ph91 ], [ %i.fk, %bb.ap ] ; 3 uses
+  %.04589 = phi i32 [ %1, %.lr.ph91 ], [ %i.fk, %bb.ap ] ; 2 uses
   %i.fa = trunc i32 %.04589 to i16
   store i16 %i.fa, ptr %i.a, align 2
   call void @_ZN6icu_7817CollationIterator5resetEv(ptr noundef nonnull align 8 dereferenceable(416) %4) #9
@@ -638,9 +637,9 @@ bb.ap:                                            ; preds = %bb.ao
   %i.fi = getelementptr inbounds nuw i8, ptr %i.fh, i64 24
   %i.fj = load ptr, ptr %i.fi, align 8
   call void %i.fj(ptr noundef nonnull align 8 dereferenceable(8) %i.fe, ptr noundef %i.ff, i32 noundef %i.fg) #9
-  %i.fk = add i32 %.04589, 1
-  %exitcond.not = icmp eq i32 %.04589, %2
-  br i1 %exitcond.not, label %.critedge.thread, label %bb.ao, !llvm.loop !16
+  %i.fk = add nsw i32 %.04589, 1                  ; 2 uses
+  %.not53.not = icmp sgt i32 %i.fk, %2
+  br i1 %.not53.not, label %.critedge.thread, label %bb.ao, !llvm.loop !16
 
 .critedge:                                        ; preds = %bb.ao
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
@@ -898,11 +897,10 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 452
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %4, i64 12 ; 2 uses
-  %smax = call i32 @llvm.smax.i32(i32 %2, i32 %1)
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZN6icu_7813UnicodeString8truncateEi.exit, %bb.b
-  %.0 = phi i32 [ %1, %bb.b ], [ %i.an, %_ZN6icu_7813UnicodeString8truncateEi.exit ] ; 3 uses
+  %.0 = phi i32 [ %1, %bb.b ], [ %i.an, %_ZN6icu_7813UnicodeString8truncateEi.exit ] ; 2 uses
   %i.h = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString6appendEi(ptr noundef nonnull align 8 dereferenceable(64) %4, i32 noundef %.0) #9 ; 0 uses
   %i.i = load ptr, ptr %i.c, align 8              ; 4 uses
   %.not = icmp eq ptr %i.i, null
@@ -966,9 +964,9 @@ bb.j:                                             ; preds = %bb.h
   br label %_ZN6icu_7813UnicodeString8truncateEi.exit
 
 _ZN6icu_7813UnicodeString8truncateEi.exit:        ; preds = %bb.f, %bb.g, %bb.i, %bb.j
-  %i.an = add i32 %.0, 1
-  %exitcond.not = icmp eq i32 %.0, %smax
-  br i1 %exitcond.not, label %bb.k, label %bb.c, !llvm.loop !20
+  %i.an = add nsw i32 %.0, 1                      ; 2 uses
+  %.not8 = icmp sgt i32 %i.an, %2
+  br i1 %.not8, label %bb.k, label %bb.c, !llvm.loop !20
 
 bb.k:                                             ; preds = %_ZN6icu_7813UnicodeString8truncateEi.exit
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %4) #9

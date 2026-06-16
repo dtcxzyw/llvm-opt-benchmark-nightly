@@ -201,17 +201,17 @@ mi_arena_info_slices_needed.exit:                 ; preds = %bb.i, %bb.j
   %.0.i.i = phi i64 [ %i.aa, %bb.i ], [ %i.ac, %bb.j ]
   %i.ad = tail call i64 @_mi_os_secure_guard_page_size() #14
   %i.ae = add i64 %.0.i.i, 65535
-  %i.af = add i64 %i.ae, %i.ad                    ; 6 uses
+  %i.af = add i64 %i.ae, %i.ad                    ; 5 uses
   %i.ag = lshr i64 %i.af, 16                      ; 7 uses
-  %.not110 = icmp samesign ugt i64 %i.m, %i.ag
-  br i1 %.not110, label %bb.l, label %bb.k
+  %9 = add nuw nsw i64 %i.ag, 1                   ; 2 uses
+  %10 = icmp samesign ult i64 %i.m, %9
+  br i1 %10, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %mi_arena_info_slices_needed.exit
   %i.ah = lshr i64 %.197, 10
-  %9 = and i64 %i.af, -65536
-  %10 = add i64 %9, 65536
-  %11 = lshr exact i64 %10, 10
-  tail call void (ptr, ...) @_mi_warning_message(ptr noundef nonnull @.str.15, i64 noundef %i.ah, i64 noundef %11) #14
+  %11 = shl nuw nsw i64 %9, 6
+  %12 = and i64 %11, 18014398509481920
+  tail call void (ptr, ...) @_mi_warning_message(ptr noundef nonnull @.str.15, i64 noundef %i.ah, i64 noundef %12) #14
   br label %mi_arenas_add.exit
 
 bb.l:                                             ; preds = %mi_arena_info_slices_needed.exit

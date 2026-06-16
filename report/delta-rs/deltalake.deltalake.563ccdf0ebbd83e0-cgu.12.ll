@@ -201,7 +201,7 @@ bb.s:                                             ; preds = %bb.r
   %i.by = getelementptr inbounds nuw i8, ptr %i.bh, i64 16 ; 2 uses
   %i.bz = load i64, ptr %i.by, align 8, !alias.scope !1437, !noalias !1442, !noundef !4 ; 4 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
-  %i.cb = load i64, ptr %i.ca, align 8, !alias.scope !1440, !noalias !1444, !noundef !4 ; 7 uses
+  %i.cb = load i64, ptr %i.ca, align 8, !alias.scope !1440, !noalias !1444, !noundef !4 ; 6 uses
   %i.cc = icmp ult i64 %i.cb, 128102389400760776
   tail call void @llvm.assume(i1 %i.cc)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !1445
@@ -253,11 +253,11 @@ _RNvMsF_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecINtNtNtCs4j34XAPZOn0_4http6header3ma
   %i.cu = load ptr, ptr %i.ct, align 8, !alias.scope !1451, !noalias !1452, !nonnull !4, !noundef !4
   %i.cv = getelementptr inbounds nuw [72 x i8], ptr %i.cu, i64 %i.cb
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.cv, ptr noundef nonnull align 8 dereferenceable(72) %i.b, i64 72, i1 false), !noalias !1444
-  %i.cw = add nuw nsw i64 %i.cb, 1                ; 2 uses
+  %i.cw = add nuw nsw i64 %i.cb, 1                ; 3 uses
   store i64 %i.cw, ptr %i.ca, align 8, !alias.scope !1451, !noalias !1452
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1445
-  %.not.i = icmp ugt i64 %i.bz, %i.cb
-  br i1 %.not.i, label %bb.ab, label %bb.aa
+  %3 = icmp ult i64 %i.bz, %i.cw
+  br i1 %3, label %bb.aa, label %bb.ab
 
 bb.w:                                             ; preds = %bb.r
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses

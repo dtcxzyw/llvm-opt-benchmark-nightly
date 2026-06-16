@@ -107,18 +107,15 @@ declare hidden ptr @luaM_toobig(ptr noundef) local_unnamed_addr #1
 ; Function Attrs: nounwind uwtable
 define hidden ptr @luaS_newlstr(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = lshr i64 %2, 5                           ; 2 uses
-  %.neg = xor i64 %i.a, -1
-  %.not.not42.not = icmp eq i64 %2, 0
-  br i1 %.not.not42.not, label %._crit_edge, label %.lr.ph.preheader
+  %3 = trunc i64 %2 to i32                        ; 2 uses
+  %i.a = lshr i64 %2, 5
+  %4 = add nuw nsw i64 %i.a, 1                    ; 3 uses
+  %.not43 = icmp ult i64 %2, %4
+  br i1 %.not43, label %._crit_edge, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.a
-  %3 = trunc i64 %2 to i32
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.03344 = phi i64 [ %4, %.lr.ph ], [ %2, %.lr.ph.preheader ] ; 2 uses
-  %.03543 = phi i32 [ %i.j, %.lr.ph ], [ %3, %.lr.ph.preheader ] ; 3 uses
+.lr.ph:                                           ; preds = %bb.a, %.lr.ph
+  %.03344 = phi i64 [ %5, %.lr.ph ], [ %2, %bb.a ] ; 2 uses
+  %.03543 = phi i32 [ %i.j, %.lr.ph ], [ %3, %bb.a ] ; 3 uses
   %i.b = shl i32 %.03543, 5
   %i.c = lshr i32 %.03543, 2
   %i.d = add i32 %i.b, %i.c
@@ -128,12 +125,12 @@ bb.a:
   %i.h = zext i8 %i.g to i32
   %i.i = add i32 %i.d, %i.h
   %i.j = xor i32 %i.i, %.03543                    ; 2 uses
-  %4 = add i64 %.03344, %.neg                     ; 2 uses
-  %.not.not = icmp ugt i64 %4, %i.a
-  br i1 %.not.not, label %.lr.ph, label %._crit_edge, !llvm.loop !36
+  %5 = sub nuw i64 %.03344, %4                    ; 2 uses
+  %.not = icmp ult i64 %5, %4
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !36
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
-  %.035.lcssa = phi i32 [ 0, %bb.a ], [ %i.j, %.lr.ph ] ; 3 uses
+  %.035.lcssa = phi i32 [ %3, %bb.a ], [ %i.j, %.lr.ph ] ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !8    ; 3 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !37

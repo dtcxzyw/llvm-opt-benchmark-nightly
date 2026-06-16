@@ -128,23 +128,20 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
   %6 = alloca %"class.icu_78::ConstChar16Ptr", align 8 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
-  %i.c = load i32, ptr %i.b, align 4              ; 4 uses
+  %i.c = load i32, ptr %i.b, align 4              ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 5 uses
   %i.e = load i32, ptr %i.d, align 4
   %.not = icmp slt i32 %i.c, %i.e
   br i1 %.not, label %bb.b, label %bb.r
 
 bb.b:                                             ; preds = %bb.a
+  %7 = add nsw i32 %i.c, -1                       ; 2 uses
   %i.f = load i32, ptr %2, align 4                ; 2 uses
-  %.not5761.not = icmp sgt i32 %i.c, %i.f
-  br i1 %.not5761.not, label %.lr.ph.preheader, label %._crit_edge
+  %.not5761 = icmp slt i32 %7, %i.f
+  br i1 %.not5761, label %._crit_edge, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.b
-  %7 = add nsw i32 %i.c, -1
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
-  %.05162 = phi i32 [ %i.o, %bb.d ], [ %7, %.lr.ph.preheader ] ; 2 uses
+.lr.ph:                                           ; preds = %bb.b, %bb.d
+  %.05162 = phi i32 [ %i.o, %bb.d ], [ %7, %bb.b ] ; 2 uses
   %i.g = load ptr, ptr %1, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 80
   %i.i = load ptr, ptr %i.h, align 8

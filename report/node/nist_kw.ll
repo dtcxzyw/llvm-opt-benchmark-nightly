@@ -199,11 +199,13 @@ bb.i:                                             ; preds = %bb.g
   %i.al = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.am = shl nuw nsw i64 %i.w, 3
   %i.an = getelementptr inbounds nuw i8, ptr %4, i64 %i.am
+  %7 = or disjoint i64 %i.x, 1
+  %umax = tail call i64 @llvm.umax.i64(i64 %7, i64 2)
   br label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph, %bb.k
   %.067103 = phi ptr [ %i.ab, %.lr.ph ], [ %spec.select90, %bb.k ] ; 3 uses
-  %.069102 = phi i64 [ 1, %.lr.ph ], [ %i.by, %bb.k ] ; 10 uses
+  %.069102 = phi i64 [ 1, %.lr.ph ], [ %i.by, %bb.k ] ; 9 uses
   %i.ao = load i64, ptr %4, align 1
   store i64 %i.ao, ptr %i.c, align 16
   %i.ap = load i64, ptr %.067103, align 1
@@ -257,8 +259,8 @@ bb.k:                                             ; preds = %bb.j
   %i.bx = getelementptr inbounds nuw i8, ptr %.067103, i64 8 ; 2 uses
   %.not86 = icmp ult ptr %i.bx, %i.an
   %spec.select90 = select i1 %.not86, ptr %i.bx, ptr %i.ab
-  %i.by = add nuw i64 %.069102, 1
-  %exitcond.not = icmp eq i64 %.069102, %i.x
+  %i.by = add nuw i64 %.069102, 1                 ; 2 uses
+  %exitcond.not = icmp eq i64 %i.by, %umax
   br i1 %exitcond.not, label %.loopexit, label %bb.j, !llvm.loop !11
 
 .loopexit:                                        ; preds = %bb.k, %.preheader, %bb.h
@@ -660,6 +662,9 @@ declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_add
 
 ; Function Attrs: nofree nounwind
 declare noundef i32 @putchar(i32 noundef) local_unnamed_addr #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #5
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }

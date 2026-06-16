@@ -201,7 +201,7 @@ bb.g:                                             ; preds = %bb.f
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 1088 ; 12 uses
   store ptr %i.ae, ptr %i.af, align 8, !tbaa !61
   %i.ag = icmp sgt i32 %2, 0                      ; 2 uses
-  br i1 %i.ag, label %.lr.ph478.preheader, label %.preheader468
+  br i1 %i.ag, label %.lr.ph478.preheader, label %.preheader468.preheader
 
 .lr.ph478.preheader:                              ; preds = %bb.g
   %wide.trip.count549 = zext nneg i32 %2 to i64   ; 2 uses
@@ -212,33 +212,6 @@ bb.g:                                             ; preds = %bb.f
 .lr.ph478.preheader.new:                          ; preds = %.lr.ph478.preheader
   %unroll_iter719.a = and i64 %wide.trip.count549, 2147483644
   br label %.lr.ph478
-
-.preheader468.loopexit.unr-lcssa:                 ; preds = %.lr.ph478
-  %lcmp.mod717.not = icmp eq i64 %xtraiter715.a, 0
-  br i1 %lcmp.mod717.not, label %.preheader468, label %.lr.ph478.epil.preheader
-
-.lr.ph478.epil.preheader:                         ; preds = %.preheader468.loopexit.unr-lcssa, %.lr.ph478.preheader
-  %indvars.iv546.epil.init = phi i64 [ 0, %.lr.ph478.preheader ], [ %indvars.iv.next547.3, %.preheader468.loopexit.unr-lcssa ]
-  %lcmp.mod718 = icmp ne i64 %xtraiter715.a, 0
-  tail call void @llvm.assume(i1 %lcmp.mod718)
-  br label %.lr.ph478.epil
-
-.lr.ph478.epil:                                   ; preds = %.lr.ph478.epil, %.lr.ph478.epil.preheader
-  %indvars.iv546.epil = phi i64 [ %indvars.iv546.epil.init, %.lr.ph478.epil.preheader ], [ %indvars.iv.next547.epil, %.lr.ph478.epil ] ; 3 uses
-  %epil.iter716 = phi i64 [ 0, %.lr.ph478.epil.preheader ], [ %epil.iter716.next, %.lr.ph478.epil ]
-  %7 = trunc i64 %indvars.iv546.epil to i8
-  %8 = load ptr, ptr %i.af, align 8, !tbaa !61
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 %indvars.iv546.epil
-  store i8 %7, ptr %9, align 1, !tbaa !29
-  %indvars.iv.next547.epil = add nuw nsw i64 %indvars.iv546.epil, 1
-  %epil.iter716.next = add i64 %epil.iter716, 1   ; 2 uses
-  %epil.iter716.cmp.not = icmp eq i64 %epil.iter716.next, %xtraiter715.a
-  br i1 %epil.iter716.cmp.not, label %.preheader468, label %.lr.ph478.epil, !llvm.loop !62
-
-.preheader468:                                    ; preds = %.preheader468.loopexit.unr-lcssa, %.lr.ph478.epil, %bb.g
-  %invariant.smax = tail call i32 @llvm.smax.i32(i32 %3, i32 1) ; 2 uses
-  %or.cond693 = icmp sgt i32 %2, %invariant.smax
-  br i1 %or.cond693, label %.lr.ph481.preheader.a, label %._crit_edge.thread
 
 .lr.ph478:                                        ; preds = %.lr.ph478, %.lr.ph478.preheader.new
   %indvars.iv546 = phi i64 [ 0, %.lr.ph478.preheader.new ], [ %indvars.iv.next547.3, %.lr.ph478 ] ; 6 uses
@@ -265,19 +238,50 @@ bb.g:                                             ; preds = %bb.f
   %indvars.iv.next547.3 = add nuw nsw i64 %indvars.iv546, 4 ; 2 uses
   %niter720.next.3 = add i64 %niter720.a, 4       ; 2 uses
   %niter720.ncmp.3 = icmp eq i64 %niter720.next.3, %unroll_iter719.a
-  br i1 %niter720.ncmp.3, label %.preheader468.loopexit.unr-lcssa, label %.lr.ph478, !llvm.loop !63
+  br i1 %niter720.ncmp.3, label %.preheader468.preheader.loopexit.unr-lcssa, label %.lr.ph478, !llvm.loop !62
 
-.lr.ph481.preheader.a:                            ; preds = %.preheader468, %._crit_edge
-  %.1695.in = phi i32 [ %.1695, %._crit_edge ], [ %2, %.preheader468 ]
-  %indvars.iv554694.in = phi i32 [ %indvars.iv554694, %._crit_edge ], [ %2, %.preheader468 ]
-  %indvars.iv554694 = add i32 %indvars.iv554694.in, -1 ; 2 uses
-  %.1695 = add nsw i32 %.1695.in, -1              ; 2 uses
+.preheader468.preheader.loopexit.unr-lcssa:       ; preds = %.lr.ph478
+  %lcmp.mod711.not = icmp eq i64 %xtraiter715.a, 0
+  br i1 %lcmp.mod711.not, label %.preheader468.preheader, label %.lr.ph478.epil.preheader
+
+.lr.ph478.epil.preheader:                         ; preds = %.preheader468.preheader.loopexit.unr-lcssa, %.lr.ph478.preheader
+  %indvars.iv546.epil.init = phi i64 [ 0, %.lr.ph478.preheader ], [ %indvars.iv.next547.3, %.preheader468.preheader.loopexit.unr-lcssa ]
+  %lcmp.mod712 = icmp ne i64 %xtraiter715.a, 0
+  tail call void @llvm.assume(i1 %lcmp.mod712)
+  br label %.lr.ph478.epil
+
+.lr.ph478.epil:                                   ; preds = %.lr.ph478.epil, %.lr.ph478.epil.preheader
+  %indvars.iv546.epil = phi i64 [ %indvars.iv546.epil.init, %.lr.ph478.epil.preheader ], [ %indvars.iv.next547.epil, %.lr.ph478.epil ] ; 3 uses
+  %epil.iter710 = phi i64 [ 0, %.lr.ph478.epil.preheader ], [ %epil.iter710.next, %.lr.ph478.epil ]
+  %7 = trunc i64 %indvars.iv546.epil to i8
+  %8 = load ptr, ptr %i.af, align 8, !tbaa !61
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 %indvars.iv546.epil
+  store i8 %7, ptr %9, align 1, !tbaa !29
+  %indvars.iv.next547.epil = add nuw nsw i64 %indvars.iv546.epil, 1
+  %epil.iter710.next = add i64 %epil.iter710, 1   ; 2 uses
+  %epil.iter710.cmp.not = icmp eq i64 %epil.iter710.next, %xtraiter715.a
+  br i1 %epil.iter710.cmp.not, label %.preheader468.preheader, label %.lr.ph478.epil, !llvm.loop !63
+
+.preheader468.preheader:                          ; preds = %.preheader468.preheader.loopexit.unr-lcssa, %.lr.ph478.epil, %bb.g
+  br label %.lr.ph481.preheader.a
+
+.lr.ph481.preheader.a:                            ; preds = %.preheader468.preheader, %._crit_edge
+  %.1695.in = phi i32 [ %indvars.iv554694, %._crit_edge ], [ %2, %.preheader468.preheader ]
+  %indvars.iv554694.in = phi i32 [ %.1695, %._crit_edge ], [ %2, %.preheader468.preheader ] ; 2 uses
+  %indvars.iv554694 = add i32 %.1695.in, -1       ; 2 uses
+  %.1695 = add nsw i32 %indvars.iv554694.in, -1   ; 2 uses
+  %.not429 = icmp sge i32 %.1695, %3
+  %10 = icmp sgt i32 %indvars.iv554694.in, 1
+  %or.cond = and i1 %.not429, %10
+  br i1 %or.cond, label %.lr.ph481.preheader, label %._crit_edge.thread
+
+.lr.ph481.preheader:                              ; preds = %.lr.ph481.preheader.a
   %wide.trip.count556 = zext i32 %indvars.iv554694 to i64
   br label %.lr.ph481
 
-.lr.ph481:                                        ; preds = %.lr.ph481.preheader.a, %bb.i
-  %indvars.iv551 = phi i64 [ 0, %.lr.ph481.preheader.a ], [ %indvars.iv.next552, %bb.i ] ; 2 uses
-  %.0356480 = phi i32 [ 1, %.lr.ph481.preheader.a ], [ %.1357, %bb.i ]
+.lr.ph481:                                        ; preds = %.lr.ph481.preheader, %bb.i
+  %indvars.iv551 = phi i64 [ 0, %.lr.ph481.preheader ], [ %indvars.iv.next552, %bb.i ] ; 2 uses
+  %.0356480 = phi i32 [ 1, %.lr.ph481.preheader ], [ %.1357, %bb.i ]
   %i.au = load ptr, ptr %i.af, align 8, !tbaa !61 ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 %indvars.iv551 ; 2 uses
   %i.aw = load i8, ptr %i.av, align 1, !tbaa !29  ; 2 uses
@@ -307,11 +311,9 @@ bb.i:                                             ; preds = %.lr.ph481, %bb.h
 
 ._crit_edge:                                      ; preds = %bb.i
   %i.bi = icmp eq i32 %.1357, 0
-  %or.cond = icmp sgt i32 %.1695, %invariant.smax
-  %or.cond701 = select i1 %i.bi, i1 %or.cond, i1 false
-  br i1 %or.cond701, label %.lr.ph481.preheader.a, label %._crit_edge.thread
+  br i1 %i.bi, label %.lr.ph481.preheader.a, label %._crit_edge.thread
 
-._crit_edge.thread:                               ; preds = %._crit_edge, %.preheader468
+._crit_edge.thread:                               ; preds = %._crit_edge, %.lr.ph481.preheader.a
   %i.bj = icmp sgt i32 %3, 0                      ; 2 uses
   br i1 %i.h, label %.preheader463, label %.preheader465
 
@@ -714,8 +716,8 @@ attributes #12 = { noreturn nounwind }
 !59 = distinct !{!59, !60}
 !60 = !{!"llvm.loop.unroll.disable"}
 !61 = !{!8, !13, i64 1088}
-!62 = distinct !{!62, !60}
-!63 = distinct !{!63, !58}
+!62 = distinct !{!62, !58}
+!63 = distinct !{!63, !60}
 !64 = distinct !{!64, !58}
 !65 = distinct !{!65, !58}
 !66 = !{i64 0, i64 1, !29, i64 1, i64 1, !29, i64 2, i64 1, !29}

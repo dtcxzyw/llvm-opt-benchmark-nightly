@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.l = trunc i64 %i.k to i32                    ; 11 uses
   %i.m = load ptr, ptr %1, align 8, !tbaa !8
   %i.n = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.m) #14 ; 11 uses
-  %i.o = trunc i64 %i.n to i32                    ; 15 uses
+  %i.o = trunc i64 %i.n to i32                    ; 14 uses
   %i.p = icmp slt i32 %i.i, %i.l
   %i.q = load i32, ptr @MSalign11.orlgth2, align 4 ; 4 uses
   %i.r = icmp slt i32 %i.q, %i.o
@@ -601,8 +601,8 @@ bb.o:                                             ; preds = %.lr.ph.epil.prehead
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %bb.o, %.lr.ph.epil.preheader, %match_calc.exit314
   %i.gx = load float, ptr %i.cl, align 4, !tbaa !12
   store float %i.gx, ptr %.0270, align 4, !tbaa !12
-  %.not292329 = icmp slt i32 %i.o, 1              ; 2 uses
-  br i1 %.not292329, label %._crit_edge336, label %.lr.ph332.preheader
+  %3 = icmp sgt i32 %i.o, 0                       ; 4 uses
+  br i1 %3, label %.lr.ph332.preheader, label %._crit_edge336
 
 .lr.ph332.preheader:                              ; preds = %._crit_edge
   %i.gy = add nuw nsw i64 %i.n, 1                 ; 2 uses
@@ -920,7 +920,7 @@ match_calc.exit321:                               ; preds = %.prol.loopexit496, 
   %i.ly = fpext float %i.lx to double
   %i.lz = fpext float %i.lt to double
   %i.ma = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.lw, ptr noundef nonnull @.str.3, double noundef %i.ly, double noundef %i.lz) #11 ; 0 uses
-  br i1 %.not292329, label %._crit_edge349, label %.lr.ph348
+  br i1 %3, label %.lr.ph348, label %._crit_edge349
 
 .lr.ph348:                                        ; preds = %match_calc.exit321
   %i.mb = load ptr, ptr @MSalign11.ijp, align 8, !tbaa !47
@@ -1066,7 +1066,6 @@ bb.ae:                                            ; preds = %bb.ad
   %.0264.lcssa = phi float [ -9.999000e+02, %._crit_edge336 ], [ %.1265.1, %.preheader324.loopexit.unr-lcssa ], [ %.1265.epil, %.epil.preheader ] ; 3 uses
   %.0251.lcssa = phi i32 [ 0, %._crit_edge336 ], [ %.1252.1, %.preheader324.loopexit.unr-lcssa ], [ %.1252.epil, %.epil.preheader ] ; 3 uses
   %.0247.lcssa = phi i32 [ 0, %._crit_edge336 ], [ %.1248.1, %.preheader324.loopexit.unr-lcssa ], [ %.1248.epil, %.epil.preheader ] ; 3 uses
-  %3 = icmp sgt i32 %i.o, 0                       ; 2 uses
   br i1 %3, label %.lr.ph371.a, label %.preheader323
 
 .lr.ph371.a:                                      ; preds = %.preheader324
@@ -1292,7 +1291,7 @@ bb.ag:                                            ; preds = %bb.ag, %.lr.ph371.n
   %indvars.iv.next.i.epil = add nuw nsw i64 %indvars.iv.i.epil, 1 ; 2 uses
   %i.ri = getelementptr inbounds nuw [8 x i8], ptr %i.qy, i64 %indvars.iv.i.epil
   %i.rj = load ptr, ptr %i.ri, align 8, !tbaa !43
-  %i.rk = trunc nuw i64 %indvars.iv.next.i.epil to i32
+  %i.rk = trunc nuw nsw i64 %indvars.iv.next.i.epil to i32
   store i32 %i.rk, ptr %i.rj, align 4, !tbaa !4
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter517
@@ -1341,42 +1340,42 @@ scalar.ph467.preheader:                           ; preds = %.lr.ph5.i, %middle.
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
   %i.rs = getelementptr inbounds nuw [8 x i8], ptr %i.qy, i64 %indvars.iv.i
   %i.rt = load ptr, ptr %i.rs, align 8, !tbaa !43
-  %i.ru = trunc nuw i64 %indvars.iv.next.i to i32
+  %i.ru = trunc nuw nsw i64 %indvars.iv.next.i to i32
   store i32 %i.ru, ptr %i.rt, align 4, !tbaa !4
   %indvars.iv.next.i.1 = or disjoint i64 %indvars.iv.i, 2 ; 2 uses
   %i.rv = getelementptr inbounds nuw [8 x i8], ptr %i.qy, i64 %indvars.iv.next.i
   %i.rw = load ptr, ptr %i.rv, align 8, !tbaa !43
-  %i.rx = trunc nuw i64 %indvars.iv.next.i.1 to i32
+  %i.rx = trunc nuw nsw i64 %indvars.iv.next.i.1 to i32
   store i32 %i.rx, ptr %i.rw, align 4, !tbaa !4
   %indvars.iv.next.i.2 = or disjoint i64 %indvars.iv.i, 3 ; 2 uses
   %i.ry = getelementptr inbounds nuw [8 x i8], ptr %i.qy, i64 %indvars.iv.next.i.1
   %i.rz = load ptr, ptr %i.ry, align 8, !tbaa !43
-  %i.sa = trunc nuw i64 %indvars.iv.next.i.2 to i32
+  %i.sa = trunc nuw nsw i64 %indvars.iv.next.i.2 to i32
   store i32 %i.sa, ptr %i.rz, align 4, !tbaa !4
   %indvars.iv.next.i.3 = or disjoint i64 %indvars.iv.i, 4 ; 2 uses
   %i.sb = getelementptr inbounds nuw [8 x i8], ptr %i.qy, i64 %indvars.iv.next.i.2
   %i.sc = load ptr, ptr %i.sb, align 8, !tbaa !43
-  %i.sd = trunc nuw i64 %indvars.iv.next.i.3 to i32
+  %i.sd = trunc nuw nsw i64 %indvars.iv.next.i.3 to i32
   store i32 %i.sd, ptr %i.sc, align 4, !tbaa !4
   %indvars.iv.next.i.4 = or disjoint i64 %indvars.iv.i, 5 ; 2 uses
   %i.se = getelementptr inbounds nuw [8 x i8], ptr %i.qy, i64 %indvars.iv.next.i.3
   %i.sf = load ptr, ptr %i.se, align 8, !tbaa !43
-  %i.sg = trunc nuw i64 %indvars.iv.next.i.4 to i32
+  %i.sg = trunc nuw nsw i64 %indvars.iv.next.i.4 to i32
   store i32 %i.sg, ptr %i.sf, align 4, !tbaa !4
   %indvars.iv.next.i.5 = or disjoint i64 %indvars.iv.i, 6 ; 2 uses
   %i.sh = getelementptr inbounds nuw [8 x i8], ptr %i.qy, i64 %indvars.iv.next.i.4
   %i.si = load ptr, ptr %i.sh, align 8, !tbaa !43
-  %i.sj = trunc nuw i64 %indvars.iv.next.i.5 to i32
+  %i.sj = trunc nuw nsw i64 %indvars.iv.next.i.5 to i32
   store i32 %i.sj, ptr %i.si, align 4, !tbaa !4
   %indvars.iv.next.i.6 = or disjoint i64 %indvars.iv.i, 7 ; 2 uses
   %i.sk = getelementptr inbounds nuw [8 x i8], ptr %i.qy, i64 %indvars.iv.next.i.5
   %i.sl = load ptr, ptr %i.sk, align 8, !tbaa !43
-  %i.sm = trunc nuw i64 %indvars.iv.next.i.6 to i32
+  %i.sm = trunc nuw nsw i64 %indvars.iv.next.i.6 to i32
   store i32 %i.sm, ptr %i.sl, align 4, !tbaa !4
   %indvars.iv.next.i.7 = add nuw nsw i64 %indvars.iv.i, 8 ; 3 uses
   %i.sn = getelementptr inbounds nuw [8 x i8], ptr %i.qy, i64 %indvars.iv.next.i.6
   %i.so = load ptr, ptr %i.sn, align 8, !tbaa !43
-  %i.sp = trunc nuw i64 %indvars.iv.next.i.7 to i32
+  %i.sp = trunc nuw nsw i64 %indvars.iv.next.i.7 to i32
   store i32 %i.sp, ptr %i.so, align 4, !tbaa !4
   %niter521.next.7 = add i64 %niter521, 8         ; 2 uses
   %niter521.ncmp.7 = icmp eq i64 %niter521.next.7, %unroll_iter520

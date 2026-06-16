@@ -201,13 +201,13 @@ bb.bw:                                            ; preds = %peek.exit367.thread
   %i.mq = phi ptr [ %i.lk, %peek.exit367.thread ], [ %i.lo, %peek.exit367 ]
   %i.mr = phi i64 [ %i.ln, %peek.exit367.thread ], [ %i.lr, %peek.exit367 ]
   %i.ms = getelementptr inbounds nuw i8, ptr %0, i64 556 ; 2 uses
-  %i.mt = load i32, ptr %i.ms, align 4, !tbaa !75 ; 2 uses
-  %i.mu = add nsw i32 %i.mt, 1                    ; 2 uses
+  %i.mt = load i32, ptr %i.ms, align 4, !tbaa !75
+  %i.mu = add nsw i32 %i.mt, 1                    ; 3 uses
   store i32 %i.mu, ptr %i.ms, align 4, !tbaa !75
   %i.mv = getelementptr inbounds nuw i8, ptr %1, i64 28
   %i.mw = load i32, ptr %i.mv, align 4, !tbaa !30 ; 2 uses
   %.not164 = icmp ne i32 %i.mw, 0
-  %2 = icmp sle i32 %i.mw, %i.mt
+  %2 = icmp slt i32 %i.mw, %i.mu
   %spec.select = select i1 %.not164, i1 %2, i1 false
   br i1 %spec.select, label %bb.bx, label %bb.by, !prof !67
 
@@ -552,13 +552,13 @@ bb.cu:                                            ; preds = %peek.exit391.thread
   %.in = getelementptr inbounds nuw i8, ptr %.pn, i64 16
   %i.qm = load i64, ptr %.in, align 8, !tbaa !50
   %i.qn = getelementptr inbounds nuw i8, ptr %0, i64 556 ; 4 uses
-  %i.qo = load i32, ptr %i.qn, align 4, !tbaa !75 ; 2 uses
-  %i.qp = add nsw i32 %i.qo, 1                    ; 2 uses
+  %i.qo = load i32, ptr %i.qn, align 4, !tbaa !75
+  %i.qp = add nsw i32 %i.qo, 1                    ; 3 uses
   store i32 %i.qp, ptr %i.qn, align 4, !tbaa !75
   %i.qq = getelementptr inbounds nuw i8, ptr %1, i64 28
   %i.qr = load i32, ptr %i.qq, align 4, !tbaa !30 ; 2 uses
   %.not = icmp ne i32 %i.qr, 0
-  %3 = icmp sle i32 %i.qr, %i.qo
+  %3 = icmp slt i32 %i.qr, %i.qp
   %spec.select170 = select i1 %.not, i1 %3, i1 false
   br i1 %spec.select170, label %bb.cv, label %bb.cw, !prof !67
 

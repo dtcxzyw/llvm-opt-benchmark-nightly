@@ -201,8 +201,10 @@ bb.q:                                             ; preds = %_ZN8facebook5velox4
 
 iter.check91:                                     ; preds = %bb.q
   %i.bs = zext nneg i32 %i.br to i64              ; 2 uses
-  %i.bt = add nsw i64 %i.bs, -64                  ; 3 uses
-  %i.bu = lshr exact i64 %i.bt, 6
+  %5 = or disjoint i64 %i.bs, 1
+  %umax = call i64 @llvm.umax.i64(i64 %5, i64 128)
+  %i.bt = add nsw i64 %umax, -65                  ; 3 uses
+  %i.bu = lshr i64 %i.bt, 6
   %i.bv = add nuw nsw i64 %i.bu, 1                ; 5 uses
   %min.iters.check68 = icmp ult i64 %i.bt, 192
   br i1 %min.iters.check68, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check69
@@ -303,7 +305,7 @@ vec.epilog.middle.block103:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader, %.lr.ph.i.i
   %indvars.iv42 = phi i64 [ %indvars.iv.next43, %.lr.ph.i.i ], [ %indvars.iv42.ph, %.lr.ph.i.i.preheader ] ; 2 uses
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph.i.i ], [ %indvars.iv.ph, %.lr.ph.i.i.preheader ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph.i.i ], [ %indvars.iv.ph, %.lr.ph.i.i.preheader ]
   %i.dd = phi i32 [ %i.dj, %.lr.ph.i.i ], [ %.ph, %.lr.ph.i.i.preheader ]
   %i.de = lshr exact i64 %indvars.iv42, 3
   %i.df = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.de
@@ -311,10 +313,10 @@ vec.epilog.middle.block103:                       ; preds = %vec.epilog.vector.b
   %i.dh = call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.dg)
   %i.di = trunc nuw nsw i64 %i.dh to i32
   %i.dj = add nuw nsw i32 %i.dd, %i.di            ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 64
-  %.not33.i.i.not = icmp samesign ult i64 %indvars.iv, %i.bs
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 64 ; 2 uses
+  %.not33.i.i = icmp samesign ugt i64 %indvars.iv.next, %i.bs
   %indvars.iv.next43 = add nuw nsw i64 %indvars.iv42, 64
-  br i1 %.not33.i.i.not, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !447
+  br i1 %.not33.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i, !llvm.loop !447
 
 .sink.split.i.i:                                  ; preds = %._crit_edge.i.i
   %i.dk = lshr i32 %i.bq, 6

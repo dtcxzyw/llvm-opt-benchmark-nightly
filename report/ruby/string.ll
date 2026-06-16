@@ -201,9 +201,9 @@ RSTRING_PTR.exit:                                 ; preds = %str_independent.exi
   br i1 %i.p, label %bb.d, label %bb.e, !prof !34
 
 RSTRING_PTR.exit.thread:                          ; preds = %str_independent.exit.thread
-  %i.q = load ptr, ptr %i.m, align 8, !tbaa !20
-  %i.r = getelementptr i8, ptr %i.b, i64 16       ; 2 uses
-  %i.s = load i64, ptr %i.r, align 8, !tbaa !14   ; 3 uses
+  %i.q = load ptr, ptr %i.m, align 8, !tbaa !20   ; 2 uses
+  %i.r = getelementptr i8, ptr %i.b, i64 16       ; 3 uses
+  %i.s = load i64, ptr %i.r, align 8, !tbaa !14   ; 4 uses
   %i.t = icmp eq i64 %i.s, 9223372036854775807
   br i1 %i.t, label %bb.d, label %bb.f, !prof !34
 
@@ -221,50 +221,40 @@ bb.e:                                             ; preds = %RSTRING_PTR.exit
 bb.f:                                             ; preds = %RSTRING_PTR.exit.thread
   %i.x = and i64 %i.k, 1073745920
   %.not.i28 = icmp eq i64 %i.x, 0
-  br i1 %.not.i28, label %bb.g, label %str_capacity.exit.thread
-
-str_capacity.exit.thread:                         ; preds = %bb.f
-  %2 = trunc i64 %i.k to i32
-  %3 = and i32 %2, 3145728
-  br label %bb.i
+  br i1 %.not.i28, label %bb.g, label %str_capacity.exit
 
 bb.g:                                             ; preds = %bb.f
   %i.y = getelementptr i8, ptr %i.b, i64 32
   %i.z = load i64, ptr %i.y, align 8, !tbaa !20
   br label %str_capacity.exit
 
-str_capacity.exit:                                ; preds = %bb.e, %bb.g
-  %4 = phi i64 [ %.pre36, %bb.e ], [ %i.k, %bb.g ]
-  %5 = phi ptr [ %i.m, %bb.e ], [ %i.q, %bb.g ]
-  %6 = phi ptr [ %i.n, %bb.e ], [ %i.r, %bb.g ]
-  %7 = phi i64 [ %i.o, %bb.e ], [ %i.s, %bb.g ]   ; 5 uses
-  %.0.i29 = phi i64 [ %i.w, %bb.e ], [ %i.z, %bb.g ]
-  %8 = trunc i64 %4 to i32
-  %9 = and i32 %8, 3145728                        ; 2 uses
-  %.not24.not = icmp sgt i64 %.0.i29, %7
-  br i1 %.not24.not, label %bb.h, label %bb.i, !prof !25
+str_capacity.exit:                                ; preds = %bb.f, %bb.e, %bb.g
+  %2 = phi i64 [ %.pre36, %bb.e ], [ %i.k, %bb.g ], [ %i.k, %bb.f ]
+  %3 = phi ptr [ %i.m, %bb.e ], [ %i.q, %bb.g ], [ %i.q, %bb.f ]
+  %4 = phi ptr [ %i.n, %bb.e ], [ %i.r, %bb.g ], [ %i.r, %bb.f ]
+  %5 = phi i64 [ %i.o, %bb.e ], [ %i.s, %bb.g ], [ %i.s, %bb.f ] ; 3 uses
+  %.0.i29 = phi i64 [ %i.w, %bb.e ], [ %i.z, %bb.g ], [ %i.s, %bb.f ]
+  %6 = add nsw i64 %5, 1                          ; 2 uses
+  %.not24 = icmp slt i64 %.0.i29, %6
+  br i1 %.not24, label %bb.i, label %bb.h, !prof !34
 
 bb.h:                                             ; preds = %str_capacity.exit
-  %10 = add nsw i64 %7, 1
-  %i.aa = getelementptr i8, ptr %5, i64 %7        ; 2 uses
+  %i.aa = getelementptr i8, ptr %3, i64 %5        ; 2 uses
   store i8 %1, ptr %i.aa, align 1, !tbaa !20
-  store i64 %10, ptr %6, align 8, !tbaa !14
+  store i64 %6, ptr %4, align 8, !tbaa !14
   %i.ab = getelementptr i8, ptr %i.aa, i64 1
   store i8 0, ptr %i.ab, align 1, !tbaa !20
   br label %bb.j
 
-bb.i:                                             ; preds = %str_capacity.exit.thread, %str_capacity.exit
-  %11 = phi i32 [ %3, %str_capacity.exit.thread ], [ %9, %str_capacity.exit ]
-  %12 = phi i64 [ %i.s, %str_capacity.exit.thread ], [ %7, %str_capacity.exit ]
+bb.i:                                             ; preds = %str_capacity.exit
   %i.ac = call fastcc i64 @str_buf_cat4(i64 noundef %0, ptr noundef nonnull %i.a, i64 noundef 1, i1 noundef zeroext false) ; 0 uses
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %13 = phi i32 [ %11, %bb.i ], [ %9, %bb.h ]
-  %14 = phi i64 [ %12, %bb.i ], [ %7, %bb.h ]
-  %i.ad = icmp eq i32 %13, 1048576
-  %i.ae = icmp eq i64 %14, 0
-  %or.cond = or i1 %i.ad, %i.ae
+  %7 = and i64 %2, 3145728
+  %i.ad = icmp eq i64 %7, 1048576
+  %i.ae = icmp eq i64 %5, 0
+  %or.cond = or i1 %i.ae, %i.ad
   br i1 %or.cond, label %bb.k, label %bb.o
 
 bb.k:                                             ; preds = %bb.j
@@ -667,26 +657,26 @@ bb.ab:                                            ; preds = %RSTRING_LENINT.exit
   br i1 %i.ew, label %.thread168, label %.lr.ph221
 
 .lr.ph183.split.us:                               ; preds = %.lr.ph183, %.lr.ph183.split.us
-  %.077181.us = phi i64 [ %i.ez, %.lr.ph183.split.us ], [ %i.et, %.lr.ph183 ] ; 3 uses
+  %.077181.us = phi i64 [ %i.ez, %.lr.ph183.split.us ], [ %i.et, %.lr.ph183 ] ; 2 uses
   %i.ex = tail call i64 (ptr, ptr, ...) @rb_enc_sprintf(ptr noundef nonnull %i.ev, ptr noundef nonnull @.str.25, i32 noundef %i.eo, i64 noundef %.077181.us) #28
   %i.ey = tail call i32 %3(i64 noundef %i.ex, i64 noundef %4) #28
   %.not95.us = icmp ne i32 %i.ey, 0
-  %i.ez = add nsw i64 %.077181.us, 1
-  %.not93.us = icmp sge i64 %.077181.us, %i.eu
+  %i.ez = add nsw i64 %.077181.us, 1              ; 2 uses
+  %.not93.us = icmp sgt i64 %i.ez, %i.eu
   %or.cond186 = select i1 %.not95.us, i1 true, i1 %.not93.us
   br i1 %or.cond186, label %.thread168, label %.lr.ph183.split.us, !llvm.loop !139
 
 .lr.ph183.split:                                  ; preds = %.lr.ph221
-  %7 = add nsw i64 %.077181220, 1                 ; 2 uses
   %i.fa = icmp eq i64 %7, %i.eu
   br i1 %i.fa, label %.thread168, label %.lr.ph221, !llvm.loop !139
 
 .lr.ph221:                                        ; preds = %.lr.ph183.split.preheader, %.lr.ph183.split
-  %.077181220 = phi i64 [ %7, %.lr.ph183.split ], [ %i.et, %.lr.ph183.split.preheader ] ; 3 uses
+  %.077181220 = phi i64 [ %7, %.lr.ph183.split ], [ %i.et, %.lr.ph183.split.preheader ] ; 2 uses
   %i.fb = tail call i64 (ptr, ptr, ...) @rb_enc_sprintf(ptr noundef nonnull %i.ev, ptr noundef nonnull @.str.25, i32 noundef %i.eo, i64 noundef %.077181220) #28
   %i.fc = tail call i32 %3(i64 noundef %i.fb, i64 noundef %4) #28
   %.not95 = icmp ne i32 %i.fc, 0
-  %.not93 = icmp sge i64 %.077181220, %i.eu
+  %7 = add nsw i64 %.077181220, 1                 ; 3 uses
+  %.not93 = icmp sgt i64 %7, %i.eu
   %or.cond187 = select i1 %.not95, i1 true, i1 %.not93
   br i1 %or.cond187, label %..thread168.loopexit217_crit_edge, label %.lr.ph183.split, !llvm.loop !139
 

@@ -201,8 +201,8 @@ bb.d:                                             ; preds = %_RNvXsg_NtCs2pqxYH9
   %i.p = ptrtoint ptr %i.k to i64
   %i.q = sub nuw i64 %i.o, %i.p
   %i.r = udiv exact i64 %i.q, 24
-  %i.s = tail call i64 @llvm.umax.i64(i64 %i.r, i64 3) ; 2 uses
-  %.sroa.0.0.i.i = add nuw nsw i64 %i.s, 1
+  %i.s = tail call i64 @llvm.umax.i64(i64 %i.r, i64 3)
+  %.sroa.0.0.i.i = add nuw nsw i64 %i.s, 1        ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !10401
   invoke void @_RNvMs4_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.b, i64 noundef %.sroa.0.0.i.i, i1 noundef zeroext false, i64 noundef 8, i64 noundef 24)
           to label %.noexc.i unwind label %bb.c, !noalias !10401
@@ -225,7 +225,7 @@ bb.e:                                             ; preds = %.noexc.i
 
 bb.f:                                             ; preds = %.noexc.i
   %i.z = load ptr, ptr %i.x, align 8, !noalias !10401, !nonnull !4, !noundef !4 ; 2 uses
-  %2 = icmp ult i64 %i.s, %i.w
+  %2 = icmp ule i64 %.sroa.0.0.i.i, %i.w
   tail call void @llvm.assume(i1 %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !10401
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.z, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false), !noalias !10401

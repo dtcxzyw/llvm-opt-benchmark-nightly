@@ -201,17 +201,17 @@ bb.a:
   br i1 %i.m, label %._crit_edge20, label %.preheader
 
 .preheader:                                       ; preds = %.preheader.prol.loopexit, %._crit_edge.1
-  %.01519.in = phi i64 [ %.01519.1, %._crit_edge.1 ], [ %.01519.in.unr, %.preheader.prol.loopexit ] ; 4 uses
-  %.01418 = phi i64 [ %i.s, %._crit_edge.1 ], [ %.01418.unr, %.preheader.prol.loopexit ] ; 5 uses
+  %.01519.in = phi i64 [ %.01519.1, %._crit_edge.1 ], [ %.01519.in.unr, %.preheader.prol.loopexit ] ; 3 uses
+  %.01418 = phi i64 [ %i.s, %._crit_edge.1 ], [ %.01418.unr, %.preheader.prol.loopexit ] ; 4 uses
   %.01519 = add nsw i64 %.01519.in, -1            ; 2 uses
-  %.not = icmp sgt i64 %.01519.in, %.01418
-  br i1 %.not, label %._crit_edge, label %.lr.ph
+  %2 = icmp slt i64 %.01519, %.01418
+  br i1 %2, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.preheader
-  %i.n = add nuw nsw i64 %.01418, 1
-  %.01519.1 = add nsw i64 %.01519.in, -2          ; 2 uses
-  %.not.1 = icmp sgt i64 %.01519, %i.n
-  br i1 %.not.1, label %._crit_edge.1, label %.lr.ph.1
+  %i.n = add nuw nsw i64 %.01418, 1               ; 2 uses
+  %.01519.1 = add nsw i64 %.01519.in, -2          ; 3 uses
+  %3 = icmp slt i64 %.01519.1, %i.n
+  br i1 %3, label %.lr.ph.1, label %._crit_edge.1
 
 .lr.ph.1:                                         ; preds = %._crit_edge, %.lr.ph.1
   %.016.1 = phi i64 [ %i.r, %.lr.ph.1 ], [ %.01519.1, %._crit_edge ] ; 2 uses
@@ -220,8 +220,8 @@ bb.a:
   %i.q = shufflevector <2 x i64> %i.p, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
   store <2 x i64> %i.q, ptr %i.o, align 8
   %i.r = add nsw i64 %.016.1, 2                   ; 2 uses
-  %.not21 = icmp sgt i64 %i.r, %.01418
-  br i1 %.not21, label %._crit_edge.1, label %.lr.ph.1, !llvm.loop !6
+  %4 = icmp slt i64 %i.r, %i.n
+  br i1 %4, label %.lr.ph.1, label %._crit_edge.1, !llvm.loop !6
 
 ._crit_edge.1:                                    ; preds = %.lr.ph.1, %._crit_edge
   %i.s = add nuw nsw i64 %.01418, 2
@@ -624,17 +624,17 @@ bb.b:                                             ; preds = %.lr.ph39, %_ZN5o3dg
   br i1 %i.af, label %_ZN5o3dgc5MergeEPll.exit, label %.preheader.i
 
 .preheader.i:                                     ; preds = %.preheader.i.prol.loopexit, %._crit_edge.i.1
-  %.01519.in.i = phi i64 [ %.01519.i.1, %._crit_edge.i.1 ], [ %.01519.in.i.unr, %.preheader.i.prol.loopexit ] ; 4 uses
-  %.01418.i = phi i64 [ %i.al, %._crit_edge.i.1 ], [ %.01418.i.unr, %.preheader.i.prol.loopexit ] ; 5 uses
+  %.01519.in.i = phi i64 [ %.01519.i.1, %._crit_edge.i.1 ], [ %.01519.in.i.unr, %.preheader.i.prol.loopexit ] ; 3 uses
+  %.01418.i = phi i64 [ %i.al, %._crit_edge.i.1 ], [ %.01418.i.unr, %.preheader.i.prol.loopexit ] ; 4 uses
   %.01519.i = add nsw i64 %.01519.in.i, -1        ; 2 uses
-  %.not.i = icmp sgt i64 %.01519.in.i, %.01418.i
-  br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i
+  %2 = icmp slt i64 %.01519.i, %.01418.i
+  br i1 %2, label %.lr.ph.i, label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %.preheader.i
-  %i.ag = add nuw nsw i64 %.01418.i, 1
-  %.01519.i.1 = add nsw i64 %.01519.in.i, -2      ; 2 uses
-  %.not.i.1 = icmp sgt i64 %.01519.i, %i.ag
-  br i1 %.not.i.1, label %._crit_edge.i.1, label %.lr.ph.i.1
+  %i.ag = add nuw nsw i64 %.01418.i, 1            ; 2 uses
+  %.01519.i.1 = add nsw i64 %.01519.in.i, -2      ; 3 uses
+  %3 = icmp slt i64 %.01519.i.1, %i.ag
+  br i1 %3, label %.lr.ph.i.1, label %._crit_edge.i.1
 
 .lr.ph.i.1:                                       ; preds = %._crit_edge.i, %.lr.ph.i.1
   %.016.i.1 = phi i64 [ %i.ak, %.lr.ph.i.1 ], [ %.01519.i.1, %._crit_edge.i ] ; 2 uses
@@ -643,8 +643,8 @@ bb.b:                                             ; preds = %.lr.ph39, %_ZN5o3dg
   %i.aj = shufflevector <2 x i64> %i.ai, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
   store <2 x i64> %i.aj, ptr %i.ah, align 8
   %i.ak = add nsw i64 %.016.i.1, 2                ; 2 uses
-  %.not = icmp sgt i64 %i.ak, %.01418.i
-  br i1 %.not, label %._crit_edge.i.1, label %.lr.ph.i.1, !llvm.loop !6
+  %4 = icmp slt i64 %i.ak, %i.ag
+  br i1 %4, label %.lr.ph.i.1, label %._crit_edge.i.1, !llvm.loop !6
 
 ._crit_edge.i.1:                                  ; preds = %.lr.ph.i.1, %._crit_edge.i
   %i.al = add nuw nsw i64 %.01418.i, 2

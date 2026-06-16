@@ -201,7 +201,7 @@ deflate_choose_all_literals.exit:                 ; preds = %deflate_choose_all_
   %i.ar = tail call fastcc i32 @deflate_compute_true_cost(ptr noundef nonnull %0)
   %i.as = add i32 %3, 257                         ; 2 uses
   %i.at = icmp ult i32 %i.as, 305000
-  %narrow = select i1 %i.at, i32 %i.as, i32 304999 ; 4 uses
+  %narrow = select i1 %i.at, i32 %i.as, i32 304999 ; 3 uses
   %.not114 = icmp ugt i32 %3, %narrow
   br i1 %.not114, label %._crit_edge.thread, label %.lr.ph
 
@@ -211,28 +211,30 @@ deflate_choose_all_literals.exit:                 ; preds = %deflate_choose_all_
 
 .lr.ph:                                           ; preds = %deflate_choose_all_literals.exit
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 6532420 ; 9 uses
-  %i.av = zext nneg i32 %3 to i64                 ; 2 uses
+  %i.av = zext i32 %3 to i64                      ; 4 uses
   %i.aw = add nuw nsw i32 %narrow, 1
-  %9 = add nuw nsw i32 %narrow, 1
-  %10 = sub nuw i32 %9, %3
-  %11 = sub nuw i32 %narrow, %3
-  %xtraiter348 = and i32 %10, 7                   ; 2 uses
-  %lcmp.mod349.not = icmp eq i32 %xtraiter348, 0
+  %wide.trip.count = zext nneg i32 %i.aw to i64
+  %9 = zext nneg i32 %narrow to i64               ; 2 uses
+  %10 = add nuw nsw i64 %9, 1
+  %11 = sub nsw i64 %10, %i.av
+  %12 = sub nsw i64 %9, %i.av
+  %xtraiter348 = and i64 %11, 7                   ; 2 uses
+  %lcmp.mod349.not = icmp eq i64 %xtraiter348, 0
   br i1 %lcmp.mod349.not, label %.prol.loopexit, label %.prol.preheader
 
 .prol.preheader:                                  ; preds = %.lr.ph, %.prol.preheader
   %indvars.iv.prol = phi i64 [ %indvars.iv.next.prol, %.prol.preheader ], [ %i.av, %.lr.ph ] ; 2 uses
-  %prol.iter = phi i32 [ %prol.iter.next, %.prol.preheader ], [ 0, %.lr.ph ]
+  %prol.iter = phi i64 [ %prol.iter.next, %.prol.preheader ], [ 0, %.lr.ph ]
   %i.ax = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %indvars.iv.prol
   store i32 -2147483648, ptr %i.ax, align 4, !tbaa !20
   %indvars.iv.next.prol = add nuw nsw i64 %indvars.iv.prol, 1 ; 2 uses
-  %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
-  %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter348
+  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter348
   br i1 %prol.iter.cmp.not, label %.prol.loopexit, label %.prol.preheader, !llvm.loop !132
 
 .prol.loopexit:                                   ; preds = %.prol.preheader, %.lr.ph
   %indvars.iv.unr = phi i64 [ %i.av, %.lr.ph ], [ %indvars.iv.next.prol, %.prol.preheader ]
-  %i.ay = icmp samesign ult i32 %11, 7
+  %i.ay = icmp ult i64 %12, 7
   br i1 %i.ay, label %._crit_edge, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.prol.loopexit, %.lr.ph.new
@@ -261,8 +263,7 @@ deflate_choose_all_literals.exit:                 ; preds = %deflate_choose_all_
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 56
   store i32 -2147483648, ptr %i.bn, align 4, !tbaa !20
   %indvars.iv.next.7 = add nuw nsw i64 %indvars.iv, 8 ; 2 uses
-  %lftr.wideiv.7 = trunc i64 %indvars.iv.next.7 to i32
-  %exitcond.not.7 = icmp eq i32 %i.aw, %lftr.wideiv.7
+  %exitcond.not.7 = icmp eq i64 %indvars.iv.next.7, %wide.trip.count
   br i1 %exitcond.not.7, label %._crit_edge, label %.lr.ph.new, !llvm.loop !133
 
 ._crit_edge:                                      ; preds = %.lr.ph.new, %.prol.loopexit

@@ -201,13 +201,13 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %.lr.ph
-  %indvars.iv.next40 = add nuw i32 %indvars.iv3957, 1
+  %indvars.iv.next41 = add nuw nsw i64 %indvars.iv4058, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !5
 
 .lr.ph:                                           ; preds = %.preheader, %bb.c
   %indvars.iv58 = phi i64 [ %indvars.iv.next, %bb.c ], [ 0, %.preheader ]
-  %indvars.iv3957 = phi i32 [ %indvars.iv.next40, %bb.c ], [ 1, %.preheader ] ; 2 uses
+  %indvars.iv4058 = phi i64 [ %indvars.iv.next41, %bb.c ], [ 1, %.preheader ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv58, 1 ; 5 uses
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv.next
   %i.m = load ptr, ptr %i.l, align 8              ; 3 uses
@@ -225,14 +225,13 @@ bb.d:                                             ; preds = %.lr.ph
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.next
   %i.w = trunc i64 %i.q to i8
   store i8 %i.w, ptr %i.v, align 1
-  %1 = sext i32 %indvars.iv3957 to i64
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.m, i64 14
   %.pre = load i8, ptr %.phi.trans.insert, align 1
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZN4absl13cord_internal7CordRep5btreeEv.exit, %bb.d
   %i.x = phi i8 [ %i.al, %_ZN4absl13cord_internal7CordRep5btreeEv.exit ], [ %.pre, %bb.d ]
-  %indvars.iv42 = phi i64 [ %indvars.iv.next43, %_ZN4absl13cord_internal7CordRep5btreeEv.exit ], [ %1, %bb.d ] ; 2 uses
+  %indvars.iv42 = phi i64 [ %indvars.iv.next43, %_ZN4absl13cord_internal7CordRep5btreeEv.exit ], [ %indvars.iv4058, %bb.d ] ; 2 uses
   %.017 = phi ptr [ %i.af, %_ZN4absl13cord_internal7CordRep5btreeEv.exit ], [ %i.m, %bb.d ] ; 2 uses
   %.016 = phi i64 [ %i.am, %_ZN4absl13cord_internal7CordRep5btreeEv.exit ], [ %i.q, %bb.d ] ; 3 uses
   %i.y = zext i8 %i.x to i64

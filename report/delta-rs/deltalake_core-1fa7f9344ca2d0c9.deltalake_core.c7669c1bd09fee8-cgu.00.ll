@@ -201,8 +201,8 @@ bb.d:                                             ; preds = %_RINvMNtCsbvkFyIu7l
 _RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtNtB5_5slice4iter4IterNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchENCNCNCNvNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion10find_files24scan_files_where_matches0s0_00EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2Q_.exit65.i.i.i: ; preds = %bb.d, %_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtNtB5_5slice4iter4IterNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchENCNCNCNvNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion10find_files24scan_files_where_matches0s0_00EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2Q_.exit.i.i.i
   %.sroa.072.0.i.i.i = phi i64 [ %i.v, %bb.d ], [ 0, %_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtNtB5_5slice4iter4IterNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchENCNCNCNvNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion10find_files24scan_files_where_matches0s0_00EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2Q_.exit.i.i.i ]
   %i.w = add nuw nsw i64 %.sroa.072.0.i.i.i, %.sroa.7.0.i.i.i
-  %i.x = tail call i64 @llvm.umax.i64(i64 %i.w, i64 3) ; 2 uses
-  %.sroa.0.0.i.i = add nuw nsw i64 %i.x, 1
+  %i.x = tail call i64 @llvm.umax.i64(i64 %i.w, i64 3)
+  %.sroa.0.0.i.i = add nuw nsw i64 %i.x, 1        ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !18077
   invoke void @_RNvMs4_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.c, i64 noundef %.sroa.0.0.i.i, i1 noundef zeroext false, i64 noundef 8, i64 noundef 120)
           to label %.noexc.i unwind label %bb.f, !noalias !18077
@@ -239,7 +239,7 @@ bb.g:                                             ; preds = %.noexc.i
 
 bb.h:                                             ; preds = %.noexc.i
   %i.ah = load ptr, ptr %i.af, align 8, !noalias !18077, !nonnull !8, !noundef !8 ; 2 uses
-  %2 = icmp ult i64 %i.x, %i.ae
+  %2 = icmp ule i64 %.sroa.0.0.i.i, %i.ae
   tail call void @llvm.assume(i1 %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !18077
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.ah, ptr noundef nonnull align 8 dereferenceable(120) %i.e, i64 120, i1 false), !noalias !18077
@@ -642,8 +642,8 @@ bb.o:                                             ; preds = %bb.j, %bb.k
   store i64 %.sink.i.i, ptr %.sink78.i.i.sroa.phi, align 8, !alias.scope !31264, !noalias !31263
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7)
-  %i.ax = tail call i64 @llvm.umax.i64(i64 %i.ap, i64 7) ; 2 uses
-  %.sroa.0.0.i = add nuw nsw i64 %i.ax, 1
+  %i.ax = tail call i64 @llvm.umax.i64(i64 %i.ap, i64 7)
+  %.sroa.0.0.i = add nuw nsw i64 %i.ax, 1         ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   invoke void @_RNvMs4_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef %.sroa.0.0.i, i1 noundef zeroext false, i64 noundef 1, i64 noundef 1)
           to label %.noexc11 unwind label %bb.n
@@ -666,7 +666,7 @@ bb.p:                                             ; preds = %.noexc11
 
 bb.q:                                             ; preds = %.noexc11
   %i.be = load ptr, ptr %i.bc, align 8, !nonnull !8, !noundef !8 ; 2 uses
-  %2 = icmp ult i64 %i.ax, %i.bb
+  %2 = icmp ule i64 %.sroa.0.0.i, %i.bb
   tail call void @llvm.assume(i1 %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   store i8 %.sroa.3.0.i7.pn.i.i.ph, ptr %i.be, align 1

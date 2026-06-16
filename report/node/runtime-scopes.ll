@@ -201,7 +201,7 @@ _ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit:
   %i.k = ptrtoint ptr %i.j to i64
   %i.l = ptrtoint ptr %i.h to i64
   %i.m = sub i64 %i.k, %i.l
-  %i.n = lshr exact i64 %i.m, 3                   ; 3 uses
+  %i.n = lshr exact i64 %i.m, 3                   ; 2 uses
   %i.o = trunc i64 %i.n to i32                    ; 6 uses
   %i.p = load i64, ptr %1, align 8
   %i.q = add i64 %i.p, 31
@@ -230,7 +230,7 @@ bb.b:                                             ; preds = %_ZNK2v88internal9Ar
   %i.ag = inttoptr i64 %i.af to ptr
   %i.ah = load i16, ptr %i.ag, align 2            ; 2 uses
   %.0.i.i = tail call noundef i16 @llvm.usub.sat.i16(i16 %i.ah, i16 1)
-  %i.ai = zext i16 %.0.i.i to i32                 ; 2 uses
+  %i.ai = zext i16 %.0.i.i to i32
   %i.aj = icmp sgt i32 %i.o, 0
   br i1 %i.aj, label %bb.c, label %_ZN2v88internal12_GLOBAL__N_118NewSloppyArgumentsINS1_15HandleArgumentsEEENS0_12DirectHandleINS0_8JSObjectEEEPNS0_7IsolateENS4_INS0_10JSFunctionEEET_i.exit
 
@@ -239,7 +239,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i4, label %bb.aj, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %.sroa.speculated.i = tail call i32 @llvm.umin.i32(i32 %i.o, i32 %i.ai) ; 4 uses
+  %.sroa.speculated.i = tail call i32 @llvm.umin.i32(i32 %i.o, i32 %i.ai) ; 5 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %2, i64 344 ; 2 uses
   %.sroa.0.0.copyload.i78.i = load i64, ptr %i.ak, align 8
   %i.al = load ptr, ptr %i.a, align 8             ; 2 uses
@@ -362,25 +362,25 @@ bb.p:                                             ; preds = %bb.o
   br label %_ZN2v88internal8JSObject12set_elementsENS0_6TaggedINS0_14FixedArrayBaseEEENS0_16WriteBarrierModeE.exit.i
 
 _ZN2v88internal8JSObject12set_elementsENS0_6TaggedINS0_14FixedArrayBaseEEENS0_16WriteBarrierModeE.exit.i: ; preds = %bb.p, %bb.o, %_ZN2v88internal10HeapObject7set_mapEPNS0_7IsolateENS0_6TaggedINS0_3MapEEE.exit.i
-  %.not57.not242.i = icmp samesign ugt i32 %i.o, %i.ai
-  br i1 %.not57.not242.i, label %.lr.ph.preheader.i, label %._crit_edge.i
+  %.0242.i = add nsw i32 %i.o, -1                 ; 2 uses
+  %.not57243.i = icmp samesign ult i32 %.0242.i, %.sroa.speculated.i
+  br i1 %.not57243.i, label %._crit_edge.i, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %_ZN2v88internal8JSObject12set_elementsENS0_6TaggedINS0_14FixedArrayBaseEEENS0_16WriteBarrierModeE.exit.i
-  %7 = and i64 %i.n, 2147483647
+  %7 = zext nneg i32 %.0242.i to i64
   %i.cj = zext nneg i32 %.sroa.speculated.i to i64
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit.i, %.lr.ph.preheader.i
-  %indvars.iv.i = phi i64 [ %7, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit.i ]
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 4 uses
+  %indvars.iv.i = phi i64 [ %7, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit.i ] ; 3 uses
   %i.ck = load i64, ptr %i.as, align 8
   %i.cl = add i64 %i.ck, -1                       ; 3 uses
   %i.cm = inttoptr i64 %i.cl to ptr
-  %i.cn = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %indvars.iv.next.i
+  %i.cn = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %indvars.iv.i
   %i.co = load ptr, ptr %i.cn, align 8
   %i.cp = load i64, ptr %i.co, align 8            ; 5 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cm, i64 16
-  %i.cr = getelementptr inbounds nuw [8 x i8], ptr %i.cq, i64 %indvars.iv.next.i ; 2 uses
+  %i.cr = getelementptr inbounds nuw [8 x i8], ptr %i.cq, i64 %indvars.iv.i ; 2 uses
   store atomic volatile i64 %i.cp, ptr %i.cr monotonic, align 8
   %i.cs = trunc i64 %i.cp to i1
   br i1 %i.cs, label %bb.q, label %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit.i
@@ -417,8 +417,9 @@ bb.u:                                             ; preds = %bb.t
   br label %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit.i
 
 _ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit.i: ; preds = %bb.u, %bb.t, %.lr.ph.i
-  %.not57.not.i = icmp sgt i64 %indvars.iv.next.i, %i.cj
-  br i1 %.not57.not.i, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !14
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 2 uses
+  %.not57.i = icmp slt i64 %indvars.iv.next.i, %i.cj
+  br i1 %.not57.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !14
 
 ._crit_edge.i:                                    ; preds = %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit.i, %_ZN2v88internal8JSObject12set_elementsENS0_6TaggedINS0_14FixedArrayBaseEEENS0_16WriteBarrierModeE.exit.i
   %i.dd = load i64, ptr %1, align 8

@@ -201,7 +201,7 @@ bb.t:                                             ; preds = %.noexc14, %.lr.ph.i
   br i1 %.not79.i, label %_ZN5arrow12_GLOBAL__N_123QuadraticSpaceMyersDiff4NextEv.exitthread-pre-split, label %.lr.ph82.i
 
 .lr.ph82.i:                                       ; preds = %._crit_edge.i
-  %i.fm = add nuw i64 %i.fj, 1
+  %i.fm = add nuw nsw i64 %i.fj, 1
   %i.fn = mul nuw nsw i64 %i.fm, %i.fj
   %.neg.i6284.i = lshr i64 %i.fn, 1
   %i.fo = load ptr, ptr %i.am, align 8, !tbaa !558
@@ -278,12 +278,12 @@ bb.v:                                             ; preds = %bb.u, %.noexc15
   br i1 %i.hh, label %.lr.ph78.i, label %._crit_edge.i, !llvm.loop !563
 
 bb.w:                                             ; preds = %bb.x
-  %i.hi = add nuw i64 %.04280.i, 1
-  %exitcond.not.i = icmp eq i64 %.04280.i, %i.fj
-  br i1 %exitcond.not.i, label %_ZN5arrow12_GLOBAL__N_123QuadraticSpaceMyersDiff4NextEv.exitthread-pre-split, label %bb.x, !llvm.loop !564
+  %i.hi = add nuw nsw i64 %.04280.i, 1            ; 2 uses
+  %.not.i13 = icmp sgt i64 %i.hi, %i.fj
+  br i1 %.not.i13, label %_ZN5arrow12_GLOBAL__N_123QuadraticSpaceMyersDiff4NextEv.exitthread-pre-split, label %bb.x, !llvm.loop !564
 
 bb.x:                                             ; preds = %bb.w, %.lr.ph82.i
-  %.04280.i = phi i64 [ 0, %.lr.ph82.i ], [ %i.hi, %bb.w ] ; 3 uses
+  %.04280.i = phi i64 [ 0, %.lr.ph82.i ], [ %i.hi, %bb.w ] ; 2 uses
   %i.hj = add nsw i64 %.04280.i, %i.ed            ; 4 uses
   %i.hk = sub i64 %i.hj, %.neg.i6284.i
   %i.hl = shl nsw i64 %i.hk, 1

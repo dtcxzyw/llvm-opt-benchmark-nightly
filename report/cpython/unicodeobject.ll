@@ -201,7 +201,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #33
   store ptr null, ptr %i.b, align 8, !tbaa !194
   %i.g = getelementptr i8, ptr %0, i64 16
-  %.val190 = load i64, ptr %i.g, align 8, !tbaa !207 ; 11 uses
+  %.val190 = load i64, ptr %i.g, align 8, !tbaa !207 ; 10 uses
   %i.h = getelementptr i8, ptr %0, i64 32
   %i.i = load i32, ptr %i.h, align 8              ; 3 uses
   %i.j = lshr i32 %i.i, 2
@@ -251,7 +251,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph362, %bb.al
-  %.0124361 = phi i64 [ %.0124.ph393, %.lr.ph362 ], [ %6, %bb.al ] ; 19 uses
+  %.0124361 = phi i64 [ %.0124.ph393, %.lr.ph362 ], [ %3, %bb.al ] ; 15 uses
   %.0132360 = phi ptr [ %.0132.ph392, %.lr.ph362 ], [ %i.cy, %bb.al ] ; 10 uses
   switch i32 %i.k, label %bb.j [
     i32 1, label %bb.h
@@ -278,15 +278,14 @@ bb.j:                                             ; preds = %bb.g
 PyUnicode_READ.exit:                              ; preds = %bb.h, %bb.i, %bb.j
   %.0.i193 = phi i32 [ %i.z, %bb.h ], [ %i.ac, %bb.i ], [ %i.ae, %bb.j ] ; 2 uses
   %i.af = icmp ult i32 %.0.i193, %2
+  %3 = add nsw i64 %.0124361, 1                   ; 5 uses
+  %4 = icmp slt i64 %3, %.val190                  ; 4 uses
   br i1 %i.af, label %bb.al, label %bb.k
 
 bb.k:                                             ; preds = %PyUnicode_READ.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #33
   %i.ag = add nsw i64 %.0124361, 1
-  %smax264 = call i64 @llvm.smax.i64(i64 %.val190, i64 %i.ag) ; 7 uses
-  %3 = add nsw i64 %smax264, -1                   ; 6 uses
-  %.0129382 = add nsw i64 %.0124361, 1            ; 4 uses
-  %4 = icmp slt i64 %.0129382, %.val190           ; 3 uses
+  %smax264 = call i64 @llvm.smax.i64(i64 %.val190, i64 %i.ag) ; 6 uses
   switch i32 %i.k, label %.split.preheader [
     i32 1, label %.split.us.preheader
     i32 2, label %.split.us236.preheader
@@ -302,41 +301,38 @@ bb.k:                                             ; preds = %PyUnicode_READ.exit
   br i1 %4, label %PyUnicode_READ.exit195, label %.critedge
 
 .split.us:                                        ; preds = %PyUnicode_READ.exit195.us
-  %.0129.us = add nsw i64 %.0129.us375, 1         ; 2 uses
+  %.0129.us = add nsw i64 %.0129.in.us374, 1      ; 2 uses
   %i.ah = icmp slt i64 %.0129.us, %.val190
   br i1 %i.ah, label %PyUnicode_READ.exit195.us, label %.critedge, !llvm.loop !513
 
 PyUnicode_READ.exit195.us:                        ; preds = %.split.us.preheader, %.split.us
-  %.0129.us375 = phi i64 [ %.0129.us, %.split.us ], [ %.0129382, %.split.us.preheader ] ; 4 uses
-  %.0129.in.us374 = phi i64 [ %.0129.us375, %.split.us ], [ %.0124361, %.split.us.preheader ]
-  %i.ai = getelementptr i8, ptr %.0.i, i64 %.0129.us375
+  %.0129.in.us374 = phi i64 [ %.0129.us, %.split.us ], [ %3, %.split.us.preheader ] ; 3 uses
+  %i.ai = getelementptr i8, ptr %.0.i, i64 %.0129.in.us374
   %i.aj = load i8, ptr %i.ai, align 1, !tbaa !205
   %i.ak = zext i8 %i.aj to i32
   %.not.us = icmp samesign ugt i32 %2, %i.ak
   br i1 %.not.us, label %PyUnicode_READ.exit195.us..critedge.loopexit335_crit_edge, label %.split.us, !llvm.loop !513
 
 .split.us236:                                     ; preds = %PyUnicode_READ.exit195.us239
-  %.0129.us238 = add nsw i64 %.0129.us238366, 1   ; 2 uses
+  %.0129.us238 = add nsw i64 %.0129.in.us237365, 1 ; 2 uses
   %i.al = icmp slt i64 %.0129.us238, %.val190
   br i1 %i.al, label %PyUnicode_READ.exit195.us239, label %.critedge, !llvm.loop !513
 
 PyUnicode_READ.exit195.us239:                     ; preds = %.split.us236.preheader, %.split.us236
-  %.0129.us238366 = phi i64 [ %.0129.us238, %.split.us236 ], [ %.0129382, %.split.us236.preheader ] ; 4 uses
-  %.0129.in.us237365 = phi i64 [ %.0129.us238366, %.split.us236 ], [ %.0124361, %.split.us236.preheader ]
-  %i.am = getelementptr [2 x i8], ptr %.0.i, i64 %.0129.us238366
+  %.0129.in.us237365 = phi i64 [ %.0129.us238, %.split.us236 ], [ %3, %.split.us236.preheader ] ; 3 uses
+  %i.am = getelementptr [2 x i8], ptr %.0.i, i64 %.0129.in.us237365
   %i.an = load i16, ptr %i.am, align 2, !tbaa !208
   %.not.us241 = icmp ult i16 %i.an, %i.v
   br i1 %.not.us241, label %PyUnicode_READ.exit195.us239..critedge.loopexit339_crit_edge, label %.split.us236, !llvm.loop !513
 
 .split:                                           ; preds = %PyUnicode_READ.exit195
-  %.0129 = add nsw i64 %.0129384, 1               ; 2 uses
+  %.0129 = add nsw i64 %.0129.in383, 1            ; 2 uses
   %i.ao = icmp slt i64 %.0129, %.val190
   br i1 %i.ao, label %PyUnicode_READ.exit195, label %.critedge, !llvm.loop !513
 
 PyUnicode_READ.exit195:                           ; preds = %.split.preheader, %.split
-  %.0129384 = phi i64 [ %.0129, %.split ], [ %.0129382, %.split.preheader ] ; 4 uses
-  %.0129.in383 = phi i64 [ %.0129384, %.split ], [ %.0124361, %.split.preheader ]
-  %i.ap = getelementptr [4 x i8], ptr %.0.i, i64 %.0129384
+  %.0129.in383 = phi i64 [ %.0129, %.split ], [ %3, %.split.preheader ] ; 3 uses
+  %i.ap = getelementptr [4 x i8], ptr %.0.i, i64 %.0129.in383
   %i.aq = load i32, ptr %i.ap, align 4, !tbaa !7
   %.not = icmp ult i32 %i.aq, %2
   br i1 %.not, label %PyUnicode_READ.exit195..critedge.loopexit_crit_edge, label %.split, !llvm.loop !513
@@ -351,8 +347,7 @@ PyUnicode_READ.exit195.us239..critedge.loopexit339_crit_edge: ; preds = %PyUnico
   br label %.critedge, !llvm.loop !513
 
 .critedge:                                        ; preds = %.split.us236, %.split.us, %.split, %.split.us236.preheader, %PyUnicode_READ.exit195.us239..critedge.loopexit339_crit_edge, %.split.us.preheader, %PyUnicode_READ.exit195.us..critedge.loopexit335_crit_edge, %.split.preheader, %PyUnicode_READ.exit195..critedge.loopexit_crit_edge
-  %.us-phi = phi i64 [ %smax264, %.split ], [ %smax264, %.split.us ], [ %.0129384, %PyUnicode_READ.exit195..critedge.loopexit_crit_edge ], [ %smax264, %.split.preheader ], [ %.0129.us375, %PyUnicode_READ.exit195.us..critedge.loopexit335_crit_edge ], [ %smax264, %.split.us.preheader ], [ %smax264, %.split.us236.preheader ], [ %.0129.us238366, %PyUnicode_READ.exit195.us239..critedge.loopexit339_crit_edge ], [ %smax264, %.split.us236 ] ; 12 uses
-  %.us-phi233.a = phi i64 [ %3, %.split ], [ %3, %.split.us ], [ %.0129.in383, %PyUnicode_READ.exit195..critedge.loopexit_crit_edge ], [ %3, %.split.preheader ], [ %.0129.in.us374, %PyUnicode_READ.exit195.us..critedge.loopexit335_crit_edge ], [ %3, %.split.us.preheader ], [ %3, %.split.us236.preheader ], [ %.0129.in.us237365, %PyUnicode_READ.exit195.us239..critedge.loopexit339_crit_edge ], [ %3, %.split.us236 ] ; 3 uses
+  %.us-phi233.a = phi i64 [ %smax264, %.split ], [ %smax264, %.split.us ], [ %.0129.in383, %PyUnicode_READ.exit195..critedge.loopexit_crit_edge ], [ %smax264, %.split.preheader ], [ %.0129.in.us374, %PyUnicode_READ.exit195.us..critedge.loopexit335_crit_edge ], [ %smax264, %.split.us.preheader ], [ %smax264, %.split.us236.preheader ], [ %.0129.in.us237365, %PyUnicode_READ.exit195.us239..critedge.loopexit339_crit_edge ], [ %smax264, %.split.us236 ] ; 15 uses
   %.us-phi235 = phi i32 [ 0, %.split ], [ 0, %.split.us ], [ 1, %PyUnicode_READ.exit195..critedge.loopexit_crit_edge ], [ 0, %.split.preheader ], [ 1, %PyUnicode_READ.exit195.us..critedge.loopexit335_crit_edge ], [ 0, %.split.us.preheader ], [ 0, %.split.us236.preheader ], [ 1, %PyUnicode_READ.exit195.us239..critedge.loopexit339_crit_edge ], [ 0, %.split.us236 ]
   store i32 %.us-phi235, ptr %i.t, align 4, !tbaa !514
   %i.ar = icmp eq i32 %.0140.ph391, 0
@@ -374,15 +369,11 @@ bb.m:                                             ; preds = %bb.l, %.critedge
   ]
 
 .preheader:                                       ; preds = %bb.m
-  %.not179250 = icmp sgt i64 %.0124361, %.us-phi233.a
-  br i1 %.not179250, label %raise_encode_exception.exit, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %.preheader
-  %5 = add i64 %.us-phi233.a, 1
-  br label %.lr.ph
+  %5 = icmp slt i64 %.0124361, %.us-phi233.a
+  br i1 %5, label %.lr.ph, label %raise_encode_exception.exit
 
 bb.n:                                             ; preds = %bb.m
-  call fastcc void @make_encode_exception(ptr noundef nonnull %i.b, ptr noundef nonnull %i.e, ptr noundef %0, i64 noundef %.0124361, i64 noundef %.us-phi, ptr noundef nonnull %i.f)
+  call fastcc void @make_encode_exception(ptr noundef nonnull %i.b, ptr noundef nonnull %i.e, ptr noundef %0, i64 noundef %.0124361, i64 noundef %.us-phi233.a, ptr noundef nonnull %i.f)
   %i.at = load ptr, ptr %i.b, align 8, !tbaa !194 ; 2 uses
   %.not.i196 = icmp eq ptr %i.at, null
   br i1 %.not.i196, label %.loopexit311, label %bb.o
@@ -392,32 +383,32 @@ bb.o:                                             ; preds = %bb.n
   br label %.loopexit311
 
 bb.p:                                             ; preds = %bb.m
-  %i.av = sub i64 %.us-phi, %.0124361             ; 2 uses
+  %i.av = sub i64 %.us-phi233.a, %.0124361        ; 2 uses
   call void @llvm.memset.p0.i64(ptr align 1 %.0132360, i8 63, i64 %i.av, i1 false)
   %i.aw = getelementptr i8, ptr %.0132360, i64 %i.av
   br label %raise_encode_exception.exit
 
 bb.q:                                             ; preds = %bb.m
-  %.neg181.a = sub i64 %.0124361, %.us-phi
+  %.neg181.a = sub i64 %.0124361, %.us-phi233.a
   %i.ax = load i64, ptr %i.u, align 8, !tbaa !516
   %i.ay = add i64 %.neg181.a, %i.ax
   store i64 %i.ay, ptr %i.u, align 8, !tbaa !516
-  %i.az = call fastcc ptr @backslashreplace(ptr noundef %i.q, ptr noundef %.0132360, ptr noundef %0, i64 noundef %.0124361, i64 noundef %.us-phi) ; 2 uses
+  %i.az = call fastcc ptr @backslashreplace(ptr noundef %i.q, ptr noundef %.0132360, ptr noundef %0, i64 noundef %.0124361, i64 noundef %.us-phi233.a) ; 2 uses
   %i.ba = icmp eq ptr %i.az, null
   br i1 %i.ba, label %.loopexit311, label %raise_encode_exception.exit
 
 bb.r:                                             ; preds = %bb.m
-  %.neg = sub i64 %.0124361, %.us-phi
+  %.neg = sub i64 %.0124361, %.us-phi233.a
   %i.bb = load i64, ptr %i.u, align 8, !tbaa !516
   %i.bc = add i64 %.neg, %i.bb
   store i64 %i.bc, ptr %i.u, align 8, !tbaa !516
-  %i.bd = call fastcc ptr @xmlcharrefreplace(ptr noundef %i.q, ptr noundef %.0132360, ptr noundef %0, i64 noundef %.0124361, i64 noundef %.us-phi) ; 2 uses
+  %i.bd = call fastcc ptr @xmlcharrefreplace(ptr noundef %i.q, ptr noundef %.0132360, ptr noundef %0, i64 noundef %.0124361, i64 noundef %.us-phi233.a) ; 2 uses
   %i.be = icmp eq ptr %i.bd, null
   br i1 %i.be, label %.loopexit311, label %raise_encode_exception.exit
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.v
-  %.1125253 = phi i64 [ %i.bq, %bb.v ], [ %.0124361, %.lr.ph.preheader ] ; 6 uses
-  %.2134251 = phi ptr [ %i.bp, %bb.v ], [ %.0132360, %.lr.ph.preheader ] ; 3 uses
+.lr.ph:                                           ; preds = %.preheader, %bb.v
+  %.1125253 = phi i64 [ %i.bq, %bb.v ], [ %.0124361, %.preheader ] ; 5 uses
+  %.2134251 = phi ptr [ %i.bp, %bb.v ], [ %.0132360, %.preheader ] ; 3 uses
   switch i32 %i.k, label %bb.u [
     i32 1, label %bb.s
     i32 2, label %bb.t
@@ -450,14 +441,14 @@ bb.v:                                             ; preds = %PyUnicode_READ.exit
   %i.bo = trunc i32 %.0.i197 to i8
   %i.bp = getelementptr i8, ptr %.2134251, i64 1  ; 2 uses
   store i8 %i.bo, ptr %.2134251, align 1, !tbaa !205
-  %i.bq = add i64 %.1125253, 1
-  %exitcond.not = icmp eq i64 %.1125253, %.us-phi233.a
+  %i.bq = add nsw i64 %.1125253, 1                ; 2 uses
+  %exitcond.not = icmp eq i64 %i.bq, %.us-phi233.a
   br i1 %exitcond.not, label %raise_encode_exception.exit, label %.lr.ph, !llvm.loop !517
 
 .loopexit.a:                                      ; preds = %PyUnicode_READ.exit198, %bb.m
   %.3135 = phi ptr [ %.0132360, %bb.m ], [ %.2134251, %PyUnicode_READ.exit198 ] ; 2 uses
   %.2126 = phi i64 [ %.0124361, %bb.m ], [ %.1125253, %PyUnicode_READ.exit198 ] ; 5 uses
-  %i.br = call fastcc ptr @unicode_encode_call_errorhandler(ptr noundef %1, ptr noundef %i.a, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, ptr noundef %0, ptr noundef %i.b, i64 noundef %.2126, i64 noundef %.us-phi, ptr noundef %i.c) ; 12 uses
+  %i.br = call fastcc ptr @unicode_encode_call_errorhandler(ptr noundef %1, ptr noundef %i.a, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, ptr noundef %0, ptr noundef %i.b, i64 noundef %.2126, i64 noundef %.us-phi233.a, ptr noundef %i.c) ; 12 uses
   %i.bs = icmp eq ptr %i.br, null
   br i1 %i.bs, label %.thread292, label %bb.w
 
@@ -510,7 +501,7 @@ bb.ac:                                            ; preds = %bb.aa
   br i1 %.not184, label %bb.ad, label %bb.af
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab
-  call fastcc void @make_encode_exception(ptr noundef nonnull %i.b, ptr noundef nonnull %i.e, ptr noundef %0, i64 noundef %.2126, i64 noundef %.us-phi, ptr noundef nonnull %i.f)
+  call fastcc void @make_encode_exception(ptr noundef nonnull %i.b, ptr noundef nonnull %i.e, ptr noundef %0, i64 noundef %.2126, i64 noundef %.us-phi233.a, ptr noundef nonnull %i.f)
   %i.ck = load ptr, ptr %i.b, align 8, !tbaa !194 ; 2 uses
   %.not.i199 = icmp eq ptr %i.ck, null
   br i1 %.not.i199, label %.thread299, label %bb.ae
@@ -564,7 +555,7 @@ bb.ak:                                            ; preds = %bb.aj
 
 raise_encode_exception.exit:                      ; preds = %bb.v, %bb.p, %bb.m, %bb.q, %bb.r, %bb.ai, %bb.aj, %bb.ak, %.preheader
   %.6138 = phi ptr [ %i.cr, %bb.ak ], [ %i.bd, %bb.r ], [ %.0132360, %bb.m ], [ %i.az, %bb.q ], [ %i.aw, %bb.p ], [ %i.cr, %bb.ai ], [ %i.cr, %bb.aj ], [ %.0132360, %.preheader ], [ %i.bp, %bb.v ] ; 2 uses
-  %.4 = phi i64 [ %i.cs, %bb.ak ], [ %.us-phi, %bb.r ], [ %.us-phi, %bb.m ], [ %.us-phi, %bb.q ], [ %.us-phi, %bb.p ], [ %i.cs, %bb.ai ], [ %i.cs, %bb.aj ], [ %.0124361, %.preheader ], [ %5, %bb.v ] ; 2 uses
+  %.4 = phi i64 [ %i.cs, %bb.ak ], [ %.us-phi233.a, %bb.r ], [ %.us-phi233.a, %bb.m ], [ %.us-phi233.a, %bb.q ], [ %.us-phi233.a, %bb.p ], [ %i.cs, %bb.ai ], [ %i.cs, %bb.aj ], [ %.0124361, %.preheader ], [ %.us-phi233.a, %bb.v ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #33
   %i.cw = icmp slt i64 %.4, %.val190
   br i1 %i.cw, label %.lr.ph362, label %.outer._crit_edge
@@ -577,9 +568,7 @@ bb.al:                                            ; preds = %PyUnicode_READ.exit
   %i.cx = trunc nuw i32 %.0.i193 to i8
   %i.cy = getelementptr i8, ptr %.0132360, i64 1  ; 2 uses
   store i8 %i.cx, ptr %.0132360, align 1, !tbaa !205
-  %6 = add nsw i64 %.0124361, 1                   ; 2 uses
-  %7 = icmp slt i64 %6, %.val190
-  br i1 %7, label %bb.g, label %.outer._crit_edge
+  br i1 %4, label %bb.g, label %.outer._crit_edge
 
 .outer._crit_edge:                                ; preds = %raise_encode_exception.exit, %bb.al, %bb.f
   %.0132.lcssa = phi ptr [ %i.cy, %bb.al ], [ %i.s, %bb.f ], [ %.6138, %raise_encode_exception.exit ]
@@ -982,7 +971,7 @@ define internal fastcc i64 @asciilib_adaptive_find(ptr noundef %0, i64 noundef r
   %i.b = add nsw i64 %3, -1                       ; 10 uses
   %i.c = getelementptr i8, ptr %2, i64 %i.b
   %i.d = load i8, ptr %i.c, align 1, !tbaa !205   ; 4 uses
-  %i.e = getelementptr i8, ptr %0, i64 %i.b
+  %i.e = getelementptr i8, ptr %0, i64 %i.b       ; 3 uses
   %n.vec = and i64 %i.b, -4                       ; 3 uses
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.b, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -1049,17 +1038,18 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph145.split.us:                               ; preds = %.lr.ph145.split.us.preheader, %bb.i
   %.092143.us = phi i64 [ %i.bf, %bb.i ], [ 0, %.lr.ph145.split.us.preheader ] ; 13 uses
   %.0104142.us = phi i64 [ %.2106.us, %bb.i ], [ 0, %.lr.ph145.split.us.preheader ] ; 3 uses
-  %i.af = getelementptr i8, ptr %i.e, i64 %.092143.us ; 3 uses
+  %i.af = getelementptr i8, ptr %i.e, i64 %.092143.us
   %i.ag = load i8, ptr %i.af, align 1, !tbaa !205
   %i.ah = icmp eq i8 %i.ag, %i.d
   br i1 %i.ah, label %.preheader.us, label %bb.a
 
 bb.a:                                             ; preds = %.lr.ph145.split.us
-  %.not118.not.us = icmp slt i64 %.092143.us, %i.a
-  br i1 %.not118.not.us, label %bb.b, label %bb.i
+  %4 = add nsw i64 %.092143.us, 1                 ; 2 uses
+  %.not118.us = icmp sgt i64 %4, %i.a
+  br i1 %.not118.us, label %bb.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.ai = getelementptr i8, ptr %i.af, i64 1
+  %i.ai = getelementptr i8, ptr %i.e, i64 %4
   %i.aj = load i8, ptr %i.ai, align 1, !tbaa !205
   %i.ak = and i8 %i.aj, 63
   %i.al = zext nneg i8 %i.ak to i64
@@ -1093,11 +1083,12 @@ bb.d:                                             ; preds = %._crit_edge137.us
   br i1 %or.cond.us, label %.split.us, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %.not121.not.us = icmp slt i64 %.092143.us, %i.a
-  br i1 %.not121.not.us, label %bb.f, label %bb.g
+  %5 = add nsw i64 %.092143.us, 1                 ; 2 uses
+  %.not121.us = icmp sgt i64 %5, %i.a
+  br i1 %.not121.us, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.az = getelementptr i8, ptr %i.af, i64 1
+  %i.az = getelementptr i8, ptr %i.e, i64 %5
   %i.ba = load i8, ptr %i.az, align 1, !tbaa !205
   %i.bb = and i8 %i.ba, 63
   %i.bc = zext nneg i8 %i.bb to i64
@@ -1500,7 +1491,7 @@ define internal fastcc i64 @ucs1lib_adaptive_find(ptr noundef %0, i64 noundef ra
   %i.b = add nsw i64 %3, -1                       ; 11 uses
   %i.c = getelementptr i8, ptr %2, i64 %i.b
   %i.d = load i8, ptr %i.c, align 1, !tbaa !205   ; 4 uses
-  %i.e = getelementptr i8, ptr %0, i64 %i.b
+  %i.e = getelementptr i8, ptr %0, i64 %i.b       ; 3 uses
   %n.vec = and i64 %i.b, -4                       ; 3 uses
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.b, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -1569,17 +1560,18 @@ middle.block:                                     ; preds = %vector.body
   %.092148.us = phi i64 [ %i.bi, %bb.k ], [ 0, %.lr.ph151.split.us.preheader ] ; 13 uses
   %.0100147.us = phi i64 [ %.2102.us, %bb.k ], [ 0, %.lr.ph151.split.us.preheader ] ; 6 uses
   %.0104146.us = phi i64 [ %.2106.us, %bb.k ], [ 0, %.lr.ph151.split.us.preheader ] ; 4 uses
-  %i.af = getelementptr i8, ptr %i.e, i64 %.092148.us ; 3 uses
+  %i.af = getelementptr i8, ptr %i.e, i64 %.092148.us
   %i.ag = load i8, ptr %i.af, align 1, !tbaa !205
   %i.ah = icmp eq i8 %i.ag, %i.d
   br i1 %i.ah, label %.preheader.us, label %bb.a
 
 bb.a:                                             ; preds = %.lr.ph151.split.us
-  %.not118.not.us = icmp slt i64 %.092148.us, %i.a
-  br i1 %.not118.not.us, label %bb.b, label %bb.k
+  %8 = add nsw i64 %.092148.us, 1                 ; 2 uses
+  %.not118.us = icmp sgt i64 %8, %i.a
+  br i1 %.not118.us, label %bb.k, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.ai = getelementptr i8, ptr %i.af, i64 1
+  %i.ai = getelementptr i8, ptr %i.e, i64 %8
   %i.aj = load i8, ptr %i.ai, align 1, !tbaa !205
   %i.ak = and i8 %i.aj, 63
   %i.al = zext nneg i8 %i.ak to i64
@@ -1613,11 +1605,12 @@ bb.d:                                             ; preds = %._crit_edge141.us
   br i1 %or.cond.us, label %.split.us, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %.not121.not.us = icmp slt i64 %.092148.us, %i.a
-  br i1 %.not121.not.us, label %bb.f, label %bb.g
+  %9 = add nsw i64 %.092148.us, 1                 ; 2 uses
+  %.not121.us = icmp sgt i64 %9, %i.a
+  br i1 %.not121.us, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.az = getelementptr i8, ptr %i.af, i64 1
+  %i.az = getelementptr i8, ptr %i.e, i64 %9
   %i.ba = load i8, ptr %i.az, align 1, !tbaa !205
   %i.bb = and i8 %i.ba, 63
   %i.bc = zext nneg i8 %i.bb to i64
@@ -2020,7 +2013,7 @@ define internal fastcc i64 @ucs2lib_adaptive_find(ptr noundef %0, i64 noundef ra
   %i.b = add nsw i64 %3, -1                       ; 11 uses
   %i.c = getelementptr [2 x i8], ptr %2, i64 %i.b
   %i.d = load i16, ptr %i.c, align 2, !tbaa !208  ; 4 uses
-  %i.e = getelementptr [2 x i8], ptr %0, i64 %i.b
+  %i.e = getelementptr [2 x i8], ptr %0, i64 %i.b ; 3 uses
   %n.vec = and i64 %i.b, -4                       ; 3 uses
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.b, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -2089,18 +2082,19 @@ middle.block:                                     ; preds = %vector.body
   %.092148.us = phi i64 [ %i.bg, %bb.k ], [ 0, %.lr.ph151.split.us.preheader ] ; 13 uses
   %.0100147.us = phi i64 [ %.2102.us, %bb.k ], [ 0, %.lr.ph151.split.us.preheader ] ; 6 uses
   %.0104146.us = phi i64 [ %.2106.us, %bb.k ], [ 0, %.lr.ph151.split.us.preheader ] ; 4 uses
-  %i.af = getelementptr [2 x i8], ptr %i.e, i64 %.092148.us ; 3 uses
+  %i.af = getelementptr [2 x i8], ptr %i.e, i64 %.092148.us
   %i.ag = load i16, ptr %i.af, align 2, !tbaa !208
   %i.ah = icmp eq i16 %i.ag, %i.d
   br i1 %i.ah, label %.preheader.us, label %bb.a
 
 bb.a:                                             ; preds = %.lr.ph151.split.us
-  %.not118.not.us = icmp slt i64 %.092148.us, %i.a
-  br i1 %.not118.not.us, label %bb.b, label %bb.k
+  %8 = add nsw i64 %.092148.us, 1                 ; 2 uses
+  %.not118.us = icmp sgt i64 %8, %i.a
+  br i1 %.not118.us, label %bb.k, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %8 = getelementptr i8, ptr %i.af, i64 2
-  %i.ai = load i16, ptr %8, align 2, !tbaa !208
+  %9 = getelementptr [2 x i8], ptr %i.e, i64 %8
+  %i.ai = load i16, ptr %9, align 2, !tbaa !208
   %i.aj = and i16 %i.ai, 63
   %i.ak = zext nneg i16 %i.aj to i64
   %i.al = shl nuw i64 1, %i.ak
@@ -2133,12 +2127,13 @@ bb.d:                                             ; preds = %._crit_edge141.us
   br i1 %or.cond.us, label %.split.us, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %.not121.not.us = icmp slt i64 %.092148.us, %i.a
-  br i1 %.not121.not.us, label %bb.f, label %bb.g
+  %10 = add nsw i64 %.092148.us, 1                ; 2 uses
+  %.not121.us = icmp sgt i64 %10, %i.a
+  br i1 %.not121.us, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %9 = getelementptr i8, ptr %i.af, i64 2
-  %i.ay = load i16, ptr %9, align 2, !tbaa !208
+  %11 = getelementptr [2 x i8], ptr %i.e, i64 %10
+  %i.ay = load i16, ptr %11, align 2, !tbaa !208
   %i.az = and i16 %i.ay, 63
   %i.ba = zext nneg i16 %i.az to i64
   %i.bb = shl nuw i64 1, %i.ba
@@ -2541,7 +2536,7 @@ define internal fastcc i64 @ucs4lib_adaptive_find(ptr noundef %0, i64 noundef ra
   %i.b = add nsw i64 %3, -1                       ; 11 uses
   %i.c = getelementptr [4 x i8], ptr %2, i64 %i.b
   %i.d = load i32, ptr %i.c, align 4, !tbaa !7    ; 4 uses
-  %i.e = getelementptr [4 x i8], ptr %0, i64 %i.b
+  %i.e = getelementptr [4 x i8], ptr %0, i64 %i.b ; 3 uses
   %n.vec = and i64 %i.b, -4                       ; 3 uses
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.b, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -2610,18 +2605,19 @@ middle.block:                                     ; preds = %vector.body
   %.092148.us = phi i64 [ %i.bg, %bb.k ], [ 0, %.lr.ph151.split.us.preheader ] ; 13 uses
   %.0100147.us = phi i64 [ %.2102.us, %bb.k ], [ 0, %.lr.ph151.split.us.preheader ] ; 6 uses
   %.0104146.us = phi i64 [ %.2106.us, %bb.k ], [ 0, %.lr.ph151.split.us.preheader ] ; 4 uses
-  %i.af = getelementptr [4 x i8], ptr %i.e, i64 %.092148.us ; 3 uses
+  %i.af = getelementptr [4 x i8], ptr %i.e, i64 %.092148.us
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !7
   %i.ah = icmp eq i32 %i.ag, %i.d
   br i1 %i.ah, label %.preheader.us, label %bb.a
 
 bb.a:                                             ; preds = %.lr.ph151.split.us
-  %.not118.not.us = icmp slt i64 %.092148.us, %i.a
-  br i1 %.not118.not.us, label %bb.b, label %bb.k
+  %8 = add nsw i64 %.092148.us, 1                 ; 2 uses
+  %.not118.us = icmp sgt i64 %8, %i.a
+  br i1 %.not118.us, label %bb.k, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %8 = getelementptr i8, ptr %i.af, i64 4
-  %i.ai = load i32, ptr %8, align 4, !tbaa !7
+  %9 = getelementptr [4 x i8], ptr %i.e, i64 %8
+  %i.ai = load i32, ptr %9, align 4, !tbaa !7
   %i.aj = and i32 %i.ai, 63
   %i.ak = zext nneg i32 %i.aj to i64
   %i.al = shl nuw i64 1, %i.ak
@@ -2654,12 +2650,13 @@ bb.d:                                             ; preds = %._crit_edge141.us
   br i1 %or.cond.us, label %.split.us, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %.not121.not.us = icmp slt i64 %.092148.us, %i.a
-  br i1 %.not121.not.us, label %bb.f, label %bb.g
+  %10 = add nsw i64 %.092148.us, 1                ; 2 uses
+  %.not121.us = icmp sgt i64 %10, %i.a
+  br i1 %.not121.us, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %9 = getelementptr i8, ptr %i.af, i64 4
-  %i.ay = load i32, ptr %9, align 4, !tbaa !7
+  %11 = getelementptr [4 x i8], ptr %i.e, i64 %10
+  %i.ay = load i32, ptr %11, align 4, !tbaa !7
   %i.az = and i32 %i.ay, 63
   %i.ba = zext nneg i32 %i.az to i64
   %i.bb = shl nuw i64 1, %i.ba

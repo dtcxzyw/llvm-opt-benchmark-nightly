@@ -201,7 +201,7 @@ _ZNK6hermes2vm10NativeArgs6getArgEj.exit.thread:  ; preds = %bb.k, %_ZNK6hermes2
 
 .lr.ph79:                                         ; preds = %.preheader, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit
   %i.bs = phi i32 [ %i.bz, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit ], [ 0, %.preheader ] ; 2 uses
-  %.04078 = phi i32 [ %i.ca, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit ], [ 0, %.preheader ] ; 2 uses
+  %.04078 = phi i32 [ %i.ca, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit ], [ 0, %.preheader ]
   %i.bt = load i32, ptr %i.bq, align 4, !tbaa !69
   %.not.i = icmp ult i32 %i.bs, %i.bt
   br i1 %.not.i, label %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit, label %bb.l, !prof !22
@@ -220,9 +220,9 @@ _ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit: ; preds = %.lr.ph79
   %i.by = load i32, ptr %i.bp, align 8, !tbaa !68
   %i.bz = add i32 %i.by, 1                        ; 2 uses
   store i32 %i.bz, ptr %i.bp, align 8, !tbaa !68
-  %i.ca = add nuw i32 %.04078, 1
-  %exitcond.not = icmp eq i32 %.04078, %i.bk
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph79, !llvm.loop !88
+  %i.ca = add nuw nsw i32 %.04078, 1              ; 2 uses
+  %.not = icmp sgt i32 %i.ca, %i.bk
+  br i1 %.not, label %.loopexit, label %.lr.ph79, !llvm.loop !88
 
 bb.m:                                             ; preds = %_ZNK6hermes2vm10NativeArgs6getArgEj.exit.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
@@ -625,12 +625,12 @@ _ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit80: ; preds = %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit80, %bb.r
   %.lcssa = phi i32 [ %i.cw, %bb.r ], [ %i.dg, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit80 ] ; 2 uses
-  %i.dj = load i32, ptr %i.a, align 4, !tbaa !3   ; 8 uses
-  %i.dk = add nsw i32 %i.dj, -1                   ; 3 uses
-  %10 = icmp slt i32 %i.dj, -5
-  %.not.not = icmp sgt i32 %i.dj, %i.bx
-  %or.cond72 = select i1 %10, i1 true, i1 %.not.not
-  br i1 %or.cond72, label %bb.t, label %bb.ab
+  %i.dj = load i32, ptr %i.a, align 4, !tbaa !3   ; 7 uses
+  %i.dk = add nsw i32 %i.dj, -1                   ; 4 uses
+  %10 = icmp sgt i32 %i.dj, -6
+  %.not = icmp slt i32 %i.dk, %i.bx
+  %or.cond72 = select i1 %10, i1 %.not, i1 false
+  br i1 %or.cond72, label %bb.ab, label %bb.t
 
 bb.t:                                             ; preds = %._crit_edge
   %i.dl = icmp ugt i32 %.lcssa, 1

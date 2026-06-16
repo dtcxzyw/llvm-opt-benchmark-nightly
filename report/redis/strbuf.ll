@@ -201,36 +201,38 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 ; Function Attrs: nounwind uwtable
 define dso_local void @strbuf_resize(ptr noundef %0, i64 noundef %1) local_unnamed_addr #4 {
 bb.a:
-  switch i64 %1, label %bb.c [
-    i64 0, label %.thread.i
-    i64 -1, label %bb.b
-  ]
+  %2 = icmp eq i64 %1, 0
+  br i1 %2, label %.thread.i, label %3
 
 .thread.i:                                        ; preds = %bb.a
   tail call void (ptr, ...) @die(ptr noundef nonnull @.str.6)
   unreachable
 
-bb.b:                                             ; preds = %bb.a
+3:                                                ; preds = %bb.a
+  %4 = add nuw i64 %1, 1                          ; 3 uses
+  %5 = icmp eq i64 %1, -1
+  br i1 %5, label %bb.b, label %bb.c
+
+bb.b:                                             ; preds = %3
   tail call void (ptr, ...) @die(ptr noundef nonnull @.str, i64 noundef -1)
   unreachable
 
-bb.c:                                             ; preds = %bb.a
-  %2 = add nuw i64 %1, 1                          ; 2 uses
+bb.c:                                             ; preds = %3
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !8    ; 3 uses
-  %i.c = icmp ugt i64 %i.b, %2
+  %i.c = icmp ugt i64 %i.b, %4
   %i.d = icmp ugt i64 %1, 9223372036854775805
   %or.cond.i = or i1 %i.d, %i.c
   br i1 %or.cond.i, label %calculate_new_size.exit, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.c, %.preheader.i
   %.0.i = phi i64 [ %i.e, %.preheader.i ], [ %i.b, %bb.c ] ; 3 uses
-  %.not.i = icmp ugt i64 %.0.i, %1
+  %6 = icmp ult i64 %.0.i, %4
   %i.e = shl i64 %.0.i, 1
-  br i1 %.not.i, label %calculate_new_size.exit, label %.preheader.i, !llvm.loop !22
+  br i1 %6, label %.preheader.i, label %calculate_new_size.exit, !llvm.loop !22
 
 calculate_new_size.exit:                          ; preds = %.preheader.i, %bb.c
-  %.018.i = phi i64 [ %2, %bb.c ], [ %.0.i, %.preheader.i ] ; 3 uses
+  %.018.i = phi i64 [ %4, %bb.c ], [ %.0.i, %.preheader.i ] ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.g = load i32, ptr %i.f, align 8, !tbaa !18
   %i.h = icmp sgt i32 %i.g, 1

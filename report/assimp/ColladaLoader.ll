@@ -201,7 +201,7 @@ bb.j:                                             ; preds = %.lr.ph1734, %_ZN6As
   store i64 0, ptr %i.af, align 8
   store i8 0, ptr %i.ae, align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.ag, i8 0, i64 48, i1 false)
-  %i.cp = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0862.01732, i8 noundef signext 47, i64 noundef 0) #26 ; 8 uses
+  %i.cp = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0862.01732, i8 noundef signext 47, i64 noundef 0) #26 ; 5 uses
   %i.cq = icmp eq i64 %i.cp, -1
   br i1 %i.cq, label %bb.k, label %bb.aq
 
@@ -604,7 +604,7 @@ bb.ap:                                            ; preds = %.noexc.i.i741, %bb.
   br label %.body743
 
 bb.aq:                                            ; preds = %bb.j
-  %i.gu = add nuw i64 %i.cp, 1                    ; 10 uses
+  %i.gu = add nuw i64 %i.cp, 1                    ; 13 uses
   %i.gv = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0862.01732, i8 noundef signext 47, i64 noundef %i.gu) #26
   %.not315 = icmp eq i64 %i.gv, -1
   br i1 %.not315, label %bb.ar, label %_ZNSt6vectorIN6Assimp7Collada12ChannelEntryESaIS2_EE9push_backERKS2_.exit
@@ -759,12 +759,12 @@ bb.bb:                                            ; preds = %.noexc10.i.i390
   br label %.body743
 
 _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread906: ; preds = %bb.ba, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit
-  %i.ih = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0862.01732, i8 noundef signext 46, i64 noundef 0) #26 ; 4 uses
+  %i.ih = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0862.01732, i8 noundef signext 46, i64 noundef 0) #26 ; 3 uses
   %.not316 = icmp eq i64 %i.ih, -1
   br i1 %.not316, label %bb.ca, label %bb.bc
 
 bb.bc:                                            ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread906
-  %i.ii = add nuw i64 %i.ih, 1                    ; 4 uses
+  %i.ii = add nuw i64 %i.ih, 1                    ; 5 uses
   %i.ij = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0862.01732, i8 noundef signext 46, i64 noundef %i.ii) #26
   %.not317 = icmp eq i64 %i.ij, -1
   br i1 %.not317, label %bb.bd, label %_ZNSt6vectorIN6Assimp7Collada12ChannelEntryESaIS2_EE9push_backERKS2_.exit
@@ -773,8 +773,8 @@ bb.bd:                                            ; preds = %bb.bc
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #26
   call void @llvm.experimental.noalias.scope.decl(metadata !127)
   %i.ik = load i64, ptr %i.gx, align 8, !noalias !127 ; 3 uses
-  %.not973 = icmp ult i64 %i.cp, %i.ik
-  br i1 %.not973, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i404, label %bb.be
+  %25 = icmp ugt i64 %i.gu, %i.ik
+  br i1 %25, label %bb.be, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i404
 
 bb.be:                                            ; preds = %bb.bd
   invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.89, ptr noundef nonnull @.str.97, i64 noundef %i.gu, i64 noundef %i.ik) #29
@@ -913,8 +913,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit421: ; preds = %_Z
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #26
   call void @llvm.experimental.noalias.scope.decl(metadata !130)
   %i.jr = load i64, ptr %i.gx, align 8, !noalias !130 ; 3 uses
-  %.not974 = icmp ult i64 %i.ih, %i.jr
-  br i1 %.not974, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i422, label %bb.bn
+  %26 = icmp ugt i64 %i.ii, %i.jr
+  br i1 %26, label %bb.bn, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i422
 
 bb.bn:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit421
   invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.89, ptr noundef nonnull @.str.97, i64 noundef %i.ii, i64 noundef %i.jr) #29
@@ -1143,8 +1143,8 @@ bb.ca:                                            ; preds = %_ZStneIcSt11char_tr
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #26
   call void @llvm.experimental.noalias.scope.decl(metadata !133)
   %i.ln = load i64, ptr %i.gx, align 8, !noalias !133 ; 3 uses
-  %.not975 = icmp ult i64 %i.cp, %i.ln
-  br i1 %.not975, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i446, label %bb.cb
+  %27 = icmp ugt i64 %i.gu, %i.ln
+  br i1 %27, label %bb.cb, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i446
 
 bb.cb:                                            ; preds = %bb.ca
   invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.89, ptr noundef nonnull @.str.97, i64 noundef %i.gu, i64 noundef %i.ln) #29
@@ -1300,8 +1300,8 @@ bb.cm:                                            ; preds = %bb.cl
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #26
   call void @llvm.experimental.noalias.scope.decl(metadata !136)
   %i.ms = load i64, ptr %i.gx, align 8, !noalias !136 ; 3 uses
-  %.not976 = icmp ult i64 %i.cp, %i.ms
-  br i1 %.not976, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i464, label %bb.cn
+  %28 = icmp ugt i64 %i.gu, %i.ms
+  br i1 %28, label %bb.cn, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i464
 
 bb.cn:                                            ; preds = %bb.cm
   invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.89, ptr noundef nonnull @.str.97, i64 noundef %i.gu, i64 noundef %i.ms) #29

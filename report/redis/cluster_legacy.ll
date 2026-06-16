@@ -201,15 +201,15 @@ bb.hv:                                            ; preds = %bb.hu
 .lr.ph550:                                        ; preds = %.lr.ph550.preheader, %clusterAddSlot.exit
   %i.yz = phi ptr [ %.pre653, %.lr.ph550.preheader ], [ %i.zr, %clusterAddSlot.exit ] ; 2 uses
   %indvars.iv636 = phi i64 [ %i.yx, %.lr.ph550.preheader ], [ %indvars.iv.next637, %clusterAddSlot.exit ] ; 5 uses
-  %indvars.iv.next637 = add nuw nsw i64 %indvars.iv636, 1
+  %indvars.iv.next637 = add nuw nsw i64 %indvars.iv636, 1 ; 2 uses
   %i.za = getelementptr inbounds nuw i8, ptr %i.yz, i64 262192
   %i.zb = getelementptr inbounds nuw [8 x i8], ptr %i.za, i64 %indvars.iv636
   %i.zc = load ptr, ptr %i.zb, align 8, !tbaa !54
   %.not.i388 = icmp eq ptr %i.zc, null
-  %4 = trunc nuw i64 %indvars.iv636 to i32        ; 4 uses
   br i1 %.not.i388, label %bb.hw, label %clusterAddSlot.exit
 
 bb.hw:                                            ; preds = %.lr.ph550
+  %4 = trunc nuw i64 %indvars.iv636 to i32        ; 3 uses
   %i.zd = call i32 @clusterNodeSetSlotBit(ptr noundef %.0256, i32 noundef %4) ; 0 uses
   %i.ze = load ptr, ptr getelementptr inbounds nuw (i8, ptr @server, i64 8224), align 8, !tbaa !66 ; 2 uses
   %i.zf = getelementptr inbounds nuw i8, ptr %i.ze, i64 262192
@@ -231,9 +231,10 @@ bb.hw:                                            ; preds = %.lr.ph550
   br label %clusterAddSlot.exit
 
 clusterAddSlot.exit:                              ; preds = %.lr.ph550, %bb.hw
-  %i.zr = phi ptr [ %.pre652, %bb.hw ], [ %i.yz, %.lr.ph550 ]
-  %.not332.not = icmp sgt i32 %.0257, %4
-  br i1 %.not332.not, label %.lr.ph550, label %.loopexit, !llvm.loop !102
+  %i.zr = phi ptr [ %i.yz, %.lr.ph550 ], [ %.pre652, %bb.hw ]
+  %5 = trunc nuw i64 %indvars.iv.next637 to i32
+  %.not332 = icmp slt i32 %.0257, %5
+  br i1 %.not332, label %.loopexit, label %.lr.ph550, !llvm.loop !102
 
 .loopexit:                                        ; preds = %clusterAddSlot.exit, %clusterAddNode.exit387, %.preheader
   %indvars.iv.next640 = add nuw nsw i64 %indvars.iv639, 1 ; 2 uses
@@ -636,7 +637,7 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %.not17 = icmp eq i32 %2, 0
   %i.a = sext i32 %3 to i64                       ; 2 uses
-  %5 = add i32 %4, 1                              ; 2 uses
+  %5 = sext i32 %4 to i64                         ; 2 uses
   br i1 %.not17, label %.critedge.us, label %.lr.ph.split
 
 .critedge.us:                                     ; preds = %.lr.ph, %bb.c
@@ -658,9 +659,8 @@ bb.b:                                             ; preds = %.critedge.us
 
 bb.c:                                             ; preds = %bb.b
   %indvars.iv.next35 = add nsw i64 %indvars.iv34, 1 ; 2 uses
-  %lftr.wideiv37 = trunc i64 %indvars.iv.next35 to i32
-  %exitcond38.not = icmp eq i32 %5, %lftr.wideiv37
-  br i1 %exitcond38.not, label %.loopexit, label %.critedge.us, !llvm.loop !310
+  %.not.us = icmp sgt i64 %indvars.iv.next35, %5
+  br i1 %.not.us, label %.loopexit, label %.critedge.us, !llvm.loop !310
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.e
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.e ], [ %i.a, %.lr.ph ] ; 5 uses
@@ -681,9 +681,8 @@ bb.d:                                             ; preds = %.lr.ph.split
 
 bb.e:                                             ; preds = %bb.d
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond.not = icmp eq i32 %5, %lftr.wideiv
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph.split, !llvm.loop !310
+  %.not = icmp sgt i64 %indvars.iv.next, %5
+  br i1 %.not, label %.loopexit, label %.lr.ph.split, !llvm.loop !310
 
 .loopexit.sink.split:                             ; preds = %bb.d, %.lr.ph.split, %bb.b, %.critedge.us
   %.us-phi26.in.sink = phi i64 [ %indvars.iv34, %bb.b ], [ %indvars.iv34, %.critedge.us ], [ %indvars.iv, %.lr.ph.split ], [ %indvars.iv, %bb.d ]
@@ -1086,13 +1085,13 @@ bb.ak:                                            ; preds = %bb.aj
 
 .lr.ph.i.us:                                      ; preds = %bb.ak
   %i.fp = sext i32 %i.fg to i64
-  %1 = add nuw i32 %i.fm, 1
+  %1 = sext i32 %i.fm to i64
   %i.fq = load ptr, ptr getelementptr inbounds nuw (i8, ptr @server, i64 8224), align 8, !tbaa !66
   %i.fr = getelementptr inbounds nuw i8, ptr %i.fq, i64 262192
   br label %.lr.ph.split.i369.us
 
 .lr.ph.split.i369.us:                             ; preds = %.lr.ph.i.us, %bb.am
-  %indvars.iv.i370.us = phi i64 [ %indvars.iv.next.i371.us, %bb.am ], [ %i.fp, %.lr.ph.i.us ] ; 5 uses
+  %indvars.iv.i370.us = phi i64 [ %indvars.iv.next.i371.us, %bb.am ], [ %i.fp, %.lr.ph.i.us ] ; 6 uses
   %i.fs = getelementptr inbounds [8 x i8], ptr %i.fr, i64 %indvars.iv.i370.us
   %i.ft = load ptr, ptr %i.fs, align 8, !tbaa !54
   %i.fu = icmp eq ptr %i.ft, null
@@ -1107,9 +1106,8 @@ bb.al:                                            ; preds = %.lr.ph.split.i369.u
   br i1 %i.fy, label %.loopexit414, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  %indvars.iv.next.i371.us = add nsw i64 %indvars.iv.i370.us, 1 ; 2 uses
-  %lftr.wideiv.i372.us = trunc i64 %indvars.iv.next.i371.us to i32
-  %exitcond.not.i373.us = icmp eq i32 %1, %lftr.wideiv.i372.us
+  %indvars.iv.next.i371.us = add nsw i64 %indvars.iv.i370.us, 1
+  %exitcond.not.i373.us = icmp eq i64 %indvars.iv.i370.us, %1
   br i1 %exitcond.not.i373.us, label %.loopexit415.us, label %.lr.ph.split.i369.us, !llvm.loop !310
 
 .loopexit415.us:                                  ; preds = %bb.am
@@ -1158,13 +1156,13 @@ bb.ao:                                            ; preds = %bb.an
 
 .lr.ph.i:                                         ; preds = %bb.ao
   %i.go = sext i32 %i.gf to i64
-  %2 = add nuw i32 %i.gl, 1
+  %2 = sext i32 %i.gl to i64
   %i.gp = load ptr, ptr getelementptr inbounds nuw (i8, ptr @server, i64 8224), align 8, !tbaa !66
   %i.gq = getelementptr inbounds nuw i8, ptr %i.gp, i64 262192
   br label %.critedge.us.i379
 
 .critedge.us.i379:                                ; preds = %.lr.ph.i, %bb.aq
-  %indvars.iv34.i380 = phi i64 [ %indvars.iv.next35.i382, %bb.aq ], [ %i.go, %.lr.ph.i ] ; 5 uses
+  %indvars.iv34.i380 = phi i64 [ %indvars.iv.next35.i382, %bb.aq ], [ %i.go, %.lr.ph.i ] ; 6 uses
   %i.gr = getelementptr inbounds [8 x i8], ptr %i.gq, i64 %indvars.iv34.i380
   %i.gs = load ptr, ptr %i.gr, align 8, !tbaa !54
   %.not18.us.i381 = icmp eq ptr %i.gs, null
@@ -1179,9 +1177,8 @@ bb.ap:                                            ; preds = %.critedge.us.i379
   br i1 %i.gw, label %.loopexit414, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
-  %indvars.iv.next35.i382 = add nsw i64 %indvars.iv34.i380, 1 ; 2 uses
-  %lftr.wideiv37.i383 = trunc i64 %indvars.iv.next35.i382 to i32
-  %exitcond38.not.i384 = icmp eq i32 %2, %lftr.wideiv37.i383
+  %indvars.iv.next35.i382 = add nsw i64 %indvars.iv34.i380, 1
+  %exitcond38.not.i384 = icmp eq i64 %indvars.iv34.i380, %2
   br i1 %exitcond38.not.i384, label %.loopexit418, label %.critedge.us.i379, !llvm.loop !310
 
 .loopexit414:                                     ; preds = %bb.ap, %.critedge.us.i379, %bb.al, %.lr.ph.split.i369.us
@@ -1584,7 +1581,7 @@ bb.i:                                             ; preds = %.lr.ph39, %._crit_e
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %clusterAddSlot.exit
   %i.ab = phi ptr [ %.pre45, %.lr.ph.preheader ], [ %i.cu, %clusterAddSlot.exit ]
-  %indvars.iv = phi i64 [ %i.x, %.lr.ph.preheader ], [ %indvars.iv.next, %clusterAddSlot.exit ] ; 10 uses
+  %indvars.iv = phi i64 [ %i.x, %.lr.ph.preheader ], [ %indvars.iv.next, %clusterAddSlot.exit ] ; 9 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 262192
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %indvars.iv
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !54 ; 3 uses
@@ -1738,11 +1735,11 @@ clusterNodeSetSlotBit.exit:                       ; preds = %clusterDelSlot.exit
 
 clusterAddSlot.exit:                              ; preds = %clusterDelSlot.exit, %clusterNodeSetSlotBit.exit
   %i.cu = phi ptr [ %.pre46, %clusterDelSlot.exit ], [ %.pre, %clusterNodeSetSlotBit.exit ]
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.cv = load i16, ptr %i.v, align 2, !tbaa !344
   %i.cw = zext i16 %i.cv to i64
-  %.not29.not = icmp samesign ult i64 %indvars.iv, %i.cw
-  br i1 %.not29.not, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !346
+  %.not29 = icmp samesign ugt i64 %indvars.iv.next, %i.cw
+  br i1 %.not29, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !346
 
 bb.r:                                             ; preds = %bb.e
   tail call void @unpauseActions(i32 noundef 3) #30

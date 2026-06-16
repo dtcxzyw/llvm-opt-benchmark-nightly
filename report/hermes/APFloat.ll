@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.b
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 4
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !7   ; 5 uses
   %i.ab = add i32 %i.aa, -1                       ; 2 uses
-  %i.ac = lshr i32 %i.ab, 6                       ; 4 uses
+  %i.ac = lshr i32 %i.ab, 6                       ; 3 uses
   %i.ad = and i32 %i.ab, 63
   %i.ae = zext nneg i32 %i.ad to i64
   %notmask = shl nsw i64 -1, %i.ae
@@ -211,18 +211,18 @@ bb.c:                                             ; preds = %bb.b
   %i.ai = load i64, ptr %i.ah, align 8, !tbaa !22
   %i.aj = and i64 %i.ai, %i.af
   store i64 %i.aj, ptr %i.ah, align 8, !tbaa !22
-  %.039 = add nuw nsw i32 %i.ac, 1                ; 4 uses
+  %.039 = add nuw nsw i32 %i.ac, 1                ; 5 uses
   %.not2940 = icmp eq i32 %.039, %i.n
   br i1 %.not2940, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.thread
   %i.ak = xor i32 %i.ac, -1
   %i.al = add nsw i32 %i.n, %i.ak                 ; 3 uses
-  %min.iters.check = icmp ugt i32 %i.al, 13
+  %min.iters.check = icmp ult i32 %i.al, 14
   %i.am = add nsw i32 %i.n, -1
-  %.not54 = icmp ugt i32 %i.am, %i.ac
-  %or.cond = select i1 %min.iters.check, i1 %.not54, i1 false
-  br i1 %or.cond, label %vector.ph, label %.lr.ph.preheader55
+  %4 = icmp ult i32 %i.am, %.039
+  %or.cond = select i1 %min.iters.check, i1 true, i1 %4
+  br i1 %or.cond, label %.lr.ph.preheader55, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
   %n.vec = and i32 %i.al, -4                      ; 3 uses
@@ -625,18 +625,18 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.i
 
 bb.f:                                             ; preds = %bb.d
-  %7 = zext nneg i16 %i.r to i32                  ; 2 uses
-  %8 = add nuw nsw i32 %7, 1                      ; 4 uses
-  %.not = icmp ugt i32 %3, %7
-  br i1 %.not, label %bb.g, label %.critedge
+  %narrow = add nuw i16 %i.r, 1
+  %7 = zext i16 %narrow to i32                    ; 5 uses
+  %.not = icmp ult i32 %3, %7
+  br i1 %.not, label %.critedge, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %9 = icmp ult i32 %8, %i.l
-  br i1 %9, label %bb.h, label %.thread
+  %8 = icmp ugt i32 %i.l, %7
+  br i1 %8, label %bb.h, label %.thread
 
 bb.h:                                             ; preds = %bb.g
-  %i.aa = sub nuw i32 %i.l, %8                    ; 2 uses
-  tail call void @_ZN4llvh5APInt9tcExtractEPmjPKmjj(ptr noundef %1, i32 noundef %i.e, ptr noundef %.0.i.i, i32 noundef %8, i32 noundef %i.aa) #25
+  %i.aa = sub nuw i32 %i.l, %7                    ; 2 uses
+  tail call void @_ZN4llvh5APInt9tcExtractEPmjPKmjj(ptr noundef %1, i32 noundef %i.e, ptr noundef %.0.i.i, i32 noundef %7, i32 noundef %i.aa) #25
   br label %bb.i
 
 .thread:                                          ; preds = %bb.g
@@ -644,7 +644,7 @@ bb.h:                                             ; preds = %bb.g
   %i.ab = load ptr, ptr %0, align 8, !tbaa !13
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 4
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !7
-  %i.ae = sub i32 %8, %i.ad
+  %i.ae = sub i32 %7, %i.ad
   tail call void @_ZN4llvh5APInt11tcShiftLeftEPmjj(ptr noundef %1, i32 noundef %i.e, i32 noundef %i.ae) #25
   br label %_ZN4llvhL29lostFractionThroughTruncationEPKmjj.exit
 

@@ -201,19 +201,19 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
-  %i.c = load i32, ptr %i.b, align 4, !tbaa !396  ; 4 uses
+  %i.c = load i32, ptr %i.b, align 4, !tbaa !396  ; 3 uses
   %i.d = icmp sgt i32 %1, %i.c
   br i1 %i.d, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !395
-  %.not = icmp sgt i32 %i.f, %i.c
+  %3 = add nuw nsw i32 %i.c, 1                    ; 3 uses
+  %4 = icmp slt i32 %i.f, %3
   %.pre28.pre = load ptr, ptr %0, align 8, !tbaa !393 ; 2 uses
-  br i1 %.not, label %bb.e, label %bb.d
+  br i1 %4, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %3 = add nuw nsw i32 %i.c, 1                    ; 2 uses
   store i32 %3, ptr %i.e, align 8, !tbaa !395
   %i.g = zext nneg i32 %3 to i64
   %i.h = shl nuw nsw i64 %i.g, 3

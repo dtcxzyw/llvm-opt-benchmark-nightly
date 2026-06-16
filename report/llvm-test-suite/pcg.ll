@@ -169,7 +169,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load double, ptr %i.d, align 8, !tbaa !40 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.g = load i32, ptr %i.f, align 8, !tbaa !36   ; 3 uses
+  %i.g = load i32, ptr %i.f, align 8, !tbaa !36   ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.i = load i32, ptr %i.h, align 4, !tbaa !41
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -262,18 +262,16 @@ bb.i:                                             ; preds = %bb.g, %bb.h, %bb.d
   %i.bl = getelementptr inbounds nuw i8, ptr %i.b, i64 56 ; 6 uses
   %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !17
   %i.bn = tail call double %i.bm(ptr noundef %i.s, ptr noundef %i.o) #10
-  %.not174.not176 = icmp sgt i32 %i.g, 0
-  br i1 %.not174.not176, label %.lr.ph, label %._crit_edge
+  %.not174176 = icmp slt i32 %i.g, 1
+  br i1 %.not174176, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.i
   %i.bo = getelementptr inbounds nuw i8, ptr %i.b, i64 88 ; 3 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.b, i64 80
-  %4 = add nuw i32 %i.g, 1
-  %wide.trip.count = zext i32 %4 to i64
   br label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph, %bb.s
-  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %bb.s ] ; 7 uses
+  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %bb.s ] ; 5 uses
   %.0165178 = phi double [ %i.bn, %.lr.ph ], [ %i.ce, %bb.s ] ; 2 uses
   %.0166177 = phi double [ 0.000000e+00, %.lr.ph ], [ %.1167, %bb.s ] ; 4 uses
   %i.bq = load ptr, ptr %i.au, align 8, !tbaa !15
@@ -324,7 +322,7 @@ bb.n:                                             ; preds = %._crit_edge186, %bb
 bb.o:                                             ; preds = %bb.n
   %i.cn = fcmp ogt double %.0170, 0.000000e+00
   %or.cond175 = select i1 %i.ap, i1 %i.cn, i1 false
-  br i1 %or.cond175, label %bb.p, label %._crit_edge.loopexit.split.loop.exit188
+  br i1 %or.cond175, label %bb.p, label %._crit_edge.loopexit.split.loop.exit190
 
 bb.p:                                             ; preds = %bb.o
   %i.co = load ptr, ptr %i.bl, align 8, !tbaa !17
@@ -355,7 +353,7 @@ bb.r:                                             ; preds = %bb.q
   %i.dg = fsub double 1.000000e+00, %i.df
   %i.dh = fmul double %i.da, %i.dg
   %i.di = fcmp ogt double %i.dh, %i.e
-  br i1 %i.di, label %._crit_edge.loopexit.split.loop.exit, label %bb.s
+  br i1 %i.di, label %._crit_edge.loopexit.split.loop.exit190, label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q
   %.1167 = phi double [ %i.da, %bb.r ], [ %.0166177, %bb.q ]
@@ -365,23 +363,16 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %i.dm = load ptr, ptr %i.bo, align 8, !tbaa !21
   %i.dn = tail call i32 %i.dm(double noundef 1.000000e+00, ptr noundef %i.q, ptr noundef %i.o) #10 ; 0 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.j, !llvm.loop !44
+  %4 = trunc nuw i64 %indvars.iv.next to i32
+  %.not174 = icmp slt i32 %i.g, %4
+  br i1 %.not174, label %._crit_edge.loopexit.split.loop.exit190, label %bb.j, !llvm.loop !44
 
-._crit_edge.loopexit.split.loop.exit:             ; preds = %bb.r
-  %5 = trunc nuw nsw i64 %indvars.iv to i32
-  br label %._crit_edge
-
-._crit_edge.loopexit.split.loop.exit188:          ; preds = %bb.o
-  %6 = trunc nuw nsw i64 %indvars.iv to i32
-  br label %._crit_edge
-
-._crit_edge.loopexit.split.loop.exit190:          ; preds = %bb.p
+._crit_edge.loopexit.split.loop.exit190:          ; preds = %bb.r, %bb.o, %bb.p, %bb.s
   %i.do = trunc nuw nsw i64 %indvars.iv to i32
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %bb.s, %._crit_edge.loopexit.split.loop.exit, %._crit_edge.loopexit.split.loop.exit188, %._crit_edge.loopexit.split.loop.exit190, %bb.i
-  %.1 = phi i32 [ 0, %bb.i ], [ %i.do, %._crit_edge.loopexit.split.loop.exit190 ], [ %6, %._crit_edge.loopexit.split.loop.exit188 ], [ %5, %._crit_edge.loopexit.split.loop.exit ], [ %i.g, %bb.s ]
+._crit_edge:                                      ; preds = %._crit_edge.loopexit.split.loop.exit190, %bb.i
+  %.1 = phi i32 [ 0, %bb.i ], [ %i.do, %._crit_edge.loopexit.split.loop.exit190 ]
   %i.dp = getelementptr inbounds nuw i8, ptr %0, i64 88
   store i32 %.1, ptr %i.dp, align 8, !tbaa !46
   br label %bb.t
