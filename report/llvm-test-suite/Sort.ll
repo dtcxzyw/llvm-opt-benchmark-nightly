@@ -23,41 +23,48 @@ bb.c:                                             ; preds = %._crit_edge, %bb.b
   br i1 %i.h, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c, %bb.f
-  %i.i = phi i32 [ %i.u, %bb.f ], [ %i.g, %bb.c ] ; 5 uses
+  %i.i = phi i32 [ %i.u, %bb.f ], [ %i.g, %bb.c ] ; 6 uses
   %.080104 = phi i32 [ %.079, %bb.f ], [ %.082, %bb.c ]
   %i.j = icmp ult i32 %i.i, %1
-  br i1 %i.j, label %bb.d, label %bb.e
+  br i1 %i.j, label %bb.d, label %.lr.ph._crit_edge
+
+.lr.ph._crit_edge:                                ; preds = %.lr.ph
+  %.phi.trans.insert = zext i32 %i.i to i64       ; 2 uses
+  %.phi.trans.insert119 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.phi.trans.insert
+  %.pre = load i32, ptr %.phi.trans.insert119, align 4, !tbaa !4
+  br label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph
   %i.k = or disjoint i32 %i.i, 1                  ; 2 uses
   %i.l = zext i32 %i.k to i64
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.l
-  %i.n = load i32, ptr %i.m, align 4, !tbaa !4
+  %i.n = load i32, ptr %i.m, align 4, !tbaa !4    ; 2 uses
   %i.o = zext i32 %i.i to i64
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.o
-  %i.q = load i32, ptr %i.p, align 4, !tbaa !4
+  %i.q = load i32, ptr %i.p, align 4, !tbaa !4    ; 2 uses
   %i.r = icmp ugt i32 %i.n, %i.q
-  %spec.select = select i1 %i.r, i32 %i.k, i32 %i.i
+  %spec.select = select i1 %i.r, i32 %i.k, i32 %i.i ; 2 uses
+  %2 = tail call i32 @llvm.umax.i32(i32 %i.n, i32 %i.q)
+  %.pre128 = zext i32 %spec.select to i64
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %.lr.ph
-  %.079 = phi i32 [ %i.i, %.lr.ph ], [ %spec.select, %bb.d ] ; 3 uses
-  %2 = zext i32 %.079 to i64                      ; 2 uses
-  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %2
-  %4 = load i32, ptr %3, align 4, !tbaa !4        ; 2 uses
-  %.not = icmp ult i32 %i.f, %4
+bb.e:                                             ; preds = %.lr.ph._crit_edge, %bb.d
+  %.pre-phi129 = phi i64 [ %.phi.trans.insert, %.lr.ph._crit_edge ], [ %.pre128, %bb.d ]
+  %3 = phi i32 [ %.pre, %.lr.ph._crit_edge ], [ %2, %bb.d ] ; 2 uses
+  %.079 = phi i32 [ %i.i, %.lr.ph._crit_edge ], [ %spec.select, %bb.d ] ; 2 uses
+  %.not = icmp ult i32 %i.f, %3
   %i.s = zext i32 %.080104 to i64                 ; 2 uses
   br i1 %.not, label %bb.f, label %._crit_edge
 
 bb.f:                                             ; preds = %bb.e
   %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.s
-  store i32 %4, ptr %i.t, align 4, !tbaa !4
+  store i32 %3, ptr %i.t, align 4, !tbaa !4
   %i.u = shl i32 %.079, 1                         ; 2 uses
   %i.v = icmp ugt i32 %i.u, %1
   br i1 %i.v, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.e, %bb.c
-  %.pre-phi = phi i64 [ %i.d, %bb.c ], [ %2, %bb.f ], [ %i.s, %bb.e ]
+  %.pre-phi = phi i64 [ %i.d, %bb.c ], [ %.pre-phi129, %bb.f ], [ %i.s, %bb.e ]
   %i.w = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.pre-phi
   store i32 %i.f, ptr %i.w, align 4, !tbaa !4
   %i.x = add nsw i32 %.082, -1                    ; 2 uses
@@ -95,41 +102,48 @@ bb.g:                                             ; preds = %.lr.ph115, %._crit_
   br i1 %i.an, label %._crit_edge110, label %.lr.ph109
 
 .lr.ph109:                                        ; preds = %bb.g, %bb.j
-  %i.ao = phi i32 [ %i.ba, %bb.j ], [ %i.am, %bb.g ] ; 5 uses
+  %i.ao = phi i32 [ %i.ba, %bb.j ], [ %i.am, %bb.g ] ; 6 uses
   %.075107 = phi i32 [ %.0, %bb.j ], [ %i.ah, %bb.g ]
   %i.ap = icmp ult i32 %i.ao, %indvars
-  br i1 %i.ap, label %bb.h, label %bb.i
+  br i1 %i.ap, label %bb.h, label %.lr.ph109._crit_edge
+
+.lr.ph109._crit_edge:                             ; preds = %.lr.ph109
+  %.phi.trans.insert120 = zext i32 %i.ao to i64   ; 2 uses
+  %.phi.trans.insert121 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.phi.trans.insert120
+  %.pre122 = load i32, ptr %.phi.trans.insert121, align 4, !tbaa !4
+  br label %bb.i
 
 bb.h:                                             ; preds = %.lr.ph109
   %i.aq = or disjoint i32 %i.ao, 1                ; 2 uses
   %i.ar = zext i32 %i.aq to i64
   %i.as = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.ar
-  %i.at = load i32, ptr %i.as, align 4, !tbaa !4
+  %i.at = load i32, ptr %i.as, align 4, !tbaa !4  ; 2 uses
   %i.au = zext i32 %i.ao to i64
   %i.av = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.au
-  %i.aw = load i32, ptr %i.av, align 4, !tbaa !4
+  %i.aw = load i32, ptr %i.av, align 4, !tbaa !4  ; 2 uses
   %i.ax = icmp ugt i32 %i.at, %i.aw
-  %spec.select94 = select i1 %i.ax, i32 %i.aq, i32 %i.ao
+  %spec.select94 = select i1 %i.ax, i32 %i.aq, i32 %i.ao ; 2 uses
+  %4 = tail call i32 @llvm.umax.i32(i32 %i.at, i32 %i.aw)
+  %.pre126 = zext i32 %spec.select94 to i64
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %.lr.ph109
-  %.0 = phi i32 [ %i.ao, %.lr.ph109 ], [ %spec.select94, %bb.h ] ; 3 uses
-  %5 = zext i32 %.0 to i64                        ; 2 uses
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %5
-  %7 = load i32, ptr %6, align 4, !tbaa !4        ; 2 uses
-  %.not93 = icmp ult i32 %i.ad, %7
+bb.i:                                             ; preds = %.lr.ph109._crit_edge, %bb.h
+  %.pre-phi127 = phi i64 [ %.phi.trans.insert120, %.lr.ph109._crit_edge ], [ %.pre126, %bb.h ]
+  %5 = phi i32 [ %.pre122, %.lr.ph109._crit_edge ], [ %4, %bb.h ] ; 2 uses
+  %.0 = phi i32 [ %i.ao, %.lr.ph109._crit_edge ], [ %spec.select94, %bb.h ] ; 2 uses
+  %.not93 = icmp ult i32 %i.ad, %5
   %i.ay = zext i32 %.075107 to i64                ; 2 uses
   br i1 %.not93, label %bb.j, label %._crit_edge110
 
 bb.j:                                             ; preds = %bb.i
   %i.az = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.ay
-  store i32 %7, ptr %i.az, align 4, !tbaa !4
+  store i32 %5, ptr %i.az, align 4, !tbaa !4
   %i.ba = shl i32 %.0, 1                          ; 2 uses
   %i.bb = icmp ugt i32 %i.ba, %indvars
   br i1 %i.bb, label %._crit_edge110, label %.lr.ph109
 
 ._crit_edge110:                                   ; preds = %bb.j, %bb.i, %bb.g
-  %.pre-phi120 = phi i64 [ %i.aj, %bb.g ], [ %5, %bb.j ], [ %i.ay, %bb.i ]
+  %.pre-phi120 = phi i64 [ %i.aj, %bb.g ], [ %.pre-phi127, %bb.j ], [ %i.ay, %bb.i ]
   %i.bc = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.pre-phi120
   store i32 %i.ad, ptr %i.bc, align 4, !tbaa !4
   %i.bd = icmp ugt i32 %indvars, 3
@@ -172,7 +186,11 @@ bb.n:                                             ; preds = %bb.l, %bb.m, %bb.a
   ret void
 }
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #1
+
 attributes #0 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

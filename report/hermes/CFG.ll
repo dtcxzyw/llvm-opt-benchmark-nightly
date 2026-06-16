@@ -201,7 +201,7 @@ _ZNK4llvh12DenseMapBaseINS_8DenseMapIPN6hermes10BasicBlockESt10unique_ptrINS_15D
 
 _ZNK4llvh17DominatorTreeBaseIN6hermes10BasicBlockELb0EE7getNodeEPKS2_.exit26: ; preds = %_ZNK4llvh12DenseMapBaseINS_8DenseMapIPN6hermes10BasicBlockESt10unique_ptrINS_15DomTreeNodeBaseIS3_EESt14default_deleteIS7_EENS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_SA_EEEES4_SA_SC_SF_E4findEPKS3_.exit.i21
   %i.bb = getelementptr inbounds nuw i8, ptr %.sink.i.ph.pn.i.i22, i64 8
-  %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !34 ; 3 uses
+  %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !34 ; 4 uses
   %i.bd = icmp ne ptr %.0.i, null
   %i.be = icmp ne ptr %i.bc, null
   %or.cond = and i1 %i.bd, %i.be
@@ -209,23 +209,28 @@ _ZNK4llvh17DominatorTreeBaseIN6hermes10BasicBlockELb0EE7getNodeEPKS2_.exit26: ; 
 
 .preheader:                                       ; preds = %_ZNK4llvh17DominatorTreeBaseIN6hermes10BasicBlockELb0EE7getNodeEPKS2_.exit26
   %.not = icmp eq ptr %.0.i, %i.bc
-  br i1 %.not, label %._crit_edge.thread, label %.lr.ph
+  br i1 %.not, label %._crit_edge.thread, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %.preheader, %.lr.ph
-  %.045 = phi ptr [ %spec.select40, %.lr.ph ], [ %i.bc, %.preheader ] ; 3 uses
-  %.03444.a = phi ptr [ %i.bj, %.lr.ph ], [ %.0.i, %.preheader ] ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %.03444.a, i64 16
-  %4 = load i32, ptr %3, align 8, !tbaa !57
-  %i.bf = getelementptr inbounds nuw i8, ptr %.045, i64 16
-  %i.bg = load i32, ptr %i.bf, align 8, !tbaa !57
-  %i.bh = icmp ult i32 %4, %i.bg                  ; 2 uses
-  %spec.select = select i1 %i.bh, ptr %.045, ptr %.03444.a
-  %spec.select40 = select i1 %i.bh, ptr %.03444.a, ptr %.045 ; 2 uses
+.lr.ph.preheader:                                 ; preds = %.preheader
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.bc, i64 16
+  %.pre = load i32, ptr %.phi.trans.insert, align 8, !tbaa !57
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
+  %3 = phi i32 [ %4, %.lr.ph ], [ %.pre, %.lr.ph.preheader ] ; 2 uses
+  %.03444.a = phi ptr [ %spec.select40, %.lr.ph ], [ %i.bc, %.lr.ph.preheader ] ; 2 uses
+  %.03444 = phi ptr [ %i.bj, %.lr.ph ], [ %.0.i, %.lr.ph.preheader ] ; 3 uses
+  %i.bf = getelementptr inbounds nuw i8, ptr %.03444, i64 16
+  %i.bg = load i32, ptr %i.bf, align 8, !tbaa !57 ; 2 uses
+  %i.bh = icmp ult i32 %i.bg, %3                  ; 2 uses
+  %spec.select = select i1 %i.bh, ptr %.03444.a, ptr %.03444
+  %spec.select40 = select i1 %i.bh, ptr %.03444, ptr %.03444.a ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %spec.select, i64 8
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !84 ; 4 uses
   %i.bk = icmp ne ptr %i.bj, null                 ; 2 uses
   %i.bl = icmp ne ptr %i.bj, %spec.select40
   %i.bm = and i1 %i.bk, %i.bl
+  %4 = tail call i32 @llvm.umin.i32(i32 %i.bg, i32 %3)
   br i1 %i.bm, label %.lr.ph, label %._crit_edge, !llvm.loop !115
 
 ._crit_edge:                                      ; preds = %.lr.ph
@@ -627,6 +632,9 @@ _ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes10BasicBlockESt10unique_ptrINS_15Do
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #11
