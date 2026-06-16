@@ -84,7 +84,7 @@ bb.e:                                             ; preds = %bb.c, %bb.c, %bb.c,
   %i.n = load ptr, ptr %i.a, align 8, !tbaa !46
   %i.o = tail call fastcc i32 @read_pbm_integer(ptr noundef %0, ptr noundef %i.n, i32 noundef 65535) ; 7 uses
   %i.p = load ptr, ptr %i.a, align 8, !tbaa !46
-  %i.q = tail call fastcc i32 @read_pbm_integer(ptr noundef %0, ptr noundef %i.p, i32 noundef 65535) ; 15 uses
+  %i.q = tail call fastcc i32 @read_pbm_integer(ptr noundef %0, ptr noundef %i.p, i32 noundef 65535) ; 16 uses
   %i.r = icmp eq i32 %i.m, 0
   %i.s = icmp eq i32 %i.o, 0
   %or.cond = select i1 %i.r, i1 true, i1 %i.s
@@ -487,7 +487,7 @@ bb.bi:                                            ; preds = %bb.bh
   br label %.sink.split
 
 bb.bj:                                            ; preds = %bb.bh
-  switch i32 %i.eo, label %bb.bk [
+  switch i32 %i.eo, label %2 [
     i32 1, label %.sink.split
     i32 4, label %.sink.split
   ]
@@ -496,29 +496,40 @@ bb.bj:                                            ; preds = %bb.bh
   %.sink263 = phi i32 [ %i.et, %bb.bi ], [ %i.eo, %bb.bj ], [ %i.eo, %bb.bj ]
   %i.eu = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i32 %.sink263, ptr %i.eu, align 8, !tbaa !54
-  br label %bb.bk
+  br label %2
 
-bb.bk:                                            ; preds = %.sink.split, %bb.bj
-  br i1 %.not234, label %bb.bm, label %bb.bl
+2:                                                ; preds = %.sink.split, %bb.bj
+  br i1 %.not234, label %bb.bm, label %bb.bk
 
-bb.bl:                                            ; preds = %bb.bk
-  %2 = icmp eq i32 %i.h, 54
-  %3 = mul nuw nsw i64 %i.z, 3
-  %.sink265 = select i1 %2, i64 %3, i64 %i.z
-  %4 = icmp ugt i32 %i.q, 255
-  %5 = zext i1 %4 to i64
-  %6 = shl nuw nsw i64 %.sink265, %5              ; 2 uses
+bb.bk:                                            ; preds = %2
+  %3 = icmp eq i32 %i.h, 54
+  br i1 %3, label %4, label %8
+
+4:                                                ; preds = %bb.bk
+  %5 = icmp ult i32 %i.q, 256
+  %6 = select i1 %5, i64 3, i64 6
+  %7 = mul nuw nsw i64 %6, %i.z
+  br label %bb.bl
+
+8:                                                ; preds = %bb.bk
+  %9 = icmp ugt i32 %i.q, 255
+  %10 = zext i1 %9 to i64
+  %11 = shl nuw nsw i64 %i.z, %10
+  br label %bb.bl
+
+bb.bl:                                            ; preds = %8, %4
+  %.sink = phi i64 [ %7, %4 ], [ %11, %8 ]        ; 2 uses
   %i.ev = getelementptr inbounds nuw i8, ptr %1, i64 80
-  store i64 %6, ptr %i.ev, align 8, !tbaa !55
+  store i64 %.sink, ptr %i.ev, align 8, !tbaa !55
   %i.ew = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ex = load ptr, ptr %i.ew, align 8, !tbaa !35
   %i.ey = load ptr, ptr %i.ex, align 8, !tbaa !36
-  %i.ez = tail call ptr %i.ey(ptr noundef nonnull %0, i32 noundef 1, i64 noundef %6) #6
+  %i.ez = tail call ptr %i.ey(ptr noundef nonnull %0, i32 noundef 1, i64 noundef %.sink) #6
   %i.fa = getelementptr inbounds nuw i8, ptr %1, i64 64
   store ptr %i.ez, ptr %i.fa, align 8, !tbaa !56
   br label %bb.bm
 
-bb.bm:                                            ; preds = %bb.bl, %bb.bk
+bb.bm:                                            ; preds = %bb.bl, %2
   br i1 %.not235, label %bb.bo, label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm
