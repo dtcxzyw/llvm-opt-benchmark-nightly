@@ -201,13 +201,13 @@ define hidden ptr @_ZN2v88internal15TransitionArray28GrowPrototypeTransitionArra
   %i.c = inttoptr i64 %i.b to ptr
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.e = load i64, ptr %i.d, align 8
-  %3 = tail call i32 @llvm.smin.i32(i32 %1, i32 256)
-  %4 = lshr i64 %i.e, 32
-  %5 = trunc nuw i64 %4 to i32                    ; 2 uses
-  %reass.sub = sub i32 %3, %5
+  %3 = lshr i64 %i.e, 32
+  %4 = trunc nuw i64 %3 to i32                    ; 2 uses
+  %5 = tail call i32 @llvm.smin.i32(i32 %1, i32 256)
+  %reass.sub = sub i32 %5, %4
   %i.f = add i32 %reass.sub, 1
   %i.g = tail call ptr @_ZN2v88internal7Factory25CopyWeakFixedArrayAndGrowENS0_12DirectHandleINS0_14WeakFixedArrayEEEi(ptr noundef nonnull align 1 dereferenceable(1) %2, ptr nonnull %0, i32 noundef %i.f) #16 ; 2 uses
-  %i.h = icmp slt i32 %5, 1
+  %i.h = icmp slt i32 %4, 1
   br i1 %i.h, label %bb.a, label %bb.b
 
 bb.a:                                             ; preds = %.lr.ph.i.i

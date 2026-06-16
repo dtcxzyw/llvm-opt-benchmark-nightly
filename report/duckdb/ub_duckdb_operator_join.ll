@@ -201,10 +201,10 @@ bb.a:
   %.sroa.02.010.i.i = phi ptr [ %spec.select.i.i, %.lr.ph.i.i ], [ %i.b, %.lr.ph.preheader.i.i ]
   %i.i = load i64, ptr %i.h, align 8, !tbaa !68   ; 2 uses
   %i.j = icmp ult i64 %i.g, %i.i
-  %1 = tail call i64 @llvm.umax.i64(i64 %i.g, i64 %i.i)
   %spec.select.i.i = select i1 %i.j, ptr %i.h, ptr %.sroa.02.010.i.i ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
   %.not.i.i = icmp eq ptr %i.k, %i.d
+  %1 = tail call i64 @llvm.umax.i64(i64 %i.g, i64 %i.i)
   br i1 %.not.i.i, label %_ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEET_S7_S7_.exit, label %.lr.ph.i.i, !llvm.loop !1938
 
 _ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEET_S7_S7_.exit: ; preds = %.lr.ph.i.i, %bb.a

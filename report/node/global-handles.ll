@@ -201,15 +201,15 @@ bb.a:
   %.015 = phi i32 [ %i.f, %.lr.ph ], [ %i.n, %.lr.ph.i.i ] ; 2 uses
   %.sroa.09.014 = phi ptr [ %i.b, %.lr.ph ], [ %i.o, %.lr.ph.i.i ] ; 2 uses
   %i.g = load ptr, ptr %.sroa.09.014, align 8     ; 2 uses
-  %2 = tail call i32 @llvm.smin.i32(i32 %.015, i32 256)
-  %3 = ptrtoint ptr %i.g to i64
-  %i.h = sext i32 %2 to i64
+  %2 = ptrtoint ptr %i.g to i64
+  %3 = tail call i32 @llvm.smin.i32(i32 %.015, i32 256)
+  %i.h = sext i32 %3 to i64
   %i.i = getelementptr inbounds [8 x i8], ptr %i.g, i64 %i.h
   %i.j = ptrtoint ptr %i.i to i64
   %i.k = load ptr, ptr %1, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %i.m = load ptr, ptr %i.l, align 8
-  tail call void %i.m(ptr noundef nonnull align 8 dereferenceable(8) %1, i32 noundef 7, ptr noundef null, i64 %3, i64 %i.j) #21
+  tail call void %i.m(ptr noundef nonnull align 8 dereferenceable(8) %1, i32 noundef 7, ptr noundef null, i64 %2, i64 %i.j) #21
   %i.n = add nsw i32 %.015, -256
   %i.o = getelementptr inbounds nuw i8, ptr %.sroa.09.014, i64 8 ; 2 uses
   %i.p = icmp eq ptr %i.o, %i.d

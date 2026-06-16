@@ -201,10 +201,10 @@ bb.r:                                             ; preds = %.lr.ph244, %bb.ag
   %.val.val.i = load i64, ptr %i.ew, align 8, !tbaa !168 ; 2 uses
   %i.ex = icmp ult i64 %.val.val.i, %.val2.val.i  ; 2 uses
   %.1158 = select i1 %i.ex, i64 %i.dy, i64 %.0157226 ; 3 uses
-  %5 = call i64 @llvm.umin.i64(i64 %.val.val.i, i64 %.val2.val.i)
   %.156 = select i1 %i.ex, i64 %i.ec, i64 %.055229 ; 2 uses
   %i.ey = add nuw i64 %.057228, 1                 ; 2 uses
   %exitcond.not = icmp eq i64 %i.ey, %i.cs
+  %5 = call i64 @llvm.umin.i64(i64 %.val.val.i, i64 %.val2.val.i)
   br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph230, !llvm.loop !11184
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph230
@@ -607,10 +607,10 @@ bb.r:                                             ; preds = %.lr.ph244, %bb.ag
   %.val.val.i = load i64, ptr %i.ew, align 8, !tbaa !168 ; 2 uses
   %i.ex = icmp ult i64 %.val.val.i, %.val2.val.i  ; 2 uses
   %.1158 = select i1 %i.ex, i64 %i.dy, i64 %.0157226 ; 3 uses
-  %5 = call i64 @llvm.umin.i64(i64 %.val.val.i, i64 %.val2.val.i)
   %.156 = select i1 %i.ex, i64 %i.ec, i64 %.055229 ; 2 uses
   %i.ey = add nuw i64 %.057228, 1                 ; 2 uses
   %exitcond.not = icmp eq i64 %i.ey, %i.cs
+  %5 = call i64 @llvm.umin.i64(i64 %.val.val.i, i64 %.val2.val.i)
   br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph230, !llvm.loop !11221
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph230

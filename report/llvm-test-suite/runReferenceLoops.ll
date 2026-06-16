@@ -201,12 +201,12 @@ _ZN8LoopStataSERKS_.exit52.2:                     ; preds = %bb.i
   %i.rx = load x86_fp80, ptr %i.rw, align 16, !tbaa !44 ; 2 uses
   %i.ry = load x86_fp80, ptr %i.ru, align 16, !tbaa !44 ; 2 uses
   %i.rz = fcmp olt x86_fp80 %i.rx, %i.ry
-  %4 = select i1 %i.rz, x86_fp80 %i.rx, x86_fp80 %i.ry ; 2 uses
   %i.sa = getelementptr inbounds nuw i8, ptr %i.rs, i64 8 ; 3 uses
   %i.sb = load ptr, ptr %i.sa, align 8, !tbaa !50 ; 4 uses
   %i.sc = getelementptr inbounds nuw i8, ptr %i.rs, i64 16 ; 2 uses
   %i.sd = load ptr, ptr %i.sc, align 8, !tbaa !43
   %.not.i = icmp eq ptr %i.sb, %i.sd
+  %4 = select i1 %i.rz, x86_fp80 %i.rx, x86_fp80 %i.ry ; 2 uses
   br i1 %.not.i, label %bb.l, label %bb.k
 
 bb.j:                                             ; preds = %bb.i, %.noexc64.2, %_ZN8LoopStataSERKS_.exit52.1, %bb.h, %.noexc64.1, %_ZN8LoopStataSERKS_.exit52, %bb.g, %.noexc64, %_ZN8LoopStataSERKS_.exit52.preheader
@@ -292,12 +292,12 @@ _ZNSt6vectorIeSaIeEE9push_backERKe.exit:          ; preds = %_ZNSt6vectorIeSaIeE
   %i.te = load x86_fp80, ptr %i.td, align 16, !tbaa !44 ; 2 uses
   %i.tf = load x86_fp80, ptr %i.tb, align 16, !tbaa !44 ; 2 uses
   %i.tg = fcmp olt x86_fp80 %i.te, %i.tf
-  %5 = select i1 %i.tg, x86_fp80 %i.te, x86_fp80 %i.tf ; 2 uses
   %i.th = getelementptr inbounds nuw i8, ptr %i.sy, i64 32 ; 3 uses
   %i.ti = load ptr, ptr %i.th, align 8, !tbaa !50 ; 4 uses
   %i.tj = getelementptr inbounds nuw i8, ptr %i.sy, i64 40 ; 2 uses
   %i.tk = load ptr, ptr %i.tj, align 8, !tbaa !43
   %.not.i.1 = icmp eq ptr %i.ti, %i.tk
+  %5 = select i1 %i.tg, x86_fp80 %i.te, x86_fp80 %i.tf ; 2 uses
   br i1 %.not.i.1, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %_ZNSt6vectorIeSaIeEE9push_backERKe.exit
@@ -371,12 +371,12 @@ _ZNSt6vectorIeSaIeEE9push_backERKe.exit.1:        ; preds = %_ZNSt6vectorIeSaIeE
   %i.uk = load x86_fp80, ptr %i.uj, align 16, !tbaa !44 ; 2 uses
   %i.ul = load x86_fp80, ptr %i.uh, align 16, !tbaa !44 ; 2 uses
   %i.um = fcmp olt x86_fp80 %i.uk, %i.ul
-  %6 = select i1 %i.um, x86_fp80 %i.uk, x86_fp80 %i.ul ; 2 uses
   %i.un = getelementptr inbounds nuw i8, ptr %i.ue, i64 56 ; 3 uses
   %i.uo = load ptr, ptr %i.un, align 8, !tbaa !50 ; 4 uses
   %i.up = getelementptr inbounds nuw i8, ptr %i.ue, i64 64 ; 2 uses
   %i.uq = load ptr, ptr %i.up, align 8, !tbaa !43
   %.not.i.2 = icmp eq ptr %i.uo, %i.uq
+  %6 = select i1 %i.um, x86_fp80 %i.uk, x86_fp80 %i.ul ; 2 uses
   br i1 %.not.i.2, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %_ZNSt6vectorIeSaIeEE9push_backERKe.exit.1
