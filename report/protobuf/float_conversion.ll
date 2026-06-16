@@ -201,12 +201,12 @@ vector.memcheck154:                               ; preds = %iter.check179
   br i1 %found.conflict158, label %.lr.ph.preheader, label %vector.main.loop.iter.check160
 
 vector.main.loop.iter.check160:                   ; preds = %vector.memcheck154
-  %min.iters.check161 = icmp ult i64 %.082, 16
+  %min.iters.check161 = icmp ult i64 %.082, 32
   br i1 %min.iters.check161, label %vec.epilog.ph183, label %vector.ph162
 
 vector.ph162:                                     ; preds = %vector.main.loop.iter.check160
-  %n.mod.vf163 = and i64 %.082, 8
-  %n.vec164 = and i64 %.082, 9223372036854775792  ; 5 uses
+  %n.mod.vf163 = and i64 %.082, 24
+  %n.vec164 = and i64 %.082, 9223372036854775776  ; 5 uses
   %i.cv = sub nsw i64 0, %n.vec164                ; 2 uses
   %i.cw = getelementptr i8, ptr %i.ck, i64 %i.cv
   %i.cx = getelementptr i8, ptr %i.ct, i64 %i.cv
@@ -215,15 +215,21 @@ vector.ph162:                                     ; preds = %vector.main.loop.it
 vector.body165:                                   ; preds = %vector.body165, %vector.ph162
   %index166 = phi i64 [ 0, %vector.ph162 ], [ %index.next174, %vector.body165 ] ; 2 uses
   %i.cy = sub i64 0, %index166                    ; 2 uses
-  %next.gep167.a = getelementptr i8, ptr %i.ck, i64 %i.cy
-  %next.gep168 = getelementptr i8, ptr %i.ct, i64 %i.cy
-  %i.cz = getelementptr inbounds i8, ptr %next.gep168, i64 -16 ; 2 uses
+  %next.gep167 = getelementptr i8, ptr %i.ck, i64 %i.cy ; 2 uses
+  %next.gep167.a = getelementptr i8, ptr %i.ct, i64 %i.cy ; 2 uses
+  %next.gep168 = getelementptr inbounds i8, ptr %next.gep167.a, i64 -16 ; 2 uses
+  %i.cz = getelementptr inbounds i8, ptr %next.gep167.a, i64 -32 ; 2 uses
+  %wide.load169 = load <16 x i8>, ptr %next.gep168, align 1, !tbaa !12, !alias.scope !166, !noalias !169
   %wide.load169.a = load <16 x i8>, ptr %i.cz, align 1, !tbaa !12, !alias.scope !166, !noalias !169
-  %i.da = getelementptr inbounds i8, ptr %next.gep167.a, i64 -16 ; 2 uses
+  %3 = getelementptr inbounds i8, ptr %next.gep167, i64 -16 ; 2 uses
+  %i.da = getelementptr inbounds i8, ptr %next.gep167, i64 -32 ; 2 uses
+  %wide.load171 = load <16 x i8>, ptr %3, align 1, !tbaa !12, !alias.scope !169
   %wide.load170 = load <16 x i8>, ptr %i.da, align 1, !tbaa !12, !alias.scope !169
+  store <16 x i8> %wide.load171, ptr %next.gep168, align 1, !tbaa !12, !alias.scope !166, !noalias !169
   store <16 x i8> %wide.load170, ptr %i.cz, align 1, !tbaa !12, !alias.scope !166, !noalias !169
+  store <16 x i8> %wide.load169, ptr %3, align 1, !tbaa !12, !alias.scope !169
   store <16 x i8> %wide.load169.a, ptr %i.da, align 1, !tbaa !12, !alias.scope !169
-  %index.next174 = add nuw i64 %index166, 16      ; 2 uses
+  %index.next174 = add nuw i64 %index166, 32      ; 2 uses
   %i.db = icmp eq i64 %index.next174, %n.vec164
   br i1 %i.db, label %middle.block175, label %vector.body165, !llvm.loop !171
 
@@ -626,7 +632,7 @@ attributes #20 = { noreturn }
 !169 = !{!170}
 !170 = distinct !{!170, !168}
 !171 = distinct !{!171, !34, !151, !152}
-!172 = !{!"branch_weights", i32 8, i32 8}
+!172 = !{!"branch_weights", i32 8, i32 24}
 !173 = distinct !{!173, !34, !151, !152}
 !174 = distinct !{!174, !41}
 !175 = distinct !{!175, !34}

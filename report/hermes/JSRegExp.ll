@@ -201,7 +201,7 @@ declare noalias noundef nonnull ptr @_ZN6hermes13checkedMallocEm(i64 noundef) lo
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN6hermes2vm8JSRegExp6searchENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_15StringPrimitiveEEEj(ptr dead_on_unwind noalias writable sret(%"class.hermes::vm::CallResult.222") align 8 initializes((64, 65)) %0, ptr nofree readonly captures(none) %1, ptr noundef nonnull align 8 dereferenceable(9816) %2, ptr %3, i32 noundef %4) local_unnamed_addr #0 align 2 {
 bb.a:
-  %5 = alloca %"class.hermes::vm::CallResult.222", align 8 ; 21 uses
+  %5 = alloca %"class.hermes::vm::CallResult.222", align 8 ; 20 uses
   %6 = alloca %"class.hermes::vm::CallResult.222", align 8 ; 9 uses
   %7 = alloca %"class.hermes::vm::CallResult.222", align 8 ; 9 uses
   %i.a = tail call { ptr, i64 } @_ZN6hermes2vm15StringPrimitive16createStringViewERNS0_7RuntimeENS0_6HandleIS1_EE(ptr noundef nonnull align 8 dereferenceable(9816) %2, ptr %3) #19 ; 2 uses
@@ -497,20 +497,27 @@ bb.ai:                                            ; preds = %bb.ah
 bb.aj:                                            ; preds = %bb.ah
   %i.ct = load i32, ptr %i.r, align 8, !tbaa !56  ; 6 uses
   %.not.i30 = icmp eq i32 %i.ct, 0
-  br i1 %.not.i30, label %_ZN4llvh11SmallVectorIN6hermes8OptValueINS1_2vm16RegExpMatchRangeEEELj4EEaSERKS6_.exit.thread, label %bb.ak
+  br i1 %.not.i30, label %bb.ak, label %bb.al
 
 bb.ak:                                            ; preds = %bb.aj
-  %.sroa.0.0.copyload.i = load i64, ptr %3, align 8, !tbaa !45
-  %8 = getelementptr inbounds nuw i8, ptr %2, i64 552
-  store i64 %.sroa.0.0.copyload.i, ptr %8, align 8, !tbaa !164
-  %.sroa.0.0.copyload.i32 = load i64, ptr %1, align 8, !tbaa !45
-  %i.cu = getelementptr inbounds nuw i8, ptr %2, i64 560
-  store i64 %.sroa.0.0.copyload.i32, ptr %i.cu, align 8, !tbaa !164
-  %i.cv = getelementptr inbounds nuw i8, ptr %2, i64 760 ; 5 uses
-  %9 = icmp eq ptr %i.cv, %5
-  br i1 %9, label %_ZN4llvh11SmallVectorIN6hermes8OptValueINS1_2vm16RegExpMatchRangeEEELj4EEaSERKS6_.exit.thread, label %bb.al
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 64
+  store i8 1, ptr %8, align 8, !tbaa !197
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store ptr %9, ptr %0, align 8, !tbaa !54
+  %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i32 0, ptr %i.cu, align 8, !tbaa !56
+  %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 12
+  store i32 4, ptr %i.cv, align 4, !tbaa !57
+  br label %_ZN6hermes2vm10CallResultIN4llvh11SmallVectorINS_8OptValueINS0_16RegExpMatchRangeEEELj4EEELNS0_6detail20CallResultSpecializeE0EEC2EOSA_.exit.thread72
 
-bb.al:                                            ; preds = %bb.ak
+bb.al:                                            ; preds = %bb.aj
+  %.sroa.0.0.copyload.i = load i64, ptr %3, align 8, !tbaa !45
+  %10 = getelementptr inbounds nuw i8, ptr %2, i64 552
+  store i64 %.sroa.0.0.copyload.i, ptr %10, align 8, !tbaa !164
+  %.sroa.0.0.copyload.i32 = load i64, ptr %1, align 8, !tbaa !45
+  %11 = getelementptr inbounds nuw i8, ptr %2, i64 560
+  store i64 %.sroa.0.0.copyload.i32, ptr %11, align 8, !tbaa !164
+  %12 = getelementptr inbounds nuw i8, ptr %2, i64 760 ; 4 uses
   %i.cw = zext i32 %i.ct to i64                   ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %2, i64 768 ; 3 uses
   %i.cy = load i32, ptr %i.cx, align 8, !tbaa !56 ; 4 uses
@@ -520,7 +527,7 @@ bb.al:                                            ; preds = %bb.ak
 
 bb.am:                                            ; preds = %bb.al
   %i.da = load ptr, ptr %5, align 8, !tbaa !54    ; 2 uses
-  %i.db = load ptr, ptr %i.cv, align 8, !tbaa !54 ; 2 uses
+  %i.db = load ptr, ptr %12, align 8, !tbaa !54   ; 2 uses
   %.not31.i.i = icmp eq i32 %i.ct, 1
   br i1 %.not31.i.i, label %bb.ao, label %bb.an, !prof !133
 
@@ -542,7 +549,7 @@ bb.ap:                                            ; preds = %bb.al
 bb.aq:                                            ; preds = %bb.ap
   store i32 0, ptr %i.cx, align 8, !tbaa !56
   %i.df = getelementptr inbounds nuw i8, ptr %2, i64 776
-  call void @_ZN4llvh15SmallVectorBase8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(64) %i.cv, ptr noundef nonnull %i.df, i64 noundef %i.cw, i64 noundef 12) #19
+  call void @_ZN4llvh15SmallVectorBase8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(64) %12, ptr noundef nonnull %i.df, i64 noundef %i.cw, i64 noundef 12) #19
   br label %_ZSt4copyIPKN6hermes8OptValueINS0_2vm16RegExpMatchRangeEEEPS4_ET0_T_S9_S8_.exit30.i.i
 
 bb.ar:                                            ; preds = %bb.ap
@@ -551,7 +558,7 @@ bb.ar:                                            ; preds = %bb.ap
 
 bb.as:                                            ; preds = %bb.ar
   %i.dg = load ptr, ptr %5, align 8, !tbaa !54    ; 2 uses
-  %i.dh = load ptr, ptr %i.cv, align 8, !tbaa !54 ; 2 uses
+  %i.dh = load ptr, ptr %12, align 8, !tbaa !54   ; 2 uses
   %.not33.i.i = icmp eq i32 %i.cy, 1
   br i1 %.not33.i.i, label %bb.au, label %bb.at, !prof !133
 
@@ -575,19 +582,14 @@ bb.av:                                            ; preds = %_ZSt4copyIPKN6herme
   %i.dk = load ptr, ptr %5, align 8, !tbaa !54
   %.idx35.i.i = mul nuw nsw i64 %.022.i.i, 12
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dk, i64 %.idx35.i.i
-  %i.dm = load ptr, ptr %i.cv, align 8, !tbaa !54
+  %i.dm = load ptr, ptr %12, align 8, !tbaa !54
   %i.dn = getelementptr inbounds nuw [12 x i8], ptr %i.dm, i64 %.022.i.i
   %.idx3436.i.i = sub nsw i64 %i.dj, %.022.i.i
   %gepdiff.i.i = mul nsw i64 %.idx3436.i.i, 12
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.dn, ptr align 4 %i.dl, i64 %gepdiff.i.i, i1 false)
   br label %_ZN4llvh11SmallVectorIN6hermes8OptValueINS1_2vm16RegExpMatchRangeEEELj4EEaSERKS6_.exit
 
-_ZN4llvh11SmallVectorIN6hermes8OptValueINS1_2vm16RegExpMatchRangeEEELj4EEaSERKS6_.exit.thread: ; preds = %bb.ak, %bb.aj
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store i8 1, ptr %10, align 8, !tbaa !197
-  br label %bb.aw
-
-_ZN4llvh11SmallVectorIN6hermes8OptValueINS1_2vm16RegExpMatchRangeEEELj4EEaSERKS6_.exit: ; preds = %bb.an, %bb.ao, %_ZSt4copyIPKN6hermes8OptValueINS0_2vm16RegExpMatchRangeEEEPS4_ET0_T_S9_S8_.exit30.i.i, %bb.av
+_ZN4llvh11SmallVectorIN6hermes8OptValueINS1_2vm16RegExpMatchRangeEEELj4EEaSERKS6_.exit: ; preds = %bb.av, %_ZSt4copyIPKN6hermes8OptValueINS0_2vm16RegExpMatchRangeEEEPS4_ET0_T_S9_S8_.exit30.i.i, %bb.ao, %bb.an
   store i32 %i.ct, ptr %i.cx, align 8, !tbaa !56
   %.pre = load i8, ptr %i.p, align 8, !tbaa !197, !range !26 ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -595,15 +597,15 @@ _ZN4llvh11SmallVectorIN6hermes8OptValueINS1_2vm16RegExpMatchRangeEEELj4EEaSERKS6
   %i.dp = trunc nuw i8 %.pre to i1
   br i1 %i.dp, label %bb.aw, label %_ZN6hermes2vm10CallResultIN4llvh11SmallVectorINS_8OptValueINS0_16RegExpMatchRangeEEELj4EEELNS0_6detail20CallResultSpecializeE0EED2Ev.exit35
 
-bb.aw:                                            ; preds = %_ZN4llvh11SmallVectorIN6hermes8OptValueINS1_2vm16RegExpMatchRangeEEELj4EEaSERKS6_.exit.thread, %_ZN4llvh11SmallVectorIN6hermes8OptValueINS1_2vm16RegExpMatchRangeEEELj4EEaSERKS6_.exit
+bb.aw:                                            ; preds = %_ZN4llvh11SmallVectorIN6hermes8OptValueINS1_2vm16RegExpMatchRangeEEELj4EEaSERKS6_.exit
+  %.pr = load i32, ptr %i.r, align 8, !tbaa !56
   %i.dq = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.dq, ptr %0, align 8, !tbaa !54
   %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 0, ptr %i.dr, align 8, !tbaa !56
   %i.ds = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 4, ptr %i.ds, align 4, !tbaa !57
-  %11 = load i32, ptr %i.r, align 8, !tbaa !56
-  %.not.i.i.i.i.i34 = icmp eq i32 %11, 0
+  %.not.i.i.i.i.i34 = icmp eq i32 %.pr, 0
   br i1 %.not.i.i.i.i.i34, label %_ZN6hermes2vm10CallResultIN4llvh11SmallVectorINS_8OptValueINS0_16RegExpMatchRangeEEELj4EEELNS0_6detail20CallResultSpecializeE0EEC2EOSA_.exit.thread72, label %_ZN6hermes2vm10CallResultIN4llvh11SmallVectorINS_8OptValueINS0_16RegExpMatchRangeEEELj4EEELNS0_6detail20CallResultSpecializeE0EEC2EOSA_.exit
 
 _ZN6hermes2vm10CallResultIN4llvh11SmallVectorINS_8OptValueINS0_16RegExpMatchRangeEEELj4EEELNS0_6detail20CallResultSpecializeE0EEC2EOSA_.exit: ; preds = %bb.aw
@@ -612,7 +614,7 @@ _ZN6hermes2vm10CallResultIN4llvh11SmallVectorINS_8OptValueINS0_16RegExpMatchRang
   %i.du = trunc nuw i8 %.pre59 to i1
   br i1 %i.du, label %_ZN6hermes2vm10CallResultIN4llvh11SmallVectorINS_8OptValueINS0_16RegExpMatchRangeEEELj4EEELNS0_6detail20CallResultSpecializeE0EEC2EOSA_.exit.thread72, label %_ZN6hermes2vm10CallResultIN4llvh11SmallVectorINS_8OptValueINS0_16RegExpMatchRangeEEELj4EEELNS0_6detail20CallResultSpecializeE0EED2Ev.exit35
 
-_ZN6hermes2vm10CallResultIN4llvh11SmallVectorINS_8OptValueINS0_16RegExpMatchRangeEEELj4EEELNS0_6detail20CallResultSpecializeE0EEC2EOSA_.exit.thread72: ; preds = %bb.aw, %_ZN6hermes2vm10CallResultIN4llvh11SmallVectorINS_8OptValueINS0_16RegExpMatchRangeEEELj4EEELNS0_6detail20CallResultSpecializeE0EEC2EOSA_.exit
+_ZN6hermes2vm10CallResultIN4llvh11SmallVectorINS_8OptValueINS0_16RegExpMatchRangeEEELj4EEELNS0_6detail20CallResultSpecializeE0EEC2EOSA_.exit.thread72: ; preds = %bb.ak, %bb.aw, %_ZN6hermes2vm10CallResultIN4llvh11SmallVectorINS_8OptValueINS0_16RegExpMatchRangeEEELj4EEELNS0_6detail20CallResultSpecializeE0EEC2EOSA_.exit
   %i.dv = load ptr, ptr %5, align 8, !tbaa !54    ; 2 uses
   %i.dw = icmp eq ptr %i.dv, %i.q
   br i1 %i.dw, label %_ZN6hermes2vm10CallResultIN4llvh11SmallVectorINS_8OptValueINS0_16RegExpMatchRangeEEELj4EEELNS0_6detail20CallResultSpecializeE0EED2Ev.exit35, label %bb.ax
@@ -621,7 +623,7 @@ bb.ax:                                            ; preds = %_ZN6hermes2vm10Call
   call void @free(ptr noundef %i.dv) #19
   br label %_ZN6hermes2vm10CallResultIN4llvh11SmallVectorINS_8OptValueINS0_16RegExpMatchRangeEEELj4EEELNS0_6detail20CallResultSpecializeE0EED2Ev.exit35
 
-_ZN6hermes2vm10CallResultIN4llvh11SmallVectorINS_8OptValueINS0_16RegExpMatchRangeEEELj4EEELNS0_6detail20CallResultSpecializeE0EED2Ev.exit35: ; preds = %bb.ai, %_ZN4llvh11SmallVectorIN6hermes8OptValueINS1_2vm16RegExpMatchRangeEEELj4EEaSERKS6_.exit, %_ZN6hermes2vm10CallResultIN4llvh11SmallVectorINS_8OptValueINS0_16RegExpMatchRangeEEELj4EEELNS0_6detail20CallResultSpecializeE0EEC2EOSA_.exit, %_ZN6hermes2vm10CallResultIN4llvh11SmallVectorINS_8OptValueINS0_16RegExpMatchRangeEEELj4EEELNS0_6detail20CallResultSpecializeE0EEC2EOSA_.exit.thread72, %bb.ax
+_ZN6hermes2vm10CallResultIN4llvh11SmallVectorINS_8OptValueINS0_16RegExpMatchRangeEEELj4EEELNS0_6detail20CallResultSpecializeE0EED2Ev.exit35: ; preds = %_ZN4llvh11SmallVectorIN6hermes8OptValueINS1_2vm16RegExpMatchRangeEEELj4EEaSERKS6_.exit, %bb.ai, %_ZN6hermes2vm10CallResultIN4llvh11SmallVectorINS_8OptValueINS0_16RegExpMatchRangeEEELj4EEELNS0_6detail20CallResultSpecializeE0EEC2EOSA_.exit, %_ZN6hermes2vm10CallResultIN4llvh11SmallVectorINS_8OptValueINS0_16RegExpMatchRangeEEELj4EEELNS0_6detail20CallResultSpecializeE0EEC2EOSA_.exit.thread72, %bb.ax
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #19
   br label %bb.ay
 
