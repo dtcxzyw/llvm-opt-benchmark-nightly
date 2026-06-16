@@ -201,7 +201,7 @@ _ZN8simdjson8fallback8ondemand14value_iterator11start_arrayEv.exit: ; preds = %b
   %i.eu = add nuw nsw i32 %.sroa.4448.0.copyload, 1 ; 2 uses
   %i.ev = icmp sgt i32 %.sroa.4448.0.copyload, 0
   %i.ew = getelementptr inbounds nuw i8, ptr %.sroa.0447.0.copyload, i64 24 ; 3 uses
-  %or.cond.i.i147 = icmp samesign ult i32 %.sroa.4448.0.copyload, 2147483646
+  %or.cond.i.i147 = icmp samesign ult i32 %.sroa.4448.0.copyload, 2147483646 ; 2 uses
   %i.ex = getelementptr inbounds nuw i8, ptr %.sroa.0447.0.copyload, i64 16 ; 3 uses
   %i.ey = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ez = getelementptr inbounds nuw i8, ptr %14, i64 16 ; 5 uses
@@ -546,6 +546,7 @@ bb.bb:                                            ; preds = %.loopexit
   br label %_ZN8simdjson15simdjson_resultINS_8fallback8ondemand14array_iteratorEEppEv.exit
 
 bb.bc:                                            ; preds = %.loopexit
+  call void @llvm.assume(i1 %or.cond.i.i147)
   store i32 %i.eu, ptr %i.er, align 4
   br label %_ZN8simdjson15simdjson_resultINS_8fallback8ondemand14array_iteratorEEppEv.exit
 

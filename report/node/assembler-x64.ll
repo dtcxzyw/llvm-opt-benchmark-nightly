@@ -147,7 +147,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.o = or i32 %8, %i.m
   %i.p = icmp ne i32 %i.o, 0
   %or.cond3.i = or i1 %i.n, %i.p
-  %i.q = icmp samesign ult i8 %2, 16
+  %i.q = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.q)
   br i1 %or.cond3.i, label %bb.c, label %bb.d
 
@@ -195,6 +195,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_S2_NS1_12VectorL
   %i.ar = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink20.i ; 3 uses
   store i8 %1, ptr %i.ar, align 1, !alias.scope !9
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 1
+  tail call void @llvm.assume(i1 %i.q)
   %i.at = shl nuw nsw i8 %2, 3
   %i.au = and i8 %4, 7
   %i.av = or disjoint i8 %i.au, %i.at
@@ -262,7 +263,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.o = or i32 %8, %i.m
   %i.p = icmp ne i32 %i.o, 0
   %or.cond3.i = or i1 %i.n, %i.p
-  %i.q = icmp samesign ult i8 %2, 16
+  %i.q = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.q)
   br i1 %or.cond3.i, label %bb.c, label %bb.d
 
@@ -310,6 +311,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_S2_NS1_12VectorL
   %i.ar = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink20.i ; 3 uses
   store i8 %1, ptr %i.ar, align 1, !alias.scope !21
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 1
+  tail call void @llvm.assume(i1 %i.q)
   %i.at = shl nuw nsw i8 %2, 3
   %i.au = and i8 %4, 7
   %i.av = or disjoint i8 %i.au, %i.at
@@ -351,7 +353,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.n = icmp ne i32 %9, 0
   %or.cond3.i = or i1 %or.cond.i, %i.n
   %i.o = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %i.p = icmp samesign ult i8 %2, 16
+  %i.p = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.p)
   br i1 %or.cond3.i, label %bb.c, label %bb.d
 
@@ -398,6 +400,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_NS0_7OperandENS1
   store i8 %1, ptr %i.ao, align 1, !alias.scope !30
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 1 ; 4 uses
   store ptr %i.ap, ptr %i.c, align 8
+  tail call void @llvm.assume(i1 %i.p)
   %i.aq = and i8 %2, 7                            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10)
   store i64 %4, ptr %10, align 8
@@ -580,7 +583,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.n = icmp ne i32 %9, 0
   %or.cond3.i = or i1 %or.cond.i, %i.n
   %i.o = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %i.p = icmp samesign ult i8 %2, 16
+  %i.p = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.p)
   br i1 %or.cond3.i, label %bb.c, label %bb.d
 
@@ -627,6 +630,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_NS0_7OperandENS1
   store i8 %1, ptr %i.ao, align 1, !alias.scope !36
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 1 ; 4 uses
   store ptr %i.ap, ptr %i.c, align 8
+  tail call void @llvm.assume(i1 %i.p)
   %i.aq = and i8 %2, 7                            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10)
   store i64 %4, ptr %10, align 8
@@ -727,7 +731,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.o = or i32 %7, %i.m
   %i.p = icmp ne i32 %i.o, 0
   %or.cond3.i = or i1 %i.n, %i.p
-  %i.q = icmp samesign ult i8 %2, 16
+  %i.q = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.q)
   br i1 %or.cond3.i, label %bb.c, label %bb.d
 
@@ -774,6 +778,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_S2_NS1_12VectorL
   %i.aq = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink20.i ; 3 uses
   store i8 %1, ptr %i.aq, align 1, !alias.scope !42
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 1
+  tail call void @llvm.assume(i1 %i.q)
   %i.as = shl nuw nsw i8 %2, 3
   %i.at = and i8 %4, 7
   %i.au = or disjoint i8 %i.at, %i.as
@@ -813,7 +818,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.o = or i32 %7, %i.m
   %i.p = icmp ne i32 %i.o, 0
   %or.cond3.i = or i1 %i.n, %i.p
-  %i.q = icmp samesign ult i8 %2, 16
+  %i.q = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.q)
   br i1 %or.cond3.i, label %bb.c, label %bb.d
 
@@ -860,6 +865,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_S2_NS1_12VectorL
   %i.aq = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink20.i ; 3 uses
   store i8 %1, ptr %i.aq, align 1, !alias.scope !51
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 1
+  tail call void @llvm.assume(i1 %i.q)
   %i.as = shl nuw nsw i8 %2, 3
   %i.at = and i8 %4, 7
   %i.au = or disjoint i8 %i.at, %i.as
@@ -901,7 +907,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.n = icmp ne i32 %8, 0
   %or.cond3.i = or i1 %or.cond.i, %i.n
   %i.o = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %i.p = icmp samesign ult i8 %2, 16
+  %i.p = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.p)
   br i1 %or.cond3.i, label %bb.c, label %bb.d
 
@@ -947,6 +953,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_NS0_7OperandENS1
   store i8 %1, ptr %i.an, align 1, !alias.scope !60
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 1 ; 4 uses
   store ptr %i.ao, ptr %i.c, align 8
+  tail call void @llvm.assume(i1 %i.p)
   %i.ap = and i8 %2, 7                            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10)
   store i64 %4, ptr %10, align 8
@@ -1047,7 +1054,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.o = or i32 %7, %i.m
   %i.p = icmp ne i32 %i.o, 0
   %or.cond3.i = or i1 %i.n, %i.p
-  %i.q = icmp samesign ult i8 %2, 16
+  %i.q = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.q)
   br i1 %or.cond3.i, label %bb.c, label %bb.d
 
@@ -1094,6 +1101,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_S2_NS1_12VectorL
   %i.aq = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink20.i ; 3 uses
   store i8 %1, ptr %i.aq, align 1, !alias.scope !66
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 1
+  tail call void @llvm.assume(i1 %i.q)
   %i.as = shl nuw nsw i8 %2, 3
   %i.at = and i8 %4, 7
   %i.au = or disjoint i8 %i.at, %i.as
@@ -1135,7 +1143,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.n = icmp ne i32 %8, 0
   %or.cond3.i = or i1 %or.cond.i, %i.n
   %i.o = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %i.p = icmp samesign ult i8 %2, 16
+  %i.p = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.p)
   br i1 %or.cond3.i, label %bb.c, label %bb.d
 
@@ -1181,6 +1189,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_NS0_7OperandENS1
   store i8 %1, ptr %i.an, align 1, !alias.scope !75
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 1 ; 4 uses
   store ptr %i.ao, ptr %i.c, align 8
+  tail call void @llvm.assume(i1 %i.p)
   %i.ap = and i8 %2, 7                            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10)
   store i64 %4, ptr %10, align 8
@@ -1281,7 +1290,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.o = or i32 %7, %i.m
   %i.p = icmp ne i32 %i.o, 0
   %or.cond3.i = or i1 %i.n, %i.p
-  %i.q = icmp samesign ult i8 %2, 16
+  %i.q = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.q)
   br i1 %or.cond3.i, label %bb.c, label %bb.d
 
@@ -1328,6 +1337,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_S2_NS1_12VectorL
   %i.aq = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink20.i ; 3 uses
   store i8 %1, ptr %i.aq, align 1, !alias.scope !81
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 1
+  tail call void @llvm.assume(i1 %i.q)
   %i.as = shl nuw nsw i8 %2, 3
   %i.at = and i8 %4, 7
   %i.au = or disjoint i8 %i.at, %i.as
@@ -1730,7 +1740,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = icmp samesign ult i8 %2, 16
   tail call void @llvm.assume(i1 %i.k)
   %.not = icmp samesign ult i8 %2, 8
-  %i.l = icmp samesign ult i8 %1, 16
+  %i.l = icmp samesign ult i8 %1, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.l)
   %i.m = shl nuw i8 %1, 4
   %i.n = and i8 %i.m, -128                        ; 2 uses
@@ -1756,6 +1766,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_S2_NS1_12VectorL
   %i.s = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink20.i ; 3 uses
   store i8 18, ptr %i.s, align 1, !alias.scope !3321
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 1
+  tail call void @llvm.assume(i1 %i.l)
   %i.u = shl nuw nsw i8 %1, 3
   %i.v = and i8 %2, 7
   %i.w = or disjoint i8 %i.v, %i.u
@@ -1793,7 +1804,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = trunc i64 %2 to i1
   %i.l = icmp eq i8 %.sroa.3.0.extract.trunc.i, 0
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %i.n = icmp samesign ult i8 %1, 16
+  %i.n = icmp samesign ult i8 %1, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.n)
   br i1 %i.l, label %bb.d, label %bb.c
 
@@ -1824,6 +1835,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_NS0_7OperandENS1
   store i8 18, ptr %i.y, align 1, !alias.scope !3330
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 1 ; 4 uses
   store ptr %i.z, ptr %i.c, align 8
+  tail call void @llvm.assume(i1 %i.n)
   %i.aa = and i8 %1, 7                            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   store i64 %2, ptr %4, align 8
@@ -1919,7 +1931,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = icmp samesign ult i8 %2, 16
   tail call void @llvm.assume(i1 %i.k)
   %.not = icmp samesign ult i8 %2, 8
-  %i.l = icmp samesign ult i8 %1, 16
+  %i.l = icmp samesign ult i8 %1, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.l)
   %i.m = shl nuw i8 %1, 4
   %i.n = and i8 %i.m, -128                        ; 2 uses
@@ -1945,6 +1957,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_S2_NS1_12VectorL
   %i.s = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink20.i ; 3 uses
   store i8 22, ptr %i.s, align 1, !alias.scope !3336
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 1
+  tail call void @llvm.assume(i1 %i.l)
   %i.u = shl nuw nsw i8 %1, 3
   %i.v = and i8 %2, 7
   %i.w = or disjoint i8 %i.v, %i.u
@@ -1979,7 +1992,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = icmp samesign ult i8 %2, 16
   tail call void @llvm.assume(i1 %i.k)
   %.not = icmp samesign ult i8 %2, 8
-  %i.l = icmp samesign ult i8 %1, 16
+  %i.l = icmp samesign ult i8 %1, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.l)
   %i.m = shl nuw i8 %1, 4
   %i.n = and i8 %i.m, -128                        ; 2 uses
@@ -2005,6 +2018,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_S2_NS1_12VectorL
   %i.s = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink20.i ; 3 uses
   store i8 18, ptr %i.s, align 1, !alias.scope !3345
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 1
+  tail call void @llvm.assume(i1 %i.l)
   %i.u = shl nuw nsw i8 %1, 3
   %i.v = and i8 %2, 7
   %i.w = or disjoint i8 %i.v, %i.u
@@ -2042,7 +2056,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = trunc i64 %2 to i1
   %i.l = icmp eq i8 %.sroa.3.0.extract.trunc.i, 0
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %i.n = icmp samesign ult i8 %1, 16
+  %i.n = icmp samesign ult i8 %1, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.n)
   br i1 %i.l, label %bb.d, label %bb.c
 
@@ -2073,6 +2087,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_NS0_7OperandENS1
   store i8 18, ptr %i.y, align 1, !alias.scope !3354
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 1 ; 4 uses
   store ptr %i.z, ptr %i.c, align 8
+  tail call void @llvm.assume(i1 %i.n)
   %i.aa = and i8 %1, 7                            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   store i64 %2, ptr %4, align 8
@@ -2168,7 +2183,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = icmp samesign ult i8 %2, 16
   tail call void @llvm.assume(i1 %i.k)
   %.not = icmp samesign ult i8 %2, 8
-  %i.l = icmp samesign ult i8 %1, 16
+  %i.l = icmp samesign ult i8 %1, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.l)
   %i.m = shl nuw i8 %1, 4
   %i.n = and i8 %i.m, -128                        ; 2 uses
@@ -2194,6 +2209,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_S2_NS1_12VectorL
   %i.s = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink20.i ; 3 uses
   store i8 22, ptr %i.s, align 1, !alias.scope !3360
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 1
+  tail call void @llvm.assume(i1 %i.l)
   %i.u = shl nuw nsw i8 %1, 3
   %i.v = and i8 %2, 7
   %i.w = or disjoint i8 %i.v, %i.u
@@ -2596,7 +2612,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = icmp samesign ult i8 %2, 16
   tail call void @llvm.assume(i1 %i.k)
   %.not = icmp samesign ult i8 %2, 8
-  %i.l = icmp samesign ult i8 %1, 16
+  %i.l = icmp samesign ult i8 %1, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.l)
   %i.m = shl nuw i8 %1, 4
   %i.n = and i8 %i.m, -128                        ; 2 uses
@@ -2622,6 +2638,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_S2_NS1_12VectorL
   %i.s = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink20.i ; 3 uses
   store i8 110, ptr %i.s, align 1, !alias.scope !3504
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 1
+  tail call void @llvm.assume(i1 %i.l)
   %i.u = shl nuw nsw i8 %1, 3
   %i.v = and i8 %2, 7
   %i.w = or disjoint i8 %i.v, %i.u
@@ -2659,7 +2676,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = trunc i64 %2 to i1
   %i.l = icmp eq i8 %.sroa.3.0.extract.trunc.i, 0
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %i.n = icmp samesign ult i8 %1, 16
+  %i.n = icmp samesign ult i8 %1, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.n)
   br i1 %i.l, label %bb.d, label %bb.c
 
@@ -2690,6 +2707,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_NS0_7OperandENS1
   store i8 110, ptr %i.y, align 1, !alias.scope !3513
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 1 ; 4 uses
   store ptr %i.z, ptr %i.c, align 8
+  tail call void @llvm.assume(i1 %i.n)
   %i.aa = and i8 %1, 7                            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   store i64 %2, ptr %4, align 8
@@ -2785,7 +2803,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = icmp samesign ult i8 %1, 16
   tail call void @llvm.assume(i1 %i.k)
   %.not = icmp samesign ult i8 %1, 8
-  %i.l = icmp samesign ult i8 %2, 16
+  %i.l = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.l)
   %i.m = shl nuw i8 %2, 4
   %i.n = and i8 %i.m, -128                        ; 2 uses
@@ -2811,6 +2829,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_S2_NS1_12VectorL
   %i.s = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink20.i ; 3 uses
   store i8 126, ptr %i.s, align 1, !alias.scope !3519
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 1
+  tail call void @llvm.assume(i1 %i.l)
   %i.u = shl nuw nsw i8 %2, 3
   %i.v = and i8 %1, 7
   %i.w = or disjoint i8 %i.u, %i.v
@@ -3059,7 +3078,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = trunc i64 %2 to i1
   %i.l = icmp eq i8 %.sroa.3.0.extract.trunc.i, 0
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %i.n = icmp samesign ult i8 %1, 16
+  %i.n = icmp samesign ult i8 %1, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.n)
   br i1 %i.l, label %bb.d, label %bb.c
 
@@ -3090,6 +3109,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_NS0_7OperandENS1
   store i8 111, ptr %i.y, align 1, !alias.scope !3570
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 1 ; 4 uses
   store ptr %i.z, ptr %i.c, align 8
+  tail call void @llvm.assume(i1 %i.n)
   %i.aa = and i8 %1, 7                            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   store i64 %2, ptr %4, align 8
@@ -3185,7 +3205,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = icmp samesign ult i8 %2, 16
   tail call void @llvm.assume(i1 %i.k)
   %.not = icmp samesign ult i8 %2, 8
-  %i.l = icmp samesign ult i8 %1, 16
+  %i.l = icmp samesign ult i8 %1, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.l)
   %i.m = shl nuw i8 %1, 4
   %i.n = and i8 %i.m, -128                        ; 2 uses
@@ -3211,6 +3231,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_S2_NS1_12VectorL
   %i.s = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink20.i ; 3 uses
   store i8 111, ptr %i.s, align 1, !alias.scope !3576
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 1
+  tail call void @llvm.assume(i1 %i.l)
   %i.u = shl nuw nsw i8 %1, 3
   %i.v = and i8 %2, 7
   %i.w = or disjoint i8 %i.v, %i.u
@@ -3248,7 +3269,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = trunc i64 %2 to i1
   %i.l = icmp eq i8 %.sroa.3.0.extract.trunc.i, 0
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %i.n = icmp samesign ult i8 %1, 16
+  %i.n = icmp samesign ult i8 %1, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.n)
   br i1 %i.l, label %bb.d, label %bb.c
 
@@ -3279,6 +3300,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_NS0_7OperandENS1
   store i8 111, ptr %i.y, align 1, !alias.scope !3585
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 1 ; 4 uses
   store ptr %i.z, ptr %i.c, align 8
+  tail call void @llvm.assume(i1 %i.n)
   %i.aa = and i8 %1, 7                            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   store i64 %2, ptr %4, align 8
@@ -3374,7 +3396,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = icmp samesign ult i8 %2, 16
   tail call void @llvm.assume(i1 %i.k)
   %.not = icmp samesign ult i8 %2, 8
-  %i.l = icmp samesign ult i8 %1, 16
+  %i.l = icmp samesign ult i8 %1, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.l)
   %i.m = shl nuw i8 %1, 4
   %i.n = and i8 %i.m, -128                        ; 2 uses
@@ -3400,6 +3422,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_S2_NS1_12VectorL
   %i.s = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink20.i ; 3 uses
   store i8 111, ptr %i.s, align 1, !alias.scope !3591
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 1
+  tail call void @llvm.assume(i1 %i.l)
   %i.u = shl nuw nsw i8 %1, 3
   %i.v = and i8 %2, 7
   %i.w = or disjoint i8 %i.v, %i.u
@@ -3437,7 +3460,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = trunc i64 %2 to i1
   %i.l = icmp eq i8 %.sroa.3.0.extract.trunc.i, 0
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %i.n = icmp samesign ult i8 %1, 16
+  %i.n = icmp samesign ult i8 %1, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.n)
   br i1 %i.l, label %bb.d, label %bb.c
 
@@ -3468,6 +3491,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_NS0_7OperandENS1
   store i8 111, ptr %i.y, align 1, !alias.scope !3600
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 1 ; 4 uses
   store ptr %i.z, ptr %i.c, align 8
+  tail call void @llvm.assume(i1 %i.n)
   %i.aa = and i8 %1, 7                            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   store i64 %2, ptr %4, align 8
@@ -3566,7 +3590,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = trunc i64 %1 to i1
   %i.l = icmp eq i8 %.sroa.3.0.extract.trunc.i, 0
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %i.n = icmp samesign ult i8 %3, 16
+  %i.n = icmp samesign ult i8 %3, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.n)
   br i1 %i.l, label %bb.d, label %bb.c
 
@@ -3597,6 +3621,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_NS0_7OperandENS1
   store i8 127, ptr %i.y, align 1, !alias.scope !3606
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 1 ; 4 uses
   store ptr %i.z, ptr %i.c, align 8
+  tail call void @llvm.assume(i1 %i.n)
   %i.aa = and i8 %3, 7                            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   store i64 %1, ptr %4, align 8
@@ -3692,7 +3717,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = icmp samesign ult i8 %1, 16
   tail call void @llvm.assume(i1 %i.k)
   %.not = icmp samesign ult i8 %1, 8
-  %i.l = icmp samesign ult i8 %2, 16
+  %i.l = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.l)
   %i.m = shl nuw i8 %2, 4
   %i.n = and i8 %i.m, -128                        ; 2 uses
@@ -3718,6 +3743,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_S2_NS1_12VectorL
   %i.s = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink20.i ; 3 uses
   store i8 127, ptr %i.s, align 1, !alias.scope !3612
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 1
+  tail call void @llvm.assume(i1 %i.l)
   %i.u = shl nuw nsw i8 %2, 3
   %i.v = and i8 %1, 7
   %i.w = or disjoint i8 %i.u, %i.v
@@ -3755,7 +3781,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = trunc i64 %2 to i1
   %i.l = icmp eq i8 %.sroa.3.0.extract.trunc.i, 0
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %i.n = icmp samesign ult i8 %1, 16
+  %i.n = icmp samesign ult i8 %1, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.n)
   br i1 %i.l, label %bb.d, label %bb.c
 
@@ -3786,6 +3812,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_NS0_7OperandENS1
   store i8 111, ptr %i.y, align 1, !alias.scope !3621
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 1 ; 4 uses
   store ptr %i.z, ptr %i.c, align 8
+  tail call void @llvm.assume(i1 %i.n)
   %i.aa = and i8 %1, 7                            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   store i64 %2, ptr %4, align 8
@@ -3884,7 +3911,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = trunc i64 %1 to i1
   %i.l = icmp eq i8 %.sroa.3.0.extract.trunc.i, 0
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %i.n = icmp samesign ult i8 %3, 16
+  %i.n = icmp samesign ult i8 %3, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.n)
   br i1 %i.l, label %bb.d, label %bb.c
 
@@ -3915,6 +3942,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_NS0_7OperandENS1
   store i8 127, ptr %i.y, align 1, !alias.scope !3627
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 1 ; 4 uses
   store ptr %i.z, ptr %i.c, align 8
+  tail call void @llvm.assume(i1 %i.n)
   %i.aa = and i8 %3, 7                            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   store i64 %1, ptr %4, align 8
@@ -4010,7 +4038,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = icmp samesign ult i8 %1, 16
   tail call void @llvm.assume(i1 %i.k)
   %.not = icmp samesign ult i8 %1, 8
-  %i.l = icmp samesign ult i8 %2, 16
+  %i.l = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.l)
   %i.m = shl nuw i8 %2, 4
   %i.n = and i8 %i.m, -128                        ; 2 uses
@@ -4036,6 +4064,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_S2_NS1_12VectorL
   %i.s = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink20.i ; 3 uses
   store i8 127, ptr %i.s, align 1, !alias.scope !3633
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 1
+  tail call void @llvm.assume(i1 %i.l)
   %i.u = shl nuw nsw i8 %2, 3
   %i.v = and i8 %1, 7
   %i.w = or disjoint i8 %i.u, %i.v
@@ -4073,7 +4102,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = trunc i64 %3 to i1
   %i.l = icmp eq i8 %.sroa.3.0.extract.trunc.i, 0
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %i.n = icmp samesign ult i8 %1, 16
+  %i.n = icmp samesign ult i8 %1, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.n)
   br i1 %i.l, label %bb.d, label %bb.c
 
@@ -4112,6 +4141,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_NS0_7OperandENS1
   store i8 18, ptr %i.ae, align 1, !alias.scope !3642
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 1 ; 4 uses
   store ptr %i.af, ptr %i.c, align 8
+  tail call void @llvm.assume(i1 %i.n)
   %i.ag = and i8 %1, 7                            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
   store i64 %3, ptr %5, align 8
@@ -4210,7 +4240,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = trunc i64 %1 to i1
   %i.l = icmp eq i8 %.sroa.3.0.extract.trunc.i, 0
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %i.n = icmp samesign ult i8 %3, 16
+  %i.n = icmp samesign ult i8 %3, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.n)
   br i1 %i.l, label %bb.d, label %bb.c
 
@@ -4241,6 +4271,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_NS0_7OperandENS1
   store i8 19, ptr %i.y, align 1, !alias.scope !3648
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 1 ; 4 uses
   store ptr %i.z, ptr %i.c, align 8
+  tail call void @llvm.assume(i1 %i.n)
   %i.aa = and i8 %3, 7                            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   store i64 %1, ptr %4, align 8
@@ -4339,7 +4370,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = trunc i64 %3 to i1
   %i.l = icmp eq i8 %.sroa.3.0.extract.trunc.i, 0
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %i.n = icmp samesign ult i8 %1, 16
+  %i.n = icmp samesign ult i8 %1, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.n)
   br i1 %i.l, label %bb.d, label %bb.c
 
@@ -4378,6 +4409,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_NS0_7OperandENS1
   store i8 22, ptr %i.ae, align 1, !alias.scope !3654
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 1 ; 4 uses
   store ptr %i.af, ptr %i.c, align 8
+  tail call void @llvm.assume(i1 %i.n)
   %i.ag = and i8 %1, 7                            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
   store i64 %3, ptr %5, align 8
@@ -4476,7 +4508,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = trunc i64 %1 to i1
   %i.l = icmp eq i8 %.sroa.3.0.extract.trunc.i, 0
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %i.n = icmp samesign ult i8 %3, 16
+  %i.n = icmp samesign ult i8 %3, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.n)
   br i1 %i.l, label %bb.d, label %bb.c
 
@@ -4507,6 +4539,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_NS0_7OperandENS1
   store i8 23, ptr %i.y, align 1, !alias.scope !3660
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 1 ; 4 uses
   store ptr %i.z, ptr %i.c, align 8
+  tail call void @llvm.assume(i1 %i.n)
   %i.aa = and i8 %3, 7                            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   store i64 %1, ptr %4, align 8
@@ -4607,7 +4640,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.o = or i32 %7, %i.m
   %i.p = icmp ne i32 %i.o, 0
   %or.cond3.i = or i1 %i.n, %i.p
-  %i.q = icmp samesign ult i8 %2, 16
+  %i.q = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.q)
   br i1 %or.cond3.i, label %bb.c, label %bb.d
 
@@ -4653,6 +4686,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_S2_NS1_12VectorL
   %i.ap = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink20.i ; 3 uses
   store i8 %1, ptr %i.ap, align 1, !alias.scope !3666
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 1
+  tail call void @llvm.assume(i1 %i.q)
   %i.ar = shl nuw nsw i8 %2, 3
   %i.as = and i8 %4, 7
   %i.at = or disjoint i8 %i.as, %i.ar
@@ -4694,7 +4728,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.n = icmp ne i32 %8, 0
   %or.cond3.i = or i1 %or.cond.i, %i.n
   %i.o = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %i.p = icmp samesign ult i8 %2, 16
+  %i.p = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.p)
   br i1 %or.cond3.i, label %bb.c, label %bb.d
 
@@ -4739,6 +4773,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_NS0_7OperandENS1
   store i8 %1, ptr %i.am, align 1, !alias.scope !3675
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 1 ; 4 uses
   store ptr %i.an, ptr %i.c, align 8
+  tail call void @llvm.assume(i1 %i.p)
   %i.ao = and i8 %2, 7                            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10)
   store i64 %4, ptr %10, align 8
@@ -4834,7 +4869,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = icmp samesign ult i8 %4, 16
   tail call void @llvm.assume(i1 %i.k)
   %.not = icmp samesign ult i8 %4, 8
-  %i.l = icmp samesign ult i8 %2, 16
+  %i.l = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.l)
   br i1 %.not, label %bb.d, label %bb.c
 
@@ -4870,6 +4905,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_S2_NS1_12VectorL
   %i.aa = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink20.i ; 3 uses
   store i8 %1, ptr %i.aa, align 1, !alias.scope !3681
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 1
+  tail call void @llvm.assume(i1 %i.l)
   %i.ac = shl nuw nsw i8 %2, 3
   %i.ad = and i8 %4, 7
   %i.ae = or disjoint i8 %i.ad, %i.ac
@@ -4904,7 +4940,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = icmp samesign ult i8 %4, 16
   tail call void @llvm.assume(i1 %i.k)
   %.not = icmp samesign ult i8 %4, 8
-  %i.l = icmp samesign ult i8 %2, 16
+  %i.l = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.l)
   br i1 %.not, label %bb.d, label %bb.c
 
@@ -4941,6 +4977,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_S2_NS1_12VectorL
   %i.ab = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink20.i ; 3 uses
   store i8 %1, ptr %i.ab, align 1, !alias.scope !3690
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 1
+  tail call void @llvm.assume(i1 %i.l)
   %i.ad = shl nuw nsw i8 %2, 3
   %i.ae = and i8 %4, 7
   %i.af = or disjoint i8 %i.ae, %i.ad
@@ -4978,7 +5015,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = trunc i64 %4 to i1
   %i.l = icmp eq i8 %.sroa.3.0.extract.trunc.i, 0
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %i.n = icmp samesign ult i8 %2, 16
+  %i.n = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.n)
   br i1 %i.l, label %bb.d, label %bb.c
 
@@ -5017,6 +5054,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_NS0_7OperandENS1
   store i8 %1, ptr %i.ae, align 1, !alias.scope !3699
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 1 ; 4 uses
   store ptr %i.af, ptr %i.c, align 8
+  tail call void @llvm.assume(i1 %i.n)
   %i.ag = and i8 %2, 7                            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   store i64 %4, ptr %6, align 8
@@ -5115,7 +5153,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = trunc i64 %4 to i1
   %i.l = icmp eq i8 %.sroa.3.0.extract.trunc.i, 0
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %i.n = icmp samesign ult i8 %2, 16
+  %i.n = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.n)
   br i1 %i.l, label %bb.d, label %bb.c
 
@@ -5155,6 +5193,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_NS0_7OperandENS1
   store i8 %1, ptr %i.af, align 1, !alias.scope !3705
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 1 ; 4 uses
   store ptr %i.ag, ptr %i.c, align 8
+  tail call void @llvm.assume(i1 %i.n)
   %i.ah = and i8 %2, 7                            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   store i64 %4, ptr %6, align 8
@@ -5250,7 +5289,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = icmp samesign ult i8 %4, 16
   tail call void @llvm.assume(i1 %i.k)
   %.not = icmp samesign ult i8 %4, 8
-  %i.l = icmp samesign ult i8 %2, 16
+  %i.l = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.l)
   br i1 %.not, label %bb.d, label %bb.c
 
@@ -5286,6 +5325,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_S2_NS1_12VectorL
   %i.aa = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink20.i ; 4 uses
   store i8 %1, ptr %i.aa, align 1, !alias.scope !3711
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 1
+  tail call void @llvm.assume(i1 %i.l)
   %i.ac = shl nuw nsw i8 %2, 3
   %i.ad = and i8 %4, 7
   %i.ae = or disjoint i8 %i.ad, %i.ac
@@ -5322,7 +5362,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = icmp samesign ult i8 %4, 16
   tail call void @llvm.assume(i1 %i.k)
   %.not = icmp samesign ult i8 %4, 8
-  %i.l = icmp samesign ult i8 %2, 16
+  %i.l = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.l)
   br i1 %.not, label %bb.d, label %bb.c
 
@@ -5359,6 +5399,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_S2_NS1_12VectorL
   %i.ab = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink20.i ; 4 uses
   store i8 %1, ptr %i.ab, align 1, !alias.scope !3723
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 1
+  tail call void @llvm.assume(i1 %i.l)
   %i.ad = shl nuw nsw i8 %2, 3
   %i.ae = and i8 %4, 7
   %i.af = or disjoint i8 %i.ae, %i.ad
@@ -5395,7 +5436,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = icmp samesign ult i8 %4, 16
   tail call void @llvm.assume(i1 %i.k)
   %.not = icmp samesign ult i8 %4, 8
-  %i.l = icmp samesign ult i8 %2, 16
+  %i.l = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.l)
   br i1 %.not, label %bb.d, label %bb.c
 
@@ -5432,6 +5473,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_S2_NS1_12VectorL
   %i.ab = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink20.i ; 3 uses
   store i8 %1, ptr %i.ab, align 1, !alias.scope !3735
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 1
+  tail call void @llvm.assume(i1 %i.l)
   %i.ad = shl nuw nsw i8 %2, 3
   %i.ae = and i8 %4, 7
   %i.af = or disjoint i8 %i.ae, %i.ad
@@ -5469,7 +5511,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = trunc i64 %4 to i1
   %i.l = icmp eq i8 %.sroa.3.0.extract.trunc.i, 0
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %i.n = icmp samesign ult i8 %2, 16
+  %i.n = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.n)
   br i1 %i.l, label %bb.d, label %bb.c
 
@@ -5508,6 +5550,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_NS0_7OperandENS1
   store i8 %1, ptr %i.ad, align 1, !alias.scope !3744
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 1 ; 4 uses
   store ptr %i.ae, ptr %i.c, align 8
+  tail call void @llvm.assume(i1 %i.n)
   %i.af = and i8 %2, 7                            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   store i64 %4, ptr %6, align 8
@@ -5603,7 +5646,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = icmp samesign ult i8 %4, 16
   tail call void @llvm.assume(i1 %i.k)
   %.not = icmp samesign ult i8 %4, 8
-  %i.l = icmp samesign ult i8 %2, 16
+  %i.l = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.l)
   br i1 %.not, label %bb.d, label %bb.c
 
@@ -5640,6 +5683,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_S2_NS1_12VectorL
   %i.ab = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink20.i ; 3 uses
   store i8 %1, ptr %i.ab, align 1, !alias.scope !3750
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 1
+  tail call void @llvm.assume(i1 %i.l)
   %i.ad = shl nuw nsw i8 %2, 3
   %i.ae = and i8 %4, 7
   %i.af = or disjoint i8 %i.ae, %i.ad
@@ -5677,7 +5721,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = trunc i64 %4 to i1
   %i.l = icmp eq i8 %.sroa.3.0.extract.trunc.i, 0
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %i.n = icmp samesign ult i8 %2, 16
+  %i.n = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.n)
   br i1 %i.l, label %bb.d, label %bb.c
 
@@ -5717,6 +5761,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_NS0_7OperandENS1
   store i8 %1, ptr %i.af, align 1, !alias.scope !3759
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 1 ; 4 uses
   store ptr %i.ag, ptr %i.c, align 8
+  tail call void @llvm.assume(i1 %i.n)
   %i.ah = and i8 %2, 7                            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   store i64 %4, ptr %6, align 8
@@ -5812,7 +5857,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = icmp samesign ult i8 %4, 16
   tail call void @llvm.assume(i1 %i.k)
   %.not = icmp samesign ult i8 %4, 8
-  %i.l = icmp samesign ult i8 %2, 16
+  %i.l = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.l)
   br i1 %.not, label %bb.d, label %bb.c
 
@@ -5849,6 +5894,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_S2_NS1_12VectorL
   %i.ab = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink20.i ; 3 uses
   store i8 %1, ptr %i.ab, align 1, !alias.scope !3765
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 1
+  tail call void @llvm.assume(i1 %i.l)
   %i.ad = shl nuw nsw i8 %2, 3
   %i.ae = and i8 %4, 7
   %i.af = or disjoint i8 %i.ae, %i.ad
@@ -5886,7 +5932,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = trunc i64 %4 to i1
   %i.l = icmp eq i8 %.sroa.3.0.extract.trunc.i, 0
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %i.n = icmp samesign ult i8 %2, 16
+  %i.n = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.n)
   br i1 %i.l, label %bb.d, label %bb.c
 
@@ -5926,6 +5972,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_NS0_7OperandENS1
   store i8 %1, ptr %i.af, align 1, !alias.scope !3774
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 1 ; 4 uses
   store ptr %i.ag, ptr %i.c, align 8
+  tail call void @llvm.assume(i1 %i.n)
   %i.ah = and i8 %2, 7                            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   store i64 %4, ptr %6, align 8
@@ -6221,7 +6268,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = icmp samesign ult i8 %2, 16
   tail call void @llvm.assume(i1 %i.k)
   %.not = icmp samesign ult i8 %2, 8
-  %i.l = icmp samesign ult i8 %1, 16
+  %i.l = icmp samesign ult i8 %1, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.l)
   %i.m = shl nuw i8 %1, 4
   %i.n = and i8 %i.m, -128                        ; 2 uses
@@ -6247,6 +6294,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_S2_NS1_12VectorL
   %i.s = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink20.i ; 3 uses
   store i8 46, ptr %i.s, align 1, !alias.scope !3846
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 1
+  tail call void @llvm.assume(i1 %i.l)
   %i.u = shl nuw nsw i8 %1, 3
   %i.v = and i8 %2, 7
   %i.w = or disjoint i8 %i.v, %i.u
@@ -6284,7 +6332,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = trunc i64 %2 to i1
   %i.l = icmp eq i8 %.sroa.3.0.extract.trunc.i, 0
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %i.n = icmp samesign ult i8 %1, 16
+  %i.n = icmp samesign ult i8 %1, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.n)
   br i1 %i.l, label %bb.d, label %bb.c
 
@@ -6315,6 +6363,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_NS0_7OperandENS1
   store i8 46, ptr %i.y, align 1, !alias.scope !3855
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 1 ; 4 uses
   store ptr %i.z, ptr %i.c, align 8
+  tail call void @llvm.assume(i1 %i.n)
   %i.aa = and i8 %1, 7                            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   store i64 %2, ptr %4, align 8
@@ -6470,7 +6519,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = icmp samesign ult i8 %4, 16
   tail call void @llvm.assume(i1 %i.k)
   %.not = icmp samesign ult i8 %4, 8
-  %i.l = icmp samesign ult i8 %2, 16
+  %i.l = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.l)
   br i1 %.not, label %bb.d, label %bb.c
 
@@ -6507,6 +6556,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_S2_NS1_12VectorL
   %i.ab = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink20.i ; 3 uses
   store i8 %1, ptr %i.ab, align 1, !alias.scope !3870
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 1
+  tail call void @llvm.assume(i1 %i.l)
   %i.ad = shl nuw nsw i8 %2, 3
   %i.ae = and i8 %4, 7
   %i.af = or disjoint i8 %i.ae, %i.ad
@@ -6544,7 +6594,7 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   %i.k = trunc i64 %4 to i1
   %i.l = icmp eq i8 %.sroa.3.0.extract.trunc.i, 0
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %i.n = icmp samesign ult i8 %2, 16
+  %i.n = icmp samesign ult i8 %2, 16              ; 2 uses
   tail call void @llvm.assume(i1 %i.n)
   br i1 %i.l, label %bb.d, label %bb.c
 
@@ -6584,6 +6634,7 @@ _ZN2v88internal9Assembler15emit_vex_prefixENS0_11XMMRegisterES2_NS0_7OperandENS1
   store i8 %1, ptr %i.af, align 1, !alias.scope !3879
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 1 ; 4 uses
   store ptr %i.ag, ptr %i.c, align 8
+  tail call void @llvm.assume(i1 %i.n)
   %i.ah = and i8 %2, 7                            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   store i64 %4, ptr %6, align 8
