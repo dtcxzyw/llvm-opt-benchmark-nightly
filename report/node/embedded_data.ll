@@ -81,7 +81,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZN4node13GetOctalTableB5cxx11Ev(ptr dead_on_unwind noalias nofree writable sret(%"class.std::vector") align 8 captures(none) initializes((0, 8), (16, 24)) %0) local_unnamed_addr #2 {
 bb.a:
-  %1 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
+  %1 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = tail call noalias noundef nonnull dereferenceable(8192) ptr @_Znwm(i64 noundef 8192) #6 ; 3 uses
   store ptr %i.b, ptr %0, align 8
@@ -124,14 +124,14 @@ bb.a:
 _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EEC2EmRKS6_.exit: ; preds = %.lr.ph.i.i.i.i.i
   store ptr %i.q, ptr %i.a, align 8
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 8 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 9 uses
   %.sroa.516.16..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 20
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 17
-  %i.u = load ptr, ptr %0, align 8
+  %i.u = load ptr, ptr %0, align 8                ; 3 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EEC2EmRKS6_.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %.018 = phi i64 [ 0, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EEC2EmRKS6_.exit ], [ %i.am, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 3 uses
+  %.018 = phi i64 [ 0, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EEC2EmRKS6_.exit ], [ %i.am, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #7
   %i.v = trunc nuw i64 %.018 to i8                ; 7 uses
   %i.w = add i8 %i.v, -32
@@ -139,20 +139,13 @@ bb.b:                                             ; preds = %_ZNSt6vectorINSt7__
   br i1 %or.cond.i, label %switch.early.test.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45.i
 
 switch.early.test.i:                              ; preds = %bb.b
-  switch i8 %i.v, label %2 [
+  switch i8 %i.v, label %_ZN4node13ToOctalStringB5cxx11Eh.exit [
     i8 92, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45.i
     i8 63, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45.i
     i8 34, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45.i
   ]
 
-2:                                                ; preds = %switch.early.test.i
-  store ptr %i.s, ptr %1, align 8, !alias.scope !10
-  store i8 %i.v, ptr %i.s, align 8, !alias.scope !10
-  store i64 1, ptr %i.r, align 8, !alias.scope !10
-  store i8 0, ptr %i.t, align 1, !alias.scope !10
-  br label %_ZN4node13ToOctalStringB5cxx11Eh.exit
-
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45.i: ; preds = %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %bb.b
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45.i: ; preds = %bb.b, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i
   %i.x = lshr i8 %i.v, 3
   %i.y = and i8 %i.x, 7
   %i.z = or disjoint i8 %i.y, 48
@@ -165,50 +158,54 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45.i: ; preds = %s
   %.sroa.28.18.insert.ext10 = zext nneg i8 %i.z to i32
   %.sroa.28.18.insert.shift11 = shl nuw nsw i32 %.sroa.28.18.insert.ext10, 16
   %.sroa.28.17.insert.insert = or disjoint i32 %.sroa.28.18.insert.shift11, %.sroa.28.17.insert.shift
-  store ptr %i.s, ptr %1, align 8, !alias.scope !13
+  store ptr %i.s, ptr %1, align 8, !alias.scope !10
   %.sroa.215.sroa.4.0.insert.ext = zext nneg i8 %i.ab to i32
   %.sroa.215.sroa.4.0.insert.shift = shl nuw nsw i32 %.sroa.215.sroa.4.0.insert.ext, 24
   %.sroa.28.18.insert.insert13 = or disjoint i32 %.sroa.28.17.insert.insert, %.sroa.215.sroa.4.0.insert.shift
   %.sroa.215.sroa.0.0.insert.insert = or disjoint i32 %.sroa.28.18.insert.insert13, 92
   store i32 %.sroa.215.sroa.0.0.insert.insert, ptr %i.s, align 8
   store i8 0, ptr %.sroa.516.16..sroa_idx, align 4
-  store i64 4, ptr %i.r, align 8, !alias.scope !13
-  br label %_ZN4node13ToOctalStringB5cxx11Eh.exit
+  store i64 4, ptr %i.r, align 8, !alias.scope !10
+  %2 = getelementptr inbounds nuw [32 x i8], ptr %i.u, i64 %.018 ; 3 uses
+  %.not21.i.jt4 = icmp eq ptr %1, %2
+  br i1 %.not21.i.jt4, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, label %bb.d, !prof !15
 
-_ZN4node13ToOctalStringB5cxx11Eh.exit:            ; preds = %2, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45.i
-  %3 = phi i8 [ %i.v, %2 ], [ 92, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45.i ]
-  %cond = phi i1 [ true, %2 ], [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45.i ]
-  %4 = phi i64 [ 1, %2 ], [ 4, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45.i ]
-  %5 = getelementptr inbounds nuw [32 x i8], ptr %i.u, i64 %.018 ; 4 uses
-  %6 = load ptr, ptr %5, align 8                  ; 2 uses
-  %.not21.i = icmp eq ptr %1, %5
-  br i1 %.not21.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, label %7, !prof !16
+_ZN4node13ToOctalStringB5cxx11Eh.exit:            ; preds = %switch.early.test.i
+  store ptr %i.s, ptr %1, align 8, !alias.scope !16
+  store i8 %i.v, ptr %i.s, align 8, !alias.scope !16
+  store i64 1, ptr %i.r, align 8, !alias.scope !16
+  store i8 0, ptr %i.t, align 1, !alias.scope !16
+  %3 = getelementptr inbounds nuw [32 x i8], ptr %i.u, i64 %.018 ; 3 uses
+  %.not21.i = icmp eq ptr %1, %3
+  br i1 %.not21.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, label %bb.c, !prof !15
 
-7:                                                ; preds = %_ZN4node13ToOctalStringB5cxx11Eh.exit
-  br i1 %cond, label %bb.c, label %bb.d
-
-bb.c:                                             ; preds = %7
-  store i8 %3, ptr %6, align 1
+bb.c:                                             ; preds = %_ZN4node13ToOctalStringB5cxx11Eh.exit
+  %4 = load ptr, ptr %3, align 8
+  store i8 %i.v, ptr %4, align 1
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
-bb.d:                                             ; preds = %7
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %6, ptr noundef nonnull align 8 dereferenceable(1) %i.s, i64 %4, i1 false)
+bb.d:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45.i
+  %5 = load ptr, ptr %2, align 8
+  %6 = load i32, ptr %i.s, align 8
+  store i32 %6, ptr %5, align 1
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.d, %bb.c
+  %7 = phi ptr [ %2, %bb.d ], [ %3, %bb.c ]
+  %8 = getelementptr inbounds nuw [32 x i8], ptr %i.u, i64 %.018
   %i.ae = load i64, ptr %i.r, align 8             ; 2 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.af = getelementptr inbounds nuw i8, ptr %8, i64 8
   store i64 %i.ae, ptr %i.af, align 8
-  %i.ag = load ptr, ptr %5, align 8
+  %i.ag = load ptr, ptr %7, align 8
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.ae
   store i8 0, ptr %i.ah, align 1
   %.pre.i = load ptr, ptr %1, align 8
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %_ZN4node13ToOctalStringB5cxx11Eh.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
-  %8 = phi ptr [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ], [ %i.s, %_ZN4node13ToOctalStringB5cxx11Eh.exit ]
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45.i, %_ZN4node13ToOctalStringB5cxx11Eh.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
+  %9 = phi ptr [ %.pre.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i ], [ %i.s, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45.i ], [ %i.s, %_ZN4node13ToOctalStringB5cxx11Eh.exit ]
   store i64 0, ptr %i.r, align 8
-  store i8 0, ptr %8, align 1
+  store i8 0, ptr %9, align 1
   %i.ai = load ptr, ptr %1, align 8               ; 2 uses
   %i.aj = icmp eq ptr %i.ai, %i.s
   br i1 %i.aj, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
@@ -315,9 +312,6 @@ declare void @__cxa_guard_release(ptr) local_unnamed_addr #3
 ; Function Attrs: nobuiltin allocsize(0)
 declare noundef nonnull ptr @_Znwm(i64 noundef) local_unnamed_addr #4
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
-
 ; Function Attrs: nobuiltin nounwind
 declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #5
 
@@ -344,13 +338,13 @@ attributes #8 = { builtin nounwind }
 !7 = distinct !{!7, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_S5_"}
 !8 = distinct !{!8, !9}
 !9 = !{!"llvm.loop.mustprogress"}
-!10 = !{!11}
-!11 = distinct !{!11, !12, !"_ZN4node13ToOctalStringB5cxx11Eh: argument 0"}
-!12 = distinct !{!12, !"_ZN4node13ToOctalStringB5cxx11Eh"}
-!13 = !{!14, !11}
-!14 = distinct !{!14, !15, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_S5_: argument 0"}
-!15 = distinct !{!15, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_S5_"}
-!16 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!10 = !{!11, !13}
+!11 = distinct !{!11, !12, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_S5_: argument 0"}
+!12 = distinct !{!12, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_S5_"}
+!13 = distinct !{!13, !14, !"_ZN4node13ToOctalStringB5cxx11Eh: argument 0"}
+!14 = distinct !{!14, !"_ZN4node13ToOctalStringB5cxx11Eh"}
+!15 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!16 = !{!13}
 !17 = distinct !{!17, !9}
 !18 = distinct !{!18, !9}
 !19 = !{!"branch_weights", i32 1, i32 1048575}

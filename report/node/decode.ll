@@ -201,7 +201,7 @@ declare hidden void @BrotliDecoderStateMetablockBegin(ptr noundef) local_unnamed
 ; Function Attrs: nofree noinline norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc range(i32 -31, 3) i32 @DecodeMetaBlockLength(ptr nofree noundef captures(none) %0, ptr nofree noundef captures(none) %1) unnamed_addr #8 {
 .split:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 752 ; 12 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 752 ; 13 uses
   %.promoted255 = load i32, ptr %i.a, align 8, !tbaa !124
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 16 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 16 uses
@@ -209,11 +209,7 @@ define internal fastcc range(i32 -31, 3) i32 @DecodeMetaBlockLength(ptr nofree n
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 772 ; 14 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 132 ; 9 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 5 uses
-  br label %bb.a
-
-bb.a:                                             ; preds = %4, %.split
-  %storemerge256 = phi i32 [ %storemerge, %4 ], [ %.promoted255, %.split ]
-  switch i32 %storemerge256, label %BrotliSafeReadBits.exit95.thread [
+  switch i32 %.promoted255, label %BrotliSafeReadBits.exit95.thread [
     i32 0, label %.preheader172
     i32 1, label %bb.d
     i32 2, label %._crit_edge310
@@ -224,11 +220,21 @@ bb.a:                                             ; preds = %4, %.split
     i32 7, label %.loopexit177.loopexit
   ]
 
-._crit_edge310:                                   ; preds = %bb.a
+2:                                                ; preds = %bb.b
+  store i32 2, ptr %i.a, align 8, !tbaa !124
+  br label %._crit_edge310
+
+bb.a:                                             ; preds = %bb.i
+  %3 = or i32 %i.be, 4
+  store i32 %3, ptr %i.e, align 4
+  store i32 5, ptr %i.a, align 8, !tbaa !124
+  br label %.preheader168
+
+._crit_edge310:                                   ; preds = %2, %.split
   %.promoted248.pre = load i64, ptr %i.b, align 8, !tbaa !50
   br label %bb.h
 
-.preheader172:                                    ; preds = %bb.a
+.preheader172:                                    ; preds = %.split
   %.promoted = load i64, ptr %i.b, align 8, !tbaa !50 ; 2 uses
   %i.h = icmp eq i64 %.promoted, 0
   br i1 %i.h, label %.lr.ph, label %.preheader172._crit_edge
@@ -244,7 +250,7 @@ bb.a:                                             ; preds = %4, %.split
   %i.k = icmp eq ptr %.promoted225, %i.j
   br i1 %i.k, label %BrotliSafeReadBits.exit95.thread, label %BrotliPullByte.exit
 
-.preheader168:                                    ; preds = %bb.a
+.preheader168:                                    ; preds = %bb.a, %.split
   %.promoted257 = load i64, ptr %i.b, align 8, !tbaa !50 ; 2 uses
   %i.l = icmp eq i64 %.promoted257, 0
   br i1 %i.l, label %.lr.ph258.split, label %.preheader168._crit_edge
@@ -277,13 +283,13 @@ bb.b:                                             ; preds = %.preheader172._crit
   %i.y = or disjoint i32 %i.x, %i.v
   store i32 0, ptr %i.f, align 4, !tbaa !58
   store i32 %i.y, ptr %i.e, align 4
-  br i1 %.not67, label %bb.c, label %4
+  br i1 %.not67, label %bb.c, label %2
 
 bb.c:                                             ; preds = %bb.b
   store i32 1, ptr %i.a, align 8, !tbaa !124
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %bb.a
+bb.d:                                             ; preds = %bb.c, %.split
   %.promoted233 = load i64, ptr %i.b, align 8, !tbaa !50 ; 2 uses
   %i.z = icmp eq i64 %.promoted233, 0
   br i1 %i.z, label %.lr.ph235, label %._crit_edge
@@ -369,18 +375,13 @@ bb.i:                                             ; preds = %._crit_edge312, %Br
   store i32 %i.be, ptr %i.e, align 4
   store i32 0, ptr %i.g, align 4, !tbaa !52
   %i.bf = icmp eq i64 %i.aw, 3
-  br i1 %i.bf, label %2, label %bb.j
-
-2:                                                ; preds = %bb.i
-  %3 = or i32 %i.be, 4
-  store i32 %3, ptr %i.e, align 4
-  br label %4
+  br i1 %i.bf, label %bb.a, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   store i32 3, ptr %i.a, align 8, !tbaa !124
   br label %.loopexit
 
-.loopexit.loopexit:                               ; preds = %bb.a
+.loopexit.loopexit:                               ; preds = %.split
   %.pre314 = load i32, ptr %i.g, align 4, !tbaa !52
   %.pre315 = load i32, ptr %i.e, align 4
   br label %.loopexit
@@ -465,7 +466,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   store i32 4, ptr %i.a, align 8, !tbaa !124
   br label %.loopexit175
 
-.loopexit175.loopexit:                            ; preds = %bb.a
+.loopexit175.loopexit:                            ; preds = %.split
   %.pre318 = load i32, ptr %i.e, align 4
   br label %.loopexit175
 
@@ -551,7 +552,7 @@ bb.r:                                             ; preds = %bb.q
   store i32 6, ptr %i.a, align 8, !tbaa !124
   br label %.loopexit176
 
-.loopexit176.loopexit:                            ; preds = %bb.a
+.loopexit176.loopexit:                            ; preds = %.split
   %.promoted262.pre = load i64, ptr %i.b, align 8, !tbaa !50
   br label %.loopexit176
 
@@ -606,7 +607,7 @@ bb.t:                                             ; preds = %._crit_edge265
   store i32 7, ptr %i.a, align 8, !tbaa !124
   br label %.loopexit177
 
-.loopexit177.loopexit:                            ; preds = %bb.a
+.loopexit177.loopexit:                            ; preds = %.split
   %.pre304 = load i32, ptr %i.e, align 4
   br label %.loopexit177
 
@@ -696,13 +697,8 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   store i32 0, ptr %i.a, align 8, !tbaa !124
   br label %BrotliSafeReadBits.exit95.thread
 
-4:                                                ; preds = %bb.b, %2
-  %storemerge = phi i32 [ 5, %2 ], [ 2, %bb.b ]   ; 2 uses
-  store i32 %storemerge, ptr %i.a, align 8, !tbaa !124
-  br label %bb.a
-
-BrotliSafeReadBits.exit95.thread:                 ; preds = %bb.a, %.lr.ph, %.lr.ph235, %.lr.ph250, %bb.w, %bb.m, %.lr.ph264, %.lr.ph258.split, %.lr.ph286.split, %bb.q, %._crit_edge276, %bb.u, %bb.s, %bb.p, %bb.k, %bb.f
-  %.059 = phi i32 [ -2, %bb.q ], [ 1, %bb.f ], [ 2, %bb.u ], [ 2, %bb.k ], [ 1, %bb.p ], [ 2, %.lr.ph258.split ], [ 2, %.lr.ph264 ], [ -3, %bb.w ], [ -1, %bb.m ], [ 1, %._crit_edge276 ], [ 1, %bb.s ], [ 2, %.lr.ph286.split ], [ 2, %.lr.ph ], [ 2, %.lr.ph250 ], [ 2, %.lr.ph235 ], [ -31, %bb.a ]
+BrotliSafeReadBits.exit95.thread:                 ; preds = %bb.m, %bb.w, %.split, %.lr.ph, %.lr.ph235, %.lr.ph250, %.lr.ph264, %.lr.ph258.split, %.lr.ph286.split, %bb.q, %._crit_edge276, %bb.u, %bb.s, %bb.p, %bb.k, %bb.f
+  %.059 = phi i32 [ -2, %bb.q ], [ 1, %bb.f ], [ 2, %bb.u ], [ 2, %bb.k ], [ 1, %bb.p ], [ 2, %.lr.ph258.split ], [ 2, %.lr.ph264 ], [ -31, %.split ], [ -3, %bb.w ], [ 1, %._crit_edge276 ], [ 1, %bb.s ], [ 2, %.lr.ph286.split ], [ 2, %.lr.ph235 ], [ 2, %.lr.ph250 ], [ 2, %.lr.ph ], [ -1, %bb.m ]
   ret i32 %.059
 }
 
@@ -1105,19 +1101,19 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 92
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 96
   %.pre = load i32, ptr %i.b, align 4, !tbaa !144
-  br label %.outer
-
-.outer:                                           ; preds = %5, %.preheader
-  %.ph = phi i32 [ 0, %5 ], [ %.pre, %.preheader ]
   br label %4
 
-4:                                                ; preds = %.outer, %4
-  switch i32 %.ph, label %4 [
+4:                                                ; preds = %4, %.preheader
+  switch i32 %.pre, label %4 [
     i32 0, label %BrotliGetRemainingBytes.exit
     i32 1, label %.loopexit
   ]
 
-BrotliGetRemainingBytes.exit:                     ; preds = %4
+.outer:                                           ; preds = %bb.f, %bb.e
+  store i32 0, ptr %i.b, align 4, !tbaa !144
+  br label %BrotliGetRemainingBytes.exit
+
+BrotliGetRemainingBytes.exit:                     ; preds = %4, %.outer
   %i.n = load ptr, ptr %i.d, align 8, !tbaa !45
   %i.o = load ptr, ptr %i.e, align 8, !tbaa !44
   %i.p = ptrtoint ptr %i.n to i64
@@ -1231,15 +1227,11 @@ bb.e:                                             ; preds = %.loopexit
   %i.bp = and i32 %i.bo, 63
   %i.bq = shl nuw i32 1, %i.bp
   %i.br = icmp eq i32 %i.bm, %i.bq
-  br i1 %i.br, label %bb.f, label %5
+  br i1 %i.br, label %bb.f, label %.outer
 
 bb.f:                                             ; preds = %bb.e
   %i.bs = load i32, ptr %i.l, align 4, !tbaa !53
   store i32 %i.bs, ptr %i.m, align 8, !tbaa !115
-  br label %5
-
-5:                                                ; preds = %bb.e, %bb.f
-  store i32 0, ptr %i.b, align 4, !tbaa !144
   br label %.outer
 
 .thread48:                                        ; preds = %.loopexit, %bb.d, %bb.a

@@ -201,7 +201,6 @@ bb.ba:                                            ; preds = %bb.ax, %bb.as
   br label %bb.en
 
 bb.bb:                                            ; preds = %.backedge.i.i, %.lr.ph502.i.i
-  %.2500.i.i = phi i32 [ undef, %.lr.ph502.i.i ], [ %.8631.i.i, %.backedge.i.i ] ; 14 uses
   %.0260499.i.i = phi i32 [ 0, %.lr.ph502.i.i ], [ %.2262630.i.i, %.backedge.i.i ]
   %.0263498.i.i = phi i32 [ 0, %.lr.ph502.i.i ], [ %.5268629.i.i, %.backedge.i.i ] ; 15 uses
   %.pre.i325.i.i = load ptr, ptr %i.i, align 8, !tbaa !11
@@ -604,15 +603,11 @@ bb.ed:                                            ; preds = %tok_nextc.exit373.i
 bb.ee:                                            ; preds = %bb.ed
   %i.nh = tail call i32 @_PyTokenizer_warn_invalid_escape_sequence(ptr noundef nonnull %0, i32 noundef %.0246.i.i) #8
   %.not291.i.i = icmp eq i32 %i.nh, 0
-  br i1 %.not291.i.i, label %._crit_edge579.i.i, label %2
+  br i1 %.not291.i.i, label %._crit_edge579.i.i, label %bb.em
 
 ._crit_edge579.i.i:                               ; preds = %bb.ee
   %.pre.i.i = load ptr, ptr %i.i, align 8, !tbaa !11
   br label %bb.ef
-
-2:                                                ; preds = %bb.ee
-  %3 = tail call i32 @_PyLexer_token_setup(ptr noundef nonnull %0, ptr noundef %1, i32 noundef 67, ptr noundef null, ptr noundef null) #8
-  br label %bb.em
 
 bb.ef:                                            ; preds = %._crit_edge579.i.i, %bb.ed
   %i.ni = phi ptr [ %.pre.i.i, %._crit_edge579.i.i ], [ %i.ne, %bb.ed ]
@@ -639,12 +634,12 @@ tok_backup.exit376.i.i:                           ; preds = %bb.eh
   %i.nn = load i32, ptr %i.o, align 4, !tbaa !28
   %i.no = add i32 %i.nn, -1
   store i32 %i.no, ptr %i.o, align 4, !tbaa !28
-  br label %bb.em, !llvm.loop !48
+  br label %.backedge.i.i, !llvm.loop !48
 
 bb.ej:                                            ; preds = %tok_nextc.exit373.i.i
   %i.np = icmp eq i8 %.0246.in.i.i, 78
   %or.cond15.i.i = and i1 %i.np, %i.ng
-  br i1 %or.cond15.i.i, label %bb.ek, label %bb.em
+  br i1 %or.cond15.i.i, label %bb.ek, label %.backedge.i.i
 
 bb.ek:                                            ; preds = %bb.ej
   %i.nq = tail call fastcc i32 @tok_nextc(ptr noundef nonnull %0) ; 2 uses
@@ -655,24 +650,16 @@ bb.el:                                            ; preds = %bb.ek
   tail call fastcc void @tok_backup(ptr noundef nonnull %0, i32 noundef %i.nq)
   br label %.backedge.i.i
 
-bb.em:                                            ; preds = %bb.ej, %tok_backup.exit376.i.i, %2
-  %.5274.i.i = phi i32 [ 6, %tok_backup.exit376.i.i ], [ 1, %2 ], [ 0, %bb.ej ]
-  %.5.i.i = phi i32 [ %.2500.i.i, %tok_backup.exit376.i.i ], [ %3, %2 ], [ %.2500.i.i, %bb.ej ] ; 4 uses
+bb.em:                                            ; preds = %bb.ee
+  %2 = tail call i32 @_PyLexer_token_setup(ptr noundef nonnull %0, ptr noundef %1, i32 noundef 67, ptr noundef null, ptr noundef null) #8 ; 2 uses
   switch i8 %.0246.in.i.i, label %.backedge.i.i [
-    i8 125, label %4
-    i8 123, label %4
+    i8 125, label %tok_get.exit
+    i8 123, label %tok_get.exit
   ]
 
-4:                                                ; preds = %bb.em, %bb.em
-  switch i32 %.5274.i.i, label %tok_get.exit [
-    i32 0, label %.backedge.i.i
-    i32 6, label %.backedge.i.i
-  ]
-
-.backedge.i.i:                                    ; preds = %bb.dq, %bb.dy, %4, %4, %bb.em, %bb.el, %bb.ek, %bb.ec, %bb.ea, %bb.dw, %bb.du, %bb.ds, %bb.dp, %bb.cf, %bb.ce
-  %.8631.i.i = phi i32 [ %.5.i.i, %4 ], [ %.5.i.i, %4 ], [ %.2500.i.i, %bb.ce ], [ %.5.i.i, %bb.em ], [ %.2500.i.i, %bb.cf ], [ %.2500.i.i, %bb.el ], [ %.2500.i.i, %bb.ek ], [ %.2500.i.i, %bb.dy ], [ %.2500.i.i, %bb.du ], [ %.2500.i.i, %bb.ds ], [ %.2500.i.i, %bb.dp ], [ %.2500.i.i, %bb.dw ], [ %.2500.i.i, %bb.ec ], [ %.2500.i.i, %bb.ea ], [ %.2500.i.i, %bb.dq ]
-  %.2262630.i.i = phi i32 [ 0, %4 ], [ 0, %4 ], [ %i.hv, %bb.ce ], [ 0, %bb.em ], [ 0, %bb.cf ], [ 0, %bb.el ], [ 0, %bb.ek ], [ 0, %bb.dy ], [ 0, %bb.du ], [ 0, %bb.ds ], [ 0, %bb.dp ], [ 0, %bb.dw ], [ 0, %bb.ec ], [ 0, %bb.ea ], [ 0, %bb.dq ] ; 4 uses
-  %.5268629.i.i = phi i32 [ %.0263498.i.i, %4 ], [ %.0263498.i.i, %4 ], [ %.0263498.i.i, %bb.ce ], [ %.0263498.i.i, %bb.em ], [ %.0263498.i.i, %bb.cf ], [ %.0263498.i.i, %bb.el ], [ 1, %bb.ek ], [ %.0263498.i.i, %bb.dy ], [ %.0263498.i.i, %bb.du ], [ %.0263498.i.i, %bb.ds ], [ %.0263498.i.i, %bb.dp ], [ %.0263498.i.i, %bb.dw ], [ %.0263498.i.i, %bb.ec ], [ %.0263498.i.i, %bb.ea ], [ %.0263498.i.i, %bb.dq ]
+.backedge.i.i:                                    ; preds = %bb.dq, %bb.dy, %bb.em, %bb.el, %bb.ek, %bb.ej, %tok_backup.exit376.i.i, %bb.ec, %bb.ea, %bb.dw, %bb.du, %bb.ds, %bb.dp, %bb.cf, %bb.ce
+  %.2262630.i.i = phi i32 [ 0, %bb.dy ], [ 0, %tok_backup.exit376.i.i ], [ %i.hv, %bb.ce ], [ 0, %bb.em ], [ 0, %bb.cf ], [ 0, %bb.el ], [ 0, %bb.ek ], [ 0, %bb.ea ], [ 0, %bb.du ], [ 0, %bb.ds ], [ 0, %bb.dp ], [ 0, %bb.dw ], [ 0, %bb.ec ], [ 0, %bb.ej ], [ 0, %bb.dq ] ; 4 uses
+  %.5268629.i.i = phi i32 [ %.0263498.i.i, %bb.dy ], [ %.0263498.i.i, %tok_backup.exit376.i.i ], [ %.0263498.i.i, %bb.ce ], [ %.0263498.i.i, %bb.em ], [ %.0263498.i.i, %bb.cf ], [ %.0263498.i.i, %bb.el ], [ 1, %bb.ek ], [ %.0263498.i.i, %bb.ea ], [ %.0263498.i.i, %bb.du ], [ %.0263498.i.i, %bb.ds ], [ %.0263498.i.i, %bb.dp ], [ %.0263498.i.i, %bb.dw ], [ %.0263498.i.i, %bb.ec ], [ %.0263498.i.i, %bb.ej ], [ %.0263498.i.i, %bb.dq ]
   %i.ns = load i32, ptr %i.ck, align 8, !tbaa !38
   %.not288.i.i = icmp eq i32 %.2262630.i.i, %i.ns
   br i1 %.not288.i.i, label %.preheader.i.i, label %bb.bb, !llvm.loop !48
@@ -716,8 +703,8 @@ tok_backup.exit379.i.i:                           ; preds = %bb.ep
   %exitcond.not.i.i = icmp eq i32 %i.og, %.2262630.i.i
   br i1 %exitcond.not.i.i, label %._crit_edge505.split.i.i, label %bb.en, !llvm.loop !51
 
-tok_get.exit:                                     ; preds = %4, %bb.b, %bb.aa, %bb.ab, %bb.az, %bb.bk, %bb.bq, %bb.bt, %tok_backup.exit334.i.i, %bb.cb, %bb.cc, %bb.cj, %bb.db, %bb.dd, %bb.df, %bb.dn, %._crit_edge505.split.i.i
-  %.0.i = phi i32 [ %i.h, %bb.b ], [ %i.ce, %bb.aa ], [ %i.eg, %bb.az ], [ %i.fl, %bb.bk ], [ %i.nz, %._crit_edge505.split.i.i ], [ %i.cg, %bb.ab ], [ %i.ke, %bb.dd ], [ %i.jy, %bb.db ], [ %i.hp, %bb.cb ], [ %i.lr, %bb.dn ], [ %i.kk, %bb.df ], [ %i.ie, %bb.cj ], [ %i.hr, %bb.cc ], [ %i.gw, %tok_backup.exit334.i.i ], [ %i.gh, %bb.bt ], [ %i.fw, %bb.bq ], [ %.5.i.i, %4 ]
+tok_get.exit:                                     ; preds = %bb.em, %bb.em, %bb.b, %bb.aa, %bb.ab, %bb.az, %bb.bk, %bb.bq, %bb.bt, %tok_backup.exit334.i.i, %bb.cb, %bb.cc, %bb.cj, %bb.db, %bb.dd, %bb.df, %bb.dn, %._crit_edge505.split.i.i
+  %.0.i = phi i32 [ %i.h, %bb.b ], [ %i.ce, %bb.aa ], [ %i.eg, %bb.az ], [ %i.fl, %bb.bk ], [ %i.nz, %._crit_edge505.split.i.i ], [ %i.cg, %bb.ab ], [ %i.ke, %bb.dd ], [ %i.jy, %bb.db ], [ %i.hp, %bb.cb ], [ %i.lr, %bb.dn ], [ %i.kk, %bb.df ], [ %i.ie, %bb.cj ], [ %i.hr, %bb.cc ], [ %i.gw, %tok_backup.exit334.i.i ], [ %i.gh, %bb.bt ], [ %i.fw, %bb.bq ], [ %2, %bb.em ], [ %2, %bb.em ]
   %i.oh = getelementptr i8, ptr %0, i64 2756
   %i.oi = load i32, ptr %i.oh, align 4, !tbaa !44
   %.not = icmp eq i32 %i.oi, 0
