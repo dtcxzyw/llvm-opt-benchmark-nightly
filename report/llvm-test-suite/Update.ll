@@ -201,20 +201,24 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 6 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  br label %.outer.a
+  %.not76 = icmp eq i32 %2, 0
+  br i1 %.not76, label %.thread, label %.outer.a
 
-.outer.a:                                         ; preds = %bb.bm, %bb.c
-  %.042.ph = phi i32 [ %.244, %bb.bm ], [ %2, %bb.c ] ; 5 uses
-  %.039.ph = phi ptr [ %.241, %bb.bm ], [ %1, %bb.c ] ; 4 uses
-  %.0.ph = phi i32 [ %.6, %bb.bm ], [ undef, %bb.c ]
-  %.not76 = icmp eq i32 %.042.ph, 0
-  br i1 %.not76, label %.thread, label %.outer.split
+.outer.a:                                         ; preds = %bb.c, %_ZN18COutMultiVolStream14CSubStreamInfoD2Ev.exit
+  %.042.ph = phi i32 [ %.1, %_ZN18COutMultiVolStream14CSubStreamInfoD2Ev.exit ], [ undef, %bb.c ]
+  %5 = load i32, ptr %i.e, align 4, !tbaa !8
+  %6 = load ptr, ptr %i.o, align 8
+  %7 = load i32, ptr %i.p, align 4
+  %8 = add nsw i32 %7, -1
+  %9 = load ptr, ptr %i.q, align 8
+  %.promoted = load i32, ptr %i.c, align 4, !tbaa !24
+  %.promoted602 = load i64, ptr %i.r, align 8
+  br label %.outer.split
 
-.outer.split:                                     ; preds = %.outer.a, %_ZN18COutMultiVolStream14CSubStreamInfoD2Ev.exit
-  %.0 = phi i32 [ %.1, %_ZN18COutMultiVolStream14CSubStreamInfoD2Ev.exit ], [ %.0.ph, %.outer.a ] ; 3 uses
-  %5 = load i32, ptr %i.c, align 4, !tbaa !24     ; 5 uses
-  %6 = load i32, ptr %i.e, align 4, !tbaa !8
-  %.not77 = icmp slt i32 %5, %6
+.outer.split:                                     ; preds = %.outer.a, %bb.bl
+  %10 = phi i64 [ %.promoted602, %.outer.a ], [ %12, %bb.bl ] ; 5 uses
+  %11 = phi i32 [ %.promoted, %.outer.a ], [ %13, %bb.bl ] ; 5 uses
+  %.not77 = icmp slt i32 %11, %5
   br i1 %.not77, label %bb.ax, label %bb.d
 
 bb.d:                                             ; preds = %.outer.split
@@ -225,7 +229,7 @@ bb.d:                                             ; preds = %.outer.split
   store i32 0, ptr %i.u, align 4, !tbaa !35
   store i32 4, ptr %i.h, align 4, !tbaa !37
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
-  %i.v = add nsw i32 %5, 1
+  %i.v = add nsw i32 %11, 1
   invoke void @_Z21ConvertUInt32ToStringjPw(i32 noundef %i.v, ptr noundef nonnull %i.a)
           to label %bb.e unwind label %bb.o
 
@@ -628,7 +632,7 @@ bb.ao:                                            ; preds = %_ZN11CStringBaseIwE
           to label %bb.ap unwind label %bb.ag, !llvm.loop !63 ; 0 uses
 
 bb.ap:                                            ; preds = %bb.ao, %bb.ae
-  %.1 = phi i32 [ %i.dm, %bb.ae ], [ %.0, %bb.ao ] ; 2 uses
+  %.1 = phi i32 [ %i.dm, %bb.ae ], [ %.042.ph, %bb.ao ] ; 2 uses
   %i.fc = icmp eq ptr %.sroa.0.1, null
   br i1 %i.fc, label %_ZN11CStringBaseIwED2Ev.exit132, label %bb.aq
 
@@ -675,7 +679,7 @@ bb.au:                                            ; preds = %bb.at
 
 _ZN18COutMultiVolStream14CSubStreamInfoD2Ev.exit: ; preds = %_ZN11CStringBaseIwED2Ev.exit.i134, %bb.at
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #19
-  br i1 %i.dk, label %.outer.split, label %.thread
+  br i1 %i.dk, label %.outer.a, label %.thread
 
 .body122:                                         ; preds = %bb.ag, %bb.ak, %bb.ah
   %.pn = phi { ptr, i32 } [ %i.dp, %bb.ah ], [ %i.do, %bb.ag ], [ %i.ee, %bb.ak ] ; 2 uses
@@ -704,32 +708,20 @@ _ZN11CStringBaseIwED2Ev.exit137:                  ; preds = %bb.p, %.body109, %b
   resume { ptr, i32 } %.pn85.pn.pn.pn.pn
 
 bb.ax:                                            ; preds = %.outer.split
-  %7 = load ptr, ptr %i.o, align 8, !tbaa !12
-  %i.fp = sext i32 %5 to i64
-  %i.fq = getelementptr inbounds [8 x i8], ptr %7, i64 %i.fp
+  %i.fp = sext i32 %11 to i64
+  %i.fq = getelementptr inbounds [8 x i8], ptr %6, i64 %i.fp
   %i.fr = load ptr, ptr %i.fq, align 8, !tbaa !13 ; 4 uses
-  %8 = load i32, ptr %i.p, align 4, !tbaa !8
-  %9 = add nsw i32 %8, -1
-  %spec.select = call i32 @llvm.smin.i32(i32 %5, i32 %9)
-  %10 = load ptr, ptr %i.q, align 8, !tbaa !12
+  %spec.select = call i32 @llvm.smin.i32(i32 %11, i32 %8)
   %i.fs = sext i32 %spec.select to i64
-  %i.ft = getelementptr inbounds [8 x i8], ptr %10, i64 %i.fs
-  %11 = load i64, ptr %i.ft, align 8, !tbaa !64   ; 5 uses
-  %i.fu = load i64, ptr %i.r, align 8, !tbaa !65  ; 5 uses
-  %.not79 = icmp ult i64 %i.fu, %11
-  br i1 %.not79, label %bb.ay, label %12
-
-12:                                               ; preds = %bb.ax
-  %13 = sub nuw i64 %i.fu, %11
-  store i64 %13, ptr %i.r, align 8, !tbaa !65
-  %14 = add nsw i32 %5, 1
-  store i32 %14, ptr %i.c, align 4, !tbaa !24
-  br label %bb.bm, !llvm.loop !63
+  %i.ft = getelementptr inbounds [8 x i8], ptr %9, i64 %i.fs
+  %i.fu = load i64, ptr %i.ft, align 8, !tbaa !64 ; 5 uses
+  %.not79 = icmp ult i64 %10, %i.fu
+  br i1 %.not79, label %bb.ay, label %bb.bl
 
 bb.ay:                                            ; preds = %bb.ax
   %i.fv = getelementptr inbounds nuw i8, ptr %i.fr, i64 32 ; 4 uses
-  %i.fw = load i64, ptr %i.fv, align 8, !tbaa !66
-  %.not80 = icmp eq i64 %i.fu, %i.fw
+  %i.fw = load i64, ptr %i.fv, align 8, !tbaa !65
+  %.not80 = icmp eq i64 %10, %i.fw
   br i1 %.not80, label %bb.bb, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
@@ -738,19 +730,19 @@ bb.az:                                            ; preds = %bb.ay
   %i.fz = load ptr, ptr %i.fy, align 8, !tbaa !48
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fz, i64 48
   %i.gb = load ptr, ptr %i.ga, align 8
-  %i.gc = call noundef i32 %i.gb(ptr noundef nonnull align 8 dereferenceable(8) %i.fy, i64 noundef %i.fu, i32 noundef 0, ptr noundef null) ; 2 uses
+  %i.gc = call noundef i32 %i.gb(ptr noundef nonnull align 8 dereferenceable(8) %i.fy, i64 noundef %10, i32 noundef 0, ptr noundef null) ; 2 uses
   %.not81 = icmp eq i32 %i.gc, 0
   br i1 %.not81, label %bb.ba, label %.thread
 
 bb.ba:                                            ; preds = %bb.az
-  %i.gd = load i64, ptr %i.r, align 8, !tbaa !65  ; 2 uses
-  store i64 %i.gd, ptr %i.fv, align 8, !tbaa !66
+  %i.gd = load i64, ptr %i.r, align 8, !tbaa !66  ; 2 uses
+  store i64 %i.gd, ptr %i.fv, align 8, !tbaa !65
   br label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba, %bb.ay
-  %i.ge = phi i64 [ %i.gd, %bb.ba ], [ %i.fu, %bb.ay ] ; 2 uses
-  %i.gf = zext i32 %.042.ph to i64
-  %i.gg = sub i64 %11, %i.ge
+  %i.ge = phi i64 [ %i.gd, %bb.ba ], [ %10, %bb.ay ] ; 2 uses
+  %i.gf = zext i32 %2 to i64
+  %i.gg = sub i64 %i.fu, %i.ge
   %i.gh = call noundef i64 @llvm.umin.i64(i64 %i.gf, i64 %i.gg)
   %i.gi = trunc nuw i64 %i.gh to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #19
@@ -759,21 +751,19 @@ bb.bb:                                            ; preds = %bb.ba, %bb.ay
   %i.gl = load ptr, ptr %i.gk, align 8, !tbaa !48
   %i.gm = getelementptr inbounds nuw i8, ptr %i.gl, i64 40
   %i.gn = load ptr, ptr %i.gm, align 8
-  %i.go = call noundef i32 %i.gn(ptr noundef nonnull align 8 dereferenceable(8) %i.gk, ptr noundef %.039.ph, i32 noundef %i.gi, ptr noundef nonnull %i.b) ; 2 uses
+  %i.go = call noundef i32 %i.gn(ptr noundef nonnull align 8 dereferenceable(8) %i.gk, ptr noundef %1, i32 noundef %i.gi, ptr noundef nonnull %i.b) ; 2 uses
   %.not82 = icmp eq i32 %i.go, 0
-  br i1 %.not82, label %bb.bc, label %bb.bl
+  br i1 %.not82, label %bb.bc, label %bb.bm
 
 bb.bc:                                            ; preds = %bb.bb
-  %i.gp = load i32, ptr %i.b, align 4, !tbaa !4   ; 4 uses
-  %i.gq = zext i32 %i.gp to i64                   ; 4 uses
-  %15 = getelementptr inbounds nuw i8, ptr %.039.ph, i64 %i.gq
-  %16 = sub i32 %.042.ph, %i.gp
-  %i.gr = load i64, ptr %i.fv, align 8, !tbaa !66
+  %i.gp = load i32, ptr %i.b, align 4, !tbaa !4   ; 3 uses
+  %i.gq = zext i32 %i.gp to i64                   ; 3 uses
+  %i.gr = load i64, ptr %i.fv, align 8, !tbaa !65
   %i.gs = add i64 %i.gr, %i.gq                    ; 2 uses
-  store i64 %i.gs, ptr %i.fv, align 8, !tbaa !66
-  %i.gt = load i64, ptr %i.r, align 8, !tbaa !65
+  store i64 %i.gs, ptr %i.fv, align 8, !tbaa !65
+  %i.gt = load i64, ptr %i.r, align 8, !tbaa !66
   %i.gu = add i64 %i.gt, %i.gq                    ; 3 uses
-  store i64 %i.gu, ptr %i.r, align 8, !tbaa !65
+  store i64 %i.gu, ptr %i.r, align 8, !tbaa !66
   %i.gv = load i64, ptr %i.s, align 8, !tbaa !67
   %i.gw = add i64 %i.gv, %i.gq                    ; 3 uses
   store i64 %i.gw, ptr %i.s, align 8, !tbaa !67
@@ -805,52 +795,38 @@ bb.bh:                                            ; preds = %bb.bg
   br label %bb.bi
 
 bb.bi:                                            ; preds = %bb.bh, %bb.bg
-  %i.he = icmp eq i64 %i.gs, %11
+  %i.he = icmp eq i64 %i.gs, %i.fu
   br i1 %i.he, label %bb.bj, label %bb.bk
 
 bb.bj:                                            ; preds = %bb.bi
   %i.hf = load i32, ptr %i.c, align 4, !tbaa !24
   %i.hg = add nsw i32 %i.hf, 1
   store i32 %i.hg, ptr %i.c, align 4, !tbaa !24
-  store i64 0, ptr %i.r, align 8, !tbaa !65
+  store i64 0, ptr %i.r, align 8, !tbaa !66
   br label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj, %bb.bi
   %i.hh = icmp eq i32 %i.gp, 0
-  %i.hi = icmp ne i64 %11, %i.ge
-  %or.cond = and i1 %i.hi, %i.hh                  ; 2 uses
-  %. = select i1 %or.cond, i32 1, i32 3
-  %..3. = select i1 %or.cond, i32 -2147467259, i32 %.0
-  br label %bb.bl
-
-bb.bl:                                            ; preds = %bb.bk, %bb.bb
-  %.363 = phi i32 [ %., %bb.bk ], [ 1, %bb.bb ]
-  %.143 = phi i32 [ %16, %bb.bk ], [ %.042.ph, %bb.bb ]
-  %.140 = phi ptr [ %15, %bb.bk ], [ %.039.ph, %bb.bb ]
-  %.5 = phi i32 [ %..3., %bb.bk ], [ %i.go, %bb.bb ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
+  %i.hi = icmp ne i64 %i.fu, %i.ge
+  %or.cond = and i1 %i.hi, %i.hh
+  %..3. = select i1 %or.cond, i32 -2147467259, i32 0
   br label %bb.bm
 
-bb.bm:                                            ; preds = %bb.bl, %12
-  %.464 = phi i32 [ 2, %12 ], [ %.363, %bb.bl ]
-  %.244 = phi i32 [ %.042.ph, %12 ], [ %.143, %bb.bl ]
-  %.241 = phi ptr [ %.039.ph, %12 ], [ %.140, %bb.bl ]
-  %.6 = phi i32 [ %.0, %12 ], [ %.5, %bb.bl ]     ; 2 uses
-  switch i32 %.464, label %default.unreachable385 [
-    i32 2, label %.outer.a
-    i32 1, label %.thread.loopexit515
-    i32 3, label %.thread
-  ]
+bb.bl:                                            ; preds = %bb.ax
+  %12 = sub nuw i64 %10, %i.fu                    ; 2 uses
+  store i64 %12, ptr %i.r, align 8, !tbaa !66
+  %13 = add nsw i32 %11, 1                        ; 2 uses
+  store i32 %13, ptr %i.c, align 4, !tbaa !24
+  br label %.outer.split
 
-.thread.loopexit515:                              ; preds = %bb.bm
+bb.bm:                                            ; preds = %bb.bk, %bb.bb
+  %.244 = phi i32 [ %..3., %bb.bk ], [ %i.go, %bb.bb ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
   br label %.thread
 
-.thread:                                          ; preds = %bb.az, %.outer.a, %_ZN18COutMultiVolStream14CSubStreamInfoD2Ev.exit, %bb.bm, %.thread.loopexit515
-  %.7 = phi i32 [ %.1, %_ZN18COutMultiVolStream14CSubStreamInfoD2Ev.exit ], [ 0, %bb.bm ], [ 0, %.outer.a ], [ %i.gc, %bb.az ], [ %.6, %.thread.loopexit515 ]
+.thread:                                          ; preds = %_ZN18COutMultiVolStream14CSubStreamInfoD2Ev.exit, %bb.c, %bb.bm, %bb.az
+  %.7 = phi i32 [ %i.gc, %bb.az ], [ %.244, %bb.bm ], [ 0, %bb.c ], [ %.1, %_ZN18COutMultiVolStream14CSubStreamInfoD2Ev.exit ]
   ret i32 %.7
-
-default.unreachable385:                           ; preds = %bb.bm
-  unreachable
 }
 
 declare void @_Z21ConvertUInt32ToStringjPw(i32 noundef, ptr noundef) local_unnamed_addr #2
@@ -1134,7 +1110,7 @@ default.unreachable12:                            ; preds = %bb.b
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
   %i.j = phi i64 [ %i.h, %bb.e ], [ %i.e, %bb.d ], [ %1, %bb.c ] ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %i.j, ptr %i.k, align 8, !tbaa !65
+  store i64 %i.j, ptr %i.k, align 8, !tbaa !66
   %.not = icmp eq ptr %3, null
   br i1 %.not, label %bb.h, label %bb.g
 
@@ -1245,7 +1221,7 @@ _ZN9CMyComPtrI10IOutStreamE7ReleaseEv.exit:       ; preds = %bb.e, %bb.f
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ap = load i64, ptr %i.ao, align 8, !tbaa !67
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %i.ap, ptr %i.aq, align 8, !tbaa !65
+  store i64 %i.ap, ptr %i.aq, align 8, !tbaa !66
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 0, ptr %i.ar, align 4, !tbaa !24
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -1648,8 +1624,8 @@ attributes #24 = { noreturn }
 !62 = !{!25, !33, i64 120}
 !63 = distinct !{!63, !23}
 !64 = !{!21, !21, i64 0}
-!65 = !{!25, !21, i64 16}
-!66 = !{!15, !21, i64 32}
+!65 = !{!15, !21, i64 32}
+!66 = !{!25, !21, i64 16}
 !67 = !{!25, !21, i64 24}
 !68 = !{!25, !21, i64 32}
 !69 = !{!15, !21, i64 40}

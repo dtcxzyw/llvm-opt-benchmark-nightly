@@ -136,7 +136,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %.backedge
   %i.r = phi i32 [ %i.d, %.lr.ph ], [ %6, %.backedge ] ; 5 uses
-  %.0103159 = phi ptr [ %2, %.lr.ph ], [ %.4107178, %.backedge ] ; 6 uses
+  %.0103159 = phi ptr [ %2, %.lr.ph ], [ %.4107.jt0, %.backedge ] ; 6 uses
   %i.s = load i64, ptr %i.e, align 8, !tbaa !21   ; 5 uses
   %i.t = icmp eq i32 %i.r, 9
   br i1 %i.t, label %.thread151, label %bb.c
@@ -267,10 +267,10 @@ bb.u:                                             ; preds = %bb.t
   store i32 0, ptr %i.i, align 8, !tbaa !19
   br label %.thread174
 
-.thread174:                                       ; preds = %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.i, %bb.h
-  %.1.i = phi i32 [ 9, %bb.t ], [ 5, %bb.q ], [ 8, %bb.i ], [ 9, %bb.k ], [ 2, %bb.n ], [ %i.ar, %bb.o ], [ 4, %bb.p ], [ 1, %bb.l ], [ 1, %bb.m ], [ %i.bb, %bb.r ], [ 6, %bb.u ], [ 9, %bb.s ], [ 9, %bb.h ] ; 2 uses
+.thread174:                                       ; preds = %bb.h, %bb.i, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t, %bb.u
+  %.1.i = phi i32 [ 9, %bb.t ], [ 5, %bb.q ], [ 8, %bb.i ], [ 9, %bb.k ], [ 2, %bb.n ], [ %i.ar, %bb.o ], [ 4, %bb.p ], [ 1, %bb.l ], [ 1, %bb.m ], [ %i.bb, %bb.r ], [ 6, %bb.u ], [ 9, %bb.s ], [ 9, %bb.h ]
   store i32 %.1.i, ptr %i.c, align 8, !tbaa !9
-  br label %.backedge
+  br label %.backedge, !llvm.loop !28
 
 bb.v:                                             ; preds = %bb.e
   %i.bk = sub i64 %1, %i.s                        ; 2 uses
@@ -293,7 +293,7 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.w
   store i32 3, ptr %5, align 4, !tbaa !4
-  br label %.thread180
+  br label %bb.aw
 
 bb.y:                                             ; preds = %bb.w
   %i.bs = icmp eq i32 %i.r, 6
@@ -312,7 +312,7 @@ bb.aa:                                            ; preds = %bb.z
 bb.ab:                                            ; preds = %bb.z
   %i.bv = load i32, ptr %i.m, align 8, !tbaa !17
   %.not133 = icmp eq i32 %i.bv, 0
-  br i1 %.not133, label %.thread, label %.thread180
+  br i1 %.not133, label %.thread, label %bb.aw
 
 .thread:                                          ; preds = %bb.aa, %bb.ab
   store i32 0, ptr %i.m, align 8, !tbaa !17
@@ -332,41 +332,41 @@ bb.ad:                                            ; preds = %bb.ac
 bb.ae:                                            ; preds = %bb.ad, %bb.ac
   %i.by = phi i64 [ %spec.select134, %bb.ad ], [ %i.bw, %bb.ac ] ; 5 uses
   %i.bz = icmp eq i64 %i.by, 0
-  br i1 %i.bz, label %.thread180, label %bb.af
+  br i1 %i.bz, label %bb.aw, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %i.ca = load ptr, ptr %i.o, align 8, !tbaa !28
-  %i.cb = load i64, ptr %i.e, align 8, !tbaa !29
+  %i.ca = load ptr, ptr %i.o, align 8, !tbaa !30
+  %i.cb = load i64, ptr %i.e, align 8, !tbaa !31
   %i.cc = getelementptr inbounds nuw i8, ptr %i.ca, i64 %i.cb
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.cc, ptr noundef nonnull readonly align 1 dereferenceable(1) %.0103159, i64 range(i64 1, 0) %i.by, i1 false)
-  %i.cd = load i64, ptr %i.e, align 8, !tbaa !29
+  %i.cd = load i64, ptr %i.e, align 8, !tbaa !31
   %i.ce = add i64 %i.cd, %i.by
-  store i64 %i.ce, ptr %i.e, align 8, !tbaa !29
-  %i.cf = load i32, ptr %i.p, align 4, !tbaa !30
+  store i64 %i.ce, ptr %i.e, align 8, !tbaa !31
+  %i.cf = load i32, ptr %i.p, align 4, !tbaa !32
   %i.cg = icmp eq i32 %i.cf, 0
   br i1 %i.cg, label %bb.ag, label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %bb.af
-  %.pre.i = load i32, ptr %.phi.trans.insert.i, align 8, !tbaa !31
+  %.pre.i = load i32, ptr %.phi.trans.insert.i, align 8, !tbaa !33
   br label %LzmaDec_UpdateWithUncompressed.exit
 
 bb.ag:                                            ; preds = %bb.af
-  %i.ch = load i32, ptr %i.q, align 4, !tbaa !32  ; 2 uses
-  %i.ci = load i32, ptr %.phi.trans.insert.i, align 8, !tbaa !31 ; 3 uses
+  %i.ch = load i32, ptr %i.q, align 4, !tbaa !34  ; 2 uses
+  %i.ci = load i32, ptr %.phi.trans.insert.i, align 8, !tbaa !33 ; 3 uses
   %i.cj = sub i32 %i.ch, %i.ci
   %i.ck = zext i32 %i.cj to i64
   %.not.i136 = icmp samesign ult i64 %i.by, %i.ck
   br i1 %.not.i136, label %LzmaDec_UpdateWithUncompressed.exit, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
-  store i32 %i.ch, ptr %i.p, align 4, !tbaa !30
+  store i32 %i.ch, ptr %i.p, align 4, !tbaa !32
   br label %LzmaDec_UpdateWithUncompressed.exit
 
 LzmaDec_UpdateWithUncompressed.exit:              ; preds = %._crit_edge.i, %bb.ag, %bb.ah
   %i.cl = phi i32 [ %.pre.i, %._crit_edge.i ], [ %i.ci, %bb.ah ], [ %i.ci, %bb.ag ]
   %i.cm = trunc nuw i64 %i.by to i32
   %i.cn = add i32 %i.cl, %i.cm
-  store i32 %i.cn, ptr %.phi.trans.insert.i, align 8, !tbaa !31
+  store i32 %i.cn, ptr %.phi.trans.insert.i, align 8, !tbaa !33
   %i.co = load i64, ptr %i.a, align 8, !tbaa !20  ; 3 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %.0103159, i64 %i.co
   %i.cq = load i64, ptr %3, align 8, !tbaa !20
@@ -379,7 +379,7 @@ LzmaDec_UpdateWithUncompressed.exit:              ; preds = %._crit_edge.i, %bb.
   %i.cv = icmp eq i32 %i.ct, %i.cs
   %i.cw = select i1 %i.cv, i32 0, i32 7
   store i32 %i.cw, ptr %i.c, align 8, !tbaa !9
-  br label %bb.aw
+  br label %.thread180
 
 bb.ai:                                            ; preds = %bb.v
   %i.cx = icmp eq i32 %i.r, 6
@@ -397,7 +397,7 @@ bb.aj:                                            ; preds = %bb.ai
 bb.ak:                                            ; preds = %bb.aj
   %i.de = load i32, ptr %i.m, align 8, !tbaa !17
   %.not127 = icmp eq i32 %i.de, 0
-  br i1 %.not127, label %bb.al, label %.thread180
+  br i1 %.not127, label %bb.al, label %bb.aw
 
 bb.al:                                            ; preds = %bb.ak
   br i1 %i.dc, label %.thread139, label %bb.am
@@ -405,7 +405,7 @@ bb.al:                                            ; preds = %bb.ak
 bb.am:                                            ; preds = %bb.al
   %i.df = load i32, ptr %i.n, align 4, !tbaa !18
   %.not128 = icmp eq i32 %i.df, 0
-  br i1 %.not128, label %.thread139, label %.thread180
+  br i1 %.not128, label %.thread139, label %bb.aw
 
 .thread139:                                       ; preds = %bb.aj, %bb.al, %bb.am
   call void @LzmaDec_InitDicAndState(ptr noundef nonnull %0, i32 noundef %i.db, i32 noundef %i.dd) #4
@@ -445,12 +445,12 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   %i.dv = add i32 %i.du, %.neg157                 ; 2 uses
   store i32 %i.dv, ptr %i.l, align 4, !tbaa !23
   %.not129 = icmp eq i32 %i.dl, 0
-  br i1 %.not129, label %bb.aq, label %.thread180
+  br i1 %.not129, label %bb.aq, label %bb.aw
 
 bb.aq:                                            ; preds = %bb.ap
   %i.dw = load i32, ptr %5, align 4, !tbaa !4     ; 3 uses
   %i.dx = icmp eq i32 %i.dw, 3
-  br i1 %i.dx, label %.thread180, label %bb.ar
+  br i1 %i.dx, label %bb.aw, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
   %i.dy = icmp eq i64 %i.dm, 0
@@ -464,7 +464,7 @@ bb.as:                                            ; preds = %bb.ar
   %or.cond155 = select i1 %.not130, i1 %.not131, i1 false
   %.not132 = icmp eq i32 %i.dr, %i.dq
   %or.cond156 = select i1 %or.cond155, i1 %.not132, i1 false
-  br i1 %or.cond156, label %bb.at, label %.thread180
+  br i1 %or.cond156, label %bb.at, label %bb.aw
 
 bb.at:                                            ; preds = %bb.as
   store i32 0, ptr %i.c, align 8, !tbaa !9
@@ -474,35 +474,34 @@ bb.at:                                            ; preds = %bb.as
 bb.au:                                            ; preds = %bb.at, %bb.ar
   %i.ea = phi i32 [ %.pre162, %bb.at ], [ %i.dw, %bb.ar ]
   %i.eb = icmp eq i32 %i.ea, 4
-  br i1 %i.eb, label %bb.av, label %bb.aw
+  br i1 %i.eb, label %bb.av, label %.thread180
 
 bb.av:                                            ; preds = %bb.au
   store i32 2, ptr %5, align 4, !tbaa !4
-  br label %bb.aw
+  br label %.thread180
 
-.thread180:                                       ; preds = %bb.ab, %bb.ae, %bb.aq, %bb.as, %bb.ap, %bb.am, %bb.ak, %bb.x
-  %.8.ph = phi i32 [ 0, %bb.x ], [ 1, %bb.ab ], [ 1, %bb.ae ], [ 0, %bb.aq ], [ 1, %bb.as ], [ %i.dl, %bb.ap ], [ 1, %bb.am ], [ 1, %bb.ak ]
+.thread180:                                       ; preds = %bb.av, %bb.au, %LzmaDec_UpdateWithUncompressed.exit
+  %.3106.jt0 = phi ptr [ %i.cp, %LzmaDec_UpdateWithUncompressed.exit ], [ %i.dn, %bb.au ], [ %i.dn, %bb.av ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
+  br label %.backedge
+
+bb.aw:                                            ; preds = %bb.ab, %bb.ae, %bb.aq, %bb.as, %bb.ap, %bb.am, %bb.ak, %bb.x
+  %.8.jt1 = phi i32 [ 0, %bb.x ], [ 1, %bb.as ], [ 0, %bb.aq ], [ 1, %bb.ak ], [ 1, %bb.am ], [ %i.dl, %bb.ap ], [ 1, %bb.ae ], [ 1, %bb.ab ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   br label %.thread151
 
-bb.aw:                                            ; preds = %LzmaDec_UpdateWithUncompressed.exit, %bb.au, %bb.av
-  %.3106 = phi ptr [ %i.cp, %LzmaDec_UpdateWithUncompressed.exit ], [ %i.dn, %bb.au ], [ %i.dn, %bb.av ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
-  %.pr = load i32, ptr %i.c, align 8, !tbaa !9
-  br label %.backedge
-
-.backedge:                                        ; preds = %bb.aw, %.thread174
-  %6 = phi i32 [ %.pr, %bb.aw ], [ %.1.i, %.thread174 ] ; 2 uses
-  %.4107178 = phi ptr [ %.3106, %bb.aw ], [ %i.z, %.thread174 ]
+.backedge:                                        ; preds = %.thread180, %.thread174
+  %.4107.jt0 = phi ptr [ %.3106.jt0, %.thread180 ], [ %i.z, %.thread174 ]
+  %6 = load i32, ptr %i.c, align 8, !tbaa !9      ; 2 uses
   %.not = icmp eq i32 %6, 8
-  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !33
+  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !28
 
 ._crit_edge:                                      ; preds = %.backedge, %bb.a
   store i32 1, ptr %5, align 4, !tbaa !4
   br label %.thread151
 
-.thread151:                                       ; preds = %bb.b, %.thread180, %bb.g, %bb.d, %._crit_edge
-  %.10 = phi i32 [ 0, %bb.g ], [ 0, %._crit_edge ], [ 0, %bb.d ], [ %.8.ph, %.thread180 ], [ 1, %bb.b ]
+.thread151:                                       ; preds = %bb.b, %bb.aw, %bb.g, %bb.d, %._crit_edge
+  %.10 = phi i32 [ 0, %bb.g ], [ 0, %._crit_edge ], [ 0, %bb.d ], [ %.8.jt1, %bb.aw ], [ 1, %bb.b ]
   ret i32 %.10
 }
 
@@ -697,13 +696,13 @@ attributes #4 = { nounwind }
 !25 = !{!10, !5, i64 8}
 !26 = !{!10, !5, i64 0}
 !27 = !{!10, !5, i64 4}
-!28 = !{!11, !15, i64 24}
-!29 = !{!11, !16, i64 48}
-!30 = !{!11, !5, i64 68}
-!31 = !{!11, !5, i64 64}
-!32 = !{!11, !5, i64 12}
-!33 = distinct !{!33, !34}
-!34 = !{!"llvm.loop.mustprogress"}
+!28 = distinct !{!28, !29}
+!29 = !{!"llvm.loop.mustprogress"}
+!30 = !{!11, !15, i64 24}
+!31 = !{!11, !16, i64 48}
+!32 = !{!11, !5, i64 68}
+!33 = !{!11, !5, i64 64}
+!34 = !{!11, !5, i64 12}
 !35 = !{!10, !16, i64 56}
 !36 = !{!10, !15, i64 24}
 end_hunk_0

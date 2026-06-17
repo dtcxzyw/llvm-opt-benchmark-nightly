@@ -201,9 +201,9 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal fastcc noundef range(i32 0, 2) i32 @TIFFRewriteDirectorySec(ptr noundef %0, i32 noundef range(i32 0, 2) %1, ptr nofree noundef writeonly captures(address_is_null) %2) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca i16, align 2                      ; 7 uses
-  %i.b = alloca i32, align 4                      ; 6 uses
-  %i.c = alloca i32, align 4                      ; 4 uses
+  %i.a = alloca i16, align 2                      ; 10 uses
+  %i.b = alloca i32, align 4                      ; 9 uses
+  %i.c = alloca i32, align 4                      ; 5 uses
   %i.d = alloca i64, align 8                      ; 6 uses
   %i.e = alloca i64, align 8                      ; 6 uses
   %i.f = alloca i64, align 8                      ; 4 uses
@@ -225,7 +225,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 828 ; 3 uses
-  %i.o = load i32, ptr %i.n, align 4, !tbaa !101  ; 2 uses
+  %i.o = load i32, ptr %i.n, align 4, !tbaa !101  ; 3 uses
   %i.p = zext i32 %i.o to i64
   %i.q = icmp eq i64 %i.h, %i.p
   br i1 %i.q, label %bb.e, label %bb.g
@@ -260,27 +260,24 @@ bb.g:                                             ; preds = %bb.d
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 1200 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 1192
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 40
-  br label %3
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
+  %3 = zext i32 %i.o to i64
+  %4 = tail call i32 @_TIFFSeekOK(ptr noundef nonnull %0, i64 noundef %3) #8
+  %.not1041 = icmp eq i32 %4, 0
+  br i1 %.not1041, label %bb.q, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   tail call void (ptr, ptr, ptr, ...) @TIFFErrorExtR(ptr noundef nonnull %0, ptr noundef nonnull @TIFFRewriteDirectorySec.module, ptr noundef nonnull @.str.15) #8
   br label %.loopexit
 
-3:                                                ; preds = %.preheader, %bb.s
-  %.092 = phi i32 [ %.193, %bb.s ], [ %i.o, %.preheader ] ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
-  %4 = zext i32 %.092 to i64
-  %5 = call i32 @_TIFFSeekOK(ptr noundef nonnull %0, i64 noundef %4) #8
-  %.not104 = icmp eq i32 %5, 0
-  br i1 %.not104, label %.thread115, label %bb.i
-
-bb.i:                                             ; preds = %3
+bb.i:                                             ; preds = %.preheader, %bb.r
+  %.0922 = phi i32 [ %i.bd, %bb.r ], [ %i.o, %.preheader ]
   %i.ai = load ptr, ptr %i.ad, align 8, !tbaa !106
   %i.aj = load ptr, ptr %i.ae, align 8, !tbaa !98
   %i.ak = call i64 %i.ai(ptr noundef %i.aj, ptr noundef nonnull %i.a, i64 noundef 2) #8
   %i.al = icmp eq i64 %i.ak, 2
-  br i1 %i.al, label %bb.j, label %.thread115
+  br i1 %i.al, label %bb.j, label %bb.q
 
 bb.j:                                             ; preds = %bb.i
   %i.am = load i32, ptr %i.k, align 8, !tbaa !27
@@ -295,7 +292,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k, %bb.j
   %i.ao = load ptr, ptr %i.af, align 8, !tbaa !97
   %i.ap = load ptr, ptr %i.ae, align 8, !tbaa !98
-  %i.aq = add i32 %.092, 2                        ; 2 uses
+  %i.aq = add i32 %.0922, 2                       ; 2 uses
   %i.ar = load i16, ptr %i.a, align 2, !tbaa !44
   %i.as = zext i16 %i.ar to i32
   %i.at = mul nuw nsw i32 %i.as, 12
@@ -306,7 +303,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.ay = load ptr, ptr %i.ae, align 8, !tbaa !98
   %i.az = call i64 %i.ax(ptr noundef %i.ay, ptr noundef nonnull %i.b, i64 noundef 4) #8
   %i.ba = icmp eq i64 %i.az, 4
-  br i1 %i.ba, label %bb.m, label %.thread115
+  br i1 %i.ba, label %bb.m, label %bb.q
 
 bb.m:                                             ; preds = %bb.l
   %i.bb = load i32, ptr %i.k, align 8, !tbaa !27
@@ -319,11 +316,11 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
-  %i.bd = load i32, ptr %i.b, align 4, !tbaa !3   ; 2 uses
+  %i.bd = load i32, ptr %i.b, align 4, !tbaa !3   ; 3 uses
   %i.be = zext i32 %i.bd to i64
   %i.bf = load i64, ptr %i.g, align 8, !tbaa !96
   %i.bg = icmp eq i64 %i.bf, %i.be
-  br i1 %i.bg, label %bb.p, label %bb.s
+  br i1 %i.bg, label %bb.p, label %bb.r
 
 bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #8
@@ -340,38 +337,39 @@ bb.p:                                             ; preds = %bb.o
   %i.bq = load ptr, ptr %i.ae, align 8, !tbaa !98
   %i.br = call i64 %i.bp(ptr noundef %i.bq, ptr noundef nonnull %i.c, i64 noundef 4) #8
   %i.bs = icmp eq i64 %i.br, 4
-  br i1 %i.bs, label %bb.q, label %6
+  br i1 %i.bs, label %bb.s, label %.thread115
 
-6:                                                ; preds = %bb.p
-  call void (ptr, ptr, ptr, ...) @TIFFErrorExtR(ptr noundef nonnull %0, ptr noundef nonnull @TIFFRewriteDirectorySec.module, ptr noundef nonnull @.str.12) #8
-  br label %bb.r
-
-bb.q:                                             ; preds = %bb.p
-  store i64 0, ptr %i.g, align 8, !tbaa !96
-  store i64 0, ptr %i.ah, align 8, !tbaa !102
-  br label %bb.r
-
-bb.r:                                             ; preds = %bb.q, %6
-  %.094 = phi i32 [ 3, %bb.q ], [ 1, %6 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
-  br label %bb.s
-
-.thread115:                                       ; preds = %bb.l, %3, %bb.i
-  %.str.17.sink = phi ptr [ @.str.16, %3 ], [ @.str.16, %bb.i ], [ @.str.17, %bb.l ]
+bb.q:                                             ; preds = %bb.i, %bb.r, %bb.l, %.preheader
+  %.str.17.sink = phi ptr [ @.str.16, %.preheader ], [ @.str.16, %bb.i ], [ @.str.16, %bb.r ], [ @.str.17, %bb.l ]
   call void (ptr, ptr, ptr, ...) @TIFFErrorExtR(ptr noundef nonnull %0, ptr noundef nonnull @TIFFRewriteDirectorySec.module, ptr noundef nonnull %.str.17.sink) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   br label %.loopexit
 
-bb.s:                                             ; preds = %bb.o, %bb.r
-  %.195 = phi i32 [ %.094, %bb.r ], [ 0, %bb.o ]
-  %.193 = phi i32 [ %.092, %bb.r ], [ %i.bd, %bb.o ]
+bb.r:                                             ; preds = %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
-  switch i32 %.195, label %.loopexit [
-    i32 0, label %3
-    i32 3, label %.thread112
-  ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
+  %5 = zext i32 %i.bd to i64
+  %6 = call i32 @_TIFFSeekOK(ptr noundef nonnull %0, i64 noundef %5) #8
+  %.not104 = icmp eq i32 %6, 0
+  br i1 %.not104, label %bb.q, label %bb.i
+
+.thread115:                                       ; preds = %bb.p
+  call void (ptr, ptr, ptr, ...) @TIFFErrorExtR(ptr noundef nonnull %0, ptr noundef nonnull @TIFFRewriteDirectorySec.module, ptr noundef nonnull @.str.12) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
+  br label %.loopexit
+
+bb.s:                                             ; preds = %bb.p
+  store i64 0, ptr %i.g, align 8, !tbaa !96
+  store i64 0, ptr %i.ah, align 8, !tbaa !102
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
+  br label %.thread112
 
 bb.t:                                             ; preds = %bb.c
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 832 ; 3 uses
@@ -508,13 +506,13 @@ bb.aj:                                            ; preds = %bb.ae, %bb.ai
     i32 5, label %.thread112
   ]
 
-.thread112:                                       ; preds = %bb.aj, %bb.s, %bb.u, %bb.e
+.thread112:                                       ; preds = %bb.aj, %bb.u, %bb.e, %bb.s
   %i.dq = call i32 @_TIFFRemoveEntryFromDirectoryListByOffset(ptr noundef nonnull %0, i64 noundef %i.h) #8 ; 0 uses
   %i.dr = call fastcc i32 @TIFFWriteDirectorySec(ptr noundef nonnull %0, i32 noundef 1, i32 noundef %1, ptr noundef %2)
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.aj, %bb.s, %.thread125, %.thread115, %bb.f, %bb.h, %bb.v, %.thread112, %bb.b
-  %.7 = phi i32 [ %i.j, %bb.b ], [ %i.dr, %.thread112 ], [ 0, %bb.v ], [ 0, %bb.s ], [ 0, %bb.f ], [ 0, %bb.h ], [ 0, %.thread125 ], [ 0, %.thread115 ], [ 0, %bb.aj ]
+.loopexit:                                        ; preds = %bb.aj, %.thread115, %.thread125, %bb.q, %bb.f, %bb.h, %bb.v, %.thread112, %bb.b
+  %.7 = phi i32 [ %i.j, %bb.b ], [ %i.dr, %.thread112 ], [ 0, %bb.v ], [ 0, %.thread115 ], [ 0, %bb.f ], [ 0, %bb.h ], [ 0, %.thread125 ], [ 0, %bb.q ], [ 0, %bb.aj ]
   ret i32 %.7
 }
 

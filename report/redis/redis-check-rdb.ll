@@ -201,10 +201,10 @@ define dso_local range(i32 0, 2) i32 @redis_check_rdb(ptr noundef %0, ptr nounde
 bb.a:
   %i.a = alloca [1024 x i8], align 16             ; 7 uses
   %2 = alloca %struct.stat, align 8               ; 4 uses
-  %i.b = alloca i8, align 1                       ; 4 uses
+  %i.b = alloca i8, align 1                       ; 5 uses
   %i.c = alloca i32, align 4                      ; 4 uses
   %i.d = alloca [10 x i8], align 1                ; 5 uses
-  %i.e = alloca ptr, align 8                      ; 6 uses
+  %i.e = alloca ptr, align 8                      ; 7 uses
   %i.f = alloca i64, align 8                      ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   %i.g = tail call i64 @mstime() #13
@@ -312,8 +312,8 @@ bb.k:                                             ; preds = %bb.j
   br label %.thread152
 
 .preheader165:                                    ; preds = %bb.j, %.preheader165.backedge
-  %.079 = phi i64 [ %.079.be, %.preheader165.backedge ], [ -1, %bb.j ] ; 11 uses
-  %.078 = phi i32 [ %.078.be, %.preheader165.backedge ], [ -1, %bb.j ] ; 12 uses
+  %.079 = phi i64 [ %.079.be, %.preheader165.backedge ], [ -1, %bb.j ] ; 12 uses
+  %.078 = phi i32 [ %.078.be, %.preheader165.backedge ], [ -1, %bb.j ] ; 13 uses
   store i32 1, ptr getelementptr inbounds nuw (i8, ptr @rdbstate, i64 56), align 8, !tbaa !25
   %i.as = call i32 @rdbLoadType(ptr noundef nonnull @redis_check_rdb.rdb) #13 ; 6 uses
   switch i32 %i.as, label %bb.aq [
@@ -355,7 +355,7 @@ bb.n:                                             ; preds = %.preheader165
   %i.ba = load i64, ptr getelementptr inbounds nuw (i8, ptr @redis_check_rdb.rdb, i64 48), align 8, !tbaa !41
   %i.bb = and i64 %i.ba, 1
   %.not.i113 = icmp eq i64 %i.bb, 0
-  br i1 %.not.i113, label %.preheader.i115, label %rioRead.exit122
+  br i1 %.not.i113, label %.preheader.i115, label %select.unfold.jt2
 
 .preheader.i115:                                  ; preds = %bb.n
   %i.bc = load ptr, ptr @redis_check_rdb.rdb, align 8, !tbaa !43
@@ -367,7 +367,7 @@ bb.n:                                             ; preds = %.preheader165
   %i.bf = load i64, ptr getelementptr inbounds nuw (i8, ptr @redis_check_rdb.rdb, i64 48), align 8, !tbaa !41
   %i.bg = or i64 %i.bf, 1
   store i64 %i.bg, ptr getelementptr inbounds nuw (i8, ptr @redis_check_rdb.rdb, i64 48), align 8, !tbaa !41
-  br label %rioRead.exit122
+  br label %select.unfold.jt2
 
 bb.o:                                             ; preds = %.preheader.i115
   %i.bh = load ptr, ptr getelementptr inbounds nuw (i8, ptr @redis_check_rdb.rdb, i64 32), align 8, !tbaa !40 ; 2 uses
@@ -378,16 +378,12 @@ bb.p:                                             ; preds = %bb.o
   call void %i.bh(ptr noundef nonnull @redis_check_rdb.rdb, ptr noundef nonnull %i.b, i64 noundef 1) #13, !inline_history !44
   br label %rioRead.exit122.loopexit
 
-rioRead.exit122.loopexit:                         ; preds = %bb.o, %bb.p
+rioRead.exit122.loopexit:                         ; preds = %bb.p, %bb.o
   %i.bi = load i64, ptr getelementptr inbounds nuw (i8, ptr @redis_check_rdb.rdb, i64 56), align 8, !tbaa !23
   %i.bj = add i64 %i.bi, 1
   store i64 %i.bj, ptr getelementptr inbounds nuw (i8, ptr @redis_check_rdb.rdb, i64 56), align 8, !tbaa !23
-  br label %rioRead.exit122
-
-rioRead.exit122:                                  ; preds = %rioRead.exit122.loopexit, %.thread.i121, %bb.n
-  %3 = phi i32 [ 2, %.thread.i121 ], [ 2, %bb.n ], [ 4, %rioRead.exit122.loopexit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
-  br label %select.unfold
+  br label %.preheader165.backedge
 
 bb.q:                                             ; preds = %.preheader165
   %i.bk = call i64 @rdbLoadLen(ptr noundef nonnull @redis_check_rdb.rdb, ptr noundef null) #13
@@ -400,11 +396,6 @@ bb.r:                                             ; preds = %.preheader165
     i64 -1, label %rioRead.exit.thread
     i64 0, label %.preheader165.backedge
   ]
-
-.preheader165.backedge:                           ; preds = %bb.v, %bb.r, %bb.l, %bb.ag, %bb.x, %bb.m, %bb.q, %bb.ba, %bb.am, %bb.ac, %bb.z, %select.unfold
-  %.079.be = phi i64 [ %.079, %bb.am ], [ %.079, %bb.z ], [ %.079, %select.unfold ], [ %.079, %bb.ac ], [ %.079, %bb.r ], [ %i.au, %bb.l ], [ %.079, %bb.ag ], [ %.079, %bb.x ], [ %i.ax, %bb.m ], [ %.079, %bb.q ], [ -1, %bb.ba ], [ %.079, %bb.v ]
-  %.078.be = phi i32 [ %.078, %bb.am ], [ %.078, %bb.z ], [ %.078, %select.unfold ], [ %.078, %bb.ac ], [ %.078, %bb.r ], [ %.078, %bb.l ], [ %.078, %bb.ag ], [ %i.ch, %bb.x ], [ %.078, %bb.m ], [ %.078, %bb.q ], [ %.078, %bb.ba ], [ %.078, %bb.v ]
-  br label %.preheader165
 
 .lr.ph:                                           ; preds = %bb.r, %bb.v
   %.083176 = phi i64 [ %i.ce, %bb.v ], [ 0, %bb.r ]
@@ -487,6 +478,11 @@ bb.z:                                             ; preds = %bb.y
   %i.ck = call i64 @rdbLoadLen(ptr noundef nonnull @redis_check_rdb.rdb, ptr noundef null) #13
   %i.cl = icmp eq i64 %i.ck, -1
   br i1 %i.cl, label %rioRead.exit.thread, label %.preheader165.backedge
+
+.preheader165.backedge:                           ; preds = %bb.v, %bb.z, %bb.ac, %bb.ap, %bb.am, %bb.ba, %rioRead.exit122.loopexit, %bb.q, %bb.m, %bb.x, %bb.ag, %bb.l, %bb.r
+  %.079.be = phi i64 [ %.079, %bb.r ], [ %.079, %bb.z ], [ %.079, %bb.ac ], [ %.079, %bb.ap ], [ %.079, %bb.am ], [ -1, %bb.ba ], [ %.079, %rioRead.exit122.loopexit ], [ %.079, %bb.q ], [ %i.ax, %bb.m ], [ %.079, %bb.x ], [ %.079, %bb.ag ], [ %i.au, %bb.l ], [ %.079, %bb.v ]
+  %.078.be = phi i32 [ %.078, %bb.r ], [ %.078, %bb.z ], [ %.078, %bb.ac ], [ %.078, %bb.ap ], [ %.078, %bb.am ], [ %.078, %bb.ba ], [ %.078, %rioRead.exit122.loopexit ], [ %.078, %bb.q ], [ %.078, %bb.m ], [ %i.ch, %bb.x ], [ %.078, %bb.ag ], [ %.078, %bb.l ], [ %.078, %bb.v ]
+  br label %.preheader165
 
 bb.aa:                                            ; preds = %.preheader165
   %i.cm = call i64 @rdbLoadLen(ptr noundef nonnull @redis_check_rdb.rdb, ptr noundef null) #13
@@ -571,19 +567,11 @@ bb.ao:                                            ; preds = %.preheader165
   store i32 9, ptr getelementptr inbounds nuw (i8, ptr @rdbstate, i64 56), align 8, !tbaa !25
   %i.dh = call i32 @rdbFunctionLoad(ptr noundef nonnull @redis_check_rdb.rdb, i32 noundef %i.aq, ptr noundef null, i32 noundef 0, ptr noundef nonnull %i.e) #13
   %.not100 = icmp eq i32 %i.dh, 0
-  br i1 %.not100, label %bb.ap, label %4
+  br i1 %.not100, label %bb.ap, label %select.unfold
 
-4:                                                ; preds = %bb.ao
-  %5 = load ptr, ptr %i.e, align 8, !tbaa !26
-  call void (ptr, ...) @rdbCheckError(ptr noundef nonnull @.str.58, ptr noundef %5)
-  %6 = load ptr, ptr %i.e, align 8, !tbaa !26
-  call void @sdsfree(ptr noundef %6) #13
-  br label %bb.ap
-
-bb.ap:                                            ; preds = %bb.ao, %4
-  %.9 = phi i32 [ 3, %4 ], [ 4, %bb.ao ]
+bb.ap:                                            ; preds = %bb.ao
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #13
-  br label %select.unfold
+  br label %.preheader165.backedge
 
 bb.aq:                                            ; preds = %.preheader165
   %or.cond4 = icmp ult i32 %i.as, 8
@@ -660,13 +648,17 @@ bb.ba:                                            ; preds = %bb.az, %bb.ay, %bb.
   store i32 -1, ptr getelementptr inbounds nuw (i8, ptr @rdbstate, i64 16), align 8, !tbaa !31
   br label %.preheader165.backedge
 
-select.unfold:                                    ; preds = %bb.ap, %rioRead.exit122
-  %.10 = phi i32 [ %.9, %bb.ap ], [ %3, %rioRead.exit122 ]
-  switch i32 %.10, label %select.unfold.unreachabledefault [
-    i32 2, label %rioRead.exit.thread
-    i32 4, label %.preheader165.backedge
-    i32 3, label %.thread152
-  ]
+select.unfold.jt2:                                ; preds = %bb.n, %.thread.i121
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
+  br label %rioRead.exit.thread
+
+select.unfold:                                    ; preds = %bb.ao
+  %3 = load ptr, ptr %i.e, align 8, !tbaa !26
+  call void (ptr, ...) @rdbCheckError(ptr noundef nonnull @.str.58, ptr noundef %3)
+  %4 = load ptr, ptr %i.e, align 8, !tbaa !26
+  call void @sdsfree(ptr noundef %4) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #13
+  br label %.thread152
 
 .thread156:                                       ; preds = %.preheader165
   %i.ec = icmp sgt i32 %i.aq, 4
@@ -710,7 +702,7 @@ bb.be:                                            ; preds = %bb.bd
 bb.bf:                                            ; preds = %.thread161, %.thread156
   br i1 %i.h, label %.sink.split.sink.split, label %.sink.split
 
-rioRead.exit.thread:                              ; preds = %select.unfold, %bb.ac, %bb.z, %bb.q, %bb.ai, %bb.ah, %bb.aa, %bb.ab, %bb.y, %bb.at, %bb.ad, %bb.w, %bb.aj, %bb.as, %bb.m, %.preheader165, %bb.l, %bb.r, %rioRead.exit132.thread, %bb.af, %.thread.i, %bb.e, %.thread163
+rioRead.exit.thread:                              ; preds = %bb.ac, %bb.z, %bb.q, %bb.ai, %bb.ah, %bb.aa, %bb.ab, %bb.y, %bb.at, %bb.ad, %bb.w, %bb.aj, %bb.as, %bb.m, %.preheader165, %bb.l, %bb.r, %select.unfold.jt2, %rioRead.exit132.thread, %bb.af, %.thread.i, %bb.e, %.thread163
   %i.ek = load i32, ptr getelementptr inbounds nuw (i8, ptr @rdbstate, i64 60), align 4, !tbaa !32
   %.not105 = icmp eq i32 %i.ek, 0
   br i1 %.not105, label %bb.bh, label %bb.bg
@@ -725,9 +717,6 @@ bb.bh:                                            ; preds = %rioRead.exit.thread
 
 .thread152:                                       ; preds = %select.unfold, %bb.al, %bb.an, %bb.ar, %bb.be, %bb.bg, %bb.bh, %bb.k, %bb.i
   br i1 %i.h, label %.sink.split.sink.split, label %.sink.split
-
-select.unfold.unreachabledefault:                 ; preds = %select.unfold
-  unreachable
 
 .sink.split.sink.split:                           ; preds = %.thread152, %bb.bf
   %.sink.ph = phi i32 [ 1, %bb.bf ], [ 0, %.thread152 ]
