@@ -201,9 +201,9 @@ _ZSt9__advanceIPZNK4absl12lts_2024011616strings_internal8SplitterINS1_6ByCharENS
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZSt9__advanceIPZNK4absl12lts_2024011616strings_internal8SplitterINS1_6ByCharENS1_10AllowEmptyESt17basic_string_viewIcSt11char_traitsIcEEE18ConvertToContainerISt6vectorIS9_SaIS9_EES9_Lb0EEclERKSA_E8raw_viewlEvRT_T0_St26random_access_iterator_tag.exit
   %i.au = add i64 %i.a, %i.l
-  %i.av = add i64 %i.au, -16
-  %4 = add i64 %i.j, %i.b
-  %5 = sub i64 %i.av, %4                          ; 2 uses
+  %i.av = add i64 %i.j, %i.b
+  %4 = sub i64 %i.au, %i.av
+  %5 = add i64 %4, -16                            ; 2 uses
   %i.aw = lshr i64 %5, 4
   %i.ax = add nuw nsw i64 %i.aw, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %5, 432
@@ -422,8 +422,8 @@ _ZNSt12_Vector_baseISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE11_M_alloc
 
 _ZSt34__uninitialized_move_if_noexcept_aIPSt17basic_string_viewIcSt11char_traitsIcEES4_SaIS3_EET0_T_S7_S6_RT1_.exit: ; preds = %.lr.ph.i.i.i.i.i68, %_ZNSt12_Vector_baseISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE11_M_allocateEm.exit
   %.0.lcssa.i.i.i.i.i71 = phi ptr [ %i.df, %_ZNSt12_Vector_baseISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE11_M_allocateEm.exit ], [ %i.di, %.lr.ph.i.i.i.i.i68 ] ; 7 uses
-  %6 = add i64 %i.a, -16
-  %7 = sub i64 %6, %i.b                           ; 2 uses
+  %6 = sub i64 %i.a, %i.b
+  %7 = add i64 %6, -16                            ; 2 uses
   %i.dk = lshr i64 %7, 4
   %i.dl = add nuw nsw i64 %i.dk, 1                ; 2 uses
   %min.iters.check216 = icmp ult i64 %7, 240

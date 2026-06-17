@@ -201,8 +201,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal4wasm24CompilationEventCallbackESt14de
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal4wasm24CompilationEventCallbackESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNKSt6vectorISt10unique_ptrIN2v88internal4wasm24CompilationEventCallbackESt14default_deleteIS4_EESaIS7_EE12_M_check_lenEmPKc.exit.i
-  %2 = add i64 %i.y, -8
-  %3 = sub i64 %2, %i.z                           ; 2 uses
+  %2 = sub i64 %i.y, %i.z
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.ak = lshr i64 %3, 3
   %i.al = add nuw nsw i64 %i.ak, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -484,8 +484,8 @@ _ZNKSt6vectorIN2v88internal4wasm19WasmCompilationUnitESaIS3_EE12_M_check_lenEmPK
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %_ZNKSt6vectorIN2v88internal4wasm19WasmCompilationUnitESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i
   %i.bk = ptrtoaddr ptr %i.bg to i64
-  %4 = add i64 %i.aw, -8
-  %5 = sub i64 %4, %i.ax                          ; 2 uses
+  %4 = sub i64 %i.aw, %i.ax
+  %5 = add i64 %4, -8                             ; 2 uses
   %i.bl = lshr i64 %5, 3
   %i.bm = add nuw nsw i64 %i.bl, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %5, 24
@@ -888,8 +888,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal4wasm24CompilationEventCallbackESt14de
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal4wasm24CompilationEventCallbackESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorISt10unique_ptrIN2v88internal4wasm24CompilationEventCallbackESt14default_deleteIS4_EESaIS7_EE12_M_check_lenEmPKc.exit.i.i.i
-  %32 = add i64 %i.hz, -8
-  %33 = sub i64 %32, %i.ia                        ; 2 uses
+  %32 = sub i64 %i.hz, %i.ia
+  %33 = add i64 %32, -8                           ; 2 uses
   %i.im = lshr i64 %33, 3
   %i.in = add nuw nsw i64 %i.im, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %33, 152
@@ -1292,8 +1292,8 @@ _ZNKSt6vectorIN2v88internal4wasm19WasmCompilationUnitESaIS3_EE12_M_check_lenEmPK
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN2v88internal4wasm19WasmCompilationUnitESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.bq = ptrtoaddr ptr %i.bm to i64
-  %4 = add i64 %i.bc, -8
-  %5 = sub i64 %4, %i.bd                          ; 2 uses
+  %4 = sub i64 %i.bc, %i.bd
+  %5 = add i64 %4, -8                             ; 2 uses
   %i.br = lshr i64 %5, 3
   %i.bs = add nuw nsw i64 %i.br, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %5, 24
@@ -1498,8 +1498,8 @@ _ZNKSt6vectorIN2v88internal4wasm19WasmCompilationUnitESaIS3_EE12_M_check_lenEmPK
 
 .lr.ph.i.i.i.i.i.i63.preheader:                   ; preds = %_ZNKSt6vectorIN2v88internal4wasm19WasmCompilationUnitESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i59
   %i.ej = ptrtoaddr ptr %i.ef to i64
-  %6 = add i64 %i.dv, -8
-  %7 = sub i64 %6, %i.dw                          ; 2 uses
+  %6 = sub i64 %i.dv, %i.dw
+  %7 = add i64 %6, -8                             ; 2 uses
   %i.ek = lshr i64 %7, 3
   %i.el = add nuw nsw i64 %i.ek, 1                ; 2 uses
   %min.iters.check140 = icmp ult i64 %7, 24
@@ -1902,8 +1902,8 @@ _ZNKSt6vectorIN2v88internal4wasm19WasmCompilationUnitESaIS3_EE12_M_check_lenEmPK
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN2v88internal4wasm19WasmCompilationUnitESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.am = ptrtoaddr ptr %i.ai to i64
-  %2 = add i64 %i.y, -8
-  %3 = sub i64 %2, %i.z                           ; 2 uses
+  %2 = sub i64 %i.y, %i.z
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.an = lshr i64 %3, 3
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 56
@@ -2034,8 +2034,8 @@ _ZNKSt6vectorIN2v88internal4wasm19WasmCompilationUnitESaIS3_EE12_M_check_lenEmPK
 
 .lr.ph.i.i.i.i.i.i22.preheader:                   ; preds = %_ZNKSt6vectorIN2v88internal4wasm19WasmCompilationUnitESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i18
   %i.cb = ptrtoaddr ptr %i.bx to i64
-  %4 = add i64 %i.bn, -8
-  %5 = sub i64 %4, %i.bo                          ; 2 uses
+  %4 = sub i64 %i.bn, %i.bo
+  %5 = add i64 %4, -8                             ; 2 uses
   %i.cc = lshr i64 %5, 3
   %i.cd = add nuw nsw i64 %i.cc, 1                ; 2 uses
   %min.iters.check20 = icmp ult i64 %5, 56
@@ -2438,8 +2438,8 @@ _ZNKSt6vectorIN2v88internal4wasm19WasmCompilationUnitESaIS3_EE12_M_check_lenEmPK
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN2v88internal4wasm19WasmCompilationUnitESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.ca = ptrtoaddr ptr %i.by to i64
-  %6 = add i64 %i.bo, -8
-  %7 = sub i64 %6, %i.bp                          ; 2 uses
+  %6 = sub i64 %i.bo, %i.bp
+  %7 = add i64 %6, -8                             ; 2 uses
   %i.cb = lshr i64 %7, 3
   %i.cc = add nuw nsw i64 %i.cb, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %7, 24
@@ -2842,8 +2842,8 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %.idx = sub i64 0, %i.e
   %i.r = getelementptr inbounds i8, ptr %i.j, i64 %.idx ; 4 uses
-  %4 = add i64 %i.c, -8
-  %5 = sub i64 %4, %i.d                           ; 2 uses
+  %4 = sub i64 %i.c, %i.d
+  %5 = add i64 %4, -8                             ; 2 uses
   %i.s = lshr i64 %5, 3
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
   %min.iters.check124 = icmp ult i64 %5, 56
@@ -2941,9 +2941,9 @@ _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN2v88internal4wasm19WasmCompilati
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN2v88internal4wasm19WasmCompilationUnitESt6vectorIS5_SaIS5_EEEElEvRT_T0_St26random_access_iterator_tag.exit
   %i.au = add i64 %i.c, %i.n
-  %i.av = add i64 %i.au, -8
-  %6 = add i64 %i.l, %i.d
-  %7 = sub i64 %i.av, %6                          ; 2 uses
+  %i.av = add i64 %i.l, %i.d
+  %6 = sub i64 %i.au, %i.av
+  %7 = add i64 %6, -8                             ; 2 uses
   %i.aw = lshr i64 %7, 3
   %i.ax = add nuw nsw i64 %i.aw, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %7, 56
@@ -3007,8 +3007,8 @@ _ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPN2v88internal4wasm1
   br i1 %i.bo, label %_ZSt22__uninitialized_move_aIPN2v88internal4wasm19WasmCompilationUnitES4_SaIS3_EET0_T_S7_S6_RT1_.exit47, label %.lr.ph.i.i.i.i.i43.preheader
 
 .lr.ph.i.i.i.i.i43.preheader:                     ; preds = %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPN2v88internal4wasm19WasmCompilationUnitESt6vectorIS5_SaIS5_EEEES6_S5_ET0_T_SC_SB_RSaIT1_E.exit
-  %8 = add i64 %i.l, -8
-  %9 = sub i64 %8, %i.n                           ; 2 uses
+  %8 = sub i64 %i.l, %i.n
+  %9 = add i64 %8, -8                             ; 2 uses
   %i.bp = lshr i64 %9, 3
   %i.bq = add nuw nsw i64 %i.bp, 1                ; 2 uses
   %min.iters.check106 = icmp ult i64 %9, 104
@@ -3171,8 +3171,8 @@ middle.block153:                                  ; preds = %vector.body146
 
 _ZSt34__uninitialized_move_if_noexcept_aIPN2v88internal4wasm19WasmCompilationUnitES4_SaIS3_EET0_T_S7_S6_RT1_.exit: ; preds = %.lr.ph.i.i.i.i.i49, %middle.block153, %_ZNSt12_Vector_baseIN2v88internal4wasm19WasmCompilationUnitESaIS3_EE11_M_allocateEm.exit
   %.0.lcssa.i.i.i.i.i52 = phi ptr [ %i.cu, %_ZNSt12_Vector_baseIN2v88internal4wasm19WasmCompilationUnitESaIS3_EE11_M_allocateEm.exit ], [ %i.dd, %middle.block153 ], [ %i.dl, %.lr.ph.i.i.i.i.i49 ] ; 4 uses
-  %10 = add i64 %i.c, -8
-  %11 = sub i64 %10, %i.d                         ; 2 uses
+  %10 = sub i64 %i.c, %i.d
+  %11 = add i64 %10, -8                           ; 2 uses
   %i.dn = lshr i64 %11, 3
   %i.do = add nuw nsw i64 %i.dn, 1                ; 2 uses
   %min.iters.check161 = icmp ult i64 %11, 56
@@ -3575,8 +3575,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal4wasm24CompilationEventCallbackESt14de
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal4wasm24CompilationEventCallbackESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNKSt6vectorISt10unique_ptrIN2v88internal4wasm24CompilationEventCallbackESt14default_deleteIS4_EESaIS7_EE12_M_check_lenEmPKc.exit.i
-  %6 = add i64 %i.cx, -8
-  %7 = sub i64 %6, %i.cy                          ; 2 uses
+  %6 = sub i64 %i.cx, %i.cy
+  %7 = add i64 %6, -8                             ; 2 uses
   %i.dk = lshr i64 %7, 3
   %i.dl = add nuw nsw i64 %i.dk, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %7, 152
@@ -3851,8 +3851,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal4wasm24CompilationEventCallbackESt14de
   br i1 %.not10.i.i.i.i46, label %_ZNSt6vectorISt10unique_ptrIN2v88internal4wasm24CompilationEventCallbackESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i58, label %.lr.ph.i.i.i.i47.preheader
 
 .lr.ph.i.i.i.i47.preheader:                       ; preds = %_ZNKSt6vectorISt10unique_ptrIN2v88internal4wasm24CompilationEventCallbackESt14default_deleteIS4_EESaIS7_EE12_M_check_lenEmPKc.exit.i43
-  %8 = add i64 %i.go, -8
-  %9 = sub i64 %8, %i.gp                          ; 2 uses
+  %8 = sub i64 %i.go, %i.gp
+  %9 = add i64 %8, -8                             ; 2 uses
   %i.hb = lshr i64 %9, 3
   %i.hc = add nuw nsw i64 %i.hb, 1                ; 2 uses
   %min.iters.check129 = icmp ult i64 %9, 152

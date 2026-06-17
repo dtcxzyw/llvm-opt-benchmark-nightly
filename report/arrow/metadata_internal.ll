@@ -201,8 +201,8 @@ _ZNKSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7f
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc54
   %i.al = ptrtoaddr ptr %i.ai to i64
-  %10 = add i64 %i.y, -4
-  %11 = sub i64 %10, %i.z                         ; 2 uses
+  %10 = sub i64 %i.y, %i.z
+  %11 = add i64 %10, -4                           ; 2 uses
   %i.am = lshr i64 %11, 2
   %i.an = add nuw nsw i64 %i.am, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %11, 28
@@ -605,8 +605,8 @@ _ZNKSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7f
 
 .lr.ph.i.i.i.i.i.i69.preheader:                   ; preds = %.noexc71
   %i.fw = ptrtoaddr ptr %i.fu to i64
-  %12 = add i64 %i.fk, -4
-  %13 = sub i64 %12, %i.fl                        ; 2 uses
+  %12 = sub i64 %i.fk, %i.fl
+  %13 = add i64 %12, -4                           ; 2 uses
   %i.fx = lshr i64 %13, 2
   %i.fy = add nuw nsw i64 %i.fx, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %13, 28
@@ -1009,8 +1009,8 @@ _ZNKSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7f
 
 .lr.ph.i.i.i.i.i.i70.i.preheader:                 ; preds = %.noexc72.i
   %i.eo = ptrtoaddr ptr %i.em to i64
-  %21 = add i64 %i.ec, -4
-  %22 = sub i64 %21, %i.ed                        ; 2 uses
+  %21 = sub i64 %i.ec, %i.ed
+  %22 = add i64 %21, -4                           ; 2 uses
   %i.ep = lshr i64 %22, 2
   %i.eq = add nuw nsw i64 %i.ep, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %22, 28
@@ -1413,8 +1413,8 @@ _ZNKSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7f
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.noexc90
   %i.dy = ptrtoaddr ptr %i.dw to i64
-  %9 = add i64 %i.dm, -4
-  %10 = sub i64 %9, %i.dn                         ; 2 uses
+  %9 = sub i64 %i.dm, %i.dn
+  %10 = add i64 %9, -4                            ; 2 uses
   %i.dz = lshr i64 %10, 2
   %i.ea = add nuw nsw i64 %i.dz, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %10, 28
@@ -1817,8 +1817,8 @@ _ZNKSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7f
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf8KeyValueEEESaIS8_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.bl = ptrtoaddr ptr %i.bj to i64
-  %3 = add i64 %i.az, -4
-  %4 = sub i64 %3, %i.ba                          ; 2 uses
+  %3 = sub i64 %i.az, %i.ba
+  %4 = add i64 %3, -4                             ; 2 uses
   %i.bm = lshr i64 %4, 2
   %i.bn = add nuw nsw i64 %i.bm, 1                ; 2 uses
   %min.iters.check28 = icmp ult i64 %4, 28
@@ -2221,8 +2221,8 @@ _ZNKSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7f
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc28
   %i.az = ptrtoaddr ptr %i.aw to i64
-  %6 = add i64 %i.am, -4
-  %7 = sub i64 %6, %i.an                          ; 2 uses
+  %6 = sub i64 %i.am, %i.an
+  %7 = add i64 %6, -4                             ; 2 uses
   %i.ba = lshr i64 %7, 2
   %i.bb = add nuw nsw i64 %i.ba, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %7, 28

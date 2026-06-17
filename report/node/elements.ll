@@ -201,9 +201,9 @@ bb.a:
   %i.h = load i64, ptr %i.g, align 8
   %i.i = add i64 %i.h, %i.e
   %i.j = inttoptr i64 %i.i to ptr                 ; 2 uses
-  %.idx19.i = shl i64 %4, 2                       ; 5 uses
+  %.idx19.i = shl nuw nsw i64 %4, 2               ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx19.i ; 5 uses
-  %.idx.i = shl i64 %5, 2                         ; 5 uses
+  %.idx.i = shl i64 %5, 2                         ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx.i ; 2 uses
   %i.m = add i64 %i.b, 31
   %i.n = inttoptr i64 %i.m to ptr
@@ -242,11 +242,11 @@ bb.d:                                             ; preds = %bb.b
   br i1 %.not5.i.i.i.i, label %_ZN2v88internal12_GLOBAL__N_121TypedElementsAccessorILNS0_12ElementsKindE22EE8FillImplEPNS0_7IsolateENS0_12DirectHandleINS0_8JSObjectEEENS7_INS0_6ObjectEEEmm.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.d
-  %6 = add i64 %.idx.i, -4
-  %7 = sub i64 %6, %.idx19.i                      ; 2 uses
-  %8 = lshr exact i64 %7, 2
+  %6 = sub i64 %5, %4
+  %7 = add i64 %6, 4611686018427387903
+  %8 = and i64 %7, 4611686018427387903            ; 2 uses
   %i.w = add nuw nsw i64 %8, 1                    ; 2 uses
-  %min.iters.check = icmp ult i64 %7, 28
+  %min.iters.check = icmp samesign ult i64 %8, 7
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader10, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.preheader
@@ -649,9 +649,9 @@ bb.a:
   %i.h = load i64, ptr %i.g, align 8
   %i.i = add i64 %i.h, %i.e
   %i.j = inttoptr i64 %i.i to ptr                 ; 2 uses
-  %.idx19.i = shl i64 %4, 2                       ; 5 uses
+  %.idx19.i = shl nuw nsw i64 %4, 2               ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx19.i ; 5 uses
-  %.idx.i = shl i64 %5, 2                         ; 5 uses
+  %.idx.i = shl i64 %5, 2                         ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx.i ; 2 uses
   %i.m = add i64 %i.b, 31
   %i.n = inttoptr i64 %i.m to ptr
@@ -690,11 +690,11 @@ bb.d:                                             ; preds = %bb.b
   br i1 %.not5.i.i.i.i, label %_ZN2v88internal12_GLOBAL__N_121TypedElementsAccessorILNS0_12ElementsKindE23EE8FillImplEPNS0_7IsolateENS0_12DirectHandleINS0_8JSObjectEEENS7_INS0_6ObjectEEEmm.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.d
-  %6 = add i64 %.idx.i, -4
-  %7 = sub i64 %6, %.idx19.i                      ; 2 uses
-  %8 = lshr exact i64 %7, 2
+  %6 = sub i64 %5, %4
+  %7 = add i64 %6, 4611686018427387903
+  %8 = and i64 %7, 4611686018427387903            ; 2 uses
   %i.w = add nuw nsw i64 %8, 1                    ; 2 uses
-  %min.iters.check = icmp ult i64 %7, 28
+  %min.iters.check = icmp samesign ult i64 %8, 7
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader10, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.preheader
@@ -1097,9 +1097,9 @@ bb.a:
   %i.j = load i64, ptr %i.i, align 8
   %i.k = add i64 %i.j, %i.g                       ; 2 uses
   %i.l = inttoptr i64 %i.k to ptr                 ; 2 uses
-  %.idx19.i = shl i64 %4, 3                       ; 5 uses
+  %.idx19.i = shl nuw nsw i64 %4, 3               ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx19.i ; 6 uses
-  %.idx.i = shl i64 %5, 3                         ; 5 uses
+  %.idx.i = shl i64 %5, 3                         ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx.i ; 3 uses
   %i.o = add i64 %i.d, 31
   %i.p = inttoptr i64 %i.o to ptr
@@ -1155,11 +1155,11 @@ bb.d:                                             ; preds = %bb.b
   br i1 %.not5.i.i.i.i, label %_ZN2v88internal12_GLOBAL__N_121TypedElementsAccessorILNS0_12ElementsKindE24EE8FillImplEPNS0_7IsolateENS0_12DirectHandleINS0_8JSObjectEEENS7_INS0_6ObjectEEEmm.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.d
-  %6 = add i64 %.idx.i, -8
-  %7 = sub i64 %6, %.idx19.i                      ; 2 uses
-  %8 = lshr exact i64 %7, 3
+  %6 = sub i64 %5, %4
+  %7 = add i64 %6, 2305843009213693951
+  %8 = and i64 %7, 2305843009213693951            ; 2 uses
   %i.ac = add nuw nsw i64 %8, 1                   ; 2 uses
-  %min.iters.check = icmp ult i64 %7, 24
+  %min.iters.check = icmp samesign ult i64 %8, 3
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader13, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.preheader
@@ -1562,9 +1562,9 @@ bb.a:
   %i.j = load i64, ptr %i.i, align 8
   %i.k = add i64 %i.j, %i.g                       ; 2 uses
   %i.l = inttoptr i64 %i.k to ptr                 ; 2 uses
-  %.idx19.i = shl i64 %4, 3                       ; 5 uses
+  %.idx19.i = shl nuw nsw i64 %4, 3               ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx19.i ; 6 uses
-  %.idx.i = shl i64 %5, 3                         ; 5 uses
+  %.idx.i = shl i64 %5, 3                         ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx.i ; 3 uses
   %i.o = add i64 %i.d, 31
   %i.p = inttoptr i64 %i.o to ptr
@@ -1620,11 +1620,11 @@ bb.d:                                             ; preds = %bb.b
   br i1 %.not5.i.i.i.i, label %_ZN2v88internal12_GLOBAL__N_121TypedElementsAccessorILNS0_12ElementsKindE25EE8FillImplEPNS0_7IsolateENS0_12DirectHandleINS0_8JSObjectEEENS7_INS0_6ObjectEEEmm.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.d
-  %6 = add i64 %.idx.i, -8
-  %7 = sub i64 %6, %.idx19.i                      ; 2 uses
-  %8 = lshr exact i64 %7, 3
+  %6 = sub i64 %5, %4
+  %7 = add i64 %6, 2305843009213693951
+  %8 = and i64 %7, 2305843009213693951            ; 2 uses
   %i.ac = add nuw nsw i64 %8, 1                   ; 2 uses
-  %min.iters.check = icmp ult i64 %7, 24
+  %min.iters.check = icmp samesign ult i64 %8, 3
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader13, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.preheader
@@ -2027,9 +2027,9 @@ _ZN2v88internal12_GLOBAL__N_121TypedElementsAccessorILNS0_12ElementsKindE27EE10F
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = add i64 %i.ac, %i.z                     ; 2 uses
   %i.ae = inttoptr i64 %i.ad to ptr               ; 2 uses
-  %.idx19.i = shl i64 %4, 2                       ; 5 uses
+  %.idx19.i = shl nuw nsw i64 %4, 2               ; 4 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 %.idx19.i ; 6 uses
-  %.idx.i = shl i64 %5, 2                         ; 5 uses
+  %.idx.i = shl i64 %5, 2                         ; 4 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 %.idx.i ; 3 uses
   %i.ah = add i64 %i.w, 31
   %i.ai = inttoptr i64 %i.ah to ptr
@@ -2084,11 +2084,11 @@ bb.q:                                             ; preds = %bb.o, %bb.n
   br i1 %.not6.i.i.i.i, label %_ZN2v88internal12_GLOBAL__N_121TypedElementsAccessorILNS0_12ElementsKindE27EE8FillImplEPNS0_7IsolateENS0_12DirectHandleINS0_8JSObjectEEENS7_INS0_6ObjectEEEmm.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.q
-  %6 = add i64 %.idx.i, -4
-  %7 = sub i64 %6, %.idx19.i                      ; 2 uses
-  %8 = lshr exact i64 %7, 2
+  %6 = sub i64 %5, %4
+  %7 = add i64 %6, 4611686018427387903
+  %8 = and i64 %7, 4611686018427387903            ; 2 uses
   %i.aw = add nuw nsw i64 %8, 1                   ; 2 uses
-  %min.iters.check = icmp ult i64 %7, 28
+  %min.iters.check = icmp samesign ult i64 %8, 7
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader13, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.preheader
@@ -2491,9 +2491,9 @@ _ZN2v88internal12_GLOBAL__N_121TypedElementsAccessorILNS0_12ElementsKindE28EE10F
   %i.s = load i64, ptr %i.r, align 8
   %i.t = add i64 %i.s, %i.p                       ; 2 uses
   %i.u = inttoptr i64 %i.t to ptr                 ; 2 uses
-  %.idx19.i = shl i64 %4, 3                       ; 5 uses
+  %.idx19.i = shl nuw nsw i64 %4, 3               ; 4 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %.idx19.i ; 6 uses
-  %.idx.i = shl i64 %5, 3                         ; 5 uses
+  %.idx.i = shl i64 %5, 3                         ; 4 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.u, i64 %.idx.i ; 3 uses
   %i.x = add i64 %i.m, 31
   %i.y = inttoptr i64 %i.x to ptr
@@ -2552,11 +2552,11 @@ bb.f:                                             ; preds = %bb.d, %bb.c
   br i1 %.not6.i.i.i.i, label %_ZN2v88internal12_GLOBAL__N_121TypedElementsAccessorILNS0_12ElementsKindE28EE8FillImplEPNS0_7IsolateENS0_12DirectHandleINS0_8JSObjectEEENS7_INS0_6ObjectEEEmm.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.f
-  %6 = add i64 %.idx.i, -8
-  %7 = sub i64 %6, %.idx19.i                      ; 2 uses
-  %8 = lshr exact i64 %7, 3
+  %6 = sub i64 %5, %4
+  %7 = add i64 %6, 2305843009213693951
+  %8 = and i64 %7, 2305843009213693951            ; 2 uses
   %i.am = add nuw nsw i64 %8, 1                   ; 2 uses
-  %min.iters.check = icmp ult i64 %7, 24
+  %min.iters.check = icmp samesign ult i64 %8, 3
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader13, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.preheader
@@ -2959,9 +2959,9 @@ bb.a:
   %i.h = load i64, ptr %i.g, align 8
   %i.i = add i64 %i.h, %i.e
   %i.j = inttoptr i64 %i.i to ptr                 ; 2 uses
-  %.idx19.i = shl i64 %4, 2                       ; 5 uses
+  %.idx19.i = shl nuw nsw i64 %4, 2               ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx19.i ; 5 uses
-  %.idx.i = shl i64 %5, 2                         ; 5 uses
+  %.idx.i = shl i64 %5, 2                         ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx.i ; 2 uses
   %i.m = add i64 %i.b, 31
   %i.n = inttoptr i64 %i.m to ptr
@@ -3000,11 +3000,11 @@ bb.d:                                             ; preds = %bb.b
   br i1 %.not5.i.i.i.i, label %_ZN2v88internal12_GLOBAL__N_121TypedElementsAccessorILNS0_12ElementsKindE34EE8FillImplEPNS0_7IsolateENS0_12DirectHandleINS0_8JSObjectEEENS7_INS0_6ObjectEEEmm.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.d
-  %6 = add i64 %.idx.i, -4
-  %7 = sub i64 %6, %.idx19.i                      ; 2 uses
-  %8 = lshr exact i64 %7, 2
+  %6 = sub i64 %5, %4
+  %7 = add i64 %6, 4611686018427387903
+  %8 = and i64 %7, 4611686018427387903            ; 2 uses
   %i.w = add nuw nsw i64 %8, 1                    ; 2 uses
-  %min.iters.check = icmp ult i64 %7, 28
+  %min.iters.check = icmp samesign ult i64 %8, 7
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader10, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.preheader
@@ -3407,9 +3407,9 @@ bb.a:
   %i.h = load i64, ptr %i.g, align 8
   %i.i = add i64 %i.h, %i.e
   %i.j = inttoptr i64 %i.i to ptr                 ; 2 uses
-  %.idx19.i = shl i64 %4, 2                       ; 5 uses
+  %.idx19.i = shl nuw nsw i64 %4, 2               ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx19.i ; 5 uses
-  %.idx.i = shl i64 %5, 2                         ; 5 uses
+  %.idx.i = shl i64 %5, 2                         ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx.i ; 2 uses
   %i.m = add i64 %i.b, 31
   %i.n = inttoptr i64 %i.m to ptr
@@ -3448,11 +3448,11 @@ bb.d:                                             ; preds = %bb.b
   br i1 %.not5.i.i.i.i, label %_ZN2v88internal12_GLOBAL__N_121TypedElementsAccessorILNS0_12ElementsKindE35EE8FillImplEPNS0_7IsolateENS0_12DirectHandleINS0_8JSObjectEEENS7_INS0_6ObjectEEEmm.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.d
-  %6 = add i64 %.idx.i, -4
-  %7 = sub i64 %6, %.idx19.i                      ; 2 uses
-  %8 = lshr exact i64 %7, 2
+  %6 = sub i64 %5, %4
+  %7 = add i64 %6, 4611686018427387903
+  %8 = and i64 %7, 4611686018427387903            ; 2 uses
   %i.w = add nuw nsw i64 %8, 1                    ; 2 uses
-  %min.iters.check = icmp ult i64 %7, 28
+  %min.iters.check = icmp samesign ult i64 %8, 7
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader10, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.preheader
@@ -3855,9 +3855,9 @@ bb.a:
   %i.j = load i64, ptr %i.i, align 8
   %i.k = add i64 %i.j, %i.g                       ; 2 uses
   %i.l = inttoptr i64 %i.k to ptr                 ; 2 uses
-  %.idx19.i = shl i64 %4, 3                       ; 5 uses
+  %.idx19.i = shl nuw nsw i64 %4, 3               ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx19.i ; 6 uses
-  %.idx.i = shl i64 %5, 3                         ; 5 uses
+  %.idx.i = shl i64 %5, 3                         ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx.i ; 3 uses
   %i.o = add i64 %i.d, 31
   %i.p = inttoptr i64 %i.o to ptr
@@ -3913,11 +3913,11 @@ bb.d:                                             ; preds = %bb.b
   br i1 %.not5.i.i.i.i, label %_ZN2v88internal12_GLOBAL__N_121TypedElementsAccessorILNS0_12ElementsKindE36EE8FillImplEPNS0_7IsolateENS0_12DirectHandleINS0_8JSObjectEEENS7_INS0_6ObjectEEEmm.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.d
-  %6 = add i64 %.idx.i, -8
-  %7 = sub i64 %6, %.idx19.i                      ; 2 uses
-  %8 = lshr exact i64 %7, 3
+  %6 = sub i64 %5, %4
+  %7 = add i64 %6, 2305843009213693951
+  %8 = and i64 %7, 2305843009213693951            ; 2 uses
   %i.ac = add nuw nsw i64 %8, 1                   ; 2 uses
-  %min.iters.check = icmp ult i64 %7, 24
+  %min.iters.check = icmp samesign ult i64 %8, 3
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader13, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.preheader
@@ -4320,9 +4320,9 @@ bb.a:
   %i.j = load i64, ptr %i.i, align 8
   %i.k = add i64 %i.j, %i.g                       ; 2 uses
   %i.l = inttoptr i64 %i.k to ptr                 ; 2 uses
-  %.idx19.i = shl i64 %4, 3                       ; 5 uses
+  %.idx19.i = shl nuw nsw i64 %4, 3               ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx19.i ; 6 uses
-  %.idx.i = shl i64 %5, 3                         ; 5 uses
+  %.idx.i = shl i64 %5, 3                         ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx.i ; 3 uses
   %i.o = add i64 %i.d, 31
   %i.p = inttoptr i64 %i.o to ptr
@@ -4378,11 +4378,11 @@ bb.d:                                             ; preds = %bb.b
   br i1 %.not5.i.i.i.i, label %_ZN2v88internal12_GLOBAL__N_121TypedElementsAccessorILNS0_12ElementsKindE37EE8FillImplEPNS0_7IsolateENS0_12DirectHandleINS0_8JSObjectEEENS7_INS0_6ObjectEEEmm.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.d
-  %6 = add i64 %.idx.i, -8
-  %7 = sub i64 %6, %.idx19.i                      ; 2 uses
-  %8 = lshr exact i64 %7, 3
+  %6 = sub i64 %5, %4
+  %7 = add i64 %6, 2305843009213693951
+  %8 = and i64 %7, 2305843009213693951            ; 2 uses
   %i.ac = add nuw nsw i64 %8, 1                   ; 2 uses
-  %min.iters.check = icmp ult i64 %7, 24
+  %min.iters.check = icmp samesign ult i64 %8, 3
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader13, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.preheader
@@ -4785,9 +4785,9 @@ _ZN2v88internal12_GLOBAL__N_121TypedElementsAccessorILNS0_12ElementsKindE39EE10F
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = add i64 %i.ac, %i.z                     ; 2 uses
   %i.ae = inttoptr i64 %i.ad to ptr               ; 2 uses
-  %.idx19.i = shl i64 %4, 2                       ; 5 uses
+  %.idx19.i = shl nuw nsw i64 %4, 2               ; 4 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 %.idx19.i ; 6 uses
-  %.idx.i = shl i64 %5, 2                         ; 5 uses
+  %.idx.i = shl i64 %5, 2                         ; 4 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 %.idx.i ; 3 uses
   %i.ah = add i64 %i.w, 31
   %i.ai = inttoptr i64 %i.ah to ptr
@@ -4842,11 +4842,11 @@ bb.q:                                             ; preds = %bb.o, %bb.n
   br i1 %.not6.i.i.i.i, label %_ZN2v88internal12_GLOBAL__N_121TypedElementsAccessorILNS0_12ElementsKindE39EE8FillImplEPNS0_7IsolateENS0_12DirectHandleINS0_8JSObjectEEENS7_INS0_6ObjectEEEmm.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.q
-  %6 = add i64 %.idx.i, -4
-  %7 = sub i64 %6, %.idx19.i                      ; 2 uses
-  %8 = lshr exact i64 %7, 2
+  %6 = sub i64 %5, %4
+  %7 = add i64 %6, 4611686018427387903
+  %8 = and i64 %7, 4611686018427387903            ; 2 uses
   %i.aw = add nuw nsw i64 %8, 1                   ; 2 uses
-  %min.iters.check = icmp ult i64 %7, 28
+  %min.iters.check = icmp samesign ult i64 %8, 7
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader13, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.preheader
@@ -5249,9 +5249,9 @@ _ZN2v88internal12_GLOBAL__N_121TypedElementsAccessorILNS0_12ElementsKindE40EE10F
   %i.s = load i64, ptr %i.r, align 8
   %i.t = add i64 %i.s, %i.p                       ; 2 uses
   %i.u = inttoptr i64 %i.t to ptr                 ; 2 uses
-  %.idx19.i = shl i64 %4, 3                       ; 5 uses
+  %.idx19.i = shl nuw nsw i64 %4, 3               ; 4 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %.idx19.i ; 6 uses
-  %.idx.i = shl i64 %5, 3                         ; 5 uses
+  %.idx.i = shl i64 %5, 3                         ; 4 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.u, i64 %.idx.i ; 3 uses
   %i.x = add i64 %i.m, 31
   %i.y = inttoptr i64 %i.x to ptr
@@ -5310,11 +5310,11 @@ bb.f:                                             ; preds = %bb.d, %bb.c
   br i1 %.not6.i.i.i.i, label %_ZN2v88internal12_GLOBAL__N_121TypedElementsAccessorILNS0_12ElementsKindE40EE8FillImplEPNS0_7IsolateENS0_12DirectHandleINS0_8JSObjectEEENS7_INS0_6ObjectEEEmm.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.f
-  %6 = add i64 %.idx.i, -8
-  %7 = sub i64 %6, %.idx19.i                      ; 2 uses
-  %8 = lshr exact i64 %7, 3
+  %6 = sub i64 %5, %4
+  %7 = add i64 %6, 2305843009213693951
+  %8 = and i64 %7, 2305843009213693951            ; 2 uses
   %i.am = add nuw nsw i64 %8, 1                   ; 2 uses
-  %min.iters.check = icmp ult i64 %7, 24
+  %min.iters.check = icmp samesign ult i64 %8, 3
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader13, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.preheader

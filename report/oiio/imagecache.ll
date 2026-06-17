@@ -201,8 +201,8 @@ _ZNKSt6vectorISt10unique_ptrIN11OpenImageIO4v3_19ImageSpecESt14default_deleteIS3
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN11OpenImageIO4v3_19ImageSpecESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc14
-  %4 = add i64 %i.w, -8
-  %5 = sub i64 %4, %i.x                           ; 2 uses
+  %4 = sub i64 %i.w, %i.x
+  %5 = add i64 %4, -8                             ; 2 uses
   %i.ai = lshr i64 %5, 3
   %i.aj = add nuw nsw i64 %i.ai, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %5, 152
@@ -553,8 +553,8 @@ _ZNKSt6vectorISt10unique_ptrIN11OpenImageIO4v3_114ImageCacheFile9ImageDimsESt14d
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN11OpenImageIO4v3_114ImageCacheFile9ImageDimsESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc15
-  %4 = add i64 %i.l, -8
-  %5 = sub i64 %4, %i.m                           ; 2 uses
+  %4 = sub i64 %i.l, %i.m
+  %5 = add i64 %4, -8                             ; 2 uses
   %i.y = lshr i64 %5, 3
   %i.z = add nuw nsw i64 %i.y, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %5, 152
@@ -957,8 +957,8 @@ _ZNKSt6vectorISt10unique_ptrIN11OpenImageIO4v3_123ImageCachePerThreadInfoESt14de
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN11OpenImageIO4v3_123ImageCachePerThreadInfoESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc9
-  %4 = add i64 %i.ao, -8
-  %5 = sub i64 %4, %i.ap                          ; 2 uses
+  %4 = sub i64 %i.ao, %i.ap
+  %5 = add i64 %4, -8                             ; 2 uses
   %i.ba = lshr i64 %5, 3
   %i.bb = add nuw nsw i64 %i.ba, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %5, 152
@@ -1361,8 +1361,8 @@ _ZNSt16allocator_traitsISaIN11OpenImageIO4v3_113intrusive_ptrINS1_14ImageCacheFi
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorIN11OpenImageIO4v3_113intrusive_ptrINS1_14ImageCacheFileEEESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit33.i, label %.lr.ph.i.i.i.i666.preheader
 
 .lr.ph.i.i.i.i666.preheader:                      ; preds = %_ZNSt16allocator_traitsISaIN11OpenImageIO4v3_113intrusive_ptrINS1_14ImageCacheFileEEEEE9constructIS4_JRKS4_EEEvRS5_PT_DpOT0_.exit.i
-  %60 = add i64 %i.ft, -8
-  %61 = sub i64 %60, %i.fu                        ; 2 uses
+  %60 = sub i64 %i.ft, %i.fu
+  %61 = add i64 %60, -8                           ; 2 uses
   %i.gh = lshr i64 %61, 3
   %i.gi = add nuw nsw i64 %i.gh, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %61, 56
@@ -1765,8 +1765,8 @@ _ZNKSt6vectorIN11OpenImageIO4v3_17ustringESaIS2_EE12_M_check_lenEmPKc.exit.i.i: 
 
 .lr.ph.i.i.i.i.i106.preheader:                    ; preds = %.noexc108
   %i.ds = ptrtoaddr ptr %i.dp to i64
-  %11 = add i64 %i.df, -8
-  %12 = sub i64 %11, %i.dg                        ; 2 uses
+  %11 = sub i64 %i.df, %i.dg
+  %12 = add i64 %11, -8                           ; 2 uses
   %i.dt = lshr i64 %12, 3
   %i.du = add nuw nsw i64 %i.dt, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %12, 24
@@ -1931,8 +1931,8 @@ _ZNKSt6vectorIN11OpenImageIO4v3_17ustringESaIS2_EE12_M_check_lenEmPKc.exit.i.i11
 
 .lr.ph.i.i.i.i.i117.preheader:                    ; preds = %.noexc126
   %i.fo = ptrtoaddr ptr %i.fl to i64
-  %13 = add i64 %i.fb, -8
-  %14 = sub i64 %13, %i.fc                        ; 2 uses
+  %13 = sub i64 %i.fb, %i.fc
+  %14 = add i64 %13, -8                           ; 2 uses
   %i.fp = lshr i64 %14, 3
   %i.fq = add nuw nsw i64 %i.fp, 1                ; 2 uses
   %min.iters.check644 = icmp ult i64 %14, 24
@@ -2089,8 +2089,8 @@ _ZNKSt6vectorIN11OpenImageIO4v3_17ustringESaIS2_EE12_M_check_lenEmPKc.exit.i.i12
 
 .lr.ph.i.i.i.i.i133.preheader:                    ; preds = %.noexc142
   %i.hj = ptrtoaddr ptr %i.hh to i64
-  %15 = add i64 %i.gx, -8
-  %16 = sub i64 %15, %i.gy                        ; 2 uses
+  %15 = sub i64 %i.gx, %i.gy
+  %16 = add i64 %15, -8                           ; 2 uses
   %i.hk = lshr i64 %16, 3
   %i.hl = add nuw nsw i64 %i.hk, 1                ; 2 uses
   %min.iters.check608 = icmp ult i64 %16, 24
@@ -2257,8 +2257,8 @@ _ZNKSt6vectorIN11OpenImageIO4v3_17ustringESaIS2_EE12_M_check_lenEmPKc.exit.i.i14
 
 .lr.ph.i.i.i.i.i150.preheader:                    ; preds = %.noexc159
   %i.ji = ptrtoaddr ptr %i.jg to i64
-  %17 = add i64 %i.iw, -8
-  %18 = sub i64 %17, %i.ix                        ; 2 uses
+  %17 = sub i64 %i.iw, %i.ix
+  %18 = add i64 %17, -8                           ; 2 uses
   %i.jj = lshr i64 %18, 3
   %i.jk = add nuw nsw i64 %i.jj, 1                ; 2 uses
   %min.iters.check626 = icmp ult i64 %18, 24
@@ -2661,8 +2661,8 @@ _ZNKSt6vectorIN11OpenImageIO4v3_17ustringESaIS2_EE12_M_check_lenEmPKc.exit.i: ; 
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNKSt6vectorIN11OpenImageIO4v3_17ustringESaIS2_EE12_M_check_lenEmPKc.exit.i
   %i.z = ptrtoaddr ptr %i.w to i64
-  %2 = add i64 %i.d, -8
-  %3 = sub i64 %2, %i.e                           ; 2 uses
+  %2 = sub i64 %i.d, %i.e
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.aa = lshr i64 %3, 3
   %i.ab = add nuw nsw i64 %i.aa, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %3, 56
@@ -2891,8 +2891,8 @@ _ZNKSt6vectorISt10unique_ptrIN11OpenImageIO4v3_123ImageCachePerThreadInfoESt14de
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN11OpenImageIO4v3_123ImageCachePerThreadInfoESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc5
-  %1 = add i64 %i.ah, -8
-  %2 = sub i64 %1, %i.ai                          ; 2 uses
+  %1 = sub i64 %i.ah, %i.ai
+  %2 = add i64 %1, -8                             ; 2 uses
   %i.at = lshr i64 %2, 3
   %i.au = add nuw nsw i64 %i.at, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %2, 152
@@ -3295,8 +3295,8 @@ _ZNSt6vectorISt10unique_ptrIN11OpenImageIO4v3_19ImageSpecESt14default_deleteIS3_
           to label %.lr.ph.i.i.i.i.i.i.preheader unwind label %_ZNSt12_Vector_baseISt10unique_ptrIN11OpenImageIO4v3_19ImageSpecESt14default_deleteIS3_EESaIS6_EED2Ev.exit.i ; 8 uses
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.lr.ph.i.i.i.i.preheader.i.i
-  %1 = add i64 %i.d, -8
-  %2 = sub i64 %1, %i.e                           ; 2 uses
+  %1 = sub i64 %i.d, %i.e
+  %2 = add i64 %1, -8                             ; 2 uses
   %i.l = lshr i64 %2, 3
   %i.m = add nuw nsw i64 %i.l, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %2, 152
@@ -3451,8 +3451,8 @@ _ZNSt6vectorISt10unique_ptrIN11OpenImageIO4v3_114ImageCacheFile9ImageDimsESt14de
           to label %.lr.ph.i.i.i.i.i.i.preheader unwind label %_ZNSt12_Vector_baseISt10unique_ptrIN11OpenImageIO4v3_114ImageCacheFile9ImageDimsESt14default_deleteIS4_EESaIS7_EED2Ev.exit.i ; 8 uses
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.lr.ph.i.i.i.i.preheader.i.i
-  %1 = add i64 %i.d, -8
-  %2 = sub i64 %1, %i.e                           ; 2 uses
+  %1 = sub i64 %i.d, %i.e
+  %2 = add i64 %1, -8                             ; 2 uses
   %i.l = lshr i64 %2, 3
   %i.m = add nuw nsw i64 %i.l, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %2, 152
@@ -3696,8 +3696,8 @@ bb.m:                                             ; preds = %bb.l
   %.idx.i.i.i.i.i = shl nuw nsw i64 %i.ao, 3
   %i.ap = getelementptr inbounds nuw i8, ptr %i.d, i64 %.idx.i.i.i.i.i ; 3 uses
   %i.aq = shl i64 %2, 3
-  %4 = add i64 %i.aq, -8
-  %5 = sub i64 %4, %i.k                           ; 2 uses
+  %4 = sub i64 %i.aq, %i.k
+  %5 = add i64 %4, -8                             ; 2 uses
   %i.ar = lshr i64 %5, 3
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %5, 24
@@ -3765,8 +3765,8 @@ _ZSt22__uninitialized_move_aIPmS0_SaImEET0_T_S3_S2_RT1_.exit69: ; preds = %bb.p,
   br i1 %.not5.i.i.i70, label %_ZSt4fillIPmmEvT_S1_RKT0_.exit, label %.lr.ph.i.i.i71.preheader
 
 .lr.ph.i.i.i71.preheader:                         ; preds = %_ZSt22__uninitialized_move_aIPmS0_SaImEET0_T_S3_S2_RT1_.exit69
-  %6 = add i64 %i.f, -8
-  %7 = sub i64 %6, %i.j                           ; 2 uses
+  %6 = sub i64 %i.f, %i.j
+  %7 = add i64 %6, -8                             ; 2 uses
   %i.be = lshr i64 %7, 3
   %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses
   %min.iters.check113 = icmp ult i64 %7, 24
@@ -4169,8 +4169,8 @@ _ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %i.am = ptrtoaddr ptr %i.ak to i64
-  %3 = add i64 %i.aa, -4
-  %4 = sub i64 %3, %i.ab                          ; 2 uses
+  %3 = sub i64 %i.aa, %i.ab
+  %4 = add i64 %3, -4                             ; 2 uses
   %i.an = lshr i64 %4, 2
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %4, 28
@@ -4573,8 +4573,8 @@ _ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %i.am = ptrtoaddr ptr %i.ak to i64
-  %3 = add i64 %i.aa, -4
-  %4 = sub i64 %3, %i.ab                          ; 2 uses
+  %3 = sub i64 %i.aa, %i.ab
+  %4 = add i64 %3, -4                             ; 2 uses
   %i.an = lshr i64 %4, 2
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %4, 28
@@ -4977,8 +4977,8 @@ _ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %i.am = ptrtoaddr ptr %i.ak to i64
-  %3 = add i64 %i.aa, -4
-  %4 = sub i64 %3, %i.ab                          ; 2 uses
+  %3 = sub i64 %i.aa, %i.ab
+  %4 = add i64 %3, -4                             ; 2 uses
   %i.an = lshr i64 %4, 2
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %4, 28
@@ -5381,8 +5381,8 @@ _ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorINSt7__cxx1112regex_traitsIcE10_RegexMaskESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %i.am = ptrtoaddr ptr %i.ak to i64
-  %3 = add i64 %i.aa, -4
-  %4 = sub i64 %3, %i.ab                          ; 2 uses
+  %3 = sub i64 %i.aa, %i.ab
+  %4 = add i64 %3, -4                             ; 2 uses
   %i.an = lshr i64 %4, 2
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %4, 28

@@ -201,8 +201,8 @@ _ZNK7testing10TestResult17GetTestPartResultEi.exit.i.i.i: ; preds = %.lr.ph.i.i.
   br i1 %.not7.i.i.i, label %_ZNK7testing10TestResult7SkippedEv.exit.thread.i, label %.lr.ph.i1.i.i.preheader
 
 .lr.ph.i1.i.i.preheader:                          ; preds = %.loopexit.i.i
-  %1 = add i64 %i.w, -112
-  %2 = sub i64 %1, %i.x                           ; 2 uses
+  %1 = sub i64 %i.w, %i.x
+  %2 = add i64 %1, -112                           ; 2 uses
   %i.af = udiv i64 %2, 112
   %i.ag = add nuw nsw i64 %i.af, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %2, 784
@@ -460,8 +460,8 @@ _ZNK7testing10TestResult17GetTestPartResultEi.exit.i.i.i.i: ; preds = %.lr.ph.i.
   br i1 %.not7.i.i.i.i, label %_ZN7testing9TestSuite11TestSkippedEPKNS_8TestInfoE.exit.i, label %.lr.ph.i1.i.i.i.preheader
 
 .lr.ph.i1.i.i.i.preheader:                        ; preds = %.loopexit.i.i.i
-  %1 = add i64 %i.w, -112
-  %2 = sub i64 %1, %i.x                           ; 2 uses
+  %1 = sub i64 %i.w, %i.x
+  %2 = add i64 %1, -112                           ; 2 uses
   %i.af = udiv i64 %2, 112
   %i.ag = add nuw nsw i64 %i.af, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %2, 784
@@ -628,8 +628,8 @@ _ZNK7testing10TestResult17GetTestPartResultEi.exit.i.i.i: ; preds = %.lr.ph.i.i.
   br i1 %.not7.i.i.i, label %_ZN7testing9TestSuite11TestSkippedEPKNS_8TestInfoE.exit, label %.lr.ph.i1.i.i.preheader
 
 .lr.ph.i1.i.i.preheader:                          ; preds = %.loopexit.i.i
-  %1 = add i64 %i.m, -112
-  %2 = sub i64 %1, %i.n                           ; 2 uses
+  %1 = sub i64 %i.m, %i.n
+  %2 = add i64 %1, -112                           ; 2 uses
   %i.v = udiv i64 %2, 112
   %i.w = add nuw nsw i64 %i.v, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %2, 784
@@ -1032,8 +1032,8 @@ _ZNK7testing10TestResult17GetTestPartResultEi.exit.i: ; preds = %.lr.ph.i
   br i1 %.not7.i, label %_ZNK7testing10TestResult6FailedEv.exit, label %.lr.ph.i1.preheader
 
 .lr.ph.i1.preheader:                              ; preds = %.loopexit
-  %1 = add i64 %i.e, -112
-  %2 = sub i64 %1, %i.f                           ; 2 uses
+  %1 = sub i64 %i.e, %i.f
+  %2 = add i64 %1, -112                           ; 2 uses
   %i.n = udiv i64 %2, 112
   %i.o = add nuw nsw i64 %i.n, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %2, 784
@@ -1436,8 +1436,8 @@ _ZNK7testing10TestResult17GetTestPartResultEi.exit.i.i: ; preds = %.lr.ph.i.i
   br i1 %.not7.i.i, label %_ZNK7testing10TestResult7SkippedEv.exit, label %.lr.ph.i1.i.preheader
 
 .lr.ph.i1.i.preheader:                            ; preds = %.loopexit.i
-  %0 = add i64 %i.r, -112
-  %1 = sub i64 %0, %i.s                           ; 2 uses
+  %0 = sub i64 %i.r, %i.s
+  %1 = add i64 %0, -112                           ; 2 uses
   %i.aa = udiv i64 %1, 112
   %i.ab = add nuw nsw i64 %i.aa, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %1, 784
@@ -1840,8 +1840,8 @@ _ZNK7testing10TestResult17GetTestPartResultEi.exit.i.i: ; preds = %.lr.ph.i.i
   br i1 %.not7.i.i, label %_ZNK7testing10TestResult7SkippedEv.exit.thread, label %.lr.ph.i1.i.preheader
 
 .lr.ph.i1.i.preheader:                            ; preds = %.loopexit.i
-  %4 = add i64 %i.g, -112
-  %5 = sub i64 %4, %i.h                           ; 2 uses
+  %4 = sub i64 %i.g, %i.h
+  %5 = add i64 %4, -112                           ; 2 uses
   %i.p = udiv i64 %5, 112
   %i.q = add nuw nsw i64 %i.p, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %5, 784
@@ -2148,8 +2148,8 @@ _ZNK7testing10TestResult17GetTestPartResultEi.exit.i.i: ; preds = %.lr.ph.i.i
   br i1 %.not7.i.i, label %_ZNK7testing10TestResult7SkippedEv.exit.thread, label %.lr.ph.i1.i.preheader
 
 .lr.ph.i1.i.preheader:                            ; preds = %.loopexit.i
-  %1 = add i64 %i.e, -112
-  %2 = sub i64 %1, %i.f                           ; 2 uses
+  %1 = sub i64 %i.e, %i.f
+  %2 = add i64 %1, -112                           ; 2 uses
   %i.n = udiv i64 %2, 112
   %i.o = add nuw nsw i64 %i.n, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %2, 784
@@ -2552,8 +2552,8 @@ _ZNK7testing10TestResult17GetTestPartResultEi.exit.i.i.i.i: ; preds = %.lr.ph.i.
   br i1 %.not7.i.i.i.i, label %_ZN7testing9TestSuite11TestSkippedEPKNS_8TestInfoE.exit.i, label %.lr.ph.i1.i.i.i.preheader
 
 .lr.ph.i1.i.i.i.preheader:                        ; preds = %.loopexit.i.i.i
-  %1 = add i64 %i.aq, -112
-  %2 = sub i64 %1, %i.ar                          ; 2 uses
+  %1 = sub i64 %i.aq, %i.ar
+  %2 = add i64 %1, -112                           ; 2 uses
   %i.az = udiv i64 %2, 112
   %i.ba = add nuw nsw i64 %i.az, 1                ; 2 uses
   %min.iters.check59 = icmp ult i64 %2, 784
@@ -2733,8 +2733,8 @@ _ZNK7testing10TestResult17GetTestPartResultEi.exit.i.i: ; preds = %.lr.ph.i.i24
   br i1 %.not7.i.i19, label %_ZNK7testing10TestResult7SkippedEv.exit.thread, label %.lr.ph.i1.i.preheader
 
 .lr.ph.i1.i.preheader:                            ; preds = %.loopexit.i
-  %3 = add i64 %i.dw, -112
-  %4 = sub i64 %3, %i.dx                          ; 2 uses
+  %3 = sub i64 %i.dw, %i.dx
+  %4 = add i64 %3, -112                           ; 2 uses
   %i.ef = udiv i64 %4, 112
   %i.eg = add nuw nsw i64 %i.ef, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %4, 784
@@ -3137,8 +3137,8 @@ _ZNK7testing10TestResult17GetTestPartResultEi.exit.i.i: ; preds = %.lr.ph.i.i
   br i1 %.not7.i.i, label %_ZNK7testing10TestResult7SkippedEv.exit.thread, label %.lr.ph.i1.i.preheader
 
 .lr.ph.i1.i.preheader:                            ; preds = %.loopexit.i
-  %25 = add i64 %i.ht, -112
-  %26 = sub i64 %25, %i.hu                        ; 2 uses
+  %25 = sub i64 %i.ht, %i.hu
+  %26 = add i64 %25, -112                         ; 2 uses
   %i.ic = udiv i64 %26, 112
   %i.id = add nuw nsw i64 %i.ic, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %26, 784
@@ -3541,8 +3541,8 @@ _ZNK7testing10TestResult17GetTestPartResultEi.exit.i.i.i.i: ; preds = %.lr.ph.i.
   br i1 %.not7.i.i.i.i, label %_ZN7testing9TestSuite11TestSkippedEPKNS_8TestInfoE.exit.i, label %.lr.ph.i1.i.i.i.preheader
 
 .lr.ph.i1.i.i.i.preheader:                        ; preds = %.loopexit.i.i.i
-  %24 = add i64 %i.fr, -112
-  %25 = sub i64 %24, %i.fs                        ; 2 uses
+  %24 = sub i64 %i.fr, %i.fs
+  %25 = add i64 %24, -112                         ; 2 uses
   %i.ga = udiv i64 %25, 112
   %i.gb = add nuw nsw i64 %i.ga, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %25, 784
@@ -3945,8 +3945,8 @@ _ZNK7testing10TestResult17GetTestPartResultEi.exit.i.i: ; preds = %.lr.ph.i.i
   br i1 %.not7.i.i, label %_ZNK7testing10TestResult7SkippedEv.exit.thread, label %.lr.ph.i1.i.preheader
 
 .lr.ph.i1.i.preheader:                            ; preds = %.loopexit.i
-  %27 = add i64 %i.hz, -112
-  %28 = sub i64 %27, %i.ia                        ; 2 uses
+  %27 = sub i64 %i.hz, %i.ia
+  %28 = add i64 %27, -112                         ; 2 uses
   %i.ii = udiv i64 %28, 112
   %i.ij = add nuw nsw i64 %i.ii, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %28, 784

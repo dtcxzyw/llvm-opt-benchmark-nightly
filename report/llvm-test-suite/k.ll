@@ -201,8 +201,8 @@ bb.m:                                             ; preds = %bb.l
   %.idx.i.i.i.i.i = shl nuw nsw i64 %i.ao, 3
   %i.ap = getelementptr inbounds nuw i8, ptr %i.d, i64 %.idx.i.i.i.i.i ; 3 uses
   %i.aq = shl i64 %2, 3
-  %4 = add i64 %i.aq, -8
-  %5 = sub i64 %4, %i.k                           ; 2 uses
+  %4 = sub i64 %i.aq, %i.k
+  %5 = add i64 %4, -8                             ; 2 uses
   %i.ar = lshr i64 %5, 3
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %5, 24
@@ -270,8 +270,8 @@ _ZSt22__uninitialized_move_aIPPN9__gnu_cxx15_Hashtable_nodeIN2kc8hashitemEEES6_S
   br i1 %.not6.i.i.i70, label %_ZSt4fillIPPN9__gnu_cxx15_Hashtable_nodeIN2kc8hashitemEEES5_EvT_S7_RKT0_.exit, label %.lr.ph.i.i.i71.preheader
 
 .lr.ph.i.i.i71.preheader:                         ; preds = %_ZSt22__uninitialized_move_aIPPN9__gnu_cxx15_Hashtable_nodeIN2kc8hashitemEEES6_SaIS5_EET0_T_S9_S8_RT1_.exit69
-  %6 = add i64 %i.f, -8
-  %7 = sub i64 %6, %i.j                           ; 2 uses
+  %6 = sub i64 %i.f, %i.j
+  %7 = add i64 %6, -8                             ; 2 uses
   %i.be = lshr i64 %7, 3
   %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses
   %min.iters.check113 = icmp ult i64 %7, 24

@@ -201,8 +201,8 @@ _ZNKSt6vectorIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x321IfcRepresentationItemEEES
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x321IfcRepresentationItemEEESaIS6_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.bz = ptrtoaddr ptr %i.bx to i64
-  %11 = add i64 %i.bn, -8
-  %12 = sub i64 %11, %i.bo                        ; 2 uses
+  %11 = sub i64 %i.bn, %i.bo
+  %12 = add i64 %11, -8                           ; 2 uses
   %i.ca = lshr i64 %12, 3
   %i.cb = add nuw nsw i64 %i.ca, 1                ; 2 uses
   %min.iters.check101 = icmp ult i64 %12, 24
@@ -605,8 +605,8 @@ _ZNKSt6vectorIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x317IfcRepresentationEEESaIS6
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x317IfcRepresentationEEESaIS6_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.bz = ptrtoaddr ptr %i.bx to i64
-  %11 = add i64 %i.bn, -8
-  %12 = sub i64 %11, %i.bo                        ; 2 uses
+  %11 = sub i64 %i.bn, %i.bo
+  %12 = add i64 %11, -8                           ; 2 uses
   %i.ca = lshr i64 %12, 3
   %i.cb = add nuw nsw i64 %i.ca, 1                ; 2 uses
   %min.iters.check101 = icmp ult i64 %12, 24
@@ -1009,8 +1009,8 @@ _ZNKSt6vectorIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x324IfcCompositeCurveSegmentE
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x324IfcCompositeCurveSegmentEEESaIS6_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.bz = ptrtoaddr ptr %i.bx to i64
-  %11 = add i64 %i.bn, -8
-  %12 = sub i64 %11, %i.bo                        ; 2 uses
+  %11 = sub i64 %i.bn, %i.bo
+  %12 = add i64 %11, -8                           ; 2 uses
   %i.ca = lshr i64 %12, 3
   %i.cb = add nuw nsw i64 %i.ca, 1                ; 2 uses
   %min.iters.check101 = icmp ult i64 %12, 24
@@ -1413,8 +1413,8 @@ _ZNKSt6vectorIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x310IfcProductEEESaIS6_EE12_M
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x310IfcProductEEESaIS6_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.bz = ptrtoaddr ptr %i.bx to i64
-  %11 = add i64 %i.bn, -8
-  %12 = sub i64 %11, %i.bo                        ; 2 uses
+  %11 = sub i64 %i.bn, %i.bo
+  %12 = add i64 %11, -8                           ; 2 uses
   %i.ca = lshr i64 %12, 3
   %i.cb = add nuw nsw i64 %i.ca, 1                ; 2 uses
   %min.iters.check101 = icmp ult i64 %12, 24
@@ -1817,8 +1817,8 @@ _ZNKSt6vectorIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x324IfcRepresentationContextE
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x324IfcRepresentationContextEEESaIS6_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.bz = ptrtoaddr ptr %i.bx to i64
-  %11 = add i64 %i.bn, -8
-  %12 = sub i64 %11, %i.bo                        ; 2 uses
+  %11 = sub i64 %i.bn, %i.bo
+  %12 = add i64 %11, -8                           ; 2 uses
   %i.ca = lshr i64 %12, 3
   %i.cb = add nuw nsw i64 %i.ca, 1                ; 2 uses
   %min.iters.check101 = icmp ult i64 %12, 24
@@ -2221,8 +2221,8 @@ _ZNKSt6vectorIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x39IfcObjectEEESaIS6_EE12_M_c
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x39IfcObjectEEESaIS6_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.bz = ptrtoaddr ptr %i.bx to i64
-  %11 = add i64 %i.bn, -8
-  %12 = sub i64 %11, %i.bo                        ; 2 uses
+  %11 = sub i64 %i.bn, %i.bo
+  %12 = add i64 %11, -8                           ; 2 uses
   %i.ca = lshr i64 %12, 3
   %i.cb = add nuw nsw i64 %i.ca, 1                ; 2 uses
   %min.iters.check101 = icmp ult i64 %12, 24
@@ -2625,8 +2625,8 @@ _ZNKSt6vectorIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x319IfcObjectDefinitionEEESaI
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x319IfcObjectDefinitionEEESaIS6_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.bz = ptrtoaddr ptr %i.bx to i64
-  %11 = add i64 %i.bn, -8
-  %12 = sub i64 %11, %i.bo                        ; 2 uses
+  %11 = sub i64 %i.bn, %i.bo
+  %12 = add i64 %11, -8                           ; 2 uses
   %i.ca = lshr i64 %12, 3
   %i.cb = add nuw nsw i64 %i.ca, 1                ; 2 uses
   %min.iters.check101 = icmp ult i64 %12, 24
@@ -3029,8 +3029,8 @@ _ZNKSt6vectorIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x317IfcCartesianPointEEESaIS6
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x317IfcCartesianPointEEESaIS6_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.bz = ptrtoaddr ptr %i.bx to i64
-  %11 = add i64 %i.bn, -8
-  %12 = sub i64 %11, %i.bo                        ; 2 uses
+  %11 = sub i64 %i.bn, %i.bo
+  %12 = add i64 %11, -8                           ; 2 uses
   %i.ca = lshr i64 %12, 3
   %i.cb = add nuw nsw i64 %i.ca, 1                ; 2 uses
   %min.iters.check105 = icmp ult i64 %12, 24
@@ -3433,8 +3433,8 @@ _ZNKSt6vectorIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x37IfcFaceEEESaIS6_EE12_M_che
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x37IfcFaceEEESaIS6_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.bz = ptrtoaddr ptr %i.bx to i64
-  %11 = add i64 %i.bn, -8
-  %12 = sub i64 %11, %i.bo                        ; 2 uses
+  %11 = sub i64 %i.bn, %i.bo
+  %12 = add i64 %11, -8                           ; 2 uses
   %i.ca = lshr i64 %12, 3
   %i.cb = add nuw nsw i64 %i.ca, 1                ; 2 uses
   %min.iters.check101 = icmp ult i64 %12, 24
@@ -3837,8 +3837,8 @@ _ZNKSt6vectorIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x330IfcPresentationStyleAssig
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN6Assimp4STEP4LazyINS0_3IFC10Schema_2x330IfcPresentationStyleAssignmentEEESaIS6_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.bz = ptrtoaddr ptr %i.bx to i64
-  %11 = add i64 %i.bn, -8
-  %12 = sub i64 %11, %i.bo                        ; 2 uses
+  %11 = sub i64 %i.bn, %i.bo
+  %12 = add i64 %11, -8                           ; 2 uses
   %i.ca = lshr i64 %12, 3
   %i.cb = add nuw nsw i64 %i.ca, 1                ; 2 uses
   %min.iters.check101 = icmp ult i64 %12, 24

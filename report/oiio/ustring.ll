@@ -201,8 +201,8 @@ _ZNKSt6vectorIN11OpenImageIO4v3_17ustringESaIS2_EE12_M_check_lenEmPKc.exit.i.i: 
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc4
   %i.w = ptrtoaddr ptr %i.t to i64
-  %1 = add i64 %i.j, -8
-  %2 = sub i64 %1, %i.k                           ; 2 uses
+  %1 = sub i64 %i.j, %i.k
+  %2 = add i64 %1, -8                             ; 2 uses
   %i.x = lshr i64 %2, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %2, 24

@@ -201,8 +201,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_6ModuleEEESaIS4_EE12_M_check_len
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_6ModuleEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i
   %i.af = ptrtoaddr ptr %i.ad to i64
-  %5 = add i64 %i.t, -8
-  %6 = sub i64 %5, %i.u                           ; 2 uses
+  %5 = sub i64 %i.t, %i.u
+  %6 = add i64 %5, -8                             ; 2 uses
   %i.ag = lshr i64 %6, 3
   %i.ah = add nuw nsw i64 %i.ag, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %6, 24
@@ -345,8 +345,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_7MessageEEESaIS4_EE12_M_check_le
 
 .lr.ph.i.i.i.i.i.i.i31.preheader:                 ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_7MessageEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i
   %i.bu = ptrtoaddr ptr %i.bs to i64
-  %7 = add i64 %i.bi, -8
-  %8 = sub i64 %7, %i.bj                          ; 2 uses
+  %7 = sub i64 %i.bi, %i.bj
+  %8 = add i64 %7, -8                             ; 2 uses
   %i.bv = lshr i64 %8, 3
   %i.bw = add nuw nsw i64 %i.bv, 1                ; 2 uses
   %min.iters.check145 = icmp ult i64 %8, 24
@@ -454,15 +454,15 @@ _ZNSt12_Vector_baseIN2v88internal14LocalUncheckedINS0_6ModuleEEESaIS4_EEC2EmRKS5
   %i.cv = getelementptr inbounds nuw i8, ptr %i.ct, i64 %i.co
   %i.cw = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.cv, ptr %i.cw, align 8
-  %9 = add i64 %i.cm, -8
-  %10 = sub i64 %9, %i.cn                         ; 2 uses
+  %9 = sub i64 %i.cm, %i.cn
+  %10 = add i64 %9, -8                            ; 2 uses
   %i.cx = lshr i64 %10, 3
   %i.cy = add nuw nsw i64 %i.cx, 1                ; 2 uses
   %min.iters.check163 = icmp ult i64 %10, 56
   %i.cz = ptrtoaddr ptr %i.ct to i64
   %i.da = sub i64 %i.cz, %i.cn
   %diff.check161 = icmp ult i64 %i.da, 32
-  %or.cond198 = or i1 %min.iters.check163, %diff.check161
+  %or.cond198 = select i1 %min.iters.check163, i1 true, i1 %diff.check161
   br i1 %or.cond198, label %.lr.ph.i.i.i.i.i.i.i37.preheader, label %vector.ph164
 
 vector.ph164:                                     ; preds = %_ZNSt12_Vector_baseIN2v88internal14LocalUncheckedINS0_6ModuleEEESaIS4_EEC2EmRKS5_.exit.i.i.i
@@ -542,15 +542,15 @@ _ZNSt12_Vector_baseIN2v88internal14LocalUncheckedINS0_7MessageEEESaIS4_EEC2EmRKS
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dv, i64 %i.dq
   %i.dy = getelementptr inbounds nuw i8, ptr %0, i64 40
   store ptr %i.dx, ptr %i.dy, align 8
-  %11 = add i64 %i.do, -8
-  %12 = sub i64 %11, %i.dp                        ; 2 uses
+  %11 = sub i64 %i.do, %i.dp
+  %12 = add i64 %11, -8                           ; 2 uses
   %i.dz = lshr i64 %12, 3
   %i.ea = add nuw nsw i64 %i.dz, 1                ; 2 uses
   %min.iters.check181 = icmp ult i64 %12, 56
   %i.eb = ptrtoaddr ptr %i.dv to i64
   %i.ec = sub i64 %i.eb, %i.dp
   %diff.check179 = icmp ult i64 %i.ec, 32
-  %or.cond200 = or i1 %min.iters.check181, %diff.check179
+  %or.cond200 = select i1 %min.iters.check181, i1 true, i1 %diff.check179
   br i1 %or.cond200, label %.lr.ph.i.i.i.i.i.i4.i.preheader, label %vector.ph182
 
 vector.ph182:                                     ; preds = %_ZNSt12_Vector_baseIN2v88internal14LocalUncheckedINS0_7MessageEEESaIS4_EEC2EmRKS5_.exit.i.i.i
@@ -953,8 +953,8 @@ _ZNKSt6vectorIN2v88internal21DirectHandleUncheckedINS1_12AccessorPairEEESaIS4_EE
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %_ZNKSt6vectorIN2v88internal21DirectHandleUncheckedINS1_12AccessorPairEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i
   %i.bt = ptrtoaddr ptr %i.br to i64
-  %11 = add i64 %i.bh, -8
-  %12 = sub i64 %11, %i.bi                        ; 2 uses
+  %11 = sub i64 %i.bh, %i.bi
+  %12 = add i64 %11, -8                           ; 2 uses
   %i.bu = lshr i64 %12, 3
   %i.bv = add nuw nsw i64 %i.bu, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %12, 56
@@ -1357,8 +1357,8 @@ _ZNKSt6vectorIN2v88internal21DirectHandleUncheckedINS1_10JSReceiverEEESaIS4_EE12
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN2v88internal21DirectHandleUncheckedINS1_10JSReceiverEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.u = ptrtoaddr ptr %i.s to i64
-  %2 = add i64 %i.i, -8
-  %3 = sub i64 %2, %i.j                           ; 2 uses
+  %2 = sub i64 %i.i, %i.j
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.v = lshr i64 %3, 3
   %i.w = add nuw nsw i64 %i.v, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 56

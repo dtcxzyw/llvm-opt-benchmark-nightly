@@ -201,8 +201,8 @@ _ZNKSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec13EnumGenerat
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec13EnumGeneratorESt14default_deleteIS5_EESaIS8_EE11_S_relocateEPS8_SB_SB_RS9_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc89
-  %9 = add i64 %i.br, -8
-  %10 = sub i64 %9, %i.bs                         ; 2 uses
+  %9 = sub i64 %i.br, %i.bs
+  %10 = add i64 %9, -8                            ; 2 uses
   %i.cd = lshr i64 %10, 3
   %i.ce = add nuw nsw i64 %i.cd, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %10, 56
@@ -425,8 +425,8 @@ _ZNKSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec18ExtensionGe
   br i1 %.not10.i.i.i.i92, label %_ZNSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec18ExtensionGeneratorESt14default_deleteIS5_EESaIS8_EE11_S_relocateEPS8_SB_SB_RS9_.exit22.i, label %.lr.ph.i.i.i.i93.preheader
 
 .lr.ph.i.i.i.i93.preheader:                       ; preds = %.noexc106
-  %11 = add i64 %i.ed, -8
-  %12 = sub i64 %11, %i.ee                        ; 2 uses
+  %11 = sub i64 %i.ed, %i.ee
+  %12 = add i64 %11, -8                           ; 2 uses
   %i.ep = lshr i64 %12, 3
   %i.eq = add nuw nsw i64 %i.ep, 1                ; 2 uses
   %min.iters.check260 = icmp ult i64 %12, 56
@@ -640,8 +640,8 @@ _ZNKSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec16MessageGene
   br i1 %.not10.i.i.i.i109, label %_ZNSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec16MessageGeneratorESt14default_deleteIS5_EESaIS8_EE11_S_relocateEPS8_SB_SB_RS9_.exit22.i, label %.lr.ph.i.i.i.i110.preheader
 
 .lr.ph.i.i.i.i110.preheader:                      ; preds = %.noexc123
-  %13 = add i64 %i.gd, -8
-  %14 = sub i64 %13, %i.ge                        ; 2 uses
+  %13 = sub i64 %i.gd, %i.ge
+  %14 = add i64 %13, -8                           ; 2 uses
   %i.gp = lshr i64 %14, 3
   %i.gq = add nuw nsw i64 %i.gp, 1                ; 2 uses
   %min.iters.check284 = icmp ult i64 %14, 56
@@ -1031,8 +1031,8 @@ _ZNKSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec13EnumGenerat
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec13EnumGeneratorESt14default_deleteIS5_EESaIS8_EE11_S_relocateEPS8_SB_SB_RS9_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc33
-  %8 = add i64 %i.v, -8
-  %9 = sub i64 %8, %i.w                           ; 2 uses
+  %8 = sub i64 %i.v, %i.w
+  %9 = add i64 %8, -8                             ; 2 uses
   %i.ah = lshr i64 %9, 3
   %i.ai = add nuw nsw i64 %i.ah, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %9, 56
@@ -1218,8 +1218,8 @@ _ZNKSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec16MessageGene
   br i1 %.not10.i.i.i.i36, label %_ZNSt6vectorISt10unique_ptrIN6google8protobuf8compiler10objectivec16MessageGeneratorESt14default_deleteIS5_EESaIS8_EE11_S_relocateEPS8_SB_SB_RS9_.exit22.i, label %.lr.ph.i.i.i.i37.preheader
 
 .lr.ph.i.i.i.i37.preheader:                       ; preds = %.noexc50
-  %10 = add i64 %i.bp, -8
-  %11 = sub i64 %10, %i.bq                        ; 2 uses
+  %10 = sub i64 %i.bp, %i.bq
+  %11 = add i64 %10, -8                           ; 2 uses
   %i.cb = lshr i64 %11, 3
   %i.cc = add nuw nsw i64 %i.cb, 1                ; 2 uses
   %min.iters.check122 = icmp ult i64 %11, 56

@@ -201,8 +201,8 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %.idx = sub i64 0, %i.d
   %i.q = getelementptr inbounds i8, ptr %i.i, i64 %.idx ; 4 uses
-  %4 = add i64 %i.b, -8
-  %5 = sub i64 %4, %i.c                           ; 2 uses
+  %4 = sub i64 %i.b, %i.c
+  %5 = add i64 %4, -8                             ; 2 uses
   %i.r = lshr i64 %5, 3
   %i.s = add nuw nsw i64 %i.r, 1                  ; 2 uses
   %min.iters.check154 = icmp ult i64 %5, 56
@@ -341,9 +341,9 @@ _ZSt9__advanceIPKN2v85LocalINS0_6StringEEElEvRT_T0_St26random_access_iterator_ta
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZSt9__advanceIPKN2v85LocalINS0_6StringEEElEvRT_T0_St26random_access_iterator_tag.exit
   %i.bg = add i64 %i.b, %i.m
-  %i.bh = add i64 %i.bg, -8
-  %6 = add i64 %i.k, %i.c
-  %7 = sub i64 %i.bh, %6                          ; 2 uses
+  %i.bh = add i64 %i.k, %i.c
+  %6 = sub i64 %i.bg, %i.bh
+  %7 = add i64 %6, -8                             ; 2 uses
   %i.bi = lshr i64 %7, 3
   %i.bj = add nuw nsw i64 %i.bi, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %7, 56
@@ -407,8 +407,8 @@ _ZSt22__uninitialized_copy_aIPKN2v85LocalINS0_6StringEEEPNS0_8internal14LocalUnc
   br i1 %i.bz, label %_ZSt22__uninitialized_move_aIPN2v88internal14LocalUncheckedINS0_6StringEEES5_SaIS4_EET0_T_S8_S7_RT1_.exit52, label %.lr.ph.i.i.i.i.i48.preheader
 
 .lr.ph.i.i.i.i.i48.preheader:                     ; preds = %_ZSt22__uninitialized_copy_aIPKN2v85LocalINS0_6StringEEEPNS0_8internal14LocalUncheckedIS2_EES8_ET0_T_SB_SA_RSaIT1_E.exit
-  %8 = add i64 %i.k, -8
-  %9 = sub i64 %8, %i.m                           ; 2 uses
+  %8 = sub i64 %i.k, %i.m
+  %9 = add i64 %8, -8                             ; 2 uses
   %i.ca = lshr i64 %9, 3
   %i.cb = add nuw nsw i64 %i.ca, 1                ; 2 uses
   %min.iters.check117 = icmp ult i64 %9, 104
@@ -612,8 +612,8 @@ middle.block202:                                  ; preds = %vector.body195
 
 _ZSt34__uninitialized_move_if_noexcept_aIPN2v88internal14LocalUncheckedINS0_6StringEEES5_SaIS4_EET0_T_S8_S7_RT1_.exit: ; preds = %.lr.ph.i.i.i.i.i59, %middle.block202, %_ZNSt12_Vector_baseIN2v88internal14LocalUncheckedINS0_6StringEEESaIS4_EE11_M_allocateEm.exit
   %.0.lcssa.i.i.i.i.i62 = phi ptr [ %i.dt, %_ZNSt12_Vector_baseIN2v88internal14LocalUncheckedINS0_6StringEEESaIS4_EE11_M_allocateEm.exit ], [ %i.ec, %middle.block202 ], [ %i.ek, %.lr.ph.i.i.i.i.i59 ] ; 4 uses
-  %10 = add i64 %i.b, -8
-  %11 = sub i64 %10, %i.c                         ; 2 uses
+  %10 = sub i64 %i.b, %i.c
+  %11 = add i64 %10, -8                           ; 2 uses
   %i.em = lshr i64 %11, 3
   %i.en = add nuw nsw i64 %i.em, 1                ; 2 uses
   %min.iters.check210 = icmp ult i64 %11, 56

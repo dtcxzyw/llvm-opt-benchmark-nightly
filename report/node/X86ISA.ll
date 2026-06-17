@@ -201,8 +201,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i
   %i.af = ptrtoaddr ptr %i.ac to i64
-  %3 = add i64 %i.s, -8
-  %4 = sub i64 %3, %i.t                           ; 2 uses
+  %3 = sub i64 %i.s, %i.t
+  %4 = add i64 %3, -8                             ; 2 uses
   %i.ag = lshr i64 %4, 3
   %i.ah = add nuw nsw i64 %i.ag, 1                ; 2 uses
   %min.iters.check169 = icmp ult i64 %4, 24
@@ -311,8 +311,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i12.preheader:                     ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i8
   %i.bk = ptrtoaddr ptr %i.bh to i64
-  %5 = add i64 %i.ax, -8
-  %6 = sub i64 %5, %i.ay                          ; 2 uses
+  %5 = sub i64 %i.ax, %i.ay
+  %6 = add i64 %5, -8                             ; 2 uses
   %i.bl = lshr i64 %6, 3
   %i.bm = add nuw nsw i64 %i.bl, 1                ; 2 uses
   %min.iters.check187 = icmp ult i64 %6, 24
@@ -421,8 +421,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i26.preheader:                     ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i22
   %i.cp = ptrtoaddr ptr %i.cm to i64
-  %7 = add i64 %i.cc, -8
-  %8 = sub i64 %7, %i.cd                          ; 2 uses
+  %7 = sub i64 %i.cc, %i.cd
+  %8 = add i64 %7, -8                             ; 2 uses
   %i.cq = lshr i64 %8, 3
   %i.cr = add nuw nsw i64 %i.cq, 1                ; 2 uses
   %min.iters.check205 = icmp ult i64 %8, 24
@@ -531,8 +531,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i40.preheader:                     ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i36
   %i.du = ptrtoaddr ptr %i.dr to i64
-  %9 = add i64 %i.dh, -8
-  %10 = sub i64 %9, %i.di                         ; 2 uses
+  %9 = sub i64 %i.dh, %i.di
+  %10 = add i64 %9, -8                            ; 2 uses
   %i.dv = lshr i64 %10, 3
   %i.dw = add nuw nsw i64 %i.dv, 1                ; 2 uses
   %min.iters.check223 = icmp ult i64 %10, 24
@@ -641,8 +641,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i54.preheader:                     ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i50
   %i.ez = ptrtoaddr ptr %i.ew to i64
-  %11 = add i64 %i.em, -8
-  %12 = sub i64 %11, %i.en                        ; 2 uses
+  %11 = sub i64 %i.em, %i.en
+  %12 = add i64 %11, -8                           ; 2 uses
   %i.fa = lshr i64 %12, 3
   %i.fb = add nuw nsw i64 %i.fa, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %12, 24
@@ -853,8 +853,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i337.us.preheader:                 ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i333.us
   %i.af = ptrtoaddr ptr %i.ac to i64
-  %4 = add i64 %i.s, -8
-  %5 = sub i64 %4, %i.t                           ; 2 uses
+  %4 = sub i64 %i.s, %i.t
+  %5 = add i64 %4, -8                             ; 2 uses
   %i.ag = lshr i64 %5, 3
   %i.ah = add nuw nsw i64 %i.ag, 1                ; 2 uses
   %min.iters.check2204 = icmp ult i64 %5, 24
@@ -959,8 +959,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i323.us.preheader:                 ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i319.us
   %i.bk = ptrtoaddr ptr %i.bh to i64
-  %6 = add i64 %i.ax, -8
-  %7 = sub i64 %6, %i.ay                          ; 2 uses
+  %6 = sub i64 %i.ax, %i.ay
+  %7 = add i64 %6, -8                             ; 2 uses
   %i.bl = lshr i64 %7, 3
   %i.bm = add nuw nsw i64 %i.bl, 1                ; 2 uses
   %min.iters.check2186 = icmp ult i64 %7, 24
@@ -1065,8 +1065,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i309.us.preheader:                 ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i305.us
   %i.cp = ptrtoaddr ptr %i.cm to i64
-  %8 = add i64 %i.cc, -8
-  %9 = sub i64 %8, %i.cd                          ; 2 uses
+  %8 = sub i64 %i.cc, %i.cd
+  %9 = add i64 %8, -8                             ; 2 uses
   %i.cq = lshr i64 %9, 3
   %i.cr = add nuw nsw i64 %i.cq, 1                ; 2 uses
   %min.iters.check2168 = icmp ult i64 %9, 24
@@ -1171,8 +1171,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i295.us.preheader:                 ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i291.us
   %i.du = ptrtoaddr ptr %i.dr to i64
-  %10 = add i64 %i.dh, -8
-  %11 = sub i64 %10, %i.di                        ; 2 uses
+  %10 = sub i64 %i.dh, %i.di
+  %11 = add i64 %10, -8                           ; 2 uses
   %i.dv = lshr i64 %11, 3
   %i.dw = add nuw nsw i64 %i.dv, 1                ; 2 uses
   %min.iters.check2150 = icmp ult i64 %11, 24
@@ -1277,8 +1277,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i281.us.preheader:                 ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i277.us
   %i.ez = ptrtoaddr ptr %i.ew to i64
-  %12 = add i64 %i.em, -8
-  %13 = sub i64 %12, %i.en                        ; 2 uses
+  %12 = sub i64 %i.em, %i.en
+  %13 = add i64 %12, -8                           ; 2 uses
   %i.fa = lshr i64 %13, 3
   %i.fb = add nuw nsw i64 %i.fa, 1                ; 2 uses
   %min.iters.check2132 = icmp ult i64 %13, 24
@@ -1383,8 +1383,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i267.us.preheader:                 ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i263.us
   %i.ge = ptrtoaddr ptr %i.gb to i64
-  %14 = add i64 %i.fr, -8
-  %15 = sub i64 %14, %i.fs                        ; 2 uses
+  %14 = sub i64 %i.fr, %i.fs
+  %15 = add i64 %14, -8                           ; 2 uses
   %i.gf = lshr i64 %15, 3
   %i.gg = add nuw nsw i64 %i.gf, 1                ; 2 uses
   %min.iters.check2114 = icmp ult i64 %15, 24
@@ -1489,8 +1489,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i253.us.preheader:                 ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i249.us
   %i.hj = ptrtoaddr ptr %i.hg to i64
-  %16 = add i64 %i.gw, -8
-  %17 = sub i64 %16, %i.gx                        ; 2 uses
+  %16 = sub i64 %i.gw, %i.gx
+  %17 = add i64 %16, -8                           ; 2 uses
   %i.hk = lshr i64 %17, 3
   %i.hl = add nuw nsw i64 %i.hk, 1                ; 2 uses
   %min.iters.check2096 = icmp ult i64 %17, 24
@@ -1595,8 +1595,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i239.us.preheader:                 ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i235.us
   %i.io = ptrtoaddr ptr %i.il to i64
-  %18 = add i64 %i.ib, -8
-  %19 = sub i64 %18, %i.ic                        ; 2 uses
+  %18 = sub i64 %i.ib, %i.ic
+  %19 = add i64 %18, -8                           ; 2 uses
   %i.ip = lshr i64 %19, 3
   %i.iq = add nuw nsw i64 %i.ip, 1                ; 2 uses
   %min.iters.check2078 = icmp ult i64 %19, 24
@@ -1701,8 +1701,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i225.us.preheader:                 ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i221.us
   %i.jt = ptrtoaddr ptr %i.jq to i64
-  %20 = add i64 %i.jg, -8
-  %21 = sub i64 %20, %i.jh                        ; 2 uses
+  %20 = sub i64 %i.jg, %i.jh
+  %21 = add i64 %20, -8                           ; 2 uses
   %i.ju = lshr i64 %21, 3
   %i.jv = add nuw nsw i64 %i.ju, 1                ; 2 uses
   %min.iters.check2060 = icmp ult i64 %21, 24
@@ -1807,8 +1807,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i211.us.preheader:                 ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i207.us
   %i.ky = ptrtoaddr ptr %i.kv to i64
-  %22 = add i64 %i.kl, -8
-  %23 = sub i64 %22, %i.km                        ; 2 uses
+  %22 = sub i64 %i.kl, %i.km
+  %23 = add i64 %22, -8                           ; 2 uses
   %i.kz = lshr i64 %23, 3
   %i.la = add nuw nsw i64 %i.kz, 1                ; 2 uses
   %min.iters.check2042 = icmp ult i64 %23, 24
@@ -1913,8 +1913,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i197.us.preheader:                 ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i193.us
   %i.md = ptrtoaddr ptr %i.ma to i64
-  %24 = add i64 %i.lq, -8
-  %25 = sub i64 %24, %i.lr                        ; 2 uses
+  %24 = sub i64 %i.lq, %i.lr
+  %25 = add i64 %24, -8                           ; 2 uses
   %i.me = lshr i64 %25, 3
   %i.mf = add nuw nsw i64 %i.me, 1                ; 2 uses
   %min.iters.check2024 = icmp ult i64 %25, 24
@@ -2019,8 +2019,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i183.us.preheader:                 ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i179.us
   %i.ni = ptrtoaddr ptr %i.nf to i64
-  %26 = add i64 %i.mv, -8
-  %27 = sub i64 %26, %i.mw                        ; 2 uses
+  %26 = sub i64 %i.mv, %i.mw
+  %27 = add i64 %26, -8                           ; 2 uses
   %i.nj = lshr i64 %27, 3
   %i.nk = add nuw nsw i64 %i.nj, 1                ; 2 uses
   %min.iters.check2006 = icmp ult i64 %27, 24
@@ -2125,8 +2125,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i169.us.preheader:                 ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i165.us
   %i.on = ptrtoaddr ptr %i.ok to i64
-  %28 = add i64 %i.oa, -8
-  %29 = sub i64 %28, %i.ob                        ; 2 uses
+  %28 = sub i64 %i.oa, %i.ob
+  %29 = add i64 %28, -8                           ; 2 uses
   %i.oo = lshr i64 %29, 3
   %i.op = add nuw nsw i64 %i.oo, 1                ; 2 uses
   %min.iters.check1988 = icmp ult i64 %29, 24
@@ -2231,8 +2231,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i155.us.preheader:                 ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i151.us
   %i.ps = ptrtoaddr ptr %i.pp to i64
-  %30 = add i64 %i.pf, -8
-  %31 = sub i64 %30, %i.pg                        ; 2 uses
+  %30 = sub i64 %i.pf, %i.pg
+  %31 = add i64 %30, -8                           ; 2 uses
   %i.pt = lshr i64 %31, 3
   %i.pu = add nuw nsw i64 %i.pt, 1                ; 2 uses
   %min.iters.check1970 = icmp ult i64 %31, 24
@@ -2337,8 +2337,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i141.us.preheader:                 ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i137.us
   %i.qx = ptrtoaddr ptr %i.qu to i64
-  %32 = add i64 %i.qk, -8
-  %33 = sub i64 %32, %i.ql                        ; 2 uses
+  %32 = sub i64 %i.qk, %i.ql
+  %33 = add i64 %32, -8                           ; 2 uses
   %i.qy = lshr i64 %33, 3
   %i.qz = add nuw nsw i64 %i.qy, 1                ; 2 uses
   %min.iters.check1952 = icmp ult i64 %33, 24
@@ -2443,8 +2443,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i127.us.preheader:                 ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i123.us
   %i.sc = ptrtoaddr ptr %i.rz to i64
-  %34 = add i64 %i.rp, -8
-  %35 = sub i64 %34, %i.rq                        ; 2 uses
+  %34 = sub i64 %i.rp, %i.rq
+  %35 = add i64 %34, -8                           ; 2 uses
   %i.sd = lshr i64 %35, 3
   %i.se = add nuw nsw i64 %i.sd, 1                ; 2 uses
   %min.iters.check1934 = icmp ult i64 %35, 24
@@ -2549,8 +2549,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i113.us.preheader:                 ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i109.us
   %i.th = ptrtoaddr ptr %i.te to i64
-  %36 = add i64 %i.su, -8
-  %37 = sub i64 %36, %i.sv                        ; 2 uses
+  %36 = sub i64 %i.su, %i.sv
+  %37 = add i64 %36, -8                           ; 2 uses
   %i.ti = lshr i64 %37, 3
   %i.tj = add nuw nsw i64 %i.ti, 1                ; 2 uses
   %min.iters.check1916 = icmp ult i64 %37, 24
@@ -2655,8 +2655,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i99.us.preheader:                  ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i95.us
   %i.um = ptrtoaddr ptr %i.uj to i64
-  %38 = add i64 %i.tz, -8
-  %39 = sub i64 %38, %i.ua                        ; 2 uses
+  %38 = sub i64 %i.tz, %i.ua
+  %39 = add i64 %38, -8                           ; 2 uses
   %i.un = lshr i64 %39, 3
   %i.uo = add nuw nsw i64 %i.un, 1                ; 2 uses
   %min.iters.check1898 = icmp ult i64 %39, 24
@@ -2761,8 +2761,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i85.us.preheader:                  ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i81.us
   %i.vr = ptrtoaddr ptr %i.vo to i64
-  %40 = add i64 %i.ve, -8
-  %41 = sub i64 %40, %i.vf                        ; 2 uses
+  %40 = sub i64 %i.ve, %i.vf
+  %41 = add i64 %40, -8                           ; 2 uses
   %i.vs = lshr i64 %41, 3
   %i.vt = add nuw nsw i64 %i.vs, 1                ; 2 uses
   %min.iters.check1880 = icmp ult i64 %41, 24
@@ -2867,8 +2867,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i71.us.preheader:                  ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i67.us
   %i.ww = ptrtoaddr ptr %i.wt to i64
-  %42 = add i64 %i.wj, -8
-  %43 = sub i64 %42, %i.wk                        ; 2 uses
+  %42 = sub i64 %i.wj, %i.wk
+  %43 = add i64 %42, -8                           ; 2 uses
   %i.wx = lshr i64 %43, 3
   %i.wy = add nuw nsw i64 %i.wx, 1                ; 2 uses
   %min.iters.check1862 = icmp ult i64 %43, 24
@@ -2973,8 +2973,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i57.us.preheader:                  ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i53.us
   %i.yb = ptrtoaddr ptr %i.xy to i64
-  %44 = add i64 %i.xo, -8
-  %45 = sub i64 %44, %i.xp                        ; 2 uses
+  %44 = sub i64 %i.xo, %i.xp
+  %45 = add i64 %44, -8                           ; 2 uses
   %i.yc = lshr i64 %45, 3
   %i.yd = add nuw nsw i64 %i.yc, 1                ; 2 uses
   %min.iters.check1844 = icmp ult i64 %45, 24
@@ -3079,8 +3079,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i43.us.preheader:                  ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i39.us
   %i.zg = ptrtoaddr ptr %i.zd to i64
-  %46 = add i64 %i.yt, -8
-  %47 = sub i64 %46, %i.yu                        ; 2 uses
+  %46 = sub i64 %i.yt, %i.yu
+  %47 = add i64 %46, -8                           ; 2 uses
   %i.zh = lshr i64 %47, 3
   %i.zi = add nuw nsw i64 %i.zh, 1                ; 2 uses
   %min.iters.check1826 = icmp ult i64 %47, 24
@@ -3185,8 +3185,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i29.us.preheader:                  ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i25.us
   %i.aal = ptrtoaddr ptr %i.aai to i64
-  %48 = add i64 %i.zy, -8
-  %49 = sub i64 %48, %i.zz                        ; 2 uses
+  %48 = sub i64 %i.zy, %i.zz
+  %49 = add i64 %48, -8                           ; 2 uses
   %i.aam = lshr i64 %49, 3
   %i.aan = add nuw nsw i64 %i.aam, 1              ; 2 uses
   %min.iters.check1808 = icmp ult i64 %49, 24
@@ -3291,8 +3291,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i15.us.preheader:                  ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i11.us
   %i.abq = ptrtoaddr ptr %i.abn to i64
-  %50 = add i64 %i.abd, -8
-  %51 = sub i64 %50, %i.abe                       ; 2 uses
+  %50 = sub i64 %i.abd, %i.abe
+  %51 = add i64 %50, -8                           ; 2 uses
   %i.abr = lshr i64 %51, 3
   %i.abs = add nuw nsw i64 %i.abr, 1              ; 2 uses
   %min.iters.check1790 = icmp ult i64 %51, 24
@@ -3397,8 +3397,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i.us.preheader:                    ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i.us
   %i.acv = ptrtoaddr ptr %i.acs to i64
-  %52 = add i64 %i.aci, -8
-  %53 = sub i64 %52, %i.acj                       ; 2 uses
+  %52 = sub i64 %i.aci, %i.acj
+  %53 = add i64 %52, -8                           ; 2 uses
   %i.acw = lshr i64 %53, 3
   %i.acx = add nuw nsw i64 %i.acw, 1              ; 2 uses
   %min.iters.check1772 = icmp ult i64 %53, 24
@@ -3503,8 +3503,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i351.us.preheader:                 ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i347.us
   %i.aea = ptrtoaddr ptr %i.adx to i64
-  %54 = add i64 %i.adn, -8
-  %55 = sub i64 %54, %i.ado                       ; 2 uses
+  %54 = sub i64 %i.adn, %i.ado
+  %55 = add i64 %54, -8                           ; 2 uses
   %i.aeb = lshr i64 %55, 3
   %i.aec = add nuw nsw i64 %i.aeb, 1              ; 2 uses
   %min.iters.check1754 = icmp ult i64 %55, 24
@@ -3754,8 +3754,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i365.preheader:                    ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i361
   %i.afh = ptrtoaddr ptr %i.afe to i64
-  %56 = add i64 %i.aeu, -8
-  %57 = sub i64 %56, %i.aev                       ; 2 uses
+  %56 = sub i64 %i.aeu, %i.aev
+  %57 = add i64 %56, -8                           ; 2 uses
   %i.afi = lshr i64 %57, 3
   %i.afj = add nuw nsw i64 %i.afi, 1              ; 2 uses
   %min.iters.check1430 = icmp ult i64 %57, 24
@@ -3864,8 +3864,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i379.preheader:                    ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i375
   %i.agm = ptrtoaddr ptr %i.agj to i64
-  %58 = add i64 %i.afz, -8
-  %59 = sub i64 %58, %i.aga                       ; 2 uses
+  %58 = sub i64 %i.afz, %i.aga
+  %59 = add i64 %58, -8                           ; 2 uses
   %i.agn = lshr i64 %59, 3
   %i.ago = add nuw nsw i64 %i.agn, 1              ; 2 uses
   %min.iters.check1448 = icmp ult i64 %59, 24
@@ -3974,8 +3974,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i393.preheader:                    ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i389
   %i.ahr = ptrtoaddr ptr %i.aho to i64
-  %60 = add i64 %i.ahe, -8
-  %61 = sub i64 %60, %i.ahf                       ; 2 uses
+  %60 = sub i64 %i.ahe, %i.ahf
+  %61 = add i64 %60, -8                           ; 2 uses
   %i.ahs = lshr i64 %61, 3
   %i.aht = add nuw nsw i64 %i.ahs, 1              ; 2 uses
   %min.iters.check1466 = icmp ult i64 %61, 24
@@ -4084,8 +4084,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i407.preheader:                    ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i403
   %i.aiw = ptrtoaddr ptr %i.ait to i64
-  %62 = add i64 %i.aij, -8
-  %63 = sub i64 %62, %i.aik                       ; 2 uses
+  %62 = sub i64 %i.aij, %i.aik
+  %63 = add i64 %62, -8                           ; 2 uses
   %i.aix = lshr i64 %63, 3
   %i.aiy = add nuw nsw i64 %i.aix, 1              ; 2 uses
   %min.iters.check1484 = icmp ult i64 %63, 24
@@ -4194,8 +4194,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i421.preheader:                    ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i417
   %i.akb = ptrtoaddr ptr %i.ajy to i64
-  %64 = add i64 %i.ajo, -8
-  %65 = sub i64 %64, %i.ajp                       ; 2 uses
+  %64 = sub i64 %i.ajo, %i.ajp
+  %65 = add i64 %64, -8                           ; 2 uses
   %i.akc = lshr i64 %65, 3
   %i.akd = add nuw nsw i64 %i.akc, 1              ; 2 uses
   %min.iters.check1502 = icmp ult i64 %65, 24
@@ -4304,8 +4304,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i435.preheader:                    ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i431
   %i.alg = ptrtoaddr ptr %i.ald to i64
-  %66 = add i64 %i.akt, -8
-  %67 = sub i64 %66, %i.aku                       ; 2 uses
+  %66 = sub i64 %i.akt, %i.aku
+  %67 = add i64 %66, -8                           ; 2 uses
   %i.alh = lshr i64 %67, 3
   %i.ali = add nuw nsw i64 %i.alh, 1              ; 2 uses
   %min.iters.check1520 = icmp ult i64 %67, 24
@@ -4414,8 +4414,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i449.preheader:                    ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i445
   %i.aml = ptrtoaddr ptr %i.ami to i64
-  %68 = add i64 %i.aly, -8
-  %69 = sub i64 %68, %i.alz                       ; 2 uses
+  %68 = sub i64 %i.aly, %i.alz
+  %69 = add i64 %68, -8                           ; 2 uses
   %i.amm = lshr i64 %69, 3
   %i.amn = add nuw nsw i64 %i.amm, 1              ; 2 uses
   %min.iters.check1538 = icmp ult i64 %69, 24
@@ -4524,8 +4524,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i463.preheader:                    ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i459
   %i.anq = ptrtoaddr ptr %i.ann to i64
-  %70 = add i64 %i.and, -8
-  %71 = sub i64 %70, %i.ane                       ; 2 uses
+  %70 = sub i64 %i.and, %i.ane
+  %71 = add i64 %70, -8                           ; 2 uses
   %i.anr = lshr i64 %71, 3
   %i.ans = add nuw nsw i64 %i.anr, 1              ; 2 uses
   %min.iters.check1556 = icmp ult i64 %71, 24
@@ -4634,8 +4634,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i477.preheader:                    ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i473
   %i.aov = ptrtoaddr ptr %i.aos to i64
-  %72 = add i64 %i.aoi, -8
-  %73 = sub i64 %72, %i.aoj                       ; 2 uses
+  %72 = sub i64 %i.aoi, %i.aoj
+  %73 = add i64 %72, -8                           ; 2 uses
   %i.aow = lshr i64 %73, 3
   %i.aox = add nuw nsw i64 %i.aow, 1              ; 2 uses
   %min.iters.check1574 = icmp ult i64 %73, 24
@@ -4744,8 +4744,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i491.preheader:                    ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i487
   %i.aqa = ptrtoaddr ptr %i.apx to i64
-  %74 = add i64 %i.apn, -8
-  %75 = sub i64 %74, %i.apo                       ; 2 uses
+  %74 = sub i64 %i.apn, %i.apo
+  %75 = add i64 %74, -8                           ; 2 uses
   %i.aqb = lshr i64 %75, 3
   %i.aqc = add nuw nsw i64 %i.aqb, 1              ; 2 uses
   %min.iters.check1592 = icmp ult i64 %75, 24
@@ -4854,8 +4854,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i505.preheader:                    ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i501
   %i.arf = ptrtoaddr ptr %i.arc to i64
-  %76 = add i64 %i.aqs, -8
-  %77 = sub i64 %76, %i.aqt                       ; 2 uses
+  %76 = sub i64 %i.aqs, %i.aqt
+  %77 = add i64 %76, -8                           ; 2 uses
   %i.arg = lshr i64 %77, 3
   %i.arh = add nuw nsw i64 %i.arg, 1              ; 2 uses
   %min.iters.check1610 = icmp ult i64 %77, 24
@@ -4964,8 +4964,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i519.preheader:                    ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i515
   %i.ask = ptrtoaddr ptr %i.ash to i64
-  %78 = add i64 %i.arx, -8
-  %79 = sub i64 %78, %i.ary                       ; 2 uses
+  %78 = sub i64 %i.arx, %i.ary
+  %79 = add i64 %78, -8                           ; 2 uses
   %i.asl = lshr i64 %79, 3
   %i.asm = add nuw nsw i64 %i.asl, 1              ; 2 uses
   %min.iters.check1628 = icmp ult i64 %79, 24
@@ -5074,8 +5074,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i533.preheader:                    ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i529
   %i.atp = ptrtoaddr ptr %i.atm to i64
-  %80 = add i64 %i.atc, -8
-  %81 = sub i64 %80, %i.atd                       ; 2 uses
+  %80 = sub i64 %i.atc, %i.atd
+  %81 = add i64 %80, -8                           ; 2 uses
   %i.atq = lshr i64 %81, 3
   %i.atr = add nuw nsw i64 %i.atq, 1              ; 2 uses
   %min.iters.check1646 = icmp ult i64 %81, 24
@@ -5184,8 +5184,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i547.preheader:                    ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i543
   %i.auu = ptrtoaddr ptr %i.aur to i64
-  %82 = add i64 %i.auh, -8
-  %83 = sub i64 %82, %i.aui                       ; 2 uses
+  %82 = sub i64 %i.auh, %i.aui
+  %83 = add i64 %82, -8                           ; 2 uses
   %i.auv = lshr i64 %83, 3
   %i.auw = add nuw nsw i64 %i.auv, 1              ; 2 uses
   %min.iters.check1664 = icmp ult i64 %83, 24
@@ -5294,8 +5294,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i561.preheader:                    ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i557
   %i.avz = ptrtoaddr ptr %i.avw to i64
-  %84 = add i64 %i.avm, -8
-  %85 = sub i64 %84, %i.avn                       ; 2 uses
+  %84 = sub i64 %i.avm, %i.avn
+  %85 = add i64 %84, -8                           ; 2 uses
   %i.awa = lshr i64 %85, 3
   %i.awb = add nuw nsw i64 %i.awa, 1              ; 2 uses
   %min.iters.check1682 = icmp ult i64 %85, 24
@@ -5404,8 +5404,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i575.preheader:                    ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i571
   %i.axe = ptrtoaddr ptr %i.axb to i64
-  %86 = add i64 %i.awr, -8
-  %87 = sub i64 %86, %i.aws                       ; 2 uses
+  %86 = sub i64 %i.awr, %i.aws
+  %87 = add i64 %86, -8                           ; 2 uses
   %i.axf = lshr i64 %87, 3
   %i.axg = add nuw nsw i64 %i.axf, 1              ; 2 uses
   %min.iters.check1700 = icmp ult i64 %87, 24
@@ -5514,8 +5514,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i589.preheader:                    ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i585
   %i.ayj = ptrtoaddr ptr %i.ayg to i64
-  %88 = add i64 %i.axw, -8
-  %89 = sub i64 %88, %i.axx                       ; 2 uses
+  %88 = sub i64 %i.axw, %i.axx
+  %89 = add i64 %88, -8                           ; 2 uses
   %i.ayk = lshr i64 %89, 3
   %i.ayl = add nuw nsw i64 %i.ayk, 1              ; 2 uses
   %min.iters.check1718 = icmp ult i64 %89, 24
@@ -5624,8 +5624,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i603.preheader:                    ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i599
   %i.azo = ptrtoaddr ptr %i.azl to i64
-  %90 = add i64 %i.azb, -8
-  %91 = sub i64 %90, %i.azc                       ; 2 uses
+  %90 = sub i64 %i.azb, %i.azc
+  %91 = add i64 %90, -8                           ; 2 uses
   %i.azp = lshr i64 %91, 3
   %i.azq = add nuw nsw i64 %i.azp, 1              ; 2 uses
   %min.iters.check1736 = icmp ult i64 %91, 24
@@ -5734,8 +5734,8 @@ _ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmP
 
 .lr.ph.i.i.i.i.i617.preheader:                    ; preds = %_ZNKSt6vectorISt4pairIN4LIEF3ELF6X86ISA4FLAGENS3_3ISAEESaIS6_EE12_M_check_lenEmPKc.exit.i.i613
   %i.bat = ptrtoaddr ptr %i.baq to i64
-  %92 = add i64 %i.bag, -8
-  %93 = sub i64 %92, %i.bah                       ; 2 uses
+  %92 = sub i64 %i.bag, %i.bah
+  %93 = add i64 %92, -8                           ; 2 uses
   %i.bau = lshr i64 %93, 3
   %i.bav = add nuw nsw i64 %i.bau, 1              ; 2 uses
   %min.iters.check = icmp ult i64 %93, 24

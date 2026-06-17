@@ -201,8 +201,8 @@ _ZSt24__uninitialized_fill_n_aIPN11OpenImageIO4v3_18TypeDescEmS2_S2_ET_S4_T0_RKT
 
 .lr.ph.i.i.i.i.i70.preheader:                     ; preds = %_ZSt24__uninitialized_fill_n_aIPN11OpenImageIO4v3_18TypeDescEmS2_S2_ET_S4_T0_RKT1_RSaIT2_E.exit
   %i.bg = ptrtoaddr ptr %i.bf to i64
-  %4 = add i64 %i.f, -8
-  %5 = sub i64 %4, %i.j                           ; 2 uses
+  %4 = sub i64 %i.f, %i.j
+  %5 = add i64 %4, -8                             ; 2 uses
   %i.bh = lshr i64 %5, 3
   %i.bi = add nuw nsw i64 %i.bh, 1                ; 2 uses
   %min.iters.check137 = icmp ult i64 %5, 56
@@ -261,8 +261,8 @@ _ZSt22__uninitialized_move_aIPN11OpenImageIO4v3_18TypeDescES3_SaIS2_EET0_T_S6_S5
   %i.bv = load ptr, ptr %i.c, align 8, !tbaa !7
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 %i.k
   store ptr %i.bw, ptr %i.c, align 8, !tbaa !7
-  %6 = add i64 %i.f, -8
-  %7 = sub i64 %6, %i.j                           ; 2 uses
+  %6 = sub i64 %i.f, %i.j
+  %7 = add i64 %6, -8                             ; 2 uses
   %i.bx = lshr i64 %7, 3
   %i.by = add nuw nsw i64 %i.bx, 1                ; 2 uses
   %min.iters.check152 = icmp ult i64 %7, 24
@@ -436,8 +436,8 @@ _ZSt24__uninitialized_fill_n_aIPN11OpenImageIO4v3_18TypeDescEmS2_S2_ET_S4_T0_RKT
   br i1 %.not11.i.i.i.i.i88, label %_ZSt34__uninitialized_move_if_noexcept_aIPN11OpenImageIO4v3_18TypeDescES3_SaIS2_EET0_T_S6_S5_RT1_.exit, label %.lr.ph.i.i.i.i.i89.preheader
 
 .lr.ph.i.i.i.i.i89.preheader:                     ; preds = %_ZSt24__uninitialized_fill_n_aIPN11OpenImageIO4v3_18TypeDescEmS2_S2_ET_S4_T0_RKT1_RSaIT2_E.exit87
-  %8 = add i64 %i.cp, -8
-  %9 = sub i64 %8, %i.cg                          ; 2 uses
+  %8 = sub i64 %i.cp, %i.cg
+  %9 = add i64 %8, -8                             ; 2 uses
   %i.ec = lshr i64 %9, 3
   %i.ed = add nuw nsw i64 %i.ec, 1                ; 2 uses
   %min.iters.check215 = icmp ult i64 %9, 56
@@ -495,8 +495,8 @@ _ZSt34__uninitialized_move_if_noexcept_aIPN11OpenImageIO4v3_18TypeDescES3_SaIS2_
   br i1 %.not11.i.i.i.i.i94, label %_ZSt34__uninitialized_move_if_noexcept_aIPN11OpenImageIO4v3_18TypeDescES3_SaIS2_EET0_T_S6_S5_RT1_.exit100, label %.lr.ph.i.i.i.i.i95.preheader
 
 .lr.ph.i.i.i.i.i95.preheader:                     ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPN11OpenImageIO4v3_18TypeDescES3_SaIS2_EET0_T_S6_S5_RT1_.exit
-  %10 = add i64 %i.f, -8
-  %11 = sub i64 %10, %i.cp                        ; 2 uses
+  %10 = sub i64 %i.f, %i.cp
+  %11 = add i64 %10, -8                           ; 2 uses
   %i.eq = lshr i64 %11, 3
   %i.er = add nuw nsw i64 %i.eq, 1                ; 2 uses
   %min.iters.check234 = icmp ult i64 %11, 104
@@ -899,8 +899,8 @@ bb.m:                                             ; preds = %bb.l
   %.idx.i.i.i.i.i = shl nuw nsw i64 %i.ao, 2
   %i.ap = getelementptr inbounds nuw i8, ptr %i.d, i64 %.idx.i.i.i.i.i ; 3 uses
   %i.aq = shl i64 %2, 2
-  %4 = add i64 %i.aq, -4
-  %5 = sub i64 %4, %i.k                           ; 2 uses
+  %4 = sub i64 %i.aq, %i.k
+  %5 = add i64 %4, -4                             ; 2 uses
   %i.ar = lshr i64 %5, 2
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %5, 28
@@ -968,8 +968,8 @@ _ZSt22__uninitialized_move_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit69: ; preds = %bb.p,
   br i1 %.not5.i.i.i70, label %_ZSt4fillIPiiEvT_S1_RKT0_.exit, label %.lr.ph.i.i.i71.preheader
 
 .lr.ph.i.i.i71.preheader:                         ; preds = %_ZSt22__uninitialized_move_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit69
-  %6 = add i64 %i.f, -4
-  %7 = sub i64 %6, %i.j                           ; 2 uses
+  %6 = sub i64 %i.f, %i.j
+  %7 = add i64 %6, -4                             ; 2 uses
   %i.be = lshr i64 %7, 2
   %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses
   %min.iters.check113 = icmp ult i64 %7, 28
@@ -1266,8 +1266,8 @@ bb.m:                                             ; preds = %bb.l
   %.idx.i.i.i.i.i = shl nuw nsw i64 %i.ao, 2
   %i.ap = getelementptr inbounds nuw i8, ptr %i.d, i64 %.idx.i.i.i.i.i ; 3 uses
   %i.aq = shl i64 %2, 2
-  %4 = add i64 %i.aq, -4
-  %5 = sub i64 %4, %i.k                           ; 2 uses
+  %4 = sub i64 %i.aq, %i.k
+  %5 = add i64 %4, -4                             ; 2 uses
   %i.ar = lshr i64 %5, 2
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %5, 28
@@ -1335,8 +1335,8 @@ _ZSt22__uninitialized_move_aIPjS0_SaIjEET0_T_S3_S2_RT1_.exit69: ; preds = %bb.p,
   br i1 %.not5.i.i.i70, label %_ZSt4fillIPjjEvT_S1_RKT0_.exit, label %.lr.ph.i.i.i71.preheader
 
 .lr.ph.i.i.i71.preheader:                         ; preds = %_ZSt22__uninitialized_move_aIPjS0_SaIjEET0_T_S3_S2_RT1_.exit69
-  %6 = add i64 %i.f, -4
-  %7 = sub i64 %6, %i.j                           ; 2 uses
+  %6 = sub i64 %i.f, %i.j
+  %7 = add i64 %6, -4                             ; 2 uses
   %i.be = lshr i64 %7, 2
   %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses
   %min.iters.check113 = icmp ult i64 %7, 28
@@ -1739,8 +1739,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.k, label %.lr.ph.i.preheader, label %bb.d
 
 .lr.ph.i.preheader:                               ; preds = %bb.c
-  %3 = add i64 %i.g, -4
-  %4 = sub i64 %3, %i.d                           ; 2 uses
+  %3 = sub i64 %i.g, %i.d
+  %4 = add i64 %3, -4                             ; 2 uses
   %i.l = lshr i64 %4, 2
   %i.m = add nuw nsw i64 %i.l, 1                  ; 2 uses
   %min.iters.check175 = icmp ult i64 %4, 60

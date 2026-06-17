@@ -201,8 +201,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_17SharedArrayBufferEEESaIS4_EE12
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_17SharedArrayBufferEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i
   %i.hb = ptrtoaddr ptr %i.gz to i64
-  %14 = add i64 %i.gp, -8
-  %15 = sub i64 %14, %i.gq                        ; 2 uses
+  %14 = sub i64 %i.gp, %i.gq
+  %15 = add i64 %14, -8                           ; 2 uses
   %i.hc = lshr i64 %15, 3
   %i.hd = add nuw nsw i64 %i.hc, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %15, 24
@@ -605,14 +605,14 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_11ArrayBufferEEESaIS4_EE12_M_che
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_11ArrayBufferEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i
   %i.dk = ptrtoaddr ptr %i.di to i64
-  %26 = add i64 %i.cx, -8
-  %27 = sub i64 %26, %i.cy                        ; 2 uses
+  %26 = sub i64 %i.cx, %i.cy
+  %27 = add i64 %26, -8                           ; 2 uses
   %i.dl = lshr i64 %27, 3
   %i.dm = add nuw nsw i64 %i.dl, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %27, 24
   %i.dn = sub i64 %i.dk, %i.cy
   %diff.check = icmp ult i64 %i.dn, 32
-  %or.cond = or i1 %min.iters.check, %diff.check
+  %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.i.preheader711, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader
@@ -1015,8 +1015,8 @@ _ZNKSt6vectorISt10unique_ptrIN4node6worker12TransferDataESt14default_deleteIS3_E
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4node6worker12TransferDataESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i.i, label %.lr.ph.i.i.i.i.i144.preheader
 
 .lr.ph.i.i.i.i.i144.preheader:                    ; preds = %_ZNKSt6vectorISt10unique_ptrIN4node6worker12TransferDataESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit.i.i
-  %28 = add i64 %i.pa, -8
-  %29 = sub i64 %28, %i.pb                        ; 2 uses
+  %28 = sub i64 %i.pa, %i.pb
+  %29 = add i64 %28, -8                           ; 2 uses
   %i.pn = lshr i64 %29, 3
   %i.po = add nuw nsw i64 %i.pn, 1                ; 2 uses
   %min.iters.check687 = icmp ult i64 %29, 56
@@ -1419,8 +1419,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.u = ptrtoaddr ptr %i.s to i64
-  %2 = add i64 %i.i, -8
-  %3 = sub i64 %2, %i.j                           ; 2 uses
+  %2 = sub i64 %i.i, %i.j
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.v = lshr i64 %3, 3
   %i.w = add nuw nsw i64 %i.v, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 56

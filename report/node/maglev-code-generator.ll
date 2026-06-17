@@ -201,8 +201,8 @@ _ZNKSt6vectorImN2v88internal19StrongRootAllocatorImEEE12_M_check_lenEmPKc.exit.i
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorImN2v88internal19StrongRootAllocatorImEEE12_M_check_lenEmPKc.exit.i.i.i
   %i.bd = ptrtoaddr ptr %i.bb to i64
-  %4 = add i64 %i.as, -8
-  %5 = sub i64 %4, %i.at                          ; 2 uses
+  %4 = sub i64 %i.as, %i.at
+  %5 = add i64 %4, -8                             ; 2 uses
   %i.be = lshr i64 %5, 3
   %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %5, 24
@@ -605,8 +605,8 @@ _ZNKSt6vectorImN2v88internal19StrongRootAllocatorImEEE12_M_check_lenEmPKc.exit.i
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorImN2v88internal19StrongRootAllocatorImEEE12_M_check_lenEmPKc.exit.i.i.i
   %i.bm = ptrtoaddr ptr %i.bk to i64
-  %3 = add i64 %i.bb, -8
-  %4 = sub i64 %3, %i.bc                          ; 2 uses
+  %3 = sub i64 %i.bb, %i.bc
+  %4 = add i64 %3, -8                             ; 2 uses
   %i.bn = lshr i64 %4, 3
   %i.bo = add nuw nsw i64 %i.bn, 1                ; 2 uses
   %min.iters.check33 = icmp ult i64 %4, 24
@@ -1009,8 +1009,8 @@ _ZNSt12_Vector_baseImN2v88internal19StrongRootAllocatorImEEE11_M_allocateEm.exit
 
 .lr.ph.i.i.preheader:                             ; preds = %_ZNSt12_Vector_baseImN2v88internal19StrongRootAllocatorImEEE11_M_allocateEm.exit.i
   %i.p = ptrtoaddr ptr %i.n to i64
-  %3 = add i64 %i.a, -8
-  %4 = sub i64 %3, %i.b                           ; 2 uses
+  %3 = sub i64 %i.a, %i.b
+  %4 = add i64 %3, -8                             ; 2 uses
   %i.q = lshr i64 %4, 3
   %i.r = add nuw nsw i64 %i.q, 1                  ; 2 uses
   %min.iters.check37 = icmp ult i64 %4, 56
@@ -1143,9 +1143,9 @@ _ZSt4copyISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImN2v88int
 
 .lr.ph.i.preheader:                               ; preds = %_ZSt4copyISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImN2v88internal19StrongRootAllocatorImEEEEEES3_ET0_T_SD_SC_.exit19
   %i.bb = add i64 %i.j, %i.a
-  %i.bc = add i64 %i.bb, -8
-  %5 = add i64 %i.ao, %i.b
-  %6 = sub i64 %i.bc, %5                          ; 2 uses
+  %i.bc = add i64 %i.ao, %i.b
+  %5 = sub i64 %i.bb, %i.bc
+  %6 = add i64 %5, -8                             ; 2 uses
   %i.bd = lshr i64 %6, 3
   %i.be = add nuw nsw i64 %i.bd, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %6, 104

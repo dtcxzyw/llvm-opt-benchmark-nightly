@@ -201,8 +201,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i
   %i.ck = ptrtoaddr ptr %i.ci to i64
-  %1 = add i64 %i.by, -8
-  %2 = sub i64 %1, %i.bz                          ; 2 uses
+  %1 = sub i64 %i.by, %i.bz
+  %2 = add i64 %1, -8                             ; 2 uses
   %i.cl = lshr i64 %2, 3
   %i.cm = add nuw nsw i64 %i.cl, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %2, 24
@@ -481,8 +481,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i
   %i.co = ptrtoaddr ptr %i.cm to i64
-  %1 = add i64 %i.cc, -8
-  %2 = sub i64 %1, %i.cd                          ; 2 uses
+  %1 = sub i64 %i.cc, %i.cd
+  %2 = add i64 %1, -8                             ; 2 uses
   %i.cp = lshr i64 %2, 3
   %i.cq = add nuw nsw i64 %i.cp, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %2, 24
@@ -752,8 +752,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i
   %i.ck = ptrtoaddr ptr %i.ci to i64
-  %1 = add i64 %i.by, -8
-  %2 = sub i64 %1, %i.bz                          ; 2 uses
+  %1 = sub i64 %i.by, %i.bz
+  %2 = add i64 %1, -8                             ; 2 uses
   %i.cl = lshr i64 %2, 3
   %i.cm = add nuw nsw i64 %i.cl, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %2, 24
@@ -1156,8 +1156,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i
   %i.fj = ptrtoaddr ptr %i.fh to i64
-  %1 = add i64 %i.ex, -8
-  %2 = sub i64 %1, %i.ey                          ; 2 uses
+  %1 = sub i64 %i.ex, %i.ey
+  %2 = add i64 %1, -8                             ; 2 uses
   %i.fk = lshr i64 %2, 3
   %i.fl = add nuw nsw i64 %i.fk, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %2, 24
@@ -1560,8 +1560,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i324.preheader:                ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i320
   %i.fi = ptrtoaddr ptr %i.fg to i64
-  %4 = add i64 %i.ew, -8
-  %5 = sub i64 %4, %i.ex                          ; 2 uses
+  %4 = sub i64 %i.ew, %i.ex
+  %5 = add i64 %4, -8                             ; 2 uses
   %i.fj = lshr i64 %5, 3
   %i.fk = add nuw nsw i64 %i.fj, 1                ; 2 uses
   %min.iters.check2357 = icmp ult i64 %5, 56
@@ -1854,8 +1854,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i353.preheader:                ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i349
   %i.iv = ptrtoaddr ptr %i.it to i64
-  %6 = add i64 %i.ij, -8
-  %7 = sub i64 %6, %i.ik                          ; 2 uses
+  %6 = sub i64 %i.ij, %i.ik
+  %7 = add i64 %6, -8                             ; 2 uses
   %i.iw = lshr i64 %7, 3
   %i.ix = add nuw nsw i64 %i.iw, 1                ; 2 uses
   %min.iters.check2394 = icmp ult i64 %7, 56
@@ -2148,8 +2148,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i382.preheader:                ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i378
   %i.mi = ptrtoaddr ptr %i.mg to i64
-  %8 = add i64 %i.lw, -8
-  %9 = sub i64 %8, %i.lx                          ; 2 uses
+  %8 = sub i64 %i.lw, %i.lx
+  %9 = add i64 %8, -8                             ; 2 uses
   %i.mj = lshr i64 %9, 3
   %i.mk = add nuw nsw i64 %i.mj, 1                ; 2 uses
   %min.iters.check2431 = icmp ult i64 %9, 56
@@ -2442,8 +2442,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i412.preheader:                ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i408
   %i.pv = ptrtoaddr ptr %i.pt to i64
-  %10 = add i64 %i.pj, -8
-  %11 = sub i64 %10, %i.pk                        ; 2 uses
+  %10 = sub i64 %i.pj, %i.pk
+  %11 = add i64 %10, -8                           ; 2 uses
   %i.pw = lshr i64 %11, 3
   %i.px = add nuw nsw i64 %i.pw, 1                ; 2 uses
   %min.iters.check2468 = icmp ult i64 %11, 56
@@ -2736,8 +2736,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i442.preheader:                ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i438
   %i.ti = ptrtoaddr ptr %i.tg to i64
-  %12 = add i64 %i.sw, -8
-  %13 = sub i64 %12, %i.sx                        ; 2 uses
+  %12 = sub i64 %i.sw, %i.sx
+  %13 = add i64 %12, -8                           ; 2 uses
   %i.tj = lshr i64 %13, 3
   %i.tk = add nuw nsw i64 %i.tj, 1                ; 2 uses
   %min.iters.check2505 = icmp ult i64 %13, 56
@@ -3030,8 +3030,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i472.preheader:                ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i468
   %i.wv = ptrtoaddr ptr %i.wt to i64
-  %14 = add i64 %i.wj, -8
-  %15 = sub i64 %14, %i.wk                        ; 2 uses
+  %14 = sub i64 %i.wj, %i.wk
+  %15 = add i64 %14, -8                           ; 2 uses
   %i.ww = lshr i64 %15, 3
   %i.wx = add nuw nsw i64 %i.ww, 1                ; 2 uses
   %min.iters.check2542 = icmp ult i64 %15, 56
@@ -3324,8 +3324,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i501.preheader:                ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i497
   %i.aai = ptrtoaddr ptr %i.aag to i64
-  %16 = add i64 %i.zw, -8
-  %17 = sub i64 %16, %i.zx                        ; 2 uses
+  %16 = sub i64 %i.zw, %i.zx
+  %17 = add i64 %16, -8                           ; 2 uses
   %i.aaj = lshr i64 %17, 3
   %i.aak = add nuw nsw i64 %i.aaj, 1              ; 2 uses
   %min.iters.check2579 = icmp ult i64 %17, 56
@@ -3618,8 +3618,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i531.preheader:                ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i527
   %i.adv = ptrtoaddr ptr %i.adt to i64
-  %18 = add i64 %i.adj, -8
-  %19 = sub i64 %18, %i.adk                       ; 2 uses
+  %18 = sub i64 %i.adj, %i.adk
+  %19 = add i64 %18, -8                           ; 2 uses
   %i.adw = lshr i64 %19, 3
   %i.adx = add nuw nsw i64 %i.adw, 1              ; 2 uses
   %min.iters.check2616 = icmp ult i64 %19, 56
@@ -3912,8 +3912,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i561.preheader:                ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i557
   %i.ahi = ptrtoaddr ptr %i.ahg to i64
-  %20 = add i64 %i.agw, -8
-  %21 = sub i64 %20, %i.agx                       ; 2 uses
+  %20 = sub i64 %i.agw, %i.agx
+  %21 = add i64 %20, -8                           ; 2 uses
   %i.ahj = lshr i64 %21, 3
   %i.ahk = add nuw nsw i64 %i.ahj, 1              ; 2 uses
   %min.iters.check2653 = icmp ult i64 %21, 56
@@ -4206,8 +4206,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i590.preheader:                ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i586
   %i.akv = ptrtoaddr ptr %i.akt to i64
-  %22 = add i64 %i.akj, -8
-  %23 = sub i64 %22, %i.akk                       ; 2 uses
+  %22 = sub i64 %i.akj, %i.akk
+  %23 = add i64 %22, -8                           ; 2 uses
   %i.akw = lshr i64 %23, 3
   %i.akx = add nuw nsw i64 %i.akw, 1              ; 2 uses
   %min.iters.check2690 = icmp ult i64 %23, 56
@@ -4500,8 +4500,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i620.preheader:                ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i616
   %i.aoi = ptrtoaddr ptr %i.aog to i64
-  %24 = add i64 %i.anw, -8
-  %25 = sub i64 %24, %i.anx                       ; 2 uses
+  %24 = sub i64 %i.anw, %i.anx
+  %25 = add i64 %24, -8                           ; 2 uses
   %i.aoj = lshr i64 %25, 3
   %i.aok = add nuw nsw i64 %i.aoj, 1              ; 2 uses
   %min.iters.check2727 = icmp ult i64 %25, 56
@@ -4794,8 +4794,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i650.preheader:                ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i646
   %i.arv = ptrtoaddr ptr %i.art to i64
-  %26 = add i64 %i.arj, -8
-  %27 = sub i64 %26, %i.ark                       ; 2 uses
+  %26 = sub i64 %i.arj, %i.ark
+  %27 = add i64 %26, -8                           ; 2 uses
   %i.arw = lshr i64 %27, 3
   %i.arx = add nuw nsw i64 %i.arw, 1              ; 2 uses
   %min.iters.check2764 = icmp ult i64 %27, 56
@@ -5088,8 +5088,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i680.preheader:                ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i676
   %i.avi = ptrtoaddr ptr %i.avg to i64
-  %28 = add i64 %i.auw, -8
-  %29 = sub i64 %28, %i.aux                       ; 2 uses
+  %28 = sub i64 %i.auw, %i.aux
+  %29 = add i64 %28, -8                           ; 2 uses
   %i.avj = lshr i64 %29, 3
   %i.avk = add nuw nsw i64 %i.avj, 1              ; 2 uses
   %min.iters.check2801 = icmp ult i64 %29, 56
@@ -5492,8 +5492,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i845.preheader:                ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i841
   %i.bbq = ptrtoaddr ptr %i.bbo to i64
-  %30 = add i64 %i.bbe, -8
-  %31 = sub i64 %30, %i.bbf                       ; 2 uses
+  %30 = sub i64 %i.bbe, %i.bbf
+  %31 = add i64 %30, -8                           ; 2 uses
   %i.bbr = lshr i64 %31, 3
   %i.bbs = add nuw nsw i64 %i.bbr, 1              ; 2 uses
   %min.iters.check2899 = icmp ult i64 %31, 56
@@ -5786,8 +5786,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i875.preheader:                ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i871
   %i.bfd = ptrtoaddr ptr %i.bfb to i64
-  %32 = add i64 %i.ber, -8
-  %33 = sub i64 %32, %i.bes                       ; 2 uses
+  %32 = sub i64 %i.ber, %i.bes
+  %33 = add i64 %32, -8                           ; 2 uses
   %i.bfe = lshr i64 %33, 3
   %i.bff = add nuw nsw i64 %i.bfe, 1              ; 2 uses
   %min.iters.check2936 = icmp ult i64 %33, 56
@@ -6080,8 +6080,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i905.preheader:                ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i901
   %i.biq = ptrtoaddr ptr %i.bio to i64
-  %34 = add i64 %i.bie, -8
-  %35 = sub i64 %34, %i.bif                       ; 2 uses
+  %34 = sub i64 %i.bie, %i.bif
+  %35 = add i64 %34, -8                           ; 2 uses
   %i.bir = lshr i64 %35, 3
   %i.bis = add nuw nsw i64 %i.bir, 1              ; 2 uses
   %min.iters.check2973 = icmp ult i64 %35, 56
@@ -6374,8 +6374,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i935.preheader:                ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i931
   %i.bmd = ptrtoaddr ptr %i.bmb to i64
-  %36 = add i64 %i.blr, -8
-  %37 = sub i64 %36, %i.bls                       ; 2 uses
+  %36 = sub i64 %i.blr, %i.bls
+  %37 = add i64 %36, -8                           ; 2 uses
   %i.bme = lshr i64 %37, 3
   %i.bmf = add nuw nsw i64 %i.bme, 1              ; 2 uses
   %min.iters.check3010 = icmp ult i64 %37, 56
@@ -6668,8 +6668,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i965.preheader:                ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i961
   %i.bpq = ptrtoaddr ptr %i.bpo to i64
-  %38 = add i64 %i.bpe, -8
-  %39 = sub i64 %38, %i.bpf                       ; 2 uses
+  %38 = sub i64 %i.bpe, %i.bpf
+  %39 = add i64 %38, -8                           ; 2 uses
   %i.bpr = lshr i64 %39, 3
   %i.bps = add nuw nsw i64 %i.bpr, 1              ; 2 uses
   %min.iters.check3047 = icmp ult i64 %39, 56
@@ -6962,8 +6962,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i995.preheader:                ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i991
   %i.btd = ptrtoaddr ptr %i.btb to i64
-  %40 = add i64 %i.bsr, -8
-  %41 = sub i64 %40, %i.bss                       ; 2 uses
+  %40 = sub i64 %i.bsr, %i.bss
+  %41 = add i64 %40, -8                           ; 2 uses
   %i.bte = lshr i64 %41, 3
   %i.btf = add nuw nsw i64 %i.bte, 1              ; 2 uses
   %min.iters.check3084 = icmp ult i64 %41, 56
@@ -7256,8 +7256,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i1025.preheader:               ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i1021
   %i.bwq = ptrtoaddr ptr %i.bwo to i64
-  %42 = add i64 %i.bwe, -8
-  %43 = sub i64 %42, %i.bwf                       ; 2 uses
+  %42 = sub i64 %i.bwe, %i.bwf
+  %43 = add i64 %42, -8                           ; 2 uses
   %i.bwr = lshr i64 %43, 3
   %i.bws = add nuw nsw i64 %i.bwr, 1              ; 2 uses
   %min.iters.check3121 = icmp ult i64 %43, 56
@@ -7550,8 +7550,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i1055.preheader:               ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i1051
   %i.cad = ptrtoaddr ptr %i.cab to i64
-  %44 = add i64 %i.bzr, -8
-  %45 = sub i64 %44, %i.bzs                       ; 2 uses
+  %44 = sub i64 %i.bzr, %i.bzs
+  %45 = add i64 %44, -8                           ; 2 uses
   %i.cae = lshr i64 %45, 3
   %i.caf = add nuw nsw i64 %i.cae, 1              ; 2 uses
   %min.iters.check3158 = icmp ult i64 %45, 56
@@ -7844,8 +7844,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i1085.preheader:               ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i1081
   %i.cdq = ptrtoaddr ptr %i.cdo to i64
-  %46 = add i64 %i.cde, -8
-  %47 = sub i64 %46, %i.cdf                       ; 2 uses
+  %46 = sub i64 %i.cde, %i.cdf
+  %47 = add i64 %46, -8                           ; 2 uses
   %i.cdr = lshr i64 %47, 3
   %i.cds = add nuw nsw i64 %i.cdr, 1              ; 2 uses
   %min.iters.check3195 = icmp ult i64 %47, 56
@@ -8138,8 +8138,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i1115.preheader:               ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i1111
   %i.chd = ptrtoaddr ptr %i.chb to i64
-  %48 = add i64 %i.cgr, -8
-  %49 = sub i64 %48, %i.cgs                       ; 2 uses
+  %48 = sub i64 %i.cgr, %i.cgs
+  %49 = add i64 %48, -8                           ; 2 uses
   %i.che = lshr i64 %49, 3
   %i.chf = add nuw nsw i64 %i.che, 1              ; 2 uses
   %min.iters.check3232 = icmp ult i64 %49, 56
@@ -8432,8 +8432,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i1145.preheader:               ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i1141
   %i.ckq = ptrtoaddr ptr %i.cko to i64
-  %50 = add i64 %i.cke, -8
-  %51 = sub i64 %50, %i.ckf                       ; 2 uses
+  %50 = sub i64 %i.cke, %i.ckf
+  %51 = add i64 %50, -8                           ; 2 uses
   %i.ckr = lshr i64 %51, 3
   %i.cks = add nuw nsw i64 %i.ckr, 1              ; 2 uses
   %min.iters.check3269 = icmp ult i64 %51, 56
@@ -8726,8 +8726,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i1175.preheader:               ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i1171
   %i.cod = ptrtoaddr ptr %i.cob to i64
-  %52 = add i64 %i.cnr, -8
-  %53 = sub i64 %52, %i.cns                       ; 2 uses
+  %52 = sub i64 %i.cnr, %i.cns
+  %53 = add i64 %52, -8                           ; 2 uses
   %i.coe = lshr i64 %53, 3
   %i.cof = add nuw nsw i64 %i.coe, 1              ; 2 uses
   %min.iters.check3306 = icmp ult i64 %53, 56
@@ -9020,8 +9020,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i1205.preheader:               ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i1201
   %i.crq = ptrtoaddr ptr %i.cro to i64
-  %54 = add i64 %i.cre, -8
-  %55 = sub i64 %54, %i.crf                       ; 2 uses
+  %54 = sub i64 %i.cre, %i.crf
+  %55 = add i64 %54, -8                           ; 2 uses
   %i.crr = lshr i64 %55, 3
   %i.crs = add nuw nsw i64 %i.crr, 1              ; 2 uses
   %min.iters.check3343 = icmp ult i64 %55, 56
@@ -9314,8 +9314,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i1235.preheader:               ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i1231
   %i.cvd = ptrtoaddr ptr %i.cvb to i64
-  %56 = add i64 %i.cur, -8
-  %57 = sub i64 %56, %i.cus                       ; 2 uses
+  %56 = sub i64 %i.cur, %i.cus
+  %57 = add i64 %56, -8                           ; 2 uses
   %i.cve = lshr i64 %57, 3
   %i.cvf = add nuw nsw i64 %i.cve, 1              ; 2 uses
   %min.iters.check3380 = icmp ult i64 %57, 56
@@ -9608,8 +9608,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i1265.preheader:               ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i1261
   %i.cyq = ptrtoaddr ptr %i.cyo to i64
-  %58 = add i64 %i.cye, -8
-  %59 = sub i64 %58, %i.cyf                       ; 2 uses
+  %58 = sub i64 %i.cye, %i.cyf
+  %59 = add i64 %58, -8                           ; 2 uses
   %i.cyr = lshr i64 %59, 3
   %i.cys = add nuw nsw i64 %i.cyr, 1              ; 2 uses
   %min.iters.check3417 = icmp ult i64 %59, 56
@@ -9902,8 +9902,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i1295.preheader:               ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i1291
   %i.dcd = ptrtoaddr ptr %i.dcb to i64
-  %60 = add i64 %i.dbr, -8
-  %61 = sub i64 %60, %i.dbs                       ; 2 uses
+  %60 = sub i64 %i.dbr, %i.dbs
+  %61 = add i64 %60, -8                           ; 2 uses
   %i.dce = lshr i64 %61, 3
   %i.dcf = add nuw nsw i64 %i.dce, 1              ; 2 uses
   %min.iters.check3454 = icmp ult i64 %61, 56
@@ -10196,8 +10196,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i1324.preheader:               ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i1320
   %i.dfq = ptrtoaddr ptr %i.dfo to i64
-  %62 = add i64 %i.dfe, -8
-  %63 = sub i64 %62, %i.dff                       ; 2 uses
+  %62 = sub i64 %i.dfe, %i.dff
+  %63 = add i64 %62, -8                           ; 2 uses
   %i.dfr = lshr i64 %63, 3
   %i.dfs = add nuw nsw i64 %i.dfr, 1              ; 2 uses
   %min.iters.check3491 = icmp ult i64 %63, 56
@@ -10490,8 +10490,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i1354.preheader:               ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i1350
   %i.djd = ptrtoaddr ptr %i.djb to i64
-  %64 = add i64 %i.dir, -8
-  %65 = sub i64 %64, %i.dis                       ; 2 uses
+  %64 = sub i64 %i.dir, %i.dis
+  %65 = add i64 %64, -8                           ; 2 uses
   %i.dje = lshr i64 %65, 3
   %i.djf = add nuw nsw i64 %i.dje, 1              ; 2 uses
   %min.iters.check3528 = icmp ult i64 %65, 56
@@ -10784,8 +10784,8 @@ _ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenE
 
 .lr.ph.i.i.i.i.i.i.i1384.preheader:               ; preds = %_ZNKSt6vectorIN2v88internal14LocalUncheckedINS0_5ValueEEESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i1380
   %i.dmq = ptrtoaddr ptr %i.dmo to i64
-  %66 = add i64 %i.dme, -8
-  %67 = sub i64 %66, %i.dmf                       ; 2 uses
+  %66 = sub i64 %i.dme, %i.dmf
+  %67 = add i64 %66, -8                           ; 2 uses
   %i.dmr = lshr i64 %67, 3
   %i.dms = add nuw nsw i64 %i.dmr, 1              ; 2 uses
   %min.iters.check3565 = icmp ult i64 %67, 56

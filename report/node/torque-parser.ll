@@ -201,8 +201,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -605,8 +605,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque6SymbolESt14default_deleteIS4_E
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque6SymbolESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc5
-  %4 = add i64 %i.m, -8
-  %5 = sub i64 %4, %i.n                           ; 2 uses
+  %4 = sub i64 %i.m, %i.n
+  %5 = add i64 %4, -8                             ; 2 uses
   %i.y = lshr i64 %5, 3
   %i.z = add nuw nsw i64 %i.y, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %5, 152
@@ -1009,8 +1009,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -1413,8 +1413,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -1740,8 +1740,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -2144,8 +2144,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque4RuleESt14default_deleteIS4_EES
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque4RuleESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc6
-  %3 = add i64 %i.aj, -8
-  %4 = sub i64 %3, %i.ak                          ; 2 uses
+  %3 = sub i64 %i.aj, %i.ak
+  %4 = add i64 %3, -8                             ; 2 uses
   %i.av = lshr i64 %4, 3
   %i.aw = add nuw nsw i64 %i.av, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %4, 152
@@ -2548,8 +2548,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -2952,8 +2952,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -3356,8 +3356,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -3760,8 +3760,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -4164,8 +4164,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -4336,8 +4336,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -4657,8 +4657,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -5061,8 +5061,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -5423,8 +5423,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -5756,8 +5756,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -6033,8 +6033,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -6310,8 +6310,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -6665,8 +6665,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -6860,8 +6860,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -7089,8 +7089,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -7422,8 +7422,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -7699,8 +7699,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -8103,8 +8103,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -8458,8 +8458,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -8862,8 +8862,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -9266,8 +9266,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -9670,8 +9670,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -9842,8 +9842,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -10014,8 +10014,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -10186,8 +10186,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -10358,8 +10358,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -10530,8 +10530,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -10934,8 +10934,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -11144,8 +11144,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -11548,8 +11548,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -11952,8 +11952,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -12229,8 +12229,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -12633,8 +12633,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -12839,8 +12839,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -13011,8 +13011,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -13415,8 +13415,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -13819,8 +13819,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -14196,8 +14196,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -14600,8 +14600,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -15004,8 +15004,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -15408,8 +15408,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -15812,8 +15812,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -16216,8 +16216,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -16456,8 +16456,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -16860,8 +16860,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -17264,8 +17264,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -17668,8 +17668,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -18072,8 +18072,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -18282,8 +18282,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -18686,8 +18686,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -19090,8 +19090,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -19494,8 +19494,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -19898,8 +19898,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -20302,8 +20302,8 @@ _ZNKSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque7AstNodeESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152

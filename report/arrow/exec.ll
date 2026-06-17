@@ -201,8 +201,8 @@ bb.m:                                             ; preds = %bb.l
   %.idx.i.i.i.i.i = shl nuw nsw i64 %i.ao, 2
   %i.ap = getelementptr inbounds nuw i8, ptr %i.d, i64 %.idx.i.i.i.i.i ; 3 uses
   %i.aq = shl i64 %2, 2
-  %4 = add i64 %i.aq, -4
-  %5 = sub i64 %4, %i.k                           ; 2 uses
+  %4 = sub i64 %i.aq, %i.k
+  %5 = add i64 %4, -4                             ; 2 uses
   %i.ar = lshr i64 %5, 2
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %5, 28
@@ -270,8 +270,8 @@ _ZSt22__uninitialized_move_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit69: ; preds = %bb.p,
   br i1 %.not5.i.i.i70, label %_ZSt4fillIPiiEvT_S1_RKT0_.exit, label %.lr.ph.i.i.i71.preheader
 
 .lr.ph.i.i.i71.preheader:                         ; preds = %_ZSt22__uninitialized_move_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit69
-  %6 = add i64 %i.f, -4
-  %7 = sub i64 %6, %i.j                           ; 2 uses
+  %6 = sub i64 %i.f, %i.j
+  %7 = add i64 %6, -4                             ; 2 uses
   %i.be = lshr i64 %7, 2
   %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses
   %min.iters.check113 = icmp ult i64 %7, 28
@@ -571,8 +571,8 @@ bb.m:                                             ; preds = %bb.l
   %.idx.i.i.i.i.i = shl nuw nsw i64 %i.ao, 3
   %i.ap = getelementptr inbounds nuw i8, ptr %i.d, i64 %.idx.i.i.i.i.i ; 3 uses
   %i.aq = shl i64 %2, 3
-  %4 = add i64 %i.aq, -8
-  %5 = sub i64 %4, %i.k                           ; 2 uses
+  %4 = sub i64 %i.aq, %i.k
+  %5 = add i64 %4, -8                             ; 2 uses
   %i.ar = lshr i64 %5, 3
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %5, 24
@@ -640,8 +640,8 @@ _ZSt22__uninitialized_move_aIPlS0_SaIlEET0_T_S3_S2_RT1_.exit69: ; preds = %bb.p,
   br i1 %.not5.i.i.i70, label %_ZSt4fillIPllEvT_S1_RKT0_.exit, label %.lr.ph.i.i.i71.preheader
 
 .lr.ph.i.i.i71.preheader:                         ; preds = %_ZSt22__uninitialized_move_aIPlS0_SaIlEET0_T_S3_S2_RT1_.exit69
-  %6 = add i64 %i.f, -8
-  %7 = sub i64 %6, %i.j                           ; 2 uses
+  %6 = sub i64 %i.f, %i.j
+  %7 = add i64 %6, -8                             ; 2 uses
   %i.be = lshr i64 %7, 3
   %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses
   %min.iters.check113 = icmp ult i64 %7, 24
@@ -1044,8 +1044,8 @@ _ZNKSt6vectorIN5arrow7compute12_GLOBAL__N_119BufferPreallocationESaIS3_EE12_M_ch
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorIN5arrow7compute12_GLOBAL__N_119BufferPreallocationESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %i.aa = ptrtoaddr ptr %i.x to i64
-  %2 = add i64 %i.m, -8
-  %3 = sub i64 %2, %i.n                           ; 2 uses
+  %2 = sub i64 %i.m, %i.n
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.ab = lshr i64 %3, 3
   %i.ac = add nuw nsw i64 %i.ab, 1                ; 2 uses
   %min.iters.check77 = icmp ult i64 %3, 56
@@ -1160,8 +1160,8 @@ _ZNKSt6vectorIN5arrow7compute12_GLOBAL__N_119BufferPreallocationESaIS3_EE12_M_ch
 
 .lr.ph.i.i.i.i.i15.preheader:                     ; preds = %_ZNKSt6vectorIN5arrow7compute12_GLOBAL__N_119BufferPreallocationESaIS3_EE12_M_check_lenEmPKc.exit.i.i12
   %i.bj = ptrtoaddr ptr %i.bg to i64
-  %4 = add i64 %i.av, -8
-  %5 = sub i64 %4, %i.aw                          ; 2 uses
+  %4 = sub i64 %i.av, %i.aw
+  %5 = add i64 %4, -8                             ; 2 uses
   %i.bk = lshr i64 %5, 3
   %i.bl = add nuw nsw i64 %i.bk, 1                ; 2 uses
   %min.iters.check59 = icmp ult i64 %5, 56
@@ -1276,8 +1276,8 @@ _ZNKSt6vectorIN5arrow7compute12_GLOBAL__N_119BufferPreallocationESaIS3_EE12_M_ch
 
 .lr.ph.i.i.i.i.i26.preheader:                     ; preds = %_ZNKSt6vectorIN5arrow7compute12_GLOBAL__N_119BufferPreallocationESaIS3_EE12_M_check_lenEmPKc.exit.i.i23
   %i.cs = ptrtoaddr ptr %i.cp to i64
-  %6 = add i64 %i.ce, -8
-  %7 = sub i64 %6, %i.cf                          ; 2 uses
+  %6 = sub i64 %i.ce, %i.cf
+  %7 = add i64 %6, -8                             ; 2 uses
   %i.ct = lshr i64 %7, 3
   %i.cu = add nuw nsw i64 %i.ct, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %7, 56

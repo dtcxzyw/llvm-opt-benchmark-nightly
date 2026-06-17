@@ -201,8 +201,8 @@ _ZNKSt6vectorISt10unique_ptrIN11OpenImageIO4v3_19ArgOptionESt14default_deleteIS3
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN11OpenImageIO4v3_19ArgOptionESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc37
-  %5 = add i64 %i.fl, -8
-  %6 = sub i64 %5, %i.fm                          ; 2 uses
+  %5 = sub i64 %i.fl, %i.fm
+  %6 = add i64 %5, -8                             ; 2 uses
   %i.fx = lshr i64 %6, 3
   %i.fy = add nuw nsw i64 %i.fx, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %6, 56
@@ -460,8 +460,8 @@ _ZNKSt6vectorISt10unique_ptrIN11OpenImageIO4v3_19ArgOptionESt14default_deleteIS3
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN11OpenImageIO4v3_19ArgOptionESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorISt10unique_ptrIN11OpenImageIO4v3_19ArgOptionESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit.i.i
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.w = lshr i64 %3, 3
   %i.x = add nuw nsw i64 %i.w, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -842,8 +842,8 @@ _ZNKSt6vectorISt10unique_ptrIN11OpenImageIO4v3_19ArgOptionESt14default_deleteIS3
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN11OpenImageIO4v3_19ArgOptionESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc25
-  %4 = add i64 %i.bc, -8
-  %5 = sub i64 %4, %i.bd                          ; 2 uses
+  %4 = sub i64 %i.bc, %i.bd
+  %5 = add i64 %4, -8                             ; 2 uses
   %i.bo = lshr i64 %5, 3
   %i.bp = add nuw nsw i64 %i.bo, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %5, 152
@@ -1246,8 +1246,8 @@ bb.m:                                             ; preds = %bb.l
   %.idx.i.i.i.i.i = shl nuw nsw i64 %i.ao, 3
   %i.ap = getelementptr inbounds nuw i8, ptr %i.d, i64 %.idx.i.i.i.i.i ; 3 uses
   %i.aq = shl i64 %2, 3
-  %4 = add i64 %i.aq, -8
-  %5 = sub i64 %4, %i.k                           ; 2 uses
+  %4 = sub i64 %i.aq, %i.k
+  %5 = add i64 %4, -8                             ; 2 uses
   %i.ar = lshr i64 %5, 3
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %5, 24
@@ -1314,8 +1314,8 @@ _ZSt22__uninitialized_move_aIPPvS1_SaIS0_EET0_T_S4_S3_RT1_.exit69: ; preds = %bb
   br i1 %.not6.i.i.i70, label %_ZSt4fillIPPvS0_EvT_S2_RKT0_.exit, label %.lr.ph.i.i.i71.preheader
 
 .lr.ph.i.i.i71.preheader:                         ; preds = %_ZSt22__uninitialized_move_aIPPvS1_SaIS0_EET0_T_S4_S3_RT1_.exit69
-  %6 = add i64 %i.f, -8
-  %7 = sub i64 %6, %i.j                           ; 2 uses
+  %6 = sub i64 %i.f, %i.j
+  %7 = add i64 %6, -8                             ; 2 uses
   %i.be = lshr i64 %7, 3
   %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses
   %min.iters.check112 = icmp ult i64 %7, 24
@@ -1702,8 +1702,8 @@ _ZSt24__uninitialized_fill_n_aIPN11OpenImageIO4v3_18TypeDescEmS2_S2_ET_S4_T0_RKT
 
 .lr.ph.i.i.i.i.i70.preheader:                     ; preds = %_ZSt24__uninitialized_fill_n_aIPN11OpenImageIO4v3_18TypeDescEmS2_S2_ET_S4_T0_RKT1_RSaIT2_E.exit
   %i.bg = ptrtoaddr ptr %i.bf to i64
-  %4 = add i64 %i.f, -8
-  %5 = sub i64 %4, %i.j                           ; 2 uses
+  %4 = sub i64 %i.f, %i.j
+  %5 = add i64 %4, -8                             ; 2 uses
   %i.bh = lshr i64 %5, 3
   %i.bi = add nuw nsw i64 %i.bh, 1                ; 2 uses
   %min.iters.check137 = icmp ult i64 %5, 56
@@ -1762,8 +1762,8 @@ _ZSt22__uninitialized_move_aIPN11OpenImageIO4v3_18TypeDescES3_SaIS2_EET0_T_S6_S5
   %i.bv = load ptr, ptr %i.c, align 8, !tbaa !97
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 %i.k
   store ptr %i.bw, ptr %i.c, align 8, !tbaa !97
-  %6 = add i64 %i.f, -8
-  %7 = sub i64 %6, %i.j                           ; 2 uses
+  %6 = sub i64 %i.f, %i.j
+  %7 = add i64 %6, -8                             ; 2 uses
   %i.bx = lshr i64 %7, 3
   %i.by = add nuw nsw i64 %i.bx, 1                ; 2 uses
   %min.iters.check152 = icmp ult i64 %7, 24
@@ -1937,8 +1937,8 @@ _ZSt24__uninitialized_fill_n_aIPN11OpenImageIO4v3_18TypeDescEmS2_S2_ET_S4_T0_RKT
   br i1 %.not11.i.i.i.i.i88, label %_ZSt34__uninitialized_move_if_noexcept_aIPN11OpenImageIO4v3_18TypeDescES3_SaIS2_EET0_T_S6_S5_RT1_.exit, label %.lr.ph.i.i.i.i.i89.preheader
 
 .lr.ph.i.i.i.i.i89.preheader:                     ; preds = %_ZSt24__uninitialized_fill_n_aIPN11OpenImageIO4v3_18TypeDescEmS2_S2_ET_S4_T0_RKT1_RSaIT2_E.exit87
-  %8 = add i64 %i.cp, -8
-  %9 = sub i64 %8, %i.cg                          ; 2 uses
+  %8 = sub i64 %i.cp, %i.cg
+  %9 = add i64 %8, -8                             ; 2 uses
   %i.ec = lshr i64 %9, 3
   %i.ed = add nuw nsw i64 %i.ec, 1                ; 2 uses
   %min.iters.check215 = icmp ult i64 %9, 56
@@ -1996,8 +1996,8 @@ _ZSt34__uninitialized_move_if_noexcept_aIPN11OpenImageIO4v3_18TypeDescES3_SaIS2_
   br i1 %.not11.i.i.i.i.i94, label %_ZSt34__uninitialized_move_if_noexcept_aIPN11OpenImageIO4v3_18TypeDescES3_SaIS2_EET0_T_S6_S5_RT1_.exit100, label %.lr.ph.i.i.i.i.i95.preheader
 
 .lr.ph.i.i.i.i.i95.preheader:                     ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPN11OpenImageIO4v3_18TypeDescES3_SaIS2_EET0_T_S6_S5_RT1_.exit
-  %10 = add i64 %i.f, -8
-  %11 = sub i64 %10, %i.cp                        ; 2 uses
+  %10 = sub i64 %i.f, %i.cp
+  %11 = add i64 %10, -8                           ; 2 uses
   %i.eq = lshr i64 %11, 3
   %i.er = add nuw nsw i64 %i.eq, 1                ; 2 uses
   %min.iters.check234 = icmp ult i64 %11, 104
@@ -2400,8 +2400,8 @@ _ZNKSt6vectorISt10unique_ptrIN11OpenImageIO4v3_19ArgOptionESt14default_deleteIS3
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN11OpenImageIO4v3_19ArgOptionESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNKSt6vectorISt10unique_ptrIN11OpenImageIO4v3_19ArgOptionESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit.i
-  %3 = add i64 %i.b, -8
-  %4 = sub i64 %3, %i.c                           ; 2 uses
+  %3 = sub i64 %i.b, %i.c
+  %4 = add i64 %3, -8                             ; 2 uses
   %i.an = lshr i64 %4, 3
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %4, 152
@@ -2475,8 +2475,8 @@ _ZNSt6vectorISt10unique_ptrIN11OpenImageIO4v3_19ArgOptionESt14default_deleteIS3_
   br i1 %.not10.i.i.i16.i, label %_ZNSt6vectorISt10unique_ptrIN11OpenImageIO4v3_19ArgOptionESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i, label %.lr.ph.i.i.i17.i.preheader
 
 .lr.ph.i.i.i17.i.preheader:                       ; preds = %_ZNSt6vectorISt10unique_ptrIN11OpenImageIO4v3_19ArgOptionESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit.i
-  %5 = add i64 %i.ab, -8
-  %6 = sub i64 %5, %i.b                           ; 2 uses
+  %5 = sub i64 %i.ab, %i.b
+  %6 = add i64 %5, -8                             ; 2 uses
   %i.bf = lshr i64 %6, 3
   %i.bg = add nuw nsw i64 %i.bf, 1                ; 2 uses
   %min.iters.check39 = icmp ult i64 %6, 216
