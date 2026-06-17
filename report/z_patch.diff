@@ -1,0 +1,194 @@
+diff --git a/llvm/include/llvm/IR/IntrinsicInst.h b/llvm/include/llvm/IR/IntrinsicInst.h
+index 78a0cd569d5bd..214b0f96afbf9 100644
+--- a/llvm/include/llvm/IR/IntrinsicInst.h
++++ b/llvm/include/llvm/IR/IntrinsicInst.h
+@@ -836,6 +836,29 @@ class MinMaxIntrinsic : public IntrinsicInst {
+   /// Whether the intrinsic is a smax or a umax.
+   bool isMax() const { return !isMin(getIntrinsicID()); }
+ 
++  /// Returns the identity value for this min/max intrinsic, such
++  /// that minmax(X, Identity) == X.
++  static APInt getIdentity(Intrinsic::ID ID, unsigned NumBits) {
++    switch (ID) {
++    case Intrinsic::umin:
++      return APInt::getMaxValue(NumBits);
++    case Intrinsic::umax:
++      return APInt::getMinValue(NumBits);
++    case Intrinsic::smin:
++      return APInt::getSignedMaxValue(NumBits);
++    case Intrinsic::smax:
++      return APInt::getSignedMinValue(NumBits);
++    default:
++      llvm_unreachable("Invalid intrinsic");
++    }
++  }
++
++  /// Returns the identity value for this min/max intrinsic, such
++  /// that minmax(X, Identity) == X.
++  APInt getIdentity() const {
++    return getIdentity(getIntrinsicID(), getType()->getScalarSizeInBits());
++  }
++
+   /// Min/max intrinsics are monotonic, they operate on a fixed-bitwidth values,
+   /// so there is a certain threshold value, upon reaching which,
+   /// their value can no longer change. Return said threshold.
+diff --git a/llvm/lib/Analysis/InstructionSimplify.cpp b/llvm/lib/Analysis/InstructionSimplify.cpp
+index 81debece796b1..6cc5efda3cfdc 100644
+--- a/llvm/lib/Analysis/InstructionSimplify.cpp
++++ b/llvm/lib/Analysis/InstructionSimplify.cpp
+@@ -4526,6 +4526,27 @@ static Value *simplifyWithOpsReplaced(Value *V,
+ 
+         return ConstantInt::get(I->getType(), 0);
+       }
++
++      if (auto *MMI = dyn_cast<MinMaxIntrinsic>(II)) {
++        const APInt Identity = MMI->getIdentity();
++
++        Value *Result = nullptr;
++        if (match(NewOps[0], m_SpecificInt(Identity)))
++          Result = NewOps[1];
++        else if (match(NewOps[1], m_SpecificInt(Identity)))
++          Result = NewOps[0];
++
++        if (Result) {
++          if (II->hasPoisonGeneratingAnnotations()) {
++            if (!DropFlags)
++              return nullptr;
++
++            DropFlags->push_back(II);
++          }
++
++          return Result;
++        }
++      }
+     }
+ 
+     if (isa<GetElementPtrInst>(I)) {
+diff --git a/llvm/test/Transforms/InstCombine/smax-icmp.ll b/llvm/test/Transforms/InstCombine/smax-icmp.ll
+index 4c9cbed9d9ebf..fa2f88a83e6fa 100644
+--- a/llvm/test/Transforms/InstCombine/smax-icmp.ll
++++ b/llvm/test/Transforms/InstCombine/smax-icmp.ll
+@@ -844,5 +844,15 @@ entry:
+   ret i1 %cmp
+ }
+ 
++define i32 @select_signed_min_smax(i32 %pos, i32 %len) {
++; CHECK-LABEL: @select_signed_min_smax(
++; CHECK-NEXT:    [[CLAMPED:%.*]] = call i32 @llvm.smax.i32(i32 [[POS:%.*]], i32 [[LEN:%.*]])
++; CHECK-NEXT:    ret i32 [[CLAMPED]]
++;
++  %is_smin = icmp eq i32 %pos, -2147483648
++  %clamped = call i32 @llvm.smax.i32(i32 %pos, i32 %len)
++  %out = select i1 %is_smin, i32 %len, i32 %clamped
++  ret i32 %out
++}
+ 
+ declare i32 @llvm.smax.i32(i32, i32)
+diff --git a/llvm/test/Transforms/InstCombine/smin-icmp.ll b/llvm/test/Transforms/InstCombine/smin-icmp.ll
+index f05c1698f1a98..bec40d14b04dc 100644
+--- a/llvm/test/Transforms/InstCombine/smin-icmp.ll
++++ b/llvm/test/Transforms/InstCombine/smin-icmp.ll
+@@ -1292,6 +1292,17 @@ define i1 @eq_smin_nofold(i32 %x) {
+   ret i1 %ret
+ }
+ 
++define i32 @select_signed_max_smin(i32 %pos, i32 %len) {
++; CHECK-LABEL: @select_signed_max_smin(
++; CHECK-NEXT:    [[CLAMPED:%.*]] = call i32 @llvm.smin.i32(i32 [[POS:%.*]], i32 [[LEN:%.*]])
++; CHECK-NEXT:    ret i32 [[CLAMPED]]
++;
++  %is_smax = icmp eq i32 %pos, 2147483647
++  %clamped = call i32 @llvm.smin.i32(i32 %pos, i32 %len)
++  %out = select i1 %is_smax, i32 %len, i32 %clamped
++  ret i32 %out
++}
++
+ declare void @llvm.assume(i1)
+ declare i32 @llvm.smin.i32(i32, i32)
+ declare <2 x i32> @llvm.smin.v2i32(<2 x i32>, <2 x i32>)
+diff --git a/llvm/test/Transforms/InstCombine/umax-icmp.ll b/llvm/test/Transforms/InstCombine/umax-icmp.ll
+index 0c42d26750e4b..826db976fc311 100644
+--- a/llvm/test/Transforms/InstCombine/umax-icmp.ll
++++ b/llvm/test/Transforms/InstCombine/umax-icmp.ll
+@@ -828,4 +828,15 @@ if.else:
+   ret i1 false
+ }
+ 
++define i32 @select_zero_umax(i32 %pos, i32 %len) {
++; CHECK-LABEL: @select_zero_umax(
++; CHECK-NEXT:    [[CLAMPED:%.*]] = call i32 @llvm.umax.i32(i32 [[POS:%.*]], i32 [[LEN:%.*]])
++; CHECK-NEXT:    ret i32 [[CLAMPED]]
++;
++  %is_zero = icmp eq i32 %pos, 0
++  %clamped = call i32 @llvm.umax.i32(i32 %pos, i32 %len)
++  %out = select i1 %is_zero, i32 %len, i32 %clamped
++  ret i32 %out
++}
++
+ declare i32 @llvm.umax.i32(i32, i32)
+diff --git a/llvm/test/Transforms/InstCombine/umin-icmp.ll b/llvm/test/Transforms/InstCombine/umin-icmp.ll
+index cb23b2f00d292..76928ecc6520b 100644
+--- a/llvm/test/Transforms/InstCombine/umin-icmp.ll
++++ b/llvm/test/Transforms/InstCombine/umin-icmp.ll
+@@ -804,4 +804,61 @@ end:
+   ret void
+ }
+ 
++define i32 @select_npos_umin(i32 %pos, i32 %len) {
++; CHECK-LABEL: @select_npos_umin(
++; CHECK-NEXT:    [[CLAMPED:%.*]] = call i32 @llvm.umin.i32(i32 [[POS:%.*]], i32 [[LEN:%.*]])
++; CHECK-NEXT:    ret i32 [[CLAMPED]]
++;
++  %is_npos = icmp eq i32 %pos, -1
++  %clamped = call i32 @llvm.umin.i32(i32 %pos, i32 %len)
++  %out = select i1 %is_npos, i32 %len, i32 %clamped
++  ret i32 %out
++}
++
++define i32 @select_not_npos_umin(i32 %pos, i32 %len) {
++; CHECK-LABEL: @select_not_npos_umin(
++; CHECK-NEXT:    [[CLAMPED:%.*]] = call i32 @llvm.umin.i32(i32 [[POS:%.*]], i32 [[LEN:%.*]])
++; CHECK-NEXT:    ret i32 [[CLAMPED]]
++;
++  %is_not_npos = icmp ne i32 %pos, -1
++  %clamped = call i32 @llvm.umin.i32(i32 %pos, i32 %len)
++  %out = select i1 %is_not_npos, i32 %clamped, i32 %len
++  ret i32 %out
++}
++
++define i32 @select_npos_umin_commuted(i32 %pos, i32 %len) {
++; CHECK-LABEL: @select_npos_umin_commuted(
++; CHECK-NEXT:    [[CLAMPED:%.*]] = call i32 @llvm.umin.i32(i32 [[LEN:%.*]], i32 [[POS:%.*]])
++; CHECK-NEXT:    ret i32 [[CLAMPED]]
++;
++  %is_npos = icmp eq i32 %pos, -1
++  %clamped = call i32 @llvm.umin.i32(i32 %len, i32 %pos)
++  %out = select i1 %is_npos, i32 %len, i32 %clamped
++  ret i32 %out
++}
++
++define i32 @select_npos_wrong_bound_negative(i32 %pos, i32 %len, i32 %other) {
++; CHECK-LABEL: @select_npos_wrong_bound_negative(
++; CHECK-NEXT:    [[IS_NPOS:%.*]] = icmp eq i32 [[POS:%.*]], -1
++; CHECK-NEXT:    [[CLAMPED:%.*]] = call i32 @llvm.umin.i32(i32 [[POS]], i32 [[LEN:%.*]])
++; CHECK-NEXT:    [[OUT:%.*]] = select i1 [[IS_NPOS]], i32 [[OTHER:%.*]], i32 [[CLAMPED]]
++; CHECK-NEXT:    ret i32 [[OUT]]
++;
++  %is_npos = icmp eq i32 %pos, -1
++  %clamped = call i32 @llvm.umin.i32(i32 %pos, i32 %len)
++  %out = select i1 %is_npos, i32 %other, i32 %clamped
++  ret i32 %out
++}
++
++define i32 @select_npos_umin_drop_range(i32 %pos, i32 %len) {
++; CHECK-LABEL: @select_npos_umin_drop_range(
++; CHECK-NEXT:    [[CLAMPED:%.*]] = call i32 @llvm.umin.i32(i32 [[POS:%.*]], i32 [[LEN:%.*]])
++; CHECK-NEXT:    ret i32 [[CLAMPED]]
++;
++  %is_npos = icmp eq i32 %pos, -1
++  %clamped = call range(i32 0, 10) i32 @llvm.umin.i32(i32 %pos, i32 %len)
++  %out = select i1 %is_npos, i32 %len, i32 %clamped
++  ret i32 %out
++}
++
+ declare i32 @llvm.umin.i32(i32, i32)
