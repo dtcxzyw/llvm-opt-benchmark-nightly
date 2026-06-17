@@ -201,7 +201,7 @@ bb.ak:                                            ; preds = %bb.aj
   %.not87132 = icmp eq i32 %i.cv, 0
   br i1 %.not87132, label %.thread116, label %.lr.ph134
 
-.lr.ph134:                                        ; preds = %bb.ak, %._crit_edge.a
+.lr.ph134:                                        ; preds = %bb.ak, %.loopexit
   %i.cw = load ptr, ptr %i.cp, align 8, !tbaa !213 ; 3 uses
   %i.cx = call i64 @rioWriteBulkCount(ptr noundef %0, i8 noundef signext 42, i64 noundef 7) #17
   %.not88 = icmp eq i64 %i.cx, 0
@@ -260,9 +260,9 @@ bb.as:                                            ; preds = %bb.ar
   %i.dl = call i32 @raxSeek(ptr noundef nonnull %6, ptr noundef nonnull @.str.144, ptr noundef null, i64 noundef 0) #17 ; 0 uses
   %i.dm = call i32 @raxNext(ptr noundef nonnull %6) #17
   %.not96125 = icmp eq i32 %i.dm, 0
-  br i1 %.not96125, label %._crit_edge.a, label %.lr.ph126
+  br i1 %.not96125, label %.loopexit, label %.lr.ph126
 
-.lr.ph126:                                        ; preds = %bb.as, %.backedge.a
+.lr.ph126:                                        ; preds = %bb.as, %._crit_edge.a
   %i.dn = load ptr, ptr %i.cs, align 8, !tbaa !213 ; 3 uses
   %i.do = getelementptr inbounds nuw i8, ptr %i.dn, i64 24 ; 2 uses
   %i.dp = load ptr, ptr %i.do, align 8, !tbaa !222
@@ -275,7 +275,7 @@ bb.at:                                            ; preds = %.lr.ph126
   %i.dt = load i64, ptr %i.cr, align 8, !tbaa !218
   %i.du = call i32 @rioWriteStreamEmptyConsumer(ptr noundef %0, ptr noundef %1, ptr noundef %i.ds, i64 noundef %i.dt, ptr noundef nonnull %i.dn)
   %i.dv = icmp eq i32 %i.du, 0
-  br i1 %i.dv, label %.thread114, label %.backedge.a, !llvm.loop !223
+  br i1 %i.dv, label %.thread114, label %._crit_edge.a, !llvm.loop !223
 
 .thread114:                                       ; preds = %bb.at
   call void @raxStop(ptr noundef nonnull %6) #17
@@ -302,26 +302,14 @@ bb.av:                                            ; preds = %.critedge107
   %i.ec = load ptr, ptr %i.cu, align 8, !tbaa !217
   %i.ed = call i32 @rioWriteStreamPendingEntry(ptr noundef %0, ptr noundef %1, ptr noundef %i.ea, i64 noundef %i.eb, ptr noundef %i.dn, ptr noundef %i.ec, ptr noundef %i.dz)
   %.not98 = icmp eq i32 %i.ed, 0
-  br i1 %.not98, label %.loopexit, label %.critedge107
+  br i1 %.not98, label %.backedge.a, label %.critedge107
 
 bb.aw:                                            ; preds = %.critedge107
   call void @raxStop(ptr noundef nonnull %7) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #17
-  br label %.backedge.a
+  br label %._crit_edge.a
 
-.backedge.a:                                      ; preds = %bb.at, %bb.aw
-  %8 = call i32 @raxNext(ptr noundef nonnull %6) #17
-  %.not96 = icmp eq i32 %8, 0
-  br i1 %.not96, label %._crit_edge.a, label %.lr.ph126, !llvm.loop !223
-
-._crit_edge.a:                                    ; preds = %.backedge.a, %bb.as
-  call void @raxStop(ptr noundef nonnull %6) #17
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #17
-  %i.ee = call i32 @raxNext(ptr noundef nonnull %5) #17
-  %.not87.a = icmp eq i32 %i.ee, 0
-  br i1 %.not87.a, label %.thread116, label %.lr.ph134, !llvm.loop !224
-
-.loopexit:                                        ; preds = %bb.av
+.backedge.a:                                      ; preds = %bb.av
   call void @raxStop(ptr noundef nonnull %7) #17
   call void @raxStop(ptr noundef nonnull %6) #17
   call void @raxStop(ptr noundef nonnull %5) #17
@@ -329,12 +317,24 @@ bb.aw:                                            ; preds = %.critedge107
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #17
   br label %.loopexit118, !llvm.loop !224
 
-.thread116:                                       ; preds = %._crit_edge.a, %bb.ak
+._crit_edge.a:                                    ; preds = %bb.at, %bb.aw
+  %i.ee = call i32 @raxNext(ptr noundef nonnull %6) #17
+  %.not87.a = icmp eq i32 %i.ee, 0
+  br i1 %.not87.a, label %.loopexit, label %.lr.ph126, !llvm.loop !223
+
+.loopexit:                                        ; preds = %._crit_edge.a, %bb.as
+  call void @raxStop(ptr noundef nonnull %6) #17
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #17
+  %8 = call i32 @raxNext(ptr noundef nonnull %5) #17
+  %.not87 = icmp eq i32 %8, 0
+  br i1 %.not87, label %.thread116, label %.lr.ph134, !llvm.loop !224
+
+.thread116:                                       ; preds = %.loopexit, %bb.ak
   call void @raxStop(ptr noundef nonnull %5) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #17
   br label %bb.ax
 
-.loopexit118:                                     ; preds = %.loopexit, %.thread114
+.loopexit118:                                     ; preds = %.backedge.a, %.thread114
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #17
   br label %bb.ay
@@ -737,9 +737,9 @@ bb.aj:                                            ; preds = %rioWrite.exit79
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.backedge
   %i.eq = phi ptr [ %i.fl, %.backedge ], [ %i.eo, %.lr.ph.preheader ]
-  %.1117 = phi i64 [ %.3153, %.backedge ], [ %.040122, %.lr.ph.preheader ] ; 3 uses
+  %.1117 = phi i64 [ %.450151, %.backedge ], [ %.040122, %.lr.ph.preheader ] ; 3 uses
   %.142116 = phi i64 [ %.5152, %.backedge ], [ %.041121, %.lr.ph.preheader ] ; 4 uses
-  %.147115 = phi i64 [ %.450151, %.backedge ], [ %.046120, %.lr.ph.preheader ] ; 2 uses
+  %.147115 = phi i64 [ %.3153, %.backedge ], [ %.046120, %.lr.ph.preheader ] ; 2 uses
   %i.er = load i64, ptr %i.dp, align 8, !tbaa !192
   %i.es = call ptr @dictGetKey(ptr noundef nonnull %i.eq) #17 ; 4 uses
   %i.et = call i64 @kvobjGetExpire(ptr noundef %i.es) #17
@@ -761,7 +761,7 @@ bb.al:                                            ; preds = %bb.ak, %.lr.ph
   store ptr %i.ey, ptr %i.dq, align 8, !tbaa !124
   %i.ez = call i32 @rewriteObject(ptr noundef nonnull %0, ptr noundef nonnull %3, ptr noundef %i.es, i32 noundef %i.ep, i64 noundef %i.et)
   %i.fa = icmp eq i32 %i.ez, -1
-  br i1 %i.fa, label %4, label %bb.am
+  br i1 %i.fa, label %.thread154, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
   %i.fb = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 56), align 8, !tbaa !256
@@ -794,28 +794,34 @@ bb.ar:                                            ; preds = %bb.ap, %bb.aq, %bb.
   %.344 = phi i64 [ %.142116, %bb.ao ], [ %i.fh, %bb.aq ], [ %.142116, %bb.ap ]
   %i.fk = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 7052), align 4, !tbaa !257 ; 2 uses
   %.not63 = icmp eq i32 %i.fk, 0
-  br i1 %.not63, label %.thread154, label %bb.as
+  br i1 %.not63, label %bb.as, label %4
 
-bb.as:                                            ; preds = %bb.ar
+4:                                                ; preds = %bb.ar
   call void @debugDelay(i32 noundef %i.fk) #17
-  br label %.thread154
+  br label %bb.as
 
-.thread154:                                       ; preds = %bb.as, %bb.ar
+bb.as:                                            ; preds = %bb.ar, %4
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #17
   br label %.backedge
 
-.backedge:                                        ; preds = %bb.ak, %.thread154
-  %.3153 = phi i64 [ %i.fe, %.thread154 ], [ %.1117, %bb.ak ] ; 2 uses
-  %.5152 = phi i64 [ %.344, %.thread154 ], [ %.142116, %bb.ak ] ; 2 uses
-  %.450151 = phi i64 [ %.147115, %.thread154 ], [ %i.ex, %bb.ak ] ; 2 uses
+.thread154:                                       ; preds = %bb.al
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #17
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #17
+  call void @kvstoreIteratorReset(ptr noundef nonnull %2) #17
+  br label %bb.au
+
+.backedge:                                        ; preds = %bb.as, %bb.ak
+  %.3153 = phi i64 [ %.147115, %bb.as ], [ %i.ex, %bb.ak ] ; 2 uses
+  %.5152 = phi i64 [ %.344, %bb.as ], [ %.142116, %bb.ak ] ; 2 uses
+  %.450151 = phi i64 [ %i.fe, %bb.as ], [ %.1117, %bb.ak ] ; 2 uses
   %i.fl = call ptr @kvstoreIteratorNext(ptr noundef nonnull %2) #17 ; 2 uses
   %.not59 = icmp eq ptr %i.fl, null
   br i1 %.not59, label %._crit_edge, label %.lr.ph, !llvm.loop !258
 
 ._crit_edge:                                      ; preds = %.backedge, %bb.aj
-  %.147.lcssa = phi i64 [ %.046120, %bb.aj ], [ %.450151, %.backedge ]
+  %.147.lcssa = phi i64 [ %.046120, %bb.aj ], [ %.3153, %.backedge ]
   %.142.lcssa = phi i64 [ %.041121, %bb.aj ], [ %.5152, %.backedge ]
-  %.1.lcssa = phi i64 [ %.040122, %bb.aj ], [ %.3153, %.backedge ]
+  %.1.lcssa = phi i64 [ %.040122, %bb.aj ], [ %.450151, %.backedge ]
   call void @kvstoreIteratorReset(ptr noundef nonnull %2) #17
   br label %.thread95
 
@@ -845,14 +851,8 @@ bb.at:                                            ; preds = %._crit_edge125
   call void (i32, ptr, ...) @_serverLog(i32 noundef 2, ptr noundef nonnull @.str.150, i64 noundef %.040.lcssa, i64 noundef %.046.lcssa) #17
   br label %bb.au
 
-4:                                                ; preds = %bb.al
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #17
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #17
-  call void @kvstoreIteratorReset(ptr noundef nonnull %2) #17
-  br label %bb.au
-
-bb.au:                                            ; preds = %.thread89, %rewriteFunctions.exit.thread, %bb.p, %4, %bb.at, %._crit_edge125
-  %.0 = phi i32 [ -1, %bb.p ], [ 0, %bb.at ], [ -1, %.thread89 ], [ 0, %._crit_edge125 ], [ -1, %rewriteFunctions.exit.thread ], [ -1, %4 ]
+bb.au:                                            ; preds = %.thread89, %rewriteFunctions.exit.thread, %bb.p, %.thread154, %bb.at, %._crit_edge125
+  %.0 = phi i32 [ -1, %bb.p ], [ 0, %bb.at ], [ -1, %.thread89 ], [ 0, %._crit_edge125 ], [ -1, %rewriteFunctions.exit.thread ], [ -1, %.thread154 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #17
   ret i32 %.0
 }

@@ -201,7 +201,7 @@ grow_array_inplace.exit.i:                        ; preds = %bb.cb, %bb.bu
   store i32 1, ptr %i.ij, align 8, !tbaa !91
   br label %bb.cx
 
-compare_stacks.exit.thread.i:                     ; preds = %compare_stacks.exit.i, %bb.bt, %bb.bs, %bb.br, %._crit_edge66.i.i, %.thread.i.i
+compare_stacks.exit.thread.i:                     ; preds = %bb.bt, %compare_stacks.exit.i, %bb.bs, %bb.br, %._crit_edge66.i.i, %.thread.i.i
   %.2.i96.i = phi i32 [ 0, %compare_stacks.exit.i ], [ 1, %.thread.i.i ], [ 1, %bb.bs ], [ %..i.i, %bb.bt ], [ 1, %._crit_edge66.i.i ], [ 2, %bb.br ] ; 2 uses
   %.17795.i = phi i64 [ 0, %compare_stacks.exit.i ], [ %i.dj, %.thread.i.i ], [ %.076.i, %bb.bs ], [ %.076.i, %bb.bt ], [ %i.hm, %._crit_edge66.i.i ], [ %.076.i, %bb.br ] ; 13 uses
   %.17994.i = phi i64 [ 0, %compare_stacks.exit.i ], [ %i.gs, %.thread.i.i ], [ 0, %bb.bs ], [ %.078.i, %bb.bt ], [ %i.hl, %._crit_edge66.i.i ], [ 0, %bb.br ] ; 4 uses
