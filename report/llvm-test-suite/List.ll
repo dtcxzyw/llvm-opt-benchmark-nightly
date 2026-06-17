@@ -201,10 +201,10 @@ bb.a:
   %22 = alloca %class.CStringBase, align 8        ; 8 uses
   %23 = alloca %class.CStringBase, align 8        ; 5 uses
   %i.i = alloca i64, align 8                      ; 8 uses
-  %i.j = alloca i64, align 8                      ; 8 uses
+  %i.j = alloca i64, align 8                      ; 9 uses
   %i.k = alloca i32, align 4                      ; 6 uses
-  %24 = alloca %class.CStringBase, align 8        ; 10 uses
-  %i.l = alloca i8, align 1                       ; 6 uses
+  %24 = alloca %class.CStringBase, align 8        ; 14 uses
+  %i.l = alloca i8, align 1                       ; 7 uses
   %i.m = alloca i64, align 8                      ; 6 uses
   %i.n = alloca i64, align 8                      ; 6 uses
   store i64 0, ptr %10, align 8, !tbaa !65
@@ -607,8 +607,8 @@ bb.dz:                                            ; preds = %bb.dx
 bb.ea:                                            ; preds = %bb.dy, %.thread508
   %i.ms = phi ptr [ %i.mo, %bb.dy ], [ %i.mn, %.thread508 ] ; 5 uses
   %i.mt = phi ptr [ %i.mp, %bb.dy ], [ %i.mm, %.thread508 ] ; 2 uses
-  %.18512824 = phi i32 [ %.18512825, %bb.dy ], [ %.18512, %.thread508 ] ; 2 uses
-  %or.cond513822 = phi i1 [ %or.cond513823, %bb.dy ], [ %or.cond513, %.thread508 ]
+  %.18512824 = phi i32 [ %.18512825, %bb.dy ], [ %.18512, %.thread508 ]
+  %or.cond513822 = phi i1 [ %or.cond513823, %bb.dy ], [ %or.cond513, %.thread508 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #17
   store i64 0, ptr %i.i, align 8, !tbaa !65
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #17
@@ -635,14 +635,13 @@ bb.ec:                                            ; preds = %bb.ea
   br label %.loopexit.split-lp558
 
 .lr.ph702:                                        ; preds = %.preheader576, %bb.fe
-  %.22701 = phi i32 [ %.25, %bb.fe ], [ %.18512824, %.preheader576 ] ; 2 uses
   %.0243700 = phi i32 [ %i.oe, %bb.fe ], [ 0, %.preheader576 ] ; 6 uses
-  %.0250699 = phi ptr [ %.3253, %bb.fe ], [ null, %.preheader576 ] ; 5 uses
-  %.0256698 = phi ptr [ %.3259, %bb.fe ], [ null, %.preheader576 ] ; 5 uses
-  %.0262697 = phi i64 [ %.3265, %bb.fe ], [ 0, %.preheader576 ] ; 5 uses
-  %.0267696 = phi i64 [ %.3270, %bb.fe ], [ 0, %.preheader576 ] ; 5 uses
-  %i.na = phi i64 [ %28, %bb.fe ], [ 0, %.preheader576 ] ; 5 uses
-  %i.nb = phi i64 [ %27, %bb.fe ], [ 0, %.preheader576 ] ; 5 uses
+  %.0250699 = phi ptr [ %.2252.jt0, %bb.fe ], [ null, %.preheader576 ] ; 3 uses
+  %.0256698 = phi ptr [ %.2258.jt0, %bb.fe ], [ null, %.preheader576 ] ; 3 uses
+  %.0262697 = phi i64 [ %.2264.jt0, %bb.fe ], [ 0, %.preheader576 ] ; 3 uses
+  %.0267696 = phi i64 [ %.2269.jt0, %bb.fe ], [ 0, %.preheader576 ] ; 3 uses
+  %i.na = phi i64 [ %30, %bb.fe ], [ 0, %.preheader576 ] ; 3 uses
+  %i.nb = phi i64 [ %29, %bb.fe ], [ 0, %.preheader576 ] ; 3 uses
   %i.nc = invoke noundef zeroext i1 @_ZN13NConsoleClose15TestBreakSignalEv()
           to label %bb.ed unwind label %bb.ee
 
@@ -670,7 +669,7 @@ bb.eg:                                            ; preds = %bb.ef
 bb.eh:                                            ; preds = %bb.eg
   %i.ng = icmp eq i32 %i.nf, -2147024809
   %or.cond21 = and i1 %2, %i.ng
-  br i1 %or.cond21, label %bb.fc, label %bb.ek
+  br i1 %or.cond21, label %26, label %bb.ek
 
 bb.ei:                                            ; preds = %bb.ef
   %i.nh = landingpad { ptr, i32 }
@@ -692,9 +691,8 @@ bb.el:                                            ; preds = %bb.ek
           to label %bb.em unwind label %bb.en     ; 2 uses
 
 bb.em:                                            ; preds = %bb.el
-  %.not368 = icmp eq i32 %i.nj, 0                 ; 2 uses
-  %.22.. = select i1 %.not368, i32 %.22701, i32 %i.nj
-  br i1 %.not368, label %bb.eo, label %bb.fb
+  %.not368 = icmp eq i32 %i.nj, 0
+  br i1 %.not368, label %bb.eo, label %25
 
 bb.en:                                            ; preds = %bb.el
   %i.nk = landingpad { ptr, i32 }
@@ -772,47 +770,59 @@ bb.fa:                                            ; preds = %bb.ez
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #17
   br label %bb.fb
 
-bb.fb:                                            ; preds = %bb.ep, %bb.em, %bb.fa
-  %25 = phi i64 [ %i.ob, %bb.fa ], [ %i.nb, %bb.em ], [ %i.nb, %bb.ep ]
-  %26 = phi i64 [ %i.nz, %bb.fa ], [ %i.na, %bb.em ], [ %i.na, %bb.ep ]
-  %.18319 = phi i32 [ 0, %bb.fa ], [ 1, %bb.em ], [ 19, %bb.ep ]
-  %.2269 = phi i64 [ %.1268, %bb.fa ], [ %.0267696, %bb.em ], [ %.0267696, %bb.ep ]
-  %.2264 = phi i64 [ %.1263, %bb.fa ], [ %.0262697, %bb.em ], [ %.0262697, %bb.ep ]
-  %.2258 = phi ptr [ %.1257, %bb.fa ], [ %.0256698, %bb.em ], [ %.0256698, %bb.ep ]
-  %.2252 = phi ptr [ %.1251, %bb.fa ], [ %.0250699, %bb.em ], [ %.0250699, %bb.ep ]
+25:                                               ; preds = %bb.em
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #17
   br label %bb.fc
 
-bb.fc:                                            ; preds = %bb.eh, %bb.ek, %bb.fb
-  %27 = phi i64 [ %i.nb, %bb.ek ], [ %25, %bb.fb ], [ %i.nb, %bb.eh ] ; 3 uses
-  %28 = phi i64 [ %i.na, %bb.ek ], [ %26, %bb.fb ], [ %i.na, %bb.eh ] ; 3 uses
-  %.19320 = phi i32 [ 1, %bb.ek ], [ %.18319, %bb.fb ], [ 17, %bb.eh ] ; 2 uses
-  %.3270 = phi i64 [ %.0267696, %bb.ek ], [ %.2269, %bb.fb ], [ %.0267696, %bb.eh ] ; 3 uses
-  %.3265 = phi i64 [ %.0262697, %bb.ek ], [ %.2264, %bb.fb ], [ %.0262697, %bb.eh ] ; 3 uses
-  %.3259 = phi ptr [ %.0256698, %bb.ek ], [ %.2258, %bb.fb ], [ %.0256698, %bb.eh ] ; 3 uses
-  %.3253 = phi ptr [ %.0250699, %bb.ek ], [ %.2252, %bb.fb ], [ %.0250699, %bb.eh ] ; 3 uses
-  %.25 = phi i32 [ %i.nf, %bb.ek ], [ %.22.., %bb.fb ], [ %.22701, %bb.eh ] ; 4 uses
+26:                                               ; preds = %bb.eh
+  %27 = load ptr, ptr %24, align 8, !tbaa !22     ; 2 uses
+  %28 = icmp eq ptr %27, null
+  br i1 %28, label %_ZN11CStringBaseIwED2Ev.exit443, label %33
+
+bb.fb:                                            ; preds = %bb.fa, %bb.ep
+  %29 = phi i64 [ %i.ob, %bb.fa ], [ %i.nb, %bb.ep ] ; 2 uses
+  %30 = phi i64 [ %i.nz, %bb.fa ], [ %i.na, %bb.ep ] ; 2 uses
+  %.2269.jt0 = phi i64 [ %.1268, %bb.fa ], [ %.0267696, %bb.ep ] ; 2 uses
+  %.2264.jt0 = phi i64 [ %.1263, %bb.fa ], [ %.0262697, %bb.ep ] ; 2 uses
+  %.2258.jt0 = phi ptr [ %.1257, %bb.fa ], [ %.0256698, %bb.ep ] ; 2 uses
+  %.2252.jt0 = phi ptr [ %.1251, %bb.fa ], [ %.0250699, %bb.ep ] ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #17
+  %31 = load ptr, ptr %24, align 8, !tbaa !22     ; 2 uses
+  %32 = icmp eq ptr %31, null
+  br i1 %32, label %bb.fe, label %34
+
+bb.fc:                                            ; preds = %bb.ek, %25
+  %.25.jt1 = phi i32 [ %i.nj, %25 ], [ %i.nf, %bb.ek ]
   %i.oc = load ptr, ptr %24, align 8, !tbaa !22   ; 2 uses
   %i.od = icmp eq ptr %i.oc, null
-  br i1 %i.od, label %_ZN11CStringBaseIwED2Ev.exit443, label %bb.fd
+  br i1 %i.od, label %_ZN11CStringBaseIwED2Ev.exit443.jt1, label %bb.fd
+
+33:                                               ; preds = %26
+  call void @_ZdaPv(ptr noundef nonnull %27) #16
+  br label %_ZN11CStringBaseIwED2Ev.exit443
+
+34:                                               ; preds = %bb.fb
+  call void @_ZdaPv(ptr noundef nonnull %31) #16
+  br label %bb.fe
 
 bb.fd:                                            ; preds = %bb.fc
   call void @_ZdaPv(ptr noundef nonnull %i.oc) #16
-  br label %_ZN11CStringBaseIwED2Ev.exit443
+  br label %_ZN11CStringBaseIwED2Ev.exit443.jt1
 
-_ZN11CStringBaseIwED2Ev.exit443:                  ; preds = %bb.fc, %bb.fd
+_ZN11CStringBaseIwED2Ev.exit443:                  ; preds = %33, %26
   call void @llvm.lifetime.end.p0(ptr nonnull %24) #17
-  switch i32 %.19320, label %.thread531 [
-    i32 0, label %bb.fe
-    i32 19, label %bb.fe
-    i32 17, label %.thread518
-  ]
+  br label %.thread518
 
-bb.fe:                                            ; preds = %_ZN11CStringBaseIwED2Ev.exit443, %_ZN11CStringBaseIwED2Ev.exit443
+bb.fe:                                            ; preds = %34, %bb.fb
+  call void @llvm.lifetime.end.p0(ptr nonnull %24) #17
   %i.oe = add nuw i32 %.0243700, 1                ; 2 uses
   %i.of = load i32, ptr %i.k, align 4, !tbaa !4
   %i.og = icmp ult i32 %i.oe, %i.of
   br i1 %i.og, label %.lr.ph702, label %.thread518, !llvm.loop !100
+
+_ZN11CStringBaseIwED2Ev.exit443.jt1:              ; preds = %bb.fd, %bb.fc
+  call void @llvm.lifetime.end.p0(ptr nonnull %24) #17
+  br label %.thread531
 
 bb.ff:                                            ; preds = %bb.ev, %bb.eq, %bb.en
   %.pn369 = phi { ptr, i32 } [ %i.ns, %bb.ev ], [ %i.np, %bb.eq ], [ %i.nk, %bb.en ]
@@ -835,13 +845,12 @@ _ZN11CStringBaseIwED2Ev.exit444:                  ; preds = %bb.fh, %bb.fg, %bb.
   br label %.loopexit.split-lp558
 
 .thread518:                                       ; preds = %bb.fe, %_ZN11CStringBaseIwED2Ev.exit443, %.preheader576
-  %i.oj = phi i64 [ 0, %.preheader576 ], [ %27, %_ZN11CStringBaseIwED2Ev.exit443 ], [ %27, %bb.fe ] ; 2 uses
-  %i.ok = phi i64 [ 0, %.preheader576 ], [ %28, %_ZN11CStringBaseIwED2Ev.exit443 ], [ %28, %bb.fe ] ; 2 uses
-  %.26530 = phi i32 [ %.18512824, %.preheader576 ], [ %.25, %_ZN11CStringBaseIwED2Ev.exit443 ], [ %.25, %bb.fe ]
-  %.4254529 = phi ptr [ null, %.preheader576 ], [ %.3253, %_ZN11CStringBaseIwED2Ev.exit443 ], [ %.3253, %bb.fe ] ; 2 uses
-  %.4260528 = phi ptr [ null, %.preheader576 ], [ %.3259, %_ZN11CStringBaseIwED2Ev.exit443 ], [ %.3259, %bb.fe ] ; 2 uses
-  %.4266527 = phi i64 [ 0, %.preheader576 ], [ %.3265, %_ZN11CStringBaseIwED2Ev.exit443 ], [ %.3265, %bb.fe ] ; 2 uses
-  %.4271526 = phi i64 [ 0, %.preheader576 ], [ %.3270, %_ZN11CStringBaseIwED2Ev.exit443 ], [ %.3270, %bb.fe ] ; 4 uses
+  %i.oj = phi i64 [ 0, %.preheader576 ], [ %i.nb, %_ZN11CStringBaseIwED2Ev.exit443 ], [ %29, %bb.fe ] ; 3 uses
+  %i.ok = phi i64 [ 0, %.preheader576 ], [ %i.na, %_ZN11CStringBaseIwED2Ev.exit443 ], [ %30, %bb.fe ] ; 2 uses
+  %.4254529 = phi ptr [ null, %.preheader576 ], [ %.0250699, %_ZN11CStringBaseIwED2Ev.exit443 ], [ %.2252.jt0, %bb.fe ] ; 3 uses
+  %.4260528 = phi ptr [ null, %.preheader576 ], [ %.0256698, %_ZN11CStringBaseIwED2Ev.exit443 ], [ %.2258.jt0, %bb.fe ] ; 2 uses
+  %.4266527 = phi i64 [ 0, %.preheader576 ], [ %.0262697, %_ZN11CStringBaseIwED2Ev.exit443 ], [ %.2264.jt0, %bb.fe ] ; 2 uses
+  %.4271526 = phi i64 [ 0, %.preheader576 ], [ %.0267696, %_ZN11CStringBaseIwED2Ev.exit443 ], [ %.2269.jt0, %bb.fe ] ; 4 uses
   store i64 %i.ok, ptr %i.i, align 8
   store i64 %i.oj, ptr %i.j, align 8
   %i.ol = icmp ne ptr %.4260528, null
@@ -884,14 +893,15 @@ bb.fj:                                            ; preds = %bb.fi, %.thread518
 
 bb.fk:                                            ; preds = %bb.fj
   store i64 0, ptr %i.j, align 8, !tbaa !65
-  br label %bb.fl
-
-bb.fl:                                            ; preds = %bb.fk, %bb.fj
-  %29 = phi i64 [ 0, %bb.fk ], [ %i.oj, %bb.fj ]
-  %.5255 = phi ptr [ %i.j, %bb.fk ], [ %.4254529, %bb.fj ] ; 2 uses
   br i1 %or.cond513822, label %bb.fp, label %bb.fm
 
-bb.fm:                                            ; preds = %bb.fl
+bb.fl:                                            ; preds = %bb.fj
+  br i1 %or.cond513822, label %bb.fp, label %bb.fm
+
+bb.fm:                                            ; preds = %bb.fk, %bb.fl
+  %.5255874 = phi ptr [ %i.j, %bb.fk ], [ %.4254529, %bb.fl ] ; 2 uses
+  %35 = phi i64 [ 0, %bb.fk ], [ %i.oj, %bb.fl ]
+  %.4271526846854872 = phi i64 [ 0, %bb.fk ], [ %.4271526, %bb.fl ] ; 2 uses
   %i.ou = load i32, ptr %i.ax, align 4, !tbaa !28
   %i.ov = icmp sgt i32 %i.ou, 0
   br i1 %i.ov, label %.lr.ph11.i445, label %_ZN13CFieldPrinter15PrintTitleLinesEv.exit457
@@ -945,14 +955,17 @@ _ZN13CFieldPrinter15PrintTitleLinesEv.exit457:    ; preds = %._crit_edge.i448, %
           to label %bb.fn unwind label %.loopexit.split-lp558.loopexit.split-lp ; 0 uses
 
 bb.fn:                                            ; preds = %_ZN13CFieldPrinter15PrintTitleLinesEv.exit457
-  %i.pp = invoke noundef i32 @_ZN13CFieldPrinter16PrintSummaryInfoEyyPKyS1_(ptr noundef nonnull align 8 dereferenceable(32) %11, i64 noundef %.4271526, i64 noundef %.4266527, ptr noundef %.5255, ptr noundef %.5261)
+  %i.pp = invoke noundef i32 @_ZN13CFieldPrinter16PrintSummaryInfoEyyPKyS1_(ptr noundef nonnull align 8 dereferenceable(32) %11, i64 noundef %.4271526846854872, i64 noundef %.4266527, ptr noundef %.5255874, ptr noundef %.5261)
           to label %bb.fo unwind label %.loopexit.split-lp558.loopexit.split-lp ; 0 uses
 
 bb.fo:                                            ; preds = %bb.fn
   %i.pq = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZN13CStdOutStreamlsEPFRS_S0_E(ptr noundef nonnull align 8 dereferenceable(16) @g_StdOut, ptr noundef nonnull @_Z4endlR13CStdOutStream)
           to label %bb.fp unwind label %.loopexit.split-lp558.loopexit.split-lp ; 0 uses
 
-bb.fp:                                            ; preds = %bb.fo, %bb.fl
+bb.fp:                                            ; preds = %bb.fk, %bb.fo, %bb.fl
+  %.5255875 = phi ptr [ %.5255874, %bb.fo ], [ %.4254529, %bb.fl ], [ %i.j, %bb.fk ]
+  %36 = phi i64 [ %35, %bb.fo ], [ %i.oj, %bb.fl ], [ 0, %bb.fk ]
+  %.4271526846854873 = phi i64 [ %.4271526846854872, %bb.fo ], [ %.4271526, %bb.fl ], [ 0, %bb.fk ]
   %.not379 = icmp eq ptr %.5261, null
   br i1 %.not379, label %bb.fr, label %bb.fq
 
@@ -964,28 +977,28 @@ bb.fq:                                            ; preds = %bb.fp
 
 bb.fr:                                            ; preds = %bb.fq, %bb.fp
   %.1279 = phi ptr [ %i.a, %bb.fq ], [ %.0278723, %bb.fp ]
-  %.not380 = icmp eq ptr %.5255, null
+  %.not380 = icmp eq ptr %.5255875, null
   br i1 %.not380, label %bb.ft, label %bb.fs
 
 bb.fs:                                            ; preds = %bb.fr
   %i.pt = load i64, ptr %i.b, align 8, !tbaa !65
-  %i.pu = add i64 %i.pt, %29
+  %i.pu = add i64 %i.pt, %36
   store i64 %i.pu, ptr %i.b, align 8, !tbaa !65
   br label %bb.ft
 
 bb.ft:                                            ; preds = %bb.fs, %bb.fr
   %.1286 = phi ptr [ %i.b, %bb.fs ], [ %.0285722, %bb.fr ]
-  %i.pv = add i64 %.4271526, %.0244725
+  %i.pv = add i64 %.4271526846854873, %.0244725
   %i.pw = add i64 %.4266527, %.0272724
   br label %.thread531
 
-.thread531:                                       ; preds = %_ZN11CStringBaseIwED2Ev.exit443, %bb.ed, %bb.eb, %bb.ft
-  %.21322 = phi i32 [ 0, %bb.ft ], [ 1, %bb.eb ], [ 1, %bb.ed ], [ %.19320, %_ZN11CStringBaseIwED2Ev.exit443 ]
-  %.2287 = phi ptr [ %.1286, %bb.ft ], [ %.0285722, %bb.eb ], [ %.0285722, %bb.ed ], [ %.0285722, %_ZN11CStringBaseIwED2Ev.exit443 ]
-  %.2280 = phi ptr [ %.1279, %bb.ft ], [ %.0278723, %bb.eb ], [ %.0278723, %bb.ed ], [ %.0278723, %_ZN11CStringBaseIwED2Ev.exit443 ]
-  %.1273 = phi i64 [ %i.pw, %bb.ft ], [ %.0272724, %bb.eb ], [ %.0272724, %bb.ed ], [ %.0272724, %_ZN11CStringBaseIwED2Ev.exit443 ]
-  %.1245 = phi i64 [ %i.pv, %bb.ft ], [ %.0244725, %bb.eb ], [ %.0244725, %bb.ed ], [ %.0244725, %_ZN11CStringBaseIwED2Ev.exit443 ]
-  %.27 = phi i32 [ %.26530, %bb.ft ], [ %i.mx, %bb.eb ], [ -2147467260, %bb.ed ], [ %.25, %_ZN11CStringBaseIwED2Ev.exit443 ]
+.thread531:                                       ; preds = %bb.ed, %_ZN11CStringBaseIwED2Ev.exit443.jt1, %bb.eb, %bb.ft
+  %.21322 = phi i32 [ 0, %bb.ft ], [ 1, %bb.eb ], [ 1, %_ZN11CStringBaseIwED2Ev.exit443.jt1 ], [ 1, %bb.ed ]
+  %.2287 = phi ptr [ %.1286, %bb.ft ], [ %.0285722, %bb.eb ], [ %.0285722, %_ZN11CStringBaseIwED2Ev.exit443.jt1 ], [ %.0285722, %bb.ed ]
+  %.2280 = phi ptr [ %.1279, %bb.ft ], [ %.0278723, %bb.eb ], [ %.0278723, %_ZN11CStringBaseIwED2Ev.exit443.jt1 ], [ %.0278723, %bb.ed ]
+  %.1273 = phi i64 [ %i.pw, %bb.ft ], [ %.0272724, %bb.eb ], [ %.0272724, %_ZN11CStringBaseIwED2Ev.exit443.jt1 ], [ %.0272724, %bb.ed ]
+  %.1245 = phi i64 [ %i.pv, %bb.ft ], [ %.0244725, %bb.eb ], [ %.0244725, %_ZN11CStringBaseIwED2Ev.exit443.jt1 ], [ %.0244725, %bb.ed ]
+  %.27 = phi i32 [ %.18512824, %bb.ft ], [ %i.mx, %bb.eb ], [ %.25.jt1, %_ZN11CStringBaseIwED2Ev.exit443.jt1 ], [ -2147467260, %bb.ed ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #17
@@ -1025,7 +1038,6 @@ bb.fv:                                            ; preds = %_ZN8NWindows5NFile5
   switch i32 %.24325, label %.loopexit580 [
     i32 0, label %bb.fw
     i32 4, label %bb.fw
-    i32 2, label %.thread539
   ]
 
 bb.fw:                                            ; preds = %bb.fv, %bb.fv
@@ -1059,7 +1071,7 @@ _ZN20COpenCallbackConsoleD2Ev.exit460:            ; preds = %bb.fx, %.loopexit.s
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #17
   br label %.loopexit.split-lp
 
-.thread539:                                       ; preds = %bb.fw, %bb.fv
+.thread539:                                       ; preds = %bb.fw
   %.not389 = xor i1 %7, true
   %or.cond32.not = and i1 %6, %.not389
   %i.qd = icmp sgt i32 %.5297, 1

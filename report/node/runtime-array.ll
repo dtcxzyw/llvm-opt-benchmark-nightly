@@ -201,12 +201,12 @@ _ZN2v88internal11HandleScopeD2Ev.exit3:           ; preds = %bb.ap, %_ZN2v88inte
 define hidden noundef i64 @_ZN2v88internal20Runtime_ArrayIndexOfEiPmPNS0_7IsolateE(i32 noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 {
 bb.a:
   %3 = alloca %"class.v8::internal::LookupIterator", align 8 ; 17 uses
-  %4 = alloca %"class.v8::internal::LookupIterator", align 8 ; 5 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 560 ; 7 uses
+  %4 = alloca %"class.v8::internal::LookupIterator", align 8 ; 6 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 560 ; 8 uses
   %i.b = load ptr, ptr %i.a, align 8
-  %i.c = getelementptr inbounds nuw i8, ptr %2, i64 568 ; 8 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %2, i64 568 ; 10 uses
   %i.d = load ptr, ptr %i.c, align 8              ; 2 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %2, i64 576 ; 8 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %2, i64 576 ; 10 uses
   %i.f = load i32, ptr %i.e, align 8
   %i.g = add nsw i32 %i.f, 1
   store i32 %i.g, ptr %i.e, align 8
@@ -609,14 +609,13 @@ _ZNKR2v85MaybeIlE8FromJustEv.exit:                ; preds = %_ZN2v88internal8JSO
   br label %bb.ae
 
 bb.ae:                                            ; preds = %.lr.ph, %bb.am
-  %.1108.i196 = phi i64 [ %i.ev, %.lr.ph ], [ %i.hz, %bb.am ] ; 5 uses
-  %.sroa.082.2195 = phi i64 [ undef, %.lr.ph ], [ %.sroa.082.3, %bb.am ] ; 2 uses
-  %i.gw = load ptr, ptr %i.a, align 8
-  %i.gx = load ptr, ptr %i.c, align 8             ; 2 uses
+  %.sroa.082.2195 = phi i64 [ %i.ev, %.lr.ph ], [ %i.hz, %bb.am ] ; 5 uses
+  %i.gw = load ptr, ptr %i.a, align 8             ; 2 uses
+  %i.gx = load ptr, ptr %i.c, align 8             ; 4 uses
   %i.gy = load i32, ptr %i.e, align 8
   %i.gz = add nsw i32 %i.gy, 1
   store i32 %i.gz, ptr %i.e, align 8
-  %i.ha = uitofp nneg i64 %.1108.i196 to double
+  %i.ha = uitofp nneg i64 %.sroa.082.2195 to double
   %i.hb = fptoui double %i.ha to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
   call void @_ZN2v88internal14LookupIteratorC2EPNS0_7IsolateENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEENS4_INS0_4NameEEEmSG_NS1_13ConfigurationE(ptr noundef nonnull align 8 dereferenceable(88) %4, ptr noundef nonnull %2, ptr nonnull %.sroa.07.0.i152156, ptr null, i64 noundef %i.hb, ptr nonnull %.sroa.07.0.i152156, i32 noundef 3)
@@ -631,7 +630,7 @@ bb.af:                                            ; preds = %bb.ae
 _ZNKR2v85MaybeIbE8FromJustEv.exit:                ; preds = %bb.ae
   %i.hf = and i16 %i.hc, 256
   %.not191 = icmp eq i16 %i.hf, 0
-  br i1 %.not191, label %_ZN2v88internal11FactoryBaseINS0_7FactoryEE18NewNumberFromInt64ILNS0_14AllocationTypeE0EEENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEEl.exit, label %bb.ag
+  br i1 %.not191, label %5, label %bb.ag
 
 bb.ag:                                            ; preds = %_ZNKR2v85MaybeIbE8FromJustEv.exit
   %i.hg = call ptr @_ZN2v88internal6Object11GetPropertyEPNS0_14LookupIteratorEb(ptr noundef nonnull %4, i1 noundef zeroext false) #11 ; 2 uses
@@ -646,15 +645,15 @@ _ZNK2v88internal11MaybeHandleINS0_6ObjectEE2ToIS2_EEbPNS0_12DirectHandleIT_EE.ex
   %i.hi = load i64, ptr %i.j, align 8
   %i.hj = load i64, ptr %i.hg, align 8
   %i.hk = call noundef zeroext i1 @_ZN2v88internal6Object12StrictEqualsENS0_6TaggedIS1_EES3_(i64 %i.hi, i64 %i.hj) #11
-  br i1 %i.hk, label %bb.ah, label %_ZN2v88internal11FactoryBaseINS0_7FactoryEE18NewNumberFromInt64ILNS0_14AllocationTypeE0EEENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEEl.exit
+  br i1 %i.hk, label %bb.ah, label %5
 
 bb.ah:                                            ; preds = %.critedge124.i
-  %i.hl = add i64 %.1108.i196, -2147483648
+  %i.hl = add i64 %.sroa.082.2195, -2147483648
   %or.cond.i18 = icmp ult i64 %i.hl, -4294967296
   br i1 %or.cond.i18, label %bb.ak, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
-  %sext.i = shl nsw i64 %.1108.i196, 32           ; 2 uses
+  %sext.i = shl nsw i64 %.sroa.082.2195, 32       ; 2 uses
   %i.hm = load ptr, ptr %i.a, align 8             ; 2 uses
   %i.hn = load ptr, ptr %i.c, align 8
   %i.ho = icmp eq ptr %i.hm, %i.hn
@@ -670,7 +669,7 @@ _ZN2v88internal12DirectHandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.
   br label %_ZN2v88internal11FactoryBaseINS0_7FactoryEE18NewNumberFromInt64ILNS0_14AllocationTypeE0EEENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEEl.exit
 
 bb.ak:                                            ; preds = %bb.ah
-  %i.hq = sitofp i64 %.1108.i196 to double
+  %i.hq = sitofp i64 %.sroa.082.2195 to double
   %i.hr = call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE13NewHeapNumberILNS0_14AllocationTypeE0EEENS0_6HandleINS0_10HeapNumberEEEv(ptr noundef nonnull align 1 dereferenceable(1) %2) #11 ; 2 uses
   %i.hs = load i64, ptr %i.hr, align 8
   %i.ht = add i64 %i.hs, -1
@@ -680,9 +679,18 @@ bb.ak:                                            ; preds = %bb.ah
   %.pre200 = load i64, ptr %i.hr, align 8
   br label %_ZN2v88internal11FactoryBaseINS0_7FactoryEE18NewNumberFromInt64ILNS0_14AllocationTypeE0EEENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEEl.exit
 
-_ZN2v88internal11FactoryBaseINS0_7FactoryEE18NewNumberFromInt64ILNS0_14AllocationTypeE0EEENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEEl.exit: ; preds = %bb.ak, %_ZN2v88internal12DirectHandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i, %bb.af, %_ZNKR2v85MaybeIbE8FromJustEv.exit, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE2ToIS2_EEbPNS0_12DirectHandleIT_EE.exit, %.critedge124.i
-  %.sroa.082.3 = phi i64 [ %i.he, %bb.af ], [ %.sroa.082.2195, %_ZNKR2v85MaybeIbE8FromJustEv.exit ], [ %.sroa.082.2195, %.critedge124.i ], [ %i.hh, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE2ToIS2_EEbPNS0_12DirectHandleIT_EE.exit ], [ %.pre200, %bb.ak ], [ %sext.i, %_ZN2v88internal12DirectHandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i ] ; 2 uses
-  %.7.i = phi i32 [ 1, %bb.af ], [ 24, %_ZNKR2v85MaybeIbE8FromJustEv.exit ], [ 0, %.critedge124.i ], [ 1, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE2ToIS2_EEbPNS0_12DirectHandleIT_EE.exit ], [ 1, %bb.ak ], [ 1, %_ZN2v88internal12DirectHandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i ]
+5:                                                ; preds = %_ZNKR2v85MaybeIbE8FromJustEv.exit, %.critedge124.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
+  store ptr %i.gw, ptr %i.a, align 8
+  %6 = load i32, ptr %i.e, align 8
+  %7 = add nsw i32 %6, -1
+  store i32 %7, ptr %i.e, align 8
+  %8 = load ptr, ptr %i.c, align 8
+  %.not.i3.jt0 = icmp eq ptr %8, %i.gx
+  br i1 %.not.i3.jt0, label %bb.am, label %bb.al, !prof !7
+
+_ZN2v88internal11FactoryBaseINS0_7FactoryEE18NewNumberFromInt64ILNS0_14AllocationTypeE0EEENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEEl.exit: ; preds = %bb.ak, %_ZN2v88internal12DirectHandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE2ToIS2_EEbPNS0_12DirectHandleIT_EE.exit, %bb.af
+  %.sroa.082.3.jt1 = phi i64 [ %i.he, %bb.af ], [ %i.hh, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE2ToIS2_EEbPNS0_12DirectHandleIT_EE.exit ], [ %.pre200, %bb.ak ], [ %sext.i, %_ZN2v88internal12DirectHandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
   store ptr %i.gw, ptr %i.a, align 8
   %i.hw = load i32, ptr %i.e, align 8
@@ -690,26 +698,25 @@ _ZN2v88internal11FactoryBaseINS0_7FactoryEE18NewNumberFromInt64ILNS0_14Allocatio
   store i32 %i.hx, ptr %i.e, align 8
   %i.hy = load ptr, ptr %i.c, align 8
   %.not.i3 = icmp eq ptr %i.hy, %i.gx
-  br i1 %.not.i3, label %_ZN2v88internal11HandleScopeD2Ev.exit, label %bb.al, !prof !7
+  br i1 %.not.i3, label %_ZN2v88internalL30__RT_impl_Runtime_ArrayIndexOfENS0_9ArgumentsILNS0_13ArgumentsTypeE0EEEPNS0_7IsolateE.exit.thread, label %_ZN2v88internal11HandleScopeD2Ev.exit, !prof !7
 
-bb.al:                                            ; preds = %_ZN2v88internal11FactoryBaseINS0_7FactoryEE18NewNumberFromInt64ILNS0_14AllocationTypeE0EEENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEEl.exit
+bb.al:                                            ; preds = %5
   store ptr %i.gx, ptr %i.c, align 8
   call void @_ZN2v88internal11HandleScope16DeleteExtensionsEPNS0_7IsolateE(ptr noundef nonnull %2) #11
-  br label %_ZN2v88internal11HandleScopeD2Ev.exit
+  br label %bb.am
 
-_ZN2v88internal11HandleScopeD2Ev.exit:            ; preds = %bb.al, %_ZN2v88internal11FactoryBaseINS0_7FactoryEE18NewNumberFromInt64ILNS0_14AllocationTypeE0EEENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEEl.exit
-  switch i32 %.7.i, label %_ZN2v88internalL30__RT_impl_Runtime_ArrayIndexOfENS0_9ArgumentsILNS0_13ArgumentsTypeE0EEEPNS0_7IsolateE.exit.thread [
-    i32 0, label %bb.am
-    i32 24, label %bb.am
-  ]
+_ZN2v88internal11HandleScopeD2Ev.exit:            ; preds = %_ZN2v88internal11FactoryBaseINS0_7FactoryEE18NewNumberFromInt64ILNS0_14AllocationTypeE0EEENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEEl.exit
+  store ptr %i.gx, ptr %i.c, align 8
+  call void @_ZN2v88internal11HandleScope16DeleteExtensionsEPNS0_7IsolateE(ptr noundef nonnull %2) #11
+  br label %_ZN2v88internalL30__RT_impl_Runtime_ArrayIndexOfENS0_9ArgumentsILNS0_13ArgumentsTypeE0EEEPNS0_7IsolateE.exit.thread
 
-bb.am:                                            ; preds = %_ZN2v88internal11HandleScopeD2Ev.exit, %_ZN2v88internal11HandleScopeD2Ev.exit
-  %i.hz = add i64 %.1108.i196, 1                  ; 2 uses
+bb.am:                                            ; preds = %5, %bb.al
+  %i.hz = add i64 %.sroa.082.2195, 1              ; 2 uses
   %exitcond.not = icmp eq i64 %i.hz, %.1104.i
   br i1 %exitcond.not, label %_ZN2v88internalL30__RT_impl_Runtime_ArrayIndexOfENS0_9ArgumentsILNS0_13ArgumentsTypeE0EEEPNS0_7IsolateE.exit.thread, label %bb.ae, !llvm.loop !19
 
-_ZN2v88internalL30__RT_impl_Runtime_ArrayIndexOfENS0_9ArgumentsILNS0_13ArgumentsTypeE0EEEPNS0_7IsolateE.exit.thread: ; preds = %bb.am, %_ZN2v88internal11HandleScopeD2Ev.exit, %bb.g, %_ZN2v88internal12IsHeapNumberENS0_6TaggedINS0_6ObjectEEE.exit.i.i, %.critedge.i, %bb.d, %_ZN2v88internal6Object13ToArrayLengthENS0_6TaggedIS1_EEPj.exit, %_ZNKR2v85MaybeIlE8FromJustEv.exit, %bb.ad, %.critedge120.i.thread, %.critedge120.i, %bb.y, %bb.n, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE2ToIS2_EEbPNS0_12DirectHandleIT_EE.exit11
-  %.sroa.082.5185 = phi i64 [ -4294967296, %_ZN2v88internal12IsHeapNumberENS0_6TaggedINS0_6ObjectEEE.exit.i.i ], [ %i.cr, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE2ToIS2_EEbPNS0_12DirectHandleIT_EE.exit11 ], [ %i.di, %bb.n ], [ -4294967296, %.critedge120.i ], [ %i.en, %bb.y ], [ %i.gq, %bb.ad ], [ -4294967296, %.critedge120.i.thread ], [ -4294967296, %_ZN2v88internal6Object13ToArrayLengthENS0_6TaggedIS1_EEPj.exit ], [ %i.gt, %_ZNKR2v85MaybeIlE8FromJustEv.exit ], [ %i.x, %bb.d ], [ -4294967296, %.critedge.i ], [ -4294967296, %bb.g ], [ %.sroa.082.3, %_ZN2v88internal11HandleScopeD2Ev.exit ], [ -4294967296, %bb.am ]
+_ZN2v88internalL30__RT_impl_Runtime_ArrayIndexOfENS0_9ArgumentsILNS0_13ArgumentsTypeE0EEEPNS0_7IsolateE.exit.thread: ; preds = %bb.am, %bb.g, %_ZN2v88internal12IsHeapNumberENS0_6TaggedINS0_6ObjectEEE.exit.i.i, %.critedge.i, %_ZN2v88internal11FactoryBaseINS0_7FactoryEE18NewNumberFromInt64ILNS0_14AllocationTypeE0EEENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEEl.exit, %_ZN2v88internal11HandleScopeD2Ev.exit, %bb.d, %_ZN2v88internal6Object13ToArrayLengthENS0_6TaggedIS1_EEPj.exit, %_ZNKR2v85MaybeIlE8FromJustEv.exit, %bb.ad, %.critedge120.i.thread, %.critedge120.i, %bb.y, %bb.n, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE2ToIS2_EEbPNS0_12DirectHandleIT_EE.exit11
+  %.sroa.082.5185 = phi i64 [ %.sroa.082.3.jt1, %_ZN2v88internal11FactoryBaseINS0_7FactoryEE18NewNumberFromInt64ILNS0_14AllocationTypeE0EEENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEEl.exit ], [ %i.cr, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE2ToIS2_EEbPNS0_12DirectHandleIT_EE.exit11 ], [ %i.di, %bb.n ], [ -4294967296, %.critedge120.i ], [ %i.en, %bb.y ], [ %i.gq, %bb.ad ], [ -4294967296, %.critedge120.i.thread ], [ -4294967296, %_ZN2v88internal6Object13ToArrayLengthENS0_6TaggedIS1_EEPj.exit ], [ %i.gt, %_ZNKR2v85MaybeIlE8FromJustEv.exit ], [ %i.x, %bb.d ], [ -4294967296, %.critedge.i ], [ -4294967296, %bb.g ], [ -4294967296, %_ZN2v88internal12IsHeapNumberENS0_6TaggedINS0_6ObjectEEE.exit.i.i ], [ %.sroa.082.3.jt1, %_ZN2v88internal11HandleScopeD2Ev.exit ], [ -4294967296, %bb.am ]
   store ptr %i.b, ptr %i.a, align 8
   %i.ia = load i32, ptr %i.e, align 8
   %i.ib = add nsw i32 %i.ia, -1

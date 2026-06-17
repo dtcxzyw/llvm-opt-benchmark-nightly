@@ -201,7 +201,7 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 8, !tbaa !7    ; 25 uses
   %i.c = add i32 %i.b, -384                       ; 2 uses
   store i32 %i.c, ptr %i.a, align 8, !tbaa !7
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 164 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 170 uses
   %i.e = zext i32 %i.c to i64                     ; 39 uses
   %.val1486 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.f = getelementptr inbounds nuw i8, ptr %.val1486, i64 %i.e
@@ -358,7 +358,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.bu = getelementptr inbounds nuw i8, ptr %.val1472, i64 %i.e
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 20
   store i32 0, ptr %i.bv, align 1
-  %i.bw = add nuw nsw i64 %i.e, 128               ; 6 uses
+  %i.bw = add nuw nsw i64 %i.e, 128               ; 8 uses
   %.val1471 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.bx = getelementptr inbounds nuw i8, ptr %.val1471, i64 %i.bw
   store i32 0, ptr %i.bx, align 1
@@ -568,7 +568,7 @@ bb.z:                                             ; preds = %bb.x
   br label %.loopexit1692
 
 bb.aa:                                            ; preds = %bb.z, %bb.w
-  %.01354 = phi i32 [ -1, %bb.w ], [ %i.en, %bb.z ] ; 7 uses
+  %.01354 = phi i32 [ -1, %bb.w ], [ %i.en, %bb.z ] ; 3 uses
   %i.eu = zext i32 %.01355 to i64                 ; 2 uses
   %.val1536 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ev = getelementptr inbounds nuw i8, ptr %.val1536, i64 %i.eu
@@ -765,8 +765,8 @@ bb.aq:                                            ; preds = %bb.ao
 bb.ar:                                            ; preds = %bb.aq, %bb.ap
   %.pre-phi = phi i64 [ %.pre, %bb.aq ], [ %i.hd, %bb.ap ] ; 2 uses
   %.01353 = phi i32 [ %i.hf, %bb.aq ], [ %.0.copyload.i1632, %bb.ap ] ; 2 uses
-  %i.hg = add i32 %i.b, -244
-  %i.hh = add i32 %i.b, -304                      ; 4 uses
+  %i.hg = add i32 %i.b, -244                      ; 3 uses
+  %i.hh = add i32 %i.b, -304                      ; 6 uses
   %i.hi = uitofp i32 %.01354 to double            ; 3 uses
   %i.hj = bitcast double %i.hi to i64             ; 2 uses
   %.val1526 = load ptr, ptr %i.d, align 8, !tbaa !18
@@ -779,9 +779,9 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i1635) #8, !srcloc !19
   %i.hm = shl i32 %.0.copyload.i1635, 2
   %i.hn = add i32 %i.b, -256                      ; 2 uses
-  %i.ho = add nuw nsw i64 %i.e, 188               ; 2 uses
+  %i.ho = add nuw nsw i64 %i.e, 188               ; 4 uses
   %i.hp = add nuw nsw i64 %i.e, 72                ; 3 uses
-  %i.hq = add nuw nsw i64 %i.e, 68                ; 5 uses
+  %i.hq = add nuw nsw i64 %i.e, 68                ; 7 uses
   %i.hr = add nuw nsw i64 %i.e, 132               ; 2 uses
   %i.hs = add i32 %i.b, -316                      ; 2 uses
   %i.ht = add i32 %i.b, -336                      ; 2 uses
@@ -796,16 +796,12 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap
   %i.ic = lshr i8 %.0.copyload.i1614, 3
   %i.id = and i8 %i.ic, 1
   %.lobit = zext nneg i8 %i.id to i32
-  br label %5
+  br label %bb.as
 
-5:                                                ; preds = %bb.cc, %bb.ar
-  %.11369 = phi i32 [ 0, %bb.ar ], [ %.41372, %bb.cc ] ; 4 uses
-  %.01363 = phi i32 [ 0, %bb.ar ], [ %.6, %bb.cc ] ; 7 uses
-  %.01360 = phi i32 [ 0, %bb.ar ], [ %.11361, %bb.cc ] ; 10 uses
-  %.not1403 = icmp ult i32 %.11369, %i.ez
-  br i1 %.not1403, label %bb.as, label %bb.cd
-
-bb.as:                                            ; preds = %5
+bb.as:                                            ; preds = %bb.ar, %bb.cc
+  %.013601816 = phi i32 [ 0, %bb.ar ], [ %.11361.jt0, %bb.cc ] ; 7 uses
+  %.013631815 = phi i32 [ 0, %bb.ar ], [ %.6.jt0, %bb.cc ] ; 6 uses
+  %.113691814 = phi i32 [ 0, %bb.ar ], [ %.41372.jt0, %bb.cc ]
   %.val1524 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ie = getelementptr inbounds nuw i8, ptr %.val1524, i64 %i.q
   %.0.copyload.i1636 = load i32, ptr %i.ie, align 1 ; 2 uses
@@ -826,7 +822,7 @@ bb.as:                                            ; preds = %5
   %.val1452 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.il = getelementptr inbounds nuw i8, ptr %.val1452, i64 %i.x
   store i32 %i.ik, ptr %i.il, align 1
-  tail call void @w2c_hermes_hermes0x3A0x3Avm0x3A0x3AJSRegExp0x3A0x3Asearch0x28hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AJSRegExp0x3E0x2C0x20hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AStringPrimitive0x3E0x2C0x20unsigned0x20int0x29(ptr noundef nonnull %0, i32 noundef %i.hn, i32 noundef %i.dk, i32 noundef %3, i32 noundef %.01355, i32 noundef %.11369) #8
+  tail call void @w2c_hermes_hermes0x3A0x3Avm0x3A0x3AJSRegExp0x3A0x3Asearch0x28hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AJSRegExp0x3E0x2C0x20hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AStringPrimitive0x3E0x2C0x20unsigned0x20int0x29(ptr noundef nonnull %0, i32 noundef %i.hn, i32 noundef %i.dk, i32 noundef %3, i32 noundef %.01355, i32 noundef %.113691814) #8
   %.val1588 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.im = getelementptr inbounds nuw i8, ptr %.val1588, i64 %i.ho
   %.0.copyload.i1638 = load i8, ptr %i.im, align 1 ; 2 uses
@@ -851,7 +847,7 @@ bb.au:                                            ; preds = %bb.as
   %.0.copyload.i1639 = load i32, ptr %i.iq, align 1 ; 6 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i1639) #8, !srcloc !19
   %.not1405 = icmp eq i32 %.0.copyload.i1639, 0
-  br i1 %.not1405, label %.loopexit, label %bb.av
+  br i1 %.not1405, label %.loopexit.jt3, label %bb.av
 
 bb.av:                                            ; preds = %bb.au
   %i.ir = icmp ugt i32 %.0.copyload.i1639, 4
@@ -895,10 +891,10 @@ bb.az:                                            ; preds = %bb.aw, %bb.ay
   %i.iz = zext i32 %.0.copyload.i1643 to i64      ; 2 uses
   %.val1517 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ja = getelementptr inbounds nuw i8, ptr %.val1517, i64 %i.iz
-  %.0.copyload.i1644 = load i32, ptr %i.ja, align 1 ; 9 uses
+  %.0.copyload.i1644 = load i32, ptr %i.ja, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i1644) #8, !srcloc !19
   %.not1407 = icmp ult i32 %.0.copyload.i1644, %i.ez
-  br i1 %.not1407, label %bb.ba, label %.loopexit
+  br i1 %.not1407, label %bb.ba, label %.loopexit.jt3
 
 bb.ba:                                            ; preds = %bb.az
   %.val1516 = load ptr, ptr %i.d, align 8, !tbaa !18
@@ -906,8 +902,8 @@ bb.ba:                                            ; preds = %bb.az
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 4
   %.0.copyload.i1645 = load i32, ptr %i.jc, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i1645) #8, !srcloc !19
-  %i.jd = add i32 %.0.copyload.i1645, %.0.copyload.i1644 ; 6 uses
-  %i.je = icmp eq i32 %.01360, %i.jd
+  %i.jd = add i32 %.0.copyload.i1645, %.0.copyload.i1644 ; 5 uses
+  %i.je = icmp eq i32 %.013601816, %i.jd
   br i1 %i.je, label %bb.bb, label %bb.bc
 
 bb.bb:                                            ; preds = %bb.ba
@@ -921,8 +917,8 @@ bb.bb:                                            ; preds = %bb.ba
   br label %.loopexit
 
 bb.bc:                                            ; preds = %bb.ba
-  %i.jj = sub i32 %.0.copyload.i1644, %.01360
-  tail call void @w2c_hermes_hermes0x3A0x3Avm0x3A0x3AStringPrimitive0x3A0x3Aslice0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AStringPrimitive0x3E0x2C0x20unsigned0x20long0x2C0x20unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.ht, i32 noundef %3, i32 noundef %.01355, i32 noundef %.01360, i32 noundef %i.jj) #8
+  %i.jj = sub i32 %.0.copyload.i1644, %.013601816
+  tail call void @w2c_hermes_hermes0x3A0x3Avm0x3A0x3AStringPrimitive0x3A0x3Aslice0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AStringPrimitive0x3E0x2C0x20unsigned0x20long0x2C0x20unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.ht, i32 noundef %3, i32 noundef %.01355, i32 noundef %.013601816, i32 noundef %i.jj) #8
   %.val1514 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.jk = getelementptr inbounds nuw i8, ptr %.val1514, i64 %i.hu
   %.0.copyload.i1647 = load i32, ptr %i.jk, align 1 ; 2 uses
@@ -934,7 +930,7 @@ bb.bc:                                            ; preds = %bb.ba
 bb.bd:                                            ; preds = %bb.bc
   %i.jl = getelementptr inbounds nuw i8, ptr %.val1448, i64 %i.hx
   store i32 0, ptr %i.jl, align 1
-  br label %.loopexit
+  br label %.loopexit.jt1
 
 bb.be:                                            ; preds = %bb.bc
   %i.jm = getelementptr inbounds nuw i8, ptr %.val1448, i64 %i.hv
@@ -943,8 +939,8 @@ bb.be:                                            ; preds = %bb.bc
   %.val1559 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.jn = getelementptr inbounds nuw i8, ptr %.val1559, i64 %.pre-phi
   store i64 %.0.copyload.i1648, ptr %i.jn, align 1
-  tail call void @w2c_hermes_hermes0x3A0x3Avm0x3A0x3AArrayImpl0x3A0x3A_setOwnIndexedImpl0x28hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AJSObject0x3E0x2C0x20hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20int0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AHermesValue0x3E0x29(ptr noundef nonnull %0, i32 noundef %i.hw, i32 noundef %i.dv, i32 noundef %3, i32 noundef %.01363, i32 noundef %.01353) #8
-  %i.jo = add i32 %.01363, 1                      ; 3 uses
+  tail call void @w2c_hermes_hermes0x3A0x3Avm0x3A0x3AArrayImpl0x3A0x3A_setOwnIndexedImpl0x28hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AJSObject0x3E0x2C0x20hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20int0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AHermesValue0x3E0x29(ptr noundef nonnull %0, i32 noundef %i.hw, i32 noundef %i.dv, i32 noundef %3, i32 noundef %.013631815, i32 noundef %.01353) #8
+  %i.jo = add i32 %.013631815, 1                  ; 3 uses
   %i.jp = icmp eq i32 %.01354, %i.jo
   %.val1513 = load ptr, ptr %i.d, align 8, !tbaa !18 ; 2 uses
   br i1 %i.jp, label %bb.bf, label %bb.bl
@@ -1005,7 +1001,7 @@ bb.bi:                                            ; preds = %bb.bh, %bb.bg
 bb.bj:                                            ; preds = %bb.bi
   %i.ki = getelementptr inbounds nuw i8, ptr %.val1444, i64 %i.hx
   store i32 0, ptr %i.ki, align 1
-  br label %.loopexit
+  br label %.loopexit.jt1
 
 bb.bk:                                            ; preds = %bb.bi
   %i.kj = getelementptr inbounds nuw i8, ptr %.val1444, i64 %i.ia
@@ -1018,7 +1014,7 @@ bb.bk:                                            ; preds = %bb.bi
   %.val1443 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.km = getelementptr inbounds nuw i8, ptr %.val1443, i64 %i.hx
   store i32 1, ptr %i.km, align 1
-  br label %.loopexit
+  br label %.loopexit.jt1
 
 bb.bl:                                            ; preds = %bb.be
   %i.kn = getelementptr inbounds nuw i8, ptr %.val1513, i64 %i.hp
@@ -1029,7 +1025,7 @@ bb.bl:                                            ; preds = %bb.be
 
 .preheader:                                       ; preds = %bb.bl, %bb.br
   %.31371 = phi i32 [ %i.mk, %bb.br ], [ 1, %bb.bl ] ; 2 uses
-  %.11364 = phi i32 [ %i.ly, %bb.br ], [ %i.jo, %bb.bl ] ; 3 uses
+  %.11364 = phi i32 [ %i.ly, %bb.br ], [ %i.jo, %bb.bl ] ; 2 uses
   %.val1509 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.kp = getelementptr inbounds nuw i8, ptr %.val1509, i64 %i.i
   %.0.copyload.i1655 = load i32, ptr %i.kp, align 1 ; 2 uses
@@ -1226,14 +1222,12 @@ bb.bw:                                            ; preds = %bb.bv
 
 .sink.split:                                      ; preds = %bb.bm, %bb.bw
   %.sink.ph = phi i32 [ 1, %bb.bw ], [ 0, %bb.bm ]
-  %.3.ph = phi i32 [ %.01354, %bb.bw ], [ %.11364, %bb.bm ]
   %.val1432 = load ptr, ptr %i.d, align 8, !tbaa !18
   br label %bb.bx
 
 bb.bx:                                            ; preds = %.sink.split, %bb.bv
   %.val1433.sink = phi ptr [ %.val1433, %bb.bv ], [ %.val1432, %.sink.split ]
   %.sink = phi i32 [ 0, %bb.bv ], [ %.sink.ph, %.sink.split ]
-  %.3 = phi i32 [ %.01354, %bb.bv ], [ %.3.ph, %.sink.split ]
   %i.nh = getelementptr inbounds nuw i8, ptr %.val1433.sink, i64 %i.hx
   store i32 %.sink, ptr %i.nh, align 1
   %.val1494 = load ptr, ptr %i.d, align 8, !tbaa !18
@@ -1259,31 +1253,86 @@ bb.bx:                                            ; preds = %.sink.split, %bb.bv
   %i.nr = getelementptr inbounds nuw i8, ptr %.val1429, i64 %i.kq
   %i.ns = getelementptr inbounds nuw i8, ptr %i.nr, i64 168
   store i32 %i.nq, ptr %i.ns, align 1
-  br label %.loopexit
+  br label %.loopexit.jt1
 
-.loopexit:                                        ; preds = %bb.br, %bb.bj, %bb.bk, %bb.bx, %bb.bl, %bb.az, %bb.au, %bb.bd, %bb.bb
-  %.41372 = phi i32 [ %.11369, %bb.au ], [ %.11369, %bb.az ], [ %i.ji, %bb.bb ], [ %.0.copyload.i1644, %bb.bd ], [ %i.jd, %bb.bl ], [ %.0.copyload.i1644, %bb.bx ], [ %.0.copyload.i1644, %bb.bj ], [ %.0.copyload.i1644, %bb.bk ], [ %i.jd, %bb.br ]
-  %.6 = phi i32 [ %.01363, %bb.au ], [ %.01363, %bb.az ], [ %.01363, %bb.bb ], [ %.01363, %bb.bd ], [ %i.jo, %bb.bl ], [ %.3, %bb.bx ], [ %.01354, %bb.bj ], [ %.01354, %bb.bk ], [ %i.ly, %bb.br ] ; 2 uses
-  %.11361 = phi i32 [ %.01360, %bb.au ], [ %.01360, %bb.az ], [ %.01360, %bb.bb ], [ %.01360, %bb.bd ], [ %i.jd, %bb.bl ], [ %i.jd, %bb.bx ], [ %.01360, %bb.bj ], [ %.01360, %bb.bk ], [ %i.jd, %bb.br ] ; 2 uses
-  %.11357 = phi i32 [ 3, %bb.au ], [ 3, %bb.az ], [ 0, %bb.bb ], [ 1, %bb.bd ], [ 0, %bb.bl ], [ 1, %bb.bx ], [ 1, %bb.bj ], [ 1, %bb.bk ], [ 0, %bb.br ]
+.loopexit.jt1:                                    ; preds = %bb.bk, %bb.bj, %bb.bx, %bb.bd
+  %.val1492.jt1 = load ptr, ptr %i.d, align 8, !tbaa !18
+  %5 = getelementptr inbounds nuw i8, ptr %.val1492.jt1, i64 %i.hq
+  %.0.copyload.i1676.jt1 = load i32, ptr %5, align 1 ; 3 uses
+  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i1676.jt1) #8, !srcloc !19
+  %.not1414.jt1 = icmp eq i32 %i.hh, %.0.copyload.i1676.jt1
+  br i1 %.not1414.jt1, label %9, label %7
+
+.loopexit:                                        ; preds = %bb.br, %bb.bl, %bb.bb
+  %.41372.jt0 = phi i32 [ %i.ji, %bb.bb ], [ %i.jd, %bb.bl ], [ %i.jd, %bb.br ] ; 2 uses
+  %.6.jt0 = phi i32 [ %.013631815, %bb.bb ], [ %i.jo, %bb.bl ], [ %i.ly, %bb.br ] ; 2 uses
+  %.11361.jt0 = phi i32 [ %.013601816, %bb.bb ], [ %i.jd, %bb.bl ], [ %i.jd, %bb.br ] ; 2 uses
   %.val1492 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.nt = getelementptr inbounds nuw i8, ptr %.val1492, i64 %i.hq
   %.0.copyload.i1676 = load i32, ptr %i.nt, align 1 ; 3 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i1676) #8, !srcloc !19
   %.not1414 = icmp eq i32 %i.hh, %.0.copyload.i1676
-  br i1 %.not1414, label %bb.bz, label %bb.by
+  br i1 %.not1414, label %11, label %8
 
-bb.by:                                            ; preds = %.loopexit
+.loopexit.jt3:                                    ; preds = %bb.az, %bb.au
+  %.val1492.jt3 = load ptr, ptr %i.d, align 8, !tbaa !18
+  %6 = getelementptr inbounds nuw i8, ptr %.val1492.jt3, i64 %i.hq
+  %.0.copyload.i1676.jt3 = load i32, ptr %6, align 1 ; 3 uses
+  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i1676.jt3) #8, !srcloc !19
+  %.not1414.jt3 = icmp eq i32 %i.hh, %.0.copyload.i1676.jt3
+  br i1 %.not1414.jt3, label %bb.bz, label %bb.by
+
+7:                                                ; preds = %.loopexit.jt1
+  tail call void @w2c_hermes_dlfree(ptr noundef nonnull %0, i32 noundef %.0.copyload.i1676.jt1) #8
+  br label %9
+
+8:                                                ; preds = %.loopexit
   tail call void @w2c_hermes_dlfree(ptr noundef nonnull %0, i32 noundef %.0.copyload.i1676) #8
+  br label %11
+
+bb.by:                                            ; preds = %.loopexit.jt3
+  tail call void @w2c_hermes_dlfree(ptr noundef nonnull %0, i32 noundef %.0.copyload.i1676.jt3) #8
   br label %bb.bz
 
-bb.bz:                                            ; preds = %bb.by, %.loopexit
+9:                                                ; preds = %7, %.loopexit.jt1
+  %.val1584.jt1 = load ptr, ptr %i.d, align 8, !tbaa !18
+  %10 = getelementptr inbounds nuw i8, ptr %.val1584.jt1, i64 %i.ho
+  %.0.copyload.i1677.jt1 = load i8, ptr %10, align 1 ; 2 uses
+  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i1677.jt1) #8, !srcloc !21
+  %.not1415.jt1 = icmp eq i8 %.0.copyload.i1677.jt1, 0
+  br i1 %.not1415.jt1, label %.loopexit1692, label %13
+
+11:                                               ; preds = %8, %.loopexit
+  %.val1584.jt0 = load ptr, ptr %i.d, align 8, !tbaa !18
+  %12 = getelementptr inbounds nuw i8, ptr %.val1584.jt0, i64 %i.ho
+  %.0.copyload.i1677.jt0 = load i8, ptr %12, align 1 ; 2 uses
+  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i1677.jt0) #8, !srcloc !21
+  %.not1415.jt0 = icmp eq i8 %.0.copyload.i1677.jt0, 0
+  br i1 %.not1415.jt0, label %bb.cc, label %16
+
+bb.bz:                                            ; preds = %bb.by, %.loopexit.jt3
   %.val1584 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.nu = getelementptr inbounds nuw i8, ptr %.val1584, i64 %i.ho
   %.0.copyload.i1677 = load i8, ptr %i.nu, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i1677) #8, !srcloc !21
   %.not1415 = icmp eq i8 %.0.copyload.i1677, 0
-  br i1 %.not1415, label %bb.cc, label %bb.ca
+  br i1 %.not1415, label %bb.cd, label %bb.ca
+
+13:                                               ; preds = %9
+  %.val1491.jt1 = load ptr, ptr %i.d, align 8, !tbaa !18
+  %14 = getelementptr inbounds nuw i8, ptr %.val1491.jt1, i64 %i.bw
+  %.0.copyload.i1678.jt1 = load i32, ptr %14, align 1 ; 3 uses
+  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i1678.jt1) #8, !srcloc !19
+  %15 = icmp eq i32 %.0.copyload.i1678.jt1, %i.hg
+  br i1 %15, label %.loopexit1692, label %19
+
+16:                                               ; preds = %11
+  %.val1491.jt0 = load ptr, ptr %i.d, align 8, !tbaa !18
+  %17 = getelementptr inbounds nuw i8, ptr %.val1491.jt0, i64 %i.bw
+  %.0.copyload.i1678.jt0 = load i32, ptr %17, align 1 ; 3 uses
+  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i1678.jt0) #8, !srcloc !19
+  %18 = icmp eq i32 %.0.copyload.i1678.jt0, %i.hg
+  br i1 %18, label %bb.cc, label %20
 
 bb.ca:                                            ; preds = %bb.bz
   %.val1491 = load ptr, ptr %i.d, align 8, !tbaa !18
@@ -1291,23 +1340,29 @@ bb.ca:                                            ; preds = %bb.bz
   %.0.copyload.i1678 = load i32, ptr %i.nv, align 1 ; 3 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i1678) #8, !srcloc !19
   %i.nw = icmp eq i32 %.0.copyload.i1678, %i.hg
-  br i1 %i.nw, label %bb.cc, label %bb.cb
+  br i1 %i.nw, label %bb.cd, label %bb.cb
+
+19:                                               ; preds = %13
+  tail call void @w2c_hermes_dlfree(ptr noundef nonnull %0, i32 noundef %.0.copyload.i1678.jt1) #8
+  br label %.loopexit1692
+
+20:                                               ; preds = %16
+  tail call void @w2c_hermes_dlfree(ptr noundef nonnull %0, i32 noundef %.0.copyload.i1678.jt0) #8
+  br label %bb.cc
 
 bb.cb:                                            ; preds = %bb.ca
   tail call void @w2c_hermes_dlfree(ptr noundef nonnull %0, i32 noundef %.0.copyload.i1678) #8
-  br label %bb.cc
+  br label %bb.cd
 
-bb.cc:                                            ; preds = %bb.ca, %bb.bz, %bb.cb
-  switch i32 %.11357, label %.loopexit1692 [
-    i32 0, label %5
-    i32 3, label %bb.cd
-  ]
+bb.cc:                                            ; preds = %20, %16, %11
+  %.not1403 = icmp ult i32 %.41372.jt0, %i.ez
+  br i1 %.not1403, label %bb.as, label %bb.cd
 
-bb.cd:                                            ; preds = %bb.cc, %5
-  %.7 = phi i32 [ %.01363, %5 ], [ %.6, %bb.cc ]  ; 2 uses
-  %.21362 = phi i32 [ %.01360, %5 ], [ %.11361, %bb.cc ] ; 2 uses
-  %i.nx = sub i32 %i.ez, %.21362
-  tail call void @w2c_hermes_hermes0x3A0x3Avm0x3A0x3AStringPrimitive0x3A0x3Aslice0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AStringPrimitive0x3E0x2C0x20unsigned0x20long0x2C0x20unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.hn, i32 noundef %3, i32 noundef %.01355, i32 noundef %.21362, i32 noundef %i.nx) #8
+bb.cd:                                            ; preds = %bb.cc, %bb.bz, %bb.ca, %bb.cb
+  %.013631803 = phi i32 [ %.013631815, %bb.cb ], [ %.013631815, %bb.bz ], [ %.013631815, %bb.ca ], [ %.6.jt0, %bb.cc ] ; 2 uses
+  %.013601796 = phi i32 [ %.013601816, %bb.cb ], [ %.013601816, %bb.bz ], [ %.013601816, %bb.ca ], [ %.11361.jt0, %bb.cc ] ; 2 uses
+  %i.nx = sub i32 %i.ez, %.013601796
+  tail call void @w2c_hermes_hermes0x3A0x3Avm0x3A0x3AStringPrimitive0x3A0x3Aslice0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AStringPrimitive0x3E0x2C0x20unsigned0x20long0x2C0x20unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.hn, i32 noundef %3, i32 noundef %.01355, i32 noundef %.013601796, i32 noundef %i.nx) #8
   %.val1490 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ny = getelementptr inbounds nuw i8, ptr %.val1490, i64 %i.bw
   %.0.copyload.i1679 = load i32, ptr %i.ny, align 1 ; 2 uses
@@ -1329,8 +1384,8 @@ bb.cf:                                            ; preds = %bb.cd
   %.val1554 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.oc = getelementptr inbounds nuw i8, ptr %.val1554, i64 %.pre-phi
   store i64 %.0.copyload.i1680, ptr %i.oc, align 1
-  tail call void @w2c_hermes_hermes0x3A0x3Avm0x3A0x3AArrayImpl0x3A0x3A_setOwnIndexedImpl0x28hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AJSObject0x3E0x2C0x20hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20int0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AHermesValue0x3E0x29(ptr noundef nonnull %0, i32 noundef %i.hs, i32 noundef %i.dv, i32 noundef %3, i32 noundef %.7, i32 noundef %.01353) #8
-  %i.od = add i32 %.7, 1
+  tail call void @w2c_hermes_hermes0x3A0x3Avm0x3A0x3AArrayImpl0x3A0x3A_setOwnIndexedImpl0x28hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AJSObject0x3E0x2C0x20hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20int0x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AHermesValue0x3E0x29(ptr noundef nonnull %0, i32 noundef %i.hs, i32 noundef %i.dv, i32 noundef %3, i32 noundef %.013631803, i32 noundef %.01353) #8
+  %i.od = add i32 %.013631803, 1
   %i.oe = uitofp i32 %i.od to double              ; 2 uses
   %.val1489 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.of = getelementptr inbounds nuw i8, ptr %.val1489, i64 %i.i
@@ -1405,7 +1460,7 @@ bb.ck:                                            ; preds = %bb.ci
   store i32 1, ptr %i.pd, align 1
   br label %.loopexit1692
 
-.loopexit1692:                                    ; preds = %bb.cc, %bb.am, %bb.al, %bb.ck, %bb.cj, %bb.ce, %bb.at, %bb.an, %bb.ac, %.thread, %bb.y, %bb.v, %bb.t, %bb.o, %bb.j, %bb.e, %bb.c
+.loopexit1692:                                    ; preds = %19, %13, %9, %bb.am, %bb.al, %bb.ck, %bb.cj, %bb.ce, %bb.at, %bb.an, %bb.ac, %.thread, %bb.y, %bb.v, %bb.t, %bb.o, %bb.j, %bb.e, %bb.c
   tail call void @w2c_hermes_hermes0x3A0x3Avm0x3A0x3AGCScope0x3A0x3A0x7EGCScope0x280x29(ptr noundef nonnull %0, i32 noundef %i.ab) #8
   store i32 %i.b, ptr %i.a, align 8, !tbaa !7
   ret void
