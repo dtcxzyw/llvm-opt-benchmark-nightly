@@ -201,14 +201,12 @@ _ZNK2v88internal8compiler7Linkage17GetReturnLocationEm.exit: ; preds = %bb.r
   %.sroa.0.0.copyload.i.i.i = load i64, ptr %i.en, align 4 ; 6 uses
   %i.eo = and i64 %.sroa.0.0.copyload.i.i.i, 2147483649
   %i.ep = icmp eq i64 %i.eo, 2147483649
-  br i1 %i.ep, label %3, label %bb.t
+  %3 = load i8, ptr %i.cx, align 4, !range !9
+  %4 = trunc nuw i8 %3 to i1
+  %or.cond = select i1 %i.ep, i1 %4, i1 false
+  br i1 %or.cond, label %bb.ad, label %bb.t
 
-3:                                                ; preds = %_ZNK2v88internal8compiler7Linkage17GetReturnLocationEm.exit
-  %4 = load i8, ptr %i.cx, align 4, !range !9, !noundef !10
-  %5 = trunc nuw i8 %4 to i1
-  br i1 %5, label %bb.ad, label %bb.t
-
-bb.t:                                             ; preds = %3, %_ZNK2v88internal8compiler7Linkage17GetReturnLocationEm.exit
+bb.t:                                             ; preds = %_ZNK2v88internal8compiler7Linkage17GetReturnLocationEm.exit
   %i.eq = getelementptr inbounds nuw [4 x i8], ptr %i.cy, i64 %.03446
   %.sroa.01.0.copyload = load i32, ptr %i.eq, align 4 ; 2 uses
   %i.er = load ptr, ptr %i.i, align 8             ; 2 uses
@@ -311,8 +309,8 @@ _ZN2v88internal8compiler16OperandGenerator11UseLocationENS1_10turboshaft7OpIndex
   store i64 %.sroa.013.0.i.i, ptr %i.gt, align 8
   br label %bb.ad
 
-bb.ad:                                            ; preds = %3, %_ZN2v88internal8compiler16OperandGenerator11UseLocationENS1_10turboshaft7OpIndexENS0_15LinkageLocationE.exit
-  %.1 = phi i64 [ %i.gs, %_ZN2v88internal8compiler16OperandGenerator11UseLocationENS1_10turboshaft7OpIndexENS0_15LinkageLocationE.exit ], [ %.03446, %3 ]
+bb.ad:                                            ; preds = %_ZNK2v88internal8compiler7Linkage17GetReturnLocationEm.exit, %_ZN2v88internal8compiler16OperandGenerator11UseLocationENS1_10turboshaft7OpIndexENS0_15LinkageLocationE.exit
+  %.1 = phi i64 [ %i.gs, %_ZN2v88internal8compiler16OperandGenerator11UseLocationENS1_10turboshaft7OpIndexENS0_15LinkageLocationE.exit ], [ %.03446, %_ZNK2v88internal8compiler7Linkage17GetReturnLocationEm.exit ]
   %i.gu = add nuw i64 %.047, 1                    ; 2 uses
   %exitcond.not = icmp eq i64 %i.gu, %i.o
   br i1 %exitcond.not, label %._crit_edge, label %bb.r, !llvm.loop !220

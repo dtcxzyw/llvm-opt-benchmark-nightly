@@ -201,7 +201,7 @@ bb.cq:                                            ; preds = %bb.cp
   br label %bb.cr
 
 bb.cr:                                            ; preds = %.lr.ph468, %bb.dm
-  %.0116.in465 = phi i32 [ %.0125476, %.lr.ph468 ], [ %.0116466, %bb.dm ] ; 4 uses
+  %.0116.in465 = phi i32 [ %.0125476, %.lr.ph468 ], [ %.0116466, %bb.dm ] ; 3 uses
   %.0117464 = phi i32 [ %i.oo, %.lr.ph468 ], [ %i.qv, %bb.dm ]
   %.0116466 = add i32 %.0116.in465, 1             ; 3 uses
   %i.ot = zext i32 %.0116466 to i64               ; 2 uses
@@ -218,8 +218,12 @@ bb.cs:                                            ; preds = %bb.cr
   %i.pb = getelementptr inbounds nuw [96 x i8], ptr %i.ov, i64 %i.ot ; 4 uses
   %i.pc = getelementptr inbounds nuw i8, ptr %i.pb, i64 8
   %i.pd = load i64, ptr %i.pc, align 8, !tbaa !16
-  %i.pe = icmp eq i64 %i.pd, 0
-  br i1 %i.pe, label %17, label %.critedge
+  %17 = icmp ne i64 %i.pd, 0
+  %18 = getelementptr inbounds nuw i8, ptr %i.pb, i64 32
+  %19 = load i32, ptr %18, align 8
+  %i.pe = icmp eq i32 %19, 2147483647
+  %or.cond190 = select i1 %17, i1 true, i1 %i.pe
+  br i1 %or.cond190, label %.critedge, label %bb.cz
 
 bb.ct:                                            ; preds = %bb.cc
   %i.pf = landingpad { ptr, i32 }
@@ -253,13 +257,7 @@ bb.cy:                                            ; preds = %bb.cx, %bb.cw
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #26
   br label %bb.em
 
-17:                                               ; preds = %bb.cs
-  %18 = getelementptr inbounds nuw i8, ptr %i.pb, i64 32
-  %19 = load i32, ptr %18, align 8, !tbaa !73
-  %20 = icmp eq i32 %19, 2147483647
-  br i1 %20, label %.critedge, label %bb.cz
-
-bb.cz:                                            ; preds = %17
+bb.cz:                                            ; preds = %bb.cs
   %i.pj = getelementptr inbounds nuw i8, ptr %i.pb, i64 40
   %i.pk = load ptr, ptr %i.pj, align 8, !tbaa !41 ; 3 uses
   %i.pl = load ptr, ptr %i.oe, align 8, !tbaa !42 ; 6 uses
@@ -418,8 +416,8 @@ bb.dm:                                            ; preds = %bb.dl, %_ZSt12const
           cleanup
   br label %bb.em
 
-.critedge:                                        ; preds = %bb.dm, %bb.cr, %17, %bb.cs, %bb.cq, %bb.bu, %bb.cp, %_ZN5boost10shared_ptrIKNS_15program_options14value_semanticEED2Ev.exit268, %_ZNSt6vectorIN5boost15program_options12basic_optionIcEESaIS3_EE9push_backERKS3_.exit263
-  %.3128 = phi i32 [ %.0125476, %_ZNSt6vectorIN5boost15program_options12basic_optionIcEESaIS3_EE9push_backERKS3_.exit263 ], [ %.0125476, %bb.bu ], [ %.0125476, %_ZN5boost10shared_ptrIKNS_15program_options14value_semanticEED2Ev.exit268 ], [ %.0125476, %bb.cp ], [ %.0125476, %bb.cq ], [ %.0116466, %bb.dm ], [ %.0116.in465, %bb.cr ], [ %.0116.in465, %17 ], [ %.0116.in465, %bb.cs ]
+.critedge:                                        ; preds = %bb.dm, %bb.cr, %bb.cs, %bb.cq, %bb.bu, %bb.cp, %_ZN5boost10shared_ptrIKNS_15program_options14value_semanticEED2Ev.exit268, %_ZNSt6vectorIN5boost15program_options12basic_optionIcEESaIS3_EE9push_backERKS3_.exit263
+  %.3128 = phi i32 [ %.0125476, %_ZNSt6vectorIN5boost15program_options12basic_optionIcEESaIS3_EE9push_backERKS3_.exit263 ], [ %.0125476, %bb.bu ], [ %.0125476, %_ZN5boost10shared_ptrIKNS_15program_options14value_semanticEED2Ev.exit268 ], [ %.0125476, %bb.cp ], [ %.0125476, %bb.cq ], [ %.0116466, %bb.dm ], [ %.0116.in465, %bb.cr ], [ %.0116.in465, %bb.cs ]
   %i.qw = add i32 %.3128, 1                       ; 2 uses
   %i.qx = zext i32 %i.qw to i64                   ; 2 uses
   %i.qy = load ptr, ptr %i.km, align 8, !tbaa !66 ; 2 uses

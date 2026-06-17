@@ -200,16 +200,16 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   %i.dt = add nuw nsw i32 %i.cd, 1
   %i.du = mul nsw i32 %i.dp, %i.dt
   %i.dv = select i1 %i.ce, i32 %i.du, i32 0
-  %4 = icmp slt i32 %i.di, 1
-  %5 = icmp slt i32 %i.dg, 1
+  %4 = icmp sgt i32 %i.di, 0
+  %5 = icmp sgt i32 %i.dh, 0
   %i.dw = sub i32 %i.dp, %i.dg
   %i.dx = sub i32 %i.do, %i.dg
   %i.dy = sub i32 %i.dv, %factor.op.mul496
   %i.dz = sub i32 %i.ds, %factor.op.mul
-  %6 = icmp slt i32 %i.dh, 1
-  %or.cond.not624 = or i1 %4, %6
-  %brmerge = or i1 %or.cond.not624, %5
-  br i1 %brmerge, label %.loopexit467, label %.preheader463.us.us.us.us.us.preheader
+  %brmerge.not594 = and i1 %4, %5
+  %6 = icmp sgt i32 %i.dg, 0
+  %or.cond = and i1 %brmerge.not594, %6
+  br i1 %or.cond, label %.preheader463.us.us.us.us.us.preheader, label %.loopexit467
 
 .preheader463.us.us.us.us.us.preheader:           ; preds = %.preheader465.lr.ph
   %i.ea = add nsw i32 %i.cx, %i.df
@@ -422,16 +422,16 @@ bb.n:                                             ; preds = %bb.l, %bb.m
   %i.hn = add nuw nsw i32 %i.cd, 1
   %i.ho = mul nsw i32 %i.hj, %i.hn
   %i.hp = select i1 %i.ce, i32 %i.ho, i32 0
-  %7 = icmp slt i32 %i.hc, 1
-  %8 = icmp slt i32 %i.ha, 1
+  %7 = icmp sgt i32 %i.hc, 0
+  %8 = icmp sgt i32 %i.hb, 0
   %i.hq = sub i32 %i.hj, %i.ha
   %i.hr = sub i32 %i.hi, %i.ha
   %i.hs = sub i32 %i.hp, %factor.op.mul536
   %i.ht = sub i32 %i.hm, %factor.op.mul537
-  %9 = icmp slt i32 %i.hb, 1
-  %or.cond619.not627 = or i1 %7, %9
-  %brmerge621 = or i1 %or.cond619.not627, %8
-  br i1 %brmerge621, label %.loopexit467, label %.preheader462.us.us.us.us.us.preheader
+  %brmerge529.not597 = and i1 %7, %8
+  %9 = icmp sgt i32 %i.ha, 0
+  %or.cond591 = and i1 %brmerge529.not597, %9
+  br i1 %or.cond591, label %.preheader462.us.us.us.us.us.preheader, label %.loopexit467
 
 .preheader462.us.us.us.us.us.preheader:           ; preds = %.preheader464.lr.ph
   %i.hu = add nsw i32 %i.gr, %i.gz
@@ -834,16 +834,16 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   %i.dt = add nuw nsw i32 %i.cd, 1
   %i.du = mul nsw i32 %i.dp, %i.dt
   %i.dv = select i1 %i.ce, i32 %i.du, i32 0
-  %3 = icmp slt i32 %i.di, 1
-  %4 = icmp slt i32 %i.dg, 1
+  %3 = icmp sgt i32 %i.di, 0
+  %4 = icmp sgt i32 %i.dh, 0
   %i.dw = sub i32 %i.dp, %i.dg
   %i.dx = sub i32 %i.do, %i.dg
   %i.dy = sub i32 %i.dv, %factor.op.mul285
   %i.dz = sub i32 %i.ds, %factor.op.mul
-  %5 = icmp slt i32 %i.dh, 1
-  %or.cond.not339 = or i1 %3, %5
-  %brmerge = or i1 %or.cond.not339, %4
-  br i1 %brmerge, label %.loopexit257, label %.preheader255.us.us.us.us.us.preheader
+  %brmerge.not324 = and i1 %3, %4
+  %5 = icmp sgt i32 %i.dg, 0
+  %or.cond = and i1 %brmerge.not324, %5
+  br i1 %or.cond, label %.preheader255.us.us.us.us.us.preheader, label %.loopexit257
 
 .preheader255.us.us.us.us.us.preheader:           ; preds = %.preheader256.lr.ph
   %i.ea = add nsw i32 %i.cx, %i.df
@@ -1125,14 +1125,14 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   %i.bd = add nuw nsw i32 %i.ak, 1
   %i.be = mul nsw i32 %i.bc, %i.bd
   %i.bf = select i1 %i.al, i32 %i.be, i32 0
-  %2 = icmp slt i32 %i.aw, 1
-  %3 = icmp slt i32 %i.au, 1
+  %2 = icmp sgt i32 %i.aw, 0
+  %3 = icmp sgt i32 %i.av, 0
   %i.bg = sub i32 %i.bc, %i.au
   %i.bh = sub i32 %i.bf, %factor.op.mul170
-  %4 = icmp slt i32 %i.av, 1
-  %or.cond.not201 = or i1 %2, %4
-  %brmerge = or i1 %or.cond.not201, %3
-  br i1 %brmerge, label %._crit_edge, label %.preheader154.us.us.us.us.us.preheader
+  %brmerge.not189 = and i1 %2, %3
+  %4 = icmp sgt i32 %i.au, 0
+  %or.cond = and i1 %brmerge.not189, %4
+  br i1 %or.cond, label %.preheader154.us.us.us.us.us.preheader, label %._crit_edge
 
 .preheader154.us.us.us.us.us.preheader:           ; preds = %.preheader155.lr.ph
   %i.bi = add nsw i32 %i.ag, %i.at
@@ -1316,20 +1316,19 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.bo = add nuw nsw i32 %i.as, 1
   %i.bp = mul nsw i32 %i.bn, %i.bo
   %i.bq = select i1 %i.at, i32 %i.bp, i32 0
-  %1 = icmp slt i32 %i.bl, 1
-  %2 = icmp slt i32 %i.bj, 1
+  %1 = icmp sgt i32 %i.bl, 0
+  %2 = icmp sgt i32 %i.bk, 0
   %i.br = sub i32 %i.bq, %factor.op.mul181
-  %3 = icmp slt i32 %i.bk, 1
-  %or.cond.not216 = or i1 %1, %3
-  %brmerge = or i1 %or.cond.not216, %2
-  br i1 %brmerge, label %._crit_edge, label %.preheader165.us.us.us.us.us.preheader
+  %brmerge.not204 = and i1 %1, %2
+  %3 = icmp sgt i32 %i.bj, 0
+  %or.cond = and i1 %brmerge.not204, %3
+  br i1 %or.cond, label %.preheader165.us.us.us.us.us.preheader, label %._crit_edge
 
 .preheader165.us.us.us.us.us.preheader:           ; preds = %.preheader166.lr.ph
   %i.bs = zext nneg i32 %i.bj to i64
   %i.bt = shl nuw nsw i64 %i.bs, 3                ; 5 uses
-  %4 = add nsw i32 %i.bk, -1
   %xtraiter = and i32 %i.bk, 3                    ; 3 uses
-  %i.bu = icmp ult i32 %4, 3
+  %i.bu = icmp ult i32 %i.bk, 4
   %unroll_iter = and i32 %i.bk, 2147483644
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   %lcmp.mod218 = icmp ne i32 %xtraiter, 0
@@ -1496,14 +1495,14 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.bb = mul nsw i32 %i.az, %i.ba
   %i.bc = select i1 %i.z, i32 %i.bb, i32 0
   %i.bd = mul i32 %i.ap, %i.o
-  %1 = icmp slt i32 %i.at, 1
-  %2 = icmp slt i32 %i.ap, 1
+  %1 = icmp sgt i32 %i.at, 0
+  %2 = icmp sgt i32 %i.ar, 0
   %i.be = sub i32 %i.aw, %i.bd
   %i.bf = sub i32 %i.bc, %factor.op.mul157
-  %3 = icmp slt i32 %i.ar, 1
-  %or.cond.not182 = or i1 %1, %3
-  %brmerge = or i1 %or.cond.not182, %2
-  br i1 %brmerge, label %._crit_edge, label %.preheader139.us.us.us.us.us.preheader
+  %brmerge.not170 = and i1 %1, %2
+  %3 = icmp sgt i32 %i.ap, 0
+  %or.cond = and i1 %brmerge.not170, %3
+  br i1 %or.cond, label %.preheader139.us.us.us.us.us.preheader, label %._crit_edge
 
 .preheader139.us.us.us.us.us.preheader:           ; preds = %.preheader140.lr.ph
   %i.bg = sext i32 %i.o to i64                    ; 5 uses

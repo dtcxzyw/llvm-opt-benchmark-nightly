@@ -201,16 +201,14 @@ _ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit: ; pre
   %.sroa.0.0.copyload.i.i = load i64, ptr %i.p, align 8 ; 3 uses
   %i.q = tail call noundef nonnull align 8 dereferenceable(72) ptr @_ZN2v88internal8compiler13FieldAccessOfEPKNS1_8OperatorE(ptr noundef nonnull %i.a) #14 ; 2 uses
   %i.r = load i8, ptr %i.q, align 8
-  %i.s = icmp eq i8 %i.r, 1
-  br i1 %i.s, label %5, label %.thread
-
-5:                                                ; preds = %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit
+  %5 = icmp eq i8 %i.r, 1
   %6 = getelementptr inbounds nuw i8, ptr %i.q, i64 4
   %7 = load i32, ptr %6, align 4
-  %8 = icmp eq i32 %7, 0
-  br i1 %8, label %bb.e, label %.thread
+  %i.s = icmp eq i32 %7, 0
+  %or.cond = select i1 %5, i1 %i.s, i1 false
+  br i1 %or.cond, label %bb.e, label %.thread
 
-bb.e:                                             ; preds = %5
+bb.e:                                             ; preds = %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.u = load ptr, ptr %i.t, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
@@ -264,8 +262,8 @@ bb.f:                                             ; preds = %_ZN2v88internal8com
   call void %i.an(ptr noundef nonnull align 8 dereferenceable(8) %i.ak, ptr noundef nonnull %1, ptr noundef %i.ai, ptr noundef null, ptr noundef null) #14, !inline_history !16
   br label %.thread
 
-.thread:                                          ; preds = %_ZN2v88internal8compiler12_GLOBAL__N_126GetStableMapFromObjectTypeEPNS1_12JSHeapBrokerENS1_4TypeE.exit.thread, %_ZN2v88internal8compiler12_GLOBAL__N_126GetStableMapFromObjectTypeEPNS1_12JSHeapBrokerENS1_4TypeE.exit, %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit, %5, %bb.f
-  %.sroa.013.1 = phi ptr [ %i.ai, %bb.f ], [ null, %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit ], [ null, %5 ], [ null, %_ZN2v88internal8compiler12_GLOBAL__N_126GetStableMapFromObjectTypeEPNS1_12JSHeapBrokerENS1_4TypeE.exit ], [ null, %_ZN2v88internal8compiler12_GLOBAL__N_126GetStableMapFromObjectTypeEPNS1_12JSHeapBrokerENS1_4TypeE.exit.thread ]
+.thread:                                          ; preds = %_ZN2v88internal8compiler12_GLOBAL__N_126GetStableMapFromObjectTypeEPNS1_12JSHeapBrokerENS1_4TypeE.exit.thread, %_ZN2v88internal8compiler12_GLOBAL__N_126GetStableMapFromObjectTypeEPNS1_12JSHeapBrokerENS1_4TypeE.exit, %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit, %bb.f
+  %.sroa.013.1 = phi ptr [ %i.ai, %bb.f ], [ null, %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit ], [ null, %_ZN2v88internal8compiler12_GLOBAL__N_126GetStableMapFromObjectTypeEPNS1_12JSHeapBrokerENS1_4TypeE.exit ], [ null, %_ZN2v88internal8compiler12_GLOBAL__N_126GetStableMapFromObjectTypeEPNS1_12JSHeapBrokerENS1_4TypeE.exit.thread ]
   ret ptr %.sroa.013.1
 }
 

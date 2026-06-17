@@ -201,7 +201,7 @@ _ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32Turbos
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 529
   %i.ba = load i8, ptr %i.az, align 1, !range !10, !noundef !11
   %i.bb = trunc nuw i8 %i.ba to i1
-  br i1 %i.bb, label %bb.k, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32TurboshaftGraphBuildingInterfaceELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS5_7ControlE.exit
+  br i1 %i.bb, label %bb.k, label %bb.m
 
 bb.k:                                             ; preds = %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32TurboshaftGraphBuildingInterfaceELNS1_12DecodingModeE0EE15PushMergeValuesEPNS5_7ControlEPNS1_5MergeINS5_5ValueEEE.exit
   %i.bc = getelementptr inbounds i8, ptr %i.c, i64 -100
@@ -216,7 +216,7 @@ bb.k:                                             ; preds = %_ZN2v88internal4was
   %i.bl = lshr exact i64 %i.bk, 2
   %i.bm = trunc i64 %i.bl to i32
   %i.bn = icmp ult i32 %i.bd, %i.bm
-  br i1 %i.bn, label %.lr.ph.i10, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32TurboshaftGraphBuildingInterfaceELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS5_7ControlE.exit
+  br i1 %i.bn, label %.lr.ph.i10, label %bb.m
 
 .lr.ph.i10:                                       ; preds = %bb.k
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 472
@@ -239,34 +239,28 @@ bb.l:                                             ; preds = %bb.l, %.lr.ph.i10
   %i.ca = lshr exact i64 %i.bz, 2
   %i.cb = trunc i64 %i.ca to i32
   %i.cc = icmp ult i32 %i.bd, %i.cb
-  br i1 %i.cc, label %bb.l, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32TurboshaftGraphBuildingInterfaceELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS5_7ControlE.exit, !llvm.loop !150
+  br i1 %i.cc, label %bb.l, label %bb.m, !llvm.loop !150
 
-_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32TurboshaftGraphBuildingInterfaceELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS5_7ControlE.exit: ; preds = %bb.l, %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32TurboshaftGraphBuildingInterfaceELNS1_12DecodingModeE0EE15PushMergeValuesEPNS5_7ControlEPNS1_5MergeINS5_5ValueEEE.exit, %bb.k
+bb.m:                                             ; preds = %bb.l, %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32TurboshaftGraphBuildingInterfaceELNS1_12DecodingModeE0EE15PushMergeValuesEPNS5_7ControlEPNS1_5MergeINS5_5ValueEEE.exit, %bb.k
   %1 = getelementptr inbounds i8, ptr %i.c, i64 -127
   %2 = load i8, ptr %1, align 1
   %3 = icmp eq i8 %2, 0
-  br i1 %3, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32TurboshaftGraphBuildingInterfaceELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS5_7ControlE.exit..critedge_crit_edge, label %bb.m
-
-_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32TurboshaftGraphBuildingInterfaceELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS5_7ControlE.exit..critedge_crit_edge: ; preds = %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32TurboshaftGraphBuildingInterfaceELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS5_7ControlE.exit
-  %.pre = load ptr, ptr %i.b, align 8
-  br label %.critedge
-
-bb.m:                                             ; preds = %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32TurboshaftGraphBuildingInterfaceELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS5_7ControlE.exit
   %i.cd = getelementptr inbounds i8, ptr %i.c, i64 -48
-  %i.ce = load i8, ptr %i.cd, align 8, !range !10, !noundef !11
+  %i.ce = load i8, ptr %i.cd, align 8, !range !10
   %i.cf = trunc nuw i8 %i.ce to i1
-  %.pre11 = load ptr, ptr %i.b, align 8           ; 3 uses
-  br i1 %i.cf, label %.critedge, label %bb.n
+  %or.cond = select i1 %3, i1 true, i1 %i.cf
+  br i1 %or.cond, label %.critedge, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.cg = load i8, ptr %i.d, align 8
   %i.ch = icmp eq i8 %i.cg, 0
-  %i.ci = getelementptr i8, ptr %.pre11, i64 -128 ; 3 uses
+  %4 = load ptr, ptr %i.b, align 8                ; 2 uses
+  %i.ci = getelementptr i8, ptr %4, i64 -128      ; 3 uses
   store ptr %i.ci, ptr %i.b, align 8
   br i1 %i.ch, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32TurboshaftGraphBuildingInterfaceELNS1_12DecodingModeE0EE39SetSucceedingCodeDynamicallyUnreachableEv.exit, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.cj = getelementptr i8, ptr %.pre11, i64 -255 ; 2 uses
+  %i.cj = getelementptr i8, ptr %4, i64 -255      ; 2 uses
   %i.ck = load i8, ptr %i.cj, align 1
   %i.cl = icmp eq i8 %i.ck, 0
   br i1 %i.cl, label %bb.p, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32TurboshaftGraphBuildingInterfaceELNS1_12DecodingModeE0EE39SetSucceedingCodeDynamicallyUnreachableEv.exit
@@ -278,9 +272,9 @@ bb.p:                                             ; preds = %bb.o
   %.pre12 = load ptr, ptr %i.b, align 8
   br label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32TurboshaftGraphBuildingInterfaceELNS1_12DecodingModeE0EE39SetSucceedingCodeDynamicallyUnreachableEv.exit
 
-.critedge:                                        ; preds = %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32TurboshaftGraphBuildingInterfaceELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS5_7ControlE.exit..critedge_crit_edge, %bb.m
-  %4 = phi ptr [ %.pre, %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32TurboshaftGraphBuildingInterfaceELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS5_7ControlE.exit..critedge_crit_edge ], [ %.pre11, %bb.m ]
-  %i.cn = getelementptr i8, ptr %4, i64 -128      ; 2 uses
+.critedge:                                        ; preds = %bb.m
+  %5 = load ptr, ptr %i.b, align 8
+  %i.cn = getelementptr i8, ptr %5, i64 -128      ; 2 uses
   store ptr %i.cn, ptr %i.b, align 8
   br label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_32TurboshaftGraphBuildingInterfaceELNS1_12DecodingModeE0EE39SetSucceedingCodeDynamicallyUnreachableEv.exit
 

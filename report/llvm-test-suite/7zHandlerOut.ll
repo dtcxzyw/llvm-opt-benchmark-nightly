@@ -201,38 +201,36 @@ bb.r:                                             ; preds = %bb.q
   %wide.trip.count = zext nneg i32 %i.bl to i64
   br label %bb.s
 
-bb.s:                                             ; preds = %.lr.ph, %10
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %10 ] ; 2 uses
+6:                                                ; preds = %bb.s
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %.loopexit, label %bb.s, !llvm.loop !50
+
+bb.s:                                             ; preds = %.lr.ph, %6
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %6 ] ; 2 uses
   %i.bo = getelementptr inbounds nuw [8 x i8], ptr %i.bn, i64 %indvars.iv
   %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !41 ; 3 uses
   %i.bq = load i32, ptr %i.bp, align 8, !tbaa !38
   %.off = add i32 %i.bq, -1
   %switch = icmp ult i32 %.off, 2
-  br i1 %switch, label %6, label %10
-
-6:                                                ; preds = %bb.s
   %7 = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
-  %8 = load i16, ptr %7, align 8, !tbaa !34
+  %8 = load i16, ptr %7, align 8
   %9 = icmp eq i16 %8, 19
-  br i1 %9, label %.critedge, label %10
+  %or.cond = select i1 %switch, i1 %9, i1 false
+  br i1 %or.cond, label %.critedge, label %6
 
-.critedge:                                        ; preds = %6
+.critedge:                                        ; preds = %bb.s
   %i.br = getelementptr inbounds nuw i8, ptr %i.bp, i64 16
-  %i.bs = load i32, ptr %i.br, align 8, !tbaa !50 ; 2 uses
+  %i.bs = load i32, ptr %i.br, align 8, !tbaa !51 ; 2 uses
   %i.bt = zext i32 %i.bs to i64
   %i.bu = shl nuw nsw i64 %i.bt, 7
   %i.bv = icmp ult i32 %i.bs, 131072
   %spec.select42 = select i1 %i.bv, i64 16777216, i64 %i.bu
-  store i64 %spec.select42, ptr %i.al, align 8, !tbaa !51
+  store i64 %spec.select42, ptr %i.al, align 8, !tbaa !52
   store i8 1, ptr %i.ai, align 8, !tbaa !49
   br label %.loopexit
 
-10:                                               ; preds = %bb.s, %6
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit, label %bb.s, !llvm.loop !52
-
-.loopexit:                                        ; preds = %10, %.preheader, %bb.r, %.critedge
+.loopexit:                                        ; preds = %6, %.preheader, %bb.r, %.critedge
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTV13CObjectVectorI5CPropE, i64 16), ptr %i.ab, align 8, !tbaa !25
   invoke void @_ZN17CBaseRecordVector5ClearEv(ptr noundef nonnull align 8 dereferenceable(32) %i.ab)
           to label %_ZN7CMethodD2Ev.exit unwind label %bb.t, !inline_history !42
@@ -282,7 +280,7 @@ bb.u:                                             ; preds = %.critedge44
 bb.v:                                             ; preds = %.critedge69
   store i8 1, ptr %i.cc, align 8, !tbaa !49
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store i64 0, ptr %i.cf, align 8, !tbaa !51
+  store i64 0, ptr %i.cf, align 8, !tbaa !52
   br label %bb.w
 
 bb.w:                                             ; preds = %.thread, %.thread49, %.critedge69, %bb.v
@@ -685,7 +683,7 @@ bb.ae:                                            ; preds = %bb.ab
   ]
 
 bb.af:                                            ; preds = %bb.ae
-  %i.ew = load i32, ptr %i.am, align 8, !tbaa !50
+  %i.ew = load i32, ptr %i.am, align 8, !tbaa !51
   store i32 %i.ew, ptr %i.an, align 8, !tbaa !75
   br label %.sink.split
 
@@ -952,7 +950,7 @@ bb.bn:                                            ; preds = %bb.bl
 bb.bo:                                            ; preds = %bb.bn
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #18
-  %i.gx = load ptr, ptr %i.ay, align 8, !tbaa !50
+  %i.gx = load ptr, ptr %i.ay, align 8, !tbaa !51
   invoke void @_ZN11CStringBaseIwEC2EPKw(ptr noundef nonnull align 8 dereferenceable(16) %12, ptr noundef %i.gx)
           to label %bb.bp unwind label %bb.bu
 
@@ -1103,7 +1101,7 @@ bb.ci:                                            ; preds = %bb.cd
   ]
 
 bb.cj:                                            ; preds = %bb.ci
-  %i.hz = load i16, ptr %i.ba, align 8, !tbaa !50
+  %i.hz = load i16, ptr %i.ba, align 8, !tbaa !51
   %i.ia = icmp ne i16 %i.hz, 0
   %i.ib = zext i1 %i.ia to i8
   store i8 %i.ib, ptr %i.t, align 1, !tbaa !67
@@ -1170,7 +1168,7 @@ bb.cr:                                            ; preds = %bb.co
   ]
 
 bb.cs:                                            ; preds = %bb.cr
-  %i.io = load i16, ptr %i.bc, align 8, !tbaa !50
+  %i.io = load i16, ptr %i.bc, align 8, !tbaa !51
   %i.ip = icmp ne i16 %i.io, 0
   %i.iq = zext i1 %i.ip to i8
   br label %bb.ct
@@ -1267,7 +1265,7 @@ bb.de:                                            ; preds = %bb.db
   br i1 %.not236, label %bb.df, label %bb.dg
 
 bb.df:                                            ; preds = %bb.de
-  %i.jm = load i64, ptr %i.be, align 8, !tbaa !50 ; 2 uses
+  %i.jm = load i64, ptr %i.be, align 8, !tbaa !51 ; 2 uses
   store i64 %i.jm, ptr %i.p, align 8, !tbaa !64
   %i.jn = icmp ne i64 %i.jm, 0
   %i.jo = load i8, ptr %i.l, align 2, !range !22
@@ -1670,9 +1668,9 @@ attributes #22 = { noreturn }
 !47 = !{!"_ZTS7CMethod", !16, i64 0, !48, i64 8}
 !48 = !{!"_ZTS13CObjectVectorI5CPropE", !11, i64 0}
 !49 = !{!9, !15, i64 64}
-!50 = !{!6, !6, i64 0}
-!51 = !{!9, !16, i64 56}
-!52 = distinct !{!52, !20}
+!50 = distinct !{!50, !20}
+!51 = !{!6, !6, i64 0}
+!52 = !{!9, !16, i64 56}
 !53 = distinct !{!53, !20}
 !54 = distinct !{!54, !20}
 !55 = !{!56, !57, i64 0}

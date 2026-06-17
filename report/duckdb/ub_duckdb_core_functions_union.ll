@@ -201,21 +201,19 @@ bb.al:                                            ; preds = %bb.af
   %i.cl = tail call noundef nonnull align 8 dereferenceable(88) ptr @_ZNK6duckdb10unique_ptrINS_10ExpressionESt14default_deleteIS1_ELb1EEdeEv(ptr noundef nonnull align 8 dereferenceable(8) %i.bp)
   call void @_ZN6duckdb18ExpressionExecutor14EvaluateScalarERNS_13ClientContextERKNS_10ExpressionEb(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::Value") align 8 %12, ptr noundef nonnull align 8 dereferenceable(512) %1, ptr noundef nonnull align 8 dereferenceable(88) %i.cl, i1 noundef zeroext false)
   %i.cm = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZN6duckdb11StringValue3GetB5cxx11ERKNS_5ValueE(ptr noundef nonnull align 8 dereferenceable(64) %12)
-          to label %26 unwind label %bb.aq        ; 2 uses
+          to label %bb.am unwind label %bb.aq     ; 2 uses
 
-26:                                               ; preds = %bb.al
-  %27 = getelementptr inbounds nuw i8, ptr %12, i64 24
-  %28 = load i8, ptr %27, align 8, !tbaa !86, !range !93, !noundef !56
-  %29 = trunc nuw i8 %28 to i1
-  br i1 %29, label %bb.an, label %bb.am
-
-bb.am:                                            ; preds = %26
+bb.am:                                            ; preds = %bb.al
+  %26 = getelementptr inbounds nuw i8, ptr %12, i64 24
+  %27 = load i8, ptr %26, align 8, !tbaa !86, !range !93, !noundef !56
+  %28 = trunc nuw i8 %27 to i1
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 8
-  %i.co = load i64, ptr %i.cn, align 8, !tbaa !94
+  %i.co = load i64, ptr %i.cn, align 8
   %i.cp = icmp eq i64 %i.co, 0
-  br i1 %i.cp, label %bb.an, label %bb.at
+  %or.cond = select i1 %28, i1 true, i1 %i.cp
+  br i1 %or.cond, label %bb.an, label %bb.at
 
-bb.an:                                            ; preds = %bb.am, %26
+bb.an:                                            ; preds = %bb.am
   %i.cq = call ptr @__cxa_allocate_exception(i64 16) #18 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #18

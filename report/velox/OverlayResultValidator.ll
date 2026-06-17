@@ -201,20 +201,18 @@ bb.c:                                             ; preds = %bb.b
   store i8 %i.f, ptr %i.b, align 1, !tbaa !62
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.h = invoke noundef signext i8 @_ZN4geos9operation7overlay8validate17FuzzyPointLocator11getLocationERKNS_4geom10CoordinateE(ptr noundef nonnull align 8 dereferenceable(32) %i.g, ptr noundef nonnull align 8 dereferenceable(24) %2)
-          to label %._crit_edge.i.i.i unwind label %_ZNSt6vectorIN4geos4geom8LocationESaIS2_EED2Ev.exit14 ; 2 uses
+          to label %bb.d unwind label %_ZNSt6vectorIN4geos4geom8LocationESaIS2_EED2Ev.exit14 ; 2 uses
 
-._crit_edge.i.i.i:                                ; preds = %bb.c
+bb.d:                                             ; preds = %bb.c
   %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 2 uses
   store i8 %i.h, ptr %3, align 1, !tbaa !62
   %4 = load i8, ptr %i.a, align 1, !tbaa !62      ; 2 uses
   %5 = icmp eq i8 %4, 1
-  br i1 %5, label %_ZNSt6vectorIN4geos4geom8LocationESaIS2_EED2Ev.exit, label %bb.d
-
-bb.d:                                             ; preds = %._crit_edge.i.i.i
-  %i.i = load i8, ptr %i.b, align 1, !tbaa !62    ; 2 uses
+  %i.i = load i8, ptr %i.b, align 1               ; 2 uses
   %i.j = icmp eq i8 %i.i, 1
+  %or.cond = select i1 %5, i1 true, i1 %i.j
   %i.k = icmp eq i8 %i.h, 1
-  %or.cond.a = or i1 %i.j, %i.k
+  %or.cond.a = or i1 %or.cond, %i.k
   br i1 %or.cond.a, label %_ZNSt6vectorIN4geos4geom8LocationESaIS2_EED2Ev.exit, label %bb.e
 
 _ZNSt6vectorIN4geos4geom8LocationESaIS2_EED2Ev.exit14: ; preds = %bb.e, %bb.c, %bb.b, %bb.a
@@ -233,8 +231,8 @@ _ZN4geos9operation7overlay8validate22OverlayResultValidator13isValidResultENS1_9
   %i.p = xor i1 %i.m, %i.o
   br label %_ZNSt6vectorIN4geos4geom8LocationESaIS2_EED2Ev.exit
 
-_ZNSt6vectorIN4geos4geom8LocationESaIS2_EED2Ev.exit: ; preds = %._crit_edge.i.i.i, %bb.d, %_ZN4geos9operation7overlay8validate22OverlayResultValidator13isValidResultENS1_9OverlayOp6OpCodeERSt6vectorINS_4geom8LocationESaIS8_EE.exit
-  %.0 = phi i1 [ true, %._crit_edge.i.i.i ], [ %i.p, %_ZN4geos9operation7overlay8validate22OverlayResultValidator13isValidResultENS1_9OverlayOp6OpCodeERSt6vectorINS_4geom8LocationESaIS8_EE.exit ], [ true, %bb.d ]
+_ZNSt6vectorIN4geos4geom8LocationESaIS2_EED2Ev.exit: ; preds = %bb.d, %_ZN4geos9operation7overlay8validate22OverlayResultValidator13isValidResultENS1_9OverlayOp6OpCodeERSt6vectorINS_4geom8LocationESaIS8_EE.exit
+  %.0 = phi i1 [ true, %bb.d ], [ %i.p, %_ZN4geos9operation7overlay8validate22OverlayResultValidator13isValidResultENS1_9OverlayOp6OpCodeERSt6vectorINS_4geom8LocationESaIS8_EE.exit ]
   tail call void @_ZdlPv(ptr noundef nonnull %i.a) #12
   ret i1 %.0
 }

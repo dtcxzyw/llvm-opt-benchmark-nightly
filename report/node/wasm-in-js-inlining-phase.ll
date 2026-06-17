@@ -201,7 +201,7 @@ _ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS0_8compile
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 305
   %i.bb = load i8, ptr %i.ba, align 1, !range !11, !noundef !6
   %i.bc = trunc nuw i8 %i.bb to i1
-  br i1 %i.bc, label %bb.k, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS0_8compiler10turboshaft25WasmInJsInliningInterfaceINS6_9AssemblerINS_4base3tmp5list1IJNS6_12GraphVisitorENS6_23WasmInJSInliningReducerENS6_19WasmLoweringReducerENS6_13TSReducerBaseEEEEEEEELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS1_11ControlBaseINSI_5ValueES4_EE.exit
+  br i1 %i.bc, label %bb.k, label %bb.m
 
 bb.k:                                             ; preds = %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS0_8compiler10turboshaft25WasmInJsInliningInterfaceINS6_9AssemblerINS_4base3tmp5list1IJNS6_12GraphVisitorENS6_23WasmInJSInliningReducerENS6_19WasmLoweringReducerENS6_13TSReducerBaseEEEEEEEELNS1_12DecodingModeE0EE15PushMergeValuesEPNS1_11ControlBaseINSI_5ValueES4_EEPNS1_5MergeISM_EE.exit
   %i.bd = getelementptr inbounds i8, ptr %i.c, i64 -68
@@ -216,7 +216,7 @@ bb.k:                                             ; preds = %_ZN2v88internal4was
   %i.bm = lshr exact i64 %i.bl, 2
   %i.bn = trunc i64 %i.bm to i32
   %i.bo = icmp ult i32 %i.be, %i.bn
-  br i1 %i.bo, label %.lr.ph.i10, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS0_8compiler10turboshaft25WasmInJsInliningInterfaceINS6_9AssemblerINS_4base3tmp5list1IJNS6_12GraphVisitorENS6_23WasmInJSInliningReducerENS6_19WasmLoweringReducerENS6_13TSReducerBaseEEEEEEEELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS1_11ControlBaseINSI_5ValueES4_EE.exit
+  br i1 %i.bo, label %.lr.ph.i10, label %bb.m
 
 .lr.ph.i10:                                       ; preds = %bb.k
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 248
@@ -239,34 +239,28 @@ bb.l:                                             ; preds = %bb.l, %.lr.ph.i10
   %i.cb = lshr exact i64 %i.ca, 2
   %i.cc = trunc i64 %i.cb to i32
   %i.cd = icmp ult i32 %i.be, %i.cc
-  br i1 %i.cd, label %bb.l, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS0_8compiler10turboshaft25WasmInJsInliningInterfaceINS6_9AssemblerINS_4base3tmp5list1IJNS6_12GraphVisitorENS6_23WasmInJSInliningReducerENS6_19WasmLoweringReducerENS6_13TSReducerBaseEEEEEEEELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS1_11ControlBaseINSI_5ValueES4_EE.exit, !llvm.loop !721
+  br i1 %i.cd, label %bb.l, label %bb.m, !llvm.loop !721
 
-_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS0_8compiler10turboshaft25WasmInJsInliningInterfaceINS6_9AssemblerINS_4base3tmp5list1IJNS6_12GraphVisitorENS6_23WasmInJSInliningReducerENS6_19WasmLoweringReducerENS6_13TSReducerBaseEEEEEEEELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS1_11ControlBaseINSI_5ValueES4_EE.exit: ; preds = %bb.l, %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS0_8compiler10turboshaft25WasmInJsInliningInterfaceINS6_9AssemblerINS_4base3tmp5list1IJNS6_12GraphVisitorENS6_23WasmInJSInliningReducerENS6_19WasmLoweringReducerENS6_13TSReducerBaseEEEEEEEELNS1_12DecodingModeE0EE15PushMergeValuesEPNS1_11ControlBaseINSI_5ValueES4_EEPNS1_5MergeISM_EE.exit, %bb.k
+bb.m:                                             ; preds = %bb.l, %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS0_8compiler10turboshaft25WasmInJsInliningInterfaceINS6_9AssemblerINS_4base3tmp5list1IJNS6_12GraphVisitorENS6_23WasmInJSInliningReducerENS6_19WasmLoweringReducerENS6_13TSReducerBaseEEEEEEEELNS1_12DecodingModeE0EE15PushMergeValuesEPNS1_11ControlBaseINSI_5ValueES4_EEPNS1_5MergeISM_EE.exit, %bb.k
   %1 = getelementptr inbounds i8, ptr %i.c, i64 -95
   %2 = load i8, ptr %1, align 1
   %3 = icmp eq i8 %2, 0
-  br i1 %3, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS0_8compiler10turboshaft25WasmInJsInliningInterfaceINS6_9AssemblerINS_4base3tmp5list1IJNS6_12GraphVisitorENS6_23WasmInJSInliningReducerENS6_19WasmLoweringReducerENS6_13TSReducerBaseEEEEEEEELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS1_11ControlBaseINSI_5ValueES4_EE.exit..critedge_crit_edge, label %bb.m
-
-_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS0_8compiler10turboshaft25WasmInJsInliningInterfaceINS6_9AssemblerINS_4base3tmp5list1IJNS6_12GraphVisitorENS6_23WasmInJSInliningReducerENS6_19WasmLoweringReducerENS6_13TSReducerBaseEEEEEEEELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS1_11ControlBaseINSI_5ValueES4_EE.exit..critedge_crit_edge: ; preds = %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS0_8compiler10turboshaft25WasmInJsInliningInterfaceINS6_9AssemblerINS_4base3tmp5list1IJNS6_12GraphVisitorENS6_23WasmInJSInliningReducerENS6_19WasmLoweringReducerENS6_13TSReducerBaseEEEEEEEELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS1_11ControlBaseINSI_5ValueES4_EE.exit
-  %.pre = load ptr, ptr %i.b, align 8
-  br label %.critedge
-
-bb.m:                                             ; preds = %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS0_8compiler10turboshaft25WasmInJsInliningInterfaceINS6_9AssemblerINS_4base3tmp5list1IJNS6_12GraphVisitorENS6_23WasmInJSInliningReducerENS6_19WasmLoweringReducerENS6_13TSReducerBaseEEEEEEEELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS1_11ControlBaseINSI_5ValueES4_EE.exit
   %i.ce = getelementptr inbounds i8, ptr %i.c, i64 -16
-  %i.cf = load i8, ptr %i.ce, align 8, !range !11, !noundef !6
+  %i.cf = load i8, ptr %i.ce, align 8, !range !11
   %i.cg = trunc nuw i8 %i.cf to i1
-  %.pre12 = load ptr, ptr %i.b, align 8           ; 3 uses
-  br i1 %i.cg, label %.critedge, label %bb.n
+  %or.cond = select i1 %3, i1 true, i1 %i.cg
+  br i1 %or.cond, label %.critedge, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.ch = load i8, ptr %i.d, align 8
   %i.ci = icmp eq i8 %i.ch, 0
-  %scevgep.i = getelementptr i8, ptr %.pre12, i64 -96 ; 3 uses
+  %4 = load ptr, ptr %i.b, align 8                ; 2 uses
+  %scevgep.i = getelementptr i8, ptr %4, i64 -96  ; 3 uses
   store ptr %scevgep.i, ptr %i.b, align 8
   br i1 %i.ci, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS0_8compiler10turboshaft25WasmInJsInliningInterfaceINS6_9AssemblerINS_4base3tmp5list1IJNS6_12GraphVisitorENS6_23WasmInJSInliningReducerENS6_19WasmLoweringReducerENS6_13TSReducerBaseEEEEEEEELNS1_12DecodingModeE0EE39SetSucceedingCodeDynamicallyUnreachableEv.exit, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.cj = getelementptr i8, ptr %.pre12, i64 -191 ; 2 uses
+  %i.cj = getelementptr i8, ptr %4, i64 -191      ; 2 uses
   %i.ck = load i8, ptr %i.cj, align 1
   %i.cl = icmp eq i8 %i.ck, 0
   br i1 %i.cl, label %bb.p, label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS0_8compiler10turboshaft25WasmInJsInliningInterfaceINS6_9AssemblerINS_4base3tmp5list1IJNS6_12GraphVisitorENS6_23WasmInJSInliningReducerENS6_19WasmLoweringReducerENS6_13TSReducerBaseEEEEEEEELNS1_12DecodingModeE0EE39SetSucceedingCodeDynamicallyUnreachableEv.exit
@@ -278,9 +272,9 @@ bb.p:                                             ; preds = %bb.o
   %.pre13 = load ptr, ptr %i.b, align 8
   br label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS0_8compiler10turboshaft25WasmInJsInliningInterfaceINS6_9AssemblerINS_4base3tmp5list1IJNS6_12GraphVisitorENS6_23WasmInJSInliningReducerENS6_19WasmLoweringReducerENS6_13TSReducerBaseEEEEEEEELNS1_12DecodingModeE0EE39SetSucceedingCodeDynamicallyUnreachableEv.exit
 
-.critedge:                                        ; preds = %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS0_8compiler10turboshaft25WasmInJsInliningInterfaceINS6_9AssemblerINS_4base3tmp5list1IJNS6_12GraphVisitorENS6_23WasmInJSInliningReducerENS6_19WasmLoweringReducerENS6_13TSReducerBaseEEEEEEEELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS1_11ControlBaseINSI_5ValueES4_EE.exit..critedge_crit_edge, %bb.m
-  %4 = phi ptr [ %.pre, %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS0_8compiler10turboshaft25WasmInJsInliningInterfaceINS6_9AssemblerINS_4base3tmp5list1IJNS6_12GraphVisitorENS6_23WasmInJSInliningReducerENS6_19WasmLoweringReducerENS6_13TSReducerBaseEEEEEEEELNS1_12DecodingModeE0EE28RollbackLocalsInitializationEPNS1_11ControlBaseINSI_5ValueES4_EE.exit..critedge_crit_edge ], [ %.pre12, %bb.m ]
-  %scevgep.i11 = getelementptr i8, ptr %4, i64 -96 ; 2 uses
+.critedge:                                        ; preds = %bb.m
+  %5 = load ptr, ptr %i.b, align 8
+  %scevgep.i11 = getelementptr i8, ptr %5, i64 -96 ; 2 uses
   store ptr %scevgep.i11, ptr %i.b, align 8
   br label %_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS0_8compiler10turboshaft25WasmInJsInliningInterfaceINS6_9AssemblerINS_4base3tmp5list1IJNS6_12GraphVisitorENS6_23WasmInJSInliningReducerENS6_19WasmLoweringReducerENS6_13TSReducerBaseEEEEEEEELNS1_12DecodingModeE0EE39SetSucceedingCodeDynamicallyUnreachableEv.exit
 

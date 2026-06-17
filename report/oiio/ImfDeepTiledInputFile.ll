@@ -201,18 +201,16 @@ bb.ao:                                            ; preds = %bb.an, %bb.am
 
 bb.ap:                                            ; preds = %bb.ah
   %i.ds = call noundef nonnull align 8 dereferenceable(50) ptr @_ZNK27OpenImageIO_v3_1_Imf__3_3_515DeepFrameBuffer19getSampleCountSliceEv(ptr noundef nonnull align 8 dereferenceable(104) %3) ; 7 uses
-  %i.dt = getelementptr inbounds nuw i8, ptr %i.ds, i64 32
-  %i.du = load i32, ptr %i.dt, align 8, !tbaa !96
+  %7 = getelementptr inbounds nuw i8, ptr %i.ds, i64 32
+  %8 = load i32, ptr %7, align 8, !tbaa !96
+  %.not.i38 = icmp eq i32 %8, 1
+  %i.dt = getelementptr inbounds nuw i8, ptr %i.ds, i64 36
+  %i.du = load i32, ptr %i.dt, align 4
   %.not.i38.a = icmp eq i32 %i.du, 1
-  br i1 %.not.i38.a, label %7, label %bb.aq
+  %or.cond.i39 = select i1 %.not.i38, i1 %.not.i38.a, i1 false
+  br i1 %or.cond.i39, label %bb.at, label %bb.aq
 
-7:                                                ; preds = %bb.ap
-  %8 = getelementptr inbounds nuw i8, ptr %i.ds, i64 36
-  %9 = load i32, ptr %8, align 4, !tbaa !98
-  %.not38.i = icmp eq i32 %9, 1
-  br i1 %.not38.i, label %bb.at, label %bb.aq
-
-bb.aq:                                            ; preds = %7, %bb.ap
+bb.aq:                                            ; preds = %bb.ap
   %i.dv = call ptr @__cxa_allocate_exception(i64 72) #26 ; 3 uses
   invoke void @_ZN7Iex_3_36ArgExcC1EPKc(ptr noundef nonnull align 8 dereferenceable(72) %i.dv, ptr noundef nonnull @.str.40)
           to label %bb.ar unwind label %bb.as
@@ -227,7 +225,7 @@ bb.as:                                            ; preds = %bb.aq
   call void @__cxa_free_exception(ptr nonnull %i.dv) #26
   br label %common.resume
 
-bb.at:                                            ; preds = %7
+bb.at:                                            ; preds = %bb.ap
   %i.dx = getelementptr inbounds nuw i8, ptr %i.ds, i64 48
   %i.dy = load i8, ptr %i.dx, align 8, !tbaa !230, !range !81, !noundef !82
   %i.dz = trunc nuw i8 %i.dy to i1
@@ -343,18 +341,16 @@ bb.au:                                            ; preds = %_ZN27OpenImageIO_v3
 bb.av:                                            ; preds = %._crit_edge20.i, %.lr.ph24.i
   %i.gi = phi i32 [ %i.gb, %.lr.ph24.i ], [ %i.hj, %._crit_edge20.i ] ; 5 uses
   %.sroa.02.022.i = phi ptr [ %.val, %.lr.ph24.i ], [ %i.hk, %._crit_edge20.i ] ; 10 uses
-  %i.gj = getelementptr inbounds nuw i8, ptr %.sroa.02.022.i, i64 32
-  %i.gk = load i32, ptr %i.gj, align 8, !tbaa !96
+  %9 = getelementptr inbounds nuw i8, ptr %.sroa.02.022.i, i64 32
+  %10 = load i32, ptr %9, align 8, !tbaa !96
+  %.not.i43 = icmp eq i32 %10, 1
+  %i.gj = getelementptr inbounds nuw i8, ptr %.sroa.02.022.i, i64 36
+  %i.gk = load i32, ptr %i.gj, align 4
   %.not.i42 = icmp eq i32 %i.gk, 1
-  br i1 %.not.i42, label %10, label %bb.aw
+  %or.cond75.i = select i1 %.not.i43, i1 %.not.i42, i1 false
+  br i1 %or.cond75.i, label %bb.az, label %bb.aw
 
-10:                                               ; preds = %bb.av
-  %11 = getelementptr inbounds nuw i8, ptr %.sroa.02.022.i, i64 36
-  %12 = load i32, ptr %11, align 4, !tbaa !98
-  %.not71.i = icmp eq i32 %12, 1
-  br i1 %.not71.i, label %bb.az, label %bb.aw
-
-bb.aw:                                            ; preds = %10, %bb.av
+bb.aw:                                            ; preds = %bb.av
   %i.gl = call ptr @__cxa_allocate_exception(i64 72) #26 ; 3 uses
   invoke void @_ZN7Iex_3_36ArgExcC1EPKc(ptr noundef nonnull align 8 dereferenceable(72) %i.gl, ptr noundef nonnull @.str.40)
           to label %bb.ax unwind label %bb.ay
@@ -368,7 +364,7 @@ bb.ay:                                            ; preds = %bb.aw
           cleanup
   br label %bb.br
 
-bb.az:                                            ; preds = %10
+bb.az:                                            ; preds = %bb.av
   %i.gn = getelementptr inbounds nuw i8, ptr %.sroa.02.022.i, i64 16
   %i.go = load i64, ptr %i.gn, align 8, !tbaa !237 ; 2 uses
   %i.gp = getelementptr inbounds nuw i8, ptr %.sroa.02.022.i, i64 24

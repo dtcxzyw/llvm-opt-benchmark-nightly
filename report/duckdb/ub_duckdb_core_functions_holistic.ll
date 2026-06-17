@@ -201,8 +201,13 @@ bb.b:                                             ; preds = %.lr.ph.split
 .lr.ph.i33.preheader:                             ; preds = %bb.b, %.lr.ph.split
   br label %.lr.ph.i33
 
-.lr.ph.i33:                                       ; preds = %.lr.ph.i33.preheader, %.critedge.i
-  %.0122.i = phi i64 [ %9, %.critedge.i ], [ 0, %.lr.ph.i33.preheader ] ; 4 uses
+5:                                                ; preds = %_ZNK6duckdb6vectorINS_11FrameBoundsELb1ESaIS1_EEixEm.exit
+  %6 = add nuw i64 %.0122.i, 1                    ; 2 uses
+  %exitcond66.not = icmp eq i64 %6, %i.ae
+  br i1 %exitcond66.not, label %_ZNK6duckdb12_GLOBAL__N_18FrameSet8ContainsEm.exit.thread, label %.lr.ph.i33, !llvm.loop !2257
+
+.lr.ph.i33:                                       ; preds = %.lr.ph.i33.preheader, %5
+  %.0122.i = phi i64 [ %6, %5 ], [ 0, %.lr.ph.i33.preheader ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i64 %.0122.i, ptr %i.b, align 8, !tbaa !59
@@ -276,27 +281,20 @@ _ZNK6duckdb6vectorINS_11FrameBoundsELb1ESaIS1_EEixEm.exit: ; preds = %.lr.ph.i33
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   %i.aw = getelementptr inbounds nuw [16 x i8], ptr %i.aa, i64 %.0122.i ; 2 uses
-  %i.ax = load i64, ptr %i.aw, align 8, !tbaa !1995
-  %.not.i34 = icmp ugt i64 %i.ax, %i.ak
-  br i1 %.not.i34, label %.critedge.i, label %5
+  %7 = load i64, ptr %i.aw, align 8, !tbaa !1995
+  %.not.i34 = icmp ule i64 %7, %i.ak
+  %8 = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
+  %i.ax = load i64, ptr %8, align 8
+  %9 = icmp ult i64 %i.ak, %i.ax
+  %or.cond.not.not.i = select i1 %.not.i34, i1 %9, i1 false
+  br i1 %or.cond.not.not.i, label %bb.h, label %5
 
-5:                                                ; preds = %_ZNK6duckdb6vectorINS_11FrameBoundsELb1ESaIS1_EEixEm.exit
-  %6 = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
-  %7 = load i64, ptr %6, align 8, !tbaa !1993
-  %8 = icmp ult i64 %i.ak, %7
-  br i1 %8, label %bb.h, label %.critedge.i
-
-.critedge.i:                                      ; preds = %5, %_ZNK6duckdb6vectorINS_11FrameBoundsELb1ESaIS1_EEixEm.exit
-  %9 = add nuw i64 %.0122.i, 1                    ; 2 uses
-  %exitcond66.not = icmp eq i64 %9, %i.ae
-  br i1 %exitcond66.not, label %_ZNK6duckdb12_GLOBAL__N_18FrameSet8ContainsEm.exit.thread, label %.lr.ph.i33, !llvm.loop !2257
-
-bb.h:                                             ; preds = %5
+bb.h:                                             ; preds = %_ZNK6duckdb6vectorINS_11FrameBoundsELb1ESaIS1_EEixEm.exit
   %i.ay = add i64 %.02849, 1
   br label %_ZNK6duckdb12_GLOBAL__N_18FrameSet8ContainsEm.exit.thread
 
-_ZNK6duckdb12_GLOBAL__N_18FrameSet8ContainsEm.exit.thread: ; preds = %.critedge.i, %bb.h
-  %i.az = phi i64 [ %i.ay, %bb.h ], [ %.02849, %.critedge.i ] ; 3 uses
+_ZNK6duckdb12_GLOBAL__N_18FrameSet8ContainsEm.exit.thread: ; preds = %5, %bb.h
+  %i.az = phi i64 [ %i.ay, %bb.h ], [ %.02849, %5 ] ; 3 uses
   %i.ba = add nuw i64 %.02948, 1                  ; 2 uses
   %exitcond67.not = icmp eq i64 %i.ba, %.lcssa92
   br i1 %exitcond67.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !2258

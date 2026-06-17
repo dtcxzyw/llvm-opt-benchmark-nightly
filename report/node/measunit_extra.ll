@@ -201,16 +201,14 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %5, i64 96 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, i8 0, i64 16, i1 false)
   %i.g = call noundef nonnull align 8 dereferenceable(112) ptr @_ZN6icu_7815MeasureUnitImpl14forMeasureUnitERKNS_11MeasureUnitERS0_R10UErrorCode(ptr noundef nonnull align 8 dereferenceable(19) %2, ptr noundef nonnull align 8 dereferenceable(112) %5, ptr noundef nonnull align 4 dereferenceable(4) %3) ; 4 uses
-  %i.h = load i32, ptr %4, align 8
+  %6 = load i32, ptr %4, align 8
+  %7 = icmp eq i32 %6, 2
+  %i.h = load i32, ptr %i.g, align 8
   %i.i = icmp eq i32 %i.h, 2
-  br i1 %i.i, label %bb.b, label %6
+  %or.cond23 = select i1 %7, i1 true, i1 %i.i
+  br i1 %or.cond23, label %bb.b, label %.preheader
 
-6:                                                ; preds = %bb.a
-  %7 = load i32, ptr %i.g, align 8
-  %8 = icmp eq i32 %7, 2
-  br i1 %8, label %bb.b, label %.preheader
-
-.preheader:                                       ; preds = %6
+.preheader:                                       ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 2 uses
   %i.k = load i32, ptr %i.j, align 8
   %i.l = icmp sgt i32 %i.k, 0
@@ -220,7 +218,7 @@ bb.a:
   %i.m = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   br label %bb.c
 
-bb.b:                                             ; preds = %6, %bb.a
+bb.b:                                             ; preds = %bb.a
   store i32 1, ptr %3, align 4
   call void @_ZN6icu_7811MeasureUnitC1Ev(ptr noundef nonnull align 8 dereferenceable(19) %0) #15
   br label %bb.h

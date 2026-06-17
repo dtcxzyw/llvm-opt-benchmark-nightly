@@ -201,31 +201,25 @@ bb.a:
   %3 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 6 uses
   %4 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !23, !nonnull !22, !align !24 ; 7 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !25
-  %i.e = icmp slt i32 %1, %i.d
-  br i1 %i.e, label %bb.b, label %5
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !23, !nonnull !22, !align !24 ; 4 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
+  %6 = load i32, ptr %5, align 8, !tbaa !25
+  %7 = icmp slt i32 %1, %6
+  %8 = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
+  %9 = load i32, ptr %8, align 8
+  %10 = icmp sgt i32 %1, %9
+  %or.cond = select i1 %7, i1 true, i1 %10
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 28 ; 2 uses
+  %i.d = load i32, ptr %i.c, align 4
+  %i.e = icmp slt i32 %2, %i.d
+  %or.cond34 = select i1 %or.cond, i1 true, i1 %i.e
+  %11 = getelementptr inbounds nuw i8, ptr %i.b, i64 36 ; 2 uses
+  %12 = load i32, ptr %11, align 4
+  %13 = icmp sgt i32 %2, %12
+  %or.cond37 = select i1 %or.cond34, i1 true, i1 %13
+  br i1 %or.cond37, label %bb.b, label %bb.m
 
-5:                                                ; preds = %bb.a
-  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  %7 = load i32, ptr %6, align 8, !tbaa !29
-  %8 = icmp sgt i32 %1, %7
-  br i1 %8, label %bb.b, label %9
-
-9:                                                ; preds = %5
-  %10 = getelementptr inbounds nuw i8, ptr %i.b, i64 28
-  %11 = load i32, ptr %10, align 4, !tbaa !28
-  %12 = icmp slt i32 %2, %11
-  br i1 %12, label %bb.b, label %13
-
-13:                                               ; preds = %9
-  %14 = getelementptr inbounds nuw i8, ptr %i.b, i64 36
-  %15 = load i32, ptr %14, align 4, !tbaa !30
-  %16 = icmp sgt i32 %2, %15
-  br i1 %16, label %bb.b, label %bb.m
-
-bb.b:                                             ; preds = %bb.a, %5, %9, %13
+bb.b:                                             ; preds = %bb.a
   tail call void @_Z13iex_debugTrapv()
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
   call void @_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEC1Ev(ptr noundef nonnull align 8 dereferenceable(128) %3)
@@ -250,7 +244,7 @@ bb.d:                                             ; preds = %_ZStlsISt11char_tra
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit31 unwind label %bb.j ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit31: ; preds = %bb.d
-  %i.l = load i32, ptr %i.c, align 8, !tbaa !25
+  %i.l = load i32, ptr %5, align 8, !tbaa !25
   %i.m = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) %i.j, i32 noundef %i.l)
           to label %bb.e unwind label %bb.j       ; 2 uses
 
@@ -259,8 +253,7 @@ bb.e:                                             ; preds = %_ZStlsISt11char_tra
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit32 unwind label %bb.j ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit32: ; preds = %bb.e
-  %17 = getelementptr inbounds nuw i8, ptr %i.b, i64 28
-  %i.o = load i32, ptr %17, align 4, !tbaa !28
+  %i.o = load i32, ptr %i.c, align 4, !tbaa !28
   %i.p = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) %i.m, i32 noundef %i.o)
           to label %bb.f unwind label %bb.j       ; 2 uses
 
@@ -269,8 +262,7 @@ bb.f:                                             ; preds = %_ZStlsISt11char_tra
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit33 unwind label %bb.j ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit33: ; preds = %bb.f
-  %18 = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  %i.r = load i32, ptr %18, align 8, !tbaa !29
+  %i.r = load i32, ptr %8, align 8, !tbaa !29
   %i.s = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) %i.p, i32 noundef %i.r)
           to label %bb.g unwind label %bb.j       ; 2 uses
 
@@ -279,8 +271,7 @@ bb.g:                                             ; preds = %_ZStlsISt11char_tra
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit34 unwind label %bb.j ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit34: ; preds = %bb.g
-  %19 = getelementptr inbounds nuw i8, ptr %i.b, i64 36
-  %i.u = load i32, ptr %19, align 4, !tbaa !30
+  %i.u = load i32, ptr %11, align 4, !tbaa !30
   %i.v = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) %i.s, i32 noundef %i.u)
           to label %bb.h unwind label %bb.j
 
@@ -314,7 +305,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #11
   br label %bb.y
 
-bb.m:                                             ; preds = %13
+bb.m:                                             ; preds = %bb.a
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !12
   %i.ac = srem i32 %1, %i.ab
