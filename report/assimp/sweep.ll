@@ -201,14 +201,14 @@ bb.g:                                             ; preds = %bb.e
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 8
   %i.bj = load double, ptr %i.bi, align 8
   %i.bk = fcmp olt double %i.bg, %i.bj            ; 2 uses
-  %i.bl = select i1 %i.bk, ptr %i.be, ptr %i.bh
-  %. = select i1 %i.bk, ptr %i.s, ptr %i.w
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.bl, i64 8
+  %i.bl = select i1 %i.bk, ptr %i.s, ptr %i.w
+  %. = select i1 %i.bk, ptr %i.be, ptr %i.bh
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %., i64 8
   br label %.thread36
 
 .thread36:                                        ; preds = %bb.f, %bb.d, %bb.g
   %.in = phi ptr [ %.phi.trans.insert, %bb.g ], [ %i.ae, %bb.d ], [ %i.at, %bb.f ]
-  %.2 = phi ptr [ %., %bb.g ], [ %i.w, %bb.d ], [ %i.s, %bb.f ]
+  %.2 = phi ptr [ %i.bl, %bb.g ], [ %i.w, %bb.d ], [ %i.s, %bb.f ]
   %i.bm = load double, ptr %.in, align 8
   %i.bn = load i8, ptr %i.a, align 8, !range !6, !noundef !7
   %i.bo = trunc nuw i8 %i.bn to i1

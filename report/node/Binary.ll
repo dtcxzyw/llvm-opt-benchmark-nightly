@@ -201,23 +201,23 @@ _ZSt4findIN9__gnu_cxx17__normal_iteratorIPPN4LIEF5MachO7SectionESt6vectorIS5_SaI
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.preheader.i.i
-  %i.cb = phi ptr [ %i.ch, %.lr.ph.i.i ], [ %.pre.i.i, %.lr.ph.preheader.i.i ] ; 2 uses
+  %i.cb = phi ptr [ %4, %.lr.ph.i.i ], [ %.pre.i.i, %.lr.ph.preheader.i.i ] ; 2 uses
   %i.cc = phi ptr [ %3, %.lr.ph.i.i ], [ %i.ca, %.lr.ph.preheader.i.i ] ; 3 uses
-  %.sroa.02.010.i.i = phi ptr [ %spec.select.i.i, %.lr.ph.i.i ], [ %.sroa.064.0.lcssa137, %.lr.ph.preheader.i.i ]
+  %.sroa.02.010.i.i = phi ptr [ %i.ch, %.lr.ph.i.i ], [ %.sroa.064.0.lcssa137, %.lr.ph.preheader.i.i ]
   %i.cd = load ptr, ptr %i.cc, align 8            ; 2 uses
   %i.ce = getelementptr i8, ptr %i.cb, i64 104
   %.val.i.i.i = load i32, ptr %i.ce, align 8
   %i.cf = getelementptr i8, ptr %i.cd, i64 104
   %.val1.i.i.i = load i32, ptr %i.cf, align 8
   %i.cg = icmp ult i32 %.val.i.i.i, %.val1.i.i.i  ; 2 uses
-  %i.ch = select i1 %i.cg, ptr %i.cd, ptr %i.cb
-  %spec.select.i.i = select i1 %i.cg, ptr %i.cc, ptr %.sroa.02.010.i.i ; 2 uses
+  %i.ch = select i1 %i.cg, ptr %i.cc, ptr %.sroa.02.010.i.i ; 2 uses
   %3 = getelementptr inbounds nuw i8, ptr %i.cc, i64 8 ; 2 uses
   %.not.i.i36 = icmp eq ptr %3, %.sroa.11.2
+  %4 = select i1 %i.cg, ptr %i.cd, ptr %i.cb
   br i1 %.not.i.i36, label %"_ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPPN4LIEF5MachO7SectionESt6vectorIS5_SaIS5_EEEEZNS3_6Binary14extend_sectionERS4_mE3$_0ET_SE_SE_T0_.exit", label %.lr.ph.i.i, !llvm.loop !199
 
 "_ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPPN4LIEF5MachO7SectionESt6vectorIS5_SaIS5_EEEEZNS3_6Binary14extend_sectionERS4_mE3$_0ET_SE_SE_T0_.exit": ; preds = %.lr.ph.i.i, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPPN4LIEF5MachO7SectionESt6vectorIS5_SaIS5_EEEES5_ET_SB_SB_RKT0_.exit
-  %.sroa.02.2.i.i = phi ptr [ %.sroa.064.0.lcssa137, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPPN4LIEF5MachO7SectionESt6vectorIS5_SaIS5_EEEES5_ET_SB_SB_RKT0_.exit ], [ %spec.select.i.i, %.lr.ph.i.i ]
+  %.sroa.02.2.i.i = phi ptr [ %.sroa.064.0.lcssa137, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPPN4LIEF5MachO7SectionESt6vectorIS5_SaIS5_EEEES5_ET_SB_SB_RKT0_.exit ], [ %i.ch, %.lr.ph.i.i ]
   %i.ci = load ptr, ptr %.sroa.02.2.i.i, align 8
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 104
   %i.ck = load i32, ptr %i.cj, align 8

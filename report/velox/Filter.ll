@@ -201,10 +201,10 @@ _ZSt11min_elementIN9__gnu_cxx17__normal_iteratorIPKnSt6vectorInSaInEEEEET_S8_S8_
   %.sroa.02.09.i.i = phi ptr [ %spec.select.i.i, %.lr.ph.i.i ], [ %i.c, %bb.a ]
   %i.l = load i128, ptr %i.k, align 16, !tbaa !219 ; 2 uses
   %i.m = icmp slt i128 %i.l, %i.j
-  %3 = tail call i128 @llvm.smin.i128(i128 %i.l, i128 %i.j)
   %spec.select.i.i = select i1 %i.m, ptr %i.k, ptr %.sroa.02.09.i.i ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 16 ; 2 uses
   %i.o = icmp eq ptr %i.n, %i.e
+  %3 = tail call i128 @llvm.smin.i128(i128 %i.l, i128 %i.j)
   br i1 %i.o, label %.lr.ph.preheader.i.i9, label %.lr.ph.i.i, !llvm.loop !617
 
 .lr.ph.preheader.i.i9:                            ; preds = %.lr.ph.i.i
@@ -219,10 +219,10 @@ _ZSt11min_elementIN9__gnu_cxx17__normal_iteratorIPKnSt6vectorInSaInEEEEET_S8_S8_
   %.sroa.02.09.i.i12 = phi ptr [ %spec.select.i.i13, %.lr.ph.i.i11 ], [ %i.c, %.lr.ph.preheader.i.i9 ]
   %i.s = load i128, ptr %i.r, align 16, !tbaa !219 ; 2 uses
   %i.t = icmp slt i128 %i.q, %i.s
-  %4 = tail call i128 @llvm.smax.i128(i128 %i.q, i128 %i.s)
   %spec.select.i.i13 = select i1 %i.t, ptr %i.r, ptr %.sroa.02.09.i.i12 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.r, i64 16 ; 2 uses
   %i.v = icmp eq ptr %i.u, %i.e
+  %4 = tail call i128 @llvm.smax.i128(i128 %i.q, i128 %i.s)
   br i1 %i.v, label %_ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPKnSt6vectorInSaInEEEEET_S8_S8_.exit.loopexit, label %.lr.ph.i.i11, !llvm.loop !618
 
 _ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPKnSt6vectorInSaInEEEEET_S8_S8_.exit.loopexit: ; preds = %.lr.ph.i.i11
@@ -625,8 +625,8 @@ _ZNK8facebook5velox9TimestampssERKS1_.exit:       ; preds = %bb.d, %bb.c
   %i.ak = load i64, ptr %i.aj, align 8
   %i.al = icmp ult i64 %i.ai, %i.ak
   %.sroa.09.2.i.i = select i1 %i.af, i1 %i.al, i1 %i.ag ; 2 uses
-  %3 = select i1 %.sroa.09.2.i.i, i64 %i.ae, i64 %i.ad ; 3 uses
   %..i = select i1 %.sroa.09.2.i.i, ptr %i.ac, ptr %i.ab
+  %3 = select i1 %.sroa.09.2.i.i, i64 %i.ae, i64 %i.ad ; 3 uses
   %.sroa.5.0...i.sroa_idx = getelementptr inbounds nuw i8, ptr %..i, i64 8
   %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0...i.sroa_idx, align 8, !tbaa !33 ; 3 uses
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
@@ -641,8 +641,8 @@ _ZNK8facebook5velox9TimestampssERKS1_.exit:       ; preds = %bb.d, %bb.c
   %i.av = load i64, ptr %i.au, align 8
   %i.aw = icmp ult i64 %i.at, %i.av
   %.sroa.09.2.i.i8 = select i1 %i.aq, i1 %i.aw, i1 %i.ar ; 2 uses
-  %4 = select i1 %.sroa.09.2.i.i8, i64 %i.ao, i64 %i.ap ; 3 uses
   %..i9 = select i1 %.sroa.09.2.i.i8, ptr %i.an, ptr %i.am
+  %4 = select i1 %.sroa.09.2.i.i8, i64 %i.ao, i64 %i.ap ; 3 uses
   %.sroa.6.0...i9.sroa_idx = getelementptr inbounds nuw i8, ptr %..i9, i64 8
   %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0...i9.sroa_idx, align 8, !tbaa !33 ; 3 uses
   %i.ax = icmp eq i64 %3, %4                      ; 2 uses

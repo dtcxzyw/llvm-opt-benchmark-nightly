@@ -201,10 +201,10 @@ bb.el:                                            ; preds = %.critedge187
   %.sroa.02.09.i.i.i = phi ptr [ %spec.select.i.i.i, %.lr.ph.i.i.i ], [ %i.vf, %.lr.ph.preheader.i.i.i ]
   %.sroa.01.0.copyload.i.i.i.i = load i32, ptr %i.vn, align 4 ; 2 uses
   %i.vo = icmp ult i32 %i.vm, %.sroa.01.0.copyload.i.i.i.i
-  %6 = call i32 @llvm.umax.i32(i32 %i.vm, i32 %.sroa.01.0.copyload.i.i.i.i)
   %spec.select.i.i.i = select i1 %i.vo, ptr %i.vn, ptr %.sroa.02.09.i.i.i ; 2 uses
   %i.vp = getelementptr inbounds nuw i8, ptr %i.vn, i64 4 ; 2 uses
   %i.vq = icmp eq ptr %i.vp, %i.vh
+  %6 = call i32 @llvm.umax.i32(i32 %i.vm, i32 %.sroa.01.0.copyload.i.i.i.i)
   br i1 %i.vq, label %_ZNK2v88internal4wasm10WasmModule21MaxCanonicalTypeIndexEv.exit, label %.lr.ph.i.i.i, !llvm.loop !45
 
 _ZNK2v88internal4wasm10WasmModule21MaxCanonicalTypeIndexEv.exit: ; preds = %.lr.ph.i.i.i, %bb.el

@@ -201,10 +201,10 @@ _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.
   %i.x = lshr i64 %i.w, 1
   %i.y = icmp samesign ult i64 %i.v, %i.x         ; 5 uses
   %i.z = select i1 %i.y, i64 %i.w, i64 %i.u       ; 2 uses
-  %3 = select i1 %i.y, i64 %i.u, i64 %i.w
-  %4 = lshr i64 %i.z, 1                           ; 3 uses
-  %i.aa = lshr i64 %3, 1
-  %i.ab = sub nsw i64 %4, %i.aa
+  %3 = lshr i64 %i.z, 1                           ; 3 uses
+  %4 = select i1 %i.y, i64 %i.u, i64 %i.w
+  %i.aa = lshr i64 %4, 1
+  %i.ab = sub nsw i64 %3, %i.aa
   %i.ac = icmp ugt i64 %i.ab, 1
   br i1 %i.ac, label %.thread69, label %bb.d
 
@@ -217,9 +217,9 @@ bb.d:                                             ; preds = %_ZStneIcSt11char_tr
   %spec.select.sroa.sel = select i1 %i.y, ptr %.sroa.sel.v.sroa.sel, ptr %.sroa.sel133 ; 2 uses
   %i.ae = load ptr, ptr %spec.select.sroa.sel, align 8
   %i.af = select i1 %i.ad, ptr %i.ae, ptr %spec.select.sroa.sel ; 2 uses
-  %.idx = mul nuw nsw i64 %4, 48
+  %.idx = mul nuw nsw i64 %3, 48
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 %.idx
-  %.not4792 = icmp eq i64 %4, 0
+  %.not4792 = icmp eq i64 %3, 0
   br i1 %.not4792, label %.thread69, label %.lr.ph95
 
 .lr.ph95:                                         ; preds = %bb.d

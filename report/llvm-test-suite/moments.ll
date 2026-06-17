@@ -201,23 +201,23 @@ bb.e:                                             ; preds = %_ZSt11nth_elementIN
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.prol.loopexit, label %.lr.ph.i.i.prol
 
 .lr.ph.i.i.prol:                                  ; preds = %.lr.ph.preheader.i.i, %.lr.ph.i.i.prol
-  %i.bo = phi double [ %3, %.lr.ph.i.i.prol ], [ %.pre.i.i, %.lr.ph.preheader.i.i ] ; 2 uses
-  %i.bp = phi ptr [ %4, %.lr.ph.i.i.prol ], [ %i.bk, %.lr.ph.preheader.i.i ] ; 3 uses
+  %i.bo = phi double [ %4, %.lr.ph.i.i.prol ], [ %.pre.i.i, %.lr.ph.preheader.i.i ] ; 2 uses
+  %i.bp = phi ptr [ %3, %.lr.ph.i.i.prol ], [ %i.bk, %.lr.ph.preheader.i.i ] ; 3 uses
   %.sroa.02.010.i.i.prol = phi ptr [ %spec.select.i.i.prol, %.lr.ph.i.i.prol ], [ %1, %.lr.ph.preheader.i.i ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.prol ], [ 0, %.lr.ph.preheader.i.i ]
   %i.bq = load double, ptr %i.bp, align 8, !tbaa !12 ; 2 uses
   %i.br = fcmp olt double %i.bo, %i.bq            ; 2 uses
-  %3 = select i1 %i.br, double %i.bq, double %i.bo ; 2 uses
   %spec.select.i.i.prol = select i1 %i.br, ptr %i.bp, ptr %.sroa.02.010.i.i.prol ; 3 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.bp, i64 8 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.bp, i64 8 ; 2 uses
+  %4 = select i1 %i.br, double %i.bq, double %i.bo ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.prol.loopexit, label %.lr.ph.i.i.prol, !llvm.loop !26
 
 .lr.ph.i.i.prol.loopexit:                         ; preds = %.lr.ph.i.i.prol, %.lr.ph.preheader.i.i
   %spec.select.i.i.lcssa.unr = phi ptr [ poison, %.lr.ph.preheader.i.i ], [ %spec.select.i.i.prol, %.lr.ph.i.i.prol ]
-  %.unr = phi double [ %.pre.i.i, %.lr.ph.preheader.i.i ], [ %3, %.lr.ph.i.i.prol ]
-  %.unr54 = phi ptr [ %i.bk, %.lr.ph.preheader.i.i ], [ %4, %.lr.ph.i.i.prol ]
+  %.unr = phi double [ %.pre.i.i, %.lr.ph.preheader.i.i ], [ %4, %.lr.ph.i.i.prol ]
+  %.unr54 = phi ptr [ %i.bk, %.lr.ph.preheader.i.i ], [ %3, %.lr.ph.i.i.prol ]
   %.sroa.02.010.i.i.unr = phi ptr [ %1, %.lr.ph.preheader.i.i ], [ %spec.select.i.i.prol, %.lr.ph.i.i.prol ]
   %i.bs = icmp ult i64 %i.bl, 24
   br i1 %i.bs, label %_ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEET_S7_S7_.exit, label %.lr.ph.i.i
@@ -228,25 +228,25 @@ bb.e:                                             ; preds = %_ZSt11nth_elementIN
   %.sroa.02.010.i.i = phi ptr [ %spec.select.i.i.3, %.lr.ph.i.i ], [ %.sroa.02.010.i.i.unr, %.lr.ph.i.i.prol.loopexit ]
   %i.bv = load double, ptr %i.bu, align 8, !tbaa !12 ; 2 uses
   %i.bw = fcmp olt double %i.bt, %i.bv            ; 2 uses
-  %5 = select i1 %i.bw, double %i.bv, double %i.bt ; 2 uses
   %spec.select.i.i = select i1 %i.bw, ptr %i.bu, ptr %.sroa.02.010.i.i
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bu, i64 8 ; 2 uses
+  %5 = select i1 %i.bw, double %i.bv, double %i.bt ; 2 uses
   %6 = load double, ptr %i.bx, align 8, !tbaa !12 ; 2 uses
   %7 = fcmp olt double %5, %6                     ; 2 uses
-  %8 = select i1 %7, double %6, double %5         ; 2 uses
   %spec.select.i.i.1 = select i1 %7, ptr %i.bx, ptr %spec.select.i.i
   %i.by = getelementptr inbounds nuw i8, ptr %i.bu, i64 16 ; 2 uses
+  %8 = select i1 %7, double %6, double %5         ; 2 uses
   %9 = load double, ptr %i.by, align 8, !tbaa !12 ; 2 uses
   %10 = fcmp olt double %8, %9                    ; 2 uses
-  %11 = select i1 %10, double %9, double %8       ; 2 uses
   %spec.select.i.i.2 = select i1 %10, ptr %i.by, ptr %spec.select.i.i.1
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bu, i64 24 ; 2 uses
+  %11 = select i1 %10, double %9, double %8       ; 2 uses
   %12 = load double, ptr %i.bz, align 8, !tbaa !12 ; 2 uses
   %13 = fcmp olt double %11, %12                  ; 2 uses
-  %14 = select i1 %13, double %12, double %11
   %spec.select.i.i.3 = select i1 %13, ptr %i.bz, ptr %spec.select.i.i.2 ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bu, i64 32 ; 2 uses
   %.not.i.i.3 = icmp eq ptr %i.ca, %i.bd
+  %14 = select i1 %13, double %12, double %11
   br i1 %.not.i.i.3, label %_ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEET_S7_S7_.exit, label %.lr.ph.i.i, !llvm.loop !28
 
 _ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEET_S7_S7_.exit: ; preds = %.lr.ph.i.i.prol.loopexit, %.lr.ph.i.i, %bb.e
