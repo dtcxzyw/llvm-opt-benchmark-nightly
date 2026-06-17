@@ -201,7 +201,7 @@ bb.z:                                             ; preds = %bb.y
   %switch.select3.i = select i1 %switch.selectcmp2.i, i32 1, i32 %switch.select.i
   br label %bb.aa
 
-bb.aa:                                            ; preds = %bb.y, %bb.z
+bb.aa:                                            ; preds = %bb.z, %bb.y
   %.0 = phi i32 [ %switch.select3.i, %bb.z ], [ 2, %bb.y ] ; 5 uses
   %i.bm = call noundef nonnull align 8 dereferenceable(44) ptr @_ZNK18NCommandLineParser7CParserixEm(ptr noundef nonnull align 8 dereferenceable(48) %0, i64 noundef 11)
   %i.bn = load i8, ptr %i.bm, align 8, !tbaa !35, !range !37, !noundef !38

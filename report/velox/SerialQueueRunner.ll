@@ -201,6 +201,8 @@ bb.i:                                             ; preds = %AfterCoroSuspend127
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.z, i64 104
   %i.ah = load i8, ptr %i.ag, align 8, !tbaa !544, !range !28, !noalias !567, !noundef !29 ; 2 uses
+  %.spill.addr220 = getelementptr inbounds nuw i8, ptr %0, i64 409
+  store i8 %i.ah, ptr %.spill.addr220, align 1
   store i8 %i.ah, ptr %.reload.addr231, align 8, !tbaa !544, !alias.scope !567
   %i.ai = getelementptr inbounds nuw i8, ptr %i.z, i64 112 ; 2 uses
   %i.aj = load <2 x ptr>, ptr %i.ai, align 8, !tbaa !535, !noalias !567
@@ -240,8 +242,6 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 _ZN5folly4coro4TaskISt4pairIbSt6vectorINS1_IvEESaIS4_EEEE7Awaiter12await_resumeEv.exit: ; preds = %bb.i
-  %.spill.addr211 = getelementptr inbounds nuw i8, ptr %0, i64 409
-  store i8 %i.ah, ptr %.spill.addr211, align 1
   %i.av = load ptr, ptr %.reload.addr232, align 8, !tbaa !88 ; 3 uses
   %.not.i31 = icmp eq ptr %i.av, null
   br i1 %.not.i31, label %_ZN5folly4coro4TaskISt4pairIbSt6vectorINS1_IvEESaIS4_EEEE7AwaiterD2Ev.exit32, label %bb.m
@@ -277,7 +277,7 @@ bb.p:                                             ; preds = %bb.o
   tail call void @__clang_call_terminate(ptr %i.be) #26
   unreachable
 
-_ZN5folly4coro4TaskISt4pairIbSt6vectorINS1_IvEESaIS4_EEEED2Ev.exit: ; preds = %_ZN5folly4coro4TaskISt4pairIbSt6vectorINS1_IvEESaIS4_EEEE7AwaiterD2Ev.exit32, %bb.o
+_ZN5folly4coro4TaskISt4pairIbSt6vectorINS1_IvEESaIS4_EEEED2Ev.exit: ; preds = %bb.o, %_ZN5folly4coro4TaskISt4pairIbSt6vectorINS1_IvEESaIS4_EEEE7AwaiterD2Ev.exit32
   %i.bf = load ptr, ptr %i.af, align 8, !tbaa !535 ; 4 uses
   %.spill.addr214 = getelementptr inbounds nuw i8, ptr %0, i64 384
   store ptr %i.bf, ptr %.spill.addr214, align 8
@@ -580,7 +580,7 @@ _ZNSt4pairIbSt6vectorIN5folly4coro4TaskIvEESaIS4_EEED2Ev.exit.from.: ; preds = %
   tail call void @_ZdlPvm(ptr noundef nonnull %.reload222, i64 noundef %i.dx) #25
   br label %_ZNSt4pairIbSt6vectorIN5folly4coro4TaskIvEESaIS4_EEED2Ev.exit
 
-_ZNSt4pairIbSt6vectorIN5folly4coro4TaskIvEESaIS4_EEED2Ev.exit: ; preds = %_ZSt8_DestroyIPN5folly4coro4TaskIvEES3_EvT_S5_RSaIT0_E.exit.i.i, %_ZNSt4pairIbSt6vectorIN5folly4coro4TaskIvEESaIS4_EEED2Ev.exit.from.
+_ZNSt4pairIbSt6vectorIN5folly4coro4TaskIvEESaIS4_EEED2Ev.exit: ; preds = %_ZNSt4pairIbSt6vectorIN5folly4coro4TaskIvEESaIS4_EEED2Ev.exit.from., %_ZSt8_DestroyIPN5folly4coro4TaskIvEES3_EvT_S5_RSaIT0_E.exit.i.i
   br i1 %i.ds, label %bb.am, label %.preheader
 
 bb.am:                                            ; preds = %_ZNSt4pairIbSt6vectorIN5folly4coro4TaskIvEESaIS4_EEED2Ev.exit
@@ -850,7 +850,7 @@ bb.m:                                             ; preds = %AfterCoroSuspend135
   tail call void @_ZNSt15__exception_ptr13exception_ptr10_M_releaseEv(ptr noundef nonnull align 8 dereferenceable(8) %.reload.addr242) #22
   br label %.loopexit
 
-.loopexit:                                        ; preds = %resume.entry, %AfterCoroSuspend135, %bb.m, %_ZNSt4pairIbSt6vectorIN5folly4coro4TaskIvEESaIS4_EEED2Ev.exit.from., %_ZN5folly4coro4TaskISt4pairIbSt6vectorINS1_IvEESaIS4_EEEE7AwaiterD2Ev.exit32, %bb.e, %_ZSt8_DestroyIPN5folly4coro4TaskIvEES3_EvT_S5_RSaIT0_E.exit.i.i, %_ZN5folly4coro8co_errorD2Ev.exit28, %bb.b, %resume.entry
+.loopexit:                                        ; preds = %resume.entry, %AfterCoroSuspend135, %bb.m, %_ZN5folly4coro4TaskISt4pairIbSt6vectorINS1_IvEESaIS4_EEEE7AwaiterD2Ev.exit32, %bb.e, %_ZSt8_DestroyIPN5folly4coro4TaskIvEES3_EvT_S5_RSaIT0_E.exit.i.i, %_ZNSt4pairIbSt6vectorIN5folly4coro4TaskIvEESaIS4_EEED2Ev.exit.from., %_ZN5folly4coro8co_errorD2Ev.exit28, %bb.b, %resume.entry
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.ak = load i8, ptr %i.aj, align 8, !tbaa !69, !range !28, !noundef !29
   %i.al = trunc nuw i8 %i.ak to i1

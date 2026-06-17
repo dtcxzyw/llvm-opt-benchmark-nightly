@@ -201,7 +201,7 @@ bb.h:                                             ; preds = %bb.g
   %.030 = select i1 %or.cond, i32 2, i32 0
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.g, %_ZNSt11shared_lockIN5folly15SharedMutexImplILb0EvSt6atomicNS0_24SharedMutexPolicyDefaultEEEEC2ERS4_.exit, %bb.h
+bb.i:                                             ; preds = %bb.h, %bb.g, %_ZNSt11shared_lockIN5folly15SharedMutexImplILb0EvSt6atomicNS0_24SharedMutexPolicyDefaultEEEEC2ERS4_.exit
   %.131 = phi i32 [ %.030, %bb.h ], [ 1, %_ZNSt11shared_lockIN5folly15SharedMutexImplILb0EvSt6atomicNS0_24SharedMutexPolicyDefaultEEEEC2ERS4_.exit ], [ 4, %bb.g ]
   %.226 = phi i64 [ %spec.select, %bb.h ], [ %.02458, %_ZNSt11shared_lockIN5folly15SharedMutexImplILb0EvSt6atomicNS0_24SharedMutexPolicyDefaultEEEEC2ERS4_.exit ], [ %.02458, %bb.g ] ; 3 uses
   %.1 = phi i64 [ %.059, %bb.h ], [ %i.u, %_ZNSt11shared_lockIN5folly15SharedMutexImplILb0EvSt6atomicNS0_24SharedMutexPolicyDefaultEEEEC2ERS4_.exit ], [ %.059, %bb.g ] ; 3 uses

@@ -201,7 +201,7 @@ bb.af:                                            ; preds = %bb.ad, %bb.ae
   %spec.select241 = add nsw i32 %.0191322, %i.eh
   br i1 %.not217, label %.backedge, label %.loopexit.loopexit
 
-.backedge:                                        ; preds = %bb.af, %bb.q, %bb.w
+.backedge:                                        ; preds = %bb.q, %bb.w, %bb.af
   %.3194 = phi i32 [ %.0191322, %bb.q ], [ %.0191322, %bb.w ], [ %spec.select241, %bb.af ] ; 2 uses
   %.4189 = phi i32 [ %.0185323, %bb.q ], [ %.0185323, %bb.w ], [ %.1186, %bb.af ] ; 2 uses
   %.4 = phi i8 [ %.0181324, %bb.q ], [ %.0181324, %bb.w ], [ %.1182, %bb.af ] ; 2 uses
@@ -424,7 +424,7 @@ bb.av:                                            ; preds = %bb.au
   store i32 3, ptr %i.a, align 4, !tbaa !3
   br label %.loopexit.loopexit
 
-.loopexit.loopexit:                               ; preds = %bb.x, %bb.af, %bb.ac, %.loopexit.loopexit.sink.split
+.loopexit.loopexit:                               ; preds = %bb.x, %bb.ac, %bb.af, %.loopexit.loopexit.sink.split
   %.pre343 = load i32, ptr %i.a, align 4, !tbaa !3
   br label %.loopexit
 
@@ -434,7 +434,7 @@ bb.av:                                            ; preds = %bb.au
   store i32 %i.ir, ptr %i.is, align 8, !tbaa !100
   br label %.thread281
 
-.thread281:                                       ; preds = %read_binary_data.exit, %bb.p, %bb.v, %.thread.i, %bb.av, %bb.ag, %bb.ao, %bb.b, %bb.c, %.loopexit
+.thread281:                                       ; preds = %bb.p, %read_binary_data.exit, %bb.v, %.thread.i, %bb.av, %bb.ag, %bb.ao, %bb.b, %bb.c, %.loopexit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
   ret void
 }
