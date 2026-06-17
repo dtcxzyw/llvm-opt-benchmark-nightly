@@ -201,11 +201,11 @@ bb.y:                                             ; preds = %select.unfold
   br label %.lr.ph416
 
 .lr.ph416:                                        ; preds = %.lr.ph416.preheader, %bb.ai
-  %.1414 = phi i32 [ %.4, %bb.ai ], [ %.0721, %.lr.ph416.preheader ] ; 3 uses
-  %.1144411 = phi i64 [ %.2145, %bb.ai ], [ %.0143720, %.lr.ph416.preheader ] ; 5 uses
-  %.1148410 = phi i64 [ %.7, %bb.ai ], [ %.0147719, %.lr.ph416.preheader ] ; 4 uses
-  %.0154409 = phi i64 [ %i.cx, %bb.ai ], [ 0, %.lr.ph416.preheader ] ; 2 uses
-  %.1169408 = phi i32 [ %.5173, %bb.ai ], [ %.0168716, %.lr.ph416.preheader ]
+  %.1414 = phi i32 [ %.0721, %.lr.ph416.preheader ], [ %.4, %bb.ai ] ; 3 uses
+  %.1144411 = phi i64 [ %.0143720, %.lr.ph416.preheader ], [ %.2145, %bb.ai ] ; 5 uses
+  %.1148410 = phi i64 [ %.0147719, %.lr.ph416.preheader ], [ %.7, %bb.ai ] ; 4 uses
+  %.0154409 = phi i64 [ 0, %.lr.ph416.preheader ], [ %i.cx, %bb.ai ] ; 2 uses
+  %.1169408 = phi i32 [ %.0168716, %.lr.ph416.preheader ], [ %.5173, %bb.ai ]
   switch i32 %.1169408, label %default.unreachable526 [
     i32 0, label %bb.z
     i32 1, label %bb.ac

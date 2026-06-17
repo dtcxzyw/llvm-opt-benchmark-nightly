@@ -201,8 +201,8 @@ _ZNK6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE5checkEDs.exit
   %i.af = getelementptr inbounds nuw i8, ptr %6, i64 32
   br label %_ZNK6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE5checkEDs.exit.i4
 
-._crit_edge:                                      ; preds = %.backedge, %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEDs.exit
-  %.lcssa = phi ptr [ %i.s, %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEDs.exit ], [ %i.di, %.backedge ]
+._crit_edge:                                      ; preds = %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE8setErrorENS0_9constants9ErrorTypeE.exit.loopexit, %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEDs.exit
+  %.lcssa = phi ptr [ %i.s, %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEDs.exit ], [ %8, %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE8setErrorENS0_9constants9ErrorTypeE.exit.loopexit ]
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.ah = load i32, ptr %i.ag, align 8, !tbaa !17
   %i.ai = icmp eq i32 %i.ah, 0
@@ -213,8 +213,8 @@ bb.c:                                             ; preds = %._crit_edge
   store ptr %.lcssa, ptr %i.c, align 8, !tbaa !15
   br label %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE8setErrorENS0_9constants9ErrorTypeE.exit
 
-_ZNK6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE5checkEDs.exit.i4: ; preds = %_ZNK6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE5checkEDs.exit.i4.lr.ph, %.backedge
-  %i.aj = phi ptr [ %i.r, %_ZNK6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE5checkEDs.exit.i4.lr.ph ], [ %7, %.backedge ] ; 2 uses
+_ZNK6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE5checkEDs.exit.i4: ; preds = %_ZNK6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE5checkEDs.exit.i4.lr.ph, %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE8setErrorENS0_9constants9ErrorTypeE.exit.loopexit
+  %i.aj = phi ptr [ %i.r, %_ZNK6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE5checkEDs.exit.i4.lr.ph ], [ %7, %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE8setErrorENS0_9constants9ErrorTypeE.exit.loopexit ] ; 2 uses
   %i.ak = load i16, ptr %i.aj, align 2, !tbaa !31
   %i.al = icmp eq i16 %i.ak, 93
   br i1 %i.al, label %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEDs.exit5.thread, label %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEDs.exit5
@@ -229,7 +229,7 @@ _ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEDs
   call void @_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE26tryConsumeBracketClassAtomEv(ptr dead_on_unwind nonnull writable sret(%"class.llvh::Optional.253") align 8 %3, ptr noundef nonnull align 8 dereferenceable(41) %0)
   %i.an = load i8, ptr %i.u, align 8, !tbaa !418, !range !278, !noundef !242
   %i.ao = trunc nuw i8 %i.an to i1
-  br i1 %i.ao, label %bb.d, label %.backedge, !llvm.loop !423
+  br i1 %i.ao, label %bb.d, label %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE8setErrorENS0_9constants9ErrorTypeE.exit.loopexit, !llvm.loop !423
 
 bb.d:                                             ; preds = %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEDs.exit5
   %i.ap = load ptr, ptr %i.c, align 8, !tbaa !15  ; 3 uses
@@ -244,7 +244,7 @@ _ZNK6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE5checkEDs.exit
 
 bb.e:                                             ; preds = %_ZNK6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE5checkEDs.exit.i7, %bb.d
   %i.at = call noundef zeroext i1 @_ZZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE21consumeCharacterClassEvENKUlRKNS7_9ClassAtomEE_clESA_(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(40) %3)
-  br i1 %i.at, label %.backedge, label %.thread, !llvm.loop !423
+  br i1 %i.at, label %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE8setErrorENS0_9constants9ErrorTypeE.exit.loopexit, label %.thread, !llvm.loop !423
 
 .thread:                                          ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #15
@@ -289,7 +289,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   %i.bf = load i32, ptr %i.ac, align 8, !tbaa !17
   %i.bg = icmp eq i32 %i.bf, 0
-  br i1 %i.bg, label %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE8setErrorENS0_9constants9ErrorTypeE.exit.loopexit.sink.split, label %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE8setErrorENS0_9constants9ErrorTypeE.exit.loopexit
+  br i1 %i.bg, label %.backedge, label %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE8setErrorENS0_9constants9ErrorTypeE.exit.loopexit.sink.split
 
 bb.k:                                             ; preds = %bb.h
   %.pre41 = trunc nuw i8 %.pre to i1
@@ -317,7 +317,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %.thread59
   %i.bo = load i32, ptr %i.ac, align 8, !tbaa !17
   %i.bp = icmp eq i32 %i.bo, 0
-  br i1 %i.bp, label %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE8setErrorENS0_9constants9ErrorTypeE.exit.loopexit.sink.split, label %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE8setErrorENS0_9constants9ErrorTypeE.exit.loopexit
+  br i1 %i.bp, label %.backedge, label %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE8setErrorENS0_9constants9ErrorTypeE.exit.loopexit.sink.split
 
 bb.n:                                             ; preds = %.thread59
   %i.bq = load ptr, ptr %i.b, align 8, !tbaa !414 ; 2 uses
@@ -404,29 +404,29 @@ _ZN6hermes5regex11BracketNodeINS0_16UTF16RegexTraitsEE8addRangeEjj.exit: ; preds
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
   br label %select.unfold
 
-select.unfold:                                    ; preds = %bb.g, %bb.l, %_ZN6hermes5regex11BracketNodeINS0_16UTF16RegexTraitsEE8addRangeEjj.exit
+select.unfold:                                    ; preds = %_ZN6hermes5regex11BracketNodeINS0_16UTF16RegexTraitsEE8addRangeEjj.exit, %bb.l, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
-  br label %.backedge
-
-.backedge:                                        ; preds = %bb.e, %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEDs.exit5, %select.unfold
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #15
-  %7 = load ptr, ptr %i.c, align 8, !tbaa !15     ; 2 uses
-  %i.di = load ptr, ptr %i.i, align 8, !tbaa !16  ; 2 uses
-  %8 = icmp eq ptr %7, %i.di
-  br i1 %8, label %._crit_edge, label %_ZNK6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE5checkEDs.exit.i4, !llvm.loop !423
-
-_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE8setErrorENS0_9constants9ErrorTypeE.exit.loopexit.sink.split: ; preds = %bb.m, %bb.j
-  store i32 7, ptr %i.ac, align 8, !tbaa !17
-  %9 = load ptr, ptr %i.i, align 8, !tbaa !16
-  store ptr %9, ptr %i.c, align 8, !tbaa !15
   br label %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE8setErrorENS0_9constants9ErrorTypeE.exit.loopexit
 
-_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE8setErrorENS0_9constants9ErrorTypeE.exit.loopexit: ; preds = %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE8setErrorENS0_9constants9ErrorTypeE.exit.loopexit.sink.split, %bb.j, %bb.m
+.backedge:                                        ; preds = %bb.m, %bb.j
+  store i32 7, ptr %i.ac, align 8, !tbaa !17
+  %i.di = load ptr, ptr %i.i, align 8, !tbaa !16
+  store ptr %i.di, ptr %i.c, align 8, !tbaa !15
+  br label %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE8setErrorENS0_9constants9ErrorTypeE.exit.loopexit.sink.split
+
+_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE8setErrorENS0_9constants9ErrorTypeE.exit.loopexit.sink.split: ; preds = %.backedge, %bb.j, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #15
   br label %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE8setErrorENS0_9constants9ErrorTypeE.exit
 
-_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE8setErrorENS0_9constants9ErrorTypeE.exit: ; preds = %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE8setErrorENS0_9constants9ErrorTypeE.exit.loopexit, %.thread, %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEDs.exit5.thread, %bb.c, %._crit_edge
+_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE8setErrorENS0_9constants9ErrorTypeE.exit.loopexit: ; preds = %bb.e, %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEDs.exit5, %select.unfold
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #15
+  %7 = load ptr, ptr %i.c, align 8, !tbaa !15     ; 2 uses
+  %8 = load ptr, ptr %i.i, align 8, !tbaa !16     ; 2 uses
+  %9 = icmp eq ptr %7, %8
+  br i1 %9, label %._crit_edge, label %_ZNK6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE5checkEDs.exit.i4, !llvm.loop !423
+
+_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE8setErrorENS0_9constants9ErrorTypeE.exit: ; preds = %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE8setErrorENS0_9constants9ErrorTypeE.exit.loopexit.sink.split, %.thread, %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEDs.exit5.thread, %bb.c, %._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #15
   ret void

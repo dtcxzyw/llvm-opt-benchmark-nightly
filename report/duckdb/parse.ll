@@ -201,7 +201,7 @@ _ZN10duckdb_re2eqERKNS_11StringPieceES2_.exit.thread2.i.i.i87: ; preds = %_ZN10d
   %exitcond.not.i.i.i89 = icmp eq i64 %indvars.iv.next.i.i.i88, %wide.trip.count.i.i.i83
   br i1 %exitcond.not.i.i.i89, label %.loopexit, label %.lr.ph.i.i.i84, !llvm.loop !194
 
-.thread187:                                       ; preds = %bb.ah, %_ZN10duckdb_re2eqERKNS_11StringPieceES2_.exit.i.i.i90
+.thread187:                                       ; preds = %_ZN10duckdb_re2eqERKNS_11StringPieceES2_.exit.i.i.i90, %bb.ah
   %i.dp = getelementptr inbounds nuw i8, ptr %i.dc, i64 2
   store ptr %i.dp, ptr %1, align 8, !tbaa !97
   %i.dq = add i64 %i.da, -2
@@ -210,14 +210,14 @@ _ZN10duckdb_re2eqERKNS_11StringPieceES2_.exit.thread2.i.i.i87: ; preds = %_ZN10d
   %i.ds = getelementptr inbounds nuw i8, ptr %i.de, i64 8
   %i.dt = load i32, ptr %i.ds, align 8, !tbaa !216
   call fastcc void @_ZN10duckdb_re2L9AddUGroupEPNS_16CharClassBuilderEPKNS_6UGroupEiNS_6Regexp10ParseFlagsE(ptr noundef %i.dr, ptr noundef nonnull %i.de, i32 noundef %i.dt, i32 noundef %i.cy)
-  br label %.backedge
+  br label %.backedge, !llvm.loop !217
 
 .loopexit:                                        ; preds = %_ZN10duckdb_re2eqERKNS_11StringPieceES2_.exit.thread2.i.i.i87, %bb.ag, %.thread186, %bb.af
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #30
   store i32 0, ptr %5, align 4, !tbaa !46
   store i32 0, ptr %i.ah, align 4, !tbaa !177
   %i.du = call noundef zeroext i1 @_ZN10duckdb_re26Regexp10ParseState12ParseCCRangeEPNS_11StringPieceEPNS_9RuneRangeERKS2_PNS_12RegexpStatusE(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull %1, ptr noundef nonnull %5, ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef %3)
-  br i1 %i.du, label %bb.ai, label %.loopexit111.loopexit
+  br i1 %i.du, label %bb.ai, label %6
 
 bb.ai:                                            ; preds = %.loopexit
   %i.dv = load ptr, ptr %i.l, align 8, !tbaa !27
@@ -229,7 +229,12 @@ bb.ai:                                            ; preds = %.loopexit
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #30
   br label %.backedge
 
-.backedge:                                        ; preds = %bb.ai, %.thread187, %bb.ad, %_ZN10duckdb_re2L11ParseCCNameEPNS_11StringPieceENS_6Regexp10ParseFlagsEPNS_16CharClassBuilderEPNS_12RegexpStatusE.exit
+6:                                                ; preds = %.loopexit
+  call void @_ZN10duckdb_re26Regexp6DecrefEv(ptr noundef nonnull align 8 dereferenceable(40) %i.h)
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #30
+  br label %.loopexit111
+
+.backedge:                                        ; preds = %.thread187, %bb.ai, %bb.ad, %_ZN10duckdb_re2L11ParseCCNameEPNS_11StringPieceENS_6Regexp10ParseFlagsEPNS_16CharClassBuilderEPNS_12RegexpStatusE.exit
   %i.ea = load i64, ptr %i.b, align 8, !tbaa !101 ; 2 uses
   %i.eb = icmp eq i64 %i.ea, 0
   br i1 %i.eb, label %._crit_edge, label %bb.m, !llvm.loop !217
@@ -264,13 +269,8 @@ bb.al:                                            ; preds = %bb.k, %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #30
   resume { ptr, i32 } %.pn
 
-.loopexit111.loopexit:                            ; preds = %.loopexit
-  call void @_ZN10duckdb_re26Regexp6DecrefEv(ptr noundef nonnull align 8 dereferenceable(40) %i.h)
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #30
-  br label %.loopexit111
-
-.loopexit111:                                     ; preds = %.loopexit111.loopexit, %_ZN10duckdb_re2L17StringPieceToRuneEPiPNS_11StringPieceEPNS_12RegexpStatusE.exit.thread, %.loopexit107, %bb.ae, %._crit_edge, %bb.ak, %bb.c
-  %.5 = phi i1 [ false, %bb.c ], [ false, %._crit_edge ], [ true, %bb.ak ], [ false, %_ZN10duckdb_re2L17StringPieceToRuneEPiPNS_11StringPieceEPNS_12RegexpStatusE.exit.thread ], [ false, %bb.ae ], [ false, %.loopexit107 ], [ false, %.loopexit111.loopexit ]
+.loopexit111:                                     ; preds = %6, %_ZN10duckdb_re2L17StringPieceToRuneEPiPNS_11StringPieceEPNS_12RegexpStatusE.exit.thread, %.loopexit107, %bb.ae, %._crit_edge, %bb.ak, %bb.c
+  %.5 = phi i1 [ false, %bb.c ], [ false, %._crit_edge ], [ true, %bb.ak ], [ false, %_ZN10duckdb_re2L17StringPieceToRuneEPiPNS_11StringPieceEPNS_12RegexpStatusE.exit.thread ], [ false, %bb.ae ], [ false, %.loopexit107 ], [ false, %6 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #30
   ret i1 %.5
 }

@@ -201,10 +201,10 @@ declare void @check_hash_code_sanity(...) local_unnamed_addr #3
 define internal fastcc i32 @negamax(i32 noundef range(i32 -2147483648, 49) %0, i32 noundef range(i32 0, 2) %1, i32 noundef range(i32 -2147483647, -2147483648) %2, i32 noundef range(i32 -2147483647, -2147483648) %3) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 8 uses
-  %i.b = alloca i32, align 4                      ; 5 uses
+  %i.b = alloca i32, align 4                      ; 6 uses
   %4 = alloca [256 x %struct.Move], align 16      ; 9 uses
   %5 = alloca %struct.Move, align 8               ; 6 uses
-  %i.c = alloca i32, align 4                      ; 7 uses
+  %i.c = alloca i32, align 4                      ; 8 uses
   %6 = alloca %struct.Move, align 8               ; 7 uses
   store i32 %2, ptr %i.a, align 4, !tbaa !4
   store i32 %3, ptr %i.b, align 4, !tbaa !4
@@ -303,7 +303,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.l
   %i.ar = call i32 @move_generator_stage1(ptr noundef nonnull %4, i32 noundef %1) #10 ; 2 uses
-  %.not197 = icmp ne i32 %i.ar, 0                 ; 2 uses
+  %.not197 = icmp ne i32 %i.ar, 0                 ; 3 uses
   br i1 %.not197, label %bb.q, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
@@ -316,8 +316,8 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.o, %bb.p, %bb.n
-  %.199 = phi i32 [ 3, %bb.p ], [ 3, %bb.o ], [ 2, %bb.n ]
-  %.0183 = phi i32 [ 0, %bb.p ], [ %i.as, %bb.o ], [ %i.ar, %bb.n ] ; 3 uses
+  %.199 = phi i32 [ 3, %bb.p ], [ 3, %bb.o ], [ 2, %bb.n ] ; 2 uses
+  %.0183 = phi i32 [ 0, %bb.p ], [ %i.as, %bb.o ], [ %i.ar, %bb.n ] ; 5 uses
   %.sroa.04.0.copyload = load i64, ptr %6, align 8
   %.sroa.25.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 8
   %.sroa.25.0.copyload = load i32, ptr %.sroa.25.0..sroa_idx, align 8
@@ -328,35 +328,37 @@ bb.q:                                             ; preds = %bb.o, %bb.p, %bb.n
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %.loopexit
-  %.0186 = phi i32 [ 1, %bb.q ], [ %.1187, %.loopexit ] ; 2 uses
-  %.0184 = phi i32 [ 0, %bb.q ], [ %.1185201, %.loopexit ] ; 3 uses
-  %.0181 = phi i32 [ 0, %bb.q ], [ %.1182, %.loopexit ]
-  switch i32 %.0181, label %bb.t [
-    i32 0, label %bb.u
+  %.0186 = phi i32 [ 1, %bb.q ], [ %.1187223, %.loopexit ] ; 3 uses
+  %.0184 = phi i32 [ 0, %bb.q ], [ %.1185201, %.loopexit ] ; 5 uses
+  %.0181 = phi i32 [ 0, %bb.q ], [ %.1182225, %.loopexit ]
+  switch i32 %.0181, label %bb.u [
+    i32 0, label %bb.t
     i32 1, label %bb.s
   ]
 
-bb.s:                                             ; preds = %bb.r
+bb.s:                                             ; preds = %bb.r, %.loopexit.jt1
   call void @sort_moves(ptr noundef nonnull %4, i32 noundef 1, i32 noundef %.0183) #10
-  br label %bb.u
+  %7 = icmp slt i32 %.0184, %.0183
+  br i1 %7, label %.lr.ph.preheader, label %..loopexit_crit_edge
 
 bb.t:                                             ; preds = %bb.r
-  %7 = call i32 @move_generator_stage2(ptr noundef nonnull %4, i32 noundef %.0186, i32 noundef %1) #10
-  br label %bb.u
+  %8 = icmp slt i32 %.0184, %.0186
+  br i1 %8, label %.lr.ph.preheader, label %.loopexit.jt1
 
-bb.u:                                             ; preds = %bb.s, %bb.r, %bb.t
-  %.1187 = phi i32 [ %7, %bb.t ], [ %.0183, %bb.s ], [ %.0186, %bb.r ] ; 4 uses
-  %8 = phi i1 [ false, %bb.t ], [ %.not197, %bb.s ], [ true, %bb.r ]
-  %.1182 = phi i32 [ 3, %bb.t ], [ %.199, %bb.s ], [ 1, %bb.r ]
-  %i.aw = icmp slt i32 %.0184, %.1187
-  br i1 %i.aw, label %.lr.ph.preheader, label %..loopexit_crit_edge
+bb.u:                                             ; preds = %bb.r
+  %9 = call i32 @move_generator_stage2(ptr noundef nonnull %4, i32 noundef %.0186, i32 noundef %1) #10 ; 2 uses
+  %i.aw = icmp slt i32 %.0184, %9
+  br i1 %i.aw, label %.lr.ph.preheader, label %bb.ab
 
-..loopexit_crit_edge:                             ; preds = %bb.u
+..loopexit_crit_edge:                             ; preds = %bb.s
   %.pre = load i32, ptr %i.c, align 4, !tbaa !4
   %.pre213 = load i32, ptr %i.b, align 4, !tbaa !4
   br label %.loopexit
 
-.lr.ph.preheader:                                 ; preds = %bb.u
+.lr.ph.preheader:                                 ; preds = %bb.t, %bb.u, %bb.s
+  %.1182224 = phi i32 [ 1, %bb.t ], [ 3, %bb.u ], [ %.199, %bb.s ] ; 3 uses
+  %10 = phi i1 [ true, %bb.t ], [ false, %bb.u ], [ %.not197, %bb.s ] ; 3 uses
+  %.1187222 = phi i32 [ %.0186, %bb.t ], [ %9, %bb.u ], [ %.0183, %bb.s ] ; 5 uses
   %i.ax = sext i32 %.0184 to i64
   br label %.lr.ph
 
@@ -646,18 +648,27 @@ bb.z:                                             ; preds = %bb.y
 bb.aa:                                            ; preds = %bb.y, %bb.z
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond.not = icmp eq i32 %.1187, %lftr.wideiv
+  %exitcond.not = icmp eq i32 %.1187222, %lftr.wideiv
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !41
 
 .loopexit:                                        ; preds = %bb.aa, %..loopexit_crit_edge, %bb.w, %bb.x
-  %i.jl = phi i32 [ %i.iu, %bb.x ], [ %i.iu, %bb.w ], [ %.pre213, %..loopexit_crit_edge ], [ %i.iu, %bb.aa ]
-  %i.jm = phi i32 [ %i.it, %bb.x ], [ %i.it, %bb.w ], [ %.pre, %..loopexit_crit_edge ], [ %i.it, %bb.aa ]
-  %.1185201 = phi i32 [ %i.bc, %bb.x ], [ %i.bc, %bb.w ], [ %.0184, %..loopexit_crit_edge ], [ %.1187, %bb.aa ]
+  %.1182225 = phi i32 [ %.199, %..loopexit_crit_edge ], [ %.1182224, %bb.x ], [ %.1182224, %bb.w ], [ %.1182224, %bb.aa ]
+  %11 = phi i1 [ %.not197, %..loopexit_crit_edge ], [ %10, %bb.x ], [ %10, %bb.w ], [ %10, %bb.aa ]
+  %.1187223 = phi i32 [ %.0183, %..loopexit_crit_edge ], [ %.1187222, %bb.x ], [ %.1187222, %bb.w ], [ %.1187222, %bb.aa ]
+  %i.jl = phi i32 [ %.pre213, %..loopexit_crit_edge ], [ %i.iu, %bb.x ], [ %i.iu, %bb.w ], [ %i.iu, %bb.aa ]
+  %i.jm = phi i32 [ %.pre, %..loopexit_crit_edge ], [ %i.it, %bb.x ], [ %i.it, %bb.w ], [ %i.it, %bb.aa ]
+  %.1185201 = phi i32 [ %.0184, %..loopexit_crit_edge ], [ %i.bc, %bb.x ], [ %i.bc, %bb.w ], [ %.1187222, %bb.aa ]
   %i.jn = icmp slt i32 %i.jm, %i.jl
-  %or.cond = and i1 %8, %i.jn
+  %or.cond = and i1 %11, %i.jn
   br i1 %or.cond, label %bb.r, label %bb.ab, !llvm.loop !42
 
-bb.ab:                                            ; preds = %.loopexit
+.loopexit.jt1:                                    ; preds = %bb.t
+  %.pre.jt1 = load i32, ptr %i.c, align 4, !tbaa !4
+  %.pre213.jt1 = load i32, ptr %i.b, align 4, !tbaa !4
+  %12 = icmp slt i32 %.pre.jt1, %.pre213.jt1
+  br i1 %12, label %bb.s, label %bb.ab, !llvm.loop !42
+
+bb.ab:                                            ; preds = %.loopexit.jt1, %.loopexit, %bb.u
   %i.jo = load i32, ptr %i.a, align 4, !tbaa !4
   %i.jp = load i64, ptr @g_num_nodes, align 8, !tbaa !16
   %i.jq = and i64 %i.e, 4294967295

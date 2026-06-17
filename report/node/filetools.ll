@@ -23,8 +23,8 @@ bb.a:
   %4 = alloca %struct.stat, align 8               ; 4 uses
   %5 = alloca %struct.stat, align 8               ; 5 uses
   %6 = alloca %struct.stat, align 8               ; 5 uses
-  %i.a = alloca i32, align 4                      ; 7 uses
-  %7 = alloca %"class.icu_78::CharString", align 8 ; 14 uses
+  %i.a = alloca i32, align 4                      ; 9 uses
+  %7 = alloca %"class.icu_78::CharString", align 8 ; 18 uses
   %i.b = icmp eq ptr %0, null
   %i.c = icmp eq ptr %1, null
   %or.cond = or i1 %i.b, %i.c
@@ -47,7 +47,7 @@ bb.c:                                             ; preds = %bb.b
 sub_0.lr.ph:                                      ; preds = %.preheader
   %i.g = getelementptr inbounds nuw i8, ptr %7, i64 13 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %i.i = getelementptr inbounds nuw i8, ptr %7, i64 12 ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %7, i64 12 ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %7, i64 56
   %i.k = getelementptr inbounds nuw i8, ptr %5, i64 88
   %i.l = getelementptr inbounds nuw i8, ptr %6, i64 88
@@ -55,7 +55,6 @@ sub_0.lr.ph:                                      ; preds = %.preheader
 
 sub_0:                                            ; preds = %sub_0.lr.ph, %bb.l
   %i.m = phi ptr [ %i.f, %sub_0.lr.ph ], [ %i.au, %bb.l ] ; 4 uses
-  %.03581 = phi i8 [ 1, %sub_0.lr.ph ], [ %.439, %bb.l ] ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 19 ; 2 uses
   %i.o = load i8, ptr %i.n, align 1
   %.not83 = icmp eq i8 %i.o, 46
@@ -93,13 +92,7 @@ sub_178:                                          ; preds = %.tail
   %i.z = call noundef nonnull align 8 dereferenceable(60) ptr @_ZN6icu_7810CharString6appendEPKciR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(60) %7, ptr noundef nonnull %i.n, i32 noundef -1, ptr noundef nonnull align 4 dereferenceable(4) %i.a) #7 ; 0 uses
   %i.aa = load i32, ptr %i.a, align 4             ; 2 uses
   %i.ab = icmp slt i32 %i.aa, 1
-  br i1 %i.ab, label %bb.d, label %8
-
-8:                                                ; preds = %.tail76.thread
-  %9 = load ptr, ptr @stderr, align 8
-  %10 = call ptr @u_errorName_78(i32 noundef %i.aa) #7
-  %11 = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %9, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.4, i32 noundef 66, ptr noundef %10) #8 ; 0 uses
-  br label %bb.j
+  br i1 %i.ab, label %bb.d, label %bb.j
 
 bb.d:                                             ; preds = %.tail76.thread
   %i.ac = load ptr, ptr %7, align 8
@@ -110,10 +103,9 @@ bb.d:                                             ; preds = %.tail76.thread
 bb.e:                                             ; preds = %bb.d
   %i.ae = call i32 @closedir(ptr noundef nonnull %i.ad) ; 0 uses
   %i.af = load ptr, ptr %7, align 8
-  %i.ag = call signext i8 @isFileModTimeLater(ptr noundef %0, ptr noundef %i.af, i8 noundef signext 1) ; 2 uses
+  %i.ag = call signext i8 @isFileModTimeLater(ptr noundef %0, ptr noundef %i.af, i8 noundef signext 1)
   %.not61.not = icmp eq i8 %i.ag, 0
-  %spec.select74 = select i1 %.not61.not, i32 3, i32 0
-  br label %bb.j
+  br i1 %.not61.not, label %.loopexit, label %spec.select74.si.unfold.false.jt0
 
 bb.f:                                             ; preds = %bb.d
   %i.ah = load ptr, ptr %7, align 8               ; 2 uses
@@ -131,59 +123,86 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %i.am = load i64, ptr %i.k, align 8
   %i.an = load i64, ptr %i.l, align 8
-  %i.ao = call double @difftime(i64 noundef %i.am, i64 noundef %i.an) #9
+  %i.ao = call double @difftime(i64 noundef %i.am, i64 noundef %i.an) #8
   %i.ap = fcmp olt double %i.ao, 0.000000e+00
   br i1 %i.ap, label %_ZL23whichFileModTimeIsLaterPKcS0_.exit.thread, label %_ZL23whichFileModTimeIsLaterPKcS0_.exit
 
 _ZL23whichFileModTimeIsLaterPKcS0_.exit:          ; preds = %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #7
-  br label %bb.j
+  br label %spec.select74.si.unfold.false.jt0
 
 bb.i:                                             ; preds = %bb.g, %bb.f
   %i.aq = load ptr, ptr @stderr, align 8
-  %i.ar = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.aq, ptr noundef nonnull @.str.6, ptr noundef nonnull %0, ptr noundef %i.ah) #8 ; 0 uses
+  %i.ar = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.aq, ptr noundef nonnull @.str.6, ptr noundef nonnull %0, ptr noundef %i.ah) #9 ; 0 uses
   br label %_ZL23whichFileModTimeIsLaterPKcS0_.exit.thread
 
-_ZL23whichFileModTimeIsLaterPKcS0_.exit.thread:   ; preds = %bb.i, %bb.h
+_ZL23whichFileModTimeIsLaterPKcS0_.exit.thread:   ; preds = %bb.h, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #7
-  br label %bb.j
+  br label %.loopexit
 
-bb.j:                                             ; preds = %bb.e, %_ZL23whichFileModTimeIsLaterPKcS0_.exit, %_ZL23whichFileModTimeIsLaterPKcS0_.exit.thread, %8
-  %.143 = phi i32 [ 1, %8 ], [ %spec.select74, %bb.e ], [ 3, %_ZL23whichFileModTimeIsLaterPKcS0_.exit.thread ], [ 0, %_ZL23whichFileModTimeIsLaterPKcS0_.exit ]
-  %.338 = phi i8 [ %.03581, %8 ], [ %i.ag, %bb.e ], [ 0, %_ZL23whichFileModTimeIsLaterPKcS0_.exit.thread ], [ %.03581, %_ZL23whichFileModTimeIsLaterPKcS0_.exit ] ; 2 uses
+spec.select74.si.unfold.false.jt0:                ; preds = %bb.e, %_ZL23whichFileModTimeIsLaterPKcS0_.exit
+  %8 = load i8, ptr %i.i, align 4
+  %.not.i.i.i.jt0 = icmp eq i8 %8, 0
+  br i1 %.not.i.i.i.jt0, label %_ZN6icu_7810CharStringD2Ev.exit.jt0, label %13
+
+.loopexit:                                        ; preds = %bb.e, %_ZL23whichFileModTimeIsLaterPKcS0_.exit.thread
+  %9 = load i8, ptr %i.i, align 4
+  %.not.i.i.i.jt3 = icmp eq i8 %9, 0
+  br i1 %.not.i.i.i.jt3, label %_ZN6icu_7810CharStringD2Ev.exit.jt3, label %15
+
+bb.j:                                             ; preds = %.tail76.thread
+  %10 = load ptr, ptr @stderr, align 8
+  %11 = call ptr @u_errorName_78(i32 noundef %i.aa) #7
+  %12 = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %10, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.4, i32 noundef 66, ptr noundef %11) #9 ; 0 uses
   %i.as = load i8, ptr %i.i, align 4
   %.not.i.i.i = icmp eq i8 %i.as, 0
   br i1 %.not.i.i.i, label %_ZN6icu_7810CharStringD2Ev.exit, label %bb.k
+
+13:                                               ; preds = %spec.select74.si.unfold.false.jt0
+  %14 = load ptr, ptr %7, align 8
+  call void @uprv_free_78(ptr noundef %14) #7
+  br label %_ZN6icu_7810CharStringD2Ev.exit.jt0
+
+15:                                               ; preds = %.loopexit
+  %16 = load ptr, ptr %7, align 8
+  call void @uprv_free_78(ptr noundef %16) #7
+  br label %_ZN6icu_7810CharStringD2Ev.exit.jt3
 
 bb.k:                                             ; preds = %bb.j
   %i.at = load ptr, ptr %7, align 8
   call void @uprv_free_78(ptr noundef %i.at) #7
   br label %_ZN6icu_7810CharStringD2Ev.exit
 
-_ZN6icu_7810CharStringD2Ev.exit:                  ; preds = %bb.j, %bb.k
+_ZN6icu_7810CharStringD2Ev.exit.jt0:              ; preds = %13, %spec.select74.si.unfold.false.jt0
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
-  switch i32 %.143, label %.loopexit.a [
-    i32 0, label %bb.l
-    i32 3, label %.thread
-  ]
+  br label %bb.l
 
-bb.l:                                             ; preds = %_ZN6icu_7810CharStringD2Ev.exit, %.tail76, %.tail
-  %.439 = phi i8 [ %.338, %_ZN6icu_7810CharStringD2Ev.exit ], [ %.03581, %.tail76 ], [ %.03581, %.tail ] ; 2 uses
+_ZN6icu_7810CharStringD2Ev.exit.jt3:              ; preds = %15, %.loopexit
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
+  br label %.thread
+
+_ZN6icu_7810CharStringD2Ev.exit:                  ; preds = %bb.k, %bb.j
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
+  br label %.loopexit.a
+
+bb.l:                                             ; preds = %_ZN6icu_7810CharStringD2Ev.exit.jt0, %.tail76, %.tail
   %i.au = call ptr @readdir64(ptr noundef nonnull %i.e) #7 ; 2 uses
   %.not54 = icmp eq ptr %i.au, null
   br i1 %.not54, label %.thread, label %sub_0, !llvm.loop !5
 
-.thread:                                          ; preds = %_ZN6icu_7810CharStringD2Ev.exit, %bb.l, %.preheader
-  %.540 = phi i8 [ 1, %.preheader ], [ %.439, %bb.l ], [ %.338, %_ZN6icu_7810CharStringD2Ev.exit ]
+.thread:                                          ; preds = %bb.l, %_ZN6icu_7810CharStringD2Ev.exit.jt3, %.preheader
+  %.540 = phi i8 [ 1, %.preheader ], [ 0, %_ZN6icu_7810CharStringD2Ev.exit.jt3 ], [ 1, %bb.l ]
   %i.av = call i32 @closedir(ptr noundef nonnull %i.e) ; 0 uses
   br label %.loopexit.a
 
 .critedge:                                        ; preds = %bb.c
   %i.aw = load ptr, ptr @stderr, align 8
-  %i.ax = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.aw, ptr noundef nonnull @.str.5, ptr noundef nonnull %1) #8 ; 0 uses
+  %i.ax = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.aw, ptr noundef nonnull @.str.5, ptr noundef nonnull %1) #9 ; 0 uses
   br label %.loopexit.a
 
 bb.m:                                             ; preds = %bb.b
@@ -208,7 +227,7 @@ bb.p:                                             ; preds = %bb.o
   %i.be = load i64, ptr %i.bd, align 8
   %i.bf = getelementptr inbounds nuw i8, ptr %4, i64 88
   %i.bg = load i64, ptr %i.bf, align 8
-  %i.bh = tail call double @difftime(i64 noundef %i.be, i64 noundef %i.bg) #9
+  %i.bh = tail call double @difftime(i64 noundef %i.be, i64 noundef %i.bg) #8
   %i.bi = fcmp olt double %i.bh, 0.000000e+00
   br i1 %i.bi, label %_ZL23whichFileModTimeIsLaterPKcS0_.exit64, label %bb.q
 
@@ -217,7 +236,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.o, %bb.n
   %i.bj = load ptr, ptr @stderr, align 8
-  %i.bk = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.bj, ptr noundef nonnull @.str.6, ptr noundef nonnull %0, ptr noundef nonnull %1) #8 ; 0 uses
+  %i.bk = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.bj, ptr noundef nonnull @.str.6, ptr noundef nonnull %0, ptr noundef nonnull %1) #9 ; 0 uses
   br label %_ZL23whichFileModTimeIsLaterPKcS0_.exit64
 
 _ZL23whichFileModTimeIsLaterPKcS0_.exit64:        ; preds = %bb.q, %bb.p, %bb.r
@@ -366,8 +385,8 @@ attributes #4 = { mustprogress nofree norecurse nosync nounwind memory(argmem: r
 attributes #5 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { mustprogress nofree nosync nounwind willreturn memory(none) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { nounwind }
-attributes #8 = { cold nounwind }
-attributes #9 = { nounwind willreturn memory(none) }
+attributes #8 = { nounwind willreturn memory(none) }
+attributes #9 = { cold nounwind }
 attributes #10 = { nounwind willreturn memory(read) }
 
 !llvm.module.flags = !{!0, !1, !2, !3}

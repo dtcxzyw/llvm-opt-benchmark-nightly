@@ -16,7 +16,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.5 = private unnamed_addr constant [20 x i8] c"group name is empty\00", align 1
 @.str.6 = private unnamed_addr constant [23 x i8] c"undefined group option\00", align 1
 @.str.7 = private unnamed_addr constant [17 x i8] c"empty char-class\00", align 1
-@switch.table.pm_regexp_parse_quantifier = private unnamed_addr constant [14 x i8] [i8 3, i8 poison, i8 poison, i8 poison, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1], align 4
 
 ; Function Attrs: nounwind sspstrong uwtable
 define hidden void @pm_regexp_parse(ptr noundef %0, ptr noundef %1, i64 noundef %2, i1 noundef zeroext %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef %7) local_unnamed_addr #0 {
@@ -419,34 +418,56 @@ bb.bt:                                            ; preds = %pm_regexp_char_find
 ; Function Attrs: nofree norecurse nosync nounwind sspstrong memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @pm_regexp_parse_quantifier(ptr nofree noundef nonnull captures(none) %0) unnamed_addr #2 {
 bb.a:
-  %i.a = getelementptr i8, ptr %0, i64 16         ; 4 uses
+  %i.a = getelementptr i8, ptr %0, i64 16         ; 8 uses
   %i.b = getelementptr i8, ptr %0, i64 24
-  %.val6 = load ptr, ptr %i.b, align 8, !tbaa !19 ; 4 uses
-  %.val617 = ptrtoint ptr %.val6 to i64
+  %.val6 = load ptr, ptr %i.b, align 8, !tbaa !19 ; 7 uses
+  %.val617 = ptrtoint ptr %.val6 to i64           ; 2 uses
   %.promoted = load ptr, ptr %i.a, align 8, !tbaa !18 ; 2 uses
   %.not11 = icmp ult ptr %.promoted, %.val6
   br i1 %.not11, label %.lr.ph, label %._crit_edge
 
-.lr.ph:                                           ; preds = %bb.a, %pm_regexp_parse_range_quantifier.exit.a
-  %storemerge1012 = phi ptr [ %storemerge, %pm_regexp_parse_range_quantifier.exit.a ], [ %.promoted, %bb.a ] ; 5 uses
+.lr.ph:                                           ; preds = %bb.a, %pm_regexp_parse_range_quantifier.exit
+  %storemerge1012 = phi ptr [ %12, %pm_regexp_parse_range_quantifier.exit ], [ %.promoted, %bb.a ] ; 7 uses
   %storemerge101218 = ptrtoint ptr %storemerge1012 to i64
   %i.c = load i8, ptr %storemerge1012, align 1, !tbaa !48
   switch i8 %i.c, label %._crit_edge [
     i8 42, label %bb.b
     i8 43, label %bb.b
     i8 63, label %bb.b
-    i8 123, label %bb.c
+    i8 123, label %1
   ]
 
 bb.b:                                             ; preds = %.lr.ph, %.lr.ph, %.lr.ph
   %i.d = getelementptr i8, ptr %storemerge1012, i64 1
-  br label %pm_regexp_parse_range_quantifier.exit.a
+  br label %pm_regexp_parse_range_quantifier.exit.sink.split
 
-bb.c:                                             ; preds = %.lr.ph
-  %i.e = getelementptr i8, ptr %storemerge1012, i64 1 ; 10 uses
+1:                                                ; preds = %.lr.ph
+  %2 = getelementptr i8, ptr %storemerge1012, i64 1 ; 14 uses
+  store ptr %2, ptr %i.a, align 8, !tbaa !18
+  %.not35.i = icmp ult ptr %2, %.val6
+  br i1 %.not35.i, label %.lr.ph.i, label %pm_regexp_parse_range_quantifier.exit.sink.split
+
+.lr.ph.i:                                         ; preds = %1
+  %3 = load i8, ptr %2, align 1, !tbaa !48
+  switch i8 %3, label %pm_regexp_parse_range_quantifier.exit [
+    i8 48, label %bb.c
+    i8 49, label %bb.c
+    i8 50, label %bb.c
+    i8 51, label %bb.c
+    i8 52, label %bb.c
+    i8 53, label %bb.c
+    i8 54, label %bb.c
+    i8 55, label %bb.c
+    i8 56, label %bb.c
+    i8 57, label %bb.c
+    i8 44, label %pm_regexp_parse_range_quantifier.exit.a
+  ]
+
+bb.c:                                             ; preds = %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i
+  %i.e = getelementptr i8, ptr %storemerge1012, i64 2 ; 3 uses
   store ptr %i.e, ptr %i.a, align 8, !tbaa !18
   %.not35.i.a = icmp ult ptr %i.e, %.val6
-  br i1 %.not35.i.a, label %.lr.ph.i.preheader, label %pm_regexp_parse_range_quantifier.exit.a
+  br i1 %.not35.i.a, label %.lr.ph.i.preheader, label %pm_regexp_parse_range_quantifier.exit.sink.split
 
 .lr.ph.i.preheader:                               ; preds = %bb.c
   %scevgep = getelementptr i8, ptr %storemerge1012, i64 %.val617
@@ -454,52 +475,60 @@ bb.c:                                             ; preds = %.lr.ph
   %scevgep19 = getelementptr i8, ptr %scevgep, i64 %i.f
   br label %.lr.ph.i.a
 
-.lr.ph.i.a:                                       ; preds = %.lr.ph.i.preheader, %bb.h
-  %.036.i = phi i32 [ %.1.i, %bb.h ], [ 0, %.lr.ph.i.preheader ]
-  %i.g = phi ptr [ %i.k, %bb.h ], [ %i.e, %.lr.ph.i.preheader ] ; 4 uses
-  %i.h = load i8, ptr %i.g, align 1, !tbaa !48    ; 4 uses
-  switch i32 %.036.i, label %default.unreachable [
-    i32 0, label %bb.d
-    i32 1, label %2
-    i32 3, label %bb.f
-    i32 2, label %4
-  ]
-
-bb.d:                                             ; preds = %.lr.ph.i.a
-  %switch.tableidx = add i8 %i.h, -44             ; 3 uses
-  %1 = icmp ult i8 %switch.tableidx, 14
-  br i1 %1, label %switch.hole_check, label %pm_regexp_parse_range_quantifier.exit.a
-
-2:                                                ; preds = %.lr.ph.i.a
-  switch i8 %i.h, label %pm_regexp_parse_range_quantifier.exit.a [
-    i8 48, label %bb.h
-    i8 49, label %bb.h
-    i8 50, label %bb.h
-    i8 51, label %bb.h
-    i8 52, label %bb.h
-    i8 53, label %bb.h
-    i8 54, label %bb.h
-    i8 55, label %bb.h
-    i8 56, label %bb.h
-    i8 57, label %bb.h
-    i8 44, label %3
+.lr.ph.i.a:                                       ; preds = %.lr.ph.i.preheader, %bb.d
+  %4 = phi ptr [ %5, %bb.d ], [ %i.e, %.lr.ph.i.preheader ] ; 4 uses
+  %i.g = phi ptr [ %4, %bb.d ], [ %2, %.lr.ph.i.preheader ]
+  %i.h = load i8, ptr %4, align 1, !tbaa !48
+  switch i8 %i.h, label %pm_regexp_parse_range_quantifier.exit.sink.split [
+    i8 48, label %bb.d
+    i8 49, label %bb.d
+    i8 50, label %bb.d
+    i8 51, label %bb.d
+    i8 52, label %bb.d
+    i8 53, label %bb.d
+    i8 54, label %bb.d
+    i8 55, label %bb.d
+    i8 56, label %bb.d
+    i8 57, label %bb.d
+    i8 44, label %bb.g
     i8 125, label %bb.e
   ]
 
-3:                                                ; preds = %2
-  br label %bb.h
+bb.d:                                             ; preds = %.lr.ph.i.a, %.lr.ph.i.a, %.lr.ph.i.a, %.lr.ph.i.a, %.lr.ph.i.a, %.lr.ph.i.a, %.lr.ph.i.a, %.lr.ph.i.a, %.lr.ph.i.a, %.lr.ph.i.a
+  %5 = getelementptr i8, ptr %4, i64 1            ; 3 uses
+  store ptr %5, ptr %i.a, align 8, !tbaa !18
+  %exitcond.not = icmp eq ptr %5, %scevgep19
+  br i1 %exitcond.not, label %pm_regexp_parse_range_quantifier.exit.sink.split, label %.lr.ph.i.a
 
-bb.e:                                             ; preds = %2
-  %i.i = getelementptr i8, ptr %i.g, i64 1
-  br label %pm_regexp_parse_range_quantifier.exit.a
+bb.e:                                             ; preds = %.lr.ph.i.a
+  %i.i = getelementptr i8, ptr %i.g, i64 2
+  br label %pm_regexp_parse_range_quantifier.exit.sink.split
 
-bb.f:                                             ; preds = %.lr.ph.i.a
-  %.off.i = add i8 %i.h, -48
+bb.f:                                             ; preds = %pm_regexp_parse_range_quantifier.exit.a
+  %6 = load i8, ptr %11, align 1, !tbaa !48
+  %.off.i = add i8 %6, -48
   %switch.i = icmp ult i8 %.off.i, 10
-  br i1 %switch.i, label %bb.h, label %pm_regexp_parse_range_quantifier.exit.a
+  br i1 %switch.i, label %bb.g, label %pm_regexp_parse_range_quantifier.exit.sink.split
 
-4:                                                ; preds = %.lr.ph.i.a
-  switch i8 %i.h, label %pm_regexp_parse_range_quantifier.exit.a [
+bb.g:                                             ; preds = %.lr.ph.i.a, %bb.f
+  %.lcssa51.sink.i = phi ptr [ %11, %bb.f ], [ %4, %.lr.ph.i.a ] ; 4 uses
+  %i.j = getelementptr i8, ptr %.lcssa51.sink.i, i64 1 ; 3 uses
+  store ptr %i.j, ptr %i.a, align 8, !tbaa !18
+  %.not.jt2.i15 = icmp ult ptr %i.j, %.val6
+  br i1 %.not.jt2.i15, label %switch.hole_check, label %pm_regexp_parse_range_quantifier.exit.sink.split
+
+switch.hole_check:                                ; preds = %bb.g
+  %.lcssa51.sink.i28 = ptrtoint ptr %.lcssa51.sink.i to i64
+  %scevgep27 = getelementptr i8, ptr %.lcssa51.sink.i, i64 %.val617
+  %7 = sub i64 0, %.lcssa51.sink.i28
+  %scevgep29 = getelementptr i8, ptr %scevgep27, i64 %7
+  br label %switch.lookup
+
+switch.lookup:                                    ; preds = %switch.hole_check, %bb.h
+  %8 = phi ptr [ %i.k, %bb.h ], [ %i.j, %switch.hole_check ] ; 3 uses
+  %.lcssa51.sink.sink.i16 = phi ptr [ %8, %bb.h ], [ %.lcssa51.sink.i, %switch.hole_check ]
+  %switch.load = load i8, ptr %8, align 1, !tbaa !48
+  switch i8 %switch.load, label %pm_regexp_parse_range_quantifier.exit.sink.split [
     i8 48, label %bb.h
     i8 49, label %bb.h
     i8 50, label %bb.h
@@ -510,43 +539,36 @@ bb.f:                                             ; preds = %.lr.ph.i.a
     i8 55, label %bb.h
     i8 56, label %bb.h
     i8 57, label %bb.h
-    i8 125, label %bb.g
+    i8 125, label %9
   ]
 
-bb.g:                                             ; preds = %4
-  %i.j = getelementptr i8, ptr %i.g, i64 1
-  br label %pm_regexp_parse_range_quantifier.exit.a
-
-default.unreachable:                              ; preds = %.lr.ph.i.a
-  unreachable
-
-switch.hole_check:                                ; preds = %bb.d
-  %switch.maskindex = zext nneg i8 %switch.tableidx to i16
-  %switch.shifted = lshr i16 16369, %switch.maskindex
-  %switch.lobit = trunc i16 %switch.shifted to i1
-  br i1 %switch.lobit, label %switch.lookup, label %pm_regexp_parse_range_quantifier.exit.a
-
-switch.lookup:                                    ; preds = %switch.hole_check
-  %5 = zext nneg i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.pm_regexp_parse_quantifier, i64 %5
-  %switch.load = load i8, ptr %switch.gep, align 1
-  %switch.ext = zext i8 %switch.load to i32
-  br label %bb.h
-
-bb.h:                                             ; preds = %switch.lookup, %4, %4, %4, %4, %4, %4, %4, %4, %4, %4, %bb.f, %3, %2, %2, %2, %2, %2, %2, %2, %2, %2, %2
-  %.1.i = phi i32 [ 2, %bb.f ], [ 1, %2 ], [ 2, %4 ], [ %switch.ext, %switch.lookup ], [ 2, %3 ], [ 2, %4 ], [ 2, %4 ], [ 2, %4 ], [ 2, %4 ], [ 2, %4 ], [ 2, %4 ], [ 2, %4 ], [ 2, %4 ], [ 2, %4 ], [ 1, %2 ], [ 1, %2 ], [ 1, %2 ], [ 1, %2 ], [ 1, %2 ], [ 1, %2 ], [ 1, %2 ], [ 1, %2 ], [ 1, %2 ]
-  %i.k = getelementptr i8, ptr %i.g, i64 1        ; 3 uses
+bb.h:                                             ; preds = %switch.lookup, %switch.lookup, %switch.lookup, %switch.lookup, %switch.lookup, %switch.lookup, %switch.lookup, %switch.lookup, %switch.lookup, %switch.lookup
+  %i.k = getelementptr i8, ptr %8, i64 1          ; 3 uses
   store ptr %i.k, ptr %i.a, align 8, !tbaa !18
-  %exitcond.not.a = icmp eq ptr %i.k, %scevgep19
-  br i1 %exitcond.not.a, label %pm_regexp_parse_range_quantifier.exit.a, label %.lr.ph.i.a
+  %exitcond.not.a = icmp eq ptr %i.k, %scevgep29
+  br i1 %exitcond.not.a, label %pm_regexp_parse_range_quantifier.exit.sink.split, label %switch.lookup
 
-pm_regexp_parse_range_quantifier.exit.a:          ; preds = %bb.h, %4, %bb.f, %2, %bb.d, %switch.hole_check, %bb.g, %bb.e, %bb.c, %bb.b
-  %storemerge = phi ptr [ %i.d, %bb.b ], [ %i.e, %bb.c ], [ %i.j, %bb.g ], [ %i.i, %bb.e ], [ %i.e, %switch.hole_check ], [ %i.e, %bb.d ], [ %i.e, %2 ], [ %i.e, %bb.f ], [ %i.e, %4 ], [ %i.e, %bb.h ] ; 3 uses
-  store ptr %storemerge, ptr %i.a, align 8, !tbaa !18
-  %.not.a = icmp ult ptr %storemerge, %.val6
-  br i1 %.not.a, label %.lr.ph, label %._crit_edge, !llvm.loop !65
+9:                                                ; preds = %switch.lookup
+  %10 = getelementptr i8, ptr %.lcssa51.sink.sink.i16, i64 2
+  br label %pm_regexp_parse_range_quantifier.exit.sink.split
 
-._crit_edge:                                      ; preds = %.lr.ph, %pm_regexp_parse_range_quantifier.exit.a, %bb.a
+pm_regexp_parse_range_quantifier.exit.a:          ; preds = %.lr.ph.i
+  %11 = getelementptr i8, ptr %storemerge1012, i64 2 ; 4 uses
+  store ptr %11, ptr %i.a, align 8, !tbaa !18
+  %.not.a = icmp ult ptr %11, %.val6
+  br i1 %.not.a, label %bb.f, label %pm_regexp_parse_range_quantifier.exit.sink.split
+
+pm_regexp_parse_range_quantifier.exit.sink.split: ; preds = %bb.d, %.lr.ph.i.a, %bb.h, %switch.lookup, %1, %bb.e, %bb.f, %9, %pm_regexp_parse_range_quantifier.exit.a, %bb.g, %bb.c, %bb.b
+  %.sink.i.sink = phi ptr [ %i.d, %bb.b ], [ %2, %bb.f ], [ %10, %9 ], [ %2, %pm_regexp_parse_range_quantifier.exit.a ], [ %2, %1 ], [ %i.i, %bb.e ], [ %2, %bb.g ], [ %2, %bb.h ], [ %2, %bb.c ], [ %2, %switch.lookup ], [ %2, %.lr.ph.i.a ], [ %2, %bb.d ] ; 2 uses
+  store ptr %.sink.i.sink, ptr %i.a, align 8, !tbaa !18
+  br label %pm_regexp_parse_range_quantifier.exit
+
+pm_regexp_parse_range_quantifier.exit:            ; preds = %pm_regexp_parse_range_quantifier.exit.sink.split, %.lr.ph.i
+  %12 = phi ptr [ %2, %.lr.ph.i ], [ %.sink.i.sink, %pm_regexp_parse_range_quantifier.exit.sink.split ] ; 2 uses
+  %.not = icmp ult ptr %12, %.val6
+  br i1 %.not, label %.lr.ph, label %._crit_edge, !llvm.loop !65
+
+._crit_edge:                                      ; preds = %.lr.ph, %pm_regexp_parse_range_quantifier.exit, %bb.a
   ret void
 }
 

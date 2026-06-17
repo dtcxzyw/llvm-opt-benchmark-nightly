@@ -201,9 +201,9 @@ bb.a:
   %5 = alloca %"class.icu_78::UnicodeString", align 8 ; 6 uses
   %6 = alloca %"class.icu_78::UnicodeSet", align 8 ; 6 uses
   %7 = alloca %"class.icu_78::UnicodeSetIterator", align 8 ; 9 uses
-  %8 = alloca %"class.icu_78::Hashtable", align 8 ; 10 uses
-  %9 = alloca %"class.icu_78::UnicodeString", align 8 ; 6 uses
-  %i.a = alloca i32, align 4                      ; 5 uses
+  %8 = alloca %"class.icu_78::Hashtable", align 8 ; 12 uses
+  %9 = alloca %"class.icu_78::UnicodeString", align 8 ; 8 uses
+  %i.a = alloca i32, align 4                      ; 6 uses
   %10 = alloca %"class.icu_78::UnicodeString", align 8 ; 9 uses
   %i.b = load i32, ptr %4, align 4
   %i.c = icmp slt i32 %i.b, 1
@@ -312,12 +312,12 @@ bb.o:                                             ; preds = %bb.n
   %.not7493 = icmp eq i8 %i.aq, 0
   br i1 %.not7493, label %.thread88, label %.lr.ph95
 
-.thread88:                                        ; preds = %.backedge, %bb.o
+.thread88:                                        ; preds = %bb.aa, %bb.o
   call void @_ZN6icu_7818UnicodeSetIteratorD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %7) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #10
   br label %bb.ab
 
-.lr.ph95:                                         ; preds = %bb.o, %.backedge
+.lr.ph95:                                         ; preds = %bb.o, %bb.aa
   %i.ar = load i32, ptr %i.k, align 8             ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #10
   store ptr null, ptr %8, align 8
@@ -346,8 +346,7 @@ _ZN6icu_789HashtableC2ER10UErrorCode.exit:        ; preds = %.lr.ph95, %bb.p, %b
 bb.r:                                             ; preds = %_ZN6icu_789HashtableC2ER10UErrorCode.exit
   %i.bc = load i32, ptr %4, align 4
   %i.bd = icmp slt i32 %i.bc, 1
-  %. = select i1 %i.bd, i32 7, i32 1
-  br label %bb.y, !llvm.loop !22
+  br i1 %i.bd, label %bb.y, label %..si.unfold.false.jt1
 
 bb.s:                                             ; preds = %_ZN6icu_789HashtableC2ER10UErrorCode.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #10
@@ -401,51 +400,59 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %10) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #10
   %.not75 = icmp eq ptr %i.bx, null
-  br i1 %.not75, label %._crit_edge, label %.lr.ph, !llvm.loop !23
+  br i1 %.not75, label %._crit_edge, label %.lr.ph, !llvm.loop !22
 
 ._crit_edge:                                      ; preds = %bb.v, %bb.s
   %i.by = load ptr, ptr %1, align 8
   %i.bz = call noundef i32 @uhash_count_78(ptr noundef %i.by) #10
   %i.ca = icmp sgt i32 %i.bz, 4096
-  br i1 %i.ca, label %bb.w, label %bb.x
+  br i1 %i.ca, label %bb.w, label %11
 
 bb.w:                                             ; preds = %._crit_edge
   store i32 16, ptr %4, align 4
   br label %bb.x
 
-bb.x:                                             ; preds = %.thread85, %bb.w, %._crit_edge
-  %.262 = phi i32 [ 1, %.thread85 ], [ 1, %bb.w ], [ 0, %._crit_edge ]
+11:                                               ; preds = %._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %9) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #10
   br label %bb.y
 
-bb.y:                                             ; preds = %bb.r, %bb.x
-  %.363 = phi i32 [ %., %bb.r ], [ %.262, %bb.x ]
+bb.x:                                             ; preds = %bb.w, %.thread85
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %9) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %9) #10
+  br label %..si.unfold.false.jt1
+
+..si.unfold.false.jt1:                            ; preds = %bb.r, %bb.x
+  %12 = load ptr, ptr %8, align 8                 ; 2 uses
+  %.not.i.jt1 = icmp eq ptr %12, null
+  br i1 %.not.i.jt1, label %.backedge, label %bb.z
+
+bb.y:                                             ; preds = %11, %bb.r
   %i.cb = load ptr, ptr %8, align 8               ; 2 uses
   %.not.i = icmp eq ptr %i.cb, null
-  br i1 %.not.i, label %_ZN6icu_789HashtableD2Ev.exit, label %bb.z
+  br i1 %.not.i, label %bb.aa, label %_ZN6icu_789HashtableD2Ev.exit
 
-bb.z:                                             ; preds = %bb.y
+bb.z:                                             ; preds = %..si.unfold.false.jt1
+  call void @uhash_close_78(ptr noundef nonnull %12) #10
+  br label %.backedge
+
+_ZN6icu_789HashtableD2Ev.exit:                    ; preds = %bb.y
   call void @uhash_close_78(ptr noundef nonnull %i.cb) #10
-  br label %_ZN6icu_789HashtableD2Ev.exit
+  br label %bb.aa
 
-_ZN6icu_789HashtableD2Ev.exit:                    ; preds = %bb.y, %bb.z
+.backedge:                                        ; preds = %bb.z, %..si.unfold.false.jt1
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #10
-  switch i32 %.363, label %bb.aa [
-    i32 0, label %.backedge
-    i32 7, label %.backedge
-  ]
-
-.backedge:                                        ; preds = %_ZN6icu_789HashtableD2Ev.exit, %_ZN6icu_789HashtableD2Ev.exit
-  %11 = call noundef signext i8 @_ZN6icu_7818UnicodeSetIterator4nextEv(ptr noundef nonnull align 8 dereferenceable(64) %7) #10
-  %.not74 = icmp eq i8 %11, 0
-  br i1 %.not74, label %.thread88, label %.lr.ph95, !llvm.loop !22
-
-bb.aa:                                            ; preds = %_ZN6icu_789HashtableD2Ev.exit
   call void @_ZN6icu_7818UnicodeSetIteratorD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %7) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #10
   br label %bb.ac
+
+bb.aa:                                            ; preds = %_ZN6icu_789HashtableD2Ev.exit, %bb.y
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #10
+  %13 = call noundef signext i8 @_ZN6icu_7818UnicodeSetIterator4nextEv(ptr noundef nonnull align 8 dereferenceable(64) %7) #10
+  %.not74 = icmp eq i8 %13, 0
+  br i1 %.not74, label %.thread88, label %.lr.ph95, !llvm.loop !23
 
 bb.ab:                                            ; preds = %.thread88, %bb.n
   %i.cc = icmp ult i32 %.156, 65536
@@ -460,8 +467,8 @@ bb.ab:                                            ; preds = %.thread88, %bb.n
   %.80 = select i1 %i.cg, ptr %1, ptr null
   br label %bb.ac
 
-bb.ac:                                            ; preds = %bb.aa, %.critedge
-  %.10 = phi ptr [ %.80, %.critedge ], [ null, %bb.aa ]
+bb.ac:                                            ; preds = %.backedge, %.critedge
+  %.10 = phi ptr [ %.80, %.critedge ], [ null, %.backedge ]
   call void @_ZN6icu_7810UnicodeSetD1Ev(ptr noundef nonnull align 8 dereferenceable(200) %6) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %5) #10

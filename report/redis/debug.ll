@@ -201,8 +201,8 @@ get_ready_to_signal_threads_tids.exit.thread21:   ; preds = %bb.c
 
 sub_0.i:                                          ; preds = %.preheader.i, %.backedge.i
   %.03457.i = phi i64 [ %i.x, %.backedge.i ], [ 0, %.preheader.i ] ; 2 uses
-  %.13656.i = phi i64 [ %.374.i, %.backedge.i ], [ %.035.i, %.preheader.i ] ; 6 uses
-  %.13855.i = phi i32 [ %.44172.i, %.backedge.i ], [ %.037.i, %.preheader.i ] ; 4 uses
+  %.13656.i = phi i64 [ %.3.jt5.i, %.backedge.i ], [ %.035.i, %.preheader.i ] ; 6 uses
+  %.13855.i = phi i32 [ %.441.jt5.i, %.backedge.i ], [ %.037.i, %.preheader.i ] ; 4 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.e, i64 %.03457.i ; 4 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 16
   %i.v = load i16, ptr %i.u, align 8, !tbaa !199
@@ -333,14 +333,14 @@ bb.k:                                             ; preds = %._crit_edge.i.i
   br label %.loopexit.i
 
 .backedge.i:                                      ; preds = %.tail.i, %.thread77.i, %.tail51.i
-  %.374.i = phi i64 [ %.2.ph.i, %.thread77.i ], [ %.13656.i, %.tail51.i ], [ %.13656.i, %.tail.i ] ; 2 uses
-  %.44172.i = phi i32 [ %.340.ph.i, %.thread77.i ], [ %.13855.i, %.tail51.i ], [ %.13855.i, %.tail.i ] ; 2 uses
+  %.441.jt5.i = phi i32 [ %.340.ph.i, %.thread77.i ], [ %.13855.i, %.tail51.i ], [ %.13855.i, %.tail.i ] ; 2 uses
+  %.3.jt5.i = phi i64 [ %.2.ph.i, %.thread77.i ], [ %.13656.i, %.tail51.i ], [ %.13656.i, %.tail.i ] ; 2 uses
   %i.bf = icmp slt i64 %i.x, %i.q
   br i1 %i.bf, label %sub_0.i, label %._crit_edge.i, !llvm.loop !201
 
 ._crit_edge.i:                                    ; preds = %.backedge.i, %.preheader.i
-  %.542.i = phi i32 [ %.037.i, %.preheader.i ], [ %.44172.i, %.backedge.i ] ; 2 uses
-  %.4.i = phi i64 [ %.035.i, %.preheader.i ], [ %.374.i, %.backedge.i ] ; 2 uses
+  %.542.i = phi i32 [ %.037.i, %.preheader.i ], [ %.441.jt5.i, %.backedge.i ] ; 2 uses
+  %.4.i = phi i64 [ %.035.i, %.preheader.i ], [ %.3.jt5.i, %.backedge.i ] ; 2 uses
   %i.bg = icmp eq i64 %.4.i, 50
   br i1 %i.bg, label %.loopexit.i, label %bb.c, !llvm.loop !203
 

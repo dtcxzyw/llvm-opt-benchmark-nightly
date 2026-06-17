@@ -201,7 +201,7 @@ bb.a:
   %i.c = alloca i32, align 4                      ; 5 uses
   %48 = alloca %"struct.icu_78::(anonymous namespace)::CalendarDataSink", align 8 ; 50 uses
   %49 = alloca %"class.icu_78::UnicodeString", align 8 ; 10 uses
-  %50 = alloca %"class.icu_78::CharString", align 8 ; 10 uses
+  %50 = alloca %"class.icu_78::CharString", align 8 ; 12 uses
   %51 = alloca %"class.icu_78::ConstChar16Ptr", align 8 ; 3 uses
   %52 = alloca %"class.icu_78::ConstChar16Ptr", align 8 ; 3 uses
   %53 = alloca %"class.icu_78::CharString", align 8 ; 90 uses
@@ -486,7 +486,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 .lr.ph:                                           ; preds = %bb.h
   %i.eb = getelementptr inbounds nuw i8, ptr %50, i64 13 ; 2 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %50, i64 8
-  %i.ed = getelementptr inbounds nuw i8, ptr %50, i64 12 ; 2 uses
+  %i.ed = getelementptr inbounds nuw i8, ptr %50, i64 12 ; 3 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %50, i64 56
   br label %bb.i
 
@@ -577,40 +577,54 @@ _ZN6icu_7812_GLOBAL__N_116CalendarDataSink17visitAllResourcesEv.exit292: ; preds
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.p, %_ZN6icu_7812_GLOBAL__N_116CalendarDataSink17visitAllResourcesEv.exit292, %bb.o, %bb.n, %bb.k, %_ZN6icu_7812_GLOBAL__N_116CalendarDataSink17visitAllResourcesEv.exit
-  %.0 = phi i32 [ 2, %_ZN6icu_7812_GLOBAL__N_116CalendarDataSink17visitAllResourcesEv.exit ], [ 3, %bb.o ], [ 1, %bb.k ], [ 3, %bb.n ], [ 0, %_ZN6icu_7812_GLOBAL__N_116CalendarDataSink17visitAllResourcesEv.exit292 ], [ 0, %bb.p ] ; 2 uses
+  %.0 = phi i32 [ 2, %_ZN6icu_7812_GLOBAL__N_116CalendarDataSink17visitAllResourcesEv.exit ], [ 3, %bb.o ], [ 1, %bb.k ], [ 3, %bb.n ], [ 0, %_ZN6icu_7812_GLOBAL__N_116CalendarDataSink17visitAllResourcesEv.exit292 ], [ 0, %bb.p ]
   %.not.i = icmp eq ptr %i.ej, null
-  br i1 %.not.i, label %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit.a, label %bb.t
+  br i1 %.not.i, label %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   call void @ures_close_78(ptr noundef nonnull %i.ej) #13
-  br label %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit.a
+  br label %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit
 
-_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit.a: ; preds = %bb.t, %bb.s, %bb.i
-  %.1 = phi i32 [ 1, %bb.i ], [ %.0, %bb.s ], [ %.0, %bb.t ]
+_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit: ; preds = %bb.t, %bb.s
+  %60 = load i8, ptr %i.ed, align 4
+  %.not.i.i.i = icmp eq i8 %60, 0
+  br i1 %.not.i.i.i, label %_ZN6icu_7810CharStringD2Ev.exit, label %61
+
+_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit.a: ; preds = %bb.i
   %i.fj = load i8, ptr %i.ed, align 4
   %.not.i.i.i.a = icmp eq i8 %i.fj, 0
   br i1 %.not.i.i.i.a, label %_ZN6icu_7810CharStringD2Ev.exit.a, label %bb.u
+
+61:                                               ; preds = %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit
+  %62 = load ptr, ptr %50, align 8
+  call void @uprv_free_78(ptr noundef %62) #13
+  br label %_ZN6icu_7810CharStringD2Ev.exit
 
 bb.u:                                             ; preds = %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit.a
   %i.fk = load ptr, ptr %50, align 8
   call void @uprv_free_78(ptr noundef %i.fk) #13
   br label %_ZN6icu_7810CharStringD2Ev.exit.a
 
-_ZN6icu_7810CharStringD2Ev.exit.a:                ; preds = %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit.a, %bb.u
+_ZN6icu_7810CharStringD2Ev.exit:                  ; preds = %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit, %61
   call void @llvm.lifetime.end.p0(ptr nonnull %50) #13
-  switch i32 %.1, label %.loopexit882 [
+  switch i32 %.0, label %_ZN6icu_7810CharStringD2Ev.exit.unreachabledefault [
     i32 0, label %.backedge
     i32 2, label %.backedge
     i32 3, label %_ZN6icu_7810CharStringD2Ev.exit._crit_edge
+    i32 1, label %.loopexit882
   ]
 
-.backedge:                                        ; preds = %_ZN6icu_7810CharStringD2Ev.exit.a, %_ZN6icu_7810CharStringD2Ev.exit.a
+_ZN6icu_7810CharStringD2Ev.exit.a:                ; preds = %bb.u, %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit.a
+  call void @llvm.lifetime.end.p0(ptr nonnull %50) #13
+  br label %.loopexit882
+
+.backedge:                                        ; preds = %_ZN6icu_7810CharStringD2Ev.exit, %_ZN6icu_7810CharStringD2Ev.exit
   %i.fl = load i16, ptr %i.dy, align 8
   %i.fm = and i16 %i.fl, 1
   %.not228 = icmp eq i16 %i.fm, 0
   br i1 %.not228, label %bb.i, label %_ZN6icu_7810CharStringD2Ev.exit._crit_edge, !llvm.loop !9
 
-_ZN6icu_7810CharStringD2Ev.exit._crit_edge:       ; preds = %.backedge, %_ZN6icu_7810CharStringD2Ev.exit.a, %bb.h
+_ZN6icu_7810CharStringD2Ev.exit._crit_edge:       ; preds = %.backedge, %_ZN6icu_7810CharStringD2Ev.exit, %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %53) #13
   %i.fn = getelementptr inbounds nuw i8, ptr %53, i64 13 ; 2 uses
   store ptr %i.fn, ptr %53, align 8
@@ -1013,7 +1027,10 @@ _ZN6icu_7810CharStringD2Ev.exit645:               ; preds = %_ZN6icu_788internal
   call void @llvm.lifetime.end.p0(ptr nonnull %53) #13
   br label %.loopexit882
 
-.loopexit882:                                     ; preds = %_ZN6icu_7810CharStringD2Ev.exit.a, %_ZN6icu_7810CharStringD2Ev.exit645
+_ZN6icu_7810CharStringD2Ev.exit.unreachabledefault: ; preds = %_ZN6icu_7810CharStringD2Ev.exit
+  unreachable
+
+.loopexit882:                                     ; preds = %_ZN6icu_7810CharStringD2Ev.exit, %_ZN6icu_7810CharStringD2Ev.exit.a, %_ZN6icu_7810CharStringD2Ev.exit645
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %49) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %49) #13
   br label %bb.jk

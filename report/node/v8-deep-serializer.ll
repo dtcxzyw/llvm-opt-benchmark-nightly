@@ -201,7 +201,7 @@ declare noundef zeroext i1 @_ZNK2v85Value17IsGeneratorObjectEv(ptr noundef nonnu
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @_ZN12v8_inspector12_GLOBAL__N_115SerializeObjectEN2v85LocalINS1_6ObjectEEENS2_INS1_7ContextEEEiS4_RNS_31V8SerializationDuplicateTrackerERNS_8protocol15DictionaryValueE(ptr dead_on_unwind noalias writable align 8 %0, ptr %1, ptr %2, i32 noundef %3, ptr %4, ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(96) %6) unnamed_addr #0 {
 bb.a:
-  %7 = alloca %"class.std::unique_ptr.42", align 8 ; 7 uses
+  %7 = alloca %"class.std::unique_ptr.42", align 8 ; 9 uses
   %8 = alloca %"class.v8_inspector::String16", align 8 ; 7 uses
   %9 = alloca %"class.std::unique_ptr.50", align 8 ; 5 uses
   %10 = alloca %"class.std::unique_ptr.27", align 8 ; 6 uses
@@ -436,7 +436,7 @@ bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #9, !noalias !75
   %i.ca = call noundef ptr @_ZN2v87Isolate10GetCurrentEv() #9
   call void @_ZN12v8_inspector16toProtocolStringEPN2v87IsolateENS0_5LocalINS0_6StringEEE(ptr dead_on_unwind nonnull writable sret(%"class.v8_inspector::String16") align 8 %8, ptr noundef %i.ca, ptr nonnull %i.bn) #9
-  %i.cb = call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #11, !noalias !95 ; 8 uses
+  %i.cb = call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #11, !noalias !95 ; 9 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %i.cb, i64 8
   store i32 4, ptr %i.cc, align 8, !noalias !95
   store ptr getelementptr inbounds nuw inrange(-16, 72) (i8, ptr @_ZTVN12v8_inspector8protocol11StringValueE, i64 16), ptr %i.cb, align 8, !noalias !95
@@ -544,7 +544,7 @@ _ZNSt10unique_ptrIN12v8_inspector11ValueMirrorESt14default_deleteIS1_EED2Ev.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #9, !noalias !75
   %i.dg = load i32, ptr %0, align 8, !alias.scope !75
   %i.dh = icmp eq i32 %i.dg, 1
-  br i1 %i.dh, label %bb.s, label %_ZNSt10unique_ptrIN12v8_inspector8protocol9ListValueESt14default_deleteIS2_EED2Ev.exit.i
+  br i1 %i.dh, label %bb.s, label %_ZNSt10unique_ptrIN12v8_inspector8protocol9ListValueESt14default_deleteIS2_EED2Ev.exit.jt1.i
 
 bb.s:                                             ; preds = %_ZNSt10unique_ptrIN12v8_inspector11ValueMirrorESt14default_deleteIS1_EED2Ev.exit.i
   %i.di = call noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #11, !noalias !101 ; 4 uses
@@ -604,39 +604,32 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @_ZdlPvm(ptr noundef %i.dx, i64 noundef %i.ea) #10
   br label %_ZNSt10unique_ptrIN12v8_inspector8protocol9ListValueESt14default_deleteIS2_EED2Ev.exit.i
 
-_ZNSt10unique_ptrIN12v8_inspector8protocol9ListValueESt14default_deleteIS2_EED2Ev.exit.i: ; preds = %bb.t, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i, %_ZNSt10unique_ptrIN12v8_inspector11ValueMirrorESt14default_deleteIS1_EED2Ev.exit.i, %bb.i
-  %.sroa.052.1.i = phi ptr [ null, %bb.i ], [ %i.cb, %_ZNSt10unique_ptrIN12v8_inspector11ValueMirrorESt14default_deleteIS1_EED2Ev.exit.i ], [ null, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i ], [ null, %bb.t ] ; 3 uses
-  %.1.i = phi i32 [ 6, %bb.i ], [ 1, %_ZNSt10unique_ptrIN12v8_inspector11ValueMirrorESt14default_deleteIS1_EED2Ev.exit.i ], [ 0, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i ], [ 0, %bb.t ]
+_ZNSt10unique_ptrIN12v8_inspector8protocol9ListValueESt14default_deleteIS2_EED2Ev.exit.jt1.i: ; preds = %_ZNSt10unique_ptrIN12v8_inspector11ValueMirrorESt14default_deleteIS1_EED2Ev.exit.i
+  %17 = load ptr, ptr %7, align 8, !noalias !75   ; 3 uses
+  %.not.i34.jt1.i = icmp eq ptr %17, null
+  br i1 %.not.i34.jt1.i, label %_ZN12v8_inspector12_GLOBAL__N_120SerializeObjectValueEN2v85LocalINS1_6ObjectEEENS2_INS1_7ContextEEEiS4_RNS_31V8SerializationDuplicateTrackerEPSt10unique_ptrINS_8protocol9ListValueESt14default_deleteISB_EE.exit.thread, label %_ZNKSt14default_deleteIN12v8_inspector8protocol15DictionaryValueEEclEPS2_.exit.i.i
+
+_ZNSt10unique_ptrIN12v8_inspector8protocol9ListValueESt14default_deleteIS2_EED2Ev.exit.i: ; preds = %bb.t, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i, %bb.i
   %i.eb = load ptr, ptr %7, align 8, !noalias !75 ; 3 uses
   %.not.i34.i = icmp eq ptr %i.eb, null
-  br i1 %.not.i34.i, label %_ZNSt10unique_ptrIN12v8_inspector8protocol15DictionaryValueESt14default_deleteIS2_EED2Ev.exit.i, label %_ZNKSt14default_deleteIN12v8_inspector8protocol15DictionaryValueEEclEPS2_.exit.i.i
+  br i1 %.not.i34.i, label %bb.u, label %_ZNKSt14default_deleteIN12v8_inspector8protocol5ValueEEclEPS2_.exit.i36.i
 
-_ZNKSt14default_deleteIN12v8_inspector8protocol15DictionaryValueEEclEPS2_.exit.i.i: ; preds = %_ZNSt10unique_ptrIN12v8_inspector8protocol9ListValueESt14default_deleteIS2_EED2Ev.exit.i
-  %i.ec = load ptr, ptr %i.eb, align 8
+_ZNKSt14default_deleteIN12v8_inspector8protocol15DictionaryValueEEclEPS2_.exit.i.i: ; preds = %_ZNSt10unique_ptrIN12v8_inspector8protocol9ListValueESt14default_deleteIS2_EED2Ev.exit.jt1.i
+  %i.ec = load ptr, ptr %17, align 8
   %i.ed = getelementptr inbounds nuw i8, ptr %i.ec, i64 16
   %i.ee = load ptr, ptr %i.ed, align 8
-  call void %i.ee(ptr noundef nonnull align 8 dereferenceable(96) %i.eb) #9, !inline_history !105
-  br label %_ZNSt10unique_ptrIN12v8_inspector8protocol15DictionaryValueESt14default_deleteIS2_EED2Ev.exit.i
+  call void %i.ee(ptr noundef nonnull align 8 dereferenceable(96) %17) #9, !inline_history !105
+  br label %_ZN12v8_inspector12_GLOBAL__N_120SerializeObjectValueEN2v85LocalINS1_6ObjectEEENS2_INS1_7ContextEEEiS4_RNS_31V8SerializationDuplicateTrackerEPSt10unique_ptrINS_8protocol9ListValueESt14default_deleteISB_EE.exit.thread
 
-_ZNSt10unique_ptrIN12v8_inspector8protocol15DictionaryValueESt14default_deleteIS2_EED2Ev.exit.i: ; preds = %_ZNKSt14default_deleteIN12v8_inspector8protocol15DictionaryValueEEclEPS2_.exit.i.i, %_ZNSt10unique_ptrIN12v8_inspector8protocol9ListValueESt14default_deleteIS2_EED2Ev.exit.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #9, !noalias !75
-  %.not.i35.i = icmp eq ptr %.sroa.052.1.i, null
-  br i1 %.not.i35.i, label %_ZNSt10unique_ptrIN12v8_inspector8protocol5ValueESt14default_deleteIS2_EED2Ev.exit37.i, label %_ZNKSt14default_deleteIN12v8_inspector8protocol5ValueEEclEPS2_.exit.i36.i
-
-_ZNKSt14default_deleteIN12v8_inspector8protocol5ValueEEclEPS2_.exit.i36.i: ; preds = %_ZNSt10unique_ptrIN12v8_inspector8protocol15DictionaryValueESt14default_deleteIS2_EED2Ev.exit.i
-  %i.ef = load ptr, ptr %.sroa.052.1.i, align 8
+_ZNKSt14default_deleteIN12v8_inspector8protocol5ValueEEclEPS2_.exit.i36.i: ; preds = %_ZNSt10unique_ptrIN12v8_inspector8protocol9ListValueESt14default_deleteIS2_EED2Ev.exit.i
+  %i.ef = load ptr, ptr %i.eb, align 8
   %i.eg = getelementptr inbounds nuw i8, ptr %i.ef, i64 16
   %i.eh = load ptr, ptr %i.eg, align 8
-  call void %i.eh(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.052.1.i) #9, !inline_history !104
-  br label %_ZNSt10unique_ptrIN12v8_inspector8protocol5ValueESt14default_deleteIS2_EED2Ev.exit37.i
+  call void %i.eh(ptr noundef nonnull align 8 dereferenceable(96) %i.eb) #9, !inline_history !105
+  br label %bb.u
 
-_ZNSt10unique_ptrIN12v8_inspector8protocol5ValueESt14default_deleteIS2_EED2Ev.exit37.i: ; preds = %_ZNKSt14default_deleteIN12v8_inspector8protocol5ValueEEclEPS2_.exit.i36.i, %_ZNSt10unique_ptrIN12v8_inspector8protocol15DictionaryValueESt14default_deleteIS2_EED2Ev.exit.i
-  switch i32 %.1.i, label %_ZN12v8_inspector12_GLOBAL__N_120SerializeObjectValueEN2v85LocalINS1_6ObjectEEENS2_INS1_7ContextEEEiS4_RNS_31V8SerializationDuplicateTrackerEPSt10unique_ptrINS_8protocol9ListValueESt14default_deleteISB_EE.exit.thread [
-    i32 0, label %bb.u
-    i32 6, label %bb.u
-  ]
-
-bb.u:                                             ; preds = %_ZNSt10unique_ptrIN12v8_inspector8protocol5ValueESt14default_deleteIS2_EED2Ev.exit37.i, %_ZNSt10unique_ptrIN12v8_inspector8protocol5ValueESt14default_deleteIS2_EED2Ev.exit37.i
+bb.u:                                             ; preds = %_ZNKSt14default_deleteIN12v8_inspector8protocol5ValueEEclEPS2_.exit.i36.i, %_ZNSt10unique_ptrIN12v8_inspector8protocol9ListValueESt14default_deleteIS2_EED2Ev.exit.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #9, !noalias !75
   %i.ei = add nuw i32 %.085.i, 1                  ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.ei, %i.q
   br i1 %exitcond.not.i, label %_ZN12v8_inspector12_GLOBAL__N_120SerializeObjectValueEN2v85LocalINS1_6ObjectEEENS2_INS1_7ContextEEEiS4_RNS_31V8SerializationDuplicateTrackerEPSt10unique_ptrINS_8protocol9ListValueESt14default_deleteISB_EE.exit, label %bb.f, !llvm.loop !106
@@ -650,7 +643,12 @@ _ZN12v8_inspector12_GLOBAL__N_120SerializeObjectValueEN2v85LocalINS1_6ObjectEEEN
   %i.ek = icmp eq i32 %i.ej, 1
   br i1 %i.ek, label %bb.v, label %_ZNKSt14default_deleteIN12v8_inspector8protocol9ListValueEEclEPS2_.exit.i
 
-_ZN12v8_inspector12_GLOBAL__N_120SerializeObjectValueEN2v85LocalINS1_6ObjectEEENS2_INS1_7ContextEEEiS4_RNS_31V8SerializationDuplicateTrackerEPSt10unique_ptrINS_8protocol9ListValueESt14default_deleteISB_EE.exit.thread: ; preds = %_ZNSt10unique_ptrIN12v8_inspector8protocol5ValueESt14default_deleteIS2_EED2Ev.exit37.i
+_ZN12v8_inspector12_GLOBAL__N_120SerializeObjectValueEN2v85LocalINS1_6ObjectEEENS2_INS1_7ContextEEEiS4_RNS_31V8SerializationDuplicateTrackerEPSt10unique_ptrINS_8protocol9ListValueESt14default_deleteISB_EE.exit.thread: ; preds = %_ZNSt10unique_ptrIN12v8_inspector8protocol9ListValueESt14default_deleteIS2_EED2Ev.exit.jt1.i, %_ZNKSt14default_deleteIN12v8_inspector8protocol15DictionaryValueEEclEPS2_.exit.i.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #9, !noalias !75
+  %18 = load ptr, ptr %i.cb, align 8
+  %19 = getelementptr inbounds nuw i8, ptr %18, i64 16
+  %20 = load ptr, ptr %19, align 8
+  call void %20(ptr noundef nonnull align 8 dereferenceable(12) %i.cb) #9, !inline_history !104
   %i.el = load ptr, ptr %i.o, align 8
   %i.em = getelementptr inbounds nuw i8, ptr %i.el, i64 16
   %i.en = load ptr, ptr %i.em, align 8

@@ -201,10 +201,10 @@ _ZNSt6vectorIZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS0_14TableFilte
 define void @_ZN6duckdb18ExpressionRewriter10ApplyRulesERNS_15LogicalOperatorERKNS_6vectorISt17reference_wrapperINS_4RuleEELb1ESaIS6_EEENS_10unique_ptrINS_10ExpressionESt14default_deleteISC_ELb1EEERbb(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.duckdb::unique_ptr.141") align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(97) %1, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef %3, ptr noundef nonnull align 1 dereferenceable(1) %4, i1 noundef zeroext %5) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
-  %6 = alloca %"class.duckdb::vector.1097", align 8 ; 8 uses
-  %i.b = alloca i8, align 1                       ; 6 uses
-  %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 16 uses
-  %8 = alloca %"class.duckdb::unique_ptr.141", align 8 ; 10 uses
+  %6 = alloca %"class.duckdb::vector.1097", align 8 ; 10 uses
+  %i.b = alloca i8, align 1                       ; 7 uses
+  %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 18 uses
+  %8 = alloca %"class.duckdb::unique_ptr.141", align 8 ; 11 uses
   %9 = alloca %"class.duckdb::unique_ptr.141", align 8 ; 4 uses
   %10 = alloca %"class.std::function.740", align 8 ; 12 uses
   %i.c = load ptr, ptr %2, align 8, !tbaa !1463   ; 2 uses
@@ -214,7 +214,7 @@ bb.a:
   br i1 %.not65, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.f = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 9 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 10 uses
   %i.g = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 7 uses
   br label %bb.b
 
@@ -239,7 +239,7 @@ bb.d:                                             ; preds = %bb.c
           to label %bb.e unwind label %bb.u
 
 bb.e:                                             ; preds = %bb.d
-  br i1 %i.o, label %bb.f, label %bb.ad
+  br i1 %i.o, label %bb.f, label %13
 
 bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #33
@@ -451,7 +451,7 @@ _ZNKSt14default_deleteIN6duckdb10ExpressionEEclEPS1_.exit.i35: ; preds = %bb.aa
 bb.ab:                                            ; preds = %bb.k
   %i.bs = load i8, ptr %i.b, align 1, !tbaa !794, !range !60, !noundef !61
   %i.bt = trunc nuw i8 %i.bs to i1
-  br i1 %i.bt, label %bb.ac, label %_ZNSt10unique_ptrIN6duckdb10ExpressionESt14default_deleteIS1_EED2Ev.exit39
+  br i1 %i.bt, label %bb.ac, label %_ZNSt10unique_ptrIN6duckdb10ExpressionESt14default_deleteIS1_EED2Ev.exit39.jt3
 
 bb.ac:                                            ; preds = %bb.ab
   store i8 1, ptr %4, align 1, !tbaa !794
@@ -472,21 +472,30 @@ _ZNKSt14default_deleteIN6duckdb10ExpressionEEclEPS1_.exit.i38: ; preds = %_ZNSt1
   call void %i.bx(ptr noundef nonnull align 8 dereferenceable(88) %.pr) #33, !inline_history !364
   br label %_ZNSt10unique_ptrIN6duckdb10ExpressionESt14default_deleteIS1_EED2Ev.exit39
 
-_ZNSt10unique_ptrIN6duckdb10ExpressionESt14default_deleteIS1_EED2Ev.exit39: ; preds = %bb.ab, %_ZNSt10unique_ptrIN6duckdb10ExpressionESt14default_deleteIS1_EED2Ev.exit, %_ZNKSt14default_deleteIN6duckdb10ExpressionEEclEPS1_.exit.i38
-  %.02457 = phi i32 [ 1, %_ZNKSt14default_deleteIN6duckdb10ExpressionEEclEPS1_.exit.i38 ], [ 1, %_ZNSt10unique_ptrIN6duckdb10ExpressionESt14default_deleteIS1_EED2Ev.exit ], [ 3, %bb.ab ]
+_ZNSt10unique_ptrIN6duckdb10ExpressionESt14default_deleteIS1_EED2Ev.exit39.jt3: ; preds = %bb.ab
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #33
+  %11 = load ptr, ptr %7, align 8, !tbaa !124     ; 2 uses
+  %12 = icmp eq ptr %11, %i.f
+  br i1 %12, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.jt3
+
+_ZNSt10unique_ptrIN6duckdb10ExpressionESt14default_deleteIS1_EED2Ev.exit39: ; preds = %_ZNSt10unique_ptrIN6duckdb10ExpressionESt14default_deleteIS1_EED2Ev.exit, %_ZNKSt14default_deleteIN6duckdb10ExpressionEEclEPS1_.exit.i38
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #33
   %i.by = load ptr, ptr %7, align 8, !tbaa !124   ; 2 uses
   %i.bz = icmp eq ptr %i.by, %i.f
-  br i1 %i.bz, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
+  br i1 %i.bz, label %bb.ad, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.jt3: ; preds = %_ZNSt10unique_ptrIN6duckdb10ExpressionESt14default_deleteIS1_EED2Ev.exit39.jt3
+  call void @_ZdlPv(ptr noundef %11) #34
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %_ZNSt10unique_ptrIN6duckdb10ExpressionESt14default_deleteIS1_EED2Ev.exit39
   call void @_ZdlPv(ptr noundef %i.by) #34
-  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+  br label %bb.ad
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt10unique_ptrIN6duckdb10ExpressionESt14default_deleteIS1_EED2Ev.exit39, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt10unique_ptrIN6duckdb10ExpressionESt14default_deleteIS1_EED2Ev.exit39.jt3, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.jt3
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #33
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #33
-  br label %bb.ad
+  br label %13
 
 _ZNSt10unique_ptrIN6duckdb10ExpressionESt14default_deleteIS1_EED2Ev.exit36: ; preds = %_ZNKSt14default_deleteIN6duckdb10ExpressionEEclEPS1_.exit.i35, %bb.aa, %bb.x
   %.pn = phi { ptr, i32 } [ %i.bh, %bb.x ], [ %i.bn, %bb.aa ], [ %i.bn, %_ZNKSt14default_deleteIN6duckdb10ExpressionEEclEPS1_.exit.i35 ] ; 2 uses
@@ -518,27 +527,35 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45: ; preds = %_ZN
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #33
   br label %bb.ag
 
-bb.ad:                                            ; preds = %bb.e, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %.125 = phi i32 [ %.02457, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ 0, %bb.e ]
+13:                                               ; preds = %bb.e, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+  %14 = load ptr, ptr %6, align 8, !tbaa !1467    ; 2 uses
+  %.not.i.i.i.jt3 = icmp eq ptr %14, null
+  br i1 %.not.i.i.i.jt3, label %bb.af, label %bb.ae
+
+bb.ad:                                            ; preds = %_ZNSt10unique_ptrIN6duckdb10ExpressionESt14default_deleteIS1_EED2Ev.exit39, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #33
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #33
   %i.cg = load ptr, ptr %6, align 8, !tbaa !1467  ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.cg, null
-  br i1 %.not.i.i.i, label %_ZNSt6vectorISt17reference_wrapperIN6duckdb10ExpressionEESaIS3_EED2Ev.exit, label %bb.ae
+  br i1 %.not.i.i.i, label %_ZNSt6vectorISt17reference_wrapperIN6duckdb10ExpressionEESaIS3_EED2Ev.exit.jt1, label %_ZNSt6vectorISt17reference_wrapperIN6duckdb10ExpressionEESaIS3_EED2Ev.exit
 
-bb.ae:                                            ; preds = %bb.ad
+bb.ae:                                            ; preds = %13
+  call void @_ZdlPv(ptr noundef nonnull %14) #34
+  br label %bb.af
+
+_ZNSt6vectorISt17reference_wrapperIN6duckdb10ExpressionEESaIS3_EED2Ev.exit: ; preds = %bb.ad
   call void @_ZdlPv(ptr noundef nonnull %i.cg) #34
-  br label %_ZNSt6vectorISt17reference_wrapperIN6duckdb10ExpressionEESaIS3_EED2Ev.exit
+  br label %_ZNSt6vectorISt17reference_wrapperIN6duckdb10ExpressionEESaIS3_EED2Ev.exit.jt1
 
-_ZNSt6vectorISt17reference_wrapperIN6duckdb10ExpressionEESaIS3_EED2Ev.exit: ; preds = %bb.ad, %bb.ae
+bb.af:                                            ; preds = %bb.ae, %13
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #33
-  switch i32 %.125, label %.loopexit [
-    i32 0, label %bb.af
-    i32 3, label %bb.af
-  ]
-
-bb.af:                                            ; preds = %_ZNSt6vectorISt17reference_wrapperIN6duckdb10ExpressionEESaIS3_EED2Ev.exit, %_ZNSt6vectorISt17reference_wrapperIN6duckdb10ExpressionEESaIS3_EED2Ev.exit
   %i.ch = getelementptr inbounds nuw i8, ptr %.sroa.052.066, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.ch, %i.e
   br i1 %.not, label %._crit_edge, label %bb.b
+
+_ZNSt6vectorISt17reference_wrapperIN6duckdb10ExpressionEESaIS3_EED2Ev.exit.jt1: ; preds = %_ZNSt6vectorISt17reference_wrapperIN6duckdb10ExpressionEESaIS3_EED2Ev.exit, %bb.ad
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #33
+  br label %.loopexit
 
 bb.ag:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45, %bb.u
   %.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45 ], [ %i.be, %bb.u ]
@@ -618,7 +635,7 @@ _ZNSt14_Function_baseD2Ev.exit50:                 ; preds = %bb.al, %bb.am
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #33
   br label %bb.ao
 
-.loopexit:                                        ; preds = %_ZNSt6vectorISt17reference_wrapperIN6duckdb10ExpressionEESaIS3_EED2Ev.exit, %_ZNSt14_Function_baseD2Ev.exit
+.loopexit:                                        ; preds = %_ZNSt6vectorISt17reference_wrapperIN6duckdb10ExpressionEESaIS3_EED2Ev.exit.jt1, %_ZNSt14_Function_baseD2Ev.exit
   ret void
 
 bb.ao:                                            ; preds = %_ZNSt14_Function_baseD2Ev.exit50, %_ZNSt6vectorISt17reference_wrapperIN6duckdb10ExpressionEESaIS3_EED2Ev.exit47

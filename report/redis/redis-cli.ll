@@ -201,7 +201,7 @@ bb.by:                                            ; preds = %bb.bx
 bb.bz:                                            ; preds = %bb.by
   %i.ot = load ptr, ptr %i.g, align 8, !tbaa !29  ; 3 uses
   %.not337 = icmp eq ptr %i.ot, null
-  br i1 %.not337, label %5, label %bb.ca
+  br i1 %.not337, label %bb.cd, label %bb.ca
 
 bb.ca:                                            ; preds = %bb.bz
   %i.ou = getelementptr inbounds nuw i8, ptr %i.on, i64 16
@@ -210,22 +210,27 @@ bb.ca:                                            ; preds = %bb.bz
   %i.ox = load i32, ptr %i.ow, align 8, !tbaa !83
   call void (i32, ptr, ...) @clusterManagerLog(i32 noundef 3, ptr noundef nonnull @.str.182, ptr noundef %i.ov, i32 noundef %i.ox, ptr noundef nonnull %i.ot)
   call void @zfree(ptr noundef nonnull %i.ot) #32
-  br label %5
+  br label %bb.cd
 
 bb.cb:                                            ; preds = %bb.by, %bb.bx
   %i.oy = load ptr, ptr %i.g, align 8, !tbaa !29  ; 2 uses
   %.not338 = icmp eq ptr %i.oy, null
-  br i1 %.not338, label %bb.cd, label %bb.cc
+  br i1 %.not338, label %bb.cc, label %5
 
-bb.cc:                                            ; preds = %bb.cb
+5:                                                ; preds = %bb.cb
   call void @zfree(ptr noundef nonnull %i.oy) #32
-  br label %bb.cd
+  br label %bb.cc
 
-bb.cd:                                            ; preds = %bb.cb, %bb.cc
+bb.cc:                                            ; preds = %5, %bb.cb
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #32
   br label %.backedge
 
-.backedge:                                        ; preds = %.lr.ph598, %bb.cd
+bb.cd:                                            ; preds = %bb.ca, %bb.bz
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #32
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #32
+  br label %bb.ch
+
+.backedge:                                        ; preds = %bb.cc, %.lr.ph598
   %i.oz = call ptr @listNext(ptr noundef nonnull %4) #32 ; 2 uses
   %.not330 = icmp eq ptr %i.oz, null
   br i1 %.not330, label %._crit_edge599, label %.lr.ph598, !llvm.loop !131
@@ -272,13 +277,8 @@ bb.cg:                                            ; preds = %._crit_edge605
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #32
   br label %bb.ch
 
-5:                                                ; preds = %bb.bz, %bb.ca
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #32
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #32
-  br label %bb.ch
-
-bb.ch:                                            ; preds = %5, %.thread456, %.thread440, %confirmWithYes.exit.thread437, %confirmWithYes.exit
-  %.11 = phi i32 [ 0, %.thread440 ], [ %.10.ph, %.thread456 ], [ 0, %5 ], [ 1, %confirmWithYes.exit ], [ 1, %confirmWithYes.exit.thread437 ]
+bb.ch:                                            ; preds = %bb.cd, %.thread456, %.thread440, %confirmWithYes.exit.thread437, %confirmWithYes.exit
+  %.11 = phi i32 [ 0, %.thread440 ], [ %.10.ph, %.thread456 ], [ 0, %bb.cd ], [ 1, %confirmWithYes.exit ], [ 1, %confirmWithYes.exit.thread437 ]
   call void @zfree(ptr noundef %i.bx) #32
   call void @zfree(ptr noundef %i.bz) #32
   br i1 %i.eb, label %.lr.ph609.preheader, label %.loopexit766

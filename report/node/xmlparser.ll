@@ -201,7 +201,7 @@ declare void @T_FileStream_close(ptr noundef) local_unnamed_addr #3
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local noundef ptr @_ZN6icu_7810UXMLParser5parseERKNS_13UnicodeStringER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(4576) %0, ptr noundef nonnull align 8 dereferenceable(64) %1, ptr noundef nonnull align 4 dereferenceable(4) %2) local_unnamed_addr #1 align 2 {
 bb.a:
-  %3 = alloca %"class.icu_78::UnicodeString", align 8 ; 15 uses
+  %3 = alloca %"class.icu_78::UnicodeString", align 8 ; 13 uses
   %4 = alloca %"class.icu_78::UnicodeString", align 8 ; 11 uses
   %i.a = load i32, ptr %2, align 4
   %i.b = icmp slt i32 %i.a, 1
@@ -333,15 +333,10 @@ bb.k:                                             ; preds = %bb.h
   %i.bu = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.bv = getelementptr inbounds nuw i8, ptr %4, i64 12
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 4472 ; 2 uses
-  br label %.backedge.outer
-
-.backedge.outer:                                  ; preds = %.backedge.outer.backedge, %bb.k
-  %.072.ph = phi ptr [ %i.bp, %bb.k ], [ %.072.ph.be, %.backedge.outer.backedge ] ; 8 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.072.ph, i64 168
-  %6 = getelementptr inbounds nuw i8, ptr %.072.ph, i64 168
   br label %.backedge
 
-.backedge:                                        ; preds = %.backedge.outer, %.thread137
+.backedge:                                        ; preds = %.backedge.backedge, %bb.k
+  %.072 = phi ptr [ %i.bp, %bb.k ], [ %.072.be, %.backedge.backedge ] ; 12 uses
   %i.bx = load i32, ptr %i.c, align 8
   %i.by = sext i32 %i.bx to i64
   %i.bz = call noundef signext i8 @_ZN6icu_7812RegexMatcher9lookingAtElR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(336) %i.n, i64 noundef %i.by, ptr noundef nonnull align 4 dereferenceable(4) %2) #9
@@ -350,21 +345,21 @@ bb.k:                                             ; preds = %bb.h
 
 bb.l:                                             ; preds = %.backedge
   %i.ca = call noundef ptr @_ZN6icu_7810UXMLParser13createElementERNS_12RegexMatcherER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(4576) %0, ptr noundef nonnull align 8 dereferenceable(336) %i.n, ptr noundef nonnull align 4 dereferenceable(4) %2) ; 4 uses
-  %i.cb = getelementptr inbounds nuw i8, ptr %.072.ph, i64 168
+  %i.cb = getelementptr inbounds nuw i8, ptr %.072, i64 168
   call void @_ZN6icu_787UVector10addElementEPvR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(40) %i.cb, ptr noundef %i.ca, ptr noundef nonnull align 4 dereferenceable(4) %2) #9
   %i.cc = getelementptr inbounds nuw i8, ptr %i.ca, i64 208
-  store ptr %.072.ph, ptr %i.cc, align 8
+  store ptr %.072, ptr %i.cc, align 8
   %i.cd = load ptr, ptr %i.br, align 8
   %.not9.i = icmp eq ptr %i.cd, null
   br i1 %.not9.i, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  call void @_ZN6icu_787UVector12adoptElementEPvR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(40) %i.bq, ptr noundef nonnull %.072.ph, ptr noundef nonnull align 4 dereferenceable(4) %2) #9
-  br label %.backedge.outer.backedge
+  call void @_ZN6icu_787UVector12adoptElementEPvR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(40) %i.bq, ptr noundef nonnull %.072, ptr noundef nonnull align 4 dereferenceable(4) %2) #9
+  br label %.backedge.backedge
 
 bb.n:                                             ; preds = %bb.l
-  call void @_ZN6icu_787UVector10addElementEPvR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(40) %i.bq, ptr noundef nonnull %.072.ph, ptr noundef nonnull align 4 dereferenceable(4) %2) #9
-  br label %.backedge.outer.backedge
+  call void @_ZN6icu_787UVector10addElementEPvR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(40) %i.bq, ptr noundef nonnull %.072, ptr noundef nonnull align 4 dereferenceable(4) %2) #9
+  br label %.backedge.backedge
 
 bb.o:                                             ; preds = %.backedge
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #9
@@ -386,13 +381,14 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   call void @_ZN6icu_7810UXMLParser15replaceCharRefsERNS_13UnicodeStringER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(4576) %0, ptr noundef nonnull align 8 dereferenceable(64) %3, ptr noundef nonnull align 4 dereferenceable(4) %2)
+  %5 = getelementptr inbounds nuw i8, ptr %.072, i64 168
   %i.co = call noundef ptr @_ZNK6icu_7813UnicodeString5cloneEv(ptr noundef nonnull align 8 dereferenceable(64) %3) #9
-  call void @_ZN6icu_787UVector10addElementEPvR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(40) %6, ptr noundef %i.co, ptr noundef nonnull align 4 dereferenceable(4) %2) #9
+  call void @_ZN6icu_787UVector10addElementEPvR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(40) %5, ptr noundef %i.co, ptr noundef nonnull align 4 dereferenceable(4) %2) #9
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p
   %i.cp = call noundef nonnull align 8 dereferenceable(336) ptr @_ZN6icu_7812RegexMatcher5resetERKNS_13UnicodeStringE(ptr noundef nonnull align 8 dereferenceable(336) %i.h, ptr noundef nonnull align 8 dereferenceable(64) %1) #9 ; 0 uses
-  br label %.thread137, !llvm.loop !11
+  br label %.loopexit.loopexit, !llvm.loop !11
 
 bb.s:                                             ; preds = %bb.o
   %i.cq = load i32, ptr %i.c, align 8
@@ -404,7 +400,7 @@ bb.s:                                             ; preds = %bb.o
 bb.t:                                             ; preds = %bb.s
   %i.ct = call noundef i32 @_ZNK6icu_7812RegexMatcher3endER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(336) %i.f, ptr noundef nonnull align 4 dereferenceable(4) %2) #9
   store i32 %i.ct, ptr %i.c, align 8
-  br label %.thread137, !llvm.loop !11
+  br label %.loopexit.loopexit, !llvm.loop !11
 
 bb.u:                                             ; preds = %bb.s
   %i.cu = load i32, ptr %i.c, align 8
@@ -416,7 +412,7 @@ bb.u:                                             ; preds = %bb.s
 bb.v:                                             ; preds = %bb.u
   %i.cx = call noundef i32 @_ZNK6icu_7812RegexMatcher3endER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(336) %i.l, ptr noundef nonnull align 4 dereferenceable(4) %2) #9
   store i32 %i.cx, ptr %i.c, align 8
-  br label %.thread137, !llvm.loop !11
+  br label %.loopexit.loopexit, !llvm.loop !11
 
 bb.w:                                             ; preds = %bb.u
   %i.cy = load i32, ptr %i.c, align 8
@@ -430,7 +426,7 @@ bb.x:                                             ; preds = %bb.w
   store i32 %i.db, ptr %i.c, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
   call void @_ZNK6icu_7812RegexMatcher5groupEiR10UErrorCode(ptr dead_on_unwind nonnull writable sret(%"class.icu_78::UnicodeString") align 8 %4, ptr noundef nonnull align 8 dereferenceable(336) %i.p, i32 noundef 1, ptr noundef nonnull align 4 dereferenceable(4) %2) #9
-  %i.dc = getelementptr inbounds nuw i8, ptr %.072.ph, i64 16
+  %i.dc = getelementptr inbounds nuw i8, ptr %.072, i64 16
   %i.dd = load ptr, ptr %i.dc, align 8            ; 5 uses
   %i.de = load i16, ptr %i.bu, align 8            ; 3 uses
   %i.df = and i16 %i.de, 1
@@ -511,28 +507,22 @@ _ZNK6icu_7813UnicodeString7indexOfEDsi.exit.i91:  ; preds = %_ZNK6icu_7813Unicod
   %i.ew = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ev, ptr noundef nonnull @.str.22, ptr noundef nonnull @.str.18, i32 noundef %.09.lcssa.i88) #10 ; 0 uses
   %i.ex = load i32, ptr %2, align 4
   %i.ey = icmp sgt i32 %i.ex, 0
-  br i1 %i.ey, label %_ZN6icu_7810UXMLParser5errorEPKcR10UErrorCode.exit.loopexit, label %bb.aa
+  br i1 %i.ey, label %7, label %bb.aa
 
 bb.aa:                                            ; preds = %._crit_edge.i87
   store i32 9, ptr %2, align 4
-  br label %_ZN6icu_7810UXMLParser5errorEPKcR10UErrorCode.exit.loopexit
+  br label %7
 
 bb.ab:                                            ; preds = %bb.y, %_ZNK6icu_7813UnicodeStringneERKS0_.exit
   %i.ez = load i32, ptr %i.bw, align 8
   %.not = icmp eq i32 %i.ez, 0
-  br i1 %.not, label %.loopexit.loopexit, label %.thread144
+  br i1 %.not, label %.thread137, label %.thread144
 
 .thread144:                                       ; preds = %bb.ab
   %i.fa = call noundef ptr @_ZN6icu_786UStack3popEv(ptr noundef nonnull align 8 dereferenceable(40) %i.bq) #9
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %4) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
-  call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %3) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #9
-  br label %.backedge.outer.backedge
-
-.backedge.outer.backedge:                         ; preds = %.thread144, %bb.m, %bb.n
-  %.072.ph.be = phi ptr [ %i.ca, %bb.n ], [ %i.ca, %bb.m ], [ %i.fa, %.thread144 ]
-  br label %.backedge.outer
+  br label %.loopexit.loopexit
 
 bb.ac:                                            ; preds = %bb.w
   %i.fb = load i32, ptr %i.c, align 8
@@ -543,26 +533,39 @@ bb.ac:                                            ; preds = %bb.w
 
 bb.ad:                                            ; preds = %bb.ac
   %i.fe = call noundef ptr @_ZN6icu_7810UXMLParser13createElementERNS_12RegexMatcherER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(4576) %0, ptr noundef nonnull align 8 dereferenceable(336) %i.r, ptr noundef nonnull align 4 dereferenceable(4) %2)
-  call void @_ZN6icu_787UVector10addElementEPvR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(40) %5, ptr noundef %i.fe, ptr noundef nonnull align 4 dereferenceable(4) %2) #9
-  br label %.thread137
+  %6 = getelementptr inbounds nuw i8, ptr %.072, i64 168
+  call void @_ZN6icu_787UVector10addElementEPvR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(40) %6, ptr noundef %i.fe, ptr noundef nonnull align 4 dereferenceable(4) %2) #9
+  br label %.loopexit.loopexit
 
 .thread:                                          ; preds = %bb.ac
   call void @_ZN6icu_7810UXMLParser5errorEPKcR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(4576) %0, ptr noundef nonnull @.str.19, ptr noundef nonnull align 4 dereferenceable(4) %2)
-  %i.ff = icmp eq ptr %.072.ph, null
+  %i.ff = icmp eq ptr %.072, null
   br label %.loopexit
 
-.thread137:                                       ; preds = %bb.r, %bb.t, %bb.v, %bb.ad
+7:                                                ; preds = %._crit_edge.i87, %bb.aa
+  call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %4) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %3) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #9
-  br label %.backedge
+  br label %_ZN6icu_7810UXMLParser5errorEPKcR10UErrorCode.exit
 
-.loopexit.loopexit:                               ; preds = %bb.ab
+.thread137:                                       ; preds = %bb.ab
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %4) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.loopexit.loopexit, %.thread
-  %.274120 = phi i1 [ %i.ff, %.thread ], [ true, %.loopexit.loopexit ]
+.loopexit.loopexit:                               ; preds = %bb.ad, %.thread144, %bb.v, %bb.t, %bb.r
+  %.274.jt4 = phi ptr [ %.072, %bb.r ], [ %.072, %bb.t ], [ %.072, %bb.v ], [ %i.fa, %.thread144 ], [ %.072, %bb.ad ]
+  call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %3) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #9
+  br label %.backedge.backedge
+
+.backedge.backedge:                               ; preds = %.loopexit.loopexit, %bb.n, %bb.m
+  %.072.be = phi ptr [ %.274.jt4, %.loopexit.loopexit ], [ %i.ca, %bb.m ], [ %i.ca, %bb.n ]
+  br label %.backedge
+
+.loopexit:                                        ; preds = %.thread137, %.thread
+  %.274120 = phi i1 [ %i.ff, %.thread ], [ true, %.thread137 ]
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %3) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #9
   %i.fg = load i32, ptr %i.bw, align 8
@@ -671,15 +674,8 @@ bb.ah:                                            ; preds = %._crit_edge.i107
   store i32 9, ptr %2, align 4
   br label %_ZN6icu_7810UXMLParser5errorEPKcR10UErrorCode.exit
 
-_ZN6icu_7810UXMLParser5errorEPKcR10UErrorCode.exit.loopexit: ; preds = %._crit_edge.i87, %bb.aa
-  call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %4) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
-  call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %3) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #9
-  br label %_ZN6icu_7810UXMLParser5errorEPKcR10UErrorCode.exit
-
-_ZN6icu_7810UXMLParser5errorEPKcR10UErrorCode.exit: ; preds = %_ZN6icu_7810UXMLParser5errorEPKcR10UErrorCode.exit.loopexit, %bb.af, %._crit_edge.i97, %bb.ah, %._crit_edge.i107
-  %.171 = phi ptr [ %.070, %._crit_edge.i107 ], [ %.070, %bb.ah ], [ %i.bp, %bb.af ], [ %i.bp, %._crit_edge.i97 ], [ %i.bp, %_ZN6icu_7810UXMLParser5errorEPKcR10UErrorCode.exit.loopexit ] ; 3 uses
+_ZN6icu_7810UXMLParser5errorEPKcR10UErrorCode.exit: ; preds = %7, %bb.af, %._crit_edge.i97, %bb.ah, %._crit_edge.i107
+  %.171 = phi ptr [ %.070, %._crit_edge.i107 ], [ %.070, %bb.ah ], [ %i.bp, %bb.af ], [ %i.bp, %._crit_edge.i97 ], [ %i.bp, %7 ] ; 3 uses
   %i.hg = icmp eq ptr %.171, null
   br i1 %i.hg, label %_ZN6icu_7810UXMLParser5errorEPKcR10UErrorCode.exit.thread, label %bb.ai
 

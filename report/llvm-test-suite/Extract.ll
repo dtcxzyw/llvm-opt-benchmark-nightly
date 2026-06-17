@@ -115,10 +115,10 @@ $_ZTS13CRecordVectorIiE = comdat any
 ; Function Attrs: mustprogress uwtable
 define dso_local noundef i32 @_Z18DecompressArchivesP7CCodecsRK13CRecordVectorIiER13CObjectVectorI11CStringBaseIwEES9_RKN9NWildcard11CCensorNodeERK15CExtractOptionsP15IOpenCallbackUIP18IExtractCallbackUIRS7_R15CDecompressStat(ptr noundef %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull align 8 dereferenceable(120) %4, ptr noundef nonnull align 8 dereferenceable(64) %5, ptr noundef %6, ptr noundef %7, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(16) %8, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(48) initializes((0, 44)) %9) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %10 = alloca %class.CRecordVector.13, align 8   ; 11 uses
+  %10 = alloca %class.CRecordVector.13, align 8   ; 13 uses
   %i.a = alloca i32, align 4                      ; 8 uses
-  %11 = alloca %class.CStringBase, align 8        ; 9 uses
-  %i.b = alloca i8, align 1                       ; 5 uses
+  %11 = alloca %class.CStringBase, align 8        ; 11 uses
+  %i.b = alloca i8, align 1                       ; 6 uses
   %12 = alloca %class.CObjectVector.1, align 8    ; 11 uses
   %13 = alloca %class.CStringBase, align 8        ; 13 uses
   %14 = alloca %class.CStringBase, align 8        ; 9 uses
@@ -521,7 +521,6 @@ bb.cz:                                            ; preds = %bb.cx
   br label %bb.du
 
 .lr.ph.i303:                                      ; preds = %.preheader.i, %bb.do
-  %.1183.i = phi i32 [ %.4.i, %bb.do ], [ 0, %.preheader.i ]
   %.0100181.i = phi i32 [ %i.nt, %bb.do ], [ 0, %.preheader.i ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #14
   store i64 17179869184, ptr %i.ct, align 8
@@ -554,8 +553,7 @@ bb.de:                                            ; preds = %bb.db
           to label %bb.df unwind label %bb.dg     ; 2 uses
 
 bb.df:                                            ; preds = %bb.de
-  %.not104.i = icmp eq i32 %i.ne, 0               ; 2 uses
-  %.1...i = select i1 %.not104.i, i32 %.1183.i, i32 %i.ne
+  %.not104.i = icmp eq i32 %i.ne, 0
   br i1 %.not104.i, label %bb.dh, label %bb.dl
 
 bb.dg:                                            ; preds = %bb.de
@@ -571,7 +569,7 @@ bb.dh:                                            ; preds = %bb.df
           to label %bb.di unwind label %bb.dj
 
 bb.di:                                            ; preds = %bb.dh
-  br i1 %i.nj, label %bb.dk, label %bb.dl
+  br i1 %i.nj, label %bb.dk, label %26
 
 bb.dj:                                            ; preds = %bb.dk, %bb.dh
   %i.nk = landingpad { ptr, i32 }
@@ -591,32 +589,41 @@ _ZN13CRecordVectorIjE3AddEj.exit.i:               ; preds = %bb.dk
   %i.np = load i32, ptr %i.cs, align 4, !tbaa !38
   %i.nq = add nsw i32 %i.np, 1
   store i32 %i.nq, ptr %i.cs, align 4, !tbaa !38
-  br label %bb.dl
+  br label %26
 
-bb.dl:                                            ; preds = %_ZN13CRecordVectorIjE3AddEj.exit.i, %bb.di, %bb.df
-  %.395.i = phi i32 [ 4, %bb.di ], [ 1, %bb.df ], [ 0, %_ZN13CRecordVectorIjE3AddEj.exit.i ]
+bb.dl:                                            ; preds = %bb.df
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14
   br label %bb.dm
 
-bb.dm:                                            ; preds = %bb.dl, %bb.db
-  %.496.i = phi i32 [ %.395.i, %bb.dl ], [ 1, %bb.db ]
-  %.4.i = phi i32 [ %.1...i, %bb.dl ], [ %i.nb, %bb.db ] ; 2 uses
+bb.dm:                                            ; preds = %bb.db, %bb.dl
+  %.4.i = phi i32 [ %i.ne, %bb.dl ], [ %i.nb, %bb.db ]
   %i.nr = load ptr, ptr %11, align 8, !tbaa !25   ; 2 uses
   %i.ns = icmp eq ptr %i.nr, null
-  br i1 %i.ns, label %_ZN11CStringBaseIwED2Ev.exit.i, label %bb.dn
+  br i1 %i.ns, label %_ZN11CStringBaseIwED2Ev.exit.i, label %29
 
-bb.dn:                                            ; preds = %bb.dm
+26:                                               ; preds = %_ZN13CRecordVectorIjE3AddEj.exit.i, %bb.di
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14
+  %27 = load ptr, ptr %11, align 8, !tbaa !25     ; 2 uses
+  %28 = icmp eq ptr %27, null
+  br i1 %28, label %bb.do, label %bb.dn
+
+29:                                               ; preds = %bb.dm
   call void @_ZdaPv(ptr noundef nonnull %i.nr) #17
   br label %_ZN11CStringBaseIwED2Ev.exit.i
 
-_ZN11CStringBaseIwED2Ev.exit.i:                   ; preds = %bb.dn, %bb.dm
-  call void @llvm.lifetime.end.p0(ptr nonnull %11) #14
-  switch i32 %.496.i, label %26 [
-    i32 0, label %bb.do
-    i32 4, label %bb.do
-  ]
+bb.dn:                                            ; preds = %26
+  call void @_ZdaPv(ptr noundef nonnull %27) #17
+  br label %bb.do
 
-bb.do:                                            ; preds = %_ZN11CStringBaseIwED2Ev.exit.i, %_ZN11CStringBaseIwED2Ev.exit.i
+_ZN11CStringBaseIwED2Ev.exit.i:                   ; preds = %bb.dm, %29
+  call void @llvm.lifetime.end.p0(ptr nonnull %11) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
+  call void @_ZN17CBaseRecordVectorD2Ev(ptr noundef nonnull align 8 dereferenceable(32) %10) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %10) #14
+  br label %.thread327
+
+bb.do:                                            ; preds = %bb.dn, %26
+  call void @llvm.lifetime.end.p0(ptr nonnull %11) #14
   %i.nt = add nuw i32 %.0100181.i, 1              ; 2 uses
   %i.nu = load i32, ptr %i.a, align 4, !tbaa !4
   %i.nv = icmp ult i32 %i.nt, %i.nu
@@ -665,10 +672,6 @@ bb.dt:                                            ; preds = %bb.ds
 
 .thread173.i:                                     ; preds = %bb.ds, %bb.cy
   %.6.ph.i = phi i32 [ 0, %bb.ds ], [ %i.mx, %bb.cy ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
-  br label %bb.ft
-
-26:                                               ; preds = %_ZN11CStringBaseIwED2Ev.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   br label %bb.ft
 
@@ -1074,9 +1077,9 @@ bb.fs:                                            ; preds = %_ZN11CStringBaseIwE
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #14
   br label %.body306
 
-bb.ft:                                            ; preds = %_ZN13CObjectVectorI11CStringBaseIwEED2Ev.exit.i, %26, %.thread173.i
-  %.4 = phi i64 [ %.1318, %_ZN13CObjectVectorI11CStringBaseIwEED2Ev.exit.i ], [ 0, %.thread173.i ], [ 0, %26 ]
-  %.10.i = phi i32 [ %.9.i, %_ZN13CObjectVectorI11CStringBaseIwEED2Ev.exit.i ], [ %.6.ph.i, %.thread173.i ], [ %.4.i, %26 ] ; 2 uses
+bb.ft:                                            ; preds = %_ZN13CObjectVectorI11CStringBaseIwEED2Ev.exit.i, %.thread173.i
+  %.4 = phi i64 [ %.1318, %_ZN13CObjectVectorI11CStringBaseIwEED2Ev.exit.i ], [ 0, %.thread173.i ]
+  %.10.i = phi i32 [ %.9.i, %_ZN13CObjectVectorI11CStringBaseIwEED2Ev.exit.i ], [ %.6.ph.i, %.thread173.i ] ; 2 uses
   call void @_ZN17CBaseRecordVectorD2Ev(ptr noundef nonnull align 8 dereferenceable(32) %10) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #14
   %.not274 = icmp eq i32 %.10.i, 0
@@ -1103,9 +1106,9 @@ bb.fu:                                            ; preds = %bb.ft
   %.14.. = select i1 %i.tq, i32 -2147467259, i32 %.2..
   br label %.thread327
 
-.thread327:                                       ; preds = %bb.cw, %bb.ft, %bb.fu, %bb.cr, %bb.cm
-  %.11223 = phi i32 [ 1, %bb.cm ], [ %., %bb.fu ], [ 1, %bb.cr ], [ 1, %bb.ft ], [ 1, %bb.cw ]
-  %.17 = phi i32 [ %i.lb, %bb.cm ], [ %.14.., %bb.fu ], [ %i.lj, %bb.cr ], [ %.10.i, %bb.ft ], [ %i.ly, %bb.cw ]
+.thread327:                                       ; preds = %bb.cw, %bb.ft, %bb.fu, %_ZN11CStringBaseIwED2Ev.exit.i, %bb.cr, %bb.cm
+  %.11223 = phi i32 [ 1, %bb.cm ], [ 1, %_ZN11CStringBaseIwED2Ev.exit.i ], [ 1, %bb.cr ], [ 1, %bb.ft ], [ %., %bb.fu ], [ 1, %bb.cw ]
+  %.17 = phi i32 [ %i.lb, %bb.cm ], [ %.4.i, %_ZN11CStringBaseIwED2Ev.exit.i ], [ %i.lj, %bb.cr ], [ %.10.i, %bb.ft ], [ %.14.., %bb.fu ], [ %i.ly, %bb.cw ]
   %i.tr = load ptr, ptr %25, align 8, !tbaa !25   ; 2 uses
   %i.ts = icmp eq ptr %i.tr, null
   br i1 %i.ts, label %_ZN11CStringBaseIwED2Ev.exit308, label %bb.fv

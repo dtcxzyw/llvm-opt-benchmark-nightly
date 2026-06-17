@@ -201,8 +201,8 @@ bb.a:
   %10 = alloca %"class.duckdb::Value", align 8    ; 10 uses
   %11 = alloca %"class.duckdb::Value", align 8    ; 11 uses
   %12 = alloca %"class.std::multimap.2103", align 8 ; 8 uses
-  %13 = alloca %"class.duckdb::unique_ptr.48", align 8 ; 12 uses
-  %14 = alloca %"class.duckdb::Value", align 8    ; 8 uses
+  %13 = alloca %"class.duckdb::unique_ptr.48", align 8 ; 14 uses
+  %14 = alloca %"class.duckdb::Value", align 8    ; 10 uses
   %15 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %16 = alloca %"class.std::allocator.17", align 1 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #37
@@ -231,9 +231,9 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.ao
-  %.047174 = phi i64 [ %6, %.lr.ph ], [ %.148, %bb.ao ] ; 6 uses
-  %.049173 = phi i64 [ 0, %.lr.ph ], [ %.150, %bb.ao ] ; 5 uses
-  %.053172 = phi i1 [ false, %.lr.ph ], [ %.255, %bb.ao ] ; 5 uses
+  %.047174 = phi i64 [ %6, %.lr.ph ], [ %.148.jt3, %bb.ao ] ; 5 uses
+  %.049173 = phi i64 [ 0, %.lr.ph ], [ %.150.jt3, %bb.ao ] ; 4 uses
+  %.053172 = phi i1 [ false, %.lr.ph ], [ %.255.jt3, %bb.ao ] ; 3 uses
   %.sroa.0105.0171 = phi ptr [ %i.f, %.lr.ph ], [ %i.bj, %bb.ao ] ; 5 uses
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.0105.0171, i64 16
   %i.n = load i32, ptr %i.m, align 8, !tbaa !2856
@@ -287,7 +287,7 @@ bb.k:                                             ; preds = %bb.j
   store i64 %.047174, ptr %0, align 8, !tbaa !3747
   store i64 0, ptr %i.i, align 8, !tbaa !3749
   store i64 %.049173, ptr %i.j, align 8, !tbaa !3750
-  br label %bb.am
+  br label %18
 
 bb.l:                                             ; preds = %bb.e, %bb.d
   %i.aa = landingpad { ptr, i32 }
@@ -330,7 +330,7 @@ bb.t:                                             ; preds = %bb.s
           to label %bb.u unwind label %bb.w
 
 bb.u:                                             ; preds = %bb.t
-  br i1 %i.ai, label %17, label %bb.al
+  br i1 %i.ai, label %bb.al, label %17
 
 bb.v:                                             ; preds = %bb.p, %bb.o
   %i.aj = landingpad { ptr, i32 }
@@ -343,13 +343,7 @@ bb.w:                                             ; preds = %bb.t, %bb.aa, %bb.z
   br label %bb.aq
 
 bb.x:                                             ; preds = %bb.r
-  br i1 %.not284, label %bb.al, label %17
-
-17:                                               ; preds = %bb.u, %bb.x
-  store i64 %.047174, ptr %0, align 8, !tbaa !3747
-  store i64 0, ptr %i.i, align 8, !tbaa !3749
-  store i64 %.049173, ptr %i.j, align 8, !tbaa !3750
-  br label %bb.al
+  br i1 %.not284, label %17, label %bb.al
 
 bb.y:                                             ; preds = %bb.q
   br i1 %.not284, label %bb.z, label %bb.ac
@@ -363,7 +357,7 @@ bb.aa:                                            ; preds = %bb.z
           to label %bb.ab unwind label %bb.w
 
 bb.ab:                                            ; preds = %bb.aa
-  br i1 %i.am, label %bb.al, label %bb.ac
+  br i1 %i.am, label %17, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %bb.y
   %i.an = getelementptr inbounds nuw i8, ptr %.sroa.0105.0171, i64 8
@@ -456,40 +450,54 @@ _ZN6duckdb12_GLOBAL__N_119RowGroupOffsetEntryD2Ev.exit: ; preds = %bb.ah, %bb.ai
   %i.bg = load i64, ptr %i.e, align 8, !tbaa !3528
   %i.bh = add i64 %i.bg, 1
   store i64 %i.bh, ptr %i.e, align 8, !tbaa !3528
-  br label %bb.al
+  br label %17
 
-bb.al:                                            ; preds = %bb.u, %bb.ab, %bb.x, %_ZN6duckdb12_GLOBAL__N_119RowGroupOffsetEntryD2Ev.exit, %17
-  %.068 = phi i32 [ 0, %_ZN6duckdb12_GLOBAL__N_119RowGroupOffsetEntryD2Ev.exit ], [ 3, %bb.u ], [ 1, %17 ], [ 3, %bb.x ], [ 3, %bb.ab ]
-  %.154 = phi i1 [ %.053172, %_ZN6duckdb12_GLOBAL__N_119RowGroupOffsetEntryD2Ev.exit ], [ %.053172, %bb.u ], [ %.053172, %17 ], [ true, %bb.x ], [ true, %bb.ab ]
+bb.al:                                            ; preds = %bb.x, %bb.u
+  store i64 %.047174, ptr %0, align 8, !tbaa !3747
+  store i64 0, ptr %i.i, align 8, !tbaa !3749
+  store i64 %.049173, ptr %i.j, align 8, !tbaa !3750
+  call void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %14) #37
+  call void @llvm.lifetime.end.p0(ptr nonnull %14) #37
+  br label %18
+
+17:                                               ; preds = %bb.ab, %bb.x, %bb.u, %_ZN6duckdb12_GLOBAL__N_119RowGroupOffsetEntryD2Ev.exit
+  %.154.jt3 = phi i1 [ %.053172, %_ZN6duckdb12_GLOBAL__N_119RowGroupOffsetEntryD2Ev.exit ], [ %.053172, %bb.u ], [ true, %bb.ab ], [ true, %bb.x ]
   call void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %14) #37
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #37
   br label %bb.am
 
-bb.am:                                            ; preds = %bb.al, %bb.n, %bb.k
-  %.169 = phi i32 [ 1, %bb.k ], [ 3, %bb.n ], [ %.068, %bb.al ]
-  %.255 = phi i1 [ %.053172, %bb.k ], [ %.053172, %bb.n ], [ %.154, %bb.al ] ; 2 uses
-  %.150 = phi i64 [ %.049173, %bb.k ], [ %i.ad, %bb.n ], [ %.049173, %bb.al ] ; 3 uses
-  %.148 = phi i64 [ %.047174, %bb.k ], [ %i.ac, %bb.n ], [ %.047174, %bb.al ] ; 3 uses
+bb.am:                                            ; preds = %17, %bb.n
+  %.255.jt3 = phi i1 [ %.154.jt3, %17 ], [ %.053172, %bb.n ] ; 2 uses
+  %.150.jt3 = phi i64 [ %.049173, %17 ], [ %i.ad, %bb.n ] ; 3 uses
+  %.148.jt3 = phi i64 [ %.047174, %17 ], [ %i.ac, %bb.n ] ; 3 uses
   %i.bi = load ptr, ptr %13, align 8, !tbaa !320  ; 3 uses
   %.not.i = icmp eq ptr %i.bi, null
-  br i1 %.not.i, label %bb.an, label %_ZNKSt14default_deleteIN6duckdb14BaseStatisticsEEclEPS1_.exit.i
+  br i1 %.not.i, label %bb.ao, label %_ZNKSt14default_deleteIN6duckdb14BaseStatisticsEEclEPS1_.exit.i
+
+18:                                               ; preds = %bb.al, %bb.k
+  %19 = load ptr, ptr %13, align 8, !tbaa !320    ; 3 uses
+  %.not.i.jt1 = icmp eq ptr %19, null
+  br i1 %.not.i.jt1, label %20, label %bb.an
 
 _ZNKSt14default_deleteIN6duckdb14BaseStatisticsEEclEPS1_.exit.i: ; preds = %bb.am
   call void @_ZN6duckdb14BaseStatisticsD1Ev(ptr noundef nonnull align 8 dead_on_return(128) dereferenceable(128) %i.bi) #37
   call void @_ZdlPv(ptr noundef nonnull %i.bi) #39
-  br label %bb.an
+  br label %bb.ao
 
-bb.an:                                            ; preds = %_ZNKSt14default_deleteIN6duckdb14BaseStatisticsEEclEPS1_.exit.i, %bb.am
+bb.an:                                            ; preds = %18
+  call void @_ZN6duckdb14BaseStatisticsD1Ev(ptr noundef nonnull align 8 dead_on_return(128) dereferenceable(128) %19) #37
+  call void @_ZdlPv(ptr noundef nonnull %19) #39
+  br label %20
+
+bb.ao:                                            ; preds = %_ZNKSt14default_deleteIN6duckdb14BaseStatisticsEEclEPS1_.exit.i, %bb.am
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #37
-  switch i32 %.169, label %.loopexit [
-    i32 0, label %bb.ao
-    i32 3, label %bb.ao
-  ]
-
-bb.ao:                                            ; preds = %bb.an, %bb.an
   %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.0105.0171, i64 40 ; 2 uses
   %.not = icmp eq ptr %i.bj, %i.h
   br i1 %.not, label %.thread116, label %bb.b
+
+20:                                               ; preds = %bb.an, %18
+  call void @llvm.lifetime.end.p0(ptr nonnull %13) #37
+  br label %.loopexit
 
 bb.ap:                                            ; preds = %bb.ac
   %i.bk = landingpad { ptr, i32 }
@@ -525,20 +533,20 @@ bb.at:                                            ; preds = %bb.as, %bb.l
 
 .thread116:                                       ; preds = %bb.ao
   %i.bm = icmp eq i8 %4, 2
-  %or.cond = select i1 %i.bm, i1 %.255, i1 false
+  %or.cond = select i1 %i.bm, i1 %.255.jt3, i1 false
   br i1 %or.cond, label %bb.au, label %.thread116.thread
 
 bb.au:                                            ; preds = %.thread116
-  store i64 %.148, ptr %0, align 8, !tbaa !3747
+  store i64 %.148.jt3, ptr %0, align 8, !tbaa !3747
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 0, ptr %i.bn, align 8, !tbaa !3749
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.150, ptr %i.bo, align 8, !tbaa !3750
+  store i64 %.150.jt3, ptr %i.bo, align 8, !tbaa !3750
   br label %.loopexit
 
 .thread116.thread:                                ; preds = %bb.a, %.thread116
-  %.047.lcssa336 = phi i64 [ %.148, %.thread116 ], [ %6, %bb.a ] ; 12 uses
-  %.049.lcssa335 = phi i64 [ %.150, %.thread116 ], [ 0, %bb.a ] ; 2 uses
+  %.047.lcssa336 = phi i64 [ %.148.jt3, %.thread116 ], [ %6, %bb.a ] ; 12 uses
+  %.049.lcssa335 = phi i64 [ %.150.jt3, %.thread116 ], [ 0, %bb.a ] ; 2 uses
   switch i8 %3, label %bb.cm [
     i8 2, label %bb.av
     i8 3, label %bb.br
@@ -941,7 +949,7 @@ bb.cq:                                            ; preds = %_ZNKSt7__cxx1112bas
   call void @__cxa_free_exception(ptr %i.gb) #37
   br label %.body90
 
-.loopexit:                                        ; preds = %bb.an, %.thread112, %_ZN6duckdb12_GLOBAL__N_124FindOffsetPrunableChunksISt16reverse_iteratorISt17_Rb_tree_iteratorISt4pairIKNS_5ValueENS0_19RowGroupOffsetEntryEEEESA_EENS_19OffsetPruningResultET_T0_NS_17OrderByStatisticsENS_17OrderByColumnTypeEm.exit, %_ZN6duckdb12_GLOBAL__N_124FindOffsetPrunableChunksISt17_Rb_tree_iteratorISt4pairIKNS_5ValueENS0_19RowGroupOffsetEntryEEES8_EENS_19OffsetPruningResultET_T0_NS_17OrderByStatisticsENS_17OrderByColumnTypeEm.exit, %bb.au
+.loopexit:                                        ; preds = %20, %.thread112, %_ZN6duckdb12_GLOBAL__N_124FindOffsetPrunableChunksISt16reverse_iteratorISt17_Rb_tree_iteratorISt4pairIKNS_5ValueENS0_19RowGroupOffsetEntryEEEESA_EENS_19OffsetPruningResultET_T0_NS_17OrderByStatisticsENS_17OrderByColumnTypeEm.exit, %_ZN6duckdb12_GLOBAL__N_124FindOffsetPrunableChunksISt17_Rb_tree_iteratorISt4pairIKNS_5ValueENS0_19RowGroupOffsetEntryEEES8_EENS_19OffsetPruningResultET_T0_NS_17OrderByStatisticsENS_17OrderByColumnTypeEm.exit, %bb.au
   %.val85 = load ptr, ptr %i.b, align 8, !tbaa !3525
   call fastcc void @_ZNSt8_Rb_treeIN6duckdb5ValueESt4pairIKS1_NS0_12_GLOBAL__N_119RowGroupOffsetEntryEESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE8_M_eraseEPSt13_Rb_tree_nodeIS6_E(ptr noundef %.val85)
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #37
