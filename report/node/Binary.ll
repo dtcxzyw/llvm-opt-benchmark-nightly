@@ -201,7 +201,7 @@ bb.m:                                             ; preds = %bb.l, %_ZNSt6vector
   %i.co = phi ptr [ %.pre60, %bb.l ], [ %i.ci, %_ZNSt6vectorIPN4LIEF5MachO12DylibCommandESaIS3_EE9push_backERKS3_.exit ] ; 2 uses
   %i.cp = ptrtoint ptr %i.co to i64               ; 2 uses
   %i.cq = load ptr, ptr %i.a, align 8             ; 10 uses
-  %.idx55 = shl i64 %2, 3                         ; 7 uses
+  %.idx55 = shl i64 %2, 3                         ; 6 uses
   %i.cr = getelementptr i8, ptr %i.cq, i64 %.idx55 ; 12 uses
   %i.cs = ptrtoint ptr %i.cr to i64
   %i.ct = ptrtoint ptr %i.cq to i64               ; 4 uses
@@ -374,12 +374,13 @@ _ZNSt6vectorISt10unique_ptrIN4LIEF5MachO11LoadCommandESt14default_deleteIS3_EESa
   br i1 %.not10.i.i.i16.i, label %_ZNSt6vectorISt10unique_ptrIN4LIEF5MachO11LoadCommandESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i, label %.lr.ph.i.i.i17.i.preheader
 
 .lr.ph.i.i.i17.i.preheader:                       ; preds = %_ZNSt6vectorISt10unique_ptrIN4LIEF5MachO11LoadCommandESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit.i
-  %5 = add i64 %i.dx, -8
-  %i.ex = add i64 %.idx55, %i.ct
-  %i.ey = sub i64 %5, %i.ex                       ; 2 uses
-  %i.ez = lshr i64 %i.ey, 3
+  %5 = shl i64 %2, 3
+  %i.ex = add i64 %5, %i.ct
+  %i.ey = sub i64 %i.dx, %i.ex
+  %6 = add i64 %i.ey, -8                          ; 2 uses
+  %i.ez = lshr i64 %6, 3
   %i.fa = add nuw nsw i64 %i.ez, 1                ; 2 uses
-  %min.iters.check93 = icmp ult i64 %i.ey, 216
+  %min.iters.check93 = icmp ult i64 %6, 216
   br i1 %min.iters.check93, label %.lr.ph.i.i.i17.i.preheader108, label %vector.memcheck86
 
 vector.memcheck86:                                ; preds = %.lr.ph.i.i.i17.i.preheader
@@ -782,8 +783,8 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO7SectionESt14default_deleteIS3_EESaIS6_
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4LIEF5MachO7SectionESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO7SectionESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit.i
-  %3 = add i64 %i.gc, -8
-  %4 = sub i64 %3, %i.gd                          ; 2 uses
+  %3 = sub i64 %i.gc, %i.gd
+  %4 = add i64 %3, -8                             ; 2 uses
   %i.gp = lshr i64 %4, 3
   %i.gq = add nuw nsw i64 %i.gp, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %4, 152
@@ -1186,8 +1187,8 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO6SymbolESt14default_deleteIS3_EESaIS6_E
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4LIEF5MachO6SymbolESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO6SymbolESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit.i
-  %2 = add i64 %i.k, -8
-  %3 = sub i64 %2, %i.l                           ; 2 uses
+  %2 = sub i64 %i.k, %i.l
+  %3 = add i64 %2, -8                             ; 2 uses
   %i.x = lshr i64 %3, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %3, 152
@@ -1413,8 +1414,8 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO6SymbolESt14default_deleteIS3_EESaIS6_E
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4LIEF5MachO6SymbolESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNKSt6vectorISt10unique_ptrIN4LIEF5MachO6SymbolESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit.i
-  %4 = add i64 %i.aq, -8
-  %5 = sub i64 %4, %i.ar                          ; 2 uses
+  %4 = sub i64 %i.aq, %i.ar
+  %5 = add i64 %4, -8                             ; 2 uses
   %i.bd = lshr i64 %5, 3
   %i.be = add nuw nsw i64 %i.bd, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %5, 152
@@ -1817,8 +1818,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.k, label %.lr.ph.i.preheader, label %bb.d
 
 .lr.ph.i.preheader:                               ; preds = %bb.c
-  %3 = add i64 %i.g, -8
-  %4 = sub i64 %3, %i.d                           ; 2 uses
+  %3 = sub i64 %i.g, %i.d
+  %4 = add i64 %3, -8                             ; 2 uses
   %i.l = lshr i64 %4, 3
   %i.m = add nuw nsw i64 %i.l, 1                  ; 2 uses
   %min.iters.check165 = icmp ult i64 %4, 120
