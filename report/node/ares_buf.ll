@@ -1,4 +1,4 @@
-inline.NumInlined: 90
+inline.NumInlined: 91
 inline.NumDeleted: 5
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
@@ -92,35 +92,33 @@ bb.b:                                             ; preds = %bb.a
 
 ._crit_edge30:                                    ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !12   ; 2 uses
-  %.not26 = icmp eq i64 %i.d, -1
+  %i.d = load i64, ptr %i.c, align 8, !tbaa !12
   %.phi.trans.insert31 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %.pre32 = load i64, ptr %.phi.trans.insert31, align 8, !tbaa !20 ; 2 uses
-  %spec.select = tail call i64 @llvm.umin.i64(i64 %i.d, i64 %.pre32)
-  %.0 = select i1 %.not26, i64 %.pre32, i64 %spec.select ; 5 uses
-  %i.e = icmp eq i64 %.0, 0
+  %.pre32 = load i64, ptr %.phi.trans.insert31, align 8, !tbaa !20
+  %spec.select = tail call i64 @llvm.umin.i64(i64 %i.d, i64 %.pre32) ; 5 uses
+  %i.e = icmp eq i64 %spec.select, 0
   br i1 %i.e, label %ares_buf_is_const.exit, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge30
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.h = load i64, ptr %i.g, align 8, !tbaa !18
-  %i.i = sub i64 %i.h, %.0                        ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %.pre, i64 %.0
+  %i.i = sub i64 %i.h, %spec.select               ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %.pre, i64 %spec.select
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %.pre, ptr nonnull align 1 %i.j, i64 %i.i, i1 false)
   %i.k = load ptr, ptr %i.f, align 8, !tbaa !19
   store ptr %i.k, ptr %0, align 8, !tbaa !17
   store i64 %i.i, ptr %i.g, align 8, !tbaa !18
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.m = load i64, ptr %i.l, align 8, !tbaa !20
-  %i.n = sub i64 %i.m, %.0
+  %i.n = sub i64 %i.m, %spec.select
   store i64 %i.n, ptr %i.l, align 8, !tbaa !20
   %i.o = load i64, ptr %i.c, align 8, !tbaa !12   ; 2 uses
   %.not27 = icmp eq i64 %i.o, -1
   br i1 %.not27, label %ares_buf_is_const.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.p = sub i64 %i.o, %.0
+  %i.p = sub i64 %i.o, %spec.select
   store i64 %i.p, ptr %i.c, align 8, !tbaa !12
   br label %ares_buf_is_const.exit
 
@@ -253,31 +251,29 @@ bb.e:                                             ; preds = %bb.d
   %i.u = phi ptr [ %i.i, %bb.e ], [ %i.o, %.thread ] ; 4 uses
   %i.v = phi i64 [ %i.j, %bb.e ], [ %i.p, %.thread ]
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
-  %i.x = load i64, ptr %i.w, align 8, !tbaa !12   ; 2 uses
-  %.not26.i = icmp eq i64 %i.x, -1
+  %i.x = load i64, ptr %i.w, align 8, !tbaa !12
   %.phi.trans.insert31.i = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
-  %.pre32.i = load i64, ptr %.phi.trans.insert31.i, align 8, !tbaa !20 ; 2 uses
-  %spec.select.i = tail call i64 @llvm.umin.i64(i64 %i.x, i64 %.pre32.i)
-  %.0.i34 = select i1 %.not26.i, i64 %.pre32.i, i64 %spec.select.i ; 5 uses
-  %i.y = icmp eq i64 %.0.i34, 0
+  %.pre32.i = load i64, ptr %.phi.trans.insert31.i, align 8, !tbaa !20
+  %spec.select.i = tail call i64 @llvm.umin.i64(i64 %i.x, i64 %.pre32.i) ; 5 uses
+  %i.y = icmp eq i64 %spec.select.i, 0
   br i1 %i.y, label %ares_buf_reclaim.exit, label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge30.i
-  %i.z = sub i64 %i.v, %.0.i34                    ; 2 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %.pre.i44, i64 %.0.i34
+  %i.z = sub i64 %i.v, %spec.select.i             ; 2 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %.pre.i44, i64 %spec.select.i
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %.pre.i44, ptr nonnull align 1 %i.aa, i64 %i.z, i1 false)
   %i.ab = load ptr, ptr %.phi.trans.insert.i41, align 8, !tbaa !19 ; 3 uses
   store ptr %i.ab, ptr %0, align 8, !tbaa !17
   store i64 %i.z, ptr %i.u, align 8, !tbaa !18
   %i.ac = load i64, ptr %.phi.trans.insert31.i, align 8, !tbaa !20
-  %i.ad = sub i64 %i.ac, %.0.i34
+  %i.ad = sub i64 %i.ac, %spec.select.i
   store i64 %i.ad, ptr %.phi.trans.insert31.i, align 8, !tbaa !20
   %i.ae = load i64, ptr %i.w, align 8, !tbaa !12  ; 2 uses
   %.not27.i = icmp eq i64 %i.ae, -1
   br i1 %.not27.i, label %ares_buf_reclaim.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.af = sub i64 %i.ae, %.0.i34
+  %i.af = sub i64 %i.ae, %spec.select.i
   store i64 %i.af, ptr %i.w, align 8, !tbaa !12
   br label %ares_buf_reclaim.exit
 
@@ -529,33 +525,31 @@ bb.d:                                             ; preds = %bb.b
 
 ._crit_edge30.i:                                  ; preds = %bb.c, %bb.d
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
-  %i.f = load i64, ptr %i.e, align 8, !tbaa !12   ; 2 uses
-  %.not26.i = icmp eq i64 %i.f, -1
+  %i.f = load i64, ptr %i.e, align 8, !tbaa !12
   %.phi.trans.insert31.i = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
-  %.pre32.i = load i64, ptr %.phi.trans.insert31.i, align 8, !tbaa !20 ; 2 uses
-  %spec.select.i = tail call i64 @llvm.umin.i64(i64 %i.f, i64 %.pre32.i)
-  %.0.i16 = select i1 %.not26.i, i64 %.pre32.i, i64 %spec.select.i ; 5 uses
-  %i.g = icmp eq i64 %.0.i16, 0
+  %.pre32.i = load i64, ptr %.phi.trans.insert31.i, align 8, !tbaa !20
+  %spec.select.i = tail call i64 @llvm.umin.i64(i64 %i.f, i64 %.pre32.i) ; 5 uses
+  %i.g = icmp eq i64 %spec.select.i, 0
   br i1 %i.g, label %ares_buf_reclaim.exit.thread30, label %bb.e
 
 bb.e:                                             ; preds = %._crit_edge30.i
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.i = load i64, ptr %i.h, align 8, !tbaa !18
-  %i.j = sub i64 %i.i, %.0.i16                    ; 2 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %.pre.i20, i64 %.0.i16
+  %i.j = sub i64 %i.i, %spec.select.i             ; 2 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %.pre.i20, i64 %spec.select.i
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %.pre.i20, ptr nonnull align 1 %i.k, i64 %i.j, i1 false)
   %i.l = load ptr, ptr %.phi.trans.insert.i19, align 8, !tbaa !19 ; 3 uses
   store ptr %i.l, ptr %0, align 8, !tbaa !17
   store i64 %i.j, ptr %i.h, align 8, !tbaa !18
   %i.m = load i64, ptr %.phi.trans.insert31.i, align 8, !tbaa !20
-  %i.n = sub i64 %i.m, %.0.i16
+  %i.n = sub i64 %i.m, %spec.select.i
   store i64 %i.n, ptr %.phi.trans.insert31.i, align 8, !tbaa !20
   %i.o = load i64, ptr %i.e, align 8, !tbaa !12   ; 2 uses
   %.not27.i = icmp eq i64 %i.o, -1
   br i1 %.not27.i, label %ares_buf_reclaim.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.p = sub i64 %i.o, %.0.i16
+  %i.p = sub i64 %i.o, %spec.select.i
   store i64 %i.p, ptr %i.e, align 8, !tbaa !12
   br label %ares_buf_reclaim.exit
 
@@ -608,33 +602,31 @@ bb.d:                                             ; preds = %bb.b
 
 ._crit_edge30.i.i:                                ; preds = %bb.d, %bb.c
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !12   ; 2 uses
-  %.not26.i.i = icmp eq i64 %i.e, -1
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !12
   %.phi.trans.insert31.i.i = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
-  %.pre32.i.i = load i64, ptr %.phi.trans.insert31.i.i, align 8, !tbaa !20 ; 2 uses
-  %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %i.e, i64 %.pre32.i.i)
-  %.0.i16.i = select i1 %.not26.i.i, i64 %.pre32.i.i, i64 %spec.select.i.i ; 5 uses
-  %i.f = icmp eq i64 %.0.i16.i, 0
+  %.pre32.i.i = load i64, ptr %.phi.trans.insert31.i.i, align 8, !tbaa !20
+  %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %i.e, i64 %.pre32.i.i) ; 5 uses
+  %i.f = icmp eq i64 %spec.select.i.i, 0
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.pre = load i64, ptr %.phi.trans.insert, align 8, !tbaa !18 ; 2 uses
   br i1 %i.f, label %ares_buf_finish_bin.exit.thread14, label %bb.e
 
 bb.e:                                             ; preds = %._crit_edge30.i.i
-  %i.g = sub i64 %.pre, %.0.i16.i                 ; 3 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %.pre.i20.i, i64 %.0.i16.i
+  %i.g = sub i64 %.pre, %spec.select.i.i          ; 3 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %.pre.i20.i, i64 %spec.select.i.i
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %.pre.i20.i, ptr nonnull align 1 %i.h, i64 %i.g, i1 false)
   %i.i = load ptr, ptr %.phi.trans.insert.i19.i, align 8, !tbaa !19 ; 3 uses
   store ptr %i.i, ptr %0, align 8, !tbaa !17
   store i64 %i.g, ptr %.phi.trans.insert, align 8, !tbaa !18
   %i.j = load i64, ptr %.phi.trans.insert31.i.i, align 8, !tbaa !20
-  %i.k = sub i64 %i.j, %.0.i16.i
+  %i.k = sub i64 %i.j, %spec.select.i.i
   store i64 %i.k, ptr %.phi.trans.insert31.i.i, align 8, !tbaa !20
   %i.l = load i64, ptr %i.d, align 8, !tbaa !12   ; 2 uses
   %.not27.i.i = icmp eq i64 %i.l, -1
   br i1 %.not27.i.i, label %ares_buf_reclaim.exit.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.m = sub i64 %i.l, %.0.i16.i
+  %i.m = sub i64 %i.l, %spec.select.i.i
   store i64 %i.m, ptr %i.d, align 8, !tbaa !12
   br label %ares_buf_reclaim.exit.i
 
@@ -1037,7 +1029,6 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 18) i32 @ares_buf_parse_dns_binstr_int(ptr nofree noundef captures(address_is_null) %0, i64 noundef %1, ptr nofree noundef writeonly captures(address_is_null) %2, ptr nofree noundef writeonly captures(none) %3, i32 noundef range(i32 0, 2) %4) unnamed_addr #0 {
 bb.a:
-  %5 = alloca i64, align 8                        ; 5 uses
   %i.a = icmp eq ptr %0, null
   br i1 %i.a, label %ares_buf_create.exit.thread, label %bb.b
 
@@ -1046,12 +1037,12 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %ares_buf_create.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = tail call ptr @ares_malloc_zero(i64 noundef 48) #15 ; 6 uses
+  %i.c = tail call ptr @ares_malloc_zero(i64 noundef 48) #15 ; 14 uses
   %i.d = icmp eq ptr %i.c, null
   br i1 %i.d, label %ares_buf_create.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 40
+  %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 40 ; 4 uses
   store i64 -1, ptr %i.e, align 8, !tbaa !12
   %i.f = load ptr, ptr %0, align 8, !tbaa !17     ; 3 uses
   %i.g = icmp eq ptr %i.f, null
@@ -1113,7 +1104,7 @@ ares_buf_consume.exit.thread58.thread:            ; preds = %ares_buf_len.exit.i
 ares_buf_consume.exit:                            ; preds = %bb.h
   %i.aa = tail call i32 @ares_buf_fetch_bytes_into_buf(ptr noundef nonnull %0, ptr noundef nonnull %i.c, i64 noundef %i.p) ; 2 uses
   %.not36 = icmp eq i32 %i.aa, 0
-  br i1 %.not36, label %ares_buf_consume.exit.thread58.thread74, label %ares_buf_destroy.exit
+  br i1 %.not36, label %ares_buf_consume.exit.thread61.thread79, label %ares_buf_destroy.exit
 
 ares_buf_destroy.exit:                            ; preds = %ares_buf_peek.exit, %bb.d, %ares_buf_fetch.exit.i, %ares_buf_len.exit.i, %bb.e, %ares_buf_consume.exit
   %.156 = phi i32 [ %i.aa, %ares_buf_consume.exit ], [ 10, %bb.e ], [ 10, %ares_buf_len.exit.i ], [ 10, %bb.d ], [ 10, %ares_buf_fetch.exit.i ], [ 17, %ares_buf_peek.exit ]
@@ -1125,20 +1116,90 @@ ares_buf_destroy.exit:                            ; preds = %ares_buf_peek.exit,
 
 ares_buf_consume.exit.thread58:                   ; preds = %bb.f
   %.not37 = icmp eq ptr %2, null
-  br i1 %.not37, label %ares_buf_create.exit.thread, label %ares_buf_consume.exit.thread58.thread74
+  br i1 %.not37, label %ares_buf_create.exit.thread, label %ares_buf_consume.exit.thread61.thread79
 
-ares_buf_consume.exit.thread58.thread74:          ; preds = %ares_buf_consume.exit, %ares_buf_consume.exit.thread58
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #15
-  store i64 0, ptr %5, align 8, !tbaa !24
-  %6 = call ptr @ares_buf_finish_str(ptr noundef nonnull %i.c, ptr noundef nonnull %5)
-  store ptr %6, ptr %2, align 8, !tbaa !29
-  %i.ad = load i64, ptr %5, align 8, !tbaa !24
-  store i64 %i.ad, ptr %3, align 8, !tbaa !24
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #15
+ares_buf_consume.exit.thread61.thread79:          ; preds = %ares_buf_consume.exit, %ares_buf_consume.exit.thread58
+  %5 = load ptr, ptr %i.c, align 8, !tbaa !17
+  %.not.i.i.i = icmp eq ptr %5, null
+  %.phi.trans.insert.i18.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 3 uses
+  %.pre.i19.i.i = load ptr, ptr %.phi.trans.insert.i18.i.i, align 8, !tbaa !19 ; 4 uses
+  %6 = icmp eq ptr %.pre.i19.i.i, null            ; 2 uses
+  br i1 %.not.i.i.i, label %8, label %7
+
+7:                                                ; preds = %ares_buf_consume.exit.thread61.thread79
+  br i1 %6, label %ares_buf_finish_str.exit, label %._crit_edge30.i.i.i
+
+8:                                                ; preds = %ares_buf_consume.exit.thread61.thread79
+  br i1 %6, label %ares_buf_reclaim.exit.thread.i.i, label %._crit_edge30.i.i.i
+
+._crit_edge30.i.i.i:                              ; preds = %8, %7
+  %9 = load i64, ptr %i.e, align 8, !tbaa !12
+  %.phi.trans.insert31.i.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 32 ; 3 uses
+  %.pre32.i.i.i = load i64, ptr %.phi.trans.insert31.i.i.i, align 8, !tbaa !20
+  %spec.select.i.i.i = tail call i64 @llvm.umin.i64(i64 %9, i64 %.pre32.i.i.i) ; 5 uses
+  %10 = icmp eq i64 %spec.select.i.i.i, 0
+  %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
+  %.pre.i = load i64, ptr %.phi.trans.insert.i, align 8, !tbaa !18 ; 2 uses
+  br i1 %10, label %ares_buf_finish_bin.exit.thread14.i, label %ares_buf_consume.exit.thread58.thread74
+
+ares_buf_consume.exit.thread58.thread74:          ; preds = %._crit_edge30.i.i.i
+  %11 = sub i64 %.pre.i, %spec.select.i.i.i       ; 3 uses
+  %12 = getelementptr inbounds nuw i8, ptr %.pre.i19.i.i, i64 %spec.select.i.i.i
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %.pre.i19.i.i, ptr nonnull align 1 %12, i64 %11, i1 false)
+  %13 = load ptr, ptr %.phi.trans.insert.i18.i.i, align 8, !tbaa !19 ; 3 uses
+  store ptr %13, ptr %i.c, align 8, !tbaa !17
+  store i64 %11, ptr %.phi.trans.insert.i, align 8, !tbaa !18
+  %i.ad = load i64, ptr %.phi.trans.insert31.i.i.i, align 8, !tbaa !20
+  %14 = sub i64 %i.ad, %spec.select.i.i.i
+  store i64 %14, ptr %.phi.trans.insert31.i.i.i, align 8, !tbaa !20
+  %15 = load i64, ptr %i.e, align 8, !tbaa !12    ; 2 uses
+  %.not27.i.i.i = icmp eq i64 %15, -1
+  br i1 %.not27.i.i.i, label %ares_buf_reclaim.exit.i.i, label %16
+
+16:                                               ; preds = %ares_buf_consume.exit.thread58.thread74
+  %17 = sub i64 %15, %spec.select.i.i.i
+  store i64 %17, ptr %i.e, align 8, !tbaa !12
+  br label %ares_buf_reclaim.exit.i.i
+
+ares_buf_reclaim.exit.i.i:                        ; preds = %16, %ares_buf_consume.exit.thread58.thread74
+  %18 = icmp eq ptr %13, null
+  br i1 %18, label %ares_buf_reclaim.exit.thread.i.i, label %ares_buf_finish_bin.exit.thread14.i
+
+ares_buf_reclaim.exit.thread.i.i:                 ; preds = %ares_buf_reclaim.exit.i.i, %8
+  %19 = tail call fastcc i32 @ares_buf_ensure_space(ptr noundef nonnull %i.c, i64 noundef 1)
+  %.not15.i.i = icmp eq i32 %19, 0
+  br i1 %.not15.i.i, label %ares_buf_finish_bin.exit.i, label %ares_buf_finish_str.exit
+
+ares_buf_finish_bin.exit.thread14.i:              ; preds = %ares_buf_reclaim.exit.i.i, %._crit_edge30.i.i.i
+  %20 = phi i64 [ %11, %ares_buf_reclaim.exit.i.i ], [ %.pre.i, %._crit_edge30.i.i.i ]
+  %.ph.i = phi ptr [ %13, %ares_buf_reclaim.exit.i.i ], [ %.pre.i19.i.i, %._crit_edge30.i.i.i ]
+  tail call void @ares_free(ptr noundef nonnull %i.c) #15
+  br label %24
+
+ares_buf_finish_bin.exit.i:                       ; preds = %ares_buf_reclaim.exit.thread.i.i
+  %.pre.i.i = load ptr, ptr %.phi.trans.insert.i18.i.i, align 8, !tbaa !19 ; 2 uses
+  %21 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %22 = load i64, ptr %21, align 8, !tbaa !18
+  tail call void @ares_free(ptr noundef nonnull %i.c) #15
+  %23 = icmp eq ptr %.pre.i.i, null
+  br i1 %23, label %ares_buf_finish_str.exit, label %24
+
+24:                                               ; preds = %ares_buf_finish_bin.exit.i, %ares_buf_finish_bin.exit.thread14.i
+  %25 = phi i64 [ %20, %ares_buf_finish_bin.exit.thread14.i ], [ %22, %ares_buf_finish_bin.exit.i ] ; 2 uses
+  %26 = phi ptr [ %.ph.i, %ares_buf_finish_bin.exit.thread14.i ], [ %.pre.i.i, %ares_buf_finish_bin.exit.i ] ; 2 uses
+  %27 = getelementptr inbounds nuw i8, ptr %26, i64 %25
+  store i8 0, ptr %27, align 1, !tbaa !25
+  br label %ares_buf_finish_str.exit
+
+ares_buf_finish_str.exit:                         ; preds = %7, %ares_buf_reclaim.exit.thread.i.i, %ares_buf_finish_bin.exit.i, %24
+  %.050 = phi i64 [ 0, %7 ], [ 0, %ares_buf_finish_bin.exit.i ], [ %25, %24 ], [ 0, %ares_buf_reclaim.exit.thread.i.i ]
+  %.0.i44 = phi ptr [ null, %7 ], [ null, %ares_buf_finish_bin.exit.i ], [ %26, %24 ], [ null, %ares_buf_reclaim.exit.thread.i.i ]
+  store ptr %.0.i44, ptr %2, align 8, !tbaa !29
+  store i64 %.050, ptr %3, align 8, !tbaa !24
   br label %ares_buf_create.exit.thread
 
-ares_buf_create.exit.thread:                      ; preds = %ares_buf_consume.exit.thread58.thread, %bb.c, %ares_buf_destroy.exit, %ares_buf_consume.exit.thread58.thread74, %ares_buf_consume.exit.thread58, %bb.b, %bb.a
-  %.0 = phi i32 [ %.156, %ares_buf_destroy.exit ], [ 2, %bb.a ], [ 10, %bb.b ], [ 0, %ares_buf_consume.exit.thread58.thread74 ], [ 0, %ares_buf_consume.exit.thread58 ], [ 15, %bb.c ], [ 0, %ares_buf_consume.exit.thread58.thread ]
+ares_buf_create.exit.thread:                      ; preds = %ares_buf_consume.exit.thread58.thread, %bb.c, %ares_buf_destroy.exit, %ares_buf_finish_str.exit, %ares_buf_consume.exit.thread58, %bb.b, %bb.a
+  %.0 = phi i32 [ %.156, %ares_buf_destroy.exit ], [ 2, %bb.a ], [ 10, %bb.b ], [ 0, %ares_buf_finish_str.exit ], [ 0, %ares_buf_consume.exit.thread58 ], [ 15, %bb.c ], [ 0, %ares_buf_consume.exit.thread58.thread ]
   ret i32 %.0
 }
 

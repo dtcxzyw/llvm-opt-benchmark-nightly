@@ -201,11 +201,9 @@ bb.e:                                             ; preds = %bb.d
   %i.o = call noundef ptr @_ZN5folly7memrchrEPKvim(ptr noundef %i.i, i32 noundef 46, i64 noundef %.pre13.i) #23 ; 2 uses
   %i.p = icmp eq ptr %i.o, null
   %i.q = ptrtoint ptr %i.o to i64
-  %i.r = sub i64 %i.q, %.pre11.i                  ; 2 uses
-  %13 = icmp eq i64 %i.r, -1
-  %or.cond.i = or i1 %i.p, %13
+  %i.r = sub i64 %i.q, %.pre11.i
   %i.s = call i64 @llvm.umin.i64(i64 %.pre13.i, i64 %i.r)
-  %i.t = select i1 %or.cond.i, i64 %.pre13.i, i64 %i.s
+  %i.t = select i1 %i.p, i64 %.pre13.i, i64 %i.s
   br label %_ZN12_GLOBAL__N_116getBaseNameNoExtEN5folly5RangeIPKcEE.exit
 
 _ZN12_GLOBAL__N_116getBaseNameNoExtEN5folly5RangeIPKcEE.exit: ; preds = %bb.d, %bb.e

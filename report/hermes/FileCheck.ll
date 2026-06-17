@@ -201,14 +201,12 @@ _ZNK4llvh9StringRef5splitEc.exit:
   store i64 %.sroa.speculated16, ptr %i.h, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i8 10, ptr %i.a, align 1, !tbaa !43, !noalias !125
-  %i.i = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr nonnull %i.a, i64 1, i64 noundef 0) #18, !noalias !128 ; 2 uses
-  %5 = icmp eq i64 %i.i, -1
-  %.sroa.5.0.copyload5 = load i64, ptr %i.h, align 8, !tbaa !44 ; 2 uses
+  %i.i = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr nonnull %i.a, i64 1, i64 noundef 0) #18, !noalias !128
+  %.sroa.5.0.copyload5 = load i64, ptr %i.h, align 8, !tbaa !44
   %i.j = call i64 @llvm.umin.i64(i64 %.sroa.5.0.copyload5, i64 %i.i)
-  %.sroa.5.0 = select i1 %5, i64 %.sroa.5.0.copyload5, i64 %i.j
   %.sroa.07.0 = select i1 %i.c, ptr %i.e, ptr %.sroa.07.0.copyload
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  store i64 %.sroa.5.0, ptr %i.h, align 8, !tbaa !44
+  store i64 %i.j, ptr %i.h, align 8, !tbaa !44
   %i.k = call noundef i32 @_ZNK4llvh9StringRef13edit_distanceES0_bj(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr %.sroa.07.0, i64 %.sroa.58.0, i1 noundef zeroext true, i32 noundef 0) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
   ret i32 %i.k
@@ -611,14 +609,12 @@ bb.c:                                             ; preds = %bb.b
   store i64 %.sroa.speculated16.i, ptr %i.e, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i8 10, ptr %i.a, align 1, !tbaa !43, !noalias !146
-  %i.p = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr nonnull %i.a, i64 1, i64 noundef 0) #18, !noalias !149 ; 2 uses
-  %8 = icmp eq i64 %i.p, -1
-  %.sroa.5.0.copyload5.i = load i64, ptr %i.e, align 8, !tbaa !44 ; 2 uses
+  %i.p = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr nonnull %i.a, i64 1, i64 noundef 0) #18, !noalias !149
+  %.sroa.5.0.copyload5.i = load i64, ptr %i.e, align 8, !tbaa !44
   %i.q = call i64 @llvm.umin.i64(i64 %.sroa.5.0.copyload5.i, i64 %i.p)
-  %.sroa.5.0.i = select i1 %8, i64 %.sroa.5.0.copyload5.i, i64 %i.q
   %.sroa.07.0.i = select i1 %i.m, ptr %i.n, ptr %.sroa.07.0.copyload.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  store i64 %.sroa.5.0.i, ptr %i.e, align 8, !tbaa !44
+  store i64 %i.q, ptr %i.e, align 8, !tbaa !44
   %i.r = call noundef i32 @_ZNK4llvh9StringRef13edit_distanceES0_bj(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr %.sroa.07.0.i, i64 %.sroa.58.0.i, i1 noundef zeroext true, i32 noundef 0) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
   %i.s = uitofp i32 %i.r to double

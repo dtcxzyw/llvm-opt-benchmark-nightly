@@ -201,18 +201,16 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit: ; preds = %bb.
   br i1 %i.mt, label %bb.cz, label %bb.cl
 
 bb.cl:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit
-  %i.mu = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm(ptr noundef nonnull align 8 dereferenceable(32) %11, i8 noundef signext 46, i64 noundef -1) #24 ; 2 uses
-  %23 = icmp eq i64 %i.mu, -1
-  %.pre906 = load i64, ptr %i.iz, align 8         ; 2 uses
+  %i.mu = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5rfindEcm(ptr noundef nonnull align 8 dereferenceable(32) %11, i8 noundef signext 46, i64 noundef -1) #24
+  %.pre906 = load i64, ptr %i.iz, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #24
   call void @llvm.experimental.noalias.scope.decl(metadata !215)
   store ptr %i.ja, ptr %12, align 8, !alias.scope !215
   %i.mv = load ptr, ptr %11, align 8, !noalias !215 ; 2 uses
-  %i.mw = call i64 @llvm.umin.i64(i64 %i.mu, i64 %.pre906)
-  %spec.select.i.i.i337 = select i1 %23, i64 %.pre906, i64 %i.mw ; 4 uses
+  %i.mw = call i64 @llvm.umin.i64(i64 %i.mu, i64 %.pre906) ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #24, !noalias !215
-  store i64 %spec.select.i.i.i337, ptr %i.d, align 8, !noalias !215
-  %i.mx = icmp ugt i64 %spec.select.i.i.i337, 15
+  store i64 %i.mw, ptr %i.d, align 8, !noalias !215
+  %i.mx = icmp ugt i64 %i.mw, 15
   br i1 %i.mx, label %.noexc10.i.i339, label %._crit_edge.i.i.i338
 
 .noexc10.i.i339:                                  ; preds = %bb.cl
@@ -227,7 +225,7 @@ bb.cl:                                            ; preds = %_ZNSt7__cxx1112basi
 
 ._crit_edge.i.i.i338:                             ; preds = %.noexc340, %bb.cl
   %i.na = phi ptr [ %i.my, %.noexc340 ], [ %i.ja, %bb.cl ] ; 2 uses
-  switch i64 %spec.select.i.i.i337, label %bb.cn [
+  switch i64 %i.mw, label %bb.cn [
     i64 1, label %bb.cm
     i64 0, label %bb.co
   ]
@@ -238,7 +236,7 @@ bb.cm:                                            ; preds = %._crit_edge.i.i.i33
   br label %bb.co
 
 bb.cn:                                            ; preds = %._crit_edge.i.i.i338
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.na, ptr align 1 %i.mv, i64 %spec.select.i.i.i337, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.na, ptr align 1 %i.mv, i64 %i.mw, i1 false)
   br label %bb.co
 
 bb.co:                                            ; preds = %bb.cn, %bb.cm, %._crit_edge.i.i.i338
