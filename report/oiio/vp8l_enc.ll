@@ -201,7 +201,7 @@ bb.cq:                                            ; preds = %bb.cp
   %i.afc = load i32, ptr %i.aet, align 8, !tbaa !119
   %i.afd = mul i32 %i.afc, 5
   %i.afe = zext i32 %i.afd to i64
-  %i.aff = call ptr @WebPSafeCalloc(i64 noundef %i.afe, i64 noundef 24) #7 ; 20 uses
+  %i.aff = call ptr @WebPSafeCalloc(i64 noundef %i.afe, i64 noundef 24) #7 ; 16 uses
   %i.afg = icmp eq ptr %i.aff, null
   br i1 %i.afg, label %.thread274.sink.split.i, label %bb.cr
 
@@ -386,90 +386,76 @@ VP8LPutBits.exit272.i:                            ; preds = %bb.db, %bb.da
 
 bb.dc:                                            ; preds = %VP8LPutBits.exit270.i
   %.not356.i = icmp eq i32 %.0225.lcssa.i, 0
-  br i1 %.not356.i, label %._crit_edge340.i, label %.lr.ph339.preheader.i
+  br i1 %.not356.i, label %middle.block, label %.lr.ph339.preheader.i
 
 .lr.ph339.preheader.i:                            ; preds = %bb.dc, %.thread412.i
   %.1203415.i = phi i32 [ %i.ahs, %.thread412.i ], [ %i.aey, %bb.dc ]
   %i.aht = mul i32 %.0225.lcssa.i, 5              ; 2 uses
-  %wide.trip.count380.i = zext i32 %i.aht to i64  ; 4 uses
-  %min.iters.check = icmp ult i32 %i.aht, 9
+  %wide.trip.count380.i = zext i32 %i.aht to i64  ; 3 uses
+  %xtraiter527 = and i64 %wide.trip.count380.i, 3 ; 3 uses
+  %7 = add i32 %i.aht, -1
+  %min.iters.check = icmp ult i32 %7, 3
   br i1 %min.iters.check, label %.lr.ph339.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph339.preheader.i
-  %n.mod.vf = and i64 %wide.trip.count380.i, 7    ; 2 uses
-  %7 = icmp eq i64 %n.mod.vf, 0
-  %8 = select i1 %7, i64 8, i64 %n.mod.vf
-  %n.vec = sub nsw i64 %wide.trip.count380.i, %8  ; 2 uses
+  %n.mod.vf = and i64 %wide.trip.count380.i, 4294967292
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 9 uses
-  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %32, %vector.body ]
-  %vec.phi453 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %33, %vector.body ]
-  %9 = getelementptr inbounds nuw [24 x i8], ptr %i.aff, i64 %index
+  %index = phi i64 [ 0, %vector.ph ], [ %indvars.iv.next378.i.3, %vector.body ] ; 5 uses
+  %.0199337.i = phi i32 [ 0, %vector.ph ], [ %spec.select264.i.3, %vector.body ]
+  %niter533 = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ]
   %i.ahu = getelementptr inbounds nuw [24 x i8], ptr %i.aff, i64 %index
-  %10 = getelementptr inbounds nuw i8, ptr %i.ahu, i64 24
-  %11 = getelementptr inbounds nuw [24 x i8], ptr %i.aff, i64 %index
-  %12 = getelementptr inbounds nuw i8, ptr %11, i64 48
+  %8 = load i32, ptr %i.ahu, align 8, !tbaa !123
+  %spec.select264.i = call i32 @llvm.smax.i32(i32 %.0199337.i, i32 %8)
   %i.ahv = getelementptr inbounds nuw [24 x i8], ptr %i.aff, i64 %index
-  %i.ahw = getelementptr inbounds nuw i8, ptr %i.ahv, i64 72
-  %13 = getelementptr inbounds nuw [24 x i8], ptr %i.aff, i64 %index
-  %14 = getelementptr inbounds nuw i8, ptr %13, i64 96
+  %i.ahw = getelementptr inbounds nuw i8, ptr %i.ahv, i64 24
+  %9 = load i32, ptr %i.ahw, align 8, !tbaa !123
+  %spec.select264.i.1 = call i32 @llvm.smax.i32(i32 %spec.select264.i, i32 %9)
   %i.ahx = getelementptr inbounds nuw [24 x i8], ptr %i.aff, i64 %index
-  %i.ahy = getelementptr inbounds nuw i8, ptr %i.ahx, i64 120
-  %15 = getelementptr inbounds nuw [24 x i8], ptr %i.aff, i64 %index
-  %16 = getelementptr inbounds nuw i8, ptr %15, i64 144
+  %i.ahy = getelementptr inbounds nuw i8, ptr %i.ahx, i64 48
+  %10 = load i32, ptr %i.ahy, align 8, !tbaa !123
+  %spec.select264.i.2 = call i32 @llvm.smax.i32(i32 %spec.select264.i.1, i32 %10)
   %i.ahz = getelementptr inbounds nuw [24 x i8], ptr %i.aff, i64 %index
-  %i.aia = getelementptr inbounds nuw i8, ptr %i.ahz, i64 168
-  %17 = load i32, ptr %9, align 8, !tbaa !123
-  %18 = load i32, ptr %10, align 8, !tbaa !123
-  %19 = load i32, ptr %12, align 8, !tbaa !123
-  %20 = load i32, ptr %i.ahw, align 8, !tbaa !123
-  %21 = insertelement <4 x i32> poison, i32 %17, i64 0
-  %22 = insertelement <4 x i32> %21, i32 %18, i64 1
-  %23 = insertelement <4 x i32> %22, i32 %19, i64 2
-  %24 = insertelement <4 x i32> %23, i32 %20, i64 3
-  %25 = load i32, ptr %14, align 8, !tbaa !123
-  %26 = load i32, ptr %i.ahy, align 8, !tbaa !123
-  %27 = load i32, ptr %16, align 8, !tbaa !123
+  %i.aia = getelementptr inbounds nuw i8, ptr %i.ahz, i64 72
   %i.aib = load i32, ptr %i.aia, align 8, !tbaa !123
-  %28 = insertelement <4 x i32> poison, i32 %25, i64 0
-  %29 = insertelement <4 x i32> %28, i32 %26, i64 1
-  %30 = insertelement <4 x i32> %29, i32 %27, i64 2
-  %31 = insertelement <4 x i32> %30, i32 %i.aib, i64 3
-  %32 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %vec.phi, <4 x i32> %24) ; 2 uses
-  %33 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %vec.phi453, <4 x i32> %31) ; 2 uses
-  %index.next = add nuw i64 %index, 8             ; 2 uses
-  %i.aic = icmp eq i64 %index.next, %n.vec
-  br i1 %i.aic, label %middle.block, label %vector.body, !llvm.loop !126
+  %spec.select264.i.3 = call i32 @llvm.smax.i32(i32 %spec.select264.i.2, i32 %i.aib) ; 3 uses
+  %indvars.iv.next378.i.3 = add nuw nsw i64 %index, 4 ; 2 uses
+  %index.next = add i64 %niter533, 4              ; 2 uses
+  %i.aic = icmp eq i64 %index.next, %n.mod.vf
+  br i1 %i.aic, label %._crit_edge340.i.thread.unr-lcssa, label %vector.body, !llvm.loop !126
 
-middle.block:                                     ; preds = %vector.body
-  %rdx.minmax = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %32, <4 x i32> %33)
-  %34 = call i32 @llvm.vector.reduce.smax.v4i32(<4 x i32> %rdx.minmax)
-  br label %.lr.ph339.i.preheader
+middle.block:                                     ; preds = %bb.dc
+  %11 = call ptr @WebPSafeMalloc(i64 noundef 0, i64 noundef 2) #7 ; 2 uses
+  %.not259.i = icmp eq ptr %11, null
+  br i1 %.not259.i, label %.thread274.sink.split.i, label %._crit_edge345.i
 
-.lr.ph339.i.preheader:                            ; preds = %.lr.ph339.preheader.i, %middle.block
-  %indvars.iv377.i.ph = phi i64 [ 0, %.lr.ph339.preheader.i ], [ %n.vec, %middle.block ]
-  %.0199337.i.ph = phi i32 [ 0, %.lr.ph339.preheader.i ], [ %34, %middle.block ]
+._crit_edge340.i.thread.unr-lcssa:                ; preds = %vector.body
+  %lcmp.mod529.not = icmp eq i64 %xtraiter527, 0
+  br i1 %lcmp.mod529.not, label %._crit_edge340.i.thread, label %.lr.ph339.i.preheader
+
+.lr.ph339.i.preheader:                            ; preds = %._crit_edge340.i.thread.unr-lcssa, %.lr.ph339.preheader.i
+  %indvars.iv377.i.ph = phi i64 [ 0, %.lr.ph339.preheader.i ], [ %indvars.iv.next378.i.3, %._crit_edge340.i.thread.unr-lcssa ]
+  %.0199337.i.ph = phi i32 [ 0, %.lr.ph339.preheader.i ], [ %spec.select264.i.3, %._crit_edge340.i.thread.unr-lcssa ]
+  %lcmp.mod531 = icmp ne i64 %xtraiter527, 0
+  call void @llvm.assume(i1 %lcmp.mod531)
   br label %.lr.ph339.i
 
-.lr.ph339.i:                                      ; preds = %.lr.ph339.i.preheader, %.lr.ph339.i
-  %indvars.iv377.i = phi i64 [ %indvars.iv.next378.i, %.lr.ph339.i ], [ %indvars.iv377.i.ph, %.lr.ph339.i.preheader ] ; 2 uses
-  %.0199337.i.a = phi i32 [ %spec.select264.i.a, %.lr.ph339.i ], [ %.0199337.i.ph, %.lr.ph339.i.preheader ]
+.lr.ph339.i:                                      ; preds = %.lr.ph339.i, %.lr.ph339.i.preheader
+  %indvars.iv377.i = phi i64 [ %indvars.iv377.i.ph, %.lr.ph339.i.preheader ], [ %indvars.iv.next378.i.epil, %.lr.ph339.i ] ; 2 uses
+  %.0199337.i.a = phi i32 [ %.0199337.i.ph, %.lr.ph339.i.preheader ], [ %spec.select264.i.a, %.lr.ph339.i ]
+  %epil.iter528 = phi i64 [ 0, %.lr.ph339.i.preheader ], [ %indvars.iv.next378.i, %.lr.ph339.i ]
   %i.aid = getelementptr inbounds nuw [24 x i8], ptr %i.aff, i64 %indvars.iv377.i
   %i.aie = load i32, ptr %i.aid, align 8, !tbaa !123
   %spec.select264.i.a = call i32 @llvm.smax.i32(i32 %.0199337.i.a, i32 %i.aie) ; 2 uses
-  %indvars.iv.next378.i = add nuw nsw i64 %indvars.iv377.i, 1 ; 2 uses
-  %exitcond381.not.i = icmp eq i64 %indvars.iv.next378.i, %wide.trip.count380.i
+  %indvars.iv.next378.i.epil = add nuw nsw i64 %indvars.iv377.i, 1
+  %indvars.iv.next378.i = add i64 %epil.iter528, 1 ; 2 uses
+  %exitcond381.not.i = icmp eq i64 %indvars.iv.next378.i, %xtraiter527
   br i1 %exitcond381.not.i, label %._crit_edge340.i.thread, label %.lr.ph339.i, !llvm.loop !127
 
-._crit_edge340.i:                                 ; preds = %bb.dc
-  %35 = call ptr @WebPSafeMalloc(i64 noundef 0, i64 noundef 2) #7 ; 2 uses
-  %.not259.i = icmp eq ptr %35, null
-  br i1 %.not259.i, label %.thread274.sink.split.i, label %._crit_edge345.i
-
-._crit_edge340.i.thread:                          ; preds = %.lr.ph339.i
-  %i.aif = zext nneg i32 %spec.select264.i.a to i64
+._crit_edge340.i.thread:                          ; preds = %.lr.ph339.i, %._crit_edge340.i.thread.unr-lcssa
+  %spec.select264.i.lcssa = phi i32 [ %spec.select264.i.3, %._crit_edge340.i.thread.unr-lcssa ], [ %spec.select264.i.a, %.lr.ph339.i ]
+  %i.aif = zext nneg i32 %spec.select264.i.lcssa to i64
   %i.aig = call ptr @WebPSafeMalloc(i64 noundef %i.aif, i64 noundef 2) #7 ; 3 uses
   %.not259.i248 = icmp eq ptr %i.aig, null
   br i1 %.not259.i248, label %.thread274.sink.split.i, label %.lr.ph344.i
@@ -529,9 +515,9 @@ ClearHuffmanTreeIfOnlyOneSymbol.exit.i:           ; preds = %bb.de, %bb.dg, %.lr
   %exitcond387.not.i = icmp eq i64 %indvars.iv.next383.i, %wide.trip.count380.i
   br i1 %exitcond387.not.i, label %._crit_edge345.i, label %.lr.ph344.i, !llvm.loop !132
 
-._crit_edge345.i:                                 ; preds = %ClearHuffmanTreeIfOnlyOneSymbol.exit.i, %._crit_edge340.i
-  %.1203416.i251256 = phi i32 [ %i.aey, %._crit_edge340.i ], [ %.1203415.i, %ClearHuffmanTreeIfOnlyOneSymbol.exit.i ]
-  %i.aiw = phi ptr [ %35, %._crit_edge340.i ], [ %i.aig, %ClearHuffmanTreeIfOnlyOneSymbol.exit.i ] ; 2 uses
+._crit_edge345.i:                                 ; preds = %ClearHuffmanTreeIfOnlyOneSymbol.exit.i, %middle.block
+  %.1203416.i251256 = phi i32 [ %i.aey, %middle.block ], [ %.1203415.i, %ClearHuffmanTreeIfOnlyOneSymbol.exit.i ]
+  %i.aiw = phi ptr [ %11, %middle.block ], [ %i.aig, %ClearHuffmanTreeIfOnlyOneSymbol.exit.i ] ; 2 uses
   %i.aix = load ptr, ptr %i.ai, align 8, !tbaa !74
   %i.aiy = load ptr, ptr %i.ak, align 8, !tbaa !76
   %i.aiz = ptrtoint ptr %i.aix to i64
@@ -590,10 +576,10 @@ bb.dj:                                            ; preds = %bb.di, %bb.dh
   %i.akg = and i1 %i.aeo, %.not255.i
   br i1 %i.akg, label %bb.cn, label %.loopexit.i, !llvm.loop !133
 
-.thread274.sink.split.i:                          ; preds = %._crit_edge340.i.thread, %._crit_edge340.i, %bb.cr, %bb.cq, %bb.co
-  %.3230.ph.ph.i = phi ptr [ null, %bb.co ], [ null, %bb.cq ], [ %i.aff, %bb.cr ], [ %i.aff, %._crit_edge340.i ], [ %i.aff, %._crit_edge340.i.thread ]
-  %.2217.ph.ph.i = phi ptr [ %i.aeu, %bb.co ], [ %i.aeu, %bb.cq ], [ %i.aeu, %bb.cr ], [ null, %._crit_edge340.i ], [ null, %._crit_edge340.i.thread ]
-  %.2211.ph.ph.i = phi ptr [ %i.aet, %bb.co ], [ %i.aet, %bb.cq ], [ %i.aet, %bb.cr ], [ null, %._crit_edge340.i ], [ null, %._crit_edge340.i.thread ]
+.thread274.sink.split.i:                          ; preds = %._crit_edge340.i.thread, %middle.block, %bb.cr, %bb.cq, %bb.co
+  %.3230.ph.ph.i = phi ptr [ null, %bb.co ], [ null, %bb.cq ], [ %i.aff, %bb.cr ], [ %i.aff, %middle.block ], [ %i.aff, %._crit_edge340.i.thread ]
+  %.2217.ph.ph.i = phi ptr [ %i.aeu, %bb.co ], [ %i.aeu, %bb.cq ], [ %i.aeu, %bb.cr ], [ null, %middle.block ], [ null, %._crit_edge340.i.thread ]
+  %.2211.ph.ph.i = phi ptr [ %i.aet, %bb.co ], [ %i.aet, %bb.cq ], [ %i.aet, %bb.cr ], [ null, %middle.block ], [ null, %._crit_edge340.i.thread ]
   %i.akh = call i32 @WebPEncodingSetError(ptr noundef %i.l, i32 noundef 1) #7 ; 0 uses
   br label %.thread274.i
 
@@ -996,12 +982,6 @@ declare i32 @llvm.smax.i32(i32, i32) #5
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #6
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.smax.v4i32(<4 x i32>) #5
-
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -1141,8 +1121,8 @@ attributes #7 = { nounwind }
 !123 = !{!124, !4, i64 0}
 !124 = !{!"", !4, i64 0, !20, i64 8, !125, i64 16}
 !125 = !{!"p1 short", !10, i64 0}
-!126 = distinct !{!126, !28, !94, !95}
-!127 = distinct !{!127, !28, !95, !94}
+!126 = distinct !{!126, !28}
+!127 = distinct !{!127, !50}
 !128 = !{!124, !20, i64 8}
 !129 = distinct !{!129, !28}
 !130 = !{!124, !125, i64 16}

@@ -201,7 +201,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %.02342 = phi ptr [ %i.r, %.lr.ph ], [ %i.a, %bb.a ] ; 4 uses
-  %.02441 = phi i64 [ %.2, %.lr.ph ], [ 0, %bb.a ] ; 3 uses
+  %.02441 = phi i64 [ %spec.select35, %.lr.ph ], [ 0, %bb.a ] ; 2 uses
   %.02640 = phi ptr [ %.228, %.lr.ph ], [ null, %bb.a ]
   %.02939 = phi i64 [ %.130, %.lr.ph ], [ 0, %bb.a ]
   %i.c = getelementptr inbounds nuw i8, ptr %.02342, i64 32
@@ -212,14 +212,13 @@ bb.a:
   %i.h = icmp ugt i64 %i.g, -9223372036854775808
   %i.i = sub i64 %i.d, %i.f
   %i.j = select i1 %i.h, i64 %i.i, i64 0          ; 3 uses
-  %.not34 = icmp ne i64 %i.j, 0                   ; 3 uses
+  %.not34 = icmp ne i64 %i.j, 0                   ; 2 uses
   %i.k = icmp ugt i64 %i.j, %.02441
   %spec.select35 = tail call i64 @llvm.umax.i64(i64 %i.j, i64 %.02441)
   %i.l = zext i1 %.not34 to i64
   %.130 = add nuw nsw i64 %.02939, %i.l           ; 3 uses
   %i.m = select i1 %.not34, i1 %i.k, i1 false
   %.228 = select i1 %i.m, ptr %.02342, ptr %.02640 ; 5 uses
-  %.2 = select i1 %.not34, i64 %spec.select35, i64 %.02441
   %i.n = getelementptr inbounds nuw i8, ptr %.02342, i64 8
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !1193 ; 2 uses
   %i.p = icmp ne ptr %i.o, null                   ; 2 uses

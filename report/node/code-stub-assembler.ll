@@ -201,93 +201,77 @@ bb.f:                                             ; preds = %bb.e
   call void @_ZN2v88internal8compiler13CodeAssembler4BindEPNS1_18CodeAssemblerLabelE(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %53) #23
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
-  %i.av = load i64, ptr %i.au, align 8            ; 6 uses
+  %i.av = load i64, ptr %i.au, align 8            ; 5 uses
   %i.aw = icmp ult i64 %i.av, 2147483648
-  br i1 %i.aw, label %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.lr.ph, label %109, !prof !24464
+  br i1 %i.aw, label %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.lr.ph, label %84, !prof !24464
 
 _ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.lr.ph: ; preds = %bb.f
-  %i.ax = load ptr, ptr %i.at, align 8            ; 9 uses
+  %i.ax = load ptr, ptr %i.at, align 8            ; 5 uses
   %.not99 = icmp eq i64 %i.av, 0
   br i1 %.not99, label %.split.us, label %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us.preheader
 
 _ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us.preheader: ; preds = %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.lr.ph
-  %min.iters.check = icmp ult i64 %i.av, 9
+  %xtraiter = and i64 %i.av, 3                    ; 3 uses
+  %min.iters.check = icmp ult i64 %i.av, 4
   br i1 %min.iters.check, label %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us.preheader125, label %vector.ph
 
 vector.ph:                                        ; preds = %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us.preheader
-  %n.mod.vf = and i64 %i.av, 7                    ; 2 uses
-  %81 = icmp eq i64 %n.mod.vf, 0
-  %82 = select i1 %81, i64 8, i64 %n.mod.vf
-  %n.vec = sub nsw i64 %i.av, %82                 ; 2 uses
+  %n.mod.vf = and i64 %i.av, 2147483644
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 9 uses
-  %vec.phi = phi <4 x i32> [ splat (i32 -1), %vector.ph ], [ %106, %vector.body ]
-  %vec.phi124 = phi <4 x i32> [ splat (i32 -1), %vector.ph ], [ %107, %vector.body ]
-  %83 = getelementptr inbounds nuw [12 x i8], ptr %i.ax, i64 %index
+  %index = phi i64 [ 0, %vector.ph ], [ %indvars.iv.next104.3, %vector.body ] ; 5 uses
+  %.08290.us95 = phi i32 [ -1, %vector.ph ], [ %.sroa.speculated.us.3, %vector.body ]
+  %niter = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ]
   %i.ay = getelementptr inbounds nuw [12 x i8], ptr %i.ax, i64 %index
-  %84 = getelementptr inbounds nuw i8, ptr %i.ay, i64 12
-  %85 = getelementptr inbounds nuw [12 x i8], ptr %i.ax, i64 %index
-  %86 = getelementptr inbounds nuw i8, ptr %85, i64 24
+  %81 = load i32, ptr %i.ay, align 4
+  %.sroa.speculated.us = call i32 @llvm.smax.i32(i32 %.08290.us95, i32 %81)
   %i.az = getelementptr inbounds nuw [12 x i8], ptr %i.ax, i64 %index
-  %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 36
-  %87 = getelementptr inbounds nuw [12 x i8], ptr %i.ax, i64 %index
-  %88 = getelementptr inbounds nuw i8, ptr %87, i64 48
+  %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 12
+  %82 = load i32, ptr %i.ba, align 4
+  %.sroa.speculated.us.1 = call i32 @llvm.smax.i32(i32 %.sroa.speculated.us, i32 %82)
   %i.bb = getelementptr inbounds nuw [12 x i8], ptr %i.ax, i64 %index
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 60
-  %89 = getelementptr inbounds nuw [12 x i8], ptr %i.ax, i64 %index
-  %90 = getelementptr inbounds nuw i8, ptr %89, i64 72
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 24
+  %83 = load i32, ptr %i.bc, align 4
+  %.sroa.speculated.us.2 = call i32 @llvm.smax.i32(i32 %.sroa.speculated.us.1, i32 %83)
   %i.bd = getelementptr inbounds nuw [12 x i8], ptr %i.ax, i64 %index
-  %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 84
-  %91 = load i32, ptr %83, align 4
-  %92 = load i32, ptr %84, align 4
-  %93 = load i32, ptr %86, align 4
-  %94 = load i32, ptr %i.ba, align 4
-  %95 = insertelement <4 x i32> poison, i32 %91, i64 0
-  %96 = insertelement <4 x i32> %95, i32 %92, i64 1
-  %97 = insertelement <4 x i32> %96, i32 %93, i64 2
-  %98 = insertelement <4 x i32> %97, i32 %94, i64 3
-  %99 = load i32, ptr %88, align 4
-  %100 = load i32, ptr %i.bc, align 4
-  %101 = load i32, ptr %90, align 4
+  %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 36
   %i.bf = load i32, ptr %i.be, align 4
-  %102 = insertelement <4 x i32> poison, i32 %99, i64 0
-  %103 = insertelement <4 x i32> %102, i32 %100, i64 1
-  %104 = insertelement <4 x i32> %103, i32 %101, i64 2
-  %105 = insertelement <4 x i32> %104, i32 %i.bf, i64 3
-  %106 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %vec.phi, <4 x i32> %98) ; 2 uses
-  %107 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %vec.phi124, <4 x i32> %105) ; 2 uses
-  %index.next = add nuw i64 %index, 8             ; 2 uses
-  %i.bg = icmp eq i64 %index.next, %n.vec
-  br i1 %i.bg, label %middle.block, label %vector.body, !llvm.loop !24493
+  %.sroa.speculated.us.3 = call i32 @llvm.smax.i32(i32 %.sroa.speculated.us.2, i32 %i.bf) ; 3 uses
+  %indvars.iv.next104.3 = add nuw nsw i64 %index, 4 ; 2 uses
+  %index.next = add i64 %niter, 4                 ; 2 uses
+  %i.bg = icmp eq i64 %index.next, %n.mod.vf
+  br i1 %i.bg, label %middle.block, label %vector.body
 
-middle.block:                                     ; preds = %vector.body
-  %rdx.minmax = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %106, <4 x i32> %107)
-  %108 = call i32 @llvm.vector.reduce.smax.v4i32(<4 x i32> %rdx.minmax)
-  br label %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us.preheader125
-
-_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us.preheader125: ; preds = %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us.preheader, %middle.block
-  %indvars.iv103.ph = phi i64 [ 0, %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us.preheader ], [ %n.vec, %middle.block ]
-  %.08290.us95.ph = phi i32 [ -1, %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us.preheader ], [ %108, %middle.block ]
-  br label %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us
-
-_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us: ; preds = %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us.preheader125, %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us
-  %indvars.iv103 = phi i64 [ %indvars.iv.next104, %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us ], [ %indvars.iv103.ph, %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us.preheader125 ] ; 2 uses
-  %.08290.us95.a = phi i32 [ %.sroa.speculated.us.a, %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us ], [ %.08290.us95.ph, %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us.preheader125 ]
-  %i.bh = getelementptr inbounds nuw [12 x i8], ptr %i.ax, i64 %indvars.iv103
-  %i.bi = load i32, ptr %i.bh, align 4
-  %.sroa.speculated.us.a = call i32 @llvm.smax.i32(i32 %.08290.us95.a, i32 %i.bi) ; 2 uses
-  %indvars.iv.next104 = add nuw nsw i64 %indvars.iv103, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next104, %i.av
-  br i1 %exitcond.not, label %.split.us, label %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us, !llvm.loop !24494
-
-109:                                              ; preds = %bb.f
+84:                                               ; preds = %bb.f
   call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.523) #24
   unreachable
 
-.split.us:                                        ; preds = %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us, %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.lr.ph
-  %.us-phi = phi i32 [ -1, %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.lr.ph ], [ %.sroa.speculated.us.a, %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us ]
+middle.block:                                     ; preds = %vector.body
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.split.us, label %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us.preheader125
+
+_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us.preheader125: ; preds = %middle.block, %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us.preheader
+  %indvars.iv103.ph = phi i64 [ 0, %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us.preheader ], [ %indvars.iv.next104.3, %middle.block ]
+  %.08290.us95.ph = phi i32 [ -1, %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us.preheader ], [ %.sroa.speculated.us.3, %middle.block ]
+  %lcmp.mod128 = icmp ne i64 %xtraiter, 0
+  call void @llvm.assume(i1 %lcmp.mod128)
+  br label %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us
+
+_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us: ; preds = %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us, %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us.preheader125
+  %indvars.iv103 = phi i64 [ %indvars.iv.next104.epil, %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us ], [ %indvars.iv103.ph, %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us.preheader125 ] ; 2 uses
+  %.08290.us95.a = phi i32 [ %.sroa.speculated.us.a, %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us ], [ %.08290.us95.ph, %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us.preheader125 ]
+  %epil.iter = phi i64 [ %indvars.iv.next104, %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us ], [ 0, %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us.preheader125 ]
+  %i.bh = getelementptr inbounds nuw [12 x i8], ptr %i.ax, i64 %indvars.iv103
+  %i.bi = load i32, ptr %i.bh, align 4
+  %.sroa.speculated.us.a = call i32 @llvm.smax.i32(i32 %.08290.us95.a, i32 %i.bi) ; 2 uses
+  %indvars.iv.next104.epil = add nuw nsw i64 %indvars.iv103, 1
+  %indvars.iv.next104 = add i64 %epil.iter, 1     ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next104, %xtraiter
+  br i1 %exitcond.not, label %.split.us, label %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us, !llvm.loop !24493
+
+.split.us:                                        ; preds = %middle.block, %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us, %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.lr.ph
+  %.us-phi = phi i32 [ -1, %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.lr.ph ], [ %.sroa.speculated.us.3, %middle.block ], [ %.sroa.speculated.us.a, %_ZNK2v84base6VectorINS_8internal23PrototypeCheckAssembler24DescriptorIndexNameValueEE6lengthEv.exit32.us ]
   call void @llvm.lifetime.start.p0(ptr nonnull %65) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %67) #23
   call void @_ZN2v88internal8compiler13CodeAssembler13Int32ConstantEi(ptr dead_on_unwind nonnull writable sret(%"class.v8::internal::TNode.49") align 8 %67, ptr noundef nonnull align 8 dereferenceable(8) %0, i32 noundef %.us-phi) #23
@@ -689,12 +673,6 @@ declare i64 @llvm.smin.i64(i64, i64) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #21
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #21
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.smax.v4i32(<4 x i32>) #21
 
 attributes #0 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -1098,8 +1076,8 @@ begin_hunk_2_@llvm.vector.reduce.smax.v4i32/@llvm.smax.i32
 !24490 = distinct !{!24490, !580, !24491, !24492}
 !24491 = !{!"llvm.loop.peeled.count", i32 1}
 !24492 = !{!"llvm.loop.estimated_trip_count", i32 2015}
-!24493 = distinct !{!24493, !1604, !1605}
-!24494 = distinct !{!24494, !1605, !1604}
+!24493 = distinct !{!24493, !24494}
+!24494 = !{!"llvm.loop.unroll.disable"}
 !24495 = !{!24496}
 !24496 = distinct !{!24496, !24497, !"_ZN2v88internal17CodeStubAssembler23LoadNumberOfDescriptorsENS0_5TNodeINS0_15DescriptorArrayEEE: argument 0"}
 !24497 = distinct !{!24497, !"_ZN2v88internal17CodeStubAssembler23LoadNumberOfDescriptorsENS0_5TNodeINS0_15DescriptorArrayEEE"}

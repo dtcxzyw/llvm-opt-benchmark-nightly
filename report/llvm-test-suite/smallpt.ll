@@ -201,46 +201,38 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %i.fz = shl nuw nsw i64 %indvars.iv, 10         ; 2 uses
   br label %vector.body
 
-vector.body:                                      ; preds = %vector.body, %.split161
-  %index = phi i64 [ 0, %.split161 ], [ %index.next, %vector.body ] ; 3 uses
-  %4 = or disjoint i64 %index, 1
-  %5 = sub nsw i64 %index, %i.fz
-  %i.ga = sub nsw i64 %4, %i.fz
-  %6 = getelementptr [24 x i8], ptr %i.i, i64 %5  ; 3 uses
-  %i.gb = getelementptr [24 x i8], ptr %i.i, i64 %i.ga ; 3 uses
-  %7 = getelementptr i8, ptr %6, i64 18849792     ; 2 uses
-  %8 = getelementptr i8, ptr %i.gb, i64 18849792
-  %i.gc = getelementptr i8, ptr %6, i64 18849800
-  %i.gd = getelementptr i8, ptr %i.gb, i64 18849800
-  %9 = getelementptr i8, ptr %6, i64 18849808
-  %10 = getelementptr i8, ptr %i.gb, i64 18849808
-  %11 = load double, ptr %7, align 8, !tbaa !22
-  %12 = load double, ptr %8, align 8, !tbaa !22
-  %13 = insertelement <2 x double> poison, double %11, i64 0
-  %14 = insertelement <2 x double> %13, double %12, i64 1
-  %15 = load double, ptr %i.gc, align 8, !tbaa !22
-  %16 = load double, ptr %i.gd, align 8, !tbaa !22
-  %17 = insertelement <2 x double> poison, double %15, i64 0
-  %18 = insertelement <2 x double> %17, double %16, i64 1
-  %19 = load double, ptr %9, align 8, !tbaa !22
-  %i.ge = load double, ptr %10, align 8, !tbaa !22
-  %20 = insertelement <2 x double> poison, double %19, i64 0
-  %21 = insertelement <2 x double> %20, double %i.ge, i64 1
-  %i.gf = fadd <2 x double> %21, zeroinitializer
-  %22 = shufflevector <2 x double> %14, <2 x double> %18, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %23 = fadd <4 x double> %22, zeroinitializer
-  %24 = shufflevector <2 x double> %i.gf, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %interleaved.vec = shufflevector <4 x double> %23, <4 x double> %24, <6 x i32> <i32 0, i32 2, i32 4, i32 1, i32 3, i32 5>
-  store <6 x double> %interleaved.vec, ptr %7, align 8, !tbaa !22
-  %index.next = add nuw i64 %index, 2             ; 2 uses
-  %i.gg = icmp eq i64 %index.next, 1024
-  br i1 %i.gg, label %.split163, label %vector.body, !llvm.loop !72
-
 .split163:                                        ; preds = %vector.body
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond176.not = icmp eq i64 %indvars.iv.next, 768
   br i1 %exitcond176.not, label %.split167.us, label %.split161
+
+vector.body:                                      ; preds = %vector.body, %.split161
+  %index = phi i64 [ 0, %.split161 ], [ %index.next, %vector.body ] ; 3 uses
+  %i.ga = sub nsw i64 %index, %i.fz
+  %i.gb = getelementptr [24 x i8], ptr %i.i, i64 %i.ga ; 2 uses
+  %i.gc = getelementptr i8, ptr %i.gb, i64 18849792 ; 2 uses
+  %i.gd = getelementptr i8, ptr %i.gb, i64 18849808 ; 2 uses
+  %.promoted158 = load double, ptr %i.gd, align 8, !tbaa !22
+  %4 = fadd double %.promoted158, 0.000000e+00
+  %5 = load <2 x double>, ptr %i.gc, align 8, !tbaa !22
+  %6 = fadd <2 x double> %5, zeroinitializer
+  store <2 x double> %6, ptr %i.gc, align 8, !tbaa !22
+  store double %4, ptr %i.gd, align 8, !tbaa !22
+  %indvars.iv.next172 = or disjoint i64 %index, 1
+  %7 = sub nsw i64 %indvars.iv.next172, %i.fz
+  %8 = getelementptr [24 x i8], ptr %i.i, i64 %7  ; 2 uses
+  %9 = getelementptr i8, ptr %8, i64 18849792     ; 2 uses
+  %10 = getelementptr i8, ptr %8, i64 18849808    ; 2 uses
+  %i.ge = load double, ptr %10, align 8, !tbaa !22
+  %11 = fadd double %i.ge, 0.000000e+00
+  %12 = load <2 x double>, ptr %9, align 8, !tbaa !22
+  %i.gf = fadd <2 x double> %12, zeroinitializer
+  store <2 x double> %i.gf, ptr %9, align 8, !tbaa !22
+  store double %11, ptr %10, align 8, !tbaa !22
+  %index.next = add nuw nsw i64 %index, 2         ; 2 uses
+  %i.gg = icmp eq i64 %index.next, 1024
+  br i1 %i.gg, label %.split163, label %vector.body
 }
 
 ; Function Attrs: nobuiltin allocsize(0)
@@ -353,7 +345,4 @@ attributes #12 = { cold nounwind }
 !69 = !{!70}
 !70 = distinct !{!70, !71, !"_ZNK3VecplERKS_: argument 0"}
 !71 = distinct !{!71, !"_ZNK3VecplERKS_"}
-!72 = distinct !{!72, !73, !74}
-!73 = !{!"llvm.loop.isvectorized", i32 1}
-!74 = !{!"llvm.loop.unroll.runtime.disable"}
 end_hunk_0

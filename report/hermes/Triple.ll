@@ -201,16 +201,14 @@ _ZNK4llvh9StringRef5splitEc.exit:
   store i64 %i.e, ptr %i.c, align 8, !tbaa !20
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i8 45, ptr %i.a, align 1, !tbaa !46, !noalias !130
-  %i.f = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr nonnull %i.a, i64 1, i64 noundef 0) #13, !noalias !133 ; 2 uses
-  %2 = icmp eq i64 %i.f, -1
-  %.sroa.5.0.copyload = load i64, ptr %i.c, align 8, !tbaa !22 ; 2 uses
+  %i.f = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr nonnull %i.a, i64 1, i64 noundef 0) #13, !noalias !133
+  %.sroa.5.0.copyload = load i64, ptr %i.c, align 8, !tbaa !22
   %i.g = call i64 @llvm.umin.i64(i64 %.sroa.5.0.copyload, i64 %i.f)
-  %.sroa.5.0 = select i1 %2, i64 %.sroa.5.0.copyload, i64 %i.g
   %.sroa.0.0 = load ptr, ptr %1, align 8, !tbaa !21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #13
   %.fca.0.insert = insertvalue { ptr, i64 } poison, ptr %.sroa.0.0, 0
-  %.fca.1.insert = insertvalue { ptr, i64 } %.fca.0.insert, i64 %.sroa.5.0, 1
+  %.fca.1.insert = insertvalue { ptr, i64 } %.fca.0.insert, i64 %i.g, 1
   ret { ptr, i64 } %.fca.1.insert
 }
 
@@ -254,16 +252,14 @@ _ZNK4llvh9StringRef5splitEc.exit:                 ; preds = %bb.a, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i8 45, ptr %i.a, align 1, !tbaa !46, !noalias !142
-  %i.o = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr nonnull %i.a, i64 1, i64 noundef 0) #13, !noalias !145 ; 2 uses
-  %3 = icmp eq i64 %i.o, -1
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.8.16..sroa_idx, align 8, !tbaa !22 ; 2 uses
+  %i.o = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr nonnull %i.a, i64 1, i64 noundef 0) #13, !noalias !145
+  %.sroa.5.0.copyload = load i64, ptr %.sroa.8.16..sroa_idx, align 8, !tbaa !22
   %i.p = call i64 @llvm.umin.i64(i64 %.sroa.5.0.copyload, i64 %i.o)
-  %.sroa.5.0 = select i1 %3, i64 %.sroa.5.0.copyload, i64 %i.p
   %.sroa.0.0 = load ptr, ptr %1, align 8, !tbaa !21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #13
   %.fca.0.insert = insertvalue { ptr, i64 } poison, ptr %.sroa.0.0, 0
-  %.fca.1.insert = insertvalue { ptr, i64 } %.fca.0.insert, i64 %.sroa.5.0, 1
+  %.fca.1.insert = insertvalue { ptr, i64 } %.fca.0.insert, i64 %i.p, 1
   ret { ptr, i64 } %.fca.1.insert
 }
 
@@ -329,16 +325,14 @@ _ZNK4llvh9StringRef5splitEc.exit3:                ; preds = %_ZNK4llvh9StringRef
   store i64 %.sroa.8.0, ptr %.sroa.813.16..sroa_idx, align 8, !tbaa !22
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i8 45, ptr %i.a, align 1, !tbaa !46, !noalias !160
-  %i.x = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr nonnull %i.a, i64 1, i64 noundef 0) #13, !noalias !163 ; 2 uses
-  %3 = icmp eq i64 %i.x, -1
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.813.16..sroa_idx, align 8, !tbaa !22 ; 2 uses
+  %i.x = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr nonnull %i.a, i64 1, i64 noundef 0) #13, !noalias !163
+  %.sroa.5.0.copyload = load i64, ptr %.sroa.813.16..sroa_idx, align 8, !tbaa !22
   %i.y = call i64 @llvm.umin.i64(i64 %.sroa.5.0.copyload, i64 %i.x)
-  %.sroa.5.0 = select i1 %3, i64 %.sroa.5.0.copyload, i64 %i.y
   %.sroa.0.0 = load ptr, ptr %1, align 8, !tbaa !21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #13
   %.fca.0.insert = insertvalue { ptr, i64 } poison, ptr %.sroa.0.0, 0
-  %.fca.1.insert = insertvalue { ptr, i64 } %.fca.0.insert, i64 %.sroa.5.0, 1
+  %.fca.1.insert = insertvalue { ptr, i64 } %.fca.0.insert, i64 %i.y, 1
   ret { ptr, i64 } %.fca.1.insert
 }
 
@@ -741,11 +735,9 @@ _ZNK4llvh6Triple13getVendorNameEv.exit:           ; preds = %_ZN4llvh11SmallStri
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i8 45, ptr %i.c, align 1, !tbaa !46, !noalias !203
-  %i.ai = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr nonnull %i.c, i64 1, i64 noundef 0) #13, !noalias !206 ; 2 uses
-  %9 = icmp eq i64 %i.ai, -1
-  %.sroa.5.0.copyload.i = load i64, ptr %.sroa.8.16..sroa_idx.i, align 8, !tbaa !22 ; 2 uses
-  %i.aj = call i64 @llvm.umin.i64(i64 %.sroa.5.0.copyload.i, i64 %i.ai)
-  %.sroa.5.0.i = select i1 %9, i64 %.sroa.5.0.copyload.i, i64 %i.aj ; 5 uses
+  %i.ai = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr nonnull %i.c, i64 1, i64 noundef 0) #13, !noalias !206
+  %.sroa.5.0.copyload.i = load i64, ptr %.sroa.8.16..sroa_idx.i, align 8, !tbaa !22
+  %i.aj = call i64 @llvm.umin.i64(i64 %.sroa.5.0.copyload.i, i64 %i.ai) ; 5 uses
   %.sroa.0.0.i = load ptr, ptr %5, align 8, !tbaa !21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #13
@@ -754,25 +746,25 @@ _ZNK4llvh6Triple13getVendorNameEv.exit:           ; preds = %_ZN4llvh11SmallStri
   %i.am = load i32, ptr %i.f, align 8, !tbaa !10  ; 2 uses
   %i.an = zext i32 %i.am to i64                   ; 3 uses
   %i.ao = sub nsw i64 %i.al, %i.an
-  %i.ap = icmp ugt i64 %.sroa.5.0.i, %i.ao
+  %i.ap = icmp ugt i64 %i.aj, %i.ao
   br i1 %i.ap, label %.thread.i16, label %bb.e
 
 .thread.i16:                                      ; preds = %_ZNK4llvh6Triple13getVendorNameEv.exit
-  %i.aq = add i64 %.sroa.5.0.i, %i.an
+  %i.aq = add i64 %i.aj, %i.an
   call void @_ZN4llvh15SmallVectorBase8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(80) %7, ptr noundef nonnull %i.e, i64 noundef %i.aq, i64 noundef 1) #13
   %.pre7.pre.i.i.i17 = load i32, ptr %i.f, align 8, !tbaa !10
   %.pre51.a = zext i32 %.pre7.pre.i.i.i17 to i64
   br label %bb.f
 
 bb.e:                                             ; preds = %_ZNK4llvh6Triple13getVendorNameEv.exit
-  %.not.i.i.i.i13 = icmp samesign eq i64 %.sroa.5.0.i, 0
+  %.not.i.i.i.i13 = icmp samesign eq i64 %i.aj, 0
   br i1 %.not.i.i.i.i13, label %_ZN4llvh11SmallStringILj64EEpLENS_9StringRefE.exit18, label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %.thread.i16
   %.pre-phi = phi i64 [ %i.an, %bb.e ], [ %.pre51.a, %.thread.i16 ]
   %i.ar = load ptr, ptr %7, align 8, !tbaa !7
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 %.pre-phi
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.as, ptr align 1 %.sroa.0.0.i, i64 %.sroa.5.0.i, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.as, ptr align 1 %.sroa.0.0.i, i64 %i.aj, i1 false)
   %.pre.i.i.i15 = load i32, ptr %i.f, align 8, !tbaa !10
   %.pre50 = load i32, ptr %i.g, align 4, !tbaa !11
   br label %_ZN4llvh11SmallStringILj64EEpLENS_9StringRefE.exit18
@@ -780,7 +772,7 @@ bb.f:                                             ; preds = %bb.e, %.thread.i16
 _ZN4llvh11SmallStringILj64EEpLENS_9StringRefE.exit18: ; preds = %bb.e, %bb.f
   %i.at = phi i32 [ %i.ak, %bb.e ], [ %.pre50, %bb.f ] ; 2 uses
   %i.au = phi i32 [ %i.am, %bb.e ], [ %.pre.i.i.i15, %bb.f ]
-  %i.av = trunc i64 %.sroa.5.0.i to i32
+  %i.av = trunc i64 %i.aj to i32
   %i.aw = add i32 %i.au, %i.av                    ; 3 uses
   store i32 %i.aw, ptr %i.f, align 8, !tbaa !10
   %i.ax = icmp eq i32 %i.at, %i.aw
@@ -954,17 +946,15 @@ _ZN4llvhplERKNS_5TwineES2_.exit7:
   store i64 %i.h, ptr %i.f, align 8, !tbaa !20
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i8 45, ptr %i.c, align 1, !tbaa !46, !noalias !221
-  %i.i = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr nonnull %i.c, i64 1, i64 noundef 0) #13, !noalias !224 ; 2 uses
-  %13 = icmp eq i64 %i.i, -1
-  %.sroa.5.0.copyload.i = load i64, ptr %i.f, align 8, !tbaa !22 ; 2 uses
+  %i.i = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr nonnull %i.c, i64 1, i64 noundef 0) #13, !noalias !224
+  %.sroa.5.0.copyload.i = load i64, ptr %i.f, align 8, !tbaa !22
   %i.j = call i64 @llvm.umin.i64(i64 %.sroa.5.0.copyload.i, i64 %i.i)
-  %.sroa.5.0.i = select i1 %13, i64 %.sroa.5.0.copyload.i, i64 %i.j
   %.sroa.0.0.i = load ptr, ptr %5, align 8, !tbaa !21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #13
   store ptr %.sroa.0.0.i, ptr %11, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %11, i64 8
-  store i64 %.sroa.5.0.i, ptr %i.k, align 8
+  store i64 %i.j, ptr %i.k, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %10, i64 16
   store i8 5, ptr %i.l, align 8, !tbaa !42, !alias.scope !227
   %i.m = getelementptr inbounds nuw i8, ptr %10, i64 17
@@ -1127,17 +1117,15 @@ bb.b:                                             ; preds = %bb.a
   store i64 %i.m, ptr %i.k, align 8, !tbaa !20
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   store i8 45, ptr %i.f, align 1, !tbaa !46, !noalias !257
-  %i.n = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %8, ptr nonnull %i.f, i64 1, i64 noundef 0) #13, !noalias !260 ; 2 uses
-  %25 = icmp eq i64 %i.n, -1
-  %.sroa.5.0.copyload.i = load i64, ptr %i.k, align 8, !tbaa !22 ; 2 uses
+  %i.n = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %8, ptr nonnull %i.f, i64 1, i64 noundef 0) #13, !noalias !260
+  %.sroa.5.0.copyload.i = load i64, ptr %i.k, align 8, !tbaa !22
   %i.o = call i64 @llvm.umin.i64(i64 %.sroa.5.0.copyload.i, i64 %i.n)
-  %.sroa.5.0.i = select i1 %25, i64 %.sroa.5.0.copyload.i, i64 %i.o
   %.sroa.0.0.i = load ptr, ptr %8, align 8, !tbaa !21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #13
   store ptr %.sroa.0.0.i, ptr %16, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %16, i64 8
-  store i64 %.sroa.5.0.i, ptr %i.p, align 8
+  store i64 %i.o, ptr %i.p, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %15, i64 16
   store i8 5, ptr %i.q, align 8, !tbaa !42, !alias.scope !263
   %i.r = getelementptr inbounds nuw i8, ptr %15, i64 17
@@ -1178,17 +1166,15 @@ _ZN4llvhplERKNS_5TwineES2_.exit33:                ; preds = %bb.b, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   store i8 45, ptr %i.d, align 1, !tbaa !46, !noalias !272
-  %i.ae = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr nonnull %i.d, i64 1, i64 noundef 0) #13, !noalias !275 ; 2 uses
-  %26 = icmp eq i64 %i.ae, -1
-  %.sroa.5.0.copyload.i1 = load i64, ptr %.sroa.8.16..sroa_idx.i, align 8, !tbaa !22 ; 2 uses
+  %i.ae = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr nonnull %i.d, i64 1, i64 noundef 0) #13, !noalias !275
+  %.sroa.5.0.copyload.i1 = load i64, ptr %.sroa.8.16..sroa_idx.i, align 8, !tbaa !22
   %i.af = call i64 @llvm.umin.i64(i64 %.sroa.5.0.copyload.i1, i64 %i.ae)
-  %.sroa.5.0.i2 = select i1 %26, i64 %.sroa.5.0.copyload.i1, i64 %i.af
   %.sroa.0.0.i3 = load ptr, ptr %6, align 8, !tbaa !21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #13
   store ptr %.sroa.0.0.i3, ptr %17, align 8
   %i.ag = getelementptr inbounds nuw i8, ptr %17, i64 8
-  store i64 %.sroa.5.0.i2, ptr %i.ag, align 8
+  store i64 %i.af, ptr %i.ag, align 8
   store ptr %15, ptr %14, align 8, !tbaa !46, !alias.scope !278
   %i.ah = getelementptr inbounds nuw i8, ptr %14, i64 8
   store ptr %17, ptr %i.ah, align 8, !tbaa !46, !alias.scope !278
@@ -1258,17 +1244,15 @@ bb.d:                                             ; preds = %bb.a
   store i64 %i.bd, ptr %i.bb, align 8, !tbaa !20
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i8 45, ptr %i.c, align 1, !tbaa !46, !noalias !303
-  %i.be = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr nonnull %i.c, i64 1, i64 noundef 0) #13, !noalias !306 ; 2 uses
-  %27 = icmp eq i64 %i.be, -1
-  %.sroa.5.0.copyload.i34 = load i64, ptr %i.bb, align 8, !tbaa !22 ; 2 uses
+  %i.be = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr nonnull %i.c, i64 1, i64 noundef 0) #13, !noalias !306
+  %.sroa.5.0.copyload.i34 = load i64, ptr %i.bb, align 8, !tbaa !22
   %i.bf = call i64 @llvm.umin.i64(i64 %.sroa.5.0.copyload.i34, i64 %i.be)
-  %.sroa.5.0.i35 = select i1 %27, i64 %.sroa.5.0.copyload.i34, i64 %i.bf
   %.sroa.0.0.i36 = load ptr, ptr %5, align 8, !tbaa !21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #13
   store ptr %.sroa.0.0.i36, ptr %23, align 8
   %i.bg = getelementptr inbounds nuw i8, ptr %23, i64 8
-  store i64 %.sroa.5.0.i35, ptr %i.bg, align 8
+  store i64 %i.bf, ptr %i.bg, align 8
   %i.bh = getelementptr inbounds nuw i8, ptr %22, i64 16
   store i8 5, ptr %i.bh, align 8, !tbaa !42, !alias.scope !309
   %i.bi = getelementptr inbounds nuw i8, ptr %22, i64 17
@@ -1309,17 +1293,15 @@ _ZN4llvhplERKNS_5TwineES2_.exit68:                ; preds = %bb.d, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i8 45, ptr %i.a, align 1, !tbaa !46, !noalias !318
-  %i.bv = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr nonnull %i.a, i64 1, i64 noundef 0) #13, !noalias !321 ; 2 uses
-  %28 = icmp eq i64 %i.bv, -1
-  %.sroa.5.0.copyload.i42 = load i64, ptr %.sroa.8.16..sroa_idx.i41, align 8, !tbaa !22 ; 2 uses
+  %i.bv = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr nonnull %i.a, i64 1, i64 noundef 0) #13, !noalias !321
+  %.sroa.5.0.copyload.i42 = load i64, ptr %.sroa.8.16..sroa_idx.i41, align 8, !tbaa !22
   %i.bw = call i64 @llvm.umin.i64(i64 %.sroa.5.0.copyload.i42, i64 %i.bv)
-  %.sroa.5.0.i43 = select i1 %28, i64 %.sroa.5.0.copyload.i42, i64 %i.bw
   %.sroa.0.0.i44 = load ptr, ptr %3, align 8, !tbaa !21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
   store ptr %.sroa.0.0.i44, ptr %24, align 8
   %i.bx = getelementptr inbounds nuw i8, ptr %24, i64 8
-  store i64 %.sroa.5.0.i43, ptr %i.bx, align 8
+  store i64 %i.bw, ptr %i.bx, align 8
   store ptr %22, ptr %21, align 8, !tbaa !46, !alias.scope !324
   %i.by = getelementptr inbounds nuw i8, ptr %21, i64 8
   store ptr %24, ptr %i.by, align 8, !tbaa !46, !alias.scope !324
@@ -1488,17 +1470,15 @@ bb.a:
   store i64 %i.h, ptr %i.f, align 8, !tbaa !20
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i8 45, ptr %i.c, align 1, !tbaa !46, !noalias !349
-  %i.i = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr nonnull %i.c, i64 1, i64 noundef 0) #13, !noalias !352 ; 2 uses
-  %16 = icmp eq i64 %i.i, -1
-  %.sroa.5.0.copyload.i = load i64, ptr %i.f, align 8, !tbaa !22 ; 2 uses
+  %i.i = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr nonnull %i.c, i64 1, i64 noundef 0) #13, !noalias !352
+  %.sroa.5.0.copyload.i = load i64, ptr %i.f, align 8, !tbaa !22
   %i.j = call i64 @llvm.umin.i64(i64 %.sroa.5.0.copyload.i, i64 %i.i)
-  %.sroa.5.0.i = select i1 %16, i64 %.sroa.5.0.copyload.i, i64 %i.j
   %.sroa.0.0.i = load ptr, ptr %5, align 8, !tbaa !21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #13
   store ptr %.sroa.0.0.i, ptr %13, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %13, i64 8
-  store i64 %.sroa.5.0.i, ptr %i.k, align 8
+  store i64 %i.j, ptr %i.k, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %12, i64 16
   store i8 5, ptr %i.l, align 8, !tbaa !42, !alias.scope !355
   %i.m = getelementptr inbounds nuw i8, ptr %12, i64 17
@@ -1539,17 +1519,15 @@ _ZN4llvhplERKNS_5TwineES2_.exit33:                ; preds = %bb.a, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i8 45, ptr %i.a, align 1, !tbaa !46, !noalias !364
-  %i.z = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr nonnull %i.a, i64 1, i64 noundef 0) #13, !noalias !367 ; 2 uses
-  %17 = icmp eq i64 %i.z, -1
-  %.sroa.5.0.copyload.i1 = load i64, ptr %.sroa.8.16..sroa_idx.i, align 8, !tbaa !22 ; 2 uses
+  %i.z = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr nonnull %i.a, i64 1, i64 noundef 0) #13, !noalias !367
+  %.sroa.5.0.copyload.i1 = load i64, ptr %.sroa.8.16..sroa_idx.i, align 8, !tbaa !22
   %i.aa = call i64 @llvm.umin.i64(i64 %.sroa.5.0.copyload.i1, i64 %i.z)
-  %.sroa.5.0.i2 = select i1 %17, i64 %.sroa.5.0.copyload.i1, i64 %i.aa
   %.sroa.0.0.i3 = load ptr, ptr %3, align 8, !tbaa !21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
   store ptr %.sroa.0.0.i3, ptr %14, align 8
   %i.ab = getelementptr inbounds nuw i8, ptr %14, i64 8
-  store i64 %.sroa.5.0.i2, ptr %i.ab, align 8
+  store i64 %i.aa, ptr %i.ab, align 8
   store ptr %12, ptr %11, align 8, !tbaa !46, !alias.scope !370
   %i.ac = getelementptr inbounds nuw i8, ptr %11, i64 8
   store ptr %14, ptr %i.ac, align 8, !tbaa !46, !alias.scope !370
@@ -1731,17 +1709,15 @@ bb.a:
   store i64 %i.h, ptr %i.f, align 8, !tbaa !20
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i8 45, ptr %i.c, align 1, !tbaa !46, !noalias !405
-  %i.i = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr nonnull %i.c, i64 1, i64 noundef 0) #13, !noalias !408 ; 2 uses
-  %13 = icmp eq i64 %i.i, -1
-  %.sroa.5.0.copyload.i = load i64, ptr %i.f, align 8, !tbaa !22 ; 2 uses
+  %i.i = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr nonnull %i.c, i64 1, i64 noundef 0) #13, !noalias !408
+  %.sroa.5.0.copyload.i = load i64, ptr %i.f, align 8, !tbaa !22
   %i.j = call i64 @llvm.umin.i64(i64 %.sroa.5.0.copyload.i, i64 %i.i)
-  %.sroa.5.0.i = select i1 %13, i64 %.sroa.5.0.copyload.i, i64 %i.j
   %.sroa.0.0.i = load ptr, ptr %5, align 8, !tbaa !21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #13
   store ptr %.sroa.0.0.i, ptr %11, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %11, i64 8
-  store i64 %.sroa.5.0.i, ptr %i.k, align 8
+  store i64 %i.j, ptr %i.k, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %10, i64 16
   store i8 5, ptr %i.l, align 8, !tbaa !42, !alias.scope !411
   %i.m = getelementptr inbounds nuw i8, ptr %10, i64 17
@@ -1782,17 +1758,15 @@ _ZN4llvhplERKNS_5TwineES2_.exit19:                ; preds = %bb.a, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i8 45, ptr %i.a, align 1, !tbaa !46, !noalias !420
-  %i.z = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr nonnull %i.a, i64 1, i64 noundef 0) #13, !noalias !423 ; 2 uses
-  %14 = icmp eq i64 %i.z, -1
-  %.sroa.5.0.copyload.i1 = load i64, ptr %.sroa.8.16..sroa_idx.i, align 8, !tbaa !22 ; 2 uses
+  %i.z = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr nonnull %i.a, i64 1, i64 noundef 0) #13, !noalias !423
+  %.sroa.5.0.copyload.i1 = load i64, ptr %.sroa.8.16..sroa_idx.i, align 8, !tbaa !22
   %i.aa = call i64 @llvm.umin.i64(i64 %.sroa.5.0.copyload.i1, i64 %i.z)
-  %.sroa.5.0.i2 = select i1 %14, i64 %.sroa.5.0.copyload.i1, i64 %i.aa
   %.sroa.0.0.i3 = load ptr, ptr %3, align 8, !tbaa !21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
   store ptr %.sroa.0.0.i3, ptr %12, align 8
   %i.ab = getelementptr inbounds nuw i8, ptr %12, i64 8
-  store i64 %.sroa.5.0.i2, ptr %i.ab, align 8
+  store i64 %i.aa, ptr %i.ab, align 8
   store ptr %10, ptr %9, align 8, !tbaa !46, !alias.scope !426
   %i.ac = getelementptr inbounds nuw i8, ptr %9, i64 8
   store ptr %12, ptr %i.ac, align 8, !tbaa !46, !alias.scope !426
@@ -2195,11 +2169,9 @@ bb.b:                                             ; preds = %bb.a
   store i64 %i.f, ptr %i.d, align 8, !tbaa !20
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i8 45, ptr %i.a, align 1, !tbaa !46, !noalias !441
-  %i.g = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr nonnull %i.a, i64 1, i64 noundef 0) #13, !noalias !444 ; 2 uses
-  %4 = icmp eq i64 %i.g, -1
-  %.sroa.5.0.copyload.i = load i64, ptr %i.d, align 8, !tbaa !22 ; 2 uses
+  %i.g = call noundef i64 @_ZNK4llvh9StringRef4findES0_m(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr nonnull %i.a, i64 1, i64 noundef 0) #13, !noalias !444
+  %.sroa.5.0.copyload.i = load i64, ptr %i.d, align 8, !tbaa !22
   %i.h = call i64 @llvm.umin.i64(i64 %.sroa.5.0.copyload.i, i64 %i.g)
-  %.sroa.5.0.i = select i1 %4, i64 %.sroa.5.0.copyload.i, i64 %i.h
   %.sroa.0.0.i = load ptr, ptr %3, align 8, !tbaa !21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
@@ -2207,7 +2179,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %.sroa.022.0 = phi ptr [ %.sroa.0.0.i, %bb.b ], [ %1, %bb.a ]
-  %.sroa.7.0 = phi i64 [ %.sroa.5.0.i, %bb.b ], [ %2, %bb.a ]
+  %.sroa.7.0 = phi i64 [ %i.h, %bb.b ], [ %2, %bb.a ]
   %i.i = call { ptr, i64 } @_ZN4llvh3ARM20getCanonicalArchNameENS_9StringRefE(ptr %.sroa.022.0, i64 %.sroa.7.0) #13 ; 2 uses
   %i.j = extractvalue { ptr, i64 } %i.i, 0        ; 4 uses
   %i.k = extractvalue { ptr, i64 } %i.i, 1        ; 6 uses

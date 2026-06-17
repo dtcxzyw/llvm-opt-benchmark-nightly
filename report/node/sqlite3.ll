@@ -201,85 +201,68 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %bb.b
   %i.j = add nsw i32 %i.h, -1                     ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !3757 ; 9 uses
-  %wide.trip.count = zext nneg i32 %i.b to i64    ; 3 uses
-  %min.iters.check = icmp ult i32 %i.b, 9
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !3757 ; 5 uses
+  %wide.trip.count = zext nneg i32 %i.b to i64    ; 2 uses
+  %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
+  %min.iters.check = icmp ult i32 %i.b, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph
-  %n.mod.vf = and i64 %wide.trip.count, 7         ; 2 uses
-  %3 = icmp eq i64 %n.mod.vf, 0
-  %4 = select i1 %3, i64 8, i64 %n.mod.vf
-  %n.vec = sub nsw i64 %wide.trip.count, %4       ; 2 uses
-  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.j, i64 0
-  %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %n.mod.vf = and i64 %wide.trip.count, 2147483644
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 9 uses
-  %vec.phi = phi <4 x i32> [ %broadcast.splat, %vector.ph ], [ %31, %vector.body ]
-  %vec.phi4 = phi <4 x i32> [ %broadcast.splat, %vector.ph ], [ %32, %vector.body ]
-  %5 = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %index
-  %6 = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %index
-  %7 = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %index
+  %index = phi i64 [ 0, %vector.ph ], [ %indvars.iv.next.3, %vector.body ] ; 5 uses
+  %.02 = phi i32 [ %i.j, %vector.ph ], [ %spec.select.3, %vector.body ]
+  %niter = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ]
   %i.m = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %index
-  %8 = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %index
-  %9 = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %index
-  %10 = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %index
+  %3 = getelementptr inbounds nuw i8, ptr %i.m, i64 24
+  %4 = load i32, ptr %3, align 8, !tbaa !3758
+  %spec.select = tail call i32 @llvm.smax.i32(i32 %4, i32 %.02)
   %i.n = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %index
-  %11 = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %12 = getelementptr inbounds nuw i8, ptr %6, i64 56
-  %13 = getelementptr inbounds nuw i8, ptr %7, i64 88
-  %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 120
-  %14 = getelementptr inbounds nuw i8, ptr %8, i64 152
-  %15 = getelementptr inbounds nuw i8, ptr %9, i64 184
-  %16 = getelementptr inbounds nuw i8, ptr %10, i64 216
-  %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 248
-  %17 = load i32, ptr %11, align 8, !tbaa !3758
-  %18 = load i32, ptr %12, align 8, !tbaa !3758
-  %19 = load i32, ptr %13, align 8, !tbaa !3758
-  %i.q = load i32, ptr %i.o, align 8, !tbaa !3758
-  %20 = insertelement <4 x i32> poison, i32 %17, i64 0
-  %21 = insertelement <4 x i32> %20, i32 %18, i64 1
-  %22 = insertelement <4 x i32> %21, i32 %19, i64 2
-  %23 = insertelement <4 x i32> %22, i32 %i.q, i64 3
-  %24 = load i32, ptr %14, align 8, !tbaa !3758
-  %25 = load i32, ptr %15, align 8, !tbaa !3758
-  %26 = load i32, ptr %16, align 8, !tbaa !3758
-  %i.r = load i32, ptr %i.p, align 8, !tbaa !3758
-  %27 = insertelement <4 x i32> poison, i32 %24, i64 0
-  %28 = insertelement <4 x i32> %27, i32 %25, i64 1
-  %29 = insertelement <4 x i32> %28, i32 %26, i64 2
-  %30 = insertelement <4 x i32> %29, i32 %i.r, i64 3
-  %31 = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %23, <4 x i32> %vec.phi) ; 2 uses
-  %32 = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %30, <4 x i32> %vec.phi4) ; 2 uses
-  %index.next = add nuw i64 %index, 8             ; 2 uses
-  %i.s = icmp eq i64 %index.next, %n.vec
+  %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 56
+  %5 = load i32, ptr %i.o, align 8, !tbaa !3758
+  %spec.select.1 = tail call i32 @llvm.smax.i32(i32 %5, i32 %spec.select)
+  %6 = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %index
+  %i.p = getelementptr inbounds nuw i8, ptr %6, i64 88
+  %i.q = load i32, ptr %i.p, align 8, !tbaa !3758
+  %spec.select.2 = tail call i32 @llvm.smax.i32(i32 %i.q, i32 %spec.select.1)
+  %7 = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %index
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 120
+  %i.r = load i32, ptr %8, align 8, !tbaa !3758
+  %spec.select.3 = tail call i32 @llvm.smax.i32(i32 %i.r, i32 %spec.select.2) ; 3 uses
+  %indvars.iv.next.3 = add nuw nsw i64 %index, 4  ; 2 uses
+  %index.next = add i64 %niter, 4                 ; 2 uses
+  %i.s = icmp eq i64 %index.next, %n.mod.vf
   br i1 %i.s, label %middle.block, label %vector.body, !llvm.loop !4392
 
 middle.block:                                     ; preds = %vector.body
-  %rdx.minmax = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %31, <4 x i32> %32)
-  %33 = tail call i32 @llvm.vector.reduce.smax.v4i32(<4 x i32> %rdx.minmax)
-  br label %scalar.ph.preheader
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %._crit_edge.loopexit, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.block
-  %indvars.iv.ph = phi i64 [ 0, %.lr.ph ], [ %n.vec, %middle.block ]
-  %.02.ph = phi i32 [ %i.j, %.lr.ph ], [ %33, %middle.block ]
+scalar.ph.preheader:                              ; preds = %middle.block, %.lr.ph
+  %indvars.iv.ph = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.3, %middle.block ]
+  %.02.ph = phi i32 [ %i.j, %.lr.ph ], [ %spec.select.3, %middle.block ]
+  %lcmp.mod5 = icmp ne i64 %xtraiter, 0
+  tail call void @llvm.assume(i1 %lcmp.mod5)
   br label %scalar.ph
 
-scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 2 uses
-  %.02.a = phi i32 [ %spec.select.a, %scalar.ph ], [ %.02.ph, %scalar.ph.preheader ]
+scalar.ph:                                        ; preds = %scalar.ph, %scalar.ph.preheader
+  %indvars.iv = phi i64 [ %indvars.iv.ph, %scalar.ph.preheader ], [ %indvars.iv.next.epil, %scalar.ph ] ; 2 uses
+  %.02.a = phi i32 [ %.02.ph, %scalar.ph.preheader ], [ %spec.select.a, %scalar.ph ]
+  %epil.iter = phi i64 [ 0, %scalar.ph.preheader ], [ %indvars.iv.next, %scalar.ph ]
   %i.t = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %indvars.iv
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 24
   %i.v = load i32, ptr %i.u, align 8, !tbaa !3758
   %spec.select.a = tail call i32 @llvm.smax.i32(i32 %i.v, i32 %.02.a) ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv, 1
+  %indvars.iv.next = add i64 %epil.iter, 1        ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %xtraiter
   br i1 %exitcond.not, label %._crit_edge.loopexit, label %scalar.ph, !llvm.loop !4393
 
-._crit_edge.loopexit:                             ; preds = %scalar.ph
-  %i.w = add nsw i32 %spec.select.a, 1
+._crit_edge.loopexit:                             ; preds = %scalar.ph, %middle.block
+  %spec.select.lcssa = phi i32 [ %spec.select.3, %middle.block ], [ %spec.select.a, %scalar.ph ]
+  %i.w = add nsw i32 %spec.select.lcssa, 1
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.b
@@ -682,7 +665,7 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag, %.lr
 
 .lr.ph177.preheader:                              ; preds = %.split.us
   %wide.trip.count201 = zext i32 %.fr to i64      ; 7 uses
-  %min.iters.check = icmp ult i32 %.fr, 17
+  %min.iters.check = icmp ult i32 %.fr, 25
   br i1 %min.iters.check, label %.lr.ph177.preheader253, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph177.preheader
@@ -1085,8 +1068,8 @@ begin_hunk_2_@llvm.fmuladd.v2f64
 !4389 = distinct !{!4389, !52}
 !4390 = distinct !{!4390, !52}
 !4391 = distinct !{!4391, !52}
-!4392 = distinct !{!4392, !52, !343, !344}
-!4393 = distinct !{!4393, !52, !344, !343}
+!4392 = distinct !{!4392, !52}
+!4393 = distinct !{!4393, !334}
 !4394 = distinct !{!4394, !52}
 !4395 = !{!3752, !6, i64 24}
 !4396 = !{!3752, !7, i64 29}
