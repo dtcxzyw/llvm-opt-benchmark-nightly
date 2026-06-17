@@ -150,7 +150,7 @@ bb.a:
 define dso_local range(i32 0, 2) i32 @custom_ext_parse(ptr noundef %0, i32 noundef %1, i32 noundef %2, ptr noundef %3, i64 noundef %4, ptr noundef %5, i64 noundef %6) local_unnamed_addr #3 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   store i32 0, ptr %i.a, align 4, !tbaa !5
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 2176
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !25   ; 3 uses
@@ -223,7 +223,7 @@ custom_ext_find.exit:                             ; preds = %bb.d, %.lr.ph.split
   %.016.i = phi ptr [ %.023.us.i, %.lr.ph.split.us.i ], [ %.023.i, %bb.d ] ; 5 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.016.i, i64 8
   %i.ad = load i32, ptr %i.ac, align 8, !tbaa !86
-  %i.ae = tail call i32 @extension_is_relevant(ptr noundef %0, i32 noundef %i.ad, i32 noundef %1) #10
+  %i.ae = tail call i32 @extension_is_relevant(ptr noundef %0, i32 noundef %i.ad, i32 noundef %1) #9
   %.not31 = icmp eq i32 %i.ae, 0
   br i1 %.not31, label %custom_ext_find.exit.thread, label %bb.f
 
@@ -240,9 +240,9 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.aj, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @ERR_new() #10
-  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 141, ptr noundef nonnull @__func__.custom_ext_parse) #10
-  tail call void (ptr, i32, i32, ptr, ...) @ossl_statem_fatal(ptr noundef %0, i32 noundef 110, i32 noundef 110, ptr noundef null) #10
+  tail call void @ERR_new() #9
+  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 141, ptr noundef nonnull @__func__.custom_ext_parse) #9
+  tail call void (ptr, i32, i32, ptr, ...) @ossl_statem_fatal(ptr noundef %0, i32 noundef 110, i32 noundef 110, ptr noundef null) #9
   br label %custom_ext_find.exit.thread
 
 bb.i:                                             ; preds = %bb.g, %bb.f
@@ -268,20 +268,20 @@ bb.l:                                             ; preds = %bb.k
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !88
   %i.at = getelementptr inbounds nuw i8, ptr %.016.i, i64 48
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !89
-  %i.av = call i32 %i.ap(ptr noundef %i.as, i32 noundef %2, i32 noundef %1, ptr noundef %3, i64 noundef %4, ptr noundef %5, i64 noundef %6, ptr noundef nonnull %i.a, ptr noundef %i.au) #10
+  %i.av = call i32 %i.ap(ptr noundef %i.as, i32 noundef %2, i32 noundef %1, ptr noundef %3, i64 noundef %4, ptr noundef %5, i64 noundef %6, ptr noundef nonnull %i.a, ptr noundef %i.au) #9
   %i.aw = icmp slt i32 %i.av, 1
   br i1 %i.aw, label %bb.m, label %custom_ext_find.exit.thread
 
 bb.m:                                             ; preds = %bb.l
-  call void @ERR_new() #10
-  call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 162, ptr noundef nonnull @__func__.custom_ext_parse) #10
+  call void @ERR_new() #9
+  call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 162, ptr noundef nonnull @__func__.custom_ext_parse) #9
   %i.ax = load i32, ptr %i.a, align 4, !tbaa !5
-  call void (ptr, i32, i32, ptr, ...) @ossl_statem_fatal(ptr noundef nonnull %0, i32 noundef %i.ax, i32 noundef 110, ptr noundef null) #10
+  call void (ptr, i32, i32, ptr, ...) @ossl_statem_fatal(ptr noundef nonnull %0, i32 noundef %i.ax, i32 noundef 110, ptr noundef null) #9
   br label %custom_ext_find.exit.thread
 
 custom_ext_find.exit.thread:                      ; preds = %bb.e, %bb.c, %.thread, %bb.b, %bb.l, %bb.k, %custom_ext_find.exit, %bb.m, %bb.h
   %.026 = phi i32 [ 0, %bb.h ], [ 1, %custom_ext_find.exit ], [ 0, %bb.m ], [ 1, %bb.k ], [ 1, %bb.l ], [ 1, %bb.b ], [ 1, %.thread ], [ 1, %bb.c ], [ 1, %bb.e ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   ret i32 %.026
 }
 
@@ -302,7 +302,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 2176
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !25   ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 128
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %i.g = and i32 %1, 32768
   %.not = icmp eq i32 %i.g, 0                     ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 136 ; 2 uses
@@ -320,15 +320,15 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %.thread88
   %.06193 = phi i64 [ 0, %.lr.ph ], [ %i.br, %.thread88 ] ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
   store ptr null, ptr %i.b, align 8, !tbaa !90
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #9
   store i64 0, ptr %i.c, align 8, !tbaa !20
   %i.n = load ptr, ptr %i.f, align 8, !tbaa !13
   %i.o = getelementptr inbounds nuw [56 x i8], ptr %i.n, i64 %.06193 ; 16 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.q = load i32, ptr %i.p, align 8, !tbaa !86
-  %i.r = call i32 @should_add_extension(ptr noundef %0, i32 noundef %i.q, i32 noundef %1, i32 noundef %5) #10
+  %i.r = call i32 @should_add_extension(ptr noundef %0, i32 noundef %i.q, i32 noundef %1, i32 noundef %5) #9
   %.not68 = icmp eq i32 %i.r, 0
   br i1 %.not68, label %.thread88, label %bb.c
 
@@ -360,7 +360,7 @@ bb.g:                                             ; preds = %bb.e
   %i.aa = zext i16 %i.z to i32
   %i.ab = getelementptr inbounds nuw i8, ptr %i.o, i64 32
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !92
-  %i.ad = call i32 %i.w(ptr noundef %i.y, i32 noundef %i.aa, i32 noundef %1, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef %3, i64 noundef %4, ptr noundef nonnull %i.a, ptr noundef %i.ac) #10 ; 2 uses
+  %i.ad = call i32 %i.w(ptr noundef %i.y, i32 noundef %i.aa, i32 noundef %1, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef %3, i64 noundef %4, ptr noundef nonnull %i.a, ptr noundef %i.ac) #9 ; 2 uses
   %i.ae = icmp slt i32 %i.ad, 0
   br i1 %i.ae, label %bb.h, label %bb.j
 
@@ -368,10 +368,10 @@ bb.h:                                             ; preds = %.thread
   br i1 %.not, label %bb.i, label %.thread85
 
 bb.i:                                             ; preds = %bb.h
-  call void @ERR_new() #10
-  call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 211, ptr noundef nonnull @__func__.custom_ext_add) #10
+  call void @ERR_new() #9
+  call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 211, ptr noundef nonnull @__func__.custom_ext_add) #9
   %i.af = load i32, ptr %i.a, align 4, !tbaa !5
-  call void (ptr, i32, i32, ptr, ...) @ossl_statem_fatal(ptr noundef nonnull %0, i32 noundef %i.af, i32 noundef 234, ptr noundef null) #10
+  call void (ptr, i32, i32, ptr, ...) @ossl_statem_fatal(ptr noundef nonnull %0, i32 noundef %i.af, i32 noundef 234, ptr noundef null) #9
   br label %.thread85
 
 bb.j:                                             ; preds = %.thread
@@ -381,12 +381,12 @@ bb.j:                                             ; preds = %.thread
 bb.k:                                             ; preds = %bb.j, %bb.g
   %i.ag = load i16, ptr %i.o, align 8, !tbaa !14
   %i.ah = zext i16 %i.ag to i64
-  %i.ai = call i32 @WPACKET_put_bytes__(ptr noundef %2, i64 noundef %i.ah, i64 noundef 2) #10
+  %i.ai = call i32 @WPACKET_put_bytes__(ptr noundef %2, i64 noundef %i.ah, i64 noundef 2) #9
   %.not72 = icmp eq i32 %i.ai, 0
   br i1 %.not72, label %bb.p, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.aj = call i32 @WPACKET_start_sub_packet_len__(ptr noundef %2, i64 noundef 2) #10
+  %i.aj = call i32 @WPACKET_start_sub_packet_len__(ptr noundef %2, i64 noundef 2) #9
   %.not73 = icmp eq i32 %i.aj, 0
   br i1 %.not73, label %bb.p, label %bb.m
 
@@ -397,12 +397,12 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.al = load ptr, ptr %i.b, align 8, !tbaa !90
-  %i.am = call i32 @WPACKET_memcpy(ptr noundef %2, ptr noundef %i.al, i64 noundef %i.ak) #10
+  %i.am = call i32 @WPACKET_memcpy(ptr noundef %2, ptr noundef %i.al, i64 noundef %i.ak) #9
   %.not75 = icmp eq i32 %i.am, 0
   br i1 %.not75, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
-  %i.an = call i32 @WPACKET_close(ptr noundef %2) #10
+  %i.an = call i32 @WPACKET_close(ptr noundef %2) #9
   %.not76 = icmp eq i32 %i.an, 0
   br i1 %.not76, label %bb.p, label %bb.t
 
@@ -419,16 +419,16 @@ bb.q:                                             ; preds = %bb.p
   %i.at = load ptr, ptr %i.b, align 8, !tbaa !90
   %i.au = getelementptr inbounds nuw i8, ptr %i.o, i64 32
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !92
-  call void %i.ap(ptr noundef %i.aq, i32 noundef %i.as, i32 noundef %1, ptr noundef %i.at, ptr noundef %i.av) #10
+  call void %i.ap(ptr noundef %i.aq, i32 noundef %i.as, i32 noundef %1, ptr noundef %i.at, ptr noundef %i.av) #9
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p
   br i1 %.not, label %bb.s, label %.thread85
 
 bb.s:                                             ; preds = %bb.r
-  call void @ERR_new() #10
-  call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 226, ptr noundef nonnull @__func__.custom_ext_add) #10
-  call void (ptr, i32, i32, ptr, ...) @ossl_statem_fatal(ptr noundef %0, i32 noundef 80, i32 noundef 786691, ptr noundef null) #10
+  call void @ERR_new() #9
+  call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 226, ptr noundef nonnull @__func__.custom_ext_add) #9
+  call void (ptr, i32, i32, ptr, ...) @ossl_statem_fatal(ptr noundef %0, i32 noundef 80, i32 noundef 786691, ptr noundef null) #9
   br label %.thread85
 
 bb.t:                                             ; preds = %bb.o
@@ -454,16 +454,16 @@ bb.w:                                             ; preds = %bb.v
   %i.bf = load ptr, ptr %i.b, align 8, !tbaa !90
   %i.bg = getelementptr inbounds nuw i8, ptr %i.o, i64 32
   %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !92
-  call void %i.bb(ptr noundef %i.bc, i32 noundef %i.be, i32 noundef %1, ptr noundef %i.bf, ptr noundef %i.bh) #10
+  call void %i.bb(ptr noundef %i.bc, i32 noundef %i.be, i32 noundef %1, ptr noundef %i.bf, ptr noundef %i.bh) #9
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.v
   br i1 %.not, label %bb.y, label %.thread85
 
 bb.y:                                             ; preds = %bb.x
-  call void @ERR_new() #10
-  call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 238, ptr noundef nonnull @__func__.custom_ext_add) #10
-  call void (ptr, i32, i32, ptr, ...) @ossl_statem_fatal(ptr noundef %0, i32 noundef 80, i32 noundef 786691, ptr noundef null) #10
+  call void @ERR_new() #9
+  call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 238, ptr noundef nonnull @__func__.custom_ext_add) #9
+  call void (ptr, i32, i32, ptr, ...) @ossl_statem_fatal(ptr noundef %0, i32 noundef 80, i32 noundef 786691, ptr noundef null) #9
   br label %.thread85
 
 bb.z:                                             ; preds = %bb.u
@@ -484,17 +484,17 @@ bb.ab:                                            ; preds = %bb.aa
   %i.bo = load ptr, ptr %i.b, align 8, !tbaa !90
   %i.bp = getelementptr inbounds nuw i8, ptr %i.o, i64 32
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !92
-  call void %i.bk(ptr noundef %i.bl, i32 noundef %i.bn, i32 noundef %1, ptr noundef %i.bo, ptr noundef %i.bq) #10
+  call void %i.bk(ptr noundef %i.bl, i32 noundef %i.bn, i32 noundef %1, ptr noundef %i.bo, ptr noundef %i.bq) #9
   br label %.thread88
 
 .thread85:                                        ; preds = %bb.x, %bb.r, %bb.s, %bb.y, %bb.h, %bb.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
   br label %.loopexit
 
 .thread88:                                        ; preds = %bb.j, %bb.b, %bb.f, %bb.aa, %bb.ab, %bb.d
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
   %i.br = add nuw i64 %.06193, 1                  ; 2 uses
   %i.bs = load i64, ptr %i.h, align 8, !tbaa !9
   %i.bt = icmp ult i64 %i.br, %i.bs
@@ -502,7 +502,7 @@ bb.ab:                                            ; preds = %bb.aa
 
 .loopexit:                                        ; preds = %.thread88, %bb.a, %.thread85
   %.4 = phi i32 [ 0, %.thread85 ], [ 1, %bb.a ], [ 1, %.thread88 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   ret i32 %.4
 }
 
@@ -607,7 +607,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = load ptr, ptr %1, align 8, !tbaa !13
   %i.d = mul i64 %i.b, 56
-  %i.e = tail call ptr @CRYPTO_memdup(ptr noundef %i.c, i64 noundef %i.d, ptr noundef nonnull @.str, i32 noundef 308) #10 ; 2 uses
+  %i.e = tail call ptr @CRYPTO_memdup(ptr noundef %i.c, i64 noundef %i.d, ptr noundef nonnull @.str, i32 noundef 308) #9 ; 2 uses
   store ptr %i.e, ptr %0, align 8, !tbaa !13
   %i.f = icmp eq ptr %i.e, null
   br i1 %i.f, label %.thread, label %bb.c
@@ -657,12 +657,12 @@ custom_ext_copy_old_cb.exit.thread.peel:          ; preds = %bb.d
 bb.e:                                             ; preds = %bb.d
   %i.w = getelementptr inbounds nuw i8, ptr %i.l, i64 32
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !92
-  %i.y = tail call ptr @CRYPTO_memdup(ptr noundef %i.x, i64 noundef 24, ptr noundef nonnull @.str, i32 noundef 290) #10
+  %i.y = tail call ptr @CRYPTO_memdup(ptr noundef %i.x, i64 noundef 24, ptr noundef nonnull @.str, i32 noundef 290) #9
   %i.z = getelementptr inbounds nuw i8, ptr %i.k, i64 32 ; 2 uses
   store ptr %i.y, ptr %i.z, align 8, !tbaa !92
   %i.aa = getelementptr inbounds nuw i8, ptr %i.l, i64 48
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !89
-  %i.ac = tail call ptr @CRYPTO_memdup(ptr noundef %i.ab, i64 noundef 16, ptr noundef nonnull @.str, i32 noundef 292) #10 ; 2 uses
+  %i.ac = tail call ptr @CRYPTO_memdup(ptr noundef %i.ab, i64 noundef 16, ptr noundef nonnull @.str, i32 noundef 292) #9 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.k, i64 48
   store ptr %i.ac, ptr %i.ad, align 8, !tbaa !89
   %i.ae = load ptr, ptr %i.z, align 8, !tbaa !92
@@ -712,10 +712,10 @@ custom_ext_copy_old_cb.exit.thread:               ; preds = %.lr.ph
 bb.f:                                             ; preds = %.lr.ph.i
   %i.au = getelementptr inbounds nuw i8, ptr %.012.i, i64 32
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !92
-  tail call void @CRYPTO_free(ptr noundef %i.av, ptr noundef nonnull @.str, i32 noundef 385) #10
+  tail call void @CRYPTO_free(ptr noundef %i.av, ptr noundef nonnull @.str, i32 noundef 385) #9
   %i.aw = getelementptr inbounds nuw i8, ptr %.012.i, i64 48
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !89
-  tail call void @CRYPTO_free(ptr noundef %i.ax, ptr noundef nonnull @.str, i32 noundef 386) #10
+  tail call void @CRYPTO_free(ptr noundef %i.ax, ptr noundef nonnull @.str, i32 noundef 386) #9
   %.pre.i = load i64, ptr %i.h, align 8, !tbaa !9
   br label %bb.g
 
@@ -732,7 +732,7 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph.i
 
 custom_exts_free.exit:                            ; preds = %._crit_edge.thread35, %._crit_edge.loopexit.i
   %i.bc = phi ptr [ %.pre14.i, %._crit_edge.loopexit.i ], [ %i.ap, %._crit_edge.thread35 ]
-  tail call void @CRYPTO_free(ptr noundef %i.bc, ptr noundef nonnull @.str, i32 noundef 388) #10
+  tail call void @CRYPTO_free(ptr noundef %i.bc, ptr noundef nonnull @.str, i32 noundef 388) #9
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
   br label %.thread
 
@@ -764,10 +764,10 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph
   %i.g = getelementptr inbounds nuw i8, ptr %.012, i64 32
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !92
-  tail call void @CRYPTO_free(ptr noundef %i.h, ptr noundef nonnull @.str, i32 noundef 385) #10
+  tail call void @CRYPTO_free(ptr noundef %i.h, ptr noundef nonnull @.str, i32 noundef 385) #9
   %i.i = getelementptr inbounds nuw i8, ptr %.012, i64 48
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !89
-  tail call void @CRYPTO_free(ptr noundef %i.j, ptr noundef nonnull @.str, i32 noundef 386) #10
+  tail call void @CRYPTO_free(ptr noundef %i.j, ptr noundef nonnull @.str, i32 noundef 386) #9
   %.pre = load i64, ptr %i.b, align 8, !tbaa !9
   br label %bb.c
 
@@ -784,7 +784,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
   %i.o = phi ptr [ %.pre14, %._crit_edge.loopexit ], [ %i.a, %bb.a ]
-  tail call void @CRYPTO_free(ptr noundef %i.o, ptr noundef nonnull @.str, i32 noundef 388) #10
+  tail call void @CRYPTO_free(ptr noundef %i.o, ptr noundef nonnull @.str, i32 noundef 388) #9
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
   ret void
 }
@@ -793,78 +793,86 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
 define dso_local range(i32 0, 2) i32 @custom_exts_copy_conn(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !9    ; 5 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !9    ; 4 uses
   %.not = icmp eq i64 %i.b, 0
   br i1 %.not, label %.critedge, label %.preheader66
 
 .preheader66:                                     ; preds = %bb.a
   %i.c = load ptr, ptr %1, align 8, !tbaa !13     ; 5 uses
+  %xtraiter = and i64 %i.b, 3                     ; 3 uses
   %min.iters.check = icmp ult i64 %i.b, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.preheader66
-  %n.vec = and i64 %i.b, -4                       ; 3 uses
+  %n.vec = and i64 %i.b, -4
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 5 uses
-  %vec.phi = phi <2 x i64> [ zeroinitializer, %vector.ph ], [ %20, %vector.body ]
-  %vec.phi93 = phi <2 x i64> [ zeroinitializer, %vector.ph ], [ %21, %vector.body ]
-  %i.d = getelementptr inbounds nuw [56 x i8], ptr %i.c, i64 %index
-  %2 = getelementptr inbounds nuw [56 x i8], ptr %i.c, i64 %index
-  %3 = getelementptr inbounds nuw [56 x i8], ptr %i.c, i64 %index
-  %i.e = getelementptr inbounds nuw [56 x i8], ptr %i.c, i64 %index
-  %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 12
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 68
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 124
-  %6 = getelementptr inbounds nuw i8, ptr %i.e, i64 180
+  %index = phi i64 [ 0, %vector.ph ], [ %spec.select.3, %vector.body ]
+  %.04667 = phi i64 [ 0, %vector.ph ], [ %22, %vector.body ] ; 5 uses
+  %niter = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ]
+  %i.d = getelementptr inbounds nuw [56 x i8], ptr %i.c, i64 %.04667
+  %2 = getelementptr inbounds nuw i8, ptr %i.d, i64 12
+  %3 = load i32, ptr %2, align 4, !tbaa !21
+  %4 = lshr i32 %3, 2
+  %5 = and i32 %4, 1
+  %6 = zext nneg i32 %5 to i64
+  %spec.select = add i64 %index, %6
+  %i.e = getelementptr inbounds nuw [56 x i8], ptr %i.c, i64 %.04667
+  %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 68
   %7 = load i32, ptr %i.f, align 4, !tbaa !21
-  %8 = load i32, ptr %4, align 4, !tbaa !21
-  %9 = insertelement <2 x i32> poison, i32 %7, i64 0
-  %10 = insertelement <2 x i32> %9, i32 %8, i64 1
-  %i.g = load i32, ptr %5, align 4, !tbaa !21
-  %11 = load i32, ptr %6, align 4, !tbaa !21
-  %12 = insertelement <2 x i32> poison, i32 %i.g, i64 0
-  %13 = insertelement <2 x i32> %12, i32 %11, i64 1
-  %14 = lshr <2 x i32> %10, splat (i32 2)
-  %15 = lshr <2 x i32> %13, splat (i32 2)
-  %16 = and <2 x i32> %14, splat (i32 1)
-  %17 = and <2 x i32> %15, splat (i32 1)
-  %18 = zext nneg <2 x i32> %16 to <2 x i64>
-  %19 = zext nneg <2 x i32> %17 to <2 x i64>
-  %20 = add <2 x i64> %vec.phi, %18               ; 2 uses
-  %21 = add <2 x i64> %vec.phi93, %19             ; 2 uses
-  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %8 = lshr i32 %7, 2
+  %9 = and i32 %8, 1
+  %10 = zext nneg i32 %9 to i64
+  %spec.select.1 = add i64 %spec.select, %10
+  %11 = getelementptr inbounds nuw [56 x i8], ptr %i.c, i64 %.04667
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 124
+  %i.g = load i32, ptr %12, align 4, !tbaa !21
+  %13 = lshr i32 %i.g, 2
+  %14 = and i32 %13, 1
+  %15 = zext nneg i32 %14 to i64
+  %spec.select.2 = add i64 %spec.select.1, %15
+  %16 = getelementptr inbounds nuw [56 x i8], ptr %i.c, i64 %.04667
+  %17 = getelementptr inbounds nuw i8, ptr %16, i64 180
+  %18 = load i32, ptr %17, align 4, !tbaa !21
+  %19 = lshr i32 %18, 2
+  %20 = and i32 %19, 1
+  %21 = zext nneg i32 %20 to i64
+  %spec.select.3 = add i64 %spec.select.2, %21    ; 3 uses
+  %22 = add nuw i64 %.04667, 4                    ; 2 uses
+  %index.next = add i64 %niter, 4                 ; 2 uses
   %i.h = icmp eq i64 %index.next, %n.vec
   br i1 %i.h, label %middle.block, label %vector.body, !llvm.loop !101
 
 middle.block:                                     ; preds = %vector.body
-  %bin.rdx = add <2 x i64> %21, %20
-  %22 = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i64 %i.b, %n.vec
+  %cmp.n = icmp eq i64 %xtraiter, 0
   br i1 %cmp.n, label %.loopexit, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %.preheader66, %middle.block
-  %.04468.ph = phi i64 [ 0, %.preheader66 ], [ %22, %middle.block ]
-  %.04667.ph = phi i64 [ 0, %.preheader66 ], [ %n.vec, %middle.block ]
+scalar.ph.preheader:                              ; preds = %middle.block, %.preheader66
+  %.04468.ph = phi i64 [ 0, %.preheader66 ], [ %spec.select.3, %middle.block ]
+  %.04667.ph = phi i64 [ 0, %.preheader66 ], [ %22, %middle.block ]
+  %lcmp.mod94 = icmp ne i64 %xtraiter, 0
+  tail call void @llvm.assume(i1 %lcmp.mod94)
   br label %scalar.ph
 
-scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %.04468 = phi i64 [ %spec.select.a, %scalar.ph ], [ %.04468.ph, %scalar.ph.preheader ]
-  %.04667.a = phi i64 [ %i.o, %scalar.ph ], [ %.04667.ph, %scalar.ph.preheader ] ; 2 uses
-  %i.i = getelementptr inbounds nuw [56 x i8], ptr %i.c, i64 %.04667.a
+scalar.ph:                                        ; preds = %scalar.ph, %scalar.ph.preheader
+  %.04468.epil = phi i64 [ %.04468.ph, %scalar.ph.preheader ], [ %spec.select.epil, %scalar.ph ]
+  %.04468 = phi i64 [ %.04667.ph, %scalar.ph.preheader ], [ %spec.select.a, %scalar.ph ] ; 2 uses
+  %.04667.a = phi i64 [ 0, %scalar.ph.preheader ], [ %i.o, %scalar.ph ]
+  %i.i = getelementptr inbounds nuw [56 x i8], ptr %i.c, i64 %.04468
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 12
   %i.k = load i32, ptr %i.j, align 4, !tbaa !21
   %i.l = lshr i32 %i.k, 2
   %i.m = and i32 %i.l, 1
   %i.n = zext nneg i32 %i.m to i64
-  %spec.select.a = add i64 %.04468, %i.n          ; 2 uses
-  %i.o = add nuw i64 %.04667.a, 1                 ; 2 uses
-  %exitcond.not = icmp eq i64 %i.o, %i.b
-  br i1 %exitcond.not, label %.loopexit, label %scalar.ph, !llvm.loop !104
+  %spec.select.epil = add i64 %.04468.epil, %i.n  ; 2 uses
+  %spec.select.a = add nuw i64 %.04468, 1
+  %i.o = add i64 %.04667.a, 1                     ; 2 uses
+  %exitcond.not = icmp eq i64 %i.o, %xtraiter
+  br i1 %exitcond.not, label %.loopexit, label %scalar.ph, !llvm.loop !102
 
 .loopexit:                                        ; preds = %scalar.ph, %middle.block
-  %spec.select.lcssa = phi i64 [ %22, %middle.block ], [ %spec.select.a, %scalar.ph ] ; 3 uses
+  %spec.select.lcssa = phi i64 [ %spec.select.3, %middle.block ], [ %spec.select.epil, %scalar.ph ] ; 3 uses
   %.not49 = icmp eq i64 %spec.select.lcssa, 0
   br i1 %.not49, label %.critedge, label %bb.b
 
@@ -874,7 +882,7 @@ bb.b:                                             ; preds = %.loopexit
   %i.r = load i64, ptr %i.q, align 8, !tbaa !9
   %i.s = add i64 %i.r, %spec.select.lcssa
   %i.t = mul i64 %i.s, 56
-  %i.u = tail call ptr @CRYPTO_realloc(ptr noundef %i.p, i64 noundef %i.t, ptr noundef nonnull @.str, i32 noundef 341) #10 ; 4 uses
+  %i.u = tail call ptr @CRYPTO_realloc(ptr noundef %i.p, i64 noundef %i.t, ptr noundef nonnull @.str, i32 noundef 341) #9 ; 4 uses
   %.not50 = icmp eq ptr %i.u, null
   br i1 %.not50, label %.critedge, label %.preheader
 
@@ -909,12 +917,12 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.ae = getelementptr inbounds nuw i8, ptr %i.z, i64 32
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !92
-  %i.ag = tail call ptr @CRYPTO_memdup(ptr noundef %i.af, i64 noundef 24, ptr noundef nonnull @.str, i32 noundef 290) #10
+  %i.ag = tail call ptr @CRYPTO_memdup(ptr noundef %i.af, i64 noundef 24, ptr noundef nonnull @.str, i32 noundef 290) #9
   %i.ah = getelementptr inbounds nuw i8, ptr %i.x, i64 32 ; 2 uses
   store ptr %i.ag, ptr %i.ah, align 8, !tbaa !92
   %i.ai = getelementptr inbounds nuw i8, ptr %i.z, i64 48
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !89
-  %i.ak = tail call ptr @CRYPTO_memdup(ptr noundef %i.aj, i64 noundef 16, ptr noundef nonnull @.str, i32 noundef 292) #10 ; 2 uses
+  %i.ak = tail call ptr @CRYPTO_memdup(ptr noundef %i.aj, i64 noundef 16, ptr noundef nonnull @.str, i32 noundef 292) #9 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.x, i64 48
   store ptr %i.ak, ptr %i.al, align 8, !tbaa !89
   %i.am = load ptr, ptr %i.ah, align 8, !tbaa !92
@@ -930,7 +938,7 @@ custom_ext_copy_old_cb.exit:                      ; preds = %bb.e, %.lr.ph, %bb.
   %.4 = phi i32 [ %.069, %.lr.ph ], [ %spec.select64, %bb.e ], [ 1, %bb.d ] ; 2 uses
   %i.aq = add nuw i64 %.14770, 1                  ; 2 uses
   %i.ar = icmp ult i64 %i.aq, %i.ap
-  br i1 %i.ar, label %.lr.ph, label %._crit_edge, !llvm.loop !105
+  br i1 %i.ar, label %.lr.ph, label %._crit_edge, !llvm.loop !103
 
 ._crit_edge:                                      ; preds = %custom_ext_copy_old_cb.exit, %.preheader
   %i.as = phi i64 [ 0, %.preheader ], [ %i.ap, %custom_ext_copy_old_cb.exit ] ; 2 uses
@@ -978,12 +986,12 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g
   %i.bg = getelementptr inbounds nuw i8, ptr %i.ax, i64 32
   %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !92
-  %i.bi = tail call ptr @CRYPTO_memdup(ptr noundef %i.bh, i64 noundef 24, ptr noundef nonnull @.str, i32 noundef 290) #10
+  %i.bi = tail call ptr @CRYPTO_memdup(ptr noundef %i.bh, i64 noundef 24, ptr noundef nonnull @.str, i32 noundef 290) #9
   %i.bj = getelementptr inbounds nuw i8, ptr %.04274, i64 32 ; 2 uses
   store ptr %i.bi, ptr %i.bj, align 8, !tbaa !92
   %i.bk = getelementptr inbounds nuw i8, ptr %i.ax, i64 48
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !89
-  %i.bm = tail call ptr @CRYPTO_memdup(ptr noundef %i.bl, i64 noundef 16, ptr noundef nonnull @.str, i32 noundef 292) #10 ; 2 uses
+  %i.bm = tail call ptr @CRYPTO_memdup(ptr noundef %i.bl, i64 noundef 16, ptr noundef nonnull @.str, i32 noundef 292) #9 ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %.04274, i64 48
   store ptr %i.bm, ptr %i.bn, align 8, !tbaa !89
   %i.bo = load ptr, ptr %i.bj, align 8, !tbaa !92
@@ -1005,7 +1013,7 @@ bb.j:                                             ; preds = %.lr.ph76, %custom_e
   %.143 = phi ptr [ %.04274, %.lr.ph76 ], [ %i.br, %custom_ext_copy_old_cb.exit57 ]
   %i.bt = add nuw i64 %.24873, 1                  ; 2 uses
   %i.bu = icmp ult i64 %i.bt, %i.bs
-  br i1 %i.bu, label %.lr.ph76, label %.critedge53.loopexit, !llvm.loop !106
+  br i1 %i.bu, label %.lr.ph76, label %.critedge53.loopexit, !llvm.loop !104
 
 .critedge53.loopexit:                             ; preds = %bb.j
   %.pre82 = load i64, ptr %i.q, align 8, !tbaa !9
@@ -1036,10 +1044,10 @@ bb.k:                                             ; preds = %.critedge53
 bb.l:                                             ; preds = %.lr.ph.i
   %i.cb = getelementptr inbounds nuw i8, ptr %.012.i, i64 32
   %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !92
-  tail call void @CRYPTO_free(ptr noundef %i.cc, ptr noundef nonnull @.str, i32 noundef 385) #10
+  tail call void @CRYPTO_free(ptr noundef %i.cc, ptr noundef nonnull @.str, i32 noundef 385) #9
   %i.cd = getelementptr inbounds nuw i8, ptr %.012.i, i64 48
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !89
-  tail call void @CRYPTO_free(ptr noundef %i.ce, ptr noundef nonnull @.str, i32 noundef 386) #10
+  tail call void @CRYPTO_free(ptr noundef %i.ce, ptr noundef nonnull @.str, i32 noundef 386) #9
   %.pre.i = load i64, ptr %i.q, align 8, !tbaa !9
   br label %bb.m
 
@@ -1056,7 +1064,7 @@ bb.m:                                             ; preds = %bb.l, %.lr.ph.i
 
 custom_exts_free.exit:                            ; preds = %bb.k, %._crit_edge.loopexit.i
   %i.cj = phi ptr [ %.pre14.i, %._crit_edge.loopexit.i ], [ %i.bx, %bb.k ]
-  tail call void @CRYPTO_free(ptr noundef %i.cj, ptr noundef nonnull @.str, i32 noundef 388) #10
+  tail call void @CRYPTO_free(ptr noundef %i.cj, ptr noundef nonnull @.str, i32 noundef 388) #9
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
   br label %.critedge
 
@@ -1074,13 +1082,13 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 define internal i32 @custom_ext_add_old_cb_wrap(ptr noundef %0, i32 noundef %1, i32 %2, ptr noundef %3, ptr noundef %4, ptr nofree readnone captures(none) %5, i64 %6, ptr noundef %7, ptr nofree noundef readonly captures(none) %8) #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !107  ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !105  ; 2 uses
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = load ptr, ptr %8, align 8, !tbaa !109
-  %i.e = tail call i32 %i.b(ptr noundef %0, i32 noundef %1, ptr noundef %3, ptr noundef %4, ptr noundef %7, ptr noundef %i.d) #10
+  %i.d = load ptr, ptr %8, align 8, !tbaa !107
+  %i.e = tail call i32 %i.b(ptr noundef %0, i32 noundef %1, ptr noundef %3, ptr noundef %4, ptr noundef %7, ptr noundef %i.d) #9
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -1094,7 +1102,7 @@ declare void @CRYPTO_free(ptr noundef, ptr noundef, i32 noundef) local_unnamed_a
 define dso_local range(i32 0, 2) i32 @SSL_CTX_has_client_custom_ext(ptr nofree noundef readonly captures(none) %0, i32 noundef %1) local_unnamed_addr #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 344
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !110  ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !108  ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 136
   %i.d = load i64, ptr %i.c, align 8, !tbaa !9    ; 2 uses
   %.not27.i = icmp eq i64 %i.d, 0
@@ -1145,7 +1153,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 344
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !110
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !108
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 128
   br label %bb.d
 
@@ -1162,7 +1170,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %or.cond3, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.k = tail call i32 @SSL_CTX_ct_is_enabled(ptr noundef nonnull %0) #10
+  %i.k = tail call i32 @SSL_CTX_ct_is_enabled(ptr noundef nonnull %0) #9
   %.not = icmp eq i32 %i.k, 0
   br i1 %.not, label %bb.g, label %custom_ext_find.exit
 
@@ -1225,7 +1233,7 @@ bb.k:                                             ; preds = %bb.j, %.lr.ph.split
 .loopexit:                                        ; preds = %bb.k, %bb.i, %bb.h
   %i.ag = mul i64 %i.q, 56
   %i.ah = add i64 %i.ag, 56
-  %i.ai = tail call ptr @CRYPTO_realloc(ptr noundef %.pre, i64 noundef %i.ah, ptr noundef nonnull @.str, i32 noundef 450) #10 ; 3 uses
+  %i.ai = tail call ptr @CRYPTO_realloc(ptr noundef %.pre, i64 noundef %i.ah, ptr noundef nonnull @.str, i32 noundef 450) #9 ; 3 uses
   %i.aj = icmp eq ptr %i.ai, null
   br i1 %i.aj, label %custom_ext_find.exit, label %bb.l
 
@@ -1313,22 +1321,22 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 0, 2) i32 @SSL_CTX_add_client_custom_ext(ptr noundef %0, i32 noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6) local_unnamed_addr #3 {
 bb.a:
-  %i.a = tail call noalias ptr @CRYPTO_malloc(i64 noundef 24, ptr noundef nonnull @.str, i32 noundef 479) #10 ; 6 uses
-  %i.b = tail call noalias ptr @CRYPTO_malloc(i64 noundef 16, ptr noundef nonnull @.str, i32 noundef 481) #10 ; 5 uses
+  %i.a = tail call noalias ptr @CRYPTO_malloc(i64 noundef 24, ptr noundef nonnull @.str, i32 noundef 479) #9 ; 6 uses
+  %i.b = tail call noalias ptr @CRYPTO_malloc(i64 noundef 16, ptr noundef nonnull @.str, i32 noundef 481) #9 ; 5 uses
   %i.c = icmp eq ptr %i.a, null
   %i.d = icmp eq ptr %i.b, null
   %or.cond.i = select i1 %i.c, i1 true, i1 %i.d
   br i1 %or.cond.i, label %.sink.split.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  store ptr %4, ptr %i.a, align 8, !tbaa !109
+  store ptr %4, ptr %i.a, align 8, !tbaa !107
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr %2, ptr %i.e, align 8, !tbaa !107
+  store ptr %2, ptr %i.e, align 8, !tbaa !105
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store ptr %3, ptr %i.f, align 8, !tbaa !125
-  store ptr %6, ptr %i.b, align 8, !tbaa !126
+  store ptr %3, ptr %i.f, align 8, !tbaa !123
+  store ptr %6, ptr %i.b, align 8, !tbaa !124
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store ptr %5, ptr %i.g, align 8, !tbaa !128
+  store ptr %5, ptr %i.g, align 8, !tbaa !126
   %i.h = tail call i32 @ossl_tls_add_custom_ext_intern(ptr noundef %0, ptr noundef null, i32 noundef 0, i32 noundef %1, i32 noundef 464, ptr noundef nonnull @custom_ext_add_old_cb_wrap, ptr noundef nonnull @custom_ext_free_old_cb_wrap, ptr noundef nonnull %i.a, ptr noundef nonnull @custom_ext_parse_old_cb_wrap, ptr noundef nonnull %i.b)
   %.not.i = icmp eq i32 %i.h, 0
   br i1 %.not.i, label %.sink.split.i, label %add_old_custom_ext.exit
@@ -1336,8 +1344,8 @@ bb.b:                                             ; preds = %bb.a
 .sink.split.i:                                    ; preds = %bb.b, %bb.a
   %.sink29.i = phi i32 [ 485, %bb.a ], [ 505, %bb.b ]
   %.sink.i = phi i32 [ 486, %bb.a ], [ 506, %bb.b ]
-  tail call void @CRYPTO_free(ptr noundef %i.a, ptr noundef nonnull @.str, i32 noundef %.sink29.i) #10
-  tail call void @CRYPTO_free(ptr noundef %i.b, ptr noundef nonnull @.str, i32 noundef %.sink.i) #10
+  tail call void @CRYPTO_free(ptr noundef %i.a, ptr noundef nonnull @.str, i32 noundef %.sink29.i) #9
+  tail call void @CRYPTO_free(ptr noundef %i.b, ptr noundef nonnull @.str, i32 noundef %.sink.i) #9
   br label %add_old_custom_ext.exit
 
 add_old_custom_ext.exit:                          ; preds = %bb.b, %.sink.split.i
@@ -1348,22 +1356,22 @@ add_old_custom_ext.exit:                          ; preds = %bb.b, %.sink.split.
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 0, 2) i32 @SSL_CTX_add_server_custom_ext(ptr noundef %0, i32 noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6) local_unnamed_addr #3 {
 bb.a:
-  %i.a = tail call noalias ptr @CRYPTO_malloc(i64 noundef 24, ptr noundef nonnull @.str, i32 noundef 479) #10 ; 6 uses
-  %i.b = tail call noalias ptr @CRYPTO_malloc(i64 noundef 16, ptr noundef nonnull @.str, i32 noundef 481) #10 ; 5 uses
+  %i.a = tail call noalias ptr @CRYPTO_malloc(i64 noundef 24, ptr noundef nonnull @.str, i32 noundef 479) #9 ; 6 uses
+  %i.b = tail call noalias ptr @CRYPTO_malloc(i64 noundef 16, ptr noundef nonnull @.str, i32 noundef 481) #9 ; 5 uses
   %i.c = icmp eq ptr %i.a, null
   %i.d = icmp eq ptr %i.b, null
   %or.cond.i = select i1 %i.c, i1 true, i1 %i.d
   br i1 %or.cond.i, label %.sink.split.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  store ptr %4, ptr %i.a, align 8, !tbaa !109
+  store ptr %4, ptr %i.a, align 8, !tbaa !107
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr %2, ptr %i.e, align 8, !tbaa !107
+  store ptr %2, ptr %i.e, align 8, !tbaa !105
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store ptr %3, ptr %i.f, align 8, !tbaa !125
-  store ptr %6, ptr %i.b, align 8, !tbaa !126
+  store ptr %3, ptr %i.f, align 8, !tbaa !123
+  store ptr %6, ptr %i.b, align 8, !tbaa !124
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store ptr %5, ptr %i.g, align 8, !tbaa !128
+  store ptr %5, ptr %i.g, align 8, !tbaa !126
   %i.h = tail call i32 @ossl_tls_add_custom_ext_intern(ptr noundef %0, ptr noundef null, i32 noundef 1, i32 noundef %1, i32 noundef 464, ptr noundef nonnull @custom_ext_add_old_cb_wrap, ptr noundef nonnull @custom_ext_free_old_cb_wrap, ptr noundef nonnull %i.a, ptr noundef nonnull @custom_ext_parse_old_cb_wrap, ptr noundef nonnull %i.b)
   %.not.i = icmp eq i32 %i.h, 0
   br i1 %.not.i, label %.sink.split.i, label %add_old_custom_ext.exit
@@ -1371,8 +1379,8 @@ bb.b:                                             ; preds = %bb.a
 .sink.split.i:                                    ; preds = %bb.b, %bb.a
   %.sink29.i = phi i32 [ 485, %bb.a ], [ 505, %bb.b ]
   %.sink.i = phi i32 [ 486, %bb.a ], [ 506, %bb.b ]
-  tail call void @CRYPTO_free(ptr noundef %i.a, ptr noundef nonnull @.str, i32 noundef %.sink29.i) #10
-  tail call void @CRYPTO_free(ptr noundef %i.b, ptr noundef nonnull @.str, i32 noundef %.sink.i) #10
+  tail call void @CRYPTO_free(ptr noundef %i.a, ptr noundef nonnull @.str, i32 noundef %.sink29.i) #9
+  tail call void @CRYPTO_free(ptr noundef %i.b, ptr noundef nonnull @.str, i32 noundef %.sink.i) #9
   br label %add_old_custom_ext.exit
 
 add_old_custom_ext.exit:                          ; preds = %bb.b, %.sink.split.i
@@ -1393,13 +1401,13 @@ declare noalias ptr @CRYPTO_malloc(i64 noundef, ptr noundef, i32 noundef) local_
 define internal void @custom_ext_free_old_cb_wrap(ptr noundef %0, i32 noundef %1, i32 %2, ptr noundef %3, ptr nofree noundef readonly captures(none) %4) #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !125  ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !123  ; 2 uses
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = load ptr, ptr %4, align 8, !tbaa !109
-  tail call void %i.b(ptr noundef %0, i32 noundef %1, ptr noundef %3, ptr noundef %i.d) #10
+  %i.d = load ptr, ptr %4, align 8, !tbaa !107
+  tail call void %i.b(ptr noundef %0, i32 noundef %1, ptr noundef %3, ptr noundef %i.d) #9
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -1410,13 +1418,13 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 define internal i32 @custom_ext_parse_old_cb_wrap(ptr noundef %0, i32 noundef %1, i32 %2, ptr noundef %3, i64 noundef %4, ptr nofree readnone captures(none) %5, i64 %6, ptr noundef %7, ptr nofree noundef readonly captures(none) %8) #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !128  ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !126  ; 2 uses
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = load ptr, ptr %8, align 8, !tbaa !126
-  %i.e = tail call i32 %i.b(ptr noundef %0, i32 noundef %1, ptr noundef %3, i64 noundef %4, ptr noundef %7, ptr noundef %i.d) #10
+  %i.d = load ptr, ptr %8, align 8, !tbaa !124
+  %i.e = tail call i32 %i.b(ptr noundef %0, i32 noundef %1, ptr noundef %3, i64 noundef %4, ptr noundef %7, ptr noundef %i.d) #9
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -1427,9 +1435,6 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #8
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #9
-
 attributes #0 = { nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -1439,8 +1444,7 @@ attributes #5 = { nofree norecurse nosync nounwind memory(read, inaccessiblemem:
 attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #8 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #10 = { nounwind }
+attributes #9 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}
@@ -1547,32 +1551,30 @@ attributes #10 = { nounwind }
 !98 = distinct !{!98, !18, !99}
 !99 = !{!"llvm.loop.peeled.count", i32 1}
 !100 = distinct !{!100, !18}
-!101 = distinct !{!101, !18, !102, !103}
-!102 = !{!"llvm.loop.isvectorized", i32 1}
-!103 = !{!"llvm.loop.unroll.runtime.disable"}
-!104 = distinct !{!104, !18, !103, !102}
-!105 = distinct !{!105, !18}
-!106 = distinct !{!106, !18}
-!107 = !{!108, !11, i64 8}
-!108 = !{!"", !11, i64 0, !11, i64 8, !11, i64 16}
-!109 = !{!108, !11, i64 0}
-!110 = !{!111, !63, i64 344}
-!111 = !{!"ssl_ctx_st", !32, i64 0, !29, i64 8, !62, i64 16, !62, i64 24, !62, i64 32, !112, i64 40, !113, i64 48, !12, i64 56, !64, i64 64, !64, i64 72, !6, i64 80, !36, i64 88, !11, i64 96, !11, i64 104, !11, i64 112, !114, i64 120, !30, i64 164, !11, i64 168, !11, i64 176, !11, i64 184, !11, i64 192, !11, i64 200, !11, i64 208, !11, i64 216, !11, i64 224, !11, i64 232, !31, i64 240, !49, i64 256, !49, i64 264, !59, i64 272, !115, i64 280, !11, i64 288, !47, i64 296, !47, i64 304, !12, i64 312, !6, i64 320, !6, i64 324, !6, i64 328, !12, i64 336, !63, i64 344, !11, i64 352, !6, i64 360, !11, i64 368, !11, i64 376, !6, i64 384, !12, i64 392, !7, i64 400, !11, i64 432, !11, i64 440, !55, i64 448, !6, i64 456, !116, i64 464, !11, i64 472, !11, i64 480, !12, i64 488, !12, i64 496, !12, i64 504, !12, i64 512, !117, i64 520, !11, i64 528, !11, i64 536, !11, i64 544, !11, i64 552, !118, i64 560, !11, i64 800, !11, i64 808, !11, i64 816, !11, i64 824, !74, i64 832, !120, i64 960, !72, i64 992, !11, i64 1000, !11, i64 1008, !11, i64 1016, !6, i64 1024, !6, i64 1028, !11, i64 1032, !11, i64 1040, !12, i64 1048, !12, i64 1056, !11, i64 1064, !11, i64 1072, !11, i64 1080, !12, i64 1088, !11, i64 1096, !11, i64 1104, !6, i64 1112, !11, i64 1120, !11, i64 1128, !46, i64 1136, !7, i64 1144, !7, i64 1200, !7, i64 1392, !7, i64 1504, !12, i64 1616, !12, i64 1624, !50, i64 1632, !52, i64 1640, !122, i64 1648, !12, i64 1656, !12, i64 1664, !123, i64 1672, !12, i64 1680, !12, i64 1688, !6, i64 1696, !6, i64 1700, !6, i64 1704, !6, i64 1708, !46, i64 1712, !12, i64 1720, !46, i64 1728, !12, i64 1736, !12, i64 1744, !124, i64 1752, !46, i64 1760}
-!112 = !{!"p1 _ZTS13x509_store_st", !11, i64 0}
-!113 = !{!"p1 _ZTS20lhash_st_SSL_SESSION", !11, i64 0}
-!114 = !{!"", !7, i64 0, !7, i64 4, !7, i64 8, !7, i64 12, !7, i64 16, !7, i64 20, !7, i64 24, !7, i64 28, !7, i64 32, !7, i64 36, !7, i64 40}
-!115 = !{!"p1 _ZTS17stack_st_SSL_COMP", !11, i64 0}
-!116 = !{!"p1 _ZTS14ctlog_store_st", !11, i64 0}
-!117 = !{!"p1 _ZTS9engine_st", !11, i64 0}
-!118 = !{!"", !11, i64 0, !11, i64 8, !7, i64 16, !119, i64 32, !11, i64 40, !11, i64 48, !11, i64 56, !11, i64 64, !6, i64 72, !7, i64 76, !12, i64 80, !46, i64 88, !12, i64 96, !52, i64 104, !12, i64 112, !52, i64 120, !12, i64 128, !69, i64 136, !11, i64 144, !11, i64 152, !46, i64 160, !12, i64 168, !11, i64 176, !11, i64 184, !11, i64 192, !11, i64 200, !7, i64 208}
-!119 = !{!"p1 _ZTS21ssl_ctx_ext_secure_st", !11, i64 0}
-!120 = !{!"dane_ctx_st", !121, i64 0, !46, i64 8, !7, i64 16, !12, i64 24}
-!121 = !{!"p2 _ZTS9evp_md_st", !84, i64 0}
-!122 = !{!"p1 _ZTS17tls_group_info_st", !11, i64 0}
-!123 = !{!"p1 _ZTS18tls_sigalg_info_st", !11, i64 0}
-!124 = !{!"p1 _ZTS18ssl_token_store_st", !11, i64 0}
-!125 = !{!108, !11, i64 16}
-!126 = !{!127, !11, i64 0}
-!127 = !{!"", !11, i64 0, !11, i64 8}
-!128 = !{!127, !11, i64 8}
+!101 = distinct !{!101, !18}
+!102 = distinct !{!102, !24}
+!103 = distinct !{!103, !18}
+!104 = distinct !{!104, !18}
+!105 = !{!106, !11, i64 8}
+!106 = !{!"", !11, i64 0, !11, i64 8, !11, i64 16}
+!107 = !{!106, !11, i64 0}
+!108 = !{!109, !63, i64 344}
+!109 = !{!"ssl_ctx_st", !32, i64 0, !29, i64 8, !62, i64 16, !62, i64 24, !62, i64 32, !110, i64 40, !111, i64 48, !12, i64 56, !64, i64 64, !64, i64 72, !6, i64 80, !36, i64 88, !11, i64 96, !11, i64 104, !11, i64 112, !112, i64 120, !30, i64 164, !11, i64 168, !11, i64 176, !11, i64 184, !11, i64 192, !11, i64 200, !11, i64 208, !11, i64 216, !11, i64 224, !11, i64 232, !31, i64 240, !49, i64 256, !49, i64 264, !59, i64 272, !113, i64 280, !11, i64 288, !47, i64 296, !47, i64 304, !12, i64 312, !6, i64 320, !6, i64 324, !6, i64 328, !12, i64 336, !63, i64 344, !11, i64 352, !6, i64 360, !11, i64 368, !11, i64 376, !6, i64 384, !12, i64 392, !7, i64 400, !11, i64 432, !11, i64 440, !55, i64 448, !6, i64 456, !114, i64 464, !11, i64 472, !11, i64 480, !12, i64 488, !12, i64 496, !12, i64 504, !12, i64 512, !115, i64 520, !11, i64 528, !11, i64 536, !11, i64 544, !11, i64 552, !116, i64 560, !11, i64 800, !11, i64 808, !11, i64 816, !11, i64 824, !74, i64 832, !118, i64 960, !72, i64 992, !11, i64 1000, !11, i64 1008, !11, i64 1016, !6, i64 1024, !6, i64 1028, !11, i64 1032, !11, i64 1040, !12, i64 1048, !12, i64 1056, !11, i64 1064, !11, i64 1072, !11, i64 1080, !12, i64 1088, !11, i64 1096, !11, i64 1104, !6, i64 1112, !11, i64 1120, !11, i64 1128, !46, i64 1136, !7, i64 1144, !7, i64 1200, !7, i64 1392, !7, i64 1504, !12, i64 1616, !12, i64 1624, !50, i64 1632, !52, i64 1640, !120, i64 1648, !12, i64 1656, !12, i64 1664, !121, i64 1672, !12, i64 1680, !12, i64 1688, !6, i64 1696, !6, i64 1700, !6, i64 1704, !6, i64 1708, !46, i64 1712, !12, i64 1720, !46, i64 1728, !12, i64 1736, !12, i64 1744, !122, i64 1752, !46, i64 1760}
+!110 = !{!"p1 _ZTS13x509_store_st", !11, i64 0}
+!111 = !{!"p1 _ZTS20lhash_st_SSL_SESSION", !11, i64 0}
+!112 = !{!"", !7, i64 0, !7, i64 4, !7, i64 8, !7, i64 12, !7, i64 16, !7, i64 20, !7, i64 24, !7, i64 28, !7, i64 32, !7, i64 36, !7, i64 40}
+!113 = !{!"p1 _ZTS17stack_st_SSL_COMP", !11, i64 0}
+!114 = !{!"p1 _ZTS14ctlog_store_st", !11, i64 0}
+!115 = !{!"p1 _ZTS9engine_st", !11, i64 0}
+!116 = !{!"", !11, i64 0, !11, i64 8, !7, i64 16, !117, i64 32, !11, i64 40, !11, i64 48, !11, i64 56, !11, i64 64, !6, i64 72, !7, i64 76, !12, i64 80, !46, i64 88, !12, i64 96, !52, i64 104, !12, i64 112, !52, i64 120, !12, i64 128, !69, i64 136, !11, i64 144, !11, i64 152, !46, i64 160, !12, i64 168, !11, i64 176, !11, i64 184, !11, i64 192, !11, i64 200, !7, i64 208}
+!117 = !{!"p1 _ZTS21ssl_ctx_ext_secure_st", !11, i64 0}
+!118 = !{!"dane_ctx_st", !119, i64 0, !46, i64 8, !7, i64 16, !12, i64 24}
+!119 = !{!"p2 _ZTS9evp_md_st", !84, i64 0}
+!120 = !{!"p1 _ZTS17tls_group_info_st", !11, i64 0}
+!121 = !{!"p1 _ZTS18tls_sigalg_info_st", !11, i64 0}
+!122 = !{!"p1 _ZTS18ssl_token_store_st", !11, i64 0}
+!123 = !{!106, !11, i64 16}
+!124 = !{!125, !11, i64 0}
+!125 = !{!"", !11, i64 0, !11, i64 8}
+!126 = !{!125, !11, i64 8}
 end_hunk_0

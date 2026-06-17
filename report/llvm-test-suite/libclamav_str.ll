@@ -201,7 +201,7 @@ iter.check:                                       ; preds = %bb.c
   %i.g = lshr i32 %i.f, 1
   %i.h = add nuw nsw i32 %i.g, 1
   %wide.trip.count = zext nneg i32 %i.h to i64    ; 7 uses
-  %min.iters.check = icmp ult i32 %i.f, 6
+  %min.iters.check = icmp ult i32 %i.f, 14
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
@@ -220,7 +220,7 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
   br i1 %min.iters.check32, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %n.mod.vf = and i64 %wide.trip.count, 12
+  %n.mod.vf = and i64 %wide.trip.count, 8
   %n.vec = and i64 %wide.trip.count, 2147483632   ; 5 uses
   %i.l = shl nuw nsw i64 %n.vec, 1
   br label %vector.body
@@ -358,46 +358,74 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec34 = and i64 %wide.trip.count, 2147483644 ; 4 uses
+  %n.vec34 = and i64 %wide.trip.count, 2147483640 ; 4 uses
   %i.dy = shl nuw nsw i64 %n.vec34, 1
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index35 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next36, %vec.epilog.vector.body ] ; 3 uses
-  %i.dz = shl i64 %index35, 1                     ; 4 uses
-  %i.ea = getelementptr inbounds nuw i8, ptr %0, i64 %i.dz ; 2 uses
+  %i.dz = shl i64 %index35, 1                     ; 8 uses
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 %i.dz ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 %i.dz ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 2
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 %i.dz ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 4
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 %i.dz ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 6
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 %i.dz ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 8
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 %i.dz ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 10
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 %i.dz ; 2 uses
+  %i.ea = getelementptr inbounds nuw i8, ptr %13, i64 12
   %i.eb = getelementptr inbounds nuw i8, ptr %0, i64 %i.dz ; 2 uses
-  %i.ec = getelementptr inbounds nuw i8, ptr %i.eb, i64 2
-  %i.ed = getelementptr inbounds nuw i8, ptr %0, i64 %i.dz ; 2 uses
-  %i.ee = getelementptr inbounds nuw i8, ptr %i.ed, i64 4
-  %i.ef = getelementptr inbounds nuw i8, ptr %0, i64 %i.dz ; 2 uses
-  %i.eg = getelementptr inbounds nuw i8, ptr %i.ef, i64 6
-  %i.eh = getelementptr inbounds nuw i8, ptr %i.ea, i64 1
-  %i.ei = getelementptr inbounds nuw i8, ptr %i.eb, i64 3
-  %i.ej = getelementptr inbounds nuw i8, ptr %i.ed, i64 5
-  %i.ek = getelementptr inbounds nuw i8, ptr %i.ef, i64 7
+  %i.ec = getelementptr inbounds nuw i8, ptr %i.eb, i64 14
+  %i.ed = getelementptr inbounds nuw i8, ptr %2, i64 1
+  %i.ee = getelementptr inbounds nuw i8, ptr %3, i64 3
+  %i.ef = getelementptr inbounds nuw i8, ptr %5, i64 5
+  %i.eg = getelementptr inbounds nuw i8, ptr %7, i64 7
+  %i.eh = getelementptr inbounds nuw i8, ptr %9, i64 9
+  %i.ei = getelementptr inbounds nuw i8, ptr %11, i64 11
+  %i.ej = getelementptr inbounds nuw i8, ptr %13, i64 13
+  %i.ek = getelementptr inbounds nuw i8, ptr %i.eb, i64 15
+  %14 = load i8, ptr %i.ed, align 1, !tbaa !8, !alias.scope !21
+  %15 = load i8, ptr %i.ee, align 1, !tbaa !8, !alias.scope !21
+  %16 = load i8, ptr %i.ef, align 1, !tbaa !8, !alias.scope !21
+  %17 = load i8, ptr %i.eg, align 1, !tbaa !8, !alias.scope !21
   %i.el = load i8, ptr %i.eh, align 1, !tbaa !8, !alias.scope !21
   %i.em = load i8, ptr %i.ei, align 1, !tbaa !8, !alias.scope !21
   %i.en = load i8, ptr %i.ej, align 1, !tbaa !8, !alias.scope !21
   %i.eo = load i8, ptr %i.ek, align 1, !tbaa !8, !alias.scope !21
-  %2 = insertelement <4 x i8> poison, i8 %i.el, i64 0
-  %3 = insertelement <4 x i8> %2, i8 %i.em, i64 1
-  %4 = insertelement <4 x i8> %3, i8 %i.en, i64 2
-  %5 = insertelement <4 x i8> %4, i8 %i.eo, i64 3
-  %6 = shl <4 x i8> %5, splat (i8 4)              ; 2 uses
+  %18 = insertelement <8 x i8> poison, i8 %14, i64 0
+  %19 = insertelement <8 x i8> %18, i8 %15, i64 1
+  %20 = insertelement <8 x i8> %19, i8 %16, i64 2
+  %21 = insertelement <8 x i8> %20, i8 %17, i64 3
+  %22 = insertelement <8 x i8> %21, i8 %i.el, i64 4
+  %23 = insertelement <8 x i8> %22, i8 %i.em, i64 5
+  %24 = insertelement <8 x i8> %23, i8 %i.en, i64 6
+  %25 = insertelement <8 x i8> %24, i8 %i.eo, i64 7
+  %26 = shl <8 x i8> %25, splat (i8 4)            ; 2 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %i.e, i64 %index35 ; 2 uses
-  store <4 x i8> %6, ptr %i.ep, align 1, !tbaa !8, !alias.scope !24, !noalias !21
-  %i.eq = load i8, ptr %i.ea, align 1, !tbaa !8, !alias.scope !21
-  %i.er = load i8, ptr %i.ec, align 1, !tbaa !8, !alias.scope !21
-  %i.es = load i8, ptr %i.ee, align 1, !tbaa !8, !alias.scope !21
-  %i.et = load i8, ptr %i.eg, align 1, !tbaa !8, !alias.scope !21
-  %7 = insertelement <4 x i8> poison, i8 %i.eq, i64 0
-  %8 = insertelement <4 x i8> %7, i8 %i.er, i64 1
-  %9 = insertelement <4 x i8> %8, i8 %i.es, i64 2
-  %10 = insertelement <4 x i8> %9, i8 %i.et, i64 3
-  %11 = add <4 x i8> %10, %6
-  store <4 x i8> %11, ptr %i.ep, align 1, !tbaa !8, !alias.scope !24, !noalias !21
-  %index.next36 = add nuw i64 %index35, 4         ; 2 uses
+  store <8 x i8> %26, ptr %i.ep, align 1, !tbaa !8, !alias.scope !24, !noalias !21
+  %27 = load i8, ptr %2, align 1, !tbaa !8, !alias.scope !21
+  %28 = load i8, ptr %4, align 1, !tbaa !8, !alias.scope !21
+  %29 = load i8, ptr %6, align 1, !tbaa !8, !alias.scope !21
+  %30 = load i8, ptr %8, align 1, !tbaa !8, !alias.scope !21
+  %i.eq = load i8, ptr %10, align 1, !tbaa !8, !alias.scope !21
+  %i.er = load i8, ptr %12, align 1, !tbaa !8, !alias.scope !21
+  %i.es = load i8, ptr %i.ea, align 1, !tbaa !8, !alias.scope !21
+  %i.et = load i8, ptr %i.ec, align 1, !tbaa !8, !alias.scope !21
+  %31 = insertelement <8 x i8> poison, i8 %27, i64 0
+  %32 = insertelement <8 x i8> %31, i8 %28, i64 1
+  %33 = insertelement <8 x i8> %32, i8 %29, i64 2
+  %34 = insertelement <8 x i8> %33, i8 %30, i64 3
+  %35 = insertelement <8 x i8> %34, i8 %i.eq, i64 4
+  %36 = insertelement <8 x i8> %35, i8 %i.er, i64 5
+  %37 = insertelement <8 x i8> %36, i8 %i.es, i64 6
+  %38 = insertelement <8 x i8> %37, i8 %i.et, i64 7
+  %39 = add <8 x i8> %38, %26
+  store <8 x i8> %39, ptr %i.ep, align 1, !tbaa !8, !alias.scope !24, !noalias !21
+  %index.next36 = add nuw i64 %index35, 8         ; 2 uses
   %i.eu = icmp eq i64 %index.next36, %n.vec34
   br i1 %i.eu, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !30
 
@@ -800,7 +828,7 @@ attributes #15 = { nounwind willreturn memory(none) }
 !26 = distinct !{!26, !17, !27, !28}
 !27 = !{!"llvm.loop.isvectorized", i32 1}
 !28 = !{!"llvm.loop.unroll.runtime.disable"}
-!29 = !{!"branch_weights", i32 4, i32 12}
+!29 = !{!"branch_weights", i32 8, i32 8}
 !30 = distinct !{!30, !17, !27, !28}
 !31 = distinct !{!31, !17, !27}
 !32 = distinct !{!32, !17}

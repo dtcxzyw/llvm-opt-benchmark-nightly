@@ -201,9 +201,9 @@ LoadAssignArrayWithRand.exit:                     ; preds = %LoadAssign.exit.i
 .lr.ph.preheader:                                 ; preds = %LoadAssignArrayWithRand.exit.thread, %LoadAssignArrayWithRand.exit
   %i.ea = phi i64 [ %i.dy, %LoadAssignArrayWithRand.exit.thread ], [ %i.dz, %LoadAssignArrayWithRand.exit ]
   %i.eb = getelementptr inbounds nuw i8, ptr %i.a, i64 192 ; 2 uses
-  %i.ec = getelementptr inbounds nuw i8, ptr %i.a, i64 194
-  %i.ed = getelementptr inbounds nuw i8, ptr %i.a, i64 196
-  %i.ee = getelementptr inbounds nuw i8, ptr %i.a, i64 198
+  %i.ec = getelementptr inbounds nuw i8, ptr %i.a, i64 194 ; 2 uses
+  %i.ed = getelementptr inbounds nuw i8, ptr %i.a, i64 196 ; 2 uses
+  %i.ee = getelementptr inbounds nuw i8, ptr %i.a, i64 198 ; 2 uses
   %i.ef = getelementptr inbounds nuw i8, ptr %i.a, i64 200 ; 2 uses
   br label %.lr.ph
 
@@ -606,60 +606,67 @@ pred.store.continue58:                            ; preds = %pred.store.if57, %p
 
 vec.epilog.iter.check:                            ; preds = %pred.store.continue58
   %bin.rdx = add <8 x i16> %predphi61, %predphi59
-  %i.rw = tail call i16 @llvm.vector.reduce.add.v8i16(<8 x i16> %bin.rdx)
-  %2 = insertelement <4 x i16> <i16 poison, i16 0, i16 0, i16 0>, i16 %i.rw, i64 0
+  %i.rw = tail call i16 @llvm.vector.reduce.add.v8i16(<8 x i16> %bin.rdx) ; 2 uses
   %i.rx = getelementptr inbounds nuw i8, ptr %invariant.gep.i18.i, i64 19392
-  %3 = getelementptr inbounds nuw i8, ptr %invariant.gep.i18.i, i64 19594
-  %4 = getelementptr inbounds nuw i8, ptr %invariant.gep.i18.i, i64 19796
-  %5 = getelementptr inbounds nuw i8, ptr %invariant.gep.i18.i, i64 19998
-  %6 = load i16, ptr %i.rx, align 2, !tbaa !91
-  %i.ry = load i16, ptr %3, align 2, !tbaa !91
-  %7 = load i16, ptr %4, align 2, !tbaa !91
-  %i.rz = load i16, ptr %5, align 2, !tbaa !91
-  %8 = insertelement <4 x i16> poison, i16 %6, i64 0
-  %9 = insertelement <4 x i16> %8, i16 %i.ry, i64 1
-  %10 = insertelement <4 x i16> %9, i16 %7, i64 2
-  %11 = insertelement <4 x i16> %10, i16 %i.rz, i64 3
-  %12 = icmp eq <4 x i16> %11, splat (i16 1)      ; 2 uses
-  %wide.load66 = load <4 x i16>, ptr %i.eb, align 16, !tbaa !91
-  %13 = icmp ne <4 x i16> %wide.load66, splat (i16 1) ; 2 uses
-  %14 = select <4 x i1> %12, <4 x i1> %13, <4 x i1> zeroinitializer ; 4 uses
-  %15 = extractelement <4 x i1> %14, i64 0
-  br i1 %15, label %pred.store.if67, label %pred.store.continue68
+  %i.ry = load i16, ptr %i.rx, align 2, !tbaa !91
+  %2 = icmp ne i16 %i.ry, 1
+  %i.rz = load i16, ptr %i.eb, align 16
+  %.not103.i.i = icmp eq i16 %i.rz, 1
+  %or.cond = select i1 %2, i1 true, i1 %.not103.i.i
+  br i1 %or.cond, label %pred.store.continue68, label %pred.store.if67
 
 pred.store.if67:                                  ; preds = %vec.epilog.iter.check
   store i16 1, ptr %i.eb, align 16, !tbaa !91
+  %3 = add i16 %i.rw, 1
   br label %pred.store.continue68
 
 pred.store.continue68:                            ; preds = %pred.store.if67, %vec.epilog.iter.check
-  %16 = extractelement <4 x i1> %14, i64 1
-  br i1 %16, label %pred.store.if69, label %pred.store.continue70
+  %.2.i.i = phi i16 [ %3, %pred.store.if67 ], [ %i.rw, %vec.epilog.iter.check ] ; 2 uses
+  %gep.i19.i.1 = getelementptr inbounds nuw i8, ptr %invariant.gep.i18.i, i64 19594
+  %4 = load i16, ptr %gep.i19.i.1, align 2, !tbaa !91
+  %5 = icmp ne i16 %4, 1
+  %6 = load i16, ptr %i.ec, align 2
+  %.not103.i.i.1 = icmp eq i16 %6, 1
+  %or.cond88 = select i1 %5, i1 true, i1 %.not103.i.i.1
+  br i1 %or.cond88, label %pred.store.continue70, label %pred.store.if69
 
 pred.store.if69:                                  ; preds = %pred.store.continue68
   store i16 1, ptr %i.ec, align 2, !tbaa !91
+  %7 = add i16 %.2.i.i, 1
   br label %pred.store.continue70
 
 pred.store.continue70:                            ; preds = %pred.store.if69, %pred.store.continue68
-  %17 = extractelement <4 x i1> %14, i64 2
-  br i1 %17, label %pred.store.if71, label %pred.store.continue72
+  %.2.i.i.1 = phi i16 [ %7, %pred.store.if69 ], [ %.2.i.i, %pred.store.continue68 ] ; 2 uses
+  %gep.i19.i.2 = getelementptr inbounds nuw i8, ptr %invariant.gep.i18.i, i64 19796
+  %8 = load i16, ptr %gep.i19.i.2, align 2, !tbaa !91
+  %9 = icmp ne i16 %8, 1
+  %10 = load i16, ptr %i.ed, align 4
+  %.not103.i.i.2 = icmp eq i16 %10, 1
+  %or.cond89 = select i1 %9, i1 true, i1 %.not103.i.i.2
+  br i1 %or.cond89, label %pred.store.continue72, label %pred.store.if71
 
 pred.store.if71:                                  ; preds = %pred.store.continue70
   store i16 1, ptr %i.ed, align 4, !tbaa !91
+  %11 = add i16 %.2.i.i.1, 1
   br label %pred.store.continue72
 
 pred.store.continue72:                            ; preds = %pred.store.if71, %pred.store.continue70
-  %18 = extractelement <4 x i1> %14, i64 3
-  br i1 %18, label %pred.store.if73, label %pred.store.continue74
+  %.2.i.i.2 = phi i16 [ %11, %pred.store.if71 ], [ %.2.i.i.1, %pred.store.continue70 ] ; 2 uses
+  %gep.i19.i.3 = getelementptr inbounds nuw i8, ptr %invariant.gep.i18.i, i64 19998
+  %12 = load i16, ptr %gep.i19.i.3, align 2, !tbaa !91
+  %13 = icmp ne i16 %12, 1
+  %14 = load i16, ptr %i.ee, align 2
+  %.not103.i.i.3 = icmp eq i16 %14, 1
+  %or.cond90 = select i1 %13, i1 true, i1 %.not103.i.i.3
+  br i1 %or.cond90, label %pred.store.continue74, label %pred.store.if73
 
 pred.store.if73:                                  ; preds = %pred.store.continue72
   store i16 1, ptr %i.ee, align 2, !tbaa !91
+  %15 = add i16 %.2.i.i.2, 1
   br label %pred.store.continue74
 
 pred.store.continue74:                            ; preds = %pred.store.if73, %pred.store.continue72
-  %narrow99 = select <4 x i1> %12, <4 x i1> %13, <4 x i1> zeroinitializer
-  %predphi75 = zext <4 x i1> %narrow99 to <4 x i16>
-  %predphi76 = add <4 x i16> %2, %predphi75
-  %19 = tail call i16 @llvm.vector.reduce.add.v4i16(<4 x i16> %predphi76) ; 2 uses
+  %.2.i.i.3 = phi i16 [ %15, %pred.store.if73 ], [ %.2.i.i.2, %pred.store.continue72 ] ; 2 uses
   %gep.i19.i = getelementptr inbounds nuw i8, ptr %invariant.gep.i18.i, i64 20200
   %i.sa = load i16, ptr %gep.i19.i, align 2, !tbaa !91
   %i.sb = icmp ne i16 %i.sa, 1
@@ -670,11 +677,11 @@ pred.store.continue74:                            ; preds = %pred.store.if73, %p
 
 bb.cc:                                            ; preds = %pred.store.continue74
   store i16 1, ptr %i.ef, align 8, !tbaa !91
-  %i.sd = add i16 %19, 1
+  %i.sd = add i16 %.2.i.i.3, 1
   br label %.loopexit112.i.i
 
 .loopexit112.i.i:                                 ; preds = %pred.store.continue74, %bb.cc, %.preheader115.i.i
-  %.3.i13.i = phi i16 [ %.0130.i.i, %.preheader115.i.i ], [ %i.sd, %bb.cc ], [ %19, %pred.store.continue74 ] ; 2 uses
+  %.3.i13.i = phi i16 [ %.0130.i.i, %.preheader115.i.i ], [ %i.sd, %bb.cc ], [ %.2.i.i.3, %pred.store.continue74 ] ; 2 uses
   %indvars.iv.next158.i.i = add nuw nsw i64 %indvars.iv157.i.i, 1 ; 2 uses
   %exitcond159.not.i.i = icmp eq i64 %indvars.iv.next158.i.i, 101
   br i1 %exitcond159.not.i.i, label %bb.cd, label %.preheader115.i.i, !llvm.loop !98
@@ -1075,9 +1082,6 @@ declare void @llvm.assume(i1 noundef) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.vector.reduce.add.v8i16(<8 x i16>) #4
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.vector.reduce.add.v4i16(<4 x i16>) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i64> @llvm.smin.v2i64(<2 x i64>, <2 x i64>) #4
