@@ -201,25 +201,70 @@ bb.h:                                             ; preds = %bb.g
   %i.am = sext i32 %i.al to i64
   br label %.outer
 
-.outer:                                           ; preds = %.outer.backedge, %.preheader
-  %.072.ph = phi double [ 0.000000e+00, %.preheader ], [ %.072.ph.be, %.outer.backedge ] ; 9 uses
-  %.057.ph = phi i8 [ 0, %.preheader ], [ %.057.ph.be, %.outer.backedge ] ; 8 uses
-  %.055.ph = phi i8 [ 0, %.preheader ], [ %.055.ph.be, %.outer.backedge ] ; 9 uses
-  %.052.ph = phi i32 [ 0, %.preheader ], [ %.052.ph.be, %.outer.backedge ] ; 3 uses
-  %.049.ph = phi ptr [ %0, %.preheader ], [ %.251, %.outer.backedge ] ; 3 uses
-  %.046.ph = phi i64 [ 0, %.preheader ], [ %.3, %.outer.backedge ]
-  %.044.ph = phi i64 [ 0, %.preheader ], [ %i.ba, %.outer.backedge ] ; 2 uses
-  %.042.ph = phi double [ 0.000000e+00, %.preheader ], [ %.042.ph.be, %.outer.backedge ] ; 9 uses
-  %.041.ph = phi i64 [ 53, %.preheader ], [ %.041.ph.be, %.outer.backedge ] ; 7 uses
+.outer:                                           ; preds = %.loopexit, %.preheader
+  %.072.ph = phi double [ 0.000000e+00, %.preheader ], [ %.072.ph141, %.loopexit ] ; 2 uses
+  %.057.ph = phi i8 [ 0, %.preheader ], [ %.057.ph148, %.loopexit ] ; 2 uses
+  %.055.ph = phi i8 [ 0, %.preheader ], [ %.055.ph154, %.loopexit ] ; 2 uses
+  %.052.ph = phi i32 [ 0, %.preheader ], [ %.052.ph156, %.loopexit ] ; 2 uses
+  %.049.ph = phi ptr [ %0, %.preheader ], [ %.251, %.loopexit ] ; 2 uses
+  %.046.ph = phi i64 [ 0, %.preheader ], [ %.3, %.loopexit ]
+  %.044.ph = phi i64 [ 0, %.preheader ], [ %i.ba, %.loopexit ] ; 2 uses
+  %.042.ph = phi double [ 0.000000e+00, %.preheader ], [ %.042.ph163, %.loopexit ] ; 2 uses
+  %.041.ph = phi i64 [ 53, %.preheader ], [ %.041.ph170, %.loopexit ] ; 2 uses
   %i.an = icmp eq i64 %.044.ph, 0
   br i1 %i.an, label %.lr.ph.split.us, label %.loopexit
 
-.lr.ph.split.us:                                  ; preds = %.outer
-  %i.ao = icmp eq ptr %.049.ph, %i.a
+.outer.jt4:                                       ; preds = %.loopexit.jt3, %29, %bb.m
+  %3 = phi i64 [ %31, %bb.m ], [ %i.ba, %29 ], [ %14, %.loopexit.jt3 ] ; 2 uses
+  %.251176 = phi ptr [ %.251174, %bb.m ], [ %.251, %29 ], [ %.251177.ph, %.loopexit.jt3 ] ; 2 uses
+  %.173.jt4 = phi double [ %.072.ph139, %bb.m ], [ %.072.ph141, %29 ], [ %.173.jt3.ph, %.loopexit.jt3 ] ; 2 uses
+  %.158.jt4 = phi i8 [ %.057.ph146, %bb.m ], [ %.057.ph148, %29 ], [ %.158.jt3.ph, %.loopexit.jt3 ] ; 2 uses
+  %.156.jt4 = phi i8 [ %.055.ph152, %bb.m ], [ %.055.ph154, %29 ], [ %.156.jt3.ph, %.loopexit.jt3 ] ; 2 uses
+  %.143.jt4 = phi double [ %i.bh, %bb.m ], [ %30, %29 ], [ %15, %.loopexit.jt3 ] ; 2 uses
+  %.1.jt4 = phi i64 [ %.041.ph168, %bb.m ], [ %.041.ph170, %29 ], [ %.1.jt3.ph, %.loopexit.jt3 ] ; 2 uses
+  %4 = icmp eq i64 %3, 0
+  br i1 %4, label %.lr.ph.split.us, label %.loopexit.jt4
+
+.outer.jt3:                                       ; preds = %.outer.backedge, %.loopexit.jt3
+  %5 = phi i64 [ %14, %.loopexit.jt3 ], [ %.ph, %.outer.backedge ] ; 3 uses
+  %.143.jt3 = phi double [ %15, %.loopexit.jt3 ], [ %.143.jt3.ph, %.outer.backedge ] ; 2 uses
+  %6 = icmp eq i64 %5, 0
+  br i1 %6, label %.lr.ph.split.us, label %.loopexit.jt3
+
+.outer.jt2:                                       ; preds = %bb.l
+  %7 = icmp eq i64 %26, 0
+  br i1 %7, label %.lr.ph.split.us, label %.loopexit.jt2
+
+.outer.jt0:                                       ; preds = %.preheader193.preheader, %bb.j
+  %8 = phi i64 [ %21, %bb.j ], [ %i.ba, %.preheader193.preheader ] ; 3 uses
+  %9 = icmp eq i64 %8, 0
+  br i1 %9, label %.lr.ph.split.us, label %bb.j
+
+.outer.jt1:                                       ; preds = %bb.k, %bb.l
+  %10 = phi i64 [ %26, %bb.l ], [ %.lcssa212, %bb.k ] ; 3 uses
+  %.3186 = phi i64 [ %.3183, %bb.l ], [ %.3, %bb.k ] ; 2 uses
+  %.251178 = phi ptr [ %.251175, %bb.l ], [ %.251, %bb.k ] ; 2 uses
+  %.173.jt1 = phi double [ %i.be, %bb.l ], [ 1.000000e+00, %bb.k ] ; 2 uses
+  %.158.jt1 = phi i8 [ %.057.ph147, %bb.l ], [ %.057.ph148, %bb.k ] ; 2 uses
+  %.156.jt1 = phi i8 [ %.055.ph153, %bb.l ], [ %.055.ph154, %bb.k ] ; 2 uses
+  %.143.jt1 = phi double [ %.042.ph162, %bb.l ], [ %.042.ph163, %bb.k ] ; 2 uses
+  %.1.jt1 = phi i64 [ %i.bf, %bb.l ], [ %i.bb, %bb.k ] ; 2 uses
+  %11 = icmp eq i64 %10, 0
+  br i1 %11, label %.lr.ph.split.us, label %.loopexit.jt1
+
+.lr.ph.split.us:                                  ; preds = %.outer.jt0, %.outer.jt3, %.outer.jt4, %.outer.jt2, %.outer.jt1, %.outer
+  %.041.ph164 = phi i64 [ %.1.jt4, %.outer.jt4 ], [ %.1.jt3.ph, %.outer.jt3 ], [ 0, %.outer.jt2 ], [ %.041.ph, %.outer ], [ %.1.jt1, %.outer.jt1 ], [ %.041.ph170, %.outer.jt0 ]
+  %.042.ph158 = phi double [ %.143.jt4, %.outer.jt4 ], [ %.143.jt3, %.outer.jt3 ], [ %.042.ph162, %.outer.jt2 ], [ %.042.ph, %.outer ], [ %.143.jt1, %.outer.jt1 ], [ %.042.ph163, %.outer.jt0 ] ; 3 uses
+  %.049.ph157 = phi ptr [ %.251176, %.outer.jt4 ], [ %.251177.ph, %.outer.jt3 ], [ %.251175, %.outer.jt2 ], [ %.049.ph, %.outer ], [ %.251178, %.outer.jt1 ], [ %.251, %.outer.jt0 ] ; 2 uses
+  %.052.ph155 = phi i32 [ 4, %.outer.jt4 ], [ 3, %.outer.jt3 ], [ 2, %.outer.jt2 ], [ %.052.ph, %.outer ], [ 1, %.outer.jt1 ], [ 0, %.outer.jt0 ] ; 2 uses
+  %.055.ph149 = phi i8 [ %.156.jt4, %.outer.jt4 ], [ %.156.jt3.ph, %.outer.jt3 ], [ %.055.ph153, %.outer.jt2 ], [ %.055.ph, %.outer ], [ %.156.jt1, %.outer.jt1 ], [ %.055.ph154, %.outer.jt0 ] ; 3 uses
+  %.057.ph142 = phi i8 [ %.158.jt4, %.outer.jt4 ], [ %.158.jt3.ph, %.outer.jt3 ], [ %27, %.outer.jt2 ], [ %.057.ph, %.outer ], [ %.158.jt1, %.outer.jt1 ], [ %.057.ph148, %.outer.jt0 ] ; 2 uses
+  %.072.ph135 = phi double [ %.173.jt4, %.outer.jt4 ], [ %.173.jt3.ph, %.outer.jt3 ], [ %i.be, %.outer.jt2 ], [ %.072.ph, %.outer ], [ %.173.jt1, %.outer.jt1 ], [ %.072.ph141, %.outer.jt0 ] ; 4 uses
+  %i.ao = icmp eq ptr %.049.ph157, %i.a
   br i1 %i.ao, label %.split.us, label %.lr.ph102
 
 .lr.ph102:                                        ; preds = %.lr.ph.split.us, %bb.i
-  %.04993.us101 = phi ptr [ %.150.us, %bb.i ], [ %.049.ph, %.lr.ph.split.us ] ; 3 uses
+  %.04993.us101 = phi ptr [ %.150.us, %bb.i ], [ %.049.ph157, %.lr.ph.split.us ] ; 3 uses
   %i.ap = load i8, ptr %.04993.us101, align 1, !tbaa !66 ; 3 uses
   %i.aq = icmp eq i8 %i.ap, 95
   br i1 %i.aq, label %bb.i, label %.thread80, !prof !62, !llvm.loop !309
@@ -230,7 +275,7 @@ bb.i:                                             ; preds = %.lr.ph102
   br i1 %i.ar, label %.split.us, label %.lr.ph102
 
 .split.us:                                        ; preds = %.lr.ph.split.us, %bb.i
-  switch i32 %.052.ph, label %_ZN6hermes23parseIntWithRadixDigitsILb1EN4llvh8ArrayRefIcEEZNS_17parseIntWithRadixILb1ES3_EENS_8OptValueIdEET0_iEUlhE_EEbS7_iT1_.exit [
+  switch i32 %.052.ph155, label %_ZN6hermes23parseIntWithRadixDigitsILb1EN4llvh8ArrayRefIcEEZNS_17parseIntWithRadixILb1ES3_EENS_8OptValueIdEET0_iEUlhE_EEbS7_iT1_.exit [
     i32 4, label %bb.o
     i32 3, label %bb.n
   ]
@@ -247,76 +292,126 @@ bb.i:                                             ; preds = %.lr.ph102
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.outer, %.thread80
-  %.251 = phi ptr [ %.15084, %.thread80 ], [ %.049.ph, %.outer ]
-  %.3 = phi i64 [ %.147, %.thread80 ], [ %.046.ph, %.outer ] ; 2 uses
-  %.2 = phi i64 [ %i.am, %.thread80 ], [ %.044.ph, %.outer ] ; 2 uses
+  %.041.ph170 = phi i64 [ %.041.ph, %.outer ], [ %.041.ph164, %.thread80 ] ; 8 uses
+  %.042.ph163 = phi double [ %.042.ph, %.outer ], [ %.042.ph158, %.thread80 ] ; 6 uses
+  %.052.ph156 = phi i32 [ %.052.ph, %.outer ], [ %.052.ph155, %.thread80 ] ; 2 uses
+  %.055.ph154 = phi i8 [ %.055.ph, %.outer ], [ %.055.ph149, %.thread80 ] ; 7 uses
+  %.057.ph148 = phi i8 [ %.057.ph, %.outer ], [ %.057.ph142, %.thread80 ] ; 8 uses
+  %.072.ph141 = phi double [ %.072.ph, %.outer ], [ %.072.ph135, %.thread80 ] ; 7 uses
+  %.251 = phi ptr [ %.049.ph, %.outer ], [ %.15084, %.thread80 ] ; 8 uses
+  %.3 = phi i64 [ %.046.ph, %.outer ], [ %.147, %.thread80 ] ; 7 uses
+  %.2 = phi i64 [ %.044.ph, %.outer ], [ %i.am, %.thread80 ] ; 2 uses
   %i.ax = and i64 %.2, %.3
   %i.ay = icmp ne i64 %i.ax, 0                    ; 4 uses
   %i.az = zext i1 %i.ay to i8                     ; 2 uses
-  %i.ba = lshr i64 %.2, 1
-  switch i32 %.052.ph, label %.outer.backedge [
-    i32 0, label %bb.j
+  %i.ba = lshr i64 %.2, 1                         ; 8 uses
+  switch i32 %.052.ph156, label %.outer [
+    i32 0, label %.preheader193.preheader
     i32 1, label %bb.l
-    i32 2, label %4
-    i32 3, label %bb.m
-    i32 4, label %5
-  ]
+    i32 2, label %.outer.backedge
+    i32 3, label %29
+    i32 4, label %bb.m
+  ], !llvm.loop !309
 
-bb.j:                                             ; preds = %.loopexit
-  br i1 %i.ay, label %bb.k, label %.outer.backedge
+.preheader193.preheader:                          ; preds = %.loopexit
+  br i1 %i.ay, label %bb.k, label %.outer.jt0
 
-bb.k:                                             ; preds = %bb.j
-  %i.bb = add i64 %.041.ph, -1
+.loopexit.jt4:                                    ; preds = %.outer.jt4
+  %12 = lshr i64 %3, 1
+  br label %bb.m
+
+.loopexit.jt3:                                    ; preds = %.outer.jt3
+  %13 = and i64 %5, %.3185.ph
+  %.not = icmp eq i64 %13, 0
+  %14 = lshr i64 %5, 1                            ; 2 uses
+  %15 = fmul double %.143.jt3, 2.000000e+00       ; 2 uses
+  br i1 %.not, label %.outer.jt3, label %.outer.jt4
+
+.loopexit.jt2:                                    ; preds = %.outer.jt2
+  %16 = and i64 %26, %.3183
+  %17 = icmp ne i64 %16, 0
+  %18 = zext i1 %17 to i8
+  %19 = lshr i64 %26, 1
   br label %.outer.backedge
 
-bb.l:                                             ; preds = %.loopexit
-  %i.bc = fmul double %.072.ph, 2.000000e+00
-  %i.bd = uitofp i1 %i.ay to double
-  %i.be = fadd double %i.bc, %i.bd                ; 2 uses
-  %i.bf = add i64 %.041.ph, -1                    ; 2 uses
+bb.j:                                             ; preds = %.outer.jt0
+  %20 = and i64 %8, %.3
+  %.not224 = icmp eq i64 %20, 0
+  %21 = lshr i64 %8, 1                            ; 2 uses
+  br i1 %.not224, label %.outer.jt0, label %bb.k
+
+.loopexit.jt1:                                    ; preds = %.outer.jt1
+  %22 = and i64 %10, %.3186
+  %23 = icmp ne i64 %22, 0                        ; 2 uses
+  %24 = zext i1 %23 to i8
+  %25 = lshr i64 %10, 1
+  br label %bb.l
+
+bb.k:                                             ; preds = %bb.j, %.preheader193.preheader
+  %.lcssa212 = phi i64 [ %i.ba, %.preheader193.preheader ], [ %21, %bb.j ]
+  %i.bb = add i64 %.041.ph170, -1
+  br label %.outer.jt1
+
+bb.l:                                             ; preds = %.loopexit.jt1, %.loopexit
+  %26 = phi i64 [ %25, %.loopexit.jt1 ], [ %i.ba, %.loopexit ] ; 4 uses
+  %27 = phi i8 [ %24, %.loopexit.jt1 ], [ %i.az, %.loopexit ] ; 2 uses
+  %28 = phi i1 [ %23, %.loopexit.jt1 ], [ %i.ay, %.loopexit ]
+  %.3183 = phi i64 [ %.3186, %.loopexit.jt1 ], [ %.3, %.loopexit ] ; 3 uses
+  %.251175 = phi ptr [ %.251178, %.loopexit.jt1 ], [ %.251, %.loopexit ] ; 3 uses
+  %.041.ph169 = phi i64 [ %.1.jt1, %.loopexit.jt1 ], [ %.041.ph170, %.loopexit ]
+  %.042.ph162 = phi double [ %.143.jt1, %.loopexit.jt1 ], [ %.042.ph163, %.loopexit ] ; 2 uses
+  %.055.ph153 = phi i8 [ %.156.jt1, %.loopexit.jt1 ], [ %.055.ph154, %.loopexit ] ; 2 uses
+  %.057.ph147 = phi i8 [ %.158.jt1, %.loopexit.jt1 ], [ %.057.ph148, %.loopexit ]
+  %.072.ph140 = phi double [ %.173.jt1, %.loopexit.jt1 ], [ %.072.ph141, %.loopexit ]
+  %i.bc = fmul double %.072.ph140, 2.000000e+00
+  %i.bd = uitofp i1 %28 to double
+  %i.be = fadd double %i.bc, %i.bd                ; 3 uses
+  %i.bf = add i64 %.041.ph169, -1                 ; 2 uses
   %i.bg = icmp eq i64 %i.bf, 0
-  br i1 %i.bg, label %3, label %.outer.backedge
+  br i1 %i.bg, label %.outer.jt2, label %.outer.jt1
 
-.outer.backedge:                                  ; preds = %bb.l, %3, %bb.j, %bb.k, %5, %bb.m, %4, %.loopexit
-  %.072.ph.be = phi double [ %.072.ph, %.loopexit ], [ 1.000000e+00, %bb.k ], [ %.072.ph, %bb.j ], [ %i.be, %3 ], [ %i.be, %bb.l ], [ %.072.ph, %4 ], [ %.072.ph, %bb.m ], [ %.072.ph, %5 ]
-  %.057.ph.be = phi i8 [ %.057.ph, %.loopexit ], [ %.057.ph, %bb.k ], [ %.057.ph, %bb.j ], [ %i.az, %3 ], [ %.057.ph, %bb.l ], [ %.057.ph, %4 ], [ %.057.ph, %bb.m ], [ %.057.ph, %5 ]
-  %.055.ph.be = phi i8 [ %.055.ph, %.loopexit ], [ %.055.ph, %bb.k ], [ %.055.ph, %bb.j ], [ %.055.ph, %3 ], [ %.055.ph, %bb.l ], [ %i.az, %4 ], [ %.055.ph, %bb.m ], [ %.055.ph, %5 ]
-  %.052.ph.be = phi i32 [ %.052.ph, %.loopexit ], [ 1, %bb.k ], [ 0, %bb.j ], [ 2, %3 ], [ 1, %bb.l ], [ 3, %4 ], [ %spec.select, %bb.m ], [ 4, %5 ]
-  %.042.ph.be = phi double [ %.042.ph, %.loopexit ], [ %.042.ph, %bb.k ], [ %.042.ph, %bb.j ], [ %.042.ph, %3 ], [ %.042.ph, %bb.l ], [ 2.000000e+00, %4 ], [ %i.bh, %bb.m ], [ %6, %5 ]
-  %.041.ph.be = phi i64 [ %.041.ph, %.loopexit ], [ %i.bb, %bb.k ], [ %.041.ph, %bb.j ], [ 0, %3 ], [ %i.bf, %bb.l ], [ %.041.ph, %4 ], [ %.041.ph, %bb.m ], [ %.041.ph, %5 ]
-  br label %.outer, !llvm.loop !309
+29:                                               ; preds = %.loopexit
+  %30 = fmul double %.042.ph163, 2.000000e+00     ; 2 uses
+  br i1 %i.ay, label %.outer.jt4, label %.outer.backedge
 
-3:                                                ; preds = %bb.l
-  br label %.outer.backedge
+.outer.backedge:                                  ; preds = %.loopexit.jt2, %.loopexit, %29
+  %.ph = phi i64 [ %i.ba, %29 ], [ %19, %.loopexit.jt2 ], [ %i.ba, %.loopexit ]
+  %.3185.ph = phi i64 [ %.3, %29 ], [ %.3183, %.loopexit.jt2 ], [ %.3, %.loopexit ]
+  %.251177.ph = phi ptr [ %.251, %29 ], [ %.251175, %.loopexit.jt2 ], [ %.251, %.loopexit ] ; 2 uses
+  %.173.jt3.ph = phi double [ %.072.ph141, %29 ], [ %i.be, %.loopexit.jt2 ], [ %.072.ph141, %.loopexit ] ; 2 uses
+  %.158.jt3.ph = phi i8 [ %.057.ph148, %29 ], [ %27, %.loopexit.jt2 ], [ %.057.ph148, %.loopexit ] ; 2 uses
+  %.156.jt3.ph = phi i8 [ %.055.ph154, %29 ], [ %18, %.loopexit.jt2 ], [ %i.az, %.loopexit ] ; 2 uses
+  %.143.jt3.ph = phi double [ %30, %29 ], [ 2.000000e+00, %.loopexit.jt2 ], [ 2.000000e+00, %.loopexit ]
+  %.1.jt3.ph = phi i64 [ %.041.ph170, %29 ], [ 0, %.loopexit.jt2 ], [ %.041.ph170, %.loopexit ] ; 2 uses
+  br label %.outer.jt3
 
-4:                                                ; preds = %.loopexit
-  br label %.outer.backedge
-
-bb.m:                                             ; preds = %.loopexit
-  %spec.select = select i1 %i.ay, i32 4, i32 3
-  %i.bh = fmul double %.042.ph, 2.000000e+00
-  br label %.outer.backedge
-
-5:                                                ; preds = %.loopexit
-  %6 = fmul double %.042.ph, 2.000000e+00
-  br label %.outer.backedge
+bb.m:                                             ; preds = %.loopexit.jt4, %.loopexit
+  %31 = phi i64 [ %12, %.loopexit.jt4 ], [ %i.ba, %.loopexit ]
+  %.251174 = phi ptr [ %.251176, %.loopexit.jt4 ], [ %.251, %.loopexit ]
+  %.041.ph168 = phi i64 [ %.1.jt4, %.loopexit.jt4 ], [ %.041.ph170, %.loopexit ]
+  %.042.ph161 = phi double [ %.143.jt4, %.loopexit.jt4 ], [ %.042.ph163, %.loopexit ]
+  %.055.ph152 = phi i8 [ %.156.jt4, %.loopexit.jt4 ], [ %.055.ph154, %.loopexit ]
+  %.057.ph146 = phi i8 [ %.158.jt4, %.loopexit.jt4 ], [ %.057.ph148, %.loopexit ]
+  %.072.ph139 = phi double [ %.173.jt4, %.loopexit.jt4 ], [ %.072.ph141, %.loopexit ]
+  %i.bh = fmul double %.042.ph161, 2.000000e+00
+  br label %.outer.jt4
 
 bb.n:                                             ; preds = %.split.us
-  %i.bi = trunc nuw i8 %.055.ph to i1
-  %i.bj = uitofp nneg i8 %.057.ph to double
+  %i.bi = trunc nuw i8 %.055.ph149 to i1
+  %i.bj = uitofp nneg i8 %.057.ph142 to double
   %i.bk = select i1 %i.bi, double %i.bj, double 0.000000e+00
-  %i.bl = fadd double %.072.ph, %i.bk
-  %i.bm = fmul double %i.bl, %.042.ph
+  %i.bl = fadd double %.072.ph135, %i.bk
+  %i.bm = fmul double %i.bl, %.042.ph158
   br label %_ZN6hermes23parseIntWithRadixDigitsILb1EN4llvh8ArrayRefIcEEZNS_17parseIntWithRadixILb1ES3_EENS_8OptValueIdEET0_iEUlhE_EEbS7_iT1_.exit
 
 bb.o:                                             ; preds = %.split.us
-  %i.bn = uitofp nneg i8 %.055.ph to double
-  %i.bo = fadd double %.072.ph, %i.bn
-  %i.bp = fmul double %i.bo, %.042.ph
+  %i.bn = uitofp nneg i8 %.055.ph149 to double
+  %i.bo = fadd double %.072.ph135, %i.bn
+  %i.bp = fmul double %i.bo, %.042.ph158
   br label %_ZN6hermes23parseIntWithRadixDigitsILb1EN4llvh8ArrayRefIcEEZNS_17parseIntWithRadixILb1ES3_EENS_8OptValueIdEET0_iEUlhE_EEbS7_iT1_.exit
 
 _ZN6hermes23parseIntWithRadixDigitsILb1EN4llvh8ArrayRefIcEEZNS_17parseIntWithRadixILb1ES3_EENS_8OptValueIdEET0_iEUlhE_EEbS7_iT1_.exit: ; preds = %bb.g, %bb.h, %bb.a, %.loopexit88, %bb.o, %bb.n, %.split.us, %bb.b
-  %.sroa.070.0 = phi double [ 0.000000e+00, %bb.b ], [ %i.bm, %bb.n ], [ 0.000000e+00, %bb.a ], [ %.5.ph, %.loopexit88 ], [ %.072.ph, %.split.us ], [ %i.bp, %bb.o ], [ 0.000000e+00, %bb.h ], [ 0.000000e+00, %bb.g ]
+  %.sroa.070.0 = phi double [ 0.000000e+00, %bb.b ], [ %i.bm, %bb.n ], [ 0.000000e+00, %bb.a ], [ %.5.ph, %.loopexit88 ], [ %.072.ph135, %.split.us ], [ %i.bp, %bb.o ], [ 0.000000e+00, %bb.h ], [ 0.000000e+00, %bb.g ]
   %.sroa.371.0 = phi i8 [ 0, %bb.b ], [ 1, %bb.n ], [ 1, %bb.a ], [ 1, %.loopexit88 ], [ 1, %.split.us ], [ 1, %bb.o ], [ 0, %bb.h ], [ 0, %bb.g ]
   %.fca.0.insert = insertvalue { double, i8 } poison, double %.sroa.070.0, 0
   %.fca.1.insert = insertvalue { double, i8 } %.fca.0.insert, i8 %.sroa.371.0, 1

@@ -201,7 +201,6 @@ $_ZSt19piecewise_construct = comdat any
 @.str.89 = private unnamed_addr constant [22 x i8] c"basic_string::replace\00", align 1
 @.str.90 = private unnamed_addr constant [55 x i8] c"%s: __pos (which is %zu) > this->size() (which is %zu)\00", align 1
 @.str.91 = private unnamed_addr constant [18 x i8] c"Allocation failed\00", align 1
-@switch.table._ZN4llvh9FileCheck13ReadCheckFileERNS_9SourceMgrENS_9StringRefERNS_5RegexERSt6vectorINS_15FileCheckStringESaIS7_EE = private unnamed_addr constant [10 x i8] [i8 0, i8 1, i8 6, i8 6, i8 5, i8 5, i8 7, i8 7, i8 poison, i8 0], align 8
 
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef zeroext i1 @_ZN4llvh16FileCheckPattern12ParsePatternENS_9StringRefES1_RNS_9SourceMgrEjRKNS_16FileCheckRequestE(ptr noundef nonnull align 8 dereferenceable(136) initializes((0, 8), (132, 136)) %0, ptr %1, i64 %2, ptr %3, i64 %4, ptr noundef nonnull align 8 dereferenceable(120) %5, i32 noundef %6, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(86) %7) local_unnamed_addr #0 align 2 {
@@ -604,7 +603,7 @@ _ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit40: ; preds = %bb.k, 
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef zeroext i1 @_ZN4llvh9FileCheck13ReadCheckFileERNS_9SourceMgrENS_9StringRefERNS_5RegexERSt6vectorINS_15FileCheckStringESaIS7_EE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(88) %0, ptr noundef nonnull align 8 dereferenceable(120) %1, ptr %2, i64 %3, ptr noundef nonnull align 8 dereferenceable(12) %4, ptr noundef nonnull align 8 dereferenceable(24) %5) local_unnamed_addr #0 align 2 {
 bb.a:
-  %6 = alloca %"class.llvh::SmallVector.97", align 8 ; 11 uses
+  %6 = alloca %"class.llvh::SmallVector.97", align 8 ; 15 uses
   %i.a = alloca ptr, align 8                      ; 4 uses
   %7 = alloca %"struct.llvh::SourceMgr::SrcBuffer", align 8 ; 8 uses
   %i.b = alloca i32, align 4                      ; 4 uses
@@ -619,7 +618,7 @@ bb.a:
   %15 = alloca %"class.llvh::Twine", align 8      ; 6 uses
   %16 = alloca %"class.llvh::FileCheckPattern", align 8 ; 16 uses
   %17 = alloca %"class.std::vector.41", align 8   ; 19 uses
-  %18 = alloca %"class.llvh::StringRef", align 8  ; 14 uses
+  %18 = alloca %"class.llvh::StringRef", align 8  ; 18 uses
   %19 = alloca %"class.llvh::Twine", align 8      ; 7 uses
   %20 = alloca %"class.llvh::Twine", align 8      ; 7 uses
   %21 = alloca %"class.llvh::ArrayRef.22", align 8 ; 2 uses
@@ -741,7 +740,7 @@ _ZNSt6vectorIN4llvh16FileCheckPatternESaIS1_EEC2ERKS3_.exit: ; preds = %.lr.ph.i
   %i.bd = phi ptr [ %i.ar, %_ZNSt12_Vector_baseIN4llvh16FileCheckPatternESaIS1_EEC2EmRKS2_.exit.i.thread ], [ %i.aw, %.lr.ph.i.i.i.i.i ] ; 10 uses
   %.0.lcssa.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseIN4llvh16FileCheckPatternESaIS1_EEC2EmRKS2_.exit.i.thread ], [ %i.ba, %.lr.ph.i.i.i.i.i ]
   store ptr %.0.lcssa.i.i.i.i.i, ptr %i.bd, align 8, !tbaa !162
-  %i.be = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 3 uses
+  %i.be = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 8 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %6, i64 12 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #18
@@ -751,10 +750,10 @@ _ZNSt6vectorIN4llvh16FileCheckPatternESaIS1_EEC2ERKS3_.exit: ; preds = %.lr.ph.i
   store i32 2, ptr %i.bg, align 4, !tbaa !121
   %i.bh = load i64, ptr %i.d, align 8, !tbaa !70  ; 2 uses
   %i.bi = icmp eq i64 %i.bh, 0
-  br i1 %i.bi, label %_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit.thread, label %.lr.ph.preheader.i.lr.ph
+  br i1 %i.bi, label %.thread311.sink.split, label %.lr.ph.preheader.i.lr.ph
 
 .lr.ph.preheader.i.lr.ph:                         ; preds = %_ZNSt6vectorIN4llvh16FileCheckPatternESaIS1_EEC2ERKS3_.exit
-  %i.bj = getelementptr inbounds nuw i8, ptr %18, i64 8 ; 3 uses
+  %i.bj = getelementptr inbounds nuw i8, ptr %18, i64 8 ; 7 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 81
   %i.bm = getelementptr inbounds nuw i8, ptr %23, i64 24 ; 2 uses
@@ -1069,30 +1068,24 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit82: ; preds = %_ZN
   %.not = icmp eq ptr %i.gq, %i.h
   br i1 %.not, label %._crit_edge, label %._crit_edge.i.i
 
-_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit.thread: ; preds = %.backedge, %_ZNSt6vectorIN4llvh16FileCheckPatternESaIS1_EEC2ERKS3_.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
-  br label %.thread311
-
 .lr.ph.preheader.i:                               ; preds = %.lr.ph.preheader.i.lr.ph, %.backedge
   %i.gr = phi i64 [ %i.bh, %.lr.ph.preheader.i.lr.ph ], [ %i.qe, %.backedge ]
-  %.0327 = phi i32 [ 1, %.lr.ph.preheader.i.lr.ph ], [ %.2, %.backedge ]
-  %.0293326 = phi i32 [ undef, %.lr.ph.preheader.i.lr.ph ], [ %.2295, %.backedge ]
+  %.0293326 = phi i32 [ 1, %.lr.ph.preheader.i.lr.ph ], [ %.4292, %.backedge ]
   %.sroa.010.0.copyload.pre.i = load ptr, ptr %8, align 8, !tbaa !41
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZL8SkipWordN4llvh9StringRefEm.exit.i, %.lr.ph.preheader.i
-  %.1294 = phi i32 [ %.0293326, %.lr.ph.preheader.i ], [ %.3296, %_ZL8SkipWordN4llvh9StringRefEm.exit.i ] ; 4 uses
-  %.1 = phi i32 [ %.0327, %.lr.ph.preheader.i ], [ %.3, %_ZL8SkipWordN4llvh9StringRefEm.exit.i ] ; 3 uses
+  %.1 = phi i32 [ %.0293326, %.lr.ph.preheader.i ], [ %.3, %_ZL8SkipWordN4llvh9StringRefEm.exit.i ] ; 2 uses
   %.sroa.010.0.copyload.i = phi ptr [ %.sroa.010.0.copyload.pre.i, %.lr.ph.preheader.i ], [ %i.ms, %_ZL8SkipWordN4llvh9StringRefEm.exit.i ]
   %i.gs = phi i64 [ %i.gr, %.lr.ph.preheader.i ], [ %i.mt, %_ZL8SkipWordN4llvh9StringRefEm.exit.i ]
   %i.gt = call noundef zeroext i1 @_ZN4llvh5Regex5matchENS_9StringRefEPNS_15SmallVectorImplIS1_EE(ptr noundef nonnull align 8 dereferenceable(12) %4, ptr %.sroa.010.0.copyload.i, i64 %i.gs, ptr noundef nonnull %6) #18
-  %.pre.pre.i = load ptr, ptr %6, align 8, !tbaa !118 ; 4 uses
-  br i1 %i.gt, label %bb.k, label %.loopexit.i.a
+  %.pre.pre.i = load ptr, ptr %6, align 8, !tbaa !118 ; 14 uses
+  br i1 %i.gt, label %bb.k, label %.loopexit.i
 
 bb.k:                                             ; preds = %.lr.ph.i
-  %.sroa.044.0.copyload.i = load ptr, ptr %.pre.pre.i, align 8, !tbaa !41 ; 16 uses
+  %.sroa.044.0.copyload.i = load ptr, ptr %.pre.pre.i, align 8, !tbaa !41 ; 8 uses
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.pre.pre.i, i64 8
-  %.sroa.8.0.copyload.i = load i64, ptr %.sroa.8.0..sroa_idx.i, align 8, !tbaa !44 ; 21 uses
+  %.sroa.8.0.copyload.i = load i64, ptr %.sroa.8.0..sroa_idx.i, align 8, !tbaa !44 ; 17 uses
   store i32 0, ptr %i.bf, align 8, !tbaa !120
   %i.gu = load ptr, ptr %8, align 8, !tbaa !71    ; 4 uses
   %i.gv = ptrtoint ptr %.sroa.044.0.copyload.i to i64
@@ -1174,7 +1167,7 @@ switch.early.test.i:                              ; preds = %.loopexit
   ]
 
 _ZNK4llvh9StringRef5countEc.exit.thread.i:        ; preds = %switch.early.test.i, %bb.k
-  %.4292 = phi i32 [ %.1, %bb.k ], [ %i.hq, %switch.early.test.i ] ; 23 uses
+  %.4292 = phi i32 [ %.1, %bb.k ], [ %i.hq, %switch.early.test.i ] ; 10 uses
   %.not.i34.i = icmp ugt i64 %i.ha, %.sroa.8.0.copyload.i
   br i1 %.not.i34.i, label %bb.l, label %.critedge.i
 
@@ -1182,7 +1175,7 @@ bb.l:                                             ; preds = %_ZNK4llvh9StringRef
   %i.hv = getelementptr inbounds nuw i8, ptr %i.gz, i64 %.sroa.8.0.copyload.i
   %i.hw = load i8, ptr %i.hv, align 1, !tbaa !43
   switch i8 %i.hw, label %.critedge.i [
-    i8 58, label %.loopexit.i.a
+    i8 58, label %.loopexit.i.jt1
     i8 45, label %bb.m
   ], !llvm.loop !194
 
@@ -1204,7 +1197,7 @@ _ZNK4llvh9StringRef10startswithES0_.exit30.i.i:   ; preds = %bb.m
   %i.ih = icmp ne i32 %i.ig, 0
   %i.ii = zext i1 %i.ih to i32
   %i.ij = icmp eq i32 %i.ii, 0
-  br i1 %i.ij, label %.loopexit.i.a, label %_ZNK4llvh9StringRef10startswithES0_.exit28.i.i, !llvm.loop !194
+  br i1 %i.ij, label %.loopexit.i.jt3, label %_ZNK4llvh9StringRef10startswithES0_.exit28.i.i, !llvm.loop !194
 
 _ZNK4llvh9StringRef10startswithES0_.exit28.i.i:   ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit30.i.i
   %i.ik = load i32, ptr %i.hy, align 1
@@ -1217,7 +1210,7 @@ _ZNK4llvh9StringRef10startswithES0_.exit28.i.i:   ; preds = %_ZNK4llvh9StringRef
   %i.ir = icmp ne i32 %i.iq, 0
   %i.is = zext i1 %i.ir to i32
   %i.it = icmp eq i32 %i.is, 0
-  br i1 %i.it, label %.loopexit.i.a, label %_ZNK4llvh9StringRef10startswithES0_.exit26.i.i, !llvm.loop !194
+  br i1 %i.it, label %.loopexit.i.jt3, label %_ZNK4llvh9StringRef10startswithES0_.exit26.i.i, !llvm.loop !194
 
 _ZNK4llvh9StringRef10startswithES0_.exit28.thread.i.i: ; preds = %bb.m
   %.not.i25.not.i.i = icmp eq i64 %i.hz, 4
@@ -1228,14 +1221,14 @@ _ZNK4llvh9StringRef10startswithES0_.exit26.i.i:   ; preds = %_ZNK4llvh9StringRef
   %i.iv = icmp ne i32 %i.iu, 978603854
   %i.iw = zext i1 %i.iv to i32
   %i.ix = icmp eq i32 %i.iw, 0
-  br i1 %i.ix, label %.loopexit.i.a, label %_ZNK4llvh9StringRef10startswithES0_.exit26.thread.i.i, !llvm.loop !194
+  br i1 %i.ix, label %.loopexit.i.jt5, label %_ZNK4llvh9StringRef10startswithES0_.exit26.thread.i.i, !llvm.loop !194
 
 _ZNK4llvh9StringRef10startswithES0_.exit26.thread.i.i: ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit26.i.i
   %i.iy = load i32, ptr %i.hy, align 1
   %i.iz = icmp ne i32 %i.iy, 977748292
   %i.ja = zext i1 %i.iz to i32
   %i.jb = icmp eq i32 %i.ja, 0
-  br i1 %i.jb, label %.loopexit.i.a, label %_ZNK4llvh9StringRef10startswithES0_.exit24.thread.i.i, !llvm.loop !194
+  br i1 %i.jb, label %.loopexit.i.jt5, label %_ZNK4llvh9StringRef10startswithES0_.exit24.thread.i.i, !llvm.loop !194
 
 _ZNK4llvh9StringRef10startswithES0_.exit24.thread.i.i: ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit26.thread.i.i
   %.not.i21.i.i = icmp ult i64 %i.hz, 6
@@ -1252,7 +1245,7 @@ _ZNK4llvh9StringRef10startswithES0_.exit22.i.i:   ; preds = %_ZNK4llvh9StringRef
   %i.jj = icmp ne i32 %i.ji, 0
   %i.jk = zext i1 %i.jj to i32
   %i.jl = icmp eq i32 %i.jk, 0
-  br i1 %i.jl, label %.loopexit.i.a, label %_ZNK4llvh9StringRef10startswithES0_.exit20.i.i, !llvm.loop !194
+  br i1 %i.jl, label %.loopexit.i.jt7, label %_ZNK4llvh9StringRef10startswithES0_.exit20.i.i, !llvm.loop !194
 
 _ZNK4llvh9StringRef10startswithES0_.exit20.i.i:   ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit22.i.i
   %i.jm = load i32, ptr %i.hy, align 1
@@ -1265,7 +1258,7 @@ _ZNK4llvh9StringRef10startswithES0_.exit20.i.i:   ; preds = %_ZNK4llvh9StringRef
   %i.jt = icmp ne i32 %i.js, 0
   %i.ju = zext i1 %i.jt to i32
   %i.jv = icmp eq i32 %i.ju, 0
-  br i1 %i.jv, label %.loopexit.i.a, label %_ZNK4llvh9StringRef10startswithES0_.exit20.thread.i.i, !llvm.loop !194
+  br i1 %i.jv, label %.loopexit.i.jt7, label %_ZNK4llvh9StringRef10startswithES0_.exit20.thread.i.i, !llvm.loop !194
 
 _ZNK4llvh9StringRef10startswithES0_.exit20.thread.i.i: ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit20.i.i
   %.not.i17.i.i = icmp ult i64 %i.hz, 8
@@ -1276,14 +1269,14 @@ _ZNK4llvh9StringRef10startswithES0_.exit18.i.i:   ; preds = %_ZNK4llvh9StringRef
   %i.jx = icmp ne i64 %i.jw, 4203071549429203268
   %i.jy = zext i1 %i.jx to i32
   %i.jz = icmp eq i32 %i.jy, 0
-  br i1 %i.jz, label %.loopexit.i.a, label %_ZNK4llvh9StringRef10startswithES0_.exit16.i.i, !llvm.loop !194
+  br i1 %i.jz, label %.loopexit.i.jt9, label %_ZNK4llvh9StringRef10startswithES0_.exit16.i.i, !llvm.loop !194
 
 _ZNK4llvh9StringRef10startswithES0_.exit16.i.i:   ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit18.i.i
   %i.ka = load i64, ptr %i.hy, align 1
   %i.kb = icmp ne i64 %i.ka, 4199396938620358478
   %i.kc = zext i1 %i.kb to i32
   %i.kd = icmp eq i32 %i.kc, 0
-  br i1 %i.kd, label %.loopexit.i.a, label %_ZNK4llvh9StringRef10startswithES0_.exit16.thread.i.i, !llvm.loop !194
+  br i1 %i.kd, label %.loopexit.i.jt9, label %_ZNK4llvh9StringRef10startswithES0_.exit16.thread.i.i, !llvm.loop !194
 
 _ZNK4llvh9StringRef10startswithES0_.exit16.thread.i.i: ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit16.i.i
   %.not.i13.i.i = icmp eq i64 %i.hz, 8
@@ -1300,7 +1293,7 @@ _ZNK4llvh9StringRef10startswithES0_.exit14.i.i:   ; preds = %_ZNK4llvh9StringRef
   %i.kl = icmp ne i64 %i.kk, 0
   %i.km = zext i1 %i.kl to i32
   %i.kn = icmp eq i32 %i.km, 0
-  br i1 %i.kn, label %.loopexit.i.a, label %_ZNK4llvh9StringRef10startswithES0_.exit12.i.i, !llvm.loop !194
+  br i1 %i.kn, label %.loopexit.i.jt9, label %_ZNK4llvh9StringRef10startswithES0_.exit12.i.i, !llvm.loop !194
 
 _ZNK4llvh9StringRef10startswithES0_.exit12.i.i:   ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit14.i.i
   %i.ko = load i64, ptr %i.hy, align 1
@@ -1313,7 +1306,7 @@ _ZNK4llvh9StringRef10startswithES0_.exit12.i.i:   ; preds = %_ZNK4llvh9StringRef
   %i.kv = icmp ne i64 %i.ku, 0
   %i.kw = zext i1 %i.kv to i32
   %i.kx = icmp eq i32 %i.kw, 0
-  br i1 %i.kx, label %.loopexit.i.a, label %_ZNK4llvh9StringRef10startswithES0_.exit10.i.i, !llvm.loop !194
+  br i1 %i.kx, label %.loopexit.i.jt9, label %_ZNK4llvh9StringRef10startswithES0_.exit10.i.i, !llvm.loop !194
 
 _ZNK4llvh9StringRef10startswithES0_.exit10.i.i:   ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit12.i.i
   %i.ky = load i64, ptr %i.hy, align 1
@@ -1326,7 +1319,7 @@ _ZNK4llvh9StringRef10startswithES0_.exit10.i.i:   ; preds = %_ZNK4llvh9StringRef
   %i.lf = icmp ne i64 %i.le, 0
   %i.lg = zext i1 %i.lf to i32
   %i.lh = icmp eq i32 %i.lg, 0
-  br i1 %i.lh, label %.loopexit.i.a, label %_ZNK4llvh9StringRef10startswithES0_.exit8.i.i, !llvm.loop !194
+  br i1 %i.lh, label %.loopexit.i.jt9, label %_ZNK4llvh9StringRef10startswithES0_.exit8.i.i, !llvm.loop !194
 
 _ZNK4llvh9StringRef10startswithES0_.exit8.i.i:    ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit10.i.i
   %i.li = load i64, ptr %i.hy, align 1
@@ -1339,7 +1332,7 @@ _ZNK4llvh9StringRef10startswithES0_.exit8.i.i:    ; preds = %_ZNK4llvh9StringRef
   %i.lp = icmp ne i64 %i.lo, 0
   %i.lq = zext i1 %i.lp to i32
   %i.lr = icmp eq i32 %i.lq, 0
-  br i1 %i.lr, label %.loopexit.i.a, label %_ZNK4llvh9StringRef10startswithES0_.exit8.thread.i.i, !llvm.loop !194
+  br i1 %i.lr, label %.loopexit.i.jt9, label %_ZNK4llvh9StringRef10startswithES0_.exit8.thread.i.i, !llvm.loop !194
 
 _ZNK4llvh9StringRef10startswithES0_.exit8.thread.i.i: ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit8.i.i
   %.not.i5.i.i = icmp ult i64 %i.hz, 10
@@ -1356,7 +1349,7 @@ _ZNK4llvh9StringRef10startswithES0_.exit6.i.i:    ; preds = %_ZNK4llvh9StringRef
   %i.lz = icmp ne i64 %i.ly, 0
   %i.ma = zext i1 %i.lz to i32
   %i.mb = icmp eq i32 %i.ma, 0
-  br i1 %i.mb, label %.loopexit.i.a, label %_ZNK4llvh9StringRef10startswithES0_.exit.i.i, !llvm.loop !194
+  br i1 %i.mb, label %.loopexit.i.jt9, label %_ZNK4llvh9StringRef10startswithES0_.exit.i.i, !llvm.loop !194
 
 _ZNK4llvh9StringRef10startswithES0_.exit.i.i:     ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit6.i.i
   %i.mc = load i64, ptr %i.hy, align 1
@@ -1370,11 +1363,10 @@ _ZNK4llvh9StringRef10startswithES0_.exit.i.i:     ; preds = %_ZNK4llvh9StringRef
   %i.mk = zext i1 %i.mj to i32
   %bcmp171.fr.i.i = freeze i32 %i.mk
   %i.ml = icmp eq i32 %bcmp171.fr.i.i, 0
-  br i1 %i.ml, label %.loopexit.i.a, label %.critedge.i, !llvm.loop !194
+  br i1 %i.ml, label %.loopexit.i.jt9, label %.critedge.i, !llvm.loop !194
 
 .critedge.i:                                      ; preds = %_ZNK4llvh9StringRef5countEc.exit.thread.i, %bb.l, %_ZNK4llvh9StringRef10startswithES0_.exit28.thread.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit24.thread.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit20.thread.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit16.thread.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit8.thread.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit.i.i, %switch.early.test.i, %switch.early.test.i, %.loopexit
-  %.3296 = phi i32 [ %.1294, %.loopexit ], [ %.1294, %switch.early.test.i ], [ %.1294, %switch.early.test.i ], [ 0, %_ZNK4llvh9StringRef10startswithES0_.exit.i.i ], [ 0, %_ZNK4llvh9StringRef10startswithES0_.exit8.thread.i.i ], [ 0, %_ZNK4llvh9StringRef10startswithES0_.exit16.thread.i.i ], [ 0, %_ZNK4llvh9StringRef10startswithES0_.exit20.thread.i.i ], [ 0, %_ZNK4llvh9StringRef10startswithES0_.exit24.thread.i.i ], [ 0, %_ZNK4llvh9StringRef10startswithES0_.exit28.thread.i.i ], [ 0, %bb.l ], [ 0, %_ZNK4llvh9StringRef5countEc.exit.thread.i ] ; 2 uses
-  %.3 = phi i32 [ %i.hq, %.loopexit ], [ %i.hq, %switch.early.test.i ], [ %i.hq, %switch.early.test.i ], [ %.4292, %_ZNK4llvh9StringRef10startswithES0_.exit.i.i ], [ %.4292, %_ZNK4llvh9StringRef10startswithES0_.exit8.thread.i.i ], [ %.4292, %_ZNK4llvh9StringRef10startswithES0_.exit16.thread.i.i ], [ %.4292, %_ZNK4llvh9StringRef10startswithES0_.exit20.thread.i.i ], [ %.4292, %_ZNK4llvh9StringRef10startswithES0_.exit24.thread.i.i ], [ %.4292, %_ZNK4llvh9StringRef10startswithES0_.exit28.thread.i.i ], [ %.4292, %bb.l ], [ %.4292, %_ZNK4llvh9StringRef5countEc.exit.thread.i ] ; 2 uses
+  %.3 = phi i32 [ %i.hq, %.loopexit ], [ %i.hq, %switch.early.test.i ], [ %i.hq, %switch.early.test.i ], [ %.4292, %_ZNK4llvh9StringRef10startswithES0_.exit.i.i ], [ %.4292, %_ZNK4llvh9StringRef10startswithES0_.exit8.thread.i.i ], [ %.4292, %_ZNK4llvh9StringRef10startswithES0_.exit16.thread.i.i ], [ %.4292, %_ZNK4llvh9StringRef10startswithES0_.exit20.thread.i.i ], [ %.4292, %_ZNK4llvh9StringRef10startswithES0_.exit24.thread.i.i ], [ %.4292, %_ZNK4llvh9StringRef10startswithES0_.exit28.thread.i.i ], [ %.4292, %bb.l ], [ %.4292, %_ZNK4llvh9StringRef5countEc.exit.thread.i ]
   %i.mm = icmp ult i64 %.sroa.8.0.copyload.i, %i.ha
   br i1 %i.mm, label %.lr.ph.i37.i, label %_ZL8SkipWordN4llvh9StringRefEm.exit.i
 
@@ -1407,33 +1399,98 @@ _ZL8SkipWordN4llvh9StringRefEm.exit.i:            ; preds = %bb.n, %switch.early
   store ptr %i.ms, ptr %8, align 8, !tbaa !41
   store i64 %i.mt, ptr %i.d, align 8, !tbaa !44
   %i.mu = icmp eq i64 %i.mt, 0
-  br i1 %i.mu, label %.loopexit.i.a, label %.lr.ph.i
+  br i1 %i.mu, label %.loopexit.i, label %.lr.ph.i
 
-.loopexit.i.a:                                    ; preds = %bb.l, %_ZNK4llvh9StringRef10startswithES0_.exit30.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit28.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit26.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit26.thread.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit22.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit20.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit18.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit16.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit14.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit12.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit10.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit8.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit6.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit.i.i, %_ZL8SkipWordN4llvh9StringRefEm.exit.i, %.lr.ph.i
-  %.2295 = phi i32 [ %.3296, %_ZL8SkipWordN4llvh9StringRefEm.exit.i ], [ %.1294, %.lr.ph.i ], [ 1, %bb.l ], [ 9, %_ZNK4llvh9StringRef10startswithES0_.exit16.i.i ], [ 9, %_ZNK4llvh9StringRef10startswithES0_.exit14.i.i ], [ 9, %_ZNK4llvh9StringRef10startswithES0_.exit12.i.i ], [ 9, %_ZNK4llvh9StringRef10startswithES0_.exit10.i.i ], [ 9, %_ZNK4llvh9StringRef10startswithES0_.exit8.i.i ], [ 9, %_ZNK4llvh9StringRef10startswithES0_.exit6.i.i ], [ 7, %_ZNK4llvh9StringRef10startswithES0_.exit20.i.i ], [ 6, %_ZNK4llvh9StringRef10startswithES0_.exit22.i.i ], [ 5, %_ZNK4llvh9StringRef10startswithES0_.exit26.thread.i.i ], [ 4, %_ZNK4llvh9StringRef10startswithES0_.exit26.i.i ], [ 3, %_ZNK4llvh9StringRef10startswithES0_.exit28.i.i ], [ 2, %_ZNK4llvh9StringRef10startswithES0_.exit30.i.i ], [ 9, %_ZNK4llvh9StringRef10startswithES0_.exit18.i.i ], [ 9, %_ZNK4llvh9StringRef10startswithES0_.exit.i.i ] ; 9 uses
-  %.2 = phi i32 [ %.3, %_ZL8SkipWordN4llvh9StringRefEm.exit.i ], [ %.1, %.lr.ph.i ], [ %.4292, %bb.l ], [ %.4292, %_ZNK4llvh9StringRef10startswithES0_.exit16.i.i ], [ %.4292, %_ZNK4llvh9StringRef10startswithES0_.exit14.i.i ], [ %.4292, %_ZNK4llvh9StringRef10startswithES0_.exit12.i.i ], [ %.4292, %_ZNK4llvh9StringRef10startswithES0_.exit10.i.i ], [ %.4292, %_ZNK4llvh9StringRef10startswithES0_.exit8.i.i ], [ %.4292, %_ZNK4llvh9StringRef10startswithES0_.exit6.i.i ], [ %.4292, %_ZNK4llvh9StringRef10startswithES0_.exit20.i.i ], [ %.4292, %_ZNK4llvh9StringRef10startswithES0_.exit22.i.i ], [ %.4292, %_ZNK4llvh9StringRef10startswithES0_.exit26.thread.i.i ], [ %.4292, %_ZNK4llvh9StringRef10startswithES0_.exit26.i.i ], [ %.4292, %_ZNK4llvh9StringRef10startswithES0_.exit28.i.i ], [ %.4292, %_ZNK4llvh9StringRef10startswithES0_.exit30.i.i ], [ %.4292, %_ZNK4llvh9StringRef10startswithES0_.exit18.i.i ], [ %.4292, %_ZNK4llvh9StringRef10startswithES0_.exit.i.i ] ; 2 uses
-  %.sroa.8.0.i = phi i64 [ 0, %_ZL8SkipWordN4llvh9StringRefEm.exit.i ], [ 0, %.lr.ph.i ], [ %.sroa.8.0.copyload.i, %bb.l ], [ %.sroa.8.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit16.i.i ], [ %.sroa.8.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit14.i.i ], [ %.sroa.8.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit12.i.i ], [ %.sroa.8.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit10.i.i ], [ %.sroa.8.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit8.i.i ], [ %.sroa.8.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit6.i.i ], [ %.sroa.8.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit20.i.i ], [ %.sroa.8.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit22.i.i ], [ %.sroa.8.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit26.thread.i.i ], [ %.sroa.8.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit26.i.i ], [ %.sroa.8.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit28.i.i ], [ %.sroa.8.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit30.i.i ], [ %.sroa.8.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit18.i.i ], [ %.sroa.8.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit.i.i ] ; 3 uses
-  %.sroa.044.0.i = phi ptr [ null, %_ZL8SkipWordN4llvh9StringRefEm.exit.i ], [ null, %.lr.ph.i ], [ %.sroa.044.0.copyload.i, %bb.l ], [ %.sroa.044.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit16.i.i ], [ %.sroa.044.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit14.i.i ], [ %.sroa.044.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit12.i.i ], [ %.sroa.044.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit10.i.i ], [ %.sroa.044.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit8.i.i ], [ %.sroa.044.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit6.i.i ], [ %.sroa.044.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit20.i.i ], [ %.sroa.044.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit22.i.i ], [ %.sroa.044.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit26.thread.i.i ], [ %.sroa.044.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit26.i.i ], [ %.sroa.044.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit28.i.i ], [ %.sroa.044.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit30.i.i ], [ %.sroa.044.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit18.i.i ], [ %.sroa.044.0.copyload.i, %_ZNK4llvh9StringRef10startswithES0_.exit.i.i ] ; 3 uses
-  %i.mv = icmp eq ptr %.pre.pre.i, %i.be
-  br i1 %i.mv, label %_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit, label %bb.o
+.loopexit.i:                                      ; preds = %_ZL8SkipWordN4llvh9StringRefEm.exit.i, %.lr.ph.i
+  %37 = icmp eq ptr %.pre.pre.i, %i.be
+  br i1 %37, label %.thread311.sink.split, label %43
 
-bb.o:                                             ; preds = %.loopexit.i.a
+.loopexit.i.jt3:                                  ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit30.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit28.i.i
+  %.2295.jt3 = phi i32 [ 2, %_ZNK4llvh9StringRef10startswithES0_.exit30.i.i ], [ 3, %_ZNK4llvh9StringRef10startswithES0_.exit28.i.i ]
+  %38 = icmp eq ptr %.pre.pre.i, %i.be
+  br i1 %38, label %_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit.jt3, label %44
+
+.loopexit.i.jt5:                                  ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit26.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit26.thread.i.i
+  %.2295.jt5 = phi i32 [ 4, %_ZNK4llvh9StringRef10startswithES0_.exit26.i.i ], [ 5, %_ZNK4llvh9StringRef10startswithES0_.exit26.thread.i.i ]
+  %39 = icmp eq ptr %.pre.pre.i, %i.be
+  br i1 %39, label %_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit.jt5, label %45
+
+.loopexit.i.jt7:                                  ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit22.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit20.i.i
+  %.2295.jt7 = phi i32 [ 6, %_ZNK4llvh9StringRef10startswithES0_.exit22.i.i ], [ 7, %_ZNK4llvh9StringRef10startswithES0_.exit20.i.i ]
+  %40 = icmp eq ptr %.pre.pre.i, %i.be
+  br i1 %40, label %.loopexit.i.a, label %46
+
+.loopexit.i.jt9:                                  ; preds = %_ZNK4llvh9StringRef10startswithES0_.exit.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit18.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit6.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit8.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit10.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit12.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit14.i.i, %_ZNK4llvh9StringRef10startswithES0_.exit16.i.i
+  %41 = icmp eq ptr %.pre.pre.i, %i.be
+  br i1 %41, label %bb.o, label %47
+
+.loopexit.i.jt1:                                  ; preds = %bb.l
+  %42 = icmp eq ptr %.pre.pre.i, %i.be
+  br i1 %42, label %_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit, label %48
+
+43:                                               ; preds = %.loopexit.i
   call void @free(ptr noundef %.pre.pre.i) #18
+  br label %.thread311.sink.split
+
+44:                                               ; preds = %.loopexit.i.jt3
+  call void @free(ptr noundef nonnull %.pre.pre.i) #18
+  br label %_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit.jt3
+
+45:                                               ; preds = %.loopexit.i.jt5
+  call void @free(ptr noundef nonnull %.pre.pre.i) #18
+  br label %_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit.jt5
+
+46:                                               ; preds = %.loopexit.i.jt7
+  call void @free(ptr noundef nonnull %.pre.pre.i) #18
+  br label %.loopexit.i.a
+
+47:                                               ; preds = %.loopexit.i.jt9
+  call void @free(ptr noundef nonnull %.pre.pre.i) #18
+  br label %bb.o
+
+48:                                               ; preds = %.loopexit.i.jt1
+  call void @free(ptr noundef nonnull %.pre.pre.i) #18
   br label %_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit
 
-_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit: ; preds = %.loopexit.i.a, %bb.o
+_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit.jt3: ; preds = %44, %.loopexit.i.jt3
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
-  store ptr %.sroa.044.0.i, ptr %18, align 8
-  store i64 %.sroa.8.0.i, ptr %i.bj, align 8
-  %i.mw = icmp eq i64 %.sroa.8.0.i, 0
+  store ptr %.sroa.044.0.copyload.i, ptr %18, align 8
+  store i64 %.sroa.8.0.copyload.i, ptr %i.bj, align 8
+  %49 = icmp eq i64 %.sroa.8.0.copyload.i, 0
+  br i1 %49, label %.thread311, label %switch.lookup
+
+_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit.jt5: ; preds = %45, %.loopexit.i.jt5
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
+  store ptr %.sroa.044.0.copyload.i, ptr %18, align 8
+  store i64 %.sroa.8.0.copyload.i, ptr %i.bj, align 8
+  %50 = icmp eq i64 %.sroa.8.0.copyload.i, 0
+  br i1 %50, label %.thread311, label %switch.lookup
+
+.loopexit.i.a:                                    ; preds = %46, %.loopexit.i.jt7
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
+  store ptr %.sroa.044.0.copyload.i, ptr %18, align 8
+  store i64 %.sroa.8.0.copyload.i, ptr %i.bj, align 8
+  %i.mv = icmp eq i64 %.sroa.8.0.copyload.i, 0
+  br i1 %i.mv, label %.thread311, label %switch.lookup
+
+bb.o:                                             ; preds = %47, %.loopexit.i.jt9
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
+  store ptr %.sroa.044.0.copyload.i, ptr %18, align 8
+  store i64 %.sroa.8.0.copyload.i, ptr %i.bj, align 8
+  %51 = icmp eq i64 %.sroa.8.0.copyload.i, 0
+  br i1 %51, label %.thread311, label %switch.lookup
+
+_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit: ; preds = %48, %.loopexit.i.jt1
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
+  store ptr %.sroa.044.0.copyload.i, ptr %18, align 8
+  store i64 %.sroa.8.0.copyload.i, ptr %i.bj, align 8
+  %i.mw = icmp eq i64 %.sroa.8.0.copyload.i, 0
   br i1 %i.mw, label %.thread311, label %switch.lookup
 
-switch.lookup:                                    ; preds = %_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit
-  %37 = zext nneg i32 %.2295 to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN4llvh9FileCheck13ReadCheckFileERNS_9SourceMgrENS_9StringRefERNS_5RegexERSt6vectorINS_15FileCheckStringESaIS7_EE, i64 %37
-  %switch.load = load i8, ptr %switch.gep, align 1
-  %switch.ext = zext i8 %switch.load to i64
-  %i.mx = add i64 %.sroa.8.0.i, %switch.ext
+switch.lookup:                                    ; preds = %.loopexit.i.a, %_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit.jt5, %_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit.jt3, %_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit, %bb.o
+  %.2295429 = phi i32 [ 1, %_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit ], [ %.2295.jt5, %_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit.jt5 ], [ %.2295.jt3, %_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit.jt3 ], [ 9, %bb.o ], [ %.2295.jt7, %.loopexit.i.a ] ; 7 uses
+  %.0.i = phi i64 [ 1, %_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit ], [ 5, %_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit.jt5 ], [ 6, %_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit.jt3 ], [ 0, %bb.o ], [ 7, %.loopexit.i.a ]
+  %i.mx = add i64 %.0.i, %.sroa.8.0.copyload.i
   %i.my = load i64, ptr %i.d, align 8, !tbaa !44  ; 2 uses
   %.sroa.speculated287 = call i64 @llvm.umin.i64(i64 %i.my, i64 %i.mx) ; 3 uses
   %i.mz = load ptr, ptr %8, align 8, !tbaa !71    ; 2 uses
@@ -1441,7 +1498,7 @@ switch.lookup:                                    ; preds = %_ZL23FindFirstMatch
   %i.nb = sub i64 %i.my, %.sroa.speculated287
   store ptr %i.na, ptr %8, align 8, !tbaa !41
   store i64 %i.nb, ptr %i.d, align 8, !tbaa !44
-  %i.nc = icmp eq i32 %.2295, 9
+  %i.nc = icmp eq i32 %.2295429, 9
   br i1 %i.nc, label %.thread315, label %bb.p
 
 .thread315:                                       ; preds = %switch.lookup
@@ -1504,16 +1561,16 @@ bb.r:                                             ; preds = %bb.p, %bb.q
   store ptr %i.bq, ptr %i.bs, align 8, !tbaa !122
   store ptr %i.bq, ptr %i.bt, align 8, !tbaa !186
   store i64 0, ptr %i.bu, align 8, !tbaa !187
-  store i32 %.2295, ptr %i.bv, align 8, !tbaa !114
+  store i32 %.2295429, ptr %i.bv, align 8, !tbaa !114
   %i.nv = load i64, ptr %i.d, align 8, !tbaa !44
   %.sroa.speculated243 = call i64 @llvm.umin.i64(i64 %i.nv, i64 %i.nt)
   %.sroa.08.0.copyload = load ptr, ptr %18, align 8, !tbaa !41
   %.sroa.2.0.copyload = load i64, ptr %i.bj, align 8, !tbaa !44
-  %i.nw = call noundef zeroext i1 @_ZN4llvh16FileCheckPattern12ParsePatternENS_9StringRefES1_RNS_9SourceMgrEjRKNS_16FileCheckRequestE(ptr noundef nonnull align 8 dereferenceable(136) %23, ptr %i.nu, i64 %.sroa.speculated243, ptr %.sroa.08.0.copyload, i64 %.sroa.2.0.copyload, ptr noundef nonnull align 8 dereferenceable(120) %1, i32 noundef %.2, ptr noundef nonnull align 8 dereferenceable(86) %0)
+  %i.nw = call noundef zeroext i1 @_ZN4llvh16FileCheckPattern12ParsePatternENS_9StringRefES1_RNS_9SourceMgrEjRKNS_16FileCheckRequestE(ptr noundef nonnull align 8 dereferenceable(136) %23, ptr %i.nu, i64 %.sroa.speculated243, ptr %.sroa.08.0.copyload, i64 %.sroa.2.0.copyload, ptr noundef nonnull align 8 dereferenceable(120) %1, i32 noundef %.4292, ptr noundef nonnull align 8 dereferenceable(86) %0)
   br i1 %i.nw, label %_ZNSt6vectorIN4llvh16FileCheckPatternESaIS1_EE9push_backERKS1_.exit, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.nx = icmp eq i32 %.2295, 6
+  %i.nx = icmp eq i32 %.2295429, 6
   br i1 %i.nx, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
@@ -1547,7 +1604,7 @@ _ZN4llvhplERKNS_5TwineES2_.exit99:                ; preds = %bb.t
   store i8 2, ptr %i.cw, align 8, !tbaa !47, !alias.scope !207
   store i8 3, ptr %i.cx, align 1, !tbaa !53, !alias.scope !207
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %26, i8 0, i64 16, i1 false)
-  call void @_ZNK4llvh9SourceMgr12PrintMessageENS_5SMLocENS0_8DiagKindERKNS_5TwineENS_8ArrayRefINS_7SMRangeEEENS6_INS_7SMFixItEEEb(ptr noundef nonnull align 8 dereferenceable(120) %1, ptr %.sroa.044.0.i, i32 noundef 0, ptr noundef nonnull align 8 dereferenceable(18) %24, ptr null, i64 0, ptr noundef nonnull byval(%"class.llvh::ArrayRef.22") align 8 %26, i1 noundef zeroext true) #18
+  call void @_ZNK4llvh9SourceMgr12PrintMessageENS_5SMLocENS0_8DiagKindERKNS_5TwineENS_8ArrayRefINS_7SMRangeEEENS6_INS_7SMFixItEEEb(ptr noundef nonnull align 8 dereferenceable(120) %1, ptr %.sroa.044.0.copyload.i, i32 noundef 0, ptr noundef nonnull align 8 dereferenceable(18) %24, ptr null, i64 0, ptr noundef nonnull byval(%"class.llvh::ArrayRef.22") align 8 %26, i1 noundef zeroext true) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %25) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %24) #18
   br label %_ZNSt6vectorIN4llvh16FileCheckPatternESaIS1_EE9push_backERKS1_.exit
@@ -1560,7 +1617,7 @@ bb.u:                                             ; preds = %bb.s
   %i.ol = sub i64 %i.oi, %.sroa.speculated236
   store ptr %i.ok, ptr %8, align 8, !tbaa !41
   store i64 %i.ol, ptr %i.d, align 8, !tbaa !44
-  switch i32 %.2295, label %bb.w [
+  switch i32 %.2295429, label %bb.w [
     i32 7, label %bb.v
     i32 3, label %bb.v
     i32 2, label %bb.v
@@ -1574,8 +1631,8 @@ bb.v:                                             ; preds = %bb.u, %bb.u, %bb.u
 
 _ZN4llvhplERKNS_5TwineES2_.exit136:               ; preds = %bb.v
   call void @llvm.lifetime.start.p0(ptr nonnull %27) #18
-  %i.op = icmp eq i32 %.2295, 2
-  %i.oq = icmp eq i32 %.2295, 7
+  %i.op = icmp eq i32 %.2295429, 2
+  %i.oq = icmp eq i32 %.2295429, 7
   %i.or = select i1 %i.oq, ptr @.str.36, ptr @.str.37
   %i.os = select i1 %i.op, ptr @.str.35, ptr %i.or ; 2 uses
   store ptr %i.os, ptr %27, align 8, !tbaa !71
@@ -1612,7 +1669,7 @@ _ZN4llvhplERKNS_5TwineES2_.exit136:               ; preds = %bb.v
   store i8 2, ptr %i.cn, align 8, !tbaa !47, !alias.scope !237
   store i8 3, ptr %i.co, align 1, !tbaa !53, !alias.scope !237
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %34, i8 0, i64 16, i1 false)
-  call void @_ZNK4llvh9SourceMgr12PrintMessageENS_5SMLocENS0_8DiagKindERKNS_5TwineENS_8ArrayRefINS_7SMRangeEEENS6_INS_7SMFixItEEEb(ptr noundef nonnull align 8 dereferenceable(120) %1, ptr %.sroa.044.0.i, i32 noundef 0, ptr noundef nonnull align 8 dereferenceable(18) %28, ptr null, i64 0, ptr noundef nonnull byval(%"class.llvh::ArrayRef.22") align 8 %34, i1 noundef zeroext true) #18
+  call void @_ZNK4llvh9SourceMgr12PrintMessageENS_5SMLocENS0_8DiagKindERKNS_5TwineENS_8ArrayRefINS_7SMRangeEEENS6_INS_7SMFixItEEEb(ptr noundef nonnull align 8 dereferenceable(120) %1, ptr %.sroa.044.0.copyload.i, i32 noundef 0, ptr noundef nonnull align 8 dereferenceable(18) %28, ptr null, i64 0, ptr noundef nonnull byval(%"class.llvh::ArrayRef.22") align 8 %34, i1 noundef zeroext true) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %33) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %32) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %31) #18
@@ -1623,7 +1680,7 @@ _ZN4llvhplERKNS_5TwineES2_.exit136:               ; preds = %bb.v
   br label %_ZNSt6vectorIN4llvh16FileCheckPatternESaIS1_EE9push_backERKS1_.exit
 
 bb.w:                                             ; preds = %bb.u, %bb.v
-  %i.ou = and i32 %.2295, -2
+  %i.ou = and i32 %.2295429, -2
   %or.cond5 = icmp eq i32 %i.ou, 4
   br i1 %or.cond5, label %bb.x, label %bb.aa
 
@@ -1720,7 +1777,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @_ZdlPvm(ptr noundef %i.px, i64 noundef %i.qa) #21
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i143
 
-.thread311:                                       ; preds = %_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit, %_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit.thread
+.thread311.sink.split:                            ; preds = %.backedge, %43, %.loopexit.i, %_ZNSt6vectorIN4llvh16FileCheckPatternESaIS1_EEC2ERKS3_.exit
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
+  br label %.thread311
+
+.thread311:                                       ; preds = %_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit, %bb.o, %.loopexit.i.a, %_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit.jt5, %_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit.jt3, %.thread311.sink.split
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #18
   %i.qb = load ptr, ptr %17, align 8, !tbaa !188
   %i.qc = load ptr, ptr %i.bd, align 8, !tbaa !188
@@ -1749,7 +1810,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   store i32 2, ptr %i.bg, align 4, !tbaa !121
   %i.qe = load i64, ptr %i.d, align 8, !tbaa !70  ; 2 uses
   %i.qf = icmp eq i64 %i.qe, 0
-  br i1 %i.qf, label %_ZL23FindFirstMatchingPrefixRN4llvh5RegexERNS_9StringRefERjRNS_5Check13FileCheckTypeE.exit.thread, label %.lr.ph.preheader.i, !llvm.loop !242
+  br i1 %i.qf, label %.thread311.sink.split, label %.lr.ph.preheader.i, !llvm.loop !242
 
 bb.ae:                                            ; preds = %.thread311
   call void @llvm.lifetime.start.p0(ptr nonnull %35) #18

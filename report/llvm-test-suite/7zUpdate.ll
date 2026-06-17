@@ -201,8 +201,8 @@ bb.a:
   %23 = alloca %class.CObjectVector.17, align 8   ; 16 uses
   %24 = alloca %"struct.NArchive::N7z::CSolidGroup", align 8 ; 24 uses
   %25 = alloca %class.CMyComBSTR, align 8         ; 9 uses
-  %26 = alloca %"struct.NArchive::N7z::CCompressionMethodMode", align 8 ; 30 uses
-  %27 = alloca %"class.NArchive::N7z::CEncoder", align 8 ; 8 uses
+  %26 = alloca %"struct.NArchive::N7z::CCompressionMethodMode", align 8 ; 34 uses
+  %27 = alloca %"class.NArchive::N7z::CEncoder", align 8 ; 10 uses
   %28 = alloca %class.CStreamBinder, align 16     ; 10 uses
   %29 = alloca %class.CMyComPtr, align 8          ; 10 uses
   %30 = alloca %class.CMyComPtr.21, align 8       ; 8 uses
@@ -211,14 +211,14 @@ bb.a:
   %33 = alloca %"struct.NArchive::N7z::CFileItem", align 8 ; 13 uses
   %34 = alloca %"struct.NArchive::N7z::CFileItem2", align 8 ; 6 uses
   %35 = alloca %"struct.NArchive::N7z::CFileItem", align 8 ; 11 uses
-  %36 = alloca %class.CRecordVector.22, align 8   ; 12 uses
-  %i.d = alloca i8, align 1                       ; 8 uses
+  %36 = alloca %class.CRecordVector.22, align 8   ; 14 uses
+  %i.d = alloca i8, align 1                       ; 9 uses
   %37 = alloca %"struct.NArchive::N7z::CRefItem", align 8 ; 2 uses
-  %38 = alloca %class.CRecordVector.1, align 8    ; 12 uses
+  %38 = alloca %class.CRecordVector.1, align 8    ; 14 uses
   %39 = alloca %class.CStringBase, align 8        ; 9 uses
   %40 = alloca %"struct.NArchive::N7z::CFolder", align 8 ; 26 uses
-  %41 = alloca %"struct.NArchive::N7z::CFileItem", align 8 ; 13 uses
-  %42 = alloca %"struct.NArchive::N7z::CFileItem2", align 8 ; 7 uses
+  %41 = alloca %"struct.NArchive::N7z::CFileItem", align 8 ; 14 uses
+  %42 = alloca %"struct.NArchive::N7z::CFileItem2", align 8 ; 8 uses
   %43 = alloca %class.CRecordVector.12, align 8   ; 14 uses
   %44 = alloca %"struct.NArchive::N7z::CFileItem", align 8 ; 9 uses
   %45 = alloca %"struct.NArchive::N7z::CFileItem2", align 8 ; 6 uses
@@ -621,12 +621,12 @@ bb.dx:                                            ; preds = %bb.dv
   %i.uw = getelementptr inbounds nuw i8, ptr %23, i64 16
   %i.ux = getelementptr inbounds nuw i8, ptr %26, i64 8
   %i.uy = getelementptr inbounds nuw i8, ptr %26, i64 24
-  %i.uz = getelementptr inbounds nuw i8, ptr %26, i64 32 ; 7 uses
+  %i.uz = getelementptr inbounds nuw i8, ptr %26, i64 32 ; 8 uses
   %i.va = getelementptr inbounds nuw i8, ptr %26, i64 40
   %i.vb = getelementptr inbounds nuw i8, ptr %26, i64 56
   %i.vc = getelementptr inbounds nuw i8, ptr %26, i64 64
   %i.vd = getelementptr inbounds nuw i8, ptr %26, i64 68 ; 4 uses
-  %i.ve = getelementptr inbounds nuw i8, ptr %26, i64 72 ; 7 uses
+  %i.ve = getelementptr inbounds nuw i8, ptr %26, i64 72 ; 8 uses
   %i.vf = getelementptr inbounds nuw i8, ptr %26, i64 84 ; 3 uses
   %i.vg = getelementptr inbounds nuw i8, ptr %7, i64 17
   %i.vh = getelementptr inbounds nuw i8, ptr %18, i64 8 ; 5 uses
@@ -753,7 +753,7 @@ bb.dx:                                            ; preds = %bb.dv
   %i.zw = getelementptr inbounds nuw i8, ptr %40, i64 44
   %i.zx = getelementptr inbounds nuw i8, ptr %40, i64 48
   %i.zy = getelementptr inbounds nuw i8, ptr %40, i64 112
-  %i.zz = getelementptr inbounds nuw i8, ptr %41, i64 16 ; 3 uses
+  %i.zz = getelementptr inbounds nuw i8, ptr %41, i64 16 ; 4 uses
   %i.aaa = getelementptr inbounds nuw i8, ptr %41, i64 32 ; 2 uses
   %i.aab = getelementptr inbounds nuw i8, ptr %41, i64 33
   %i.aac = getelementptr inbounds nuw i8, ptr %41, i64 34
@@ -766,8 +766,8 @@ bb.dx:                                            ; preds = %bb.dv
 
 bb.dy:                                            ; preds = %bb.dx, %bb.ms
   %indvars.iv1820 = phi i64 [ 0, %bb.dx ], [ %indvars.iv.next1821, %bb.ms ] ; 5 uses
-  %.91540 = phi i32 [ 0, %bb.dx ], [ %.31, %bb.ms ] ; 2 uses
-  %.05601539 = phi i32 [ 0, %bb.dx ], [ %.15611028, %bb.ms ] ; 3 uses
+  %.91540 = phi i32 [ 0, %bb.dx ], [ %.31.jt25, %bb.ms ] ; 2 uses
+  %.05601539 = phi i32 [ 0, %bb.dx ], [ %.1561.lcssa, %bb.ms ] ; 3 uses
   %i.aag = load ptr, ptr %i.uw, align 8, !tbaa !42
   %i.aah = getelementptr inbounds nuw [8 x i8], ptr %i.aag, i64 %indvars.iv1820
   %i.aai = load ptr, ptr %i.aah, align 8, !tbaa !43 ; 2 uses
@@ -1170,7 +1170,7 @@ bb.gn:                                            ; preds = %bb.gg, %_ZN11CStrin
   br label %.lr.ph1506
 
 .lr.ph1506:                                       ; preds = %.lr.ph1506.preheader, %._crit_edge1503
-  %indvars.iv1789 = phi i64 [ %i.ahy, %.lr.ph1506.preheader ], [ %indvars.iv.next1790, %._crit_edge1503 ] ; 4 uses
+  %indvars.iv1789 = phi i64 [ %i.ahy, %.lr.ph1506.preheader ], [ %indvars.iv.next1790, %._crit_edge1503 ] ; 3 uses
   %.101505 = phi i32 [ %.91540, %.lr.ph1506.preheader ], [ %.19, %._crit_edge1503 ] ; 3 uses
   %i.ahz = load ptr, ptr %i.wl, align 8, !tbaa !42
   %i.aia = getelementptr inbounds [12 x i8], ptr %i.ahz, i64 %indvars.iv1789 ; 3 uses
@@ -1332,7 +1332,7 @@ scalar.ph3266:                                    ; preds = %scalar.ph3266, %sca
 bb.gr:                                            ; preds = %.loopexit946
   %.not612 = icmp eq i32 %i.akw, 0                ; 2 uses
   %.10. = select i1 %.not612, i32 %.101505, i32 %i.akw
-  br i1 %.not612, label %bb.gu, label %.critedge677.thread.loopexit
+  br i1 %.not612, label %bb.gu, label %.critedge677.thread
 
 bb.gs:                                            ; preds = %bb.iw
   %i.akx = landingpad { ptr, i32 }
@@ -1735,7 +1735,7 @@ bb.io:                                            ; preds = %bb.in
 
 _ZN13CStreamBinderD2Ev.exit:                      ; preds = %bb.in
   call void @llvm.lifetime.end.p0(ptr nonnull %28) #17
-  br i1 %.15400, label %bb.iw, label %.critedge677.thread.loopexit
+  br i1 %.15400, label %bb.iw, label %.critedge677.thread
 
 .body752:                                         ; preds = %.loopexit956, %.loopexit.split-lp957, %bb.ic, %bb.hx
   %.pn604 = phi { ptr, i32 } [ %i.apr, %bb.hx ], [ %i.ary, %bb.ic ], [ %lpad.loopexit958, %.loopexit956 ], [ %lpad.loopexit.split-lp959, %.loopexit.split-lp957 ]
@@ -2052,7 +2052,7 @@ _ZN8NArchive3N7z9CFileItemD2Ev.exit770:           ; preds = %bb.ju, %bb.jt, %bb.
   %i.awp = getelementptr inbounds nuw i8, ptr %i.aai, i64 12
   %i.awq = load i32, ptr %i.awp, align 4, !tbaa !39 ; 8 uses
   %i.awr = icmp eq i32 %i.awq, 0
-  br i1 %i.awr, label %.critedge677.thread, label %bb.jv
+  br i1 %i.awr, label %.critedge677.thread.jt25, label %bb.jv
 
 bb.jv:                                            ; preds = %.critedge677
   call void @llvm.lifetime.start.p0(ptr nonnull %36) #17
@@ -2455,8 +2455,7 @@ _ZN13CObjectVectorIN8NArchive3N7z7CFolderEE3AddERKS2_.exit840: ; preds = %bb.ls
 
 bb.lu:                                            ; preds = %_ZN13CObjectVectorIN8NArchive3N7z7CFolderEE3AddERKS2_.exit840, %bb.mg
   %indvars.iv1814 = phi i64 [ 0, %_ZN13CObjectVectorIN8NArchive3N7z7CFolderEE3AddERKS2_.exit840 ], [ %indvars.iv.next1815, %bb.mg ] ; 5 uses
-  %.251536 = phi i32 [ %.23., %_ZN13CObjectVectorIN8NArchive3N7z7CFolderEE3AddERKS2_.exit840 ], [ %.26, %bb.mg ] ; 2 uses
-  %.04171534 = phi i32 [ 0, %_ZN13CObjectVectorIN8NArchive3N7z7CFolderEE3AddERKS2_.exit840 ], [ %.2419, %bb.mg ] ; 3 uses
+  %.04171534 = phi i32 [ 0, %_ZN13CObjectVectorIN8NArchive3N7z7CFolderEE3AddERKS2_.exit840 ], [ %.2419.jt57, %bb.mg ] ; 2 uses
   %i.bfi = load ptr, ptr %i.ze, align 8, !tbaa !42
   %i.bfj = getelementptr [4 x i8], ptr %i.bfi, i64 %indvars.iv1814
   %i.bfk = getelementptr [4 x i8], ptr %i.bfj, i64 %i.azr
@@ -2512,7 +2511,7 @@ bb.mb:                                            ; preds = %bb.ma, %bb.lw
   %i.bgb = load i8, ptr %i.aab, align 1, !range !48
   %i.bgc = trunc nuw i8 %i.bgb to i1
   %or.cond = select i1 %i.bga, i1 true, i1 %i.bgc
-  br i1 %or.cond, label %bb.me, label %bb.mc
+  br i1 %or.cond, label %46, label %bb.mc
 
 bb.mc:                                            ; preds = %bb.mb
   %i.bgd = load ptr, ptr %i.bff, align 8, !tbaa !42
@@ -2539,30 +2538,36 @@ bb.md:                                            ; preds = %bb.mc
   invoke void @_ZN8NArchive3N7z16CArchiveDatabase7AddFileERKNS0_9CFileItemERKNS0_10CFileItem2E(ptr noundef nonnull align 8 dereferenceable(480) %4, ptr noundef nonnull align 8 dereferenceable(36) %41, ptr noundef nonnull align 8 dereferenceable(40) %42)
           to label %bb.me unwind label %bb.ly
 
-bb.me:                                            ; preds = %bb.md, %bb.mc, %bb.mb
-  %.2419 = phi i32 [ %.04171534, %bb.mb ], [ %.04171534, %bb.mc ], [ %spec.select2168, %bb.md ] ; 2 uses
-  %.23408 = phi i32 [ 1, %bb.mb ], [ 57, %bb.mc ], [ 0, %bb.md ] ; 2 uses
-  %.26 = phi i32 [ -2147467259, %bb.mb ], [ %.251536, %bb.mc ], [ %.251536, %bb.md ] ; 3 uses
+bb.me:                                            ; preds = %bb.md, %bb.mc
+  %.2419.jt57 = phi i32 [ %spec.select2168, %bb.md ], [ %.04171534, %bb.mc ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %42) #17
   %i.bgo = load ptr, ptr %i.zz, align 8, !tbaa !102 ; 2 uses
   %i.bgp = icmp eq ptr %i.bgo, null
-  br i1 %i.bgp, label %_ZN8NArchive3N7z9CFileItemD2Ev.exit844, label %bb.mf
+  br i1 %i.bgp, label %bb.mg, label %bb.mf
+
+46:                                               ; preds = %bb.mb
+  call void @llvm.lifetime.end.p0(ptr nonnull %42) #17
+  %47 = load ptr, ptr %i.zz, align 8, !tbaa !102  ; 2 uses
+  %48 = icmp eq ptr %47, null
+  br i1 %48, label %_ZN8NArchive3N7z9CFileItemD2Ev.exit844.jt1, label %_ZN8NArchive3N7z9CFileItemD2Ev.exit844
 
 bb.mf:                                            ; preds = %bb.me
   call void @_ZdaPv(ptr noundef nonnull %i.bgo) #19
-  br label %_ZN8NArchive3N7z9CFileItemD2Ev.exit844
+  br label %bb.mg
 
-_ZN8NArchive3N7z9CFileItemD2Ev.exit844:           ; preds = %bb.me, %bb.mf
+_ZN8NArchive3N7z9CFileItemD2Ev.exit844:           ; preds = %46
+  call void @_ZdaPv(ptr noundef nonnull %47) #19
+  br label %_ZN8NArchive3N7z9CFileItemD2Ev.exit844.jt1
+
+bb.mg:                                            ; preds = %bb.mf, %bb.me
   call void @llvm.lifetime.end.p0(ptr nonnull %41) #17
-  switch i32 %.23408, label %.loopexit [
-    i32 0, label %bb.mg
-    i32 57, label %bb.mg
-  ]
-
-bb.mg:                                            ; preds = %_ZN8NArchive3N7z9CFileItemD2Ev.exit844, %_ZN8NArchive3N7z9CFileItemD2Ev.exit844
   %indvars.iv.next1815 = add nuw nsw i64 %indvars.iv1814, 1 ; 2 uses
   %exitcond1819.not = icmp eq i64 %indvars.iv.next1815, %wide.trip.count1818
   br i1 %exitcond1819.not, label %bb.mh, label %bb.lu, !llvm.loop !272
+
+_ZN8NArchive3N7z9CFileItemD2Ev.exit844.jt1:       ; preds = %_ZN8NArchive3N7z9CFileItemD2Ev.exit844, %46
+  call void @llvm.lifetime.end.p0(ptr nonnull %41) #17
+  br label %.loopexit
 
 _ZN8NArchive3N7z9CFileItemD2Ev.exit843:           ; preds = %bb.lz, %bb.ly, %bb.lx
   %.pn628 = phi { ptr, i32 } [ %i.bfu, %bb.lx ], [ %i.bfv, %bb.ly ], [ %i.bfv, %bb.lz ]
@@ -2578,17 +2583,17 @@ bb.mi:                                            ; preds = %bb.mh
   %i.bgr = load i32, ptr %i.yk, align 4, !tbaa !39
   %i.bgs = sext i32 %i.bgr to i64
   %i.bgt = getelementptr inbounds [4 x i8], ptr %i.bgq, i64 %i.bgs
-  store i32 %.2419, ptr %i.bgt, align 4, !tbaa !4
+  store i32 %.2419.jt57, ptr %i.bgt, align 4, !tbaa !4
   %i.bgu = load i32, ptr %i.yk, align 4, !tbaa !39
   %i.bgv = add nsw i32 %i.bgu, 1
   store i32 %i.bgv, ptr %i.yk, align 4, !tbaa !39
   %i.bgw = add nsw i32 %spec.store.select21, %.5546
   br label %.loopexit
 
-.loopexit:                                        ; preds = %_ZN8NArchive3N7z9CFileItemD2Ev.exit844, %bb.mi, %bb.lk
-  %.7548 = phi i32 [ %.5546, %bb.lk ], [ %i.bgw, %bb.mi ], [ %.5546, %_ZN8NArchive3N7z9CFileItemD2Ev.exit844 ]
-  %.26411 = phi i32 [ 1, %bb.lk ], [ 0, %bb.mi ], [ %.23408, %_ZN8NArchive3N7z9CFileItemD2Ev.exit844 ] ; 2 uses
-  %.28 = phi i32 [ %i.bcp, %bb.lk ], [ %.26, %bb.mi ], [ %.26, %_ZN8NArchive3N7z9CFileItemD2Ev.exit844 ] ; 2 uses
+.loopexit:                                        ; preds = %_ZN8NArchive3N7z9CFileItemD2Ev.exit844.jt1, %bb.mi, %bb.lk
+  %.7548 = phi i32 [ %.5546, %bb.lk ], [ %i.bgw, %bb.mi ], [ %.5546, %_ZN8NArchive3N7z9CFileItemD2Ev.exit844.jt1 ]
+  %cond6 = phi i1 [ false, %bb.lk ], [ true, %bb.mi ], [ false, %_ZN8NArchive3N7z9CFileItemD2Ev.exit844.jt1 ]
+  %.28 = phi i32 [ %i.bcp, %bb.lk ], [ %.23., %bb.mi ], [ -2147467259, %_ZN8NArchive3N7z9CFileItemD2Ev.exit844.jt1 ] ; 2 uses
   call void @_ZN17CBaseRecordVectorD2Ev(ptr noundef nonnull align 8 dereferenceable(32) %i.zr) #17
   call void @_ZN17CBaseRecordVectorD2Ev(ptr noundef nonnull align 8 dereferenceable(32) %i.zo) #17
   call void @_ZN17CBaseRecordVectorD2Ev(ptr noundef nonnull align 8 dereferenceable(32) %i.zl) #17
@@ -2621,8 +2626,7 @@ bb.ml:                                            ; preds = %bb.mk
 
 _ZN11CStringBaseIwED2Ev.exit850:                  ; preds = %bb.mk
   call void @_ZdaPv(ptr noundef nonnull %.sroa.0875.5.ph) #19
-  %cond6 = icmp eq i32 %.26411, 0
-  br i1 %cond6, label %bb.km, label %bb.mp, !llvm.loop !273
+  br i1 %cond6, label %bb.km, label %.critedge677.thread.loopexit, !llvm.loop !273
 
 bb.mm:                                            ; preds = %bb.mh
   %i.bhf = landingpad { ptr, i32 }
@@ -2656,9 +2660,15 @@ _ZN9CMyComPtrI19ISequentialInStreamED2Ev.exit852: ; preds = %_ZN11CStringBaseIwE
   call void @_ZdaPv(ptr noundef nonnull %.sroa.0875.6) #19
   br label %_ZN11CStringBaseIwED2Ev.exit853
 
-bb.mp:                                            ; preds = %bb.km, %_ZN11CStringBaseIwED2Ev.exit850
-  %.27412 = phi i32 [ %.26411, %_ZN11CStringBaseIwED2Ev.exit850 ], [ 0, %bb.km ]
-  %.29 = phi i32 [ %.28, %_ZN11CStringBaseIwED2Ev.exit850 ], [ %.23, %bb.km ]
+bb.mp:                                            ; preds = %bb.km
+  call void @_ZN17CBaseRecordVectorD2Ev(ptr noundef nonnull align 8 dereferenceable(32) %38) #17
+  call void @llvm.lifetime.end.p0(ptr nonnull %38) #17
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #17
+  call void @_ZN17CBaseRecordVectorD2Ev(ptr noundef nonnull align 8 dereferenceable(32) %36) #17
+  call void @llvm.lifetime.end.p0(ptr nonnull %36) #17
+  br label %.critedge677.thread.jt25
+
+.critedge677.thread.loopexit:                     ; preds = %_ZN11CStringBaseIwED2Ev.exit850
   call void @_ZN17CBaseRecordVectorD2Ev(ptr noundef nonnull align 8 dereferenceable(32) %38) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %38) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #17
@@ -2666,47 +2676,66 @@ bb.mp:                                            ; preds = %bb.km, %_ZN11CStrin
   call void @llvm.lifetime.end.p0(ptr nonnull %36) #17
   br label %.critedge677.thread
 
-.critedge677.thread.loopexit:                     ; preds = %bb.gr, %_ZN13CStreamBinderD2Ev.exit
-  %.31.ph = phi i32 [ %i.akw, %bb.gr ], [ %.18, %_ZN13CStreamBinderD2Ev.exit ]
-  %46 = trunc nsw i64 %indvars.iv1789 to i32
-  br label %.critedge677.thread
-
-.critedge677.thread:                              ; preds = %.critedge677.thread.loopexit, %bb.mp, %.critedge677
-  %.15611028 = phi i32 [ %.1561.lcssa, %.critedge677 ], [ %.1561.lcssa, %bb.mp ], [ %46, %.critedge677.thread.loopexit ] ; 2 uses
-  %.29414 = phi i32 [ 25, %.critedge677 ], [ %.27412, %bb.mp ], [ 1, %.critedge677.thread.loopexit ]
-  %.31 = phi i32 [ %.10.lcssa, %.critedge677 ], [ %.29, %bb.mp ], [ %.31.ph, %.critedge677.thread.loopexit ] ; 2 uses
+.critedge677.thread:                              ; preds = %_ZN13CStreamBinderD2Ev.exit, %bb.gr, %.critedge677.thread.loopexit
+  %.31 = phi i32 [ %.28, %.critedge677.thread.loopexit ], [ %i.akw, %bb.gr ], [ %.18, %_ZN13CStreamBinderD2Ev.exit ]
   call void @_ZN8NArchive3N7z8CEncoderD1Ev(ptr noundef nonnull align 8 dead_on_return(433) dereferenceable(433) %27) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %27) #17
   %i.bhm = load ptr, ptr %i.ve, align 8, !tbaa !102 ; 2 uses
   %i.bhn = icmp eq ptr %i.bhm, null
-  br i1 %i.bhn, label %_ZN11CStringBaseIwED2Ev.exit.i, label %bb.mq
+  br i1 %i.bhn, label %_ZN11CStringBaseIwED2Ev.exit.i.jt1, label %51
 
-bb.mq:                                            ; preds = %.critedge677.thread
+.critedge677.thread.jt25:                         ; preds = %bb.mp, %.critedge677
+  %.31.jt25 = phi i32 [ %.10.lcssa, %.critedge677 ], [ %.23, %bb.mp ]
+  call void @_ZN8NArchive3N7z8CEncoderD1Ev(ptr noundef nonnull align 8 dead_on_return(433) dereferenceable(433) %27) #17
+  call void @llvm.lifetime.end.p0(ptr nonnull %27) #17
+  %49 = load ptr, ptr %i.ve, align 8, !tbaa !102  ; 2 uses
+  %50 = icmp eq ptr %49, null
+  br i1 %50, label %_ZN11CStringBaseIwED2Ev.exit.i, label %bb.mq
+
+51:                                               ; preds = %.critedge677.thread
   call void @_ZdaPv(ptr noundef nonnull %i.bhm) #19
+  br label %_ZN11CStringBaseIwED2Ev.exit.i.jt1
+
+bb.mq:                                            ; preds = %.critedge677.thread.jt25
+  call void @_ZdaPv(ptr noundef nonnull %49) #19
   br label %_ZN11CStringBaseIwED2Ev.exit.i
 
-_ZN11CStringBaseIwED2Ev.exit.i:                   ; preds = %bb.mq, %.critedge677.thread
+_ZN11CStringBaseIwED2Ev.exit.i.jt1:               ; preds = %51, %.critedge677.thread
   call void @_ZN17CBaseRecordVectorD2Ev(ptr noundef nonnull align 8 dereferenceable(32) %i.uz) #17
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTV13CObjectVectorIN8NArchive3N7z11CMethodFullEE, i64 16), ptr %26, align 8, !tbaa !33
   invoke void @_ZN17CBaseRecordVector5ClearEv(ptr noundef nonnull align 8 dereferenceable(88) %26)
-          to label %_ZN8NArchive3N7z22CCompressionMethodModeD2Ev.exit unwind label %bb.mr, !inline_history !274
+          to label %_ZN8NArchive3N7z22CCompressionMethodModeD2Ev.exit unwind label %.loopexit.split-lp2781, !inline_history !274
 
-bb.mr:                                            ; preds = %_ZN11CStringBaseIwED2Ev.exit.i
-  %47 = landingpad { ptr, i32 }
+_ZN11CStringBaseIwED2Ev.exit.i:                   ; preds = %bb.mq, %.critedge677.thread.jt25
+  call void @_ZN17CBaseRecordVectorD2Ev(ptr noundef nonnull align 8 dereferenceable(32) %i.uz) #17
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTV13CObjectVectorIN8NArchive3N7z11CMethodFullEE, i64 16), ptr %26, align 8, !tbaa !33
+  invoke void @_ZN17CBaseRecordVector5ClearEv(ptr noundef nonnull align 8 dereferenceable(88) %26)
+          to label %bb.ms unwind label %.loopexit2780, !inline_history !274
+
+.loopexit2780:                                    ; preds = %_ZN11CStringBaseIwED2Ev.exit.i
+  %lpad.loopexit2782 = landingpad { ptr, i32 }
           catch ptr null
-  %i.bho = extractvalue { ptr, i32 } %47, 0
+  br label %bb.mr
+
+.loopexit.split-lp2781:                           ; preds = %_ZN11CStringBaseIwED2Ev.exit.i.jt1
+  %lpad.loopexit.split-lp2783 = landingpad { ptr, i32 }
+          catch ptr null
+  br label %bb.mr
+
+bb.mr:                                            ; preds = %.loopexit.split-lp2781, %.loopexit2780
+  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit2782, %.loopexit2780 ], [ %lpad.loopexit.split-lp2783, %.loopexit.split-lp2781 ]
+  %i.bho = extractvalue { ptr, i32 } %lpad.phi, 0
   call void @__clang_call_terminate(ptr %i.bho) #20, !inline_history !274
   unreachable
 
-_ZN8NArchive3N7z22CCompressionMethodModeD2Ev.exit: ; preds = %_ZN11CStringBaseIwED2Ev.exit.i
+_ZN8NArchive3N7z22CCompressionMethodModeD2Ev.exit: ; preds = %_ZN11CStringBaseIwED2Ev.exit.i.jt1
   call void @_ZN17CBaseRecordVectorD2Ev(ptr noundef nonnull align 8 dereferenceable(88) %26) #17, !inline_history !274
   call void @llvm.lifetime.end.p0(ptr nonnull %26) #17
-  switch i32 %.29414, label %.loopexit962 [
-    i32 0, label %bb.ms
-    i32 25, label %bb.ms
-  ]
+  br label %.loopexit962
 
-bb.ms:                                            ; preds = %_ZN8NArchive3N7z22CCompressionMethodModeD2Ev.exit, %_ZN8NArchive3N7z22CCompressionMethodModeD2Ev.exit
+bb.ms:                                            ; preds = %_ZN11CStringBaseIwED2Ev.exit.i
+  call void @_ZN17CBaseRecordVectorD2Ev(ptr noundef nonnull align 8 dereferenceable(88) %26) #17, !inline_history !274
+  call void @llvm.lifetime.end.p0(ptr nonnull %26) #17
   %indvars.iv.next1821 = add nuw nsw i64 %indvars.iv1820, 1 ; 2 uses
   %exitcond1824.not = icmp eq i64 %indvars.iv.next1821, 4
   br i1 %exitcond1824.not, label %bb.mv, label %bb.dy, !llvm.loop !275
@@ -2750,7 +2779,7 @@ bb.mu:                                            ; preds = %.body733, %bb.go
 
 bb.mv:                                            ; preds = %bb.ms
   %i.bhp = load i32, ptr %i.pe, align 4, !tbaa !39
-  %.not649 = icmp eq i32 %.15611028, %i.bhp
+  %.not649 = icmp eq i32 %.1561.lcssa, %i.bhp
   br i1 %.not649, label %bb.mx, label %.loopexit962
 
 bb.mw:                                            ; preds = %._crit_edge1547

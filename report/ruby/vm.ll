@@ -201,7 +201,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.bh, %bb.a
   %.pre = phi ptr [ %.pre.pre, %bb.a ], [ %i.kj, %bb.bh ]
-  %.0196 = phi i32 [ %1, %bb.a ], [ %.1197304317, %bb.bh ] ; 4 uses
+  %.0196 = phi i32 [ %1, %bb.a ], [ %.1197304317, %bb.bh ] ; 8 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %rb_vm_pop_frame.exit, %bb.b
@@ -293,8 +293,9 @@ bb.h:                                             ; preds = %bb.d
   br i1 %i.bd, label %bb.i, label %bb.t
 
 bb.i:                                             ; preds = %bb.h
-  %.val258 = load ptr, ptr %i.n, align 8, !tbaa !490 ; 3 uses
-  %i.be = icmp eq ptr %i.p, %.val258
+  %.val258 = load ptr, ptr %i.n, align 8, !tbaa !490
+  %.0213300.fr.jt2 = freeze ptr %.val258          ; 4 uses
+  %i.be = icmp eq ptr %i.p, %.0213300.fr.jt2
   br i1 %i.be, label %bb.j, label %bb.t
 
 bb.j:                                             ; preds = %bb.i
@@ -306,13 +307,7 @@ bb.k:                                             ; preds = %bb.j
   %.val254.val = load i64, ptr %.val254, align 8, !tbaa !11
   %i.bg = and i64 %.val254.val, 32
   %.not = icmp eq i64 %i.bg, 0
-  br i1 %.not, label %4, label %bb.l
-
-4:                                                ; preds = %bb.k
-  %5 = getelementptr i8, ptr %i.p, i64 56
-  store ptr %5, ptr %i.n, align 8, !tbaa !490
-  store i32 2, ptr %i.o, align 8, !tbaa !161
-  br label %.thread293.a
+  br i1 %.not, label %.thread293.a, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.bh = getelementptr i8, ptr %i.av, i64 160
@@ -407,8 +402,8 @@ bb.s:                                             ; preds = %bb.j
   br label %bb.bi
 
 bb.t:                                             ; preds = %bb.i, %bb.h
-  %.0213 = phi ptr [ %.val258, %bb.i ], [ null, %bb.h ] ; 10 uses
-  switch i32 %.0196, label %.thread293.a [
+  %.0213 = phi ptr [ %.0213300.fr.jt2, %bb.i ], [ null, %bb.h ] ; 13 uses
+  switch i32 %.0196, label %.thread293 [
     i32 6, label %bb.u
     i32 4, label %bb.z
   ]
@@ -516,23 +511,29 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac, %bb.
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.thread309, label %bb.aa, !llvm.loop !915
 
-.thread293.a:                                     ; preds = %4, %bb.t
-  %.1197305 = phi i32 [ %.0196, %bb.t ], [ 2, %4 ] ; 10 uses
-  %.0213300 = phi ptr [ %.0213, %bb.t ], [ %.val258, %4 ]
-  %.0213300.fr = freeze ptr %.0213300             ; 7 uses
-  %6 = icmp eq i32 %.1197305, 2
-  %i.dy = icmp eq ptr %.0213300.fr, null
-  %or.cond4.not239 = and i1 %6, %i.dy
+.thread293:                                       ; preds = %bb.t
+  %4 = icmp eq i32 %.0196, 2
+  %5 = icmp eq ptr %.0213, null
+  %or.cond4.not239 = and i1 %4, %5
   br i1 %or.cond4.not239, label %bb.af, label %switch.early.test
 
-switch.early.test:                                ; preds = %.thread293.a
-  switch i32 %.1197305, label %switch.early.test.thread [
+.thread293.a:                                     ; preds = %bb.k
+  %6 = getelementptr i8, ptr %i.p, i64 56
+  store ptr %6, ptr %i.n, align 8, !tbaa !490
+  store i32 2, ptr %i.o, align 8, !tbaa !161
+  %i.dy = icmp eq ptr %.0213300.fr.jt2, null
+  br i1 %i.dy, label %bb.af, label %switch.early.test.thread
+
+switch.early.test:                                ; preds = %.thread293
+  switch i32 %.0196, label %switch.early.test.thread [
     i32 5, label %bb.af
     i32 3, label %bb.af
   ]
 
-bb.af:                                            ; preds = %switch.early.test, %switch.early.test, %.thread293.a
-  %i.dz = zext nneg i32 %.1197305 to i64
+bb.af:                                            ; preds = %.thread293.a, %switch.early.test, %switch.early.test, %.thread293
+  %.0213300.fr514 = phi ptr [ null, %.thread293.a ], [ %.0213, %switch.early.test ], [ %.0213, %switch.early.test ], [ null, %.thread293 ] ; 4 uses
+  %.1197305512 = phi i32 [ 2, %.thread293.a ], [ %.0196, %switch.early.test ], [ %.0196, %switch.early.test ], [ 2, %.thread293 ] ; 6 uses
+  %i.dz = zext nneg i32 %.1197305512 to i64
   %i.ea = getelementptr [4 x i8], ptr @constinit, i64 %i.dz
   %i.eb = load i32, ptr %i.ea, align 4, !tbaa !7
   %i.ec = getelementptr i8, ptr %i.av, i64 160
@@ -653,7 +654,7 @@ vm_base_ptr.exit:                                 ; preds = %bb.ak, %bb.ap
   %i.gc = getelementptr [8 x i8], ptr %.0.i, i64 %i.gb ; 3 uses
   %i.gd = getelementptr i8, ptr %i.p, i64 8       ; 2 uses
   store ptr %i.gc, ptr %i.gd, align 8, !tbaa !73
-  %.not244 = icmp eq i32 %.1197305, 5
+  %.not244 = icmp eq i32 %.1197305512, 5
   br i1 %.not244, label %bb.ar, label %bb.aq
 
 bb.aq:                                            ; preds = %vm_base_ptr.exit
@@ -674,18 +675,20 @@ bb.as:                                            ; preds = %bb.ag, %bb.ah, %bb.
   %exitcond490.not = icmp eq i64 %indvars.iv.next487, %wide.trip.count489
   br i1 %exitcond490.not, label %.thread309, label %bb.ag, !llvm.loop !916
 
-switch.early.test.thread:                         ; preds = %switch.early.test
+switch.early.test.thread:                         ; preds = %switch.early.test, %.thread293.a
+  %.0213300.fr515 = phi ptr [ %.0213, %switch.early.test ], [ %.0213300.fr.jt2, %.thread293.a ] ; 2 uses
+  %.1197305513 = phi i32 [ %.0196, %switch.early.test ], [ 2, %.thread293.a ] ; 2 uses
   %.phi.trans.insert = getelementptr i8, ptr %i.av, i64 160
   %.pre491 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !148 ; 2 uses
   %.not240 = icmp eq ptr %.pre491, null
   br i1 %.not240, label %.thread309, label %.preheader362
 
 .preheader362:                                    ; preds = %bb.q, %switch.early.test.thread
-  %.0213300341348522 = phi ptr [ %.0213300.fr, %switch.early.test.thread ], [ %i.p, %bb.q ] ; 3 uses
+  %.0213300341348522 = phi ptr [ %.0213300.fr515, %switch.early.test.thread ], [ %i.p, %bb.q ] ; 3 uses
   %.1211301339349521 = phi ptr [ null, %switch.early.test.thread ], [ %i.bw, %bb.q ] ; 2 uses
   %.1208302337350520 = phi i64 [ 0, %switch.early.test.thread ], [ %i.cc, %bb.q ] ; 2 uses
   %.1205303335351519 = phi i64 [ 0, %switch.early.test.thread ], [ %i.bz, %bb.q ] ; 2 uses
-  %.1197305332352518 = phi i32 [ %.1197305, %switch.early.test.thread ], [ 1, %bb.q ] ; 3 uses
+  %.1197305332352518 = phi i32 [ %.1197305513, %switch.early.test.thread ], [ 1, %bb.q ] ; 3 uses
   %i.gh = phi ptr [ %.pre491, %switch.early.test.thread ], [ %i.bi, %bb.q ] ; 2 uses
   %i.gi = load i32, ptr %i.gh, align 1, !tbaa !7  ; 2 uses
   %.not428 = icmp eq i32 %i.gi, 0
@@ -724,8 +727,8 @@ bb.aw:                                            ; preds = %bb.at, %bb.au, %bb.
 
 .loopexit.sink.split:                             ; preds = %bb.ac, %bb.x, %bb.x, %bb.av, %bb.ai
   %.lcssa542.sink571 = phi ptr [ %i.gk, %bb.av ], [ %i.eg, %bb.ai ], [ %i.cx, %bb.x ], [ %i.cx, %bb.x ], [ %i.dk, %bb.ac ] ; 3 uses
-  %.1197304.ph = phi i32 [ %.1197305332352518, %bb.av ], [ %.1197305, %bb.ai ], [ 6, %bb.x ], [ 6, %bb.x ], [ 4, %bb.ac ]
-  %.0213299.ph = phi ptr [ %.0213300341348522, %bb.av ], [ %.0213300.fr, %bb.ai ], [ %.0213, %bb.x ], [ %.0213, %bb.x ], [ %.0213, %bb.ac ]
+  %.1197304.ph = phi i32 [ %.1197305332352518, %bb.av ], [ %.1197305512, %bb.ai ], [ 6, %bb.x ], [ 6, %bb.x ], [ 4, %bb.ac ]
+  %.0213299.ph = phi ptr [ %.0213300341348522, %bb.av ], [ %.0213300.fr514, %bb.ai ], [ %.0213, %bb.x ], [ %.0213, %bb.x ], [ %.0213, %bb.ac ]
   %i.gu = getelementptr i8, ptr %.lcssa542.sink571, i64 8
   %i.gv = load ptr, ptr %i.gu, align 8, !tbaa !151
   %i.gw = getelementptr i8, ptr %.lcssa542.sink571, i64 24
@@ -919,8 +922,8 @@ vm_push_frame.exit:                               ; preds = %.lr.ph.i, %middle.b
   br label %bb.bi
 
 .thread309:                                       ; preds = %bb.ae, %bb.y, %bb.as, %switch.early.test.thread, %.preheader, %.preheader366, %.preheader365, %bb.af, %bb.z, %bb.u, %.loopexit
-  %.0213299318 = phi ptr [ %.0213299, %.loopexit ], [ %.0213300.fr, %bb.af ], [ %.0213, %bb.u ], [ %.0213, %.preheader365 ], [ %.0213, %bb.z ], [ %.0213, %.preheader366 ], [ %.0213300.fr, %bb.as ], [ %.0213, %bb.y ], [ %.0213300.fr, %.preheader ], [ %.0213300.fr, %switch.early.test.thread ], [ %.0213, %bb.ae ]
-  %.1197304317 = phi i32 [ %.1197304, %.loopexit ], [ %.1197305, %bb.af ], [ 6, %bb.u ], [ 6, %.preheader365 ], [ 4, %bb.z ], [ 4, %.preheader366 ], [ %.1197305, %bb.as ], [ 6, %bb.y ], [ %.1197305, %.preheader ], [ %.1197305, %switch.early.test.thread ], [ 4, %bb.ae ] ; 3 uses
+  %.0213299318 = phi ptr [ %.0213299, %.loopexit ], [ %.0213300.fr514, %bb.af ], [ %.0213, %bb.u ], [ %.0213, %.preheader365 ], [ %.0213, %bb.z ], [ %.0213, %.preheader366 ], [ %.0213300.fr514, %bb.as ], [ %.0213, %bb.y ], [ %.0213300.fr514, %.preheader ], [ %.0213300.fr515, %switch.early.test.thread ], [ %.0213, %bb.ae ]
+  %.1197304317 = phi i32 [ %.1197304, %.loopexit ], [ %.1197305512, %bb.af ], [ 6, %bb.u ], [ 6, %.preheader365 ], [ 4, %bb.z ], [ 4, %.preheader366 ], [ %.1197305512, %bb.as ], [ 6, %bb.y ], [ %.1197305512, %.preheader ], [ %.1197305513, %switch.early.test.thread ], [ 4, %bb.ae ] ; 3 uses
   %i.jt = icmp eq ptr %i.p, %.0213299318
   call fastcc void @hook_before_rewind(ptr noundef %0, i1 noundef zeroext %i.jt, i32 noundef %.1197304317, ptr noundef %i.a)
   %i.ju = load ptr, ptr %i.b, align 8, !tbaa !70  ; 2 uses

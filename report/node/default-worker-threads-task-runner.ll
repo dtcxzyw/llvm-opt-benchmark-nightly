@@ -201,25 +201,25 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZN2v88platform30DefaultWorkerThreadsTaskRunner12WorkerThread3RunEv(ptr noundef nonnull align 8 dereferenceable(64) %0) unnamed_addr #0 align 2 {
 bb.a:
-  %1 = alloca %"struct.v8::platform::DelayedTaskQueue::MaybeNextTask", align 8 ; 6 uses
+  %1 = alloca %"struct.v8::platform::DelayedTaskQueue::MaybeNextTask", align 8 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 8 uses
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   tail call void @_ZN2v84base5Mutex4LockEv(ptr noundef nonnull align 8 dereferenceable(8) %i.c) #13
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   br label %.backedge
 
-.backedge:                                        ; preds = %.backedge.backedge, %bb.a
+.backedge:                                        ; preds = %_ZN2v84base9LockGuardINS0_5MutexEED2Ev.exit, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #13
   %i.g = load ptr, ptr %i.a, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 72
   call void @_ZN2v88platform16DelayedTaskQueue10TryGetNextEv(ptr dead_on_unwind nonnull writable sret(%"struct.v8::platform::DelayedTaskQueue::MaybeNextTask") align 8 %1, ptr noundef nonnull align 8 dereferenceable(144) %i.h) #13
   %i.i = load i32, ptr %1, align 8
-  switch i32 %i.i, label %bb.o [
+  switch i32 %i.i, label %bb.p [
     i32 0, label %bb.b
-    i32 3, label %bb.p
+    i32 3, label %bb.o
     i32 1, label %bb.c
     i32 2, label %bb.i
   ]
@@ -381,34 +381,37 @@ _ZNSt6vectorIPN2v88platform30DefaultWorkerThreadsTaskRunner12WorkerThreadESaIS4_
   br label %bb.p
 
 bb.o:                                             ; preds = %.backedge
-  br label %bb.p
+  %2 = load ptr, ptr %i.f, align 8                ; 3 uses
+  %.not.i.i9.jt1 = icmp eq ptr %2, null
+  br i1 %.not.i.i9.jt1, label %.backedge.backedge, label %_ZNKSt14default_deleteIN2v84TaskEEclEPS1_.exit.i.i
 
-bb.p:                                             ; preds = %.backedge, %bb.o, %_ZNSt6vectorIPN2v88platform30DefaultWorkerThreadsTaskRunner12WorkerThreadESaIS4_EE9push_backEOS4_.exit8, %_ZNSt6vectorIPN2v88platform30DefaultWorkerThreadsTaskRunner12WorkerThreadESaIS4_EE9push_backEOS4_.exit, %bb.b
-  %.0 = phi i32 [ 0, %bb.o ], [ 2, %bb.b ], [ 2, %_ZNSt6vectorIPN2v88platform30DefaultWorkerThreadsTaskRunner12WorkerThreadESaIS4_EE9push_backEOS4_.exit8 ], [ 2, %_ZNSt6vectorIPN2v88platform30DefaultWorkerThreadsTaskRunner12WorkerThreadESaIS4_EE9push_backEOS4_.exit ], [ 1, %.backedge ]
+bb.p:                                             ; preds = %.backedge, %_ZNSt6vectorIPN2v88platform30DefaultWorkerThreadsTaskRunner12WorkerThreadESaIS4_EE9push_backEOS4_.exit, %_ZNSt6vectorIPN2v88platform30DefaultWorkerThreadsTaskRunner12WorkerThreadESaIS4_EE9push_backEOS4_.exit8, %bb.b
   %i.bs = load ptr, ptr %i.f, align 8             ; 3 uses
   %.not.i.i9 = icmp eq ptr %i.bs, null
-  br i1 %.not.i.i9, label %_ZN2v88platform16DelayedTaskQueue13MaybeNextTaskD2Ev.exit, label %_ZNKSt14default_deleteIN2v84TaskEEclEPS1_.exit.i.i
+  br i1 %.not.i.i9, label %_ZN2v84base9LockGuardINS0_5MutexEED2Ev.exit, label %_ZN2v88platform16DelayedTaskQueue13MaybeNextTaskD2Ev.exit
 
-_ZNKSt14default_deleteIN2v84TaskEEclEPS1_.exit.i.i: ; preds = %bb.p
-  %i.bt = load ptr, ptr %i.bs, align 8
+_ZNKSt14default_deleteIN2v84TaskEEclEPS1_.exit.i.i: ; preds = %bb.o
+  %i.bt = load ptr, ptr %2, align 8
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
   %i.bv = load ptr, ptr %i.bu, align 8
-  call void %i.bv(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.bs) #13, !inline_history !33
-  br label %_ZN2v88platform16DelayedTaskQueue13MaybeNextTaskD2Ev.exit
+  call void %i.bv(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %2) #13, !inline_history !33
+  br label %.backedge.backedge
 
-_ZN2v88platform16DelayedTaskQueue13MaybeNextTaskD2Ev.exit: ; preds = %bb.p, %_ZNKSt14default_deleteIN2v84TaskEEclEPS1_.exit.i.i
+_ZN2v88platform16DelayedTaskQueue13MaybeNextTaskD2Ev.exit: ; preds = %bb.p
+  %3 = load ptr, ptr %i.bs, align 8
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %5 = load ptr, ptr %4, align 8
+  call void %5(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.bs) #13, !inline_history !33
+  br label %_ZN2v84base9LockGuardINS0_5MutexEED2Ev.exit
+
+.backedge.backedge:                               ; preds = %_ZNKSt14default_deleteIN2v84TaskEEclEPS1_.exit.i.i, %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #13
-  switch i32 %.0, label %_ZN2v84base9LockGuardINS0_5MutexEED2Ev.exit [
-    i32 0, label %.backedge.backedge
-    i32 2, label %.backedge.backedge
-  ]
-
-.backedge.backedge:                               ; preds = %_ZN2v88platform16DelayedTaskQueue13MaybeNextTaskD2Ev.exit, %_ZN2v88platform16DelayedTaskQueue13MaybeNextTaskD2Ev.exit
-  br label %.backedge, !llvm.loop !32
-
-_ZN2v84base9LockGuardINS0_5MutexEED2Ev.exit:      ; preds = %_ZN2v88platform16DelayedTaskQueue13MaybeNextTaskD2Ev.exit
   call void @_ZN2v84base5Mutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(8) %i.c) #13
   ret void
+
+_ZN2v84base9LockGuardINS0_5MutexEED2Ev.exit:      ; preds = %_ZN2v88platform16DelayedTaskQueue13MaybeNextTaskD2Ev.exit, %bb.p
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #13
+  br label %.backedge, !llvm.loop !32
 }
 
 declare void @_ZN2v88platform16DelayedTaskQueue10TryGetNextEv(ptr dead_on_unwind writable sret(%"struct.v8::platform::DelayedTaskQueue::MaybeNextTask") align 8, ptr noundef nonnull align 8 dereferenceable(144)) local_unnamed_addr #1

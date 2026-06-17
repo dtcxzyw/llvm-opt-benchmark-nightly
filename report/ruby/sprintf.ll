@@ -201,7 +201,7 @@ bb.a:
   %i.b = alloca [5 x i8], align 1                 ; 3 uses
   %i.c = alloca i32, align 4                      ; 4 uses
   %i.d = alloca ptr, align 8                      ; 10 uses
-  %i.e = alloca i8, align 1                       ; 17 uses
+  %i.e = alloca i8, align 1                       ; 20 uses
   %i.f = alloca i32, align 4                      ; 19 uses
   %i.g = alloca [7 x i8], align 1                 ; 11 uses
   %i.h = alloca i64, align 8                      ; 11 uses
@@ -220,7 +220,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #20
-  %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 1335 ; 5 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 1335 ; 7 uses
   %i.m = getelementptr i8, ptr %0, i64 16         ; 2 uses
   %i.n = load i16, ptr %i.m, align 8, !tbaa !63
   %i.o = and i16 %i.n, 26
@@ -265,7 +265,6 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.0531.ph = phi double [ %.2533, %bb.kf ], [ 0.000000e+00, %bb.c ] ; 7 uses
   %.0526.ph = phi i32 [ %.3529, %bb.kf ], [ 0, %bb.c ] ; 16 uses
   %.0519.ph = phi i32 [ %.5524, %bb.kf ], [ 0, %bb.c ] ; 10 uses
-  %.0503.ph = phi ptr [ %.5508, %bb.kf ], [ null, %bb.c ] ; 15 uses
   %.0492.ph = phi ptr [ %.7, %bb.kf ], [ %1, %bb.c ]
   br label %bb.d
 
@@ -340,9 +339,13 @@ bb.l:                                             ; preds = %bb.k
   store i8 0, ptr %i.e, align 1, !tbaa !15
   br label %.backedge
 
+.backedge.loopexit:                               ; preds = %._crit_edge
+  %.1536.fr.le2971 = freeze i32 %.1536
+  br label %.backedge.backedge
+
 .backedge:                                        ; preds = %.backedge.backedge, %bb.l
   %i.bd = phi i8 [ 0, %bb.l ], [ %.be, %.backedge.backedge ] ; 14 uses
-  %.0546 = phi i32 [ 0, %bb.l ], [ %.0546.be, %.backedge.backedge ] ; 40 uses
+  %.0546 = phi i32 [ 0, %bb.l ], [ %.0546.be, %.backedge.backedge ] ; 39 uses
   %.0540 = phi i32 [ 0, %bb.l ], [ %.0540.be, %.backedge.backedge ]
   %.0535 = phi i32 [ -1, %bb.l ], [ %.0535.be, %.backedge.backedge ]
   %.2 = phi ptr [ %i.bc, %bb.l ], [ %.2.be, %.backedge.backedge ] ; 2 uses
@@ -356,20 +359,20 @@ bb.l:                                             ; preds = %bb.k
 
 .outer:                                           ; preds = %.outer.loopexit, %.backedge
   %.1541.ph = phi i32 [ %.0540, %.backedge ], [ %i.cw, %.outer.loopexit ] ; 13 uses
-  %.1536.ph = phi i32 [ %.0535, %.backedge ], [ %.1536, %.outer.loopexit ]
+  %.1536.ph = phi i32 [ %.0535, %.backedge ], [ %.1536.fr.le2973, %.outer.loopexit ]
   %.0494.ph = phi i32 [ %i.bg, %.backedge ], [ %i.cz, %.outer.loopexit ]
   %.3.ph = phi ptr [ %i.be, %.backedge ], [ %i.cx, %.outer.loopexit ]
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.backedge, %.outer
-  %.1536 = phi i32 [ %.1536.ph, %.outer ], [ %.1536.be, %._crit_edge.backedge ] ; 32 uses
-  %.0494 = phi i32 [ %.0494.ph, %.outer ], [ %.0494.be, %._crit_edge.backedge ] ; 18 uses
+  %.1536 = phi i32 [ %.1536.ph, %.outer ], [ %.1536.be, %._crit_edge.backedge ] ; 24 uses
+  %.0494 = phi i32 [ %.0494.ph, %.outer ], [ %.0494.be, %._crit_edge.backedge ] ; 21 uses
   %.3 = phi ptr [ %.3.ph, %.outer ], [ %.3.be, %._crit_edge.backedge ] ; 26 uses
   switch i32 %.0494, label %bb.gc [
     i32 32, label %bb.m
     i32 35, label %bb.o
     i32 42, label %bb.p
-    i32 45, label %.loopexit1039
+    i32 45, label %.loopexit1039.loopexit
     i32 43, label %bb.u
     i32 46, label %bb.v
     i32 48, label %bb.aa
@@ -382,7 +385,7 @@ bb.l:                                             ; preds = %bb.k
     i32 55, label %.preheader2255
     i32 56, label %.preheader2255
     i32 57, label %.preheader2255
-    i32 76, label %.backedge.backedge
+    i32 76, label %.backedge.loopexit
     i32 104, label %bb.ac
     i32 116, label %bb.ad
     i32 122, label %bb.ad
@@ -390,39 +393,41 @@ bb.l:                                             ; preds = %bb.k
     i32 99, label %bb.ae
     i32 105, label %bb.ai
     i32 68, label %bb.ar
-    i32 100, label %.loopexit1040
+    i32 100, label %.loopexit1040.loopexit
     i32 97, label %bb.bg
     i32 65, label %bb.bg
     i32 101, label %bb.bi
     i32 69, label %bb.bi
     i32 102, label %bb.bj
-    i32 103, label %.loopexit1041
-    i32 71, label %.loopexit1041
+    i32 103, label %.loopexit1041.loopexit
+    i32 71, label %.loopexit1041.loopexit
     i32 110, label %bb.dd
     i32 79, label %bb.dr
-    i32 111, label %.loopexit1042
+    i32 111, label %.loopexit1042.loopexit
     i32 112, label %bb.ef
     i32 115, label %bb.ej
     i32 85, label %bb.ep
-    i32 117, label %.loopexit1043
+    i32 117, label %.loopexit1043.loopexit
     i32 88, label %.loopexit1044.loopexit
-    i32 120, label %.loopexit1044
+    i32 120, label %bb.fd
     i32 0, label %.loopexit
   ]
 
 .preheader2255:                                   ; preds = %._crit_edge, %._crit_edge, %._crit_edge, %._crit_edge, %._crit_edge, %._crit_edge, %._crit_edge, %._crit_edge, %._crit_edge
+  %.1536.fr.le2973 = freeze i32 %.1536
   br label %bb.ab
 
 bb.m:                                             ; preds = %._crit_edge
+  %.1536.fr.le2985 = freeze i32 %.1536            ; 2 uses
   %.not668 = icmp eq i8 %i.bd, 0
   br i1 %.not668, label %bb.n, label %.backedge.backedge
 
-.backedge.backedge:                               ; preds = %._crit_edge, %bb.m, %bb.n, %bb.o, %.loopexit1039, %bb.u, %bb.z, %bb.aa, %bb.ac, %bb.ad, %bb.s
-  %.be = phi i8 [ %i.bd, %bb.ad ], [ %i.bd, %bb.o ], [ %i.bd, %bb.s ], [ %i.bd, %.loopexit1039 ], [ 43, %bb.u ], [ %i.bd, %bb.z ], [ %i.bd, %bb.aa ], [ %i.bd, %bb.m ], [ %i.bd, %bb.ac ], [ 32, %bb.n ], [ %i.bd, %._crit_edge ]
-  %.0546.be = phi i32 [ %i.dd, %bb.ad ], [ %i.bh, %bb.o ], [ %.0546, %bb.s ], [ %i.bu, %.loopexit1039 ], [ %.0546, %bb.u ], [ %.0546, %bb.z ], [ %i.ct, %bb.aa ], [ %.0546, %bb.m ], [ %i.dc, %bb.ac ], [ %.0546, %bb.n ], [ %.0546, %._crit_edge ]
-  %.0540.be = phi i32 [ %.1541.ph, %bb.ad ], [ %.1541.ph, %bb.o ], [ %i.br, %bb.s ], [ %.2542, %.loopexit1039 ], [ %.1541.ph, %bb.u ], [ %.1541.ph, %bb.z ], [ %.1541.ph, %bb.aa ], [ %.1541.ph, %bb.m ], [ %.1541.ph, %bb.ac ], [ %.1541.ph, %bb.n ], [ %.1541.ph, %._crit_edge ]
-  %.0535.be = phi i32 [ %.1536, %bb.ad ], [ %.1536, %bb.o ], [ %.1536, %bb.s ], [ %.1536, %.loopexit1039 ], [ %.1536, %bb.u ], [ %i.ck, %bb.z ], [ %.1536, %bb.aa ], [ %.1536, %bb.m ], [ %.1536, %bb.ac ], [ %.1536, %bb.n ], [ %.1536, %._crit_edge ]
-  %.2.be = phi ptr [ %.3, %bb.ad ], [ %.3, %bb.o ], [ %.3, %bb.s ], [ %.3, %.loopexit1039 ], [ %.3, %bb.u ], [ %i.bv, %bb.z ], [ %.3, %bb.aa ], [ %.3, %bb.m ], [ %.3, %bb.ac ], [ %.3, %bb.n ], [ %.3, %._crit_edge ]
+.backedge.backedge:                               ; preds = %bb.m, %bb.n, %bb.o, %.loopexit1039, %bb.u, %bb.z, %bb.aa, %bb.ac, %bb.ad, %bb.s, %.backedge.loopexit
+  %.be = phi i8 [ %i.bd, %bb.ad ], [ %i.bd, %bb.o ], [ %i.bd, %bb.s ], [ %i.bd, %.loopexit1039 ], [ 43, %bb.u ], [ %i.bd, %bb.z ], [ %i.bd, %bb.aa ], [ %i.bd, %bb.m ], [ %i.bd, %bb.ac ], [ 32, %bb.n ], [ %i.bd, %.backedge.loopexit ]
+  %.0546.be = phi i32 [ %i.dd, %bb.ad ], [ %i.bh, %bb.o ], [ %.0546, %bb.s ], [ %i.bu, %.loopexit1039 ], [ %.0546, %bb.u ], [ %.0546, %bb.z ], [ %i.ct, %bb.aa ], [ %.0546, %bb.m ], [ %i.dc, %bb.ac ], [ %.0546, %bb.n ], [ %.0546, %.backedge.loopexit ]
+  %.0540.be = phi i32 [ %.1541.ph, %bb.ad ], [ %.1541.ph, %bb.o ], [ %i.br, %bb.s ], [ %.2542, %.loopexit1039 ], [ %.1541.ph, %bb.u ], [ %.1541.ph, %bb.z ], [ %.1541.ph, %bb.aa ], [ %.1541.ph, %bb.m ], [ %.1541.ph, %bb.ac ], [ %.1541.ph, %bb.n ], [ %.1541.ph, %.backedge.loopexit ]
+  %.0535.be = phi i32 [ %.1536.fr.le2967, %bb.ad ], [ %.1536.fr.le2983, %bb.o ], [ %.1536.fr.le2981, %bb.s ], [ %.1536.fr2653, %.loopexit1039 ], [ %.1536.fr.le2977, %bb.u ], [ %i.ck, %bb.z ], [ %.1536.fr.le2975, %bb.aa ], [ %.1536.fr.le2985, %bb.m ], [ %.1536.fr.le2969, %bb.ac ], [ %.1536.fr.le2985, %bb.n ], [ %.1536.fr.le2971, %.backedge.loopexit ]
+  %.2.be = phi ptr [ %.3, %bb.ad ], [ %.3, %bb.o ], [ %.3, %bb.s ], [ %.3, %.loopexit1039 ], [ %.3, %bb.u ], [ %i.bv, %bb.z ], [ %.3, %bb.aa ], [ %.3, %bb.m ], [ %.3, %bb.ac ], [ %.3, %bb.n ], [ %.3, %.backedge.loopexit ]
   br label %.backedge
 
 bb.n:                                             ; preds = %bb.m
@@ -430,10 +435,12 @@ bb.n:                                             ; preds = %bb.m
   br label %.backedge.backedge
 
 bb.o:                                             ; preds = %._crit_edge
+  %.1536.fr.le2983 = freeze i32 %.1536
   %i.bh = or i32 %.0546, 1
   br label %.backedge.backedge
 
 bb.p:                                             ; preds = %._crit_edge
+  %.1536.fr.le2981 = freeze i32 %.1536            ; 2 uses
   %i.bi = load i32, ptr %2, align 8               ; 3 uses
   %i.bj = icmp ult i32 %i.bi, 41
   br i1 %i.bj, label %bb.q, label %bb.r
@@ -462,12 +469,18 @@ bb.t:                                             ; preds = %bb.s
   %i.bt = sub i32 0, %i.br
   br label %.loopexit1039
 
-.loopexit1039:                                    ; preds = %._crit_edge, %bb.t
-  %.2542 = phi i32 [ %i.bt, %bb.t ], [ %.1541.ph, %._crit_edge ]
+.loopexit1039.loopexit:                           ; preds = %._crit_edge
+  %.1536.fr.le2979 = freeze i32 %.1536
+  br label %.loopexit1039
+
+.loopexit1039:                                    ; preds = %.loopexit1039.loopexit, %bb.t
+  %.1536.fr2653 = phi i32 [ %.1536.fr.le2981, %bb.t ], [ %.1536.fr.le2979, %.loopexit1039.loopexit ]
+  %.2542 = phi i32 [ %i.bt, %bb.t ], [ %.1541.ph, %.loopexit1039.loopexit ]
   %i.bu = or i32 %.0546, 4
   br label %.backedge.backedge
 
 bb.u:                                             ; preds = %._crit_edge
+  %.1536.fr.le2977 = freeze i32 %.1536
   store i8 43, ptr %i.e, align 1, !tbaa !15
   br label %.backedge.backedge
 
@@ -532,6 +545,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x
   br label %._crit_edge
 
 bb.aa:                                            ; preds = %._crit_edge
+  %.1536.fr.le2975 = freeze i32 %.1536
   %i.ct = or i32 %.0546, 128
   br label %.backedge.backedge
 
@@ -550,10 +564,12 @@ bb.ab:                                            ; preds = %.preheader2255, %bb
   br i1 %i.db, label %bb.ab, label %.outer.loopexit, !llvm.loop !96
 
 bb.ac:                                            ; preds = %._crit_edge
+  %.1536.fr.le2969 = freeze i32 %.1536
   %i.dc = or i32 %.0546, 64
   br label %.backedge.backedge
 
 bb.ad:                                            ; preds = %._crit_edge, %._crit_edge, %._crit_edge
+  %.1536.fr.le2967 = freeze i32 %.1536
   %i.dd = or i32 %.0546, 16
   br label %.backedge.backedge
 
@@ -585,6 +601,7 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
   br label %bb.gd
 
 bb.ai:                                            ; preds = %._crit_edge
+  %.1536.fr.le2965 = freeze i32 %.1536            ; 4 uses
   %i.dp = load ptr, ptr %i.af, align 8, !tbaa !72
   %.not660 = icmp ne ptr %i.dp, null
   %i.dq = and i32 %.0546, 80
@@ -643,22 +660,28 @@ bb.ao:                                            ; preds = %bb.an, %bb.am
   br i1 %.not665, label %.thread1011, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.em = icmp slt i32 %.1536, 0
+  %i.em = icmp slt i32 %.1536.fr.le2965, 0
   %.pre1577 = load i64, ptr %i.i, align 8, !tbaa !11 ; 2 uses
   br i1 %i.em, label %bb.ge, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
-  %i.en = zext nneg i32 %.1536 to i64
+  %i.en = zext nneg i32 %.1536.fr.le2965 to i64
   %i.eo = call i64 @llvm.smin.i64(i64 %.pre1577, i64 %i.en)
   %i.ep = trunc i64 %i.eo to i32
   br label %bb.gd
 
 bb.ar:                                            ; preds = %._crit_edge
+  %.1536.fr.le2963 = freeze i32 %.1536
   %i.eq = or i32 %.0546, 16
   br label %.loopexit1040
 
-.loopexit1040:                                    ; preds = %._crit_edge, %bb.ar, %bb.ai, %bb.aj
-  %.1547 = phi i32 [ %.0546, %bb.aj ], [ %i.eq, %bb.ar ], [ %.0546, %bb.ai ], [ %.0546, %._crit_edge ] ; 5 uses
+.loopexit1040.loopexit:                           ; preds = %._crit_edge
+  %.1536.fr.le2961 = freeze i32 %.1536
+  br label %.loopexit1040
+
+.loopexit1040:                                    ; preds = %.loopexit1040.loopexit, %bb.ar, %bb.ai, %bb.aj
+  %.1536.fr2656 = phi i32 [ %.1536.fr.le2965, %bb.aj ], [ %.1536.fr.le2963, %bb.ar ], [ %.1536.fr.le2965, %bb.ai ], [ %.1536.fr.le2961, %.loopexit1040.loopexit ] ; 3 uses
+  %.1547 = phi i32 [ %.0546, %bb.aj ], [ %i.eq, %bb.ar ], [ %.0546, %bb.ai ], [ %.0546, %.loopexit1040.loopexit ] ; 5 uses
   %i.er = and i32 %.1547, 16
   %.not661 = icmp eq i32 %i.er, 0
   br i1 %.not661, label %bb.aw, label %bb.as
@@ -746,52 +769,60 @@ bb.bf:                                            ; preds = %bb.ba, %bb.be, %bb.
   %i.fy = phi i64 [ %i.fb, %bb.av ], [ %i.fo, %bb.ba ], [ %i.fx, %bb.be ] ; 4 uses
   store i64 %i.fy, ptr %i.h, align 8, !tbaa !11
   %i.fz = icmp slt i64 %i.fy, 0
-  br i1 %i.fz, label %.thread1727, label %bb.ft
+  br i1 %i.fz, label %.thread1727, label %bb.fs
 
 .thread1727:                                      ; preds = %bb.bf
   %i.ga = sub i64 0, %i.fy                        ; 2 uses
   store i64 %i.ga, ptr %i.h, align 8, !tbaa !11
   store i8 45, ptr %i.e, align 1, !tbaa !15
   %i.gb = and i32 %.1547, -129
-  %i.gc = icmp slt i32 %.1536, 0
+  %i.gc = icmp slt i32 %.1536.fr2656, 0
   %spec.select7471714 = select i1 %i.gc, i32 %.1547, i32 %i.gb
-  br label %bb.fv
+  br label %22
 
 bb.bg:                                            ; preds = %._crit_edge, %._crit_edge
-  %i.gd = icmp sgt i32 %.1536, 0
+  %.1536.fr.le2959 = freeze i32 %.1536            ; 3 uses
+  %i.gd = icmp sgt i32 %.1536.fr.le2959, 0
   br i1 %i.gd, label %bb.bh, label %bb.bk
 
 bb.bh:                                            ; preds = %bb.bg
   %i.ge = or i32 %.0546, 1
-  %i.gf = add nuw i32 %.1536, 1                   ; 2 uses
+  %i.gf = add nuw i32 %.1536.fr.le2959, 1         ; 2 uses
   br label %bb.bk
 
 bb.bi:                                            ; preds = %._crit_edge, %._crit_edge
-  %.not650 = icmp ne i32 %.1536, 0
+  %.1536.fr.le2957 = freeze i32 %.1536            ; 3 uses
+  %.not650 = icmp ne i32 %.1536.fr.le2957, 0
   %i.gg = zext i1 %.not650 to i32
   %spec.select = or i32 %.0546, %i.gg
-  %i.gh = icmp eq i32 %.1536, -1                  ; 2 uses
-  %i.gi = add nuw i32 %.1536, 1                   ; 2 uses
+  %i.gh = icmp eq i32 %.1536.fr.le2957, -1        ; 2 uses
+  %i.gi = add nuw i32 %.1536.fr.le2957, 1         ; 2 uses
   %.1520 = select i1 %i.gh, i32 %.0519.ph, i32 %i.gi
   %i.gj = select i1 %i.gh, i32 7, i32 %i.gi
   br label %bb.bk
 
 bb.bj:                                            ; preds = %._crit_edge
-  %.not649 = icmp ne i32 %.1536, 0
+  %.1536.fr.le2955 = freeze i32 %.1536            ; 2 uses
+  %.not649 = icmp ne i32 %.1536.fr.le2955, 0
   %i.gk = zext i1 %.not649 to i32
   %spec.select741 = or i32 %.0546, %i.gk
   br label %.loopexit1041
 
-.loopexit1041:                                    ; preds = %._crit_edge, %._crit_edge, %bb.bj
-  %.3549 = phi i32 [ %spec.select741, %bb.bj ], [ %.0546, %._crit_edge ], [ %.0546, %._crit_edge ]
-  %i.gl = icmp eq i32 %.1536, -1                  ; 2 uses
-  %..1536 = select i1 %i.gl, i32 6, i32 %.1536
-  %.0519..1536 = select i1 %i.gl, i32 %.0519.ph, i32 %.1536
+.loopexit1041.loopexit:                           ; preds = %._crit_edge, %._crit_edge
+  %.1536.fr.le2953 = freeze i32 %.1536
+  br label %.loopexit1041
+
+.loopexit1041:                                    ; preds = %.loopexit1041.loopexit, %bb.bj
+  %.1536.fr2658 = phi i32 [ %.1536.fr.le2955, %bb.bj ], [ %.1536.fr.le2953, %.loopexit1041.loopexit ] ; 3 uses
+  %.3549 = phi i32 [ %spec.select741, %bb.bj ], [ %.0546, %.loopexit1041.loopexit ]
+  %i.gl = icmp eq i32 %.1536.fr2658, -1           ; 2 uses
+  %..1536 = select i1 %i.gl, i32 6, i32 %.1536.fr2658
+  %.0519..1536 = select i1 %i.gl, i32 %.0519.ph, i32 %.1536.fr2658
   br label %bb.bk
 
 bb.bk:                                            ; preds = %.loopexit1041, %bb.bg, %bb.bh, %bb.bi
   %.4550 = phi i32 [ %i.ge, %bb.bh ], [ %.0546, %bb.bg ], [ %spec.select, %bb.bi ], [ %.3549, %.loopexit1041 ] ; 6 uses
-  %.2537 = phi i32 [ %i.gf, %bb.bh ], [ %.1536, %bb.bg ], [ %i.gj, %bb.bi ], [ %..1536, %.loopexit1041 ] ; 6 uses
+  %.2537 = phi i32 [ %i.gf, %bb.bh ], [ %.1536.fr.le2959, %bb.bg ], [ %i.gj, %bb.bi ], [ %..1536, %.loopexit1041 ] ; 6 uses
   %.2521 = phi i32 [ %i.gf, %bb.bh ], [ %.0519.ph, %bb.bg ], [ %.1520, %bb.bi ], [ %.0519..1536, %.loopexit1041 ] ; 12 uses
   %i.gm = load i32, ptr %i.y, align 4             ; 3 uses
   %i.gn = icmp ult i32 %i.gm, 161
@@ -1194,11 +1225,17 @@ bb.dq:                                            ; preds = %bb.dp, %bb.do
   br label %.backedge2271
 
 bb.dr:                                            ; preds = %._crit_edge
+  %.1536.fr.le2951 = freeze i32 %.1536
   %i.mm = or i32 %.0546, 16
   br label %.loopexit1042
 
-.loopexit1042:                                    ; preds = %._crit_edge, %bb.dr
-  %.6552 = phi i32 [ %i.mm, %bb.dr ], [ %.0546, %._crit_edge ] ; 3 uses
+.loopexit1042.loopexit:                           ; preds = %._crit_edge
+  %.1536.fr.le2949 = freeze i32 %.1536
+  br label %.loopexit1042
+
+.loopexit1042:                                    ; preds = %.loopexit1042.loopexit, %bb.dr
+  %.1536.fr2659 = phi i32 [ %.1536.fr.le2951, %bb.dr ], [ %.1536.fr.le2949, %.loopexit1042.loopexit ] ; 4 uses
+  %.6552 = phi i32 [ %i.mm, %bb.dr ], [ %.0546, %.loopexit1042.loopexit ] ; 4 uses
   %i.mn = and i32 %.6552, 16
   %.not645 = icmp eq i32 %i.mn, 0
   br i1 %.not645, label %bb.dw, label %bb.ds
@@ -1225,7 +1262,7 @@ bb.du:                                            ; preds = %bb.ds
 bb.dv:                                            ; preds = %bb.du, %bb.dt
   %i.mw = phi ptr [ %i.ms, %bb.dt ], [ %i.mu, %bb.du ]
   %i.mx = load i64, ptr %i.mw, align 8, !tbaa !11
-  br label %5
+  br label %15
 
 bb.dw:                                            ; preds = %.loopexit1042
   %i.my = and i32 %.6552, 64
@@ -1256,7 +1293,7 @@ bb.ea:                                            ; preds = %bb.dz, %bb.dy
   %i.ni = load i32, ptr %i.nh, align 4, !tbaa !7
   %i.nj = and i32 %i.ni, 65535
   %i.nk = zext nneg i32 %i.nj to i64
-  br label %5
+  br label %15
 
 bb.eb:                                            ; preds = %bb.dw
   br i1 %i.na, label %bb.ec, label %bb.ed
@@ -1279,12 +1316,7 @@ bb.ee:                                            ; preds = %bb.ed, %bb.ec
   %i.nr = phi ptr [ %i.nn, %bb.ec ], [ %i.np, %bb.ed ]
   %i.ns = load i32, ptr %i.nr, align 4, !tbaa !7
   %i.nt = zext i32 %i.ns to i64
-  br label %5
-
-5:                                                ; preds = %bb.ea, %bb.ee, %bb.dv
-  %6 = phi i64 [ %i.mx, %bb.dv ], [ %i.nk, %bb.ea ], [ %i.nt, %bb.ee ] ; 2 uses
-  store i64 %6, ptr %i.h, align 8, !tbaa !11
-  br label %bb.fs
+  br label %15
 
 bb.ef:                                            ; preds = %._crit_edge
   %i.nu = load i32, ptr %2, align 8               ; 3 uses
@@ -1310,10 +1342,13 @@ bb.ei:                                            ; preds = %bb.eh, %bb.eg
   %i.od = load ptr, ptr %i.oc, align 8, !tbaa !111
   %i.oe = ptrtoint ptr %i.od to i64               ; 2 uses
   store i64 %i.oe, ptr %i.h, align 8, !tbaa !11
-  %i.of = or i32 %.0546, 2
-  br label %bb.fs
+  store i8 0, ptr %i.e, align 1, !tbaa !15
+  %5 = and i32 %.0546, -131
+  %i.of = or disjoint i32 %5, 2
+  br label %bb.fv
 
 bb.ej:                                            ; preds = %._crit_edge
+  %.1536.fr.le2947 = freeze i32 %.1536            ; 3 uses
   %i.og = load i32, ptr %2, align 8               ; 3 uses
   %i.oh = icmp ult i32 %i.og, 41
   br i1 %i.oh, label %bb.ek, label %bb.el
@@ -1337,11 +1372,11 @@ bb.em:                                            ; preds = %bb.el, %bb.ek
   %i.op = load ptr, ptr %i.oo, align 8, !tbaa !99 ; 2 uses
   %i.oq = icmp eq ptr %i.op, null
   %spec.store.select = select i1 %i.oq, ptr @.str.44, ptr %i.op ; 5 uses
-  %i.or = icmp sgt i32 %.1536, -1
+  %i.or = icmp sgt i32 %.1536.fr.le2947, -1
   br i1 %i.or, label %bb.en, label %bb.eo
 
 bb.en:                                            ; preds = %bb.em
-  %i.os = zext nneg i32 %.1536 to i64             ; 2 uses
+  %i.os = zext nneg i32 %.1536.fr.le2947 to i64   ; 2 uses
   %i.ot = call ptr @memchr(ptr noundef nonnull %spec.store.select, i32 noundef 0, i64 noundef %i.os) #22 ; 2 uses
   %.not644 = icmp eq ptr %i.ot, null
   %i.ou = ptrtoint ptr %i.ot to i64
@@ -1349,7 +1384,7 @@ bb.en:                                            ; preds = %bb.em
   %i.ow = sub i64 %i.ou, %i.ov
   %spec.select7601035 = call i64 @llvm.smin.i64(i64 %i.ow, i64 %i.os)
   %spec.select760 = trunc i64 %spec.select7601035 to i32
-  %.1511 = select i1 %.not644, i32 %.1536, i32 %spec.select760
+  %.1511 = select i1 %.not644, i32 %.1536.fr.le2947, i32 %spec.select760
   store i8 0, ptr %i.e, align 1, !tbaa !15
   br label %bb.gd
 
@@ -1358,11 +1393,17 @@ bb.eo:                                            ; preds = %bb.em
   br label %.sink.split
 
 bb.ep:                                            ; preds = %._crit_edge
+  %.1536.fr.le2945 = freeze i32 %.1536
   %i.oy = or i32 %.0546, 16
   br label %.loopexit1043
 
-.loopexit1043:                                    ; preds = %._crit_edge, %bb.ep
-  %.7553 = phi i32 [ %i.oy, %bb.ep ], [ %.0546, %._crit_edge ] ; 3 uses
+.loopexit1043.loopexit:                           ; preds = %._crit_edge
+  %.1536.fr.le2943 = freeze i32 %.1536
+  br label %.loopexit1043
+
+.loopexit1043:                                    ; preds = %.loopexit1043.loopexit, %bb.ep
+  %.1536.fr2657 = phi i32 [ %.1536.fr.le2945, %bb.ep ], [ %.1536.fr.le2943, %.loopexit1043.loopexit ]
+  %.7553 = phi i32 [ %i.oy, %bb.ep ], [ %.0546, %.loopexit1043.loopexit ] ; 3 uses
   %i.oz = and i32 %.7553, 16
   %.not642 = icmp eq i32 %i.oz, 0
   br i1 %.not642, label %bb.eu, label %bb.eq
@@ -1389,7 +1430,7 @@ bb.es:                                            ; preds = %bb.eq
 bb.et:                                            ; preds = %bb.es, %bb.er
   %i.pi = phi ptr [ %i.pe, %bb.er ], [ %i.pg, %bb.es ]
   %i.pj = load i64, ptr %i.pi, align 8, !tbaa !11
-  br label %bb.fd
+  br label %bb.fr
 
 bb.eu:                                            ; preds = %.loopexit1043
   %i.pk = and i32 %.7553, 64
@@ -1420,7 +1461,7 @@ bb.ey:                                            ; preds = %bb.ex, %bb.ew
   %i.pu = load i32, ptr %i.pt, align 4, !tbaa !7
   %i.pv = and i32 %i.pu, 65535
   %i.pw = zext nneg i32 %i.pv to i64
-  br label %bb.fd
+  br label %bb.fr
 
 bb.ez:                                            ; preds = %bb.eu
   br i1 %i.pm, label %bb.fa, label %bb.fb
@@ -1443,18 +1484,19 @@ bb.fc:                                            ; preds = %bb.fb, %bb.fa
   %i.qd = phi ptr [ %i.pz, %bb.fa ], [ %i.qb, %bb.fb ]
   %i.qe = load i32, ptr %i.qd, align 4, !tbaa !7
   %i.qf = zext i32 %i.qe to i64
-  br label %bb.fd
+  br label %bb.fr
 
-bb.fd:                                            ; preds = %bb.ey, %bb.fc, %bb.et
-  %7 = phi i64 [ %i.pj, %bb.et ], [ %i.pw, %bb.ey ], [ %i.qf, %bb.fc ] ; 2 uses
-  store i64 %7, ptr %i.h, align 8, !tbaa !11
-  br label %bb.fs
-
-.loopexit1044.loopexit:                           ; preds = %._crit_edge
+bb.fd:                                            ; preds = %._crit_edge
+  %.1536.fr.le = freeze i32 %.1536
   br label %.loopexit1044
 
-.loopexit1044:                                    ; preds = %._crit_edge, %.loopexit1044.loopexit
-  %.1504 = phi ptr [ getelementptr (i8, ptr @ruby_hexdigits, i64 16), %.loopexit1044.loopexit ], [ @ruby_hexdigits, %._crit_edge ]
+.loopexit1044.loopexit:                           ; preds = %._crit_edge
+  %.1536.fr.le2941 = freeze i32 %.1536
+  br label %.loopexit1044
+
+.loopexit1044:                                    ; preds = %.loopexit1044.loopexit, %bb.fd
+  %.1536.fr2660 = phi i32 [ %.1536.fr.le, %bb.fd ], [ %.1536.fr.le2941, %.loopexit1044.loopexit ] ; 3 uses
+  %.1504 = phi ptr [ @ruby_hexdigits, %bb.fd ], [ getelementptr (i8, ptr @ruby_hexdigits, i64 16), %.loopexit1044.loopexit ]
   %i.qg = and i32 %.0546, 16
   %.not640 = icmp eq i32 %i.qg, 0
   br i1 %.not640, label %bb.fi, label %bb.fe
@@ -1481,7 +1523,7 @@ bb.fg:                                            ; preds = %bb.fe
 bb.fh:                                            ; preds = %bb.fg, %bb.ff
   %i.qp = phi ptr [ %i.ql, %bb.ff ], [ %i.qn, %bb.fg ]
   %i.qq = load i64, ptr %i.qp, align 8, !tbaa !11
-  br label %bb.fr
+  br label %bb.ft
 
 bb.fi:                                            ; preds = %.loopexit1044
   %i.qr = and i32 %.0546, 64
@@ -1512,7 +1554,7 @@ bb.fm:                                            ; preds = %bb.fl, %bb.fk
   %i.rb = load i32, ptr %i.ra, align 4, !tbaa !7
   %i.rc = and i32 %i.rb, 65535
   %i.rd = zext nneg i32 %i.rc to i64
-  br label %bb.fr
+  br label %bb.ft
 
 bb.fn:                                            ; preds = %bb.fi
   br i1 %i.qt, label %bb.fo, label %bb.fp
@@ -1535,83 +1577,97 @@ bb.fq:                                            ; preds = %bb.fp, %bb.fo
   %i.rk = phi ptr [ %i.rg, %bb.fo ], [ %i.ri, %bb.fp ]
   %i.rl = load i32, ptr %i.rk, align 4, !tbaa !7
   %i.rm = zext i32 %i.rl to i64
-  br label %bb.fr
-
-bb.fr:                                            ; preds = %bb.fm, %bb.fq, %bb.fh
-  %i.rn = phi i64 [ %i.qq, %bb.fh ], [ %i.rd, %bb.fm ], [ %i.rm, %bb.fq ] ; 3 uses
-  store i64 %i.rn, ptr %i.h, align 8, !tbaa !11
-  %8 = trunc i32 %.0546 to i1
-  %9 = icmp ne i64 %i.rn, 0
-  %or.cond7 = select i1 %8, i1 %9, i1 false
-  %10 = or i32 %.0546, 2
-  %spec.select746 = select i1 %or.cond7, i32 %10, i32 %.0546
-  br label %bb.fs
-
-bb.fs:                                            ; preds = %bb.fr, %bb.fd, %bb.ei, %5
-  %11 = phi i64 [ %6, %5 ], [ %i.oe, %bb.ei ], [ %7, %bb.fd ], [ %i.rn, %bb.fr ]
-  %.8554 = phi i32 [ %.6552, %5 ], [ %i.of, %bb.ei ], [ %.7553, %bb.fd ], [ %spec.select746, %bb.fr ]
-  %.3538 = phi i32 [ %.1536, %5 ], [ 16, %bb.ei ], [ %.1536, %bb.fd ], [ %.1536, %bb.fr ]
-  %.0517 = phi i32 [ 8, %5 ], [ 16, %bb.ei ], [ 10, %bb.fd ], [ 16, %bb.fr ]
-  %.2505 = phi ptr [ %.0503.ph, %5 ], [ @ruby_hexdigits, %bb.ei ], [ %.0503.ph, %bb.fd ], [ %.1504, %bb.fr ]
-  %.5499 = phi i32 [ %.0494, %5 ], [ 120, %bb.ei ], [ %.0494, %bb.fd ], [ %.0494, %bb.fr ]
-  store i8 0, ptr %i.e, align 1, !tbaa !15
   br label %bb.ft
 
-bb.ft:                                            ; preds = %bb.bf, %bb.fs
-  %.pre15781604 = phi i8 [ 0, %bb.fs ], [ %i.bd, %bb.bf ] ; 5 uses
-  %12 = phi i64 [ %11, %bb.fs ], [ %i.fy, %bb.bf ] ; 4 uses
-  %.9 = phi i32 [ %.8554, %bb.fs ], [ %.1547, %bb.bf ] ; 2 uses
-  %.4539 = phi i32 [ %.3538, %bb.fs ], [ %.1536, %bb.bf ] ; 6 uses
-  %.1518 = phi i32 [ %.0517, %bb.fs ], [ 10, %bb.bf ]
-  %.3506 = phi ptr [ %.2505, %bb.fs ], [ %.0503.ph, %bb.bf ] ; 6 uses
-  %.6500 = phi i32 [ %.5499, %bb.fs ], [ %.0494, %bb.bf ] ; 5 uses
-  %i.ro = and i32 %.9, -129
-  %i.rp = icmp slt i32 %.4539, 0
-  %spec.select747 = select i1 %i.rp, i32 %.9, i32 %i.ro ; 6 uses
-  %i.rq = icmp ne i64 %12, 0
-  %i.rr = icmp ne i32 %.4539, 0
+bb.fr:                                            ; preds = %bb.et, %bb.fc, %bb.ey
+  %i.rn = phi i64 [ %i.pj, %bb.et ], [ %i.pw, %bb.ey ], [ %i.qf, %bb.fc ] ; 2 uses
+  store i64 %i.rn, ptr %i.h, align 8, !tbaa !11
+  store i8 0, ptr %i.e, align 1, !tbaa !15
+  br label %bb.fs
+
+bb.fs:                                            ; preds = %bb.bf, %bb.fr
+  %.1536.fr2655 = phi i32 [ %.1536.fr2657, %bb.fr ], [ %.1536.fr2656, %bb.bf ] ; 3 uses
+  %.pre15781604.jt10 = phi i8 [ 0, %bb.fr ], [ %i.bd, %bb.bf ] ; 2 uses
+  %6 = phi i64 [ %i.rn, %bb.fr ], [ %i.fy, %bb.bf ] ; 2 uses
+  %.9.jt10 = phi i32 [ %.7553, %bb.fr ], [ %.1547, %bb.bf ] ; 2 uses
+  %7 = and i32 %.9.jt10, -129
+  %8 = icmp slt i32 %.1536.fr2655, 0
+  %spec.select747.jt10 = select i1 %8, i32 %.9.jt10, i32 %7 ; 2 uses
+  %9 = icmp ne i64 %6, 0
+  %10 = icmp ne i32 %.1536.fr2655, 0
+  %or.cond9.jt10 = or i1 %10, %9
+  br i1 %or.cond9.jt10, label %22, label %BSD__ultoa.exit
+
+bb.ft:                                            ; preds = %bb.fh, %bb.fq, %bb.fm
+  %11 = phi i64 [ %i.qq, %bb.fh ], [ %i.rd, %bb.fm ], [ %i.rm, %bb.fq ] ; 4 uses
+  store i64 %11, ptr %i.h, align 8, !tbaa !11
+  %12 = trunc i32 %.0546 to i1
+  %13 = icmp ne i64 %11, 0
+  %or.cond7 = and i1 %13, %12
+  %14 = or i32 %.0546, 2
+  %spec.select746 = select i1 %or.cond7, i32 %14, i32 %.0546 ; 2 uses
+  store i8 0, ptr %i.e, align 1, !tbaa !15
+  %i.ro = and i32 %spec.select746, -129
+  %i.rp = icmp slt i32 %.1536.fr2660, 0
+  %spec.select747 = select i1 %i.rp, i32 %spec.select746, i32 %i.ro ; 2 uses
+  %i.rq = icmp ne i64 %11, 0
+  %i.rr = icmp ne i32 %.1536.fr2660, 0
   %or.cond9 = or i1 %i.rr, %i.rq
-  br i1 %or.cond9, label %bb.fu, label %BSD__ultoa.exit
+  br i1 %or.cond9, label %bb.fv, label %BSD__ultoa.exit
 
-bb.fu:                                            ; preds = %bb.ft
-  %i.rs = and i32 %spec.select747, 1
-  switch i32 %.1518, label %.unreachabledefault [
-    i32 10, label %bb.fv
-    i32 8, label %.preheader.i785
-    i32 16, label %.preheader39.i
-  ]
+15:                                               ; preds = %bb.ea, %bb.ee, %bb.dv
+  %16 = phi i64 [ %i.mx, %bb.dv ], [ %i.nk, %bb.ea ], [ %i.nt, %bb.ee ] ; 3 uses
+  store i64 %16, ptr %i.h, align 8, !tbaa !11
+  store i8 0, ptr %i.e, align 1, !tbaa !15
+  %17 = and i32 %.6552, -129
+  %18 = icmp slt i32 %.1536.fr2659, 0
+  %spec.select747.jt8 = select i1 %18, i32 %.6552, i32 %17 ; 4 uses
+  %19 = icmp ne i64 %16, 0
+  %20 = icmp ne i32 %.1536.fr2659, 0
+  %or.cond9.jt8 = or i1 %20, %19
+  br i1 %or.cond9.jt8, label %bb.fu, label %BSD__ultoa.exit
 
-bb.fv:                                            ; preds = %.thread1727, %bb.fu
-  %.pre1578160417171738 = phi i8 [ 45, %.thread1727 ], [ %.pre15781604, %bb.fu ] ; 2 uses
-  %i.rt = phi i64 [ %i.ga, %.thread1727 ], [ %12, %bb.fu ] ; 6 uses
-  %.453917191737 = phi i32 [ %.1536, %.thread1727 ], [ %.4539, %bb.fu ] ; 2 uses
-  %.350617221736 = phi ptr [ %.0503.ph, %.thread1727 ], [ %.3506, %bb.fu ] ; 2 uses
-  %.650017241735 = phi i32 [ %.0494, %.thread1727 ], [ %.6500, %bb.fu ] ; 2 uses
-  %spec.select74717261734 = phi i32 [ %spec.select7471714, %.thread1727 ], [ %spec.select747, %bb.fu ] ; 2 uses
-  %13 = icmp ult i64 %i.rt, 10
-  br i1 %13, label %bb.fw, label %bb.fx
+bb.fu:                                            ; preds = %15
+  %i.rs = and i32 %spec.select747.jt8, 1
+  br label %.preheader.i785
 
-bb.fw:                                            ; preds = %bb.fv
-  %i.ru = trunc nuw nsw i64 %i.rt to i8
+bb.fv:                                            ; preds = %bb.ft, %bb.ei
+  %21 = phi i32 [ %i.of, %bb.ei ], [ %spec.select747, %bb.ft ]
+  %i.rt = phi i64 [ %i.oe, %bb.ei ], [ %11, %bb.ft ]
+  %.453917191737 = phi i32 [ 16, %bb.ei ], [ %.1536.fr2660, %bb.ft ]
+  %.350617221736 = phi ptr [ @ruby_hexdigits, %bb.ei ], [ %.1504, %bb.ft ]
+  %spec.select74717261734 = phi i32 [ 120, %bb.ei ], [ %.0494, %bb.ft ]
+  br label %.preheader39.i
+
+22:                                               ; preds = %bb.fs, %.thread1727
+  %.1536.fr2654 = phi i32 [ %.1536.fr2656, %.thread1727 ], [ %.1536.fr2655, %bb.fs ] ; 2 uses
+  %spec.select747.jt101730 = phi i32 [ %spec.select7471714, %.thread1727 ], [ %spec.select747.jt10, %bb.fs ] ; 2 uses
+  %23 = phi i64 [ %i.ga, %.thread1727 ], [ %6, %bb.fs ] ; 6 uses
+  %.pre15781604.jt101722 = phi i8 [ 45, %.thread1727 ], [ %.pre15781604.jt10, %bb.fs ] ; 2 uses
+  %24 = icmp ult i64 %23, 10
+  br i1 %24, label %bb.fw, label %bb.fx
+
+bb.fw:                                            ; preds = %22
+  %i.ru = trunc nuw nsw i64 %23 to i8
   %i.rv = or disjoint i8 %i.ru, 48
   store i8 %i.rv, ptr %i.ag, align 2, !tbaa !15
   br label %BSD__ultoa.exit
 
-bb.fx:                                            ; preds = %bb.fv
-  %i.rw = icmp slt i64 %i.rt, 0
+bb.fx:                                            ; preds = %22
+  %i.rw = icmp slt i64 %23, 0
   br i1 %i.rw, label %bb.fy, label %.preheader2267
 
 bb.fy:                                            ; preds = %bb.fx
-  %i.rx = urem i64 %i.rt, 10
+  %i.rx = urem i64 %23, 10
   %i.ry = trunc nuw nsw i64 %i.rx to i8
   %i.rz = or disjoint i8 %i.ry, 48
   store i8 %i.rz, ptr %i.ag, align 2, !tbaa !15
-  %i.sa = udiv i64 %i.rt, 10
+  %i.sa = udiv i64 %23, 10
   br label %.preheader2267
 
 .preheader2267:                                   ; preds = %bb.fy, %bb.fx
   %.129.i.ph = phi ptr [ %i.l, %bb.fx ], [ %i.ag, %bb.fy ]
-  %.1.i.ph = phi i64 [ %i.rt, %bb.fx ], [ %i.sa, %bb.fy ]
+  %.1.i.ph = phi i64 [ %23, %bb.fx ], [ %i.sa, %bb.fy ]
   br label %bb.fz
 
 bb.fz:                                            ; preds = %.preheader2267, %bb.fz
@@ -1627,7 +1683,7 @@ bb.fz:                                            ; preds = %.preheader2267, %bb
   br i1 %.not38.i, label %BSD__ultoa.exit, label %bb.fz, !llvm.loop !47
 
 .preheader.i785:                                  ; preds = %bb.fu, %.preheader.i785
-  %.031.i = phi i64 [ %i.sk, %.preheader.i785 ], [ %12, %bb.fu ] ; 2 uses
+  %.031.i = phi i64 [ %i.sk, %.preheader.i785 ], [ %16, %bb.fu ] ; 2 uses
   %.2.i786 = phi ptr [ %i.sj, %.preheader.i785 ], [ %i.l, %bb.fu ] ; 2 uses
   %i.sg = trunc i64 %.031.i to i8
   %i.sh = and i8 %i.sg, 7                         ; 2 uses
@@ -1649,11 +1705,11 @@ bb.gb:                                            ; preds = %bb.ga
   store i8 48, ptr %i.sl, align 1, !tbaa !15
   br label %BSD__ultoa.exit
 
-.preheader39.i:                                   ; preds = %bb.fu, %.preheader39.i
-  %.132.i = phi i64 [ %i.sq, %.preheader39.i ], [ %12, %bb.fu ] ; 2 uses
-  %.3.i783 = phi ptr [ %i.sp, %.preheader39.i ], [ %i.l, %bb.fu ]
+.preheader39.i:                                   ; preds = %bb.fv, %.preheader39.i
+  %.132.i = phi i64 [ %i.sq, %.preheader39.i ], [ %i.rt, %bb.fv ] ; 2 uses
+  %.3.i783 = phi ptr [ %i.sp, %.preheader39.i ], [ %i.l, %bb.fv ]
   %i.sm = and i64 %.132.i, 15
-  %i.sn = getelementptr i8, ptr %.3506, i64 %i.sm
+  %i.sn = getelementptr i8, ptr %.350617221736, i64 %i.sm
   %i.so = load i8, ptr %i.sn, align 1, !tbaa !15
   %i.sp = getelementptr i8, ptr %.3.i783, i64 -1  ; 3 uses
   store i8 %i.so, ptr %i.sp, align 1, !tbaa !15
@@ -1661,20 +1717,16 @@ bb.gb:                                            ; preds = %bb.ga
   %.not.i784 = icmp eq i64 %i.sq, 0
   br i1 %.not.i784, label %BSD__ultoa.exit, label %.preheader39.i, !llvm.loop !113
 
-.unreachabledefault:                              ; preds = %bb.fu
-  unreachable
-
-BSD__ultoa.exit:                                  ; preds = %.preheader39.i, %bb.fz, %bb.gb, %bb.ga, %bb.fw, %bb.ft
-  %spec.select7471725 = phi i32 [ %spec.select747, %bb.ft ], [ %spec.select74717261734, %bb.fw ], [ %spec.select74717261734, %bb.fz ], [ %spec.select747, %bb.ga ], [ %spec.select747, %bb.gb ], [ %spec.select747, %.preheader39.i ]
-  %.65001723 = phi i32 [ %.6500, %bb.ft ], [ %.650017241735, %bb.fw ], [ %.650017241735, %bb.fz ], [ %.6500, %bb.ga ], [ %.6500, %bb.gb ], [ %.6500, %.preheader39.i ]
-  %.35061721 = phi ptr [ %.3506, %bb.ft ], [ %.350617221736, %bb.fw ], [ %.350617221736, %bb.fz ], [ %.3506, %bb.ga ], [ %.3506, %bb.gb ], [ %.3506, %.preheader39.i ]
-  %.45391718 = phi i32 [ 0, %bb.ft ], [ %.453917191737, %bb.fw ], [ %.453917191737, %bb.fz ], [ %.4539, %bb.ga ], [ %.4539, %bb.gb ], [ %.4539, %.preheader39.i ]
-  %.pre157816041716 = phi i8 [ %.pre15781604, %bb.ft ], [ %.pre1578160417171738, %bb.fw ], [ %.pre1578160417171738, %bb.fz ], [ %.pre15781604, %bb.ga ], [ %.pre15781604, %bb.gb ], [ %.pre15781604, %.preheader39.i ]
-  %.0568 = phi ptr [ %i.l, %bb.ft ], [ %i.ag, %bb.fw ], [ %i.se, %bb.fz ], [ %i.sj, %bb.ga ], [ %i.sl, %bb.gb ], [ %i.sp, %.preheader39.i ] ; 2 uses
+BSD__ultoa.exit:                                  ; preds = %.preheader39.i, %bb.fz, %bb.fs, %bb.ft, %15, %bb.gb, %bb.ga, %bb.fw
+  %spec.select7471712 = phi i32 [ %spec.select747.jt10, %bb.fs ], [ %spec.select747, %bb.ft ], [ %spec.select747.jt8, %15 ], [ %spec.select747.jt101730, %bb.fw ], [ %spec.select747.jt101730, %bb.fz ], [ %spec.select747.jt8, %bb.gb ], [ %spec.select747.jt8, %bb.ga ], [ %21, %.preheader39.i ]
+  %.65001711 = phi i32 [ %.0494, %bb.fs ], [ %.0494, %bb.ft ], [ %.0494, %15 ], [ %.0494, %bb.fw ], [ %.0494, %bb.fz ], [ %.0494, %bb.gb ], [ %.0494, %bb.ga ], [ %spec.select74717261734, %.preheader39.i ]
+  %.45391709 = phi i32 [ 0, %bb.fs ], [ 0, %bb.ft ], [ 0, %15 ], [ %.1536.fr2654, %bb.fw ], [ %.1536.fr2654, %bb.fz ], [ %.1536.fr2659, %bb.gb ], [ %.1536.fr2659, %bb.ga ], [ %.453917191737, %.preheader39.i ]
+  %.pre157816041708 = phi i8 [ %.pre15781604.jt10, %bb.fs ], [ 0, %bb.ft ], [ 0, %15 ], [ %.pre15781604.jt101722, %bb.fw ], [ %.pre15781604.jt101722, %bb.fz ], [ 0, %bb.gb ], [ 0, %bb.ga ], [ 0, %.preheader39.i ]
+  %.0568 = phi ptr [ %i.l, %bb.fs ], [ %i.l, %bb.ft ], [ %i.l, %15 ], [ %i.ag, %bb.fw ], [ %i.se, %bb.fz ], [ %i.sl, %bb.gb ], [ %i.sj, %bb.ga ], [ %i.sp, %.preheader39.i ] ; 2 uses
   %i.sr = ptrtoint ptr %.0568 to i64
   %i.ss = sub i64 %i.ah, %i.sr
   %i.st = trunc i64 %i.ss to i32
-  %i.su = sext i32 %.45391718 to i64
+  %i.su = sext i32 %.45391709 to i64
   br label %bb.gd
 
 bb.gc:                                            ; preds = %._crit_edge
@@ -1684,18 +1736,17 @@ bb.gc:                                            ; preds = %._crit_edge
   br label %bb.gd
 
 bb.gd:                                            ; preds = %._crit_edge1602, %bb.bq, %bb.bo, %bb.bp, %bb.dc, %bb.gc, %BSD__ultoa.exit, %bb.en, %bb.aq, %bb.ah
-  %.pre1578 = phi i8 [ 0, %bb.gc ], [ 0, %bb.ah ], [ 0, %bb.aq ], [ %.pre157816041716, %BSD__ultoa.exit ], [ 45, %bb.bp ], [ %i.bd, %bb.bo ], [ %i.bd, %bb.bq ], [ %.pre1578.pre, %._crit_edge1602 ], [ 45, %bb.dc ], [ 0, %bb.en ]
+  %.pre1578 = phi i8 [ 0, %bb.gc ], [ 0, %bb.ah ], [ 0, %bb.aq ], [ %.pre157816041708, %BSD__ultoa.exit ], [ 45, %bb.bp ], [ %i.bd, %bb.bo ], [ %i.bd, %bb.bq ], [ %.pre1578.pre, %._crit_edge1602 ], [ 45, %bb.dc ], [ 0, %bb.en ]
   %.1904 = phi i32 [ %.0903.ph, %bb.gc ], [ %.0903.ph, %bb.ah ], [ %.0903.ph, %bb.aq ], [ %.0903.ph, %BSD__ultoa.exit ], [ %.0903.ph, %bb.bp ], [ %.0903.ph, %bb.bo ], [ %.0903.ph, %bb.bq ], [ %i.il, %._crit_edge1602 ], [ %i.il, %bb.dc ], [ %.0903.ph, %bb.en ]
   %.1569 = phi ptr [ %i.j, %bb.gc ], [ %i.j, %bb.ah ], [ %i.el, %bb.aq ], [ %.0568, %BSD__ultoa.exit ], [ @.str.30, %bb.bp ], [ @.str.30, %bb.bo ], [ @.str.29, %bb.bq ], [ %i.j, %._crit_edge1602 ], [ %i.j, %bb.dc ], [ %spec.store.select, %bb.en ]
   %.3558 = phi ptr [ %.2557, %bb.gc ], [ %.2557, %bb.ah ], [ %4, %bb.aq ], [ %.2557, %BSD__ultoa.exit ], [ %.2557, %bb.bp ], [ %.2557, %bb.bo ], [ %.2557, %bb.bq ], [ %.2557, %._crit_edge1602 ], [ %.2557, %bb.dc ], [ %.2557, %bb.en ]
-  %.11 = phi i32 [ %.0546, %bb.gc ], [ %.0546, %bb.ah ], [ %.0546, %bb.aq ], [ %spec.select7471725, %BSD__ultoa.exit ], [ %.4550, %bb.bp ], [ %.4550, %bb.bo ], [ %.4550, %bb.bq ], [ %.5551, %._crit_edge1602 ], [ %.5551, %bb.dc ], [ %.0546, %bb.en ]
+  %.11 = phi i32 [ %.0546, %bb.gc ], [ %.0546, %bb.ah ], [ %.0546, %bb.aq ], [ %spec.select7471712, %BSD__ultoa.exit ], [ %.4550, %bb.bp ], [ %.4550, %bb.bo ], [ %.4550, %bb.bq ], [ %.5551, %._crit_edge1602 ], [ %.5551, %bb.dc ], [ %.0546, %bb.en ]
   %.1532 = phi double [ %.0531.ph, %bb.gc ], [ %.0531.ph, %bb.ah ], [ %.0531.ph, %bb.aq ], [ %.0531.ph, %BSD__ultoa.exit ], [ %i.gv, %bb.bp ], [ %i.gv, %bb.bo ], [ %i.gv, %bb.bq ], [ %i.gv, %._crit_edge1602 ], [ %i.gv, %bb.dc ], [ %.0531.ph, %bb.en ]
   %.2528 = phi i32 [ %.0526.ph, %bb.gc ], [ %.0526.ph, %bb.ah ], [ %.0526.ph, %bb.aq ], [ %.0526.ph, %BSD__ultoa.exit ], [ %.0526.ph, %bb.bp ], [ %.0526.ph, %bb.bo ], [ %.0526.ph, %bb.bq ], [ %.1527, %._crit_edge1602 ], [ %.1527, %bb.dc ], [ %.0526.ph, %bb.en ]
   %.4523 = phi i32 [ %.0519.ph, %bb.gc ], [ %.0519.ph, %bb.ah ], [ %.0519.ph, %bb.aq ], [ %.0519.ph, %BSD__ultoa.exit ], [ %.2521, %bb.bp ], [ %.2521, %bb.bo ], [ %.2521, %bb.bq ], [ %.3522, %._crit_edge1602 ], [ %.3522, %bb.dc ], [ %.0519.ph, %bb.en ]
   %.0515 = phi i64 [ 0, %bb.gc ], [ 0, %bb.ah ], [ 0, %bb.aq ], [ %i.su, %BSD__ultoa.exit ], [ 0, %bb.bp ], [ 0, %bb.bo ], [ 0, %bb.bq ], [ 0, %._crit_edge1602 ], [ 0, %bb.dc ], [ 0, %bb.en ]
   %.2512 = phi i32 [ 1, %bb.gc ], [ 1, %bb.ah ], [ %i.ep, %bb.aq ], [ %i.st, %BSD__ultoa.exit ], [ 3, %bb.bp ], [ 3, %bb.bo ], [ 3, %bb.bq ], [ %.0510, %._crit_edge1602 ], [ %.0510, %bb.dc ], [ %.1511, %bb.en ]
-  %.4507 = phi ptr [ %.0503.ph, %bb.gc ], [ %.0503.ph, %bb.ah ], [ %.0503.ph, %bb.aq ], [ %.35061721, %BSD__ultoa.exit ], [ %.0503.ph, %bb.bp ], [ %.0503.ph, %bb.bo ], [ %.0503.ph, %bb.bq ], [ %.0503.ph, %._crit_edge1602 ], [ %.0503.ph, %bb.dc ], [ %.0503.ph, %bb.en ]
-  %.7501 = phi i32 [ %.0494, %bb.gc ], [ 99, %bb.ah ], [ 105, %bb.aq ], [ %.65001723, %BSD__ultoa.exit ], [ %.0494, %bb.bp ], [ %.0494, %bb.bo ], [ %.0494, %bb.bq ], [ %.4498, %._crit_edge1602 ], [ %.4498, %bb.dc ], [ 115, %bb.en ]
+  %.7501 = phi i32 [ %.0494, %bb.gc ], [ 99, %bb.ah ], [ 105, %bb.aq ], [ %.65001711, %BSD__ultoa.exit ], [ %.0494, %bb.bp ], [ %.0494, %bb.bo ], [ %.0494, %bb.bq ], [ %.4498, %._crit_edge1602 ], [ %.4498, %bb.dc ], [ 115, %bb.en ]
   %.6 = phi ptr [ %.3, %bb.gc ], [ %.3, %bb.ah ], [ %i.du, %bb.aq ], [ %.3, %BSD__ultoa.exit ], [ %.3, %bb.bp ], [ %.3, %bb.bo ], [ %.3, %bb.bq ], [ %.3, %._crit_edge1602 ], [ %.3, %bb.dc ], [ %.3, %bb.en ]
   %i.sw = sext i32 %.2512 to i64
   br label %.sink.split
@@ -1711,7 +1762,6 @@ bb.gd:                                            ; preds = %._crit_edge1602, %b
   %.3529.ph = phi i32 [ %.2528, %bb.gd ], [ %.0526.ph, %bb.eo ]
   %.5524.ph = phi i32 [ %.4523, %bb.gd ], [ %.0519.ph, %bb.eo ]
   %.1516.ph = phi i64 [ %.0515, %bb.gd ], [ 0, %bb.eo ]
-  %.5508.ph = phi ptr [ %.4507, %bb.gd ], [ %.0503.ph, %bb.eo ]
   %.8502.ph = phi i32 [ %.7501, %bb.gd ], [ 115, %bb.eo ]
   %.7.ph = phi ptr [ %.6, %bb.gd ], [ %.3, %bb.eo ]
   store i64 %.sink, ptr %i.i, align 8, !tbaa !11
@@ -1730,7 +1780,6 @@ bb.ge:                                            ; preds = %.sink.split, %bb.ap
   %.3529 = phi i32 [ %.0526.ph, %bb.ap ], [ %.3529.ph, %.sink.split ] ; 3 uses
   %.5524 = phi i32 [ %.0519.ph, %bb.ap ], [ %.5524.ph, %.sink.split ] ; 7 uses
   %.1516 = phi i64 [ 0, %bb.ap ], [ %.1516.ph, %.sink.split ] ; 2 uses
-  %.5508 = phi ptr [ %.0503.ph, %bb.ap ], [ %.5508.ph, %.sink.split ]
   %.8502 = phi i32 [ 105, %bb.ap ], [ %.8502.ph, %.sink.split ] ; 5 uses
   %.7 = phi ptr [ %i.du, %bb.ap ], [ %.7.ph, %.sink.split ]
   %i.ta = call i64 @llvm.smax.i64(i64 %.1516, i64 %i.sz)

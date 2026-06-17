@@ -201,10 +201,10 @@ bb.n:                                             ; preds = %.thread.i
   %i.aw = getelementptr inbounds nuw i8, ptr %i.a, i64 7 ; 4 uses
   br label %bb.o
 
-bb.o:                                             ; preds = %ignorechar.exit.i, %bb.n
-  %.0118.i = phi i64 [ %i.aj, %bb.n ], [ %i.fa, %ignorechar.exit.i ] ; 6 uses
-  %.0110.i = phi ptr [ %i.av, %bb.n ], [ %11, %ignorechar.exit.i ] ; 3 uses
-  %.0105.i = phi ptr [ %i.ak, %bb.n ], [ %i.ez, %ignorechar.exit.i ] ; 3 uses
+bb.o:                                             ; preds = %bb.ar, %bb.n
+  %.0118.i = phi i64 [ %i.aj, %bb.n ], [ %39, %bb.ar ] ; 6 uses
+  %.0110.i = phi ptr [ %i.av, %bb.n ], [ %i.et, %bb.ar ] ; 3 uses
+  %.0105.i = phi ptr [ %i.ak, %bb.n ], [ %38, %bb.ar ] ; 3 uses
   %i.ax = icmp ugt i64 %.0118.i, 3
   br i1 %i.ax, label %bb.p, label %bb.r
 
@@ -286,33 +286,53 @@ base64_decode_fast.exit.thread.i:                 ; preds = %base64_decode_fast.
   br label %bb.r
 
 bb.r:                                             ; preds = %base64_decode_fast.exit.thread.i, %bb.o
-  %.2120.i = phi i64 [ %.1119323.i, %base64_decode_fast.exit.thread.i ], [ %.0118.i, %bb.o ] ; 2 uses
-  %.2112.i = phi ptr [ %.1111.i, %base64_decode_fast.exit.thread.i ], [ %.0110.i, %bb.o ] ; 2 uses
-  %.2107.i = phi ptr [ %.1106.i, %base64_decode_fast.exit.thread.i ], [ %.0105.i, %bb.o ]
+  %.2120.i = phi i64 [ %.1119323.i, %base64_decode_fast.exit.thread.i ], [ %.0118.i, %bb.o ] ; 4 uses
+  %.2112.i = phi ptr [ %.1111.i, %base64_decode_fast.exit.thread.i ], [ %.0110.i, %bb.o ] ; 4 uses
+  %.2107.i = phi ptr [ %.1106.i, %base64_decode_fast.exit.thread.i ], [ %.0105.i, %bb.o ] ; 4 uses
   %.not133250.i = icmp eq i64 %.2120.i, 0
-  br i1 %.not133250.i, label %ignorechar.exit.thread198.i, label %.lr.ph.i.a
+  br i1 %.not133250.i, label %ignorechar.exit.thread198.i, label %.lr.ph.jt0.i
 
-.lr.ph.i.a:                                       ; preds = %bb.r, %bb.at
-  %.095256.i = phi i32 [ %.2.ph.i, %bb.at ], [ 0, %bb.r ] ; 6 uses
-  %.097255.i = phi i8 [ %.3100.ph.i, %bb.at ], [ 0, %bb.r ] ; 10 uses
-  %.0101254.i = phi i32 [ %.3104.ph.i, %bb.at ], [ 0, %bb.r ] ; 14 uses
-  %.3108253.i = phi ptr [ %i.fb, %bb.at ], [ %.2107.i, %bb.r ] ; 4 uses
-  %.3113252.i = phi ptr [ %.6.ph.i, %bb.at ], [ %.2112.i, %bb.r ] ; 16 uses
-  %.3121251.i = phi i64 [ %i.fc, %bb.at ], [ %.2120.i, %bb.r ] ; 2 uses
-  %i.cr = load i8, ptr %.3108253.i, align 1, !tbaa !16 ; 3 uses
+.lr.ph.i:                                         ; preds = %40
+  %6 = load i8, ptr %41, align 1, !tbaa !16       ; 3 uses
+  %7 = icmp eq i8 %6, 61
+  br i1 %7, label %bb.s, label %14
+
+.lr.ph.jt0.i:                                     ; preds = %bb.r
+  %8 = load i8, ptr %.2107.i, align 1, !tbaa !16  ; 3 uses
+  %9 = icmp eq i8 %8, 61
+  br i1 %9, label %bb.s, label %19
+
+.lr.ph.jt2.i:                                     ; preds = %bb.as
+  %10 = load i8, ptr %45, align 1, !tbaa !16      ; 3 uses
+  %11 = icmp eq i8 %10, 61
+  br i1 %11, label %bb.s, label %24
+
+.lr.ph.jt1.i:                                     ; preds = %ignorechar.exit.i
+  %12 = load i8, ptr %i.ez, align 1, !tbaa !16    ; 3 uses
+  %13 = icmp eq i8 %12, 61
+  br i1 %13, label %bb.s, label %29
+
+.lr.ph.i.a:                                       ; preds = %bb.at
+  %i.cr = load i8, ptr %i.fb, align 1, !tbaa !16  ; 3 uses
   %i.cs = icmp eq i8 %i.cr, 61
   br i1 %i.cs, label %bb.s, label %bb.ac
 
-bb.s:                                             ; preds = %.lr.ph.i.a
-  %i.ct = add i32 %.095256.i, 1                   ; 5 uses
-  %i.cu = icmp sgt i32 %.0101254.i, 1             ; 2 uses
-  %i.cv = add i32 %.0101254.i, %i.ct              ; 2 uses
+bb.s:                                             ; preds = %.lr.ph.i.a, %.lr.ph.jt1.i, %.lr.ph.jt2.i, %.lr.ph.jt0.i, %.lr.ph.i
+  %.3121251346.i = phi i64 [ %.2120.i, %.lr.ph.jt0.i ], [ %46, %.lr.ph.jt2.i ], [ %i.fa, %.lr.ph.jt1.i ], [ %i.fc, %.lr.ph.i.a ], [ %42, %.lr.ph.i ] ; 4 uses
+  %.3113252341.i = phi ptr [ %.2112.i, %.lr.ph.jt0.i ], [ %i.ex, %.lr.ph.jt2.i ], [ %.6.ph.jt1.i, %.lr.ph.jt1.i ], [ %51, %.lr.ph.i.a ], [ %.6.ph.i, %.lr.ph.i ] ; 6 uses
+  %.3108253334.i = phi ptr [ %.2107.i, %.lr.ph.jt0.i ], [ %45, %.lr.ph.jt2.i ], [ %i.ez, %.lr.ph.jt1.i ], [ %i.fb, %.lr.ph.i.a ], [ %41, %.lr.ph.i ] ; 5 uses
+  %.0101254331.i = phi i32 [ 0, %.lr.ph.jt0.i ], [ 2, %.lr.ph.jt2.i ], [ 1, %.lr.ph.jt1.i ], [ 3, %.lr.ph.i.a ], [ %.3104.ph.i, %.lr.ph.i ] ; 8 uses
+  %.097255326.i = phi i8 [ 0, %.lr.ph.jt0.i ], [ %i.ey, %.lr.ph.jt2.i ], [ %.3100.ph.jt1.i, %.lr.ph.jt1.i ], [ %52, %.lr.ph.i.a ], [ %.3100.ph.i, %.lr.ph.i ] ; 4 uses
+  %.095256323.i = phi i32 [ 0, %.lr.ph.jt0.i ], [ 0, %.lr.ph.jt2.i ], [ 0, %.lr.ph.jt1.i ], [ 0, %.lr.ph.i.a ], [ %.2.ph.i, %.lr.ph.i ]
+  %i.ct = add i32 %.095256323.i, 1                ; 5 uses
+  %i.cu = icmp sgt i32 %.0101254331.i, 1          ; 2 uses
+  %i.cv = add i32 %i.ct, %.0101254331.i           ; 2 uses
   br i1 %i.al, label %bb.t, label %bb.ab
 
 bb.t:                                             ; preds = %bb.s
   %i.cw = icmp slt i32 %i.cv, 5
   %or.cond144.i = select i1 %i.cu, i1 %i.cw, i1 false
-  br i1 %or.cond144.i, label %bb.at, label %bb.u
+  br i1 %or.cond144.i, label %40, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   br i1 %or.cond49, label %bb.y, label %bb.v
@@ -321,7 +341,7 @@ bb.v:                                             ; preds = %bb.u
   %i.cx = load i8, ptr %i.aw, align 1, !tbaa !16  ; 2 uses
   %i.cy = and i8 %i.cx, 32
   %.not.i.i = icmp eq i8 %i.cy, 0
-  br i1 %.not.i.i, label %bb.w, label %bb.at
+  br i1 %.not.i.i, label %bb.w, label %40
 
 bb.w:                                             ; preds = %bb.v
   %i.cz = load ptr, ptr %.094157.i, align 8, !tbaa !17
@@ -333,10 +353,10 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.w
   %i.dc = or disjoint i8 %i.cx, 32
   store i8 %i.dc, ptr %i.aw, align 1, !tbaa !16
-  br label %bb.at
+  br label %40
 
 bb.y:                                             ; preds = %bb.w, %bb.u
-  %i.dd = icmp eq i32 %.0101254.i, 1
+  %i.dd = icmp eq i32 %.0101254331.i, 1
   br i1 %i.dd, label %.thread206.i, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
@@ -346,9 +366,9 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.z
   %i.df = load ptr, ptr %i.de, align 8, !tbaa !10
-  %i.dg = icmp eq i32 %.0101254.i, 0
+  %i.dg = icmp eq i32 %.0101254331.i, 0
   %i.dh = load ptr, ptr %4, align 8
-  %i.di = icmp eq ptr %.3108253.i, %i.dh
+  %i.di = icmp eq ptr %.3108253334.i, %i.dh
   %i.dj = select i1 %i.dg, i1 %i.di, i1 false
   %i.dk = select i1 %i.dj, ptr @.str.29, ptr @.str.30
   call void @PyErr_SetString(ptr noundef %i.df, ptr noundef nonnull %i.dk) #6
@@ -357,23 +377,58 @@ bb.aa:                                            ; preds = %bb.z
 bb.ab:                                            ; preds = %bb.s
   %i.dl = icmp sgt i32 %i.cv, 3
   %or.cond146.i = select i1 %i.cu, i1 %i.dl, i1 false
-  br i1 %or.cond146.i, label %ignorechar.exit.thread198.i, label %bb.at
+  br i1 %or.cond146.i, label %ignorechar.exit.thread198.i, label %40
+
+14:                                               ; preds = %.lr.ph.i
+  %15 = zext i8 %6 to i64
+  %16 = getelementptr i8, ptr @table_a2b_base64, i64 %15
+  %17 = load i8, ptr %16, align 1, !tbaa !16      ; 5 uses
+  %18 = icmp ugt i8 %17, 63
+  br i1 %18, label %bb.ad, label %bb.ak
+
+19:                                               ; preds = %.lr.ph.jt0.i
+  %20 = zext i8 %8 to i64
+  %21 = getelementptr i8, ptr @table_a2b_base64, i64 %20
+  %22 = load i8, ptr %21, align 1, !tbaa !16      ; 2 uses
+  %23 = icmp ugt i8 %22, 63
+  br i1 %23, label %bb.ad, label %ignorechar.exit.i
+
+24:                                               ; preds = %.lr.ph.jt2.i
+  %25 = zext i8 %10 to i64
+  %26 = getelementptr i8, ptr @table_a2b_base64, i64 %25
+  %27 = load i8, ptr %26, align 1, !tbaa !16      ; 2 uses
+  %28 = icmp ugt i8 %27, 63
+  br i1 %28, label %bb.ad, label %bb.at
+
+29:                                               ; preds = %.lr.ph.jt1.i
+  %30 = zext i8 %12 to i64
+  %31 = getelementptr i8, ptr @table_a2b_base64, i64 %30
+  %32 = load i8, ptr %31, align 1, !tbaa !16      ; 2 uses
+  %33 = icmp ugt i8 %32, 63
+  br i1 %33, label %bb.ad, label %bb.as
 
 bb.ac:                                            ; preds = %.lr.ph.i.a
   %i.dm = zext i8 %i.cr to i64
   %i.dn = getelementptr i8, ptr @table_a2b_base64, i64 %i.dm
-  %i.do = load i8, ptr %i.dn, align 1, !tbaa !16  ; 7 uses
+  %i.do = load i8, ptr %i.dn, align 1, !tbaa !16  ; 2 uses
   %i.dp = icmp ugt i8 %i.do, 63
-  br i1 %i.dp, label %bb.ad, label %bb.ak
+  br i1 %i.dp, label %bb.ad, label %bb.ar
 
-bb.ad:                                            ; preds = %bb.ac
-  br i1 %i.al, label %bb.ae, label %bb.at
+bb.ad:                                            ; preds = %bb.ac, %29, %24, %19, %14
+  %34 = phi i8 [ %8, %19 ], [ %10, %24 ], [ %12, %29 ], [ %i.cr, %bb.ac ], [ %6, %14 ]
+  %.3121251347.i = phi i64 [ %.2120.i, %19 ], [ %46, %24 ], [ %i.fa, %29 ], [ %i.fc, %bb.ac ], [ %42, %14 ] ; 3 uses
+  %.3113252342.i = phi ptr [ %.2112.i, %19 ], [ %i.ex, %24 ], [ %.6.ph.jt1.i, %29 ], [ %51, %bb.ac ], [ %.6.ph.i, %14 ] ; 3 uses
+  %.3108253335.i = phi ptr [ %.2107.i, %19 ], [ %45, %24 ], [ %i.ez, %29 ], [ %i.fb, %bb.ac ], [ %41, %14 ] ; 3 uses
+  %.0101254332.i = phi i32 [ 0, %19 ], [ 2, %24 ], [ 1, %29 ], [ 3, %bb.ac ], [ %.3104.ph.i, %14 ] ; 3 uses
+  %.097255327.i = phi i8 [ 0, %19 ], [ %i.ey, %24 ], [ %.3100.ph.jt1.i, %29 ], [ %52, %bb.ac ], [ %.3100.ph.i, %14 ] ; 3 uses
+  %.095256324.i = phi i32 [ 0, %19 ], [ 0, %24 ], [ 0, %29 ], [ 0, %bb.ac ], [ %.2.ph.i, %14 ] ; 3 uses
+  br i1 %i.al, label %bb.ae, label %40
 
 bb.ae:                                            ; preds = %bb.ad
   br i1 %or.cond49, label %bb.ai, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %i.dq = zext i8 %i.cr to i32                    ; 3 uses
+  %i.dq = zext i8 %34 to i32                      ; 3 uses
   %i.dr = lshr i32 %i.dq, 3
   %i.ds = zext nneg i32 %i.dr to i64
   %i.dt = getelementptr i8, ptr %i.a, i64 %i.ds   ; 2 uses
@@ -383,7 +438,7 @@ bb.af:                                            ; preds = %bb.ae
   %i.dx = shl nuw nsw i32 1, %i.dw                ; 2 uses
   %i.dy = and i32 %i.dx, %i.dv
   %.not.i147.i = icmp eq i32 %i.dy, 0
-  br i1 %.not.i147.i, label %bb.ag, label %bb.at
+  br i1 %.not.i147.i, label %bb.ag, label %40
 
 bb.ag:                                            ; preds = %bb.af
   %i.dz = load ptr, ptr %.094157.i, align 8, !tbaa !17
@@ -396,7 +451,7 @@ bb.ah:                                            ; preds = %bb.ag
   %i.ec = trunc nuw i32 %i.dx to i8
   %i.ed = or i8 %i.du, %i.ec
   store i8 %i.ed, ptr %i.dt, align 1, !tbaa !16
-  br label %bb.at
+  br label %40
 
 bb.ai:                                            ; preds = %bb.ag, %bb.ae
   %i.ee = call ptr @PyModule_GetState(ptr noundef %0) #6 ; 2 uses
@@ -408,8 +463,8 @@ bb.aj:                                            ; preds = %bb.ai
   call void @PyErr_SetString(ptr noundef %i.ef, ptr noundef nonnull @.str.31) #6
   br label %ignorechar.exit.thread182.i
 
-bb.ak:                                            ; preds = %bb.ac
-  %i.eg = icmp ne i32 %.095256.i, 0
+bb.ak:                                            ; preds = %14
+  %i.eg = icmp ne i32 %.2.ph.i, 0
   %or.cond.i = and i1 %i.al, %i.eg
   br i1 %or.cond.i, label %bb.al, label %ignorechar.exit154.i
 
@@ -441,68 +496,101 @@ bb.ap:                                            ; preds = %bb.an, %bb.al
 
 bb.aq:                                            ; preds = %bb.ap
   %i.eo = load ptr, ptr %i.en, align 8, !tbaa !10
-  %i.ep = add i32 %.0101254.i, %.095256.i
+  %i.ep = add i32 %.2.ph.i, %.3104.ph.i
   %i.eq = icmp eq i32 %i.ep, 4
   %i.er = select i1 %i.eq, ptr @.str.32, ptr @.str.33
   call void @PyErr_SetString(ptr noundef %i.eo, ptr noundef nonnull %i.er) #6
   br label %ignorechar.exit.thread182.i
 
 ignorechar.exit154.i:                             ; preds = %bb.ao, %bb.am, %bb.ak
-  switch i32 %.0101254.i, label %.unreachabledefault.i [
-    i32 0, label %bb.at
-    i32 1, label %bb.ar
-    i32 2, label %bb.as
-    i32 3, label %ignorechar.exit.i
+  switch i32 %.3104.ph.i, label %default.unreachable [
+    i32 0, label %ignorechar.exit.i
+    i32 1, label %bb.as
+    i32 2, label %bb.at
+    i32 3, label %bb.ar
   ]
 
-bb.ar:                                            ; preds = %ignorechar.exit154.i
-  %6 = shl nuw i8 %.097255.i, 2
-  %7 = lshr i8 %i.do, 4
-  %i.es = or disjoint i8 %7, %6
-  %i.et = getelementptr i8, ptr %.3113252.i, i64 1
-  store i8 %i.es, ptr %.3113252.i, align 1, !tbaa !16
-  %8 = and i8 %i.do, 15
-  br label %bb.at
-
-bb.as:                                            ; preds = %ignorechar.exit154.i
-  %i.eu = shl i8 %.097255.i, 4
-  %i.ev = lshr i8 %i.do, 2
-  %i.ew = or disjoint i8 %i.ev, %i.eu
-  %i.ex = getelementptr i8, ptr %.3113252.i, i64 1
-  store i8 %i.ew, ptr %.3113252.i, align 1, !tbaa !16
-  %i.ey = and i8 %i.do, 3
-  br label %bb.at
-
-.unreachabledefault.i:                            ; preds = %ignorechar.exit154.i
+default.unreachable:                              ; preds = %ignorechar.exit154.i
   unreachable
 
-ignorechar.exit.i:                                ; preds = %ignorechar.exit154.i
-  %9 = shl i8 %.097255.i, 6
-  %10 = or disjoint i8 %i.do, %9
-  %11 = getelementptr i8, ptr %.3113252.i, i64 1
-  store i8 %10, ptr %.3113252.i, align 1, !tbaa !16
-  %i.ez = getelementptr i8, ptr %.3108253.i, i64 1
-  %i.fa = add i64 %.3121251.i, -1
+bb.ar:                                            ; preds = %ignorechar.exit154.i, %bb.ac
+  %35 = phi i8 [ %17, %ignorechar.exit154.i ], [ %i.do, %bb.ac ]
+  %.3121251348.i = phi i64 [ %42, %ignorechar.exit154.i ], [ %i.fc, %bb.ac ]
+  %.3113252343.i = phi ptr [ %.6.ph.i, %ignorechar.exit154.i ], [ %51, %bb.ac ] ; 2 uses
+  %36 = phi ptr [ %.3108253340.i, %ignorechar.exit154.i ], [ %.3108253337.i, %bb.ac ]
+  %.097255328.i = phi i8 [ %.3100.ph.i, %ignorechar.exit154.i ], [ %52, %bb.ac ]
+  %37 = shl i8 %.097255328.i, 6
+  %i.es = or disjoint i8 %37, %35
+  %i.et = getelementptr i8, ptr %.3113252343.i, i64 1
+  store i8 %i.es, ptr %.3113252343.i, align 1, !tbaa !16
+  %38 = getelementptr i8, ptr %36, i64 2
+  %39 = add i64 %.3121251348.i, -1
   br label %bb.o
 
-bb.at:                                            ; preds = %bb.as, %bb.ar, %ignorechar.exit154.i, %bb.ah, %bb.af, %bb.ad, %bb.ab, %bb.x, %bb.v, %bb.t
-  %.6.ph.i = phi ptr [ %.3113252.i, %bb.ah ], [ %.3113252.i, %bb.af ], [ %.3113252.i, %bb.v ], [ %i.ex, %bb.as ], [ %.3113252.i, %bb.x ], [ %.3113252.i, %bb.ad ], [ %.3113252.i, %ignorechar.exit154.i ], [ %i.et, %bb.ar ], [ %.3113252.i, %bb.t ], [ %.3113252.i, %bb.ab ] ; 4 uses
-  %.3104.ph.i = phi i32 [ %.0101254.i, %bb.ah ], [ %.0101254.i, %bb.af ], [ %.0101254.i, %bb.v ], [ 3, %bb.as ], [ %.0101254.i, %bb.x ], [ %.0101254.i, %bb.ad ], [ 1, %ignorechar.exit154.i ], [ 2, %bb.ar ], [ %.0101254.i, %bb.t ], [ %.0101254.i, %bb.ab ] ; 3 uses
-  %.3100.ph.i = phi i8 [ %.097255.i, %bb.ah ], [ %.097255.i, %bb.af ], [ %.097255.i, %bb.v ], [ %i.ey, %bb.as ], [ %.097255.i, %bb.x ], [ %.097255.i, %bb.ad ], [ %i.do, %ignorechar.exit154.i ], [ %8, %bb.ar ], [ %.097255.i, %bb.t ], [ %.097255.i, %bb.ab ]
-  %.2.ph.i = phi i32 [ %.095256.i, %bb.ah ], [ %.095256.i, %bb.af ], [ %i.ct, %bb.v ], [ 0, %bb.as ], [ %i.ct, %bb.x ], [ %.095256.i, %bb.ad ], [ %.0101254.i, %ignorechar.exit154.i ], [ 0, %bb.ar ], [ %i.ct, %bb.t ], [ %i.ct, %bb.ab ] ; 2 uses
-  %i.fb = getelementptr i8, ptr %.3108253.i, i64 1
-  %i.fc = add i64 %.3121251.i, -1                 ; 2 uses
-  %.not133.i.a = icmp eq i64 %i.fc, 0
-  br i1 %.not133.i.a, label %._crit_edge.i, label %.lr.ph.i.a, !llvm.loop !41
+40:                                               ; preds = %bb.ah, %bb.af, %bb.ad, %bb.ab, %bb.x, %bb.v, %bb.t
+  %.3121251352.i = phi i64 [ %.3121251346.i, %bb.ab ], [ %.3121251346.i, %bb.t ], [ %.3121251347.i, %bb.ad ], [ %.3121251346.i, %bb.x ], [ %.3121251346.i, %bb.v ], [ %.3121251347.i, %bb.af ], [ %.3121251347.i, %bb.ah ]
+  %.3108253340.i = phi ptr [ %.3108253334.i, %bb.ab ], [ %.3108253334.i, %bb.t ], [ %.3108253335.i, %bb.ad ], [ %.3108253334.i, %bb.x ], [ %.3108253334.i, %bb.v ], [ %.3108253335.i, %bb.af ], [ %.3108253335.i, %bb.ah ] ; 3 uses
+  %.6.ph.i = phi ptr [ %.3113252341.i, %bb.ab ], [ %.3113252341.i, %bb.t ], [ %.3113252342.i, %bb.ad ], [ %.3113252341.i, %bb.x ], [ %.3113252341.i, %bb.v ], [ %.3113252342.i, %bb.af ], [ %.3113252342.i, %bb.ah ] ; 9 uses
+  %.3104.ph.i = phi i32 [ %.0101254331.i, %bb.ab ], [ %.0101254331.i, %bb.t ], [ %.0101254332.i, %bb.ad ], [ %.0101254331.i, %bb.x ], [ %.0101254331.i, %bb.v ], [ %.0101254332.i, %bb.af ], [ %.0101254332.i, %bb.ah ] ; 6 uses
+  %.3100.ph.i = phi i8 [ %.097255326.i, %bb.ab ], [ %.097255326.i, %bb.t ], [ %.097255327.i, %bb.ad ], [ %.097255326.i, %bb.x ], [ %.097255326.i, %bb.v ], [ %.097255327.i, %bb.af ], [ %.097255327.i, %bb.ah ] ; 5 uses
+  %.2.ph.i = phi i32 [ %i.ct, %bb.ab ], [ %i.ct, %bb.t ], [ %.095256324.i, %bb.ad ], [ %i.ct, %bb.x ], [ %i.ct, %bb.v ], [ %.095256324.i, %bb.af ], [ %.095256324.i, %bb.ah ] ; 5 uses
+  %41 = getelementptr i8, ptr %.3108253340.i, i64 1 ; 5 uses
+  %42 = add i64 %.3121251352.i, -1                ; 7 uses
+  %.not133.i = icmp eq i64 %42, 0
+  br i1 %.not133.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !41
 
-._crit_edge.i:                                    ; preds = %bb.at
+bb.as:                                            ; preds = %ignorechar.exit154.i, %29
+  %43 = phi i8 [ %17, %ignorechar.exit154.i ], [ %32, %29 ] ; 2 uses
+  %.3121251350.i = phi i64 [ %42, %ignorechar.exit154.i ], [ %i.fa, %29 ]
+  %.3113252345.i = phi ptr [ %.6.ph.i, %ignorechar.exit154.i ], [ %.6.ph.jt1.i, %29 ] ; 2 uses
+  %44 = phi ptr [ %.3108253340.i, %ignorechar.exit154.i ], [ %.3108253339.i, %29 ]
+  %.097255330.i = phi i8 [ %.3100.ph.i, %ignorechar.exit154.i ], [ %.3100.ph.jt1.i, %29 ]
+  %i.eu = shl nuw i8 %.097255330.i, 2
+  %i.ev = lshr i8 %43, 4
+  %i.ew = or disjoint i8 %i.eu, %i.ev
+  %i.ex = getelementptr i8, ptr %.3113252345.i, i64 1 ; 4 uses
+  store i8 %i.ew, ptr %.3113252345.i, align 1, !tbaa !16
+  %i.ey = and i8 %43, 15                          ; 3 uses
+  %45 = getelementptr i8, ptr %44, i64 2          ; 4 uses
+  %46 = add i64 %.3121251350.i, -1                ; 4 uses
+  %.not133.jt2.i = icmp eq i64 %46, 0
+  br i1 %.not133.jt2.i, label %bb.av, label %.lr.ph.jt2.i, !llvm.loop !41
+
+ignorechar.exit.i:                                ; preds = %ignorechar.exit154.i, %19
+  %.3121251351.i = phi i64 [ %42, %ignorechar.exit154.i ], [ %.2120.i, %19 ]
+  %.3108253339.i = phi ptr [ %41, %ignorechar.exit154.i ], [ %.2107.i, %19 ] ; 2 uses
+  %.6.ph.jt1.i = phi ptr [ %.6.ph.i, %ignorechar.exit154.i ], [ %.2112.i, %19 ] ; 4 uses
+  %.3100.ph.jt1.i = phi i8 [ %17, %ignorechar.exit154.i ], [ %22, %19 ] ; 3 uses
+  %i.ez = getelementptr i8, ptr %.3108253339.i, i64 1 ; 3 uses
+  %i.fa = add i64 %.3121251351.i, -1              ; 4 uses
+  %.not133.jt1.i = icmp eq i64 %i.fa, 0
+  br i1 %.not133.jt1.i, label %.thread206.i, label %.lr.ph.jt1.i, !llvm.loop !41
+
+bb.at:                                            ; preds = %ignorechar.exit154.i, %24
+  %47 = phi i8 [ %17, %ignorechar.exit154.i ], [ %27, %24 ] ; 2 uses
+  %.3121251349.i = phi i64 [ %42, %ignorechar.exit154.i ], [ %46, %24 ]
+  %.3113252344.i = phi ptr [ %.6.ph.i, %ignorechar.exit154.i ], [ %i.ex, %24 ] ; 2 uses
+  %.3108253337.i = phi ptr [ %41, %ignorechar.exit154.i ], [ %45, %24 ] ; 2 uses
+  %.097255329.i = phi i8 [ %.3100.ph.i, %ignorechar.exit154.i ], [ %i.ey, %24 ]
+  %48 = shl i8 %.097255329.i, 4
+  %49 = lshr i8 %47, 2
+  %50 = or disjoint i8 %48, %49
+  %51 = getelementptr i8, ptr %.3113252344.i, i64 1 ; 4 uses
+  store i8 %50, ptr %.3113252344.i, align 1, !tbaa !16
+  %52 = and i8 %47, 3                             ; 3 uses
+  %i.fb = getelementptr i8, ptr %.3108253337.i, i64 1 ; 3 uses
+  %i.fc = add i64 %.3121251349.i, -1              ; 4 uses
+  %.not133.i.a = icmp eq i64 %i.fc, 0
+  br i1 %.not133.i.a, label %bb.av, label %.lr.ph.i.a, !llvm.loop !41
+
+._crit_edge.i:                                    ; preds = %40
   switch i32 %.3104.ph.i, label %bb.av [
     i32 1, label %.thread206.i
     i32 0, label %ignorechar.exit.thread198.i
   ]
 
-.thread206.i:                                     ; preds = %._crit_edge.i, %bb.y
-  %.3113243.i = phi ptr [ %.3113252.i, %bb.y ], [ %.6.ph.i, %._crit_edge.i ]
+.thread206.i:                                     ; preds = %ignorechar.exit.i, %._crit_edge.i, %bb.y
+  %.3113243.i = phi ptr [ %.3113252341.i, %bb.y ], [ %.6.ph.i, %._crit_edge.i ], [ %.6.ph.jt1.i, %ignorechar.exit.i ]
   %i.fd = call ptr @PyModule_GetState(ptr noundef %0) #6 ; 2 uses
   %.not142.i = icmp eq ptr %i.fd, null
   br i1 %.not142.i, label %ignorechar.exit.thread182.i, label %bb.au
@@ -519,8 +607,11 @@ bb.au:                                            ; preds = %.thread206.i
   %i.fm = call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.ff, ptr noundef nonnull @.str.34, i64 noundef %i.fl) #6 ; 0 uses
   br label %ignorechar.exit.thread182.i
 
-bb.av:                                            ; preds = %._crit_edge.i
-  %i.fn = add i32 %.2.ph.i, %.3104.ph.i
+bb.av:                                            ; preds = %bb.at, %bb.as, %._crit_edge.i
+  %.095.lcssa362.i = phi i32 [ %.2.ph.i, %._crit_edge.i ], [ 0, %bb.as ], [ 0, %bb.at ]
+  %.0101.lcssa361.i = phi i32 [ %.3104.ph.i, %._crit_edge.i ], [ 3, %bb.at ], [ 2, %bb.as ]
+  %.3113.lcssa360.i = phi ptr [ %.6.ph.i, %._crit_edge.i ], [ %51, %bb.at ], [ %i.ex, %bb.as ]
+  %i.fn = add i32 %.0101.lcssa361.i, %.095.lcssa362.i
   %i.fo = icmp slt i32 %i.fn, 4
   br i1 %i.fo, label %bb.aw, label %ignorechar.exit.thread198.i
 
@@ -534,8 +625,8 @@ bb.ax:                                            ; preds = %bb.aw
   call void @PyErr_SetString(ptr noundef %i.fq, ptr noundef nonnull @.str.35) #6
   br label %ignorechar.exit.thread182.i
 
-ignorechar.exit.thread198.i:                      ; preds = %bb.r, %bb.ab, %bb.av, %._crit_edge.i
-  %.3113242.i = phi ptr [ %.6.ph.i, %bb.av ], [ %.6.ph.i, %._crit_edge.i ], [ %.3113252.i, %bb.ab ], [ %.2112.i, %bb.r ]
+ignorechar.exit.thread198.i:                      ; preds = %bb.ab, %bb.r, %bb.av, %._crit_edge.i
+  %.3113242.i = phi ptr [ %.3113.lcssa360.i, %bb.av ], [ %.6.ph.i, %._crit_edge.i ], [ %.3113252341.i, %bb.ab ], [ %.2112.i, %bb.r ]
   %i.fr = call ptr @PyBytesWriter_FinishWithPointer(ptr noundef nonnull %i.at, ptr noundef %.3113242.i) #6
   br label %binascii_a2b_base64_impl.exit
 

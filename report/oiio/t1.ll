@@ -17,7 +17,6 @@ target triple = "x86_64-pc-linux-gnu"
 @lut_nmsedec_sig0 = internal unnamed_addr constant [128 x i16] [i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 128, i16 128, i16 128, i16 128, i16 256, i16 256, i16 256, i16 384, i16 384, i16 512, i16 512, i16 640, i16 640, i16 768, i16 768, i16 896, i16 1024, i16 1024, i16 1152, i16 1280, i16 1408, i16 1408, i16 1536, i16 1664, i16 1792, i16 1920, i16 2048, i16 2176, i16 2304, i16 2432, i16 2560, i16 2688, i16 2944, i16 3072, i16 3200, i16 3328, i16 3584, i16 3712, i16 3840, i16 4096, i16 4224, i16 4480, i16 4608, i16 4864, i16 4992, i16 5248, i16 5376, i16 5632, i16 5888, i16 6016, i16 6272, i16 6528, i16 6784, i16 6912, i16 7168, i16 7424, i16 7680, i16 7936, i16 8192, i16 8448, i16 8704, i16 8960, i16 9216, i16 9472, i16 9856, i16 10112, i16 10368, i16 10624, i16 11008, i16 11264, i16 11520, i16 11904, i16 12160, i16 12544, i16 12800, i16 13184, i16 13440, i16 13824, i16 14080, i16 14464, i16 14848, i16 15104, i16 15488, i16 15872, i16 16256, i16 16512, i16 16896, i16 17280, i16 17664, i16 18048, i16 18432, i16 18816, i16 19200, i16 19584, i16 19968, i16 20352, i16 20864, i16 21248, i16 21632, i16 22016, i16 22528, i16 22912, i16 23296, i16 23808, i16 24192, i16 24704, i16 25088, i16 25600, i16 25984, i16 26496, i16 26880, i16 27392, i16 27904, i16 28288, i16 28800, i16 29312, i16 29824, i16 30208, i16 30720, i16 31232, i16 31744, i16 32256], align 16
 @lut_nmsedec_ref = internal unnamed_addr constant [128 x i16] [i16 6144, i16 6016, i16 5888, i16 5760, i16 5632, i16 5504, i16 5376, i16 5248, i16 5120, i16 4992, i16 4864, i16 4736, i16 4608, i16 4480, i16 4352, i16 4224, i16 4096, i16 3968, i16 3840, i16 3712, i16 3584, i16 3456, i16 3328, i16 3200, i16 3072, i16 2944, i16 2816, i16 2688, i16 2560, i16 2432, i16 2304, i16 2176, i16 2048, i16 1920, i16 1792, i16 1664, i16 1536, i16 1408, i16 1280, i16 1152, i16 1024, i16 896, i16 768, i16 640, i16 512, i16 384, i16 256, i16 128, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 128, i16 256, i16 384, i16 512, i16 640, i16 768, i16 896, i16 1024, i16 1152, i16 1280, i16 1408, i16 1536, i16 1664, i16 1792, i16 1920, i16 2048, i16 2176, i16 2304, i16 2432, i16 2560, i16 2688, i16 2816, i16 2944, i16 3072, i16 3200, i16 3328, i16 3456, i16 3584, i16 3712, i16 3840, i16 3968, i16 4096, i16 4224, i16 4352, i16 4480, i16 4608, i16 4736, i16 4864, i16 4992, i16 5120, i16 5248, i16 5376, i16 5504, i16 5632, i16 5760, i16 5888, i16 6016], align 16
 @lut_nmsedec_ref0 = internal unnamed_addr constant [128 x i16] [i16 8192, i16 7936, i16 7680, i16 7424, i16 7168, i16 6912, i16 6784, i16 6528, i16 6272, i16 6016, i16 5888, i16 5632, i16 5376, i16 5248, i16 4992, i16 4864, i16 4608, i16 4480, i16 4224, i16 4096, i16 3840, i16 3712, i16 3584, i16 3328, i16 3200, i16 3072, i16 2944, i16 2688, i16 2560, i16 2432, i16 2304, i16 2176, i16 2048, i16 1920, i16 1792, i16 1664, i16 1536, i16 1408, i16 1408, i16 1280, i16 1152, i16 1024, i16 1024, i16 896, i16 768, i16 768, i16 640, i16 640, i16 512, i16 512, i16 384, i16 384, i16 256, i16 256, i16 256, i16 128, i16 128, i16 128, i16 128, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 128, i16 128, i16 128, i16 128, i16 256, i16 256, i16 256, i16 384, i16 384, i16 512, i16 512, i16 640, i16 640, i16 768, i16 768, i16 896, i16 1024, i16 1024, i16 1152, i16 1280, i16 1408, i16 1408, i16 1536, i16 1664, i16 1792, i16 1920, i16 2048, i16 2176, i16 2304, i16 2432, i16 2560, i16 2688, i16 2944, i16 3072, i16 3200, i16 3328, i16 3584, i16 3712, i16 3840, i16 4096, i16 4224, i16 4480, i16 4608, i16 4864, i16 4992, i16 5248, i16 5376, i16 5632, i16 5888, i16 6016, i16 6272, i16 6528, i16 6784, i16 6912, i16 7168, i16 7424, i16 7680, i16 7936], align 16
-@switch.table.opj_t1_cblk_encode_processor = private unnamed_addr constant [4 x i32] [i32 -1226833921, i32 -1224736769, i32 -1207959553, i32 -1073741825], align 4
 
 ; Function Attrs: nounwind uwtable
 define ptr @opj_t1_create(i32 noundef %0) local_unnamed_addr #0 {
@@ -420,7 +419,7 @@ bb.u:                                             ; preds = %bb.t, %.thread288.i
   %i.lv = getelementptr inbounds nuw i8, ptr %.0, i64 8 ; 50 uses
   %i.lw = getelementptr inbounds nuw i8, ptr %.0, i64 224 ; 3 uses
   %i.lx = getelementptr inbounds nuw i8, ptr %.0, i64 176 ; 4 uses
-  %i.ly = getelementptr inbounds nuw i8, ptr %.0, i64 184 ; 9 uses
+  %i.ly = getelementptr inbounds nuw i8, ptr %.0, i64 184 ; 11 uses
   %i.lz = getelementptr inbounds nuw i8, ptr %.0, i64 40 ; 21 uses
   %i.ma = and i32 %i.ik, 8                        ; 2 uses
   %i.mb = icmp ne i32 %i.ma, 0                    ; 3 uses
@@ -823,15 +822,15 @@ bb.jl:                                            ; preds = %bb.aa
 .lr.ph721.i.i:                                    ; preds = %.preheader685.i.i, %bb.lt
   %.38.i = phi i32 [ %.42.i, %bb.lt ], [ %.37.i, %.preheader685.i.i ] ; 3 uses
   %.0720.i.i = phi i32 [ %i.byk, %bb.lt ], [ 0, %.preheader685.i.i ]
-  %.1442719.i.i = phi ptr [ %.7.i211.i, %bb.lt ], [ %.0441733.i.i, %.preheader685.i.i ]
-  %.1444718.i.i = phi i32 [ %.41.i210.i, %bb.lt ], [ %.0443732.i.i, %.preheader685.i.i ] ; 4 uses
-  %.1458717.i.i = phi i32 [ %.31488.i.i, %bb.lt ], [ %.0457731.i.i, %.preheader685.i.i ] ; 2 uses
-  %.1508716.i.i = phi i32 [ %.31538.i.i, %bb.lt ], [ %.0507730.i.i, %.preheader685.i.i ] ; 4 uses
-  %.1557715.i.i = phi ptr [ %.4560.i.i, %bb.lt ], [ %.0556729.i.i, %.preheader685.i.i ] ; 7 uses
+  %.1442719.i.i = phi ptr [ %.7.i211.i, %bb.lt ], [ %.0441733.i.i, %.preheader685.i.i ] ; 2 uses
+  %.1444718.i.i = phi i32 [ %.41.i210.i, %bb.lt ], [ %.0443732.i.i, %.preheader685.i.i ] ; 5 uses
+  %.1458717.i.i = phi i32 [ %.31488.i.i, %bb.lt ], [ %.0457731.i.i, %.preheader685.i.i ] ; 3 uses
+  %.1508716.i.i = phi i32 [ %.31538.i.i, %bb.lt ], [ %.0507730.i.i, %.preheader685.i.i ] ; 5 uses
+  %.1557715.i.i = phi ptr [ %.4560.i.i, %bb.lt ], [ %.0556729.i.i, %.preheader685.i.i ] ; 8 uses
   %.1564712.i.i = phi ptr [ %i.byl, %bb.lt ], [ %.0563728.i.i, %.preheader685.i.i ] ; 13 uses
-  %i.bnk = load i32, ptr %.1564712.i.i, align 4, !tbaa !3
+  %i.bnk = load i32, ptr %.1564712.i.i, align 4, !tbaa !3 ; 4 uses
   %.not630.i.i = icmp eq i32 %i.bnk, 0            ; 2 uses
-  br i1 %.not630.i.i, label %.preheader684.preheader.i.i, label %.loopexit678.i.i.a
+  br i1 %.not630.i.i, label %.preheader684.preheader.i.i, label %.loopexit678.jt0.i.i
 
 .preheader684.preheader.i.i:                      ; preds = %.lr.ph721.i.i
   %scevgep.i258.i = getelementptr i8, ptr %.1557715.i.i, i64 16
@@ -867,8 +866,8 @@ bb.jm:                                            ; preds = %.preheader684.3.i.i
 bb.jn:                                            ; preds = %bb.jm, %.preheader684.3.i.i, %.preheader684.2.i.i, %.preheader684.1.i.i, %.preheader684.preheader.i.i
   %i.bnw = phi i32 [ 1, %.preheader684.preheader.i.i ], [ 0, %bb.jm ], [ 1, %.preheader684.1.i.i ], [ 1, %.preheader684.3.i.i ], [ 1, %.preheader684.2.i.i ]
   %i.bnx = phi i1 [ false, %.preheader684.preheader.i.i ], [ true, %bb.jm ], [ false, %.preheader684.1.i.i ], [ false, %.preheader684.3.i.i ], [ false, %.preheader684.2.i.i ]
-  %.0566.lcssa.i.i = phi i32 [ 0, %.preheader684.preheader.i.i ], [ 4, %bb.jm ], [ 1, %.preheader684.1.i.i ], [ 3, %.preheader684.3.i.i ], [ 2, %.preheader684.2.i.i ] ; 5 uses
-  %.2558.lcssa.i.i = phi ptr [ %.1557715.i.i, %.preheader684.preheader.i.i ], [ %scevgep.i258.i, %bb.jm ], [ %i.bnn, %.preheader684.1.i.i ], [ %i.bnt, %.preheader684.3.i.i ], [ %i.bnq, %.preheader684.2.i.i ] ; 4 uses
+  %.0566.lcssa.i.i = phi i32 [ 0, %.preheader684.preheader.i.i ], [ 4, %bb.jm ], [ 1, %.preheader684.1.i.i ], [ 3, %.preheader684.3.i.i ], [ 2, %.preheader684.2.i.i ] ; 4 uses
+  %.2558.lcssa.i.i = phi ptr [ %.1557715.i.i, %.preheader684.preheader.i.i ], [ %scevgep.i258.i, %bb.jm ], [ %i.bnn, %.preheader684.1.i.i ], [ %i.bnt, %.preheader684.3.i.i ], [ %i.bnq, %.preheader684.2.i.i ] ; 6 uses
   %i.bny = load ptr, ptr %i.lx, align 8, !tbaa !122 ; 4 uses
   %i.bnz = getelementptr inbounds nuw i8, ptr %i.bny, i64 4
   %i.boa = load i32, ptr %i.bnz, align 4, !tbaa !126
@@ -1097,11 +1096,11 @@ bb.kn:                                            ; preds = %bb.km, %bb.kl
   %.18.i266.i = phi i32 [ %i.bre, %bb.km ], [ %i.brb, %bb.kl ] ; 2 uses
   %i.brg = and i32 %.13470.i.i, 16384
   %i.brh = icmp eq i32 %i.brg, 0
-  br i1 %i.brh, label %bb.kl, label %.loopexit678.i.i.a, !llvm.loop !287
+  br i1 %i.brh, label %bb.kl, label %.loopexit678.i.i, !llvm.loop !287
 
 bb.ko:                                            ; preds = %bb.kj
   %i.bri = add i32 %i.bqs, %.15.i260.i
-  br label %.loopexit678.i.i.a
+  br label %.loopexit678.i.i
 
 bb.kp:                                            ; preds = %.loopexit680.i.i
   %i.brj = icmp ult i32 %i.bqt, %i.bqs
@@ -1135,35 +1134,74 @@ bb.ks:                                            ; preds = %bb.kr, %bb.kq
   %.21.i263.i = phi i32 [ %i.brr, %bb.kr ], [ %i.bro, %bb.kq ] ; 2 uses
   %i.brt = and i32 %.15472.i.i, 16384
   %i.bru = icmp eq i32 %i.brt, 0
-  br i1 %i.bru, label %bb.kq, label %.loopexit678.i.i.a, !llvm.loop !288
+  br i1 %i.bru, label %bb.kq, label %.loopexit678.i.i, !llvm.loop !288
 
-.loopexit678.i.i.a:                               ; preds = %bb.ks, %bb.kn, %bb.ko, %.lr.ph721.i.i
-  %.1567.i.i = phi i32 [ 0, %.lr.ph721.i.i ], [ %.0566.lcssa.i.i, %bb.ko ], [ %.0566.lcssa.i.i, %bb.kn ], [ %.0566.lcssa.i.i, %bb.ks ] ; 4 uses
-  %.3559.i.i = phi ptr [ %.1557715.i.i, %.lr.ph721.i.i ], [ %.2558.lcssa.i.i, %bb.ko ], [ %.2558.lcssa.i.i, %bb.kn ], [ %.2558.lcssa.i.i, %bb.ks ] ; 2 uses
-  %.16523.i.i = phi i32 [ %.1508716.i.i, %.lr.ph721.i.i ], [ %.11518.i.i, %bb.ko ], [ %.13520.i.i, %bb.kn ], [ %.15522.i.i, %bb.ks ] ; 2 uses
-  %.16473.i.i = phi i32 [ %.1458717.i.i, %.lr.ph721.i.i ], [ %i.bqt, %bb.ko ], [ %i.bra, %bb.kn ], [ %i.brn, %bb.ks ] ; 2 uses
-  %.22.i201.i = phi i32 [ %.1444718.i.i, %.lr.ph721.i.i ], [ %i.bri, %bb.ko ], [ %.18.i266.i, %bb.kn ], [ %.21.i263.i, %bb.ks ] ; 2 uses
-  %.2.i.i = phi ptr [ %.1442719.i.i, %.lr.ph721.i.i ], [ %i.ly, %bb.ko ], [ %i.ly, %bb.kn ], [ %i.ly, %bb.ks ] ; 2 uses
-  %2 = load i32, ptr %.1564712.i.i, align 4, !tbaa !3 ; 3 uses
+.loopexit678.i.i:                                 ; preds = %bb.ks, %bb.kn, %bb.ko
+  %.16523.i.i = phi i32 [ %.13520.i.i, %bb.kn ], [ %.11518.i.i, %bb.ko ], [ %.15522.i.i, %bb.ks ] ; 5 uses
+  %.16473.i.i = phi i32 [ %i.bra, %bb.kn ], [ %i.bqt, %bb.ko ], [ %i.brn, %bb.ks ] ; 5 uses
+  %.22.i263.i = phi i32 [ %.18.i266.i, %bb.kn ], [ %i.bri, %bb.ko ], [ %.21.i263.i, %bb.ks ] ; 5 uses
+  %2 = load i32, ptr %.1564712.i.i, align 4, !tbaa !3 ; 6 uses
   %3 = and i32 %2, 1226843280
   %4 = icmp eq i32 %3, 1226843280
-  br i1 %4, label %switch.lookup, label %.lr.ph.i202.i
+  br i1 %4, label %10, label %.loopexit678.i.i.a
 
-.lr.ph.i202.i:                                    ; preds = %.loopexit678.i.i.a
-  %5 = getelementptr inbounds i8, ptr %.1564712.i.i, i64 -4 ; 3 uses
-  %6 = getelementptr inbounds nuw i8, ptr %.1564712.i.i, i64 4 ; 3 uses
+.loopexit678.jt0.i.i:                             ; preds = %.lr.ph721.i.i
+  %5 = and i32 %i.bnk, 1226843280
+  %6 = icmp eq i32 %5, 1226843280
+  br i1 %6, label %.lr.ph.i202.i, label %.loopexit678.i.i.a
+
+.loopexit678.i.i.a:                               ; preds = %.loopexit678.jt0.i.i, %.loopexit678.i.i
+  %7 = phi i32 [ %i.bnk, %.loopexit678.jt0.i.i ], [ %2, %.loopexit678.i.i ]
+  %.2847.i.i = phi ptr [ %.1442719.i.i, %.loopexit678.jt0.i.i ], [ %i.ly, %.loopexit678.i.i ]
+  %.22845.i.i = phi i32 [ %.1444718.i.i, %.loopexit678.jt0.i.i ], [ %.22.i263.i, %.loopexit678.i.i ]
+  %.16473843.i.i = phi i32 [ %.1458717.i.i, %.loopexit678.jt0.i.i ], [ %.16473.i.i, %.loopexit678.i.i ]
+  %.16523841.i.i = phi i32 [ %.1508716.i.i, %.loopexit678.jt0.i.i ], [ %.16523.i.i, %.loopexit678.i.i ]
+  %.3559838.i.i = phi ptr [ %.1557715.i.i, %.loopexit678.jt0.i.i ], [ %.2558.lcssa.i.i, %.loopexit678.i.i ] ; 2 uses
+  %.1567835.i.i = phi i32 [ 0, %.loopexit678.jt0.i.i ], [ %.0566.lcssa.i.i, %.loopexit678.i.i ] ; 3 uses
+  %8 = getelementptr inbounds i8, ptr %.1564712.i.i, i64 -4 ; 3 uses
+  %9 = getelementptr inbounds nuw i8, ptr %.1564712.i.i, i64 4 ; 3 uses
   br label %bb.kt
 
-bb.kt:                                            ; preds = %opj_t1_update_flags.exit.i204.i, %.lr.ph.i202.i
-  %.39.i = phi i32 [ %.38.i, %.lr.ph.i202.i ], [ %.40.i, %opj_t1_update_flags.exit.i204.i ] ; 3 uses
-  %i.brv = phi i32 [ %2, %.lr.ph.i202.i ], [ %i.bye, %opj_t1_update_flags.exit.i204.i ] ; 3 uses
-  %.3708.i.i = phi ptr [ %.2.i.i, %.lr.ph.i202.i ], [ %.5.i206.i, %opj_t1_update_flags.exit.i204.i ]
-  %.23707.i.i = phi i32 [ %.22.i201.i, %.lr.ph.i202.i ], [ %.39.i205.i, %opj_t1_update_flags.exit.i204.i ] ; 5 uses
-  %.17474706.i.i = phi i32 [ %.16473.i.i, %.lr.ph.i202.i ], [ %.29486.i.i, %opj_t1_update_flags.exit.i204.i ] ; 3 uses
-  %.17524705.i.i = phi i32 [ %.16523.i.i, %.lr.ph.i202.i ], [ %.29536.i.i, %opj_t1_update_flags.exit.i204.i ] ; 5 uses
-  %.0568704.i.i = phi i32 [ %.1567.i.i, %.lr.ph.i202.i ], [ %i.byg, %opj_t1_update_flags.exit.i204.i ] ; 6 uses
-  %.0569703.i.i = phi ptr [ %.3559.i.i, %.lr.ph.i202.i ], [ %i.byf, %opj_t1_update_flags.exit.i204.i ] ; 3 uses
-  %i.brw = icmp eq i32 %.0568704.i.i, %.1567.i.i
+10:                                               ; preds = %.loopexit678.i.i
+  switch i32 %.0566.lcssa.i.i, label %default.unreachable.i.i [
+    i32 0, label %.lr.ph.i202.i
+    i32 1, label %13
+    i32 2, label %15
+    i32 3, label %17
+  ]
+
+.lr.ph.i202.i:                                    ; preds = %10, %.loopexit678.jt0.i.i
+  %11 = phi i32 [ %2, %10 ], [ %i.bnk, %.loopexit678.jt0.i.i ]
+  %.2848.i.i = phi ptr [ %i.ly, %10 ], [ %.1442719.i.i, %.loopexit678.jt0.i.i ]
+  %.22846.i.i = phi i32 [ %.22.i263.i, %10 ], [ %.1444718.i.i, %.loopexit678.jt0.i.i ]
+  %.16473844.i.i = phi i32 [ %.16473.i.i, %10 ], [ %.1458717.i.i, %.loopexit678.jt0.i.i ]
+  %.16523842.i.i = phi i32 [ %.16523.i.i, %10 ], [ %.1508716.i.i, %.loopexit678.jt0.i.i ]
+  %.3559839.i.i = phi ptr [ %.2558.lcssa.i.i, %10 ], [ %.1557715.i.i, %.loopexit678.jt0.i.i ]
+  %12 = and i32 %11, -1226833921
+  br label %switch.lookup
+
+13:                                               ; preds = %10
+  %14 = and i32 %2, -1224736769
+  br label %switch.lookup
+
+15:                                               ; preds = %10
+  %16 = and i32 %2, -1207959553
+  br label %switch.lookup
+
+17:                                               ; preds = %10
+  %18 = and i32 %2, -1073741825
+  br label %switch.lookup
+
+bb.kt:                                            ; preds = %opj_t1_update_flags.exit.i204.i, %.loopexit678.i.i.a
+  %.39.i = phi i32 [ %.38.i, %.loopexit678.i.i.a ], [ %.40.i, %opj_t1_update_flags.exit.i204.i ] ; 3 uses
+  %i.brv = phi i32 [ %7, %.loopexit678.i.i.a ], [ %i.bye, %opj_t1_update_flags.exit.i204.i ] ; 3 uses
+  %.3708.i.i = phi ptr [ %.2847.i.i, %.loopexit678.i.i.a ], [ %.5.i206.i, %opj_t1_update_flags.exit.i204.i ]
+  %.23707.i.i = phi i32 [ %.22845.i.i, %.loopexit678.i.i.a ], [ %.39.i205.i, %opj_t1_update_flags.exit.i204.i ] ; 5 uses
+  %.17474706.i.i = phi i32 [ %.16473843.i.i, %.loopexit678.i.i.a ], [ %.29486.i.i, %opj_t1_update_flags.exit.i204.i ] ; 3 uses
+  %.17524705.i.i = phi i32 [ %.16523841.i.i, %.loopexit678.i.i.a ], [ %.29536.i.i, %opj_t1_update_flags.exit.i204.i ] ; 5 uses
+  %.0568704.i.i = phi i32 [ %.1567835.i.i, %.loopexit678.i.i.a ], [ %i.byg, %opj_t1_update_flags.exit.i204.i ] ; 6 uses
+  %.0569703.i.i = phi ptr [ %.3559838.i.i, %.loopexit678.i.i.a ], [ %i.byf, %opj_t1_update_flags.exit.i204.i ] ; 3 uses
+  %i.brw = icmp eq i32 %.0568704.i.i, %.1567835.i.i
   %or.cond.i203.i = and i1 %.not630.i.i, %i.brw
   %.pre811.i.i = mul nuw nsw i32 %.0568704.i.i, 3 ; 11 uses
   br i1 %or.cond.i203.i, label %.thread651.i.i, label %bb.ku
@@ -1287,8 +1325,8 @@ bb.lf:                                            ; preds = %bb.le, %bb.ld
   %.31659.i.i = phi i32 [ %.30.i240.i, %.loopexit674..thread651_crit_edge.i.i ], [ %.23707.i.i, %bb.kt ] ; 3 uses
   %.23480658.i.i = phi i32 [ %.22479.i.i, %.loopexit674..thread651_crit_edge.i.i ], [ %.17474706.i.i, %bb.kt ]
   %.23530657.i.i = phi i32 [ %.22529.i.i, %.loopexit674..thread651_crit_edge.i.i ], [ %.17524705.i.i, %bb.kt ] ; 3 uses
-  %i.btr = load i32, ptr %5, align 4, !tbaa !3
-  %i.bts = load i32, ptr %6, align 4, !tbaa !3
+  %i.btr = load i32, ptr %8, align 4, !tbaa !3
+  %i.bts = load i32, ptr %9, align 4, !tbaa !3
   %i.btt = icmp eq i32 %.0568704.i.i, 0           ; 2 uses
   %i.btu = add nuw nsw i32 %.pre811.i.i, 12
   %.pn.in.v.i.i242.i = select i1 %i.btt, i32 14, i32 %i.btu
@@ -1426,9 +1464,9 @@ bb.lp:                                            ; preds = %bb.lo, %bb.ln
   %i.bwn = load i32, ptr %i.bo, align 8, !tbaa !107
   %i.bwo = add i32 %i.bwn, 2                      ; 2 uses
   %i.bwp = shl nuw nsw i32 32, %.pre811.i.i
-  %i.bwq = load i32, ptr %5, align 4, !tbaa !3
+  %i.bwq = load i32, ptr %8, align 4, !tbaa !3
   %i.bwr = or i32 %i.bwq, %i.bwp
-  store i32 %i.bwr, ptr %5, align 4, !tbaa !3
+  store i32 %i.bwr, ptr %8, align 4, !tbaa !3
   %i.bws = shl nuw nsw i32 %i.buz, 19
   %i.bwt = or disjoint i32 %i.bws, 16
   %i.bwu = shl nuw nsw i32 %i.bwt, %.pre811.i.i
@@ -1436,9 +1474,9 @@ bb.lp:                                            ; preds = %bb.lo, %bb.ln
   %i.bww = or i32 %i.bwv, %i.bwu
   store i32 %i.bww, ptr %.1564712.i.i, align 4, !tbaa !3
   %i.bwx = shl nuw nsw i32 8, %.pre811.i.i
-  %i.bwy = load i32, ptr %6, align 4, !tbaa !3
+  %i.bwy = load i32, ptr %9, align 4, !tbaa !3
   %i.bwz = or i32 %i.bwy, %i.bwx
-  store i32 %i.bwz, ptr %6, align 4, !tbaa !3
+  store i32 %i.bwz, ptr %9, align 4, !tbaa !3
   %i.bxa = or i32 %.0568704.i.i, %i.bwm
   %or.cond.not.i.i251.i = icmp eq i32 %i.bxa, 0
   br i1 %or.cond.not.i.i251.i, label %bb.lq, label %bb.lr
@@ -1500,23 +1538,31 @@ opj_t1_update_flags.exit.i204.i:                  ; preds = %bb.ls, %bb.lr, %.lo
   %exitcond.not.i207.i = icmp eq i32 %i.byg, 4
   br i1 %exitcond.not.i207.i, label %.loopexit677.i.i, label %bb.kt, !llvm.loop !293
 
-switch.lookup:                                    ; preds = %.loopexit678.i.i.a
-  %7 = zext nneg i32 %.1567.i.i to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.opj_t1_cblk_encode_processor, i64 %7
-  %switch.load = load i32, ptr %switch.gep, align 4
-  %8 = and i32 %switch.load, %2
-  store i32 %8, ptr %.1564712.i.i, align 4, !tbaa !3
+default.unreachable.i.i:                          ; preds = %10
+  unreachable
+
+switch.lookup:                                    ; preds = %17, %15, %13, %.lr.ph.i202.i
+  %.sink.i.i = phi i32 [ %12, %.lr.ph.i202.i ], [ %16, %15 ], [ %18, %17 ], [ %14, %13 ]
+  %.3559840.ph.i.i = phi ptr [ %.3559839.i.i, %.lr.ph.i202.i ], [ %.2558.lcssa.i.i, %15 ], [ %.2558.lcssa.i.i, %17 ], [ %.2558.lcssa.i.i, %13 ]
+  %.1567837.ph.i.i = phi i32 [ 0, %.lr.ph.i202.i ], [ 2, %15 ], [ 3, %17 ], [ 1, %13 ]
+  %.30537.ph.i.i = phi i32 [ %.16523842.i.i, %.lr.ph.i202.i ], [ %.16523.i.i, %15 ], [ %.16523.i.i, %17 ], [ %.16523.i.i, %13 ]
+  %.30487.ph.i.i = phi i32 [ %.16473844.i.i, %.lr.ph.i202.i ], [ %.16473.i.i, %15 ], [ %.16473.i.i, %17 ], [ %.16473.i.i, %13 ]
+  %.40.ph.i.i = phi i32 [ %.22846.i.i, %.lr.ph.i202.i ], [ %.22.i263.i, %15 ], [ %.22.i263.i, %17 ], [ %.22.i263.i, %13 ]
+  %.6.ph.i.i = phi ptr [ %.2848.i.i, %.lr.ph.i202.i ], [ %i.ly, %15 ], [ %i.ly, %17 ], [ %i.ly, %13 ]
+  store i32 %.sink.i.i, ptr %.1564712.i.i, align 4, !tbaa !3
   br label %.loopexit677.i.i
 
 .loopexit677.i.i:                                 ; preds = %opj_t1_update_flags.exit.i204.i, %switch.lookup
   %.41.i = phi i32 [ %.38.i, %switch.lookup ], [ %.40.i, %opj_t1_update_flags.exit.i204.i ]
-  %.30537.i.i = phi i32 [ %.16523.i.i, %switch.lookup ], [ %.29536.i.i, %opj_t1_update_flags.exit.i204.i ]
-  %.30487.i.i = phi i32 [ %.16473.i.i, %switch.lookup ], [ %.29486.i.i, %opj_t1_update_flags.exit.i204.i ]
-  %.40.i208.i = phi i32 [ %.22.i201.i, %switch.lookup ], [ %.39.i205.i, %opj_t1_update_flags.exit.i204.i ]
-  %.6.i209.i = phi ptr [ %.2.i.i, %switch.lookup ], [ %.5.i206.i, %opj_t1_update_flags.exit.i204.i ]
-  %i.byh = sub nuw nsw i32 4, %.1567.i.i
+  %.3559840.i.i = phi ptr [ %.3559840.ph.i.i, %switch.lookup ], [ %.3559838.i.i, %opj_t1_update_flags.exit.i204.i ]
+  %.1567837.i.i = phi i32 [ %.1567837.ph.i.i, %switch.lookup ], [ %.1567835.i.i, %opj_t1_update_flags.exit.i204.i ]
+  %.30537.i.i = phi i32 [ %.30537.ph.i.i, %switch.lookup ], [ %.29536.i.i, %opj_t1_update_flags.exit.i204.i ]
+  %.30487.i.i = phi i32 [ %.30487.ph.i.i, %switch.lookup ], [ %.29486.i.i, %opj_t1_update_flags.exit.i204.i ]
+  %.40.i208.i = phi i32 [ %.40.ph.i.i, %switch.lookup ], [ %.39.i205.i, %opj_t1_update_flags.exit.i204.i ]
+  %.6.i209.i = phi ptr [ %.6.ph.i.i, %switch.lookup ], [ %.5.i206.i, %opj_t1_update_flags.exit.i204.i ]
+  %i.byh = sub nuw nsw i32 4, %.1567837.i.i
   %i.byi = zext nneg i32 %i.byh to i64
-  %i.byj = getelementptr inbounds nuw [4 x i8], ptr %.3559.i.i, i64 %i.byi
+  %i.byj = getelementptr inbounds nuw [4 x i8], ptr %.3559840.i.i, i64 %i.byi
   br label %bb.lt
 
 bb.lt:                                            ; preds = %.loopexit677.i.i, %.loopexit682.i.i

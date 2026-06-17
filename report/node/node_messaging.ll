@@ -201,9 +201,9 @@ bb.p:                                             ; preds = %_ZNSt5dequeISt10sha
 define dso_local void @_ZN4node6worker11MessagePort9OnMessageENS1_21MessageProcessingModeE(ptr noundef nonnull align 8 dereferenceable(264) %0, i32 noundef %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %2 = alloca %"class.v8::HandleScope", align 8   ; 7 uses
-  %3 = alloca %"class.v8::HandleScope", align 8   ; 8 uses
-  %4 = alloca %"class.v8::Local.36", align 8      ; 5 uses
-  %5 = alloca [3 x %"class.v8::Local.36"], align 16 ; 9 uses
+  %3 = alloca %"class.v8::HandleScope", align 8   ; 12 uses
+  %4 = alloca %"class.v8::Local.36", align 8      ; 6 uses
+  %5 = alloca [3 x %"class.v8::Local.36"], align 16 ; 10 uses
   %6 = alloca %"class.node::errors::TryCatchScope", align 8 ; 13 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.b = load i32, ptr %i.a, align 8
@@ -294,7 +294,7 @@ _ZN4node17PersistentToLocal4WeakIN2v86ObjectEEENS2_5LocalIT_EEPNS2_7IsolateERKNS
 
 _ZNK4node10BaseObject6objectEPN2v87IsolateE.exit: ; preds = %_ZNK2v814PersistentBaseINS_6ObjectEE6IsWeakEv.exit.i.i.i, %_ZN4node17PersistentToLocal4WeakIN2v86ObjectEEENS2_5LocalIT_EEPNS2_7IsolateERKNS2_14PersistentBaseIS5_EE.exit.i.i.i
   %.sroa.0.0.i.i.i = phi ptr [ %.0.i.i.i.i.i, %_ZN4node17PersistentToLocal4WeakIN2v86ObjectEEENS2_5LocalIT_EEPNS2_7IsolateERKNS2_14PersistentBaseIS5_EE.exit.i.i.i ], [ %i.an, %_ZNK2v814PersistentBaseINS_6ObjectEE6IsWeakEv.exit.i.i.i ]
-  %i.be = tail call ptr @_ZN2v86Object25GetCreationContextCheckedEv(ptr noundef nonnull align 1 dereferenceable(1) %.sroa.0.0.i.i.i) #29 ; 3 uses
+  %i.be = tail call ptr @_ZN2v86Object25GetCreationContextCheckedEv(ptr noundef nonnull align 1 dereferenceable(1) %.sroa.0.0.i.i.i) #29 ; 4 uses
   %i.bf = icmp eq i32 %1, 0
   br i1 %i.bf, label %bb.e, label %bb.f
 
@@ -345,8 +345,8 @@ bb.f:                                             ; preds = %_ZNK4node10BaseObje
   br i1 %.not66, label %_ZN4node6worker11MessagePort12TriggerAsyncEv.exit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.f
-  %i.co = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
-  %i.cp = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
+  %i.co = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 5 uses
+  %i.cp = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 256
   %i.cr = getelementptr inbounds nuw i8, ptr %6, i64 48
   %i.cs = getelementptr inbounds nuw i8, ptr %6, i64 56
@@ -444,7 +444,7 @@ _ZN2v88internal12HandleHelper12EqualHandlesINS_5LocalINS_5ValueEEENS3_INS_6Symbo
   %i.ek = load i64, ptr %i.dy, align 8
   %i.el = load i64, ptr %i.ei, align 8
   %i.em = icmp eq i64 %i.ek, %i.el
-  br i1 %i.em, label %_ZN4node5DebugIJEEEvPNS_9AsyncWrapEPKcDpOT_.exit, label %_ZN2v88internal12HandleHelper12EqualHandlesINS_5LocalINS_5ValueEEENS3_INS_6SymbolEEEEEbRKT_RKT0_.exit.thread
+  br i1 %i.em, label %_ZN4node5DebugIJEEEvPNS_9AsyncWrapEPKcDpOT_.exit.jt1, label %_ZN2v88internal12HandleHelper12EqualHandlesINS_5LocalINS_5ValueEEENS3_INS_6SymbolEEEEEbRKT_RKT0_.exit.thread
 
 _ZN2v88internal12HandleHelper12EqualHandlesINS_5LocalINS_5ValueEEENS3_INS_6SymbolEEEEEbRKT_RKT0_.exit.thread: ; preds = %bb.n, %_ZN2v88internal12HandleHelper12EqualHandlesINS_5LocalINS_5ValueEEENS3_INS_6SymbolEEEEEbRKT_RKT0_.exit
   %i.en = getelementptr inbounds nuw i8, ptr %i.ee, i64 1001
@@ -526,32 +526,57 @@ bb.r:                                             ; preds = %bb.q
 .thread59:                                        ; preds = %bb.p, %.thread62, %bb.r, %bb.q
   %i.gd = load ptr, ptr %i.l, align 8
   %.not65 = icmp eq ptr %i.gd, null
-  br i1 %.not65, label %_ZN4node5DebugIJEEEvPNS_9AsyncWrapEPKcDpOT_.exit, label %bb.s
+  br i1 %.not65, label %_ZN4node5DebugIJEEEvPNS_9AsyncWrapEPKcDpOT_.exit.jt1, label %bb.s
 
 bb.s:                                             ; preds = %.thread59
   %i.ge = load i32, ptr %i.n, align 8
   %i.gf = add i32 %i.ge, -1
   %spec.select.i.i25 = icmp ult i32 %i.gf, 2
-  br i1 %spec.select.i.i25, label %_ZN4node5DebugIJEEEvPNS_9AsyncWrapEPKcDpOT_.exit, label %bb.t
+  br i1 %spec.select.i.i25, label %_ZN4node5DebugIJEEEvPNS_9AsyncWrapEPKcDpOT_.exit.jt1, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   %i.gg = call i32 @uv_async_send(ptr noundef nonnull %i.cv) #29
   %i.gh = icmp eq i32 %i.gg, 0
-  br i1 %i.gh, label %_ZN4node5DebugIJEEEvPNS_9AsyncWrapEPKcDpOT_.exit, label %bb.u, !prof !29
+  br i1 %i.gh, label %_ZN4node5DebugIJEEEvPNS_9AsyncWrapEPKcDpOT_.exit.jt1, label %bb.u, !prof !29
 
 bb.u:                                             ; preds = %bb.t
   call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node6worker11MessagePort12TriggerAsyncEvE20error_and_abort_args) #29
   call void @abort() #30
   unreachable
 
-_ZN4node5DebugIJEEEvPNS_9AsyncWrapEPKcDpOT_.exit: ; preds = %bb.t, %bb.s, %bb.o, %_ZNK4node11Environment16can_call_into_jsEv.exit.thread, %bb.p, %.thread59, %_ZN2v88internal12HandleHelper12EqualHandlesINS_5LocalINS_5ValueEEENS3_INS_6SymbolEEEEEbRKT_RKT0_.exit
-  %.116 = phi i32 [ 0, %bb.p ], [ 1, %.thread59 ], [ 3, %_ZN2v88internal12HandleHelper12EqualHandlesINS_5LocalINS_5ValueEEENS3_INS_6SymbolEEEEEbRKT_RKT0_.exit ], [ 2, %bb.o ], [ 2, %_ZNK4node11Environment16can_call_into_jsEv.exit.thread ], [ 1, %bb.s ], [ 1, %bb.t ]
+_ZN4node5DebugIJEEEvPNS_9AsyncWrapEPKcDpOT_.exit.jt1: ; preds = %_ZN2v88internal12HandleHelper12EqualHandlesINS_5LocalINS_5ValueEEENS3_INS_6SymbolEEEEEbRKT_RKT0_.exit, %bb.t, %bb.s, %.thread59
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #29
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #29
+  call void @_ZN2v87Context4ExitEv(ptr noundef nonnull align 1 dereferenceable(1) %i.be) #29
+  %7 = load ptr, ptr %3, align 8                  ; 2 uses
+  %8 = icmp eq ptr %7, null
+  br i1 %8, label %_ZN2v811HandleScopeD2Ev.exit20, label %9, !prof !5
+
+_ZN4node5DebugIJEEEvPNS_9AsyncWrapEPKcDpOT_.exit: ; preds = %_ZNK4node11Environment16can_call_into_jsEv.exit.thread, %bb.o, %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #29
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #29
   call void @_ZN2v87Context4ExitEv(ptr noundef nonnull align 1 dereferenceable(1) %i.be) #29
   %i.gi = load ptr, ptr %3, align 8               ; 2 uses
   %i.gj = icmp eq ptr %i.gi, null
-  br i1 %i.gj, label %_ZN2v811HandleScopeD2Ev.exit20, label %bb.v, !prof !5
+  br i1 %i.gj, label %.backedge, label %bb.v, !prof !5
+
+9:                                                ; preds = %_ZN4node5DebugIJEEEvPNS_9AsyncWrapEPKcDpOT_.exit.jt1
+  %10 = ptrtoint ptr %7 to i64
+  %11 = add i64 %10, 560
+  %12 = inttoptr i64 %11 to ptr                   ; 4 uses
+  %13 = load ptr, ptr %12, align 8
+  %14 = load ptr, ptr %i.co, align 8
+  store ptr %14, ptr %12, align 8
+  store ptr %13, ptr %i.co, align 8
+  %15 = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 2 uses
+  %16 = load i32, ptr %15, align 8
+  %17 = add nsw i32 %16, -1
+  store i32 %17, ptr %15, align 8
+  %18 = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 2 uses
+  %19 = load ptr, ptr %18, align 8
+  %20 = load ptr, ptr %i.cp, align 8              ; 2 uses
+  %.not.i19.jt1 = icmp eq ptr %19, %20
+  br i1 %.not.i19.jt1, label %_ZN2v811HandleScopeD2Ev.exit20, label %21, !prof !29
 
 bb.v:                                             ; preds = %_ZN4node5DebugIJEEEvPNS_9AsyncWrapEPKcDpOT_.exit
   %i.gk = ptrtoint ptr %i.gi to i64
@@ -569,32 +594,31 @@ bb.v:                                             ; preds = %_ZN4node5DebugIJEEE
   %i.gt = load ptr, ptr %i.gs, align 8
   %i.gu = load ptr, ptr %i.cp, align 8            ; 2 uses
   %.not.i19 = icmp eq ptr %i.gt, %i.gu
-  br i1 %.not.i19, label %_ZN2v811HandleScopeD2Ev.exit20, label %bb.w, !prof !29
+  br i1 %.not.i19, label %.backedge, label %bb.w, !prof !29
+
+21:                                               ; preds = %9
+  store ptr %20, ptr %18, align 8
+  %22 = load ptr, ptr %3, align 8
+  call void @_ZN2v811HandleScope16DeleteExtensionsEPNS_7IsolateE(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef %22) #29
+  br label %_ZN2v811HandleScopeD2Ev.exit20
 
 bb.w:                                             ; preds = %bb.v
   store ptr %i.gu, ptr %i.gs, align 8
   %i.gv = load ptr, ptr %3, align 8
   call void @_ZN2v811HandleScope16DeleteExtensionsEPNS_7IsolateE(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef %i.gv) #29
-  br label %_ZN2v811HandleScopeD2Ev.exit20
+  br label %.backedge
 
-_ZN2v811HandleScopeD2Ev.exit20:                   ; preds = %_ZN4node5DebugIJEEEvPNS_9AsyncWrapEPKcDpOT_.exit, %bb.v, %bb.w
+_ZN2v811HandleScopeD2Ev.exit20:                   ; preds = %21, %9, %_ZN4node5DebugIJEEEvPNS_9AsyncWrapEPKcDpOT_.exit.jt1
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #29
-  switch i32 %.116, label %default.unreachable [
-    i32 0, label %.backedge
-    i32 3, label %_ZN4node6worker11MessagePort12TriggerAsyncEv.exit
-    i32 2, label %.backedge
-    i32 1, label %_ZN4node6worker11MessagePort12TriggerAsyncEv.exit
-  ]
+  br label %_ZN4node6worker11MessagePort12TriggerAsyncEv.exit
 
-.backedge:                                        ; preds = %_ZN2v811HandleScopeD2Ev.exit20, %_ZN2v811HandleScopeD2Ev.exit20
+.backedge:                                        ; preds = %bb.w, %bb.v, %_ZN4node5DebugIJEEEvPNS_9AsyncWrapEPKcDpOT_.exit
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #29
   %i.gw = load ptr, ptr %i.l, align 8
   %.not = icmp eq ptr %i.gw, null
   br i1 %.not, label %_ZN4node6worker11MessagePort12TriggerAsyncEv.exit, label %bb.g, !llvm.loop !169
 
-default.unreachable:                              ; preds = %_ZN2v811HandleScopeD2Ev.exit20
-  unreachable
-
-_ZN4node6worker11MessagePort12TriggerAsyncEv.exit: ; preds = %_ZN2v811HandleScopeD2Ev.exit20, %_ZN2v811HandleScopeD2Ev.exit20, %.backedge, %bb.f, %bb.i, %bb.h
+_ZN4node6worker11MessagePort12TriggerAsyncEv.exit: ; preds = %.backedge, %_ZN2v811HandleScopeD2Ev.exit20, %bb.f, %bb.i, %bb.h
   %i.gx = load ptr, ptr %2, align 8               ; 3 uses
   %i.gy = icmp eq ptr %i.gx, null
   br i1 %i.gy, label %_ZN2v811HandleScopeD2Ev.exit, label %bb.x, !prof !5

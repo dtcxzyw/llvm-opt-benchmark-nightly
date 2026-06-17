@@ -201,7 +201,7 @@ define void @_ZN6duckdb33DisabledCompressionMethodsSetting9SetGlobalEPNS_16Datab
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %6 = alloca %"class.duckdb::vector.521", align 8 ; 10 uses
-  %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
+  %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %9 = alloca %"class.std::allocator", align 1    ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
@@ -252,7 +252,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31: ; preds = %_ZN
   %i.l = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.m = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %i.o = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 3 uses
   br label %bb.c
 
 bb.b:                                             ; preds = %._crit_edge.i.i
@@ -282,9 +282,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit37: ; preds = %_ZN
   br label %bb.ab
 
 bb.c:                                             ; preds = %.lr.ph, %bb.t
-  %i.v = phi ptr [ null, %.lr.ph ], [ %10, %bb.t ] ; 6 uses
-  %i.w = phi ptr [ null, %.lr.ph ], [ %11, %bb.t ] ; 6 uses
-  %i.x = phi ptr [ null, %.lr.ph ], [ %12, %bb.t ] ; 12 uses
+  %i.v = phi ptr [ null, %.lr.ph ], [ %10, %bb.t ] ; 4 uses
+  %i.w = phi ptr [ null, %.lr.ph ], [ %11, %bb.t ] ; 5 uses
+  %i.x = phi ptr [ null, %.lr.ph ], [ %12, %bb.t ] ; 9 uses
   %.sroa.056.064 = phi ptr [ %i.i, %.lr.ph ], [ %i.be, %bb.t ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
   invoke void @_ZN6duckdb10StringUtil5LowerERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %7, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.056.064)
@@ -325,11 +325,11 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 
 bb.h:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
   %.not.i.i.i = icmp eq ptr %i.w, %i.x
-  br i1 %.not.i.i.i, label %_ZN6duckdb6vectorINS_15CompressionTypeELb1ESaIS1_EE5clearEv.exit, label %_ZSt8_DestroyIPN6duckdb15CompressionTypeES1_EvT_S3_RSaIT0_E.exit.i.i.i
+  br i1 %.not.i.i.i, label %_ZN6duckdb6vectorINS_15CompressionTypeELb1ESaIS1_EE5clearEv.exit.jt2, label %_ZSt8_DestroyIPN6duckdb15CompressionTypeES1_EvT_S3_RSaIT0_E.exit.i.i.i
 
 _ZSt8_DestroyIPN6duckdb15CompressionTypeES1_EvT_S3_RSaIT0_E.exit.i.i.i: ; preds = %bb.h
   store ptr %i.x, ptr %i.m, align 8, !tbaa !412
-  br label %_ZN6duckdb6vectorINS_15CompressionTypeELb1ESaIS1_EE5clearEv.exit
+  br label %_ZN6duckdb6vectorINS_15CompressionTypeELb1ESaIS1_EE5clearEv.exit.jt2
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread: ; preds = %._ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread_crit_edge, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
   %i.ag = phi ptr [ %.pre, %._ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread_crit_edge ], [ %i.ab, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit ]
@@ -462,30 +462,36 @@ _ZNSt6vectorIN6duckdb15CompressionTypeESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9_
   store ptr %i.bb, ptr %i.n, align 8, !tbaa !417
   br label %_ZN6duckdb6vectorINS_15CompressionTypeELb1ESaIS1_EE5clearEv.exit
 
-_ZN6duckdb6vectorINS_15CompressionTypeELb1ESaIS1_EE5clearEv.exit: ; preds = %bb.e, %bb.o, %_ZNSt6vectorIN6duckdb15CompressionTypeESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i, %_ZSt8_DestroyIPN6duckdb15CompressionTypeES1_EvT_S3_RSaIT0_E.exit.i.i.i, %bb.h
-  %10 = phi ptr [ %i.v, %_ZSt8_DestroyIPN6duckdb15CompressionTypeES1_EvT_S3_RSaIT0_E.exit.i.i.i ], [ %i.v, %bb.e ], [ %i.v, %bb.h ], [ %i.bb, %_ZNSt6vectorIN6duckdb15CompressionTypeESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.v, %bb.o ]
-  %11 = phi ptr [ %i.x, %_ZSt8_DestroyIPN6duckdb15CompressionTypeES1_EvT_S3_RSaIT0_E.exit.i.i.i ], [ %i.w, %bb.e ], [ %i.w, %bb.h ], [ %i.ba, %_ZNSt6vectorIN6duckdb15CompressionTypeESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.ao, %bb.o ]
-  %12 = phi ptr [ %i.x, %_ZSt8_DestroyIPN6duckdb15CompressionTypeES1_EvT_S3_RSaIT0_E.exit.i.i.i ], [ %i.x, %bb.e ], [ %i.x, %bb.h ], [ %i.ax, %_ZNSt6vectorIN6duckdb15CompressionTypeESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.x, %bb.o ]
-  %.011 = phi i32 [ 2, %_ZSt8_DestroyIPN6duckdb15CompressionTypeES1_EvT_S3_RSaIT0_E.exit.i.i.i ], [ 3, %bb.e ], [ 2, %bb.h ], [ 0, %_ZNSt6vectorIN6duckdb15CompressionTypeESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ 0, %bb.o ]
+_ZN6duckdb6vectorINS_15CompressionTypeELb1ESaIS1_EE5clearEv.exit: ; preds = %bb.o, %_ZNSt6vectorIN6duckdb15CompressionTypeESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i, %bb.e
+  %10 = phi ptr [ %i.v, %bb.o ], [ %i.v, %bb.e ], [ %i.bb, %_ZNSt6vectorIN6duckdb15CompressionTypeESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ]
+  %11 = phi ptr [ %i.ao, %bb.o ], [ %i.w, %bb.e ], [ %i.ba, %_ZNSt6vectorIN6duckdb15CompressionTypeESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ]
+  %12 = phi ptr [ %i.x, %bb.o ], [ %i.x, %bb.e ], [ %i.ax, %_ZNSt6vectorIN6duckdb15CompressionTypeESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ]
   %i.bc = load ptr, ptr %7, align 8, !tbaa !7     ; 2 uses
   %i.bd = icmp eq ptr %i.bc, %i.o
-  br i1 %i.bd, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit47, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i45
+  br i1 %i.bd, label %bb.t, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i45
+
+_ZN6duckdb6vectorINS_15CompressionTypeELb1ESaIS1_EE5clearEv.exit.jt2: ; preds = %bb.h, %_ZSt8_DestroyIPN6duckdb15CompressionTypeES1_EvT_S3_RSaIT0_E.exit.i.i.i
+  %13 = load ptr, ptr %7, align 8, !tbaa !7       ; 2 uses
+  %14 = icmp eq ptr %13, %i.o
+  br i1 %14, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit47.jt2, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit47
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i45: ; preds = %_ZN6duckdb6vectorINS_15CompressionTypeELb1ESaIS1_EE5clearEv.exit
   call void @_ZdlPv(ptr noundef %i.bc) #27
-  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit47
+  br label %bb.t
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit47: ; preds = %_ZN6duckdb6vectorINS_15CompressionTypeELb1ESaIS1_EE5clearEv.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i45
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit47: ; preds = %_ZN6duckdb6vectorINS_15CompressionTypeELb1ESaIS1_EE5clearEv.exit.jt2
+  call void @_ZdlPv(ptr noundef %13) #27
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit47.jt2
+
+bb.t:                                             ; preds = %_ZN6duckdb6vectorINS_15CompressionTypeELb1ESaIS1_EE5clearEv.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i45
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
-  switch i32 %.011, label %._crit_edge [
-    i32 0, label %bb.t
-    i32 3, label %bb.t
-  ]
-
-bb.t:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit47, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit47
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.056.064, i64 32 ; 2 uses
   %.not = icmp eq ptr %i.be, %i.k
   br i1 %.not, label %._crit_edge, label %bb.c
+
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit47.jt2: ; preds = %_ZN6duckdb6vectorINS_15CompressionTypeELb1ESaIS1_EE5clearEv.exit.jt2, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit47
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
+  br label %._crit_edge
 
 bb.u:                                             ; preds = %.loopexit, %.loopexit.split-lp, %bb.m, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit41, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i39, %bb.g
   %.pn22.pn = phi { ptr, i32 } [ %i.aa, %bb.g ], [ %i.ak, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i39 ], [ %.pn2062, %bb.m ], [ %i.ak, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit41 ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ] ; 2 uses
@@ -502,7 +508,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit50: ; preds = %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
   br label %bb.z
 
-._crit_edge:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit47, %bb.t, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31
+._crit_edge:                                      ; preds = %bb.t, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit47.jt2, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31
   invoke void @_ZN6duckdb8DBConfig29SetDisabledCompressionMethodsERKNS_6vectorINS_15CompressionTypeELb1ESaIS2_EEE(ptr noundef nonnull align 8 dereferenceable(1360) %1, ptr noundef nonnull align 8 dereferenceable(24) %6)
           to label %bb.v unwind label %bb.y
 

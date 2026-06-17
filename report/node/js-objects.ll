@@ -201,9 +201,9 @@ bb.a:
   %i.c = add i64 %i.b, -1
   %i.d = inttoptr i64 %i.c to ptr
   %i.e = load atomic volatile i64, ptr %i.d monotonic, align 8 ; 3 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 560 ; 13 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 560 ; 14 uses
   %i.g = load ptr, ptr %i.f, align 8              ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 568 ; 8 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 568 ; 10 uses
   %i.i = load ptr, ptr %i.h, align 8
   %i.j = icmp eq ptr %i.g, %i.i
   br i1 %i.j, label %bb.b, label %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit, !prof !7
@@ -366,7 +366,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br i1 %.not348353, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.l
-  %i.da = getelementptr inbounds nuw i8, ptr %0, i64 576 ; 4 uses
+  %i.da = getelementptr inbounds nuw i8, ptr %0, i64 576 ; 6 uses
   %i.db = getelementptr inbounds nuw i8, ptr %7, i64 4
   %i.dc = getelementptr inbounds nuw i8, ptr %7, i64 12
   %i.dd = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
@@ -392,10 +392,10 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph, %bb.au
-  %.091356 = phi i1 [ %i.cw, %.lr.ph ], [ %.6, %bb.au ] ; 2 uses
+  %.091356 = phi i1 [ %i.cw, %.lr.ph ], [ %.6.jt5, %bb.au ] ; 2 uses
   %.sroa.0184.0354 = phi i64 [ 0, %.lr.ph ], [ %i.lq, %bb.au ] ; 2 uses
-  %i.dx = load ptr, ptr %i.f, align 8             ; 3 uses
-  %i.dy = load ptr, ptr %i.h, align 8             ; 3 uses
+  %i.dx = load ptr, ptr %i.f, align 8             ; 4 uses
+  %i.dy = load ptr, ptr %i.h, align 8             ; 5 uses
   %i.dz = load i32, ptr %i.da, align 8
   %i.ea = add nsw i32 %i.dz, 1
   store i32 %i.ea, ptr %i.da, align 8
@@ -682,7 +682,7 @@ _ZN2v88internal14LookupIteratorC2EPNS0_7IsolateENS0_12DirectHandleINS0_5UnionIJN
 
 bb.ag:                                            ; preds = %_ZN2v88internal14LookupIteratorC2EPNS0_7IsolateENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEENS4_INS0_4NameEEENS1_13ConfigurationE.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #21
-  br label %.thread331
+  br label %.thread331.jt1
 
 _ZN2v88internal14LookupIterator20ComputeConfigurationEPNS0_7IsolateENS1_13ConfigurationENS0_12DirectHandleINS0_4NameEEE.exit.i.i136: ; preds = %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #21
@@ -746,31 +746,27 @@ _ZN2v88internal14LookupIteratorC2EPNS0_7IsolateENS0_12DirectHandleINS0_5UnionIJN
   call void @_ZN2v88internal14LookupIterator5StartILb0EEEvv(ptr noundef nonnull align 8 dereferenceable(88) %7) #21
   %i.kd = load i32, ptr %i.db, align 4
   %.not349 = icmp eq i32 %i.kd, 0
-  br i1 %.not349, label %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit115.thread343, label %bb.ak
+  br i1 %.not349, label %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit115, label %bb.ak
 
 bb.ak:                                            ; preds = %_ZN2v88internal14LookupIteratorC2EPNS0_7IsolateENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEENS4_INS0_4NameEEENS1_13ConfigurationE.exit145
   %.sroa.0.0.copyload.i.i146 = load i32, ptr %i.dd, align 8
   %i.ke = and i32 %.sroa.0.0.copyload.i.i146, 8
   %.not.i.i = icmp eq i32 %i.ke, 0
-  br i1 %.not.i.i, label %bb.al, label %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit115.thread343
+  br i1 %.not.i.i, label %bb.al, label %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit115
 
 bb.al:                                            ; preds = %bb.ak
   %i.kf = call ptr @_ZN2v88internal6Object11GetPropertyEPNS0_14LookupIteratorEb(ptr noundef nonnull %7, i1 noundef zeroext false) #21 ; 2 uses
   %.not350 = icmp eq ptr %i.kf, null
-  br i1 %.not350, label %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit115.thread343, label %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit115
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #21
+  br i1 %.not350, label %.thread331.jt1, label %.thread
 
-_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit115.thread343: ; preds = %bb.ak, %_ZN2v88internal14LookupIteratorC2EPNS0_7IsolateENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEENS4_INS0_4NameEEENS1_13ConfigurationE.exit145, %bb.al
-  %.2.ph = phi i32 [ 1, %bb.al ], [ 5, %bb.ak ], [ 5, %_ZN2v88internal14LookupIteratorC2EPNS0_7IsolateENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEENS4_INS0_4NameEEENS1_13ConfigurationE.exit145 ]
+_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit115: ; preds = %_ZN2v88internal14LookupIteratorC2EPNS0_7IsolateENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEENS4_INS0_4NameEEENS1_13ConfigurationE.exit145, %bb.ak
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #21
   br label %.thread331
 
-_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit115: ; preds = %bb.al
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #21
-  br label %.thread
-
-.thread:                                          ; preds = %_ZN2v88internal8JSObject14FastPropertyAtEPNS0_7IsolateENS0_12DirectHandleIS1_EENS0_14RepresentationENS0_10FieldIndexE.exit, %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit113, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit115, %.thread337
-  %.sroa.0176.2 = phi ptr [ %i.ix, %.thread337 ], [ %i.kf, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit115 ], [ %i.ia, %_ZN2v88internal8JSObject14FastPropertyAtEPNS0_7IsolateENS0_12DirectHandleIS1_EENS0_14RepresentationENS0_10FieldIndexE.exit ], [ %.0.i112, %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit113 ] ; 2 uses
-  %.495 = phi i1 [ %i.jd, %.thread337 ], [ false, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit115 ], [ true, %_ZN2v88internal8JSObject14FastPropertyAtEPNS0_7IsolateENS0_12DirectHandleIS1_EENS0_14RepresentationENS0_10FieldIndexE.exit ], [ true, %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit113 ]
+.thread:                                          ; preds = %bb.al, %_ZN2v88internal8JSObject14FastPropertyAtEPNS0_7IsolateENS0_12DirectHandleIS1_EENS0_14RepresentationENS0_10FieldIndexE.exit, %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit113, %.thread337
+  %.sroa.0176.2 = phi ptr [ %i.ix, %.thread337 ], [ %.0.i112, %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit113 ], [ %i.ia, %_ZN2v88internal8JSObject14FastPropertyAtEPNS0_7IsolateENS0_12DirectHandleIS1_EENS0_14RepresentationENS0_10FieldIndexE.exit ], [ %i.kf, %bb.al ] ; 2 uses
+  %.495 = phi i1 [ %i.jd, %.thread337 ], [ true, %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit113 ], [ true, %_ZN2v88internal8JSObject14FastPropertyAtEPNS0_7IsolateENS0_12DirectHandleIS1_EENS0_14RepresentationENS0_10FieldIndexE.exit ], [ false, %bb.al ]
   br i1 %2, label %bb.am, label %bb.an
 
 bb.am:                                            ; preds = %.thread
@@ -841,29 +837,36 @@ _ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16H
   store i32 %i.lm, ptr %i.a, align 4
   br label %.thread331
 
-.thread331:                                       ; preds = %bb.p, %_ZN2v88internal6HandleINS0_4NameEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit115.thread343, %bb.ag, %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit
-  %.6 = phi i1 [ %.091356, %_ZN2v88internal6HandleINS0_4NameEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit ], [ %.495, %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit ], [ true, %bb.ag ], [ false, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit115.thread343 ], [ true, %bb.p ]
-  %.4 = phi i32 [ 5, %_ZN2v88internal6HandleINS0_4NameEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit ], [ 0, %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit ], [ 1, %bb.ag ], [ %.2.ph, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit115.thread343 ], [ 5, %bb.p ]
+.thread331.jt1:                                   ; preds = %bb.al, %bb.ag
+  store ptr %i.dx, ptr %i.f, align 8
+  %8 = load i32, ptr %i.da, align 8
+  %9 = add nsw i32 %8, -1
+  store i32 %9, ptr %i.da, align 8
+  %10 = load ptr, ptr %i.h, align 8
+  %.not.i.jt1 = icmp eq ptr %10, %i.dy
+  br i1 %.not.i.jt1, label %.loopexit, label %bb.at, !prof !17
+
+.thread331:                                       ; preds = %bb.p, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit115, %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit, %_ZN2v88internal6HandleINS0_4NameEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit
+  %.6.jt5 = phi i1 [ %.091356, %_ZN2v88internal6HandleINS0_4NameEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit ], [ %.495, %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit ], [ true, %bb.p ], [ false, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit115 ]
   store ptr %i.dx, ptr %i.f, align 8
   %i.ln = load i32, ptr %i.da, align 8
   %i.lo = add nsw i32 %i.ln, -1
   store i32 %i.lo, ptr %i.da, align 8
   %i.lp = load ptr, ptr %i.h, align 8
   %.not.i = icmp eq ptr %i.lp, %i.dy
-  br i1 %.not.i, label %_ZN2v88internal11HandleScopeD2Ev.exit, label %bb.at, !prof !17
+  br i1 %.not.i, label %bb.au, label %_ZN2v88internal11HandleScopeD2Ev.exit, !prof !17
 
-bb.at:                                            ; preds = %.thread331
+bb.at:                                            ; preds = %.thread331.jt1
   store ptr %i.dy, ptr %i.h, align 8
   call void @_ZN2v88internal11HandleScope16DeleteExtensionsEPNS0_7IsolateE(ptr noundef nonnull %0) #21
-  br label %_ZN2v88internal11HandleScopeD2Ev.exit
+  br label %.loopexit
 
-_ZN2v88internal11HandleScopeD2Ev.exit:            ; preds = %bb.at, %.thread331
-  switch i32 %.4, label %.loopexit [
-    i32 0, label %bb.au
-    i32 5, label %bb.au
-  ]
+_ZN2v88internal11HandleScopeD2Ev.exit:            ; preds = %.thread331
+  store ptr %i.dy, ptr %i.h, align 8
+  call void @_ZN2v88internal11HandleScope16DeleteExtensionsEPNS0_7IsolateE(ptr noundef nonnull %0) #21
+  br label %bb.au
 
-bb.au:                                            ; preds = %_ZN2v88internal11HandleScopeD2Ev.exit, %_ZN2v88internal11HandleScopeD2Ev.exit
+bb.au:                                            ; preds = %.thread331, %_ZN2v88internal11HandleScopeD2Ev.exit
   %i.lq = add nuw nsw i64 %.sroa.0184.0354, 1     ; 2 uses
   %.not348 = icmp eq i64 %i.lq, %i.br
   br i1 %.not348, label %.critedge, label %bb.m
@@ -874,8 +877,8 @@ bb.au:                                            ; preds = %_ZN2v88internal11Ha
   store ptr %i.ls, ptr %3, align 8
   br label %.loopexit
 
-.loopexit:                                        ; preds = %_ZN2v88internal11HandleScopeD2Ev.exit, %bb.i, %.critedge
-  %.sroa.8.0 = phi i16 [ 257, %.critedge ], [ 0, %bb.i ], [ 0, %_ZN2v88internal11HandleScopeD2Ev.exit ]
+.loopexit:                                        ; preds = %bb.at, %.thread331.jt1, %bb.i, %.critedge
+  %.sroa.8.0 = phi i16 [ 257, %.critedge ], [ 0, %bb.i ], [ 0, %.thread331.jt1 ], [ 0, %bb.at ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   br label %bb.av
 

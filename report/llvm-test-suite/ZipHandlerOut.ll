@@ -201,8 +201,8 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define dso_local noundef i32 @_ZN8NArchive4NZip8CHandler13SetPropertiesEPPKwPK14tagPROPVARIANTi(ptr noundef nonnull align 8 dereferenceable(256) initializes((208, 251), (252, 256)) %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, i32 noundef %3) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = alloca %class.CStringBase.3, align 8       ; 31 uses
-  %i.a = alloca i32, align 4                      ; 6 uses
+  %4 = alloca %class.CStringBase.3, align 8       ; 33 uses
+  %i.a = alloca i32, align 4                      ; 7 uses
   %5 = alloca %class.CStringBase.3, align 8       ; 10 uses
   %6 = alloca %class.CStringBase.3, align 8       ; 7 uses
   %7 = alloca %class.CStringBase.3, align 8       ; 17 uses
@@ -281,7 +281,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.gk
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.gk ] ; 3 uses
-  %.0542 = phi i32 [ undef, %.lr.ph ], [ %.17, %bb.gk ] ; 17 uses
+  %.0542 = phi i32 [ undef, %.lr.ph ], [ %.17.jt4, %bb.gk ] ; 17 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !136 ; 2 uses
@@ -492,9 +492,8 @@ bb.j:                                             ; preds = %bb.i
 
 _ZN11CStringBaseIwED2Ev.exit:                     ; preds = %bb.i, %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
-  %.not231 = icmp eq i32 %i.cz, 0                 ; 2 uses
-  %.0. = select i1 %.not231, i32 %.0542, i32 %i.cz
-  br i1 %.not231, label %bb.o, label %bb.p
+  %.not231 = icmp eq i32 %i.cz, 0
+  br i1 %.not231, label %bb.p, label %bb.o
 
 bb.k:                                             ; preds = %bb.gb, %bb.fv, %bb.fr, %bb.q
   %i.dc = landingpad { ptr, i32 }
@@ -524,14 +523,14 @@ bb.n:                                             ; preds = %bb.m
   br label %_ZN11CStringBaseIwED2Ev.exit267
 
 bb.o:                                             ; preds = %_ZN11CStringBaseIwED2Ev.exit
-  %23 = load i32, ptr %i.a, align 4, !tbaa !4
-  store i32 %23, ptr %i.k, align 8, !tbaa !104
-  br label %bb.p
-
-bb.p:                                             ; preds = %_ZN11CStringBaseIwED2Ev.exit, %bb.o
-  %.1101 = phi i32 [ 4, %bb.o ], [ 1, %_ZN11CStringBaseIwED2Ev.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
   br label %bb.gi
+
+bb.p:                                             ; preds = %_ZN11CStringBaseIwED2Ev.exit
+  %23 = load i32, ptr %i.a, align 4, !tbaa !4
+  store i32 %23, ptr %i.k, align 8, !tbaa !104
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
+  br label %.critedge252
 
 bb.q:                                             ; preds = %bb.f
   %i.dh = invoke noundef i32 @_Z15MyStringComparePKwS0_(ptr noundef nonnull %i.bm, ptr noundef nonnull @.str)
@@ -666,7 +665,7 @@ bb.al:                                            ; preds = %bb.ak
   br label %_ZN11CStringBaseIwED2Ev.exit278
 
 _ZN11CStringBaseIwED2Ev.exit278:                  ; preds = %bb.ak, %bb.al
-  br i1 %cond20, label %bb.gh, label %bb.gi
+  br i1 %cond20, label %.critedge252, label %bb.gi
 
 bb.am:                                            ; preds = %bb.s
   %i.eo = getelementptr inbounds nuw i8, ptr %i.bl, i64 8
@@ -681,7 +680,7 @@ bb.am:                                            ; preds = %bb.s
 
 bb.an:                                            ; preds = %bb.am, %bb.am, %bb.am, %bb.am, %bb.am
   store i32 %i.ep, ptr %i.aq, align 4, !tbaa !105
-  br label %bb.gh
+  br label %.critedge252
 
 bb.ao:                                            ; preds = %bb.r
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #18
@@ -1084,7 +1083,7 @@ bb.bu:                                            ; preds = %bb.bt
 
 _ZN11CStringBaseIwED2Ev.exit316:                  ; preds = %bb.bt, %bb.bu
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #18
-  br i1 %cond19, label %bb.gh, label %bb.gi
+  br i1 %cond19, label %.critedge252, label %bb.gi
 
 .body408:                                         ; preds = %_ZN11CStringBaseIwED2Ev.exit309, %_ZN11CStringBaseIwED2Ev.exit.i397, %bb.bl, %_ZN11CStringBaseIwED2Ev.exit308, %bb.bh
   %.pn222 = phi { ptr, i32 } [ %i.hx, %bb.bh ], [ %.pn218, %_ZN11CStringBaseIwED2Ev.exit308 ], [ %i.id, %_ZN11CStringBaseIwED2Ev.exit309 ], [ %i.ic, %bb.bl ], [ %i.gq, %_ZN11CStringBaseIwED2Ev.exit.i397 ] ; 2 uses
@@ -1262,7 +1261,7 @@ bb.ca:                                            ; preds = %bb.bz
 _ZN11CStringBaseIwED2Ev.exit320:                  ; preds = %bb.bz, %bb.ca
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #18
   %.not217 = icmp eq i32 %i.kh, 0
-  br i1 %.not217, label %bb.ce, label %.critedge
+  br i1 %.not217, label %bb.ce, label %bb.gh
 
 bb.cb:                                            ; preds = %bb.bx
   %i.kk = landingpad { ptr, i32 }
@@ -1290,7 +1289,7 @@ bb.ce:                                            ; preds = %_ZN11CStringBaseIwE
   %i.ko = load i32, ptr %i.b, align 4, !tbaa !4
   store i32 %i.ko, ptr %i.an, align 8, !tbaa !108
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #18
-  br label %bb.gh
+  br label %.critedge252
 
 bb.cf:                                            ; preds = %bb.bw
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #18
@@ -1468,7 +1467,7 @@ bb.cl:                                            ; preds = %bb.ck
 _ZN11CStringBaseIwED2Ev.exit329:                  ; preds = %bb.ck, %bb.cl
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #18
   %.not214 = icmp eq i32 %i.mg, 0
-  br i1 %.not214, label %bb.cs, label %.critedge236
+  br i1 %.not214, label %bb.cs, label %.critedge
 
 bb.cm:                                            ; preds = %bb.cf
   %i.mj = landingpad { ptr, i32 }
@@ -1517,7 +1516,7 @@ bb.cs:                                            ; preds = %_ZN11CStringBaseIwE
   %i.mr = load i32, ptr %i.c, align 4, !tbaa !4
   store i32 %i.mr, ptr %i.ak, align 4, !tbaa !117
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #18
-  br label %bb.gh
+  br label %.critedge252
 
 bb.ct:                                            ; preds = %_ZN11CStringBaseIwED2Ev.exit326
   %i.ms = load ptr, ptr %4, align 8, !tbaa !41    ; 2 uses
@@ -1680,7 +1679,7 @@ bb.cx:                                            ; preds = %bb.cw
 _ZN11CStringBaseIwED2Ev.exit334:                  ; preds = %bb.cw, %bb.cx
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #18
   %.not211 = icmp eq i32 %i.og, 0
-  br i1 %.not211, label %bb.db, label %.critedge239
+  br i1 %.not211, label %bb.db, label %.critedge236
 
 bb.cy:                                            ; preds = %bb.cu
   %i.oj = landingpad { ptr, i32 }
@@ -1708,7 +1707,7 @@ bb.db:                                            ; preds = %_ZN11CStringBaseIwE
   %i.on = load i32, ptr %i.d, align 4, !tbaa !4
   store i32 %i.on, ptr %i.ah, align 8, !tbaa !119
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #18
-  br label %bb.gh
+  br label %.critedge252
 
 bb.dc:                                            ; preds = %bb.ct
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #18
@@ -1886,7 +1885,7 @@ bb.di:                                            ; preds = %bb.dh
 _ZN11CStringBaseIwED2Ev.exit343:                  ; preds = %bb.dh, %bb.di
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #18
   %.not208 = icmp eq i32 %i.qf, 0
-  br i1 %.not208, label %bb.dp, label %.critedge242
+  br i1 %.not208, label %bb.dp, label %.critedge239
 
 bb.dj:                                            ; preds = %bb.dc
   %i.qi = landingpad { ptr, i32 }
@@ -1935,7 +1934,7 @@ bb.dp:                                            ; preds = %_ZN11CStringBaseIwE
   %i.qq = load i32, ptr %i.e, align 4, !tbaa !4
   store i32 %i.qq, ptr %i.ae, align 8, !tbaa !106
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #18
-  br label %bb.gh
+  br label %.critedge252
 
 bb.dq:                                            ; preds = %_ZN11CStringBaseIwED2Ev.exit340
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #18
@@ -2113,7 +2112,7 @@ bb.dw:                                            ; preds = %bb.dv
 _ZN11CStringBaseIwED2Ev.exit353:                  ; preds = %bb.dv, %bb.dw
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #18
   %.not205 = icmp eq i32 %i.si, 0
-  br i1 %.not205, label %bb.ed, label %.critedge245
+  br i1 %.not205, label %bb.ed, label %.critedge242
 
 bb.dx:                                            ; preds = %bb.dq
   %i.sl = landingpad { ptr, i32 }
@@ -2162,7 +2161,7 @@ bb.ed:                                            ; preds = %_ZN11CStringBaseIwE
   %i.st = load i32, ptr %i.f, align 4, !tbaa !4
   store i32 %i.st, ptr %i.ab, align 4, !tbaa !110
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #18
-  br label %bb.gh
+  br label %.critedge252
 
 bb.ee:                                            ; preds = %_ZN11CStringBaseIwED2Ev.exit350
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #18
@@ -2340,7 +2339,7 @@ bb.ek:                                            ; preds = %bb.ej
 _ZN11CStringBaseIwED2Ev.exit363:                  ; preds = %bb.ej, %bb.ek
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #18
   %.not202 = icmp eq i32 %i.ul, 0
-  br i1 %.not202, label %bb.er, label %.critedge248
+  br i1 %.not202, label %bb.er, label %.critedge245
 
 bb.el:                                            ; preds = %bb.ee
   %i.uo = landingpad { ptr, i32 }
@@ -2390,7 +2389,7 @@ bb.er:                                            ; preds = %_ZN11CStringBaseIwE
   store i32 %i.uw, ptr %i.y, align 8, !tbaa !112
   store i8 1, ptr %i.l, align 4, !tbaa !114
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #18
-  br label %bb.gh
+  br label %.critedge252
 
 bb.es:                                            ; preds = %_ZN11CStringBaseIwED2Ev.exit360
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #18
@@ -2439,7 +2438,7 @@ bb.ex:                                            ; preds = %bb.ew
 _ZN11CStringBaseIwED2Ev.exit373:                  ; preds = %bb.ew, %bb.ex
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #18
   %.not199 = icmp eq i32 %i.ve, 0
-  br i1 %.not199, label %bb.gh, label %bb.gi
+  br i1 %.not199, label %.critedge252, label %bb.gi
 
 bb.ey:                                            ; preds = %bb.es
   %i.vh = landingpad { ptr, i32 }
@@ -2532,7 +2531,7 @@ bb.fj:                                            ; preds = %bb.fi
 _ZN11CStringBaseIwED2Ev.exit383:                  ; preds = %bb.fi, %bb.fj
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #18
   %.not196 = icmp eq i32 %i.vw, 0
-  br i1 %.not196, label %bb.fq, label %.critedge252
+  br i1 %.not196, label %bb.fq, label %.critedge248
 
 bb.fk:                                            ; preds = %bb.fe
   %i.vz = landingpad { ptr, i32 }
@@ -2581,7 +2580,7 @@ bb.fq:                                            ; preds = %_ZN11CStringBaseIwE
   %i.wh = load i32, ptr %i.h, align 4, !tbaa !4
   store i32 %i.wh, ptr %i.v, align 4, !tbaa !115
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #18
-  br label %bb.gh
+  br label %.critedge252
 
 bb.fr:                                            ; preds = %_ZN11CStringBaseIwED2Ev.exit380
   %i.wi = load ptr, ptr %4, align 8, !tbaa !41
@@ -2598,7 +2597,7 @@ bb.fs:                                            ; preds = %_ZNK11CStringBaseIw
 
 bb.ft:                                            ; preds = %bb.fs
   %.not193 = icmp eq i32 %i.wl, 0
-  br i1 %.not193, label %bb.gh, label %bb.gi
+  br i1 %.not193, label %.critedge252, label %bb.gi
 
 bb.fu:                                            ; preds = %bb.fs
   %i.wm = landingpad { ptr, i32 }
@@ -2630,11 +2629,11 @@ bb.fy:                                            ; preds = %bb.fw
 bb.fz:                                            ; preds = %bb.fx
   %i.ws = load i8, ptr %i.q, align 1, !tbaa !59, !range !54, !noundef !58
   %i.wt = trunc nuw i8 %i.ws to i1
-  br i1 %i.wt, label %bb.ga, label %bb.gh
+  br i1 %i.wt, label %bb.ga, label %.critedge252
 
 bb.ga:                                            ; preds = %bb.fz
   store i8 0, ptr %i.r, align 2, !tbaa !135
-  br label %bb.gh
+  br label %.critedge252
 
 bb.gb:                                            ; preds = %_ZNK11CStringBaseIwE13CompareNoCaseEPKw.exit388
   %i.wu = load ptr, ptr %4, align 8, !tbaa !41
@@ -2661,66 +2660,69 @@ bb.ge:                                            ; preds = %bb.gc
 bb.gf:                                            ; preds = %bb.gd
   %i.wz = load i8, ptr %i.r, align 2, !tbaa !135, !range !54, !noundef !58
   %i.xa = trunc nuw i8 %i.wz to i1
-  br i1 %i.xa, label %bb.gg, label %bb.gh
+  br i1 %i.xa, label %bb.gg, label %.critedge252
 
 bb.gg:                                            ; preds = %bb.gf
   store i8 0, ptr %i.q, align 1, !tbaa !59
-  br label %bb.gh
+  br label %.critedge252
 
-bb.gh:                                            ; preds = %bb.fq, %bb.er, %bb.ed, %bb.dp, %bb.db, %bb.cs, %bb.ce, %_ZN11CStringBaseIwED2Ev.exit278, %bb.an, %_ZN11CStringBaseIwED2Ev.exit373, %bb.ft, %bb.gg, %bb.gf, %bb.fz, %bb.ga, %_ZN11CStringBaseIwED2Ev.exit316
-  %.15 = phi i32 [ %.2, %_ZN11CStringBaseIwED2Ev.exit278 ], [ %.0542, %bb.an ], [ %.3, %_ZN11CStringBaseIwED2Ev.exit316 ], [ %.0542, %bb.ce ], [ %.0542, %bb.cs ], [ %.0542, %bb.db ], [ %.0542, %bb.dp ], [ %.0542, %bb.ed ], [ %.0542, %bb.er ], [ %.0542, %_ZN11CStringBaseIwED2Ev.exit373 ], [ %.0542, %bb.fq ], [ %.0542, %bb.ft ], [ %.0542, %bb.ga ], [ %.0542, %bb.fz ], [ %.0542, %bb.gg ], [ %.0542, %bb.gf ]
-  br label %bb.gi
-
-.critedge:                                        ; preds = %_ZN11CStringBaseIwED2Ev.exit320
+bb.gh:                                            ; preds = %_ZN11CStringBaseIwED2Ev.exit320
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #18
   br label %bb.gi
 
-.critedge236:                                     ; preds = %_ZN11CStringBaseIwED2Ev.exit329
+.critedge:                                        ; preds = %_ZN11CStringBaseIwED2Ev.exit329
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #18
   br label %bb.gi
 
-.critedge239:                                     ; preds = %_ZN11CStringBaseIwED2Ev.exit334
+.critedge236:                                     ; preds = %_ZN11CStringBaseIwED2Ev.exit334
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #18
   br label %bb.gi
 
-.critedge242:                                     ; preds = %_ZN11CStringBaseIwED2Ev.exit343
+.critedge239:                                     ; preds = %_ZN11CStringBaseIwED2Ev.exit343
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #18
   br label %bb.gi
 
-.critedge245:                                     ; preds = %_ZN11CStringBaseIwED2Ev.exit353
+.critedge242:                                     ; preds = %_ZN11CStringBaseIwED2Ev.exit353
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #18
   br label %bb.gi
 
-.critedge248:                                     ; preds = %_ZN11CStringBaseIwED2Ev.exit363
+.critedge245:                                     ; preds = %_ZN11CStringBaseIwED2Ev.exit363
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #18
   br label %bb.gi
 
-.critedge252:                                     ; preds = %_ZN11CStringBaseIwED2Ev.exit383
+.critedge248:                                     ; preds = %_ZN11CStringBaseIwED2Ev.exit383
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #18
   br label %bb.gi
 
-bb.gi:                                            ; preds = %bb.p, %bb.gh, %bb.gd, %bb.fx, %bb.ft, %_ZN11CStringBaseIwED2Ev.exit373, %_ZN11CStringBaseIwED2Ev.exit316, %_ZN11CStringBaseIwED2Ev.exit278, %bb.am, %bb.s, %bb.ar, %.critedge, %.critedge236, %.critedge239, %.critedge242, %.critedge245, %.critedge248, %.critedge252, %_ZNK11CStringBaseIwE13CompareNoCaseEPKw.exit390, %_ZN11CStringBaseIwE9MakeUpperEv.exit
-  %.23 = phi i32 [ 1, %_ZN11CStringBaseIwE9MakeUpperEv.exit ], [ %.1101, %bb.p ], [ 0, %bb.gh ], [ 1, %_ZN11CStringBaseIwED2Ev.exit278 ], [ 1, %.critedge252 ], [ 1, %bb.am ], [ 1, %_ZN11CStringBaseIwED2Ev.exit316 ], [ 1, %bb.s ], [ 1, %_ZNK11CStringBaseIwE13CompareNoCaseEPKw.exit390 ], [ 1, %.critedge248 ], [ 1, %.critedge245 ], [ 1, %.critedge242 ], [ 1, %.critedge239 ], [ 1, %.critedge236 ], [ 1, %_ZN11CStringBaseIwED2Ev.exit373 ], [ 1, %.critedge ], [ 1, %bb.ft ], [ 1, %bb.fx ], [ 1, %bb.gd ], [ 1, %bb.ar ]
-  %.17 = phi i32 [ -2147024809, %_ZN11CStringBaseIwE9MakeUpperEv.exit ], [ %.0., %bb.p ], [ %.15, %bb.gh ], [ %.2, %_ZN11CStringBaseIwED2Ev.exit278 ], [ %i.vw, %.critedge252 ], [ -2147024809, %bb.am ], [ %.3, %_ZN11CStringBaseIwED2Ev.exit316 ], [ -2147024809, %bb.s ], [ -2147024809, %_ZNK11CStringBaseIwE13CompareNoCaseEPKw.exit390 ], [ %i.ul, %.critedge248 ], [ %i.si, %.critedge245 ], [ %i.qf, %.critedge242 ], [ %i.og, %.critedge239 ], [ %i.mg, %.critedge236 ], [ %i.ve, %_ZN11CStringBaseIwED2Ev.exit373 ], [ %i.kh, %.critedge ], [ %i.wl, %bb.ft ], [ %i.wq, %bb.fx ], [ %i.wx, %bb.gd ], [ -2147024809, %bb.ar ] ; 2 uses
+.critedge252:                                     ; preds = %_ZN11CStringBaseIwED2Ev.exit316, %bb.ga, %bb.fz, %bb.gf, %bb.gg, %bb.ft, %_ZN11CStringBaseIwED2Ev.exit373, %bb.an, %_ZN11CStringBaseIwED2Ev.exit278, %bb.ce, %bb.cs, %bb.db, %bb.dp, %bb.ed, %bb.er, %bb.fq, %bb.p
+  %.17.jt4 = phi i32 [ %.0542, %bb.p ], [ %.2, %_ZN11CStringBaseIwED2Ev.exit278 ], [ %.0542, %bb.an ], [ %.3, %_ZN11CStringBaseIwED2Ev.exit316 ], [ %.0542, %bb.ce ], [ %.0542, %bb.cs ], [ %.0542, %bb.db ], [ %.0542, %bb.dp ], [ %.0542, %bb.ed ], [ %.0542, %bb.er ], [ %.0542, %_ZN11CStringBaseIwED2Ev.exit373 ], [ %.0542, %bb.fq ], [ %.0542, %bb.ft ], [ %.0542, %bb.ga ], [ %.0542, %bb.fz ], [ %.0542, %bb.gg ], [ %.0542, %bb.gf ]
+  %24 = load ptr, ptr %4, align 8, !tbaa !41      ; 2 uses
+  %25 = icmp eq ptr %24, null
+  br i1 %25, label %bb.gk, label %bb.gj
+
+bb.gi:                                            ; preds = %bb.ar, %bb.gd, %bb.fx, %bb.ft, %_ZN11CStringBaseIwED2Ev.exit373, %_ZNK11CStringBaseIwE13CompareNoCaseEPKw.exit390, %bb.s, %_ZN11CStringBaseIwED2Ev.exit316, %bb.am, %_ZN11CStringBaseIwED2Ev.exit278, %_ZN11CStringBaseIwE9MakeUpperEv.exit, %bb.gh, %.critedge, %.critedge236, %.critedge239, %.critedge242, %.critedge245, %.critedge248, %bb.o
+  %.17.jt1 = phi i32 [ %i.kh, %bb.gh ], [ %i.ul, %.critedge245 ], [ %i.cz, %bb.o ], [ %i.si, %.critedge242 ], [ %i.vw, %.critedge248 ], [ %i.qf, %.critedge239 ], [ %i.og, %.critedge236 ], [ %i.mg, %.critedge ], [ %i.wx, %bb.gd ], [ %i.wq, %bb.fx ], [ %i.wl, %bb.ft ], [ %i.ve, %_ZN11CStringBaseIwED2Ev.exit373 ], [ -2147024809, %_ZNK11CStringBaseIwE13CompareNoCaseEPKw.exit390 ], [ -2147024809, %bb.s ], [ %.3, %_ZN11CStringBaseIwED2Ev.exit316 ], [ -2147024809, %bb.am ], [ %.2, %_ZN11CStringBaseIwED2Ev.exit278 ], [ -2147024809, %bb.ar ], [ -2147024809, %_ZN11CStringBaseIwE9MakeUpperEv.exit ]
   %i.xb = load ptr, ptr %4, align 8, !tbaa !41    ; 2 uses
   %i.xc = icmp eq ptr %i.xb, null
-  br i1 %i.xc, label %_ZN11CStringBaseIwED2Ev.exit391, label %bb.gj
+  br i1 %i.xc, label %_ZN11CStringBaseIwED2Ev.exit391.jt1, label %_ZN11CStringBaseIwED2Ev.exit391
 
-bb.gj:                                            ; preds = %bb.gi
+bb.gj:                                            ; preds = %.critedge252
+  call void @_ZdaPv(ptr noundef nonnull %24) #21
+  br label %bb.gk
+
+_ZN11CStringBaseIwED2Ev.exit391:                  ; preds = %bb.gi
   call void @_ZdaPv(ptr noundef nonnull %i.xb) #21
-  br label %_ZN11CStringBaseIwED2Ev.exit391
+  br label %_ZN11CStringBaseIwED2Ev.exit391.jt1
 
-_ZN11CStringBaseIwED2Ev.exit391:                  ; preds = %bb.gi, %bb.gj
+bb.gk:                                            ; preds = %bb.gj, %.critedge252
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
-  switch i32 %.23, label %._crit_edge [
-    i32 0, label %bb.gk
-    i32 4, label %bb.gk
-  ]
-
-bb.gk:                                            ; preds = %_ZN11CStringBaseIwED2Ev.exit391, %_ZN11CStringBaseIwED2Ev.exit391
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond574.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond574.not, label %._crit_edge, label %bb.b, !llvm.loop !213
+
+_ZN11CStringBaseIwED2Ev.exit391.jt1:              ; preds = %_ZN11CStringBaseIwED2Ev.exit391, %bb.gi
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
+  br label %._crit_edge
 
 _ZN11CStringBaseIwED2Ev.exit267:                  ; preds = %bb.x, %bb.y, %bb.z, %bb.k, %.body, %_ZN11CStringBaseIwED2Ev.exit307, %_ZN11CStringBaseIwED2Ev.exit317, %.body423, %_ZN11CStringBaseIwED2Ev.exit330, %.body438, %.body453, %_ZN11CStringBaseIwED2Ev.exit344, %.body468, %_ZN11CStringBaseIwED2Ev.exit354, %.body483, %_ZN11CStringBaseIwED2Ev.exit364, %.body498, %_ZN11CStringBaseIwED2Ev.exit374, %_ZN11CStringBaseIwED2Ev.exit375, %_ZN11CStringBaseIwED2Ev.exit384, %_ZN11CStringBaseIwED2Ev.exit385, %bb.fu, %bb.fy, %bb.ge, %bb.e
   %.pn227.pn.pn = phi { ptr, i32 } [ %i.bk, %bb.e ], [ %.pn227, %.body ], [ %.pn, %_ZN11CStringBaseIwED2Ev.exit307 ], [ %.pn222.pn, %_ZN11CStringBaseIwED2Ev.exit317 ], [ %.pn215, %.body423 ], [ %.pn212, %.body438 ], [ %.pn209, %.body453 ], [ %.pn206, %.body468 ], [ %.pn203, %.body483 ], [ %.pn200, %.body498 ], [ %.pn197, %_ZN11CStringBaseIwED2Ev.exit375 ], [ %.pn194, %_ZN11CStringBaseIwED2Ev.exit385 ], [ %i.wm, %bb.fu ], [ %i.wr, %bb.fy ], [ %i.wy, %bb.ge ], [ %i.dc, %bb.k ], [ %.pn190, %_ZN11CStringBaseIwED2Ev.exit384 ], [ %.pn188, %_ZN11CStringBaseIwED2Ev.exit374 ], [ %.pn186, %_ZN11CStringBaseIwED2Ev.exit364 ], [ %.pn184, %_ZN11CStringBaseIwED2Ev.exit354 ], [ %.pn182, %_ZN11CStringBaseIwED2Ev.exit344 ], [ %.pn180, %_ZN11CStringBaseIwED2Ev.exit330 ], [ %i.ea, %bb.x ], [ %i.eb, %bb.y ], [ %i.eb, %bb.z ]
@@ -2736,8 +2738,8 @@ _ZN11CStringBaseIwED2Ev.exit392:                  ; preds = %_ZN11CStringBaseIwE
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
   resume { ptr, i32 } %.pn227.pn.pn
 
-._crit_edge:                                      ; preds = %_ZN11CStringBaseIwED2Ev.exit391, %bb.gk, %bb.a
-  %spec.select = phi i32 [ 0, %bb.a ], [ 0, %bb.gk ], [ %.17, %_ZN11CStringBaseIwED2Ev.exit391 ]
+._crit_edge:                                      ; preds = %bb.gk, %_ZN11CStringBaseIwED2Ev.exit391.jt1, %bb.a
+  %spec.select = phi i32 [ 0, %bb.a ], [ %.17.jt1, %_ZN11CStringBaseIwED2Ev.exit391.jt1 ], [ 0, %bb.gk ]
   ret i32 %spec.select
 }
 

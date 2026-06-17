@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.b, %bb.a
 .lr.ph1114:                                       ; preds = %.lr.ph, %select.unfold.backedge
   %i.ab = phi i8 [ %i.am, %select.unfold.backedge ], [ %i.aa, %.lr.ph ] ; 3 uses
   %.02087471112 = phi ptr [ %.0208.be, %select.unfold.backedge ], [ %.0208.ph785, %.lr.ph ] ; 19 uses
-  %.11717481111 = phi ptr [ %.1171.be, %select.unfold.backedge ], [ %.1171.ph791, %.lr.ph ] ; 59 uses
+  %.11717481111 = phi ptr [ %.1171.be, %select.unfold.backedge ], [ %.1171.ph791, %.lr.ph ] ; 67 uses
   %i.ac = sext i8 %i.ab to i32
   %i.ad = call i32 @isspace(i32 noundef %i.ac) #22
   %.not278 = icmp eq i32 %i.ad, 0
@@ -362,64 +362,75 @@ bb.n:                                             ; preds = %bb.cc
 
 bb.o:                                             ; preds = %bb.f
   %i.br = load i8, ptr %.11717481111, align 1, !tbaa !14 ; 2 uses
-  %i.bs = icmp eq i8 %i.br, 45                    ; 5 uses
-  br i1 %i.bs, label %bb.p, label %bb.q
+  %i.bs = icmp eq i8 %i.br, 45                    ; 4 uses
+  br i1 %i.bs, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %21 = getelementptr inbounds nuw i8, ptr %.11717481111, i64 1 ; 2 uses
-  %.pre.i330 = load i8, ptr %21, align 1, !tbaa !14
-  br label %bb.q
+  %21 = sext i8 %i.br to i32
+  %memchr95.i.jt2 = call ptr @memchr(ptr noundef nonnull dereferenceable(1) @_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_17kDigitsE, i32 %21, i64 11) ; 2 uses
+  %.not7396.i.jt2 = icmp eq ptr %memchr95.i.jt2, null
+  br i1 %.not7396.i.jt2, label %select.unfold.i323, label %.lr.ph.i320.peel
 
-bb.q:                                             ; preds = %bb.p, %bb.o
-  %22 = phi i8 [ %.pre.i330, %bb.p ], [ %i.br, %bb.o ]
-  %.0.i319 = phi ptr [ %21, %bb.p ], [ %.11717481111, %bb.o ] ; 5 uses
-  %i.bt = sext i8 %22 to i32
+bb.q:                                             ; preds = %bb.o
+  %22 = getelementptr inbounds nuw i8, ptr %.11717481111, i64 1 ; 5 uses
+  %.pre.i330 = load i8, ptr %22, align 1, !tbaa !14
+  %i.bt = sext i8 %.pre.i330 to i32
   %memchr95.i = call ptr @memchr(ptr noundef nonnull dereferenceable(1) @_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_17kDigitsE, i32 %i.bt, i64 11) ; 2 uses
   %.not7396.i = icmp eq ptr %memchr95.i, null
-  br i1 %.not7396.i, label %select.unfold.i323, label %.lr.ph.i320.peel
+  %23 = ptrtoint ptr %memchr95.i to i64
+  %24 = trunc i64 %23 to i32
+  %25 = sub i32 %24, ptrtoint (ptr @_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_17kDigitsE to i32) ; 2 uses
+  %26 = icmp sgt i32 %25, 9
+  %or.cond1070 = or i1 %.not7396.i, %26
+  br i1 %or.cond1070, label %select.unfold.i323, label %.fold.split.peel
 
-.lr.ph.i320.peel:                                 ; preds = %bb.q
-  %i.bu = ptrtoint ptr %memchr95.i to i64
+.lr.ph.i320.peel:                                 ; preds = %bb.p
+  %i.bu = ptrtoint ptr %memchr95.i.jt2 to i64
   %i.bv = trunc i64 %i.bu to i32
   %i.bw = sub i32 %i.bv, ptrtoint (ptr @_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_17kDigitsE to i32) ; 3 uses
   %i.bx = icmp sgt i32 %i.bw, 9
-  br i1 %i.bx, label %select.unfold.i323, label %bb.r
+  br i1 %i.bx, label %select.unfold.i323, label %.lr.ph.i320.preheader.peel.newph
 
-bb.r:                                             ; preds = %.lr.ph.i320.peel
-  %i.by = sub nsw i32 0, %i.bw                    ; 3 uses
-  %23 = getelementptr inbounds nuw i8, ptr %.0.i319, i64 1 ; 4 uses
-  br i1 %i.bs, label %select.unfold.i323, label %.fold.split.peel
-
-.fold.split.peel:                                 ; preds = %bb.r
-  %24 = load i8, ptr %23, align 1, !tbaa !14
-  %25 = sext i8 %24 to i32
-  %memchr.i322.peel = call ptr @memchr(ptr noundef nonnull dereferenceable(1) @_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_17kDigitsE, i32 %25, i64 11) ; 2 uses
-  %.not73.i.peel = icmp eq ptr %memchr.i322.peel, null
-  br i1 %.not73.i.peel, label %select.unfold.i323, label %.lr.ph.i320.preheader.peel.newph
-
-.lr.ph.i320.preheader.peel.newph:                 ; preds = %.fold.split.peel
-  %26 = mul i32 %i.bw, -10                        ; 2 uses
-  %27 = ptrtoint ptr %memchr.i322.peel to i64
+bb.r:                                             ; preds = %.lr.ph.i320.preheader.peel.newph
+  %27 = ptrtoint ptr %memchr.i322 to i64
   %28 = trunc i64 %27 to i32
-  %i.bz = sub i32 %28, ptrtoint (ptr @_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_17kDigitsE to i32) ; 3 uses
-  %29 = or disjoint i32 %i.bz, -2147483648
-  %30 = icmp sgt i32 %i.bz, 9                     ; 3 uses
-  %31 = icmp slt i32 %26, %29
-  %brmerge = select i1 %30, i1 true, i1 %31
-  %.mux = select i1 %30, i32 %i.by, i32 -2147483640
-  %.mux1341 = select i1 %30, i1 true, i1 false
-  br i1 %brmerge, label %select.unfold.i323, label %select.unfold.i323.loopexit.loopexit.split.loop.exit1337
+  %i.by = sub i32 %28, ptrtoint (ptr @_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_17kDigitsE to i32) ; 2 uses
+  %29 = icmp sgt i32 %i.by, 9
+  br i1 %29, label %select.unfold.i323, label %30
 
-select.unfold.i323.loopexit.loopexit.split.loop.exit1337: ; preds = %.lr.ph.i320.preheader.peel.newph
-  %i.ca = sub nsw i32 %26, %i.bz
-  %i.cb = getelementptr inbounds nuw i8, ptr %.0.i319, i64 2
+30:                                               ; preds = %bb.r
+  %31 = mul i32 %i.bw, -10
+  br label %.fold.split.peel
+
+.fold.split.peel:                                 ; preds = %30, %bb.q
+  %.0.i319927937945 = phi ptr [ %.11717481111, %30 ], [ %22, %bb.q ] ; 2 uses
+  %.199.i.jt1938944 = phi ptr [ %35, %30 ], [ %22, %bb.q ]
+  %.05397.i.jt1939943 = phi i32 [ %31, %30 ], [ 0, %bb.q ] ; 2 uses
+  %32 = phi i32 [ %i.by, %30 ], [ %25, %bb.q ]    ; 2 uses
+  %33 = or disjoint i32 %32, -2147483648
+  %34 = icmp slt i32 %.05397.i.jt1939943, %33
+  br i1 %34, label %select.unfold.i323, label %select.unfold.i323.loopexit.loopexit.split.loop.exit1337
+
+.lr.ph.i320.preheader.peel.newph:                 ; preds = %.lr.ph.i320.peel
+  %i.bz = sub nsw i32 0, %i.bw                    ; 2 uses
+  %35 = getelementptr inbounds nuw i8, ptr %.11717481111, i64 1 ; 4 uses
+  %36 = load i8, ptr %35, align 1, !tbaa !14
+  %37 = sext i8 %36 to i32
+  %memchr.i322 = call ptr @memchr(ptr noundef nonnull dereferenceable(1) @_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_17kDigitsE, i32 %37, i64 11) ; 2 uses
+  %.not73.i = icmp eq ptr %memchr.i322, null
+  br i1 %.not73.i, label %select.unfold.i323, label %bb.r
+
+select.unfold.i323.loopexit.loopexit.split.loop.exit1337: ; preds = %.fold.split.peel
+  %i.ca = sub nsw i32 %.05397.i.jt1939943, %32
+  %i.cb = getelementptr inbounds nuw i8, ptr %.11717481111, i64 2
   br label %select.unfold.i323
 
-select.unfold.i323:                               ; preds = %.lr.ph.i320.preheader.peel.newph, %.lr.ph.i320.peel, %bb.r, %.fold.split.peel, %select.unfold.i323.loopexit.loopexit.split.loop.exit1337, %bb.q
-  %.255.ph.i324 = phi i32 [ 0, %bb.q ], [ 0, %.lr.ph.i320.peel ], [ %i.by, %bb.r ], [ %i.by, %.fold.split.peel ], [ %.mux, %.lr.ph.i320.preheader.peel.newph ], [ %i.ca, %select.unfold.i323.loopexit.loopexit.split.loop.exit1337 ] ; 4 uses
-  %.252.ph.not.i325 = phi i1 [ true, %bb.q ], [ true, %.lr.ph.i320.peel ], [ true, %bb.r ], [ true, %.fold.split.peel ], [ %.mux1341, %.lr.ph.i320.preheader.peel.newph ], [ true, %select.unfold.i323.loopexit.loopexit.split.loop.exit1337 ]
-  %.3.ph.i326 = phi ptr [ %.0.i319, %bb.q ], [ %.0.i319, %.lr.ph.i320.peel ], [ %23, %bb.r ], [ %23, %.fold.split.peel ], [ %23, %.lr.ph.i320.preheader.peel.newph ], [ %i.cb, %select.unfold.i323.loopexit.loopexit.split.loop.exit1337 ] ; 2 uses
-  %i.cc = icmp ne ptr %.3.ph.i326, %.0.i319
+select.unfold.i323:                               ; preds = %.lr.ph.i320.preheader.peel.newph, %bb.r, %.fold.split.peel, %.lr.ph.i320.peel, %select.unfold.i323.loopexit.loopexit.split.loop.exit1337, %bb.p, %bb.q
+  %.0.i319926 = phi ptr [ %.11717481111, %bb.p ], [ %22, %bb.q ], [ %.0.i319927937945, %.fold.split.peel ], [ %.0.i319927937945, %select.unfold.i323.loopexit.loopexit.split.loop.exit1337 ], [ %.11717481111, %bb.r ], [ %.11717481111, %.lr.ph.i320.preheader.peel.newph ], [ %.11717481111, %.lr.ph.i320.peel ]
+  %.255.ph.i324 = phi i32 [ 0, %bb.p ], [ 0, %bb.q ], [ -2147483640, %.fold.split.peel ], [ %i.ca, %select.unfold.i323.loopexit.loopexit.split.loop.exit1337 ], [ %i.bz, %bb.r ], [ %i.bz, %.lr.ph.i320.preheader.peel.newph ], [ 0, %.lr.ph.i320.peel ] ; 4 uses
+  %.252.ph.not.i325 = phi i1 [ true, %bb.p ], [ true, %bb.q ], [ false, %.fold.split.peel ], [ true, %select.unfold.i323.loopexit.loopexit.split.loop.exit1337 ], [ true, %bb.r ], [ true, %.lr.ph.i320.preheader.peel.newph ], [ true, %.lr.ph.i320.peel ]
+  %.3.ph.i326 = phi ptr [ %.11717481111, %bb.p ], [ %22, %bb.q ], [ %.199.i.jt1938944, %.fold.split.peel ], [ %i.cb, %select.unfold.i323.loopexit.loopexit.split.loop.exit1337 ], [ %35, %bb.r ], [ %35, %.lr.ph.i320.preheader.peel.newph ], [ %.11717481111, %.lr.ph.i320.peel ] ; 2 uses
+  %i.cc = icmp ne ptr %.3.ph.i326, %.0.i319926
   %or.cond.not94.i = and i1 %.252.ph.not.i325, %i.cc
   %i.cd = icmp ne i32 %.255.ph.i324, -2147483648
   %or.cond3.i327 = select i1 %i.bs, i1 true, i1 %i.cd
@@ -822,42 +833,42 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.j = trunc i64 %i.i to i32
   %i.k = sub i32 %i.j, ptrtoint (ptr @_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_17kDigitsE to i32) ; 3 uses
   %i.l = icmp sgt i32 %i.k, 9
-  br i1 %i.l, label %select.unfold.i, label %bb.e
+  br i1 %i.l, label %select.unfold.i, label %.fold.split.peel
 
-bb.e:                                             ; preds = %.lr.ph.i.peel
-  %i.m = sub nsw i32 0, %i.k                      ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %.0.i, i64 1 ; 4 uses
-  br i1 %i.e, label %select.unfold.i, label %.fold.split.peel
+bb.e:                                             ; preds = %.fold.split
+  %2 = ptrtoint ptr %memchr.i to i64
+  %3 = trunc i64 %2 to i32
+  %i.m = sub i32 %3, ptrtoint (ptr @_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_17kDigitsE to i32) ; 3 uses
+  %4 = icmp sgt i32 %i.m, 9
+  br i1 %4, label %select.unfold.i, label %.lr.ph.i.preheader.peel.newph
 
-.fold.split.peel:                                 ; preds = %bb.e
-  %3 = load i8, ptr %2, align 1, !tbaa !14
-  %4 = sext i8 %3 to i32
-  %memchr.i.peel = tail call ptr @memchr(ptr noundef nonnull dereferenceable(1) @_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_17kDigitsE, i32 %4, i64 11) ; 2 uses
-  %.not73.i.peel = icmp eq ptr %memchr.i.peel, null
-  br i1 %.not73.i.peel, label %select.unfold.i, label %.lr.ph.i.preheader.peel.newph
+.fold.split.peel:                                 ; preds = %.lr.ph.i.peel
+  %5 = sub nsw i32 0, %i.k                        ; 3 uses
+  %6 = getelementptr inbounds nuw i8, ptr %.0.i, i64 1 ; 5 uses
+  br i1 %i.e, label %select.unfold.i, label %.fold.split
 
-.lr.ph.i.preheader.peel.newph:                    ; preds = %.fold.split.peel
+.lr.ph.i.preheader.peel.newph:                    ; preds = %bb.e
   %i.n = mul i32 %i.k, -10                        ; 2 uses
-  %5 = ptrtoint ptr %memchr.i.peel to i64
-  %6 = trunc i64 %5 to i32
-  %7 = sub i32 %6, ptrtoint (ptr @_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_17kDigitsE to i32) ; 3 uses
-  %i.o = or disjoint i32 %7, -2147483648
-  %8 = icmp sgt i32 %7, 9                         ; 3 uses
+  %i.o = or disjoint i32 %i.m, -2147483648
   %i.p = icmp slt i32 %i.n, %i.o
-  %brmerge = select i1 %8, i1 true, i1 %i.p
-  %.mux = select i1 %8, i32 %i.m, i32 -2147483640
-  %.mux85 = select i1 %8, i1 true, i1 false
-  br i1 %brmerge, label %select.unfold.i, label %select.unfold.i.loopexit.loopexit.split.loop.exit49
+  br i1 %i.p, label %select.unfold.i, label %select.unfold.i.loopexit.loopexit.split.loop.exit49
 
 select.unfold.i.loopexit.loopexit.split.loop.exit49: ; preds = %.lr.ph.i.preheader.peel.newph
-  %i.q = sub nsw i32 %i.n, %7
+  %i.q = sub nsw i32 %i.n, %i.m
   %i.r = getelementptr inbounds nuw i8, ptr %.0.i, i64 2
   br label %select.unfold.i
 
-select.unfold.i:                                  ; preds = %.lr.ph.i.preheader.peel.newph, %.lr.ph.i.peel, %bb.e, %.fold.split.peel, %select.unfold.i.loopexit.loopexit.split.loop.exit49, %bb.d
-  %.255.ph.i = phi i32 [ 0, %bb.d ], [ 0, %.lr.ph.i.peel ], [ %i.m, %bb.e ], [ %i.m, %.fold.split.peel ], [ %.mux, %.lr.ph.i.preheader.peel.newph ], [ %i.q, %select.unfold.i.loopexit.loopexit.split.loop.exit49 ] ; 4 uses
-  %.252.ph.not.i = phi i1 [ true, %bb.d ], [ true, %.lr.ph.i.peel ], [ true, %bb.e ], [ true, %.fold.split.peel ], [ %.mux85, %.lr.ph.i.preheader.peel.newph ], [ true, %select.unfold.i.loopexit.loopexit.split.loop.exit49 ]
-  %.3.ph.i = phi ptr [ %.0.i, %bb.d ], [ %.0.i, %.lr.ph.i.peel ], [ %2, %bb.e ], [ %2, %.fold.split.peel ], [ %2, %.lr.ph.i.preheader.peel.newph ], [ %i.r, %select.unfold.i.loopexit.loopexit.split.loop.exit49 ] ; 8 uses
+.fold.split:                                      ; preds = %.fold.split.peel
+  %7 = load i8, ptr %6, align 1, !tbaa !14
+  %8 = sext i8 %7 to i32
+  %memchr.i = tail call ptr @memchr(ptr noundef nonnull dereferenceable(1) @_ZN4absl12lts_2025051213time_internal4cctz6detail12_GLOBAL__N_17kDigitsE, i32 %8, i64 11) ; 2 uses
+  %.not73.i = icmp eq ptr %memchr.i, null
+  br i1 %.not73.i, label %select.unfold.i, label %bb.e
+
+select.unfold.i:                                  ; preds = %.fold.split.peel, %.fold.split, %.lr.ph.i.peel, %bb.e, %.lr.ph.i.preheader.peel.newph, %select.unfold.i.loopexit.loopexit.split.loop.exit49, %bb.d
+  %.255.ph.i = phi i32 [ 0, %bb.d ], [ %5, %.fold.split.peel ], [ %i.q, %select.unfold.i.loopexit.loopexit.split.loop.exit49 ], [ 0, %.lr.ph.i.peel ], [ %5, %.fold.split ], [ -2147483640, %.lr.ph.i.preheader.peel.newph ], [ %5, %bb.e ] ; 4 uses
+  %.252.ph.not.i = phi i1 [ true, %bb.d ], [ true, %.fold.split.peel ], [ true, %select.unfold.i.loopexit.loopexit.split.loop.exit49 ], [ true, %.lr.ph.i.peel ], [ true, %.fold.split ], [ false, %.lr.ph.i.preheader.peel.newph ], [ true, %bb.e ]
+  %.3.ph.i = phi ptr [ %.0.i, %bb.d ], [ %6, %.fold.split.peel ], [ %i.r, %select.unfold.i.loopexit.loopexit.split.loop.exit49 ], [ %.0.i, %.lr.ph.i.peel ], [ %6, %.fold.split ], [ %6, %.lr.ph.i.preheader.peel.newph ], [ %6, %bb.e ] ; 8 uses
   %i.s = icmp ne ptr %.3.ph.i, %.0.i
   %or.cond.not94.i = and i1 %.252.ph.not.i, %i.s
   %i.t = icmp ne i32 %.255.ph.i, -2147483648
