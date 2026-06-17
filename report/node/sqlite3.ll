@@ -201,7 +201,7 @@ constraintCompatibleWithOuterJoin.exit.thread.i:  ; preds = %bb.i, %constraintCo
   br label %._crit_edge277.i
 
 ._crit_edge277.i:                                 ; preds = %._crit_edge277.loopexit.i, %bb.a
-  %.0175.lcssa.i = phi i64 [ 0, %bb.a ], [ %i.bd, %._crit_edge277.loopexit.i ] ; 4 uses
+  %.0175.lcssa.i = phi i64 [ 0, %bb.a ], [ %i.bd, %._crit_edge277.loopexit.i ] ; 3 uses
   %.not198.i = icmp eq ptr %i.q, null
   br i1 %.not198.i, label %bb.ab, label %bb.j
 
@@ -411,12 +411,11 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z, %bb.x
   %.2191.i = phi i32 [ 0, %._crit_edge277.i ], [ 0, %.thread248.i ], [ %i.dw, %bb.z ], [ %i.du, %bb.x ], [ %spec.select.i, %bb.aa ]
   %.1181.i = phi i32 [ 0, %._crit_edge277.i ], [ 0, %.thread248.i ], [ %i.be, %bb.z ], [ %i.be, %bb.x ], [ %i.be, %bb.aa ] ; 3 uses
   %i.dy = load ptr, ptr %i.d, align 8, !tbaa !651 ; 2 uses
-  %5 = mul nsw i64 %.0175.lcssa.i, 20
   %i.dz = sext i32 %.1181.i to i64                ; 2 uses
-  %reass.add.i = add nsw i64 %.0175.lcssa.i, %i.dz
-  %reass.mul.i = shl nsw i64 %reass.add.i, 3
-  %i.ea = add nsw i64 %5, 128
-  %i.eb = add nsw i64 %i.ea, %reass.mul.i         ; 3 uses
+  %5 = shl nsw i64 %i.dz, 3
+  %reass.mul.i = mul nsw i64 %.0175.lcssa.i, 28
+  %i.ea = add nsw i64 %reass.mul.i, 128
+  %i.eb = add nsw i64 %i.ea, %5                   ; 3 uses
   %.not.i.i220.i = icmp eq ptr %i.dy, null
   br i1 %.not.i.i220.i, label %bb.ad, label %bb.ac
 
