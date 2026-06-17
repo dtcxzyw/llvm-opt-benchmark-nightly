@@ -201,31 +201,31 @@ bb.c:                                             ; preds = %.preheader.us, %are
 
 arena_get.exit.us:                                ; preds = %bb.c
   switch i32 %.041.us, label %default.unreachable [
-    i32 0, label %bb.l
-    i32 1, label %bb.k
-    i32 2, label %bb.j
-    i32 3, label %bb.i
+    i32 0, label %bb.d
+    i32 1, label %bb.e
+    i32 2, label %bb.f
+    i32 3, label %bb.g
     i32 4, label %bb.h
-    i32 5, label %bb.g
-    i32 6, label %bb.f
-    i32 7, label %bb.e
-    i32 8, label %bb.d
+    i32 5, label %bb.i
+    i32 6, label %bb.j
+    i32 7, label %bb.k
+    i32 8, label %bb.l
   ]
 
 bb.d:                                             ; preds = %arena_get.exit.us
-  tail call void @je_arena_prefork8(ptr noundef %.0.i, ptr noundef nonnull %i.h) #20
+  tail call void @je_arena_prefork0(ptr noundef %.0.i, ptr noundef nonnull %i.h) #20
   br label %arena_get.exit.thread.us
 
 bb.e:                                             ; preds = %arena_get.exit.us
-  tail call void @je_arena_prefork7(ptr noundef %.0.i, ptr noundef nonnull %i.h) #20
+  tail call void @je_arena_prefork1(ptr noundef %.0.i, ptr noundef nonnull %i.h) #20
   br label %arena_get.exit.thread.us
 
 bb.f:                                             ; preds = %arena_get.exit.us
-  tail call void @je_arena_prefork6(ptr noundef %.0.i, ptr noundef nonnull %i.h) #20
+  tail call void @je_arena_prefork2(ptr noundef %.0.i, ptr noundef nonnull %i.h) #20
   br label %arena_get.exit.thread.us
 
 bb.g:                                             ; preds = %arena_get.exit.us
-  tail call void @je_arena_prefork5(ptr noundef %.0.i, ptr noundef nonnull %i.h) #20
+  tail call void @je_arena_prefork3(ptr noundef %.0.i, ptr noundef nonnull %i.h) #20
   br label %arena_get.exit.thread.us
 
 bb.h:                                             ; preds = %arena_get.exit.us
@@ -233,22 +233,25 @@ bb.h:                                             ; preds = %arena_get.exit.us
   br label %arena_get.exit.thread.us
 
 bb.i:                                             ; preds = %arena_get.exit.us
-  tail call void @je_arena_prefork3(ptr noundef %.0.i, ptr noundef nonnull %i.h) #20
+  tail call void @je_arena_prefork5(ptr noundef %.0.i, ptr noundef nonnull %i.h) #20
   br label %arena_get.exit.thread.us
 
 bb.j:                                             ; preds = %arena_get.exit.us
-  tail call void @je_arena_prefork2(ptr noundef %.0.i, ptr noundef nonnull %i.h) #20
+  tail call void @je_arena_prefork6(ptr noundef %.0.i, ptr noundef nonnull %i.h) #20
   br label %arena_get.exit.thread.us
 
 bb.k:                                             ; preds = %arena_get.exit.us
-  tail call void @je_arena_prefork1(ptr noundef %.0.i, ptr noundef nonnull %i.h) #20
+  tail call void @je_arena_prefork7(ptr noundef %.0.i, ptr noundef nonnull %i.h) #20
   br label %arena_get.exit.thread.us
 
 bb.l:                                             ; preds = %arena_get.exit.us
-  tail call void @je_arena_prefork0(ptr noundef %.0.i, ptr noundef nonnull %i.h) #20
+  tail call void @je_arena_prefork8(ptr noundef %.0.i, ptr noundef nonnull %i.h) #20
   br label %arena_get.exit.thread.us
 
-arena_get.exit.thread.us:                         ; preds = %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c
+default.unreachable:                              ; preds = %arena_get.exit.us
+  unreachable
+
+arena_get.exit.thread.us:                         ; preds = %bb.c, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge.us, label %bb.c, !llvm.loop !170
@@ -257,9 +260,6 @@ arena_get.exit.thread.us:                         ; preds = %bb.l, %bb.k, %bb.j,
   %i.j = add nuw nsw i32 %.041.us, 1              ; 2 uses
   %exitcond44.not = icmp eq i32 %i.j, 9
   br i1 %exitcond44.not, label %.split.us, label %.preheader.us, !llvm.loop !171
-
-default.unreachable:                              ; preds = %arena_get.exit.us
-  unreachable
 
 .split.us:                                        ; preds = %._crit_edge.us, %tsd_fetch_impl.exit
   tail call void @je_prof_prefork1(ptr noundef %.0.i) #20

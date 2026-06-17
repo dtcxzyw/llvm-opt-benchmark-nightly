@@ -201,7 +201,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.ea = icmp samesign ult i64 %indvars.iv.next77, %i.bf
   br i1 %i.ea, label %iter.check, label %._crit_edge, !llvm.loop !80
 
-._crit_edge:                                      ; preds = %..loopexit63_crit_edge.us, %..loopexit_crit_edge.us.us, %.lr.ph68.split, %.lr.ph68.split.us, %bb.a
+._crit_edge:                                      ; preds = %..loopexit63_crit_edge.us, %..loopexit_crit_edge.us.us, %.lr.ph68.split.us, %.lr.ph68.split, %bb.a
   ret void
 }
 

@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %.not30.us = icmp eq i32 %.5.us, 0
   br i1 %.not30.us, label %.sink.split, label %.thread.us
 
-.thread.us:                                       ; preds = %bb.e, %bb.d
+.thread.us:                                       ; preds = %bb.d, %bb.e
   %.536.us = phi i32 [ %.5.us, %bb.e ], [ 1, %bb.d ] ; 3 uses
   %.22835.us = phi i32 [ %.228.us, %bb.e ], [ %i.az, %bb.d ] ; 2 uses
   %i.ba = trunc nuw nsw i32 %.536.us to i8
@@ -280,7 +280,7 @@ bb.c:                                             ; preds = %bb.b
   tail call void @Conceal_Error(ptr noundef %0, i32 noundef %i.k, i32 noundef %i.o, ptr noundef %2, ptr noundef nonnull %1)
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %bb.b
+bb.d:                                             ; preds = %bb.b, %bb.c
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge.us, label %bb.b, !llvm.loop !81
