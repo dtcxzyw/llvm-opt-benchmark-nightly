@@ -201,13 +201,11 @@ bb.w:                                             ; preds = %_ZN6hermes2vm16JSTy
   br i1 %.not5.i.i.i66, label %_ZSt4fillIPhhEvT_S1_RKT0_.exit, label %.lr.ph.i.i.i67.preheader
 
 .lr.ph.i.i.i67.preheader:                         ; preds = %bb.w
-  %4 = shl i64 %i.bl, 2
-  %i.eh = add i64 %4, -4
-  %5 = shl i64 %i.bd, 2
-  %6 = sub i64 %i.eh, %5                          ; 2 uses
-  %7 = lshr exact i64 %6, 2
-  %i.ei = add nuw nsw i64 %7, 1                   ; 2 uses
-  %min.iters.check123 = icmp ult i64 %6, 28
+  %4 = sub i64 %i.bl, %i.bd
+  %i.eh = add i64 %4, 4611686018427387903
+  %5 = and i64 %i.eh, 4611686018427387903         ; 2 uses
+  %i.ei = add nuw nsw i64 %5, 1                   ; 2 uses
+  %min.iters.check123 = icmp samesign ult i64 %5, 7
   br i1 %min.iters.check123, label %.lr.ph.i.i.i67.preheader160, label %vector.ph124
 
 vector.ph124:                                     ; preds = %.lr.ph.i.i.i67.preheader
@@ -252,13 +250,11 @@ bb.x:                                             ; preds = %_ZN6hermes2vm16JSTy
   br i1 %.not5.i.i.i70, label %_ZSt4fillIPhhEvT_S1_RKT0_.exit, label %.lr.ph.i.i.i71.preheader
 
 .lr.ph.i.i.i71.preheader:                         ; preds = %bb.x
-  %8 = shl i64 %i.bl, 3
-  %i.es = add i64 %8, -8
-  %9 = shl i64 %i.bd, 3
-  %10 = sub i64 %i.es, %9                         ; 2 uses
-  %11 = lshr exact i64 %10, 3
-  %i.et = add nuw nsw i64 %11, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %10, 24
+  %6 = sub i64 %i.bl, %i.bd
+  %i.es = add i64 %6, 2305843009213693951
+  %7 = and i64 %i.es, 2305843009213693951         ; 2 uses
+  %i.et = add nuw nsw i64 %7, 1                   ; 2 uses
+  %min.iters.check = icmp samesign ult i64 %7, 3
   br i1 %min.iters.check, label %.lr.ph.i.i.i71.preheader162, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i71.preheader

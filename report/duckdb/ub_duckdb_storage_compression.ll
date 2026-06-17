@@ -201,8 +201,6 @@ bb.a:
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
   %i.n = getelementptr i8, ptr %i.b, i64 8252     ; 3 uses
   %.pre = load i64, ptr %i.e, align 8, !tbaa !2409
-  %5 = shl i64 %2, 2
-  %6 = add i64 %5, -4
   %i.o = shl i64 %4, 2                            ; 2 uses
   %scevgep = getelementptr i8, ptr %i.d, i64 %i.o
   %i.p = getelementptr i8, ptr %i.d, i64 %i.o
@@ -232,11 +230,11 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.d
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %.0104 ; 3 uses
   %i.w = load i32, ptr %i.h, align 8, !tbaa !3    ; 2 uses
-  %7 = shl i64 %.0104, 2
-  %8 = sub i64 %6, %7                             ; 2 uses
-  %9 = lshr exact i64 %8, 2
-  %i.x = add nuw nsw i64 %9, 1                    ; 2 uses
-  %min.iters.check135 = icmp ult i64 %8, 28
+  %5 = sub i64 %2, %.0104
+  %6 = add i64 %5, 4611686018427387903
+  %7 = and i64 %6, 4611686018427387903            ; 2 uses
+  %i.x = add nuw nsw i64 %7, 1                    ; 2 uses
+  %min.iters.check135 = icmp samesign ult i64 %7, 7
   br i1 %min.iters.check135, label %.lr.ph.i.i.i.preheader169, label %vector.ph136
 
 vector.ph136:                                     ; preds = %.lr.ph.i.i.i.preheader
@@ -639,8 +637,6 @@ bb.a:
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 16456 ; 2 uses
   %.pre = load i64, ptr %i.e, align 8, !tbaa !2516
-  %5 = shl i64 %2, 3
-  %6 = add i64 %5, -8
   %i.o = shl i64 %4, 3                            ; 2 uses
   %scevgep = getelementptr i8, ptr %i.d, i64 %i.o
   %scevgep149 = getelementptr i8, ptr %i.b, i64 16472
@@ -671,11 +667,11 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.d
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %.0104 ; 3 uses
   %i.w = load i64, ptr %i.h, align 8, !tbaa !21   ; 2 uses
-  %7 = shl i64 %.0104, 3
-  %8 = sub i64 %6, %7                             ; 2 uses
-  %9 = lshr exact i64 %8, 3
-  %i.x = add nuw nsw i64 %9, 1                    ; 2 uses
-  %min.iters.check136 = icmp ult i64 %8, 24
+  %5 = sub i64 %2, %.0104
+  %6 = add i64 %5, 2305843009213693951
+  %7 = and i64 %6, 2305843009213693951            ; 2 uses
+  %i.x = add nuw nsw i64 %7, 1                    ; 2 uses
+  %min.iters.check136 = icmp samesign ult i64 %7, 3
   br i1 %min.iters.check136, label %.lr.ph.i.i.i.preheader171, label %vector.ph137
 
 vector.ph137:                                     ; preds = %.lr.ph.i.i.i.preheader
@@ -1078,8 +1074,6 @@ bb.a:
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
   %i.n = getelementptr i8, ptr %i.b, i64 8252     ; 3 uses
   %.pre = load i64, ptr %i.e, align 8, !tbaa !2801
-  %5 = shl i64 %2, 2
-  %6 = add i64 %5, -4
   %i.o = shl i64 %4, 2                            ; 2 uses
   %scevgep = getelementptr i8, ptr %i.d, i64 %i.o
   %i.p = getelementptr i8, ptr %i.d, i64 %i.o
@@ -1109,11 +1103,11 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.d
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %.0103 ; 3 uses
   %i.w = load i32, ptr %i.h, align 8, !tbaa !3    ; 2 uses
-  %7 = shl i64 %.0103, 2
-  %8 = sub i64 %6, %7                             ; 2 uses
-  %9 = lshr exact i64 %8, 2
-  %i.x = add nuw nsw i64 %9, 1                    ; 2 uses
-  %min.iters.check134 = icmp ult i64 %8, 28
+  %5 = sub i64 %2, %.0103
+  %6 = add i64 %5, 4611686018427387903
+  %7 = and i64 %6, 4611686018427387903            ; 2 uses
+  %i.x = add nuw nsw i64 %7, 1                    ; 2 uses
+  %min.iters.check134 = icmp samesign ult i64 %7, 7
   br i1 %min.iters.check134, label %.lr.ph.i.i.i.preheader168, label %vector.ph135
 
 vector.ph135:                                     ; preds = %.lr.ph.i.i.i.preheader
@@ -1516,8 +1510,6 @@ bb.a:
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 16456 ; 2 uses
   %.pre = load i64, ptr %i.e, align 8, !tbaa !2902
-  %5 = shl i64 %2, 3
-  %6 = add i64 %5, -8
   %i.o = shl i64 %4, 3                            ; 2 uses
   %scevgep = getelementptr i8, ptr %i.d, i64 %i.o
   %scevgep148 = getelementptr i8, ptr %i.b, i64 16472
@@ -1548,11 +1540,11 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.d
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %.0103 ; 3 uses
   %i.w = load i64, ptr %i.h, align 8, !tbaa !21   ; 2 uses
-  %7 = shl i64 %.0103, 3
-  %8 = sub i64 %6, %7                             ; 2 uses
-  %9 = lshr exact i64 %8, 3
-  %i.x = add nuw nsw i64 %9, 1                    ; 2 uses
-  %min.iters.check135 = icmp ult i64 %8, 24
+  %5 = sub i64 %2, %.0103
+  %6 = add i64 %5, 2305843009213693951
+  %7 = and i64 %6, 2305843009213693951            ; 2 uses
+  %i.x = add nuw nsw i64 %7, 1                    ; 2 uses
+  %min.iters.check135 = icmp samesign ult i64 %7, 3
   br i1 %min.iters.check135, label %.lr.ph.i.i.i.preheader170, label %vector.ph136
 
 vector.ph136:                                     ; preds = %.lr.ph.i.i.i.preheader

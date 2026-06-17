@@ -201,13 +201,11 @@ _ZN2v84base11SmallVectorINS_8internal8compiler10turboshaft7OpIndexELm16ESaIS5_EE
   %i.cg = phi ptr [ %.pre.i, %_ZN2v84base11SmallVectorINS_8internal8compiler10turboshaft7OpIndexELm16ESaIS5_EEC2ENS0_6VectorIKS5_EERKS6_.exit.thread.i ], [ %i.cb, %_ZN2v84base11SmallVectorINS_8internal8compiler10turboshaft7OpIndexELm16ESaIS5_EEC2ENS0_6VectorIKS5_EERKS6_.exit.i ] ; 5 uses
   %.idx9.pn.i = shl nuw nsw i64 %i.ca, 2
   %i.ch = getelementptr inbounds nuw i8, ptr %i.bz, i64 %.idx9.pn.i
-  %8 = shl nuw nsw i64 %i.by, 2
-  %i.ci = add nsw i64 %8, -4
-  %9 = shl nuw nsw i64 %i.bw, 2
-  %10 = sub nsw i64 %i.ci, %9                     ; 2 uses
-  %11 = lshr exact i64 %10, 2
-  %i.cj = add nuw nsw i64 %11, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %10, 76
+  %8 = sub nsw i64 %i.by, %i.bw
+  %i.ci = add nsw i64 %8, 4611686018427387903
+  %9 = and i64 %i.ci, 4611686018427387903         ; 2 uses
+  %i.cj = add nuw nsw i64 %9, 1                   ; 2 uses
+  %min.iters.check = icmp samesign ult i64 %9, 19
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader.i
