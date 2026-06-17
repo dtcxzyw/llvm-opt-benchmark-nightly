@@ -201,7 +201,7 @@ _ZN8facebook5velox6StatusD2Ev.exit39.i.us76:      ; preds = %_ZN8facebook5velox6
   %i.hw = or disjoint i64 %i.fa, 1
   %umax164 = tail call i64 @llvm.umax.i64(i64 %i.hw, i64 %i.ez) ; 2 uses
   %i.hx = sub i64 %umax164, %i.fa                 ; 2 uses
-  %min.iters.check165 = icmp ult i64 %i.hx, 40
+  %min.iters.check165 = icmp ult i64 %i.hx, 80
   br i1 %min.iters.check165, label %_ZN8facebook5velox6StatusD2Ev.exit39.i.preheader, label %vector.scevcheck159
 
 vector.scevcheck159:                              ; preds = %.lr.ph90.i.split.split
@@ -604,7 +604,7 @@ _ZN8facebook5velox6StatusD2Ev.exit39.i.us74:      ; preds = %_ZN8facebook5velox6
   %i.hw = or disjoint i64 %i.fa, 1
   %umax162 = tail call i64 @llvm.umax.i64(i64 %i.hw, i64 %i.ez) ; 2 uses
   %i.hx = sub i64 %umax162, %i.fa                 ; 2 uses
-  %min.iters.check163 = icmp ult i64 %i.hx, 40
+  %min.iters.check163 = icmp ult i64 %i.hx, 80
   br i1 %min.iters.check163, label %_ZN8facebook5velox6StatusD2Ev.exit39.i.preheader, label %vector.scevcheck157
 
 vector.scevcheck157:                              ; preds = %.lr.ph86.i.split.split

@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.c
   %i.p = sub i64 %i.o, %i.f                       ; 2 uses
   %i.q = lshr i64 %i.p, 3
   %i.r = add nuw nsw i64 %i.q, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.p, 184
+  %min.iters.check = icmp ult i64 %i.p, 344
   br i1 %min.iters.check, label %.lr.ph.preheader277, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader

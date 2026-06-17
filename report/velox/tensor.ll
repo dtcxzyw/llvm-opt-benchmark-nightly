@@ -201,7 +201,7 @@ bb.f:                                             ; preds = %_ZN5arrow9ArraySpan
 .lr.ph20:                                         ; preds = %bb.f
   %i.aj = load ptr, ptr %1, align 8, !tbaa !1565, !nonnull !81, !align !82 ; 10 uses
   %.promoted = load ptr, ptr %i.aj, align 8, !tbaa !274 ; 8 uses
-  %min.iters.check = icmp ult i64 %i.i, 18
+  %min.iters.check = icmp ult i64 %i.i, 26
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph20
@@ -604,7 +604,7 @@ bb.f:                                             ; preds = %_ZN5arrow9ArraySpan
 .lr.ph20:                                         ; preds = %bb.f
   %i.aj = load ptr, ptr %1, align 8, !tbaa !1737, !nonnull !81, !align !82 ; 10 uses
   %.promoted = load ptr, ptr %i.aj, align 8, !tbaa !281 ; 8 uses
-  %min.iters.check = icmp ult i64 %i.i, 18
+  %min.iters.check = icmp ult i64 %i.i, 26
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph20
@@ -878,7 +878,7 @@ bb.f:                                             ; preds = %_ZN5arrow9ArraySpan
 .lr.ph20:                                         ; preds = %bb.f
   %i.aj = load ptr, ptr %1, align 8, !tbaa !1737, !nonnull !81, !align !82 ; 10 uses
   %.promoted = load ptr, ptr %i.aj, align 8, !tbaa !281 ; 8 uses
-  %min.iters.check = icmp ult i64 %i.i, 18
+  %min.iters.check = icmp ult i64 %i.i, 26
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph20

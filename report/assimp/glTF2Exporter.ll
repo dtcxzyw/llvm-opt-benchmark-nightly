@@ -201,7 +201,7 @@ _ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i44: ; preds = %.noexc48
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 1032
   %i.r = load ptr, ptr %i.q, align 8              ; 6 uses
   %i.s = fpext float %4 to double                 ; 2 uses
-  %min.iters.check = icmp ult i32 %i.b, 11
+  %min.iters.check = icmp ult i32 %i.b, 13
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 scalar.ph.preheader:                              ; preds = %vector.body, %vector.memcheck, %vector.scevcheck, %.lr.ph
@@ -604,8 +604,8 @@ bb.a:                                             ; preds = %_ZNSt6vectorIfSaIfE
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 1048
   %i.r = load ptr, ptr %i.q, align 8              ; 6 uses
   %i.s = fpext float %4 to double                 ; 2 uses
-  %i.t = add i32 %i.b, -7
-  %or.cond = icmp ult i32 %i.t, 1073741818
+  %i.t = add i32 %i.b, -9
+  %or.cond = icmp ult i32 %i.t, 1073741816
   br i1 %or.cond, label %vector.memcheck, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.body, %vector.memcheck, %.lr.ph
@@ -839,7 +839,7 @@ _ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i44: ; preds = %.noexc48
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 1064
   %i.r = load ptr, ptr %i.q, align 8              ; 6 uses
   %i.s = fpext float %4 to double                 ; 2 uses
-  %min.iters.check = icmp ult i32 %i.b, 11
+  %min.iters.check = icmp ult i32 %i.b, 13
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 scalar.ph.preheader:                              ; preds = %vector.body, %vector.memcheck, %vector.scevcheck, %.lr.ph

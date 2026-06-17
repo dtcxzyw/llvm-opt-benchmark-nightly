@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %_ZN5arrow9ArraySpan
 .lr.ph21:                                         ; preds = %bb.e
   %i.ai = load ptr, ptr %1, align 8, !tbaa !1532, !nonnull !54, !align !342 ; 10 uses
   %.promoted = load ptr, ptr %i.ai, align 8, !tbaa !234 ; 8 uses
-  %min.iters.check = icmp ult i64 %i.i, 24
+  %min.iters.check = icmp ult i64 %i.i, 26
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph21
@@ -479,7 +479,7 @@ bb.e:                                             ; preds = %_ZN5arrow9ArraySpan
 .lr.ph21:                                         ; preds = %bb.e
   %i.ai = load ptr, ptr %1, align 8, !tbaa !1532, !nonnull !54, !align !342 ; 10 uses
   %.promoted = load ptr, ptr %i.ai, align 8, !tbaa !234 ; 8 uses
-  %min.iters.check = icmp ult i64 %i.i, 24
+  %min.iters.check = icmp ult i64 %i.i, 26
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph21
@@ -882,7 +882,7 @@ bb.e:                                             ; preds = %_ZN5arrow9ArraySpan
 .lr.ph21:                                         ; preds = %bb.e
   %i.ai = load ptr, ptr %1, align 8, !tbaa !1703, !nonnull !54, !align !342 ; 10 uses
   %.promoted = load ptr, ptr %i.ai, align 8, !tbaa !241 ; 8 uses
-  %min.iters.check = icmp ult i64 %i.i, 24
+  %min.iters.check = icmp ult i64 %i.i, 26
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph21
@@ -1160,7 +1160,7 @@ bb.e:                                             ; preds = %_ZN5arrow9ArraySpan
 .lr.ph21:                                         ; preds = %bb.e
   %i.ai = load ptr, ptr %1, align 8, !tbaa !1703, !nonnull !54, !align !342 ; 10 uses
   %.promoted = load ptr, ptr %i.ai, align 8, !tbaa !241 ; 8 uses
-  %min.iters.check = icmp ult i64 %i.i, 24
+  %min.iters.check = icmp ult i64 %i.i, 26
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph21
