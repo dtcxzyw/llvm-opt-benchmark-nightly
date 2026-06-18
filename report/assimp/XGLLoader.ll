@@ -201,20 +201,22 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
-  %i.b = tail call ptr @_ZNK4pugi8xml_node11first_childEv(ptr noundef nonnull align 8 dereferenceable(8) %0) ; 4 uses
+  %i.b = tail call ptr @_ZNK4pugi8xml_node11first_childEv(ptr noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   store ptr %i.b, ptr %4, align 8
-  %.not715 = icmp eq ptr %i.b, null
-  %8 = load ptr, ptr %0, align 8
-  %.not816 = icmp eq ptr %i.b, %8
-  %or.cond17 = select i1 %.not715, i1 true, i1 %.not816
-  br i1 %or.cond17, label %.critedge, label %.lr.ph18
+  %.not816 = icmp eq ptr %i.b, null
+  br i1 %.not816, label %.critedge, label %.lr.ph18
 
 .lr.ph18:                                         ; preds = %bb.c
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  br label %bb.d
+  br label %8
 
-bb.d:                                             ; preds = %.lr.ph18, %.loopexit.thread
-  %9 = phi ptr [ %i.b, %.lr.ph18 ], [ %i.aa, %.loopexit.thread ]
+8:                                                ; preds = %.lr.ph18, %.loopexit.thread
+  %9 = phi ptr [ %i.b, %.lr.ph18 ], [ %i.aa, %.loopexit.thread ] ; 2 uses
+  %10 = load ptr, ptr %0, align 8
+  %.not8 = icmp eq ptr %9, %10
+  br i1 %.not8, label %.critedge, label %bb.d
+
+bb.d:                                             ; preds = %8
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   store ptr %9, ptr %2, align 8
   %i.d = call noundef ptr @_ZNK4pugi8xml_node4nameEv(ptr noundef nonnull align 8 dereferenceable(8) %2) ; 2 uses
@@ -313,14 +315,11 @@ bb.k:                                             ; preds = %.loopexit
   br label %.loopexit.thread
 
 .loopexit.thread:                                 ; preds = %.lr.ph, %.loopexit.thread.sink.split, %.loopexit
-  %i.aa = phi ptr [ %.pre, %.loopexit ], [ %.sink, %.loopexit.thread.sink.split ], [ %i.t, %.lr.ph ] ; 3 uses
-  %.not7 = icmp eq ptr %i.aa, null
-  %10 = load ptr, ptr %0, align 8
-  %.not8.a = icmp eq ptr %i.aa, %10
-  %or.cond = select i1 %.not7, i1 true, i1 %.not8.a
-  br i1 %or.cond, label %.critedge, label %bb.d, !llvm.loop !162
+  %i.aa = phi ptr [ %.pre, %.loopexit ], [ %.sink, %.loopexit.thread.sink.split ], [ %i.t, %.lr.ph ] ; 2 uses
+  %.not8.a = icmp eq ptr %i.aa, null
+  br i1 %.not8.a, label %.critedge, label %8, !llvm.loop !162
 
-.critedge:                                        ; preds = %.loopexit.thread, %bb.c
+.critedge:                                        ; preds = %8, %.loopexit.thread, %bb.c
   call void @_ZN4pugi8xml_nodeC1Ev(ptr noundef nonnull align 8 dereferenceable(8) %3)
   br label %bb.l
 

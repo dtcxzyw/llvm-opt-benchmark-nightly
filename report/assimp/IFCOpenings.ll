@@ -201,12 +201,14 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN6Assimp
   %i.k = fdiv <2 x double> %i.j, splat (double f0x41D6A09E66400000) ; 2 uses
   %i.l = fcmp ogt <2 x double> %i.k, splat (double 1.000000e+00)
   %i.m = select <2 x i1> %i.l, <2 x double> splat (double 1.000000e+00), <2 x double> %i.k ; 4 uses
-  %.val11 = load ptr, ptr %1, align 8             ; 2 uses
-  %.not10.not.i = icmp ne ptr %.val11, %i.h
-  %or.cond.not = select i1 %2, i1 %.not10.not.i, i1 false
-  br i1 %or.cond.not, label %.lr.ph.i.preheader, label %_ZN6Assimp3IFCL17IsDuplicateVertexERK10aiVector2tIdERKSt6vectorIS2_SaIS2_EE.exit.thread
+  br i1 %2, label %3, label %_ZN6Assimp3IFCL17IsDuplicateVertexERK10aiVector2tIdERKSt6vectorIS2_SaIS2_EE.exit.thread
 
-.lr.ph.i.preheader:                               ; preds = %bb.b
+3:                                                ; preds = %bb.b
+  %.val11 = load ptr, ptr %1, align 8             ; 2 uses
+  %.not10.not.i = icmp eq ptr %.val11, %i.h
+  br i1 %.not10.not.i, label %_ZN6Assimp3IFCL17IsDuplicateVertexERK10aiVector2tIdERKSt6vectorIS2_SaIS2_EE.exit.thread, label %.lr.ph.i.preheader
+
+.lr.ph.i.preheader:                               ; preds = %3
   %i.n = extractelement <2 x double> %i.m, i64 0
   %i.o = extractelement <2 x double> %i.m, i64 1
   br label %.lr.ph.i
@@ -228,7 +230,7 @@ bb.c:                                             ; preds = %.lr.ph.i
   %i.x = fcmp olt double %i.w, f0x3EE4F8B580000000
   br i1 %i.x, label %_ZN6Assimp3IFCL17IsDuplicateVertexERK10aiVector2tIdERKSt6vectorIS2_SaIS2_EE.exit, label %bb.c
 
-_ZN6Assimp3IFCL17IsDuplicateVertexERK10aiVector2tIdERKSt6vectorIS2_SaIS2_EE.exit.thread: ; preds = %bb.c, %bb.b
+_ZN6Assimp3IFCL17IsDuplicateVertexERK10aiVector2tIdERKSt6vectorIS2_SaIS2_EE.exit.thread: ; preds = %bb.c, %3, %bb.b
   %i.y = load ptr, ptr %i.g, align 8
   %.not.i = icmp eq ptr %i.h, %i.y
   br i1 %.not.i, label %bb.e, label %bb.d
@@ -631,7 +633,7 @@ bb.ar:                                            ; preds = %bb.aq
   br label %_ZNSt5dequeISt4pairI10aiVector2tIdES2_ESaIS3_EE9push_backERKS3_.exit265
 
 bb.as:                                            ; preds = %bb.aq
-  %i.lf = load ptr, ptr %i.ds, align 8            ; 3 uses
+  %i.lf = load ptr, ptr %i.ds, align 8            ; 2 uses
   %i.lg = load ptr, ptr %i.dt, align 8
   %i.lh = ptrtoint ptr %i.lf to i64               ; 2 uses
   %i.li = ptrtoint ptr %i.lg to i64
@@ -676,18 +678,14 @@ bb.au:                                            ; preds = %bb.as
 
 bb.av:                                            ; preds = %bb.au
   invoke void @_ZNSt5dequeISt4pairI10aiVector2tIdES2_ESaIS3_EE17_M_reallocate_mapEmb(ptr noundef nonnull align 8 dereferenceable(80) %8, i64 noundef 1, i1 noundef zeroext false)
-          to label %.noexc410 unwind label %.loopexit604
+          to label %_ZNSt5dequeISt4pairI10aiVector2tIdES2_ESaIS3_EE22_M_reserve_map_at_backEm.exit.i unwind label %.loopexit604
 
-.noexc410:                                        ; preds = %bb.av
-  %.pre.i = load ptr, ptr %i.ds, align 8
-  br label %_ZNSt5dequeISt4pairI10aiVector2tIdES2_ESaIS3_EE22_M_reserve_map_at_backEm.exit.i
-
-_ZNSt5dequeISt4pairI10aiVector2tIdES2_ESaIS3_EE22_M_reserve_map_at_backEm.exit.i: ; preds = %.noexc410, %bb.au
-  %24 = phi ptr [ %i.lf, %bb.au ], [ %.pre.i, %.noexc410 ]
+_ZNSt5dequeISt4pairI10aiVector2tIdES2_ESaIS3_EE22_M_reserve_map_at_backEm.exit.i: ; preds = %bb.av, %bb.au
   %i.mj = invoke noalias noundef nonnull dereferenceable(512) ptr @_Znwm(i64 noundef 512) #25
           to label %.noexc264 unwind label %.loopexit604
 
 .noexc264:                                        ; preds = %_ZNSt5dequeISt4pairI10aiVector2tIdES2_ESaIS3_EE22_M_reserve_map_at_backEm.exit.i
+  %24 = load ptr, ptr %i.ds, align 8
   %i.mk = getelementptr inbounds nuw i8, ptr %24, i64 8
   store ptr %i.mj, ptr %i.mk, align 8
   %i.ml = load ptr, ptr %i.dp, align 8            ; 4 uses
@@ -1090,7 +1088,7 @@ _ZSt4copyIPP10aiVector2tIdES3_ET0_T_S5_S4_.exit24.i: ; preds = %bb.cs, %bb.cr, %
   br label %_ZNSt5dequeI10aiVector2tIdESaIS1_EE17_M_push_front_auxIJRKS1_EEEvDpOT_.exit.i
 
 _ZNSt5dequeI10aiVector2tIdESaIS1_EE17_M_push_front_auxIJRKS1_EEEvDpOT_.exit.i: ; preds = %.noexc306, %bb.cd
-  %i.wu = phi ptr [ %i.ub, %bb.cd ], [ %.0.i, %.noexc306 ]
+  %i.wu = phi ptr [ %.0.i, %.noexc306 ], [ %i.ub, %bb.cd ]
   %i.wv = invoke noalias noundef nonnull dereferenceable(512) ptr @_Znwm(i64 noundef 512) #25
           to label %.noexc307 unwind label %.loopexit594
 
@@ -1285,7 +1283,7 @@ _ZSt4copyIPP10aiVector2tIdES3_ET0_T_S5_S4_.exit24.i419: ; preds = %bb.dm, %bb.dl
   br label %_ZNSt5dequeI10aiVector2tIdESaIS1_EE17_M_push_front_auxIJRKS1_EEEvDpOT_.exit.i310
 
 _ZNSt5dequeI10aiVector2tIdESaIS1_EE17_M_push_front_auxIJRKS1_EEEvDpOT_.exit.i310: ; preds = %.noexc313.a, %bb.cx
-  %i.aag = phi ptr [ %i.xn, %bb.cx ], [ %.0.i420, %.noexc313.a ]
+  %i.aag = phi ptr [ %.0.i420, %.noexc313.a ], [ %i.xn, %bb.cx ]
   %i.aah = invoke noalias noundef nonnull dereferenceable(512) ptr @_Znwm(i64 noundef 512) #25
           to label %.noexc314 unwind label %.loopexit594
 
@@ -1493,7 +1491,7 @@ _ZSt4copyIPP10aiVector2tIdES3_ET0_T_S5_S4_.exit24.i441: ; preds = %bb.ei, %bb.eh
   br label %_ZNSt5dequeI10aiVector2tIdESaIS1_EE22_M_reserve_map_at_backEm.exit.i
 
 _ZNSt5dequeI10aiVector2tIdESaIS1_EE22_M_reserve_map_at_backEm.exit.i: ; preds = %.noexc430, %bb.dt
-  %i.adz = phi ptr [ %i.se, %bb.dt ], [ %i.adw, %.noexc430 ]
+  %i.adz = phi ptr [ %i.adw, %.noexc430 ], [ %i.se, %bb.dt ]
   %i.aea = invoke noalias noundef nonnull dereferenceable(512) ptr @_Znwm(i64 noundef 512) #25
           to label %.noexc318 unwind label %.loopexit594
 
@@ -1700,7 +1698,7 @@ _ZSt4copyIPP10aiVector2tIdES3_ET0_T_S5_S4_.exit24.i451: ; preds = %bb.fe, %bb.fd
   br label %_ZNSt5dequeI10aiVector2tIdESaIS1_EE22_M_reserve_map_at_backEm.exit.i433
 
 _ZNSt5dequeI10aiVector2tIdESaIS1_EE22_M_reserve_map_at_backEm.exit.i433: ; preds = %.noexc436, %bb.ep
-  %i.ahr = phi ptr [ %i.se, %bb.ep ], [ %i.aho, %.noexc436 ]
+  %i.ahr = phi ptr [ %i.aho, %.noexc436 ], [ %i.se, %bb.ep ]
   %i.ahs = invoke noalias noundef nonnull dereferenceable(512) ptr @_Znwm(i64 noundef 512) #25
           to label %.noexc321 unwind label %.loopexit594
 
@@ -2103,7 +2101,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 4 uses
-  %i.d = load ptr, ptr %i.c, align 8              ; 3 uses
+  %i.d = load ptr, ptr %i.c, align 8              ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.f = load ptr, ptr %i.e, align 8
   %i.g = ptrtoint ptr %i.d to i64                 ; 2 uses
@@ -2150,14 +2148,13 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZNSt5dequeISt4pairI10aiVector2tIdES2_ESaIS3_EE17_M_reallocate_mapEmb(ptr noundef nonnull align 8 dereferenceable(80) %0, i64 noundef 1, i1 noundef zeroext false)
-  %.pre = load ptr, ptr %i.c, align 8
   br label %_ZNSt5dequeISt4pairI10aiVector2tIdES2_ESaIS3_EE22_M_reserve_map_at_backEm.exit
 
 _ZNSt5dequeISt4pairI10aiVector2tIdES2_ESaIS3_EE22_M_reserve_map_at_backEm.exit: ; preds = %bb.c, %bb.d
-  %2 = phi ptr [ %i.d, %bb.c ], [ %.pre, %bb.d ]
-  %3 = tail call noalias noundef nonnull dereferenceable(512) ptr @_Znwm(i64 noundef 512) #25
-  %i.am = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store ptr %3, ptr %i.am, align 8
+  %2 = tail call noalias noundef nonnull dereferenceable(512) ptr @_Znwm(i64 noundef 512) #25
+  %3 = load ptr, ptr %i.c, align 8
+  %i.am = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store ptr %2, ptr %i.am, align 8
   %i.an = load ptr, ptr %i.a, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.an, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false)
   %i.ao = load ptr, ptr %i.c, align 8

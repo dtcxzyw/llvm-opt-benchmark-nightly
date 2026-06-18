@@ -201,7 +201,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not.i, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.o = load ptr, ptr %i.n, align 8, !tbaa !248
+  %i.o = load ptr, ptr %i.n, align 8, !tbaa !248  ; 2 uses
   store ptr %i.o, ptr %2, align 8, !tbaa !582
   br label %bb.j
 
@@ -210,6 +210,7 @@ bb.i:                                             ; preds = %bb.g
           to label %bb.j unwind label %bb.o
 
 bb.j:                                             ; preds = %bb.h, %bb.i
+  %.promoted = phi ptr [ %i.o, %bb.h ], [ null, %bb.i ]
   %.sink13.i = phi ptr [ %i.n, %bb.h ], [ %i.p, %bb.i ] ; 5 uses
   store ptr null, ptr %.sink13.i, align 8, !tbaa !248
   %i.q = getelementptr inbounds nuw i8, ptr %.sink13.i, i64 8
@@ -228,22 +229,18 @@ bb.j:                                             ; preds = %bb.h, %bb.i
   store ptr %i.v, ptr %i.z, align 8, !tbaa !295
   %.02837 = load ptr, ptr %i.l, align 8, !tbaa !248 ; 2 uses
   %.not3038 = icmp eq ptr %.02837, null
-  br i1 %.not3038, label %.loopexit, label %.lr.ph.preheader
+  br i1 %.not3038, label %.loopexit, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.j
-  %.promoted = load ptr, ptr %2, align 8
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.q
-  %.02840.a = phi ptr [ %.028, %bb.q ], [ %.02837, %.lr.ph.preheader ] ; 3 uses
-  %.02639.a = phi ptr [ %.sink13.i34, %bb.q ], [ %.sink13.i, %.lr.ph.preheader ] ; 2 uses
-  %i.aa = phi ptr [ %i.ae, %bb.q ], [ %.promoted, %.lr.ph.preheader ] ; 3 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %.02840.a, i64 8
-  %.not.i33 = icmp eq ptr %i.aa, null
+.lr.ph:                                           ; preds = %bb.j, %bb.q
+  %.02840.a = phi ptr [ %i.ae, %bb.q ], [ %.promoted, %bb.j ] ; 3 uses
+  %.02639.a = phi ptr [ %.028, %bb.q ], [ %.02837, %bb.j ] ; 3 uses
+  %i.aa = phi ptr [ %.sink13.i34, %bb.q ], [ %.sink13.i, %bb.j ] ; 2 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %.02639.a, i64 8
+  %.not.i33 = icmp eq ptr %.02840.a, null
   br i1 %.not.i33, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph
-  %i.ac = load ptr, ptr %i.aa, align 8, !tbaa !248 ; 2 uses
+  %i.ac = load ptr, ptr %.02840.a, align 8, !tbaa !248 ; 2 uses
   store ptr %i.ac, ptr %2, align 8, !tbaa !582
   br label %bb.m
 
@@ -253,14 +250,14 @@ bb.l:                                             ; preds = %.lr.ph
 
 bb.m:                                             ; preds = %bb.k, %bb.l
   %i.ae = phi ptr [ %i.ac, %bb.k ], [ null, %bb.l ]
-  %.sink13.i34 = phi ptr [ %i.aa, %bb.k ], [ %i.ad, %bb.l ] ; 5 uses
+  %.sink13.i34 = phi ptr [ %.02840.a, %bb.k ], [ %i.ad, %bb.l ] ; 5 uses
   store ptr null, ptr %.sink13.i34, align 8, !tbaa !248
   %i.af = getelementptr inbounds nuw i8, ptr %.sink13.i34, i64 8
   %i.ag = load i8, ptr %i.ab, align 1, !tbaa !290
   store i8 %i.ag, ptr %i.af, align 8, !tbaa !290
-  store ptr %.sink13.i34, ptr %.02639.a, align 8, !tbaa !248
+  store ptr %.sink13.i34, ptr %i.aa, align 8, !tbaa !248
   %i.ah = getelementptr inbounds nuw i8, ptr %.sink13.i34, i64 16
-  %i.ai = getelementptr inbounds nuw i8, ptr %.02840.a, i64 16
+  %i.ai = getelementptr inbounds nuw i8, ptr %.02639.a, i64 16
   %i.aj = load i64, ptr %i.ai, align 8, !tbaa !296 ; 2 uses
   store i64 %i.aj, ptr %i.ah, align 8, !tbaa !296
   %i.ak = urem i64 %i.aj, %i.x
@@ -270,7 +267,7 @@ bb.m:                                             ; preds = %bb.k, %bb.l
   br i1 %.not32, label %bb.n, label %bb.q
 
 bb.n:                                             ; preds = %bb.m
-  store ptr %.02639.a, ptr %i.al, align 8, !tbaa !295
+  store ptr %i.aa, ptr %i.al, align 8, !tbaa !295
   br label %bb.q
 
 bb.o:                                             ; preds = %bb.i
@@ -284,7 +281,7 @@ bb.p:                                             ; preds = %bb.l
   br label %bb.r
 
 bb.q:                                             ; preds = %bb.n, %bb.m
-  %.028 = load ptr, ptr %.02840.a, align 8, !tbaa !248 ; 2 uses
+  %.028 = load ptr, ptr %.02639.a, align 8, !tbaa !248 ; 2 uses
   %.not30 = icmp eq ptr %.028, null
   br i1 %.not30, label %.loopexit, label %.lr.ph, !llvm.loop !585
 

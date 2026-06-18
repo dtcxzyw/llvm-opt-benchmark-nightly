@@ -201,22 +201,17 @@ bb.ac:                                            ; preds = %bb.ab
 bb.ad:                                            ; preds = %bb.ac
   %i.dm = load i8, ptr %i.n, align 8, !tbaa !38, !range !39, !noundef !40
   %i.dn = trunc nuw i8 %i.dm to i1
-  %6 = icmp eq i32 %i.dk, -1
-  %not. = xor i1 %i.dn, true
-  %or.cond11.not = select i1 %not., i1 %6, i1 false
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 196
-  %8 = load i32, ptr %7, align 4
-  %9 = icmp eq i32 %8, 0
-  %or.cond132 = select i1 %or.cond11.not, i1 %9, i1 false
-  br i1 %or.cond132, label %bb.af, label %.thread117
+  %6 = icmp ne i32 %i.dk, -1
+  %or.cond132 = select i1 %i.dn, i1 true, i1 %6
+  br i1 %or.cond132, label %.thread117, label %bb.ae
 
-bb.ae:                                            ; preds = %bb.ab
+bb.ae:                                            ; preds = %bb.ad, %bb.ab
   %.old = getelementptr inbounds nuw i8, ptr %0, i64 196
   %.old130 = load i32, ptr %.old, align 4, !tbaa !46
   %.old131 = icmp eq i32 %.old130, 0
   br i1 %.old131, label %bb.af, label %.thread117
 
-bb.af:                                            ; preds = %bb.ad, %bb.ae, %bb.aa
+bb.af:                                            ; preds = %bb.ae, %bb.aa
   br label %.thread117
 
 .thread117:                                       ; preds = %select.unfold115, %bb.x, %bb.y, %bb.w, %bb.q, %bb.r, %bb.s, %select.unfold115.us149, %bb.n, %bb.m, %bb.l, %bb.ac, %.split137.us, %bb.ae, %bb.ad, %.thread121, %bb.af

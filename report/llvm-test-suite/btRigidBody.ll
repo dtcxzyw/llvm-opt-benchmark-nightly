@@ -201,20 +201,16 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   br i1 %exitcond.not.i.i.i.3, label %_ZNK20btAlignedObjectArrayIP17btTypedConstraintE4copyEiiPS1_.exit.thread.i.i, label %scalar.ph, !llvm.loop !74
 
 _ZNK20btAlignedObjectArrayIP17btTypedConstraintE4copyEiiPS1_.exit.i.i: ; preds = %_ZN20btAlignedObjectArrayIP17btTypedConstraintE8allocateEi.exit.i.i
-  %.not.i5.i.i = icmp ne ptr %i.w, null
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 544
-  %3 = load i8, ptr %2, align 8, !range !20
-  %4 = trunc nuw i8 %3 to i1
-  %or.cond.i = select i1 %.not.i5.i.i, i1 %4, i1 false
-  br i1 %or.cond.i, label %bb.g, label %_ZN20btAlignedObjectArrayIP17btTypedConstraintE10deallocateEv.exit.i.i
+  %.not.i5.i.i = icmp eq ptr %i.w, null
+  br i1 %.not.i5.i.i, label %_ZN20btAlignedObjectArrayIP17btTypedConstraintE10deallocateEv.exit.i.i, label %_ZNK20btAlignedObjectArrayIP17btTypedConstraintE4copyEiiPS1_.exit.thread.i.i
 
-_ZNK20btAlignedObjectArrayIP17btTypedConstraintE4copyEiiPS1_.exit.thread.i.i: ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
+_ZNK20btAlignedObjectArrayIP17btTypedConstraintE4copyEiiPS1_.exit.thread.i.i: ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %_ZNK20btAlignedObjectArrayIP17btTypedConstraintE4copyEiiPS1_.exit.i.i
   %.old.i = getelementptr inbounds nuw i8, ptr %0, i64 544
   %.old8.i = load i8, ptr %.old.i, align 8, !tbaa !10, !range !20, !noundef !39
   %.old9.i = trunc nuw i8 %.old8.i to i1
   br i1 %.old9.i, label %bb.g, label %_ZN20btAlignedObjectArrayIP17btTypedConstraintE10deallocateEv.exit.i.i
 
-bb.g:                                             ; preds = %_ZNK20btAlignedObjectArrayIP17btTypedConstraintE4copyEiiPS1_.exit.thread.i.i, %_ZNK20btAlignedObjectArrayIP17btTypedConstraintE4copyEiiPS1_.exit.i.i
+bb.g:                                             ; preds = %_ZNK20btAlignedObjectArrayIP17btTypedConstraintE4copyEiiPS1_.exit.thread.i.i
   tail call void @_Z21btAlignedFreeInternalPv(ptr noundef nonnull %i.w)
   %.pre2.pre.pre.i = load i32, ptr %i.a, align 4, !tbaa !18
   br label %_ZN20btAlignedObjectArrayIP17btTypedConstraintE10deallocateEv.exit.i.i

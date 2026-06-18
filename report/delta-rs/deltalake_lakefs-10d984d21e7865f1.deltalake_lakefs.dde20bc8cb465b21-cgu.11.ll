@@ -201,10 +201,7 @@ bb.bn:                                            ; preds = %bb.bq, %_RNvMs3_NtC
   br i1 %i.ge, label %.lr.ph.i74.lr.ph.i.i.i.i.i.i.i, label %.loopexit123.i.i.i.i.i.i.i
 
 .lr.ph.i74.lr.ph.i.i.i.i.i.i.i:                   ; preds = %bb.bn
-  %.promoted.i.i.i.i.i.i.i = load i64, ptr %i.cz, align 8, !alias.scope !850, !noalias !790
   %i.gf = load ptr, ptr %i.cv, align 8, !alias.scope !946, !noalias !951, !nonnull !3, !noundef !3 ; 3 uses
-  %6 = load i64, ptr %i.cu, align 8, !range !8, !alias.scope !850, !noalias !790
-  %7 = load ptr, ptr %i.dz, align 8, !alias.scope !850, !noalias !790, !nonnull !3
   br label %.lr.ph.i74.i.i.i.i.i.i.i
 
 bb.bo:                                            ; preds = %bb.ao
@@ -240,7 +237,6 @@ bb.bq:                                            ; preds = %bb.bm
   %i.go = phi i64 [ %.promoted.i72162.i.i.i.i.i.i.i, %.lr.ph.i74.lr.ph.i.i.i.i.i.i.i ], [ %i.gz, %bb.ca ]
   %.sroa.042.2164.i.i.i.i.i.i.i = phi i1 [ %.sroa.042.0.i.i.i.i.i.i.i, %.lr.ph.i74.lr.ph.i.i.i.i.i.i.i ], [ true, %bb.ca ] ; 2 uses
   %.sroa.027.2163.i.i.i.i.i.i.i = phi i8 [ %.sroa.027.0.i.i.i.i.i.i.i, %.lr.ph.i74.lr.ph.i.i.i.i.i.i.i ], [ %i.he, %bb.ca ] ; 6 uses
-  %8 = phi i64 [ %.promoted.i.i.i.i.i.i.i, %.lr.ph.i74.lr.ph.i.i.i.i.i.i.i ], [ %i.hb, %bb.ca ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !957)
   br label %bb.br
 
@@ -321,15 +317,18 @@ bb.by:                                            ; preds = %bb.bv
 bb.bz:                                            ; preds = %bb.bx, %bb.bw
   %i.gz = add i64 %i.gp, 1                        ; 3 uses
   store i64 %i.gz, ptr %i.cw, align 8, !alias.scope !966, !noalias !790
-  %i.ha = icmp eq i64 %8, 0
+  %6 = load i64, ptr %i.cz, align 8, !alias.scope !850, !noalias !790, !noundef !3 ; 2 uses
+  %i.ha = icmp eq i64 %6, 0
   br i1 %i.ha, label %_RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs1gOyXocuPRE_10serde_core2de9MapAccess10next_valueNtNtB1a_11ignored_any10IgnoredAnyECsj34PGqTgg0L_16deltalake_lakefs.exit.i.backedge, label %bb.ca
 
 bb.ca:                                            ; preds = %bb.bz
-  %i.hb = add i64 %8, -1                          ; 4 uses
+  %i.hb = add i64 %6, -1                          ; 3 uses
   store i64 %i.hb, ptr %i.cz, align 8, !alias.scope !850, !noalias !790
-  %i.hc = icmp ult i64 %i.hb, %6
+  %7 = load i64, ptr %i.cu, align 8, !range !8, !alias.scope !850, !noalias !790, !noundef !3
+  %i.hc = icmp ult i64 %i.hb, %7
   call void @llvm.assume(i1 %i.hc)
-  %i.hd = getelementptr inbounds nuw i8, ptr %7, i64 %i.hb
+  %8 = load ptr, ptr %i.dz, align 8, !alias.scope !850, !noalias !790, !nonnull !3, !noundef !3
+  %i.hd = getelementptr inbounds nuw i8, ptr %8, i64 %i.hb
   %i.he = load i8, ptr %i.hd, align 1, !noalias !790, !noundef !3 ; 2 uses
   %i.hf = icmp ult i64 %i.gz, %i.gd
   br i1 %i.hf, label %.lr.ph.i74.i.i.i.i.i.i.i, label %.loopexit123.i.i.i.i.i.i.i

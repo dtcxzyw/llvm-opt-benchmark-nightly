@@ -201,8 +201,8 @@ bb.h:                                             ; preds = %bb.g
   %.sroa.12.1.ph160.i.i = phi i32 [ %.sroa.12.4.i.i, %_ZNSt6vectorIPN12_GLOBAL__N_112StringPackerIhE11StringEntryESaIS4_EE9push_backEOS4_.exit.i.i ], [ %.sroa.12.0174.i.i, %bb.h ] ; 5 uses
   %.sroa.23.1.ph158.i.i = phi i32 [ %.sroa.23.6.i.i, %_ZNSt6vectorIPN12_GLOBAL__N_112StringPackerIhE11StringEntryESaIS4_EE9push_backEOS4_.exit.i.i ], [ %.sroa.23.0173.i.i, %bb.h ] ; 4 uses
   %.sroa.29.1.ph156.i.i = phi i32 [ %.sroa.29.5.i.i, %_ZNSt6vectorIPN12_GLOBAL__N_112StringPackerIhE11StringEntryESaIS4_EE9push_backEOS4_.exit.i.i ], [ %.sroa.29.0172.i.i, %bb.h ] ; 11 uses
-  %i.cq = load ptr, ptr %13, align 8, !noalias !89 ; 2 uses
-  %i.cr = load i32, ptr %i.cg, align 8, !noalias !89 ; 2 uses
+  %i.cq = load ptr, ptr %13, align 8, !noalias !76 ; 2 uses
+  %i.cr = load i32, ptr %i.cg, align 8, !noalias !76 ; 2 uses
   %i.cs = icmp eq i32 %i.cr, 0
   %i.ct = add i32 %i.cr, -1                       ; 2 uses
   br label %bb.i
@@ -605,8 +605,8 @@ bb.cw:                                            ; preds = %bb.cv
   %.sroa.12.1.ph162.i.i = phi i32 [ %.sroa.12.4.i.i80, %_ZNSt6vectorIPN12_GLOBAL__N_112StringPackerIDsE11StringEntryESaIS4_EE9push_backEOS4_.exit.i.i ], [ %.sroa.12.0176.i.i, %bb.cw ] ; 5 uses
   %.sroa.23.1.ph160.i.i = phi i32 [ %.sroa.23.6.i.i79, %_ZNSt6vectorIPN12_GLOBAL__N_112StringPackerIDsE11StringEntryESaIS4_EE9push_backEOS4_.exit.i.i ], [ %.sroa.23.0175.i.i, %bb.cw ] ; 4 uses
   %.sroa.29.1.ph158.i.i = phi i32 [ %.sroa.29.5.i.i78, %_ZNSt6vectorIPN12_GLOBAL__N_112StringPackerIDsE11StringEntryESaIS4_EE9push_backEOS4_.exit.i.i ], [ %.sroa.29.0174.i.i, %bb.cw ] ; 11 uses
-  %i.abq = load ptr, ptr %8, align 8, !noalias !227 ; 2 uses
-  %i.abr = load i32, ptr %i.abg, align 8, !noalias !227 ; 2 uses
+  %i.abq = load ptr, ptr %8, align 8, !noalias !214 ; 2 uses
+  %i.abr = load i32, ptr %i.abg, align 8, !noalias !214 ; 2 uses
   %i.abs = icmp eq i32 %i.abr, 0
   %i.abt = add i32 %i.abr, -1                     ; 2 uses
   br label %bb.cx
@@ -1009,7 +1009,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 4 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !37   ; 3 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !37   ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !37
   %i.g = ptrtoint ptr %i.d to i64                 ; 2 uses
@@ -1056,14 +1056,13 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZNSt5dequeISt6vectorIDsSaIDsEESaIS2_EE17_M_reallocate_mapEmb(ptr noundef nonnull align 8 dereferenceable(80) %0, i64 noundef 1, i1 noundef zeroext false)
-  %.pre = load ptr, ptr %i.c, align 8, !tbaa !366
   br label %_ZNSt5dequeISt6vectorIDsSaIDsEESaIS2_EE22_M_reserve_map_at_backEm.exit
 
 _ZNSt5dequeISt6vectorIDsSaIDsEESaIS2_EE22_M_reserve_map_at_backEm.exit: ; preds = %bb.c, %bb.d
-  %1 = phi ptr [ %i.d, %bb.c ], [ %.pre, %bb.d ]
-  %2 = tail call noalias noundef nonnull dereferenceable(504) ptr @_Znwm(i64 noundef 504) #16
-  %i.am = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store ptr %2, ptr %i.am, align 8, !tbaa !36
+  %1 = tail call noalias noundef nonnull dereferenceable(504) ptr @_Znwm(i64 noundef 504) #16
+  %2 = load ptr, ptr %i.c, align 8, !tbaa !366
+  %i.am = getelementptr inbounds nuw i8, ptr %2, i64 8
+  store ptr %1, ptr %i.am, align 8, !tbaa !36
   %i.an = load ptr, ptr %i.a, align 8, !tbaa !41
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.an, i8 0, i64 24, i1 false)
   %i.ao = load ptr, ptr %i.c, align 8, !tbaa !366

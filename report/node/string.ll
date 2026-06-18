@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %bb.d
   call void @_ZSt17__throw_bad_allocv() #26
   unreachable
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_moveEPcPKcm.exit.i.i.i.i.thread: ; preds = %bb.d, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_moveEPcPKcm.exit.i.i.i.i.thread: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i, %bb.d
   %i.m = phi i64 [ %i.k, %bb.d ], [ 31, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i ]
   %.0.i7 = phi i64 [ %i.f, %bb.d ], [ 30, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i ]
   %i.n = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.m) #30 ; 2 uses
@@ -604,7 +604,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 4 uses
-  %i.d = load ptr, ptr %i.c, align 8              ; 3 uses
+  %i.d = load ptr, ptr %i.c, align 8              ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.f = load ptr, ptr %i.e, align 8
   %i.g = ptrtoint ptr %i.d to i64                 ; 2 uses
@@ -651,14 +651,13 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZNSt5dequeISt4pairIN2v88internal6TaggedINS2_6StringEEEiESaIS6_EE17_M_reallocate_mapEmb(ptr noundef nonnull align 8 dereferenceable(80) %0, i64 noundef 1, i1 noundef zeroext false)
-  %.pre = load ptr, ptr %i.c, align 8
   br label %_ZNSt5dequeISt4pairIN2v88internal6TaggedINS2_6StringEEEiESaIS6_EE22_M_reserve_map_at_backEm.exit
 
 _ZNSt5dequeISt4pairIN2v88internal6TaggedINS2_6StringEEEiESaIS6_EE22_M_reserve_map_at_backEm.exit: ; preds = %bb.c, %bb.d
-  %2 = phi ptr [ %i.d, %bb.c ], [ %.pre, %bb.d ]
-  %3 = tail call noalias noundef nonnull dereferenceable(512) ptr @_Znwm(i64 noundef 512) #30
-  %i.am = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store ptr %3, ptr %i.am, align 8
+  %2 = tail call noalias noundef nonnull dereferenceable(512) ptr @_Znwm(i64 noundef 512) #30
+  %3 = load ptr, ptr %i.c, align 8
+  %i.am = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store ptr %2, ptr %i.am, align 8
   %i.an = load ptr, ptr %i.a, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.an, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false)
   %i.ao = load ptr, ptr %i.c, align 8

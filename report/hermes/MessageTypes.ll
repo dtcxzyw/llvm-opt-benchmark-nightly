@@ -201,26 +201,21 @@ _ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESa
   %i.w = urem i64 %i.t, %i.v                      ; 4 uses
   %i.x = load i64, ptr %i.b, align 8, !tbaa !2130
   %i.y = icmp ugt i64 %i.x, 20
-  br i1 %i.y, label %bb.c, label %.thread..critedge_crit_edge
-
-.thread..critedge_crit_edge:                      ; preds = %.thread
-  %.pre55 = load ptr, ptr %1, align 8, !tbaa !9
-  %.pre57 = load i64, ptr %i.r, align 8, !tbaa !45
-  br label %.critedge
+  br i1 %i.y, label %bb.c, label %.critedge
 
 bb.c:                                             ; preds = %.thread
   %i.z = load ptr, ptr %0, align 8, !tbaa !288
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %i.w
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !2132 ; 2 uses
   %.not.i.i = icmp eq ptr %i.ab, null
-  %.pre56 = load ptr, ptr %1, align 8             ; 6 uses
-  %.pre58 = load i64, ptr %i.r, align 8
-  %.fr22.i.i = freeze i64 %.pre58                 ; 8 uses
   br i1 %.not.i.i, label %.critedge, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !285 ; 3 uses
+  %4 = load i64, ptr %i.r, align 8
+  %.fr22.i.i = freeze i64 %4                      ; 3 uses
   %i.ad = icmp eq i64 %.fr22.i.i, 0
+  %5 = load ptr, ptr %1, align 8
   %.phi.trans.insert25.i.i = getelementptr inbounds nuw i8, ptr %i.ac, i64 48
   %.pre26.i.i = load i64, ptr %.phi.trans.insert25.i.i, align 8, !tbaa !2133 ; 2 uses
   br i1 %i.ad, label %.split.us.i.i, label %.split.i.i
@@ -264,7 +259,7 @@ bb.g:                                             ; preds = %.split.i.i
 
 _ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS6_PFSt10unique_ptrIN8facebook6hermes3cdp7message7RequestESt14default_deleteISE_EEPKN6hermes6parser10JSONObjectEEENS_10_Select1stESt8equal_toIS6_ESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE12_M_equals_trIS6_EEbRKT_mRKNS_16_Hash_node_valueISP_Lb1EEE.exit.i.i: ; preds = %bb.g
   %i.at = load ptr, ptr %i.ao, align 8, !tbaa !9
-  %bcmp.i.i.i.i.i.i = tail call i32 @bcmp(ptr %.pre56, ptr %i.at, i64 %.fr22.i.i)
+  %bcmp.i.i.i.i.i.i = tail call i32 @bcmp(ptr %5, ptr %i.at, i64 %.fr22.i.i)
   %i.au = icmp eq i32 %bcmp.i.i.i.i.i.i, 0
   br i1 %i.au, label %_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS6_PFSt10unique_ptrIN8facebook6hermes3cdp7message7RequestESt14default_deleteISE_EEPKN6hermes6parser10JSONObjectEEENS_10_Select1stESt8equal_toIS6_ESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE16_M_key_equals_trIS6_EEbRKT_RKNS_16_Hash_node_valueISP_Lb1EEE.exit.thread, label %_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS6_PFSt10unique_ptrIN8facebook6hermes3cdp7message7RequestESt14default_deleteISE_EEPKN6hermes6parser10JSONObjectEEENS_10_Select1stESt8equal_toIS6_ESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE12_M_equals_trIS6_EEbRKT_mRKNS_16_Hash_node_valueISP_Lb1EEE.exit.thread.i.i
 
@@ -280,17 +275,17 @@ bb.h:                                             ; preds = %_ZNKSt8__detail15_H
   %.not19.i.i = icmp eq i64 %i.ay, %i.w
   br i1 %.not19.i.i, label %.split.i.i, label %.critedge, !llvm.loop !2135
 
-.critedge:                                        ; preds = %_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS6_PFSt10unique_ptrIN8facebook6hermes3cdp7message7RequestESt14default_deleteISE_EEPKN6hermes6parser10JSONObjectEEENS_10_Select1stESt8equal_toIS6_ESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE12_M_equals_trIS6_EEbRKT_mRKNS_16_Hash_node_valueISP_Lb1EEE.exit.thread.i.i, %bb.h, %bb.f, %_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS6_PFSt10unique_ptrIN8facebook6hermes3cdp7message7RequestESt14default_deleteISE_EEPKN6hermes6parser10JSONObjectEEENS_10_Select1stESt8equal_toIS6_ESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE12_M_equals_trIS6_EEbRKT_mRKNS_16_Hash_node_valueISP_Lb1EEE.exit.thread.us.i.i, %.thread..critedge_crit_edge, %bb.c
-  %4 = phi i64 [ %.pre57, %.thread..critedge_crit_edge ], [ %.fr22.i.i, %bb.f ], [ %.fr22.i.i, %bb.c ], [ %.fr22.i.i, %_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS6_PFSt10unique_ptrIN8facebook6hermes3cdp7message7RequestESt14default_deleteISE_EEPKN6hermes6parser10JSONObjectEEENS_10_Select1stESt8equal_toIS6_ESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE12_M_equals_trIS6_EEbRKT_mRKNS_16_Hash_node_valueISP_Lb1EEE.exit.thread.us.i.i ], [ %.fr22.i.i, %bb.h ], [ %.fr22.i.i, %_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS6_PFSt10unique_ptrIN8facebook6hermes3cdp7message7RequestESt14default_deleteISE_EEPKN6hermes6parser10JSONObjectEEENS_10_Select1stESt8equal_toIS6_ESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE12_M_equals_trIS6_EEbRKT_mRKNS_16_Hash_node_valueISP_Lb1EEE.exit.thread.i.i ] ; 4 uses
-  %5 = phi ptr [ %.pre55, %.thread..critedge_crit_edge ], [ %.pre56, %bb.f ], [ %.pre56, %bb.c ], [ %.pre56, %_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS6_PFSt10unique_ptrIN8facebook6hermes3cdp7message7RequestESt14default_deleteISE_EEPKN6hermes6parser10JSONObjectEEENS_10_Select1stESt8equal_toIS6_ESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE12_M_equals_trIS6_EEbRKT_mRKNS_16_Hash_node_valueISP_Lb1EEE.exit.thread.us.i.i ], [ %.pre56, %bb.h ], [ %.pre56, %_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS6_PFSt10unique_ptrIN8facebook6hermes3cdp7message7RequestESt14default_deleteISE_EEPKN6hermes6parser10JSONObjectEEENS_10_Select1stESt8equal_toIS6_ESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE12_M_equals_trIS6_EEbRKT_mRKNS_16_Hash_node_valueISP_Lb1EEE.exit.thread.i.i ] ; 2 uses
+.critedge:                                        ; preds = %_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS6_PFSt10unique_ptrIN8facebook6hermes3cdp7message7RequestESt14default_deleteISE_EEPKN6hermes6parser10JSONObjectEEENS_10_Select1stESt8equal_toIS6_ESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE12_M_equals_trIS6_EEbRKT_mRKNS_16_Hash_node_valueISP_Lb1EEE.exit.thread.i.i, %bb.h, %bb.f, %_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS6_PFSt10unique_ptrIN8facebook6hermes3cdp7message7RequestESt14default_deleteISE_EEPKN6hermes6parser10JSONObjectEEENS_10_Select1stESt8equal_toIS6_ESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE12_M_equals_trIS6_EEbRKT_mRKNS_16_Hash_node_valueISP_Lb1EEE.exit.thread.us.i.i, %bb.c, %.thread
   %i.az = tail call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #23 ; 12 uses
   store ptr null, ptr %i.az, align 8, !tbaa !285
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 8 ; 4 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.az, i64 24 ; 3 uses
   store ptr %i.bb, ptr %i.ba, align 8, !tbaa !44
+  %6 = load ptr, ptr %1, align 8, !tbaa !9        ; 2 uses
+  %7 = load i64, ptr %i.r, align 8, !tbaa !45     ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
-  store i64 %4, ptr %i.a, align 8, !tbaa !87
-  %i.bc = icmp ugt i64 %4, 15
+  store i64 %7, ptr %i.a, align 8, !tbaa !87
+  %i.bc = icmp ugt i64 %7, 15
   br i1 %i.bc, label %bb.i, label %._crit_edge.i.i.i.i.i.i
 
 bb.i:                                             ; preds = %.critedge
@@ -302,18 +297,18 @@ bb.i:                                             ; preds = %.critedge
 
 ._crit_edge.i.i.i.i.i.i:                          ; preds = %bb.i, %.critedge
   %i.bf = phi ptr [ %i.bd, %bb.i ], [ %i.bb, %.critedge ] ; 2 uses
-  switch i64 %4, label %bb.k [
+  switch i64 %7, label %bb.k [
     i64 1, label %bb.j
     i64 0, label %_ZNSt8__detail12_NodeBuilderINS_10_Select1stEE8_S_buildIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt4pairISA_PFSt10unique_ptrIN8facebook6hermes3cdp7message7RequestESt14default_deleteISI_EEPKN6hermes6parser10JSONObjectEEENS_10_AllocNodeISaINS_10_Hash_nodeIST_Lb1EEEEEEEEPNT1_11__node_typeEOT_OT0_RKS11_.exit
   ]
 
 bb.j:                                             ; preds = %._crit_edge.i.i.i.i.i.i
-  %i.bg = load i8, ptr %5, align 1, !tbaa !15
+  %i.bg = load i8, ptr %6, align 1, !tbaa !15
   store i8 %i.bg, ptr %i.bf, align 1, !tbaa !15
   br label %_ZNSt8__detail12_NodeBuilderINS_10_Select1stEE8_S_buildIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt4pairISA_PFSt10unique_ptrIN8facebook6hermes3cdp7message7RequestESt14default_deleteISI_EEPKN6hermes6parser10JSONObjectEEENS_10_AllocNodeISaINS_10_Hash_nodeIST_Lb1EEEEEEEEPNT1_11__node_typeEOT_OT0_RKS11_.exit
 
 bb.k:                                             ; preds = %._crit_edge.i.i.i.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bf, ptr align 1 %5, i64 %4, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bf, ptr align 1 %6, i64 %7, i1 false)
   br label %_ZNSt8__detail12_NodeBuilderINS_10_Select1stEE8_S_buildIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt4pairISA_PFSt10unique_ptrIN8facebook6hermes3cdp7message7RequestESt14default_deleteISI_EEPKN6hermes6parser10JSONObjectEEENS_10_AllocNodeISaINS_10_Hash_nodeIST_Lb1EEEEEEEEPNT1_11__node_typeEOT_OT0_RKS11_.exit
 
 _ZNSt8__detail12_NodeBuilderINS_10_Select1stEE8_S_buildIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt4pairISA_PFSt10unique_ptrIN8facebook6hermes3cdp7message7RequestESt14default_deleteISI_EEPKN6hermes6parser10JSONObjectEEENS_10_AllocNodeISaINS_10_Hash_nodeIST_Lb1EEEEEEEEPNT1_11__node_typeEOT_OT0_RKS11_.exit: ; preds = %._crit_edge.i.i.i.i.i.i, %bb.j, %bb.k

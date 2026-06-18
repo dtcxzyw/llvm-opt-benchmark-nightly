@@ -201,7 +201,6 @@ bb.e:                                             ; preds = %bb.a, %bb.c, %bb.b,
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN10BitBoard645printEv(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(8) %0) local_unnamed_addr #6 align 2 {
 bb.a:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 4
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.g
@@ -272,11 +271,11 @@ bb.d:                                             ; preds = %_Z6getBFPii.exit
 
 _ZN10BitBoard646getBitEi.exit:                    ; preds = %bb.d
   %i.y = icmp samesign ult i32 %.7.i, 32          ; 2 uses
-  %2 = load i32, ptr %0, align 4
-  %3 = load i32, ptr %1, align 4
-  %4 = add nsw i32 %.7.i, -32
-  %.7.i.sink = select i1 %i.y, i32 %.7.i, i32 %4
-  %.sink = select i1 %i.y, i32 %2, i32 %3
+  %1 = add nsw i32 %.7.i, -32
+  %.7.i.sink = select i1 %i.y, i32 %.7.i, i32 %1
+  %.sink.in.idx = select i1 %i.y, i64 0, i64 4
+  %.sink.in = getelementptr inbounds nuw i8, ptr %0, i64 %.sink.in.idx
+  %.sink = load i32, ptr %.sink.in, align 4, !tbaa !4
   %i.z = shl nuw i32 1, %.7.i.sink
   %i.aa = and i32 %.sink, %i.z
   %.not = icmp eq i32 %i.aa, 0

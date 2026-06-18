@@ -53,8 +53,7 @@ _ZNK2v813CFunctionInfo13ArgumentCountEv.exit:     ; preds = %bb.a
   %i.g = zext i32 %i.f to i64
   %i.h = getelementptr inbounds nuw [2 x i8], ptr %i.e, i64 %i.g
   %i.i = load i8, ptr %i.h, align 1
-  %.fr.i = freeze i8 %i.i
-  %i.j = icmp eq i8 %.fr.i, -1
+  %i.j = icmp eq i8 %i.i, -1
   %i.k = sext i1 %i.j to i32
   %spec.select.i = add i32 %i.c, %i.k             ; 3 uses
   store i32 %spec.select.i, ptr %i.a, align 4

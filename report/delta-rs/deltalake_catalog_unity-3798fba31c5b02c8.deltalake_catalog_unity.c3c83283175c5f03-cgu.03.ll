@@ -201,10 +201,7 @@ bb.db:                                            ; preds = %bb.de, %_RNvMs3_NtC
   br i1 %i.lk, label %.lr.ph.i74.lr.ph.i.i.i.i.i.i.i, label %.loopexit123.i.i.i.i.i.i.i
 
 .lr.ph.i74.lr.ph.i.i.i.i.i.i.i:                   ; preds = %bb.db
-  %.promoted.i.i.i.i.i.i.i = load i64, ptr %i.fj, align 8, !alias.scope !832, !noalias !750
   %i.ll = load ptr, ptr %i.bm, align 8, !alias.scope !958, !noalias !965, !nonnull !3, !noundef !3 ; 3 uses
-  %6 = load i64, ptr %1, align 8, !range !179, !alias.scope !832, !noalias !750
-  %7 = load ptr, ptr %i.fl, align 8, !alias.scope !832, !noalias !750, !nonnull !3
   br label %.lr.ph.i74.i.i.i.i.i.i.i
 
 bb.dc:                                            ; preds = %bb.cc
@@ -240,7 +237,6 @@ bb.de:                                            ; preds = %bb.da
   %i.lu = phi i64 [ %.promoted.i72162.i.i.i.i.i.i.i, %.lr.ph.i74.lr.ph.i.i.i.i.i.i.i ], [ %i.me, %bb.do ]
   %.sroa.042.2164.i.i.i.i.i.i.i = phi i1 [ %.sroa.042.0.i.i.i.i.i.i.i, %.lr.ph.i74.lr.ph.i.i.i.i.i.i.i ], [ true, %bb.do ] ; 2 uses
   %.sroa.027.2163.i.i.i.i.i.i.i = phi i8 [ %.sroa.027.0.i.i.i.i.i.i.i, %.lr.ph.i74.lr.ph.i.i.i.i.i.i.i ], [ %i.mj, %bb.do ] ; 6 uses
-  %8 = phi i64 [ %.promoted.i.i.i.i.i.i.i, %.lr.ph.i74.lr.ph.i.i.i.i.i.i.i ], [ %i.mg, %bb.do ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !972)
   br label %bb.df
 
@@ -314,15 +310,18 @@ bb.dm:                                            ; preds = %bb.dj
 bb.dn:                                            ; preds = %bb.dl, %bb.dk
   %i.me = add i64 %i.lv, 1                        ; 3 uses
   store i64 %i.me, ptr %i.bi, align 8, !alias.scope !982, !noalias !750
-  %i.mf = icmp eq i64 %8, 0
+  %6 = load i64, ptr %i.fj, align 8, !alias.scope !832, !noalias !750, !noundef !3 ; 2 uses
+  %i.mf = icmp eq i64 %6, 0
   br i1 %i.mf, label %_RINvYINtNtCseqDwI8vvjGQ_10serde_json2de9MapAccessNtNtB8_4read7StrReadENtNtCs1gOyXocuPRE_10serde_core2de9MapAccess10next_valueNtNtB18_11ignored_any10IgnoredAnyECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i, label %bb.do
 
 bb.do:                                            ; preds = %bb.dn
-  %i.mg = add i64 %8, -1                          ; 4 uses
+  %i.mg = add i64 %6, -1                          ; 3 uses
   store i64 %i.mg, ptr %i.fj, align 8, !alias.scope !832, !noalias !750
-  %i.mh = icmp ult i64 %i.mg, %6
+  %7 = load i64, ptr %1, align 8, !range !179, !alias.scope !832, !noalias !750, !noundef !3
+  %i.mh = icmp ult i64 %i.mg, %7
   call void @llvm.assume(i1 %i.mh)
-  %i.mi = getelementptr inbounds nuw i8, ptr %7, i64 %i.mg
+  %8 = load ptr, ptr %i.fl, align 8, !alias.scope !832, !noalias !750, !nonnull !3, !noundef !3
+  %i.mi = getelementptr inbounds nuw i8, ptr %8, i64 %i.mg
   %i.mj = load i8, ptr %i.mi, align 1, !noalias !750, !noundef !3 ; 2 uses
   %i.mk = icmp ult i64 %i.me, %i.lj
   br i1 %i.mk, label %.lr.ph.i74.i.i.i.i.i.i.i, label %.loopexit123.i.i.i.i.i.i.i
@@ -725,10 +724,7 @@ bb.ag:                                            ; preds = %bb.aj, %_RNvMs3_NtC
   br i1 %i.ck, label %.lr.ph.i74.lr.ph.i.i.i.i.i, label %.loopexit123.i.i.i.i.i
 
 .lr.ph.i74.lr.ph.i.i.i.i.i:                       ; preds = %bb.ag
-  %.promoted.i.i.i.i.i = load i64, ptr %i.ad, align 8, !alias.scope !1797
   %i.cl = load ptr, ptr %i.u, align 8, !alias.scope !1895, !noalias !1900, !nonnull !3, !noundef !3 ; 3 uses
-  %0 = load i64, ptr %.0.val, align 8, !range !179, !alias.scope !1797
-  %1 = load ptr, ptr %i.af, align 8, !alias.scope !1797, !nonnull !3
   br label %.lr.ph.i74.i.i.i.i.i
 
 bb.ah:                                            ; preds = %bb.h
@@ -758,7 +754,6 @@ bb.aj:                                            ; preds = %bb.af
   %i.cu = phi i64 [ %.promoted.i72162.i.i.i.i.i, %.lr.ph.i74.lr.ph.i.i.i.i.i ], [ %i.de, %bb.au ]
   %.sroa.042.2164.i.i.i.i.i = phi i1 [ %.sroa.042.0.i.i.i.i.i, %.lr.ph.i74.lr.ph.i.i.i.i.i ], [ true, %bb.au ] ; 2 uses
   %.sroa.027.2163.i.i.i.i.i = phi i8 [ %.sroa.027.0.i.i.i.i.i, %.lr.ph.i74.lr.ph.i.i.i.i.i ], [ %i.dj, %bb.au ] ; 6 uses
-  %2 = phi i64 [ %.promoted.i.i.i.i.i, %.lr.ph.i74.lr.ph.i.i.i.i.i ], [ %i.dg, %bb.au ] ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1906)
   br label %bb.ak
 
@@ -832,15 +827,18 @@ bb.as:                                            ; preds = %bb.ap
 bb.at:                                            ; preds = %bb.ar, %bb.aq
   %i.de = add i64 %i.cv, 1                        ; 3 uses
   store i64 %i.de, ptr %i.q, align 8, !alias.scope !1915
-  %i.df = icmp eq i64 %2, 0
+  %0 = load i64, ptr %i.ad, align 8, !alias.scope !1797, !noundef !3 ; 2 uses
+  %i.df = icmp eq i64 %0, 0
   br i1 %i.df, label %_RINvXs9_NtCseqDwI8vvjGQ_10serde_json2deINtB6_9MapAccessNtNtB8_4read9SliceReadENtNtCs1gOyXocuPRE_10serde_core2de9MapAccess15next_value_seedINtNtCsbvkFyIu7lgC_4core6marker11PhantomDataNtNtB1g_11ignored_any10IgnoredAnyEECsgO8S5jLFugx_23deltalake_catalog_unity.exit, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  %i.dg = add i64 %2, -1                          ; 4 uses
+  %i.dg = add i64 %0, -1                          ; 3 uses
   store i64 %i.dg, ptr %i.ad, align 8, !alias.scope !1797
-  %i.dh = icmp ult i64 %i.dg, %0
+  %1 = load i64, ptr %.0.val, align 8, !range !179, !alias.scope !1797, !noundef !3
+  %i.dh = icmp ult i64 %i.dg, %1
   tail call void @llvm.assume(i1 %i.dh)
-  %i.di = getelementptr inbounds nuw i8, ptr %1, i64 %i.dg
+  %2 = load ptr, ptr %i.af, align 8, !alias.scope !1797, !nonnull !3, !noundef !3
+  %i.di = getelementptr inbounds nuw i8, ptr %2, i64 %i.dg
   %i.dj = load i8, ptr %i.di, align 1, !noundef !3 ; 2 uses
   %i.dk = icmp ult i64 %i.de, %i.cj
   br i1 %i.dk, label %.lr.ph.i74.i.i.i.i.i, label %.loopexit123.i.i.i.i.i

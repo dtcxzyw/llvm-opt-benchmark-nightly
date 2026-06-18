@@ -201,11 +201,11 @@ bb.d:                                             ; preds = %.noexc, %bb.b, %bb.
   br i1 %.not18.i, label %bb.f, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.d
-  %.promoted.i = load i64, ptr %i.a, align 8      ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %5, i64 18528
   %i.k = load i64, ptr %i.j, align 8, !tbaa !227  ; 5 uses
   %.promoted16.i.a = load ptr, ptr %i.i, align 8, !tbaa !228
+  %.promoted16.i = load i64, ptr %i.a, align 8, !tbaa !221 ; 2 uses
   %xtraiter = and i64 %i.h, 3                     ; 3 uses
   %i.l = icmp ult i64 %.012.i, 4096
   br i1 %i.l, label %.epil.preheader, label %.lr.ph.i.new
@@ -219,7 +219,7 @@ bb.d:                                             ; preds = %.noexc, %bb.b, %bb.
   br i1 %lcmp.mod.not, label %._crit_edge.i, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge.i.unr-lcssa, %.lr.ph.i
-  %.epil.init = phi i64 [ %.promoted.i, %.lr.ph.i ], [ %i.af, %._crit_edge.i.unr-lcssa ]
+  %.epil.init = phi i64 [ %.promoted16.i, %.lr.ph.i ], [ %i.af, %._crit_edge.i.unr-lcssa ]
   %lcmp.mod18 = icmp ne i64 %xtraiter, 0
   call void @llvm.assume(i1 %lcmp.mod18)
   br label %bb.e
@@ -248,7 +248,7 @@ bb.f:                                             ; preds = %._crit_edge.i, %bb.
   br i1 %i.s, label %bb.i, label %bb.h
 
 bb.g:                                             ; preds = %bb.g, %.lr.ph.i.new
-  %i.t = phi i64 [ %.promoted.i, %.lr.ph.i.new ], [ %i.af, %bb.g ] ; 2 uses
+  %i.t = phi i64 [ %.promoted16.i, %.lr.ph.i.new ], [ %i.af, %bb.g ] ; 2 uses
   %niter = phi i64 [ 0, %.lr.ph.i.new ], [ %niter.next.3, %bb.g ]
   %i.u = sub i64 %i.k, %i.t
   %i.v = call noundef i64 @llvm.umin.i64(i64 %i.u, i64 1024)
@@ -353,11 +353,11 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   br i1 %.not18.i, label %bb.f, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.d
-  %.promoted.i = load i64, ptr %i.c, align 8      ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 18528
   %i.m = load i64, ptr %i.l, align 8, !tbaa !227  ; 5 uses
   %.promoted16.i.a = load ptr, ptr %i.k, align 8, !tbaa !228
+  %.promoted16.i = load i64, ptr %i.c, align 8, !tbaa !221 ; 2 uses
   %xtraiter = and i64 %i.j, 3                     ; 3 uses
   %i.n = icmp ult i64 %.012.i, 4096
   br i1 %i.n, label %.epil.preheader, label %.lr.ph.i.new
@@ -371,7 +371,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   br i1 %lcmp.mod.not, label %._crit_edge.i, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge.i.unr-lcssa, %.lr.ph.i
-  %.epil.init = phi i64 [ %.promoted.i, %.lr.ph.i ], [ %i.ah, %._crit_edge.i.unr-lcssa ]
+  %.epil.init = phi i64 [ %.promoted16.i, %.lr.ph.i ], [ %i.ah, %._crit_edge.i.unr-lcssa ]
   %lcmp.mod7 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod7)
   br label %bb.e
@@ -400,7 +400,7 @@ bb.f:                                             ; preds = %._crit_edge.i, %bb.
   br i1 %i.u, label %_ZN6duckdb12AlpScanStateIfE4SkipERNS_13ColumnSegmentEm.exit, label %bb.h
 
 bb.g:                                             ; preds = %bb.g, %.lr.ph.i.new
-  %i.v = phi i64 [ %.promoted.i, %.lr.ph.i.new ], [ %i.ah, %bb.g ] ; 2 uses
+  %i.v = phi i64 [ %.promoted16.i, %.lr.ph.i.new ], [ %i.ah, %bb.g ] ; 2 uses
   %niter = phi i64 [ 0, %.lr.ph.i.new ], [ %niter.next.3, %bb.g ]
   %i.w = sub i64 %i.m, %i.v
   %i.x = tail call noundef i64 @llvm.umin.i64(i64 %i.w, i64 1024)
@@ -803,11 +803,11 @@ bb.d:                                             ; preds = %.noexc, %bb.b, %bb.
   br i1 %.not18.i, label %bb.f, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.d
-  %.promoted.i = load i64, ptr %i.a, align 8      ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %5, i64 26720
   %i.k = load i64, ptr %i.j, align 8, !tbaa !287  ; 5 uses
   %.promoted16.i.a = load ptr, ptr %i.i, align 8, !tbaa !288
+  %.promoted16.i = load i64, ptr %i.a, align 8, !tbaa !282 ; 2 uses
   %xtraiter = and i64 %i.h, 3                     ; 3 uses
   %i.l = icmp ult i64 %.012.i, 4096
   br i1 %i.l, label %.epil.preheader, label %.lr.ph.i.new
@@ -821,7 +821,7 @@ bb.d:                                             ; preds = %.noexc, %bb.b, %bb.
   br i1 %lcmp.mod.not, label %._crit_edge.i, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge.i.unr-lcssa, %.lr.ph.i
-  %.epil.init = phi i64 [ %.promoted.i, %.lr.ph.i ], [ %i.af, %._crit_edge.i.unr-lcssa ]
+  %.epil.init = phi i64 [ %.promoted16.i, %.lr.ph.i ], [ %i.af, %._crit_edge.i.unr-lcssa ]
   %lcmp.mod18 = icmp ne i64 %xtraiter, 0
   call void @llvm.assume(i1 %lcmp.mod18)
   br label %bb.e
@@ -850,7 +850,7 @@ bb.f:                                             ; preds = %._crit_edge.i, %bb.
   br i1 %i.s, label %bb.i, label %bb.h
 
 bb.g:                                             ; preds = %bb.g, %.lr.ph.i.new
-  %i.t = phi i64 [ %.promoted.i, %.lr.ph.i.new ], [ %i.af, %bb.g ] ; 2 uses
+  %i.t = phi i64 [ %.promoted16.i, %.lr.ph.i.new ], [ %i.af, %bb.g ] ; 2 uses
   %niter = phi i64 [ 0, %.lr.ph.i.new ], [ %niter.next.3, %bb.g ]
   %i.u = sub i64 %i.k, %i.t
   %i.v = call noundef i64 @llvm.umin.i64(i64 %i.u, i64 1024)
@@ -955,11 +955,11 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   br i1 %.not18.i, label %bb.f, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.d
-  %.promoted.i = load i64, ptr %i.c, align 8      ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 26720
   %i.m = load i64, ptr %i.l, align 8, !tbaa !287  ; 5 uses
   %.promoted16.i.a = load ptr, ptr %i.k, align 8, !tbaa !288
+  %.promoted16.i = load i64, ptr %i.c, align 8, !tbaa !282 ; 2 uses
   %xtraiter = and i64 %i.j, 3                     ; 3 uses
   %i.n = icmp ult i64 %.012.i, 4096
   br i1 %i.n, label %.epil.preheader, label %.lr.ph.i.new
@@ -973,7 +973,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   br i1 %lcmp.mod.not, label %._crit_edge.i, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge.i.unr-lcssa, %.lr.ph.i
-  %.epil.init = phi i64 [ %.promoted.i, %.lr.ph.i ], [ %i.ah, %._crit_edge.i.unr-lcssa ]
+  %.epil.init = phi i64 [ %.promoted16.i, %.lr.ph.i ], [ %i.ah, %._crit_edge.i.unr-lcssa ]
   %lcmp.mod7 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod7)
   br label %bb.e
@@ -1002,7 +1002,7 @@ bb.f:                                             ; preds = %._crit_edge.i, %bb.
   br i1 %i.u, label %_ZN6duckdb12AlpScanStateIdE4SkipERNS_13ColumnSegmentEm.exit, label %bb.h
 
 bb.g:                                             ; preds = %bb.g, %.lr.ph.i.new
-  %i.v = phi i64 [ %.promoted.i, %.lr.ph.i.new ], [ %i.ah, %bb.g ] ; 2 uses
+  %i.v = phi i64 [ %.promoted16.i, %.lr.ph.i.new ], [ %i.ah, %bb.g ] ; 2 uses
   %niter = phi i64 [ 0, %.lr.ph.i.new ], [ %niter.next.3, %bb.g ]
   %i.w = sub i64 %i.m, %i.v
   %i.x = tail call noundef i64 @llvm.umin.i64(i64 %i.w, i64 1024)
@@ -1405,15 +1405,13 @@ bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store float %i.cl, ptr %i.a, align 4, !tbaa !149
   %i.co = call noundef zeroext i1 @_ZN6duckdb11GreaterThan9OperationIfEEbRKT_S4_(ptr noundef nonnull align 4 dereferenceable(4) %i.cm, ptr noundef nonnull align 4 dereferenceable(4) %i.a)
-  %.val.i.i.i = load float, ptr %i.a, align 4
-  %.val7.i.i.i = load float, ptr %i.cm, align 4
-  %1 = select i1 %i.co, float %.val.i.i.i, float %.val7.i.i.i
-  store float %1, ptr %i.cm, align 4, !tbaa !149
+  %..i.i.i = select i1 %i.co, ptr %i.a, ptr %i.cm
+  %.val7.i.i.i = load float, ptr %..i.i.i, align 4, !tbaa !149
+  store float %.val7.i.i.i, ptr %i.cm, align 4, !tbaa !149
   %i.cp = call noundef zeroext i1 @_ZN6duckdb11GreaterThan9OperationIfEEbRKT_S4_(ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 4 dereferenceable(4) %i.cn)
-  %.val8.i.i.i = load float, ptr %i.a, align 4
-  %.val9.i.i.i = load float, ptr %i.cn, align 4
-  %2 = select i1 %i.cp, float %.val8.i.i.i, float %.val9.i.i.i
-  store float %2, ptr %i.cn, align 4, !tbaa !149
+  %.in6.i.i.i = select i1 %i.cp, ptr %i.a, ptr %i.cn
+  %.val9.i.i.i = load float, ptr %.in6.i.i.i, align 4, !tbaa !149
+  store float %.val9.i.i.i, ptr %i.cn, align 4, !tbaa !149
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.cq = add nuw i64 %.015, 1                    ; 2 uses
   %i.cr = load i64, ptr %i.ap, align 8, !tbaa !188 ; 2 uses
@@ -1816,15 +1814,13 @@ bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store double %i.cl, ptr %i.a, align 8, !tbaa !255
   %i.co = call noundef zeroext i1 @_ZN6duckdb11GreaterThan9OperationIdEEbRKT_S4_(ptr noundef nonnull align 8 dereferenceable(8) %i.cm, ptr noundef nonnull align 8 dereferenceable(8) %i.a)
-  %.val.i.i.i = load double, ptr %i.a, align 8
-  %.val7.i.i.i = load double, ptr %i.cm, align 8
-  %1 = select i1 %i.co, double %.val.i.i.i, double %.val7.i.i.i
-  store double %1, ptr %i.cm, align 8, !tbaa !255
+  %..i.i.i = select i1 %i.co, ptr %i.a, ptr %i.cm
+  %.val7.i.i.i = load double, ptr %..i.i.i, align 8, !tbaa !255
+  store double %.val7.i.i.i, ptr %i.cm, align 8, !tbaa !255
   %i.cp = call noundef zeroext i1 @_ZN6duckdb11GreaterThan9OperationIdEEbRKT_S4_(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(8) %i.cn)
-  %.val8.i.i.i = load double, ptr %i.a, align 8
-  %.val9.i.i.i = load double, ptr %i.cn, align 8
-  %2 = select i1 %i.cp, double %.val8.i.i.i, double %.val9.i.i.i
-  store double %2, ptr %i.cn, align 8, !tbaa !255
+  %.in6.i.i.i = select i1 %i.cp, ptr %i.a, ptr %i.cn
+  %.val9.i.i.i = load double, ptr %.in6.i.i.i, align 8, !tbaa !255
+  store double %.val9.i.i.i, ptr %i.cn, align 8, !tbaa !255
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.cq = add nuw i64 %.015, 1                    ; 2 uses
   %i.cr = load i64, ptr %i.ap, align 8, !tbaa !276 ; 2 uses
