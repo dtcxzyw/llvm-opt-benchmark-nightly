@@ -201,13 +201,13 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   %i.cy = zext nneg i32 %i.cx to i64              ; 3 uses
   %i.cz = sext i32 %2 to i64                      ; 3 uses
   %i.da = sext i32 %i.cw to i64                   ; 3 uses
-  %wide.trip.count = zext i32 %.fr to i64         ; 2 uses
+  %wide.trip.count = zext nneg i32 %.fr to i64    ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 1
   %i.db = icmp eq i32 %.fr, 1
   br i1 %i.db, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %wide.trip.count, 4294967294
+  %unroll_iter = and i64 %wide.trip.count, 2147483646
   br label %bb.ap
 
 bb.ao:                                            ; preds = %bb.an

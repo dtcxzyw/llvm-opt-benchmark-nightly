@@ -201,7 +201,7 @@ _RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
 .preheader.i.i.i.i.preheader:                     ; preds = %._crit_edge.i.i.i.i
   %i.ak = mul i32 %.sroa.0.040.lcssa.i.i.i.i, %.sroa.0.040.lcssa.i.i.i.i
   %i.al = shl i32 %.sroa.0.040.lcssa.i.i.i.i, 1
-  %i.am = or i32 %i.al, 1
+  %i.am = or disjoint i32 %i.al, 1
   br label %.preheader.i.i.i.i
 
 .loopexit.i.i.i.i:                                ; preds = %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit25.i.i.i.i, %._crit_edge.i.i.i.i
@@ -604,7 +604,7 @@ _RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
 .preheader.i.i.i.i.preheader:                     ; preds = %._crit_edge.i.i.i.i
   %i.ak = mul i32 %.sroa.0.040.lcssa.i.i.i.i, %.sroa.0.040.lcssa.i.i.i.i
   %i.al = shl i32 %.sroa.0.040.lcssa.i.i.i.i, 1
-  %i.am = or i32 %i.al, 1
+  %i.am = or disjoint i32 %i.al, 1
   br label %.preheader.i.i.i.i
 
 .loopexit.i.i.i.i:                                ; preds = %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit25.i.i.i.i, %._crit_edge.i.i.i.i

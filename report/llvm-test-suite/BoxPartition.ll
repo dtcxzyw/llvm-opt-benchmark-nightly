@@ -201,7 +201,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 ._crit_edge.split.us376.split.us.us.us.us.us.us.i.us: ; preds = %bb.f, %bb.i, %middle.block129
   %.us-phi.us408.us.us.us.us.i.us = phi i32 [ %.2360.us.us.us527.us.us.us.i.us, %middle.block129 ], [ %.4.us375.us.us.us.us.us.us.i.us, %bb.i ], [ %.2360.us.us.us527.us.us.us.i.us, %bb.f ] ; 2 uses
-  %i.ef = add i32 %.0169358.us.us.us528.us.us.us.i.us, 1 ; 2 uses
+  %i.ef = add nsw i32 %.0169358.us.us.us528.us.us.us.i.us, 1 ; 2 uses
   %exitcond.not = icmp eq i32 %i.ef, %i.ax
   br i1 %exitcond.not, label %._crit_edge361.split.us.split.us.us.us.us.us.i.us, label %.preheader.us.us.us526.us.us.us.i.us, !llvm.loop !17
 
@@ -463,7 +463,7 @@ bb.v:                                             ; preds = %_ZL10resize_intPPiS
   %.us-phi513.us.us.us.us.i.us = phi ptr [ %.2205357.us.us.us.us.us.us.us.i.us, %middle.block ], [ %.2205357.us.us.us.us.us.us.us.i.us, %bb.m ], [ %.4207.us.us.us.us.us.us.us.us.us.i.us, %bb.v ], [ %.2205357.us.us.us.us.us.us.us.i.us, %bb.j ] ; 2 uses
   %.us-phi514.us.us.us.us.i.us = phi i32 [ %.2161359.us.us.us.us.us.us.us.i.us, %middle.block ], [ %.2161359.us.us.us.us.us.us.us.i.us, %bb.m ], [ %.4163.us.us.us.us.us.us.us.us.us.i.us, %bb.v ], [ %.2161359.us.us.us.us.us.us.us.i.us, %bb.j ] ; 2 uses
   %.us-phi515.us.us.us.us.i.us = phi i32 [ %.2360.us.us.us.us.us.us.us.i.us, %middle.block ], [ %.4.us.us.us.us.us547.us.us.us.us.i.us, %bb.m ], [ %.4.us.us.us.us.us.us.us.us.us.i.us, %bb.v ], [ %.2360.us.us.us.us.us.us.us.i.us, %bb.j ] ; 2 uses
-  %i.hx = add i32 %.0169358.us.us.us.us.us.us.us.i.us, 1 ; 2 uses
+  %i.hx = add nsw i32 %.0169358.us.us.us.us.us.us.us.i.us, 1 ; 2 uses
   %exitcond47.not = icmp eq i32 %i.hx, %i.ax
   br i1 %exitcond47.not, label %._crit_edge361.split.us.split.us.us.us.us.us.i.us, label %.preheader.us.us.us.us.us.us.us.i.us, !llvm.loop !17
 
@@ -472,7 +472,7 @@ bb.v:                                             ; preds = %_ZL10resize_intPPiS
   %.us-phi509.us.us.us.us.i.us = phi ptr [ %.us-phi513.us.us.us.us.i.us, %._crit_edge.split.us.us.us.us.us.us.us.us.i.us ], [ %.1204517.us.us.us.us.i.us, %._crit_edge.split.us376.split.us.us.us.us.us.us.i.us ] ; 2 uses
   %.us-phi510.us.us.us.us.i.us = phi i32 [ %.us-phi514.us.us.us.us.i.us, %._crit_edge.split.us.us.us.us.us.us.us.us.i.us ], [ %.1160519.us.us.us.us.i.us, %._crit_edge.split.us376.split.us.us.us.us.us.us.i.us ] ; 2 uses
   %.us-phi511.us.us.us.us.i.us = phi i32 [ %.us-phi515.us.us.us.us.i.us, %._crit_edge.split.us.us.us.us.us.us.us.us.i.us ], [ %.us-phi.us408.us.us.us.us.i.us, %._crit_edge.split.us376.split.us.us.us.us.us.us.i.us ] ; 2 uses
-  %i.hy = add i32 %.0168518.us.us.us.us.i.us, 1   ; 2 uses
+  %i.hy = add nsw i32 %.0168518.us.us.us.us.i.us, 1 ; 2 uses
   %exitcond48.not = icmp eq i32 %i.hy, %i.av
   br i1 %exitcond48.not, label %_ZL12box_disjointRK3BoxS1_.exit.thread.us.us.i.us, label %.preheader276.us.us.us.us.i.us, !llvm.loop !21
 

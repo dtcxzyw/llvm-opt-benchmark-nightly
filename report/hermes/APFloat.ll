@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.t = icmp eq i64 %i.h, 32767                  ; 2 uses
   %i.u = icmp eq i64 %.fr, -9223372036854775808
-  %or.cond3 = and i1 %i.t, %i.u
+  %or.cond3 = and i1 %i.u, %i.t
   br i1 %or.cond3, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
@@ -211,7 +211,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.w = icmp ne i64 %.fr, -9223372036854775808
-  %or.cond5 = and i1 %i.t, %i.w
+  %or.cond5 = and i1 %i.w, %i.t
   br i1 %or.cond5, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e

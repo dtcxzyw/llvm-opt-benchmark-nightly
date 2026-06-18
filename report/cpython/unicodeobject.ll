@@ -201,9 +201,9 @@ bb.k:                                             ; preds = %bb.j, %.thread167.u
   br i1 %i.cm, label %.preheader177.us.backedge, label %.thread
 
 bb.l:                                             ; preds = %bb.i
-  %i.cn = add nsw i64 %.0124205.us, 1             ; 2 uses
-  %3 = icmp slt i64 %i.cn, %.fr291
-  br i1 %3, label %bb.i, label %..preheader_crit_edge.us, !llvm.loop !822
+  %i.cn = add i64 %.0124205.us, 1                 ; 2 uses
+  %exitcond280.not = icmp eq i64 %i.cn, %.fr291
+  br i1 %exitcond280.not, label %..preheader_crit_edge.us, label %bb.i, !llvm.loop !822
 
 ..preheader_crit_edge.us:                         ; preds = %bb.l
   br i1 %.not152208, label %.lr.ph210.us, label %.thread170
@@ -606,9 +606,9 @@ bb.k:                                             ; preds = %bb.j, %.thread167.u
   br i1 %i.cn, label %.preheader177.us.backedge, label %.thread
 
 bb.l:                                             ; preds = %bb.i
-  %i.co = add nsw i64 %.0124205.us, 1             ; 2 uses
-  %3 = icmp slt i64 %i.co, %.fr291
-  br i1 %3, label %bb.i, label %..preheader_crit_edge.us, !llvm.loop !852
+  %i.co = add i64 %.0124205.us, 1                 ; 2 uses
+  %exitcond280.not = icmp eq i64 %i.co, %.fr291
+  br i1 %exitcond280.not, label %..preheader_crit_edge.us, label %bb.i, !llvm.loop !852
 
 ..preheader_crit_edge.us:                         ; preds = %bb.l
   br i1 %.not152208, label %.lr.ph210.us, label %.thread170
@@ -1011,9 +1011,9 @@ bb.k:                                             ; preds = %bb.j, %.thread167.u
   br i1 %i.cn, label %.preheader177.us.backedge, label %.thread
 
 bb.l:                                             ; preds = %bb.i
-  %i.co = add nsw i64 %.0124205.us, 1             ; 2 uses
-  %3 = icmp slt i64 %i.co, %.fr291
-  br i1 %3, label %bb.i, label %..preheader_crit_edge.us, !llvm.loop !881
+  %i.co = add i64 %.0124205.us, 1                 ; 2 uses
+  %exitcond280.not = icmp eq i64 %i.co, %.fr291
+  br i1 %exitcond280.not, label %..preheader_crit_edge.us, label %bb.i, !llvm.loop !881
 
 ..preheader_crit_edge.us:                         ; preds = %bb.l
   br i1 %.not152208, label %.lr.ph210.us, label %.thread170
