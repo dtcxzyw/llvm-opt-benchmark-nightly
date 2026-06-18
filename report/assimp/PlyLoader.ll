@@ -201,19 +201,23 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 11 uses
   %i.d = load i64, ptr %i.c, align 8              ; 2 uses
   %i.e = load i64, ptr %i.a, align 8              ; 2 uses
-  %.not = icmp uge i64 %i.d, %i.e
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 8 uses
+  %.not = icmp ult i64 %i.d, %i.e
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.g = load i64, ptr %i.f, align 8              ; 3 uses
-  %2 = icmp eq i64 %i.g, 0
-  %or.cond = select i1 %.not, i1 true, i1 %2
-  br i1 %or.cond, label %bb.b, label %bb.e
+  br i1 %.not, label %2, label %bb.b
 
-bb.b:                                             ; preds = %bb.a
+2:                                                ; preds = %bb.a
+  %3 = icmp eq i64 %i.g, 0
+  br i1 %3, label %bb.b, label %bb.e
+
+bb.b:                                             ; preds = %bb.a, %2
+  %4 = phi i64 [ 0, %2 ], [ %i.g, %bb.a ]
   %i.h = load ptr, ptr %0, align 8                ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.i = load ptr, ptr %i.h, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 32
   %i.k = load ptr, ptr %i.j, align 8
-  %i.l = tail call noundef i32 %i.k(ptr noundef nonnull align 8 dereferenceable(8) %i.h, i64 noundef %i.g, i32 noundef 0), !inline_history !13 ; 0 uses
+  %i.l = tail call noundef i32 %i.k(ptr noundef nonnull align 8 dereferenceable(8) %i.h, i64 noundef %4, i32 noundef 0), !inline_history !13 ; 0 uses
   %i.m = load ptr, ptr %0, align 8                ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.o = load ptr, ptr %i.n, align 8
@@ -236,9 +240,9 @@ bb.d:                                             ; preds = %bb.c
 
 _ZN6Assimp14IOStreamBufferIcE13readNextBlockEv.exit.thread: ; preds = %bb.c, %bb.d
   %i.w = phi i64 [ %i.t, %bb.d ], [ %i.u, %bb.c ] ; 2 uses
-  %i.x = load i64, ptr %i.f, align 8
+  %i.x = load i64, ptr %5, align 8
   %i.y = add i64 %i.x, %i.w                       ; 2 uses
-  store i64 %i.y, ptr %i.f, align 8
+  store i64 %i.y, ptr %5, align 8
   store i64 0, ptr %i.c, align 8
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.aa = load i64, ptr %i.z, align 8
@@ -246,10 +250,10 @@ _ZN6Assimp14IOStreamBufferIcE13readNextBlockEv.exit.thread: ; preds = %bb.c, %bb
   store i64 %i.ab, ptr %i.z, align 8
   br label %bb.e
 
-bb.e:                                             ; preds = %_ZN6Assimp14IOStreamBufferIcE13readNextBlockEv.exit.thread, %bb.a
-  %i.ac = phi i64 [ %i.y, %_ZN6Assimp14IOStreamBufferIcE13readNextBlockEv.exit.thread ], [ %i.g, %bb.a ]
-  %i.ad = phi i64 [ %i.w, %_ZN6Assimp14IOStreamBufferIcE13readNextBlockEv.exit.thread ], [ %i.e, %bb.a ]
-  %i.ae = phi i64 [ 0, %_ZN6Assimp14IOStreamBufferIcE13readNextBlockEv.exit.thread ], [ %i.d, %bb.a ] ; 3 uses
+bb.e:                                             ; preds = %_ZN6Assimp14IOStreamBufferIcE13readNextBlockEv.exit.thread, %2
+  %i.ac = phi i64 [ %i.y, %_ZN6Assimp14IOStreamBufferIcE13readNextBlockEv.exit.thread ], [ %i.g, %2 ]
+  %i.ad = phi i64 [ %i.w, %_ZN6Assimp14IOStreamBufferIcE13readNextBlockEv.exit.thread ], [ %i.e, %2 ]
+  %i.ae = phi i64 [ 0, %_ZN6Assimp14IOStreamBufferIcE13readNextBlockEv.exit.thread ], [ %i.d, %2 ] ; 3 uses
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 7 uses
   %i.ag = load ptr, ptr %i.af, align 8            ; 3 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.ae
@@ -262,6 +266,7 @@ bb.e:                                             ; preds = %_ZN6Assimp14IOStrea
   ]
 
 _ZN6Assimp9IsLineEndIcEEbT_.exit:                 ; preds = %bb.e, %bb.e, %bb.e, %bb.e
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   br label %bb.f
 
@@ -302,9 +307,9 @@ bb.i:                                             ; preds = %bb.h
 
 _ZN6Assimp14IOStreamBufferIcE13readNextBlockEv.exit18.thread.a: ; preds = %bb.h, %bb.i
   %i.be = phi i64 [ %i.bb, %bb.i ], [ %i.bc, %bb.h ] ; 2 uses
-  %i.bf = load i64, ptr %i.f, align 8
+  %i.bf = load i64, ptr %6, align 8
   %i.bg = add i64 %i.bf, %i.be                    ; 2 uses
-  store i64 %i.bg, ptr %i.f, align 8
+  store i64 %i.bg, ptr %6, align 8
   store i64 0, ptr %i.c, align 8
   %i.bh = load i64, ptr %i.aj, align 8
   %i.bi = add i64 %i.bh, 1
@@ -326,6 +331,7 @@ _ZN6Assimp9IsLineEndIcEEbT_.exit.thread:          ; preds = %bb.j, %bb.e
   %i.bp = phi ptr [ %i.ag, %bb.e ], [ %i.bj, %bb.j ]
   %i.bq = phi i64 [ %i.ae, %bb.e ], [ %i.bk, %bb.j ]
   %i.br = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   br label %bb.k
 
@@ -372,7 +378,7 @@ bb.m:                                             ; preds = %bb.l, %_ZN6Assimp9I
 
 bb.n:                                             ; preds = %bb.m
   %i.cl = load ptr, ptr %0, align 8               ; 2 uses
-  %i.cm = load i64, ptr %i.f, align 8
+  %i.cm = load i64, ptr %7, align 8
   %i.cn = load ptr, ptr %i.cl, align 8
   %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 32
   %i.cp = load ptr, ptr %i.co, align 8
@@ -398,9 +404,9 @@ bb.p:                                             ; preds = %bb.o
 
 _ZN6Assimp14IOStreamBufferIcE13readNextBlockEv.exit20.thread: ; preds = %bb.o, %bb.p
   %i.da = phi i64 [ %i.cx, %bb.p ], [ %i.cy, %bb.o ]
-  %i.db = load i64, ptr %i.f, align 8
+  %i.db = load i64, ptr %7, align 8
   %i.dc = add i64 %i.db, %i.da
-  store i64 %i.dc, ptr %i.f, align 8
+  store i64 %i.dc, ptr %7, align 8
   store i64 0, ptr %i.c, align 8
   %i.dd = load i64, ptr %i.bs, align 8
   %i.de = add i64 %i.dd, 1

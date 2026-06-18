@@ -201,8 +201,8 @@ bb.av:                                            ; preds = %bb.au
   %i.jx = getelementptr inbounds nuw i8, ptr %i.jk, i64 8489
   %i.jy = load i8, ptr %i.jx, align 1, !range !180
   %i.jz = trunc nuw i8 %i.jy to i1
-  %i.ka = select i1 %i.jw, i1 %i.jz, i1 false
-  br i1 %i.ka, label %bb.aw, label %_ZN6hermes2vm16ArrayStorageBaseINS0_13HermesValue32EE8pop_backERNS0_7RuntimeE.exit, !prof !58
+  %i.ka = select i1 %i.jw, i1 %i.jz, i1 false, !prof !186
+  br i1 %i.ka, label %bb.aw, label %_ZN6hermes2vm16ArrayStorageBaseINS0_13HermesValue32EE8pop_backERNS0_7RuntimeE.exit, !prof !186
 
 bb.aw:                                            ; preds = %bb.av
   %i.kb = getelementptr inbounds nuw i8, ptr %i.jk, i64 856
@@ -236,7 +236,7 @@ bb.az:                                            ; preds = %bb.ax, %bb.ay
   %.235.ph = phi i8 [ 1, %bb.ax ], [ %.033142, %bb.ay ] ; 2 uses
   %i.kk = add nuw i32 %.038139, 1                 ; 2 uses
   %exitcond.not = icmp eq i32 %i.kk, %i.cm
-  br i1 %exitcond.not, label %._crit_edge, label %bb.m, !llvm.loop !186
+  br i1 %exitcond.not, label %._crit_edge, label %bb.m, !llvm.loop !187
 
 ._crit_edge:                                      ; preds = %bb.az
   %i.kl = trunc nuw i8 %.235.ph to i1
@@ -391,8 +391,8 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %i.e, i64 8489
   %i.s = load i8, ptr %i.r, align 1, !range !180
   %i.t = trunc nuw i8 %i.s to i1
-  %i.u = select i1 %i.q, i1 %i.t, i1 false
-  br i1 %i.u, label %bb.b, label %_ZN6hermes2vm16ArrayStorageBaseINS0_13HermesValue32EE8pop_backERNS0_7RuntimeE.exit, !prof !58
+  %i.u = select i1 %i.q, i1 %i.t, i1 false, !prof !186
+  br i1 %i.u, label %bb.b, label %_ZN6hermes2vm16ArrayStorageBaseINS0_13HermesValue32EE8pop_backERNS0_7RuntimeE.exit, !prof !186
 
 bb.b:                                             ; preds = %bb.a
   %.sroa.0.0.copyload.i = load i32, ptr %i.k, align 4, !tbaa !3
@@ -724,7 +724,7 @@ _ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit41: ; preds = %_ZN4
   store i32 %i.dg, ptr %i.a, align 8, !tbaa !10
   %i.dh = add nuw i64 %.0114, 1                   ; 2 uses
   %exitcond.not = icmp eq i64 %i.dh, %2
-  br i1 %exitcond.not, label %._crit_edge, label %bb.d, !llvm.loop !187
+  br i1 %exitcond.not, label %._crit_edge, label %bb.d, !llvm.loop !188
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -1127,7 +1127,7 @@ bb.aq:                                            ; preds = %bb.an, %_ZN6hermes1
   %.1 = phi i64 [ %.0118, %_ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit83 ], [ %.0118, %_ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit86 ], [ %.0118, %_ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit77 ], [ %.0118, %_ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit71 ], [ %.0118, %_ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit90 ], [ %.0118, %_ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit41 ], [ %.0118, %_ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit47 ], [ %.0118, %_ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit53 ], [ %.0118, %_ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit59 ], [ %.0118, %_ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit65 ], [ %i.fm, %bb.an ], [ %.0118, %_ZN6hermes15handleSurrogateIN4llvh11SmallVectorIDsLj32EEEDsEEbRT_NS1_8ArrayRefIT0_EEm.exit ]
   %i.gp = add i64 %.1, 1                          ; 2 uses
   %i.gq = icmp ult i64 %i.gp, %2
-  br i1 %i.gq, label %bb.d, label %._crit_edge.loopexit, !llvm.loop !188
+  br i1 %i.gq, label %bb.d, label %._crit_edge.loopexit, !llvm.loop !189
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -1478,9 +1478,9 @@ declare { i32, i64 } @_ZN6hermes2vm23ExternalStringPrimitiveIDsE6createINSt7__cx
 define linkonce_odr hidden void @_ZN6hermes2vm15StringPrimitive13arrayToStringIDsEENSt7__cxx1112basic_stringIT_St11char_traitsIS5_ESaIS5_EEEN4llvh8ArrayRefIS5_EE(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string.230") align 8 %0, ptr %1, i64 %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  store ptr %i.a, ptr %0, align 8, !tbaa !189
+  store ptr %i.a, ptr %0, align 8, !tbaa !190
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  store i64 0, ptr %i.b, align 8, !tbaa !190
+  store i64 0, ptr %i.b, align 8, !tbaa !191
   %.idx = shl nuw nsw i64 %2, 1                   ; 3 uses
   %i.c = icmp ugt i64 %2, 7
   br i1 %i.c, label %bb.b, label %._crit_edge.i.i
@@ -1517,7 +1517,7 @@ bb.e:                                             ; preds = %._crit_edge.i.i
   br label %_ZNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEC2IPKDsvEET_S8_RKS3_.exit
 
 _ZNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEC2IPKDsvEET_S8_RKS3_.exit: ; preds = %._crit_edge.i.i, %bb.d, %bb.e
-  store i64 %2, ptr %i.b, align 8, !tbaa !190
+  store i64 %2, ptr %i.b, align 8, !tbaa !191
   %i.h = getelementptr inbounds nuw i8, ptr %.pre7.i.i, i64 %.idx
   store i16 0, ptr %i.h, align 2, !tbaa !133
   ret void
@@ -1737,9 +1737,10 @@ attributes #13 = { builtin nounwind allocsize(0) }
 !183 = distinct !{!183, !117}
 !184 = !{!"branch_weights", !"expected", i32 -2147483648, i32 0}
 !185 = !{!91, !49, i64 0}
-!186 = distinct !{!186, !117}
+!186 = !{!"branch_weights", i32 1, i32 4001}
 !187 = distinct !{!187, !117}
 !188 = distinct !{!188, !117}
-!189 = !{!61, !48, i64 0}
-!190 = !{!60, !13, i64 8}
+!189 = distinct !{!189, !117}
+!190 = !{!61, !48, i64 0}
+!191 = !{!60, !13, i64 8}
 end_hunk_1

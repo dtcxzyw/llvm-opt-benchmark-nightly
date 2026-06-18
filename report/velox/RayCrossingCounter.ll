@@ -127,7 +127,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.i = load double, ptr %i.h, align 8, !tbaa !14 ; 7 uses
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.k = load double, ptr %i.j, align 8           ; 4 uses
+  %i.k = load double, ptr %i.j, align 8
   %i.l = fcmp oeq double %i.i, %i.k
   %or.cond51.a = select i1 %i.g, i1 %i.l, i1 false
   br i1 %or.cond51.a, label %bb.c, label %._crit_edge
@@ -142,7 +142,8 @@ bb.c:                                             ; preds = %bb.b
   %i.o = load double, ptr %i.n, align 8, !tbaa !14 ; 3 uses
   %i.p = fcmp oeq double %i.o, %i.i
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.r = fcmp oeq double %i.k, %i.i
+  %3 = load double, ptr %i.q, align 8
+  %i.r = fcmp oeq double %3, %i.i
   %or.cond39 = select i1 %i.p, i1 %i.r, i1 false
   br i1 %or.cond39, label %bb.d, label %bb.f
 
@@ -162,17 +163,19 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %._crit_edge
   %i.w = fcmp ule double %i.o, %i.i
-  %i.x = fcmp ugt double %i.k, %i.i
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %5 = load double, ptr %4, align 8, !tbaa !14    ; 2 uses
+  %i.x = fcmp ugt double %5, %i.i
   %or.cond43 = select i1 %i.w, i1 true, i1 %i.x
   br i1 %or.cond43, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.y = fcmp ule double %i.k, %i.i
+  %i.y = fcmp ule double %5, %i.i
   %i.z = fcmp ugt double %i.o, %i.i
   %or.cond45 = or i1 %i.z, %i.y
   br i1 %or.cond45, label %bb.l, label %bb.h
 
-bb.h:                                             ; preds = %bb.g, %bb.f
+bb.h:                                             ; preds = %bb.f, %bb.g
   %i.aa = tail call noundef i32 @_ZN4geos9algorithm14CGAlgorithmsDD16orientationIndexERKNS_4geom10CoordinateES5_S5_(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %i.b) ; 3 uses
   %i.ab = icmp eq i32 %i.aa, 0
   br i1 %i.ab, label %bb.i, label %bb.j
@@ -183,7 +186,8 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.l
 
 bb.j:                                             ; preds = %bb.h
-  %i.ad = load double, ptr %i.q, align 8, !tbaa !14
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %i.ad = load double, ptr %6, align 8, !tbaa !14
   %i.ae = load double, ptr %i.n, align 8, !tbaa !14
   %i.af = fcmp olt double %i.ad, %i.ae
   %i.ag = sub nsw i32 0, %i.aa

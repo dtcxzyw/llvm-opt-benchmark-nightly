@@ -201,42 +201,36 @@ bb.e:                                             ; preds = %bb.b
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.r = load i64, ptr %i.q, align 8, !noundef !10 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 72
-  %3 = load ptr, ptr %i.s, align 8, !nonnull !10
   %i.t = zext i16 %i.n to i64
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %4 = load i64, ptr %i.u, align 8                ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %5 = load ptr, ptr %i.v, align 8, !nonnull !10
-  %6 = load ptr, ptr %2, align 8                  ; 3 uses
-  %7 = icmp eq ptr %6, null                       ; 3 uses
-  %not..i.i = xor i1 %7, true
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %8 = load i8, ptr %i.w, align 8, !range !25
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
-  %9 = load i64, ptr %i.x, align 8                ; 3 uses
-  %i.y = load ptr, ptr %i.w, align 8              ; 3 uses
-  %10 = ptrtoint ptr %6 to i64
-  %11 = ptrtoint ptr %i.y to i64
-  %.not153 = icmp eq i64 %i.r, 0
+  %.not184 = icmp eq i64 %i.r, 0
+  %i.y = load ptr, ptr %i.s, align 8, !nonnull !10, !noundef !10
   br label %.outer
 
 .outer:                                           ; preds = %_RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread, %bb.e
-  %.sroa.07.0.ph = phi i64 [ %i.al, %_RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread ], [ 0, %bb.e ] ; 3 uses
+  %.sroa.07.0.ph = phi i64 [ %i.al, %_RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread ], [ 0, %bb.e ] ; 4 uses
   %.sroa.0.0.ph = phi i64 [ %i.am, %_RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread ], [ %i.p, %bb.e ] ; 2 uses
   %i.z = icmp ult i64 %.sroa.0.0.ph, %i.r         ; 2 uses
-  %.not153.not = xor i1 %.not153, true
+  %.not153.not = xor i1 %.not184, true
   %brmerge = or i1 %i.z, %.not153.not
   %.sroa.0.0.ph.mux = select i1 %i.z, i64 %.sroa.0.0.ph, i64 0 ; 6 uses
   br i1 %brmerge, label %.loopexit, label %infloop
 
 .loopexit:                                        ; preds = %.outer
-  %i.aa = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.sroa.0.0.ph.mux ; 2 uses
+  %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %.sroa.0.0.ph.mux ; 2 uses
   %i.ab = load i16, ptr %i.aa, align 2, !noundef !10 ; 2 uses
   %.not = icmp eq i16 %i.ab, -1
-  br i1 %.not, label %bb.h, label %bb.g
+  br i1 %.not, label %3, label %bb.g
 
 bb.f:                                             ; preds = %bb.o
   unreachable
+
+3:                                                ; preds = %.loopexit
+  %4 = icmp samesign ugt i64 %.sroa.07.0.ph, 511
+  br i1 %4, label %.sink.split, label %bb.h
 
 bb.g:                                             ; preds = %.loopexit
   %i.ac = zext i16 %i.ab to i64                   ; 5 uses
@@ -247,20 +241,21 @@ bb.g:                                             ; preds = %.loopexit
   %i.ah = sub i64 %.sroa.0.0.ph.mux, %i.ag
   %i.ai = and i64 %i.ah, %i.t
   %i.aj = icmp samesign ult i64 %i.ai, %.sroa.07.0.ph
-  br i1 %i.aj, label %bb.h, label %bb.i
+  br i1 %i.aj, label %9, label %bb.i
 
-bb.h:                                             ; preds = %.loopexit, %bb.g
-  %12 = icmp samesign ugt i64 %.sroa.07.0.ph, 511
-  %13 = load i64, ptr %1, align 8, !range !26
-  %14 = icmp ne i64 %13, 2
-  %narrow = select i1 %12, i1 %14, i1 false
+.sink.split:                                      ; preds = %3, %9
+  %5 = load i64, ptr %1, align 8, !range !25, !noundef !10
+  %6 = icmp ne i64 %5, 2
+  %7 = zext i1 %6 to i8
+  br label %bb.h
+
+bb.h:                                             ; preds = %.sink.split, %3, %9
+  %.sroa.10.0 = phi i8 [ 0, %9 ], [ 0, %3 ], [ %7, %.sink.split ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.833, ptr noundef nonnull align 8 dereferenceable(16) %i.x, i64 16, i1 false)
-  %.sroa.10.0 = zext i1 %narrow to i8
   store ptr %1, ptr %0, align 8
   %.sroa.523.0..sroa_idx24 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %10, ptr %.sroa.523.0..sroa_idx24, align 8
-  %.sroa.728.0..sroa_idx29 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %11, ptr %.sroa.728.0..sroa_idx29, align 8
+  %8 = load <2 x i64>, ptr %2, align 8
+  store <2 x i64> %8, ptr %.sroa.523.0..sroa_idx24, align 8
   %.sroa.833.0..sroa_idx34 = getelementptr inbounds nuw i8, ptr %0, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.833.0..sroa_idx34, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.833, i64 16, i1 false)
   %.sroa.836.0..sroa_idx37 = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -275,21 +270,30 @@ bb.i:                                             ; preds = %bb.g
   %i.ak = icmp eq i16 %i.ae, %i.l
   br i1 %i.ak, label %bb.j, label %_RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread
 
+9:                                                ; preds = %bb.g
+  %10 = icmp samesign ugt i64 %.sroa.07.0.ph, 511
+  br i1 %10, label %.sink.split, label %bb.h
+
 _RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread: ; preds = %bb.m, %bb.k, %bb.n, %_RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit, %bb.i
   %i.al = add nuw nsw i64 %.sroa.07.0.ph, 1
   %i.am = add i64 %.sroa.0.0.ph.mux, 1
   br label %.outer
 
 bb.j:                                             ; preds = %bb.i
-  %i.an = icmp ugt i64 %4, %i.ac
+  %11 = load i64, ptr %i.u, align 8, !noundef !10 ; 2 uses
+  %i.an = icmp ugt i64 %11, %i.ac
   br i1 %i.an, label %bb.k, label %bb.o
 
 bb.k:                                             ; preds = %bb.j
-  %i.ao = getelementptr inbounds nuw [104 x i8], ptr %5, i64 %i.ac ; 4 uses
+  %12 = load ptr, ptr %i.v, align 8, !nonnull !10, !noundef !10
+  %i.ao = getelementptr inbounds nuw [104 x i8], ptr %12, i64 %i.ac ; 4 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 64
   %i.aq = load ptr, ptr %i.ap, align 8, !noundef !10
   %i.ar = icmp ne ptr %i.aq, null                 ; 2 uses
-  %i.as = xor i1 %i.ar, %7
+  %13 = load ptr, ptr %2, align 8, !noundef !10   ; 2 uses
+  %14 = icmp eq ptr %13, null                     ; 3 uses
+  %not..i.i = xor i1 %14, true
+  %i.as = xor i1 %i.ar, %14
   br i1 %i.as, label %bb.l, label %_RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread
 
 bb.l:                                             ; preds = %bb.k
@@ -298,26 +302,29 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l
   tail call void @llvm.assume(i1 %not..i.i)
   %i.at = getelementptr inbounds nuw i8, ptr %i.ao, i64 80
-  %i.au = load i64, ptr %i.at, align 8, !noundef !10
-  %i.av = icmp eq i64 %i.au, %9
+  %15 = load i64, ptr %i.at, align 8, !noundef !10 ; 3 uses
+  %i.au = load i64, ptr %i.x, align 8, !noundef !10
+  %i.av = icmp eq i64 %15, %i.au
   br i1 %i.av, label %bb.n, label %_RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread
 
 bb.n:                                             ; preds = %bb.m
+  %16 = load ptr, ptr %i.w, align 8, !noundef !10 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.ao, i64 72
   %i.ax = load ptr, ptr %i.aw, align 8, !noundef !10
-  %bcmp.i.i.i.i = tail call i32 @bcmp(ptr %i.ax, ptr %i.y, i64 %9)
+  %bcmp.i.i.i.i = tail call i32 @bcmp(ptr %i.ax, ptr %16, i64 %15)
   %i.ay = icmp eq i32 %bcmp.i.i.i.i, 0
   br i1 %i.ay, label %bb.p, label %_RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread
 
 bb.o:                                             ; preds = %bb.j
-  invoke void @_RNvNtCsbvkFyIu7lgC_4core9panicking18panic_bounds_check(i64 noundef %i.ac, i64 noundef %4, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #33
+  invoke void @_RNvNtCsbvkFyIu7lgC_4core9panicking18panic_bounds_check(i64 noundef %i.ac, i64 noundef %11, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #33
           to label %bb.f unwind label %bb.q
 
 _RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit: ; preds = %bb.l
-  tail call void @llvm.assume(i1 %7)
+  tail call void @llvm.assume(i1 %14)
   %i.az = getelementptr inbounds nuw i8, ptr %i.ao, i64 72
-  %i.ba = load i8, ptr %i.az, align 8, !range !25, !noundef !10
-  %i.bb = icmp eq i8 %i.ba, %8
+  %17 = load i8, ptr %i.az, align 8, !range !26, !noundef !10
+  %i.ba = load i8, ptr %i.w, align 8, !range !26, !noundef !10
+  %i.bb = icmp eq i8 %17, %i.ba
   br i1 %i.bb, label %.thread, label %_RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread
 
 .thread:                                          ; preds = %_RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
@@ -338,10 +345,10 @@ bb.p:                                             ; preds = %bb.n
   store i64 %i.ac, ptr %.sroa.728.0..sroa_idx31, align 8
   %.sroa.10.0..sroa_idx48 = getelementptr inbounds nuw i8, ptr %0, i64 50
   store i8 2, ptr %.sroa.10.0..sroa_idx48, align 2
-  %i.bc = getelementptr inbounds nuw i8, ptr %6, i64 32
+  %i.bc = getelementptr inbounds nuw i8, ptr %13, i64 32
   %i.bd = load ptr, ptr %i.bc, align 8, !noalias !27, !nonnull !10, !noundef !10
   %i.be = getelementptr inbounds nuw i8, ptr %2, i64 24
-  tail call void %i.bd(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.be, ptr noundef %i.y, i64 noundef %9), !inline_history !24
+  tail call void %i.bd(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.be, ptr noundef %16, i64 noundef %15), !inline_history !24
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4j34XAPZOn0_4http6header4name10HeaderNameECsgO8S5jLFugx_23deltalake_catalog_unity.exit
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4j34XAPZOn0_4http6header4name10HeaderNameECsgO8S5jLFugx_23deltalake_catalog_unity.exit: ; preds = %bb.p, %.thread, %bb.d, %bb.c, %bb.h
@@ -418,7 +425,7 @@ bb.b:                                             ; preds = %bb.a
   %i.s = load ptr, ptr %1, align 8                ; 4 uses
   %i.t = icmp eq ptr %i.s, null                   ; 3 uses
   %not..i.i.i.i = xor i1 %i.t, true
-  %i.u = load i8, ptr %i.q, align 8, !range !25
+  %i.u = load i8, ptr %i.q, align 8, !range !26
   %i.v = load i64, ptr %i.r, align 8              ; 2 uses
   %i.w = load ptr, ptr %i.q, align 8
   %.not = icmp eq i64 %i.k, 0
@@ -491,7 +498,7 @@ bb.i:                                             ; preds = %bb.h
 _RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.i.i: ; preds = %bb.g
   tail call void @llvm.assume(i1 %i.t)
   %i.ax = getelementptr inbounds nuw i8, ptr %i.am, i64 72
-  %i.ay = load i8, ptr %i.ax, align 8, !range !25, !noalias !76, !noundef !10
+  %i.ay = load i8, ptr %i.ax, align 8, !range !26, !noalias !76, !noundef !10
   %i.az = icmp eq i8 %i.ay, %i.u
   br i1 %i.az, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4j34XAPZOn0_4http6header4name10HeaderNameECsgO8S5jLFugx_23deltalake_catalog_unity.exit2, label %_RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread.i.i
 
@@ -894,7 +901,7 @@ bb.f:                                             ; preds = %bb.e, %bb.c
 define internal fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNtNtCs2pqxYH9ZEk8_3std9backtrace9BacktraceEECsgO8S5jLFugx_23deltalake_catalog_unity(ptr %.0.val) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  %i.a = load i64, ptr %.0.val, align 8, !range !26, !alias.scope !212, !noundef !10
+  %i.a = load i64, ptr %.0.val, align 8, !range !25, !alias.scope !212, !noundef !10
   %switch.i.i = icmp samesign ult i64 %i.a, 2
   br i1 %switch.i.i, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs2pqxYH9ZEk8_3std9backtrace9BacktraceECsgO8S5jLFugx_23deltalake_catalog_unity.exit, label %bb.b
 
@@ -1297,7 +1304,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs2pqxYH9ZEk8_3std3ffi6os_str
 ; Function Attrs: nonlazybind uwtable
 define internal void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs4lawaffTVVK_9sqlparser6parser11ParserErrorECsgO8S5jLFugx_23deltalake_catalog_unity(ptr noalias noundef align 8 dereferenceable(32) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !range !26, !noundef !10
+  %i.a = load i64, ptr %0, align 8, !range !25, !noundef !10
   switch i64 %i.a, label %bb.b [
     i64 0, label %bb.c
     i64 1, label %bb.f
@@ -1700,7 +1707,7 @@ bb.em:                                            ; preds = %bb.e
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.j, i64 noundef 96, i64 noundef 16) #37, !noalias !497, !inline_history !500
   %i.fn = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val3 = load ptr, ptr %i.fn, align 16, !nonnull !10, !noundef !10 ; 4 uses
-  %i.fo = load i64, ptr %.val3, align 8, !range !26, !alias.scope !518, !noundef !10
+  %i.fo = load i64, ptr %.val3, align 8, !range !25, !alias.scope !518, !noundef !10
   %switch.i.i.i = icmp samesign ult i64 %i.fo, 2
   br i1 %switch.i.i.i, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNtNtCs2pqxYH9ZEk8_3std9backtrace9BacktraceEECsgO8S5jLFugx_23deltalake_catalog_unity.exit, label %bb.en
 
@@ -2103,7 +2110,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3Box
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjhHCjzi9uUI_17datafusion_common15table_reference14TableReferenceECsgO8S5jLFugx_23deltalake_catalog_unity(ptr noalias noundef nonnull align 8 dereferenceable(56) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !range !26, !noundef !10
+  %i.a = load i64, ptr %0, align 8, !range !25, !noundef !10
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
   switch i64 %i.a, label %bb.b [
     i64 0, label %bb.d
@@ -2506,7 +2513,7 @@ bb.a:
   call void @_RINvMNtNtCskQDtHcQtBkN_5tokio7runtime6handleNtB3_6Handle8block_onNCNvMs4_CsgO8S5jLFugx_23deltalake_catalog_unityNtB19_19UnityCatalogBuilder25get_uc_location_and_token0EB19_(ptr noalias noundef nonnull sret([80 x i8]) align 8 captures(address) dereferenceable(80) %i.b, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.d, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(2616) %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @31), !noalias !790
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !790
   %i.f = load ptr, ptr %0, align 8, !alias.scope !790, !nonnull !10, !align !175, !noundef !10 ; 6 uses
-  %i.g = load i64, ptr %i.f, align 8, !range !26, !alias.scope !793, !noalias !790, !noundef !10 ; 2 uses
+  %i.g = load i64, ptr %i.f, align 8, !range !25, !alias.scope !793, !noalias !790, !noundef !10 ; 2 uses
   %i.h = icmp eq i64 %i.g, 2
   br i1 %i.h, label %_RNCNCINvMs4_CsgO8S5jLFugx_23deltalake_catalog_unityNtBa_19UnityCatalogBuilder17execute_uc_futureNCNvB6_25get_uc_location_and_token0INtNtCsbvkFyIu7lgC_4core6result6ResultTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapB2I_B2I_EENtBa_17UnityCatalogErrorEEs_00Ba_.exit, label %bb.b
 
@@ -2596,7 +2603,7 @@ bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
   %i.c = alloca [72 x i8], align 16               ; 13 uses
-  %i.d = load i64, ptr %0, align 8, !range !26, !noundef !10
+  %i.d = load i64, ptr %0, align 8, !range !25, !noundef !10
   %i.e = icmp eq i64 %i.d, 2
   br i1 %i.e, label %bb.b, label %bb.e
 
@@ -2637,7 +2644,7 @@ bb.c:                                             ; preds = %bb.b
   br label %_RINvXsz_NtNtCs4j34XAPZOn0_4http6header4nameNtB6_10HeaderNameNtNtCsbvkFyIu7lgC_4core4hash4Hash4hashNtNtNtCs2pqxYH9ZEk8_3std4hash6random13DefaultHasherECsgO8S5jLFugx_23deltalake_catalog_unity.exit
 
 bb.d:                                             ; preds = %bb.b
-  %i.q = load i8, ptr %i.o, align 8, !range !25, !noalias !800, !noundef !10
+  %i.q = load i8, ptr %i.o, align 8, !range !26, !noalias !800, !noundef !10
   %i.r = zext nneg i8 %i.q to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !810
   store i64 %i.r, ptr %i.a, align 8, !noalias !810
@@ -2805,7 +2812,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ef, label %_RINvXsz_NtNtCs4j34XAPZOn0_4http6header4nameNtB6_10HeaderNameNtNtCsbvkFyIu7lgC_4core4hash4Hash4hashNtNtB8_3map9FnvHasherECsgO8S5jLFugx_23deltalake_catalog_unity.exit, label %.lr.ph.i.i.i.i
 
 bb.g:                                             ; preds = %bb.e
-  %i.eg = load i8, ptr %i.ch, align 8, !range !25, !noalias !818, !noundef !10
+  %i.eg = load i8, ptr %i.ch, align 8, !range !26, !noalias !818, !noundef !10
   %i.eh = zext nneg i8 %i.eg to i64
   %i.ei = xor i64 %i.cg, %i.eh
   %i.ej = mul i64 %i.ei, 2232315406967589409
@@ -3208,7 +3215,7 @@ bb.ah:                                            ; preds = %bb.ad, %bb.ab
 bb.ai:                                            ; preds = %bb.ah
   %i.ee = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.ef = load i64, ptr %i.o, align 8, !range !26, !noalias !939, !noundef !10
+  %i.ef = load i64, ptr %i.o, align 8, !range !25, !noalias !939, !noundef !10
   %.not10.i = icmp eq i64 %i.ef, 2
   br i1 %.not10.i, label %.body.i, label %bb.ak
 
@@ -3611,7 +3618,7 @@ bb.a:
   %i.g = load i64, ptr %i.f, align 8, !noundef !10 ; 4 uses
   %i.h = icmp ult i64 %i.g, 88686269585142076
   tail call void @llvm.assume(i1 %i.h)
-  %i.i = load i64, ptr %0, align 8, !range !26, !noundef !10
+  %i.i = load i64, ptr %0, align 8, !range !25, !noundef !10
   %i.j = icmp eq i64 %i.i, 1
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 5 uses
   %i.l = load i64, ptr %i.k, align 8, !noundef !10 ; 5 uses
@@ -4014,11 +4021,8 @@ bb.l:                                             ; preds = %.loopexit
   store i16 %.sroa.09.0.ph, ptr %i.az, align 2
   store i16 %.sroa.6.0.ph, ptr %i.bc, align 2
   %i.bd = icmp ugt i64 %.sroa.07.0.ph, 127
-  %or.cond = select i1 %5, i1 true, i1 %i.bd
-  %6 = load i64, ptr %0, align 8, !range !26
-  %7 = icmp eq i64 %6, 0
-  %or.cond3 = select i1 %or.cond, i1 %7, i1 false
-  br i1 %or.cond3, label %bb.n, label %_RNvMs0_NtNtCs4j34XAPZOn0_4http6header3mapNtB5_9HeaderMap16try_insert_entryCsgO8S5jLFugx_23deltalake_catalog_unity.exit.thread
+  %or.cond3 = select i1 %5, i1 true, i1 %i.bd
+  br i1 %or.cond3, label %6, label %_RNvMs0_NtNtCs4j34XAPZOn0_4http6header3mapNtB5_9HeaderMap16try_insert_entryCsgO8S5jLFugx_23deltalake_catalog_unity.exit.thread
 
 bb.m:                                             ; preds = %.loopexit
   %i.be = add i64 %.sroa.07.0.ph, 1
@@ -4028,13 +4032,18 @@ bb.m:                                             ; preds = %.loopexit
   %i.bg = add nuw i64 %.sroa.0.0.ph.mux, 1
   br label %.outer
 
-bb.n:                                             ; preds = %bb.l
+6:                                                ; preds = %bb.l
+  %7 = load i64, ptr %0, align 8, !range !25, !noundef !10
+  %8 = icmp eq i64 %7, 0
+  br i1 %8, label %bb.n, label %_RNvMs0_NtNtCs4j34XAPZOn0_4http6header3mapNtB5_9HeaderMap16try_insert_entryCsgO8S5jLFugx_23deltalake_catalog_unity.exit.thread
+
+bb.n:                                             ; preds = %6
   store i64 1, ptr %0, align 8
   br label %_RNvMs0_NtNtCs4j34XAPZOn0_4http6header3mapNtB5_9HeaderMap16try_insert_entryCsgO8S5jLFugx_23deltalake_catalog_unity.exit.thread
 
-_RNvMs0_NtNtCs4j34XAPZOn0_4http6header3mapNtB5_9HeaderMap16try_insert_entryCsgO8S5jLFugx_23deltalake_catalog_unity.exit.thread: ; preds = %bb.g, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4j34XAPZOn0_4http6header5value11HeaderValueECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i, %bb.n, %bb.l
-  %.sroa.06.0 = phi i64 [ 0, %bb.n ], [ 0, %bb.l ], [ 1, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4j34XAPZOn0_4http6header5value11HeaderValueECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i ], [ 1, %bb.g ]
-  %i.bh = insertvalue { i64, i64 } poison, i64 %.sroa.06.0, 0
+_RNvMs0_NtNtCs4j34XAPZOn0_4http6header3mapNtB5_9HeaderMap16try_insert_entryCsgO8S5jLFugx_23deltalake_catalog_unity.exit.thread: ; preds = %bb.g, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4j34XAPZOn0_4http6header5value11HeaderValueECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i, %bb.n, %6, %bb.l
+  %.sroa.04.0 = phi i64 [ 0, %bb.n ], [ 0, %bb.l ], [ 0, %6 ], [ 1, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4j34XAPZOn0_4http6header5value11HeaderValueECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i ], [ 1, %bb.g ]
+  %i.bh = insertvalue { i64, i64 } poison, i64 %.sroa.04.0, 0
   %i.bi = insertvalue { i64, i64 } %i.bh, i64 %i.c, 1
   ret { i64, i64 } %i.bi
 
@@ -4437,7 +4446,7 @@ define internal noundef zeroext i1 @_RNvXs6_NtCs4lawaffTVVK_9sqlparser6parserNtB
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
-  %i.c = load i64, ptr %0, align 8, !range !26, !noundef !10
+  %i.c = load i64, ptr %0, align 8, !range !25, !noundef !10
   switch i64 %i.c, label %default.unreachable1 [
     i64 0, label %bb.b
     i64 1, label %bb.c
@@ -4840,8 +4849,8 @@ attributes #39 = { inlinehint }
 !22 = distinct !{!22, !"_RNvXs1_NtCs9Ct3XQYJhun_5bytes5bytesNtB5_5BytesNtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4drop"}
 !23 = !{!21, !18, !15, !12, !7, !4}
 !24 = distinct !{null, null, null, null, null, null}
-!25 = !{i8 0, i8 81}
-!26 = !{i64 0, i64 3}
+!25 = !{i64 0, i64 3}
+!26 = !{i8 0, i8 81}
 !27 = !{!28, !30, !32, !34, !36, !38}
 !28 = distinct !{!28, !29, !"_RNvXs1_NtCs9Ct3XQYJhun_5bytes5bytesNtB5_5BytesNtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4drop: argument 0"}
 !29 = distinct !{!29, !"_RNvXs1_NtCs9Ct3XQYJhun_5bytes5bytesNtB5_5BytesNtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4drop"}

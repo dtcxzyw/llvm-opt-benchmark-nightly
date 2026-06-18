@@ -201,7 +201,6 @@ bb.b:                                             ; preds = %bb.a
   %i.o = load i64, ptr %i.n, align 8
   %.fr89 = freeze i64 %i.o                        ; 3 uses
   %i.p = icmp eq i64 %.fr89, 0
-  %6 = load ptr, ptr %4, align 8
   br i1 %i.p, label %.split.us, label %.split, !llvm.loop !57
 
 .split.us:                                        ; preds = %bb.b, %bb.c
@@ -290,6 +289,7 @@ bb.e:                                             ; preds = %.lr.ph, %.critedge.
 
 bb.f:                                             ; preds = %bb.e
   %i.bj = load ptr, ptr %i.bf, align 8, !tbaa !47
+  %6 = load ptr, ptr %4, align 8, !tbaa !47
   %bcmp.i.i.i = tail call i32 @bcmp(ptr %6, ptr %i.bj, i64 %.fr89)
   %i.bk = icmp eq i32 %bcmp.i.i.i, 0
   br i1 %i.bk, label %_ZNK5folly3f146detail21VectorContainerPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEvvvvSt17integral_constantIbLb1EEE14keyMatchesItemIS8_EEbRKT_RKj.exit.thread, label %.critedge.i.backedge, !prof !59
@@ -692,8 +692,7 @@ bb.b:                                             ; preds = %bb.a
   %i.n = and i64 %i.m, 255                        ; 3 uses
   %i.o = shl nuw i64 1, %i.n                      ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %4 = load ptr, ptr %i.p, align 8, !tbaa !12     ; 2 uses
-  %i.q = load ptr, ptr %0, align 8                ; 2 uses
+  %i.q = load ptr, ptr %i.p, align 8, !tbaa !12   ; 2 uses
   %i.r = load ptr, ptr %i.a, align 8
   %i.s = load i64, ptr %3, align 8
   %.fr36 = freeze i64 %i.s                        ; 3 uses
@@ -704,7 +703,7 @@ bb.b:                                             ; preds = %bb.a
   %.0.i33.us = phi i64 [ %i.ad, %bb.c ], [ %i.e, %bb.b ] ; 2 uses
   %.022.i32.us = phi i64 [ %i.ac, %bb.c ], [ %i.o, %bb.b ]
   %i.u = call noundef i64 @llvm.x86.bmi.bzhi.64(i64 %.0.i33.us, i64 range(i64 0, 256) %i.n)
-  %i.v = getelementptr inbounds nuw [64 x i8], ptr %4, i64 %i.u ; 3 uses
+  %i.v = getelementptr inbounds nuw [64 x i8], ptr %i.q, i64 %i.u ; 3 uses
   %i.w = load <16 x i8>, ptr %i.v, align 16       ; 2 uses
   %i.x = icmp eq <16 x i8> %i.w, %i.l
   %i.y = bitcast <16 x i1> %i.x to i16
@@ -728,6 +727,7 @@ bb.c:                                             ; preds = %.critedge.i._crit_e
   %i.af = icmp ne ptr %i.v, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
   call void @llvm.assume(i1 %i.af)
   %i.ag = getelementptr inbounds nuw i8, ptr %i.v, i64 16
+  %4 = load ptr, ptr %0, align 8, !tbaa !32
   br label %bb.d
 
 bb.d:                                             ; preds = %.critedge.i.backedge.us.us, %.lr.ph.us
@@ -737,7 +737,7 @@ bb.d:                                             ; preds = %.critedge.i.backedg
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %i.ai
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !7
   %i.al = zext i32 %i.ak to i64
-  %i.am = getelementptr inbounds nuw [32 x i8], ptr %i.q, i64 %i.al
+  %i.am = getelementptr inbounds nuw [32 x i8], ptr %4, i64 %i.al
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 8
   %i.ao = load i64, ptr %i.an, align 8, !tbaa !52
   %.not.i.i.i.us.us = icmp eq i64 %i.ao, 0
@@ -753,7 +753,7 @@ bb.d:                                             ; preds = %.critedge.i.backedg
   %.0.i33 = phi i64 [ %i.bp, %bb.g ], [ %i.e, %bb.b ] ; 2 uses
   %.022.i32 = phi i64 [ %i.bo, %bb.g ], [ %i.o, %bb.b ]
   %i.ar = call noundef i64 @llvm.x86.bmi.bzhi.64(i64 %.0.i33, i64 range(i64 0, 256) %i.n)
-  %i.as = getelementptr inbounds nuw [64 x i8], ptr %4, i64 %i.ar ; 3 uses
+  %i.as = getelementptr inbounds nuw [64 x i8], ptr %i.q, i64 %i.ar ; 3 uses
   %i.at = load <16 x i8>, ptr %i.as, align 16     ; 2 uses
   %i.au = icmp eq <16 x i8> %i.at, %i.l
   %i.av = bitcast <16 x i1> %i.au to i16
@@ -767,6 +767,7 @@ bb.d:                                             ; preds = %.critedge.i.backedg
   %i.az = icmp ne ptr %i.as, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
   call void @llvm.assume(i1 %i.az)
   %i.ba = getelementptr inbounds nuw i8, ptr %i.as, i64 16
+  %5 = load ptr, ptr %0, align 8, !tbaa !32
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %.critedge.i.backedge
@@ -778,7 +779,7 @@ bb.e:                                             ; preds = %.lr.ph, %.critedge.
   %i.bf = getelementptr inbounds nuw [4 x i8], ptr %i.ba, i64 %i.be
   %i.bg = load i32, ptr %i.bf, align 4, !tbaa !7
   %i.bh = zext i32 %i.bg to i64
-  %i.bi = getelementptr inbounds nuw [32 x i8], ptr %i.q, i64 %i.bh ; 2 uses
+  %i.bi = getelementptr inbounds nuw [32 x i8], ptr %5, i64 %i.bh ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 8
   %i.bk = load i64, ptr %i.bj, align 8, !tbaa !52
   %.not.i.i.i = icmp eq i64 %.fr36, %i.bk

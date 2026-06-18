@@ -201,19 +201,25 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   %i.bs = select i1 %i.bq, i1 %i.br, i1 false     ; 2 uses
   %i.bt = load i8, ptr %i.aa, align 1, !tbaa !31, !range !48, !noundef !51
   %i.bu = trunc nuw i8 %i.bt to i1
-  %4 = load i64, ptr %i.ab, align 8
-  %5 = icmp uge i64 %i.bp, %4
-  %6 = select i1 %i.bu, i1 %5, i1 false           ; 2 uses
+  br i1 %i.bu, label %4, label %7
+
+4:                                                ; preds = %bb.g
+  %5 = load i64, ptr %i.ab, align 8, !tbaa !45
+  %6 = icmp uge i64 %i.bp, %5
+  br label %7
+
+7:                                                ; preds = %4, %bb.g
+  %8 = phi i1 [ false, %bb.g ], [ %6, %4 ]        ; 2 uses
   %.not66 = icmp eq i32 %i.bf, 0                  ; 2 uses
   br i1 %.not66, label %bb.h, label %bb.i
 
-bb.h:                                             ; preds = %bb.g
+bb.h:                                             ; preds = %7
   %i.bv = icmp eq i64 %i.bm, %.045
   %or.cond = select i1 %i.bv, i1 true, i1 %i.bs
-  %or.cond8 = select i1 %or.cond, i1 true, i1 %6
+  %or.cond8 = select i1 %or.cond, i1 true, i1 %8
   br i1 %or.cond8, label %bb.i, label %bb.o
 
-bb.i:                                             ; preds = %bb.h, %bb.g
+bb.i:                                             ; preds = %bb.h, %7
   %i.bw = load ptr, ptr %i.ae, align 8, !tbaa !53
   %i.bx = load i64, ptr %i.af, align 8, !tbaa !47 ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %i.bw, i64 %i.bx
@@ -242,7 +248,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 
 bb.l:                                             ; preds = %bb.k
   %.not67 = icmp ne i32 %i.ca, 0
-  %brmerge = select i1 %.not67, i1 true, i1 %6    ; 2 uses
+  %brmerge = select i1 %.not67, i1 true, i1 %8    ; 2 uses
   %.not73 = xor i1 %i.bs, true
   %brmerge74 = select i1 %brmerge, i1 true, i1 %.not73
   br i1 %brmerge74, label %bb.n, label %bb.m

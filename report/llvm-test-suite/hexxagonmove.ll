@@ -201,9 +201,15 @@ bb.a:
   call void @srandom(i32 noundef %i.h) #13
   %i.i = load i32, ptr %0, align 8, !tbaa !8
   %.not = icmp eq i32 %i.i, 0
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %3 = load ptr, ptr %2, align 8
-  %.0 = select i1 %.not, ptr null, ptr %3
+  br i1 %.not, label %5, label %2
+
+2:                                                ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %4 = load ptr, ptr %3, align 8, !tbaa !12
+  br label %5
+
+5:                                                ; preds = %bb.a, %2
+  %.0 = phi ptr [ %4, %2 ], [ null, %bb.a ]
   ret ptr %.0
 }
 

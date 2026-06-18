@@ -201,12 +201,14 @@ bb.c:                                             ; preds = %bb.b
   %i.p = tail call noundef i32 @_ZNK6icu_7813UnicodeString8char32AtEi(ptr noundef nonnull align 8 dereferenceable(64) %2, i32 noundef 0) #17
   %i.q = tail call signext i8 @u_islower_78(i32 noundef %i.p) #17
   %.not = icmp eq i8 %i.q, 0
-  %4 = load i32, ptr %3, align 4
-  %5 = icmp sgt i32 %4, 0
-  %or.cond21 = select i1 %.not, i1 true, i1 %5
-  br i1 %or.cond21, label %bb.i, label %bb.d
+  br i1 %.not, label %bb.i, label %4
 
-bb.d:                                             ; preds = %bb.c
+4:                                                ; preds = %bb.c
+  %5 = load i32, ptr %3, align 4
+  %6 = icmp sgt i32 %5, 0
+  br i1 %6, label %bb.i, label %bb.d
+
+bb.d:                                             ; preds = %4
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 328
   %i.s = load ptr, ptr %i.r, align 8              ; 2 uses
   %.not14 = icmp eq ptr %i.s, null
@@ -236,7 +238,7 @@ bb.h:                                             ; preds = %bb.e, %bb.g, %bb.f
   %i.w = tail call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString7toTitleEPNS_13BreakIteratorERKNS_6LocaleEj(ptr noundef nonnull align 8 dereferenceable(64) %2, ptr noundef nonnull %i.s, ptr noundef nonnull align 8 dereferenceable(40) %i.v, i32 noundef 768) #17 ; 0 uses
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.f, %bb.c, %bb.d, %bb.g, %bb.h, %bb.e, %bb.b, %bb.a
+bb.i:                                             ; preds = %bb.f, %bb.c, %4, %bb.d, %bb.g, %bb.h, %bb.e, %bb.b, %bb.a
   ret ptr %2
 }
 

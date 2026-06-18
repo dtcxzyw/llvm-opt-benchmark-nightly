@@ -201,35 +201,41 @@ bb.g:                                             ; preds = %bb.f
   %i.al = sub nsw i64 0, %i.aj
   %i.am = getelementptr inbounds i8, ptr %i.af, i64 %i.al
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.am, ptr align 1 %.015, i64 %i.aj, i1 false)
-  br label %_ZSt13move_backwardIPcS0_ET0_T_S2_S1_.exit.a
+  br label %_ZSt13move_backwardIPcS0_ET0_T_S2_S1_.exit
 
 bb.h:                                             ; preds = %bb.f
   %i.an = icmp eq i64 %i.aj, 1
-  br i1 %i.an, label %bb.i, label %_ZSt13move_backwardIPcS0_ET0_T_S2_S1_.exit.a
+  br i1 %i.an, label %bb.i, label %_ZSt13move_backwardIPcS0_ET0_T_S2_S1_.exit
 
 bb.i:                                             ; preds = %bb.h
   %i.ao = load i8, ptr %.015, align 1, !tbaa !56
   store i8 %i.ao, ptr %i.ag, align 1, !tbaa !56
-  br label %_ZSt13move_backwardIPcS0_ET0_T_S2_S1_.exit.a
+  br label %_ZSt13move_backwardIPcS0_ET0_T_S2_S1_.exit
 
-_ZSt13move_backwardIPcS0_ET0_T_S2_S1_.exit.a:     ; preds = %bb.g, %bb.h, %bb.i
+_ZSt13move_backwardIPcS0_ET0_T_S2_S1_.exit:       ; preds = %bb.g, %bb.h, %bb.i
   %3 = load i32, ptr %i.b, align 8, !tbaa !68
   %4 = add i32 %3, 1                              ; 2 uses
   store i32 %4, ptr %i.b, align 8, !tbaa !68
-  %.not18 = icmp ule ptr %.015, %2
-  %i.ap = load ptr, ptr %0, align 8
+  %.not18 = icmp ugt ptr %.015, %2
+  br i1 %.not18, label %5, label %_ZSt13move_backwardIPcS0_ET0_T_S2_S1_.exit.a
+
+_ZSt13move_backwardIPcS0_ET0_T_S2_S1_.exit.a:     ; preds = %_ZSt13move_backwardIPcS0_ET0_T_S2_S1_.exit
+  %i.ap = load ptr, ptr %0, align 8, !tbaa !67
   %i.aq = zext i32 %4 to i64
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ap, i64 %i.aq
   %i.as = icmp ult ptr %2, %i.ar
-  %narrow = select i1 %.not18, i1 %i.as, i1 false
-  %.0.idx = zext i1 %narrow to i64
+  %.0.idx = zext i1 %i.as to i64
   %.0.a = getelementptr inbounds nuw i8, ptr %2, i64 %.0.idx
-  %5 = load i8, ptr %.0.a, align 1, !tbaa !56
-  store i8 %5, ptr %.015, align 1, !tbaa !56
+  br label %5
+
+5:                                                ; preds = %_ZSt13move_backwardIPcS0_ET0_T_S2_S1_.exit.a, %_ZSt13move_backwardIPcS0_ET0_T_S2_S1_.exit
+  %.0 = phi ptr [ %2, %_ZSt13move_backwardIPcS0_ET0_T_S2_S1_.exit ], [ %.0.a, %_ZSt13move_backwardIPcS0_ET0_T_S2_S1_.exit.a ]
+  %6 = load i8, ptr %.0, align 1, !tbaa !56
+  store i8 %6, ptr %.015, align 1, !tbaa !56
   br label %bb.j
 
-bb.j:                                             ; preds = %_ZSt13move_backwardIPcS0_ET0_T_S2_S1_.exit.a, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit
-  %.014 = phi ptr [ %i.r, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit ], [ %.015, %_ZSt13move_backwardIPcS0_ET0_T_S2_S1_.exit.a ]
+bb.j:                                             ; preds = %5, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit
+  %.014 = phi ptr [ %i.r, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit ], [ %.015, %5 ]
   ret ptr %.014
 }
 

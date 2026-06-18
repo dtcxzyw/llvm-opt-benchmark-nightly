@@ -201,11 +201,7 @@ bb.ab:                                            ; preds = %._crit_edge178
   %i.jw = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 2 uses
   %i.jx = load ptr, ptr %i.jw, align 8, !tbaa !40 ; 8 uses
   %i.jy = getelementptr inbounds nuw i8, ptr %0, i64 180 ; 4 uses
-  %3 = load i32, ptr %i.jy, align 4               ; 2 uses
-  %4 = icmp sgt i32 %3, 0
-  %i.jz = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 2 uses
-  %5 = load ptr, ptr %i.jz, align 8               ; 2 uses
-  %wide.trip.count.i121 = zext nneg i32 %3 to i64
+  %i.jz = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 3 uses
   br label %.lr.ph.i110
 
 .lr.ph.i110:                                      ; preds = %_ZNK11NCoderMixer9CBindInfo22FindBinderForOutStreamEj.exit126, %.lr.ph.i110.lr.ph
@@ -337,10 +333,17 @@ middle.block312:                                  ; preds = %vector.body303
 
 _ZNK11NCoderMixer9CBindInfo22GetCoderOutStreamIndexEj.exit118: ; preds = %.lr.ph.i112.prol.loopexit, %.lr.ph.i112, %_ZNK11NCoderMixer9CBindInfo12FindInStreamEjRjS1_.exit
   %.06.lcssa.i117 = phi i32 [ 0, %_ZNK11NCoderMixer9CBindInfo12FindInStreamEjRjS1_.exit ], [ %.lcssa334.unr, %.lr.ph.i112.prol.loopexit ], [ %i.lz, %.lr.ph.i112 ] ; 3 uses
-  br i1 %4, label %.lr.ph.i120.a, label %.preheader
+  %3 = load i32, ptr %i.jy, align 4, !tbaa !37    ; 2 uses
+  %4 = icmp sgt i32 %3, 0
+  br i1 %4, label %.lr.ph.i120, label %.preheader
 
-.lr.ph.i120.a:                                    ; preds = %_ZNK11NCoderMixer9CBindInfo22GetCoderOutStreamIndexEj.exit118, %bb.ae
-  %indvars.iv.i122 = phi i64 [ %indvars.iv.next.i123, %bb.ae ], [ 0, %_ZNK11NCoderMixer9CBindInfo22GetCoderOutStreamIndexEj.exit118 ] ; 3 uses
+.lr.ph.i120:                                      ; preds = %_ZNK11NCoderMixer9CBindInfo22GetCoderOutStreamIndexEj.exit118
+  %5 = load ptr, ptr %i.jz, align 8, !tbaa !40
+  %wide.trip.count.i121 = zext nneg i32 %3 to i64
+  br label %.lr.ph.i120.a
+
+.lr.ph.i120.a:                                    ; preds = %bb.ae, %.lr.ph.i120
+  %indvars.iv.i122 = phi i64 [ 0, %.lr.ph.i120 ], [ %indvars.iv.next.i123, %bb.ae ] ; 3 uses
   %i.mb = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv.i122
   %i.mc = getelementptr inbounds nuw i8, ptr %i.mb, i64 4
   %i.md = load i32, ptr %i.mc, align 4, !tbaa !185
@@ -386,8 +389,9 @@ bb.ah:                                            ; preds = %bb.af
   br i1 %exitcond216.not, label %.loopexit140, label %bb.af, !llvm.loop !192
 
 _ZNK11NCoderMixer9CBindInfo22FindBinderForOutStreamEj.exit126: ; preds = %.lr.ph.i120.a
+  %6 = load ptr, ptr %i.jz, align 8, !tbaa !40
   %i.mq = and i64 %indvars.iv.i122, 4294967295
-  %i.mr = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.mq
+  %i.mr = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.mq
   br label %.lr.ph.i110
 
 .loopexit140:                                     ; preds = %bb.ah, %.preheader, %bb.ag

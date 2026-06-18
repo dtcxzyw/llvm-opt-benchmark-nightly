@@ -201,12 +201,14 @@ bb.y:                                             ; preds = %.tail.i18
   %i.ex = load ptr, ptr %i.ew, align 8
   %i.ey = call noundef i32 %i.ex(ptr noundef nonnull align 8 dereferenceable(8) %2) #13, !inline_history !53
   %i.ez = icmp eq i32 %i.ey, 0
-  %21 = load i32, ptr %4, align 4
-  %22 = icmp slt i32 %21, 1
-  %or.cond.i19 = select i1 %i.ez, i1 %22, i1 false
-  br i1 %or.cond.i19, label %bb.z, label %_ZN6icu_7812_GLOBAL__N_122RelDateTimeFmtDataSink20handlePlainDirectionERNS_13ResourceValueER10UErrorCode.exit.i
+  br i1 %i.ez, label %21, label %_ZN6icu_7812_GLOBAL__N_122RelDateTimeFmtDataSink20handlePlainDirectionERNS_13ResourceValueER10UErrorCode.exit.i
 
-bb.z:                                             ; preds = %bb.y
+21:                                               ; preds = %bb.y
+  %22 = load i32, ptr %4, align 4
+  %23 = icmp slt i32 %22, 1
+  br i1 %23, label %bb.z, label %_ZN6icu_7812_GLOBAL__N_122RelDateTimeFmtDataSink20handlePlainDirectionERNS_13ResourceValueER10UErrorCode.exit.i
+
+bb.z:                                             ; preds = %21
   %i.fa = load i32, ptr %i.r, align 8
   %switch.tableidx = add i32 %i.fa, -1            ; 2 uses
   %i.fb = icmp ult i32 %switch.tableidx, 14
@@ -249,7 +251,7 @@ bb.aa:                                            ; preds = %switch.lookup
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #13
   br label %_ZN6icu_7812_GLOBAL__N_122RelDateTimeFmtDataSink20handlePlainDirectionERNS_13ResourceValueER10UErrorCode.exit.i
 
-_ZN6icu_7812_GLOBAL__N_122RelDateTimeFmtDataSink20handlePlainDirectionERNS_13ResourceValueER10UErrorCode.exit.i: ; preds = %bb.z, %bb.aa, %switch.lookup, %bb.y, %.tail.i18, %sub_1.i17, %sub_0.i15
+_ZN6icu_7812_GLOBAL__N_122RelDateTimeFmtDataSink20handlePlainDirectionERNS_13ResourceValueER10UErrorCode.exit.i: ; preds = %bb.z, %bb.aa, %switch.lookup, %21, %bb.y, %.tail.i18, %sub_1.i17, %sub_0.i15
   %i.ft = load ptr, ptr %2, align 8
   %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 24
   %i.fv = load ptr, ptr %i.fu, align 8

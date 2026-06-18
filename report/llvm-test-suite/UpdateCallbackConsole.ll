@@ -201,14 +201,15 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 ; Function Attrs: mustprogress uwtable
 define dso_local noundef range(i32 -2147467260, 1) i32 @_ZN22CUpdateCallbackConsole12SetCompletedEPKy(ptr noundef nonnull align 8 dereferenceable(232) %0, ptr nofree noundef readonly captures(address_is_null) %1) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
-bb.a:
-  %2 = tail call i32 @pthread_mutex_lock(ptr noundef nonnull align 8 dereferenceable(40) @_ZL17g_CriticalSection) #15 ; 0 uses
-  %.not = icmp ne ptr %1, null
+  %3 = tail call i32 @pthread_mutex_lock(ptr noundef nonnull align 8 dereferenceable(40) @_ZL17g_CriticalSection) #15 ; 0 uses
+  %.not = icmp eq ptr %1, null
+  br i1 %.not, label %bb.e, label %bb.a
+
+bb.a:                                             ; preds = %2
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.b = load i8, ptr %i.a, align 8, !range !37
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !47, !range !37, !noundef !38
   %i.c = trunc nuw i8 %i.b to i1
-  %or.cond = select i1 %.not, i1 %i.c, i1 false
-  br i1 %or.cond, label %bb.b, label %bb.e
+  br i1 %i.c, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -229,7 +230,7 @@ bb.d:                                             ; preds = %bb.e, %bb.b
   %i.i = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) @_ZL17g_CriticalSection) #15 ; 0 uses
   resume { ptr, i32 } %i.h
 
-bb.e:                                             ; preds = %bb.c, %bb.a
+bb.e:                                             ; preds = %bb.a, %bb.c, %2
   %i.j = invoke noundef zeroext i1 @_ZN13NConsoleClose15TestBreakSignalEv()
           to label %bb.f unwind label %bb.d
 

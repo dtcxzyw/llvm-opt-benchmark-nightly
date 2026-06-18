@@ -201,17 +201,20 @@ bb.d:                                             ; preds = %.lr.ph
   %i.g = load i64, ptr %i.b, align 8, !tbaa !72   ; 4 uses
   %i.h = add i64 %i.g, 1                          ; 3 uses
   %i.i = load ptr, ptr %0, align 8, !tbaa !74     ; 2 uses
-  %i.j = icmp eq ptr %i.i, %i.a                   ; 2 uses
-  br i1 %i.j, label %bb.e, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i
+  %i.j = icmp eq ptr %i.i, %i.a
+  br i1 %i.j, label %bb.e, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 bb.e:                                             ; preds = %bb.d
   %i.k = icmp ult i64 %i.g, 16
   tail call void @llvm.assume(i1 %i.k)
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i: ; preds = %bb.e, %bb.d
-  %3 = load i64, ptr %i.a, align 8
-  %4 = select i1 %i.j, i64 15, i64 %3
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i: ; preds = %bb.d
+  %3 = load i64, ptr %i.a, align 8, !tbaa !36
+  br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i, %bb.e
+  %4 = phi i64 [ %3, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i ], [ 15, %bb.e ]
   %i.l = icmp ugt i64 %i.h, %4
   br i1 %i.l, label %bb.f, label %bb.g
 
@@ -614,7 +617,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 4 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !45   ; 3 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !45   ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !45
   %i.g = ptrtoint ptr %i.d to i64                 ; 2 uses
@@ -659,14 +662,13 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZNSt5dequeIcSaIcEE17_M_reallocate_mapEmb(ptr noundef nonnull align 8 dereferenceable(80) %0, i64 noundef 1, i1 noundef zeroext false)
-  %.pre = load ptr, ptr %i.c, align 8, !tbaa !51
   br label %_ZNSt5dequeIcSaIcEE22_M_reserve_map_at_backEm.exit
 
 _ZNSt5dequeIcSaIcEE22_M_reserve_map_at_backEm.exit: ; preds = %bb.c, %bb.d
-  %2 = phi ptr [ %i.d, %bb.c ], [ %.pre, %bb.d ]
-  %3 = tail call noalias noundef nonnull dereferenceable(512) ptr @_Znwm(i64 noundef 512) #14
-  %i.ak = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store ptr %3, ptr %i.ak, align 8, !tbaa !52
+  %2 = tail call noalias noundef nonnull dereferenceable(512) ptr @_Znwm(i64 noundef 512) #14
+  %3 = load ptr, ptr %i.c, align 8, !tbaa !51
+  %i.ak = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store ptr %2, ptr %i.ak, align 8, !tbaa !52
   %i.al = load ptr, ptr %i.a, align 8, !tbaa !78
   %i.am = load i8, ptr %1, align 1, !tbaa !36
   store i8 %i.am, ptr %i.al, align 1, !tbaa !36

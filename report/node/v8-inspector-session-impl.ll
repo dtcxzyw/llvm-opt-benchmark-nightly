@@ -201,7 +201,7 @@ _ZNKSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EE16_M_get_use_countEv.exit.i
   br label %_ZN12v8_inspector22V8InspectorSessionImpl21KeepSessionAliveScopeC2ERKS0_.exit
 
 _ZN12v8_inspector22V8InspectorSessionImpl21KeepSessionAliveScopeC2ERKS0_.exit: ; preds = %bb.c, %_ZNKSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EE16_M_get_use_countEv.exit.i.i.i.i, %bb.a
-  %.sroa.330.1 = phi ptr [ %i.b, %_ZNKSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EE16_M_get_use_countEv.exit.i.i.i.i ], [ null, %bb.a ], [ null, %bb.c ] ; 8 uses
+  %.sroa.330.1 = phi ptr [ null, %bb.a ], [ %i.b, %_ZNKSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EE16_M_get_use_countEv.exit.i.i.i.i ], [ null, %bb.c ] ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #17
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false)
   %.sroa.025.0.copyload = load i8, ptr %1, align 8
@@ -604,9 +604,9 @@ _ZNKSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE8capacityEv.exit: ; pre
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load i64, ptr %i.a, align 8              ; 9 uses
   %i.c = load ptr, ptr %0, align 8                ; 4 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %i.e = icmp eq ptr %i.c, %i.d                   ; 2 uses
-  %i.f = load i64, ptr %i.d, align 8              ; 2 uses
+  %i.f = load i64, ptr %i.d, align 8
   %i.g = select i1 %i.e, i64 7, i64 %i.f          ; 2 uses
   %i.h = icmp ugt i64 %i.b, %i.g
   br i1 %i.h, label %bb.b, label %bb.f
@@ -638,7 +638,8 @@ _ZNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE9_M_createERmm.exit: ; p
   br i1 %i.e, label %.thread, label %_ZNKSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE11_M_is_localEv.exit.i
 
 _ZNKSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE11_M_is_localEv.exit.i: ; preds = %_ZNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE9_M_createERmm.exit
-  %i.p = shl i64 %i.f, 1
+  %2 = load i64, ptr %i.d, align 8
+  %i.p = shl i64 %2, 1
   %i.q = add i64 %i.p, 2
   tail call void @_ZdlPvm(ptr noundef %i.c, i64 noundef %i.q) #19
   br label %.thread

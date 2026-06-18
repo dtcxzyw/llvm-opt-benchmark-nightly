@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %_ZNSt6vectorIN8face
   %i.w = load ptr, ptr %0, align 8
   %i.x = icmp ne ptr %i.w, null
   %i.y = select i1 %i.l, i1 %i.x, i1 false
-  br i1 %i.y, label %bb.d, label %_ZNK8facebook5velox6memory10Allocation11sanityCheckEv.exit, !prof !30
+  br i1 %i.y, label %bb.d, label %_ZNK8facebook5velox6memory10Allocation11sanityCheckEv.exit, !prof !93
 
 bb.d:                                             ; preds = %bb.c
   invoke void @_ZN8facebook5velox6detail14veloxCheckFailINS0_17VeloxRuntimeErrorENS0_22CompileTimeEmptyStringEEEvRKNS1_18VeloxCheckFailArgsET0_(ptr noundef nonnull align 8 dereferenceable(56) @_ZZNK8facebook5velox6memory10Allocation11sanityCheckEvE18veloxCheckFailArgs_1) #16
@@ -361,4 +361,5 @@ attributes #19 = { noreturn nounwind }
 !90 = !{!91}
 !91 = distinct !{!91, !92, !"_ZN8facebook5velox12errorMessageIJbbEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN3fmt3v1117basic_string_viewIcEEDpRKT_: argument 0"}
 !92 = distinct !{!92, !"_ZN8facebook5velox12errorMessageIJbbEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN3fmt3v1117basic_string_viewIcEEDpRKT_"}
+!93 = !{!"branch_weights", i32 1, i32 4001}
 end_hunk_0

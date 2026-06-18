@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.g = load ptr, ptr %i.f, align 8              ; 11 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 100
-  %i.i = load i32, ptr %i.h, align 4              ; 4 uses
+  %i.i = load i32, ptr %i.h, align 4              ; 5 uses
   %i.j = sext i32 %i.i to i64                     ; 8 uses
   %i.k = getelementptr [2 x i8], ptr %i.g, i64 %i.j ; 3 uses
   %i.l = getelementptr i8, ptr %i.k, i64 28
@@ -604,8 +604,8 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.af, label %.lr.ph224.a, label %.thread182
 
 .lr.ph224.a:                                      ; preds = %.thread295
-  %invariant.op = add i32 %i.i, -4096             ; 2 uses
-  %wide.trip.count264 = zext nneg i32 %2 to i64
+  %wide.trip.count261 = zext nneg i32 %2 to i64
+  %invariant.op = add i32 %i.i, -4096
   br label %bb.ab
 
 bb.ab:                                            ; preds = %.lr.ph224.a, %_ZNK6icu_7813CollationData14getScriptIndexEi.exit173.thread
@@ -628,6 +628,7 @@ bb.ab:                                            ; preds = %.lr.ph224.a, %_ZNK6
   %i.jq = zext nneg i32 %2 to i64
   %sext = shl i64 %indvars.iv.next262, 32
   %i.jr = ashr exact i64 %sext, 32
+  %invariant.op304 = add i32 %i.i, -4096
   br label %bb.ac
 
 bb.ac:                                            ; preds = %.lr.ph229.a, %_ZNK6icu_7813CollationData14getScriptIndexEi.exit.thread
@@ -663,7 +664,7 @@ bb.ah:                                            ; preds = %bb.af
   br i1 %or.cond.i, label %bb.ai, label %_ZNK6icu_7813CollationData14getScriptIndexEi.exit.thread
 
 bb.ai:                                            ; preds = %bb.ah
-  %.reass232 = add i32 %i.jt, %invariant.op
+  %.reass232 = add i32 %i.jt, %invariant.op304
   %i.jy = sext i32 %.reass232 to i64
   br label %_ZNK6icu_7813CollationData14getScriptIndexEi.exit
 
@@ -784,7 +785,7 @@ bb.at:                                            ; preds = %bb.ar
 
 _ZNK6icu_7813CollationData14getScriptIndexEi.exit173.thread: ; preds = %bb.am, %bb.ap, %bb.at, %_ZNK6icu_7813CollationData14getScriptIndexEi.exit173
   %.5 = phi i32 [ %.3122222, %_ZNK6icu_7813CollationData14getScriptIndexEi.exit173 ], [ %i.lx, %bb.at ], [ %.3122222, %bb.ap ], [ %.3122222, %bb.am ] ; 2 uses
-  %exitcond265.not = icmp eq i64 %indvars.iv.next262, %wide.trip.count264
+  %exitcond265.not = icmp eq i64 %indvars.iv.next262, %wide.trip.count261
   br i1 %exitcond265.not, label %.thread182, label %bb.ab
 
 .thread182:                                       ; preds = %_ZNK6icu_7813CollationData14getScriptIndexEi.exit173.thread, %_ZNK6icu_7813CollationData14getScriptIndexEi.exit.thread, %.thread295, %.preheader200
@@ -872,7 +873,6 @@ bb.ba:                                            ; preds = %_ZN6icu_789UVector3
   br i1 %i.nd, label %.lr.ph240, label %.thread188
 
 .lr.ph240:                                        ; preds = %bb.ba
-  %6 = load ptr, ptr %i.t, align 8
   %i.ne = sext i32 %.0113 to i64
   %i.nf = sext i32 %i.nc to i64
   br label %bb.bb
@@ -887,6 +887,7 @@ bb.bb:                                            ; preds = %.lr.ph240, %bb.bd
 
 bb.bc:                                            ; preds = %bb.bb
   %i.nj = zext i8 %i.nh to i32
+  %6 = load ptr, ptr %i.t, align 8
   %i.nk = getelementptr inbounds [2 x i8], ptr %6, i64 %indvars.iv274
   %i.nl = load i16, ptr %i.nk, align 2
   %i.nm = lshr i16 %i.nl, 8

@@ -201,11 +201,11 @@ bb.l:                                             ; preds = %bb.a, %_ZSt4findIPK
 ; Function Attrs: mustprogress uwtable
 define hidden noundef i64 @_ZNK10duckdb_re211StringPiece5rfindERKS0_m(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1, i64 noundef %2) local_unnamed_addr #3 align 2 {
 bb.a:
-  %3 = alloca %"class.std::reverse_iterator", align 8 ; 4 uses
-  %4 = alloca %"class.std::reverse_iterator", align 8 ; 4 uses
-  %5 = alloca %"class.std::reverse_iterator", align 8 ; 4 uses
-  %6 = alloca %"class.std::reverse_iterator", align 8 ; 4 uses
-  %7 = alloca %"class.std::reverse_iterator", align 8 ; 4 uses
+  %3 = alloca %"class.std::reverse_iterator", align 8 ; 5 uses
+  %4 = alloca %"class.std::reverse_iterator", align 8 ; 5 uses
+  %5 = alloca %"class.std::reverse_iterator", align 8 ; 5 uses
+  %6 = alloca %"class.std::reverse_iterator", align 8 ; 5 uses
+  %7 = alloca %"class.std::reverse_iterator", align 8 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i64, ptr %i.a, align 8, !tbaa !7    ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -226,7 +226,7 @@ _ZSt8find_endIPKcS1_ET_S2_S2_T0_S3_.exit.a:       ; preds = %bb.b
   %i.h = sub i64 %i.b, %i.d
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %2, i64 %i.h)
   %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 %.sroa.speculated
-  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.d ; 3 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.d ; 2 uses
   %i.k = load ptr, ptr %1, align 8, !tbaa !12     ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.d
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
@@ -240,25 +240,37 @@ _ZSt8find_endIPKcS1_ET_S2_S2_T0_S3_.exit.a:       ; preds = %bb.b
   store ptr %i.k, ptr %7, align 8, !tbaa !16
   call void @_ZSt8__searchISt16reverse_iteratorIPKcES3_N9__gnu_cxx5__ops19_Iter_equal_to_iterEET_S7_S7_T0_S8_T1_(ptr dead_on_unwind nonnull writable sret(%"class.std::reverse_iterator") align 8 %3, ptr noundef nonnull dead_on_return %4, ptr noundef nonnull dead_on_return %5, ptr noundef nonnull dead_on_return %6, ptr noundef nonnull dead_on_return %7)
   %i.m = load ptr, ptr %3, align 8, !tbaa !16     ; 2 uses
-  %8 = icmp eq ptr %i.m, %i.g
-  %gepdiff = sub nsw i64 0, %i.d
-  %9 = getelementptr inbounds i8, ptr %i.m, i64 %gepdiff
-  %.0.i.i = select i1 %8, ptr %i.j, ptr %9        ; 2 uses
+  %.not.a = icmp eq ptr %i.m, %i.g
+  br i1 %.not.a, label %_ZSt8find_endIPKcS1_ET_S2_S2_T0_S3_.exit.thread, label %_ZSt8find_endIPKcS1_ET_S2_S2_T0_S3_.exit
+
+_ZSt8find_endIPKcS1_ET_S2_S2_T0_S3_.exit.thread:  ; preds = %_ZSt8find_endIPKcS1_ET_S2_S2_T0_S3_.exit.a
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
-  %.not.a = icmp eq ptr %.0.i.i, %i.j
-  %10 = load ptr, ptr %0, align 8
-  %11 = ptrtoint ptr %.0.i.i to i64
-  %12 = ptrtoint ptr %10 to i64
-  %13 = sub i64 %11, %12
-  %14 = select i1 %.not.a, i64 -1, i64 %13
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.a, %_ZSt8find_endIPKcS1_ET_S2_S2_T0_S3_.exit.a, %bb.c
-  %.0 = phi i64 [ %14, %_ZSt8find_endIPKcS1_ET_S2_S2_T0_S3_.exit.a ], [ %.sroa.speculated18, %bb.c ], [ -1, %bb.a ]
+_ZSt8find_endIPKcS1_ET_S2_S2_T0_S3_.exit:         ; preds = %_ZSt8find_endIPKcS1_ET_S2_S2_T0_S3_.exit.a
+  %gepdiff = sub nsw i64 0, %i.d
+  %8 = getelementptr inbounds i8, ptr %i.m, i64 %gepdiff ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  call void @llvm.lifetime.end.p0(ptr nonnull %5)
+  call void @llvm.lifetime.end.p0(ptr nonnull %6)
+  call void @llvm.lifetime.end.p0(ptr nonnull %7)
+  %.not = icmp eq ptr %8, %i.j
+  br i1 %.not, label %bb.d, label %9
+
+9:                                                ; preds = %_ZSt8find_endIPKcS1_ET_S2_S2_T0_S3_.exit
+  %10 = load ptr, ptr %0, align 8, !tbaa !12
+  %11 = ptrtoint ptr %8 to i64
+  %12 = ptrtoint ptr %10 to i64
+  %13 = sub i64 %11, %12
+  br label %bb.d
+
+bb.d:                                             ; preds = %_ZSt8find_endIPKcS1_ET_S2_S2_T0_S3_.exit.thread, %9, %_ZSt8find_endIPKcS1_ET_S2_S2_T0_S3_.exit, %bb.a, %bb.c
+  %.0 = phi i64 [ -1, %bb.a ], [ %.sroa.speculated18, %bb.c ], [ %13, %9 ], [ -1, %_ZSt8find_endIPKcS1_ET_S2_S2_T0_S3_.exit ], [ -1, %_ZSt8find_endIPKcS1_ET_S2_S2_T0_S3_.exit.thread ]
   ret i64 %.0
 }
 

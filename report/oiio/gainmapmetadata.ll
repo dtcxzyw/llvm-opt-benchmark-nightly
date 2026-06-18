@@ -201,15 +201,17 @@ bb.f:                                             ; preds = %bb.e
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 36
   %i.ai = load float, ptr %i.ah, align 4, !tbaa !49 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %3 = load float, ptr %i.aj, align 8, !tbaa !49
-  %4 = fcmp contract oeq float %i.ai, %3
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 44
-  %i.ak = load float, ptr %5, align 4
+  %i.ak = load float, ptr %i.aj, align 8, !tbaa !49
   %i.al = fcmp contract oeq float %i.ai, %i.ak
-  %or.cond15.i = select i1 %4, i1 %i.al, i1 false
-  br i1 %or.cond15.i, label %bb.g, label %_ZNK8ultrahdr25uhdr_gainmap_metadata_ext26are_all_channels_identicalEv.exit
+  br i1 %i.al, label %3, label %_ZNK8ultrahdr25uhdr_gainmap_metadata_ext26are_all_channels_identicalEv.exit
 
-bb.g:                                             ; preds = %bb.f
+3:                                                ; preds = %bb.f
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 44
+  %5 = load float, ptr %4, align 4, !tbaa !49
+  %6 = fcmp contract oeq float %i.ai, %5
+  br i1 %6, label %bb.g, label %_ZNK8ultrahdr25uhdr_gainmap_metadata_ext26are_all_channels_identicalEv.exit
+
+bb.g:                                             ; preds = %3
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.an = load float, ptr %i.am, align 8, !tbaa !49 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 52
@@ -223,8 +225,8 @@ bb.h:                                             ; preds = %bb.g
   %i.at = fcmp contract oeq float %i.an, %i.as
   br label %_ZNK8ultrahdr25uhdr_gainmap_metadata_ext26are_all_channels_identicalEv.exit
 
-_ZNK8ultrahdr25uhdr_gainmap_metadata_ext26are_all_channels_identicalEv.exit: ; preds = %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h
-  %6 = phi i1 [ false, %bb.g ], [ false, %bb.d ], [ false, %bb.f ], [ %i.at, %bb.h ], [ false, %bb.e ], [ false, %bb.c ] ; 2 uses
+_ZNK8ultrahdr25uhdr_gainmap_metadata_ext26are_all_channels_identicalEv.exit: ; preds = %bb.c, %bb.d, %bb.e, %bb.f, %3, %bb.g, %bb.h
+  %7 = phi i1 [ false, %bb.g ], [ false, %3 ], [ false, %bb.f ], [ %i.at, %bb.h ], [ false, %bb.e ], [ false, %bb.c ], [ false, %bb.d ] ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %2, i64 36 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
@@ -243,7 +245,7 @@ _ZNK8ultrahdr25uhdr_gainmap_metadata_ext26are_all_channels_identicalEv.exit: ; p
 bb.i:                                             ; preds = %bb.r
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %.not116 = icmp samesign ugt i64 %indvars.iv, 1
-  %.not.not = select i1 %6, i1 true, i1 %.not116
+  %.not.not = select i1 %7, i1 true, i1 %.not116
   br i1 %.not.not, label %.critedge, label %bb.j, !llvm.loop !53
 
 bb.j:                                             ; preds = %_ZNK8ultrahdr25uhdr_gainmap_metadata_ext26are_all_channels_identicalEv.exit, %bb.i
@@ -351,7 +353,7 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.z
 
 .critedge:                                        ; preds = %bb.i
-  br i1 %6, label %bb.t, label %bb.u
+  br i1 %7, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %.critedge
   %i.ds = load i32, ptr %i.au, align 4, !tbaa !3  ; 2 uses

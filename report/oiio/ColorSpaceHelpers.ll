@@ -201,7 +201,7 @@ bb.n:                                             ; preds = %._crit_edge.i.i53
 
 bb.o:                                             ; preds = %bb.n, %bb.m, %._crit_edge.i.i53
   %i.bd = load i64, ptr %i.e, align 8, !tbaa !67  ; 2 uses
-  %i.be = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
+  %i.be = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 3 uses
   store i64 %i.bd, ptr %i.be, align 8, !tbaa !50
   %i.bf = load ptr, ptr %i.au, align 8, !tbaa !56
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 %i.bd
@@ -258,14 +258,16 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %._cri
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %6, i8 0, i64 24, i1 false)
   %i.bv = load ptr, ptr %1, align 8, !tbaa !24
   %i.bw = invoke noundef signext i8 @_ZNK16OpenColorIO_v2_56Config18getFamilySeparatorEv(ptr noundef nonnull align 8 dereferenceable(8) %i.bv)
-          to label %bb.s unwind label %bb.ac
+          to label %10 unwind label %bb.ac
 
-bb.s:                                             ; preds = %bb.r
+10:                                               ; preds = %bb.r
   %.not35 = icmp eq i8 %i.bw, 0
-  %i.bx = load i64, ptr %i.be, align 8            ; 5 uses
+  br i1 %.not35, label %bb.ae, label %bb.s
+
+bb.s:                                             ; preds = %10
+  %i.bx = load i64, ptr %i.be, align 8, !tbaa !50
   %i.by = icmp eq i64 %i.bx, 0
-  %or.cond = select i1 %.not35, i1 true, i1 %i.by
-  br i1 %or.cond, label %bb.ae, label %bb.t
+  br i1 %i.by, label %bb.ae, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #28
@@ -398,7 +400,7 @@ bb.ad:                                            ; preds = %bb.u, %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #28
   br label %bb.ax
 
-bb.ae:                                            ; preds = %bb.s
+bb.ae:                                            ; preds = %bb.s, %10
   %i.dm = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
   %i.dn = load ptr, ptr %i.dm, align 8, !tbaa !71 ; 8 uses
   %i.do = getelementptr inbounds nuw i8, ptr %6, i64 16
@@ -410,9 +412,10 @@ bb.af:                                            ; preds = %bb.ae
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dn, i64 16 ; 3 uses
   store ptr %i.dq, ptr %i.dn, align 8, !tbaa !46
   %i.dr = load ptr, ptr %i.au, align 8, !tbaa !56 ; 2 uses
+  %11 = load i64, ptr %i.be, align 8, !tbaa !50   ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #28
-  store i64 %i.bx, ptr %i.c, align 8, !tbaa !67
-  %i.ds = icmp ugt i64 %i.bx, 15
+  store i64 %11, ptr %i.c, align 8, !tbaa !67
+  %i.ds = icmp ugt i64 %11, 15
   br i1 %i.ds, label %.noexc.i.i, label %._crit_edge.i.i.i
 
 .noexc.i.i:                                       ; preds = %bb.af
@@ -427,7 +430,7 @@ bb.af:                                            ; preds = %bb.ae
 
 ._crit_edge.i.i.i:                                ; preds = %.noexc61, %bb.af
   %i.dv = phi ptr [ %i.dt, %.noexc61 ], [ %i.dq, %bb.af ] ; 2 uses
-  switch i64 %i.bx, label %bb.ah [
+  switch i64 %11, label %bb.ah [
     i64 1, label %bb.ag
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i
   ]
@@ -438,7 +441,7 @@ bb.ag:                                            ; preds = %._crit_edge.i.i.i
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i
 
 bb.ah:                                            ; preds = %._crit_edge.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.dv, ptr align 1 %i.dr, i64 %i.bx, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.dv, ptr align 1 %i.dr, i64 %11, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i: ; preds = %bb.ah, %bb.ag, %._crit_edge.i.i.i
