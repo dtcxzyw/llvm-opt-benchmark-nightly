@@ -201,9 +201,9 @@ _ZNKSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE8capacityEv.exit: ; pre
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load i64, ptr %i.a, align 8              ; 9 uses
   %i.c = load ptr, ptr %0, align 8                ; 4 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %i.e = icmp eq ptr %i.c, %i.d                   ; 2 uses
-  %i.f = load i64, ptr %i.d, align 8              ; 2 uses
+  %i.f = load i64, ptr %i.d, align 8
   %i.g = select i1 %i.e, i64 7, i64 %i.f          ; 2 uses
   %i.h = icmp ugt i64 %i.b, %i.g
   br i1 %i.h, label %bb.b, label %bb.f
@@ -235,7 +235,8 @@ _ZNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE9_M_createERmm.exit: ; p
   br i1 %i.e, label %.thread, label %_ZNKSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE11_M_is_localEv.exit.i
 
 _ZNKSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE11_M_is_localEv.exit.i: ; preds = %_ZNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE9_M_createERmm.exit
-  %i.p = shl i64 %i.f, 1
+  %2 = load i64, ptr %i.d, align 8
+  %i.p = shl i64 %2, 1
   %i.q = add i64 %i.p, 2
   tail call void @_ZdlPvm(ptr noundef %i.c, i64 noundef %i.q) #10
   br label %.thread

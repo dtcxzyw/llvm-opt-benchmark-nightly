@@ -201,11 +201,7 @@ bb.s:                                             ; preds = %_ZNSt6vectorIjSaIjE
   %i.fd = getelementptr inbounds nuw [4 x i8], ptr %i.dl, i64 %i.eu
   store i32 0, ptr %i.fd, align 4
   %.not360444 = icmp eq ptr %.sroa.0254.1, %.sroa.0252.0.lcssa
-  br i1 %.not360444, label %.preheader364.preheader, label %.lr.ph449
-
-.lr.ph449:                                        ; preds = %._crit_edge436
-  %4 = load i32, ptr %i.t, align 8
-  br label %bb.af
+  br i1 %.not360444, label %.preheader364.preheader, label %bb.af
 
 _ZNSt6vectorIjSaIjEED2Ev.exit185.thread:          ; preds = %_ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i225
   %i.fe = landingpad { ptr, i32 }
@@ -411,10 +407,10 @@ bb.ae:                                            ; preds = %._crit_edge417, %.l
 .preheader364.preheader:                          ; preds = %._crit_edge436, %._crit_edge450
   br label %.preheader364
 
-bb.af:                                            ; preds = %.lr.ph449, %bb.ah
-  %.1108447 = phi i32 [ -1, %.lr.ph449 ], [ %.3110, %bb.ah ] ; 2 uses
-  %.0115446 = phi i32 [ -1, %.lr.ph449 ], [ %.2117, %bb.ah ] ; 3 uses
-  %.sroa.0238.0445 = phi ptr [ %.sroa.0254.1, %.lr.ph449 ], [ %i.hk, %bb.ah ] ; 2 uses
+bb.af:                                            ; preds = %._crit_edge436, %bb.ah
+  %.1108447 = phi i32 [ %.3110, %bb.ah ], [ -1, %._crit_edge436 ] ; 2 uses
+  %.0115446 = phi i32 [ %.2117, %bb.ah ], [ -1, %._crit_edge436 ] ; 3 uses
+  %.sroa.0238.0445 = phi ptr [ %i.hk, %bb.ah ], [ %.sroa.0254.1, %._crit_edge436 ] ; 2 uses
   %i.ha = load i32, ptr %.sroa.0238.0445, align 4 ; 2 uses
   %i.hb = zext i32 %i.ha to i64                   ; 2 uses
   %i.hc = getelementptr inbounds nuw [4 x i8], ptr %i.dl, i64 %i.hb
@@ -428,6 +424,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.hg = sub i32 %.1123.lcssa, %i.hf             ; 2 uses
   %i.hh = shl i32 %i.hd, 1
   %i.hi = add i32 %i.hg, %i.hh
+  %4 = load i32, ptr %i.t, align 8
   %.not138 = icmp ugt i32 %i.hi, %4
   %spec.select = select i1 %.not138, i32 0, i32 %i.hg ; 2 uses
   %i.hj = icmp sgt i32 %spec.select, %.0115446

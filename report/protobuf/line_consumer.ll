@@ -201,7 +201,7 @@ bb.i:                                             ; preds = %bb.a, %_ZNSt7__cxx1
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.j
-  %.01524.i = phi i64 [ %i.am, %bb.j ], [ 0, %.lr.ph.i.preheader ] ; 5 uses
+  %.01524.i = phi i64 [ %i.am, %bb.j ], [ 0, %.lr.ph.i.preheader ] ; 6 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.1147.174, i64 %.01524.i
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !15
   %i.am = add nuw i64 %.01524.i, 1                ; 4 uses
@@ -221,21 +221,23 @@ bb.k:                                             ; preds = %.lr.ph.i, %.lr.ph.i
   %i.aq = add nsw i32 %i.ap, 1
   store i32 %i.aq, ptr %i.aj, align 8, !tbaa !28
   %.not6.i = icmp eq i64 %.01524.i, 0
-  br i1 %.not6.i, label %_ZN6google8protobuf8compiler10objectivec12_GLOBAL__N_113RemoveCommentEPSt17basic_string_viewIcSt11char_traitsIcEE.exit, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.a
+  br i1 %.not6.i, label %_ZN6google8protobuf8compiler10objectivec12_GLOBAL__N_113RemoveCommentEPSt17basic_string_viewIcSt11char_traitsIcEE.exit, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
 
-_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.a:   ; preds = %bb.k
+_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.k
   %6 = call ptr @memchr(ptr noundef nonnull %.sroa.1147.174, i32 noundef 35, i64 noundef %.01524.i) #12 ; 2 uses
   %.not.i.i = icmp eq ptr %6, null
+  br i1 %.not.i.i, label %_ZN6google8protobuf8compiler10objectivec12_GLOBAL__N_113RemoveCommentEPSt17basic_string_viewIcSt11char_traitsIcEE.exit, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.a
+
+_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.a:   ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
   %i.ar = ptrtoint ptr %6 to i64
   %i.as = ptrtoint ptr %.sroa.1147.174 to i64
   %i.at = sub i64 %i.ar, %i.as                    ; 2 uses
   %.not.i23 = icmp eq i64 %i.at, -1
-  %or.cond.i = or i1 %.not.i.i, %.not.i23
-  %spec.select = select i1 %or.cond.i, i64 %.01524.i, i64 %i.at
+  %spec.select = select i1 %.not.i23, i64 %.01524.i, i64 %i.at
   br label %_ZN6google8protobuf8compiler10objectivec12_GLOBAL__N_113RemoveCommentEPSt17basic_string_viewIcSt11char_traitsIcEE.exit
 
-_ZN6google8protobuf8compiler10objectivec12_GLOBAL__N_113RemoveCommentEPSt17basic_string_viewIcSt11char_traitsIcEE.exit: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.a, %bb.k
-  %.sroa.038.2 = phi i64 [ 0, %bb.k ], [ %spec.select, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.a ]
+_ZN6google8protobuf8compiler10objectivec12_GLOBAL__N_113RemoveCommentEPSt17basic_string_viewIcSt11char_traitsIcEE.exit: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.a, %bb.k, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
+  %.sroa.038.2 = phi i64 [ 0, %bb.k ], [ %.01524.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i ], [ %spec.select, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.a ]
   %i.au = call { i64, ptr } @_ZN4absl12lts_2025051227StripLeadingAsciiWhitespaceESt17basic_string_viewIcSt11char_traitsIcEE(i64 %.sroa.038.2, ptr nonnull %.sroa.1147.174) ; 2 uses
   %i.av = extractvalue { i64, ptr } %i.au, 0      ; 4 uses
   %i.aw = extractvalue { i64, ptr } %i.au, 1      ; 6 uses

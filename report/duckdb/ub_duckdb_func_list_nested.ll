@@ -201,7 +201,7 @@ bb.s:                                             ; preds = %bb.j, %bb.i
   br label %bb.cx
 
 bb.t:                                             ; preds = %bb.bc, %bb.bb, %._crit_edge176.i
-  %.sroa.0124.0.lcssa215.i = phi ptr [ %.sroa.0124.0.lcssa214220222.i, %bb.bc ], [ %.sroa.0124.0.lcssa214220223.i, %bb.bb ], [ %.sroa.0124.2.i, %._crit_edge176.i ]
+  %.sroa.0124.0.lcssa215.i = phi ptr [ %.sroa.0124.0.lcssa213219221.i, %bb.bc ], [ %.sroa.0124.0.lcssa214220223.i, %bb.bb ], [ %.sroa.0124.2.i, %._crit_edge176.i ]
   %i.y = landingpad { ptr, i32 }
           cleanup
   br label %bb.cv
@@ -567,31 +567,33 @@ bb.ba:                                            ; preds = %.lr.ph180.i
   br label %bb.cv
 
 ._crit_edge181.thread.i:                          ; preds = %._crit_edge181.i, %_ZN6duckdb15SelectionVectorC2Em.exit.i
-  %.sroa.0124.0.lcssa214220224.i = phi ptr [ %.sroa.0124.2.i, %._crit_edge181.i ], [ null, %_ZN6duckdb15SelectionVectorC2Em.exit.i ] ; 2 uses
+  %.sroa.0124.0.lcssa214220224.i = phi ptr [ %.sroa.0124.2.i, %._crit_edge181.i ], [ null, %_ZN6duckdb15SelectionVectorC2Em.exit.i ] ; 3 uses
   %i.dr = load i8, ptr %i.c, align 8, !tbaa !106
-  %15 = icmp eq i8 %i.dr, 2
-  %16 = load i8, ptr %i.d, align 8
-  %i.ds = icmp eq i8 %16, 2
-  %or.cond.i = select i1 %15, i1 %i.ds, i1 false
-  br i1 %or.cond.i, label %bb.bb, label %bb.bc
+  %i.ds = icmp eq i8 %i.dr, 2
+  br i1 %i.ds, label %15, label %bb.bc
 
-bb.bb:                                            ; preds = %._crit_edge181.thread.i, %._crit_edge181.i
-  %.sroa.0124.0.lcssa214220223.i = phi ptr [ %.sroa.0124.0.lcssa214220224.i, %._crit_edge181.thread.i ], [ %.sroa.0124.2.i, %._crit_edge181.i ] ; 2 uses
+15:                                               ; preds = %._crit_edge181.thread.i
+  %16 = load i8, ptr %i.d, align 8, !tbaa !106
+  %17 = icmp eq i8 %16, 2
+  br i1 %17, label %bb.bb, label %bb.bc
+
+bb.bb:                                            ; preds = %15, %._crit_edge181.i
+  %.sroa.0124.0.lcssa214220223.i = phi ptr [ %.sroa.0124.0.lcssa214220224.i, %15 ], [ %.sroa.0124.2.i, %._crit_edge181.i ] ; 2 uses
   invoke void @_ZN6duckdb6Vector13SetVectorTypeENS_10VectorTypeE(ptr noundef nonnull align 8 dereferenceable(104) %2, i8 noundef zeroext 2)
           to label %bb.bc unwind label %bb.t
 
-bb.bc:                                            ; preds = %bb.bb, %._crit_edge181.thread.i
-  %.sroa.0124.0.lcssa214220222.i = phi ptr [ %.sroa.0124.0.lcssa214220223.i, %bb.bb ], [ %.sroa.0124.0.lcssa214220224.i, %._crit_edge181.thread.i ] ; 3 uses
+bb.bc:                                            ; preds = %bb.bb, %15, %._crit_edge181.thread.i
+  %.sroa.0124.0.lcssa213219221.i = phi ptr [ %.sroa.0124.0.lcssa214220223.i, %bb.bb ], [ %.sroa.0124.0.lcssa214220224.i, %15 ], [ %.sroa.0124.0.lcssa214220224.i, %._crit_edge181.thread.i ] ; 3 uses
   invoke void @_ZN6duckdb6Vector6VerifyEm(ptr noundef nonnull align 8 dereferenceable(104) %2, i64 noundef %i.b)
           to label %bb.bd unwind label %bb.t
 
 bb.bd:                                            ; preds = %bb.bc
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #20
-  %.not.i.i.i87.i = icmp eq ptr %.sroa.0124.0.lcssa214220222.i, null
+  %.not.i.i.i87.i = icmp eq ptr %.sroa.0124.0.lcssa213219221.i, null
   br i1 %.not.i.i.i87.i, label %_ZNSt6vectorImSaImEED2Ev.exit.i, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
-  call void @_ZdlPv(ptr noundef nonnull %.sroa.0124.0.lcssa214220222.i) #24
+  call void @_ZdlPv(ptr noundef nonnull %.sroa.0124.0.lcssa213219221.i) #24
   br label %_ZNSt6vectorImSaImEED2Ev.exit.i
 
 _ZNSt6vectorImSaImEED2Ev.exit.i:                  ; preds = %bb.be, %bb.bd

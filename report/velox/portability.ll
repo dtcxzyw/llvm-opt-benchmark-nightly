@@ -103,7 +103,7 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.b, %bb.c
 bb.c:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
   %i.j = add nuw i64 %.01117.i, 1                 ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.j, %i.b
-  br i1 %exitcond.not.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13find_first_ofEPKcmm.exit.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, !llvm.loop !17
+  br i1 %exitcond.not.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13find_first_ofEPKcmm.exit.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13find_first_ofEPKcmm.exit: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
   %i.k = icmp eq i64 %.01117.i, -1
@@ -210,7 +210,7 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %_ZSteqIcSt11char_tr
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
   %i.p = add nuw i64 %.01117.i.i, 1               ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.p, %i.b
-  br i1 %exitcond.not.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13find_first_ofEPKcmm.exit.thread.i, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i, !llvm.loop !17
+  br i1 %exitcond.not.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13find_first_ofEPKcmm.exit.thread.i, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13find_first_ofEPKcmm.exit.i: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
   %i.q = icmp eq i64 %.01117.i.i, -1
@@ -430,5 +430,4 @@ attributes #5 = { nounwind }
 !14 = !{!5, !5, i64 0}
 !15 = distinct !{!15, !16}
 !16 = !{!"llvm.loop.mustprogress"}
-!17 = distinct !{!17, !16}
 end_hunk_0

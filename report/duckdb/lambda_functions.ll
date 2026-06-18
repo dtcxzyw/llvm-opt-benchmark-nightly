@@ -201,20 +201,17 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit:    ; preds = %bb.i, %bb.j
   %i.aj = ashr exact i64 %i.ai, 3                 ; 3 uses
   %.promoted = load i64, ptr %i.f, align 8, !tbaa !427 ; 3 uses
   %i.ak = icmp ult i64 %.promoted, %i.aj
-  br i1 %i.ak, label %.lr.ph, label %.critedge
+  br i1 %i.ak, label %bb.k, label %.critedge
 
-.lr.ph:                                           ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit
-  %9 = load i64, ptr %i.h, align 8
-  br label %bb.k
-
-bb.k:                                             ; preds = %.lr.ph, %bb.l
-  %i.al = phi i64 [ %.promoted, %.lr.ph ], [ %i.aq, %bb.l ] ; 4 uses
+bb.k:                                             ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit, %bb.l
+  %i.al = phi i64 [ %i.aq, %bb.l ], [ %.promoted, %_ZNK6duckdb15SelectionVector9get_indexEm.exit ] ; 4 uses
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %i.al
   %i.an = load i64, ptr %i.am, align 8, !tbaa !20
   %.not67 = icmp eq i64 %i.an, 0
   br i1 %.not67, label %bb.l, label %.critedge
 
 bb.l:                                             ; preds = %bb.k
+  %9 = load i64, ptr %i.h, align 8, !tbaa !434
   %i.ao = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %i.al ; 2 uses
   store i64 %9, ptr %i.ao, align 8, !tbaa !245
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
@@ -222,7 +219,7 @@ bb.l:                                             ; preds = %bb.k
   %i.aq = add i64 %i.al, 1                        ; 3 uses
   store i64 %i.aq, ptr %i.f, align 8, !tbaa !427
   %exitcond.not = icmp eq i64 %i.aq, %i.aj
-  br i1 %exitcond.not, label %.critedge, label %bb.k, !llvm.loop !434
+  br i1 %exitcond.not, label %.critedge, label %bb.k, !llvm.loop !435
 
 .body:                                            ; preds = %bb.n
   %i.ar = landingpad { ptr, i32 }
@@ -257,39 +254,39 @@ bb.m:                                             ; preds = %_ZNK6duckdb21Templa
   %i.be = getelementptr inbounds nuw [4 x i8], ptr %i.bd, i64 %.084
   store i32 %i.bc, ptr %i.be, align 4, !tbaa !3
   %i.bf = add i64 %.084, 1
-  %i.bg = load i64, ptr %i.i, align 8, !tbaa !435
+  %i.bg = load i64, ptr %i.i, align 8, !tbaa !436
   %i.bh = add i64 %i.bg, 1
-  store i64 %i.bh, ptr %i.i, align 8, !tbaa !435
+  store i64 %i.bh, ptr %i.i, align 8, !tbaa !436
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit
   %.1 = phi i64 [ %i.bf, %bb.m ], [ %.084, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread ], [ %.084, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit ] ; 2 uses
-  %i.bi = load i64, ptr %i.j, align 8, !tbaa !436
+  %i.bi = load i64, ptr %i.j, align 8, !tbaa !437
   %i.bj = add i64 %i.bi, 1
-  store i64 %i.bj, ptr %i.j, align 8, !tbaa !436
+  store i64 %i.bj, ptr %i.j, align 8, !tbaa !437
   %i.bk = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN6duckdb6vectorImLb1ESaImEEixEm(ptr noundef nonnull align 8 dereferenceable(24) %4, i64 noundef %.lcssa)
           to label %bb.o unwind label %.body
 
 bb.o:                                             ; preds = %bb.n
   %i.bl = load i64, ptr %i.bk, align 8, !tbaa !20
-  %i.bm = load i64, ptr %i.j, align 8, !tbaa !436
+  %i.bm = load i64, ptr %i.j, align 8, !tbaa !437
   %i.bn = icmp eq i64 %i.bl, %i.bm
   br i1 %i.bn, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  %i.bo = load i64, ptr %i.h, align 8, !tbaa !437 ; 2 uses
+  %i.bo = load i64, ptr %i.h, align 8, !tbaa !434 ; 2 uses
   %i.bp = load i64, ptr %i.f, align 8, !tbaa !427 ; 2 uses
   %i.bq = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %i.bp ; 2 uses
   store i64 %i.bo, ptr %i.bq, align 8, !tbaa !245
-  %i.br = load i64, ptr %i.i, align 8, !tbaa !435 ; 2 uses
+  %i.br = load i64, ptr %i.i, align 8, !tbaa !436 ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bq, i64 8
   store i64 %i.br, ptr %i.bs, align 8, !tbaa !247
   %i.bt = add i64 %i.br, %i.bo
-  store i64 %i.bt, ptr %i.h, align 8, !tbaa !437
+  store i64 %i.bt, ptr %i.h, align 8, !tbaa !434
   %i.bu = add i64 %i.bp, 1
   store i64 %i.bu, ptr %i.f, align 8, !tbaa !427
-  store i64 0, ptr %i.i, align 8, !tbaa !435
-  store i64 0, ptr %i.j, align 8, !tbaa !436
+  store i64 0, ptr %i.i, align 8, !tbaa !436
+  store i64 0, ptr %i.j, align 8, !tbaa !437
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o
@@ -308,7 +305,7 @@ bb.s:                                             ; preds = %bb.r
   br i1 %.not, label %bb.t, label %.critedge2
 
 bb.t:                                             ; preds = %bb.s
-  %i.bz = load i64, ptr %i.u, align 8, !tbaa !437
+  %i.bz = load i64, ptr %i.u, align 8, !tbaa !434
   %i.ca = load i64, ptr %i.k, align 8, !tbaa !427 ; 2 uses
   %i.cb = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %i.ca ; 2 uses
   store i64 %i.bz, ptr %i.cb, align 8, !tbaa !245
@@ -711,10 +708,10 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !431 = !{!"_ZTSSt12_Vector_baseImSaImEE", !432, i64 0}
 !432 = !{!"_ZTSNSt12_Vector_baseImSaImEE12_Vector_implE", !273, i64 0}
 !433 = !{!224, !225, i64 0}
-!434 = distinct !{!434, !19}
-!435 = !{!428, !21, i64 24}
-!436 = !{!428, !21, i64 48}
-!437 = !{!428, !21, i64 32}
+!434 = !{!428, !21, i64 32}
+!435 = distinct !{!435, !19}
+!436 = !{!428, !21, i64 24}
+!437 = !{!428, !21, i64 48}
 !438 = distinct !{!438, !19}
 !439 = distinct !{!439, !19}
 end_hunk_1

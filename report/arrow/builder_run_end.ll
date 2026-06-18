@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %.sink.split, %_ZN5a
 define void @_ZN5arrow8internal20RunCompressorBuilder12AppendScalarERKNS_6ScalarEl(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.arrow::Status") align 8 captures(none) initializes((0, 8)) %0, ptr noundef nonnull align 8 dereferenceable(184) %1, ptr noundef nonnull align 8 dereferenceable(41) %2, i64 noundef %3) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %"class.std::shared_ptr.13", align 8 ; 6 uses
-  %5 = alloca %"class.arrow::EqualOptions", align 8 ; 8 uses
+  %5 = alloca %"class.arrow::EqualOptions", align 8 ; 7 uses
   %6 = alloca %"class.arrow::Status", align 8     ; 4 uses
   %7 = alloca %"class.arrow::Status", align 8     ; 5 uses
   %i.a = icmp eq i64 %3, 0
@@ -239,18 +239,18 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 bb.g:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 160 ; 4 uses
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !92   ; 2 uses
-  %.not.i = icmp ne ptr %i.l, null                ; 2 uses
+  %.not.i = icmp eq ptr %i.l, null
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
-  %8 = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
-  %9 = load i8, ptr %8, align 8, !range !107
-  %10 = trunc nuw i8 %9 to i1
-  %or.cond = select i1 %.not.i, i1 true, i1 %10
-  br i1 %or.cond, label %bb.h, label %.critedge
+  br i1 %.not.i, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  br i1 %.not.i, label %bb.i, label %.critedge2
+  %8 = getelementptr inbounds nuw i8, ptr %2, i64 40
+  %9 = load i8, ptr %8, align 8, !tbaa !97, !range !107, !noundef !108
+  %10 = trunc nuw i8 %9 to i1
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
+  br i1 %10, label %_ZN5arrow6StatusD2Ev.exit, label %bb.j
 
-bb.i:                                             ; preds = %bb.h
+bb.i:                                             ; preds = %bb.g
   %i.m = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i64 16777472, ptr %i.m, align 8, !alias.scope !109
   store double 1.000000e-05, ptr %5, align 8, !tbaa !112, !alias.scope !109
@@ -261,21 +261,13 @@ bb.i:                                             ; preds = %bb.h
   %.pre40 = load i64, ptr %i.b, align 8, !tbaa !74 ; 2 uses
   br i1 %i.o, label %bb.j, label %_ZN5arrow6StatusD2Ev.exit
 
-.critedge:                                        ; preds = %bb.g
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
-  br label %bb.j
-
-bb.j:                                             ; preds = %.critedge, %bb.i
-  %i.p = phi i64 [ %i.c, %.critedge ], [ %.pre40, %bb.i ]
+bb.j:                                             ; preds = %bb.h, %bb.i
+  %i.p = phi i64 [ %.pre40, %bb.i ], [ %i.c, %bb.h ]
   %i.q = add nsw i64 %i.p, %3
   br label %_ZNSt12__shared_ptrIKN5arrow6ScalarELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
 
-.critedge2:                                       ; preds = %bb.h
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
-  br label %_ZN5arrow6StatusD2Ev.exit
-
-_ZN5arrow6StatusD2Ev.exit:                        ; preds = %bb.i, %.critedge2
-  %i.r = phi i64 [ %i.c, %.critedge2 ], [ %.pre40, %bb.i ]
+_ZN5arrow6StatusD2Ev.exit:                        ; preds = %bb.h, %bb.i
+  %i.r = phi i64 [ %.pre40, %bb.i ], [ %i.c, %bb.h ]
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #18
   %i.s = load ptr, ptr %1, align 8, !tbaa !54
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 112
@@ -333,7 +325,8 @@ bb.n:                                             ; preds = %_ZN5arrow6StatusD2E
   %i.at = load i64, ptr %i.as, align 8, !tbaa !85
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 96
   store i64 %i.at, ptr %i.au, align 8, !tbaa !85
-  %i.av = load i8, ptr %8, align 8, !tbaa !97, !range !107, !noundef !108
+  %11 = getelementptr inbounds nuw i8, ptr %2, i64 40
+  %i.av = load i8, ptr %11, align 8, !tbaa !97, !range !107, !noundef !108
   %i.aw = trunc nuw i8 %i.av to i1
   br i1 %i.aw, label %bb.o, label %bb.s
 

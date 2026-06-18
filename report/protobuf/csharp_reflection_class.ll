@@ -201,9 +201,6 @@ bb.a:
   %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.o, align 8, !tbaa !21 ; 2 uses
   %i.p = insertelement <16 x i8> poison, i8 %i.m, i64 0
   %i.q = shufflevector <16 x i8> %i.p, <16 x i8> poison, <16 x i32> zeroinitializer
-  %.sroa.0.0.copyload.i.i.i.i.i = load i64, ptr %2, align 8 ; 3 uses
-  %.sroa.2.0.copyload.i.i.i.i.i = load ptr, ptr %.sroa.2.0..sroa_idx.i, align 8
-  %3 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i, 0
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %bb.a
@@ -217,10 +214,16 @@ bb.b:                                             ; preds = %bb.d, %bb.a
   %i.u = icmp eq <16 x i8> %i.q, %i.t
   %i.v = bitcast <16 x i1> %i.u to i16            ; 2 uses
   %.not59 = icmp eq i16 %i.v, 0
-  br i1 %.not59, label %.critedge18, label %.lr.ph.a
+  br i1 %.not59, label %.critedge18, label %.lr.ph
 
-.lr.ph.a:                                         ; preds = %bb.b, %.critedge
-  %.sroa.034.060 = phi i16 [ %i.ae, %.critedge ], [ %i.v, %bb.b ] ; 3 uses
+.lr.ph:                                           ; preds = %bb.b
+  %.sroa.0.0.copyload.i.i.i.i.i = load i64, ptr %2, align 8, !tbaa !106 ; 3 uses
+  %.sroa.2.0.copyload.i.i.i.i.i = load ptr, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !146
+  %3 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i, 0
+  br label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %.lr.ph, %.critedge
+  %.sroa.034.060 = phi i16 [ %i.v, %.lr.ph ], [ %i.ae, %.critedge ] ; 3 uses
   %i.w = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.sroa.034.060, i1 true)
   %i.x = zext nneg i16 %i.w to i64
   %i.y = add i64 %.sroa.7.0, %i.x

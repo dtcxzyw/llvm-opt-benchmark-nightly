@@ -201,7 +201,11 @@ _ZZN6google8protobuf8internal18EpsCopyInputStream12AppendStringEPKcPNSt7__cxx111
   %i.x = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.s, ptr noundef %.01526, i64 noundef %i.r) ; 0 uses
   %i.y = tail call noundef ptr @_ZN6google8protobuf8internal18EpsCopyInputStream4NextEv(ptr noundef nonnull align 8 dereferenceable(88) %0) ; 2 uses
   %.not = icmp eq ptr %i.y, null
-  br i1 %.not, label %.loopexit, label %thread-pre-split
+  br i1 %.not, label %3, label %thread-pre-split
+
+3:                                                ; preds = %_ZZN6google8protobuf8internal18EpsCopyInputStream12AppendStringEPKcPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEENKUlS4_lE_clES4_l.exit
+  %4 = load ptr, ptr %0, align 8, !tbaa !39
+  br label %bb.d
 
 ._crit_edge.loopexit:                             ; preds = %thread-pre-split
   %.pre = load ptr, ptr %i.a, align 8, !tbaa !35
@@ -232,12 +236,8 @@ _ZZN6google8protobuf8internal18EpsCopyInputStream12AppendStringEPKcPNSt7__cxx111
   %i.ai = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.ad, ptr noundef %.015.lcssa, i64 noundef %i.ac) ; 0 uses
   br label %bb.d
 
-.loopexit:                                        ; preds = %_ZZN6google8protobuf8internal18EpsCopyInputStream12AppendStringEPKcPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEENKUlS4_lE_clES4_l.exit
-  %3 = load ptr, ptr %0, align 8
-  br label %bb.d
-
-bb.d:                                             ; preds = %.loopexit, %bb.a, %_ZZN6google8protobuf8internal18EpsCopyInputStream12AppendStringEPKcPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEENKUlS4_lE_clES4_l.exit20
-  %.2 = phi ptr [ %i.aa, %_ZZN6google8protobuf8internal18EpsCopyInputStream12AppendStringEPKcPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEENKUlS4_lE_clES4_l.exit20 ], [ null, %bb.a ], [ %3, %.loopexit ]
+bb.d:                                             ; preds = %3, %bb.a, %_ZZN6google8protobuf8internal18EpsCopyInputStream12AppendStringEPKcPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEENKUlS4_lE_clES4_l.exit20
+  %.2 = phi ptr [ %i.aa, %_ZZN6google8protobuf8internal18EpsCopyInputStream12AppendStringEPKcPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEENKUlS4_lE_clES4_l.exit20 ], [ %4, %3 ], [ null, %bb.a ]
   ret ptr %.2
 }
 
@@ -319,4 +319,5 @@ attributes #11 = { builtin nounwind }
 !36 = !{!"_ZTSN6google8protobuf8internal18EpsCopyInputStreamE", !20, i64 0, !20, i64 8, !20, i64 16, !4, i64 24, !4, i64 28, !37, i64 32, !5, i64 40, !11, i64 72, !4, i64 80, !4, i64 84}
 !37 = !{!"p1 _ZTSN6google8protobuf2io19ZeroCopyInputStreamE", !13, i64 0}
 !38 = !{!36, !4, i64 28}
+!39 = !{!36, !20, i64 0}
 end_hunk_0

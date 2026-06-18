@@ -1,0 +1,798 @@
+diff --git a/llvm/lib/IR/Value.cpp b/llvm/lib/IR/Value.cpp
+index d3f90bd81bbe2..6d0170dd23e75 100644
+--- a/llvm/lib/IR/Value.cpp
++++ b/llvm/lib/IR/Value.cpp
+@@ -38,7 +38,7 @@
+ using namespace llvm;
+ 
+ static cl::opt<bool> UseDerefAtPointSemantics(
+-    "use-dereferenceable-at-point-semantics", cl::Hidden, cl::init(false),
++    "use-dereferenceable-at-point-semantics", cl::Hidden, cl::init(true),
+     cl::desc("Deref attributes and metadata infer facts at definition only"));
+ 
+ //===----------------------------------------------------------------------===//
+diff --git a/llvm/test/CodeGen/AMDGPU/amdhsa-trap-num-sgprs.ll b/llvm/test/CodeGen/AMDGPU/amdhsa-trap-num-sgprs.ll
+index 85b5c7c870b23..eac6daf9b9bcc 100644
+--- a/llvm/test/CodeGen/AMDGPU/amdhsa-trap-num-sgprs.ll
++++ b/llvm/test/CodeGen/AMDGPU/amdhsa-trap-num-sgprs.ll
+@@ -2,7 +2,7 @@
+ ; RUN: llc -mtriple=amdgcn-amd-amdhsa -mcpu=gfx803 -mattr=-trap-handler < %s | FileCheck %s --check-prefixes=GCN,TRAP-HANDLER-DISABLE
+ 
+ ; GCN-LABEL: {{^}}amdhsa_trap_num_sgprs
+-; TRAP-HANDLER-ENABLE:  NumSgprs: 61
++; TRAP-HANDLER-ENABLE:  NumSgprs: 63
+ ; TRAP-HANDLER-DISABLE: NumSgprs: 77
+ define amdgpu_kernel void @amdhsa_trap_num_sgprs(
+     ptr addrspace(1) %out0, i32 %in0,
+diff --git a/llvm/test/CodeGen/AMDGPU/asyncmark-gfx12plus.ll b/llvm/test/CodeGen/AMDGPU/asyncmark-gfx12plus.ll
+index 2a27d7ff34bd5..131f25c4d1e8e 100644
+--- a/llvm/test/CodeGen/AMDGPU/asyncmark-gfx12plus.ll
++++ b/llvm/test/CodeGen/AMDGPU/asyncmark-gfx12plus.ll
+@@ -172,12 +172,13 @@ define amdgpu_kernel void @test_pipelined_loop(ptr addrspace(1) %foo, ptr addrsp
+ ; SDAG-NEXT:    s_cbranch_scc1 .LBB1_1
+ ; SDAG-NEXT:  ; %bb.2: ; %epilog
+ ; SDAG-NEXT:    s_lshl2_add_u32 s0, s3, s2
+-; SDAG-NEXT:    ; wait_asyncmark(1)
+-; SDAG-NEXT:    s_wait_asynccnt 0x1
++; SDAG-NEXT:    v_mov_b32_e32 v2, 0
+ ; SDAG-NEXT:    s_add_co_i32 s0, s0, -8
+ ; SDAG-NEXT:    s_delay_alu instid0(SALU_CYCLE_1)
+-; SDAG-NEXT:    v_dual_mov_b32 v2, 0 :: v_dual_mov_b32 v0, s0
++; SDAG-NEXT:    v_mov_b32_e32 v0, s0
+ ; SDAG-NEXT:    s_load_b64 s[0:1], s[4:5], 0x34 nv
++; SDAG-NEXT:    ; wait_asyncmark(1)
++; SDAG-NEXT:    s_wait_asynccnt 0x1
+ ; SDAG-NEXT:    ds_load_b32 v0, v0
+ ; SDAG-NEXT:    ; wait_asyncmark(0)
+ ; SDAG-NEXT:    s_wait_dscnt 0x0
+@@ -228,14 +229,14 @@ define amdgpu_kernel void @test_pipelined_loop(ptr addrspace(1) %foo, ptr addrsp
+ ; GISEL-NEXT:    s_cbranch_scc1 .LBB1_1
+ ; GISEL-NEXT:  ; %bb.2: ; %epilog
+ ; GISEL-NEXT:    s_lshl_b32 s0, s3, 2
+-; GISEL-NEXT:    ; wait_asyncmark(1)
+-; GISEL-NEXT:    s_wait_asynccnt 0x1
+-; GISEL-NEXT:    s_add_co_u32 s0, s2, s0
+ ; GISEL-NEXT:    v_mov_b32_e32 v1, 0
++; GISEL-NEXT:    s_add_co_u32 s0, s2, s0
++; GISEL-NEXT:    s_delay_alu instid0(SALU_CYCLE_1) | instskip(NEXT) | instid1(SALU_CYCLE_1)
+ ; GISEL-NEXT:    s_add_co_u32 s0, s0, -8
+-; GISEL-NEXT:    s_delay_alu instid0(SALU_CYCLE_1)
+ ; GISEL-NEXT:    v_mov_b32_e32 v0, s0
+ ; GISEL-NEXT:    s_load_b64 s[0:1], s[4:5], 0x34 nv
++; GISEL-NEXT:    ; wait_asyncmark(1)
++; GISEL-NEXT:    s_wait_asynccnt 0x1
+ ; GISEL-NEXT:    ds_load_b32 v0, v0
+ ; GISEL-NEXT:    ; wait_asyncmark(0)
+ ; GISEL-NEXT:    s_wait_dscnt 0x0
+diff --git a/llvm/test/CodeGen/AMDGPU/insert-delay-alu-bug.ll b/llvm/test/CodeGen/AMDGPU/insert-delay-alu-bug.ll
+index 7ba2f1b847fa0..b0ea20d4969bd 100644
+--- a/llvm/test/CodeGen/AMDGPU/insert-delay-alu-bug.ll
++++ b/llvm/test/CodeGen/AMDGPU/insert-delay-alu-bug.ll
+@@ -113,16 +113,18 @@ define amdgpu_kernel void @f2(i32 %arg, i32 %arg1, i32 %arg2, i1 %arg3, i32 %arg
+ ; GFX11-NEXT:    s_cmp_eq_u32 s1, 0
+ ; GFX11-NEXT:    s_cbranch_scc0 .LBB2_8
+ ; GFX11-NEXT:  ; %bb.5: ; %bb18.preheader
+-; GFX11-NEXT:    s_load_b128 s[28:31], s[18:19], 0x44
++; GFX11-NEXT:    s_clause 0x1
++; GFX11-NEXT:    s_load_b64 s[0:1], s[18:19], 0x44
++; GFX11-NEXT:    s_load_b32 s9, s[18:19], 0x4c
+ ; GFX11-NEXT:    v_mov_b32_e32 v0, 0
+ ; GFX11-NEXT:    s_waitcnt lgkmcnt(0)
+-; GFX11-NEXT:    s_mul_hi_u32 s1, s29, s28
+-; GFX11-NEXT:    s_mul_i32 s0, s29, s28
++; GFX11-NEXT:    s_mul_hi_u32 s29, s1, s0
++; GFX11-NEXT:    s_mul_i32 s28, s1, s0
+ ; GFX11-NEXT:    s_delay_alu instid0(SALU_CYCLE_1) | instskip(SKIP_2) | instid1(SALU_CYCLE_1)
+-; GFX11-NEXT:    s_lshr_b64 s[0:1], s[0:1], 1
++; GFX11-NEXT:    s_lshr_b64 s[0:1], s[28:29], 1
+ ; GFX11-NEXT:    s_mov_b32 s1, 0
+ ; GFX11-NEXT:    s_or_b32 s0, s0, 1
+-; GFX11-NEXT:    s_lshr_b32 s0, s0, s30
++; GFX11-NEXT:    s_lshr_b32 s0, s0, s9
+ ; GFX11-NEXT:    s_delay_alu instid0(SALU_CYCLE_1) | instskip(NEXT) | instid1(SALU_CYCLE_1)
+ ; GFX11-NEXT:    s_mul_i32 s0, s0, s22
+ ; GFX11-NEXT:    s_mul_i32 s0, s0, s20
+diff --git a/llvm/test/CodeGen/AMDGPU/madak.ll b/llvm/test/CodeGen/AMDGPU/madak.ll
+index 8d40458a46087..dd0d190f9f160 100644
+--- a/llvm/test/CodeGen/AMDGPU/madak.ll
++++ b/llvm/test/CodeGen/AMDGPU/madak.ll
+@@ -1323,14 +1323,13 @@ define amdgpu_kernel void @madak_constant_bus_violation(i32 %arg1, [8 x i32], fl
+ ; GFX6-NEXT:    buffer_store_dword v0, off, s[0:3], 0
+ ; GFX6-NEXT:    s_waitcnt vmcnt(0)
+ ; GFX6-NEXT:  .LBB9_2: ; %bb4
++; GFX6-NEXT:    s_load_dword s0, s[4:5], 0x12
+ ; GFX6-NEXT:    s_mov_b32 s3, 0xf000
+ ; GFX6-NEXT:    s_mov_b32 s2, -1
+-; GFX6-NEXT:    s_waitcnt expcnt(0)
++; GFX6-NEXT:    v_mov_b32_e32 v1, 0x42280000
++; GFX6-NEXT:    s_waitcnt expcnt(0) lgkmcnt(0)
+ ; GFX6-NEXT:    buffer_load_dword v0, off, s[0:3], 0 glc
+ ; GFX6-NEXT:    s_waitcnt vmcnt(0)
+-; GFX6-NEXT:    s_load_dword s0, s[4:5], 0x12
+-; GFX6-NEXT:    v_mov_b32_e32 v1, 0x42280000
+-; GFX6-NEXT:    s_waitcnt lgkmcnt(0)
+ ; GFX6-NEXT:    v_mac_f32_e64 v1, s0, 0.5
+ ; GFX6-NEXT:    v_mul_f32_e32 v0, v1, v0
+ ; GFX6-NEXT:    buffer_store_dword v0, off, s[0:3], 0
+@@ -1348,9 +1347,9 @@ define amdgpu_kernel void @madak_constant_bus_violation(i32 %arg1, [8 x i32], fl
+ ; GFX8-NEXT:    flat_store_dword v[0:1], v0
+ ; GFX8-NEXT:    s_waitcnt vmcnt(0)
+ ; GFX8-NEXT:  .LBB9_2: ; %bb4
++; GFX8-NEXT:    s_load_dword s0, s[4:5], 0x48
+ ; GFX8-NEXT:    flat_load_dword v0, v[0:1] glc
+ ; GFX8-NEXT:    s_waitcnt vmcnt(0)
+-; GFX8-NEXT:    s_load_dword s0, s[4:5], 0x48
+ ; GFX8-NEXT:    v_mov_b32_e32 v1, 0x42280000
+ ; GFX8-NEXT:    s_waitcnt lgkmcnt(0)
+ ; GFX8-NEXT:    v_mac_f32_e64 v1, s0, 0.5
+@@ -1370,9 +1369,9 @@ define amdgpu_kernel void @madak_constant_bus_violation(i32 %arg1, [8 x i32], fl
+ ; GFX9-NEXT:    global_store_dword v[0:1], v0, off
+ ; GFX9-NEXT:    s_waitcnt vmcnt(0)
+ ; GFX9-NEXT:  .LBB9_2: ; %bb4
++; GFX9-NEXT:    s_load_dword s0, s[4:5], 0x48
+ ; GFX9-NEXT:    global_load_dword v0, v[0:1], off glc
+ ; GFX9-NEXT:    s_waitcnt vmcnt(0)
+-; GFX9-NEXT:    s_load_dword s0, s[4:5], 0x48
+ ; GFX9-NEXT:    v_mov_b32_e32 v1, 0x42280000
+ ; GFX9-NEXT:    s_waitcnt lgkmcnt(0)
+ ; GFX9-NEXT:    v_mac_f32_e64 v1, s0, 0.5
+@@ -1392,9 +1391,9 @@ define amdgpu_kernel void @madak_constant_bus_violation(i32 %arg1, [8 x i32], fl
+ ; GFX10-MAD-NEXT:    global_store_dword v[0:1], v0, off
+ ; GFX10-MAD-NEXT:    s_waitcnt_vscnt null, 0x0
+ ; GFX10-MAD-NEXT:  .LBB9_2: ; %bb4
++; GFX10-MAD-NEXT:    s_load_dword s0, s[4:5], 0x48
+ ; GFX10-MAD-NEXT:    global_load_dword v0, v[0:1], off glc dlc
+ ; GFX10-MAD-NEXT:    s_waitcnt vmcnt(0)
+-; GFX10-MAD-NEXT:    s_load_dword s0, s[4:5], 0x48
+ ; GFX10-MAD-NEXT:    v_mov_b32_e32 v1, 0.5
+ ; GFX10-MAD-NEXT:    s_waitcnt lgkmcnt(0)
+ ; GFX10-MAD-NEXT:    v_madak_f32 v1, s0, v1, 0x42280000
+@@ -1414,10 +1413,9 @@ define amdgpu_kernel void @madak_constant_bus_violation(i32 %arg1, [8 x i32], fl
+ ; GFX11-MAD-NEXT:    global_store_b32 v[0:1], v0, off dlc
+ ; GFX11-MAD-NEXT:    s_waitcnt_vscnt null, 0x0
+ ; GFX11-MAD-NEXT:  .LBB9_2: ; %bb4
+-; GFX11-MAD-NEXT:    global_load_b32 v0, v[0:1], off glc dlc
+-; GFX11-MAD-NEXT:    s_waitcnt vmcnt(0)
+ ; GFX11-MAD-NEXT:    s_load_b32 s0, s[4:5], 0x48
+-; GFX11-MAD-NEXT:    s_waitcnt lgkmcnt(0)
++; GFX11-MAD-NEXT:    global_load_b32 v0, v[0:1], off glc dlc
++; GFX11-MAD-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
+ ; GFX11-MAD-NEXT:    v_mul_f32_e64 v1, s0, 0.5
+ ; GFX11-MAD-NEXT:    s_delay_alu instid0(VALU_DEP_1) | instskip(NEXT) | instid1(VALU_DEP_1)
+ ; GFX11-MAD-NEXT:    v_add_f32_e32 v1, 0x42280000, v1
+@@ -1437,9 +1435,9 @@ define amdgpu_kernel void @madak_constant_bus_violation(i32 %arg1, [8 x i32], fl
+ ; GFX942-FMA-NEXT:    global_store_dword v[0:1], v0, off sc0 sc1
+ ; GFX942-FMA-NEXT:    s_waitcnt vmcnt(0)
+ ; GFX942-FMA-NEXT:  .LBB9_2: ; %bb4
++; GFX942-FMA-NEXT:    s_load_dword s0, s[4:5], 0x48
+ ; GFX942-FMA-NEXT:    global_load_dword v0, v[0:1], off sc0 sc1
+ ; GFX942-FMA-NEXT:    s_waitcnt vmcnt(0)
+-; GFX942-FMA-NEXT:    s_load_dword s0, s[4:5], 0x48
+ ; GFX942-FMA-NEXT:    v_mov_b32_e32 v1, 0x42280000
+ ; GFX942-FMA-NEXT:    s_waitcnt lgkmcnt(0)
+ ; GFX942-FMA-NEXT:    v_fmac_f32_e64 v1, s0, 0.5
+@@ -1459,9 +1457,9 @@ define amdgpu_kernel void @madak_constant_bus_violation(i32 %arg1, [8 x i32], fl
+ ; GFX10-FMA-NEXT:    global_store_dword v[0:1], v0, off
+ ; GFX10-FMA-NEXT:    s_waitcnt_vscnt null, 0x0
+ ; GFX10-FMA-NEXT:  .LBB9_2: ; %bb4
++; GFX10-FMA-NEXT:    s_load_dword s0, s[4:5], 0x48
+ ; GFX10-FMA-NEXT:    global_load_dword v0, v[0:1], off glc dlc
+ ; GFX10-FMA-NEXT:    s_waitcnt vmcnt(0)
+-; GFX10-FMA-NEXT:    s_load_dword s0, s[4:5], 0x48
+ ; GFX10-FMA-NEXT:    v_mov_b32_e32 v1, 0.5
+ ; GFX10-FMA-NEXT:    s_waitcnt lgkmcnt(0)
+ ; GFX10-FMA-NEXT:    v_fmaak_f32 v1, s0, v1, 0x42280000
+@@ -1481,9 +1479,9 @@ define amdgpu_kernel void @madak_constant_bus_violation(i32 %arg1, [8 x i32], fl
+ ; GFX11-FMA-NEXT:    global_store_b32 v[0:1], v0, off dlc
+ ; GFX11-FMA-NEXT:    s_waitcnt_vscnt null, 0x0
+ ; GFX11-FMA-NEXT:  .LBB9_2: ; %bb4
++; GFX11-FMA-NEXT:    s_load_b32 s0, s[4:5], 0x48
+ ; GFX11-FMA-NEXT:    global_load_b32 v0, v[0:1], off glc dlc
+ ; GFX11-FMA-NEXT:    s_waitcnt vmcnt(0)
+-; GFX11-FMA-NEXT:    s_load_b32 s0, s[4:5], 0x48
+ ; GFX11-FMA-NEXT:    v_mov_b32_e32 v1, 0.5
+ ; GFX11-FMA-NEXT:    s_waitcnt lgkmcnt(0)
+ ; GFX11-FMA-NEXT:    s_delay_alu instid0(VALU_DEP_1) | instskip(NEXT) | instid1(VALU_DEP_1)
+diff --git a/llvm/test/CodeGen/AMDGPU/rewrite-mfma-form-spill-cost-reset.ll b/llvm/test/CodeGen/AMDGPU/rewrite-mfma-form-spill-cost-reset.ll
+index ce59330eed898..dc7120b8aef94 100644
+--- a/llvm/test/CodeGen/AMDGPU/rewrite-mfma-form-spill-cost-reset.ll
++++ b/llvm/test/CodeGen/AMDGPU/rewrite-mfma-form-spill-cost-reset.ll
+@@ -533,7 +533,7 @@ define amdgpu_kernel void @test_spill_cost_reset(
+   ; CHECK-NEXT:   S_BRANCH %bb.2
+   ; CHECK-NEXT: {{  $}}
+   ; CHECK-NEXT: bb.2.epilogue:
+-  ; CHECK-NEXT:   [[S_LOAD_DWORDX2_IMM:%[0-9]+]]:sreg_64_xexec_xnull = S_LOAD_DWORDX2_IMM [[COPY]](p4), 0, 0 :: (dereferenceable invariant load (s64) from %ir.out.kernarg.offset550, align 16, addrspace 4)
++  ; CHECK-NEXT:   [[S_LOAD_DWORDX2_IMM:%[0-9]+]]:sreg_64_xexec_xnull = S_LOAD_DWORDX2_IMM [[COPY]](p4), 0, 0 :: (invariant load (s64) from %ir.out.kernarg.offset550, align 16, addrspace 4)
+   ; CHECK-NEXT:   [[V_MOV_B32_e32_13:%[0-9]+]]:vgpr_32 = V_MOV_B32_e32 0, implicit $exec
+   ; CHECK-NEXT:   GLOBAL_STORE_DWORD_SADDR [[V_MOV_B32_e32_13]], [[V_MFMA_F32_16X16X32_F16_vgprcd_e64_2]].sub0, [[S_LOAD_DWORDX2_IMM]], 0, 0, implicit $exec :: (store (s32) into %ir.out.load, addrspace 1)
+   ; CHECK-NEXT:   S_ENDPGM 0
+diff --git a/llvm/test/CodeGen/X86/load-partial.ll b/llvm/test/CodeGen/X86/load-partial.ll
+index a2f4f7ac3d534..c4c1d0d01fb5e 100644
+--- a/llvm/test/CodeGen/X86/load-partial.ll
++++ b/llvm/test/CodeGen/X86/load-partial.ll
+@@ -150,7 +150,7 @@ define <4 x float> @load_float4_float3_as_float2_float_0122(ptr nocapture readon
+   ret <4 x float> %10
+ }
+ 
+-define <4 x float> @load_float4_float3_trunc(ptr nocapture readonly dereferenceable(16)) {
++define <4 x float> @load_float4_float3_trunc(ptr nocapture readonly dereferenceable(16)) nofree {
+ ; SSE-LABEL: load_float4_float3_trunc:
+ ; SSE:       # %bb.0:
+ ; SSE-NEXT:    movaps (%rdi), %xmm0
+diff --git a/llvm/test/CodeGen/X86/oddsubvector.ll b/llvm/test/CodeGen/X86/oddsubvector.ll
+index 5df1867f73c8e..c971619a2a64c 100644
+--- a/llvm/test/CodeGen/X86/oddsubvector.ll
++++ b/llvm/test/CodeGen/X86/oddsubvector.ll
+@@ -91,11 +91,11 @@ define void @PR40815(ptr nocapture readonly dereferenceable(64), ptr nocapture d
+ ;
+ ; AVX512-LABEL: PR40815:
+ ; AVX512:       # %bb.0:
+-; AVX512-NEXT:    vmovaps 48(%rdi), %xmm0
+-; AVX512-NEXT:    vmovups 16(%rdi), %ymm1
+-; AVX512-NEXT:    vinsertf128 $1, (%rdi), %ymm1, %ymm1
+-; AVX512-NEXT:    vinsertf128 $1, 32(%rdi), %ymm0, %ymm0
+-; AVX512-NEXT:    vinsertf64x4 $1, %ymm1, %zmm0, %zmm0
++; AVX512-NEXT:    vmovaps 16(%rdi), %xmm0
++; AVX512-NEXT:    vmovaps 48(%rdi), %xmm1
++; AVX512-NEXT:    vinsertf128 $1, (%rdi), %ymm0, %ymm0
++; AVX512-NEXT:    vinsertf128 $1, 32(%rdi), %ymm1, %ymm1
++; AVX512-NEXT:    vinsertf64x4 $1, %ymm0, %zmm1, %zmm0
+ ; AVX512-NEXT:    vmovups %zmm0, (%rsi)
+ ; AVX512-NEXT:    vzeroupper
+ ; AVX512-NEXT:    retq
+diff --git a/llvm/test/Transforms/GVN/PRE/volatile.ll b/llvm/test/Transforms/GVN/PRE/volatile.ll
+index 38ba5e2cfeb19..9d5227f025b95 100644
+--- a/llvm/test/Transforms/GVN/PRE/volatile.ll
++++ b/llvm/test/Transforms/GVN/PRE/volatile.ll
+@@ -153,7 +153,7 @@ exit:
+ 
+ ; Another volatile PRE case - two paths through a loop
+ ; load in preheader, one path read only, one not
+-define i32 @test8(i1 %b, i1 %c, ptr noalias align 4 dereferenceable(4) %p, ptr noalias %q) {
++define i32 @test8(i1 %b, i1 %c, ptr noalias align 4 dereferenceable(4) %p, ptr noalias %q) nofree {
+ ; CHECK-LABEL: @test8(
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[Y1:%.*]] = load i32, ptr [[P:%.*]], align 4
+diff --git a/llvm/test/Transforms/LoopVectorize/AArch64/simple_early_exit.ll b/llvm/test/Transforms/LoopVectorize/AArch64/simple_early_exit.ll
+index 630cd40f1f299..d9904db8df386 100644
+--- a/llvm/test/Transforms/LoopVectorize/AArch64/simple_early_exit.ll
++++ b/llvm/test/Transforms/LoopVectorize/AArch64/simple_early_exit.ll
+@@ -3,7 +3,7 @@
+ 
+ target triple = "aarch64-unknown-linux-gnu"
+ 
+-declare void @init_mem(ptr, i64);
++declare void @init_mem(ptr, i64) nofree
+ 
+ define i64 @same_exit_block_pre_inc_use1() #1 {
+ ; CHECK-LABEL: define i64 @same_exit_block_pre_inc_use1(
+diff --git a/llvm/test/Transforms/LoopVectorize/early_exit_legality.ll b/llvm/test/Transforms/LoopVectorize/early_exit_legality.ll
+index 88a2bccf9c904..95178808b0141 100644
+--- a/llvm/test/Transforms/LoopVectorize/early_exit_legality.ll
++++ b/llvm/test/Transforms/LoopVectorize/early_exit_legality.ll
+@@ -8,10 +8,6 @@ declare void @init_mem(ptr, i64);
+ 
+ ; The form of the induction variables requires SCEV predicates.
+ define i32 @diff_exit_block_needs_scev_check(i32 %end) {
+-; CHECK-LABEL: LV: Checking a loop in 'diff_exit_block_needs_scev_check'
+-; CHECK:       Found an early exit loop with symbolic max backedge taken count: (-1 + (1 umax (zext i10 (trunc i32 %end to i10) to i32)))<nsw>
+-; CHECK-NEXT:  LV: We can vectorize this loop!
+-; CHECK-NOT:   LV: Not vectorizing:
+ entry:
+   %p1 = alloca [1024 x i32]
+   %p2 = alloca [1024 x i32]
+@@ -46,10 +42,6 @@ exit:
+ 
+ 
+ define i64 @same_exit_block_pre_inc_use1() {
+-; CHECK-LABEL: LV: Checking a loop in 'same_exit_block_pre_inc_use1'
+-; CHECK:       LV: Found an early exit loop with symbolic max backedge taken count: 63
+-; CHECK-NEXT:  LV: We can vectorize this loop!
+-; CHECK-NOT:   LV: Not vectorizing
+ entry:
+   %p1 = alloca [1024 x i8]
+   %p2 = alloca [1024 x i8]
+@@ -78,9 +70,6 @@ loop.end:
+ 
+ 
+ define i64 @loop_contains_safe_call() {
+-; CHECK-LABEL: LV: Checking a loop in 'loop_contains_safe_call'
+-; CHECK:       LV: Found an early exit loop with symbolic max backedge taken count: 63
+-; CHECK-NEXT:  LV: We can vectorize this loop!
+ entry:
+   %p1 = alloca [1024 x i8]
+   %p2 = alloca [1024 x i8]
+@@ -108,9 +97,6 @@ loop.end:
+ 
+ 
+ define i64 @loop_contains_safe_div() {
+-; CHECK-LABEL: LV: Checking a loop in 'loop_contains_safe_div'
+-; CHECK:       LV: Found an early exit loop with symbolic max backedge taken count: 63
+-; CHECK-NEXT:  LV: We can vectorize this loop!
+ entry:
+   %p1 = alloca [1024 x i8]
+   %p2 = alloca [1024 x i8]
+@@ -138,10 +124,6 @@ loop.end:
+ 
+ 
+ define i64 @loop_contains_load_after_early_exit(ptr dereferenceable(1024) align(8) %p2) {
+-; CHECK-LABEL: LV: Checking a loop in 'loop_contains_load_after_early_exit'
+-; CHECK:       LV: Found an early exit loop with symbolic max backedge taken count: 63
+-; CHECK-NEXT:  LV: We can vectorize this loop!
+-; CHECK-NOT:   LV: Not vectorizing
+ entry:
+   %p1 = alloca [1024 x i8]
+   call void @init_mem(ptr %p1, i64 1024)
+@@ -168,10 +150,6 @@ loop.end:
+ 
+ 
+ define i64 @one_uncountable_two_countable_same_exit_phi_of_consts() {
+-; CHECK-LABEL: LV: Checking a loop in 'one_uncountable_two_countable_same_exit_phi_of_consts'
+-; CHECK:       LV: Found an early exit loop with symbolic max backedge taken count: 61
+-; CHECK-NEXT:  LV: We can vectorize this loop!
+-; CHECK-NEXT:  LV: Not vectorizing: Auto-vectorization of early exit loops requiring a scalar epilogue is unsupported.
+ entry:
+   %p1 = alloca [1024 x i8]
+   %p2 = alloca [1024 x i8]
+@@ -207,8 +185,6 @@ loop.end:
+ 
+ 
+ define i64 @same_exit_block_pre_inc_use1_too_small_allocas() {
+-; CHECK-LABEL: LV: Checking a loop in 'same_exit_block_pre_inc_use1_too_small_allocas'
+-; CHECK:       LV: Not vectorizing: Auto-vectorization of loops with potentially faulting load is not supported.
+ entry:
+   %p1 = alloca [42 x i8]
+   %p2 = alloca [42 x i8]
+@@ -237,8 +213,6 @@ loop.end:
+ 
+ 
+ define i64 @same_exit_block_pre_inc_use1_too_small_deref_ptrs(ptr dereferenceable(42) %p1, ptr dereferenceable(42) %p2) {
+-; CHECK-LABEL: LV: Checking a loop in 'same_exit_block_pre_inc_use1_too_small_deref_ptrs'
+-; CHECK:       LV: Not vectorizing: Auto-vectorization of loops with potentially faulting load is not supported.
+ entry:
+   br label %loop
+ 
+@@ -263,8 +237,6 @@ loop.end:
+ 
+ 
+ define i64 @same_exit_block_pre_inc_use1_unknown_ptrs(ptr %p1, ptr %p2) {
+-; CHECK-LABEL: LV: Checking a loop in 'same_exit_block_pre_inc_use1_unknown_ptrs'
+-; CHECK:       LV: Not vectorizing: Auto-vectorization of loops with potentially faulting load is not supported.
+ entry:
+   br label %loop
+ 
+@@ -288,8 +260,6 @@ loop.end:
+ }
+ 
+ define ptr @same_exit_block_strided_unknown_ptr(ptr %first, ptr %last, i32 %value) {
+-; CHECK-LABEL: LV: Checking a loop in 'same_exit_block_strided_unknown_ptr'
+-; CHECK:       LV: Not vectorizing: Loop contains potentially faulting strided load.
+ entry:
+   %cond = icmp eq ptr %first, %last
+   br i1 %cond, label %return, label %for.body
+@@ -317,8 +287,6 @@ return:
+ ; The early exit (i.e. unknown exit-not-taken count) is the latch - we don't
+ ; support this yet.
+ define i64 @uncountable_exit_on_last_block() {
+-; CHECK-LABEL: LV: Checking a loop in 'uncountable_exit_on_last_block'
+-; CHECK:       LV: Not vectorizing: Cannot determine exact exit count for latch block.
+ entry:
+   %p1 = alloca [1024 x i8]
+   %p2 = alloca [1024 x i8]
+@@ -348,8 +316,6 @@ loop.end:
+ 
+ ; Multiple uncountable early exits are now supported.
+ define i64 @multiple_uncountable_exits() {
+-; CHECK-LABEL: LV: Checking a loop in 'multiple_uncountable_exits'
+-; CHECK:       LV: We can vectorize this loop!
+ entry:
+   %p1 = alloca [1024 x i8]
+   %p2 = alloca [1024 x i8]
+@@ -382,8 +348,6 @@ loop.end:
+ 
+ 
+ define i64 @uncountable_exit_infinite_loop() {
+-; CHECK-LABEL: LV: Checking a loop in 'uncountable_exit_infinite_loop'
+-; CHECK:       LV: Not vectorizing: Cannot vectorize uncountable loop.
+ entry:
+   %p1 = alloca [1024 x i8]
+   %p2 = alloca [1024 x i8]
+@@ -412,8 +376,6 @@ loop.end:
+ 
+ 
+ define i64 @loop_contains_unsafe_call() {
+-; CHECK-LABEL: LV: Checking a loop in 'loop_contains_unsafe_call'
+-; CHECK:       LV: Not vectorizing: Early exit loop contains operations that cannot be speculatively executed.
+ entry:
+   %p1 = alloca [1024 x i8]
+   %p2 = alloca [1024 x i8]
+@@ -441,8 +403,6 @@ loop.end:
+ 
+ 
+ define i64 @loop_contains_unsafe_div() {
+-; CHECK-LABEL: LV: Checking a loop in 'loop_contains_unsafe_div'
+-; CHECK:       LV: Not vectorizing: Early exit loop contains operations that cannot be speculatively executed.
+ entry:
+   %p1 = alloca [1024 x i8]
+   %p2 = alloca [1024 x i8]
+@@ -469,8 +429,6 @@ loop.end:
+ }
+ 
+ define void @exit_conditions_combined_in_single_branch(ptr noalias dereferenceable(40) %array, ptr readonly align 2 dereferenceable(40) %pred) {
+-; CHECK-LABEL: LV: Checking a loop in 'exit_conditions_combined_in_single_branch'
+-; CHECK:       LV: Not vectorizing: Cannot vectorize uncountable loop.
+ entry:
+   br label %for.body
+ 
+@@ -493,8 +451,6 @@ exit:
+ }
+ 
+ define i64 @same_exit_block_pre_inc_use1_with_reduction() {
+-; CHECK-LABEL: LV: Checking a loop in 'same_exit_block_pre_inc_use1_with_reduction'
+-; CHECK:       LV: Not vectorizing: Found reductions or recurrences in early-exit loop.
+ entry:
+   %p1 = alloca [1024 x i8]
+   %p2 = alloca [1024 x i8]
+@@ -527,8 +483,6 @@ loop.end:
+ 
+ 
+ define i64 @uncountable_exit_has_multiple_outside_successors() {
+-; CHECK-LABEL: LV: Checking a loop in 'uncountable_exit_has_multiple_outside_successors'
+-; CHECK:       LV: Not vectorizing: Loop contains an unsupported switch
+ entry:
+   %p1 = alloca [1024 x i8]
+   call void @init_mem(ptr %p1, i64 1024)
+@@ -560,8 +514,6 @@ loop.end:
+ ; Two early exits on parallel branches (neither dominates the other).
+ ; This is now supported with predicated early exits.
+ define i64 @uncountable_exits_on_parallel_branches() {
+-; CHECK-LABEL: LV: Checking a loop in 'uncountable_exits_on_parallel_branches'
+-; CHECK:       LV: We can vectorize this loop!
+ entry:
+   %p1 = alloca [1024 x i8]
+   %p2 = alloca [1024 x i8]
+@@ -601,8 +553,6 @@ loop.end:
+ ; Note: This loop cannot be vectorized because the latch has no determinate
+ ; exit count (loop is infinite without early exits).
+ define void @uncountable_exits_invariant_conditions(ptr %p, i1 %cond1, i1 %cond2, i1 %cond3) {
+-; CHECK-LABEL: LV: Checking a loop in 'uncountable_exits_invariant_conditions'
+-; CHECK:       LV: Not vectorizing: Cannot determine exact exit count for latch block.
+ entry:
+   br label %loop.header
+ 
+@@ -634,3 +584,5 @@ declare i32 @foo(i32) readonly
+ declare <vscale x 4 x i32> @foo_vec(<vscale x 4 x i32>)
+ 
+ attributes #0 = { "vector-function-abi-variant"="_ZGVsNxv_foo(foo_vec)" }
++;; NOTE: These prefixes are unused and the list is autogenerated. Do not add tests below this line:
++; CHECK: {{.*}}
+diff --git a/llvm/test/Transforms/LoopVectorize/early_exit_with_outer_loop.ll b/llvm/test/Transforms/LoopVectorize/early_exit_with_outer_loop.ll
+index b02a96ab25f3c..d244adcc259c0 100644
+--- a/llvm/test/Transforms/LoopVectorize/early_exit_with_outer_loop.ll
++++ b/llvm/test/Transforms/LoopVectorize/early_exit_with_outer_loop.ll
+@@ -122,7 +122,7 @@ exit:
+ 
+ ; Tests when an early-exit inner loop has multiple exits and all exits
+ ; leave the outer loop.
+-define i32 @multi_early_exit_all_leave_outer_loop(i1 %c, ptr dereferenceable(1024) %src) {
++define i32 @multi_early_exit_all_leave_outer_loop(i1 %c, ptr dereferenceable(1024) %src) nofree {
+ ; CHECK-LABEL: Loop info for function 'multi_early_exit_all_leave_outer_loop':
+ ; CHECK-NEXT: Loop at depth 1 containing: %outer.header<header>,%outer.latch<latch><exiting>,%vector.ph,%vector.body<exiting>,%vector.body.interim,%middle.block
+ ; CHECK-NEXT:     Loop at depth 2 containing: %vector.body<header><exiting>,%vector.body.interim<latch><exiting>
+@@ -159,7 +159,7 @@ early.exit.2:
+ 
+ ; Tests when an inner loop has two early exits at different loop levels
+ ; (one staying in the outer loop, one leaving all loops).
+-define i32 @multi_early_exit_different_loop_levels(i1 %c, ptr dereferenceable(1024) %src) {
++define i32 @multi_early_exit_different_loop_levels(i1 %c, ptr dereferenceable(1024) %src) nofree {
+ ; CHECK-LABEL: Loop info for function 'multi_early_exit_different_loop_levels':
+ ; CHECK-NEXT: Loop at depth 1 containing: %outer.header<header>,%early.exit.outer,%outer.latch<latch>,%outer.latch.loopexit,%vector.ph,%vector.body,%vector.body.interim,%middle.block,%vector.early.exit.check<exiting>,%vector.early.exit.0
+ ; CHECK-NEXT:     Loop at depth 2 containing: %vector.body<header><exiting>,%vector.body.interim<latch><exiting>
+@@ -196,7 +196,7 @@ early.exit.leave:
+ 
+ ; Same as above, but the early exit order is reversed: the first early exit
+ ; leaves all loops and the second stays in the outer loop.
+-define i32 @multi_early_exit_different_loop_levels_reversed(i1 %c, ptr dereferenceable(1024) %src) {
++define i32 @multi_early_exit_different_loop_levels_reversed(i1 %c, ptr dereferenceable(1024) %src) nofree {
+ ; CHECK-LABEL: Loop info for function 'multi_early_exit_different_loop_levels_reversed':
+ ; CHECK-NEXT: Loop at depth 1 containing: %outer.header<header>,%early.exit.outer,%outer.latch<latch>,%outer.latch.loopexit,%vector.ph,%vector.body,%vector.body.interim,%middle.block,%vector.early.exit.check<exiting>,%vector.early.exit.1
+ ; CHECK-NEXT:     Loop at depth 2 containing: %vector.body<header><exiting>,%vector.body.interim<latch><exiting>
+@@ -233,7 +233,7 @@ early.exit.leave:
+ 
+ ; Tests when an inner loop has two early exits at different loop levels
+ ; (one going to a middle loop, one going to the outer loop).
+-define i32 @multi_early_exit_two_different_loops(i1 %c, ptr dereferenceable(1024) %src) {
++define i32 @multi_early_exit_two_different_loops(i1 %c, ptr dereferenceable(1024) %src) nofree {
+ ; CHECK-LABEL: Loop info for function 'multi_early_exit_two_different_loops':
+ ; CHECK-NEXT: Loop at depth 1 containing: %outer.header<header>,%middle.header,%early.exit.outer,%early.exit.middle,%middle.latch,%outer.latch<latch>,%middle.latch.loopexit,%outer.latch.loopexit,%vector.ph,%vector.body,%vector.body.interim,%middle.block,%vector.early.exit.check,%vector.early.exit.1,%vector.early.exit.0
+ ; CHECK-NEXT:     Loop at depth 2 containing: %middle.header<header>,%early.exit.middle,%middle.latch<latch><exiting>,%middle.latch.loopexit,%vector.ph,%vector.body,%vector.body.interim,%middle.block,%vector.early.exit.check<exiting>,%vector.early.exit.0
+@@ -277,7 +277,7 @@ early.exit.outer:
+ 
+ ; Same as above, but the early exit order is reversed: the first early exit
+ ; goes to the outer loop and the second goes to the middle loop.
+-define i32 @multi_early_exit_two_different_loops_reversed(i1 %c, ptr dereferenceable(1024) %src) {
++define i32 @multi_early_exit_two_different_loops_reversed(i1 %c, ptr dereferenceable(1024) %src) nofree {
+ ; CHECK-LABEL: Loop info for function 'multi_early_exit_two_different_loops_reversed':
+ ; CHECK-NEXT: Loop at depth 1 containing: %outer.header<header>,%middle.header,%early.exit.middle,%middle.latch,%early.exit.outer,%outer.latch<latch>,%middle.latch.loopexit,%outer.latch.loopexit,%vector.ph,%vector.body,%vector.body.interim,%middle.block,%vector.early.exit.check,%vector.early.exit.1,%vector.early.exit.0
+ ; CHECK-NEXT:     Loop at depth 2 containing: %middle.header<header>,%early.exit.middle,%middle.latch<latch><exiting>,%middle.latch.loopexit,%vector.ph,%vector.body,%vector.body.interim,%middle.block,%vector.early.exit.check<exiting>,%vector.early.exit.1
+@@ -323,7 +323,7 @@ early.exit.outer:
+ ; intermediate exit-routing blocks have multiple successors (i.e., the
+ ; vector.early.exit.check block itself has >1 successor), and all exits leave
+ ; all loops.
+-define i32 @multi_early_exit_all_leave_with_multi_succ_exit_check(i1 %c.1, i1 %c.2, ptr dereferenceable(1024) %src) {
++define i32 @multi_early_exit_all_leave_with_multi_succ_exit_check(i1 %c.1, i1 %c.2, ptr dereferenceable(1024) %src) nofree {
+ ; CHECK-LABEL: Loop info for function 'multi_early_exit_all_leave_with_multi_succ_exit_check':
+ ; CHECK-NEXT: Loop at depth 1 containing: %outer.header<header>,%outer.latch<latch>,%vector.ph,%vector.body<exiting>,%vector.body.interim,%middle.block
+ ; CHECK-NEXT:     Loop at depth 2 containing: %vector.body<header><exiting>,%vector.body.interim<latch><exiting>
+@@ -368,7 +368,7 @@ early.exit.3:
+ ; has 3 early exits that ALL leave ALL loops. The exit routing blocks have
+ ; multiple successors so connectToPredecessors places them in the vectorized
+ ; loop. The fixup pass must move them all the way out (not just one level up).
+-define i32 @multi_early_exit_all_leave_three_nested_loops(i1 %c.1, i1 %c.2, ptr dereferenceable(1024) %src) {
++define i32 @multi_early_exit_all_leave_three_nested_loops(i1 %c.1, i1 %c.2, ptr dereferenceable(1024) %src) nofree {
+ ; CHECK-LABEL: Loop info for function 'multi_early_exit_all_leave_three_nested_loops':
+ ; CHECK-NEXT: Loop at depth 1 containing: %outer.header<header>,%middle.header,%middle.latch,%outer.latch<latch>,%vector.ph,%vector.body<exiting>,%vector.body.interim,%middle.block
+ ; CHECK-NEXT:     Loop at depth 2 containing: %middle.header<header>,%middle.latch<latch><exiting>,%vector.ph,%vector.body<exiting>,%vector.body.interim,%middle.block
+@@ -419,7 +419,7 @@ early.exit.3:
+ ; Tests that dispatch blocks are correctly placed in the outermost loop when
+ ; the innermost loop has two uncountable early exits at different loop depths:
+ ; one to the outer loop and one outside all loops.
+-define i64 @multi_early_exit_to_outer_and_outside(ptr dereferenceable(1024) %p1, ptr dereferenceable(1024) %p2, i1 %c) {
++define i64 @multi_early_exit_to_outer_and_outside(ptr dereferenceable(1024) %p1, ptr dereferenceable(1024) %p2, i1 %c) nofree {
+ ; CHECK-LABEL: Loop info for function 'multi_early_exit_to_outer_and_outside':
+ ; CHECK-NEXT: Loop at depth 1 containing: %loop.outer<header>,%loop.middle,%loop.inner.end,%loop.middle.end,%loop.inner.found,%loop.outer.latch<latch><exiting>,%vector.ph,%vector.body,%vector.body.interim,%middle.block,%vector.early.exit.0,%vector.early.exit.check<exiting>
+ ; CHECK-NEXT:    Loop at depth 2 containing: %loop.middle<header>,%loop.inner.end<latch><exiting>,%vector.ph,%vector.body<exiting>,%vector.body.interim,%middle.block
+@@ -476,7 +476,7 @@ exit:
+ 
+ ; Same as above but with early exits reversed: the first early exit goes outside
+ ; all loops and the second goes to the outer loop.
+-define i64 @multi_early_exit_to_outside_and_outer(ptr dereferenceable(1024) %p1, ptr dereferenceable(1024) %p2, i1 %c) {
++define i64 @multi_early_exit_to_outside_and_outer(ptr dereferenceable(1024) %p1, ptr dereferenceable(1024) %p2, i1 %c) nofree {
+ ; CHECK-LABEL: Loop info for function 'multi_early_exit_to_outside_and_outer':
+ ; CHECK-NEXT: Loop at depth 1 containing: %loop.outer<header>,%loop.middle,%loop.inner.end,%loop.middle.end,%loop.inner.found,%loop.outer.latch<latch><exiting>,%vector.ph,%vector.body,%vector.body.interim,%middle.block,%vector.early.exit.1,%vector.early.exit.check<exiting>
+ ; CHECK-NEXT:    Loop at depth 2 containing: %loop.middle<header>,%loop.inner.end<latch><exiting>,%vector.ph,%vector.body<exiting>,%vector.body.interim,%middle.block
+diff --git a/llvm/test/Transforms/LoopVectorize/single_early_exit.ll b/llvm/test/Transforms/LoopVectorize/single_early_exit.ll
+index 3848ac68a07c8..86e5416fe52a7 100644
+--- a/llvm/test/Transforms/LoopVectorize/single_early_exit.ll
++++ b/llvm/test/Transforms/LoopVectorize/single_early_exit.ll
+@@ -300,42 +300,17 @@ define void @inner_loop_trip_count_depends_on_outer_iv(ptr align 8 dereferenceab
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp eq i64 [[OUTER_IV]], 0
+ ; CHECK-NEXT:    br i1 [[C_1]], label [[THEN:%.*]], label [[INNER_HEADER_PREHEADER:%.*]]
+ ; CHECK:       inner.header.preheader:
+-; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i64 [[OUTER_IV]], 4
+-; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], label [[SCALAR_PH:%.*]], label [[VECTOR_PH:%.*]]
+-; CHECK:       vector.ph:
+-; CHECK-NEXT:    [[N_MOD_VF:%.*]] = urem i64 [[OUTER_IV]], 4
+-; CHECK-NEXT:    [[N_VEC:%.*]] = sub i64 [[OUTER_IV]], [[N_MOD_VF]]
+-; CHECK-NEXT:    br label [[VECTOR_BODY:%.*]]
+-; CHECK:       vector.body:
+-; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY_INTERIM:%.*]] ]
+-; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr ptr, ptr [[GEP_SRC]], i64 [[INDEX]]
+-; CHECK-NEXT:    [[WIDE_LOAD:%.*]] = load <4 x ptr>, ptr [[TMP0]], align 8
+-; CHECK-NEXT:    [[TMP1:%.*]] = icmp eq <4 x ptr> [[WIDE_LOAD]], splat (ptr null)
+-; CHECK-NEXT:    [[TMP2:%.*]] = freeze <4 x i1> [[TMP1]]
+-; CHECK-NEXT:    [[TMP3:%.*]] = call i1 @llvm.vector.reduce.or.v4i1(<4 x i1> [[TMP2]])
+-; CHECK-NEXT:    [[INDEX_NEXT]] = add nuw i64 [[INDEX]], 4
+-; CHECK-NEXT:    [[TMP4:%.*]] = icmp eq i64 [[INDEX_NEXT]], [[N_VEC]]
+-; CHECK-NEXT:    br i1 [[TMP3]], label [[VECTOR_EARLY_EXIT:%.*]], label [[VECTOR_BODY_INTERIM]]
+-; CHECK:       vector.body.interim:
+-; CHECK-NEXT:    br i1 [[TMP4]], label [[MIDDLE_BLOCK:%.*]], label [[VECTOR_BODY]], !llvm.loop [[LOOP7:![0-9]+]]
+-; CHECK:       middle.block:
+-; CHECK-NEXT:    [[CMP_N:%.*]] = icmp eq i64 [[OUTER_IV]], [[N_VEC]]
+-; CHECK-NEXT:    br i1 [[CMP_N]], label [[OUTER_LATCH_LOOPEXIT:%.*]], label [[SCALAR_PH]]
+-; CHECK:       vector.early.exit:
+-; CHECK-NEXT:    br label [[THEN_LOOPEXIT:%.*]]
+-; CHECK:       scalar.ph:
+-; CHECK-NEXT:    [[BC_RESUME_VAL:%.*]] = phi i64 [ [[N_VEC]], [[MIDDLE_BLOCK]] ], [ 0, [[INNER_HEADER_PREHEADER]] ]
+ ; CHECK-NEXT:    br label [[INNER_HEADER:%.*]]
+ ; CHECK:       inner.header:
+-; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[IV_NEXT:%.*]], [[INNER_LATCH:%.*]] ], [ [[BC_RESUME_VAL]], [[SCALAR_PH]] ]
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[IV_NEXT:%.*]], [[INNER_LATCH:%.*]] ], [ 0, [[INNER_HEADER_PREHEADER]] ]
+ ; CHECK-NEXT:    [[GEP_IV:%.*]] = getelementptr ptr, ptr [[GEP_SRC]], i64 [[IV]]
+ ; CHECK-NEXT:    [[L:%.*]] = load ptr, ptr [[GEP_IV]], align 8
+ ; CHECK-NEXT:    [[C_2:%.*]] = icmp eq ptr [[L]], null
+-; CHECK-NEXT:    br i1 [[C_2]], label [[THEN_LOOPEXIT]], label [[INNER_LATCH]]
++; CHECK-NEXT:    br i1 [[C_2]], label [[THEN_LOOPEXIT:%.*]], label [[INNER_LATCH]]
+ ; CHECK:       inner.latch:
+ ; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 1
+ ; CHECK-NEXT:    [[EXITCOND_NOT:%.*]] = icmp eq i64 [[IV_NEXT]], [[OUTER_IV]]
+-; CHECK-NEXT:    br i1 [[EXITCOND_NOT]], label [[OUTER_LATCH_LOOPEXIT]], label [[INNER_HEADER]], !llvm.loop [[LOOP8:![0-9]+]]
++; CHECK-NEXT:    br i1 [[EXITCOND_NOT]], label [[OUTER_LATCH_LOOPEXIT:%.*]], label [[INNER_HEADER]]
+ ; CHECK:       then.loopexit:
+ ; CHECK-NEXT:    br label [[THEN]]
+ ; CHECK:       then:
+@@ -413,7 +388,7 @@ define i64 @loop_guard_needed_to_prove_dereferenceable(i32 %x, i1 %cmp2) {
+ ; CHECK-NEXT:    [[TMP5:%.*]] = icmp eq i64 [[INDEX_NEXT]], [[N_VEC]]
+ ; CHECK-NEXT:    br i1 [[TMP4]], label [[VECTOR_EARLY_EXIT:%.*]], label [[VECTOR_BODY_INTERIM]]
+ ; CHECK:       vector.body.interim:
+-; CHECK-NEXT:    br i1 [[TMP5]], label [[MIDDLE_BLOCK:%.*]], label [[VECTOR_BODY]], !llvm.loop [[LOOP9:![0-9]+]]
++; CHECK-NEXT:    br i1 [[TMP5]], label [[MIDDLE_BLOCK:%.*]], label [[VECTOR_BODY]], !llvm.loop [[LOOP7:![0-9]+]]
+ ; CHECK:       middle.block:
+ ; CHECK-NEXT:    [[CMP_N:%.*]] = icmp eq i64 [[TMP0]], [[N_VEC]]
+ ; CHECK-NEXT:    br i1 [[CMP_N]], label [[EXIT_LOOPEXIT:%.*]], label [[SCALAR_PH]]
+@@ -433,7 +408,7 @@ define i64 @loop_guard_needed_to_prove_dereferenceable(i32 %x, i1 %cmp2) {
+ ; CHECK:       loop.latch:
+ ; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i64 [[IV]], [[N_EXT]]
+-; CHECK-NEXT:    br i1 [[EC]], label [[EXIT_LOOPEXIT]], label [[LOOP_HEADER]], !llvm.loop [[LOOP10:![0-9]+]]
++; CHECK-NEXT:    br i1 [[EC]], label [[EXIT_LOOPEXIT]], label [[LOOP_HEADER]], !llvm.loop [[LOOP8:![0-9]+]]
+ ; CHECK:       exit.loopexit:
+ ; CHECK-NEXT:    [[RES_PH:%.*]] = phi i64 [ [[IV]], [[LOOP_HEADER]] ], [ -1, [[LOOP_LATCH]] ], [ -1, [[MIDDLE_BLOCK]] ], [ [[TMP8]], [[VECTOR_EARLY_EXIT]] ]
+ ; CHECK-NEXT:    br label [[EXIT]]
+@@ -559,7 +534,7 @@ define i64 @loop_guards_needed_to_prove_deref_multiple(i32 %x, i1 %c, ptr derefe
+ ; CHECK-NEXT:    [[TMP7:%.*]] = icmp eq i64 [[INDEX_NEXT]], [[IV_NEXT]]
+ ; CHECK-NEXT:    br i1 [[TMP6]], label [[VECTOR_EARLY_EXIT:%.*]], label [[VECTOR_BODY_INTERIM]]
+ ; CHECK:       vector.body.interim:
+-; CHECK-NEXT:    br i1 [[TMP7]], label [[LOOP_LATCH:%.*]], label [[VECTOR_BODY]], !llvm.loop [[LOOP11:![0-9]+]]
++; CHECK-NEXT:    br i1 [[TMP7]], label [[LOOP_LATCH:%.*]], label [[VECTOR_BODY]], !llvm.loop [[LOOP9:![0-9]+]]
+ ; CHECK:       middle.block:
+ ; CHECK-NEXT:    [[CMP_N:%.*]] = icmp eq i64 [[TMP2]], [[IV_NEXT]]
+ ; CHECK-NEXT:    br i1 [[CMP_N]], label [[EXIT_LOOPEXIT:%.*]], label [[SCALAR_PH]]
+@@ -579,7 +554,7 @@ define i64 @loop_guards_needed_to_prove_deref_multiple(i32 %x, i1 %c, ptr derefe
+ ; CHECK:       loop.latch:
+ ; CHECK-NEXT:    [[IV_NEXT1]] = add i64 [[IV1]], 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i64 [[IV1]], [[N_EXT]]
+-; CHECK-NEXT:    br i1 [[EC]], label [[EXIT_LOOPEXIT]], label [[LOOP_HEADER1]], !llvm.loop [[LOOP12:![0-9]+]]
++; CHECK-NEXT:    br i1 [[EC]], label [[EXIT_LOOPEXIT]], label [[LOOP_HEADER1]], !llvm.loop [[LOOP10:![0-9]+]]
+ ; CHECK:       exit.loopexit:
+ ; CHECK-NEXT:    [[RES_PH:%.*]] = phi i64 [ [[IV1]], [[LOOP_HEADER1]] ], [ 0, [[LOOP_LATCH1]] ], [ 0, [[LOOP_LATCH]] ], [ [[TMP10]], [[VECTOR_EARLY_EXIT]] ]
+ ; CHECK-NEXT:    br label [[EXIT]]
+@@ -632,6 +607,4 @@ exit:
+ ; CHECK: [[LOOP8]] = distinct !{[[LOOP8]], [[META2]], [[META1]]}
+ ; CHECK: [[LOOP9]] = distinct !{[[LOOP9]], [[META1]], [[META2]]}
+ ; CHECK: [[LOOP10]] = distinct !{[[LOOP10]], [[META2]], [[META1]]}
+-; CHECK: [[LOOP11]] = distinct !{[[LOOP11]], [[META1]], [[META2]]}
+-; CHECK: [[LOOP12]] = distinct !{[[LOOP12]], [[META2]], [[META1]]}
+ ;.
+diff --git a/llvm/test/Transforms/LoopVectorize/single_early_exit_live_outs.ll b/llvm/test/Transforms/LoopVectorize/single_early_exit_live_outs.ll
+index fdc11882d9673..68b1e45d060cd 100644
+--- a/llvm/test/Transforms/LoopVectorize/single_early_exit_live_outs.ll
++++ b/llvm/test/Transforms/LoopVectorize/single_early_exit_live_outs.ll
+@@ -1,7 +1,7 @@
+ ; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 4
+ ; RUN: opt -S < %s -p loop-vectorize -force-vector-width=4 | FileCheck %s
+ 
+-declare void @init_mem(ptr, i64);
++declare void @init_mem(ptr, i64) nofree
+ 
+ define i64 @same_exit_block_pre_inc_use1() {
+ ; CHECK-LABEL: define i64 @same_exit_block_pre_inc_use1() {
+diff --git a/llvm/test/Transforms/MergeICmps/X86/no-gep-other-work.ll b/llvm/test/Transforms/MergeICmps/X86/no-gep-other-work.ll
+index 71c040a4a0e8e..5fe5688590359 100644
+--- a/llvm/test/Transforms/MergeICmps/X86/no-gep-other-work.ll
++++ b/llvm/test/Transforms/MergeICmps/X86/no-gep-other-work.ll
+@@ -10,32 +10,23 @@ target triple = "x86_64-grtev4-linux-gnu"
+ declare void @other_work()
+ 
+ define i1 @test(ptr dereferenceable(2) %arg, ptr dereferenceable(2) %arg1) {
+-; GLOBAL-LABEL: @test(
+-; GLOBAL-NEXT:  "if+entry":
+-; GLOBAL-NEXT:    call void @other_work()
+-; GLOBAL-NEXT:    [[MEMCMP:%.*]] = call i32 @memcmp(ptr [[ARG:%.*]], ptr [[ARG1:%.*]], i64 2)
+-; GLOBAL-NEXT:    [[TMP0:%.*]] = icmp eq i32 [[MEMCMP]], 0
+-; GLOBAL-NEXT:    br label [[JOIN:%.*]]
+-; GLOBAL:       join:
+-; GLOBAL-NEXT:    ret i1 [[TMP0]]
+-;
+-; AT-POINT-LABEL: @test(
+-; AT-POINT-NEXT:  entry:
+-; AT-POINT-NEXT:    call void @other_work()
+-; AT-POINT-NEXT:    [[ARG_OFF:%.*]] = getelementptr inbounds i8, ptr [[ARG:%.*]], i64 1
+-; AT-POINT-NEXT:    [[ARG1_OFF:%.*]] = getelementptr inbounds i8, ptr [[ARG1:%.*]], i64 1
+-; AT-POINT-NEXT:    [[ARG_OFF_VAL:%.*]] = load i8, ptr [[ARG_OFF]], align 1
+-; AT-POINT-NEXT:    [[ARG1_OFF_VAL:%.*]] = load i8, ptr [[ARG1_OFF]], align 1
+-; AT-POINT-NEXT:    [[CMP_OFF:%.*]] = icmp eq i8 [[ARG_OFF_VAL]], [[ARG1_OFF_VAL]]
+-; AT-POINT-NEXT:    br i1 [[CMP_OFF]], label [[IF:%.*]], label [[JOIN:%.*]]
+-; AT-POINT:       if:
+-; AT-POINT-NEXT:    [[ARG_VAL:%.*]] = load i8, ptr [[ARG]], align 1
+-; AT-POINT-NEXT:    [[ARG1_VAL:%.*]] = load i8, ptr [[ARG1]], align 1
+-; AT-POINT-NEXT:    [[CMP:%.*]] = icmp eq i8 [[ARG_VAL]], [[ARG1_VAL]]
+-; AT-POINT-NEXT:    br label [[JOIN]]
+-; AT-POINT:       join:
+-; AT-POINT-NEXT:    [[PHI:%.*]] = phi i1 [ false, [[ENTRY:%.*]] ], [ [[CMP]], [[IF]] ]
+-; AT-POINT-NEXT:    ret i1 [[PHI]]
++; CHECK-LABEL: @test(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    call void @other_work()
++; CHECK-NEXT:    [[ARG_OFF:%.*]] = getelementptr inbounds i8, ptr [[ARG:%.*]], i64 1
++; CHECK-NEXT:    [[ARG1_OFF:%.*]] = getelementptr inbounds i8, ptr [[ARG1:%.*]], i64 1
++; CHECK-NEXT:    [[ARG_OFF_VAL:%.*]] = load i8, ptr [[ARG_OFF]], align 1
++; CHECK-NEXT:    [[ARG1_OFF_VAL:%.*]] = load i8, ptr [[ARG1_OFF]], align 1
++; CHECK-NEXT:    [[CMP_OFF:%.*]] = icmp eq i8 [[ARG_OFF_VAL]], [[ARG1_OFF_VAL]]
++; CHECK-NEXT:    br i1 [[CMP_OFF]], label [[IF:%.*]], label [[JOIN:%.*]]
++; CHECK:       if:
++; CHECK-NEXT:    [[ARG_VAL:%.*]] = load i8, ptr [[ARG]], align 1
++; CHECK-NEXT:    [[ARG1_VAL:%.*]] = load i8, ptr [[ARG1]], align 1
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i8 [[ARG_VAL]], [[ARG1_VAL]]
++; CHECK-NEXT:    br label [[JOIN]]
++; CHECK:       join:
++; CHECK-NEXT:    [[PHI:%.*]] = phi i1 [ false, [[ENTRY:%.*]] ], [ [[CMP]], [[IF]] ]
++; CHECK-NEXT:    ret i1 [[PHI]]
+ ;
+ entry:
+   call void @other_work()
+@@ -86,3 +77,6 @@ join:
+   %phi = phi i1 [ false, %entry ], [ %cmp, %if ]
+   ret i1 %phi
+ }
++;; NOTE: These prefixes are unused and the list is autogenerated. Do not add tests below this line:
++; AT-POINT: {{.*}}
++; GLOBAL: {{.*}}
+diff --git a/llvm/test/Transforms/PhaseOrdering/AArch64/constraint-elimination-placement.ll b/llvm/test/Transforms/PhaseOrdering/AArch64/constraint-elimination-placement.ll
+index 73b16f124757e..be18ec052c8d0 100644
+--- a/llvm/test/Transforms/PhaseOrdering/AArch64/constraint-elimination-placement.ll
++++ b/llvm/test/Transforms/PhaseOrdering/AArch64/constraint-elimination-placement.ll
+@@ -97,17 +97,18 @@ define void @test2(ptr %this) #0 {
+ ; CHECK-SAME: ptr nofree writeonly captures(none) [[THIS:%.*]]) local_unnamed_addr #[[ATTR2:[0-9]+]] {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[CALL1_I_I:%.*]] = tail call i1 @test2_fn4(i8 undef)
++; CHECK-NEXT:    br i1 [[CALL1_I_I]], label [[COND_TRUE_I_I:%.*]], label [[COMMON_RET:%.*]]
++; CHECK:       cond.true.i.i:
+ ; CHECK-NEXT:    [[CALL2_I_I:%.*]] = load i64, ptr inttoptr (i64 8 to ptr), align 8
+ ; CHECK-NEXT:    [[COND38:%.*]] = icmp eq i64 [[CALL2_I_I]], 13
+-; CHECK-NEXT:    [[COND:%.*]] = select i1 [[CALL1_I_I]], i1 [[COND38]], i1 false
+-; CHECK-NEXT:    br i1 [[COND]], label [[TEST2_FN2_EXIT12:%.*]], label [[COMMON_RET:%.*]]
+-; CHECK:       test2_fn2.exit12:
++; CHECK-NEXT:    br i1 [[COND38]], label [[TEST2_FN2_EXIT14:%.*]], label [[COMMON_RET]]
++; CHECK:       test2_fn2.exit14:
+ ; CHECK-NEXT:    [[CALL8_I_I8:%.*]] = tail call fastcc noundef i32 @test2_fn6()
+ ; CHECK-NEXT:    [[CMP4_I11:%.*]] = icmp eq i32 [[CALL8_I_I8]], 0
+ ; CHECK-NEXT:    br i1 [[CMP4_I11]], label [[TEST2_FN2_EXIT24:%.*]], label [[COMMON_RET]]
+ ; CHECK:       common.ret:
+ ; CHECK-NEXT:    ret void
+-; CHECK:       test2_fn2.exit24:
++; CHECK:       test2_fn2.exit28:
+ ; CHECK-NEXT:    store i8 0, ptr [[THIS]], align 4
+ ; CHECK-NEXT:    br label [[COMMON_RET]]
+ ;
+@@ -136,8 +137,12 @@ define i1 @test2_fn2(ptr %__rhs) #0 {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[CALL:%.*]] = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) [[__RHS]])
+ ; CHECK-NEXT:    [[CALL1_I:%.*]] = tail call i1 @test2_fn4(i8 undef)
++; CHECK-NEXT:    br i1 [[CALL1_I]], label [[COND_TRUE_I:%.*]], label [[ENTRY:%.*]]
++; CHECK:       cond.true.i:
+ ; CHECK-NEXT:    [[CALL2_I:%.*]] = load i64, ptr inttoptr (i64 8 to ptr), align 8
+-; CHECK-NEXT:    [[COND_I:%.*]] = select i1 [[CALL1_I]], i64 [[CALL2_I]], i64 0
++; CHECK-NEXT:    br label [[ENTRY]]
++; CHECK:       test2_fn3.exit:
++; CHECK-NEXT:    [[COND_I:%.*]] = phi i64 [ [[CALL2_I]], [[COND_TRUE_I]] ], [ 0, [[ENTRY1:%.*]] ]
+ ; CHECK-NEXT:    [[CMP2_NOT:%.*]] = icmp eq i64 [[CALL]], [[COND_I]]
+ ; CHECK-NEXT:    br i1 [[CMP2_NOT]], label [[IF_END:%.*]], label [[CLEANUP:%.*]]
+ ; CHECK:       if.end:
+@@ -145,7 +150,7 @@ define i1 @test2_fn2(ptr %__rhs) #0 {
+ ; CHECK-NEXT:    [[CMP4:%.*]] = icmp eq i32 [[CALL8_I]], 0
+ ; CHECK-NEXT:    br label [[CLEANUP]]
+ ; CHECK:       cleanup:
+-; CHECK-NEXT:    [[RETVAL_0:%.*]] = phi i1 [ [[CMP4]], [[IF_END]] ], [ false, [[ENTRY:%.*]] ]
++; CHECK-NEXT:    [[RETVAL_0:%.*]] = phi i1 [ [[CMP4]], [[IF_END]] ], [ false, [[ENTRY]] ]
+ ; CHECK-NEXT:    ret i1 [[RETVAL_0]]
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/SimplifyCFG/fold-branch-to-common-dest.ll b/llvm/test/Transforms/SimplifyCFG/fold-branch-to-common-dest.ll
+index d1c574051a0ee..f23a99a77e492 100644
+--- a/llvm/test/Transforms/SimplifyCFG/fold-branch-to-common-dest.ll
++++ b/llvm/test/Transforms/SimplifyCFG/fold-branch-to-common-dest.ll
+@@ -1295,17 +1295,15 @@ define void @load_derefable_two_preds(i8 %v0, i8 %v1, i8 %v2, ptr dereferenceabl
+ ; CHECK-NEXT:    [[C0:%.*]] = icmp eq i8 [[V0:%.*]], 0
+ ; CHECK-NEXT:    br i1 [[C0]], label [[PRED0:%.*]], label [[PRED1:%.*]]
+ ; CHECK:       pred0:
+-; CHECK-NEXT:    [[C1:%.*]] = icmp eq i8 [[V1:%.*]], 0
+-; CHECK-NEXT:    [[V3_OLD:%.*]] = load i8, ptr [[P:%.*]], align 1
+-; CHECK-NEXT:    [[C3_OLD:%.*]] = icmp eq i8 [[V3_OLD]], 0
+-; CHECK-NEXT:    [[OR_COND1:%.*]] = select i1 [[C1]], i1 true, i1 [[C3_OLD]]
+-; CHECK-NEXT:    br i1 [[OR_COND1]], label [[FINAL_LEFT:%.*]], label [[FINAL_RIGHT:%.*]]
++; CHECK-NEXT:    [[C3_OLD:%.*]] = icmp eq i8 [[V3_OLD:%.*]], 0
++; CHECK-NEXT:    br i1 [[C3_OLD]], label [[FINAL_LEFT:%.*]], label [[DISPATCH:%.*]]
+ ; CHECK:       pred1:
+ ; CHECK-NEXT:    [[C2:%.*]] = icmp eq i8 [[V2:%.*]], 0
+-; CHECK-NEXT:    [[V3:%.*]] = load i8, ptr [[P]], align 1
++; CHECK-NEXT:    br i1 [[C2]], label [[DISPATCH]], label [[FINAL_RIGHT:%.*]]
++; CHECK:       dispatch:
++; CHECK-NEXT:    [[V3:%.*]] = load i8, ptr [[P:%.*]], align 1
+ ; CHECK-NEXT:    [[C3:%.*]] = icmp eq i8 [[V3]], 0
+-; CHECK-NEXT:    [[OR_COND:%.*]] = select i1 [[C2]], i1 [[C3]], i1 false
+-; CHECK-NEXT:    br i1 [[OR_COND]], label [[FINAL_LEFT]], label [[FINAL_RIGHT]]
++; CHECK-NEXT:    br i1 [[C3]], label [[FINAL_LEFT]], label [[FINAL_RIGHT]]
+ ; CHECK:       common.ret:
+ ; CHECK-NEXT:    ret void
+ ; CHECK:       final_left:

@@ -201,8 +201,8 @@ bb.k:                                             ; preds = %_ZN6hermes2vm9GCPoi
   %i.bz = getelementptr inbounds nuw i8, ptr %1, i64 8489
   %i.ca = load i8, ptr %i.bz, align 1, !range !108
   %i.cb = trunc nuw i8 %i.ca to i1
-  %i.cc = select i1 %i.by, i1 %i.cb, i1 false
-  br i1 %i.cc, label %bb.l, label %_ZN6hermes2vm13GCPointerBase7setNullERNS0_7HadesGCE.exit, !prof !7
+  %i.cc = select i1 %i.by, i1 %i.cb, i1 false, !prof !121
+  br i1 %i.cc, label %bb.l, label %_ZN6hermes2vm13GCPointerBase7setNullERNS0_7HadesGCE.exit, !prof !121
 
 bb.l:                                             ; preds = %bb.k
   %i.cd = load i32, ptr %i.bt, align 4, !tbaa !3  ; 2 uses
@@ -422,4 +422,5 @@ attributes #6 = { noreturn nounwind }
 !118 = distinct !{!118, !"_ZNK6hermes2vm10NativeArgs5beginEv"}
 !119 = !{!53, !66, i64 32}
 !120 = !{!60, !4, i64 0}
+!121 = !{!"branch_weights", i32 1, i32 4001}
 end_hunk_0

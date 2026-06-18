@@ -201,10 +201,9 @@ bb.f:                                             ; preds = %bb.d, %bb.b, %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.i = load i64, ptr %i.h, align 8, !tbaa !19
   %i.j = icmp eq i64 %i.i, 0
-  %_ZZNK16OpenColorIO_v2_516XmlReaderElement10getXmlFileB5cxx11EvE9emptyNameB5cxx11.val = load ptr, ptr @_ZZNK16OpenColorIO_v2_516XmlReaderElement10getXmlFileB5cxx11EvE9emptyNameB5cxx11, align 8
-  %.val = load ptr, ptr %i.g, align 8
-  %6 = select i1 %i.j, ptr %_ZZNK16OpenColorIO_v2_516XmlReaderElement10getXmlFileB5cxx11EvE9emptyNameB5cxx11.val, ptr %.val ; 3 uses
-  %.not.i9 = icmp eq ptr %6, null
+  %6 = select i1 %i.j, ptr @_ZZNK16OpenColorIO_v2_516XmlReaderElement10getXmlFileB5cxx11EvE9emptyNameB5cxx11, ptr %i.g
+  %.val = load ptr, ptr %6, align 8, !tbaa !16    ; 3 uses
+  %.not.i9 = icmp eq ptr %.val, null
   br i1 %.not.i9, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
@@ -219,8 +218,8 @@ bb.g:                                             ; preds = %bb.f
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit unwind label %bb.t
 
 bb.h:                                             ; preds = %bb.f
-  %i.r = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %6) #29
-  %i.s = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull %6, i64 noundef %i.r)
+  %i.r = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %.val) #29
+  %i.s = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull %.val, i64 noundef %i.r)
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit unwind label %bb.t ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit: ; preds = %bb.g, %bb.h
@@ -623,10 +622,9 @@ bb.t:                                             ; preds = %bb.r, %bb.p, %bb.o
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.ba = load i64, ptr %i.az, align 8, !tbaa !19
   %i.bb = icmp eq i64 %i.ba, 0
-  %_ZZNK16OpenColorIO_v2_516XmlReaderElement10getXmlFileB5cxx11EvE9emptyNameB5cxx11.val = load ptr, ptr @_ZZNK16OpenColorIO_v2_516XmlReaderElement10getXmlFileB5cxx11EvE9emptyNameB5cxx11, align 8
-  %.val = load ptr, ptr %i.ay, align 8
-  %11 = select i1 %i.bb, ptr %_ZZNK16OpenColorIO_v2_516XmlReaderElement10getXmlFileB5cxx11EvE9emptyNameB5cxx11.val, ptr %.val ; 3 uses
-  %.not.i20 = icmp eq ptr %11, null
+  %11 = select i1 %i.bb, ptr @_ZZNK16OpenColorIO_v2_516XmlReaderElement10getXmlFileB5cxx11EvE9emptyNameB5cxx11, ptr %i.ay
+  %.val = load ptr, ptr %11, align 8, !tbaa !16   ; 3 uses
+  %.not.i20 = icmp eq ptr %.val, null
   br i1 %.not.i20, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
@@ -641,8 +639,8 @@ bb.u:                                             ; preds = %bb.t
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit unwind label %bb.ab
 
 bb.v:                                             ; preds = %bb.t
-  %i.bj = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %11) #29
-  %i.bk = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %9, ptr noundef nonnull %11, i64 noundef %i.bj)
+  %i.bj = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %.val) #29
+  %i.bk = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %9, ptr noundef nonnull %.val, i64 noundef %i.bj)
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit unwind label %bb.ab ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit: ; preds = %bb.u, %bb.v

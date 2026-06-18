@@ -201,12 +201,7 @@ bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 123
   %i.f = load i8, ptr %i.e, align 1
   %i.g = icmp sgt i8 %i.f, 0
-  br i1 %i.g, label %2, label %_ZNK6icu_788Calendar11internalGetE19UCalendarDateFieldsi.exit
-
-2:                                                ; preds = %bb.c
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 84
-  %4 = load i32, ptr %3, align 4
-  br label %_ZNK6icu_788Calendar11internalGetE19UCalendarDateFieldsi.exit
+  br i1 %i.g, label %bb.e, label %_ZNK6icu_788Calendar11internalGetE19UCalendarDateFieldsi.exit
 
 bb.d:                                             ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 105
@@ -214,13 +209,14 @@ bb.d:                                             ; preds = %bb.b
   %i.j = icmp sgt i8 %i.i, 0
   br i1 %i.j, label %bb.e, label %_ZNK6icu_788Calendar11internalGetE19UCalendarDateFieldsi.exit
 
-bb.e:                                             ; preds = %bb.d
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 12
+bb.e:                                             ; preds = %bb.d, %bb.c
+  %.sink5 = phi i64 [ 84, %bb.c ], [ 12, %bb.d ]
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %.sink5
   %i.l = load i32, ptr %i.k, align 4
   br label %_ZNK6icu_788Calendar11internalGetE19UCalendarDateFieldsi.exit
 
-_ZNK6icu_788Calendar11internalGetE19UCalendarDateFieldsi.exit: ; preds = %bb.e, %bb.d, %2, %bb.c, %bb.a
-  %.03 = phi i32 [ 0, %bb.a ], [ 1, %bb.c ], [ %4, %2 ], [ %i.l, %bb.e ], [ 1, %bb.d ]
+_ZNK6icu_788Calendar11internalGetE19UCalendarDateFieldsi.exit: ; preds = %bb.e, %bb.d, %bb.c, %bb.a
+  %.03 = phi i32 [ 0, %bb.a ], [ 1, %bb.c ], [ 1, %bb.d ], [ %i.l, %bb.e ]
   ret i32 %.03
 }
 

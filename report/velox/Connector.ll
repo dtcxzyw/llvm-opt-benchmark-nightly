@@ -201,8 +201,7 @@ _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE23_M_add_ref_lock_nothrowE
 
 _ZNKSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EE16_M_get_use_countEv.exit.i.i.i.i.i: ; preds = %bb.p
   %i.bf = load atomic i32, ptr %i.az monotonic, align 8, !noalias !114
-  %.fr.i.i.i.i.i = freeze i32 %i.bf
-  %.not.i.i.i13.i.i = icmp eq i32 %.fr.i.i.i.i.i, 0
+  %.not.i.i.i13.i.i = icmp eq i32 %i.bf, 0
   br i1 %.not.i.i.i13.i.i, label %_ZNKSt8weak_ptrIN8facebook5velox5cache11ScanTrackerEE4lockEv.exit.thread.i.i, label %_ZNKSt8weak_ptrIN8facebook5velox5cache11ScanTrackerEE4lockEv.exit.i.i
 
 _ZNKSt8weak_ptrIN8facebook5velox5cache11ScanTrackerEE4lockEv.exit.thread.i.i: ; preds = %_ZNKSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EE16_M_get_use_countEv.exit.i.i.i.i.i, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE23_M_add_ref_lock_nothrowEv.exit.i.i.i.i.i.i, %bb.m
@@ -210,7 +209,7 @@ _ZNKSt8weak_ptrIN8facebook5velox5cache11ScanTrackerEE4lockEv.exit.thread.i.i: ; 
   br label %bb.q
 
 _ZNKSt8weak_ptrIN8facebook5velox5cache11ScanTrackerEE4lockEv.exit.i.i: ; preds = %_ZNKSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EE16_M_get_use_countEv.exit.i.i.i.i.i
-  %i.bg = load ptr, ptr %i.av, align 8, !noalias !114 ; 3 uses
+  %i.bg = load ptr, ptr %i.av, align 8, !tbaa !108, !noalias !114 ; 3 uses
   store ptr %i.bg, ptr %8, align 16, !tbaa !105, !alias.scope !111, !noalias !100
   %.not.i.i = icmp eq ptr %i.bg, null
   br i1 %.not.i.i, label %bb.q, label %_ZNSt12__shared_ptrIN8facebook5velox5cache11ScanTrackerELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit35.i.i
@@ -613,16 +612,14 @@ bb.b:                                             ; preds = %bb.a
   %i.i = and i64 %i.b, 255                        ; 4 uses
   %i.j = shl nuw i64 1, %i.i                      ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %7 = load ptr, ptr %i.k, align 8, !tbaa !126    ; 3 uses
-  %i.l = load ptr, ptr %1, align 8
-  %8 = load i32, ptr %4, align 4
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !126  ; 3 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.f
   %.0.i76 = phi i64 [ %2, %bb.b ], [ %i.ai, %bb.f ] ; 2 uses
   %.022.i75 = phi i64 [ %i.j, %bb.b ], [ %i.ah, %bb.f ]
   %i.m = tail call noundef i64 @llvm.x86.bmi.bzhi.64(i64 %.0.i76, i64 range(i64 0, 256) %i.i)
-  %i.n = getelementptr inbounds nuw [64 x i8], ptr %7, i64 %i.m ; 3 uses
+  %i.n = getelementptr inbounds nuw [64 x i8], ptr %i.l, i64 %i.m ; 3 uses
   %i.o = load <16 x i8>, ptr %i.n, align 16       ; 2 uses
   %i.p = icmp eq <16 x i8> %i.o, %i.h
   %i.q = bitcast <16 x i1> %i.p to i16
@@ -645,9 +642,11 @@ bb.d:                                             ; preds = %.critedge.i
   %i.z = zext nneg i32 %i.w to i64                ; 3 uses
   tail call void @llvm.assume(i1 %i.t)
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %i.z
+  %7 = load ptr, ptr %1, align 8, !tbaa !231
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !3
   %i.ac = zext i32 %i.ab to i64
-  %i.ad = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %i.ac
+  %i.ad = getelementptr inbounds nuw [24 x i8], ptr %7, i64 %i.ac
+  %8 = load i32, ptr %4, align 4, !tbaa !130
   %i.ae = load i32, ptr %i.ad, align 4, !tbaa !130
   %i.af = icmp eq i32 %8, %i.ae
   br i1 %i.af, label %bb.g, label %.critedge.i, !prof !62, !llvm.loop !132
@@ -669,7 +668,7 @@ bb.g:                                             ; preds = %bb.d
 .thread65:                                        ; preds = %bb.f, %bb.e, %..thread65_crit_edge
   %.pre-phi85 = phi i64 [ %.pre84, %..thread65_crit_edge ], [ %i.j, %bb.e ], [ %i.j, %bb.f ] ; 2 uses
   %.pre-phi = phi i64 [ %i.b, %..thread65_crit_edge ], [ %i.i, %bb.e ], [ %i.i, %bb.f ]
-  %i.ak = phi ptr [ %.pre, %..thread65_crit_edge ], [ %7, %bb.e ], [ %7, %bb.f ] ; 2 uses
+  %i.ak = phi ptr [ %.pre, %..thread65_crit_edge ], [ %i.l, %bb.e ], [ %i.l, %bb.f ] ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 12
   %.0.copyload.i.i = load i16, ptr %i.al, align 1
   %i.am = zext i16 %.0.copyload.i.i to i64        ; 2 uses

@@ -201,21 +201,19 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 32
   call void @_RINvNtNtNtNtCskQDtHcQtBkN_5tokio7runtime9scheduler12multi_thread6worker14block_in_placeNCNvXNtCs7p2uQeJxui2_9deltalake6readerNtB1s_21StreamToReaderAdapterNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4next0INtNtB2A_6option6OptionINtNtB2A_6result6ResultNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchNtNtCsfYVtenZkBsn_12arrow_schema5error10ArrowErrorEEEB1u_(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %i.j, ptr noalias noundef nonnull align 8 dereferenceable(16) %i.k, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @145)
-  %i.l = load i64, ptr %i.j, align 8, !range !654, !noundef !19 ; 2 uses
-  %.not3 = icmp eq i64 %i.l, -9223372036854775807
-  br i1 %.not3, label %3, label %bb.b
+  %i.l = load i64, ptr %i.j, align 8, !range !654, !noundef !19
+  %switch = icmp slt i64 %i.l, -9223372036854775806
+  br i1 %switch, label %2, label %bb.b
 
-bb.b:                                             ; preds = %bb.a
-  %2 = icmp ne i64 %i.l, -9223372036854775808
-  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %i.n = load i8, ptr %i.m, align 8, !range !113
-  %i.o = trunc nuw i8 %i.n to i1
-  %or.cond = select i1 %2, i1 %i.o, i1 false
-  br i1 %or.cond, label %bb.c, label %3
-
-3:                                                ; preds = %bb.b, %bb.a
+2:                                                ; preds = %bb.a, %bb.b
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 8 dereferenceable(40) %i.j, i64 40, i1 false)
   br label %bb.aw
+
+bb.b:                                             ; preds = %bb.a
+  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %i.n = load i8, ptr %i.m, align 8, !range !113, !noundef !19
+  %i.o = trunc nuw i8 %i.n to i1
+  br i1 %i.o, label %bb.c, label %2
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.i, ptr noundef nonnull align 8 dereferenceable(40) %i.j, i64 40, i1 false)
@@ -618,7 +616,7 @@ _RNvMs_NtCs7p2uQeJxui2_9deltalake6readerNtB4_21StreamToReaderAdapter15normalize_
   %cond6 = icmp eq i64 %i.dw, -9223372036854775808
   br i1 %cond6, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchNtNtCsfYVtenZkBsn_12arrow_schema5error10ArrowErrorEECs7p2uQeJxui2_9deltalake.exit, label %bb.aw
 
-bb.aw:                                            ; preds = %_RNvMs_NtCs7p2uQeJxui2_9deltalake6readerNtB4_21StreamToReaderAdapter15normalize_batch.exit, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchNtNtCsfYVtenZkBsn_12arrow_schema5error10ArrowErrorEECs7p2uQeJxui2_9deltalake.exit, %3
+bb.aw:                                            ; preds = %_RNvMs_NtCs7p2uQeJxui2_9deltalake6readerNtB4_21StreamToReaderAdapter15normalize_batch.exit, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchNtNtCsfYVtenZkBsn_12arrow_schema5error10ArrowErrorEECs7p2uQeJxui2_9deltalake.exit, %2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   ret void
 

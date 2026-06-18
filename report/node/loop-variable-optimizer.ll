@@ -201,17 +201,19 @@ _ZNK2v88internal8compiler4Edge4fromEv.exit22:     ; preds = %_ZNK2v88internal8co
   %i.et = load ptr, ptr %i.es, align 8
   %i.eu = getelementptr inbounds nuw i8, ptr %i.et, i64 16
   %i.ev = load i16, ptr %i.eu, align 8
-  %3 = icmp ne i16 %i.ev, 1
-  %4 = load i32, ptr %0, align 8
-  %.not16.a = icmp eq i32 %i.eg, %4
-  %or.cond = select i1 %3, i1 true, i1 %.not16.a
-  br i1 %or.cond, label %bb.t, label %bb.s
+  %.not16.a = icmp eq i16 %i.ev, 1
+  br i1 %.not16.a, label %3, label %bb.t
 
-bb.s:                                             ; preds = %_ZNK2v88internal8compiler4Edge4fromEv.exit22
+3:                                                ; preds = %_ZNK2v88internal8compiler4Edge4fromEv.exit22
+  %4 = load i32, ptr %0, align 8
+  %.not16 = icmp eq i32 %i.eg, %4
+  br i1 %.not16, label %bb.t, label %bb.s
+
+bb.s:                                             ; preds = %3
   call void @_ZN2v88internal8compiler21LoopVariableOptimizer13VisitBackedgeEPNS1_4NodeES4_(ptr noundef nonnull align 8 dereferenceable(168) %0, ptr noundef nonnull %i.ae, ptr noundef nonnull %i.es)
   br label %bb.x
 
-bb.t:                                             ; preds = %_ZNK2v88internal8compiler4Edge4fromEv.exit22
+bb.t:                                             ; preds = %3, %_ZNK2v88internal8compiler4Edge4fromEv.exit22
   %i.ew = getelementptr inbounds nuw i8, ptr %i.es, i64 16
   %i.ex = load i32, ptr %i.ew, align 8
   %i.ey = load i32, ptr %2, align 4

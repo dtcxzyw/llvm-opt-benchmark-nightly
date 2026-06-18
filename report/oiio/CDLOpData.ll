@@ -201,11 +201,17 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.c = load ptr, ptr %i.b, align 8
   %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 8 dereferenceable(256) %0)
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 168
-  %2 = load i32, ptr %1, align 8
-  %switch.i = icmp ugt i32 %2, 1
-  %3 = select i1 %i.d, i1 %switch.i, i1 false
-  ret i1 %3
+  br i1 %i.d, label %1, label %4
+
+1:                                                ; preds = %bb.a
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 168
+  %3 = load i32, ptr %2, align 8, !tbaa !19
+  %switch.i = icmp ugt i32 %3, 1
+  br label %4
+
+4:                                                ; preds = %1, %bb.a
+  %5 = phi i1 [ false, %bb.a ], [ %switch.i, %1 ]
+  ret i1 %5
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
