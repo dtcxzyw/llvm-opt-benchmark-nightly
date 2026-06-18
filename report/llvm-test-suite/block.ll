@@ -200,10 +200,10 @@ add_sorted_list.exit:                             ; preds = %.lr.ph34.i, %._crit
 
 .preheader342.lr.ph:                              ; preds = %add_sorted_list.exit
   %.not324423 = icmp slt i32 %i.jq, 1
-  %.not325419.a = icmp slt i32 %i.js, 1
-  %.not326414 = icmp slt i32 %i.ju, 1
-  %brmerge.a = select i1 %.not324423, i1 true, i1 %.not325419.a
-  %brmerge454 = select i1 %brmerge.a, i1 true, i1 %.not326414
+  %.not325419.a = icmp slt i32 %i.ju, 1
+  %.not326414 = icmp slt i32 %i.js, 1
+  %brmerge.a = select i1 %.not324423, i1 true, i1 %.not326414
+  %brmerge454 = select i1 %brmerge.a, i1 true, i1 %.not325419.a
   br i1 %brmerge454, label %._crit_edge429.split, label %.preheader342.lr.ph.split.split.split
 
 .preheader342.lr.ph.split.split.split:            ; preds = %.preheader342.lr.ph
@@ -606,10 +606,10 @@ del_sorted_list.exit:                             ; preds = %.lr.ph33.i, %.prehe
 
 .preheader228.lr.ph:                              ; preds = %del_sorted_list.exit
   %.not213262 = icmp slt i32 %i.fl, 1
-  %.not214258.a = icmp slt i32 %i.fo, 1
-  %.not215253 = icmp slt i32 %i.fs, 1
-  %brmerge.a = select i1 %.not213262, i1 true, i1 %.not214258.a
-  %brmerge282 = select i1 %brmerge.a, i1 true, i1 %.not215253
+  %.not214258.a = icmp slt i32 %i.fs, 1
+  %.not215253 = icmp slt i32 %i.fo, 1
+  %brmerge.a = select i1 %.not213262, i1 true, i1 %.not215253
+  %brmerge282 = select i1 %brmerge.a, i1 true, i1 %.not214258.a
   br i1 %brmerge282, label %._crit_edge268.split, label %.preheader228.lr.ph.split.split.split
 
 .preheader228.lr.ph.split.split.split:            ; preds = %.preheader228.lr.ph

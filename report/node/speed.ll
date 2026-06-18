@@ -201,7 +201,7 @@ bb.yy:                                            ; preds = %bb.yw
   %i.drr = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.324, i32 noundef 256, ptr noundef nonnull @.str.100, double noundef %i.dro, double noundef %i.drq, double noundef %i.drn, double noundef %i.drp) ; 0 uses
   br label %.split3181
 
-.split3181:                                       ; preds = %bb.yx, %bb.yy, %bb.yv
+.split3181:                                       ; preds = %bb.yv, %bb.yy, %bb.yx
   store i32 1, ptr @testnum, align 4, !tbaa !5
   %i.drs = load i8, ptr %i.k, align 1, !tbaa !26
   %.not1826 = icmp eq i8 %i.drs, 0

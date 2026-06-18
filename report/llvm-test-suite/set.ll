@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %bb.d
   store i32 %i.bx, ptr %i.bv, align 4, !tbaa !4
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.d, %bb.e
+bb.f:                                             ; preds = %bb.e, %bb.d
   %i.by = add nuw nsw i32 %.03542, 1              ; 2 uses
   %exitcond.not = icmp eq i32 %i.by, %i.z
   br i1 %exitcond.not, label %._crit_edge44, label %bb.d

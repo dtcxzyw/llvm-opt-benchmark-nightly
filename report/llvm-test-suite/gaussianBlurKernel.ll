@@ -88,7 +88,7 @@ bb.a:
   %i.bn = icmp sgt i32 %0, 8
   %i.bo = icmp sgt i32 %1, 8
   %or.cond = and i1 %i.bn, %i.bo
-  br i1 %or.cond, label %.preheader68.preheader, label %._crit_edge81.split
+  br i1 %or.cond, label %.preheader68.preheader, label %._crit_edge81
 
 .preheader68.preheader:                           ; preds = %.preheader69
   %i.bp = add nsw i32 %0, -4
@@ -163,10 +163,6 @@ bb.a:
   %i.ea = mul nuw nsw i64 %i.dz, %i.bm
   %i.eb = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.ea ; 2 uses
   br label %.preheader67
-
-._crit_edge81.split:                              ; preds = %._crit_edge, %.preheader69
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
-  ret void
 
 .preheader67:                                     ; preds = %.preheader68, %.preheader67
   %indvars.iv93 = phi i64 [ 4, %.preheader68 ], [ %i.ec, %.preheader67 ] ; 20 uses
@@ -424,7 +420,11 @@ bb.a:
 ._crit_edge:                                      ; preds = %.preheader67
   %indvars.iv.next98 = add nuw nsw i64 %indvars.iv97, 1 ; 2 uses
   %exitcond101.not = icmp eq i64 %indvars.iv.next98, %wide.trip.count100
-  br i1 %exitcond101.not, label %._crit_edge81.split, label %.preheader68, !llvm.loop !13
+  br i1 %exitcond101.not, label %._crit_edge81, label %.preheader68, !llvm.loop !13
+
+._crit_edge81:                                    ; preds = %._crit_edge, %.preheader69
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
+  ret void
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)

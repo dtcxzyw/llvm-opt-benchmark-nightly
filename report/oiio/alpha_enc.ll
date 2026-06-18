@@ -201,7 +201,7 @@ bb.m:                                             ; preds = %bb.m, %.epil.prehea
   %exitcond29.not.i.i.i.i = icmp eq i64 %indvars.iv.next26.i.i.i.i, %wide.trip.count28.i.i.i.i
   br i1 %exitcond29.not.i.i.i.i, label %vector.body.preheader, label %.lr.ph.i.i.i.i, !llvm.loop !58
 
-vector.body.preheader:                            ; preds = %._crit_edge.i.i.i.i, %bb.l
+vector.body.preheader:                            ; preds = %bb.l, %._crit_edge.i.i.i.i
   %i.bz = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %wide.load = load <4 x i8>, ptr %i.a, align 16, !tbaa !53
   %wide.load30 = load <4 x i8>, ptr %i.bz, align 4, !tbaa !53

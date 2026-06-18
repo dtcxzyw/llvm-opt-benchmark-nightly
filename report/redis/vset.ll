@@ -201,23 +201,15 @@ bb.a:
   %sqrt = tail call nnan ninf double @llvm.sqrt.f64(double %i.g)
   %i.h = fdiv nnan double 1.000000e+00, %sqrt
   %i.i = fptrunc nnan double %i.h to float        ; 2 uses
-  %2 = icmp ne i32 %1, 0
-  %3 = icmp ne i32 %0, 0
-  %or.cond = and i1 %2, %3
-  br i1 %or.cond, label %.preheader, label %._crit_edge22.split
+  %.not = icmp eq i32 %1, 0
+  %.not23 = icmp eq i32 %0, 0
+  %or.cond = or i1 %.not, %.not23
+  br i1 %or.cond, label %._crit_edge22, label %.preheader
 
-.preheader:                                       ; preds = %bb.a, %._crit_edge
-  %.021 = phi i32 [ %4, %._crit_edge ], [ 0, %bb.a ] ; 3 uses
+.preheader:                                       ; preds = %bb.a, %._crit_edge.us
+  %.021 = phi i32 [ %2, %._crit_edge.us ], [ 0, %bb.a ] ; 3 uses
   %i.j = mul i32 %.021, %0
   br label %bb.b
-
-._crit_edge22.split:                              ; preds = %._crit_edge, %bb.a
-  ret ptr %i.f
-
-._crit_edge:                                      ; preds = %bit_count.exit
-  %4 = add nuw i32 %.021, 1                       ; 2 uses
-  %exitcond24.not = icmp eq i32 %4, %1
-  br i1 %exitcond24.not, label %._crit_edge22.split, label %.preheader, !llvm.loop !83
 
 bb.b:                                             ; preds = %.preheader, %bit_count.exit
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %bit_count.exit ] ; 2 uses
@@ -233,7 +225,7 @@ bb.b:                                             ; preds = %.preheader, %bit_co
   %i.n = add i32 %.057.i, %.08.i                  ; 2 uses
   %i.o = lshr i32 %.057.i, 1                      ; 2 uses
   %.not.i = icmp eq i32 %i.o, 0
-  br i1 %.not.i, label %bit_count.exit.loopexit, label %.lr.ph.i, !llvm.loop !84
+  br i1 %.not.i, label %bit_count.exit.loopexit, label %.lr.ph.i, !llvm.loop !83
 
 bit_count.exit.loopexit:                          ; preds = %.lr.ph.i
   %i.p = and i32 %i.n, 1
@@ -247,10 +239,18 @@ bit_count.exit:                                   ; preds = %bit_count.exit.loop
   %.0.lcssa.i = phi float [ %i.i, %bb.b ], [ %i.t, %bit_count.exit.loopexit ]
   %i.u = zext i32 %i.l to i64
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %i.u
-  store float %.0.lcssa.i, ptr %i.v, align 4, !tbaa !85
+  store float %.0.lcssa.i, ptr %i.v, align 4, !tbaa !84
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.b
-  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !87
+  br i1 %exitcond.not, label %._crit_edge.us, label %bb.b, !llvm.loop !86
+
+._crit_edge.us:                                   ; preds = %bit_count.exit
+  %2 = add nuw i32 %.021, 1                       ; 2 uses
+  %exitcond26.not = icmp eq i32 %2, %1
+  br i1 %exitcond26.not, label %._crit_edge22, label %.preheader, !llvm.loop !87
+
+._crit_edge22:                                    ; preds = %._crit_edge.us, %bb.a
+  ret ptr %i.f
 }
 
 ; Function Attrs: nounwind uwtable
@@ -277,7 +277,7 @@ bb.a:
   br label %.lr.ph.us
 
 .lr.ph24.split.preheader:                         ; preds = %.lr.ph24
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.d, i8 0, i64 %i.c, i1 false), !tbaa !85
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.d, i8 0, i64 %i.c, i1 false), !tbaa !84
   br label %._crit_edge25
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %._crit_edge.us
@@ -293,27 +293,27 @@ bb.a:
   %.01820.us = phi float [ %i.ac, %.lr.ph.us.new ], [ 0.000000e+00, %.lr.ph.us ]
   %niter = phi i64 [ %niter.next.3, %.lr.ph.us.new ], [ 0, %.lr.ph.us ]
   %i.j = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv
-  %i.k = load float, ptr %i.j, align 4, !tbaa !85
+  %i.k = load float, ptr %i.j, align 4, !tbaa !84
   %i.l = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv
-  %i.m = load float, ptr %i.l, align 4, !tbaa !85
+  %i.m = load float, ptr %i.l, align 4, !tbaa !84
   %i.n = tail call float @llvm.fmuladd.f32(float %i.k, float %i.m, float %.01820.us)
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
   %i.o = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv.next
-  %i.p = load float, ptr %i.o, align 4, !tbaa !85
+  %i.p = load float, ptr %i.o, align 4, !tbaa !84
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv.next
-  %i.r = load float, ptr %i.q, align 4, !tbaa !85
+  %i.r = load float, ptr %i.q, align 4, !tbaa !84
   %i.s = tail call float @llvm.fmuladd.f32(float %i.p, float %i.r, float %i.n)
   %indvars.iv.next.1 = or disjoint i64 %indvars.iv, 2 ; 2 uses
   %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv.next.1
-  %i.u = load float, ptr %i.t, align 4, !tbaa !85
+  %i.u = load float, ptr %i.t, align 4, !tbaa !84
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv.next.1
-  %i.w = load float, ptr %i.v, align 4, !tbaa !85
+  %i.w = load float, ptr %i.v, align 4, !tbaa !84
   %i.x = tail call float @llvm.fmuladd.f32(float %i.u, float %i.w, float %i.s)
   %indvars.iv.next.2 = or disjoint i64 %indvars.iv, 3 ; 2 uses
   %i.y = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv.next.2
-  %i.z = load float, ptr %i.y, align 4, !tbaa !85
+  %i.z = load float, ptr %i.y, align 4, !tbaa !84
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv.next.2
-  %i.ab = load float, ptr %i.aa, align 4, !tbaa !85
+  %i.ab = load float, ptr %i.aa, align 4, !tbaa !84
   %i.ac = tail call float @llvm.fmuladd.f32(float %i.z, float %i.ab, float %i.x) ; 3 uses
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
@@ -334,9 +334,9 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
   %.01820.us.epil = phi float [ %.01820.us.epil.init, %.epil.preheader ], [ %i.ah, %bb.b ]
   %epil.iter = phi i64 [ 0, %.epil.preheader ], [ %epil.iter.next, %bb.b ]
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv.epil
-  %i.ae = load float, ptr %i.ad, align 4, !tbaa !85
+  %i.ae = load float, ptr %i.ad, align 4, !tbaa !84
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv.epil
-  %i.ag = load float, ptr %i.af, align 4, !tbaa !85
+  %i.ag = load float, ptr %i.af, align 4, !tbaa !84
   %i.ah = tail call float @llvm.fmuladd.f32(float %i.ae, float %i.ag, float %.01820.us.epil) ; 2 uses
   %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
@@ -346,7 +346,7 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
 ._crit_edge.us:                                   ; preds = %bb.b, %._crit_edge.us.unr-lcssa
   %.lcssa = phi float [ %i.ac, %._crit_edge.us.unr-lcssa ], [ %i.ah, %bb.b ]
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv29
-  store float %.lcssa, ptr %i.ai, align 4, !tbaa !85
+  store float %.lcssa, ptr %i.ai, align 4, !tbaa !84
   %indvars.iv.next30 = add nuw nsw i64 %indvars.iv29, 1 ; 2 uses
   %exitcond33.not = icmp eq i64 %indvars.iv.next30, %i.b
   br i1 %exitcond33.not, label %._crit_edge25, label %.lr.ph.us, !llvm.loop !91
@@ -749,7 +749,7 @@ bb.o:                                             ; preds = %.lr.ph
   %i.bj = load double, ptr %i.d, align 8, !tbaa !118
   %i.bk = fptrunc double %i.bj to float
   %i.bl = getelementptr inbounds nuw [4 x i8], ptr %i.be, i64 %indvars.iv
-  store float %i.bk, ptr %i.bl, align 4, !tbaa !85
+  store float %i.bk, ptr %i.bl, align 4, !tbaa !84
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #22
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.bm = load i64, ptr %i.c, align 8, !tbaa !116 ; 2 uses
@@ -1152,7 +1152,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.b
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.m
   %.08696.us = phi i64 [ %i.az, %bb.m ], [ 0, %.lr.ph ] ; 5 uses
   %i.ao = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %.08696.us ; 2 uses
-  %i.ap = load float, ptr %i.ao, align 4, !tbaa !85
+  %i.ap = load float, ptr %i.ao, align 4, !tbaa !84
   %i.aq = fmul float %i.ap, 5.000000e-01
   %i.ar = fcmp ogt float %i.aq, %4
   br i1 %i.ar, label %._crit_edge, label %bb.g
@@ -1178,7 +1178,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %.thread.us, %bb.h
   %i.bc = load ptr, ptr @RedisModule_ReplyWithDouble, align 8, !tbaa !13
-  %i.bd = load float, ptr %i.ao, align 4, !tbaa !85
+  %i.bd = load float, ptr %i.ao, align 4, !tbaa !84
   %i.be = fpext float %i.bd to double
   %i.bf = fmul double %i.be, 5.000000e-01
   %i.bg = fsub double 1.000000e+00, %i.bf
@@ -1211,7 +1211,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 .lr.ph.split.split.split.us:                      ; preds = %.lr.ph.split.split, %bb.n
   %.08696.us109 = phi i64 [ %i.bz, %bb.n ], [ 0, %.lr.ph.split.split ] ; 5 uses
   %i.bo = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %.08696.us109 ; 2 uses
-  %i.bp = load float, ptr %i.bo, align 4, !tbaa !85
+  %i.bp = load float, ptr %i.bo, align 4, !tbaa !84
   %i.bq = fmul float %i.bp, 5.000000e-01
   %i.br = fcmp ogt float %i.bq, %4
   br i1 %i.br, label %._crit_edge, label %bb.n
@@ -1226,7 +1226,7 @@ bb.n:                                             ; preds = %.lr.ph.split.split.
   %i.by = tail call i32 %i.bw(ptr noundef %0, ptr noundef %i.bx) #22 ; 0 uses
   %i.bz = add nuw nsw i64 %.08696.us109, 1
   %i.ca = load ptr, ptr @RedisModule_ReplyWithDouble, align 8, !tbaa !13
-  %i.cb = load float, ptr %i.bo, align 4, !tbaa !85
+  %i.cb = load float, ptr %i.bo, align 4, !tbaa !84
   %i.cc = fpext float %i.cb to double
   %i.cd = fmul double %i.cc, 5.000000e-01
   %i.ce = fsub double 1.000000e+00, %i.cd
@@ -1237,7 +1237,7 @@ bb.n:                                             ; preds = %.lr.ph.split.split.
 .lr.ph.split.split.split:                         ; preds = %.lr.ph.split.split, %bb.o
   %.08696 = phi i64 [ %i.cr, %bb.o ], [ 0, %.lr.ph.split.split ] ; 5 uses
   %i.cg = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %.08696
-  %i.ch = load float, ptr %i.cg, align 4, !tbaa !85
+  %i.ch = load float, ptr %i.cg, align 4, !tbaa !84
   %i.ci = fmul float %i.ch, 5.000000e-01
   %i.cj = fcmp ogt float %i.ci, %4
   br i1 %i.cj, label %._crit_edge, label %bb.o
@@ -1317,7 +1317,7 @@ bb.a:
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !13
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !13   ; 2 uses
-  %i.l = load float, ptr %i.k, align 4, !tbaa !85
+  %i.l = load float, ptr %i.k, align 4, !tbaa !84
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !13
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 48
@@ -1720,7 +1720,7 @@ bb.bg:                                            ; preds = %bb.bf
   store ptr %i.ia, ptr %i.ib, align 8, !tbaa !13
   %i.ic = load double, ptr %i.c, align 8, !tbaa !118
   %i.id = fptrunc double %i.ic to float
-  store float %i.id, ptr %i.ia, align 4, !tbaa !85
+  store float %i.id, ptr %i.ia, align 4, !tbaa !84
   %i.ie = inttoptr i64 %.0175.lcssa to ptr
   %i.if = getelementptr inbounds nuw i8, ptr %i.ht, i64 40
   store ptr %i.ie, ptr %i.if, align 8, !tbaa !13
@@ -2123,7 +2123,7 @@ vectorSetGetQuantName.exit:                       ; preds = %bb.j, %switch.looku
   %i.bd = tail call i32 %i.ax(ptr noundef %0, ptr noundef %i.az, i64 noundef %i.bc) #22 ; 0 uses
   %i.be = load ptr, ptr @RedisModule_ReplyWithDouble, align 8, !tbaa !13
   %i.bf = getelementptr inbounds nuw i8, ptr %i.ag, i64 28
-  %i.bg = load float, ptr %i.bf, align 4, !tbaa !85
+  %i.bg = load float, ptr %i.bf, align 4, !tbaa !84
   %i.bh = fpext float %i.bg to double
   %i.bi = tail call i32 %i.be(ptr noundef %0, double noundef %i.bh) #22 ; 0 uses
   br i1 %i.am, label %bb.k, label %bb.m
@@ -2131,7 +2131,7 @@ vectorSetGetQuantName.exit:                       ; preds = %bb.j, %switch.looku
 bb.k:                                             ; preds = %vectorSetGetQuantName.exit
   %i.bj = load ptr, ptr @RedisModule_ReplyWithDouble, align 8, !tbaa !13
   %i.bk = getelementptr inbounds nuw i8, ptr %i.ag, i64 24
-  %i.bl = load float, ptr %i.bk, align 8, !tbaa !85
+  %i.bl = load float, ptr %i.bk, align 8, !tbaa !84
   %i.bm = fpext float %i.bl to double
   %i.bn = tail call i32 %i.bj(ptr noundef %0, double noundef %i.bm) #22 ; 0 uses
   br label %bb.m
@@ -2167,7 +2167,7 @@ bb.l:                                             ; preds = %bb.i
   %indvars.iv83 = phi i64 [ %indvars.iv.next84, %.lr.ph79 ], [ 0, %bb.l ] ; 2 uses
   %i.cg = load ptr, ptr @RedisModule_ReplyWithDouble, align 8, !tbaa !13
   %i.ch = getelementptr inbounds nuw [4 x i8], ptr %i.bu, i64 %indvars.iv83
-  %i.ci = load float, ptr %i.ch, align 4, !tbaa !85
+  %i.ci = load float, ptr %i.ch, align 4, !tbaa !84
   %i.cj = fpext float %i.ci to double
   %i.ck = tail call i32 %i.cg(ptr noundef %0, double noundef %i.cj) #22 ; 0 uses
   %indvars.iv.next84 = add nuw nsw i64 %indvars.iv83, 1 ; 2 uses
@@ -2570,9 +2570,9 @@ attributes #25 = { nounwind willreturn memory(read) }
 !81 = distinct !{!81, !22}
 !82 = distinct !{!82, !22}
 !83 = distinct !{!83, !22}
-!84 = distinct !{!84, !22}
-!85 = !{!86, !86, i64 0}
-!86 = !{!"float", !11, i64 0}
+!84 = !{!85, !85, i64 0}
+!85 = !{!"float", !11, i64 0}
+!86 = distinct !{!86, !22}
 !87 = distinct !{!87, !22}
 !88 = distinct !{!88, !22}
 !89 = distinct !{!89, !90}
@@ -2622,7 +2622,7 @@ attributes #25 = { nounwind willreturn memory(read) }
 !133 = distinct !{!133, !22}
 !134 = distinct !{!134, !22}
 !135 = !{!136, !10, i64 8}
-!136 = !{!"", !137, i64 0, !10, i64 8, !10, i64 12, !86, i64 16, !10, i64 20}
+!136 = !{!"", !137, i64 0, !10, i64 8, !10, i64 12, !85, i64 16, !10, i64 20}
 !137 = !{!"p2 _ZTS8hnswNode", !26, i64 0}
 !138 = distinct !{!138, !22}
 !139 = !{!136, !137, i64 0}

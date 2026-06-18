@@ -84,12 +84,12 @@ bb.a:
 
 .preheader20.preheader:                           ; preds = %bb.a
   %i.c = add nsw i32 %i.a, %0
-  %i.d = add nsw i32 %i.a, %2
-  %i.e = add nsw i32 %i.a, %1
+  %i.d = add nsw i32 %i.a, %1
+  %i.e = add nsw i32 %i.a, %2
   %i.f = sext i32 %2 to i64
-  %i.g = sext i32 %i.d to i64
+  %i.g = sext i32 %i.e to i64
   %i.h = sext i32 %1 to i64
-  %i.i = sext i32 %i.e to i64
+  %i.i = sext i32 %i.d to i64
   %i.j = sext i32 %0 to i64
   %i.k = sext i32 %i.c to i64
   br label %.preheader20
@@ -100,16 +100,16 @@ bb.a:
   %i.m = getelementptr inbounds [4096 x i8], ptr @c, i64 %indvars.iv32.a
   br label %.preheader
 
-.preheader:                                       ; preds = %.preheader20, %._crit_edge.a
-  %indvars.iv29 = phi i64 [ %i.h, %.preheader20 ], [ %indvars.iv.next30, %._crit_edge.a ] ; 3 uses
+.preheader:                                       ; preds = %._crit_edge.a, %.preheader20
+  %indvars.iv29 = phi i64 [ %indvars.iv.next30, %._crit_edge.a ], [ %i.h, %.preheader20 ] ; 3 uses
   %invariant.gep = getelementptr [4 x i8], ptr @b, i64 %indvars.iv29
   %i.n = getelementptr inbounds [4 x i8], ptr %i.m, i64 %indvars.iv29 ; 2 uses
   %.promoted = load float, ptr %i.n, align 4, !tbaa !8
   br label %bb.b
 
-bb.b:                                             ; preds = %.preheader, %bb.b
-  %indvars.iv = phi i64 [ %i.f, %.preheader ], [ %indvars.iv.next, %bb.b ] ; 3 uses
-  %i.o = phi float [ %.promoted, %.preheader ], [ %i.s, %bb.b ]
+bb.b:                                             ; preds = %bb.b, %.preheader
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.b ], [ %i.f, %.preheader ] ; 3 uses
+  %i.o = phi float [ %i.s, %bb.b ], [ %.promoted, %.preheader ]
   %i.p = getelementptr inbounds [4 x i8], ptr %i.l, i64 %indvars.iv
   %i.q = load float, ptr %i.p, align 4, !tbaa !8
   %gep = getelementptr [4096 x i8], ptr %invariant.gep, i64 %indvars.iv
@@ -158,13 +158,13 @@ bb.a:
   %indvars.iv.next24 = add nuw nsw i64 %indvars.iv23, %i.e ; 3 uses
   br label %.preheader
 
-.preheader:                                       ; preds = %.preheader11, %._crit_edge.a
-  %indvars.iv20 = phi i64 [ 0, %.preheader11 ], [ %indvars.iv.next21, %._crit_edge.a ] ; 2 uses
+.preheader:                                       ; preds = %._crit_edge.a, %.preheader11
+  %indvars.iv20 = phi i64 [ %indvars.iv.next21, %._crit_edge.a ], [ 0, %.preheader11 ] ; 2 uses
   %indvars.iv.next21 = add nuw nsw i64 %indvars.iv20, %i.e ; 3 uses
   br label %.preheader20.preheader.i
 
-.preheader20.preheader.i:                         ; preds = %.preheader, %mm_inner.exit.loopexit
-  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %mm_inner.exit.loopexit ] ; 2 uses
+.preheader20.preheader.i:                         ; preds = %mm_inner.exit.loopexit, %.preheader
+  %indvars.iv = phi i64 [ %indvars.iv.next, %mm_inner.exit.loopexit ], [ 0, %.preheader ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, %i.e ; 3 uses
   br label %.preheader20.i
 
@@ -175,15 +175,15 @@ bb.a:
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %._crit_edge.i, %.preheader20.i
-  %indvars.iv29.i = phi i64 [ %indvars.iv20, %.preheader20.i ], [ %indvars.iv.next30.i, %._crit_edge.i ] ; 3 uses
+  %indvars.iv29.i = phi i64 [ %indvars.iv.next30.i, %._crit_edge.i ], [ %indvars.iv20, %.preheader20.i ] ; 3 uses
   %invariant.gep.i = getelementptr [4 x i8], ptr @b, i64 %indvars.iv29.i
   %i.h = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv29.i ; 2 uses
   %.promoted.i = load float, ptr %i.h, align 4, !tbaa !8
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %.preheader.i
-  %indvars.iv.i = phi i64 [ %indvars.iv, %.preheader.i ], [ %indvars.iv.next.i, %bb.b ] ; 3 uses
-  %i.i = phi float [ %.promoted.i, %.preheader.i ], [ %i.m, %bb.b ]
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.b ], [ %indvars.iv, %.preheader.i ] ; 3 uses
+  %i.i = phi float [ %i.m, %bb.b ], [ %.promoted.i, %.preheader.i ]
   %i.j = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %indvars.iv.i
   %i.k = load float, ptr %i.j, align 4, !tbaa !8
   %gep.i = getelementptr [4096 x i8], ptr %invariant.gep.i, i64 %indvars.iv.i

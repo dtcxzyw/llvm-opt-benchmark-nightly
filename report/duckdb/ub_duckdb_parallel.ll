@@ -201,60 +201,60 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph.split.us
   invoke void @_ZN6duckdb8Pipeline12GetOperatorsEv(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::vector.21") align 8 %3, ptr noundef nonnull align 8 dereferenceable(224) %i.m)
-          to label %.preheader46.us unwind label %.split.us
+          to label %bb.c unwind label %.split.us
 
-._crit_edge49.split.us.thread:                    ; preds = %._crit_edge.us, %._crit_edge49.split.us
-  tail call void @_ZdlPv(ptr noundef nonnull %12) #36
+._crit_edge49.split.us.thread:                    ; preds = %._crit_edge49.split.us, %.preheader.us
+  tail call void @_ZdlPv(ptr noundef nonnull %i.p) #36
   br label %_ZNSt6vectorISt17reference_wrapperIN6duckdb16PhysicalOperatorEESaIS3_EED2Ev.exit21.us
 
-_ZNSt6vectorISt17reference_wrapperIN6duckdb16PhysicalOperatorEESaIS3_EED2Ev.exit21.us: ; preds = %._crit_edge49.split.us.thread, %._crit_edge49.split.us
+_ZNSt6vectorISt17reference_wrapperIN6duckdb16PhysicalOperatorEESaIS3_EED2Ev.exit21.us: ; preds = %._crit_edge49.split.us.thread, %.preheader.us
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #34
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.041.051.us, i64 16 ; 2 uses
   %.not.us = icmp eq ptr %i.n, %i.d
   br i1 %.not.us, label %._crit_edge53, label %.lr.ph.split.us
 
-bb.c:                                             ; preds = %.preheader.us, %bb.d
-  %.01447.us = phi i64 [ 0, %.preheader.us ], [ %9, %bb.d ] ; 2 uses
-  %4 = load ptr, ptr %10, align 8, !tbaa !680     ; 2 uses
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %.01447.us
-  %i.o = load ptr, ptr %5, align 8, !tbaa !680
-  %i.p = load ptr, ptr %4, align 8, !tbaa !28
-  %6 = getelementptr inbounds nuw i8, ptr %i.p, i64 48
-  %7 = load ptr, ptr %6, align 8
-  %8 = invoke noundef zeroext i1 %7(ptr noundef nonnull align 8 dereferenceable(136) %4, ptr noundef nonnull align 8 dereferenceable(136) %i.o)
-          to label %bb.d unwind label %_ZNSt6vectorISt17reference_wrapperIN6duckdb16PhysicalOperatorEESaIS3_EED2Ev.exit34.thread ; 0 uses
+bb.c:                                             ; preds = %bb.b
+  %i.o = load ptr, ptr %i.h, align 8, !tbaa !330  ; 2 uses
+  %i.p = load ptr, ptr %3, align 8, !tbaa !334    ; 6 uses
+  %.not57 = icmp eq ptr %i.o, %i.p
+  br i1 %.not57, label %.preheader.us, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %9 = add nuw i64 %.01447.us, 1                  ; 2 uses
-  %exitcond.not = icmp eq i64 %9, %16
-  br i1 %exitcond.not, label %._crit_edge.us, label %bb.c, !llvm.loop !685
+  %4 = ptrtoint ptr %i.o to i64
+  %5 = ptrtoint ptr %i.p to i64
+  %6 = sub i64 %4, %5
+  %7 = ashr exact i64 %6, 3
+  br label %.preheader46.us
 
-.preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge.us
-  %.01548.us = phi i64 [ %i.q, %._crit_edge.us ], [ 0, %.preheader.us.preheader ] ; 2 uses
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %.01548.us
-  br label %bb.c
+.preheader.us:                                    ; preds = %bb.c
+  %.not.i.i.i20.us = icmp eq ptr %i.p, null
+  br i1 %.not.i.i.i20.us, label %_ZNSt6vectorISt17reference_wrapperIN6duckdb16PhysicalOperatorEESaIS3_EED2Ev.exit21.us, label %._crit_edge49.split.us.thread
 
-.preheader46.us:                                  ; preds = %bb.b
-  %11 = load ptr, ptr %i.h, align 8, !tbaa !330   ; 2 uses
-  %12 = load ptr, ptr %3, align 8, !tbaa !334     ; 6 uses
-  %.not55 = icmp eq ptr %11, %12
-  br i1 %.not55, label %._crit_edge49.split.us, label %.preheader.us.preheader
+.preheader46.us:                                  ; preds = %bb.d, %._crit_edge49.split.us
+  %.01548.us.us = phi i64 [ %16, %._crit_edge49.split.us ], [ 0, %bb.d ] ; 2 uses
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %.01548.us.us
+  br label %.preheader.us.preheader
 
-.preheader.us.preheader:                          ; preds = %.preheader46.us
-  %13 = ptrtoint ptr %11 to i64
-  %14 = ptrtoint ptr %12 to i64
-  %15 = sub i64 %13, %14
-  %16 = ashr exact i64 %15, 3
-  br label %.preheader.us
+.preheader.us.preheader:                          ; preds = %._crit_edge.us, %.preheader46.us
+  %.01447.us.us = phi i64 [ 0, %.preheader46.us ], [ %i.q, %._crit_edge.us ] ; 2 uses
+  %9 = load ptr, ptr %8, align 8, !tbaa !680      ; 2 uses
+  %10 = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %.01447.us.us
+  %11 = load ptr, ptr %10, align 8, !tbaa !680
+  %12 = load ptr, ptr %9, align 8, !tbaa !28
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 48
+  %14 = load ptr, ptr %13, align 8
+  %15 = invoke noundef zeroext i1 %14(ptr noundef nonnull align 8 dereferenceable(136) %9, ptr noundef nonnull align 8 dereferenceable(136) %11)
+          to label %._crit_edge.us unwind label %_ZNSt6vectorISt17reference_wrapperIN6duckdb16PhysicalOperatorEESaIS3_EED2Ev.exit34.thread ; 0 uses
 
-._crit_edge.us:                                   ; preds = %bb.d
-  %i.q = add nuw i64 %.01548.us, 1                ; 2 uses
-  %exitcond58.not = icmp eq i64 %i.q, %umax57
-  br i1 %exitcond58.not, label %._crit_edge49.split.us.thread, label %.preheader.us, !llvm.loop !686
+._crit_edge.us:                                   ; preds = %.preheader.us.preheader
+  %i.q = add nuw i64 %.01447.us.us, 1             ; 2 uses
+  %exitcond58.not = icmp eq i64 %i.q, %7
+  br i1 %exitcond58.not, label %._crit_edge49.split.us, label %.preheader.us.preheader, !llvm.loop !685
 
-._crit_edge49.split.us:                           ; preds = %.preheader46.us
-  %.not.i.i.i20.us.a = icmp eq ptr %12, null
-  br i1 %.not.i.i.i20.us.a, label %_ZNSt6vectorISt17reference_wrapperIN6duckdb16PhysicalOperatorEESaIS3_EED2Ev.exit21.us, label %._crit_edge49.split.us.thread
+._crit_edge49.split.us:                           ; preds = %._crit_edge.us
+  %16 = add nuw i64 %.01548.us.us, 1              ; 2 uses
+  %.not.i.i.i20.us.a = icmp eq i64 %16, %umax57
+  br i1 %.not.i.i.i20.us.a, label %._crit_edge49.split.us.thread, label %.preheader46.us, !llvm.loop !686
 
 .split.us:                                        ; preds = %bb.b, %.lr.ph.split.us
   %i.r = landingpad { ptr, i32 }
@@ -303,10 +303,10 @@ _ZNSt6vectorISt17reference_wrapperIN6duckdb16PhysicalOperatorEESaIS3_EED2Ev.exit
           cleanup
   br label %_ZNSt6vectorISt17reference_wrapperIN6duckdb16PhysicalOperatorEESaIS3_EED2Ev.exit34
 
-_ZNSt6vectorISt17reference_wrapperIN6duckdb16PhysicalOperatorEESaIS3_EED2Ev.exit34.thread: ; preds = %bb.c
+_ZNSt6vectorISt17reference_wrapperIN6duckdb16PhysicalOperatorEESaIS3_EED2Ev.exit34.thread: ; preds = %.preheader.us.preheader
   %i.w = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPv(ptr noundef nonnull %12) #36
+  tail call void @_ZdlPv(ptr noundef nonnull %i.p) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #34
   br label %bb.h
 

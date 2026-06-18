@@ -199,7 +199,7 @@ bb.o:                                             ; preds = %bb.n, %._crit_edge.
   %.pre = load i64, ptr %i.a, align 16
   br label %.split49
 
-.split49:                                         ; preds = %._crit_edge.5, %bb.b
+.split49:                                         ; preds = %bb.b, %._crit_edge.5
   %i.em = phi i64 [ %.pre, %._crit_edge.5 ], [ %i.g, %bb.b ]
   store i64 %i.em, ptr %1, align 1
   br label %bb.p

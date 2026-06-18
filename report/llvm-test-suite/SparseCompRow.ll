@@ -31,14 +31,14 @@ bb.a:
   %.030 = phi i32 [ %i.ay, %._crit_edge29 ], [ 0, %.preheader.preheader ]
   br label %bb.b
 
-bb.b:                                             ; preds = %.preheader, %._crit_edge
-  %i.c = phi i32 [ %.pre.pre, %.preheader ], [ %i.e, %._crit_edge ] ; 2 uses
-  %indvars.iv33 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next34, %._crit_edge ] ; 2 uses
+bb.b:                                             ; preds = %.preheader, %._crit_edge.us
+  %i.c = phi i32 [ %.pre.pre, %.preheader ], [ %i.e, %._crit_edge.us ] ; 2 uses
+  %indvars.iv33 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next34, %._crit_edge.us ] ; 2 uses
   %indvars.iv.next34 = add nuw nsw i64 %indvars.iv33, 1 ; 3 uses
   %i.d = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv.next34
   %i.e = load i32, ptr %i.d, align 4, !tbaa !4    ; 3 uses
   %i.f = icmp slt i32 %i.c, %i.e
-  br i1 %i.f, label %.lr.ph.preheader, label %._crit_edge
+  br i1 %i.f, label %.lr.ph.preheader, label %._crit_edge.us
 
 .lr.ph.preheader:                                 ; preds = %bb.b
   %i.g = sext i32 %i.c to i64                     ; 4 uses
@@ -71,7 +71,14 @@ bb.b:                                             ; preds = %.preheader, %._crit
   %.02326.unr = phi double [ 0.000000e+00, %.lr.ph.preheader ], [ %i.p, %.lr.ph.prol ]
   %i.q = sub nsw i64 %i.g, %wide.trip.count
   %i.r = icmp ugt i64 %i.q, -4
-  br i1 %i.r, label %._crit_edge, label %.lr.ph
+  br i1 %i.r, label %._crit_edge.us, label %.lr.ph
+
+._crit_edge.us:                                   ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.b
+  %.023.lcssa.us = phi double [ 0.000000e+00, %bb.b ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ %i.ax, %.lr.ph ]
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv33
+  store double %.023.lcssa.us, ptr %7, align 8, !tbaa !8
+  %exitcond38.not = icmp eq i64 %indvars.iv.next34, %wide.trip.count36
+  br i1 %exitcond38.not, label %._crit_edge29, label %bb.b, !llvm.loop !12
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
   %indvars.iv = phi i64 [ %indvars.iv.next.3, %.lr.ph ], [ %indvars.iv.unr, %.lr.ph.prol.loopexit ] ; 6 uses
@@ -113,16 +120,9 @@ bb.b:                                             ; preds = %.preheader, %._crit
   %i.ax = tail call double @llvm.fmuladd.f64(double %i.au, double %i.aw, double %i.ap) ; 2 uses
   %indvars.iv.next.3 = add nsw i64 %indvars.iv, 4 ; 2 uses
   %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %wide.trip.count
-  br i1 %exitcond.not.3, label %._crit_edge, label %.lr.ph, !llvm.loop !12
+  br i1 %exitcond.not.3, label %._crit_edge.us, label %.lr.ph, !llvm.loop !14
 
-._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.b
-  %.023.lcssa = phi double [ 0.000000e+00, %bb.b ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ %i.ax, %.lr.ph ]
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv33
-  store double %.023.lcssa, ptr %7, align 8, !tbaa !8
-  %exitcond37.not = icmp eq i64 %indvars.iv.next34, %wide.trip.count36
-  br i1 %exitcond37.not, label %._crit_edge29, label %bb.b, !llvm.loop !14
-
-._crit_edge29:                                    ; preds = %._crit_edge
+._crit_edge29:                                    ; preds = %._crit_edge.us
   %i.ay = add nuw nsw i32 %.030, 1                ; 2 uses
   %exitcond38.not.a = icmp eq i32 %i.ay, %6
   br i1 %exitcond38.not.a, label %._crit_edge31.split, label %.preheader, !llvm.loop !15

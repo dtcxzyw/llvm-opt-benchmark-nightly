@@ -179,7 +179,7 @@ print_bitboard.exit.i:                            ; preds = %.lr.ph.i.i, %bb.d
   tail call void (ptr, i32, i32, ptr, ...) @_fatal_error_aux(ptr noundef nonnull @.str.1, i32 noundef 23, i32 noundef 1, ptr noundef nonnull @.str.28) #9
   br label %check_hashkey_bit_set.exit
 
-check_hashkey_bit_set.exit:                       ; preds = %bb.c, %print_bitboard.exit.i
+check_hashkey_bit_set.exit:                       ; preds = %print_bitboard.exit.i, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %11)
   %i.aj = xor i32 %.048220, -1
   %i.ak = add nsw i32 %i.b, %i.aj                 ; 2 uses
@@ -223,7 +223,7 @@ print_bitboard.exit.i52:                          ; preds = %.lr.ph.i.i62, %bb.e
   tail call void (ptr, i32, i32, ptr, ...) @_fatal_error_aux(ptr noundef nonnull @.str.1, i32 noundef 23, i32 noundef 1, ptr noundef nonnull @.str.28) #9
   br label %check_hashkey_bit_set.exit66
 
-check_hashkey_bit_set.exit66:                     ; preds = %check_hashkey_bit_set.exit, %print_bitboard.exit.i52
+check_hashkey_bit_set.exit66:                     ; preds = %print_bitboard.exit.i52, %check_hashkey_bit_set.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %10)
   %i.bc = add nsw i32 %.048220, %i.l              ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9)
@@ -265,7 +265,7 @@ print_bitboard.exit.i68:                          ; preds = %.lr.ph.i.i78, %bb.f
   tail call void (ptr, i32, i32, ptr, ...) @_fatal_error_aux(ptr noundef nonnull @.str.1, i32 noundef 23, i32 noundef 1, ptr noundef nonnull @.str.28) #9
   br label %check_hashkey_bit_set.exit82
 
-check_hashkey_bit_set.exit82:                     ; preds = %check_hashkey_bit_set.exit66, %print_bitboard.exit.i68
+check_hashkey_bit_set.exit82:                     ; preds = %print_bitboard.exit.i68, %check_hashkey_bit_set.exit66
   call void @llvm.lifetime.end.p0(ptr nonnull %9)
   %i.bt = add nsw i32 %i.ak, %i.l                 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8)
@@ -307,7 +307,7 @@ print_bitboard.exit.i84:                          ; preds = %.lr.ph.i.i94, %bb.g
   tail call void (ptr, i32, i32, ptr, ...) @_fatal_error_aux(ptr noundef nonnull @.str.1, i32 noundef 23, i32 noundef 1, ptr noundef nonnull @.str.28) #9
   br label %check_hashkey_bit_set.exit98
 
-check_hashkey_bit_set.exit98:                     ; preds = %check_hashkey_bit_set.exit82, %print_bitboard.exit.i84
+check_hashkey_bit_set.exit98:                     ; preds = %print_bitboard.exit.i84, %check_hashkey_bit_set.exit82
   call void @llvm.lifetime.end.p0(ptr nonnull %8)
   br label %bb.m
 
@@ -352,7 +352,7 @@ print_bitboard.exit.i100:                         ; preds = %.lr.ph.i.i110, %bb.
   tail call void (ptr, i32, i32, ptr, ...) @_fatal_error_aux(ptr noundef nonnull @.str.1, i32 noundef 38, i32 noundef 1, ptr noundef nonnull @.str.28) #9
   br label %check_hashkey_bit_not_set.exit
 
-check_hashkey_bit_not_set.exit:                   ; preds = %bb.h, %print_bitboard.exit.i100
+check_hashkey_bit_not_set.exit:                   ; preds = %print_bitboard.exit.i100, %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
   %i.db = xor i32 %.048220, -1
   %i.dc = add nsw i32 %i.b, %i.db                 ; 2 uses
@@ -396,7 +396,7 @@ print_bitboard.exit.i115:                         ; preds = %.lr.ph.i.i125, %bb.
   tail call void (ptr, i32, i32, ptr, ...) @_fatal_error_aux(ptr noundef nonnull @.str.1, i32 noundef 38, i32 noundef 1, ptr noundef nonnull @.str.28) #9
   br label %check_hashkey_bit_not_set.exit129
 
-check_hashkey_bit_not_set.exit129:                ; preds = %check_hashkey_bit_not_set.exit, %print_bitboard.exit.i115
+check_hashkey_bit_not_set.exit129:                ; preds = %print_bitboard.exit.i115, %check_hashkey_bit_not_set.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
   %i.du = add nsw i32 %.048220, %i.l              ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
@@ -438,7 +438,7 @@ print_bitboard.exit.i131:                         ; preds = %.lr.ph.i.i141, %bb.
   tail call void (ptr, i32, i32, ptr, ...) @_fatal_error_aux(ptr noundef nonnull @.str.1, i32 noundef 38, i32 noundef 1, ptr noundef nonnull @.str.28) #9
   br label %check_hashkey_bit_not_set.exit145
 
-check_hashkey_bit_not_set.exit145:                ; preds = %check_hashkey_bit_not_set.exit129, %print_bitboard.exit.i131
+check_hashkey_bit_not_set.exit145:                ; preds = %print_bitboard.exit.i131, %check_hashkey_bit_not_set.exit129
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   %i.el = add nsw i32 %i.dc, %i.l                 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
@@ -480,11 +480,11 @@ print_bitboard.exit.i147:                         ; preds = %.lr.ph.i.i157, %bb.
   tail call void (ptr, i32, i32, ptr, ...) @_fatal_error_aux(ptr noundef nonnull @.str.1, i32 noundef 38, i32 noundef 1, ptr noundef nonnull @.str.28) #9
   br label %check_hashkey_bit_not_set.exit161
 
-check_hashkey_bit_not_set.exit161:                ; preds = %check_hashkey_bit_not_set.exit145, %print_bitboard.exit.i147
+check_hashkey_bit_not_set.exit161:                ; preds = %print_bitboard.exit.i147, %check_hashkey_bit_not_set.exit145
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
   br label %bb.m
 
-bb.m:                                             ; preds = %check_hashkey_bit_set.exit98, %check_hashkey_bit_not_set.exit161
+bb.m:                                             ; preds = %check_hashkey_bit_not_set.exit161, %check_hashkey_bit_set.exit98
   %exitcond.not = icmp eq i32 %i.p, %i.b
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !10
 
@@ -498,9 +498,9 @@ bb.m:                                             ; preds = %check_hashkey_bit_s
   %.pre225 = load i32, ptr getelementptr inbounds nuw (i8, ptr @g_board_size, i64 4), align 4, !tbaa !4
   br label %._crit_edge222.split
 
-._crit_edge222.split:                             ; preds = %._crit_edge222.split.loopexit, %.preheader.lr.ph, %bb.a
-  %i.fc = phi i32 [ %.pre225, %._crit_edge222.split.loopexit ], [ %i.b, %.preheader.lr.ph ], [ %i.b, %bb.a ] ; 5 uses
-  %i.fd = phi i32 [ %.pre, %._crit_edge222.split.loopexit ], [ %i.a, %.preheader.lr.ph ], [ %i.a, %bb.a ] ; 3 uses
+._crit_edge222.split:                             ; preds = %.preheader.lr.ph, %._crit_edge222.split.loopexit, %bb.a
+  %i.fc = phi i32 [ %i.b, %bb.a ], [ %.pre225, %._crit_edge222.split.loopexit ], [ %i.b, %.preheader.lr.ph ] ; 5 uses
+  %i.fd = phi i32 [ %i.a, %bb.a ], [ %.pre, %._crit_edge222.split.loopexit ], [ %i.a, %.preheader.lr.ph ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %3, ptr noundef nonnull align 4 dereferenceable(20) @g_norm_hashkey, i64 20, i1 false)
   %i.fe = getelementptr inbounds nuw i8, ptr %3, i64 16

@@ -176,7 +176,7 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.k, i8 32, i64 %i.r, i1 false), !tbaa !14
   br label %._crit_edge12.split
 
-._crit_edge12.split:                              ; preds = %.preheader.preheader, %.preheader.lr.ph, %bb.a
+._crit_edge12.split:                              ; preds = %.preheader.lr.ph, %.preheader.preheader, %bb.a
   store i1 true, ptr @prologue_done, align 4
   ret void
 }
@@ -297,7 +297,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.av, i8 32, i64 %i.ay, i1 false), !tbaa !14
   br label %._crit_edge41.split
 
-._crit_edge41.split:                              ; preds = %.preheader.preheader, %.preheader.lr.ph, %bb.g
+._crit_edge41.split:                              ; preds = %.preheader.lr.ph, %.preheader.preheader, %bb.g
   ret void
 }
 
@@ -550,14 +550,9 @@ bb.f:                                             ; preds = %bb.e
   %i.bc = icmp eq i64 %i.bb, %i.aw
   br label %.preheader
 
-..loopexit_crit_edge:                             ; preds = %.preheader.new, %.prol.loopexit
-  %.lcssa = phi i32 [ %.lcssa.unr, %.prol.loopexit ], [ %i.bp, %.preheader.new ]
-  %.not44.not = icmp sgt i64 %indvars.iv.next57, %i.ay
-  br i1 %.not44.not, label %.preheader, label %.loopexit48, !llvm.loop !23
-
-.preheader:                                       ; preds = %.preheader.preheader, %..loopexit_crit_edge
-  %indvars.iv56 = phi i64 [ %i.ax, %.preheader.preheader ], [ %indvars.iv.next57, %..loopexit_crit_edge ]
-  %.03753 = phi i32 [ 0, %.preheader.preheader ], [ %.lcssa, %..loopexit_crit_edge ] ; 3 uses
+.preheader:                                       ; preds = %.preheader.preheader, %..loopexit_crit_edge.us
+  %indvars.iv56 = phi i64 [ %i.ax, %.preheader.preheader ], [ %indvars.iv.next57, %..loopexit_crit_edge.us ]
+  %.03753 = phi i32 [ 0, %.preheader.preheader ], [ %.lcssa, %..loopexit_crit_edge.us ] ; 3 uses
   %indvars.iv.next57 = add nsw i64 %indvars.iv56, -1 ; 3 uses
   %i.bd = mul nsw i64 %indvars.iv.next57, %i.az
   %invariant.gep = getelementptr i8, ptr %i.av, i64 %i.bd ; 3 uses
@@ -578,7 +573,7 @@ bb.f:                                             ; preds = %bb.e
   %.lcssa.unr = phi i32 [ poison, %.preheader ], [ %i.bf, %.prol.loopexit.unr-lcssa ]
   %indvars.iv.unr = phi i64 [ %i.aw, %.preheader ], [ %indvars.iv.next.prol, %.prol.loopexit.unr-lcssa ]
   %.149.unr = phi i32 [ %.03753, %.preheader ], [ %i.bf, %.prol.loopexit.unr-lcssa ]
-  br i1 %i.bc, label %..loopexit_crit_edge, label %.preheader.new
+  br i1 %i.bc, label %..loopexit_crit_edge.us, label %.preheader.new
 
 .preheader.new:                                   ; preds = %.prol.loopexit, %.preheader.new
   %indvars.iv = phi i64 [ %indvars.iv.next.1, %.preheader.new ], [ %indvars.iv.unr, %.prol.loopexit ] ; 3 uses
@@ -602,13 +597,18 @@ bb.f:                                             ; preds = %bb.e
   store i8 %i.bs, ptr %gep.1, align 1, !tbaa !14
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %exitcond.not.1 = icmp eq i64 %indvars.iv.next.1, %wide.trip.count
-  br i1 %exitcond.not.1, label %..loopexit_crit_edge, label %.preheader.new, !llvm.loop !24
+  br i1 %exitcond.not.1, label %..loopexit_crit_edge.us, label %.preheader.new, !llvm.loop !23
+
+..loopexit_crit_edge.us:                          ; preds = %.preheader.new, %.prol.loopexit
+  %.lcssa = phi i32 [ %.lcssa.unr, %.prol.loopexit ], [ %i.bp, %.preheader.new ]
+  %.not44.not.us = icmp sgt i64 %indvars.iv.next57, %i.ay
+  br i1 %.not44.not.us, label %.preheader, label %.loopexit48, !llvm.loop !24
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.bu = tail call ptr (i32, i32, ptr, i32, ptr, ...) @Error(i32 noundef 51, i32 noundef 4, ptr noundef nonnull @.str.21, i32 noundef 2, ptr noundef nonnull %i.a, ptr noundef nonnull %i.d, i32 noundef undef, i32 noundef undef) #11 ; 0 uses
   br label %.loopexit48
 
-.loopexit48:                                      ; preds = %..loopexit_crit_edge, %.preheader47, %.preheader.lr.ph, %bb.g, %bb.d, %bb.b
+.loopexit48:                                      ; preds = %..loopexit_crit_edge.us, %.preheader.lr.ph, %.preheader47, %bb.g, %bb.d, %bb.b
   ret void
 }
 

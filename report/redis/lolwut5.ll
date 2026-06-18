@@ -62,15 +62,31 @@ bb.a:
   %i.q = uitofp nneg i32 %i.c to float            ; 3 uses
   br i1 %i.o, label %.preheader, label %._crit_edge57.split
 
-.preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge
-  %.05256 = phi i32 [ %3, %._crit_edge ], [ 0, %.preheader.lr.ph ] ; 3 uses
+.preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge.us
+  %.05256 = phi i32 [ %8, %._crit_edge.us ], [ 0, %.preheader.lr.ph ] ; 3 uses
   %i.r = uitofp nneg i32 %.05256 to float         ; 4 uses
   %i.s = tail call float @llvm.fmuladd.f32(float %i.r, float %i.h, float %i.p)
   %i.t = fadd float %i.s, %i.q
   %i.u = fptosi float %i.t to i32                 ; 2 uses
   %i.v = icmp samesign ugt i32 %.05256, 1
   %i.w = sitofp i32 %i.u to float
-  br i1 %i.v, label %.lr.ph.split.us, label %.lr.ph.split
+  br i1 %i.v, label %.lr.ph.split.us, label %.lr.ph.split.us60
+
+.lr.ph.split.us60:                                ; preds = %.preheader, %.lr.ph.split.us60
+  %.05155.us58 = phi i32 [ %7, %.lr.ph.split.us60 ], [ 0, %.preheader ] ; 2 uses
+  %3 = uitofp nneg i32 %.05155.us58 to float
+  %4 = tail call float @llvm.fmuladd.f32(float %3, float %i.h, float %i.p)
+  %5 = fadd float %4, %i.q
+  %6 = fptosi float %5 to i32
+  tail call void @lwDrawSquare(ptr noundef %i.m, i32 noundef %6, i32 noundef %i.u, float noundef %i.h, float noundef 0.000000e+00, i32 noundef 1) #6
+  %7 = add nuw nsw i32 %.05155.us58, 1            ; 2 uses
+  %exitcond.not = icmp eq i32 %7, %1
+  br i1 %exitcond.not, label %._crit_edge.us, label %.lr.ph.split.us60, !llvm.loop !14
+
+._crit_edge.us:                                   ; preds = %.lr.ph.split.us60, %.lr.ph.split.us
+  %8 = add nuw nsw i32 %.05256, 1                 ; 2 uses
+  %exitcond64.not = icmp eq i32 %8, %2
+  br i1 %exitcond64.not, label %._crit_edge57.split, label %.preheader, !llvm.loop !16
 
 .lr.ph.split.us:                                  ; preds = %.preheader, %.lr.ph.split.us
   %.05155.us = phi i32 [ %i.bi, %.lr.ph.split.us ], [ 0, %.preheader ] ; 2 uses
@@ -120,26 +136,10 @@ bb.a:
   tail call void @lwDrawSquare(ptr noundef %i.m, i32 noundef %i.bd, i32 noundef %i.bh, float noundef %i.h, float noundef %.047.us, i32 noundef 1) #6
   %i.bi = add nuw nsw i32 %.05155.us, 1           ; 2 uses
   %exitcond59.not = icmp eq i32 %i.bi, %1
-  br i1 %exitcond59.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !14
+  br i1 %exitcond59.not, label %._crit_edge.us, label %.lr.ph.split.us, !llvm.loop !14
 
-._crit_edge57.split:                              ; preds = %._crit_edge, %.preheader.lr.ph, %bb.a
+._crit_edge57.split:                              ; preds = %._crit_edge.us, %.preheader.lr.ph, %bb.a
   ret ptr %i.m
-
-._crit_edge:                                      ; preds = %.lr.ph.split, %.lr.ph.split.us
-  %3 = add nuw nsw i32 %.05256, 1                 ; 2 uses
-  %exitcond60.not = icmp eq i32 %3, %2
-  br i1 %exitcond60.not, label %._crit_edge57.split, label %.preheader, !llvm.loop !16
-
-.lr.ph.split:                                     ; preds = %.preheader, %.lr.ph.split
-  %.05155 = phi i32 [ %8, %.lr.ph.split ], [ 0, %.preheader ] ; 2 uses
-  %4 = uitofp nneg i32 %.05155 to float
-  %5 = tail call float @llvm.fmuladd.f32(float %4, float %i.h, float %i.p)
-  %6 = fadd float %5, %i.q
-  %7 = fptosi float %6 to i32
-  tail call void @lwDrawSquare(ptr noundef %i.m, i32 noundef %7, i32 noundef %i.u, float noundef %i.h, float noundef 0.000000e+00, i32 noundef 1) #6
-  %8 = add nuw nsw i32 %.05155, 1                 ; 2 uses
-  %exitcond.not = icmp eq i32 %8, %1
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !14
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)

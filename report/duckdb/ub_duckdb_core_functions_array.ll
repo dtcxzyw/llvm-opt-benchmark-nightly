@@ -201,7 +201,7 @@ bb.j:                                             ; preds = %bb.i
   invoke void @_ZN6duckdb12ValidityMask6ResizeEm(ptr noundef nonnull align 8 dereferenceable(32) %i.v, i64 noundef %i.w)
           to label %bb.m unwind label %bb.l
 
-bb.k:                                             ; preds = %._crit_edge55.split, %._crit_edge
+bb.k:                                             ; preds = %._crit_edge55, %._crit_edge
   %i.x = landingpad { ptr, i32 }
           cleanup
   br label %bb.x
@@ -212,25 +212,15 @@ bb.l:                                             ; preds = %bb.i, %bb.j
   br label %bb.x
 
 bb.m:                                             ; preds = %bb.j, %bb.h
-  %6 = icmp ne i64 %i.g, 0
-  %7 = icmp ne i64 %.lcssa, 0
-  %or.cond = and i1 %6, %7
-  br i1 %or.cond, label %.preheader, label %._crit_edge55.split
+  %.not63 = icmp eq i64 %i.g, 0
+  %.not64 = icmp eq i64 %.lcssa, 0
+  %or.cond = or i1 %.not63, %.not64
+  br i1 %or.cond, label %._crit_edge55, label %.preheader
 
-.preheader:                                       ; preds = %bb.m, %._crit_edge53
-  %.03354 = phi i64 [ %9, %._crit_edge53 ], [ 0, %bb.m ] ; 3 uses
+.preheader:                                       ; preds = %bb.m, %._crit_edge53.us
+  %.03354 = phi i64 [ %6, %._crit_edge53.us ], [ 0, %bb.m ] ; 3 uses
   %i.z = mul i64 %.03354, %.lcssa
   br label %bb.n
-
-._crit_edge55.split:                              ; preds = %._crit_edge53, %bb.m
-  %8 = load i64, ptr %i.f, align 8, !tbaa !113
-  invoke void @_ZN6duckdb6Vector6VerifyEm(ptr noundef nonnull align 8 dereferenceable(104) %2, i64 noundef %8)
-          to label %bb.w unwind label %bb.k
-
-._crit_edge53:                                    ; preds = %bb.q
-  %9 = add nuw i64 %.03354, 1                     ; 2 uses
-  %exitcond58.not = icmp eq i64 %9, %i.g
-  br i1 %exitcond58.not, label %._crit_edge55.split, label %.preheader, !llvm.loop !153
 
 bb.n:                                             ; preds = %.preheader, %bb.q
   %.051 = phi i64 [ 0, %.preheader ], [ %i.ab, %bb.q ] ; 3 uses
@@ -248,43 +238,53 @@ bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #20
   %i.aa = add i64 %.051, %i.z
   invoke void @_ZN6duckdb6Vector8SetValueEmRKNS_5ValueE(ptr noundef nonnull align 8 dereferenceable(104) %i.h, i64 noundef %i.aa, ptr noundef nonnull align 8 dereferenceable(64) %4)
-          to label %bb.q unwind label %bb.u
+          to label %bb.q unwind label %bb.t
 
 bb.q:                                             ; preds = %bb.p
   call void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %4) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20
   %i.ab = add nuw i64 %.051, 1                    ; 2 uses
   %exitcond.not = icmp eq i64 %i.ab, %.lcssa
-  br i1 %exitcond.not, label %._crit_edge53, label %bb.n, !llvm.loop !154
+  br i1 %exitcond.not, label %._crit_edge53.us, label %bb.n, !llvm.loop !153
+
+._crit_edge53.us:                                 ; preds = %bb.q
+  %6 = add nuw i64 %.03354, 1                     ; 2 uses
+  %exitcond67.not = icmp eq i64 %6, %i.g
+  br i1 %exitcond67.not, label %._crit_edge55, label %.preheader, !llvm.loop !154
 
 bb.r:                                             ; preds = %bb.n
   %i.ac = landingpad { ptr, i32 }
           cleanup
-  br label %bb.t
+  br label %bb.u
 
 bb.s:                                             ; preds = %bb.o
   %i.ad = landingpad { ptr, i32 }
           cleanup
   call void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %5) #20
-  br label %bb.t
+  br label %bb.u
 
-bb.t:                                             ; preds = %bb.s, %bb.r
-  %.pn = phi { ptr, i32 } [ %i.ad, %bb.s ], [ %i.ac, %bb.r ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #20
-  br label %bb.v
-
-bb.u:                                             ; preds = %bb.p
-  %10 = landingpad { ptr, i32 }
+bb.t:                                             ; preds = %bb.p
+  %7 = landingpad { ptr, i32 }
           cleanup
   call void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %4) #20
   br label %bb.v
 
-bb.v:                                             ; preds = %bb.u, %bb.t
-  %.pn43 = phi { ptr, i32 } [ %10, %bb.u ], [ %.pn, %bb.t ]
+._crit_edge55:                                    ; preds = %._crit_edge53.us, %bb.m
+  %8 = load i64, ptr %i.f, align 8, !tbaa !113
+  invoke void @_ZN6duckdb6Vector6VerifyEm(ptr noundef nonnull align 8 dereferenceable(104) %2, i64 noundef %8)
+          to label %bb.w unwind label %bb.k
+
+bb.u:                                             ; preds = %bb.s, %bb.r
+  %.pn = phi { ptr, i32 } [ %i.ad, %bb.s ], [ %i.ac, %bb.r ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #20
+  br label %bb.v
+
+bb.v:                                             ; preds = %bb.t, %bb.u
+  %.pn43 = phi { ptr, i32 } [ %7, %bb.t ], [ %.pn, %bb.u ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20
   br label %bb.x
 
-bb.w:                                             ; preds = %._crit_edge55.split
+bb.w:                                             ; preds = %._crit_edge55
   call void @_ZN6duckdb11LogicalTypeD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %3) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20
   ret void

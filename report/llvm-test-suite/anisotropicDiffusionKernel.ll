@@ -10,10 +10,10 @@ bb.a:
   br i1 %i.b, label %.preheader109.lr.ph, label %._crit_edge114.split
 
 .preheader109.lr.ph:                              ; preds = %bb.a
-  %5 = icmp slt i32 %0, 5
-  %6 = icmp slt i32 %1, 5
-  %brmerge = or i1 %5, %6
-  br i1 %brmerge, label %._crit_edge114.split, label %.preheader109.preheader
+  %5 = icmp sgt i32 %0, 4
+  %6 = icmp sgt i32 %1, 4
+  %or.cond = and i1 %5, %6
+  br i1 %or.cond, label %.preheader109.preheader, label %._crit_edge114.split
 
 .preheader109.preheader:                          ; preds = %.preheader109.lr.ph
   %i.c = add nsw i32 %1, -2
@@ -26,8 +26,8 @@ bb.a:
   %.0108113 = phi i32 [ %i.dc, %._crit_edge112 ], [ 0, %.preheader109.preheader ]
   br label %.preheader
 
-.preheader:                                       ; preds = %.preheader109, %._crit_edge.a
-  %indvars.iv118 = phi i64 [ 2, %.preheader109 ], [ %indvars.iv.next119, %._crit_edge.a ] ; 3 uses
+.preheader:                                       ; preds = %._crit_edge.a, %.preheader109
+  %indvars.iv118 = phi i64 [ %indvars.iv.next119, %._crit_edge.a ], [ 2, %.preheader109 ] ; 3 uses
   %i.e = getelementptr inbounds nuw [2048 x i8], ptr %2, i64 %indvars.iv118 ; 7 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 2048 ; 3 uses
   %i.g = getelementptr i8, ptr %i.e, i64 -2048    ; 3 uses
@@ -37,8 +37,8 @@ bb.a:
   %i.k = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.j
   br label %bb.b
 
-bb.b:                                             ; preds = %.preheader, %bb.b
-  %indvars.iv = phi i64 [ 2, %.preheader ], [ %indvars.iv.next, %bb.b ] ; 8 uses
+bb.b:                                             ; preds = %bb.b, %.preheader
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.b ], [ 2, %.preheader ] ; 8 uses
   %i.l = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %indvars.iv ; 7 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %i.n = load i32, ptr %i.m, align 4, !tbaa !4

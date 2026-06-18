@@ -199,16 +199,16 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   %i.fn = mul nsw i32 %i.fd, %i.fm
   %i.fo = select i1 %i.dg, i32 %i.fn, i32 0
   %i.fp = mul i32 %i.fe, %i.ex
-  %4 = icmp sgt i32 %i.fg, 0
-  %5 = icmp sgt i32 %i.ff, 0
+  %4 = icmp slt i32 %i.fg, 1
+  %5 = icmp slt i32 %i.fe, 1
   %i.fq = sub i32 %i.fc, %i.fp
   %i.fr = sub i32 %i.fi, %i.fe
   %i.fs = sub i32 %i.fo, %factor.op.mul569
   %i.ft = sub i32 %i.fl, %factor.op.mul
-  %brmerge.not685 = and i1 %4, %5
-  %6 = icmp sgt i32 %i.fe, 0
-  %or.cond = and i1 %brmerge.not685, %6
-  br i1 %or.cond, label %.preheader544.us.us.preheader, label %._crit_edge.split
+  %6 = icmp slt i32 %i.ff, 1
+  %or.cond.not715 = or i1 %4, %6
+  %brmerge = or i1 %or.cond.not715, %5
+  br i1 %brmerge, label %._crit_edge.split, label %.preheader544.us.us.preheader
 
 .preheader544.us.us.preheader:                    ; preds = %.preheader545.lr.ph
   %i.fu = sext i32 %i.ex to i64                   ; 5 uses
@@ -611,16 +611,16 @@ bb.ac:                                            ; preds = %bb.aa, %bb.ab
   %i.ot = mul nsw i32 %i.on, %i.os
   %i.ou = select i1 %i.no, i32 %i.ot, i32 0
   %i.ov = mul i32 %i.oo, %i.oh
-  %7 = icmp sgt i32 %i.oq, 0
-  %8 = icmp sgt i32 %i.op, 0
+  %7 = icmp slt i32 %i.oq, 1
+  %8 = icmp slt i32 %i.oo, 1
   %i.ow = sub i32 %i.od, %i.oo
   %i.ox = sub i32 %i.om, %i.ov
   %i.oy = sub i32 %i.og, %factor.op.mul598
   %i.oz = sub i32 %i.ou, %factor.op.mul599
-  %brmerge617.not688 = and i1 %7, %8
-  %9 = icmp sgt i32 %i.oo, 0
-  %or.cond682 = and i1 %brmerge617.not688, %9
-  br i1 %or.cond682, label %.preheader540.us.us.preheader, label %._crit_edge600.split
+  %9 = icmp slt i32 %i.op, 1
+  %or.cond710.not718 = or i1 %7, %9
+  %brmerge712 = or i1 %or.cond710.not718, %8
+  br i1 %brmerge712, label %._crit_edge600.split, label %.preheader540.us.us.preheader
 
 .preheader540.us.us.preheader:                    ; preds = %.preheader541.lr.ph
   %i.pa = sext i32 %i.oh to i64                   ; 3 uses

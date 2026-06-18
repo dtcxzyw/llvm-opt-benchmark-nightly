@@ -201,12 +201,8 @@ bb.fm:                                            ; preds = %bb.fl
   %lcmp.mod2136 = trunc i32 %i.vg to i1
   br label %.preheader.i.a
 
-.thread.i353:                                     ; preds = %bb.fm
-  call void @free(ptr noundef %i.uu) #47
-  br label %.thread400
-
 .preheader.i.a:                                   ; preds = %._crit_edge.i, %.preheader.lr.ph.split.i
-  %indvars.iv109.i = phi i64 [ 0, %.preheader.lr.ph.split.i ], [ %indvars.iv.next110.i, %._crit_edge.i ] ; 3 uses
+  %indvars.iv109.i = phi i64 [ %indvars.iv.next110.i, %._crit_edge.i ], [ 0, %.preheader.lr.ph.split.i ] ; 3 uses
   %i.wk = trunc i64 %indvars.iv109.i to i32
   %i.wl = mul i32 %i.vm, %i.wk
   %i.wm = add i32 %i.wl, %i.vk
@@ -261,6 +257,10 @@ bb.fm:                                            ; preds = %bb.fl
   %indvars.iv.next110.i = add nuw nsw i64 %indvars.iv109.i, 1 ; 2 uses
   %i.xl = icmp samesign ult i64 %indvars.iv.next110.i, %i.wi
   br i1 %i.xl, label %.preheader.i.a, label %._crit_edge103.split.i, !llvm.loop !169
+
+.thread.i353:                                     ; preds = %bb.fm
+  call void @free(ptr noundef %i.uu) #47
+  br label %.thread400
 
 ._crit_edge103.split.i:                           ; preds = %._crit_edge.i, %.preheader99.i
   call void @free(ptr noundef %.pre115.i) #47

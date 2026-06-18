@@ -200,11 +200,6 @@ bb.d:                                             ; preds = %memtest_progress_st
   %exitcond57.not = icmp eq i64 %i.ag, 512
   br i1 %exitcond57.not, label %.split, label %.lr.ph.us.a, !llvm.loop !33
 
-3:                                                ; preds = %bb.a
-  tail call void @_serverAssert(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.9, i32 noundef 126) #16
-  tail call void @abort() #17
-  unreachable
-
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %._crit_edge.split.us
   %.044 = phi i64 [ %.lcssa, %._crit_edge.split.us ], [ -3372857614747716250, %.lr.ph.preheader ] ; 2 uses
   %.03743 = phi i64 [ %i.bi, %._crit_edge.split.us ], [ 0, %.lr.ph.preheader ] ; 2 uses
@@ -267,6 +262,11 @@ bb.d:                                             ; preds = %memtest_progress_st
   %i.bi = add nuw nsw i64 %.03743, 1              ; 2 uses
   %exitcond59.not = icmp eq i64 %i.bi, 512
   br i1 %exitcond59.not, label %.split, label %.lr.ph, !llvm.loop !33
+
+3:                                                ; preds = %bb.a
+  tail call void @_serverAssert(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.9, i32 noundef 126) #16
+  tail call void @abort() #17
+  unreachable
 
 .split:                                           ; preds = %._crit_edge.split.us49, %._crit_edge.split.us, %.preheader
   ret void
@@ -365,11 +365,6 @@ bb.d:                                             ; preds = %memtest_progress_st
   %exitcond52.not.a = icmp eq i64 %i.ah, 512
   br i1 %exitcond52.not.a, label %.split, label %.lr.ph.us.a, !llvm.loop !35
 
-6:                                                ; preds = %bb.a
-  tail call void @_serverAssert(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.9, i32 noundef 151) #16
-  tail call void @abort() #17
-  unreachable
-
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %._crit_edge.split.us
   %.041 = phi i64 [ %i.bk, %._crit_edge.split.us ], [ 0, %.lr.ph.preheader ] ; 3 uses
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.041 ; 3 uses
@@ -450,6 +445,11 @@ bb.e:                                             ; preds = %bb.e, %.epil.prehea
   %i.bk = add nuw nsw i64 %.041, 1                ; 2 uses
   %exitcond54.not = icmp eq i64 %i.bk, 512
   br i1 %exitcond54.not, label %.split, label %.lr.ph, !llvm.loop !35
+
+6:                                                ; preds = %bb.a
+  tail call void @_serverAssert(ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.9, i32 noundef 151) #16
+  tail call void @abort() #17
+  unreachable
 
 .split:                                           ; preds = %._crit_edge.split.us45, %._crit_edge.split.us, %.preheader
   ret void

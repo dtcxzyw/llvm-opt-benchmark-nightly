@@ -201,29 +201,20 @@ bb.u:                                             ; preds = %bb.t
   %i.bz = select i1 %.not34.i, i64 %i.bw, i64 %i.by
   call fastcc void @w_long(i64 noundef %i.bz, ptr noundef nonnull %2)
   %i.ca = icmp sgt i64 %i.br, 0
-  br i1 %i.ca, label %.lr.ph40.i, label %._crit_edge41.split.i
+  br i1 %i.ca, label %.lr.ph40.i, label %._crit_edge41.i
 
 .lr.ph40.i:                                       ; preds = %bb.u
   %.not42.i = icmp ult i8 %i.bg, 15
   %i.cb = getelementptr i8, ptr %2, i64 40        ; 6 uses
   %i.cc = getelementptr i8, ptr %2, i64 16        ; 6 uses
   %i.cd = getelementptr i8, ptr %2, i64 8         ; 2 uses
-  br i1 %.not42.i, label %._crit_edge41.split.i, label %.lr.ph.i
+  br i1 %.not42.i, label %._crit_edge41.i, label %.lr.ph.i
 
-._crit_edge41.split.i:                            ; preds = %._crit_edge.i, %.lr.ph40.i, %bb.u
-  %4 = load i32, ptr %i.bt, align 4, !tbaa !7
-  br label %bb.ah
-
-.lr.ph.i:                                         ; preds = %.lr.ph40.i, %._crit_edge.i
-  %.03038.i = phi i64 [ %5, %._crit_edge.i ], [ 0, %.lr.ph40.i ] ; 2 uses
+.lr.ph.i:                                         ; preds = %.lr.ph40.i, %._crit_edge.us.i
+  %.03038.i = phi i64 [ %19, %._crit_edge.us.i ], [ 0, %.lr.ph40.i ] ; 2 uses
   %i.ce = getelementptr [4 x i8], ptr %i.bm, i64 %.03038.i
   %i.cf = load i32, ptr %i.ce, align 4, !tbaa !7
   br label %bb.v
-
-._crit_edge.i:                                    ; preds = %w_short.exit.i
-  %5 = add nuw nsw i64 %.03038.i, 1               ; 2 uses
-  %exitcond43.not.i = icmp eq i64 %5, %i.br
-  br i1 %exitcond43.not.i, label %._crit_edge41.split.i, label %.lr.ph.i, !llvm.loop !111
 
 bb.v:                                             ; preds = %w_short.exit.i, %.lr.ph.i
   %.037.i = phi i64 [ 0, %.lr.ph.i ], [ %i.dx, %w_short.exit.i ]
@@ -244,7 +235,18 @@ bb.x:                                             ; preds = %bb.w
   %i.cl = ptrtoint ptr %i.cg to i64
   %i.cm = ptrtoint ptr %i.ck to i64
   %i.cn = sub i64 %i.cl, %i.cm                    ; 3 uses
-  br i1 %.not.i.i.i, label %bb.y, label %w_reserve.exit.i.i
+  br i1 %.not.i.i.i, label %bb.y, label %w_reserve.exit.i.us.i
+
+w_reserve.exit.i.us.i:                            ; preds = %bb.x
+  %4 = call i64 @fwrite(ptr noundef %i.ck, i64 noundef 1, i64 noundef %i.cn, ptr noundef nonnull %i.cj) ; 0 uses
+  %5 = load ptr, ptr %i.cb, align 8, !tbaa !18    ; 4 uses
+  store ptr %5, ptr %i.a, align 8, !tbaa !19
+  %6 = load ptr, ptr %i.c, align 8, !tbaa !20     ; 2 uses
+  %7 = ptrtoint ptr %6 to i64
+  %8 = ptrtoint ptr %5 to i64
+  %9 = sub i64 %7, %8
+  %10 = icmp slt i64 %9, 1
+  br i1 %10, label %w_reserve.exit.thread.i.i, label %bb.ab
 
 bb.y:                                             ; preds = %bb.x
   %i.co = load ptr, ptr %i.cc, align 8, !tbaa !22
@@ -258,10 +260,6 @@ bb.y:                                             ; preds = %bb.x
   %i.cu = sub i64 9223372036854775807, %.val.i.i.i ; 2 uses
   %i.cv = icmp sgt i64 %i.ct, %i.cu
   br i1 %i.cv, label %.thread.i, label %bb.z
-
-.thread.i:                                        ; preds = %bb.y
-  store i32 3, ptr %i.cd, align 8, !tbaa !28
-  br label %bb.ad
 
 bb.z:                                             ; preds = %bb.y
   %i.cw = add i64 %i.ct, %.val.i.i.i              ; 2 uses
@@ -282,19 +280,8 @@ w_reserve.exit.thread20.i.i:                      ; preds = %bb.z
   store ptr %i.db, ptr %i.c, align 8, !tbaa !20
   br label %bb.ab
 
-w_reserve.exit.i.i:                               ; preds = %bb.x
-  %6 = call i64 @fwrite(ptr noundef %i.ck, i64 noundef 1, i64 noundef %i.cn, ptr noundef nonnull %i.cj) ; 0 uses
-  %7 = load ptr, ptr %i.cb, align 8, !tbaa !18    ; 4 uses
-  store ptr %7, ptr %i.a, align 8, !tbaa !19
-  %8 = load ptr, ptr %i.c, align 8, !tbaa !20     ; 2 uses
-  %9 = ptrtoint ptr %8 to i64
-  %10 = ptrtoint ptr %7 to i64
-  %11 = sub i64 %9, %10
-  %12 = icmp slt i64 %11, 1
-  br i1 %12, label %w_reserve.exit.thread.i.i, label %bb.ab
-
-bb.ab:                                            ; preds = %w_reserve.exit.i.i, %w_reserve.exit.thread20.i.i, %bb.v
-  %i.dc = phi ptr [ %i.da, %w_reserve.exit.thread20.i.i ], [ %7, %w_reserve.exit.i.i ], [ %i.cg, %bb.v ] ; 2 uses
+bb.ab:                                            ; preds = %w_reserve.exit.thread20.i.i, %w_reserve.exit.i.us.i, %bb.v
+  %i.dc = phi ptr [ %i.da, %w_reserve.exit.thread20.i.i ], [ %5, %w_reserve.exit.i.us.i ], [ %i.cg, %bb.v ] ; 2 uses
   %i.dd = trunc i32 %.136.i to i8
   %i.de = getelementptr i8, ptr %i.dc, i64 1
   store ptr %i.de, ptr %i.a, align 8, !tbaa !19
@@ -303,15 +290,19 @@ bb.ab:                                            ; preds = %w_reserve.exit.i.i,
   %.pre.pre.i.i = load ptr, ptr %i.c, align 8, !tbaa !20
   br label %w_reserve.exit.thread.i.i
 
-w_reserve.exit.thread.i.i:                        ; preds = %bb.ab, %w_reserve.exit.i.i
-  %i.df = phi ptr [ %.pre.pre.i.i, %bb.ab ], [ %8, %w_reserve.exit.i.i ] ; 3 uses
-  %i.dg = phi ptr [ %.pr.pre.i.i, %bb.ab ], [ %7, %w_reserve.exit.i.i ] ; 2 uses
+w_reserve.exit.thread.i.i:                        ; preds = %bb.ab, %w_reserve.exit.i.us.i
+  %i.df = phi ptr [ %.pre.pre.i.i, %bb.ab ], [ %6, %w_reserve.exit.i.us.i ] ; 3 uses
+  %i.dg = phi ptr [ %.pr.pre.i.i, %bb.ab ], [ %5, %w_reserve.exit.i.us.i ] ; 2 uses
   %.not10.i.i = icmp eq ptr %i.dg, %i.df
   br i1 %.not10.i.i, label %w_reserve.exit.thread.thread.i.i, label %bb.ag
 
 w_reserve.exit.thread.thread.i.i:                 ; preds = %w_reserve.exit.thread.i.i
   %i.dh = icmp eq ptr %i.df, null
   br i1 %i.dh, label %w_short.exit.i, label %bb.ac
+
+.thread.i:                                        ; preds = %bb.y
+  store i32 3, ptr %i.cd, align 8, !tbaa !28
+  br label %bb.ad
 
 bb.ac:                                            ; preds = %w_reserve.exit.thread.thread.i.i
   %.pre.i = load ptr, ptr %2, align 8, !tbaa !11  ; 2 uses
@@ -320,7 +311,7 @@ bb.ac:                                            ; preds = %w_reserve.exit.thre
   %.pre46.i = ptrtoint ptr %.pre44.i to i64
   %.pre48.i = sub i64 %.pre45.i, %.pre46.i        ; 2 uses
   %.not.i12.i.i = icmp eq ptr %.pre.i, null
-  br i1 %.not.i12.i.i, label %._crit_edge89, label %w_reserve.exit17.i.i
+  br i1 %.not.i12.i.i, label %._crit_edge89, label %w_reserve.exit17.i.us.i
 
 ._crit_edge89:                                    ; preds = %bb.ac
   %.pre90 = load ptr, ptr %i.cc, align 8, !tbaa !22
@@ -330,6 +321,17 @@ bb.ac:                                            ; preds = %w_reserve.exit.thre
   %.pre94 = add nsw i64 %.val.i14.i.i.pre, 1024
   %.pre96 = sub i64 9223372036854775807, %.val.i14.i.i.pre
   br label %bb.ad
+
+w_reserve.exit17.i.us.i:                          ; preds = %bb.ac
+  %11 = call i64 @fwrite(ptr noundef %.pre44.i, i64 noundef 1, i64 noundef %.pre48.i, ptr noundef nonnull %.pre.i) ; 0 uses
+  %12 = load ptr, ptr %i.cb, align 8, !tbaa !18   ; 3 uses
+  store ptr %12, ptr %i.a, align 8, !tbaa !19
+  %13 = load ptr, ptr %i.c, align 8, !tbaa !20
+  %14 = ptrtoint ptr %13 to i64
+  %15 = ptrtoint ptr %12 to i64
+  %16 = sub i64 %14, %15
+  %17 = icmp slt i64 %16, 1
+  br i1 %17, label %w_short.exit.i, label %bb.ag
 
 bb.ad:                                            ; preds = %._crit_edge89, %.thread.i
   %.pre-phi97 = phi i64 [ %.pre96, %._crit_edge89 ], [ %i.cu, %.thread.i ]
@@ -341,11 +343,7 @@ bb.ad:                                            ; preds = %._crit_edge89, %.th
   %.0.i15.i.i = select i1 %i.di, i64 %.pre-phi, i64 %.pre-phi95
   %i.dj = call i64 @llvm.smax.i64(i64 %.0.i15.i.i, i64 1) ; 2 uses
   %i.dk = icmp sgt i64 %i.dj, %.pre-phi97
-  br i1 %i.dk, label %13, label %bb.ae
-
-13:                                               ; preds = %bb.ad
-  store i32 3, ptr %i.cd, align 8, !tbaa !28
-  br label %w_short.exit.i
+  br i1 %i.dk, label %18, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
   %i.dl = add i64 %i.dj, %.val.i14.i.i            ; 2 uses
@@ -366,19 +364,8 @@ w_reserve.exit17.thread25.i.i:                    ; preds = %bb.ae
   store ptr %i.dq, ptr %i.c, align 8, !tbaa !20
   br label %bb.ag
 
-w_reserve.exit17.i.i:                             ; preds = %bb.ac
-  %14 = call i64 @fwrite(ptr noundef %.pre44.i, i64 noundef 1, i64 noundef %.pre48.i, ptr noundef nonnull %.pre.i) ; 0 uses
-  %15 = load ptr, ptr %i.cb, align 8, !tbaa !18   ; 3 uses
-  store ptr %15, ptr %i.a, align 8, !tbaa !19
-  %16 = load ptr, ptr %i.c, align 8, !tbaa !20
-  %17 = ptrtoint ptr %16 to i64
-  %18 = ptrtoint ptr %15 to i64
-  %19 = sub i64 %17, %18
-  %20 = icmp slt i64 %19, 1
-  br i1 %20, label %w_short.exit.i, label %bb.ag
-
-bb.ag:                                            ; preds = %w_reserve.exit17.i.i, %w_reserve.exit17.thread25.i.i, %w_reserve.exit.thread.i.i
-  %i.dr = phi ptr [ %i.dp, %w_reserve.exit17.thread25.i.i ], [ %15, %w_reserve.exit17.i.i ], [ %i.dg, %w_reserve.exit.thread.i.i ] ; 2 uses
+bb.ag:                                            ; preds = %w_reserve.exit17.thread25.i.i, %w_reserve.exit17.i.us.i, %w_reserve.exit.thread.i.i
+  %i.dr = phi ptr [ %i.dp, %w_reserve.exit17.thread25.i.i ], [ %12, %w_reserve.exit17.i.us.i ], [ %i.dg, %w_reserve.exit.thread.i.i ] ; 2 uses
   %i.ds = lshr i32 %.136.i, 8
   %i.dt = trunc i32 %i.ds to i8
   %i.du = and i8 %i.dt, 127
@@ -387,14 +374,27 @@ bb.ag:                                            ; preds = %w_reserve.exit17.i.
   store i8 %i.du, ptr %i.dr, align 1, !tbaa !29
   br label %w_short.exit.i
 
-w_short.exit.i:                                   ; preds = %bb.ag, %w_reserve.exit17.i.i, %bb.af, %13, %w_reserve.exit.thread.thread.i.i, %bb.aa, %bb.w
+18:                                               ; preds = %bb.ad
+  store i32 3, ptr %i.cd, align 8, !tbaa !28
+  br label %w_short.exit.i
+
+w_short.exit.i:                                   ; preds = %18, %bb.ag, %bb.af, %w_reserve.exit17.i.us.i, %w_reserve.exit.thread.thread.i.i, %bb.aa, %bb.w
   %i.dw = lshr i32 %.136.i, 15
   %i.dx = add nuw nsw i64 %.037.i, 1              ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.dx, %i.bi
-  br i1 %exitcond.not.i, label %._crit_edge.i, label %bb.v, !llvm.loop !112
+  br i1 %exitcond.not.i, label %._crit_edge.us.i, label %bb.v, !llvm.loop !111
 
-bb.ah:                                            ; preds = %bb.ah, %._crit_edge41.split.i
-  %.2.i = phi i32 [ %4, %._crit_edge41.split.i ], [ %i.dz, %bb.ah ] ; 2 uses
+._crit_edge.us.i:                                 ; preds = %w_short.exit.i
+  %19 = add nuw nsw i64 %.03038.i, 1              ; 2 uses
+  %exitcond44.not.i = icmp eq i64 %19, %i.br
+  br i1 %exitcond44.not.i, label %._crit_edge41.i, label %.lr.ph.i, !llvm.loop !112
+
+._crit_edge41.i:                                  ; preds = %._crit_edge.us.i, %.lr.ph40.i, %bb.u
+  %20 = load i32, ptr %i.bt, align 4, !tbaa !7
+  br label %bb.ah
+
+bb.ah:                                            ; preds = %bb.ah, %._crit_edge41.i
+  %.2.i = phi i32 [ %20, %._crit_edge41.i ], [ %i.dz, %bb.ah ] ; 2 uses
   %i.dy = and i32 %.2.i, 32767
   call fastcc void @w_short(i32 noundef %i.dy, ptr noundef nonnull %2)
   %i.dz = lshr i32 %.2.i, 15                      ; 2 uses
@@ -424,29 +424,20 @@ bb.al:                                            ; preds = %bb.ak
   %i.eg = select i1 %.not34.i38, i64 %i.ed, i64 %i.ef
   call fastcc void @w_long(i64 noundef %i.eg, ptr noundef nonnull %2)
   %i.eh = icmp sgt i64 %i.br, 0
-  br i1 %i.eh, label %.lr.ph40.i42, label %._crit_edge41.split.i39
+  br i1 %i.eh, label %.lr.ph40.i42, label %._crit_edge41.i39
 
 .lr.ph40.i42:                                     ; preds = %bb.al
   %.not42.i43 = icmp ult i8 %i.bg, 15
   %i.ei = getelementptr i8, ptr %2, i64 40        ; 6 uses
   %i.ej = getelementptr i8, ptr %2, i64 16        ; 6 uses
   %i.ek = getelementptr i8, ptr %2, i64 8         ; 2 uses
-  br i1 %.not42.i43, label %._crit_edge41.split.i39, label %.lr.ph.i44
+  br i1 %.not42.i43, label %._crit_edge41.i39, label %.lr.ph.i44
 
-._crit_edge41.split.i39:                          ; preds = %._crit_edge.i55, %.lr.ph40.i42, %bb.al
-  %21 = load i16, ptr %i.ea, align 2, !tbaa !114
-  br label %bb.ay
-
-.lr.ph.i44:                                       ; preds = %.lr.ph40.i42, %._crit_edge.i55
-  %.03038.i45 = phi i64 [ %22, %._crit_edge.i55 ], [ 0, %.lr.ph40.i42 ] ; 2 uses
+.lr.ph.i44:                                       ; preds = %.lr.ph40.i42, %._crit_edge.us.i55
+  %.03038.i45 = phi i64 [ %36, %._crit_edge.us.i55 ], [ 0, %.lr.ph40.i42 ] ; 2 uses
   %i.el = getelementptr [2 x i8], ptr %i.bm, i64 %.03038.i45
   %i.em = load i16, ptr %i.el, align 2, !tbaa !114
   br label %bb.am
-
-._crit_edge.i55:                                  ; preds = %w_short.exit.i53
-  %22 = add nuw nsw i64 %.03038.i45, 1            ; 2 uses
-  %exitcond43.not.i56 = icmp eq i64 %22, %i.br
-  br i1 %exitcond43.not.i56, label %._crit_edge41.split.i39, label %.lr.ph.i44, !llvm.loop !117
 
 bb.am:                                            ; preds = %w_short.exit.i53, %.lr.ph.i44
   %.037.i46 = phi i64 [ 0, %.lr.ph.i44 ], [ %i.ge, %w_short.exit.i53 ]
@@ -467,7 +458,18 @@ bb.ao:                                            ; preds = %bb.an
   %i.es = ptrtoint ptr %i.en to i64
   %i.et = ptrtoint ptr %i.er to i64
   %i.eu = sub i64 %i.es, %i.et                    ; 3 uses
-  br i1 %.not.i.i.i70, label %bb.ap, label %w_reserve.exit.i.i71
+  br i1 %.not.i.i.i70, label %bb.ap, label %w_reserve.exit.i.us.i71
+
+w_reserve.exit.i.us.i71:                          ; preds = %bb.ao
+  %21 = call i64 @fwrite(ptr noundef %i.er, i64 noundef 1, i64 noundef %i.eu, ptr noundef nonnull %i.eq) ; 0 uses
+  %22 = load ptr, ptr %i.ei, align 8, !tbaa !18   ; 4 uses
+  store ptr %22, ptr %i.a, align 8, !tbaa !19
+  %23 = load ptr, ptr %i.c, align 8, !tbaa !20    ; 2 uses
+  %24 = ptrtoint ptr %23 to i64
+  %25 = ptrtoint ptr %22 to i64
+  %26 = sub i64 %24, %25
+  %27 = icmp slt i64 %26, 1
+  br i1 %27, label %w_reserve.exit.thread.i.i51, label %bb.as
 
 bb.ap:                                            ; preds = %bb.ao
   %i.ev = load ptr, ptr %i.ej, align 8, !tbaa !22
@@ -481,10 +483,6 @@ bb.ap:                                            ; preds = %bb.ao
   %i.fb = sub i64 9223372036854775807, %.val.i.i.i72 ; 2 uses
   %i.fc = icmp sgt i64 %i.fa, %i.fb
   br i1 %i.fc, label %.thread.i76, label %bb.aq
-
-.thread.i76:                                      ; preds = %bb.ap
-  store i32 3, ptr %i.ek, align 8, !tbaa !28
-  br label %bb.au
 
 bb.aq:                                            ; preds = %bb.ap
   %i.fd = add i64 %i.fa, %.val.i.i.i72            ; 2 uses
@@ -505,19 +503,8 @@ w_reserve.exit.thread20.i.i75:                    ; preds = %bb.aq
   store ptr %i.fi, ptr %i.c, align 8, !tbaa !20
   br label %bb.as
 
-w_reserve.exit.i.i71:                             ; preds = %bb.ao
-  %23 = call i64 @fwrite(ptr noundef %i.er, i64 noundef 1, i64 noundef %i.eu, ptr noundef nonnull %i.eq) ; 0 uses
-  %24 = load ptr, ptr %i.ei, align 8, !tbaa !18   ; 4 uses
-  store ptr %24, ptr %i.a, align 8, !tbaa !19
-  %25 = load ptr, ptr %i.c, align 8, !tbaa !20    ; 2 uses
-  %26 = ptrtoint ptr %25 to i64
-  %27 = ptrtoint ptr %24 to i64
-  %28 = sub i64 %26, %27
-  %29 = icmp slt i64 %28, 1
-  br i1 %29, label %w_reserve.exit.thread.i.i51, label %bb.as
-
-bb.as:                                            ; preds = %w_reserve.exit.i.i71, %w_reserve.exit.thread20.i.i75, %bb.am
-  %i.fj = phi ptr [ %i.fh, %w_reserve.exit.thread20.i.i75 ], [ %24, %w_reserve.exit.i.i71 ], [ %i.en, %bb.am ] ; 2 uses
+bb.as:                                            ; preds = %w_reserve.exit.thread20.i.i75, %w_reserve.exit.i.us.i71, %bb.am
+  %i.fj = phi ptr [ %i.fh, %w_reserve.exit.thread20.i.i75 ], [ %22, %w_reserve.exit.i.us.i71 ], [ %i.en, %bb.am ] ; 2 uses
   %i.fk = trunc i16 %.136.i47 to i8
   %i.fl = getelementptr i8, ptr %i.fj, i64 1
   store ptr %i.fl, ptr %i.a, align 8, !tbaa !19
@@ -526,15 +513,19 @@ bb.as:                                            ; preds = %w_reserve.exit.i.i7
   %.pre.pre.i.i50 = load ptr, ptr %i.c, align 8, !tbaa !20
   br label %w_reserve.exit.thread.i.i51
 
-w_reserve.exit.thread.i.i51:                      ; preds = %bb.as, %w_reserve.exit.i.i71
-  %i.fm = phi ptr [ %.pre.pre.i.i50, %bb.as ], [ %25, %w_reserve.exit.i.i71 ] ; 3 uses
-  %i.fn = phi ptr [ %.pr.pre.i.i49, %bb.as ], [ %24, %w_reserve.exit.i.i71 ] ; 2 uses
+w_reserve.exit.thread.i.i51:                      ; preds = %bb.as, %w_reserve.exit.i.us.i71
+  %i.fm = phi ptr [ %.pre.pre.i.i50, %bb.as ], [ %23, %w_reserve.exit.i.us.i71 ] ; 3 uses
+  %i.fn = phi ptr [ %.pr.pre.i.i49, %bb.as ], [ %22, %w_reserve.exit.i.us.i71 ] ; 2 uses
   %.not10.i.i52 = icmp eq ptr %i.fn, %i.fm
   br i1 %.not10.i.i52, label %w_reserve.exit.thread.thread.i.i57, label %bb.ax
 
 w_reserve.exit.thread.thread.i.i57:               ; preds = %w_reserve.exit.thread.i.i51
   %i.fo = icmp eq ptr %i.fm, null
   br i1 %i.fo, label %w_short.exit.i53, label %bb.at
+
+.thread.i76:                                      ; preds = %bb.ap
+  store i32 3, ptr %i.ek, align 8, !tbaa !28
+  br label %bb.au
 
 bb.at:                                            ; preds = %w_reserve.exit.thread.thread.i.i57
   %.pre.i58 = load ptr, ptr %2, align 8, !tbaa !11 ; 2 uses
@@ -543,7 +534,7 @@ bb.at:                                            ; preds = %w_reserve.exit.thre
   %.pre46.i61 = ptrtoint ptr %.pre44.i59 to i64
   %.pre48.i62 = sub i64 %.pre45.i60, %.pre46.i61  ; 2 uses
   %.not.i12.i.i63 = icmp eq ptr %.pre.i58, null
-  br i1 %.not.i12.i.i63, label %._crit_edge, label %w_reserve.exit17.i.i64
+  br i1 %.not.i12.i.i63, label %._crit_edge, label %w_reserve.exit17.i.us.i64
 
 ._crit_edge:                                      ; preds = %bb.at
   %.pre = load ptr, ptr %i.ej, align 8, !tbaa !22
@@ -553,6 +544,17 @@ bb.at:                                            ; preds = %w_reserve.exit.thre
   %.pre100 = add nsw i64 %.val.i14.i.i66.pre, 1024
   %.pre102 = sub i64 9223372036854775807, %.val.i14.i.i66.pre
   br label %bb.au
+
+w_reserve.exit17.i.us.i64:                        ; preds = %bb.at
+  %28 = call i64 @fwrite(ptr noundef %.pre44.i59, i64 noundef 1, i64 noundef %.pre48.i62, ptr noundef nonnull %.pre.i58) ; 0 uses
+  %29 = load ptr, ptr %i.ei, align 8, !tbaa !18   ; 3 uses
+  store ptr %29, ptr %i.a, align 8, !tbaa !19
+  %30 = load ptr, ptr %i.c, align 8, !tbaa !20
+  %31 = ptrtoint ptr %30 to i64
+  %32 = ptrtoint ptr %29 to i64
+  %33 = sub i64 %31, %32
+  %34 = icmp slt i64 %33, 1
+  br i1 %34, label %w_short.exit.i53, label %bb.ax
 
 bb.au:                                            ; preds = %._crit_edge, %.thread.i76
   %.pre-phi103 = phi i64 [ %.pre102, %._crit_edge ], [ %i.fb, %.thread.i76 ]
@@ -564,11 +566,7 @@ bb.au:                                            ; preds = %._crit_edge, %.thre
   %.0.i15.i.i67 = select i1 %i.fp, i64 %.pre-phi99, i64 %.pre-phi101
   %i.fq = call i64 @llvm.smax.i64(i64 %.0.i15.i.i67, i64 1) ; 2 uses
   %i.fr = icmp sgt i64 %i.fq, %.pre-phi103
-  br i1 %i.fr, label %30, label %bb.av
-
-30:                                               ; preds = %bb.au
-  store i32 3, ptr %i.ek, align 8, !tbaa !28
-  br label %w_short.exit.i53
+  br i1 %i.fr, label %35, label %bb.av
 
 bb.av:                                            ; preds = %bb.au
   %i.fs = add i64 %i.fq, %.val.i14.i.i66          ; 2 uses
@@ -589,19 +587,8 @@ w_reserve.exit17.thread25.i.i69:                  ; preds = %bb.av
   store ptr %i.fx, ptr %i.c, align 8, !tbaa !20
   br label %bb.ax
 
-w_reserve.exit17.i.i64:                           ; preds = %bb.at
-  %31 = call i64 @fwrite(ptr noundef %.pre44.i59, i64 noundef 1, i64 noundef %.pre48.i62, ptr noundef nonnull %.pre.i58) ; 0 uses
-  %32 = load ptr, ptr %i.ei, align 8, !tbaa !18   ; 3 uses
-  store ptr %32, ptr %i.a, align 8, !tbaa !19
-  %33 = load ptr, ptr %i.c, align 8, !tbaa !20
-  %34 = ptrtoint ptr %33 to i64
-  %35 = ptrtoint ptr %32 to i64
-  %36 = sub i64 %34, %35
-  %37 = icmp slt i64 %36, 1
-  br i1 %37, label %w_short.exit.i53, label %bb.ax
-
-bb.ax:                                            ; preds = %w_reserve.exit17.i.i64, %w_reserve.exit17.thread25.i.i69, %w_reserve.exit.thread.i.i51
-  %i.fy = phi ptr [ %i.fw, %w_reserve.exit17.thread25.i.i69 ], [ %32, %w_reserve.exit17.i.i64 ], [ %i.fn, %w_reserve.exit.thread.i.i51 ] ; 2 uses
+bb.ax:                                            ; preds = %w_reserve.exit17.thread25.i.i69, %w_reserve.exit17.i.us.i64, %w_reserve.exit.thread.i.i51
+  %i.fy = phi ptr [ %i.fw, %w_reserve.exit17.thread25.i.i69 ], [ %29, %w_reserve.exit17.i.us.i64 ], [ %i.fn, %w_reserve.exit.thread.i.i51 ] ; 2 uses
   %i.fz = lshr i16 %.136.i47, 8
   %i.ga = trunc nuw i16 %i.fz to i8
   %i.gb = and i8 %i.ga, 127
@@ -610,14 +597,27 @@ bb.ax:                                            ; preds = %w_reserve.exit17.i.
   store i8 %i.gb, ptr %i.fy, align 1, !tbaa !29
   br label %w_short.exit.i53
 
-w_short.exit.i53:                                 ; preds = %bb.ax, %w_reserve.exit17.i.i64, %bb.aw, %30, %w_reserve.exit.thread.thread.i.i57, %bb.ar, %bb.an
+35:                                               ; preds = %bb.au
+  store i32 3, ptr %i.ek, align 8, !tbaa !28
+  br label %w_short.exit.i53
+
+w_short.exit.i53:                                 ; preds = %35, %bb.ax, %bb.aw, %w_reserve.exit17.i.us.i64, %w_reserve.exit.thread.thread.i.i57, %bb.ar, %bb.an
   %i.gd = lshr i16 %.136.i47, 15
   %i.ge = add nuw nsw i64 %.037.i46, 1            ; 2 uses
   %exitcond.not.i54 = icmp eq i64 %i.ge, %i.bi
-  br i1 %exitcond.not.i54, label %._crit_edge.i55, label %bb.am, !llvm.loop !118
+  br i1 %exitcond.not.i54, label %._crit_edge.us.i55, label %bb.am, !llvm.loop !117
 
-bb.ay:                                            ; preds = %bb.ay, %._crit_edge41.split.i39
-  %.2.i40 = phi i16 [ %21, %._crit_edge41.split.i39 ], [ %i.gh, %bb.ay ] ; 3 uses
+._crit_edge.us.i55:                               ; preds = %w_short.exit.i53
+  %36 = add nuw nsw i64 %.03038.i45, 1            ; 2 uses
+  %exitcond44.not.i56 = icmp eq i64 %36, %i.br
+  br i1 %exitcond44.not.i56, label %._crit_edge41.i39, label %.lr.ph.i44, !llvm.loop !118
+
+._crit_edge41.i39:                                ; preds = %._crit_edge.us.i55, %.lr.ph40.i42, %bb.al
+  %37 = load i16, ptr %i.ea, align 2, !tbaa !114
+  br label %bb.ay
+
+bb.ay:                                            ; preds = %bb.ay, %._crit_edge41.i39
+  %.2.i40 = phi i16 [ %37, %._crit_edge41.i39 ], [ %i.gh, %bb.ay ] ; 3 uses
   %i.gf = and i16 %.2.i40, 32767
   %i.gg = zext nneg i16 %i.gf to i32
   call fastcc void @w_short(i32 noundef %i.gg, ptr noundef nonnull %2)

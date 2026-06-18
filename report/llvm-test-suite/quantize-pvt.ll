@@ -200,13 +200,6 @@ bb.g:                                             ; preds = %bb.f, %.loopexit
   %i.dr = getelementptr inbounds nuw [240 x i8], ptr %i.dp, i64 %indvars.iv101 ; 3 uses
   br i1 %i.dq, label %.epil.preheader, label %.preheader66.new
 
-.preheader65:                                     ; preds = %bb.g
-  br i1 %i.do, label %.preheader.lr.ph, label %._crit_edge81
-
-.preheader.lr.ph:                                 ; preds = %._crit_edge.a, %.preheader65
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 204
-  br label %.preheader
-
 .preheader66.new:                                 ; preds = %.preheader66, %.preheader66.new
   %indvars.iv97 = phi i64 [ %indvars.iv.next98.1, %.preheader66.new ], [ 0, %.preheader66 ] ; 3 uses
   %niter = phi i64 [ %niter.next.1, %.preheader66.new ], [ 0, %.preheader66 ]
@@ -257,6 +250,13 @@ bb.g:                                             ; preds = %bb.f, %.loopexit
   %indvars.iv.next102 = add nuw nsw i64 %indvars.iv101, 1 ; 2 uses
   %exitcond105.not = icmp eq i64 %indvars.iv.next102, %wide.trip.count104
   br i1 %exitcond105.not, label %.preheader.lr.ph, label %.preheader66, !llvm.loop !33
+
+.preheader65:                                     ; preds = %bb.g
+  br i1 %i.do, label %.preheader.lr.ph, label %._crit_edge81
+
+.preheader.lr.ph:                                 ; preds = %._crit_edge.a, %.preheader65
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 204
+  br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %.preheader
   %indvar = phi i64 [ 0, %.preheader.lr.ph ], [ %indvar.next, %.preheader ] ; 2 uses

@@ -201,13 +201,13 @@ bb.j:                                             ; preds = %.lr.ph293, %._crit_
   %wide.trip.count352 = zext nneg i32 %i.kv to i64
   br label %.lr.ph287.split.us
 
-.lr.ph287.split.us:                               ; preds = %.lr.ph287.split.us.preheader, %..loopexit229_crit_edge.split.us
-  %indvars.iv349 = phi i64 [ 0, %.lr.ph287.split.us.preheader ], [ %indvars.iv.next350, %..loopexit229_crit_edge.split.us ] ; 2 uses
+.lr.ph287.split.us:                               ; preds = %.lr.ph287.split.us.preheader, %..loopexit229_crit_edge.us
+  %indvars.iv349 = phi i64 [ 0, %.lr.ph287.split.us.preheader ], [ %indvars.iv.next355, %..loopexit229_crit_edge.us ] ; 2 uses
   %i.ky = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv349
   %i.kz = load i32, ptr %i.ky, align 4, !tbaa !4  ; 3 uses
   %i.la = sext i32 %i.kz to i64                   ; 2 uses
   %i.lb = icmp sgt i64 %indvars.iv354.a, %i.la
-  br i1 %i.lb, label %..loopexit229_crit_edge.split.us, label %.lr.ph284.us
+  br i1 %i.lb, label %..loopexit229_crit_edge.us, label %.lr.ph284.us
 
 .lr.ph284.us:                                     ; preds = %.lr.ph287.split.us
   %i.lc = load ptr, ptr %i.ag, align 8, !tbaa !48
@@ -218,12 +218,17 @@ bb.j:                                             ; preds = %.lr.ph293, %._crit_
   %i.lh = icmp sgt i32 %i.lg, 0
   %i.li = zext i32 %i.kz to i64
   %i.lj = icmp ne i64 %indvars.iv354.a, %i.li
-  br i1 %i.lh, label %.lr.ph279.us.preheader, label %..loopexit229_crit_edge.split.us
+  br i1 %i.lh, label %.lr.ph279.us.preheader, label %..loopexit229_crit_edge.us
 
 .lr.ph279.us.preheader:                           ; preds = %.lr.ph284.us
   %i.lk = shl i32 %i.kz, 6
   %i.ll = sext i32 %i.lk to i64
   br label %.lr.ph279.us
+
+..loopexit229_crit_edge.us:                       ; preds = %._crit_edge280.us, %.lr.ph284.us, %.lr.ph287.split.us
+  %indvars.iv.next355 = add nuw nsw i64 %indvars.iv349, 1 ; 2 uses
+  %exitcond358.not = icmp eq i64 %indvars.iv.next355, %wide.trip.count352
+  br i1 %exitcond358.not, label %._crit_edge288, label %.lr.ph287.split.us
 
 .lr.ph279.us:                                     ; preds = %.lr.ph279.us.preheader, %._crit_edge280.us
   %indvars.iv345 = phi i64 [ %i.kp, %.lr.ph279.us.preheader ], [ %indvars.iv.next346, %._crit_edge280.us ] ; 4 uses
@@ -373,18 +378,13 @@ bb.l:                                             ; preds = %bb.k
   %exitcond342.not = icmp eq i32 %i.px, %i.lg
   br i1 %exitcond342.not, label %._crit_edge280.us, label %bb.k
 
-..loopexit229_crit_edge.split.us:                 ; preds = %._crit_edge280.us, %.lr.ph284.us, %.lr.ph287.split.us
-  %indvars.iv.next350 = add nuw nsw i64 %indvars.iv349, 1 ; 2 uses
-  %exitcond353.not = icmp eq i64 %indvars.iv.next350, %wide.trip.count352
-  br i1 %exitcond353.not, label %._crit_edge288, label %.lr.ph287.split.us
-
 ._crit_edge280.us:                                ; preds = %.loopexit.us
   %i.py = add nuw nsw i32 %.0189282.us, 1         ; 2 uses
   %indvars.iv.next346 = add nuw nsw i64 %indvars.iv345, 1
   %exitcond348.not = icmp eq i32 %i.py, %.fr
-  br i1 %exitcond348.not, label %..loopexit229_crit_edge.split.us, label %.lr.ph279.us
+  br i1 %exitcond348.not, label %..loopexit229_crit_edge.us, label %.lr.ph279.us
 
-._crit_edge288:                                   ; preds = %..loopexit229_crit_edge.split.us, %bb.j
+._crit_edge288:                                   ; preds = %..loopexit229_crit_edge.us, %bb.j
   %indvars.iv.next355.a = add nuw nsw i64 %indvars.iv354.a, 1 ; 2 uses
   %i.pz = load ptr, ptr %i.ag, align 8, !tbaa !48 ; 2 uses
   %i.qa = getelementptr inbounds nuw i8, ptr %i.pz, i64 12

@@ -199,18 +199,15 @@ scalar.ph786.prol.loopexit:                       ; preds = %scalar.ph786.prol, 
 .preheader376:                                    ; preds = %.loopexit, %.preheader378
   %.pre638.pre.pre681 = phi ptr [ %.pre638.pre.pre, %.preheader378 ], [ %.pre638.pre.pre680, %.loopexit ] ; 5 uses
   %i.yt = phi i32 [ %i.wg, %.preheader378 ], [ %i.wi, %.loopexit ]
-  br i1 %.not387, label %.preheader375, label %.lr.ph438
+  br i1 %.not387, label %.preheader375, label %.lr.ph434.preheader
 
-.lr.ph438:                                        ; preds = %.preheader376
+.lr.ph434.preheader:                              ; preds = %.preheader376
   %6 = load ptr, ptr @Calignm1.gl, align 8
-  br i1 %.not342407, label %._crit_edge447, label %.lr.ph434.preheader
-
-.lr.ph434.preheader:                              ; preds = %.lr.ph438
-  %i.yu = add nuw nsw i64 %i.ag, 1
+  %i.yu = add i64 %i.ag, 1
   %i.yv = add nuw i32 %4, 1
   %wide.trip.count571 = zext i32 %i.yv to i64
   %wide.trip.count566 = and i64 %i.yu, 4294967295
-  br label %.lr.ph434
+  br label %7
 
 scalar.ph786:                                     ; preds = %scalar.ph786.prol.loopexit, %scalar.ph786
   %indvars.iv547 = phi i64 [ %indvars.iv.next548.3, %scalar.ph786 ], [ %indvars.iv547.unr, %scalar.ph786.prol.loopexit ] ; 6 uses
@@ -246,12 +243,15 @@ scalar.ph786:                                     ; preds = %scalar.ph786.prol.l
   %wide.trip.count590 = and i64 %i.zf, 4294967295
   br label %.preheader374
 
-.lr.ph434:                                        ; preds = %.lr.ph434.preheader, %._crit_edge435
-  %indvars.iv568 = phi i64 [ 0, %.lr.ph434.preheader ], [ %indvars.iv.next569, %._crit_edge435 ] ; 3 uses
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv568
-  %8 = load double, ptr %7, align 8, !tbaa !26
-  %9 = fptrunc double %8 to float                 ; 2 uses
-  %i.zg = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv568
+7:                                                ; preds = %.lr.ph434.preheader, %._crit_edge435
+  %indvars.iv569 = phi i64 [ 0, %.lr.ph434.preheader ], [ %indvars.iv.next569, %._crit_edge435 ] ; 3 uses
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv569
+  %9 = load double, ptr %8, align 8, !tbaa !26
+  %10 = fptrunc double %9 to float                ; 2 uses
+  br i1 %.not342407, label %._crit_edge435, label %.lr.ph434
+
+.lr.ph434:                                        ; preds = %7
+  %i.zg = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv569
   %i.zh = load ptr, ptr %i.zg, align 8, !tbaa !8
   %i.zi = load i32, ptr @penalty, align 4
   %i.zj = sitofp i32 %i.zi to float               ; 2 uses
@@ -272,7 +272,7 @@ bb.l:                                             ; preds = %bb.k
   %i.zq = sext i32 %i.zn to i64                   ; 2 uses
   %i.zr = getelementptr inbounds [4 x i8], ptr %i.zp, i64 %i.zq ; 2 uses
   %i.zs = load float, ptr %i.zr, align 4, !tbaa !50
-  %i.zt = tail call float @llvm.fmuladd.f32(float %9, float %i.zj, float %i.zs)
+  %i.zt = tail call float @llvm.fmuladd.f32(float %10, float %i.zj, float %i.zs)
   store float %i.zt, ptr %i.zr, align 4, !tbaa !50
   %i.zu = getelementptr inbounds nuw i8, ptr %i.zk, i64 1
   %i.zv = load i8, ptr %i.zu, align 1, !tbaa !11
@@ -284,7 +284,7 @@ bb.m:                                             ; preds = %bb.l
   %i.zx = load ptr, ptr %i.zw, align 8, !tbaa !43
   %i.zy = getelementptr inbounds [4 x i8], ptr %i.zx, i64 %i.zq ; 2 uses
   %i.zz = load float, ptr %i.zy, align 4, !tbaa !50
-  %i.aaa = tail call float @llvm.fmuladd.f32(float %9, float %i.zj, float %i.zz)
+  %i.aaa = tail call float @llvm.fmuladd.f32(float %10, float %i.zj, float %i.zz)
   store float %i.aaa, ptr %i.zy, align 4, !tbaa !50
   br label %bb.n
 
@@ -294,10 +294,10 @@ bb.n:                                             ; preds = %bb.k, %bb.m, %bb.l
   %exitcond567.not = icmp eq i64 %indvars.iv.next564, %wide.trip.count566
   br i1 %exitcond567.not, label %._crit_edge435, label %bb.k, !llvm.loop !64
 
-._crit_edge435:                                   ; preds = %bb.n
-  %indvars.iv.next569 = add nuw nsw i64 %indvars.iv568, 1 ; 2 uses
+._crit_edge435:                                   ; preds = %bb.n, %7
+  %indvars.iv.next569 = add nuw nsw i64 %indvars.iv569, 1 ; 2 uses
   %exitcond572.not = icmp eq i64 %indvars.iv.next569, %wide.trip.count571
-  br i1 %exitcond572.not, label %.preheader375, label %.lr.ph434, !llvm.loop !65
+  br i1 %exitcond572.not, label %.preheader375, label %7, !llvm.loop !65
 
 .preheader374:                                    ; preds = %.preheader374.lr.ph, %._crit_edge444
   %indvars.iv580 = phi i64 [ 0, %.preheader374.lr.ph ], [ %indvars.iv.next581, %._crit_edge444 ] ; 9 uses
@@ -394,7 +394,7 @@ bb.q:                                             ; preds = %.lr.ph443, %bb.q
   %exitcond591.not = icmp eq i64 %indvars.iv.next581, %wide.trip.count590
   br i1 %exitcond591.not, label %._crit_edge447, label %.preheader374, !llvm.loop !69
 
-._crit_edge447:                                   ; preds = %._crit_edge444, %.lr.ph438, %.preheader375
+._crit_edge447:                                   ; preds = %._crit_edge444, %.preheader375
   %i.abg = load ptr, ptr @Calignm1.v, align 8, !tbaa !38 ; 11 uses
   store ptr %i.abg, ptr @Calignm1.w, align 8, !tbaa !38
   %i.abh = load ptr, ptr @Calignm1.g, align 8, !tbaa !40 ; 6 uses

@@ -201,7 +201,7 @@ bb.r:                                             ; preds = %bb.o, %bb.k
   %i.bo = load i32, ptr %i.c, align 8
   %i.bp = icmp eq i32 %i.bo, 1
   %.not149 = icmp eq i64 %i.h, 0                  ; 2 uses
-  br i1 %i.bp, label %.preheader109, label %.preheader117
+  br i1 %i.bp, label %.noexc103, label %.preheader117
 
 .preheader117:                                    ; preds = %bb.r
   br i1 %.not149, label %.loopexit110, label %.preheader116.lr.ph
@@ -209,174 +209,174 @@ bb.r:                                             ; preds = %bb.o, %bb.k
 .preheader116.lr.ph:                              ; preds = %.preheader117
   %i.bq = zext i32 %.063 to i64
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 40
-  br i1 %.not, label %._crit_edge146, label %.preheader116
+  br i1 %.not, label %._crit_edge146, label %.preheader.lr.ph.a
 
-.preheader109:                                    ; preds = %bb.r
-  br i1 %.not149, label %.loopexit110, label %.preheader.lr.ph.a
+.preheader.lr.ph.a:                               ; preds = %.preheader116.lr.ph, %._crit_edge137
+  %.060137.us = phi i64 [ %i.ce, %._crit_edge137 ], [ 0, %.preheader116.lr.ph ] ; 2 uses
+  br label %.preheader
 
-.preheader.lr.ph.a:                               ; preds = %.preheader109
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  br i1 %.not, label %._crit_edge146, label %.preheader
+.preheader:                                       ; preds = %.preheader.lr.ph.a, %.loopexit
+  %.062142 = phi i64 [ 0, %.preheader.lr.ph.a ], [ %i.cd, %.loopexit ] ; 2 uses
+  %7 = invoke noundef i32 @_ZN5o3dgc16Arithmetic_Codec6decodeERNS_19Adaptive_Data_ModelE(ptr noundef nonnull align 8 dereferenceable(44) %3, ptr noundef nonnull align 8 dereferenceable(52) %6)
+          to label %._crit_edge141 unwind label %bb.t ; 2 uses
 
-.preheader:                                       ; preds = %.preheader.lr.ph.a, %._crit_edge141
-  %.062142 = phi i64 [ %8, %._crit_edge141 ], [ 0, %.preheader.lr.ph.a ] ; 2 uses
-  br label %bb.s
+._crit_edge141:                                   ; preds = %.preheader
+  %8 = zext i32 %7 to i64
+  %exitcond155.not = icmp eq i32 %.063, %7
+  br i1 %exitcond155.not, label %.preheader111.us, label %.loopexit
 
-._crit_edge141:                                   ; preds = %.loopexit
-  %8 = add nuw i64 %.062142, 1                    ; 2 uses
-  %exitcond155.not = icmp eq i64 %8, %i.h
-  br i1 %exitcond155.not, label %.lr.ph145, label %.preheader, !llvm.loop !11
+.preheader111.us:                                 ; preds = %._crit_edge141, %bb.s
+  %.014.i.i.us = phi i32 [ %.115.i.i.us, %bb.s ], [ %.064, %._crit_edge141 ] ; 2 uses
+  %.012.i.i.us = phi i32 [ %.113.i.i.us, %bb.s ], [ 0, %._crit_edge141 ]
+  %9 = invoke noundef i32 @_ZN5o3dgc16Arithmetic_Codec6decodeERNS_18Adaptive_Bit_ModelE(ptr noundef nonnull align 8 dereferenceable(44) %3, ptr noundef nonnull align 4 dereferenceable(20) %5)
+          to label %bb.s unwind label %.noexc102  ; 2 uses
 
-bb.s:                                             ; preds = %.preheader, %.loopexit
-  %.061139 = phi i64 [ 0, %.preheader ], [ %i.cd, %.loopexit ] ; 2 uses
-  %9 = load i64, ptr %i.a, align 8                ; 2 uses
-  %10 = add i64 %9, 1                             ; 2 uses
-  store i64 %10, ptr %i.a, align 8
-  %11 = load ptr, ptr %2, align 8
-  %12 = getelementptr inbounds nuw i8, ptr %11, i64 %9
-  %13 = load i8, ptr %12, align 1                 ; 2 uses
-  %14 = zext i8 %13 to i64
-  %i.bs = icmp eq i8 %13, 127
-  br i1 %i.bs, label %.preheader.i.i, label %.loopexit
+bb.s:                                             ; preds = %.preheader111.us
+  %10 = icmp eq i32 %9, 1                         ; 2 uses
+  %11 = shl nuw i32 1, %.014.i.i.us
+  %12 = zext i1 %10 to i32
+  %.115.i.i.us = add nsw i32 %.014.i.i.us, %12    ; 3 uses
+  %13 = select i1 %10, i32 %11, i32 0
+  %.113.i.i.us = add nsw i32 %13, %.012.i.i.us    ; 2 uses
+  %i.bs = icmp eq i32 %9, 0
+  br i1 %i.bs, label %.preheader.i.i100.us, label %.preheader111.us, !llvm.loop !9
 
-.preheader.i.i:                                   ; preds = %bb.s, %.preheader.i.i
-  %15 = phi i64 [ %16, %.preheader.i.i ], [ %10, %bb.s ] ; 2 uses
-  %.09.i.i = phi i64 [ %23, %.preheader.i.i ], [ 127, %bb.s ]
-  %.0.i.i = phi i64 [ %24, %.preheader.i.i ], [ 0, %bb.s ] ; 2 uses
-  %16 = add i64 %15, 1                            ; 2 uses
-  store i64 %16, ptr %i.a, align 8
-  %17 = load ptr, ptr %2, align 8
-  %18 = getelementptr inbounds nuw i8, ptr %17, i64 %15
-  %19 = load i8, ptr %18, align 1
-  %20 = zext i8 %19 to i64                        ; 2 uses
-  %21 = lshr i64 %20, 1
-  %22 = shl i64 %21, %.0.i.i
-  %23 = add i64 %22, %.09.i.i                     ; 2 uses
-  %24 = add i64 %.0.i.i, 6
-  %25 = and i64 %20, 1
-  %.not.i.i = icmp eq i64 %25, 0
-  br i1 %.not.i.i, label %.loopexit, label %.preheader.i.i, !llvm.loop !12
+.preheader.i.i100.us:                             ; preds = %bb.s
+  %.not1617.i.i.us = icmp eq i32 %.115.i.i.us, 0
+  br i1 %.not1617.i.i.us, label %_ZN5o3dgc16Arithmetic_Codec15ExpGolombDecodeEiRNS_16Static_Bit_ModelERNS_18Adaptive_Bit_ModelE.exit.i.us, label %.lr.ph.i.i.us
 
-.loopexit:                                        ; preds = %.preheader.i.i, %bb.s
-  %.1.i.i = phi i64 [ %14, %bb.s ], [ %23, %.preheader.i.i ] ; 3 uses
+.lr.ph.i.i.us:                                    ; preds = %.preheader.i.i100.us, %.preheader.i.i
+  %.019.i.i.us = phi i32 [ %.1.i.i101.us, %.preheader.i.i ], [ 0, %.preheader.i.i100.us ]
+  %.218.i.i.us = phi i32 [ %15, %.preheader.i.i ], [ %.115.i.i.us, %.preheader.i.i100.us ]
+  %14 = invoke noundef i32 @_ZN5o3dgc16Arithmetic_Codec6decodeERNS_16Static_Bit_ModelE(ptr noundef nonnull align 8 dereferenceable(44) %3, ptr noundef nonnull align 4 dereferenceable(4) %4)
+          to label %.preheader.i.i unwind label %.preheader112
+
+.preheader.i.i:                                   ; preds = %.lr.ph.i.i.us
+  %15 = add nsw i32 %.218.i.i.us, -1              ; 3 uses
+  %16 = icmp eq i32 %14, 1
+  %17 = shl nuw i32 1, %15
+  %18 = select i1 %16, i32 %17, i32 0
+  %.1.i.i101.us = or i32 %18, %.019.i.i.us        ; 2 uses
+  %.not.i.i = icmp eq i32 %15, 0
+  br i1 %.not.i.i, label %_ZN5o3dgc16Arithmetic_Codec15ExpGolombDecodeEiRNS_16Static_Bit_ModelERNS_18Adaptive_Bit_ModelE.exit.i.us, label %.lr.ph.i.i.us, !llvm.loop !10
+
+_ZN5o3dgc16Arithmetic_Codec15ExpGolombDecodeEiRNS_16Static_Bit_ModelERNS_18Adaptive_Bit_ModelE.exit.i.us: ; preds = %.preheader.i.i, %.preheader.i.i100.us
+  %.0.lcssa.i.i.us = phi i32 [ 0, %.preheader.i.i100.us ], [ %.1.i.i101.us, %.preheader.i.i ]
+  %19 = add nsw i32 %.0.lcssa.i.i.us, %.113.i.i.us
+  %20 = zext i32 %19 to i64
+  %21 = add nuw nsw i64 %20, %i.bq
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %_ZN5o3dgc16Arithmetic_Codec15ExpGolombDecodeEiRNS_16Static_Bit_ModelERNS_18Adaptive_Bit_ModelE.exit.i.us, %._crit_edge141
+  %.1.i.i = phi i64 [ %21, %_ZN5o3dgc16Arithmetic_Codec15ExpGolombDecodeEiRNS_16Static_Bit_ModelERNS_18Adaptive_Bit_ModelE.exit.i.us ], [ %8, %._crit_edge141 ] ; 3 uses
   %i.bt = and i64 %.1.i.i, 1
   %.not.i2.i = icmp eq i64 %i.bt, 0
-  %i.bu = add i64 %.1.i.i, 1
+  %i.bu = add nuw nsw i64 %.1.i.i, 1
   %i.bv = lshr exact i64 %i.bu, 1
   %i.bw = sub nsw i64 0, %i.bv
   %i.bx = lshr exact i64 %.1.i.i, 1
   %i.by = select i1 %.not.i2.i, i64 %i.bx, i64 %i.bw
-  %i.bz = load ptr, ptr %7, align 8
-  %i.ca = mul i64 %.061139, %i.h
+  %i.bz = load ptr, ptr %i.br, align 8
+  %i.ca = mul i64 %.062142, %i.h
   %i.cb = getelementptr [8 x i8], ptr %i.bz, i64 %i.ca
-  %i.cc = getelementptr [8 x i8], ptr %i.cb, i64 %.062142
+  %i.cc = getelementptr [8 x i8], ptr %i.cb, i64 %.060137.us
   store i64 %i.by, ptr %i.cc, align 8
-  %i.cd = add nuw i64 %.061139, 1                 ; 2 uses
+  %i.cd = add nuw i64 %.062142, 1                 ; 2 uses
   %exitcond154.not = icmp eq i64 %i.cd, %i.g
-  br i1 %exitcond154.not, label %._crit_edge141, label %bb.s, !llvm.loop !13
+  br i1 %exitcond154.not, label %._crit_edge137, label %.preheader, !llvm.loop !11
 
-.preheader116:                                    ; preds = %.preheader116.lr.ph, %._crit_edge137
-  %.060138 = phi i64 [ %i.ce, %._crit_edge137 ], [ 0, %.preheader116.lr.ph ] ; 2 uses
-  br label %bb.t
-
-._crit_edge137:                                   ; preds = %bb.u
-  %i.ce = add nuw i64 %.060138, 1                 ; 2 uses
+._crit_edge137:                                   ; preds = %.loopexit
+  %i.ce = add nuw i64 %.060137.us, 1              ; 2 uses
   %exitcond153.not = icmp eq i64 %i.ce, %i.h
-  br i1 %exitcond153.not, label %.lr.ph145, label %.preheader116, !llvm.loop !14
+  br i1 %exitcond153.not, label %.lr.ph145, label %.preheader.lr.ph.a, !llvm.loop !12
 
-bb.t:                                             ; preds = %.preheader116, %bb.u
-  %.059135 = phi i64 [ 0, %.preheader116 ], [ %i.cr, %bb.u ] ; 2 uses
-  %26 = invoke noundef i32 @_ZN5o3dgc16Arithmetic_Codec6decodeERNS_19Adaptive_Data_ModelE(ptr noundef nonnull align 8 dereferenceable(44) %3, ptr noundef nonnull align 8 dereferenceable(52) %6)
-          to label %.noexc102 unwind label %.loopexit.split-lp.loopexit.split-lp ; 2 uses
+bb.t:                                             ; preds = %.preheader
+  %lpad.loopexit.split-lp113.us = landingpad { ptr, i32 }
+          cleanup
+  br label %.loopexit.split-lp
 
-.noexc102:                                        ; preds = %bb.t
-  %27 = zext i32 %26 to i64
-  %28 = icmp eq i32 %.063, %26
-  br i1 %28, label %.preheader112, label %bb.u
+.noexc102:                                        ; preds = %.preheader111.us
+  %lpad.loopexit112.us = landingpad { ptr, i32 }
+          cleanup
+  br label %.loopexit.split-lp
 
-.preheader112:                                    ; preds = %.noexc102, %.noexc103
-  %.014.i.i = phi i32 [ %.115.i.i, %.noexc103 ], [ %.064, %.noexc102 ] ; 2 uses
-  %.012.i.i = phi i32 [ %.113.i.i, %.noexc103 ], [ 0, %.noexc102 ]
-  %29 = invoke noundef i32 @_ZN5o3dgc16Arithmetic_Codec6decodeERNS_18Adaptive_Bit_ModelE(ptr noundef nonnull align 8 dereferenceable(44) %3, ptr noundef nonnull align 4 dereferenceable(20) %5)
-          to label %.noexc103 unwind label %.loopexit.split-lp.loopexit ; 2 uses
+.preheader112:                                    ; preds = %.lr.ph.i.i.us
+  %lpad.loopexit.us = landingpad { ptr, i32 }
+          cleanup
+  br label %.loopexit.split-lp
 
-.noexc103:                                        ; preds = %.preheader112
-  %30 = icmp eq i32 %29, 1                        ; 2 uses
-  %31 = shl nuw i32 1, %.014.i.i
-  %32 = zext i1 %30 to i32
-  %.115.i.i = add nsw i32 %.014.i.i, %32          ; 3 uses
-  %33 = select i1 %30, i32 %31, i32 0
-  %.113.i.i = add nsw i32 %33, %.012.i.i          ; 2 uses
-  %.not.i.i99 = icmp eq i32 %29, 0
-  br i1 %.not.i.i99, label %.preheader.i.i100, label %.preheader112, !llvm.loop !9
+.noexc103:                                        ; preds = %bb.r
+  br i1 %.not149, label %.loopexit110, label %.preheader.i.i100
 
 .preheader.i.i100:                                ; preds = %.noexc103
-  %.not1617.i.i = icmp eq i32 %.115.i.i, 0
-  br i1 %.not1617.i.i, label %_ZN5o3dgc16Arithmetic_Codec15ExpGolombDecodeEiRNS_16Static_Bit_ModelERNS_18Adaptive_Bit_ModelE.exit.i, label %.lr.ph.i.i
+  %22 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  br i1 %.not, label %._crit_edge146, label %.lr.ph.i.i
 
-.lr.ph.i.i:                                       ; preds = %.preheader.i.i100, %.noexc104
-  %.019.i.i = phi i32 [ %.1.i.i101, %.noexc104 ], [ 0, %.preheader.i.i100 ]
-  %.218.i.i = phi i32 [ %35, %.noexc104 ], [ %.115.i.i, %.preheader.i.i100 ]
-  %34 = invoke noundef i32 @_ZN5o3dgc16Arithmetic_Codec6decodeERNS_16Static_Bit_ModelE(ptr noundef nonnull align 8 dereferenceable(44) %3, ptr noundef nonnull align 4 dereferenceable(4) %4)
-          to label %.noexc104 unwind label %.loopexit111
+.lr.ph.i.i:                                       ; preds = %.preheader.i.i100, %.loopexit.split-lp.loopexit.split-lp
+  %.062143.us = phi i64 [ %38, %.loopexit.split-lp.loopexit.split-lp ], [ 0, %.preheader.i.i100 ] ; 2 uses
+  br label %.noexc104
 
-.noexc104:                                        ; preds = %.lr.ph.i.i
-  %35 = add nsw i32 %.218.i.i, -1                 ; 3 uses
-  %36 = icmp eq i32 %34, 1
-  %37 = shl nuw i32 1, %35
-  %38 = select i1 %36, i32 %37, i32 0
-  %.1.i.i101 = or i32 %38, %.019.i.i              ; 2 uses
-  %.not16.i.i = icmp eq i32 %35, 0
-  br i1 %.not16.i.i, label %_ZN5o3dgc16Arithmetic_Codec15ExpGolombDecodeEiRNS_16Static_Bit_ModelERNS_18Adaptive_Bit_ModelE.exit.i, label %.lr.ph.i.i, !llvm.loop !10
+.noexc104:                                        ; preds = %.lr.ph.i.i, %bb.u
+  %.061140.us = phi i64 [ 0, %.lr.ph.i.i ], [ %i.cr, %bb.u ] ; 2 uses
+  %23 = load i64, ptr %i.a, align 8               ; 2 uses
+  %24 = add i64 %23, 1                            ; 2 uses
+  store i64 %24, ptr %i.a, align 8
+  %25 = load ptr, ptr %2, align 8
+  %26 = getelementptr inbounds nuw i8, ptr %25, i64 %23
+  %27 = load i8, ptr %26, align 1                 ; 2 uses
+  %28 = zext i8 %27 to i64
+  %.not16.i.i = icmp eq i8 %27, 127
+  br i1 %.not16.i.i, label %_ZN5o3dgc16Arithmetic_Codec15ExpGolombDecodeEiRNS_16Static_Bit_ModelERNS_18Adaptive_Bit_ModelE.exit.i, label %bb.u
 
-_ZN5o3dgc16Arithmetic_Codec15ExpGolombDecodeEiRNS_16Static_Bit_ModelERNS_18Adaptive_Bit_ModelE.exit.i: ; preds = %.noexc104, %.preheader.i.i100
-  %.0.lcssa.i.i = phi i32 [ 0, %.preheader.i.i100 ], [ %.1.i.i101, %.noexc104 ]
-  %39 = add nsw i32 %.0.lcssa.i.i, %.113.i.i
-  %i.cf = zext i32 %39 to i64
-  %i.cg = add nuw nsw i64 %i.cf, %i.bq
-  br label %bb.u
+_ZN5o3dgc16Arithmetic_Codec15ExpGolombDecodeEiRNS_16Static_Bit_ModelERNS_18Adaptive_Bit_ModelE.exit.i: ; preds = %.noexc104, %_ZN5o3dgc16Arithmetic_Codec15ExpGolombDecodeEiRNS_16Static_Bit_ModelERNS_18Adaptive_Bit_ModelE.exit.i
+  %29 = phi i64 [ %30, %_ZN5o3dgc16Arithmetic_Codec15ExpGolombDecodeEiRNS_16Static_Bit_ModelERNS_18Adaptive_Bit_ModelE.exit.i ], [ %24, %.noexc104 ] ; 2 uses
+  %.09.i.i.us = phi i64 [ %36, %_ZN5o3dgc16Arithmetic_Codec15ExpGolombDecodeEiRNS_16Static_Bit_ModelERNS_18Adaptive_Bit_ModelE.exit.i ], [ 127, %.noexc104 ]
+  %.0.i.i.us = phi i64 [ %i.cg, %_ZN5o3dgc16Arithmetic_Codec15ExpGolombDecodeEiRNS_16Static_Bit_ModelERNS_18Adaptive_Bit_ModelE.exit.i ], [ 0, %.noexc104 ] ; 2 uses
+  %30 = add i64 %29, 1                            ; 2 uses
+  store i64 %30, ptr %i.a, align 8
+  %31 = load ptr, ptr %2, align 8
+  %32 = getelementptr inbounds nuw i8, ptr %31, i64 %29
+  %33 = load i8, ptr %32, align 1
+  %i.cf = zext i8 %33 to i64                      ; 2 uses
+  %34 = lshr i64 %i.cf, 1
+  %35 = shl i64 %34, %.0.i.i.us
+  %36 = add i64 %35, %.09.i.i.us                  ; 2 uses
+  %i.cg = add i64 %.0.i.i.us, 6
+  %37 = and i64 %i.cf, 1
+  %.not.i.i.us = icmp eq i64 %37, 0
+  br i1 %.not.i.i.us, label %bb.u, label %_ZN5o3dgc16Arithmetic_Codec15ExpGolombDecodeEiRNS_16Static_Bit_ModelERNS_18Adaptive_Bit_ModelE.exit.i, !llvm.loop !13
 
-bb.u:                                             ; preds = %_ZN5o3dgc16Arithmetic_Codec15ExpGolombDecodeEiRNS_16Static_Bit_ModelERNS_18Adaptive_Bit_ModelE.exit.i, %.noexc102
-  %.0.i = phi i64 [ %i.cg, %_ZN5o3dgc16Arithmetic_Codec15ExpGolombDecodeEiRNS_16Static_Bit_ModelERNS_18Adaptive_Bit_ModelE.exit.i ], [ %27, %.noexc102 ] ; 3 uses
+bb.u:                                             ; preds = %_ZN5o3dgc16Arithmetic_Codec15ExpGolombDecodeEiRNS_16Static_Bit_ModelERNS_18Adaptive_Bit_ModelE.exit.i, %.noexc104
+  %.0.i = phi i64 [ %28, %.noexc104 ], [ %36, %_ZN5o3dgc16Arithmetic_Codec15ExpGolombDecodeEiRNS_16Static_Bit_ModelERNS_18Adaptive_Bit_ModelE.exit.i ] ; 3 uses
   %i.ch = and i64 %.0.i, 1
   %.not.i10.i = icmp eq i64 %i.ch, 0
-  %i.ci = add nuw nsw i64 %.0.i, 1
+  %i.ci = add i64 %.0.i, 1
   %i.cj = lshr exact i64 %i.ci, 1
   %i.ck = sub nsw i64 0, %i.cj
   %i.cl = lshr exact i64 %.0.i, 1
   %i.cm = select i1 %.not.i10.i, i64 %i.cl, i64 %i.ck
-  %i.cn = load ptr, ptr %i.br, align 8
-  %i.co = mul i64 %.059135, %i.h
+  %i.cn = load ptr, ptr %22, align 8
+  %i.co = mul i64 %.061140.us, %i.h
   %i.cp = getelementptr [8 x i8], ptr %i.cn, i64 %i.co
-  %i.cq = getelementptr [8 x i8], ptr %i.cp, i64 %.060138
+  %i.cq = getelementptr [8 x i8], ptr %i.cp, i64 %.062143.us
   store i64 %i.cm, ptr %i.cq, align 8
-  %i.cr = add nuw i64 %.059135, 1                 ; 2 uses
+  %i.cr = add nuw i64 %.061140.us, 1              ; 2 uses
   %exitcond.not = icmp eq i64 %i.cr, %i.g
-  br i1 %exitcond.not, label %._crit_edge137, label %bb.t, !llvm.loop !15
+  br i1 %exitcond.not, label %.loopexit.split-lp.loopexit.split-lp, label %.noexc104, !llvm.loop !14
 
-.loopexit111:                                     ; preds = %.lr.ph.i.i
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.loopexit.split-lp
+.loopexit.split-lp.loopexit.split-lp:             ; preds = %bb.u
+  %38 = add nuw i64 %.062143.us, 1                ; 2 uses
+  %exitcond158.not = icmp eq i64 %38, %i.h
+  br i1 %exitcond158.not, label %.lr.ph145, label %.lr.ph.i.i, !llvm.loop !15
 
-.loopexit.split-lp.loopexit:                      ; preds = %.preheader112
-  %lpad.loopexit113 = landingpad { ptr, i32 }
-          cleanup
-  br label %.loopexit.split-lp
-
-.loopexit.split-lp.loopexit.split-lp:             ; preds = %bb.t
-  %lpad.loopexit.split-lp114 = landingpad { ptr, i32 }
-          cleanup
-  br label %.loopexit.split-lp
-
-.loopexit110:                                     ; preds = %.preheader117, %.preheader109
+.loopexit110:                                     ; preds = %.preheader117, %.noexc103
   br i1 %.not, label %._crit_edge146, label %.lr.ph145
 
-.lr.ph145:                                        ; preds = %._crit_edge137, %._crit_edge141, %.loopexit110
+.lr.ph145:                                        ; preds = %._crit_edge137, %.loopexit.split-lp.loopexit.split-lp, %.loopexit110
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 40
   br label %bb.z
 
-._crit_edge146:                                   ; preds = %bb.aa, %.preheader.lr.ph.a, %.preheader116.lr.ph, %.loopexit110
+._crit_edge146:                                   ; preds = %bb.aa, %.preheader116.lr.ph, %.preheader.i.i100, %.loopexit110
   %i.ct = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.cu = load ptr, ptr %i.ct, align 8
   %i.cv = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -433,8 +433,8 @@ bb.y:                                             ; preds = %.noexc107, %._crit_
   %lcmp.mod178 = trunc i64 %i.h to i1
   br label %.lr.ph.i106
 
-.lr.ph.i106:                                      ; preds = %.lr.ph.i106.preheader, %._crit_edge.i
-  %.02734.i = phi i64 [ %48, %._crit_edge.i ], [ 0, %.lr.ph.i106.preheader ] ; 5 uses
+.lr.ph.i106:                                      ; preds = %.lr.ph.i106.preheader, %._crit_edge.us.i
+  %.02734.i = phi i64 [ %47, %._crit_edge.us.i ], [ 0, %.lr.ph.i106.preheader ] ; 5 uses
   %i.dr = getelementptr inbounds nuw [4 x i8], ptr %i.da, i64 %.02734.i
   %i.ds = load float, ptr %i.dr, align 4
   %i.dt = getelementptr inbounds nuw [4 x i8], ptr %i.cy, i64 %.02734.i ; 4 uses
@@ -446,29 +446,6 @@ bb.y:                                             ; preds = %.noexc107, %._crit_
   %invariant.gep.i = getelementptr [4 x i8], ptr %i.cu, i64 %.02734.i ; 3 uses
   %i.dy = mul i64 %.02734.i, %i.h                 ; 3 uses
   br i1 %i.dq, label %.epil.preheader, label %.lr.ph.i106.new
-
-._crit_edge.i.unr-lcssa:                          ; preds = %.lr.ph.i106.new
-  br i1 %lcmp.mod.not, label %._crit_edge.i, label %.epil.preheader
-
-.epil.preheader:                                  ; preds = %._crit_edge.i.unr-lcssa, %.lr.ph.i106
-  %.033.i.epil.init = phi i64 [ 0, %.lr.ph.i106 ], [ %i.eq, %._crit_edge.i.unr-lcssa ] ; 2 uses
-  call void @llvm.assume(i1 %lcmp.mod178)
-  %40 = load ptr, ptr %i.dp, align 8
-  %41 = getelementptr [8 x i8], ptr %40, i64 %.033.i.epil.init
-  %42 = getelementptr [8 x i8], ptr %41, i64 %i.dy
-  %43 = load i64, ptr %42, align 8
-  %44 = sitofp i64 %43 to float
-  %45 = load float, ptr %i.dt, align 4
-  %46 = call float @llvm.fmuladd.f32(float %44, float %.028.i, float %45)
-  %47 = mul i64 %.033.i.epil.init, %i.cw
-  %gep.i.epil = getelementptr [4 x i8], ptr %invariant.gep.i, i64 %47
-  store float %46, ptr %gep.i.epil, align 4
-  br label %._crit_edge.i
-
-._crit_edge.i:                                    ; preds = %._crit_edge.i.unr-lcssa, %.epil.preheader
-  %48 = add nuw i64 %.02734.i, 1                  ; 2 uses
-  %exitcond39.not.i = icmp eq i64 %48, %i.g
-  br i1 %exitcond39.not.i, label %_ZN5o3dgc20DynamicVectorDecoder9IQuantizeEPfmmmPKfS3_m.exit, label %.lr.ph.i106, !llvm.loop !16
 
 .lr.ph.i106.new:                                  ; preds = %.lr.ph.i106, %.lr.ph.i106.new
   %.033.i = phi i64 [ %i.eq, %.lr.ph.i106.new ], [ 0, %.lr.ph.i106 ] ; 4 uses
@@ -497,7 +474,30 @@ bb.y:                                             ; preds = %.noexc107, %._crit_
   %i.eq = add nuw i64 %.033.i, 2                  ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.i.unr-lcssa, label %.lr.ph.i106.new, !llvm.loop !17
+  br i1 %niter.ncmp.1, label %._crit_edge.us.i.unr-lcssa, label %.lr.ph.i106.new, !llvm.loop !16
+
+._crit_edge.us.i.unr-lcssa:                       ; preds = %.lr.ph.i106.new
+  br i1 %lcmp.mod.not, label %._crit_edge.us.i, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %._crit_edge.us.i.unr-lcssa, %.lr.ph.i106
+  %.033.us.i.epil.init = phi i64 [ 0, %.lr.ph.i106 ], [ %i.eq, %._crit_edge.us.i.unr-lcssa ] ; 2 uses
+  call void @llvm.assume(i1 %lcmp.mod178)
+  %39 = load ptr, ptr %i.dp, align 8
+  %40 = getelementptr [8 x i8], ptr %39, i64 %.033.us.i.epil.init
+  %41 = getelementptr [8 x i8], ptr %40, i64 %i.dy
+  %42 = load i64, ptr %41, align 8
+  %43 = sitofp i64 %42 to float
+  %44 = load float, ptr %i.dt, align 4
+  %45 = call float @llvm.fmuladd.f32(float %43, float %.028.i, float %44)
+  %46 = mul i64 %.033.us.i.epil.init, %i.cw
+  %gep.us.i.epil = getelementptr [4 x i8], ptr %invariant.gep.i, i64 %46
+  store float %45, ptr %gep.us.i.epil, align 4
+  br label %._crit_edge.us.i
+
+._crit_edge.us.i:                                 ; preds = %._crit_edge.us.i.unr-lcssa, %.epil.preheader
+  %47 = add nuw i64 %.02734.i, 1                  ; 2 uses
+  %exitcond40.not.i = icmp eq i64 %47, %i.g
+  br i1 %exitcond40.not.i, label %_ZN5o3dgc20DynamicVectorDecoder9IQuantizeEPfmmmPKfS3_m.exit, label %.lr.ph.i106, !llvm.loop !17
 
 bb.z:                                             ; preds = %.lr.ph145, %bb.aa
   %.0143 = phi i64 [ 0, %.lr.ph145 ], [ %i.ev, %bb.aa ] ; 2 uses
@@ -517,7 +517,7 @@ bb.ab:                                            ; preds = %bb.z
           cleanup
   br label %.loopexit.split-lp
 
-_ZN5o3dgc20DynamicVectorDecoder9IQuantizeEPfmmmPKfS3_m.exit: ; preds = %._crit_edge.i, %.lr.ph36.i, %bb.y
+_ZN5o3dgc20DynamicVectorDecoder9IQuantizeEPfmmmPKfS3_m.exit: ; preds = %._crit_edge.us.i, %.lr.ph36.i, %bb.y
   call void @_ZN5o3dgc19Adaptive_Data_ModelD1Ev(ptr noundef nonnull align 8 dead_on_return(52) dereferenceable(52) %6) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #14
@@ -526,8 +526,8 @@ _ZN5o3dgc20DynamicVectorDecoder9IQuantizeEPfmmmPKfS3_m.exit: ; preds = %._crit_e
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #14
   ret i32 0
 
-.loopexit.split-lp:                               ; preds = %.loopexit111, %.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp.loopexit, %bb.ab, %bb.q
-  %.pn = phi { ptr, i32 } [ %i.bn, %bb.q ], [ %i.ew, %bb.ab ], [ %lpad.loopexit, %.loopexit111 ], [ %lpad.loopexit113, %.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp114, %.loopexit.split-lp.loopexit.split-lp ]
+.loopexit.split-lp:                               ; preds = %.preheader112, %bb.t, %.noexc102, %bb.ab, %bb.q
+  %.pn = phi { ptr, i32 } [ %i.bn, %bb.q ], [ %i.ew, %bb.ab ], [ %lpad.loopexit.us, %.preheader112 ], [ %lpad.loopexit112.us, %.noexc102 ], [ %lpad.loopexit.split-lp113.us, %bb.t ]
   call void @_ZN5o3dgc19Adaptive_Data_ModelD1Ev(ptr noundef nonnull align 8 dead_on_return(52) dereferenceable(52) %6) #14
   br label %bb.ac
 
@@ -919,7 +919,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 bb.e:                                             ; preds = %bb.d, %bb.a
   %.not = icmp eq i64 %3, 0
-  br i1 %.not, label %._crit_edge37.split, label %.lr.ph36
+  br i1 %.not, label %._crit_edge37, label %.lr.ph36
 
 .lr.ph36:                                         ; preds = %bb.e
   %i.l = trunc i64 %7 to i32
@@ -928,7 +928,7 @@ bb.e:                                             ; preds = %bb.d, %bb.a
   %i.n = uitofp nneg i32 %i.m to float
   %.not38 = icmp eq i64 %2, 0
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
-  br i1 %.not38, label %._crit_edge37.split, label %.lr.ph.preheader
+  br i1 %.not38, label %._crit_edge37, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph36
   %xtraiter = and i64 %2, 1
@@ -938,11 +938,8 @@ bb.e:                                             ; preds = %bb.d, %bb.a
   %lcmp.mod44 = trunc i64 %2 to i1
   br label %.lr.ph
 
-._crit_edge37.split:                              ; preds = %._crit_edge, %.lr.ph36, %bb.e
-  ret i32 0
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %._crit_edge
-  %.02734 = phi i64 [ %16, %._crit_edge ], [ 0, %.lr.ph.preheader ] ; 5 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %._crit_edge.us
+  %.02734 = phi i64 [ %16, %._crit_edge.us ], [ 0, %.lr.ph.preheader ] ; 5 uses
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %.02734
   %i.r = load float, ptr %i.q, align 4
   %i.s = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %.02734 ; 4 uses
@@ -954,29 +951,6 @@ bb.e:                                             ; preds = %bb.d, %bb.a
   %invariant.gep = getelementptr [4 x i8], ptr %1, i64 %.02734 ; 3 uses
   %i.x = mul i64 %.02734, %2                      ; 3 uses
   br i1 %i.p, label %.epil.preheader, label %.lr.ph.new
-
-._crit_edge.unr-lcssa:                            ; preds = %.lr.ph.new
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
-
-.epil.preheader:                                  ; preds = %._crit_edge.unr-lcssa, %.lr.ph
-  %.033.epil.init = phi i64 [ 0, %.lr.ph ], [ %i.ap, %._crit_edge.unr-lcssa ] ; 2 uses
-  tail call void @llvm.assume(i1 %lcmp.mod44)
-  %8 = load ptr, ptr %i.o, align 8
-  %9 = getelementptr [8 x i8], ptr %8, i64 %.033.epil.init
-  %10 = getelementptr [8 x i8], ptr %9, i64 %i.x
-  %11 = load i64, ptr %10, align 8
-  %12 = sitofp i64 %11 to float
-  %13 = load float, ptr %i.s, align 4
-  %14 = tail call float @llvm.fmuladd.f32(float %12, float %.028, float %13)
-  %15 = mul i64 %.033.epil.init, %4
-  %gep.epil = getelementptr [4 x i8], ptr %invariant.gep, i64 %15
-  store float %14, ptr %gep.epil, align 4
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.unr-lcssa, %.epil.preheader
-  %16 = add nuw i64 %.02734, 1                    ; 2 uses
-  %exitcond39.not = icmp eq i64 %16, %3
-  br i1 %exitcond39.not, label %._crit_edge37.split, label %.lr.ph, !llvm.loop !16
 
 .lr.ph.new:                                       ; preds = %.lr.ph, %.lr.ph.new
   %.033 = phi i64 [ %i.ap, %.lr.ph.new ], [ 0, %.lr.ph ] ; 4 uses
@@ -1005,7 +979,33 @@ bb.e:                                             ; preds = %bb.d, %bb.a
   %i.ap = add nuw i64 %.033, 2                    ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %.lr.ph.new, !llvm.loop !17
+  br i1 %niter.ncmp.1, label %._crit_edge.us.unr-lcssa, label %.lr.ph.new, !llvm.loop !16
+
+._crit_edge.us.unr-lcssa:                         ; preds = %.lr.ph.new
+  br i1 %lcmp.mod.not, label %._crit_edge.us, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %._crit_edge.us.unr-lcssa, %.lr.ph
+  %.033.us.epil.init = phi i64 [ 0, %.lr.ph ], [ %i.ap, %._crit_edge.us.unr-lcssa ] ; 2 uses
+  tail call void @llvm.assume(i1 %lcmp.mod44)
+  %8 = load ptr, ptr %i.o, align 8
+  %9 = getelementptr [8 x i8], ptr %8, i64 %.033.us.epil.init
+  %10 = getelementptr [8 x i8], ptr %9, i64 %i.x
+  %11 = load i64, ptr %10, align 8
+  %12 = sitofp i64 %11 to float
+  %13 = load float, ptr %i.s, align 4
+  %14 = tail call float @llvm.fmuladd.f32(float %12, float %.028, float %13)
+  %15 = mul i64 %.033.us.epil.init, %4
+  %gep.us.epil = getelementptr [4 x i8], ptr %invariant.gep, i64 %15
+  store float %14, ptr %gep.us.epil, align 4
+  br label %._crit_edge.us
+
+._crit_edge.us:                                   ; preds = %._crit_edge.us.unr-lcssa, %.epil.preheader
+  %16 = add nuw i64 %.02734, 1                    ; 2 uses
+  %exitcond40.not = icmp eq i64 %16, %3
+  br i1 %exitcond40.not, label %._crit_edge37, label %.lr.ph, !llvm.loop !17
+
+._crit_edge37:                                    ; preds = %._crit_edge.us, %.lr.ph36, %bb.e
+  ret i32 0
 }
 
 ; Function Attrs: nounwind

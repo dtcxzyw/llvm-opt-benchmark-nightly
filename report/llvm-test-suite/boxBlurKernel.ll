@@ -9,7 +9,7 @@ bb.a:
   %i.b = icmp sgt i32 %0, 8
   %i.c = icmp sgt i32 %1, 8
   %or.cond = and i1 %i.b, %i.c
-  br i1 %or.cond, label %.preheader34.preheader, label %._crit_edge41.split
+  br i1 %or.cond, label %.preheader34.preheader, label %._crit_edge41
 
 .preheader34.preheader:                           ; preds = %bb.a
   %i.d = add nsw i32 %0, -4
@@ -275,9 +275,6 @@ middle.block:                                     ; preds = %vector.body
   %indvars.iv.ph = phi i64 [ %i.q, %middle.block ], [ 4, %.preheader34 ]
   br label %.preheader33
 
-._crit_edge41.split:                              ; preds = %._crit_edge, %bb.a
-  ret void
-
 .preheader33:                                     ; preds = %.preheader33.preheader, %.preheader33
   %indvars.iv = phi i64 [ %i.fr, %.preheader33 ], [ %indvars.iv.ph, %.preheader33.preheader ] ; 10 uses
   %i.fp = add nsw i64 %indvars.iv, -4             ; 8 uses
@@ -348,7 +345,10 @@ middle.block:                                     ; preds = %vector.body
 
 ._crit_edge:                                      ; preds = %.preheader33, %middle.block
   %exitcond49.not = icmp eq i64 %i.ae, %wide.trip.count48
-  br i1 %exitcond49.not, label %._crit_edge41.split, label %.preheader34, !llvm.loop !18
+  br i1 %exitcond49.not, label %._crit_edge41, label %.preheader34, !llvm.loop !18
+
+._crit_edge41:                                    ; preds = %._crit_edge, %bb.a
+  ret void
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)

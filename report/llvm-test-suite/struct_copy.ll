@@ -133,16 +133,16 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   %i.cu = add nuw nsw i32 %i.az, 1
   %i.cv = mul nsw i32 %i.cq, %i.cu
   %i.cw = select i1 %i.ba, i32 %i.cv, i32 0
-  %2 = icmp sgt i32 %i.cj, 0
-  %3 = icmp sgt i32 %i.ci, 0
+  %2 = icmp slt i32 %i.cj, 1
+  %3 = icmp slt i32 %i.ch, 1
   %i.cx = sub i32 %i.cq, %i.ch
   %i.cy = sub i32 %i.cp, %i.ch
   %i.cz = sub i32 %i.cw, %factor.op.mul237
   %i.da = sub i32 %i.ct, %factor.op.mul
-  %brmerge.not273 = and i1 %2, %3
-  %4 = icmp sgt i32 %i.ch, 0
-  %or.cond = and i1 %brmerge.not273, %4
-  br i1 %or.cond, label %.preheader217.us.us.preheader, label %._crit_edge.split
+  %4 = icmp slt i32 %i.ci, 1
+  %or.cond.not289 = or i1 %2, %4
+  %brmerge = or i1 %or.cond.not289, %3
+  br i1 %brmerge, label %._crit_edge.split, label %.preheader217.us.us.preheader
 
 .preheader217.us.us.preheader:                    ; preds = %.preheader218.lr.ph
   %i.db = add nsw i32 %i.bu, %i.cg

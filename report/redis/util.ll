@@ -201,10 +201,10 @@ declare i64 @__isoc23_strtoull(ptr noundef, ptr noundef, i32 noundef) local_unna
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: read) uwtable
 define dso_local ptr @mempbrk(ptr nofree noundef readonly captures(ret: address, provenance) %0, i64 noundef %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3) local_unnamed_addr #7 {
 bb.a:
-  %4 = icmp ne i64 %1, 0
-  %.not24 = icmp ne i64 %3, 0
-  %or.cond = and i1 %4, %.not24
-  br i1 %or.cond, label %.preheader, label %.loopexit23
+  %.not = icmp eq i64 %1, 0
+  %.not24.not = icmp eq i64 %3, 0
+  %or.cond = or i1 %.not, %.not24.not
+  br i1 %or.cond, label %.loopexit23, label %.preheader
 
 .preheader:                                       ; preds = %bb.a, %._crit_edge
   %.01526 = phi i64 [ %i.g, %._crit_edge ], [ 0, %bb.a ] ; 3 uses
@@ -234,7 +234,7 @@ bb.c:                                             ; preds = %.preheader, %bb.b
   br label %.loopexit23
 
 .loopexit23:                                      ; preds = %._crit_edge, %.loopexit23.loopexit, %bb.a
-  %i.i = phi ptr [ %i.h, %.loopexit23.loopexit ], [ null, %bb.a ], [ null, %._crit_edge ]
+  %i.i = phi ptr [ null, %bb.a ], [ %i.h, %.loopexit23.loopexit ], [ null, %._crit_edge ]
   ret ptr %i.i
 }
 
