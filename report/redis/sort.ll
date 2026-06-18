@@ -201,7 +201,7 @@ bb.a:
   store i64 0, ptr %i.a, align 8, !tbaa !23
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
   store i64 -1, ptr %i.b, align 8, !tbaa !23
-  %i.e = tail call ptr @listCreate() #12          ; 7 uses
+  %i.e = tail call ptr @listCreate() #12          ; 8 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   store ptr @zfree, ptr %i.f, align 8, !tbaa !63
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 224
@@ -604,7 +604,7 @@ bb.bv:                                            ; preds = %bb.bt
   br label %bb.bw
 
 bb.bw:                                            ; preds = %.critedge540, %bb.bv
-  %.0432 = phi ptr [ %i.ku, %bb.bv ], [ %i.lb, %.critedge540 ] ; 29 uses
+  %.0432 = phi ptr [ %i.ku, %bb.bv ], [ %i.lb, %.critedge540 ] ; 30 uses
   %.pre799 = load i64, ptr %.0432, align 8
   %.pre801 = and i64 %.pre799, 15                 ; 2 uses
   %i.lc = icmp ne i64 %.pre801, 2
@@ -749,7 +749,7 @@ bb.cm:                                            ; preds = %bb.cl
   br label %bb.cn
 
 bb.cn:                                            ; preds = %bb.cl, %bb.cm, %bb.ck, %bb.cj
-  %.1415 = phi i32 [ %i.nb, %bb.cm ], [ %.0414, %bb.cl ], [ %.0414, %bb.ck ], [ %.0414, %bb.cj ] ; 14 uses
+  %.1415 = phi i32 [ %i.nb, %bb.cm ], [ %.0414, %bb.cl ], [ %.0414, %bb.ck ], [ %.0414, %bb.cj ] ; 13 uses
   %i.nc = sext i32 %.1415 to i64                  ; 3 uses
   %i.nd = shl nsw i64 %i.nc, 4
   %i.ne = call noalias ptr @zmalloc(i64 noundef %i.nd) #11 ; 18 uses
@@ -1152,7 +1152,7 @@ bb.fu:                                            ; preds = %bb.ft, %bb.fq
 
 .loopexit:                                        ; preds = %._crit_edge729, %bb.fb, %bb.fu, %bb.ez
   %i.vs = icmp sgt i32 %.1415, 0
-  br i1 %i.vs, label %.lr.ph736.preheader, label %._crit_edge737
+  br i1 %i.vs, label %.lr.ph736.preheader, label %._crit_edge741.critedge
 
 .lr.ph736.preheader:                              ; preds = %.loopexit
   %wide.trip.count786 = zext nneg i32 %.1415 to i64
@@ -1167,13 +1167,11 @@ bb.fu:                                            ; preds = %bb.ft, %bb.fq
   %exitcond787.not = icmp eq i64 %indvars.iv.next784, %wide.trip.count786
   br i1 %exitcond787.not, label %._crit_edge737, label %.lr.ph736, !llvm.loop !127
 
-._crit_edge737:                                   ; preds = %.lr.ph736, %.loopexit
+._crit_edge737:                                   ; preds = %.lr.ph736
   call void @decrRefCount(ptr noundef nonnull %.0432) #12
   call void @listRelease(ptr noundef %i.e) #12
-  %10 = icmp slt i32 %.1415, 1
   %.not537 = icmp eq i32 %.4846, 0
-  %or.cond742 = select i1 %10, i1 true, i1 %.not537
-  br i1 %or.cond742, label %._crit_edge741.split, label %.lr.ph740.split.preheader
+  br i1 %.not537, label %._crit_edge741.split, label %.lr.ph740.split.preheader
 
 .lr.ph740.split.preheader:                        ; preds = %._crit_edge737
   %wide.trip.count791 = zext nneg i32 %.1415 to i64
@@ -1196,7 +1194,12 @@ bb.fw:                                            ; preds = %.lr.ph740.split, %b
   %exitcond792.not = icmp eq i64 %indvars.iv.next789, %wide.trip.count791
   br i1 %exitcond792.not, label %._crit_edge741.split, label %.lr.ph740.split, !llvm.loop !128
 
-._crit_edge741.split:                             ; preds = %bb.fw, %._crit_edge737
+._crit_edge741.critedge:                          ; preds = %.loopexit
+  call void @decrRefCount(ptr noundef nonnull %.0432) #12
+  call void @listRelease(ptr noundef %i.e) #12
+  br label %._crit_edge741.split
+
+._crit_edge741.split:                             ; preds = %bb.fw, %._crit_edge741.critedge, %._crit_edge737
   call void @zfree(ptr noundef %i.ne) #12
   br label %bb.fx
 

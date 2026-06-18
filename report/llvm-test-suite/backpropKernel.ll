@@ -15,12 +15,10 @@ bb.a:
 .lr.ph168:                                        ; preds = %bb.a
   %.not125 = icmp slt i32 %1, 1                   ; 2 uses
   %.not117122 = icmp slt i32 %0, 0                ; 2 uses
-  %.not110136 = icmp slt i32 %2, 1                ; 2 uses
+  %.not110136 = icmp slt i32 %2, 1
   %.not116128 = icmp slt i32 %1, 0                ; 2 uses
   %i.f = add i32 %0, 1                            ; 3 uses
   %wide.trip.count = zext i32 %i.f to i64         ; 2 uses
-  %brmerge = or i1 %.not110136, %.not116128
-  %brmerge171 = or i1 %.not125, %.not117122
   %wide.trip.count208 = zext i32 %i.f to i64
   %xtraiter = and i64 %wide.trip.count, 1
   %i.g = icmp eq i32 %0, 0
@@ -32,10 +30,11 @@ bb.a:
   %unroll_iter233 = and i64 %i.b, 4294967294
   %lcmp.mod230.not = icmp eq i64 %xtraiter229, 0
   %lcmp.mod232 = trunc i32 %i.a to i1
+  %brmerge = or i1 %.not125, %.not117122
   br label %bb.b
 
 ._crit_edge169:                                   ; preds = %._crit_edge165.split, %bb.a
-  %.0.lcssa = phi float [ 0.000000e+00, %bb.a ], [ %.1.lcssa219, %._crit_edge165.split ]
+  %.0.lcssa = phi float [ 0.000000e+00, %bb.a ], [ %.1.lcssa219221, %._crit_edge165.split ]
   ret float %.0.lcssa
 
 bb.b:                                             ; preds = %.lr.ph168, %._crit_edge165.split
@@ -203,7 +202,11 @@ bb.b:                                             ; preds = %.lr.ph168, %._crit_
 
 ._crit_edge142:                                   ; preds = %.lr.ph141
   store float 1.000000e+00, ptr %4, align 4, !tbaa !8
-  br i1 %brmerge, label %._crit_edge154.split, label %.preheader118
+  br i1 %.not116128, label %._crit_edge154.thread, label %.preheader118
+
+._crit_edge154.thread:                            ; preds = %._crit_edge142
+  store float 1.000000e+00, ptr %3, align 4, !tbaa !8
+  br label %._crit_edge165.split
 
 .preheader118:                                    ; preds = %._crit_edge142, %._crit_edge147
   %indvars.iv200 = phi i64 [ %indvars.iv.next201, %._crit_edge147 ], [ 1, %._crit_edge142 ] ; 4 uses
@@ -241,10 +244,10 @@ bb.c:                                             ; preds = %.preheader118, %bb.
   %exitcond204.not = icmp eq i64 %indvars.iv.next201, %i.d
   br i1 %exitcond204.not, label %._crit_edge154.split, label %.preheader118, !llvm.loop !17
 
-._crit_edge154.split:                             ; preds = %._crit_edge147, %._crit_edge142.thread, %._crit_edge142
-  %.1.lcssa219 = phi float [ 0.000000e+00, %._crit_edge142.thread ], [ %i.bx, %._crit_edge142 ], [ %i.bx, %._crit_edge147 ]
+._crit_edge154.split:                             ; preds = %._crit_edge147, %._crit_edge142.thread
+  %.1.lcssa219 = phi float [ 0.000000e+00, %._crit_edge142.thread ], [ %i.bx, %._crit_edge147 ] ; 2 uses
   store float 1.000000e+00, ptr %3, align 4, !tbaa !8
-  br i1 %brmerge171, label %._crit_edge165.split, label %.preheader
+  br i1 %brmerge, label %._crit_edge165.split, label %.preheader
 
 .preheader:                                       ; preds = %._crit_edge154.split, %._crit_edge158
   %indvars.iv210 = phi i64 [ %indvars.iv.next211, %._crit_edge158 ], [ 1, %._crit_edge154.split ] ; 4 uses
@@ -282,7 +285,8 @@ bb.d:                                             ; preds = %.preheader, %bb.d
   %exitcond214.not = icmp eq i64 %indvars.iv.next211, %i.b
   br i1 %exitcond214.not, label %._crit_edge165.split, label %.preheader, !llvm.loop !19
 
-._crit_edge165.split:                             ; preds = %._crit_edge158, %._crit_edge154.split
+._crit_edge165.split:                             ; preds = %._crit_edge158, %._crit_edge154.split, %._crit_edge154.thread
+  %.1.lcssa219221 = phi float [ %i.bx, %._crit_edge154.thread ], [ %.1.lcssa219, %._crit_edge154.split ], [ %.1.lcssa219, %._crit_edge158 ]
   %i.dc = add nuw nsw i32 %.099166, 1             ; 2 uses
   %exitcond215.not = icmp eq i32 %i.dc, %13
   br i1 %exitcond215.not, label %._crit_edge169, label %bb.b, !llvm.loop !20
