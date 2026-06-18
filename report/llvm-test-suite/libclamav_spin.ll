@@ -201,8 +201,8 @@ bb.y:                                             ; preds = %bb.w
   %.val611 = load i32, ptr %i.dk, align 1         ; 2 uses
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.9, i32 noundef %i.cw, i32 noundef %.val611) #7
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.10) #7
-  %7 = icmp sgt i32 %3, 0                         ; 4 uses
-  br i1 %7, label %.lr.ph666.preheader, label %._crit_edge
+  %7 = icmp slt i32 %3, 1                         ; 5 uses
+  br i1 %7, label %._crit_edge, label %.lr.ph666.preheader
 
 .lr.ph666.preheader:                              ; preds = %bb.y
   %wide.trip.count = zext nneg i32 %3 to i64
@@ -407,7 +407,7 @@ bb.ah:                                            ; preds = %.preheader640
   %.val607 = load i32, ptr %i.gb, align 1         ; 2 uses
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.16, i32 noundef %.val607) #7
   %i.gc = getelementptr inbounds nuw i8, ptr %i.di, i64 1877
-  br i1 %7, label %.lr.ph678.preheader, label %._crit_edge679
+  br i1 %7, label %._crit_edge679, label %.lr.ph678.preheader
 
 .lr.ph678.preheader:                              ; preds = %.split
   %wide.trip.count718 = zext nneg i32 %3 to i64
@@ -475,7 +475,7 @@ bb.ai:                                            ; preds = %.lr.ph675
   br i1 %i.gv, label %.critedge605, label %.preheader638
 
 .preheader638:                                    ; preds = %._crit_edge679
-  br i1 %7, label %.lr.ph683, label %._crit_edge684.thread
+  br i1 %7, label %._crit_edge684.thread, label %.lr.ph683
 
 .lr.ph683:                                        ; preds = %.preheader638
   %i.gw = getelementptr inbounds nuw i8, ptr %6, i64 32
@@ -755,7 +755,7 @@ bb.bh:                                            ; preds = %bb.bg
   br i1 %.not574, label %.thread633, label %.preheader
 
 .preheader:                                       ; preds = %bb.bh
-  br i1 %7, label %bb.bi, label %._crit_edge695
+  br i1 %7, label %._crit_edge695, label %bb.bi
 
 bb.bi:                                            ; preds = %.preheader
   %wide.trip.count738 = zext nneg i32 %3 to i64
@@ -852,10 +852,9 @@ bb.bo:                                            ; preds = %._crit_edge695, %bb
 
 bb.bp:                                            ; preds = %.thread633, %bb.bg
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.31, i32 noundef %.1473) #7
-  %8 = icmp slt i32 %3, 1
   %i.mi = and i32 %.1473, 1
   %.not576 = icmp eq i32 %i.mi, 0
-  %or.cond705 = or i1 %8, %.not576
+  %or.cond705 = or i1 %7, %.not576
   br i1 %or.cond705, label %._crit_edge699.split, label %.lr.ph698.split.preheader
 
 .lr.ph698.split.preheader:                        ; preds = %bb.bp

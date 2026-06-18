@@ -201,7 +201,7 @@ bb.h:                                             ; preds = %_ZN6duckdb11StructS
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !294 ; 7 uses
   %.not.i75 = icmp eq ptr %i.aa, null             ; 6 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !311 ; 10 uses
+  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !311 ; 9 uses
   %.not.i77 = icmp eq ptr %i.ac, null
   %i.ad = load i8, ptr %i.v, align 1, !range !59
   %.fr149 = freeze i8 %i.ad
@@ -220,7 +220,7 @@ bb.h:                                             ; preds = %_ZN6duckdb11StructS
   br i1 %.not.i, label %.lr.ph118.split.split.us, label %.lr.ph118.split.split
 
 .lr.ph118.split.split.us:                         ; preds = %.lr.ph118.split
-  br i1 %i.ae, label %.lr.ph118.split.split.us.split.us, label %.lr.ph118.split.split.us.split
+  br i1 %i.ae, label %.lr.ph118.split.split.us.split.us, label %.lr.ph118.split.split.us.split.split.us
 
 .lr.ph118.split.split.us.split.us:                ; preds = %.lr.ph118.split.split.us
   br i1 %or.cond, label %._crit_edge, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us122.us
@@ -251,35 +251,23 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit76.us123.us: ; preds = %bb.j, %_ZNK
   %.not158.a = icmp eq i64 %i.ar, 0
   br i1 %.not158.a, label %.split120, label %bb.i
 
-.lr.ph118.split.split.us.split:                   ; preds = %.lr.ph118.split.split.us
-  br i1 %or.cond, label %.lr.ph118.split.split.us.split.split.us, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us122
+.lr.ph118.split.split.us.split.split.us:          ; preds = %.lr.ph118.split.split.us
+  br i1 %or.cond, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us122.us142.us, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us122
 
-.lr.ph118.split.split.us.split.split.us:          ; preds = %.lr.ph118.split.split.us.split
-  br i1 %.not.i75, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us122.us142.us, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us122.us142
-
-_ZNK6duckdb15SelectionVector9get_indexEm.exit.us122.us142.us: ; preds = %.lr.ph118.split.split.us.split.split.us, %bb.k
-  %.056117.us121.us143.us = phi i64 [ %18, %bb.k ], [ 0, %.lr.ph118.split.split.us.split.split.us ] ; 3 uses
-  %12 = lshr i64 %.056117.us121.us143.us, 6
-  %13 = and i64 %.056117.us121.us143.us, 63
-  %14 = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %12
-  %15 = load i64, ptr %14, align 8, !tbaa !123
-  %16 = shl nuw i64 1, %13
-  %17 = and i64 %15, %16
-  %.not157 = icmp eq i64 %17, 0
-  br i1 %.not157, label %bb.k, label %.split
+_ZNK6duckdb15SelectionVector9get_indexEm.exit.us122.us142.us: ; preds = %.lr.ph118.split.split.us.split.split.us, %bb.l
+  %.056117.us121.us143.us = phi i64 [ %i.ay, %bb.l ], [ 0, %.lr.ph118.split.split.us.split.split.us ] ; 3 uses
+  br i1 %.not.i75, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us122.us142, label %bb.k
 
 bb.k:                                             ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us122.us142.us
-  %18 = add nuw i64 %.056117.us121.us143.us, 1    ; 2 uses
-  %exitcond178.not = icmp eq i64 %18, %3
-  br i1 %exitcond178.not, label %._crit_edge, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us122.us142.us, !llvm.loop !312
+  %12 = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %.056117.us121.us143.us
+  %13 = load i32, ptr %12, align 4, !tbaa !3
+  %14 = zext i32 %13 to i64
+  br label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us122.us142
 
-_ZNK6duckdb15SelectionVector9get_indexEm.exit.us122.us142: ; preds = %.lr.ph118.split.split.us.split.split.us, %bb.l
-  %.056117.us121.us143 = phi i64 [ %i.ay, %bb.l ], [ 0, %.lr.ph118.split.split.us.split.split.us ] ; 2 uses
-  %19 = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %.056117.us121.us143
-  %20 = load i32, ptr %19, align 4, !tbaa !3
-  %21 = zext i32 %20 to i64                       ; 2 uses
-  %i.as = lshr i64 %21, 6
-  %i.at = and i64 %21, 63
+_ZNK6duckdb15SelectionVector9get_indexEm.exit.us122.us142: ; preds = %bb.k, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us122.us142.us
+  %.056117.us121.us143 = phi i64 [ %14, %bb.k ], [ %.056117.us121.us143.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us122.us142.us ] ; 2 uses
+  %i.as = lshr i64 %.056117.us121.us143, 6
+  %i.at = and i64 %.056117.us121.us143, 63
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %i.as
   %i.av = load i64, ptr %i.au, align 8, !tbaa !123
   %i.aw = shl nuw i64 1, %i.at
@@ -288,11 +276,11 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us122.us142: ; preds = %.lr.ph118.
   br i1 %.not156.a, label %bb.l, label %.split
 
 bb.l:                                             ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us122.us142
-  %i.ay = add nuw i64 %.056117.us121.us143, 1     ; 2 uses
+  %i.ay = add nuw i64 %.056117.us121.us143.us, 1  ; 2 uses
   %exitcond177.not = icmp eq i64 %i.ay, %3
-  br i1 %exitcond177.not, label %._crit_edge, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us122.us142, !llvm.loop !312
+  br i1 %exitcond177.not, label %._crit_edge, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us122.us142.us, !llvm.loop !312
 
-_ZNK6duckdb15SelectionVector9get_indexEm.exit.us122: ; preds = %.lr.ph118.split.split.us.split
+_ZNK6duckdb15SelectionVector9get_indexEm.exit.us122: ; preds = %.lr.ph118.split.split.us.split.split.us
   br i1 %.not.i75, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit76.us123, label %bb.m
 
 bb.m:                                             ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us122
@@ -408,7 +396,7 @@ bb.q:                                             ; preds = %_ZNK6duckdb15Select
   %exitcond.not = icmp eq i64 %i.db, %3
   br i1 %exitcond.not, label %._crit_edge, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us133, !llvm.loop !312
 
-._crit_edge:                                      ; preds = %bb.q, %bb.p, %bb.o, %bb.n, %bb.l, %bb.k, %bb.i, %.lr.ph118.split.split.split.us, %.lr.ph118.split.split.us.split.us, %.lr.ph118.split.us.split, %.preheader
+._crit_edge:                                      ; preds = %bb.q, %bb.p, %bb.o, %bb.n, %bb.l, %bb.i, %.lr.ph118.split.split.split.us, %.lr.ph118.split.split.us.split.us, %.lr.ph118.split.us.split, %.preheader
   %i.dc = getelementptr inbounds nuw i8, ptr %5, i64 64
   %i.dd = load ptr, ptr %i.dc, align 8, !tbaa !36 ; 8 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.dd, null
@@ -539,7 +527,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit76:  ; preds = %bb.ae, %_ZNK6duckdb
   %.not151 = icmp eq i64 %i.ew, 0
   br i1 %.not151, label %.split120, label %.split
 
-.split:                                           ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us133, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us133.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us122.us142, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us122.us142.us, %.lr.ph118.split.us.split, %_ZNK6duckdb15SelectionVector9get_indexEm.exit76.us123, %_ZNK6duckdb15SelectionVector9get_indexEm.exit76
+.split:                                           ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us133, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us133.us, %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us122.us142, %.lr.ph118.split.us.split, %_ZNK6duckdb15SelectionVector9get_indexEm.exit76.us123, %_ZNK6duckdb15SelectionVector9get_indexEm.exit76
   %i.ex = call ptr @__cxa_allocate_exception(i64 16) #28 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #28

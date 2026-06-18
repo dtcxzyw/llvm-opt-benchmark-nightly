@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %._crit_edge112
   %i.dj = getelementptr inbounds [4 x i8], ptr %i.di, i64 %i.dg
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 4 ; 4 uses
   %i.dl = icmp sgt i32 %.fr130, 1                 ; 2 uses
-  %.not.i.i = icmp sge i32 %2, %i.dc
+  %.not.i.not.i = icmp slt i32 %2, %i.dc
   %i.dm = add i32 %i.de, 1
   %umax.i.i = tail call i32 @llvm.umax.i32(i32 %i.dm, i32 2)
   %i.dn = sext i32 %1 to i64
@@ -226,7 +226,7 @@ bb.f:                                             ; preds = %bb.bo, %.lr.ph.i
   %i.dv = sub nsw i32 %1, %i.du
   %i.dw = call noundef i32 @llvm.smin.i32(i32 %i.cj, i32 %i.dv) ; 2 uses
   %i.dx = sub nsw i32 %0, %i.dt                   ; 3 uses
-  %i.dy = call noundef i32 @llvm.smin.i32(i32 %i.cj, i32 %i.dx) ; 4 uses
+  %i.dy = call noundef i32 @llvm.smin.i32(i32 %i.cj, i32 %i.dx) ; 3 uses
   %i.dz = icmp sgt i32 %i.dt, 0
   %i.ea = zext i1 %i.dz to i32                    ; 2 uses
   %i.eb = sub nsw i32 %i.dt, %i.ea
@@ -253,11 +253,9 @@ bb.f:                                             ; preds = %bb.bo, %.lr.ph.i
 
 .split.us.preheader.i.i:                          ; preds = %bb.f
   %i.et = icmp sgt i32 %i.dx, 0
-  %15 = icmp slt i32 %i.dy, 1
   %i.eu = sext i32 %i.du to i64                   ; 3 uses
   %wide.trip.count146.i.i = zext nneg i32 %i.dw to i64 ; 3 uses
   %wide.trip.count.i.i = zext nneg i32 %i.dy to i64 ; 2 uses
-  %brmerge.i.i = or i1 %.not.i.i, %15
   br i1 %i.et, label %.split.us.i.us.i, label %.split.us.i.i.preheader
 
 .split.us.i.i.preheader:                          ; preds = %.split.us.preheader.i.i
@@ -395,7 +393,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %exitcond.not.i.us.us.i, label %._crit_edge.us.i.us.us.i, label %.lr.ph.us.i.us.us.i, !llvm.loop !27
 
 ._crit_edge.us.i.us.us.i:                         ; preds = %.lr.ph.us.i.us.us.i
-  br i1 %brmerge.i.i, label %.loopexit.split.us.i.us.us.i, label %.lr.ph119.us.i.us.us.i
+  br i1 %.not.i.not.i, label %.lr.ph119.us.i.us.us.i, label %.loopexit.split.us.i.us.us.i
 
 .lr.ph119.us.i.us.us.i:                           ; preds = %._crit_edge.us.i.us.us.i, %._crit_edge120.us.i.us.us.i
   %.098121.us.i.us.us.i = phi i32 [ %i.ib, %._crit_edge120.us.i.us.us.i ], [ 1, %._crit_edge.us.i.us.us.i ] ; 2 uses

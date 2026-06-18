@@ -6,36 +6,29 @@ target triple = "x86_64-pc-linux-gnu"
 define dso_local void @dilateKernel(i32 noundef %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef writeonly captures(none) %3, ptr nofree noundef captures(none) %4) local_unnamed_addr #0 {
 bb.a:
   %i.a = zext i32 %1 to i64                       ; 6 uses
-  %i.b = icmp sgt i32 %0, 0
+  %i.b = icmp sgt i32 %0, 0                       ; 2 uses
   %i.c = icmp sgt i32 %1, 0
   %or.cond84 = and i1 %i.b, %i.c
-  br i1 %or.cond84, label %.preheader73.preheader, label %._crit_edge83.split
+  br i1 %or.cond84, label %.preheader73.preheader, label %._crit_edge82
 
 .preheader73.preheader:                           ; preds = %bb.a
   %i.d = zext nneg i32 %1 to i64
   %wide.trip.count103 = zext nneg i32 %0 to i64
-  %5 = icmp ugt i32 %1, 1
   %exitcond.peel.not = icmp eq i32 %1, 1
   %i.e = icmp ugt i32 %1, 2
   %exitcond.peel98.not = icmp eq i32 %1, 2
   br label %bb.b
 
-bb.b:                                             ; preds = %.preheader73.preheader, %._crit_edge
-  %indvars.iv100 = phi i64 [ 0, %.preheader73.preheader ], [ %indvars.iv.next101, %._crit_edge ] ; 3 uses
-  %i.f = getelementptr inbounds nuw [4096 x i8], ptr %2, i64 %indvars.iv100 ; 7 uses
+bb.b:                                             ; preds = %.preheader73.preheader, %._crit_edge.us
+  %indvars.iv100 = phi i64 [ 0, %.preheader73.preheader ], [ %indvars.iv.next101, %._crit_edge.us ] ; 3 uses
+  %i.f = getelementptr inbounds nuw [4096 x i8], ptr %2, i64 %indvars.iv100 ; 6 uses
   %i.g = mul nuw nsw i64 %indvars.iv100, %i.a
   %i.h = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.g ; 5 uses
-  br i1 %5, label %bb.c, label %6
+  br i1 %exitcond.peel.not, label %.thread126, label %bb.c
 
-6:                                                ; preds = %bb.b
+.thread126:                                       ; preds = %bb.b
   store i32 0, ptr %i.h, align 4, !tbaa !4
-  br i1 %exitcond.peel.not, label %._crit_edge, label %.thread126
-
-.thread126:                                       ; preds = %6
-  %7 = getelementptr inbounds nuw i8, ptr %i.f, i64 4
-  %8 = load i32, ptr %7, align 4, !tbaa !4
-  %..059.1.peel93127 = tail call i32 @llvm.smax.i32(i32 %8, i32 0)
-  br label %.thread128
+  br label %._crit_edge.us
 
 bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 4
@@ -51,34 +44,20 @@ bb.d:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.n = load i32, ptr %i.m, align 4, !tbaa !4
   %..059.2.peel96 = tail call i32 @llvm.smax.i32(i32 %i.n, i32 %..059.1.peel93)
-  br label %.thread128
-
-.thread128:                                       ; preds = %.thread126, %bb.d
-  %.160.2.peel97.ph = phi i32 [ %..059.1.peel93127, %.thread126 ], [ %..059.2.peel96, %bb.d ]
-  %9 = getelementptr inbounds nuw i8, ptr %i.h, i64 4
-  store i32 %.160.2.peel97.ph, ptr %9, align 4, !tbaa !4
-  br label %.preheader72.peel.next87.preheader
+  %5 = getelementptr inbounds nuw i8, ptr %i.h, i64 4
+  store i32 %..059.2.peel96, ptr %5, align 4, !tbaa !4
+  br label %.preheader70.preheader
 
 bb.e:                                             ; preds = %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %i.h, i64 4
   store i32 %..059.1.peel93, ptr %i.o, align 4, !tbaa !4
-  br i1 %exitcond.peel98.not, label %._crit_edge, label %.preheader72.peel.next87.preheader
+  br i1 %exitcond.peel98.not, label %._crit_edge.us, label %.preheader70.preheader
 
-.preheader72.peel.next87.preheader:               ; preds = %.thread128, %bb.e
+.preheader70.preheader:                           ; preds = %bb.d, %bb.e
   br label %.preheader72.peel.next87
 
-.preheader70.preheader:                           ; preds = %._crit_edge
-  %10 = zext nneg i32 %0 to i64
-  %wide.trip.count114 = zext nneg i32 %0 to i64
-  br label %.preheader70
-
-._crit_edge:                                      ; preds = %bb.g, %bb.e, %6
-  %indvars.iv.next101 = add nuw nsw i64 %indvars.iv100, 1 ; 2 uses
-  %exitcond104.not = icmp eq i64 %indvars.iv.next101, %wide.trip.count103
-  br i1 %exitcond104.not, label %.preheader70.preheader, label %bb.b, !llvm.loop !8
-
-.preheader72.peel.next87:                         ; preds = %.preheader72.peel.next87.preheader, %bb.g
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.g ], [ 2, %.preheader72.peel.next87.preheader ] ; 4 uses
+.preheader72.peel.next87:                         ; preds = %.preheader70.preheader, %bb.g
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.g ], [ 2, %.preheader70.preheader ] ; 4 uses
   %i.p = getelementptr [4 x i8], ptr %i.f, i64 %indvars.iv
   %i.q = getelementptr i8, ptr %i.p, i64 -4
   %i.r = load i32, ptr %i.q, align 4, !tbaa !4
@@ -101,10 +80,23 @@ bb.g:                                             ; preds = %bb.f, %.preheader72
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %indvars.iv
   store i32 %.160.2, ptr %i.x, align 4, !tbaa !4
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.a
-  br i1 %exitcond.not, label %._crit_edge, label %.preheader72.peel.next87, !llvm.loop !10
+  br i1 %exitcond.not, label %._crit_edge.us, label %.preheader72.peel.next87, !llvm.loop !8
 
-.preheader70:                                     ; preds = %.preheader70.preheader, %._crit_edge81
-  %indvars.iv111 = phi i64 [ 0, %.preheader70.preheader ], [ %i.ad, %._crit_edge81 ] ; 5 uses
+._crit_edge.us:                                   ; preds = %bb.g, %.thread126, %bb.e
+  %indvars.iv.next101 = add nuw nsw i64 %indvars.iv100, 1 ; 2 uses
+  %exitcond104.not = icmp eq i64 %indvars.iv.next101, %wide.trip.count103
+  br i1 %exitcond104.not, label %.preheader71, label %bb.b, !llvm.loop !11
+
+.preheader71:                                     ; preds = %._crit_edge.us
+  br i1 %i.b, label %.preheader70.us.preheader, label %._crit_edge82
+
+.preheader70.us.preheader:                        ; preds = %.preheader71
+  %6 = zext nneg i32 %0 to i64
+  %wide.trip.count114 = zext nneg i32 %0 to i64
+  br label %.preheader70
+
+.preheader70:                                     ; preds = %.preheader70.us.preheader, %._crit_edge.us83
+  %indvars.iv111 = phi i64 [ 0, %.preheader70.us.preheader ], [ %i.ad, %._crit_edge.us83 ] ; 5 uses
   %i.y = mul nuw nsw i64 %indvars.iv111, %i.a     ; 2 uses
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.y
   %i.aa = icmp samesign ugt i64 %indvars.iv111, 1
@@ -112,34 +104,22 @@ bb.g:                                             ; preds = %bb.f, %.preheader72
   %i.ab = add nsw i64 %indvars.iv111, -1
   %i.ac = mul nuw nsw i64 %i.ab, %i.a
   %i.ad = add nuw nsw i64 %indvars.iv111, 1       ; 4 uses
-  %i.ae = icmp samesign ult i64 %i.ad, %10
+  %i.ae = icmp samesign ult i64 %i.ad, %6
   %i.af = mul nuw nsw i64 %i.ad, %i.a
-  br label %.preheader
+  br label %.preheader.us
 
-._crit_edge83.split:                              ; preds = %._crit_edge81, %bb.a
-  ret void
-
-.preheader:                                       ; preds = %.preheader70, %bb.l
-  %indvars.iv106 = phi i64 [ 0, %.preheader70 ], [ %indvars.iv.next107, %bb.l ] ; 3 uses
-  %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv106 ; 3 uses
-  br i1 %i.aa, label %.thread131, label %bb.h
-
-._crit_edge81:                                    ; preds = %bb.l
-  %exitcond115.not = icmp eq i64 %i.ad, %wide.trip.count114
-  br i1 %exitcond115.not, label %._crit_edge83.split, label %.preheader70, !llvm.loop !12
-
-.thread131:                                       ; preds = %.preheader
-  %gep = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep, i64 %i.ac
+.thread131:                                       ; preds = %.preheader.us
+  %gep = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep.us, i64 %i.ac
   %i.ag = load i32, ptr %gep, align 4, !tbaa !4
   %..055 = tail call i32 @llvm.smax.i32(i32 %i.ag, i32 0)
   br label %bb.i
 
-bb.h:                                             ; preds = %.preheader
+bb.h:                                             ; preds = %.preheader.us
   br i1 %.not, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %.thread131, %bb.h
   %.1134 = phi i32 [ %..055, %.thread131 ], [ 0, %bb.h ]
-  %gep.1 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep, i64 %i.y
+  %gep.1 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep.us, i64 %i.y
   %i.ah = load i32, ptr %gep.1, align 4, !tbaa !4
   %..055.1 = tail call i32 @llvm.smax.i32(i32 %i.ah, i32 %.1134)
   br label %bb.j
@@ -149,7 +129,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %i.ae, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %gep.2 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep, i64 %i.af
+  %gep.2 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep.us, i64 %i.af
   %i.ai = load i32, ptr %gep.2, align 4, !tbaa !4
   %..055.2 = tail call i32 @llvm.smax.i32(i32 %i.ai, i32 %.1.1)
   br label %bb.l
@@ -160,7 +140,19 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   store i32 %.1.2, ptr %i.aj, align 4, !tbaa !4
   %indvars.iv.next107 = add nuw nsw i64 %indvars.iv106, 1 ; 2 uses
   %exitcond110.not = icmp eq i64 %indvars.iv.next107, %i.a
-  br i1 %exitcond110.not, label %._crit_edge81, label %.preheader, !llvm.loop !13
+  br i1 %exitcond110.not, label %._crit_edge.us83, label %.preheader.us, !llvm.loop !12
+
+.preheader.us:                                    ; preds = %.preheader70, %bb.l
+  %indvars.iv106 = phi i64 [ 0, %.preheader70 ], [ %indvars.iv.next107, %bb.l ] ; 3 uses
+  %invariant.gep.us = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv106 ; 3 uses
+  br i1 %i.aa, label %.thread131, label %bb.h
+
+._crit_edge.us83:                                 ; preds = %bb.l
+  %exitcond115.not = icmp eq i64 %i.ad, %wide.trip.count114
+  br i1 %exitcond115.not, label %._crit_edge82, label %.preheader70, !llvm.loop !13
+
+._crit_edge82:                                    ; preds = %._crit_edge.us83, %bb.a, %.preheader71
+  ret void
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -181,10 +173,10 @@ attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 !5 = !{!"int", !6, i64 0}
 !6 = !{!"omnipotent char", !7, i64 0}
 !7 = !{!"Simple C/C++ TBAA"}
-!8 = distinct !{!8, !9}
+!8 = distinct !{!8, !9, !10}
 !9 = !{!"llvm.loop.mustprogress"}
-!10 = distinct !{!10, !9, !11}
-!11 = !{!"llvm.loop.peeled.count", i32 2}
+!10 = !{!"llvm.loop.peeled.count", i32 2}
+!11 = distinct !{!11, !9}
 !12 = distinct !{!12, !9}
 !13 = distinct !{!13, !9}
 end_hunk_0

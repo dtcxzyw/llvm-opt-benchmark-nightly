@@ -116,16 +116,14 @@ bb.a:
   %i.cs = getelementptr inbounds [8 x i8], ptr %i.cm, i64 %i.bu ; 4 uses
   %i.ct = getelementptr inbounds i8, ptr %i.cs, i64 -8 ; 2 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %i.cs, i64 8 ; 2 uses
-  %i.cv = icmp slt i32 %i.j, %i.l
-  br i1 %i.cv, label %.preheader226.lr.ph, label %._crit_edge231.split
+  %4 = icmp slt i32 %i.j, %i.l
+  %5 = icmp slt i32 %i.f, %i.h
+  %or.cond = select i1 %4, i1 %5, i1 false
+  %i.cv = icmp slt i32 %i.b, %i.d
+  %or.cond247 = select i1 %or.cond, i1 %i.cv, i1 false
+  br i1 %or.cond247, label %.preheader226.preheader, label %._crit_edge231.split
 
-.preheader226.lr.ph:                              ; preds = %bb.a
-  %4 = icmp sge i32 %i.f, %i.h
-  %5 = icmp sge i32 %i.b, %i.d
-  %brmerge = select i1 %4, i1 true, i1 %5
-  br i1 %brmerge, label %._crit_edge231.split, label %.preheader226.preheader
-
-.preheader226.preheader:                          ; preds = %.preheader226.lr.ph
+.preheader226.preheader:                          ; preds = %bb.a
   %i.cw = sext i32 %i.b to i64                    ; 11 uses
   %wide.trip.count = sext i32 %i.d to i64         ; 7 uses
   %i.cx = xor i64 %i.cw, -1
@@ -240,9 +238,9 @@ bb.a:
   %i.ew = mul nsw i32 %.0225230, %i.p
   br label %.preheader
 
-.preheader:                                       ; preds = %.preheader226, %._crit_edge.a
-  %indvar244 = phi i32 [ 0, %.preheader226 ], [ %indvar.next245, %._crit_edge.a ] ; 3 uses
-  %.0224228 = phi i32 [ %i.f, %.preheader226 ], [ %i.og, %._crit_edge.a ] ; 2 uses
+.preheader:                                       ; preds = %._crit_edge.a, %.preheader226
+  %indvar244 = phi i32 [ %indvar.next245, %._crit_edge.a ], [ 0, %.preheader226 ] ; 3 uses
+  %.0224228 = phi i32 [ %i.og, %._crit_edge.a ], [ %i.f, %.preheader226 ] ; 2 uses
   %i.ex = mul i32 %i.n, %indvar244
   %i.ey = add i32 %i.et, %i.ex
   %i.ez = sext i32 %i.ey to i64                   ; 5 uses
@@ -645,7 +643,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %indvar.next = add i32 %indvar, 1
   br i1 %exitcond236.not, label %._crit_edge231.split, label %.preheader226, !llvm.loop !135
 
-._crit_edge231.split:                             ; preds = %._crit_edge229, %.preheader226.lr.ph, %bb.a
+._crit_edge231.split:                             ; preds = %._crit_edge229, %bb.a
   ret void
 }
 

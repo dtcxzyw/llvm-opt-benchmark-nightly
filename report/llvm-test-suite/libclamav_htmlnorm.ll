@@ -201,7 +201,7 @@ bb.a:
   %i.d = alloca [1025 x i8], align 16             ; 37 uses
   %5 = alloca %struct.tag_arguments_tag, align 8  ; 23 uses
   %6 = alloca %struct.entity_conv, align 8        ; 9 uses
-  %i.e = alloca [1025 x i8], align 16             ; 11 uses
+  %i.e = alloca [1025 x i8], align 16             ; 10 uses
   %i.f = alloca [10 x i8], align 1                ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #15
@@ -370,7 +370,7 @@ bb.aa:                                            ; preds = %bb.y
 
 bb.ab:                                            ; preds = %bb.m, %bb.aa
   %.0999 = phi ptr [ %i.ad, %bb.aa ], [ null, %bb.m ] ; 32 uses
-  %.0996 = phi ptr [ %i.ac, %bb.aa ], [ null, %bb.m ] ; 56 uses
+  %.0996 = phi ptr [ %i.ac, %bb.aa ], [ null, %bb.m ] ; 55 uses
   %.0994 = phi ptr [ %i.aa, %bb.aa ], [ null, %bb.m ] ; 57 uses
   br i1 %i.k, label %bb.ac, label %bb.ad
 
@@ -394,7 +394,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   %.not12.i1532 = icmp eq ptr %.0996, null        ; 41 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %.0996, i64 8196 ; 85 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %.0996, i64 4 ; 77 uses
-  %.not.i1538 = icmp eq ptr %.0999, null          ; 16 uses
+  %.not.i1538 = icmp eq ptr %.0999, null          ; 18 uses
   %i.az = getelementptr inbounds nuw i8, ptr %.0999, i64 8196 ; 56 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %.0999, i64 4 ; 48 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.f, i64 9
@@ -797,7 +797,7 @@ bb.ji:                                            ; preds = %.lr.ph.i1357
 .critedge1216:                                    ; preds = %bb.jd, %bb.ji, %bb.jg, %.critedge1216.sink.split, %bb.jh, %bb.jc, %html_tag_arg_value.exit
   %.4965 = phi i32 [ 14, %.critedge1216.sink.split ], [ 14, %bb.ji ], [ 1, %html_tag_arg_value.exit ], [ 1, %bb.jh ], [ 14, %bb.jg ], [ 1, %bb.jc ], [ 1, %bb.jd ] ; 2 uses
   %.3945 = phi i32 [ %.19431811, %.critedge1216.sink.split ], [ %.19431811, %bb.ji ], [ 1, %html_tag_arg_value.exit ], [ 1, %bb.jh ], [ %.19431811, %bb.jg ], [ 1, %bb.jc ], [ 1, %bb.jd ] ; 2 uses
-  br i1 %.not.i1538, label %.critedge1220, label %bb.jj
+  br i1 %.not.i1538, label %html_output_str.exit.i, label %bb.jj
 
 bb.jj:                                            ; preds = %.critedge1216
   %i.adb = load i32, ptr %i.az, align 4, !tbaa !41 ; 2 uses
@@ -862,18 +862,21 @@ bb.jn:                                            ; preds = %html_output_flush.e
   store i32 %i.aec, ptr %i.az, align 4, !tbaa !41
   br label %html_output_str.exit.i
 
-html_output_str.exit.i:                           ; preds = %bb.jn, %html_output_flush.exit15.i.i
+html_output_str.exit.i:                           ; preds = %bb.jn, %html_output_flush.exit15.i.i, %.critedge1216
   %i.aed = load i32, ptr %5, align 8, !tbaa !24
   %i.aee = icmp sgt i32 %i.aed, 0
-  br i1 %i.aee, label %.lr.ph58.i, label %._crit_edge59.i.thread2101
+  br i1 %i.aee, label %.lr.ph58.i, label %._crit_edge59.i
 
 .lr.ph58.i:                                       ; preds = %html_output_str.exit.i
   %i.aef = load ptr, ptr %i.u, align 8
   %i.aeg = load ptr, ptr %i.v, align 8
-  br label %.lr.ph58.i.split
+  br label %7
 
-.lr.ph58.i.split:                                 ; preds = %.lr.ph58.i, %html_output_c.exit50.i
-  %indvars.iv61.i = phi i64 [ %indvars.iv.next62.i, %html_output_c.exit50.i ], [ 0, %.lr.ph58.i ] ; 3 uses
+7:                                                ; preds = %html_output_c.exit50.i, %.lr.ph58.i
+  %indvars.iv62.i = phi i64 [ 0, %.lr.ph58.i ], [ %indvars.iv.next62.i, %html_output_c.exit50.i ] ; 3 uses
+  br i1 %.not.i1538, label %html_output_c.exit50.i, label %.lr.ph58.i.split
+
+.lr.ph58.i.split:                                 ; preds = %7
   %i.aeh = load i32, ptr %i.az, align 4, !tbaa !41 ; 2 uses
   %i.aei = icmp eq i32 %i.aeh, 8192
   br i1 %i.aei, label %html_output_flush.exit.i32.i, label %bb.jo
@@ -890,7 +893,7 @@ bb.jo:                                            ; preds = %html_output_flush.e
   %i.aen = sext i32 %i.ael to i64
   %i.aeo = getelementptr inbounds i8, ptr %i.ba, i64 %i.aen
   store i8 32, ptr %i.aeo, align 1, !tbaa !15
-  %i.aep = getelementptr inbounds nuw [8 x i8], ptr %i.aef, i64 %indvars.iv61.i
+  %i.aep = getelementptr inbounds nuw [8 x i8], ptr %i.aef, i64 %indvars.iv62.i
   %i.aeq = load ptr, ptr %i.aep, align 8, !tbaa !30 ; 3 uses
   %i.aer = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.aeq) #17 ; 2 uses
   %i.aes = trunc i64 %i.aer to i32                ; 5 uses
@@ -939,7 +942,7 @@ bb.jr:                                            ; preds = %html_output_flush.e
   br label %html_output_str.exit39.i
 
 html_output_str.exit39.i:                         ; preds = %bb.jr, %html_output_flush.exit15.i37.i
-  %i.afl = getelementptr inbounds nuw [8 x i8], ptr %i.aeg, i64 %indvars.iv61.i ; 3 uses
+  %i.afl = getelementptr inbounds nuw [8 x i8], ptr %i.aeg, i64 %indvars.iv62.i ; 3 uses
   %i.afm = load ptr, ptr %i.afl, align 8, !tbaa !30
   %.not.i1363 = icmp eq ptr %i.afm, null
   br i1 %.not.i1363, label %html_output_c.exit50.i, label %bb.js
@@ -1027,14 +1030,17 @@ bb.jt:                                            ; preds = %html_output_flush.e
   store i8 34, ptr %i.agx, align 1, !tbaa !15
   br label %html_output_c.exit50.i
 
-html_output_c.exit50.i:                           ; preds = %bb.jt, %html_output_str.exit39.i
-  %indvars.iv.next62.i = add nuw nsw i64 %indvars.iv61.i, 1 ; 2 uses
+html_output_c.exit50.i:                           ; preds = %bb.jt, %html_output_str.exit39.i, %7
+  %indvars.iv.next62.i = add nuw nsw i64 %indvars.iv62.i, 1 ; 2 uses
   %i.agy = load i32, ptr %5, align 8, !tbaa !24
   %i.agz = sext i32 %i.agy to i64
   %i.aha = icmp slt i64 %indvars.iv.next62.i, %i.agz
-  br i1 %i.aha, label %.lr.ph58.i.split, label %._crit_edge59.i.thread2101, !llvm.loop !49
+  br i1 %i.aha, label %7, label %._crit_edge59.i, !llvm.loop !49
 
-._crit_edge59.i.thread2101:                       ; preds = %html_output_c.exit50.i, %html_output_str.exit.i
+._crit_edge59.i:                                  ; preds = %html_output_c.exit50.i, %html_output_str.exit.i
+  br i1 %.not.i1538, label %.critedge1220, label %._crit_edge59.i.thread2101
+
+._crit_edge59.i.thread2101:                       ; preds = %._crit_edge59.i
   %i.ahb = load i32, ptr %i.az, align 4, !tbaa !41 ; 2 uses
   %i.ahc = icmp eq i32 %i.ahb, 8192
   br i1 %i.ahc, label %html_output_flush.exit.i52.i, label %bb.ju
@@ -1437,12 +1443,12 @@ bb.ml:                                            ; preds = %bb.mk
   call fastcc void @html_tag_contents_done(ptr noundef nonnull %3, i32 noundef %i.aqt)
   br label %.critedge1220
 
-.critedge1220:                                    ; preds = %bb.ld, %bb.lr, %bb.kn, %bb.kb, %.critedge1216, %bb.kj, %bb.lj, %html_tag_arg_value.exit1409.thread, %bb.lc, %bb.km, %bb.jx, %.thread, %bb.ju, %html_tag_arg_value.exit1381, %bb.kd, %html_tag_arg_value.exit1402, %bb.lh, %bb.iz, %bb.ja, %bb.kk, %bb.md, %bb.me, %bb.ma, %bb.lz, %bb.mg, %bb.mh, %bb.ml, %bb.mk, %bb.mf, %html_tag_arg_value.exit1416, %bb.lt, %bb.lx, %bb.lw, %html_tag_arg_value.exit1388, %bb.kp, %bb.kz, %bb.ky, %bb.iy
-  %.31029 = phi ptr [ %.110271800, %bb.kk ], [ %.110271800, %bb.iy ], [ %.110271800, %html_tag_arg_value.exit1381 ], [ %.110271800, %html_tag_arg_value.exit1402 ], [ %.110271800, %bb.kz ], [ %.110271800, %bb.ky ], [ %.110271800, %bb.kp ], [ %.110271800, %html_tag_arg_value.exit1388 ], [ null, %bb.iz ], [ %.110271800, %bb.lx ], [ null, %bb.lw ], [ %.110271800, %bb.lt ], [ %.110271800, %html_tag_arg_value.exit1416 ], [ %.110271800, %bb.me ], [ null, %bb.md ], [ %.110271800, %bb.ma ], [ %.110271800, %bb.lz ], [ %.110271800, %bb.ml ], [ null, %bb.mk ], [ %.110271800, %bb.mh ], [ %.110271800, %bb.mg ], [ %.110271800, %bb.mf ], [ null, %bb.ja ], [ %i.ang, %bb.lh ], [ %.110271800, %bb.kj ], [ %.110271800, %bb.kd ], [ %.110271800, %bb.lr ], [ %.110271800, %bb.ju ], [ %.110271800, %bb.kb ], [ %.110271800, %.thread ], [ %.110271800, %bb.jx ], [ %.110271800, %.critedge1216 ], [ %.110271800, %bb.lj ], [ %.110271800, %bb.kn ], [ %.110271800, %bb.km ], [ %.110271800, %bb.lc ], [ %.110271800, %html_tag_arg_value.exit1409.thread ], [ %.110271800, %bb.ld ]
-  %.61021 = phi ptr [ %.210171802, %bb.kk ], [ %.41019, %bb.iy ], [ %.210171802, %html_tag_arg_value.exit1381 ], [ %spec.select1221, %html_tag_arg_value.exit1402 ], [ %.39761807, %bb.kz ], [ %spec.select1221, %bb.ky ], [ %spec.select1221, %bb.kp ], [ %spec.select1221, %html_tag_arg_value.exit1388 ], [ %.41019, %bb.iz ], [ %spec.select1221, %bb.lx ], [ %spec.select1221, %bb.lw ], [ %spec.select1221, %bb.lt ], [ %spec.select1221, %html_tag_arg_value.exit1416 ], [ %spec.select1221, %bb.me ], [ %spec.select1221, %bb.md ], [ %spec.select1221, %bb.ma ], [ %spec.select1221, %bb.lz ], [ %spec.select1221, %bb.ml ], [ %spec.select1221, %bb.mk ], [ %spec.select1221, %bb.mh ], [ %spec.select1221, %bb.mg ], [ %spec.select1221, %bb.mf ], [ %.41019, %bb.ja ], [ %spec.select1221, %bb.lh ], [ %.210171802, %bb.kj ], [ %.210171802, %bb.kd ], [ %spec.select1221, %bb.lr ], [ %.210171802, %bb.ju ], [ %.210171802, %bb.kb ], [ %.210171802, %.thread ], [ %.210171802, %bb.jx ], [ %.210171802, %.critedge1216 ], [ %spec.select1221, %bb.lj ], [ %spec.select1221, %bb.kn ], [ %spec.select1221, %bb.km ], [ %spec.select1221, %bb.lc ], [ %spec.select1221, %html_tag_arg_value.exit1409.thread ], [ %spec.select1221, %bb.ld ]
-  %.61011 = phi i32 [ %.110061803, %bb.kk ], [ %.31008, %bb.iy ], [ %.110061803, %html_tag_arg_value.exit1381 ], [ %.110061803, %html_tag_arg_value.exit1402 ], [ %i.amf, %bb.kz ], [ %.51010, %bb.ky ], [ %.110061803, %bb.kp ], [ %.110061803, %html_tag_arg_value.exit1388 ], [ %.31008, %bb.iz ], [ %.110061803, %bb.lx ], [ %.110061803, %bb.lw ], [ %.110061803, %bb.lt ], [ %.110061803, %html_tag_arg_value.exit1416 ], [ %.110061803, %bb.me ], [ %.110061803, %bb.md ], [ %.110061803, %bb.ma ], [ %.110061803, %bb.lz ], [ %.110061803, %bb.ml ], [ %.110061803, %bb.mk ], [ %.110061803, %bb.mh ], [ %.110061803, %bb.mg ], [ %.110061803, %bb.mf ], [ %.31008, %bb.ja ], [ %.110061803, %bb.lh ], [ %.110061803, %bb.kj ], [ %.110061803, %bb.kd ], [ %.110061803, %bb.lr ], [ %.110061803, %bb.ju ], [ %.110061803, %bb.kb ], [ %.110061803, %.thread ], [ %.110061803, %bb.jx ], [ %.110061803, %.critedge1216 ], [ %.110061803, %bb.lj ], [ %.110061803, %bb.kn ], [ %.110061803, %bb.km ], [ %.110061803, %bb.lc ], [ %.110061803, %html_tag_arg_value.exit1409.thread ], [ %.110061803, %bb.ld ]
-  %.5966 = phi i32 [ 1, %bb.kk ], [ 1, %bb.iy ], [ 1, %html_tag_arg_value.exit1381 ], [ 1, %html_tag_arg_value.exit1402 ], [ 1, %bb.kz ], [ 1, %bb.ky ], [ 1, %bb.kp ], [ 1, %html_tag_arg_value.exit1388 ], [ 1, %bb.iz ], [ 1, %bb.lx ], [ 1, %bb.lw ], [ 1, %bb.lt ], [ 1, %html_tag_arg_value.exit1416 ], [ 1, %bb.me ], [ 1, %bb.md ], [ 1, %bb.ma ], [ 1, %bb.lz ], [ 1, %bb.ml ], [ 1, %bb.mk ], [ 1, %bb.mh ], [ 1, %bb.mg ], [ 1, %bb.mf ], [ 1, %bb.ja ], [ 1, %bb.lh ], [ 1, %bb.kj ], [ 1, %bb.kd ], [ 1, %bb.lr ], [ %.4965, %bb.ju ], [ 1, %bb.kb ], [ 1, %.thread ], [ 1, %bb.jx ], [ %.4965, %.critedge1216 ], [ 1, %bb.lj ], [ 1, %bb.kn ], [ 1, %bb.km ], [ 1, %bb.lc ], [ 1, %html_tag_arg_value.exit1409.thread ], [ 1, %bb.ld ]
-  %.4946 = phi i32 [ %.19431811, %bb.kk ], [ %.2944, %bb.iy ], [ %.19431811, %html_tag_arg_value.exit1381 ], [ %.19431811, %html_tag_arg_value.exit1402 ], [ %.19431811, %bb.kz ], [ %.19431811, %bb.ky ], [ %.19431811, %bb.kp ], [ %.19431811, %html_tag_arg_value.exit1388 ], [ %.2944, %bb.iz ], [ %.19431811, %bb.lx ], [ %.19431811, %bb.lw ], [ %.19431811, %bb.lt ], [ %.19431811, %html_tag_arg_value.exit1416 ], [ %.19431811, %bb.me ], [ %.19431811, %bb.md ], [ %.19431811, %bb.ma ], [ %.19431811, %bb.lz ], [ %.19431811, %bb.ml ], [ %.19431811, %bb.mk ], [ %.19431811, %bb.mh ], [ %.19431811, %bb.mg ], [ %.19431811, %bb.mf ], [ %.2944, %bb.ja ], [ %.19431811, %bb.lh ], [ %.19431811, %bb.kj ], [ %.19431811, %bb.kd ], [ %.19431811, %bb.lr ], [ %.3945, %bb.ju ], [ %.19431811, %bb.kb ], [ %.19431811, %.thread ], [ %.19431811, %bb.jx ], [ %.3945, %.critedge1216 ], [ %.19431811, %bb.lj ], [ %.19431811, %bb.kn ], [ %.19431811, %bb.km ], [ %.19431811, %bb.lc ], [ %.19431811, %html_tag_arg_value.exit1409.thread ], [ %.19431811, %bb.ld ]
+.critedge1220:                                    ; preds = %bb.ld, %bb.lr, %bb.kn, %bb.kb, %bb.kj, %bb.lj, %html_tag_arg_value.exit1409.thread, %bb.lc, %bb.km, %bb.jx, %.thread, %bb.ju, %._crit_edge59.i, %html_tag_arg_value.exit1381, %bb.kd, %html_tag_arg_value.exit1402, %bb.lh, %bb.iz, %bb.ja, %bb.kk, %bb.md, %bb.me, %bb.ma, %bb.lz, %bb.mg, %bb.mh, %bb.ml, %bb.mk, %bb.mf, %html_tag_arg_value.exit1416, %bb.lt, %bb.lx, %bb.lw, %html_tag_arg_value.exit1388, %bb.kp, %bb.kz, %bb.ky, %bb.iy
+  %.31029 = phi ptr [ %.110271800, %bb.kk ], [ %.110271800, %bb.iy ], [ %.110271800, %html_tag_arg_value.exit1381 ], [ %.110271800, %html_tag_arg_value.exit1402 ], [ %.110271800, %bb.kz ], [ %.110271800, %bb.ky ], [ %.110271800, %bb.kp ], [ %.110271800, %html_tag_arg_value.exit1388 ], [ null, %bb.iz ], [ %.110271800, %bb.lx ], [ null, %bb.lw ], [ %.110271800, %bb.lt ], [ %.110271800, %html_tag_arg_value.exit1416 ], [ %.110271800, %bb.me ], [ null, %bb.md ], [ %.110271800, %bb.ma ], [ %.110271800, %bb.lz ], [ %.110271800, %bb.ml ], [ null, %bb.mk ], [ %.110271800, %bb.mh ], [ %.110271800, %bb.mg ], [ %.110271800, %bb.mf ], [ null, %bb.ja ], [ %i.ang, %bb.lh ], [ %.110271800, %bb.kj ], [ %.110271800, %bb.kd ], [ %.110271800, %._crit_edge59.i ], [ %.110271800, %bb.ju ], [ %.110271800, %bb.lr ], [ %.110271800, %.thread ], [ %.110271800, %bb.jx ], [ %.110271800, %bb.kb ], [ %.110271800, %bb.lj ], [ %.110271800, %bb.kn ], [ %.110271800, %bb.km ], [ %.110271800, %bb.lc ], [ %.110271800, %html_tag_arg_value.exit1409.thread ], [ %.110271800, %bb.ld ]
+  %.61021 = phi ptr [ %.210171802, %bb.kk ], [ %.41019, %bb.iy ], [ %.210171802, %html_tag_arg_value.exit1381 ], [ %spec.select1221, %html_tag_arg_value.exit1402 ], [ %.39761807, %bb.kz ], [ %spec.select1221, %bb.ky ], [ %spec.select1221, %bb.kp ], [ %spec.select1221, %html_tag_arg_value.exit1388 ], [ %.41019, %bb.iz ], [ %spec.select1221, %bb.lx ], [ %spec.select1221, %bb.lw ], [ %spec.select1221, %bb.lt ], [ %spec.select1221, %html_tag_arg_value.exit1416 ], [ %spec.select1221, %bb.me ], [ %spec.select1221, %bb.md ], [ %spec.select1221, %bb.ma ], [ %spec.select1221, %bb.lz ], [ %spec.select1221, %bb.ml ], [ %spec.select1221, %bb.mk ], [ %spec.select1221, %bb.mh ], [ %spec.select1221, %bb.mg ], [ %spec.select1221, %bb.mf ], [ %.41019, %bb.ja ], [ %spec.select1221, %bb.lh ], [ %.210171802, %bb.kj ], [ %.210171802, %bb.kd ], [ %.210171802, %._crit_edge59.i ], [ %.210171802, %bb.ju ], [ %spec.select1221, %bb.lr ], [ %.210171802, %.thread ], [ %.210171802, %bb.jx ], [ %.210171802, %bb.kb ], [ %spec.select1221, %bb.lj ], [ %spec.select1221, %bb.kn ], [ %spec.select1221, %bb.km ], [ %spec.select1221, %bb.lc ], [ %spec.select1221, %html_tag_arg_value.exit1409.thread ], [ %spec.select1221, %bb.ld ]
+  %.61011 = phi i32 [ %.110061803, %bb.kk ], [ %.31008, %bb.iy ], [ %.110061803, %html_tag_arg_value.exit1381 ], [ %.110061803, %html_tag_arg_value.exit1402 ], [ %i.amf, %bb.kz ], [ %.51010, %bb.ky ], [ %.110061803, %bb.kp ], [ %.110061803, %html_tag_arg_value.exit1388 ], [ %.31008, %bb.iz ], [ %.110061803, %bb.lx ], [ %.110061803, %bb.lw ], [ %.110061803, %bb.lt ], [ %.110061803, %html_tag_arg_value.exit1416 ], [ %.110061803, %bb.me ], [ %.110061803, %bb.md ], [ %.110061803, %bb.ma ], [ %.110061803, %bb.lz ], [ %.110061803, %bb.ml ], [ %.110061803, %bb.mk ], [ %.110061803, %bb.mh ], [ %.110061803, %bb.mg ], [ %.110061803, %bb.mf ], [ %.31008, %bb.ja ], [ %.110061803, %bb.lh ], [ %.110061803, %bb.kj ], [ %.110061803, %bb.kd ], [ %.110061803, %._crit_edge59.i ], [ %.110061803, %bb.ju ], [ %.110061803, %bb.lr ], [ %.110061803, %.thread ], [ %.110061803, %bb.jx ], [ %.110061803, %bb.kb ], [ %.110061803, %bb.lj ], [ %.110061803, %bb.kn ], [ %.110061803, %bb.km ], [ %.110061803, %bb.lc ], [ %.110061803, %html_tag_arg_value.exit1409.thread ], [ %.110061803, %bb.ld ]
+  %.5966 = phi i32 [ 1, %bb.kk ], [ 1, %bb.iy ], [ 1, %html_tag_arg_value.exit1381 ], [ 1, %html_tag_arg_value.exit1402 ], [ 1, %bb.kz ], [ 1, %bb.ky ], [ 1, %bb.kp ], [ 1, %html_tag_arg_value.exit1388 ], [ 1, %bb.iz ], [ 1, %bb.lx ], [ 1, %bb.lw ], [ 1, %bb.lt ], [ 1, %html_tag_arg_value.exit1416 ], [ 1, %bb.me ], [ 1, %bb.md ], [ 1, %bb.ma ], [ 1, %bb.lz ], [ 1, %bb.ml ], [ 1, %bb.mk ], [ 1, %bb.mh ], [ 1, %bb.mg ], [ 1, %bb.mf ], [ 1, %bb.ja ], [ 1, %bb.lh ], [ 1, %bb.kj ], [ 1, %bb.kd ], [ %.4965, %._crit_edge59.i ], [ %.4965, %bb.ju ], [ 1, %bb.lr ], [ 1, %.thread ], [ 1, %bb.jx ], [ 1, %bb.kb ], [ 1, %bb.lj ], [ 1, %bb.kn ], [ 1, %bb.km ], [ 1, %bb.lc ], [ 1, %html_tag_arg_value.exit1409.thread ], [ 1, %bb.ld ]
+  %.4946 = phi i32 [ %.19431811, %bb.kk ], [ %.2944, %bb.iy ], [ %.19431811, %html_tag_arg_value.exit1381 ], [ %.19431811, %html_tag_arg_value.exit1402 ], [ %.19431811, %bb.kz ], [ %.19431811, %bb.ky ], [ %.19431811, %bb.kp ], [ %.19431811, %html_tag_arg_value.exit1388 ], [ %.2944, %bb.iz ], [ %.19431811, %bb.lx ], [ %.19431811, %bb.lw ], [ %.19431811, %bb.lt ], [ %.19431811, %html_tag_arg_value.exit1416 ], [ %.19431811, %bb.me ], [ %.19431811, %bb.md ], [ %.19431811, %bb.ma ], [ %.19431811, %bb.lz ], [ %.19431811, %bb.ml ], [ %.19431811, %bb.mk ], [ %.19431811, %bb.mh ], [ %.19431811, %bb.mg ], [ %.19431811, %bb.mf ], [ %.2944, %bb.ja ], [ %.19431811, %bb.lh ], [ %.19431811, %bb.kj ], [ %.19431811, %bb.kd ], [ %.3945, %._crit_edge59.i ], [ %.3945, %bb.ju ], [ %.19431811, %bb.lr ], [ %.19431811, %.thread ], [ %.19431811, %bb.jx ], [ %.19431811, %bb.kb ], [ %.19431811, %bb.lj ], [ %.19431811, %bb.kn ], [ %.19431811, %bb.km ], [ %.19431811, %bb.lc ], [ %.19431811, %html_tag_arg_value.exit1409.thread ], [ %.19431811, %bb.ld ]
   call void @html_tag_arg_free(ptr noundef nonnull %5)
   br label %.backedge
 
@@ -1845,9 +1851,9 @@ bb.vt:                                            ; preds = %bb.vs, %bb.vr
   br i1 %.not1106, label %._crit_edge1864, label %bb.af, !llvm.loop !57
 
 ._crit_edge1864:                                  ; preds = %bb.vt, %bb.ae
-  %.01032.lcssa = phi i64 [ 0, %bb.ae ], [ %.11033.lcssa, %bb.vt ] ; 4 uses
-  %.01026.lcssa = phi ptr [ null, %bb.ae ], [ %.11027.lcssa, %bb.vt ] ; 6 uses
-  %.01005.lcssa = phi i32 [ 0, %bb.ae ], [ %.11006.lcssa, %bb.vt ] ; 6 uses
+  %.01032.lcssa = phi i64 [ 0, %bb.ae ], [ %.11033.lcssa, %bb.vt ] ; 3 uses
+  %.01026.lcssa = phi ptr [ null, %bb.ae ], [ %.11027.lcssa, %bb.vt ] ; 4 uses
+  %.01005.lcssa = phi i32 [ 0, %bb.ae ], [ %.11006.lcssa, %bb.vt ] ; 4 uses
   br i1 %i.k, label %bb.vu, label %.loopexit
 
 bb.vu:                                            ; preds = %._crit_edge1864
@@ -1994,56 +2000,27 @@ bb.vw:                                            ; preds = %bb.vu
 
 bb.vx:                                            ; preds = %bb.vw
   call fastcc void @html_output_c(ptr noundef %.0994, ptr noundef %.0996, i8 noundef zeroext 38)
-  %i.bzz = tail call ptr @__ctype_tolower_loc() #16 ; 2 uses
+  %i.bzz = tail call ptr @__ctype_tolower_loc() #16
   %.not.i1604 = icmp eq ptr %.0994, null
   %i.caa = getelementptr inbounds nuw i8, ptr %.0994, i64 8196 ; 2 uses
   %i.cab = getelementptr inbounds nuw i8, ptr %.0994, i64 4 ; 2 uses
-  %.not12.i1605 = icmp eq ptr %.0996, null        ; 2 uses
-  %i.cac = getelementptr inbounds nuw i8, ptr %.0996, i64 8196 ; 4 uses
-  %i.cad = getelementptr inbounds nuw i8, ptr %.0996, i64 4 ; 4 uses
-  br i1 %.not.i1604, label %.split.us, label %.split
+  %.not12.i1605 = icmp eq ptr %.0996, null
+  %i.cac = getelementptr inbounds nuw i8, ptr %.0996, i64 8196 ; 2 uses
+  %i.cad = getelementptr inbounds nuw i8, ptr %.0996, i64 4 ; 2 uses
+  br label %.split.us.split
 
-.split.us:                                        ; preds = %bb.vx
-  br i1 %.not12.i1605, label %.loopexit, label %.split.us.split
-
-.split.us.split:                                  ; preds = %.split.us, %html_output_c.exit1608.us
-  %.19161873.us = phi i64 [ %15, %html_output_c.exit1608.us ], [ 0, %.split.us ] ; 2 uses
+.split.us.split:                                  ; preds = %bb.vx, %html_output_c.exit1608
+  %.19161873.us = phi i64 [ 0, %bb.vx ], [ %i.cbb, %html_output_c.exit1608 ] ; 2 uses
   %i.cae = load ptr, ptr %i.bzz, align 8, !tbaa !44
   %i.caf = getelementptr inbounds nuw i8, ptr %i.e, i64 %.19161873.us
   %i.cag = load i8, ptr %i.caf, align 1, !tbaa !15
   %i.cah = zext i8 %i.cag to i64
   %i.cai = getelementptr inbounds nuw [4 x i8], ptr %i.cae, i64 %i.cah
   %i.caj = load i32, ptr %i.cai, align 4, !tbaa !4
-  %i.cak = trunc i32 %i.caj to i8
-  %7 = load i32, ptr %i.cac, align 4, !tbaa !41   ; 2 uses
-  %8 = icmp eq i32 %7, 8192
-  br i1 %8, label %html_output_flush.exit13.i1606.us, label %html_output_c.exit1608.us
+  %i.cak = trunc i32 %i.caj to i8                 ; 2 uses
+  br i1 %.not.i1604, label %8, label %.split
 
-html_output_flush.exit13.i1606.us:                ; preds = %.split.us.split
-  %9 = load i32, ptr %.0996, align 4, !tbaa !39
-  %10 = call i32 @cli_writen(i32 noundef %9, ptr noundef nonnull %i.cad, i32 noundef 8192) #15 ; 0 uses
-  br label %html_output_c.exit1608.us
-
-html_output_c.exit1608.us:                        ; preds = %html_output_flush.exit13.i1606.us, %.split.us.split
-  %11 = phi i32 [ 0, %html_output_flush.exit13.i1606.us ], [ %7, %.split.us.split ] ; 2 uses
-  %12 = add nsw i32 %11, 1
-  store i32 %12, ptr %i.cac, align 4, !tbaa !41
-  %13 = sext i32 %11 to i64
-  %14 = getelementptr inbounds i8, ptr %i.cad, i64 %13
-  store i8 %i.cak, ptr %14, align 1, !tbaa !15
-  %15 = add nuw i64 %.19161873.us, 1              ; 2 uses
-  %exitcond1913.not = icmp eq i64 %15, %.01032.lcssa
-  br i1 %exitcond1913.not, label %.loopexit, label %.split.us.split, !llvm.loop !59
-
-.split:                                           ; preds = %bb.vx, %html_output_c.exit1608
-  %.19161873 = phi i64 [ %i.cbb, %html_output_c.exit1608 ], [ 0, %bb.vx ] ; 2 uses
-  %16 = load ptr, ptr %i.bzz, align 8, !tbaa !44
-  %17 = getelementptr inbounds nuw i8, ptr %i.e, i64 %.19161873
-  %18 = load i8, ptr %17, align 1, !tbaa !15
-  %19 = zext i8 %18 to i64
-  %20 = getelementptr inbounds nuw [4 x i8], ptr %16, i64 %19
-  %21 = load i32, ptr %20, align 4, !tbaa !4
-  %22 = trunc i32 %21 to i8                       ; 2 uses
+.split:                                           ; preds = %.split.us.split
   %i.cal = load i32, ptr %i.caa, align 4, !tbaa !41 ; 2 uses
   %i.cam = icmp eq i32 %i.cal, 8192
   br i1 %i.cam, label %html_output_flush.exit.i1607, label %bb.vy
@@ -2059,10 +2036,13 @@ bb.vy:                                            ; preds = %html_output_flush.e
   store i32 %i.caq, ptr %i.caa, align 4, !tbaa !41
   %i.car = sext i32 %i.cap to i64
   %i.cas = getelementptr inbounds i8, ptr %i.cab, i64 %i.car
-  store i8 %22, ptr %i.cas, align 1, !tbaa !15
+  store i8 %i.cak, ptr %i.cas, align 1, !tbaa !15
+  br label %8
+
+8:                                                ; preds = %bb.vy, %.split.us.split
   br i1 %.not12.i1605, label %html_output_c.exit1608, label %bb.vz
 
-bb.vz:                                            ; preds = %bb.vy
+bb.vz:                                            ; preds = %8
   %i.cat = load i32, ptr %i.cac, align 4, !tbaa !41 ; 2 uses
   %i.cau = icmp eq i32 %i.cat, 8192
   br i1 %i.cau, label %html_output_flush.exit13.i1606, label %bb.wa
@@ -2078,18 +2058,18 @@ bb.wa:                                            ; preds = %html_output_flush.e
   store i32 %i.cay, ptr %i.cac, align 4, !tbaa !41
   %i.caz = sext i32 %i.cax to i64
   %i.cba = getelementptr inbounds i8, ptr %i.cad, i64 %i.caz
-  store i8 %22, ptr %i.cba, align 1, !tbaa !15
+  store i8 %i.cak, ptr %i.cba, align 1, !tbaa !15
   br label %html_output_c.exit1608
 
-html_output_c.exit1608:                           ; preds = %bb.vy, %bb.wa
-  %i.cbb = add nuw i64 %.19161873, 1              ; 2 uses
+html_output_c.exit1608:                           ; preds = %8, %bb.wa
+  %i.cbb = add nuw i64 %.19161873.us, 1           ; 2 uses
   %exitcond1912.not = icmp eq i64 %i.cbb, %.01032.lcssa
-  br i1 %exitcond1912.not, label %.loopexit, label %.split, !llvm.loop !59
+  br i1 %exitcond1912.not, label %.loopexit, label %.split.us.split, !llvm.loop !59
 
-.loopexit:                                        ; preds = %bb.ty, %html_output_c.exit1608, %html_output_c.exit1608.us, %.split.us, %._crit_edge1864, %bb.vw, %._crit_edge1870, %bb.ua, %bb.an
-  %.51031 = phi ptr [ %.01026.lcssa, %._crit_edge1870 ], [ %.110271800, %bb.an ], [ %.110271800, %bb.ua ], [ %.01026.lcssa, %html_output_c.exit1608.us ], [ %.01026.lcssa, %bb.vw ], [ %.01026.lcssa, %._crit_edge1864 ], [ %.01026.lcssa, %html_output_c.exit1608 ], [ %.01026.lcssa, %.split.us ], [ %.110271800, %bb.ty ] ; 2 uses
-  %.81013 = phi i32 [ %.01005.lcssa, %._crit_edge1870 ], [ %.110061803, %bb.an ], [ %.110061803, %bb.ua ], [ %.01005.lcssa, %html_output_c.exit1608.us ], [ %.01005.lcssa, %bb.vw ], [ %.01005.lcssa, %._crit_edge1864 ], [ %.01005.lcssa, %html_output_c.exit1608 ], [ %.01005.lcssa, %.split.us ], [ %.110061803, %bb.ty ] ; 2 uses
-  %.0914 = phi i32 [ 1, %._crit_edge1870 ], [ 0, %bb.an ], [ 0, %bb.ua ], [ 1, %html_output_c.exit1608.us ], [ 1, %bb.vw ], [ 1, %._crit_edge1864 ], [ 1, %html_output_c.exit1608 ], [ 1, %.split.us ], [ 0, %bb.ty ] ; 2 uses
+.loopexit:                                        ; preds = %bb.ty, %html_output_c.exit1608, %._crit_edge1864, %bb.vw, %._crit_edge1870, %bb.ua, %bb.an
+  %.51031 = phi ptr [ %.01026.lcssa, %._crit_edge1870 ], [ %.110271800, %bb.an ], [ %.110271800, %bb.ua ], [ %.01026.lcssa, %html_output_c.exit1608 ], [ %.01026.lcssa, %bb.vw ], [ %.01026.lcssa, %._crit_edge1864 ], [ %.110271800, %bb.ty ] ; 2 uses
+  %.81013 = phi i32 [ %.01005.lcssa, %._crit_edge1870 ], [ %.110061803, %bb.an ], [ %.110061803, %bb.ua ], [ %.01005.lcssa, %html_output_c.exit1608 ], [ %.01005.lcssa, %bb.vw ], [ %.01005.lcssa, %._crit_edge1864 ], [ %.110061803, %bb.ty ] ; 2 uses
+  %.0914 = phi i32 [ 1, %._crit_edge1870 ], [ 0, %bb.an ], [ 0, %bb.ua ], [ 1, %html_output_c.exit1608 ], [ 1, %bb.vw ], [ 1, %._crit_edge1864 ], [ 0, %bb.ty ] ; 2 uses
   %.not1204 = icmp eq ptr %.51031, null
   br i1 %.not1204, label %bb.wc, label %bb.wb
 

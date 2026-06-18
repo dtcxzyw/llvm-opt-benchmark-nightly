@@ -201,15 +201,13 @@ bb.a:
   %i.i = trunc i64 %i.h to i32
   %i.j = mul i32 %narrow.i.i, %i.i                ; 4 uses
   %i.k = icmp sgt i32 %1, 0
-  br i1 %i.k, label %.preheader26.lr.ph, label %._crit_edge32.split
+  %5 = icmp sgt i32 %2, 0
+  %or.cond = and i1 %i.k, %5
+  %6 = icmp sgt i32 %i.j, 0
+  %or.cond54 = select i1 %or.cond, i1 %6, i1 false
+  br i1 %or.cond54, label %.preheader26.preheader, label %._crit_edge
 
-.preheader26.lr.ph:                               ; preds = %bb.a
-  %5 = icmp slt i32 %2, 1
-  %6 = icmp slt i32 %i.j, 1
-  %brmerge = select i1 %5, i1 true, i1 %6
-  br i1 %brmerge, label %._crit_edge32.split, label %.preheader26.preheader
-
-.preheader26.preheader:                           ; preds = %.preheader26.lr.ph
+.preheader26.preheader:                           ; preds = %bb.a
   %i.l = zext nneg i32 %i.j to i64                ; 13 uses
   %i.m = zext nneg i32 %1 to i64                  ; 3 uses
   %i.n = zext nneg i32 %2 to i64                  ; 4 uses
@@ -230,8 +228,8 @@ bb.a:
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br label %.preheader26
 
-.preheader26:                                     ; preds = %.preheader26.preheader, %._crit_edge29
-  %indvars.iv42 = phi i64 [ 0, %.preheader26.preheader ], [ %indvars.iv.next43, %._crit_edge29 ] ; 6 uses
+.preheader26:                                     ; preds = %.preheader26.preheader, %._crit_edge29.split.us.us.us
+  %indvars.iv42 = phi i64 [ 0, %.preheader26.preheader ], [ %indvars.iv.next46, %._crit_edge29.split.us.us.us ] ; 6 uses
   %i.t = mul i64 %indvars.iv42, %i.l
   %scevgep = getelementptr i8, ptr %4, i64 %i.t
   %i.u = add i64 %i.q, %indvars.iv42
@@ -246,11 +244,8 @@ bb.a:
   %found.conflict = and i1 %bound0, %bound1
   br label %iter.check
 
-._crit_edge32.split:                              ; preds = %._crit_edge29, %.preheader26.lr.ph, %bb.a
-  ret void
-
-iter.check:                                       ; preds = %.preheader26, %._crit_edge
-  %indvars.iv37 = phi i64 [ 0, %.preheader26 ], [ %indvars.iv.next38, %._crit_edge ] ; 3 uses
+iter.check:                                       ; preds = %._crit_edge.us.us.us, %.preheader26
+  %indvars.iv37 = phi i64 [ %indvars.iv.next41, %._crit_edge.us.us.us ], [ 0, %.preheader26 ] ; 3 uses
   %i.y = add nuw nsw i64 %indvars.iv37, %i.x
   %i.z = mul nuw nsw i64 %i.y, %i.l
   %i.aa = mul nuw nsw i64 %indvars.iv37, %i.m
@@ -279,7 +274,7 @@ vector.body:                                      ; preds = %vector.main.loop.it
   br i1 %i.ah, label %middle.block, label %vector.body, !llvm.loop !255
 
 middle.block:                                     ; preds = %vector.body
-  br i1 %cmp.n, label %._crit_edge, label %vec.epilog.iter.check
+  br i1 %cmp.n, label %._crit_edge.us.us.us, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !256
@@ -299,7 +294,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.ak, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !257
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  br i1 %cmp.n61, label %._crit_edge, label %vec.epilog.scalar.ph.preheader
+  br i1 %cmp.n61, label %._crit_edge.us.us.us, label %vec.epilog.scalar.ph.preheader
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv.ph = phi i64 [ 0, %iter.check ], [ %n.vec57, %vec.epilog.middle.block ], [ %n.vec, %vec.epilog.iter.check ] ; 3 uses
@@ -321,17 +316,7 @@ vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.p
   %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %vec.epilog.scalar.ph.preheader ], [ %indvars.iv.next.prol, %vec.epilog.scalar.ph.prol ]
   %i.am = sub nsw i64 %indvars.iv.ph, %i.l
   %i.an = icmp ugt i64 %i.am, -4
-  br i1 %i.an, label %._crit_edge, label %vec.epilog.scalar.ph
-
-._crit_edge29:                                    ; preds = %._crit_edge
-  %indvars.iv.next43 = add nuw nsw i64 %indvars.iv42, 1 ; 2 uses
-  %exitcond46.not = icmp eq i64 %indvars.iv.next43, %i.m
-  br i1 %exitcond46.not, label %._crit_edge32.split, label %.preheader26, !llvm.loop !260
-
-._crit_edge:                                      ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
-  %indvars.iv.next38 = add nuw nsw i64 %indvars.iv37, 1 ; 2 uses
-  %exitcond41.not = icmp eq i64 %indvars.iv.next38, %i.n
-  br i1 %exitcond41.not, label %._crit_edge29, label %iter.check, !llvm.loop !261
+  br i1 %i.an, label %._crit_edge.us.us.us, label %vec.epilog.scalar.ph
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next.3, %vec.epilog.scalar.ph ], [ %indvars.iv.unr, %vec.epilog.scalar.ph.prol.loopexit ] ; 6 uses
@@ -356,7 +341,20 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   store i8 %i.ar, ptr %gep50.3, align 1, !tbaa !15
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %i.l
-  br i1 %exitcond.not.3, label %._crit_edge, label %vec.epilog.scalar.ph, !llvm.loop !262
+  br i1 %exitcond.not.3, label %._crit_edge.us.us.us, label %vec.epilog.scalar.ph, !llvm.loop !260
+
+._crit_edge.us.us.us:                             ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
+  %indvars.iv.next41 = add nuw nsw i64 %indvars.iv37, 1 ; 2 uses
+  %exitcond44.not = icmp eq i64 %indvars.iv.next41, %i.n
+  br i1 %exitcond44.not, label %._crit_edge29.split.us.us.us, label %iter.check, !llvm.loop !261
+
+._crit_edge29.split.us.us.us:                     ; preds = %._crit_edge.us.us.us
+  %indvars.iv.next46 = add nuw nsw i64 %indvars.iv42, 1 ; 2 uses
+  %exitcond49.not = icmp eq i64 %indvars.iv.next46, %i.m
+  br i1 %exitcond49.not, label %._crit_edge, label %.preheader26, !llvm.loop !262
+
+._crit_edge:                                      ; preds = %._crit_edge29.split.us.us.us, %bb.a
+  ret void
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -759,16 +757,14 @@ _ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit: ; preds = %bb
   %i.ct = mul i64 %i.cs, %i.cr
   %i.cu = trunc i64 %i.ct to i32
   %i.cv = mul i32 %narrow.i.i.i, %i.cu            ; 4 uses
-  %i.cw = icmp sgt i32 %i.co, 0
-  br i1 %i.cw, label %.preheader26.lr.ph.i, label %_ZN11OpenImageIO4v3_110TIFFOutput18contig_to_separateEiiPKcPc.exit
+  %12 = icmp sgt i32 %i.co, 0
+  %13 = icmp sgt i32 %i.ch, 0
+  %or.cond.i71 = and i1 %12, %13
+  %i.cw = icmp sgt i32 %i.cv, 0
+  %or.cond54.i = select i1 %or.cond.i71, i1 %i.cw, i1 false
+  br i1 %or.cond54.i, label %.preheader26.preheader.i, label %_ZN11OpenImageIO4v3_110TIFFOutput18contig_to_separateEiiPKcPc.exit
 
-.preheader26.lr.ph.i:                             ; preds = %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit
-  %12 = icmp slt i32 %i.ch, 1
-  %13 = icmp slt i32 %i.cv, 1
-  %brmerge.i = select i1 %12, i1 true, i1 %13
-  br i1 %brmerge.i, label %_ZN11OpenImageIO4v3_110TIFFOutput18contig_to_separateEiiPKcPc.exit, label %.preheader26.preheader.i
-
-.preheader26.preheader.i:                         ; preds = %.preheader26.lr.ph.i
+.preheader26.preheader.i:                         ; preds = %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit
   %i.cx = zext nneg i32 %i.cv to i64              ; 13 uses
   %i.cy = zext nneg i32 %i.co to i64              ; 3 uses
   %i.cz = zext nneg i32 %i.ch to i64              ; 4 uses
@@ -789,8 +785,8 @@ _ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit: ; preds = %bb
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br label %.preheader26.i
 
-.preheader26.i:                                   ; preds = %._crit_edge29.i, %.preheader26.preheader.i
-  %indvars.iv42.i = phi i64 [ 0, %.preheader26.preheader.i ], [ %indvars.iv.next43.i, %._crit_edge29.i ] ; 6 uses
+.preheader26.i:                                   ; preds = %._crit_edge29.split.us.us.us.i, %.preheader26.preheader.i
+  %indvars.iv42.i = phi i64 [ 0, %.preheader26.preheader.i ], [ %indvars.iv.next46.i, %._crit_edge29.split.us.us.us.i ] ; 6 uses
   %i.df = mul i64 %indvars.iv42.i, %i.cx
   %scevgep = getelementptr i8, ptr %.032, i64 %i.df
   %i.dg = add i64 %i.dc, %indvars.iv42.i
@@ -805,8 +801,8 @@ _ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit: ; preds = %bb
   %found.conflict = and i1 %bound0, %bound1
   br label %iter.check
 
-iter.check:                                       ; preds = %._crit_edge.i, %.preheader26.i
-  %indvars.iv37.i = phi i64 [ 0, %.preheader26.i ], [ %indvars.iv.next38.i, %._crit_edge.i ] ; 3 uses
+iter.check:                                       ; preds = %._crit_edge.us.us.us.i, %.preheader26.i
+  %indvars.iv37.i = phi i64 [ %indvars.iv.next41.i, %._crit_edge.us.us.us.i ], [ 0, %.preheader26.i ] ; 3 uses
   %i.dk = add nuw nsw i64 %indvars.iv37.i, %i.dj
   %i.dl = mul nuw nsw i64 %i.dk, %i.cx
   %i.dm = mul nuw nsw i64 %indvars.iv37.i, %i.cy
@@ -835,7 +831,7 @@ vector.body:                                      ; preds = %vector.main.loop.it
   br i1 %i.dt, label %middle.block, label %vector.body, !llvm.loop !273
 
 middle.block:                                     ; preds = %vector.body
-  br i1 %cmp.n, label %._crit_edge.i, label %vec.epilog.iter.check
+  br i1 %cmp.n, label %._crit_edge.us.us.us.i, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !256
@@ -855,7 +851,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.dw, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !274
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  br i1 %cmp.n139, label %._crit_edge.i, label %vec.epilog.scalar.ph.preheader
+  br i1 %cmp.n139, label %._crit_edge.us.us.us.i, label %vec.epilog.scalar.ph.preheader
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv.i.ph = phi i64 [ 0, %iter.check ], [ %n.vec135, %vec.epilog.middle.block ], [ %n.vec, %vec.epilog.iter.check ] ; 3 uses
@@ -877,17 +873,7 @@ vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.p
   %indvars.iv.i.unr = phi i64 [ %indvars.iv.i.ph, %vec.epilog.scalar.ph.preheader ], [ %indvars.iv.next.i.prol, %vec.epilog.scalar.ph.prol ]
   %i.dy = sub nsw i64 %indvars.iv.i.ph, %i.cx
   %i.dz = icmp ugt i64 %i.dy, -4
-  br i1 %i.dz, label %._crit_edge.i, label %vec.epilog.scalar.ph
-
-._crit_edge29.i:                                  ; preds = %._crit_edge.i
-  %indvars.iv.next43.i = add nuw nsw i64 %indvars.iv42.i, 1 ; 2 uses
-  %exitcond46.not.i = icmp eq i64 %indvars.iv.next43.i, %i.cy
-  br i1 %exitcond46.not.i, label %_ZN11OpenImageIO4v3_110TIFFOutput18contig_to_separateEiiPKcPc.exit, label %.preheader26.i, !llvm.loop !260
-
-._crit_edge.i:                                    ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
-  %indvars.iv.next38.i = add nuw nsw i64 %indvars.iv37.i, 1 ; 2 uses
-  %exitcond41.not.i = icmp eq i64 %indvars.iv.next38.i, %i.cz
-  br i1 %exitcond41.not.i, label %._crit_edge29.i, label %iter.check, !llvm.loop !261
+  br i1 %i.dz, label %._crit_edge.us.us.us.i, label %vec.epilog.scalar.ph
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i.3, %vec.epilog.scalar.ph ], [ %indvars.iv.i.unr, %vec.epilog.scalar.ph.prol.loopexit ] ; 6 uses
@@ -912,9 +898,19 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   store i8 %i.ed, ptr %gep50.i.3, align 1, !tbaa !15
   %indvars.iv.next.i.3 = add nuw nsw i64 %indvars.iv.i, 4 ; 2 uses
   %exitcond.not.i.3 = icmp eq i64 %indvars.iv.next.i.3, %i.cx
-  br i1 %exitcond.not.i.3, label %._crit_edge.i, label %vec.epilog.scalar.ph, !llvm.loop !276
+  br i1 %exitcond.not.i.3, label %._crit_edge.us.us.us.i, label %vec.epilog.scalar.ph, !llvm.loop !276
 
-_ZN11OpenImageIO4v3_110TIFFOutput18contig_to_separateEiiPKcPc.exit: ; preds = %._crit_edge29.i, %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit, %.preheader26.lr.ph.i
+._crit_edge.us.us.us.i:                           ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
+  %indvars.iv.next41.i = add nuw nsw i64 %indvars.iv37.i, 1 ; 2 uses
+  %exitcond44.not.i = icmp eq i64 %indvars.iv.next41.i, %i.cz
+  br i1 %exitcond44.not.i, label %._crit_edge29.split.us.us.us.i, label %iter.check, !llvm.loop !261
+
+._crit_edge29.split.us.us.us.i:                   ; preds = %._crit_edge.us.us.us.i
+  %indvars.iv.next46.i = add nuw nsw i64 %indvars.iv42.i, 1 ; 2 uses
+  %exitcond49.not.i = icmp eq i64 %indvars.iv.next46.i, %i.cy
+  br i1 %exitcond49.not.i, label %_ZN11OpenImageIO4v3_110TIFFOutput18contig_to_separateEiiPKcPc.exit, label %.preheader26.i, !llvm.loop !262
+
+_ZN11OpenImageIO4v3_110TIFFOutput18contig_to_separateEiiPKcPc.exit: ; preds = %._crit_edge29.split.us.us.us.i, %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit
   %i.ee = load i32, ptr %i.aj, align 4, !tbaa !73
   %.not53106 = icmp sgt i32 %i.ee, 0
   br i1 %.not53106, label %.lr.ph, label %.critedge
@@ -1317,16 +1313,14 @@ _ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit: ; preds = %bb
   %i.du = mul i64 %i.dt, %i.ds
   %i.dv = trunc i64 %i.du to i32
   %i.dw = mul i32 %narrow.i.i.i, %i.dv            ; 4 uses
-  %i.dx = icmp sgt i32 %i.dp, 0
-  br i1 %i.dx, label %.preheader26.lr.ph.i, label %_ZN11OpenImageIO4v3_110TIFFOutput18contig_to_separateEiiPKcPc.exit
+  %15 = icmp sgt i32 %i.dp, 0
+  %16 = icmp sgt i32 %i.di, 0
+  %or.cond.i98 = and i1 %15, %16
+  %i.dx = icmp sgt i32 %i.dw, 0
+  %or.cond54.i = select i1 %or.cond.i98, i1 %i.dx, i1 false
+  br i1 %or.cond54.i, label %.preheader26.preheader.i, label %_ZN11OpenImageIO4v3_110TIFFOutput18contig_to_separateEiiPKcPc.exit
 
-.preheader26.lr.ph.i:                             ; preds = %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit
-  %15 = icmp slt i32 %i.di, 1
-  %16 = icmp slt i32 %i.dw, 1
-  %brmerge.i = select i1 %15, i1 true, i1 %16
-  br i1 %brmerge.i, label %_ZN11OpenImageIO4v3_110TIFFOutput18contig_to_separateEiiPKcPc.exit, label %.preheader26.preheader.i
-
-.preheader26.preheader.i:                         ; preds = %.preheader26.lr.ph.i
+.preheader26.preheader.i:                         ; preds = %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit
   %i.dy = zext nneg i32 %i.dw to i64              ; 13 uses
   %i.dz = and i64 %i.da, 2147483647               ; 3 uses
   %i.ea = zext nneg i32 %i.di to i64              ; 4 uses
@@ -1347,8 +1341,8 @@ _ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit: ; preds = %bb
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br label %.preheader26.i
 
-.preheader26.i:                                   ; preds = %._crit_edge29.i, %.preheader26.preheader.i
-  %indvars.iv42.i = phi i64 [ 0, %.preheader26.preheader.i ], [ %indvars.iv.next43.i, %._crit_edge29.i ] ; 6 uses
+.preheader26.i:                                   ; preds = %._crit_edge29.split.us.us.us.i, %.preheader26.preheader.i
+  %indvars.iv42.i = phi i64 [ 0, %.preheader26.preheader.i ], [ %indvars.iv.next46.i, %._crit_edge29.split.us.us.us.i ] ; 6 uses
   %i.eg = mul i64 %indvars.iv42.i, %i.dy
   %scevgep = getelementptr i8, ptr %.058, i64 %i.eg
   %i.eh = add i64 %i.ed, %indvars.iv42.i
@@ -1363,8 +1357,8 @@ _ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit: ; preds = %bb
   %found.conflict = and i1 %bound0, %bound1
   br label %iter.check
 
-iter.check:                                       ; preds = %._crit_edge.i, %.preheader26.i
-  %indvars.iv37.i = phi i64 [ 0, %.preheader26.i ], [ %indvars.iv.next38.i, %._crit_edge.i ] ; 3 uses
+iter.check:                                       ; preds = %._crit_edge.us.us.us.i, %.preheader26.i
+  %indvars.iv37.i = phi i64 [ %indvars.iv.next41.i, %._crit_edge.us.us.us.i ], [ 0, %.preheader26.i ] ; 3 uses
   %i.el = add nuw nsw i64 %indvars.iv37.i, %i.ek
   %i.em = mul nuw nsw i64 %i.el, %i.dy
   %i.en = mul nuw nsw i64 %indvars.iv37.i, %i.dz
@@ -1393,7 +1387,7 @@ vector.body:                                      ; preds = %vector.main.loop.it
   br i1 %i.eu, label %middle.block, label %vector.body, !llvm.loop !394
 
 middle.block:                                     ; preds = %vector.body
-  br i1 %cmp.n, label %._crit_edge.i, label %vec.epilog.iter.check
+  br i1 %cmp.n, label %._crit_edge.us.us.us.i, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !256
@@ -1413,7 +1407,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.ex, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !395
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  br i1 %cmp.n171, label %._crit_edge.i, label %vec.epilog.scalar.ph.preheader
+  br i1 %cmp.n171, label %._crit_edge.us.us.us.i, label %vec.epilog.scalar.ph.preheader
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv.i.ph = phi i64 [ 0, %iter.check ], [ %n.vec167, %vec.epilog.middle.block ], [ %n.vec, %vec.epilog.iter.check ] ; 3 uses
@@ -1435,17 +1429,7 @@ vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.p
   %indvars.iv.i.unr = phi i64 [ %indvars.iv.i.ph, %vec.epilog.scalar.ph.preheader ], [ %indvars.iv.next.i.prol, %vec.epilog.scalar.ph.prol ]
   %i.ez = sub nsw i64 %indvars.iv.i.ph, %i.dy
   %i.fa = icmp ugt i64 %i.ez, -4
-  br i1 %i.fa, label %._crit_edge.i, label %vec.epilog.scalar.ph
-
-._crit_edge29.i:                                  ; preds = %._crit_edge.i
-  %indvars.iv.next43.i = add nuw nsw i64 %indvars.iv42.i, 1 ; 2 uses
-  %exitcond46.not.i = icmp eq i64 %indvars.iv.next43.i, %i.dz
-  br i1 %exitcond46.not.i, label %_ZN11OpenImageIO4v3_110TIFFOutput18contig_to_separateEiiPKcPc.exit, label %.preheader26.i, !llvm.loop !260
-
-._crit_edge.i:                                    ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
-  %indvars.iv.next38.i = add nuw nsw i64 %indvars.iv37.i, 1 ; 2 uses
-  %exitcond41.not.i = icmp eq i64 %indvars.iv.next38.i, %i.ea
-  br i1 %exitcond41.not.i, label %._crit_edge29.i, label %iter.check, !llvm.loop !261
+  br i1 %i.fa, label %._crit_edge.us.us.us.i, label %vec.epilog.scalar.ph
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i.3, %vec.epilog.scalar.ph ], [ %indvars.iv.i.unr, %vec.epilog.scalar.ph.prol.loopexit ] ; 6 uses
@@ -1470,9 +1454,19 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   store i8 %i.fe, ptr %gep50.i.3, align 1, !tbaa !15
   %indvars.iv.next.i.3 = add nuw nsw i64 %indvars.iv.i, 4 ; 2 uses
   %exitcond.not.i.3 = icmp eq i64 %indvars.iv.next.i.3, %i.dy
-  br i1 %exitcond.not.i.3, label %._crit_edge.i, label %vec.epilog.scalar.ph, !llvm.loop !397
+  br i1 %exitcond.not.i.3, label %._crit_edge.us.us.us.i, label %vec.epilog.scalar.ph, !llvm.loop !397
 
-_ZN11OpenImageIO4v3_110TIFFOutput18contig_to_separateEiiPKcPc.exit: ; preds = %._crit_edge29.i, %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit, %.preheader26.lr.ph.i
+._crit_edge.us.us.us.i:                           ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
+  %indvars.iv.next41.i = add nuw nsw i64 %indvars.iv37.i, 1 ; 2 uses
+  %exitcond44.not.i = icmp eq i64 %indvars.iv.next41.i, %i.ea
+  br i1 %exitcond44.not.i, label %._crit_edge29.split.us.us.us.i, label %iter.check, !llvm.loop !261
+
+._crit_edge29.split.us.us.us.i:                   ; preds = %._crit_edge.us.us.us.i
+  %indvars.iv.next46.i = add nuw nsw i64 %indvars.iv42.i, 1 ; 2 uses
+  %exitcond49.not.i = icmp eq i64 %indvars.iv.next46.i, %i.dz
+  br i1 %exitcond49.not.i, label %_ZN11OpenImageIO4v3_110TIFFOutput18contig_to_separateEiiPKcPc.exit, label %.preheader26.i, !llvm.loop !262
+
+_ZN11OpenImageIO4v3_110TIFFOutput18contig_to_separateEiiPKcPc.exit: ; preds = %._crit_edge29.split.us.us.us.i, %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit
   %i.ff = load i32, ptr %i.bg, align 4, !tbaa !73
   %.not79139 = icmp sgt i32 %i.ff, 0
   br i1 %.not79139, label %.lr.ph, label %.critedge
@@ -1875,10 +1869,7 @@ bb.a:
   %i.a = icmp ne i64 %1, 0
   %i.b = icmp sgt i32 %3, 0
   %or.cond = and i1 %i.a, %i.b
-  br i1 %or.cond, label %.lr.ph.i.preheader, label %._crit_edge.split
-
-._crit_edge.split:                                ; preds = %_ZN11OpenImageIO4v3_120bitstring_add_n_bitsIhEEvRPT_Riji.exit.loopexit, %bb.a
-  ret void
+  br i1 %or.cond, label %.lr.ph.i.preheader, label %._crit_edge
 
 .lr.ph.i.preheader:                               ; preds = %bb.a, %_ZN11OpenImageIO4v3_120bitstring_add_n_bitsIhEEvRPT_Riji.exit.loopexit
   %.014 = phi i64 [ %i.v, %_ZN11OpenImageIO4v3_120bitstring_add_n_bitsIhEEvRPT_Riji.exit.loopexit ], [ 0, %bb.a ] ; 2 uses
@@ -1929,7 +1920,10 @@ bb.b:                                             ; preds = %.lr.ph.i, %.lr.ph.i
 _ZN11OpenImageIO4v3_120bitstring_add_n_bitsIhEEvRPT_Riji.exit.loopexit: ; preds = %bb.b
   %i.v = add nuw i64 %.014, 1                     ; 2 uses
   %exitcond.not = icmp eq i64 %i.v, %1
-  br i1 %exitcond.not, label %._crit_edge.split, label %.lr.ph.i.preheader, !llvm.loop !292
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.i.preheader, !llvm.loop !292
+
+._crit_edge:                                      ; preds = %_ZN11OpenImageIO4v3_120bitstring_add_n_bitsIhEEvRPT_Riji.exit.loopexit, %bb.a
+  ret void
 }
 
 ; Function Attrs: inlinehint mustprogress uwtable
@@ -1938,10 +1932,7 @@ bb.a:
   %i.a = icmp ne i64 %1, 0
   %i.b = icmp sgt i32 %3, 0
   %or.cond = and i1 %i.a, %i.b
-  br i1 %or.cond, label %.lr.ph.i.preheader, label %._crit_edge.split
-
-._crit_edge.split:                                ; preds = %_ZN11OpenImageIO4v3_120bitstring_add_n_bitsIhEEvRPT_Riji.exit.loopexit, %bb.a
-  ret void
+  br i1 %or.cond, label %.lr.ph.i.preheader, label %._crit_edge
 
 .lr.ph.i.preheader:                               ; preds = %bb.a, %_ZN11OpenImageIO4v3_120bitstring_add_n_bitsIhEEvRPT_Riji.exit.loopexit
   %.014 = phi i64 [ %i.u, %_ZN11OpenImageIO4v3_120bitstring_add_n_bitsIhEEvRPT_Riji.exit.loopexit ], [ 0, %bb.a ] ; 2 uses
@@ -1991,7 +1982,10 @@ bb.b:                                             ; preds = %.lr.ph.i, %.lr.ph.i
 _ZN11OpenImageIO4v3_120bitstring_add_n_bitsIhEEvRPT_Riji.exit.loopexit: ; preds = %bb.b
   %i.u = add nuw i64 %.014, 1                     ; 2 uses
   %exitcond.not = icmp eq i64 %i.u, %1
-  br i1 %exitcond.not, label %._crit_edge.split, label %.lr.ph.i.preheader, !llvm.loop !457
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.i.preheader, !llvm.loop !457
+
+._crit_edge:                                      ; preds = %_ZN11OpenImageIO4v3_120bitstring_add_n_bitsIhEEvRPT_Riji.exit.loopexit, %bb.a
+  ret void
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -2394,7 +2388,7 @@ _ZN3fmt3v126detail4copyIcPKcNS0_14basic_appenderIcEETnNSt9enable_ifIXaasr23is_ba
   %exitcond.not = icmp eq i64 %i.bw, %1
   br i1 %exitcond.not, label %_ZN3fmt3v126detail6fill_nINS0_14basic_appenderIcEEmcEET_S5_T0_RKT1_.exit, label %.lr.ph34.i.i, !llvm.loop !621
 
-_ZN3fmt3v126detail6fill_nINS0_14basic_appenderIcEEmcEET_S5_T0_RKT1_.exit: ; preds = %_ZN3fmt3v126detail4copyIcPKcNS0_14basic_appenderIcEETnNSt9enable_ifIXaasr23is_back_insert_iteratorIT1_EE5valuesr41has_back_insert_iterator_container_appendIS8_T0_EE5valueEiE4typeELi0EEES8_S9_S9_S8_.exit.loopexit, %_ZN3fmt3v1214basic_appenderIcEaSEc.exit.i, %bb.e, %.lr.ph, %bb.b
+_ZN3fmt3v126detail6fill_nINS0_14basic_appenderIcEEmcEET_S5_T0_RKT1_.exit: ; preds = %_ZN3fmt3v126detail4copyIcPKcNS0_14basic_appenderIcEETnNSt9enable_ifIXaasr23is_back_insert_iteratorIT1_EE5valuesr41has_back_insert_iterator_container_appendIS8_T0_EE5valueEiE4typeELi0EEES8_S9_S9_S8_.exit.loopexit, %_ZN3fmt3v1214basic_appenderIcEaSEc.exit.i, %.lr.ph, %bb.e, %bb.b
   ret ptr %0
 }
 
@@ -2797,9 +2791,9 @@ begin_hunk_5_@llvm.umin.i32
 !257 = distinct !{!257, !112, !118, !119}
 !258 = distinct !{!258, !259}
 !259 = !{!"llvm.loop.unroll.disable"}
-!260 = distinct !{!260, !112}
+!260 = distinct !{!260, !112, !118}
 !261 = distinct !{!261, !112}
-!262 = distinct !{!262, !112, !118}
+!262 = distinct !{!262, !112}
 !263 = distinct !{!263, !112}
 !264 = distinct !{!264, !112}
 !265 = !{!68, !9, i64 8}
