@@ -201,8 +201,8 @@ bb.a:
   %3 = alloca %struct.FT_Raster_Params_, align 8  ; 11 uses
   %4 = alloca %struct.TOrigin_, align 8           ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !27   ; 12 uses
-  %i.c = ptrtoint ptr %i.b to i64                 ; 4 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !27   ; 9 uses
+  %i.c = ptrtoint ptr %i.b to i64                 ; 2 uses
   %.not = icmp eq ptr %i.b, null
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -215,7 +215,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %i.h = phi ptr [ %i.g, %bb.b ], [ null, %bb.a ] ; 4 uses
-  %i.i = ptrtoint ptr %i.h to i64                 ; 2 uses
+  %i.i = ptrtoint ptr %i.h to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 4
@@ -322,57 +322,20 @@ middle.block:                                     ; preds = %vector.body
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !96
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !76
-  %i.bg = call i32 %i.bd(ptr noundef %i.bf, ptr noundef nonnull %3) #13 ; 2 uses
-  %5 = add i64 %i.c, 16
-  %umax43 = call i64 @llvm.umax.i64(i64 %i.i, i64 %5)
-  %6 = xor i64 %i.c, -1
-  %7 = add i64 %umax43, %6                        ; 2 uses
-  %8 = lshr i64 %7, 4
-  %9 = add nuw nsw i64 %8, 1                      ; 2 uses
-  %min.iters.check45 = icmp ult i64 %7, 48
-  br i1 %min.iters.check45, label %.lr.ph37.preheader59, label %vector.ph46
-
-vector.ph46:                                      ; preds = %.lr.ph37.preheader
-  %n.vec48 = and i64 %9, 2305843009213693950      ; 3 uses
-  %10 = shl i64 %n.vec48, 4
-  %11 = getelementptr i8, ptr %i.b, i64 %10
-  br label %vector.body49
-
-vector.body49:                                    ; preds = %vector.body49, %vector.ph46
-  %index50 = phi i64 [ 0, %vector.ph46 ], [ %index.next55, %vector.body49 ] ; 2 uses
-  %12 = shl i64 %index50, 4                       ; 2 uses
-  %next.gep51 = getelementptr i8, ptr %i.b, i64 %12 ; 2 uses
-  %13 = getelementptr i8, ptr %i.b, i64 %12
-  %next.gep52 = getelementptr i8, ptr %13, i64 16 ; 2 uses
-  %wide.load53 = load <2 x i64>, ptr %next.gep51, align 8
-  %wide.load54 = load <2 x i64>, ptr %next.gep52, align 8
-  %14 = sdiv <2 x i64> %wide.load53, splat (i64 4)
-  %15 = sdiv <2 x i64> %wide.load54, splat (i64 4)
-  store <2 x i64> %14, ptr %next.gep51, align 8
-  store <2 x i64> %15, ptr %next.gep52, align 8
-  %index.next55 = add nuw i64 %index50, 2         ; 2 uses
-  %16 = icmp eq i64 %index.next55, %n.vec48
-  br i1 %16, label %middle.block56, label %vector.body49, !llvm.loop !141
-
-middle.block56:                                   ; preds = %vector.body49
-  %cmp.n57 = icmp eq i64 %9, %n.vec48
-  br i1 %cmp.n57, label %.loopexit, label %.lr.ph37.preheader59
-
-.lr.ph37.preheader59:                             ; preds = %.lr.ph37.preheader, %middle.block56
-  %.135.ph = phi ptr [ %i.b, %.lr.ph37.preheader ], [ %11, %middle.block56 ]
+  %i.bg = call i32 %i.bd(ptr noundef %i.bf, ptr noundef nonnull %3) #13
   br label %.lr.ph37
 
-.lr.ph37:                                         ; preds = %.lr.ph37.preheader59, %.lr.ph37
-  %.135 = phi ptr [ %i.bj, %.lr.ph37 ], [ %.135.ph, %.lr.ph37.preheader59 ] ; 3 uses
+.lr.ph37:                                         ; preds = %.lr.ph37.preheader, %.lr.ph37
+  %.135 = phi ptr [ %i.bj, %.lr.ph37 ], [ %i.b, %.lr.ph37.preheader ] ; 3 uses
   %i.bh = load <2 x i64>, ptr %.135, align 8, !tbaa !132
   %i.bi = sdiv <2 x i64> %i.bh, splat (i64 4)
   store <2 x i64> %i.bi, ptr %.135, align 8, !tbaa !132
   %i.bj = getelementptr inbounds nuw i8, ptr %.135, i64 16 ; 2 uses
   %i.bk = icmp ult ptr %i.bj, %i.h
-  br i1 %i.bk, label %.lr.ph37, label %.loopexit, !llvm.loop !142
+  br i1 %i.bk, label %.lr.ph37, label %.loopexit, !llvm.loop !141
 
-.loopexit:                                        ; preds = %.lr.ph37, %middle.block56, %._crit_edge, %bb.c
-  %.029 = phi i32 [ 98, %bb.c ], [ %i.bb, %._crit_edge ], [ %i.bg, %middle.block56 ], [ %i.bg, %.lr.ph37 ]
+.loopexit:                                        ; preds = %.lr.ph37, %._crit_edge, %bb.c
+  %.029 = phi i32 [ 98, %bb.c ], [ %i.bb, %._crit_edge ], [ %i.bg, %.lr.ph37 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
   ret i32 %.029
@@ -629,12 +592,12 @@ bb.a:
   %i.ac = load i16, ptr %i.o, align 2, !tbaa !118
   %i.ad = zext i16 %i.ac to i32
   %i.ae = icmp samesign ult i32 %indvars.iv.next, %i.ad
-  br i1 %i.ae, label %.lr.ph, label %._crit_edge, !llvm.loop !143
+  br i1 %i.ae, label %.lr.ph, label %._crit_edge, !llvm.loop !142
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.lr.ph25
   %i.af = getelementptr inbounds nuw i8, ptr %.01823, i64 6
   %.not = icmp eq i32 %i.i, 0
-  br i1 %.not, label %._crit_edge26, label %.lr.ph25, !llvm.loop !144
+  br i1 %.not, label %._crit_edge26, label %.lr.ph25, !llvm.loop !143
 
 ._crit_edge26:                                    ; preds = %._crit_edge, %bb.a
   ret void
@@ -682,7 +645,7 @@ bb.a:
   %i.q = getelementptr inbounds nuw i8, ptr %.01217.prol, i64 3 ; 2 uses
   %prol.iter.next = add i16 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i16 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.prol.loopexit, label %.prol.preheader, !llvm.loop !145
+  br i1 %prol.iter.cmp.not, label %.prol.loopexit, label %.prol.preheader, !llvm.loop !144
 
 .prol.loopexit:                                   ; preds = %.prol.preheader, %.lr.ph
   %.018.unr = phi i16 [ %i.j, %.lr.ph ], [ %i.p, %.prol.preheader ]
@@ -711,12 +674,12 @@ bb.a:
   store i8 %.pre, ptr %i.y, align 1, !tbaa !122
   %i.aa = getelementptr inbounds nuw i8, ptr %.01217, i64 24
   %.not15.7 = icmp eq i16 %i.z, 0
-  br i1 %.not15.7, label %._crit_edge, label %.lr.ph.new, !llvm.loop !147
+  br i1 %.not15.7, label %._crit_edge, label %.lr.ph.new, !llvm.loop !146
 
 ._crit_edge:                                      ; preds = %.prol.loopexit, %.lr.ph.new, %.lr.ph22
   %i.ab = getelementptr inbounds nuw i8, ptr %.01420, i64 6
   %.not = icmp eq i32 %i.h, 0
-  br i1 %.not, label %._crit_edge23, label %.lr.ph22, !llvm.loop !148
+  br i1 %.not, label %._crit_edge23, label %.lr.ph22, !llvm.loop !147
 
 ._crit_edge23:                                    ; preds = %._crit_edge, %bb.a
   ret void
@@ -897,12 +860,11 @@ attributes #15 = { noreturn nounwind }
 !138 = !{!137, !4, i64 8}
 !139 = distinct !{!139, !107, !108, !109}
 !140 = distinct !{!140, !107, !109, !108}
-!141 = distinct !{!141, !107, !108, !109}
-!142 = distinct !{!142, !107, !109, !108}
+!141 = distinct !{!141, !107}
+!142 = distinct !{!142, !107}
 !143 = distinct !{!143, !107}
-!144 = distinct !{!144, !107}
-!145 = distinct !{!145, !146}
-!146 = !{!"llvm.loop.unroll.disable"}
+!144 = distinct !{!144, !145}
+!145 = !{!"llvm.loop.unroll.disable"}
+!146 = distinct !{!146, !107}
 !147 = distinct !{!147, !107}
-!148 = distinct !{!148, !107}
 end_hunk_0

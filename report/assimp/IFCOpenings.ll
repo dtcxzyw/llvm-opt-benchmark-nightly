@@ -201,18 +201,18 @@ _ZNSt6vectorI10aiVector2tIdESaIS1_EE7reserveEm.exit: ; preds = %bb.g, %_ZNSt12_V
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorI10aiVector2tIdESaIS1_EE7reserveEm.exit, %._crit_edge.loopexit
   %i.bl = phi ptr [ %i.ef, %._crit_edge.loopexit ], [ %.pre175, %_ZNSt6vectorI10aiVector2tIdESaIS1_EE7reserveEm.exit ] ; 3 uses
-  %i.bm = phi ptr [ %.pre174, %._crit_edge.loopexit ], [ %i.bd, %_ZNSt6vectorI10aiVector2tIdESaIS1_EE7reserveEm.exit ] ; 5 uses
+  %i.bm = phi ptr [ %.pre174, %._crit_edge.loopexit ], [ %i.bd, %_ZNSt6vectorI10aiVector2tIdESaIS1_EE7reserveEm.exit ] ; 4 uses
   %i.bn = phi ptr [ %.pre173, %._crit_edge.loopexit ], [ %i.be, %_ZNSt6vectorI10aiVector2tIdESaIS1_EE7reserveEm.exit ]
   %i.bo = phi ptr [ %.pre172, %._crit_edge.loopexit ], [ %i.be, %_ZNSt6vectorI10aiVector2tIdESaIS1_EE7reserveEm.exit ]
   %.0.lcssa = phi double [ %i.cw, %._crit_edge.loopexit ], [ 0.000000e+00, %_ZNSt6vectorI10aiVector2tIdESaIS1_EE7reserveEm.exit ]
   %i.bp = phi <2 x double> [ %i.dk, %._crit_edge.loopexit ], [ splat (double -1.000000e+10), %_ZNSt6vectorI10aiVector2tIdESaIS1_EE7reserveEm.exit ]
-  %i.bq = phi <2 x double> [ %i.di, %._crit_edge.loopexit ], [ splat (double 1.000000e+10), %_ZNSt6vectorI10aiVector2tIdESaIS1_EE7reserveEm.exit ] ; 5 uses
+  %i.bq = phi <2 x double> [ %i.di, %._crit_edge.loopexit ], [ splat (double 1.000000e+10), %_ZNSt6vectorI10aiVector2tIdESaIS1_EE7reserveEm.exit ] ; 4 uses
   %i.br = ptrtoint ptr %i.bo to i64
   %i.bs = ptrtoint ptr %i.bn to i64
   %i.bt = sub i64 %i.br, %i.bs
   %i.bu = sdiv exact i64 %i.bt, 24
   %i.bv = uitofp i64 %i.bu to double
-  %i.bw = fsub <2 x double> %i.bp, %i.bq          ; 4 uses
+  %i.bw = fsub <2 x double> %i.bp, %i.bq          ; 3 uses
   %.not136155 = icmp eq ptr %i.bm, %i.bl
   br i1 %.not136155, label %._crit_edge159, label %.lr.ph158.preheader
 
@@ -222,52 +222,24 @@ _ZNSt6vectorI10aiVector2tIdESaIS1_EE7reserveEm.exit: ; preds = %bb.g, %_ZNSt12_V
   %i.bz = add i64 %i.by, -16
   %i.ca = sub i64 %i.bz, %i.bx
   %i.cb = lshr i64 %i.ca, 4                       ; 2 uses
-  %6 = add nuw nsw i64 %i.cb, 1                   ; 2 uses
   %min.iters.check = icmp eq i64 %i.cb, 0
-  br i1 %min.iters.check, label %.lr.ph158.preheader217, label %vector.ph
+  br i1 %min.iters.check, label %.lr.ph158, label %vector.body
 
-vector.ph:                                        ; preds = %.lr.ph158.preheader
-  %n.vec = and i64 %6, 2305843009213693950        ; 3 uses
-  %7 = shl i64 %n.vec, 4
-  %8 = getelementptr i8, ptr %i.bm, i64 %7
-  %broadcast.splat = shufflevector <2 x double> %i.bq, <2 x double> poison, <2 x i32> zeroinitializer
-  %broadcast.splat211 = shufflevector <2 x double> %i.bw, <2 x double> poison, <2 x i32> zeroinitializer
-  %broadcast.splat213 = shufflevector <2 x double> %i.bq, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %broadcast.splat215 = shufflevector <2 x double> %i.bw, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  br label %vector.body
-
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+vector.body:                                      ; preds = %.lr.ph158.preheader, %vector.body
+  %index = phi i64 [ %index.next, %vector.body ], [ 0, %.lr.ph158.preheader ] ; 3 uses
   %i.cc = shl i64 %index, 4
   %next.gep = getelementptr i8, ptr %i.bm, i64 %i.cc ; 2 uses
-  %wide.vec = load <4 x double>, ptr %next.gep, align 8 ; 2 uses
-  %strided.vec = shufflevector <4 x double> %wide.vec, <4 x double> poison, <2 x i32> <i32 0, i32 2>
-  %strided.vec216 = shufflevector <4 x double> %wide.vec, <4 x double> poison, <2 x i32> <i32 1, i32 3>
-  %9 = fsub <2 x double> %strided.vec, %broadcast.splat
-  %10 = fdiv <2 x double> %9, %broadcast.splat211 ; 2 uses
-  %i.cd = fsub <2 x double> %strided.vec216, %broadcast.splat213
-  %i.ce = fdiv <2 x double> %i.cd, %broadcast.splat215 ; 2 uses
-  %11 = fcmp olt <2 x double> %10, zeroinitializer
-  %12 = select <2 x i1> %11, <2 x double> zeroinitializer, <2 x double> %10 ; 2 uses
+  %wide.load = load <2 x double>, ptr %next.gep, align 8
+  %i.cd = fsub <2 x double> %wide.load, %i.bq
+  %i.ce = fdiv <2 x double> %i.cd, %i.bw          ; 2 uses
   %i.cf = fcmp olt <2 x double> %i.ce, zeroinitializer
-  %13 = select <2 x i1> %i.cf, <2 x double> zeroinitializer, <2 x double> %i.ce ; 2 uses
-  %14 = fcmp ogt <2 x double> %12, splat (double 1.000000e+00)
-  %i.cg = select <2 x i1> %14, <2 x double> splat (double 1.000000e+00), <2 x double> %12
-  %i.ch = fcmp ogt <2 x double> %13, splat (double 1.000000e+00)
-  %i.ci = select <2 x i1> %i.ch, <2 x double> splat (double 1.000000e+00), <2 x double> %13
-  %interleaved.vec = shufflevector <2 x double> %i.cg, <2 x double> %i.ci, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  store <4 x double> %interleaved.vec, ptr %next.gep, align 8
-  %index.next = add nuw i64 %index, 2             ; 2 uses
-  %i.cj = icmp eq i64 %index.next, %n.vec
-  br i1 %i.cj, label %middle.block, label %vector.body, !llvm.loop !224
-
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %6, %n.vec
-  br i1 %cmp.n, label %._crit_edge159, label %.lr.ph158.preheader217
-
-.lr.ph158.preheader217:                           ; preds = %.lr.ph158.preheader, %middle.block
-  %.sroa.078.0156.ph = phi ptr [ %i.bm, %.lr.ph158.preheader ], [ %8, %middle.block ]
-  br label %.lr.ph158
+  %i.cg = select <2 x i1> %i.cf, <2 x double> zeroinitializer, <2 x double> %i.ce ; 2 uses
+  %i.ch = fcmp ogt <2 x double> %i.cg, splat (double 1.000000e+00)
+  %i.ci = select <2 x i1> %i.ch, <2 x double> splat (double 1.000000e+00), <2 x double> %i.cg
+  store <2 x double> %i.ci, ptr %next.gep, align 8
+  %index.next = add nuw i64 %index, 1
+  %i.cj = icmp eq i64 %index, %i.cb
+  br i1 %i.cj, label %._crit_edge159, label %vector.body, !llvm.loop !224
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNSt6vectorI10aiVector2tIdESaIS1_EE12emplace_backIJRKdS6_EEERS1_DpOT_.exit
   %i.ck = phi ptr [ %i.ef, %_ZNSt6vectorI10aiVector2tIdESaIS1_EE12emplace_backIJRKdS6_EEERS1_DpOT_.exit ], [ %.pre175, %.lr.ph.preheader ] ; 5 uses
@@ -370,7 +342,7 @@ _ZNSt6vectorI10aiVector2tIdESaIS1_EE12emplace_backIJRKdS6_EEERS1_DpOT_.exit: ; p
   %.not = icmp eq ptr %i.eg, %i.be
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph
 
-._crit_edge159:                                   ; preds = %.lr.ph158, %middle.block, %._crit_edge
+._crit_edge159:                                   ; preds = %vector.body, %.lr.ph158, %._crit_edge
   %i.eh = fdiv <2 x double> splat (double 1.000000e+00), %i.bw ; 4 uses
   %i.ei = fneg <2 x double> %i.bq
   %i.ej = fneg double %.0.lcssa
@@ -438,8 +410,8 @@ _ZNSt6vectorI10aiVector2tIdESaIS1_EE12emplace_backIJRKdS6_EEERS1_DpOT_.exit: ; p
   store double 1.000000e+00, ptr %.sroa.57.0..sroa_idx, align 8
   br label %bb.m
 
-.lr.ph158:                                        ; preds = %.lr.ph158.preheader217, %.lr.ph158
-  %.sroa.078.0156 = phi ptr [ %i.gm, %.lr.ph158 ], [ %.sroa.078.0156.ph, %.lr.ph158.preheader217 ] ; 3 uses
+.lr.ph158:                                        ; preds = %.lr.ph158.preheader, %.lr.ph158
+  %.sroa.078.0156 = phi ptr [ %i.gm, %.lr.ph158 ], [ %i.bm, %.lr.ph158.preheader ] ; 3 uses
   %i.gf = load <2 x double>, ptr %.sroa.078.0156, align 8
   %i.gg = fsub <2 x double> %i.gf, %i.bq
   %i.gh = fdiv <2 x double> %i.gg, %i.bw          ; 2 uses
